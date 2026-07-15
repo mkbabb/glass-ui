@@ -1,43 +1,46 @@
 # SegmentedTabs — the unified spring-slider tab family
 
 `<SegmentedTabs>` is glass-ui's ONE tab/toggle-strip primitive: a single
-component with a three-value `variant` axis and ONE shared elastic indicator. It
-subsumed the former `BouncyToggle` / `BouncyTabs` / `UnderlineTabs` /
-`ResponsiveTabs` quartet (a clean break, no alias). This README is the SOURCE OF
-TRUTH for the variant axis, the indicator mechanism, the ARIA-role-per-variant
-contract, and the colocation map — so a consumer reaches for the right variant
-and does not re-invent the indicator.
+component with a two-value material axis, an independent semantic axis, and ONE
+shared elastic indicator. It subsumed the former `BouncyToggle` / `BouncyTabs` /
+`UnderlineTabs` / `ResponsiveTabs` quartet (a clean break, no alias). This README
+is the SOURCE OF TRUTH for the material/semantic axes, the indicator mechanism,
+the ARIA contract, and the colocation map — so a consumer reaches for the right
+shape and does not re-invent the indicator.
 
 All tabs surfaces reach consumers via `@mkbabb/glass-ui/tabs`.
 
 ---
 
-## The variant axis
+## Material and semantics
 
-ONE component, a three-value `variant` axis:
+ONE component, two materials:
 
-- **`segmented`** (DEFAULT) — the iOS segmented control: a glass-plated strip
-  with the active segment lifted by a gliding indicator plate.
-- **`pill`** — a rounded-pill strip register.
+- **`pill`** (DEFAULT) — the iOS segmented control: a glass-plated strip with the
+  active segment lifted by a gliding indicator plate.
 - **`underline`** — panel-navigation tabs with an underline indicator.
 
-`:multi-select` (segmented / pill only) drives N simultaneously-pressed segments
-off the same engine — the ToggleGroup-shaped surface. `:responsive` (`true` or
+`semantics="toggle"` exposes `role="group"` + `aria-pressed` buttons;
+`semantics="tabs"` exposes `role="tablist"` / `role="tab"` + `aria-selected`.
+When omitted, compatibility defaults preserve the historical pairing: pill is
+toggle semantics and underline is tab semantics. Material remains independent,
+so `variant="pill" semantics="tabs"` is the glass-pill panel-navigation form.
+
+`:responsive` (`true` or
 `{ breakpoint, desktopOptions, ariaLabel, triggerClass }`) collapses the strip to
 a `<Select>` below the breakpoint.
 
-### ARIA-role-per-variant (load-bearing)
+### ARIA semantics (load-bearing)
 
-The role is keyed to the SEMANTIC, not the look:
+The role is keyed to `semantics`, not the look:
 
-- `underline` is **panel navigation** — `role="tablist"` / `role="tab"` +
+- `tabs` is **panel navigation** — `role="tablist"` / `role="tab"` +
   `aria-selected`. Exactly one tab active; each reveals a distinct panel.
-- `segmented` / `pill` are the **ToggleGroup-shaped surface** — `role="group"` +
+- `toggle` is the **ToggleGroup-shaped surface** — `role="group"` +
   `aria-pressed`. No panel swap; the toggles flip state on a shared view.
 
-Reach for `underline` for mutually-exclusive PANEL navigation; reach for
-`segmented` / `pill` (or `:multi-select`) for independent-or-single-select
-TOGGLES that mutate one surface. (See `CLAUDE.md` §Tabs vs ToggleGroup.)
+Reach for `semantics="tabs"` for mutually-exclusive PANEL navigation and
+`semantics="toggle"` for a single-select control that mutates one surface.
 
 ---
 
@@ -55,7 +58,7 @@ clock (the Material-3 elastic / Apple Liquid-Glass "grow then shrink" register).
 The squish is owned by the `useTabIndicator` composable (`composables/`): it
 writes a transient `--stretch` scalar to the indicator's own custom property; the
 SFC's scoped CSS pairs it reciprocally. The squish is INDEPENDENT of the position
-path — the elastic warp lands on all three variants. It is
+path — the elastic warp lands on both materials. It is
 `prefers-reduced-motion`-gated (no deform under reduce).
 
 ---
@@ -107,7 +110,7 @@ token, no library edit.
 ## Gates (the falsifiable contract)
 
 - `proof:tabs-unified` — the unified family contract: ONE component, the
-  three-value variant axis, the ARIA-role-per-variant, and the single elastic
+  two-value material axis, the independent ARIA semantic, and the single elastic
   indicator. Bite: re-introduce a `Bouncy*` alias or a second indicator → RED.
 - `proof:no-god-module` — `SegmentedTabs.vue` is under the 500-line bound (the
   BG.W-COLOCATE carve landed: the responsive + roving-focus concerns moved to

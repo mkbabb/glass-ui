@@ -3,12 +3,12 @@ import { computed, type HTMLAttributes } from "vue";
 import {
     SelectTrigger,
     SelectIcon,
-    DropdownMenuTrigger,
     PopoverTrigger,
 } from "reka-ui";
 import { ChevronDown } from "@lucide/vue";
 import { cn } from "../_shared/class-names";
 import { vSpecular } from "../../composables/glass";
+import DropdownMenuTrigger from "../dropdown-menu/DropdownMenuTrigger.vue";
 
 /**
  * <DockTrigger> — the ONE dock overlay trigger (BI.W-DOCK-CONTROLS; folds
@@ -68,6 +68,7 @@ const triggerClass = computed(() =>
         v-else-if="props.for === 'dropdown'"
         v-specular
         v-bind="$attrs"
+        action="pointerdown"
         :class="triggerClass"
     >
         <slot />

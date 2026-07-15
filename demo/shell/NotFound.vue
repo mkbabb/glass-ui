@@ -12,7 +12,7 @@ const router = useRouter();
 <template>
     <div class="grid min-h-[60vh] place-items-center p-8">
         <Card tier="floating" class="max-w-sm text-center">
-            <p class="text-title">404</p>
+            <h1 class="text-title">Page not found</h1>
             <p class="text-muted-foreground mt-2">
                 Nothing lives at this route.
             </p>

@@ -150,8 +150,11 @@
        consumer tuning the bold-letterform character (a lighter title, a heavier
        display) had to fork every @utility. These name the weight the way the size
        ladder names --type-*: the semantic.css utilities read them; the literals are
-       byte-identical defaults (display 600, heading/title 700). */
-    --type-weight-display: 600;
+       byte-identical defaults (display 600, heading/title 700). The public
+       --font-display-weight knob feeds the canonical internal display register so a
+       consumer override reaches every display utility without a utility fork. */
+    --font-display-weight: 600;
+    --type-weight-display: var(--font-display-weight);
     --type-weight-heading: 700;
     --type-weight-title: 700;
 

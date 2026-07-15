@@ -27,6 +27,28 @@ interface EasingPickerValue {
 }
 ```
 
+### Drive a preview from external progress
+
+Disable the built-in travel dot when another control owns progress; the authored
+callable in `v-model` can drive any external preview directly.
+
+```vue
+<script setup lang="ts">
+import { computed, ref } from "vue";
+import { EasingPicker, type EasingPickerValue } from "@mkbabb/glass-ui/easing";
+
+const curve = ref<EasingPickerValue>();
+const progress = ref(0);
+const eased = computed(() => curve.value?.fn(progress.value) ?? progress.value);
+</script>
+
+<template>
+    <EasingPicker v-model="curve" :playback="false" />
+    <input v-model.number="progress" type="range" min="0" max="1" step="0.01" />
+    <output>{{ eased.toFixed(3) }}</output>
+</template>
+```
+
 ## The boundary law (the recorded fence)
 
 curve **MATH = value.js** · playback/spring = keyframes.js · the editor
@@ -46,6 +68,10 @@ hand-rolled staircase evaluator (the `curves.ts` NO-FORK discipline, now in a
 published component). The optional spring-driven dot reads the library's
 `MOTION_CURVES` table (which itself composes the keyframes.js `springTimingFunction`
 + value.js callables), never a hand-rolled spring solver.
+
+`EasingPicker` deliberately authors only CSS-reparseable cubic-bezier and steps
+curves. Analytic bounce and spring catalogues remain value.js/keyframes-owned;
+this component does not duplicate them.
 
 ## The single color event
 

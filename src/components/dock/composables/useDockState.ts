@@ -67,8 +67,8 @@ export interface UseDockStateReturn {
  *   PINNED ──(clickOutside)──→ COLLAPSED
  *   Any ──(alwaysExpanded=true)──→ PINNED
  *
- * keepOpen/release ref-counting prevents TIMER-BASED collapse
- * but NOT explicit click-away dismissal (onPointerDownOutside).
+ * keepOpen/release ref-counting prevents both timer-based collapse and
+ * click-away dismissal while a descendant owns an active hold.
  *
  * Teleported targets (reka-ui portals, floating panels, dock popovers)
  * are treated as "inside the dock" for mouse/focus/click-away purposes.
@@ -327,6 +327,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
 
     function onPointerDownOutside(e: PointerEvent) {
         if (getAlwaysExpanded()) return;
+        if (keepOpenCount.value > 0) return;
         // During transitions, pointer-events:none on dock-layers causes clicks
         // to target the parent element — suppress click-away entirely.
         if (isTransitioning?.value) return;
@@ -334,8 +335,6 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         if (!root || root.contains(e.target as Node)) return;
         if (isTeleportedTarget(e.target, dockId)) return;
 
-        // Click outside → always collapse, even if keepOpenCount > 0
-        // (keepOpenCount prevents timer-based collapse, not explicit dismissal)
         collapse();
     }
 

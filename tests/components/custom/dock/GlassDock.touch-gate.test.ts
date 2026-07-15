@@ -279,6 +279,49 @@ describe("GlassDock touch-gate behavioural contract (AT.W6-dock-b)", () => {
         wrapper.unmount();
     });
 
+    it("keep-open: outside pointerdown waits for the active hold to release", async () => {
+        const addListener = vi.spyOn(document, "addEventListener");
+        const removeListener = vi.spyOn(document, "removeEventListener");
+        const { wrapper } = mountDockWithCollapsedControl();
+        const root = wrapper.get(".glass-dock").element;
+        const vm = wrapper.findComponent(GlassDock).vm as unknown as Record<
+            string,
+            unknown
+        >;
+
+        (vm.expand as () => void)();
+        (vm.keepOpen as () => void)();
+        await wrapper.vm.$nextTick();
+        vi.runAllTimers();
+        await wrapper.vm.$nextTick();
+
+        const clickAwayInstall = addListener.mock.calls.find(
+            ([type, , capture]) => type === "pointerdown" && capture === true,
+        );
+        expect(clickAwayInstall).toBeDefined();
+        expect(root.classList.contains("expanded")).toBe(true);
+
+        document.body.dispatchEvent(
+            new Event("pointerdown", { bubbles: true, cancelable: true }),
+        );
+        await wrapper.vm.$nextTick();
+        expect(root.classList.contains("expanded")).toBe(true);
+
+        (vm.release as () => void)();
+        document.body.dispatchEvent(
+            new Event("pointerdown", { bubbles: true, cancelable: true }),
+        );
+        await wrapper.vm.$nextTick();
+        expect(root.classList.contains("collapsed")).toBe(true);
+        expect(removeListener).toHaveBeenCalledWith(
+            "pointerdown",
+            clickAwayInstall![1],
+            true,
+        );
+
+        wrapper.unmount();
+    });
+
     it("no-regression: an already-expanded dock taps its control with no double-fire", async () => {
         const { wrapper, onPlay } = mountDockWithCollapsedControl();
         const vm = wrapper.findComponent(GlassDock).vm as unknown as Record<

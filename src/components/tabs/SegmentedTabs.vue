@@ -63,6 +63,10 @@ export interface SegmentedTabOption {
  *  retired `segmented`); `underline` = the paper ink-hairline rule. */
 export type SegmentedTabsVariant = "pill" | "underline";
 
+/** The interaction semantic, independent of material. `toggle` exposes a
+ *  group of pressed buttons; `tabs` exposes a tablist with selected tabs. */
+export type SegmentedTabsSemantics = "toggle" | "tabs";
+
 /** The orientation axis — `horizontal` (default) lays children in a row + tracks
  *  the indicator on the inline axis; `vertical` stacks a column + tracks the
  *  block axis (the vertical underline is the leading-edge ink rail). */
@@ -93,6 +97,11 @@ export interface SegmentedTabsProps {
      * (the paper ink-hairline rule).
      */
     variant?: SegmentedTabsVariant;
+    /**
+     * Interaction semantics, independent of `variant`. When omitted, preserves the
+     * historical mapping: `pill` → `toggle`, `underline` → `tabs`.
+     */
+    semantics?: SegmentedTabsSemantics;
     /**
      * Orientation — `horizontal` (default) or `vertical`. Axis-derived on the
      * one indicator engine.
@@ -143,6 +152,9 @@ const buttonRefs = ref<HTMLElement[]>([]);
 
 const isUnderline = computed(() => props.variant === "underline");
 const isVertical = computed(() => props.orientation === "vertical");
+const isTabsSemantic = computed(
+    () => props.semantics === "tabs" || (!props.semantics && isUnderline.value),
+);
 
 // BI.W-TABS-FACTOR — eyeglass IS the tabs DEFAULT (UF-H1: "eyeglass should become the
 // default tabs option … we don't need a million variants"; ratified judgment (e)). The
@@ -343,14 +355,13 @@ const { rovingTabindex, onStripKeydown } = useTabRovingFocus({
         </Select>
     </div>
 
-    <!-- The tab strip. ARIA-role-per-variant: `underline` is panel-nav
-         (`role=tablist`/`tab` + `aria-selected`); `pill` is the ToggleGroup-shaped
-         surface (`role=group` + `aria-pressed`). -->
+    <!-- Material and semantics are independent: `variant` owns the look;
+         `semantics` owns role/state, defaulting to the historical mapping. -->
     <div
         v-else
         ref="containerRef"
-        :role="isUnderline ? 'tablist' : 'group'"
-        :aria-orientation="isUnderline ? (isVertical ? 'vertical' : 'horizontal') : undefined"
+        :role="isTabsSemantic ? 'tablist' : 'group'"
+        :aria-orientation="isTabsSemantic ? (isVertical ? 'vertical' : 'horizontal') : undefined"
         :data-motion="motionAxis.dataMotion.value"
         :data-eyeglass="eyeglassOn ? '' : undefined"
         :style="motionAxis.hostStyle.value"
@@ -428,9 +439,9 @@ const { rovingTabindex, onStripKeydown } = useTabRovingFocus({
                             type="button"
                             :ref="(el) => { if (el) buttonRefs[idx] = el as HTMLElement }"
                             class="segmented-tab"
-                            :role="isUnderline ? 'tab' : undefined"
+                            :role="isTabsSemantic ? 'tab' : undefined"
                             :tabindex="rovingTabindex(idx)"
-                            v-bind="isUnderline
+                            v-bind="isTabsSemantic
                                 ? { 'aria-selected': isActive(option.value) ? 'true' : 'false' }
                                 : { 'aria-pressed': isActive(option.value) ? 'true' : 'false' }"
                             :disabled="option.disabled"
@@ -456,9 +467,9 @@ const { rovingTabindex, onStripKeydown } = useTabRovingFocus({
                 type="button"
                 :ref="(el) => { if (el) buttonRefs[idx] = el as HTMLElement }"
                 class="segmented-tab"
-                :role="isUnderline ? 'tab' : undefined"
+                :role="isTabsSemantic ? 'tab' : undefined"
                 :tabindex="rovingTabindex(idx)"
-                v-bind="isUnderline
+                v-bind="isTabsSemantic
                     ? { 'aria-selected': isActive(option.value) ? 'true' : 'false' }
                     : { 'aria-pressed': isActive(option.value) ? 'true' : 'false' }"
                 :disabled="option.disabled"
