@@ -62,7 +62,7 @@
  *                              from (1) so MUST come after them; defines the
  *                              `dark` variant selector consumed by the cascade.
  *   4. glass.css             — thin @import root over glass/{material,ladder,
- *                              surfaces,progress-rail,squircle,a11y-fallback}.css.
+ *                              surfaces,progress-rail,squircle}.css.
  *                              .glass-{wash,quiet,resting,floating,overlay}
  *                              5-rung ladder + .glass-card / -pill / -btn.
  *                              Consumes tokens (1) + theme aliases (3).
@@ -135,7 +135,7 @@
  *                              recipe + `--vt-*` axes (AQ.W5; the
  *                              `useViewTransition` substrate's CSS half).
  *  11. utilities.css         — thin @import root over utilities/{animate,base,
- *                              components,btn,a11y-overrides}.css. focus-ring,
+ *                              components,btn}.css. focus-ring,
  *                              btn-audacious + btn-interactive (press cluster;
  *                              K W6 + Q.W3 Lane E), rainbow-vivid +
  *                              rainbow-pastel. Consumes earlier animations +
@@ -165,9 +165,12 @@
  *                             drawer so the positioning SHIPS regardless of consumer JIT
  *                             reach; locked by proof:emission.
  *
+ *  18. accessibility.css     — terminal reduced-transparency/contrast/motion,
+ *                              forced-colors, and coarse-input adaptations.
+ *
  * Per-package component CSS lives at (12)-(17) (loaded after utilities so
- * component-local recipes can override). New per-package CSS files append
- * to that tail.
+ * component-local recipes can override). Accessibility then replaces the
+ * completed paint as one terminal product mode.
  */
 @import "./tokens.css";
 @import "./typography.css";
@@ -246,6 +249,11 @@
    masthead rule + CompletionSeal + HandMark are its recorded members. Compositor-only,
    PRM-static. */
 @import "./draw-in.css";
+
+/* Accessibility is a terminal product mode, not a mid-cascade patch. This one
+   import owns reduced transparency/contrast/motion, forced colors, and coarse
+   target adaptation after every material and component recipe. */
+@import "./accessibility.css";
 
 /* Ensure Tailwind scans glass-ui's compiled component templates for the utility
    classes they emit (CVA variant classes like text-destructive-foreground,

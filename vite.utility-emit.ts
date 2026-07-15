@@ -4,7 +4,7 @@ import { dirname, resolve } from "node:path";
 import postcss from "postcss";
 import tailwindcss from "@tailwindcss/postcss";
 
-import { atSourceIndex } from "./vite.style-fold";
+import { terminalImportIndex } from "./vite.style-fold";
 
 const require_ = createRequire(import.meta.url);
 
@@ -236,10 +236,8 @@ export async function emitComponentUtilities(
         "utf-8",
     );
 
-    // 4. Pull components.css into the dist cascade AFTER utilities.css so a
-    //    consumer can still override (the @import sits inside the leading
-    //    import block, before the trailing `@source`). The src index.css is
-    //    untouched — this @import lands in the DIST copy only.
+    // 4. Pull components.css into the dist cascade after utilities.css and before
+    //    the terminal accessibility mode. The src index.css is untouched.
     const distIndex = resolve(distStyles, "index.css");
     if (!existsSync(distIndex)) return;
     const indexSrc = readFileSync(distIndex, "utf-8");
@@ -255,7 +253,7 @@ export async function emitComponentUtilities(
         writeFileSync(distIndex, indexSrc.replace(legacyImport, compImport), "utf-8");
         return;
     }
-    const sourceAt = atSourceIndex(indexSrc);
+    const sourceAt = terminalImportIndex(indexSrc);
     const comment =
         "/* P9 — component-utility rules (rounded-panel, text-muted-foreground,\n" +
         "   …) shipped build-independently so a bare consumer paints them. */\n";

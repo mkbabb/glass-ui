@@ -1,0 +1,48 @@
+/* Terminal accessibility cascade: adaptations replace the completed product
+   paint instead of competing with later component rules. */
+@import "./glass/a11y-fallback.css";
+@import "./utilities/a11y-overrides.css";
+
+/* Selection and validation keep a non-hue boundary when contrast is requested.
+   The system-color arm yields fully to the user's forced palette. */
+@media (prefers-contrast: more) {
+    :is(
+        [aria-current]:not([aria-current="false"]),
+        [aria-selected="true"],
+        [aria-pressed="true"],
+        [aria-checked="true"],
+        [data-state="checked"],
+        [data-state="on"]
+    ) {
+        border-color: currentColor !important;
+        border-style: solid !important;
+        border-width: 2px !important;
+    }
+
+    :is([aria-invalid="true"], :user-invalid) {
+        border-color: var(--destructive) !important;
+        border-style: solid !important;
+        border-width: 2px !important;
+    }
+}
+
+@media (forced-colors: active) {
+    :is(
+        [aria-current]:not([aria-current="false"]),
+        [aria-selected="true"],
+        [aria-pressed="true"],
+        [aria-checked="true"],
+        [data-state="checked"],
+        [data-state="on"]
+    ) {
+        border-color: Highlight !important;
+        border-style: solid !important;
+        border-width: 2px !important;
+    }
+
+    :is([aria-invalid="true"], :user-invalid) {
+        border-color: Mark !important;
+        border-style: solid !important;
+        border-width: 2px !important;
+    }
+}

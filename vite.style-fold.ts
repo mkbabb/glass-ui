@@ -81,6 +81,12 @@ export function atSourceIndex(css: string): number {
     return m ? m.index : -1;
 }
 
+/** Keep dist-only component imports ahead of the terminal accessibility mode. */
+export function terminalImportIndex(css: string): number {
+    const mode = /^[ \t]*@import\s+["']\.\/accessibility\.css["'];/m.exec(css);
+    return mode ? mode.index : atSourceIndex(css);
+}
+
 /**
  * copyStyleAssets — cpSync `src/styles/` → `dist/styles/` and `src/fonts/` →
  * `dist/fonts/` wholesale so `./styles` ships the authored cascade verbatim
@@ -140,10 +146,9 @@ function cssFilesUnder(...roots: string[]): string[] {
  * `src/styles/index.css` references no built sibling, so the `proof:theme`
  * source-read stays valid.
  *
- * CSS ordering: the SFC `@import` is inserted before the trailing `@source`
- * at-rule so it sits inside the file's leading @import block (CSS forbids
- * `@import` after a non-import statement). The SFC bundle lives one dir up from
- * `dist/styles/`, hence `../glass-ui.css`.
+ * CSS ordering: the SFC `@import` is inserted before the terminal accessibility
+ * import (or the trailing `@source` in an older source tree). The SFC bundle
+ * lives one dir up from `dist/styles/`, hence `../glass-ui.css`.
  */
 export function foldSfcBundle(root: string, distStyles: string): void {
     const distIndex = resolve(distStyles, "index.css");
@@ -152,7 +157,7 @@ export function foldSfcBundle(root: string, distStyles: string): void {
         const indexSrc = readFileSync(distIndex, "utf-8");
         const sfcImport = '@import "../glass-ui.css";';
         if (!indexSrc.includes(sfcImport)) {
-            const sourceAt = atSourceIndex(indexSrc);
+            const sourceAt = terminalImportIndex(indexSrc);
             const folded =
                 sourceAt === -1
                     ? `${indexSrc}\n${sfcImport}\n`

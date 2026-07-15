@@ -35,15 +35,15 @@
  * under the 500-line no-god-module bound), @import-ed below in CASCADE ORDER.
  * The base ladder splits into three adjacent `@layer components` blocks
  * (material · ladder · surfaces) — same layer, same source order, so the carve
- * is isomorphic. The squircle `@supports` arm and the a11y `@media`/`@supports`
- * overrides MUST stay AFTER the base ladder (they override it). See
+ * is isomorphic. The squircle `@supports` arm stays after the base ladder;
+ * accessibility modes load once at the end of styles/index.css. See
  * docs/precepts/design-idioms.md §cohesion-aware partials.
  */
 
 /* CSS @import rules must precede every other rule. The seven partials @import in
    cascade order (surface-axis.css AFTER ladder/surfaces so its [data-surface]
    decoration attr rules win over the base rung by source order; BEFORE the
-   squircle + a11y @supports overrides, which must stay last): */
+   squircle override): */
 @import "./glass/material.css";
 @import "./glass/ladder.css";
 /* BI.W-STYLE-REDRAIN — the .glass-opaque level-0 escape + the content-aware under-shadow
@@ -104,8 +104,7 @@
    decoration ON a base rung (the .glass-opaque/.glass-deep precedent), @import-ed
    IMMEDIATELY AFTER deep.css (same @layer components, source-order-after so its cohort
    fills win over control-surfaces.css/surfaces.css at equal specificity) and BEFORE the
-   squircle/a11y overrides (which still win by :root level). */
+   squircle override. */
 @import "./glass/defined.css";
 @import "./glass/progress-rail.css";
 @import "./glass/squircle.css";
-@import "./glass/a11y-fallback.css";

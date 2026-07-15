@@ -6,8 +6,8 @@
  * The @layer components base block (split at the metric-badge seam into
  * base/components AND, at BB.W-CARVE3, at the
  * post-tap-squish seam into base/base-misc — all adjacent same-layer blocks,
- * isomorphic), the @utility button cluster, and the a11y @media overrides keep
- * their source order so the cascade is unchanged. See
+ * isomorphic), and the @utility button cluster keep their source order.
+ * Accessibility modes load once at the end of styles/index.css. See
  * docs/precepts/design-idioms.md §cohesion-aware partials.
  */
 
@@ -22,4 +22,3 @@
 @import "./utilities/metal.css";
 @import "./utilities/components.css";
 @import "./utilities/btn.css";
-@import "./utilities/a11y-overrides.css";
