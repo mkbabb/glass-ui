@@ -231,6 +231,27 @@
         opacity: calc(1 - var(--dock-morph-t));
     }
 
+    /* GU-4 — retain only the witnessed press control through a collapse-triggered
+       layer swap. The pane stays a non-target; the marked origin alone remains above
+       the entering summary until the root click/cancel capture clears the marker. */
+    .glass-dock .dock-layer.is-leaving.is-press-keepalive {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: none;
+    }
+
+    .glass-dock .dock-layer.is-leaving.is-press-keepalive [inert] {
+        visibility: hidden;
+    }
+
+    .glass-dock
+        .dock-layer.is-leaving.is-press-keepalive
+        [data-dock-press-origin] {
+        position: relative;
+        z-index: 1;
+        pointer-events: auto;
+    }
+
     /* AX.W45 — opacity now has ONE owner: the `--dock-morph-t` scalar (the leaving
        pane via `calc(1 - t)`, the entering pane revealed by the clip aperture +
        child stagger off the SAME scalar). Visibility keeps ONE owner: the delayed

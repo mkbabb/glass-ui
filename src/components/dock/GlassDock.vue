@@ -195,7 +195,11 @@ const outerLayerAxis = computed<"horizontal" | "vertical">(() => orientation.val
    the orchestrator pins at `from` then measures `to` one rAF post-flush; size/pad/
    radius/color/stagger co-morph off the one `--dock-morph-t` scalar. A nested
    `<DockLayerGroup>` registers as a SECOND target on the SAME spring. (dockMorphContext) */
-const { context: dockMorphContext } = useDockMorphOrchestrator({
+const {
+    context: dockMorphContext,
+    outerCurrentLayer,
+    outerLeavingLayer,
+} = useDockMorphOrchestrator({
     rootEl: dockEl,
     outerEl: layersEl,
     outerActiveLayer,
@@ -249,6 +253,7 @@ const {
     onPointerCancelCapture,
     onClickCapture,
     markExpandFlip,
+    pressKeepaliveLayer,
 } = useDockClickIntegrity({
     rootEl: dockEl,
     visualExpanded,
@@ -400,23 +405,29 @@ defineExpose({
             column that opts out of collapse reads exactly as before.
         -->
         <div ref="layersEl" class="dock-layers">
-            <!-- BC.W-DOCK-VERTICAL-FIX — `inert` reads `visualExpanded`, the SAME
-                 signal the `is-active` class reads (NOT the raw `expanded`). The bug:
+            <!-- BC.W-DOCK-VERTICAL-FIX — `inert` and `is-active` read the SAME
+                 orchestrator layer identity (NOT the raw `expanded`). The bug:
                  an `alwaysExpanded`/mid-flip vertical dock has `visualExpanded` true
                  (pane painted active) yet `expanded` false → the pane was `:inert`
                  (every control non-interactive) while VISIBLE — a painted-but-dead
-                 column (glass-dock-codebase.md §2.3). Keying both off `visualExpanded`
-                 means paint + interactivity read ONE source and can never disagree:
-                 a control is interactive IFF its pane is painted active. -->
+                 column (glass-dock-codebase.md §2.3). GU-4's sole exception is the
+                 witnessed full-pane press retained until its click/cancel. -->
             <div
-                :class="['dock-layer dock-layer--full', { 'is-active': visualExpanded }]"
-                :inert="!visualExpanded || undefined"
+                :class="['dock-layer dock-layer--full', {
+                    'is-active': outerCurrentLayer === 'full',
+                    'is-leaving': outerLeavingLayer === 'full' || (pressKeepaliveLayer === 'full' && outerCurrentLayer !== 'full'),
+                    'is-press-keepalive': pressKeepaliveLayer === 'full',
+                }]"
+                :inert="(outerCurrentLayer !== 'full' && pressKeepaliveLayer !== 'full') || undefined"
             >
                 <slot />
             </div>
             <div
-                :class="['dock-layer dock-layer--summary', { 'is-active': !visualExpanded }]"
-                :inert="visualExpanded || undefined"
+                :class="['dock-layer dock-layer--summary', {
+                    'is-active': outerCurrentLayer === 'summary',
+                    'is-leaving': outerLeavingLayer === 'summary',
+                }]"
+                :inert="(outerCurrentLayer !== 'summary') || undefined"
                 @click="onClickCollapsed"
             >
                 <slot name="collapsed" />

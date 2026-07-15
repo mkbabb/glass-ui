@@ -32,6 +32,8 @@ const familyMembers: FamilyMember[] = [
 const bold = ref<boolean>(false);
 const marks = ref<string[]>(["bold"]);
 const align = ref<string>("left");
+const density = ref<string>("comfortable");
+const densityOptions = ["Compact", "Comfortable", "Spacious", "Touch", "Presentation"];
 const filters = ref<{ fourier: boolean; chebyshev: boolean; legendre: boolean }>({
     fourier: true,
     chebyshev: false,
@@ -113,6 +115,30 @@ const cell = ref<string>("warm");
             </ToggleGroup>
             <p class="text-mono-caption text-muted-foreground">align · {{ align }}</p>
         </section>
+
+        <StorySection
+            heading="Narrow horizontal strip"
+            blurb="Safe centering keeps the strip balanced when it fits and leaves both scroll edges reachable when it overflows."
+        >
+            <ToggleGroup
+                v-model="density"
+                type="single"
+                class="w-56 max-w-full overflow-x-auto"
+                aria-label="Interface density"
+            >
+                <ToggleGroupItem
+                    v-for="option in densityOptions"
+                    :key="option"
+                    :value="option.toLowerCase()"
+                    class="shrink-0 whitespace-nowrap"
+                >
+                    {{ option }}
+                </ToggleGroupItem>
+            </ToggleGroup>
+            <p class="text-mono-caption text-muted-foreground">
+                density · {{ density }}
+            </p>
+        </StorySection>
 
         <!-- Chip: pill shape. -->
         <section class="flex flex-col gap-3" data-testid="toggle-chip-chip-section">

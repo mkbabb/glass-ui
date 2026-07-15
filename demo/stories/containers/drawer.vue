@@ -139,6 +139,9 @@ const ctaPresses = ref(0);
                     surface behind keeps its size, stays keyboard-reachable, and is
                     never hidden from assistive tech. The default modal sheet above traps
                     focus and scales the page; this mode is the opt-in non-modal peer.
+                    This specimen sets
+                    <code class="font-mono text-xs">--drawer-inset-block-end: 4.5rem</code>,
+                    so even Full stops above the labeled menubar reserve.
                 </p>
                 <div
                     id="verdict-surface"
@@ -206,7 +209,12 @@ const ctaPresses = ref(0);
                                 Open instrument sheet
                             </Button>
                         </DrawerTrigger>
-                        <DrawerContent :show-overlay="false" class="live-sheet">
+                        <DrawerContent
+                            :show-overlay="false"
+                            class="live-sheet"
+                            style="--drawer-inset-block-end: 4.5rem"
+                            data-reserve-specimen
+                        >
                             <DrawerHeader>
                                 <DrawerTitle>Instrument</DrawerTitle>
                                 <DrawerDescription>
@@ -222,6 +230,15 @@ const ctaPresses = ref(0);
                             </div>
                         </DrawerContent>
                     </Drawer>
+
+                </div>
+                <div
+                    v-if="liveOpen"
+                    class="fixed inset-x-0 bottom-0 flex items-center justify-center border-t border-border bg-card text-caption text-muted-foreground"
+                    :style="{ height: '4.5rem', zIndex: 'var(--z-modal)' }"
+                    data-drawer-reserve-band
+                >
+                    Reserved menubar · 4.5rem
                 </div>
             </StorySection>
 

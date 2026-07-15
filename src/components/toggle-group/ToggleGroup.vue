@@ -58,16 +58,17 @@ const groupTrack = computed(() =>
 // byte-identical to the prior `rounded-pill`); `variant="card"` items →
 // ctx = --radius-card → track = card + 4px, killing the pill-track-vs-card-item
 // mismatch (GEO-6 auto-fall). The multi-select arm publishes nothing (byte-identical).
-const groupTrackStyle = computed<Record<string, string> | undefined>(() =>
-  props.type === 'single'
+const groupTrackStyle = computed<Record<string, string>>(() => ({
+  justifyContent: 'safe center',
+  ...(props.type === 'single'
     ? {
         '--radius-inset': '0.25rem',
         '--radius-ctx':
           props.variant === 'card' ? 'var(--radius-card)' : 'var(--radius-pill)',
         borderRadius: 'calc(var(--radius-ctx) + var(--radius-inset))',
       }
-    : undefined,
-)
+    : {}),
+}))
 
 const delegatedProps = computed(() => {
   const { class: _, ...delegated } = props
@@ -79,7 +80,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
 
 <template>
   <ToggleGroupRoot v-bind="forwarded" as-child>
-    <div data-slot="toggle-group" :role="groupRole" :style="groupTrackStyle" :class="cn('flex items-center justify-center gap-1', groupTrack, props.class)">
+    <div data-slot="toggle-group" :role="groupRole" :style="groupTrackStyle" :class="cn('flex items-center gap-1', groupTrack, props.class)">
       <slot />
     </div>
   </ToggleGroupRoot>

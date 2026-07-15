@@ -128,6 +128,8 @@ export interface UseDockMorphOrchestratorReturn {
     context: DockMorphContext;
     /** The outer pair's post-swap active layer id (call-site parity). */
     outerCurrentLayer: Readonly<Ref<string>>;
+    /** The outer pair's fading pane id, or null once settled. */
+    outerLeavingLayer: Readonly<Ref<string | null>>;
 }
 
 /**
@@ -351,5 +353,6 @@ export function useDockMorphOrchestrator(
     return {
         context,
         outerCurrentLayer: readonly(outerTarget.currentLayer),
+        outerLeavingLayer: readonly(outerTarget.leavingLayer),
     };
 }

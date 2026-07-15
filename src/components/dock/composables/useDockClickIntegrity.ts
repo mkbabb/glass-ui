@@ -38,7 +38,7 @@
 // keyed off it. A dock that never morphs (always-expanded) never arms the guard, so
 // its clicks are byte-identical to before.
 
-import { onBeforeUnmount, type Ref } from "vue";
+import { onBeforeUnmount, readonly, ref, watch, type Ref } from "vue";
 import { MORPH_SETTLE_MS } from "../constants";
 
 export interface DockClickIntegrity {
@@ -50,6 +50,8 @@ export interface DockClickIntegrity {
     onClickCapture: (event: MouseEvent) => void;
     /** Mark the collapsed→expanded flip so the settle window opens (call on expand). */
     markExpandFlip: () => void;
+    /** The outer pane retained for the witnessed press, or null. */
+    pressKeepaliveLayer: Readonly<Ref<"full" | null>>;
 }
 
 export interface UseDockClickIntegrityOptions {
@@ -88,6 +90,42 @@ export function useDockClickIntegrity(
     // opens the window; a click after it (and after the morph settles) is genuine.
     let settleDeadline = 0;
     let settleTimer: ReturnType<typeof setTimeout> | null = null;
+    const pressKeepaliveLayer = ref<"full" | null>(null);
+    let pressControl: HTMLElement | null = null;
+    const inertedBranches: Array<{ element: HTMLElement; wasInert: boolean }> = [];
+
+    function clearPressKeepalive(): void {
+        pressControl?.removeAttribute("data-dock-press-origin");
+        pressControl = null;
+        for (const { element, wasInert } of inertedBranches.splice(0)) {
+            element.toggleAttribute("inert", wasInert);
+        }
+        pressKeepaliveLayer.value = null;
+    }
+
+    function armPressKeepalive(target: EventTarget | null): void {
+        const element = target instanceof Element ? target : null;
+        const control = element?.closest<HTMLElement>(
+            "button, a[href], input, select, textarea, [role='button'], [tabindex]",
+        );
+        const pane = control?.closest<HTMLElement>(".dock-layer--full");
+        if (!control || !pane || !rootEl.value?.contains(pane)) return;
+
+        pressControl = control;
+        control.setAttribute("data-dock-press-origin", "");
+        pressKeepaliveLayer.value = "full";
+
+        for (let branch: HTMLElement = control; branch !== pane;) {
+            const parent = branch.parentElement;
+            if (!parent) break;
+            for (const sibling of parent.children) {
+                if (sibling === branch || !(sibling instanceof HTMLElement)) continue;
+                inertedBranches.push({ element: sibling, wasInert: sibling.inert });
+                sibling.inert = true;
+            }
+            branch = parent;
+        }
+    }
 
     function clearSettleTimer() {
         if (settleTimer !== null) {
@@ -132,6 +170,7 @@ export function useDockClickIntegrity(
     }
 
     function onPointerDownCapture(event: PointerEvent): void {
+        clearPressKeepalive();
         pressTarget = event.target;
         pressedWhileCollapsed = !visualExpanded.value;
         // A press that BEGINS while the box is still morphing is a race by
@@ -141,7 +180,12 @@ export function useDockClickIntegrity(
         pressedDuringMorph = morphInFlight();
     }
 
+    watch(visualExpanded, (expanded, wasExpanded) => {
+        if (wasExpanded && !expanded && pressTarget) armPressKeepalive(pressTarget);
+    });
+
     function onPointerCancelCapture(): void {
+        clearPressKeepalive();
         pressTarget = null;
         pressedWhileCollapsed = false;
         pressedDuringMorph = false;
@@ -164,6 +208,7 @@ export function useDockClickIntegrity(
     }
 
     function onClickCapture(event: MouseEvent): void {
+        clearPressKeepalive();
         const pressedDuringMorphSnapshot = pressedDuringMorph;
         pressedDuringMorph = false;
         // Only guard while a swap could have moved a control under the pointer — a
@@ -204,12 +249,16 @@ export function useDockClickIntegrity(
         pressTarget = null;
     }
 
-    onBeforeUnmount(clearSettleTimer);
+    onBeforeUnmount(() => {
+        clearSettleTimer();
+        clearPressKeepalive();
+    });
 
     return {
         onPointerDownCapture,
         onPointerCancelCapture,
         onClickCapture,
         markExpandFlip,
+        pressKeepaliveLayer: readonly(pressKeepaliveLayer),
     };
 }
