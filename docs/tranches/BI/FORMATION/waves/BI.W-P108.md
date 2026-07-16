@@ -1,11 +1,23 @@
 # BI.W-P108 — Command apotheosis — command palette/list
 
-**Status:** PLANNED
+**Status:** IMPLEMENTED — native acceptance pending
+**Disposition:** retained Command with direct Dialog composition
 **Topological stratum:** BI.S19
 **Formation family:** component-containers
 **Core centers:** C10_CONSTELLATION_ASSAY, C6_COMPONENT_APOTHEOSIS
 **Terminal owner:** glass-ui orchestrator
 **Evidence root:** `docs/tranches/BI/evidence/BI.W-P108`
+
+Current product evidence:
+
+- `src/components/command/` owns inline search, groups, items, empty state, active identity,
+  keyboard execution, disabled semantics, and its colocated material.
+- `CommandDialog.vue` directly composes Dialog and Command. The routed story renders the
+  public member against the same collection and selected identity as inline Command.
+- `tests/components/command.contract.test.ts` exercises filtering, active descendant,
+  keyboard execution, disabled items, Dialog dismissal, and focus restoration.
+- Native Browser review of inline/dialog, narrow/touch, and reduced-motion states remains
+  pending.
 
 ## Intent
 
@@ -18,7 +30,8 @@ Retain one public concept and remove shadcn/CVA/raw-utility styling authority, a
 - Replace shadcn/CVA/raw Tailwind visual recipes with typed semantic props/state attributes and colocated owned CSS while preserving Reka/native accessibility behavior.
 - Render and exercise the exact state set in the shared specimen chassis: inline, dialog, query, empty, groups, disabled, keyboard.
 - Repoint every listed local consumer/import/test/story/build projection atomically; update generated migration/entry facts when the public shape changes.
-- Retain CommandDialog only by turning its currently prose-only dialog branch into a direct packed-public-member scenario; the present route exercises inline query/active-descendant/execution but renders zero dialog roots.
+- Retain CommandDialog as a direct packed-public-member scenario sharing the inline
+  collection and selected identity.
 - Open, query, Arrow-navigate, execute, Escape, and restore focus through CommandDialog while sharing one command collection/active identity with inline Command and satisfying Dialog title, modality, dismissal, surface, and PRM.
 
 ## File manifest (15)

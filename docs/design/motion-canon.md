@@ -36,11 +36,10 @@ the one row the §6 table never listed; it is added now.
 
 The SOTA **arrival** ease — the bold decelerating settle for a draw-on reveal or a
 big-distance arrival — is the EXISTING `--ease-out-expo` (alias →
-`--motion-ease-out-expo` = `cubic-bezier(0.16, 1, 0.3, 1)`, the house expo with the
-value.js `easeOutExpo` JS twin in the `curves.ts` `MOTION_CURVES` table). The canon
-NAMES it as the arrival register; it is not re-minted — a duplicate alias would fail
-`proof:animation-coherence`'s EASING-TABLE-BOUND arm (every `--ease-*` named on a leg
-must have its canonical/alias row, the two halves cannot drift).
+`--motion-ease-out-expo` = `cubic-bezier(0.16, 1, 0.3, 1)`). CSS consumes the token;
+JavaScript that needs callable expo math imports `easeOutExpo` directly from
+`@mkbabb/value.js/easing`. The canon names the arrival register without maintaining a
+reverse CSS-token-to-JavaScript table.
 
 ## P2 — enter bouncy/snappy, exit no-overshoot bezier
 
@@ -160,10 +159,12 @@ channel. `--tab-indicator-duration: var(--spring-snappy-duration)` is the model 
 spring leg reads its OWN clock through the named token.
 
 **The sanctioned off-spine SET (the allowlist).** The canonical motion authority is
-`keyframes.js` reached through the `/motion` barrel: every spring/morph/press/drag/
-reveal/number-tween composes a kf primitive (`SpringProgress`/`Draggable`/
-`ElementMorph`/`SmoothProgress`/`NumericAnimation`/`Sequence`). There are exactly TWO
-sanctioned off-spine seams, each for SCC / foreign-tree reasons, each documented:
+`keyframes.js`; implementation sites import its primitives directly. Glass `/motion`
+publishes only Glass-owned Vue composition and semantic spring presets. Every
+spring/morph/press/drag/reveal/number-tween still composes an upstream primitive
+(`SpringProgress`/`Draggable`/`ElementMorph`/`SmoothProgress`/`NumericAnimation`/
+`Sequence`). There are exactly TWO sanctioned off-spine seams, each for SCC /
+foreign-tree reasons, each documented:
 
 - **`usePointerVelocityField`** — the shared viz-pointer-physics field. A hand-rolled
   critically-damped lerp (position → velocity → acceleration), intentionally kf-FREE so

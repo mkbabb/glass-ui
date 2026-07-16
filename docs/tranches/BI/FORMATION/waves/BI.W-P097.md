@@ -1,6 +1,6 @@
 # BI.W-P097 — TagsInput apotheosis — multi-token text entry
 
-**Status:** PLANNED
+**Status:** IMPLEMENTED — focused contract and production build green; native Browser witness pending availability
 **Topological stratum:** BI.S18
 **Formation family:** component-forms
 **Core centers:** C1_LIQUID_GLASS, C5_AUDACIOUS_TYPOGRAPHY, C6_COMPONENT_APOTHEOSIS

@@ -20,6 +20,11 @@ Decided (PASS-1 dialog cluster + PASS-4B proto):
   Dialog root, not a distinct component).
 - **Dialog `variant` → `surface` clean break** (the binary `variant: glass|opaque` retires onto the shared
   surface axis — no alias; the W-SURFACE-EXTRACT courier is the door).
+- **Placed-content anatomy is stable.** Every non-center placement is one stationary plate plus one
+  stable side-content region. Header, body, and actions remain intrinsic top-flow children of that
+  region; full-height left/right placements leave unused space below rather than stretching implicit
+  grid tracks or pinning generic actions. The `scroll` axis changes only that region's overflow
+  ownership, never the plate, its material sampler, or the slot's parentage.
 - **THE N3 DISAMBIGUATION RULE (load-bearing):** Dialog[placement] is NOT Drawer. **Drawer SURVIVES** — it
   owns snap-detent spring physics + the live-behind non-modal focus model + a keyframes-bearing chunk (a
   mechanism no survivor expresses). A side sheet with no detents is `Dialog placement=right`; a detented
@@ -43,14 +48,20 @@ Gate: **`proof:fold-delete`** (dialog/sheet clause, authored in W-AXES-GATES) + 
   preset (no standalone root); survivor `Dialog[placement]` + `Drawer` present → GREEN.
 - Dialog `variant` DEFINITION-ABSENT (the binary retired onto `surface`); axes membership: `PLACEMENTS`
   tuple (from W-AXES-GATES) is the fenced source.
+- All four non-center placements keep actions at their intrinsic authored height and content-adjacent;
+  `scroll` moves only the stable inner region while the plate stays at `scrollTop = 0`. The direct-child
+  graded edge retains its bounds within ±0.5 CSS px before/after an actual overflow scroll. A host
+  overflow/clip, `DialogFooter`/Button sizing patch, implicit bottom anchoring, or conditional wrapper
+  that re-parents content is a failed fold.
 - N3 fence bite: `Drawer` root present-and-distinct (the placement fold must NOT swallow Drawer's snap
   engine); a synthetic Drawer-fold-into-Dialog REDs.
 
 ## §π/DELTA
 
-**Edge-slide parity + focus-return** π: Dialog `placement=right|bottom` slide byte-identical to the retired
-Sheet frame-series; focus-trap + focus-return; the N3 fence (Drawer live-behind non-modal unchanged) —
-Chrome + real WebKit, BOTH modes. DELTA: `W-DIALOG-PLACEMENT-DELTA.md`. rides the B-close gestalt ceremony (W-GESTALT-LEDGER-FILE oracle + the close battery)
+**Edge-slide parity + focus-return** π: Dialog `placement=top|right|bottom|left` keeps the retired Sheet
+frame-series, intrinsic action geometry, and stable inner-scroll ownership; focus-trap + focus-return;
+the N3 fence (Drawer live-behind non-modal unchanged) — wide + narrow, both schemes, Chrome + real
+WebKit. DELTA: `W-DIALOG-PLACEMENT-DELTA.md`. rides the B-close gestalt ceremony (W-GESTALT-LEDGER-FILE oracle + the close battery)
 (`proof:ba-gestalt` overlay-band).
 
 ## §Obligations

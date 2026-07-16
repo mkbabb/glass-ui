@@ -1,6 +1,6 @@
 # BI.W-P067 — Input apotheosis — single-line text input
 
-**Status:** PLANNED
+**Status:** IMPLEMENTED — NATIVE ACCEPTANCE PENDING
 **Topological stratum:** BI.S16
 **Formation family:** component-forms
 **Core centers:** C1_LIQUID_GLASS, C5_AUDACIOUS_TYPOGRAPHY, C6_COMPONENT_APOTHEOSIS

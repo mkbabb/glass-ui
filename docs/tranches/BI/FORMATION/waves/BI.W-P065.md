@@ -1,6 +1,6 @@
 # BI.W-P065 — Button apotheosis — command/action control
 
-**Status:** PLANNED
+**Status:** IMPLEMENTED — NATIVE ACCEPTANCE PENDING
 **Topological stratum:** BI.S17
 **Formation family:** component-display
 **Core centers:** C6_COMPONENT_APOTHEOSIS

@@ -1,6 +1,6 @@
 # BI.W-P022 — Accessibility material and interaction modes
 
-**Status:** PLANNED
+**Status:** IMPLEMENTED — NATIVE ACCESSIBILITY-MODE ACCEPTANCE PENDING
 **Topological stratum:** BI.S11
 **Formation family:** design-foundation
 **Core centers:** C1_LIQUID_GLASS, C3_MOTION, C7_KEYFRAMES_INTEGRATION

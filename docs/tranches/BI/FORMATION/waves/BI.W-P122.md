@@ -1,109 +1,165 @@
-# BI.W-P122 — InstrumentChassis apotheosis — physical instrument housing with phase bus
+# BI.W-P122 — InstrumentChassis apotheosis — one physical instrument sleeve
 
-**Status:** PLANNED
+**Status:** IMPLEMENTED — NATIVE COORDINATE ACCEPTANCE PENDING
 **Topological stratum:** BI.S16
 **Formation family:** component-data
 **Core centers:** C1_LIQUID_GLASS, C6_COMPONENT_APOTHEOSIS, C8_DEMO_CHASSIS
 **Terminal owner:** glass-ui orchestrator
-**Evidence root:** `docs/tranches/BI/evidence/BI.W-P122`
 
 ## Intent
 
-Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS. InstrumentChassis owns housing, regions/dividers, phase semantics, reserved geometry, and material role; it does not hardcode domain phases, duplicate Card, or carry compatibility variants.
+Retain only the genuine cross-product concept: a stable App-level physical sleeve that frames an
+instrument's stage, optional inspector, and actions. Remove the generic Card duplication and the
+Speedtest-specific phase, meter, and viewport machinery that accumulated around it.
 
-## Exact scope
+InstrumentChassis remains public only at `@mkbabb/glass-ui/instrument-chassis`. It is not re-exported
+from the package root.
 
-- Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.
-- Make the binding concept contract explicit: InstrumentChassis owns housing, regions/dividers, phase semantics, reserved geometry, and material role; it does not hardcode domain phases, duplicate Card, or carry compatibility variants.
-- Replace shadcn/CVA/raw Tailwind visual recipes with typed semantic props/state attributes and colocated owned CSS while preserving Reka/native accessibility behavior.
-- Render and exercise the exact state set in the shared specimen chassis: ready, active, complete, structure, wide, narrow, loading.
-- Repoint every listed local consumer/import/test/story/build projection atomically; update generated migration/entry facts when the public shape changes.
+## Landed disposition
 
-## File manifest (12)
+- `/instrument-chassis` exports one runtime sleeve plus its generic state, proportion, boundary,
+  reserve, and props types. The package root exports none of the family.
+- `stage`, optional `inspector`, and optional `action` regions render in ordinary document order.
+  The root and every region wrapper are landmark-neutral.
+- The single material owns its edge, quiet curvature, generic consumer-tone state tint, private
+  responsive rhythm, optional grooves, overflow containment, and stable reserve hooks.
+- Product phases, chart-token reads, glass/spine/structure variants, the internal meter grid,
+  viewport/dock sizing, compatibility warnings, and `ChassisDivider` are absent.
+- The data story is the sole chassis specimen. The former chassis palette story now demonstrates
+  only the independently owned chart palette.
 
-| # | action | path | target | source-base blob | provenance |
-| --- | --- | --- | --- | --- | --- |
-| 1 | modify | demo/stories/data/instrument-chassis.vue | — | 5439f87b703c75b49e6009a7a188de721529fd18 | source base |
-| 2 | repair | demo/stories/foundations/chart-chassis-palette.vue | — | efc049f29ea84e68a9e615ca4b68c0633ac4d94c | source base |
-| 3 | repair | demo/stories/manifest.ts | — | f21057ce0dc8086c56ee114f48dacb9d4bb287e1 | source base |
-| 4 | repair | DESIGN.md | — | 2bcbe5fe1bdf3f345b07ba80602dfe561c7bc306 | source base |
-| 5 | modify | src/components/instrument-chassis/ChassisDivider.vue | — | — | BI.W-P008 |
-| 6 | modify | src/components/instrument-chassis/index.ts | — | — | BI.W-P008 |
-| 7 | modify | src/components/instrument-chassis/InstrumentChassis.vue | — | — | BI.W-P008 |
-| 8 | modify | src/components/instrument-chassis/README.md | — | — | BI.W-P008 |
-| 9 | create | tests-visual/instrument-chassis.contract.spec.ts | — | — | source base |
-| 10 | repair | tests/components/custom/instrument-chassis/InstrumentChassis.phase-canon.test.ts | — | d47daaf66a594f8133cbd6f56be59f7457c07617 | source base |
-| 11 | repair | tests/components/custom/instrument-chassis/InstrumentChassis.spine-variant.test.ts | — | fc0652a635d4106c73eebd8bccfb5424c7500fff | source base |
-| 12 | create | tests/components/instrument-chassis.contract.test.ts | — | — | source base |
+## Evidence and owner ruling
 
-## Repair manifest (11)
+Speedtest has four chassis elements and Muster has three, but only each application's root mount is
+a true instrument housing. Speedtest's two chart wrappers and one map wrapper, plus Muster's two
+conditional WinnerHero branches, are ordinary nested content surfaces and should use `Card` or
+`Surface` rather than a chassis.
 
-| surface | # | exact path |
-| --- | --- | --- |
-| imports | 1 | demo/stories/data/instrument-chassis.vue |
-| imports | 2 | demo/stories/foundations/chart-chassis-palette.vue |
-| imports | 3 | demo/stories/manifest.ts |
-| imports | 4 | tests/components/custom/instrument-chassis/InstrumentChassis.phase-canon.test.ts |
-| imports | 5 | tests/components/custom/instrument-chassis/InstrumentChassis.spine-variant.test.ts |
-| tests | 1 | tests-visual/instrument-chassis.contract.spec.ts |
-| tests | 2 | tests/components/custom/instrument-chassis/InstrumentChassis.phase-canon.test.ts |
-| tests | 3 | tests/components/custom/instrument-chassis/InstrumentChassis.spine-variant.test.ts |
-| tests | 4 | tests/components/instrument-chassis.contract.test.ts |
-| docs | 1 | DESIGN.md |
-| docs | 2 | demo/stories/data/instrument-chassis.vue |
+The retired API and stylesheet contradicted a general housing contract:
 
-## Orchestrator integration envelope (3)
+- `InstrumentChassisPhase` hardcodes `ping`, `download`, `upload`, and `jitter`;
+- `InstrumentChassisVariant` forks `glass`, `spine`, and `structure` material identities;
+- CSS reads Speedtest chart colors, supplies a gold completion default, and assumes an internal
+  three-track meter/readout grid;
+- narrow layout assumes exactly three dial children and reserves a hardcoded 24rem meter region;
+- wide layout inherits a dock-adjusted viewport budget; and
+- the dial is always a `<main>`, which creates a nested landmark in Muster.
 
-| # | action | path | role | producer | containing-commit policy |
-| --- | --- | --- | --- | --- | --- |
-| 1 | create | docs/tranches/BI/evidence/BI.W-P122/receipt.json | terminal-receipt | this wave | resolve externally from first-parent integration parent plus BI-Wave and artifact-digest trailers |
-| 2 | modify | docs/tranches/BI/RELEASE-ATTESTATION.json | continuous-release-attestation | BI.W-P002 | mechanically rendered projection |
-| 3 | modify | docs/tranches/BI/FINAL.md | continuous-final-projection | BI.W-P002 | mechanically rendered projection |
+`ChassisDivider` has three external Muster uses, including teleported content outside any chassis.
+That is evidence for the ordinary `Separator`/twin-line primitive, not for a public chassis part.
 
-These paths are part of this wave's one terminal commit but are never builder-lane leases. After applying the bounded subject diff, the orchestrator alone acquires `serialized-orchestrator-envelope`, renders the acyclic receipt → attestation → FINAL chain, commits with raw-byte artifact digests in the transaction trailers, resolves the containing commit and tree externally from Git, recovers state read-only, and releases the mutex. Projection mode is `REFRESH`; integration-only wave references are `BI.W-P002`. The exact machine prerequisites are `BI.W-P002` status `DONE`, verified `ACTIVATE` receipt/trailers, and digest-matching RELEASE-ATTESTATION plus FINAL; P002 DEAD withdraws the entire perfected-BI formation, forbids every P003-P133 integration, and permanently denies release eligibility for this execution lineage.
+## Public contract
 
-## Durable acceptance
+The subpath exports `InstrumentChassis`, `InstrumentChassisProps`, and the generic state,
+proportion, boundary, and reserve types.
 
-**Invariant:** InstrumentChassis owns housing, regions/dividers, phase semantics, reserved geometry, and material role; it does not hardcode domain phases, duplicate Card, or carry compatibility variants.
+- `state?: "ready" | "active" | "complete" | "loading"` describes housing state without naming a
+  product phase.
+- `tone?` supplies the consumer-owned accent/color value used by the state treatment. The chassis
+  must not import chart/domain tokens or assign a brand meaning to completion.
+- `class?` remains the ordinary styling escape hatch.
+- `proportion?: "golden" | "preview-dominant"` controls only the outer stage/inspector ratio:
+  `61.8033989/38.1966011` or `66.6666667/33.3333333`; without an inspector, stage is 100%.
+- `boundaries?` is an order-insensitive, set-like request for only the `stage-inspector` and
+  `inspector-action` grooves; it defaults to `[]` and never manufactures a line.
+- `reserve?: "none" | "stage" | "inspector" | "both"` opts into stable consumer-sized regions and
+  defaults to `none`.
+- `stage`, `inspector`, and `action` slots render in that document order. Optional regions and
+  their private grooves render only when populated.
 
-**Required mutation bite:** Animate reserved block size or add domain-only phase names to the public union; stability/data evidence must turn RED.
+The sleeve's only region-spacing authorities are dial inline/block padding, dial gap, control
+inline/block padding, and control gap. Its independent `--instrument-title-gap` defaults to
+`calc(var(--instrument-dial-padding-inline, 1.5rem) / 2.618)`.
 
-**Single executable owner:** `node scripts/verify.mjs --state auto --wave BI.W-P122`. P000's immutable one-shot plan is the sole pre-cursor exception; P001 and every later wave auto-recovers authoritative Git/receipt state before selecting its evidence plan. No row has an independently runnable command or table file.
+The root is the one non-Card sleeve/housing material. It owns its outer edge, subtle state tint,
+vertical region rhythm, internal grooves, overflow containment, and explicit stage/inspector
+reserve hooks. It owns no universal minimum block size and does not own the dial slot's internal
+columns, child count, meter dimensions, dock offset, or content semantics. The dial wrapper is a
+neutral `<div>`; consumers own landmarks.
 
-| invariant family | evidence kind | oracle invariant | realistic RED mutations |
-| --- | --- | --- | --- |
-| architecture.component-topology | device-free | Every public component concept has one flat family home; ui/custom tiers, public wrapper synonyms, and second authorities are absent. | Restore src/components/ui.; Export IconTooltip beside Tooltip. |
-| architecture.present-tense-source | device-free | Production source explains current invariants without tranche IDs, recovery diaries, retired alternatives, or migration archaeology. | Add a BI.W identifier to src.; Describe a retired implementation as current rationale. |
-| behavior.data | browser | Tables, data tables, metrics, progress, timeline, and virtual lists preserve semantic structure, stable identity, readable density, and truthful loading/empty/error state. | Use array index as a row identity.; Announce indeterminate progress as a false percentage. |
-| demo.scenario-contract | browser | Every story exposes the states required to evaluate its behavior, material, responsiveness, accessibility, and reduced-motion contract through reusable chassis. | Add a dark-mode control that changes no rendered subtree.; Omit invalid state from a form story. |
-| design.contrast | browser | Text, icons, focus, selection, and nontext boundaries meet their semantic contrast requirements in every material and state. | Lower selected-control icon contrast below its required band.; Remove the noncolor focus boundary. |
-| design.material-hierarchy | browser | Content field, elevated content surface, functional glass, and transient overlay remain perceptually ordered in light/dark and simple/complex backdrops. | Give a content card the same translucency as navigation glass.; Remove overlay edge separation on a complex backdrop. |
-| design.responsive-touch | browser | Components reflow without hidden controls, unintended overflow, or sub-floor touch targets at supported narrow/wide and coarse/fine inputs. | Reduce a primary coarse target below the product floor.; Hide a control at narrow width without an equivalent path. |
+There is no public `ChassisDivider`, `variant`, `phase`, phase-name union, structure register, or
+glass-as-card register. The component never animates reserved block size.
 
-## π obligation
+## Implementation scope
 
-Browsers: Safari-current, Chrome-current
-Modes: wide-fine, narrow-coarse, prefers-reduced-motion
-Scenarios: instrument-chassis-ready, instrument-chassis-active, instrument-chassis-complete, instrument-chassis-structure, instrument-chassis-wide, instrument-chassis-narrow, instrument-chassis-loading
-Observables: role/state, focus/keyboard, material/contrast, responsive geometry, motion/PRM
-Freshness: terminal wave commit
-Evidence: tests-visual/results/<wave-id>/<browser>/<scenario>.json plus PNG only when the scenario needs human review
+1. Rewrite `InstrumentChassis.vue` around the single sleeve contract and emit generic `data-state`
+   plus the consumer tone custom property. Replace the dial `<main>` with `<div>`.
+2. Keep region grooves as private markup/CSS and delete `ChassisDivider.vue` plus its public export.
+3. Reduce `styles.css` to the outer sleeve, private regions/grooves, generic state treatment,
+   stable reserve, responsive padding, and reduced-motion handling. Delete variant selectors,
+   chart-token reads, completion gold, internal meter grid, exact-child layout, and viewport/dock
+   sizing assumptions.
+4. Remove the family from `src/index.ts`; retain only the explicit `/instrument-chassis` package
+   subpath and declarations.
+5. Remove now-unowned chassis phase/meter/variant tokens and narration from:
+   `src/styles/tokens/offsets.css`, `property-regs.css`, `scheme-motion.css`, `glass-fx.css`,
+   `glass.css`, and any metric/progress token block that exists only for the old internal layout.
+   Preserve a token only when the reduced component or another real owner still reads it.
+6. Update the component README, `README.md`, `DESIGN.md`, `MIGRATION.md`, style entry commentary,
+   data story, chart palette story, and manifest to describe the sleeve rather than a generic
+   content chassis.
+7. Replace phase-canon and spine-variant tests with one focused housing contract suite. Delete
+   tests that assert retired phase names or variants.
+
+No sibling repository is edited by this wave.
+
+## External migration order
+
+The clean break is smallest when consumer topology is simplified before the producer API is
+removed:
+
+| order | consumer site | disposition |
+| ---: | --- | --- |
+| 1 | Speedtest `ChartsView.vue` (2) and `MapView.vue` (1) | Replace nested chassis wrappers with `Card`/`Surface`; those sites do not require a physical app sleeve. |
+| 2 | Muster `WinnerHero.vue` (2 conditional branches) | Replace nested chassis wrappers with `Card`/`Surface`. |
+| 3 | Muster `InstrumentAside.vue` (3 dividers) | Replace public `ChassisDivider` with `Separator` or the shared twin-line divider. |
+| 4 | Speedtest `App.vue` | Keep the root sleeve; map ping/download/upload/jitter locally to `state="active"` and pass the active chart tone. |
+| 5 | Muster `App.vue` | Keep the root sleeve; map run state locally and remove `variant="spine"`. |
+| 6 | Glass producer | Remove root export, divider, variants, and domain phases at the planned major boundary after the coordinated consumer changes are ready. |
+
+Consumer-owned content grids, meter reserves, active-phase animation, and viewport/dock budgeting
+remain in the consumer repositories. They are not promoted back into Glass as compatibility props.
+
+## Product acceptance
+
+- Built output exposes InstrumentChassis only from `/instrument-chassis`; the root and subpath do
+  not export `ChassisDivider`, `InstrumentChassisVariant`, or domain phase types.
+- Source and built CSS contain no `data-variant`, `data-phase`, `ping`, `download`, `upload`,
+  `jitter`, chart-token, completion-gold, exact-child, or fixed meter-grid arm owned by this family.
+- Every region wrapper is neutral and creates no nested landmark.
+- Omitted inspector/action slots emit neither empty regions nor grooves.
+- Ready, active, complete, and loading states use a consumer tone without changing geometry or
+  claiming product-specific meaning.
+- Wide and narrow layouts preserve the sleeve edge, region hierarchy, and readable spacing while
+  leaving the dial's internal layout untouched.
+- Loading and hydration do not shift the reserved outer geometry; reduced motion removes tint
+  interpolation without changing state visibility.
+- Without an explicit stage/inspector reserve, content alone determines the sleeve's block size.
+- The sleeve is visibly distinct from a nested Card/Surface and is used only where physical
+  instrument housing is the truthful role.
+
+## Native visual validation
+
+Use the in-app browser only; do not use Playwright. Inspect Safari-current and Chrome-current in
+wide/fine, narrow/coarse, and reduced-motion modes. The family story must show:
+
+- ready, active with two consumer tones, complete, and loading;
+- stage + inspector + action, stage-only, and omitted optional-region markup;
+- wide and narrow sleeves containing consumer-defined one- and two-column stage layouts; and
+- a chassis surrounding a Card so the material hierarchy can be judged directly.
+
+Review edge continuity, groove alignment, border/rim occlusion, nested-landmark semantics, stable
+outer geometry, contrast, proportional padding, and motion. Capture screenshots only where human
+comparison is useful.
 
 ## Minimal DAG edges
 
 | dependency | required invariant |
 | --- | --- |
-| BI.W-P075 | Progress exposes truthful value/min/max/indeterminate/segmented semantics, readable state, stable geometry, and no invented completion claim. |
-| BI.W-P117 | One Metric family owns badge/cell/row/stack presentations, numeric typography, trend/status/context, and token contract; three parallel public families are folded. |
-
-Declared semantic locks: `component-instrument-chassis`. The cursor also acquires 12 implicit exact-path write leases before the worktree starts and binds each to its current integration-parent blob. A repair-manifest path closes as MODIFIED or VERIFIED_UNCHANGED when its enrolled subject is conditional REPAIR, and as CREATED, RENAMED, or DELETED when an explicit structural subject owns it. Maximum live execution lanes remain three.
-
-## Terminal transaction
-
-DONE when every scope row, applicable invariant, and π obligation is current and every repair-manifest path has a disk receipt whose outcome matches its enrolled transaction action: MODIFIED or VERIFIED_UNCHANGED for conditional repair, CREATED, RENAMED, or DELETED for an explicit structural action; DEAD only if the product owner permanently withdraws the complete subject with evidence.
-
-Commit policy: exactly one orchestrator-owned Conventional Commit containing the bounded subject diff, terminal receipt, and applicable continuous projections; research agents do not commit. Every wave requires `BI-Wave`, `BI-Status`, `BI-Receipt-SHA256`, and `BI-Formation-SHA256`; P002 and later also require `BI-Attestation-SHA256` and `BI-FINAL-SHA256`. A no-op without a disk-proven terminal disposition is RED. A wave may never become PARTIAL, carried, or successor-owned.
+| BI.W-P075 | Any composed progress remains truthful and owns its own segmented/value semantics. |
+| BI.W-P117 | The chassis story imports Metric family parts only from `/metric`. |
 
 ## Archaeology folded
 
-- Current family home custom/instrument-chassis at 26c5ae686fd0f1181083aebda1215b00524555f1; decision=retain.
+- Current home at the audited branch: `src/components/instrument-chassis`; decision: retain only
+  the root physical sleeve and delete the public accessory/variant/domain surface.

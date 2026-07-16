@@ -16,7 +16,7 @@ the `opaque` CardTier rung, and the a11y brackets (`prefers-reduced-transparency
 sets `--glass-level` on any ancestor to retune every descendant. The blur ladder was
 dialed back ~15-20% uniformly at BA.W-GLASS-CAL. The legibility allowlist that legitimately
 stays opaque: `avatar`, `label`, `separator`, `skeleton`, `table`/`data-table`, and Badge's
-loud-saturated-pill register (`proof:glass-cohesion`).
+loud-saturated-pill register.
 
 ## The per-tier alpha is canonical at the primitive (BB.W-CARD-TIER-ALPHA)
 
@@ -81,11 +81,10 @@ is a byte-identical no-op.
 (`src/styles/glass/surface-axis.css` + `_shared/useSurfaceAxis.ts`) that every
 content/floating/feedback surface exposes uniformly (Card, GlassPanel, Dialog, Sheet,
 Drawer, Popover, Command, ExpandableContainer, Skeleton, Toast, Button). `veil` is the
-borderless legibility plate; `opaque` is `--glass-level:0`. No second three-rung surface
-recipe is possible (`proof:surface-axis` W1). W-FEEDBACK-TONE and W-MENU-GLASS CONSUME
-this axis; they do not re-author it.
+borderless legibility plate; `opaque` is `--glass-level:0`. Feedback and menu families
+consume this axis; they do not re-author it.
 
 The enrolled surfaces each thread the `surface` prop through the resolver, so `<Sheet
 surface="opaque">` / `<Popover surface="veil">` / `<Toast surface="veil">` / `<Button
-surface="veil">` all mean the SAME thing — the doc-honest eleven-surface enrollment (each
-example names a prop the SFC genuinely declares; `proof:surface-axis` W7).
+surface="veil">` all mean the same thing. Each example must name a prop the component
+actually declares.

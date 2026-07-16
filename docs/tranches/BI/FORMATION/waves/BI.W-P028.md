@@ -1,6 +1,6 @@
 # BI.W-P028 — Single FLIP and morph engine
 
-**Status:** PLANNED
+**Status:** IMPLEMENTED — NATIVE MORPH ACCEPTANCE PENDING
 **Topological stratum:** BI.S16
 **Formation family:** motion
 **Core centers:** C2_DOCK, C3_MOTION, C7_KEYFRAMES_INTEGRATION

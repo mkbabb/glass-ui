@@ -1,6 +1,6 @@
 # BI.W-P021 — Responsive geometry and coarse/fine input contract
 
-**Status:** PLANNED
+**Status:** IMPLEMENTED — NATIVE INPUT/ZOOM ACCEPTANCE PENDING
 **Topological stratum:** BI.S10
 **Formation family:** design-foundation
 **Core centers:** C6_COMPONENT_APOTHEOSIS

@@ -1,6 +1,6 @@
 # BI.W-P076 — Pulse apotheosis — activity/liveness signal
 
-**Status:** PLANNED
+**Status:** IMPLEMENTED — NATIVE ACCEPTANCE PENDING
 **Topological stratum:** BI.S15
 **Formation family:** component-feedback
 **Core centers:** C3_MOTION, C6_COMPONENT_APOTHEOSIS, C7_KEYFRAMES_INTEGRATION

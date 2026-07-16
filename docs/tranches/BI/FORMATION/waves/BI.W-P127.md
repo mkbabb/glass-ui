@@ -1,6 +1,6 @@
 # BI.W-P127 — Dependency, peer, generator, and lockfile singularity
 
-**Status:** PLANNED
+**Status:** IN PROGRESS — package hygiene and the Value 4 source cut are implemented; immutable producer bytes and the resulting lock remain open
 **Topological stratum:** BI.S25
 **Formation family:** package-contract
 **Core centers:** C10_CONSTELLATION_ASSAY, C3_MOTION, C6_COMPONENT_APOTHEOSIS, C7_KEYFRAMES_INTEGRATION, C9_PRUNE
@@ -11,91 +11,131 @@
 
 Make package metadata follow the post-apotheosis import graph, remove the shadcn generator contract, and reconcile the value/keyframes/pencil-boil peer line without duplicate engines.
 
-## Exact scope
+Glass source, types, build externalization, bundle profiling, and the Value peer
+manifest now consume the clean Value 4 contract through exactly `/color`, `/css`, and
+`/easing`. That implementation was checked against the Value V.W17 rehearsal tarball;
+the rehearsal is not a published producer boundary and is not written into the lock.
+The registry artifact, final Keyframes range, regenerated lock, and Glass 7 release
+bytes remain open until their immutable inputs exist and are tested together.
 
-- Delete components.json after the ui/custom and shadcn structures are gone; no generator alias or hidden src/utils target survives.
-- Remove class-variance-authority, clsx, and tw-animate-css only after their exact last importers land; classify every remaining package as runtime, peer, optional, or development from the packed graph.
-- Reconcile @mkbabb/keyframes.js ^5.2.0 with @mkbabb/value.js ^3.1.0 as a paired contract and execute X8's @mkbabb/pencil-boil ^0.8.1 widen with isolated consumer verification.
-- Regenerate one lockfile from the resulting manifest and reject file: links, duplicate semantic engines, unused peers, and peer/dev range disagreement.
+## Authoritative Value 4 consumer contract
 
-## File manifest (9)
+Glass accepts only
+`@mkbabb/value.js/color`, `@mkbabb/value.js/css`, and
+`@mkbabb/value.js/easing`; root, package-prefix, `/units`, `/parsing`, private-dist,
+alias, shim, and forwarding forms remain rejected.
 
-| # | action | path | target | source-base blob | provenance |
-| --- | --- | --- | --- | --- | --- |
-| 1 | delete | components.json | — | 2fd7bc40d9628fc3efc8b11debb525ae0064dd43 | source base |
-| 2 | repair | MIGRATION.md | — | 1068a94e272e770510befbf98a8dd8f7c3dbaeaf | source base |
-| 3 | modify | package-lock.json | — | b7b72916912609cca3de20894210d10a26665141 | source base |
-| 4 | modify | package.json | — | 2eb141a061925a053bb06ab29c8f745aaee8ea8d | source base |
-| 5 | repair | README.md | — | a12a23d4b4b52565af5af0eaff8949683140c482 | source base |
-| 6 | create | scripts/dependencies/contract.mjs | — | — | source base |
-| 7 | create | tests/package/consumer-fixtures.test.ts | — | — | source base |
-| 8 | create | tests/package/dependency-contract.test.ts | — | — | source base |
-| 9 | repair | vite.config.ts | — | 7d9d1eb2030c4963c0359ee4083d7359c5e912db | source base |
+- `/color` exposes the 17 final-object factories (`rgb`, `hsl`, `hsv`, `hwb`, `lab`,
+  `lch`, `oklab`, `oklch`, `xyz`, `kelvin`, `linearSrgb`, `displayP3`, `a98Rgb`,
+  `prophotoRgb`, `rec2020`, `ictcp`, and `jzazbz`) as
+  `Result<Color<S>, ColorIssue>`. Glass also consumes the failure-explicit
+  `convertColor`, `mixColors`, `mapColorToGamut`, `safeAccentColor`,
+  `interpolateHue`, and `toRgba8` operations. `Result` failure uses `error`, and
+  public hue interpolation is degree-in/degree-out.
+- `/css` defines `CssColor` as exactly the CSS-spellable `rgb`, `hsl`, `hwb`, `lab`,
+  `lch`, `oklab`, `oklch`, `xyz`, `srgb-linear`, `display-p3`, `a98-rgb`,
+  `prophoto-rgb`, and `rec2020` spaces. Consequently
+  `parseCssColor(source): ParseResult<CssColor>` and
+  `serializeCssColor(color: CssColor): Result<string, ColorIssue>` do not accept
+  arbitrary `AnyColor`. The `/color`-only `hsv`, `kelvin`, `ictcp`, and `jzazbz`
+  spaces must pass through an explicit `convertColor` to a chosen CSS-native space.
+  `parseTimingFunction` also belongs only to `/css`.
+- `/easing` keeps CSS parsing out and exposes `linear` plus failure-explicit
+  `CubicBezier`, `steppedEase`, `linearEasing`, and `easing` operations. Their
+  invalid domains are represented by the closed `EasingIssue` result contract,
+  never an identity/default fallback.
 
-## Repair manifest (7)
+The exact failure-explicit operations consumed by Glass are:
 
-| surface | # | exact path |
-| --- | --- | --- |
-| tests | 1 | tests/package/consumer-fixtures.test.ts |
-| tests | 2 | tests/package/dependency-contract.test.ts |
-| build | 1 | package-lock.json |
-| build | 2 | package.json |
-| build | 3 | vite.config.ts |
-| docs | 1 | MIGRATION.md |
-| docs | 2 | README.md |
+```ts
+convertColor<S extends SpaceId>(color: AnyColor, space: S): Result<Color<S>, ColorIssue>
+mixColors<S extends SpaceId>(
+  from: AnyColor,
+  to: AnyColor,
+  progress: number,
+  options: { readonly space: S; readonly hue?: HueInterpolationMethod },
+): Result<Color<S>, ColorIssue>
+mapColorToGamut<S extends SpaceId>(
+  color: Color<S>,
+  target: RgbGamut,
+): Result<Color<S>, ColorIssue>
+safeAccentColor(
+  accent: AnyColor,
+  surface: AnyColor,
+  options: { readonly minimumRatio: number; readonly gamut: RgbGamut },
+): Result<Color<"oklch">, ColorIssue>
+interpolateHue(
+  fromDegrees: number,
+  toDegrees: number,
+  progress: number,
+  method?: HueInterpolationMethod,
+): Result<number, ColorIssue>
+toRgba8(
+  color: AnyColor,
+  options: { readonly gamut: "clip" },
+): Result<RGBA8, ColorIssue>
 
-## Orchestrator integration envelope (3)
+linear(progress: number): number
+CubicBezier(x1: number, y1: number, x2: number, y2: number): Result<EasingFunction, EasingIssue>
+steppedEase(count: number, position?: JumpPosition): Result<EasingFunction, EasingIssue>
+linearEasing(stops: readonly LinearEasingStop[]): Result<EasingFunction, EasingIssue>
+easing(name: string): Result<EasingFunction, EasingIssue>
+```
 
-| # | action | path | role | producer | containing-commit policy |
-| --- | --- | --- | --- | --- | --- |
-| 1 | create | docs/tranches/BI/evidence/BI.W-P127/receipt.json | terminal-receipt | this wave | resolve externally from first-parent integration parent plus BI-Wave and artifact-digest trailers |
-| 2 | modify | docs/tranches/BI/RELEASE-ATTESTATION.json | continuous-release-attestation | BI.W-P002 | mechanically rendered projection |
-| 3 | modify | docs/tranches/BI/FINAL.md | continuous-final-projection | BI.W-P002 | mechanically rendered projection |
+`ColorIssue.code` is closed to `color_invalid_input`, `color_non_finite`,
+`color_out_of_range`, `color_missing_channel`, `color_missing_alpha`,
+`color_progress_out_of_range`, and `contrast_unreachable`. `EasingIssue.code` is
+closed to `easing_non_finite`, `bezier_x_out_of_range`, `step_count_invalid`,
+`jump_position_invalid`, `linear_stop_invalid`, and `easing_name_unknown`.
 
-These paths are part of this wave's one terminal commit but are never builder-lane leases. After applying the bounded subject diff, the orchestrator alone acquires `serialized-orchestrator-envelope`, renders the acyclic receipt → attestation → FINAL chain, commits with raw-byte artifact digests in the transaction trailers, resolves the containing commit and tree externally from Git, recovers state read-only, and releases the mutex. Projection mode is `REFRESH`; integration-only wave references are `BI.W-P002`. The exact machine prerequisites are `BI.W-P002` status `DONE`, verified `ACTIVATE` receipt/trailers, and digest-matching RELEASE-ATTESTATION plus FINAL; P002 DEAD withdraws the entire perfected-BI formation, forbids every P003-P133 integration, and permanently denies release eligibility for this execution lineage.
+## Current execution truth
 
-## Durable acceptance
+- `components.json` and the generator-only package surface are deleted; no generator
+  alias or hidden `src/utils` target remains.
+- Glass source imports, Vite externalization, and `profile:bundle` recognize exactly
+  `@mkbabb/value.js/color`, `@mkbabb/value.js/css`, and
+  `@mkbabb/value.js/easing`. The package root, old subpaths, prefixes, lookalikes,
+  and private distribution paths are rejected.
+- Color parsing is full-consuming and failure-explicit. Non-opaque CSS colors are
+  rejected at the named Glass boundary. Color conversion, gamut mapping, painted-band
+  contrast, RGBA projection, and degree-domain hue interpolation use Value's public
+  final-object operations without catch-to-default behavior.
+- Easing constructors are failure-explicit; both bezier and stepped readouts are
+  reparsed through `/css`, and the former identity fallback is absent.
+- The manifest declares Value `^4.0.0`. The lock still records the last published
+  producer graph and must not be represented as the final Glass graph.
+- Immutable pencil-boil `0.9.2` is already the optional peer boundary. The clean
+  export cut is a justified Glass 7 major: the packed map moves from 82 to 73 keys,
+  removes 11 subpaths (`./color-swatch`, `./controls`, `./focus-scope`, `./icon-chip`,
+  `./icon-tooltip`, `./metric-badge`, `./metric-cell`, `./metric-stack`,
+  `./motion-curves`, `./notification`, and `./spa-view`), and adds
+  `./dark-mode-toggle` plus `./metric`, without aliases or shims. The compatible
+  Keyframes range remains evidence-derived.
 
-**Invariant:** The manifest and lock are projections of actual packed imports and supported peer contracts; no shadcn generator, styling scaffold, duplicate engine, or range contradiction survives.
+## Remaining closure
 
-**Required mutation bite:** Restore class-variance-authority with zero imports, move reka-ui to dev-only, or pin pencil-boil below the declared peer; the dependency contract must identify each distinct defect.
+1. Consume the published Value 4 artifact and verify its bytes and declarations match
+   the rehearsal contract used for the source cut.
+2. Establish the compatible immutable Keyframes boundary without a nested older Glass
+   core or forced npm resolution.
+3. Regenerate one lock from those registry artifacts and reject `file:` links,
+   duplicate semantic engines, unused peers, and peer/dev range disagreement.
+4. Build, pack, and install the resulting Glass artifact in an isolated consumer before
+   assigning release coordinates.
 
-**Single executable owner:** `node scripts/verify.mjs --state auto --wave BI.W-P127`. P000's immutable one-shot plan is the sole pre-cursor exception; P001 and every later wave auto-recovers authoritative Git/receipt state before selecting its evidence plan. No row has an independently runnable command or table file.
+## Ordinary acceptance
 
-| invariant family | evidence kind | oracle invariant | realistic RED mutations |
-| --- | --- | --- | --- |
-| architecture.clean-break | device-free | No legacy alias, deprecated prop, compatibility shim, dual read/write, silent masking path, or retired public name survives. | Re-export Countup as an alias.; Read both variant and morphT for the same blob state. |
-| integrity.build-package | device-free | A clean build emits a self-contained package whose files, CSS URLs, maps, and declaration imports all resolve inside the packed artifact. | Delete one packed CSS asset.; Point one emitted declaration at a source-only path. |
-| integrity.dependencies | device-free | Runtime, peer, optional, and development dependencies match actual import boundaries and the supported package contract. | Move a runtime dependency to devDependencies.; Add a second spring engine for an existing motion concept. |
+- `src/**` contains none of the removed Value root, `/parsing`, `/units`, or private
+  imports.
+- Type checking, focused color/easing tests, the library build, and the demo production
+  build pass against the rehearsal declarations.
+- Built JavaScript retains only the three exact external Value entries.
+- The README-wired `profile:bundle` command reports those entries and rejects root,
+  old, prefix, and lookalike forms.
+- A final lock, pack, and isolated install remain required after immutable producer
+  publication; no receipt runner, mutation farm, cursor, or attestation script is a
+  substitute for those checks.
 
-## π obligation
-
-Device-free: Dependency and isolated-package resolution are device-free.
-
-## Minimal DAG edges
-
-| dependency | required invariant |
-| --- | --- |
-| BI.W-P051 | Handmark and WatercolorDot share one deterministic drawing substrate while retaining distinct semantic mark and point-paint contracts; no unrelated filter resource or unseeded writer enters the family. |
-| BI.W-P071 | Avatar owns image, accessible name/alt policy, fallback initials, load failure, status composition, and stable geometry without a second image-loading path. |
-| BI.W-P072 | Badge is noninteractive metadata with semantic tone/emphasis and noncolor distinction; command behavior belongs to Button/Chip. |
-| BI.W-P073 | Alert owns inline status semantics, title/body/action structure, tone, and live-region policy; it never behaves like transient Toast. |
-| BI.W-P074 | One Reka-backed Toast family owns provider, queue, viewport, item, action, close, swipe, lifetime, tone, and announcements; Notification's parallel TransitionGroup engine is deleted. |
-| BI.W-P090 | ToggleGroup declares single/multiple selection, orientation, roving focus, disabled state, and one shared Toggle visual/press contract. |
-| BI.W-P091 | One Chip family owns text/icon/removal/selection/action semantics with explicit modes; IconChip is a slot/size form, not a second concept/export. |
-| BI.W-P093 | Slider preserves min/max/step/orientation/single-range/keyboard/touch/form semantics and stable thumb/track geometry with no duplicate spring engine. |
-| BI.W-P099 | Search owns query, clear, submit, async/loading/empty/error, optional suggestions, keyboard navigation, and result announcement without duplicating Combobox when selection is not its concept. |
-| BI.W-P106 | Dialog owns title/description, modality, focus containment/restoration, inert background, dismissal policy, portal, size/scroll, and shared overlay material/motion. |
-| BI.W-P119 | Carousel owns slide identity, previous/next/direct navigation, loop policy, drag, autoplay pause, focus, announcements, responsive sizing, and composes PagerDots rather than forking it. |
-
-Declared semantic locks: `package-lock`, `package-manifest`. The cursor also acquires 9 implicit exact-path write leases before the worktree starts and binds each to its current integration-parent blob. A repair-manifest path closes as MODIFIED or VERIFIED_UNCHANGED when its enrolled subject is conditional REPAIR, and as CREATED, RENAMED, or DELETED when an explicit structural subject owns it. Maximum live execution lanes remain three.
-
-## Terminal transaction
-
-DONE when every scope row, applicable invariant, and π obligation is current and every repair-manifest path has a disk receipt whose outcome matches its enrolled transaction action: MODIFIED or VERIFIED_UNCHANGED for conditional repair, CREATED, RENAMED, or DELETED for an explicit structural action; DEAD only if the product owner permanently withdraws the complete subject with evidence.
-
-Commit policy: exactly one orchestrator-owned Conventional Commit containing the bounded subject diff, terminal receipt, and applicable continuous projections; research agents do not commit. Every wave requires `BI-Wave`, `BI-Status`, `BI-Receipt-SHA256`, and `BI-Formation-SHA256`; P002 and later also require `BI-Attestation-SHA256` and `BI-FINAL-SHA256`. A no-op without a disk-proven terminal disposition is RED. A wave may never become PARTIAL, carried, or successor-owned.
-
-## Archaeology folded
-
-- The current manifest preserves shadcn-vue generation metadata, CVA/clsx/tw-animate peers, and pencil-boil ^0.4.1 while the standing X8 ruling requires ^0.8.1 verification.
+The source-base package retained shadcn generation metadata, styling scaffolds, and a
+pencil-boil `^0.4.1` peer. Those are historical context only; the current package graph
+must be judged from its imports and packed bytes.

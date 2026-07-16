@@ -1,6 +1,6 @@
 # BI.W-P104 — Tooltip consolidation — terse noninteractive description overlay
 
-**Status:** PLANNED
+**Status:** IMPLEMENTED — NATIVE ACCEPTANCE PENDING
 **Topological stratum:** BI.S16
 **Formation family:** component-containers
 **Core centers:** C6_COMPONENT_APOTHEOSIS
@@ -9,22 +9,32 @@
 
 ## Intent
 
-Fold custom/icon-tooltip into ui/tooltip; delete the wrapper/export and migrate icon triggers to ordinary Tooltip composition. One Tooltip family owns delayed hover/focus description, escape, no interactive content, touch policy, accessible description, and IconTooltip is only trigger content.
+Fold icon-tooltip into tooltip; delete the wrapper/export and migrate icon triggers to ordinary Tooltip composition. One Tooltip family owns delayed hover/focus description, escape, noninteractive content, touch policy, and accessible description. An icon may be ordinary TooltipTrigger content; IconTooltip is not a retained component or preset.
 
 ## Exact scope
 
-- Fold custom/icon-tooltip into ui/tooltip; delete the wrapper/export and migrate icon triggers to ordinary Tooltip composition.
-- Make the binding concept contract explicit: One Tooltip family owns delayed hover/focus description, escape, no interactive content, touch policy, accessible description, and IconTooltip is only trigger content.
+- Fold icon-tooltip into tooltip; delete the wrapper/export and migrate icon triggers to ordinary Tooltip composition.
+- Make the binding concept contract explicit: One Tooltip family owns delayed hover/focus description, escape, noninteractive content, touch policy, and accessible description; an icon is ordinary trigger content, never a second component/preset.
 - Replace shadcn/CVA/raw Tailwind visual recipes with typed semantic props/state attributes and colocated owned CSS while preserving Reka/native accessibility behavior.
 - Render and exercise the exact state set in the shared specimen chassis: focus, hover, delay, escape, icon-trigger, touch-policy, prm.
 - Repoint every listed local consumer/import/test/story/build projection atomically; update generated migration/entry facts when the public shape changes.
+- Keep the public family compositional and small: `TooltipProvider`, `Tooltip`, `TooltipTrigger`, and `TooltipContent` remain; do not recreate IconTooltip as a re-export, compatibility wrapper, `Tooltip` text/icon shortcut, or implicit per-icon preset. Providers sit at the nearest real shared scope when one already exists.
+- Include the live production consume omitted by the formation-era roster: `src/components/labeled-field/LabeledField.vue` imports IconTooltip today, and `demo/stories/forms/labeled-field.vue` describes that contract. Migrate both. Preserve the label's `for`/`id` association, but do not keep the label itself as the tooltip trigger: supplemental help uses a separately focusable, named trigger beside the label so hover and keyboard focus reach the same description.
+- Tooltip content stays terse and noninteractive; a link, button, field, menu, or required instruction belongs in Popover or ordinary visible/help text. Touch does not synthesize hover, so no tooltip may be the sole path to information required to operate or validate a control.
+
+## Clean-break implementation acceptance
+
+- The `./icon-tooltip` package/type entry, component directory, story, current documentation, and all runtime imports disappear atomically. `MIGRATION.md` may name IconTooltip only to state the deletion and show ordinary Tooltip composition; no alias or shim survives under `./tooltip` or the root.
+- Icon-button triggers retain their own native button semantics, accessible names, visible focus, and target floor; `TooltipTrigger as-child` adds description behavior without wrapping or resizing them. LabeledField keeps its real `<label for>` and places a named help trigger alongside it rather than turning label text into a hover-only pseudo-control.
+- Hover and focus open the same `role="tooltip"` after the provider delay, associate it through the primitive's accessible-description contract, and Escape closes it without moving focus. TooltipContent contains no focusable descendants. Initial, open, and close motion honors PRM.
+- Coarse/touch verification proves supplemental copy is not hover-exclusive or operation-critical; it does not invent click-to-pin, dialog semantics, or an interactive tooltip. No new proof/gate script is part of the implementation.
 
 ## File manifest (25)
 
 | # | action | path | target | source-base blob | provenance |
 | --- | --- | --- | --- | --- | --- |
-| 1 | modify | demo/chassis/landing/SectionLanding.vue | — | aa70cb4d1b1e105017218f47ff1f4eab75f7439a | source base |
-| 2 | modify | demo/chassis/page/StoryPage.vue | — | 0fe1e8036e707a34599b151634d5672a12ff4428 | source base |
+| 1 | modify | src/components/labeled-field/LabeledField.vue | — | — | BI.W-P008 |
+| 2 | modify | demo/stories/forms/labeled-field.vue | — | e1e428d93503b932882d8daca37d0fb2592571f3 | source base |
 | 3 | modify | demo/shell/BottomDock.vue | — | 7272ac4c8df457fda07fccc16edb032f76e06931 | source base |
 | 4 | modify | demo/shell/SidebarDock.vue | — | 29a2eacac8153dc0b5a94af4cc96313cd97100f3 | source base |
 | 5 | modify | demo/stories/containers/hover-card.vue | — | 717b04d3220f4a89414ea02df7e058bb31abae7f | source base |
@@ -53,8 +63,8 @@ Fold custom/icon-tooltip into ui/tooltip; delete the wrapper/export and migrate 
 
 | surface | # | exact path |
 | --- | --- | --- |
-| imports | 1 | demo/chassis/landing/SectionLanding.vue |
-| imports | 2 | demo/chassis/page/StoryPage.vue |
+| imports | 1 | src/components/labeled-field/LabeledField.vue |
+| imports | 2 | demo/stories/forms/labeled-field.vue |
 | imports | 3 | demo/shell/BottomDock.vue |
 | imports | 4 | demo/shell/SidebarDock.vue |
 | imports | 5 | demo/stories/containers/hover-card.vue |
@@ -84,9 +94,9 @@ These paths are part of this wave's one terminal commit but are never builder-la
 
 ## Durable acceptance
 
-**Invariant:** One Tooltip family owns delayed hover/focus description, escape, no interactive content, touch policy, accessible description, and IconTooltip is only trigger content.
+**Invariant:** One Tooltip family owns delayed hover/focus description, escape, noninteractive content, touch policy, and accessible description; icons are ordinary triggers and IconTooltip has no surviving runtime or public surface.
 
-**Required mutation bite:** Restore IconTooltip or allow focusable interactive content inside Tooltip; topology/overlay evidence must turn RED.
+**Required mutation bite:** Restore IconTooltip or an equivalent text/icon shortcut, keep a form label as a hover-only trigger, make required help tooltip-only on touch, allow focusable content inside Tooltip, or break trigger focus/name/description/Escape behavior; topology/overlay/form evidence must turn RED.
 
 **Single executable owner:** `node scripts/verify.mjs --state auto --wave BI.W-P104`. P000's immutable one-shot plan is the sole pre-cursor exception; P001 and every later wave auto-recovers authoritative Git/receipt state before selecting its evidence plan. No row has an independently runnable command or table file.
 

@@ -1,6 +1,6 @@
 # BI.W-P091 — Chip consolidation — compact selection/filter/action chip
 
-**Status:** PLANNED
+**Status:** IMPLEMENTED — NATIVE ACCEPTANCE PENDING
 **Topological stratum:** BI.S17
 **Formation family:** component-forms
 **Core centers:** C5_AUDACIOUS_TYPOGRAPHY, C6_COMPONENT_APOTHEOSIS, C8_DEMO_CHASSIS
@@ -9,15 +9,25 @@
 
 ## Intent
 
-Fold icon-chip into chip through slots/size semantics; delete IconChip export, wrapper, CSS, story, and compatibility name. One Chip family owns text/icon/removal/selection/action semantics with explicit modes; IconChip is a slot/size form, not a second concept/export.
+Fold icon-chip into chip through slots/size semantics; delete IconChip export, wrapper, CSS, story, and compatibility name. One Chip family owns text/icon/removal/selection/action semantics with explicit modes. A plated icon is the static icon shape of Chip; an unplated glyph is an ordinary icon, not a second chip concept.
 
 ## Exact scope
 
 - Fold icon-chip into chip through slots/size semantics; delete IconChip export, wrapper, CSS, story, and compatibility name.
-- Make the binding concept contract explicit: One Chip family owns text/icon/removal/selection/action semantics with explicit modes; IconChip is a slot/size form, not a second concept/export.
+- Make the binding concept contract explicit: One Chip family owns text/icon/removal/selection/action semantics with explicit modes; a plated icon is a static Chip shape and a bare glyph is not a Chip.
 - Replace shadcn/CVA/raw Tailwind visual recipes with typed semantic props/state attributes and colocated owned CSS while preserving Reka/native accessibility behavior.
 - Render and exercise the exact state set in the shared specimen chassis: static, selectable, selected, removable, icon, disabled, keyboard, touch.
 - Repoint every listed local consumer/import/test/story/build projection atomically; update generated migration/entry facts when the public shape changes.
+- Do not pour IconChip's historical axes into Chip. Delete the `icon`, `section`, `glyphSize`, `strokeWidth`, `bare`, `duotone`, `bloom`, `saturated`, `glass`, and `reveal` API rather than preserving them as deprecated props or aliases. Section colour becomes the existing `tone` input at the demo consumer, glass becomes `surface="glass"`, glyph geometry belongs to the slotted icon, reveal belongs to the consumer's shared motion facility, and a no-plate use renders the icon directly.
+- Make root semantics explicit rather than inferred from slot content: `mode="static"` is non-focusable/non-pressed content, `mode="selectable"` owns boolean `v-model` and Toggle/`aria-pressed` behavior, `mode="action"` is a button, and `mode="removable"` exposes one separately named remove action. Local uses state the mode; icon content never silently turns a static chip into a control.
+- Follow the current import/style/export graph, including the live production consume in `src/components/metric-cell/MetricCell.vue`, the root export in `src/index.ts`, and the `src/styles/index.css` import of `src/components/icon-chip/styles.css`. Completion deletes the old component directory, stylesheet import, selectors, `--icon-chip-*` variables, package/type projection, and runtime/current-doc references; `MIGRATION.md` may name the removed API only to state the clean break.
+
+## Clean-break implementation acceptance
+
+- The public family is one `Chip` export with the orthogonal `mode × shape × size × tone × surface` contract. `shape="icon"` changes geometry only; it never changes role, focusability, selection, or events.
+- Static and selectable specimens resolve different native/ARIA semantics and different affordance states. A static plated glyph has no `button`/Toggle role, `tabindex`, `aria-pressed`, pointer cursor, hover lift, or press animation. Selectable/action/remove controls retain visible focus and coarse-target floors.
+- MetricCell's current `IconChip bare` use becomes its existing ordinary slotted/raw icon treatment; it does not keep a hidden Chip dependency merely to reuse colour or glyph sizing.
+- No `IconChip` component, export, subpath, type, compatibility alias, wrapper, CSS recipe, or duplicated icon-prop surface survives. No new proof/gate script is part of the implementation.
 
 ## File manifest (64)
 
@@ -49,13 +59,13 @@ Fold icon-chip into chip through slots/size semantics; delete IconChip export, w
 | 24 | modify | demo/stories/feedback/progress.vue | — | 1584fe98ba3c4146a60ff9b58750eb2c1b4420b6 | source base |
 | 25 | modify | demo/stories/feedback/skeleton.vue | — | fb8ba6c20de783088b1c6bbee7af01c4ff732679 | source base |
 | 26 | modify | demo/stories/feedback/toast.vue | — | 417f1d0a506f018bec760b95647ee2252498bf4b | source base |
-| 27 | modify | demo/stories/forms/checks.vue | — | 04ec086e401a31129dc06379ef0b9db93f3e0d2b | source base |
+| 27 | modify | src/components/metric-cell/MetricCell.vue | — | — | BI.W-P008 |
 | 28 | create | demo/stories/forms/chip.vue | — | — | source base |
 | 29 | modify | demo/stories/forms/combobox.vue | — | 857ff5e276a3da069b9ae7f1166f5c7d7062d057 | source base |
-| 30 | modify | demo/stories/forms/inputs.vue | — | 710a5484ef5c868f89a7ae6d141ef4ae6ad356e2 | source base |
-| 31 | modify | demo/stories/forms/label.vue | — | ff08672dda7fc3631d36c3cf15b67b715c96e671 | source base |
-| 32 | modify | demo/stories/forms/number-field.vue | — | 02a660baf3648e235ddd421edcd712775e3a48a6 | source base |
-| 33 | modify | demo/stories/forms/select.vue | — | 831a46d8d8aed8a4c74eabd9d71c936b4ed72492 | source base |
+| 30 | modify | src/components/metric-cell/README.md | — | — | BI.W-P008 |
+| 31 | modify | src/index.ts | — | — | BI.W-P009 |
+| 32 | modify | src/styles/index.css | — | — | BI.W-P011 |
+| 33 | delete | src/components/icon-chip/styles.css | — | — | BI.W-P011 |
 | 34 | delete | demo/stories/forms/selectable-chip.vue | — | 38a31fcb4dd3a1d5438746f386d50dc8925ff91a | source base |
 | 35 | modify | demo/stories/forms/slider.vue | — | 7ba393813177863acc6ac6a34292570759e6f5ec | source base |
 | 36 | modify | demo/stories/forms/textarea.vue | — | 16be74fb5191866c650e157e8c4225b10bf28653 | source base |
@@ -118,12 +128,12 @@ Fold icon-chip into chip through slots/size semantics; delete IconChip export, w
 | imports | 24 | demo/stories/feedback/progress.vue |
 | imports | 25 | demo/stories/feedback/skeleton.vue |
 | imports | 26 | demo/stories/feedback/toast.vue |
-| imports | 27 | demo/stories/forms/checks.vue |
+| imports | 27 | src/components/metric-cell/MetricCell.vue |
 | imports | 28 | demo/stories/forms/combobox.vue |
-| imports | 29 | demo/stories/forms/inputs.vue |
-| imports | 30 | demo/stories/forms/label.vue |
-| imports | 31 | demo/stories/forms/number-field.vue |
-| imports | 32 | demo/stories/forms/select.vue |
+| imports | 29 | src/index.ts |
+| imports | 30 | src/styles/index.css |
+| imports | 31 | src/components/icon-chip/styles.css |
+| imports | 32 | src/components/metric-cell/README.md |
 | imports | 33 | demo/stories/forms/selectable-chip.vue |
 | imports | 34 | demo/stories/forms/slider.vue |
 | imports | 35 | demo/stories/forms/textarea.vue |
@@ -164,9 +174,9 @@ These paths are part of this wave's one terminal commit but are never builder-la
 
 ## Durable acceptance
 
-**Invariant:** One Chip family owns text/icon/removal/selection/action semantics with explicit modes; IconChip is a slot/size form, not a second concept/export.
+**Invariant:** One Chip family owns text/icon/removal/selection/action semantics through explicit root modes; a plated icon is a static Chip shape, a bare glyph is an ordinary icon, and IconChip has no surviving runtime or public surface.
 
-**Required mutation bite:** Restore IconChip as a second export or let Chip mode be inferred ambiguously from slot content; topology/selection evidence must turn RED.
+**Required mutation bite:** Restore IconChip or one of its legacy props/selectors, render a static icon Chip through Toggle/button semantics, infer mode from slot content, or make a selectable/action/removable Chip lose its correct native role, focus, value, or named action; topology/selection/affordance evidence must turn RED.
 
 **Single executable owner:** `node scripts/verify.mjs --state auto --wave BI.W-P091`. P000's immutable one-shot plan is the sole pre-cursor exception; P001 and every later wave auto-recovers authoritative Git/receipt state before selecting its evidence plan. No row has an independently runnable command or table file.
 
@@ -186,7 +196,7 @@ These paths are part of this wave's one terminal commit but are never builder-la
 
 Browsers: Safari-current, Chrome-current
 Modes: wide-fine, narrow-coarse, prefers-reduced-motion
-Scenarios: chip-static, chip-selectable, chip-selected, chip-removable, chip-icon, chip-disabled, chip-keyboard, chip-touch
+Scenarios: chip-static, chip-static-icon, chip-selectable, chip-selected, chip-action, chip-removable, chip-disabled, chip-keyboard, chip-touch
 Observables: role/state, focus/keyboard, material/contrast, responsive geometry, motion/PRM
 Freshness: terminal wave commit
 Evidence: tests-visual/results/<wave-id>/<browser>/<scenario>.json plus PNG only when the scenario needs human review

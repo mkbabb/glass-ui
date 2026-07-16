@@ -23,8 +23,7 @@ The `--spring-<name>` `linear()` curve is normalized to 0..1 and DISCARDS the se
 so pairing it with a generic `--duration-*` clock re-timed every spring to one wall clock.
 **`--spring-<name>-duration`** is the spring's OWN 2%-band settle clock, GENERATED in
 `scripts/regen-spring-tokens.mjs` from the SAME `(response, ζ)` SPRING_PRESETS table (never a
-hand value): `t_s = -ln(0.02) / (ζ·ωₙ)`, ωₙ = 2π/response. Locked by
-`proof:spring-tokens-synced` + `proof:glass-cal` S1/S2 + `proof:animation-coherence`.
+hand value): `t_s = -ln(0.02) / (ζ·ωₙ)`, ωₙ = 2π/response.
 
 ## The ONE interruptible, coupled spring-press (BB.W-PRESS-UNIFY)
 
@@ -40,10 +39,9 @@ Button (direct `useSpringPress`) + Card (`:pressable`). Compositor-only + PRM-in
 A CSS `@keyframes` step may animate ONLY compositor-safe channels — transform/translate/
 scale/rotate, opacity, filter/backdrop-filter, clip-path, paint props, and `--*` customs
 that resolve onto them — NEVER a layout-triggering property (padding/margin/font-size/
-width/height/inset/grid-template/flex-basis/line-height/border-width/gap). Machine-locked
-by `proof:no-layout-animation` (device-free), which scans the whole `@keyframes` corpus +
-every `transition`/`transition-property` + Vue `<Transition>` recipe class, under ONE shared
-reflow set + a narrow named CLS-bounded allowlist for a genuine discrete layout reclaim.
+width/height/inset/grid-template/flex-basis/line-height/border-width/gap). Review the
+changed keyframes and transitions directly, then inspect layout stability in the routed
+product.
 
 ## The liquid-open / bloom-from-source register (BB.W-LIQUID-REVEAL)
 
@@ -52,8 +50,8 @@ Every top-layer surface MATERIALIZES as glass coalescing — scales + fades + de
 fixed-bezier zoom-95. `.glass-reveal` (`src/styles/glass/reveal.css`) is the zero-JS top-
 layer default; `useLiquidReveal` is the source-rect bloom JS refinement (composes kf
 `ElementMorph` + `springTimingFunction`); `useDockCtaReceive` is the bloom's inverse (an
-external CTA morphs onto a dock control). `popover-animate` + `slide-in-from-side` RETIRED
-(clean break, no alias). Machine-locked by `proof:liquid-reveal`.
+external CTA morphs onto a dock control). `popover-animate` + `slide-in-from-side` retired
+as a clean break.
 
 ## useDragMorph — the pull/drag-to-morph-squish primitive (BB.W-DRAG-MORPH)
 
@@ -65,7 +63,7 @@ the WAI-ARIA roving-tabindex contract on every strip.
 
 ## DOCK_SPRING
 
-`DOCK_SPRING` (`src/components/custom/dock/constants.ts`) is the dock's single spring register
+`DOCK_SPRING` (`src/components/dock/constants.ts`) is the dock's single spring register
 sourced from `springPreset("dock")` (the SPRING_PRESETS row — defined ONCE, read by
 `dockMorphContext.ts` + `useLayerTransition`). It is byte-fenced across the dock-morph waves
 (a re-tune touches the SPRING_PRESETS table, never a hardcoded copy).
@@ -77,5 +75,5 @@ substrate — glass-ui ships the native register; **the no-Lenis/GSAP/Locomotive
 binding** (a 20-40KB JS runtime the native-first identity refuses). `src/styles/scroll-
 choreography.css` mints `.scroll-build` (route-enter page-build), `.scroll-cascade` (section
 cascade), `.scroll-pin`/`.scroll-pin-stage` (scroll-pinned), and `.smooth-scroll` (native
-`scroll-behavior: smooth`, not a rAF momentum loop). All compositor-only + PRM-carved. Locked
-by `proof:scroll-motion`.
+`scroll-behavior: smooth`, not a rAF momentum loop). All compositor-only and reduced-motion
+aware.

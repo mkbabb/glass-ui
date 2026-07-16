@@ -1,6 +1,6 @@
 # BI.W-P024 — Motion API clean break — aliases, legacy names, and shadow writers
 
-**Status:** PLANNED
+**Status:** DONE — PRODUCT COMPLETE
 **Topological stratum:** BI.S13
 **Formation family:** motion
 **Core centers:** C1_LIQUID_GLASS, C3_MOTION, C7_KEYFRAMES_INTEGRATION, C9_PRUNE

@@ -1,6 +1,6 @@
 # BI.W-P015 — Semantic token graph and dead-alias excision
 
-**Status:** PLANNED
+**Status:** IMPLEMENTED — SOURCE CONTRACT GREEN
 **Topological stratum:** BI.S09
 **Formation family:** design-foundation
 **Core centers:** C10_CONSTELLATION_ASSAY, C1_LIQUID_GLASS, C6_COMPONENT_APOTHEOSIS

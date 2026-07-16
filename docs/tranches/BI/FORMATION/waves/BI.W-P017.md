@@ -1,6 +1,6 @@
 # BI.W-P017 — Liquid Glass functional-plane anatomy
 
-**Status:** PLANNED
+**Status:** IMPLEMENTED — NATIVE FUNCTIONAL-PLANE ACCEPTANCE PENDING
 **Topological stratum:** BI.S11
 **Formation family:** design-foundation
 **Core centers:** C1_LIQUID_GLASS

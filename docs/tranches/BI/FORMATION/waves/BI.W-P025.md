@@ -1,6 +1,6 @@
 # BI.W-P025 — Temporal authority and lifecycle
 
-**Status:** PLANNED
+**Status:** IMPLEMENTED — NATIVE LIFECYCLE ACCEPTANCE PENDING
 **Topological stratum:** BI.S14
 **Formation family:** motion
 **Core centers:** C3_MOTION, C7_KEYFRAMES_INTEGRATION

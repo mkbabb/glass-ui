@@ -1,102 +1,19 @@
-# Structure (GENERATED — do not hand-edit)
+# Source structure
 
-> Re-derived from disk by `node scripts/regen-structure.mjs --write` via the
-> SAME colocated-barrel glob (`scripts/lib/subpath-policy.mjs` `readTree`) the
-> export regen feeds, so the package enumeration cannot drift. Run `--check` in
-> CI to RED a component dir add that never re-generated this file. The narrative
-> structure prose (the `src/styles/` cascade, the per-dir intent) lands at
-> BH.B4b-content [WS12]; this skeleton carries the package enumeration.
+Glass UI uses semantic ownership rather than historical component tiers.
 
-## src/components (78 dirs)
+```text
+src/
+├── index.ts          curated, lightweight root surface
+├── forms.ts          input-family entry
+├── components/       flat component families plus private `_shared` leaves
+├── composables/      reusable behavior grouped by domain
+├── styles/           global tokens, material substrate, and utilities
+├── fonts/            packaged font assets
+└── html-attributes.d.ts
+```
 
-- _shared/
-- accordion/
-- alert/
-- animated-digit/
-- aurora/
-- avatar/
-- badge/
-- blob/
-- button/
-- card/
-- carousel/
-- checkbox/
-- chip/
-- collapsible/
-- color-swatch/
-- combobox/
-- command/
-- completion-seal/
-- configurator/
-- constellation/
-- controls/
-- data-table/
-- deck/
-- dialog/
-- dock/
-- drawer/
-- dropdown-menu/
-- easing/
-- expandable-container/
-- fading-scroll/
-- focus-scope/
-- fourier-field/
-- goo-filter/
-- handmark/
-- header-ribbon/
-- icon-chip/
-- icon-tooltip/
-- infinite-scroll/
-- input/
-- instrument-chassis/
-- label/
-- labeled-field/
-- liquid-grid/
-- metric-badge/
-- metric-cell/
-- metric-stack/
-- notification/
-- number-field/
-- pager-dots/
-- paper-backdrop/
-- popover/
-- progress/
-- pulse/
-- radio-group/
-- scroll-progress-rim/
-- search/
-- section/
-- select/
-- separator/
-- skeleton/
-- slider/
-- sortable-list/
-- spa-view/
-- split-chars/
-- status-dot/
-- surface/
-- switch/
-- table/
-- tabs/
-- tags-input/
-- textarea/
-- timeline/
-- toast/
-- toggle/
-- toggle-group/
-- tooltip/
-- typewriter/
-- watercolor-dot/
-
-## src/composables (10 dirs)
-
-- color/
-- context/
-- dark/
-- dom/
-- glass/
-- keyboard/
-- motion/
-- reactive/
-- sidebar/
-- virtual/
+Component-owned code and CSS live with their family. Cross-family material, token,
+typography, accessibility, and utility rules remain in `src/styles`. Public build and
+declaration entries come from the semantic entry map in
+`scripts/lib/subpath-policy.mjs`; no source-subpath mirror tree exists.

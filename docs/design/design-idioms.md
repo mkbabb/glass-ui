@@ -91,7 +91,7 @@ declarations) lives in the file that owns its COHESION DOMAIN. The home map:
 | a11y / capability override | `src/styles/utilities/a11y-overrides.css` | `touch-hit-area` + the `@media` overrides |
 | glass surface | `src/styles/glass/*.css` | `glass-progress-rail` (the deck-position rail @utility); the `[data-surface="glass\|veil\|opaque"]` shared surface-decoration axis + the `.paper-ink-mark` MARK register (`glass/surface-axis.css` — see below); the `--control-surface-{bg,border,blur,bg-hover}` form-family REST tier (`glass/surfaces.css`) |
 | feedback tone | `src/styles/feedback-tone.css` | `.feedback-tone` + `.feedback-tone-{success,warning,info,destructive}` (the ONE shared tinted-glass tone register; cascade rung 7a after cards.css) |
-| menu glass | `src/styles/menu.css` | `.glass-menu-row` + `.glass-menu-section` (the shared glass menu-row register; cascade rung 11a after utilities.css) |
+| menu glass | `src/components/_shared/menu.css` | `.glass-menu-row` (the shared interactive menu-row register) |
 | paper texture | `src/styles/paper.css` | the paper underpaint + grain utilities |
 | card / cartoon surface | `src/styles/cards.css` | `cartoon-surface` |
 | dock control | `src/styles/dock-controls.css` | the dock-control surface utilities |
@@ -178,12 +178,9 @@ discipline (the `dock.css` precedent — AX.W06 — generalized by AY.W-CSS1 to
 4. **Each partial carries a COHESION header** (what the §-section IS), not
    migration archaeology — name what the partial DOES, never "carved from the
    old monolith vN.N".
-5. **Machine-locked.** `proof:no-god-module` (the `.css`-aware collector, O1) +
-   `scripts/read-css-monoliths.mjs` (the per-monolith ordered partial-list
-   authority) assert per-file line bound AND import-order preservation — a
-   reordered `@import` or an over-bound partial reds the gate. The carve emits a
-   byte-equivalent `/styles` bundle (the empty compiled-cascade diff is the
-   no-delta proof).
+5. **Keep the root authoritative.** Its literal `@import` sequence records the
+   cascade. Style-surface tests follow those imports directly, and the production
+   build verifies that the assembled stylesheet resolves.
 
 The carved partial directories at HEAD: `src/styles/dock/*` (the AX.W06 dock
 carve), `src/styles/tokens/*` · `src/styles/glass/*` · `src/styles/utilities/*`
@@ -283,21 +280,18 @@ ring chain), and the `in srgb` surface-tint family (over `in oklab`). The keep i
 recorded HERE + cross-referenced in-source so a contributor choosing between two
 near-twins has documented guidance instead of guessing.
 
-**ConfiguratorRow vs LabeledField (AZ.W-METRIC-UNIFY §B).** Both are "label
+**ConfiguratorRow vs LabeledField.** Both are "label
 (+ meta) above/beside a slotted control", but they emphasize DIFFERENT features
 and are NOT interchangeable:
 
 | primitive | use for | carries |
 |---|---|---|
 | `<ConfiguratorRow>` (`custom/configurator/`) | TOKEN / PRESET controls inside a `<Configurator>` | token-`name` reference + opt-in `reset` (`canReset`) + the four-rung `density` axis (local-prop-over-inject) |
-| `<LabeledField>` (`custom/labeled-field/`) | accessible FORM fields | `for`/`id` label↔control a11y wiring (`controlId`/`labelId`/`errorId`) + `tooltip` + `required` asterisk + `aria-live` `error` region |
+| `<LabeledField>` (`components/labeled-field/`) | accessible form controls | stable label/description/error IDs + required/optional + invalid/disabled + default/horizontal layout; no control paint |
 
-This is a recorded DIVERGENCE, not a gap: a forced merge is wrong (the feature
-sets genuinely diverge) and no ≥2-consumer shared-row-chassis need surfaced (the
-overfitting-audit bar). If a THIRD caller later wants a shared label+description+
-slot sub-chassis, the `<LabeledRow>` leaf is the named successor (AZ.W-METRIC-UNIFY
-§7); until then the divergence note is terminal. Both SFCs carry the
-cross-referencing docstring.
+These concepts diverge deliberately. Use ConfiguratorRow only when token metadata
+or reset is itself content; use LabeledField directly for a form control, even
+inside a Configurator. Do not nest them merely to repeat a label.
 
 (The sibling Metric*-family abstraction — the `coalesceMetric` value core the four
 Metric* surfaces share — is the OPPOSITE verdict from the same wave: those four

@@ -1,11 +1,22 @@
 # BI.W-P105 — DropdownMenu apotheosis — menu of commands/choices
 
-**Status:** PLANNED
+**Status:** IMPLEMENTED — native acceptance pending
+**Disposition:** retained one DropdownMenu family with click/context anchoring
 **Topological stratum:** BI.S16
 **Formation family:** component-containers
 **Core centers:** C1_LIQUID_GLASS, C6_COMPONENT_APOTHEOSIS
 **Terminal owner:** glass-ui orchestrator
 **Evidence root:** `docs/tranches/BI/evidence/BI.W-P105`
+
+Current product evidence:
+
+- `src/components/dropdown-menu/` owns the public family, its internal portal selection,
+  collision props, submenu topology, focus lifecycle, and colocated styles.
+- `DropdownMenuPortal` is absent from the public barrel. Bare menu parts fail fast instead
+  of silently choosing a click-menu engine.
+- `tests/components/dropdown-menu.contract.test.ts` exercises click/context portals,
+  check/radio/disabled items, submenu keyboard ownership, dismissal, and focus restoration.
+- Native Browser review of the routed click/context stories remains pending.
 
 ## Intent
 

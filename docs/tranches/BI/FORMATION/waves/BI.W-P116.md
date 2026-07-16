@@ -1,6 +1,6 @@
 # BI.W-P116 — DataTable apotheosis — interactive tabular data model
 
-**Status:** PLANNED
+**Status:** IMPLEMENTED — NATIVE ACCEPTANCE PENDING
 **Topological stratum:** BI.S16
 **Formation family:** component-data
 **Core centers:** C1_LIQUID_GLASS, C6_COMPONENT_APOTHEOSIS

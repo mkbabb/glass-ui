@@ -1,6 +1,6 @@
 # BI.W-P026 — Spring families as semantic motion tokens
 
-**Status:** PLANNED
+**Status:** IMPLEMENTED — NATIVE MOTION ACCEPTANCE PENDING
 **Topological stratum:** BI.S15
 **Formation family:** motion
 **Core centers:** C1_LIQUID_GLASS, C2_DOCK, C3_MOTION, C6_COMPONENT_APOTHEOSIS, C7_KEYFRAMES_INTEGRATION

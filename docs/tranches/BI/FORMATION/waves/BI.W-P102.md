@@ -1,6 +1,6 @@
 # BI.W-P102 — Accordion apotheosis — single/multiple disclosure group
 
-**Status:** PLANNED
+**Status:** IMPLEMENTED — focused contract and production build green; native Browser witness pending availability
 **Topological stratum:** BI.S19
 **Formation family:** component-containers
 **Core centers:** C3_MOTION, C6_COMPONENT_APOTHEOSIS, C7_KEYFRAMES_INTEGRATION, C9_PRUNE

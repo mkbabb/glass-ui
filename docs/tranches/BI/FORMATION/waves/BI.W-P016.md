@@ -1,6 +1,6 @@
 # BI.W-P016 — Warm content-field and functional material hierarchy
 
-**Status:** PLANNED
+**Status:** IMPLEMENTED — NATIVE MATERIAL ACCEPTANCE PENDING
 **Topological stratum:** BI.S10
 **Formation family:** design-foundation
 **Core centers:** C1_LIQUID_GLASS, C6_COMPONENT_APOTHEOSIS

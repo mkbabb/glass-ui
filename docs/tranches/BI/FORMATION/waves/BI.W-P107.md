@@ -1,11 +1,27 @@
 # BI.W-P107 — Drawer apotheosis — edge-attached dialog/drawer
 
-**Status:** PLANNED
+**Status:** IMPLEMENTED — GCF-02 NATIVE ACCEPTANCE PENDING
+**Disposition:** retained canonical fixed/detented Drawer with one spring and instance-owned staging
 **Topological stratum:** BI.S19
 **Formation family:** component-containers
 **Core centers:** C3_MOTION, C6_COMPONENT_APOTHEOSIS, C7_KEYFRAMES_INTEGRATION
 **Terminal owner:** glass-ui orchestrator
 **Evidence root:** `docs/tranches/BI/evidence/BI.W-P107`
+
+Current product evidence:
+
+- `Drawer` retains the truthful modal/live-behind, fixed/detented, direction, stage,
+  active-snap-point, semantic grip, surface, and drag APIs on the existing Dialog root.
+- the root and private `DrawerOverlay` register the owning wrapper and portaled scrim in
+  `DrawerSnapContext`; `useDrawerSnap` writes only those refs and contains no global
+  first-match fallback.
+- one `SpringProgress` still owns open, drag, interruption, reverse, and close. Every
+  settle assigns its target before playback, so reduced motion paints the requested
+  endpoint before Presence releases. The existing Presence hold keeps content inert and
+  mounted through an animated close, then releases only the settling instance's gates.
+- `tests/components/custom/drawer/Drawer.motion-lifecycle.test.ts` exercises bottom/right
+  PRM endpoints, close retention/reversal, Escape/outside dismissal, focus restoration,
+  and concurrent nested owner isolation through final settle.
 
 ## Intent
 

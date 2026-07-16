@@ -25,8 +25,7 @@ Projects import styles via CSS, components and composables via JS.
 A consumer retunes a glass surface's blur by overriding the `--glass-blur-*-radius`
 PRIMITIVE (which the composite `--glass-blur-*` reads through `* --glass-level` + its
 `saturate()` companion), never the composed `--glass-blur-*` directly — the substitution-
-vs-redeclaration discipline. The composed token is generated, never hand-set. Machine-
-locked by `proof:doc-override-idiom`.
+vs-redeclaration discipline. The composed token is generated, never hand-set.
 
 ## `tw-animate-css` is required for the animation grammar
 
@@ -66,7 +65,7 @@ compiles against glass-ui's own `@theme`, and ships the resulting utility RULES 
 `dist/styles/components.css` (a bare consumer with no `@source` gets `rounded-panel` &c. for
 free); (2) glass-ui's OWN `@source "../*.js"` backstop in `src/styles/index.css`. Fully-
 arbitrary bracket utilities are PRE-COMPILED into shipped CSS instead (the Select collision-
-bound, the Slider size axis). Machine-locked by `proof:emission`.
+bound, the Slider size axis).
 
 **The `.scroll-gutter-stable` discipline (presets-in-consumers).** An app-shell route
 scroller that HOSTS portaled picker/menu overlays (Select / DropdownMenu / any reka overlay
@@ -75,5 +74,4 @@ RESERVES the scrollbar gutter whether or not the scrollbar is present, so reka's
 scrollbar removal removes NO layout space and the centred content does not reflow / the
 trigger does not twitch. The library ships the named discipline; the CONSUMER app-shell opts
 its OWN scroller in (the demo `.demo-main-scroller` is the reference adoption). glass-ui does
-NOT force `scrollbar-gutter` on every consumer's scroller. Machine-locked by
-`proof:dropdown-fix`.
+NOT force `scrollbar-gutter` on every consumer's scroller.

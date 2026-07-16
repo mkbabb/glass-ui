@@ -1,6 +1,6 @@
 # BI.W-P101 — Collapsible apotheosis — single disclosure region
 
-**Status:** PLANNED
+**Status:** IMPLEMENTED — focused contract and production build green; native Browser witness pending availability
 **Topological stratum:** BI.S18
 **Formation family:** component-containers
 **Core centers:** C3_MOTION, C6_COMPONENT_APOTHEOSIS, C7_KEYFRAMES_INTEGRATION

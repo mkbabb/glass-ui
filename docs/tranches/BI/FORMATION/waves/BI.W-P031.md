@@ -1,6 +1,6 @@
 # BI.W-P031 — Reduced-motion semantics across the full motion graph
 
-**Status:** PLANNED
+**Status:** IMPLEMENTED — NATIVE ACCEPTANCE PENDING
 **Topological stratum:** BI.S15
 **Formation family:** motion
 **Core centers:** C3_MOTION, C7_KEYFRAMES_INTEGRATION
@@ -10,6 +10,21 @@
 ## Intent
 
 Remove travel and continuous animation under PRM while retaining immediate, causal, legible state changes.
+
+## Current implementation
+
+`readReducedMotion()` is the SSR-safe current read; `useReducedMotion()` is the
+single shared reactive `MediaQueryList` authority. Motion-axis resolution, RAF and
+scroll writers, pointer/procedural lifecycles, Carousel and CompletionSeal, and the
+Countup, Typewriter, Stagger, and Easing one-shots consume that authority. Enabling
+PRM mid-flight now cancels optional work and seats the complete state; procedural
+surfaces paint one static frame and park.
+
+Focused ordinary coverage is green (14 files, 76 tests), as are aggregate source +
+test type checks and the production build with 69 declaration entries. Native
+in-app Browser acceptance remains pending because no Browser session was available;
+Playwright was not substituted. P028/P029 motion surfaces and the active Dock/Drawer
+GCF lane remain under their respective owners rather than being rewritten here.
 
 ## Exact scope
 

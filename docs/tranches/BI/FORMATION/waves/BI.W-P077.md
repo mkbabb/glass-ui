@@ -1,6 +1,6 @@
 # BI.W-P077 — StatusDot apotheosis — compact nontext status indicator
 
-**Status:** PLANNED
+**Status:** IMPLEMENTED — NATIVE ACCEPTANCE PENDING
 **Topological stratum:** BI.S15
 **Formation family:** component-feedback
 **Core centers:** C5_AUDACIOUS_TYPOGRAPHY, C6_COMPONENT_APOTHEOSIS

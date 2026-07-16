@@ -1,6 +1,6 @@
 # BI.W-P068 — Textarea apotheosis — multiline text input
 
-**Status:** PLANNED
+**Status:** IMPLEMENTED — NATIVE ACCEPTANCE PENDING
 **Topological stratum:** BI.S16
 **Formation family:** component-forms
 **Core centers:** C1_LIQUID_GLASS, C5_AUDACIOUS_TYPOGRAPHY, C6_COMPONENT_APOTHEOSIS

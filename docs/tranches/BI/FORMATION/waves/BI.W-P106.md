@@ -1,11 +1,33 @@
 # BI.W-P106 — Dialog apotheosis — modal/nonmodal dialog
 
-**Status:** PLANNED
+**Status:** DONE
+**Disposition:** retained canonical modal/nonmodal Dialog with instance-owned portal staging
 **Topological stratum:** BI.S18
 **Formation family:** component-containers
 **Core centers:** C1_LIQUID_GLASS, C3_MOTION, C6_COMPONENT_APOTHEOSIS, C7_KEYFRAMES_INTEGRATION
 **Terminal owner:** glass-ui orchestrator
 **Evidence root:** `docs/tranches/BI/evidence/BI.W-P106`
+
+Current product evidence:
+
+- `DialogContent` retains the canonical center/edge placement, scroll, surface, motion,
+  close-control, scrim-animation, and `none | dim | scale | immersive` stage axes.
+- `Dialog` now provides instance-local stage wrapper and scrim refs. The in-flow root
+  anchor resolves only its nearest consumer wrapper, while the portaled `ModalOverlay`
+  registers only its own scrim; no global first-match stage mutation remains.
+- stage flip frames are cancelled on close/teardown, and cleanup is limited to roots
+  previously acquired by that Dialog instance.
+- `tests/components/ui/dialog/dialog-stage-ownership.test.ts` exercises concurrent
+  nested Dialog owners, isolated wrapper gates, isolated immersive scrim state, and
+  owner-local close cleanup.
+- `demo/stories/containers/dialog.vue` routes concise nonmodal, genuinely overflowing
+  scroll, nested, and explicit-close specimens on the canonical Dialog anatomy.
+
+**Active correction rider — native acceptance not yet credited.** A non-center `DialogContent` is one
+stationary plate plus one stable inner content region. The region owns intrinsic top-flow anatomy and,
+when named, scrolling; the host and any direct-child material sampler remain stationary. The prior
+full-height implicit-grid stretch and host-scroll topology are not covered by this wave's existing DONE
+record and remain open until the native matrix below passes.
 
 ## Intent
 
@@ -19,6 +41,9 @@ Retain one public concept and remove shadcn/CVA/raw-utility styling authority, a
 - Render and exercise the exact state set in the shared specimen chassis: modal, nonmodal, scroll, nested, no-close, keyboard, touch, prm.
 - Repoint every listed local consumer/import/test/story/build projection atomically; update generated migration/entry facts when the public shape changes.
 - Delete zero-witness DialogScrollContent and fold its long-content behavior into one explicit DialogContent size/scroll axis; no second DialogPortal/ModalOverlay/close/style recipe or alias survives.
+- For every non-center placement, retain one stable side-content region across the `scroll` arms. Keep
+  actions intrinsic and content-adjacent, and place overflow only on that region; do not patch the host,
+  footer, or controls, conditionally re-parent the slot, or infer a bottom-anchored action policy.
 - Collapse ModalOverlay to the distinct behavior Dialog actually consumes: no forward-reserved edge layout, no scale/slide spellings that resolve to fade, and no unused none arm. Preserve a scroll switch only if the folded DialogContent owner causally needs it.
 - Exercise viewport-bounded inner scroll, inert background, title/description, focus, outside/Escape dismissal, touch, narrow geometry, and PRM with content that actually overflows.
 
@@ -108,8 +133,8 @@ These paths are part of this wave's one terminal commit but are never builder-la
 
 Browsers: Safari-current, Chrome-current
 Modes: wide-fine, narrow-coarse, prefers-reduced-motion
-Scenarios: dialog-modal, dialog-nonmodal, dialog-scroll, dialog-nested, dialog-no-close, dialog-keyboard, dialog-touch, dialog-prm
-Observables: role/state, focus/keyboard, material/contrast, responsive geometry, motion/PRM
+Scenarios: dialog-modal, dialog-nonmodal, dialog-scroll, dialog-nested, dialog-no-close, dialog-keyboard, dialog-touch, dialog-prm, dialog-placement-top, dialog-placement-right, dialog-placement-bottom, dialog-placement-left
+Observables: role/state, focus/keyboard, material/contrast, responsive geometry, intrinsic action geometry, host-vs-inner scroll ownership, stationary graded-edge bounds, motion/PRM
 Freshness: terminal wave commit
 Evidence: tests-visual/results/<wave-id>/<browser>/<scenario>.json plus PNG only when the scenario needs human review
 

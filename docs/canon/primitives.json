@@ -4,10 +4,10 @@
     "scripts/lib/subpath-policy.mjs (the published-subpath export manifest)",
     "scripts/lib/canon-doc.mjs CANON_HOMES (the canon-doc homes)"
   ],
-  "_note": "Machine-readable canonical-primitives register — the ROOT registry atlas G-M11 (no-hand-rolled-substitute-where-a-glass-ui-primitive-exists) references. Co-ownership: atlas M.W0-A.6 authors the consume-canon; glass-ui owns this artifact. DERIVE-not-hand-author — regenerate via the generator, never hand-edit; proof:canon-homes asserts committed==regen. BH.B4-canon / ATLAS-M item 7 / the WG-E·PRIMITIVES-REGISTER root.",
+  "_note": "Machine-readable canonical-primitives register. Derive consumer subsets from this root; regenerate it from source and the public export map rather than hand-editing it.",
   "package": "@mkbabb/glass-ui",
-  "subpathCount": 78,
-  "primitiveCount": 1294,
+  "subpathCount": 69,
+  "primitiveCount": 1144,
   "assets": [
     "./fonts/*",
     "./styles",
@@ -37,9 +37,14 @@
         "AuroraCursorResult",
         "Avatar",
         "AvatarFallback",
+        "AvatarFallbackProps",
+        "AvatarIdentityProps",
         "AvatarImage",
-        "avatarVariants",
-        "AvatarVariants",
+        "AvatarImageProps",
+        "AvatarImageStatus",
+        "AvatarProps",
+        "AvatarShape",
+        "AvatarSize",
         "Badge",
         "badgeVariants",
         "BadgeVariants",
@@ -50,8 +55,9 @@
         "BlobPullOptions",
         "BlobPullResult",
         "Button",
-        "buttonVariants",
-        "ButtonVariants",
+        "ButtonEmphasis",
+        "ButtonProps",
+        "ButtonSize",
         "Canvas2DFrame",
         "Canvas2DHandle",
         "Canvas2DOptions",
@@ -63,15 +69,13 @@
         "CardFooter",
         "CardHeader",
         "CardMetal",
-        "CardSpecular",
-        "CardSurface",
+        "CardProps",
+        "CardSize",
         "CardTier",
         "CardTitle",
         "CardVariant",
-        "ChassisDivider",
         "Checkbox",
         "cn",
-        "coalesceMetric",
         "Collapsible",
         "CollapsibleContent",
         "CollapsibleTrigger",
@@ -105,16 +109,18 @@
         "createTokenColorCache",
         "DataTable",
         "DataTableColumn",
-        "DataTablePagination",
         "DataTableProps",
+        "DataTableRowAttrs",
+        "DataTableRowIndex",
+        "DataTableRowRef",
         "DataTableSort",
+        "DataTableStatus",
         "Dialog",
         "DialogClose",
         "DialogContent",
         "DialogDescription",
         "DialogFooter",
         "DialogHeader",
-        "DialogScrollContent",
         "DialogTitle",
         "DialogTrigger",
         "DropdownMenu",
@@ -123,7 +129,6 @@
         "DropdownMenuGroup",
         "DropdownMenuItem",
         "DropdownMenuLabel",
-        "DropdownMenuPortal",
         "DropdownMenuRadioGroup",
         "DropdownMenuRadioItem",
         "DropdownMenuSeparator",
@@ -138,37 +143,20 @@
         "fourierLeanMapping",
         "FourierLeanOptions",
         "FourierLeanResult",
-        "GooBarbellRefs",
         "HighlightMatcher",
-        "IconChip",
-        "IconChipIcon",
-        "IconChipProps",
-        "IconChipSection",
-        "IconChipTone",
-        "InstrumentChassis",
-        "InstrumentChassisPhase",
-        "InstrumentChassisVariant",
         "Label",
+        "LabelProps",
+        "LabelRequirement",
         "LeadTrailEdges",
         "LiquidFlexAxis",
-        "MenuItemVariants",
         "MenuTrigger",
-        "METRIC_PLACEHOLDER",
-        "MetricValue",
-        "MetricValueProps",
-        "MORPH_SIGNATURES",
-        "MorphSignature",
-        "MorphSignatureName",
-        "MorphVector",
         "Motion",
-        "navigate",
-        "NavigateOptions",
-        "Notification",
         "NumberField",
         "NumberFieldContent",
         "NumberFieldDecrement",
         "NumberFieldIncrement",
         "NumberFieldInput",
+        "NumberFieldProps",
         "Orientation",
         "PointerFieldSnapshot",
         "PointerVec2",
@@ -176,11 +164,10 @@
         "PopoverContent",
         "PopoverTrigger",
         "Progress",
-        "ProgressDefault",
-        "ProgressGradient",
-        "ProgressLiquid",
-        "ProgressSectioned",
-        "ProgressSegment",
+        "ProgressOrientation",
+        "ProgressProps",
+        "ProgressStatus",
+        "ProgressVariant",
         "provideConfiguratorSize",
         "RadioGroup",
         "RadioGroupItem",
@@ -188,19 +175,11 @@
         "resolveTokenColor",
         "ResolveTokenColorCache",
         "RoutePointerContext",
-        "ScrollCard",
-        "ScrollCardHeader",
-        "ScrollCardHeaderProps",
-        "ScrollCardProps",
-        "Section",
-        "SectionedCell",
         "Select",
         "SelectContent",
         "SelectGroup",
         "SelectItem",
         "SelectLabel",
-        "SelectScrollDownButton",
-        "SelectScrollUpButton",
         "SelectSeparator",
         "SelectTrigger",
         "SelectValue",
@@ -208,13 +187,12 @@
         "Size",
         "Skeleton",
         "Slider",
-        "sliderVariants",
-        "SliderVariants",
+        "SliderProps",
+        "SliderSize",
+        "SliderVariant",
         "snapshotField",
         "SpecularWriter",
-        "SplitChars",
         "startViewTransition",
-        "supportsRouteTransitions",
         "supportsScrollTimeline",
         "supportsViewTimeline",
         "supportsViewTransitions",
@@ -234,6 +212,7 @@
         "TagsInputItem",
         "TagsInputItemDelete",
         "TagsInputItemText",
+        "TagsInputProps",
         "toast",
         "Toast",
         "ToastAction",
@@ -243,11 +222,8 @@
         "ToasterPosition",
         "ToastTitle",
         "ToastType",
-        "Toggle",
         "ToggleGroup",
         "ToggleGroupItem",
-        "toggleVariants",
-        "ToggleVariants",
         "TokenColorResolver",
         "Tooltip",
         "TooltipContent",
@@ -258,9 +234,6 @@
         "UseBreakpointControls",
         "useCanvas2D",
         "useCanvasLifecycle",
-        "useCharStagger",
-        "UseCharStaggerOptions",
-        "UseCharStaggerReturn",
         "useClipboard",
         "UseClipboardOptions",
         "UseClipboardReturn",
@@ -268,9 +241,6 @@
         "useDragVelocity",
         "UseDragVelocityParams",
         "UseDragVelocityReturn",
-        "useGooMorph",
-        "UseGooMorphParams",
-        "UseGooMorphReturn",
         "useIdleReady",
         "UseIdleReadyControls",
         "UseIdleReadyOptions",
@@ -287,7 +257,6 @@
         "usePointerVelocityField",
         "UsePointerVelocityField",
         "UsePointerVelocityFieldOptions",
-        "useProgressGeometry",
         "useResizeObserver",
         "UseResizeObserverControls",
         "UseResizeObserverOptions",
@@ -344,6 +313,7 @@
         "auroraFallbackGround",
         "AuroraFallbackGround",
         "AuroraFallbackGroundOptions",
+        "AuroraFieldInteractivityAtom",
         "AuroraFlow",
         "AuroraGroundMetrics",
         "AuroraHarmony",
@@ -357,9 +327,11 @@
         "AuroraMediumAtom",
         "AuroraMotionAtom",
         "AuroraNucleus",
+        "AuroraPainterlyInteractivityAtom",
         "AuroraRenderMode",
         "AuroraRuntimeMode",
         "AuroraRuntimeOptions",
+        "AuroraSmoothInteractivityAtom",
         "AuroraSource",
         "AuroraZoneArrangement",
         "AuroraZones",
@@ -405,7 +377,7 @@
       "specifier": "@mkbabb/glass-ui/axes",
       "name": "axes",
       "tier": "curated",
-      "source": "src/axes.ts",
+      "source": "src/components/_shared/axes.ts",
       "canonHome": null,
       "exports": [
         "Motion",
@@ -417,6 +389,7 @@
         "Size",
         "SIZES",
         "Surface",
+        "SURFACE_TIERS",
         "SURFACES",
         "SurfaceTier",
         "Tone",
@@ -460,8 +433,8 @@
         "BlobQuality",
         "BlobSatelliteSystem",
         "BlobSatelliteTiming",
+        "BlobSettledFrame",
         "BlobSurface",
-        "BlobVariant",
         "clampLightnessFloor",
         "LIGHTNESS_FLOOR_BRACKET",
         "LIGHTNESS_FLOOR_DEFAULT",
@@ -496,7 +469,6 @@
         "BlobQuality",
         "BlobSatelliteTiming",
         "BlobSurface",
-        "BlobVariant",
         "clampLightnessFloor",
         "LIGHTNESS_FLOOR_BRACKET",
         "LIGHTNESS_FLOOR_DEFAULT",
@@ -514,8 +486,9 @@
       "canonHome": null,
       "exports": [
         "Button",
-        "buttonVariants",
-        "ButtonVariants"
+        "ButtonEmphasis",
+        "ButtonProps",
+        "ButtonSize"
       ]
     },
     {
@@ -548,32 +521,25 @@
         "CardFooter",
         "CardHeader",
         "CardMetal",
-        "CardSpecular",
-        "CardSurface",
+        "CardProps",
+        "CardSize",
         "CardTier",
         "CardTitle",
-        "CardVariant",
-        "ScrollCard",
-        "ScrollCardHeader",
-        "ScrollCardHeaderProps",
-        "ScrollCardProps"
+        "CardVariant"
       ]
     },
     {
       "specifier": "@mkbabb/glass-ui/carousel",
       "name": "carousel",
       "tier": "curated",
-      "source": "src/carousel.ts",
+      "source": "src/components/carousel/index.ts",
       "canonHome": null,
       "exports": [
         "Carousel",
         "CarouselApi",
         "CarouselContent",
         "CarouselItem",
-        "CarouselNext",
         "CarouselPager",
-        "CarouselPrevious",
-        "GlassCarouselPager",
         "useCarousel"
       ]
     },
@@ -585,6 +551,7 @@
       "canonHome": null,
       "exports": [
         "Chip",
+        "ChipMode",
         "ChipProps",
         "chipVariants",
         "ChipVariants"
@@ -628,16 +595,6 @@
       ]
     },
     {
-      "specifier": "@mkbabb/glass-ui/color-swatch",
-      "name": "color-swatch",
-      "tier": "component",
-      "source": "src/components/color-swatch/index.ts",
-      "canonHome": null,
-      "exports": [
-        "ColorSwatch"
-      ]
-    },
-    {
       "specifier": "@mkbabb/glass-ui/command",
       "name": "command",
       "tier": "component",
@@ -652,8 +609,7 @@
         "CommandItem",
         "CommandList",
         "CommandSeparator",
-        "CommandShortcut",
-        "MenuItemVariants"
+        "CommandShortcut"
       ]
     },
     {
@@ -738,7 +694,6 @@
         "MAX_NODES",
         "nearestNode",
         "parallaxNodePos",
-        "parseColorRGBA",
         "pickWanderTarget",
         "readInteractionConfig",
         "readPalette",
@@ -756,20 +711,10 @@
       ]
     },
     {
-      "specifier": "@mkbabb/glass-ui/controls",
-      "name": "controls",
-      "tier": "component",
-      "source": "src/components/controls/index.ts",
-      "canonHome": null,
-      "exports": [
-        "DarkModeToggle"
-      ]
-    },
-    {
       "specifier": "@mkbabb/glass-ui/dark",
       "name": "dark",
       "tier": "curated",
-      "source": "src/dark.ts",
+      "source": "src/composables/dark/index.ts",
       "canonHome": null,
       "exports": [
         "DARK_MODE_STORAGE_KEY",
@@ -783,6 +728,18 @@
       ]
     },
     {
+      "specifier": "@mkbabb/glass-ui/dark-mode-toggle",
+      "name": "dark-mode-toggle",
+      "tier": "component",
+      "source": "src/components/dark-mode-toggle/index.ts",
+      "canonHome": null,
+      "exports": [
+        "DarkModeToggle",
+        "DarkModeToggleProps",
+        "DarkModeToggleSize"
+      ]
+    },
+    {
       "specifier": "@mkbabb/glass-ui/data-table",
       "name": "data-table",
       "tier": "component",
@@ -791,9 +748,12 @@
       "exports": [
         "DataTable",
         "DataTableColumn",
-        "DataTablePagination",
         "DataTableProps",
-        "DataTableSort"
+        "DataTableRowAttrs",
+        "DataTableRowIndex",
+        "DataTableRowRef",
+        "DataTableSort",
+        "DataTableStatus"
       ]
     },
     {
@@ -809,7 +769,6 @@
         "DeckMoves",
         "DeckPager",
         "handleDeckKey",
-        "PagerWindow",
         "useDeck",
         "useDeckKeyboard",
         "UseDeckKeyboardOptions",
@@ -829,7 +788,6 @@
         "DialogDescription",
         "DialogFooter",
         "DialogHeader",
-        "DialogScrollContent",
         "DialogTitle",
         "DialogTrigger"
       ]
@@ -842,6 +800,7 @@
       "canonHome": "src/components/dock/README.md",
       "exports": [
         "DOCK_CONTEXT_KEY",
+        "DockBackdropMode",
         "DockBackgroundToggle",
         "DockContext",
         "DockControl",
@@ -854,16 +813,10 @@
         "DockLayerGroup",
         "DockLayout",
         "DockOrientation",
-        "DockSection",
-        "DockSectionDescriptor",
-        "DockSectionKind",
         "DockSeparator",
-        "DockStack",
-        "DockStackItem",
         "DockState",
         "DockTrigger",
         "GlassDock",
-        "GooFilter",
         "provideDockContext",
         "useDockContext",
         "useDockCtaReceive",
@@ -933,8 +886,6 @@
         "DrawerFooter",
         "DrawerHeader",
         "DrawerMode",
-        "DrawerOverlay",
-        "DrawerPortal",
         "DrawerStage",
         "DrawerTitle",
         "DrawerTrigger"
@@ -953,7 +904,6 @@
         "DropdownMenuGroup",
         "DropdownMenuItem",
         "DropdownMenuLabel",
-        "DropdownMenuPortal",
         "DropdownMenuRadioGroup",
         "DropdownMenuRadioItem",
         "DropdownMenuSeparator",
@@ -1008,18 +958,6 @@
       ]
     },
     {
-      "specifier": "@mkbabb/glass-ui/focus-scope",
-      "name": "focus-scope",
-      "tier": "component",
-      "source": "src/components/focus-scope/index.ts",
-      "canonHome": null,
-      "exports": [
-        "FocusScope",
-        "FocusScopeEmits",
-        "FocusScopeProps"
-      ]
-    },
-    {
       "specifier": "@mkbabb/glass-ui/forms",
       "name": "forms",
       "tier": "curated",
@@ -1028,19 +966,19 @@
       "exports": [
         "Combobox",
         "ComboboxAnchor",
-        "ComboboxCancel",
         "ComboboxEmpty",
         "ComboboxGroup",
         "ComboboxInput",
         "ComboboxItem",
         "ComboboxItemIndicator",
         "ComboboxList",
-        "ComboboxSeparator",
         "ComboboxTrigger",
-        "ComboboxViewport",
         "ControlSize",
         "Input",
+        "InputProps",
         "Textarea",
+        "TextareaProps",
+        "TextareaResize",
         "useUserInvalidAria",
         "UseUserInvalidAriaOptions",
         "UseUserInvalidAriaReturn"
@@ -1149,39 +1087,17 @@
       "canonHome": null,
       "exports": [
         "HeaderRibbon",
+        "HeaderRibbonAnchorSlotProps",
+        "HeaderRibbonMode",
         "HeaderRibbonPlacement",
         "HeaderRibbonProps"
-      ]
-    },
-    {
-      "specifier": "@mkbabb/glass-ui/icon-chip",
-      "name": "icon-chip",
-      "tier": "component",
-      "source": "src/components/icon-chip/index.ts",
-      "canonHome": null,
-      "exports": [
-        "IconChip",
-        "IconChipIcon",
-        "IconChipProps",
-        "IconChipSection",
-        "IconChipTone"
-      ]
-    },
-    {
-      "specifier": "@mkbabb/glass-ui/icon-tooltip",
-      "name": "icon-tooltip",
-      "tier": "component",
-      "source": "src/components/icon-tooltip/index.ts",
-      "canonHome": null,
-      "exports": [
-        "IconTooltip"
       ]
     },
     {
       "specifier": "@mkbabb/glass-ui/infinite-scroll",
       "name": "infinite-scroll",
       "tier": "curated",
-      "source": "src/infinite-scroll.ts",
+      "source": "src/components/infinite-scroll/index.ts",
       "canonHome": null,
       "exports": [
         "InfiniteScroll",
@@ -1197,17 +1113,19 @@
       "source": "src/components/instrument-chassis/index.ts",
       "canonHome": "src/components/instrument-chassis/README.md",
       "exports": [
-        "ChassisDivider",
         "InstrumentChassis",
-        "InstrumentChassisPhase",
-        "InstrumentChassisVariant"
+        "InstrumentChassisBoundary",
+        "InstrumentChassisProportion",
+        "InstrumentChassisProps",
+        "InstrumentChassisReserve",
+        "InstrumentChassisState"
       ]
     },
     {
       "specifier": "@mkbabb/glass-ui/keyboard",
       "name": "keyboard",
       "tier": "curated",
-      "source": "src/keyboard.ts",
+      "source": "src/composables/keyboard/index.ts",
       "canonHome": null,
       "exports": [
         "formatCombo",
@@ -1228,7 +1146,9 @@
       "source": "src/components/label/index.ts",
       "canonHome": null,
       "exports": [
-        "Label"
+        "Label",
+        "LabelProps",
+        "LabelRequirement"
       ]
     },
     {
@@ -1239,10 +1159,19 @@
       "canonHome": null,
       "exports": [
         "LabeledField",
+        "LabeledFieldCommonProps",
+        "LabeledFieldErrorLive",
+        "LabeledFieldLayout",
+        "LabeledFieldProps",
+        "LabeledFieldSlotProps",
         "LabeledInput",
+        "LabeledInputProps",
         "LabeledSelect",
+        "LabeledSelectProps",
         "LabeledSlider",
-        "LabeledSwitch"
+        "LabeledSliderProps",
+        "LabeledSwitch",
+        "LabeledSwitchProps"
       ]
     },
     {
@@ -1276,139 +1205,62 @@
       ]
     },
     {
-      "specifier": "@mkbabb/glass-ui/metric-badge",
-      "name": "metric-badge",
+      "specifier": "@mkbabb/glass-ui/metric",
+      "name": "metric",
       "tier": "component",
-      "source": "src/components/metric-badge/index.ts",
+      "source": "src/components/metric/index.ts",
       "canonHome": null,
       "exports": [
-        "MetricBadge",
-        "MetricBadgeLabelPosition",
-        "MetricBadgeProps",
-        "MetricBadgeSize"
-      ]
-    },
-    {
-      "specifier": "@mkbabb/glass-ui/metric-cell",
-      "name": "metric-cell",
-      "tier": "component",
-      "source": "src/components/metric-cell/index.ts",
-      "canonHome": null,
-      "exports": [
+        "Metric",
         "MetricCell",
-        "MetricCellAppearance",
-        "MetricCellProps"
-      ]
-    },
-    {
-      "specifier": "@mkbabb/glass-ui/metric-stack",
-      "name": "metric-stack",
-      "tier": "component",
-      "source": "src/components/metric-stack/index.ts",
-      "canonHome": null,
-      "exports": [
+        "MetricCellProps",
+        "MetricDensity",
+        "MetricOrientation",
+        "MetricProps",
         "MetricRow",
         "MetricRowProps",
+        "MetricSize",
         "MetricStack",
-        "MetricStackProps"
+        "MetricStackProps",
+        "MetricValue",
+        "MetricValueProps"
       ]
     },
     {
       "specifier": "@mkbabb/glass-ui/motion",
       "name": "motion",
       "tier": "curated",
-      "source": "src/motion.ts",
+      "source": "src/composables/motion/index.ts",
       "canonHome": null,
       "exports": [
-        "AnimatedNumber",
         "AnimatedNumberMode",
-        "AnimationEngine",
-        "AnimationFrame",
-        "AnimationOptionError",
-        "AnimationOptions",
         "asElement",
         "BloomUpPreset",
-        "Countup",
-        "createNativeTimeline",
         "DAMPING",
-        "decay",
-        "DecayOptions",
-        "decayRest",
-        "DecaySample",
+        "DOCK_CTA_RECEIVE_BANDS",
+        "DockCtaReceiveBand",
+        "DockCtaReceiveObservables",
+        "DockCtaReceivePath",
+        "DockCtaReceivePhase",
         "DockCtaReceivePreset",
-        "drag",
-        "drag2D",
-        "DragAxis",
-        "Draggable",
         "DragMorphAxis",
         "DragMorphSnapTarget",
-        "DragOptions",
-        "DragSubscriber",
-        "Easing",
-        "ElementMorph",
-        "ElementMorphOptions",
+        "ElementMorphMeasurement",
         "ElementMorphPreset",
-        "flip",
-        "FlipOptions",
-        "flipShared",
-        "InputAnimationOptions",
-        "insetSelf",
-        "KeyframesScrollTimeline",
         "LiquidRevealPreset",
-        "loadAnimationEngine",
         "lockSpatialTransition",
-        "ManualTimeline",
         "MorphChannels",
         "MorphEndpoint",
-        "MorphRect",
-        "NativeTimelineSpec",
-        "NumericAnimation",
-        "NumericAnimationOptions",
-        "NumericFrameCallback",
-        "Oscillator",
         "prefersReducedMotion",
-        "probeVelocity",
-        "RAFPlayback",
-        "RAFPlaybackOptions",
-        "reducedMotionScale",
-        "reseatToSpring",
-        "ResolvedKeyframes",
-        "resolveEasing",
-        "Sequence",
-        "SequenceEntry",
-        "SequenceOptions",
-        "SequencePosition",
-        "SmoothProgress",
-        "SmoothProgressOptions",
         "SNAP_THRESHOLD",
         "SPRING_PRESETS",
-        "SpringFrameCallback",
-        "springLinearStops",
-        "SpringLinearStopsOptions",
         "SpringMountRef",
         "springPreset",
         "SpringPreset",
         "SpringPresetName",
         "SpringPresetRow",
-        "SpringPressRef",
-        "SpringProgress",
-        "SpringProgressOptions",
         "SpringRef",
         "SpringSnapshot",
-        "SpringSubscriber",
-        "springTimingFunction",
-        "SpringTimingFunctionOptions",
-        "stagger",
-        "StaggerFn",
-        "StaggerOptions",
-        "StaggerOrigin",
-        "Tickable",
-        "Timeline",
-        "TimelineOptions",
-        "TimingFunction",
-        "TimingFunctionNames",
-        "toEasing",
-        "UnknownEasingError",
         "useAnimatedNumber",
         "useAnimatedNumberMap",
         "UseAnimatedNumberMapOptions",
@@ -1441,19 +1293,14 @@
         "useSpring",
         "useSpringMount",
         "UseSpringMountOptions",
-        "UseSpringOptions",
-        "useSpringPress",
-        "UseSpringPressOptions",
-        "Vars",
-        "warmEngine",
-        "waveformValue"
+        "UseSpringOptions"
       ]
     },
     {
       "specifier": "@mkbabb/glass-ui/motion-core",
       "name": "motion-core",
       "tier": "curated",
-      "source": "src/motion-core.ts",
+      "source": "src/composables/motion/core/index.ts",
       "canonHome": null,
       "exports": [
         "AURORA_CURSOR_RADIUS",
@@ -1478,27 +1325,19 @@
         "fourierLeanMapping",
         "FourierLeanOptions",
         "FourierLeanResult",
-        "GooBarbellRefs",
         "HighlightMatcher",
         "INDICATOR_RELEASE_AT_ARRIVAL",
         "IntersectionPauseControls",
         "LeadTrailEdges",
         "LiquidFlexAxis",
-        "MORPH_SIGNATURES",
-        "MorphSignature",
-        "MorphSignatureName",
-        "MorphVector",
         "MOTION_WEIGHT_REST",
-        "navigate",
-        "NavigateOptions",
         "PausableRuntime",
         "PointerFieldSnapshot",
         "PointerVec2",
-        "PostTaskOptions",
-        "postTaskSafe",
         "RAFLoopCallback",
         "RAFLoopControls",
         "RAFLoopTiming",
+        "readReducedMotion",
         "RoutePointerContext",
         "SelectionMode",
         "SelectionOption",
@@ -1506,16 +1345,8 @@
         "SNAP_THRESHOLD",
         "snapshotField",
         "startViewTransition",
-        "supportsRouteTransitions",
         "supportsViewTransitions",
-        "TaskPriority",
         "TriggerPoint",
-        "useCharStagger",
-        "UseCharStaggerOptions",
-        "UseCharStaggerReturn",
-        "useGooMorph",
-        "UseGooMorphParams",
-        "UseGooMorphReturn",
         "useIntersectionPause",
         "UseIntersectionPauseOptions",
         "useLeadTrail",
@@ -1527,10 +1358,9 @@
         "usePointerVelocityField",
         "UsePointerVelocityField",
         "UsePointerVelocityFieldOptions",
-        "usePrioritizedTask",
-        "UsePrioritizedTaskReturn",
         "useRAFLoop",
         "UseRAFLoopOptions",
+        "useReducedMotion",
         "useRoutePointer",
         "UseRoutePointerOptions",
         "useScrollChrome",
@@ -1557,56 +1387,8 @@
         "ViewTransitionOptions",
         "ViewTransitionResult",
         "vReveal",
-        "vScrollRevealOnce",
         "writeVelocityWeight",
         "yieldToMain"
-      ]
-    },
-    {
-      "specifier": "@mkbabb/glass-ui/motion-curves",
-      "name": "motion-curves",
-      "tier": "composable",
-      "source": "src/composables/motion/curves.ts",
-      "canonHome": null,
-      "exports": [
-        "CSSCubicBezier",
-        "CurveFn",
-        "easeInBounce",
-        "easeInCirc",
-        "easeInCubic",
-        "easeInExpo",
-        "easeInOutCirc",
-        "easeInOutCubic",
-        "easeInOutExpo",
-        "easeInOutQuad",
-        "easeInOutSine",
-        "easeInQuad",
-        "easeInSine",
-        "easeOutCirc",
-        "easeOutCubic",
-        "easeOutExpo",
-        "easeOutQuad",
-        "easeOutSine",
-        "linear",
-        "MOTION_CURVES",
-        "MOTION_CURVES_CANONICAL",
-        "motionCurve",
-        "MotionCurve",
-        "MotionCurveKind",
-        "SPRING_PRESETS",
-        "springPreset",
-        "SpringPresetName",
-        "SpringPresetRow"
-      ]
-    },
-    {
-      "specifier": "@mkbabb/glass-ui/notification",
-      "name": "notification",
-      "tier": "component",
-      "source": "src/components/notification/index.ts",
-      "canonHome": null,
-      "exports": [
-        "Notification"
       ]
     },
     {
@@ -1620,7 +1402,8 @@
         "NumberFieldContent",
         "NumberFieldDecrement",
         "NumberFieldIncrement",
-        "NumberFieldInput"
+        "NumberFieldInput",
+        "NumberFieldProps"
       ]
     },
     {
@@ -1631,9 +1414,7 @@
       "canonHome": null,
       "exports": [
         "PagerDots",
-        "PagerDotsProps",
-        "pagerWindow",
-        "PagerWindow"
+        "PagerDotsProps"
       ]
     },
     {
@@ -1644,7 +1425,6 @@
       "canonHome": null,
       "exports": [
         "PaperBackdrop",
-        "PaperBackdropFrequency",
         "PaperBackdropProps"
       ]
     },
@@ -1668,13 +1448,10 @@
       "canonHome": null,
       "exports": [
         "Progress",
-        "ProgressDefault",
-        "ProgressGradient",
-        "ProgressLiquid",
-        "ProgressSectioned",
-        "ProgressSegment",
-        "SectionedCell",
-        "useProgressGeometry"
+        "ProgressOrientation",
+        "ProgressProps",
+        "ProgressStatus",
+        "ProgressVariant"
       ]
     },
     {
@@ -1684,7 +1461,8 @@
       "source": "src/components/pulse/index.ts",
       "canonHome": null,
       "exports": [
-        "Pulse"
+        "Pulse",
+        "PulseState"
       ]
     },
     {
@@ -1751,8 +1529,6 @@
         "SelectGroup",
         "SelectItem",
         "SelectLabel",
-        "SelectScrollDownButton",
-        "SelectScrollUpButton",
         "SelectSeparator",
         "SelectTrigger",
         "SelectValue"
@@ -1772,7 +1548,7 @@
       "specifier": "@mkbabb/glass-ui/sidebar",
       "name": "sidebar",
       "tier": "curated",
-      "source": "src/sidebar.ts",
+      "source": "src/composables/sidebar/index.ts",
       "canonHome": null,
       "exports": [
         "buildTreeIndex",
@@ -1807,8 +1583,9 @@
       "canonHome": null,
       "exports": [
         "Slider",
-        "sliderVariants",
-        "SliderVariants"
+        "SliderProps",
+        "SliderSize",
+        "SliderVariant"
       ]
     },
     {
@@ -1825,24 +1602,15 @@
       ]
     },
     {
-      "specifier": "@mkbabb/glass-ui/spa-view",
-      "name": "spa-view",
-      "tier": "component",
-      "source": "src/components/spa-view/index.ts",
-      "canonHome": "src/components/spa-view/README.md",
-      "exports": [
-        "SpaView",
-        "SpaViewProps"
-      ]
-    },
-    {
       "specifier": "@mkbabb/glass-ui/status-dot",
       "name": "status-dot",
       "tier": "component",
       "source": "src/components/status-dot/index.ts",
       "canonHome": null,
       "exports": [
-        "StatusDot"
+        "StatusDot",
+        "StatusDotSize",
+        "StatusDotState"
       ]
     },
     {
@@ -1852,10 +1620,12 @@
       "source": "src/components/surface/index.ts",
       "canonHome": null,
       "exports": [
-        "decorationClass",
         "Surface",
-        "surfaceClass",
-        "SurfaceProps"
+        "SurfaceDecoration",
+        "SurfaceMaterial",
+        "SurfaceProps",
+        "SurfaceSpecular",
+        "SurfaceTier"
       ]
     },
     {
@@ -1877,9 +1647,11 @@
       "exports": [
         "SegmentedTabOption",
         "SegmentedTabs",
+        "SegmentedTabsActivation",
         "SegmentedTabsOrientation",
         "SegmentedTabsProps",
         "SegmentedTabsResponsive",
+        "SegmentedTabsSemantics",
         "SegmentedTabsVariant"
       ]
     },
@@ -1930,14 +1702,18 @@
       "specifier": "@mkbabb/glass-ui/tokens",
       "name": "tokens",
       "tier": "curated",
-      "source": "src/tokens.ts",
+      "source": "src/styles/tokens.ts",
       "canonHome": null,
       "exports": [
         "chartColors",
         "chartHeights",
         "chartMargin",
         "minWidthInputSm",
-        "motionStagger"
+        "motionStagger",
+        "SemanticToken",
+        "semanticTokens",
+        "TokenDomain",
+        "tokenDomains"
       ]
     },
     {
@@ -1975,7 +1751,6 @@
         "PausePatterns",
         "pickNgramSize",
         "pickTypoChar",
-        "prefersReducedMotion",
         "QWERTY_MAP",
         "randomInRange",
         "sleep",

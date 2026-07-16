@@ -1,6 +1,6 @@
 # BI.W-P029 — Enter/exit and View Transition continuity
 
-**Status:** PLANNED
+**Status:** IMPLEMENTED — NATIVE CONTINUITY ACCEPTANCE PENDING
 **Topological stratum:** BI.S17
 **Formation family:** motion
 **Core centers:** C3_MOTION, C7_KEYFRAMES_INTEGRATION

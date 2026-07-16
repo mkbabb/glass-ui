@@ -1,6 +1,6 @@
 # BI.W-P023 — Direct keyframes.js boundary and Glass-owned motion vocabulary
 
-**Status:** PLANNED
+**Status:** IMPLEMENTED — IMMUTABLE KEYFRAMES 6 CUT DEFERRED TO P127
 **Topological stratum:** BI.S12
 **Formation family:** motion
 **Core centers:** C1_LIQUID_GLASS, C3_MOTION, C6_COMPONENT_APOTHEOSIS, C7_KEYFRAMES_INTEGRATION, C8_DEMO_CHASSIS

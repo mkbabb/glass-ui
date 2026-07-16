@@ -1,6 +1,6 @@
 # BI.W-P018 — Depth, concentricity, radius, and shadow grammar
 
-**Status:** PLANNED
+**Status:** IMPLEMENTED — NATIVE DEPTH ACCEPTANCE PENDING; P109 OWNS THE RETAINED STATIC CARTOON DECORATION
 **Topological stratum:** BI.S11
 **Formation family:** design-foundation
 **Core centers:** C1_LIQUID_GLASS, C6_COMPONENT_APOTHEOSIS

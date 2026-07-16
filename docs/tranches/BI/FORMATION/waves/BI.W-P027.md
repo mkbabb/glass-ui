@@ -1,6 +1,6 @@
 # BI.W-P027 — Press language and tactile glass response
 
-**Status:** PLANNED
+**Status:** IMPLEMENTED — NATIVE PRESS ACCEPTANCE PENDING
 **Topological stratum:** BI.S16
 **Formation family:** motion
 **Core centers:** C1_LIQUID_GLASS, C2_DOCK, C3_MOTION, C6_COMPONENT_APOTHEOSIS, C7_KEYFRAMES_INTEGRATION

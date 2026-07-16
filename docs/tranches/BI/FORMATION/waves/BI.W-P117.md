@@ -1,136 +1,138 @@
-# BI.W-P117 — Metric consolidation — metric value plus label/context composition
+# BI.W-P117 — Metric consolidation — one numeric readout family
 
-**Status:** PLANNED
+**Status:** DONE — PRODUCT COMPLETE
 **Topological stratum:** BI.S15
 **Formation family:** component-data
 **Core centers:** C1_LIQUID_GLASS, C5_AUDACIOUS_TYPOGRAPHY, C6_COMPONENT_APOTHEOSIS
 **Terminal owner:** glass-ui orchestrator
-**Evidence root:** `docs/tranches/BI/evidence/BI.W-P117`
 
 ## Intent
 
-Merge metric-badge, metric-cell, and metric-stack into src/components/metric with one /metric entry and explicit parts; delete all three old entries without aliases. One Metric family owns badge/cell/row/stack presentations, numeric typography, trend/status/context, and token contract; three parallel public families are folded.
+Replace the parallel `metric-badge`, `metric-cell`, and `metric-stack` packages with one
+public `/metric` family. Preserve the general readout, cell, row, and stack concepts while
+removing Speedtest-specific state, animation, aliases, and token vocabulary.
 
-## Exact scope
+This is a clean break. `MetricPill` was already deleted after a zero-consumer audit and
+`MetricsGrid` has no implementation, history, or consumer; neither is recreated.
 
-- Merge metric-badge, metric-cell, and metric-stack into src/components/metric with one /metric entry and explicit parts; delete all three old entries without aliases.
-- Make the binding concept contract explicit: One Metric family owns badge/cell/row/stack presentations, numeric typography, trend/status/context, and token contract; three parallel public families are folded.
-- Replace shadcn/CVA/raw Tailwind visual recipes with typed semantic props/state attributes and colocated owned CSS while preserving Reka/native accessibility behavior.
-- Render and exercise the exact state set in the shared specimen chassis: badge, cell, row, stack, trend, status, long-label, narrow.
-- Repoint every listed local consumer/import/test/story/build projection atomically; update generated migration/entry facts when the public shape changes.
+## Live evidence and owner ruling
 
-## File manifest (27)
+| current surface | live external source sites | disposition |
+| --- | ---: | --- |
+| `MetricBadge` | 22 across Speedtest, Muster, Keyframes, SCI, and Fourier | Rename/fold into the base `Metric`; the static readout has broad library value. |
+| `MetricCell` | 8 across Speedtest and Muster | Retain as `MetricCell`; it is a general icon/label/value composition. |
+| `MetricStack` / `MetricRow` | 4 stack and 4 row sites across Speedtest and Muster | Retain the ledger layout, not the Speedtest presentation knobs. |
+| `MetricPill` | 0; source and export already removed | Delete its residual CSS and comments. Do not add an alias. |
+| `MetricsGrid` | 0; no source, export, or history found | Do not create it. Consumers use ordinary layout around metric parts. |
 
-| # | action | path | target | source-base blob | provenance |
-| --- | --- | --- | --- | --- | --- |
-| 1 | modify | demo/stories/data/instrument-chassis.vue | — | 5439f87b703c75b49e6009a7a188de721529fd18 | source base |
-| 2 | delete | demo/stories/data/metric-cell.vue | — | ba851ae5f53abdb3aaf555eb5722ef19f374576e | source base |
-| 3 | delete | demo/stories/data/metric-stack.vue | — | 373c38180f5cdc3071b23962b40f501614c84458 | source base |
-| 4 | create | demo/stories/data/metric.vue | — | — | source base |
-| 5 | delete | demo/stories/display/metric-badge.vue | — | 0ce729be9d5638820a513e649ae011004a647229 | source base |
-| 6 | repair | demo/stories/manifest.ts | — | f21057ce0dc8086c56ee114f48dacb9d4bb287e1 | source base |
-| 7 | repair | DESIGN.md | — | 2bcbe5fe1bdf3f345b07ba80602dfe561c7bc306 | source base |
-| 8 | modify | MIGRATION.md | — | 1068a94e272e770510befbf98a8dd8f7c3dbaeaf | source base |
-| 9 | modify | package.json | — | 2eb141a061925a053bb06ab29c8f745aaee8ea8d | source base |
-| 10 | modify | README.md | — | a12a23d4b4b52565af5af0eaff8949683140c482 | source base |
-| 11 | modify | scripts/lib/subpath-policy.mjs | — | cb93f9896eb4f73f11992932ed2515f7954147af | source base |
-| 12 | rename | src/components/metric-badge/index.ts | src/components/metric/badge/index.ts | — | BI.W-P008 |
-| 13 | rename | src/components/metric-badge/MetricBadge.vue | src/components/metric/badge/MetricBadge.vue | — | BI.W-P008 |
-| 14 | rename | src/components/metric-badge/README.md | src/components/metric/badge/README.md | — | BI.W-P008 |
-| 15 | rename | src/components/metric-cell/index.ts | src/components/metric/cell/index.ts | — | BI.W-P008 |
-| 16 | rename | src/components/metric-cell/MetricCell.vue | src/components/metric/cell/MetricCell.vue | — | BI.W-P008 |
-| 17 | rename | src/components/metric-cell/README.md | src/components/metric/cell/README.md | — | BI.W-P008 |
-| 18 | rename | src/components/metric-stack/index.ts | src/components/metric/stack/index.ts | — | BI.W-P008 |
-| 19 | rename | src/components/metric-stack/MetricRow.vue | src/components/metric/stack/MetricRow.vue | — | BI.W-P008 |
-| 20 | rename | src/components/metric-stack/MetricStack.vue | src/components/metric/stack/MetricStack.vue | — | BI.W-P008 |
-| 21 | rename | src/components/metric-stack/README.md | src/components/metric/stack/README.md | — | BI.W-P008 |
-| 22 | delete | tests-visual/_metric-zero-capture.spec.ts | — | 392d9e98ffef0d3910bc57a25eaff9165d9158df | source base |
-| 23 | create | tests-visual/metric.contract.spec.ts | — | — | source base |
-| 24 | delete | tests/components/custom/metric-badge/zero-value.test.ts | — | b066161d3eba0cda63abc700f3dc4e44c26e87f9 | source base |
-| 25 | delete | tests/components/custom/metric-stack/MetricStack.test.ts | — | 63d504f2f5c2f5dbe6a83189f8c85d2cdf25aec5 | source base |
-| 26 | create | tests/components/metric.contract.test.ts | — | — | source base |
-| 27 | repair | vite.config.ts | — | 7d9d1eb2030c4963c0359ee4083d7359c5e912db | source base |
+The private `src/components/metric/coalesce-metric.ts` is the single value-normalization
+authority: finite numbers including `0` and `-0` are real; nullish, blank/whitespace, `NaN`,
+and infinite input resolves to the configured placeholder. Loading masks any present value
+behind one stable ellipsis and marks the owning readout `aria-busy`.
 
-## Repair manifest (20)
+## Public contract
 
-| surface | # | exact path |
+`@mkbabb/glass-ui/metric` is the only public entry and exports:
+
+- `Metric` and `MetricProps` for a static value/unit/label/context readout;
+- `MetricCell` and `MetricCellProps` for a bounded readout cell;
+- `MetricRow` and `MetricRowProps` for one semantic ledger row;
+- `MetricStack` and `MetricStackProps` for aligned rows; and
+- the concise shared `MetricValue`, `MetricValueProps`, and `MetricDensity` types, plus the
+  component-owned `MetricSize` and `MetricOrientation` axes.
+
+The family owns truthful value fallback, numeric typography, value/unit alignment, readable
+label/context hierarchy, and responsive ledger geometry. It exposes no status, trend, formatter,
+locale, or precision matrix.
+
+The family does not own:
+
+- hover lift, press scale, focus rings, or celebration on a non-interactive metric;
+- `data-just-resolved`, aura hosts, phase tint buses, protagonist state, or result animation;
+- `dpi`, `audacious|result`, fixed four-row reserves, arbitrary consumer variants, or
+  `result-*` compatibility classes; or
+- consumer animation wrappers. A consumer can animate a stable metric subtree itself.
+
+`Metric` owns `size` and inline/stacked `orientation`; `MetricCell` and `MetricStack` share the
+compact/comfortable density axis. `MetricRow` adds no presentation state. The family reuses the
+existing typography scale rather than minting a second one.
+
+## Implementation scope
+
+1. Create the flat family at `src/components/metric/` with `Metric.vue`, `MetricCell.vue`,
+   `MetricRow.vue`, `MetricStack.vue`, `index.ts`, `styles.css`, and a concise `README.md`.
+2. Reuse the private coalescing helper. Move only CSS and tokens that support the public metric
+   contract; remove Speedtest-derived props, selectors, aliases, reserve math, and narration.
+3. Render MetricCell's optional icon directly. Do not retain the `IconChip bare` composition as a
+   glyph wrapper.
+4. Delete `src/components/metric-badge`, `src/components/metric-cell`, and
+   `src/components/metric-stack` after their general implementation has moved.
+5. Delete the `/metric-badge`, `/metric-cell`, and `/metric-stack` exports, declaration mappings,
+   and subpath-policy rows. Add `/metric`; do not publish compatibility barrels or aliases.
+6. Remove dead `.metric-pill` rules from `src/styles/utilities/components.css`. Consolidate owned
+   metric CSS under the family and prune obsolete badge/row tokens from
+   `src/styles/tokens/sizing-config.css` and `src/styles/tokens/scale-paper.css`.
+7. Replace the three separate stories with `demo/stories/data/metric.vue`; repair the manifest,
+   the InstrumentChassis story import, public docs, migration table, style entry, and build entry.
+8. Replace the old zero-value and MetricStack tests with one focused family contract suite. Keep
+   zero/empty behavior, semantic structure, long-label behavior, and responsive geometry covered.
+
+No product source outside this repository is edited by this wave.
+
+## External clean-break handoff
+
+| consumer | current use | migration after the `/metric` artifact exists |
 | --- | --- | --- |
-| imports | 1 | demo/stories/data/instrument-chassis.vue |
-| imports | 2 | demo/stories/data/metric-cell.vue |
-| imports | 3 | demo/stories/data/metric-stack.vue |
-| imports | 4 | demo/stories/display/metric-badge.vue |
-| imports | 5 | demo/stories/manifest.ts |
-| imports | 6 | tests-visual/_metric-zero-capture.spec.ts |
-| imports | 7 | tests/components/custom/metric-badge/zero-value.test.ts |
-| imports | 8 | tests/components/custom/metric-stack/MetricStack.test.ts |
-| tests | 1 | tests-visual/_metric-zero-capture.spec.ts |
-| tests | 2 | tests-visual/metric.contract.spec.ts |
-| tests | 3 | tests/components/custom/metric-badge/zero-value.test.ts |
-| tests | 4 | tests/components/custom/metric-stack/MetricStack.test.ts |
-| tests | 5 | tests/components/metric.contract.test.ts |
-| build | 1 | package.json |
-| build | 2 | scripts/lib/subpath-policy.mjs |
-| build | 3 | vite.config.ts |
-| docs | 1 | DESIGN.md |
-| docs | 2 | MIGRATION.md |
-| docs | 3 | README.md |
-| docs | 4 | demo/stories/data/metric.vue |
+| Speedtest | badge 2, cell 7, stack 2, row 2 | Import the four retained parts from `/metric`; keep phase, active aura, and result transitions in Speedtest. |
+| Muster | badge 5, cell 1, stack 2, row 2 | Import from `/metric`; replace its old `amount` badge prop directly rather than adding a compatibility prop in Glass. |
+| Keyframes | badge 1 | Replace `MetricBadge` with `Metric` in its next coordinated Glass bump. |
+| SCI | badge 2 | Replace `MetricBadge` with `Metric` in its next coordinated Glass bump. |
+| Fourier | badge 12 | Replace `MetricBadge` with `Metric` in its next coordinated Glass bump. |
 
-## Orchestrator integration envelope (3)
+Land the producer family and its local contracts atomically, publish it only at the planned major
+boundary, then migrate the five consumer repositories. The wide badge edge is a release
+coordination concern, not a reason to preserve old subpaths.
 
-| # | action | path | role | producer | containing-commit policy |
-| --- | --- | --- | --- | --- | --- |
-| 1 | create | docs/tranches/BI/evidence/BI.W-P117/receipt.json | terminal-receipt | this wave | resolve externally from first-parent integration parent plus BI-Wave and artifact-digest trailers |
-| 2 | modify | docs/tranches/BI/RELEASE-ATTESTATION.json | continuous-release-attestation | BI.W-P002 | mechanically rendered projection |
-| 3 | modify | docs/tranches/BI/FINAL.md | continuous-final-projection | BI.W-P002 | mechanically rendered projection |
+## Product acceptance
 
-These paths are part of this wave's one terminal commit but are never builder-lane leases. After applying the bounded subject diff, the orchestrator alone acquires `serialized-orchestrator-envelope`, renders the acyclic receipt → attestation → FINAL chain, commits with raw-byte artifact digests in the transaction trailers, resolves the containing commit and tree externally from Git, recovers state read-only, and releases the mutex. Projection mode is `REFRESH`; integration-only wave references are `BI.W-P002`. The exact machine prerequisites are `BI.W-P002` status `DONE`, verified `ACTIVATE` receipt/trailers, and digest-matching RELEASE-ATTESTATION plus FINAL; P002 DEAD withdraws the entire perfected-BI formation, forbids every P003-P133 integration, and permanently denies release eligibility for this execution lineage.
+- `/metric` is the sole public entry and its declarations match its runtime exports.
+- No old metric subpath, alias, `MetricBadge`, `MetricPill`, `MetricsGrid`, or `result-*` selector
+  survives in source or built output.
+- `0`, fractional values, strings, empty values, units, long labels, and narrow containers render
+  truthfully without clipping or invented completion/status.
+- Metric, cell, row, and stack share one value/typography contract and do not duplicate token
+  writers.
+- Static metrics have no hover/press/focus affordance. If a consumer needs an action, it composes
+  the metric inside a real control with its own accessible name and interaction states.
+- Row and stack preserve stable semantic order and alignment without Speedtest-only phase,
+  protagonist, aura, variant, or fixed-row assumptions.
 
-## Durable acceptance
+## Native visual validation
 
-**Invariant:** One Metric family owns badge/cell/row/stack presentations, numeric typography, trend/status/context, and token contract; three parallel public families are folded.
+Use the in-app browser only; do not use Playwright. The consolidated story now shows:
 
-**Required mutation bite:** Preserve any old metric subpath alias or duplicate token/writer across parts; clean-break/topology evidence must turn RED.
+- base value, zero, empty placeholder, loading placeholder, unit, and context;
+- cell with and without icon;
+- row and multi-row stack with mixed digit counts;
+- long labels and narrow wrapping/truncation behavior; and
+- light/dark contrast with no false interactive motion or affordance.
 
-**Single executable owner:** `node scripts/verify.mjs --state auto --wave BI.W-P117`. P000's immutable one-shot plan is the sole pre-cursor exception; P001 and every later wave auto-recovers authoritative Git/receipt state before selecting its evidence plan. No row has an independently runnable command or table file.
-
-| invariant family | evidence kind | oracle invariant | realistic RED mutations |
-| --- | --- | --- | --- |
-| architecture.clean-break | device-free | No legacy alias, deprecated prop, compatibility shim, dual read/write, silent masking path, or retired public name survives. | Re-export Countup as an alias.; Read both variant and morphT for the same blob state. |
-| architecture.component-topology | device-free | Every public component concept has one flat family home; ui/custom tiers, public wrapper synonyms, and second authorities are absent. | Restore src/components/ui.; Export IconTooltip beside Tooltip. |
-| architecture.present-tense-source | device-free | Production source explains current invariants without tranche IDs, recovery diaries, retired alternatives, or migration archaeology. | Add a BI.W identifier to src.; Describe a retired implementation as current rationale. |
-| behavior.data | browser | Tables, data tables, metrics, progress, timeline, and virtual lists preserve semantic structure, stable identity, readable density, and truthful loading/empty/error state. | Use array index as a row identity.; Announce indeterminate progress as a false percentage. |
-| demo.scenario-contract | browser | Every story exposes the states required to evaluate its behavior, material, responsiveness, accessibility, and reduced-motion contract through reusable chassis. | Add a dark-mode control that changes no rendered subtree.; Omit invalid state from a form story. |
-| design.contrast | browser | Text, icons, focus, selection, and nontext boundaries meet their semantic contrast requirements in every material and state. | Lower selected-control icon contrast below its required band.; Remove the noncolor focus boundary. |
-| design.responsive-touch | browser | Components reflow without hidden controls, unintended overflow, or sub-floor touch targets at supported narrow/wide and coarse/fine inputs. | Reduce a primary coarse target below the product floor.; Hide a control at narrow width without an equivalent path. |
-| design.typography | browser | Display, heading, body, label, code, and numeric rungs are optically distinct, geometrically stable during font load, and never arbitrarily re-minted by a component. | Set a label larger than its section heading.; Remove size-adjust from the loading fallback and induce layout shift. |
-| integrity.entry-graph | device-free | One entry graph generates Vite inputs, declarations, package exports, types, and migration mappings; no hand mirror or source subpath barrel exists. | Add a package export absent from the authority.; Restore one src/subpaths mirror barrel. |
-
-## π obligation
-
-Browsers: Safari-current, Chrome-current
-Modes: wide-fine, narrow-coarse, prefers-reduced-motion
-Scenarios: metric-badge, metric-cell, metric-row, metric-stack, metric-trend, metric-status, metric-long-label, metric-narrow
-Observables: role/state, focus/keyboard, material/contrast, responsive geometry, motion/PRM
-Freshness: terminal wave commit
-Evidence: tests-visual/results/<wave-id>/<browser>/<scenario>.json plus PNG only when the scenario needs human review
+Native visual validation was unavailable in this execution because the required in-app-browser
+control capability was not present. No Playwright or other browser substitute was used. Focused
+unit contracts remain the source of truth for value normalization, semantics, responsive source
+geometry, and export shape.
 
 ## Minimal DAG edges
 
 | dependency | required invariant |
 | --- | --- |
-| BI.W-P017 | All functional glass consumes one anatomy and state grammar; content surfaces do not opt in by aesthetic variant. |
-| BI.W-P059 | Every story control has a typed live effect with a causal semantic/numeric observable and reset, applicable semantic states are reachable through one reusable accessible specimen grammar, and demo/runtime ownership is proven without foreign-inventory, file-existence, test-as-consumer, or stale-readout laundering. |
-| BI.W-P062 | Applicable accessibility/input modes are declared and green when each story lands; modal isolation, form error linkage, inactive-face exclusion, mobile action reachability, and target floors are first-order predicates rather than terminal-sweep discoveries. |
-
-Declared semantic locks: `component-metric-badge`, `component-metric-cell`, `component-metric-stack`, `entry-graph`. The cursor also acquires 37 implicit exact-path write leases before the worktree starts and binds each to its current integration-parent blob. A repair-manifest path closes as MODIFIED or VERIFIED_UNCHANGED when its enrolled subject is conditional REPAIR, and as CREATED, RENAMED, or DELETED when an explicit structural subject owns it. Maximum live execution lanes remain three.
-
-## Terminal transaction
-
-DONE when every scope row, applicable invariant, and π obligation is current and every repair-manifest path has a disk receipt whose outcome matches its enrolled transaction action: MODIFIED or VERIFIED_UNCHANGED for conditional repair, CREATED, RENAMED, or DELETED for an explicit structural action; DEAD only if the product owner permanently withdraws the complete subject with evidence.
-
-Commit policy: exactly one orchestrator-owned Conventional Commit containing the bounded subject diff, terminal receipt, and applicable continuous projections; research agents do not commit. Every wave requires `BI-Wave`, `BI-Status`, `BI-Receipt-SHA256`, and `BI-Formation-SHA256`; P002 and later also require `BI-Attestation-SHA256` and `BI-FINAL-SHA256`. A no-op without a disk-proven terminal disposition is RED. A wave may never become PARTIAL, carried, or successor-owned.
+| BI.W-P017 | Functional glass uses one anatomy/state grammar; content surfaces do not opt into aesthetic variants. |
+| BI.W-P059 | Story controls have typed live effects and applicable states are reachable. |
+| BI.W-P062 | Accessibility and input modes are exercised when the family lands. |
+| BI.W-P091 | MetricCell renders its optional glyph directly rather than restoring a decorative IconChip wrapper. |
 
 ## Archaeology folded
 
-- Current family home custom/metric-badge + custom/metric-cell + custom/metric-stack at 26c5ae686fd0f1181083aebda1215b00524555f1; decision=fold.
+- Current homes at the audited branch: `src/components/metric-badge`,
+  `src/components/metric-cell`, and `src/components/metric-stack`; decision: fold into one family.
+- `MetricPill` deletion commit: `0338d068`; decision: preserve deletion and remove residual CSS.

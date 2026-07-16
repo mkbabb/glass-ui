@@ -1,6 +1,6 @@
 # BI.W-P020 — Restrained accent and semantic color-event grammar
 
-**Status:** PLANNED
+**Status:** IMPLEMENTED ON THE CURRENT COLOR CORE — NATIVE ACCEPTANCE AND P127 VALUE 4 CUT PENDING
 **Topological stratum:** BI.S10
 **Formation family:** design-foundation
 **Core centers:** C1_LIQUID_GLASS

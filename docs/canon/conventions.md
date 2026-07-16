@@ -47,9 +47,9 @@ dark ladder warms in lockstep on the W-DARK-MATERIAL base. See `glass-system.md`
 
 ## `cn()` is a deliberate hand-rolled deduplicator keep (AW.W26)
 
-`src/utils/cn.ts` is `clsx` + a hand-rolled conflict-bucket deduplicator (replaced
-`tailwind-merge` at v0.9.2). It is NOT a gap to "upgrade" back. The CVA bases' arbitrary-
-selector icon tokens (`[&_svg:not([class*=size-])]:size-4`) pass through untouched; a
+`src/components/_shared/class-names.ts` owns a dependency-free class normalizer and
+small conflict-bucket deduplicator. It is NOT a gap to add a general-purpose runtime
+class helper. Unknown and arbitrary-selector utilities pass through untouched; a
 host-sized icon does not false-merge against the base `size-4`.
 
 ## The token-first ring registers

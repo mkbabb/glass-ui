@@ -1,6 +1,6 @@
 # BI.W-P030 — Native scroll timelines and single-owner scroll state
 
-**Status:** PLANNED
+**Status:** IMPLEMENTED — NATIVE SCROLL ACCEPTANCE PENDING
 **Topological stratum:** BI.S15
 **Formation family:** motion
 **Core centers:** C1_LIQUID_GLASS, C3_MOTION, C7_KEYFRAMES_INTEGRATION
