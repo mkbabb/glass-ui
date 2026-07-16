@@ -448,3 +448,33 @@ OWNED / ANSWERED-BY-EXISTING / DECLINED-TERMINAL above — driven by the two exe
 + the four MARK-ONLY rulings (O-E11 · O-E3 · O-E6 · WG-E · C4 · M22 · M6 · L15 · PAPER-GRID-BREATHE).
 No row reads UNOWNED. The standing liveness contract: a NEW inbox-class coordination file landing
 without a marks section REDs `proof:inbound-marks` (I1/I4).
+
+## docs/tranches/BH/coordination/atlas-inbox-2026-07-16-totality-producer-packet.md (marked 2026-07-16)
+
+| ask-id | ask | disposition |
+|---|---|---|
+| §1 | BLOCKING: manual dock interaction axis (`auto`/`manual`; internal hover/focus/idle/outside-click/touch writers suppressed at BOTH poles; explicit `expand()`/`collapse()` operative), then the immutable Glass 7 publish with the full evidence tuple | OWNED-ACCEPTED — minted as the dock-interaction wave (triumvirate + two-challenge, this session); RIDES THE 7.0.0 TAG (the tag is already Q003-held, so no post-tag API churn); `alwaysExpanded`'s fate is adjudicated inside the wave under the consumer-updates ruling (atlas consumes it today — any cut ships with a marked atlas consumer-update); the evidence tuple returns via the Q060 outbound at publish |
+| §1b | progress-rim generalization: ONE progress-rim primitive over a [0,1] value with scroll-derived and plain-reactive backbones; radius-aware host tracing (P2, rides any tag) | OWNED-FORMED — triumvirate wave candidate queued behind the dock axis; rides 7.0.0 only if it lands without delaying the tag, else the first 7.x; the §4 rim radius default folds into it |
+| §2 | mechanical confirm: is `Metric` the badge-shaped register, or compose `MetricCell`? | ANSWERED — see `glass-outbound-2026-07-16-producer-reply.md`: `Metric` (size `sm`, `inline`) for text value+label seats; `MetricCell` when an icon rides with it; pill CHROME composes `./badge` (which both consumers already import) |
+| §3 | breaking-change ledgers for keyframes 5.3.5→6.0.0 and value 3.1.0→4.0.0 | ANSWERED — `keyframes.js/CHANGELOG.md` §6.0.0 (line 6) and `value.js/CHANGELOG.md` §[4.0.0] (line 3; §[3.1.0] + §[3.0.0] cover the rest of the crossing); both ride the published tarballs |
+| §4 | rim radius default (9999px vs inherit→0) · dock placement prop (P3) · drawer focus-restore verify-at-bytes · withdrawn asks | OWNED/NO-ACTION — radius default folds into §1b's wave; placement axis is a P3 wave candidate researched alongside the dock axis (same file) but NOT tag-gating; drawer + withdrawn rows need nothing from us |
+| §5 | keyframes/value: no asks | NO-ACTION |
+
+## docs/tranches/BH/coordination/atlas-inbox-2026-07-16-p-addenda-augment.md (marked 2026-07-16)
+
+| ask-id | ask | disposition |
+|---|---|---|
+| §A | consumer-census augmentation (28 subpaths / 93 imports across atlas+sci; 11 zero-consumption subpaths; consumer-side backdrop:none misuse note) | RECEIVED-DATA — banked as the consumer-earning recompute input; the `tabs` zero is their PA-4 consume gap, not a glass defect; backdrop:none recorded NOT-A-GLASS-DEFECT so no BI lane chases it |
+| §B | GCF-01/02 + data-table + pencil-boil read fixed; re-verified at next immutable bytes | NO-ACTION — verification is theirs at publish |
+| §C.1 | controlled dock posture: `alwaysExpanded` covers the expanded pole today; residual = consumer-controlled COLLAPSED pole (FSM quiet in both poles) | SAME WAVE as totality §1 — one axis, one wave |
+| §C.2 | dock placement axis for the desktop rail (P3) | OWNED-QUEUED — see totality §4 row |
+| §D | not-glass rows (rim 0×0, backdrop census, WG-E, GCF-03) | NO-ACTION — recorded so they never arrive as asks |
+| §E | OF-13 owner ruling: gate scripts abrogated program-wide | ALIGNED — already standing law here (the gates-abrogation mandate); BI plans no gate-file ceremony |
+
+## Session-relayed constellation status (2026-07-16 evening, via the owner)
+
+SCI `7f413ace` + Atlas `ab75813` pushed — 16 lane commits durable on origin; the Atlas
+breaking-change commits evidence THEIR 7.0.0 major (consuming Glass 7); fleet 17/19 with the
+parsimony and matrix lanes as the tail. Consumers are registry-HELD on the Glass 7 publish.
+Producer reply PLACED at `glass-outbound-2026-07-16-producer-reply.md`. The publish remains
+gated by Q003 RED + the native sweeps + Q002 — the hold is honest, not idle.
