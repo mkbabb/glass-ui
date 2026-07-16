@@ -1,15 +1,11 @@
 import { MAX_STOPS } from "../constants/presets";
 
-// inv-K-2 / AU.W5 — the single canonical color core is value.js's Ottosson
-// primitives. The SHARED runtime-JS hoist (oklchToLinear / cssToOklch /
-// oklchStopToHex + the blob's gamma exit) now lives in the `/color` leaf
-// (`src/composables/color`), which aurora AND the goo-blob both consume. aurora
-// imports the leaf core for its own composers AND re-exports it so the
-// `@mkbabb/glass-ui/aurora` surface is unchanged (no break). The aurora-DOMAIN
+// The canonical color core is value.js's Ottosson primitives. The shared runtime
+// helpers live in the `/color` leaf, which Aurora and Blob both consume. Aurora
+// imports the leaf core for its own composers and re-exports it. Aurora-domain
 // composers below (deriveAurora, the gamut-mapper, the palette bake) keep
 // sourcing their math from value.js DIRECTLY — that is still ONE source
-// (value.js), not a re-implementation. `__tests__/color-equivalence.test.ts` is
-// the drift canary.
+// (value.js), not a reimplementation.
 import {
     cssToOklch,
     deriveHue,
@@ -24,7 +20,7 @@ import {
 } from "@mkbabb/value.js/color";
 import { colorValue } from "../../../composables/color/value";
 
-// Re-export the shared color core from the leaf (AU.W5 hoist — surface preserved).
+// Re-export the shared color core from the leaf ( hoist — surface preserved).
 // `gamutMapStop` is re-exported so the aurora-domain consumers (atoms.ts's chroma
 // bracket) funnel their gamut-safety through the ONE aurora color surface.
 export {
@@ -35,7 +31,7 @@ export {
 } from "../../../composables/color";
 export type { OklchStop } from "../../../composables/color";
 
-// AW.W11.b — the harmony vocabulary (deriveHue / gamutMapStop / the harmony union)
+// Harmony vocabulary: deriveHue, gamutMapStop, and the harmony union.
 // is HOISTED to the `/color` leaf so the blob and aurora derive from ONE source
 // (no second forked `deriveHue`/`gamutMapStop`). `AuroraHarmony` stays as the
 // public alias of the shared `ColorHarmony` (surface preserved — no break).
@@ -74,7 +70,7 @@ export function flattenPalette(
 /**
  * Derive a cheap CSS `linear-gradient` from an Aurora palette — the static
  * first-frame placeholder painted under the WebGL canvas while the runtime
- * arms (see `useAurora`'s deferred init / Aurora.vue's placeholder element).
+ * arms (see `useAurora`'s deferred init, Aurora.vue's placeholder element).
  *
  * The shader interpolates the same OKLCh stops in linear sRGB; here we render
  * each stop as a gamma-sRGB hex so the browser's gradient compositor produces
@@ -102,17 +98,15 @@ export function hexToOklchStop(hex: string): OklchStop {
 
 /**
  * Harmony schemes for {@link deriveAurora} — the PUBLIC alias of the shared
- * `ColorHarmony` vocabulary hoisted to the `/color` leaf (AW.W11.b). The blob and
+ * `ColorHarmony` vocabulary hoisted to the `/color` leaf (.b). The blob and
  * aurora derive from this ONE union; aurora keeps the `AuroraHarmony` name for
  * surface preservation. See `ColorHarmony` for the per-scheme semantics.
  */
 export type AuroraHarmony = ColorHarmony;
 
 /**
- * Eased L/C journey shapes for the derived ramp. `bell` (the W5 default for chroma)
- * peaks the chroma in the mids and desaturates the extremes — the painterly
- * "saturated body, calm edges" curve. `linear` is the prior monotone falloff
- * (the named pre-W5 branch — NOT a back-compat alias, a first-class choice).
+ * Eased L/C journey shapes for the derived ramp. `bell` peaks chroma in the
+ * middle and calms both extremes; `linear` provides a monotone falloff.
  */
 export type DeriveEasing = "linear" | "sine" | "bell";
 
@@ -129,33 +123,30 @@ export interface DeriveAuroraOptions {
     hueSpread?: number;
     /** L-ramp easing across the band. Default `linear` (monotone ascent). */
     lightnessEasing?: DeriveEasing;
-    /** C-ramp easing. Default `bell` (peak in the mids — the W5 painterly default). */
+    /** C-ramp easing. `bell` peaks in the middle. Default `bell`. */
     chromaEasing?: DeriveEasing;
     /**
-     * Warm-light / cool-shadow temperature coupling (0..1). A hue delta that warms
+     * Warm-light, cool-shadow temperature coupling (0..1). A hue delta that warms
      * the lights and cools the shadows — the single most-cited painting rule, the
      * fold that makes the oil/oil-pastel mediums read as mixed paint. Default 0.
      */
     temperatureShift?: number;
     /**
-     * BC.W-VIZ-AURORA (A7) — the additive DERIVE-path hue-EXCLUSION axis (the
-     * speedtest-AX cross-repo fold). Named OKLCh hue bands (each `[startDeg, endDeg]`,
+     * Additive derive-path hue exclusions. Named OKLCh hue bands (each `[startDeg, endDeg]`,
      * wrap-around supported via `start > end`) that EVERY derived stop's hue must fall
      * OUTSIDE. The mechanism that makes "teal-on-navy is GONE" enforceable in the DERIVE
      * path, not just the static default — a consumer deriving a palette FROM any seed
      * can never re-introduce a purged band (e.g. `avoidHues: [[170, 200]]` excludes the
      * teal arc by construction). The exclusion RE-ROUTES the walked hue to the nearest
      * band EDGE (preserving L/C — no chroma flatten); it is NOT a post-hoc desaturate.
-     * Additive + default-unset → byte-identical derive (the `WarpMode`-additive-widen
-     * precedent: `proof:aurora-atoms-roundtrip` stays GREEN by construction).
+     * Leaving it unset preserves the ordinary derivation.
      */
     avoidHues?: readonly (readonly [number, number])[];
     /**
-     * BG.W-AUR-IMAGE-SOURCE (ASK-GU-AURORA-SCHEME-LUMA) — the luminance SCHEME preset. A
+     * The luminance scheme preset. A
      * derived palette's L band anchors the whole ramp's luminosity; the default
      * `"light"` band ([0.35, 0.95]) reads as a light-pastel field, which composites to a
-     * flat gray behind glass in a DARK app shell (the same luminous-dark identity concern
-     * `W-DARK-MATERIAL` owns). `"dark"` shifts the band toward the luminous-dark identity
+     * flat gray behind glass in a dark app shell. `"dark"` shifts the band toward the luminous-dark identity
      * (`DERIVE_L_BAND_DARK`, a deeper base + a lower apex) so a derived-from-seed field
      * reads as a rich luminous-dark wash, not a washed-pale composite. Additive +
      * default-unset → byte-identical derive (the `WarpMode`-additive-widen precedent).
@@ -163,7 +154,7 @@ export interface DeriveAuroraOptions {
      */
     scheme?: "light" | "dark";
     /**
-     * BG.W-AUR-IMAGE-SOURCE — an explicit L band `[min, max]` (OKLCh L units) that OVERRIDES
+     * an explicit L band `[min, max]` (OKLCh L units) that OVERRIDES
      * both the default band AND `scheme`. The single retune knob for a consumer whose
      * derived field needs a bespoke luminosity window. Clamped into [0, 1] defensively.
      */
@@ -178,11 +169,10 @@ export interface DeriveAuroraOptions {
 const DERIVE_L_BAND: readonly [number, number] = [0.35, 0.95];
 
 /**
- * BG.W-AUR-IMAGE-SOURCE (ASK-GU-AURORA-SCHEME-LUMA) · BI.W-AURORA-VIBRANCY (GAP-L2) — the
- * luminous-dark L band. A deep base + a DEEP apex so a `scheme:"dark"` derived field reads
+ * The luminous-dark L band. A deep base + a deep apex makes a `scheme:"dark"` derived field read
  * as a rich luminous-dark wash — never a washed-pale composite behind glass in a dark shell.
  *
- * RECALIBRATED at BI (GAP-L2): the prior apex `0.72` let a dark-scheme field composite to
+ * RECALIBRATED at BI: the prior apex `0.72` let a dark-scheme field composite to
  * L≈0.716 (dark cocoa cards floating on a bright salmon field — the O-26 dark-leg defect).
  * The apex is dropped to `0.42` so the whole ramp lands INSIDE the required deep window
  * [0.18, 0.42] — the dark scheme now IS the luminous-dark band, reachable by construction.
@@ -213,7 +203,7 @@ function resolveDeriveLBand(
  * walks the hue per `harmony`. EVERY derived stop is gamut-mapped through
  * value.js's `mapColorToGamut` so none falls outside sRGB.
  *
- * Deterministic and DOM-free (SSR / happy-dom safe — `cssToOklch` is the only
+ * Deterministic and DOM-free (SSR, happy-dom safe — `cssToOklch` is the only
  * string path and it parses via value.js, not a canvas). The returned length is
  * clamped to `[2, MAX_STOPS]`; L is monotonic ascending across the ramp.
  *
@@ -241,7 +231,7 @@ export function deriveAurora(
     } = options;
 
     const n = Math.max(2, Math.min(MAX_STOPS, Math.round(stopCount)));
-    // BG.W-AUR-IMAGE-SOURCE — the L band is scheme/override-resolved (default `"light"` =
+    // the L band is scheme/override-resolved (default `"light"` =
     // the unchanged [0.35, 0.95], so an unset config derives byte-identically).
     const [lMin, lMax] = resolveDeriveLBand(lBand, scheme);
 
@@ -262,13 +252,13 @@ export function deriveAurora(
     lHigh = Math.min(lMax, lHigh);
 
     const stops: OklchStop[] = [];
-    // BI.W-AURORA-VIBRANCY — the derive contract PROMISES a monotonic-ascending L ramp
+    // the derive contract PROMISES a monotonic-ascending L ramp
     // (deep base → pale apex). value.js's `mapColorToGamut` is the gamut authority,
     // NOT L-preserving: at the sRGB hull it nudges a stop's L a sub-perceptible fraction,
     // which on a dense MAX_STOPS ramp can INVERT two adjacent stops (~0.002 L for a neon
     // seed). `floorL` is the running maximum of the emitted L; a stop the map nudged below
     // it is raised BACK to the floor and its chroma pulled inward until it re-enters sRGB
-    // — so the emitted ramp is monotonic BY CONSTRUCTION (the promise is TRUE, not
+    // so the emitted ramp is monotonic BY CONSTRUCTION (the promise is TRUE, not
     // approximately-true), gamut-safe, and a no-op for the common non-hull seed.
     let floorL = -Infinity;
     for (let i = 0; i < n; i++) {
@@ -278,9 +268,8 @@ export function deriveAurora(
         // softens the ends; `bell` peaks the mid-L.
         const L = lLow + (lHigh - lLow) * easeRamp(t, lightnessEasing);
 
-        // C: the eased chroma journey. `bell` (the W5 default) peaks the chroma in
-        // the mids and desaturates the extremes; `linear`/`sine` fall off toward the
-        // apex per `chromaFalloff` (the named pre-W5 monotone falloff).
+        // C: `bell` peaks chroma in the middle; `linear` and `sine` fall toward
+        // the apex according to `chromaFalloff`.
         const cTop = anchor.C * chromaFalloff;
         let C: number;
         if (chromaEasing === "bell") {
@@ -293,12 +282,12 @@ export function deriveAurora(
         }
 
         let h = deriveHue(anchor.h, harmony, hueSpread, t);
-        // Warm-light / cool-shadow: warm (toward WARM_POLE) as it lightens, cool
+        // Warm-light, cool-shadow: warm (toward WARM_POLE) as it lightens, cool
         // (toward COOL_POLE) as it darkens — interpolated toward the named poles.
         if (temperatureShift > 0) {
             h = applyTemperature(h, t, temperatureShift);
         }
-        // BC.W-VIZ-AURORA (A7) — HONOR avoidHues: re-route the walked hue OUT of any
+        // Re-route the walked hue out of any
         // excluded band to the nearest band edge (L/C preserved — no chroma flatten).
         // The load-bearing half of the fold: the option is ACTED ON, not parsed-and-
         // dropped, so a derived ramp cannot land a stop inside a purged hue arc.
@@ -314,7 +303,7 @@ export function deriveAurora(
 }
 
 /**
- * BI.W-AURORA-VIBRANCY — enforce the monotonic-ascending L contract on a gamut-mapped
+ * enforce the monotonic-ascending L contract on a gamut-mapped
  * stop. If the map nudged `stop.L` below the running `floorL`, raise L back to the floor
  * and pull chroma inward until the raised stop re-enters sRGB. The gate is the raw linear
  * over-1 from the shared `oklchToLinear` transform,
@@ -357,7 +346,7 @@ function bell(t: number): number {
  * most-cited painting rule. ONE retunable source: shift a pole here and the whole
  * warm/cool axis re-anchors. Previously the model was a blind ±degree nudge whose
  * comment NAMED these poles but never used them (the documented-model-≠-implementation
- * seam AX.W10 closes — the model IS the implementation now).
+ * seam  closes — the model IS the implementation now).
  */
 const WARM_POLE = 70; // orange — the lit edge
 const COOL_POLE = 250; // blue — the shadow
@@ -420,7 +409,7 @@ function hueDist(a: number, b: number): number {
 }
 
 /**
- * BC.W-VIZ-AURORA (A7) — re-route a hue OUT of any excluded band to the nearest band
+ * Re-route a hue out of any excluded band to the nearest band
  * EDGE (a tiny ε past the boundary so the in-band test is strictly false). L/C are
  * untouched (no chroma flatten). Iterated a bounded number of passes so an exit from
  * one band that lands inside an adjacent band re-routes again; the loop terminates (the
@@ -448,14 +437,9 @@ function routeHueOutOfBands(
     return hue; // bailed (degenerate full-wheel exclusion) — return the best effort
 }
 
-// `deriveHue` + `gamutMapStop` are HOISTED to the `/color` leaf (AW.W11.b) and
+// `deriveHue` and `gamutMapStop` live in the `/color` leaf and are
 // imported above — aurora and the blob derive from ONE source (no forked copies).
 //
-// AX.W10 — the dead second seed→whole-scene door (the prior mood-word config
-// derive + its own mood union + recipe table + duplicated thirds prior) is DELETED
-// (zero non-test consumers; the converged `resolveAtoms` door in `atoms.ts` is the
-// ONE consumer-facing surface). The only unique value it carried — the
-// mood→medium/temperature/chroma coupling — folds into the surviving door's COLOR
-// atom (`resolveAtoms`'s colorEnergy → temperatureShift on the palette derive). The
-// rule-of-thirds nuclei prior is single-sourced at ONE home (`nucleiPrior` in
-// `atoms.ts`).
+// `resolveAtoms` in `atoms.ts` is the single consumer-facing seed-to-scene door.
+// Its color-energy atom drives temperature shift during palette derivation, and
+// `nucleiPrior` owns the rule-of-thirds arrangement.

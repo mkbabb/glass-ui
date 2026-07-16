@@ -3,11 +3,8 @@
 .scroll-progress-rim {
     --scroll-progress-rim-inset: 1px;
     --scroll-progress-rim-width: 4px;
-    --scroll-progress-rim-edge-depth: calc(
-        var(--scroll-progress-rim-inset) + var(--scroll-progress-rim-width)
-    );
     position: absolute;
-    inset: 0;
+    inset: var(--scroll-progress-rim-inset);
     z-index: 2;
     isolation: isolate;
     border-radius: var(--scroll-progress-rim-radius, inherit);
@@ -15,12 +12,9 @@
 }
 
 .scroll-progress-rim__track {
-    box-sizing: border-box;
     position: absolute;
     inset: 0;
-    /* Border establishes the safe inset; padding/content masks derive concentric radii. */
-    border: var(--scroll-progress-rim-inset) solid transparent;
-    padding: var(--scroll-progress-rim-width);
+    border: var(--scroll-progress-rim-width) solid transparent;
     border-radius: inherit;
     background:
         conic-gradient(
@@ -32,11 +26,11 @@
         color-mix(in srgb, var(--foreground) 14%, transparent);
     -webkit-mask:
         linear-gradient(#fff 0 0) padding-box,
-        linear-gradient(#fff 0 0) content-box;
+        linear-gradient(#fff 0 0) border-box;
     -webkit-mask-composite: xor;
     mask:
         linear-gradient(#fff 0 0) padding-box,
-        linear-gradient(#fff 0 0) content-box;
+        linear-gradient(#fff 0 0) border-box;
     mask-composite: exclude;
 }
 
@@ -49,7 +43,7 @@
             transparent 100%
         ),
         color-mix(in srgb, var(--foreground) 14%, transparent);
-    clip-path: inset(calc(100% - var(--scroll-progress-rim-edge-depth)) 0 0);
+    clip-path: inset(calc(100% - var(--scroll-progress-rim-width)) 0 0);
 }
 
 .scroll-progress-rim[data-coverage="inline-end-edge"] .scroll-progress-rim__track {
@@ -61,10 +55,10 @@
             transparent 100%
         ),
         color-mix(in srgb, var(--foreground) 14%, transparent);
-    clip-path: inset(0 0 0 calc(100% - var(--scroll-progress-rim-edge-depth)));
+    clip-path: inset(0 0 0 calc(100% - var(--scroll-progress-rim-width)));
 }
 
 .scroll-progress-rim[data-coverage="inline-end-edge"]:dir(rtl)
     .scroll-progress-rim__track {
-    clip-path: inset(0 calc(100% - var(--scroll-progress-rim-edge-depth)) 0 0);
+    clip-path: inset(0 calc(100% - var(--scroll-progress-rim-width)) 0 0);
 }

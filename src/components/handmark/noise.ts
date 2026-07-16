@@ -8,17 +8,15 @@
  * a period); each octave's amplitude decays by 1/φ. The result is a hump-to-hump-
  * IRREGULAR hand line whose inter-extremum spacing-CV is the honest teeth.
  *
- * WHY ITS OWN LEAF (BG.W-HANDMARK-PERFECT): geometry.ts imports `@mkbabb/pencil-boil`
+ * WHY ITS OWN LEAF: geometry.ts imports `@mkbabb/pencil-boil`
  * at module top, and node's type-stripping refuses to strip a TS module under
- * node_modules — so a device-free gate cannot import geometry.ts to sample the REAL
- * emitted point-set. This leaf imports ONLY the house prng + the marking constants
- * (both pure, strippable), so `proof:handmark-audit` imports the REAL
- * `naturalUnderlinePoints` and measures its spacing-CV over 400 seeds (never a
- * symbol-presence regex — the W-GATE-TRUTH-AUDIT discipline). geometry.ts re-exports
+ * node_modules. This leaf imports only the house PRNG and marking constants
+ * (both pure and strippable), allowing direct sampling of
+ * `naturalUnderlinePoints` over many seeds. geometry.ts re-exports
  * it, so the /handmark barrel surface is unchanged.
  *
- * THE SEED RECONCILE (BA.W-HANDMARK [S2]): the wobble seeds from the HOUSE prng leaf
- * (src/composables/glass/procedural/prng.ts mulberry32 — the AV.W14 single-source), ZERO pencil-boil
+ * THE SEED RECONCILE ( [S2]): the wobble seeds from the HOUSE prng leaf
+ * (src/composables/glass/procedural/prng.ts mulberry32 — the single-source), ZERO pencil-boil
  * `mulberry32` import.
  */
 import { mulberry32 } from "../../composables/glass/procedural/prng";
@@ -48,7 +46,7 @@ export function smootherstep(t: number): number {
  * The four atlas axes:
  *   - amplitude SCALES with the rendered span (`(x2−x1) × NOISE_AMP_FRAC × ampScale`),
  *     not a viewBox-stretched constant (a long word and a short word wobble in
- *     proportion); `ampScale` is the BG.W-HANDMARK-PERFECT excursion knob (default 1
+ *     proportion); `ampScale` is the excursion knob (default 1
  *     ⇒ byte-identical; the SFC derives it from the brush `wobble` scalar, decoupling
  *     excursion from stroke `weight`);
  *   - the hump-to-hump spacing is IRREGULAR (the φ-incommensurate octave sum — the

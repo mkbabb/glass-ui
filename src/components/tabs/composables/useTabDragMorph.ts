@@ -4,7 +4,7 @@ import {
     useDragMorph,
     type DragMorphSnapTarget,
     type UseDragMorphReturn,
-} from "../../../composables/motion/useDragMorph";
+} from "../../../composables/motion/morph/useDragMorph";
 import {
     effectiveCap,
     writeVelocityWeight,
@@ -13,8 +13,8 @@ import { DEFAULT_INDICATOR_MAX_STRETCH } from "../constants";
 import type { SegmentedTabOption } from "../SegmentedTabs.vue";
 
 /**
- * Package-private composable for `SegmentedTabs.vue` — BB.W-DRAG-MORPH, the LIQUID
- * TAB (the `:draggable` axis). Carved out of the SFC at BB.W-CARVE4 to hold the
+ * Package-private composable for `SegmentedTabs.vue` — the LIQUID
+ * TAB (the `:draggable` axis). Carved out of the SFC at  to hold the
  * no-god-module bound, mirroring the `useTabIndicator` colocation sibling; the SFC
  * IMPORTS it and binds only its state; the shared morph owner writes geometry.
  *
@@ -67,7 +67,7 @@ export function useTabDragMorph(
 
     const dragEnabled = computed(() => draggable() && !isUnderline.value);
 
-    // BD.W-MOTION-WEIGHT — the drag squish cap is derived SITE-LOCALLY off the live
+    // the drag squish cap is derived SITE-LOCALLY off the live
     // `--motion-weight` read at the indicator (the spike-corrected mechanism): the
     // shipped `--tab-indicator-max-stretch` token at rest weight 0.618, 1.0 at
     // weight 0. Reads the EXISTING token directly — no `--*-stretch-k` cohort.
@@ -123,7 +123,7 @@ export function useTabDragMorph(
             if (!el || !dragEnabled.value) return;
             if (isDragging) {
                 el.style.setProperty("--stretch", String(stretch));
-                // BD.W-MOTION-WEIGHT (§2c) — recover the saturating velocity term from
+                // Recover the saturating velocity term from
                 // the tanh-law stretch (`stretch = 1 + tanh(v·k)·(cap−1)`, so
                 // `flexVel = (stretch−1)/(cap−1)`) and fold it into the transient
                 // `--motion-weight` boost on the indicator, so a fast fling deepens its
@@ -140,7 +140,7 @@ export function useTabDragMorph(
         },
     );
 
-    // BI.W-DRAG-REATTACH (Kill A) — arm `reattach` on the LIVE indicator element.
+    // Arm `reattach` on the live indicator element.
     // `useDragMorph.reattach()` runs ONCE in setup, PRE-MOUNT, when `indicatorRef` is
     // still null — the early-return leaves the `Draggable` UNBUILT — and nothing re-arms
     // it: on mount `dragEnabled`/`stripOptions.length`/`isVertical` are all STABLE (the

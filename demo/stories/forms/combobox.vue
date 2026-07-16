@@ -34,7 +34,7 @@ const options: Option[] = [
 
 const selected = ref<string>("");
 
-// BI.W-MULTISELECT-FOLD — the multi-select story folds HERE. `<Combobox multiple>`
+// the multi-select story folds HERE. `<Combobox multiple>`
 // is the multi-select mechanism: an array v-model + chips-in-trigger rendered via
 // the shared glass-chip capsule register (the TagsInput chip register), read from
 // the root's forwarded `modelValue` slot state.
@@ -115,7 +115,7 @@ const summary = computed(() => selectedMulti.value.map(labelFor).join(", "));
             </p>
         </section>
 
-        <!-- BI.W-MULTISELECT-FOLD — the multiple arm (was ui/multi-select). The
+        <!-- the multiple arm (was ui/multi-select). The
              selected values render as chips-in-trigger on the glass-chip capsule
              register; the trigger opens the same filtered list. -->
         <section class="flex flex-col gap-3 max-w-sm">

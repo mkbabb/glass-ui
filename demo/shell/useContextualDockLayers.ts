@@ -1,10 +1,10 @@
 /**
- * useContextualDockLayers — the route→layer-set seam (AZ.W-DOCK-CONTEXT).
+ * useContextualDockLayers — the route-to-layer-set seam.
  *
  * Binds the dock's EXISTING layer registry (`DockLayerGroup` + `DockLayer` +
  * provide/inject) to the active route, so the demo shell docks display a DIFFERENT
  * `DockLayer` set per page-context. This is the thin, idiomatic route→layer map the
- * R3-14 redesign mandate names — NOT a new layer machinery (the registry already
+ * route names, not a new layer mechanism (the registry already
  * exists; this layers a route-keyed lookup ON it).
  *
  * The lookup is GENERAL and route-INDEXED: it reads the active category off

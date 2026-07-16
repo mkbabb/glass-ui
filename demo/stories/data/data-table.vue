@@ -31,7 +31,7 @@ const rows: Repo[] = [
     },
     {
         _id: "2",
-        name: "keyframes.js",
+        name: "Motion engine",
         language: "TypeScript",
         stars: 842,
         issues: 4,
@@ -91,6 +91,7 @@ const filter = ref("");
 const sort = ref<DataTableSort | undefined>({ key: "stars", direction: "desc" });
 const selectedRowId = ref<PropertyKey | null>("3");
 const tabbableRowId = ref<PropertyKey | null>("3");
+const inspectedRepoName = ref<string | null>(null);
 const scenario = ref<"data" | "virtual" | "loading" | "empty" | "error">("data");
 const projection = ref<"wide" | "narrow">("wide");
 const scenarioOptions = ["data", "virtual", "loading", "empty", "error"] as const;
@@ -175,6 +176,7 @@ function resetDemo(): void {
     sort.value = { key: "stars", direction: "desc" };
     selectedRowId.value = "3";
     tabbableRowId.value = "3";
+    inspectedRepoName.value = null;
     scenario.value = "data";
     projection.value = "wide";
 }
@@ -215,6 +217,9 @@ watch(filter, () => {
                 <p aria-live="polite">
                     Selected: <strong>{{ selectedRepo?.name ?? "None" }}</strong>
                     <span class="text-muted-foreground"> · Arrow keys move; Enter or Space selects.</span>
+                </p>
+                <p class="text-mono-caption text-muted-foreground" aria-live="polite">
+                    Inspected: {{ inspectedRepoName ?? "None" }}
                 </p>
                 <div class="flex flex-wrap gap-2">
                     <div role="group" aria-label="Projection" class="flex gap-1">
@@ -257,6 +262,16 @@ watch(filter, () => {
                     <template #error>Repository data could not be loaded.</template>
                     <template #empty>No repositories yet.</template>
                     <template #filtered-empty>No repositories match this filter.</template>
+                    <template #row-actions="{ row }">
+                        <Button
+                            size="sm"
+                            emphasis="quiet"
+                            :aria-label="`Inspect ${row.name}`"
+                            @click="inspectedRepoName = row.name"
+                        >
+                            Inspect
+                        </Button>
+                    </template>
                 </DataTable>
             </div>
         </StorySection>

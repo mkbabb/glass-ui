@@ -1,13 +1,10 @@
-// AW.W17 — `useCanvas2D`: the Canvas2D lifecycle substrate, the park/freeze/
-// dispose PARALLEL to `useWebGLCanvas` (AU.W6). BB.W-CANVAS-UNIFY de-forked it:
-// it is now a THIN Canvas2D backend over the shared `createCanvasLifecycle` core
-// (the AU.W6 carve), exactly the way `useWebGLCanvas` is the thin WebGL2 backend.
+// `useCanvas2D` is the thin Canvas2D backend over `createCanvasLifecycle`.
+// Its park, freeze, disposal, and scheduling semantics parallel `useWebGLCanvas`.
 // The schedule — the three-reason suspend Set, the rAF tick/wake demand gate, the
 // document-visibility owner, the content-visibility offscreen-park, and the live
 // `prefers-reduced-motion` re-monitor — lives ONCE in the core; this module owns
 // ONLY the genuinely backend-specific 2D concerns and the Vue-ref wrapper. The
-// prior copy of that machinery (the AV.W1 two-copy class the carve was built to
-// prevent, re-forked at AW.W17) is gone.
+// prior copy of that machinery is gone.
 //
 // The backend-specific 2D concerns this module threads through the core's
 // `buildContext`/`resize` seam:
@@ -48,7 +45,7 @@ import {
 
 /**
  * The suspend reasons that gate the loop. Twins the WebGL substrate's union
- * (`createCanvasLifecycle.CanvasSuspendReason`): the AX.W16 F6 `"off-screen-io"`
+ * (`createCanvasLifecycle.CanvasSuspendReason`): the `"off-screen-io"`
  * key is the IntersectionObserver fallback's OWN reason, distinct from the
  * content-visibility path's `"off-screen"`, so the two offscreen detectors never
  * cross-lift each other's suspend.

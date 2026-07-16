@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// BB.W-DEMO-DESIGN — the icons pane as a DESIGNED specimen. The Pops row (the
+// the icons pane as a DESIGNED specimen. The Pops row (the
 // user-cited "colorful audacious pops, like in our icons") LEADS the pane — the
 // icons-as-color-event IS the story; the monochrome grid is the supporting
 // reference. Static icon plates use Chip geometry without acquiring button semantics.

@@ -10,8 +10,7 @@ import type { TimelineSegment } from "./types";
  * continuous-variant timeline. DECK-PRIVATE child of <ContinuousTimeline>
  * (not a public export). Renders the N absolute-positioned region children,
  * each windowing into the ONE rail-spanning stitched gradient. Carries no
- * focusable descendants (Option C structural split, AB.W2.T4 — axe
- * `nested-interactive`); the interactive markers are a sibling overlay
+ * focusable descendants; the interactive markers are a sibling overlay
  * rendered by <ContinuousMarkers>.
  *
  * The split is a pure transposition out of the prior monolithic
@@ -39,7 +38,7 @@ defineProps<{
         :aria-label="railAriaLabel"
     >
         <!-- N region children, each absolute-positioned within the rail.
-             AC.W9 (B2) — each region WINDOWS into the one shared
+             Each region windows into the one shared
              `--stitch-gradient` (the rail-spanning stitched
              gradient) via `background-size` / `background-
              position-x`, so the phase hues cross-fade smoothly
@@ -67,7 +66,7 @@ defineProps<{
             }"
             aria-hidden="true"
         >
-            <!-- AB.W2.T4 — the fill child clips the gradient to
+            <!-- The fill child clips the gradient to
                  `--continuous-fill-width`. Pending regions render
                  no fill (the var resolves to 0%); completed
                  regions paint 100%; active regions paint the
@@ -101,7 +100,7 @@ defineProps<{
         background var(--duration-fast, 0.2s) var(--ease-standard, ease);
 }
 
-/* AC.W9 (B2) — fill child WINDOWS into the ONE rail-spanning stitched
+/* The fill child windows into the one rail-spanning stitched
    gradient. The gradient (`--stitch-gradient`) is identical across every
    region; each region scales it up by `--stitch-size-x` (= 1 / region
    width) and offsets it by `--stitch-pos-x` so its slice aligns with the
@@ -136,7 +135,7 @@ defineProps<{
     pointer-events: none;
 }
 
-/* AC.W9 (B2) — proper rounded ends. The fill child's corners must NOT
+/* Proper rounded ends. The fill child's corners must not
    blanket-inherit the rail's pill radius (that rounds interior regions'
    fills on all four corners, leaving the rail's true leading + trailing
    edges squared off where a partial fill or a state seam lands). The
@@ -160,7 +159,7 @@ defineProps<{
     width: 100%;
 }
 
-/* AF.W1 (D12) — active regions paint a partial-width fill, so the fill's
+/* Active regions paint a partial-width fill, so the fill's
    incrementing (trailing) edge sits mid-region where the rail's
    `rounded-pill` mask has no curvature and would render squared. Round
    that incrementing edge so the live fill front reads as a pill cap.

@@ -1,7 +1,7 @@
 /**
  * constants.ts — the marking-space geometry constants (the colocation home).
  * ─────────────────────────────────────────────────────────────────────────────
- * The hand-mark family's named geometry constants live here (the AY.W-COLOCATE
+ * The hand-mark family's named geometry constants live here (the
  * convention's `constants.ts` home). geometry.ts + the SFC re-read them by name.
  */
 
@@ -20,7 +20,7 @@ export const VB_H = 40;
 export const UNDERLINE_GAP = 0.06;
 
 /**
- * The highlighter LOW-SEAT band (BA.W-HANDMARK C-1(a)). A real highlighter rides
+ * The highlighter LOW-SEAT band ( C-1(a)). A real highlighter rides
  * the low two-thirds of the line — the ink sits on the baseline and rises to
  * ~x-height — NOT the box vertical center the fork shipped. The band centerline
  * seats at `baselineFrac − HIGHLIGHT_RISE` (raised off the baseline by ~half a
@@ -63,9 +63,9 @@ export const NOISE_AMP_FRAC = 0.05;
 export const NOISE_EDGE = 0.12;
 
 /**
- * The AMPLITUDE-KNOB reference wobble (BG.W-HANDMARK-PERFECT (c)). The natural-underline
- * excursion is `span × NOISE_AMP_FRAC × f(wobble)` where `f(wobble) = wobble / NOISE_WOBBLE_REF`
- * — repurposing the existing Brush `wobble` scalar to drive the centerline amplitude,
+ * The AMPLITUDE-KNOB reference wobble ( (c)). The natural-underline
+ * excursion is `span × NOISE_AMP_FRAC × f(wobble)` where `f(wobble) = wobble, NOISE_WOBBLE_REF`
+ * repurposing the existing Brush `wobble` scalar to drive the centerline amplitude,
  * decoupling excursion from stroke `weight` (the atlas's published `amplitude` ask, no 13th
  * scalar). Pinned to the shipped `boil` brush's wobble (1.4) so `f(1.4) = 1` ⇒ the default
  * boil render is BYTE-IDENTICAL; a consumer lifts excursion by raising `wobble` (or the

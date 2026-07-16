@@ -1,24 +1,14 @@
-/**
- * Aurora adaptive render substrate (AM.W1; `aurora-lazy-init §3.1`).
- *
- * Aurora is NEVER retired — the warm wash composites under every branch. Only
- * the *substrate* adapts: the animated WebGL field on capable devices, the
- * static CSS-gradient placeholder (a complete render of the same palette) on
- * low-power / reduced-motion / save-data devices.
- */
+/** Aurora adaptive render-substrate policy. The warm wash exists on every branch. */
 import { probeWebGL2Renderer } from "../../../composables/glass/webgl/useWebGLCanvas";
 
 export type AuroraRenderMode = "webgl" | "css" | "auto";
 
 /**
- * Detect a SOFTWARE / CPU WebGL renderer (SwiftShader, llvmpipe, the Microsoft
- * Basic Render Driver) via the shared `probeWebGL2Renderer` capability helper
- * (BB.W-CI-GREEN — the substrate owns the SINGLE `getContext("webgl2")`
- * bootstrap; this consumer reads the renderer STRING through it rather than
- * creating a second probe context, per `proof:webgl-substrate-single`).
+ * Detect a SOFTWARE, CPU WebGL renderer (SwiftShader, llvmpipe, the Microsoft
+ * Basic Render Driver) through the shared `probeWebGL2Renderer` capability helper,
+ * so this consumer does not create another context.
  *
- * WHY this is a `"css"` signal (the N.W5 Defect-A root cause, proven live under
- * the playwright SwiftShader harness): a full-viewport WebGL2 surface is a
+ * A full-viewport WebGL2 surface is a
  * compositor layer the rasteriser must re-raster on every composite. On a
  * software rasteriser that per-composite cost is so high that a REAL pointer
  * interaction — which forces a composite — starves the renderer's input ack and
@@ -30,12 +20,12 @@ export type AuroraRenderMode = "webgl" | "css" | "auto";
  * same palette, composites cheaply, and never stalls input. A blocklisted-GPU
  * user gets a smooth atmosphere instead of a janky/hanging one.
  *
- * A `null` probe (no WebGL2 / extension masked / throw) returns `false` — we
+ * A `null` probe (no WebGL2, extension masked, throw) returns `false` — we
  * never downgrade a renderer we cannot PROVE is software (the `"css"` path is the
  * conservative-but-lossy choice, so a false miss keeps the richer default).
  */
 export function isSoftwareWebGLRenderer(): boolean {
-    // BB.W-AURORA-SWRASTER — the probe call is wrapped: a THROWING probe (a partial
+    // the probe call is wrapped: a THROWING probe (a partial
     // webgl2 stub with no `getExtension`, an SSR/happy-dom shim) is morally a `null`
     // probe — "cannot prove software", so we keep the richer default (`false`). This
     // matters now the guard runs for forced `mode:"webgl"` too: the probe is reached
@@ -62,19 +52,18 @@ export function isSoftwareWebGLRenderer(): boolean {
 }
 
 /**
- * Resolve-mode options. The software-raster GUARD is the safe DEFAULT (see
- * {@link resolveRenderMode}); the single ESCAPE is `forceWebGLUnderSoftwareRaster`
- * (BB.W-AURORA-SWRASTER).
+ * Resolve-mode options. The software-raster guard is the safe default; the named
+ * escape is `forceWebGLUnderSoftwareRaster`.
  */
 export interface ResolveRenderModeOptions {
     /**
      * Opt OUT of the universal software-raster guard. When `true`, a forced
      * `mode:"webgl"`/`mode:"capture"` arm ARMS the live WebGL2 surface even on a
-     * detected software renderer (SwiftShader / llvmpipe / MS Basic Render) — for
+     * detected software renderer (SwiftShader, llvmpipe, MS Basic Render) — for
      * a deterministic test that ACCEPTS the per-composite raster cost. Default
      * `false`: the guard is the SAFE default (a software-raster signal forces
      * `"css"` regardless of the requested mode, so a consumer who pins
-     * `mode:"webgl"` on a headless / GPU-blocklisted device gets the static
+     * `mode:"webgl"` on a headless, GPU-blocklisted device gets the static
      * ground, never the page-wedging hang). The escape is NAMED + recorded,
      * never silent.
      */
@@ -82,43 +71,32 @@ export interface ResolveRenderModeOptions {
 }
 
 /**
- * Resolve `"auto"` to a concrete substrate per device tier — AND universalize the
- * software-raster guard out of the `"auto"`-only branch (BB.W-AURORA-SWRASTER).
+ * Resolve `"auto"` to a concrete substrate per device tier and apply the
+ * software-raster guard to every GPU-arming mode.
  *
- * THE GUARD (the universal first leg). A SOFTWARE WebGL renderer (SwiftShader /
- * llvmpipe / MS Basic Render — the GPU-blocklisted / headless path) forces `"css"`
+ * A software WebGL renderer (SwiftShader, llvmpipe, or MS Basic Render) forces `"css"`
  * for ANY WebGL-ARMING requested mode (`"webgl"` OR `"auto"`), not only `"auto"`.
  * A full-viewport software-rastered GL layer is so expensive to re-raster on every
  * composite that a pointer interaction starves the renderer's input ack and the
- * page goes UNRESPONSIVE (the headless-Chromium hang the speedtest harness
- * documents). A consumer (or a capture harness) that pins `mode:"webgl"` /
- * `mode:"capture"` on such a device MUST still fall to the static ground — so the
+ * page becomes unresponsive. A consumer that pins `mode:"webgl"` or
+ * `mode:"capture"` on such a device must still fall to the static ground, so the
  * probe runs BEFORE the `mode !== "auto"` short-circuit when the requested mode
  * would arm WebGL. The single ESCAPE is `options.forceWebGLUnderSoftwareRaster`
  * (default `false` — the guard is the safe default).
  *
- * BC.W-VIZ-AURORA (T1) — the DEAD-STATIC `"auto"` fall is RETIRED. The
- * `lowConcurrency` (`hardwareConcurrency <= 4`) and `saveData` heuristics are
- * GONE: they predate the offscreen-park + the `AV_AURORA_DPR_MAX` sub-2× cap +
- * the demand-gate that make a full-viewport aurora cheap, and `<= 4` is
- * false-positive-prone in 2026 (a capable base-M-series laptop / a throttled VM
- * tab reports 4 logical cores → it got a FROZEN static gradient that reads as
- * "the aurora is broken", USER-DEFECTS §E "renders SLOW"). So `"auto"` arms the
- * GPU on every Chrome-113/Safari-26/Firefox-141 device.
+ * `"auto"` arms the GPU unless the software-renderer guard fires. Core-count and
+ * save-data heuristics do not select a static substrate.
  *
  * Reduced-motion is handled SOLELY by the substrate's live `matchMedia` freeze
- * (`createCanvasLifecycle` paints ONE static frame then parks, and re-arms on
- * un-reduce) — NOT a render-mode fall (the old `"css"` fall never armed WebGL,
- * so an un-reduce mid-session could never wake it; the substrate freeze does).
- * The ONLY `"css"` signal that remains is the genuine software-raster GUARD
- * (the universal first leg above) — and even that is subsumed by
- * `BC.W-WEBGPU-EVERYWHERE`'s try-WebGPU-then-rebuild-WebGL2 picker.
+ * (`createCanvasLifecycle` paints one static frame then parks and re-arms on
+ * un-reduce), not by changing render mode. The only automatic `"css"` signal is
+ * the software-raster guard.
  *
- * THE CAPABLE PATH IS BYTE-UNTOUCHED: `isSoftwareWebGLRenderer()` returns `false`
+ * `isSoftwareWebGLRenderer()` returns `false`
  * on a real GPU (or a null probe — never a false downgrade), so a forced
  * `mode:"webgl"` on hardware passes through exactly as before.
  *
- * SSR / missing-API safe: if `navigator` / `window` / the probes are
+ * SSR, missing-API safe: if `navigator`, `window`, the probes are
  * unavailable we ASSUME a capable device and resolve `"webgl"` (the warm wash
  * still composites either way — the only question is whether it animates).
  *
@@ -130,7 +108,7 @@ export function resolveRenderMode(
     mode: AuroraRenderMode,
     options: ResolveRenderModeOptions = {},
 ): "webgl" | "css" {
-    // THE UNIVERSAL SOFTWARE-RASTER GUARD (BB.W-AURORA-SWRASTER) — runs BEFORE the
+    // THE UNIVERSAL SOFTWARE-RASTER GUARD — runs BEFORE the
     // `mode !== "auto"` short-circuit, for any mode that would ARM WebGL (`"webgl"`
     // or `"auto"`). An explicit `"css"` needs no probe (it never arms WebGL). The
     // escape opts out (default off — the guard is the safe default).
@@ -144,13 +122,9 @@ export function resolveRenderMode(
 
     if (mode !== "auto") return mode;
 
-    // BC.W-VIZ-AURORA (T1) — `"auto"` arms the GPU on every device. The only
-    // `"css"` signal is the universal software-raster guard above (a real GPU /
-    // a null probe never trips it). The `lowConcurrency`/`saveData`/`reducedMotion`
-    // dead-static heuristics are RETIRED: reduced-motion is the substrate's live
-    // `matchMedia` freeze (one static frame then park, re-arms on un-reduce), and
-    // a 4-core report no longer demotes a 2026-capable device to a frozen gradient
-    // (the "renders SLOW" defect root). SSR is the same answer (assume capable —
-    // the warm wash composites either way; the WebGL arm is browser-only deferred).
+    // `"auto"` arms the GPU on every device. Only the software-raster guard above
+    // selects `"css"`; a real GPU or null probe never trips it. Reduced motion uses
+    // the substrate's live `matchMedia` freeze. SSR assumes a capable device because
+    // the warm wash composites either way; the WebGL arm is browser-only deferred.
     return "webgl";
 }

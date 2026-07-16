@@ -46,7 +46,7 @@ const layers = [
     { id: "libs" as const, label: "Libraries", icon: Library, blurb: "shared component kits" },
 ];
 
-/* The CONTROLLED-NO-RAIL case (X3): the thin <DockCrossfade :active> consumed directly
+/* The CONTROLLED-NO-RAIL case (X3): the thin <DockCrossfade:active> consumed directly
    (the speedtest 5-pane pattern), driven by an external strip — no switcher rail, no
    selection engine. Faces of genuinely differing height exercise the peak reserve. */
 const controlled = ref("assets");
@@ -68,7 +68,7 @@ function back() {
 
 <template>
     <StoryPage>
-        <!-- BA.W-STAGE scope 8/9 (FD-DOCK-1) — the dock-layers demos sit over ONE
+        <!-- The dock-layer demos sit over one
              shared, offscreen-paused aurora field (DockStage); the flat bg-card/40
              panels become transparent `.dock-stage-tile` framed slots so the
              DockLayerGroup glass floats over the live field. -->
@@ -340,7 +340,7 @@ function back() {
 </template>
 
 <style scoped>
-/* BA.W-STAGE scope 9 — transparent demo tiles over the shared DockStage field. */
+/*  scope 9 — transparent demo tiles over the shared DockStage field. */
 .dock-stage-tile {
     background: transparent;
 }

@@ -11,16 +11,12 @@ import {
 } from "./composables/dockCrossfadeContext";
 
 /**
- * <DockCrossfade :active> — the THIN controlled face-swap core (BI.W-DOCK-CROSSFADE,
- * PASS-1 §2.6 / PASS-4B ruling 3).
+ * <DockCrossfade:active> is the thin controlled face-swap core.
  *
  * The content layer hosts ONE active face; a switch is a two-child OPACITY OVERLAP on
  * the per-face `--dock-t` scalar — driven by the ONE dock spring (`useDockSpring`,
- * velocity-continuous + interruptible), NOT a UA-eased View Transition. G6 CLOSED:
- * `startViewTransition` is non-interruptible (a hard cut on rapid re-toggle — a direct
- * violation of the liquid-weight edict) and its snapshot of a live `backdrop-filter`
- * plate over aurora is unproven (blur ghost / edge pop); the two-child crossfade needs
- * no VT and stays spring-driven. The reserved box is sized to the PEAK face as a
+ * velocity-continuous + interruptible), not a UA-eased View Transition. The reserved
+ * box is sized to the peak face as a
  * MEASURE-ONCE `min-block-size` (a running max — NOT a per-swap FLIP). A dissolving
  * focus-holding face transfers focus to its successor, else the body
  * (un-inert-before-focus is load-bearing).

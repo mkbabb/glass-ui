@@ -10,7 +10,7 @@ import type { Size, Tone } from "../_shared/axes";
 import { cn } from "../_shared/class-names";
 import type { PrimitiveProps } from "../_shared/primitive";
 import { vSpecular } from "../../composables/glass";
-import { useLiquidPress } from "../../composables/motion/useLiquidPress";
+import { useLiquidPress } from "../../composables/motion/spring/useLiquidPress";
 
 export type ButtonEmphasis = "primary" | "secondary" | "quiet" | "text";
 export type ButtonSize = Extract<Size, "xs" | "sm" | "md" | "lg">;

@@ -1,7 +1,7 @@
 import { getCurrentScope, onScopeDispose, ref, type Ref } from "vue";
 
 /**
- * Scope-aware `document.visibilityState` leaf (AV.W14) — the single source for
+ * Scope-aware `document.visibilityState` leaf: the single source for
  * the `visibilitychange → document.hidden` pattern that the motion composables
  * (`useRAFLoop`, `useIntersectionPause`) and the WebGL substrate hand-rolled
  * four times over. Returns a `Ref<boolean>` `hidden` that flips on

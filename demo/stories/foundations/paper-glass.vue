@@ -5,7 +5,7 @@ import { defineAsyncComponent, onMounted, ref } from "vue";
 import FamilyTabs, { type FamilyMember } from "../../chassis/family/FamilyTabs.vue";
 import { cn } from "@glass/components/_shared/class-names";
 
-// BG.W-DEMO-IA-REDESIGN — the Foundations PAPER chapter. The paper-texture tour
+// the Foundations PAPER chapter. The paper-texture tour
 // folds onto this ONE paper page as a member (bare, STORY_NESTED_KEY) via the
 // switcher below.
 const familyMembers: FamilyMember[] = [
@@ -123,12 +123,12 @@ onMounted(() => {
 <template>
     <StoryPage>
         <!-- The five glass tier tiles, reading translucent over a recessive WARM
-             PAPER FIELD (D2 — BG.W-PAPER-GRAIN-OPTIN retired the universal warm
+             PAPER FIELD (D2 —  retired the universal warm
              `.paper-field` plane, so a `paper-grain-overlay` glass tile over the
              bare recessive shell aurora composited GRAY/metallic — the gray tooth
              desaturated the faint-warm plate below the no-gray floor, C≈0.009). The
              `paper-glass-tier-field` carries a static warm CSS radial behind the
-             grid (the W-CATEGORY-CARD-WARM precedent, NO live GL), so the
+             grid (no live GL), so the
              translucent glass+grain tiles composite WARM-cream — the warm-cream
              grain the page is about. -->
         <div class="paper-glass-tier-field">
@@ -266,16 +266,16 @@ onMounted(() => {
 </template>
 
 <style scoped>
-/* D2 / metallic-wash fold — the recessive WARM PAPER FIELD behind the tier-tile
-   grid. BG.W-PAPER-GRAIN-OPTIN retired the universal warm `.paper-field` plane, so
+/* D2, metallic-wash fold — the recessive WARM PAPER FIELD behind the tier-tile
+   grid.  retired the universal warm `.paper-field` plane, so
    a `glass-{tier} paper-grain-overlay` tile over the bare recessive shell aurora
    composited GRAY (the saturate=0 grain tooth desaturated the faint-warm plate
-   below the BA.W-NO-GRAY floor C 0.02 — measured C 0.009). This gives the
+   below the floor C 0.02 — measured C 0.009). This gives the
    translucent glass+grain tiles a warm-cream substrate to transmit, so they read
    WARM-cream (the page's own "translucent over warm-cream grain" promise). A static
    warm CSS radial — NO live GL (the one-GL-per-route budget held) — keyed off the
    warm field hue 62 ([25,95] band default), mirroring SectionLanding's
-   `.section-bento::before` (the W-CATEGORY-CARD-WARM precedent). Plain per-mode
+   `.section-bento::before`. Plain per-mode
    `.dark` arm (the light-dark() inset-shadow trap + the scoped :global() drop). */
 .paper-glass-tier-field {
     position: relative;
@@ -301,7 +301,7 @@ onMounted(() => {
         ),
         oklch(0.92 0.068 62);
 }
-/* warm-EMBER dark floor — low L, chroma KEPT (the W-DARK-MATERIAL luminous-dark
+/* warm-EMBER dark floor — low L, chroma KEPT (the luminous-dark
    model), so the tiles transmit a warm glow over the near-black page, NEVER a
    charcoal/metallic slab. */
 .dark .paper-glass-tier-field::before {

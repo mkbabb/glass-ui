@@ -1,7 +1,7 @@
 import { effectScope } from "vue";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { useStagger } from "@glass/composables/motion/useStagger";
+import { useStagger } from "@glass/composables/motion/reveal/useStagger";
 import { useStaggerReveal } from "@glass/composables/motion/core";
 
 afterEach(() => {

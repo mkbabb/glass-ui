@@ -1,4 +1,4 @@
-// BC.W-VIZ-PAPERGRID — the liquid-grid compile-time caps + the WARM-IDENTITY default config
+// the liquid-grid compile-time caps + the WARM-IDENTITY default config
 // (the single source the SFC, the composables, and the WGSL/GLSL shaders all read).
 //
 // THE WARM-IDENTITY FENCE (load-bearing — §E REMOVE the teal-on-navy reference). The default
@@ -6,7 +6,7 @@
 // background default is transparent so the grid suffuses over the page. The demo themes
 // nothing here — the warm default + the suffusion preset live in
 // `demo/stories/substrates/presets.ts` (presets-in-consumers — never a library token).
-// `proof:viz-papergrid` clause P5 reds a teal/navy literal (h in [180,280]) in THIS file.
+// Keep library defaults outside the teal/navy hue band [180,280].
 
 import type { OklchStop } from "../../composables/color";
 
@@ -50,11 +50,10 @@ export interface LiquidGridConfig {
     /** The line ink (the warm `--foreground` identity by default — NEVER teal-on-navy). */
     lineColor: OklchStop;
 
-    // ── The FACE (BD.W-PAPERGRID-FACE — the height-lit filled cell interior) ──────────────
+    // ── Face: the height-lit filled cell interior ─────────────────────
     /**
      * The filled-FACE opacity — **default `0`** so the face EVAPORATES → byte-identical to the
-     * line-only HEAD render (every `proof:viz-papergrid` cage clause + the warm-identity fence
-     * stay GREEN). The demo `LIQUID_GRID_PRESET_RIPPLE` lifts it (presets-in-consumers).
+     * line-only default render. The demo `LIQUID_GRID_PRESET_RIPPLE` lifts it.
      */
     faceAlpha: number;
     /** The slope-shade gain (the ∇H Lambert relief — higher = steeper crest/trough contrast). */
@@ -66,7 +65,7 @@ export interface LiquidGridConfig {
     /**
      * The 3-stop warm-DIVERGENT face ramp (FOLD B — height-keyed, NOT a 2-point mid-park `mix`):
      * trough → mid → crest. ALL hues ∈ [20,90] (rose-umber → ember/amber → warm-wheat) so the
-     * teal-navy purge is clear by construction. `proof:viz-papergrid` clause reds a hue ∈ [180,280].
+     * teal/navy exclusion is clear by construction.
      */
     faceWarmLo: OklchStop;
     faceWarmMid: OklchStop;
@@ -76,7 +75,7 @@ export interface LiquidGridConfig {
 
     /** The ground (default transparent so it suffuses over the page). */
     background: OklchStop | "transparent";
-    /** Pointer bulge (§4/§8) — on (demo) / off (suffusion). */
+    /** Pointer bulge (§4/§8) — on (demo), off (suffusion). */
     interactive: boolean;
     /** ONE static frame then park under `prefers-reduced-motion: reduce`. */
     respectReducedMotion: boolean;
@@ -84,7 +83,7 @@ export interface LiquidGridConfig {
 
 /**
  * The warm-cream identity line ink (the library default — NOT a themed hue). A warm-amber
- * ink in the `--foreground` family (OKLab hue ~62, the BA.W-NO-GRAY warm identity) so the
+ * ink in the `--foreground` family (OKLab hue ~62, the warm identity) so the
  * grid reads as warm ink over the page; the SFC resolves the live `--foreground` token at
  * mount, this stop is the SSR/no-token fallback identity. A consumer (the demo) themes it
  * through a PRESET, never a token edit. NEVER teal/navy (h in [180,280] reds P5).
@@ -95,7 +94,7 @@ export const WARM_IDENTITY_INK: OklchStop = { L: 0.62, C: 0.05, h: 62 };
  * The library-default FACE ramp stops — a CALM warm-divergent fold the face would paint IF lit
  * (the `faceAlpha:0` default keeps the face evaporated, so these never paint at HEAD; they are
  * the warm-identity SSR fallback the vivid demo preset overrides). ALL hues ∈ [20,90] — the
- * teal-navy purge clear by construction (`proof:viz-papergrid` reds a hue ∈ [180,280] here).
+ * teal/navy exclusion is clear by construction.
  *   trough → rose-umber, mid → ember-amber, crest → warm-wheat.
  */
 export const FACE_WARM_LO: OklchStop = { L: 0.44, C: 0.07, h: 32 };

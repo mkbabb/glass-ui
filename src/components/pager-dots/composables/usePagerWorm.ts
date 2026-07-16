@@ -1,5 +1,4 @@
-// BI.W-PAGER-WORM — the PagerDots liquid dot-MORPH worm wiring (the colocated leaf
-// PagerDots imports back; the BH.B2.4a colocation carve re-based onto the two-edge
+// PagerDots liquid dot-morph worm wiring, colocated with the component and based on the two-edge
 // lead/trail driver — the σ8 filter-annihilation empty-pill defect cured at the root).
 //
 // The active indicator GOO-MORPHS from dot to dot as a two-edge worm: a LEAD edge
@@ -17,8 +16,8 @@
 
 import type { ComputedRef, Ref } from "vue";
 import { nextTick, onMounted, watch } from "vue";
-import { useLeadTrail, type LeadTrailEdges } from "../../../composables/motion/useLeadTrail";
-import { useLiquidFlex } from "../../../composables/motion/useLiquidFlex";
+import { useLeadTrail, type LeadTrailEdges } from "../../../composables/motion/morph/useLeadTrail";
+import { useLiquidFlex } from "../../../composables/motion/spring/useLiquidFlex";
 import { useResizeObserver } from "../../../composables/dom/useResizeObserver";
 import {
     DEFAULT_DOT_PX,

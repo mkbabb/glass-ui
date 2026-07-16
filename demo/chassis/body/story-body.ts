@@ -1,4 +1,4 @@
-// story-body — the pages-as-data schema (the STORY-A architecture).
+// Pages-as-data story schema.
 //
 // A spec-sheet story page is a STACK OF SECTIONS, each showing REAL library
 // specimens (a bare Input, a variant grid of Badges, an Alert per tone). The
@@ -11,8 +11,7 @@
 // This module is PURE DATA — types only, ZERO Vue runtime (no `ref`/`reactive`,
 // no `h()`, no render closure, no `.vue` import). The reactive StoryScope harness
 // + the per-cell isolated models live in the RENDERER; the schema only names the
-// shape. The "Vue-in-JSON" anti-pattern (a render closure smuggled into the data)
-// is what proof:story-schema S1 reds.
+// shape. Render closures do not belong in the data contract.
 //
 // `Component` is a TYPE-only import (a specimen references a real library
 // component by value in the story SFC, where the imports are code-split per route;
@@ -66,8 +65,8 @@ export interface SpecimenSpec {
      * "plain" }` for a default v-model; `{ pressed: "on" }` / `{ open: "isOpen" }`
      * for a named v-model. The map is the anti-no-op FLOOR (a named v-model
      * silently no-ops when mis-bound), and it COUNTS toward the schema, never the
-     * escape hatch — a specimen that needs a two-way binding but omits `models`
-     * (leaning on a bare `modelValue` prop) is what proof:story-schema S3 reds.
+     * escape hatch. A specimen that needs a two-way binding declares it in `models`
+     * rather than leaning on a bare `modelValue` prop.
      */
     models?: Record<string, string>;
     /** Slot content by name (`default` the common case). */

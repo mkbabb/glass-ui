@@ -1,7 +1,7 @@
 <script setup lang="ts">
-// BB.W-DEMO-DESIGN — the shadows token tour gains ONE chassis lever: the calm wash
-// read-through (StorySection over the StoryHero `wash` card drop) + the PRM-safe
-// scroll-cascade rung stagger (W-SCROLL-MOTION `.scroll-cascade`, no GL). The
+// The shadows token tour uses a calm wash
+// read-through and a reduced-motion-safe
+// scroll-cascade rung stagger ( `.scroll-cascade`, no GL). The
 // shadows-on-stage perception-correction (the dark mid-tone backing so cast shadows
 // read in DARK) is PRESERVED — the wash sits UNDER it, not replacing it.
 import StoryPage from "../../chassis/page/StoryPage.vue";
@@ -25,9 +25,9 @@ const shadows: { cls: string; label: string }[] = [
 
 <template>
     <StoryPage>
-        <!-- Grid of static shadow demos. BA.W-STAGE scope 7 — the elevation grid
+        <!-- Grid of static shadow demos.  scope 7 — the elevation grid
              sits on a contrasting "stage" so the cast shadows read in DARK: a
-             dark drop-shadow over the W-DARK-MATERIAL near-black page is invisible,
+             dark drop-shadow over the near-black page is invisible,
              so the `.shadow-stage` paints a mid-tone backing in dark (transparent in
              light, where the cream page already reads the shadows). The cells pop in
              on the scroll-cascade; the stage perception-correction is PRESERVED. -->
@@ -82,22 +82,22 @@ const shadows: { cls: string; label: string }[] = [
 </template>
 
 <style scoped>
-/* BA.W-STAGE scope 7 — the dark "stage" tile so cast shadows read in DARK. In
+/*  scope 7 — the dark "stage" tile so cast shadows read in DARK. In
    light the cream page already shows the shadows (transparent stage); in dark a
    neutral mid-tone backing lifts off the near-black page so a dark drop-shadow has
    a surface to cast onto. Token-driven so it tracks the warm-neutral identity. */
 .shadow-stage {
     background-color: transparent;
 }
-/* Plain-ancestor `.dark .x` form — the global-wrapped ancestor form inside a
+/* Plain-ancestor `.dark.x` form — the global-wrapped ancestor form inside a
    scoped block is SILENTLY DROPPED (the recurring trap). */
 .dark .shadow-stage {
     background-color: color-mix(in srgb, var(--foreground) 10%, var(--card));
-    /* F2.R2 W-DARK-READABILITY-REPAIR (paint re-open, Class-B) — this dark stage is a
+    /*   (paint re-open, Class-B) — this dark stage is a
        lifted mid-tone plate ([71,61,53] L≈0.28), so the swatch-caption --muted-foreground
        (--neutral-5, calibrated vs the near-black PAGE) collapsed to WCAG 4.12 on it. Re-point
        the muted register on THIS stage to the shared on-glass -strong rung (no new token, no
-       fork — the F2.R1 demo-local re-point precedent), which clears the floor here (6.89). */
+       fork), which clears the floor here (6.89). */
     --muted-foreground: var(--on-glass-muted-strong);
     --muted-foreground-strong: var(--on-glass-muted-strong);
 }

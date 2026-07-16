@@ -1,21 +1,22 @@
-// BC.W-VIZ-PAPERGRID — the liquid-grid fullscreen fragment pass (WebGPU primary).
+// The LiquidGrid fullscreen fragment pass is the WebGPU primary.
 //
 // The same shape-class as aurora/concentric — a pure full-screen-triangle fragment pass (no
 // vertex buffer, no compute, no storage buffer — the LIGHTEST viz in the suite). `fs_main`
 // evaluates the grid at an AFFINE-WARPED coordinate `g = waveFlow(uv·scale) → cursorSwirl`
-// (BG.W-GRID-AFFINE: a smooth continuous domain transform gated by the traveling wave, locally
+// as a smooth continuous domain transform gated by the traveling wave, locally
 // affine at the cell scale — the sheet bows/shears as ONE coherent transform, major lines a
 // single smooth curve) and extracts each line as a crisp constant-pixel-width stroke via the Ben
-// Golus screen-space derivative AA (the blur-kill). BD.W-PAPERGRID-FACE adds the FACE: a
+// Golus screen-space derivative AA (the blur-kill). The pass adds the face: a
 // height-lit filled cell interior (`cellHeight`/`faceRelief`/`facePlateau` — the slope of the
 // SAME traveling-wave height the warp rides, squashed so the crest face inflates), a 3-stop
 // warm-divergent ramp keyed on `mix(shade,h)`, composited UNDER the kept creases. The ink is warm
 // (hue ∈ [20,90] — teal-on-navy gone, §E REMOVE); over TRANSPARENT (the page reads through the
 // gutters). `faceAlpha:0` default → the face evaporates → byte-identical line render.
 //
-// THE SINGLE MATH SOURCE. `potentialFBM` / `gridCoverage` here + the SHARED `waveFlow` /
-// `cellHeight` / `faceRelief` / `facePlateau` / `cursorSwirl` (the `waveField` leaf) transcribe
-// `composables/liquidGrid.ts` line-for-line; `proof:viz-papergrid` clause P3 round-trips the
+// The single math source combines local `potentialFBM` and `gridCoverage` with shared
+// `waveFlow`, `cellHeight`, `faceRelief`, `facePlateau`, and `cursorSwirl` from the
+// `waveField` leaf. Together they transcribe `composables/liquidGrid.ts` line-for-line;
+// shared numeric vectors round-trip the
 // JS↔WGSL↔GLSL paths at a fixed sample set. The curl operator is the SHARED `flow.wgsl.ts` chunk
 // (ONE curl source per backend).
 
@@ -50,11 +51,11 @@ struct LiquidGridUniforms {
   wave: vec4<f32>,
   // wave2: (waveSigma, twistMax, _pad, amp) — the affine sheet-warp envelope (amp: spring-eased)
   wave2: vec4<f32>,
-  // faceLo: (rose-umber trough .rgb (linear), _pad) — the warm-divergent ramp (FOLD B, 3-stop)
+  // faceLo: (rose-umber trough.rgb (linear), _pad) — the warm-divergent ramp (FOLD B, 3-stop)
   faceLo: vec4<f32>,
-  // faceMid: (ember-amber mid .rgb (linear), _pad)
+  // faceMid: (ember-amber mid.rgb (linear), _pad)
   faceMid: vec4<f32>,
-  // faceHi: (warm-wheat crest .rgb (linear), _pad)
+  // faceHi: (warm-wheat crest.rgb (linear), _pad)
   faceHi: vec4<f32>,
 };
 
@@ -121,7 +122,7 @@ ${CURL_FBM_WGSL}
 ${WAVE_FIELD_WGSL}
 
 // ── §1 The crisp line: Ben Golus derivative-AA grid coverage (transcribes gridCoverage) ──
-// targetWidth is the line half-width in GRID UNITS (lineWidthPx / minorPitchPx); uvDeriv is
+// targetWidth is the line half-width in grid units (lineWidthPx / minorPitchPx); uvDeriv is
 // the per-axis screen-space derivative of g (length(vec2(dpdx, dpdy)) per axis). Returns
 // line coverage [0..1] — exactly N device-pixels wide at ANY DPR/zoom (the blur-kill).
 fn gridCoverage(g: vec2f, targetWidth: f32, uvDeriv: vec2f) -> f32 {
@@ -184,12 +185,12 @@ fn fs_main(in: VSOut) -> @location(0) vec4f {
   // no per-cell seam); cursorSwirl twists the cells about the finger. The Golus dv reads the FINAL
   // warped coord (the crisp-line fence survives).
   let g0 = uv * gridScale;
-  // BG.W-GRID-AFFINE — g0 is CELL-scale, so pass the tiny 0.03 curl-sampling frequency (== the JS
+  // g0 is CELL-scale, so pass the tiny 0.03 curl-sampling frequency (== the JS
   // LIQUID_GRID_WARP_FREQ) so the warp is locally affine at the cell scale (major lines bow as ONE
   // smooth curve, no sub-cell crackle). Concentric passes 0.6 (its p is unit-scale).
   var g = waveFlow(g0, t, u.wave.xy, u.wave.z, u.wave.w, u.wave2.x, u.wave2.y, u.wave2.w, 0.03);
   if (u.cursor2.y > 0.5) {
-    // bulgeMode (cursor2.x: +repel / −attract) signs the swirl direction.
+    // bulgeMode (cursor2.x: +repel, −attract) signs the swirl direction.
     g = cursorSwirl(g, u.cursor.xy, u.cursor.z * u.cursor2.x, u.cursor.w);
   }
 
@@ -201,12 +202,12 @@ fn fs_main(in: VSOut) -> @location(0) vec4f {
   );
 
   let minor = gridCoverage(g, u.grid.x, dv);
-  // The major tier evals at g / majorEvery with its own derivative scaling.
+  // The major tier evaluates at g / majorEvery with its own derivative scaling.
   let me = max(u.u0.w, 1.0);
   let major = gridCoverage(g / me, u.grid.y, dv / me);
   let line = max(minor * u.grid.z, major * u.grid.w);
 
-  // ── The FACE (BD.W-PAPERGRID-FACE) — height-lit filled cell interior ──────────────────
+  // ── The FACE — height-lit filled cell interior ──────────────────
   // Sample height/relief at the WARPED-space cell center (floor(g)+0.5, the cell the fragment
   // lands in under the affine warp); Lambert the ∇H slope against the fixed cel key-light; squash
   // the inset so the crest face inflates; multi-stop warm-divergent ramp keyed on mix(shade, h)

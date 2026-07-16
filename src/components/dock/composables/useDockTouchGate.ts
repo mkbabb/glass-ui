@@ -3,28 +3,13 @@ import type { Ref } from "vue";
 import { useTouchGate } from "../../../composables/dom/useTouchGate";
 
 /**
- * BG.W-DOCK-DECOMPOSE — the dock touch-gate wiring, carved off the `GlassDock.vue`
- * god-SFC (the F6.5 one-writer-per-concern seam). It owns the `useTouchGate`
- * instance + the tap/scroll discrimination handlers + the collapse-on-deactivate
- * watch — ONE structural concern (the collapsed-pill tap-to-expand gesture), NEVER
- * a morph-scalar writer (`--dock-morph-t`/`--dock-morph-v` stay the orchestrator's).
+ * Own collapsed-pill tap/scroll discrimination and collapse-on-deactivate state.
+ * Morph scalars remain owned by the Dock orchestrator.
  *
- * AT.W6-dock-b — shape B′ touch-gate. The gate's job is to DISTINGUISH a tap from a
- * vertical scroll on the floating collapsed pill (the 150ms pending window + the
- * >10px scroll-check inside `useTouchGate`), NOT to SWALLOW the tap. It therefore
- * does NOT `preventDefault()`/`stopPropagation()` the activating `touchstart`/
- * `touchend`: the browser's native tap→click compatibility event is allowed to flow
- * to the tapped control, so a SINGLE tap on a collapsed dock control BOTH expands the
- * dock AND activates that control (via the native click) — the iOS Now-Playing
- * mini-bar single-tap-play contract. No `elementFromPoint`, no synthetic dispatch. A
- * scroll gesture cancels the pending tap inside the gate and never emits a tap-click,
- * so vertical scrolling on the pill stays browser-owned. (Swallowing the tap was the
- * root cause of the double-tap field defect — a prevented touch sequence emits no
- * compatibility click, so the control under the finger fired nothing.)
- *
- * AZ.W-DOCK-TAXONOMY — the gate applies to ANY collapsible dock, not just the
- * horizontal one (a vertical dock now collapses too), so it must distinguish a tap
- * from a vertical scroll on its pill as well.
+ * The gate distinguishes a tap from vertical scrolling without preventing the
+ * browser's compatibility click. A single tap can expand the Dock and activate its
+ * control; a scroll cancels the pending tap. No hit-test lookup or synthetic
+ * dispatch is used. The same behavior applies to both orientations.
  */
 export interface UseDockTouchGateOptions {
     /** The dock's auto-collapse delay (ms) — the gate's deactivation timer. */

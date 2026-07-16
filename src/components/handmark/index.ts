@@ -1,5 +1,5 @@
 /**
- * handmark — the ./handmark barrel (SPEC §11).
+ * HandMark public barrel.
  * ─────────────────────────────────────────────────────────────────────────────
  * `HandMark` is the sole public component name. The pure L1–L3 functions ship
  * too — they are framework-free, directly usable in slides decks, D3 charts
@@ -10,14 +10,13 @@
  * is vendored; only `ribbon:'hull'` (the highlighter) touches that core
  * (treeshaken otherwise).
  *
- * BA.W-HANDMARK: `GlassUnderline`/the `/underline` subpath RETIRED onto
- * `HandMark shape="underline"` (DEC-8 outcome 1; clean break, no alias). The
- * editorial draw-on underline is `<HandMark shape="underline" animation="draw-on">`;
- * the natural pencil-boil morphology is the `boil` brush.
+ * The editorial draw-on underline is
+ * `<HandMark shape="underline" animation="draw-on">`; the natural pencil-boil
+ * morphology is the `boil` brush.
  */
 export { default as HandMark } from "./HandMark.vue";
 
-// ── the flat Brush model (pure data + types; SPEC §2) ──
+// ── Flat Brush model: pure data and types ─────────────────────────────────
 export {
     BRUSHES,
     resolveBrush,

@@ -1,4 +1,4 @@
-// BI.W-BLOB-SEAMS — the blob CONFIG-preset leaf (GAP-L5 / value.js T-communiqué §4).
+// the blob CONFIG-preset leaf (value.js T-communiqué §4).
 //
 // The value.js-FREE config surface: named presets + the derived-palette ink-floor
 // bracket, all plain serializable data + pure math (NO `<Blob>` SFC, NO renderer, NO
@@ -10,7 +10,7 @@
 import type { BlobConfig } from "./types";
 import { BLOB_CONFIG_DEFAULTS } from "./types";
 
-// ── The derived-palette ink-floor bracket (D8 / value.js GAP-L5) ────────────────────
+// ── The derived-palette ink-floor bracket (D8, value.js ) ────────────────────
 //
 // `deriveBlobPalette` (`/color`) walks a seed into a body→satellite OKLCh ramp whose
 // deepest (body) stop can collapse toward an illegible near-black on a dark seed. The
@@ -19,7 +19,7 @@ import { BLOB_CONFIG_DEFAULTS } from "./types";
 // reads as a black slab (the ink-floor defect), above 0.20 the deep body loses its
 // weight against the lighter satellites. The default sits mid-bracket at 0.15.
 
-/** The D8 OKLab-L ink-floor bracket — `[min, max]` (BI.W-BLOB-SEAMS / value.js GAP-L5). */
+/** OKLab-L ink-floor bracket expressed as `[min, max]`. */
 export const LIGHTNESS_FLOOR_BRACKET: readonly [number, number] = [0.12, 0.2];
 
 /** The default derived-palette OKLab-L floor (mid-bracket). */
@@ -27,7 +27,7 @@ export const LIGHTNESS_FLOOR_DEFAULT = 0.15;
 
 /**
  * Clamp a lightness-floor value into the {@link LIGHTNESS_FLOOR_BRACKET} `[0.12, 0.20]`.
- * A non-finite / omitted value resolves to {@link LIGHTNESS_FLOOR_DEFAULT} (0.15). Pass
+ * A non-finite, omitted value resolves to {@link LIGHTNESS_FLOOR_DEFAULT} (0.15). Pass
  * the result to `deriveBlobPalette`'s `lightnessFloor` so a consumer/HERO body never
  * derives below the ink floor NOR above the deep-body ceiling — the bracket is the
  * contract, the atom is the knob.

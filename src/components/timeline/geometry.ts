@@ -2,8 +2,7 @@
  * Timeline shared geometry — pure math + payload helpers used by ≥ 2 of
  * the variant SFCs (ScrubberTimeline / SegmentedTimeline / ContinuousTimeline).
  *
- * Split out of the prior monolithic `GlassTimeline.vue` per O.W3 Lane A —
- * the geometry was identical across the segmented + continuous variants,
+ * The geometry is shared across the segmented + continuous variants,
  * and the popover-payload helper is consumed only by the continuous variant
  * today but its shape (the AA-canonical `{ label, value, description, state }`
  * envelope) is documented as the shared per-segment hover-payload contract.
@@ -20,7 +19,7 @@ import type { TimelineSegment, TimelineSegmentGradient } from "./types";
 
 // ─── Per-segment fill helper ──────────────────────────────────────────────
 //
-// BD.W-TIMELINE-RAIL-UNIFY (LEG 1) — the opaque `gradientFor(seg)` `chart-*`
+// The opaque `gradientFor(seg)` `chart-*`
 // cel fill is RETIRED (no consumer left): the segmented cels are now tinted
 // GLASS over the warm rail (`.timeline-cel` + the per-segment `--cel-accent`
 // the SFC derives from the gradient `to`). The stitched continuous gradient
@@ -227,7 +226,7 @@ export function continuousFillWidth(seg: TimelineSegment): number {
 // ─── Continuous-variant popover payload ──────────────────────────────────
 
 /**
- * AB.W2.T2 — default popover content payload shape.
+ * Default popover content payload shape.
  *
  * Reads `value` shape if the consumer supplied the AA-canonical
  * `{ label, value, description, state }` payload (the speedtest

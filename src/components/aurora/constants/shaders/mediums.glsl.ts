@@ -27,10 +27,10 @@ vec3 sampleBase(vec2 p, float t) {
   return c;
 }
 `
-    // BG.W-AUR-METAL-FINISH — the gradient PACK helpers (packGrad before structureTensorField).
+    // The gradient pack helpers precede structureTensorField.
     + AURORA_METAL_PACK_GLSL
     + /* glsl */ `
-// ── Structure-tensor / edge-tangent-flow (AW.W4.1) ─────────────────────────
+// ── Structure tensor / edge-tangent flow ───────────────────────────────────
 // The keystone of the painterly engine: derive stroke orientation from the COLOR
 // FIELD's OWN structure, not a hand-authored flow pattern. A 3x3 Sobel over
 // luma(sampleBase) yields the gradient (Gx,Gy); the 2x2 structure tensor
@@ -38,8 +38,7 @@ vec3 sampleBase(vec2 p, float t) {
 // eigenvector (the edge-TANGENT — least color change, the stroke direction) + the
 // coherence A = (λ1-λ2)/(λ1+λ2); flat zones relax toward fallbackDir by (1-A). The
 // single-pass small-tap WebGL2 form. Returns vec4(tangent.xy, A, packGrad(Gx,Gy)) —
-// the .w lane carries the metal medium's gradient (BG.W-AUR-METAL-FINISH; the .xy/.z
-// callers are byte-unchanged).
+// The .w lane carries the metal medium's gradient; the .xy/.z callers are unchanged.
 vec4 structureTensorField(vec2 p, float t, vec2 fallbackDir) {
   float e = 0.0035; // small-tap neighborhood (edge-mask scale)
   // 3x3 luma samples.
@@ -135,7 +134,7 @@ vec3 mediumPastel(vec3 col, vec2 p, float t) {
 `;
 
 export const AURORA_MEDIUMS_POST_BRUSH_GLSL = /* glsl */ `// ── Medium id constants (mirror uniformBridge.ts MEDIUM_ID — the uMedium ladder) ──
-// The StrokeProfile selector (AX.W12 + AX.W13) dispatches on the medium id: oil,
+// The StrokeProfile selector dispatches on the medium id: oil,
 // van-Gogh, and oil-pastel each AUTHOR a first-class profile in profileFor.
 #define MEDIUM_OIL 3
 #define MEDIUM_CRAYON 4
@@ -148,7 +147,7 @@ export const AURORA_MEDIUMS_POST_BRUSH_GLSL = /* glsl */ `// ── Medium id co
 // SCUMBLE that lets the lower color show through the broken upper layer, and stable
 // OKLCh broken-color pigment patches. NO sheen, NO burnish film — that waxy gloss is
 // the OIL-PASTEL deposition's signature (mediumOilPastel), distinct from dry crayon
-// (AX.W13 slice 8 F1 — the split). Crayon shares the SUBSTRATE (the structure-tensor
+// split. Crayon shares the substrate (the structure-tensor
 // orientation, the tooth noise, OKLCh brokenColorJitter), not the dispatch body.
 vec3 mediumCrayon(vec3 col, vec2 p, float t) {
   // Orient the deposition along the structure-tensor edge-tangent (the bridge forces
@@ -199,12 +198,12 @@ vec3 mediumCrayon(vec3 col, vec2 p, float t) {
   return result;
 }
 
-// ── StrokeProfile — the oil-stroke parameter vector (AX.W12, slice 8 F6) ──────
+// ── StrokeProfile — the oil-stroke parameter vector ────────────────────────
 // The SBR "stroke = parameter vector" canon (facet 11): the per-mode if-ladder knobs
 // become struct FIELDS — logic-as-DATA, not an imperative branch. profileFor(medium,
 // mode) populates the profile for a (medium, mode) pair; paintStrokeLayers(profile) runs
-// the four-layer bestOil/paintOver cascade off it. A new medium (the W13 van-Gogh /
-// oil-pastel profiles) AUTHORS a profile entry — it never edits a monolith.
+// the four-layer bestOil/paintOver cascade off it. A new medium, such as van-Gogh or
+// oil-pastel, authors a profile entry; it never edits a monolith.
 struct StrokeProfile {
   int   shapeType;   // 0 tapered, 1 load-drag, 2 dab, 3 even, 4 comma/crescent
   float bristleAmp;  // edge raggedness 0..0.5
@@ -218,16 +217,16 @@ struct StrokeProfile {
   float densityBig;  // layer-1 (big gestural) placement density gate
   float densityMed;  // layer-2 (medium body) placement density gate
   float densitySml;  // layer-3 (small dabs) placement density gate
-  float energyGrade; // AX.W13 — SBR energy-grade magnitude (0 off; 1 the van-Gogh
+  float energyGrade; // SBR energy-grade magnitude (0 off; 1 the van-Gogh
                      // Starry-Night length cascade). The energy grade is a PROFILE
                      // field, NOT a buried uMedium==5 bestOil branch (slice 8 F0).
-  float impastoFloor;// AX.W13 — the per-stroke height-crown floor (0.4 oil falloff;
+  float impastoFloor;// Per-stroke height-crown floor (0.4 oil falloff;
                      // 1.0 van-Gogh FULL-height crown so each dab catches its glint).
-  float densityFill; // AX.W13 — layer-4 fill-dab density. Oil/oil-pastel fill the
+  float densityFill; // Layer-4 fill-dab density. Oil/oil-pastel fill the
                      // bald spots (0.95, full coverage); van-Gogh sets it LOW so the
                      // sparse atomic dabs keep their visible inter-stroke ground gaps
                      // (the atomicity read — a 0.95 fill would close every gap to a smear).
-  float groundFloor; // AX.W13 — the bare-ground darken floor. The gaps between strokes
+  float groundFloor; // Bare-ground darken floor. The gaps between strokes
                      // (low accumulated height) multiply toward this floor, so van-Gogh's
                      // sparse atomic dabs read over a visibly darker underpainting (the
                      // Starry-Night visible ground). Oil/oil-pastel keep 1.0 (no darken).
@@ -242,7 +241,7 @@ struct StrokeProfile {
 `
     + AURORA_OIL_MODES_GLSL
     + /* glsl */ `
-// The single parameterized four-layer stroke cascade (AX.W12). The four hand-unrolled
+// The single parameterized four-layer stroke cascade. The four hand-unrolled
 // bestOil/paintOver invocations collapse into ONE body driven by the profile + the
 // uniform-derived per-layer scale/anisotropy multipliers (which are mode-INVARIANT — the
 // per-layer offsets, seeds, and len/wid muls are fixed across modes, so they stay here as
@@ -254,15 +253,15 @@ void paintStrokeLayers(inout vec3 col, inout float height, StrokeProfile prof,
   // Scales & multipliers from uniforms (mode-invariant cascade structure).
   float baseScale = max(uStrokeScale * 0.006, 0.008);
   // Three primary layers: big gestural, medium body, small dabs.
-  // W-AUR-STUDIO D5 — the −5/3 radii respacing was MEASURED + REVERTED (recorded, not
-  // silently struck). The φ-adjacent geometric candidate (2.4 / 1.45 / 0.87, a fixed
+  // The −5/3 radii respacing was measured and reverted, not
+  // silently struck). The φ-adjacent geometric candidate (2.4, 1.45, 0.87, a fixed
   // ≈1.66× step) moved oil-pastel β −2.534 → −2.413 — TOWARD the −5/3 band but NOT into
   // it (floor −1.85), so the keep-iff-into-band gate failed. The single-pass WebGL2 path
   // is the true limiter (HC-aurora §5): the oil-pastel β + the oil/oil-pastel anisotropy
-  // residual stays the oil/oil-pastel stroke-cascade ceiling. BB.W-AUR-KUWAHARA DECIDED the
-  // booking: the SOFT anisotropic-Kuwahara finish ships as the OPT-IN mediumKuwahara() body
+  // residual stays the oil/oil-pastel stroke-cascade ceiling. The soft
+  // anisotropic-Kuwahara finish therefore remains the opt-in mediumKuwahara() body
   // (uMedium==7) the consumer selects — NOT a re-tune of these oil/oil-pastel knobs. The
-  // hand-set 2.4 / 1.1 / 0.45 stays — it is van-Gogh's landed-band spacing.
+  // hand-set 2.4, 1.1, 0.45 stays — it is van-Gogh's landed-band spacing.
   float sBig = baseScale * 2.4;
   float sMed = baseScale * 1.1;
   float sSml = baseScale * 0.45;
@@ -337,14 +336,14 @@ void paintStrokeLayers(inout vec3 col, inout float height, StrokeProfile prof,
   }
 }
 
-// The shared stroke-medium SUBSTRATE finish (AX.W12 + AX.W13): paint the four-layer
+// The shared stroke-medium substrate finish paints the four-layer
 // cascade off the profile, then canvas-tooth + relight + saturation. The three painterly
-// STROKE mediums (oil / van-Gogh / oil-pastel) each AUTHOR their own profile and call
+// STROKE mediums (oil, van-Gogh, oil-pastel) each AUTHOR their own profile and call
 // this — the substrate is shared, the PROFILE (not a dispatch-body fork) differentiates
-// the medium (slice 8 F6). mode passes through for the cascade's mode-special-cased shapes.
+// the medium. mode passes through for the cascade's mode-special-cased shapes.
 vec3 paintStrokeMedium(vec3 col, vec2 p, float t, StrokeProfile prof, int mode) {
   vec3 result = col;
-  // AW.W4.2 — accumulated paint HEIGHT across the stroke layers. The relight reads
+  // Accumulated paint height across the stroke layers. The relight reads
   // its gradient for the normal; the canvas tooth seeds the base relief.
   float height = 0.0;
   paintStrokeLayers(result, height, prof, mode, p, t);
@@ -355,13 +354,13 @@ vec3 paintStrokeMedium(vec3 col, vec2 p, float t, StrokeProfile prof, int mode) 
   float tooth  = (0.6 * tooth1 + 0.4 * tooth2) - 0.5;
   result *= 1.0 + tooth * prof.toothAmp * uCanvasGrain;
 
-  // AW.W4.2 — relight the accumulated paint height with the movable uLightDir
+  // Relight the accumulated paint height with the movable uLightDir
   // source (diffuse + Blinn specular, in LINEAR before aces()). The canvas tooth
   // is the base relief term so the weave also catches the raking light.
   float canvasBase = tooth * prof.toothAmp * 0.5;
   result = relightImpasto(result, height, canvasBase);
 
-  // AX.W13 — the visible ground. The bare-ground gaps (low accumulated stroke height)
+  // Preserve visible ground. The bare-ground gaps (low accumulated stroke height)
   // multiply toward prof.groundFloor, so van-Gogh's sparse atomic dabs read as separable
   // marks over a darker underpainting (oil/oil-pastel keep groundFloor=1.0 → no-op). The
   // smoothstep keeps the impasto dabs (high height) at full value; only the open ground
@@ -376,7 +375,7 @@ vec3 paintStrokeMedium(vec3 col, vec2 p, float t, StrokeProfile prof, int mode) 
 
 vec3 mediumOil(vec3 col, vec2 p, float t) {
   // The oil medium is a thin body: fetch the oil profile (mode-dispatched), paint via
-  // the shared stroke substrate.  uStrokeMode: 0 oil (gestural), 1 knife, 3 brushwork.
+  // the shared stroke substrate. uStrokeMode: 0 oil (gestural), 1 knife, 3 brushwork.
   int mode = uStrokeMode;
   StrokeProfile prof = profileFor(MEDIUM_OIL, mode);
   return paintStrokeMedium(col, p, t, prof, mode);
@@ -384,8 +383,7 @@ vec3 mediumOil(vec3 col, vec2 p, float t) {
 
 #define MEDIUM_KUWAHARA 7
 
-// ── Kuwahara — the anisotropic generalized Kuwahara painterly finish (uMedium==7,
-// BB.W-AUR-KUWAHARA) ───────────────────────────────────────────────────────────────
+// ── Kuwahara — anisotropic generalized painterly finish (uMedium==7) ───────
 // The SOTA edge-preserving painterly smoothing: the generalized/anisotropic Kuwahara of
 // Kyprianidis 2010, the SOFT polynomial-weighted variant (NOT the pre-2010 hard argmin,
 // which BANDS the flat field into an 8-spoke pinwheel — the §4.2 anti-regression). Aurora
@@ -395,10 +393,10 @@ vec3 mediumOil(vec3 col, vec2 p, float t) {
 // output is the variance-weighted blend of the sector means (1/(1+var^q) — low-variance
 // sectors dominate, the SOFT criterion → flat oil-paint patches with crisp zone boundaries).
 // Single-pass small-radius WebGL2 form: 4 rings × 8 angular taps = 32 procedural samples
-// (cost-bounded; the offscreen-park / PRM freeze the substrate owns is untouched).
+// (cost-bounded; the offscreen-park, PRM freeze the substrate owns is untouched).
 vec3 mediumKuwahara(vec3 col, vec2 p, float t) {
   // Orient the kernel along the structure-tensor edge-tangent + read the coherence A
-  // (the field widened vec3→vec4 for metal's gradient; kuwahara reads only .xy/.z).
+  // (the field widened vec3→vec4 for metal's gradient; Kuwahara reads only .xy/.z).
   vec4 stf = structureTensorField(p, t, flowField(p, t));
   vec2 tangent = stf.xy;
   float A = stf.z;
@@ -481,11 +479,11 @@ vec3 mediumKuwahara(vec3 col, vec2 p, float t) {
 }
 
 `
-    // BG.W-AUR-METAL-FINISH — the metal bodies (uMedium==8/9) splice in HERE, after
+    // The metal bodies (uMedium==8/9) splice in here, after
     // mediumKuwahara + before vangogh (carved to metal-medium.glsl.ts for the bound).
     + AURORA_METAL_MEDIUM_GLSL
     + AURORA_VANGOGH_MEDIUM_GLSL
-    + /* glsl */ `// AX.W13 — the oil-pastel medium (uMedium==6) is a DISTINCT stroke-deposition body,
+    + /* glsl */ `// The oil-pastel medium (uMedium==6) is a distinct stroke-deposition body,
 // split out of the dry-crayon tooth-multiply (mediumCrayon) (slice 8 F1). It DEPOSITS
 // broad smeared directional strokes via the same brush engine with a creamy soft
 // hardness, heavy pigment build-up where strokes overlap, and a chroma punch — the

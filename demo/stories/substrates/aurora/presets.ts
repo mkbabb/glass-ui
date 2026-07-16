@@ -547,7 +547,7 @@ const CRAYON = cfg({
 });
 
 // ── METAL ─────────────────────────────────────────────────────────────────
-// BG.W-AUR-METAL-FINISH — the warm folded-metal hero (the medium-forcing preset,
+// the warm folded-metal hero (the medium-forcing preset,
 // mirroring VANGOGH). The metal medium re-lights the field's luma as a HEIGHT
 // field, so a warm gold/bronze/copper ramp with a strong luma range gives the
 // folds real relief to catch the cursor-synth light. `metalPolish` lifts the
@@ -583,7 +583,7 @@ const METAL = cfg({
 });
 
 // ── SETTING_SUN (candidate A — the default lead, safest) ────────────────────
-// BI.W-AURORA-VIBRANCY (UF-E1) — "a few more notes of pink — like the setting sun."
+// "a few more notes of pink — like the setting sun."
 // The warm horizon band: a rose sun-core (THE pink note, h:12) low over a coral→amber→
 // gold sweep, a pale cream apex up top. Warm nuclei biased LOW (y 0.6–0.9), the sun-core
 // horizontally ELONGATED (a sun-BAND, not a blob); the pale stop rides high (y≈0.2).

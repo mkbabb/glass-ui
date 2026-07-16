@@ -1,5 +1,5 @@
 /* glass/liquid-enter.css
-   BD.W-LIQUID-ENTRANCE-GENERAL — the UNIVERSAL LIQUID-ENTER mount recipe.
+   Universal liquid-enter mount recipe.
 
    `.glass-reveal`'s four coupled channels (SPATIAL bloom + SQUISH + fade + decongest),
    promoted from an overlay-only `data-state` TRANSITION to a mount `@keyframes` so a
@@ -13,20 +13,19 @@
                 floor, the DEFAULT. Zero JS. Route changes use native View Transitions,
                 not this recipe.
      • SCROLL — `.scroll-cascade` (scroll-choreography.css), the section cascade; this
-                file does NOT touch it. (The `.scroll-build` page-build recipe is
-                RETIRED — BG.W-ROUTE-TRANSITION — so its `gl-page-build`-clobber fence
-                is moot.)
+                file does NOT touch it. The retired `.scroll-build` page-build recipe
+                and its `gl-page-build` clobber fence do not survive.
      • TRIGGER— `useLiquidReveal`/`useBloomUp` (the JS source-rect bloom).
 
-   THE FOUR CHANNELS (the iOS-27 read, design.md §SPATIAL/EFFECTS split):
+   THE FOUR CHANNELS (the spatial/effects split):
      1. SPATIAL bloom — `translate:` rise (the LONGHAND, composes with a centering
         transform) on the snappy spring.
      2. SQUISH volume — the reciprocal `scale:` LONGHAND, born wide+flat (vol-preserving
-        sx·sy ≈ 1), settles square. NEVER a `transform: scale()` shorthand (Bug A: it
+        sx·sy ≈ 1), settles square. NEVER a `transform: scale()` shorthand because it
         REPLACES a base centering `transform: translate(-50%,-50%)` → a centered dialog
         snaps to the corner; AND it composes with a `scale:` longhand → double-scale,
-        born at 78% area). The bloom-from-small GRACE is the coupled rise + blur + fade,
-        NOT an isotropic shrink (a 0.88 multiplier re-introduces the 0.776-area shrink).
+        born at 78% area. The bloom-from-small GRACE is the coupled rise + blur + fade,
+        NOT an isotropic shrink (a 0.94 multiplier re-introduces a 0.884-area footprint).
         When a JS clock is present, `--stretch` (useLiquidFlex — the ONE squish engine)
         is written live and paired reciprocally on THIS longhand.
      3. EFFECTS fade — `opacity 0→1` (coupled so scale+fade read as ONE coalescing layer).
@@ -35,7 +34,7 @@
         WebKit per-frame-reblur hole is avoided), on the SAME spring clock.
 
    The four channels are governed by ONE number — `--motion-weight` (rest 1/φ ≈ 0.618,
-   the shipped Band-0 token): weight 0 ⇒ no visible punch (PRM), weight 1 ⇒ the full
+   the resting token): weight 0 ⇒ no visible punch (PRM), weight 1 ⇒ the full
    celebration slam. Co-scaled, never four unrelated tics.
 
    @import-ed by glass.css in cascade order, in its own @layer components. */
@@ -54,14 +53,14 @@
         --lq-stretch-y: 0.945;
         /* The register's OWN clock — the 1/φ overlap stagger keys off THIS so the
            "launch beat N+1 as beat N hits 62%" holds on the cel/bouncy clock too
-           (DELTA-ASSAY §3 — not hardcoded to the snappy duration). */
+           rather than being hardcoded to the snappy duration. */
         --lq-enter-duration: var(--spring-snappy-duration);
     }
 
-    /* ── BASE register (the graceful floor, GREEN on the bouncy/snappy spring) ──
+    /* ── Base register (the graceful floor on the bouncy/snappy spring) ──
        A 2-stop squish-grow: the spring's `linear()` overshoot interior supplies the
        calibrated iOS bounce. ONE `scale:` longhand (the squish), ONE `translate:`
-       longhand (the rise) — NO `transform:` shorthand (Bug A). */
+       longhand (the rise) — NO `transform:` shorthand. */
     @media (prefers-reduced-motion: no-preference) {
         .liquid-enter {
             animation: gl-liquid-enter var(--lq-enter-duration) var(--spring-snappy)
@@ -78,8 +77,8 @@
             transform-origin: var(--lq-enter-origin);
         }
 
-        /* DISPLAY type arrives with GRAVITY, no bounce (a heading must not overshoot —
-           the W-HIERARCHY arrival law). The fade/decongest still ride the recipe. */
+        /* Display type arrives with gravity and no bounce because a heading must not
+           overshoot. The fade and decongest channels still ride the recipe. */
         .liquid-enter.is-display {
             animation-timing-function: var(--ease-out);
         }
@@ -106,9 +105,9 @@
     }
 
     /* ── CEL register (`.is-cel`, the audacious cartoon-technicolor upgrade) ──
-       LIVE-PROVEN FINDING (GOLDEN §7e): the cel-slam PUNCH cannot come from
-       ease-overshoot across the narrow `scale: 0.88→1` span (a 0.12 span × a 1.22
-       ease-peak yields only ~2% absolute punch). The punch MUST live in EXPLICIT
+       The cel-slam punch cannot come from
+       ease-overshoot across the narrow `scale: 0.94→1` span (a 0.06 span × a 1.22
+       ease-peak yields only ~1.3% absolute punch). The punch MUST live in EXPLICIT
        keyframe STOPS (a 3-stop arc); `--ease-cartoon-punch` (the shipped loud
        `linear()`) adds the anticipation dip + extra overshoot ON TOP. Same
        `scale:`/`translate:` LONGHAND discipline — NO `transform:` shorthand.
@@ -199,12 +198,12 @@
     }
 }
 
-/* The Safari < 17.2 `linear()` cubic-bezier floor was COLLAPSED at BG.NF.2
-   W-LEGACY-LADDER-COLLAPSE — both targets (current Chrome + current Safari)
+/* The Safari < 17.2 `linear()` cubic-bezier floor was removed because both
+   targets (current Chrome + current Safari)
    parse `linear()` spring curves, so the `--spring-*` tokens are the sole
    timing source; the bezier degrade arm served no target engine. */
 
-/* ── REDUCED-MOTION CARVE (the vestibular floor — WCAG 2.3.3 · design.md P6) ──
+/* ── Reduced-motion carve (the vestibular floor — WCAG 2.3.3) ──
    Under `prefers-reduced-motion: reduce` the entrance keeps the FADE and drops the
    transform + squish + bounce + blur + stagger + cast in ONE arm (opacity is not a
    vestibular trigger). One calm paint on the short clock, delay → 0. This mirrors the

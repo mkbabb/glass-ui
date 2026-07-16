@@ -1,22 +1,22 @@
-// BI.W-FOURIER-RIBBON — the WebGL2 INSTANCED-RIBBON programs (the WebGL2 fallback tail).
+// The WebGL2 instanced-ribbon programs form the fallback tail.
 //
 // The fullscreen per-pixel SDF fragment (the O(pixels×segments) loop over ALL ≤256 segments
-// at EVERY pixel) RETIRED wholesale onto instanced geometry (proof:viz-fourier-ribbon FB1 —
-// no dual path). ONE instanced program paints every ribbon LAYER (trail · epicycle · head ·
+// at every pixel) retired wholesale onto instanced geometry, with no dual path.
+// One instanced program paints every ribbon layer (trail · epicycle · head ·
 // cel), selected per draw by `uLayer`:
 //   • the VERTEX expands a unit quad to the per-instance capsule (a→b padded by the covered
-//     extent) or AABB (ring / head halo) bounding box — so each instance covers ONLY its own
+//     extent) or AABB (ring, head halo) bounding box — so each instance covers ONLY its own
 //     segment, O(covered_pixels), not the whole canvas;
-//   • the FRAGMENT runs the EXACT `segDist` under-glow+core / ring+arm+dot / head-aniso /
-//     cel over-composite the fullscreen loop ran — pixel-identical by over-composite
+//   • the fragment runs the exact `segDist` under-glow+core, ring+arm+dot, head-aniso,
+//     and cel over-composite the fullscreen loop ran — pixel-identical by over-composite
 //     associativity, the per-instance premultiplied contribution blended `over` in draw order.
 //
 // The head→tail TAPER (`RIBBON_TAIL_FRAC`, MIRRORED verbatim from constants.ts — the GLSL
 // twin cannot import a TS const) + the soft UNDER-GLOW (`RIBBON_UNDERGLOW_*`) live in the
-// trail fragment; proof:viz FB1 cross-checks the mirror. The color/OKLCh math splices the
+// trail fragment; focused parity coverage cross-checks the mirror. The color/OKLCh math splices the
 // SHARED `procedural-color.glsl.ts` chunk so the OETF + Ottosson matrices can never DRIFT
 // from the WGSL primary. NEVER reached on a capable engine — Safari 26+/Chrome ride the WGSL
-// instanced primary; this is the Linux-Firefox / pre-A12 tail.
+// instanced primary; this is the Linux-Firefox, pre-A12 tail.
 
 import {
     OETF_GLSL,
@@ -25,7 +25,7 @@ import {
 
 /** The instanced ribbon VERTEX — expands the unit quad to each instance's covered bbox. */
 export const FOURIER_FIELD_VERT_GLSL = /* glsl */ `#version 300 es
-// BI.W-FOURIER-RIBBON §2b — MUST equal the WGSL twin + FOURIER_TANGENT_EPS (constants.ts).
+// Must equal the WGSL twin and FOURIER_TANGENT_EPS in constants.ts.
 #define RIBBON_UNDERGLOW_SCALE 2.2
 
 in vec2 aCorner;   // the unit quad corner ∈ [0,1]²
@@ -56,7 +56,7 @@ void main() {
     ext += uEdgeMargin;
     pos = a + (aCorner * 2.0 - 1.0) * ext;
   } else {
-    // Capsule along a→b padded by the covered extent (trail under-glow / cel stroke).
+    // Capsule along a→b padded by the covered extent (trail under-glow, cel stroke).
     float ext = (uLayer == 0) ? (strokeHalf * RIBBON_UNDERGLOW_SCALE) : strokeHalf;
     ext += uEdgeMargin;
     vec2 d = b - a;
@@ -71,7 +71,7 @@ void main() {
   vec2 center = uFit.xy;
   float scale = max(uFit.z, 1e-6);
   float aspect = max(uFit.w, 1e-4);
-  // model → clip (the inverse of the fs's p = center + vClip·aspect / scale).
+  // model → clip (the inverse of the fs's p = center + vClip·aspect, scale).
   float clipX = (pos.x - center.x) * scale / aspect;
   float clipY = (pos.y - center.y) * scale;
   gl_Position = vec4(clipX, clipY, 0.0, 1.0);
@@ -83,11 +83,11 @@ export const FOURIER_FIELD_FRAG_GLSL = /* glsl */ `#version 300 es
 precision highp float;
 
 #define MAX_FOURIER_STOPS 4
-// BD.W-FOURIER-LOOM §2b — MUST equal the WGSL twin + FOURIER_TANGENT_EPS (constants.ts).
+// Must equal the WGSL twin and FOURIER_TANGENT_EPS in constants.ts.
 #define TANGENT_EPS 1e-4
 #define SPEED_REF_HALFWIDTHS 6.0
-// BG.W-FOURIER-BEAUTY B1 — the THICK luminous RIBBON. RIBBON_TAIL_FRAC is MIRRORED verbatim
-// from constants.ts (the GLSL twin cannot import a TS const); proof:viz FB1 cross-checks the
+// The thick luminous ribbon mirrors RIBBON_TAIL_FRAC verbatim
+// from constants.ts because the GLSL twin cannot import a TS const; parity coverage verifies the
 // two copies are equal so the mid-body floor (RIBBON_HEAD_FLOOR_PX) can never drift off it.
 #define RIBBON_TAIL_FRAC 0.4
 #define RIBBON_UNDERGLOW_SCALE 2.2
@@ -145,7 +145,7 @@ float segDist(vec2 p, vec2 a, vec2 b) {
   return length(pa - ba * h);
 }
 
-// BD.W-FOURIER-LOOM §2b — the head travel frame (T, ŝ), the GLSL twin of the WGSL headFrame.
+// The head travel frame (T, ŝ), the GLSL twin of the WGSL headFrame.
 struct HeadFrame { vec2 T; float sHat; };
 HeadFrame headFrame(vec2 head, vec2 headBack, float halfW) {
   vec2 d = head - headBack;
@@ -184,15 +184,15 @@ void main() {
     // ── TRAIL — the tapered luminous ribbon over its own soft under-glow ──
     float age = vAge;
     float d = segDist(p, vA, vB);
-    // B1 — the head→tail TAPER: the ribbon half-width scales with age (thick head, thin tail).
+    // Head→tail taper: the ribbon half-width scales with age (thick head, thin tail).
     float ribbonHalf = halfW * (RIBBON_TAIL_FRAC + (1.0 - RIBBON_TAIL_FRAC) * age);
     vec3 lin = samplePaletteLin(1.0 - age * 0.4);
     vec3 rgb = clamp(linearToSrgb(lin), vec3(0.0), vec3(1.0));
-    // B1 — the soft UNDER-GLOW: a wider, low-alpha copy UNDER the crisp ribbon (ONE color event).
+    // Soft under-glow: a wider, low-alpha copy under the crisp ribbon (one color event).
     float glowHalf = ribbonHalf * RIBBON_UNDERGLOW_SCALE;
     float glowCover = 1.0 - smoothstep(glowHalf, glowHalf + aa * 3.0, d);
     float ga = peak * RIBBON_UNDERGLOW_ALPHA * pow(age, fadeExp) * glowCover;
-    // the crisp tapered ribbon core.
+    // The crisp tapered ribbon core.
     float cover = 1.0 - smoothstep(ribbonHalf, ribbonHalf + aa, d);
     float ca = max(peak * pow(age, fadeExp), peak * trailFloor) * cover;
     // core OVER glow OVER transparent (both premultiplied on the SAME rgb → out = rgb·outA).
@@ -231,7 +231,7 @@ void main() {
     accum = vec4(vec3(1.0) * spec, spec) + accum * (1.0 - spec);
     fragColor = accum;
   } else {
-    // ── CEL — the technicolor ink shadow (rope uLayer==3 / arm uLayer==4) ──
+    // ── CEL — the technicolor ink shadow (rope uLayer==3, arm uLayer==4) ──
     float celA = clamp(celGain, 0.0, 1.0);
     float d = segDist(p, vA, vB);
     float cover = 1.0 - smoothstep(halfW, halfW + aa, d);

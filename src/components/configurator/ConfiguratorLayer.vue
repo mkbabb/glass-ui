@@ -15,7 +15,7 @@ import { cn } from "../_shared/class-names";
  * SegmentedTabs / DockLayerGroup at the parent governs which layer is
  * active).
  *
- * # M.W2 Lane A (F-ε-3 fix) — recursion-free reveal
+ * Recursion-free reveal
  *
  * Earlier versions composed `<Collapsible>` + `<CollapsibleContent>` from
  * reka-ui to drive the height transition. Under Lighthouse's strict cold-
@@ -32,8 +32,6 @@ import { cn } from "../_shared/class-names";
  * which requires no JS watchers and produces no reactive graph. The
  * a11y surface (`role="button"` + `aria-expanded` + `aria-controls`)
  * matches the prior reka-ui shape; consumers do not need to migrate.
- *
- * Cf. `docs/tranches/M/audit/W2-Lane-A-F-eps-3-proof.md`.
  */
 const props = withDefaults(
     defineProps<{
@@ -48,7 +46,7 @@ const props = withDefaults(
         /**
          * Opt-in inter-row hairline. When set, sibling rows inside the body
          * are separated by a `border-border/30` top rule (the first row stays
-         * flush). Default `false` keeps the body gap-only (pre-AU.W9 visual).
+         * flush). Default `false` keeps the body gap-only.
          */
         dividers?: boolean;
         class?: HTMLAttributes["class"];
@@ -89,7 +87,7 @@ const stateAttr = computed(() => (open.value ? "open" : "closed"));
 </script>
 
 <template>
-    <!-- BI.W-CONFIG-IN-SHEET (Law 1/Law 2, ruling 11) — the section is a CONCENTRIC
+    <!-- The section is a concentric
          CARD, not a flush-square hairline block. The `border` (all-side) width is
          Tailwind; the concentric `border-radius` (max(floor, ctx − inset)) + the
          `overflow: hidden` clip + the section tint + the CARD border-color come from
@@ -97,7 +95,7 @@ const stateAttr = computed(() => (open.value ? "open" : "closed"));
          Law-1 relay off the parent ctx (the <Configurator> root site #1 / the gear
          Sheet site #3). This SUPERSEDES the prior "no per-section radius / flush
          border-b" contract (clean break — UF-A4). The dark-adaptive
-         --configurator-divider-section token (BA.W-CONFIG-CHASSIS.1 / CFG-4) still
+         --configurator-divider-section token still
          carries the border color so the card edge survives both glass plates. -->
     <div
         data-slot="configurator-layer"
@@ -129,7 +127,7 @@ const stateAttr = computed(() => (open.value ? "open" : "closed"));
             @click="onToggle"
         >
             <div class="flex min-w-0 items-baseline gap-2">
-                <!-- The SECTION register (AZ.W-HIERARCHY D6-3): the label reads as a
+                <!-- Section label:
                      section (√φ subheading / 600 via .configurator-section-label),
                      NOT a row — lifting off the prior flat `text-small font-semibold`.
                      The class consumes the minted --configurator-section-{size,weight}. -->
@@ -141,7 +139,7 @@ const stateAttr = computed(() => (open.value ? "open" : "closed"));
                     {{ sub }}
                 </span>
             </div>
-            <!-- BG.W-DISCLOSURE-ROTATE — the chevron rides the ONE shared
+            <!-- The chevron rides the shared
                  `transition-disclosure` register (btn.css): the `rotate` longhand on
                  `--spring-snappy-duration` + the weighty `--ease-cartoon-punch` arrival.
                  The prior scoped `transition: transform …` transitioned the WRONG property
@@ -171,11 +169,11 @@ const stateAttr = computed(() => (open.value ? "open" : "closed"));
             :style="{ gridTemplateRows: open ? '1fr' : '0fr' }"
         >
             <div class="min-h-0 overflow-hidden">
-                <!-- BA.W-CONFIG-CHASSIS.1 (CFG-4) — the inter-row divider reads the
+                <!-- The inter-row divider reads the
                      dark-adaptive --configurator-divider token (off the inline
                      `border-border/30` alpha). The `border-t`/`pt-2` arbitrary
                      variants stay (the WIDTH + spacing); `data-dividers` keys the
-                     scoped COLOR rule below. BI.W-CONFIG-IN-SHEET — the body drops its
+                     scoped color rule below. The body drops its
                      raw `px-3` literal; its inline padding is the ONE
                      --configurator-pad-inline anchor (configurator.css), aligned with
                      the section trigger + the sheet chrome. -->
@@ -199,14 +197,14 @@ const stateAttr = computed(() => (open.value ? "open" : "closed"));
 <style scoped>
 /*
  * Section-reveal MOTION (the D1 "faster/smoother/springier" ask). The
- * `grid-template-rows: 0fr ↔ 1fr` reveal machinery is the M.W2 Lane A
+ * `grid-template-rows: 0fr ↔ 1fr` reveal machinery is the
  * recursion-free CSS-only pattern — UNTOUCHED. Only its TIMING moves: from
  * the prior flat `duration-200 ease-out` bezier onto the §6 enter register —
  * the fast snappy spring (`--spring-snappy`) at `--duration-fast`. The
  * height axis is a layout property; the snappy `linear()` overshoot reads as
  * a quick settle (sub-perceptual peak), not a sluggish 200ms ramp. The
  * chevron rotation is owned by the shared `transition-disclosure` register
- * (BG.W-DISCLOSURE-ROTATE, btn.css) — no scoped chevron transition survives here.
+ * (`btn.css`); no scoped chevron transition survives here.
  */
 .configurator-layer-region {
     transition: grid-template-rows var(--duration-fast) var(--spring-snappy);

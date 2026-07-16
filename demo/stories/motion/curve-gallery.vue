@@ -20,7 +20,7 @@ import {
     SPRING_PRESETS,
     springPreset,
     type SpringPresetName,
-} from "@glass/composables/motion/springPresets";
+} from "@glass/composables/motion/spring/springPresets";
 
 const preset = ref<SpringPresetName>("snappy");
 const activePreset = computed(() => springPreset(preset.value));
@@ -85,7 +85,7 @@ onBeforeUnmount(disposeSpring);
     <StoryPage>
         <StorySection
             label="Physical vocabulary"
-            blurb="Glass names the response; keyframes.js owns the engine. Choose a Glass preset, then reverse the live target mid-flight to test velocity-continuous motion without a republished engine surface."
+            blurb="Choose a motion character, then reverse the target mid-flight to see momentum carry continuously through the turn."
         >
             <div class="grid gap-4 lg:grid-cols-[minmax(0,1fr)_18rem]">
                 <div
@@ -188,7 +188,7 @@ onBeforeUnmount(disposeSpring);
 
         <StorySection
             label="Authoring boundary"
-            blurb="Glass owns the accessible editor chassis. value.js supplies the callable curve math at the component seam; reusable playback remains a direct keyframes.js concern."
+            blurb="Shape a reusable curve with keyboard-accessible controls and compare continuous and stepped timing side by side."
         >
             <div class="grid gap-6 lg:grid-cols-2">
                 <EasingPicker v-model="bezier" mode="bezier" />

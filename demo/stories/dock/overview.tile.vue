@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// dock/overview — the landing-tile vignette (BI.W-LIVE-TILES, the AUTHORED rung).
+// dock/overview — authored landing-tile vignette.
 // A mini live <GlassDock> — the HEAVIEST tile case (the headline primitive), a real
 // glass dock with four icon controls at REST (one active). Inert + 0-GL by the
 // fenced stage (SectionPreviewCard); no live substrate, no own rAF — the dock reads

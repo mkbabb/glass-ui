@@ -1,5 +1,5 @@
-// BC.W-CARVE6 — the gravity-well FORCE, carved out of constellationInteraction.ts to hold
-// the 500-line no-god-module bound. ONE cohesive sub-concern: the held-pointer inverse-square
+// The gravity-well force is isolated from constellationInteraction.ts as one cohesive
+// sub-concern: the held-pointer inverse-square
 // pull + the asymmetric |v|→speed cool-back (the field-heats-while-held / cools-on-release
 // invariant). The function body is the byte-for-byte lift of the prior in-interaction cluster;
 // `constellationInteraction.ts` re-exports `stepWell` so the field engine + the package barrel
@@ -8,7 +8,7 @@
 
 import type { ConstellationField } from "./constellationField";
 
-// ── Gravity-well force (AY.W-CON2) ───────────────────────────────────────────
+// ── Gravity-well force ───────────────────────────────────────────────────────
 /** Below this strength the well force is sub-perceptual — skip the O(count) pass. */
 const WELL_EPS = 1e-3;
 /**
@@ -59,7 +59,7 @@ const WELL_RELEASE_RAMP = 22.0;
 const WELL_DT_CLAMP = 0.05;
 
 /**
- * Advance the gravity-well one `dt` (AY.W-CON2). A transient held-pointer force
+ * Advance the gravity-well one `dt`. A transient held-pointer force
  * composed inside `stepField` (NO new rAF): ease `well.strength` toward
  * `well.target` (1 held / 0 released) at `cfg.ramp`/s; while active, add an
  * inverse-square pull toward the held point onto each node within `cfg.reach`
@@ -101,7 +101,7 @@ export function stepWell(
     const coolRate = well.target > 0 ? WELL_COOL_HELD : WELL_COOL_RELEASED;
     const cool = Math.min(coolRate * h, 1);
     const active = well.strength > WELL_EPS && well.x >= 0;
-    // The PINNED node (AZ.W-CON-GEN G1) is exempt from the well pull AND the |v|→speed
+    // The pinned node is exempt from the well pull and the |v|→speed
     // ease-back — it holds its anchor (the gentle `pinnedDrift` is the only mover).
     const pinned = field.pinnedIndex;
     for (let i = 0; i < nodes.length; i++) {

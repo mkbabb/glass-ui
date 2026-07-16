@@ -9,7 +9,7 @@ import {
     pendingRenderer,
     type RendererStatus,
 } from "@glass/composables/glass/webgpu/rendererStatus";
-import { useReducedMotion } from "@glass/composables/motion/useReducedMotion";
+import { useReducedMotion } from "@glass/composables/motion/core/useReducedMotion";
 
 /** Stage shell — canvas, nuclei overlay, and pointer interaction inside the
  * parent-owned VizStudio aperture. Studio state stays with the parent. */
@@ -17,9 +17,9 @@ const props = withDefaults(
     defineProps<{
         config: AuroraConfig;
         /**
-         * BC.W-VIZ-AURORA (T5) — master switch for configured pointer shaping.
+         * Master switch for configured pointer shaping.
          * The Aurora config still opts each interaction axis in. Pass `false` for a
-         * static specimen; the runtime independently gates the cursor path under PRM.
+         * static specimen; the runtime independently disables cursor motion for reduced motion.
          */
         interactive?: boolean;
     }>(),
@@ -45,18 +45,18 @@ useCursorInteraction(stageRef, () => props.config, {
         auroraRef.value?.setCursor(x, y, strength);
     },
     clearCursor: () => auroraRef.value?.clearCursor(),
-    // BI.W-FIELD-CORE — a single position write (setCursor); the shared pointer field
+    // a single position write (setCursor); the shared pointer field
     // DERIVES the velocity + flick-burst from the smoothed position deltas in its tick (the
     // ONE smoothing stage — the per-move delta re-feed retired with cursorModel).
 });
 </script>
 
 <template>
-    <!-- BC.W-VIZ-AURORA (T3) — the rounded clip lands on the CANVAS-bearing wrapper
+    <!-- The rounded clip lands on the canvas-bearing wrapper
          (`rounded-card overflow-hidden`) so the radius reaches the canvas PIXELS, not
          just the Configurator panel frame; `.aurora-root` keeps its `contain:content`
          so the corners clip the live field, never a square canvas behind a round panel. -->
-    <!-- V-A94 — VizStudio/Configurator owns the painted aperture. The field fills that
+    <!-- VizStudio and Configurator own the painted aperture. The field fills that
          definite grid track and may shrink with it; a second child-owned minimum would
          overflow the aperture and clip the bottom interaction cue. -->
     <div

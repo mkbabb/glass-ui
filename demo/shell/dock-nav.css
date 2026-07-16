@@ -1,6 +1,6 @@
 /*
- * dock-nav.css — DEMO-PRIVATE layout for the GlassDock-driven demo nav chrome
- * (AW.W28.b). It does NOT touch src/styles/.
+ * dock-nav.css — demo-private layout for the GlassDock-driven navigation chrome.
+ * It does not touch src/styles/.
  *
  * Two docks compose the demo's core navigation:
  *   - SidebarDock — a FIXED vertical `always-expanded` GlassDock
@@ -16,9 +16,8 @@
  */
 
 :root {
-    /* AZ.W-REGISTER-IOS — the demo's NCSU-red active accent (`--demo-nav-accent:
-       var(--viz-fourier)`) is RETIRED. R3-6 de-red'd the interactive register AT
-       THE ROOT: the dock selected/hover/active/pressed register is now the iOS
+    /* The retired NCSU-red accent no longer overrides interaction color. The dock's
+       selected, hover, active, and pressed states use the shared iOS-style
        luminance-lift glass register the library ships by default
        (`--dock-selected-accent` + the glass material-lift plate), so the demo
        consumes the neutral root register and no longer re-tints it to red. The
@@ -56,8 +55,8 @@
     margin: 0;
 }
 
-/* ── BG.W-DOCK-RAIL-REINVENT (F3.R4) — the reinvented CONTAINED rail paints the LIBRARY
-   default topology; the demo re-seat is RETIRED (clean break, no dead orphan) ──
+/* The contained rail paints the library's default topology; no demo-only re-seat
+   survives.
    The BE-era `.demo-sidebar-rail … .dock-hairline-slot` / `.dock-stack.vertical` re-seat
    forced the OLD always-OUTSIDE stack into the LOWER gutter (fanning UP off the dock floor)
    because the old topology floated the WHOLE stack outside the dock box, abutting <main>.
@@ -69,13 +68,12 @@
    `.demo-main-scroller` scroll-padding below), NOT by re-seating the whole rail. The library
    box stays INVIOLATE (deltaW=deltaH=0). */
 
-/* ── Active-category — the SHIPPED iOS luminance-lift rail polish (AX.W06 demo ==
-   shipped; de-red'd at AZ.W-REGISTER-IOS) ────────────────────────────────────
+/* Active-category luminance-lift rail polish.
    The active-item register + the leading-edge accent rule are SHIPPED by the
    vertical-dock CSS (`.glass-dock.vertical`, `src/styles/dock-controls.css`): the
    selected control reads as the glass material-lift plate + the translucent
    `--dock-selected-accent` luminance bar — the iOS register. The demo NO LONGER
-   re-tints the accent to NCSU-red (R3-6 retired the brand-red interactive
+   re-tints the accent to NCSU red; the former brand-red interactive
    register at the root); it consumes the neutral default and only widens the
    accent BAR geometry. `tap-squish` press feedback stays composed in markup. */
 .demo-sidebar-item.is-active {
@@ -103,7 +101,7 @@
     max-width: min(100%, 64rem);
 }
 
-/* AZ.W-RAIL3 — the in-dock `.demo-bottom-dock__tabs` story-tab run (the per-facet
+/* The retired in-dock `.demo-bottom-dock__tabs` story-tab run (the per-facet
    DockTabButton column inside the deleted in-dock <DockLayerGroup>) is GONE: the
    in-category facets re-home on the rail's floating carousel strip. The active-story
    weight cue rode that tab run, so its rule is buried with it (no dead orphan). */
@@ -137,7 +135,7 @@
 .demo-main-scroller {
     padding-block: var(--demo-shell-content-pad-block);
     padding-inline: var(--demo-shell-content-pad-inline);
-    /* BC.W-DROPDOWN-FIX — the no-shift discipline. This route scroller hosts the
+    /* No-shift discipline: this route scroller hosts the
        portaled picker overlays (Select / DropdownMenu); reka's body scroll-lock
        removes a classic (space-taking) scrollbar on open, and WITHOUT a reserved
        gutter the centred `max-w-6xl` content reflows wider → the trigger twitches
@@ -148,7 +146,7 @@
        (presets-in-consumers); the durable library utility is in utilities/base-misc.css.
        Baseline-newly-available (Chrome 94+ / Firefox 97+ / Safari 18.2+). */
     scrollbar-gutter: stable;
-    /* BB.W-HIERARCHY2 — the CONTENT-side anti-collision gutter. The `<main>` route
+    /* Content-side anti-collision gutter. The `<main>` route
        column reserves the library `--dock-content-safe-inset` gutter (keyed to the
        dock rail reach) on the SCROLL axes so the page-title band is structurally clear
        of any dock-chip reach even on a route added WITHOUT a per-route audit (the
@@ -157,7 +155,7 @@
        leading `scroll-padding-inline-start` reserves the dead inline band the fixed
        SidebarDock rail sits beside. This is the CONTENT-side half of the
        dock-collision close — the SEAT half (chipOverMain:false on EVERY route by
-       topology) is W-CHIP-GRAZE + W-DOCK-RAIL-SEAT-FINAL's; the two close the collision
+       topology) pairs with the rail seat; the two close the collision
        from BOTH sides on the SAME dead gutter (ONE gutter, two consumers — the reserve
        + the fan). It NEVER widens the SEAT's gutter-fan or the symmetric `px-*` page
        padding (a scroll-axis reserve, not a layout-box padding clobber). */

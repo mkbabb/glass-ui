@@ -1,4 +1,4 @@
-// BC.W-VIZ-FOURIER — the partial-sum + epicycle-chain COMPUTE kernel (WebGPU primary).
+// Partial-sum and epicycle-chain compute kernel (WebGPU primary).
 //
 // A `@compute @workgroup_size(64)` kernel over TWO output storage buffers:
 //   • `curveSamples[i]` — the comet body: the partial-sum curve point at
@@ -10,9 +10,8 @@
 // Both are pure `f(coefficients, head_t, N)` — deterministic; `head_t` arrives as a uniform
 // from the ONE keyframes.js clock. The summation is the WGSL transcription of `math.ts`:
 //   `partialSumAt` (math.ts:78-95) ── `epicycleChainTip` here transcribes `positionsAt`
-//   (math.ts:41-60). `proof:fourier-field` clause U3 round-trips the JS evaluator against
-//   this WGSL at a fixed `(spectrum, t, N)` sample set (mean/p99 within the position-delta
-//   bar). The spectrum is CPU-minted (makeEllipticSpectrum/dftFromPoints run ONCE in JS);
+//   (math.ts:41-60). The spectrum is CPU-minted
+//   (`makeEllipticSpectrum`/`dftFromPoints` run once in JS);
 //   the WGSL only SUMS the per-frame phasor table — NO WGSL-side spectrum mint.
 
 export const FOURIER_FIELD_COMPUTE_WGSL = /* wgsl */ `

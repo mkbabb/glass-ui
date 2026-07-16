@@ -99,15 +99,15 @@ let seededHarmony = atoms.harmony;
 // lossy-recovery clobber the seed/harmony guard closes for the palette. So we only
 // re-resolve zones when the user actually MOVES the count/arrangement; an UNTOUCHED
 // zones atom keeps the preset's hand-authored nuclei intact (the per-preset look
-// survives a first touch on a DIFFERENT atom — the W-AUR-STUDIO clobber fix).
+// survives a first touch on a DIFFERENT atom — the clobber fix).
 let seededZonesCount = atoms.zones?.count;
 let seededZonesArrangement = atoms.zones?.arrangement;
 // The seeded medium at baseline. The medium atom's `amount` recovers ONLY
 // `strokeAmount` (the shared signature knob); `applyTexture` then DERIVES the
 // medium's other texture fields FROM that amount (e.g. vangogh's `impasto` and
 // `canvasGrain`), which DIVERGE from a preset's hand-tuned values (Van Gogh
-// authors impasto 0.48 / canvasGrain 0.03, but applyTexture would re-derive
-// impasto 0.85 / canvasGrain 0.051 from the recovered strokeAmount 0.85). So an
+// authors impasto 0.48, canvasGrain 0.03, but applyTexture would re-derive
+// impasto 0.85, canvasGrain 0.051 from the recovered strokeAmount 0.85). So an
 // UNTOUCHED medium atom is stripped — the preset's hand-tuned texture fields
 // survive a first touch on a DIFFERENT atom.
 let seededMediumKind = atoms.medium?.kind;
@@ -248,13 +248,13 @@ function onReset() {
           it); the `data-atom` anchors ride the atom controls inside the
           sections.
         -->
-        <!-- BA.W-FADING-SCROLL — the vertical controls column is the scroll-STATE
+        <!-- the vertical controls column is the scroll-STATE
              driven `<FadingScroll axis="y">`: the top edge feathers only past
              `scrollTop > 0` (sharp at rest), the bottom edge only while the
              section list overflows. The root IS the scroll port (FadingScroll--y
              sets `overflow-y: auto`); the `data-aurora-atoms-surface` sentinel +
              the layout/scrollbar utilities ride it. -->
-        <!-- BA.W-CONFIG-CHASSIS.2 (CFG-2) — the `overflow-x-clip` is now a general
+        <!-- The `overflow-x-clip` is a general
              cross-axis guard on the vertical scroll port, NOT the MONO-clip mechanism:
              the DERIVE chip group (AuroraColorSection) WRAPS rather than overflowing,
              so no chip is sliced. The clip stays as a defensive guard against any

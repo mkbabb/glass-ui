@@ -10,7 +10,7 @@ import {
 import { Button } from "@glass/components/button";
 import { Bold, Italic, Underline, Save, Share2 } from "@lucide/vue";
 
-// BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2
+// reconcile — the containers band's ONE coherent --section-color-2
 // blue identity. PH3-safe (inline borderLeft, not the border-l-[3px] +
 
 type Side = "top" | "right" | "bottom" | "left";

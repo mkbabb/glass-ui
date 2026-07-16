@@ -7,10 +7,8 @@
  * falls back to loading everything (`visibleCount = totalCount`).
  *
  * GENERIC-count-sourced: `totalCount`/`visibleCount` are plain params, NEVER a
- * consumer type (no `WordList`/`PaperSection` coupling). A consumer wiring a
- * virtual-windowed ToC composes `useVirtualSectionWindow`'s `ensureTargetWindow`
- * as the warm step BEFORE `scrollTo` (the two leaves are file-disjoint, joined
- * at the call site: ToC-click → `ensureTargetWindow(id)` → `scrollTo(id)`).
+ * consumer type (no `WordList`/`PaperSection` coupling). A windowed consumer
+ * warms its target BEFORE `scrollTo`; that composition stays at the call site.
  */
 import { nextTick, onScopeDispose } from "vue";
 import type { ScrollToOptions } from "./types";

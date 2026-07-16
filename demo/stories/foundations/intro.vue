@@ -32,12 +32,12 @@ const SUMMARIES: Record<string, string> = {
 // lead/rest rhythm so the set is not eight identical boxes. Each card carries the
 // category's DISTINCT icon + section hue from the ONE CATEGORY_HERO source (the
 // per-category {icon, sectionHue} — never a hand-rolled SECTION_HUE duplicate),
-// and an inline non-text preview (BC.W-HERO-AUDACIOUS — the front door is a
+// and an inline non-text preview; the front door is a
 // section-landing peer; the cards link
 // the 11 section LANDINGS, each preview a budget-safe still).
 const categories = computed(() =>
     CATEGORIES.filter((c) => !c.reference).map((c, idx) => {
-        // BI.W-LIVE-TILES — the front-door card previews a REAL representative
+        // the front-door card previews a REAL representative
         // component from the section (the ss-01 "empty brown tile + lone compass"
         // cure). Resolve the tile of the category's LEAD story (skipping the D0
         // front door itself) via the SAME per-story ladder the landings use — a
@@ -68,7 +68,7 @@ const categories = computed(() =>
 
         <!-- Category index — one SectionPreviewCard per category, navigating to the
              category's SECTION-LANDING hero. Each card carries a quiet static plate + an
-             inline non-text preview (BC.W-PAGE-CHASSIS — no text-only redirect card
+             inline non-text preview; no text-only redirect card
              survives on the front door, PC7). The cards ride the resting glass rung so
              the aurora the chassis paints reads THROUGH them. -->
         <section class="mt-16">

@@ -11,7 +11,7 @@
 // table's length, never hardcoded.)
 //
 // The script is idempotent — it locates the §2 EASING block in tokens.css by
-// the spring-block marker comments and rewrites the four `--spring-*` lines
+// the spring-block marker comments and rewrites every `--spring-*` line
 // in place. All other tokens are untouched.
 
 import { readFileSync, writeFileSync } from "node:fs";
@@ -20,11 +20,11 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 // The (response, ζ) pairs are single-sourced in `springPresets.ts`. CSS token
 // generation and Glass composables read the same semantic rows; engine callables
 // remain direct keyframes.js imports. Node imports the pure `.ts` data directly.
-import { SPRING_PRESETS } from "../src/composables/motion/springPresets.ts";
+import { SPRING_PRESETS } from "../src/composables/motion/spring/springPresets.ts";
 import {
     springProjection,
     springSettleDurationSeconds,
-} from "../src/composables/motion/springProjection.ts";
+} from "../src/composables/motion/spring/springProjection.ts";
 
 const root = resolve(fileURLToPath(new URL("..", import.meta.url)));
 // AY.W-CSS1 — tokens.css was carved into thin @import root + tokens/* partials;
@@ -120,19 +120,17 @@ export function generateInteractiveSpatialBlock() {
 
 export const BLOCK_START_MARKER =
     "    /* ═══════════════════════════════════════════════\n       §2  EASING — Spring curves via linear()";
-// The regex enumerates the SAME six names the PRESETS table carries — a name added to
+// The regex enumerates the SAME names the PRESETS table carries — a name added to
 // the table must be added here (the gen WRITE + the sync gate READ both anchor on this
 // alternation). BG.W-SPRING-REGISTER-TIDY drained the three per-component `timeline-*`
-// rows OUT of the global table (table→6, presets-in-consumers → ScrubberTimeline-local),
-// so the dead `--spring-timeline-*` CSS twins die and the alternation narrows to the 6.
+// rows OUT of the global table (presets-in-consumers → ScrubberTimeline-local), so the
+// dead `--spring-timeline-*` CSS twins stay absent.
 // BI.W-REGISTER-TABLE — the `transient` (0.62, 0.90) enter-transient register joins
-// the six-name alternation (the Toast CENTER-SEED bloom, MOTION-LADDER
-// M5). BI.W-TABS-FACTOR — the `eyeglass` (0.36, 0.64) iOS-27 tab-pill LOUPE register
-// joins it too (ratified judgment (e), POST-M1). A name added to the PRESETS table must
-// be added to BOTH alternations here (the gen WRITE + the sync gate READ both anchor on
-// them).
+// the alternation (the Toast CENTER-SEED bloom, MOTION-LADDER M5). A name added to the
+// PRESETS table must be added to BOTH alternations here (the gen WRITE + the sync gate
+// READ both anchor on them).
 export const SPRING_LINES_RE =
-    /(    --spring-(?:smooth|snappy|bouncy|gentle|dock|press|transient|eyeglass): linear\([^)]+\);\n?)+/m;
+    /(    --spring-(?:smooth|snappy|bouncy|gentle|dock|press|transient): linear\([^)]+\);\n?)+/m;
 // BA.W-GLASS-CAL Unit 3 · BI.W-TEMPO — the per-spring DURATION block. A SEPARATE
 // contiguous block (immediately after the `linear()` easing block) so SPRING_LINES_RE
 // keeps matching only the easing lines; this regex owns BOTH the raw `-settle` lines
@@ -140,7 +138,7 @@ export const SPRING_LINES_RE =
 // is `[^;\n]+` so it matches a flat `0.35s` (pre-split) OR a `calc(…)` reader (post-
 // split) — the one-time conversion + idempotent re-runs both match.
 export const SPRING_DURATION_LINES_RE =
-    /(    --spring-(?:smooth|snappy|bouncy|gentle|dock|press|transient|eyeglass)-(?:settle|duration): [^;\n]+;\n?)+/m;
+    /(    --spring-(?:smooth|snappy|bouncy|gentle|dock|press|transient)-(?:settle|duration): [^;\n]+;\n?)+/m;
 // BG.W-LIQUID-WEIGHT-DEFAULT (F5.2) — the ONE `--transition-liquid-spatial` line the
 // gen WRITE + the drift-check READ both anchor on. It resolves to a `--spring-*`
 // register (the interactive-spatial default is a spring alias — the gate asserts it is

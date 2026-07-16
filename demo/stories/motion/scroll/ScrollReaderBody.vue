@@ -1,15 +1,15 @@
 <script setup lang="ts">
-// BG.W-DEMO-DUP-MERGE (F7.3) — the Scroll READER register body, extracted from the
+// Scroll Reader register body composed by the
 // retired routed `scroll-system.vue` wrapper (the StoryPage chrome stripped; composed
 // as one <StorySection> register inside motion/scroll.vue). The live exerciser for the
 // ONE scroll reader, `useScrollTrigger`. Point it at a scroll source and it gives back
 // two things off the SAME rAF-coalesced read (the shared `createScrollReader` core):
 //   · a continuous `progress` ref (0..1) for ramps,
-//   · discrete crossing events — onCross / onEnter / onLeave — that fire ONCE when the
+//   · discrete crossing events — onCross, onEnter, onLeave — that fire ONCE when the
 //     scroll position passes a declared trigger-point in a given direction (a flip-delta
 //     debounce so a 1px jitter never re-fires).
 // Plus `direction` (committed past the 8px flip-delta) and `velocity` (px/s,
-// framerate-independent). This is the trigger-point reader BC.W-SCROLL-CHROME consumes
+// framerate-independent). This is the trigger-point reader  consumes
 // for the dock + page-header collapse — the §3.2 gap #1 closed.
 //
 // It CONSUMES the reader — no new substrate, no second listener. PascalCase composed-by
@@ -54,7 +54,7 @@ function clear() {
     log.value = [];
 }
 
-// ── BC.W-SCROLL-CHROME — the floating-chrome COLLAPSE demonstration. A bounded scroll
+// ── Floating-chrome collapse demonstration. A bounded scroll
 // port with a FLOATING header that SHRINKS on scroll-down, EXPANDS on scroll-up, FLICKS
 // to the endpoint on a fast scroll, and SNAPS to the nearest state on scroll-stop. The
 // header is `.scroll-chrome`; the `useScrollChrome` machine writes `--chrome-collapse-t`
@@ -196,11 +196,11 @@ const collapsePct = computed(() => `${Math.round(collapseT.value * 100)}%`);
                 </span>
             </div>
 
-            <!-- The scroll port with a FLOATING .scroll-chrome header over it. The port
+            <!-- The scroll port with a FLOATING.scroll-chrome header over it. The port
                  scrolls under the header; the machine writes --chrome-collapse-t onto the
                  header, the recipe paints the shrink/quiet. -->
             <div class="relative h-[26rem] overflow-hidden rounded-card">
-                <!-- The floating header — .scroll-chrome reads --chrome-collapse-t. -->
+                <!-- The floating header —.scroll-chrome reads --chrome-collapse-t. -->
                 <header
                     ref="collapseHeader"
                     class="scroll-chrome glass-floating rounded-card absolute inset-x-3 top-3 z-10 flex items-center gap-3 px-5 py-3"

@@ -1,11 +1,11 @@
 // The curated shape-trace path library for the foreground Fourier studio
-// (BA.W-FOURIER-STUDIO scope 5). Each entry is a closed point set in a centered
+// studio. Each entry is a closed point set in a centered
 // unit box (x,y ∈ roughly [-0.5, 0.5]; y grows DOWNWARD, screen convention) fed
 // through `dftFromPoints` — the forward DFT — to produce the SAME-engine spectrum
-// that `partialSumAt` / `positionsAt` reconstruct. This is `dftFromPoints`'s
-// STUDIO consumer face (BA-FOUR-4): the exported-but-consumerless forward
+// that `partialSumAt`, `positionsAt` reconstruct. This is `dftFromPoints`'s
+// Studio consumer face: the forward
 // transform gains a rendered consumer beyond its E1 easter-egg use, and the ℱ
-// wordmark is literally drawn by its own Fourier epicycles (the brand tie-in).
+// wordmark is drawn by its own Fourier epicycles.
 //
 // The ℱ wordmark reuses the hand-traced glyph the redraw egg already ships
 // (./fGlyphPoints.ts — colocated with this, its ONE consumer, at the eggs delete) — one source of truth for the brand outline. The
@@ -64,7 +64,7 @@ function sampleClosed(
 }
 
 // ── The heart — a classic closed cardioid-ish parametric heart curve. ─────────
-// x = 16 sin³θ ; y = 13 cosθ − 5 cos2θ − 2 cos3θ − cos4θ (the canonical "heart
+// x = 16 sin³θ; y = 13 cosθ − 5 cos2θ − 2 cos3θ − cos4θ (the canonical "heart
 // curve"), negated on y so the lobes sit UP in screen convention.
 function heartPoints(samples = 256): [number, number][] {
     return sampleClosed((u) => {
@@ -126,8 +126,8 @@ function starPoints(points = 5, samples = 256): [number, number][] {
 }
 
 /**
- * Build a {@link FourierShape} from a label + closed point set — the SINGLE place
- * the forward DFT is invoked (the W4 consumer call site). Memoized at module load.
+ * Build a {@link FourierShape} from a label and closed point set. This is the sole
+ * forward-DFT call site and each shape is memoized at module load.
  */
 function makeShape(key: string, label: string, points: [number, number][]): FourierShape {
     return { key, label, points, spectrum: dftFromPoints(points) };

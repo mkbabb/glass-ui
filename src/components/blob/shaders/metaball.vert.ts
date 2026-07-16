@@ -1,4 +1,4 @@
-// GooBlob metaball — vertex shader (AU.W7 lift). A full-viewport quad: `vUv`
+// GooBlob metaball vertex shader. A full-viewport quad: `vUv`
 // varies 0..1 across the surface. glass-ui ships GLSL as a TS string export
 // (the aurora `shaders/aurora.vert.ts` shape) so the dts/bundle stay raw-loader
 // free.

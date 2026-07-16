@@ -39,7 +39,7 @@ function restart(): void {
 
 <template>
     <StoryPage>
-        <!-- BB.W-SUFFUSE3 (b) — the motion title at the DISPLAY register with the
+        <!-- The motion title uses the display register with the
              --motion-accent violet as the ONE color text-event (the existing
              motion-purple family on the masthead, never a body <p>/<h2>). -->
         <header class="flex flex-col gap-1">

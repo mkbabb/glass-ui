@@ -53,7 +53,7 @@ export interface UseIdleReadyControls {
  * a composable not a component). SSR / non-browser flips synchronously so
  * consumers don't stall.
  *
- * Why this exists (speedtest origin, glass-ui promotion AO.W3): the gate is
+ * This gate is
  * hand-rolled at 5 speedtest sites (App.vue, MapView.vue, DashboardMap.vue,
  * useAutoStart.ts, useIPInfo.ts) — the ≥2-consumer substrate-promotion gate
  * (J inv 10 / L inv 8) fires for a publisher-side absorption.

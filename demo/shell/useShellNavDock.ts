@@ -60,8 +60,7 @@ export function useShellNavDock(
             return (here ?? contextLayers.value[0])?.id;
         },
         set: (id) => {
-            // BA.W-SHELL-HOLD (FD-FS-4) — the page must HOLD. The `set` navigates ONLY
-            // on a genuine user chip activation, NEVER from a non-interactive v-model
+            // Navigate only on a genuine user chip activation, never from a v-model
             // echo of the `get` fallback. The equality short-circuit IS the
             // user-activation discriminator: a real chip click on a facet writes an id
             // DIFFERENT from the one `get` already resolved (so it falls through and

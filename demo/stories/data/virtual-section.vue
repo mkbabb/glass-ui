@@ -5,13 +5,12 @@ import { computed, ref } from "vue";
 import {
     useVirtualSectionWindow,
     type FlatSection,
-} from "@glass/composables/virtual";
+} from "../../composables/virtual";
 import { Badge } from "@glass/components/badge";
 import { cn } from "@glass/components/_shared/class-names";
 
 // A 1000-section synthetic document. The producer (this flattener) lives in the
-// consumer; glass-ui owns only the generic FlatSection windowing contract. The
-// re-homed windowing engine renders only the ~20 sections near the viewport.
+// story; the demo-owned windower renders only the ~20 sections near the viewport.
 const TOTAL = 1000;
 const TONES = ["0", "2", "3", "4", "5", "7", "8", "11"];
 
@@ -43,7 +42,6 @@ const {
     bottomSpacerPx,
     measureSection,
     ensureTargetWindow,
-    getOffsetFor,
     activeId,
 } = useVirtualSectionWindow<DemoSection>({
     items: sections,
@@ -55,15 +53,7 @@ const renderedCount = computed(() => visibleItems.value.length);
 const jumpTargetId = ref("section-850");
 
 function scrollToTarget() {
-    const id = jumpTargetId.value;
-    // Warm the target into the render window a beat before the scroll lands so
-    // it is painted-and-measured when the scroll arrives (never a blank target).
-    ensureTargetWindow(id);
-    requestAnimationFrame(() => {
-        const offset = getOffsetFor(id);
-        const el = scrollContainer.value;
-        if (offset != null && el) el.scrollTo({ top: offset, behavior: "smooth" });
-    });
+    ensureTargetWindow(jumpTargetId.value);
 }
 </script>
 
@@ -74,7 +64,7 @@ function scrollToTarget() {
                 label="Virtual section window"
                 :heading="`${TOTAL}-section document — only the window renders`"
             />
-            <!-- CBA-3: the window readout is a FEATURE caption (the windowing is the
+            <!-- The window readout is a feature caption because windowing is the
                  story), not a test hook — only ~20 of 1000 sections live in the DOM at
                  once, and the active id is the live scroll-spy. -->
             <div class="flex items-center gap-3">

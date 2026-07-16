@@ -43,7 +43,7 @@ export type ConfiguratorAsideSide = "left" | "right";
  * frame — the §2.1 reflow (gallery up-top + larger + scrollable). The stage +
  * controls reclaim the full height below it. An additive axis: the grid arm is
  * the precompiled `[data-slot=configurator][data-gallery=top]` rule in
- * configurator.css (never a dead JIT bracket — the BC.W-CONFIG-RIGHT lesson).
+ * configurator.css (never a dead JIT bracket — the lesson).
  */
 export type ConfiguratorGalleryPlacement = "aside" | "top";
 
@@ -51,7 +51,7 @@ export type ConfiguratorGalleryPlacement = "aside" | "top";
  * Generic preset descriptor. Consumers pass `T` as the live config shape.
  * The primitive carries no preset semantics beyond `key + label` for
  * the picker row and `config: T` for the active payload — preset
- * selection / diff-from-preset / reset semantics live in the optional
+ * selection, diff-from-preset, reset semantics live in the optional
  * `useConfiguratorState<T>` composable.
  */
 export interface ConfiguratorPreset<T> {
@@ -85,10 +85,10 @@ const props = withDefaults(
         /** Scroll behavior for the controls column. Default: `auto`. */
         scrollMode?: ConfiguratorScrollMode;
         /**
-         * Row-level density axis (N.W2 Lane A). Cascades to descendant
+         * Row-level density axis. Cascades to descendant
          * `<ConfiguratorRow>` children via provide/inject. A row may
          * override locally by setting its own `size` prop (prop wins
-         * over inject). Default `"md"` preserves the prior
+         * over inject). Default `"md"` uses the
          * `gap-1.5 py-2` recipe exactly.
          */
         size?: ConfiguratorSize;
@@ -110,7 +110,7 @@ const props = withDefaults(
          * Aside width band at `lg`+ width, as a CSS length pair driving
          * `minmax(--configurator-aside-min, --configurator-aside-max)`. The
          * prop sets the two inline custom properties; consumers may instead
-         * (or also) set `--configurator-aside-min` / `--configurator-aside-max`
+         * (or also) set `--configurator-aside-min`, `--configurator-aside-max`
          * via the cascade. Default band is `280px`/`360px`. Pass a single
          * length to pin the band (`min === max`), or a `[min, max]` pair.
          */
@@ -155,23 +155,23 @@ const containerClass = computed(() =>
         // Single column below `lg` (a plain utility — emits reliably). At `lg`+
         // the DESKTOP TWO-COLUMN layout (stage 1fr + the aside band) comes from
         // the PRECOMPILED `[data-slot="configurator"]` rule in configurator.css,
-        // NOT a dead arbitrary utility. BC.W-CONFIG-RIGHT — the old
+        // not a content-scanned arbitrary utility. The
         // `lg:grid-cols-[minmax(0,1fr)_minmax(var(--configurator-aside-min,…),…)]`
         // arbitrary bracket (nested `var()` + commas) silently died in a
-        // consumer's content-scan (the BA.W-EMISSION self-emission class), so the
+        // consumer's content-scan (the self-emission class), so the
         // chassis stayed single-column on ALL widths. The structural layout now
-        // lives in shipped CSS (the Select-collision-bound precedent) — never
+        // lives in library CSS and is never
         // load-bearing on a JIT reach. The aside band still reads the SAME
         // `--configurator-aside-{min,max}` token pair (defaults 280px/360px,
         // retunable via the `asideWidth` prop or the cascade).
-        // BD.W-CONFIG-GALLERY-DOCK — the gallery is now a section-level grid
+        // the gallery is now a section-level grid
         // child (a `data-gallery-dock` row), so the base single-column stack is
         // gallery → stage → controls. The explicit named areas + the desktop
         // two-column placement ride the precompiled configurator.css rules
         // (`[data-slot=configurator]` + `[data-gallery=…]`) — never a dead JIT
         // bracket. The base `grid-cols-1` keeps the mobile single column.
         "grid grid-cols-1",
-        // AZ.W-BLOB-REDRESS — the single-column band sets EXPLICIT rows so the
+        // the single-column band sets EXPLICIT rows so the
         // stage row is a DEFINITE track (a `--configurator-stage-min` floor),
         // not a content-auto row that collapses to 0 when its child sizes off a
         // percentage/`h-full` height (the mobile 0×0 live-specimen collapse —
@@ -183,7 +183,7 @@ const containerClass = computed(() =>
         // precompiled desktop rule.
         // Mobile rows: gallery (auto) → stage (a definite `--configurator-stage-min`
         // floor so a percentage/`h-full` stage child cannot collapse to 0 — the
-        // AZ.W-BLOB-REDRESS mobile 0×0 fix) → controls (the 1fr remainder, scrolls
+        //  mobile 0×0 fix) → controls (the 1fr remainder, scrolls
         // internally). When no gallery renders the first `auto` row collapses to 0.
         // At `lg`+ the configurator.css rules reset the template to the two-column
         // geometry (per `data-gallery`).
@@ -195,8 +195,8 @@ const containerClass = computed(() =>
 
 // Inline custom props projected onto the root.
 //
-// BI.W-CONFIG-IN-SHEET (Law 1 — the concentric-radius RELAY parent, site #1). The
-// <Configurator> root PUBLISHES its resolved corner (--radius-panel, the `rounded-panel`
+// The Configurator root publishes its resolved panel corner
+// (`--radius-panel`, painted by `rounded-panel`)
 // the containerClass paints) as --radius-ctx + its section inset (--configurator-pad-inline)
 // as --radius-inset, so a nested `.configurator-layer` section DERIVES its own corner
 // concentric with the outer:
@@ -221,15 +221,9 @@ const containerStyle = computed(() => {
     return style;
 });
 
-// Visual side flip without a DOM reorder. BC.W-CONFIG-RIGHT — the side moves
-// off the dead `lg:col-start-*` arbitrary utility (gated behind the same silent-
-// JIT-failure class as the grid) onto the `data-aside-side` attr bound on the
-// root `<section>`; the `[data-slot="configurator"][data-aside-side="left"]`
-// rule in configurator.css owns the grid-column swap. `right` (default) keeps
-// the natural source order (stage col 1, aside col 2) and needs no override —
-// the bare desktop rule already places them left→right. `left` swaps the column
-// targets so the aside paints first VISUALLY; the DOM/tab order stays stage→aside
-// (the side is grid-cell placement + border-side only, no a11y regression).
+// Visual side placement never reorders the DOM. `data-aside-side` lets
+// configurator.css swap grid columns while the source and tab order remain
+// stage→aside. The default `right` placement follows natural source order.
 
 // The aside's vertical/horizontal rules follow the side: on the right the
 // hairline sits on its left edge (`lg:border-l`); flipped left, on its right
@@ -238,8 +232,7 @@ const asideBorderClass = computed(() =>
     props.asideSide === "left" ? "lg:border-r lg:border-l-0" : "lg:border-l",
 );
 
-// BA.W-CONFIG-CHASSIS.1c — the controls column adopts <FadingScroll axis="y">
-// (the W-FADING-SCROLL primitive) off the static `.scroll-fade-y` mask. The
+// The controls column uses <FadingScroll axis="y">. The
 // `never` mode does NOT scroll (the host owns overflow — a popover/sheet host),
 // so it renders a plain `<div>`; `auto`/`always` render the FadingScroll
 // scroll-port (which sets `overflow-y: auto` itself + drives the per-edge
@@ -256,7 +249,7 @@ const controlsScrolls = computed(() => props.scrollMode !== "never");
         :class="containerClass"
         :style="containerStyle"
     >
-        <!-- ── Preset GALLERY (BD.W-CONFIG-GALLERY-DOCK) ────────────────
+        <!-- ── Preset GALLERY ────────────────
              The gallery is a SECTION-level child (no longer trapped inside the
              360px aside), grid-PLACED by the precompiled
              `[data-slot=configurator][data-gallery]` rules in configurator.css:
@@ -274,7 +267,7 @@ const controlsScrolls = computed(() => props.scrollMode !== "never");
             <slot name="presets" :presets="presets" :active-preset="activePreset">
                 <!--
                     Default preset gallery: the warm-glass toggle-button tiles
-                    (BD.W-CONFIG-GALLERY-DOCK). The a11y fence is ONE pattern —
+                    (). The a11y fence is ONE pattern —
                     plain type="button" + aria-pressed in a role="group"
                     aria-label="Presets" container (NOT role="tab"+aria-selected,
                     an ARIA contradiction; the FadingScroll is not a tablist).
@@ -325,7 +318,7 @@ const controlsScrolls = computed(() => props.scrollMode !== "never");
         </div>
 
         <!-- ── Aside (controls + footer) ─────────────────────────────── -->
-        <!-- BA.W-CONFIG-CHASSIS.1 (CFG-4) — the aside/footer chrome dividers read
+        <!-- The aside/footer chrome dividers read
              the dark-adaptive --configurator-divider token (configurator.css), so
              the hairlines survive the dark glass plate. The preset GALLERY moved
              OUT to a section-level child (grid-placed); the aside now holds the
@@ -338,7 +331,7 @@ const controlsScrolls = computed(() => props.scrollMode !== "never");
                 )
             "
         >
-            <!-- Controls column (layered config body). BA.W-CONFIG-CHASSIS.1c —
+            <!-- Controls column (layered config body)..1c —
                  the `auto`/`always` scroll modes render the <FadingScroll axis="y">
                  scroll-port (sharp at rest, feathered while overflowing) off the
                  retired `.scroll-fade-y` mask; `never` renders a plain div (the

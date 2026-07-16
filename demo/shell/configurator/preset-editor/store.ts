@@ -1,9 +1,8 @@
 // demo/shell/configurator/preset-editor/store.ts — singleton state + the
 // `usePresetEditor()` composable factory.
 //
-// O.W3 Lane C — split from the prior `usePresetEditor.ts` god-module per Rβ.
-// Orchestrates the four supporting concerns:
-//   - types/defaults (./types, ./defaults)
+// Orchestrates four supporting concerns:
+//   - types/defaults (./types,./defaults)
 //   - CSS-variable writers (./css-writers)
 //   - localStorage I/O + migration (./persistence)
 //   - preset-active stylesheet hot-swap (./stylesheet-swap)
@@ -84,14 +83,8 @@ function removeWritten(written: Set<string>): void {
 export function usePresetEditor(): PresetEditor {
     if (singleton) return singleton;
 
-    // BA.W-CONFIG-CHASSIS.3 (BA-DARK-F1+F2) — the parallel config-store `dark`
-    // field is GONE. Dark mode is owned SOLELY by the global `useGlobalDark`
-    // composable (the canonical single source of truth); the gear's Appearance
-    // row renders the live `<DarkModeToggle>` bound to it directly. The prior
-    // `delta.dark` shadow desynced (it returned `DEFAULT_CONFIG.dark` (false) not
-    // `isDark.value`, so the boot mismatch made the toggle a NO-OP both
-    // directions). `isDark` is still exposed for the `reset()` sync-to-default;
-    // `toggleDark` is no longer called from this store (the toggle owns it).
+    // Dark mode is owned solely by useGlobalDark. The preset store exposes the
+    // live value but never persists or toggles a shadow copy.
     const { isDark } = useGlobalDark();
     const written = new Set<string>();
     const delta = reactive<ConfigDelta>(loadPersisted());
@@ -139,7 +132,6 @@ export function usePresetEditor(): PresetEditor {
                     written.delete(prop);
                 }
             }
-            // `dark` has no CSS prop — handled via useGlobalDark.
         }
         persist(delta);
     }
@@ -164,10 +156,6 @@ export function usePresetEditor(): PresetEditor {
             setPreset(value as PresetId | "custom");
             return;
         }
-
-        // BA.W-CONFIG-CHASSIS.3 — the `key === "dark"` toggle/short-circuit branch
-        // is GONE with the field. Dark mode is the live `useGlobalDark` (the gear's
-        // <DarkModeToggle> owns it); there is no store delta to write.
 
         if (key === "font") {
             // Full-font assignment: replace entirely. Use the per-slot setter
@@ -263,18 +251,10 @@ export function usePresetEditor(): PresetEditor {
         for (const key of Object.keys(delta) as DeltaKey[]) {
             delete delta[key];
         }
-        // BA.W-CONFIG-CHASSIS.3 — "Reset all" resets the configurator's TOKEN
-        // deltas; it no longer flips the user's dark-mode preference (dark is
-        // owned by `useGlobalDark`, not a config delta — the `toggleDark`
-        // sync-to-default is GONE with the field). The user's chosen mode
-        // survives a token reset.
+        // Reset clears configurator token deltas; the independent dark-mode
+        // preference survives.
         persist(delta);
     }
-
-    // BA.W-CONFIG-CHASSIS.3 — the `watch(isDark)` mirror is GONE with the field.
-    // It existed only to shadow library-level dark toggles into `delta.dark`;
-    // with no delta to mirror, the live `useGlobalDark` is the sole source of
-    // truth (the gear's <DarkModeToggle> reads + writes it directly).
 
     singleton = {
         delta,

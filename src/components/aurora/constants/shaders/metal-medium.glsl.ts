@@ -1,20 +1,20 @@
-// BG.W-AUR-METAL-FINISH — the metal-medium GLSL bodies (uMedium==8/9), carved out of
-// mediums.glsl.ts to hold it under the no-god-module 500-line bound (the BB.W-CARVE5
+// The metal-medium GLSL bodies (uMedium==8/9) are carved out of
+// mediums.glsl.ts to hold it under the no-god-module 500-line bound (the
 // carve discipline). This is a MECHANICAL carve: the chunk splices back into
 // AURORA_MEDIUMS_POST_BRUSH_GLSL immediately after the mediumKuwahara body (the same
 // join point the metal bodies occupied inline), so the ASSEMBLED shader string is
 // byte-identical. Every symbol the bodies read (packGrad/unpackGrad/structureTensorField
 // in mediums.glsl.ts PRE_BRUSH, flowField in flow.glsl.ts, W_LUMA/hash21/uCursor/
 // uMetalPolish/uMetalHeightScale in aurora.frag.ts) is in-scope in the final composed
-// FRAGMENT_SRC — the sibling is a pure position-preserving relocation (vangogh-medium.glsl.ts
-// precedent). proof:aur-metal reads the metal bodies HERE (the grep-lock follows the carve).
+// FRAGMENT_SRC. The sibling is a pure position-preserving relocation, following the
+// vangogh-medium.glsl.ts precedent. The assembler reads the metal bodies here.
 
 // The gradient PACK helpers (packGrad/unpackGrad) — spliced into PRE_BRUSH BEFORE
 // structureTensorField (which calls packGrad); the metal bodies call unpackGrad.
 export const AURORA_METAL_PACK_GLSL = /* glsl */ `
-// ── Gradient pack (BG.W-AUR-METAL-FINISH) ──────────────────────────────────
+// ── Gradient pack ──────────────────────────────────
 // structureTensorField re-plumbs its already-computed luma gradient (Gx,Gy) out through
-// the vec4 return's .w lane so the metal medium pays ZERO extra taps (a second Sobel is
+// the vec4 return value's .w lane so the metal medium pays ZERO extra taps (a second Sobel is
 // 8 sampleBase() taps). 12 bits per bounded component ([-4,4]) into one f32, exact under
 // highp; the .xy/.z crayon/kuwahara callers are transparent to the widen.
 float packGrad(float gx, float gy) {
@@ -32,8 +32,7 @@ vec2 unpackGrad(float packed) {
 export const AURORA_METAL_MEDIUM_GLSL = /* glsl */ `#define MEDIUM_METAL 8
 #define MEDIUM_METALGRAD 9
 
-// ── Metal — the two-term anisotropic BRDF over the field's own relief (uMedium==8/9,
-// BG.W-AUR-METAL-FINISH) ─────────────────────────────────────────────────────────
+// ── Metal — two-term anisotropic BRDF over the field relief (uMedium==8/9) ──
 // Metal is a MUTUALLY-EXCLUSIVE medium (NOT a finish axis) — the field re-lights as
 // warm folded metal: the luma HEIGHT field (the packed structure-tensor gradient →
 // the surface normal) catches an anisotropic Blinn streak (brushed metal, the streak
@@ -42,7 +41,7 @@ export const AURORA_METAL_MEDIUM_GLSL = /* glsl */ `#define MEDIUM_METAL 8
 // uLightDir read would be flat on the WGSL primary). The catch is the ACHROMATIC-WARM
 // anchor (AURORA_CATCH_LIGHT_ANCHOR ≈ [1.0,0.97,0.90], never a cold chrome-blue). The
 // body keeps the field HUE (technicolor valley base); the height rides the relief.
-// ZERO new taps — structureTensorField ALREADY computed the gradient (unpacked from .w).
+// ZERO new taps — structureTensorField already computed the gradient (unpacked from .w).
 const vec3  METAL_CATCH_WARM       = vec3(1.0, 0.97, 0.90); // AURORA_CATCH_LIGHT_ANCHOR
 const float METAL_HEIGHT_SCALE     = 2.2;   // gradient → normal tilt (× uMetalHeightScale)
 const float METAL_LIGHT_Z          = 0.55;  // synth-light z (toward viewer)

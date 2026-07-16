@@ -1,4 +1,4 @@
-// BC.W-CARVE6 — the goo-blob metaball NOISE + FBM helper chunk, carved out of
+// Goo-blob metaball noise and FBM helper chunk, carved out of
 // `metaball.wgsl.ts` to hold the no-god-module line bound (the AURORA_MEDIUMS /
 // procedural-color.wgsl shared-chunk precedent — a cohesive WGSL helper block
 // SPLICED back via `${METABALL_NOISE_WGSL}`, the ASSEMBLED shader byte-equivalent).
@@ -9,7 +9,7 @@
 // by the `${FBM_ROT_WGSL}` splice metaball.wgsl.ts places IMMEDIATELY BEFORE this
 // chunk) and the `FBM_LACUNARITY`/`FBM_GAIN` consts at the top of metaball.wgsl.ts.
 // It carries NO `${...}` splice of its own (so the device-free WGSL assembler
-// resolves `${METABALL_NOISE_WGSL}` to a complete body — `proof:webgpu-everywhere`
+// resolves `${METABALL_NOISE_WGSL}` to a complete body.
 // W7), and it is spliced BEFORE the full-screen-triangle vertex stage (the fixed
 // ASSEMBLED body order — the FIELD helpers precede the vertex stage).
 

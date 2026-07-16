@@ -2,7 +2,7 @@
 // machinery that displaces the organic blob edge (and drives the color field).
 //
 // `hash21` is the blob-LOCAL 3D-p3 hash (legitimately distinct from aurora's 2D
-// hash, per AV.W2 §3a). `noised()` is IQ's analytic-derivative gradient noise — it
+// hash. `noised()` is IQ's analytic-derivative gradient noise; it
 // returns the noise VALUE in `.x` and its analytic 2D GRADIENT (∂/∂x, ∂/∂y) in
 // `.yz` from ONE evaluation (the gradient is exact, not finite-differenced). The
 // old `valueNoise()` (lattice value noise, no derivative) is retired: gradient
@@ -12,7 +12,7 @@
 //
 // `fbm` accumulates value-only octaves (the color-noise + warp-offset scalar);
 // `fbmG`/`fbmWarpedG` accumulate the value AND its ANALYTIC GRADIENT per octave
-// (AX.W15 — the keystone feed for the analytic surface normal that DELETES the
+// (the feed for the analytic surface normal that removes the
 // 4-tap), the warp pass folded directly into `fbmWarpedG`. All read the shared
 // FBM_ROT rotation constant. Two exports: the assembler splices the W2
 // ${FBM_ROT_GLSL} BETWEEN them (the hash + noised() before the constant, the FBM
@@ -61,10 +61,10 @@ vec3 noised(vec2 p) {
 
 // Rotated-octave FBM over the analytic gradient noise: a fixed ~0.5 rad 2x2
 // rotation between octaves breaks the axis-aligned banding. The rotation CONSTANT
-// is spliced from the shared chunk (AV.W2 — the one FBM_ROT); the loops below
+// is spliced from the shared chunk; the loops below
 // stay blob-local (param octaves + the LIQUID lacunarity/persistence, per §3a).`;
 
-// AX.W15 F3 — the LIQUID-not-rocky band. The membrane reads as a liquid blob, not
+// Liquid-not-rocky band. The membrane reads as a liquid blob, not
 // terrain: the lacunarity drops 2.0 → 1.8 (octaves stay closer in frequency so the
 // edge undulates smoothly rather than fracturing) and the persistence/gain drops
 // 0.5 → 0.42 (higher octaves contribute LESS, so the silhouette stays a calm wave,
@@ -88,7 +88,7 @@ export const METABALL_EDGE_NOISE_POST_GLSL = /* glsl */ `float fbm(vec2 p, int o
     return value;
 }
 
-// AX.W15 — FBM with ANALYTIC GRADIENT. Returns vec3(value, ∂/∂x, ∂/∂y). The
+// FBM with analytic gradient. Returns vec3(value, ∂/∂x, ∂/∂y). The
 // gradient accumulates noised()'s analytic gradient per octave, chain-ruled
 // through the per-octave frequency scale AND the FBM_ROT rotation: octave i samples
 // at R^i · (freq·p), so the gradient w.r.t. the ORIGINAL p picks up freq and

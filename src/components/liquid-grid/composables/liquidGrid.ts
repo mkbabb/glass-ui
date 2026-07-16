@@ -1,4 +1,4 @@
-// BC.W-VIZ-PAPERGRID — the ONE math source (pure, node-testable) the WGSL primary +
+// the ONE math source (pure, node-testable) the WGSL primary +
 // the WebGL2 GLSL fallback transcribe line-for-line.
 //
 // The liquid-grid is the composition of THREE cited techniques on the proven substrate
@@ -18,7 +18,7 @@
 //      by construction, so the grid folds + stretches like fluid advection rather than
 //      the source-y bulge a raw fbm gradient produces).
 //
-// THE AFFINE SHEET WARP (BG.W-GRID-AFFINE). The ripple is a SMOOTH continuous domain transform
+// THE AFFINE SHEET WARP. The ripple is a SMOOTH continuous domain transform
 // of the grid coordinate BEFORE the grid eval — `waveFlow` (the shared `waveField` leaf, the SAME
 // warp concentric reads): a low-order curl-flow displacement gated by the traveling wave, locally
 // affine at the cell scale (the warp Jacobian is ~constant across any one cell). So MAJOR
@@ -27,10 +27,10 @@
 // kinked crest-band; `waveFlow` is the continuous twin). A leaf tune moves both viz (the DRY
 // coupling recorded).
 //
-// THE SINGLE MATH SOURCE. The WGSL `fs_main` + the GLSL fragment transcribe `potentialFBM` /
-// `gridCoverage` here + the SHARED `waveFlow` / `cellHeight` / `faceRelief` / `facePlateau` /
-// `cursorSwirl` (the `waveField` leaf) EXACTLY; `proof:viz-papergrid` clause P3 round-trips
-// JS↔WGSL↔GLSL at a FIXED `(uv, t, cursor, uvDeriv)` sample set. JS has no fragment derivatives,
+// THE SINGLE MATH SOURCE. The WGSL `fs_main` and GLSL fragment transcribe
+// `potentialFBM`, `gridCoverage`, and the shared `waveFlow`, `cellHeight`,
+// `faceRelief`, `facePlateau`, and `cursorSwirl` functions exactly. Tests compare
+// JS↔WGSL↔GLSL at a fixed `(uv, t, cursor, uvDeriv)` sample set. JS has no fragment derivatives,
 // so the round-trip passes a FIXED `uvDeriv` into `gridCoverage`/`facePlateau` (the caller
 // computes it analytically from the pitch) — the Golus + the face-plateau paths are reproducible.
 
@@ -51,11 +51,11 @@ export interface Vec2 {
 /** Two-pi. */
 const TAU = Math.PI * 2;
 
-/** The curl central-difference epsilon (matches `flow.glsl.ts` / `flow.wgsl.ts`). */
+/** The curl central-difference epsilon (matches `flow.glsl.ts`, `flow.wgsl.ts`). */
 export const CURL_EPS = 0.012;
 
 /**
- * BG.W-GRID-AFFINE — the liquid-grid curl-sampling spatial frequency (in CELL units).
+ * the liquid-grid curl-sampling spatial frequency (in CELL units).
  * `g0 = uv · gridScale` is CELL-scale (span ~14–40 cells), so the warp must sample the curl
  * potential at a frequency an ORDER OF MAGNITUDE below the grid frequency for the warp to be
  * locally affine at the cell scale — the sheet bows as ONE smooth curve (base wavelength 1/0.03 ≈
@@ -68,7 +68,7 @@ export const LIQUID_GRID_WARP_FREQ = 0.03;
 // ── The host noise basis: a quintic-faded 2D value-noise fbm potential ────────────
 // The SAME basis the dot-flow-field's `flowField.ts` carries (so the suite speaks ONE
 // noise basis); the curl operator wraps it (basis-agnostic). The WGSL/GLSL transcribe
-// `hash21` / `valueNoise` / `potentialFBM` line-for-line.
+// `hash21`, `valueNoise`, `potentialFBM` line-for-line.
 
 function hash21(x: number, y: number): number {
     // The blob-local 3D-p3 hash mirror (the WGSL `hash21`), so the JS noise basis
@@ -140,7 +140,7 @@ export function curlFBM(p: Vec2): Vec2 {
 // ── §3/§4 RETIRED — the LINE-warp `curlWarp`, the radial `cursorBulge`, AND the per-cell
 // `cellTwist` are GONE (clean break, no alias). The "liquid" is now the SMOOTH continuous
 // AFFINE sheet warp (`waveFlow`) + the cursor SWIRL (`cursorSwirl`), both from the shared
-// `waveField` leaf; `sampleLiquidGrid` composes them (BG.W-GRID-AFFINE: the sheet bows/shears
+// `waveField` leaf; `sampleLiquidGrid` composes them (: the sheet bows/shears
 // as ONE coherent transform, major lines a single smooth curve, no per-cell kink).
 
 // ── §1 The crisp line: Ben Golus derivative-AA grid coverage ──────────────────────
@@ -164,7 +164,7 @@ function clamp(x: number, lo: number, hi: number): number {
 
 /**
  * The Ben Golus derivative-AA grid line coverage at `g` (grid space). `targetWidth` is the
- * desired line half-width in GRID UNITS (the caller passes `lineWidthPx / minorPitchPx` so
+ * desired line half-width in GRID UNITS (the caller passes `lineWidthPx, minorPitchPx` so
  * the line is N device-pixels wide); `uvDeriv` is the per-axis screen-space derivative of
  * `g` (in the shaders `length(vec2(dFdx(g), dFdy(g)))`; in JS the caller passes it
  * analytically so the path is reproducible). Returns line coverage [0..1].
@@ -207,7 +207,7 @@ export function gridCoverage(g: Vec2, targetWidth: number, uvDeriv: Vec2): numbe
  * it from `dpdx`/`dpdy`. Returns `{ line, alpha }` — the line coverage + the global alpha.
  */
 export interface LiquidGridSampleParams {
-    /** The grid scale (view / minorPitch → LARGER cells = smaller scale). */
+    /** The grid scale (view, minorPitch → LARGER cells = smaller scale). */
     gridScale: number;
     /** The traveling-wave front direction. */
     waveDir: Vec2;
@@ -241,7 +241,7 @@ export interface LiquidGridSampleParams {
     fieldAlpha: number;
     /** The FIXED per-axis derivative (the JS round-trip; shaders use dpdx/dpdy). */
     uvDeriv: Vec2;
-    // ── The FACE (BD.W-PAPERGRID-FACE) — the height-lit filled cell interior ──────────────
+    // ── The FACE — the height-lit filled cell interior ──────────────
     // OPTIONAL: a line-only caller (e.g. the parity capture) omits them → the face evaporates
     // (faceAlpha→0), line-identical. The live SFC path always supplies them from the config.
     /** The filled-FACE opacity (0 → the face evaporates → byte-identical to HEAD). */
@@ -278,7 +278,7 @@ export function sampleLiquidGrid(
     p: LiquidGridSampleParams,
 ): { line: number; alpha: number; face: LiquidGridFace } {
     const g0: Vec2 = { x: uv.x * p.gridScale, y: uv.y * p.gridScale };
-    // BG.W-GRID-AFFINE — the AFFINE sheet warp: a SMOOTH continuous domain transform of the grid
+    // the AFFINE sheet warp: a SMOOTH continuous domain transform of the grid
     // coordinate BEFORE the grid eval (`waveFlow`, the SAME warp concentric reads). The low-order
     // curl-flow displacement is gated by the traveling wave + locally affine at the cell scale, so
     // the whole sheet bows/shears as ONE coherent transform — major lines a single smooth curve,
@@ -306,7 +306,7 @@ export function sampleLiquidGrid(
     const major = gridCoverage(gMajor, p.targetWidthMajor, dvMajor);
     const line = Math.max(minor * p.minorAlpha, major * p.majorAlpha);
 
-    // ── The FACE (BD.W-PAPERGRID-FACE) — height-lit filled cell interior ──────────────────
+    // ── The FACE — height-lit filled cell interior ──────────────────
     // Sample height/relief at the WARPED-space cell center (`floor(g)+0.5`, the cell the fragment
     // actually lands in under the affine warp); Lambert the ∇H slope against the fixed cel
     // key-light; squash the inset (the crest face inflates); composite UNDER the line,

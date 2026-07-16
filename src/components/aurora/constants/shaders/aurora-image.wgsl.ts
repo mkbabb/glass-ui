@@ -1,4 +1,4 @@
-// BG.W-AUR-IMAGE-SOURCE — the aurora IMAGE-source WGSL program (WebGPU primary).
+// Aurora image-source WGSL program (WebGPU primary).
 //
 // The WGSL twin of `aurora-image.frag.ts` — the CONSTRUCTION-TIME PROGRAM PERMUTATION on
 // the WebGPU backend: `source:"image"` builds THIS separate pipeline (its own bind group

@@ -7,7 +7,7 @@ import { Surface } from "@glass/components/surface";
 import { Input } from "@glass/components/input";
 import { Label } from "@glass/components/label";
 
-// BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2
+// reconcile — the containers band's ONE coherent --section-color-2
 // blue identity. PH3-safe (inline borderLeft, not the border-l-[3px] +
 
 type Side = "top" | "right" | "bottom" | "left";
@@ -24,7 +24,7 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
                 </p>
                 <!-- The lone trigger is wrapped in the `flex flex-wrap` idiom so it
                      sizes to its content, never balloons to the article width (the
-                     StorySection body is align-items:stretch — CBA-1/CBA-7). -->
+                     StorySection body uses `align-items: stretch`). -->
                 <div class="flex flex-wrap gap-3">
                     <Popover>
                         <PopoverTrigger as-child>

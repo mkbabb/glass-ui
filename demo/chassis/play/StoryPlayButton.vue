@@ -1,16 +1,9 @@
 <script setup lang="ts">
-// BA.W-DEMO-AFFORDANCES.1 — the ONE demo play-control register.
-//
-// The storybook's canonical play/replay affordance, alongside <StorySection> /
-// <ShowcaseFrame>. Every demo motion-fire site reaches for THIS, never a
-// hand-rolled control. It wraps a real <Button> (the content-width pill, the
-// glass `default` register that POPs over the W-STAGE-staged backdrop now that
-// W-DARK-MATERIAL's dark glass transmits) with the Lucide <Play>/<Pause> glyph
-// as a LEADING icon — never the `▶` U+25B6 text glyph. The same Button contract
-// owns both content-width and icon-only geometry.
+// Canonical demo play/replay affordance. It wraps Button with Lucide Play/Pause,
+// supporting both content-width and icon-only geometry.
 //
 // The `playing` register mirrors the dock transport idiom
-// (dock/overview.vue: <Pause v-if="playing"/> / <Play v-else/>). Omitting `label`
+// (dock/overview.vue: <Pause v-if="playing"/>, <Play v-else/>). Omitting `label`
 // gives the icon-only register; passing it gives the leading-icon + text pill.
 import { computed } from "vue";
 import { Play, Pause } from "@lucide/vue";

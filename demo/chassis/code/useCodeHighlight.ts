@@ -1,7 +1,7 @@
 // useCodeHighlight — the lazy highlight.js runtime the <CodeBlock> paints color
-// through (BI.W-CODEBLOCK).
+// through.
 //
-// The delivery is RUNTIME-LAZY (G2 / story/PASS-1.md §4.2): glass-ui snippets are
+// Delivery is runtime-lazy: glass-ui snippets are
 // authored inline literals, not `?source` file imports, so the value.js build-time
 // file plugin does not apply. The model is DEFERRED COLOR, never deferred content:
 // the raw fira-code text paints from frame 0 (real selectable text, copied text

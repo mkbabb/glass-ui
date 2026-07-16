@@ -1,5 +1,5 @@
 /**
- * AX.W10 — the aurora "atoms of control" door: the ONE consumer-facing surface
+ * Aurora's atoms-of-control door: the one consumer-facing surface
  * over the ~28-field author schema. `AuroraConfig` is the INTERNAL author schema
  * (the full escape hatch a preset author types against); `resolveAtoms` is the
  * SIMPLIFIED door the live config UI + every consumer drives.
@@ -12,7 +12,7 @@
  * saturation + valueVariance + breath + the warm/cool temperature, because moving any
  * one alone reads as a defect).
  *
- * Contract (machine-asserted by proof:aurora-atoms-roundtrip):
+ * Contract:
  *   - TOTAL — every atom combination (incl. out-of-range/adversarial inputs) produces
  *     a VALID in-range `AuroraConfig` respecting every `budget.ts` cap (no NaN, no
  *     out-of-range field). Clamp/saturate, never garbage.
@@ -34,13 +34,10 @@ import {
     type AuroraConfig,
     type AuroraMedium,
     type OklchStop,
-    type WarpMode,
 } from "../constants/presets";
-import { deriveAurora, gamutMapStop, oklchStopToHex, type AuroraHarmony } from "./color";
-// The field-mapping leaves (BB.W-CARVE5 carve) — the COLOR-energy poles + the
-// MOTION_FIELDS table, the textured-medium texture fan + its inverse, and the
-// lerp/unlerp/motion inverses. The ZONES `nucleiPrior` + the NOISE
-// `applyNoise`/`warpModeFor` fan STAY here (the source-gate witnesses read them).
+import { deriveAurora, oklchStopToHex, type AuroraHarmony } from "./color";
+// Pure field mappings and their literal classifiers live in one cycle-free leaf;
+// this module retains the consumer schema and resolve/config composition.
 import {
     lerp,
     unlerp,
@@ -49,10 +46,12 @@ import {
     textureAmountFor,
     COLOR_ENERGY,
     MOTION_FIELDS,
+    nucleiPrior,
+    applyChromaBracket,
+    applyNoise,
+    type AuroraMotionAtom,
+    type AuroraZoneArrangement,
 } from "./atoms-fields";
-
-/** The motion atom — the three motion registers. */
-export type AuroraMotionAtom = "still" | "breathing" | "drifting";
 
 /**
  * The ZONES arrangement character — selects the nuclei placement prior. NOT a bare
@@ -61,7 +60,8 @@ export type AuroraMotionAtom = "still" | "breathing" | "drifting";
  * - `composed`  — the rule-of-thirds prior (the deliberate, balanced field).
  * - `centred`   — a tight central cluster (one dominant glow, calm).
  */
-export type AuroraZoneArrangement = "scattered" | "composed" | "centred";
+// The placement classifier is mapping-owned in atoms-fields; this schema only
+// references it as part of the consumer-facing zone atom.
 
 /** The ZONES atom — a count + an arrangement character (default `composed`). */
 export interface AuroraZones {
@@ -82,25 +82,23 @@ export type AuroraMediumAtom =
     | { kind: Exclude<AuroraMedium, "smooth">; amount?: number };
 
 /**
- * The interactivity atom — ONLY the wired axes ship. `light` (cursor-as-light) and
- * `scroll` (scroll-coupled palette/breath) are wired downstream
- * (`frameLoop.ts`/`useAurora.ts`); the declared-but-unwired `flow`/`wake` axes are
- * EXCISED from the shipped atom shape (no declared-but-dead axis — excise-or-wire).
+ * The interactivity atom exposes only wired axes. `light` (cursor-as-light) and
+ * `scroll` (scroll-coupled palette/breath) are wired by
+ * `frameLoop.ts` and `useAurora.ts`.
  */
 export interface AuroraFieldInteractivityAtom {
     /** palette/breath progress couples to scroll (via useScrollProgress). */
     scroll?: boolean;
     /**
-     * BI.W-FIELD-CORE (FC6/T-38) — the cursor SWIRL/luminance-lean axis, MEDIUM-GATED. On the
+     * Cursor swirl/luminance-lean axis, medium-gated. On the
      * `smooth` medium the cursor reads as a local LUMINANCE LEAN (engagement-driven, via the
      * `auroraCursorMapping` strength → `uCursorStrength`) instead of the dead
-     * impasto light the `light` axis drives ONLY on the painterly mediums — the T-38 "the
-     * swirl/burst axes are perceptually DEAD on the smooth medium" fix. Default coupled to
-     * `light` when unset (an interactive config reads on EVERY medium, not just painterly).
+     * impasto light the `light` axis drives only on painterly media. It defaults to
+     * the interactive state so every medium responds.
      */
     swirl?: boolean;
     /**
-     * BI.W-FIELD-CORE (FC6) — the SIZED amplitude atom (0..1, default 0.5). Sizes the cursor's
+     * Sized amplitude atom (0..1, default 0.5). Sizes the cursor's
      * field influence — how much the velocity burst lifts the CPU-projected cursor strength.
      */
     amplitude?: number;
@@ -139,7 +137,7 @@ interface AuroraAtomsBase {
      */
     colorEnergy?: number;
     /**
-     * BI.W-AURORA-VIBRANCY (GAP-L2) — the lightness SCHEME of the derived ramp. `"light"`
+     * the lightness SCHEME of the derived ramp. `"light"`
      * (the default when a seed is set) is the light-pastel band; `"dark"` shifts the WHOLE
      * ramp into the luminous-dark band [0.18, 0.42] so a derived-from-seed field reads as a
      * rich luminous-dark wash behind glass in a dark shell — never a washed-pale salmon
@@ -149,21 +147,21 @@ interface AuroraAtomsBase {
      */
     lightnessScheme?: "light" | "dark";
     /**
-     * BI.W-AURORA-VIBRANCY (GAP-L2) — an explicit derived L band `[min, max]` (OKLCh L
+     * an explicit derived L band `[min, max]` (OKLCh L
      * units) that OVERRIDES `lightnessScheme`. The single retune knob for a bespoke
      * luminosity window (e.g. `[0.18, 0.42]` for the deep luminous-dark identity). Routes
      * to `deriveAurora`'s `lBand`; only read when a `seed` is set.
      */
     lBand?: readonly [number, number];
     /**
-     * BI.W-AURORA-VIBRANCY (GAP-L2) — the analogous hue-walk width (degrees). Optional;
+     * the analogous hue-walk width (degrees). Optional;
      * omitted = the chroma-ADAPTIVE default (a higher `colorEnergy` widens the walk so a
      * vivid field carries a real second accent hue, a calm field stays a tight
      * neighbourhood). An explicit value wins. Only read when a `seed` is set.
      */
     hueSpread?: number;
     /**
-     * BI.W-AURORA-VIBRANCY (GAP-L2) — the cross-stop chroma VARIANCE (0..1, the T-26
+     * the cross-stop chroma VARIANCE (0..1, the
      * bracket grammar). 0 (default) = the uniform painterly ramp (every stop near the
      * anchor chroma); 1 = a WIDE bracket — the vivid stops toward marigold, the calm stops
      * toward the sage-whisper pole (C≈0.03), so the ramp carries an "interesting" chroma
@@ -172,9 +170,9 @@ interface AuroraAtomsBase {
      */
     chromaVariance?: number;
     /**
-     * BI.W-AURORA-VIBRANCY (GAP-L2) — the counterpoint option. When true (and
+     * the counterpoint option. When true (and
      * `chromaVariance > 0`) the deepest ramp stop is pinned to the sage-whisper pole as a
-     * deliberate low-chroma "silence" note against the vivid mass (the T-26 "silence ←
+     * deliberate low-chroma "silence" note against the vivid mass (the "silence ←
      * whisper → marigold" grammar). Default false (the variance spreads without a dedicated
      * whisper stop). Only read when a `seed` is set.
      */
@@ -233,162 +231,25 @@ export const DEFAULT_ATOMS: AuroraAtoms = {};
 // (t=0.5) is the wispy-sky default's value for each field so a half-energy config
 // reads as the balanced default.
 
-// ── ZONES: the ONE nuclei prior (single-sourced; the AW duplicated prior pair
-// collapses onto this) ─────────────────────────────────────────────────────────
-
-/** The φ⁻¹ conjugate — the golden-ratio step for a low-discrepancy scatter walk. */
-const PHI_INV = 0.61803398875;
-
-/**
- * The deterministic nuclei prior for `count` zones under an `arrangement` character.
- * ONE home for the rule-of-thirds prior (the AW duplicated prior pair is gone). Total:
- * clamps `count` to `[1, MAX_NUCLEI]`; every arrangement yields a valid in-range nuclei
- * array.
- *
- * - `composed`  — the rule-of-thirds anchor table (the deliberate balanced field).
- * - `scattered` — a golden-angle (φ⁻¹) low-discrepancy spread off-centre (loose).
- * - `centred`   — a tight cluster around the centre (one dominant glow).
- */
-export function nucleiPrior(
-    count: number,
-    arrangement: AuroraZoneArrangement = "composed",
-): AuroraConfig["nuclei"] {
-    const n = Math.max(1, Math.min(MAX_NUCLEI, Math.round(count)));
-
-    // The rule-of-thirds anchor table (the `composed` prior).
-    const THIRDS: [number, number][] = [
-        [0.33, 0.33],
-        [0.67, 0.67],
-        [0.67, 0.33],
-        [0.33, 0.67],
-        [0.5, 0.33],
-        [0.5, 0.67],
-        [0.33, 0.5],
-        [0.67, 0.5],
-    ];
-
-    const placeAt = (i: number): [number, number] => {
-        switch (arrangement) {
-            case "scattered": {
-                // Golden-angle stratified scatter: deterministic, stays composed for
-                // any count, no two seeds-of-count collide. Spiral out from centre.
-                const a = i * PHI_INV * Math.PI * 2;
-                const r = 0.12 + 0.3 * Math.sqrt((i + 0.5) / n);
-                return [
-                    clampBudget(0.5 + r * Math.cos(a), 0.1, 0.9),
-                    clampBudget(0.5 + r * Math.sin(a), 0.1, 0.9),
-                ];
-            }
-            case "centred": {
-                // A tight central cluster — small ring around the middle.
-                if (n === 1) return [0.5, 0.5];
-                const a = (i / n) * Math.PI * 2;
-                const r = 0.12;
-                return [0.5 + r * Math.cos(a), 0.5 + r * Math.sin(a)];
-            }
-            case "composed":
-            default:
-                return THIRDS[i % THIRDS.length]!;
-        }
-    };
-
-    return Array.from({ length: n }, (_, i) => {
-        const [x, y] = placeAt(i);
-        return {
-            x,
-            y,
-            radius: 0.5,
-            paletteBias: n === 1 ? 0 : i / (n - 1),
-            valueBias: (i % 2 === 0 ? 1 : -1) * 0.05,
-            driftRadius: 0.045,
-            driftPhase: (i * 2.4) % (Math.PI * 2),
-        };
-    });
-}
-
-// ── COLOR: the cross-stop chroma bracket (GAP-L2, the T-26 grammar) ─────────────
-
-/** The T-26 sage-whisper chroma pole (C≈0.02–0.04) — the "silence" note. */
-const SAGE_WHISPER_C = 0.03;
-
-/**
- * BI.W-AURORA-VIBRANCY (GAP-L2) — spread a derived palette's cross-stop chroma into a
- * bracket, IN PLACE. `variance∈[0,1]` widens the spread: even stops lift toward the vivid
- * marigold pole (a bounded lift above the ramp mean), odd stops sink toward the
- * sage-whisper pole — so a flat monochrome ramp gains an "interesting" chroma counterpoint
- * ("silence ← sage-whisper → marigold"). `counterpoint` additionally pins the DEEPEST stop
- * to the whisper as the deliberate silence note. CHROMA-ONLY — L and hue are preserved
- * exactly (the bracket is a chroma grammar); each lifted chroma is gamut-clamped through
- * the ONE `gamutMapStop` primitive so no lift escapes sRGB. A no-op at variance 0.
- */
-function applyChromaBracket(
-    palette: OklchStop[],
-    variance: number,
-    counterpoint: boolean,
-): void {
-    const n = palette.length;
-    if (n === 0 || variance <= 0) return;
-    const meanC = palette.reduce((s, st) => s + st.C, 0) / n;
-    // The vivid pole is a bounded lift above the mean (never past the gamut-safe ceiling).
-    const marigold = Math.min(0.22, meanC * 1.5);
-    // The gamut-safe chroma at a stop's OWN L/hue — take gamutMapStop's chroma, keep L+hue.
-    const safeC = (L: number, C: number, h: number): number =>
-        gamutMapStop({ L, C, h }).C;
-    palette.forEach((st, i) => {
-        const pole = i % 2 === 0 ? marigold : SAGE_WHISPER_C;
-        const C = clampBudget(lerp(st.C, pole, variance), 0, 0.4);
-        st.C = safeC(st.L, C, st.h);
-    });
-    if (counterpoint) {
-        // Pin the deepest (lowest-L) stop to the sage pole — the base "silence" note.
-        let deep = 0;
-        for (let i = 1; i < n; i++) if (palette[i]!.L < palette[deep]!.L) deep = i;
-        const st = palette[deep]!;
-        st.C = safeC(st.L, SAGE_WHISPER_C, st.h);
-    }
-}
-
-// ── NOISE: the organic-boundary fan-out ────────────────────────────────────────
-
-/** WarpMode as a function of the noise scalar — smooth fBm → hybrid → cellular. */
-function warpModeFor(t: number): WarpMode {
-    if (t < 0.4) return "fbm";
-    if (t < 0.75) return "hybrid";
-    return "cellular";
-}
-
-/**
- * The NOISE atom fan-out: one scalar t∈[0,1] drives the organic-boundary cluster.
- * Total — clamps t and every output into its budget band.
- */
-function applyNoise(cfg: AuroraConfig, amount: number): void {
-    const t = clampBudget(amount, 0, 1);
-    cfg.warpAmount = clampBudget(lerp(0.2, 0.6, t), 0, 0.6); // distortion strength
-    cfg.warpScale = clampBudget(lerp(1.0, 2.6, t), 0.5, 3); // distortion frequency
-    cfg.warpMode = warpModeFor(t); // fBm → hybrid → cellular
-    cfg.noiseOctaves = (t < 0.5 ? 3 : t < 0.85 ? 4 : 5) as 3 | 4 | 5; // detail
-}
-
 /**
  * Expand the ≤7 Tier-1 atoms into a full, valid, in-range `AuroraConfig`. A PURE,
  * TOTAL function: clones the BASE config and applies ONLY the present atoms as clamped
  * overrides, so the empty atom set resolves to exactly the base and every atom
  * combination yields a config respecting every `budget.ts` cap.
  *
- * `base` defaults to the wispy-sky `DEFAULT_AURORA_CONFIG` (so `resolveAtoms(DEFAULT_ATOMS)`
- * deep-equals it — the machine-asserted default-preserving contract). A consumer that
+ * `base` defaults to the wispy-sky `DEFAULT_AURORA_CONFIG`, so
+ * `resolveAtoms(DEFAULT_ATOMS)` deep-equals it. A consumer that
  * REFINES a richer config (the live atoms studio seeding FROM the active preset) passes the
  * preset config as `base`, so the ~21 non-atom fields the ≤7-knob projection does NOT carry
  * (the hero's stroke params, the per-preset palette specifics beyond the seed) SURVIVE the
- * atom touch — the first atom edit refines the preset rather than clobbering it to the
- * wispy-sky default (the W-AUR-STUDIO D4 atoms-trap fix).
+ * atom touch: the first edit refines the active preset rather than replacing it.
  */
 export function resolveAtoms(
     atoms: AuroraAtoms = DEFAULT_ATOMS,
     base: AuroraConfig = DEFAULT_AURORA_CONFIG,
 ): AuroraConfig {
     // Deep-clone the base so the returned config is independent (no shared nuclei
-    // array / palette / flow references the consumer could mutate into the base).
+    // array, palette, flow references the consumer could mutate into the base).
     const cfg: AuroraConfig = {
         ...base,
         palette: base.palette.map((s) => ({ ...s })),
@@ -397,15 +258,15 @@ export function resolveAtoms(
     };
 
     // ── COLOR: seed + harmony + colorEnergy → the derived palette + the co-varying
-    // chroma/value cluster. The colorEnergy temperatureShift folds the old mood
-    // coupling into the palette derive (one door covers it). An absent seed keeps the
+    // chroma/value cluster. Color energy also drives temperature shift during palette
+    // derivation. An absent seed keeps the
     // default palette; an absent colorEnergy keeps the default chroma/value fields.
     const energy =
         atoms.colorEnergy !== undefined ? clampBudget(atoms.colorEnergy, 0, 1) : undefined;
 
     if (atoms.seed !== undefined) {
         const stopCount = Math.min(AV_MAX_COLORS, 4);
-        // GAP-L2 — the chroma-ADAPTIVE hue-walk: an explicit atom wins; else a vivid field
+        // the chroma-ADAPTIVE hue-walk: an explicit atom wins; else a vivid field
         // (high energy) widens the analogous walk so the ramp carries a real second accent
         // hue, a calm field stays a tight neighbourhood; an unset energy keeps the derive default.
         const hueSpread =
@@ -418,18 +279,18 @@ export function resolveAtoms(
             harmony: atoms.harmony ?? "analogous",
             stopCount,
             // The COLOR-energy knob drives the warm-light/cool-shadow temperature on
-            // the derived palette (the old mood→temperatureShift coupling, folded).
+            // the derived palette.
             temperatureShift:
                 energy !== undefined
                     ? lerp(COLOR_ENERGY.temperatureShift.calm, COLOR_ENERGY.temperatureShift.vivid, energy)
                     : 0,
-            // GAP-L2 — the (adaptive) hue-walk + the luminance scheme / explicit L band.
+            // the (adaptive) hue-walk + the luminance scheme, explicit L band.
             // Each is spread only when present so an unset door is a byte-identical derive.
             ...(hueSpread !== undefined ? { hueSpread } : {}),
             ...(atoms.lightnessScheme !== undefined ? { scheme: atoms.lightnessScheme } : {}),
             ...(atoms.lBand !== undefined ? { lBand: atoms.lBand } : {}),
         });
-        // GAP-L2 — the cross-stop chroma bracket (T-26). Post-derive, chroma-only + opt-in.
+        // the cross-stop chroma bracket. Post-derive, chroma-only + opt-in.
         if (atoms.chromaVariance !== undefined && atoms.chromaVariance > 0) {
             applyChromaBracket(
                 cfg.palette,
@@ -457,7 +318,7 @@ export function resolveAtoms(
         );
     }
 
-    // ── ZONES: count + arrangement → the nuclei (the ONE prior).
+    // ── Zones: count + arrangement → nuclei.
     if (atoms.zones !== undefined) {
         cfg.nuclei = nucleiPrior(atoms.zones.count, atoms.zones.arrangement ?? "composed");
     }
@@ -497,11 +358,10 @@ export function resolveAtoms(
         );
     }
 
-    // ── interactivity (the wired axes — light/scroll + the FC6 medium-gated swirl + the
-    //    sized amplitude atom; default OFF). MEDIUM-GATED: `swirl` defaults ON whenever
-    //    interactivity is engaged so the cursor reads on the `smooth` medium (the T-38
-    //    dead-axis fix — the engagement-driven `auroraCursorMapping` strength paints the
-    //    cursor-local luminance lean), not just the painterly `light`.
+    // ── Interactivity: light/scroll, medium-gated swirl, and sized amplitude.
+    // `swirl` defaults on whenever
+    //    interactivity is engaged so the cursor reads on the `smooth` medium (the
+    // `auroraCursorMapping` paints cursor-local luminance lean, not just painterly light.
     if (atoms.interactivity !== undefined) {
         const it = atoms.interactivity;
         const light = atoms.medium?.kind !== undefined && atoms.medium.kind !== "smooth"
@@ -510,7 +370,7 @@ export function resolveAtoms(
         cfg.interactivity = {
             ...(light !== undefined ? { light } : {}),
             ...(it.scroll !== undefined ? { scroll: it.scroll } : {}),
-            // The smooth-medium interactivity reads by default (swirl ON) — the dead-axis fix.
+            // Smooth-medium interactivity reads by default through swirl.
             swirl: it.swirl ?? true,
             // The sized amplitude atom — clamped 0..1 (default balanced 0.5).
             amplitude: it.amplitude !== undefined ? clampBudget(it.amplitude, 0, 1) : 0.5,
@@ -523,7 +383,7 @@ export function resolveAtoms(
 // ── The inverse projection: config → atoms (the seed-from-preset door) ──────────
 //
 // `resolveAtoms` is a ~28-field expansion of ≤7 atoms; `configToAtoms` is the LOSSY
-// inverse — it reads back the SHIPPED atoms (seed/colorEnergy/zones-count/noise/medium
+// inverse: it reads back seed, color energy, zone count, noise, medium,
 // /motion) that the live preset config implies, so the atoms surface seeds FROM the
 // active preset instead of a fixed wispy-sky default. A preset's first atom touch then
 // REFINES the preset rather than clobbering it to the atoms default.
@@ -537,11 +397,10 @@ export function resolveAtoms(
 
 /**
  * Project a full `AuroraConfig` back onto the ≤7 Tier-1 atoms. The minimal recovered
- * set is seed / colorEnergy / zones-count / noise / medium(+amount) / motion; `harmony`
+ * set is seed, colorEnergy, zones-count, noise, medium(+amount), motion; `harmony`
  * and `zones.arrangement` take their door defaults (not recoverable — lossy by design).
  * `configToAtoms(resolveAtoms(a))` recovers the energy/noise/medium/motion/zone-count
- * axes of `a` within the projection's resolution (the round-trip the seed-from-preset
- * fix needs + the gate asserts).
+ * axes of `a` within the projection's resolution.
  */
 export function configToAtoms(cfg: AuroraConfig): AuroraAtoms {
     const kind = cfg.medium;

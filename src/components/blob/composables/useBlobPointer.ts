@@ -13,14 +13,14 @@ export interface TrailSample {
 }
 
 /**
- * The blob pointer/interaction machine (W10). Tracks the pointer over a host
+ * The blob pointer/interaction machine tracks the pointer over a host
  * element (normalised to [-1, 1] about the element centre) and resolves it with a
  * FRAME-RATE-INDEPENDENT critically-damped spring fed the renderer's per-frame
- * `dtMs` (NOT a fixed-α lerp — the prior `SMOOTH_FACTOR = 0.12` was framerate
- * dependent). The spring is `@mkbabb/keyframes.js` `SpringProgress` driven through
+ * `dtMs`, rather than a frame-rate-dependent fixed-α lerp. The spring is
+ * `@mkbabb/keyframes.js` `SpringProgress` driven through
  * its `tickDt(dtMs)` seam by the SUBSTRATE's single rAF — it does NOT call
  * `SpringProgress.play()` (that would start a parallel rAF, the
- * single-substrate-loop violation `proof:blob-interaction-prm` forbids).
+ * single-substrate-loop contract forbids).
  *
  * Exposes the smoothed `pointer` position AND its `velocity` (the spring's own
  * per-frame velocity, units/s in normalized space), plus a decaying-radius `trail`
@@ -32,16 +32,15 @@ export interface TrailSample {
  * pointer target (or centre when inactive), zero velocity, the trail collapsed
  * onto the body.
  *
- * F9.R8 (BG.W-BLOB-AFFECT-INTERACT — pointer truth) — the SDF-SHAPED HIT-TEST. The
+ * The SDF-shaped hit test. The
  * listener box is a SQUARE, but the blob silhouette is the body DISC (the satellites
  * orbit OUTSIDE the box). `options.hitRadius()` returns the silhouette radius in the
  * normalized [-1, 1] space; `hitTest(clientX, clientY)` is the authoritative predicate
  * the engage + click gates read, and `onPointerMove` engages the attract ONLY inside
  * it — so hovering the empty box margin never lunges the blob, and the caller lets a
  * corner click FALL THROUGH to a sibling card (the `.goo-blob-hit` clip-path is the
- * compositor-level twin). With `hitRadius` UNSET the whole box engages (byte-identical
- * to the prior always-on `active`) — the tight silhouette is the opt-in a shaped
- * consumer (GooBlob) passes; the UNSET-whole-box default stays byte-preserved.
+ * compositor-level twin). With `hitRadius` unset, the whole box engages; a shaped
+ * consumer passes a tighter silhouette radius.
  */
 export function useBlobPointer(
     el: Ref<HTMLElement | null>,
@@ -82,9 +81,9 @@ export function useBlobPointer(
     // velocity; the spring rings back to 0.
     let pulse = 0;
     let pulseVel = 0;
-    // Underdamped spring constants (PULSE_OMEGA/PULSE_ZETA) live in ../constants.
+    // Underdamped spring constants (PULSE_OMEGA/PULSE_ZETA) live in../constants.
 
-    // F9.R8 — the SDF engage radius in the listener's normalized [-1, 1] space. The
+    // the SDF engage radius in the listener's normalized [-1, 1] space. The
     // blob silhouette ≈ the body disc (satellites orbit OUTSIDE the listener box);
     // `hitRadius()` returns that radius, UNSET → Infinity (the whole box, byte-identical
     // to the prior always-on `active`). `pulse` swells the body on a click, so the
@@ -99,7 +98,7 @@ export function useBlobPointer(
      * the blob silhouette? The root square must NOT intercept sibling-card clicks —
      * outside the SDF the caller lets the event fall through (the `.goo-blob-hit`
      * clip-path is the compositor-level twin; this is the authoritative JS predicate the
-     * engage + click gates read). Returns false when unmounted / zero-sized.
+     * engage + click gates read). Returns false when unmounted, zero-sized.
      */
     function hitTest(clientX: number, clientY: number): boolean {
         const target = el.value;
@@ -213,7 +212,7 @@ export function useBlobPointer(
 
     /**
      * The live trail sources, newest first, with a decaying radius (`r *= 1 - i/N`)
-     * — a snapshot the renderer uploads each frame. `count` is the live length.
+     * a snapshot the renderer uploads each frame. `count` is the live length.
      * Trail entries are in the SAME normalized [-1, 1] space as `pointer`; the
      * renderer maps them to body space.
      */
@@ -238,22 +237,20 @@ export function useBlobPointer(
         clickPending = true;
     }
 
-    /** Drain the one-shot click flag — true once after each `click()` (W11.c mood). */
+    /** Drain the one-shot click flag; true once after each `click()`. */
     function consumeClick(): boolean {
         const c = clickPending;
         clickPending = false;
         return c;
     }
 
-    // ms since the last pointer activity — drives the mood `sleepy` drift (W11.c).
+    // Milliseconds since the last pointer activity; drives the `sleepy` drift.
     let idleMs = 0;
 
     /**
-     * Compose the DETERMINISTIC reduced-motion rest pose (W10): the spring snapped
-     * to centre, zero velocity, the trail collapsed, the pulse zeroed. The
-     * SUBSTRATE decides WHEN to freeze (it owns PRM); the renderer calls this on the
-     * one static frame it paints so the rest pose is bit-deterministic (no leaked
-     * mid-gesture residual). NO matchMedia here.
+     * Compose a deterministic reduced-motion rest pose: spring centered, velocity
+     * zero, trail collapsed, and pulse cleared. The substrate owns the preference;
+     * the renderer calls this for its static frame so gesture state cannot leak.
      */
     function rest() {
         springX.reset(0, 0); // value 0, velocity 0
@@ -269,9 +266,9 @@ export function useBlobPointer(
     }
 
     /**
-     * AX.W16 (arm 2) — the pointer is AT REST (the quiescence loop may park) when
+     * The pointer is at rest (and the quiescence loop may park) when
      * EVERY motion source has settled: the pointer is inactive (not over the blob, so
-     * the spring is relaxing toward / sitting at centre), the spring velocity is below
+     * the spring is relaxing toward, sitting at centre), the spring velocity is below
      * eps, the spring has reached centre (|value| < eps), the trail has collapsed, AND
      * the click pulse is zero. An ACTIVE pointer is never at rest (the spring is
      * following the cursor), so a held hover keeps the loop alive — no false-park.
@@ -292,7 +289,7 @@ export function useBlobPointer(
         velocity: readonly(velocity),
         active: readonly(active),
         /**
-         * BI.W-FIELD-CORE — the RAW pointer target (pre-spring, [-1,1] body space). The
+         * the RAW pointer target (pre-spring, [-1,1] body space). The
          * shared `usePointerVelocityField` reads THIS (not the smoothed `pointer`) so the
          * field is the ONE smoothing stage — the double-smooth (feeding the spring output
          * into the field, which smooths it AGAIN) is dead. The blob's own body spring reads
@@ -301,16 +298,16 @@ export function useBlobPointer(
         rawPointer: (): { x: number; y: number } => ({ x: rawX, y: rawY }),
         /** The live click-impulse pulse value (folds into uPulseAmp). */
         pulse: readonly(pulseRef),
-        /** ms since the last pointer activity (W11.c mood idle drift). */
+        /** Milliseconds since the last pointer activity, used by mood idle drift. */
         idleMs: () => idleMs,
         tick,
         trailSources,
         click,
         consumeClick,
         rest,
-        /** AX.W16 — the quiescence at-rest predicate the renderer's demand gate reads. */
+        /** Quiescence predicate read by the renderer's demand gate. */
         isAtRest,
-        /** F9.R8 — the SDF-shaped hit-test (is a client point inside the blob silhouette?). */
+        /** the SDF-shaped hit-test (is a client point inside the blob silhouette?). */
         hitTest,
     };
 }

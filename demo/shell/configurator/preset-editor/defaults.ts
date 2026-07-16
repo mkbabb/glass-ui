@@ -1,7 +1,6 @@
 // demo/shell/configurator/preset-editor/defaults.ts — default presets, constants,
 // and CSS-variable name tables.
 //
-// O.W3 Lane C — split from the prior `usePresetEditor.ts` god-module per Rβ.
 // Const-only module; no runtime side effects.
 
 import type { ConfigBaseline, Density, FontOption, FontSlots, WritableField } from "./types";
@@ -10,7 +9,7 @@ export const STORAGE_KEY = "glass-ui-demo-config";
 export const PRESET_LINK_ID = "glass-ui-demo-preset-link";
 
 // The shipped-canon font picker. Every stack names ONLY a self-hosted face
-// (Plus Jakarta Sans / Fira Code — declared in src/styles/fonts.css +
+// (Plus Jakarta Sans, Fira Code — declared in src/styles/fonts.css +
 // demo/demo.css), its Capsize-calibrated "* Fallback" wrapper, or a generic
 // system keyword. No option advertises a face the browser cannot paint.
 export const FONT_OPTIONS: readonly FontOption[] = [
@@ -50,10 +49,8 @@ export const DEFAULT_CONFIG: ConfigBaseline = {
     density: "comfortable",
     radius: 10,
     cartoonShadow: true,
-    // BA.W-CONFIG-CHASSIS.3 — the `dark` baseline is GONE; dark mode is owned by
-    // `useGlobalDark`, not a config baseline (the field DIED with the desynced
-    // store machinery + the gear's NO-OP Switch).
-    // The post-W54 axes — each at its library identity (zero-delta when untouched).
+    // Dark mode is owned by `useGlobalDark`, not the preset baseline.
+    // Each axis begins at its library identity (zero delta when untouched).
     glassLevel: 1, // --glass-level identity (the calibrated glass; 0 = opaque)
     scale: 1, // --ui-scale identity (the desktop comfort scalar)
 };
@@ -81,7 +78,7 @@ export const FIELD_CSS_VARS = {
     density: ["--density-pad", "--density-gap"],
     radius: ["--radius"],
     cartoonShadow: ["--shadow-card", "--shadow-card-hover"],
-    // The post-W54 axes — the demo SURFACES the shipped library knobs. `scale`
+    // The demo surfaces the shipped library knobs. `scale`
     // writes the GLOBAL `--ui-scale` (the dock's `--dock-scale` derives from it),
     // NOT `--dock-scale` directly.
     glassLevel: ["--glass-level"],

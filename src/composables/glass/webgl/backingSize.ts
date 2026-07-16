@@ -1,9 +1,5 @@
-// BD.W-SUBSTRATE-SIZE-UNIFY (G1) — the ONE backing-store sizer, carved into this
-// colocated leaf at BG.W-COLOCATE (the WS4 canvas-lifecycle carve; ratchet-drain #3).
-// `createCanvasLifecycle` COMPOSES it (imports + re-exports the value + its types so
-// every consumer reaches the sizer through the lifecycle unchanged). Pure CSS-geometry
-// — ZERO closure state, no scheduling, no DOM listeners; the schedule + park + reveal
-// machinery live beside it (createCanvasLifecycle + the visibility leaf).
+// The sole backing-store sizer. `createCanvasLifecycle` composes and re-exports it.
+// This leaf owns pure CSS geometry with no closure state, scheduling, or listeners.
 
 /**
  * The freshly-measured backing geometry the leaf hands the consumer's `resize`. The
@@ -27,24 +23,21 @@ export interface BackingSize {
 export type DprPolicy = number | ((box: { w: number; h: number }) => number);
 
 /**
- * BD.W-SUBSTRATE-SIZE-UNIFY (G1) — the ONE canonical backing-store sizer.
+ * The canonical backing-store sizer.
  *
- * Aurora's PROVEN gBCR-ancestor sizer, lifted into the agnostic leaf so it lives ONCE
- * (DRY) instead of in N drifted consumer `resize()` closures (the three incompatible
- * `clientWidth || 320` / `clientWidth || canvasSize` / one-parent-gBCR conventions the
- * DELTA-ASSAY reproduced as the live 300×150 stuck-canvas).
+ * The shared ancestor-aware sizer replaces per-consumer `resize()` conventions.
  *
  * Measures the LAID-OUT border-box via `getBoundingClientRect` — NOT `clientWidth`,
  * which reads 0 under a `content-visibility:auto` skip (the born-skipped trap). Walks
  * ancestors ONLY when our own rect is still zero (truly un-laid-out), and the walk is
- * BOUNDED (H-B): cap depth at 3 AND stop at the first sized / contained / container /
- * positioned ancestor — never an unbounded gBCR storm to `<body>` (O(depth) reflow per
+ * Bounded: cap depth at 3 and stop at the first sized, contained, container-positioned
+ * ancestor — never an unbounded gBCR walk to `<body>` (O(depth) reflow per
  * tick), never an over-recovered wide flex/grid grandparent that sizes the backing to
  * the viewport. Idempotent: the realloc (which CLEARS the drawing buffer) is skipped
  * when the buffer already matches the box.
  *
  * Pure CSS-geometry — ZERO dependency on which GPU API is live, so it runs SYNCHRONOUSLY
- * at mount before the async WebGPU device resolves (G2). Engine-identical in Chromium +
+ * at mount before the async WebGPU device resolves. Engine-identical in Chromium and
  * WebKit (gBCR reflects the real box across a CV skip in both).
  */
 export function sizeBacking(

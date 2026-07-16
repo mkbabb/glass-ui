@@ -70,7 +70,7 @@ export interface UseViewportReadyControls {
  * disposal (mirrors `useResizeObserver` / `useInterval` upstream); outside
  * a scope callers receive the manual `stop()` control.
  *
- * Why this exists (speedtest origin, glass-ui promotion AJ.W6-α): both
+ * Both
  * `AdminOverviewView` and `ChartsView` shipped a near-identical `chartReady`
  * flag flipped by `requestIdleCallback` alone. The W3-R1 idiom in those
  * sites — gate visibility first, then schedule rIC inside the IO callback —

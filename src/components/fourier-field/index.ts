@@ -31,9 +31,9 @@ export {
 
 /**
  * The props a consumer forwards when wrapping `<FourierField>` (the GPU-substrate epicycle
- * field; ships via `/fourier-field`). Mirrors the component's inline `defineProps` shape (an
- * SFC cannot export its inline props type). BC.W-VIZ-FOURIER — the `variant: "hero"|"final"`
- * enum is RETIRED (folds into config presets); the renderer is the WGSL-primary GPU substrate.
+ * field; ships via `/fourier-field`). Mirrors the component's inline `defineProps` shape because
+ * an SFC cannot export its inline props type. Visual bundles live in config presets; the
+ * renderer is the WGSL-primary GPU substrate.
  */
 export interface FourierFieldProps {
     /** The full author config (the studio's `useConfiguratorState` model). Defaults to the warm identity. */

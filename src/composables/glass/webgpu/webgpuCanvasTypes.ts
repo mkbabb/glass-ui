@@ -1,12 +1,12 @@
-// BG.W-COLOCATE — the WebGPU backend's public TYPE surface, carved out of
+// the WebGPU backend's public TYPE surface, carved out of
 // useWebGPUCanvas.ts to hold the 500-line no-god-module bound (ratchet-drain #4). Pure
 // types — NO WebGPU bootstrap token (`navigator.gpu`/`getContext("webgpu")`/
-// `requestAdapter` live ONLY in the substrate — proof:gpu-substrate-single clause A);
+// `requestAdapter` live ONLY in the substrate —  clause A);
 // the substrate + the picker (`useGpuSubstrate`) re-import these unchanged.
 import type { BackingSize, DprPolicy } from "../webgl/createCanvasLifecycle";
 
-// Lockstep with createCanvasLifecycle's CanvasSuspendReason (the AX.W16 F6
-// "off-screen-io" key — the IntersectionObserver fallback's OWN reason, distinct from
+// Lockstep with createCanvasLifecycle's CanvasSuspendReason. `off-screen-io` is
+// the IntersectionObserver fallback's own reason, distinct from
 // the content-visibility path's "off-screen").
 export type WebGPUSuspendReason =
     | "tab-hidden"
@@ -29,7 +29,7 @@ export interface WebGPUCanvasFrame {
     /** Demand-gate: is there live motion to render next frame? `false` → park. */
     shouldContinue: () => boolean;
     /**
-     * Upload the backing geometry. BD.W-SUBSTRATE-SIZE-UNIFY: when a `dprPolicy` is
+     * Upload the backing geometry.: when a `dprPolicy` is
      * supplied the leaf sizes the backing + passes the live `BackingSize` here (the
      * WGSL swap chain auto-tracks the backing, so the consumer body shrinks to an aspect
      * upload). The arg is optional so a legacy self-measuring consumer keeps compiling.
@@ -58,17 +58,17 @@ export interface WebGPUCanvasOptions {
      */
     respectReducedMotion?: boolean;
     /**
-     * BD.W-SUBSTRATE-SIZE-UNIFY (G1/G2) — the consumer's DPR policy. When PRESENT the
+     * The consumer's DPR policy. When present the
      * leaf sizes the backing SYNCHRONOUSLY at mount (via `presize`, BEFORE the async
      * device acquire — the ≤6s blurry-flash close) and hands the live `BackingSize` to
      * `resize(s)`. When ABSENT the legacy path runs (the consumer self-measures).
      */
     dprPolicy?: DprPolicy;
-    /** Compose the leaf IO park (G3). Default `false` (opt-in; see createCanvasLifecycle). */
+    /** Compose the leaf IO park. Default `false`; see createCanvasLifecycle. */
     composeIntersectionPark?: boolean;
-    /** `rootMargin` for the leaf IO park (G3). */
+    /** `rootMargin` for the leaf IO park. */
     intersectionRootMargin?: string;
-    /** Fire the one-shot cold-first-VISIBLE entrance bloom (BG.W-VIZ-REVEAL-BLOOM — the `data-substrate-reveal` attr). Default `false`. */
+    /** Fire the one-shot cold-first-visible entrance bloom via `data-substrate-reveal`. Default `false`. */
     revealBloom?: boolean;
     /**
      * Build the WGSL pipeline + bind groups on the resolved device. Called on the
@@ -81,7 +81,7 @@ export interface WebGPUCanvasOptions {
     ) => WebGPUCanvasFrame;
     /** Internal lifecycle projection used by the shared renderer-status owner. */
     onContextStateChange?: (state: "lost" | "restored") => void;
-    /** Surface a device-init / validation failure (no WebGPU adapter, a `setup` throw). */
+    /** Surface a device-init, validation failure (no WebGPU adapter, a `setup` throw). */
     onInitError?: (error: unknown) => void;
 }
 
@@ -89,7 +89,7 @@ export interface WebGPUCanvasHandle {
     /**
      * Run the expensive ASYNC init (adapter + device + context.configure + `setup`)
      * THEN arm the loop. Resolves once armed (or rejects-via-`onInitError` on a
-     * device-unavailable / `setup` failure). Idempotent; a no-op post-dispose.
+     * device-unavailable, `setup` failure). Idempotent; a no-op post-dispose.
      */
     armAsync: () => Promise<void>;
     /**
@@ -98,16 +98,16 @@ export interface WebGPUCanvasHandle {
      * `armAsync` for the WebGPU path). Idempotent.
      */
     arm: () => void;
-    /** BD.W-SUBSTRATE-SIZE-UNIFY (G2) — size the backing + start the leaf RO synchronously, before the async acquire. */
+    /** Size the backing and start the leaf RO synchronously before async acquire. */
     presize: () => void;
     suspend: (reason?: WebGPUSuspendReason) => void;
     resume: (reason?: WebGPUSuspendReason) => void;
     /** Re-arm a parked loop (a setter that re-introduced motion calls this). */
     wake: () => void;
-    /** Draw one frame at `timeSec` out-of-loop (capture / thumbnail). */
+    /** Draw one frame at `timeSec` out-of-loop (capture, thumbnail). */
     renderAt: (timeSec: number) => void;
     dispose: () => void;
-    /** The live device (null before armAsync / after dispose / mid-loss). */
+    /** The live device (null before armAsync, after dispose, mid-loss). */
     readonly device: GPUDevice | null;
     /** Runtime-derived adapter identity, available once acquisition succeeds. */
     readonly adapterClass: string;

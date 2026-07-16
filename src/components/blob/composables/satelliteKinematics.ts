@@ -9,8 +9,8 @@ import {
 import type { SatelliteInternal } from "../types";
 
 /**
- * The stateless satellite KINEMATICS leaf (BG.W-BLOB-KINEMATICS-LEAF) — the
- * orbit / eccentricity / wobble math carved out of `useBlobSatellites.ts`.
+ * The stateless satellite KINEMATICS leaf — the
+ * orbit, eccentricity, wobble math carved out of `useBlobSatellites.ts`.
  *
  * Every function here is PURE: it takes the PRNG, the geometry, and the tempo
  * clock as EXPLICIT parameters and owns NO closure state, NO `SpringProgress`,
@@ -18,7 +18,7 @@ import type { SatelliteInternal } from "../types";
  * the phase state-machine live in the driver (`useBlobSatellites.ts`), which
  * COMPOSES these — one writer of the satellite state (the driver), and the
  * kinematics math beside it (this leaf). The `rng` is passed IN, never owned:
- * the seed / reseed discipline stays with the stateful driver.
+ * the seed, reseed discipline stays with the stateful driver.
  */
 
 function createSatellite(
@@ -28,16 +28,13 @@ function createSatellite(
     eccentricity: number,
     now: number,
 ): SatelliteInternal {
-    // `now` is the canonical tempo-integrated clock (W11.c) — the satellite phase
-    // timing rides the SAME clock the renderer scales by tempo, so pausing the
+    // Satellite phase timing uses the renderer's tempo-integrated clock, so pausing
     // tempo freezes the satellites with no discontinuity.
     // Spread starts widely — full circle with large random offset
     const baseAngle = (index / 4) * Math.PI * 2 + (rng() - 0.5) * Math.PI;
 
-    // BA.W-GOO-REDRESS (direction i) — the orbit envelope is RE-CENTERED + CAPPED
-    // (×0.85..1.05, was ×0.8..1.2) so the worst-case satellite near-edge stays
-    // within the widened smin band's reach (uploadBlobUniforms.ts) — the satellite
-    // bridges across the WHOLE orbit, never floats as an unrelated disc.
+    // The ×0.85..1.05 orbit envelope keeps the worst-case satellite edge within
+    // the smooth-union band's reach, so it remains joined throughout the orbit.
     const baseR = orbitRadius * (ORBIT_RANDOM_BASE + rng() * ORBIT_RANDOM_SPAN);
     const ecc = eccentricity * (0.3 + rng() * 0.7);
 
@@ -69,7 +66,7 @@ function createSatellite(
         endX: 0,
         endY: 0,
 
-        // BD.W-GOOBLOB-MERCURY-COLONY — born NOT fissioning (the calm bonded breath).
+        // born NOT fissioning (the calm bonded breath).
         fissioning: false,
         snapFired: false,
     };
@@ -82,7 +79,7 @@ function orbitPos(
     wobbleScale: number,
 ): { x: number; y: number } {
     const t = (now - s.timeOrigin) / 1000;
-    // Mood drives the orbit (W11.c): orbitSpeedScale speeds/slows the orbital
+    // Mood drives the orbit: orbitSpeedScale changes the orbital
     // sweep; wobbleScale fattens/calms the radial wobble. excited = faster + more
     // wobble, sleepy = slow + calm.
     const angle = s.angularSpeed * orbitSpeedScale * t + s.phaseOffset;
@@ -110,8 +107,8 @@ function randomizeOrbit(
     s.timeOrigin = now;
     s.angularSpeed = 0.08 + rng() * 0.16;
     s.phaseOffset = rng() * Math.PI * 2;
-    // BA.W-GOO-REDRESS (direction i) — the SAME capped orbit envelope on the orbit
-    // re-randomize (the create + re-randomize sites read ONE source so a fresh
+    // Preserve the capped orbit envelope when re-randomizing an orbit.
+    // The create and re-randomize sites read one source so a fresh
     // orbit never re-inflates past the band reach).
     const baseR = orbitRadius * (ORBIT_RANDOM_BASE + rng() * ORBIT_RANDOM_SPAN);
     const ecc = eccentricity * (0.3 + rng() * 0.7);

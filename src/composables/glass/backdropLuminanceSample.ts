@@ -1,10 +1,8 @@
-// backdropLuminanceSample — the STATELESS backdrop-sampling + OKLab-reduce family,
-// carved from useGlassBackdropLuminance.ts (BI.W-ENCAP-REDRAIN; the no-god-module
-// colocation carve — position-preserving, behaviour-identical, ZERO pixel change).
+// Stateless backdrop sampling and OKLab reduction.
 //
 // The observer HOST keeps only the reactive wiring (the useRAFLoop/useIntersectionPause/
 // useResizeObserver composition, the reusable downsample-canvas lifecycle, and the
-// `--glass-backdrop-*` / `--glass-ambient-*` writes on the target). The two SAMPLERS
+// `--glass-backdrop-*`, `--glass-ambient-*` writes on the target). The two SAMPLERS
 // live HERE as pure functions the observer COMPOSES:
 //   - `sampleStatic`   — the `elementsFromPoint` stack-walk of the painted background
 //                        LAYER (the static page case), un-wrapping `var(--token)`
@@ -19,9 +17,9 @@
 
 import { resolveTokenColor } from "../dom/useResolveTokenColor";
 import { isCanvas, relLuminance, parseRgb } from "./backdropSampleMath";
-// BE.W-AMBIENT-TINT — the ambient-hue histogram (accumulate/resolve + the value.js
+// the ambient-hue histogram (accumulate/resolve + the value.js
 // color source) lives in the colocated leaf; the sampler COMPOSES it (the ONE color
-// source — proof:single-color-core follows the value.js import into the histogram leaf).
+// source).
 import {
     makeHueHistogram,
     accumulateHuePixel,
@@ -50,20 +48,22 @@ export type BackgroundCanvasSource =
 /** The downsample resolution for the animated-field read (a 32×32 mean). */
 export const SAMPLE_DOWNSAMPLE = 32;
 
-// BG.W-GLASS-SIGNAL-TRUTH (NF.3, paint mustFix #2) — the animated field-canvas
+// The animated field-canvas
 // readback carries REAL painted content only when the source WebGL `<canvas>` actually
 // rendered a frame AND kept its drawing buffer (`preserveDrawingBuffer`). An
-// unrendered / composited-and-cleared / software-raster-fallback field reads
+// unrendered, composited-and-cleared, software-raster-fallback field reads
 // fully-transparent (mean alpha ≈ 0); compositing THAT over white yields a DEGENERATE
 // luma ≈ 1.0 + a `transparent` ambient hue — the "witness fires but the value is a lie"
-// state the NF.3 paint-DELTA flagged. Below this mean-alpha floor the readback is not a
-// valid sample: `sampleAnimated` returns null so the observer falls to the static
-// stack-walk (a REAL warm backdrop proxy). Fail-explicit, never a masking fake value.
+// state. Below this mean-alpha floor the readback is not a
+// valid sample: `sampleAnimated` returns null and the live caller writes `unavailable`
+// (see useGlassBackdropLuminance.sampleNow). A null live sample NEVER falls to the
+// static stack-walk — that coalescing is deliberately forbidden (P016). Fail-loud,
+// never a masking fake value.
 export const FIELD_ALPHA_FLOOR = 0.02;
 
-/** BG.W-FIELD-ACCENT-RECONCILE — the library convention marking the ONE shell
+/** Library convention marking the single shell
  *  field canvas (the recessive shell `<Aurora>` the demo chassis mounts behind every
- *  non-focal route; also the WS8 BACKDROP-SAMPLE marker). A glass surface that does
+ *  non-focal route; also the BACKDROP-SAMPLE marker). A glass surface that does
  *  NOT name an explicit `backgroundCanvas` auto-discovers this canvas so it samples
  *  the LIVE field rather than a static stack-walk; absent it (a focal route where the
  *  shell stands down, an SSR scope) the static `elementsFromPoint` path is the floor. */
@@ -101,10 +101,10 @@ export function resolveSourceCanvas(
 /**
  * Robust CSS-color → sRGB `[r,g,b,a]`. `parseRgb` is the fast path for the legacy
  * `rgb()/rgba()` serialization; ANY other valid CSS color form — the MODERN
- * `oklch()` / `color(srgb …)` / `hsl()` tokens the warm-cream demo basis resolves to —
+ * `oklch()`, `color(srgb …)`, `hsl()` tokens the warm-cream demo basis resolves to —
  * is normalized by painting it onto the 1×1 corner of the reused 2D canvas (passed in)
  * and reading the composited pixel back (`getImageData` ALWAYS returns integer sRGB
- * whatever the source space). BG.W-GLASS-SIGNAL-TRUTH: without this `sampleStatic`
+ * whatever the source space).: without this `sampleStatic`
  * returned null on a `color(srgb …)`/`oklch(…)` backdrop and wrote NOTHING — the static
  * floor was a DEAD channel. The static floor is now writer-true over ANY backdrop.
  */
@@ -130,8 +130,9 @@ export function normalizeToRgb(
 /**
  * Sample the ANIMATED backdrop: downsample the resolved source canvas under the
  * surface's bounding box → mean relative luminance + the ambient-hue histogram (a FREE
- * rider over the SAME pixel pass). Returns null if no source / an all-transparent
- * (unrendered) field / a tainted canvas — the caller falls to the static stack-walk.
+ * rider over the SAME pixel pass). Returns null if no source, an all-transparent
+ * (unrendered) field, or a tainted canvas — the live caller writes `unavailable` on a
+ * null; it NEVER falls to the static stack-walk (that coalescing is forbidden, P016).
  */
 export function sampleAnimated(
     el: HTMLElement,
@@ -182,22 +183,21 @@ export function sampleAnimated(
             const b = data[i + 2]! * a + 255 * (1 - a);
             sum += relLuminance(r, g, b);
             alphaSum += a;
-            // BE.W-AMBIENT-TINT — the hue histogram, a FREE rider in the SAME loop
+            // the hue histogram, a FREE rider in the SAME loop
             // (no second getImageData, no second canvas, no second pass).
             accumulateHuePixel(hist, r, g, b, a);
             n++;
         }
-        // BG.W-GLASS-SIGNAL-TRUTH (NF.3 mustFix #2) — an all-transparent readback (mean
-        // alpha below the floor) carries NO painted field content (an unrendered /
-        // cleared-after-composite / software-raster field). It is NOT a valid sample:
-        // returning null lets the caller fall to the static stack-walk (a real warm
-        // backdrop) instead of writing a degenerate luma ≈ 1.0 + `transparent` hue.
+        // An all-transparent readback carries no painted field content and is not a
+        // valid sample. Returning null makes the live caller write `unavailable` (never
+        // the static stack-walk — forbidden by P016) rather than a degenerate luma ≈ 1.0
+        // with a transparent hue.
         if (n === 0 || alphaSum / n < FIELD_ALPHA_FLOOR) return null;
         return { luma: sum / n, ambientHue: resolveAmbientHue(hist) };
     } catch {
-        // fail-explicit: a tainted/cross-origin canvas throws on getImageData; the null
-        // return SURFACES the miss to the caller, which falls back to the static
-        // stack-walk (never a silent wrong answer).
+        // fail-loud: a tainted/cross-origin canvas throws on getImageData; the null
+        // return SURFACES the miss to the caller, which writes `unavailable` (never the
+        // static stack-walk — forbidden by P016; never a silent wrong answer).
         return null;
     }
 }

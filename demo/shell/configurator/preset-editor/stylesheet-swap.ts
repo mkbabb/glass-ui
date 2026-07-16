@@ -1,7 +1,7 @@
 // demo/shell/configurator/preset-editor/stylesheet-swap.ts — preset-active stylesheet
 // `<link>` hot-swap path.
 //
-// O.W3 Lane C — split from the prior `usePresetEditor.ts` god-module per Rβ.
+// Split from the former monolithic `usePresetEditor.ts`.
 // Owns the singleton `<link id="glass-ui-demo-preset-link">` lifecycle: lazy
 // creation, href swap, enable/disable. No CSS-variable writes, no localStorage.
 

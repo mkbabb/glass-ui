@@ -1,22 +1,20 @@
 /**
- * The ONE shared texture-upload primitive (BG.W-AUR-IMAGE-SOURCE).
+ * The ONE shared texture-upload primitive.
  *
  * A photo entering a dual-engine (WebGL2 + WebGPU) shader family has ONE genuine
- * cross-engine hazard: the WebGL2 and WebGPU uploads DIFFER on premultiply /
- * colour-space / flip-Y defaults (gpuweb #4356; Safari's
+ * cross-engine hazard: the WebGL2 and WebGPU uploads differ on premultiply,
+ * colour-space and flip-Y defaults (gpuweb #4356; Safari's
  * `copyExternalImageToTexture(ImageBitmap)` history). Left ad-hoc per site it bites
  * invisibly and per-backend. This module NORMALISES the decode + declares the SAME
  * flag set EXPLICITLY on both upload legs, so a texture reads identically on Chromium
  * and WebKit — the single seam every image-consuming viz routes through.
  *
- * The ≥2-consumer bar is met by construction: `<Aurora source="image">` is consumer
- * #1 (this wave BUILDS the seam); `BD.W-DOT-IMAGE` (the dot-matrix image variant) is
- * the booked consumer #2 — whichever landed first BUILDS it, the other CONSUMES it
- * (the first-to-land-builds contract). Recorded in
+ * `<Aurora source="image">` consumes this upload seam. Further image-backed
+ * substrates can share it without adding another texture path.
  * `docs/consumer-evidence/texture-upload.md`.
  *
- * INTERNAL — off the public `src/composables/glass/index.ts` barrel (the WebGL2 /
- * WebGPU substrates are likewise): aurora + dot-image compose it via a direct
+ * Internal and absent from the public `src/composables/glass/index.ts` barrel, like the
+ * WebGL2 and WebGPU substrates: Aurora and dot-image compose it via a direct
  * relative import.
  *
  * The decode contract (BOTH legs share it):
@@ -43,7 +41,7 @@ export type UploadableImageSource =
     | ImageData;
 
 /**
- * Anything a consumer may hand the axis: a URL string / `Blob` (needs a decode) OR an
+ * Anything a consumer may hand the axis: a URL string, `Blob` (needs a decode) OR an
  * already-uploadable source (passed straight through). `resolveImageSource` normalises
  * every form to an {@link UploadableImageSource} via the shared decode contract.
  */

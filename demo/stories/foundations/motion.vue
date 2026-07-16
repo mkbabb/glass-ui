@@ -37,10 +37,10 @@ interface TransitionDemo {
     cssClass: string; // Transition name prop → matches .<name>-enter-active etc.
 }
 
-// BI.W-REGISTER-TABLE — the `fade-slide` / `pop` / `dialog-scale` / `dropdown`
+// the `fade-slide`, `pop`, `dialog-scale`, `dropdown`
 // Vue-<Transition> recipes are RETIRED (census-dead, 0 src/ consumers); their overlay/
 // menu entrances now ride the ONE `.glass-reveal` recipe bound by `data-reveal`
-// (enter-overlay / enter-menu / enter-tooltip / enter-transient — see the live overlays
+// (enter-overlay, enter-menu, enter-tooltip, enter-transient — see the live overlays
 // in Display ▸ Overlays). The showcase keeps the still-live generic swaps.
 const transitionDemos: TransitionDemo[] = [
     {
@@ -130,7 +130,7 @@ function toggle(id: string): void {
                         "
                     >
                         <Transition :name="demo.cssClass">
-                            <!-- F2.R1 W-DARK-READABILITY-REPAIR (paint re-open): white on the
+                            <!--   (paint re-open): white on the
                                  fixed --motion-accent violet collapsed to WCAG ~2.45 in dark.
                                  The native contrast-color() picks the legible ink on the census
                                  engines (Chrome 149 / Safari 26); text-white is the base. -->

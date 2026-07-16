@@ -1,11 +1,11 @@
 <script setup lang="ts">
-// BB.W-DEMO-DESIGN — the type pane as an EDITORIAL TYPE SPECIMEN, not a flat
+// the type pane as an EDITORIAL TYPE SPECIMEN, not a flat
 // 18-row label/sample table. It leads with ONE focal display word, ACTIVATES the
 // audacious mega/hero/audacious tiers the library is proud of (the fast.com peg —
 // they were never even shown before), then lays the graded ladder as a designed
 // rhythm over the calm grid/paper wash (the StoryHero `cardTier` drop-through the
 // `foundations→paper` manifest default declares). The body-pane CASCADE rides
-// StoryPage's `.scroll-cascade` host (W-SCROLL-MOTION — each StorySection builds in
+// StoryPage's `.scroll-cascade` host; each StorySection builds in
 // on its own view() timeline; no demo-local @keyframes). The ONE color event is
 // the TYPE itself — the ladder stays ink, the wash is the calm neutral grid (the
 // one-color-event proportion held).
@@ -52,7 +52,7 @@ const peaks: { cls: string; label: string; peg: string; word: string }[] = [
         <!-- THE FOCAL SPECIMEN — one audacious display word leads the pane. The
              type IS the experience (the ONE color event is the type itself; it
              stays ink so the ladder, the peaks, and the wash never compete). The
-             focal word rides the W-SCROLL-MOTION cascade (StoryPage's .scroll-
+             focal word rides the cascade (StoryPage's .scroll-
              cascade host) on its own view() timeline. -->
         <section class="flex flex-col gap-3">
             <p class="section-label">Foundations · Typography</p>

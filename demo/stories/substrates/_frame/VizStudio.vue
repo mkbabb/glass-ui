@@ -31,18 +31,17 @@ const props = withDefaults(
         /**
          * Where the preset gallery sits — forwarded to `<Configurator>`. Default
          * `"aside"` (the inspector idiom, byte-identical to before). `"top"` pins
-         * the presets as a LARGE full-width scrollable ribbon across the top of the
-         * studio (the aurora studio's F7.6 register — the stage + controls reclaim
-         * the full height below it). The chassis OWNS the passthrough (single-writer
-         * — it threads the axis to the ONE library `<Configurator>`); a studio only
-         * sets the axis, never a per-studio gallery re-fork.
+         * the presets as a full-width scrollable ribbon across the top of the
+         * studio so the stage and controls share the height below it. This chassis
+         * forwards the axis to the sole `<Configurator>`; individual studios only
+         * select the placement.
          */
         galleryPlacement?: ConfiguratorGalleryPlacement;
         /** Scroll behaviour for the controls column. Default `auto`. */
         scrollMode?: ConfiguratorScrollMode;
         /**
          * The studio height envelope — the fixed-height frame the stage flexes
-         * inside. BI.W-AURORA-VIBRANCY (UF-E4) bumped the default from `min(78vh,720px)`
+         * inside. bumped the default from `min(78vh,720px)`
          * to `min(86vh,880px)` — the "core chosen aurora space larger" read (the studio
          * canvas grows). Pass a tighter rung for a smaller viz.
          */
@@ -72,7 +71,7 @@ const configuratorClass = computed(() =>
 <template>
     <StoryPage>
         <StorySection :heading="heading" :label="label" :blurb="blurb">
-            <!-- BC.W-CONFIG-RIGHT — stage LEFT, controls RIGHT on desktop. The
+            <!-- stage LEFT, controls RIGHT on desktop. The
                  `aside-side="right"` is the <Configurator> default, pinned here so
                  the studio's controls-right placement is a recorded contract the π
                  asserts. The desktop two-column grid ships as the precompiled
@@ -104,7 +103,7 @@ const configuratorClass = computed(() =>
                     <slot name="controls" />
                 </template>
 
-                <!-- Optional preset-row override (aurora's PresetPickerRow / blob's
+                <!-- Optional preset-row override (aurora's PresetPickerRow, blob's
                      weighted row). When absent the <Configurator> default chip row
                      renders the `presets` prop. -->
                 <template v-if="$slots.presets" #presets="presetScope">
@@ -117,7 +116,7 @@ const configuratorClass = computed(() =>
                 </template>
             </Configurator>
 
-            <!-- The studio notes / hint prose + the comprehensive demo gallery flow
+            <!-- The studio notes, hint prose + the comprehensive demo gallery flow
                  BELOW the studio frame (the per-viz §7 suite — every state walked). -->
             <slot />
         </StorySection>

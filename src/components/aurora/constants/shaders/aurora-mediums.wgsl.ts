@@ -1,19 +1,19 @@
-// BC.W-VIZ-AURORA (T4) — the WGSL painterly-medium bodies (the keystone first-principles
-// "NO FALLBACKS on Safari" close). The booked `bb-aurora-wgpu-mediums` successor FIRED:
-// on Safari 26 (WebGPU) a painterly medium renders the FULL painterly register, never a
+// The WGSL painterly-medium bodies provide the first-principles close for the
+// "NO FALLBACKS on Safari" contract: on Safari 26 (WebGPU), a painterly medium renders
+// the full painterly register, never a
 // silent smooth degrade.
 //
 // THE PORT (mechanical, GLSL → WGSL — same math, WGSL syntax):
 //   - `sampleBase`  — the edge-mask base-color re-sample (the operator the painterly
 //     mediums Sobel/sector-sample). The WGSL twin of mediums.glsl.ts's `sampleBase`.
-//   - `structureTensorField` — the AW.W4.1 keystone: stroke/patch orientation from the
+//   - `structureTensorField` — the keystone: stroke/patch orientation from the
 //     COLOR FIELD's OWN structure (a 3×3 Sobel over luma(sampleBase) → the 2×2 structure
 //     tensor → the minor eigenvector edge-tangent + the coherence A). The WGSL twin.
 //   - `flowField` — the directional flow seed (the WGSL twin; the simple radial/swirl/
 //     diagonal patterns + the curl perturb, sufficient for the medium fallback dirs the
 //     studio default exercises).
 //   - `brokenColorJitter` — hue+chroma jitter at constant OKLCh L (the crayon pigment read).
-//   - `mediumPastel` / `mediumWatercolor` / `mediumCrayon` — the cheap PEER mediums
+//   - `mediumPastel`, `mediumWatercolor`, `mediumCrayon` — the cheap PEER mediums
 //     (sampleBase/structureTensorField/vnoise only — no stroke cascade).
 //   - `mediumKuwahara` — THE KEYSTONE (Kyprianidis 2010, the SOFT polynomial-weighted
 //     anisotropic-Kuwahara; aurora is a PROCEDURAL field so no FBO — the operator runs
@@ -30,7 +30,7 @@
 // stroke mediums render the anisotropic-Kuwahara PAINTERLY finish (a real oil-paint read,
 // NOT the smooth core) — so a `medium:"vangogh"`/`"oil"`/`"oil-pastel"` config on Safari 26
 // paints painterly, never a silent smooth degrade (the user's mandate). The full per-dab
-// Starry-Night stroke cascade WGSL port is the booked W-AURORA-WGPU-MEDIUMS-STROKES tail.
+// Starry-Night stroke cascade remains a separate full-fidelity port.
 //
 // The painterly scalars (uStrokeAmount/uStrokeScale/uStrokeAnisotropy/uCanvasGrain/uWetEdge/
 // uGranulation/uBrokenColor + the Kuwahara radius/sectors/q) ride the appended scalars4/
@@ -50,17 +50,17 @@ fn mGranulation() -> f32 { return u.scalars5.y; }
 fn mBrokenColor() -> f32 { return u.scalars5.z; }
 fn mKuwaharaQ() -> f32 { return u.scalars5.w; }
 fn mKuwaharaRadius() -> f32 { return u.kuwahara.x; }
-// BG.W-AUR-METAL-FINISH — the metal-medium knobs ride the FREE cursor.z/.w pad lanes
+// The metal-medium knobs ride the free cursor.z/.w pad lanes
 // (uniformBridgeWGPU packs them; written 0 on a non-metal config → no-op). These read
 // the IN-STRUCT cursor — the metal light is cursor-synthesized so it crosses to WGSL
-// (a phantom uLightDir read would be flat on the primary — uLightDir is .frag-only).
+// (a phantom uLightDir read would be flat on the primary; uLightDir is fragment-only).
 fn mMetalPolish() -> f32 { return u.cursor.z; }
 fn mMetalHeightScale() -> f32 { return u.cursor.w; }
 
-// ── Gradient pack (BG.W-AUR-METAL-FINISH; the WGSL twin) ────────────────────
+// ── Gradient pack (the WGSL twin) ──────────────────────────────────────────
 // structureTensorField re-plumbs its already-computed luma gradient (Gx,Gy) out
-// through the return's .w lane so the metal medium pays ZERO extra taps. 12 bits per
-// bounded component ([-4,4]) into one f32; the crayon/kuwahara callers read only .xy/.z.
+// through the return value's .w lane so the metal medium pays ZERO extra taps. 12 bits per
+// bounded component ([-4,4]) fit into one f32; the crayon/kuwahara callers read only .xy/.z.
 fn packGrad(gx: f32, gy: f32) -> f32 {
   let qx = floor(clamp(gx * 0.125 + 0.5, 0.0, 1.0) * 4095.0);
   let qy = floor(clamp(gy * 0.125 + 0.5, 0.0, 1.0) * 4095.0);
@@ -92,10 +92,10 @@ fn brokenColorJitter(c: vec3<f32>, hueSeed: f32, valueSeed: f32, strength: f32) 
   return max(oklabToLinearSrgb(oklchToOklab(lch)), vec3<f32>(0.0));
 }
 
-// ── Structure-tensor / edge-tangent-flow (AW.W4.1; the WGSL twin) ───────────
+// ── Structure tensor / edge-tangent flow (the WGSL twin) ───────────────────
 // Returns vec4(tangent.x, tangent.y, A, packGrad(Gx,Gy)) — the minor-eigenvector
-// edge-tangent + coherence + the metal medium's packed gradient (BG.W-AUR-METAL-FINISH;
-// the .xy/.z crayon/kuwahara callers are byte-unchanged).
+// edge-tangent + coherence + the metal medium's packed gradient. The .xy/.z
+// crayon/kuwahara callers are byte-unchanged.
 fn structureTensorField(p: vec2<f32>, t: f32, fallbackDir: vec2<f32>) -> vec4<f32> {
   let e = 0.0035;
   let l00 = dot(sampleBase(p + vec2<f32>(-e, -e), t), W_LUMA);
@@ -382,18 +382,18 @@ fn mediumMetalGradient(col: vec3<f32>, p: vec2<f32>, t: f32) -> vec3<f32> {
 // (pastel/watercolor/crayon) + kuwahara + metal port their own bodies; the
 // oil/vangogh/oil-pastel STROKE cascade renders the anisotropic-Kuwahara PAINTERLY
 // finish here (a real oil-paint read, never the smooth core — the "NO FALLBACKS on
-// Safari" mandate; the full per-dab Starry-Night stroke WGSL is the booked
-// W-AURORA-WGPU-MEDIUMS-STROKES tail).
+// Safari" mandate; the full per-dab Starry-Night stroke WGSL remains a separate
+// full-fidelity port).
 fn applyMedium(col: vec3<f32>, p: vec2<f32>, t: f32) -> vec3<f32> {
   let medium = u.ints1.x;
   if (medium == 1) { return mediumPastel(col, p, t); }
   if (medium == 2) { return mediumWatercolor(col, p, t); }
   if (medium == 4) { return mediumCrayon(col, p, t); }
-  // BG.W-AUR-METAL-FINISH — metal DUAL-PORTS (a .frag-only metal is invisible on the
-  // WGSL primary of both browsers); 8 metal, 9 metal-gradient.
+  // Metal uses both renderer paths; a fragment-only implementation is invisible on the
+  // WGSL primary. IDs 8 and 9 select metal and metal-gradient respectively.
   if (medium == 8) { return mediumMetal(col, p, t); }
   if (medium == 9) { return mediumMetalGradient(col, p, t); }
-  // oil(3) / vangogh(5) / oil-pastel(6) / kuwahara(7) all render the painterly
+  // oil(3), vangogh(5), oil-pastel(6), kuwahara(7) all render the painterly
   // anisotropic-Kuwahara finish on the WGSL primary (the WebGL2 fallback carries the
   // full per-dab stroke cascade for oil/vangogh/oil-pastel).
   if (medium == 3 || medium == 5 || medium == 6 || medium == 7) {

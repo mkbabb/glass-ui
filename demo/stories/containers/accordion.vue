@@ -85,7 +85,7 @@ const singleValue = ref<string | undefined>("contract");
 
         <StorySection
             heading="Disabled, keyboard, and reduced motion"
-            blurb="Disabled items leave the focus sequence inert. The remaining triggers retain Reka's arrow, Home, and End navigation; PRM changes only transition travel."
+            blurb="Disabled items leave the focus sequence. Arrow, Home, and End keys move among the remaining triggers; reduced motion changes only the transition travel."
         >
             <div class="grid gap-4 sm:grid-cols-2">
                 <ShowcaseFrame caption="Keyboard and disabled" pad="md">
@@ -125,7 +125,7 @@ const singleValue = ref<string | undefined>("contract");
                         <AccordionItem value="motion">
                             <AccordionTrigger>Motion-aware disclosure</AccordionTrigger>
                             <AccordionContent>
-                                Under PRM the shared measured-size transition completes immediately.
+                                With reduced motion, the measured-size transition completes immediately.
                             </AccordionContent>
                         </AccordionItem>
                     </Accordion>

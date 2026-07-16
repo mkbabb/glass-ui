@@ -50,7 +50,7 @@ export interface GpuSubstrateOptions {
     /** The GLSL program builder (the WebGL2 fallback path — always required). */
     setupGL: WebGLCanvasOptions["setup"];
     /**
-     * BD.W-SUBSTRATE-SIZE-UNIFY (G1/G2) — the consumer's DPR policy (a flat multiplier
+     * The consumer's DPR policy: a flat multiplier
      * or a box-aware resolver). When PRESENT the leaf owns the backing-store measurement
      * + sizes it SYNCHRONOUSLY at mount (the ONE sizer; before the async acquire on the
      * WebGPU path), handing the live `BackingSize` to each `setup`'s `resize(s)`. When
@@ -59,17 +59,17 @@ export interface GpuSubstrateOptions {
      */
     dprPolicy?: DprPolicy;
     /**
-     * G3 — compose the leaf IntersectionObserver park (a consumer inherits the
+     * Compose the leaf IntersectionObserver park so a consumer inherits the
      * off-screen IO-park ORed with content-visibility, no per-viz `useIntersectionPause`
      * wiring). Default `false` (OPT-IN): several consumers already write `"off-screen-io"`
      * from their own `useIntersectionPause` and a leaf IO default-on would double-write
      * that reason. A viz with NO IO wiring (concentric/fourier/dot-flow) opts IN.
      */
     composeIntersectionPark?: boolean;
-    /** `rootMargin` for the leaf IO park (G3). Default `"256px"`. */
+    /** `rootMargin` for the leaf IO park. Default `"256px"`. */
     intersectionRootMargin?: string;
     /**
-     * BG.W-VIZ-REVEAL-BLOOM — fire the one-shot cold-first-VISIBLE entrance bloom (a
+     * fire the one-shot cold-first-VISIBLE entrance bloom (a
      * one-shot `data-substrate-reveal` attr on the canvas the CSS `@keyframes
      * substrate-reveal-bloom` reads to ramp `filter: brightness()` from a dim floor,
      * overshoot past 1.0 on `--ease-cartoon-punch`, then settle). Fires at first-visible,
@@ -83,7 +83,7 @@ export interface GpuSubstrateOptions {
     deviceDescriptor?: WebGPUCanvasOptions["deviceDescriptor"];
     /** WebGL2 `getContext("webgl2", …)` attributes. */
     contextAttrs?: WebGLCanvasOptions["contextAttrs"];
-    /** Surface a device-init / validation failure (the WebGPU path). */
+    /** Surface a device-init, validation failure (the WebGPU path). */
     onInitError?: WebGPUCanvasOptions["onInitError"];
     /**
      * Notified when the picker FALLS from WebGPU to the WebGL2 net (the invisible
@@ -119,7 +119,7 @@ export interface GpuSubstrateHandle {
     /** Synchronous arm (the WebGL2 net arms immediately; the WebGPU path is a no-op until the device resolves). */
     arm: () => void;
     /**
-     * BD.W-SUBSTRATE-SIZE-UNIFY (G2) — size the backing store + start the leaf RO
+     * Size the backing store and start the leaf RO
      * SYNCHRONOUSLY, decoupled from the (async) backend acquire. Call it the instant the
      * canvas is in the DOM so the field is sharp from frame 0 while the device resolves
      * (the ≤6s blurry-flash close). `armAsync` already calls it internally on both legs;
@@ -207,8 +207,7 @@ export function createGpuSubstrate(
         );
     emitStatus(pendingRenderer(backend));
 
-    // Build the WebGL2 net NOW only when WebGPU is not even attempted (no WGSL path /
-    // platform absent) — a Baseline WebGPU host never pays the WebGL2-context cost
+    // Build the WebGL2 net NOW only when WebGPU is not even attempted (no WGSL path,     // platform absent) — a Baseline WebGPU host never pays the WebGL2-context cost
     // (the net is built lazily on the FALL).
     if (!attemptWebGPU) {
         webgl2 = buildWebGL2(canvas, options);
@@ -232,10 +231,10 @@ export function createGpuSubstrate(
                 );
             },
             // The picker OWNS the init-error contract on the WebGPU path: a recognized
-            // init failure (no adapter / device reject) is caught by `armAsync`'s try
+            // init failure (no adapter, device reject) is caught by `armAsync`'s try
             // and routed to the WebGL2 net — it is NOT surfaced as `onInitError` (that
             // is reserved for a genuine shader/OOM violation AFTER the device armed,
-            // the W-AURORA-SWRASTER precedent: a no-adapter fall is a recognized
+            // the precedent: a no-adapter fall is a recognized
             // substrate decision, not a contract violation). A POST-arm validation/
             // device-loss error still reaches the consumer's `onInitError`.
             onInitError: (error) => {
@@ -280,7 +279,7 @@ export function createGpuSubstrate(
 
     async function armAsync(): Promise<void> {
         if (disposed) return;
-        // G2 — size the backing the instant arm starts, before any await, so the field
+        // Size the backing when arm starts, before any await, so the field
         // is sharp through the (≤6s) cold device acquire on the WebGPU leg.
         presize();
         if (webgpu) {
@@ -329,8 +328,8 @@ export function createGpuSubstrate(
 
     function presize(): void {
         if (disposed) return;
-        // BD.W-SUBSTRATE-SIZE-UNIFY (G2) — size the backing on whichever leg is live,
-        // decoupled from the acquire. Idempotent on both legs (a no-op once armed / when
+        // Size the backing on whichever leg is live,
+        // decoupled from the acquire. Idempotent on both legs (a no-op once armed, when
         // no dprPolicy). On the WebGPU leg this sizes BEFORE the device request so the
         // canvas is sharp during the cold acquire window.
         webgpu?.presize();
@@ -339,12 +338,12 @@ export function createGpuSubstrate(
 
     function arm(): void {
         if (disposed) return;
-        // Size synchronously first (G2) so a consumer that arms-without-await still gets
+        // Size synchronously first so a consumer that arms without awaiting still gets
         // a sharp backing from frame 0.
         presize();
         // The synchronous twin: the WebGL2 net arms immediately; the WebGPU path is a
         // no-op until `armAsync` resolves the device (the uniform-handle parity). If
-        // the net was already built (no WGSL path / a prior fall), arm it now so a
+        // the net was already built (no WGSL path, a prior fall), arm it now so a
         // consumer that does not await still paints.
         webgpu?.arm();
         webgl2?.arm();

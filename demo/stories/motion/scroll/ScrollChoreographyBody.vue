@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// BG.W-DEMO-DUP-MERGE (F7.3) — the Scroll CHOREOGRAPHY register body, extracted from
+// Scroll Choreography register body composed by
 // the retired routed `scroll-choreography.vue` wrapper (the StoryPage chrome stripped;
 // composed as one <StorySection> register inside motion/scroll.vue). The canonical
 // demonstration of the SOTA scroll-driven CHOREOGRAPHY register: the page-load BUILD,
@@ -14,8 +14,8 @@ import { onMounted, ref } from "vue";
 import {
     supportsScrollTimeline,
     supportsViewTimeline,
-} from "@glass/composables/motion/supportsCssTimeline";
-import { useScrollPin } from "@glass/composables/motion/useScrollPin";
+} from "@glass/composables/motion/scroll/supportsCssTimeline";
+import { useScrollPin } from "@glass/composables/motion/scroll/useScrollPin";
 
 // ── Capability badges ───────────────────────────────────────────────────────────
 const scrollOk = ref(false);
@@ -24,8 +24,7 @@ const timelineScopeOk = ref(false);
 onMounted(() => {
     scrollOk.value = supportsScrollTimeline();
     viewOk.value = supportsViewTimeline();
-    // The scroll-pin's newest primitive — timeline-scope. The harden's negative-probe
-    // pattern: a real engine supports a valid value AND rejects garbage.
+    // Confirm that timeline-scope accepts a valid custom identifier and rejects garbage.
     timelineScopeOk.value =
         typeof CSS !== "undefined" &&
         typeof CSS.supports === "function" &&
@@ -33,7 +32,7 @@ onMounted(() => {
         !CSS.supports("timeline-scope", "gl-not-real");
 });
 
-// ── The scroll-PIN — the keyframes.js liquid spine (BD.W-SCROLL-LIQUID-ENGINE) ───
+// ── Spring-damped scroll pin ─────────────────────────
 // The prior `.scroll-pin` named `scroll-timeline` was structurally DEAD (its
 // `currentTime` was `null` on every engine — `.scroll-pin` is not a scroll port).
 // `useScrollPin` drives a spring-damped `--pin-t` onto the sticky stage off the REAL
@@ -131,13 +130,13 @@ useScrollPin({
                 Scrolling does not move the scene — it advances time inside it. The
                 stage below pins to the viewport while its tall container scrolls
                 past; the stage's internal phases (reveal → settle) advance against a
-                spring-damped <code class="fira-code">--pin-t</code> the keyframes.js
-                scroll spine writes off the real scroll port — so the reveal arrives
+                spring-damped <code class="fira-code">--pin-t</code> value written from
+                the real scroll port — so the reveal arrives
                 with inertia, overshoots, then settles, on every engine (no
                 <code class="fira-code">animation-timeline</code>, no Safari degrade).
             </p>
 
-            <!-- The .scroll-pin tall temporal container holds the sticky stage. The
+            <!-- The.scroll-pin tall temporal container holds the sticky stage. The
                  ref feeds useScrollPin, which writes --pin-t onto it per scroll tick. -->
             <div
                 ref="pinContainer"

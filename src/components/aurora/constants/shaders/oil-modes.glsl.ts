@@ -1,6 +1,6 @@
 // Aurora oil-stroke MODE selector — the `profileFor(medium, mode) -> StrokeProfile`
 // (medium, mode) selector carved out of mediums.glsl.ts as a cohesive GLSL chunk
-// (BB.W-CARVE5 — the no-god-module re-drain). The if-ladder's knobs ARE the
+// The if-ladder's knobs are the
 // StrokeProfile's fields (logic-as-DATA); a new stroke medium AUTHORS a case here.
 // `mediums.glsl.ts` splices this export back into AURORA_MEDIUMS_POST_BRUSH_GLSL via
 // a template join (immediately after the StrokeProfile struct, before
@@ -15,7 +15,7 @@ export const AURORA_OIL_MODES_GLSL = /* glsl */ `StrokeProfile profileFor(int me
     0.09,   // streakAmp
     0.9,    // impastoAmp
     0.80,   // hardness
-    340.0,  // toothScale — W-AUR-VANGOGH-CONFIG reconcile: FINER 240 → 340. Oil's §4.3 β sat
+    340.0,  // toothScale — finer 240 → 340. Oil's β sat
             //               right AT the −1.45 band ceiling (±0.02 frame variance straddling
             //               it, surfaced once the vangogh bands went green and the spec reached
             //               the oil β assert). MEASURED on the live GPU: ADDING fine high-
@@ -40,7 +40,7 @@ export const AURORA_OIL_MODES_GLSL = /* glsl */ `StrokeProfile profileFor(int me
     1.0     // groundFloor — oil keeps the full base (no ground darken; fills everywhere)
   );
 
-  // W-AUR-VANGOGH-REBUILD — the van-Gogh medium NO LONGER routes through this oil
+  // The Van Gogh medium no longer routes through this oil
   // StrokeProfile cascade. It is a DEDICATED atomic-dab body (mediumVangogh / vangoghDab
   // below) — the prior profile-driven cascade (four dense layers of long-thin
   // tensor-oriented strokes) merged into the "marbled flow-bands" read and ran at ~4fps.

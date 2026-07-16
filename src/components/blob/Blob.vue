@@ -16,7 +16,7 @@ import { useMetaballRenderer } from "./composables/useMetaballRenderer";
  * get absorbed, then re-emerge. Mood, pointer-attraction and a deterministic
  * satellite system drive the motion. The renderer composes the `createGpuSubstrate`
  * picker — the WebGPU-first `metaball.wgsl` primary OR the WebGL2 `metaball.frag`
- * fallback (BB.W-VIZ-SUITE / W-GOOBLOB-WGPU), selected once by `navigator.gpu`
+ * fallback, selected once by `navigator.gpu`
  * feature-detect; it never bootstraps its own context.
  *
  * Color is resolved INTERNALLY through the `/color` leaf (`cssToOklch →
@@ -50,7 +50,7 @@ const {
     /** Extra seed string mixed into the satellite PRNG for a unique-but-reproducible system. */
     seed?: string;
     /**
-     * AX.W16 — the declarative WCAG-2.2.2 pause seam. `v-model:paused` parks the
+     * Declarative WCAG 2.2.2 pause seam. `v-model:paused` parks the
      * render loop (the substrate's `manual` suspend) when `true` and restarts it when
      * `false`. This is the EXACT shape `<DockBackgroundToggle>` wears — wire its
      * `@update:paused` to this `v-model` and the blob's animation stops/starts for ALL
@@ -84,7 +84,7 @@ if (!cfg) {
     );
 }
 
-// AY.W-BLOB-CONFIG D1 — the LIVE config. `cfg` above is the mount-time snapshot the
+// `cfg` is the mount-time snapshot the
 // renderer + satellite system close over (their atoms are static for the lifetime). But
 // the `config` PROP is reactive (a consumer that drives a seed/harmony UI feeds a fresh
 // config object — the demo's `heroConfig` computed re-emits `color.paletteStops` from
@@ -102,10 +102,10 @@ const pointerHost = computed(() =>
     interactionEnabled.value ? hitLayerRef.value : null,
 );
 
-// F9.R8 (BG.W-BLOB-AFFECT-INTERACT — pointer truth) — the SDF hit region radius in the
+// SDF hit-region radius in the
 // listener's normalized [-1, 1] space. The body renders at `bodyRadius` in the CANVAS's
 // [-1, 1]; the canvas is 1/POS_SCALE (≈1.6×) the listener box, so the body disc maps to
-// `bodyRadius / POS_SCALE` here. A small pad gives a forgiving hover ring; everything
+// `bodyRadius, POS_SCALE` here. A small pad gives a forgiving hover ring; everything
 // beyond it — the empty box margin, the corners — falls through to a sibling card (the
 // `.goo-blob-hit` clip-path is the compositor-level twin of the JS gate). The geometry
 // atoms are a mount snapshot the renderer closes over, so this is a constant.
@@ -122,29 +122,21 @@ const mood = useBlobMood();
 const pointer = useBlobPointer(pointerHost, { hitRadius: () => hitRadius });
 const satelliteSystem = useBlobSatellites(cfg, color + seed);
 
-// AX.W16 (arm 4) — un-wrap EVERY color string (base + rim + every palette stop) to a
-// CONCRETE value HERE, in the SFC, via the ONE `resolveTokenColor` leaf, BEFORE handing
-// strings to the renderer. value.js's `parseCssColor` requires a concrete color;
-// wrapper and THROWS once per frame on a token color (the AW.W13 live bug); a token
-// also resolves differently under `.dark`. The leaf paints the string onto the host
-// `color:` and reads back the browser-resolved `rgb(...)` (the single cached
-// `getComputedStyle` cascade read — `getComputedStyle` now appears EXACTLY ONCE in the
-// codebase for this concern). The renderer receives concrete strings only and stays
-// DOM-FREE (the inv-K-3 seam restored — the renderer's prior `resolveRimColor` +
-// `rimCache` DOM-reach is DELETED). Re-resolves on a color change AND on a dark-mode
-// flip (the MutationObserver on `<html>.class`, vueuse-free per the SCC discipline).
+// Resolve base, rim, palette, and satellite colors to concrete browser values in
+// the SFC before they reach the DOM-free renderer. `parseCssColor` accepts concrete
+// colors, while CSS tokens may change under `.dark`. A cached `getComputedStyle`
+// read resolves the cascade; color changes and root theme changes invalidate it.
 const tokenColors = createTokenColorCache();
 const resolvedColor = ref(color);
 const resolvedRim = ref(cfg!.surface.rimColor);
 const resolvedStops = ref<string[]>([...cfg!.color.paletteStops]);
-// F9.R1 (BG.W-BLOB-SATELLITE-SHADE) — the un-wrapped per-satellite explicit shades
-// (mirrors `resolvedStops`; EMPTY → the GL seam stays OFF, byte-identical to HEAD).
+// Concrete per-satellite shades; empty keeps the optional shader input disabled.
 const resolvedSatColors = ref<string[]>([...(cfg!.color.satelliteColors ?? [])]);
 
 function refreshResolvedColors(): void {
     const el = wrapperRef.value;
     const live = liveConfig();
-    // The cascade may have flipped (dark-mode) — drop the cache so tokens re-resolve.
+    // Invalidate before resolving because the root color scheme may have changed.
     tokenColors.invalidate();
     resolvedColor.value = tokenColors.resolve(color, el);
     resolvedRim.value = tokenColors.resolve(live.surface.rimColor, el);
@@ -154,8 +146,7 @@ function refreshResolvedColors(): void {
     );
 }
 
-// AX.W16 (arm 1) — CAPTURE the renderer return (the prior code DISCARDED it, which is
-// why `pause`/`resume` were undefined at every consumer — the dead WCAG-2.2.2 seam).
+// Capture the renderer return so pause and resume share its manual suspension path.
 // The captured handles bind the EXISTING substrate `manual` suspend (no parallel pause
 // path); the declarative `v-model:paused` prop drives them and the imperative
 // `pause()`/`resume()` re-exposed below bind the SAME handles.
@@ -197,10 +188,9 @@ watch(colorRef, (c) => {
     satelliteSystem.reseed(c + seed);
 });
 
-// AY.W-BLOB-CONFIG D1 — the dead hero color-feed fix. The renderer reads the
-// `resolvedStops` Ref every frame, but the Ref was resolved ONCE at mount and only
-// re-resolved on a `color`-prop / dark-mode flip — never on a `paletteStops` change. So
-// a consumer driving a seed/harmony UI (the demo's `deriveBlobPalette(seed) →
+// The renderer reads `resolvedStops` every frame, so refresh it when the live palette
+// changes rather than resolving it only at mount or on color-scheme changes.
+// A consumer driving a seed/harmony UI (the demo's `deriveBlobPalette(seed) →
 // config.color.paletteStops` feed) updated the CONFIG but the hero body stayed
 // byte-identical. This watcher closes the config→Ref wire: a post-mount paletteStops (or
 // rimColor) change in the LIVE config re-resolves into the Ref the renderer paints from.
@@ -210,7 +200,7 @@ watch(colorRef, (c) => {
 watch(
     () => {
         const c = liveConfig();
-        // F9.R1 — a post-mount satelliteColors change (a consumer deriving satellite
+        // a post-mount satelliteColors change (a consumer deriving satellite
         // shades from the body hue) re-resolves into the Ref the renderer paints from.
         return [
             c.color.paletteStops.join("|"),
@@ -222,8 +212,8 @@ watch(
     { deep: true },
 );
 
-// BA.W-GOO-REDRESS (root cause 2 / BA-goo-3) — the POINTER WAKE wire. The demand
-// loop PARKS when fully at rest (the AX.W16 quiescence gate: all satellites orbiting,
+// Wake the demand loop when pointer activity begins. The loop parks when fully at rest
+// (all satellites orbiting,
 // the pointer at rest). The park re-arms on a scheduled satellite-phase wake OR the
 // color/paletteStops watchers — but NOTHING woke it on POINTER activity, so a first
 // hover over a parked blob did not repaint until the next scheduled satellite wake
@@ -260,7 +250,7 @@ function nudge() {
     satelliteSystem.nudge();
 }
 
-// AX.W46 D7 — the imperative `setMood` expose is a MANUAL retarget: it pins the mood
+// The imperative `setMood` expose is a manual retarget: it pins the mood
 // above the autonomic arc (`source: "manual"`), so the demo mood pills + any consumer
 // `blobRef.setMood(m)` drive a VISIBLE, PERSISTING param delta instead of being
 // clobbered back to idle within one frame. The latch releases on a fresh live
@@ -269,7 +259,7 @@ function setMood(m: BlobMood) {
     mood.setMood(m, { source: "manual" });
 }
 
-// A click fires the one-shot spring impulse (W10) — the blob bounces — AND emits
+// A click fires the one-shot spring impulse—the blob bounces—and emits
 // the `click` event. The impulse rides the renderer's single rAF (no parallel
 // loop); under PRM the substrate freezes the rAF so the bounce is a no-op.
 function pulse() {
@@ -280,7 +270,7 @@ function activateBlob() {
     emit("click");
 }
 
-// AX.W16 — the defineExpose now carries `pause`/`resume` (the imperative half of the
+// `defineExpose` carries `pause`/`resume` (the imperative half of the
 // WCAG-2.2.2 seam — the README table + Aurora-parity), alongside the declarative
 // `v-model:paused` prop. Both bind the SAME captured renderer handles.
 defineExpose({
@@ -290,7 +280,7 @@ defineExpose({
     currentMood: mood.currentMood,
     pause: renderer.pause,
     resume: renderer.resume,
-    // BI.W-BLOB-SEAMS (GAP-L5 / T-49) — the read-only quiescence seam surfaced to the
+    // the read-only quiescence seam surfaced to the
     // template-ref consumer. `true` IFF the engine is at rest (mood settled, pointer at
     // rest, no satellite mid-transition incl. a fission beat). A consumer parks its own
     // idle/arming ONLY while `settled` is true, so an armed hero never freezes mid-split.
@@ -308,7 +298,7 @@ defineExpose({
             aria-hidden="true"
             data-testid="goo-blob-canvas"
         />
-        <!-- F9.R8 — the SDF-shaped hit surface. The wrapper is pointer-transparent; this
+        <!-- the SDF-shaped hit surface. The wrapper is pointer-transparent; this
              clipped child is the ONLY interactive surface, so a click outside the body
              silhouette falls through to whatever card sits beneath. -->
         <button
@@ -332,16 +322,16 @@ defineExpose({
     position: relative;
     z-index: var(--z-content);
     overflow: visible;
-    /* F9.R8 — the ROOT square is pointer-transparent so it NEVER intercepts a
+    /* the ROOT square is pointer-transparent so it NEVER intercepts a
        sibling-card click; the SDF-shaped `.goo-blob-hit` child is the only interactive
        surface (the cursor + the listeners live there). The `:hover` shadow lift still
        fires: hover propagates to this ancestor when the pointer-events:auto child is
        the hit target. */
     pointer-events: none;
-    /* AV.W7 F2 — layout/style containment isolates the blob as a layout root
+    /* Layout/style containment isolates Blob as a layout root
        (NO `paint` containment: the 160%-canvas satellites intentionally
        overflow the wrapper footprint, and paint containment would clip them).
-       `content-visibility:auto` (F1) lets the browser content-skip the blob
+       `content-visibility:auto` lets the browser skip Blob
        when it scrolls offscreen — the substrate's `contentvisibilityautostate-
        change` listener then parks the RAF. content-visibility applies its own
        paint/layout containment ONLY while skipped (offscreen, invisible), so
@@ -350,7 +340,7 @@ defineExpose({
     contain: layout style;
     content-visibility: auto;
     contain-intrinsic-size: auto none;
-    /* AY.W-COHERE E2 / AZ.W-BLOB-STUDIO D4 — the GROUNDED gel-dome shadow, NOT the
+    /*  E2, D4 — the GROUNDED gel-dome shadow, NOT the
        hard `5px 5px` near-black cartoon offset-stamp. A lit gel dome SITS on its
        surface: a soft AMBIENT cast (the dome floats a little above) PLUS a tight,
        low-offset, darker CONTACT band hugging the silhouette base (the gravity cue
@@ -383,7 +373,7 @@ defineExpose({
     pointer-events: none;
 }
 
-/* F9.R8 (BG.W-BLOB-AFFECT-INTERACT) — the SDF-shaped hit surface. The wrapper is
+/* the SDF-shaped hit surface. The wrapper is
    pointer-events:none (never blocks the square), so this child is the ONLY interactive
    surface. `clip-path` shapes BOTH paint (transparent — zero visual delta) AND pointer
    hit-testing to the body silhouette disc, so a click on the corners / empty margin
@@ -420,7 +410,7 @@ defineExpose({
 
 @media (prefers-reduced-motion: reduce) {
     .goo-blob-wrapper {
-        /* AY.W-COHERE E2 / AZ.W-BLOB-STUDIO D4 — the same grounded gel-dome shadow
+        /*  E2, D4 — the same grounded gel-dome shadow
            under PRM (the gel-bead lighting language, never the hard offset-stamp);
            only the filter TRANSITION is cut. The two-rung grounded composite stays. */
         filter: drop-shadow(var(--blob-shadow-ambient)) drop-shadow(var(--blob-shadow-contact)) !important;

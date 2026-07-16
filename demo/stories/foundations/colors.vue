@@ -1,8 +1,7 @@
 <script setup lang="ts">
-// BB.W-DEMO-DESIGN — the color tour as a DESIGNED specimen. The vibrant 13-stop
+// The vibrant 13-stop color tour leads the pane as a designed specimen.
 // `--section-color` rainbow leads the pane (the focal moment, FIRST in source
-// order — it was buried below a dull flat core grid); it pops in on the W-SCROLL-
-// MOTION `.scroll-cascade--columns` register (the spring-clocked coupled build, no
+// order); it enters on the `.scroll-cascade--columns` motion register (no
 // demo-local @keyframes), the viz-basis glyphs use the shared reveal register
 // `:reveal` axis, and the core swatch grid stays correct-monochrome (the warm-cream/
 // role tokens are documentary — adding color violates the one-color-event
@@ -10,8 +9,8 @@
 // + the glass-tier hover the icons grid has. The library `--section-color` tokens
 // are NOT demo color (they ARE library tokens — D6 fence).
 //
-// BG.W-COLORS-WATERCOLOR-SWATCH (USER 07-05) — the section-ramp stops render as the
-// living WatercolorDot voice: each stop is a seeded organic pastel blob (the shipped
+// The section-ramp stops render as the living WatercolorDot voice: each stop is a
+// seeded organic pastel blob (the shipped
 // `<WatercolorDot>` primitive, REUSED not re-forked — no demo-local blob), sized well
 // above the retired 96px flat chip, laid out with a HAND-LAID vertical stagger (a
 // fixed per-stop block-offset — the irregular read the user named, never a flat
@@ -39,31 +38,29 @@ const core: { name: string; cssVar: string; utility: string }[] = [
     { name: "secondary", cssVar: "--secondary", utility: "bg-secondary" },
     { name: "accent", cssVar: "--accent", utility: "bg-accent" },
     { name: "destructive", cssVar: "--destructive", utility: "bg-destructive" },
-    // BG.W-DESHADCN — the shadcn `--ring`/`bg-ring` token retired onto the house
-    // `--focus-ring-color` / the `.focus-ring` box-shadow utility.
+    // the shadcn `--ring`/`bg-ring` token retired onto the house
+    // `--focus-ring-color`, the `.focus-ring` box-shadow utility.
     { name: "focus-ring-color", cssVar: "--focus-ring-color", utility: "focus-ring" },
 ];
 
-// 13-stop chapter palette. W1-D ships --section-color-0..12 and bg-section-N.
+// The 13-stop chapter palette maps --section-color-0..12 to bg-section-N.
 const rainbow = Array.from({ length: 13 }, (_, i) => i);
 
-// The WatercolorDot swatch size — well above the retired 96px (h-24) flat chip so
-// the organic blob reads as a hand-painted mark, not a token cell (BG.W-COLORS-
-// WATERCOLOR-SWATCH pass-bar ≥112px).
+// The 120px WatercolorDot reads as a hand-painted mark rather than a token cell.
 const SWATCH_SIZE = "7.5rem"; // 120px
 
 // Hand-laid block-offset per stop (rem), fixed for capture determinism. Adjacent
 // stops carry DISTINCT offsets — the irregular hand-laid zigzag the user named, not
 // a flat aligned row. Applied as a STATIC margin-block-start (a layout offset, never
-// animated) so it composes with the compositor-only .scroll-cascade--columns
+// animated) so it composes with the compositor-only.scroll-cascade--columns
 // entrance transform without clobbering it.
 const STAGGER_REM = [0, 1.6, 0.5, 1.3, 0, 1.7, 0.6, 1.4, 0.3, 1.5, 0.4, 1.2, 0];
 
 // Viz basis palette — the three orthogonal-polynomial hues plus two
-// companion neutrals (amber / green) used throughout math-paper work. The
+// companion neutrals (amber, green) used throughout math-paper work. The
 // ornamental glyphs are display-register letters (not lucide icons), so each tile
 // reads its hue as the ONE tile event (the glyph color); the tiles pop in on the
-// W-SCROLL-MOTION `.scroll-cascade` register.
+//  `.scroll-cascade` register.
 const viz: { id: string; glyph: string; label: string; sub: string }[] = [
     { id: "fourier", glyph: "ℱ", label: "Fourier", sub: "red basis" },
     { id: "chebyshev", glyph: "T", label: "Chebyshev", sub: "blue basis" },
@@ -78,7 +75,7 @@ const viz: { id: string; glyph: string; label: string; sub: string }[] = [
         <!-- THE RAINBOW — PROMOTED to the focal moment, leading the pane. Each of the
              13 stops is a living WatercolorDot seeded blob (≥112px, the watercolor
              voice the user asked back), laid out with a hand-laid vertical stagger and
-             popping in on the W-SCROLL-MOTION `.scroll-cascade--columns` register (the
+             popping in on the `.scroll-cascade--columns` register (the
              column-stagger spring-clocked build — the focal pop-entrance, no
              demo-local @keyframes). The blobs are LARGER than the buried HEAD chip. -->
         <StorySection label="Foundations · Color" heading="Section ramp · 13 stops">
@@ -109,7 +106,7 @@ const viz: { id: string; glyph: string; label: string; sub: string }[] = [
 
         <!-- VIZ BASIS — the math-paper hues. The hue is the ONE event per tile (the
              ornamental glyph carries it; the label stays ink). The tiles pop in on
-             the W-SCROLL-MOTION `.scroll-cascade` register (its own host so each
+             the `.scroll-cascade` register (its own host so each
              tile builds in on its view() timeline). -->
         <StorySection heading="Viz basis">
             <div class="scroll-cascade grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5">

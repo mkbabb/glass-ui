@@ -1,7 +1,7 @@
-// BI.W-FOURIER-RIBBON — the WebGL2 `setupGL` builder (the instanced-ribbon fallback tail).
+// the WebGL2 `setupGL` builder (the instanced-ribbon fallback tail).
 //
-// The fullscreen fragment SDF (the O(pixels×segments) loop) RETIRED onto instanced geometry
-// (proof:viz-fourier-ribbon FB1). On each `frame(t)` the CPU steps the SAME `partialSumAt`
+// The fullscreen fragment SDF (the O(pixels×segments) loop) retired onto instanced geometry.
+// On each `frame(t)` the CPU steps the same `partialSumAt`
 // math source into the curve-sample + chain-tip tables — the ONE evaluator the WGSL compute
 // kernel transcribes — then ASSEMBLES the per-layer instance buffer (cel → epicycle → trail →
 // head) and issues one `drawArraysInstanced` per layer. Each instance is a small capsule/AABB
@@ -58,7 +58,7 @@ export interface FourierGLSetupDeps {
     shouldContinue: () => boolean;
     onFrame?: (timeSec: number) => void;
     /**
-     * BG.W-FOURIER-BEAUTY B3 — the 2-D cursor FOLLOW (model-space center lean). Mirrors the
+     *  B3 — the 2-D cursor FOLLOW (model-space center lean). Mirrors the
      * WGSL arm exactly (both read the SAME uFit center) — parity-safe by construction.
      * `{x:0,y:0}` (ambient/PRM) is byte-identical to today.
      */
@@ -156,7 +156,7 @@ export function createFourierGLSetup(
             fit = computeFourierFit(spectrum);
         }
 
-        // BG.W-VIZ-RESIZE-ADOPT — upload-only (the leaf sized the backing store).
+        // upload-only (the leaf sized the backing store).
         function resize(s?: BackingSize): void {
             gl.viewport(0, 0, s?.w ?? canvas.width, s?.h ?? canvas.height);
         }
@@ -204,7 +204,7 @@ export function createFourierGLSetup(
                 }
             }
 
-            // BG.W-VIZ-RESIZE-ADOPT — the box in CSS px derives from the LEAF-sized backing store.
+            // the box in CSS px derives from the LEAF-sized backing store.
             const aspect = canvas.width / Math.max(canvas.height, 1);
             const cssMin =
                 Math.min(canvas.width, canvas.height) / Math.max(resolveBudgetDpr(), 1);
@@ -344,7 +344,7 @@ export function createFourierGLSetup(
             gl.bindBuffer(gl.ARRAY_BUFFER, instBuf);
             gl.bufferSubData(gl.ARRAY_BUFFER, 0, instanceScratch.subarray(0, totalFloats));
 
-            // BG.W-FOURIER-BEAUTY B3 — lean the fit CENTER toward the cursor (the 2-D follow);
+            //  B3 — lean the fit CENTER toward the cursor (the 2-D follow);
             // ambient/PRM is {0,0} → byte-identical. The ONE uFit uniform carries it.
             const lean = getPointerLean?.() ?? { x: 0, y: 0 };
             gl.uniform4f(uFit, fit.centerX - lean.x, fit.centerY - lean.y, fit.scale, aspect);

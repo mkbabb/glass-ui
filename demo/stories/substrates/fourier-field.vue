@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// BC.W-VIZ-FOURIER — the ONE Fourier view (the collapse). The three duplicate views (the
+// the ONE Fourier view (the collapse). The three duplicate views (the
 // ambient page, the re-embedded ambient companion, the separate Canvas2D stage) are GONE:
 // this single <FourierField> over its configurator IS both the ambient field and the
 // interactive teaching surface. The renderer is the WGSL-primary GPU substrate (the Canvas2D
@@ -81,7 +81,7 @@ const COLOR_OPTIONS = [
     { label: "Legendre (violet)", value: "var(--viz-legendre)" },
 ];
 
-// BG.W-FOURIER-BEAUTY B2 — the coefficient-driven closed-figure family (fourier flowers)
+//  B2 — the coefficient-driven closed-figure family (fourier flowers)
 // beside the generated ellipse + the traced glyphs.
 const FIGURE_LABELS: Record<string, string> = {
     trefoil: "Trefoil flower",
@@ -100,7 +100,7 @@ const SOURCE_OPTIONS = [
 // reconstruction (= final), Brand mark ℱ, Summing harmonics.
 const presets: readonly ConfiguratorPreset<FourierViewCfg>[] = [
     {
-        // BG.W-FOURIER-BEAUTY B2 — a DELIBERATE closed epicycle figure opens the route.
+        //  B2 — a DELIBERATE closed epicycle figure opens the route.
         key: "flower",
         label: "Fourier flower",
         sub: "closed epicycle figure",
@@ -313,16 +313,12 @@ const rendererStatus = ref<RendererStatus>(pendingRenderer("webgpu"));
 </script>
 
 <template>
-    <!-- BG.W-CONFIGURATOR-STANDARDIZE — the ONE chassis. The fourier studio re-homes
-         onto the shared VizStudio (StoryPage + <Configurator asideSide=right> + rounded
-         clip), retiring its own inline <header> masthead (the double-header F7.2 killed on
-         aurora) + the raw <Configurator>-in-<ShowcaseFrame> studio wrapper (the OFFSET). The
-         page identity is the ONE StoryHeader cluster the chassis renders. (The #stage/
-         #controls/#presets slot bodies are preserved verbatim.) -->
+    <!-- The shared VizStudio owns the page header, configurator, and rounded clip.
+         These slots provide only Fourier-specific stage, controls, and presets. -->
     <VizStudio
         heading="Fourier Field"
         label="harmonics · epicycles · shape-trace · scrub"
-        blurb="ONE Fourier view. A chain of rotating circles stacked tip-to-tail draws the reconstructing curve as you watch — drag the harmonic-count N slider and the curve assembles term by term, from a single ellipse to the full reconstruction. Toggle the epicycle chain; pick a source (a generated elliptic spectrum, the ℱ wordmark, a heart, a star); pick a color. Drag the cursor across the field to SCRUB the reconstruction — left rewinds, right fast-forwards. WebGPU-first, on the GPU substrate — no Canvas2D anywhere."
+        blurb="Watch rotating circles reconstruct a curve term by term. Change the harmonic count, choose a source and color, or drag across the field to scrub backward and forward."
         height-class="h-[min(72vh,600px)]"
         :presets="presets"
         :active-preset="studio.activePreset.value"

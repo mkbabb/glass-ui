@@ -9,10 +9,10 @@ import { isFocalRoute, suppressesShellField } from "./chassis/hero/focal";
 
 /**
  * Routes are derived from the manifest. Every category produces a
- * `/:category` SECTION-LANDING hero (BC.W-PAGE-CHASSIS — the SECTION-HERO model)
+ * `/:category` section-landing hero
  * plus a `/:category/:story` route per story. There are no flat standalone routes
- * — the former Aurora/GooBlob/Blob flat tools are now rows in the Substrates
- * category (AV.W10).
+ * the former Aurora/GooBlob/Blob flat tools are now rows in the Substrates
+ * category.
  */
 function buildRoutes(): RouteRecordRaw[] {
     const routes: RouteRecordRaw[] = [
@@ -28,10 +28,10 @@ function buildRoutes(): RouteRecordRaw[] {
     ];
 
     for (const category of CATEGORIES) {
-        // BC.W-PAGE-CHASSIS — the category landing is the D1 SECTION HERO (the
+        // the category landing is the D1 SECTION HERO (the
         // newly-begotten per-section identity moment + the bento <SectionPreviewCard>
         // grid), NOT a redirect to the first story. The SAME StoryHero chassis at
-        // heroScale: "hero" / depth: "D1" (no new component — SectionLanding composes
+        // heroScale: "hero", depth: "D1" (no new component — SectionLanding composes
         // it). An empty category falls back to the first story path.
         routes.push(
             category.stories.length > 0
@@ -43,11 +43,9 @@ function buildRoutes(): RouteRecordRaw[] {
                           categoryId: category.id,
                           landing: true,
                           title: category.title,
-                          // BG.W-FIELD-AURORA (M2) — the landing's focal flag,
-                          // derived from its resolved section-landing background.
+                          // Whether the landing paints its own full-bleed field.
                           focal: isFocalRoute(category.id, category.landing?.background),
-                          // BG.W-PAGE-COMPONENT-AUDIT (17.6) — the shell-field
-                          // suppression flag. A landing always mounts `StoryHero`
+                          // A landing always mounts `StoryHero`
                           // as a true hero route (`isHeroPage: true`); the shell
                           // stands down only for a CHROMATIC landing field.
                           suppressesShellField: suppressesShellField(
@@ -73,12 +71,9 @@ function buildRoutes(): RouteRecordRaw[] {
                     categoryId: category.id,
                     storyId: story.id,
                     title: story.title,
-                    // BG.W-FIELD-AURORA (M2) — the route's focal flag (GL
-                    // background.kind OR a SELF_STAGES_GL dock route). Owns-a-GL-field
-                    // enumeration (the one-GL law); `proof:focal-complete` reads it.
+                    // A route is focal when it owns a live background or stages one itself.
                     focal: isFocalRoute(`${category.id}/${story.id}`, story.background),
-                    // BG.W-PAGE-COMPONENT-AUDIT (17.6) — the shell-field suppression
-                    // flag. A `background.kind` field mounts ONLY on a hero page
+                    // A `background.kind` field mounts only on a hero page
                     // (`story.hero`); a CONTENT page (no hero) mounts no field and
                     // KEEPS the warm shell, and an achromatic constellation/fourier
                     // hero keeps it as an underpaint (CHROMATIC_FIELD_KINDS only).
@@ -106,8 +101,7 @@ function buildRoutes(): RouteRecordRaw[] {
 export const router = createRouter({
     history: createWebHistory(),
     routes: buildRoutes(),
-    // BG.W-ROUTE-TRANSITION (M0) — NO window-targeted scrollBehavior. `<main>` (not the
-    // window) owns route scroll, so a window scroll-reset is a no-op double-fire of the
+    // `<main>` owns route scroll, so a window scroll reset would duplicate the
     // AppShell `route.path` watch that scrolls `mainEl` to the top. The ONE scroll-reset
     // owner is the AppShell watch.
 });

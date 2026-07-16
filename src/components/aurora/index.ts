@@ -1,7 +1,7 @@
 export { default as Aurora } from "./Aurora.vue";
-// AM.W1 — adaptive render substrate. `AuroraRenderMode` is the public prop
+// Adaptive render substrate. `AuroraRenderMode` is the public prop
 // type; `resolveRenderMode` is the device-tier resolver (testable in isolation).
-// BB.W-AURORA-SWRASTER — `ResolveRenderModeOptions` carries the
+// `ResolveRenderModeOptions` carries the
 // `forceWebGLUnderSoftwareRaster` escape; `isSoftwareWebGLRenderer` is the shared
 // software-raster predicate (the runtime wedge catch + the resolver consume ONE
 // detector — no second probe context).
@@ -12,7 +12,7 @@ export {
     type ResolveRenderModeOptions,
 } from "./constants/renderMode";
 export { useAurora } from "./composables/useAurora";
-// O.W4 Lane B — Fix 2 (Rγ L2): named return shape for useAurora.
+// Named return shape for useAurora.
 export type { UseAuroraReturn } from "./composables/useAurora";
 export { useCursorInteraction } from "./composables/useCursorInteraction";
 export { createAurora } from "./composables/runtime";
@@ -20,11 +20,11 @@ export type { AuroraRuntimeMode, AuroraRuntimeOptions } from "./composables/runt
 export {
     DEFAULT_AURORA_CONFIG,
     PAPER_WASH_GROUND,
-    // BD.W-AUR-VIVIDNESS — the §3 chroma-floor identity (the gate + consumers compose
+    // The chroma-floor identity, composed by consumers
     // these by name, no magic number).
     DEFAULT_VIVIDNESS,
     VIVID_TARGET,
-    // BG.W-AUR-IMAGE-SOURCE — the image-source axis defaults + types.
+    // Image-source axis defaults and types.
     IMAGE_BLUR_MIN_DEFAULT,
     IMAGE_BLUR_MAX_DEFAULT,
     MAX_NUCLEI,
@@ -45,7 +45,7 @@ export {
     type StrokeOrient,
     type WarpMode,
 } from "./constants/presets";
-// AX.W10 — the resolveAtoms ≤7-atom door is THE consumer surface (the full
+// The resolveAtoms ≤7-atom door is the consumer surface (the full
 // AuroraConfig is the INTERNAL author schema). The atom set is re-derived from the
 // user's named control elements — COLOR (seed + harmony + colorEnergy), ZONES
 // (count + arrangement), NOISE (one organic-boundary knob), MEDIUM (+ texture),
@@ -54,18 +54,20 @@ export {
 export {
     resolveAtoms,
     configToAtoms,
-    nucleiPrior,
     DEFAULT_ATOMS,
     type AuroraAtoms,
-    type AuroraMotionAtom,
     type AuroraZones,
-    type AuroraZoneArrangement,
     type AuroraMediumAtom,
     type AuroraInteractivityAtom,
     type AuroraFieldInteractivityAtom,
     type AuroraSmoothInteractivityAtom,
     type AuroraPainterlyInteractivityAtom,
 } from "./composables/atoms";
+export {
+    nucleiPrior,
+    type AuroraMotionAtom,
+    type AuroraZoneArrangement,
+} from "./composables/atoms-fields";
 export {
     cssToOklch,
     deriveAurora,
@@ -75,7 +77,7 @@ export {
     oklchToLinear,
     paletteToCssGradient,
 } from "./composables/color";
-// BB.W-AURORA-SWRASTER — the luminance-faithful headless fallback ground (the
+// The luminance-faithful headless fallback ground (the
 // field-sampled nuclei-glow surface for the software-raster / capture substrate;
 // reuses oklchToLinear — ONE color source). `sampleAuroraField` is the per-pixel
 // static composite mirror the certify π measures.

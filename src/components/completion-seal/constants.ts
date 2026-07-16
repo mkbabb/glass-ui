@@ -1,11 +1,10 @@
-// BC.W-AX-COMPLETION-SEAL — the completion-seal primitive constants.
+// the completion-seal primitive constants.
 //
 // The colocation-home for the seal glyph defs + the spring register choice (the
-// AY.W-COLOCATE convention — a feature-dir carries its magic numbers in `constants.ts`,
-// not as module-scope `const N = <number>` in the composables, so `proof:colocation`
-// clause (b) holds). Every visual axis is a CSS custom property a consumer retunes
-// (token-first — the gold ink is the W-PHASE-PALETTE register, the glint the
-// W-AX-METAL-GLOW catch-light, the springs the SPRING-EASE clock); these are the
+// convention: a feature directory carries its constants in `constants.ts`, not as
+// anonymous module-scope numbers in composables. Every visual axis is a CSS custom property a consumer retunes
+// (token-first — the gold ink is the register, the glint the
+//  catch-light, the springs the SPRING-EASE clock); these are the
 // JS-side glyph geometry the SFC renders.
 
 /**
@@ -14,7 +13,7 @@
  *  - `ring`  — a ring/circle around the completion (a seal around the event).
  *  - `disc`  — the composed earned-coin gesture: a filled gold disc FACE with the ring
  *    stroke-draw affirmation around it and the check draw-in inside, SEQUENCED
- *    disc→ring→check (the hero completion coin — BG.W-SEAL-DISC / SPEEDTEST-AX #1).
+ *    disc→ring→check (the hero completion coin — SPEEDTEST-AX #1).
  *  - `wordmark` — a self-contained seal mark (a stylized seal glyph).
  *
  * `check`/`ring`/`wordmark` share the ONE gold-draw mechanism (the `--seal-draw`
@@ -69,7 +68,7 @@ export const COMPLETION_SEAL_RING = { cx: 32, cy: 32, r: 24 } as const;
 export const COMPLETION_SEAL_DISC = { cx: 32, cy: 32, r: 21 } as const;
 
 /**
- * The SPRING register the draw rides (SPRING-EASE / W-MOTION-CANON P2 enter-bouncy):
+ * The SPRING register the draw rides (SPRING-EASE, P2 enter-bouncy):
  *  - the SETTLE leg (the spatial overshoot) rides `--spring-bouncy` (an ENTER may
  *    overshoot on arrival);
  *  - the DRAW + GLINT legs ride the `--spring-snappy` CLOCK (the snappy settle duration)

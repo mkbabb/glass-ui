@@ -1,10 +1,7 @@
 <script setup lang="ts">
-// DO-NOT-SPLIT (AW.W15 assay): the code-quality assay graded this 432-line SFC
-// cohesive-at-boundary — the marker geometry, the hover-popover payload mapping,
-// and the per-segment render are one tightly-coupled continuous-rail concern
-// (AU.W10 already split the 901-line orchestrator into this + Rail + Timeline).
-// W14 split the ONE over-threshold god-module (DataTable); this stays whole by design.
-// BI.W-OVERLAY-UNION — the retired HoverPopover folds onto the sealed
+// Marker geometry, hover-popover payload mapping, and per-segment rendering stay
+// together because they form one continuous-rail concern.
+// The retired HoverPopover folds onto the sealed
 // `<Popover trigger="hover">` union (hover-open timer on the HoverCardRoot branch).
 import { Popover, PopoverContent, PopoverTrigger } from "../popover";
 import { popoverPayloadFor } from "./geometry";
@@ -17,7 +14,7 @@ import type { TimelineSegment } from "./types";
  * carrying one focusable button per segment boundary, each (by default)
  * wrapped in <HoverPopover>. Lives OUTSIDE the rail's `overflow: hidden`
  * clip and is a SIBLING of the progressbar rail (Option C structural
- * split, AB.W2.T4).
+ * split).
  *
  * The split is a pure transposition out of the prior monolithic
  * ContinuousTimeline.vue: same DOM, same class names, same data
@@ -43,7 +40,7 @@ const emit = defineEmits<{
 }>();
 
 /**
- * AB.W2.T2/T3 — HoverPopover-driven hover state. The popover's debounced
+ * HoverPopover-driven hover state. The popover's debounced
  * `v-model:open` state is the authoritative hover signal: it inherits
  * reka-ui's `hoverOpenDelay`/`closeDelay` cadence, so the pointer skim
  * across the trigger edge (and the popover content overlapping the dot)
@@ -176,7 +173,7 @@ function onPopoverOpenChange(seg: TimelineSegment, open: boolean) {
 </template>
 
 <style scoped>
-/* AB.W2.T4 — marker list overlay. Sibling of the rail; lives outside
+/* Marker list overlay. Sibling of the rail; lives outside
    the rail's `overflow: hidden` clip so the dots paint in full. */
 .continuous-markers {
     position: absolute;
@@ -193,7 +190,7 @@ function onPopoverOpenChange(seg: TimelineSegment, open: boolean) {
     /* `left` from inline style (anchored to boundaryX(i) * 100%). */
     transform: translate(-50%, -50%);
     /* The marker container itself is non-interactive; only the inner
-       button receives pointer events. AB.W2.T1 — `display: flex`
+       button receives pointer events. `display: flex`
        collapses the default `list-item` line-box metrics (which added
        a 1px vertical drift between the dot's geometric centre and the
        li's translate anchor); flex sizes the marker box exactly to the
@@ -246,7 +243,7 @@ function onPopoverOpenChange(seg: TimelineSegment, open: boolean) {
    `.segmented-dot` above (radius, border, transition) but overrides the
    layout-coupled positioning (no flex-cell parent anymore).
 
-   AC.W9 (B3) — the dot is a GLASS primitive: a translucent tinted fill
+   The dot is a glass primitive: a translucent tinted fill
    over a backdrop blur with a hairline ring, not an opaque puck. The
    glass treatment is the resting recipe; the per-state rules below only
    re-tint the same glass (they no longer paint an opaque solid). All
@@ -268,7 +265,7 @@ function onPopoverOpenChange(seg: TimelineSegment, open: boolean) {
     background: var(--timeline-dot-fill);
     backdrop-filter: var(--timeline-dot-blur);
     border-color: var(--timeline-dot-ring);
-    /* BD.W-TIMELINE-RAIL-UNIFY (LEG 3) — the continuous dot is a flush RIVET
+    /* The continuous dot is a flush rivet
        (the inverse of the segmented float-dot): an INNER keyed shadow reads it
        as PRESSED-IN at the phase joint of the one bar. Lit top-inset +
        shaded bottom-inset = the one key-light, sunk. A faint outer rim keeps
@@ -286,7 +283,7 @@ function onPopoverOpenChange(seg: TimelineSegment, open: boolean) {
     transform: scale(1.2);
 }
 
-/* AC.W6d F2.I-04 — WCAG 2.5.5 target-size hit-area at the continuous
+/* WCAG 2.5.5 target-size hit-area at the continuous
    variant. The dot is 14px (default) painted at the inner centre of the
    marker `<li>`. A `::before` pseudo extends the pointer-receptive area
    to 44×44 (14 + 15 + 15) without enlarging the visible dot. The pseudo
@@ -311,8 +308,8 @@ function onPopoverOpenChange(seg: TimelineSegment, open: boolean) {
     }
 }
 
-/* AB.W2.T3 — `data-current` marks the active phase regardless of hover
-   state. AC.W9 (B3) — the per-state rules re-tint the SAME glass dot;
+/* `data-current` marks the active phase regardless of hover
+   state. The per-state rules re-tint the same glass dot;
    they no longer paint an opaque solid. The tint is a translucent wash
    over the glass fill so the dot stays glassy (backdrop blur + ring
    intact) while still reading its lifecycle state. Consumers override
@@ -344,7 +341,7 @@ function onPopoverOpenChange(seg: TimelineSegment, open: boolean) {
     );
 }
 
-/* AF.W1 (A4 §C1) — completion-tick affordance. When a segment reaches
+/* Completion-tick affordance. When a segment reaches
    `state === "completed"` the dot draws a self-drawing check: the path
    sweeps in via `stroke-dashoffset` while the dot punches a one-beat
    overshoot pop. This is the badge grammar (staged, self-drawing, one
@@ -382,7 +379,7 @@ function onPopoverOpenChange(seg: TimelineSegment, open: boolean) {
    pop settles the dot releases the transform so the hover scale (and
    any future transform) is unobstructed. */
 .continuous-dot[data-completed] {
-    /* AX.W05 — control register: the check-lands pop is a crisp one-beat morph,
+    /* The check-lands pop is a crisp one-beat morph,
        so it rides --spring-snappy (~+6.8% overshoot gives the single pop). The
        inline cubic-bezier fallback is excised — no hand-rolled spring literal. */
     animation: continuous-dot-pop var(--duration-normal, 0.3s)

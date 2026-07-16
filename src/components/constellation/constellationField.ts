@@ -26,8 +26,7 @@ export { BASE_WIDTH } from "./constants";
 import { NODE_R_MIN, NODE_R_SPREAD } from "./constants";
 
 // The SHARED field/palette/warp/wander/well/pinned-drift/props TYPE shapes live
-// in the co-located `./constellationTypes` (BA.W-CARVE2 — the ~308 lines of
-// interface declarations split off the step engine). The step functions below
+// in the co-located `./constellationTypes`. The step functions below
 // read the field/node/pointer shapes from there; the whole `Constellation*`
 // type set is RE-EXPORTED here so the sibling draw/interaction/constants
 // modules + the composables keep importing types `from "./constellationField"`
@@ -43,7 +42,7 @@ import type {
 /**
  * Seed `count` drifting nodes inside `w × h`. `rng` is a `() => number` in
  * `[0, 1)` (the glass-ui `mulberry32`/`Math.random`); a seeded `rng` lays out a
- * reproducible field. Every node drifts; a focal node IS pinnable (AX.W17) — the
+ * reproducible field. Every node drifts; a focal node is pinnable — the
  * `field.focalIndex` designation + the engine-owned `warp` spring chase a node,
  * but the underlying node still drifts (warp re-points an EXISTING node, never
  * adds one, so node count is conserved).
@@ -65,7 +64,7 @@ export function seedField(
             vy: Math.sin(a) * speed,
             r: NODE_R_MIN + rng() * NODE_R_SPREAD,
             dim: rng() < 0.45,
-            // BC.W-VIZ-CONSTELLATION — the seeded parallax DEPTH (§6). z ∈ [0,1]; the
+            // Seeded parallax depth. z ∈ [0,1]; the
             // pointer offsets the node's SCREEN position by parallax·z·(pointer−center)
             // so the flat lattice reads as having depth (paint position only).
             z: rng(),
@@ -76,7 +75,7 @@ export function seedField(
 
 /**
  * Re-fit the existing lattice to a NEW canvas size, proportionally, ON the
- * size-change frame (AY.W-CON1). Without it a field seeded at a transitional
+ * size-change frame. Without it a field seeded at a transitional
  * size (the canvas measures mid responsive-scale — the deck slide-enter case)
  * keeps its small-canvas positions and DRIFTS out to fill the larger box at
  * `speed` px/frame — the visible "takes a while to expand out" lag the slides
@@ -109,12 +108,12 @@ export function refitField(
  * their speed (the slow geometric drift is preserved). `k` is the scale factor.
  *
  * `dt` (seconds since the previous frame) advances the focal-node warp spring
- * via `warpStep` INSIDE this single per-frame call (AX.W17) — NO second rAF,
+ * via `warpStep` inside this single per-frame call — no second rAF,
  * NO `useSpring`. The warp rides the substrate's ONE parked rAF; a `dt` of `0`
  * (omitted / first frame) leaves the spring untouched.
  *
  * `now` (ms; default `0` — every existing caller stays green) + `rng` (default
- * `Math.random`) drive the optional auto-DRIFT cadence (AY.W-CON1): AFTER the
+ * `Math.random`) drive the optional auto-drift cadence: after the
  * warp step, if `field.wander` is set and `now > 0`, the cadence re-points
  * `setWarpTarget` to a random node when it elapses AND the spring has settled
  * (a click-warp in flight pre-empts the cadence — `warpSettled` reports false).
@@ -130,7 +129,7 @@ export function stepField(
     pointerVel: ConstellationPointer | null = null,
 ): void {
     const { nodes, w, h } = field;
-    // The PINNED node (AZ.W-CON-GEN G1) is held by every step pass — its drift,
+    // The pinned node is held by every step pass — its drift,
     // wall-bounce, pointer-steer, and gravity-well are all skipped so it stays at its
     // seeded anchor (the gentle `pinnedDrift` mode is the ONLY thing that moves it).
     // `pinnedIndex === -1` (the default) skips no node → byte-identical to HEAD.
@@ -157,7 +156,7 @@ export function stepField(
     }
     if (pointer && pointer.x >= 0) {
         const infl = 180 * k;
-        // BC.W-VIZ-CONSTELLATION (§6) — the VELOCITY-AWARE lean. The existing position lean
+        // Velocity-aware lean. The existing position lean
         // (`pull = (1 − d/infl)·0.08`) reads only position; the shared usePointerVelocity
         // field supplies a per-frame pointer velocity (canvas-local px/frame, fed by
         // useConstellation off the smoothed pointer). A FAST sweep (`velMag` large) drags a
@@ -196,7 +195,7 @@ export function stepField(
             }
         }
     }
-    // The gravity-well force pass (AY.W-CON2) — a held-pointer inverse-square pull
+    // The gravity-well force pass — a held-pointer inverse-square pull
     // composed ON the same frame (no new rAF). The well ADDS velocity while held
     // (the field heats — the perturb), with the no-singularity floor + the
     // no-slingshot clamp; an ALWAYS-ON `|v|→speed` ease-back renormalises the field
@@ -206,7 +205,7 @@ export function stepField(
     // default render is BYTE-IDENTICAL to the pre-well HEAD.
     stepWell(field, k, speed, dt);
 
-    // The autonomous PINNED-ANCHOR drift (AZ.W-CON-GEN G5) — gently ease the pinned
+    // The autonomous pinned-anchor drift gently eases the pinned
     // node around its seeded anchor on a jittered cadence (a closed-form easeInOutQuad
     // over `now`; no integrator, no second rAF). DISTINCT from `wander` (which
     // re-targets the warp among random nodes). Absent (`field.pinnedDrift` undefined)
@@ -214,13 +213,13 @@ export function stepField(
     // warp chasing the pinned node tracks its drifted position this frame.
     stepPinnedDrift(field, now, rng);
 
-    // Advance the focal-node warp spring on the SAME frame (AX.W17). The drift
+    // Advance the focal-node warp spring on the same frame. The drift
     // happened above, so the LIVE target node has already moved this frame — the
     // spring chases its post-step position (it tracks a moving target, not a
     // frozen snapshot). One rAF, no useSpring.
     warpStep(field, dt);
 
-    // Warp AUTO-RELEASE (AZ.W-CON-GEN G6) — once the spring has SETTLED on its target
+    // Warp auto-release clears a spring that has settled on its target
     // (the `warpSettled` band), clear `targetIdx` so the focal node releases the
     // spring and rides its node's raw drift (the identity-ride), freeing the spring
     // for the next warp. Gated by the opt-in `warpAutoRelease` flag; default OFF keeps
@@ -229,7 +228,7 @@ export function stepField(
         field.warp.targetIdx = -1;
     }
 
-    // The auto-DRIFT cadence (AY.W-CON1) — the 2nd target-source on the SAME
+    // The auto-drift cadence is the second target source on the same
     // spring, stepped AFTER warpStep so a click-warp already in flight (NOT
     // settled) pre-empts the periodic re-target. `now > 0` gates the cadence
     // (the default `now = 0` callers — the unit warp suite — skip it). The
@@ -246,7 +245,7 @@ export function stepField(
     }
 }
 
-// ── BC.W-VIZ-CONSTELLATION — the CPU edge SET scan (the ONE math source; §3) ──────
+// ── CPU edge-set scan ────────────────────────────────────────────────────────
 //
 // The distance-threshold ε-proximity graph: every two nodes within `reach = link·k` are
 // joined by an edge whose `alpha = 1 − d²/reach²` falls off with distance. This is the

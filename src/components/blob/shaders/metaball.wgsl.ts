@@ -1,9 +1,9 @@
-// BB.W-VIZ-SUITE (W-GOOBLOB-WGPU) — the goo-blob metaball WGSL PRIMARY path (net-new).
+// The GooBlob metaball WGSL primary path.
 //
 // The WebGPU-first transcription of the SDF metaball fragment pipeline: the domain-warped
 // membrane body smin-merged with up to four orbiting satellites + the pointer trail, the
-// analytic-gradient surface normal, the per-pixel OKLCh perturbation, the iridescence /
-// fake-SSS / lit-glass surface, and the mandatory linearToSrgb OETF. It is the SECOND
+// analytic-gradient surface normal, the per-pixel OKLCh perturbation, iridescence,
+// fake SSS, lit-glass surface, and the mandatory linearToSrgb OETF. It is the second
 // primary beside the byte-untouched WebGL2 `metaball.frag.ts` fallback (the GL-shader
 // fence holds — `metaball.frag.ts` is the preserved ~5-10%-tail path; this `.wgsl` is the
 // WebGPU-first path).
@@ -16,11 +16,11 @@
 //
 // The shared OETF + Ottosson OKLCh matrices (`srgbToOklab`/`oklabToLinearSrgb`/
 // `oklabToOklch`/`oklchToOklab`/`linearToSrgb`) + the FBM_ROT constant are SPLICED from
-// `procedural-color.wgsl.ts` (the WGSL twin of the AV.W2 shared GLSL chunk) — the SAME
+// `procedural-color.wgsl.ts` (the WGSL twin of the shared GLSL chunk) — the SAME
 // chunk aurora.wgsl splices — so the color math can never drift between the WGSL primary
 // and the GLSL fallback, NOR between the two viz. The blob-LOCAL machinery (the 3D-p3
 // hash, the IQ analytic-derivative gradient noise, the SDF smin body, the OKLCh
-// gamut-clamp) stays inline here, legitimately distinct per AV.W2 §3a.
+// gamut clamp) stays inline here as a deliberately distinct implementation.
 //
 // The Uniforms struct mirrors `uniformBridgeWGPU.ts` (the typed-struct source-of-truth)
 // EXACTLY — the WGSL field order/alignment and the JS ArrayBuffer write offsets are
@@ -32,7 +32,7 @@ import {
     OETF_WGSL,
     OKLCH_MATRICES_WGSL,
 } from "../../../composables/glass/procedural/color.wgsl";
-// BC.W-CARVE6 — the noise/FBM + the OKLCh gamut-clamp/palette helper groups carved
+// The noise/FBM and OKLCh gamut-clamp/palette helper groups are carved
 // into sibling chunks (the no-god-module bound; the shared-chunk SPLICE precedent).
 // Spliced back IN POSITION below — the noise chunk after `${FBM_ROT_WGSL}` (its
 // FBM_ROT source), the palette chunk after `${OKLCH_MATRICES_WGSL}` (its matrix
@@ -42,10 +42,10 @@ import {
 import { METABALL_NOISE_WGSL } from "./metaball-noise.wgsl";
 import { METABALL_PALETTE_WGSL } from "./metaball-palette.wgsl";
 
-// MAX_SATS=4 / TRAIL_N=15 / MAX_BLOB_STOPS=4 mirror metaball-uniforms.glsl.ts's #defines
-// (and the JS-side BLOB_WGPU_UNIFORM layout). FBM_LACUNARITY / FBM_GAIN (the blob-local
+// MAX_SATS=4, TRAIL_N=15, MAX_BLOB_STOPS=4 mirror metaball-uniforms.glsl.ts's #defines
+// (and the JS-side BLOB_WGPU_UNIFORM layout). FBM_LACUNARITY, FBM_GAIN (the blob-local
 // LIQUID-not-rocky constants, watercolor-edges.glsl.ts) are declared in the carved
-// metaball-noise.wgsl chunk beside their only consumers (BC.W-CARVE6).
+// metaball-noise.wgsl chunk beside their only consumers.
 export const METABALL_WGSL = /* wgsl */ `
 const MAX_SATS: i32 = 4;
 const TRAIL_N: i32 = 15;
@@ -53,7 +53,7 @@ const MAX_BLOB_STOPS: i32 = 4;
 const PI: f32 = 3.141592653589793;
 
 // ── Uniforms (the typed-struct source-of-truth — see uniformBridgeWGPU.ts) ──
-// Scalars packed into vec4 lanes; per-satellite / per-trail / per-palette rows packed
+// Scalars packed into vec4 lanes; per-satellite, per-trail, per-palette rows packed
 // into a vec4 so the array stride is the natural 16 bytes (no std140 stride trap — the
 // parity-blowout suspect the wave's §Triumvirate names).
 struct Uniforms {
@@ -84,7 +84,7 @@ struct Uniforms {
   // light: (uLightDir.xyz, _pad)
   light: vec4<f32>,
   // res: (uResolution.x, uResolution.y, uShadow, uShadowSoftness)
-  // BC.W-GOOBLOB-MEATBALL — the soft-shadow march rides the spare res.z/res.w lanes the
+  // the soft-shadow march rides the spare res.z/res.w lanes the
   // typed-struct SoT (uniformBridgeWGPU.ts) reserved (the EXTEND, never a re-fork): res.z
   // = uShadow (1.0 = the dressed shadow ON), res.w = uShadowSoftness (the
   // penumbra hardness, inverse light-source size → 4-48).
@@ -98,10 +98,10 @@ struct Uniforms {
 
 @group(0) @binding(0) var<uniform> u: Uniforms;
 
-// Noise + FBM (BC.W-CARVE6 -> metaball-noise.wgsl) — spliced AFTER the FBM_ROT_WGSL chunk
+// Noise + FBM from metaball-noise.wgsl, spliced after the FBM_ROT_WGSL chunk
 // below. NB: do NOT name the chunk with a template-interpolation form in a WGSL comment —
 // it injects the whole multi-line chunk into this // comment line and breaks the parse
-// (BD.W-VIZ-BROKEN-FIX D3c).
+// at the first injected newline.
 ${FBM_ROT_WGSL}
 ${METABALL_NOISE_WGSL}
 
@@ -144,15 +144,15 @@ fn sminG(a: vec3<f32>, b: vec3<f32>, k: f32) -> vec3<f32> {
 ${OETF_WGSL}
 ${OKLCH_MATRICES_WGSL}
 
-// OKLCh gamut clamp + palette sample + breath (BC.W-CARVE6 -> metaball-palette.wgsl)
-// — spliced AFTER the OKLCH_MATRICES_WGSL chunk above (its matrix source). NB: do NOT
+// OKLCh gamut clamp, palette sample, and breath from metaball-palette.wgsl,
+// spliced AFTER the OKLCH_MATRICES_WGSL chunk above (its matrix source). NB: do NOT
 // write the chunk's identifier with a template-interpolation form in a WGSL comment — it
 // would inject the whole multi-line matrices chunk INTO this // comment line and break the
-// parse at the first injected newline (BD.W-VIZ-BROKEN-FIX D3c — the live WGSL syntax error
+// parse at the first injected newline, the live WGSL syntax error
 // that silently fell every metaball/goo-dot to the WebGL2 net, masking the WGSL primary).
 ${METABALL_PALETTE_WGSL}
 
-// AX.W15 — the composite SDF field WITH its ANALYTIC GRADIENT vec3(dist, ∂/∂x, ∂/∂y).
+// The composite SDF field with its analytic gradient: vec3(dist, ∂/∂x, ∂/∂y).
 fn sceneDistG(uv: vec2<f32>) -> vec3<f32> {
   let uBodyRadius = u.s0.y;
   let uPulsePhase = u.s0.z;
@@ -220,7 +220,7 @@ fn sceneDistG(uv: vec2<f32>) -> vec3<f32> {
   return d;
 }
 
-// AX.W15 — the analytic surface normal from the field gradient.
+// The analytic surface normal from the field gradient.
 fn surfaceNormalFromGrad(grad2d: vec2<f32>, d: f32, bodyR: f32) -> vec3<f32> {
   let g = normalize(grad2d + vec2<f32>(1e-6));
   let interior = clamp(-d / max(bodyR, 1e-4), 0.0, 1.0);
@@ -228,9 +228,9 @@ fn surfaceNormalFromGrad(grad2d: vec2<f32>, d: f32, bodyR: f32) -> vec3<f32> {
   return normalize(vec3<f32>(g * (1.0 - z), z) + vec3<f32>(0.0, 0.0, 1e-6));
 }
 
-// ── BC.W-GOOBLOB-MEATBALL — the 2D SDF soft-shadow march (IQ rmshadows improved-penumbra,
-//    research/viz/goo-blob.md §2.3). A procedural soft contact shadow that FOLLOWS the
-//    irregular metaball silhouette (NOT a hard disc / box shadow). Marches a ray from ro
+// ── 2D SDF soft-shadow march (IQ rmshadows improved penumbra) ───────────────
+//    Based on research/viz/goo-blob.md §2.3. A procedural soft contact shadow that follows the
+//    irregular metaball silhouette (NOT a hard disc, box shadow). Marches a ray from ro
 //    along rd (the in-plane projection of uLightDir), accumulating the closest miss via
 //    the Aaltonen penumbra (y = h*h/(2*ph) + d = sqrt(h*h - y*y)) that kills the
 //    banding the naive res = min(res, h/(w*t)) shows. CHEAP: 24 steps, re-uses the SAME
@@ -285,9 +285,9 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
   let uPointerActive = u.s7.x;
   let uPointerAttraction = u.s7.y;
   let uPointerStrength = u.s7.z;
-  // BC.W-GOOBLOB-PLAIN — the STAGE-1 gate (1.0 = the plain shadowless fill-only floor).
+  // The stage-1 gate (1.0 = the plain shadowless fill-only floor).
   let uStage = u.s7.w;
-  // BD.W-GOO-CAROUSEL-DECK — the blob to meatball SHADING-MORPH scalar (the base.w pad
+  // The blob-to-meatball shading-morph scalar (the base.w pad
   // lane; the typed-struct SoT writes it). 0 = flat blob, 1 = lit meatball, in-between
   // lerps the surface shading (the smin geometry is shared).
   let uMorphT = clamp(u.base.w, 0.0, 1.0);
@@ -309,13 +309,13 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
   let uRimStrength = u.s3.w;
   let uLightDir = u.light.xyz;
   let uRimColor = u.rim.rgb;
-  // BC.W-GOOBLOB-MEATBALL — the soft-shadow gate + penumbra hardness (res.z/res.w lanes).
+  // The soft-shadow gate + penumbra hardness (res.z/res.w lanes).
   let uShadow = u.res.z;
   let uShadowSoftness = u.res.w;
 
   var uv = in.uv - 0.5;
 
-  // PRE-FBM bounding test (BD.W-VIZ-BROKEN-FIX D3c — the uniformity fix). The GLSL fallback
+  // Pre-FBM bounding test, expressed for uniform derivative flow. The GLSL fallback
   // EARLY-RETURNS transparent here (a perf skip of the FBM border); WGSL CANNOT — an early
   // return predicated on the per-fragment uv makes the fwidth(d)/fwidth(Nh) calls below
   // reachable only through non-uniform control flow, which the WGSL uniformity analyzer
@@ -329,7 +329,7 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
   // ALU (no correctness hazard); the real GPU swallows it.
   let inBounds = dot(uv, uv) <= uMaxReach * uMaxReach;
 
-  // Pointer deformation — sign per AY.W-BLOB-CONFIG D2.
+  // Pointer deformation preserves the signed attraction direction.
   if (uPointerActive > 0.5) {
     let pointerDir = uPointer - uv;
     let pointerDist = length(pointerDir);
@@ -352,13 +352,13 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
   // (the GLSL early-out's transparent WRITE, expressed as an alpha gate, not a return).
   let alpha = (1.0 - smoothstep(-aa, aa, d)) * select(0.0, 1.0, inBounds);
 
-  // ── BC.W-GOOBLOB-MEATBALL — the WGSL uniformity STRUCTURAL fix (the meatball-armer).
+  // ── WGSL uniformity structure ────────────────────────────────────────────
   //    The Toksvig screen-space derivative (fwidth SITE #2) is hoisted HERE, into the SAME
   //    uniform control flow fwidth(d) above already arms in (top-level fs_main, before the
   //    per-fragment alpha < 0.001 early-return and the uLit/uShadow non-uniform branches).
   //    WGSL uniformity analysis rejects a fwidth() reached only through a return predicated
   //    on a per-fragment value (the alpha < 0.001 early-out) nested under further branches
-  //    — exactly the BB residual that kept the normal-derivative inside the lit branch from
+  //    exactly the residual that kept the normal derivative inside the lit branch from
   //    compiling, so the WGSL primary never armed and GooBlob fell to the WebGL2 net. Nh is
   //    the uniform-flow surface normal computed for this derivative ONLY (byte-identical to
   //    the lit block's own N = surfaceNormalFromGrad(...) below — the SAME inputs, so
@@ -392,12 +392,12 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
   // normal, NO Fresnel, NO lit glint, NO iridescence, NO fake-SSS, NO shadow —
   // deliberately FLAT. It returns BEFORE any of the STAGE-2 dressing is reached. The
   // STAGE-1 path simply never READS the hoisted Nh/nVar or the lit/shadow blocks; the
-  // normal-derivative is now in UNIFORM control flow above (BC.W-GOOBLOB-MEATBALL — the
-  // structural armer), so BOTH the STAGE-1 floor AND the STAGE-2 lit path arm on Metal
-  // (the BB residual that kept STAGE 2 falling to the WebGL2 net is CLOSED). The
+  // normal derivative is now in uniform control flow above, so both the stage-1 floor
+  // and the stage-2 lit path arm on Metal. The residual that kept stage 2 falling to
+  // the WebGL2 path is closed. The
   // teaching contrast: this is the "it renders, it meatballs, it works on Safari"
   // floor STAGE 2 layers the lit/shadow onto via the SAME uniforms.
-  // BD.W-GOO-CAROUSEL-DECK — the flat blob fill is snapshotted from the PRE-dressing
+  // The flat blob fill is snapshotted from the pre-dressing
   // oklch (the dressing mutates oklch below). At morphT <= 0 (a pure blob) emit the
   // flat fill + dither and return — the byte-identical STAGE-1 floor, zero dressing cost.
   let flatOkl = gamutClampOklch(oklch);
@@ -438,7 +438,8 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
     oklch.z = oklch.z + sss * 0.1 * (1.0 - thickness);
   }
 
-  // ── BC.W-GOOBLOB-MEATBALL — the soft contact shadow (T2). A procedural soft shadow that
+  // ── Soft contact shadow ──────────────────────────────────────────────────
+  //    A procedural soft shadow that
   //    FOLLOWS the irregular silhouette: march from this fragment's uv toward the in-plane
   //    projection of uLightDir; where the metaball field occludes the light (the body
   //    shadows itself opposite the light, a satellite shadows the body across the neck), the
@@ -458,8 +459,8 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
     // dot(fieldGrad, L2) < 0 (the rim facing away from L2) AND the thin-rim weight
     // (a Gaussian band peaking at thickness ≈ 0.18 so the deep-lit interior + the
     // light-facing edge stay BRIGHT — the warm-cream body mean holds). The 0.20 cap keeps
-    // it a soft GROUNDING whisper, never a gouge (the warm-cream identity + the
-    // proof:blob-warm-default floor hold).
+    // it a soft grounding whisper, never a gouge (the warm-cream identity + the
+    // floor hold).
     let away = clamp(-dot(normalize(fieldGrad + vec2<f32>(1e-6)), L2), 0.0, 1.0);
     let band = exp(-pow((thickness - 0.18) / 0.16, 2.0));
     let shadowDarken = (1.0 - sh) * away * band * 0.20;
@@ -478,8 +479,8 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
     let warmCream = oklabToLinearSrgb(oklchToOklab(vec3<f32>(0.97, 0.03, radians(85.0))));
 
     // ── fwidth SITE #2 — Toksvig normal-variance specular clamp. nVar is the HOISTED
-    //    length(fwidth(N)) (BC.W-GOOBLOB-MEATBALL — computed once at the top of fs_main
-    //    in uniform control flow, so the WGSL primary ARMS on Metal). The math is
+    //    length(fwidth(N)), computed once at the top of fs_main
+    //    in uniform control flow so the WGSL primary arms on Metal. The math is
     //    byte-identical to the GLSL fallback (length(fwidth(N))); only its evaluation
     //    point moved out of this non-uniform if (uLit > 0.5) branch. ──
     let shininess = uSpecShininess / (1.0 + 24.0 * nVar);
@@ -492,7 +493,7 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
     let lack = clamp((0.22 - dL) / 0.22, 0.0, 1.0);
     // target is a WGSL RESERVED word (W3C WGSL 16.2) so a "var target" declaration is an
     // invalid identifier: the shader module fails to compile and the WGSL primary never
-    // arms (the GooBlob reserved-keyword bug BC.W-WEBGPU-EVERYWHERE W7 catches). Renamed to
+    // arms. Renamed to
     // a valid identifier; the math + the value are byte-identical.
     var targetL = 0.18;
     if (bodyL < 0.5) { targetL = 0.92; }
@@ -510,7 +511,7 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
 
   var rgb = clamp(linearToSrgb(lin), vec3<f32>(0.0), vec3<f32>(1.0));
 
-  // BD.W-GOO-CAROUSEL-DECK — the blob↔meatball SHADING-MORPH compose: lerp the flat blob
+  // Compose the blob↔meatball shading morph: lerp the flat blob
   // fill -> the dressed meatball surface on uMorphT (the geometry/alpha is shared; only
   // the surface shading interpolates). morphT == 1 is byte-identical to the dressed
   // meatball; the morphT == 0 case already returned the flat fill above.

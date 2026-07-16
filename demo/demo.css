@@ -81,7 +81,7 @@
 }
 
 @import "tailwindcss" source("../demo");
-/* BC.W-CUSTOMIZABILITY — the demo dogfoods the library SOURCE (it `@import`s
+/* The demo dogfoods the library source (it `@import`s
    `src/styles/index.css` directly for HMR), so it must also CONTENT-SCAN the
    library component SOURCE for the utility classes those components render — the
    functional/sizing utilities (`size-(--search-icon-size)`, `h-(--switch-track-h)`,
@@ -95,7 +95,7 @@
 @source "../src/components/**/*.vue";
 @source "../src/components/_shared/*.ts";
 @source "../src/components/**/*Variants.ts";
-/* BI.W-DEMO-SOURCE-SCAN — the CVA MAPS (each ui component's index.ts) too. A
+/* Scan the CVA maps in each component's index.ts too. A
    component's cva() variant/tone map lives in index.ts, NOT the .vue render, so
    the class strings it composes (text-destructive-foreground, the four-state
    destructive tone fill bg-destructive + the hover/active/aria-pressed opacity
@@ -109,18 +109,16 @@
    emitComponentUtilities (dist components.css); this is the demo's own scan. */
 @source "../src/components/**/index.ts";
 @import "tw-animate-css";
-/* BB.W-CSS-CRITICAL — the demo's DEV cascade imports the library SOURCE UNION
+/* The demo's development cascade imports the complete library source styles
    (the full index.css) for HMR simplicity; this is the byte-complete union the
    `@mkbabb/glass-ui/styles` export resolves. The critical/deferred SPLIT is a
    PUBLISHED-dist concern (publishStyleAssets emits dist/styles/{critical,
    deferred}.css off src/styles/critical-partition.mjs) measured under the
-   W-LIGHTHOUSE production-preview protocol — the loader recipe lives in
-   index.html's <head>. The demo does NOT fork a source critical/deferred block
-   (proof:css-critical W4 — the CRITICAL_PARTITION manifest is the sole partition
-   source; a hand-extracted src critical.css would RED). */
+   production preview; the loader recipe lives in index.html's <head>. The demo
+   does not fork a second source critical/deferred block. */
 @import "../src/styles/index.css";
 @import "./chassis/hero/story-hero.css";
-/* BI.W-DOCK-RETIRES — the liquid-morph / fission / siri / V↔H-goo demo surfaces
+/* The retired liquid-morph, fission, Siri, and orientation-goo demo surfaces
    (`liquid-morph.css`, `liquid-playground`, `dock-gallery`, `morph-showcase`,
    `siri-island`) are DEFINITION-ABSENT (the whole goo-dock spectacle retired
    decided-terminal; clean break, no alias). */
@@ -128,7 +126,7 @@
 @variant dark (&:where(.dark, .dark *));
 
 /*
- * AZ.W-MOTION-SUITE — the /motion family's ONE coherent purple identity, expressed
+ * The /motion family has one coherent purple identity, expressed
  * as a DEMO-LOCAL token (never a library token — presets-in-consumers). The accent
  * is the EXISTING glass-ui `--viz-legendre` violet (the page-local twin of the
  * keyframes ppmycota brand color), so the motion plots / driven dots / spring block

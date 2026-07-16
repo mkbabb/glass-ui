@@ -3,7 +3,7 @@
 // keyframes LIGHT `NumericAnimation` engine. value.js-FREE (callable easing).
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { effectScope, ref, type EffectScope } from "vue";
-import { useCountup } from "@glass/composables/motion/useCountup";
+import { useCountup } from "@glass/composables/motion/number/useCountup";
 
 function makeFigure(
     host: HTMLElement,

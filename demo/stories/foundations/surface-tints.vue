@@ -2,7 +2,7 @@
 // Surface Tints — the 9-rung tint scale (--surface-tint-{4..25}) + tier
 // aliases (--surface-tint-quiet/floating/modal).
 //
-// BA.W-STAGE scope 7 (FD-FS-1/FD-FS-3) — the token tour reads against a CONTRAST
+// The token tour reads against a contrasting
 // reference field. A translucent `--surface-tint-N` (a color-mix(…transparent)
 // foreground-over-transparent overlay) painted over a same-tone `bg-card` plate is
 // IMPERCEPTIBLE (the prior `border-2 bg-card` swatch demonstrated zero of the visual
@@ -87,7 +87,7 @@ const aliases: TintRow[] = [
 
 <style scoped>
 /* The dense token-tour grid — a multi-column auto-fill that kills the prior
-   one-rung-per-full-width-row dead-space (FD-FS-3). */
+   one-rung-per-full-width-row dead space. */
 .tint-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
@@ -102,7 +102,7 @@ const aliases: TintRow[] = [
 }
 
 /* The translucency-reference field — a checkerboard so a color-mix(…transparent)
-   overlay reads its alpha against a contrasting backing (BA.W-STAGE scope 7). The
+   overlay reads its alpha against a contrasting backing. The
    checker tone steps with --foreground so it reads in BOTH modes. */
 .tint-checker {
     --checker: color-mix(in srgb, var(--foreground) 14%, transparent);

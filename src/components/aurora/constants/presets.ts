@@ -1,40 +1,33 @@
 /**
- * Aurora v4.1 — library config shape.
+ * Aurora library configuration.
  *
  * Authored presets (Sky, Dawn, Meadow, Deliberative, Day9, Oil Impasto,
  * Oil Gestural, Oil Van Gogh, Crayon Sunset, Crayon Rainbow, Crayon Ocean)
  * live in the consumer — see demo/stories/substrates/aurora/presets.ts.
  *
- * Per memory rule "Presets in consumers": named themed presets belong in
- * each consumer project, not in the library. The library exports only the
- * shape + a minimum-viable DEFAULT_AURORA_CONFIG for the component's own
+ * Named themed presets belong in each consumer project. The library exports only
+ * the shape and a minimum-viable DEFAULT_AURORA_CONFIG for the component's own
  * type-check ergonomics.
  */
 
 // ── Types ───────────────────────────────────────────────────────────────
 
-// OklchStop is single-sourced in the `/color` leaf (AU.W5 hoist); imported for
-// local use here AND re-exported so aurora-domain consumers keep importing it
+// OklchStop is defined in the `/color` leaf, imported locally and re-exported so
+// Aurora-domain consumers can keep importing it
 // from `../constants/presets`.
 import type { OklchStop } from "../../../composables/color";
 export type { OklchStop };
 
-// W5 — the hue-arc method for the OKLCh palette interpolation. value.js OWNS color
-// (the union color-ownership contract — the same reason the OKLCH matrices are
-// locked to value.js's Ottosson constants), so we IMPORT the type, never re-invent
-// it. `AuroraHuePath` is a public ALIAS of `HueInterpolationMethod`, not a copy.
+// value.js owns the OKLCh hue interpolation vocabulary and matrices.
 import type { HueInterpolationMethod } from "@mkbabb/value.js/color";
 export type AuroraHuePath = HueInterpolationMethod;
 
-// BG.W-AUR-IMAGE-SOURCE — the color-source axis. `palette` (default) is the procedural
-// nuclei-field ramp (byte-identical to every pre-image config); `image` selects a
-// SEPARATE compiled fragment program (the construction-time permutation) that samples a
-// decoded photo through the ONE shared texture-upload primitive and dissolves it into the
-// field's OWN drift (the blur ZONE is the aurora's drift). NOT a runtime `if(uSource)`
-// branch — the two are distinct programs picked at setup.
+// The color-source axis. `palette` uses the procedural nuclei-field ramp; `image`
+// selects a distinct fragment program at setup, samples a decoded photo through
+// the shared texture-upload primitive, and dissolves it into Aurora's drift.
 export type AuroraSource = "palette" | "image";
 
-// The photo a `source:"image"` aurora dissolves. Any URL string / `Blob` (decoded through
+// The photo a `source:"image"` aurora dissolves. Any URL string, `Blob` (decoded through
 // the shared `createImageBitmap` normalisation) OR an already-uploadable source. The
 // concrete type lives in the shared texture-upload primitive — re-exported here so the
 // aurora config surface is self-contained. The macro-flower ARRAY + cross-fade cadence are
@@ -79,9 +72,9 @@ export interface AuroraNucleus {
 
 // `vangogh` (first-class atomic comma/crescent dabs), `oil-pastel` (stroke-deposition
 // + burnish), and `crayon` (DRY tooth-multiply) are all first-class mediums. Each
-// AUTHORS its own shader body (AX.W13 — no shared dispatch). van-Gogh/oil-pastel/crayon
+// authors its own shader body with no shared dispatch. van-Gogh/oil-pastel/crayon
 // force the structure-tensor orientation (the painterly hug). The `uMedium` ladder
-// dispatches crayon==4 / vangogh==5 / oil-pastel==6; the bridge MEDIUM_ID map + the
+// dispatches crayon==4, vangogh==5, oil-pastel==6; the bridge MEDIUM_ID map + the
 // aurora.frag dispatch + the uniform uploads all carry the medium.
 export type AuroraMedium =
     | "smooth"
@@ -91,14 +84,14 @@ export type AuroraMedium =
     | "crayon"
     | "vangogh"
     | "oil-pastel"
-    // BB.W-AUR-KUWAHARA — the anisotropic-Kuwahara painterly finish (uMedium==7), an
+    // the anisotropic-Kuwahara painterly finish (uMedium==7), an
     // OPT-IN first-class medium: a single-pass generalized/anisotropic Kuwahara
     // (Kyprianidis 2010 SOFT polynomial-weighted variant) over the procedural color
     // field, the elliptical kernel squeezed along the structure tensor. DEFAULT-OFF
     // (no preset/config carries it unless explicitly selected); the smooth default +
     // the van-Gogh HERO + the oil/oil-pastel mediums are byte-unchanged.
     | "kuwahara"
-    // BG.W-AUR-METAL-FINISH — the two MUTUALLY-EXCLUSIVE metal mediums (uMedium==8/9,
+    // the two MUTUALLY-EXCLUSIVE metal mediums (uMedium==8/9,
     // NOT a finish axis): `metal` re-lights the field as warm folded metal (the luma
     // height field → an anisotropic two-term BRDF raked by a cursor-synth light, catch
     // = the achromatic-warm anchor); `metal-gradient` is the SAME BRDF over a
@@ -108,7 +101,7 @@ export type AuroraMedium =
     | "metal"
     | "metal-gradient";
 
-// AX.W13 — `crayon` is a first-class `AuroraMedium` (uMedium==4), NOT a `strokeMode`.
+// `crayon` is a first-class `AuroraMedium` (uMedium==4), not a `strokeMode`.
 // The legacy `oil` + `strokeMode:"crayon"` peer-route is REMOVED (clean break, no
 // alias — MEMORY no-backwards-compat); a crayon surface selects `medium:"crayon"`.
 /** Oil-stroke sub-mode. Applied only when `medium === "oil"`. Routes inside the shader. */
@@ -120,29 +113,28 @@ export type FlowPattern =
     | "swirl"
     | "diagonal"
     | "multi"
-    // AW.W4.1 — the structure-tensor / edge-tangent-flow pattern. The flow
+    // Structure-tensor, edge-tangent-flow pattern. The flow
     // direction derives from the color field's OWN minor-eigenvector (the
     // edge-tangent), so brushwork hugs the color zones rather than tracking a
     // hand-authored pattern. The painterly mediums (vangogh, oil-pastel) force it.
     | "tensor";
 
 /**
- * AW.W4.1 — how a stroke's orientation is sourced. `flow` keeps the hand-authored
+ * How a stroke's orientation is sourced. `flow` keeps the hand-authored
  * `flowField` pattern + per-cell jitter (the named legacy choice); `tensor`
  * substitutes the structure-tensor minor-eigenvector (the color field's own
  * edge-tangent flow). No default that hides one as a duplicate of the other.
  */
 export type StrokeOrient = "flow" | "tensor";
 
-// BB.B1 — `"curl"` is the OPT-IN Bridson curl-noise flow warp (the divergence-free
+// `"curl"` is the opt-in Bridson curl-noise flow warp (the divergence-free
 // curl of an fbm potential). It is never auto-selected by the NOISE atom fan-out
 // (warpModeFor stays fbm→hybrid→cellular), so the default config is byte-unchanged;
 // a consumer opts in by setting `warpMode: "curl"` explicitly.
 export type WarpMode = "fbm" | "cellular" | "hybrid" | "curl";
 
 /**
- * AW.W6/W8 — the interactivity flag SHAPE (declared at W6, default OFF; behavior
- * wired at W8). Each axis opts the aurora into a pointer/scroll response:
+ * Interactivity shape. Each axis opts Aurora into a pointer/scroll response:
  * - `light`  — the cursor drives the impasto `uLightDir` (cursor-as-light + idle orbit).
  * - `scroll` — palette/breath progress couples to scroll (via `useScrollProgress`).
  * - `swirl`  — cursor-local warp and luminance lean on both engines.
@@ -155,12 +147,12 @@ export interface AuroraInteractivity {
     light?: boolean;
     scroll?: boolean;
     /**
-     * BI.W-FIELD-CORE (FC6/T-38) — cursor-local field warp and luminance lean. The atoms
+     * Cursor-local field warp and luminance lean. The atoms
      * door defaults it ON when interactive, including on the smooth medium.
      */
     swirl?: boolean;
     /**
-     * BI.W-FIELD-CORE (FC6) — the sized burst amplitude (0..1). The CPU projection folds
+     * Sized burst amplitude (0..1). The CPU projection folds
      * the pointer-field burst into the shared cursor strength before either engine sees it.
      */
     amplitude?: number;
@@ -191,19 +183,19 @@ export interface AuroraConfig {
     warpMode: WarpMode;
     noiseOctaves: 3 | 4 | 5;
 
-    // BG.W-AUR-IMAGE-SOURCE — the color SOURCE axis (default `"palette"` — the procedural
+    // the color SOURCE axis (default `"palette"` — the procedural
     // field, byte-identical to every pre-image config). `"image"` selects the separate
     // compiled image program that dissolves `src` into the field's drift. Optional; omitted
     // = `"palette"` (the palette-default byte-identity floor). Aliased on `/api`.
     source?: AuroraSource;
     /**
-     * BG.W-AUR-IMAGE-SOURCE — the photo the `source:"image"` program dissolves. A URL
-     * string / `Blob` (decoded through the shared normalisation) OR an already-uploadable
+     * the photo the `source:"image"` program dissolves. A URL
+     * string, `Blob` (decoded through the shared normalisation) OR an already-uploadable
      * source (`ImageBitmap`/`HTMLImageElement`/…). Ignored when `source !== "image"`.
      */
     src?: AuroraImageSource;
     /**
-     * BG.W-AUR-IMAGE-SOURCE — the per-fragment blur-radius band (uv units) the drifting
+     * the per-fragment blur-radius band (uv units) the drifting
      * zone lerps between (`radius = mix(min, max, zone)`). Optional; omitted = the
      * `IMAGE_BLUR_MIN_DEFAULT`/`IMAGE_BLUR_MAX_DEFAULT` band (near-sharp → heavy-bokeh
      * dissolve). Only read on the `source:"image"` program.
@@ -213,19 +205,18 @@ export interface AuroraConfig {
     // Medium
     medium: AuroraMedium;
     /**
-     * W5 — the hue-arc method for the OKLCh palette interpolation. Optional;
+     * Hue-arc method for OKLCh palette interpolation. Optional;
      * omitted = `"shorter"` (the OKLab-rectangular ramp — the muddy-midtone-free
      * default). `"increasing"`/`"decreasing"` request the OKLCh hue-arc for a
-     * deliberate rainbow sweep across the stops. Aliased on `/api` as `AuroraHuePath`.
+     * deliberate rainbow sweep across the stops.
      */
     huePath?: AuroraHuePath;
     flow: AuroraFlow;
     /**
-     * AW.W4.1 — how the painterly stroke direction is sourced. Optional; omitted =
-     * `"flow"` (the hand-authored `flowField` pattern — the pre-W4 path, so an
-     * unset config renders identically). `"tensor"` substitutes the structure-tensor
-     * minor eigenvector (the color field's own edge-tangent flow); the `vangogh` /
-     * `oil-pastel` mediums force it.
+     * How the painterly stroke direction is sourced. Optional; omitted =
+     * `"flow"`, the hand-authored `flowField` pattern. `"tensor"` substitutes the
+     * structure-tensor minor eigenvector, the color field's edge-tangent flow;
+     * the `vangogh` and `oil-pastel` mediums force it.
      */
     strokeOrient?: StrokeOrient;
     strokeAmount: number; // 0..1
@@ -239,7 +230,7 @@ export interface AuroraConfig {
     brokenColor: number; // 0..1
     canvasGrain: number; // 0..0.1
     /**
-     * BC.W-VIZ-AURORA (T4) — the anisotropic-Kuwahara painterly-finish knobs (the
+     * Anisotropic-Kuwahara painterly-finish knobs (the
      * `medium:"kuwahara"` register; the WGSL primary's keystone). Optional; omitted =
      * the recipe defaults (radius 0.010 procedural-patch units, q 4.0 the SOFT
      * variance-weight exponent). Sectors are fixed at 8 (the soft-blend overlap floor —
@@ -249,26 +240,25 @@ export interface AuroraConfig {
     kuwaharaRadius?: number; // 0.006..0.024 procedural-patch units
     kuwaharaQ?: number; // 1..6 soft-blend variance exponent (4 default)
     /**
-     * BG.W-AUR-METAL-FINISH — the metal-medium knobs (the `medium:"metal"` /
-     * `"metal-gradient"` register; uMedium==8/9). Optional; omitted = the recipe
+     * Metal-medium knobs for `medium:"metal"` and `"metal-gradient"` (uMedium==8/9).
+     * Optional; omitted = the recipe
      * defaults (`METAL_POLISH_DEFAULT` catch intensity, `METAL_HEIGHT_SCALE_DEFAULT`
      * relief tilt). `metalPolish` scales the specular catch; `metalHeightScale` scales
      * the luma-relief → normal tilt (a higher value reads as sharper folds). On the WGSL
-     * primary these ride the free cursor.z/.w pad lanes; the .frag carries them as its
+     * primary these ride the free cursor.z/.w pad lanes; the.frag carries them as its
      * own uniforms. A non-metal config never reads them (no-op).
      */
     metalPolish?: number; // 0..4 specular catch intensity (1 default)
     metalHeightScale?: number; // 0.5..3 relief tilt (1 default)
     /**
-     * AW.W4.2 — the impasto relight direction (the movable directional source the
+     * Impasto relight direction (the movable directional source the
      * accumulated paint-height field catches). Optional; omitted = upper-left
-     * (matching the prior fixed-rim default, so the still default reads identically).
-     * Unit-ish [x, y, z] in screen space (z toward the viewer). AW.W8 drives this
-     * from the cursor (cursor-as-light); the shader re-normalizes it.
+     * Unit-ish [x, y, z] in screen space (z toward the viewer). The shader
+     * re-normalizes it.
      */
     lightDir?: [number, number, number];
     /**
-     * AW.W4.2 / AX.W11 — the relight tint (the impasto catch-light). Optional;
+     * Relight tint for the impasto catch-light. Optional;
      * omitted = the canonical warm-white the shared `warmCatchLight` OKLCh helper
      * derives (the `(0.985, 0.0125, 77.5°)` anchor — perceptually the prior eyeballed
      * warm-white, now on the OKLCh core). Author it either as a raw LINEAR-light
@@ -289,11 +279,11 @@ export interface AuroraConfig {
     alpha: number; // 0..1
 
     /**
-     * BD.W-AUR-VIVIDNESS — the §3 chroma FLOOR (the warm-field vividness contract).
+     * the §3 chroma FLOOR (the warm-field vividness contract).
      * Optional; omitted = `DEFAULT_VIVIDNESS` (1 — high, the library's vivid identity).
      * A shader-resident OKLab chroma-floor lifts any pale zone toward `VIVID_TARGET`
      * (mode-scaled in the shader) so the field never resolves toward gray BEHIND glass
-     * — the literal fix for the "missing colorful field → gray glass" defect. The lift
+     * the literal fix for the "missing colorful field → gray glass" defect. The lift
      * is HUE-PRESERVING (scales chroma along the zone's existing OKLab direction); below
      * `VIVID_EPS` the hue is precision noise, so the floor synthesizes along the WARM
      * anchor (`VIVID_WARM_ANCHOR`) — NEVER teal/navy, the warm-floor guarantee. A
@@ -304,9 +294,8 @@ export interface AuroraConfig {
     vividness?: number;
 
     /**
-     * AW.W6/W8 — the pointer/scroll interactivity opt-in (default OFF — the wispy-sky
-     * default stays static). W6 declares the shape; W8 wires cursor-as-light,
-     * field warp/luminance, and scroll coupling. Omitted = every
+     * Pointer/scroll interactivity opt-in (default OFF — the wispy-sky
+     * default stays static). Omitted = every
      * axis off. Aliased on `/api` as part of the `AuroraConfig` surface.
      */
     interactivity?: AuroraInteractivity;
@@ -324,14 +313,14 @@ export interface AuroraCursorApi {
 
 export interface AuroraInstance extends AuroraCursorApi {
     /**
-     * Start GPU initialization. Idempotent. On the `"eager"` /
-     * capture `initStrategy` `createAurora` already calls this before
+     * Start GPU initialization. Idempotent. With the `"eager"` capture
+     * `initStrategy`, `createAurora` calls this before
      * returning; on `"deferred"` the consumer (e.g. `useAurora`) invokes it
      * past first paint. A no-op once armed or once `dispose()` has run.
      */
     arm(): void;
     /**
-     * BC.W-VIZ-AURORA (T2) — the device-resolved arm PROMISE. On the WebGPU
+     * Device-resolved arm promise. On the WebGPU
      * backend `renderAt`/`arm` are no-ops until this resolves the async
      * adapter→device→configure→setup prelude. A CAPTURE consumer (thumbnail bake)
      * MUST `await armAsync()` before the first `renderAt` or the frame is BLANK
@@ -351,7 +340,7 @@ export interface AuroraInstance extends AuroraCursorApi {
 export const MAX_NUCLEI = 8;
 export const MAX_STOPS = 8;
 
-// ── BD.W-AUR-VIVIDNESS — the §3 chroma-floor constants ──────────────────────
+// ── Chroma-floor constants ────────────────────────────────
 /**
  * The default `vividness` for a bare `<Aurora>` — HIGH (the library's vivid identity).
  * This INVERTS the pre-floor status quo: vivid is the default, pale is the explicit
@@ -368,9 +357,9 @@ export const DEFAULT_VIVIDNESS = 1.0;
  */
 export const VIVID_TARGET = 0.115;
 
-// ── BG.W-AUR-METAL-FINISH — the metal-medium knob defaults ──────────────────
+// ── Metal-medium defaults ──────────────────────────────
 /**
- * The default `metalPolish` (specular catch intensity) for a `medium:"metal"` /
+ * The default `metalPolish` (specular catch intensity) for a `medium:"metal"` or
  * `"metal-gradient"` config when omitted. The metal light rakes at unit intensity.
  */
 export const METAL_POLISH_DEFAULT = 1.0;
@@ -380,10 +369,10 @@ export const METAL_POLISH_DEFAULT = 1.0;
  */
 export const METAL_HEIGHT_SCALE_DEFAULT = 1.0;
 
-// ── BG.W-AUR-IMAGE-SOURCE — the image zone-blur band defaults ────────────────
+// ── Image zone-blur defaults ────────────────────────────
 /**
  * The default near-sharp blur radius (uv units) at zone 0 for a `source:"image"` aurora
- * — a whisper so the recognizable zones read crisp against the dissolved ones.
+ * a whisper so the recognizable zones read crisp against the dissolved ones.
  */
 export const IMAGE_BLUR_MIN_DEFAULT = 0.004;
 /**
@@ -400,18 +389,18 @@ export const IMAGE_BLUR_MAX_DEFAULT = 0.06;
  * Not a themed preset — the demo's 11 authored presets override every field.
  */
 export const DEFAULT_AURORA_CONFIG: AuroraConfig = {
-    // The warm-cream library identity (BC.W-TEAL-NAVY-PURGE). NOT teal/navy — a
-    // soft warm-amber-to-cream ramp (hue 45..70, the W-NO-GRAY warm-amber family)
+    // The warm-cream library identity. NOT teal/navy — a
+    // soft warm-amber-to-cream ramp (hue 45..70, the warm-amber family)
     // so a bare `<Aurora>` reads warm-cream at rest. The prior blue/teal default
     // (h:220/200) was the teal-on-navy disease in the library identity. Named
     // themed presets (Sky, Ocean, …) live in the consumer (presets-in-consumers).
-    // BD.W-AUR-VIVIDNESS · BI.W-AURORA-VIBRANCY (AV1) — the AUTHORED vivid identity (the
+    // Authored vivid identity (the
     // floor is the runtime guarantee; this is the authored chroma). The pre-BI ramp's pale
     // apex (C:0.095) dragged the mean OKLab chroma BELOW the 0.13 warm-vivid floor and the
     // hues sat in a near-monochrome 45–68 cluster (a flat amber ramp). BI lifts every stop
     // into the 0.13–0.17 warm-vivid band AND spreads the hue into a real SUNSET sweep —
     // a warm coral-amber base (h:30), an amber body (h:55), a warm-gold apex (h:82): a
-    // SECOND warm accent hue per the DAWN-lilac / SUNSET-rose model (a monochrome ramp
+    // SECOND warm accent hue per the DAWN-lilac, SUNSET-rose model (a monochrome ramp
     // reads flat), all warm (NO teal/navy — the warm-floor law; NO pink — that setting-sun
     // note is a demo-local preset, presets-in-consumers). Mean OKLab C ≈ 0.15. A bare
     // `<Aurora>` reads warm-VIVID + interesting at rest, not warm-pale. Both, not either.
@@ -450,19 +439,19 @@ export const DEFAULT_AURORA_CONFIG: AuroraConfig = {
     saturation: 1.0,
     paperGrain: 0.008,
     alpha: 1.0,
-    // BD.W-AUR-VIVIDNESS — the §3 floor ON by default (the vivid identity). A pale hero
+    // the §3 floor ON by default (the vivid identity). A pale hero
     // surface opts out with `vividness: 0`.
     vividness: DEFAULT_VIVIDNESS,
 };
 
 /**
  * `PAPER_WASH_GROUND` — the library-canon recessive-ground crayon calibration
- * (BA.W-ATLAS-RECONCILE A-4a; d6 9467bd16 adopt). A pure PRESET PARTIAL (no
+ * ( A-4a; d6 9467bd16 adopt). A pure PRESET PARTIAL (no
  * palette/nuclei/motion) pinning the recessive crayon-ground deposition dials so a
  * data-ground aurora reads as paper-on-tooth without each consumer dial-tuning the
  * same recessive calibration by hand. It carries NO palette/nuclei — the consumer
  * spreads it over its own pole-derived pigment (page-glow IS data-glow):
- * `const cfg = { ...consumerBase, ...PAPER_WASH_GROUND }`.
+ * `const cfg = {...consumerBase,...PAPER_WASH_GROUND }`.
  *
  * House-rule clean (presets-in-consumers): this is the LIBRARY's own recessive-ground
  * IDENTITY, not a consumer theme — admissible at the root. `satisfies
@@ -479,7 +468,7 @@ export const PAPER_WASH_GROUND = {
     canvasGrain: 0.5,
     strokeAmount: 0.35,
     strokeAnisotropy: 0.5,
-    // Recessive guards: single dry layer, NO impasto / sheen / broken-color flecks
+    // Recessive guards: single dry layer, NO impasto, sheen, broken-color flecks
     // loud enough to name. The tooth is paper, never a picture.
     strokeLayers: 1,
     impasto: 0,

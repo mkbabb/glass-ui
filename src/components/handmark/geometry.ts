@@ -15,8 +15,8 @@
  * The circle arm rides pencil-boil's `ellipsePoints` (the hand-circle
  * overshoot ring — the sole upstream geometry delta this component required).
  *
- * THE SEED RECONCILE (BA.W-HANDMARK [S2]): the wobble centerlines are seeded from
- * the HOUSE prng leaf (`src/composables/glass/procedural/prng.ts` mulberry32 + hashString — the AV.W14
+ * THE SEED RECONCILE ( [S2]): the wobble centerlines are seeded from
+ * the HOUSE prng leaf (`src/composables/glass/procedural/prng.ts` mulberry32 + hashString — the
  * single-source). The family FEEDS pencil-boil a house-derived integer seed; glass-
  * ui code imports ZERO `mulberry32` from pencil-boil (its internal mulberry32 stays
  * inside its OWN perturb math). ONE seed leaf, the house identity.
@@ -41,11 +41,11 @@ import { naturalUnderlinePoints } from "./noise";
 import type { HandShape, MarkBox } from "./types";
 
 // The φ-incommensurate boil voice (`naturalUnderlinePoints`) lives in the pencil-boil-
-// FREE ./noise leaf so proof:handmark-audit can strip-import + sample the REAL emitted
+// FREE./noise leaf so  can strip-import + sample the REAL emitted
 // point-set (node cannot type-strip a TS module under node_modules — geometry.ts's
 // top-level pencil-boil import would block that). Re-exported so the /handmark barrel
 // surface + the measuring gate read the SAME symbol (never a symbol-presence regex —
-// the W-GATE-TRUTH-AUDIT discipline).
+// the discipline).
 export { naturalUnderlinePoints } from "./noise";
 export { VB_W, VB_H, UNDERLINE_GAP };
 
@@ -70,15 +70,15 @@ export interface ShapeGeom {
  * `naturalUnderlinePoints` morphology instead of pencil-boil's `wobbleLinePoints`
  * (the masthead `boil` voice); the default underline keeps the pencil-boil line.
  *
- * BG.W-HANDMARK-PERFECT (a) THE ASPECT-CORRECT viewBox — `vbH` is the SFC-measured
- * marking-space HEIGHT (`VB_W / boxAspect`) for the TEXT-MODE underline/strikethrough/
+ * The aspect-correct viewBox: `vbH` is the SFC-measured
+ * marking-space HEIGHT (`VB_W, boxAspect`) for the TEXT-MODE underline/strikethrough/
  * highlight, so `preserveAspectRatio="none"` scales the wobble SHAPE uniformly (the x
  * and y scales EQUAL → the humps stop being x-stretched flat). It defaults to `VB_H`,
  * and is used ONLY for the measured text-mode y — the positioned/box/circle/bracket
  * path keeps `VB_H` byte-for-byte (it DEPENDS on the none-stretch to fill the datum
  * rect; the text-mode fix must not touch it).
  *
- * BG.W-HANDMARK-PERFECT (c) THE AMPLITUDE KNOB — `ampScale` multiplies the natural-
+ * The amplitude knob: `ampScale` multiplies the natural-
  * underline excursion (default 1 ⇒ byte-identical; the SFC derives it from the brush
  * `wobble` scalar, decoupling excursion from stroke `weight`).
  */
@@ -129,7 +129,7 @@ export function shapeGeom(
         case "strikethrough":
             return { lines: [L(x1, cy, x2, cy)], closed: false };
         case "highlight": {
-            // BA.W-HANDMARK C-1(a) — the band seats LOW on the x-height/baseline band
+            //  C-1(a) — the band seats LOW on the x-height/baseline band
             // (a real highlighter rides the low two-thirds of the line, the ink on the
             // baseline rising to ~x-height), NOT the box vertical center the fork
             // shipped. Derive a band centerline from the MEASURED baseline, raised by

@@ -114,7 +114,7 @@ const boldOn = computed({
         <StorySection
             heading="LiquidGrid"
             label="liquid AA-grid · evenly-spaced LARGER cells on a sheet that bows + shears as a wave passes over and through"
-            blurb="An engineering-graph-liquid grid — evenly-spaced, LARGE cells, a crisp fine rule with a bolder major rule every 5 cells — drawn on a sheet that breathes like liquid under a lens. As a traveling Gaussian crest sweeps along a gentle diagonal, the whole SHEET bows and shears: a smooth low-order curl-flow field (Bridson divergence-free) warps the grid coordinate BEFORE evaluation, locally affine at the cell scale, so MAJOR gridlines bend as ONE coherent continuous curve and cells deform as near-parallelogram patches (never a per-pixel jitter, never a per-cell kink). The lines stay exactly one device-pixel crisp at any DPR (the Ben Golus derivative-AA distance reads the FINAL warped coordinate — the blurry-mess fix). It reads the SAME waveFlow warp as Concentric (one shared field). WebGPU-FIRST: a pure fullscreen fragment pass over the proven substrate, with a clean WebGL2 GLSL fallback (the SAME field — no Canvas2D path). Drag the cursor (interactive on) and a local swirl twists the cells around the pointer like a finger pressed into the liquid. The default is the warm-cream identity over transparent — the page reads through the cells."
+            blurb="A crisp graph-paper grid breathes and bows like a liquid sheet while its major lines remain coherent. Turn on interaction and drag to twist the cells around the pointer as if pressing a finger into the surface."
         >
             <p class="text-muted-foreground mb-4 text-small">
                 <code class="font-mono text-xs">@mkbabb/glass-ui/liquid-grid</code>

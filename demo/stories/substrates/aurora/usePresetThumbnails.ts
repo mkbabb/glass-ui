@@ -6,12 +6,12 @@ import {
 import { PRESET_KEYS, PRESETS, type PresetKey } from "./presets";
 
 /**
- * Device-free preset thumbnails (BD.W-PRESET-RENDER, re-rooted).
+ * Device-free preset thumbnails.
  *
- * THE PRIOR DEFECT (DELTA-ASSAY §2): the thumbnails baked an OFFSCREEN
+ * The previous thumbnails baked an offscreen
  * `createAurora(…, {mode:"capture"})` WebGPU field, then `toDataURL`-d each
  * preset. On every host where the WebGPU device could not be acquired (the
- * validation-probe / SwiftShader / no-device class) the `createAurora` call
+ * validation-probe, SwiftShader, no-device class) the `createAurora` call
  * THREW `[useWebGPUCanvas] device not acquired` and the `catch` aborted the
  * WHOLE bake — all 13 cards stayed eternal skeletons. No init-reorder and no
  * readback fix makes a device appear. The root cause is a GL DEPENDENCY the

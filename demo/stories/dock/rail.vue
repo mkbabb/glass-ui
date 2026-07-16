@@ -63,7 +63,7 @@ const initialPostures = [
             </p>
             <!-- The dock is glass — stage a low-intensity contained Aurora wash
                  behind the specimen so the dock reads as glass against a backdrop
-                 (W-SB-STAGE §2.2; the empty-cream frame defeated the headline
+                 because the empty-cream frame defeated the headline
                  primitive). ONE Aurora context per page — within the WebGL budget. -->
             <div class="relative flex justify-start overflow-hidden rounded-[var(--radius-card)] p-6">
                 <Aurora

@@ -1,22 +1,21 @@
 <script setup lang="ts">
-// BG.W-DEMO-DUP-MERGE (F7.3) — the Scroll NATIVE register body, extracted from the
+// Scroll Native register body composed by the
 // retired routed `scroll-vt.vue` wrapper (the StoryPage chrome stripped; composed as
-// one <StorySection> register inside motion/scroll.vue). The first live demonstration
-// of the SHIPPED native scroll-driven + view-transition facilities:
+// one <StorySection> register inside motion/scroll.vue). It demonstrates native
+// scroll-driven and view-transition facilities:
 //   · scroll-driven.css `.scroll-progress` (a scroll() timeline scaleX bar)
 //   · scroll-driven.css `[data-scroll-reveal]` (a per-child view() timeline fade+lift)
 //   · `startViewTransition` (the useViewTransition substrate) reordering a
 //     `.gl-list-item` group (view-transition.css)
 //   · a `supportsScrollTimeline`/`supportsViewTimeline` capability badge
-// These CONSUME the facilities — no new substrate. Reduced-motion is the outer gate
-// on the CSS recipes (they never bind under PRM). PascalCase composed-by helper.
+// These consume existing facilities. Reduced motion disables the CSS recipes.
 import StorySection from "../../../chassis/section/StorySection.vue";
 import { onMounted, ref } from "vue";
-import { startViewTransition } from "@glass/composables/motion/useViewTransition";
+import { startViewTransition } from "@glass/composables/motion/core/useViewTransition";
 import {
     supportsScrollTimeline,
     supportsViewTimeline,
-} from "@glass/composables/motion/supportsCssTimeline";
+} from "@glass/composables/motion/scroll/supportsCssTimeline";
 import { Button } from "@glass/components/button";
 import { cn } from "@glass/components/_shared/class-names";
 
@@ -28,7 +27,7 @@ onMounted(() => {
     viewOk.value = supportsViewTimeline();
 });
 
-// ── View-transition reorder (the .gl-list-item group recipe) ─────────────────────
+// ── View-transition reorder (the.gl-list-item group recipe) ─────────────────────
 const rows = ref([
     { id: "alpha", label: "Alpha" },
     { id: "bravo", label: "Bravo" },
@@ -54,7 +53,7 @@ const REVEAL_ITEMS = Array.from({ length: 8 }, (_, i) => `Reveal card ${i + 1}`)
 <template>
         <StorySection
             label="Capability"
-            blurb="The native scroll-driven + view-transition primitives the library reaches for, with a live capability probe. Where the engine lacks animation-timeline, the JS composables are the ≤20-LOC fallback (single writer, no double-run)."
+            blurb="See which scroll-driven and view-transition effects this browser supports, then try each behavior on the live examples below."
         >
             <div class="flex flex-wrap gap-3">
                 <span
@@ -82,7 +81,7 @@ const REVEAL_ITEMS = Array.from({ length: 8 }, (_, i) => `Reveal card ${i + 1}`)
             label="Scroll progress (scroll() timeline)"
             blurb="A .scroll-progress bar driven entirely on the compositor by a native scroll() timeline — no rAF, no scroll listener. Scroll the panel; the bar tracks 0→1 off the main thread."
         >
-            <!-- BG.W-SCROLL-PROGRESS-RAIL — the genuine NAMED-timeline cross-element
+            <!-- the genuine NAMED-timeline cross-element
                  case: the bar is a SIBLING of the scroller, so it cannot reach the
                  scroller's `--sp` scroll-timeline by ancestry. `timeline-scope: --sp`
                  on the common wrapper hoists the name so the sibling bar can read it;
@@ -129,7 +128,7 @@ const REVEAL_ITEMS = Array.from({ length: 8 }, (_, i) => `Reveal card ${i + 1}`)
 
         <StorySection
             label="View Transitions (.gl-list-item group)"
-            blurb="Reorder the list — each row animates from its old slot to its new one through the startViewTransition substrate + the .gl-list-item group recipe. On an engine without View Transitions the swap is instant (functional, just unanimated)."
+            blurb="Reorder the list and each row travels from its old slot to its new one. Where View Transitions are unavailable, the order still updates instantly."
         >
             <div class="flex flex-col gap-3">
                 <Button class="self-start" @click="shuffle">Rotate order</Button>

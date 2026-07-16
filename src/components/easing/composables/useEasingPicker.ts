@@ -1,5 +1,5 @@
-// BB.W-EASING-PRIMITIVE — the shared <EasingPicker> editor state (the C-3 fold's
-// composable half). The two demo editors (BezierEditor / StepsEditor) re-home onto
+// Shared EasingPicker editor state.
+// The two demo editors (BezierEditor / StepsEditor) share
 // this ONE primitive — no fourth fork.
 //
 // Curve math belongs to value.js; this editor owns only its authoring chassis and
@@ -20,7 +20,7 @@ import {
     type ComputedRef,
     type Ref,
 } from "vue";
-import { useReducedMotion } from "../../../composables/motion/useReducedMotion";
+import { useReducedMotion } from "../../../composables/motion/core/useReducedMotion";
 import {
     CubicBezier,
     steppedEase,

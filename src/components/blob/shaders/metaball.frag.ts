@@ -1,5 +1,4 @@
-// GooBlob metaball — fragment shader assembler (AU.W7 OKLCh shader-quality stage,
-// DEC-AT-7 LINEAR half). A gooey SDF body + up to four orbiting satellites
+// GooBlob metaball fragment-shader assembler. A gooey SDF body + up to four orbiting satellites
 // smin-merged, with FBM-displaced watercolor edges and a per-pixel
 // PERCEPTUALLY-UNIFORM color perturbation in OKLCh.
 //
@@ -14,10 +13,10 @@
 // shader-quality flip (DEC-AT-7 LINEAR half): srgbToLinear(uBaseColor) → OKLab →
 // OKLCh, perturb L/C/h perceptually, OKLCh → OKLab → linear sRGB, hue-preserving
 // gamut clamp, then the MANDATORY `linearToSrgb()` OETF before output — a linear-in
-// WITHOUT an OETF-out ships visibly too-dark (the named A5/A2 trap; the
-// `proof:blob-space-gamma` gate forbids it). The HSV gamma-space path was DELETED.
+// WITHOUT an OETF-out ships visibly too dark; the explicit color-space contract forbids it.
+// The HSV gamma-space path was deleted.
 //
-// AV.W2 — the OETF + the four Ottosson matrices + the FBM_ROT constant are SPLICED
+// The OETF, four Ottosson matrices, and FBM_ROT constant are spliced
 // from the shared procedural-color chunk (the single GLSL source both this shader
 // and aurora.frag.ts compose), so the OETF can never again diverge between them.
 // The OKLab/sRGB constants are value.js's EXACT Ottosson values; `mat3` literals
@@ -60,8 +59,8 @@ export const METABALL_FRAGMENT_SRC =
 // --- Color (Ottosson OKLab/OKLCh — value.js EXACT constants, transposed) ---
 //
 // The OETF (srgbToLinear/linearToSrgb) + the four Ottosson matrices + their space
-// conversions are SPLICED from the shared chunk (AV.W2 —
-// src/composables/glass/procedural/color.glsl.ts). They live there
+// conversions are spliced from src/composables/glass/procedural/color.glsl.ts.
+// They live there
 // ONCE so the OETF can never diverge from aurora's; the line-for-line TS port
 // (__tests__/metaball-color.glsl-port.ts) mirrors that chunk. The gamut-clamp
 // below stays blob-local (aurora has no in-shader OKLCh path).
@@ -72,7 +71,7 @@ ${OKLCH_MATRICES_GLSL}
     METABALL_OKLCH_PERTURB_GLSL +
     NL +
     /* glsl */ `
-// AX.W15 — de-synced breath. The body throb was a single sin(uPulsePhase) — a
+// De-synced breath. The body throb was a single sin(uPulsePhase), a
 // mechanical pulse that re-syncs every cycle. Three DETUNED sines at IRRATIONAL
 // frequency ratios (1, 0.13/0.09 ≈ 1.444, 0.31) never re-phase, so the membrane
 // breathes like a living creature (an asymmetric slower-exhale calm band) rather
@@ -83,7 +82,7 @@ float breath(float phase) {
           + 0.28 * sin(phase * 0.31 + 4.1)) / 1.78;
 }
 
-// AX.W15 — the composite SDF field WITH its ANALYTIC GRADIENT, returned as
+// The composite SDF field with its analytic gradient, returned as
 // vec3(dist, ∂d/∂x, ∂d/∂y). The domain-warped body membrane smin-merged with the
 // satellites + trail; the gradient propagates through sminG's mix(a.yz, b.yz, h)
 // so the surface normal reads the field gradient DIRECTLY (the 4-tap finite
@@ -98,8 +97,8 @@ vec3 sceneDistG(vec2 uv) {
     // De-synced pulsing body radius.
     float bodyR = uBodyRadius + breath(uPulsePhase) * uPulseAmp;
 
-    // Velocity-driven VOLUME-PRESERVING squash-and-stretch (W10), SATURATED (AX.W46
-    // D5). sa is the stretch along motion, EXACTLY 1/sa perpendicular (area-preserving).
+    // Velocity-driven, volume-preserving squash-and-stretch with saturated amplitude.
+    // sa is the stretch along motion, exactly 1/sa perpendicular (area-preserving).
     // The basis (ax, perp) is captured so the gradient can be transformed back below.
     //
     // The W10 form sa = 1 + speed*uStretch rode an UNBOUNDED critically-damped spring
@@ -166,7 +165,7 @@ vec3 sceneDistG(vec2 uv) {
     return d;
 }
 
-// AX.W15 — the analytic surface normal. The field gradient grad2d arrives
+// The analytic surface normal. The field gradient grad2d arrives
 // DIRECTLY from sceneDistG (no 4-tap). The smin field is sub-unit (the CD family
 // |grad| ≤ 1) so the gradient is NOT unit-length — normalize() before the dome
 // lift (the unit contract is on the FINAL lifted normal N, not the raw field
@@ -181,7 +180,7 @@ vec3 surfaceNormalFromGrad(vec2 grad2d, float d, float bodyR) {
     return normalize(vec3(g * (1.0 - z), z) + vec3(0.0, 0.0, 1e-6));
 }
 
-// BC.W-GOOBLOB-MEATBALL — the 2D SDF soft-shadow march (IQ rmshadows improved-penumbra,
+// The 2D SDF soft-shadow march (IQ rmshadows improved penumbra,
 // research/viz/goo-blob.md §2.3, §5). The GLSL twin of the WGSL softShadow2D — a procedural
 // soft contact shadow FOLLOWING the irregular metaball silhouette (NOT a hard disc/box
 // shadow). Marches from ro along rd (the in-plane projection of uLightDir),
@@ -228,9 +227,8 @@ vec3 samplePaletteOklch(float t) {
     return lch;
 }
 
-// F9.R1 (BG.W-BLOB-SATELLITE-SHADE) — the per-satellite explicit-shade blend. The GL
-// color-seam widen value.js's hero blob asked for (the BA-VJS-5 / C-1 residual, the
-// W-GOO-REDRESS arm-B book discharged). DEFAULT OFF: uSatColorActive == 0 returns oklch
+// The per-satellite explicit-shade blend widens the GL color contract for the hero blob.
+// It is off by default: uSatColorActive == 0 returns oklch
 // UNCHANGED (uniform control flow, zero cost, byte-identical to HEAD). When ON, each
 // satellite carrying a positive uSatColorAmt tints the fragments in its smin-field
 // neighbourhood toward its explicit shade — mixed in OKLab (the samplePaletteOklch
@@ -256,7 +254,7 @@ vec3 blendSatColor(vec3 oklch, vec2 uv) {
 void main() {
     vec2 uv = vUv - 0.5;
 
-    // AX.W16 (arm 5) — PRE-FBM bounding early-out. The oversized canvas (1.6x the
+    // Pre-FBM bounding early-out. The oversized canvas (1.6x the
     // wrapper) runs the full fragment ALU — two 3-octave FBM evals + the OKLCh
     // round-trip + the lit/iridescence/SSS block — on a large transparent border
     // otherwise (~60% of the canvas is outside the droplet reach). Any fragment beyond
@@ -277,7 +275,7 @@ void main() {
     // attraction leans the body IN toward the cursor, a negative shies it AWAY. The
     // signed influence flows straight into the UV shift (no hardcoded repulsion).
     //
-    // AY.W-BLOB-CONFIG D2 — the SIGN was INVERTED in the rendered result. The
+    // The sign was inverted in the rendered result. The
     // sample-shift sign here was uv -= dir*influence; the live readback (an attraction
     // sweep over a HELD pointer) measured the body shifting MORE toward the cursor as
     // attraction went MORE NEGATIVE (a=-1 -> +0.081, a=0 -> +0.063, a=+1 -> +0.042) —
@@ -289,7 +287,7 @@ void main() {
     // shifts it away (shies) — the sign the comment + the demo slider always promised,
     // now true in the render.
     //
-    // AX.W46 D5 — the falloff radius NARROWS 0.65 → 0.5 (the calm-lean reconciliation).
+    // The falloff radius narrows from 0.65 to 0.5 for a calmer lean.
     // The W15 REDRESS widened it to 0.65 to clear a synthetic floor; the live π-lane
     // read the result as a LUNGE. The drama lives in the STRENGTH (pointerStrength,
     // dropped to 0.18 in types.ts), NOT the falloff — the falloff's job is purely to keep
@@ -307,7 +305,7 @@ void main() {
     // The de-synced pulsing body radius — also reused below for the inner-glow scale.
     float bodyR = uBodyRadius + breath(uPulsePhase) * uPulseAmp;
 
-    // Composite domain-warped membrane field WITH its analytic gradient (AX.W15).
+    // Composite domain-warped membrane field with its analytic gradient.
     vec3 scene = sceneDistG(uv);
     float d = scene.x;
     vec2 fieldGrad = scene.yz;
@@ -328,16 +326,16 @@ void main() {
     // body/satellites by the color noise field — or uBaseColor when single-stop.
     float colorNoise = fbm(uv * uColorNoiseFreq + uTime * uColorNoiseSpeed, 3);
     vec3 oklch = samplePaletteOklch(colorNoise);
-    // F9.R1 — per-satellite explicit shade (default no-op at uSatColorActive == 0).
+    // per-satellite explicit shade (default no-op at uSatColorActive == 0).
     oklch = blendSatColor(oklch, uv);
 
     oklch.z += (colorNoise - 0.5) * uHueRange * (PI / 180.0);     // hue swing, radians
     oklch.y = max(oklch.y + (colorNoise - 0.5) * uSatShift, 0.0); // chroma swing
     oklch.x = clamp(oklch.x + uBrightnessShift, 0.0, 1.0);        // lightness bias
 
-    // ── BD.W-GOO-CAROUSEL-DECK — the blob to meatball SHADING MORPH (uMorphT). ──
+    // ── Blob-to-meatball shading morph (uMorphT) ────────────────────────────
     // The user #1 ask: the goo should MORPH BLOB and MEATBALL from one to another
-    // — a CONTINUOUS in-between, not a hard cut. The KEY FACT: the body
+    // with a continuous in-between, not a hard cut. The key fact: the body
     // GEOMETRY is IDENTICAL across blob/meatball (the smin SDF field, the satellites,
     // the fwidth-AA — all computed ABOVE, before this gate). ONLY the SURFACE shading
     // (flat fill vs lit/shadow/iridescence/SSS) differs. So the morph is a uMorphT
@@ -373,8 +371,8 @@ void main() {
         return;
     }
 
-    // Surface normal — from the ANALYTIC field gradient (AX.W15: the 4-tap is
-    // deleted). Computed ONCE here and reused by the iridescence (W11.a), the
+    // Surface normal from the analytic field gradient; the 4-tap is
+    // deleted. Computed once here and reused by the iridescence (W11.a), the
     // fake-SSS (W11.a), and the lit glass block (W9.b).
     vec3 N = surfaceNormalFromGrad(fieldGrad, d, bodyR);
     vec3 V = vec3(0.0, 0.0, 1.0);
@@ -407,7 +405,7 @@ void main() {
     // the fast-SSS back-light (light wrapping through the thin rim). Both lift OKLCh
     // L and warm the hue, consuming the W9 normal. In OKLCh before the gamut clamp.
     if (uCoreGlow > 0.0 || uSssScale > 0.0) {
-        // Beer-Lambert inner luminosity (AX.W15): a SATURATING 1 - exp(-k·thickness)
+        // Beer-Lambert inner luminosity uses a saturating 1 - exp(-k·thickness)
         // curve — a flat thick core with a fast warm rim falloff — NOT the linear
         // coreGlow·thickness ramp (which over-brightens deep interiors). k ≈ 3 reads
         // as glass depth.
@@ -418,11 +416,12 @@ void main() {
         float sss = back * uSssScale * (1.0 - thickness);
         oklch.x = min(oklch.x + sss, 1.0);
         // Warm the THIN leaking rim only (scale by 1 - thickness): the SSS hue-warm
-        // shift rides the rim, not the core (AX.W15 — only the thin rim warms).
+        // shift rides the rim, not the core; only the thin rim warms.
         oklch.z += sss * 0.1 * (1.0 - thickness);
     }
 
-    // ── BC.W-GOOBLOB-MEATBALL — the soft contact shadow (T2, the GLSL twin). A procedural
+    // ── Soft contact shadow (the GLSL twin) ─────────────────────────────────
+    //    A procedural
     //    soft shadow FOLLOWING the irregular silhouette: march from this fragment's uv
     //    toward the in-plane projection of uLightDir; where the metaball field occludes the
     //    light, DARKEN the OKLCh L — a soft grounded contact band under the dome
@@ -435,7 +434,7 @@ void main() {
         // The contact band sits on the LOWER rim (the side AWAY from the light), gated by
         // the away-facing rim weight + a thin-rim Gaussian band (peak thickness ≈ 0.18) so
         // the deep-lit interior + the light-facing edge stay BRIGHT (the warm-cream body
-        // mean + the proof:blob-warm-default floor hold). The 0.20 cap is a soft grounding.
+        // mean and floor hold). The 0.20 cap is a soft grounding.
         float away = clamp(-dot(normalize(fieldGrad + vec2(1e-6)), L2), 0.0, 1.0);
         float band = exp(-pow((thickness - 0.18) / 0.16, 2.0));
         float shadowDarken = (1.0 - sh) * away * band * 0.20;
@@ -464,7 +463,7 @@ void main() {
         // sRGB white (pure white reads cheap-CG). Linearized for the linear add.
         vec3 warmCream = oklabToLinearSrgb(oklchToOklab(vec3(0.97, 0.03, radians(85.0))));
 
-        // ENERGY-CONSERVING Blinn-Phong (AX.W15 [9]): the (shininess+2)/8 factor
+        // Energy-conserving Blinn-Phong: the (shininess+2)/8 factor
         // DECOUPLES shininess from strength (without it, raising shininess dims the
         // glint, so the two knobs fight). SPECULAR ANTIALIASING: the FBM membrane
         // makes the normal vary fast, so a tight glint (16-64) STROBES on small
@@ -478,7 +477,7 @@ void main() {
         float spec = pow(max(dot(N, H), 0.0), shininess) * uSpecStrength * energyNorm;
 
         // Fresnel/Schlick rim — fed uRimColor (the --foreground warm rim via the
-        // /color leaf). FOREGROUND-AWARE MIN-CONTRAST GUARD (AX.W15 [10]):
+        // /color leaf). Foreground-aware minimum-contrast guard:
         // a var(--primary) blob in dark mode resolves a rim near the BODY color, so
         // the rim washes out (no contrast). When the rim's luminance sits too close
         // to the body's, the guard CHROMA-REDUCES and L-LIFTS the rim stop (a
@@ -500,7 +499,7 @@ void main() {
         // Combine the two warm highlights and add in LINEAR. max(spec, rim*scale)
         // keeps the glint from stacking on the rim into a blown hotspot.
         //
-        // AX.W46 D4 — CLAMP the linear highlight below unity before the add (the
+        // Clamp the linear highlight below unity before the add (the
         // belt-and-braces guard the re-derived specStrength makes rarely-binding but
         // never lets a worst-case normal blow to a hard white spot). The energy-
         // conserving Blinn-Phong CAN still spike on a grazing normal where the Toksvig
@@ -516,7 +515,7 @@ void main() {
 
     vec3 rgb = clamp(linearToSrgb(lin), 0.0, 1.0); // MANDATORY OETF — closes the seam
 
-    // ── BD.W-GOO-CAROUSEL-DECK — the blob to meatball SHADING MORPH compose. ──
+    // ── Compose the blob-to-meatball shading morph ─────────────────────────
     // rgb is the fully-dressed meatball surface; flatRgb (snapshotted before the
     // dressing) is the flat blob fill. The morph is a CONTINUOUS lerp between them on
     // morphT — at morphT==1 it is byte-identical to the dressed meatball, and the
@@ -525,7 +524,7 @@ void main() {
     // another). The dither below applies to the composited result.
     rgb = mix(flatRgb, rgb, morphT);
 
-    // IGN dither (AX.W15 [2][9]) — the low-chroma warm-cream dome BANDS on 8-bit
+    // IGN dither: the low-chroma warm-cream dome bands on 8-bit
     // panels (visible Mach steps in the smooth L roll). Interleaved-gradient noise at
     // 1/255, applied AFTER linearToSrgb and BEFORE the *alpha premultiply (aurora
     // ships the same splice). A triangular ±0.5 LSB dither decorrelates the steps.

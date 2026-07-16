@@ -7,7 +7,7 @@ import {
     useNumericTransition,
     type UseNumericTransitionOptions,
     type SpringSnapshot,
-} from "@glass/composables/motion/useNumericTransition";
+} from "@glass/composables/motion/number/useNumericTransition";
 
 describe("useNumericTransition", () => {
     it("exports the canonical composable from the module", () => {

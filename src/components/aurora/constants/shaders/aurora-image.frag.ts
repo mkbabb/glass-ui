@@ -1,7 +1,7 @@
-// BG.W-AUR-IMAGE-SOURCE — the aurora IMAGE-source fragment program (WebGL2).
+// Aurora image-source fragment program (WebGL2).
 //
 // The CONSTRUCTION-TIME PROGRAM PERMUTATION of the aurora fragment: `source:"image"`
-// selects THIS separately-compiled program (the BD.W-DOT-IMAGE B1 discipline), NEVER a
+// selects this separately compiled program, never a
 // per-fragment runtime source-uniform branch. It is a COLOR-STAGE SWAP on the SAME engine —
 // the substrate/lifecycle/drift/configurator are reused; only the fragment differs.
 //

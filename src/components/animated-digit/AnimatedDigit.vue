@@ -2,7 +2,7 @@
 import type { HTMLAttributes } from "vue";
 import { computed } from "vue";
 import { cn } from "../_shared/class-names";
-import { useAnimatedNumber } from "../../composables/motion/useAnimatedNumber";
+import { useAnimatedNumber } from "../../composables/motion/number/useAnimatedNumber";
 
 /**
  * AnimatedDigit — a numeric display that damps toward its target via
@@ -10,8 +10,7 @@ import { useAnimatedNumber } from "../../composables/motion/useAnimatedNumber";
  * the tabular-numerals + ss01 + lnum font-feature register so consumers
  * stop hand-wiring those rules per site.
  *
- * AC.W6d — promoted from speedtest's hand-wired
- * `useAnimatedNumber(metric) → result.formatted` + `<span class="tabular-
+ * Replaces hand-wired `useAnimatedNumber(metric) → result.formatted` plus a `<span class="tabular-
  * nums">{{ result.formatted.value }}</span>` pattern. Two-line replacement.
  *
  * Consumers pass:
@@ -28,7 +27,7 @@ import { useAnimatedNumber } from "../../composables/motion/useAnimatedNumber";
  *  - `mode`: `"absolute"` (default) or `"progress"` — passes through to
  *    `useAnimatedNumber`.
  *
- * AZ.W-METRIC-UNIFY — AnimatedDigit keeps its OWN local `placeholder: "—"`
+ * AnimatedDigit keeps its own local `placeholder: "—"`
  * default (NOT the shared `coalesceMetric` leaf). It is a distinct animated
  * single-glyph reel, not a static value-display card: it damps the FORMATTED
  * number toward its target and its empty-check fires only on `null`/`undefined`

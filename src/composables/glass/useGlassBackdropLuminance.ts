@@ -1,63 +1,17 @@
-// AZ.W-ADAPTIVE-AUTO Arm 2 — `useGlassBackdropLuminance`: the sampled-luminance
-// observer, the iOS-27 DYNAMIC refinement of the W55 declarative bright bucket.
-//
-// THE PROBLEM. The declarative `--glass-backdrop: light|dark` bucket (W55) + the
-// unconditional self-engage default (Arm 1) are the legibility FLOOR — they darken a
-// glass surface over light content with no consumer opt-in. But a STATIC light/dark
-// bucket is too coarse for the ANIMATED-backdrop case (a dock floating over a live
-// aurora field, whose luminance shifts frame-to-frame): the surface is sometimes over
-// a bright bleed and sometimes over a dark trough, and the right darken is the one
-// that TRACKS the painted backdrop. R3-7's word: "darken DYNAMICALLY like iOS 27 so we
-// can actually see these elements."
-//
-// THE IMPOSSIBILITY. There is NO web API that reads the pixels painted BEHIND a
-// `backdrop-filter` element (the composited output is not exposed to script). So the
-// observer cannot read the blurred backdrop directly. Two legitimate samples instead:
-//
-//   - STATIC page case: an `elementsFromPoint` stack-walk at the surface's centre +
-//     corners, reading the FIRST element under the surface that carries a resolved
-//     non-transparent background, and un-wrapping its `var(--token)` background through
-//     the `resolveTokenColor` leaf (the AX.W16 single-source un-wrap). This samples the
-//     PAINTED background LAYER (the page/card surface), not the blurred composite — the
-//     legitimate proxy for "what is behind the glass".
-//
-//   - ANIMATED case (`data-glass-sample="live"`): a downsampled (32×32) offscreen-canvas
-//     `drawImage(sourceCanvas) + getImageData` of the KNOWN background-layer canvas (the
-//     aurora/blob `<canvas>` the surface floats over — located by id/selector). The
-//     surface's bounding box maps to the source-canvas region; the mean luminance of the
-//     downsample is the dynamic signal. This re-samples periodically on the rAF loop.
-//
-// THE WRITE. The observer computes WCAG relative luminance of the sampled backdrop,
-// writes `--glass-backdrop-luma` (0..1, the numeric escape hatch — its FIRST real
-// consumer, the named B3-1/E3G-4 delta) AND derives the discrete `--glass-backdrop:
-// light|dark` bucket (threshold ~0.6) on the target element. The discrete bucket re-
-// engages the EXISTING `@container style()` + self-engage machinery (zero new seam); the
-// numeric token is reserved for a future continuous-strength reader.
-//
-// THE BUDGET. rAF-THROTTLED ≤ 4 Hz (250 ms min between samples) + IntersectionObserver-
-// gated (no sample while offscreen) + parked on `document.hidden`/content-hidden — the
-// `useWebGLCanvas` offscreen-pause precedent. It COMPOSES the existing substrates
-// (`useResizeObserver` / `useIntersectionPause` / `useRAFLoop` + the `resolveTokenColor`
-// leaf) — it hand-rolls NO throttle/gate/raf path. Under `prefers-reduced-motion:
-// reduce` the live re-sample loop COLLAPSES to a single mount sample (the substrate
-// freezes its WebGL backdrop to ONE static frame under PRM, so a periodic re-sample of a
-// frozen canvas is pure waste — and would violate the substrate's PRM discipline); the
-// observer mirrors the substrate's live `matchMedia('change')` monitor and re-arms only
-// if PRM is lifted. The static page surface samples ONCE on mount + on resize-settle.
+// Sample the painted field beneath glass and adapt its tint for legibility. Static
+// surfaces use an `elementsFromPoint` stack walk; live surfaces downsample a known
+// background canvas because browsers do not expose composited backdrop-filter pixels.
+// The observer writes WCAG luminance, a light/dark bucket, and a bounded ambient hue.
+// Live sampling is capped at 4 Hz, pauses offscreen or when hidden, and collapses to
+// one sample under reduced motion. Static surfaces sample at mount and resize settle.
 
 import { onScopeDispose, readonly, ref, watch, type Ref } from "vue";
-import { useRAFLoop, type RAFLoopControls } from "../motion/useRAFLoop";
-import { useReducedMotion } from "../motion/useReducedMotion";
-import { useIntersectionPause } from "../motion/useIntersectionPause";
+import { useRAFLoop, type RAFLoopControls } from "../motion/core/useRAFLoop";
+import { useReducedMotion } from "../motion/core/useReducedMotion";
+import { useIntersectionPause } from "../motion/core/useIntersectionPause";
 import { useResizeObserver } from "../dom/useResizeObserver";
-// BI.W-ENCAP-REDRAIN — the stateless backdrop-sampling + OKLab-reduce family (the
-// `elementsFromPoint` stack-walk + the downsampled `drawImage+getImageData` field
-// reader + the OKLab luminance/ambient-hue reduce) lives in the colocated leaf; the
-// observer COMPOSES it (the no-god-module colocation carve). The observer keeps only
-// the reactive wiring + the reusable downsample-canvas lifecycle + the
-// `--glass-backdrop-*` / `--glass-ambient-*` writes. The value.js color source rides
-// THROUGH the leaf (proof:single-color-core follows the sampler into the ambient-hue
-// histogram it composes).
+// Stateless sampling and OKLab reduction live in the colocated leaf; this module
+// owns reactive wiring, canvas reuse, and the custom-property writes.
 import {
     sampleStatic,
     sampleAnimated,
@@ -67,13 +21,13 @@ import {
     type BackgroundCanvasSource,
 } from "./backdropLuminanceSample";
 
-/** The discrete bucket the observer derives + writes (re-engages the W55 machinery). */
+/** The discrete backdrop bucket derived and written by the observer. */
 export type GlassBackdropBucket = "light" | "dark";
 
 export interface UseGlassBackdropLuminanceOptions {
     /**
      * The KNOWN background-layer source for the ANIMATED case — an HTMLCanvasElement
-     * (or a getter / a CSS selector resolved against the document). When present, the
+     * (or a getter, a CSS selector resolved against the document). When present, the
      * observer downsamples this canvas under the surface's bounding box each settle
      * instead of the static `elementsFromPoint` stack-walk. The aurora/blob `<canvas>`
      * the surface floats over.
@@ -94,8 +48,7 @@ export interface UseGlassBackdropLuminanceOptions {
     lightThreshold?: number;
     /**
      * Minimum milliseconds between samples on the live loop (the ≤ 4 Hz throttle floor).
-     * Default 250 (4 Hz). Bounded ≥ 250 (the budget floor — a faster sample is the
-     * C5-9 frame-budget risk the H3 arm-(a) default-on profile must hold).
+     * Default 250 (4 Hz) and bounded to at least 250ms.
      */
     minSampleIntervalMs?: number;
     /**
@@ -105,10 +58,10 @@ export interface UseGlassBackdropLuminanceOptions {
      */
     writeBucket?: boolean;
     /**
-     * BI.W-DOCK-LUMA-SHARE — mark this as the SHARED per-ROUTE observer. It stamps
+     * mark this as the SHARED per-ROUTE observer. It stamps
      * `GLASS_BACKDROP_SHARED_ATTR` on its target (the route/stage scope) so descendant
      * glass surfaces (docks) DETECT the coverage and STAND DOWN — inheriting the route's
-     * `--glass-backdrop-luma` / `--glass-backdrop` / `--glass-ambient-*` via the cascade
+     * `--glass-backdrop-luma`, `--glass-backdrop`, `--glass-ambient-*` via the cascade
      * rather than each mounting its own readback loop (12 per-dock observers over ONE
      * aurora → ONE per-route readback). Default false: a per-SURFACE observer, which
      * stands down when a shared ancestor covers it and self-samples as the honest floor
@@ -165,31 +118,22 @@ export interface GlassBackdropTargetRect {
 }
 
 /**
- * BI.W-DOCK-LUMA-SHARE — the shared-coverage marker. A SHARED route observer
- * (`shared: true`) stamps this attribute on its target (the route/stage scope); a
- * per-SURFACE observer detects it on an ANCESTOR (`.closest`) and STANDS DOWN —
- * inheriting the route's `--glass-backdrop-luma` / `--glass-backdrop` /
- * `--glass-ambient-*` via the registered inheriting @property cascade instead of
- * mounting its OWN `drawImage + getImageData` readback loop (the 12 per-dock observers
- * over ONE DockStage aurora collapse to ONE per-route readback — PERF-6/FAM-5). A DOM
- * marker, NOT provide/inject: provide/inject does not cross the `<slot>` boundary (the
- * DockStage renders `<slot>`, the docks are slotted from the route, so the slotted
- * content's instance-parent is the slot OWNER not the stage), and the marker rides the
- * SAME DOM ancestry the inheriting custom property itself cascades over.
+ * Shared-coverage marker. A route observer stamps this on its target; descendant
+ * surface observers stand down and inherit its custom properties. A DOM marker is
+ * required because provide/inject does not follow the rendered slot ancestry that
+ * the custom properties use.
  */
 export const GLASS_BACKDROP_SHARED_ATTR = "data-glass-backdrop-shared";
 // The bounded ambient-bias strength the observer WRITES when it samples a real (non-
 // transparent) modal hue — the companion write-strength knob material.css names "the
-// observer's target owns". ≤ 8% (sub-perceptual under the W55 --glass-tint-strength-aa
-// 20% bound; tokens/glass.css §BE.W-AMBIENT-TINT). A `transparent` (gray/null) sample
-// keeps the 0% no-op floor. Without this write the sampled hue rides a frozen 0%
-// strength — a half-dead channel (a hue written but never READ), the state NF.3 forbids.
+// observer's target owns". At 8%, it remains below the 20% tint-strength bound.
+// A transparent gray/null sample keeps the 0% identity.
 const AMBIENT_STRENGTH_ENGAGED = "8%";
 
 /**
  * The sampled-luminance observer. Wire it on a glass surface (the dock root, a
- * content-glass panel) to write a DYNAMIC backdrop-luminance signal that refines the
- * W55 declarative bucket. Default-on for the dock (H3 arm a); a dark-substrate consumer
+ * content-glass panel) to write a dynamic backdrop-luminance signal that refines the
+ * declarative bucket. Default on for Dock; a dark-substrate consumer
  * opts out by setting `--glass-tint-strength: 0%` on the surface (the declarative floor
  * stays the guarantee — the observer only refines).
  *
@@ -205,13 +149,11 @@ export function useGlassBackdropLuminance(
         minSampleIntervalMs = 250,
         writeBucket = true,
     } = options;
-    // The throttle floor is bounded ≥ 250 ms (≤ 4 Hz) — the C5-9 budget guarantee.
+    // Bound the sampling cadence to 4 Hz.
     const sampleIntervalMs = Math.max(250, minSampleIntervalMs);
 
-    // BI.W-DOCK-LUMA-SHARE — the shared/per-surface role. A SHARED route observer stamps
-    // the coverage marker + runs the ONE per-route readback; a per-SURFACE observer stands
-    // down when a shared ancestor covers it (inherits the route luma via the cascade) and
-    // self-samples as the honest floor when standalone.
+    // A shared route observer runs one readback. Descendant surface observers inherit
+    // its values; standalone surface observers sample themselves.
     const isShared = options.shared === true;
 
     /**
@@ -234,7 +176,7 @@ export function useGlassBackdropLuminance(
         source: options.live === true ? "canvas" : "elements",
     });
 
-    // SSR / no-DOM: a pure no-op handle (the static surfaces never need this; the
+    // SSR, no-DOM: a pure no-op handle (the static surfaces never need this; the
     // composable is safe to call in a non-browser scope).
     if (typeof window === "undefined") {
         return {
@@ -273,8 +215,7 @@ export function useGlassBackdropLuminance(
         if (options.live !== undefined) return options.live;
         if (target.value?.dataset.glassSample === "live") return true;
         // A CONFIGURED source — even one that resolves null THIS instant (the field
-        // canvas not yet mounted) — is live intent. `!= null` admits a getter /
-        // canvas / selector but not an explicit `backgroundCanvas: null` (no source).
+        // canvas not yet mounted) — is live intent. `!= null` admits a getter,         // canvas, selector but not an explicit `backgroundCanvas: null` (no source).
         if (options.backgroundCanvas != null) return true;
         // No explicit source: a discoverable shell field canvas IS the live signal.
         return resolveSourceCanvas(undefined) !== null;
@@ -311,32 +252,19 @@ export function useGlassBackdropLuminance(
             targetRect: targetRect(el),
         };
         el.style.setProperty("--glass-backdrop-luma", value.toFixed(3));
-        // BE.W-AMBIENT-TINT — the ambient hue (a complete `oklch()` at a FIXED
+        // the ambient hue (a complete `oklch()` at a FIXED
         // sub-perceptual chroma, or `transparent` for a gray null) the plate's tint
-        // cascade biases toward at the opt-in `--glass-ambient-strength` (the W55
-        // self-engage re-point reads it; ZERO new compositing seam). A gray backdrop
+        // cascade biases toward at the opt-in `--glass-ambient-strength`. A gray backdrop
         // writes `transparent` — the room tints nothing (the correct null identity).
         el.style.setProperty("--glass-ambient-hue", result.ambientHue);
-        // BG.W-GLASS-SIGNAL-TRUTH (NF.3 mustFix #2) — WIRE THE AMBIENT BIAS ON. The
-        // catch-light seam (material.css `--glass-specular-core`) reads the sampled hue
-        // AT `--glass-ambient-strength` — "the companion write-strength knob the
-        // observer's target owns". A real (non-`transparent`) modal hue engages the
-        // bounded strength so the ambient catch-light actually READS where the observer
-        // fires; a gray/null (`transparent`) sample keeps the 0% no-op floor. Without
-        // this write the hue rides a frozen 0% strength (a hue written but never read —
-        // the half-dead channel NF.3 forbids).
+        // A real modal hue engages the bounded catch-light bias; a gray or null
+        // sample keeps the zero-strength identity.
         el.style.setProperty(
             "--glass-ambient-strength",
             result.ambientHue === "transparent" ? "0%" : AMBIENT_STRENGTH_ENGAGED,
         );
-        // BG.W-GLASS-SIGNAL-TRUTH (M8) — the WRITER-FIRED WITNESS. A dead/silently-
-        // failed observer is otherwise INDISTINGUISHABLE from a calm backdrop (both
-        // resolve the luma clamp's initial 0 → the calm floor, so the G2 "unreadable
-        // over very light materials" defect silently reverts). Stamp `[data-backdrop-
-        // sampled]` + the paired `--glass-backdrop-sampled: 1` on the FIRST real write
-        // so a π/gate can RED a wired-but-never-written channel (the dead-observer≡calm-
-        // backdrop mask). This never animates a layout property (the compositor-only
-        // floor); it is a signal-truth stamp, set once per target.
+        // Stamp the first successful write so consumers can distinguish an unsampled
+        // observer from a genuinely calm backdrop. This never affects layout.
         el.setAttribute("data-backdrop-sampled", "");
         el.setAttribute("data-backdrop-sample-state", "sampled");
         el.setAttribute(

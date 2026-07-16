@@ -7,10 +7,12 @@ import {
     createBlobWGPUUniformScratch,
     packBlobWGPUUniforms,
 } from "@glass/components/blob/composables/uniformBridgeWGPU";
-import { resolveBlobSettledFrame } from "@glass/components/blob/composables/useMetaballRenderer";
+import {
+    resolveBlobSettledFrame,
+    type BlobFrameState,
+} from "@glass/components/blob/composables/blobSimulation";
 import {
     uploadBlobUniforms,
-    type BlobFrameState,
     type MetaballUniformLocations,
 } from "@glass/components/blob/composables/uploadBlobUniforms";
 import type { BlobPointer } from "@glass/components/blob/composables/useBlobPointer";

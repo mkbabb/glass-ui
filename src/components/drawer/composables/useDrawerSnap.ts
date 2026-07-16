@@ -1,4 +1,4 @@
-// BB.W-DRAWER-ABROGATE — the THIN house snap engine (the snap math vaul-vue used to
+// Thin house snap engine (the snap math vaul-vue used to
 // own, on the HOUSE motion engine).
 //
 // ONE `SpringProgress` (the dock-morph `linear()`-curve clock, the §6 doctrine —
@@ -17,7 +17,7 @@
 
 import { onUnmounted, ref, watch, type Ref } from "vue";
 import { SpringProgress } from "@mkbabb/keyframes.js";
-import { motionTempo } from "../../../composables/motion/motionTempo";
+import { motionTempo } from "../../../composables/motion/core/motionTempo";
 import { DRAWER_FLING_VELOCITY, DRAWER_SNAP } from "../constants";
 import type { DrawerSnapContext } from "./drawerSnapContext";
 
@@ -149,13 +149,13 @@ export function useDrawerSnap(options: UseDrawerSnapOptions): UseDrawerSnapRetur
         return roots;
     }
 
-    // BD.W-OVERLAY-STAGE-COUPLE — the SINGLE writer (fold C1·R2, no dual-scalar
+    // Single writer with no dual-scalar
     // desync). ONE call writes BOTH the sheet's per-element translate scalar
     // (`--glass-drawer-t`) AND the SCENE staging scalar (`--stage-t`) atomically, so the
     // surface freeze / scrim deepen / page recede can never desync from the translate on
     // a drag-cancel / fling-overshoot / interrupted snap.
     //
-    // BI.W-DRAWER-PERF — `--stage-t` is SCOPED to the three reader roots (the sheet ·
+    // `--stage-t` is scoped to the three reader roots (the sheet,
     // the scrim · the page-wrapper), NOT `document.documentElement`. A per-frame
     // `documentElement` write invalidated the inherited-property cache for the WHOLE
     // document (a 120× main-thread lever — 12.53 ms/frame vs 0.104 ms scoped). `--stage-t`
@@ -174,7 +174,7 @@ export function useDrawerSnap(options: UseDrawerSnapOptions): UseDrawerSnapRetur
     }
 
     function clearStageScalars() {
-        // BI.W-DRAWER-PERF — clear the scoped inline `--stage-t` on close so each reader
+        // Clear the scoped inline `--stage-t` on close so each reader
         // root reverts to the registered `initial-value: 0` (drawer.css) and the NEXT
         // open does not latch a stale full-staged value (the stale-latch fix, fold
         // C3·R7). The sheet unmounts with the content; clear the cross-subtree roots +
@@ -215,7 +215,7 @@ export function useDrawerSnap(options: UseDrawerSnapOptions): UseDrawerSnapRetur
     function ensureSpring(initial?: number): SpringProgress {
         if (spring) return spring;
         spring = new SpringProgress({
-            // BI.W-TEMPO — co-scale the DRAWER_SNAP response by `--motion-tempo` read
+            // Co-scale the drawer snap response by `--motion-tempo` read
             // off the drawer's OWN scope (the content element, which inherits the
             // `.glass-drawer { --motion-tempo: 1 }` loud-scope re-pin, scheme-motion.css)
             // so the snap settle shares ONE clock with its CSS twin at any tempo (P7,
@@ -289,7 +289,7 @@ export function useDrawerSnap(options: UseDrawerSnapOptions): UseDrawerSnapRetur
         return -e.clientX; // right
     }
 
-    // BI.W-DRAWER-PERF — the drag travel span (px) one full fraction covers, measured
+    // Drag travel span in pixels for one full fraction, measured
     // ONCE at gesture start (`onPointerDown`) and cached, NOT per frame. A per-frame
     // `getBoundingClientRect()` in `onPointerMove` is a forced synchronous reflow (the
     // ForcedReflow the trace flagged); the sheet's box is fixed for the gesture, so the

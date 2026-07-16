@@ -8,15 +8,8 @@
  */
 import { ref, computed, watch, onMounted, onUnmounted, nextTick, toValue } from "vue";
 import type { MaybeRefOrGetter, Ref } from "vue";
-import {
-    createScrollReader,
-    type ScrollReader,
-} from "../motion/scrollReader";
-import type {
-    TreeNode,
-    TreeIndexEntry,
-    ScrollTrackerOptions,
-} from "./types";
+import { createScrollReader, type ScrollReader } from "../motion/scroll/scrollReader";
+import type { TreeNode, TreeIndexEntry, ScrollTrackerOptions } from "./types";
 
 export function useScrollTracker<T extends TreeNode>(
     roots: MaybeRefOrGetter<T[]>,
@@ -63,6 +56,11 @@ export function useScrollTracker<T extends TreeNode>(
     }
 
     function updateActive() {
+        const terminalId = resolveTerminalActiveId();
+        if (terminalId) {
+            activeId.value = terminalId;
+            return;
+        }
         const found = findDeepestVisible(toValue(roots));
         if (found) activeId.value = found;
     }
@@ -87,34 +85,53 @@ export function useScrollTracker<T extends TreeNode>(
         cachedIds = null;
     }
 
-    // The rAF-coalesce + listener is shared via the ONE `createScrollReader` core
-    // (BC.W-SCROLL-TRIGGER — the no-fourth-listener fence). The ToC active-section
-    // distance-resolution (deepest-visible / closest-to-active-zone) stays HERE; only
-    // the listener/coalesce plumbing is shared. `onScroll` is the per-tick callback
-    // the reader fires (no longer owns its own `requestAnimationFrame` guard).
-    function onScroll() {
-        if (locked) return;
+    function resolveTerminalActiveId(): string | null {
+        const container = options?.scrollContainer?.value;
+        const position = container
+            ? container.scrollTop
+            : Math.max(
+                  window.scrollY,
+                  document.documentElement.scrollTop,
+                  document.body.scrollTop,
+              );
+        const extent = container
+            ? Math.max(0, container.scrollHeight - container.clientHeight)
+            : Math.max(
+                  0,
+                  Math.max(
+                      document.documentElement.scrollHeight,
+                      document.body.scrollHeight,
+                  ) - window.innerHeight,
+              );
+
+        if (extent <= 0 || position < extent - 1) return null;
+        const ids = collectIds();
+        for (let index = ids.length - 1; index >= 0; index -= 1) {
+            const el = document.getElementById(ids[index]);
+            if (el?.isConnected) return ids[index];
+        }
+        return null;
+    }
+
+    function resolveGeometricActiveId(): string | null {
+        const terminalId = resolveTerminalActiveId();
+        if (terminalId) return terminalId;
+
         const container = options?.scrollContainer?.value;
         const topPct = parseFloat(rootMargin.split(" ")[0]) / 100;
-        const viewportH = container
-            ? container.clientHeight
-            : window.innerHeight;
+        const viewportH = container ? container.clientHeight : window.innerHeight;
         const activeZoneTop = Math.abs(topPct) * viewportH;
-        const containerTop = container
-            ? container.getBoundingClientRect().top
-            : 0;
+        const containerTop = container ? container.getBoundingClientRect().top : 0;
 
-        const allIds = collectIds();
         let bestId: string | null = null;
         let bestDist = Infinity;
         let closestBelowId: string | null = null;
         let closestBelowDist = Infinity;
 
-        for (const id of allIds) {
+        for (const id of collectIds()) {
             const el = document.getElementById(id);
-            if (!el) continue;
-            const rect = el.getBoundingClientRect();
-            const dist = rect.top - containerTop - activeZoneTop;
+            if (!el?.isConnected) continue;
+            const dist = el.getBoundingClientRect().top - containerTop - activeZoneTop;
             if (dist <= 0 && Math.abs(dist) < bestDist) {
                 bestDist = Math.abs(dist);
                 bestId = id;
@@ -125,7 +142,17 @@ export function useScrollTracker<T extends TreeNode>(
             }
         }
 
-        const resolvedId = bestId ?? closestBelowId;
+        return bestId ?? closestBelowId;
+    }
+
+    // The rAF-coalesce + listener is shared via the ONE `createScrollReader` core
+    // to avoid another listener. The ToC active-section
+    // distance-resolution (deepest-visible / closest-to-active-zone) stays HERE; only
+    // the listener/coalesce plumbing is shared. `onScroll` is the per-tick callback
+    // the reader fires (no longer owns its own `requestAnimationFrame` guard).
+    function onScroll() {
+        if (locked) return;
+        const resolvedId = resolveGeometricActiveId();
         if (resolvedId && resolvedId !== activeId.value) {
             sectionVisibility.clear();
             sectionVisibility.set(resolvedId, true);
@@ -133,17 +160,18 @@ export function useScrollTracker<T extends TreeNode>(
         }
     }
 
-    function observeTree(list: T[]) {
+    function observeTree(list: T[], activeObserver: IntersectionObserver) {
+        if (!mounted || observer !== activeObserver) return;
         for (const node of list) {
             if (!observedIds.has(node.id)) {
                 const el = document.getElementById(node.id);
-                if (el) {
-                    observer?.observe(el);
+                if (el?.isConnected) {
+                    activeObserver.observe(el);
                     observedIds.add(node.id);
                 }
             }
             const children = getChildren(node);
-            if (children) observeTree(children);
+            if (children) observeTree(children, activeObserver);
         }
     }
 
@@ -154,10 +182,16 @@ export function useScrollTracker<T extends TreeNode>(
         invalidateIdCache();
 
         const container = options?.scrollContainer?.value;
-        observer = new IntersectionObserver(
+        const activeObserver = new IntersectionObserver(
             (entries) => {
-                if (locked) return;
+                if (!mounted || observer !== activeObserver || locked) return;
                 for (const entry of entries) {
+                    if (
+                        !entry.target.isConnected ||
+                        !observedIds.has((entry.target as HTMLElement).id)
+                    ) {
+                        continue;
+                    }
                     sectionVisibility.set(
                         (entry.target as HTMLElement).id,
                         entry.isIntersecting,
@@ -167,26 +201,29 @@ export function useScrollTracker<T extends TreeNode>(
             },
             { root: container ?? undefined, rootMargin, threshold },
         );
+        observer = activeObserver;
 
         nextTick(() => {
-            observeTree(toValue(roots));
+            if (!mounted || observer !== activeObserver) return;
+            invalidateIdCache();
+            observeTree(toValue(roots), activeObserver);
             const currentRoots = toValue(roots);
-            if (!activeId.value && currentRoots.length > 0) {
-                activeId.value = currentRoots[0].id;
+            const currentIds = new Set(collectIds());
+            if (!activeId.value || !currentIds.has(activeId.value)) {
+                activeId.value = currentRoots[0]?.id ?? null;
             }
         });
     }
 
     watch(
         () => toValue(roots),
-        (newRoots) => {
+        () => {
             if (!mounted) return;
-            activeId.value = newRoots[0]?.id ?? null;
             setupObserver();
         },
     );
 
-    // The ONE rAF-coalesced scroll-listener core (BC.W-SCROLL-TRIGGER). The ToC
+    // The one rAF-coalesced scroll-listener core. The ToC
     // tracker is now a VIEW over `createScrollReader`: it owns no raw
     // `addEventListener("scroll")` + `requestAnimationFrame` pair (that plumbing lives
     // ONCE in the reader leaf). The reader's coalesced tick calls `onScroll`.
@@ -203,45 +240,17 @@ export function useScrollTracker<T extends TreeNode>(
     onUnmounted(() => {
         mounted = false;
         observer?.disconnect();
+        observer = null;
+        observedIds.clear();
+        sectionVisibility.clear();
+        invalidateIdCache();
         scrollReader?.stop();
         scrollReader = null;
     });
 
     function forceRecalculate() {
         sectionVisibility.clear();
-
-        const container = options?.scrollContainer?.value;
-        const topPct = parseFloat(rootMargin.split(" ")[0]) / 100;
-        const viewportH = container
-            ? container.clientHeight
-            : window.innerHeight;
-        const activeZoneTop = Math.abs(topPct) * viewportH;
-        const containerTop = container
-            ? container.getBoundingClientRect().top
-            : 0;
-
-        const allIds = collectIds();
-        let bestId: string | null = null;
-        let bestDist = Infinity;
-        let closestBelowId: string | null = null;
-        let closestBelowDist = Infinity;
-
-        for (const id of allIds) {
-            const el = document.getElementById(id);
-            if (!el) continue;
-            const rect = el.getBoundingClientRect();
-            const dist = rect.top - containerTop - activeZoneTop;
-            if (dist <= 0 && Math.abs(dist) < bestDist) {
-                bestDist = Math.abs(dist);
-                bestId = id;
-            }
-            if (dist > 0 && dist < closestBelowDist) {
-                closestBelowDist = dist;
-                closestBelowId = id;
-            }
-        }
-
-        const resolvedId = bestId ?? closestBelowId;
+        const resolvedId = resolveGeometricActiveId();
         if (resolvedId) {
             sectionVisibility.set(resolvedId, true);
             activeId.value = resolvedId;

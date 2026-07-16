@@ -20,6 +20,17 @@ if [[ -n "$(git status --porcelain)" ]]; then
     exit 1
 fi
 
+# Human pre-tag paint review — once per candidate, never automated here:
+# - confirm the routed demo boots and paints;
+# - run the existing visual suite once, including its WebKit/Safari project;
+# - record the Fable gestalt and consolidation/flattening sweep;
+# - inspect real-Safari var()-blur plus CARTOON-INK 3857b33,
+#   GLASS-BLUR-PEER cd9ce46, FIELD-AURORA b3d65eec, and
+#   BACKDROP-BLUR-ENGAGE 20b09bc7;
+# - revisit W-DOCK1/W-DOCK2/W-CON1 and the D8/D24/D25,
+#   GOO-SPLIT-PERF, and VIZ-PARITY-METAL device rows;
+# - confirm the built ./fonts/* and ./styles/fonts export targets resolve.
+
 npm run prepublishOnly
 npm run verify:package
 

@@ -3,7 +3,7 @@ import type { ComputedRef } from "vue";
 import { useOptionalDockContext } from "./dockContext";
 
 /**
- * AX.W03 — the host-native dock hold.
+ * Host-native dock hold.
  *
  * `keepDockOpen` is a FIRST-CLASS, synchronous morph-state input to the dock's
  * one state machine: while a continuous pointer/touch gesture is live on a
@@ -20,9 +20,8 @@ import { useOptionalDockContext } from "./dockContext";
  * Slot/forwardRef boundary — vue-tsc + units pass, only a real drag catches it
  * (the canonical binding-verification class, `feedback_glass_ui_binding_*`). A
  * native `addEventListener` on the RESOLVED host element is immune: the event
- * always reaches the DOM node the user actually presses. This is the
- * device-proven fix (AX.W03 §Scope.1/2 — slice-2 F0/F2; ratified host-native
- * over a reka `dragging`-ref subscription, which reka does not publicly expose
+ * always reaches the DOM node the user actually presses. This host-native behavior is
+ * preferable to a Reka `dragging`-ref subscription, which Reka does not publicly expose
  * and which would re-introduce the same forwarding fragility).
  *
  * The hold is INSTANT-ON (Apple "Building Fluid Interfaces", facet 5): the first
@@ -37,7 +36,7 @@ import { useOptionalDockContext } from "./dockContext";
  * hold path, no parallel `touchGate` watch).
  *
  * DI: consumes the EXISTING typed `DockContext` via `useOptionalDockContext()`
- * (the `keepOpen`/`release` pair, O.W2 single-typed-key collapse). A control
+ * through the `keepOpen` and `release` pair. A control
  * rendered OUTSIDE a `<GlassDock>` gets the befitting-silent default (no dock) —
  * every hook is a no-op, a primitive may legitimately render outside a dock.
  */

@@ -13,8 +13,7 @@ declare global {
 
 const app = createApp(App_).use(router);
 
-// BG.W-ROUTE-TRANSITION (M0) — a global error handler so a route-component throw (an
-// Aurora init failure, a lazy-chunk evaluation error) surfaces in the console with the
+// Surface route-component failures in the console with the
 // Vue lifecycle `info` string instead of silently white-screening the shell. The
 // per-Aurora `onInitError` contract stays the localized handler; this is the shell-wide
 // backstop.
@@ -67,7 +66,7 @@ const captureRoute = captureParams.get("capture");
 if (captureRoute) {
     void bootCaptureMode(app, captureRoute, captureParams);
 } else {
-    // W-NAV-DOCK-FIX (defect 7) — await the router (the F2 beforeResolve eager-resolves
+    // Await the router; beforeResolve eagerly resolves
     // the first navigation's lazy chunk) BEFORE mount, so the first paint is the resolved
     // page, never an empty <RouterView> + the "Pick a story" flash.
     void router.isReady().then(() => app.mount("#app"));
@@ -92,7 +91,7 @@ async function bootCaptureMode(
     try {
         localStorage.setItem("vueuse-color-scheme", mode);
     } catch {
-        // localStorage may be unavailable (private mode / file URL) — the class +
+        // localStorage may be unavailable (private mode, file URL) — the class +
         // colorScheme below are the binding signals; the seed is best-effort.
     }
     el.classList.toggle("dark", mode === "dark");
@@ -110,7 +109,7 @@ async function bootCaptureMode(
     //     Forward any EXTRA capture params (everything except `capture`/`mode`) onto
     //     the pushed route as query — history-mode push drops the OUTER search string,
     //     so a story cannot read window.location.search; it reads useRoute().query.
-    //     (BG.W-AUR-METAL-FINISH — the &aurmedium=… deterministic medium force flows
+    //     The `&aurmedium=…` deterministic medium override flows
     //     through here; general, so a future per-story capture param needs no edit.)
     const extra = new URLSearchParams();
     for (const [k, v] of params) {

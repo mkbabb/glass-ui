@@ -1,21 +1,21 @@
-// BI.W-FOURIER-RIBBON — the WebGPU INSTANCED-RIBBON render pass (the primary path).
+// The WebGPU instanced-ribbon render pass is the primary path.
 //
 // The fullscreen per-pixel SDF `fs_main` (the O(pixels×segments) loop over ALL ≤384 segments
 // at EVERY pixel — `render.wgsl fs_main` ran the IDENTICAL fullscreen loop as the GLSL twin,
 // so the WGSL primary was NO cheaper) RETIRED wholesale onto an instanced/vertex-pulling pass
-// (proof:viz-fourier-ribbon FB1 — no dual path). The `fourier-field.compute.wgsl.ts` kernel is
+// with no dual path. The `fourier-field.compute.wgsl.ts` kernel is
 // BYTE-IDENTICAL (the `curveSamples`/`chainTips` storage buffers unchanged); the render pass
 // now VERTEX-PULLS each instance's endpoints straight from those buffers via `instance_index`:
 //   • `vs_main` builds a unit quad from `vertex_index` and expands it to the per-instance
-//     capsule (a→b padded) or AABB (ring / head halo) bbox — each instance covers ONLY its
+//     capsule (a→b padded) or AABB (ring, head halo) bbox — each instance covers ONLY its
 //     segment, O(covered_pixels);
-//   • `fs_main` runs the EXACT `segDist` under-glow+core / ring+arm+dot / head-aniso / cel
+//   • `fs_main` runs the EXACT `segDist` under-glow+core, ring+arm+dot, head-aniso, cel
 //     over-composite the fullscreen loop ran — pixel-identical by over-composite associativity.
 //
 // The pipeline-overridable `LAYER` constant selects the layer (5 pipelines share this ONE
 // module): 0 trail · 1 epicycle · 2 head · 3 cel-rope · 4 cel-arm. The head→tail TAPER
 // (`RIBBON_TAIL_FRAC`, MIRRORED verbatim from constants.ts) + the soft UNDER-GLOW live in the
-// trail branch; proof:viz FB1 cross-checks the mirror. Premultiplied over the transparent
+// trail branch; focused parity coverage cross-checks the mirror. Premultiplied over the transparent
 // clear KILLS the `lighter` additive hue-blowout; the epicycle pipeline uses `operation: max`
 // so adjacent-arm overlaps UNION (the FB5 join-seam fix). Color rides the shared
 // `procedural-color.wgsl.ts` OKLCh ramp (ONE color source, no drift from the GLSL twin).
@@ -31,12 +31,12 @@ export const FOURIER_FIELD_RENDER_WGSL = /* wgsl */ `
 override LAYER: i32 = 0;
 
 const PI: f32 = 3.141592653589793;
-// BD.W-FOURIER-LOOM §2b — the degenerate-tangent guard (must equal FOURIER_TANGENT_EPS in
-// constants.ts + the GL CPU bead path so a cusp resolves IDENTICALLY across both engines).
+// The degenerate-tangent guard must equal FOURIER_TANGENT_EPS in
+// constants.ts and the GL CPU bead path so a cusp resolves identically across both engines.
 const TANGENT_EPS: f32 = 1e-4;
 const SPEED_REF_HALFWIDTHS: f32 = 6.0;
-// BG.W-FOURIER-BEAUTY B1 — the THICK luminous RIBBON. RIBBON_TAIL_FRAC is MIRRORED verbatim
-// from constants.ts (the WGSL twin cannot import a TS const); proof:viz FB1 cross-checks the
+// The thick luminous ribbon mirrors RIBBON_TAIL_FRAC verbatim
+// from constants.ts because the WGSL twin cannot import a TS const; parity coverage verifies the
 // two copies are equal so the mid-body floor (RIBBON_HEAD_FLOOR_PX) can never drift off it.
 const RIBBON_TAIL_FRAC: f32 = 0.4;
 const RIBBON_UNDERGLOW_SCALE: f32 = 2.2;
@@ -98,7 +98,7 @@ fn segDist(p: vec2<f32>, a: vec2<f32>, b: vec2<f32>) -> f32 {
   return length(pa - ba * h);
 }
 
-// BD.W-FOURIER-LOOM §2b — the head travel frame + the volume-preserving anisotropic distance.
+// The head travel frame + the volume-preserving anisotropic distance.
 struct HeadFrame { T: vec2<f32>, sHat: f32, };
 fn headFrame(head: vec2<f32>, headBack: vec2<f32>, halfW: f32) -> HeadFrame {
   let d = head - headBack;
@@ -291,7 +291,7 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
     accum = vec4<f32>(vec3<f32>(1.0) * spec, spec) + accum * (1.0 - spec);
     return accum;
   } else {
-    // ── CEL — the technicolor ink shadow (rope LAYER==3 / arm LAYER==4) ──
+    // ── CEL — the technicolor ink shadow (rope LAYER==3, arm LAYER==4) ──
     let celA = clamp(celGain, 0.0, 1.0);
     let d = segDist(p, a, b);
     let cover = 1.0 - smoothstep(halfW, halfW + aa, d);

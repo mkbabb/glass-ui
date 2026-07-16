@@ -1,11 +1,11 @@
 <script setup lang="ts">
-// BI.W-CAROUSEL-REBUILD — the carousel track host: a clean embla viewport + track.
+// Carousel track host: a clean Embla viewport and track.
 //
 // THE CATEGORY ERROR RETIRED (D-PAGER PASS-1 §0 Defect 2). The prior build painted a
 // content BARBELL over the slides — a 265px goo body flying 559px OUTSIDE the 414px card
 // and sweeping the description text every advance (a whole-layer filtered goo cast).
 // Unanimous verdict across families: RETIRE wholesale. The content-barbell composable +
-// its goo tokens are now DEFINITION-ABSENT (BI.W-PAGER-RETIRES, terminal — clean break, no
+// its goo tokens are definition-absent (a clean break with no
 // alias, no dormant stub). A metaball-merge is the INDICATOR's job (the pager worm,
 // PagerDots) — the CONTENT is crisp weighty embla scroll, with ZERO filter (the 559px-escape
 // class is structurally unreproducible: there is no filtered layer left to escape).
@@ -20,7 +20,7 @@
 import type { WithClassAsProps } from "./interface";
 import { onBeforeUnmount, ref, watch } from "vue";
 import { cn } from "../_shared/class-names";
-import { useReducedMotion } from "../../composables/motion/useReducedMotion";
+import { useReducedMotion } from "../../composables/motion/core/useReducedMotion";
 import { useCarousel } from "./useCarousel";
 import type { UnwrapRefCarouselApi } from "./interface";
 

@@ -47,13 +47,13 @@ uniform float uMerge;   // 0 = quadratic smin, 1 = circular smin (rounder menisc
 // dressed pipeline. It is derived from the single uMorphT surface scalar.
 uniform float uStage;
 
-// BD.W-GOO-CAROUSEL-DECK — the blob to meatball SHADING-MORPH scalar. 0.0 = the flat blob
+// The blob-to-meatball shading-morph scalar. 0.0 = the flat blob
 // fill (byte-identical to the STAGE-1 floor), 1.0 = the fully-dressed lit meatball; the
 // in-between LERPS the surface shading (NOT the geometry — the smin field is shared). The
 // renderer clamps it from config.morphT. Animating 0 to 1 gets the live morph.
 uniform float uMorphT;
 
-// AX.W16 (arm 5) — the PRE-FBM bounding-discard radius (UV space). main() early-outs
+// The pre-FBM bounding-discard radius in UV space. main() early-outs
 // to a transparent write for any fragment OUTSIDE this radius BEFORE the two 3-octave
 // FBM calls + the OKLCh round-trip. The renderer uploads it PADDED by every
 // outward-expanding term (body + eccentric orbit + sat radius + smin band + FBM edge
@@ -73,7 +73,7 @@ uniform float uSpecShininess;   // specular exponent (16-64, tight glint)
 uniform float uRimPower;        // Fresnel/Schlick exponent (~2-3)
 uniform float uRimStrength;     // Fresnel rim weight
 
-// BC.W-GOOBLOB-MEATBALL — the procedural 2D SDF soft-shadow march (T2, the GLSL twin of
+// The procedural 2D SDF soft-shadow march, the GLSL twin of
 // the WGSL res.z/res.w lanes). uShadow gates the IQ rmshadows soft contact shadow that
 // FOLLOWS the irregular silhouette; uShadowSoftness is the penumbra hardness (4-48).
 uniform float uShadow;          // 0 = no shadow, 1 = the soft contact shadow ON
@@ -101,9 +101,8 @@ uniform vec2 uSatPos[MAX_SATS];
 uniform float uSatRadius[MAX_SATS];
 uniform float uSatOpacity[MAX_SATS];
 
-// F9.R1 (BG.W-BLOB-SATELLITE-SHADE) — the per-satellite EXPLICIT-SHADE seam (the GL
-// color-seam widen the value.js hero blob asked for; the BA-VJS-5 / C-1 residual, the
-// W-GOO-REDRESS arm-B book discharged). uSatColorActive == 0 is the DEFAULT (the derived
+// The per-satellite explicit-shade seam widens the GL color contract for the hero blob.
+// uSatColorActive == 0 is the default (the derived
 // palette shade — byte-identical to HEAD): blendSatColor() early-returns and touches
 // nothing. When a consumer supplies explicit per-satellite shades (uSatColor[i], GAMMA
 // sRGB, at uSatColorAmt[i] weight — typically 1) the fragment blends the base palette

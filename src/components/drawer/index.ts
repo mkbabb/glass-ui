@@ -1,5 +1,5 @@
 /**
- * Drawer drag/slide direction (BB.W-DRAWER-ABROGATE). `bottom` (default) + `top`
+ * Drawer drag/slide direction. `bottom` (default) + `top`
  * can carry peek/half/full detents; `left`/`right` are the side-lens full-slide
  * axes. Only `mode="live-behind"` resolves a default ladder (bottom/top →
  * `[0.12, 0.5, 1]`); ordinary modal drawers without `snapPoints` rest fully open.
@@ -7,7 +7,7 @@
 export type DrawerDirection = "top" | "bottom" | "left" | "right";
 
 /**
- * Drawer presentation mode (AN.W3). `"modal"` is the default iOS scale-down sheet —
+ * Drawer presentation mode. `"modal"` is the default iOS scale-down sheet —
  * focus-trapped (reka `:modal="true"`), page-behind scaled. `"live-behind"` is the
  * non-modal peek/half/full bottom sheet — reka `:modal="false"` (no focus trap, no
  * page `aria-hidden`, page-behind at native size + interactive) — bundling the
@@ -17,7 +17,7 @@ export type DrawerDirection = "top" | "bottom" | "left" | "right";
 export type DrawerMode = "modal" | "live-behind";
 
 /**
- * BD.W-OVERLAY-STAGE-COUPLE — the honest scene-staging enum. `none` leaves the page
+ * The scene-staging enum. `none` leaves the page
  * untouched; `dim` deepens the scrim only (the PRM-safe luminance depth cue); `scale`
  * recedes + scales the page (the iOS card-recede); `immersive` adds one fixed-radius
  * scrim backdrop sample while the scalar continues to drive dimming only.

@@ -33,21 +33,20 @@ import {
 } from "@lucide/vue";
 
 /**
- * The hero title size rung (BC.W-PAGE-CHASSIS — the depth-keyed √φ ladder). Every
- * route resolves a rung ≥ `4` (the user-mandate floor; the prior hardcoded
- * `text-display-3` is retired). The depth tier (D0 front-door / D1 section-landing /
- * D2 main / D3 sub) maps to a rung: D0 `mega`, D1 `hero`, D2 `5`–`hero`, D3 `4`.
+ * The hero title size rung follows the depth-keyed √φ ladder. Every
+ * route resolves a rung ≥ `4`. The depth tier maps to a rung: D0 front door uses
+ * `mega`, D1 section landing uses `hero`, D2 main uses `5`–`hero`, and D3 sub uses `4`.
  */
 export type HeroScale = "audacious" | "mega" | "hero" | "5" | "4";
 
-/** The page-depth tier (BC.W-PAGE-CHASSIS). Reads as title size — depth IS size. */
+/** The page-depth tier. Reads as title size — depth IS size. */
 export type StoryDepth = "D0" | "D1" | "D2" | "D3";
 
 export interface Story {
     id: string;
     title: string;
     /**
-     * BG.W-HERO-FIT (D10, P4-C) — the MANDATORY short hero wordmark/phrase. On a
+     * The short hero wordmark or phrase. On a
      * HERO page the chassis renders the display <h1> as `displayTitle ?? title`,
      * so a front-door composition declares a SHORT wordmark (≤ ~2 words) that fits
      * the height-aware fit-cap without hyphenation at 375px (the semantic `title`
@@ -59,8 +58,8 @@ export interface Story {
     component: () => Promise<Component>;
     /**
      * The per-page background substrate, painted behind the page's glass
-     * container. A HERO page declares a rich live substrate (aurora /
-     * constellation / fourier); a content page declares a calm paper / grid
+     * container. A hero page declares a rich live substrate (aurora,
+     * constellation, fourier); a content page declares a calm paper, grid
      * wash, or nothing for the quiet default. The page chassis reads it and
      * renders it once — no page hand-rolls its own backdrop.
      */
@@ -76,24 +75,23 @@ export interface Story {
      */
     heroScale?: HeroScale;
     /**
-     * The page-depth tier (BC.W-PAGE-CHASSIS). The FIRST story in a category is the
+     * The page-depth tier. The FIRST story in a category is the
      * D2 main; the rest are D3 subs — `s()` derives this from position when unset.
      */
     depth?: StoryDepth;
     /**
-     * BI.W-STORY-SCHEMA — the pages-as-data body (the STORY-A architecture). The
-     * schema anchor on the manifest Story: a spec-sheet page declares its sections
+     * The pages-as-data body. A specimen page declares its sections
      * + specimens as DATA (`StoryBody`, no hand-authored template). The DATA rides
-     * the story SFC (which passes it to `<StoryPage :body>`), so the per-route
+     * the story SFC (which passes it to the `body` prop on `StoryPage`), so the per-route
      * component imports stay code-split — the manifest never eager-imports a page's
-     * components. A hero scene / bespoke composition declares no `body`.
+     * components. A hero scene, bespoke composition declares no `body`.
      *
      * Story-specific composition stays in the existing slots or bespoke node;
      * the shared schema grows only for repeated product-shaped demand.
      */
     body?: StoryBody;
     /**
-     * BI.W-LIVE-TILES — the co-located landing-tile loader (the AUTHORED rung of the
+     * the co-located landing-tile loader (the AUTHORED rung of the
      * per-story tile ladder). A bespoke page whose marquee is not a spec-sheet `body`
      * (a Button variant cluster, a mini GlassDock) ships a co-located
      * `<cat>/<id>.tile.vue` — a bounded, inert, 0-GL vignette of the story's headline
@@ -116,7 +114,7 @@ export interface Category {
     reference?: boolean;
     stories: Story[];
     /**
-     * The section-landing hero (BC.W-PAGE-CHASSIS — the SECTION-HERO model). Each
+     * The section-landing hero. Each
      * category's `/<id>` route resolves to a newly-begotten D1 hero (the section's
      * identity moment) over the bento `<SectionPreviewCard>` grid of its stories.
      * Synthesized by `sectionLanding(category)` below — never hand-authored.
@@ -137,9 +135,9 @@ export interface SectionLanding {
     depth: StoryDepth;
 }
 
-// ── The δ5/δ6 manifest-carve+glob DECISION (BH.B3 δ5/δ6). ────────────────────────
+// ── The δ5/δ6 manifest-carve+glob DECISION ( δ5/δ6). ────────────────────────
 // δ6 (glob `./*/*.vue` → `./*/*/index.vue` + per-story-dir moves) is DROPPED — the
-// converged BH.PLAN §4.0 family table (row 8: "δ6 glob DROPPED") is authoritative,
+// family table is authoritative,
 // and KISS keeps ~80 trivial single-file stories FLAT `<category>/<id>.vue`. The glob
 // below stays flat by DESIGN; a change to `./*/*/index.vue` renders every flat story
 // blank (the runtime route-walk hazard the wave warns about).
@@ -150,10 +148,10 @@ const modules = import.meta.glob<{ default: Component }>("./*/*.vue");
 
 const lazy = makeLazy(modules);
 
-// BI.W-LIVE-TILES — the co-located landing-tile glob (the AUTHORED ladder rung). A
+// the co-located landing-tile glob (the AUTHORED ladder rung). A
 // co-located `<cat>/<id>.tile.vue` resolves the story row's `tile` loader; a story
 // with no tile file resolves `undefined` (the ladder falls through to the frozen
-// still / the body marquee / the identity floor). A tile SFC is never a route: routes
+// still, the body marquee, the identity floor). A tile SFC is never a route: routes
 // are built from the CATEGORIES rows, never from this glob (or from `modules`, where
 // a tile key simply sits unused). This separate glob keys the `tile` loader ONLY, so
 // `makeLazy`/the story resolver never touches a tile file.
@@ -170,13 +168,13 @@ interface StoryOptions {
     background?: StoryBackground;
     hero?: boolean;
     /**
-     * BG.W-HERO-FIT — the MANDATORY short hero wordmark (see Story.displayTitle).
+     * the MANDATORY short hero wordmark (see Story.displayTitle).
      * A `hero: true` front-door composition declares it so the chassis renders a
      * SHORT title through the height-aware fit-cap.
      */
     displayTitle?: string;
     /**
-     * The explicit hero title rung override (BC.W-PAGE-CHASSIS). Unset → `s()`
+     * The explicit hero title rung override. Unset → `s()`
      * derives it from the position-keyed depth (D2 main → `5`, D3 sub → `4`); a
      * live-GL marquee story sets `heroScale: "hero"` so it keeps the largest sub-rung.
      */
@@ -186,18 +184,18 @@ interface StoryOptions {
 }
 
 /**
- * The per-category background map (BA.W-STAGE scope 1 — page-backgrounds.md §4).
+ * The per-category background map.
  *
  * EVERY story row resolves a background: a row's explicit `opts.background` wins,
  * else it INHERITS its category default below. This is the zero-keyless-routes
- * mechanism — the storybook stops being an 80%-blank near-black void (BG-1/BG-5).
+ * mechanism, keeping every route grounded in a deliberate field.
  *
  * The principle: ONE idiom-true background per CATEGORY (so a category reads as a
  * coherent place), varied ACROSS categories (not one aurora), honoring the
  * one-GL-per-route budget — live GL (aurora/constellation/fourier) is clustered on
- * the Substrates / Navigation / Dock / Motion bands (one context per route); the
- * dense Forms / Display / Containers / Data / Feedback bands ride the calm STATIC
- * washes (grid / paper), which are free and DARK-recalibrated (story-hero.css) so
+ * the Substrates, Navigation, Dock, Motion bands (one context per route); the
+ * dense Forms, Display, Containers, Data, Feedback bands ride the calm STATIC
+ * washes (grid, paper), which are free and DARK-recalibrated (story-hero.css) so
  * they read THROUGH the card.
  *
  *   - foundations → paper   (token/ink pages; the intro/paper-glass/motion heroes win explicit)
@@ -253,24 +251,22 @@ function s(
     blurb?: string,
     opts?: StoryOptions,
 ): Story {
-    // Every row resolves a background — its explicit declaration wins, else it
-    // inherits the per-category default (BA.W-STAGE scope 1; zero keyless routes,
-    // the proof:stage W1 witness). A category with no default entry would leave a
-    // route keyless — the map above covers every category in CATEGORIES.
+    // Every row resolves a background: an explicit declaration wins, otherwise
+    // the category default applies. CATEGORY_DEFAULT_BG covers every category.
     const background = opts?.background ?? CATEGORY_DEFAULT_BG[cat];
     return {
         id,
         title,
-        // BG.W-HERO-FIT — the MANDATORY short hero wordmark threads from the row
+        // the MANDATORY short hero wordmark threads from the row
         // opts; unset on a content page (the chrome <h1> reads the semantic title).
         displayTitle: opts?.displayTitle,
         blurb,
         component: lazy(cat, id),
         background,
         hero: opts?.hero,
-        // BI.W-LIVE-TILES — the AUTHORED landing-tile rung: resolved from the
+        // the AUTHORED landing-tile rung: resolved from the
         // `./*/*.tile.vue` glob (undefined when no co-located tile file exists, so
-        // the tile ladder falls through to the frozen still / body marquee / identity).
+        // the tile ladder falls through to the frozen still, body marquee, identity).
         tile: tileLoader(cat, id),
         // depth + heroScale are finalized by assignDepths() once the category's
         // story order is known (the FIRST story is the D2 main; the rest D3 subs).
@@ -279,13 +275,13 @@ function s(
 }
 
 /**
- * Build the section-landing descriptor for a category (BC.W-PAGE-CHASSIS — the
+ * Build the section-landing descriptor for a category. The
  * SECTION-HERO model). The `/<id>` route resolves to this D1 hero — the LARGEST
  * audacious rung, the section's identity moment — over the bento grid of its stories.
  * Never hand-authored; derived from the category + the landing maps above.
  */
 function sectionLanding(cat: Category): SectionLanding {
-    // BC.W-HERO-AUDACIOUS Part B/E — each section landing reads its DISTINCT field
+    // Each section landing reads its distinct field
     // from the per-category CATEGORY_HERO descriptor (the `bgKind` + the per-category
     // aurora `heroPalette`), so substrates wears its aurora-blue field, motion its
     // constellation-violet, forms its grid-teal — never the one-aurora sameness. An
@@ -307,7 +303,7 @@ function sectionLanding(cat: Category): SectionLanding {
 }
 
 /**
- * Finalize each story's depth + heroScale (BC.W-PAGE-CHASSIS — the depth-keyed
+ * Finalize each story's depth + heroScale from the depth-keyed
  * √φ ladder). The FIRST story in a category is the D2 MAIN (the marquee anchor);
  * every subsequent story is a D3 SUB. The hero rung floors at the depth tier — D0
  * `mega`, D2 `5`, D3 `4` — and an explicit `heroScale` override (a live-GL marquee
@@ -355,7 +351,7 @@ export const CATEGORIES: Category[] = [
                 {
                     background: { kind: "aurora", palette: "rose-indigo-amber" },
                     hero: true,
-                    // BG.W-HERO-FIT — the front-door wordmark (the D0 root). The
+                    // the front-door wordmark (the D0 root). The
                     // chassis renders this through the height-aware fit-cap; the ℱ
                     // ornament rides the #title-ornament slot in intro.vue.
                     displayTitle: "glass-ui",
@@ -447,7 +443,7 @@ export const CATEGORIES: Category[] = [
                 "WebGL2 metaball droplet on the shared substrate (injected color resolver) — the lit static register, the pointer-reactive interaction hero, the mood + seed-palette model, and the pause seam. Shipped /blob + /watercolor-dot.",
                 {
                     // A Blob is a CONTAINED creature, not a page-field — the page
-                    // presents its studio over a calm paper wash (W-BLOB-REBUILD; the
+                    // presents its studio over a calm paper wash (the
                     // prior `background: "blob"` blew the creature to full-page width).
                     background: "paper",
                     hero: true,
@@ -466,7 +462,7 @@ export const CATEGORIES: Category[] = [
                     heroScale: "hero",
                 },
             ),
-            // BC.W-VIZ-FOURIER — the ONE Fourier view (the collapse). The three duplicate
+            // the ONE Fourier view (the collapse). The three duplicate
             // views (the ambient page, the re-embedded ambient companion, the separate
             // Canvas2D stage) collapse to this single <FourierField> over its configurator:
             // the field IS both the ambient register and the interactive teaching surface.
@@ -495,16 +491,8 @@ export const CATEGORIES: Category[] = [
                     heroScale: "hero",
                 },
             ),
-            // BA.W-STAGE scope 2 / page-backgrounds.md §5 DRIFT — the §5 cite says
-            // glass-panel is "currently blank" and should "gain aurora". At HEAD
-            // glass-panel.vue ALREADY self-stages its five-rung ladder over a
-            // contained body <Aurora> (glass-panel.vue:80, W12) — the glass-over-a-
-            // live-field demo is PRESENT. glass-panel.vue is OUT of this wave's bound,
-            // so inheriting the substrates `aurora` default would stack a SECOND GL
-            // context (the StoryHero contained page aurora + the body aurora) on the
-            // route. It declares `grid` (a FREE static wash behind the card) so the
-            // route mounts exactly ONE GL context — its existing body aurora — the
-            // one-GL-per-route budget (BA invariant 9) held.
+            // The page already stages its material ladder over a contained Aurora.
+            // Use a static grid page background so this route mounts one GL context.
             s(
                 "substrates",
                 "glass-panel",
@@ -514,10 +502,10 @@ export const CATEGORIES: Category[] = [
                     background: "grid",
                 },
             ),
-            // BC.W-VIZ-PAPERGRID — the NEW WebGPU-first liquid AA-grid viz. It self-stages
+            // the NEW WebGPU-first liquid AA-grid viz. It self-stages
             // its OWN GL/fragment context (the field IS the surface), so the route declares
             // the FREE static `grid` wash behind the card and mounts exactly ONE live context
-            // — its own (the one-GL-per-route budget held, the glass-panel precedent above).
+            // its own (the one-GL-per-route budget held, the glass-panel precedent above).
             s(
                 "substrates",
                 "liquid-grid",
@@ -572,7 +560,7 @@ export const CATEGORIES: Category[] = [
                 "Chip",
                 "Explicit static, selectable, action, and removable semantics over pill, cell, and icon geometry.",
             ),
-            // BI.W-COMPOSITIONS-PRUNE — the LabeledField family (parent SFC + 4
+            // the LabeledField family (parent SFC + 4
             // wrappers over Input · Select · Slider · Switch), relocated from the
             // compositions band: a single forms family, not a composed scene.
             s(
@@ -600,17 +588,8 @@ export const CATEGORIES: Category[] = [
                 "Surface",
                 "Four semantic material roles, three orthogonal decorations, and the deep, grain, and specular facilities on the canonical plate primitive.",
             ),
-            // BA.W-STAGE scope 2 / page-backgrounds.md §5 DRIFT — the §5 cite says
-            // `/display/card` is "currently blank" and should be staged over an
-            // aurora HERO. At HEAD card.vue ALREADY self-stages: it hand-rolls TWO
-            // contained <Aurora> backdrops (card.vue:126,302, W12) under which the
-            // five tiers float — the R8-11 glass-over-aurora demo is ALREADY PRESENT.
-            // card.vue is OUT of this wave's bound (only glass-material.vue is), so
-            // adding a hero page-aurora would stack a THIRD GL context on the route
-            // (the binding one-GL-per-route fence, BA invariant 9). The route inherits
-            // the display `paper` default (a FREE static wash behind the card) and
-            // its two body auroras remain the live-field demos — budget-clean, the
-            // staging intent satisfied by the existing self-staging.
+            // The card page owns its contained live-field examples. Keep the page
+            // background static so those examples are the route's only GL contexts.
             s(
                 "display",
                 "card",
@@ -714,7 +693,7 @@ export const CATEGORIES: Category[] = [
                 "Command Palette",
                 "Searchable command groups inline or in a titled Dialog, with shared selection, keyboard navigation, empty and disabled states.",
             ),
-            // BI.W-COMPOSITIONS-PRUNE — the Configurator studio shell relocated from
+            // the Configurator studio shell relocated from
             // the compositions band as a single-library-family surface demo.
             s(
                 "containers",
@@ -752,7 +731,7 @@ export const CATEGORIES: Category[] = [
                 "navigation",
                 "header-ribbon",
                 "Header Ribbon",
-                "Glass command band — action-only ribbons stay persistent by default; collapsible pointer/focus reveal and activation pinning are explicit opt-ins. Shipped /header-ribbon.",
+                "Glass command band — a persistent action row pinned to a viewport corner, expanded and operable from first paint, at left or right placement. Shipped /header-ribbon.",
             ),
             s(
                 "navigation",
@@ -767,9 +746,9 @@ export const CATEGORIES: Category[] = [
         title: "Dock",
         icon: PanelBottom,
         stories: [
-            // BI.W-DOCK-RETIRES — the goo-bearing "Liquid Morph" playground + "Dock Gallery"
+            // the goo-bearing "Liquid Morph" playground + "Dock Gallery"
             // stories are DEFINITION-ABSENT (the fission/metaball spectacle retired
-            // decided-terminal + the prime UF-C3 Safari suspect; clean break, no alias).
+            // decided-terminal + the prime  Safari suspect; clean break, no alias).
             s(
                 "dock",
                 "overview",
@@ -788,7 +767,7 @@ export const CATEGORIES: Category[] = [
                 "Vertical Dock",
                 'The vertical GlassDock navigation column — an active-item accent, tap-squish press, and anchored tooltips. ONE orientation axis (no variant): a vertical dock is orientation="vertical", and it carries the same collapse/morph/shrink machinery a horizontal dock does. The only "rail" left in the dock band is the layer-switcher rail inside a DockLayerGroup.',
             ),
-            // BI.W-DOCK-RETIRES — the "Vertical ↔ Horizontal Morph" showcase is
+            // the "Vertical ↔ Horizontal Morph" showcase is
             // DEFINITION-ABSENT (the V↔H goo morph retired decided-terminal — the platform
             // cannot continuously interpolate a flex-column→row topology change; the swap
             // is the crossfade). Clean break, no alias.
@@ -798,7 +777,7 @@ export const CATEGORIES: Category[] = [
                 "Dock Sections",
                 "Semantic groups and DockSeparator express dock hierarchy with ordinary DOM, accessible names, and no descriptor layer.",
             ),
-            // BI.W-DOCK-CONTROLS — the reference CONTROLS demo. The dock IS
+            // the reference CONTROLS demo. The dock IS
             // SegmentedTabs/ToggleGroup wearing chrome: its control run is driven by
             // the SAME headless useSelectionGroup engine, its controls are the unified
             // <DockControl> (icon + tab shape axis) + <DockTrigger> (the 3 overlay
@@ -815,18 +794,12 @@ export const CATEGORIES: Category[] = [
                 "Dock Overflow",
                 "Native inline scrolling with an edge mask and scrollIntoView recentering when a control moves past the dock's size cap.",
             ),
-            // BB.B2 W-DOCKMORPH-CTA — the external-CTA-morphs-into-dock seam (the iOS
-            // bloom-from-source INVERSE). An external CTA button flies + reshapes from
-            // its own rect ONTO a dock control's rect, fades + congests into the glass,
-            // then hands off — composing the shipped useDockCtaReceive leaf (the SAME kf
-            // ElementMorph substrate useLiquidReveal activates), a consuming seam beside
-            // W-DOCK-MORPH-FAMILY. Compositor-only + PRM-seats. Over DockStage (no
-            // net-new GL).
+            // External CTA morphing into a dock control over the shared DockStage field.
             s(
                 "dock",
                 "cta-receive",
                 "CTA → Dock Morph",
-                "The external-CTA-morphs-into-dock seam — an external CTA button flies and reshapes from its own rect onto a target dock control, fades and congests into the glass, then hands off (the dock control owns the spot). The iOS bloom-from-source inverse: useDockCtaReceive composes the same element-morph substrate useLiquidReveal activates, beside the dock morph mechanism. Compositor-only (transform/opacity/filter); reduced-motion snaps the CTA to gone and hands off.",
+                "An external CTA flies and reshapes onto a target dock control, fades into the glass, then hands off so the dock owns the final spot. Reduced motion skips directly to the handoff.",
             ),
             s(
                 "dock",
@@ -834,7 +807,7 @@ export const CATEGORIES: Category[] = [
                 "Dock Search",
                 "The dock IS the search bar — tap the collapsed pill and it morphs continuously (the dock's own --dock-morph-t glide, not a hard swap) into a search field; type and the fuzzy dropdown ranks live with subsequence-match highlighting plus a ghost-text completion of the top match; arrow keys walk the results, Enter routes, a select scrolls-to-and-warms the windowed section below. useDockSearch composes the shipped useFuzzySearch matcher, the virtual-section window, and the scroll-to subuse — the dock owns the gesture, the consumer plugs the data source.",
             ),
-            // BI.W-DOCK-RETIRES — the "Siri Island" story is DEFINITION-ABSENT (the Siri
+            // the "Siri Island" story is DEFINITION-ABSENT (the Siri
             // dock capability retired decided-terminal; the siri-*-on-public-/dock
             // adjudication is terminal, ruling 18). Clean break, no alias.
         ],
@@ -844,7 +817,7 @@ export const CATEGORIES: Category[] = [
         title: "Data",
         icon: Database,
         stories: [
-            // AZ.W-SUFFUSE D4-4 — the ledger / engineering-paper-shaped surfaces
+            // Ledger and engineering-paper-shaped surfaces
             // are the most NATIVE blueprint-grid-underlay fit; the grid was
             // applied by accident-of-authoring to metric surfaces while these
             // bare table surfaces (the canonical candidates) declared nothing.
@@ -854,7 +827,14 @@ export const CATEGORIES: Category[] = [
                 "data",
                 "table",
                 "Table",
-                "Semantic table anatomy with sortable headers, captions, and responsive overflow.",
+                "Semantic table anatomy with captions, status cells, totals, and responsive overflow.",
+                { background: "grid" },
+            ),
+            s(
+                "data",
+                "data-table",
+                "Data Table",
+                "Sortable, selectable data with loading, error, empty, action, and responsive card states.",
                 { background: "grid" },
             ),
             s(
@@ -891,7 +871,7 @@ export const CATEGORIES: Category[] = [
                 "data",
                 "virtual-section",
                 "Virtual Section Window",
-                "A 1000-section document that renders only the ~20 sections near the viewport — spacer divs hold the full scroll height, and a jump warms the far target into the window before scrolling so it lands painted (the re-homed /virtual windowing leaf).",
+                "A 1000-section document that renders only the ~20 sections near the viewport — spacer divs hold the full scroll height, and a jump seats the far scroll coordinate and warms its bounded window in the same task so the target lands painted (the demo-owned windowing leaf).",
             ),
             s(
                 "data",
@@ -969,7 +949,7 @@ export const CATEGORIES: Category[] = [
                 "motion",
                 "tempo",
                 "Motion Tempo",
-                "The --motion-tempo axis — ONE registered inheriting TIME scalar co-scales CSS spring clocks, the dialog's portaled panel/scrim open+close readers, and JS spring responses while preserving their distinct base durations. A live 0.7→1.3 slider over a dropdown + popover + dialog + JS dock morph demonstrates the shared ratio; ⟂ --motion-weight ⟂ --ui-scale.",
+                "Slow or quicken the interface's motion rhythm without flattening the distinct character of dialogs, menus, and dock transitions.",
                 {
                     // A calm blueprint wash (the one-GL-per-route fence — the tempo demo
                     // spends no GL context; the glass overlays POP over the static grid).
@@ -980,12 +960,10 @@ export const CATEGORIES: Category[] = [
                 "motion",
                 "curve-gallery",
                 "Motion Lab",
-                "Glass's compact motion vocabulary: semantic spring presets, the real overlay transition grammar, and the accessible easing authoring boundary. Engine primitives remain direct keyframes.js imports.",
+                "Compare the shared spring characters, reverse them mid-flight, and author accessible easing curves with immediate visual feedback.",
                 {
-                    // R7 D2 — the calm rich substrate so the glass POPs (the
-                    // grey-on-grey kill). A blueprint `grid` wash, NOT another GL
-                    // context (the one-GL-per-route fence — springs spends the
-                    // constellation budget in this band).
+                    // A calm blueprint grid gives the glass contrast without adding
+                    // another GL context alongside the constellation.
                     background: "grid",
                 },
             ),
@@ -999,7 +977,7 @@ export const CATEGORIES: Category[] = [
                 "motion",
                 "deck",
                 "Deck",
-                "The full-viewport keyboard-paged aria-live PRESENTATION register (DISTINCT from /carousel) — useDeck (headless index/progress/liveMessage) + useDeckKeyboard (focus-guarded Arrow/Space/digit) + <DeckPager> (windowed dots over PagerDots' ONE oracle). The story's visible slide settle reads the canonical --spring-smooth token directly.",
+                "A full-viewport presentation with keyboard paging, a spoken slide position, and a compact window of page dots.",
             ),
             s(
                 "motion",
@@ -1007,7 +985,7 @@ export const CATEGORIES: Category[] = [
                 "Hand Mark",
                 "HandMark — the platform's hand voice. The pen underline, the boil natural morphology, the highlighter (multiply over the page), draw-on, the brush continuum, and a hand-circled datum — over the paper-grain register.",
                 {
-                    // BA.W-STAGE scope 1 — the per-route exception: the hand-voice
+                    // Per-route exception: the hand-drawn
                     // demo IS a paper-grain register surface (its blurb + its own
                     // paper-grain cards), so it declares `paper` rather than inherit
                     // the motion-band constellation default. Idiom-true + free
@@ -1040,7 +1018,7 @@ export const CATEGORIES: Category[] = [
         title: "Compositions",
         icon: LayoutDashboard,
         stories: [
-            // BI.W-AUTH-SHELL-BG (PERF-2 / UF-K4) — the auth-shell no longer mounts the
+            // the auth-shell no longer mounts the
             // library's HEAVIEST shader (a 4.87MP live Fourier SDF) as a decorative page
             // wash behind the form: a teaching SDF is never an ambient background. The page
             // declares a CALM `grid` blueprint wash (zero GL), and the route's ONE live GL
@@ -1059,11 +1037,11 @@ export const CATEGORIES: Category[] = [
                     heroScale: "hero",
                 },
             ),
-            // AZ.W-SUFFUSE D4-1 — the canonical thin offender: a page literally
-            // ABOUT grain / paper / type rendered flat white-on-white. The calm
+            // A deliberately thin composition: a page
+            // ABOUT grain, paper, type rendered flat white-on-white. The calm
             // blueprint-grid wash (StoryHero drops the card to `wash` over it) +
             // the math-paper section-accent rail idiom are its ONE content event
-            // — no live substrate (the over-spend fence).
+            // no live substrate (the over-spend fence).
             s(
                 "compositions",
                 "settings",
@@ -1079,7 +1057,7 @@ export const CATEGORIES: Category[] = [
                 {
                     // The empty-states page carries its OWN contained Blob mascot
                     // (a small pointer-leaning companion); it does not need — and a
-                    // Blob cannot be — a full-bleed page-field (W-BLOB-REBUILD).
+                    // Blob cannot be — a full-bleed page-field.
                     background: "paper",
                 },
             ),
@@ -1095,8 +1073,7 @@ export const CATEGORIES: Category[] = [
                 "Gate Pattern",
                 "A contained, on-demand preview of the non-dismissable access-modal idiom — a glass-card frame shows the gate, and Open the modal demo opens the real modal that refuses esc, scrim, and close, with the widened invalid ring and shake feedback, closing only on the correct key. A blessed composition, not a component.",
             ),
-            // BG.W-STORY-PAGE-API (§4-D) — the demo SUB-TYPE taxonomy reference. The
-            // five demo KINDS (stage · specimen · interaction · matrix · composition)
+            // The five demo kinds (stage · specimen · interaction · matrix · composition)
             // side by side — one product with natural variation, not N spec-sheets.
             s(
                 "compositions",
@@ -1109,7 +1086,7 @@ export const CATEGORIES: Category[] = [
     },
 ];
 
-// The narrative arc (D3-C1) — Foundations → Material (substrates) → Elements
+// The narrative arc: Foundations → Material (substrates) → Elements
 //     (DISPLAY atoms, then FORMS controls — the display↔forms swap) → Surfaces
 //     (containers · navigation · dock) → Data → Feedback → Motion → Compositions.
 const ACT_ORDER: readonly string[] = [
@@ -1127,7 +1104,7 @@ const ACT_ORDER: readonly string[] = [
 ];
 CATEGORIES.sort((a, b) => ACT_ORDER.indexOf(a.id) - ACT_ORDER.indexOf(b.id));
 
-// BC.W-PAGE-CHASSIS — finalize the depth-keyed √φ title ladder + the section
+// finalize the depth-keyed √φ title ladder + the section
 // landings AFTER the category tree is built (the FIRST story per category is the
 // D2 main, the rest D3 subs; each category gains its D1 section-landing hero).
 assignDepths(CATEGORIES);

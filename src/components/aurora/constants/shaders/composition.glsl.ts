@@ -7,7 +7,7 @@
 // shader string is character-equivalent to the prior hand-inlined source.
 export const AURORA_COMPOSITION_GLSL = /* glsl */ `// ── Palette LUT (W5 — OKLCh/OKLab interpolation) ──────────────────────────────
 // The endpoints stay CPU-baked to LINEAR sRGB (the Aras precompute pattern); only
-// the BETWEEN-endpoint interpolation runs in perceptual space. AX.W11 — the ramp
+// the between-endpoint interpolation runs in perceptual space. The ramp
 // itself (the smoothstep ease + the OKLab-rectangular-vs-OKLCh-hue-arc dispatch on
 // uHuePath) is the shared samplePaletteRamp from procedural-color.glsl, the SAME
 // source the WebGPU twin splices; samplePalette here only selects the bracketing

@@ -37,9 +37,9 @@ const cartoonShadow = ref(true);
 const paperGrain = ref(true);
 const reducedMotion = ref(false);
 
-// BI.W-GRAIN-WIRE — the appearance controls drive REAL inherited surface tokens on
-// the settings surface, so every knob visibly changes the page it configures (the
-// UF-J2 fix: a control that promises an effect delivers one). All four live tokens
+// the appearance controls drive REAL inherited surface tokens on
+// the settings surface, so every knob visibly changes the page it configures. All
+// four live tokens
 // ride ONE inherited `:style` object off the page root; `paperGrain` toggles the
 // grain overlay via `:class`. No new CSS — every token/utility already ships.
 const DENSITY_SPACING: Record<(typeof densityOptions)[number], string> = {
@@ -79,7 +79,7 @@ interface Group {
     blurb: string;
 }
 
-// AZ.W-SUFFUSE D1-8 — the section eyebrows read ONE coherent section-accent
+// Section eyebrows read one coherent section-accent
 // register (`.section-label--tinted`), NOT a four-hue rainbow (the prior
 // per-group `section: 2/5/8/11` indigo/amber/red/teal cycle that read as
 // arbitrary noise). The page-scope one-color-event rule: settings gets ONE
@@ -305,20 +305,20 @@ const groups: Record<string, Group> = {
 </template>
 
 <style scoped>
-/* AZ.W-SUFFUSE Arm D4 — the calm content-suffusion idiom on the settings page
+/* Calm content suffusion on the settings page
    (a page literally ABOUT grain / paper / type rendered flat white-on-white —
-   the canonical thin offender, D4-1). NO live substrate (the over-spend fence);
+   a deliberately quiet surface). No live substrate;
    the suffusion lives in CONTENT COMPOSITION (the math-paper.vue gold-standard
-   idiom — D4-5): the section-accent rail + the ONE coherent eyebrow accent. The
+   idiom: the section-accent rail plus one coherent eyebrow accent. The
    page declares `background: "grid"` on its manifest row (the blueprint-grid
    underlay); StoryHero drops the card to the calm `wash` tier so the grid reads. */
 
-/* D1-8 — ONE coherent section-accent register for the whole page (the violet
+/* One coherent section-accent register for the whole page (the violet
    brand anchor, --section-color-7) so the four eyebrows read as one system, not
    the prior four-hue rainbow. */
 .settings-group {
     --section-label-accent: var(--section-color-7);
-    /* The math-paper section-accent rail (the D4-5 gold-standard idiom): a thin
+    /* The math-paper section-accent rail: a thin
        left rail keyed off the page's ONE accent. The eyebrow + blurb indent off
        the rail so the section reads as an intentional, organized block. */
     border-inline-start: 3px solid
@@ -326,7 +326,7 @@ const groups: Record<string, Group> = {
     padding-inline-start: 1rem;
 }
 
-/* D1-7 — the censor-bar slider fix. The three Base size / Radius / Grain
+/* The three Base size, Radius, and Grain
    sliders paint a near-opaque dark `.slider-range` cylinder (the §B3
    pull-the-track default reading `--primary` near-black warm ink) that reads as
    the page's darkest, heaviest focal block on the calm warm-cream settings page

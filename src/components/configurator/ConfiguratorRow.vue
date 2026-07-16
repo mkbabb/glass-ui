@@ -18,15 +18,14 @@ import { useOptionalConfiguratorSize, type ConfiguratorSize } from "./size";
  *
  * # The double-label API (value.js L14)
  *
- * The label header is a first-class TRIPLE: `label` (the primary, sans /
- * medium), the optional `sub` (a SECONDARY descriptive label — sans, muted —
- * paired inline with the primary), and the optional `name` (the mono token /
- * spec reference, or a live numeric readout). All three are declarative props,
+ * The label header is a first-class triple: `label` (primary sans medium), the optional
+ * `sub` (secondary descriptive text paired inline), and the optional `name` (a mono token,
+ * specification reference, or live numeric readout). All three are declarative props,
  * so a consumer expresses a "double-label" row (primary + secondary) WITHOUT a
  * `:deep()` reach into the slot or a hand-rolled in-slot sans+mono pair. Use
  * `sub` for a descriptive secondary label and `name` for a mono token/value.
  *
- * # Size axis (BH.W-SIZE-UNIFY)
+ * # Size axis
  *
  * The row honors a three-rung size axis (`sm` | `md` | `lg`).
  * Resolution order:
@@ -45,7 +44,7 @@ import { useOptionalConfiguratorSize, type ConfiguratorSize } from "./size";
  *
  * Both are "label (+ meta) above/beside a slotted control", but they are NOT
  * interchangeable — they emphasize DIFFERENT features:
- *  - **ConfiguratorRow** (this) — for TOKEN / PRESET controls. Carries the
+ *  - **ConfiguratorRow** (this) — for TOKEN, PRESET controls. Carries the
  *    token-`name` reference, the opt-in `reset` affordance (`canReset`), and the
  *    three-rung `size` axis (local-prop-over-inject). No a11y for/id wiring.
  *  - **LabeledField** — for form controls. Carries stable label, description,
@@ -65,16 +64,16 @@ const props = defineProps<{
      * a two-part label declaratively — no `:deep()` reach, no in-slot label pair.
      */
     sub?: string;
-    /** Optional token name / spec reference (right of label, monospaced). */
+    /** Optional token name, spec reference (right of label, monospaced). */
     name?: string;
-    /** Optional helper / value description (below the control). */
+    /** Optional helper, value description (below the control). */
     description?: string;
     /** Show the reset affordance (top-right). */
     canReset?: boolean;
     /**
      * Size rung. Overrides the value injected by an ancestor
      * `<Configurator>` when set. Omit to follow the inject (or to fall
-     * back to the pre-N.W2 `gap-1.5 py-2` recipe when there is no
+     * back to the `gap-1.5 py-2` recipe when there is no
      * ancestor configurator).
      */
     size?: ConfiguratorSize;
@@ -89,7 +88,7 @@ const emit = defineEmits<{
 // swaps (e.g., viewport-driven host) propagate without remount. The
 // optional helper returns `null` when no ancestor `<Configurator>`;
 // the trailing `?? undefined` keeps the `:data-size` binding from
-// emitting an attribute in the bare-row case (pre-N.W2 visual).
+// emitting an attribute in the bare-row case.
 const injectedSize = useOptionalConfiguratorSize();
 const resolvedSize = computed<ConfiguratorSize | undefined>(
     () => props.size ?? injectedSize?.value ?? undefined,
@@ -104,7 +103,7 @@ const resolvedSize = computed<ConfiguratorSize | undefined>(
     >
         <div class="flex items-baseline justify-between gap-3">
             <div class="flex min-w-0 items-baseline gap-2">
-                <!-- SECONDARY label register (AZ.W-HIERARCHY D6-3): the row label
+                <!-- Secondary label register: the row label
                      is the SECONDARY rung — the body size (text-small / 500),
                      deliberately BELOW the .configurator-section-label section
                      register on the parent <ConfiguratorLayer>. The token-name
@@ -152,7 +151,7 @@ const resolvedSize = computed<ConfiguratorSize | undefined>(
 
 <style scoped>
 /*
- * Density-axis gap overrides. `comfortable` matches the pre-N.W2 Tailwind
+ * Density-axis gap overrides. `comfortable` matches the base Tailwind
  * `gap-1.5` (0.375rem) exactly, so its rule is a no-op restatement for
  * explicit-size consumers; the bare row (no data-size attribute)
  * picks up its gap from the `gap-1.5` Tailwind utility above.
@@ -176,7 +175,7 @@ const resolvedSize = computed<ConfiguratorSize | undefined>(
 }
 
 /*
- * Container-style-query companion (AS.W4 — @container style(--density)).
+ * Container-style-query companion using `@container style(--density)`.
  * Lets a row react to an ANCESTOR's `--configurator-size` custom property with no
  * `data-size` markup contract — a host that sets `--configurator-size: sm`
  * on any wrapping element retunes every descendant row's gap/padding.

@@ -50,11 +50,11 @@
 //
 // ── Custom-package cherry-pick rationale ─────────────────────────────────
 //
-// This root barrel re-exports a curated few of the `src/components/`
-// package (`configurator`);
-// `hover-popover` FOLDED onto the `ui/popover` union (BI.W-OVERLAY-UNION), and
-// `scrolling-text` RETIRE-RELOCATED to speedtest (BI.W-SPEEDTEST-ONLY-PAIR — the
-// overflow-marquee was speedtest-only, the ≥2-binary bar unmet). The rest reach
+// This root barrel re-exports the curated `configurator` package from
+// `src/components/`.
+// `hover-popover` folded onto the `ui/popover` union, and `scrolling-text`
+// relocated to speedtest because the overflow-marquee was speedtest-only and
+// failed the two-binary inclusion bar. The rest reach
 // consumers ONLY via their dedicated subpath
 // (`@mkbabb/glass-ui/dock`, `/aurora`, `/sidebar`, ...).
 //
@@ -90,18 +90,18 @@ export * from "./components/collapsible";
 export * from "./components/command";
 export * from "./components/data-table";
 export * from "./components/dialog";
-// Drawer is OFF the root barrel — BB.W-DRAWER-ABROGATE rebuilt it on the house
-// `useDrawerSnap` engine (a `@mkbabb/keyframes.js` SpringProgress consumer), so
+// Drawer is off the root barrel because it uses the house `useDrawerSnap` engine
+// (a `@mkbabb/keyframes.js` SpringProgress consumer), so
 // it is now a keyframes-BEARING heavy component that must NOT inline its optional
 // peer into the vueuse-free root bundle. It ships via the `/drawer` subpath
 // (`@mkbabb/glass-ui/drawer`) — the dock/aurora substrate-isolation pattern; see
 // MIGRATION.md. (clean break, no alias.)
 export * from "./components/dropdown-menu";
-// BI.W-OVERLAY-UNION — `ui/hover-card` RETIRED as a NAME (the reka HoverCardRoot
+// `ui/hover-card` retired as a name (the reka HoverCardRoot
 // substrate stays, imported by the sealed `<Popover trigger="hover">` union). The
 // HoverCard component + subpath fold onto ONE `Popover`. (clean break, no alias.)
 export * from "./components/label";
-// BI.W-MULTISELECT-FOLD — `ui/multi-select` RETIRED. A MultiSelect is a
+// `ui/multi-select` retired. A MultiSelect is a
 // Popover+Command composition over the same Combobox-family mechanism, so it folds
 // onto `<Combobox multiple>` (array v-model + chips-in-trigger). (clean break, no alias.)
 export * from "./components/number-field";
@@ -110,19 +110,19 @@ export * from "./components/progress";
 export * from "./components/radio-group";
 export * from "./components/select";
 export * from "./components/separator";
-// `ui/sheet` RETIRED at BI.W-DIALOG-PLACEMENT — Sheet's side-slide FOLDED onto
+// `ui/sheet` retired; Sheet's side-slide folded onto
 // `<DialogContent placement=top|right|bottom|left>` (same reka DialogRoot + FocusScope;
 // the slide is paint, not mechanism). Reach `Dialog` (`@mkbabb/glass-ui/dialog`); snap-
-// detent physics stays `Drawer`'s (the N3 disambiguation). Clean break, no alias.
+// detent physics stays `Drawer`'s. Clean break, no alias.
 export * from "./components/skeleton";
 export * from "./components/slider";
 export * from "./components/switch";
 export * from "./components/table";
-// BA.W-TABS — `ui/Tabs` (the reka wrapper family) LEFT the public surface (the
-// "too many types" cut: two parallel tab families, the always-ON baked-plate
-// indicator default that painted the R10-2 oval blob). The standardized tab family
+// `ui/Tabs` (the reka wrapper family) left the public surface because it duplicated
+// the tab vocabulary and its always-on baked-plate indicator painted an unwanted
+// oval blob. The standardized tab family
 // is `SegmentedTabs` (`@mkbabb/glass-ui/tabs`, TWO materials).
-// BI.W-DOCK-FOLD — the reka substrate files (`components/tabs/*`) are
+// The reka substrate files (`components/tabs/*`) are
 // DEFINITION-ABSENT (retired): their sole internal consumer `DockLayerGroup.vue`
 // re-points onto the library's ONE headless selection engine `useSelectionGroup`
 // (roving focus + the ONE traveling-indicator writer, Safari-identical), so the
@@ -133,14 +133,14 @@ export * from "./components/toggle-group";
 export * from "./components/tooltip";
 
 // Custom composites — instrument-cluster chassis
-// BI.W-OVERLAY-UNION — `custom/hover-popover` FOLDED onto `<Popover trigger="hover">`
+// `custom/hover-popover` folded onto `<Popover trigger="hover">`
 // (the Kronecker fold). HoverPopover the NAME is retired; the mechanism (hover-open
 // timer + keepDockOpen watch) lives on the sealed Popover union. (clean break, no alias.)
 
 // Custom composites — configurator primitive
 export * from "./components/configurator";
 
-// BI.W-SPEEDTEST-ONLY-PAIR — `custom/scrolling-text` RETIRE-RELOCATED to speedtest.
+// `custom/scrolling-text` relocated to speedtest.
 // The overflow-marquee's only binary consumer was speedtest (2 sites), the
 // ≥2-binary-consumer bar unmet, so the primitive + its `/scrolling-text` subpath
 // leave glass-ui; speedtest brings its own marquee. (clean break, no alias.)
@@ -174,12 +174,12 @@ export {
     startViewTransition,
     supportsViewTransitions,
     type ViewTransitionResult,
-} from "./composables/motion/useViewTransition";
+} from "./composables/motion/core/useViewTransition";
 
 // The v-reveal entrance directive. Dependency-free (`vue` type-only — no
 // keyframes, no vueuse), so it is root-barrel safe per the `useViewTransition`
 // precedent; also reachable via `@mkbabb/glass-ui/motion-core`.
-export { vReveal } from "./composables/motion/vReveal";
+export { vReveal } from "./composables/motion/reveal/vReveal";
 
 // The named CSS Custom Highlight composable (re-homed from `/dom` to
 // `/motion-core`). Imports `vue` `getCurrentScope`/`onScopeDispose` only —
@@ -191,9 +191,9 @@ export {
     useTextHighlight,
     type HighlightMatcher,
     type UseTextHighlightControls,
-} from "./composables/motion/useTextHighlight";
+} from "./composables/motion/reveal/useTextHighlight";
 
-// AZ.W-MORPH-SHOWCASE (W-LIQUID fold) — the shared amorphous flex+squish primitive.
+// Shared amorphous flex-and-squish primitive.
 // A PURE projection of a caller-driven normalized scalar onto a size span + a
 // volume-preserving squish (no spring/rAF/element — imports `vue` only), so it is
 // engine-FREE + vueuse-FREE and root-barrel safe per the `useViewTransition`
@@ -203,35 +203,35 @@ export {
     type LiquidFlexAxis,
     type UseLiquidFlexParams,
     type UseLiquidFlexReturn,
-} from "./composables/motion/useLiquidFlex";
+} from "./composables/motion/spring/useLiquidFlex";
 
-// BI.W-PAGER-WORM — the two-edge lead/trail integrator (the ONE driver behind the
-// liquid dot-MORPH worm + the B3 eyeglass release). A spring LEAD edge + a damped
-// TRAIL follower in ONE rAF; the gap IS the worm's elongation, the trail catching the
-// lead is the emergent release. Imports `vue` only — engine-FREE + vueuse-FREE (a
-// hand-rolled critically-damped integrator, no spring engine), so it is root-barrel
-// safe per the `useLiquidFlex` precedent; also reachable via `@mkbabb/glass-ui/motion-core`.
+// Two-edge lead/trail integrator behind the liquid dot morph
+// worm. A spring LEAD edge + a damped TRAIL follower share ONE rAF; their gap is the
+// worm's elongation and the trail catching the lead is the emergent release. Imports
+// `vue` only — engine-FREE + vueuse-FREE (a hand-rolled integrator, no spring engine),
+// so it is root-barrel safe per the `useLiquidFlex` precedent; also reachable via
+// `@mkbabb/glass-ui/motion-core`.
 export {
     useLeadTrail,
     type LeadTrailEdges,
     type UseLeadTrail,
     type UseLeadTrailOptions,
-} from "./composables/motion/useLeadTrail";
+} from "./composables/motion/morph/useLeadTrail";
 
-// BB.B4 (W-VIZ-POINTER) — the shared viz-pointer-physics field (pointer position +
+// Shared visualization pointer-physics field (pointer position +
 // derived velocity + the ACCEL term). The viz renderer FEEDS it via its frame `tick`
 // (NO own rAF — the one-loop discipline); under PRM it freezes (`tick(0)`). Imports
 // `vue` only — engine-FREE + vueuse-FREE and root-barrel safe per the `useLiquidFlex`
-// precedent; also reachable via `@mkbabb/glass-ui/motion-core`. The booked binary
-// consumers are the born-WebGPU viz (W-FLOWFIELD + W-CONCENTRIC).
+// precedent; also reachable via `@mkbabb/glass-ui/motion-core`. WebGPU visualizations
+// consume it for flow-field and concentric pointer response.
 export {
     usePointerVelocityField,
     type PointerVec2,
     type UsePointerVelocityField,
     type UsePointerVelocityFieldOptions,
-} from "./composables/motion/usePointerVelocityField";
+} from "./composables/motion/pointer/usePointerVelocityField";
 
-// BI.W-FIELD-CORE — the route pointer BROADCASTER (a full-bleed pointer-events:none
+// Route pointer broadcaster (a full-bleed pointer-events:none
 // background viz cannot listen for itself; the ONE capture-phase window listener per
 // route serves them via provide/inject) + the four PURE per-viz pointer-field mappings
 // (fourier draw-bias/lean · blob heavy-pull · aurora cursor · constellation well). Both
@@ -241,7 +241,7 @@ export {
     useRoutePointer,
     type RoutePointerContext,
     type UseRoutePointerOptions,
-} from "./composables/motion/useRoutePointer";
+} from "./composables/motion/pointer/useRoutePointer";
 export {
     fourierLeanMapping,
     blobPullMapping,
@@ -263,12 +263,12 @@ export {
     type AuroraCursorOptions,
     type AuroraCursorResult,
     type ConstellationWellResult,
-} from "./composables/motion/pointerFieldMappings";
+} from "./composables/motion/pointer/pointerFieldMappings";
 
-// BH.W-AXIS-GRAMMAR — the four grammar axis types published on the root barrel
+// The four grammar axis types published on the root barrel
 // (the ONE axis home is `_shared/axes.ts`; the `/axes` subpath is the discovery
 // front door). Types-only re-export — no runtime import, so the vueuse-FREE
-// root-barrel discipline is preserved (proof:vueuse-free-root unaffected).
+// root-barrel discipline is preserved.
 export type {
     Size,
     Orientation,
@@ -282,4 +282,4 @@ export { cn } from "./components/_shared/class-names";
 export {
     supportsScrollTimeline,
     supportsViewTimeline,
-} from "./composables/motion/supportsCssTimeline";
+} from "./composables/motion/scroll/supportsCssTimeline";

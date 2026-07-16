@@ -19,16 +19,13 @@ const emit = defineEmits<{ rendererStatus: [status: RendererStatus] }>();
  * the container element so the consumer controls pointer policy.
  *
  * Lazy-arm: by default GPU initialization is deferred past the consumer's
- * first paint. Until the runtime
- * arms, a palette-derived GROUND placeholder (`auroraFallbackGround` — the
- * field-sampled nuclei-glow, BI.W-E10-AURORA-ENTRANCE) paints the first frame
- * with zero JS / zero GPU; the canvas cross-fades in over it once armed. The
+ * first paint. Until the runtime arms, a palette-derived GROUND placeholder
+ * (`auroraFallbackGround`, the field-sampled nuclei glow) paints the first frame
+ * with zero JS and zero GPU; the canvas cross-fades in over it once armed. The
  * ground is derived from the same palette and nuclei the GPU path uploads, so
- * FRAME 0 is palette-COLORED (never the retired flat gray band) and the live
- * canvas WARMS INTO it — a same-palette dissolve with no tone jump (the UF-E10
- * "no repulsive-gray fade" law). The placeholder stays mounted underneath as
- * the natural static surface. Capture /
- * thumbnail-baking consumers pass `runtimeOptions.initStrategy: "eager"` (or
+ * frame 0 is palette-colored and the live canvas warms into it without a tone
+ * jump. The placeholder stays mounted underneath as the natural static surface.
+ * Capture and thumbnail-baking consumers pass `runtimeOptions.initStrategy: "eager"` (or
  * `mode: "capture"`) to begin acquisition immediately, then await `armAsync()`
  * before reading a deterministic frame.
  *
@@ -37,7 +34,7 @@ const emit = defineEmits<{ rendererStatus: [status: RendererStatus] }>();
  * receive the attributed error as well. A failed runtime never marks the live
  * canvas armed, so the palette ground remains visible.
  *
- * `opacityCeiling` (A3 §6.R-9, G-AK-D11) is the outer compositing envelope:
+ * `opacityCeiling` is the outer compositing envelope:
  * `1.0` (default) for hero surfaces, `~0.5` for quiet content-over-aurora
  * routes where form/text density would otherwise compete with the drift.
  * It applies once around the stacked placeholder + canvas field so their
@@ -49,7 +46,7 @@ const props = withDefaults(
         /**
          * Aurora field configuration (palette, nuclei, warp, media). Optional —
          * omit it and the canonical `DEFAULT_AURORA_CONFIG` painterly look
-         * renders (gap 11, AM.W1). Pass a full config to author a custom field,
+         * renders. Pass a full config to author a custom field,
          * or a preset object from `./constants/presets`. The default is supplied via a
          * `withDefaults` factory so each mount gets its own (un-shared) object.
          */
@@ -57,28 +54,24 @@ const props = withDefaults(
         runtimeOptions?: AuroraRuntimeOptions;
         onInitError?: (err: Error) => void;
         /**
-         * Adaptive render substrate (AM.W1; `aurora-lazy-init §3.1`). Aurora is
-         * NEVER retired — the warm wash always composites; only the substrate
-         * adapts:
-         *   - `"webgl"` — arm the animated GPU path (the historical public mode
-         *     name; the runtime prefers WebGPU and supports WebGL2).
+         * Adaptive render substrate. The warm wash always composites; only the
+         * substrate adapts:
+         *   - `"webgl"` — arm the animated GPU path; the runtime prefers WebGPU
+         *     and supports WebGL2.
          *   - `"css"`   — never arm a GPU; the `auroraFallbackGround` palette-
          *     derived ground stays the permanent surface (the warm wash
          *     composites, it just does not animate).
          *   - `"auto"` (default) — resolves to `"webgl"` on every device EXCEPT a
-         *     detected SOFTWARE renderer (SwiftShader / llvmpipe / MS Basic Render),
-         *     which falls to `"css"` (the page-wedging-software-raster guard, the only
-         *     surviving `"css"` signal). BC.W-VIZ-AURORA (T1) RETIRED the dead-static
-         *     `hardwareConcurrency <= 4` / `saveData` / `reduced-motion` falls: a
-         *     2026-capable low-core / throttled tab no longer gets a frozen gradient
-         *     (the "renders SLOW" defect root), and reduced-motion is handled SOLELY by
+         *     detected SOFTWARE renderer (SwiftShader, llvmpipe, MS Basic Render),
+         *     which falls to `"css"` (the page-wedging-software-raster guard and sole
+         *     `"css"` signal). Reduced motion is handled solely by
          *     the substrate's live `matchMedia` freeze (one static frame then park,
-         *     re-arms on un-reduce). Resolved once at setup; SSR / missing-API safe
+         *     re-arms on un-reduce). Resolved once at setup; SSR, missing-API safe
          *     (assumes capable → `"webgl"` when the probes are unavailable).
          */
         renderMode?: AuroraRenderMode;
         /**
-         * Per-route aurora saturation clamp (A3 §6.R-9 / G-AK-D11).
+         * Per-route aurora saturation clamp.
          *
          * The config's `alpha` field is pigment opacity for the painted image.
          * Live presentation applies it once as canvas opacity over the palette
@@ -105,16 +98,15 @@ const props = withDefaults(
     },
 );
 
-// Resolve the adaptive render substrate ONCE at setup (aurora-lazy-init §3.1).
+// Resolve the adaptive render substrate once at setup.
 // `"auto"` collapses to `"css"`/`"webgl"` per device tier here so the arm gate
-// downstream sees a concrete substrate; `"webgl"`/`"css"` pass through. SSR /
-// missing-API safe inside `resolveRenderMode`.
+// downstream sees a concrete substrate; `"webgl"`/`"css"` pass through. Resolution
+// is SSR- and missing-API-safe.
 //
-// BB.W-AURORA-SWRASTER — the universal software-raster GUARD: a forced
-// `mode:"webgl"`/`mode:"capture"` arm under a software renderer (SwiftShader /
-// llvmpipe / headless) now falls to `"css"` too, not only `"auto"`. The
+// the universal software-raster GUARD: a forced
+// `mode:"webgl"`/`mode:"capture"` arm under a software renderer (SwiftShader, // llvmpipe, headless) now falls to `"css"` too, not only `"auto"`. The
 // `forceWebGLUnderSoftwareRaster` runtime option is the named escape (default off
-// — the guard is the safe default); it is threaded into BOTH the resolver here AND
+// the guard is the safe default); it is threaded into BOTH the resolver here AND
 // the runtime wedge catch (via `mergedRuntimeOptions`).
 const resolvedRenderMode = resolveRenderMode(props.renderMode, {
     forceWebGLUnderSoftwareRaster:
@@ -159,17 +151,15 @@ watch(api.rendererStatus, (status) => emit("rendererStatus", status), {
     flush: "sync",
 });
 
-// BI.W-E10-AURORA-ENTRANCE — the placeholder is ALWAYS the palette-derived GROUND
+// The placeholder is always the palette-derived ground
 // (`auroraFallbackGround`), on the animated GPU path as much as the `"css"`
-// substrate. The flat `linear-gradient(135deg)` band is RETIRED from the capable
-// path (clean break — §Disposition terminal): the cheap gradient was the
-// "repulsive gray/neutral" first frame UF-E10 named. The ground is
+// substrate. The ground is
 // a field-sampled nuclei-glow derived from the same palette and nuclei the GPU path
 // uploads (the value.js `oklchToLinear` core — ONE color source), so:
 //   - FRAME 0 is palette-COLORED, never a gray band (the entrance colors from frame 0);
 //   - the live canvas warms into it — the `.aurora-canvas` opacity cross-fade
 //     is a same-palette dissolve FROM the ground TO the live field (no tone jump);
-//   - on the `"css"` substrate (software-raster / forced-capture) the SAME ground is
+//   - on the `"css"` substrate (software-raster, forced-capture) the SAME ground is
 //     the permanent certify surface (mean + per-quadrant luminance match the composite).
 // Reactive, so a preset switch repaints the ground too.
 const faithfulGround = computed(() => auroraFallbackGround(props.config));
@@ -207,12 +197,12 @@ defineExpose({
         :style="{ opacity: clampedOpacityCeiling }"
     >
         <!--
-          Placeholder GROUND (BI.W-E10-AURORA-ENTRANCE). The palette-derived
+          Placeholder GROUND (). The palette-derived
           field-sampled ground on EVERY substrate — frame 0 is palette-colored,
           the live canvas cross-fades OVER it (same palette, no tone jump) on the
           capable path; on the `"css"` substrate the ground is the permanent
           luminance-faithful certify surface. Sits under the canvas; remains as
-          the WebGL2-unavailable fallback (HA4 §1.5).
+          the WebGL2-unavailable fallback ( §1.5).
         -->
         <div
             class="aurora-placeholder h-full min-h-0 w-full"
@@ -246,11 +236,10 @@ defineExpose({
 <style scoped>
 .aurora-root {
     display: grid;
-    /* AV.W7 F2 — paint/layout containment caps the `backdrop-filter`-adjacent
-       paint area + isolates the WebGL surface as its own compositing root
-       (50–80% paint-area reduction; caps VRAM). `content-visibility:auto`
-       (F1) lets the browser content-skip the surface when it scrolls offscreen
-       — the substrate's `contentvisibilityautostatechange` listener parks the
+    /* Paint/layout containment caps the `backdrop-filter`-adjacent paint area and
+       isolates the WebGL surface as its own compositing root. `content-visibility`
+       lets the browser skip an offscreen surface; the
+       `contentvisibilityautostatechange` listener parks the
        RAF on `skipped`.
 
        `contain-intrinsic-size` reserves the box across a skip. The block axis
@@ -275,7 +264,7 @@ defineExpose({
     grid-area: 1 / 1;
 }
 
-/* BI.W-E10-AURORA-ENTRANCE — the placeholder is the palette-derived field raster
+/* the placeholder is the palette-derived field raster
    (a low-res 2D-canvas data: URI) on EVERY substrate. `cover` + smooth
    `image-rendering` upscale it bilinearly to fill the box — the upscale preserves
    the per-quadrant mean luminance the certify reads, and reads as a smooth
@@ -293,6 +282,14 @@ defineExpose({
 .aurora-canvas-layer {
     opacity: 0;
     transition: opacity var(--duration-slow) var(--ease-standard);
+    /* Permanent compositing isolation for the live GPU canvas (V-A95). The
+       opacity cross-fade forms a stacking context only while unarmed; at armed
+       opacity:1 it dissolves, leaving the canvas and the page's backdrop-filter
+       plates sharing one root backing. A GPU frame-present then races a plate's
+       backdrop snapshot to a momentary black sample. `isolate` keeps the canvas
+       subtree its own backdrop root so that race cannot reach the plates; the
+       plates still blur the aurora's composited output, so affordance is intact. */
+    isolation: isolate;
 }
 
 .aurora-canvas-layer--armed {

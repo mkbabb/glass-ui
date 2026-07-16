@@ -1,4 +1,4 @@
-// BC.W-VIZ-FOURIER — the WebGPU `setupWGPU` builder (the primary path).
+// the WebGPU `setupWGPU` builder (the primary path).
 //
 // A two-pass shape (compute → fullscreen-fragment render, the FLOW-FIELD precedent): the
 // compute kernel writes the comet-curve sample table + the epicycle chain-tip table into
@@ -66,7 +66,7 @@ export interface FourierWGPUSetupDeps {
     /** The per-frame pointer hook — useFourierField advances the shared pointer field here. */
     onFrame?: (timeSec: number) => void;
     /**
-     * BD.W-VIZ-BROKEN-FIX D6b — the 2-D cursor FOLLOW: a small MODEL-space offset added to
+     *  D6b — the 2-D cursor FOLLOW: a small MODEL-space offset added to
      * the view-fit center so the whole reconstruction LEANS toward the cursor (the spatial
      * "follow" beside D6a's velocity scrub). Reuses the EXISTING uFit center uniform (NO new
      * uniform, NO shader/bridge edit — parity-safe by construction, both arms read the same
@@ -155,7 +155,7 @@ export function createFourierWGPUSetup(
             ],
         });
 
-        // BI.W-FOURIER-RIBBON — the render pass VERTEX-PULLS each instance's endpoints from the
+        // the render pass VERTEX-PULLS each instance's endpoints from the
         // compute-filled storage buffers, so binding 1/2 are now VERTEX-visible too.
         const renderBGL = device.createBindGroupLayout({
             label: "[FourierField] render-bgl",
@@ -244,7 +244,7 @@ export function createFourierWGPUSetup(
             device.queue.writeBuffer(phasorBuffer, 0, packPhasorTable(spectrum));
         }
 
-        // BG.W-VIZ-RESIZE-ADOPT — upload-only. The LEAF sized the backing store; the WGPU
+        // upload-only. The LEAF sized the backing store; the WGPU
         // swap chain auto-resizes to it — no-op.
         function resize(_s?: BackingSize): void {}
 
@@ -273,13 +273,13 @@ export function createFourierWGPUSetup(
             );
             device.queue.writeBuffer(computeUniform, 0, computeScratch.buffer);
 
-            // BG.W-VIZ-RESIZE-ADOPT — the box in CSS px derives from the LEAF-sized backing
+            // the box in CSS px derives from the LEAF-sized backing
             // store (round(gBCR × dpr) ÷ dpr), never clientWidth.
             const cssMin =
                 Math.min(canvas.width, canvas.height) / Math.max(resolveBudgetDpr(), 1);
             const aspect = canvas.width / Math.max(canvas.height, 1);
             const trailModel = trailWidthToModel(config.trailWidth, fit.scale, cssMin);
-            // BI.W-FOURIER-RIBBON — the instanced-quad AA-feather slop in MODEL units: a few CSS
+            // the instanced-quad AA-feather slop in MODEL units: a few CSS
             // px so the smoothstep feather at each bbox edge is never clipped. model-per-cssPx =
             // (1/scale)·(2/cssMin); pad ~6 CSS px.
             const edgeMargin =

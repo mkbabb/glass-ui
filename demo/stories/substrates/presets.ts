@@ -1,12 +1,11 @@
-// LiquidGrid (W-VIZ-PAPERGRID) — the demo presets for the liquid liquid-grid.
+// LiquidGrid — the demo presets for the liquid liquid-grid.
 //
 // PRESETS-IN-CONSUMERS (the binding fence). The library default
 // (`DEFAULT_LIQUID_GRID_CONFIG`) is the warm-cream identity — warm-foreground ink over
 // transparent, evenly-spaced LARGE 64px cells, a slow liquid curl-flow breath. The
 // BOLD-liquid showcase + RIPPLE lit-face presets live HERE in the DEMO tree, NEVER a
 // library token. The shared SUFFUSION ground belongs to the page chassis.
-// NO teal/navy literal — the grid is monochrome warm ink (`proof:viz-papergrid` clause P5
-// reds a teal/navy hue in the LIBRARY constants.ts; this demo file is the sanctioned home
+// No teal/navy literal: the grid is monochrome warm ink. This demo file is the home
 // for any named theme).
 
 import type { LiquidGridConfig } from "@glass/components/liquid-grid";
@@ -26,7 +25,7 @@ export const LIQUID_GRID_PRESET_BOLD: LiquidGridConfig = {
 };
 
 /**
- * The RIPPLE preset (BD.W-PAPERGRID-FACE — the LIT RIPPLING PAPER SHEET, demo-only). The library
+ * The demo-only RIPPLE preset paints the lit rippling paper sheet. The library
  * default keeps `faceAlpha:0` (the line-only identity byte-frozen); THIS consumer preset lifts the
  * structurally-absent FACE: each cell becomes a filled warm-paper face, lit by the slope of the
  * SAME traveling-wave height the twist rides, squashed so the crest face inflates. The warm-

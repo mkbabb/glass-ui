@@ -18,16 +18,16 @@ import { cn } from "../_shared/class-names";
 import {
     useSpringMount,
     type SpringPreset,
-} from "../../composables/motion/useSpringMount";
+} from "../../composables/motion/spring/useSpringMount";
 import ModalOverlay from "./ModalOverlay.vue";
-// BH.W-MOTION-AXIS — the `spring` boolean dies onto the ONE `motion` axis (the preset
+// The former `spring` boolean folds into the shared `motion` axis (the preset
 // carves off onto the distinct `springPreset` prop; motion gates the JS entrance).
 import type { Motion, Placement, Surface } from "../_shared/axes";
 import { useMotionAxis } from "../_shared/useMotionAxis";
-// BA.W-SURFACE-AXIS — Dialog's binary `variant: glass|opaque` string RETIRES onto
+// Dialog's binary `variant: glass|opaque` string retires onto
 // the SHARED {glass·veil·opaque} `surface` axis (clean break, no alias — the prior
 // `variant` was Dialog-local and never matched the Card grammar; MIGRATION.md row).
-// BI.W-DIALOG-PLACEMENT — attribute-driven veil/opaque decoration rides
+// Attribute-driven veil/opaque decoration rides
 // the placement != center slide path (the folded Sheet composes glass-floating in its
 // slide base; the decoration layers the same shared W55 seam).
 import { resolveSurfaceClass } from "../_shared/resolveSurfaceClass";
@@ -73,15 +73,15 @@ const delegatedProps = computed(() => {
     return delegated;
 });
 
-// BI.W-DIALOG-PLACEMENT — center vs the folded Sheet side-slide.
+// Center placement versus the side-slide placement.
 const placement = computed<Placement>(() => props.placement ?? "center");
 const isCenter = computed(() => placement.value === "center");
 
-// BH.W-MOTION-AXIS — the resolved motion state. The JS spring entrance arms iff a
+// The resolved motion state. The JS spring entrance arms iff a
 // `springPreset` is named AND the resolved motion is not `off` (a preset-less dialog
 // keeps the `.glass-reveal` CSS bloom — byte-identical to HEAD's unset `spring`).
 const motionAxis = useMotionAxis(() => props.motion);
-// The JS spring entrance is the CENTERED scale-bloom ONLY (BI.W-DIALOG-PLACEMENT). A
+// The JS spring entrance is the centered scale bloom only. A
 // placement != center Dialog slides via the CSS `sheet-animate` register (byte-identical
 // to the retired Sheet); the JS slide-spring + drag-dismiss gesture are Drawer's
 // mechanism (the N3 disambiguation), never smuggled into this paint axis.
@@ -92,9 +92,9 @@ const springActive = computed(
         (props.placement ?? "center") === "center",
 );
 
-// BD.W-OVERLAY-STAGE-COUPLE — the centered modal flips `--stage-t` 0→1 on open (the
+// The centered modal flips `--stage-t` 0→1 on open (the
 // drawer drives it per-frame; a dialog has no detent, so it transitions the ONE scalar
-// on `--spring-snappy`, scoped to the reader roots — BI.W-DRAWER-PERF). The honest
+// on `--spring-snappy`, scoped to the reader roots). The
 // `stage` enum gates the page-wrapper recede; PRM degrades `scale`/`immersive` → `dim`.
 const resolvedStage = computed(() => {
     const base = props.stage;
@@ -107,7 +107,7 @@ const resolvedStage = computed(() => {
 });
 const dialogRoot = injectDialogRootContext();
 const stageContext = useOptionalDialogStageContext();
-// BI.W-DRAWER-PERF — flip `--stage-t` 0→1 SCOPED to the reader roots (the page-wrapper
+// Flip `--stage-t` 0→1, scoped to the reader roots (the page wrapper
 // + the scrim), NOT `document.documentElement`. `--stage-t` is `inherits: false`
 // (drawer.css), so a write on the app-root wrapper recalcs ONLY the wrapper — a whole-
 // document `:root` write invalidated the inherited-property cache for the entire app
@@ -194,14 +194,14 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
 
 // Center fade + zoom only — no slide animation. The glass-floating tier
 // (composed via `variantClasses` below) paints `--glass-shadow-floating`;
-// the prior `shadow-xl` literal clobbered it (audit U.W0.C-a §5.2).
-// BB.W-CARD-PAD — the overlay-band golden padding ladder. The overlay anchor is
+// the prior `shadow-xl` literal clobbered it.
+// The overlay-band golden padding ladder. The overlay anchor is
 // `--overlay-pad-inline` (--spacing(6) = 24px for the modal band); the block axis
 // lifts by sqrt-phi (`*1.272`) so the heading clears the top edge against a 24px
 // side. `gap-4` between header/body/footer sections STAYS (the overlay-band rhythm).
 const baseClasses =
     "fixed left-1/2 top-1/2 z-modal grid w-full max-w-lg gap-4 [--overlay-pad-inline:--spacing(6)] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)] px-(--overlay-pad-inline) py-(--overlay-pad-block)";
-// BB.W-LIQUID-REVEAL — the default (non-spring) path composes the spring-clocked
+// The default non-spring path composes the spring-clocked
 // `.glass-reveal` LIQUID-ENTER recipe (off the retired `popover-animate` bezier
 // zoom-95, clean break). The `-translate-x-1/2 -translate-y-1/2` centering stays
 // (unlayered utilities; `.glass-reveal` never writes the BASE `translate` — only its
@@ -209,7 +209,7 @@ const baseClasses =
 // is never clobbered). The recipe owns the clock, so `duration-normal` is dropped.
 const defaultMotionClasses = "-translate-x-1/2 -translate-y-1/2 glass-reveal";
 
-// BA.W-SURFACE-AXIS — the surface decoration rides the SHARED resolver on the
+// Surface decoration rides the shared resolver on the
 // `floating` tier. The resolver emits `glass-floating`; the veil/opaque attribute
 // owns decoration and Dialog appends its own `rounded-dialog` radius. The opaque rung
 // rides the SAME glass-floating tier (edge, rim, under-shadow preserved) + adds
@@ -221,7 +221,7 @@ const variantClasses = computed(() =>
     cn(resolveSurfaceClass("floating"), "rounded-dialog"),
 );
 
-// BI.W-DIALOG-PLACEMENT — the folded Sheet side-slide (the retired `sheetVariants`
+// Side-slide placement preserves the retired `sheetVariants`
 // side arms, verbatim). Each `placement != center` value rounds its INNER corners on
 // the dialog rung, borders the inner edge, and slides in via the shared `sheet-animate`
 // CSS register (byte-identical frame-series to the retired Sheet — the slide is PAINT,
@@ -266,8 +266,8 @@ const contentClass = computed(() =>
           ),
 );
 
-// BI.W-DIALOG-PLACEMENT / W-CONFIG-IN-SHEET — the folded side sheet is the Law-1
-// concentric-radius RELAY PARENT (the retired SheetContent published this for the
+// The side sheet relays the concentric-radius context
+// formerly published by SheetContent for the
 // gear-sheet Configurator's nested cards): it PUBLISHES its resolved corner
 // (--radius-dialog) as --radius-ctx + its content pad (--overlay-pad-inline) as
 // --radius-inset, so a nested card-class surface DERIVES its own corner concentric with
@@ -293,7 +293,7 @@ const springMount =
 const springStyle = computed<CSSProperties | undefined>(() => {
     if (!springMount) return undefined;
     const p = springMount.position.value; // 0 = mounted, 1 = dismissed
-    // BD.W-OVERLAY-STAGE-COUPLE — the centered-dialog SQUISH via `scale:`/`translate:`
+    // Centered-dialog squish via `scale:`/`translate:`
     // LONGHANDS, never `transform: translate() scale()` (build-trap (e): a
     // `transform:scale()` over a centering translate composes ONE matrix, so the squish
     // would re-derive the -50% offset off the scaled box and drift the dialog off
@@ -314,10 +314,10 @@ const springStyle = computed<CSSProperties | undefined>(() => {
     };
 });
 
-// BC.W-DIALOG-GLASS / BI.W-GLASS-TOKEN-PRUNE — the dialog reads as ACTUAL iOS-27
+// The dialog uses the dedicated see-through glass rung:
 // liquid glass: drop the modal plate from the floating tier (0.80 — "NOT glassy at
 // all") to the SEE-THROUGH `--glass-bg-dialog` register (0.68). The α-band probe
-// (BI.W-GLASS-TOKEN-PRUNE, the arbiter) DECIDED the rung is genuinely-distinct
+// the alpha band is distinct
 // physics — Δ plate-α 0.12 vs floating, ΔL 0.06–0.10 over a busy/dark page (>> 2%)
 // → KEEP the rung — and this reads it through ONE DOOR. The floating rung composes
 // its plate from an internal `--glass-bg-rung` slot (glass/ladder.css: `.glass-
@@ -330,7 +330,7 @@ const springStyle = computed<CSSProperties | undefined>(() => {
 // floating tier's edge/rim/under-shadow LIFT survives (the private tier resolver
 // below keeps the class). Rides the DEFAULT `glass` surface; `surface="opaque"`
 // still reaches `--glass-level:0` (the dialog rung's own calc zeroes through
-// unchanged). The `--glass-bg-dialog` token carries the BC.W-ADAPTIVE-RECONCILE
+// unchanged). The `--glass-bg-dialog` token carries the adaptive
 // oklab tint wrapper, so the bright-bucket darken reaches the modal for AA over a
 // busy page.
 const plateStyle: CSSProperties = {
@@ -339,9 +339,9 @@ const plateStyle: CSSProperties = {
 
 const contentStyle = computed<CSSProperties>(() => ({
     ...plateStyle,
-    // BI.W-DIALOG-PLACEMENT — the concentric-radius relay rides the folded side sheets only.
+    // The concentric-radius relay rides side sheets only.
     ...(isCenter.value ? {} : radiusCtxStyle),
-    // BH.W-MOTION-AXIS — the `--motion-weight: 0` off-write (undefined at full/reduced).
+    // The `--motion-weight: 0` off-write is undefined at full or reduced motion.
     ...((motionAxis.hostStyle.value as CSSProperties | undefined) ?? {}),
     ...(springStyle.value ?? {}),
 }));
@@ -363,7 +363,7 @@ const contentStyle = computed<CSSProperties>(() => ({
             :data-motion="motionAxis.dataMotion.value"
             :data-spring="springActive ? (props.springPreset ?? 'smooth') : undefined"
         >
-            <!-- BI.W-Q023 — a side sheet owns one noninteractive, mask-graded
+            <!-- A side sheet owns one noninteractive, mask-graded
            backdrop sample. The host's flat blur is disabled for this glass-only
            arm in placement.css, so this is not a nested second plate. -->
             <span
@@ -379,7 +379,7 @@ const contentStyle = computed<CSSProperties>(() => ({
             </div>
             <slot v-else />
 
-            <!-- BC.W-DIALOG-GLASS — the dismiss tracks the overlay golden padding ladder
+            <!-- The dismiss tracks the overlay golden padding ladder
            (DG4). At the floating tier's `right-4 top-4` (16px) the close jammed
            inside the 24px inline / ~30.5px block overlay pad; re-pointed onto the
            same `--overlay-pad-inline`/`--overlay-pad-block` tokens the content body

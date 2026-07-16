@@ -1,5 +1,5 @@
 /**
- * Aurora image-source coordination seam (BG.W-AUR-IMAGE-SOURCE).
+ * Aurora image-source coordination seam.
  *
  * The `source:"image"` decode + upload state machine, carved out of `runtime.ts` (the
  * no-god-module bound; the same colocation seam `glSetup`/`wgpuSetup` carry). It owns:
@@ -13,8 +13,7 @@
  *     cross-engine parity floor), seeds the placeholder + any already-decoded photo, and
  *     returns a teardown.
  *
- * The runtime COMPOSES this leaf; the gate `proof:aur-image` reads it as the WebGL2
- * routing-through-the-primitive witness (the reader-follows-the-carve precedent).
+ * The runtime composes this leaf as the WebGL2 image-source path.
  */
 
 import {
@@ -26,7 +25,7 @@ import {
 import type { AuroraConfig } from "../constants/presets";
 
 export interface AuroraImageCoordinator {
-    /** The decoded photo (or null before decode / on a palette config). */
+    /** The decoded photo (or null before decode, on a palette config). */
     getDecodedImage(): UploadableImageSource | null;
     /**
      * Register the active backend's texture uploader; passing `null` clears it (teardown).

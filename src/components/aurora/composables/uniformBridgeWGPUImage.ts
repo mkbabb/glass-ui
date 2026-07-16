@@ -1,6 +1,6 @@
 /**
  * Aurora WGSL IMAGE uniform bridge — the typed-struct source-of-truth for the
- * `source:"image"` WebGPU program (BG.W-AUR-IMAGE-SOURCE).
+ * `source:"image"` WebGPU program.
  *
  * DISTINCT from `uniformBridgeWGPU.ts` (the 672-byte palette struct): the image program
  * is a SEPARATE compiled pipeline with its OWN, smaller uniform buffer + its own bind
@@ -11,15 +11,15 @@
  * The byte layout (all offsets in bytes, std140-compatible — vec4 align 16) MIRRORS the
  * `ImageUniforms` WGSL struct (`aurora-image.wgsl.ts`) EXACTLY:
  *
- *   scalars0 : vec4<f32>            off   0   (uTime, uWarpAmount, uWarpScale, uWarpDrift)
- *   scalars1 : vec4<f32>            off  16   (uSoftmaxBeta, uNucleiDrift, uCursorStrength, uCursorRadius)
- *   scalars2 : vec4<f32>            off  32   (uSaturation, uPaperGrain, uAlpha, uVividness)
- *   image    : vec4<f32>            off  48   (uBlurMin, uBlurMax, uImageAspect, _)
- *   cursor   : vec4<f32>            off  64   (uCursor.x, uCursor.y, _, _)
- *   ints     : vec4<i32>            off  80   (uNucleiCount, uNoiseOctaves, _, _)
- *   nuc0     : array<vec4<f32>, 8>  off  96   (pos.x, pos.y, radius, valueBias)
- *   nuc1     : array<vec4<f32>, 8>  off 224   (driftRadius, driftPhase, elong, angle)
- *   total    : 352 bytes (16-aligned)
+ *   scalars0: vec4<f32>            off   0   (uTime, uWarpAmount, uWarpScale, uWarpDrift)
+ *   scalars1: vec4<f32>            off  16   (uSoftmaxBeta, uNucleiDrift, uCursorStrength, uCursorRadius)
+ *   scalars2: vec4<f32>            off  32   (uSaturation, uPaperGrain, uAlpha, uVividness)
+ *   image: vec4<f32>            off  48   (uBlurMin, uBlurMax, uImageAspect, _)
+ *   cursor: vec4<f32>            off  64   (uCursor.x, uCursor.y, _, _)
+ *   ints: vec4<i32>            off  80   (uNucleiCount, uNoiseOctaves, _, _)
+ *   nuc0: array<vec4<f32>, 8>  off  96   (pos.x, pos.y, radius, valueBias)
+ *   nuc1: array<vec4<f32>, 8>  off 224   (driftRadius, driftPhase, elong, angle)
+ *   total: 352 bytes (16-aligned)
  */
 
 import {
@@ -34,7 +34,7 @@ import type { AuroraCursorUniforms } from "./uniformBridge";
 /** The total image-uniform-buffer byte size (16-aligned). */
 export const AURORA_IMAGE_WGPU_UNIFORM_BYTES = 352;
 
-// Float32 word offsets (byte / 4) into the buffer.
+// Float32 word offsets (byte, 4) into the buffer.
 const OFF = {
     scalars0: 0,
     scalars1: 4,

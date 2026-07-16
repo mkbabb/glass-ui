@@ -5,11 +5,7 @@
 // apply a vueuse manualChunk can do so without the root barrel forcing
 // vueuse into the eager critical path.
 //
-// L.W2 — Implementation lives at `src/composables/dark/useGlobalDark.ts`;
-// the sub-tree's `index.ts` re-exports it, and the flat `@mkbabb/glass-ui/dark`
-// public subpath resolves directly through this sub-tree index.
-//
-// AU.W9.B — `initialValue` seed (#21). `createGlobalState` memoizes the factory
+// `initialValue` seed: `createGlobalState` memoizes the factory
 // closure, so the SINGLE shared instance is built exactly once on first call. A
 // per-call `initialValue` therefore CANNOT re-seed after construction: the seed
 // is a ONE-SHOT honored only by the first `useGlobalDark()` invocation. We
@@ -31,10 +27,10 @@ export type GlobalColorSchema = "auto" | "light" | "dark";
 export type DarkFlipSettledCallback = (isDark: boolean) => void;
 
 /**
- * The `useGlobalDark` return shape (AW.W15 — named `Use<Name>Return`). The
+ * The `useGlobalDark` return shape. The
  * single shared dark-mode instance: the reactive `isDark` flag, a `toggleDark`
  * that optionally suppresses transitions, the transition-suppression switch, and
- * the post-flip settle hook (BA.W-ATLAS-RECONCILE A-1 — d6 9467bd16 adopt).
+ * the post-flip settle hook ( A-1 — d6 9467bd16 adopt).
  */
 export interface UseGlobalDarkReturn {
     /** Reactive dark-mode flag (vueuse `useDark` ref — writable). */
@@ -46,7 +42,7 @@ export interface UseGlobalDarkReturn {
     /** Configure transition suppression during the dark-mode toggle. */
     setDisableTransitions: (value: boolean) => void;
     /**
-     * BA.W-ATLAS-RECONCILE A-1 — the post-flip SETTLE hook. Register a callback
+     *  A-1 — the post-flip SETTLE hook. Register a callback
      * that runs in ONE coalesced task AFTER each dark↔light flip's instant chrome
      * paint, so consumers BATCH N expensive re-theme operations (e.g. the atlas's
      * palette memo + N-chart `merge-setOption` palette tween + aurora
@@ -96,7 +92,7 @@ const createGlobalDark = createGlobalState(() => {
     function toggleDark() {
         if (disableTransitions.value) {
             document.documentElement.classList.add("no-transition");
-            // BA.W-ATLAS-RECONCILE B-2 (d6 fee5e3cd re-land) — NO forced reflow.
+            //  B-2 (d6 fee5e3cd re-land) — NO forced reflow.
             // The E9b.1 profile caught the removed `void offsetHeight` read at
             // ~40ms/flip on a dense page (a synchronous whole-document
             // style+layout flush). None is needed: the `.no-transition` class and
@@ -120,7 +116,7 @@ const createGlobalDark = createGlobalState(() => {
         disableTransitions.value = value;
     }
 
-    // ── BA.W-ATLAS-RECONCILE A-1 — the post-flip settle batch ────────────────
+    // ──  A-1 — the post-flip settle batch ────────────────
     // One shared subscriber set, drained in ONE coalesced task per flip. The
     // class toggle is already synchronous (the chrome flips instantly); this
     // schedules the consumers' expensive re-theme work AFTER that paint, batched.
@@ -149,7 +145,7 @@ const createGlobalDark = createGlobalState(() => {
 
         // `requestAnimationFrame` runs AFTER the synchronous class flip's style
         // recalc/paint — the "instant chrome flip, then the batched re-theme"
-        // ordering. No rAF (SSR / headless) → a macrotask. No View Transition.
+        // ordering. No rAF (SSR, headless) → a macrotask. No View Transition.
         if (typeof requestAnimationFrame === "function") {
             requestAnimationFrame(drain);
         } else {
@@ -165,7 +161,7 @@ const createGlobalDark = createGlobalState(() => {
         };
     }
 
-    // Safari: force style recalculation after .dark class toggle.
+    // Safari: force style recalculation after.dark class toggle.
     // WebKit doesn't always invalidate CSS custom properties when an ancestor
     // class changes. Mirroring color-scheme as an inline style on <html> forces
     // a full cascade recalculation.
@@ -177,7 +173,7 @@ const createGlobalDark = createGlobalState(() => {
         { immediate: true },
     );
 
-    // BA.W-ATLAS-RECONCILE A-1 — the FLIP watch (non-immediate: the initial seed
+    //  A-1 — the FLIP watch (non-immediate: the initial seed
     // is not a flip). On a genuine dark↔light change, schedule the ONE coalesced
     // post-flip settle task. Separate from the Safari color-scheme watch so the
     // settle fires ONLY on a real flip, never on construction.

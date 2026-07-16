@@ -3,7 +3,7 @@ import { computed } from "vue";
 import { useOptionalDockContext } from "./composables/dockContext";
 
 /**
- * <DockSeparator> — AX.W45 D13-c / DK5.
+ * <DockSeparator> —  D13-c, DK5.
  *
  * An orientation-aware divider that demarcates dock item GROUPS (transport |
  * navigation | settings) for affordance hierarchy. The raw `.dock-separator`
@@ -11,11 +11,11 @@ import { useOptionalDockContext } from "./composables/dockContext";
  * 1px-wide sliver in a column (vertical) dock and a single cell-sliver in a grid
  * dock. This primitive bundles the orientation contract the bare class could not:
  * it reads the dock `orientation`/`layout` via `useOptionalDockContext()` and the
- * dock-root ancestor class (`.glass-dock.vertical` / `.layout-grid`) drives the
+ * dock-root ancestor class (`.glass-dock.vertical`, `.layout-grid`) drives the
  * PERPENDICULAR paint (dock.css) —
  *   - row dock (horizontal, default) → a vertical 1px hairline
- *   - column dock (vertical / rail)  → a horizontal 1px rule (cross-extent)
- *   - grid dock (`layout="grid"`)     → a full-row section break (grid-column: 1 / -1)
+ *   - column dock (vertical, rail)  → a horizontal 1px rule (cross-extent)
+ *   - grid dock (`layout="grid"`)     → a full-row section break (grid-column: 1, -1)
  *
  * It is a thin oriented `<div>` (KISS); `data-orientation` is the explicit axis
  * marker (so the perpendicular paint resolves even when used inside a
@@ -27,17 +27,17 @@ import { useOptionalDockContext } from "./composables/dockContext";
  * landmark without it being interactive (it has no four-state contract — a flex
  * gap rule, not a control).
  *
- * BA.W-DOCK-SECTIONS — the `anchor` prop is the seam-locator (direction (b)): an
+ * the `anchor` prop is the seam-locator (direction (b)): an
  * anchored separator stamps `data-rail-anchor`, which the enclosing `<GlassDock>`
  * reads to seat the `#rail` line AT this divider's measured offset (the divider IS
- * the rail's anchor seam — one primitive folds R8-9's section-divider model and
- * R8-1's anchor-at-the-divider). The exposed measurable seam offset is the painted
+ * the rail's anchor seam — one primitive folds 's section-divider model and
+ * 's anchor-at-the-divider). The exposed measurable seam offset is the painted
  * position of this element within the dock-frame; GlassDock's seam read consumes it.
  */
 const props = withDefaults(
     defineProps<{
         /**
-         * BA.W-DOCK-SECTIONS — the seam-locator affordance (direction (b): the
+         * the seam-locator affordance (direction (b): the
          * separator IS the rail's anchor). When `anchor` is set the separator stamps a
          * `data-rail-anchor` marker so the enclosing `<GlassDock>` can read THIS
          * divider's measured offset within the dock-frame and seat the `#rail` line at

@@ -3,7 +3,7 @@
 //
 // Single-token recipe over --scale-hover (default 1.08). Replaces
 // `hover:scale-105`-style arbitrary-scale recipes across consumers
-// (13 sites in keyframes.js demo + 9 in words/frontend). Transition
+// across consuming demos. Transition
 // + easing bind to --duration-fast + --ease-standard.
 import { Heart, Sparkles, Star, Zap } from "@lucide/vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
@@ -19,7 +19,7 @@ import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
         >
             <ShowcaseFrame pad="lg">
                 <div class="flex flex-wrap items-center justify-center gap-6">
-                    <!-- BC.W-STORYBOOK-META — the demo glyphs read the IDENTITY
+                    <!-- the demo glyphs read the IDENTITY
                          palette (`--section-color-N`), not raw Tailwind off-brand
                          hues (the stray-blue idiom-adherence sweep — the "WTF is
                          this blue" close). Each glyph pops one ramp stop. -->

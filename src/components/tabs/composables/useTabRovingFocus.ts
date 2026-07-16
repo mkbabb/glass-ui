@@ -2,8 +2,8 @@ import { computed, ref, watch } from "vue";
 import type { ComputedRef, Ref } from "vue";
 
 /**
- * The minimal roving option shape — the machine reads ONLY `value` + `disabled`
- * (BI.W-DOCK-CONTROLS decoupled it from `SegmentedTabOption` so the shared
+ * The minimal roving option shape reads only `value` + `disabled`, decoupling it
+ * from `SegmentedTabOption` so the shared
  * headless `useSelectionGroup` can compose it VERBATIM over its generic option
  * type). Any richer option (the tabs' `SegmentedTabOption`) is structurally
  * assignable.
@@ -16,10 +16,10 @@ export interface RovingSelectionOption {
 export type TabActivation = "automatic" | "manual";
 
 /**
- * Package-private composable for `SegmentedTabs.vue` — BG.W-COLOCATE (the WS4
+ * Package-private composable for `SegmentedTabs.vue` —  (the
  * roving-focus/responsive carve; ratchet-drain #13). The WAI-ARIA tablist/toolbar
  * roving-tabindex keyboard machine lives here, carved out of the SFC to hold the
- * no-god-module bound. BI.W-DOCK-CONTROLS composes it VERBATIM inside the shared
+ * no-god-module bound.  composes it VERBATIM inside the shared
  * headless `useSelectionGroup` (the dock IS SegmentedTabs/ToggleGroup wearing
  * chrome — ONE roving machine, never re-forked). The SFC IMPORTS it and binds
  * `:tabindex="rovingTabindex(idx)"` + `@keydown="onStripKeydown"` in its template.

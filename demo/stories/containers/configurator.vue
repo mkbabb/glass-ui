@@ -38,8 +38,8 @@ const mediums = ["aurora", "ink", "gouache"] as const;
 // The triad reads INDIRECT `--bloom-*` tokens (defined on `.configurator-specimen`)
 // so the SAME geometry paints the pale pastels over the light cream stage and
 // the SATURATED rainbow hues over the dark stage — a low-chroma pastel mixed
-// toward transparent over a near-black field reads as desaturated mud (the
-// FD-R2 #3 dark defect), so dark mode swaps to the full-chroma ramp + a deep
+// toward transparent over a near-black field reads as desaturated mud, so dark
+// mode swaps to the full-chroma ramp and a deep
 // base, recovering the chromatic bloom.
 const MEDIUM_HUES: Record<string, readonly [string, string, string]> = {
     aurora: ["var(--bloom-blue)", "var(--bloom-indigo)", "var(--bloom-violet)"],
@@ -77,7 +77,7 @@ const mediumOpen = ref(false);
 // nuclei apart; bloom feathers each blob's radius + blur.
 const hues = computed(() => MEDIUM_HUES[cfg.config.medium] ?? MEDIUM_HUES.aurora!);
 
-// BD.W-CONFIG-GALLERY-DOCK — the device-free preset field-well. Each gallery tile
+// the device-free preset field-well. Each gallery tile
 // paints its preset's field from the SAME medium hue triad the live stage uses —
 // a layered radial-gradient over a base fill, ZERO GL device, deterministic, never
 // blank, identical Chrome ⇄ Safari (the §4.1 Tier-0 idea applied to the demo
@@ -85,7 +85,7 @@ const hues = computed(() => MEDIUM_HUES[cfg.config.medium] ?? MEDIUM_HUES.aurora
 // distinct, mirroring the live-stage geometry at a thumbnail scale.
 // The well reads the RESOLVABLE `--rainbow-pastel-*` tokens directly (the `--bloom-*`
 // indirection is scoped to `.configurator-specimen`, undefined on the gallery tile —
-// so `color-mix(... var(--bloom-blue) ...)` would fall to transparent and the well
+// so `color-mix(... var(--bloom-blue)...)` would fall to transparent and the well
 // would read flat cream). Each medium maps to a concrete pastel triad here.
 const WELL_HUES: Record<string, readonly [string, string, string]> = {
     aurora: [
@@ -177,7 +177,7 @@ const size = computed(() => (isNarrow.value ? "sm" : "md"));
                     @select-preset="cfg.selectPreset"
                     @reset="cfg.resetCurrent"
                 >
-                    <!-- BD.W-CONFIG-GALLERY-DOCK — the up-top warm-glass gallery
+                    <!-- the up-top warm-glass gallery
                          dock, presets that RENDER device-free. Each tile is a
                          `.glass-capsule` cel (the §3 field reads through) over a
                          per-preset CSS field-well; the toggle-button a11y pattern
@@ -320,7 +320,7 @@ const size = computed(() => (isNarrow.value ? "sm" : "md"));
 /* The bloom hue triad reads INDIRECT tokens so the SAME stage geometry paints
    correctly in both modes. In light, the pale pastels over the cream stage are
    the lavender bloom. In dark the stage well goes near-black and a high-L
-   low-chroma pastel mixed toward transparent reads as desaturated mud (FD-R2 #3)
+   low-chroma pastel mixed toward transparent reads as desaturated mud
    — so dark swaps to the FULL-CHROMA `--rainbow-*` ramp and lays a deep base
    tint behind the bloom so the chroma has a field to assert against. */
 .configurator-specimen {

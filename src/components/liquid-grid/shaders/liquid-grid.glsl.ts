@@ -1,5 +1,5 @@
-// BC.W-VIZ-PAPERGRID — the liquid-grid fullscreen fragment pass (WebGL2 GLSL FALLBACK;
-// the genuinely-absent-tail path, never demoed where WebGPU is present).
+// The LiquidGrid fullscreen fragment pass is the WebGL2 fallback,
+// used only where WebGPU is absent.
 //
 // The aurora/concentric-class clean twin: a fullscreen fragment pass that evaluates the SAME
 // liquid grid the WGSL primary does (transcribing `composables/liquidGrid.ts`), splicing the
@@ -50,7 +50,7 @@ uniform vec4  uWave;          // (waveDirX, waveDirY, waveK, waveOmega)
 uniform vec4  uWave2;         // (waveSigma, twistMax, _pad, amp) — affine sheet-warp envelope
 uniform vec3  uLineColor;     // linear-sRGB ink
 uniform vec3  uBg;            // linear-sRGB themed bg
-// ── The FACE (BD.W-PAPERGRID-FACE) — the height-lit filled cell interior ──
+// ── The FACE — the height-lit filled cell interior ──
 uniform vec4  uFace;          // (faceAlpha, faceRelief, squashK, baseInset)
 uniform vec2  uLightDir;      // the cel key-light direction
 uniform vec3  uFaceLo;        // linear-sRGB rose-umber trough (FOLD B, 3-stop)
@@ -122,7 +122,7 @@ float potentialFBM(vec2 p) {
 // The shared traveling-wave WARP chunk (waveField.glsl.ts — waveFlow/cursorSwirl/
 // travelingEnvelope + the FACE leaf; spliced AFTER valueNoise + potentialFBM bodies + the curlFBM
 // chunk). liquid-grid + concentric read the SAME waveFlow continuous affine sheet-warp (the DRY
-// coupling — a leaf tune moves both, never the retired per-cell twist / LINE-warp).
+// coupling — a leaf tune moves both, never the retired per-cell twist or line warp).
 ${WAVE_FIELD_GLSL}
 
 // ── §1 The Ben Golus derivative-AA grid coverage (transcribes liquidGrid.ts gridCoverage) ──
@@ -147,7 +147,7 @@ void main() {
   // no per-cell seam); cursorSwirl twists the cells about the finger. The Golus dv reads the FINAL
   // warped coord (the crisp-line fence survives).
   vec2 g0 = uv * uGridScale;
-  // BG.W-GRID-AFFINE — g0 is CELL-scale, so pass the tiny 0.03 curl-sampling frequency (== the JS
+  // g0 is cell-scale, so pass the tiny 0.03 curl-sampling frequency (== the JS
   // LIQUID_GRID_WARP_FREQ) so the warp is locally affine at the cell scale (major lines bow as ONE
   // smooth curve, no sub-cell crackle). Concentric passes 0.6 (its p is unit-scale).
   vec2 g = waveFlow(g0, uTime, uWave.xy, uWave.z, uWave.w, uWave2.x, uWave2.y, uWave2.w, 0.03);
@@ -167,7 +167,7 @@ void main() {
   float major = gridCoverage(g / me, uGrid.y, dv / me);
   float line = max(minor * uGrid.z, major * uGrid.w);
 
-  // ── The FACE (BD.W-PAPERGRID-FACE) — height-lit filled cell interior ──────────────────
+  // ── The FACE — height-lit filled cell interior ──────────────────
   // Sample height/relief at the WARPED-space cell center (floor(g)+0.5, the cell the fragment
   // lands in under the affine warp); Lambert the ∇H slope against the fixed cel key-light; squash
   // the inset so the crest face inflates; multi-stop warm-divergent ramp keyed on mix(shade, h)

@@ -1,5 +1,5 @@
 import { computed, onScopeDispose, ref, watch } from "vue";
-import { useReducedMotion } from "../../../composables/motion/useReducedMotion";
+import { useReducedMotion } from "../../../composables/motion/core/useReducedMotion";
 import type { TypewriterOptions, TypewriterWord, CancellationToken } from "../types";
 import { DEFAULTS } from "../types";
 import { calculateKeyDelay } from "../utils/keyboard";

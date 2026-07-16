@@ -60,7 +60,7 @@ const chartTileSwatches: { id: string; hint: string; cssVar: string }[] = [
 
         <StorySection
             label="resolved drift"
-            blurb="Pre-V the storybook referenced --viz-topology and --viz-recursion — neither token exists in the canon. This page replaces those references with the canonical chart aliases above. See `foundations/colors.vue` for the full viz-basis set."
+            blurb="These chart aliases form the supported palette for topology and recursive views. See Colors for the full visualization basis."
         />
     </StoryPage>
 </template>

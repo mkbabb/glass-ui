@@ -1,4 +1,4 @@
-// BC.W-AX-COMPLETION-SEAL — the one-shot draw lifecycle.
+// One-shot draw lifecycle.
 //
 // The seal's MOTION is CSS-driven: the recipe (completion-seal.css) runs the
 // `--seal-draw`/`--seal-scale`/`--seal-glint` `@property` animations under the
@@ -23,7 +23,7 @@ import {
     watch,
     type Ref,
 } from "vue";
-import { useReducedMotion } from "../../../composables/motion/useReducedMotion";
+import { useReducedMotion } from "../../../composables/motion/core/useReducedMotion";
 
 export interface UseCompletionSealOptions {
     /**

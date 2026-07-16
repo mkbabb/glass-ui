@@ -17,7 +17,7 @@ import { Input } from "@glass/components/input";
 import { Label } from "@glass/components/label";
 import { LoaderCircle } from "@lucide/vue";
 
-// BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2
+// reconcile — the containers band's ONE coherent --section-color-2
 // blue identity. PH3-safe (inline borderLeft, not the border-l-[3px] +
 
 const confirmOpen = ref(false);
@@ -345,6 +345,6 @@ function guardConfirmDismiss(event: Event) {
                     </div>
                 </div>
             </StorySection>
-        
+
     </StoryPage>
 </template>

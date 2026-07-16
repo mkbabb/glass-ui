@@ -5,7 +5,7 @@
  * constraint). `acquirePointerCapture` is the optimization layer: a successful
  * `setPointerCapture` routes move/up events to the captured element, but it is
  * NOT the drag's primary path — the document `pointermove`/`pointerup` listeners
- * carry the drag unconditionally (AV.W1.1b). Capture failure is SURFACED (not
+ * carry the drag unconditionally. Capture failure is surfaced rather than
  * swallowed) via the returned boolean + a once-per-process dev warning, so a
  * consumer can observe the degraded-but-correct path.
  */

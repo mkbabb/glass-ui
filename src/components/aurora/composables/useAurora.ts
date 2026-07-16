@@ -10,8 +10,8 @@ import {
 } from "vue";
 import { createAurora, type AuroraRuntime, type AuroraRuntimeOptions } from "./runtime";
 import { asGetter, type ConfigSource } from "./configSource";
-import { useIntersectionPause } from "../../../composables/motion/useIntersectionPause";
-import { useScrollProgress } from "../../../composables/motion/useScrollProgress";
+import { useIntersectionPause } from "../../../composables/motion/core/useIntersectionPause";
+import { useScrollProgress } from "../../../composables/motion/scroll/useScrollProgress";
 import type { AuroraConfig } from "../constants/presets";
 import {
     cssRenderer,
@@ -37,8 +37,7 @@ export interface UseAuroraAdaptiveOptions {
 /**
  * Public return shape of {@link useAurora}.
  *
- * O.W4 Lane B — Fix 2 (Rγ L2): authored to replace the previous anonymous
- * inline-typed literal. Parallels sibling composable return interfaces
+ * Named return shape replacing the previous anonymous inline type. Parallels sibling composable return interfaces
  * (`ConfiguratorState<T>`, `SidebarState`, `UseSortableReturn`); consumers
  * can now annotate variables holding `useAurora` results without reaching
  * for `ReturnType<typeof useAurora>`.
@@ -211,7 +210,7 @@ export function useAurora(
         if (inst !== runtime || rendererStatus.value.engine === "css") return;
         isArmed.value = true;
 
-        // BI.W-AURORA-VIBRANCY (GAP-ARM) — the cold-load arm-replay. On the DEFERRED path
+        // Cold-load arm replay. On the deferred path
         // the instance is CONSTRUCTED with `getCfg()` at mount but `arm()` runs later (past
         // first paint, gated on intersection). A config change in THAT window — a preset
         // switch before the canvas armed — is captured neither by construction (stale) nor

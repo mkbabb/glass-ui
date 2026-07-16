@@ -7,9 +7,8 @@ import type { TimelineSegment } from "./types";
  * <SegmentedTimeline> — adjacent gradient bands with boundary dots.
  *
  * Internal variant SFC dispatched from <GlassTimeline variant="segmented">.
- * Per Z.W2.T1 / A2 §B5. Speedtest consumes this as a 3-cell
- * (ping/download/upload) progress timeline; gradient endpoints map to
- * per-phase chart-color tokens. Visual shape: N rectangles in a row.
+ * Suitable for compact multi-phase progress timelines. Gradient endpoints
+ * map to per-phase chart-color tokens. Visual shape: N rectangles in a row.
  *
  * Each cell owns its own gradient background and per-state fill; the
  * boundary dot is a button anchored to the right edge of each cell
@@ -32,7 +31,7 @@ const emit = defineEmits<{
 const segmentList = computed<TimelineSegment[]>(() => props.segments ?? []);
 
 /**
- * BD.W-TIMELINE-RAIL-UNIFY (LEG 1) — resolve a segment's single
+ * Resolve a segment's single
  * representative cel hue for the tinted-GLASS cel `--cel-accent`. RETIRES the
  * opaque `gradientFor(seg)` `chart-*` fill: a `{from,to}` pair contributes its
  * `to` (the saturated phase hue); a raw CSS string is not parseable into a
@@ -120,9 +119,7 @@ function onSegmentClick(seg: TimelineSegment) {
    button anchored to the right edge of each cell (the boundary
    between this cell and the next, or the timeline terminus).
 
-   Per Z.W2.T1 / A2 §B5. Speedtest consumes this as a 3-cell
-   (ping/download/upload) progress timeline; gradient endpoints map
-   to per-phase chart-color tokens. */
+   Gradient endpoints map to per-phase chart-color tokens. */
 .timeline-segmented {
     padding: 0;
     flex: 1 1 0;
@@ -131,7 +128,7 @@ function onSegmentClick(seg: TimelineSegment) {
 
 /* The segmented lane COMPOSES `.timeline-rail` (warm-glass, from the
    dispatcher's shared register) — this scoped block carries ONLY the
-   segmented-local layout. BD.W-TIMELINE-RAIL-UNIFY (LEG 1+3): the rail is
+   segmented-local layout. The rail is
    PAINTED (warm lane); the `--timeline-segment-gap` between cels reveals the
    RAIL (the iOS battery/storage tinted-lane read — NOT N independent
    capsules). Height rides the √φ ladder's segmented rung (h/√φ). The cels are
@@ -180,13 +177,13 @@ function onSegmentClick(seg: TimelineSegment) {
        a final cap. */
     right: 0;
     transform: translate(50%, -50%);
-    /* AB.W2.T1 — include the dot's border in its 14px box so the
+    /* Include the dot's border in its 14px box so the
        perceived centre coincides with the math centre. */
     box-sizing: border-box;
     width: var(--timeline-dot-size, 14px);
     height: var(--timeline-dot-size, 14px);
     border-radius: 50%;
-    /* BD.W-TIMELINE-RAIL-UNIFY (LEG 3) — the segmented dot FLOATS above the
+    /* The segmented dot floats above the
        lane (independence). A warm-glass fill + the keyed rim + a
        `.shadow-cartoon-sm` cast (the cast offsets DOWN, opposite the upper
        key-light, so it coheres with the one key). Warm, not gray. */
@@ -206,7 +203,7 @@ function onSegmentClick(seg: TimelineSegment) {
         box-shadow var(--duration-fast) var(--ease-standard);
 }
 
-/* AC.W6d F2.I-04 — WCAG 2.5.5 target-size compliance.
+/* WCAG 2.5.5 target-size compliance.
    The 14px dot grows an invisible 44×44 pointer hit-area via a
    `::before` pseudo: `inset: -15px` extends 15px on each side
    (14 + 15 + 15 = 44px exactly), satisfying WCAG 2.5.5 (level AAA)

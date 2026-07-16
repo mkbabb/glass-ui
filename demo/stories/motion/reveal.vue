@@ -1,7 +1,7 @@
 <script setup lang="ts">
-// BB.W-DEMO-DESIGN — the reveal pane: routed through <StorySection heading> (the
-// W-HIERARCHY2 census catches the prior hand-rolled top-level text-prose), and
-// promoted to the W-LIQUID-REVEAL FLAGSHIP — a bloom-from-source overlay demo
+// the reveal pane: routed through <StorySection heading> (the
+//  census catches the prior hand-rolled top-level text-prose), and
+// promoted to the FLAGSHIP — a bloom-from-source overlay demo
 // (the iOS-27 surface that materializes FROM its trigger's rect, composing the
 // shipped `useLiquidReveal` leaf — NO demo-local re-implementation) alongside the
 // `v-reveal` stagger directive it always documented. The `v-reveal` scoped CSS is
@@ -11,10 +11,10 @@
 import { ref, type ComponentPublicInstance } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
-import { vReveal } from "@glass/composables/motion/vReveal";
-import { useLiquidReveal } from "@glass/composables/motion/useLiquidReveal";
-import { springPreset } from "@glass/composables/motion/springPresets";
-import { springProjection } from "@glass/composables/motion/springProjection";
+import { vReveal } from "@glass/composables/motion/reveal/vReveal";
+import { useLiquidReveal } from "@glass/composables/motion/reveal/useLiquidReveal";
+import { springPreset } from "@glass/composables/motion/spring/springPresets";
+import { springProjection } from "@glass/composables/motion/spring/springProjection";
 import { Button } from "@glass/components/button";
 
 const replayKey = ref(0);
@@ -29,7 +29,7 @@ function replay() {
 
 const rows = ["Discover", "Compose", "Refine", "Ship", "Measure", "Iterate"];
 
-// ── The W-LIQUID-REVEAL bloom-from-source flagship ────────────────────────────
+// ── The bloom-from-source flagship ────────────────────────────
 // The overlay blooms FROM the trigger button's rect (scale + fade + blur-settle on
 // the snappy spring), composing the shipped useLiquidReveal leaf — the iOS-27
 // materialize-from-source move. The trigger is a `<Button>` COMPONENT, so the ref is
@@ -95,7 +95,7 @@ function toggleBloom() {
                         v-reveal:fade="i + 1"
                         class="glass-card flex items-center gap-3 px-5 py-3"
                     >
-                        <!-- BA.W-SUFFUSE2 — the motion band's ONE coherent violet event
+                        <!-- the motion band's ONE coherent violet event
                          (--motion-accent, the demo-local --viz-legendre twin): a
                          leading stagger marker. The row label stays ink. -->
                         <span class="size-2 rounded-pill bg-[var(--motion-accent)]" />

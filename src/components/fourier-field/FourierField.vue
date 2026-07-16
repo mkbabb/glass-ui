@@ -4,7 +4,7 @@ import type { ColorResolver, OklchStop } from "../../composables/color";
 import { cssToOklch } from "../../composables/color";
 import { resolveTokenColor } from "../../composables/dom";
 import { useGlobalDark } from "../../composables/dark";
-import { useRoutePointer } from "../../composables/motion/useRoutePointer";
+import { useRoutePointer } from "../../composables/motion/pointer/useRoutePointer";
 import { mulberry32, hashString } from "../../composables/glass/procedural/prng";
 import {
     makeEllipticSpectrum,
@@ -20,13 +20,12 @@ import type { RendererStatus } from "../../composables/glass/webgpu/rendererStat
 const emit = defineEmits<{ rendererStatus: [status: RendererStatus] }>();
 
 /**
- * FourierField — a Fourier epicycle field on the GPU substrate (BC.W-VIZ-FOURIER), a
+ * FourierField — a Fourier epicycle field on the GPU substrate, a
  * sibling primitive to Aurora, GooBlob, and DotFlowField. A chain of rotating circles
  * stacked tip-to-tail draws the reconstructing partial-sum curve; a glowing comet head
  * leads the fading trail. WebGPU-FIRST: the compute pass writes the partial-sum curve +
  * the epicycle chain tips, the fullscreen-fragment render pass composites the SDF field; a
- * WebGL2 GLSL twin is the genuinely-absent-tail fallback (the §E "WebGPU everywhere"
- * mandate — the Canvas2D renderer is RETIRED). It composes `useFourierField` → the
+ * WebGL2 GLSL twin is the fallback. It composes `useFourierField` with the
  * `createGpuSubstrate` picker over the ONE canvas lifecycle leaf (offscreen-pause, live-PRM
  * freeze, consumer-owned DPR) and the SHARED `usePointerVelocityField` (the pointer SCRUBS
  * the reconstruction).
@@ -34,8 +33,7 @@ const emit = defineEmits<{ rendererStatus: [status: RendererStatus] }>();
  * The DEFAULT palette is the warm-cream library identity (`--viz-fourier` warm-amber); a
  * demo Teal/cool preset stays demo-LOCAL (presets-in-consumers — never a library token).
  *
- * The `variant: "hero"|"final"` prop is RETIRED (BC.W-VIZ-FOURIER — the bundles fold into
- * config presets, MIGRATION row). An ambient-background consumer passes `color` (+ the
+ * Visual bundles live in config presets. An ambient-background consumer passes `color` and the
  * `colorResolver`) for a thin warm default preserving the recessive look; the studio passes
  * the full `config` + `spectrum` + `getPalette`.
  */
@@ -69,17 +67,16 @@ const canvasRef = useTemplateRef<HTMLCanvasElement>("canvasRef");
 
 const { isDark } = useGlobalDark();
 
-// BI.W-FIELD-CORE — the route pointer BROADCASTER (the interactive-background standard). A
+// the route pointer BROADCASTER (the interactive-background standard). A
 // full-bleed `pointer-events:none` field cannot listen for its own pointer; it reads the ONE
 // capture-phase window listener the route provides (StoryHero) and feeds the shared field.
 const route = useRoutePointer();
 
-// The effective config — the passed config, or the warm-identity default; the ambient
-// `intensity` prop overrides when set. BI.W-FIELD-CORE — the hard `interactive=false` gate
-// (line 78, the ambient dead-flow) is RETIRED: an ambient consumer (no config) is now the
+// The effective config is the passed config or warm-identity default; the ambient
+// `intensity` prop overrides when set. An ambient consumer without config uses the
 // SUBTLE-INTERACTIVE background register — the field responds to the route pointer (a subtle
 // centroid lean) while the CANVAS stays `pointer-events:none` (the route broadcaster captures
-// at the window, so the field never eats the page's hit-testing).
+// at the window, so the field never consumes page hit-testing).
 const cfg = computed<FourierFieldConfig>(() => {
     const base = props.config ?? DEFAULT_FOURIER_CONFIG;
     const intensity =
@@ -112,7 +109,7 @@ const routePointerRead = props.config
 // makeEllipticSpectrum runs in JS; the WGSL only SUMS the uploaded phasor table).
 const spectrum = computed<readonly BasisComponent[]>(() => {
     if (props.spectrum && props.spectrum.length > 0) return props.spectrum;
-    // BG.W-FOURIER-BEAUTY B2 — a `source` naming a curated closed-figure recipe generates a
+    //  B2 — a `source` naming a curated closed-figure recipe generates a
     // DELIBERATE flower/epicycle figure (integer-index → closes by construction), not the
     // "boring" random ellipse. The default `source: "elliptic"` keeps the seeded generator.
     const figure = FOURIER_FIGURES[cfg.value.source];
@@ -126,7 +123,7 @@ const spectrum = computed<readonly BasisComponent[]>(() => {
 });
 const getSpectrum = (): readonly BasisComponent[] => spectrum.value;
 
-// AW.W13 seam — resolve a `var(--token)`/`light-dark()` color to a concrete value BEFORE
+// Resolve a `var(--token)`/`light-dark()` color to a concrete value before
 // reading it (value.js cannot parse a `var()` wrapper). The host element resolves the
 // cascade through the SHARED un-wrap leaf (`resolveTokenColor` — the ONE
 // getComputedStyle-paint-and-read path the aurora/blob ColorResolver seam uses); the
@@ -134,8 +131,7 @@ const getSpectrum = (): readonly BasisComponent[] => spectrum.value;
 // a real CSS property resolves through the cascade), so it is folded into the leaf's
 // scope here. A `var()`/`light-dark()` wrapper that did NOT resolve concretely (the host
 // is not yet mounted — the immediate watch fires in setup() before `hostRef`) is NOT
-// handed to value.js (it cannot parse the wrapper and throws); the caller keeps the prior
-// warm-identity palette until the on-mount resolve lands.
+// handed to value.js; the caller keeps the warm-identity palette until mount resolves it.
 function resolveColorString(css: string): string {
     if (!css.includes("var(") && !css.includes("light-dark(")) return css;
     const el = hostRef.value;
@@ -164,7 +160,7 @@ function refreshPalette(): void {
         const resolved = resolveColorString(props.color);
         // Guard the value.js parse: an UNRESOLVED `var()`/`light-dark()` wrapper (the
         // host is not yet mounted) cannot be parsed by value.js (it throws on a `var()`
-        // reference). Keep the prior warm-identity palette and re-resolve on mount.
+        // reference). Keep the warm-identity palette and re-resolve on mount.
         if (resolved.includes("var(") || resolved.includes("light-dark(")) return;
         const base = cssToOklch(resolved);
         resolvedPalette.value = [
@@ -177,12 +173,9 @@ function refreshPalette(): void {
 }
 const getPalette = (): OklchStop[] => resolvedPalette.value;
 
-// BD.W-VIZ-BROKEN-FIX D1 — pass a LIVE forward-through config (the GooBlob `renderConfig`
-// Proxy idiom, the fourier analogue). `cfg` is a `computed<FourierFieldConfig>` over
-// `props.config` + the intensity/interactive overrides; `cfg.value` SPREADS the live
-// reactive getters into a FROZEN snapshot read ONCE — so the renderer's per-frame setups
-// (which read `config.harmonics`/`.intensity`/… off the captured reference) never saw a
-// control edit (the "options do not even work" defect). The Proxy forwards EVERY reflection
+// Pass a live forward-through config. `cfg` is a `computed<FourierFieldConfig>` over
+// `props.config` plus intensity/interactive overrides; spreading `cfg.value` would freeze
+// its getters. The proxy forwards every reflection
 // (get/has/ownKeys/getOwnPropertyDescriptor — the setups spread/enumerate `config` in
 // places, so a bare `get`-only Proxy over `{}` would enumerate empty) to `cfg.value`, so
 // the per-frame reads track every configurator edit with NO re-feed wiring.
@@ -193,16 +186,13 @@ const renderConfig = new Proxy({} as FourierFieldConfig, {
     getOwnPropertyDescriptor: (_t, key) =>
         Reflect.getOwnPropertyDescriptor(cfg.value, key),
 });
-// BI.W-FOURIER-RIBBON — the per-frame `--ff-head-xy`/`--ff-head-hue` setProperty restyle
-// bridge is RETIRED (the (b) perf attribution): it drove a CSS phosphor-bloom SPRITE that had
-// ZERO live consumer, paying a style recalc every frame for nothing. The comet head is painted
-// by the GPU head quad (the instanced ribbon's head layer), never a per-frame CSS restyle.
+// The comet head is painted by the GPU head quad, not a per-frame CSS restyle.
 const renderer = useFourierField(canvasRef, {
     config: renderConfig,
     getSpectrum,
     getPalette,
     freeze: () => props.freeze,
-    // BI.W-FIELD-CORE — the ambient field reads the route broadcaster (the canvas is
+    // the ambient field reads the route broadcaster (the canvas is
     // pointer-events:none; the studio owns its host listeners so this is undefined there).
     routePointer: routePointerRead,
 });

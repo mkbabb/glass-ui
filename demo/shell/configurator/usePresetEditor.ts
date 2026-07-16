@@ -1,6 +1,6 @@
 // demo/shell/configurator/usePresetEditor.ts — thin façade.
 //
-// O.W3 Lane C — the prior 657-line god-module was split into 6 cohesive
+// The former monolith was split into six cohesive
 // sub-modules under `./preset-editor/`. This façade preserves the exact
 // public surface the demo consumes (`./index.ts` barrel + `PresetEditor.vue`).
 //

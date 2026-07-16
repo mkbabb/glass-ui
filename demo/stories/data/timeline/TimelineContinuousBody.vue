@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// BG.W-DEMO-DUP-MERGE (F7.3) — the Timeline CONTINUOUS register body, extracted from
+// Timeline continuous-register body composed by
 // the retired routed `timeline-continuous.vue` wrapper (the StoryPage chrome stripped;
 // composed as one <StorySection> register inside data/timeline.vue). PascalCase =
 // composed-by helper (off the no-orphan bijection), never a route.
@@ -272,7 +272,7 @@ function legendBackground(seg: TimelineSegment): string {
 /* Fade-swap choreography for the #detail slot. The transition name
    `phase-detail` keys both the leave and the enter so segment-to-segment
    swaps (and active ↔ idle swaps) animate
-   identically. PRM users skip the cross-fade. */
+   identically. Reduced-motion users skip the cross-fade. */
 .phase-detail-enter-active,
 .phase-detail-leave-active {
     transition:

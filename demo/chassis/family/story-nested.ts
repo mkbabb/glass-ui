@@ -1,7 +1,7 @@
 import type { InjectionKey } from "vue";
 
 /**
- * BG.W-DEMO-IA-REDESIGN — the family-collapse nesting seam.
+ * the family-collapse nesting seam.
  *
  * A FAMILY page (`forms/inputs`, `data/metrics`, `motion/text-motion`, …) shows N
  * component-family members on ONE surface via `<FamilyTabs>`. Each member is its

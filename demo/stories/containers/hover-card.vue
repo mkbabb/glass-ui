@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// BI.W-OVERLAY-UNION — HoverCard folded onto the sealed <Popover trigger="hover">
+// HoverCard folded onto the sealed <Popover trigger="hover">
 // union (the Kronecker fold: 3 overlays → 1). A hover-reveal preview card is the
 // union under trigger="hover" (role="group" + aria-label). Tooltip
 // SURVIVES the fold as a distinct, terse description mechanism.
@@ -8,7 +8,7 @@ import StorySection from "../../chassis/section/StorySection.vue";
 import { Popover, PopoverContent, PopoverTrigger } from "@glass/components/popover";
 import { Avatar, AvatarFallback, AvatarImage } from "@glass/components/avatar";
 
-// BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2
+// reconcile — the containers band's ONE coherent --section-color-2
 // blue identity. PH3-safe (inline borderLeft, not the border-l-[3px] +
 </script>
 

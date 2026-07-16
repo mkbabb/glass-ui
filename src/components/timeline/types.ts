@@ -1,10 +1,10 @@
 /**
  * Timeline primitive types — segmented + continuous variants.
  *
- * Per Z.W2.T1 / A2 §B5 + AA.W1 / A4 §S-17. The default `scrubber` variant
+ * The default `scrubber` variant
  * (single-track YouTube-style scrubber) keeps its original numeric model;
- * `segmented` (Z.W2) renders adjacent gradient bands with hover/click dots;
- * `continuous` (AA.W1) renders ONE pill rail with N absolute-positioned
+ * `segmented` renders adjacent gradient bands with hover/click dots;
+ * `continuous` renders one pill rail with N absolute-positioned
  * region children. Both array-variants consume the same `TimelineSegment[]`
  * data shape — only the rendering geometry differs.
  */

@@ -41,7 +41,7 @@ export interface ConstellationFieldState {
 }
 
 /**
- * Build the per-instance field state. The focal node (AX.W17) is engine-owned:
+ * Build the per-instance field state. The focal node is engine-owned:
  * `focalIndex` names the pinned node, `warp` is the per-axis critically-damped
  * spring the engine steps inside `stepField`. `wander`/`gravityWell` absent/false
  * leaves `field.wander`/`field.well` undefined (byte-identical to HEAD — stepField
@@ -57,7 +57,7 @@ export function createConstellationField(
     pinnedDrift: PinnedDriftProp = false,
     warpAutoRelease = false,
 ): ConstellationFieldState {
-    // The PINNED node designation (AZ.W-CON-GEN G1) — `false`/absent → -1 (no pin,
+    // The pinned node designation: `false`/absent → -1 (no pin,
     // byte-identical); `true` → index 0 (the canonical flagged node); a number → that
     // index. The pinned node is seeded like any other (it consumes the rng stream),
     // then HELD by every step pass.
@@ -77,7 +77,7 @@ export function createConstellationField(
         warpAutoRelease: !!warpAutoRelease,
     };
 
-    // The autonomous pinned-anchor drift (AZ.W-CON-GEN G5). Absent/false leaves
+    // The autonomous pinned-anchor drift. Absent/false leaves
     // `field.pinnedDrift` undefined (the pinned node holds dead-still — byte-identical);
     // `true`/an object seeds the cold cadence state (the anchor is captured on the first
     // armed frame off the pinned node's seeded position). The on-mount token read
@@ -86,7 +86,7 @@ export function createConstellationField(
         ? makePinnedDrift(pinnedDrift === true ? {} : pinnedDrift)
         : undefined;
 
-    // The auto-DRIFT cadence (AY.W-CON1). `nextAt` arms on the first stepped frame,
+    // The auto-drift cadence. `nextAt` arms on the first stepped frame,
     // so there is no immediate jump on mount.
     const wanderOverride = wander && wander !== true ? wander : {};
     const wanderState: ConstellationWander | undefined = wander
@@ -98,7 +98,7 @@ export function createConstellationField(
         : undefined;
     field.wander = wanderState;
 
-    // The gravity-well state (AY.W-CON2). The cfg is seeded from the built-in
+    // The gravity-well state. The config is seeded from the built-in
     // defaults here; the on-mount token-read re-points the un-overridden members,
     // with the PROP override (`wellOverride`) winning over both. `x = -1`
     // (inactive), `strength = target = 0` (cold) until the held-timer arms the well.

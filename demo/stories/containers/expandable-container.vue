@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // ExpandableContainer — in-place vs Teleport-to-body fullscreen, with the
 // body-overflow lock-depth counter so adjacent expanded hosts don't collide.
-// BC.W-EXPANDABLE-PART — the chrome-hook seam: a consumer re-skins the trigger
+// the chrome-hook seam: a consumer re-skins the trigger
 // via the contracted `[data-part]` descendant selector (no `:deep()`) AND replaces
 // the fullscreen-overlay chrome via the `#fullscreen-chrome` named slot — the
 // body-lock + teleport + Escape-to-exit stay the SFC's (the consumer changes the
@@ -12,7 +12,7 @@ import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import { ExpandableContainer } from "@glass/components/expandable-container";
 import { Maximize2, X } from "@lucide/vue";
 
-// BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2
+// reconcile — the containers band's ONE coherent --section-color-2
 // blue identity. PH3-safe (inline borderLeft, not the border-l-[3px] +
 </script>
 
@@ -156,7 +156,7 @@ import { Maximize2, X } from "@lucide/vue";
 </template>
 
 <style>
-/* BC.W-EXPANDABLE-PART — the contracted `[data-part]` re-skin hook reached via a
+/* the contracted `[data-part]` re-skin hook reached via a
    PLAIN descendant selector (NOT a `:deep()` scope leak). The `data-part` is a
    light-DOM contracted public surface, so a consumer styles it from its own
    (unscoped) stylesheet — this re-paints the expand glyph on the `.reskinned`

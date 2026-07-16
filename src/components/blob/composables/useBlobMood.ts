@@ -9,7 +9,7 @@ import { easeInOut } from "./easing";
 // moods are not hand-tuned in isolation — they read off one principled surface
 // (excited = high arousal + high valence, sleepy = low arousal, etc.).
 //
-// AX.W46 D7 — the manual/auto precedence. `setMood(mood, { source })` records whether
+// Manual/auto precedence. `setMood(mood, { source })` records whether
 // the retarget came from the autonomic arc (`update` → source "auto") or the public
 // expose (source "manual"). A MANUAL setMood arms a `manualOverride` latch that sits
 // ABOVE the auto-arc: `update` EARLY-RETURNS while the latch holds, so the autonomic
@@ -51,7 +51,7 @@ export interface MoodInteraction {
 }
 
 /**
- * Who is driving a `setMood` retarget (AX.W46 D7). `"auto"` — the autonomic arc
+ * Who is driving a `setMood` retarget. `"auto"` — the autonomic arc
  * (`update` from the pointer/idle state); `"manual"` — the public expose (an imperative
  * `setMood` from a consumer / the demo mood pills). A manual retarget arms the
  * `manualOverride` latch the auto-arc respects.
@@ -67,8 +67,8 @@ export interface SetMoodOptions {
 /**
  * Animates the blob's mood parameters — a cross-fade between named mood targets
  * driven per frame by `tick(dt)`. `setMood(mood, { source })` retargets (a `"manual"`
- * source — the default — pins the mood above the auto-arc, AX.W46 D7);
- * `update(interaction)` drives the AUTONOMIC arc from the AW.W10 pointer/idle state
+ * source — the default — pins the mood above the auto arc;
+ * `update(interaction)` drives the autonomic arc from pointer and idle state
  * (curious on approach, excited on click, sleepy after inactivity), always
  * `source: "auto"`, and early-returns while a manual mood is pinned; `params` is the
  * eased current value the renderer reads.
@@ -84,7 +84,7 @@ export function useBlobMood() {
     let transitioning = false;
     // A one-shot `excited` latch — a click holds excited briefly before it relaxes.
     let excitedHoldMs = 0;
-    // AX.W46 D7 — the manual-mood latch (the generalization of `excitedHoldMs` from a
+    // Manual-mood latch (the generalization of `excitedHoldMs` from a
     // one-shot timed hold into a held override). `true` while a manual `setMood` is
     // pinned; `update` early-returns and does NOT auto-drive over it. Released on a
     // genuine fresh interaction signal (a fresh click or pointer-over the live canvas),
@@ -93,7 +93,7 @@ export function useBlobMood() {
     // The last-frame `pointerActive` — so `update` can detect a RISING-EDGE pointer-over
     // (a fresh entry releases the latch ONCE; a held hover does not keep re-releasing).
     let prevPointerActive = false;
-    // AX.W16 (arm 2) — the last `idleMs` seen by `update`. A PENDING idle→sleepy
+    // Last `idleMs` seen by `update`. A pending idle→sleepy
     // auto-mood arc (`idleMs` not yet past IDLE_SLEEP_MS while the current mood is not
     // already sleepy) must keep the quiescence loop ALIVE so the arc actually FIRES
     // (the "scheduled, not polled" hazard — a parked loop never re-evaluates `update`).
@@ -101,7 +101,7 @@ export function useBlobMood() {
     let lastIdleMs = 0;
 
     function setMood(mood: BlobMood, options: SetMoodOptions = {}) {
-        // A MANUAL retarget arms the override latch ABOVE the auto-arc (AX.W46 D7) —
+        // A manual retarget arms the override latch above the auto arc;
         // recorded BEFORE the no-op early-return so re-pinning the CURRENT mood still
         // (re-)arms the latch (a deliberate user pin must hold even if the mood matches).
         if ((options.source ?? "manual") === "manual") manualOverride = true;
@@ -120,7 +120,7 @@ export function useBlobMood() {
      * `sleepy`; otherwise `idle`. The internal AUTONOMIC caller of `setMood` (always
      * `source: "auto"`).
      *
-     * AX.W46 D7 — the manual-override precedence. A genuine FRESH interaction signal —
+     * Manual-override precedence. A fresh interaction signal
      * a fresh `clicked`, OR a RISING-EDGE `pointerActive` (the pointer just entered the
      * live canvas this frame) — RELEASES a pinned manual mood and hands control back to
      * the autonomic arc. While the latch holds (no fresh interaction), `update`
@@ -154,14 +154,14 @@ export function useBlobMood() {
     }
 
     /**
-     * AX.W16 (arm 2) — the mood is SETTLED (the quiescence loop may park) when it is
+     * The mood is settled (and the quiescence loop may park) when it is
      * NOT mid-transition, NOT holding an excited latch, AND has no PENDING auto-mood
      * arc. The pending arc: the current mood is not yet `sleepy` and the last-seen
      * `idleMs` is below IDLE_SLEEP_MS — i.e. an idle→sleepy retarget is still due. The
      * renderer keeps the loop alive (or wakes it at `nextAutoMoodMs`) until the arc
      * fires, so the scheduled mood drift is never starved by a parked loop.
      *
-     * AX.W46 D7 — a MANUAL override pinned to a NON-idle mood is NOT settled: its
+     * A manual override pinned to a non-idle mood is not settled: its
      * distinct mood animation (a faster orbit on `excited`, a calmer one on `sleepy`,
      * the brighter sheen on `happy`) must keep rendering rather than the loop parking
      * the moment the cross-fade completes — and the latch suppresses the auto-arc's
@@ -183,7 +183,7 @@ export function useBlobMood() {
      * The wall-ms until the next AUTO-MOOD retarget is due (the idle→sleepy arc), so
      * the renderer's wake scheduler re-arms the parked loop in time for it. Returns
      * `Infinity` when no arc is pending (already sleepy / transitioning / held / a
-     * manual override pins the mood — AX.W46 D7: the auto-arc does not drive, so there
+     * manual override pins the mood: the auto arc does not drive, so there
      * is no auto-mood retarget to wake for).
      */
     function nextAutoMoodMs(): number {
@@ -208,9 +208,9 @@ export function useBlobMood() {
         setMood,
         update,
         tick,
-        /** AX.W16 — the quiescence at-rest predicate the renderer's demand gate reads. */
+        /** Quiescence predicate read by the renderer's demand gate. */
         isSettled,
-        /** AX.W16 — wall-ms to the next auto-mood retarget (the wake horizon). */
+        /** Milliseconds to the next automatic mood retarget. */
         nextAutoMoodMs,
     };
 }

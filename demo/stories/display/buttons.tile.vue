@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// display/buttons — the landing-tile vignette (BI.W-LIVE-TILES, the AUTHORED rung).
+// display/buttons — authored landing-tile vignette.
 // A real Button emphasis cluster at rest — the
 // live component the /display landing curates, never a silhouette. Inert + 0-GL by
 // the fenced stage (SectionPreviewCard); no own rAF.

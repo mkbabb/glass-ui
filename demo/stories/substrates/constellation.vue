@@ -92,21 +92,21 @@ const drawWarpFocal = computed(
     },
 );
 
-// ── Re-fit + auto-drift section (AY.W-CON1) ─────────────────────────────────
+// ── Re-fit + auto-drift section ──────────────────────────────────────────────
 // A dedicated <Constellation> whose container the π spec resizes (the re-fit
 // readback) AND a wander-on focal (the auto-drift cadence readback). The overlay
 // reuses the warp focal painter so the wander focal is visible.
 const refitHostRef = useTemplateRef<HTMLElement>("refitHostRef");
 const refitRef = useTemplateRef<InstanceType<typeof Constellation>>("refitRef");
 
-// ── Gravity-well section (AY.W-CON2) ────────────────────────────────────────
+// ── Gravity-well section ─────────────────────────────────────────────────────
 // A dedicated <Constellation gravityWell> — hold the pointer and the lattice is
 // pulled toward it (the engine egg); release and the field cools. The π egg-live
 // spec drives the well via the exposed holdWellAt/releaseWell (no real held-pointer
 // race) and reads back mean |v| per frame off __constellationEgg.field.
 const wellRef = useTemplateRef<InstanceType<typeof Constellation>>("wellRef");
 
-// ── Recession-envelope section (AY.W-COHERE E3) ─────────────────────────────
+// ── Recession-envelope section ───────────────────────────────────────────────
 // Two <Constellation> instances over an IDENTICAL seed/count/link, differing ONLY
 // in `opacityCeiling` (1.0 vs 0.4). The π substrate-cohesion spec screenshots both
 // canvases (located via the wrapper `data-testid`) over the white card and asserts
@@ -114,7 +114,7 @@ const wellRef = useTemplateRef<InstanceType<typeof Constellation>>("wellRef");
 // BITES (the G-RECESSION π readback), not just declared. A neutral lattice (no
 // focal overlay) so the comparison is the raw edge/node ink, the recession's target.
 
-// ── Pinned anomaly (generalized) section (AZ.W-CON-GEN G1/G2/G5/G6) ─────────
+// ── Pinned anomaly section ───────────────────────────────────────────────────
 // The six-item generalization made first-class: a PINNED node the engine HOLDS
 // (G1), its incident edges tinted accent (G2 accentEdges), the autonomous gentle
 // anchor-drift (G5 pinnedDrift), and the exposed warpSettled() signal (G6). The
@@ -199,7 +199,7 @@ onMounted(() => {
         };
     }
 
-    // AY.W-CON1: the refit + auto-drift seam. `field` lets the π spec read the
+    // The refit + auto-drift seam. `field` exposes the
     // node bbox + warp + focalIndex per frame; `resizeTo(w, h)` drives a
     // PROGRAMMATIC RO size-change (it sets the host's inline extent + forces a
     // layout flush so the substrate's ResizeObserver fires synchronously) so the
@@ -227,7 +227,7 @@ onMounted(() => {
         };
     }
 
-    // AY.W-CON2: the gravity-well egg seam. `field` lets the π egg-live spec read
+    // The gravity-well seam. `field` exposes
     // mean node |v| + every node's bbox per frame; `holdWellAt(x, y)` /
     // `releaseWell()` drive the well WITHOUT racing a real held-pointer gesture +
     // the held-timer (the test hook on the public expose).
@@ -246,7 +246,7 @@ onMounted(() => {
         };
     }
 
-    // AZ.W-CON-GEN — the generalization egg seam. `field` lets a π/proof spec read
+    // The pinned-node seam. `field` exposes
     // the pinned node's bbox + the warp-settled signal per frame; the imperative
     // `pinNode`/`warpSettled` are the test hooks on the public expose. A live poll of
     // `warpSettled()` drives the on-screen `settled` badge (the G6 isSettled read).
@@ -363,7 +363,7 @@ onMounted(() => {
                      `data-testid` lets the π refit-live spec target THIS host
                      deterministically — the StoryHero now mounts a constellation
                      background canvas at index 0 for this hero route, so the prior
-                     `.constellation-canvas` nth() index is fragile (AY.W-DOCK-CHROME §4). -->
+                     `.constellation-canvas` nth() index is fragile. -->
                 <div
                     ref="refitHostRef"
                     data-testid="constellation-refit-host"

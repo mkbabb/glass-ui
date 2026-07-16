@@ -1,20 +1,15 @@
 <script setup lang="ts">
-// BB.B2 W-DOCKMORPH-CTA — the external-CTA-MORPHS-INTO-dock seam (the iOS bloom-from-
-// source INVERSE). An EXTERNAL CTA button (OUTSIDE the dock) flies + reshapes from its
-// own rect ONTO a target dock control's rect, fades + congests into the glass, then
-// hands off — the dock control lights up "received". Composes the shipped
-// `useDockCtaReceive` leaf (which reuses the SAME kf ElementMorph + springTiming
-// Function substrate useLiquidReveal activates — NO demo-local re-implementation), a
-// CONSUMING seam BESIDE W-DOCK-MORPH-FAMILY (no dockMorphContext/DOCK_SPRING edit).
-// Compositor-only (transform/opacity/filter) + PRM-seats (a deterministic snap-to-gone
-// + hand-off under reduced-motion).
+// An external CTA flies and reshapes from its own rect onto a dock control, fades into
+// the glass, then hands off. The story composes `useDockCtaReceive`; it does not add a
+// second dock morph. Motion is compositor-only, while reduced motion snaps directly to
+// the handoff.
 import { onMounted, ref, useTemplateRef } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import { Plus, Star, Compass, Shapes, Boxes } from "@lucide/vue";
 import { GlassDock, DockControl } from "@glass/components/dock";
 import { Button } from "@glass/components/button";
-import { useDockCtaReceive } from "@glass/composables/motion/useDockCtaReceive";
+import { useDockCtaReceive } from "@glass/composables/motion/morph/useDockCtaReceive";
 import DockStage from "./_frame/DockStage.vue";
 
 // The external CTA element (the morph vehicle) + the target dock control (the
@@ -43,7 +38,7 @@ const {
     },
 });
 
-// BC.W-AX-DOCK-CTA-SEAT — ARM the landing seat as soon as the target dock control is
+// ARM the landing seat as soon as the target dock control is
 // mounted: the control shows the dim [data-cta-pending] ghost (sized for its arrival
 // from frame 0, so the dock box does NOT jump when the CTA lands). The default
 // onReceived hand-off calls clearPending() — the seat reveals its real content with the
@@ -81,7 +76,7 @@ function revealNow() {
 
 <template>
     <StoryPage>
-        <!-- BA.W-STAGE — the CTA-receive demo sits over the ONE shared offscreen-paused
+        <!-- the CTA-receive demo sits over the ONE shared offscreen-paused
              aurora field (DockStage); the dock + the CTA float over the live field so
              the morph reads as glass-into-glass. NO net-new GL context (one-GL-per-route). -->
         <DockStage #default="{ backgroundCanvas }">

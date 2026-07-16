@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
-import { useSpring } from "../../composables/motion/useSpring";
-import { useLiquidFlex } from "../../composables/motion/useLiquidFlex";
-import { useLiquidPress } from "../../composables/motion/useLiquidPress";
+import { useSpring } from "../../composables/motion/spring/useSpring";
+import { useLiquidFlex } from "../../composables/motion/spring/useLiquidFlex";
+import { useLiquidPress } from "../../composables/motion/spring/useLiquidPress";
 import { vSpecular } from "../../composables/glass";
 
-// BG.W-SPRING-REGISTER-TIDY — the head/fill/press clocks are ScrubberTimeline-LOCAL
+// the head/fill/press clocks are ScrubberTimeline-LOCAL
 // per-primitive spring defaults (presets-in-consumers). They are JS-only registers
 // (no CSS `--spring-*` token) that serve THIS ONE surface, so
 // they live HERE, not in the global SPRING_PRESETS vocabulary (which drained back to
 // the canonical 6 — the register-sprawl fix). Each (response, ζ) pair is byte-preserved
 // off the retired `timeline-*` rows (no motion delta) and is a sanctioned per-primitive
-// default on the proof:motion-one-clock SPRING_DEFAULTS_ALLOWLIST (TIMELINE_HEAD/FILL/
+// default on the SPRING_DEFAULTS_ALLOWLIST (TIMELINE_HEAD/FILL/
 // PRESS) + motion-canon.md §P7 — the canon's per-primitive seam, NOT a second table.
 const HEAD_SPRING = { response: 0.34, dampingFraction: 0.74 }; // head travel — fast clock the fill trails; whisper of fling-overshoot
 const FILL_SPRING = { response: 0.46, dampingFraction: 0.82 }; // lane fill — slower clock, TRAILS the bead (liquid trailing)
@@ -21,13 +21,13 @@ const PRESS_SPRING = { response: 0.22, dampingFraction: 0.7 }; // grab-anticipat
  * <ScrubberTimeline> — single-track normalized 0..1 scrubber.
  *
  * Internal variant SFC dispatched from <GlassTimeline variant="scrubber">.
- * Owns the pre-Z.W2 single-track contract: pointer-capture drag, keyboard
+ * Owns the single-track contract: pointer-capture drag, keyboard
  * a11y (role=slider + arrow-key step + shift-step), `label` tooltip caret.
  *
- * AA.A4 §S-16 — the `aria-valuenow` binding coerces `Number(modelValue ?? 0)`
+ *  §S-16 — the `aria-valuenow` binding coerces `Number(modelValue ?? 0)`
  * so a numeric attribute always renders (axe `aria-required-attr` regression).
  *
- * BD.W-TIMELINE-RAIL-UNIFY (LEG 2) — the head is RE-INVENTED as a warm-glass
+ * The head is a warm-glass
  * liquid lozenge. The four cartoon beats COMPOSE shipped engines only (no new
  * motion engine): travel rides a `useSpring`/SpringProgress position written
  * to `transform: translateX()` (NEVER `style.left` — Safari composites
@@ -284,7 +284,7 @@ const fillStyle = computed(() => ({
     container-type: inline-size;
     cursor: pointer;
     touch-action: none;
-    /* NO `overflow: hidden` — the liquid head (LEG 2) reads as lifted ABOVE
+    /* No `overflow: hidden`: the liquid head reads as lifted above
        the rail with its `.shadow-cartoon-sm` cast + the 44px `::before` halo,
        both of which must escape the channel. The FILL clips itself. */
     outline: none;

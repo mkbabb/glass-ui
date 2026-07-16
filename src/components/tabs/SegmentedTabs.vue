@@ -1,14 +1,8 @@
 <script setup lang="ts">
-// The standardized SegmentedTabs (BA.W-TABS) — ONE component, TWO materials, ONE
-// orientation axis, ONE indicator engine. The `variant` axis is `pill` (DEFAULT,
-// the GLASS material — absorbs the retired `segmented` value) + `underline` (the
-// PAPER material — the ink hairline on the shared `.paper-ink-mark` register).
-// `orientation` is first-class (`horizontal` default · `vertical`); the indicator
-// transform path is axis-derived (the dock-morph `dim` idiom). The track
-// choreography lives in styles/segmented-tabs.css (@import-ed into
-// styles/index.css); this SFC owns the toggle markup + the anchor/JS indicator-
-// position seam. The `overflow` axis (→ <FadingScroll>) and the `:multi-select`
-// prop (→ ToggleGroup) RETIRED — clean break, no alias (see MIGRATION.md).
+// SegmentedTabs has two materials, one orientation axis, and one indicator engine.
+// `pill` uses glass; `underline` uses the shared paper ink mark. The indicator
+// transform derives from horizontal or vertical orientation. CSS owns track paint;
+// this SFC owns markup and measured indicator position.
 import { ref, computed, onBeforeUpdate, type HTMLAttributes } from "vue";
 import { cn } from "../_shared/class-names";
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "../tooltip";
@@ -19,19 +13,18 @@ import {
     SelectTrigger,
     SelectValue,
 } from "../select";
-// BI.W-DOCK-CONTROLS — the ONE traveling-indicator writer. `useTabIndicator` was
-// PROMOTED to `composables/motion/useSelectionIndicator` (the library's single
-// indicator writer; the dock IS SegmentedTabs/ToggleGroup wearing chrome). The
-// CSS-anchor dual path RETIRED — the pill indicator ALWAYS measures via JS, so
+// The one traveling-indicator writer lives in
+// `composables/motion/morph/useSelectionIndicator`; the dock, SegmentedTabs, and
+// ToggleGroup share it. The pill indicator always measures via JS, so
 // Chrome and Safari paint the same pixels by construction.
-import { useSelectionIndicator } from "../../composables/motion/useSelectionIndicator";
+import { useSelectionIndicator } from "../../composables/motion/morph/useSelectionIndicator";
 import { useTabDragMorph } from "./composables/useTabDragMorph";
 import { useTabResponsive } from "./composables/useTabResponsive";
 import {
     useTabRovingFocus,
     type TabActivation,
 } from "./composables/useTabRovingFocus";
-// BH.W-MOTION-AXIS — the `draggable` boolean dies onto the ONE `motion` axis.
+// Motion weight is the sole drag-enrichment axis.
 import type { Motion } from "../_shared/axes";
 import { useMotionAxis } from "../_shared/useMotionAxis";
 
@@ -54,8 +47,7 @@ export interface SegmentedTabOption {
     tooltip?: string;
 }
 
-/** The two materials. `pill` (DEFAULT) = the glass-track slider (absorbs the
- *  retired `segmented`); `underline` = the paper ink-hairline rule. */
+/** The two materials: `pill` is the default glass-track slider; `underline` is the paper ink hairline. */
 export type SegmentedTabsVariant = "pill" | "underline";
 
 /** The interaction semantic, independent of material. `toggle` exposes a
@@ -111,21 +103,17 @@ export interface SegmentedTabsProps {
     orientation?: SegmentedTabsOrientation;
     /**
      * Responsive collapse — below the breakpoint the strip becomes a `<Select>`.
-     * `true` uses defaults; an object tunes the breakpoint / desktop subset /
+     * `true` uses defaults; an object tunes the breakpoint, desktop subset, and
      * accessible name.
      */
     responsive?: boolean | SegmentedTabsResponsive;
     /**
-     * BH.W-MOTION-AXIS — the ONE motion-weight axis (the `draggable` boolean's
-     * clean-break successor). `full` (default) arms the LIQUID TAB: the `pill` indicator
-     * is a physical lozenge you can GRAB and PULL — it follows the finger ~1:1, squishes
-     * on drag velocity, and flings to the nearest tab on release (`useDragMorph`),
-     * ADDITIVE OVER the click/keyboard path (which stays byte-identical + fully operable
-     * — the drag is a pointer ENHANCEMENT, never the sole selection mechanism, WCAG
-     * 2.1.1). `reduced`/`off` opt DOWN to the click-only strip (the drag unbinds; the
-     * roving-tabindex keyboard contract stays — motion off, meaning never off). No-op on
-     * `underline` (the ink hairline has no indicator element to deform). PRM forces
-     * `full → reduced` regardless (a11y absolute).
+     * Motion weight. `full` (default) lets the pill indicator follow a pointer,
+     * squash with drag velocity, and settle to the nearest tab. Drag supplements the
+     * fully operable click and keyboard path; it is never the sole selection method.
+     * `reduced` and `off` use the click-only strip while preserving roving focus.
+     * Underline has no deformable indicator. Reduced-motion preference forces
+     * `full → reduced`.
      */
     motion?: Motion;
     class?: HTMLAttributes["class"];
@@ -138,9 +126,7 @@ const props = withDefaults(defineProps<SegmentedTabsProps>(), {
     responsive: false,
 });
 
-// BH.W-MOTION-AXIS — the resolved motion state. `armed` (resolved `full`) gates the
-// drag enrichment (the SAME iOS-27 default the `draggable: true` boolean carried, now
-// the `full` register); `dataMotion`/`hostStyle` are the zero-delta-at-full binds.
+// Resolved `full` motion arms drag enrichment; the other modes keep selection intact.
 const motionAxis = useMotionAxis(() => props.motion);
 
 // Vue 3.5 defineModel — single-select string. (The multi-select array model
@@ -159,7 +145,7 @@ const isTabsSemantic = computed(
     () => props.semantics === "tabs" || (!props.semantics && isUnderline.value),
 );
 
-// BD.W-TAB-IOS-CAPSULE — the NON-selected PILL tab composes the shared
+// A non-selected pill tab composes the shared
 // `.glass-capsule-hover` register (specular catch-light lift + press-snap, the iOS
 // "ready to receive" read). Only the PILL material (the underline is paper — a
 // hairline does not lift), only non-selected (the selected tab's indicator carries
@@ -174,16 +160,15 @@ function pillHoverClass(option: SegmentedTabOption): string | false {
     );
 }
 
-// BI.W-DOCK-CONTROLS — the pill indicator element is present on the pill material
+// The pill indicator element is present only on the pill material
 // only (the underline paints its indicator as the container `::before` pseudo, no
 // element node). The ONE JS writer measures it on EVERY engine (the CSS-anchor
 // dual path retired — Safari-identical by construction).
 
-// ── Responsive collapse (package-private composable — BG.W-COLOCATE) ──
+// ── Responsive collapse ────────────────────────────────────────────────
 //
-// The `<Select>`-below-the-breakpoint fold + its `matchMedia` lifecycle live in the
-// colocated `useTabResponsive` composable (carved to hold the no-god-module bound,
-// the `useTabIndicator`/`useTabDragMorph` sibling pattern). The SFC binds
+// The `<Select>`-below-the-breakpoint fold and its `matchMedia` lifecycle live in
+// `useTabResponsive`. The SFC binds
 // `stripValue`/`stripOptions`/`showMobileSelect` + feeds `stripValue`/`stripOptions`
 // to the indicator + roving-focus concerns below.
 const { responsiveCfg, stripValue, stripOptions, mobileAriaLabel, showMobileSelect } =
@@ -221,21 +206,19 @@ const { singleSliderStyle, squishOnTravel } = useSelectionIndicator({
     vertical: isVertical,
 });
 
-// ── BB.W-DRAG-MORPH — the LIQUID TAB (the :draggable axis) ──
+// ── Liquid tab motion ───────────────────────────────────────────────────
 //
 // The drag-morph wiring (the center-anchored snap targets, the `useDragMorph` call,
 // the `--stretch` write + the option/axis refresh watchers) lives in the colocated
-// `useTabDragMorph` composable (carved at BB.W-CARVE4, the `useTabIndicator` sibling
-// pattern). The SFC binds `drag.dragging` + `dragEnabled`; useElementMorph owns
+// `useTabDragMorph` composable. The SFC binds `drag.dragging` and `dragEnabled`;
+// useElementMorph owns
 // the gesture transform.
 // template; the drag is the `pill` material ONLY + the `:draggable` opt-in.
 const { dragEnabled, drag } = useTabDragMorph({
     indicatorRef,
     isVertical,
     isUnderline,
-    // BH.W-MOTION-AXIS — the drag arms on the resolved `full` register (the internal
-    // composable option keeps its `draggable` OPTION-field name — the gate greps public
-    // component PROPS only; a composable option is explicitly excluded).
+    // Drag arms only for resolved `full` motion.
     draggable: () => motionAxis.armed.value,
     stripOptions,
     buttonRefs,
@@ -243,7 +226,7 @@ const { dragEnabled, drag } = useTabDragMorph({
 });
 
 // ── Button press animation (Web Animations API) ──
-// AX.W53 — the press rides the CONTROL register (`--spring-snappy`), one
+// The press rides the control register (`--spring-snappy`), one
 // settle-into squish (no double-spring overshoot past the rest scale). Honors
 // reduced-motion.
 
@@ -288,7 +271,7 @@ function onMobileUpdate(value: unknown) {
     if (typeof value === "string") model.value = value;
 }
 
-// ── The roving-tabindex keyboard contract (package-private composable — BG.W-COLOCATE) ──
+// ── Roving-tabindex keyboard contract ──────────────────────────────────
 //
 // The WAI-ARIA roving machine keeps exactly one tabstop, derives arrows from the axis,
 // wraps, skips disabled options, and separates focus from selection in manual mode.
@@ -353,7 +336,7 @@ const { rovingTabindex, onStripKeydown } = useTabRovingFocus({
                 'segmented-tabs',
                 `segmented-tabs--${variant}`,
                 isVertical && 'segmented-tabs--vertical',
-                // BD.W-TAB-IOS-CAPSULE — the PILL track composes the shared recessed
+                // The pill track composes the shared recessed
                 // warm channel `.glass-capsule-track` (the recess + rim live there, ONE
                 // recipe). The underline material is paper (no track), so it does NOT.
                 !isUnderline && 'glass-capsule-track',
@@ -366,7 +349,7 @@ const { rovingTabindex, onStripKeydown } = useTabRovingFocus({
              inline `:style` (CSS `position-anchor` + `inset` govern it); on the JS
              fallback the measured `singleSliderStyle`. The underline variant paints
              its indicator as the container `::before` pseudo, so no element node
-             here. BB.W-DRAG-MORPH — when `:draggable`, the indicator carries the
+             here. When draggable, the indicator carries the
              `.glass-drag-grabbable` rest affordance + the `.glass-drag-lift` grabbed
              state; the shared morph engine owns its compositor offset. -->
         <div
@@ -374,9 +357,7 @@ const { rovingTabindex, onStripKeydown } = useTabRovingFocus({
             ref="indicatorRef"
             :class="[
                 'segmented-indicator',
-                // BI.W-DOCK-CONTROLS — the ONE JS-measured writer paints the slider on
-                // EVERY engine (the CSS-anchor branch retired), so the indicator always
-                // carries `--js` (Safari-identical by construction).
+                // The measured writer paints the slider on every engine.
                 'segmented-indicator--js',
                 // The traveling indicator is the selected fill. Its glass material
                 // belongs on this measured box so geometry, clipping, and motion share

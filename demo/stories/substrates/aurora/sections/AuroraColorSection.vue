@@ -35,7 +35,7 @@ const props = defineProps<{
     config: AuroraConfig;
 }>();
 
-// ── Atom controls (seed / harmony / energy) ──
+// ── Atom controls (seed, harmony, energy) ──
 const HARMONIES_ATOM: Record<string, AuroraHarmony> = {
     Analogous: "analogous",
     Complementary: "complementary",
@@ -116,7 +116,7 @@ function derive() {
 <template>
     <div class="flex flex-col gap-3">
         <!-- ── Atom controls ── -->
-        <!-- BA.W-CONFIG-CHASSIS.2 (CFG-3) — the Seed is the library <ColorSwatch>
+        <!-- The Seed is the library <ColorSwatch>
              register (a proportioned chip + hex affordance), OFF the raw full-width
              `<input type=color>` slab that carried one swatch's information at the
              visual weight of a full slider. -->
@@ -165,9 +165,9 @@ function derive() {
                 <Sparkles :size="13" class="text-muted-foreground" />
                 <p class="text-admin-label text-muted-foreground">Derive from color</p>
             </div>
-            <!-- BA.W-CONFIG-CHASSIS.2 — the DERIVE seed is the <ColorSwatch> register
+            <!-- The derive seed is the <ColorSwatch> register
                  (off the raw `h-8 w-9` color slab); the 4-harmony chip group WRAPS to a
-                 second line (CFG-2 overflow contract) so MONO is never sliced off the
+                 second line ( overflow contract) so MONO is never sliced off the
                  ~360px aside — the items can't shrink below their uppercase min-content,
                  so `flex-wrap` (the natural fit for the 4-chip row) replaces the
                  hard-clipped single-line `flex-1` group that overflowed the aside. -->

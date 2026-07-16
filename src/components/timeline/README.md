@@ -2,7 +2,7 @@
 
 The timeline family (`@mkbabb/glass-ui/timeline`). A glass timeline + a continuous-rail family +
 a scrubber + a segmented variant — the "events along an axis" register, split out of a former
-901-line orchestrator (AU.W10) into cohesive parts.
+a monolithic orchestrator into cohesive parts.
 
 ```vue
 <GlassTimeline :items="events" />

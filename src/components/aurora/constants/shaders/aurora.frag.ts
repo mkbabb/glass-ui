@@ -1,13 +1,10 @@
-// Aurora v4.1 — fragment shader assembler.
-//
-// The GLSL pipeline is composed from cohesive partials, template-spliced into one
-// source string at module load. The emitted FRAGMENT_SRC is character-equivalent to
-// the prior hand-inlined shader (the splice boundaries fall on original line breaks).
+// Aurora fragment-shader assembler. Cohesive partials compose one source string at
+// module load.
 //
 // Stages: composition (palette LUT + nuclei softmax) · flow (flow-field dispatch) ·
 // brush (curved swept-brushstroke SDF) · mediums (the four PEER mediums) · tonemap
 // (ACES). The noise/warp foundation + the color utils + main() stay inline here: the
-// noise block carries the W2 ${FBM_ROT_GLSL}/${OETF_GLSL} splices, and main() is the
+// noise block carries ${FBM_ROT_GLSL}/${OETF_GLSL}, and main() is the
 // assembly point where the pipeline composes and the mandatory linearToSrgb() OETF
 // closes the seam before fragColor.
 //
@@ -18,13 +15,10 @@
 //      tooth noise multiplied into the base color, dispatched at main() level
 //      alongside pastel/watercolor/oil (see mediums.glsl.ts).
 //
-// AV.W2 — the sRGB OETF (`linearToSrgb`) + the FBM_ROT rotation constant are SPLICED
-// from the shared procedural-color chunk (the single GLSL source aurora + the goo-blob
-// metaball compose), so the OETF can never again diverge between them (the AV.W1 root
-// cause). Aurora keeps its OWN hash21/vnoise/fbm LOOP (its 2D hash + 2.02 lacunarity +
-// uniform octaves legitimately differ from the blob's — only the FBM_ROT constant
-// converges, per AV.W2 §3a); aurora bakes its palette CPU-side in linear, so it does
-// NOT splice the chunk's OKLCh matrices.
+// The sRGB OETF (`linearToSrgb`) and FBM_ROT rotation constant come from the shared
+// procedural-color source used by Aurora and Blob. Aurora keeps its own
+// hash21/vnoise/fbm loop because its 2D hash, 2.02 lacunarity, and uniform octaves
+// differ from Blob. Its palette is baked CPU-side in linear space.
 
 import {
     FBM_ROT_GLSL,
@@ -43,9 +37,7 @@ import {
     AURORA_MEDIUMS_POST_BRUSH_GLSL,
 } from "./mediums.glsl";
 
-// A single newline joins every adjacent stage — the splice boundaries land on the
-// original source's line breaks, so the emitted shader is character-equivalent to
-// the prior hand-inlined FRAGMENT_SRC.
+// A single newline joins adjacent stages.
 const NL = "\n";
 
 export const FRAGMENT_SRC =
@@ -74,7 +66,7 @@ uniform float uNucleiValueBias[MAX_NUCLEI];
 uniform float uNucleiDriftRadius[MAX_NUCLEI];
 uniform float uNucleiDriftPhase[MAX_NUCLEI];
 // Anisotropy: per-nucleus elongation (1.0 = isotropic) and major-axis angle (radians).
-// Defaults (1.0 / 0.0) reduce to the original circular Gaussian.
+// Defaults (1.0, 0.0) reduce to the original circular Gaussian.
 uniform float uNucleiElong[MAX_NUCLEI];
 uniform float uNucleiAngle[MAX_NUCLEI];
 uniform float uSoftmaxBeta;
@@ -84,14 +76,14 @@ uniform float uValueVariance;
 uniform float uWarpAmount;
 uniform float uWarpScale;
 uniform float uWarpDrift;
-uniform int   uWarpMode;      // 0=fbm 1=cellular 2=hybrid 3=curl (BB.B1 — opt-in Bridson flow warp)
+uniform int   uWarpMode;      // 0=fbm 1=cellular 2=hybrid 3=curl (opt-in Bridson flow warp)
 uniform int   uNoiseOctaves;
 
 // Medium
 // 0 smooth, 1 pastel, 2 watercolor, 3 oil, 4 crayon (peer medium — wax pigment
 // on paper tooth; NOT an oil-stroke sub-mode, so it dispatches at main() level).
 uniform int   uMedium;
-// Hue-arc method for the OKLCh palette interpolation (W5). Mirrors value.js's
+// Hue-arc method for OKLCh palette interpolation. Mirrors value.js's
 // HueInterpolationMethod: 0 shorter, 1 longer, 2 increasing, 3 decreasing. Only
 // consulted when the hue-arc path is requested; OKLab-rectangular ramps (the
 // default for adjacent-hue stops) ignore it.
@@ -108,7 +100,7 @@ uniform float uStrokeScale;
 uniform float uStrokeAnisotropy;
 uniform int   uStrokeLayers;  // 1 or 2 (crosshatch)
 uniform int   uStrokeMode;    // 0 oil (modern gestural), 1 palette-knife, 3 modern-chunky (crayon is uMedium==4, a peer medium)
-// AW.W4.1 — the stroke-orientation source: 0 flow (hand-authored flowField), 1
+// Stroke-orientation source: 0 flow (hand-authored flowField), 1
 // tensor (the structure-tensor minor eigenvector — the color field's edge-tangent).
 uniform int   uStrokeOrient;
 uniform float uWetEdge;
@@ -117,17 +109,16 @@ uniform float uImpasto;
 uniform float uBrokenColor;
 uniform float uCanvasGrain;
 
-// BG.W-AUR-METAL-FINISH — the metal-medium knobs (uMedium==8/9). uMetalPolish scales
+// Metal-medium knobs (uMedium==8/9). uMetalPolish scales
 // the specular catch intensity; uMetalHeightScale scales the luma-relief → normal tilt.
 // On the WGSL primary these ride the free cursor.z/.w pad lanes (uniformBridgeWGPU); the
-// .frag carries them as their own uniforms. Written 0 on a non-metal config → no-op.
+// The fragment shader carries them as uniforms. Non-metal configs write 0.
 uniform float uMetalPolish;
 uniform float uMetalHeightScale;
 
-// AW.W4.2 — the impasto relight axis. A movable directional source lighting the
+// The impasto relight axis is a movable directional source lighting the
 // accumulated paint-height field (diffuse + Blinn specular, in LINEAR before aces()).
-// AW.W8 drives uLightDir from the cursor (cursor-as-light). Default = upper-left so
-// the still default reads identically to the prior fixed rim.
+// The cursor drives uLightDir; the upper-left default supplies the still pose.
 uniform vec3  uLightDir;    // unit direction (x,y in screen space, z toward viewer)
 uniform vec3  uLightColor;  // warm-white tint (linear)
 
@@ -142,7 +133,7 @@ uniform float uSaturation;
 uniform float uPaperGrain;
 uniform float uAlpha;
 
-// BD.W-AUR-VIVIDNESS — the §3 chroma-floor strength (0 = off / pre-floor identity,
+// Chroma-floor strength (0 = off,
 // 1 = the vivid default). The shader lifts any pale zone's OKLab chroma toward
 // uVividness * VIVID_TARGET, hue-preserving, warm-anchored below the near-gray epsilon.
 uniform float uVividness;
@@ -152,7 +143,7 @@ uniform float uVividness;
 // human-friendly 0..~0.05 band — that scale is what the config schema and every
 // demo preset are tuned against. But that band, multiplied straight into uTime
 // (seconds), yields rad/sec rates so small the field reads visually static (one
-// nuclei orbit took ~10 min at the old default). These K_* constants decouple
+// nuclei orbit would otherwise take minutes). These K_* constants decouple
 // the AUTHORING scale from the RAD/SEC scale: each time term wraps its coefficient
 // in the matching K_, lifting the same authored value to a perceptible period
 // without touching any preset. Tuned so the field reads SLOWLY ALIVE — drift over
@@ -187,8 +178,8 @@ float vnoise(vec2 p) {
   return mix(mix(a, b, u.x), mix(c, d, u.x), u.y);
 }
 
-// The rotated-octave FBM rotation constant — spliced from the shared chunk (AV.W2
-// — the one FBM_ROT). The loop below stays aurora-local (2.02 lacunarity +
+// The rotated-octave FBM rotation constant is spliced from the shared chunk
+// as the sole FBM_ROT. The loop below stays aurora-local (2.02 lacunarity +
 // uniform-driven octaves, per §3a — only the rotation constant converges).
 ${FBM_ROT_GLSL}
 
@@ -204,8 +195,8 @@ float fbm(vec2 p) {
   return v;
 }
 
-// BB.B1 — the shared curl-noise flow chunk (curlFBM), spliced from the single source
-// procedural surfaces share (the AV.W2 shared-chunk precedent, applied to FLOW). The
+// The shared curl-noise flow chunk (curlFBM) is spliced from the single source
+// procedural surfaces share (the shared-chunk precedent, applied to FLOW). The
 // chunk owns ONLY the basis-agnostic curl operator; the host owns the noise basis —
 // aurora wraps its OWN fbm as the scalar potential (so curl rides the same 2.02-
 // lacunarity loop the rest of the warp uses). The curl operator is consumed ONLY on
@@ -217,20 +208,19 @@ ${CURL_FBM_GLSL}
 // forward-declares potentialFBM; this defines it (ES 3.00 allows the prototype).
 float potentialFBM(vec2 p) { return fbm(p); }
 
-// AX.W12 — the painterly-medium organic noise basis (Jarzynski PCG2D integer-bit hash
+// The painterly-medium organic noise basis (Jarzynski PCG2D integer-bit hash
 // + 2D simplex gradient noise), SPLICED from the shared procedural-color chunk (the
 // single hash source).
 // The painterly mediums (mediumOil's tooth/granulation) opt into pcgHash2/gnoise for
 // organic paper/pigment grain; the smooth/atmospheric pole KEEPS its cheap value-noise
-// fbm above (the cost-tiering is preserved per AX.W12 §3a — this is an ADDITIVE basis,
+// fbm above (the cost tiering is preserved: this is an additive basis,
 // not a blanket upgrade). The aurora-local hash21/vnoise/fbm loop stays (legitimately
 // divergent per the chunk's §3a).
 ${PCG_HASH_GLSL}
 
-// The sRGB OETF (linearToSrgb) — spliced from the shared procedural-color chunk
-// (AV.W2 — the single OETF source; the AV.W1 local copy is deleted here). Aurora's
-// linear pipeline closes the seam with this transfer before fragColor (the
-// proof:aurora-space-gamma seam).
+// The sRGB OETF (linearToSrgb) is spliced from the shared procedural-color chunk,
+// the sole OETF source; the local copy is deleted here. Aurora's linear pipeline
+// closes the color-space seam with this transfer before fragColor.
 ${OETF_GLSL}
 
 // W5 — the four Ottosson OKLab/OKLCh matrices + their space fns, spliced from the
@@ -239,13 +229,13 @@ ${OETF_GLSL}
 const float PI = 3.141592653589793;
 ${OKLCH_MATRICES_GLSL}
 
-// ── OKLCh palette ramp (W5 interp · AX.W11 single-sourced twin) ───────────────
+// ── OKLCh palette ramp (single-sourced twin) ───────────────────────────────
 // The muddy-midtone kill: distant-hue stops interpolated by a plain linear mix()
 // desaturate toward grey at the midpoint. The OKLab-rectangular lerp (L,a,b) holds
 // chroma across the ramp; the OKLCh hue-arc form (deliberate rainbow travel via
 // uHuePath increasing/decreasing) sweeps the hue wheel without flipping.
 //
-// AX.W11 — the ramp (interpolateHueTurns + mixPaletteOklab + mixPaletteOklchArc +
+// The ramp (interpolateHueTurns + mixPaletteOklab + mixPaletteOklchArc +
 // the smoothstep-eased samplePaletteRamp dispatcher) is SPLICED from the shared
 // procedural-color chunk (the single ramp source). composition.glsl.ts's
 // samplePalette calls samplePaletteRamp.
@@ -258,7 +248,7 @@ float ign(vec2 p) {
     return fract(52.9829189 * fract(dot(p, vec2(0.06711056, 0.00583715))));
 }
 
-// Cellular / Worley f1
+// Cellular, Worley f1
 float cellular(vec2 p) {
   vec2 i = floor(p);
   vec2 f = fract(p);
@@ -294,7 +284,7 @@ vec2 domainWarp(vec2 p, float t) {
     float c2 = cellular(p * uWarpScale * 1.2 + vec2(11.0, 7.0));
     warp = mix(r, vec2(c1, c2), 0.5);
   } else if (uWarpMode == 3) {
-    // BB.B1 — curl (Bridson flow warp). The divergence-free curl of an fbm potential
+    // Curl (Bridson flow warp). The divergence-free curl of an fbm potential
     // advects the field along a source-free swirl — folds + stretches like fluid
     // advection, never the source-y bulge a raw fbm gradient produces. The potential
     // scrolls on the same warp-drift clock; curlFBM is the shared chunk's operator.
@@ -342,8 +332,8 @@ vec3 linOklab(vec3 lin) {
 
 // Broken color (W5) — hue + chroma jitter at fixed PERCEPTUAL lightness, in OKLCh.
 // Broken color is hue variation at constant VALUE, which only OKLCh makes true (the
-// prior YIQ-style sRGB rotation muddied value). This is the seam AW.W4's van-Gogh /
-// oil-pastel per-stroke pigment jitter consumes (the pigment-variation read).
+// prior YIQ-style sRGB rotation muddied value). Van-Gogh and oil-pastel consume
+// this seam for per-stroke pigment jitter.
 vec3 brokenColorJitter(vec3 c, float hueSeed, float valueSeed, float strength) {
   float amt = clamp(uBrokenColor * strength, 0.0, 1.0);
   if (amt <= 0.001) return c;
@@ -363,7 +353,7 @@ vec3 saturate3(vec3 c, float amt) {
   return max(oklabToLinearSrgb(oklchToOklab(lch)), vec3(0.0));
 }
 
-// BD.W-AUR-VIVIDNESS — the §3 chroma FLOOR. Operate in OKLab: lightness + hue are
+// The chroma floor operates in OKLab: lightness + hue are
 // untouched, chroma is lifted toward the floor. A pale zone BLOOMS to transmission-fit;
 // a vivid zone (already above the floor) is byte-untouched. The near-gray hue guard is
 // STRUCTURAL: below VIVID_EPS the (a,b) direction is precision noise, so the lift
@@ -381,7 +371,7 @@ vec3 vividnessFloor(vec3 c) {
   vec3 lab = linOklab(c);
   float C = length(lab.yz);
   // Mode-aware: dim fields (low L) get a slightly higher target so they read vivid
-  // through glass. mix factor is gentle (1.0 .. 1.18) so light routes are unaffected.
+  // through glass. The mix factor is gentle (1.0–1.18) so light routes are unaffected.
   float modeLift = mix(1.18, 1.0, clamp(lab.x * 1.4, 0.0, 1.0));
   float Cmin = uVividness * VIVID_TARGET * modeLift;
   vec2 hueDir = (C > VIVID_EPS) ? lab.yz / C : VIVID_WARM_ANCHOR;
@@ -420,10 +410,10 @@ void main() {
   float breath = sin(t * 6.2831 / max(uBreathPeriod, 1.0));
   col *= 1.0 + uBreathDepth * breath * 0.5;
 
-  // Medium dispatch (AX.W13 — each is a FIRST-CLASS body, no shared dispatch):
+  // Medium dispatch: each is a first-class body with no shared dispatch.
   //   1 pastel · 2 watercolor · 3 oil · 4 crayon (DRY tooth-multiply) ·
   //   5 van-Gogh (atomic comma/crescent dabs) · 6 oil-pastel (stroke deposition) ·
-  //   7 kuwahara (anisotropic-Kuwahara edge-preserving painterly finish — BB.W-AUR-KUWAHARA).
+  //   7 kuwahara (anisotropic-Kuwahara edge-preserving painterly finish).
   // van-Gogh is no longer a mediumOil passthrough; oil-pastel and crayon no longer
   // share a body — they share the SUBSTRATE (the tooth/placement helpers), not the
   // dispatch body (slice 8 F0/F1). Kuwahara is OPT-IN (default-off — no preset selects
@@ -436,7 +426,7 @@ void main() {
   else if (uMedium == 5) col = mediumVangogh(col, pN, t);
   else if (uMedium == 6) col = mediumOilPastel(col, pN, t);
   else if (uMedium == 7) col = mediumKuwahara(col, pN, t);
-  // BG.W-AUR-METAL-FINISH — the mutually-exclusive metal mediums (opt-in, uMedium==8/9;
+  // The mutually exclusive metal mediums are opt-in at uMedium==8/9;
   // the smooth default + every existing medium are byte-unchanged by these arms).
   else if (uMedium == 8) col = mediumMetal(col, pN, t);
   else if (uMedium == 9) col = mediumMetalGradient(col, pN, t);
@@ -451,7 +441,7 @@ void main() {
   // Saturation trim
   col = saturate3(col, uSaturation);
 
-  // BD.W-AUR-VIVIDNESS — the §3 chroma floor (warm-anchored, hue-preserving). Lifts a
+  // The chroma floor is warm-anchored and hue-preserving. It lifts a
   // pale zone toward the transmissive floor so warm glass over the field reads
   // transmissive-not-gray; a vivid zone is untouched; uVividness:0 is a no-op.
   col = vividnessFloor(col);

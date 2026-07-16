@@ -2,14 +2,12 @@ import type { ComputedRef } from "vue";
 import { createOptionalContext } from "../../composables/context";
 
 /**
- * Size axis for `<Configurator>` + `<ConfiguratorRow>` (BH.W-SIZE-UNIFY — the
- * clean-break of the size/density collision onto the shared Size ordinal). The old
- * `"mobile"` rung is DROPPED — a coarse-pointer state is a `@media(pointer:coarse)`
- * concern, never a scale rung (axes.ts §sub-range-law).
+ * Size axis for `<Configurator>` and `<ConfiguratorRow>`. Coarse-pointer state is a
+ * `@media(pointer:coarse)` concern, not a scale rung.
  *
- * - `"sm"`  — slightly tighter than the default; dense studios (was `"compact"`).
- * - `"md"`  — current default; matches the `gap-1.5 py-2` recipe (was `"comfortable"`).
- * - `"lg"`  — generous gap; demo / settings-page surface (was `"spacious"`).
+ * - `"sm"` — slightly tighter than the default for dense studios.
+ * - `"md"` — the default; matches the `gap-1.5 py-2` recipe.
+ * - `"lg"` — generous gap for demos and settings surfaces.
  *
  * The `<Configurator>` provides its `size` prop to descendants via
  * `provide`/`inject` (key: `configuratorSize`). A `<ConfiguratorRow>` may override
@@ -20,7 +18,7 @@ import { createOptionalContext } from "../../composables/context";
 export type ConfiguratorSize = "sm" | "md" | "lg";
 
 /*
- * Paired helpers — AV.W14 (invariant 25 closure, canonical DI factory).
+ * Optional context helper.
  *
  * The consumer (`<ConfiguratorRow>`) renders bare when no ancestor
  * `<Configurator>` is present — size falls through to `undefined` and no

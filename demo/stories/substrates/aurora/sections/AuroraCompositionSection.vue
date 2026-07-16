@@ -17,8 +17,8 @@ import { mediumOptions } from "../config/options";
  * SINGLE-SOURCED off the canonical `mediumOptions` enum (config/options.ts) — the
  * full medium ladder (smooth · watercolor · pastel · oil · crayon · van-gogh ·
  * oil-pastel · kuwahara · metal · brushed-metal), so the studio picker can NEVER
- * drift behind the shipped medium enum (BG.W-AUR-METAL-FINISH — the demo-surfacing
- * fix: the prior truncated local map hid the metal mediums the shader built). The
+ * drift behind the public medium enum. The complete map includes every medium
+ * implemented by the shader. The
  * Texture slider is STRUCTURALLY ABSENT on a smooth medium (v-if, not
  * disabled-and-ignored — no dead affordance). Zones is a count + an arrangement
  * character. The `data-atom` anchors (`medium`, `zones-count`) are the studio

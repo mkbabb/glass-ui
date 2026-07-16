@@ -1,6 +1,5 @@
 // demo/shell/configurator/preset-editor/types.ts — public + module-internal types.
 //
-// O.W3 Lane C — split from the prior `usePresetEditor.ts` god-module per Rβ.
 // Types-only module; no runtime side effects.
 
 import type { Ref } from "vue";
@@ -28,12 +27,9 @@ export interface ConfigBaseline {
     density: Density;
     radius: number;
     cartoonShadow: boolean;
-    // BA.W-CONFIG-CHASSIS.3 — `dark` is GONE from the config baseline. Dark mode
-    // is owned SOLELY by the global `useGlobalDark` composable (the gear renders
-    // the live `<DarkModeToggle>` bound to it); the prior `dark` config field was
-    // a desynced shadow that made the gear's dark row a NO-OP.
+    // Dark mode is owned solely by useGlobalDark and is not part of this baseline.
     /**
-     * The W54 maximal-glass clarity knob — writes `--glass-level` to `:root`.
+     * The maximal-glass clarity knob — writes `--glass-level` to `:root`.
      * 1 = the calibrated glass (default); 0 = the opaque escape (solid card +
      * blur(0)); >1 = clearer. The library knob already ships; the demo SURFACES it.
      */
@@ -75,7 +71,7 @@ export type DeltaKey = keyof ConfigDelta;
 
 /**
  * The subset of `ConfigBaseline` keys backed by a CSS-variable writer in
- * `css-writers.ts` (everything except `preset` and `font`). The post-W54 axes
+ * `css-writers.ts` (everything except `preset` and `font`). The global axes
  * (`glassLevel` → `--glass-level`, `scale` → `--ui-scale`) each write a `:root`
  * custom property, so they ride the same writable-field path as the token controls.
  */

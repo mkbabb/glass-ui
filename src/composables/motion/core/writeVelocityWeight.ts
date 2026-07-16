@@ -1,4 +1,4 @@
-// BD.W-MOTION-WEIGHT — writeVelocityWeight: the tiny consumer-side DRY write home.
+// writeVelocityWeight — the tiny consumer-side velocity-weight writer.
 //
 // The §2c BOLDEST move: a driver in active fast motion transiently RAISES its own
 // `--motion-weight` toward 1, so the deformation grows the faster the surface

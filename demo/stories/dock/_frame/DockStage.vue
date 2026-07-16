@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// DockStage — the demo-private dock-staging chassis (BA.W-STAGE scope 8, FD-DOCK-1).
+// DockStage — the demo-private dock-staging chassis.
 //
 // ONE shared procedural backdrop behind a column of dock demos. The flagship dock
 // demos used to sit on FLAT `bg-card/40 p-8` panels (glass over a flat substrate is
@@ -38,7 +38,7 @@ const props = withDefaults(
          * that BELONGS to the warm-cream identity (the §L1 lens needs a colorful
          * backdrop to bend + concentrate — warmth is the identity, not blue). The prior
          * OPENAI_SKY cerulean default read the dock FIELD cold/blue, contradicting the
-         * warm identity the composited-gestalt gate enforces (BG.W-COMPOSITED-GESTALT-
+         * warm identity the composited-gestalt gate enforces (-
          * GATE — the aurora-studio doctrine: "warm-cream Dawn is the DEFAULT lead; the
          * blue Sky is a named non-default preset"). A consumer may stage a different config.
          */
@@ -51,11 +51,11 @@ const props = withDefaults(
     },
 );
 
-// The shared aurora <canvas>, surfaced through the scoped slot. BI.W-DOCK-LUMA-SHARE
+// The shared aurora <canvas>, surfaced through the scoped slot.
 // SUBSUMED the per-dock binding: the stage now runs the ONE shared observer below and the
 // staged docks INHERIT `--glass-backdrop-luma` (they stand down their own readback), so a
 // dock no longer needs the canvas. The scoped `backgroundCanvas` is RETAINED for the
-// sibling dock stories (layers / sections / cta-receive / dock-search) that still bind
+// sibling dock stories (layers, sections, cta-receive, dock-search) that still bind
 // `:background-canvas` — a now-harmless no-op there (those docks stand down under the same
 // shared marker), migrated off in the story-band pass. <Aurora> exposes its `canvasRef`.
 const auroraRef = useTemplateRef<{
@@ -70,11 +70,11 @@ watchEffect(() =>
     props.paused ? auroraRef.value?.pause() : auroraRef.value?.resume(),
 );
 
-// BI.W-DOCK-LUMA-SHARE (PERF-6/FAM-5) — the ONE shared backdrop-luminance observer per
-// route. The luminance signal is a per-ROUTE property of the shared field, not a per-DOCK
+// One shared backdrop-luminance observer serves the route. The luminance signal belongs
+// to the shared field, not to an individual dock
 // one: N docks over the SAME aurora read the SAME luma (+ ambient hue). This ONE observer
 // samples the field (drawImage + getImageData, ≤ 4 Hz, 32×32) at the `.dock-stage` scope
-// and writes `--glass-backdrop-luma` / `--glass-backdrop` / `--glass-ambient-*` there;
+// and writes `--glass-backdrop-luma`, `--glass-backdrop`, `--glass-ambient-*` there;
 // every staged GlassDock INHERITS them via the registered inheriting @property cascade and
 // STANDS DOWN its own per-dock observer (the `shared: true` observer stamps the
 // `data-glass-backdrop-shared` marker the docks' `.closest` coverage-check reads). 12
@@ -94,8 +94,8 @@ useGlassBackdropLuminance(stageEl, {
         data-material="functional"
         :[GLASS_BACKDROP_SHARED_ATTR]="''"
     >
-        <!-- The ONE shared field behind the whole demo column. The field's backing
-             store is CLAMPED to the VIEWPORT (BI.W-STAGE-FIELD-CLAMP / PERF-3): the
+        <!-- The single shared field behind the whole demo column. Its backing store
+             is clamped to the viewport:
              absolute track spans the full scroll column, but the <Aurora> host inside
              it is sized to `100dvh` and `position: sticky` — so the field pins to the
              viewport as the page scrolls (always painted) while the offscreen scroll
@@ -113,13 +113,12 @@ useGlassBackdropLuminance(stageEl, {
              content-visibility seam parks the rAF once the field leaves the viewport).
              aria-hidden — purely decorative staging.
 
-             BG.W-GLASS-SIGNAL-TRUTH (mustFix 2) — `preserveDrawingBuffer: true` on the
-             SAMPLED field. A live WebGL canvas clears its drawing buffer after the
+             `preserveDrawingBuffer: true` keeps the sampled field readable. A live
+             WebGL canvas clears its drawing buffer after the
              browser composites, so the dock's `useGlassBackdropLuminance` observer
              reads BLACK (luma 0 / hue transparent) off `drawImage(auroraCanvas)` —
-             the "witness fires but the value is a lie" state the NF.3 paint-DELTA
-             flagged. Preserving the buffer keeps the last rendered warm frame readable,
-             so the sampled luma + ambient hue are REAL (the W-DOCK-LUMA-SHARE shared
+             a false black sample. Preserving the buffer keeps the last rendered warm
+             frame readable, so the sampled luma + ambient hue are real (the shared
              observer reads this same field). The `data-glass-field-canvas` marker also
              lets a non-dock content surface over the stage auto-discover this field
              (the SHELL_FIELD_CANVAS_SELECTOR reconcile). The render is UNCHANGED —
@@ -138,7 +137,7 @@ useGlassBackdropLuminance(stageEl, {
         <!-- The dock demos flow over the shared field. The scoped slot surfaces the
              shared aurora <canvas> so each staged dock threads it into its luminance
              observer (`:background-canvas="backgroundCanvas"`) — closing the observer
-             loop over the live field (BC.W-ADAPTIVE-RECONCILE). -->
+             loop over the live field. -->
         <div class="dock-stage-column">
             <slot :background-canvas="backgroundCanvas" />
         </div>
@@ -171,8 +170,7 @@ useGlassBackdropLuminance(stageEl, {
     pointer-events: none;
 }
 
-/* The ONE shared aurora field, VIEWPORT-CLAMPED (BI.W-STAGE-FIELD-CLAMP /
-   PERF-3). Sized to `100dvh` (not the full ~2365px scroll column), so the
+/* The one shared aurora field is viewport-clamped. Sized to `100dvh` (not the full ~2365px scroll column), so the
    Aurora ResizeObserver measures the viewport and the backing store never
    exceeds ~2.5MP (down from 9.68MP). `position: sticky; top: 0` pins the field
    to the viewport across the whole column so the visible region is always

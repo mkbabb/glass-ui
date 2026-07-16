@@ -1,12 +1,12 @@
 <script setup lang="ts">
-// FamilyTabs — the demo-private FAMILY register (BG.W-DEMO-IA-REDESIGN).
+// FamilyTabs — the demo-private FAMILY register.
 //
 // The mechanism the family-page collapse needs: ONE page shows N component-family
 // members (textarea · combobox · select … under `forms/inputs`) as a SegmentedTabs
 // switcher, dogfooding the library's OWN nav. It composes the shipped
 // `<SegmentedTabs variant="underline">` (the paper ink-mark material — a family
 // switcher is a paper affordance, not a glass pill toggle) as the tab strip, and
-// renders the ACTIVE member's SFC via `<component :is>`.
+// renders the active member's SFC via `<component :is>`.
 //
 // The member SFCs each wrap `<StoryPage>` (their own chrome). `provide(STORY_NESTED_KEY,
 // true)` here makes every descendant StoryPage render BARE (its slot body only) — so
@@ -66,7 +66,8 @@ const activeMember = computed<FamilyMember | undefined>(
             class="story-family__switcher self-start"
         />
         <!-- The active member's body, rendered bare (STORY_NESTED_KEY provided). Keyed
-             so a switch remounts the member (its section-reveal re-arms). -->
+             on `active` so switching members remounts a fresh instance (clean local
+             state and a fresh entrance) rather than reusing one across families. -->
         <div class="story-family__panel">
             <component :is="activeMember?.component" :key="active" />
         </div>

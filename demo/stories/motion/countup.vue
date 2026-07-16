@@ -4,7 +4,7 @@
 // `NumericAnimation` engine (value.js-free callable easing).
 import { ref } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
-import { useCountup } from "@glass/composables/motion/useCountup";
+import { useCountup } from "@glass/composables/motion/number/useCountup";
 import { Button } from "@glass/components/button";
 
 const host = ref<HTMLElement | null>(null);
@@ -39,7 +39,7 @@ const { runActive, settle, cancel } = useCountup(host, { easeFn: easeOutBack });
                 <Button emphasis="quiet" @click="cancel">Cancel</Button>
             </div>
 
-            <!-- BA.W-SUFFUSE2 — the motion band's ONE coherent violet event
+            <!-- the motion band's ONE coherent violet event
                  (--motion-accent, the demo-local --viz-legendre twin): a leading
                  accent bar above each counting figure. The value+unit stay ink. -->
             <div ref="host">

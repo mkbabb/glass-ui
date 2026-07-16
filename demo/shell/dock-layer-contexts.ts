@@ -1,7 +1,7 @@
 /**
- * dock-layer-contexts — the per-route-context DockLayer manifest (AZ.W-DOCK-CONTEXT).
+ * dock-layer-contexts — the per-route DockLayer manifest.
  *
- * The ONE wholly-absent facility the R3 gaps census found: the dock layering
+ * The dock layering
  * system (`DockLayerGroup` + `DockLayer` + the provide/inject registry) exists and
  * works, but layer membership was HAND-AUTHORED per story, never bound to the active
  * route. This manifest is the route→layer map that makes the dock page-aware: a row
@@ -63,7 +63,7 @@ export interface ContextLayer {
     label: string;
     icon: Component | string;
     /**
-     * W-NAV-DOCK-FIX — the per-facet accent hue (the `mode="facets"` context carousel's
+     * The per-facet accent hue (the `mode="facets"` context carousel's
      * `--glass-accent` rim, presets-in-consumers). A `--section-color-N` LIBRARY identity
      * hue (READ by the demo, never minted here). Distinct per facet so the carousel reads
      * as distinct accent-tinted contexts (no two adjacent chips share a hue).
@@ -76,7 +76,7 @@ export interface ContextLayer {
 /**
  * The route→layer map. Keyed off `Category.id`. EVERY primary manifest category is
  * mapped (≥3, in fact 11 distinct contexts) so the facility is the page-aware
- * general map R3-14 names, never a demo-of-two. A category absent here falls back to
+ * general map names, never a demo of two. A category absent here falls back to
  * a single generic layer (see `useContextualDockLayers`).
  */
 export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {

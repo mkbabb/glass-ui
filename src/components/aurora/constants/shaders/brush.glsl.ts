@@ -183,13 +183,13 @@ vec3 paintOverOklab(vec3 under, vec3 over, float alpha) {
 //   impastoAmp   — 0..1 paint-thickness contribution (the height the relight reads)
 //   hardness     — 0..1 how crisp the compositing transition is (1 = razor, 0 = creamy)
 //
-// AW.W4.2 — the fixed-RGB edge rim (the phantom upper-left light) is RETIRED. Each
+// The fixed-RGB edge rim (the phantom upper-left light) is retired. Each
 // stroke now deposits PAINT HEIGHT into the height accumulator (coverage x per-stroke
 // thickness, perturbed by the bristle/streak fbm for ridges/grooves); mediumOil
 // derives a normal from the accumulated height gradient (dFdx/dFdy) and relights it
 // once with the movable uLightDir source (relightImpasto), in linear before aces().
 //
-// AX.W13 — the internal streak now perturbs HUE + CHROMA in OKLCh (not value-only),
+// The internal streak perturbs hue and chroma in OKLCh, not value only,
 // so a single stroke carries a small hue gradient (broken color at the ATOM level —
 // adjacent strokes shimmer like real impasto, not flat stamped swatches; slice 8 F5);
 // and the OVER-composite runs in OKLab on the painterly stroke mediums so overlapping
@@ -213,7 +213,7 @@ void paintOver(inout vec3 col, inout float height, StrokeHit s,
   float streakB = fbm(vec2(s.alongT * streakFreq * 0.6 + streakSeed * 3.7, s.crossN * 4.1));
   float streak = 0.6 * (streakA - 0.5) + 0.4 * (streakB - 0.5);
 
-  // ── WITHIN-stroke OKLCh broken color (AX.W13, slice 8 F5). The streak fBm perturbs
+  // ── Within-stroke OKLCh broken color. The streak fBm perturbs
   // the stroke's HUE + CHROMA along alongT/crossN, seeded per-stroke, so a single
   // stroke reads a small hue gradient (the atom-level broken-color shimmer). Value is
   // carried by the same streak so the loaded-brush light/dark survives. Gated to the
@@ -251,7 +251,7 @@ void paintOver(inout vec3 col, inout float height, StrokeHit s,
   // not grey); the smooth pole never reaches paintOver, so it keeps the cheap path.
   col = isPainterlyStroke() ? paintOverOklab(col, c, alpha) : mix(col, c, alpha);
 
-  // ── Accumulate paint HEIGHT (AW.W4.2). Thickness peaks at the stroke spine and
+  // ── Accumulate paint height. Thickness peaks at the stroke spine and
   // falls toward the impastoFloor at the edge (edgeN: 0=edge, 1=spine), perturbed by
   // the bristle streak so ridges/grooves form. The relight reads the gradient of this
   // field. The van-Gogh profile's floor=1.0 gives every atomic dab a full-height crown.
@@ -260,7 +260,7 @@ void paintOver(inout vec3 col, inout float height, StrokeHit s,
   height += s.coverage * impastoAmp * crown * ridge * alpha;
 }
 
-// AW.W4.2 — relight the accumulated paint height. Derive a normal from the height
+// Relight the accumulated paint height. Derive a normal from the height
 // gradient (dFdx/dFdy — derivatives are in-pattern; fwidth is already used for AA),
 // then apply diffuse + Blinn specular from the movable uLightDir/uLightColor source.
 // LINEAR-space lighting BEFORE aces() (the tonemap/OETF stay locked); thin strokes
@@ -317,7 +317,7 @@ StrokeHit bestOil(vec2 p, float cellSize, float lenMul, float halfWMul,
 
       vec2 center = (cc + 0.5 + hh * jitterAmt) * cellSize;
 
-      // Per-stroke direction source — the AW.W4.1 strokeOrient switch:
+      // Per-stroke direction source from the strokeOrient switch:
       //   uStrokeOrient==0 (flow)   — the layer-provided hand-authored flowField.
       //   uStrokeOrient==1 (tensor) — the structure-tensor minor eigenvector at the
       //                               cell center (the color field's edge-tangent),
@@ -346,7 +346,7 @@ StrokeHit bestOil(vec2 p, float cellSize, float lenMul, float halfWMul,
       float localCurl = (fbm(center * (2.6 + seed * 0.11) + seed * 1.9) - 0.5) * 0.55 * uFlowCurl * curlScale;
       vec2 dir = rotateDir(f, angJ + localCurl);
 
-      // AX.W13 — the SBR energy grade is a PROFILE field (energyGrade), not a buried
+      // The SBR energy grade is a profile field (energyGrade), not a buried
       // uMedium==5 branch. The van-Gogh profile passes energyGrade=1.0 (the full
       // Starry-Night cascade); oil/oil-pastel pass 0.0 (uniform length). The grade
       // modulates stroke length by local luminance (bright → long confident strokes,

@@ -1,17 +1,15 @@
-// AU.W5 — the `/color` runtime-JS leaf (DEC-AT-7 / inv-AT-color).
+// The `/color` runtime JavaScript leaf.
 //
 // ONE runtime-JS color source. The Ottosson OKLab/OKLCh/sRGB primitives live in
-// value.js `src/units/color/` (inv-K-2); this leaf is the thin value.js-backed
+// value.js; this leaf is the thin value.js-backed
 // hoist that aurora's bake AND the goo-blob's gamma exit both consume — so the
-// shared color core is a clean leaf (imports value.js; nothing imports a glass-ui
-// component back; `proof:color-acyclic` keeps the published graph a DAG). No color
-// math is re-implemented here (`proof:single-color-core`).
+// shared color core is a clean leaf: it imports value.js and no Glass component.
+// No color math is reimplemented here.
 //
-// "One core" binds the MATH SOURCE (value.js), NOT the return space — the leaf
+// One core binds the math source (value.js), not the return space. The leaf
 // ships BOTH `oklchToLinear` (aurora's linear bake target; the shader
-// ACES-tonemaps in linear) AND `oklchToGammaRgb` (the blob's GAMMA exit, DEC-AT-7:
-// the W7 faithful lift paints gamma sRGB, so its default resolver returns gamma —
-// forcing one return space re-introduces the A5/A2 darkening defect). The CSS
+// ACES-tonemaps in linear) and `oklchToGammaRgb` (Blob's gamma-encoded exit).
+// Forcing one return space would darken one of the surfaces. The CSS
 // token tier stays native (guarded) — this leaf governs only the runtime-JS tier.
 
 import {
@@ -37,12 +35,11 @@ export interface OklchStop {
 
 /**
  * A color seam: resolves a CSS color string to a GAMMA-sRGB triple in [0,1].
- * `defaultBlobColorResolver` is the shipped default. A general-purpose injection
+ * `defaultBlobColorResolver` is the default. A general-purpose injection
  * type — the `<FourierField>` background takes it as a REQUIRED `colorResolver`
  * prop (the SVG-field surface owns its own color pipeline). The goo-blob no longer
  * injects it: it resolves color internally through `cssToOklch → oklchToGammaRgb`
- * (W-BLOB3 STRIPPED the speculative DI built for an absent value.js consumer that
- * never repatriated).
+ * without dependency injection.
  */
 export type ColorResolver = (css: string) => [number, number, number];
 
@@ -68,7 +65,7 @@ export function oklchToLinear(stop: OklchStop): [number, number, number] {
 }
 
 /**
- * Warm-white catch-light → LINEAR-sRGB triple (AX.W11). The OKLCh-principled light
+ * Warm-white catch-light to linear-sRGB triple. The OKLCh-principled light
  * tint the painterly relight (aurora's impasto sheen, the blob's `warmCream`) adds
  * in LINEAR light — one shared OKLCh derivation both surfaces' light models route
  * through instead of an eyeballed sRGB-ish literal. Just `oklchToLinear({L,C,h})`
@@ -76,11 +73,10 @@ export function oklchToLinear(stop: OklchStop): [number, number, number] {
  * the literature prescribes is "the catch-light is a warm, near-white OKLCh anchor").
  *
  * Aurora's default anchor is `(0.985, 0.0125, 77.5°)` — the OKLCh anchor that
- * reproduces the prior eyeballed `[1.0, 0.95, 0.88]` warm-white to <1e-3 linear (so
- * the live relight reads identically; the seam fix is invisible to the eye). The
+ * approximates `[1.0, 0.95, 0.88]` warm white to <1e-3 linear. The
  * blob's `warmCream` anchor is `(0.97, 0.03, 85°)` — a deeper, more-saturated cream;
- * W15 re-routes the blob default through THIS helper at that anchor (the cross-surface
- * unification: ONE OKLCh derive, each surface its own principled anchor).
+ * Blob uses this helper at that anchor: one OKLCh derivation with a principled
+ * anchor per surface.
  *
  * An invalid (non-finite) anchor THROWS — a library-internal contract violation, not
  * a silent grey return (the fail-explicit precept; a stale anchor must surface loud).
@@ -99,11 +95,11 @@ export function warmCatchLight(
 }
 
 /**
- * OKLCh stop → GAMMA-sRGB in [0,1] — the blob's faithful-lift exit (DEC-AT-7's W7
- * GAMMA space). value.js's `toRgba8` returns clipped gamma-encoded 0..255; divide
+ * OKLCh stop → gamma-encoded sRGB in [0,1]. value.js's `toRgba8` returns clipped
+ * gamma-encoded 0..255; divide
  * to [0,1]. The blob's default resolver returns THIS space
- * so the W7 lift paints at parity (the LINEAR shader-quality flip + `linearToSrgb`
- * is the AU.W7 stage). Channels are clamped to [0,1] (an out-of-gamut stop is
+ * so Blob paints in the intended output space. Channels are clamped to [0,1]
+ * (an out-of-gamut stop is
  * already gamut-mapped upstream; this is the float-edge guard).
  */
 export function oklchToGammaRgb(stop: OklchStop): [number, number, number] {
@@ -116,7 +112,7 @@ export function oklchToGammaRgb(stop: OklchStop): [number, number, number] {
 
 /**
  * Resolve any CSS color string to an OKLCh stop via value.js's parser — the single
- * canonical core (inv-K-2). DOM-free (SSR / happy-dom safe — no 1×1-canvas).
+ * canonical core. DOM-free and safe for SSR and happy-dom.
  *
  * Invalid, contextual, and non-opaque inputs throw one `GlassColorError` carrying
  * the parser diagnostics or the named local alpha failure. No catch-to-default
@@ -151,22 +147,19 @@ export function oklchStopToHex(s: OklchStop): string {
 }
 
 /**
- * The shipped default `ColorResolver` — `(css) => gamma [r,g,b]` via
- * `cssToOklch → oklchToGammaRgb` (the GAMMA exit; `proof:blob-space-gamma` witnesses
- * the `oklchToGammaRgb` resolve). The `<FourierField>` background passes THIS as its
- * `colorResolver` prop. The goo-blob inlines this exact body internally (W-BLOB3 —
- * no DI seam).
+ * Default `ColorResolver`: `(css) => gamma [r,g,b]` through
+ * `cssToOklch → oklchToGammaRgb`. `<FourierField>` can pass it as its
+ * `colorResolver`; Blob uses the same body internally without a DI seam.
  */
 export const defaultBlobColorResolver: ColorResolver = (css) =>
     oklchToGammaRgb(cssToOklch(css));
 
-// ── Shared harmony vocabulary (AW.W11.b hoist) ───────────────────────────────
+// ── Shared harmony vocabulary ──────────────────────────────────────────
 //
 // The hue-scheme vocabulary aurora's `deriveAurora` and the blob's
-// `deriveBlobPalette` BOTH consume — hoisted to the `/color` leaf so the two
-// surfaces derive from ONE source (no second divergent `deriveHue`/`gamutMapStop`;
-// `proof:single-color-core` keeps the math on value.js). Aurora re-exports this as
-// `AuroraHarmony` for surface preservation (the prior name); the blob consumes
+// `deriveBlobPalette` both consume from the `/color` leaf so the two
+// surfaces derive from one source. Aurora re-exports this as
+// `AuroraHarmony`; Blob consumes
 // `ColorHarmony` directly.
 
 /**
@@ -267,7 +260,7 @@ export interface DeriveBlobPaletteOptions {
     /** Midpoint chroma-bump (keeps a vivid pair off the grey midpoint). Default ~0.03. */
     chromaBump?: number;
     /**
-     * AY.W-COHERE E1 — the OKLCh-chroma CEILING on every derived stop (OKLCh C
+     *  E1 — the OKLCh-chroma CEILING on every derived stop (OKLCh C
      * units). When set, each stop's chroma is clamped to AT MOST this value AFTER
      * the midpoint bump and BEFORE the gamut-map — so the seed→palette derivation
      * can never amplify a vivid seed into the neon register the shader's
@@ -279,7 +272,7 @@ export interface DeriveBlobPaletteOptions {
      */
     chromaCeiling?: number;
     /**
-     * BG.W-BLOB-SATELLITE-SHADE (F9.R1 — the `uSatColor[]` companion) — pin the BODY
+     * Pin the body
      * stop's OKLCh lightness. The default ramp centres L on the seed
      * (`anchor.L - lightnessSpread/2` at the body, climbing `lightnessSpread` to the
      * lightest satellite). When set, the body stop (t=0) anchors at exactly this L and
@@ -289,7 +282,7 @@ export interface DeriveBlobPaletteOptions {
      */
     bodyLightness?: number;
     /**
-     * BG.W-BLOB-SATELLITE-SHADE (F9.R1) — the OKLCh-lightness FLOOR on every derived
+     * the OKLCh-lightness FLOOR on every derived
      * stop. Replaces the hardcoded `0.05` low clamp, so a consumer guarantees no stop
      * reads darker than this (a body/satellite that never collapses toward black). The
      * `0.98` high clamp is untouched. `undefined` → the byte-identical `0.05` floor.
@@ -299,7 +292,7 @@ export interface DeriveBlobPaletteOptions {
 
 /**
  * Seed ONE color into a harmonious, gamut-safe 2-4-stop OKLCh palette for the blob
- * — the blob-side twin of `deriveAurora`, consuming the SHARED `ColorHarmony`
+ * the blob-side twin of `deriveAurora`, consuming the SHARED `ColorHarmony`
  * vocabulary (no forked `deriveHue`). The body takes the deepest/most-saturated
  * stop; satellites take the lighter in-family stops. Every stop is gamut-mapped.
  * Deterministic + DOM-free (SSR-safe; `cssToOklch` parses via value.js).
@@ -323,7 +316,7 @@ export function deriveBlobPalette(
         lightnessFloor,
     } = options;
 
-    // BG.W-BLOB-SATELLITE-SHADE — the BODY-stop L anchor. When `bodyLightness` is set,
+    // the BODY-stop L anchor. When `bodyLightness` is set,
     // the body (t=0) sits at exactly that L; otherwise the ramp centres on the seed
     // (`anchor.L - lightnessSpread/2` — the byte-identical HEAD baseline, same eval order).
     const baseL = bodyLightness !== undefined ? bodyLightness : anchor.L - lightnessSpread / 2;
@@ -337,7 +330,7 @@ export function deriveBlobPalette(
         const L = baseL + lightnessSpread * t;
         // Midpoint chroma-bump: a bell (peaks at t=0.5) keeps a vivid pair off grey.
         let C = Math.max(0, anchor.C + chromaBump * Math.sin(Math.PI * t));
-        // AY.W-COHERE E1 — the warm-register chroma cap. Applied AFTER the bump,
+        //  E1 — the warm-register chroma cap. Applied AFTER the bump,
         // BEFORE the gamut-map, so a vivid seed cannot be derived into the neon
         // band the shader then over-drives. Hue + L are untouched (a cap, not a
         // re-map). `undefined` → byte-identical to HEAD.
@@ -348,15 +341,15 @@ export function deriveBlobPalette(
     return stops;
 }
 
-// ── BC.W-ACCENT-TONE — the contrast-floored tonal-accent register (JS ink half) ──
+// ── Contrast-floored tonal accent ──────────────────────────────────────
 //
-// `useAccentTone` is the sync value.js-FREE shell (BI.W-CHIP-FOLD) — the contrast-safe
+// `useAccentTone` is the sync value.js-FREE shell — the contrast-safe
 // label ink ON the active band, value.js-QUARANTINED behind a dynamic
 // `import('./accent-tone-solve')` boundary (the value.js math lives in the
-// `accent-tone-solve` leaf, reached ONLY for a concrete tone; a `var()` / unset tone
+// `accent-tone-solve` leaf, reached ONLY for a concrete tone; a `var()`, unset tone
 // stays value.js-free). Re-exported from this `/color` leaf; the `<Chip>` that consumes
 // it imports the SHELL MODULE DIRECTLY (`./useAccentTone`, not this barrel) so its `/chip`
 // eager chunk stays value.js-free, and ships /chip ONLY (OFF the value.js-free root barrel
-// — the SCC-trap discipline).
+// the SCC-trap discipline).
 export { useAccentTone } from "./useAccentTone";
 export type { UseAccentToneOptions, UseAccentToneReturn } from "./useAccentTone";

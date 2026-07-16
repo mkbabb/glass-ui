@@ -1,7 +1,7 @@
 /* Shared @keyframes — global animations used across projects */
 
-/* (BI.W-GLASS-DEDUP — the `floating-panel-in` entrance @keyframes retired with
-   floating-panel.css / `--animate-floating-panel-in`; FAM-9 clean break.) */
+/* The `floating-panel-in` keyframes retired with floating-panel.css and
+   `--animate-floating-panel-in`; no compatibility animation remains. */
 
 /* ── Tooltip entrance ── */
 @keyframes tooltip-in {
@@ -100,9 +100,9 @@
     }
 }
 
-/* ── Metal shimmer: the metal-PARAMETERIZED text/border highlight sweep ──
- * BB.W-METAL-SHIMMER — the ONE metal-agnostic sweep (the gold-only
- * `gold-shimmer-slide` RETIRED onto it — clean break, no alias). The keyframe is
+/* ── Metal shimmer: the metal-parameterized text/border highlight sweep ──
+ * One metal-agnostic sweep (the gold-only
+ * `gold-shimmer-slide` folded into it — clean break, no alias). The keyframe is
  * PURE position (ZERO baked metal color): each recipe binds its own gradient
  * stops. The same keyframe sweeps a gold, silver, or bronze gradient,
  * usable for BOTH text-clip (the `.metal-*` text register) AND border/mask (the
@@ -115,7 +115,7 @@
     100% { background-position: -200% 0; }
 }
 
-/* ── Sparkle sweep RETIRED (BA.W-GLASS-CAL, H2a) ──
+/* ── Sparkle sweep retired ──
  * The `@keyframes sparkle-sweep` + its reduced-motion stub are DELETED with the
  * disco recipe family — the `btn-audacious` ::after star (its sole consumer) is
  * gone, and the dock-tab primary tier collapsed onto the calm glass register.
@@ -133,26 +133,25 @@
     51%, 100% { opacity: 0; }
 }
 
-/* ── .glass-reveal EXIT (BG.W-OVERLAY-ENTER-PAINT / F5.R1) ──────────────────
+/* ── .glass-reveal exit ─────────────────────────────────────────────────────
  *
  * The reka-portaled-overlay (Dialog/Popover/DropdownMenu/…) EXIT MUST be a
  * @keyframes animation, NOT a CSS transition. reka-ui's `usePresence` gates the
  * unmount on `getComputedStyle(node).animationName`: it dispatches ANIMATION_OUT
  * and awaits `animationstart`/`animationend`, with NO `transitionend` path — so a
- * transition-only exit is torn down (~11ms, <1 frame) before it can paint (the
- * paint-judge FAIL: Dialog+Popover exit painted 0 frames). The Sheet exit paints
- * only because its `sheet-animate` (`animate-out`) is a keyframe reka can await;
+ * transition-only exit is torn down (~11ms, <1 frame) before it can paint. The Sheet
+ * exit paints only because its `sheet-animate` (`animate-out`) is a keyframe reka can await;
  * this gives the `.glass-reveal` recipe (glass/reveal.css) the SAME kind.
  *
- * `glass-reveal-out` is the enter bloom REVERSED: scale 1 → (0.88 × squish),
+ * `glass-reveal-out` is the enter bloom REVERSED: scale 1 → (0.94 × squish),
  * opacity 1 → 0, filter blur(0) → blur — the SAME three coupled channels, on the
  * no-overshoot `--ease-out` clock (a closing surface must never overshoot past
- * gone, §6/W-MOTION-CANON P2). NO `translate` (the base/Dialog has none; a side
+ * gone). NO `translate` (the base/Dialog has none; a side
  * popover's slide-out stays a transition — a different property that coexists,
  * never clobbering a center Dialog's `-translate-x-1/2 -translate-y-1/2`). The
  * `to` values MIRROR the `.glass-reveal[data-state="closed"]` static end-state so
  * a non-supporting engine still lands correctly. Compositor-only (scale/opacity/
- * filter — the proof:no-layout-animation floor). The custom-property `var()`s
+ * filter, so it never animates layout). The custom-property `var()`s
  * resolve on the animated `.glass-reveal` element (they are declared on its base
  * rule). */
 @keyframes glass-reveal-out {
@@ -162,8 +161,8 @@
         filter: blur(0);
     }
     to {
-        scale: calc(var(--glass-reveal-enter-scale, 0.88) * var(--lq-stretch-x, 1.06))
-            calc(var(--glass-reveal-enter-scale, 0.88) * var(--lq-stretch-y, 0.945));
+        scale: calc(var(--glass-reveal-enter-scale, 0.94) * var(--lq-stretch-x, 1.06))
+            calc(var(--glass-reveal-enter-scale, 0.94) * var(--lq-stretch-y, 0.945));
         opacity: 0;
         filter: blur(var(--glass-reveal-blur, 4px));
     }
@@ -184,7 +183,7 @@
     }
 }
 
-/* ── §TOP-LAYER ENTRY/EXIT (AQ.W5 §Design 2) ───────────────────────────────
+/* ── Native top-layer entry/exit ────────────────────────────────────────────
  *
  * A pure-CSS entry/exit grammar for NATIVE top-layer surfaces — `[popover]`
  * elements and native `<dialog>` — keyed off `:popover-open` / `dialog[open]`,
@@ -206,7 +205,7 @@
  *
  * Uses `scale:` (the longhand) not `transform: scale()` so it composes with the
  * identity-base transform work and does not mint a stacking context. Every
- * visual axis reads a `--top-layer-*` token (tokens.css §20).
+ * visual axis reads a `--top-layer-*` token from the top-layer token group.
  */
 @supports (overlay: auto) {
     /* Base (closed / exit) + the transition list. `allow-discrete` MUST come
@@ -215,26 +214,24 @@
     dialog.glass-top-layer {
         opacity: 0;
         scale: var(--top-layer-enter-scale, 0.96);
-        /* BB.W-LIQUID-REVEAL — the coupled blur-settle decongest (the iOS
+        /* Coupled blur-settle decongestion (the iOS
            "light-bending modulation" arrival). The surface's OWN pixels decongest
            `filter: blur(--top-layer-enter-blur)` → `blur(0)` AS it blooms (a `filter`
            radius interp is compositor-safe; it rides the surface's pixels, so it does
-           NOT fight the resting glass-tier `backdrop-filter` plate blur — the
-           REVEAL-TOPLAYER-NO-BLUR fix, the twin of the `.glass-reveal` recipe's blur
-           leg, glass/reveal.css). */
+           NOT fight the resting glass-tier `backdrop-filter` plate blur). This is the
+           twin of the `.glass-reveal` recipe's blur leg in glass/reveal.css. */
         filter: blur(var(--top-layer-enter-blur, 4px));
         transition-property: opacity, scale, filter, display, overlay;
-        /* BI.W-REGISTER-TABLE — the FOURTH register RETIRED: the native `.glass-top-layer`
+        /* The native `.glass-top-layer`
            @starting-style enter is FOLDED onto the `enter-overlay` register bundle (the
            SAME register the reka portaled overlays ride via `.glass-reveal` — one enter
            grammar, no fourth recipe). It gains the register CLOCK (`--enter-overlay-clock`
            = the parity-fixed --spring-snappy-duration) + spring (`--enter-overlay-spring`);
            the scale/blur re-point to the register via the `--top-layer-enter-*` tokens
-           (scroll-tokens.css). The prior BA.W-GLASS-CAL bouncy-own-clock is superseded —
+           (scroll-tokens.css). The prior independent bouncy clock is superseded:
            the native dialog/popover enter now matches the reka Dialog enter. The blur
-           decongest keeps the no-overshoot `--ease-out` (EFFECTS), the scale the register
-           spring (SPATIAL) — the W-MOTION-CANON split. HoverPopover (the live consumer)
-           re-points onto the register by inheriting the folded recipe. */
+           decongest keeps the no-overshoot `--ease-out` (EFFECTS), while scale uses the
+           register spring (SPATIAL). Hover-triggered Popover inherits the folded recipe. */
         transition-duration: var(--enter-overlay-clock),
             var(--enter-overlay-clock), var(--enter-overlay-clock),
             var(--enter-overlay-clock), var(--enter-overlay-clock);
@@ -261,7 +258,7 @@
      * exists for `showModal()` dialogs, NOT `[popover]` (popovers are
      * non-modal — correct, no scrim). */
     dialog.glass-top-layer::backdrop {
-        /* AZ.W-ADAPTIVE-AUTO A5-1 — the modal-scrim dim is the house alpha-derivative
+        /* The modal-scrim dim is the house alpha derivative
            `color-mix(in srgb, var(--background) Npct, transparent)`, NOT the invalid
            `hsl(var(--background) / α)` double-wrap (`--background` is a complete
            `hsl()` color = `hsl(48 12% 98%)`, so `hsl(hsl(…)/α)` evaluates to nothing
@@ -280,13 +277,12 @@
             var(--background) calc(var(--top-layer-backdrop-dim, 0.5) * 100%),
             transparent
         );
-        /* SCRIM COUPLES TO LAUNCH (BG.W-OVERLAY-ENTER-PAINT / F5.R1) — the ENTER dim
+        /* The scrim couples to launch: the enter dim
            rides its OWN launch-coupled clock (`--top-layer-backdrop-in`, a fast
            no-overshoot `--ease-out`) so the scrim reaches ≥80% of its target dim
            within ~100ms of launch, coupled to the panel window rather than trailing
-           the panel on the slower `--duration-normal`/`--ease-standard` clock (the
-           HEAD defect: the scrim decoupled + dimmed over ~400ms AFTER the panel
-           seated). This ENTER transition is read from the [open] after-change state;
+           the panel on the slower `--duration-normal`/`--ease-standard` clock. This
+           enter transition is read from the [open] after-change state;
            the base `::backdrop` transition stays the EXIT clock — released cleanly
            WITH the panel, no overshoot past gone. The `@starting-style` from-state
            makes the dim interpolate from transparent (the discrete allow-discrete

@@ -7,7 +7,7 @@
 // a fudge papering over the un-normalized scale. The `k *= 4.0` pre-scale makes
 // the polynomial's effective blend band equal to `k`, so a `uSmoothK` of `0.2`
 // reads as a ~0.2-unit-wide meniscus — measurable, not magic (the
-// `proof:blob-smin-normalized` gate sweeps it).
+// both merge variants share the same practical band width).
 //
 // Two merge variants, config-gated on `uMerge` (0 = quadratic, 1 = circular):
 //   - QUADRATIC (`sminQuadratic`) — the polynomial smin; cheap, slightly creased.
@@ -22,7 +22,7 @@ float sdCircle(vec2 p, vec2 center, float radius) {
     return length(p - center) - radius;
 }
 
-// AX.W15 — the VALUE+GRADIENT circle: returns vec3(d, dd/dx, dd/dy). The circle
+// Value and gradient circle: returns vec3(d, dd/dx, dd/dy). The circle
 // gradient is the UNIT radial direction (p - center)/length(p - center) (the
 // eikonal property holds EXACTLY for a circle), guarded at the degenerate centre.
 // This is the keystone of the analytic-gradient smin: carrying the gradient
@@ -59,7 +59,7 @@ float smin(float a, float b, float k) {
     return sminQuadratic(a, b, k);
 }
 
-// AX.W15 — the VALUE+GRADIENT smin. a/b are vec3(dist, grad.xy); the blended
+// Value and gradient smin. a/b are vec3(dist, grad.xy); the blended
 // gradient is mix(a.yz, b.yz, w) with the interpolation weight w the distance
 // blend uses (IQ's vec2-smin insight). This propagates the analytic gradient
 // through the merge so the surface normal reads the field gradient DIRECTLY — no

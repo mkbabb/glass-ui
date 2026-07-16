@@ -1,5 +1,5 @@
-// AU.W6 — `useWebGLCanvas`: the WebGL2 backend over the shared
-// `createCanvasLifecycle` core. Aurora AND the AU.W7 goo-blob compose it.
+// `useWebGLCanvas`: the WebGL2 backend over the shared
+// `createCanvasLifecycle` core. Aurora AND the goo-blob compose it.
 //
 // The backend-AGNOSTIC lifecycle (the three-reason suspend Set, the rAF tick/wake
 // demand gate, the document-visibility owner, the content-visibility offscreen-park,
@@ -27,7 +27,7 @@
 // Lazy-arm + capture: `arm()` runs the expensive init (context + `setup`); it is
 // idempotent and a no-op after `dispose()`. `mode:"capture"` pre-seeds the
 // `manual` suspension so the loop never auto-runs (a capture consumer draws via
-// `renderAt`). Throws on WebGL2-unavailable / `setup` failure — the consumer's
+// `renderAt`). Throws on WebGL2-unavailable, `setup` failure — the consumer's
 // error policy (eager throw vs deferred surface) lives in its wrapper.
 
 import {
@@ -40,16 +40,15 @@ import {
 export type { BackingSize, DprPolicy } from "./createCanvasLifecycle";
 
 /**
- * The ONE `getContext("webgl2")` capability probe (BB.W-CI-GREEN — the
- * single-bootstrap rule). A throwaway WebGL2 context is created here, in the
- * substrate (the sole webgl2-creating module per `proof:webgl-substrate-single`),
- * so a consumer feature-detecting WebGL2 / reading the unmasked renderer string
+ * The one `getContext("webgl2")` capability probe. A throwaway WebGL2 context is
+ * created here in the substrate,
+ * so a consumer feature-detecting WebGL2, reading the unmasked renderer string
  * NEVER creates a second context of its own. The probe canvas is detached, its
  * context released via `WEBGL_lose_context` under the per-page context cap; the
  * read is one-shot (a mount-time device-tier decision, not a reactive one).
  *
  * Returns the lower-cased `UNMASKED_RENDERER_WEBGL` string (e.g.
- * `"google swiftshader"`), or `null` when WebGL2 / the debug-renderer extension
+ * `"google swiftshader"`), or `null` when WebGL2, the debug-renderer extension
  * is unavailable or the probe throws — the caller treats `null` as "cannot prove"
  * (the conservative-but-lossy fall-back). SSR-safe (returns `null` with no
  * `document`).
@@ -73,8 +72,8 @@ export function probeWebGL2Renderer(): string | null {
     }
 }
 
-// Lockstep with createCanvasLifecycle's CanvasSuspendReason (AX.W16 F6 adds
-// "off-screen-io" — the IntersectionObserver fallback's OWN reason key, distinct from
+// Lockstep with createCanvasLifecycle's CanvasSuspendReason. `off-screen-io` is
+// the IntersectionObserver fallback's own reason, distinct from
 // the content-visibility path's "off-screen").
 export type WebGLSuspendReason =
     | "tab-hidden"
@@ -89,7 +88,7 @@ export interface WebGLCanvasFrame {
     /** Demand-gate: is there live motion to render next frame? `false` → park. */
     shouldContinue: () => boolean;
     /**
-     * Upload the backing geometry to the viewport/uniforms. BD.W-SUBSTRATE-SIZE-UNIFY:
+     * Upload the backing geometry to the viewport/uniforms.:
      * when a `dprPolicy` is supplied the leaf MEASURES + sizes the backing and passes
      * the live `BackingSize` here (the consumer body shrinks to
      * `gl.viewport(0,0,s.w,s.h)`); the arg is optional so a legacy self-measuring
@@ -117,17 +116,17 @@ export interface WebGLCanvasOptions {
      */
     respectReducedMotion?: boolean;
     /**
-     * BD.W-SUBSTRATE-SIZE-UNIFY (G1/G2) — the consumer's DPR policy. When PRESENT the
+     * The consumer's DPR policy. When present the
      * leaf owns the backing-store measurement + sizing (the ONE sizer, sized
      * synchronously at mount before any acquire) and hands the live `BackingSize` to
      * `resize(s)`. When ABSENT the legacy path runs (the consumer self-measures).
      */
     dprPolicy?: DprPolicy;
-    /** Compose the leaf IO park (G3). Default `false` (opt-in; see createCanvasLifecycle). */
+    /** Compose the leaf IO park. Default `false`; see createCanvasLifecycle. */
     composeIntersectionPark?: boolean;
-    /** `rootMargin` for the leaf IO park (G3). */
+    /** `rootMargin` for the leaf IO park. */
     intersectionRootMargin?: string;
-    /** Fire the one-shot cold-first-VISIBLE entrance bloom (BG.W-VIZ-REVEAL-BLOOM — the `data-substrate-reveal` attr). Default `false`. */
+    /** Fire the one-shot cold-first-visible entrance bloom via `data-substrate-reveal`. Default `false`. */
     revealBloom?: boolean;
     /**
      * Build the program + geometry on a fresh context. Called on `arm()` AND on
@@ -143,16 +142,16 @@ export interface WebGLCanvasOptions {
 export interface WebGLCanvasHandle {
     /** Run the expensive init (context + `setup` + arm the loop). Idempotent; no-op post-dispose. */
     arm: () => void;
-    /** BD.W-SUBSTRATE-SIZE-UNIFY (G2) — size the backing + start the leaf RO synchronously (pre-acquire). */
+    /** Size the backing and start the leaf RO synchronously before acquire. */
     presize: () => void;
     suspend: (reason?: WebGLSuspendReason) => void;
     resume: (reason?: WebGLSuspendReason) => void;
     /** Re-arm a parked loop (a setter that re-introduced motion calls this). */
     wake: () => void;
-    /** Draw one frame at `timeSec` out-of-loop (capture / thumbnail). */
+    /** Draw one frame at `timeSec` out-of-loop (capture, thumbnail). */
     renderAt: (timeSec: number) => void;
     dispose: () => void;
-    /** The live context (null before arm / after dispose / mid-loss). */
+    /** The live context (null before arm, after dispose, mid-loss). */
     readonly gl: WebGL2RenderingContext | null;
     /**
      * The live `prefers-reduced-motion: reduce` state. The shared lifecycle core
@@ -176,11 +175,8 @@ export function createWebGLCanvas(
     // lifecycle core threads through `buildContext`. The `getContext("webgl2")`
     // acquisition + the consumer `setup(gl)` live here; the schedule lives in the core.
     //
-    // BD.W-SUBSTRATE-SIZE-UNIFY (G2) — the per-backend ResizeObserver is DELETED. The
-    // ONE engine-agnostic RO now lives in `createCanvasLifecycle` (the leaf), observing
-    // the canvas + routing through the leaf's `sizeBacking`. A backend RO here would be
-    // a triple-observe parallel path (leaf RO + WebGL RO + WebGPU RO) the BINDING LAW
-    // forbids. The consumer's `resize` is still threaded through the leaf seam below.
+    // One engine-agnostic ResizeObserver lives in `createCanvasLifecycle` and routes
+    // through `sizeBacking`. A backend observer here would duplicate that authority.
     function buildContext(): CanvasFrameHooks {
         const ctx = canvas.getContext("webgl2", contextAttrs ?? undefined);
         if (!ctx) throw new Error("[useWebGLCanvas] WebGL2 unavailable");
@@ -200,7 +196,7 @@ export function createWebGLCanvas(
         };
     }
 
-    // ── context-loss/restore robustness (the genuinely-absent piece, AU.W6 §1).
+    // ── context-loss/restore robustness (the genuinely-absent piece,  §1).
     let onContextRestored: (() => void) | null = null;
     let markContextLost: (() => void) | null = null;
     function onContextLost(e: Event): void {

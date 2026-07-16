@@ -1,20 +1,18 @@
 <script setup lang="ts">
-// SidebarDock — the demo's category-rail dock (AW.W28.b).
+// SidebarDock — the demo's category-rail dock (.b).
 //
 // An always-expanded, STATIC vertical GlassDock (`orientation="vertical"`) — the
-// fixed left-column nav rail. (BI.W-DOCK-RETIRES retired the in-situ V↔H orientation
-// morph decided-terminal: the platform cannot continuously interpolate a flex-column→row
-// topology change, so the dock is a static vertical rail — no `SHELL_DOCK_ORIENTATION`
-// track, no wide-short top-bar reshape.) It is a FIXED icon+label nav rail: it opts OUT
+// fixed left-column nav rail. The platform cannot continuously interpolate a
+// flex-column→row topology change, so this is a static vertical rail. It is a fixed
+// icon+label nav rail that opts out
 // of the collapse machinery via `always-expanded`, so there is no collapse↔expand
 // affordance here. The only "expand" is the mobile off-canvas Sheet host the BottomDock
 // owns; this component is the rail body it reuses for both the desktop fixed column and
 // the mobile drawer.
 //
-// Dogfoods the dock + the W22-W26 glass atoms + iOS-26 Liquid Glass. The
-// genuine NEW deliverable is the active-category restyle: the affordance moves
-// from the bare `.is-active` colour shift onto the NCSU-red accent + a
-// left-edge accent rule + W25 `tap-squish` press feedback.
+// The active category uses the neutral luminance-lift glass register (the shared
+// `--dock-selected-accent` material-lift plate, per dock-nav.css), a left-edge rule,
+// and `tap-squish` press feedback. The former NCSU-red interactive accent is retired.
 import { computed } from "vue";
 import {
     DockControl,
@@ -57,7 +55,7 @@ const activeCategoryId = computed<string | null>(() => {
     return loc ? loc.category.id : null;
 });
 
-// W-NAV-DOCK-FIX (defects 1, 6) — the desktop category rail is a PRIMARY nav surface,
+// The desktop category rail is a primary navigation surface,
 // so it is NEVER collapsed-by-default. A collapsed dock parks its category buttons in
 // the `inert`/`pointer-events:none` #default layer until a ~400ms hover-dwell (the
 // user's dead-click). It is now always-expanded: the categories are clickable from
@@ -66,18 +64,12 @@ const activeCategoryId = computed<string | null>(() => {
 // collapse affordance is the BottomDock's job, not the category rail's). `showTooltips`
 // keeps its tooltip-anchor meaning only.
 
-// The primary categories ride the top of the rail. (The reference-only
-// Composables shelf was removed at AZ.W-SHELL-CONFIG — the demo IA no longer
-// carries a reference category; the `!c.reference` guard stays as a harmless
-// forward filter, but no category sets it today.)
+// The primary categories ride the top of the rail. The demo IA has no standalone
+// Composables shelf. The `!c.reference` guard
+// remains a harmless forward filter, though no category sets it today.
 //
-// BG.W-DOCK-PERSISTENT-CUT (D8) — the persistent ℱ brand wordmark + its Fourier
-// egg are REMOVED (the iOS-26 HIG "glass is the floating NAVIGATION layer, never
-// content" — the brand egg is the vanity the content-first tab bar avoids). With
-// the wordmark gone, Foundations REJOINS the roving category tablist as a normal
-// chip: the `c.id !== "foundations"` filter — the ℱ-as-Foundations dedup that
-// depended on the now-deleted wordmark — is DROPPED. One Foundations entry, one
-// tab-stop, aria-current, no duplicate (the `!c.reference` forward filter stays).
+// Foundations participates in the roving category tablist as a normal chip. There
+// is one Foundations entry, one tab stop, and one `aria-current` owner.
 const primaryCategories = computed(() => CATEGORIES.filter((c) => !c.reference));
 
 function go(categoryId: string): void {
@@ -90,13 +82,11 @@ const { railItems, railContext } = useShellNavDock({
     onNavigate: () => emit("navigate"),
 });
 
-// AZ.W-SHELL-CONFIG — the gear-hosted demo configurator open control. The
-// floating FAB is GONE; the open is rehomed onto this trailing dock gear (the
-// dock-as-configurator-chrome idiom — GlassDock + DockControl). It dispatches
-// the SAME `glass-ui-demo:toggle-configurator` window event the `,` shortcut does
+// The trailing dock gear opens the demo configurator. It dispatches the same
+// `glass-ui-demo:toggle-configurator` window event the `,` shortcut does
 // (PresetEditor.vue listens for it) — one event path, no parallel open machinery.
 //
-// AZ.R4-SHELL — the gear is the INTERACTIVE trigger, so it carries
+// The gear is the interactive trigger, so it carries
 // `aria-expanded` reflecting the shared configurator open ref (the a11y contract —
 // the GlassDock root is presentational and must NOT carry aria-expanded; see the
 // CLAUDE.md GlassDock aria contract). `configOpen` is the SAME singleton the
@@ -110,13 +100,13 @@ function openConfigurator(): void {
 </script>
 
 <template>
-    <!-- W-NAV-DOCK-FIX (defects 1, 6) — the desktop category rail is a PRIMARY nav
+    <!-- The desktop category rail is a primary navigation
          surface, so it is ALWAYS-EXPANDED: the category buttons are clickable from frame
          0 (a collapsed dock parked them in the inert/pointer-events:none #default layer
          until a ~400ms hover-dwell — the user's dead-click). Both hosts (desktop fixed
          column + mobile Sheet) are unified on the always-expanded register; the collapse
          affordance is the BottomDock's job, not the category rail's. The persistent ℱ
-         brand wordmark is GONE (BG.W-DOCK-PERSISTENT-CUT); Foundations is a normal chip. -->
+         Foundations is a normal chip. -->
     <GlassDock
         orientation="vertical"
         always-expanded
@@ -124,10 +114,8 @@ function openConfigurator(): void {
         aria-label="Category navigation"
         data-testid="sidebar-dock-collapsible"
     >
-        <!-- BG.W-DOCK-PERSISTENT-CUT — the persistent ℱ brand wordmark + its
-             anchored home separator are GONE (D8). Foundations is now a normal
-             category chip in the roving tablist below, so there is no home-left
-             anchor to demarcate; the dock opens directly on the category section. -->
+        <!-- Foundations is a normal category chip in the roving tablist; the dock
+             opens directly on the category section. -->
 
         <div class="contents" role="group" aria-label="Categories">
                 <TooltipProvider :delay-duration="250">
@@ -173,7 +161,7 @@ function openConfigurator(): void {
 
         <div class="contents" role="group" aria-label="Utilities">
                 <TooltipProvider :delay-duration="250">
-                    <!-- BI.W-DOCK-RETIRES — the V↔H orientation-morph control is
+                    <!-- the V↔H orientation-morph control is
                          DEFINITION-ABSENT (the in-situ dock morph retired decided-terminal;
                          the shell dock is a static vertical rail). -->
                     <Tooltip>

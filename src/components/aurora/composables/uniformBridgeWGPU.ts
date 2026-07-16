@@ -3,34 +3,33 @@
  *
  * The WGSL `Uniforms` struct (`aurora.wgsl.ts`) and the JS `ArrayBuffer` write offsets
  * are generated from the SAME layout table here, so a std140-vs-WGSL alignment mismatch
- * (the parity-ΔE-blowout trap the wave's §Triumvirate names) is structurally impossible:
- * the field order + the byte offsets are ONE declaration.
+ * is structurally impossible because field order and byte offsets share one declaration.
  *
- * The struct packs every scalar into a vec4 lane + every per-nucleus row / palette stop
+ * The struct packs every scalar into a vec4 lane + every per-nucleus row, palette stop
  * into a vec4 so the array stride is the natural 16 bytes (no std140 16-byte-array-stride
  * surprise). The byte layout (all offsets in bytes, std140-compatible — vec4 align 16):
  *
- *   scalars0 : vec4<f32>   off   0   (uTime, uSoftmaxBeta, uValueVariance, uWarpAmount)
- *   scalars1 : vec4<f32>   off  16   (uWarpScale, uWarpDrift, uSaturation, uPaperGrain)
- *   scalars2 : vec4<f32>   off  32   (uAlpha, uNucleiDrift, uPaletteDrift, uBreathDepth)
- *   scalars3 : vec4<f32>   off  48   (uBreathPeriod, uCursorStrength, uCursorRadius, uVividness)
- *   cursor   : vec4<f32>   off  64   (uCursor.x, uCursor.y, uMetalPolish, uMetalHeightScale)
- *   ints0    : vec4<i32>   off  80   (uStopCount, uNucleiCount, uWarpMode, uNoiseOctaves)
- *   ints1    : vec4<i32>   off  96   (uMedium, uHuePath, _, _)
- *   palette  : array<vec4<f32>, 8>  off 112  (rgb linear-sRGB stop + pad)
- *   nuc0     : array<vec4<f32>, 8>  off 240  (pos.x, pos.y, radius, paletteBias)
- *   nuc1     : array<vec4<f32>, 8>  off 368  (valueBias, driftRadius, driftPhase, elong)
- *   nuc2     : array<vec4<f32>, 8>  off 496  (angle, _, _, _)
- *   scalars4 : vec4<f32>   off 624  (uStrokeAmount, uStrokeScale, uStrokeAnisotropy, uCanvasGrain)
- *   scalars5 : vec4<f32>   off 640  (uWetEdge, uGranulation, uBrokenColor, uKuwaharaQ)
- *   kuwahara : vec4<f32>   off 656  (uKuwaharaRadius, uKuwaharaSectors, _, _)
- *   total    : 672 bytes (16-aligned)
+ *   scalars0: vec4<f32>   off   0   (uTime, uSoftmaxBeta, uValueVariance, uWarpAmount)
+ *   scalars1: vec4<f32>   off  16   (uWarpScale, uWarpDrift, uSaturation, uPaperGrain)
+ *   scalars2: vec4<f32>   off  32   (uAlpha, uNucleiDrift, uPaletteDrift, uBreathDepth)
+ *   scalars3: vec4<f32>   off  48   (uBreathPeriod, uCursorStrength, uCursorRadius, uVividness)
+ *   cursor: vec4<f32>   off  64   (uCursor.x, uCursor.y, uMetalPolish, uMetalHeightScale)
+ *   ints0: vec4<i32>   off  80   (uStopCount, uNucleiCount, uWarpMode, uNoiseOctaves)
+ *   ints1: vec4<i32>   off  96   (uMedium, uHuePath, _, _)
+ *   palette: array<vec4<f32>, 8>  off 112  (rgb linear-sRGB stop + pad)
+ *   nuc0: array<vec4<f32>, 8>  off 240  (pos.x, pos.y, radius, paletteBias)
+ *   nuc1: array<vec4<f32>, 8>  off 368  (valueBias, driftRadius, driftPhase, elong)
+ *   nuc2: array<vec4<f32>, 8>  off 496  (angle, _, _, _)
+ *   scalars4: vec4<f32>   off 624  (uStrokeAmount, uStrokeScale, uStrokeAnisotropy, uCanvasGrain)
+ *   scalars5: vec4<f32>   off 640  (uWetEdge, uGranulation, uBrokenColor, uKuwaharaQ)
+ *   kuwahara: vec4<f32>   off 656  (uKuwaharaRadius, uKuwaharaSectors, _, _)
+ *   total: 672 bytes (16-aligned)
  *
- * BC.W-VIZ-AURORA (T4) — the painterly-medium scalar lanes (scalars4/scalars5/kuwahara)
+ * The painterly-medium scalar lanes (scalars4/scalars5/kuwahara)
  * are APPENDED after the arrays, so EVERY pre-existing offset is byte-identical and the
  * smooth-default parity capture is byte-equivalent (these lanes pack 0 on a smooth config).
  * The WGSL `Uniforms` struct (`aurora.wgsl.ts`) carries the SAME three trailing lanes —
- * the typed-struct lockstep: a one-sided add reds the parity-ΔE.
+ * the typed-struct lockstep.
  *
  * Y-origin: config authoring is CSS-top-origin (0 = top); the bridge flips Y at the
  * uniform boundary (`flipY`), exactly as the GLSL `uniformBridge` does.
@@ -55,7 +54,7 @@ import type { AuroraCursorUniforms } from "./uniformBridge";
 /** The total uniform-buffer byte size (16-aligned). */
 export const AURORA_WGPU_UNIFORM_BYTES = 672;
 
-// Float32 word offsets (byte / 4) into the buffer.
+// Float32 word offsets (byte, 4) into the buffer.
 const OFF = {
     scalars0: 0,
     scalars1: 4,
@@ -73,7 +72,7 @@ const OFF = {
     kuwahara: 28 + 8 * 4 + 24 * 4 + 8, // 164 → byte 656
 } as const;
 
-// BC.W-VIZ-AURORA (T4) — Kuwahara recipe defaults (mirror mediums.glsl.ts mediumKuwahara):
+// Kuwahara recipe defaults mirror mediums.glsl.ts mediumKuwahara:
 // radius 0.010 procedural-patch units, 8 sectors (fixed soft-overlap floor), q 4.0.
 const KUWAHARA_RADIUS_DEFAULT = 0.01;
 const KUWAHARA_SECTORS = 8;
@@ -137,7 +136,7 @@ export function packAuroraWGPUUniforms(
     f32[OFF.scalars2 + 3] = cfg.breathDepth;
 
     // scalars3: uBreathPeriod, uCursorStrength, uCursorRadius, uVividness
-    // BD.W-AUR-VIVIDNESS — the .w pad lane carries the §3 chroma-floor strength (omitted
+    // the.w pad lane carries the §3 chroma-floor strength (omitted
     // = the vivid default). vividness:0 writes 0 → the floor is a no-op (byte-identity).
     f32[OFF.scalars3 + 0] = cfg.breathPeriod;
     f32[OFF.scalars3 + 1] = cursor.strength;
@@ -145,7 +144,7 @@ export function packAuroraWGPUUniforms(
     f32[OFF.scalars3 + 3] = cfg.vividness ?? DEFAULT_VIVIDNESS;
 
     // cursor: uCursor.x, flipY(uCursor.y), uMetalPolish, uMetalHeightScale
-    // BG.W-AUR-METAL-FINISH — the two FREE cursor pad lanes carry the metal-medium knobs
+    // the two FREE cursor pad lanes carry the metal-medium knobs
     // (zero new struct lanes; the cursor lane remains shared). A non-metal
     // config never reads them on the WGSL primary (applyMedium at uMedium≠8/9 skips
     // metalShade), so packing them never perturbs the smooth-default parity capture.
@@ -214,7 +213,7 @@ export function packAuroraWGPUUniforms(
         }
     }
 
-    // BC.W-VIZ-AURORA (T4) — the painterly-medium scalar lanes (lockstep with the WGSL
+    // Painterly-medium scalar lanes (lockstep with the WGSL
     // `scalars4`/`scalars5`/`kuwahara` struct lanes). A smooth config carries the same
     // stroke knobs at their preset values; the WGSL `applyMedium` is a no-op at uMedium 0,
     // so packing them never perturbs the smooth-default parity capture.

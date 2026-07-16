@@ -13,6 +13,9 @@ describe("demo route hierarchy", () => {
     it("preserves canonical category and story routes", () => {
         expect(router.resolve("/forms").name).toBe("category:forms");
         expect(router.resolve("/forms/inputs").name).toBe("story:forms:inputs");
+        expect(router.resolve("/data/data-table").name).toBe(
+            "story:data:data-table",
+        );
     });
 
     it.each([

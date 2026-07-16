@@ -1,10 +1,9 @@
 import { onScopeDispose, ref, watch, type CSSProperties } from "vue";
-import { useReducedMotion } from "../motion/useReducedMotion";
+import { useReducedMotion } from "../motion/core/useReducedMotion";
 
 /**
- * `useSpecularTracking` — the pointer-anchored moving-specular write seam
- * (AX.W09). The single DRY home for the catch-light position write that was
- * hand-copied VERBATIM in `Card.vue` and `DockControl.vue`.
+ * `useSpecularTracking` is the pointer-anchored moving-specular writer shared by
+ * Card and DockControl.
  *
  * On pointer-move it writes the cursor position (`--mouse-x`/`--mouse-y`, as
  * percentages of the host box) onto the host's inline style; the unified
@@ -26,16 +25,15 @@ import { useReducedMotion } from "../motion/useReducedMotion";
  * fallback). The PRM signal comes from the shared reduced-motion authority, never a
  * fresh `matchMedia` read per pointer event.
  *
- * AY.W-A11Y-PERF O-3 — the pointer write is rAF-COALESCED: `onPointerMove` only
+ * The pointer write is rAF-coalesced: `onPointerMove` only
  * stashes the raw event + schedules ONE `requestAnimationFrame`; the rAF callback
  * does the single `getBoundingClientRect()` + style write, so a 120–1000 Hz pointer
  * collapses to ONE batched layout read + ONE style write per animation frame (under
- * W54 maximal-glass every blurred-surface repaint is amortized to the frame, not the
+ * each blurred-surface repaint is amortized to the frame rather than the
  * event). The composable cancels the pending rAF + its shared-preference watch on
  * scope dispose (cleanup discipline).
  *
- * BB.W-LIQUIDHOVER — the rAF-coalesce + cached-PRM + cleanup LOGIC is extracted to
- * `createSpecularWriter()`, the SINGLE position-write core. The composable below wraps
+ * `createSpecularWriter()` owns rAF coalescing, cached PRM, and cleanup. The composable wraps
  * it for the Vue `:style`-ref case (Card's prop-gated `specular` opt-in); the
  * tier-root auto-arm (`vSpecular`) wraps the SAME core to write directly on the
  * directive host's `el.style` (the zero-wiring delivery). ONE position-write source,
@@ -49,7 +47,7 @@ export interface UseSpecularTracking {
 }
 
 /**
- * The SINGLE position-write core (BB.W-LIQUIDHOVER) — the rAF-coalesced,
+ * The SINGLE position-write core — the rAF-coalesced,
  * PRM-aware `--mouse-x/y` write seam, sink-agnostic. `sink(x, y)` receives the
  * percentage position once per animation frame; the composable sinks into its
  * `specularStyle` ref, the `vSpecular` directive sinks into `el.style.setProperty`.
@@ -102,7 +100,7 @@ export function createSpecularWriter(
         if (typeof requestAnimationFrame === "function") {
             rafId = requestAnimationFrame(flush);
         } else {
-            // SSR / no-rAF host — write synchronously (degenerate, never the hot path).
+            // SSR, no-rAF host — write synchronously (degenerate, never the hot path).
             flush();
         }
     }

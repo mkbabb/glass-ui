@@ -17,10 +17,10 @@ import { Input } from "@glass/components/input";
 import { Label } from "@glass/components/label";
 import { Textarea } from "@glass/components/textarea";
 
-// BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2
+// reconcile — the containers band's ONE coherent --section-color-2
 // blue identity. PH3-safe (inline borderLeft, not the border-l-[3px] +
 
-// BI.W-DIALOG-PLACEMENT — the Sheet side-slide FOLDED onto `<DialogContent placement>`
+// the Sheet side-slide FOLDED onto `<DialogContent placement>`
 // (same reka DialogRoot + FocusScope; the slide is paint, not mechanism). The four
 // non-center placements are the retired Sheet sides.
 type SidePlacement = "top" | "right" | "bottom" | "left";

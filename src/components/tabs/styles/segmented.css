@@ -170,13 +170,7 @@
     font: inherit;
     font-size: 0.8125rem;
     color: var(--muted-foreground);
-    /* BD.W-TABS-LIQUID — the glyph scale-pop (overlapping action / follow-through):
-       the label settles AFTER the capsule (the child trails the parent). The `scale`
-       channel rides the snappy spring with a 60ms delay so it OVERLAPS the capsule
-       arrival; the colour cross-fade stays on the fast bezier. */
-    transition:
-        color var(--duration-fast) ease,
-        scale var(--spring-snappy-duration) var(--spring-snappy) 60ms;
+    transition: color var(--duration-fast) ease;
     /* AQ.W3 identity base — keep `scale:1; translate:0` so a hover/press
        transform never mints a stacking context that severs `anchor()`
        resolution (the WAAPI press writes `transform` transiently — harmless). */
@@ -194,18 +188,6 @@
 .segmented-tab[aria-pressed="true"],
 .segmented-tab[aria-selected="true"] {
     color: var(--foreground);
-}
-
-/* BD.W-TABS-LIQUID — the glyph scale-pop on the PILL selection. The live selection
-   model is `aria-pressed` (the pill is a ToggleGroup-shaped surface — verified in
-   SegmentedTabs.vue, NOT `aria-selected` which the underline paper material uses).
-   The pop magnitude DEPENDS `--motion-weight` (the booked Band-0 token, CONSUMED):
-   `calc(1 + 0.06 × --motion-weight)` → ~+3.7% at rest weight 0.618, and exactly 1
-   under PRM (`--motion-weight: 0`). The 60ms transition delay (above) settles it a
-   beat after the capsule arrives (overlapping action). The underline label does NOT
-   pop (paper ink, no inflation — the material fence). */
-.segmented-tabs:not(.segmented-tabs--underline) .segmented-tab[aria-pressed="true"] {
-    scale: calc(1 + 0.06 * var(--motion-weight));
 }
 
 .segmented-tab.is-disabled {

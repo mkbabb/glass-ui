@@ -16,7 +16,7 @@ function setWarpMode(v: string | string[]) {
     props.config.warpMode = String(v) as WarpMode;
 }
 
-// BG.W-AUR-IMAGE-SOURCE — the color-source axis. "Image" dissolves a decoded photo into
+// the color-source axis. "Image" dissolves a decoded photo into
 // the field's drift (a separate compiled program); a file picker feeds `config.src` (a
 // `Blob`, decoded through the ONE shared texture-upload primitive).
 function setSource(v: string | string[]) {

@@ -2,7 +2,7 @@
 // warp/wander/well/pinned-drift state shapes, and the `<Constellation>` consumer
 // prop surface.
 //
-// Carved from constellationField.ts (BA.W-CARVE2) — the ~308 lines of type
+// Carved from constellationField.ts — the ~308 lines of type
 // interfaces split off the step engine (`seedField`/`refitField`/`stepField`
 // stay in constellationField.ts). The draw/interaction siblings + the engine
 // core import these TYPES (no runtime cycle — a pure type module). The package
@@ -17,7 +17,7 @@ export interface ConstellationNode {
     r: number;
     dim: boolean;
     /**
-     * BC.W-VIZ-CONSTELLATION — the seeded parallax DEPTH (`z ∈ [0,1]`, §6). The pointer
+     * the seeded parallax DEPTH (`z ∈ [0,1]`, §6). The pointer
      * offsets the node's SCREEN position by `parallax · z · (pointer − center)` so the flat
      * lattice reads as having depth (the Awwwards "living network" register). Seeded in
      * `seedField`; perturbs the painted node position only (never field geometry). A
@@ -27,7 +27,7 @@ export interface ConstellationNode {
 }
 
 /**
- * BC.W-VIZ-CONSTELLATION — ONE edge of the proximity graph, the row the CPU all-pairs scan
+ * ONE edge of the proximity graph, the row the CPU all-pairs scan
  * (`buildEdges`) writes each frame for the Canvas2D line pass. `a`/`b` are the
  * two endpoint positions in canvas-local CSS px; `alpha` is the distance-falloff weight
  * (`1 − d²/reach²`, the `drawEdges` math) the segment-quad fragment multiplies; `accent`
@@ -63,7 +63,7 @@ export interface ConstellationPointer {
 
 /**
  * The neutral palette + legibility weights resolved off the canvas custom
- * properties (the FULL `--constellation-*` set — AX.W17). `node`/`nodeDim`/
+ * properties through the full `--constellation-*` set. `node`/`nodeDim`/
  * `line` are the colors; `edgeAlpha`/`edgeFocusAlpha`/`alpha` are the per-mode
  * legibility multipliers (replacing the `0.17`/`0.24` magic literals).
  */
@@ -78,21 +78,21 @@ export interface ConstellationPalette {
     /** The field-yields-to-type translucency knob (the global field dimmer). */
     alpha: number;
     /**
-     * The ACCENT-edge skin tint (AZ.W-CON-GEN G3) — the flagged-node EDGE color the
+     * The accent-edge skin tint: the flagged-node edge color the
      * optional `drawEdges(…, accentIndex)` pass strokes for edges incident on the
      * accented node. Reads `--constellation-accent` (the consumer-preset boundary —
      * the library ships a neutral default; a consumer aliases it to its brand hue).
      */
     accent: string;
     /**
-     * The neutral-edge alpha FLOOR (AZ.W-CON-GEN G3) — added to a distance-faded
+     * The neutral-edge alpha floor, added to a distance-faded
      * neutral hairline's alpha so it clears the perceptual/sampling floor across its
      * full length on a bright ground (the "web doesn't read in light mode" fix).
      * Default `0` is byte-identical (no floor). Reads `--constellation-edge-floor`.
      */
     edgeFloor: number;
     /**
-     * The ACCENT-incident edge alpha multiplier (AZ.W-CON-GEN G3) — the per-mode
+     * The accent-incident edge alpha multiplier: the per-mode
      * weight for an edge touching the accented node. Reads
      * `--constellation-edge-accent-alpha`; the accented edges read a touch louder
      * than the neutral lattice (the flagged-node tether).
@@ -101,7 +101,7 @@ export interface ConstellationPalette {
 }
 
 /**
- * The per-axis critically-damped warp spring on the focal node (AX.W17). The
+ * The per-axis critically damped warp spring on the focal node. The
  * focal mark's position is `(x, y)`; `vx`/`vy` its velocity; `targetIdx` the
  * LIVE node index it chases (re-read each frame so it tracks a DRIFTING target,
  * not a frozen click-time snapshot). `-1` = no active warp (the focal mark
@@ -117,8 +117,7 @@ export interface ConstellationWarp {
 }
 
 /**
- * The auto-DRIFT target-source (AY.W-CON1 — the 2nd half of the AX.W17 "drift +
- * warp are ONE mechanic" thesis). The warp re-points its focal node to a
+ * The auto-drift target source. The warp re-points its focal node to a
  * periodically-chosen RANDOM node on a jittered cadence: the SAME warp spring,
  * a different target-PICKER (a click for warp, this cadence for drift). No new
  * rAF, no second mechanic — `stepField` steps this cadence inline, re-pointing
@@ -138,7 +137,7 @@ export interface ConstellationWander {
 }
 
 /**
- * The autonomous PINNED-ANCHOR drift state (AZ.W-CON-GEN G5) — the gentle wander of
+ * The autonomous pinned-anchor drift state: the gentle wander of
  * the PINNED node (`field.pinnedIndex`) around its seeded ANCHOR. DISTINCT from
  * `wander` (which re-targets the WARP spring among random nodes): this eases ONE
  * designated node a small fraction around its rest position on a jittered cadence,
@@ -171,7 +170,7 @@ export interface ConstellationPinnedDrift {
 }
 
 /**
- * The warp-spring tuning the integrator reads (AY.W-CON2). Tokenised numeric (the
+ * The warp-spring tuning the integrator reads. Tokenised numeric (the
  * `--constellation-warp-*` cohort) so a consumer retunes the warp WITHOUT editing
  * src — read ONCE on mount via `parseFloat`, threaded onto the field.
  *
@@ -180,7 +179,7 @@ export interface ConstellationPinnedDrift {
  * settle-duration — at ζ=1 the 2%-settle lands at `t₂ ≈ 5.83/ω₀ ≈ 0.93·response`
  * (the `(1 + ω₀t)e^(−ω₀t)` critically-damped envelope). Documented here + in the
  * `--constellation-warp-response` token comment so the token semantics are honest
- * at ANY ζ (the AY.W-CON2 ω-reconcile; the engine keeps the keyframes.js convention,
+ * at ANY ζ (the ω-reconcile; the engine keeps the keyframes.js convention,
  * mints NO second ω formula).
  */
 export interface ConstellationWarpConfig {
@@ -191,7 +190,7 @@ export interface ConstellationWarpConfig {
 }
 
 /**
- * The gravity-well tuning (AY.W-CON2). The held-pointer pull is an inverse-square
+ * The gravity-well tuning. The held-pointer pull is an inverse-square
  * force composed into `stepField` (no new rAF). Tokenised numeric (the
  * `--constellation-well-*` cohort) so a consumer retunes the well WITHOUT editing
  * src. All distances are base-width px (`k`-scaled at step time).
@@ -205,7 +204,7 @@ export interface ConstellationWellConfig {
      * the ARM ramp rate (1/s) — `strength` eases toward `target = 1` at this rate
      * while HELD (the gentle bloom the token tunes). The RELEASE is NOT this rate:
      * it is the fixed brisk {@link WELL_RELEASE_RAMP} (the field-cools invariant —
-     * not consumer-tunable, F8.2). A consumer slowing this token slows the ARM
+     * not consumer-tunable). A consumer slowing this token slows the arm
      * bloom only; the release stays brisk so the cool gate holds.
      */
     ramp: number;
@@ -218,7 +217,7 @@ export interface ConstellationWellConfig {
 }
 
 /**
- * The gravity-well live STATE (AY.W-CON2). `(x, y)` is the held pointer in
+ * The gravity-well live STATE. `(x, y)` is the held pointer in
  * canvas-local px (`-1` = inactive); `strength` is the eased pull 0→1 (ramps to
  * `target` at `cfg.ramp`/s); `target` is the strength the ramp eases toward (1
  * while held, 0 on release). A transient force — the field renormalises back to
@@ -238,10 +237,10 @@ export interface ConstellationWell {
 
 /**
  * The field state the component exposes to its `drawOverlay` consumer so a
- * skin can pin itself to a real field node. `k` is the `width / BASE_WIDTH`
+ * skin can pin itself to a real field node. `k` is the `width, BASE_WIDTH`
  * scale, `dpr` the device-pixel ratio applied by the substrate.
  *
- * The focal node (AX.W17) is a FIRST-CLASS library concept: `focalIndex` names
+ * The focal node is a first-class library concept: `focalIndex` names
  * which node is focal (consumer-owned via `warpTo`), and the engine OWNS its
  * position via the `warp` spring stepped inside `stepField`. A `drawOverlay`
  * paints the focal mark at `field.warp.{x,y}` (the spring-eased position) —
@@ -256,7 +255,7 @@ export interface ConstellationField {
     h: number;
     k: number;
     dpr: number;
-    /** R5-8 — SIZES draw at `kVisOf(field)`; TRUE `k` keeps positions/reach. */
+    /** Visual sizes use `kVisOf(field)`; `k` keeps positions and reach. */
     kFloor?: number;
     /**
      * The designated focal node's INDEX, or `-1` when none is pinned. Re-points
@@ -264,24 +263,24 @@ export interface ConstellationField {
      * node). A `drawOverlay` reads `field.warp.{x,y}` for the spring-eased mark.
      */
     focalIndex: number;
-    /** The per-axis warp spring the engine steps inside `stepField` (AX.W17). */
+    /** The per-axis warp spring stepped by `stepField`. */
     warp: ConstellationWarp;
     /**
-     * The warp-spring tuning `warpStep` reads (AY.W-CON2). Optional — absent
+     * The warp-spring tuning `warpStep` reads. Optional — absent
      * falls back to the shipped `{ response: 0.55, zeta: 1.0 }` defaults (the
      * byte-identical HEAD spring). A tokenised override (read on mount) reaches
      * the integrator through this member.
      */
     warpCfg?: ConstellationWarpConfig;
     /**
-     * The optional auto-DRIFT cadence (AY.W-CON1). When set, `stepField`
+     * The optional auto-DRIFT cadence. When set, `stepField`
      * periodically re-points the warp to a random node (the wander source on the
      * SAME spring). Absent (`undefined`) leaves the field BYTE-IDENTICAL to the
      * pre-wander HEAD — `stepField` skips the cadence block entirely.
      */
     wander?: ConstellationWander;
     /**
-     * The optional gravity-well (AY.W-CON2). When set, `stepField` composes a
+     * The optional gravity-well. When set, `stepField` composes a
      * held-pointer inverse-square pull force (no new rAF) — `well.target → 1`
      * while held, `→ 0` on release, the field renormalising back to `speed` once
      * the well cools. Absent (`undefined`) leaves the field BYTE-IDENTICAL to the
@@ -289,7 +288,7 @@ export interface ConstellationField {
      */
     well?: ConstellationWell;
     /**
-     * The PINNED node designation (AZ.W-CON-GEN G1) — the index of a node `stepField`
+     * The pinned-node designation: the index of a node `stepField`
      * does NOT drift/bounce/steer/pull, so it HOLDS its seeded position (the flagged
      * flagged node the consumer pins). `-1` (the default) = no pin → every node drifts
      * (byte-identical to HEAD). A designation, NOT a new node — node count is
@@ -298,14 +297,14 @@ export interface ConstellationField {
      */
     pinnedIndex: number;
     /**
-     * The optional autonomous PINNED-ANCHOR drift (AZ.W-CON-GEN G5). When set AND a
+     * Optional autonomous pinned-anchor drift. When set and a
      * node is pinned, `stepField` gently eases the pinned node around its anchor on a
      * jittered cadence (a closed-form easeInOutQuad — no second rAF). Absent
      * (`undefined`) → the pinned node holds dead-still at its anchor (byte-identical).
      */
     pinnedDrift?: ConstellationPinnedDrift;
     /**
-     * Warp AUTO-RELEASE (AZ.W-CON-GEN G6). When `true`, `stepField` clears the warp's
+     * Warp auto-release. When `true`, `stepField` clears the warp's
      * `targetIdx` (→ -1) once the spring has SETTLED on its target — the focal node
      * releases the spring and rides its node's RAW drift (the identity-ride), freeing
      * the spring for the next warp. Default `false`/undefined keeps the held-target
@@ -327,17 +326,17 @@ export interface ConstellationProps {
     /** Drift speed. Default 0.16. */
     speed?: number;
     /**
-     * BC.W-VIZ-CONSTELLATION (§6) — the pointer-PARALLAX depth. Each node carries a seeded
+     * Pointer-parallax depth. Each node carries a seeded
      * depth `z ∈ [0,1]`; the pointer offsets node screen positions by `parallax · z ·
      * (pointer − center)` so the flat lattice reads as having depth (the Awwwards "living
      * network" register). Additive default-on at a SUB-PERCEPTUAL 0.08 (a hair of depth, not
      * a behavior break); 0 = the flat lattice. It perturbs only the painted node position,
-     * never field geometry. Frozen under reduced-motion / `freeze`.
+     * never field geometry. Frozen under reduced-motion, `freeze`.
      */
     parallax?: number;
     /**
-     * AY.W-COHERE E3 — the per-instance outer-envelope RECESSION knob (the aurora
-     * `opacityCeiling` / fourier `intensity` sibling — ONE recession vocabulary
+     * Per-instance outer-envelope recession (the Aurora
+     * `opacityCeiling`, fourier `intensity` sibling — ONE recession vocabulary
      * across the four live substrates). Scales the painted edge/node/web/ripple
      * alpha OVER the mode-tuned `--constellation-alpha` base so the lattice can
      * RECEDE behind content (0.4–0.6 in a hero). Default `1` is byte-identical to
@@ -349,7 +348,7 @@ export interface ConstellationProps {
     /** Decorative steer-toward-cursor + tap ripples. Default true; auto-off under reduced-motion. */
     pointerReactive?: boolean;
     /**
-     * Click-to-warp (AX.W17): a click warps the focal node to the nearest
+     * Click-to-warp: a click warps the focal node to the nearest
      * drifting node + springs it there. INDEPENDENT of `pointerReactive` (warp
      * works on a non-ripple lattice). Default false; auto-off under
      * reduced-motion. Enabling it gives the host a named keyboard/pointer button
@@ -357,7 +356,7 @@ export interface ConstellationProps {
      */
     warpOnClick?: boolean;
     /**
-     * Auto-DRIFT (AY.W-CON1): a periodic auto-pick re-points the focal node to a
+     * Auto-DRIFT: a periodic auto-pick re-points the focal node to a
      * random node on a jittered cadence — the wander source on the SAME warp
      * spring (no second mechanic). `true` uses the default cadence (8–16s, the
      * slides rhythm); `{ minIdle, jitter }` tunes it. Default OFF (absent →
@@ -366,7 +365,7 @@ export interface ConstellationProps {
      */
     wander?: boolean | { minIdle?: number; jitter?: number };
     /**
-     * Pointer-held GRAVITY-WELL (AY.W-CON2): hold the pointer and the lattice is
+     * Pointer-held GRAVITY-WELL: hold the pointer and the lattice is
      * pulled toward it (an inverse-square force on the same engine, no new rAF);
      * release and the field cools back to `speed`. INDEPENDENT of `warpOnClick`
      * and `pointerReactive` (a consumer can hold-to-pull on a non-ripple,
@@ -387,19 +386,19 @@ export interface ConstellationProps {
               soften?: number;
           };
     /**
-     * PINNED node designation (AZ.W-CON-GEN G1): a node held by every step pass (it
-     * does not drift / bounce / steer / feel the well). `false`/absent → no pin;
+     * Pinned-node designation: a node held by every step pass (it
+     * does not drift, bounce, steer, feel the well). `false`/absent → no pin;
      * `true` → node 0; a number → that index. The flagged-node pin the consumer holds.
      */
     pinned?: boolean | number;
     /**
-     * ACCENT-edge skin (AZ.W-CON-GEN G2): edges incident on the pinned (else focal)
+     * Accent-edge skin: edges incident on the pinned (else focal)
      * node stroke the `--constellation-accent` tint — the flagged-node tether. Default
      * OFF (the neutral single-color pass).
      */
     accentEdges?: boolean;
     /**
-     * Autonomous PINNED-ANCHOR drift (AZ.W-CON-GEN G5): the pinned node gently wanders
+     * Autonomous pinned-anchor drift: the pinned node gently wanders
      * its seeded anchor on a jittered cadence (DISTINCT from `wander`, which re-targets
      * the warp). Default OFF (the pin holds dead-still). PRM-gated.
      */
@@ -407,14 +406,14 @@ export interface ConstellationProps {
         | boolean
         | { wanderFrac?: number; durMs?: number; minIdle?: number; jitter?: number };
     /**
-     * Warp AUTO-RELEASE (AZ.W-CON-GEN G6): a settled warp clears its target so the
+     * Warp auto-release: a settled warp clears its target so the
      * focal rides its node's raw drift (the identity-ride). Default OFF (the warp holds
      * its target forever). Read the settled signal via the `warpSettled()` expose.
      */
     warpAutoRelease?: boolean;
     /**
-     * Deterministic-capture freeze (AY.W-CON3): when `true`, lays out ONE
-     * reproducible STATIC frame (no `stepField`, no ripple / warp / wander / well
+     * Deterministic-capture freeze: when `true`, lays out ONE
+     * reproducible STATIC frame (no `stepField`, no ripple, warp, wander, well
      * advance) and hands `drawOverlay` a FROZEN `now` so a phase-driven skin
      * resolves to a fixed value. Omit to AUTO-DERIVE from `location.search`
      * matching `export | print | freeze` (the deploy-pipeline contract); an
@@ -424,7 +423,7 @@ export interface ConstellationProps {
      */
     freeze?: boolean;
     /**
-     * The interactive-BACKGROUND feed (BI.W-CONSTELLATION-DEDUPE). A full-bleed
+     * The interactive-BACKGROUND feed. A full-bleed
      * `pointer-events:none` background constellation cannot listen for its own
      * pointer, so it reads the route chassis's ONE window pointer broadcaster
      * (`useRoutePointer`, provided by the route chassis) and feeds a SUBTLE pointer

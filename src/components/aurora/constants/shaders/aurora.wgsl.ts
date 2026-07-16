@@ -1,4 +1,4 @@
-// BB.W-VIZ-SUITE (W-AURORA-WGPU) — the aurora WGSL PRIMARY path (net-new).
+// The Aurora WGSL primary path.
 //
 // The WebGPU-first transcription of the aurora fragment pipeline: the procedural
 // fbm/OKLCh nuclei field over the full-screen-triangle pass, the PBR-Neutral tonemap,
@@ -10,7 +10,7 @@
 // end-to-end — domainWarp (all four warp modes + the cursor swirl), nucleiField
 // (anisotropic Gaussian softmax + drift + palette drift), samplePalette (the shared OKLCh
 // ramp), the breath wobble, saturate3, the PBR-Neutral `aces`, the film grain, the OETF,
-// the IGN display-space dither — AND, since BC.W-VIZ-AURORA (T4), the PAINTERLY MEDIUMS
+// the IGN display-space dither, and the painterly mediums
 // (the `aurora-mediums.wgsl.ts` splice): pastel/watercolor/crayon/kuwahara port their own
 // bodies, and oil/vangogh/oil-pastel render the anisotropic-Kuwahara painterly finish (a
 // real oil-paint read, NEVER a silent smooth degrade — the user's "WebGPU EVERYWHERE …
@@ -19,10 +19,10 @@
 // uMedium 0) so the smooth parity capture stays byte-equivalent on both backends. The full
 // per-dab Starry-Night STROKE cascade (bestOil/paintOver/StrokeProfile) stays the WebGL2
 // `aurora.frag.ts` full-fidelity register (byte-untouched — the GL-shader fence); its WGSL
-// port is the booked W-AURORA-WGPU-MEDIUMS-STROKES tail.
+// port remains a separate full-fidelity path.
 //
 // The shared OETF + Ottosson OKLCh matrices + FBM rotation + the palette ramp are
-// SPLICED from `procedural-color.wgsl.ts` (the WGSL twin of the AV.W2 shared GLSL chunk),
+// SPLICED from `procedural-color.wgsl.ts` (the WGSL twin of the shared GLSL chunk),
 // so the color math can never drift between the WGSL primary and the GLSL fallback.
 //
 // The Uniforms struct mirrors `aurora.wgsl.uniforms.ts` (the typed-struct source-of-truth)
@@ -39,7 +39,7 @@ import {
 import { CURL_FBM_WGSL } from "../../../../composables/glass/webgl/shaders/flow.wgsl";
 import { AURORA_MEDIUMS_WGSL } from "./aurora-mediums.wgsl";
 
-// MAX_NUCLEI=8 / MAX_STOPS=8 mirror aurora.frag.ts's #defines (and the JS-side
+// MAX_NUCLEI=8, MAX_STOPS=8 mirror aurora.frag.ts's #defines (and the JS-side
 // AURORA_UNIFORM_LAYOUT). Each per-nucleus row + each palette stop is packed into a
 // vec4 lane so the uniform array stride is the natural 16 bytes (no std140 stride trap —
 // the parity-blowout suspect the wave's §Triumvirate names).
@@ -61,10 +61,10 @@ struct Uniforms {
   // scalars2: (uAlpha, uNucleiDrift, uPaletteDrift, uBreathDepth)
   scalars2: vec4<f32>,
   // scalars3: (uBreathPeriod, uCursorStrength, uCursorRadius, uVividness)
-  // BD.W-AUR-VIVIDNESS — the .w pad lane now carries the §3 chroma-floor strength.
+  // The .w pad lane now carries the chroma-floor strength.
   scalars3: vec4<f32>,
   // cursor: (uCursor.x, uCursor.y, uMetalPolish, uMetalHeightScale)
-  // BG.W-AUR-METAL-FINISH — the two free pad lanes carry the metal-medium knobs (the
+  // The two free pad lanes carry the metal-medium knobs (the
   // metal light is cursor-synthesized so it reads in-struct on the WGSL primary too).
   cursor: vec4<f32>,
   // ints: (uStopCount, uNucleiCount, uWarpMode, uNoiseOctaves)
@@ -75,7 +75,7 @@ struct Uniforms {
   nuc0: array<vec4<f32>, 8>,
   nuc1: array<vec4<f32>, 8>,
   nuc2: array<vec4<f32>, 8>,
-  // BC.W-VIZ-AURORA (T4) — the painterly-medium scalar lanes. APPENDED after the
+  // The painterly-medium scalar lanes are appended after the
   // arrays so EVERY existing offset (and the smooth-default parity capture) is
   // byte-identical (these lanes are written 0 on a smooth config). scalars4:
   // (uStrokeAmount, uStrokeScale, uStrokeAnisotropy, uCanvasGrain). scalars5:
@@ -94,7 +94,7 @@ const K_NUCLEI: f32 = 14.0;
 const K_PAL: f32 = 24.0;
 const K_WARP: f32 = 5.0;
 
-// ── Noise (aurora-local hash21/vnoise/fbm — legitimately divergent per AV.W2 §3a) ──
+// ── Noise (Aurora-local hash21/vnoise/fbm, deliberately distinct) ──────────
 fn hash21(p0: vec2<f32>) -> f32 {
   var p = fract(p0 * vec2<f32>(123.34, 456.21));
   p = p + dot(p, p + 45.32);
@@ -146,7 +146,7 @@ fn ign(p: vec2<f32>) -> f32 {
   return fract(52.9829189 * fract(dot(p, vec2<f32>(0.06711056, 0.00583715))));
 }
 
-// Cellular / Worley f1.
+// Cellular, Worley f1.
 fn cellular(p: vec2<f32>) -> f32 {
   let i = floor(p);
   let f = fract(p);
@@ -279,7 +279,7 @@ fn saturate3(c: vec3<f32>, amt: f32) -> vec3<f32> {
   return max(oklabToLinearSrgb(oklchToOklab(lch)), vec3<f32>(0.0));
 }
 
-// BD.W-AUR-VIVIDNESS — the §3 chroma FLOOR, the WGSL twin of the GLSL vividnessFloor.
+// The chroma floor, the WGSL twin of the GLSL vividnessFloor.
 // OKLab chroma lifted toward the floor, hue + L preserved; below VIVID_EPS the (a,b)
 // direction is precision noise so the lift synthesizes along the WARM anchor (amber,
 // both components positive) — never teal/navy. vividness (scalars3.w) == 0 is a no-op
@@ -318,7 +318,7 @@ fn aces(color0: vec3<f32>) -> vec3<f32> {
   return clamp(mix(color, newPeak * vec3<f32>(1.0), g), vec3<f32>(0.0), vec3<f32>(1.0));
 }
 
-// ── BC.W-VIZ-AURORA (T4) — the painterly-medium bodies (the keystone WGSL port) ──
+// ── Painterly-medium bodies (the keystone WGSL port) ───────────────────────
 // Spliced HERE, after every helper the mediums consume is defined (domainWarp,
 // nucleiField, samplePalette, linOklab, saturate3, oklabToOklch/oklchToOklab,
 // hash21/vnoise/fbm) and before the vertex/fragment stages. applyMedium(col,p,t)
@@ -369,7 +369,7 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
   let breath = sin(t * 6.2831 / max(breathPeriod, 1.0));
   col = col * (1.0 + breathDepth * breath * 0.5);
 
-  // BC.W-VIZ-AURORA (T4) — the painterly-medium dispatch. uMedium 0 (smooth) is a
+  // Painterly-medium dispatch. uMedium 0 (smooth) is a
   // no-op pass-through so the DEFAULT smooth config is byte-identical to the prior
   // WGSL primary (the parity capture); uMedium 1-7 render the ported painterly
   // bodies (pastel/watercolor/crayon/kuwahara) or the anisotropic-Kuwahara finish
@@ -385,7 +385,7 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
   // Saturation trim.
   col = saturate3(col, saturation);
 
-  // BD.W-AUR-VIVIDNESS — the §3 chroma floor (warm-anchored, hue-preserving). The WGSL
+  // The chroma floor is warm-anchored and hue-preserving. The WGSL
   // twin of the GLSL call; vividness:0 is a no-op so the smooth/pale default stays gated.
   col = vividnessFloor(col, vividness);
 

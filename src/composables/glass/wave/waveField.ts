@@ -1,4 +1,4 @@
-// BD.W-VIZ-RESPEC — the shared traveling-wave CELL-WARP leaf (the JS evaluator).
+// the shared traveling-wave CELL-WARP leaf (the JS evaluator).
 //
 // paper-grid + concentric are ONE mechanism, two renders: a traveling-wave-gated
 // CELL-LOCAL coordinate deformation (NOT a uniform line-displacement) + the shared
@@ -15,7 +15,7 @@
 // traveling Gaussian crest sweeps over it. This is the deformation-gradient model — the
 // local distortion is the GRADIENT of the displacement field, not the displacement.
 //
-// THE SINGLE MATH SOURCE. `cellTwist` / `travelingEnvelope` / `curlScalar` / `heightField`
+// THE SINGLE MATH SOURCE. `cellTwist`, `travelingEnvelope`, `curlScalar`, `heightField`
 // below are transcribed line-for-line into `waveField.glsl.ts` + `waveField.wgsl.ts`; the
 // host shaders splice those chunks. The leaf imports NO value.js, declares no uniforms — a
 // pure JS twin + two pure string chunks. It SPLICES the existing `curlFBM` (does not re-fork
@@ -175,7 +175,7 @@ export function cellTwist(
 /**
  * The sheet displacement at a cell center `cc` — the EXACT traveling-wave scalar the twist
  * rides (`travelingEnvelope · amp`), surfaced as a named leaf fn so the face reads ONE
- * envelope. Range [0,1]·amp: ~0 ahead of / behind the crest, ~amp at the crest. `cellTwist`
+ * envelope. Range [0,1]·amp: ~0 ahead of, behind the crest, ~amp at the crest. `cellTwist`
  * (via `cellDriver`) calls this, so a sign drift reds the numeric parity gate everywhere.
  */
 export function cellHeight(
@@ -279,7 +279,7 @@ export const WAVE_FLOW_SECOND_RATIO = 1.833333;
  * the wave passes OVER and THROUGH them, with NO cell-boundary discontinuity. Returns the
  * warped coordinate.
  *
- * BG.W-GRID-AFFINE — the LOCALLY-AFFINE frequency law. `warpFreq` is the HOST-supplied spatial
+ * the LOCALLY-AFFINE frequency law. `warpFreq` is the HOST-supplied spatial
  * frequency (in the caller's OWN coordinate units) at which the curl-flow potential is sampled.
  * The caller passes a frequency an ORDER OF MAGNITUDE BELOW its own grid/contour frequency, so
  * the warp-displacement gradient is ~constant across any ONE cell (the warp Jacobian is locally

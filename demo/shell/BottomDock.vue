@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// BottomDock — the demo's shell-anchored bottom-bar story dock (AW.W28.b).
+// BottomDock — the demo's shell-anchored bottom-bar story dock (.b).
 //
 // A horizontal `always-expanded fit-content` GlassDock seated after the independently
 // scrolling <main>. Its intrinsic height reserves the interaction-safe footer while
@@ -8,7 +8,7 @@
 // prev/next-category controls that today live only as keyboard shortcuts, AND a
 // mobile-only category trigger hosting the off-canvas SidebarDock in a left-placement <Dialog>.
 //
-// Active-story affordance = the NCSU-red underline/pill + W25 `tap-squish` on
+// Active-story affordance uses the NCSU-red underline/pill and `tap-squish` on
 // press; DockControl (shape="tab") auto-activates its `.is-active` state when the rendered
 // RouterLink carries aria-current="page". Dogfoods the dock + glass atoms +
 // iOS-26 across the 3 viewports.
@@ -47,7 +47,7 @@ import { useShellNavDock } from "./useShellNavDock";
 
 const { current, next, prev, nextCategory, prevCategory, goTo } = useStoryNavigation();
 
-// W-NAV-DOCK-FIX (defect 5) — the FULL in-category page list (NOT a ≤4 summary slice).
+// Full in-category page list, not a summary slice.
 // Every story in the active category is a jump-to-page tab in the scrolling strip; the
 // active one carries aria-current="page" (DockControl (shape="tab") auto-lifts its selected-as-glass
 // tier). The strip scrolls horizontally inside the <FadingScroll> port — the dock box
@@ -86,7 +86,7 @@ const hasNext = computed(() =>
 
 <template>
     <nav class="demo-bottom-dock" aria-label="Stories in category">
-        <!-- W-NAV-DOCK-FIX (defects 2, 5) — the bottom dock is ALWAYS-EXPANDED (a single
+        <!-- The bottom dock is always expanded (a single
              ~52px row): the persistent category trigger + the SCROLLING category-page tab
              strip (a <FadingScroll axis="x"> of every in-category page) + the persistent
              prev/next + category-jump nav group, all co-resident. The ≤4 collapsed-summary
@@ -152,7 +152,7 @@ const hasNext = computed(() =>
 
             <div class="contents" role="group" aria-label="Story navigation">
                     <TooltipProvider :delay-duration="250">
-                        <!-- W-NAV-DOCK-FIX (defect 2) — prev/next are PERSISTENT four-state
+                        <!-- Previous and next remain persistent four-state
                              controls, never DOM-absent mid-row. Disabled (not removed) at a
                              true boundary so the row geometry holds and the control reads
                              honestly, never "flaky". -->
@@ -174,7 +174,7 @@ const hasNext = computed(() =>
                             </TooltipContent>
                         </Tooltip>
 
-                        <!-- W-NAV-DOCK-FIX (defect 5) — the SCROLLING category-page tab
+                        <!-- Scrolling category-page tab
                              strip. Every story in the active category as a jump-to-page
                              DockControl (shape="tab"), wrapped in the shipped <FadingScroll axis="x">
                              (start sharp at rest, end feathered while overflowing). The
@@ -195,7 +195,7 @@ const hasNext = computed(() =>
                             </DockControl>
                         </FadingScroll>
 
-                        <!-- W-NAV-DOCK-FIX (defect 2) — next is PERSISTENT, disabled (not
+                        <!-- Next remains persistent and disabled (not
                              removed) at the last story; the row geometry never shifts. -->
                         <Tooltip>
                             <TooltipTrigger as-child>
@@ -256,7 +256,7 @@ const hasNext = computed(() =>
                                 <kbd class="font-mono text-[0.7em]">}</kbd>
                             </TooltipContent>
                         </Tooltip>
-                        <!-- BI.W-DOCK-RETIRES — the V↔H orientation-morph control is
+                        <!-- the V↔H orientation-morph control is
                              DEFINITION-ABSENT (the in-situ dock morph retired
                              decided-terminal; the shell docks no longer morph orientation). -->
                     </TooltipProvider>
@@ -275,7 +275,7 @@ const hasNext = computed(() =>
 </template>
 
 <style scoped>
-/* W-NAV-DOCK-FIX (defect 5) — the category-page tab strip scrolls horizontally inside
+/* The category-page tab strip scrolls horizontally inside
    the FadingScroll port (the `.demo-bottom-dock__tabs` class is merged onto the
    <FadingScroll> root, which IS the `.fading-scroll--x` scroll port). Lay the slotted
    tab-shape DockControls in a row and cap the inline-size so overflow SCROLLS, never widening

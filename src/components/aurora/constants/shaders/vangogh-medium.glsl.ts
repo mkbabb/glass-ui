@@ -5,8 +5,8 @@
 // analytic swirl flow (not the expensive per-cell tensor). `mediums.glsl.ts`
 // splices this export into `AURORA_MEDIUMS_POST_BRUSH_GLSL` via a template join;
 // the composed string is byte-identical to the pre-carve single literal
-// (machine-proven by proof:composable-return-types’ GLSL string-parity hash).
-export const AURORA_VANGOGH_MEDIUM_GLSL = /* glsl */ `// ── Van-Gogh — DEDICATED atomic-dab body (W-AUR-VANGOGH-REBUILD) ─────────────
+// The dedicated body is shared by both renderer paths.
+export const AURORA_VANGOGH_MEDIUM_GLSL = /* glsl */ `// ── Van Gogh atomic-dab body ─────────────────────────────────────────────
 // REBUILT FROM FIRST PRINCIPLES. The prior path routed van-Gogh through the shared
 // oil paintStrokeMedium cascade — four DENSE layers of LONG-THIN tensor-oriented
 // strokes (lenMul up to 5.2, widMul 0.22) hugging a continuous coherent field. Packed
@@ -131,7 +131,7 @@ vec3 mediumVangogh(vec3 col, vec2 p, float t) {
   // and leaves visible ground around it — a longer dab (lenMul > 2) spans neighbour
   // cells and tiles the field into continuous coverage (no gaps, the gap-fraction floor
   // miss + the marble). Narrow width keeps it a directional crescent, not a wide shard.
-  // lenAniso/widAniso — the comma aspect. The W-AUR-VANGOGH-CONFIG reconcile lengthened
+  // lenAniso/widAniso — the comma aspect. The current profile lengthens
   // the comma (1.25-1.75 → 1.5-2.0) and THINNED it (0.40-0.30 → 0.32-0.24): the rebuilt
   // dabs measured §4.2 structure-tensor anisotropy A=0.699, BELOW the reference band
   // floor 0.732 (the dabs read slightly too short-fat → locally isotropic, dragging mean
@@ -174,7 +174,7 @@ vec3 mediumVangogh(vec3 col, vec2 p, float t) {
   paintOver(result, height, dSml, 42.0, 0.22,
             uImpasto * 0.55 * uStrokeAmount, 0.86, 4.1, 1.0);
 
-  // Layer 3 — the FINE divisionist flecks (W-AUR-VANGOGH-CONFIG reconcile). The two-layer
+  // Layer 3 — fine divisionist flecks. The two-layer
   // field read as a few BIG cobalt dabs over a smooth empty teal ground (the side-by-side
   // against starry-night-crop.png: the painting is DENSE small varied flecks, not sparse
   // large marks). The flecks are LONG·THIN directional commas hugging the swirl tangent
@@ -189,7 +189,7 @@ vec3 mediumVangogh(vec3 col, vec2 p, float t) {
   paintOver(result, height, dFleck, 30.0, 0.16,
             uImpasto * 0.40 * uStrokeAmount, 0.80, 7.7, 1.0);
 
-  // ── Flow-aligned GROUND swirl-GROOVING (W-AUR-VANGOGH-CONFIG reconcile) ──
+  // ── Flow-aligned ground swirl grooving ─────────────────────────
   // The bare ground between the dabs was a SMOOTH low-frequency teal gradient — the §4.3
   // power-spectrum slope ran too STEEP (β≈−2.0: too much low-frequency nuclei-field energy
   // vs the high band). Van Gogh's actual sky has the swirl BRUSHWORK everywhere, so groove
@@ -242,7 +242,7 @@ vec3 mediumVangogh(vec3 col, vec2 p, float t) {
   result *= mix(0.115, 1.0, smoothstep(0.085, 0.31, height));
 
   // The van-Gogh chroma — a light OKLCh punch. EASED to 0.92 (off 1.04) in the
-  // W-AUR-VANGOGH-CONFIG reconcile: the rebuilt discrete-dab register's per-dab OKLCh
+  // The discrete-dab profile's per-dab OKLCh
   // broken-color jitter (the ±16° hue + ±chroma swing per cell) lifts the field's
   // colourfulness on its own, so the prior 1.04 punch on TOP overshot the §4.1
   // reference band (rendered C=100.5 vs the painting's measured 70.67 ± 15/+25 →
@@ -250,7 +250,7 @@ vec3 mediumVangogh(vec3 col, vec2 p, float t) {
   // demote pulls the rendered colourfulness back IN-band while the broken-color jitter
   // keeps the per-dab pigment variation (the discrete-stroke read is untouched — this
   // is a chroma scale, not a dab-geometry change). Band-anchored on the real painting
-  // (proof:aurora-arresting), NOT a widened band.
+  // not a widened band.
   result = saturate3(result, 1.0);
   return result;
 }

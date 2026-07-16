@@ -6,7 +6,7 @@ import { Progress } from "@glass/components/progress";
 import { Button } from "@glass/components/button";
 import { ScrollProgressRim } from "@glass/components/scroll-progress-rim";
 import { GlassDock } from "@glass/components/dock";
-// BB.W-SUFFUSE3 — the feedback band's --section-color-8 ruby identity.
+// the feedback band's --section-color-8 ruby identity.
 
 const determinate = ref(42);
 const segmentProgress = [1, 0.72, 0.35, 0] as const;
@@ -47,7 +47,7 @@ onUnmounted(stopAnimated);
 
 <template>
     <StoryPage>
-        <!-- BB.W-SUFFUSE3 — the feedback-band identity COLOR EVENT (the tinted
+        <!-- the feedback-band identity COLOR EVENT (the tinted
              eyebrow + the inline accent rail, both on
              --section-color-8). The page-level color identity, DISTINCT from the
              StorySection labels + the range content below — it carries
@@ -174,8 +174,8 @@ onUnmounted(stopAnimated);
             </div>
         </StorySection>
 
-        <!-- liquid variant — the shared .glass-liquid-fill glass-cylinder meter
-             (BG.W-LIQUID-FILL). The SAME warm-glass fill the Slider re-reads; the
+        <!-- liquid variant — the shared.glass-liquid-fill glass-cylinder meter
+             The same warm-glass fill is shared with Slider; the
              phase colour rides --progress-fill (here the legendre violet) with zero
              per-site glass knowledge. -->
         <StorySection label="liquid variant (shared glass-cylinder fill)">

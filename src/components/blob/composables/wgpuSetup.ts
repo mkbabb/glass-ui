@@ -1,5 +1,5 @@
 // GooBlob WGSL setup seam — the WebGPU twin of the WebGL2 `setup` callback
-// (BB.W-VIZ-SUITE / W-GOOBLOB-WGPU).
+// used by the WebGPU renderer.
 //
 // `createBlobWGPUSetup` returns a `setupWGPU(device, context, format)` callback the
 // `createGpuSubstrate` picker invokes on the async arm (AND on every device-restore). It
@@ -8,7 +8,7 @@
 // returns the substrate's per-frame hooks (`frame`/`shouldContinue`/`resize`/`teardown`).
 //
 // The per-frame resolve (advance mood/pointer/satellites, pick the tempo-scaled clock,
-// resolve the base color) is OWNED by the renderer's `resolveFrame` closure — the SAME
+// resolve the base color) is OWNED by `blobSimulation` — the SAME
 // closure the WebGL2 `drawFrame` calls — so the simulation is substrate-AGNOSTIC. The
 // WGPU setup only swaps the upload+draw leg (the typed-struct buffer write + the
 // render-pass) for the GL `uploadBlobUniforms` leg.
@@ -26,7 +26,7 @@ import {
 import type { BlobConfig } from "../types";
 import type { BlobPointer } from "./useBlobPointer";
 import type { BlobSatelliteSystem } from "./useBlobSatellites";
-import type { BlobFrameState } from "./uploadBlobUniforms";
+import type { BlobFrameState } from "./blobSimulation";
 
 // The WebGPU usage/visibility bitflags as their SPEC-defined constants (webgpu.idl —
 // stable + immutable). `lib.dom.d.ts` declares the GPU* TYPES but not the runtime
@@ -42,11 +42,9 @@ export interface BlobWGPUSetupDeps {
     pointer: BlobPointer;
     satellites: BlobSatelliteSystem;
     /** Resolve the per-frame state (advances the sim, returns the settled values). */
-    resolveFrame: (timeSec: number) => BlobFrameState | null;
+    resolveFrame: (timeSec: number) => BlobFrameState;
     /** Demand-gate (the renderer's quiescence layer — substrate-agnostic). */
     shouldContinue: () => boolean;
-    /** Reduced-motion read (the substrate owns the query; the renderer drives tempo). */
-    getReducedMotion: () => boolean;
     /** Records the backing geometry already measured by the shared lifecycle. */
     onResize: (size: BackingSize) => void;
     /** Records a frame only after its draw submission succeeds. */
@@ -139,7 +137,7 @@ export function createBlobWGPUSetup(
 
         const scratch = createBlobWGPUUniformScratch();
 
-        // BG.W-VIZ-RESIZE-ADOPT — upload-only. The LEAF sizer already set the backing
+        // Upload only. The leaf sizer already set the backing
         // store (round(gBCR × the renderer's `blobDprPolicy`, which folds the `half`
         // quality axis); WGPU's swap chain auto-resizes to the backing on the next
         // `getCurrentTexture`, and `frame()` reads `canvas.width/height` directly, so the
@@ -150,8 +148,6 @@ export function createBlobWGPUSetup(
 
         function frame(timeSec: number): void {
             const frameState = resolveFrame(timeSec);
-            if (!frameState) return;
-
             packBlobWGPUUniforms(scratch, canvas, config, pointer, satellites, frameState);
             device.queue.writeBuffer(uniformBuffer, 0, scratch.buffer);
 

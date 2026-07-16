@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// BI.W-CAROUSEL-REBUILD — the /navigation/carousel page, rebuilt as several workflows.
+// the /navigation/carousel page, rebuilt as several workflows.
 //
 // The content BARBELL (the 559px-escape category error) is GONE — the carousel is crisp
 // weighty embla scroll, and the ONE metaball morph is the pager worm (PagerDots). Five
@@ -22,7 +22,7 @@ import { PagerDots } from "@glass/components/pager-dots";
 import { FadingScroll } from "@glass/components/fading-scroll";
 import { cn } from "@glass/components/_shared/class-names";
 
-// BC.W-SUFFUSE-reconcile — the navigation band's ONE coherent --section-color-12 indigo
+// reconcile — the navigation band's ONE coherent --section-color-12 indigo
 // identity (PH3-safe inline borderLeft, not the double-header shape).
 
 const swatches = [

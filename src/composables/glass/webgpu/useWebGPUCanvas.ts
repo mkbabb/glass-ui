@@ -1,5 +1,5 @@
-// BB.W-VIZ-SUITE (W-GPU-SUBSTRATE) — `useWebGPUCanvas`: the WebGPU backend over the
-// shared `createCanvasLifecycle` core (AU.W6). The THIRD thin wrapper, beside the
+// `useWebGPUCanvas`: the WebGPU backend over the shared `createCanvasLifecycle` core.
+// It is the third thin wrapper, beside the
 // WebGL2 backend (`useWebGLCanvas`) and the Canvas2D backend (`useCanvas2D`).
 //
 // The backend-AGNOSTIC lifecycle (the three-reason suspend Set, the rAF tick/wake
@@ -43,10 +43,9 @@ import {
 } from "../webgl/createCanvasLifecycle";
 
 export type { BackingSize, DprPolicy } from "../webgl/createCanvasLifecycle";
-// The typed INIT-FAILURE signal + the software/CPU-adapter classifier + the acquire
-// timeout race + its ceiling are carved into the sibling webgpuDevice.ts leaf (the
-// no-god-module re-drain; BG.W-COLOCATE ratchet-drain #4). They carry NO bootstrap token
-// (proof:gpu-substrate-single clause A — navigator.gpu/getContext/requestAdapter stay here).
+// Typed initialization failures, adapter classification, and acquisition timing live
+// in `webgpuDevice.ts`. Those helpers carry no bootstrap state; `navigator.gpu`,
+// `getContext`, and `requestAdapter` stay here.
 import {
     WebGPUInitError,
     isSoftwareWebGPUAdapter,
@@ -57,9 +56,8 @@ import { describeWebGPUAdapter } from "./rendererStatus";
 // Re-export so the picker + the package barrel reach them through this substrate
 // unchanged (the barrel re-exports from "./useWebGPUCanvas").
 export { WebGPUInitError, WEBGPU_ACQUIRE_TIMEOUT_MS } from "./webgpuDevice";
-// The public TYPE surface is carved into the colocated webgpuCanvasTypes.ts leaf
-// (BG.W-COLOCATE ratchet-drain #4); re-exported so `useGpuSubstrate` + the barrel
-// reach it through this substrate unchanged.
+// The public type surface lives in `webgpuCanvasTypes.ts` and is re-exported so
+// `useGpuSubstrate` and the barrel reach it through this substrate unchanged.
 export type {
     WebGPUSuspendReason,
     WebGPUCanvasFrame,
@@ -76,7 +74,7 @@ import type {
  * The ONE `navigator.gpu` capability probe (the single-bootstrap rule — mirrors
  * `probeWebGL2Renderer`). SSR-safe (returns `false` with no `navigator`). The picker
  * (`useGpuSubstrate`) reads it to decide the backend; a consumer NEVER touches
- * `navigator.gpu` directly (it composes the substrate — `proof:gpu-substrate-single`
+ * `navigator.gpu` directly because it composes the substrate
  * clause A reds a direct call).
  */
 export function supportsWebGPU(): boolean {
@@ -146,7 +144,7 @@ function acquireSharedDevice(
             throw new WebGPUInitError("no-adapter", "[useWebGPUCanvas] no GPU adapter");
         }
         // SOFTWARE-ADAPTER GUARD (the WebGPU twin of the WebGL software-raster guard,
-        // BB.W-AURORA-SWRASTER) — a SwiftShader/llvmpipe/fallback adapter cannot validate
+        // A SwiftShader, llvmpipe, or fallback adapter cannot validate
         // the metaball pipeline (the per-frame `[Invalid RenderPipeline]` flood); reject so
         // the picker falls to the WebGL2 net SILENTLY. On a real GPU this is false.
         if (isSoftwareWebGPUAdapter(adapter)) {
@@ -212,7 +210,7 @@ export function createWebGPUCanvas(
     // headless-Metal host whose adapter LIES that it is hardware — `adapter.info` reads
     // `apple/metal-3` yet the metaball `RenderPipeline` is invalid → the per-frame
     // `[Invalid RenderPipeline]` flood). On that signal `armAsync` rejects so the picker
-    // falls to the WebGL2 net (the silent W-AURORA-SWRASTER degrade — the device-string
+    // falls to the WebGL2 net (the device-string
     // guard cannot catch a lying adapter, the validation PROBE can).
     let validationProbe: Promise<GPUError | null> | null = null;
 
@@ -246,7 +244,7 @@ export function createWebGPUCanvas(
         void validationProbe.then((err) => {
             if (err) options.onInitError?.(err);
         });
-        // BD.W-SUBSTRATE-SIZE-UNIFY (G2) — the per-backend ResizeObserver is DELETED.
+        // The per-backend ResizeObserver is absent.
         // The ONE engine-agnostic RO lives in `createCanvasLifecycle` (the leaf); a
         // backend RO here would be a triple-observe parallel path the BINDING LAW
         // forbids. The WebGPU swap chain auto-tracks the backing the leaf sizes.
@@ -423,7 +421,7 @@ export function createWebGPUCanvas(
             lifecycle.arm();
             return;
         }
-        // BD.W-SUBSTRATE-SIZE-UNIFY (G2) — size the backing SYNCHRONOUSLY here, BEFORE
+        // Size the backing synchronously here, before
         // the async device acquire. On the WebGPU path `lifecycle.arm()` (which would
         // size) is only reached AFTER `acquireDevice()` resolves (a cold acquire ≤6s),
         // so without this the canvas sat at the un-laid-out 300×150 default for the whole
@@ -470,7 +468,7 @@ export function createWebGPUCanvas(
                 // navigator.gpu) is a SUBSTRATE DECISION the picker handles — REJECT so
                 // the picker's `try` falls to the WebGL2 net, but do NOT fire
                 // `onInitError` (that contract is for a genuine POST-arm shader/OOM/
-                // validation violation; a no-adapter fall is the W-AURORA-SWRASTER
+                // validation violation; a no-adapter result is the software-raster
                 // recognized degrade). A NON-init error (a `setup` throw on a host that
                 // DID get a device — the shader/OOM class) still surfaces via
                 // `onInitError` AND rejects.

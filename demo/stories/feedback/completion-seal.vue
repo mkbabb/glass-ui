@@ -6,7 +6,7 @@ import { CompletionSeal } from "@glass/components/completion-seal";
 import { Button } from "@glass/components/button";
 
 
-// BB.W-SUFFUSE3 — the feedback-band's --section-color-8 ruby identity.
+// the feedback-band's --section-color-8 ruby identity.
 const FEEDBACK_STOP = 8;
 
 // The replay key — bumping it remounts the seals so the one-shot draw re-fires (the
@@ -19,7 +19,7 @@ function fireAgain() {
 
 <template>
     <StoryPage>
-        
+
         <div class="grid gap-8">
             <div class="flex items-center gap-4">
                 <Button @click="fireAgain">
@@ -32,7 +32,7 @@ function fireAgain() {
             </div>
 
             <!-- The four glyph registers, each re-firing on replay. The seal is the
-                 visual seal of the W-PHASE-PALETTE completion event; the ink reads
+                 visual seal of the completion event; the ink reads
                  the earned-gold register. The `disc` shape is the composed earned-coin —
                  the face materializes, the ring draws around it, then the check draws
                  in (disc→ring→check). -->

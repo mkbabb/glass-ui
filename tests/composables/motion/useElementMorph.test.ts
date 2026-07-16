@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { effectScope, ref, type EffectScope } from "vue";
-import { useElementMorph } from "@glass/composables/motion/useElementMorph";
+import { useElementMorph } from "@glass/composables/motion/morph/useElementMorph";
 
 function installManualRAF() {
     let nextId = 1;

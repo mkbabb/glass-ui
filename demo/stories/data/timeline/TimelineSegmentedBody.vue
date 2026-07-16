@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// BG.W-DEMO-DUP-MERGE (F7.3) — the Timeline SEGMENTED register body, extracted from
+// Timeline segmented-register body composed by
 // the retired routed `timeline-segmented.vue` wrapper (the StoryPage chrome stripped;
 // composed as one <StorySection> register inside data/timeline.vue). PascalCase =
 // composed-by helper (off the no-orphan bijection), never a route.

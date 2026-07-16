@@ -1,14 +1,13 @@
-// BC.W-CARVE6 — the WebGPU device-classification leaf, carved out of useWebGPUCanvas.ts to
-// hold the 500-line no-god-module bound. ONE cohesive sub-concern: the recognizable typed
+// WebGPU device classification: the recognizable typed
 // INIT-FAILURE signal (`WebGPUInitError`) + the software/CPU-adapter classifier
 // (`isSoftwareWebGPUAdapter`). Both are pure, closure-free, and carry NO WebGPU BOOTSTRAP
-// token (`navigator.gpu` / `getContext("webgpu")` / `requestAdapter` live ONLY in the
-// substrate — proof:gpu-substrate-single clause A); the substrate re-imports + re-exports
+// token (`navigator.gpu`, `getContext("webgpu")`, `requestAdapter` live ONLY in the
+// substrate); the substrate re-exports
 // them so the picker + the package barrel reach them unchanged.
 
 /**
- * The recognizable WebGPU INIT-FAILURE signal (BC.W-WEBGPU-EVERYWHERE — the D8/D8'
- * close). A no-adapter host (`requestAdapter()` returns null), a `requestDevice()`
+ * Recognizable WebGPU initialization-failure signal. A no-adapter host
+ * (`requestAdapter()` returns null), a `requestDevice()`
  * reject, or a device-lost-at-birth is NOT a contract violation — it is a recognized
  * substrate decision the picker (`createGpuSubstrate`) catches to fall to the WebGL2
  * net. `armAsync()` REJECTS with this typed signal (it does NOT `throw` an uncaught
@@ -37,13 +36,12 @@ export class WebGPUInitError extends Error {
 }
 
 /**
- * Detect a SOFTWARE / CPU WebGPU adapter (SwiftShader / llvmpipe / the Microsoft
+ * Detect a SOFTWARE, CPU WebGPU adapter (SwiftShader, llvmpipe, the Microsoft
  * Basic Render Driver, or a UA-supplied `isFallbackAdapter` software fallback) — the
- * WebGPU twin of `isSoftwareWebGLRenderer` (the `renderMode.ts` WebGL software-raster
- * guard, BB.W-AURORA-SWRASTER).
+ * WebGPU twin of the `renderMode.ts` WebGL software-raster guard.
  *
  * WHY this forces the WebGL2 net (the BC WebGPU re-home regression this closes): on a
- * headless / GPU-blocklisted / CI host, `navigator.gpu` exists AND `requestAdapter()`
+ * headless, GPU-blocklisted, CI host, `navigator.gpu` exists AND `requestAdapter()`
  * SUCCEEDS — it returns a SOFTWARE adapter (SwiftShader). `requestDevice()` succeeds
  * too, so the WebGPU init does NOT reject; `setup()` builds the render pipeline, but the
  * software backend cannot validate/compile it (a metaball `RenderPipeline` is invalid
@@ -52,7 +50,7 @@ export class WebGPUInitError extends Error {
  * spew with no fallback (the loop keeps trying to draw the invalid pipeline). A
  * software-rastered WebGPU surface is the same per-composite cost class the WebGL guard
  * forbids. So a software adapter is treated as a recognized INIT FAILURE: the picker's
- * `armAsync` try/catch falls to the WebGL2 net — exactly the silent W-AURORA-SWRASTER
+ * `armAsync` try/catch falls to the WebGL2 net — exactly the silent
  * degrade, never the invalid-pipeline flood.
  *
  * The signal is the `isFallbackAdapter` spec flag (a UA sets it on a software fallback —
@@ -92,7 +90,7 @@ export function isSoftwareWebGPUAdapter(adapter: GPUAdapter): boolean {
 
 /**
  * The bound on the adapter/device acquisition (ms). The adapter/device request can
- * resolve NEITHER way on a hanging host (a headless / virtualized-Metal + some-Chrome
+ * resolve NEITHER way on a hanging host (a headless, virtualized-Metal + some-Chrome
  * class). A REAL cold acquire on a healthy Metal-3 host was live-measured at ~3478ms
  * (the FIRST device request on a cold GPU process) — well over the prior tight 2500ms
  * ceiling, which converted a slow-but-fine cold acquire into a FALSE hang so the WGSL
@@ -103,7 +101,7 @@ export function isSoftwareWebGPUAdapter(adapter: GPUAdapter): boolean {
  * perceives a permanent blank. With the SHARED device warm the ceiling is hit at most
  * ONCE per page, not N-times-per-canvas — a single ≤6s race, never N.
  *
- * BG.W-COLOCATE — carved into this device-acquisition-support leaf beside the typed
+ * carved into this device-acquisition-support leaf beside the typed
  * failure signal it throws (ratchet-drain #4). The substrate re-imports + re-exports it.
  */
 export const WEBGPU_ACQUIRE_TIMEOUT_MS = 6000;
@@ -118,7 +116,7 @@ export const WEBGPU_ACQUIRE_TIMEOUT_MS = 6000;
  *
  * `label` is the acquisition-step name used in the timeout message (the caller in the
  * substrate passes the concrete step name — the bootstrap tokens stay in the substrate
- * per proof:gpu-substrate-single clause A).
+ * per  clause A).
  */
 export function withAcquireTimeout<T>(
     promise: Promise<T>,

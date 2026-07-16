@@ -1,7 +1,7 @@
 /**
  * Aurora frame loop — the per-frame draw + the render-demand gate.
  *
- * BI.W-FIELD-CORE — the retired `cursorModel.ts` is GONE. The cursor is now the mapped
+ * the retired `cursorModel.ts` is GONE. The cursor is now the mapped
  * readout of the SHARED `usePointerVelocityField` (`auroraCursorMapping`): the mass-spring
  * attractor is the cursor position, `engagement · strength` the attraction (so the
  * cursor-local luminance lean reads on the `smooth` medium, not a dead swirl axis), with
@@ -13,18 +13,18 @@
  * full-screen-triangle draw. `needsAnimation` is the demand gate: `false` under
  * reduced-motion (the static frame draws once, then parks), `false` at steady-state (all
  * four drift uniforms 0 AND the field settled — the next frame is pixel-identical), and
- * `true` while drift is live or the field is still easing (engagement / speed / burst /
+ * `true` while drift is live or the field is still easing (engagement, speed, burst,
  * attractor motion above ε).
  */
 
 import type { UniformLocations } from "./glSetup";
 import type { AuroraCursorUniforms } from "./uniformBridge";
 import type { AuroraConfig } from "../constants/presets";
-import type { UsePointerVelocityField } from "../../../composables/motion/usePointerVelocityField";
+import type { UsePointerVelocityField } from "../../../composables/motion/pointer/usePointerVelocityField";
 import {
     auroraCursorMapping,
     snapshotField,
-} from "../../../composables/motion/pointerFieldMappings";
+} from "../../../composables/motion/pointer/pointerFieldMappings";
 
 /** The at-rest scalars a config-less cursor read seeds (strength ceiling + influence radius). */
 export interface AuroraCursorScalars {
@@ -41,7 +41,7 @@ export interface FrameLoopDeps {
     prog: WebGLProgram;
     uniforms: UniformLocations;
     /**
-     * BI.W-FIELD-CORE — the shared viz-pointer-physics field (the ONE cursor source). FED
+     * the shared viz-pointer-physics field (the ONE cursor source). FED
      * `tick(deltaMs)` from THIS callback (the one-loop discipline — no own rAF). The
      * `auroraCursorMapping` projects its readout onto the `uCursor*` uniforms.
      */
@@ -95,7 +95,7 @@ export function mapAuroraCursor(
 
 /**
  * The demand-gate liveness over the shared field state (the retired `cursorIsLive` over the
- * field) — engaged / moving / bursting / attractor mid-settle.
+ * field) — engaged, moving, bursting, attractor mid-settle.
  */
 export function auroraFieldLive(pointerField: UsePointerVelocityField): boolean {
     const av = pointerField.attractorVelocity.value;
@@ -133,7 +133,7 @@ export function createFrameLoop(deps: FrameLoopDeps): FrameLoop {
         radius: 0.25,
     };
 
-    // AW.W8.1 — the MASTER TEMPO SCALAR. The single suppression seam the whole interactive
+    // The master tempo scalar is the single suppression seam the whole interactive
     // stack routes through: 0 under reduced-motion (the substrate's live PRM ref) so every
     // interactive axis freezes; 1 otherwise. The DockBackgroundToggle pause stops the loop
     // entirely (the substrate suspend), so it converges here too. tempo scales the
@@ -151,8 +151,8 @@ export function createFrameLoop(deps: FrameLoopDeps): FrameLoop {
         gl.uniform1f(U.uCursorRadius, cur.radius);
         gl.uniform1f(U.uTime, renderTime);
 
-        // AW.W8.1 — cursor-as-light: when interactivity.light is on, the cursor drives the
-        // impasto uLightDir (the AW.W4.2 movable light); a slow idle auto-orbit when the
+        // Cursor-as-light: when interactivity.light is on, the cursor drives the
+        // impasto uLightDir (the movable light); a slow idle auto-orbit when the
         // cursor is at rest. Gated by the master tempo (0 under PRM) so the light freezes
         // under reduce.
         const cfg = getConfig();

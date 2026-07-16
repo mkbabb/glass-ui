@@ -1,4 +1,4 @@
-// BC.W-VIZ-PAPERGRID — the public composable: the studio handle + the lifecycle wiring over
+// Public composable: the studio handle and lifecycle wiring over
 // the WebGPU-first substrate (with the WebGL2 GLSL fallback) + the shared pointer field.
 //
 // `useLiquidGrid(canvasRef, options)` composes the `createGpuSubstrate` picker — the
@@ -8,7 +8,7 @@
 // seam + `wake()` on demand, and exposes the uniform `LiquidGridHandle`. The renderer owns the
 // frame loop (the canvas lifecycle leaf); this composable re-implements ZERO scheduling.
 //
-// THE POINTER (BC.W-VIZ-INTERACTION). When `config.interactive`, a soft Gaussian bulge
+// When `config.interactive`, a soft Gaussian bulge
 // presses the grid toward/away from the cursor: useLiquidGrid composes the SHARED
 // `usePointerVelocityField` (NEVER a second rAF — the field is FED `tick(delta)` from inside
 // the renderer's existing `frame` callback via the `onFrame` setup hook) and derives the
@@ -24,7 +24,7 @@ import {
     type RendererStatus,
 } from "../../../composables/glass/webgpu/useGpuSubstrate";
 import { pendingRenderer } from "../../../composables/glass/webgpu/rendererStatus";
-import { usePointerVelocityField } from "../../../composables/motion/usePointerVelocityField";
+import { usePointerVelocityField } from "../../../composables/motion/pointer/usePointerVelocityField";
 import { resolveBudgetDpr } from "../../aurora/constants/budget";
 import type { LiquidGridConfig } from "../constants";
 import { gridScaleFor, type Vec2 } from "./liquidGrid";
@@ -116,7 +116,7 @@ export function useLiquidGrid(
         }
 
         // Map the normalized pointer (0..1, y-down) → domain (-1..1, y-up) → grid space.
-        // BG.W-VIZ-RESIZE-ADOPT — read the LEAF-sized backing store, never clientWidth.
+        // Read the leaf-sized backing store, never clientWidth.
         const canvas = canvasRef.value;
         const aspect = (canvas?.width || 1) / Math.max(canvas?.height || 1, 1);
         const viewExtentPx = canvas?.height || 320;
@@ -172,10 +172,10 @@ export function useLiquidGrid(
             handle = createGpuSubstrate(canvas, {
                 mode,
                 respectReducedMotion: config.respectReducedMotion,
-                // BG.W-VIZ-RESIZE-ADOPT — the leaf owns backing measurement + sizing
+                // The leaf owns backing measurement and sizing
                 // (round(gBCR × dprPolicy)); both setups' `resize` are upload-only.
                 dprPolicy: resolveBudgetDpr,
-                // BG.W-VIZ-REVEAL-BLOOM — the one-shot cold-first-VISIBLE entrance bloom.
+                // One-shot entrance bloom on first visible frame.
                 revealBloom: true,
                 setupWGPU: createLiquidGridWGPUSetup({
                     canvas,

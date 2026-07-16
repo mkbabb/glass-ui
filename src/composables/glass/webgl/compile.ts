@@ -1,5 +1,5 @@
 /**
- * Shared WebGL2 shader compile/link pair (AV.W14) — the single error-checked
+ * Shared WebGL2 shader compile/link pair: the single error-checked
  * source the aurora GL setup (`glSetup.ts`) and the goo-blob renderer
  * (`useMetaballRenderer.ts`) both build their program from. Each consumer was
  * hand-rolling a byte-identical `compile`/`link` differing only in the error

@@ -1,4 +1,4 @@
-// _shared/useMotionAxis.ts — the ONE shared motion-weight resolver (BH.W-MOTION-AXIS).
+// The shared motion-weight resolver.
 //
 // The `Motion` union is minted in `_shared/axes.ts` (the ONE grammar home); this is
 // the resolver every carrier threads — the motion twin of the private Surface
@@ -16,7 +16,7 @@
 //              press = the `.tap-squish` `:active` carve; drag = discrete snap, no
 //              squish — the SAME visual state PRM produces, no second degrade path).
 //              Binds `data-motion="reduced"` (the F5.2 two-door calm selector hooks
-//              it; the attr is this wave's half, the CSS recipe is F5.2's).
+//              it; the attribute and CSS recipe form one contract).
 //   off      — `armed === false` AND `--motion-weight: 0` inline on the host (the
 //              live scalar useLiquidPress/useMorphField/useLiquidFlex already read —
 //              a weight→0 zeroes the cartoon channels, ZERO new plumbing). The
@@ -40,7 +40,7 @@ import { type MaybeRefOrGetter, computed, toValue } from "vue";
 import {
     readReducedMotion,
     useReducedMotion,
-} from "../../composables/motion/useReducedMotion";
+} from "../../composables/motion/core/useReducedMotion";
 import type { Motion } from "./axes";
 
 /**

@@ -1,47 +1,24 @@
-// BB.W-DRAWER-ABROGATE — the Drawer family colocated constants home.
-//
-// The module-scope magic constants the re-built Drawer snap engine reads live HERE
-// (the feature-dir `constants.ts` convention, mirroring dock/constants.ts) rather
-// than re-declared at the top of `useDrawerSnap.ts`. The DI context module
-// (`composables/drawerSnapContext.ts`) imports its `Symbol(label)` from here so the
-// label is never re-typed at two call sites.
+// Shared Drawer constants. The snap engine and DI context import these values so
+// each motion authority and context label has one definition.
 
 import type { DrawerDirection } from "./index";
 
 /**
- * The ONE drawer-snap spring authority — the sheet-settle (response, ζ) register the
- * house `SpringProgress` snap engine (`useDrawerSnap.ts`) drives `--glass-drawer-t`
- * off. This is the drawer's OWN settle clock — NOT a re-use of the dock's
- * `DOCK_SPRING` morph-settle (the per-spring-clock §6 doctrine: each register is its
- * own clock; a sheet that flings up to a detent settles slower + with a touch more
- * give than the dock's crisp 0.32/0.7 box-morph). Co-located here so the pair is
- * defined ONCE rather than at the top of the composable.
- *
- * BD.W-ANIM-IOS27-TUNE re-tuned `{0.4, 0.82}` → `{0.50, 0.74}` for inertial liquid
- * MASS — but that value was calibrated against the PRE-M1 broken CSS/JS time base AND
- * the pre-BI.W-DRAWER-PERF main-thread storm (the lag was never the spring). BI judgment
- * (g), user-delegated + orchestrator-ratified 2026-07-12: re-pinned `{0.50, 0.74}` →
- * **`{0.32, 0.80}`** — the measured-iOS drawer band (the iOS-27 frame analysis: brisk
- * arrival, ~1.5% overshoot; weight ≠ slow). Lands POST-SPRING-PARITY (M1 committed
- * 75c9e433) + POST-DRAWER-PERF (7a9faa07), per the ordering law: no spring retune
- * before M1. The A/B capture pair rides the π batch (W-DRAWER-PERF-DELTA).
- * The fling-decision (`DRAWER_FLING_VELOCITY`) is SEPARATE + unchanged.
+ * The Drawer snap spring authority. `SpringProgress` uses this response and damping
+ * pair to drive `--glass-drawer-t`; the measured band gives a brisk arrival with
+ * about 1.5% overshoot. Fling selection remains a separate velocity decision.
  */
 export const DRAWER_SNAP = { response: 0.32, dampingFraction: 0.8 } as const;
 
 /**
- * BB-2 (the direction-aware default snap ladder fold) — the peek/half/full detent
- * ladder a live-behind bottom/top sheet resolves when the consumer passes no
- * `snapPoints`. The
- * value (12% peek · 50% half · 100% full) is the `DEFAULT_LIVE_SNAP_POINTS` shape
- * the prior vaul wrapper hardcoded, re-homed into the engine as the bottom/top
- * default. A side-lens (left/right) sheet resolves a FULL-SLIDE instead (no detents)
- * — `resolveDefaultSnapPoints` returns `[]` for the side axis.
+ * Peek/half/full detents used by live-behind bottom and top sheets when the
+ * consumer supplies no `snapPoints`. Side drawers use a full slide with no detents;
+ * `resolveDefaultSnapPoints` therefore returns `[]` for either side axis.
  */
 export const BOTTOM_SHEET_LADDER: readonly number[] = [0.12, 0.5, 1];
 
 /**
- * BB-2 — resolve the LIVE-BEHIND default snap ladder from `direction` natively. A
+ * Resolve the live-behind default snap ladder from `direction`. A
  * bottom/top sheet gets the peek/half/full ladder; a left/right side-lens gets a
  * full-slide (no detents — an empty ladder, so `useDrawerSnap` treats it as a single
  * open/closed slide). A consumer-supplied `snapPoints` always wins over this default.

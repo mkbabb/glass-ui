@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// BC.W-DECK — the live demonstration of the `@mkbabb/glass-ui/deck` register. The
+// the live demonstration of the `@mkbabb/glass-ui/deck` register. The
 // in-repo exerciser: `useDeck` (the headless index/progress/liveMessage core),
 // `useDeckKeyboard` (the focus-guarded Arrow/Space/digit contract), and `<DeckPager>`
 // (the windowed dots over PagerDots' ONE pagerWindow oracle via the group aria axis).
@@ -73,12 +73,12 @@ watch(
         <StorySection
             heading="Keyboard-paged presentation deck"
             label="deck"
-            blurb="The full-viewport keyboard-paged aria-live PRESENTATION register — DISTINCT from /carousel's item-scroller. useDeck owns the headless index + progress + the 'Slide N of M' announcer; useDeckKeyboard pages on Arrow/Space/digit (focus-guarded so a focused control keeps its native activation); <DeckPager> windows the dots over PagerDots' ONE oracle. The story's visible slide transition reads the canonical --spring-smooth token directly."
+            blurb="Page through a full-viewport presentation with Arrow, Space, or number keys. Focused controls keep their native behavior, the current slide is announced, and the pager shows a compact window around your position."
         >
             <div class="flex flex-col gap-6" tabindex="0">
                 <!-- The deck stage — one slide active at a time, the rest faded out
                      on the canonical --spring-smooth curve, with the GOO-MORPH neck
-                     bridging the outgoing→incoming slide (BD.W-GOO-CAROUSEL-DECK). -->
+                     bridging the outgoing→incoming slide. -->
                 <div
                     ref="gooStageEl"
                     class="deck-demo-stage glass-quiet rounded-card"
@@ -106,7 +106,7 @@ watch(
                         :inert="i !== deck.index.value ? true : undefined"
                     >
                         <p class="text-mono-caption">{{ i + 1 }} / {{ slides.length }}</p>
-                        <!-- BC.W-SUFFUSE-reconcile — the motion band's ONE color
+                        <!-- reconcile — the motion band's ONE color
                              text-event: the slide DISPLAY title in the
                              --motion-accent violet (the motion-purple family, never
                              a body <p>). The slide title is a display heading, not a
@@ -148,16 +148,16 @@ watch(
     position: relative;
     min-block-size: 14rem;
     overflow: clip;
-    /* BD.W-CAROUSEL-DECK-GLASS §5 — the deck `--goo-weight` (0.4 — the VESTIBULAR FLOOR; a
+    /*  §5 — the deck `--goo-weight` (0.4 — the VESTIBULAR FLOOR; a
        full-viewport page-flip with overshoot is nauseating). It feeds `--motion-weight` so
-       the stage `::before` cartoon-cast reads the deck's calm weight; PRM zeroes it (below).
+       the stage `::before` cartoon cast reads the deck's calm weight; reduced motion zeroes it.
        The deck has no ambient autoplay, so no `[data-autoplay]` seam — every page is a
        deliberate keyboard/click DRIVER. */
     --goo-weight: 0.4;
     --motion-weight: var(--goo-weight);
-    /* BD.W-GOO-BARBELL-NECK — the deck barbell tokens (demo-scoped). The widest, calmest
+    /* the deck barbell tokens (demo-scoped). The widest, calmest
        waist (a full-viewport flip necks barely — the vestibular floor). */
-    /* BD.W-CAROUSEL-DECK-GLASS §3 — the WARM FIELD behind the goo (presets-in-consumers,
+    /*  §3 — the WARM FIELD behind the goo (presets-in-consumers,
        a DEMO-surface change, NOT a library token). The live deck slide resolved a flat
        taupe `oklab(0.793 0.005 0.012)` (C≈0.0128, near-gray) with NO colorful field — the
        goo had no warm chroma to bleed. The stage now lays the carousel's warm-cream→saffron
@@ -211,8 +211,8 @@ watch(
         var(--card);
 }
 
-/* BD.W-GOO-CAROUSEL-DECK — the deck goo silhouette layer (the metaball NECK bridge).
-   A TRANSIENT travel-only bridge (JUDGE-2 §1 + §2): the layer is INVISIBLE at rest
+/* the deck goo silhouette layer (the metaball NECK bridge).
+   A transient travel-only bridge: the layer is invisible at rest
    (`opacity: 0` — NO gray slab; the resting backing is the slide's OWN warm
    `glass-floating` plate) and fades in ONLY `[data-traveling]`. It rides z-index 2
    ABOVE the crisp slides during travel, so the warm-cream metaball neck flows OVER the
@@ -226,14 +226,14 @@ watch(
     filter: var(--deck-goo-filter);
     opacity: 0; /* invisible at rest; fades in only during travel */
     transition: opacity var(--duration-fast) var(--ease-out);
-    /* warm-cream plate ink — NEVER gray (BA.W-NO-GRAY). */
+    /* warm-cream plate ink — NEVER gray. */
     color: color-mix(in oklab, var(--card), white 8%);
     will-change: transform, opacity;
     contain: layout style; /* NOT paint — `contain: paint`/`overflow: clip` would clip the
-       metaball neck at the layer box (JUDGE-1 §3). The SVG filter region bounds the goo. */
+       metaball neck at the layer box. The SVG filter region bounds the goo. */
     isolation: isolate;
 }
-/* BD.W-CAROUSEL-DECK-GLASS §4 — the moving CARTOON-CAST (REUSES the SHIPPED
+/*  §4 — the moving CARTOON-CAST (REUSES the SHIPPED
    `--shadow-cartoon-*` warm cel stamp — DRY, no second shadow system). The cast must live
    OUTSIDE the goo-filtered layer (the `feColorMatrix` threshold would crush a soft shadow),
    so it rides the NON-filtered stage `::before` (the stage's pseudos are free). It PUNCHES
@@ -256,7 +256,7 @@ watch(
         opacity var(--duration-fast) var(--ease-out);
 }
 /* fade the glass bridge IN during travel (the translucent warm lens — the slide reads
-   through the bridge). At rest the layer is gone: ZERO gray slab (JUDGE-2 §1). The
+   through the bridge). At rest the layer is gone: no gray slab. The
    spring episode owns `data-traveling` on the stage and clears it on settle. */
 .deck-demo-stage[data-traveling] .deck-goo-layer {
     opacity: var(--deck-goo-layer-opacity, 0.62);
@@ -268,7 +268,7 @@ watch(
 }
 /* THE DARK REGISTER — luminous warm transmissive glass, never a gray-brown halo
    (mirrors CarouselContent.vue). Lift the dark fill toward the WARM DARK-INK
-   elevation register (W-DARK-MATERIAL): `oklch(from var(--card) 0.68 0.05 h)` keeps
+   elevation register: `oklch(from var(--card) 0.68 0.05 h)` keeps
    the warm hue, pins L→0.68 + RE-SATURATES C→0.05, NOT a gray `white N%` mix. The
    `saturate(1.3) brightness(1.3)` companion (plain CSS filters appended after
    the instance-local SVG filter reads the warm chroma as LIT glass and pushes

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-// BC.W-GLASS-PRUNE — the MATERIALS gallery. The glass system consolidates to TWO
-// registers: Glass MATERIALS (this route) + Glass CARDS (/display/card). This story
+// the MATERIALS gallery. The glass system consolidates to TWO
+// registers: Glass MATERIALS (this route) + Glass CARDS (display/card). This story
 // teaches the MATERIALS register — the ONE iOS liquid-glass material expressed as the
 // five-rung `.glass-{wash,quiet,resting,floating,overlay}` ladder, shown BARE (composing
 // the library CLASSES directly, not a `<GlassPanel>` component) over a LIVE aurora field
@@ -18,7 +18,7 @@ import StorySection from "../../chassis/section/StorySection.vue";
 import { Aurora, DEFAULT_AURORA_CONFIG } from "@glass/components/aurora";
 import { ToggleGroup, ToggleGroupItem } from "@glass/components/toggle-group";
 
-// The five-rung ladder — the canonical MATERIAL (BC.W-GLASS-IDENTITY owns the values).
+// The five-rung ladder — the canonical MATERIAL ( owns the values).
 // Each rung is visibly more present than the last (alpha-monotonic by design).
 const rungs = [
     { cls: "glass-wash", label: "wash", blurb: "~0.30α — sub-perceptual veil" },
@@ -42,7 +42,7 @@ const lensOn = () => axes.value.includes("lens");
     <StoryPage>
         <StorySection
             label="Glass MATERIALS — the five-rung ladder"
-            blurb="The ONE iOS liquid-glass material, expressed bare as the .glass-{wash·quiet·resting·floating·overlay} ladder over a LIVE aurora. Each rung is visibly more present than the last. Toggle the .glass-deep DEPTH axis (the apple-home-nav register) and the .glass-lens REFRACTION axis (the OS-grade squircle, Chromium; WebKit degrades to blur). For a content container, reach for <Card> (the CARDS register, /display/card) — not a panel."
+            blurb="Compare five levels of glass presence over a living field. Toggle deeper material and lens refraction to see how the same surface gains weight without becoming a content card."
         >
             <div class="flex flex-wrap items-center gap-4 mb-6">
                 <span class="text-mono-caption text-muted-foreground">axes:</span>

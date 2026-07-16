@@ -1,8 +1,8 @@
 <script setup lang="ts">
-// BB.W-DEMO-DESIGN — the radii token tour gains ONE chassis lever: the calm wash
+// The radii token tour uses the calm wash
 // read-through (StorySection over the StoryHero `wash` card drop the `foundations→
-// paper` manifest default declares) + the PRM-safe scroll-cascade rung stagger (the
-// W-SCROLL-MOTION `.scroll-cascade` register, no GL field — a static-wash route by
+// paper` manifest default declares) plus the reduced-motion-safe scroll-cascade stagger (the
+//  `.scroll-cascade` register, no GL field — a static-wash route by
 // design). The token-tour boxes float over a designed substrate; no per-pane
 // bespoke craft.
 import StoryPage from "../../chassis/page/StoryPage.vue";

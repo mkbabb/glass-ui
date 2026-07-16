@@ -18,7 +18,7 @@ const emit = defineEmits<{
     (e: "select", key: PresetKey): void;
 }>();
 
-// BD.W-CONFIG-GALLERY-DOCK — the device-free render fix. The thumbnail well is no
+// the device-free render fix. The thumbnail well is no
 // longer an offscreen-WebGPU <img> bake (the `device not acquired` abort that
 // killed all 13 cards); it is the §3 colourful field painted via the shipped
 // `auroraFallbackGround` (a CSS background-image — raster or gradient stack), so
@@ -37,7 +37,7 @@ function onKey(e: KeyboardEvent, key: PresetKey) {
 </script>
 
 <template>
-    <!-- BD.W-CONFIG-GALLERY-DOCK — the toggle-button preset gallery (the a11y fence:
+    <!-- the toggle-button preset gallery (the a11y fence:
          ONE pattern — plain type="button" + aria-pressed in a role="group"
          aria-label="Presets" container; NOT role="tab"+aria-selected, an ARIA
          contradiction). The tiles are warm-glass cels (`.glass-capsule`) floating

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // Overlays & Scrims — static scrim-token swatches + motion offsets.
 //
-// BA.W-STAGE scope 7 (FD-FS-1/FD-FS-3) — the scrim tour reads against a VIVID
+// The scrim tour reads against a vivid
 // reference field. A scrim is a translucent DIM; over a same-tone `bg-card` plate
 // the dim has nothing to dim and reads as nothing. The three scrim weights now
 // paint over a vivid gradient field (`.scrim-stage`) so each weight's dim reads as
@@ -45,7 +45,7 @@ const motionOffsets: TokenLadderRow[] = [
     <StoryPage>
         <StorySection
             label="three scrim weights"
-            blurb="Static token swatches, not mounted overlays. Each weight paints over a vivid reference stage so its backdrop-darkening reads clearly. Interaction proof for scrim, focus, and dismissal lives in Containers · Dialog and Feedback · Confirm dialog."
+            blurb="Each scrim weight paints over a vivid stage so its backdrop-darkening reads clearly. Open Dialog or Confirm dialog to experience focus, dismissal, and live overlay behavior."
         >
             <div class="scrim-grid">
                 <div v-for="row in scrims" :key="row.label" class="scrim-cell">
@@ -79,7 +79,7 @@ const motionOffsets: TokenLadderRow[] = [
 </template>
 
 <style scoped>
-/* The dense scrim grid (BA.W-STAGE scope 7). */
+/* The dense scrim grid. */
 .scrim-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
@@ -94,7 +94,7 @@ const motionOffsets: TokenLadderRow[] = [
 }
 
 /* The vivid reference stage — a bright multi-hue gradient so a translucent scrim
-   dim reads as the darkening it is (the FD-FS-1 contrast field). The section-color
+   dim reads as the darkening it is. The section-color
    stops are demo-local references, not a brand mint. */
 .scrim-stage {
     position: relative;

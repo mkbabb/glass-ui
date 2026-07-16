@@ -17,12 +17,14 @@ import { describe, expect, it } from "vitest";
 import {
     resolveAtoms,
     configToAtoms,
-    nucleiPrior,
     DEFAULT_ATOMS,
     type AuroraAtoms,
+} from "@glass/components/aurora/composables/atoms";
+import {
+    nucleiPrior,
     type AuroraMotionAtom,
     type AuroraZoneArrangement,
-} from "@glass/components/aurora/composables/atoms";
+} from "@glass/components/aurora/composables/atoms-fields";
 import {
     DEFAULT_AURORA_CONFIG,
     MAX_NUCLEI,

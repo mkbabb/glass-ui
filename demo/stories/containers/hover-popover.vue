@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// BI.W-OVERLAY-UNION — the retired <HoverPopover> folds onto the sealed
+// the retired <HoverPopover> folds onto the sealed
 // <Popover trigger="hover"> union (the Kronecker fold: 3 overlays → 1). This
 // story demonstrates the HOVER trigger arm of the ONE Popover — the fine-hover
 // branch is reka's HoverCardRoot (hover-open + defer-on-leave timers), promoted
@@ -11,7 +11,7 @@ import { Surface } from "@glass/components/surface";
 import { Button } from "@glass/components/button";
 import { Settings, ArrowLeft, RotateCcw, Square } from "@lucide/vue";
 
-// BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2
+// reconcile — the containers band's ONE coherent --section-color-2
 // blue identity. PH3-safe (inline borderLeft, not the border-l-[3px] +
 </script>
 
@@ -95,7 +95,7 @@ import { Settings, ArrowLeft, RotateCcw, Square } from "@lucide/vue";
         >
             <!-- The lone trigger is wrapped in the `flex flex-wrap` idiom so it sizes
                  to its content, never balloons to the article width (the flex-col
-                 body is align-items:stretch — CBA-1/CBA-7). -->
+                 body uses `align-items: stretch`). -->
             <Surface material="content" surface="veil" class="flex flex-wrap gap-3 p-6">
                 <Popover trigger="hover">
                     <PopoverTrigger as-child>

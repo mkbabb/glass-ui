@@ -16,9 +16,8 @@ import { mediumOptions } from "./aurora/config/options";
 import { usePresetThumbnails } from "./aurora/usePresetThumbnails";
 
 /**
- * Aurora studio — the FIRST exemplar of the shared VizStudio chassis
- * (BC.W-VIZ-CONFIGURATOR-SUITE). VizStudio owns the page and controls-right
- * frame; Aurora supplies three subject-specific slots:
+ * Aurora studio uses the shared VizStudio chassis. VizStudio owns the page and
+ * controls-right frame; Aurora supplies three subject-specific slots:
  *   - #stage    — AuroraStage (pointer-movement shaping plus nucleus gestures).
  *   - #controls — AuroraConfigDock (the FULL config schema, every axis a live
  *                 <ConfiguratorRow> over <ConfiguratorLayer> sections, the
@@ -27,7 +26,7 @@ import { usePresetThumbnails } from "./aurora/usePresetThumbnails";
  *                 capture AWAITS armAsync on the WebGPU backend — no dead cards).
  *
  * State composes `useConfiguratorState<AuroraConfig>` with `cloneMode:"per-preset"`
- * — the named-editable-baseline semantic (slider edits survive a preset round-trip).
+ * the named-editable-baseline semantic (slider edits survive a preset round-trip).
  */
 
 // Build the canonical ConfiguratorPreset descriptors from the authored
@@ -40,12 +39,12 @@ const AURORA_PRESETS: ConfiguratorPreset<AuroraConfig>[] = PRESET_KEYS.map((key)
     config: PRESETS[key],
 }));
 
-// BI.W-AURORA-VIBRANCY (UF-E1) — the studio LEADS with the warm-vivid SETTING_SUN (the
+// the studio LEADS with the warm-vivid SETTING_SUN (the
 // pink-note horizon), the setting-sun candidate-A default. It supersedes the prior warm
 // Dawn lead (still a named, selectable preset); the blue OPENAI_SKY survives as a
 // non-default theme (presets-in-consumers — a blue sky is a theme, never the lead).
-// /substrates/aurora reads warm-vivid-sunset at rest. This is also the W-FIELD-CORE /
-// W-E10 entrance verify surface (the T-38 aurora-pointer + the palette-honest entrance).
+// /substrates/aurora reads warm-vivid-sunset at rest and exercises pointer shaping
+// over the palette-honest entrance.
 const studio = useConfiguratorState<AuroraConfig>({
     presets: AURORA_PRESETS,
     initialPreset: "SETTING_SUN",
@@ -66,7 +65,7 @@ const activeLayer = ref<string>("medium");
 const route = useRoute();
 
 onMounted(() => {
-    // BG.W-AUR-METAL-FINISH — the deterministic capture-surfacing param. The C18
+    // the deterministic capture-surfacing param. The C18
     // capture harness (?capture=/substrates/aurora&mode=X) renders the default smooth
     // Dawn lead; an &aurmedium=metal|metal-gradient|kuwahara override forces the opt-in
     // medium so BOTH engines (Chrome + off-screen Safari) render it with ZERO
@@ -79,7 +78,7 @@ onMounted(() => {
         : undefined;
     if (forcedOpt) {
         // The metal variants ride the warm-metal baseline (the folds catch the light);
-        // kuwahara / any other medium forces on the current lead preset.
+        // kuwahara, any other medium forces on the current lead preset.
         if (forcedOpt.value === "metal" || forcedOpt.value === "metal-gradient")
             studio.selectPreset("METAL");
         studio.config.medium = forcedOpt.value;
@@ -127,7 +126,7 @@ const hintText = computed(() => [
         scroll-mode="never"
         gallery-placement="top"
     >
-        <!-- BG.W-PRESET-RIBBON-TOP — the presets are a LARGE full-width TOP RIBBON.
+        <!-- the presets are a LARGE full-width TOP RIBBON.
              The `gallery-placement="top"` axis (threaded through VizStudio to the ONE
              library <Configurator>) lifts the gallery OUT of the 360px aside gutter and
              pins it spanning BOTH columns up-top; the stage + controls reclaim the full

@@ -1,17 +1,16 @@
 /* tokens/scheme-spring.css
-   §2 EASING — Spring curves via linear() · per-spring duration clocks ·
+   EASING — Spring curves via linear() · per-spring duration clocks ·
    goo-morph dwell-flow curves · cubic-bezier cores + aliases.
 
-   Carved from scheme-motion.css's §2 EASING block to hold the no-god-module
-   500-line bound (BD.W-CUT re-grew scheme-motion past it). @import-ed by
-   tokens.css IMMEDIATELY AFTER scheme-motion.css — adjacent same-selector
-   :root{} at the SAME cascade slot, so the spring/easing tokens resolve in the
+   Carved from scheme-motion.css's easing block to hold the 500-line bound. Imported by
+   tokens.css immediately after scheme-motion.css — adjacent same-selector
+   `:root {}` at the same cascade slot, so the spring/easing tokens resolve in the
    same order their consumers (color-radius and the later partials) expect.
    Custom properties resolve order-independently within :root, so the split is
    byte-isomorphic at the cascade. */
 :root {
     /* ═══════════════════════════════════════════════
-       §2  EASING — Spring curves via linear()
+       EASING — Spring curves via linear()
 
        Generated from `scripts/regen-spring-tokens.mjs` — DO NOT hand-edit.
        To tune a spring: edit the PRESETS table in the script and re-run
@@ -21,10 +20,10 @@
        `linear()` stops; this is the single source of truth tying each
        (response, ζ) pair to its serialized curve.
 
-       iOS-canonical (response, dampingFraction) per AL-X4 §3 (the LIVE values are the
-       BD.W-ANIM-IOS27-TUNE global re-calibration toward the weighty-gooey-inertial pole
-       — every overshoot ∈ [0%,10%], gentle ζ EXACTLY 1.0; the SPRING_PRESETS table in
-       springPresets.ts is the single source, these numbers mirror it):
+       iOS-style (response, dampingFraction) values are calibrated toward the
+       weighty, gooey, inertial pole: every overshoot is in [0%,10%] and gentle ζ is
+       exactly 1.0. The `SPRING_PRESETS` table in springPresets.ts is the single source
+       mirrored by these numbers:
          smooth: (0.58s, ζ=0.80)  — inertial settle, a whisper of life, overshoot ~+1.5%
          snappy: (0.48s, ζ=0.74)  — quick-but-weighty position morph, overshoot ~+3.2%
          bouncy: (0.60s, ζ=0.60)  — emphatic FLOWING one-shot, overshoot ~+9.5% (≤10% band)
@@ -37,20 +36,18 @@
        true critical damping (`gentle`'s ζ=1.0 register) so `smooth` reads a
        little more alive on entrances/fades than `gentle`'s patient settle.
 
-       ── EASING DOCTRINE (AX.W52 §6 — which easing fits which job) ──
-       ONE recorded rule so the animation easing stops forking live. This
-       FORMALIZES the already-correct `transitions.css` idiom (enter=spring,
+       ── Which easing fits which job ──
+       This rule keeps animation easing from forking. It formalizes the
+       `transitions.css` idiom (enter=spring,
        exit=bezier) as the house rule every recipe reaches for.
 
-       BB.W-MOTION-CANON — the table embodies ONE principle (Material 3's
-       spatial-vs-effects split, codified in `docs/precepts/motion-canon.md`
-       as P1): a SPATIAL channel (the box MOVES/RESHAPES — position, SIZE,
+       The table embodies the spatial-vs-effects split: a SPATIAL channel
+       (the box MOVES/RESHAPES — position, SIZE,
        rotation, corners) rides a `--spring-<name>` (overshoot = physicality);
        an EFFECTS channel (the surface RE-TINTS — color, opacity, box-shadow)
        rides a bezier `--ease-*` (a colour cross-fade reads as a wobble on a
        spring). Each row below is tagged [SPATIAL] (spring) or [EFFECTS]
-       (bezier) so the rule is legible, not implicit. The canon doc is the
-       canonical home; this table is the SOURCE it re-states:
+       (bezier) so the rule is legible, not implicit:
 
          | Transition kind                                  | Tier      | Easing                   |
          |--------------------------------------------------|-----------|--------------------------|
@@ -66,12 +63,12 @@
          |   correction, reveal source-rect bloom)          |           |   `--spring-snappy`,     |
          |                                                  |           |   expressed as a         |
          |                                                  |           |   COMPOSITOR transform   |
-         |                                                  |           |   (P5) — NEVER an        |
+         |                                                  |           |   — NEVER an             |
          |                                                  |           |   animated width/height  |
          | Enter (mount, popover open, dialog in, reveal)   | [SPATIAL] | `--spring-bouncy` /      |
          |                                                  |           |   `--spring-snappy`      |
-         | Bold decelerating arrival (the SOTA arrival —    | [SPATIAL] | `--ease-out-expo`        |
-         |   reveal draw-on, big-distance settle)           |           |   (cubic-bezier(.16,1,   |
+         | Bold decelerating arrival (reveal draw-on,       | [SPATIAL] | `--ease-out-expo`        |
+         |   big-distance settle)                           |           |   (cubic-bezier(.16,1,   |
          |                                                  |           |   .3,1); the house expo) |
          | Exit (unmount, close)                            | [EFFECTS] | `--ease-out` /           |
          |                                                  |           |   `--ease-standard`      |
@@ -80,13 +77,11 @@
          |                                                  |           |   overshoot past gone)   |
          | Position-tracked (specular pointer follow)       | [EFFECTS] | `--ease-standard`        |
 
-       The SOTA arrival ease is the EXISTING `--ease-out-expo` (alias →
+       The bold arrival ease is the existing `--ease-out-expo` (alias →
        `--motion-ease-out-expo` = `cubic-bezier(0.16, 1, 0.3, 1)`, the house
        expo; JavaScript consumers import the `easeOutExpo` twin from value.js)
-       — NOT a net-new token. The motion canon NAMES it as the arrival register;
-       it is not re-minted (a duplicate alias would fail proof:animation-
-       coherence's EASING-TABLE-BOUND arm — the curve already has its canonical
-       token row).
+       — not a new token. It is not re-minted because the curve already has its
+       canonical token row.
 
        The BUTTON family (`.button` / `.tap-squish`) UNIFIES its `scale`
        transform leg onto ONE register —
@@ -104,24 +99,22 @@
     --spring-dock: linear(0, 0.00315 2.041%, 0.01207 4.082%, 0.02597 6.122%, 0.04414 8.163%, 0.06595 10.204%, 0.09081 12.245%, 0.11817 14.286%, 0.14757 16.327%, 0.17856 18.367%, 0.21076 20.408%, 0.24381 22.449%, 0.27740 24.490%, 0.31127 26.531%, 0.34517 28.571%, 0.37888 30.612%, 0.41222 32.653%, 0.44503 34.694%, 0.47717 36.735%, 0.50853 38.776%, 0.53901 40.816%, 0.56854 42.857%, 0.59705 44.898%, 0.62449 46.939%, 0.65083 48.980%, 0.67603 51.020%, 0.70010 53.061%, 0.72301 55.102%, 0.74478 57.143%, 0.76540 59.184%, 0.78490 61.224%, 0.80330 63.265%, 0.82062 65.306%, 0.83688 67.347%, 0.85213 69.388%, 0.86638 71.429%, 0.87969 73.469%, 0.89207 75.510%, 0.90358 77.551%, 0.91425 79.592%, 0.92411 81.633%, 0.93322 83.673%, 0.94160 85.714%, 0.94930 87.755%, 0.95635 89.796%, 0.96279 91.837%, 0.96865 93.878%, 0.97398 95.918%, 0.97881 97.959%, 1);
     --spring-press: linear(0, 0.00284 2.041%, 0.01090 4.082%, 0.02354 6.122%, 0.04014 8.163%, 0.06017 10.204%, 0.08311 12.245%, 0.10850 14.286%, 0.13590 16.327%, 0.16495 18.367%, 0.19528 20.408%, 0.22657 22.449%, 0.25855 24.490%, 0.29095 26.531%, 0.32354 28.571%, 0.35613 30.612%, 0.38852 32.653%, 0.42057 34.694%, 0.45213 36.735%, 0.48309 38.776%, 0.51333 40.816%, 0.54279 42.857%, 0.57137 44.898%, 0.59903 46.939%, 0.62572 48.980%, 0.65141 51.020%, 0.67605 53.061%, 0.69965 55.102%, 0.72219 57.143%, 0.74366 59.184%, 0.76407 61.224%, 0.78343 63.265%, 0.80175 65.306%, 0.81906 67.347%, 0.83537 69.388%, 0.85070 71.429%, 0.86509 73.469%, 0.87857 75.510%, 0.89116 77.551%, 0.90290 79.592%, 0.91382 81.633%, 0.92395 83.673%, 0.93333 85.714%, 0.94200 87.755%, 0.94999 89.796%, 0.95733 91.837%, 0.96406 93.878%, 0.97020 95.918%, 0.97581 97.959%, 1);
     --spring-transient: linear(0, 0.00427 2.041%, 0.01615 4.082%, 0.03434 6.122%, 0.05769 8.163%, 0.08520 10.204%, 0.11598 12.245%, 0.14927 14.286%, 0.18439 16.327%, 0.22076 18.367%, 0.25789 20.408%, 0.29534 22.449%, 0.33275 24.490%, 0.36982 26.531%, 0.40630 28.571%, 0.44196 30.612%, 0.47666 32.653%, 0.51024 34.694%, 0.54261 36.735%, 0.57369 38.776%, 0.60342 40.816%, 0.63176 42.857%, 0.65871 44.898%, 0.68425 46.939%, 0.70840 48.980%, 0.73117 51.020%, 0.75259 53.061%, 0.77270 55.102%, 0.79153 57.143%, 0.80913 59.184%, 0.82554 61.224%, 0.84083 63.265%, 0.85503 65.306%, 0.86820 67.347%, 0.88039 69.388%, 0.89166 71.429%, 0.90206 73.469%, 0.91163 75.510%, 0.92043 77.551%, 0.92851 79.592%, 0.93591 81.633%, 0.94268 83.673%, 0.94886 85.714%, 0.95449 87.755%, 0.95961 89.796%, 0.96427 91.837%, 0.96849 93.878%, 0.97230 95.918%, 0.97575 97.959%, 1);
-    --spring-eyeglass: linear(0, 0.00696 2.041%, 0.02640 4.082%, 0.05625 6.122%, 0.09463 8.163%, 0.13978 10.204%, 0.19012 12.245%, 0.24422 14.286%, 0.30080 16.327%, 0.35875 18.367%, 0.41708 20.408%, 0.47495 22.449%, 0.53163 24.490%, 0.58652 26.531%, 0.63915 28.571%, 0.68911 30.612%, 0.73612 32.653%, 0.77996 34.694%, 0.82048 36.735%, 0.85763 38.776%, 0.89137 40.816%, 0.92174 42.857%, 0.94882 44.898%, 0.97270 46.939%, 0.99352 48.980%, 1.01144 51.020%, 1.02663 53.061%, 1.03928 55.102%, 1.04957 57.143%, 1.05772 59.184%, 1.06392 61.224%, 1.06835 63.265%, 1.07123 65.306%, 1.07272 67.347%, 1.07301 69.388%, 1.07227 71.429%, 1.07066 73.469%, 1.06832 75.510%, 1.06538 77.551%, 1.06198 79.592%, 1.05823 81.633%, 1.05423 83.673%, 1.05007 85.714%, 1.04582 87.755%, 1.04156 89.796%, 1.03735 91.837%, 1.03324 93.878%, 1.02927 95.918%, 1.02547 97.959%, 1);
 
-    /* ── PER-SPRING DURATION CLOCK (BA.W-GLASS-CAL Unit 3 · BI.W-SPRING-PARITY ·
-       BI.W-TEMPO) ──
+    /* ── Per-spring duration clock ───────────────────────────────────────────────
        Generated from `scripts/regen-spring-tokens.mjs` — DO NOT hand-edit.
 
-       THE `-settle`/READER SPLIT (BI.W-TEMPO, M11). The raw analytic 2%-settle is
+       The `-settle`/reader split: the raw analytic 2%-settle is
        emitted under the INTERNAL token `--spring-<name>-settle`; the PUBLIC name
        `--spring-<name>-duration` is a generated READER that co-scales it by the ONE
        global `--motion-tempo` axis (property-regs.css, initial 1.0 identity):
        `--spring-<name>-duration: calc(var(--spring-<name>-settle) *
        var(--motion-tempo))`. So EVERY consumer (the ~30 `--spring-<name>-duration`
        reads + the `--tab-indicator-duration` / `--dock-motion-resize` aliases)
-       inherits tempo with ZERO edits (the G4 round-trip — the public name is the
-       reader, NOT a clean-break rename). At `--motion-tempo: 1` the reader resolves
+       inherits tempo with zero edits; the public name is the reader, not a rename.
+       At `--motion-tempo: 1` the reader resolves
        `settle * 1`, byte-identical to the prior flat `-duration` value (no-op-at-
        rest). The JS spring engines read the SAME `--motion-tempo` (motionTempo.ts)
-       and scale `response *= tempo`, so CSS_t90 == JS_t90 at ANY tempo (P7, G2).
+       and scale `response *= tempo`, so CSS_t90 == JS_t90 at any tempo.
 
        Each `--spring-<name>-settle` is the spring's OWN 2%-band settle time —
        the TRUE NUMERIC settle (tick the `SpringProgress` step response until
@@ -132,7 +125,7 @@
        polynomial `(1+ωₙt)e^(−ωₙt)` tail the pure exponential misses — gentle
        ζ=1.0 analytic 0.51s vs numeric 0.76s.)
 
-       WHY the numeric settle is load-bearing (FAM-18/M1 — the tempo-parity fix):
+       The numeric settle is load-bearing because
        the SAME settle seconds is ALSO the `maxDuration` fed to `springLinearStops`
        for the `--spring-*` curves above, so the emitted curve and this clock share
        ONE horizon — a CSS `transition` replaying the curve over this clock lands
@@ -141,9 +134,8 @@
        (~1.9s for snappy) while this clock was the ~0.4s settle — a ~4.8× mismatch
        that front-loaded the whole trajectory into the first ~10–16% of the clock
        (a ~50ms pop + a dead-flat tail). These clocks re-time UNDER each register to
-       its own settle WITHOUT touching the §6 register canon (which spring fits which
-       job): a `transition` pairs `--spring-<name>` with `--spring-<name>-duration`.
-       Locked by `proof:spring-tokens-synced`'s tempo-parity clause. */
+       its own settle without changing which spring fits which
+       job: a `transition` pairs `--spring-<name>` with `--spring-<name>-duration`. */
     --spring-smooth-settle: 0.35s;
     --spring-snappy-settle: 0.44s;
     --spring-bouncy-settle: 0.57s;
@@ -151,7 +143,6 @@
     --spring-dock-settle: 0.19s;
     --spring-press-settle: 0.12s;
     --spring-transient-settle: 0.46s;
-    --spring-eyeglass-settle: 0.34s;
     --spring-smooth-duration: calc(var(--spring-smooth-settle) * var(--motion-tempo));
     --spring-snappy-duration: calc(var(--spring-snappy-settle) * var(--motion-tempo));
     --spring-bouncy-duration: calc(var(--spring-bouncy-settle) * var(--motion-tempo));
@@ -159,9 +150,8 @@
     --spring-dock-duration: calc(var(--spring-dock-settle) * var(--motion-tempo));
     --spring-press-duration: calc(var(--spring-press-settle) * var(--motion-tempo));
     --spring-transient-duration: calc(var(--spring-transient-settle) * var(--motion-tempo));
-    --spring-eyeglass-duration: calc(var(--spring-eyeglass-settle) * var(--motion-tempo));
 
-    /* ── INTERACTIVE-SPATIAL TRANSITION DEFAULT (BG.W-LIQUID-WEIGHT-DEFAULT / F5.2) ──
+    /* ── Interactive-spatial transition default ─────────────────────────────────
        Generated from `scripts/regen-spring-tokens.mjs` — DO NOT hand-edit.
 
        The base interactive-atom recipes (`.interactive-item` / `.tap-squish` in
@@ -172,23 +162,23 @@
        was a bare `--ease-standard` bezier with ZERO weight).
 
        Spring-DERIVED — an alias to the canon interactive scale register (`smooth`,
-       the ONE button/interactive scale spring the §6 motion canon records). It is
+       the single button/interactive scale spring). It is
        GENERATED here so the "which spring is the interactive-spatial default" mapping
-       lives in the ONE motion-token source (drift-proof, the same exemplar pattern the
-       `--spring-*` curves ride — a hand-edit drifts, re-run the generator to restore).
+       lives in the single motion-token source and follows the same generated pattern as
+       the `--spring-*` curves; re-run the generator rather than hand-editing it.
 
        The EFFECTS legs (color/opacity/box-shadow) KEEP the bezier `--ease-standard`
-       (motion-canon P1 spatial/effects split — a colour cross-fade on a spring reads
+       (the spatial/effects split: a colour cross-fade on a spring reads
        as a wobble); this token is SPATIAL-only. `.motion-calm` (scheme-motion.css) is
        the EXPLICIT opt-out (→ var(--ease-standard)); the PRM carve re-aliases it the
        same way (no overshoot under reduce — the vestibular floor). */
     --transition-liquid-spatial: var(--spring-smooth);
 
-    /* --pager-worm-max-stretch: the dot-worm velocity-swell cap (BI.W-PAGER-WORM R10),
+    /* --pager-worm-max-stretch: the dot-worm velocity-swell cap,
        read LITERALLY by the two-edge worm's `useLiquidFlex` squish (usePagerWorm.ts). The
        1.45 taffy value RE-REGISTERED into the LOW 1.08–1.2 band (a lively settle, never a
        rubber-band taffy-pull): the worm narrows ≈1/1.2≈0.83× cross-axis at peak swell. The
-       worm's flow/duration clock tokens RETIRED at BI.W-PAGER-RETIRES — the `useLeadTrail`
+       worm's flow/duration clock tokens are retired; the `useLeadTrail`
        spring driver owns the physics (release-at-arrival emergent, no timer). */
     --pager-worm-max-stretch: 1.2;
 
@@ -214,7 +204,7 @@
 }
 
 /* ═══════════════════════════════════════════════
-   BG.W-LIQUID-WEIGHT-DEFAULT (F5.2) — the PRM re-alias of the interactive-spatial DEFAULT.
+   Reduced-motion re-alias of the interactive-spatial default.
 
    Under `prefers-reduced-motion: reduce` the base interactive scale legs
    (`.interactive-item` / `.tap-squish`) lose their spring
@@ -223,16 +213,16 @@
    overshoot CURVE from the CSS scale legs library-wide (the same belt-and-suspenders shape
    as `--ease-cartoon-punch`'s PRM re-alias + the `.motion-calm` opt-out).
 
-   WHY IT LIVES HERE (the cascade fix — the F5.2 paint-judge FAIL): the base default
+   It lives here because the base default
    `:root { --transition-liquid-spatial: var(--spring-smooth) }` (above) and this PRM
    re-alias both target `:root`, so they carry EQUAL specificity — at a MATCH (reduce
-   active) the LATER source-order declaration wins. scheme-spring.css is @import-ed LAST of
+   active) the later source-order declaration wins. scheme-spring.css is imported last among
    the token partials (tokens.css, immediately after scheme-motion.css), so a PRM re-alias
    parked in scheme-motion.css (imported FIRST) LOSES to THIS file's base default and the
    overshoot survives under reduce. Homing the re-alias here, AFTER the base default, makes
    it the LAST `:root` declaration of the token — so under reduce it wins and the overshoot
    is stripped, exactly as required. Do NOT move it back to scheme-motion.css (it would lose
-   the cascade — the no-op the paint judge caught). */
+   the cascade). */
 @media (prefers-reduced-motion: reduce) {
     :root {
         --transition-liquid-spatial: var(--ease-standard);

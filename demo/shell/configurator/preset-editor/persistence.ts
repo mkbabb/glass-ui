@@ -1,7 +1,6 @@
 // demo/shell/configurator/preset-editor/persistence.ts — localStorage I/O + the
 // 2-version migration logic (full-snapshot → sparse-delta).
 //
-// O.W3 Lane C — split from the prior `usePresetEditor.ts` god-module per Rβ.
 // Pure data plumbing; no DOM mutations.
 
 import { DEFAULT_CONFIG, STORAGE_KEY } from "./defaults";
@@ -31,8 +30,7 @@ function looksLikeFullSnapshot(raw: Record<string, unknown>): boolean {
         "density",
         "radius",
         "cartoonShadow",
-        // BA.W-CONFIG-CHASSIS.3 — `dark` left ConfigBaseline (useGlobalDark owns it);
-        // the legacy full-snapshot detector no longer requires the retired key.
+        // Dark mode is persisted independently by useGlobalDark.
     ];
     return baselineKeys.every((k) => k in raw);
 }
@@ -77,10 +75,7 @@ function migrateFullSnapshotToDelta(raw: Record<string, unknown>): ConfigDelta {
     ) {
         out.cartoonShadow = raw.cartoonShadow;
     }
-    // BA.W-CONFIG-CHASSIS.3 — `dark` left the config delta (owned by
-    // `useGlobalDark` now); a legacy-persisted `dark` key is silently ignored
-    // (clean break, no migration shim — the global composable persists the mode
-    // on its own key).
+    // A persisted `dark` key is ignored; useGlobalDark owns that independent value.
 
     return out;
 }
@@ -104,7 +99,6 @@ function parseDelta(raw: Record<string, unknown>): ConfigDelta {
     }
     if (typeof raw.radius === "number") out.radius = raw.radius;
     if (typeof raw.cartoonShadow === "boolean") out.cartoonShadow = raw.cartoonShadow;
-    // BA.W-CONFIG-CHASSIS.3 — `dark` left the config delta (useGlobalDark owns it).
     return out;
 }
 
@@ -136,6 +130,6 @@ export function persist(delta: ConfigDelta): void {
     try {
         window.localStorage.setItem(STORAGE_KEY, JSON.stringify(delta));
     } catch {
-        /* quota / private-mode — silently drop */
+        /* quota, private-mode — silently drop */
     }
 }

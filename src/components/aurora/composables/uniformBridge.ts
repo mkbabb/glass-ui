@@ -6,7 +6,7 @@
  * NEW union member is a COMPILE error until it gets a slot — no silent stale-Record
  * gap where a fresh enum value uploads `undefined`.
  *
- * Crayon is a FIRST-CLASS medium (`uMedium == 4`, AX.W13), NOT a stroke mode: the
+ * Crayon is a first-class medium (`uMedium == 4`), not a stroke mode: the
  * shader has a dedicated `mediumCrayon()` body (DRY wax-on-tooth). `MEDIUM_ID` carries
  * the `crayon: 4` slot and `StrokeMode` no longer has a `crayon` member — the legacy
  * `oil` + `strokeMode:"crayon"` peer-route is REMOVED (clean break); a crayon surface
@@ -22,7 +22,7 @@ import type { OklchStop } from "../../../composables/color";
 import type { UniformLocations } from "./glSetup";
 
 /**
- * BI.W-FIELD-CORE — the aurora cursor UNIFORM shape (the `uCursor*` upload inputs). The
+ * the aurora cursor UNIFORM shape (the `uCursor*` upload inputs). The
  * retired `cursorModel.ts` `CursorState` is GONE — the cursor is now the mapped readout of
  * the shared `usePointerVelocityField` (`auroraCursorMapping`): x/y = the mass-spring
  * attractor (0..1, CSS-top — the bridge flips Y), and strength is the CPU-folded steady
@@ -58,7 +58,7 @@ import {
     type WarpMode,
 } from "../constants/presets";
 
-// AX.W13 — `crayon: 4` (DRY tooth-multiply), `vangogh: 5` (atomic comma/crescent
+// `crayon: 4` (dry tooth-multiply), `vangogh: 5` (atomic comma/crescent
 // dabs), and `oil-pastel: 6` (stroke deposition + burnish) are all first-class
 // mediums, each with its OWN shader body (no shared dispatch). The `satisfies
 // Record<AuroraMedium, number>` FORCES a slot the instant the union grows — omitting
@@ -72,20 +72,20 @@ export const MEDIUM_ID = {
     crayon: 4,
     vangogh: 5,
     "oil-pastel": 6,
-    // BB.W-AUR-KUWAHARA — the anisotropic-Kuwahara painterly finish (uMedium==7).
+    // the anisotropic-Kuwahara painterly finish (uMedium==7).
     // The WGSL primary renders the smooth core for every painterly id (1-7) — a
     // kuwahara config on WebGPU degrades to the smooth core, never an error (the
-    // booked W-AURORA-WGPU-MEDIUMS successor ports the painterly bodies); the WebGL2
+    // booked  successor ports the painterly bodies); the WebGL2
     // path carries the live `mediumKuwahara()` body.
     kuwahara: 7,
-    // BG.W-AUR-METAL-FINISH — the two mutually-exclusive metal mediums. Both DUAL-PORT
+    // the two mutually-exclusive metal mediums. Both DUAL-PORT
     // (the WebGL2 `mediumMetal`/`mediumMetalGradient` bodies + the WGSL primary twins);
     // a `medium:"metal"` config re-lights the field as warm folded metal on BOTH backends.
     metal: 8,
     "metal-gradient": 9,
 } as const satisfies Record<AuroraMedium, number>;
 
-// W5 — the value.js HueInterpolationMethod → GLSL int map. The `satisfies` forces
+// value.js HueInterpolationMethod → GLSL integer. `satisfies` forces
 // a slot for every method, so a value.js enum change is a COMPILE error here.
 export const HUE_PATH_ID = {
     shorter: 0,
@@ -100,11 +100,11 @@ export const FLOW_ID = {
     swirl: 2,
     diagonal: 3,
     multi: 4,
-    // AW.W4.1 — the structure-tensor / edge-tangent-flow branch in flow.glsl.ts.
+    // The structure-tensor, edge-tangent-flow branch in flow.glsl.ts.
     tensor: 5,
 } as const satisfies Record<FlowPattern, number>;
 
-// AW.W4.1 — the stroke-orientation source → GLSL int. `flow` keeps the
+// The stroke-orientation source maps to a GLSL integer. `flow` keeps the
 // hand-authored pattern; `tensor` substitutes the structure-tensor minor
 // eigenvector in bestOil. The `satisfies` forces a slot for every union member.
 export const STROKE_ORIENT_ID = {
@@ -116,10 +116,10 @@ export const WARP_ID = {
     fbm: 0,
     cellular: 1,
     hybrid: 2,
-    curl: 3, // BB.B1 — opt-in Bridson curl-noise flow warp (the .frag uWarpMode == 3 branch)
+    curl: 3, //  — opt-in Bridson curl-noise flow warp (the .frag uWarpMode == 3 branch)
 } as const satisfies Record<WarpMode, number>;
 
-// Oil-stroke sub-modes. AX.W13 — `crayon` is a first-class medium (MEDIUM_ID), no
+// Oil-stroke sub-modes. `crayon` is a first-class medium (MEDIUM_ID), not an
 // longer a stroke mode, so the union has no `crayon` member to Exclude.
 export const STROKE_MODE_ID = {
     oil: 0,
@@ -127,12 +127,9 @@ export const STROKE_MODE_ID = {
     chunky: 3,
 } as const satisfies Record<StrokeMode, number>;
 
-// AX.W11 — the aurora catch-light OKLCh anchor. The `(0.985, 0.0125, 77.5°)` anchor
-// reproduces the prior eyeballed `[1.0, 0.95, 0.88]` warm-white to <1e-3 linear (so
-// the live impasto relight reads identically — the seam fix is invisible), now on the
-// shared OKLCh core (`warmCatchLight`) instead of an undisciplined sRGB-ish literal.
-// The blob's `warmCream` `(0.97, 0.03, 85°)` is its OWN anchor (W15 re-routes it
-// through the SAME helper) — one OKLCh derive, each surface its principled anchor.
+// The Aurora catch-light OKLCh anchor. `(0.985, 0.0125, 77.5°)` resolves to the
+// intended warm white within 1e-3 linear. Blob uses its own `(0.97, 0.03, 85°)`
+// warm-cream anchor through the same conversion helper.
 export const AURORA_CATCH_LIGHT_ANCHOR: OklchStop = { L: 0.985, C: 0.0125, h: 77.5 };
 
 /**
@@ -156,7 +153,7 @@ export function resolveLightColor(
 }
 
 /**
- * The effective `uMedium` int for a config. AX.W13 — a pure identity map over the
+ * The effective `uMedium` integer for a config: a pure identity map over the
  * medium union (the `oil` + `strokeMode:"crayon"` peer-route is REMOVED; crayon is its
  * own first-class `medium:"crayon"`). `medium` is total over `MEDIUM_ID` (the
  * `satisfies` guarantees it), so this never resolves `undefined`.
@@ -166,7 +163,7 @@ export function resolveMediumId(cfg: AuroraConfig): number {
 }
 
 /**
- * The `uStrokeMode` int for a config. AX.W13 — `strokeMode` is total over
+ * The `uStrokeMode` integer for a config. `strokeMode` is total over
  * `STROKE_MODE_ID` (no `crayon` special-case), so this is a direct map.
  */
 export function resolveStrokeModeId(cfg: AuroraConfig): number {
@@ -174,11 +171,11 @@ export function resolveStrokeModeId(cfg: AuroraConfig): number {
 }
 
 /**
- * AX.W13 — the `uStrokeOrient` int for a config. The painterly mediums (`vangogh`,
+ * The `uStrokeOrient` integer for a config. The painterly mediums (`vangogh`,
  * `oil-pastel`, `crayon`) FORCE the structure-tensor orientation regardless of the
  * config's `strokeOrient` field — their marks must hug the color zones (the
  * congruent-to-real-works contract). Every other medium honors the config's
- * `strokeOrient` (default `"flow"`). BB.W-AUR-KUWAHARA — `kuwahara` ALSO forces
+ * `strokeOrient` (default `"flow"`). `kuwahara` also forces
  * tensor: the anisotropic Kuwahara kernel is squeezed along the structure-tensor
  * minor eigenvector, so the orientation source must be the tensor field.
  */
@@ -213,9 +210,8 @@ export function createUniformBridge(
     const flipY = (y: number): number => 1.0 - y;
 
     // Pre-allocated upload buffers — filled in place inside uploadConfig() so a
-    // slider drag does not allocate per frame. Sized to the shader's MAX_NUCLEI /
-    // MAX_STOPS arrays; spare slots are uploaded but ignored thanks to the
-    // uNucleiCount / uStopCount gates in the shader.
+    // slider drag does not allocate per frame. Sized to the shader's MAX_NUCLEI,     // MAX_STOPS arrays; spare slots are uploaded but ignored thanks to the
+    // uNucleiCount, uStopCount gates in the shader.
     const ub = {
         palette: new Float32Array(MAX_STOPS * 3),
         pos: new Float32Array(MAX_NUCLEI * 2),
@@ -287,7 +283,7 @@ export function createUniformBridge(
         // Medium — `resolveMediumId` routes the oil+crayon config to the crayon
         // PEER (uMedium==4); every other case is the identity map.
         gl.uniform1i(U.uMedium, resolveMediumId(cfg));
-        // W5 — the OKLCh hue-arc method (default `shorter` = the OKLab-rectangular
+        // OKLCh hue-arc method. Default `shorter` uses the OKLab-rectangular
         // ramp, so an unset config keeps the muddy-midtone-free default).
         gl.uniform1i(U.uHuePath, HUE_PATH_ID[cfg.huePath ?? "shorter"]);
         gl.uniform1i(U.uFlowPattern, FLOW_ID[cfg.flow.pattern]);
@@ -305,14 +301,14 @@ export function createUniformBridge(
         gl.uniform1f(U.uStrokeAnisotropy, cfg.strokeAnisotropy);
         gl.uniform1i(U.uStrokeLayers, cfg.strokeLayers);
         gl.uniform1i(U.uStrokeMode, resolveStrokeModeId(cfg));
-        // AW.W4.1 — the stroke-orientation source (the painterly mediums force tensor).
+        // Stroke-orientation source; painterly mediums force tensor.
         gl.uniform1i(U.uStrokeOrient, resolveStrokeOrientId(cfg));
-        // AW.W4.2 — the impasto relight axis. Default upper-left (the prior fixed-rim
+        // Impasto relight axis. Default upper-left (the fixed-rim
         // direction) + warm-white so the still default reads identically; the shader
-        // re-normalizes uLightDir. AW.W8 overwrites uLightDir per-frame from the cursor.
+        // re-normalizes uLightDir.  overwrites uLightDir per-frame from the cursor.
         {
             const ld = cfg.lightDir ?? [-0.5, 0.6, 0.62];
-            // AX.W11 — the catch-light is OKLCh-derived (the warmCatchLight helper) off
+            // The catch-light is OKLCh-derived by `warmCatchLight` from
             // the shared /color leaf, not an eyeballed [1.0,0.95,0.88] literal; the anchor
             // reproduces the prior warm-white perceptually. A consumer may author it as an
             // {L,C,h} OKLCh anchor or a raw linear triple — resolveLightColor handles both.
@@ -325,7 +321,7 @@ export function createUniformBridge(
         gl.uniform1f(U.uImpasto, cfg.impasto);
         gl.uniform1f(U.uBrokenColor, cfg.brokenColor);
         gl.uniform1f(U.uCanvasGrain, cfg.canvasGrain);
-        // BG.W-AUR-METAL-FINISH — the metal-medium knobs (uMedium==8/9). Uploaded on
+        // the metal-medium knobs (uMedium==8/9). Uploaded on
         // every config; a non-metal path never reads them (no-op), so the smooth default
         // + every existing medium render byte-identical.
         gl.uniform1f(U.uMetalPolish, cfg.metalPolish ?? METAL_POLISH_DEFAULT);
@@ -341,10 +337,10 @@ export function createUniformBridge(
         gl.uniform1f(U.uSaturation, cfg.saturation);
         gl.uniform1f(U.uPaperGrain, cfg.paperGrain);
         gl.uniform1f(U.uAlpha, opaquePresentation ? 1 : cfg.alpha);
-        // BD.W-AUR-VIVIDNESS — the §3 chroma-floor strength (omitted = the vivid default).
+        // the §3 chroma-floor strength (omitted = the vivid default).
         gl.uniform1f(U.uVividness, cfg.vividness ?? DEFAULT_VIVIDNESS);
 
-        // BG.W-AUR-IMAGE-SOURCE — the image lane. On the PALETTE program every U.uImage/
+        // the image lane. On the PALETTE program every U.uImage/
         // uBlur*/uImageAspect location is null (the palette fragment declares none of
         // them), so these uploads are silent no-ops → the palette-default render is
         // byte-identical. Only the separate image program reads them. uImage samples

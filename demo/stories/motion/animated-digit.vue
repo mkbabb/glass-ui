@@ -22,7 +22,7 @@ function resample(): void {
             label="value tween"
             blurb="A null/undefined value paints the placeholder; a numeric value tweens toward it on the useAnimatedNumber spring."
         >
-            <!-- BA.W-SUFFUSE2 — the motion band's ONE coherent violet event
+            <!-- the motion band's ONE coherent violet event
                  (--motion-accent, the demo-local --viz-legendre twin): a leading
                  accent bar above each tweening figure. The value+unit stay ink. -->
             <div class="flex flex-wrap items-end gap-10">

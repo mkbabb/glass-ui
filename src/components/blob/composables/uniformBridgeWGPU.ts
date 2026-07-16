@@ -1,5 +1,5 @@
 // GooBlob WGSL uniform bridge — the typed-struct SOURCE OF TRUTH for the WebGPU
-// primary (BB.W-VIZ-SUITE / W-GOOBLOB-WGPU — serial migration #2).
+// primary renderer.
 //
 // The WGSL `Uniforms` struct (`metaball.wgsl.ts`) and the JS `ArrayBuffer` write offsets
 // are generated from the SAME layout table here, so a std140-vs-WGSL alignment mismatch
@@ -46,7 +46,7 @@ import {
 import type { BlobConfig, MoodParams } from "../types";
 import type { BlobPointer } from "./useBlobPointer";
 import type { BlobSatelliteSystem } from "./useBlobSatellites";
-import type { BlobFrameState } from "./uploadBlobUniforms";
+import type { BlobFrameState } from "./blobSimulation";
 import { resolveBlobSurface } from "./resolveBlobSurface";
 
 /** The total uniform-buffer byte size (16-aligned). */
@@ -131,7 +131,7 @@ export function packBlobWGPUUniforms(
     const pulsePhase = timeSec * cMem.pulseFreq * params.pulseFreq * Math.PI * 2;
     const noiseAmp = ((cMem.noiseAmp * params.noiseAmp) / 0.025) * POS_SCALE;
 
-    // ── Worst-case-orbit smin band widen (BA.W-GOO-REDRESS, byte-identical) ──
+    // ── Worst-case-orbit smin band widen ─────────────────────────
     const MAX_BRIDGE_WIDEN = 1.25;
     const worstOrbitDist = cGeo.orbitRadius * 1.2 * (1 + cGeo.eccentricity);
     const nominalBand = cMem.smoothK * params.smoothK;
@@ -146,7 +146,7 @@ export function packBlobWGPUUniforms(
     const smoothK = nominalBand * orbitWiden * POS_SCALE;
 
     // ── maxReach (byte-identical) ──
-    // BD.W-GOOBLOB-MERCURY-COLONY — the colony-register fission-apex pad (the WGSL twin
+    // Colony-register fission-apex pad (the WGSL twin
     // of uploadBlobUniforms): when surface.fissionAmp > 0 the freed bead reaches the
     // bounded apex FISSION_REACH_MAX + the snap overshoot, further than worstOrbitDist;
     // the bounding-discard radius must cover it. Zero (byte-identical to HEAD) at amp 0.
@@ -208,12 +208,12 @@ export function packBlobWGPUUniforms(
     f32[OFF.s6 + 3] = cInt.stretch;
 
     // s7: uPointerActive, uPointerAttraction, uPointerStrength, uStage
-    // BC.W-GOOBLOB-PLAIN — uStage rides the spare s7.w lane the SoT reserved (the
+    // uStage rides the spare s7.w lane the source of truth reserved (the
     // typed-struct extend, never a re-fork). 1.0 = the flat endpoint; 0.0 = dressed.
     f32[OFF.s7 + 0] = pointer.active.value ? 1.0 : 0.0;
     f32[OFF.s7 + 1] = netAttraction;
     f32[OFF.s7 + 2] = cInt.pointerStrength * POS_SCALE;
-    // uStage DERIVED from morphT (BD.W-GOO-CAROUSEL-DECK): 1.0 = the flat STAGE-1 floor.
+    // uStage derives from morphT: 1.0 is the flat endpoint.
     f32[OFF.s7 + 3] = morphT <= 0 ? 1.0 : 0.0;
 
     // ptr: uPointer.xy, uVelocity.xy (the `* 0.5 * POS_SCALE` mapping)
@@ -222,7 +222,7 @@ export function packBlobWGPUUniforms(
     f32[OFF.ptr + 2] = vel.x * 0.5 * POS_SCALE;
     f32[OFF.ptr + 3] = vel.y * 0.5 * POS_SCALE;
 
-    // base: uBaseColor.rgb, uMorphT (the base.w lane — BD.W-GOO-CAROUSEL-DECK SHADING
+    // base: uBaseColor.rgb, uMorphT (the base.w shading
     // morph scalar; the WGSL fragment reads `u.base.w`).
     f32[OFF.base + 0] = rgb[0];
     f32[OFF.base + 1] = rgb[1];
@@ -243,7 +243,7 @@ export function packBlobWGPUUniforms(
     f32[OFF.light + 3] = 0;
 
     // res: uResolution.xy, uShadow, uShadowSoftness
-    // BC.W-GOOBLOB-MEATBALL — the soft-shadow march rides the spare res.z/res.w lanes the
+    // The soft-shadow march rides the spare res.z/res.w lanes the
     // typed-struct SoT reserved. `morphT > 0` enables the shadow input while the
     // surface flag still owns whether the dressed endpoint paints it.
     f32[OFF.res + 0] = canvas.width;

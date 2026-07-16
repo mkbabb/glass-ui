@@ -6,17 +6,17 @@ import type { TimelineSegment } from "./types";
 
 /**
  * <GlassTimeline> — dispatcher SFC for three structurally-distinct
- * timeline variants. Public surface UNCHANGED from the pre-O.W3 god-module.
+ * timeline variants.
  *
  * - `variant="scrubber"` (default): single-track normalized 0..1 scrubber
  *   with full keyboard a11y (role=slider + arrow-key step + shift-step).
  *   Delegates to `<ScrubberTimeline>`.
  *
- * - `variant="segmented"` (Z.W2.T1 / A2 §B5): adjacent gradient bands,
+ * - `variant="segmented"`: adjacent gradient bands,
  *   one per phase, with boundary dots that emit `hover` + `click` events
  *   carrying the segment key + payload. Delegates to `<SegmentedTimeline>`.
  *
- * - `variant="continuous"` (AA.W1 / A4 §S-17): ONE rounded-pill rail
+ * - `variant="continuous"`: one rounded-pill rail
  *   substrate with N absolute-positioned region children. Delegates to
  *   `<ContinuousTimeline>`. The continuous variant owns the popover
  *   portal CSS contract (non-scoped <style> block; see ContinuousTimeline).
@@ -25,7 +25,6 @@ import type { TimelineSegment } from "./types";
  * gradient) or a raw CSS gradient string consumed verbatim. Falls back
  * to `--timeline-segment-default-gradient` when omitted.
  *
- * O.W3 Lane A — this dispatcher replaces the prior 1049-line monolith.
  * The three variant SFCs + `geometry.ts` shared math live alongside in
  * the same package. Consumer imports through
  * `@mkbabb/glass-ui/timeline` are unchanged.
@@ -50,14 +49,14 @@ const props = withDefaults(
          */
         ariaLabel?: string;
         /**
-         * AB.W2.T3 (A2 §B2.b) — current segment key (continuous variant).
+         * Current segment key (continuous variant).
          * Stamps `data-current="true"` on the matching marker so consumers
-         * (panel / W3 raised-rivet styling) can distinguish the active
+         * can distinguish the active
          * phase from the transient hovered phase.
          */
         currentSegmentKey?: string;
         /**
-         * AB.W2.T2 (A4 §B2.c) — disable the default per-marker
+         * Disable the default per-marker
          * HoverPopover (continuous variant). The dot still emits
          * `hover` / `click` events.
          */
@@ -85,8 +84,7 @@ const emit = defineEmits<{
 <template>
     <!-- Continuous variant — delegates to <ContinuousTimeline>. Forwards
          the popoverContent slot so consumers can override the popover
-         body via the same `#popoverContent` slot name as the pre-O.W3
-         monolithic source. -->
+         body via the same `#popoverContent` slot name. -->
     <ContinuousTimeline
         v-if="variant === 'continuous'"
         :segments="props.segments"
@@ -100,8 +98,8 @@ const emit = defineEmits<{
         <template #popoverContent="slotProps">
             <slot name="popoverContent" v-bind="slotProps" />
         </template>
-        <!-- AI.W1-δ — forward the `#detail` scoped slot on the continuous
-             variant only (option γ per post-RD-3 §3). The scrubber +
+        <!-- Forward the `#detail` scoped slot on the continuous
+             variant only. The scrubber +
              segmented variants do not carry this surface. -->
         <template v-if="$slots.detail" #detail="slotProps">
             <slot name="detail" v-bind="slotProps" />
@@ -129,7 +127,7 @@ const emit = defineEmits<{
 </template>
 
 <!-- ════════════════════════════════════════════════════════════════════
-     BD.W-TIMELINE-RAIL-UNIFY — the ONE shared timeline register.
+     The one shared timeline register.
 
      NON-SCOPED <style> block (the same portal-CSS-contract pattern
      ContinuousTimeline.vue uses for `.timeline-popover`): the three variant

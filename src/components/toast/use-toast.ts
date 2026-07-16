@@ -5,13 +5,9 @@ import type { Surface, Tone } from "../_shared/axes";
 const TOAST_LIMIT = 5;
 const TOAST_REMOVE_DELAY = 1000000;
 
-// BI.W-SYNONYM-RENAMES — the toast's semantic status reads the ONE shared `Tone`
+// the toast's semantic status reads the ONE shared `Tone`
 // axis (_shared/axes.ts's TONES tuple: neutral/success/warning/info/destructive),
-// NOT a private `ToastVariant` re-mint of the tone vocabulary (proof:encapsulation
-// axes-ext G8; proof:variant-residual). `neutral` is the un-toned floating glass
-// (the former `variant:'default'`), byte-identical paint. The old `ToastVariant`
-// export is RETIRED (clean break, no alias) — a consumer typing a toast tone imports
-// `Tone` from `@mkbabb/glass-ui/axes`.
+// not a private tone vocabulary. `neutral` is the un-toned floating glass.
 
 export interface ToastOptions {
     title?: string;
@@ -19,7 +15,7 @@ export interface ToastOptions {
     action?: Component | VNode;
     tone?: Tone;
     /**
-     * BB.W-SURFACE-AXIS-COMPLETE — the shared {glass·veil·opaque} surface-decoration
+     * the shared {glass·veil·opaque} surface-decoration
      * axis on a queued toast (default `glass`). Forwarded through `Toaster.vue`'s
      * per-toast `v-bind` exactly like `variant`; orthogonal to the tone arm.
      */
@@ -35,7 +31,7 @@ export interface ToastOptions {
 interface QueuedToast extends ToastOptions {
     id: string;
     open?: boolean;
-    // AY.W-ANIM1 (W-ANIM-FIX) — the close-request listener key. reka-ui's
+    // the close-request listener key. reka-ui's
     // `ToastRoot` emits `update:open` (a Vue event), so the spread-as-prop key
     // MUST be `onUpdate:open` — NOT the React shadcn `onOpenChange`, which reka
     // silently ignores (the stale-reka-binding no-op class: timer/close-X/swipe

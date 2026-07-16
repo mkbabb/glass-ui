@@ -1,6 +1,6 @@
 import { SpringProgress } from "@mkbabb/keyframes.js";
 import { onScopeDispose, type Ref } from "vue";
-import { springPreset } from "@glass/composables/motion/springPresets";
+import { springPreset } from "@glass/composables/motion/spring/springPresets";
 import {
     bodyDiameter,
     bodyTransform,

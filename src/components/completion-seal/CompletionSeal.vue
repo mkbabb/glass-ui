@@ -50,7 +50,7 @@
                 :r="COMPLETION_SEAL_RING.r"
                 pathLength="100"
             />
-            <!-- The check / wordmark glyph — a <path>; the gold stroke inks the mark. -->
+            <!-- The check, wordmark glyph — a <path>; the gold stroke inks the mark. -->
             <path
                 v-else
                 class="completion-seal__mark"
@@ -94,7 +94,7 @@ export interface CompletionSealProps {
      */
     play?: boolean;
     /**
-     * The earned-gold garnish (BG.W-SEAL-DISC) — the result exceeded the user's
+     * The earned-gold garnish — the result exceeded the user's
      * historical best. Arms `[data-best]`, which re-points `--seal-ink` onto the brighter
      * `--seal-best` earned-gold register (a colour LIFT within the gold family — gold is
      * EARNED, Q2). Compositor-only; the base seal ink stays the completion register.

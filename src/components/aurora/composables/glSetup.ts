@@ -1,6 +1,6 @@
 /**
  * Aurora GL setup seam — shader compile/link + geometry + the uniform location
- * cache. The GL-lifecycle orchestrator (`runtime.ts`) calls `createGlProgram` on a
+ * cache. `createAuroraGLSetup` calls `createGlProgram` on a
  * fresh context (on arm AND on every webglcontextrestored), so a GPU context loss
  * self-heals: each call rebuilds the program + the full-screen triangle + the
  * `UNIFORM_NAMES` location cache against the fresh `gl`.
@@ -10,9 +10,24 @@
  * keyed off it, so a fresh uniform always gets a location slot.
  */
 
-// AV.W14 — the error-checked compile/link is the shared `glass/webgl/compile`
+// Error-checked compile/link comes from the shared `glass/webgl/compile`
 // leaf; aurora keeps its `[Aurora]` diagnostic label via the `label` arg.
 import { compileShader, linkProgram } from "../../../composables/glass/webgl/compile";
+import type {
+    BackingSize,
+    WebGLCanvasFrame,
+} from "../../../composables/glass/webgpu/useGpuSubstrate";
+import type { UsePointerVelocityField } from "../../../composables/motion/pointer/usePointerVelocityField";
+import { VERTEX_SRC } from "../constants/shaders/aurora.vert";
+import { FRAGMENT_SRC } from "../constants/shaders/aurora.frag";
+import { IMAGE_FRAGMENT_SRC } from "../constants/shaders/aurora-image.frag";
+import type { AuroraConfig } from "../constants/presets";
+import {
+    armWebGL2ImageTexture,
+    type AuroraImageCoordinator,
+} from "./auroraImageSource";
+import { createFrameLoop, type AuroraCursorScalars } from "./frameLoop";
+import { createUniformBridge } from "./uniformBridge";
 
 const AURORA_LABEL = "[Aurora]";
 
@@ -50,9 +65,9 @@ export const UNIFORM_NAMES = [
     "uStrokeAnisotropy",
     "uStrokeLayers",
     "uStrokeMode",
-    // AW.W4.1 — stroke-orientation source (flow | tensor).
+    // Stroke-orientation source (flow | tensor).
     "uStrokeOrient",
-    // AW.W4.2 — the movable impasto relight axis (cursor-as-light in AW.W8).
+    // The movable impasto relight axis (cursor as light).
     "uLightDir",
     "uLightColor",
     "uWetEdge",
@@ -60,7 +75,7 @@ export const UNIFORM_NAMES = [
     "uImpasto",
     "uBrokenColor",
     "uCanvasGrain",
-    // BG.W-AUR-METAL-FINISH — the metal-medium knobs (uMedium==8/9).
+    // Metal-medium knobs (uMedium==8/9).
     "uMetalPolish",
     "uMetalHeightScale",
     "uNucleiDrift",
@@ -70,9 +85,9 @@ export const UNIFORM_NAMES = [
     "uSaturation",
     "uPaperGrain",
     "uAlpha",
-    // BD.W-AUR-VIVIDNESS — the §3 chroma-floor strength.
+    // Chroma-floor strength.
     "uVividness",
-    // BG.W-AUR-IMAGE-SOURCE — the image program's OWN uniform lane (the sampler + the
+    // The image program's own uniform lane (the sampler + the
     // blur band + the aspect). On the PALETTE program these resolve to null locations
     // (the palette fragment declares none of them), so uploading them is a silent no-op —
     // the palette-default render is byte-identical. Only the separate image program (a
@@ -128,4 +143,82 @@ export function createGlProgram(
     for (const n of UNIFORM_NAMES) uniforms[n] = gl.getUniformLocation(program, n);
 
     return { program, vs, fs, uniforms, geometry: { vao, buf } };
+}
+
+export interface AuroraGLSetupDeps {
+    opaquePresentation: boolean;
+    getConfig: () => AuroraConfig;
+    getReducedMotion: () => boolean;
+    getRenderTime: (elapsedSec: number) => number;
+    getCursorScalars: () => AuroraCursorScalars;
+    pointerField: UsePointerVelocityField;
+    imageCoordinator: AuroraImageCoordinator;
+    registerConfigUploader: (upload: ((config: AuroraConfig) => void) | null) => void;
+}
+
+/** Build the WebGL2 program, uniform bridge, frame loop, and teardown as one setup. */
+export function createAuroraGLSetup(
+    deps: AuroraGLSetupDeps,
+): (gl: WebGL2RenderingContext) => WebGLCanvasFrame {
+    return (gl) => {
+        const useImageProgram = deps.getConfig().source === "image";
+        const fragmentSrc = useImageProgram ? IMAGE_FRAGMENT_SRC : FRAGMENT_SRC;
+        const { program, vs, fs, uniforms, geometry } = createGlProgram(
+            gl,
+            VERTEX_SRC,
+            fragmentSrc,
+        );
+        const imageTeardown = useImageProgram
+            ? armWebGL2ImageTexture(gl, program, deps.imageCoordinator)
+            : null;
+
+        const resize = (size?: BackingSize): void => {
+            gl.viewport(0, 0, size?.w ?? gl.canvas.width, size?.h ?? gl.canvas.height);
+            gl.useProgram(program);
+        };
+        const uploadConfig = createUniformBridge(
+            gl,
+            program,
+            uniforms,
+            deps.opaquePresentation,
+        );
+        const setConfig = (config: AuroraConfig): void => uploadConfig(config);
+        deps.registerConfigUploader(setConfig);
+        setConfig(deps.getConfig());
+
+        const loop = createFrameLoop({
+            gl,
+            prog: program,
+            uniforms,
+            pointerField: deps.pointerField,
+            getCursorScalars: deps.getCursorScalars,
+            getConfig: deps.getConfig,
+            getReducedMotion: deps.getReducedMotion,
+            getRenderTime: deps.getRenderTime,
+        });
+
+        gl.clearColor(0, 0, 0, deps.opaquePresentation ? 1 : 0);
+        gl.disable(gl.DEPTH_TEST);
+        if (deps.opaquePresentation) {
+            gl.disable(gl.BLEND);
+        } else {
+            gl.enable(gl.BLEND);
+            gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+        }
+
+        return {
+            frame: loop.frame,
+            shouldContinue: loop.needsAnimation,
+            resize,
+            teardown: () => {
+                deps.registerConfigUploader(null);
+                gl.deleteProgram(program);
+                gl.deleteShader(vs);
+                gl.deleteShader(fs);
+                gl.deleteBuffer(geometry.buf);
+                gl.deleteVertexArray(geometry.vao);
+                imageTeardown?.();
+            },
+        };
+    };
 }

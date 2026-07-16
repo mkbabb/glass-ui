@@ -38,6 +38,12 @@ describe("GlassDock vertical collapse (AZ.W-DOCK-TAXONOMY HG2)", () => {
     it("a vertical dock is COLLAPSIBLE by default — it starts collapsed (the old rail force-pin is gone)", () => {
         const wrapper = mountVertical();
         const root = wrapper.get(".glass-dock");
+        // The `.glass-dock` div is the component's SINGLE root — its mounted element IS
+        // the root element. A leading comment/text sibling or a v-if on the root would
+        // demote it to a fragment whose `$el` is a non-element anchor, silently breaking
+        // every consumer that resolves the dock via a component ref (chromeRef, rootEl).
+        // Reaching `.glass-dock` by class alone would stay green through that regression.
+        expect(wrapper.element).toBe(root.element);
         expect(root.classes()).toContain("vertical");
         // The force-pin is GONE: a vertical dock is NOT always-expanded by construction.
         expect(root.classes()).not.toContain("always-expanded");

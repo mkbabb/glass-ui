@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// BI.W-TEMPO — the `--motion-tempo` axis live demo (M11 / N6). ONE registered
+// the `--motion-tempo` axis live demo (M11, N6). ONE registered
 // inheriting TIME scalar co-scales BOTH the CSS spring clocks (the
 // `--spring-<name>-duration` reader = `settle * --motion-tempo`), the canonical
 // sheet panel/scrim enter+exit reader, AND the JS spring responses
@@ -59,7 +59,7 @@ const dialogOpen = ref(false);
     <StoryPage>
         <StorySection
             heading="--motion-tempo · the one motion time knob"
-            blurb="ONE registered inheriting scalar co-scales every channel shown here: CSS spring readers, the dialog's portaled scrim enter/exit, and JS spring responses. Their base durations remain distinct, but each multiplies the same --motion-tempo owner. Slide it and the dropdown, popover, dialog panel + scrim, and JS dock morph all tighten or lengthen in proportion. 1.0 is the shipped identity; ⟂ --motion-weight ⟂ --ui-scale."
+            blurb="Move one tempo control and watch the dropdown, popover, dialog, and dock tighten or relax together while each keeps its own motion character."
         >
             <div class="tempo-panel glass-card flex flex-col gap-4 rounded-card p-6">
                 <div class="flex items-baseline justify-between gap-4">

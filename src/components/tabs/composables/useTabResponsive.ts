@@ -6,7 +6,7 @@ import type {
 } from "../SegmentedTabs.vue";
 
 /**
- * Package-private composable for `SegmentedTabs.vue` — BG.W-COLOCATE (the WS4
+ * Package-private composable for `SegmentedTabs.vue` —  (the
  * roving-focus/responsive carve; ratchet-drain #13). The responsive-collapse concern
  * (the `<Select>`-below-the-breakpoint fold) lives here, carved out of the SFC to hold
  * the no-god-module bound — the `useTabIndicator`/`useTabDragMorph` colocation-sibling

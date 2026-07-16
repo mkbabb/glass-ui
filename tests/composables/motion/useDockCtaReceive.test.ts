@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { ref } from "vue";
-import { useDockCtaReceive } from "@glass/composables/motion/useDockCtaReceive";
+import { useDockCtaReceive } from "@glass/composables/motion/morph/useDockCtaReceive";
 import { mountComposable } from "../../utils/mountComposable";
 
 function rect(x: number, y: number, width: number, height: number): DOMRect {

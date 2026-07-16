@@ -4,7 +4,7 @@
  * Sits between the props and the SFC template so a future React/web-component skin
  * reuses L1–L4. It orchestrates: resolve brush → shapeGeom → ink → animation. It
  * owns NO DOM (the SFC anchors/measures/mounts the filter); it owns the reactive
- * pipeline + the draw-on / boil state machine.
+ * pipeline + the draw-on, boil state machine.
  *
  * Two draw-on mechanisms, picked by a FIELD (never an instrument `if`):
  *   - clean ink (no grain): `stroke-dashoffset` on `pathLength="1"` — the slides
@@ -64,7 +64,7 @@ export interface UseHandMarkInput {
     jagged: boolean;
     /** NATURAL underline morphology (C-2) — procedural off the house-seeded engine. */
     natural: boolean;
-    /** NATURAL-underline excursion knob (BG.W-HANDMARK-PERFECT (c)); `null` ⇒ derive from brush wobble. */
+    /** NATURAL-underline excursion knob ( (c)); `null` ⇒ derive from brush wobble. */
     amplitude: number | null;
     box: MarkBox | null;
     path: string | null;
@@ -77,8 +77,8 @@ export interface UseHandMarkInput {
      */
     baselineFrac: number | null;
     /**
-     * The aspect-correct marking-space HEIGHT (BG.W-HANDMARK-PERFECT (a)) — `VB_W /
-     * boxAspect` from the SFC-measured `.hm` box px-aspect, so `preserveAspectRatio="none"`
+     * The aspect-correct marking-space height: `VB_W * boxAspect`, using the
+     * SFC-measured `.hm` box aspect so `preserveAspectRatio="none"`
      * scales the text-mode wobble SHAPE uniformly (the humps stop crushing flat on a short
      * word). Defaults to `VB_H`; used ONLY for the measured text-mode marks (the positioned/
      * box path keeps `VB_H` byte-for-byte).

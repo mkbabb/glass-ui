@@ -1,8 +1,8 @@
 import { SpringProgress } from "@mkbabb/keyframes.js";
-import { motionTempo } from "../../../composables/motion/motionTempo";
+import { motionTempo } from "../../../composables/motion/core/motionTempo";
 
 /**
- * BG.W-DOCK-ENGINE-UNIFY — the ONE `SpringProgress` owner for the dock band.
+ * the ONE `SpringProgress` owner for the dock band.
  *
  * The outer dock morph and controlled face crossfade share this one spring
  * factory instead of duplicating the interruptible-physics lifecycle. A consumer
@@ -93,11 +93,10 @@ export function useDockSpring(config: DockSpringConfig): DockSpring {
             : 0;
         dispose();
         const active = new SpringProgress({
-            // BI.W-TEMPO — co-scale the DOCK response by the global `--motion-tempo`
-            // axis so the JS morph shares ONE clock with the CSS `--spring-dock-
-            // duration` reader (`settle * --motion-tempo`). Read off `:root` (this
-            // factory is element-agnostic); byte-identical at the 1.0 identity. The
-            // dock-morph clock stays coupled to its CSS twin at any tempo (P7, G2).
+            // co-scale the DOCK response by the global `--motion-tempo`
+            // axis so the JS morph shares one clock with the CSS `--spring-dock-
+            // duration` reader (`settle * --motion-tempo`). Read from `:root`
+            // because this factory is element-agnostic.
             response: config.response * motionTempo(),
             dampingFraction: config.dampingFraction,
             initial: from,

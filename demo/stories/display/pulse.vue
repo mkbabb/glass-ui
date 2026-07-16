@@ -72,7 +72,7 @@ const announced = ref<PulseState>("active");
                     <Pulse state="active" />
                     <Pulse state="success" />
                     <Pulse state="warning" />
-                    <span>Dark · PRM probe</span>
+                    <span>Dark · reduced motion</span>
                 </ShowcaseFrame>
             </div>
         </StorySection>

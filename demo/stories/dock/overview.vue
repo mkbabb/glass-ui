@@ -26,7 +26,7 @@ import {
     DockBackgroundToggle,
 } from "@glass/components/dock";
 import { Slider } from "@glass/components/slider";
-// BI.W-OVERLAY-UNION — HoverPopover folded onto <Popover trigger="hover">.
+// HoverPopover folded onto <Popover trigger="hover">.
 import { Popover, PopoverContent, PopoverTrigger } from "@glass/components/popover";
 import {
     DropdownMenu,
@@ -96,21 +96,21 @@ function togglePlay() {
 
 <template>
     <StoryPage>
-        <!-- BI.W-DOCK-SPINE — the REFERENCE SPINE demo. Every dock here rides the
+        <!-- the REFERENCE SPINE demo. Every dock here rides the
              greenfield three-z-layer plate SPINE (L0 `.dock-plate` clip-path lens off ONE
              `--dock-t` / L1 `.dock-controls` overflow:visible / L2 top-layer). The public
              prop/slot surface is UNCHANGED (MIGRATION: none) — the collapse↔expand,
              always-expanded transport, triggers, slider-hold, wrap, grid, and pause-toggle
              all demonstrate on the new internals; a control hover plate at the dock edge
-             now overhangs UN-CLIPPED by construction (UF-C6/C7), and the box no longer
+             now overhangs unclipped by construction, and the box no longer
              clips/contains (the triple identity split). -->
-        <!-- BA.W-STAGE scope 8/9 (FD-DOCK-1) — the flagship dock demos sit over ONE
+        <!-- The flagship dock demos sit over one
              shared, offscreen-paused aurora field (DockStage), replacing the flat
              bg-card/40 panels. Each demo is a transparent `.dock-stage-tile` framed
-             slot so the dock floats DIRECTLY over the live field (the BG-2 lesson).
+             slot so the dock floats directly over the live field.
              ONE GL context for the band's decorative staging — the former per-demo
              fields and the pause-toggle's duplicate renderer fold into the shared field. -->
-        <!-- BI.W-DOCK-LUMA-SHARE — the 10 per-dock `:background-canvas` bindings COLLAPSE
+        <!-- the 10 per-dock `:background-canvas` bindings COLLAPSE
              onto DockStage's ONE shared per-route backdrop-luminance observer: every staged
              dock inherits `--glass-backdrop-luma` / `--glass-backdrop` / `--glass-ambient-*`
              from the stage scope (the registered inheriting @property cascade) + stands down
@@ -261,7 +261,7 @@ function togglePlay() {
 
                     <DockSeparator />
 
-                    <!-- BD.W-DOCK-CORE (A8 / F-2) — the POPOVER trigger UNIFIED into the
+                    <!-- The Popover trigger is unified into the
                          dock overlay-trigger family. It composes <DockTrigger for="popover">
                          (the SHARED `.dock-trigger` recipe) so it is byte-identical in
                          geometry/baseline to the Select + Dropdown triggers beside it —
@@ -434,7 +434,7 @@ function togglePlay() {
                 class="dock-stage-tile flex justify-center rounded-[var(--radius-card)] border border-border/30 p-8"
                 data-testid="dock-slider-hold"
             >
-                <!-- data-testid="dock-capture" is the deterministic AY.W-DOCK1 capture
+                <!-- data-testid="dock-capture" is the deterministic  capture
                      selector — a plain root-forwarded data attr (NOT the GlassDock
                      `container-name` prop, which co-applies `container-type: inline-size`
                      and breaks the collapse↔expand morph — the
@@ -489,7 +489,7 @@ function togglePlay() {
                 class="dock-stage-tile flex justify-center rounded-[var(--radius-card)] border border-border/30 p-8"
                 data-testid="dock-tap-capture-frame"
             >
-                <!-- data-testid="dock-tap-capture" — the deterministic R5-TAP (R5-3)
+                <!-- data-testid="dock-tap-capture" — deterministic tap capture
                      click-integrity capture surface (a demo-private test affordance,
                      same pattern as dock-capture; a plain root data attr, NOT the
                      container-name prop). It mirrors the slides deck's nav-pattern: a
@@ -698,8 +698,8 @@ function togglePlay() {
 </template>
 
 <style scoped>
-/* BA.W-STAGE scope 9 — the transparent demo tile. NO opaque bg-card plate; the
-   dock floats DIRECTLY over the shared DockStage aurora field (the BG-2 lesson),
+/*  scope 9 — the transparent demo tile. NO opaque bg-card plate; the
+   dock floats directly over the shared DockStage Aurora field,
    framed by a faint hairline only. */
 .dock-stage-tile {
     background: transparent;

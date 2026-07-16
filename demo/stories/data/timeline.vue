@@ -5,10 +5,10 @@ import { ref, computed } from "vue";
 import { GlassTimeline } from "@glass/components/timeline";
 import { cn } from "@glass/components/_shared/class-names";
 
-// BG.W-DEMO-DUP-MERGE (F7.3) — the Data TIMELINE family, mechanically consolidated.
+// The Data Timeline family.
 // The three timeline registers (discrete scrubber · segmented multi-phase · one-rail
 // continuous) render as THREE <StorySection> registers on this ONE page. The prior
-// routed `timeline-segmented.vue` / `timeline-continuous.vue` member wrappers +
+// routed `timeline-segmented.vue`, `timeline-continuous.vue` member wrappers +
 // the <FamilyTabs> switcher are RETIRED (clean break) — each render body moved bare
 // into a colocated PascalCase body sub-component (Timeline{Segmented,Continuous}Body).
 import TimelineSegmentedBody from "./timeline/TimelineSegmentedBody.vue";
@@ -156,7 +156,7 @@ function onEventKeydown(event: KeyboardEvent, index: number): void {
                             @click="jumpTo(e)"
                             @keydown="onEventKeydown($event, i)"
                         >
-                            <!-- F2.R1 W-DARK-READABILITY-REPAIR (paint re-open): the step number sits
+                            <!--   (paint re-open): the step number sits
                                  on a brand-ramp fill whose luminance varies per tone, so a hardcoded
                                  white collapses on the LIGHT rungs in dark (WCAG ~1.8-2.8). The native
                                  contrast-color() picks the max-contrast ink per fill on the census

@@ -8,9 +8,9 @@ export interface TreeNode {
 
 /**
  * The flat-hierarchy fields shared by every flattened tree row. Both the
- * sidebar's `TreeIndexEntry` and the virtual-windowing `FlatSection`
- * (`composables/virtual`) extend this — the four fields are declared ONCE,
- * not redeclared independently (BC.W-VIRTUAL-WINDOW type-reconcile).
+ * sidebar's `TreeIndexEntry` and the demo windower's `FlatSection`
+ * (`demo/composables/virtual`) extend this — the four fields are declared ONCE,
+ * not redeclared independently ( type-reconcile).
  */
 export interface SectionHierarchy {
     depth: number;

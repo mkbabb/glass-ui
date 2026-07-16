@@ -9,30 +9,20 @@ export type DockLayout = "linear" | "grid";
  * Dock context surfaces the dock id + orientation + held-state coordination
  * to descendants.
  *
- * O.W2 — canonical typed-key + helper-pair DI shape per invariant 25.
- * The 6 prior string-keyed provides (`glassDockContext`, `glassDockId`,
- * `dockKeepOpen`, `dockRelease`, `dockHeld`, `dockExpanded`) collapse into
- * the single `DOCK_CONTEXT_KEY` typed `InjectionKey<DockContext>`.
- * `dockExpanded` is retired (zero downstream consumers per Rδ audit).
- * `glassDockId` is dedup'd with `context.id`.
- *
+ * One typed key carries id, orientation, layout, and held-state coordination.
  * Paired helpers:
  *  - `useDockContext()` — strict; throws when used outside `<GlassDock>`.
  *  - `useOptionalDockContext()` — befitting silent default for primitives
  *    that may render outside a dock (Slider, popovers, …).
  *
- * J.W3.B — `registerPopover` / `closeOtherPopovers` retired. Hover-driven
- * dock popovers compose `<Popover trigger="hover" keep-dock-open>` (the
- * BI.W-OVERLAY-UNION sealed union; the fine-hover branch is reka's
- * HoverCardRoot). Open/close cadence is owned by reka's hover primitives;
- * cooperative dismissal between sibling popovers is no longer needed (the
- * pointer-leave timer handles the cluster transit case).
+ * Hover-driven dock popovers compose `<Popover trigger="hover" keep-dock-open>`.
+ * Reka's hover primitives own open/close cadence and cluster transit.
  */
 export interface DockContext {
     id: string;
     orientation: ComputedRef<DockOrientation>;
     /**
-     * In-cap arrangement (`linear` row/column vs `grid` tile panel). AX.W45 —
+     * In-cap arrangement (`linear` row/column vs `grid` tile panel).
      * `<DockSeparator>` reads this to paint a full-row section break in a grid dock
      * (a 1px perpendicular hairline is useless in a 2D tile grid).
      */
@@ -45,7 +35,7 @@ export interface DockContext {
     held: ComputedRef<boolean>;
 }
 
-// Strict + optional over ONE key (AV.W14): `<GlassDock>` provides; descendants
+// Strict and optional access share one key: `<GlassDock>` provides; descendants
 // use strict; a `<Slider>` that may sit outside a dock reads via the optional
 // shape over the same key.
 const ctx = createStrictContext<DockContext>(

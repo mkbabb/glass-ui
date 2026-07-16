@@ -33,7 +33,7 @@ import { useConfiguratorOpen } from "./useConfiguratorOpen";
 const CONFIG_EVENT = "glass-ui-demo:toggle-configurator";
 
 const cfg = usePresetEditor();
-// The SHARED open singleton (AZ.R4-SHELL) — the gear control reflects this same
+// The SHARED open singleton (-SHELL) — the gear control reflects this same
 // ref via aria-expanded. The Dialog binds it directly.
 const { open, toggle } = useConfiguratorOpen();
 
@@ -88,12 +88,11 @@ const cartoonModel = computed<boolean>({
     get: () => cfg.effective("cartoonShadow"),
     set: (v) => cfg.setField("cartoonShadow", v),
 });
-// BA.W-CONFIG-CHASSIS.3 — the `darkModel` computed is GONE. The dark row renders
-// the canonical <DarkModeToggle> bound to the live `useGlobalDark` (self-syncing
-// over `isDark`/`toggleDark`); there is no config-store shadow to desync.
+// Dark mode is owned by the canonical <DarkModeToggle>; the preset store has no
+// shadow copy.
 
-// ─── Preset — a short enum (default · neutral · custom) → the segmented register
-// (R4-4: glassy pill tabs, not bare radios). The active preset's prose rides a
+// ─── Preset — a short enum (default · neutral · custom) → the segmented register.
+// The active preset's prose rides a
 // description line BELOW the strip so the choice keeps its rationale. ──────────
 
 const PRESET_OPTIONS = computed<SegmentedTabOption[]>(() => [
@@ -116,7 +115,7 @@ const presetDescription = computed<string>(() => {
     return PRESETS.find((p) => p.id === id)?.description ?? "";
 });
 
-// ─── Density — a three-rung enum → the segmented register (R4-4). ─────────────
+// ─── Density — a three-rung enum → the segmented register. ─────────────
 
 const DENSITY_OPTIONS: SegmentedTabOption[] = (
     ["cozy", "comfortable", "compact"] as const
@@ -141,8 +140,7 @@ function effectiveFont(slot: keyof FontSlots): string {
 </script>
 
 <template>
-    <!-- AZ.W-SHELL-CONFIG — the gear-hosted demo configurator. The floating FAB
-         is GONE (the open is rehomed onto the SidebarDock gear DockControl);
+    <!-- The gear-hosted demo configurator is controlled by the SidebarDock gear;
          the Dialog is open-controlled by `open` (driven by the `,` shortcut + the
          `glass-ui-demo:toggle-configurator` window event — both still functional)
          + the dock gear, so there is no in-component DialogTrigger. -->
@@ -162,29 +160,13 @@ function effectiveFont(slot: keyof FontSlots): string {
                     </DialogDescription>
                 </DialogHeader>
 
-                <!-- BA.W-CONFIG-CHASSIS.3 — the gear RECOMPOSED on the Configurator
-                     chassis (CFG-5, clean break): each former hand-rolled
-                     `<section>`+`<h3 text-xs font-mono>` (a 12px mono eyebrow that
-                     read BELOW body as a caption) is now a `<ConfiguratorLayer>` so
-                     its label resolves the 20.4px `.configurator-section-label`
-                     section rung, and each former `<PresetEditorField>` (a byte-for-
-                     byte ConfiguratorRow clone) is now a `<ConfiguratorRow>` — ONE
-                     anatomy, the W-HIERARCHY vocabulary the studios already speak.
-                     BI.W-CONFIG-IN-SHEET (FAM-4, ruling 11) — the bare `.configurator
-                     glass-floating` root masquerade is GONE: the sections ARE the
-                     shipped <ConfiguratorLayer>/<ConfiguratorRow> chassis; this wrapper
-                     is an honest single-column scroll port (the Dialog owns the surface;
-                     `.configurator-sheet-body` alone owns overflow; the <Configurator>
-                     stage-grid SFC is a studio chassis,
-                     a mismatch for a controls-only sheet). The sections read the Law-1
-                     concentric card rung off the SHEET's published ctx (site #3), so
-                     each reads as a CARD inside the sheet clip (UF-A4); their inline
-                     padding + the sheet chrome share the ONE --configurator-pad-inline
-                     anchor (UF-A5/GEO-9). -->
+                <!-- ConfiguratorLayer and ConfiguratorRow own the section hierarchy.
+                     This wrapper is the single-column scroll port while Dialog owns
+                     the surface. Sheet chrome and rows share --configurator-pad-inline. -->
                 <div
                     class="configurator-sheet-body min-h-0 flex-1 overflow-y-auto py-3"
                 >
-                    <!-- Appearance — the dark toggle LEADS (R4-3: dark-mode at the TOP
+                    <!-- Appearance — the dark toggle LEADS (: dark-mode at the TOP
                          of the gear view), now the canonical live <DarkModeToggle>. -->
                     <ConfiguratorLayer label="Appearance" :dividers="true">
                         <ConfiguratorRow
@@ -228,7 +210,7 @@ function effectiveFont(slot: keyof FontSlots): string {
                         </ConfiguratorRow>
                     </ConfiguratorLayer>
 
-                    <!-- Preset — the segmented register (R4-4: glassy pill tabs,
+                    <!-- Preset — the segmented register (: glassy pill tabs,
                          not bare radios). The active preset's prose rides below. -->
                     <ConfiguratorLayer label="Preset">
                         <div class="space-y-2">

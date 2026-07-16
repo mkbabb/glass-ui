@@ -19,7 +19,7 @@ const wonkSettings = '"WONK" 1, "SOFT" 0';
 // panel and that shipped unused until now (the un-orphan). A contained Aurora
 // behind the translucent panel — this is the route's ONE live GL context.
 //
-// BI.W-AUTH-SHELL-BG (PERF-2 / UF-K4) — the page background is a CALM `grid`
+// the page background is a CALM `grid`
 // blueprint wash (zero GL); the retired 4.87MP live-fourier page-wash + the
 // recessive shell aurora are both gone (the route is enrolled in SELF_STAGES_GL so
 // the shell stands down). The one painterly moment is this brand-panel aurora, the
@@ -43,9 +43,9 @@ const trustBadges = [
 </script>
 
 <template>
-    <!-- :hero-title="false" — this auth composition hand-authors its own
+    <!-- `hero-title="false"` because this composition authors its own
          display-register brand headline (the split-panel <h1> below), so the
-         chassis does not double the page title (AZ.W-SUFFUSE D2-1). -->
+         chassis does not duplicate the page title. -->
     <StoryPage :hero-title="false">
         <div
             :class="
@@ -190,16 +190,10 @@ const trustBadges = [
 </template>
 
 <style scoped>
-/* The brand panel ALWAYS paints the bright purple→tomato aurora (the panel is
-   light-locked by construction — the aurora reads bright in both themes). So its
-   ink must be light-locked DARK too: in dark mode the inherited `--foreground`
-   flips to cream (hsl 48 10% 90%) and `--muted-foreground` to a light gray, which
-   sink into the bright coral (the FD-R2 #1 defect). Pin the two ink tokens to
-   their light-mode values on the panel so the heading + body copy stay legible
-   dark ink over the always-bright backdrop — the W55 "light-locked panel needs
-   light-locked ink" register, expressed as a local token pin (the panel is not a
-   glass rung, so the `--glass-backdrop: light` bucket cannot reach its direct
-   text). The section-color trust chips are already light-locked-correct.
+/* The brand panel always paints a bright purple→tomato aurora in both themes, so
+   its ink is fixed to the dark light-theme values for legibility. This is a local
+   token pin because the panel is not a glass surface and cannot inherit the glass
+   backdrop bucket. The section-color trust chips already provide their own ink.
 
    The token pin alone is NOT enough for the HEADING: `color` is an INHERITED
    property and `body { color: var(--foreground) }` already resolves it to cream
@@ -207,7 +201,7 @@ const trustBadges = [
    token here does not re-resolve a `color` that was locked upstream. The body
    `<p>` survives because `text-muted-foreground` emits its own `color:
    var(--muted-foreground)` at the element (which DOES re-resolve the pin). So the
-   panel must ALSO re-declare `color: var(--foreground)` to re-bind the inherited
+   panel must also re-declare `color: var(--foreground)` to re-bind the inherited
    `color` against the pinned dark ink — that single re-declaration carries the
    heading + any un-utility'd text. */
 .auth-brand-panel {

@@ -112,4 +112,109 @@ describe("useScrollTracker (reactive-roots canon)", () => {
         expect(result.activeId.value).toBe("root-b");
         unmount();
     });
+
+    it("gives exact-max scroll ownership to the last connected node", async () => {
+        const scroller = document.createElement("div");
+        document.body.appendChild(scroller);
+        Object.defineProperties(scroller, {
+            clientHeight: { configurable: true, value: 480 },
+            scrollHeight: { configurable: true, value: 960 },
+            scrollTop: { configurable: true, value: 478, writable: true },
+        });
+        scroller.getBoundingClientRect = () => ({ top: 0 }) as DOMRect;
+
+        const tops: Record<string, number> = {
+            "root-a": -300,
+            "child-a1": -200,
+            "child-a2": -100,
+            "root-b": 160,
+            "child-b1": 95,
+            "child-b2": 360,
+        };
+        for (const root of TREE) {
+            for (const node of [root, ...(root.children ?? [])]) {
+                const el = document.createElement("div");
+                el.id = node.id;
+                el.getBoundingClientRect = () =>
+                    ({ top: tops[node.id], bottom: tops[node.id] + 20 }) as DOMRect;
+                scroller.appendChild(el);
+            }
+        }
+
+        const { index } = useTreeIndex(TREE);
+        const { result, unmount } = mountComposable(() =>
+            useScrollTracker(
+                () => TREE,
+                () => index,
+                { scrollContainer: ref(scroller) },
+            ),
+        );
+        await nextTick();
+
+        // Two pixels before max is the counter-arm: ordinary active-zone
+        // geometry keeps the penultimate node nearest above the 96px line.
+        scroller.dispatchEvent(new Event("scroll"));
+        await new Promise((resolve) => setTimeout(resolve, 5));
+        expect(result.activeId.value).toBe("child-b1");
+
+        // At max, the document-order terminal node owns active state even
+        // though it remains below the active line.
+        scroller.scrollTop = 480;
+        scroller.dispatchEvent(new Event("scroll"));
+        await new Promise((resolve) => setTimeout(resolve, 5));
+        expect(result.activeId.value).toBe("child-b2");
+        expect(result.activeRootId.value).toBe("root-b");
+
+        // A late penultimate IO delivery cannot steal terminal ownership.
+        const observer = TestIntersectionObserver.instances.at(-1)!;
+        observer.trigger(document.getElementById("child-b1")!, true);
+        expect(result.activeId.value).toBe("child-b2");
+        unmount();
+    });
+
+    it("rebinds late roots without letting the retired observer overwrite active state", async () => {
+        const rootA = TREE[0];
+        const rootB = TREE[1];
+        const mountedRoots = ref([rootA]);
+        const { index } = useTreeIndex(TREE);
+
+        for (const node of [rootA, ...(rootA.children ?? [])]) {
+            const el = document.createElement("div");
+            el.id = node.id;
+            document.body.appendChild(el);
+        }
+
+        const { result, unmount } = mountComposable(() =>
+            useScrollTracker(
+                () => mountedRoots.value,
+                () => index,
+            ),
+        );
+        await nextTick();
+
+        const observerA = TestIntersectionObserver.instances.at(-1)!;
+        observerA.trigger(document.getElementById("child-a2")!, true);
+        expect(result.activeId.value).toBe("child-a2");
+
+        for (const node of [rootB, ...(rootB.children ?? [])]) {
+            const el = document.createElement("div");
+            el.id = node.id;
+            document.body.appendChild(el);
+        }
+        mountedRoots.value = [...mountedRoots.value, rootB];
+        await nextTick();
+        await nextTick();
+
+        const observerB = TestIntersectionObserver.instances.at(-1)!;
+        expect(observerB).not.toBe(observerA);
+        expect(observerA.disconnect).toHaveBeenCalledOnce();
+        expect(result.activeId.value).toBe("child-a2");
+
+        observerB.trigger(document.getElementById("child-b1")!, true);
+        expect(result.activeId.value).toBe("child-b1");
+
+        observerA.trigger(document.getElementById("child-a1")!, true);
+        expect(result.activeId.value).toBe("child-b1");
+        unmount();
+    });
 });

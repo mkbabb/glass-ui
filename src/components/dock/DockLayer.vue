@@ -4,10 +4,9 @@ import type { Component } from "vue";
 import { useDockCrossfadeContext } from "./composables/dockCrossfadeContext";
 
 /**
- * <DockLayer> — a named content pane (a "face") inside a <DockCrossfade> /
- * <DockLayerGroup>.
+ * DockLayer is a named content pane (a face) inside DockCrossfade or DockLayerGroup.
  *
- * BI.W-DOCK-CROSSFADE — the FLIP/registration engine is RETIRED. A face now does one
+ * the FLIP/registration engine is RETIRED. A face now does one
  * thing: it registers its id + label + icon + host element with the crossfade slot on
  * mount, renders its content in a `.dock-face` host, and reads its active/leaving state
  * off the context. The crossfade slot (`<DockCrossfade>`) owns the two-child opacity
@@ -70,10 +69,8 @@ const isLeaving = computed(() => ctx.leavingId.value === props.id);
         :aria-hidden="isActive ? undefined : true"
         :tabindex="isActive ? -1 : undefined"
     >
-        <!-- G12 — the content-wrapper clip lands on THIS non-interactive wrapper ONLY
-             (never the `.dock-face` interactive run), so a face's row that spills past a
-             narrowing plate mid-collapse is clipped WITHOUT clipping hover plates (which
-             overflow at rest — the clip is `[data-morphing]`-gated). See crossfade.css. -->
+        <!-- Clip only this non-interactive wrapper while morphing. The interactive
+             face remains unclipped at rest so hover plates can overflow. -->
         <div class="dock-face-content">
             <slot />
         </div>

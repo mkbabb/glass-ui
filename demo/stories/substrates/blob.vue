@@ -1,12 +1,9 @@
 <script setup lang="ts">
-// Blob — one coherent page for the WebGL2 metaball droplet. The page LEADS with
-// the LIVING lit GL bead (the Configurator-driven blob STUDIO — the interaction + mood
-// + seed-palette hero on the library's own Configurator chrome, the inv-16 dog-food
-// mirroring Aurora, satellites visibly cycling on mount), then DEMOTES the static
-// zero-GL WatercolorDot register below it as the supporting companion, then the pause
-// seam any user can reach (AZ.W-BLOB-PAGE D4 hero-first IA).
+// Blob — one coherent page for the WebGL2 metaball droplet. The interactive,
+// Configurator-driven studio leads; a static WatercolorDot register follows as a
+// supporting companion, with a user-reachable pause control.
 //
-// WebGL budget: at most TWO live Blob contexts at once (the studio hero is the ONE
+// WebGL budget: at most two live Blob contexts at once (the studio hero is the sole
 // stage). Every ambient/static swatch routes to WatercolorDot (no GL context) so the
 // page never approaches the browser's per-page WebGL cap.
 import { computed, reactive, ref, watch } from "vue";
@@ -42,15 +39,14 @@ import {
 } from "@glass/composables/color";
 const rendererStatus = ref<RendererStatus>(pendingRenderer("webgpu"));
 
-// ── The static zero-GL register (WatercolorDot) — DEMOTED below the hero ──────
+// ── Static zero-GL register (WatercolorDot) ─────────────────────────────
 // The lit-droplet look without a WebGL context — a deterministic seeded
-// border-radius morph with an internalized DEVICE-PX turbulence filter (D1). The
-// deliberate sibling for ambient/decorative thumbnails: route the static register
-// here so the page holds exactly ONE live Blob context (the interactive studio
+// border-radius morph with an internalized device-pixel turbulence filter. It is
+// the ambient/decorative thumbnail sibling, so the page holds one live Blob context
+// (the interactive studio
 // hero, the lead section) and a grid never exhausts the per-page WebGL context cap.
-// Warm-cream identity palette (BC.W-VIZ-WATERCOLOR §E / BC.W-TEAL-NAVY-PURGE — NO
-// teal-on-navy reference; the demo default is the warm amber/cream/coral family, hue
-// ~30-70). A consumer brings its OWN palette (presets-in-consumers); the dot bakes no
+// The warm-cream identity palette uses the amber/cream/coral family at roughly
+// 30–70° hue. A consumer brings its own palette; the dot bakes no
 // hue (it takes `color` as a prop) so it is compliant by construction — the warm
 // default is asserted here.
 const dotColors = [
@@ -60,23 +56,22 @@ const dotColors = [
     "oklch(0.82 0.1 75)", // pale cream-gold
 ];
 
-// ── The Configurator-driven blob studio (the inv-16 dog-food) — THE LEAD HERO ─
+// ── Configurator-driven blob studio ─────────────────────────────────────
 // The blob showcase USES the library Configurator (preset row + grouped
 // ConfiguratorLayer/ConfiguratorRow + a live stage) — the same chrome Aurora's
 // page composes — instead of a hand-rolled strip of raw <input type=range>. This
-// is the page's LEAD section (D4): the living lit GL bead, satellites cycling.
+// is the lead section: the living lit bead with cycling satellites.
 //
-// The studio's live shape: the pointer-lean axes (attraction / clickImpulse), the
-// mood, and the seed/harmony palette. The `stretch` axis is DEMOTED (AY.W-BLOB-CONFIG
-// D3 — a swamped fine-detail axis, off the top-level controls).
+// The studio's live shape: the pointer-lean axes (attraction, clickImpulse), the
+// mood, and the seed/harmony palette. The `stretch` axis is intentionally omitted
+// from the top level because its fine-detail effect is swamped by primary controls.
 interface BlobStudioCfg {
     /** Pointer lean: -1 shies away, +1 leans in. */
     attraction: number;
     /** Click spring-impulse amplitude (a one-shot bouncy pulse). */
     clickImpulse: number;
     /**
-     * AZ.W-BLOB-STUDIO D5 — the LOUDER-LEAN register (the studio-only "responsiveness"
-     * knob). The SHIPPED calm default (pointerStrength 0.10 + stretch 0.5) stays the
+     * Studio-only responsiveness. The calm default (pointerStrength 0.10 + stretch 0.5) stays the
      * page/library default (the calibrated-calm register); the studio surfaces this axis so a
      * tuning session can dial the bead LOUD — a fast flick reads a visible taffy-pull.
      * `responsiveness` is a single 0..1 axis that scales BOTH the pointer-lean strength
@@ -91,9 +86,9 @@ interface BlobStudioCfg {
     seed: string;
     /** The color-harmony the seed ramps through. */
     harmony: ColorHarmony;
-    // ── AZ.W-BLOB-STUDIO §3.3 — the Satellite GEOMETRY atoms, surfaced as LIVE knobs.
+    // Satellite geometry, surfaced as live controls.
     //    These map straight onto the BlobGeometry atom set so the user can dial the
-    //    orbit OUT past the body radius and WATCH the metaballing (the C6-7 GAP / the
+    //    orbit past the body radius and watch the metaballing,
     //    cause→effect the user asked for). count 0–MAX_SATS, orbit/satellite radii in
     //    config-UV, eccentricity the orbit-ellipse Y-inflation.
     /** Live satellite count (0–MAX_SATS=4). */
@@ -104,17 +99,17 @@ interface BlobStudioCfg {
     satelliteRadius: number;
     /** Orbit-ellipse eccentricity (the Y-inflation of the orbit path). */
     eccentricity: number;
-    // ── AZ.W-BLOB-STUDIO §3.2 — the MERGE-BRIDGE atoms, surfaced as LIVE knobs.
+    // Merge-bridge controls.
     /** smin blend-band — louder widens the gooey body→satellite bridge (the neck). */
     smoothK: number;
     /** Merge variant — `quadratic` (creased) | `circular` (rounder menisci). */
     merge: BlobMerge;
-    // ── BC.W-GOOBLOB-MEATBALL §6 Surface — the STAGE-2 lit/shadow axes, surfaced LIVE.
-    /** Lit-glass surface (Blinn-Phong glint + Fresnel rim) — STAGE-2 dressing. */
+    // Lit and shadow surface controls.
+    /** Lit-glass surface with a Blinn-Phong glint and Fresnel rim. */
     lit: boolean;
     /** Flat-to-dressed surface interpolation. */
     morphT: number;
-    /** The procedural 2D SDF soft contact shadow following the silhouette (STAGE-2). */
+    /** Procedural 2D SDF soft contact shadow following the silhouette. */
     shadow: boolean;
     /** Soft-shadow penumbra hardness (4–48; a higher value = a harder penumbra). */
     shadowSoftness: number;
@@ -131,7 +126,7 @@ const HARMONIES: ColorHarmony[] = [
 const MOODS: BlobMood[] = ["idle", "happy", "curious", "sleepy", "excited"];
 const MERGES: BlobMerge[] = ["quadratic", "circular"];
 
-// AY.W-COHERE E1 — the warm-register chroma CEILING on the seed→palette
+//  E1 — the warm-register chroma CEILING on the seed→palette
 // derivation. The blob's mood/seed bead caps INTO the band the FourierField comet
 // (--viz-fourier, C≈0.15-0.20) + the constellation focal share, so the four live
 // substrates read as ONE warm-red accent family instead of the blob breaking out
@@ -152,27 +147,16 @@ const BLOB_WARM_REGISTER_CHROMA_CEILING = 0.15;
 // attraction, the D2 sign fix). Every seed is capped non-neon by the warm-register chroma
 // ceiling (deriveBlobPalette chromaCeiling) so a vivid mode stays a saturated-but-non-neon
 // bead. presets-in-consumers: the STUDIO ships the modes; the engine ships the affect axes.
-// The shared GEOMETRY baseline the studio presets seed from — the orbit-OUTSIDE-body
-// separation geometry (orbit 0.30 > body 0.22, 4 satellites, radius 0.10, near-circular
-// ecc) that makes the metaball orbit→merge→absorb→emerge show read on the LARGE hero
-// (the same separation W-BLOB-PAGE lands on the page default, here a per-preset baseline
-// the user dials live). The merge bridge: the studio seeds a modestly LOUDER smoothK
-// (0.06) than the lean-safe library default (0.05) — a PAGE-LOCAL override (like
-// W-BLOB-PAGE's orbit override) so the STUDIO bead shows a WIDER gooey bridge (the §6
-// merge-bridge-rounder read) while staying under the gated calm-lean ceiling
-// (the studio bead IS the gated page bead — one GL context — so the studio smoothK is
-// bounded by the same lean-centroid ceiling the library default is; 0.06 + circular
-// measures lean ≈ 0.099, clear of the 0.10 ceiling, while 0.08 over-inflated it). The
-// LIVE smoothK knob (0.02–0.16) lets a tuning session dial the bridge much WIDER to WATCH
-// the neck — the gate only bounds the RESTING/auto-flick default, not the user's dial.
-// The `circular` merge variant is the library default (the C6-6 rounder-menisci re-base,
-// lean-safe); the studio inherits it.
+// The studio starts from the same separated geometry as the page default: orbit 0.30
+// outside body 0.22, four satellites, radius 0.10, and a near-circular path. Its modestly
+// wider `smoothK` (0.06 versus the library's 0.05) keeps the bridge legible while the live
+// control can widen it further. The studio inherits the lean-safe circular merge.
 const STUDIO_GEO_BASE = {
     satelliteCount: 4,
     // The orbit stays at 0.30 (> bodyRadius 0.22 — the orbit-outside-body
     // relationship + the four-side containment ceiling both
     // hold; lower than 0.30 inflated the merged footprint past containment). The
-    // BA.W-GOO-REDRESS bridge-hold is carried NOT by tightening this orbit but by
+    //  bridge-hold is carried NOT by tightening this orbit but by
     // the worst-case smin band widen (uploadBlobUniforms.ts) + the capped
     // per-satellite orbit-random/wobble envelope (useBlobSatellites.ts), which
     // keep the satellite near-edge inside the smin reach across the WHOLE orbit so
@@ -183,7 +167,7 @@ const STUDIO_GEO_BASE = {
     eccentricity: 0.04,
     smoothK: 0.06,
     merge: BLOB_CONFIG_DEFAULTS.membrane.merge,
-    // BC.W-GOOBLOB-MEATBALL — the STAGE-2 lit/shadow surface baseline (the meatball
+    // the STAGE-2 lit/shadow surface baseline (the meatball
     // default: lit-glass ON, the procedural soft contact shadow ON, mid-penumbra).
     lit: BLOB_CONFIG_DEFAULTS.surface.lit,
     morphT: BLOB_CONFIG_DEFAULTS.morphT,
@@ -233,18 +217,18 @@ const presets: readonly ConfiguratorPreset<BlobStudioCfg>[] = [
             attraction: 0.8,
             clickImpulse: 0.9,
             // The excited preset reaches the louder lean register — a lively bead that
-            // leans HARD and taffy-pulls on a flick (the D5 surfaced register in use).
+            // leans hard and taffy-pulls on a flick.
             responsiveness: 0.7,
             mood: "excited",
             seed: "oklch(0.62 0.19 25)",
-            // AY.W-COHERE E1 — `analogous`, NOT `triad`. The triad scattered the
+            // `analogous`, not `triad`: the triad scattered the
             // warm-red seed's satellite stops to green/blue (~145°/265°), so the
             // mood bead's body mean read GREEN — fracturing the warm-red accent
-            // family the set shares (D4). Analogous keeps the stops in the warm-red
+            // family the set shares. Analogous keeps the stops in the warm-red
             // neighbourhood (seed ± the hue spread), so the "warm · leans in" bead
             // is genuinely warm-red, capped by the chroma ceiling into the comet's
             // register. The triad showcase moves to the harmony Select (a user can
-            // still pick it; the SHIPPED warm preset stays in-family).
+            // still pick it; the warm preset stays in-family).
             harmony: "analogous",
             ...STUDIO_GEO_BASE,
         },
@@ -298,12 +282,12 @@ const harmonyOpen = ref(false);
 const mergeOpen = ref(false);
 
 // The live palette stops, derived from the studio seed/harmony (the D1 hero color-feed
-// — now LIVE: a post-mount stops change re-paints the hero body).
+// now LIVE: a post-mount stops change re-paints the hero body).
 const paletteStops = computed(() =>
     deriveBlobPalette(studio.config.seed, {
         stopCount: 3,
         harmony: studio.config.harmony,
-        // AY.W-COHERE E1 — cap the derived chroma into the warm register so the
+        //  E1 — cap the derived chroma into the warm register so the
         // mood/seed bead never amplifies into the neon ball the set red-team flagged.
         chromaCeiling: BLOB_WARM_REGISTER_CHROMA_CEILING,
     }).map(oklchStopToHex),
@@ -311,17 +295,12 @@ const paletteStops = computed(() =>
 
 // The live BlobConfig the stage Blob paints — the studio axes mapped onto the atom
 // surface. A reactive object whose `interaction`/`color` atoms track the studio config,
-// so every Configurator edit reaches the live hero (the D1/D2 fixes carry it through).
+// so every Configurator edit reaches the live hero.
 //
-// The RESTING studio IS the canonical BLOB_CONFIG_DEFAULTS lit cream bead (the
-// warm-cream living droplet the docs promise + the π-render gate target — the single
-// GL blob on the page is the bare default, which the Configurator then tunes). The
-// surface/membrane are the stock lit defaults (W-BLOB-REBUILD: the prior studio
-// over-tuned the resting surface — circular merge + iridescence 0.4 — off the
-// canonical default the gate calibrates against). Only the interaction lean +
-// seed-palette are studio-driven (the Configurator's purpose).
-// AZ.W-BLOB-STUDIO §3.5 — the louder-lean register mapping. `responsiveness` (0..1) is
-// the studio-only knob; it scales the SHIPPED calm interaction defaults UP toward a
+// The resting studio is the canonical lit cream bead from `BLOB_CONFIG_DEFAULTS`.
+// Surface and membrane retain the stock defaults; only interaction and seed palette
+// are studio-driven.
+// `responsiveness` (0..1) is the studio-only lean control; it scales the calm defaults toward a
 // pronounced register. pointerStrength rides 0.10 (calm default) → 0.45 (a loud lean the
 // whole creature follows); stretch rides 0.5 (the swamped-whisper default) → 2.0 (a
 // visible taffy-pull — the shader's tanh saturation caps the elongation at 1+stretch, so
@@ -346,8 +325,8 @@ const stageConfig = reactive<BlobConfig>({
     // below). Seed the reactive atoms from the initial (calm) preset's values so the
     // mount paints the studio's separation geometry (orbit 0.30 OUTSIDE body 0.22, 4
     // satellites) reading the metaball orbit→merge→absorb→emerge show on the LARGE hero
-    // — the SAME separation W-BLOB-PAGE lands on the page default (W-BLOB-PAGE owns the
-    // page-IA position + the page-default orbit; this wave owns the studio's live
+    // the SAME separation  lands on the page default ( owns the
+    // page position and default orbit; the studio owns the live
     // geometry knobs that drive THIS hero mount). The watch below threads every studio
     // edit onto these atoms. Surface/color start at the canonical lit-cream defaults; the
     // membrane smoothK/merge start at the new 0.09/circular library default the studio
@@ -380,9 +359,9 @@ const stageConfig = reactive<BlobConfig>({
 });
 
 // Thread the studio config → the reactive stage config. Every studio axis writes the
-// corresponding atom so each Configurator edit reaches the live hero (the D1/D2 watchers
+// corresponding atom so each Configurator edit reaches the live hero (the watchers
 // re-resolve on these writes). Interaction lean/impulse + the louder-lean register, the
-// live geometry (count/orbit/satellite-radius/ecc — the C6-7 cause→effect knobs), the
+// live geometry (count, orbit, satellite radius, and eccentricity), the
 // merge bridge (smoothK/merge), and the live palette stops.
 watch(
     () =>
@@ -437,12 +416,12 @@ watch(
     { immediate: true, deep: true },
 );
 
-// BC.W-GOOBLOB-PLAIN — the STAGE-1 plain-blob register. The first-principles floor:
+// Plain blob configuration:
 // the canonical separation geometry (orbit 0.30 OUTSIDE body 0.22, 4 satellites) so the
 // orbit→merge→absorb→emerge meatball show reads, with `morphT: 0` selecting the
 // shadowless lightless fill-only path (NO lit dressing —
 // the teaching contrast with the lit studio hero above). `surface.lit` is left at the
-// default; the `uStage` gate strips the lit block regardless.
+// default; `uStage` strips the lit block regardless.
 const plainConfig: BlobConfig = {
     ...BLOB_CONFIG_DEFAULTS,
     morphT: 0,
@@ -464,7 +443,7 @@ const studioPaused = ref(false);
 const clickCount = ref(0);
 
 // The mood is a MANUAL pin (the auto-arc respects it). Drive it from the
-// studio mood select; re-pin whenever the preset / select changes it.
+// studio mood select; re-pin whenever the preset, select changes it.
 watch(
     () => studio.config.mood,
     (m) => studioBlob.value?.setMood(m),
@@ -492,12 +471,8 @@ watch(studioPaused, () => {
 </script>
 
 <template>
-    <!-- BG.W-CONFIGURATOR-STANDARDIZE — the ONE chassis. The blob studio re-homes
-         onto the shared VizStudio (StoryPage + <Configurator asideSide=right> + rounded
-         clip), retiring its own inline <header> masthead (the double-header F7.2 killed on
-         aurora) + the raw <Configurator>-in-<ShowcaseFrame> studio wrapper (the OFFSET). The
-         page identity is the ONE StoryHeader cluster the chassis renders. (The #stage/
-         #controls/#presets slot bodies are preserved verbatim.) -->
+    <!-- The shared VizStudio owns the page header, configurator, and rounded clip.
+         These slots provide only Blob-specific stage, controls, and presets. -->
     <VizStudio
         heading="Blob"
         label="Blob studio — preset · interaction · mood · seed-palette"
@@ -544,7 +519,7 @@ watch(studioPaused, () => {
                             class="relative flex h-full w-full items-center justify-center overflow-hidden"
                         >
                             <!--
-                              AZ.W-BLOB-STUDIO §3.1 (D1) + AZ.W-BLOB-REDRESS — the LARGE
+                               §3.1 (D1) +  — the LARGE
                               centered hero, sized off the SMALLER stage axis so it stays a
                               true SQUARE with margin on BOTH axes regardless of the stage's
                               aspect. The prior `h-[min(78%,30rem)] max-w-[88%]` drove the
@@ -601,7 +576,7 @@ watch(studioPaused, () => {
                         </div>
                     </template>
                     <!--
-                      AZ.W-BLOB-STUDIO §3.6 — the primary→secondary→tertiary hierarchy.
+                       §3.6 — the primary→secondary→tertiary hierarchy.
                       `dividers` enabled on every layer (the per-section hairline), and
                       the layer ORDER reads top-down by importance: PRIMARY Interaction
                       (how the creature responds to YOU — the first axis a tuning session
@@ -670,13 +645,12 @@ watch(studioPaused, () => {
                             </ConfiguratorRow>
                         </ConfiguratorLayer>
                         <!--
-                          BC.W-GOOBLOB-MEATBALL §6 Surface — the STAGE-2 lit/shadow axes
-                          surfaced LIVE: the lit-glass dressing, the procedural soft contact
+                          Surface controls: lit-glass dressing, procedural soft contact
                           shadow that follows the silhouette, and the penumbra-hardness slider.
                           Toggling shadow OFF reveals the un-grounded creature; the softness
                           slider widens/tightens the contact band.
                         -->
-                        <ConfiguratorLayer label="Surface (STAGE 2)" sub="--surface-*" dividers>
+                        <ConfiguratorLayer label="Surface" sub="--surface-*" dividers>
                             <LabeledSlider
                                 v-model="studio.config.morphT"
                                 :min="0"
@@ -688,7 +662,7 @@ watch(studioPaused, () => {
                             <LabeledSwitch
                                 v-model="studio.config.lit"
                                 label="Lit glass"
-                                description="The lit-glass dressing (Blinn-Phong glint + Fresnel rim) — the STAGE-2 surface."
+                                description="Lit-glass dressing with a Blinn-Phong glint and Fresnel rim."
                             />
                             <LabeledSwitch
                                 v-model="studio.config.shadow"
@@ -705,9 +679,8 @@ watch(studioPaused, () => {
                             />
                         </ConfiguratorLayer>
                         <!--
-                          AZ.W-BLOB-STUDIO §3.3 + §3.2 — the TERTIARY Geometry / Satellites
-                          layer. The C6-7 GAP: the satellite/orbit geometry was unsurfaced,
-                          so the user could never dial the orbit out and WATCH the
+                          Geometry and satellite controls expose the orbit and merge relationship,
+                          so the user can dial the orbit out and watch the
                           metaballing. These four geometry knobs + the two merge-bridge
                           knobs make the orbit→merge→absorb→emerge cause→effect a LIVE
                           tuning experience: raise Orbit past the body radius (0.22) and the
@@ -861,7 +834,7 @@ watch(studioPaused, () => {
 
 <style scoped>
 /*
-  AZ.W-BLOB-PAGE D4 — scroll-into-view clearance for the hero canvas. With the studio
+   D4 — scroll-into-view clearance for the hero canvas. With the studio
   promoted to the LEAD section, the stage canvas sits near the document top; a
   scroll-into-view (the π readback's element-screenshot scroll) would otherwise land the
   canvas BOTTOM at the viewport bottom, UNDER the demo's viewport-anchored BottomDock —

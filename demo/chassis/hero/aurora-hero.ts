@@ -1,22 +1,14 @@
-// AX.W57 (P7) — demo hero-radial reauthor helper.
-//
-// The Class-A demo heros (hero / intro / paper-glass / auth-shell) hand-rolled
-// multi-stop radial-gradient washes keyed off the `--section-color-*` brand
-// ramp. P7 replaces those static radials with a LIVE `<Aurora>` painterly
-// drift that keeps the SAME page-identity hues — so each hero gains life
-// (drift) + idiom (one shared shipped substrate) without losing the
-// brand-color seam.
+// Shared live-Aurora configuration for demo hero washes.
 //
 // Aurora's `config.palette` is a JS `OklchStop[]` (the shader reads stops, not
-// `var(--section-color-*)`), so this factory mirrors the section-ramp HUES
+// `var(--section-color-*)`), so this factory mirrors the section-ramp hues
 // (tokens.css §colors: rose 359.8, indigo 265.5, amber 69.6, …) into lighter-
 // L painterly stops. A consumer re-tinting the wash overrides the palette here
 // (the demo-side analogue of overriding `--section-color-*`).
 //
 // `renderMode="auto"` resolves to the CSS-gradient placeholder
-// (`paletteToCssGradient`) on low-power / reduced-motion / save-data devices —
-// itself a radial/linear wash, so the replacement is strictly >= the prior
-// static radial on every device. One live GL context per mounted route only
+// (`paletteToCssGradient`) on low-power, reduced-motion, save-data devices —
+// itself a radial/linear wash. One live GL context is mounted per route
 // (the demo router mounts ONE story page at a time — within the WebGL budget).
 
 import type { AuroraConfig } from "@glass/components/aurora";
@@ -28,14 +20,13 @@ import { cssToOklch } from "@glass/composables/color";
 export type HeroStop = { L: number; C: number; h: number };
 
 /** The RAW authored brand section-ramp hues this demo's heros paint with
- *  (tokens.css §colors). The L/C is hand-set for the pastel-wash band; the `h`
+ *  in the color token ladder. The L/C is hand-set for the pastel-wash band; the `h`
  *  carries the raw brand hue and is WARM-PROJECTED below (BASE_HERO_PALETTES) — a
- *  raw rose/indigo/purple stop reads COLD/magenta as a composited ambient StoryHero
- *  backdrop, the warm-identity dominant-hue FAIL the composited-gestalt gate catches
- *  (BG.W-COMPOSITED-GESTALT-GATE). Folding every stop into [25,95]° lands the ambient
+ *  raw rose/indigo/purple stop reads cold/magenta as a composited StoryHero
+ *  backdrop. Folding every stop into [25,95]° keeps the ambient
  *  hero field warm in BOTH modes while keeping the three palettes distinct. */
 const RAW_BASE_HERO_PALETTES = {
-    /** hero.vue / intro.vue — rose → indigo → amber (section-color-0/2/5). */
+    /** hero.vue, intro.vue — rose → indigo → amber (section-color-0/2/5). */
     "rose-indigo-amber": [
         { L: 0.78, C: 0.13, h: 359.8 }, // rose      (--section-color-0)
         { L: 0.74, C: 0.12, h: 265.5 }, // indigo    (--section-color-2)
@@ -57,12 +48,10 @@ const RAW_BASE_HERO_PALETTES = {
     ],
 } satisfies Record<string, HeroStop[]>;
 
-// BC.W-HERO-AUDACIOUS Part B — the 13-stop `--section-color-N` ramp as the
-// per-category hero-palette source (the untapped per-category hue source the
-// deferral named). The literals are the LIGHT-mode library token values
+// The 13-stop `--section-color-N` ramp is the per-category hero-palette source.
+// The literals are the light-mode library token values
 // (tokens/color-radius.css §6) read AS DATA — `sectionColorToHeroPalette` parses
-// each through `cssToOklch` (value.js — `proof:single-color-core` holds, ZERO
-// re-rolled OKLCh math) and LIFTS the dark jewel L (≈0.49–0.60) into the
+// each through `cssToOklch` and lifts the dark jewel L (≈0.49–0.60) into the
 // pastel-wash band the existing hero stops use, so a category hero reads DISTINCT
 // (substrates=aurora-blue, motion=constellation-violet, forms=grid-teal …) while
 // staying the calm painterly drift a text-dense hero wants.
@@ -82,7 +71,7 @@ export const SECTION_COLOR_OKLCH: readonly string[] = [
     "oklch(0.513 0.163 291.9)", // 12 periwinkle
 ];
 
-// BG.W-FIELD-ACCENT-RECONCILE — the section hue DEGREES, derived ONCE from
+// the section hue DEGREES, derived ONCE from
 // SECTION_COLOR_OKLCH via the `/color` leaf `cssToOklch` (value.js — no re-rolled
 // OKLCh math). This SINGLE source replaces the verbatim `SECTION_HUE_DEG` literal
 // table warm-field.ts carried (the duplicate is FOLDED — one degree source, one
@@ -105,19 +94,18 @@ const HERO_WASH_L = 0.8; // the lifted lightness for the dominant stop
 const HERO_WASH_C_CAP = 0.13; // the chroma ceiling (the calm-drift bound)
 const HERO_CREAM_TAIL: HeroStop = { L: 0.92, C: 0.04, h: 30.0 }; // the warm-cream settle
 
-// BD.W-SECTION-HUE-WARM-FENCE — warm-project a raw color-wheel degree into the
+// warm-project a raw color-wheel degree into the
 // warm aurora band [25,95]. A monotone fold around the warm anchor (amber ~62)
 // that keeps the 12 categories DISTINCT while landing every dominant stop warm —
 // the teal/navy hues (the user-screenshot defect) collapse toward terracotta/sand
 // and CANNOT paint cool. The same projection shape as `warm-field.ts`'s
 // `projectWarm` (the field floor) so the chassis reads coherent; the +18°
 // neighbour stop below keeps the SPECIMEN aurora a polychrome spread DISTINCT
-// from the flat field floor (the F7 distinct-from-field fold).
+// from the flat field floor.
 export const WARM_LO = 25;
 export const WARM_HI = 95;
-/** Warm-project a raw color-wheel degree into the warm band [25,95] — the SINGLE
- *  warm projection (BG.W-FIELD-ACCENT-RECONCILE folded warm-field.ts's identical
- *  `projectWarm` onto this). Reds → coral floor; the warm wedge passes; cool folds
+/** Warm-project a raw color-wheel degree into the warm band [25,95]. Reds reach
+ *  the coral floor; the warm wedge passes; cool hues fold
  *  across the amber→sand span (never teal/navy). */
 export function warmProjectHue(deg: number): number {
     const h = ((deg % 360) + 360) % 360;
@@ -129,8 +117,7 @@ export function warmProjectHue(deg: number): number {
 const clampWarm = (h: number): number => Math.max(WARM_LO, Math.min(WARM_HI, h));
 
 /**
- * Derive a painterly hero palette from a `--section-color-N` ramp index — the
- * per-category distinctness source (BC.W-HERO-AUDACIOUS Part B). Composes the
+ * Derive a painterly hero palette from a `--section-color-N` ramp index. Composes the
  * `/color` leaf `cssToOklch` (value.js — no re-rolled OKLCh math) to read the
  * section hue, WARM-PROJECTS it into [25,95] (the warm-fence — no teal/navy
  * specimen by construction), then lifts it into the pastel-wash band a calm hero
@@ -184,11 +171,11 @@ const CATEGORY_HERO_PALETTES = Object.fromEntries(
     ]),
 ) as Record<CategoryPaletteKey, HeroStop[]>;
 
-/** The BASE hero palettes with every stop's hue WARM-PROJECTED into [25,95]°
- *  (BG.W-COMPOSITED-GESTALT-GATE — mustFix #1). `warmProjectHue` is the SAME source
+/** The base hero palettes with every stop's hue warm-projected into [25,95]°.
+ * `warmProjectHue` is the same source
  *  the chassis field (`warm-field.ts`) + the per-category palettes above already read,
  *  so the ambient StoryHero backdrop reads warm-cream in lockstep with the field (no
- *  teal/navy/magenta composited whole — a raw rose 359.8° / indigo 265.5° / purple
+ *  teal/navy/magenta composited whole — a raw rose 359.8°, indigo 265.5°, purple
  *  305.9° stop read cold as the full-bleed hero field). Built HERE (below
  *  `warmProjectHue` + `WARM_LO`/`WARM_HI`) — a raw-literal call above would hit their
  *  temporal dead zone at module eval. The three palette KEYS are preserved so every
@@ -216,18 +203,16 @@ export type HeroPaletteKey = keyof typeof HERO_PALETTES;
  *   "grid"          — a token-driven blueprint ruled grid (static CSS, the zero-GL default).
  *   "liquid-grid"   — the SUFFUSION register: a near-invisible liquid-grid
  *                     (a low-fieldAlpha, large-pitch, slow-warp <LiquidGrid>) full-bleed
- *                     behind page content (BC.W-VIZ-PAPERGRID — §E "suffuse it
- *                     throughout the site as a subtle background element"; the opt-in
+ *                     behind page content; the opt-in
  *                     one-GL-per-route hero upgrade of the static `grid` kind).
  *   "aurora"        — a live painterly drift on the brand hues.
  *   "constellation" — a drifting proximity-graph lattice.
  *
  * A GooBlob is a CONTAINED creature (fixed aspect-ratio), NOT a full-bleed
- * page-field — so it is deliberately NOT a background kind (W-BLOB-REBUILD).
+ * page-field — so it is deliberately NOT a background kind.
  *
- * BI.W-AUTH-SHELL-BG (PERF-2) — the `"fourier"` page-background kind is RETIRED
- * (clean break, no alias): a full-bleed live Fourier SDF is the library's HEAVIEST
- * shader and must NEVER be an ambient page wash. The teaching <FourierField> lives
+ * A full-bleed live Fourier SDF is too heavy for an ambient page wash. The teaching
+ * <FourierField> lives
  * ONLY on its own /substrates/fourier-field studio route (a contained field over a
  * calm paper wash), never as a StoryHero background. No route declares a live
  * fourier wash.
@@ -269,8 +254,8 @@ export function heroAuroraConfig(palette: HeroPaletteKey): AuroraConfig {
 }
 
 /**
- * BG.W-FIELD-AURORA (M2) — the SHELL field config: the ONE recessive aurora that
- * paints behind every NON-focal route, replacing the retired `.paper-field` CSS
+ * The shell field config is the single recessive aurora that
+ * paints behind every non-focal route. The
  * plane. The hue is the route's `warmFieldHue(categoryId)` (already warm-projected
  * into [25,95]); the shell re-uploads it on the persisted node per route.
  *
@@ -293,8 +278,7 @@ export function shellAuroraConfig(hue: number): AuroraConfig {
         // The EXPLICIT recessive LIGHT palette — a warm spread on the ONE route hue,
         // all chroma ≤ 0.07 so even the warm-projected worst-cool sand stays under
         // the C≤0.10 ceiling (no conic foil, no brown, no speckle). The L band is
-        // LIFTED ~0.02–0.03 brighter than the prior 0.88–0.94 (BG.W-FIELD-AURORA
-        // re-paint #3): a brighter recessive field clears the secondary light-mode
+        // L 0.93–0.96 lets the recessive field clear the secondary light-mode
         // supporting-copy `--muted-foreground` register over the composited field
         // (3.85:1 → ≥4.5:1) while staying L≥0.85 (the recessive precondition) and
         // unmistakably WARM (the chroma is kept).
@@ -313,13 +297,13 @@ export function shellAuroraConfig(hue: number): AuroraConfig {
 }
 
 /**
- * BG.W-FIELD-AURORA (re-paint #1) — the DARK-MODE shell field config: the
+ * The dark-mode shell field config is the
  * dark-aware twin of `shellAuroraConfig`. The light palette (L 0.85+) at
- * opacityCeiling 0.5 composites over the near-black W-DARK-MATERIAL dark page to a
+ * opacityCeiling 0.5 composites over the near-black  dark page to a
  * mid-light warm-BROWN wash (composited L 0.55–0.70) that erases the dark identity
- * AND drops the hero h1 / muted body text far below AA in both engines (the FAIL
+ * AND drops the hero h1, muted body text far below AA in both engines (the FAIL
  * the re-paint verdict named). This config swaps the palette to a LOW-L WARM-EMBER
- * spread — the W-DARK-MATERIAL luminous-dark transmissive model (the SectionPreviewCard
+ * spread — the luminous-dark transmissive model (the SectionPreviewCard
  * dark preview-field discipline applied to the page-wide shell): low lightness
  * (L 0.17–0.25), warm hue, chroma KEPT (C 0.045–0.07) so the field GLOWS
  * amber/terracotta rather than collapsing to a charcoal slab. At the SAME shell

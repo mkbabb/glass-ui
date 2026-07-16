@@ -6,7 +6,7 @@ import { cn } from '../_shared/class-names'
 const props = defineProps<{
   variant?: BadgeVariants['variant']
   /**
-   * BI.W-SYNONYM-RENAMES — the semantic status register (the shared `tone` axis:
+   * the semantic status register (the shared `tone` axis:
    * neutral/destructive/success/warning/info). Orthogonal to the `variant` STYLE
    * plate; a set tone overrides the plate colour. Replaces the former
    * `variant="destructive|success|warning|info"` (a tone is not a style).
@@ -14,7 +14,7 @@ const props = defineProps<{
   tone?: BadgeVariants['tone']
   size?: BadgeVariants['size']
   /**
-   * BD.W-GLASS-ATOM-REGISTER — the register split. `loud` (default) is the opaque
+   * the register split. `loud` (default) is the opaque
    * saturated identity pill; `glass` is the quiet transmissive `.glass-atom`
    * capsule tinted via `--glass-fill-tint`. A status badge stays loud (information,
    * not a sticker); `secondary`/`outline` placements may route quiet.

@@ -3,9 +3,9 @@ import { createStrictContext } from "../../../composables/context";
 import { DOCK_LAYER_GROUP_LABEL } from "../constants";
 
 /**
- * BI.W-DOCK-CROSSFADE — the crossfade face-registration context.
+ * the crossfade face-registration context.
  *
- * `<DockCrossfade :active>` provides this; each face host (`<DockLayer>`) registers
+ * `<DockCrossfade:active>` provides this; each face host (`<DockLayer>`) registers
  * its id + label + icon + host element on mount. The crossfade slot owns ONE face
  * registry.
  * A switcher rail (where one exists — `<DockLayerGroup>`) reads `faces` for its chip
@@ -54,7 +54,7 @@ export interface DockCrossfadeContext {
     faces: Readonly<Ref<DockFaceDescriptor[]>>;
 }
 
-// Strict + optional (reserved) over ONE key (AV.W14): `<DockCrossfade>` provides;
+// Strict and optional access share one key: `<DockCrossfade>` provides;
 // `<DockLayer>` children use strict.
 const ctx = createStrictContext<DockCrossfadeContext>(
     DOCK_LAYER_GROUP_LABEL,

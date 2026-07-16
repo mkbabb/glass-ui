@@ -1,29 +1,20 @@
-// useUserInvalidAria — the `:user-invalid` → `aria-invalid` bridge (AQ.W4 §W4.4).
+// useUserInvalidAria — the `:user-invalid` → `aria-invalid` bridge.
 //
 // Native `:user-invalid`/`:user-valid` are VISUAL states only — they do NOT
 // sync ARIA. A screen reader announces nothing when a field paints invalid.
 // This composable is the single canonical bridge: it keeps `aria-invalid` in
 // step with native validity, mirroring the native "after first interaction"
 // timing so a pristine required-empty field is NOT flagged on mount. The legacy
-// fallback-class toggle (for engines without `:user-invalid`) was COLLAPSED at
-// BG.NF.2 W-LEGACY-LADDER-COLLAPSE — `:user-invalid` is Baseline on the target
-// set (Chrome 119+/Safari 16.5+), so the aria-invalid bridge is the whole job.
+// fallback-class toggle was retired because `:user-invalid` is Baseline on the
+// target set (Chrome 119+/Safari 16.5+), so the aria-invalid bridge is the whole job.
 //
 // vueuse-free by construction: native `addEventListener`/`removeEventListener`
-// only (no `@vueuse/core`), so it is root-barrel safe per the L.W1 SCC-trap
-// closure.
-//
-// Cross-repo coupling (the AQ ↔ muster J seam): J.W6/J.W7 import this from
-// `@mkbabb/glass-ui` and call `bind(formRoot)` once per form. J's regression
-// suite asserts the REAL `aria-invalid` attribute on the rendered DOM (the
-// honest-gate principle), on this timeline: absent on mount, `"true"` after a
-// blur on an invalid field, `"false"` once corrected, synced for all controls
-// on submit.
+// only (no `@vueuse/core`), so it remains safe to export from the root barrel.
 
 /**
  * Options for {@link useUserInvalidAria}. Empty since the legacy
- * `fallbackClasses` knob was retired at BG.NF.2 W-LEGACY-LADDER-COLLAPSE
- * (`:user-invalid` is Baseline on the target set); the shape is kept as the
+ * `fallbackClasses` knob was retired because `:user-invalid` is Baseline on the
+ * target set; the shape is kept as the
  * canonical options seam for future extension.
  */
 export interface UseUserInvalidAriaOptions {}

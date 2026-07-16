@@ -135,7 +135,7 @@ const keyboardOpen = ref(false);
                             <Button emphasis="quiet">Motion-aware region</Button>
                         </CollapsibleTrigger>
                         <CollapsibleContent class="text-small">
-                            PRM makes the measured-size transition effectively immediate.
+                            Reduced motion makes the measured-size transition effectively immediate.
                         </CollapsibleContent>
                     </Collapsible>
                 </ShowcaseFrame>

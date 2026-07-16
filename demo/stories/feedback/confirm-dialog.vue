@@ -2,10 +2,10 @@
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import { ref } from "vue";
 import { Button } from "@glass/components/button";
-// BI.W-DIALOG-PLACEMENT — ConfirmDialog DEMOTED to a Dialog PRESET (its imperative
+// ConfirmDialog DEMOTED to a Dialog PRESET (its imperative
 // promise-opener was thin — a preset over the Dialog root, not a distinct component).
 // The confirm flow is a CONSUMER composition now (presets live in consumers): a glass
-// `<DialogContent :show-close="false">` with a title/description + a confirm/cancel
+// `<DialogContent:show-close="false">` with a title/description + a confirm/cancel
 // footer + the loading dismiss-guard. This story IS that preset, shown inline.
 import {
     Dialog,
@@ -23,7 +23,7 @@ import {
     CheckCircle2,
     LoaderCircle,
 } from "@lucide/vue";
-// BB.W-SUFFUSE3 — the feedback band's --section-color-8 ruby identity.
+// the feedback band's --section-color-8 ruby identity.
 
 const destructiveOpen = ref(false);
 const destructiveLoading = ref(false);
@@ -62,7 +62,7 @@ const signOutOpen = ref(false);
 
 <template>
     <StoryPage>
-        <!-- BB.W-SUFFUSE3 — the feedback-band identity COLOR EVENT (the tinted
+        <!-- the feedback-band identity COLOR EVENT (the tinted
              eyebrow + the inline accent rail, both on
              --section-color-8). The page-level color identity, DISTINCT from the
              section labels below — it carries NO heading rung (not an idiom-B

@@ -3,7 +3,7 @@
 // curl-noise perturbation, and blends a cursor-anchored swirl. IN: UV + time.
 // OUT: unit flow direction. Spliced verbatim into FRAGMENT_SRC by aurora.frag.ts.
 //
-// AW.W4.1 — the structure-tensor / edge-tangent-flow (ETF) keystone. `flowField`
+// The structure-tensor edge-tangent-flow (ETF) keystone extends `flowField`:
 // gains a `uFlowPattern == 5` ("tensor"/"etf") branch that returns the color
 // field's OWN minor-eigenvector direction (the edge-tangent flow), coherence-
 // weighted toward the smooth flow so flat zones stay calm. The tensor's BODY
@@ -12,12 +12,12 @@
 // supports forward declarations). bestOil consults the same field behind the
 // `uStrokeOrient` switch. The single biggest "congruent to real Van Gogh" lever:
 // brushwork derives its orientation from the image structure, not a hand-authored
-// pattern. The smoothed multi-tap form (Gaussian pre-blur + LIC smear) is the
-// AW.W7 WebGPU multi-pass fold; this is the single-pass small-tap approximation.
+// pattern. A smoothed multi-tap form (Gaussian pre-blur + LIC smear) belongs to a
+// WebGPU multi-pass implementation; this is the single-pass small-tap approximation.
 export const AURORA_FLOW_GLSL = /* glsl */ `// ── Flow field ────────────────────────────────────────────────────────────
 // Structure-tensor prototype (body defined post-sampleBase in the mediums block).
 // Returns vec4(dir.x, dir.y, coherence, packedGrad) — the minor-eigenvector tangent + A + the
-// metal-gradient .w lane (BG.W-AUR-METAL-FINISH widened vec3→vec4). The forward decl MUST match
+// metal-gradient .w lane in the widened vec3→vec4 return. The forward declaration must match
 // the vec4 definition or WebKit's compiler rejects the mismatched signature (L1b).
 vec4 structureTensorField(vec2 p, float t, vec2 fallbackDir);
 
@@ -40,7 +40,7 @@ vec2 flowField(vec2 p, float t) {
     float a = n * 6.2831;
     dir = vec2(cos(a), sin(a));
   } else if (uFlowPattern == 5) {
-    // tensor / ETF — the color field's OWN edge-tangent flow (AW.W4.1). The
+    // Tensor / ETF: the color field's own edge-tangent flow. The
     // diagonal angle seeds the smooth fallback the coherence-weighted blend
     // relaxes toward in low-structure zones. Returns directly (no curl/cursor
     // post-mix — the tensor field already carries the structure orientation;

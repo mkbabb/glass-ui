@@ -1,10 +1,10 @@
 <script setup lang="ts">
-// BC.W-DOCK-SEARCH — the DOCK as the native dynamic-search-bar (the consumer #1
+// the DOCK as the native dynamic-search-bar (the consumer #1
 // exerciser). Tap the collapsed dock pill → it MORPHS (continuously, via the dock's OWN
 // `--dock-morph-t` glide + the byte-untouched morph-bridge metaball) into a search field;
 // type → the fuzzy dropdown ranks live with subsequence-match highlighting + an
 // autocomplete ghost-text completion of the top match; ArrowDown/Up walks the results,
-// Enter routes, a result-select scrolls-to-and-warms the windowed target below; tap away
+// Enter routes, a result-select seats-and-scrolls to the windowed target below; tap away
 // → the dock returns to a compact PERSISTENT bar (NO extra-tap-to-restore).
 //
 // THE CONSUMING-SEAM DISCIPLINE. The page composes `useDockSearch` (the gesture/shrink/
@@ -18,24 +18,47 @@ import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import { GlassDock, useDockSearch } from "@glass/components/dock";
 import { useDockState } from "@glass/components/dock/composables/useDockState";
-import { useVirtualSectionWindow } from "@glass/composables/virtual";
+import { useVirtualSectionWindow, type FlatSection } from "../../composables/virtual";
 import { useScrollTo } from "@glass/composables/sidebar";
 import type { SearchableItem } from "@glass/components/search/composables";
-import type { FlatSection } from "@glass/composables/virtual/virtualSectionLayout";
 import DockStage from "./_frame/DockStage.vue";
 
 // ── A sizeable searchable item set — section titles + their body text (the fuzzy
 // index searches label×12/type×10/text×3). Each item is ALSO a content section the
 // result-select scrolls to (the ToC subsume) — so `items` doubles as the windowed list.
 const SECTION_TITLES = [
-    "Foundations", "Color tokens", "Typography ladder", "Glass tiers",
-    "Spacing scale", "Motion canon", "Spring presets", "Easing doctrine",
-    "Dock orientation", "Dock morph engine", "Dock search bar", "Configurator chassis",
-    "Aurora background", "Blob metaball", "Constellation field", "Fourier epicycles",
-    "Flow field", "Concentric rings", "Border progress", "Completion seal",
-    "Feedback tone", "Menu glass", "Surface axis", "Adaptive legibility",
-    "Dark material", "Warm chroma floor", "Card padding ladder", "Scroll choreography",
-    "Fading scroll", "Drawer modes", "Sortable list", "Virtual windowing",
+    "Foundations",
+    "Color tokens",
+    "Typography ladder",
+    "Glass tiers",
+    "Spacing scale",
+    "Motion canon",
+    "Spring presets",
+    "Easing doctrine",
+    "Dock orientation",
+    "Dock morph engine",
+    "Dock search bar",
+    "Configurator chassis",
+    "Aurora background",
+    "Blob metaball",
+    "Constellation field",
+    "Fourier epicycles",
+    "Flow field",
+    "Concentric rings",
+    "Border progress",
+    "Completion seal",
+    "Feedback tone",
+    "Menu glass",
+    "Surface axis",
+    "Adaptive legibility",
+    "Dark material",
+    "Warm chroma floor",
+    "Card padding ladder",
+    "Scroll choreography",
+    "Fading scroll",
+    "Drawer modes",
+    "Sortable list",
+    "Virtual windowing",
 ];
 
 interface DocSection extends SearchableItem, FlatSection {}
@@ -89,7 +112,7 @@ const lastRouted = ref<string | null>(null);
 const search = useDockSearch<DocSection>({
     dockState,
     items: () => items.value,
-    // The result-select → ToC subsume: warm the window THEN scroll-to-and-land.
+    // The result-select → ToC subsume: seat the window THEN scroll-to-and-land.
     ensureTargetWindow,
     scrollTo,
     onResultSelect: (result) => {
@@ -121,10 +144,7 @@ function onArm() {
 
 function onKeydown(e: KeyboardEvent) {
     // Tab/Space/ArrowRight at the end of the query fills the ghost-text.
-    if (
-        (e.key === "Tab" || e.key === "ArrowRight") &&
-        autocompleteText.value
-    ) {
+    if ((e.key === "Tab" || e.key === "ArrowRight") && autocompleteText.value) {
         e.preventDefault();
         acceptAutocomplete();
         return;
@@ -137,22 +157,20 @@ function onKeydown(e: KeyboardEvent) {
 <template>
     <StoryPage>
         <DockStage #default="{ backgroundCanvas }">
-            <StorySection
-                heading="The dock IS a search bar"
-                gap="lg"
-            >
+            <StorySection heading="The dock IS a search bar" gap="lg">
                 <p class="text-sm text-muted-foreground max-w-prose">
                     Tap the collapsed dock pill — it MORPHS continuously (the dock's own
-                    <code class="rounded bg-muted px-1">--dock-morph-t</code> glide + the
-                    metaball bridge, NOT a hard swap) into a search field. Type — the fuzzy
-                    dropdown ranks live with subsequence-match highlighting + an autocomplete
-                    ghost-text completion of the top match (Tab / → fills it); ArrowDown/Up
-                    walks the results, Enter routes, a select scrolls-to-and-warms the
-                    windowed section below. Scroll the content and the dock shrinks
-                    (the optional <code class="rounded bg-muted px-1">collapseOnScroll</code>
-                    transform-only quiet, persistent-default); the morph NEVER fires on a
-                    passive scroll (the iOS-27 lesson — that costs a tap). The active field
-                    reads ≥4.5:1 over the live field — never a pale ghost.
+                    <code class="rounded bg-muted px-1">--dock-morph-t</code> glide +
+                    the metaball bridge, NOT a hard swap) into a search field. Type —
+                    the fuzzy dropdown ranks live with subsequence-match highlighting +
+                    an autocomplete ghost-text completion of the top match (Tab / →
+                    fills it); ArrowDown/Up walks the results, Enter routes, a select
+                    seats and scrolls to the windowed section below. Scroll the content
+                    and the dock shrinks (the optional
+                    <code class="rounded bg-muted px-1">collapseOnScroll</code>
+                    transform-only quiet, persistent-default); the morph NEVER fires on
+                    a passive scroll (the iOS-27 lesson — that costs a tap). The active
+                    field reads ≥4.5:1 over the live field — never a pale ghost.
                 </p>
 
                 <div class="dock-stage-tile dock-search-demo">
@@ -178,8 +196,8 @@ function onKeydown(e: KeyboardEvent) {
                             </button>
                         </template>
 
-                        <!-- The search field aperture (rides the morph; the W55 tint seam
-                             gives it ≥4.5:1 legibility). -->
+                        <!-- The search field aperture rides the morph; adaptive tinting
+                             keeps its text contrast at or above 4.5:1. -->
                         <template #search>
                             <div class="input-bar" data-surface="glass">
                                 <Search class="size-4 text-muted-foreground shrink-0" />
@@ -196,13 +214,15 @@ function onKeydown(e: KeyboardEvent) {
                                     <!-- The autocomplete ghost-text — the unmatched suffix
                                          of the top match, rendered behind the input. -->
                                     <span class="dock-search-ghost" aria-hidden="true"
-                                        ><span class="dock-search-ghost-query">{{ fuzzy.query.value }}</span
+                                        ><span class="dock-search-ghost-query">{{
+                                            fuzzy.query.value
+                                        }}</span
                                         >{{ autocompleteText }}</span
                                     >
                                 </div>
                             </div>
 
-                            <!-- The fuzzy dropdown — the result rows ride .glass-menu-row;
+                            <!-- The fuzzy dropdown — the result rows ride.glass-menu-row;
                                  only the windowed slice paints (the spacers hold height). -->
                             <ul
                                 v-if="fuzzy.results.value.length"
@@ -215,18 +235,25 @@ function onKeydown(e: KeyboardEvent) {
                                     class="dock-search-result glass-menu-row"
                                     role="option"
                                     :aria-selected="i === fuzzy.selectedIndex.value"
-                                    :data-highlighted="i === fuzzy.selectedIndex.value || undefined"
+                                    :data-highlighted="
+                                        i === fuzzy.selectedIndex.value || undefined
+                                    "
                                     @click="fuzzy.selectResult(r)"
                                 >
                                     <span class="dock-search-result-label">
                                         <span
-                                            v-for="(p, ci) in highlightParts(r.item.label, r.matchIndices)"
+                                            v-for="(p, ci) in highlightParts(
+                                                r.item.label,
+                                                r.matchIndices,
+                                            )"
                                             :key="ci"
                                             :class="{ 'dock-search-match': p.on }"
                                             >{{ p.ch }}</span
                                         >
                                     </span>
-                                    <span class="dock-search-result-meta">{{ r.item.type }}</span>
+                                    <span class="dock-search-result-meta">{{
+                                        r.item.type
+                                    }}</span>
                                 </li>
                             </ul>
                         </template>
@@ -241,9 +268,15 @@ function onKeydown(e: KeyboardEvent) {
                             v-for="item in visibleItems"
                             :id="item.id"
                             :key="item.id"
-                            :ref="(el) => measureSection(item.id, el as HTMLElement | null)"
+                            :ref="
+                                (el) =>
+                                    measureSection(item.id, el as HTMLElement | null)
+                            "
                             class="dock-search-section"
-                            :class="{ 'dock-search-section--routed': lastRouted === item.label }"
+                            :class="{
+                                'dock-search-section--routed':
+                                    lastRouted === item.label,
+                            }"
                         >
                             <h3 class="text-subheading">{{ item.label }}</h3>
                             <p class="text-sm text-muted-foreground">{{ item.text }}</p>
@@ -253,10 +286,11 @@ function onKeydown(e: KeyboardEvent) {
                 </div>
 
                 <p class="text-mono-caption text-muted-foreground">
-                    The dock owns the gesture / shrink / dropdown; the consumer plugs its
-                    data source. ONE matcher (useFuzzySearch), ONE windowing
+                    The dock owns the gesture / shrink / dropdown; the consumer plugs
+                    its data source. ONE matcher (useFuzzySearch), ONE windowing
                     (useVirtualSectionWindow), ONE scroll reader (useScrollChrome) — no
-                    second of any. The morph is the dock's own --dock-morph-t (box-inviolate).
+                    second of any. The morph is the dock's own --dock-morph-t
+                    (box-inviolate).
                 </p>
             </StorySection>
         </DockStage>

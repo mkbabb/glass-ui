@@ -40,7 +40,7 @@ describe("reduced-motion authority", () => {
     it("reads false without a browser media-query facility", async () => {
         vi.spyOn(window, "matchMedia").mockImplementation(undefined as never);
         const { readReducedMotion } = await import(
-            "@glass/composables/motion/useReducedMotion"
+            "@glass/composables/motion/core/useReducedMotion"
         );
 
         expect(readReducedMotion()).toBe(false);
@@ -52,7 +52,7 @@ describe("reduced-motion authority", () => {
             .spyOn(window, "matchMedia")
             .mockReturnValue(preference.media);
         const { readReducedMotion, useReducedMotion } = await import(
-            "@glass/composables/motion/useReducedMotion"
+            "@glass/composables/motion/core/useReducedMotion"
         );
 
         expect(readReducedMotion()).toBe(false);
@@ -74,7 +74,7 @@ describe("reduced-motion authority", () => {
         const preference = mediaPreference();
         vi.spyOn(window, "matchMedia").mockReturnValue(preference.media);
         const { useReducedMotion } = await import(
-            "@glass/composables/motion/useReducedMotion"
+            "@glass/composables/motion/core/useReducedMotion"
         );
 
         const firstScope = effectScope();
@@ -109,7 +109,7 @@ describe("reduced-motion authority", () => {
             .spyOn(window, "matchMedia")
             .mockReturnValue(firstPreference.media);
         const { useReducedMotion } = await import(
-            "@glass/composables/motion/useReducedMotion"
+            "@glass/composables/motion/core/useReducedMotion"
         );
 
         const preference = useReducedMotion();

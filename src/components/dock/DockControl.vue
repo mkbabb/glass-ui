@@ -9,32 +9,29 @@ import {
 import { Primitive } from "reka-ui";
 import { cn } from "../_shared/class-names";
 import { vSpecular } from "../../composables/glass";
-import { useLiquidPress } from "../../composables/motion/useLiquidPress";
-import { springPreset } from "../../composables/motion/springPresets";
+import { useLiquidPress } from "../../composables/motion/spring/useLiquidPress";
+import { springPreset } from "../../composables/motion/spring/springPresets";
 
 /**
- * <DockControl> — the ONE dock control (BI.W-DOCK-CONTROLS; folds
- * `DockIconButton` + `DockTabButton` onto a `shape` axis). The dock IS
- * SegmentedTabs/ToggleGroup wearing chrome (PASS-1 §1 DOCK-D verdict), so the two
- * control components collapse to ONE with a `shape` discriminant:
+ * <DockControl> is the single dock control, with icon and tab geometry selected by
+ * a `shape` discriminant:
  *
- *   • `shape="icon"` (DEFAULT) — the fixed-square icon control (the prior
- *     `DockIconButton`): glass hover, the interruptible spring-press, the
+ *   • `shape="icon"` (default) — fixed-square icon control with glass hover,
+ *     interruptible spring press,
  *     pointer-anchored specular gleam, the selectable `active` glass-capsule seat.
- *   • `shape="tab"` — the auto-sized text-tab control (the prior `DockTabButton`):
+ *   • `shape="tab"` — auto-sized text-tab control with
  *     the de-red'd glass hover register + the pointer-following gleam.
  *
  * ONE FACE, the folded safe-inset. Both shapes read the shared `.glass-capsule`
  * face (glass/glass-capsule.css): the painted plate insets via the dock-scoped
  * `--dock-control-safe-inset` fold, while the HIT CELL stays the full
  * `--dock-control-size` (≥44px on coarse via the density clamp) — hit box ≠ paint
- * box (A11Y-5's 17×40px defect dies by construction, with W-DOCK-SPINE's L1
- * `overflow: visible` making the clip structurally absent).
+ * box. `overflow: visible` keeps the painted inset unclipped.
  *
  * Role rides the consumer: an `active` control stamps `aria-pressed` (the
  * AT-selectable semantic) + `data-active` (the CSS hook reading the
  * `--dock-control-active-bg` "selected reads as glass" tier — never a saturated
- * brand hue, per W-REGISTER-IOS). A dock built on `useSelectionGroup` threads the
+ * brand hue). A dock built on `useSelectionGroup` threads the
  * role-per-mode (radio/tab/pressed) at the group level.
  */
 const props = withDefaults(
@@ -118,7 +115,7 @@ const hostAttrs = computed(() =>
 // re-seats the LIVE (position, velocity) — the iOS velocity-continuous contract.
 // It reads the `press` SPRING_PRESETS row and writes `--dock-press-t` the
 // dock-controls CSS reads to couple darken/specular to the spring physics. The
-// CSS `:active` register stays the no-JS / PRM floor; `useLiquidPress` is
+// CSS `:active` register stays the no-JS, PRM floor; `useLiquidPress` is
 // PRM-instant + compositor-only. The tab shape reads its own CSS press register.
 const PRESS = springPreset("press");
 const press = useLiquidPress({
@@ -141,7 +138,7 @@ function blockDisabledActivation(event: MouseEvent): void {
     event.stopImmediatePropagation();
 }
 
-// BB.W-LIQUIDHOVER — the dock control auto-arms the pointer-following gleam via the
+// the dock control auto-arms the pointer-following gleam via the
 // tier-root `v-specular` directive (ONE position-write source, zero call-site wiring).
 // The icon shape wires the interruptible spring-press; the tab shape reads its own CSS
 // press/hover register. The template is SINGLE-ROOT (no leading comment node) so attr

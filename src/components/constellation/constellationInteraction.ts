@@ -40,7 +40,7 @@ export {
 
 /**
  * Read the NUMERIC interaction-tuning tokens (the warp spring + the gravity-well
- * gains) off a canvas's resolved custom properties — ONCE on mount (AY.W-CON2),
+ * gains) off a canvas's resolved custom properties once on mount,
  * via `parseFloat`, NOT per-frame `getComputedStyle` (the hot loop stays clean).
  * Returns `{ warp, well }` configs the field carries; every member falls back to
  * the shipped default when the token is absent (an SSR / no-token mount reads the
@@ -80,7 +80,7 @@ export function readInteractionConfig(canvas: HTMLCanvasElement): {
 // engine + the package barrel reach `stepWell` through this module unchanged.
 export { stepWell } from "./constellationWell";
 
-// ── Focal node + warp spring (AX.W17) ────────────────────────────────────────
+// ── Focal node and warp spring ───────────────────────────────────────────────
 // The design thesis: drift and warp are THE SAME mechanic — "spring the focal
 // node toward a target NODE" — differing only in what PICKS the target (a click
 // for warp, a periodic auto-pick for drift). ONE focal-node position spring + a
@@ -97,7 +97,7 @@ export { stepWell } from "./constellationWell";
 // PERIOD (the SwiftUI `.spring(response:)` axis), `ω₀ = 2π/response` — NOT a
 // settle-duration. At ζ=1 the 2%-settle lands at `t₂ ≈ 5.83/ω₀ ≈ 0.93·response`
 // (the `(1 + ω₀t)e^(−ω₀t)` critically-damped envelope); the shipped 0.55 settles
-// at ≈0.51s. This is the AY.W-CON2 ω-reconcile: the engine keeps the keyframes.js
+// at ≈0.51s. The engine keeps the keyframes.js
 // `ω₀ = 2π/response` convention (the shared house model — `regen-spring-tokens.mjs`,
 // `keyframes.d.ts:860-882`) and mints NO second ω formula; the SEMANTIC honesty
 // (period, not settle) lives in this doc + the token comment + the settle-time unit
@@ -147,7 +147,7 @@ export function nearestNode(
  *
  *   x += v·dt ;  v += (−2ζω·v − ω²·(x − target))·dt
  *
- * Reads `(response, ζ)` from `field.warpCfg` (the tokenised override — AY.W-CON2),
+ * Reads `(response, ζ)` from `field.warpCfg` (the tokenised override),
  * falling back to the shipped `WARP_RESPONSE`/`WARP_ZETA` defaults. `ω = 2π/response`
  * is the keyframes.js `(response, dampingFraction)` convention (the SHARED house
  * model — `ω₀` is the angular frequency, `response` its ANGULAR PERIOD, NOT a
@@ -162,7 +162,7 @@ export function warpStep(field: ConstellationField, dt: number): void {
     if (!warp || warp.targetIdx < 0 || warp.targetIdx >= nodes.length) return;
     if (!(dt > 0)) return;
     const h = Math.min(dt, WARP_DT_CLAMP);
-    // ω/ζ from the tokenised config (AY.W-CON2), else the shipped defaults —
+    // ω/ζ from the tokenised config, else the shipped defaults —
     // `ω = 2π/response` (the keyframes.js angular-period convention, unchanged).
     const response = field.warpCfg?.response ?? WARP_RESPONSE;
     const zeta = field.warpCfg?.zeta ?? WARP_ZETA;
@@ -218,7 +218,7 @@ export function warpTo(field: ConstellationField, px: number, py: number): numbe
     return idx;
 }
 
-// ── Auto-drift target-source (AY.W-CON1) ─────────────────────────────────────
+// ── Auto-drift target source ─────────────────────────────────────────────────
 /**
  * The settle BAND (px) — the warp counts as "arrived" once its gap to the live
  * target node falls within this distance. This is DELIBERATELY generous (not the
@@ -234,7 +234,7 @@ export function warpTo(field: ConstellationField, px: number, py: number): numbe
 const WARP_SETTLE_BAND = 24;
 
 /**
- * Is the warp spring ARRIVED on its target (AY.W-CON1)? True when there is no
+ * Is the warp spring arrived on its target? True when there is no
  * active target (`targetIdx < 0`) OR the focal's gap to its LIVE target node is
  * within {@link WARP_SETTLE_BAND}. A click-warp in flight (hundreds of px out)
  * reports NOT arrived, so a user click always PRE-EMPTS the auto-drift cadence
@@ -251,7 +251,7 @@ export function warpSettled(field: ConstellationField): boolean {
 }
 
 /**
- * Pick a random eligible node index for the auto-drift re-target (AY.W-CON1) —
+ * Pick a random eligible node index for the auto-drift retarget —
  * any node EXCEPT the current `focalIndex` (so the focal actually MOVES). `rng`
  * is the seeded `() => number` in `[0, 1)`. A degenerate field (≤1 node, or only
  * the current focal) returns the current focal, which `setWarpTarget` no-ops
@@ -271,9 +271,9 @@ export function pickWanderTarget(
     return r < focal ? r : r + 1; // skip the focal slot → an eligible node ≠ focal
 }
 
-// ── Autonomous pinned-anchor drift (AZ.W-CON-GEN G5) ─────────────────────────
+// ── Autonomous pinned-anchor drift ───────────────────────────────────────────
 /**
- * Build the cold `ConstellationPinnedDrift` state (AZ.W-CON-GEN G5) the field carries
+ * Build the cold `ConstellationPinnedDrift` state the field carries
  * when `pinnedDrift` is on. The anchor is seeded LATER (on the first sized frame, off
  * the pinned node's layout position) — here it is `(0,0)` until `stepPinnedDrift`
  * stamps it on the first armed leg. The token-read re-points the un-overridden
@@ -309,7 +309,7 @@ function easeInOutQuad(p: number): number {
 }
 
 /**
- * Advance the autonomous PINNED-ANCHOR drift one frame (AZ.W-CON-GEN G5). DISTINCT
+ * Advance the autonomous pinned-anchor drift one frame. Distinct
  * from `wander` (warp re-target): this gently eases the PINNED node around its seeded
  * ANCHOR within `wanderFrac` of the canvas, on a jittered cadence, via a closed-form
  * easeInOutQuad over `now` (no integrator, no second rAF — it rides `stepField`'s ONE
@@ -368,7 +368,7 @@ export function stepPinnedDrift(
     }
 }
 
-// ── BC.W-VIZ-CONSTELLATION — the acceleration→burst (the §6 ACCEL term) ──────────
+// ── Acceleration-to-burst mapping ────────────────────────────────────────────
 /** The flick-burst threshold (the shared usePointerVelocityField `burst` 0..1) above which
  *  a fast flick fires the focal warp + a transient ripple (a slow drag never fires). */
 export const BURST_FIRE_THRESHOLD = 0.45;

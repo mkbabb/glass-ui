@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { useScrollTrigger } from "@glass/composables/motion/useScrollTrigger";
-import type { TriggerPoint } from "@glass/composables/motion/useScrollTrigger";
+import { useScrollTrigger } from "@glass/composables/motion/scroll/useScrollTrigger";
+import type { TriggerPoint } from "@glass/composables/motion/scroll/useScrollTrigger";
 import { mountComposable } from "../../utils/mountComposable";
 
 // useScrollTrigger is a pure scroll→event mapper (no GPU): a continuous progress ref

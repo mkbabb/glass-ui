@@ -273,10 +273,6 @@ defineExpose({
 </script>
 
 <template>
-    <!--
-        `.glass-dock` is the root. Portaled menus and search surfaces do not contribute
-        to its layout, and the SPINE plate owns the visual clip.
-    -->
     <div
         ref="dockEl"
         v-bind="$attrs"
@@ -309,6 +305,11 @@ defineExpose({
         @pointercancel.capture="onPointerCancelCapture"
         @click.capture="onClickCapture"
     >
+        <!--
+            `.glass-dock` is the single root (kept a lone root element so `$el` resolves to it
+            for ref-passing consumers). Portaled menus and search surfaces do not contribute to
+            its layout, and the SPINE plate owns the visual clip.
+        -->
         <!--
             BI.W-DOCK-SPINE — L0 THE PLATE (the lens). One absolute, non-interactive
             (aria-hidden, decoration) element that owns backdrop-filter + the glass surface

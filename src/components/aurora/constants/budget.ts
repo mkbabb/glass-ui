@@ -1,37 +1,26 @@
-/**
- * AV.W7 F6 — the WebGL-surface perf BUDGET constants (the named ceilings).
- *
- * Promotes the formerly-magic `Math.min(dpr, 2)` literal that lived inline in
- * the aurora + goo-blob `resize()` paths (the `2` was un-named in both) to ONE
- * named ceiling, and adds the consumer-preset budget caps the SOTA crosswalk
- * §2.F F6 calls for. A preset that exceeds a cap is CLAMPED at upload, so a
- * consumer cannot blow the frame/VRAM budget by over-authoring a config.
- *
- * Token-first (the wave precept): these are the CPU-side numeric ceilings.
- * They are NOT magic numbers scattered across runtimes — every WebGL surface
- * reads the same export, so a tuning change lands in one place.
- */
+/** Shared CPU-side ceilings for GPU surface work. Authored values are clamped at
+ * upload so a configuration cannot exceed the frame or VRAM budget. */
 
 /**
  * The device-pixel-ratio clamp. A retina/4K display reports `devicePixelRatio`
  * 2–3+; rendering a full-viewport `backdrop-filter`-adjacent WebGL surface at
  * 3× is ~2.25× the fill of 2× for no perceptible gain on a drift background.
  * Cap the backing-store resolution at 2× — the single biggest VRAM/fill lever
- * after the offscreen-park. Consumed by aurora's + goo-blob's `resize()`.
+ * after offscreen parking. Consumed by Aurora and Blob backing-store sizing.
  */
 export const AV_DPR_MAX = 2;
 
 /**
- * BB.W-PERF-PRODUCER A′-5 — the aurora decorative-WASH DPR ceiling, SUB-2× and
- * DISTINCT from the focal goo-blob's {@link AV_DPR_MAX}. The aurora atmosphere is a
+ * The Aurora decorative-wash DPR ceiling, distinct from the focal Blob's
+ * {@link AV_DPR_MAX}. The aurora atmosphere is a
  * heavily-blurred drift background, not a sharp-silhouette creature: backing it at
- * full-viewport 2× (the value.js LP1 trace: ~2880×1800, ~21.8 MB native heap) is
+ * full-viewport 2× (~2880×1800, ~21.8 MB native heap) is
  * visually indistinguishable from 1.5× on a drift wash (the per-pixel FBM is
  * already smoothed below the DPR-2 detail floor), so the 1.5× ceiling quarters the
- * GPU memory + per-composite raster for no perceptible loss. The FOCAL goo-blob
- * KEEPS {@link AV_DPR_MAX} = 2 — its silhouette is sharp; only the aurora wash
+ * GPU memory and composite raster cost without perceptible loss. The focal Blob
+ * keeps {@link AV_DPR_MAX} = 2 because its silhouette is sharp; only Aurora
  * reads this sub-cap. This is the CPU-side backing-store DIMENSION only; it never
- * reaches the shader (`aurora.frag` is byte-fenced — the GL fence is absolute).
+ * reaches the shader.
  */
 export const AV_AURORA_DPR_MAX = 1.5;
 
@@ -75,11 +64,9 @@ export function resolveBudgetDpr(): number {
 }
 
 /**
- * BB.W-PERF-PRODUCER A′-5 — resolve the budget-clamped backing-store DPR for the
- * aurora decorative WASH, at the SUB-2× {@link AV_AURORA_DPR_MAX} ceiling (distinct
- * from {@link resolveBudgetDpr}'s focal 2×). SSR-safe (returns `1` when `window` is
- * absent). The single CPU-side reader is aurora's `runtime.ts` `resize()`; the
- * focal goo-blob keeps {@link resolveBudgetDpr}.
+ * Resolve the backing-store DPR for the Aurora decorative wash at the
+ * {@link AV_AURORA_DPR_MAX} ceiling. SSR-safe; returns `1` without `window`.
+ * Focal Blob surfaces use {@link resolveBudgetDpr} instead.
  */
 export function resolveAuroraWashDpr(): number {
     const raw = typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1;

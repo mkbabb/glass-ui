@@ -3,7 +3,7 @@
 // rungs + card + the floating/overlay registers Dialog/Sheet/Popover compose)
 // reads the SAME catch-light + rim from one `.glass-material` mixin; the four
 // SOTA folds (refraction, squircle, chromatic fringe, adaptive tint) ride that
-// grammar behind their `@supports`/token gates. The matrix is staged over a
+// grammar behind capability checks and tokens. The matrix is staged over a
 // shipped high-frequency Aurora backdrop so the specular + rim + folds read
 // against busy color (glass does not read on flat cream).
 //
@@ -18,13 +18,13 @@ import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import { useSpecularTracking, Button } from "@glass/index";
-// AZ.W-ADAPTIVE-AUTO Arm 2 — the DEMO exerciser for the sampled-luminance observer
+//  Arm 2 — the DEMO exerciser for the sampled-luminance observer
 // (path B: demo-private — the composable is OFF the public glass barrel, imported
 // directly here as the content-glass DEMO mount that exercises the live sampling path;
 // the binary consumer is the dock). It writes `--glass-backdrop-luma` + the bucket on a
 // glass-card over the page's live Aurora substrate so the dynamic darken TRACKS the
 // painted backdrop (the iOS-27 register). A demo mount is NOT a binary consumer (the
-// W-PRUNE2 E4-3 own-story exclusion) — it exercises the composable, it does not by
+// own-story exclusion: it exercises the composable, it does not by
 // itself clear the public ≥2-binary bar.
 import { useGlassBackdropLuminance } from "@glass/composables/glass/useGlassBackdropLuminance";
 
@@ -36,12 +36,12 @@ const rungs = ["wash", "quiet", "resting", "floating", "overlay"] as const;
 // The shipped DRY moving-specular seam. ONE instance drives the whole
 // headline band — `specularStyle` (the `--mouse-x/--mouse-y` host write) +
 // `onPointerMove` (the pointer-position write) bind across every plate, so the
-// "pointer-anchored catch-light" is LIVE on hover. PRM-safe by construction (the
+// "pointer-anchored catch-light" is live on hover and safe under reduced motion (the
 // seam skips the write under `prefers-reduced-motion: reduce`; the recipe pins
 // the centred 50% fallback). NO hand-rolled --mouse-x math, NO per-plate copy.
 const { specularStyle, onPointerMove } = useSpecularTracking();
 
-// A consumer-provided dominant backdrop color drives the adaptive tint (W23). The
+// A consumer-provided dominant backdrop color drives the adaptive tint. The
 // tint BITES only when BOTH knobs are set — `--glass-tint-source` (the sampled
 // hue) AND a non-zero `--glass-tint-strength` (the ≤30% house ceiling). "none"
 // resolves strength 0% (the genuine zero-delta default); the aurora samples
@@ -90,13 +90,13 @@ const sampleAge = computed(() => {
     return current.state === "pending" ? null : sampleNow.value - current.sampledAt;
 });
 
-// BB.W-GLASS-ACCENT — the THIRD disjoint glass axis: the per-INSTANCE chromatic-rim
+// the THIRD disjoint glass axis: the per-INSTANCE chromatic-rim
 // tint. Each swatch sets `--glass-accent: <data-hue>; --glass-accent-strength: <N%>`
-// per-INSTANCE (inline :style) — the §F1 data-keyed colored hover made a ONE-LINE
-// seam, NOT a hand-threaded border-color + inline catch-light per surface. The data
+// per instance through inline style, without hand-threading separate border and
+// catch-light colors. The data
 // hues are the demo's OWN palette (presets-in-consumers — the library token default
 // is the NEUTRAL transparent identity; a consumer's DATA hue never enters the lib).
-// The accent tints the RIM (silhouette edge) + the ::before catch-light glint with
+// The accent tints the RIM (silhouette edge) + the::before catch-light glint with
 // the datum's color; an UNSET surface beside it stays byte-identical warm-cream glass.
 const accentSamples = [
     { label: "series · rose", hue: "oklch(0.68 0.19 18)" },
@@ -116,7 +116,7 @@ const ACCENT_STRENGTH = "48%";
              bright painterly field — the whole point of this page (B13). -->
         <StorySection
             label="unified material — moving specular + rim across the band"
-            blurb="Hover any plate: every rung + card reads the SAME pointer-anchored catch-light (::before) from ONE useSpecularTracking seam + the --glass-edge-light rim from ONE .glass-material mixin — no per-component opt-in. The gleam follows the cursor and settles back on leave."
+            blurb="Hover any plate and the edge gleam follows the cursor, then settles softly back into the material when you leave."
         >
             <ShowcaseFrame pad="lg" tier="field">
                 <div class="flex flex-wrap gap-6">
@@ -309,10 +309,9 @@ const ACCENT_STRENGTH = "48%";
         >
             <ShowcaseFrame pad="lg" tier="field">
                 <div class="flex flex-wrap items-end gap-6">
-                    <!-- The dialog register — `.glass-floating.rounded-dialog` is
-                         exactly the compound the DialogContent surface composes, so
-                         this is the live squircle surface W56 ships (a real
-                         superellipse on a supporting engine, round elsewhere). -->
+                    <!-- This is the same `.glass-floating.rounded-dialog` compound
+                         used by DialogContent: a superellipse on supporting engines
+                         and a round-corner fallback elsewhere. -->
                     <div
                         class="glass-floating rounded-dialog flex h-28 w-44 items-center justify-center text-sm font-medium"
                     >
@@ -409,7 +408,7 @@ const ACCENT_STRENGTH = "48%";
             blurb="The maximal Liquid-Glass register above the calm default: compose Surface with deep, or add .glass-deep to a bare material. The backdrop reads softer and more saturated while the calm content default remains unchanged."
         >
             <ShowcaseFrame pad="lg" tier="field">
-                <!-- the deep-vs-calm contrast device: the .glass-deep plate reads
+                <!-- the deep-vs-calm contrast device: the.glass-deep plate reads
                      visibly more diffuse + more saturated than the calm
                      .glass-floating default over the SAME live aurora. -->
                 <div class="flex flex-wrap gap-6">

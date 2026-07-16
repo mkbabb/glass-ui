@@ -6,8 +6,7 @@
 // (StorySection / ShowcaseFrame). It mints ZERO new
 // visual primitive: a data page reads exactly like a hand-authored one because it
 // renders the SAME components. A net-new styled wrapper here would defeat the whole
-// "renders into B's primitives, zero new primitive" bet — proof:story-schema S2
-// asserts the import surface is the kit + Vue utilities, nothing else.
+// renderer stays limited to the existing kit and Vue utilities.
 //
 // A render function (not a template) because the dispatch is DATA-shaped: a dynamic
 // set of v-model bindings per specimen (`v-model:[prop]` across the `models` map),

@@ -6,7 +6,7 @@ import { Constellation } from "@glass/components/constellation";
 import { LiquidGrid } from "@glass/components/liquid-grid";
 import { cn } from "@glass/components/_shared/class-names";
 import { useTokenColor } from "@glass/composables/dom/useTokenColor";
-import { useRoutePointer } from "@glass/composables/motion/useRoutePointer";
+import { useRoutePointer } from "@glass/composables/motion/pointer/useRoutePointer";
 import StoryHeader from "./StoryHeader.vue";
 import {
     heroAuroraConfig,

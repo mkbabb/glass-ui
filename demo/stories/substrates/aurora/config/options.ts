@@ -11,7 +11,7 @@ type TabOption<T extends string> = {
     value: T;
 };
 
-// BG.W-AUR-IMAGE-SOURCE — the color-source axis: the procedural palette field (default)
+// the color-source axis: the procedural palette field (default)
 // or a decoded photo dissolved into the field's drift (a separate compiled program).
 export const sourceOptions = [
     { label: "Palette", value: "palette" },
@@ -23,21 +23,21 @@ export const mediumOptions = [
     { label: "Watercolor", value: "watercolor" },
     { label: "Pastel", value: "pastel" },
     { label: "Oil", value: "oil" },
-    // AX.W13 — crayon (DRY tooth-multiply), van-Gogh (atomic comma dabs), and
+    // Crayon (dry tooth-multiply), van-Gogh (atomic comma dabs), and
     // oil-pastel (stroke deposition) are first-class mediums, each its own body.
     { label: "Crayon", value: "crayon" },
     { label: "Van Gogh", value: "vangogh" },
     { label: "Oil Pastel", value: "oil-pastel" },
-    // BB.W-AUR-KUWAHARA — the anisotropic-Kuwahara edge-preserving painterly finish
+    // the anisotropic-Kuwahara edge-preserving painterly finish
     // (uMedium==7), an OPT-IN medium reached only by this explicit selection.
     { label: "Kuwahara", value: "kuwahara" },
-    // BG.W-AUR-METAL-FINISH — the two mutually-exclusive metal mediums (uMedium==8/9):
+    // the two mutually-exclusive metal mediums (uMedium==8/9):
     // warm folded metal + gradient-metallic with a twinkle-in-place flake sparkle.
     { label: "Metal", value: "metal" },
     { label: "Brushed Metal", value: "metal-gradient" },
 ] as const satisfies readonly TabOption<AuroraMedium>[];
 
-// AX.W13 — the strokeMode tab is oil sub-modes ONLY; the legacy "Crayon" entry is
+// The strokeMode tab contains oil sub-modes only; `crayon` is a medium.
 // gone (crayon is a first-class medium now, not a stroke mode).
 export const strokeModeOptions = [
     { label: "Oil", value: "oil" },

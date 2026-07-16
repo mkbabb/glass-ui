@@ -14,11 +14,11 @@ import {
     TRAIL_N,
     MAX_BLOB_STOPS,
     UNIFORM_NAMES,
-    type MetaballUniformLocations,
     type UniformName,
-} from "./uploadBlobUniforms";
+} from "../constants";
+import type { MetaballUniformLocations } from "./uploadBlobUniforms";
 
-/** Diagnostic label for the shared compile/link error path (AV.W14). */
+/** Diagnostic label for the shared compile/link error path. */
 const BLOB_LABEL = "[GooBlob]";
 
 /** The compiled-program handles the renderer closes over + tears down. */
@@ -66,7 +66,7 @@ export function buildMetaballProgram(gl: WebGL2RenderingContext): MetaballProgra
     const satPosLocs: (WebGLUniformLocation | null)[] = [];
     const satRadLocs: (WebGLUniformLocation | null)[] = [];
     const satOpLocs: (WebGLUniformLocation | null)[] = [];
-    // F9.R1 (BG.W-BLOB-SATELLITE-SHADE) — the per-satellite explicit-shade + its blend
+    // Per-satellite explicit shade and blend
     // weight (the GL color-seam widen; uSatColor[MAX_SATS] / uSatColorAmt[MAX_SATS]).
     const satColorLocs: (WebGLUniformLocation | null)[] = [];
     const satColorAmtLocs: (WebGLUniformLocation | null)[] = [];

@@ -20,8 +20,7 @@ export type StoryLocation = CategoryStoryLocation;
 
 /**
  * Story navigation helpers keyed off the current route + manifest. Every story
- * lives in a category (the flat-story arm was retired at AV.W10 when Aurora /
- * GooBlob became Substrates rows). Within-category siblings drive next/prev;
+ * lives in a category. Within-category siblings drive next/prev;
  * the category arrows wrap across categories that carry at least one story.
  */
 export function useStoryNavigation() {

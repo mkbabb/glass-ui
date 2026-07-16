@@ -1,4 +1,4 @@
-// useDockSearch — the DOCK-as-native-dynamic-search-bar seam (BC.W-DOCK-SEARCH).
+// Dock-as-native-dynamic-search-bar seam.
 //
 // Tap the collapsed dock pill and it MORPHS — continuously, via the dock's own
 // `--dock-morph-t`/`--dock-t` plate glide, not a hard swap — into a
@@ -8,7 +8,7 @@
 // retained delight); the dock NEVER auto-collapses on a passive scroll (the iOS-27
 // lesson — that costs a tap).
 //
-// THE CONSUMING-SEAM DISCIPLINE (the W-DOCKMORPH-CTA precedent). `useDockSearch` is a
+// `useDockSearch` is a
 // search mode BESIDE the dock state machine + the morph engine, NOT an edit to either:
 //   - it COMPOSES `useDockState` (the existing 3-state machine) — `armSearch()` is
 //     `onClickCollapsed()` (collapsed → pinned) + `keepOpen()` (the ref-counted hold so
@@ -19,15 +19,15 @@
 //     `--dock-morph-t`/`--dock-t` plate glide — NO second spring.
 //
 // The composable is headless: consumers author the field and portaled results surface.
-// The `/search` pipeline (`useFuzzySearch`/`useVirtualSectionWindow`/
-// `ensureTargetWindow`+`useScrollTo`) remains unchanged.
+// The library owns only the optional `ensureTargetWindow` callback seam; demo
+// compositions may satisfy it with their demo-local windower.
 //
 // THE ONE-OF-EACH DISCIPLINE. The matcher is `useFuzzySearch` (the VSCode subsequence
-// scorer — composed, NEVER re-forked); the results window is `useVirtualSectionWindow`
-// (composed); the optional scroll reader is `useScrollChrome` → `useScrollTrigger` (the
+// scorer — composed, NEVER re-forked); the optional scroll reader is
+// `useScrollChrome` → `useScrollTrigger` (the
 // ONE native dual-path reader — NO hand-rolled `addEventListener("scroll")`, the words
-// `useSearchBarScroll` supersession); the result-select scroll-to is `ensureTargetWindow`
-// + `useScrollTo` (the ToC subsume). No second of any.
+// `useSearchBarScroll` supersession); result selection invokes the consumer's
+// optional warm callback before `useScrollTo`. No second of any.
 //
 // THE WORDS SUBSUME (the foreign-tree fence, inv-26). The words app's `SearchBar.vue` +
 // its ~7 search composables RETIRE onto `<GlassDock search>` on the `^4.x` consume —
@@ -54,7 +54,7 @@ import {
 import {
     useScrollChrome,
     type UseScrollChromeReturn,
-} from "../../../composables/motion/useScrollChrome";
+} from "../../../composables/motion/scroll/useScrollChrome";
 
 export interface UseDockSearchOptions<T extends SearchableItem = SearchableItem> {
     /** Composes the existing dock state machine (no fork) — `armSearch`/`disarmSearch`
@@ -88,19 +88,19 @@ export interface UseDockSearchOptions<T extends SearchableItem = SearchableItem>
     /** The dock element the collapse-on-scroll writes `--chrome-collapse-t` onto. */
     chromeRef?: MaybeRefOrGetter<HTMLElement | null>;
     /**
-     * Result-select hook — wires the ToC subsume: `ensureTargetWindow(id)` (warm the
-     * window so the target renders) + `scrollTo(id)` (the rAF-retry scroll-to-and-land).
+     * Result-select hook — wires the ToC subsume: `ensureTargetWindow(id)` (seat the
+     * target's bounded render window) + `scrollTo(id)` (the rAF-retry scroll-to-and-land).
      * The dock owns the gesture; the consumer passes the two leaves' bound functions.
      */
     onResultSelect?: (result: SearchResult<T>) => void;
     /**
-     * The virtual-window warm step (composed `useVirtualSectionWindow.ensureTargetWindow`).
-     * Called BEFORE `scrollTo` on a result-select so the windowed target is rendered.
+     * Consumer-provided target-window step. Called BEFORE `scrollTo` on result
+     * selection so a windowed target can render before the scroll lands.
      */
     ensureTargetWindow?: (id: string) => void;
     /**
      * The ToC scroll-to (composed `useScrollTo.scrollTo`) — the rAF-retry scroll-to-id.
-     * Called AFTER the warm step on a result-select.
+     * Called AFTER the target-window step on a result-select.
      */
     scrollTo?: (id: string) => void;
 }
@@ -158,14 +158,14 @@ export function useDockSearch<T extends SearchableItem = SearchableItem>(
         ? options.items
         : () => asyncItems.value;
 
-    // The result-select → ToC subsume: warm the window THEN scroll-to-and-land. The dock
+    // The result-select → ToC subsume: seat the target window, then scroll-to-and-land. The dock
     // owns the gesture; the consumer's `onResultSelect`/`ensureTargetWindow`/`scrollTo`
     // are the wired leaves (the words `scrollToSelectedResult` generalized).
     function handleSelect(result: SearchResult<T>): void {
         const id = result.item.id;
-        // The warm step BEFORE the scroll (ensure the windowed target renders).
+        // Seat the target window BEFORE the scroll (ensure the target renders).
         options.ensureTargetWindow?.(id);
-        // The rAF-retry scroll-to-and-land AFTER the warm.
+        // The rAF-retry scroll-to-and-land AFTER the target is rendered.
         options.scrollTo?.(id);
         // The consumer's own select hook (route/navigate).
         options.onResultSelect?.(result);
@@ -185,7 +185,7 @@ export function useDockSearch<T extends SearchableItem = SearchableItem>(
     // and awaits the consumer's source; a stale resolution (its controller already
     // aborted) is dropped. The consumer owns the network/generation race INSIDE
     // `onSearch`; this is the dock's own minimal abort wiring (no `useAsyncSearch`
-    // contrivance — booked to BC.W-FUZZY-HARDEN if the ≥2-bar holds).
+    // abstraction until another consumer needs it).
     if (options.onSearch) {
         const runAsync = options.onSearch;
         watch(
@@ -224,7 +224,10 @@ export function useDockSearch<T extends SearchableItem = SearchableItem>(
         const top = fuzzy.results.value[0];
         if (!top) return "";
         const label = top.item.label;
-        if (label.toLowerCase().startsWith(q.toLowerCase()) && label.length > q.length) {
+        if (
+            label.toLowerCase().startsWith(q.toLowerCase()) &&
+            label.length > q.length
+        ) {
             return label.slice(q.length);
         }
         return "";

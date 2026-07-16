@@ -31,6 +31,10 @@ their `--spring-*` and `--ease-*` tokens; JavaScript consumers read
 `EasingPicker` and `EasingConfigurator` own accessible Vue chrome while value.js
 owns their curve math.
 
+Source leaves are grouped by mechanism under `spring/`, `scroll/`, `number/`,
+`reveal/`, `pointer/`, `morph/`, and `core/`. Those directories are internal;
+consumers use the two package entries above.
+
 ## Motion law
 
 - Spatial motion uses a named spring and its matching

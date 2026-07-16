@@ -40,7 +40,7 @@ import {
     type UploadableImageSource,
 } from "../../../composables/glass/textureUpload";
 import type { AuroraConfig } from "../constants/presets";
-import type { UsePointerVelocityField } from "../../../composables/motion/usePointerVelocityField";
+import type { UsePointerVelocityField } from "../../../composables/motion/pointer/usePointerVelocityField";
 
 export interface AuroraWGPUSetupDeps {
     canvas: HTMLCanvasElement;
@@ -53,19 +53,17 @@ export interface AuroraWGPUSetupDeps {
     /** Resolve shader time while pointer physics retain the real frame delta. */
     getRenderTime: (elapsedSec: number) => number;
     /**
-     * BC.W-VIZ-AURORA (T5) — the shared viz-pointer-physics field (BB.B4). FED
-     * `tick(deltaMs)` from the WGPU frame callback (the SAME field instance the WebGL2
-     * loop feeds — one source, no own rAF); the renderer reads `acceleration` for the
-     * iOS-27 gel snap-back.
+     * Shared viz-pointer-physics field. The WGPU frame callback feeds
+     * `tick(deltaMs)` on the same field instance as WebGL2; it owns no rAF.
      */
     pointerField: UsePointerVelocityField;
     /**
-     * BG.W-AUR-IMAGE-SOURCE — the decoded photo the `source:"image"` program samples (or
-     * `null` before decode / on a palette config). Read at setup + on re-upload.
+     * the decoded photo the `source:"image"` program samples (or
+     * `null` before decode, on a palette config). Read at setup + on re-upload.
      */
     getDecodedImage: () => UploadableImageSource | null;
     /**
-     * BG.W-AUR-IMAGE-SOURCE — register the backend's texture uploader with the runtime so
+     * register the backend's texture uploader with the runtime so
      * a late-arriving decode re-uploads into the live GPU texture. Passing `null` clears
      * it (teardown). The runtime calls the registered fn when a decode resolves.
      */
@@ -116,12 +114,12 @@ export function createAuroraWGPUSetup(
         getDecodedImage,
         registerImageUploader,
     } = deps;
-    // BC.W-VIZ-AURORA (T5) — the per-frame delta the shared field's tick() needs (the
+    // Per-frame delta for the shared field's tick(). The
     // first frame seeds prevTime so the opening delta is 0 — no teleport spike).
     let prevTimeSec: number | null = null;
 
     return function setupWGPU(device, context, format) {
-        // BG.W-AUR-IMAGE-SOURCE — the CONSTRUCTION-TIME program permutation. A
+        // the CONSTRUCTION-TIME program permutation. A
         // `source:"image"` config builds the SEPARATE image pipeline (its own bind group
         // carrying the texture + sampler + the image-uniform tail) rather than the palette
         // program. The palette path below is byte-UNTOUCHED (this returns early).
@@ -190,13 +188,13 @@ export function createAuroraWGPUSetup(
 
         const scratch = createAuroraWGPUUniformScratch();
 
-        // BG.W-VIZ-RESIZE-ADOPT — upload-only. The LEAF sizer already set the backing
+        // upload-only. The LEAF sizer already set the backing
         // store (round(gBCR × resolveAuroraWashDpr), the call-site dprPolicy); the WGPU
         // swap chain auto-resizes to it on the next frame, so the WGSL leg is a no-op.
         function resize(_s?: BackingSize): void {}
 
         function frame(timeSec: number): void {
-            // BI.W-FIELD-CORE — FEED the shared pointer field one tick (the one-loop
+            // FEED the shared pointer field one tick (the one-loop
             // push-step; no own rAF). Under PRM tick(0) freezes the field. Map its readout
             // onto the cursor uniforms (the SAME `mapAuroraCursor` the WebGL2 loop uses —
             // one source, incl. the iOS-27 gel snap-back).
@@ -267,7 +265,7 @@ export function createAuroraWGPUSetup(
     };
 }
 
-// BG.W-AUR-IMAGE-SOURCE — the SEPARATE image pipeline (the construction-time permutation).
+// the SEPARATE image pipeline (the construction-time permutation).
 // Its own bind group carries the uniform buffer (binding 0), the image texture (binding 1),
 // and the sampler (binding 2). The texture is uploaded through the ONE shared
 // `uploadImageTextureWebGPU` primitive (never a raw `createTexture` + `copyExternalImage`

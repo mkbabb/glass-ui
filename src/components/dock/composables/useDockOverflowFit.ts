@@ -1,14 +1,13 @@
 import { onMounted, onUnmounted, watch, type Ref } from "vue";
 
 /**
- * useDockOverflowFit — the fits-vs-scrollable mode resolution for the dock's native
- * scroll track (BI.W-DOCK-OVERFLOW, PASS-1 §2.5). A MEASURED branch (the wave's "single
- * container-query / measured branch"): it toggles `[data-dock-overflow]` on the dock root
+ * useDockOverflowFit resolves fits-vs-scrollable mode for the dock's native scroll
+ * track. It toggles `[data-dock-overflow]` on the dock root
  * when content exceeds the horizontal full-layer port or vertical root scroll host.
  * The overflow.css scroll track + FadingScroll edge mask engage ONLY under that attr, so
- * at rest (fits) the mask is `none` (T-52 a — no 0px-fade shave).
+ * at rest (fits) the mask is `none`.
  *
- * G9 / O5 — ZERO SCROLL LISTENER. The measure is RESIZE- and CONTENT-driven (a
+ * The measure is resize- and content-driven, with no scroll listener (a
  * `ResizeObserver` on the dock + the port, plus a narrowly filtered `MutationObserver`
  * on dock content). It never listens to `scroll` — the traveling indicator (`useSelectionIndicator`)
  * lives inside the scroll port and travels WITH scroll in content coordinates, needing no

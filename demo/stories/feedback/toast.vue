@@ -4,7 +4,7 @@ import { defineAsyncComponent, h } from "vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import FamilyTabs, { type FamilyMember } from "../../chassis/family/FamilyTabs.vue";
 
-// BG.W-DEMO-IA-REDESIGN — the Feedback TOAST family. The imperative `Toaster`
+// the Feedback TOAST family. The imperative `Toaster`
 // register folds onto this ONE toast page as a member (bare, STORY_NESTED_KEY)
 // via the switcher below.
 const familyMembers: FamilyMember[] = [
@@ -19,7 +19,7 @@ import {
     ToastAction,
     useToast,
 } from "@glass/components/toast";
-// BB.W-SUFFUSE3 — the feedback band's --section-color-8 ruby identity.
+// the feedback band's --section-color-8 ruby identity.
 
 const { toast } = useToast();
 
@@ -89,7 +89,7 @@ function fireWithAction() {
 
 <template>
     <StoryPage>
-        <!-- BB.W-SUFFUSE3 — the feedback-band identity COLOR EVENT (the tinted
+        <!-- the feedback-band identity COLOR EVENT (the tinted
              eyebrow + the inline accent rail, both on
              --section-color-8). The page-level color identity, DISTINCT from the
              StorySection HEADINGs below — it carries NO heading rung (not an

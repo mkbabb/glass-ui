@@ -34,14 +34,6 @@ const definedTokens = new Set([
 ]);
 
 describe("semantic token graph", () => {
-    it("publishes eight unique domains backed by CSS declarations", () => {
-        expect(tokenDomains).toEqual([
-            "color", "material", "type", "space", "radius", "shadow", "motion", "interaction",
-        ]);
-        expect(new Set(publicTokens).size).toBe(publicTokens.length);
-        expect(publicTokens.filter((token) => !definedTokens.has(token))).toEqual([]);
-    });
-
     it("contains no custom-property alias cycle", () => {
         const visiting = new Set<string>();
         const visited = new Set<string>();

@@ -1,8 +1,7 @@
-import { supportsScrollTimeline } from "../../composables/motion/supportsCssTimeline";
+import { supportsScrollTimeline } from "../../composables/motion/scroll/supportsCssTimeline";
 
 /**
- * The module-scope constants for the FadingScroll family — the colocation home
- * (`proof:colocation`) the dir owes once it carries a complex composable. Both
+ * Module-scope constants colocated with the FadingScroll family. Both
  * were promoted out of `composables/useFadingScroll.ts` verbatim.
  */
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch, type HTMLAttributes } from "vue";
-import { useScrollTrigger } from "../../composables/motion/useScrollTrigger";
+import { useScrollTrigger } from "../../composables/motion/scroll/useScrollTrigger";
 import { cn } from "../_shared/class-names";
 
 const props = defineProps<{

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { DEFAULT_AURORA_CONFIG, MAX_NUCLEI } from "@glass/components/aurora/constants/presets";
-import { nucleiPrior } from "@glass/components/aurora/composables/atoms";
+import { nucleiPrior } from "@glass/components/aurora/composables/atoms-fields";
 import {
     AURORA_CURSOR_UNIFORM_REST,
     createUniformBridge,

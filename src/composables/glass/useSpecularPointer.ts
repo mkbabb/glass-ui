@@ -10,19 +10,19 @@ import {
 import { createSpecularWriter } from "./useSpecularTracking";
 
 /**
- * `useSpecularPointer` — the EVOLUTION of `useSpecularTracking` (BB.W-LENSING). It
+ * `useSpecularPointer` — the EVOLUTION of `useSpecularTracking`. It
  * writes the catch-light POSITION (`--mouse-x`/`--mouse-y`, as today) PLUS the
  * `--specular-angle` channel — the pointer's angle-from-center the EDGE-glint conic
  * sweep reads (the `.glass-material::before` recipe, material.css). The angle feed is
  * what turns the centered disc into a motion-reactive RIM glint (the glass-THICKNESS
  * read); the leaf is the ONE shared specular source the hover/button waves consume.
  *
- * SINGLE-SOURCE (the W-LIQUIDHOVER reconcile, EXTENDED here — NOT a fork). There is
+ * SINGLE-SOURCE (the reconcile, EXTENDED here — NOT a fork). There is
  * exactly ONE position-write core: `createSpecularWriter` (useSpecularTracking.ts) —
  * the rAF-coalesced, cached-PRM, scope-dispose seam. This composable WRAPS that core;
  * the angle is DERIVED in the sink from the SAME `(x, y)` percentage the core already
  * computes (`angle = atan2(y - 50, x - 50)`), so there is NO duplicate
- * `getBoundingClientRect` / `--mouse-x` write — the core owns the layout read + the
+ * `getBoundingClientRect`, `--mouse-x` write — the core owns the layout read + the
  * coordinate math, this leaf only adds the angle derivation onto the existing sink.
  * `useSpecularTracking` (the position-only delivery) STAYS for the bare-position call
  * sites; `useSpecularPointer` is the angle-adding delivery for an edge-glint consumer.
@@ -34,7 +34,7 @@ import { createSpecularWriter } from "./useSpecularTracking";
  * disposes the core (cancel the pending rAF + drop the cached PRM listener) on scope
  * teardown.
  *
- * BG.W-GLASS-DYNAMICS — the OPTIONAL press-couple (absorbs 13.5, soft-gated by F5.1).
+ * The optional press coupling.
  * A consumer may pass `press` (a 0..1 press scalar — a `useLiquidPress` `.value`, or
  * any press signal); it is folded reactively into the emitted style as the ONE
  * `--glass-btn-press-t` channel the `.glass-material::before` specular magnitude reads
@@ -43,7 +43,7 @@ import { createSpecularWriter } from "./useSpecularTracking";
  * a `computed` so the press tracks the spring INDEPENDENTLY of pointer moves (a press
  * settles while the pointer is still). SOFT-GATED: when `press` is OMITTED the emitted
  * style carries NO press channel (the CSS `--glass-btn-press-t` default 0 holds — no
- * hard F5.1 dependency), and the position/angle write is byte-identical to before.
+ * hard press dependency), and the position/angle write is unchanged.
  */
 export interface UseSpecularPointerOptions {
     /** Optional 0..1 press scalar (soft-gated) folded into `--glass-btn-press-t`. */

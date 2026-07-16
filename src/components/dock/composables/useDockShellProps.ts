@@ -1,33 +1,17 @@
-// The GlassDock shell-prop derivation — the orientation-resolution + prop-
-// derivation cluster carved out of GlassDock.vue. It owns the ONE prop shape, and
-// the resolved computeds (shape / layout / orientation / density / scrollClass /
-// alwaysExpanded / fitContent / collapse surface + the container-query style). A
-// GlassDock-internal composable: it takes the resolved `props` and returns the
-// derived computeds the SFC binds.
-//
-// AZ.W-DOCK-TAXONOMY (arm a) — the `variant` discriminant is GONE. There was a
-// `variant: "dock" | "rail" | "instrument-strip"` axis that partially-duplicated
-// `orientation` (a "vertical dock" was expressible TWO ways — `variant="rail"` OR
-// `orientation="vertical"`) and overloaded the "rail" noun. The discriminated union
-// `DockVariantProps | DockRailProps` collapses to ONE `DockProps` interface;
-// "rail-ness" is now `orientation="vertical"` + a shape/size choice, and the
-// collapse/morph machinery applies on BOTH orientations (a vertical dock morphs its
-// `height`, a horizontal dock its `width`). `instrument-strip`'s chassis paint
-// RETIRED with no live consumer (the ≥2-consumer bar; the cross-repo speedtest
-// cockpit re-pins in its own migration — recorded in MIGRATION.md). No aliases.
+// GlassDock shell-prop derivation. One `DockProps` shape resolves layout,
+// orientation, size, scroll behavior, collapse posture, and container-query style.
+// `orientation` is the sole axis: vertical docks morph height and horizontal docks
+// morph width.
 
 import { computed, type ComputedRef } from "vue";
 
-// BH.W-SIZE-UNIFY — the dock scale axis IS the shared Size ordinal (no
-// separate `density` — the size/density collision the wave kills). compact→sm,
-// comfortable→md, spacious→lg, audacious→xl; `xl` is legal here (the dock is the
-// sole HEAD Size-`xl` consumer, axes.ts §sub-range-law).
+// Dock scale uses the shared Size ordinal. `xl` is valid for this audacious surface.
 export type DockSize = "sm" | "md" | "lg" | "xl";
 export type DockBackdropMode = "live" | "static";
 
 /**
- * The ONE GlassDock prop shape (AZ.W-DOCK-TAXONOMY — the discriminated union is
- * gone). Every dock — horizontal or vertical — reads the SAME surface; orientation
+ * The GlassDock prop shape. Every dock—horizontal or vertical—reads the same
+ * surface; orientation
  * is the single layout axis and the collapse surface applies on both.
  */
 export interface DockProps {
@@ -40,37 +24,29 @@ export interface DockProps {
      */
     backdropMode?: DockBackdropMode;
     /**
-     * Never collapse — render permanently expanded; the single opt-OUT of the
+     * Never collapse: render permanently expanded, the single opt-out of the
      * collapse↔expand machinery. Default `false` (every dock is collapsible).
-     * AZ.W-DOCK-TAXONOMY — vertical docks are NO LONGER force-pinned here (a
-     * vertical dock morphs its height too; the prior `variant="rail"`
-     * always-expanded-by-construction is removed). A `layout="grid"` dock is
-     * `alwaysExpanded` BY CONTRACT (a 2D tile panel does not read as a collapsible
-     * pill). A vertical nav column that wants the static always-expanded look opts
-     * in via this prop. (A positive `collapsible` boolean was considered and
-     * rejected: Vue coerces an absent boolean prop to `false`, so a `collapsible`
-     * defaulting to `true` would need a `withDefaults` second default-path; the
-     * existing `alwaysExpanded` opt-out — which correctly defaults `false` — is the
-     * one knob, no Vue boolean-trap.)
+     * A vertical dock morphs its height too. A `layout="grid"` dock is
+     * always expanded by contract (a 2D tile panel does not read as a collapsible
+     * pill). A vertical navigation column can opt into the static expanded posture.
      */
     alwaysExpanded?: boolean;
     /**
      * Corner treatment.
      *   `"pill"`    — the stadium silhouette (default).
      *   `"rounded"` — a finite rounded radius (`--radius-xl`).
-     *   `"card"`    — the AW.W3b big-dock card shell: a finite concentric
+     *   `"card"`    — a finite concentric big-dock shell
      *                 radius (`--dock-card-radius`, default `--radius-3xl`)
      *                 ABOVE 2xl, below pill — does NOT collapse to a stadium.
      *                 Collapsed it returns to a pill; the pill↔card swap
-     *                 morphs on the `--dock-motion-resize` spring. AX.W56's
+     *                 morphs on the `--dock-motion-resize` spring. The
      *                 squircle policy applies `corner-shape:
      *                 var(--corner-shape-bigdock)` here under `@supports
      *                 (corner-shape: superellipse(2))` — the big-dock is the ONE
      *                 surface where the superellipse reads (cards/pills stay
      *                 round); the border-radius arc is the cross-engine contract.
      *
-     * Paints on BOTH orientations (AZ.W-DOCK-TAXONOMY — `shape` is no longer
-     * variant-gated; a vertical dock reads `shape="rounded"` for the tool-palette
+     * Paints on both orientations: a vertical dock reads `shape="rounded"` for the tool-palette
      * look, a horizontal dock reads `shape="card"` for the big-dock shell).
      */
     shape?: "pill" | "rounded" | "card";
@@ -78,7 +54,7 @@ export interface DockProps {
      * Layout axis of the dock. `"horizontal"` (default) lays items out
      * left-to-right and animates `width`; `"vertical"` lays items out
      * top-to-bottom and animates `height`. This is the SINGLE layout axis — there
-     * is no `variant` second-way to express "vertical" (AZ.W-DOCK-TAXONOMY).
+     * is no `variant` second-way to express "vertical".
      */
     orientation?: "horizontal" | "vertical";
     /**
@@ -90,9 +66,7 @@ export interface DockProps {
      * Overflow strategy when the expanded content exceeds the dock's
      * axis cap (`--dock-max-inline-size` horizontally,
      * `--dock-max-block-size` vertically). The ONE knob governing every
-     * overflow behaviour (AT.W7-dock-a clean break — collapsed from the
-     * prior `wrap` boolean + `overflow` pair + `containerName` clip-lift,
-     * which all touched overflow divergently).
+     * overflow behavior.
      *   `"grow"`   — content grows to fit then overflows visibly past
      *                the cap (the default; nothing clips or scrolls).
      *   `"wrap"`   — expanded content wraps to multiple rows via CONTENT-DRIVEN
@@ -108,8 +82,7 @@ export interface DockProps {
      *                `.dock-overflow-wrap` class is not emitted for a vertical
      *                orientation.
      *
-     * BG.W-DOCK-CAP-SCROLL-FADE — the `"scroll"` opt-in RETIRED (clean break,
-     * no alias). A capped axis is INTRINSICALLY a scroll axis: a horizontal
+     * A capped axis is intrinsically a scroll axis: a horizontal
      * dock's inline axis reads `.dock-scroll-x` unconditionally (the CSS
      * `overflow-x: auto` scrolls ONLY when the row exceeds
      * `--dock-max-inline-size`; under the cap nothing scrolls), and a vertical
@@ -123,11 +96,10 @@ export interface DockProps {
      * subject (`container-type: inline-size; container-name: <value>`) so
      * descendants can query the named container via `@container <value>
      * (...)` rules. ORTHOGONAL to the `overflow` clip: opting into a
-     * container subject does NOT silently change the dock's clip shell
-     * (AT.W7-dock-a — the prior clip-lift was folded out; use
-     * `overflow="wrap"` to allow multi-line content).
+     * container subject does not change the dock's clip shell; use
+     * `overflow="wrap"` for multi-line content.
      *
-     * ALWAYS-EXPANDED-ONLY (AY.W-DOCK2 §F1): `container-type: inline-size`
+     * Always-expanded only: `container-type: inline-size`
      * clamps the box to its contained intrinsic size, so on a COLLAPSIBLE
      * dock the collapse↔expand FLIP measures collapsed→collapsed and the
      * morph FREEZES. A collapsible dock that needs deterministic targeting
@@ -146,8 +118,7 @@ export interface DockProps {
     collapseDelay?: number;
     /**
      * Start in the collapsed state (default true). Applies on BOTH orientations
-     * (AZ.W-DOCK-TAXONOMY — a vertical dock starts collapsed and morphs its block
-     * axis open too). Inert on an always-expanded dock.
+     * and a vertical dock morphs its block axis open too. Inert on an always-expanded dock.
      */
     startCollapsed?: boolean;
     /**
@@ -165,11 +136,9 @@ export interface DockProps {
      */
     layout?: "linear" | "grid";
     /**
-     * AZ.W-ADAPTIVE-AUTO Arm 2 (H3 arm a) — the sampled-luminance observer that
-     * DYNAMICALLY refines the W55 declarative bright-bucket darken (the iOS-27
-     * "darken dynamically" register). Default `true` (default-ON for the dock — the
-     * surface most often over a live/bright backdrop). It REFINES the floor (the
-     * unconditional self-engage + the declarative bucket stay the guarantee); a
+     * The sampled-luminance observer dynamically refines the declarative bright-
+     * backdrop tint. Default `true` because docks commonly sit over live fields.
+     * It refines the material floor; a
      * dark-substrate consumer opts out with `:auto-luminance="false"` (or
      * `--glass-tint-strength: 0%` on the dock). The observer is rAF-throttled ≤ 4 Hz,
      * IntersectionObserver-gated, and parks under `prefers-reduced-motion: reduce`.
@@ -178,7 +147,7 @@ export interface DockProps {
     /**
      * The KNOWN background-layer canvas the dock floats over (an aurora/blob
      * `<canvas>`) — an element, a getter, or a CSS selector. When present, the
-     * observer downsamples it under the dock's box each settle (the ANIMATED-backdrop
+     * observer downsamples it under the dock's box after settling (the animated-backdrop
      * case); absent, it stack-walks the painted page background (the static case).
      */
     backgroundCanvas?:
@@ -187,22 +156,13 @@ export interface DockProps {
         | string
         | null;
     /**
-     * BC.W-DOCK-SEARCH — the dock-as-native-dynamic-search-bar MODE (additive,
-     * default `false`). When true the dock stamps `[data-search]` (the CSS hook the
-     * `dock/search.css` active-field tint seam + the `.glass-menu-row` result rows
-     * target) and renders the `#search` slot INSIDE the existing morph aperture — the
-     * consumer composes `useDockSearch` (the gesture/shrink/dropdown seam) and slots
-     * its search field + fuzzy dropdown there. The pill→field morph is the dock's OWN
-     * `--dock-morph-t` glide (box-inviolate — no second engine). A non-search dock is
-     * byte-identical to HEAD (the slot + the data-attr are present only when authored).
+     * Native dynamic-search mode. Default `false`. When enabled, the dock stamps
+     * `[data-search]` and renders `#search` inside the existing morph aperture. The
+     * consumer composes `useDockSearch` and supplies its field and result menu. The
+     * dock's `--dock-morph-t` remains the sole pill-to-field motion scalar.
      */
     search?: boolean;
-    // BI.W-DOCK-RETIRES — the `splittable`/`splitContext`/`splitPlacement` fission props
-    // are DEFINITION-ABSENT (the fission facility retired decided-terminal; clean break).
-    // BI.W-DOCK-FOLD — the `draggableItems` axis (the demo-only dock-ITEM drag-reorder,
-    // `useDockItemDrag`) is DEFINITION-ABSENT (G10 census: zero binary consumer; clean
-    // break, no alias). A dock reorder is a consumer concern (`useSortable`), never a
-    // masking dead prop with no engine behind it.
+    // Splitting and item reordering are consumer composition concerns, not Dock props.
 }
 
 /** The resolved shell-prop computeds the GlassDock SFC binds. */
@@ -225,24 +185,10 @@ export interface DockShellProps {
  * resolution point — the one-path precept).
  */
 export function useDockShellProps(props: DockProps): DockShellProps {
-    /* AT.W7-dock-a — the container-query opt-in is ORTHOGONAL to the overflow
-       clip. The prior `overflow: visible` clip-lift here silently coupled the
-       container subject to the clip shell; it is folded out. A consumer wanting
-       multi-line content opts into `overflow="wrap"`.
-
-       AY.W-DOCK2 (§F1 reconcile) — `containerName` is ALWAYS-EXPANDED-ONLY. It
-       co-applies `container-type: inline-size`, which establishes inline-size
-       containment and CLAMPS the box to its contained intrinsic size — so on a
-       COLLAPSIBLE dock the FLIP measures collapsed→collapsed and the collapse↔expand
-       morph FREEZES (`--dock-morph-t` stuck at 0; W-DOCK1-DELTA §F1 captured exactly
-       this: 10px → 18px, no morph). This is the AT.W7 / 3.4.0 dock-collapse-vs-
-       container-type interaction re-surfacing on the prop (MEMORY: "dock-collapse fix
-       = container-type removal"). DECISION (W-DOCK2): DOCUMENT, not gate — gating the
-       combination would mean inferring "collapsible" at runtime, and the prop is
-       legitimately used on `always-expanded` surfaces where containment is correct.
-       Consumers needing the dock as a container query SUBJECT set `always-expanded`; a
-       collapsible dock that needs deterministic targeting uses a plain `data-testid`.
-       Mirrored in CLAUDE.md (the dock section). */
+    /* `containerName` applies inline-size containment. Use it on always-expanded
+       docks: containment makes a collapsible dock measure its contained intrinsic
+       size at both FLIP endpoints, leaving no collapse↔expand span. Overflow remains
+       an independent concern; multi-line consumers opt into `overflow="wrap"`. */
     const containerStyle = computed<Record<string, string> | undefined>(() => {
         if (!props.containerName) return undefined;
         return {
@@ -251,20 +197,17 @@ export function useDockShellProps(props: DockProps): DockShellProps {
         };
     });
 
-    /* AZ.W-DOCK-TAXONOMY — the collapse surface applies on BOTH orientations now
-       (the prior dock-branch gate is gone with the `variant` discriminant). Every
-       default has exactly one resolution point. */
-    /* BD.W-DOCK-CORE (A2) — the patient-dwell default (2000 → 3600ms): a more forgiving
-       hover/interaction window before auto-collapse, in lockstep with the useDockState
-       composable default. An explicit `:collapse-delay` consumer prop still wins. */
+    /* Collapse applies on both orientations. Every default has one resolution point. */
+    /* The patient-dwell default gives a forgiving hover/interaction window before
+       auto-collapse, in lockstep with useDockState. An explicit value still wins. */
     const collapseDelay = computed(() => props.collapseDelay ?? 3600);
     const layoutValue = computed<"linear" | "grid">(() => props.layout ?? "linear");
 
     const shape = computed(() => props.shape ?? "pill");
-    /* The SINGLE layout axis (AZ.W-DOCK-TAXONOMY — no `variant` second-way). */
+    /* The single layout axis. */
     const orientation = computed(() => props.orientation ?? "horizontal");
     const size = computed(() => props.size ?? "md");
-    /* BG.W-DOCK-CAP-SCROLL-FADE — a capped axis is ALWAYS a scroll axis (no
+    /* a capped axis is ALWAYS a scroll axis (no
        opt-in). A HORIZONTAL dock's inline axis is content-driven, so it wears
        the `.dock-scroll-x` port INTRINSICALLY — the CSS `overflow-x: auto`
        scrolls ONLY when the row exceeds `--dock-max-inline-size`; under the cap
@@ -280,11 +223,10 @@ export function useDockShellProps(props: DockProps): DockShellProps {
             ? null
             : "dock-scroll-x",
     );
-    /* AW.W3b — a `layout="grid"` dock is `alwaysExpanded` BY CONTRACT (a 2D tile
+    /* A `layout="grid"` dock is always expanded by contract (a 2D tile
        panel does not read as a collapsible pill, and `alwaysExpanded` means no
-       morph → no per-frame grid-column reflow). AZ.W-DOCK-TAXONOMY removed the
-       `orientation === "vertical"` force-pin — a vertical dock is now collapsible by
-       default, so a vertical nav column that wants the static look passes
+       morph → no per-frame grid-column reflow). A vertical dock is collapsible by
+       default; a vertical nav column that wants the static look passes
        `always-expanded` explicitly. */
     const alwaysExpanded = computed(
         () => props.alwaysExpanded || layoutValue.value === "grid",

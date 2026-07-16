@@ -1,4 +1,4 @@
-// BC.W-CARVE6 — the goo-blob metaball OKLCh gamut-clamp + palette-sample helper
+// Goo-blob metaball OKLCh gamut-clamp and palette-sample helper
 // chunk, carved out of `metaball.wgsl.ts` to hold the no-god-module line bound
 // (the shared-chunk SPLICE precedent — the ASSEMBLED shader byte-equivalent).
 //
@@ -11,7 +11,7 @@
 // chunk, the `PI` const at the top of metaball.wgsl.ts, and the `u` Uniforms
 // binding. It carries NO `${...}` splice of its own (so the device-free WGSL
 // assembler resolves `${METABALL_PALETTE_WGSL}` to a complete body —
-// `proof:webgpu-everywhere` W7), and it is spliced BEFORE the full-screen-triangle
+// and it is spliced before the full-screen-triangle
 // vertex stage (the fixed ASSEMBLED body order — the color helpers precede the vertex stage).
 
 export const METABALL_PALETTE_WGSL = /* wgsl */ `
@@ -50,7 +50,7 @@ fn samplePaletteOklch(t: f32) -> vec3<f32> {
   return lch;
 }
 
-// AX.W15 — de-synced breath (three DETUNED sines at irrational ratios).
+// De-synced breath using three detuned sines at irrational ratios.
 fn breath(phase: f32) -> f32 {
   return (sin(phase) + 0.5 * sin(phase * 1.4444 + 1.7) + 0.28 * sin(phase * 0.31 + 4.1)) / 1.78;
 }

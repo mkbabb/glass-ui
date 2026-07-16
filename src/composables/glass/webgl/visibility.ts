@@ -1,12 +1,12 @@
-// BG.W-COLOCATE — the canvas VISIBILITY / park / reveal observers, carved into this
-// colocated leaf (the WS4 canvas-lifecycle carve; ratchet-drain #3). `createCanvasLifecycle`
+// the canvas VISIBILITY, park, reveal observers, carved into this
+// colocated leaf (the canvas-lifecycle carve; ratchet-drain #3). `createCanvasLifecycle`
 // (the SCHEDULER — the suspend Set + rAF tick/wake gate + the live reduced-motion
 // re-monitor + the context-loss circuit-breaker) COMPOSES this leaf: the observers OWN
 // only the DOM-observer plumbing (the tab-visibility owner, the content-visibility
 // offscreen-park, the leaf ResizeObserver + presize, the IntersectionObserver park, and
 // the one-shot first-visible reveal bloom) and drive the scheduler ONLY through the
 // injected `suspend`/`resume`/`resize`/`wake` callbacks — the schedule lives ONCE in the
-// scheduler, the DOM observers ONCE here. Both proof:offscreen-pause + the substrate
+// scheduler, the DOM observers ONCE here. Both  + the substrate
 // single-source gates read the union (the "asserts follow the composition" precedent).
 
 import type { CanvasSuspendReason } from "./createCanvasLifecycle";
@@ -17,7 +17,7 @@ interface ContentVisibilityAutoStateChangeEvent extends Event {
 
 /**
  * The scheduler seam the observers drive. Each observer writes a DISTINCT suspend
- * reason (`tab-hidden` / `off-screen` / `off-screen-io`) — the one-writer-per-reason
+ * reason (`tab-hidden`, `off-screen`, `off-screen-io`) — the one-writer-per-reason
  * invariant — and reads the scheduler's live `armed`/`hooks`/`disposed`/`reducedMotion`
  * state through the getters (never a shared closure var, so the two files stay decoupled).
  */
@@ -38,7 +38,7 @@ export interface CanvasVisibilityDeps {
 
 export interface CanvasVisibility {
     /**
-     * BD.W-SUBSTRATE-SIZE-UNIFY (G2) — size the backing store + start the leaf RO
+     * Size the backing store and start the leaf RO
      * SYNCHRONOUSLY, decoupled from the (async) context acquire. Idempotent: a no-op
      * once it has run. The WebGPU backend calls this BEFORE its async device request so
      * the canvas is sharp from frame 0 while the device resolves.
@@ -91,8 +91,7 @@ export function createCanvasVisibility(
         //       was never there → its `wasSuspended` guard is false → it never calls
         //       `resize()`. Meanwhile the arm-time `resize()` ran while the box was
         //       un-laid-out (clientWidth/Height 0 for a skipped subtree), so the
-        //       backing froze at the un-measured default (the 300×150 HTML default /
-        //       a 1px sliver) and stayed there forever — the reveal never re-sized it.
+        //       backing froze at the un-measured default (the 300×150 HTML default,         //       a 1px sliver) and stayed there forever — the reveal never re-sized it.
         //   (2) the ResizeObserver-blind reveal. A content-visibility reveal is NOT a
         //       border-box size change (the box was always laid out at its real size;
         //       only the PAINT was skipped), so the ResizeObserver does not fire on
@@ -110,14 +109,14 @@ export function createCanvasVisibility(
         deps.wake();
     }
     /**
-     * BD.W-SUBSTRATE-SIZE-UNIFY (G2) — bind the CV listener to the NEAREST
+     * Bind the content-visibility listener to the nearest
      * `content-visibility:auto` ancestor, not blindly to `canvas.parentElement`. The
-     * `content-visibility:auto` is often on a HIGHER ancestor (a card / section host),
+     * `content-visibility:auto` is often on a HIGHER ancestor (a card, section host),
      * so binding the parent meant the `contentvisibilityautostatechange` event fired on
      * the wrong element and the reveal never re-measured (the born-skipped 2nd-canvas-
      * forever trap). Walk up (bounded, same depth-cap discipline as `sizeBacking`) to
      * the first `content-visibility:auto` ancestor; fall back to the parent if none
-     * (the IO-park G3 is the belt-and-braces for a non-CV host).
+     * (the IO park covers a non-content-visibility host).
      */
     function findCvHost(): HTMLElement | null {
         const parent = canvas.parentElement;
@@ -151,7 +150,7 @@ export function createCanvasVisibility(
         cvHost = null;
     }
 
-    // ── BD.W-SUBSTRATE-SIZE-UNIFY (G2) — the leaf ResizeObserver ───────────────
+    // ── Leaf ResizeObserver ─────────────────────────────────────────────
     // ONE engine-agnostic RO, owned HERE, observing the canvas. It REPLACES the two
     // per-backend ROs (`useWebGLCanvas`/`useWebGPUCanvas`) — else a leaf RO + two
     // backend ROs = a triple-observe parallel path (the BINDING LAW forbids it). Routes
@@ -164,7 +163,7 @@ export function createCanvasVisibility(
     function presize(): void {
         if (presized) return;
         presized = true;
-        // Size synchronously the instant the canvas has a box (G2) — decoupled from the
+        // Size synchronously as soon as the canvas has a box, decoupled from the
         // GPU acquire. The buffer is correct BEFORE the WebGPU device resolves; the
         // ≤6s blurry-flash window closes (the acquire-timeout becomes pure-cosmetic).
         deps.resize();
@@ -192,7 +191,7 @@ export function createCanvasVisibility(
         }
     }
 
-    // ── BD.W-SUBSTRATE-SIZE-UNIFY (G3) — the leaf-composed IO park ─────────────
+    // ── Leaf-composed IntersectionObserver park ──────────────────────────
     // A plain (scope-free, reactivity-free) IntersectionObserver — NOT the vue
     // `useIntersectionPause` composable (that needs a reactive scope the imperative leaf
     // does not have). Writes the DISTINCT `"off-screen-io"` reason so every consumer
@@ -236,20 +235,20 @@ export function createCanvasVisibility(
 
     function bindPark(): void {
         bindContentVisibility();
-        // G3 — compose the IO park at the leaf (every consumer inherits it, no per-viz wiring).
+        // Compose the IO park at the leaf so every consumer inherits it.
         bindIntersectionPark();
     }
 
-    // ── BG.W-VIZ-REVEAL-BLOOM — the one-shot cold-first-VISIBLE entrance bloom ──
+    // ── One-shot cold-first-visible entrance bloom ────────────────────
     // A ONE-SHOT `data-substrate-reveal` ATTRIBUTE the CANVAS-targeted CSS
     // `@keyframes substrate-reveal-bloom` (viz-reveal.css) reads to ramp
     // `filter: brightness()/saturate()` from a dim floor, OVERSHOOT past 1.0 on the
     // `--ease-cartoon-punch` linear() curve (opacity clamps at 1.0 — only filter:
     // brightness CAN overshoot), then settle to the canvas's own no-resting-filter
     // rest (FIELD bloom, the canvas rect stays scale(1) — no box-zoom gutter).
-    // Compositor-only (EFFECTS-channel, W-MOTION-CANON P1). Fires at FIRST-VISIBLE (a
+    // Compositor-only (EFFECTS-channel,  P1). Fires at FIRST-VISIBLE (a
     // dedicated one-shot IntersectionObserver), NEVER at arm() — a viz arming while
-    // content-skipped / below-fold would burn its one-shot on an invisible paint and
+    // content-skipped, below-fold would burn its one-shot on an invisible paint and
     // never materialize on scroll-in. The `revealFired` guard keeps it ONE-SHOT: an
     // IO/CV re-reveal of an already-seen viz is a silent re-attach → ZERO second bloom
     // on scroll-off-and-back. PRM → the leaf skips the attr entirely (the CSS animation
@@ -271,7 +270,7 @@ export function createCanvasVisibility(
         if (!deps.revealBloom || revealFired || deps.isReducedMotion()) return;
         if (typeof canvas.setAttribute !== "function") return;
         // Gate the bloom on the FIRST-VISIBLE transition. A dedicated one-shot IO at the
-        // real viewport edge (threshold 0, no pre-warm margin) — distinct from the G3
+        // real viewport edge (threshold 0, no pre-warm margin), distinct from the
         // park IO (which pre-warms at 256px). On the first intersection it fires + self-
         // disconnects; an env with no IntersectionObserver best-effort fires next paint.
         if (typeof IntersectionObserver === "undefined") {

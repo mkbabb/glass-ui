@@ -11,34 +11,34 @@ import type { TimelineSegment } from "./types";
  * current-boundary. Internal variant SFC dispatched from
  * <GlassTimeline variant="continuous">.
  *
- * AA.W1 / A4 §S-17 + AB.W2.T1+T4. Used by multi-phase progress UIs where
+ * Used by multi-phase progress UIs where
  * the phases are conceptually one progression bar (speedtest ping →
  * download → upload).
  *
- * AB.W2.T4 (A4 §nested-interactive — Option C): the progressbar rail and
+ * The progressbar rail and
  * the interactive marker buttons are rendered as SIBLINGS, not as
  * parent/child. `.continuous-track[role="progressbar"]` is a
  * non-interactive aggregate-progress surface; `.continuous-markers
  * ul[role="list"]` is the focusable marker overlay.
  *
- * AB.W2.T2 (A4 §B2.c): each marker button is wrapped in <HoverPopover>
+ * Each marker button is wrapped in <HoverPopover>
  * so hover surfaces a color-coded popover with the segment's
  * `{ label, value, description, state }`. Consumers override the
  * popover body via the scoped `#popoverContent` slot.
  *
- * AB.W2.T3 (A2 §B2.b): the `currentSegmentKey` prop stamps
+ * The `currentSegmentKey` prop stamps
  * `data-current="true"` on the matching marker so consumers (panel /
  * W3 raised-rivet styling) can distinguish the active phase from the
  * transient hovered phase. Hover affects the popover only; the
  * underlying current marker survives hover-leave.
  *
- * NON-SCOPED <style> CONTRACT (O.W3 Lane A — Rβ §3.1): the
+ * Non-scoped style contract: the
  * `.timeline-popover` rules live in a non-scoped <style> block at the
  * bottom of THIS SFC because HoverCardPortal escapes scoped CSS. The
  * rules must live in a component that participates in the continuous
  * render path; this is that component.
  *
- * AI.W1-δ `#detail` slot (post-RD-3 §4): the continuous variant emits an
+ * The continuous variant emits an
  * optional `#detail` scoped slot rendered as a sibling of the rail wrap,
  * payload-rich with `{ segment, source, currentKey, hoveredKey }`. The
  * primitive owns the effective-segment resolution (hovered ?? current);
@@ -46,8 +46,7 @@ import type { TimelineSegment } from "./types";
  * fade-swap keyed on the segment's stable key). The slot mount carries
  * a `min-height` reservation via `--timeline-detail-min-height` so
  * idle ↔ active transitions do not reflow the surrounding layout.
- * Speedtest's `PhaseTimelineDetailPanel` is the canonical consumer
- * (absorbed in AI.W1-δ).
+ * This keeps detail choreography consumer-owned without reflowing the rail.
  */
 const props = withDefaults(
     defineProps<{
@@ -58,7 +57,7 @@ const props = withDefaults(
          */
         ariaLabel?: string;
         /**
-         * AB.W2.T3 — current segment key. Stamps `data-current="true"`
+         * Current segment key. Stamps `data-current="true"`
          * on the matching marker (and `data-completed="true"` on prior
          * markers, derived from each segment's `state`). Hover affects
          * the popover only; the current marker survives hover-leave so
@@ -66,7 +65,7 @@ const props = withDefaults(
          */
         currentSegmentKey?: string;
         /**
-         * AB.W2.T2 — disable the default per-marker HoverPopover.
+         * Disable the default per-marker HoverPopover.
          * Useful when a consumer wants to fully own the hover affordance
          * (e.g. anchor a single popover externally). The dot still emits
          * `hover` / `click` events.
@@ -93,7 +92,7 @@ const { regionLeft, regionWidth, boundaryX, continuousAriaValueNow } =
     createContinuousGeometry(segmentList);
 
 /**
- * AC.W9 (Lane B / B2) — the ONE rail-spanning stitched gradient. The
+ * The one rail-spanning stitched gradient. The
  * `continuous` variant is conceptually a single progression bar; every
  * region windows into THIS gradient so the phase hues cross-fade
  * smoothly across the boundaries with no per-region seam. Recomputed
@@ -110,7 +109,7 @@ const continuousAriaLabel = computed<string>(() => {
 });
 
 /**
- * AI.W1-δ — primitive-side hovered-key tracking. The continuous variant
+ * The continuous variant owns hovered-key tracking.
  * owns the hovered-segment state (the previously consumer-side
  * `hoveredSegmentKey` ref that lived in speedtest's PhaseTimeline.vue
  * migrates inward). The `#detail` slot then receives both the current
@@ -159,7 +158,7 @@ function onSegmentClick(seg: TimelineSegment) {
 </script>
 
 <template>
-    <!-- AA.W1 / A4 §S-17 + AB.W2.T1+T4 — Option C structural split: the
+    <!-- Structural split: the
          rail and the marker buttons are SIBLINGS, not parent/child.
          `.continuous-track[role="progressbar"]` is a non-interactive
          aggregate-progress surface (no focusable descendants — fixes
@@ -167,7 +166,7 @@ function onSegmentClick(seg: TimelineSegment) {
          `<ul role="list">` overlay carrying the per-phase interactive
          buttons. The marker list lives outside the rail's
          `overflow: hidden` clip, so the dots' outer 16px box paints in
-         full (fixes the AB.W2 B2.a perceived-off-centre artefact). -->
+         full. -->
     <div
         class="timeline-row timeline-continuous"
         role="group"
@@ -205,7 +204,7 @@ function onSegmentClick(seg: TimelineSegment) {
             </ContinuousMarkers>
         </div>
 
-        <!-- AI.W1-δ `#detail` slot — payload-rich scoped slot consumers
+        <!-- The payload-rich `#detail` scoped slot lets consumers
              mount inline to surface a per-segment detail row (label,
              value, description, etc.) keyed to the effective segment
              (hovered ?? current). Primitive owns the resolution; the
@@ -237,14 +236,14 @@ function onSegmentClick(seg: TimelineSegment) {
 }
 
 /* ─────────────────────── Continuous variant ───────────────────────
-   AA.W1 / A4 §S-17 + AB.W2.T1+T4. ONE rounded-pill rail substrate +
+   One rounded-pill rail substrate with
    N absolute-positioned region children spanning prev-boundary →
    current-boundary. Per-region gradient drives the visual; optional
    seam dividers at region boundaries are gated by
    `--timeline-continuous-seam-opacity` (set to `0` to suppress
    entirely).
 
-   AB.W2.T4 — structural Option C split: the rail and the marker
+   The rail and marker
    buttons are SIBLINGS inside a relative-positioned `.continuous-
    track-wrap` parent. The marker `<ul>` overlay paints over the rail
    without nesting inside it, so:
@@ -276,7 +275,7 @@ function onSegmentClick(seg: TimelineSegment) {
     transition: opacity var(--duration-normal, 0.3s) var(--ease-out, ease-out);
 }
 
-/* AI.W1-δ `#detail` slot mount — sibling of `.continuous-track-wrap`.
+/* The `#detail` slot mounts beside `.continuous-track-wrap`.
    Reserves `--timeline-detail-min-height` so idle ↔ active transitions
    keyed by the consumer (`<Transition mode="out-in">`) do not reflow
    the surrounding layout. Consumers override the reservation per-host
@@ -289,7 +288,7 @@ function onSegmentClick(seg: TimelineSegment) {
 }
 </style>
 
-<!-- O.W3 Lane A (Rβ §3.1 — preserved verbatim): the `.timeline-popover`
+<!-- The `.timeline-popover`
      rules live in a NON-scoped <style> block because the HoverPopover
      content portals out of this component (rendered into the body via
      reka-ui's HoverCardPortal), so scoped CSS doesn't reach it. The
@@ -300,7 +299,7 @@ function onSegmentClick(seg: TimelineSegment) {
      CONTRACT: this block must live in a SFC that participates in the
      continuous render path so the global rules are loaded whenever a
      continuous-variant timeline mounts. Do NOT move to a separate .css
-     file — Rβ §5 (portal CSS contract). -->
+     file because this component owns the portal CSS contract. -->
 <style>
 .timeline-popover {
     /* Tighter than the default hover-popover padding — this surface

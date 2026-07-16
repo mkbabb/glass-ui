@@ -1,6 +1,6 @@
 // demo/shell/configurator/preset-editor/css-writers.ts — runtime CSS-variable writers.
 //
-// O.W3 Lane C — split from the prior `usePresetEditor.ts` god-module per Rβ.
+// Split from the former monolithic `usePresetEditor.ts`.
 // Pure CSS-custom-property application — no module-level state, no localStorage,
 // no stylesheet `<link>` toggling. Caller owns the `written` accounting; this
 // module just mutates `root.style`.

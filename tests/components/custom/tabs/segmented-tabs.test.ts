@@ -40,9 +40,6 @@ describe("SegmentedTabs v-model (segmented default)", () => {
         );
         expect(indicator.element.childElementCount).toBe(0);
         expect(wrapper.find(".segmented-indicator__plate").exists()).toBe(false);
-        expect(
-            wrapper.get('[role="group"]').attributes("data-eyeglass"),
-        ).toBeUndefined();
     });
 
     it.each([

@@ -9,15 +9,15 @@ import {
     watch,
 } from "vue";
 import type { Component } from "vue";
-import { useSelectionGroup } from "../../composables/motion/useSelectionGroup";
+import { useSelectionGroup } from "../../composables/motion/morph/useSelectionGroup";
 import { useOptionalDockContext } from "./composables/dockContext";
 import DockCrossfade from "./DockCrossfade.vue";
 import type { DockFaceDescriptor } from "./composables/dockCrossfadeContext";
 import {
     useDragMorph,
     type DragMorphSnapTarget,
-} from "../../composables/motion/useDragMorph";
-// BH.W-MOTION-AXIS — the `draggable` boolean dies onto the ONE `motion` axis.
+} from "../../composables/motion/morph/useDragMorph";
+// the `draggable` boolean dies onto the ONE `motion` axis.
 import type { Motion } from "../_shared/axes";
 import { useMotionAxis } from "../_shared/useMotionAxis";
 
@@ -25,12 +25,12 @@ import { useMotionAxis } from "../_shared/useMotionAxis";
  * <DockLayerGroup> — a stack of <DockLayer> faces with an optional Figma-style
  * switcher rail built from each face's metadata.
  *
- * BI.W-DOCK-CROSSFADE — the FLIP/registration engine is RETIRED. The face-swap is now
- * ONE crossfade slot: this component COMPOSES `<DockCrossfade :active>` (the thin
+ * the FLIP/registration engine is RETIRED. The face-swap is now
+ * ONE crossfade slot: this component COMPOSES `<DockCrossfade:active>` (the thin
  * controlled core — two-child opacity overlap, peak reserve, focus-transfer) and reads
  * the registered face descriptors off it for the rail.
  *
- * BI.W-DOCK-FOLD — the switcher rail is driven by the library's ONE headless selection
+ * the switcher rail is driven by the library's ONE headless selection
  * engine `useSelectionGroup` (the dock IS SegmentedTabs/ToggleGroup wearing chrome). The
  * reka `ui/tabs` substrate + its `--reka-tabs-indicator-*` position path are DEFINITION-
  * ABSENT (retired); the rail is a plain `role="tablist"` of `role="tab"` buttons whose
@@ -41,8 +41,8 @@ import { useMotionAxis } from "../_shared/useMotionAxis";
  *
  * Usage:
  *   <DockLayerGroup v-model:active="layer">
- *     <DockLayer id="assets" label="Assets" :icon="AssetsIcon">...</DockLayer>
- *     <DockLayer id="layers" label="Layers" :icon="LayersIcon">...</DockLayer>
+ *     <DockLayer id="assets" label="Assets":icon="AssetsIcon">...</DockLayer>
+ *     <DockLayer id="layers" label="Layers":icon="LayersIcon">...</DockLayer>
  *   </DockLayerGroup>
  */
 
@@ -55,7 +55,7 @@ const props = withDefaults(
         /** Rail placement relative to the face stack. */
         railPosition?: "start" | "end";
         /**
-         * BH.W-MOTION-AXIS — the ONE motion-weight axis. `full` (default) arms
+         * the ONE motion-weight axis. `full` (default) arms
          * pull-to-switch: the switcher-rail indicator is draggable — pull along the rail
          * axis to the next face chip, the fling-to-nearest on release writes `active`
          * (`useDragMorph`, consumer #2). `reduced`/`off` opt DOWN to click/keyboard-only
@@ -82,7 +82,7 @@ const axis = computed(
 const crossfade = useTemplateRef<{ faces: DockFaceDescriptor[] } | null>("crossfade");
 const layers = computed<DockFaceDescriptor[]>(() => crossfade.value?.faces ?? []);
 
-/* AX.W45 DK8 — the rail's visual axis is PERPENDICULAR to the group axis: a horizontal
+/*  DK8 — the rail's visual axis is PERPENDICULAR to the group axis: a horizontal
    group renders the rail as a COLUMN of stacked tabs (indicator travels Y); a vertical
    group renders the rail as a ROW (indicator travels X). */
 const railOrientation = computed<"horizontal" | "vertical">(() =>
@@ -90,7 +90,7 @@ const railOrientation = computed<"horizontal" | "vertical">(() =>
 );
 const railVertical = computed<boolean>(() => railOrientation.value === "vertical");
 
-// ── The ONE headless selection engine (BI.W-DOCK-FOLD) ──
+// ── The ONE headless selection engine ──
 // Drives the rail's roving focus, role=tab/aria-selected, and the ONE traveling-
 // indicator writer. `model` is the consumer-owned `activeLayer` (the one registry).
 const railListEl = ref<HTMLElement | null>(null);
@@ -109,7 +109,7 @@ const selection = useSelectionGroup<{ value: string }>({
     buttonRefs: railButtonRefs,
 });
 
-/* BB.W-DRAG-MORPH — pull-to-switch (consumer #2). The switcher rail is draggable: pull
+/* pull-to-switch (consumer #2). The switcher rail is draggable: pull
    along the rail axis to the adjacent face chip, the fling-to-nearest writes the
    consumer-owned `active` model (no shadow state — the one-registry discipline). This
    adds the pull GESTURE on the rail; the face-swap crossfade is `<DockCrossfade>`'s. */
@@ -159,7 +159,7 @@ onMounted(() => {
     if (motionAxis.armed.value) nextTick(() => railDrag.refresh());
 });
 
-/* AY.W-DOCK-NAV B6 — a Vue component icon can be an OBJECT (SFC) OR a FUNCTION
+/*  B6 — a Vue component icon can be an OBJECT (SFC) OR a FUNCTION
    (a `@lucide/vue` v1 functional render component); a non-empty string is the explicit
    text-glyph case. Accept both component forms so lucide icons render (not the
    first-letter fallback). */
@@ -169,7 +169,7 @@ function isComponent(icon: unknown): icon is Component {
     );
 }
 
-/* AU.W8.4 — keep the dock open while a rail tab holds focus, so keyboard navigation
+/* Keep the dock open while a rail tab holds focus, so keyboard navigation
    (Arrow/Home/End) does not trip the idle-collapse timer. A boolean edge keeps the
    keep-open token reference-counted exactly once. */
 const railHolds = ref(false);
@@ -201,7 +201,7 @@ onBeforeUnmount(() => {
         :data-motion="motionAxis.dataMotion.value"
         :style="motionAxis.hostStyle.value"
     >
-        <!-- BI.W-DOCK-FOLD — the layer-switcher rail is a plain APG tablist driven by
+        <!-- the layer-switcher rail is a plain APG tablist driven by
              `useSelectionGroup` (role=tablist/tab + aria-selected, roving tabindex,
              Arrow/Home/End). The engine's model binds the SAME `activeLayer` ref the
              crossfade slot reads, so selecting a tab drives the face-swap with no second

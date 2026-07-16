@@ -1,22 +1,11 @@
-// vizPreviewStill — the per-STORY distinct viz-preview-still registry
-// (BG.W-VIZ-PREVIEW-LIVE — D6 / WS5-01: the 11-identical-frozen-aurora-stills cure).
-//
-// THE DEFECT the /substrates bento carried: every card shared the ONE category
-// `fieldStill` (SectionLanding derives a single aurora still per category and hands
-// it to all cards) — IDENTICAL stills, the user's "not-live/all-the-same" defect
-// (UF-E9). The cure is a per-STORY dispatch: each substrate viz card rasters its OWN
-// recognizable still off a DISTINCT characteristic generator (the viz's signature
-// math — a curl-warped grid for liquid-grid, a partial-sum harmonic curve for the
-// fourier field, a sum-of-inverse-squares SDF for the metaball), so per-card
-// pixel-hash differs BY CONSTRUCTION. Seven surviving substrates post-B5 deletion
-// (dot-flow-field/concentric/dot-matrix retired): aurora·blob·constellation·
-// fourier-field·glass-material·glass-panel·liquid-grid — one distinct still each.
+// Per-story viz-preview stills. Each substrate card rasterizes a characteristic
+// generator, so preview identity follows the substrate rather than its category.
 //
 // THE ONE-GL BUDGET: every still is a device-free Canvas2D raster → `data:` URI
-// (the shipped `auroraFallbackGround` pattern — pure raster into a THROWAWAY
+// (the `auroraFallbackGround` pattern — pure raster into a throwaway
 // offscreen canvas, never a live substrate), so the landing adds ZERO WebGL/WebGPU
 // contexts — a still is a parked frame, not a live context. Module-memoized: each
-// route rasters its data-URI ONCE globally (not per card mount / per landing visit).
+// route rasters its data-URI ONCE globally (not per card mount, per landing visit).
 //
 // A demo-private helper — NOT a library export.
 
@@ -44,8 +33,7 @@ export interface VizStillSpec {
  * The per-ROUTE registry — keyed on the full `/substrates/<id>` route so the
  * dispatch is per-STORY, never the per-category smear. Seven entries (the surviving
  * substrate set post-B5 deletion), each a DISTINCT (pattern,hue,seed) triple, so
- * `proof:story-tiles`'s substrate-index arm proves the seven-cards-seven-hashes bar
- * device-free (two entries with the same triple RED).
+ * each card resolves a distinct still without relying on device rendering.
  */
 export const VIZ_PREVIEW_STILLS: Readonly<Record<string, VizStillSpec>> = {
     "/substrates/aurora": { pattern: "nuclei", hue: 58, seed: 101 },

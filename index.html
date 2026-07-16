@@ -21,11 +21,11 @@
              needed; the demo dogfoods exactly what a consumer of
              `@mkbabb/glass-ui/styles/fonts` receives. -->
 
-        <!-- BG.W-CSS-MINIFY (F8.4) — the /styles cascade is the ONE byte-complete
-             union entry `@mkbabb/glass-ui/styles` (the minified cascade). The
-             BB.W-CSS-CRITICAL critical/deferred split loader recipe retired here:
+        <!-- The /styles cascade is the one byte-complete union entry
+             `@mkbabb/glass-ui/styles` (the minified cascade). The earlier
+             critical/deferred split loader recipe retired here:
              after the publish-time minify the ~13KB saving was not worth the
-             split's wave + gate + manifest + two exports, so a consumer imports
+             split's coordination and extra exports, so a consumer imports
              the single `@mkbabb/glass-ui/styles` entry. The demo's DEV server
              bundles the library SOURCE cascade through demo.css
              (`@import "../src/styles/index.css"`, the union for HMR simplicity). -->

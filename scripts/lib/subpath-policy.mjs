@@ -96,10 +96,8 @@ export const COMPONENT_CLASS = {
 
 // --- src/composables/<subtree> ---
 export const COMPOSABLE_CLASS = {
-    // PUBLISH (4) — published through their own index.ts.
+    // PUBLISH (3) — published through their own index.ts.
     color: "PUBLISH", dom: "PUBLISH", reactive: "PUBLISH",
-    // BI.W-VIRTUAL-TRUTH: /virtual RETIRED terminal (0 external consumers; the engine stays internal).
-    virtual: "INTERNAL",
     // CURATED (4) — the vueuse/keyframes-bearing SCC-trap surfaces published via a
     // hand-curated flat barrel at src/<name>.ts, NOT this subtree's index.ts.
     dark: "CURATED", keyboard: "CURATED", motion: "CURATED", sidebar: "CURATED",
@@ -152,8 +150,6 @@ export const COMPOSABLE_SUBPATHS = {
     color: "src/composables/color/index.ts",
     dom: "src/composables/dom/index.ts",
     reactive: "src/composables/reactive/index.ts",
-    // BI.W-VIRTUAL-TRUTH: /virtual RETIRED terminal — the row leaves the published map
-    // (the engine stays internal at src/composables/virtual/).
     canvas: "src/composables/glass/canvas2d/index.ts", // name "canvas" ≠ leaf "canvas2d"
     "fourier-math": "src/components/fourier-field/math.ts", // nested, name ≠ leaf
 };
@@ -166,6 +162,9 @@ export const CSS_FONT_EXPORTS = {
     // not worth its wave + gate + manifest + two exports. The `./styles` union
     // stays the one byte-complete entry (a splitter consumer folds onto it).
     "./styles/fonts": "./dist/styles/fonts.css",
+    // Q060 / ATLAS-N C4 — Tailwind v4 registration only: the @theme aliases
+    // and dark variant, without the component cascade or resolved base tokens.
+    "./styles/theme": "./dist/styles/theme.css",
     "./styles.css": "./dist/glass-ui.css",
     "./fonts/*": "./dist/fonts/*",
 };

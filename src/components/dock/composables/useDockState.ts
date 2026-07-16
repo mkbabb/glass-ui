@@ -23,9 +23,8 @@ export interface UseDockStateOptions {
 export type DockState = "collapsed" | "hover" | "pinned";
 
 /**
- * Canonical return shape for `useDockState`. Named per the O.W6 Lane A
- * `UseClipboardReturn` precedent + P.W2 Lane D (Pγ.3 "useDockState inline
- * return"); freezes today's surface so consumers wrapping `<GlassDock>` (or
+ * Canonical return shape for `useDockState`, paralleling other named composable return
+ * types. It lets consumers wrapping `<GlassDock>` (or
  * authoring a custom dock chassis) can type the composable handle from `/api`
  * or the `/dock` subpath without reaching for `ReturnType<typeof useDockState>`.
  */
@@ -77,11 +76,10 @@ export interface UseDockStateReturn {
  * ```
  */
 export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
-    // BD.W-DOCK-CORE (A2) — the patient-dwell collapse delay (2500 → 3600ms): a more
+    // Patient-dwell collapse delay (2500 → 3600ms): a more
     // forgiving hover/interaction window before auto-collapse. The ~60ms HOVER_INTENT_MS
-    // enter-dwell (a genuine UX sweep-past guard) is KEPT; BI.W-DOCK-RETIRES deleted the
-    // AZ.W-DOCK-FLICKER moving-edge-sweep recheck (`EDGE_BAND_PX`), dead once W-DOCK-SPINE
-    // moved the hit frame onto a stationary, state-sized box that never sweeps the cursor.
+    // enter dwell is kept as a sweep-past guard. The stationary, state-sized hit frame
+    // removes the moving-edge recheck because it never sweeps the cursor.
     const {
         collapseDelay = 3600,
         rootEl,
@@ -102,7 +100,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
     const isPinned = computed(() => state.value === "pinned");
 
     let collapseTimer: ReturnType<typeof setTimeout> | null = null;
-    /* J.W5.C — `keepOpenCount` lifted to a reactive ref so descendants
+    /* `keepOpenCount` is reactive so descendants
        can derive `isHeld` from it. The semantics (≥ 1 token alive
        suppresses timer-based collapse) are unchanged; reactivity is
        additive. */
@@ -112,16 +110,16 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
     let installClickAwayFrame: number | null = null;
     let isCollapsing = false;
 
-    /* The hover INTENT-DWELL (HOVER_INTENT_MS, a genuine UX sweep-past guard KEPT by
-       W-DOCK-SPINE). A collapsed→hover expand from `onMouseEnter` is DEFERRED a few ms;
+    /* The hover intent dwell is a genuine sweep-past guard. A collapsed→hover expansion
+       from `onMouseEnter` is deferred briefly;
        a spurious enter from a fast cursor sweep is canceled by the immediately-following
        leave (which clears the pending dwell via `clearHoverIntent`) before it commits. A
        genuine human hover dwells past the window and expands. The dwell is bypassed for
        focus parity (`onFocusIn` stays instant — a keyboard focus is never a sweep artefact).
 
-       BI.W-DOCK-RETIRES deleted the AZ.W-DOCK-FLICKER moving-edge-sweep recheck
+       The moving-edge-sweep recheck is absent
        (`isMorphingEdgeSweep` + `EDGE_BAND_PX` + the `onMouseLeave` geometry recheck, ~120L):
-       W-DOCK-SPINE (G7) moved the enter/leave listeners onto a STATIONARY, state-sized hit
+       because enter/leave listeners live on a stationary, state-sized hit
        frame that never sweeps under the cursor, so a hit frame that does not move cannot
        re-fire enter↔leave — there is nothing to guard. Clean break, no alias. */
     let hoverIntentTimer: ReturnType<typeof setTimeout> | null = null;
@@ -173,7 +171,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         }, collapseDelay);
     }
 
-    /* BG.W-DOCK-CONSUMER-FENCE — the synthetic `document.body.dispatchEvent(new
+    /* The synthetic `document.body.dispatchEvent(new
        PointerEvent("pointerdown", …))` that `scheduleCollapse`/`collapse` used to
        fire ("let open portals run their normal outside dismissal") is DELETED (clean
        break, no shim). It was a forbidden GLOBAL FAKE GESTURE: reka-ui's
@@ -225,7 +223,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         if (getAlwaysExpanded()) return;
         clearTimer();
         if (state.value === "collapsed") {
-            // AZ.W-DOCK-FLICKER — DEFER the collapsed→hover expand by the intent
+            // Defer collapsed→hover expansion by the intent
             // dwell. A spurious enter from the morphing edge sweeping back over a
             // stationary cursor is canceled by the immediately-following leave
             // (`onMouseLeave` clears the pending dwell) before the expand commits,
@@ -247,7 +245,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
 
     function onMouseLeave(e?: MouseEvent) {
         if (getAlwaysExpanded()) return;
-        // AZ.W-DOCK-FLICKER — a leave cancels any pending hover-intent dwell: a
+        // A leave cancels any pending hover-intent dwell: a
         // sweeping-edge enter immediately chased by a leave never commits the expand.
         clearHoverIntent();
         if (state.value === "hover") {
@@ -329,7 +327,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         }
     }
 
-    /* O.W2 — descendant DI moved up-stack to `<GlassDock>` so the
+    /* Descendant DI lives at `<GlassDock>` so the
        canonical typed `DOCK_CONTEXT_KEY` provide composes `keepOpen` +
        `release` + `isHeld` + `id` + `orientation` in one site.
        `dockExpanded` is permanently retired (zero downstream consumers

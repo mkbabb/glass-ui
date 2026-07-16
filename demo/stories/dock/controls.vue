@@ -31,7 +31,7 @@ import {
 import { useSelectionGroup } from "@glass/composables/motion/core";
 import DockStage from "./_frame/DockStage.vue";
 
-// BI.W-DOCK-CONTROLS — the reference CONTROLS demo. The dock IS SegmentedTabs/
+// the reference CONTROLS demo. The dock IS SegmentedTabs/
 // ToggleGroup wearing chrome, so its control run is driven by the SAME headless
 // `useSelectionGroup` engine (the roving machine + the scrollIntoView recenter +
 // role-per-mode ARIA), and its controls are ordinary `<DockControl>` (the folded
@@ -66,7 +66,7 @@ const selection = useSelectionGroup<Filter>({
     // A single-select filter strip rendered as a toggle group (role="group" +
     // aria-pressed) — consistent with the DockControl `active` selected register.
     // (The engine's radiogroup/tablist role modes are exercised at the group level
-    // by SegmentedTabs / ToggleGroup, folded onto this engine in W-DOCK-FOLD.)
+    // by SegmentedTabs, ToggleGroup, folded onto this engine in.)
     mode: "single",
     role: "group",
     containerRef: filterRowRef,

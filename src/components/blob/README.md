@@ -41,7 +41,7 @@ import { Blob, BLOB_CONFIG_DEFAULTS } from "@mkbabb/glass-ui/blob";
 `config` is required unless an ancestor `provide(BLOB_CONFIG_KEY, …)` supplies it (a mount
 with neither throws — there is no silent defaults synthesis). Color is resolved INTERNALLY
 through the `/color` leaf (`cssToOklch → oklchToGammaRgb`) — no injected resolver prop (the
-speculative DI was stripped at W-BLOB3). Pass
+speculative dependency injection was removed). Pass
 `BLOB_CONFIG_DEFAULTS` for the stock lit warm-cream droplet — the
 defaults carry a light warm-cream OKLCh `color.paletteStops` ramp, so a bare mount paints the
 cream bead WITHOUT a per-instance `color`; `color` is only the single-stop fallback. Pass an
@@ -296,11 +296,11 @@ impulse resolves to the substrate's static rest pose. See [Accessibility](#acces
 - The blob works entirely in **OKLCh**, lifted from a gamma-sRGB base through value.js's exact Ottosson
   OKLab/OKLCh matrices, with a **hue-preserving gamut clamp** and the **mandatory `linearToSrgb()`
   OETF** on output. A linear-in-without-an-OETF-out ships visibly ~2.2× too dark — the named A5/A2
-  trap, machine-locked by `proof:blob-space-gamma`.
+  trap.
 - The OETF + the four Ottosson matrices + the FBM rotation constant are **spliced from the shared
   `procedural-color.glsl.ts` chunk** that both the blob and aurora compose, so the color math can never
   diverge between the two surfaces. The line-for-line TS port + the equivalence gate
-  (`proof:blob-color-equivalence`) lock it.
+  lock it.
 - **The renderer is DOM-free.** A `var(--token)` color is un-wrapped to a concrete `rgb(...)` by the
   SFC (the single cached `resolveTokenColor` cascade read) BEFORE the renderer resolves it through the
   `/color` leaf (`cssToOklch → oklchToGammaRgb`) — value.js's `parseCssColor` reports `color_context_required` for `var()`
@@ -322,7 +322,7 @@ impulse resolves to the substrate's static rest pose. See [Accessibility](#acces
   (mood settled, pointer at rest, trail collapsed, click pulse zero, no satellite mid-merge) PARKS its
   rAF and re-arms only when the next satellite phase or auto-mood arc is due. An idle ambient blob
   renders ~0 frames between phase transitions instead of burning a full 60fps forever.
-- **The `settled` seam — park YOUR own idle logic only from settled (BI.W-BLOB-SEAMS).** The renderer
+- **The `settled` seam — park your own idle logic only from settled.** The renderer
   handle (and the `<Blob>` template ref via `defineExpose`) exposes `settled: Readonly<Ref<boolean>>`
   — `true` IFF the engine is at rest: mood settled **AND** pointer at rest **AND** no satellite
   mid-transition (merging/absorbed/emerging/**fissioning** — zero in-flight fission beat). It is
@@ -409,7 +409,8 @@ blob/
 │   └── oklch-perturb.glsl.ts     # inGamut + hue-preserving gamutClampOklch
 └── composables/
     ├── useMetaballRenderer.ts   # composes createGpuSubstrate (WebGPU primary / WebGL2 fallback);
-    │                            #   the SHARED resolveFrame sim-advance, quiescence gate, pause/resume seam
+    │                            #   Vue refs, substrate setup, and engine upload bridges
+    ├── blobSimulation.ts        # the shared clocks, resolveFrame, quiescence snapshot, and scheduled wake
     ├── wgpuSetup.ts             # the WGSL setupWGPU twin (pipeline + bind-group-0 + the per-frame render pass)
     ├── uniformBridgeWGPU.ts     # the typed-struct uniform SoURCE-OF-TRUTH (the WGSL struct ↔ ArrayBuffer offsets)
     ├── uploadBlobUniforms.ts    # the WebGL2 per-frame uniform-upload leaf
@@ -424,7 +425,7 @@ load — the emitted shader is character-equivalent to a hand-inlined version. T
 the SFC un-wraps every color via one `resolveTokenColor` leaf before the renderer resolves the concrete
 strings through the `/color` leaf (`cssToOklch → oklchToGammaRgb`).
 
-### Substrate (BB.W-VIZ-SUITE / W-GOOBLOB-WGPU — the second migrated viz)
+### Substrate
 
 Blob is the SECOND procedural-suite viz migrated to the WebGPU-first dual-substrate (after aurora).
 It renders the SAME SDF metaball field through ONE of two backends, picked ONCE at mount by
@@ -441,7 +442,7 @@ It renders the SAME SDF metaball field through ONE of two backends, picked ONCE 
 - **`metaball.frag.ts` — the WebGL2 fallback** (BYTE-UNTOUCHED — the GL-shader fence). The graceful
   path for the ~5-10% tail (Linux Firefox stable, pre-A12 iPhones, flagged Firefox-Android). NOT retired.
 
-The renderer's **simulation advance (`resolveFrame`) is SHARED** across both backends — it advances the
+`blobSimulation`'s **simulation advance (`resolveFrame`) is SHARED** across both backends — it advances the
 mood / pointer / satellite systems on the tempo-scaled step and returns the settled `BlobFrameState`; the
 WebGL2 `drawFrame` (then `uploadBlobUniforms`) and the WGSL `frame` (then `packBlobWGPUUniforms`) both
 call it, so the physics is identical regardless of backend and only the upload+draw leg differs. The

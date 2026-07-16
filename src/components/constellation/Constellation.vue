@@ -3,7 +3,7 @@ import { computed, useTemplateRef, watch } from "vue";
 import { type ConstellationProps } from "./constellationField";
 import { useConstellation } from "./composables/useConstellation";
 import { DEFAULT_PARALLAX } from "./constants";
-import { useRoutePointer } from "../../composables/motion/useRoutePointer";
+import { useRoutePointer } from "../../composables/motion/pointer/useRoutePointer";
 import { cn } from "../_shared/class-names";
 import type { RendererStatus } from "../../composables/glass/webgpu/rendererStatus";
 
@@ -24,9 +24,9 @@ const emit = defineEmits<{ rendererStatus: [status: RendererStatus] }>();
  * Palette reads the FULL `--constellation-*` legibility set off the canvas (the
  * node/node-dim/line colors + the edge-alpha multipliers + the field-yields-to-
  * type `--constellation-alpha` knob; neutral fallbacks), so a consumer override
- * or a dark-mode flip re-tints AND re-weights the lattice (AX.W17).
+ * or a dark-mode flip re-tints and re-weights the lattice.
  *
- * The focal node + click-to-warp (AX.W17) is a first-class engine concept: with
+ * The focal node and click-to-warp are first-class engine concepts: with
  * `warpOnClick`, a click warps the focal node to the nearest drifting node via a
  * critically-damped spring stepped INSIDE the substrate's single rAF (no
  * `useSpring`, no second rAF). The focal mark rides `field.warp.{x,y}` (the
@@ -35,7 +35,7 @@ const emit = defineEmits<{ rendererStatus: [status: RendererStatus] }>();
  *
  * The prop contract is the public `ConstellationProps` (constellationTypes.ts);
  * the render-loop + lifecycle wiring lives in the `useConstellation` composable
- * (BA.W-CARVE2 — the SFC keeps only its template + the prop defaults + the thin
+ * (the SFC keeps only its template, prop defaults, and thin
  * composable call). `freeze` is resolved via the RAW vnode prop inside the
  * composable (NOT a default here) because Vue casts an absent Boolean prop to
  * `false`, which would erase the omitted-vs-explicit-false distinction the
@@ -61,7 +61,7 @@ const props = withDefaults(defineProps<ConstellationProps>(), {
 const hostRef = useTemplateRef<HTMLElement>("hostRef");
 const canvasRef = useTemplateRef<HTMLCanvasElement>("canvasRef");
 
-// BI.W-CONSTELLATION-DEDUPE — the interactive-BACKGROUND standard (the FourierField
+// Interactive-background behavior follows the FourierField
 // pattern). A full-bleed `pointer-events:none` background cannot listen for its own
 // pointer, so it reads the route chassis's ONE window broadcaster (provided by the route
 // chassis — `StoryHero`) and feeds a SUBTLE well over the shared field. The broadcaster is
@@ -125,7 +125,7 @@ defineExpose(expose);
     outline-offset: 2px;
 }
 
-/* The root layout is CONSUMER-OVERRIDABLE (AY.W-SB1 §1.5.2 — the zero-paint
+/* The root layout is consumer-overridable (the zero-paint
    fix). A scoped `.constellation[data-v-…]` selector is specificity (0,2,0) — it
    would BEAT a consumer's single-class placement (e.g. the storybook
    `.story-hero-bg { position: absolute; inset: 0 }` at (0,1,0)), pinning the host

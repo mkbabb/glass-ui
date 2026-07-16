@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import { defineAsyncComponent } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
-import StorySection from "../../chassis/section/StorySection.vue";
-import FamilyTabs, { type FamilyMember } from "../../chassis/family/FamilyTabs.vue";
 import {
     Table,
     TableBody,
@@ -15,21 +12,9 @@ import {
 } from "@glass/components/table";
 import { Badge } from "@glass/components/badge";
 import { cn } from "@glass/components/_shared/class-names";
-import { Table as TableIcon } from "@lucide/vue";
 
-// BC.W-SUFFUSE-reconcile — the data band's ONE coherent --section-color-9
+// reconcile — the data band's ONE coherent --section-color-9
 // double-header shape).
-
-// BG.W-DEMO-IA-REDESIGN — the Data TABLE family. The sortable/filterable data-table
-// folds onto this ONE table page as a member (bare, STORY_NESTED_KEY) via the
-// switcher below.
-const familyMembers: FamilyMember[] = [
-    {
-        id: "data-table",
-        label: "Data table",
-        component: defineAsyncComponent(() => import("./data-table.vue")),
-    },
-];
 
 interface Invoice {
     id: string;
@@ -72,7 +57,7 @@ const fmt = (n: number) => new Intl.NumberFormat("en-US", { style: "currency", c
             >
                 <Table>
                     <TableCaption class="pb-4 text-mono-caption">
-                        Recent invoices · hover a row for the interactive-item treatment.
+                        Recent invoices with status, payment method, and total.
                     </TableCaption>
                     <TableHeader>
                         <TableRow>
@@ -84,11 +69,7 @@ const fmt = (n: number) => new Intl.NumberFormat("en-US", { style: "currency", c
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        <TableRow
-                            v-for="row in rows"
-                            :key="row.id"
-                            class="interactive-item cursor-pointer"
-                        >
+                        <TableRow v-for="row in rows" :key="row.id">
                             <TableCell class="fira-code text-mono-code">{{ row.id }}</TableCell>
                             <TableCell class="font-medium">{{ row.customer }}</TableCell>
                             <TableCell>
@@ -138,8 +119,5 @@ const fmt = (n: number) => new Intl.NumberFormat("en-US", { style: "currency", c
                 </Table>
             </div>
         </div>
-        <StorySection heading="Sortable data table">
-            <FamilyTabs :members="familyMembers" aria-label="Table family" />
-        </StorySection>
     </StoryPage>
 </template>

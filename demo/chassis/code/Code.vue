@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// Code — the inline-code rung of the ONE demo code register (BC.W-CODE-BLOCKS).
+// Code — the inline-code rung of the ONE demo code register.
 //
 // A thin `<code class="fira-code">` wrapper + a subtle tint chip so a literal
 // POPS out of prose. The chip is the SUFFUSE one-color-event idiom transposed to
@@ -9,13 +9,12 @@
 // the DEFAULT chip is the neutral warm event home, never a new hue on a page that
 // already has its color event).
 //
-// The component-name / token / subpath / px / numeric literal that used to spell
+// The component-name, token, subpath, px, numeric literal that used to spell
 // `font-mono text-xs` (or a raw `class="fira-code"`) inline folds onto this ONE
 // primitive — three dialects retired onto the chip (clean break, no alias).
 // Ligatures live (`fira-code` carries liga/calt).
 //
-// A demo-private chassis primitive — NOT a library export (the <StorySection> /
-// <ShowcaseFrame> precedent). A consumer styling its own code uses the documented
+// A demo-private chassis primitive, not a library export. A consumer styling its own code uses the documented
 // `fira-code` utility directly.
 import { computed, type HTMLAttributes } from "vue";
 import { cn } from "@glass/components/_shared/class-names";

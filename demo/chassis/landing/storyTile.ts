@@ -1,7 +1,7 @@
-// storyTile — the per-STORY landing-tile resolution ladder (BI.W-LIVE-TILES).
+// storyTile — the per-STORY landing-tile resolution ladder.
 //
 // The landing bento tiles are REAL scaled components, curated per story — never a
-// shared per-category silhouette (the retired `category-hero.ts` previewKind arm).
+// shared per-category silhouette.
 // A tile resolves down ONE ladder, most-specific rung first:
 //
 //   1. authored  — a co-located `<cat>/<id>.tile.vue` bespoke vignette (the manifest
@@ -15,9 +15,8 @@
 //                  typographic specimen.
 //                  Per-STORY distinct (the title differs), 0-GL, honest — never the
 //                  repeated compass glyph. A page reaches this until it earns a
-//                  `.tile.vue` (the full per-story authoring is the extrapolated G5
-//                  obligation; the manifest carries no importable body to auto-render,
-//                  the SFC owns it — so a rich auto-marquee is a co-located tile, not a
+//                  `.tile.vue`. The manifest carries no importable body to auto-render;
+//                  the SFC owns it, so a rich marquee is a co-located tile, not a
 //                  landing-side SFC eager-import that would break code-splitting).
 //
 // The ladder mounts 0 GL contexts on the landing by construction (rung 2 is the

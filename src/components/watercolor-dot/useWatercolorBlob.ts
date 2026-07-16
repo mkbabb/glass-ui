@@ -1,13 +1,13 @@
 import { ref, watch, type Ref } from "vue";
 import { mulberry32, hashString, randomRadii, radiiToCSS } from "./prng";
-// BG.W-WATERCOLOR-RAF — the animate-mode wobble rides the library's ONE rAF loop
+// the animate-mode wobble rides the library's ONE rAF loop
 // (`useRAFLoop`), NEVER a hand-rolled self-scheduling `requestAnimationFrame(tick)`.
 // The loop parks the frame schedule when the tab is backgrounded (`pauseWhenHidden`)
 // and freezes under `prefers-reduced-motion` (`respectReducedMotion`, live-monitored),
 // so the zombie rAF — a wobble loop that ran forever in a hidden tab AND ignored
 // reduce — is retired. The loop owns its teardown via `onScopeDispose`, so no manual
 // `cancelAnimationFrame` survives here.
-import { useRAFLoop } from "../../composables/motion/useRAFLoop";
+import { useRAFLoop } from "../../composables/motion/core/useRAFLoop";
 
 export interface UseWatercolorBlobOptions {
     /** Enable the rAF animation loop (drives a COMPOSITOR transform wobble). */
@@ -55,7 +55,7 @@ const CHANNEL_AMP: Record<(typeof CHANNELS)[number], number> = {
  * every frame, which flashes Safari). In `animate` mode the liveness rides a seeded
  * COMPOSITOR `transform` wobble (scale/skew/rotate) the compositor handles WITHOUT
  * touching the cached filter — the HandMark static-filter idiom. The wobble is driven
- * by the library's ONE `useRAFLoop` (BG.W-WATERCOLOR-RAF) — parked when the tab is
+ * by the library's ONE `useRAFLoop` — parked when the tab is
  * hidden, frozen under `prefers-reduced-motion` — never a hand-rolled zombie rAF.
  */
 export function useWatercolorBlob(

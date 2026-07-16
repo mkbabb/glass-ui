@@ -1,8 +1,8 @@
-// BD.W-VIZ-RESPEC — the shared traveling-wave CELL-WARP chunk, WGSL twin.
+// The shared traveling-wave cell-warp chunk, WGSL twin.
 //
 // The WGSL string the host shader splices (`${WAVE_FIELD_WGSL}`) AFTER it has defined its
 // noise basis (`valueNoise`, `potentialFBM`) AND spliced the shared `curlFBM` (flow.wgsl.ts).
-// Transcribes `waveField.ts` line-for-line; `proof:wave-field` round-trips the JS↔GLSL↔WGSL
+// Transcribes `waveField.ts` line-for-line; shared numeric vectors round-trip the JS↔GLSL↔WGSL
 // numeric identity at a fixed sample set. NO value.js, no uniforms — a pure string chunk.
 //
 // THE DEPENDENCY contract (the splice-order law — WGSL has no forward declaration): the chunk
@@ -45,7 +45,7 @@ fn cellHeight(cc: vec2f, t: f32, waveDir: vec2f, waveK: f32, waveOmega: f32, wav
 
 // The pre-twist driver (FOLD A): the cell pivot cc + the crest envelope env the twist AND the
 // face both ride. The face samples height/relief at THIS pre-twist cc (the crest twist crosses
-// the cell boundary → floor(twisted_g) would light a NEIGHBOUR cell). cc in .xy, env in .z.
+// the cell boundary → floor(twisted_g) would light a neighbouring cell). cc is in .xy and env in .z.
 fn cellDriver(g: vec2f, cellSize: f32, t: f32, waveDir: vec2f, waveK: f32, waveOmega: f32,
               waveSigma: f32, amp: f32) -> vec3f {
   let cs = max(cellSize, 1e-3);
@@ -98,9 +98,9 @@ fn cellTwist(g: vec2f, cellSize: f32, t: f32, waveDir: vec2f, waveK: f32, waveOm
 
 // The CONTINUOUS traveling-wave FLOW warp — the SMOOTH twin of cellTwist (no per-cell seam;
 // for the level-set contours that shatter into a mesh under the cell discontinuity).
-// BG.W-GRID-AFFINE — warpFreq is the HOST-supplied curl-sampling spatial frequency (the caller's
+// warpFreq is the host-supplied curl-sampling spatial frequency (the caller's
 // own coordinate units): an order of magnitude BELOW its grid frequency so the warp is locally
-// affine (major lines bow as ONE smooth curve, no sub-cell crackle). liquid-grid (cell-scale g0)
+// affine (major lines bow as one smooth curve, no sub-cell crackle). LiquidGrid (cell-scale g0)
 // passes ~0.03; concentric (unit-scale p) passes 0.6. The 1.833333 second-flow ratio transcribes
 // WAVE_FLOW_SECOND_RATIO. Amplitude unchanged — curl magnitude is the intrinsic gradient at the
 // fixed CURL_EPS, independent of warpFreq; the t-drift is host-agnostic.

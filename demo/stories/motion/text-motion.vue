@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// BG.W-DEMO-IA-REDESIGN — the Motion TYPE & NUMBER family. The per-glyph / per-digit
+// the Motion TYPE & NUMBER family. The per-glyph, per-digit
 // motion primitives (typewriter · animated-digit · countup) collapse
 // onto ONE text-motion page — the type-and-number motion family — sectioned by member
 // via <FamilyTabs>. Zero content re-authored: each member SFC is composed bare

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// The hand-voice story (BA.W-HANDMARK) — the family's home register: marks that
+// The hand-voice story — the family's home register: marks that
 // read HAND-made over the paper-grain. Subsumes the retired /underline story (the
 // editorial draw-on underline is now <HandMark shape="underline">) + the first
 // highlighter consumer (the five field deltas LIVE) + the natural pencil-boil
@@ -10,7 +10,7 @@ import StorySection from "../../chassis/section/StorySection.vue";
 import { Button } from "@glass/components/button";
 import { HandMark } from "@glass/components/handmark";
 
-// The imperative draw-on — a template ref + play() (the masthead / Sequence register).
+// The imperative draw-on — a template ref + play() (the masthead, Sequence register).
 const loadRef = ref<{ play: () => void } | null>(null);
 function replayLoad() {
     loadRef.value?.play();
@@ -32,10 +32,10 @@ function replayLoad() {
             </div>
         </StorySection>
 
-        <!-- The natural pencil-boil morphology (C-2 — the `boil` brush). -->
+        <!-- Natural pencil-boil morphology using the `boil` brush. -->
         <StorySection
             label="boil brush · the natural morphology"
-            blurb="The natural-underline morphology goes procedural off the seeded pencil-boil engine — scale-relative amplitude, an irregular 2–4-period wobble, off the house prng leaf. Two seeds read distinct; one seed reproduces."
+            blurb="A seeded hand-drawn underline keeps its character at any scale. Different seeds vary naturally; repeating a seed reproduces the same mark."
         >
             <div class="paper-grain-overlay rounded-card border bg-card p-8">
                 <p class="text-display-3 font-display leading-tight text-foreground">
@@ -45,7 +45,7 @@ function replayLoad() {
             </div>
         </StorySection>
 
-        <!-- The highlighter — the FIRST consumer (C-1 five deltas LIVE). -->
+        <!-- Highlighter specimen. -->
         <StorySection
             label="highlighter · multiply over the page"
             blurb="The highlighter paints like a highlighter: a low-seated hull ribbon, tapered ends, a square cap, multiplying against the page text behind it (not isolated off the page). A wide translucent slab BEHIND the word."
@@ -80,7 +80,7 @@ function replayLoad() {
             </div>
         </StorySection>
 
-        <!-- The brush voices — pen / boil / pencil / crayon / marker (W5: distinct). -->
+        <!-- Distinct pen, boil, pencil, crayon, and marker voices. -->
         <StorySection
             label="the brush continuum · distinct voices"
             blurb="Each medium is a POINT in one parameter space, not a class in a taxonomy. pen (clean), boil (procedural), pencil (fine tooth), crayon (waxy grain), marker (juicy) — measurably distinct geometry, never everything-renders-pen."
@@ -114,7 +114,7 @@ function replayLoad() {
             </div>
         </StorySection>
 
-        <!-- The box-mode hull marks over TINY datums — the se-guard (BG.W-HANDMARK-PERFECT b). -->
+        <!-- The box-mode hull marks over TINY datums — the se-guard ( b). -->
         <StorySection
             label="box-mode hull · the se-guard (never a vanish)"
             blurb="A hull brush (marker/crayon) over a tiny datum used to collapse to an empty perfect-freehand outline and VANISH. The se-guard falls back to a stroked body, so a box/bracket over a 1-char datum always paints a visible band."
@@ -145,7 +145,7 @@ function replayLoad() {
             </div>
         </StorySection>
 
-        <!-- The amplitude knob — a bolder hand line off the wobble scalar (BG.W-HANDMARK-PERFECT c). -->
+        <!-- The amplitude knob — a bolder hand line off the wobble scalar ( c). -->
         <StorySection
             label="amplitude · the excursion knob"
             blurb="The natural-underline excursion is font-proportional (aspect-correct viewBox) and driven by the amplitude knob — the default reads byte-identical, an explicit amplitude lifts the wobble÷stroke ratio for a bolder hand line."

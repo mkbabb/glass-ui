@@ -1,14 +1,14 @@
 /**
- * Aurora luminance-faithful fallback ground (BB.W-AURORA-SWRASTER).
+ * Aurora luminance-faithful fallback ground.
  *
- * The headless / software-raster substrate cannot run the live WebGL field, but
+ * The headless, software-raster substrate cannot run the live WebGL field, but
  * speedtest's CI/witness harness must still certify text-on-aurora AA contrast
  * floors HEADLESS (no `--use-gl=angle`). The flat `paletteToCssGradient`
  * placeholder (`color.ts`) is a deliberate "visually-adjacent approximation" — a
  * gamma-sRGB-stop `linear-gradient(135deg, …)` band whose MEAN luminance and
  * SPATIAL distribution both diverge from the shader's nuclei-field composite, so a
  * contrast capture against it certifies the WRONG floor. This module REPLACES it,
- * in the software-raster / capture substrate, with a FIELD-SAMPLED ground derived
+ * in the software-raster, capture substrate, with a FIELD-SAMPLED ground derived
  * from the SAME inputs the shader uploads (the palette stops + the nuclei field),
  * matching the composite's mean + per-quadrant luminance within the certify band.
  *
@@ -17,7 +17,7 @@
  * `nucleiField` (the softmax-Gaussian over the nuclei → paletteId + valueMod) +
  * `samplePalette` (the linear-sRGB LUT lerp of the CPU-baked endpoints) + the
  * `valueVariance` modulation + the Khronos PBR-Neutral tonemap (`tonemap.glsl.ts`'s
- * `aces()`) + the mandatory `linearToSrgb` OETF (`proof:aurora-space-gamma`). The
+ * `aces()`) + the mandatory `linearToSrgb` OETF. The
  * palette LUT is `oklchToLinear` (the SAME value.js Ottosson bake `flattenPalette`
  * feeds the GPU) — ONE color source, no re-implemented OKLCh math. The
  * between-endpoint interpolation runs in LINEAR (the linear-baked endpoints the
@@ -31,10 +31,10 @@
  * bilinear, which preserves the per-quadrant MEAN luminance) — so the painted ground
  * reproduces the composite's SPATIAL luminance, not a partial-alpha approximation. It
  * paints once at mount and parks (no rAF, zero ongoing GPU). When no `document` is
- * available (SSR / happy-dom) it degrades to a deterministic pure-CSS layered
+ * available (SSR, happy-dom) it degrades to a deterministic pure-CSS layered
  * `radial-gradient` stack (zero canvas) — the same field samples, the SSR-safe form.
  * The luminance metrics (mean + the 4-quadrant relative luminance) are returned
- * alongside so the gate / π can MEASURE the faithfulness claim rather than assert it.
+ * alongside so the gate, π can MEASURE the faithfulness claim rather than assert it.
  */
 
 import { oklchToLinear } from "../../../composables/color";
@@ -44,8 +44,7 @@ import type { AuroraConfig, AuroraNucleus } from "../constants/presets";
 /** A linear-sRGB triple in [0,1]. */
 type Lin = [number, number, number];
 
-/** The shader's sRGB OETF (`linearToSrgb`), mirrored CPU-side — the SAME transfer the
- *  shader closes its seam with (`proof:aurora-space-gamma`). The piecewise sRGB EOTF^-1. */
+/** The shader's sRGB OETF (`linearToSrgb`), mirrored CPU-side. The piecewise sRGB EOTF^-1. */
 function linearToSrgb(c: number): number {
     const v = Math.max(0, Math.min(1, c));
     return v <= 0.0031308 ? v * 12.92 : 1.055 * Math.pow(v, 1 / 2.4) - 0.055;
@@ -83,7 +82,7 @@ function acesPbrNeutral([r, g, b]: Lin): Lin {
     ];
 }
 
-/** Linear-sRGB relative luminance (Rec.709 / WCAG), the contrast-floor metric. */
+/** Linear-sRGB relative luminance (Rec.709, WCAG), the contrast-floor metric. */
 export function relativeLuminance([r, g, b]: Lin): number {
     return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 }
@@ -111,7 +110,7 @@ function samplePaletteLinear(linStops: Lin[], id: number): Lin {
 /**
  * The static (t=0) nuclei field at normalized `(x, y)` — mirrors
  * `composition.glsl.ts`'s `nucleiField`. At t=0 the drift orbit term vanishes
- * (cos 0 / sin 0 → the nucleus sits at its authored position), so the field is a
+ * (cos 0, sin 0 → the nucleus sits at its authored position), so the field is a
  * pure softmax-Gaussian over the static nuclei: `w_i = exp(-β·d2_i/r_i²)`,
  * `paletteId = Σ(w_i·bias_i)/Σw_i`, `valueMod = Σ(w_i·vbias_i)/Σw_i`. The
  * anisotropic-ellipse local-frame rotation (elongation + angle) is reproduced.
@@ -160,8 +159,8 @@ export function nucleiFieldStatic(
  * Sample the aurora's STATIC composite at normalized `(x, y)` → a gamma-sRGB
  * `[r,g,b]` in [0,1]. The full CPU mirror of the shader main() output transfer:
  * field → linear palette LUT → valueVariance modulation → PBR-Neutral tonemap →
- * the `clamp(col*0.985 + 0.008)` toe → the `linearToSrgb` OETF. The drift / breath
- * / cursor / medium-texture terms are STATIC (t=0, no cursor, the atmospheric
+ * the `clamp(col*0.985 + 0.008)` toe → the `linearToSrgb` OETF. The drift, breath
+ *, cursor, medium-texture terms are STATIC (t=0, no cursor, the atmospheric
  * smooth pole) — the luminance ground the certify reads, not the live animation.
  */
 export function sampleAuroraField(config: AuroraConfig, x: number, y: number): Lin {
@@ -190,7 +189,7 @@ function toRgbString([r, g, b]: Lin): string {
     return `rgb(${c(r)}, ${c(g)}, ${c(b)})`;
 }
 
-/** The luminance metrics the gate / π MEASURES the faithfulness against. */
+/** The luminance metrics the gate, π MEASURES the faithfulness against. */
 export interface AuroraGroundMetrics {
     /** Mean relative luminance over the sample grid (gamma → relative-luminance). */
     mean: number;
@@ -226,7 +225,7 @@ function gammaToRelativeLuminance(gamma: Lin): number {
  * Build the luminance-faithful CSS fallback ground for an aurora config.
  *
  * Samples the static field at a `grid × grid` lattice (the SAME `sampleAuroraField`
- * the gate / π measures), emits a stack of soft `radial-gradient` layers — one per
+ * the gate, π measures), emits a stack of soft `radial-gradient` layers — one per
  * sample cell, centred on the cell, fading to transparent at ~the cell radius — over
  * a base fill at the FIELD-MEAN color. The base fill anchors the global luminance;
  * the radial layers paint the spatial nuclei-glow distribution, so the ground reads
@@ -286,7 +285,7 @@ export function auroraFallbackGround(
     // ── The one-shot 2D-canvas raster (option b — the higher-faithfulness path). ──
     // Paint each grid texel its EXACT field color into a `grid × grid` 2D canvas,
     // export ONCE as a data: URI, and let CSS upscale it (bilinear → preserves the
-    // per-quadrant mean luminance). SSR / no-`document` degrades to the layered
+    // per-quadrant mean luminance). SSR, no-`document` degrades to the layered
     // radial-gradient stack below (zero canvas, the same samples).
     const rasterDataUri = rasterizeField(samples, grid);
     if (rasterDataUri) {
@@ -338,7 +337,7 @@ function rasterizeField(
         // fail-explicit: a befitting swallow — a `document` shim that throws on
         // createElement (a partial happy-dom/SSR stub) is morally absent. Returning
         // `null` SURFACES the absence: the caller takes the layered-CSS fallback
-        // (the documented W-AURORA-SWRASTER `"css"` ground), never a wedged surface.
+        // (the documented  `"css"` ground), never a wedged surface.
         return null;
     }
     canvas.width = grid;
@@ -362,7 +361,7 @@ function rasterizeField(
     } catch {
         // fail-explicit: a befitting swallow — toDataURL throws on a tainted/quota-
         // exhausted canvas or a stub without the encoder. Returning `null` SURFACES
-        // the failed raster: the caller falls to the layered-CSS ground (W-AURORA-
+        // the failed raster: the caller falls to the layered-CSS ground (-
         // SWRASTER), never a half-painted data URI.
         return null;
     }

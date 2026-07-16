@@ -1,11 +1,7 @@
 <script setup lang="ts">
-// BA.W-TABS — the /navigation/tabs story rebuilt on the standardized family.
-// ONE component (`SegmentedTabs`), TWO materials (pill-glass + underline-paper),
-// ONE orientation axis (horizontal · vertical). The four hand-rolled `ui/Tabs`
-// recipes (the NF-1 full-width track / NF-3 rogue h3 / NF-7 four-radii incoherence)
-// and the multi-select section (re-homed to ToggleGroup) are GONE — each material
-// is shown over its PROPER substrate (pill over a glass backdrop, underline over a
-// paper/grain card). The constellation may freely change (R10, verbatim).
+// SegmentedTabs demonstrates two materials and both orientation axes. The glass
+// pill sits over glass; the paper underline sits over a grain card. Selection is
+// singular here; multi-selection belongs to ToggleGroup.
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import { ref } from "vue";
@@ -29,7 +25,7 @@ const priorityOptions: SegmentedTabOption[] = [
     { label: "Urgent", value: "urgent", disabled: true },
 ];
 
-// ── Pill (glass) — DRAGGABLE (the LIQUID TAB, BB.W-DRAG-MORPH) ──
+// ── Pill (glass) — draggable liquid tab ──
 const liquidView = ref("grid");
 
 // ── Pill (glass) — vertical ──
@@ -142,13 +138,13 @@ const chapterBody: Record<string, string> = {
         <!-- ════ The PILL material — DRAGGABLE (the LIQUID TAB) ════ -->
         <StorySection
             heading="Pill — draggable (the liquid tab)"
-            blurb="The iOS-27 move: GRAB the indicator and PULL it. The lozenge follows the finger ~1:1, stretches on drag velocity (capped low — it swells, never taffy-pulls), and flings to the nearest tab on release. The click path is unchanged; the drag is the additive :draggable axis. Composes the shared drag substrate (no second drag engine)."
+            blurb="Grab and pull the selected lozenge. It follows the finger, stretches gently with speed, and settles onto the nearest tab when released; clicking still selects directly."
         >
             <div
                 class="glass-card flex flex-col gap-4 rounded-[var(--radius-card)] p-5"
             >
                 <div class="flex flex-wrap items-center gap-3">
-                    <!-- BH.W-MOTION-AXIS — the drag is the `motion="full"` DEFAULT
+                    <!-- the drag is the `motion="full"` DEFAULT
                          (the retired `draggable` boolean's successor); a click-only
                          strip opts DOWN via `motion="reduced"`. -->
                     <SegmentedTabs
@@ -166,7 +162,7 @@ const chapterBody: Record<string, string> = {
         <!-- ════ The PILL material — vertical ════ -->
         <StorySection
             heading="Pill — vertical"
-            blurb="The same engine, the block axis. The indicator tracks the column (axis-derived — no horizontal-only slab); the squish deforms on the block axis."
+            blurb="The same gesture works down a column: the indicator follows the block axis and its soft stretch turns with the layout."
         >
             <div class="glass-card flex gap-5 rounded-[var(--radius-card)] p-5">
                 <SegmentedTabs

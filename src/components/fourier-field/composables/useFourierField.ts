@@ -1,22 +1,21 @@
-// BC.W-VIZ-FOURIER — the public composable: the studio handle + the lifecycle wiring over
+// the public composable: the studio handle + the lifecycle wiring over
 // the WebGPU-first substrate (with the WebGL2 GLSL fallback) + the shared pointer field +
 // the ONE head_t clock.
 //
 // `useFourierField(canvasRef, options)` composes the `createGpuSubstrate` picker — the
-// `setupWGPU` compute+fullscreen-fragment primary WHERE WebGPU is supported, else the
-// `setupGL` WebGL2 SDF fallback (the §E "WebGPU everywhere" mandate — the Canvas2D renderer
-// is RETIRED; this composable carries NO `useCanvas2D` import and NO `getContext("2d")`).
+// `setupWGPU` compute+fullscreen-fragment primary where WebGPU is supported, else the
+// `setupGL` WebGL2 SDF fallback. This composable has no Canvas2D path.
 // It wires the offscreen pause + the `DockBackgroundToggle` WCAG-2.2.2 pause/resume seam +
 // `wake()` on demand, and exposes the uniform `FourierFieldHandle`. The renderer owns the
 // frame loop (the canvas lifecycle leaf); this composable re-implements ZERO scheduling.
 //
 // THE ONE CLOCK (head_t). The single loop parameter `head_t ∈ [0,1)` is advanced by frame
 // time inside the substrate's `onFrame` hook (NO second rAF — the §6.1 one-clock discipline,
-// coordinated with W-VIZ-CHOREOGRAPHY). `freeze`/PRM short-circuit to the deterministic
+// coordinated by the substrate). `freeze`/PRM short-circuit to the deterministic
 // `frozenT`; the pointer SCRUB re-seats head_t directly (pointer X → head_t); a flick injects
 // a velocity-continuous momentum impulse that decays back to ambient speed.
 //
-// THE POINTER (BC.W-VIZ-INTERACTION). When `config.interactive`, useFourierField composes the
+// THE POINTER. When `config.interactive`, useFourierField composes the
 // SHARED `usePointerVelocityField` (NEVER a second rAF — the field is FED `tick(delta)` from
 // inside the renderer's `onFrame` hook): pointer X scrubs head_t, the flick burst injects clock
 // momentum, the accel term blooms the head/swells the chain (a sub-perceptual cap). PRM keeps
@@ -29,11 +28,11 @@ import {
     type RendererStatus,
 } from "../../../composables/glass/webgpu/useGpuSubstrate";
 import { pendingRenderer } from "../../../composables/glass/webgpu/rendererStatus";
-import { usePointerVelocityField } from "../../../composables/motion/usePointerVelocityField";
+import { usePointerVelocityField } from "../../../composables/motion/pointer/usePointerVelocityField";
 import {
     fourierLeanMapping,
     snapshotField,
-} from "../../../composables/motion/pointerFieldMappings";
+} from "../../../composables/motion/pointer/pointerFieldMappings";
 import { resolveBudgetDpr } from "../../aurora/constants/budget";
 import type { OklchStop } from "../../../composables/color";
 import type { FourierFieldConfig } from "../constants";
@@ -49,7 +48,7 @@ export interface UseFourierFieldOptions {
     getSpectrum: () => readonly BasisComponent[];
     /** Resolve the curve-color palette as OKLCh (the demo themes it; default warm-identity). */
     getPalette: () => OklchStop[];
-    /** When true, hold the deterministic best-frame and never advance (the capture / freeze lever). */
+    /** When true, hold the deterministic best-frame and never advance (the capture, freeze lever). */
     freeze?: () => boolean;
     /** The static deterministic best-frame parameter under `freeze`/PRM. Default 0.34. */
     frozenT?: number;
@@ -58,7 +57,7 @@ export interface UseFourierFieldOptions {
     /** `"capture"` → renderAt-only (the deterministic π capture path). Default `"live"`. */
     mode?: "live" | "capture";
     /**
-     * BI.W-FIELD-CORE — the route pointer BROADCASTER read (the SUBTLE-interactive background
+     * the route pointer BROADCASTER read (the SUBTLE-interactive background
      * register). A full-bleed `pointer-events:none` field cannot listen for its own pointer, so
      * an ambient consumer reads the route-level `useRoutePointer` and feeds the shared field
      * from here each frame (viewport-normalized ≈ host-normalized for a full-bleed field). The
@@ -78,14 +77,14 @@ export interface FourierFieldHandle {
     resume: () => void;
     /** Re-arm a parked loop on demand. */
     wake: () => void;
-    /** Draw one frame out-of-loop (capture / thumbnail). */
+    /** Draw one frame out-of-loop (capture, thumbnail). */
     renderAt: (timeSec: number) => void;
     /** The live `prefers-reduced-motion: reduce` state. */
     readonly reducedMotion: boolean;
     /** The current loop parameter `head_t ∈ [0,1)` (the scrubber reads/writes it). */
     readonly headT: number;
     readonly rendererStatus: Readonly<Ref<RendererStatus>>;
-    /** Scrub the clock directly (the transport scrubber / a pointer drag). */
+    /** Scrub the clock directly (the transport scrubber, a pointer drag). */
     setHeadT: (t: number) => void;
     /** Tear down the renderer + release GPU/GL resources. */
     dispose: () => void;
@@ -103,7 +102,7 @@ export function useFourierField(
     // ── The ONE head_t clock (no second rAF — advanced by the substrate frame). ──
     let headT = 0;
     let lastFrameSec = -1;
-    // BD.W-FOURIER-LOOM §clock-settle — the flick impulse is a SPRING displacement, not a
+    //  §clock-settle — the flick impulse is a SPRING displacement, not a
     // monotonic exponential decay. `momentum` is the clock-rate offset (turns/s) from rest;
     // `momentumVel` is its spring velocity. A flick injects `momentum`; the spring pulls it
     // back to 0 with ζ < 1 so it OVERSHOOTS rest (the iOS fling settle, the liquid-weight
@@ -140,7 +139,7 @@ export function useFourierField(
 
     // The per-frame hook the setups invoke from inside their frame callback. It advances the
     // shared pointer field (the push-API tick) + the head_t clock (the ONE clock) — once per
-    // frame, NO second rAF. BI.W-FOURIER-RIBBON retired the per-frame `--ff-head-*` setProperty
+    // frame, NO second rAF.  retired the per-frame `--ff-head-*` setProperty
     // restyle bridge (a dead CSS-sprite seam with no live consumer — the (b) perf attribution);
     // the comet head is painted by the GPU head quad, never a per-frame CSS restyle.
     function onFrame(timeSec: number): void {
@@ -152,7 +151,7 @@ export function useFourierField(
     function advanceClock(timeSec: number): void {
         const deltaMs = lastFrameSec >= 0 ? (timeSec - lastFrameSec) * 1000 : 16.7;
         lastFrameSec = timeSec;
-        // BI.W-FIELD-CORE — feed the shared field from the route broadcaster (the
+        // feed the shared field from the route broadcaster (the
         // subtle-interactive background register — the canvas is pointer-events:none, so it
         // reads the route pointer rather than its own listener). A single position write; the
         // field derives velocity/burst/engagement in tick.
@@ -173,7 +172,7 @@ export function useFourierField(
         const dt = Math.min(Math.max(deltaMs / 1000, 0), 0.05);
 
         if (config.interactive && pointer.active.value) {
-            // BD.W-VIZ-BROKEN-FIX D6a — a VELOCITY scrub, NOT an absolute-X teleport. The
+            //  D6a — a VELOCITY scrub, NOT an absolute-X teleport. The
             // cursor MOTION nudges the clock (a flick fast-forwards, a still cursor lets it
             // drift at config speed), velocity-continuous so the head NEVER teleports (the
             // prior `headT = pointerX` snapped the comet to an arbitrary phase, ignored Y,
@@ -209,9 +208,9 @@ export function useFourierField(
 
     const getHeadT = (): number => headT;
 
-    // ── BI.W-FOURIER-RIBBON — the cached view-fit (recompute on spectrum change ONLY). ──
+    // ── Cached view fit; recompute only when the spectrum changes. ──
     // The `spectrum !== fitSpectrum` guard HOISTS `computeFourierFit` out of the frame loop
-    // (proof:viz-fourier-ribbon FB4): the O(FIT_SAMPLES) bbox pass runs once per spectrum swap,
+    // The O(FIT_SAMPLES) bbox pass runs once per spectrum swap,
     // never per frame. `getPointerLean` reads the cached scale for the model→clip 2-D lean.
     let fitSpectrum: readonly BasisComponent[] | null = null;
     let fit: FourierFit = { centerX: 0, centerY: 0, scale: 1 };
@@ -224,9 +223,9 @@ export function useFourierField(
         return fit;
     };
 
-    // ── BG.W-FOURIER-BEAUTY B3 — the REAL 2-D cursor FOLLOW (critically-damped, correct
+    // ──  B3 — the REAL 2-D cursor FOLLOW (critically-damped, correct
     // coordinate space). ──  When interactive + active, the figure CENTROID genuinely REACHES
-    // toward the cursor (the prior BD.W-VIZ-BROKEN-FIX D6b 0.12 model-space whisper never
+    // toward the cursor (the prior  D6b 0.12 model-space whisper never
     // arrived — the "abysmal tracking" defect). The follow reads the SHARED
     // `usePointerVelocityField.smoothedPosition` (the critically-damped lerp — ZERO snap/
     // teleport by construction; the prior `headT = pointerX` absolute-X snap class stays
@@ -234,8 +233,8 @@ export function useFourierField(
     //   • pointer [0,1] (getBoundingClientRect-normalized — dpr/scroll-safe, the 6.1 sizer
     //     box↔backing mapping) → clip [-1,1]; DOM y grows DOWN so the y clip is INVERTED
     //     (the whisper shipped the WRONG y sign — the figure panned AWAY from the cursor);
-    //   • clip → MODEL offset via `× aspect / scale` (the exact inverse of the fs's
-    //     `model = center + clip·aspect / scale`), bounded by `FOLLOW_REACH` (< 1 so the
+    //   • clip → MODEL offset via `× aspect, scale` (the exact inverse of the fs's
+    //     `model = center + clip·aspect, scale`), bounded by `FOLLOW_REACH` (< 1 so the
     //     figure stays largely in frame), then SUBTRACTED from `fit.center` by the setups so
     //     the centroid sits under the cursor → the tracked feature reaches within a small
     //     radius within the damped settle.
@@ -247,7 +246,7 @@ export function useFourierField(
         if (!config.interactive) return { x: 0, y: 0 };
         const canvas = canvasRef.value;
         if (!canvas || !canvas.width || !canvas.height) return { x: 0, y: 0 };
-        // BI.W-FIELD-CORE — the SUBTLE lean via the shared PURE `fourierLeanMapping`
+        // the SUBTLE lean via the shared PURE `fourierLeanMapping`
         // (FOLLOW_LEAN ≈ 0.15, engagement-scaled — the RETIRED FOLLOW_REACH=0.7 centroid-
         // teleport is gone). The curve draws TOWARD the cursor without translating the figure;
         // engagement fades it in/out (a lifted pointer relaxes to the ambient register).
@@ -297,10 +296,10 @@ export function useFourierField(
             handle = createGpuSubstrate(canvas, {
                 mode,
                 respectReducedMotion: config.respectReducedMotion,
-                // BG.W-VIZ-RESIZE-ADOPT — the leaf owns backing measurement + sizing
+                // the leaf owns backing measurement + sizing
                 // (round(gBCR × dprPolicy)); both setups' `resize` are upload-only.
                 dprPolicy: resolveBudgetDpr,
-                // BG.W-VIZ-REVEAL-BLOOM — the one-shot cold-first-VISIBLE entrance bloom.
+                // the one-shot cold-first-VISIBLE entrance bloom.
                 revealBloom: true,
                 setupWGPU: createFourierWGPUSetup({
                     canvas,

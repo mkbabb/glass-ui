@@ -10,12 +10,12 @@ import {
 } from "vue";
 import { useCanvas2D } from "../../../composables/glass/canvas2d";
 import { hashString, mulberry32 } from "../../../composables/glass/procedural/prng";
-import { usePointerVelocityField } from "../../../composables/motion/usePointerVelocityField";
-import { readReducedMotion } from "../../../composables/motion/useReducedMotion";
+import { usePointerVelocityField } from "../../../composables/motion/pointer/usePointerVelocityField";
+import { readReducedMotion } from "../../../composables/motion/core/useReducedMotion";
 import {
     constellationWellMapping,
     snapshotField,
-} from "../../../composables/motion/pointerFieldMappings";
+} from "../../../composables/motion/pointer/pointerFieldMappings";
 import {
     appendPointerWeb,
     BASE_WIDTH,

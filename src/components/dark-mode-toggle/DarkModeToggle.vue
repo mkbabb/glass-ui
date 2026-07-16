@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, useAttrs, watchEffect } from "vue";
 import { useGlobalDark } from "../../composables/dark";
-import { useLiquidPress } from "../../composables/motion/useLiquidPress";
+import { useLiquidPress } from "../../composables/motion/spring/useLiquidPress";
 import { cn } from "../_shared/class-names";
 
 defineOptions({ inheritAttrs: false });

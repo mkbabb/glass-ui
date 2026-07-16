@@ -16,11 +16,11 @@
 
 import { describe, expect, it } from "vitest";
 import { effectScope } from "vue";
-import { usePointerVelocityField } from "@glass/composables/motion/usePointerVelocityField";
+import { usePointerVelocityField } from "@glass/composables/motion/pointer/usePointerVelocityField";
 import {
     auroraCursorMapping,
     snapshotField,
-} from "@glass/composables/motion/pointerFieldMappings";
+} from "@glass/composables/motion/pointer/pointerFieldMappings";
 import {
     isAuroraPointerEnabled,
     resolveAuroraRenderTime,

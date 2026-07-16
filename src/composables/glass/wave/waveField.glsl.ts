@@ -1,8 +1,8 @@
-// BD.W-VIZ-RESPEC — the shared traveling-wave CELL-WARP chunk, GLSL twin.
+// The shared traveling-wave cell-warp chunk, GLSL twin.
 //
 // The GLSL string the host shader splices (`${WAVE_FIELD_GLSL}`) AFTER it has defined its
 // noise basis (`valueNoise`, `potentialFBM`) AND spliced the shared `curlFBM` (flow.glsl.ts).
-// Transcribes `waveField.ts` line-for-line; `proof:wave-field` round-trips the JS↔GLSL↔WGSL
+// Transcribes `waveField.ts` line-for-line; shared numeric vectors round-trip the JS↔GLSL↔WGSL
 // numeric identity at a fixed sample set. NO value.js, no uniforms — a pure string chunk.
 //
 // THE DEPENDENCY contract (the splice-order law): the chunk calls `curlFBM(vec2)` and
@@ -51,7 +51,7 @@ float cellHeight(vec2 cc, float t, vec2 waveDir, float waveK, float waveOmega, f
 
 // The pre-twist driver (FOLD A): the cell pivot cc + the crest envelope env the twist AND the
 // face both ride. The face samples height/relief at THIS pre-twist cc (floor(twisted_g) at the
-// crest lights a NEIGHBOUR cell). cc in .xy, env in .z.
+// crest lights a neighbouring cell). cc is in .xy and env in .z.
 vec3 cellDriver(vec2 g, float cellSize, float t, vec2 waveDir, float waveK, float waveOmega,
                 float waveSigma, float amp) {
   float cs = max(cellSize, 1e-3);
@@ -104,9 +104,9 @@ vec2 cellTwist(vec2 g, float cellSize, float t, vec2 waveDir, float waveK, float
 
 // The CONTINUOUS traveling-wave FLOW warp — the SMOOTH twin of cellTwist (no per-cell seam;
 // for the level-set contours that shatter into a mesh under the cell discontinuity).
-// BG.W-GRID-AFFINE — warpFreq is the HOST-supplied curl-sampling spatial frequency (the caller's
+// warpFreq is the host-supplied curl-sampling spatial frequency (the caller's
 // own coordinate units): an order of magnitude BELOW its grid frequency so the warp is locally
-// affine (major lines bow as ONE smooth curve, no sub-cell crackle). liquid-grid (cell-scale g0)
+// affine (major lines bow as one smooth curve, no sub-cell crackle). LiquidGrid (cell-scale g0)
 // passes ~0.03; concentric (unit-scale p) passes 0.6. The 1.833333 second-flow ratio transcribes
 // WAVE_FLOW_SECOND_RATIO. Amplitude unchanged — curl magnitude is the intrinsic gradient at the
 // fixed CURL_EPS, independent of warpFreq; the t-drift is host-agnostic.

@@ -1,4 +1,4 @@
-// AY.W-COLOCATE — the Constellation feature-dir constants home. The package-level
+// The Constellation package-level constants live in this feature directory.
 // CONFIG-DEFAULT constants (the reference geometry, the neutral palette, the warp
 // spring + gravity-well + wander cadence DEFAULTS the `--constellation-*` tokens
 // override) live HERE (the feature-dir `constants.ts` convention) rather than at the
@@ -21,7 +21,7 @@ export const BASE_WIDTH = 1280;
  * color/alpha tokens are absent (SSR / no-token mount). The fallbacks mirror the §5c
  * light-arm token defaults so a no-token mount still reads recessive-but-legible.
  *
- * `accent`/`edgeFloor`/`edgeAccentAlpha` (AZ.W-CON-GEN G3) are the ACCENT-edge skin
+ * `accent`/`edgeFloor`/`edgeAccentAlpha` are the accent-edge skin
  * weights the optional `drawEdges(…, accentIndex)` pass reads — the flagged-node EDGE
  * tint. `accent` mirrors the `--constellation-accent` neutral library default;
  * `edgeFloor: 0` is the byte-identity (no floor by default — a consumer lifts it so a
@@ -49,7 +49,7 @@ export const WARP_RESPONSE = 0.55;
 export const WARP_ZETA = 1.0;
 
 /**
- * Gravity-well tuning DEFAULTS (AY.W-CON2). The `--constellation-well-*` tokens
+ * Gravity-well tuning defaults. The `--constellation-well-*` tokens
  * override these on mount via `field.well.cfg`; these stay the fallback. SET by the
  * §6 egg-live π readback (the field-perturbs-then-cools capture is the binding
  * truth) — a moderate gain over a generous reach, a brisk ramp, a tight no-slingshot
@@ -65,7 +65,7 @@ export const DEFAULT_WELL_CONFIG: ConstellationWellConfig = {
 };
 
 /**
- * Auto-DRIFT cadence DEFAULTS (AY.W-CON1 source; tokenised in AY.W-CON2). The
+ * Auto-drift cadence defaults. The
  * `--constellation-wander-idle`/`-wander-jitter` tokens override these on mount; a
  * prop `{ minIdle, jitter }` still wins over the token. The 8s/8s default rhythm
  * re-targets the focal mark every 8–16s (the slides cadence).
@@ -74,7 +74,7 @@ export const DEFAULT_WANDER_IDLE = 8000; // ms — min idle between auto re-targ
 export const DEFAULT_WANDER_JITTER = 8000; // ms — random extra idle per cadence
 
 /**
- * Autonomous PINNED-ANCHOR drift cadence DEFAULTS (AZ.W-CON-GEN G5). DISTINCT from
+ * Autonomous pinned-anchor drift cadence defaults. Distinct from
  * `wander` (which re-targets the WARP spring among random nodes): this gently eases
  * the PINNED node (`field.pinnedIndex`) around its seeded ANCHOR on a jittered
  * cadence — the flagged point breathes its neighborhood without leaving it. The

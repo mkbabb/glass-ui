@@ -29,7 +29,7 @@ import {
 import { watch } from "vue";
 
 /**
- * The resolver seam (AW.W15) — given a property name + the resolved element,
+ * Given a property name and resolved element,
  * return the property's value. Defaults to the live
  * `getComputedStyle(el).getPropertyValue(prop)` read; an injected resolver lets
  * SSR / tests close the DI loop without touching `document.documentElement`.
@@ -42,7 +42,7 @@ export interface UseTokenColorOptions {
     /** Fallback when the property is unset or `document` is unavailable (SSR). */
     fallback?: string;
     /**
-     * Injected property resolver (AW.W15 DI seam). Defaults to the live
+     * Injected property resolver. Defaults to the live
      * `getComputedStyle(el).getPropertyValue(prop)` read. Pass a custom resolver
      * for SSR / tests / a themed-context override without reaching the DOM.
      */
@@ -77,7 +77,7 @@ export function useTokenColor(
     const value = ref<string>(fallback);
 
     // The default resolver is the live computed-style read; an injected
-    // `options.resolver` overrides it (the AW.W15 DI seam for SSR / tests).
+    // `options.resolver` overrides it for SSR and tests.
     const resolver: TokenColorResolver =
         options.resolver ??
         ((prop, el) => getComputedStyle(el ?? document.documentElement).getPropertyValue(prop));
