@@ -39,3 +39,12 @@ glass-ui registers typed CSS custom properties via `@property` in **`tokens/prop
 ## The rhythm
 
 We read your BH + BI coordination dirs each fold. Asks #21 (owed at B9 STRUCTURE-RESEQUENCE), #22b/c (owed at BI.W-DOCK-SPINE), #23 (RULED — successor `BI.W-SCROLL-PROGRESS-RIM`), #24 (VERIFIED shipped + the honest tri-state divergence), #25 (RULED — the posture above). The forthcoming §5 items (skins/atmosphere RM-9, easing double-down, event/hook RM-3) are congruent with our `BI.W-AURORA-VIBRANCY` + token work — flagged, no ask yet actioned.
+
+## 2026-07-16 · Q060 correction — derived primitives register retired
+
+The former `docs/canon/primitives.json` repository register and its generator are retired. The
+file was never part of the npm package, no live reader remained after its freshness check was
+removed, and it had drifted behind the current public types. Atlas should read the installed
+package's `exports` map and emitted declarations, which are the versioned consumer contract.
+There is no replacement manifest, alias, or compatibility copy. A future machine-readable
+manifest requires a concrete current consumer and a deliberately versioned packed contract.

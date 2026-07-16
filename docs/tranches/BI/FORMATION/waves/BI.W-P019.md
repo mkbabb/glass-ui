@@ -21,8 +21,11 @@
 - `src/styles/typography/semantic.css` owns the two semantic utilities.
 - `/foundations/typography` shows one serif/mono consumer composition, demonstrating
   that the geometry remains independent of type voice.
-- `tests/styles/typography.test.ts` checks single-source derivation, shared leading,
-  family neutrality, and the live specimen.
+- `tests/styles/typography.test.ts` checks only the single-source derivation — the exact
+  `1/√φ` ratio, headline = `var(--type-display-2)`, kicker = `calc(headline * ratio)`, and
+  `--type-proportional-leading: 1` — by reading `scale.css`. Shared-leading application
+  across both utilities, family neutrality, and the live specimen are NOT asserted by this
+  test; they are covered only by the native in-app review below.
 
 ## Acceptance
 

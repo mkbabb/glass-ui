@@ -2,11 +2,10 @@
 
 ## 7.0.0 (unreleased)
 
-- `HeaderRibbon` is now one named toolbar whose pointer, focus, and pinned presence
-  directly own its action reveal. It uses the shared functional glass surface and motion
-  tokens, ignores hover emulation from touch pointers, and collapses on Escape while
-  restoring focus to its anchor control. The timeout prop, duplicate anchor state, and
-  extra layout slot are removed.
+- `HeaderRibbon` is persistent-only: one named toolbar on the shared functional glass
+  surface and motion tokens. Its API is props `{ placement?, ariaLabel?, class }` plus a
+  single `#items` slot. The collapsible mode, anchor button/slot, `anchorLabel`, and the
+  reveal/pin/Escape machinery are removed (see docs/consumer-evidence/header-ribbon.md).
 - `Progress` adds typed error and vertical states while retaining one numeric owner,
   one indicator, truthful indeterminate semantics, arbitrary maxima, and optional
   decorative marks.

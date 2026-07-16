@@ -1,5 +1,12 @@
 # SUFFUSION-MAP — every measured iOS-27 behavior → ONE library home (BI design loop, UF-P8 second half)
 
+> **Terminal implementation precedence — P092/Q020 (2026-07-16).** The measurements and
+> historical convergence map remain evidence, but every eyeglass row proposing a live-state
+> scalar, dedicated spring, shared lead/trail Tabs release, or successor register is
+> superseded. The current Tabs home is one measured `.glass-lens` pill fill on the shared
+> `snappy` clock; see `docs/tranches/BI/FORMATION/waves/BI.W-P092.md` and Q020 in
+> `docs/tranches/BI/addenda/PLAN.md`.
+
 Binding de-dup + delta map. Inputs: the three BI reference ladders (`DOCK-LADDER.md` ·
 `TABS-GLASS-LADDER.md` · `MOTION-LADDER.md`), the BD prior (`docs/tranches/BD/viz/video-audit/
 IOS27-REFERENCE.md` T1–T17), the pass-1/2 design-loop state (D-DOCK/D-GLASS/D-MOTION/D-PAGER

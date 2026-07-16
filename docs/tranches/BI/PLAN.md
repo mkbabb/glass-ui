@@ -33,7 +33,8 @@ charter; `docs/tranches/BH/spec-structure/` folds in via `waves/BI.W-STRUCTURE-R
    c. **Motion tempo** — the iOS ladder says 1.0 identity + per-register tightening (the M1 fix alone
       lands enters in-band); the 0.88 arm captured if the user wants globally tighter.
    d. **Button blur-mute delta** — two candidate `-radius` cohorts captured.
-   e. **Eyeglass pill vertical sizing default** (UF-H1's config axis) + eyeglass-as-default tabs.
+   e. ~~Eyeglass pill vertical sizing default~~ — later SUPERSEDED by P092/Q020 when the
+      proud/settled two-rest-state path was deleted; the one measured pill fill remains.
    f. **Hero cartoon-weight A/B** (SHADOW-GRAMMAR: the loud-CTA punch register post the rest-stamp
       gating — reverses a shipped register; capture pair in the spec).
    g. **DRAWER_SNAP detent retune A/B** ({0.5,0.74} → the measured-iOS ≈{0.32,0.80}; DRAWER-PERF's
@@ -107,7 +108,7 @@ measured spring bands; the 26-row single-home de-dup roster).
 18. Orphan routings confirmed: M1→B7 · DOC-3→B10 · STAB-B-4 residual test reds → B5 (aurora
     L-monotonic) + B3 (dock-nav detect) · siri-* public-surface adjudication → B3 (terminal in
     DOCK-RETIRES/SPINE) · UF-A3 motion half → B7 · UF-F9 draw-in half → B7 · UF-F10 halves → B5/B9 ·
-    UF-E9 → B6 · useLeadTrail minted ONCE in PAGER-WORM, consumed by the B3 eyeglass release ·
+    UF-E9 → B6 · useLeadTrail minted ONCE in PAGER-WORM and retained as its pager-owned driver ·
     backdrop-engage M8 register NO-MINT (≥2 floor unmet; the drawer's fixed engage is real) ·
     M12 app-zoom → no live defect, sits with B8's future census.
 
@@ -139,8 +140,8 @@ its residue is folded before execution begins).
 
 Round 4 (4 fresh lenses over the formed corpus) returned: "unusually strong, disciplined... born-RED
 discipline impeccable (13/13 spot-verified against HEAD)" + 15 residue items — ALL FIXED in the
-2026-07-12 fix pass (digest: audit/ROUND-4-FORMATION-AUDIT.md): the missing eyeglass wave MINTED
-(BI.W-TABS-FACTOR — UF-H1's owner, closing the 3 dangling refs); the orchestrator's own duplicate gap
+2026-07-12 fix pass (digest: audit/ROUND-4-FORMATION-AUDIT.md): the missing tabs wave MINTED
+(BI.W-TABS-FACTOR — later terminally narrowed by P092/Q020); the orchestrator's own duplicate gap
 wave RETIRED (DEAD-SUBSTRATE triple-collided with CLEAR-FOLD + GLASS-DEDUP — the audit caught the
 auditor); the MultiSelect fold gate re-pointed + authored (proof:fold-delete clause); the two
 mis-labeled born-RED claims corrected to EXTENDED-with-new-clause (GLASS-DEDUP feDisplacementMap,

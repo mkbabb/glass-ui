@@ -163,19 +163,18 @@ spring leg reads its OWN clock through the named token.
 publishes only Glass-owned Vue composition and semantic spring presets. Every
 spring/morph/press/drag/reveal/number-tween still composes an upstream primitive
 (`SpringProgress`/`Draggable`/`ElementMorph`/`SmoothProgress`/`NumericAnimation`/
-`Sequence`). There are exactly TWO sanctioned off-spine seams, each for SCC /
-foreign-tree reasons, each documented:
+`Sequence`). The sanctioned off-spine seams are documented below:
 
 - **`usePointerVelocityField`** — the shared viz-pointer-physics field. A hand-rolled
   critically-damped lerp (position → velocity → acceleration), intentionally kf-FREE so
   it ships on the engine-free `/motion-core` subpath AND the root barrel (a keyframes
   edge would trap it off-root — the SCC root-barrel discipline). It owns NO rAF: the
   renderer FEEDS it `tick(delta)` from its own canvas-lifecycle loop.
-- **`useLeadTrail`** (BI.W-PAGER-WORM W2) — the two-edge lead/trail integrator (spring
-  LEAD + damped TRAIL follower in ONE self-parking rAF). Spec-MANDATED kf-FREE for the
-  same SCC reason: it ships on `/motion-core` + the root barrel and is consumed by BOTH
-  the pager worm and the B3 eyeglass release (≥2 consumers by construction); its own
-  gate (`proof:pager-worm` W2) asserts the kf-free form. PRM seats instantly.
+- **`useLeadTrail`** (BI.W-PAGER-WORM W2) — the pager worm's two-edge lead/trail
+  integrator (spring LEAD + damped TRAIL follower in ONE self-parking rAF).
+  Spec-MANDATED kf-FREE for the same SCC reason: it ships on `/motion-core` + the root
+  barrel. PRM seats instantly. Tabs deliberately use the shared `snappy` selection
+  clock and do not compose this driver.
 - **`useDragMorph`** — the pull/drag-to-morph primitive. It WIRES the published kf
   surface (`Draggable` + `SpringProgress` + the shipped `decayRest` projection) and
   re-rolls the SNAP HERE (`decayRest` projects the frictional rest, then `spring.target`
@@ -184,12 +183,12 @@ foreign-tree reasons, each documented:
   it ships. NOT a second engine — a published-surface composition with one re-rolled
   seam.
 
-A THIRD un-sanctioned off-spine spring/rAF (a `new SpringProgress` inside a private
+Another unsanctioned off-spine spring/rAF (a `new SpringProgress` inside a private
 hand-rolled rAF integrator, a hand-rolled lerp smoother with no kf import, a second
 `decayRest`+`spring.target` re-roll) reds `proof:motion-one-clock` M2.
 
 **The sanctioned per-primitive `(response, ζ)` defaults (NOT a second register table).**
-`SPRING_PRESETS` is the ONLY hand-authored register TABLE. These four are documented
+`SPRING_PRESETS` is the ONLY hand-authored register TABLE. These defaults are documented
 per-primitive DEFAULTS, declared at each primitive's own seam, never a hand-kept second
 table — every other `(response, ζ)` read derives via `springPreset(name)`:
 
@@ -197,7 +196,7 @@ table — every other `(response, ζ)` read derives via `springPreset(name)`:
   SETTLE register's response/ζ), the floor every `useSpring` caller may override.
 - **`useSpringPress`** `(0.25, 0.7)` — the press-squish primitive default (a crisp
   short-response press settle, W-PRESS-UNIFY).
-- **`DOCK_SPRING`** `(0.68, 0.64)` — the dock expand/collapse morph register
+- **`DOCK_SPRING`** `(0.30, 0.82)` — the dock expand/collapse morph register
   (`dock/constants.ts`); the WEIGHTY iOS-27 gooey-morph re-tune (BD.W-ANIM-IOS27-TUNE),
   DERIVED from the `dock` `SPRING_PRESETS` row via `springPreset("dock")` (the
   no-second-authority fence — ONE table row feeds the CSS token, the JS-driven morph,
@@ -258,7 +257,7 @@ Two facts the canon RECORDS so a future agent does not "fix" a correct thing:
 - `src/styles/transitions.css` — the coupled-fade enter recipes (P2/P3) + the recipe-local
   PRM carve (P6).
 - `src/styles/utilities/a11y-overrides.css` — the universal PRM carve (P6).
-- `src/composables/motion/useLiquidFlex.ts` — the `sizeStyle` settled-footprint contract
+- `src/composables/motion/spring/useLiquidFlex.ts` — the `sizeStyle` settled-footprint contract
   (P5, the SIZESTYLE-LATENT note).
 - `scripts/proof-no-layout-animation.mjs` — the compositor-only enforcement (P5) across the
   `@keyframes` + transition + `<Transition>` surface, plus the PRM-carve assertion (P6).

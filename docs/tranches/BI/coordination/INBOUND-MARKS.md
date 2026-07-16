@@ -35,7 +35,7 @@ contract) — a NEW inbox-class coordination file landing WITHOUT a marks sectio
 | M4-adj Δ6 | handmark 5 asks (amplitude / hull guard / aspect viewBox / crayon-wipe / per-line band) | DISCHARGED — LANDED via KS-HANDMARK/14.3 (PROMPT-RECAP §B) |
 | M5 | Skeleton `variant="breath"` exists-confirm | DISCHARGED — exists at 4.2.0 (Skeleton.vue:26) |
 | M6 | GU-1 under-key-fill (4.4.0 pair) | OWNED — `--glass-key-direction` → BI.W-SURFACE-EXTRACT (atlas GU-1/O-E2 §Inbound arm); hero-collapse joint → below (o-close #18) |
-| M7 | primitives REGISTER (machine-readable canon) | DISCHARGED — LANDED `docs/canon/primitives.json` (BH.B4-canon) |
+| M7 | primitives REGISTER (machine-readable canon) | SUPERSEDED-TERMINAL — Q033 retired the stale, unpacked derived register after its reader disappeared; consumers use the packed `package.json` exports and emitted declarations. Q060 records the Atlas correction. |
 
 ## docs/tranches/BG/coordination/ATLAS-N-INBOUND.md
 
@@ -45,13 +45,13 @@ contract) — a NEW inbox-class coordination file landing WITHOUT a marks sectio
 | A2 | GlassDock `density`→`size` rename | DISCHARGED — DONE BH.W-SIZE-UNIFY |
 | A3 | `.text-gilt`→`.gold-shimmer`/`.metal-gold` MIGRATION row | OWNED — asks-and-consumes roster row 5 (`migrate-text-gilt-to-gold-shimmer`) |
 | B1 | `@settle` disposition drains at 4.3.0 reconcile | SUPERSEDED — Decision-0 one 5.0.0 cut (4.3.0 reconcile at the cut, user-gated) |
-| B2 | viz-subset MANIFEST (named view over register) | DISCHARGED — homed on BH.B4-canon register |
+| B2 | viz-subset MANIFEST (named view over register) | SUPERSEDED-TERMINAL — the root derived register was retired by Q033; installed exports and declarations are the versioned consumer contract. |
 | B3 | consume-time re-verifies (atlas-side pass) | DECLINED-TERMINAL — atlas-side, no ROOT action (foreign-tree fence) |
 | B4 | staleness note (GU-DOCK doc) | DECLINED-TERMINAL — informational, no glass action |
 | C1 | dock scroll-progressbar per-item stepper API | OWNED — aggregate rim → BI.W-SCROLL-PROGRESS-RIM; per-item `[0,1]` stepper seam → BI.W-SCROLL-PROGRESS-RIM §Inbound (atlas C1/#185) |
 | C2 | Card `as-child` directive-root single-root guarantee | OWNED — BI.W-AXES-GATES §Inbound (born-RED two-root bite) |
 | C3 | compact 44px tap-floor (coarse pointer) | OWNED — BI.W-DOCK-SPINE (spine/overflow contract) |
-| C4 | `./styles/theme` token-only CSS subpath | OWNED — BI.W-STRUCTURE-RESEQUENCE (the flatten export map; #21 outbound carries the table when stable) |
+| C4 | `./styles/theme` token-only CSS subpath | DISCHARGED — LANDED for 7.0.0 as the Tailwind registration bridge `./styles/theme`; it does not duplicate a resolved base-token sheet. |
 | D | 4.3.0 merge note (parked §0 reconcile) | SUPERSEDED — rides the 5.0.0 cut reconcile (Decision-0) |
 
 ## docs/tranches/BG/coordination/DNS-REPORTS-INBOUND.md
@@ -268,7 +268,7 @@ contract) — a NEW inbox-class coordination file landing WITHOUT a marks sectio
 | 9 O-E2 | GU-1 `--glass-key-direction` under-shadow key lean | OWNED — BI.W-SURFACE-EXTRACT §Inbound (atlas GU-1/O-E2) |
 | 10 O-E9 | VIRT-CORE document-native `/virtual` (CV substrate + slim viewport) | DECLINED-TERMINAL — BI.W-VIRTUAL-TRUTH retired the `/virtual` PUBLISHED SUBPATH (fresh probe: 0 external binary consumers — words ships a byte-divergent fork — + 0 src/ production consumers, demo-only). O-E9 is a long-pole future ask that per atlas "needs nothing from this row" today; re-mints at a real ≥2 cross-repo binary consume (vft V4→V6.g, or a words re-adopt ask). |
 | 11 WG-E | glass TOC/search abstraction on latex-paper | DECLINED-TERMINAL — `/sidebar` (useScrollTracker/useTreeIndex) + `/search` (useFuzzySearch) are the shipped primitives; the latex-paper abstraction is consumer composition; re-trigger: a named ≥2 cross-repo need |
-| 12 WG-E | PRIMITIVES-REGISTER manifest | DISCHARGED — BH.B4-canon primitives.json |
+| 12 WG-E | PRIMITIVES-REGISTER manifest | SUPERSEDED-TERMINAL — Q033 retired the stale, unpacked derived register; installed exports and emitted declarations are the versioned source of truth. Q060 carries the correction. |
 | 13 | pencil-boil ^0.6.0 peer bump (corrected ^0.8.1) | OWNED — BI.W-XR-PRODUCER-REPAIRS X8 (verify handmark against ^0.8.1 + widen the optionalPeer floor) |
 | 14 | standing pencil-boil asks (schedulerTick+fBm) | DECLINED-TERMINAL — pencil-boil-side (foreign-tree fence) |
 | 15 | `#persistent-end` priority (M25) | OWNED — BI.W-DOCK-CONTROLS §Inbound (M25 priority-bumped) |
@@ -431,6 +431,12 @@ inbox-classed by path, marked for wholeness:
 | §9.1 | atlas PLAN-v3 CHECKED + owner-ratified; zero new asks, zero new primitives owed; the #21–#25 thread items carry unchanged (deck-core cession still 2nd-consumer-blocked · odometer widening still owner-gated · @property posture line still welcome · peer re-pin fire-on-cut) | ANSWERED-BY-EXISTING — the standing #21–#25 dispositions hold verbatim; no new row minted per their own no-second-book framing |
 | §9.2 | ask-#24 ownership split ENCODED in atlas W-DECK-DETENT (glass owns the headless deck primitive; atlas owns deck MOTION, self-hosting the contract-identical core until our cut) | DISCHARGED — matches §7's ruling exactly; the split is now checked wave-text on their side, nothing owed here |
 | §9.3 | consume-roster head's-up: atlas W-SOURCE-BROWSER consumes our shipped `./data-table` when it lands — flips a zero-consumed subpath to consumed | OWNED — asks-and-consumes roster row (`./data-table` carries an INBOUND-CONSUMER-PENDING flag: the repo-cleanup census + any subpath-prune wave must NOT rule it dead on zero-local-consumers; the atlas consume is the recorded 2nd-party consumer) |
+
+## docs/tranches/BI/coordination/valuejs-inbox-2026-07-15-v-formation.md
+
+| ask-id | ask | disposition |
+|---|---|---|
+| V-formation | BI-V-CUT producer bundle (P019 paired `1/√φ` type · P122 chassis proportions/explicit-absence · P047 fixed-footprint Blob paint seam + reproducible body measure · P051 face-only WatercolorDot · P092 one selected fill · P046 eight-zone aurora + pointer) | RECEIVED-RECONCILING — an ACTION-REQUIRED consumer letter; its not-yet-shipped rows (P122/P051/P019/P047/blob-measurement) are RED/nonterminal producer asks that reconcile against Q003's OPEN native paint verdicts, not source-shape claims. Terminal disposition follows the Q003 in-app paint batch (no source-green close). |
 
 ---
 

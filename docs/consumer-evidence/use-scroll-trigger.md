@@ -2,7 +2,7 @@
 
 ## Artefact path
 
-`src/composables/motion/useScrollTrigger.ts` — published on `@mkbabb/glass-ui/motion-core` (it imports `vue` only — engine-FREE + vueuse-FREE, the `usePointerVelocityField`/`useScrollProgress`/`useLiquidFlex` precedent). NOT on the keyframes-bearing `/motion` barrel. The private rAF-coalesced core it composes is `src/composables/motion/scrollReader.ts` (`createScrollReader` — an internal leaf, off every public barrel).
+`src/composables/motion/scroll/useScrollTrigger.ts` — published on `@mkbabb/glass-ui/motion-core` (it imports `vue` only — engine-FREE + vueuse-FREE, the `usePointerVelocityField`/`useScrollProgress`/`useLiquidFlex` precedent). NOT on the keyframes-bearing `/motion` barrel. The private rAF-coalesced core it composes is `src/composables/motion/scroll/scrollReader.ts` (`createScrollReader` — an internal leaf, off every public barrel).
 
 ## Disposition: the ONE scroll reader, published with BOOKED binary consumers (the Band-13 scroll-cluster floor)
 

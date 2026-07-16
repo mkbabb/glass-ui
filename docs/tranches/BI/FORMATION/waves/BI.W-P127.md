@@ -105,11 +105,12 @@ closed to `easing_non_finite`, `bezier_x_out_of_range`, `step_count_invalid`,
 - The manifest declares Value `^4.0.0`. The lock still records the last published
   producer graph and must not be represented as the final Glass graph.
 - Immutable pencil-boil `0.9.2` is already the optional peer boundary. The clean
-  export cut is a justified Glass 7 major: the packed map moves from 82 to 73 keys,
+  export cut is a justified Glass 7 major: the packed map moves from 82 to 74 keys,
   removes 11 subpaths (`./color-swatch`, `./controls`, `./focus-scope`, `./icon-chip`,
   `./icon-tooltip`, `./metric-badge`, `./metric-cell`, `./metric-stack`,
   `./motion-curves`, `./notification`, and `./spa-view`), and adds
-  `./dark-mode-toggle` plus `./metric`, without aliases or shims. The compatible
+  `./dark-mode-toggle`, `./metric`, and the Tailwind registration bridge `./styles/theme`,
+  without aliases or shims. The compatible
   Keyframes range remains evidence-derived.
 
 ## Remaining closure

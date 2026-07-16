@@ -1,8 +1,8 @@
 # BI.W-PAGER-WORM — the liquid dot-morph indicator + the two-edge driver
 
 Band B4 (pager greenfield). The headline dot-MORPH mechanism: the selected indicator stretches,
-travels, and re-forms on the next dot with liquid weight (the Google-worm edict). Ships the ONE
-two-edge driver the eyeglass register (B3) also consumes.
+travels, and re-forms on the next dot with liquid weight (the Google-worm edict). Ships the pager's
+ONE two-edge driver.
 
 ## §Mandate
 
@@ -26,14 +26,13 @@ re-litigating the codebase-truth diagnosis (§0) or the driver architecture (§3
   bed pip dims ~0.35 under the worm) · WORM (a separate `aria-hidden pointer-events:none` group holding
   ONLY the indicator masses, translucency once at the layer) · INTERACTION (the transparent button grid —
   W-PAGER-A11Y owns the roving contract). The filter is DECOUPLED from the bed by construction.
-- **The two-edge driver — the ONE integrator, minted here, shared with the eyeglass.**
-  `useLeadTrail` (`src/composables/motion/useLeadTrail.ts`; on `/motion-core` + root barrel —
+- **The two-edge driver — the ONE pager integrator, minted here.**
+  `useLeadTrail` (`src/composables/motion/morph/useLeadTrail.ts`; on `/motion-core` + root barrel —
   keyframes-FREE, the `usePointerVelocityField` precedent that closes gap G2): a spring/damped LEAD edge
   targeting `centerOf(active)` px + a critically-damped trailing follower (`trail += (lead−trail)·(1−exp(−dt/τ))`,
   τ≈270ms) computed inside the SAME subscription — ONE rAF, zero per-frame `getComputedStyle`.
   Direction-agnostic (`lo=min/hi=max`). Interruption is FREE (retarget re-seats, velocity carries).
-  Release-at-arrival is EMERGENT (the trail catching the lead — no timer). ≥2 consumers by construction:
-  the pager worm + the B3 eyeglass release (E4). Hand-rolled critically-damped integrator is the
+  Release-at-arrival is EMERGENT (the trail catching the lead — no timer). Hand-rolled damped integrator is the
   keyframes-free default; kf `useSpring` only if `/pager` is proven kf-legal (G2 — prefer the hand-roll).
 - **The paint arm — ruling 13, BOTH branches specced, the pass-5 moving capture decides:**
   - **Arm A (default IFF it reads liquid at 60fps within the G3 Safari raster budget ≤4ms/frame):** a
@@ -58,7 +57,7 @@ re-litigating the codebase-truth diagnosis (§0) or the driver architecture (§3
 
 ## §Work
 
-- `src/composables/motion/useLeadTrail.ts` (NEW) — the two-edge lead/trail integrator; keyframes-free;
+- `src/composables/motion/morph/useLeadTrail.ts` (NEW) — the two-edge lead/trail integrator; keyframes-free;
   exported on `/motion-core` + root barrel; the `drive(fractionalIndex)` seam for W-CAROUSEL-REBUILD's
   drag-scrub.
 - `src/components/custom/pager-dots/PagerDots.vue` — the three-layer split; the bed loses its filter
@@ -79,7 +78,7 @@ Born-RED at HEAD: PagerDots paints EMPTY (the σ8 annihilation) — the connecte
 zero worm mass. GREEN here.
 - W1 — the bed group carries NO `filter` (the decouple); the worm group is `aria-hidden pointer-events:none`.
 - W2 — `useLeadTrail` exists once, keyframes-free (no `@mkbabb/keyframes.js` import on the `/motion-core`
-  reach), ONE rAF, ≥2 consumers recorded (pager + eyeglass evidence).
+  reach), with ONE self-parking rAF owned by the pager worm.
 - W3 — exactly ONE 13px paint arm ships (no dual path); the losing arm's capture is banked in
   `docs/tranches/BI/audit/visual/W-PAGER-WORM-DELTA.md`.
 - W4 — `useLiquidFlex` cap in the 1.08–1.2 band (the 1.45 taffy value GONE).

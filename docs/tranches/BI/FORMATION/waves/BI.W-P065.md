@@ -7,6 +7,14 @@
 **Terminal owner:** glass-ui orchestrator
 **Evidence root:** `docs/tranches/BI/evidence/BI.W-P065`
 
+> **Test manifest truth-up (2026-07-16, docs truth sweep).** Rows 52 and 58 promise
+> `tests-visual/button.contract.spec.ts` and `tests/components/button.contract.test.ts`
+> as `create` actions; NEITHER exists on disk — the button-contract test files were never
+> committed. The button coverage that DID land is `tests/components/ui/button/Button.test.ts`
+> (row 59, present). The `tests-visual/` directory itself is intact — its other rows
+> (`desktop-fluid-type`, `emission`, …) remain on disk; only the two button-contract
+> entries are phantom.
+
 ## Intent
 
 Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS. Button has one command contract, semantic tone/emphasis/size, shared press/focus/icon geometry, and native disabled/submission behavior.

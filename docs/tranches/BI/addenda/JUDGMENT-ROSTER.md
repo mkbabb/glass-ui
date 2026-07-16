@@ -1,11 +1,13 @@
 # BI-ADDENDA — JUDGMENT ROSTER (Q051)
 
 The single user-gated ask of the whole addenda. Everything else in the tranche is a decided
-disposition or an executor wave; these 17 rows are the only calls reserved for the user. One
-checklist, one pass. Fill each `DECISION:` blank and the roster closes.
+disposition or an executor wave. Row 17 is retained as closed lineage; the other 16 are the calls
+reserved for the user. One checklist, one pass. Fill each live `DECISION:` blank and the roster
+closes.
 
-Evidence riders marked **PENDING-HEAL** await the paint batch (Q003), which triggers when the
-codex dev server boots again; riders marked **PENDING-Q021** await the fission evidence packet.
+Evidence riders marked **PENDING-HEAL** await the paint batch (Q003). The dev server has healed,
+so the trigger is satisfied; the label now means native evidence remains uncollected. Riders
+marked **PENDING-Q021** await the fission evidence packet.
 The recommendation on each row is the audit's honest read, including the cost of the recommended
 arm where one exists — a recommendation is not a foregone conclusion, and the veto windows are
 real. Rows that landed to a recommendation already (judgment-a/c/g) shipped in the codex tree;
@@ -57,12 +59,15 @@ eye must judge.
 **Evidence.** Cohort pairs **PENDING-HEAL** (Q003 judgment-d).
 **DECISION: ____**
 
-### Row 6 — Judgment-e: eyeglass pill sizing default
+### Row 6 — Judgment-e: eyeglass pill sizing-axis supersession
 
-**Question.** What is the default sizing for the eyeglass pill loupe?
-**Recommendation.** The eyeglass effect itself is DELIVERED (pill default, `.glass-lens`); this
-row is only the sizing axis, which rides the paint pass.
-**Evidence.** Sizing axis **PENDING-HEAL** (Q003); see also Q020 (spring wire-or-retire).
+**Question.** Ratify the P092/Q020 clean break that supersedes the former eyeglass pill sizing
+axis?
+**Recommendation.** Ratify as MOOT/SUPERSEDED. The shipped pill keeps one measured `.glass-lens`
+fill; the former proud/settled two-rest-state sizing axis is deleted. Reopening a default would
+revive removed behavior and contradict Q020's reduced one-fill contract.
+**Evidence.** P092/Q020 source and focused tests; the one-fill native matrix remains
+**PENDING-HEAL** at Q003.
 **DECISION: ____**
 
 ### Row 7 — Judgment-f: hero cartoon-weight A/B

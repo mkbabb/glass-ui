@@ -60,3 +60,11 @@ Add or adjust only focused substrate tests necessary to hold that distinction.
 
 Runs after P043. P046, P047, P049, and P050 consume this established status/failure
 contract without reopening it.
+
+## Q042 structural follow-up (POST, nonterminal)
+
+Q042 may replace Aurora's narrower local canvas-handle type with the complete
+`GpuSubstrateHandle`, including on the explicit unavailable path. This is a type/ownership
+correction only: backend choice, same-canvas fallback, typed setup failure, lifecycle, and status
+remain this wave's protected behavior. An optional `armAsync` or partial dummy handle is not an
+acceptable substitute for the total substrate contract.

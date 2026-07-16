@@ -1,5 +1,9 @@
 # THE PERFECTED-BI FORMATION — the handoff charter
 
+> **CURRENT EXECUTION HANDOFF:** this charter preserves the architectural cores and clean-break
+> oaths, but its paused-formation status, gate machinery, old release numbers, and launch protocol
+> are superseded by [`HANDOFF-ACTIVE-EXECUTION.md`](./HANDOFF-ACTIVE-EXECUTION.md).
+
 **Mode: TRANCHE DEVELOPMENT** (user order 2026-07-13 ~23:55). Execution is PAUSED past the
 in-flight approved cleanup; no new execution bands launch until the formation converges. The
 extant workflows (structure pass-3 confirmation · the dirty-lane eyeball · the cleanup-sweeps

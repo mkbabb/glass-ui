@@ -6,16 +6,17 @@ Two product passes narrowed four POST waves before source execution. Q010 uses t
 `--space-phi-5` and Card-local ladder and deduplicates the direct DataTable story; it does not mint a
 universal pad primitive. Q020 retires the dead eyeglass preset/register/prose and preserves P092's
 single `.glass-lens` fill on the shared selection clock; it does not rebuild the deleted two-rest
-state. Q024 changes only overlay scale `0.88`→`0.94`; T14 is verify-only. Q031 relocates the four
-unpublished virtual modules, their focused test, and three story imports into demo ownership with no
-forwarder. `PLAN.md` v3.3 is the terminal execution specification; older reports remain research
+state. Q024 changes only overlay scale `0.88`→`0.94`; T14 is verify-only. Q031 relocates the three
+useful unpublished virtual modules, their focused test, and two story imports into demo ownership
+with no forwarder. `PLAN.md` v3.3 is the terminal execution specification; older reports remain research
 lineage, not a broader implementation license.
 
 ## ROUND-3 HYGIENE (2026-07-16 ~04:40 — strike-list; the corrections below remain authoritative)
 
 STRUCK as superseded (left in place for lineage, do not cite): F-6 + F-3 ("P019/eyeglass absent" —
 both were 6.0.0-published-surface reads; the codex tree implements both), C-4 (eyeglass orphan —
-REFUTED, delivered as pill default), D-3's "43 files/6-way" (42 files/7 buckets), A-5's
+REFUTED, delivered as pill default), D-3's "43 files/6-way" (44 files/7 domains; 7,801 lines at
+the committed formation baseline), A-5's
 muster/words pins (fabricated). The disposition-queue line "P013/P014→minimal invariant wiring" is
 stale post-gate-ruling — the plan's abrogation is authoritative. C-2 gains a plan VERIFY row
 (pre-tag: all 9 consolidations + ~20 flatten-partials cleared). I-6 gains a named owner (codex,
@@ -55,10 +56,11 @@ before any Downloads cleanup). Q022 folded into Q003.
   the note. Coordination-hygiene row, not a break.
 - **D-1 carries tests**: ModalOverlay move relocates tests/components/ui/_shared/ModalOverlay.test.ts;
   virtual relocation moves and repoints `tests/composables/virtual/virtualSectionLayout.test.ts`
-  with its four demo-owned modules; it does not delete the behavior test.
-- **D-3 corrected**: motion/ = 42 files; the 6-way split needs a 7th bucket (morph: useElementMorph/
-  useDragMorph/useDockCtaReceive; selection: useSelectionGroup/useSelectionIndicator) + rulings for
-  useLiquidPress/useLiquidFlex/useTextHighlight/useViewTransition/useIntersectionPause.
+  with its three useful demo-owned modules; it does not delete the behavior test.
+- **D-3 corrected**: motion/ = 44 TypeScript files / 7,801 lines at the committed formation baseline;
+  the split has seven domains. `useLeadTrail` joins morph/selection, `useIntersectionPause` joins
+  core, and `useLiquidPress`/`useLiquidFlex` join spring. Q032 re-censuses after the live transaction,
+  preserves `/motion` + `/motion-core`, and adds no bucket barrel or forwarder.
 - **D-5 corrected**: reflect-capture-verify.mjs is LIVE (paint-arm.mjs + gesture-frame-recorder.mjs
   + 6 tests-visual specs import it) — NEVER prune; orphans are audit-stash-list.mjs + worktree-gc.mjs.
 - **D-7 corrected**: 15 empty husks; target border-progress/composables (border-progress itself
@@ -100,7 +102,7 @@ Registry law: two findings sharing a mechanism share a family. Verdict column up
 | B-1 | 40-family invariants.json survives with NO engine after the in-flight harness deletion; 23 browser + 4 governance families have zero automated check; release path = typecheck+build+happy-dom vitest | critical | gates-consumers census 1 |
 | B-2 | no-masking edict: scripts/no-masking-manifest.mjs (17KB, real) referenced by nothing | major | R2 verifying |
 | B-3 | demo no-meta edict VIOLATED: ~152 meta refs in demo/ + BD.W-ANIM-IOS27-TUNE string shipping in useDragMorph; the DEMETA wave never executed; story-language gate deleted | major | R2 verifying (counts+classes) |
-| B-4 | god-module ratchet gone and regrown: ~9 src files >500 lines (Slider 641, aurora atoms 592, PagerDots 580 …) | major | R2 verifying (per-file honesty) |
+| B-4 | The deleted length ratchet conflated size with ownership. Cohesion review found three real seams only: complete cycle-free Aurora atom fields; high-level Aurora GL setup + total substrate handle; one internal Blob simulation owner + removal of renderer compatibility exports. | major narrowed to semantic corrections | → Q042; length-only candidates exempt |
 | B-5 | HEAD ci.yml/commit-hook still invoke verify.mjs which the transaction deletes — CI wiring inconsistency at the 7.0.0 commit boundary | major | tree-census + gates |
 | B-6 | Audit-trail severance: transaction deletes the only receipt (P001), EXECUTION-PROGRESS.md, BOOTSTRAP.json; 134 wave specs overwritten with retro-stubs (−23.6k lines) — originals only in git at f20a2aa9 | major (disposition needed, not resurrection) | tree-census |
 
@@ -120,8 +122,8 @@ Registry law: two findings sharing a mechanism share a family. Verdict column up
 | id | finding | est. size | verdict |
 |----|---------|-----------|---------|
 | D-1 | _shared cleanup: ModalOverlay.vue → dialog/ (1-consumer); useStalePropWarning.ts dead (0 refs) | 2 files | R2 verifying |
-| D-2 | `composables/virtual/` library-orphan (0 src runtime consumers, three demo consumers + one focused test, unpublished) → relocate all four modules and the test coordinate to demo ownership; no forwarder | 4 modules | → Q031 |
-| D-3 | composables/motion/ 43 direct files → ~6 encapsulated submodules behind the existing barrel (export-safe) | ~35 files | R2 verifying split map |
+| D-2 | `composables/virtual/` library-orphan (0 src runtime consumers, two real demo consumers + one focused test, unpublished) → relocate the three useful modules and test coordinate to demo ownership; delete the unconsumed store and false ToC composition; no forwarder | 3 modules | → Q031 |
+| D-3 | `composables/motion/` 44 TypeScript files / 7,801 committed-baseline lines → seven direct semantic domains while preserving `/motion` + `/motion-core`; no bucket barrels or source forwarders | internal move; public surface unchanged | → Q032 POST/nonterminal |
 | D-4 | optional: _shared subgroups (field/disclosure/feedback/menu/surface); styles/{glass,tokens} subgroups | ~57 | low priority |
 | D-5 | scripts one-offs: audit-stash-list.mjs, reflect-capture-verify.mjs (+ worktree-gc.mjs post-harness) | ~3 | R2 verifying |
 | D-6 | MS9/P013 structure differential guard DROPPED; MS1/P005 census folded with no artifact — the settled structure has no guard | 1 invariant | R2 verifying |
@@ -174,7 +176,7 @@ mounts (.vite/deps 404). Live π remains impossible TREE-WIDE until the dev serv
 | H-2 | Dock fission/goo + V↔H orientation morph + Siri island RETIRED (UF-C3 Safari filter:url() risk) — shipped dock is expand/collapse+crossfade, NOT the iOS-27 fission dock. Ratify-or-rebuild = USER-GATED (DOCK-LADDER gives honest-goo bounds if rebuild) | major (judgment row) | → Q051 + Band 3 |
 | H-3 | `eyeglass` spring (0.36/ζ0.64, 7.3% overshoot) is unconsumed while the sole P092 loupe fill correctly uses shared `snappy`; wiring would revive P092's deleted two-rest-state path. | major | → Q020 RETIRE preset/tokens/generator/prose; preserve one loupe fill |
 | H-4 | Live paint BLOCKED (same dead server) — the retuned feel is code-correct but UNCONFIRMED in paint; dock/motion π discharge (dual-engine, both modes, real Safari, DOCK-LADDER overshoot/settle/interruption numbers) is a first-class obligation | critical (rides Q003) | MD-1/MD-6 |
-| H-5 | dock/styles/shell.css ~505 LOC (god-module roster member) | minor | → Q042 roster |
+| H-5 | `dock/styles/shell.css` is a cohesive family cascade, not a TypeScript ownership knot | info | Q042 EXEMPT; no length-only split |
 
 ## FAM-I · reference-media truth (media fork, 2026-07-16 ~03:35)
 

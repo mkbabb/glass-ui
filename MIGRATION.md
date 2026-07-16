@@ -7,11 +7,12 @@ rename or import re-point per call site.
 
 ## 7.0.0 (unreleased)
 
-The packed public map changes from 82 to 73 export keys. It removes
+The packed public map changes from 82 to 74 export keys. It removes
 `./color-swatch`, `./controls`, `./focus-scope`, `./icon-chip`, `./icon-tooltip`,
 `./metric-badge`, `./metric-cell`, `./metric-stack`, `./motion-curves`,
-`./notification`, and `./spa-view`, and adds `./dark-mode-toggle` plus `./metric`.
-These are clean removals or replacements, without aliases or compatibility shims.
+`./notification`, and `./spa-view`, and adds `./dark-mode-toggle`, `./metric`, and
+the Tailwind registration bridge `./styles/theme`. These are clean removals or
+replacements, without aliases or compatibility shims.
 
 `InstrumentChassis` is now one landmark-neutral physical sleeve on the explicit
 `/instrument-chassis` subpath. It is no longer exported from the root.
@@ -39,19 +40,23 @@ These are clean removals or replacements, without aliases or compatibility shims
 | `@mkbabb/glass-ui/controls` | Import `DarkModeToggle` from `@mkbabb/glass-ui/dark-mode-toggle`. The collective alias is removed. |
 | `DarkModeToggle eclipse` | Remove the long-press mode. The component is one native pressed theme command. |
 | `PaperBackdrop opacity` / `frequency` | Scope the shared paper variables at the owning route. `PaperBackdrop` only mounts the global content-field recipe. |
-| `HeaderRibbon hideTimeoutMs` | Remove the prop. Reveal now derives directly from pointer, focus, or pinned presence with no private timeout. |
-| Implicit collapsible `HeaderRibbon` anchor slot | Action-only ribbons are persistent by default. Add `mode="collapsible"` and a non-empty `anchor-label` to opt into disclosure behavior; the component owns the native button and the `anchor` slot supplies decorative content only. |
-| `HeaderRibbon` anchor slot `{ pinned, toggled }` | Read `{ pinned }`; the duplicate `toggled` name is removed. |
-| `HeaderRibbon` `left` slot | Compose that content beside `HeaderRibbon`; its public slots are `anchor` and `items`. |
+| `HeaderRibbon hideTimeoutMs` | Remove the prop. The band is persistent; there is no timed reveal. |
+| `HeaderRibbon mode` / `anchorLabel` / `anchor` slot | Removed. `HeaderRibbon` is persistent-only: action rows render expanded from first paint. There is no `collapsible` mode, disclosure anchor, or reveal/pin gesture. |
+| `HeaderRibbonMode` / `HeaderRibbonAnchorSlotProps` types | Removed with the collapsible contract. `HeaderRibbon` takes only `placement`, `ariaLabel`, and `class` (`HeaderRibbonProps` / `HeaderRibbonPlacement`). |
+| `HeaderRibbon` `left` slot | Compose that content beside `HeaderRibbon`; its one public slot is `items`. |
+| `CopyFailureReason` including `"exec-command"` | Remove legacy `execCommand` handling. Clipboard failures are now `"no-api"` or `"clipboard-api"`; use `useClipboard().status` and `invalidate()` for scoped feedback. |
+| `useClipboard().copied` | Removed. Derive it as `status.value === "success"`; the composable now returns `{ status, copy, invalidate }`. |
+| `copyToClipboard(text, { onCopyError })` | Removed. The stateless door is `writeClipboard(text): Promise<CopyResult>` — it returns `{ ok: true } \| { ok: false; reason }` instead of a `boolean`: read `ok`, and `reason` on failure. The old boolean+`onCopyError` signature is a consumer preset — keep a one-line adapter in your own util if you want it. |
 
 The Dock fisheye enhancement and its deep `useDockFisheye` import are removed. Capped
 control runs retain the measured native-scroll path and `scrollIntoView` recentering.
 
 `HeaderRibbon` retains the `/header-ribbon` subpath and the `placement="left|right"`
-contract introduced in 5.0. Its default persistent mode renders actions immediately. Its
-explicit collapsible mode owns the named native anchor button, while the `anchor` slot is
-decorative; touch/click pins the actions and Escape returns focus to the owned control.
-DOM/action order is stable across placements; only visual direction changes.
+contract introduced in 5.0. It is persistent-only: the action row renders expanded and operable
+from first paint, with no disclosure mode, anchor button, or reveal gesture. DOM/action order is
+stable across placements; only visual direction changes, and the action row flows in RTL while
+the band keeps its physical corner. (See `docs/consumer-evidence/header-ribbon.md` for the
+collapsible-cut census.)
 
 Wide stage/inspector composition uses `proportion="golden|preview-dominant"`; an
 absent inspector leaves stage at 100%. Boundaries and reserve default to none.
@@ -93,6 +98,11 @@ values; the default is `jump-end`, and no spelling aliases remain.
 Import `@mkbabb/glass-ui/styles/fonts` when the packaged Plus Jakarta Sans and Fira
 Code faces are desired. That stylesheet embeds its WOFF2 payload; raw built faces
 remain addressable through `@mkbabb/glass-ui/fonts/*`.
+
+Import `@mkbabb/glass-ui/styles/theme` to register the package's Tailwind v4
+`@theme` aliases and class-based dark variant without the component cascade. This
+entry is a registration bridge over the owning token variables, not a standalone
+resolved base-token stylesheet.
 
 ## 6.0.0
 
@@ -317,8 +327,6 @@ The full 199-symbol map (grouped alphabetically by symbol; `kind` is the TS expo
 | `InkPath` | type | `/handmark` |
 | `MarkBox` | type | `/handmark` |
 | `TaperSpec` | type | `/handmark` |
-| `HeaderRibbonAnchorSlotProps` | type | `/header-ribbon` |
-| `HeaderRibbonMode` | type | `/header-ribbon` |
 | `HeaderRibbonPlacement` | type | `/header-ribbon` |
 | `HeaderRibbonProps` | type | `/header-ribbon` |
 | `InstrumentChassisProps` | type | `/instrument-chassis` |
@@ -429,8 +437,10 @@ change). MIGRATE (one-line rename per call site):
 + import { Blob } from "@mkbabb/glass-ui/blob";
 ```
 
-`<GooBlob …>` → `<Blob …>`; the prop schema + the `useMetaballRenderer` seam are
-otherwise unchanged. The merged-metaball FIELD look is identical — only the name moves.
+`<GooBlob …>` → `<Blob …>`; the prop schema is otherwise unchanged. The internal
+`useMetaballRenderer` composable and its options are no longer public `/blob` API; use
+`<Blob>` and its exposed controls instead. `BlobSettledFrame` remains public from the
+simulation owner. The merged-metaball FIELD look is identical.
 
 ### Semantic entries replace source mirrors (key-preserving)
 
@@ -500,7 +510,7 @@ production consumers; the mechanism is DEMO-ONLY (3 demo sites). Under the mecha
 | `@mkbabb/glass-ui/virtual` subpath export + `typesVersions` | RETIRED — no external target |
 | `src/subpaths/virtual.ts` mirror | DELETED |
 | `/api` re-export of `FlatSection` / `ForcedSectionWindowRange` / `SectionLayout` / `SectionWindowRange` | REMOVED — the 4 types have no owning subpath (see the `/api` fold note above) |
-| `src/composables/virtual/` engine (`useVirtualSectionWindow` / `useWindowedStore` / `virtualSectionLayout`) | KEEPS — internal, demo-consumed via `@glass/composables/virtual` |
+| `demo/composables/virtual/` facility (`useVirtualSectionWindow` / `virtualSectionLayout` / narrow index) | KEEPS — demo-owned, imported only by the two windowed stories |
 
 **MIGRATE: none — the fresh probe read ZERO external binary consumers (words maintains its own
 fork; the atlas O-E9 document-native `/virtual` core is a long-pole future ask that "needs
@@ -508,8 +518,9 @@ nothing from this row" today, DECLINED-TERMINAL). A no-op-for-consumers record (
 invariant-11), not a silent prune.** Re-entry trigger: the published subpath re-mints only on
 a real ≥2 cross-repo binary consume (a words re-adopt ask, or the vft V4 → V6.g consume) — a
 production or external importer of the glass-ui surface, never a demo page and never a local
-fork. Recorded in `docs/consumer-evidence/use-virtual-section-window.md` +
-`proof:consumer-evidence-true` / `proof:virtual-window` (VW4/VW5 reconciled to the retire).
+fork. The final demo-owned coordinate is recorded in
+`docs/consumer-evidence/use-virtual-section-window.md`; no permanent proof script
+or compatibility coordinate remains.
 
 #### The `/border-progress` subpath retirement
 
@@ -636,31 +647,19 @@ regardless (a11y absolute).
   `responsive`) — a gesture contract is a role/behavior, not motion intensity.
 Machine-locked by `proof:encapsulation` · `motion-axis` arm (M1-M6).
 
-**BI.W-TABS-FACTOR — the eyeglass loupe becomes THE `pill` default + the variant cull.
-Clean break, no alias ("No legacy code"; UF-H1: "eyeglass should become the default tabs
-option … we don't need a million variants that are essentially the same thing").** The
-`pill` material IS the iOS-27 loupe by construction — a proud two-rest-state liquid-glass
-plate (a SETTLED inset long-rest that magnifies proud on touch/travel, the release riding
-the edge-asymmetric `useLeadTrail` integrator).
-- **`<SegmentedTabs eyeglass>` (the opt-in boolean) → DELETED.** The BG opt-in prop is
-  RETIRED: a bare `<SegmentedTabs>` now paints the loupe. MIGRATE: drop the `eyeglass`
-  attribute (it re-defaults to the loupe). A consumer who wants the prior FLAT slot-fill
-  pill sets `--eyeglass-proud: 1; --eyeglass-settled: 1` on the strip (the token-first
-  escape — the flat capsule survives only as that register + the PRM/degrade floor, not a
-  named variant).
-- **The sizing config — `--eyeglass-proud`.** The user-asked vertical-sizing knob is ONE
-  bare `<number>` ratio: `--eyeglass-proud` (the LIVE magnify, default `1.12`, band
-  1.05–1.25) with `--eyeglass-settled` (the inset rest, default `0.84`). Set it on any
-  ancestor / the strip to retune every descendant loupe; no length, no `@media` re-declare
-  (viewport-invariant by construction).
-- **The eyeglass `SPRING_PRESETS` row.** The loupe travel is its own measured register
-  (`eyeglass`, response 0.36 / ζ 0.64) — the CSS `--spring-eyeglass` + `--spring-eyeglass-duration`
-  tokens derive from it. JavaScript consumers pass that same preset row directly to
-  keyframes.js; consumers reading `var(--spring-eyeglass)`
-  get the Find My loupe curve.
-Machine-locked by `proof:eyeglass-tabs` (E7 default-is-eyeglass · E8 the bounded sizing
-axis · E9 the culled variants definition-absent · E10 `useLeadTrail` consumed, no second
-integrator).
+**BI.W-TABS-FACTOR / P092 — `pill` remains the default and the former two-rest-state
+eyeglass path is removed. Clean break, no alias.** A bare `<SegmentedTabs>` paints one
+measured `.glass-lens` indicator inside the pill track; `underline` remains the only other
+material.
+
+- **`<SegmentedTabs eyeglass>` remains deleted.** Drop the old attribute; there is no
+  named eyeglass variant.
+- **The old proud/settled sizing and release controls are deleted.** Remove
+  `--eyeglass-proud`, `--eyeglass-settled`, and `--eyeglass-live-t` overrides. The active
+  fill matches the selected control instead of reserving or magnifying a second rest state.
+- **The dedicated eyeglass spring is deleted.** Remove `--spring-eyeglass`,
+  `--spring-eyeglass-settle`, and `--spring-eyeglass-duration` overrides. Selection uses
+  the shared `snappy` register; no replacement preset or compatibility token exists.
 
 **BG.W-DEAD-SWEEP — the `selectableChipVariants` alias + the `--corner-shape-card`/
 `-pill` dead tokens SWEPT. Clean break, no alias ("No legacy code").** Two net-negative
@@ -1012,7 +1011,7 @@ still resolves the SAME classes/`.feedback-tone-<name>` register.
 | Retired (5.0.0) | Survivor | Rename |
 |---|---|---|
 | `<StackedIconGroup direction="horizontal\|vertical">` | `<StackedIconGroup orientation="…">` | `direction` → the shared `orientation` vocabulary (`StackedIconGroupProps.direction` → `.orientation`; `:data-direction` → `:data-orientation`, the SFC CSS re-keyed). Zero value change |
-| `HeaderRibbon.position?: HeaderRibbonPosition` (`'left'\|'right'`) | `HeaderRibbon.placement?: HeaderRibbonPlacement` | `position` → the shared `placement` vocabulary (a PLACEMENTS subset); the type `HeaderRibbonPosition` → `HeaderRibbonPlacement` (published on `/api`). Zero value change |
+| `HeaderRibbon.position?: HeaderRibbonPosition` (`'left'\|'right'`) | `HeaderRibbon.placement?: HeaderRibbonPlacement` | `position` → the shared `placement` vocabulary (a PLACEMENTS subset); the type `HeaderRibbonPosition` → `HeaderRibbonPlacement` (published on `/header-ribbon`). Zero value change |
 
 Cross-repo: the consumer call-site migration (words/atlas/muster/sci-report, paired with the `^5.0.0` peer
 bump) is filed by `BI.W-FACTOR-ASKS` on `docs/tranches/BI/coordination/asks-and-consumes.md`. Machine-locked by
@@ -1711,61 +1710,52 @@ retired with rationale.
   (`@tanstack/vue-query` if you need server-state coordination,
   `@vueuse/core`'s `useOffsetPagination` if you want a thin wrapper).
 
-#### 3.2—`useVirtualSectionWindow`—REMOVED → REVERSED-at-BC
+#### 3.2—`useVirtualSectionWindow`—REMOVED → REVERSED-at-BC → DEMO-OWNED-at-BI
 
-- **Status**: REMOVED in v1.0; **REVERSED-at-BC** (re-promoted to
-  `src/composables/virtual/useVirtualSectionWindow.ts` + the `/virtual`
-  subpath, OFF the root barrel).
+- **Status**: REMOVED in v1.0; briefly **REVERSED-at-BC**; the fabricated
+  consumer claim was corrected at BI and the reduced facility now lives at
+  `demo/composables/virtual/useVirtualSectionWindow.ts`.
 - **Reason for the v1.0 removal**: 0 production consumers. Demo-only at
-  v0.9.x. **Reason for the BC reversal**: two binary consumers now
-  overturn the no-consumer verdict — the live words
-  `DefinitionContentView` consumer + the booked `BC.W-DOCK-SEARCH`
-  results list (`docs/consumer-evidence/use-virtual-section-window.md`).
-  The homecoming: v0.9.4 → retired v1.0 → returned BC. The machinery is
-  byte-faithful to the proven words transposed copy save three recorded
-  refinements (binary-search `findSectionOffset`, the house
-  `useResizeObserver` leaf, the shared `SectionHierarchy` type-reconcile).
-- **Subpath retired**: `@mkbabb/glass-ui/virtual` — **RE-MINTED at BC** (it
-  again houses `useVirtualSectionWindow` + `useWindowedStore` + the
-  `virtualSectionLayout` pure core). `useVirtualGrid` (the
+  v0.9.x. The BC reversal relied on two claimed binary consumers; BI found
+  that words used a divergent local fork and Dock exposed only an optional
+  callback. The demo facility retains only the two actual stories' measured
+  height, bounded far-target, spacer, and active-id behavior; the former content
+  wrapper, tuning knobs, module cache, and unused readbacks are deleted.
+- **Subpath retired**: `@mkbabb/glass-ui/virtual` — re-minted at BC, then
+  retired again at BI after the binary-consumer claim failed. `useVirtualGrid` (the
   `@tanstack/vue-virtual`-bearing grid windower) STAYS words-local — one
   consumer + a hard 3rd-party dep, the ≥2-consumer bar fails for glass-ui.
-- **Migration (pre-BC)**: production-grade virtualization belonged to
-  `@tanstack/vue-virtual`. **Post-BC**: import the re-homed engine from
-  `@mkbabb/glass-ui/virtual`.
+- **Migration**: no Glass package replacement exists. Product consumers own
+  their windowing or choose a dedicated virtualizer.
 
-#### 3.3—`useWindowedStore`—REMOVED → REVERSED-at-BC
+#### 3.3—`useWindowedStore`—REMOVED → REVERSED-at-BC → DELETED-at-BI
 
-- **Status**: REMOVED in v1.0; **REVERSED-at-BC** (re-promoted to
-  `src/composables/virtual/useWindowedStore.ts`, on `/virtual`).
-- **Reason for the v1.0 removal**: 0 production consumers. **Reason for
-  the BC reversal**: the live words `wordlist.ts` store is the consumer
-  the no-consumer verdict missed (`docs/consumer-evidence/use-windowed-store.md`).
-  The generation-counter stale-append race-guard is the load-bearing
-  concurrency primitive, preserved byte-faithful.
+- **Status**: REMOVED in v1.0; briefly **REVERSED-at-BC**; deleted again at BI.
+- **Reason for the v1.0 removal**: 0 production consumers. The BC reversal
+  mistook words' local store for a Glass package consumer. The second-pass BI
+  census found no demo consumer either, so retaining the implementation and
+  test-only cases would preserve machinery for its own sake.
 - **Subpath retired**: `@mkbabb/glass-ui/virtual` (shared with
-  `useVirtualSectionWindow`) — **RE-MINTED at BC**.
-- **Migration (post-BC)**: import from `@mkbabb/glass-ui/virtual`.
+  `useVirtualSectionWindow`) remains absent.
+- **Migration**: none; words already owns its divergent local implementation,
+  and Glass provides no alias or forwarding coordinate.
 
-#### 3.4—`virtualSectionLayout` helpers—REMOVED → REVERSED-at-BC
+#### 3.4—`virtualSectionLayout` helpers—REMOVED → DEMO-OWNED-at-BI
 
-- **Status**: REMOVED in v1.0; **REVERSED-at-BC** (re-promoted to
-  `src/composables/virtual/virtualSectionLayout.ts`, on `/virtual` + the
-  `/api` type discovery layer).
+- **Status**: removed from the package surface; the unchanged demo fixture lives
+  at `demo/composables/virtual/virtualSectionLayout.ts`.
 - **Affected exports**: `buildSectionLayout`, `findSectionOffset`,
   `resolveActiveSection`, `resolveSectionWindow`, plus the
   `FlatSection`, `SectionLayout`, `SectionWindowRange`, and
   `ForcedSectionWindowRange` types.
 - **Reason for the v1.0 removal**: support substrate for
-  `useVirtualSectionWindow`; retired with its parent. **Reason for the BC
-  reversal**: returns home WITH its parent. `findSectionOffset` is
+  `useVirtualSectionWindow`; retired with its parent. The BC reversal followed
+  that parent and was corrected with it at BI. `findSectionOffset` is
   refined to a binary search over a by-id-sorted view (the words copy
   linear-scanned; the offset answer is byte-identical), and `FlatSection`
   now shares the four hierarchy fields with the sidebar's `TreeIndexEntry`
   via the `SectionHierarchy` base (no redeclared fields).
-- **Migration (post-BC)**: import the pure helpers from
-  `@mkbabb/glass-ui/virtual` (types also discoverable via
-  `@mkbabb/glass-ui/api`).
+- **Migration**: no package import exists; the helpers are demo infrastructure.
 
 #### Composables KEPT (cross-repo wired)
 

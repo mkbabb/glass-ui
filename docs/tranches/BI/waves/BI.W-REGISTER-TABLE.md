@@ -21,15 +21,16 @@ response-shortening, lands the enters in-band** — keep the 400 ms clock, fix t
 - **The register table — `src/styles/tokens/motion-registers.css` (the one net-new token file)**, `@import`ed
   AFTER `scheme-spring.css` (reads the parity-fixed `--spring-*` / `--spring-*-duration`, READ-ONLY here — the
   W-GLASS-CAL fence). Each register is a semantic name → a bundle `{clock, curve, scale, rise, blur}`:
-  - `enter-overlay` — snappy curve, `--spring-snappy-duration`, scale 0.88, blur 4→**6–8px** (blur is the
-    dominant overlay channel, MOTION-LADDER M4). **Byte-identical to today's `.glass-reveal` default.** t90
-    ~212 ms/+3.2% (in the iOS 130–370 ms materialize band post-parity).
+  - `enter-overlay` — snappy curve, `--spring-snappy-duration`, scale 0.94, blur **6px** (blur is the
+    dominant overlay channel, MOTION-LADDER M4). Q024 retunes only the scale-from value; the spring,
+    clock, blur, rise, and coupled reveal grammar remain unchanged. t90 ~212 ms/+3.2% (in the iOS
+    130–370 ms materialize band post-parity).
   - `enter-menu` — `--spring-smooth`, tighter clock, scale 0.96, blur 2px. t90 ~239 ms/+0.2%. **THIS IS the
     "dropdown bounce refined" fix (UF-G3) + the "popover like the dropdown" homogeneity (UF-G2).**
   - `enter-tooltip` — `--ease-out-expo` (NO overshoot), fastest decelerating arrival, scale 0.97, 0 rise/blur.
     **THIS IS "tooltip/hover-card tightened" (UF-G4).**
   - `enter-transient` — **NEW spring row `(0.62, 0.90)`** → t90 337 ms/+0.2%, deeper scale-from (~0.5), heavier
-    blur; the gentle-class CENTER-SEED bloom (MOTION-LADDER M5). ≥2 consumers: Toast + Notification. Minted in
+    blur; the gentle-class CENTER-SEED bloom (MOTION-LADDER M5). Toast is its sole current consumer. Minted in
     `springPresets.ts` + regen (composes on W-SPRING-PARITY's regen fix; widen `SPRING_LINES_RE`/
     `SPRING_DURATION_LINES_RE`).
   - `exit` — a NAMED exit clock (`--exit-overlay-duration ~150 ms` / `--exit-transient-duration ~100 ms`) on
@@ -44,7 +45,7 @@ response-shortening, lands the enters in-band** — keep the 400 ms clock, fix t
   (full/reduced/off, `useMotionAxis.ts`); the collision is real (SUFFUSION-MAP M4/R3 "the renamed register-
   binding attr"). `.glass-reveal[data-reveal="menu"]` swaps ONLY the knob vars; the recipe BODY (`@starting-
   style` from-state `reveal.css:82-105`, data-state legs, coupled channels, PRM carve `:210`) stays ONE.
-  Default (no attr) = `enter-overlay` = byte-identical.
+  Default (no attr) = `enter-overlay`.
 - **The `.glass-top-layer` fold (the FOURTH register RETIRED).** `animations.css:381-470`'s native 0.62 s
   `@starting-style` enter is collapsed onto the register bundle (it gains the same coupled `filter` blur-settle
   + register clock); one enter grammar, no fourth recipe. HoverPopover's `glass-top-layer` read re-points.
@@ -61,7 +62,7 @@ response-shortening, lands the enters in-band** — keep the 400 ms clock, fix t
 - NEW `src/styles/tokens/motion-registers.css` (~40 lines of custom properties, not a framework).
 - `src/styles/glass/reveal.css:68-72` — tokenize curve/clock (`--reveal-spring`/`--reveal-clock`); add the
   `data-reveal` register variants (knob-var swaps only); mint the named exit clocks; blur-from 4→6–8px overlay.
-- `src/composables/motion/springPresets.ts` + `scripts/regen-spring-tokens.mjs` — add the `transient`
+- `src/composables/motion/spring/springPresets.ts` + `scripts/regen-spring-tokens.mjs` — add the `transient`
   `(0.62,0.90)` row (regen emits its `linear()` + `-duration`).
 - `src/components/ui/toast/Toast.vue:77` + `src/components/ui/notification/Notification.vue:77,93` — bind
   `enter-transient` (retire the `animate-in`/`slide-in-from-*-full` + the own `transition` — clean break).

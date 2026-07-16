@@ -23,6 +23,12 @@ decision is itself a terminal disposition (`DEFERRED-TO-Q051`), not an open defe
 - **MOOT** — the subject no longer exists, so the question dissolves.
 - **DEFERRED-TO-Q0##** — carried to a named addenda wave (the only permitted forward pointer).
 
+## Active execution truth
+
+| wave | disposition | evidence / remainder |
+|------|-------------|----------------------|
+| Q020 eyeglass spring retirement | IN-FLIGHT-VERIFIED (source + ordinary tests) | Seven live preset rows; generated curve/settle/duration bytes agree with the table; focused spring + SegmentedTabs tests 14/14; native 1440/390 light/dark/axis/direction/input/PRM matrix remains PENDING-Q003, so no final SHIPPED or paint credit. |
+
 Terms used once and defined here: **REBOOKED-ORPHAN** — a chronic row whose routed close-owner
 (#92 DOCK-DEVICE, #93 close-battery, #95 cross-repo cut) was superseded by the P-graph and never
 ran, leaving the row promoted but undelivered. **Vacuous-gate** — a born-RED gate whose subject
@@ -55,6 +61,7 @@ still stands but whose enforcing script was deleted by P000, so nothing checks i
 | C-6 · P033 monolithic dock state machine | SUPERSEDED | Replaced by per-composable owners; ratified here for legibility. | REGISTRY C-6; H-1 |
 | C-6 · GCF-01 dock native acceptance | DEFERRED-TO-Q003 | Rides the paint-batch-at-heal verdict. | plan Q003 |
 | C-6 · dock evolution-vs-greenfield | DEFERRED-TO-Q051 (row 1) | The fission ratify-or-rebuild ruling owns this. | plan Q051 row 1 |
+| Judgment-e eyeglass sizing default | SUPERSEDED | P092 deleted the proud/settled two-rest-state sizing path; Q020 retires its dead spring. No user decision may revive that removed axis. | plan Q020; `MIGRATION.md` BI.W-TABS-FACTOR/P092 |
 
 ### PROVENANCE-RATIFY cluster (retro-stub dispositions, per the user's protocol abrogation)
 
@@ -117,7 +124,7 @@ language + the pre-tag lane, per the gate ruling; no script is reborn.
 |----|---------|-------------|
 | C-2 · 9 consolidation waves in-flight only | 6.0.0 still ships the duplicates | IN-FLIGHT-VERIFIED → Q002 pre-tag verify sweep (P074/P081/P082/P083/P091/P100/P104/P113/P117 + ~20 flatten-partials) |
 | C-3 · P044/P059 stub lies | see PROVENANCE cluster | TRUTH-UP → IN-FLIGHT-VERIFIED |
-| H-4 · god-module regrowth (9 files >500L) | ratchet gone | DEFERRED-TO-Q042 |
+| H-4 · length-ratchet regrowth | ratchet gone; cohesion review rejects a size law | DEFERRED-TO-Q042's three semantic owner carves; Slider/Pager/Easing/shaders/dock CSS EXEMPT |
 | Decision-0 · single-cut hold VIOLATED | 5.0.0 + 6.0.0 + 7.0.0-in-flight | MOOT — versioning ruled fine by the user (see §6 Q080); the hold no longer applies |
 
 ### DONE-VERIFIED chronic headlines (no wave; recorded for completeness)

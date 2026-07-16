@@ -1,5 +1,12 @@
 # TABS-GLASS-LADDER — the iOS-27 eyeglass tab-pill + glass MATERIAL reference ladder (A-TABS-GLASS)
 
+> **Terminal implementation precedence — P092/Q020 (2026-07-16).** This file preserves
+> measured reference evidence only. Its proposed two-rest-state scalar, dedicated spring,
+> lead/trail Tabs path, and related library bindings are superseded and must not be built.
+> The current contract is one measured `.glass-lens` pill fill on the shared `snappy`
+> clock; see `docs/tranches/BI/FORMATION/waves/BI.W-P092.md` and Q020 in
+> `docs/tranches/BI/addenda/PLAN.md`.
+
 BI design-loop reference re-examination (UF-P8). Analyst: A-TABS-GLASS (Fable).
 Every number below is a direct pixel measurement with a frame reference; the BD/BG
 priors were re-derived from scratch and are corrected where wrong (§7).

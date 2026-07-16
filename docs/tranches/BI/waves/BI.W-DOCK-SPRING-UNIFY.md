@@ -60,7 +60,7 @@ clock, not two).
 - `src/styles/dock/shape.css` (21K) — DELETE `@property --dock-punch-stretch` (:53), the 7-factor `scale:`
   product (:168-176), the per-child inverse counter-scale (:235-249). `--dock-expand-t`/`--dock-size-scale`/
   dock `--stretch` DEFINITION-ABSENT (the chrome reads `--dock-t`).
-- `src/composables/motion/springPresets.ts:98` — set the `dock` row to THE §0.2a-RESOLVED value (the
+- `src/composables/motion/spring/springPresets.ts:98` — set the `dock` row to THE §0.2a-RESOLVED value (the
   recommended iOS band ~0.28/ζ0.82 IF the user confirms; the shipped 0.68/ζ0.64 with the honest-tail
   treatment IF the user vetoes — `DOCK_SPRING`/`constants.ts:85-87` re-resolves through it either way).
   Delete the `dockMorphContext.ts` arrival-settle cut UNCONDITIONALLY (the mechanism decision; whatever

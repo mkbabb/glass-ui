@@ -2,7 +2,7 @@
 
 ## Artefact path
 
-`src/composables/motion/usePointerVelocityField.ts` — published on `@mkbabb/glass-ui/motion-core` AND the root barrel (it imports `vue` only — engine-FREE + vueuse-FREE, so it is root-barrel safe per the `useLiquidFlex`/`useViewTransition` precedent).
+`src/composables/motion/pointer/usePointerVelocityField.ts` — published on `@mkbabb/glass-ui/motion-core` AND the root barrel (it imports `vue` only — engine-FREE + vueuse-FREE, so it is root-barrel safe per the `useLiquidFlex`/`useViewTransition` precedent).
 
 ## Disposition: published-EARLY with BOOKED binary consumers (the B4-EARLY placement)
 
@@ -17,7 +17,7 @@ The visual-load-bearing ≥2-consumer bar (L invariant 8 / J-inv-10) is satisfie
 The originally-booked binaries were `<DotFlowField>` (W-FLOWFIELD) + `<Concentric>` (W-CONCENTRIC) — both **DELETED at BI.W-VIZ-DELETIONS** (the user-ordered clean-break prune of the 30+-attempt viz family; `dot-matrix` was likewise deleted). The ≥2-consumer bar RE-BASES onto the surviving live consumers — each a real `usePointerVelocityField()` call site feeding its renderer's per-frame uniform upload (verified by the `proof:pointer-velocity` V5 grep, NOT prose):
 
 - **`<Aurora>`** (`src/components/custom/aurora/`) — the field feeds the pointer dynamics into the aurora runtime (`composables/runtime.ts` / `frameLoop.ts` / `wgpuSetup.ts`).
-- **`<Blob>`** (`src/components/custom/blob/`) — `composables/useMetaballRenderer.ts` feeds the field for the pointer-wake + drag response.
+- **`<Blob>`** (`src/components/blob/`) — `composables/blobSimulation.ts` feeds the field for pointer-wake and drag response.
 - **`<Constellation>`** (`src/components/custom/constellation/`) — `useConstellation.ts` / `constellationInteraction.ts` read the shared `burst` for the flick-warp.
 - **`<FourierField>`** (`src/components/custom/fourier-field/`) — `composables/useFourierField.ts` reads the critically-damped `smoothedPosition` for the pointer scrub.
 - **`<LiquidGrid>`** (`src/components/custom/liquid-grid/`) — `composables/useLiquidGrid.ts` feeds the field for the local cursor swirl.

@@ -38,7 +38,7 @@ contract).
 - `src/styles/segmented-tabs.css` — add a grab-state z-index lift on `.segmented-indicator` (e.g. under a
   `[data-dragging]`/`.glass-drag-lift` scope) so the indicator sits above `.segmented-tab z-10` DURING the
   gesture only; the rest z-0 is unchanged.
-- `src/composables/motion/useDragMorph.ts` — no engine edit; confirm `reattach` re-resolves centers on the
+- `src/composables/motion/morph/useDragMorph.ts` — no engine edit; confirm `reattach` re-resolves centers on the
   immediate call (the geometry path at L366-368 already supports it).
 
 ## §Acceptance

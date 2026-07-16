@@ -28,7 +28,7 @@ Decided (PASS-1 §2.3 + N6 WIRE):
   consumer sites + the aliases (`--tab-indicator-duration`, `--dock-motion-resize`) inherit tempo with ZERO
   edits — NOT a clean-break rename (the public name is preserved as the reader; `-settle` is internal).
 - **CSS↔JS parity (the P7 one-clock law).** A shared `motionTempo(el?)` reader (~10 lines,
-  `src/composables/motion/motionTempo.ts`, cached `getComputedStyle` — the `--motion-weight` site-local
+  `src/composables/motion/core/motionTempo.ts`, cached `getComputedStyle` — the `--motion-weight` site-local
   getter seam) multiplied `response *= tempo` at spring construction in `useSpring` / `useSpringPress` /
   `useDockSpring (the surviving dock engine per BI.W-DOCK-SPINE; useDockOrientationMorph retires)` / `useDrawerSnap`. `duration ∝ response` (ωₙ = 2π/response) so scaling the CSS clock
   by tempo ≡ scaling response by tempo — proportionality by construction; the M1 parity (CSS==JS at tempo 1)
@@ -53,7 +53,7 @@ Decided (PASS-1 §2.3 + N6 WIRE):
 - `scripts/regen-spring-tokens.mjs` — emit `--spring-<name>-settle` + the `-duration` reader block.
 - `src/styles/tokens/scheme-spring.css:121-127` — the generated `-settle` + reader blocks (replaces the flat
   `-duration` values).
-- NEW `src/composables/motion/motionTempo.ts` (~10 lines); wire `response *= tempo` into `useSpring` /
+- NEW `src/composables/motion/core/motionTempo.ts` (~10 lines); wire `response *= tempo` into `useSpring` /
   `useSpringPress` / `useDockSpring (the surviving dock engine per BI.W-DOCK-SPINE; useDockOrientationMorph retires)` / `src/components/ui/drawer/composables/useDrawerSnap.ts`.
 - `src/styles/glass/reveal.css:210` — the `data-motion="reduced"` + `data-motion="off"` arms.
 - The loud-scope `--motion-tempo: 1` re-pins (dock morph / drawer / deck scopes).

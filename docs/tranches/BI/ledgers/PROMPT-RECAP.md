@@ -257,6 +257,10 @@ DEFAULT + a vertical-size config + variant-cull. **Owner: B1/B7 (tabs) — the e
 variant collapse.** Booked successors (EYEGLASS-DOCK-KIN, T1 clone-loupe, chromatic-aberration rim, live
 ambient-observer wire) recorded — NOT BI rows unless re-triggered.
 
+**Terminal pointer (2026-07-16):** P092/Q020 supersede this historical implementation
+status; Tabs now keeps one measured `.glass-lens` pill fill on `snappy`, while Q020 native
+acceptance remains pending.
+
 ---
 
 ## §D — the BH "further perfect BH" structure mandate (20-wave CONSTELLATION)

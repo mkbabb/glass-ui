@@ -22,7 +22,7 @@ ToggleGroup wearing chrome (PASS-1 §1 DOCK-D verdict). Mint **`useSelectionGrou
 - **roving machine**: `tabs/composables/useTabRovingFocus.ts` VERBATIM (exactly-one-tabstop, axis-derived
   arrows, Home/End, wrap, disabled-skip);
 - **the ONE traveling-indicator writer**: `useTabIndicator.ts` promoted to
-  `composables/motion/useSelectionIndicator.ts` (ResizeObserver + center-anchored transform + the `--stretch`
+  `composables/motion/morph/useSelectionIndicator.ts` (ResizeObserver + center-anchored transform + the `--stretch`
   squish via `useLiquidFlex`); reka's `--reka-tabs-indicator-position` path AND the CSS-anchor indicator
   branch both retire — **ONE writer, Safari-identical by construction**;
 - **overflow**: the `<FadingScroll>` port + `scrollIntoView`-on-select (the recenter call — its FACILITY is
@@ -45,10 +45,10 @@ executes there.)
 
 ## §Work
 
-- Mint `composables/motion/useSelectionGroup.ts` (headless, reka-free): the `defineModel` selection model +
+- Mint `composables/motion/morph/useSelectionGroup.ts` (headless, reka-free): the `defineModel` selection model +
   `useTabRovingFocus` (verbatim compose) + `useSelectionIndicator` + the `el.scrollIntoView({inline:'nearest',
   block:'nearest'})`-on-select call. `/motion-core` + `/api` publication.
-- Promote `tabs/composables/useTabIndicator.ts` → `composables/motion/useSelectionIndicator.ts` (the ONE
+- Promote `tabs/composables/useTabIndicator.ts` → `composables/motion/morph/useSelectionIndicator.ts` (the ONE
   writer). Retire the CSS-anchor indicator branch in `SegmentedTabs.vue` + reka's indicator path.
 - `src/styles/glass/glass-capsule.css` — fold `--dock-control-safe-inset` into the face:
   `background-clip: content-box`; the painted plate insets, the hit cell reads the full `--dock-control-size`

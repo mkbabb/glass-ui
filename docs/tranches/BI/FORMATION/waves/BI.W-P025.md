@@ -13,7 +13,10 @@
 > discrete-episode lifecycle (generation-guarded latest-active completion, single reset timer,
 > `invalidate()`, disposal freeze) is asserted on disk in `tests/composables/dom/useClipboard.test.ts`
 > and, through the real story, `tests/demo/springs-story.test.ts`; the one-clock visual arm is
-> `tests-visual/motion-one-clock.spec.ts`.
+> `tests-visual/motion-one-clock.spec.ts`. Post-amendment, after a disposal-leak challenge
+> finding, the timeout watchdog and the success reset timer were unified onto one
+> scope-owned handle (`useClipboard.ts`'s single `timer`), so bump, invalidate, and
+> dispose all clear it symmetrically.
 
 ## Intent
 

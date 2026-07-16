@@ -7,6 +7,12 @@
 **Terminal owner:** glass-ui orchestrator
 **Evidence root:** `docs/tranches/BI/evidence/BI.W-P092`
 
+> **Test manifest truth-up (2026-07-16, docs truth sweep).** Rows 18 and 20 pin
+> `tests-visual/tabs.contract.spec.ts` and `tests/components/tabs.contract.test.ts` as
+> `create` actions; NEITHER exists on disk. The tabs coverage that DID land is
+> `tests/components/custom/tabs/segmented-tabs.test.ts` (row 19, present) — treat it as the
+> real committed contract test.
+
 ## Intent
 
 Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS. Tabs owns APG tablist/tab/tabpanel, orientation, activation, roving focus, indicator, responsive overflow, controlled value, and shared selection motion.

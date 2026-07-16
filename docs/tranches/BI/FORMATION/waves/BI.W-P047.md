@@ -7,3 +7,12 @@ The source candidate uses required `BlobConfig.morphT` as the sole flat-to-dress
 `BlobConfig.geometry.bodyRadius` remains the sole painted-mass control. No `heroScale`, second radius, renderer introspection, or alternate scene exists. One simulation and quiescence predicate feed WebGPU and WebGL2; `settledFrame` publishes the last quiescent draw with its simulation clocks, lifecycle-owned transparent-buffer dimensions/DPR, and normalized `simulationOrigin: { x, y }`.
 
 The clean public-shape break becomes terminal only when an immutable major release carries it. Preserve the current gel body, satellites, palette, press behavior, reduced motion, lifecycle, and engine status; do not restore `variant` as compatibility syntax.
+
+## Q042 structural follow-up (POST, nonterminal)
+
+Q042 gives the already-shared clocks, `resolveFrame`, quiescence, scheduled wake, and settled snapshot
+one internal `blobSimulation` owner. `useMetaballRenderer` remains the Vue/substrate adapter and is no
+longer re-exported as public `/blob` API; its options type leaves with it. `BlobSettledFrame` remains
+public from the simulation owner because the component exposes that value. The carve cannot add a
+second clock, simulation, renderer, radius, readiness signal, or compatibility forwarder, and it does
+not discharge this wave's pending painted-component/native acceptance.

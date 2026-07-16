@@ -64,9 +64,9 @@ ALREADY-smoothed position — the compound-lag "not smooth" complaint verbatim; 
 
 ## §Work
 
-- `src/composables/motion/usePointerVelocityField.ts` — the additive core evolution (engagement + attractor +
+- `src/composables/motion/pointer/usePointerVelocityField.ts` — the additive core evolution (engagement + attractor +
   options + halfLifeMs); existing outputs byte-frozen.
-- `src/composables/motion/useRoutePointer.ts` (NEW) + `pointerFieldMappings.ts` (NEW).
+- `src/composables/motion/pointer/useRoutePointer.ts` (NEW) + `pointer/pointerFieldMappings.ts` (NEW).
 - `demo/.../StoryHero.vue` — thread `useRoutePointer` into the full-bleed background vizzes;
   `FourierField.vue:78`'s hard `interactive=false` → the SUBTLE-interactive background register (influence
   ~2–6%, longer half-life; canvas stays `pointer-events:none`).
