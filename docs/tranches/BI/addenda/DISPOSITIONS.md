@@ -34,6 +34,14 @@ Terms used once and defined here: **REBOOKED-ORPHAN** — a chronic row whose ro
 ran, leaving the row promoted but undelivered. **Vacuous-gate** — a born-RED gate whose subject
 still stands but whose enforcing script was deleted by P000, so nothing checks it.
 
+**Post-commit reconciliation (2026-07-16).** This ledger was first drafted before the codex
+transaction committed. The transaction has since landed — code across `490cc46e` + `2d804ce6`, docs checkpoint at
+`d27def98`, docs boundary at `6d4e75bf` (branch `codex/bi-p-q-execution`). Rows that verified an
+"in the codex transaction (not yet committed)" state are therefore committed-at-HEAD unless a
+row says otherwise; the P044/P059 truth-ups below are updated to that committed truth. The two
+remainders that are genuinely NOT closed by the commit are native/paint certifications — Q020's
+1440/390 matrix and P059's specimen paint — which still ride Q002/Q003.
+
 ---
 
 ## 1. The Q050 terminal-disposition ledger (every plan-Q050 bullet as a row)
@@ -45,10 +53,10 @@ still stands but whose enforcing script was deleted by P000, so nothing checks i
 | D1 · W-BLURRED-IMAGE-BG | RETIRE | BD-union demo-tail; owner (`BI.W-BD-UNION-TRUE-UP`) minted pre-formation, never executed. | ledger-verify §B D1 / §C row 34 |
 | D1 · W-LIVING-ARTWORK | RETIRE | Same owner, never executed. | ledger-verify §C row 37 |
 | D1 · W-MEDIA-DOCK+NOWPLAYING | RETIRE | Same owner, never executed. | ledger-verify §C row 36 |
-| D1 · W-STICKY-TITLE-CONDENSE | DECIDED (liveness-checked in-wave) | Only sticky-title carried a probe (`9f0a5285`); the codex executor checks it live at the commit boundary and folds-or-retires on the spot. | ledger-verify §C row 35 |
-| D2 · N-19 FBO multipass | RETIRE | The promised CHRONIC-DISPOSITIONS ledger row was never written; written here as RETIRE. | ledger-verify §B D2 |
-| D2 · N-21 shader transpiler | RETIRE | Same. | ledger-verify §B D2 |
-| D2 · N-22 novel-viz | RETIRE | Same. | ledger-verify §B D2 |
+| D1 · W-STICKY-TITLE-CONDENSE | DECIDED (FOLD — behavior live in the library) | Liveness-checked at the commit boundary: the condense-on-scroll title subject is shipped as the `CardHeader` `shrink` feature — a `condensed` ref driven by `useScrollTrigger` detents (condense at scrollTop 24, expand at 12), the `card-header--shrink`+`data-condensed` binding, and `card-scroll.css` shrinking the title / hiding the description. Folds into that existing owner; no bespoke demo-tail build. Caveat recorded (not a Q050 blocker): no demo *story* currently consumes it and the StoryPage chassis carries no condense — a demo-coverage nit. The `9f0a5285` "probe" cite is a **misattribution** — that SHA is a chassis-colocation reorg (BG F7 / BH.B3 δ3/δ4) with no sticky-title logic. | `src/components/card/CardHeader.vue:8,13,29,35-45,56`; `src/components/card/card-scroll.css:34-46`; barrel export `card/index.ts:9` |
+| D2 · N-19 FBO multipass | RETIRE | The promised CHRONIC-DISPOSITIONS ledger row was never written; the RETIRE row is now written into `ledgers/CHRONIC-DISPOSITIONS.md §4d` (BD `deferred-chronic-fold.md:64`). | ledger-verify §B D2; CHRONIC §4d |
+| D2 · N-21 shader transpiler | RETIRE | Same — written into CHRONIC §4d (BD `deferred-chronic-fold.md:66`); the twins-not-transpiler identity (P044) is decided. | ledger-verify §B D2; CHRONIC §4d |
+| D2 · N-22 novel-viz | RETIRE | Same — written into CHRONIC §4d (BD `deferred-chronic-fold.md:67`). | ledger-verify §B D2; CHRONIC §4d |
 | E1 Safari blur + 4 BG surfaces | DEFERRED-TO-Q002 | The visual-cert owner (#92) is dead; the four surfaces are enumerated by SHA into the Q002 pre-tag paint roster (CARTOON-INK 3857b33 · GLASS-BLUR-PEER cd9ce46 · FIELD-AURORA b3d65eec · BACKDROP-BLUR-ENGAGE 20b09bc7) plus the real-Safari `var()`-in-`backdrop-filter` blur row. | ledger-verify §B E1; plan Q002 |
 | C1 fourier phantom-classes | SUPERSEDED (permanently-foreign-terminal) | `W-RED-COLLATERAL` ran (`71884a47`) but never named fourier; the host gate is gone; foreign-tree, low severity, no live carrier. | ledger-verify §B C1 |
 | deep-glass dual-book flip | DONE-VERIFIED | Flip evidenced at `785edf12`/`ccd56953`; the #93 terminal-flip is moot. | ledger-verify §C row 31 |
@@ -56,12 +64,12 @@ still stands but whose enforcing script was deleted by P000, so nothing checks i
 | AX 21-book cluster (disease #8) | DECIDED (consolidated ratification) | FOLD arms commit-verified done (`ax:metric-badge-icon`→METRICS-DEMO `c90f51f4`; `ax:labeled-field-for-id`→SLIDER-THUMB-NAME `85c7f130`; `ax:dock-select-clamp-label`→DOCK-CONTROLS `15a38a63`). RETIRE arms stand as ledger acts. The re-stamp-ceiling enforcement died with the gate ruling (recorded, accepted). The 8 Baseline standing-books → Q051 row 10. | ledger-verify §D §1a; §C row 2 |
 | F1 retirement-guard no-meta direction | DONE-VERIFIED | Ruled record-terminal-DEAD in `a20060ad`; greenfield-no-meta makes it moot. Loop formally closed here. | ledger-verify §B F1 |
 | G1 SRC-restructure collapse | DONE-VERIFIED | The headline chronic: `src/api`, `src/types`, `src/utils`, `src/subpaths` all GONE at HEAD (`58ddaf21`/`b02176e3`/`9c3c49e6`; ms6 `bb5c1e5c`). Loop formally closed here. | ledger-verify §B G1 |
-| C-5 · SplitChars removal | DECIDED (clean-break) | Deliberate, documented removal (MIGRATION.md:29); split-chars → product-owned grapheme treatment. Not a defect. Live-deleted in the transaction. | REGISTRY C-5; MIGRATION.md:29 |
-| C-5 · Toggle removal | DECIDED (clean-break) | Deliberate, documented removal (MIGRATION.md:31); toggle → ToggleGroupItem/native `aria-pressed`. Not a defect. Live-deleted in the transaction. | REGISTRY C-5; MIGRATION.md:31 |
+| C-5 · SplitChars removal | DECIDED (clean-break) | Deliberate, documented removal (MIGRATION.md:30 — the `SplitChars`/`useCharStagger` row); split-chars → product-owned grapheme treatment. Not a defect. Live-deleted in the committed transaction. Row live-verified on disk; the `:29` pin drifted to `:30` under the transaction. | REGISTRY C-5; MIGRATION.md:30 |
+| C-5 · Toggle removal | DECIDED (clean-break) | Deliberate, documented removal (MIGRATION.md:32 — the standalone `Toggle`/`toggleVariants` row); toggle → ToggleGroupItem/native `aria-pressed`. Not a defect. Live-deleted in the committed transaction. Row live-verified on disk; the `:31` pin drifted to `:32`. | REGISTRY C-5; MIGRATION.md:32 |
 | C-6 · P033 monolithic dock state machine | SUPERSEDED | Replaced by per-composable owners; ratified here for legibility. | REGISTRY C-6; H-1 |
 | C-6 · GCF-01 dock native acceptance | DEFERRED-TO-Q003 | Rides the paint-batch-at-heal verdict. | plan Q003 |
 | C-6 · dock evolution-vs-greenfield | DEFERRED-TO-Q051 (row 1) | The fission ratify-or-rebuild ruling owns this. | plan Q051 row 1 |
-| Judgment-e eyeglass sizing default | SUPERSEDED | P092 deleted the proud/settled two-rest-state sizing path; Q020 retires its dead spring. No user decision may revive that removed axis. | plan Q020; `MIGRATION.md` BI.W-TABS-FACTOR/P092 |
+| Judgment-e eyeglass sizing default | SUPERSEDED | P092 deleted the proud/settled two-rest-state sizing path; Q020 retires its dead spring. No user decision may revive that removed axis. | plan Q020; MIGRATION.md:650-662 (the BI.W-TABS-FACTOR / P092 block) |
 
 ### PROVENANCE-RATIFY cluster (retro-stub dispositions, per the user's protocol abrogation)
 
@@ -81,8 +89,8 @@ protected property is re-homed, not lost. Stubs cite `f20a2aa9` for the original
 | P052 procedural-config schema | DECLINED | DECIDED | live-control roundtrip → Q003 paint verdicts |
 | P053 cross-engine parity matrix | DECLINED | DECIDED | perceptual parity → Q003 paint verdicts |
 | P061 π scenario runner | DECLINED / SUPERSEDED | DECIDED | source-bound evidence → the Q002 pre-tag lane |
-| P044 procedural-color shaders | on-disk "DONE — PRODUCT COMPLETE"; deliverable UNCOMMITTED | TRUTH-UP → IN-FLIGHT-VERIFIED | shaders untracked (`color.glsl.ts`/`color.wgsl.ts`); truth the status to in-flight inside the transaction |
-| P059 specimen surface | on-disk "DONE — native accepted"; `SpecimenFrame.vue` deleted, zero π | TRUTH-UP → IN-FLIGHT-VERIFIED | reworked in the transaction; truth the status; π owed at Q003 |
+| P044 procedural-color shaders | on-disk "DONE — PRODUCT COMPLETE"; deliverable now COMMITTED | TRUTH-UP → DONE-VERIFIED | `src/composables/glass/procedural/color.glsl.ts` + `color.wgsl.ts` tracked at HEAD (landed `490cc46e`, ancestor of HEAD). The stub's DONE claim is now accurate; the earlier "untracked/in-flight" truth-up is itself superseded by the committed transaction — recorded, not laundered. |
+| P059 specimen surface | on-disk "DONE — native accepted"; rework now COMMITTED | TRUTH-UP → DONE-VERIFIED (structure); π/native → Q003 | `SpecimenFrame.vue` + `PermutationGrid.vue` deleted at HEAD, `ShowcaseFrame.vue` retained as the sole plate (deleted in `490cc46e`; already absent from `2d804ce6`). The structural consolidation is real; the stub's "native accepted" paint claim stays unbacked — the π/native pass rides Q003. |
 | deleted harness (P000/P001) | reversed in-flight | SUPERSEDED | recorded as a git-history pointer (`1c2cda3a`/`b5eee380`), not resurrected |
 
 ---
@@ -123,7 +131,7 @@ language + the pre-tag lane, per the gate ruling; no script is reborn.
 | id | subject | disposition |
 |----|---------|-------------|
 | C-2 · 9 consolidation waves in-flight only | 6.0.0 still ships the duplicates | IN-FLIGHT-VERIFIED → Q002 pre-tag verify sweep (P074/P081/P082/P083/P091/P100/P104/P113/P117 + ~20 flatten-partials) |
-| C-3 · P044/P059 stub lies | see PROVENANCE cluster | TRUTH-UP → IN-FLIGHT-VERIFIED |
+| C-3 · P044/P059 stub lies | see PROVENANCE cluster | TRUTH-UP → DONE-VERIFIED (deliverables now committed: P044 `490cc46e`; P059 rework in `490cc46e`); P059's native-paint claim → Q003 |
 | H-4 · length-ratchet regrowth | ratchet gone; cohesion review rejects a size law | DEFERRED-TO-Q042's three semantic owner carves; Slider/Pager/Easing/shaders/dock CSS EXEMPT |
 | Decision-0 · single-cut hold VIOLATED | 5.0.0 + 6.0.0 + 7.0.0-in-flight | MOOT — versioning ruled fine by the user (see §6 Q080); the hold no longer applies |
 
@@ -189,7 +197,7 @@ Unresolved rows flagged by `prompt-recap-verify.md` and their homes: the entire 
 battery (paint-in-close → Q002/Q003; gestalt-ledger → Q003; budget-rebaseline → RETIRE per A1;
 masking-sweep → Q003 F-4; ledger-liveness → this ledger + Q003 H-8/H-9/H-12) · demo no-meta edict
 → Q041 · god-module regrowth → Q042 · Safari parity → Q002 roster · eyeglass-tabs directive →
-DECIDED (delivered as pill default `.glass-lens`, MIGRATION.md:624-642; not orphaned — R1/R2
+DECIDED (delivered as pill default `.glass-lens`, MIGRATION.md:650-662; not orphaned — R1/R2
 correction) · Decision-0 single-cut → MOOT (versioning fine).
 
 ---

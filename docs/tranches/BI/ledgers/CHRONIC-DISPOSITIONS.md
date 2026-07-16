@@ -166,6 +166,21 @@ BI.W-LEDGER-DETECTOR-HARDEN.
 | cmd:kf-snap-adopt | kf `DragOptions.snap` native adopt (=D27) | BF | — | useDragMorph.ts:325 `snap:`; kf `^5.2.0` | **MET (LANDED)** → §5 (flip D27) |
 | cmd:glass-dialog-native-34 | native-`<dialog>` #34 pilot (=ax:glass-dialog-native-pilot) | AT | ~10 ⚠ | §1a row | **open_question → RETIRE standing-book** (§6.1) |
 
+### 4d. The N-19 / N-21 / N-22 viz-tail standing books → RETIRE (TAIL-EXCAVATION D2, written)
+
+The three BD viz-tail standing books promoted in TAIL-EXCAVATION §2 D2 (reg #38, TAIL-EXCAVATION.md:75)
+were routed to "add 3 RETIRE rows to CHRONIC-DISPOSITIONS (a ledger note, not a full wave)" and the note
+was **never written** (this ledger contained no N-19/N-21/N-22 rows — addenda `reports/ledger-verify.md`
+§B D2, verified in full). Written here as the terminal act, under UF-P2 — the same standing-book discipline
+the ledger applied to the §1a AX 21-book cluster. First-booked as DEFER-with-trigger in BD
+`fleet2/deferred-chronic-fold.md`; never re-surfaced across BD→BI.
+
+| id | item | first-booked | closes | evidence | disposition |
+|----|------|-------------|--------|----------|-------------|
+| N-19 | ping-pong FBO multi-pass substrate as a library primitive (literal multi-pass Kuwahara + RD/fluid-ink/caustics) | BD | 1-2 ⚠ | `fleet2/deferred-chronic-fold.md:64` (DEFER-with-trigger); the single-pass `uMedium==7` Kuwahara ships as the interim | **RETIRE** — no scene requires a generic multi-pass FBO framework; the shipped substrates own their own passes. The ≥2-FBO-consumer trigger re-enters it via a fresh wave, not a standing book. |
+| N-21 | single-source-shader transpiler (WGSL→GLSL / common IR) | BD | 1-2 ⚠ | `fleet2/deferred-chronic-fold.md:66`; `gpu-only-architecture.md:154` ("BOOKED, not built") | **RETIRE** — the decided identity is hand-authored `.glsl`/`.wgsl` twins in one procedural home (P044: no code-gen); the shared-chunk DRY is the KISS answer. A transpiler is a net-new capability that enters on its own ≥2-consumer + correctness bar, not as carried debt. |
+| N-22 | novel-viz tail (reaction-diffusion · fluid-ink · voronoi · caustics · lightning · moiré · chladni · truchet · marble · ripple · slime) | BD | 1-2 ⚠ | `fleet2/deferred-chronic-fold.md:67` | **RETIRE** — an open-ended list of unbuilt scenes cannot carry debt; each concrete viz enters as its own wave when a real ≥2-consumer or successor-class need names it (marble→aurora medium, fluid/SPH→blob successor, etc.). |
+
 ---
 
 ## §5 — MET / LANDED — flip-with-evidence (the round-1 stale-ledger corrections + already-terminal)
