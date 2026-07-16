@@ -3,11 +3,10 @@ import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import { HeaderRibbon } from "@glass/components/header-ribbon";
 import { DockControl } from "@glass/components/dock";
-import { Menu, Settings, Search, Bell } from "@lucide/vue";
+import { Settings, Search, Bell } from "@lucide/vue";
 
 // HeaderRibbon is normally `position: fixed` to the viewport corner; inside a
-// story we host it in a framed surface so pointer, focus, and pinned states can
-// be exercised without occluding the page chrome.
+// story we host it in a framed surface so it does not occlude the page chrome.
 </script>
 
 <template>
@@ -39,66 +38,24 @@ import { Menu, Settings, Search, Bell } from "@lucide/vue";
                 <p
                     class="absolute inset-x-0 bottom-3 text-center text-mono-caption text-muted-foreground"
                 >
-                    default mode · always available
+                    always available
                 </p>
             </div>
         </StorySection>
 
         <StorySection
-            heading="Collapsible command band"
-            blurb="The anchor reveals actions on pointer hover or keyboard focus. Click or touch activation pins the row; Escape unpins and returns focus, then the row collapses when focus leaves."
-        >
-            <div
-                class="relative h-32 w-full overflow-hidden rounded-card border border-border/60 bg-card"
-            >
-                <HeaderRibbon
-                    mode="collapsible"
-                    placement="left"
-                    aria-label="Left header actions"
-                    anchor-label="Toggle left header actions"
-                    class="header-ribbon--specimen"
-                >
-                    <template #anchor>
-                        <Menu aria-hidden="true" />
-                    </template>
-                    <template #items>
-                        <DockControl type="button" aria-label="Search">
-                            <Search aria-hidden="true" />
-                        </DockControl>
-                        <DockControl type="button" aria-label="Notifications">
-                            <Bell aria-hidden="true" />
-                        </DockControl>
-                        <DockControl type="button" aria-label="Settings">
-                            <Settings aria-hidden="true" />
-                        </DockControl>
-                    </template>
-                </HeaderRibbon>
-                <p
-                    class="absolute inset-x-0 bottom-3 text-center text-mono-caption text-muted-foreground"
-                >
-                    hover or focus to reveal · click or tap to pin
-                </p>
-            </div>
-        </StorySection>
-
-        <StorySection
-            heading="Placement + states"
-            blurb="The RTL specimen stays on the physical right and expands its actions inward. A disabled control keeps its place in the row but drops out of the tab order."
+            heading="Placement + RTL"
+            blurb="The right-placed specimen stays on the physical right; under RTL the action row flows inward while the band keeps its corner. A disabled control holds its place in the row but drops out of the tab order."
         >
             <div
                 dir="rtl"
                 class="relative h-32 w-full overflow-hidden rounded-card border border-border/60 bg-card"
             >
                 <HeaderRibbon
-                    mode="collapsible"
                     placement="right"
                     aria-label="Right header actions"
-                    anchor-label="Toggle right header actions"
                     class="header-ribbon--specimen"
                 >
-                    <template #anchor>
-                        <Menu aria-hidden="true" />
-                    </template>
                     <template #items>
                         <DockControl type="button" aria-label="Search">
                             <Search aria-hidden="true" />
@@ -118,7 +75,7 @@ import { Menu, Settings, Search, Bell } from "@lucide/vue";
                 <p
                     class="absolute inset-x-0 bottom-3 text-center text-mono-caption text-muted-foreground"
                 >
-                    RTL · physical right · actions expand inward
+                    RTL · physical right
                 </p>
             </div>
         </StorySection>

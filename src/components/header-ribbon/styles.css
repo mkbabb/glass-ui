@@ -33,80 +33,14 @@
         flex-direction: row-reverse;
     }
 
-    .header-ribbon__anchor {
-        display: grid;
-        flex: none;
-        place-items: center;
-        inline-size: var(--size-icon-btn);
-        block-size: var(--size-icon-btn);
-        padding: 0;
-        border: 0;
-        border-radius: var(--radius-pill);
-        background: transparent;
-        color: inherit;
-        font: inherit;
-        cursor: pointer;
-        appearance: none;
-        touch-action: manipulation;
-    }
-
-    .header-ribbon__anchor:focus-visible {
-        outline: none;
-        box-shadow: var(--focus-ring-shadow);
-    }
-
-    .header-ribbon:dir(rtl) :is(.header-ribbon__anchor, .header-ribbon__actions) {
-        direction: rtl;
-    }
-
     .header-ribbon__actions {
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        max-inline-size: var(--header-ribbon-actions-width, 30rem);
-        overflow: clip;
-        opacity: 1;
-        translate: 0;
-        transition:
-            max-inline-size var(--spring-snappy-duration) var(--spring-snappy),
-            margin var(--spring-snappy-duration) var(--spring-snappy),
-            opacity var(--duration-fast) var(--ease-standard),
-            translate var(--spring-snappy-duration) var(--spring-snappy);
     }
 
-    .header-ribbon[data-placement="left"]
-        .header-ribbon__anchor
-        + .header-ribbon__actions {
-        margin-left: 0.75rem;
-    }
-
-    .header-ribbon[data-placement="right"]
-        .header-ribbon__anchor
-        + .header-ribbon__actions {
-        margin-right: 0.75rem;
-    }
-
-    .header-ribbon:not([data-expanded]) .header-ribbon__actions {
-        max-inline-size: 0;
-        opacity: 0;
-        pointer-events: none;
-    }
-
-    .header-ribbon:not([data-expanded])[data-placement="left"] .header-ribbon__actions {
-        margin-left: 0;
-        translate: -0.375rem 0;
-    }
-
-    .header-ribbon:not([data-expanded])[data-placement="right"]
-        .header-ribbon__actions {
-        margin-right: 0;
-        translate: 0.375rem 0;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .header-ribbon__actions {
-        transition: none;
+    .header-ribbon:dir(rtl) .header-ribbon__actions {
+        direction: rtl;
     }
 }
 
@@ -123,10 +57,5 @@
 @media (forced-colors: active) {
     .header-ribbon__band {
         border: 1px solid CanvasText;
-    }
-
-    .header-ribbon__anchor:focus-visible {
-        outline: 2px solid Highlight;
-        outline-offset: 2px;
     }
 }
