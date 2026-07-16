@@ -18,5 +18,6 @@ jobs:
               with:
                   node-version: 24
             - run: npm ci
-            - name: verify current tranche state
-              run: node scripts/verify.mjs --state auto --profile ci --wave-from-commit HEAD
+            - run: npm run typecheck
+            - run: npm test
+            - run: npm run build
