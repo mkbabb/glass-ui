@@ -175,6 +175,31 @@ function barePackageRoot(reference) {
     return clean.startsWith("@") ? segments.slice(0, 2).join("/") : segments[0];
 }
 
+const owned = new Set([
+    ...Object.keys(pkg.dependencies ?? {}),
+    ...Object.keys(pkg.peerDependencies ?? {}),
+    ...Object.keys(pkg.optionalDependencies ?? {}),
+]);
+
+function recordBarePackage(barePackages, file, reference) {
+    const packageRoot = barePackageRoot(reference);
+    if (!packageRoot) return false;
+    if (!barePackages.has(packageRoot)) {
+        barePackages.set(packageRoot, { file, reference });
+    }
+    return true;
+}
+
+function reportUnownedBareRoots(barePackages, kind) {
+    for (const packageRoot of [...barePackages.keys()].sort()) {
+        if (owned.has(packageRoot)) continue;
+        const { file, reference } = barePackages.get(packageRoot);
+        failures.push(
+            `${file}: bare ${kind} ${reference} requires direct dependency ownership of ${packageRoot}`,
+        );
+    }
+}
+
 function validateDeclarations() {
     const pending = [...declarationEntries];
     const visited = new Set();
@@ -191,13 +216,7 @@ function validateDeclarations() {
         );
 
         for (const { fileName } of imports.importedFiles) {
-            const packageRoot = barePackageRoot(fileName);
-            if (packageRoot) {
-                if (!barePackages.has(packageRoot)) {
-                    barePackages.set(packageRoot, { file, reference: fileName });
-                }
-                continue;
-            }
+            if (recordBarePackage(barePackages, file, fileName)) continue;
             if (!cleanReference(fileName).startsWith(".")) continue;
             const resolved = resolveDeclaration(file, fileName);
             if (resolved === false) {
@@ -217,20 +236,13 @@ function validateDeclarations() {
                 pending.push(resolved);
             }
         }
+
+        for (const { fileName } of imports.typeReferenceDirectives) {
+            recordBarePackage(barePackages, file, fileName);
+        }
     }
 
-    const owned = new Set([
-        ...Object.keys(pkg.dependencies ?? {}),
-        ...Object.keys(pkg.peerDependencies ?? {}),
-        ...Object.keys(pkg.optionalDependencies ?? {}),
-    ]);
-    for (const packageRoot of [...barePackages.keys()].sort()) {
-        if (owned.has(packageRoot)) continue;
-        const { file, reference } = barePackages.get(packageRoot);
-        failures.push(
-            `${file}: bare declaration import ${reference} requires direct dependency ownership of ${packageRoot}`,
-        );
-    }
+    reportUnownedBareRoots(barePackages, "declaration reference");
     return visited.size;
 }
 
@@ -305,6 +317,7 @@ function resolveCssReference(from, reference, extensions = []) {
 function validateCss() {
     const pending = [...cssEntries];
     const visited = new Set();
+    const barePackages = new Map();
     const importPattern =
         /@import\s+(?:url\(\s*(?:"([^"]+)"|'([^']+)'|([^\s)]+))\s*\)|"([^"]+)"|'([^']+)')/g;
     const urlPattern = /url\(\s*["']?([^"')\s]+)["']?\s*\)/g;
@@ -322,6 +335,7 @@ function validateCss() {
         );
 
         for (const reference of imports) {
+            if (recordBarePackage(barePackages, file, reference)) continue;
             if (!reference.startsWith(".")) continue;
             const resolved = resolveCssReference(file, reference, [".css"]);
             if (resolved === false)
@@ -338,6 +352,7 @@ function validateCss() {
             }
         }
     }
+    reportUnownedBareRoots(barePackages, "CSS import");
     return visited.size;
 }
 
