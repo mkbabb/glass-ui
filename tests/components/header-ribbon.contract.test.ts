@@ -203,6 +203,50 @@ describe("HeaderRibbon", () => {
         expect(anchor().attributes("aria-expanded")).toBe("false");
     });
 
+    it("keeps pin and focus across a same-mode anchor relabel", async () => {
+        const wrapper = mountRibbon();
+        const anchor = () =>
+            wrapper.get<HTMLButtonElement>('[data-slot="header-ribbon-anchor"]');
+
+        anchor().element.click();
+        anchor().element.focus();
+        await nextTick();
+        expect(wrapper.attributes("data-pinned")).toBe("true");
+        expect(wrapper.attributes("data-expanded")).toBe("true");
+
+        await wrapper.setProps({ anchorLabel: "Toggle formatting actions" });
+
+        expect(anchor().attributes("aria-label")).toBe("Toggle formatting actions");
+        expect(wrapper.attributes("data-pinned")).toBe("true");
+        expect(wrapper.attributes("data-expanded")).toBe("true");
+        expect(anchor().attributes("aria-expanded")).toBe("true");
+        expect(document.activeElement).toBe(anchor().element);
+    });
+
+    it("drops focus presence when its owned anchor leaves the mode contract", async () => {
+        const wrapper = mountRibbon();
+        const anchor = () =>
+            wrapper.get<HTMLButtonElement>('[data-slot="header-ribbon-anchor"]');
+        const actions = () => wrapper.get('[data-slot="header-ribbon-actions"]');
+        const ownedAnchor = anchor().element;
+
+        ownedAnchor.focus();
+        await nextTick();
+        expect(wrapper.attributes("data-expanded")).toBe("true");
+
+        await wrapper.setProps({ mode: "persistent", anchorLabel: undefined });
+        expect(wrapper.attributes("data-expanded")).toBe("true");
+        expect(document.activeElement).not.toBe(ownedAnchor);
+
+        await wrapper.setProps({
+            mode: "collapsible",
+            anchorLabel: "Toggle editor actions",
+        });
+        expect(wrapper.attributes("data-expanded")).toBeUndefined();
+        expect(anchor().attributes("aria-expanded")).toBe("false");
+        expect(actions().attributes("inert")).toBeDefined();
+    });
+
     it("keeps focused actions revealed when persistent mode becomes collapsible", async () => {
         const outside = document.createElement("button");
         document.body.appendChild(outside);

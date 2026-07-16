@@ -41,7 +41,19 @@ const isVisible = computed(
 
 watch(
     [() => props.mode, () => Boolean(props.anchorLabel?.trim())] as const,
-    ([mode, hasLabel]) => {
+    ([mode, hasLabel], previous) => {
+        const wasCollapsible =
+            previous?.[0] === "collapsible" && previous[1] === true;
+        const willBeCollapsible = mode === "collapsible" && hasLabel;
+
+        if (
+            wasCollapsible &&
+            !willBeCollapsible &&
+            typeof document !== "undefined" &&
+            anchor.value?.contains(document.activeElement)
+        ) {
+            isFocusWithin.value = false;
+        }
         isPinned.value = false;
 
         if (import.meta.env.DEV && mode === "collapsible" && !hasLabel) {
