@@ -6,9 +6,13 @@ Q063 preserves the original bytes named by the BI `DOCK-LADDER`, `MOTION-LADDER`
 were retained; every destination file was then compared byte-for-byte with its source.
 
 This BD archive is canonical because the adjacent `liquid-video/` and `video-audit/` folders own
-the source-derived corpus; the BI folder owns the resulting ladders. The seven assets below are
-their complete out-of-repo source set (205,150,367 bytes). Uncited screenshots, duplicate dot-flow
-recordings, and unrelated texture references were deliberately not copied.
+the source-derived corpus; the BI folder owns the resulting ladders. The nine assets below are
+their complete out-of-repo source set (221,950,739 bytes). Uncited screenshots and unrelated
+texture references were deliberately not copied. The two `Screen Recording 2026-06-22 at 14.38.42`
+files — the cited dot-flow surpass-target original and its same-size `copy` — are BYTE-DIVERGENT
+(distinct SHA-256), so the earlier "duplicate dot-flow recordings deliberately not copied"
+rationale was incorrect and is WITHDRAWN; both are now preserved. The archive-claim scope ruling
+rides Q051 row 15.
 
 | source | bytes | original modified (EDT) | SHA-256 | calibration owner |
 |---|---:|---|---|---|
@@ -19,3 +23,5 @@ recordings, and unrelated texture references were deliberately not copied.
 | `ScreenRecording_06-24-2026 21-44-31_1.MP4` | 30,261,406 | 2026-06-24 21:44:31 | `2837f0b71d01f74fdf6e0625d21580f06be65e2064b97800555e912700e8637a` | motion B |
 | `ScreenRecording_06-24-2026 22-07-29_1.MP4` | 24,936,228 | 2026-06-24 22:07:29 | `6fa0db7ffbe993ead34ebe9366a557bd2ccedcccb0f53ae7e0240f5e4f8fff49` | motion C |
 | `IMG_1874.PNG` | 2,088,735 | 2026-06-21 01:13:54 | `381badbb62652aebfaf8deb497cb1fec882b8eafc89d3b463c18dc95ff8e29b3` | tabs/glass still |
+| `Screen Recording 2026-06-22 at 14.38.42.mov` | 8,400,186 | 2026-06-22 14:38:42 | `c97d0341b0267bdb7eb4bab09d7f87ae36b1ebae820d7c660a72dfc97fc8b6b1` | dot-flow surpass-target |
+| `Screen Recording 2026-06-22 at 14.38.42 copy.mov` | 8,400,186 | 2026-06-22 14:38:42 | `12ae08255d52723670f7678c4dfb3770a2dff5bead91269db8b271606824f257` | dot-flow surpass-target (byte-divergent copy) |

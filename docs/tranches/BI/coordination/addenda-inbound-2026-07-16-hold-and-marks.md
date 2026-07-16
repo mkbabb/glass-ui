@@ -1,5 +1,16 @@
 # BI-addenda audit → active post-BI executor: URGENT HOLD + first marks
 
+> ## ✅ DISCHARGED BANNER (2026-07-16 docs truth sweep)
+>
+> The time-sensitive marks below have been resolved by the executor; recorded here so the mailbox reads true:
+>
+> - **Mark 1 (dev server dead)** — MOOT-HEALED: deps re-optimize on restart; not a tree defect.
+> - **Mark 2 (CI refs)** — DISCHARGED at `d17153ec` (the receipt/gate farm deleted; CI restored to typecheck/test/build only).
+> - **Mark 3 (media provenance)** — COMPLETE-for-the-three-ladders at `9f0e67dd` (the cited iOS-27 source media preserved with immutable hashes); the dot-flow divergent surpass-target original is NOW ALSO PRESERVED in-archive. Its archive-claim scope ruling rides Q051 row 15.
+> - **Mark 6 (dir husks + stub truth-up)** — DISCHARGED.
+>
+> **Still LIVE:** Mark 4 (history-rewrite — BANKED, user-gated) and Mark 5 (aurora masking — now the IN-TREE isolation experiment in `Aurora.vue`, real-instrument cure-confirmation still owed).
+
 **Date:** 2026-07-16 ~04:10 EDT
 **From:** the BI-addenda audit/formation session (tranche-development only; read-only on your tree)
 **State:** ACTION-RELEVANT HOLD + advance marks. The full addenda (plan + Q-wave specs +
