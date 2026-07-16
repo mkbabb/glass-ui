@@ -57,13 +57,6 @@ function onSegmentLeave(seg: TimelineSegment) {
 function onSegmentClick(seg: TimelineSegment) {
     emit("click", { key: seg.key, segment: seg });
 }
-
-function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
-    if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        emit("click", { key: seg.key, segment: seg });
-    }
-}
 </script>
 
 <template>
@@ -96,13 +89,13 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
                     type="button"
                     class="segmented-dot"
                     :aria-label="`${seg.label}: ${seg.state}`"
+                    :aria-current="seg.state === 'active' ? 'step' : undefined"
                     :data-state="seg.state"
                     @mouseenter="onSegmentHover(seg)"
                     @mouseleave="onSegmentLeave(seg)"
                     @focus="onSegmentHover(seg)"
                     @blur="onSegmentLeave(seg)"
                     @click="onSegmentClick(seg)"
-                    @keydown="onSegmentKeydown($event, seg)"
                 >
                     <span class="sr-only">{{ seg.label }}</span>
                 </button>

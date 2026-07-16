@@ -48,21 +48,32 @@
         position: relative;
     }
 
+    /* One backdrop sample per visual plate. A canonical plate seeds its direct
+       content subtree with the private nested-cell value; inheritance carries it
+       through structural wrappers. Cell/control recipes consume this value, while
+       the plate itself does not. Floating/overlay descendants therefore remain
+       independent lenses, and a portaled overlay inherits nothing from its trigger. */
+    :where(
+            .glass-wash,
+            .glass-quiet,
+            .glass-resting,
+            .glass-floating,
+            .glass-overlay,
+            .glass-card,
+            .glass-dock
+        )
+        > * {
+        --glass-cell-backdrop-filter: none;
+    }
+
     /* ── BG.W-GLASS-CLIP-DISCIPLINE — the ONE paint-box clip register ───────────
-       The scattered per-class clip DIALECTS — `.glass-card` → `contain: layout
-       style paint` and `.glass-btn` → `contain: paint` (both surfaces.css) — are
-       RETIRED into this ONE `contain: paint` register on a NARROWED CONTENT +
-       `.glass-card` + glass-atom selector, so every composing content surface
-       inherits ONE discipline instead of two divergent per-class values.
+       Content glass and `.glass-card` share this one paint-containment register,
+       keeping descendant paint inside their rounded host.
 
        THE NARROWING (the blast-radius fence — do NOT re-widen):
        • INCLUDED — the CONTENT tiers (`.glass-wash`/`.glass-quiet`/`.glass-
          resting`, the tier the real <Card> composes via
-         surfaceClass('glass','resting')) + the `.glass-card` convenience
-         shorthand + the `.glass-btn` glass-atom. `.glass-card`/`.glass-btn` are
-         the AY.W-A11Y-PERF O-4 nested-backdrop-cost surfaces — a glass Button's
-         own backdrop sample must not escape its card box (proof:nested-backdrop-
-         budget reads `contain:paint` on BOTH).
+         private tier resolver) + the `.glass-card` convenience shorthand.
        • EXCLUDED — the OVERLAY BAND (`.glass-floating`/`.glass-overlay` — reka
          Dialog/Sheet/Popover/Command/DropdownMenu/HoverCard) carries NO clip: a
          PopperArrow / submenu / Select-scroll that does NOT portal-to-body paints
@@ -79,8 +90,8 @@
        (never `layout`, which would make the box a containing block for
        abs/fixed descendants — the pre-empt of the overlay-clip class the blast-
        radius note names). Each clipped surface carries a `border-radius`
-       (`.glass-card` → `--radius-card`, `.glass-btn` → `--radius-pill`, the
-       ladder rungs inherit the host's rounded box; the `::before`/`::after`
+       (`.glass-card` → `--radius-card`; the ladder rungs inherit the host's
+       rounded box; the `::before`/`::after`
        pseudos carry `border-radius: inherit`) so the clip FOLLOWS the corner (a
        clip with no radius trims to a SHARP RECT — the bug proof:glass-clip's
        radius-alongside arm reds). `overflow: hidden` stays FORBIDDEN (it would
@@ -88,8 +99,7 @@
     .glass-wash,
     .glass-quiet,
     .glass-resting,
-    .glass-card,
-    .glass-btn {
+    .glass-card {
         contain: paint;
     }
 
@@ -156,7 +166,7 @@
 
            BG.W-GLASS-DYNAMICS — the press-COUPLED magnitude (absorbs 13.5, soft-
            gated by F5.1). The specular reads the ONE `--glass-btn-press-t` spring
-           drive (Button.vue / a dock control writes it off `useSpringPress`), so on
+           drive (Button.vue / a dock control writes it off `useLiquidPress`), so on
            RELEASE — after the binary CSS `:active` lets go — the gleam SETTLES with
            the spring's alive overshoot (the press-swell returns) instead of snapping
            to rest. Soft-gated: `--glass-btn-press-t` defaults 0 (property-regs.css),
@@ -164,11 +174,14 @@
            hard F5.1 dependency. The `<number> * <number>` calc is engine-safe (NOT a
            registered var nested in an hsl() alpha — the Chromium-computes-to-0 class
            the `opacity` path deliberately avoids). The button's OWN active LERP
-           (surfaces.css `.btn-glass:active::before`) still wins while pressed; this
+           (the Button-owned active rule) still wins while pressed; this
            carries the general release-settle beneath it. */
         --specular-intensity: max(
             var(--glass-specular-intensity-rest, 0),
-            calc(var(--glass-specular-intensity-active, 0.16) * var(--glass-btn-press-t, 0))
+            calc(
+                var(--glass-specular-intensity-active, 0.16) *
+                    var(--glass-btn-press-t, 0)
+            )
         );
         /* AX.W52 D19 — a thin, BOUNDED, pointer-anchored EDGE gleam (not the prior
            full-plate central disc that washed small tiles muddy). The geometry is an
@@ -241,7 +254,8 @@
                 transparent 360deg
             ),
             radial-gradient(
-                circle var(--glass-specular-size, 36%) at var(--specular-x, 50%) var(--specular-y, 50%),
+                circle var(--glass-specular-size, 36%) at var(--specular-x, 50%)
+                    var(--specular-y, 50%),
                 color-mix(in srgb, var(--glass-specular-core) 50%, transparent) 0%,
                 transparent 70%,
                 transparent 100%
@@ -259,7 +273,11 @@
            :hover/:active block below). It is the SUPPLEMENTARY rim beside the primary
            `--glass-edge-light` box-shadow rim — the two carry the demoted-blur read. */
         box-shadow: inset 0 0 0 var(--glass-specular-hairline-width, 0.75px)
-            color-mix(in srgb, hsl(40 35% 92%) var(--glass-specular-hairline-ink, 70%), transparent);
+            color-mix(
+                in srgb,
+                hsl(40 35% 92%) var(--glass-specular-hairline-ink, 70%),
+                transparent
+            );
         /* The `::before` opacity gates the disc + conic (via `--specular-intensity`) AND
            this rest hairline. A rest FLOOR keeps the neutral hairline lit at rest (the
            read-carrier) while the interaction lift still rides `--specular-intensity`
@@ -286,7 +304,8 @@
                 black 100%
             ),
             radial-gradient(
-                circle var(--glass-specular-size, 36%) at var(--specular-x, 50%) var(--specular-y, 50%),
+                circle var(--glass-specular-size, 36%) at var(--specular-x, 50%)
+                    var(--specular-y, 50%),
                 black 0%,
                 black 60%,
                 transparent 100%
@@ -317,13 +336,20 @@
        intensity is 0 so they paint nothing at rest, but a control legitimately carries
        the transition). */
     .glass-specular-track::before,
-    .glass-material:hover::before,    .glass-material:active::before,
-    .glass-wash:hover::before,        .glass-wash:active::before,
-    .glass-quiet:hover::before,       .glass-quiet:active::before,
-    .glass-resting:hover::before,     .glass-resting:active::before,
-    .glass-floating:hover::before,    .glass-floating:active::before,
-    .glass-overlay:hover::before,     .glass-overlay:active::before,
-    .glass-card:hover::before,        .glass-card:active::before,
+    .glass-material:hover::before,
+    .glass-material:active::before,
+    .glass-wash:hover::before,
+    .glass-wash:active::before,
+    .glass-quiet:hover::before,
+    .glass-quiet:active::before,
+    .glass-resting:hover::before,
+    .glass-resting:active::before,
+    .glass-floating:hover::before,
+    .glass-floating:active::before,
+    .glass-overlay:hover::before,
+    .glass-overlay:active::before,
+    .glass-card:hover::before,
+    .glass-card:active::before,
     .dock-icon-button::before,
     .dock-tab-button::before,
     .dock-select-trigger::before,
@@ -358,7 +384,10 @@
            box-shadow hairline are inherited unchanged). */
         --specular-intensity: max(
             var(--glass-specular-intensity-rest, 0),
-            calc(var(--glass-specular-intensity-active, 0.16) * var(--glass-btn-press-t, 0))
+            calc(
+                var(--glass-specular-intensity-active, 0.16) *
+                    var(--glass-btn-press-t, 0)
+            )
         );
     }
 
@@ -397,21 +426,49 @@
 
     /* Selected and dragged controls hold the same interaction lens used during
        press. Semantics choose the state attribute; the material owns its paint. */
-    :is(.glass-material, .glass-wash, .glass-quiet, .glass-resting, .glass-floating,
-        .glass-overlay, .glass-specular-track, .dock-icon-button, .dock-tab-button,
-        .dock-select-trigger, .dock-dropdown-trigger):is(.is-active, .active, [data-active],
-        [data-dragging], [data-state="checked"], [data-state="on"], [aria-pressed="true"],
-        [aria-selected="true"], [aria-expanded="true"], [aria-current="page"])::before {
+    :is(
+            .glass-material,
+            .glass-wash,
+            .glass-quiet,
+            .glass-resting,
+            .glass-floating,
+            .glass-overlay,
+            .glass-specular-track,
+            .dock-icon-button,
+            .dock-tab-button,
+            .dock-select-trigger,
+            .dock-dropdown-trigger
+        ):is(
+            .is-active,
+            .active,
+            [data-active],
+            [data-dragging],
+            [data-state="checked"],
+            [data-state="on"],
+            [aria-pressed="true"],
+            [aria-selected="true"],
+            [aria-expanded="true"],
+            [aria-current="page"]
+        )::before {
         --specular-intensity: var(--glass-specular-intensity-active, 0.16);
     }
 
     /* Disabled glass keeps its neutral separating hairline but cannot wake the
        interaction lens through hover, press, or retained state. Content ink is
        untouched; each control continues to own its disabled legibility. */
-    :is(.glass-material, .glass-wash, .glass-quiet, .glass-resting, .glass-floating,
-        .glass-overlay, .glass-specular-track, .dock-icon-button, .dock-tab-button,
-        .dock-select-trigger, .dock-dropdown-trigger):is(:disabled, [data-disabled],
-        [aria-disabled="true"])::before {
+    :is(
+            .glass-material,
+            .glass-wash,
+            .glass-quiet,
+            .glass-resting,
+            .glass-floating,
+            .glass-overlay,
+            .glass-specular-track,
+            .dock-icon-button,
+            .dock-tab-button,
+            .dock-select-trigger,
+            .dock-dropdown-trigger
+        ):is(:disabled, [data-disabled], [aria-disabled="true"])::before {
         --specular-intensity: var(--glass-specular-intensity-rest, 0);
         transition: none;
     }
@@ -429,72 +486,4 @@
        default (28); the resting lens read is PRESERVED (and now actually renders), the
        press-depth animation is the deliberate tradeoff. The press squish + gleam lift on
        the SAME `--glass-btn-press-t` drive (material gleam, above) carry the press read. */
-
-    /* ── BE.W-CLEAR-VARIANT — the Apple-Clear `surface="clear"` decoration + the
-       MANDATORY legibility scrim ──────────────────────────────────────────────────
-       The 4th surface-axis member (`useSurfaceAxis.ts` maps `clear → glass-clear`).
-       A `surface="clear"` surface paints the maximally-translucent `--glass-bg-clear`
-       (0.58 — the clearest rung the library ships, the album grid bleeds through) AND
-       a MANDATORY legibility scrim IN THE SAME SEAM — a `.glass-clear` cannot exist
-       without it (the Apple Clear contract: near-transparent → the text needs a scrim
-       floor). The scrim DIMS THE BACKDROP (`color-mix(in srgb, var(--background) N%,
-       transparent)` — the A5-1 modal-scrim idiom, painted BEHIND the translucent fill
-       within the box, see the two-layer-background note below), DISTINCT from the W55
-       `--glass-tint-*` PLATE-darken axis (the two legibility axes stay disjoint: the
-       scrim dims the backdrop, the W55 tint darkens the plate). The scrim strength
-       DERIVES from the sampled
-       `--glass-backdrop-luma` (useGlassBackdropLuminance's existing write) so it dims
-       MORE over a bright album grid (luma→1) and relaxes over a dark one (luma→0) —
-       the dynamic legibility that betters Apple's fixed scrim. The `0.5` fallback is
-       the safe mid-scrim when no observer is wired. The plate fill rides the SAME
-       oklab-tint seam so the W55 darken reaches it; the see-through frost is the
-       cross-engine FLOOR (pure opacity + backdrop-filter, no `url()` — Safari paints
-       it via the build-time -webkit- prefix pass). The scrim is a STATIC paint (no
-       layout, no animation — `proof:no-layout-animation` GREEN by construction).
-
-       THE SCRIM IS A SECOND BACKGROUND LAYER, NOT A PSEUDO. The glass family already
-       claims BOTH pseudos on every base rung — `::before` (the moving specular core)
-       AND `::after` (the grain overlay, ladder.css). `surface="clear"` composes ON a
-       base tier (`glass-floating glass-clear`), so its `::before`/`::after` are taken;
-       a scrim pseudo would CLOBBER the specular or grain. The mandatory scrim is
-       therefore the FIRST of two comma-separated `background` LAYERS — painted FRONT
-       (the translucent glass fill) over BACK (the `--background` dim) within the box,
-       so the dim sits between the backdrop-filtered backdrop and the content (a child
-       paints above both). The fill stays translucent so the backdrop still reads
-       THROUGH the dim — see-through AND legible, one element, no pseudo collision. */
-    [data-surface="clear"],
-    .glass-clear {
-        /* BG.W-GLASS-SIGNAL-TRUTH (M6) — the MANDATORY scrim is a STATIC FLOOR the
-           sampled luma can only LIFT, never `var(--glass-backdrop-luma, 0.5) * 40%`
-           whose `, 0.5` fallback is DEAD (a registered `@property` initial 0 —
-           property-regs.css — is never guaranteed-invalid, so the fallback CANNOT
-           fire on a target engine, and the unwired resolve was `calc(0 * 40%) = 0%`:
-           the scrim the canon calls FORBIDDEN-to-omit painted NOTHING). Now: an
-           UNWIRED clear plate paints `--glass-clear-scrim-floor` (12% — the mandatory
-           minimum a scrim-less clear surface can never drop below); a wired observer
-           adds the luma-driven ramp on top (`--glass-clear-scrim-ramp` 28% — floor +
-           ramp caps at the prior 40% ceiling over a bright grid, luma→1). Bare
-           `var(--glass-backdrop-luma)` reads the registered initial 0 unwired (floor
-           alone), lifts CONTINUOUSLY as the observer writes. */
-        --glass-clear-scrim-floor: 12%;
-        --glass-clear-scrim-ramp: 28%;
-        --glass-clear-scrim-strength: calc(
-            var(--glass-clear-scrim-floor) +
-            var(--glass-backdrop-luma) * var(--glass-clear-scrim-ramp)
-        );
-        background:
-            color-mix(
-                in oklab,
-                var(--glass-bg-clear),
-                var(--glass-tint-source) var(--glass-tint-strength)
-            ),
-            color-mix(
-                in srgb,
-                var(--background) var(--glass-clear-scrim-strength),
-                transparent
-            );
-        backdrop-filter: var(--glass-blur-floating);
-        position: relative;
-    }
-
 }

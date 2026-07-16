@@ -5,9 +5,10 @@
 
 import { rmSync, writeFileSync } from "node:fs";
 import { dirname, relative, resolve } from "node:path";
-import { ROOT } from "./constellation.mjs";
+import { fileURLToPath } from "node:url";
 import { buildEntrySet, readTree } from "./lib/subpath-policy.mjs";
 
+const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const distDir = resolve(ROOT, "dist");
 const { entries } = buildEntrySet(readTree());
 

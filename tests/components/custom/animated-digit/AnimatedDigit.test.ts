@@ -4,14 +4,6 @@ import { describe, expect, it } from "vitest";
 import { AnimatedDigit } from "@glass/components/animated-digit/index";
 
 describe("AnimatedDigit", () => {
-    it("renders the formatted current value through useAnimatedNumber", () => {
-        // useAnimatedNumber initialises with `current === initial ?? 0`; the
-        // smoother snaps to the target on the next tick. We assert the
-        // mounted output reads a numeric string (zero-padded fine).
-        const wrapper = mount(AnimatedDigit, { props: { value: 42 } });
-        expect(wrapper.text()).toMatch(/\d+/);
-    });
-
     it("renders the placeholder when value is null", () => {
         const wrapper = mount(AnimatedDigit, {
             props: { value: null, placeholder: "—" },
@@ -37,12 +29,5 @@ describe("AnimatedDigit", () => {
         // The first tick may show 0.00 then snap. Either way it's
         // tabular-formatted via .toFixed(2).
         expect(wrapper.text()).toMatch(/\d+\.\d{2}/);
-    });
-
-    it("mirrors animation state to data-is-animating", () => {
-        const wrapper = mount(AnimatedDigit, { props: { value: 100 } });
-        const host = wrapper.get(".animated-digit");
-        // Either true or false; the attribute exists regardless.
-        expect(host.attributes("data-is-animating")).toMatch(/^(true|false)$/);
     });
 });

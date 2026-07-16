@@ -4,9 +4,9 @@
  * BI.W-FIELD-CORE — the retired `cursorModel.ts` is GONE. The cursor is now the mapped
  * readout of the SHARED `usePointerVelocityField` (`auroraCursorMapping`): the mass-spring
  * attractor is the cursor position, `engagement · strength` the attraction (so the
- * cursor-local luminance lean reads on the `smooth` medium, not a dead swirl axis), the
- * derived velocity + flick burst pass onto the EXISTING `uCursor*` uniforms (ZERO shader
- * edit). The field is FED `tick(deltaMs)` from THIS loop (the one-loop discipline — no own
+ * cursor-local luminance lean reads on the `smooth` medium, not a dead swirl axis), with
+ * the derived burst folded into that strength on the CPU. The field is FED `tick(deltaMs)`
+ * from THIS loop (the one-loop discipline — no own
  * rAF) and FREEZES under PRM via the MASTER TEMPO SCALAR (`tick(0)`).
  *
  * `drawFrame` re-sends the per-frame cursor + time uniforms and issues the single
@@ -32,6 +32,8 @@ export interface AuroraCursorScalars {
     strength: number;
     /** The influence radius (0.05..0.5). */
     radius: number;
+    /** The bounded contribution of the pointer-field burst. */
+    amplitude: number;
 }
 
 export interface FrameLoopDeps {
@@ -50,6 +52,8 @@ export interface FrameLoopDeps {
     getConfig: () => AuroraConfig;
     /** Reduced-motion intent — parks the loop after one static frame. */
     getReducedMotion: () => boolean;
+    /** Resolve shader time without altering the pointer field's real frame delta. */
+    getRenderTime: (elapsedSec: number) => number;
 }
 
 export interface FrameLoop {
@@ -65,31 +69,27 @@ const ATTRACTOR_REST_EPS = 1e-4;
 /**
  * Map an ALREADY-TICKED shared pointer field onto the aurora `uCursor*` uniform shape (the
  * ONE cursor projection both backends — WebGL2 frameLoop + WGSL wgpuSetup — share). The
- * `auroraCursorMapping` projects the attractor/engagement/velocity/burst; the iOS-27 gel
- * SNAP-BACK folds a decel over-burst onto the shader's existing burst (tempo-gated so it
- * cannot leak under reduce).
+ * iOS-27 gel snap-back augments the field burst before `auroraCursorMapping` folds it
+ * into strength. Both shader engines consume the resulting four-value cursor shape.
  */
 export function mapAuroraCursor(
     pointerField: UsePointerVelocityField,
     scalars: AuroraCursorScalars,
     tempo: number,
 ): AuroraCursorUniforms {
-    const m = auroraCursorMapping(snapshotField(pointerField), scalars);
-    let burst = m.burst;
+    const snapshot = snapshotField(pointerField);
     if (tempo > 0) {
         const accel = pointerField.acceleration.value;
         const vel = pointerField.velocity.value;
         const decel = -(accel.x * vel.x + accel.y * vel.y);
-        if (decel > 0) burst = Math.min(1, burst + decel * 3.0);
+        if (decel > 0) snapshot.burst = Math.min(1, snapshot.burst + decel * 3.0);
     }
+    const m = auroraCursorMapping(snapshot, scalars);
     return {
         x: m.cx,
         y: m.cy,
         strength: m.strength,
         radius: m.radius,
-        velX: m.velX,
-        velY: m.velY,
-        burst,
     };
 }
 
@@ -108,8 +108,16 @@ export function auroraFieldLive(pointerField: UsePointerVelocityField): boolean 
 }
 
 export function createFrameLoop(deps: FrameLoopDeps): FrameLoop {
-    const { gl, prog, uniforms: U, pointerField, getCursorScalars, getConfig, getReducedMotion } =
-        deps;
+    const {
+        gl,
+        prog,
+        uniforms: U,
+        pointerField,
+        getCursorScalars,
+        getConfig,
+        getReducedMotion,
+        getRenderTime,
+    } = deps;
     const flipY = (y: number): number => 1.0 - y;
 
     // The per-frame delta the shared field's tick() needs. The substrate's frame callback
@@ -123,9 +131,6 @@ export function createFrameLoop(deps: FrameLoopDeps): FrameLoop {
         y: 0.5,
         strength: 0,
         radius: 0.25,
-        velX: 0,
-        velY: 0,
-        burst: 0,
     };
 
     // AW.W8.1 — the MASTER TEMPO SCALAR. The single suppression seam the whole interactive
@@ -139,15 +144,12 @@ export function createFrameLoop(deps: FrameLoopDeps): FrameLoop {
     }
 
     function drawFrame(timeSec: number): void {
+        const renderTime = getRenderTime(timeSec);
         gl.useProgram(prog);
         gl.uniform2f(U.uCursor, cur.x, flipY(cur.y));
         gl.uniform1f(U.uCursorStrength, cur.strength);
         gl.uniform1f(U.uCursorRadius, cur.radius);
-        // BI.W-FIELD-CORE — the velocity-reactive flow uniforms (the field freezes under
-        // reduce via tick(0), so they cannot leak motion under reduce).
-        gl.uniform2f(U.uCursorVelocity, cur.velX, -cur.velY); // flipY on the delta
-        gl.uniform1f(U.uCursorBurst, cur.burst);
-        gl.uniform1f(U.uTime, timeSec);
+        gl.uniform1f(U.uTime, renderTime);
 
         // AW.W8.1 — cursor-as-light: when interactivity.light is on, the cursor drives the
         // impasto uLightDir (the AW.W4.2 movable light); a slow idle auto-orbit when the
@@ -156,7 +158,7 @@ export function createFrameLoop(deps: FrameLoopDeps): FrameLoop {
         const cfg = getConfig();
         if (cfg.interactivity?.light) {
             const tempo = masterTempo();
-            const orbit = timeSec * 0.25;
+            const orbit = renderTime * 0.25;
             let lx = Math.cos(orbit) * 0.5;
             let ly = Math.sin(orbit) * 0.5;
             const cuX = (cur.x - 0.5) * 2.0;

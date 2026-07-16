@@ -12,6 +12,8 @@
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createWebGLCanvas } from "@glass/composables/glass/webgl/useWebGLCanvas";
+import { createGpuSubstrate } from "@glass/composables/glass/webgpu/useGpuSubstrate";
+import type { RendererStatus } from "@glass/composables/glass/webgpu/rendererStatus";
 import {
     N_RESTORE_STORM,
     RESTORE_DEBOUNCE_MS,
@@ -123,11 +125,14 @@ beforeEach(() => {
 afterEach(() => {
     vi.useRealTimers();
     vi.unstubAllGlobals();
+    vi.restoreAllMocks();
 });
 
 describe("useWebGLCanvas — the consumer-#2 substrate contract (AU.W6)", () => {
     it("drives a NON-aurora consumer (different quad/DPR/demand-gate) generically", () => {
-        const glStub = { getExtension: () => null } as unknown as WebGL2RenderingContext;
+        const glStub = {
+            getExtension: () => null,
+        } as unknown as WebGL2RenderingContext;
         const canvas = makeCanvas(glStub);
         let frames = 0;
         let live = true;
@@ -148,7 +153,10 @@ describe("useWebGLCanvas — the consumer-#2 substrate contract (AU.W6)", () => 
         });
 
         handle.arm();
-        expect(canvas.getContext).toHaveBeenCalledWith("webgl2", { antialias: true, alpha: false });
+        expect(canvas.getContext).toHaveBeenCalledWith("webgl2", {
+            antialias: true,
+            alpha: false,
+        });
         expect(resize).toHaveBeenCalled(); // the substrate drove the consumer's resize
         // the demand-driven loop ran the consumer's frame (delta-asserted so the presize
         // layout-settle rAFs sharing the queue don't skew the count).
@@ -168,11 +176,69 @@ describe("useWebGLCanvas — the consumer-#2 substrate contract (AU.W6)", () => 
         handle.dispose();
     });
 
+    it("parks after one reduced frame and only re-arms earned demand", () => {
+        let reduced = false;
+        let preferenceListener: ((event: MediaQueryListEvent) => void) | undefined;
+        vi.spyOn(window, "matchMedia").mockReturnValue({
+            get matches() {
+                return reduced;
+            },
+            addEventListener: vi.fn(
+                (_type: string, listener: (event: MediaQueryListEvent) => void) => {
+                    preferenceListener = listener;
+                },
+            ),
+            removeEventListener: vi.fn(),
+        } as unknown as MediaQueryList);
+
+        let frames = 0;
+        let live = false;
+        const handle = createWebGLCanvas(
+            makeCanvas({
+                getExtension: () => null,
+            } as unknown as WebGL2RenderingContext),
+            {
+                setup: () => ({
+                    frame: () => {
+                        frames += 1;
+                    },
+                    shouldContinue: () => live,
+                    resize: () => {},
+                }),
+            },
+        );
+        handle.arm();
+        pumpFrames(() => frames, 5);
+        const parked = frames;
+
+        reduced = true;
+        preferenceListener?.({ matches: true } as MediaQueryListEvent);
+        expect(frames).toBe(parked + 1);
+        expect(pumpFrames(() => frames, 5)).toBe(0);
+
+        reduced = false;
+        preferenceListener?.({ matches: false } as MediaQueryListEvent);
+        expect(pumpFrames(() => frames, 5)).toBe(0);
+
+        live = true;
+        handle.wake();
+        expect(pumpFrames(() => frames, 1)).toBe(1);
+        handle.dispose();
+    });
+
     it("honors the 3-reason suspend/resume model (a tab-show cannot lift off-screen)", () => {
-        const canvas = makeCanvas({ getExtension: () => null } as unknown as WebGL2RenderingContext);
+        const canvas = makeCanvas({
+            getExtension: () => null,
+        } as unknown as WebGL2RenderingContext);
         let frames = 0;
         const handle = createWebGLCanvas(canvas, {
-            setup: () => ({ frame: () => { frames += 1; }, shouldContinue: () => true, resize: () => {} }),
+            setup: () => ({
+                frame: () => {
+                    frames += 1;
+                },
+                shouldContinue: () => true,
+                resize: () => {},
+            }),
         });
         handle.arm();
         flushFrames(1);
@@ -260,12 +326,57 @@ describe("useWebGLCanvas — the consumer-#2 substrate contract (AU.W6)", () => 
         handle.dispose();
     });
 
+    it("projects WebGL2 loss and recovery through the existing renderer status", async () => {
+        const statuses: RendererStatus[] = [];
+        const contexts = [{ getExtension: () => null }, { getExtension: () => null }];
+        let contextIndex = 0;
+        const { canvas, dispatch } = makeRestorableCanvas(
+            () => contexts[contextIndex++]!,
+        );
+        const substrate = createGpuSubstrate(canvas, {
+            setupGL: () => ({
+                frame: vi.fn(),
+                shouldContinue: () => false,
+                resize: vi.fn(),
+            }),
+            onStatus: (status) => statuses.push(status),
+        });
+
+        await substrate.armAsync();
+        expect(statuses.at(-1)).toMatchObject({
+            phase: "ready",
+            engine: "webgl2",
+        });
+
+        dispatch("webglcontextlost", { preventDefault: vi.fn() });
+        expect(statuses.at(-1)).toMatchObject({
+            phase: "initializing",
+            engine: "webgl2",
+        });
+
+        dispatch("webglcontextrestored");
+        vi.advanceTimersByTime(RESTORE_DEBOUNCE_MS + 1);
+        expect(statuses.at(-1)).toMatchObject({
+            phase: "ready",
+            engine: "webgl2",
+        });
+        substrate.dispose();
+    });
+
     it("capture mode never auto-runs; renderAt draws out-of-loop", () => {
-        const canvas = makeCanvas({ getExtension: () => null } as unknown as WebGL2RenderingContext);
+        const canvas = makeCanvas({
+            getExtension: () => null,
+        } as unknown as WebGL2RenderingContext);
         let frames = 0;
         const handle = createWebGLCanvas(canvas, {
             mode: "capture",
-            setup: () => ({ frame: () => { frames += 1; }, shouldContinue: () => true, resize: () => {} }),
+            setup: () => ({
+                frame: () => {
+                    frames += 1;
+                },
+                shouldContinue: () => true,
+                resize: () => {},
+            }),
         });
         flushFrames(5);
         expect(frames).toBe(0); // capture pre-seeds `manual` — no auto-loop
@@ -287,6 +398,7 @@ describe("useWebGLCanvas — the context-loss circuit-breaker (BC.W-SAFARI-WEBGL
     function armed(makeGl: () => object) {
         let setups = 0;
         let frames = 0;
+        const onContextError = vi.fn();
         const { canvas, dispatch } = makeRestorableCanvas(() => {
             setups += 1;
             return makeGl();
@@ -299,6 +411,7 @@ describe("useWebGLCanvas — the context-loss circuit-breaker (BC.W-SAFARI-WEBGL
                 shouldContinue: () => true,
                 resize: () => {},
             }),
+            onContextError,
         });
         handle.arm();
         return {
@@ -310,6 +423,7 @@ describe("useWebGLCanvas — the context-loss circuit-breaker (BC.W-SAFARI-WEBGL
             get frames() {
                 return frames;
             },
+            onContextError,
         };
     }
 
@@ -342,6 +456,12 @@ describe("useWebGLCanvas — the context-loss circuit-breaker (BC.W-SAFARI-WEBGL
         const setupsBeforeWindow = a.setups;
         vi.advanceTimersByTime(RESTORE_DEBOUNCE_MS + 1);
         expect(a.setups).toBe(setupsBeforeWindow); // no re-arm — held parked
+        expect(a.onContextError).toHaveBeenCalledOnce();
+        expect(a.onContextError).toHaveBeenCalledWith(
+            expect.objectContaining({
+                message: expect.stringContaining("repeated context loss"),
+            }),
+        );
         a.handle.dispose();
     });
 

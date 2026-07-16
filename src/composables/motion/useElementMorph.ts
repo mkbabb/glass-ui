@@ -1,128 +1,37 @@
-// BG.W-MOTION-SPINE — useElementMorph: the ONE compositor FLIP/morph runner.
-//
-// Three leaves — useLiquidReveal (the bloom-from-source open), useDockCtaReceive (the
-// external-CTA-into-dock morph), useBloomUp (the shared-element source≠dest bloom) —
-// each shipped their OWN copy of the identical mechanism: measure the two rects, sample
-// the spring from SPRING_PRESETS, construct `new ElementMorph`, run a `requestAnimation
-// Frame` step loop writing transform/opacity/filter, snap under reduced-motion, clear on
-// settle. That is the same rAF integrator + the same PRM branch + the same compositor-
-// only invariant, THREE times (the DRY the SOTA fewer-sharper-primitives law forbids).
-//
-// This is the spine those three collapse onto: ONE `new ElementMorph`, ONE rAF `step()`,
-// ONE PRM snap, ONE compositor-only invariant (transform/opacity/filter/`--*` only —
-// NEVER width/height/top/left/padding, the A'-3 lesson `proof:no-layout-animation`
-// enforces library-wide). The spring curve is sampled from the SAME `SPRING_PRESETS`
-// table the `--spring-*` CSS tokens generate from (`springPreset(name)` → the analytic
-// (response, ζ) → `springTimingFunction` — never a hand-authored curve), so the JS morph
-// and the CSS recipes ride ONE spring family. The velocity-continuous re-seat is the kf
-// `ElementMorph`'s own compositor delta; a `play()` mid-flight re-measures + retargets
-// (never restarts a fresh transition from the current computed value — the iOS
-// interruptible contract).
-//
-// TWO PLAY DIRECTIONS off the ONE `ElementMorph(from, to)` (apply(el,0)=from, apply(el,1)
-// =to):
-//   • direction "in"  — the FLIP INVERSION (arrive). Drives the morph 1→0: the surface
-//     starts looking like `to` (small, offset to the source) and blooms FORWARD onto
-//     `from` (its own settled rect). opacity fades IN, filter blur DECONGESTS to 0.
-//     (useLiquidReveal / useBloomUp — `from` is "self", `to` is the trigger/source.)
-//   • direction "out" — the FORWARD play (depart). Drives 0→1: the surface starts at
-//     `from` (its own rect) and flies + reshapes ONTO `to`. opacity fades OUT, filter
-//     blur CONGESTS to the target radius. (useDockCtaReceive — `from` is "self", `to` is
-//     the dock control.)
-// opacity = 1 − morphProgress and blur = radius · morphProgress in BOTH directions (the
-// surface is most-transparent + most-congested at the small `to` end), so the channel
-// math is direction-agnostic once `direction` fixes morphProgress.
-//
-// PRM-SAFE BY CONSTRUCTION. Under `prefers-reduced-motion: reduce` `play()` snaps to the
-// terminal in ONE step — the spatial channels (transform/blur) never paint an in-between
-// frame, the fade survives (opacity is not a vestibular trigger). `onSettled` still fires
-// (the gesture always completes; the cta hand-off + the bloom field-land are not gated on
-// the animation).
-//
-// THE DRIVER-LOCK SEAM (`lockSpatialTransition`). An engaged driver sets inline
-// `transition-property: none` on its target so the rAF transform writes are not fought by
-// the F5.2 liquid-weight `transition` default (or any Tailwind `transition*` utility); the
-// lock releases on settle/cancel. Exported standalone for any other spatial driver.
+// One compositor-only spatial writer. Explicit endpoints own geometry;
+// NumericAnimation owns playback and every coupled paint channel.
 
-import {
-    ElementMorph,
-    springTimingFunction,
-    type Easing,
-    type MorphRect,
-} from "@mkbabb/keyframes.js";
+import { NumericAnimation, springTimingFunction, type MorphRect } from "@mkbabb/keyframes.js";
 import {
     onScopeDispose,
     readonly,
     ref,
+    watch,
     type ComponentPublicInstance,
     type Ref,
 } from "vue";
+import { motionTempo } from "./motionTempo";
 import { springPreset, type SpringPresetName } from "./springPresets";
 
-/** A morph endpoint — a templateRef to an element/component, or the literal `"self"`
- *  (the morphed surface's OWN settled rect). */
+/** A measured endpoint, or the morphed surface's own settled box. */
 export type MorphEndpoint = Ref<HTMLElement | ComponentPublicInstance | null> | "self";
-
-/** The morph register — `snappy` (the quick app-open default) or `bouncy` (the emphatic
- *  large-surface bloom). A subset of the named `SPRING_PRESETS` rows shared by every
- *  bloom leaf so the family reads as ONE spring register. */
 export type ElementMorphPreset = Extract<SpringPresetName, "snappy" | "bouncy">;
 
-/** The declarative channel set the morph couples onto the spring clock. */
 export interface MorphChannels {
-    /** Fade the surface with the morph (opacity = 1 − morphProgress). Default `true`. */
     opacity?: boolean;
-    /** The `filter: blur()` magnitude in px at the small `to` end (decongest/congest).
-     *  Default `0` (no blur channel). */
     blur?: number;
 }
 
 export interface UseElementMorphOptions {
-    /** The `apply(el,0)` endpoint. Default `"self"` (the surface's own settled rect). */
-    from?: MorphEndpoint;
-    /** The `apply(el,1)` endpoint (the foreign trigger/source/dock-control). A null-
-     *  resolving ref degrades to a 92%-inset of the surface's own rect (the no-anchor
-     *  self-scale fallback — still spring-clocked, never a flat zoom). */
-    to?: MorphEndpoint;
-    /** `"in"` = FLIP inversion 1→0 (arrive at `from`); `"out"` = forward 0→1 (depart to
-     *  `to`). Default `"in"`. */
-    direction?: "in" | "out";
-    /** The coupled channels (opacity + blur). */
+    /** Where the episode starts. At least one endpoint normally owns `"self"`. */
+    source: MorphEndpoint;
+    /** Where the episode settles. */
+    destination: MorphEndpoint;
     channels?: MorphChannels;
-    /** The spring register (default `snappy`). Sampled via `springPreset(name)`. */
     preset?: ElementMorphPreset;
-    /** `transform-origin` resolution: anchor at `from`/`to` (relative to the surface),
-     *  `"center"`, or a raw CSS string. Default `"to"`. */
-    origin?: "from" | "to" | "center" | string;
-    /** Honor `prefers-reduced-motion: reduce` (snap to terminal, fade survives). Default `true`. */
     respectReducedMotion?: boolean;
-    /** Fired ONCE at the terminal (animation settle AND the PRM/SSR snap) — the hand-off
-     *  seam (the cta seat clear + onReceived, the bloom field-land + onBloomed). */
     onSettled?: () => void;
-    /** Fired each frame with the clamped [0,1] eased ARRIVAL progress — the extra-channel
-     *  hook (the bloom field-strength ramp). Not called on the PRM/SSR snap; `onSettled`
-     *  lands the terminal value there. */
     onFrame?: (progress: number) => void;
-}
-
-export interface UseElementMorphReturn {
-    /** Measure `from`/`to` fresh + drive the morph. Interruptible — a mid-flight `play()`
-     *  re-measures + retargets (never restarts from the current computed value). */
-    play: () => void;
-    /** Cancel any in-flight morph + release the transition lock (does NOT clear styles
-     *  or fire `onSettled` — the abort seam). */
-    cancel: () => void;
-    /** Clear the inline morph styles (transform/origin/opacity/filter) — the reset seam. */
-    clear: (el?: HTMLElement | null) => void;
-    /** Statically seat the morph at a fixed [0,1] progress WITHOUT animating (the no-
-     *  mount-flash prime — transform only, no rAF, no lock). */
-    seat: (progress: number) => void;
-    /** `true` while a morph is in flight. */
-    playing: Readonly<Ref<boolean>>;
-    /** The live eased ARRIVAL progress (0 at play start → 1 at settle). */
-    progress: Readonly<Ref<number>>;
-    /** Geometry and engine horizon measured by this owner for the current play. */
-    measurement: Readonly<Ref<ElementMorphMeasurement | null>>;
 }
 
 export interface ElementMorphMeasurement {
@@ -132,50 +41,55 @@ export interface ElementMorphMeasurement {
     readonly durationMs: number;
 }
 
-/**
- * Resolve a templateRef value to its root HTMLElement — accepts an element directly OR a
- * Vue component public instance (its `.$el`). Returns null for a fragment/text root or a
- * nullish ref. THIS is the [[glass-ui binding verification]] cure: a `ref` bound to a
- * COMPONENT resolves to the component public INSTANCE (no `getBoundingClientRect`/
- * `setAttribute`), so the morph silently no-ops / throws. Every bloom leaf imports this
- * ONE resolver (the α binding-verification fix) — a surface/trigger binds either an
- * element ref or a component ref without dying.
- */
+export interface UseElementMorphReturn {
+    play: () => void;
+    cancel: () => void;
+    clear: (el?: HTMLElement | null) => void;
+    /** Seat the explicit source→destination geometry without starting a clock. */
+    seat: (progress: number) => void;
+    /** Drive a gesture offset through this same spatial writer. */
+    offset: (x: number, y: number) => void;
+    /** Re-measure and retarget an in-flight episode from its live frame. */
+    refresh: () => void;
+    playing: Readonly<Ref<boolean>>;
+    progress: Readonly<Ref<number>>;
+    measurement: Readonly<Ref<ElementMorphMeasurement | null>>;
+}
+
+interface Geometry {
+    base: MorphRect;
+    source: MorphRect;
+    destination: MorphRect;
+}
+
+interface MorphFrame {
+    [channel: string]: number;
+    translateX: number;
+    translateY: number;
+    scaleX: number;
+    scaleY: number;
+    opacity: number;
+    blur: number;
+    clock: number;
+}
+
 export function asElement(
-    v: HTMLElement | ComponentPublicInstance | null | undefined,
+    value: HTMLElement | ComponentPublicInstance | null | undefined,
 ): HTMLElement | null {
-    if (!v) return null;
-    if (v instanceof HTMLElement) return v;
-    const el = (v as ComponentPublicInstance).$el;
+    if (!value) return null;
+    if (value instanceof HTMLElement) return value;
+    const el = (value as ComponentPublicInstance).$el;
     return el instanceof HTMLElement ? el : null;
 }
 
-/** The 92%-inset self-scale fallback (a null-resolving anchor blooms from a small inset
- *  of the surface's own rect — never a flat zoom). */
-export function insetSelf(r: MorphRect): MorphRect {
-    return {
-        x: r.x + r.width * 0.04,
-        y: r.y + r.height * 0.04,
-        width: r.width * 0.92,
-        height: r.height * 0.92,
-    };
-}
-
-/**
- * The driver-lock seam — set inline `transition-property: none` on `el` (beating the F5.2
- * liquid-weight `transition` default + any Tailwind `transition*` utility) so the rAF
- * transform writes are not fought; the returned release restores the prior value.
- */
 export function lockSpatialTransition(el: HTMLElement): () => void {
-    const prev = el.style.transitionProperty;
+    const previous = el.style.transitionProperty;
     el.style.transitionProperty = "none";
     return () => {
-        el.style.transitionProperty = prev;
+        el.style.transitionProperty = previous;
     };
 }
 
-/** The live reduced-motion probe (matchMedia, SSR-safe) — exported so a wrapper that owns
- *  a NON-animated terminal seat (the cta "snap gone + hand off") shares the ONE probe. */
 export function prefersReducedMotion(): boolean {
     return (
         typeof window !== "undefined" &&
@@ -185,198 +99,336 @@ export function prefersReducedMotion(): boolean {
 }
 
 const clamp01 = (n: number): number => (n < 0 ? 0 : n > 1 ? 1 : n);
-const toRect = (r: DOMRect | MorphRect): MorphRect => ({
-    x: r.x,
-    y: r.y,
-    width: r.width,
-    height: r.height,
+const toRect = (rect: DOMRect): MorphRect => ({
+    x: rect.x,
+    y: rect.y,
+    width: rect.width,
+    height: rect.height,
 });
+const centerX = (rect: MorphRect): number => rect.x + rect.width / 2;
+const centerY = (rect: MorphRect): number => rect.y + rect.height / 2;
 
 /**
- * The ONE compositor FLIP/morph runner. Composes the kf `ElementMorph` +
- * `springTimingFunction` into a single interruptible, PRM-safe, compositor-only morph the
- * three bloom leaves collapse onto. See the module header for the two directions + the
- * channel math + the PRM snap + the driver-lock seam.
- *
- * @example
- * ```ts
- * const engine = useElementMorph(surfaceRef, {
- *   to: triggerRef, direction: "in", channels: { opacity: true, blur: 4 },
- * })
- * watch(open, (o) => (o ? engine.play() : engine.cancel()))
- * ```
+ * A single explicit-endpoint FLIP owner for reveal, bloom, receive and gesture
+ * configurations. Replacements and resizes retarget from the last painted frame;
+ * disappearing foreign endpoints retain the last valid geometry.
  */
 export function useElementMorph(
     surface: Ref<HTMLElement | ComponentPublicInstance | null>,
-    options: UseElementMorphOptions = {},
+    options: UseElementMorphOptions,
 ): UseElementMorphReturn {
     const respectPRM = options.respectReducedMotion !== false;
-    const direction = options.direction ?? "in";
     const opacityOn = options.channels?.opacity !== false;
-    const blurPx = options.channels?.blur ?? 0;
-    const originSpec = options.origin ?? "to";
-
-    // The spring curve — the typed {fn} easing from the SAME SPRING_PRESETS row the
-    // --spring-<name> CSS tokens generate from (never a hand (response, ζ)). The morph
-    // duration is the spring's analytic settle horizon (response · 4, the kf
-    // springTimingFunction default maxDuration), mirroring the per-spring clock without
-    // re-deriving a token (the W-GLASS-CAL fence — no second clock).
+    const blurPx = Math.max(0, options.channels?.blur ?? 0);
     const { response, dampingFraction } = springPreset(options.preset ?? "snappy");
-    const easing: Easing = springTimingFunction({ response, dampingFraction });
-    const durationMs = response * 4 * 1000;
+    const easing = springTimingFunction({ response, dampingFraction });
 
     const playing = ref(false);
     const progress = ref(0);
     const measurement = ref<ElementMorphMeasurement | null>(null);
 
-    let morph: ElementMorph | null = null;
-    let raf = 0;
-    let startTs = 0;
+    let owner: NumericAnimation<MorphFrame> | null = null;
+    let activeEl: HTMLElement | null = null;
+    let currentFrame: MorphFrame | null = null;
+    let currentGeometry: Geometry | null = null;
+    let currentSignature = "";
+    let durationMs = response * 4 * 1000;
     let releaseLock: (() => void) | null = null;
+    let resizeObserver: ResizeObserver | null = null;
 
-    function cancelRaf(): void {
-        if (raf && typeof cancelAnimationFrame === "function")
-            cancelAnimationFrame(raf);
-        raf = 0;
+    function stopOwner(): void {
+        const active = owner;
+        owner = null;
+        active?.stop();
+    }
+
+    function disconnectObserver(): void {
+        resizeObserver?.disconnect();
+        resizeObserver = null;
     }
 
     function clear(elMaybe?: HTMLElement | null): void {
         const el = elMaybe ?? asElement(surface.value);
-        if (!el) return;
-        el.style.transform = "";
-        el.style.transformOrigin = "";
-        el.style.opacity = "";
-        el.style.filter = "";
+        if (el) {
+            el.style.transform = "";
+            el.style.transformOrigin = "";
+            el.style.opacity = "";
+            el.style.filter = "";
+        }
+        releaseLock?.();
+        releaseLock = null;
     }
 
     function cancel(): void {
-        cancelRaf();
-        morph = null;
-        releaseLock?.();
-        releaseLock = null;
+        const el = activeEl;
+        stopOwner();
+        disconnectObserver();
+        if (el) clear(el);
+        else {
+            releaseLock?.();
+            releaseLock = null;
+        }
+        activeEl = null;
+        currentFrame = null;
+        currentGeometry = null;
         playing.value = false;
     }
 
-    // Resolve from/to rects + the transform-origin string against the live refs.
-    function measure(el: HTMLElement): {
-        from: MorphRect;
-        to: MorphRect;
-        origin: string;
-    } {
-        const selfRect = toRect(el.getBoundingClientRect());
-        const resolve = (ep: MorphEndpoint | undefined): MorphRect => {
-            if (ep === undefined || ep === "self") return selfRect;
-            const target = asElement(ep.value);
-            return target
-                ? toRect(target.getBoundingClientRect())
-                : insetSelf(selfRect);
+    /** Read the surface's settled box without feeding our current transform back in. */
+    function settledRect(el: HTMLElement): MorphRect {
+        const transform = el.style.transform;
+        el.style.transform = "";
+        const rect = toRect(el.getBoundingClientRect());
+        el.style.transform = transform;
+        return rect;
+    }
+
+    function resolveEndpoint(endpoint: MorphEndpoint, base: MorphRect): MorphRect | null {
+        if (endpoint === "self") return base;
+        const el = asElement(endpoint.value);
+        return el ? toRect(el.getBoundingClientRect()) : null;
+    }
+
+    function measure(el: HTMLElement): Geometry | null {
+        const base = settledRect(el);
+        const sourceRect = resolveEndpoint(options.source, base);
+        const destinationRect = resolveEndpoint(options.destination, base);
+        if (!sourceRect || !destinationRect) return null;
+        return { base, source: sourceRect, destination: destinationRect };
+    }
+
+    function frameAt(geometry: Geometry, rawProgress: number): MorphFrame {
+        const p = clamp01(rawProgress);
+        const { base, source: from, destination: to } = geometry;
+        const width = from.width + (to.width - from.width) * p;
+        const height = from.height + (to.height - from.height) * p;
+        const x = from.x + (to.x - from.x) * p;
+        const y = from.y + (to.y - from.y) * p;
+        const scaleX = base.width > 0 ? width / base.width : 1;
+        const scaleY = base.height > 0 ? height / base.height : 1;
+        const sourceIsSelf = options.source === "self";
+        const destinationIsSelf = options.destination === "self";
+        const presence = sourceIsSelf === destinationIsSelf ? 1 : sourceIsSelf ? 1 - p : p;
+        const blur = sourceIsSelf === destinationIsSelf ? 0 : sourceIsSelf ? blurPx * p : blurPx * (1 - p);
+        return {
+            // Center-origin translation keeps unequal endpoint sizes aligned by their
+            // measured centers; top-left deltas drift whenever scale changes.
+            translateX: x + width / 2 - centerX(base),
+            translateY: y + height / 2 - centerY(base),
+            scaleX,
+            scaleY,
+            opacity: opacityOn ? presence : 1,
+            blur,
+            clock: p,
         };
-        const from = resolve(options.from ?? "self");
-        const to = resolve(options.to);
-        let origin: string;
-        if (originSpec === "center") origin = "center center";
-        else if (originSpec === "from")
-            origin = `${from.x - selfRect.x}px ${from.y - selfRect.y}px`;
-        else if (originSpec === "to")
-            origin = `${to.x - selfRect.x}px ${to.y - selfRect.y}px`;
-        else origin = originSpec;
-        return { from, to, origin };
     }
 
-    // Write the coupled channels for a given eased progress.
-    function paint(el: HTMLElement, eased: number): void {
-        const morphProgress = direction === "in" ? 1 - eased : eased;
-        morph?.apply(el, morphProgress);
-        if (opacityOn) el.style.opacity = clamp01(1 - morphProgress).toFixed(4);
-        if (blurPx > 0) {
-            const b = blurPx * Math.max(0, morphProgress);
-            el.style.filter = `blur(${b.toFixed(2)}px)`;
-        }
+    function paint(el: HTMLElement, frame: MorphFrame): void {
+        currentFrame = frame;
+        el.style.transform = `translate(${frame.translateX}px, ${frame.translateY}px) scale(${frame.scaleX}, ${frame.scaleY})`;
+        el.style.transformOrigin = "center center";
+        if (opacityOn) el.style.opacity = String(clamp01(frame.opacity));
+        if (blurPx > 0) el.style.filter = `blur(${Math.max(0, frame.blur).toFixed(2)}px)`;
     }
 
-    // The generic terminal — clear the spatial channels, land opacity ("in" arrives
-    // visible; "out" departs gone), fire onSettled (the extra hand-off/field-land).
-    function terminal(el: HTMLElement): void {
+    function signature(geometry: Geometry): string {
+        const { base, source: from, destination: to } = geometry;
+        return [
+            base.x,
+            base.y,
+            base.width,
+            base.height,
+            from.x,
+            from.y,
+            from.width,
+            from.height,
+            to.x,
+            to.y,
+            to.width,
+            to.height,
+        ].join(":");
+    }
+
+    function recordMeasurement(geometry: Geometry): void {
+        const { source: from, destination: to } = geometry;
+        measurement.value = {
+            travelPx: Math.hypot(centerX(to) - centerX(from), centerY(to) - centerY(from)),
+            scaleX: from.width > 0 ? to.width / from.width : 1,
+            scaleY: from.height > 0 ? to.height / from.height : 1,
+            durationMs,
+        };
+    }
+
+    function finish(el: HTMLElement, animation?: NumericAnimation<MorphFrame>): void {
+        if (animation && owner !== animation) return;
+        owner = null;
+        disconnectObserver();
+        const terminal = currentGeometry ? frameAt(currentGeometry, 1) : null;
         clear(el);
-        if (opacityOn) el.style.opacity = direction === "in" ? "1" : "0";
-        morph = null;
-        raf = 0;
-        releaseLock?.();
-        releaseLock = null;
+        if (opacityOn && terminal) el.style.opacity = String(clamp01(terminal.opacity));
+        activeEl = null;
+        currentFrame = null;
         progress.value = 1;
         playing.value = false;
         options.onSettled?.();
     }
 
-    function seat(p: number): void {
-        const el = asElement(surface.value);
-        if (!el || raf) return; // never clobber an in-flight morph
-        const m = measure(el);
-        const seatMorph = new ElementMorph(m.from, m.to, { transformOrigin: m.origin });
-        const morphProgress = direction === "in" ? 1 - p : p;
-        seatMorph.apply(el, morphProgress);
+    function run(
+        el: HTMLElement,
+        start: MorphFrame,
+        end: MorphFrame,
+        startProgress: number,
+        runDuration: number,
+    ): void {
+        const animation = new NumericAnimation<MorphFrame>(
+            [
+                { ...start, clock: 0 },
+                { ...end, clock: 1 },
+            ],
+            {
+                duration: runDuration,
+                timingFunction: easing,
+            },
+        );
+        owner = animation;
+        void animation
+            .play((frame) => {
+                if (owner !== animation) return;
+                if (asElement(surface.value) !== el) {
+                    cancel();
+                    return;
+                }
+                const local = clamp01(frame.clock);
+                const arrival = startProgress + (1 - startProgress) * local;
+                progress.value = arrival;
+                paint(el, frame);
+                options.onFrame?.(arrival);
+            })
+            .then(() => finish(el, animation));
+    }
+
+    function observe(el: HTMLElement): void {
+        disconnectObserver();
+        if (typeof ResizeObserver === "undefined") return;
+        resizeObserver = new ResizeObserver(refresh);
+        const nodes = new Set<HTMLElement>([el]);
+        for (const endpoint of [options.source, options.destination]) {
+            if (endpoint !== "self") {
+                const node = asElement(endpoint.value);
+                if (node) nodes.add(node);
+            }
+        }
+        nodes.forEach((node) => resizeObserver?.observe(node));
+    }
+
+    function refresh(): void {
+        const el = activeEl;
+        if (!el || !playing.value || !currentFrame) return;
+        const geometry = measure(el);
+        if (!geometry) return; // keep the last valid destination if a foreign node leaves
+        const nextSignature = signature(geometry);
+        if (nextSignature === currentSignature) return;
+        currentSignature = nextSignature;
+        currentGeometry = geometry;
+        recordMeasurement(geometry);
+        const start = currentFrame;
+        const startProgress = progress.value;
+        stopOwner();
+        run(
+            el,
+            start,
+            frameAt(geometry, 1),
+            startProgress,
+            Math.max(1, durationMs * (1 - startProgress)),
+        );
     }
 
     function play(): void {
         const el = asElement(surface.value);
         if (!el) return;
-        cancel();
-        const m = measure(el);
-        const fromCx = m.from.x + m.from.width / 2;
-        const fromCy = m.from.y + m.from.height / 2;
-        const toCx = m.to.x + m.to.width / 2;
-        const toCy = m.to.y + m.to.height / 2;
-        measurement.value = {
-            travelPx: Math.hypot(toCx - fromCx, toCy - fromCy),
-            scaleX: m.from.width > 0 ? m.to.width / m.from.width : 1,
-            scaleY: m.from.height > 0 ? m.to.height / m.from.height : 1,
-            durationMs,
-        };
-
-        playing.value = true;
-        progress.value = 0;
-
-        // PRM: snap to the terminal in ONE step — zero spatial frames, the fade survives.
-        if (respectPRM && prefersReducedMotion()) {
-            terminal(el);
+        const interrupted = owner !== null && activeEl === el && currentFrame !== null;
+        const liveFrame = interrupted ? currentFrame : null;
+        stopOwner();
+        if (!interrupted) {
+            releaseLock?.();
+            releaseLock = lockSpatialTransition(el);
+        }
+        activeEl = el;
+        durationMs = response * 4 * 1000 * motionTempo(el);
+        const geometry = measure(el);
+        if (!geometry) {
+            playing.value = true;
+            currentGeometry = null;
+            finish(el);
             return;
         }
+        currentGeometry = geometry;
+        currentSignature = signature(geometry);
+        recordMeasurement(geometry);
+        const start = liveFrame ?? frameAt(geometry, 0);
+        paint(el, start); // synchronous source seat: no full-size first paint
+        progress.value = 0;
+        playing.value = true;
 
-        releaseLock = lockSpatialTransition(el);
-        morph = new ElementMorph(m.from, m.to, { transformOrigin: m.origin });
-        startTs = 0;
-        const step = (ts: number): void => {
-            if (!morph || !asElement(surface.value)) {
-                cancel();
-                return;
-            }
-            if (startTs === 0) startTs = ts;
-            const t = Math.min(1, (ts - startTs) / durationMs);
-            const eased = easing.fn(t);
-            progress.value = clamp01(eased);
-            paint(el, eased);
-            options.onFrame?.(clamp01(eased));
-            if (t < 1 && typeof requestAnimationFrame === "function") {
-                raf = requestAnimationFrame(step);
-            } else {
-                terminal(el);
-            }
-        };
-        if (typeof requestAnimationFrame === "function") {
-            raf = requestAnimationFrame(step);
-        } else {
-            // SSR / no-rAF — snap to terminal + hand off.
-            terminal(el);
+        if (
+            (respectPRM && prefersReducedMotion()) ||
+            typeof requestAnimationFrame !== "function"
+        ) {
+            finish(el);
+            return;
         }
+        observe(el);
+        run(el, start, frameAt(geometry, 1), 0, durationMs);
     }
 
-    onScopeDispose(cancel);
+    function seat(rawProgress: number): void {
+        const el = asElement(surface.value);
+        if (!el || playing.value) return;
+        const geometry = measure(el);
+        if (!geometry) {
+            if (opacityOn) el.style.opacity = rawProgress < 1 ? "0" : "1";
+            return;
+        }
+        currentGeometry = geometry;
+        paint(el, frameAt(geometry, rawProgress));
+    }
+
+    function offset(x: number, y: number): void {
+        const el = asElement(surface.value);
+        if (!el) return;
+        stopOwner();
+        disconnectObserver();
+        activeEl = el;
+        releaseLock ??= lockSpatialTransition(el);
+        el.style.transform = `translate(${x}px, ${y}px)`;
+        el.style.transformOrigin = "center center";
+    }
+
+    const endpointRefs = [options.source, options.destination].filter(
+        (endpoint): endpoint is Exclude<MorphEndpoint, "self"> => endpoint !== "self",
+    );
+    const stopEndpointWatch = watch(
+        () => endpointRefs.map((endpoint) => endpoint.value),
+        () => {
+            if (!activeEl || !playing.value) return;
+            observe(activeEl);
+            refresh();
+        },
+        { flush: "post" },
+    );
+
+    onScopeDispose(() => {
+        stopEndpointWatch();
+        cancel();
+    });
 
     return {
         play,
         cancel,
         clear,
         seat,
+        offset,
+        refresh,
         playing: readonly(playing),
         progress: readonly(progress),
         measurement: readonly(measurement),

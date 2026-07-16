@@ -3,7 +3,7 @@
 // `--section-color` rainbow leads the pane (the focal moment, FIRST in source
 // order — it was buried below a dull flat core grid); it pops in on the W-SCROLL-
 // MOTION `.scroll-cascade--columns` register (the spring-clocked coupled build, no
-// demo-local @keyframes), the viz-basis glyphs pop in on the W-SUFFUSE3 IconChip
+// demo-local @keyframes), the viz-basis glyphs use the shared reveal register
 // `:reveal` axis, and the core swatch grid stays correct-monochrome (the warm-cream/
 // role tokens are documentary — adding color violates the one-color-event
 // proportion) but gains the calm wash read-through (the StoryHero `cardTier` drop)

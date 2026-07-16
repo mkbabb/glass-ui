@@ -105,7 +105,9 @@ describe("useBloomUp — the PRM snap-path seats the surface + lands the field h
         result.bloom();
 
         // The hue + the bounded strength land on the FIELD.
-        expect(field.style.getPropertyValue("--glass-ambient-hue")).toBe("oklch(0.7 0.12 60)");
+        expect(field.style.getPropertyValue("--glass-ambient-hue")).toBe(
+            "oklch(0.7 0.12 60)",
+        );
         expect(field.style.getPropertyValue("--glass-ambient-strength")).toBe("8.000%");
         // The blooming SURFACE carries NO injected hue (the compositor-only floor).
         expect(destEl.style.getPropertyValue("--glass-ambient-hue")).toBe("");
@@ -149,7 +151,9 @@ describe("useBloomUp — the PRM snap-path seats the surface + lands the field h
             useBloomUp(ref(sourceEl), ref(destEl), { field: ref(field) }),
         );
         result.bloom();
-        expect(field.style.getPropertyValue("--glass-ambient-hue")).toBe("oklch(0.6 0.1 30)");
+        expect(field.style.getPropertyValue("--glass-ambient-hue")).toBe(
+            "oklch(0.6 0.1 30)",
+        );
         unmount();
     });
 
@@ -177,6 +181,57 @@ describe("useBloomUp — the PRM snap-path seats the surface + lands the field h
     });
 });
 
+describe("useBloomUp — shared morph clock", () => {
+    beforeEach(() => installMatchMedia(false));
+    afterEach(() => {
+        vi.restoreAllMocks();
+        vi.unstubAllGlobals();
+    });
+
+    it("ramps and settles the field on useElementMorph's frame series", async () => {
+        const frames: FrameRequestCallback[] = [];
+        vi.stubGlobal("requestAnimationFrame", (callback: FrameRequestCallback) => {
+            frames.push(callback);
+            return frames.length;
+        });
+        vi.stubGlobal("cancelAnimationFrame", vi.fn());
+
+        const field = document.createElement("div");
+        const sourceEl = document.createElement("div");
+        const destEl = document.createElement("div");
+        field.appendChild(destEl);
+        stubRect(sourceEl, { x: 10, y: 10, width: 40, height: 40 });
+        stubRect(destEl, { x: 0, y: 0, width: 400, height: 300 });
+        const onBloomed = vi.fn();
+
+        const { result, unmount } = mountComposable(() =>
+            useBloomUp(ref(sourceEl), ref(destEl), {
+                field: ref(field),
+                fieldHue: "oklch(0.7 0.12 60)",
+                onBloomed,
+            }),
+        );
+
+        result.bloom();
+        expect(frames).toHaveLength(1);
+        frames.shift()?.(100);
+        frames.shift()?.(1060);
+        const mid = Number.parseFloat(
+            field.style.getPropertyValue("--glass-ambient-strength"),
+        );
+        expect(mid).toBeGreaterThan(0);
+        expect(mid).toBeLessThanOrEqual(8);
+
+        frames.shift()?.(3000);
+        await Promise.resolve();
+        await Promise.resolve();
+        expect(field.style.getPropertyValue("--glass-ambient-strength")).toBe("8.000%");
+        expect(result.blooming.value).toBe(false);
+        expect(onBloomed).toHaveBeenCalledTimes(1);
+        unmount();
+    });
+});
+
 describe("useBloomUp — the field-resolution contract (explicit > data-glass-field > parent)", () => {
     beforeEach(() => installMatchMedia(true));
     afterEach(() => vi.restoreAllMocks());
@@ -199,7 +254,9 @@ describe("useBloomUp — the field-resolution contract (explicit > data-glass-fi
         );
         result.bloom();
         // The marked ancestor — NOT the immediate parent — carries the bias.
-        expect(grandparent.style.getPropertyValue("--glass-ambient-hue")).toBe("oklch(0.7 0.12 60)");
+        expect(grandparent.style.getPropertyValue("--glass-ambient-hue")).toBe(
+            "oklch(0.7 0.12 60)",
+        );
         expect(parent.style.getPropertyValue("--glass-ambient-hue")).toBe("");
         unmount();
     });

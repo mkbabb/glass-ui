@@ -1,21 +1,31 @@
 <script setup lang="ts">
-import {
-  type DropdownMenuSubEmits,
-  type DropdownMenuSubProps,
-  useForwardPropsEmits,
-} from 'reka-ui'
-// BI.W-MENU-TRIGGER — the trigger axis switches the reka Sub family.
-import { useMenuPart } from './useMenuTrigger'
+import { useForwardPropsEmits } from "reka-ui";
+import { useMenuPart } from "./useMenuTrigger";
 
-const props = defineProps<DropdownMenuSubProps>()
-const emits = defineEmits<DropdownMenuSubEmits>()
+export interface DropdownMenuSubProps {
+    open?: boolean;
+    defaultOpen?: boolean;
+}
 
-const forwarded = useForwardPropsEmits(props, emits)
-const SubComp = useMenuPart('Sub')
+export interface DropdownMenuSubEmits {
+    "update:open": [value: boolean];
+}
+
+defineOptions({ name: "DropdownMenuSub", inheritAttrs: false });
+
+const props = withDefaults(defineProps<DropdownMenuSubProps>(), {
+    defaultOpen: false,
+    open: undefined,
+});
+const emit = defineEmits<DropdownMenuSubEmits>();
+defineSlots<{ default?: () => unknown }>();
+
+const SubComp = useMenuPart("Sub");
+const forwarded = useForwardPropsEmits(props, emit);
 </script>
 
 <template>
-  <component :is="SubComp" v-bind="forwarded">
-    <slot />
-  </component>
+    <component :is="SubComp" v-bind="forwarded">
+        <slot />
+    </component>
 </template>

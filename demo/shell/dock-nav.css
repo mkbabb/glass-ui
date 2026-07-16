@@ -6,8 +6,8 @@
  *   - SidebarDock — a FIXED vertical `always-expanded` GlassDock
  *     (`orientation="vertical"`; the left column on wide viewports; off-canvas
  *     behind a <Sheet> on narrow ones).
- *   - BottomDock — a horizontal `always-expanded` GlassDock viewport-anchored
- *     to the bottom inset, floating over the <main> scroll-region.
+ *   - BottomDock — a horizontal `always-expanded` GlassDock shell footer below
+ *     the independently scrolling <main> region.
  *
  * Every visual axis reads a library token (`--z-dock`, `--viz-fourier`,
  * `--radius-*`, `--duration-*`, `--spring-*`) or a demo-local `--demo-nav-*`
@@ -28,8 +28,14 @@
     --demo-nav-rail-accent-w: 3px;
     /* Bottom-dock viewport inset (adds the iOS safe-area gutter). */
     --demo-nav-bottom-inset: calc(0.75rem + env(safe-area-inset-bottom, 0px));
-    /* The fixed sidebar rail column width. */
-    --demo-nav-rail-w: 4.5rem;
+}
+
+/* Narrow: single content column with category navigation in the bottom trigger.
+   Compact retains that action; Wide moves the same action to the rail. */
+.demo-app-shell {
+    --demo-shell-content-pad-block: 1.5rem;
+    --demo-shell-content-pad-inline: 1rem;
+    --demo-shell-dock-pad-inline: 0.5rem;
 }
 
 /* ── Sidebar fixed-rail occupancy ──────────────────────────────────────────
@@ -37,7 +43,7 @@
    aside reserves the column gutter and centres the dock. */
 .demo-sidebar-rail {
     flex-shrink: 0;
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     min-height: 0;
@@ -76,48 +82,18 @@
     --dock-rail-accent-width: var(--demo-nav-rail-accent-w);
 }
 
-/* ── The home control — the ℱ Foundations entry (AZ.W-SHELL-IDENTITY) ─────────
-   The ℱ wordmark now renders AS a <DockIconButton> (as-child onto the RouterLink),
-   so it inherits the first-class dock-control glass hover register WHOLESALE — the
-   bg → --dock-control-hover-bg glass tier, the travelling specular ::before gleam,
-   the --scale-hover-dock lift (R3-6 / W-REGISTER-IOS, R3-15 / D3). The demo adds
-   ONLY two demo-private axes the library box cannot know:
-     1. The ℱ glyph sits SLIGHTLY LARGER than the 16px category glyphs (the brand
-        wordmark reads as the home anchor, D1).
-     2. The italic script-ℱ ink-mass is OPTICALLY centered (D2). At the 2rem brand
-        size the glyph's painted ink leans DOWN-RIGHT of the box center (the WONK-1
-        italic slant + the script-F intrinsic asymmetry) — a LIVE red-ink scan over
-        the 40×40 home rect at dpr=4 (the C8 probe scale) measured the UN-transformed
-        ink-mass at dx=+2.63px / dy=+3.75px of the geometric center. The optical
-        translate cancels that lean (UP-LEFT) so the ink re-seats ON center (the
-        re-measured offset lands at ≈dx=-0.13 / dy=0, inside the ±0.5px band). This is
-        keyed to the MEASURED offset (re-run docs/tranches/AZ/audit/ground/
-        C8-fourier-f-livescan.mjs after any glyph/size edit — note the C8 probe HOVERS
-        before clip; the binding band is the REST measurement, since the hover register
-        scales the box 1.1× and perturbs a pre-hover clip) — the acceptance is the
-        ±0.5px band, not this literal seed. Geometric flex-centering (already present
-        on the box) structurally cannot reach an ink-asymmetry; only this nudge can. */
-.demo-sidebar-home > span {
-    /* Slightly larger than the 1rem (h-4) category glyphs — the brand anchor. */
-    font-size: 2rem;
-    /* Optical center: cancel the measured down-right ink lean (dx+2.63 / dy+3.75) by
-       nudging the glyph up-left onto the box center. Re-derived from the live ink-scan;
-       the ±0.5px band (proof:shell-identity S5 / shell-identity.spec.ts) is the gate,
-       not this literal pair. */
-    transform: translate(-2.63px, -3.75px);
-}
-
-/* ── Bottom-bar viewport anchoring ─────────────────────────────────────────
-   The bottom dock floats over the <main> scroll-region's bottom inset — it is
-   NOT in document flow, so route scroll never displaces it. */
+/* ── Bottom-bar shell anchoring ────────────────────────────────────────────
+   The bottom dock is the content column's non-scrolling footer. Its intrinsic
+   height therefore shortens <main> before hit testing, while only <main> scrolls
+   and the dock remains viewport-anchored. */
 .demo-bottom-dock {
-    position: fixed;
-    inset-inline: 0;
-    inset-block-end: var(--demo-nav-bottom-inset);
+    position: relative;
+    flex: 0 0 auto;
+    min-width: 0;
     z-index: var(--z-dock);
     display: flex;
     justify-content: center;
-    padding-inline: 0.75rem;
+    padding: 0 var(--demo-shell-dock-pad-inline) var(--demo-nav-bottom-inset);
     pointer-events: none;
 }
 .demo-bottom-dock__shell {
@@ -132,25 +108,35 @@
    in-category facets re-home on the rail's floating carousel strip. The active-story
    weight cue rode that tab run, so its rule is buried with it (no dead orphan). */
 
-/* ── Responsive: mobile off-canvas, bottom bar primary ─────────────────────
-   The category trigger is now the home-left #persistent anchor on the bottom
-   dock — it stays put at every viewport and opens the off-canvas SidebarDock
-   Sheet (a quick category jump on desktop, the primary category nav on mobile).
-   Below the mobile breakpoint the fixed sidebar rail column is hidden; the
-   persistent bottom-dock category trigger carries the category navigation. */
-@media (max-width: 767px) {
+/* Compact: the off-canvas category action remains primary, with more reading room. */
+@media (min-width: 30rem) {
+    .demo-app-shell {
+        --demo-shell-content-pad-block: 2rem;
+        --demo-shell-content-pad-inline: 1.5rem;
+        --demo-shell-dock-pad-inline: 0.75rem;
+    }
+}
+
+/* Wide: category navigation moves to the visible rail; the equivalent bottom
+   trigger leaves both the paint and focus order. */
+@media (min-width: 48rem) {
+    .demo-app-shell {
+        --demo-shell-content-pad-block: 2.5rem;
+        --demo-shell-content-pad-inline: 2rem;
+    }
+
     .demo-sidebar-rail {
+        display: flex;
+    }
+
+    .demo-shell-category-menu {
         display: none;
     }
 }
 
-/* ── BG.W-DOCK-SCROLL-PROGRESS — the route scroller (the bar RETIRED onto the dock) ──
-   The standalone `.demo-scroll-progress` sticky bar is RETIRED (clean break, no
-   alias): the page-scroll position is now a BORDER ITEM on the leftside dock (the
-   `.demo-dock-scroll-ring` `<ScrollProgressRim>` overlay below). The `.scroll-progress`
-   LIBRARY recipe (src/styles/scroll-driven.css) stays — its consumer is the
-   /motion/scroll story (the native register). */
 .demo-main-scroller {
+    padding-block: var(--demo-shell-content-pad-block);
+    padding-inline: var(--demo-shell-content-pad-inline);
     /* BC.W-DROPDOWN-FIX — the no-shift discipline. This route scroller hosts the
        portaled picker overlays (Select / DropdownMenu); reka's body scroll-lock
        removes a classic (space-taking) scrollbar on open, and WITHOUT a reserved
@@ -178,107 +164,16 @@
     scroll-padding-block-start: var(--dock-content-safe-inset, 2.5rem);
     scroll-padding-inline-start: var(--dock-content-safe-inset, 2.5rem);
 }
-/* ── BG.W-DOCK-SCROLL-PROGRESS — the dock's scroll-progress BORDER ring ───────
-   The `<ScrollProgressRim>` overlay SidebarDock mounts as an inset-0 sibling of its
-   `<GlassDock>` inside the shrink-wrapping `.demo-dock-progress-host`. The ring is
-   masked to the border band only (the dock's glass + controls read through); the
-   pill radius + thin-band thickness ride the `--scroll-progress-rim-*`
-   cascade tokens (the props-defer-to-cascade seam — the ring follows the dock's
-   stadium with zero measurement). */
-.demo-dock-progress-host {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
-}
-.demo-dock-progress-host > .demo-dock-scroll-ring {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    pointer-events: none;
-    /* BI.W-DOCK-SPINE — the band inherits the dock PLATE's radius by construction: the
-       greenfield `.dock-plate` is `border-radius: inherit` from the pill `.glass-dock`,
-       so the sibling-overlay ring hugs the SAME stadium. Follow the pill: the static
-       vertical rail is `shape-pill`, and a collapsed pill is the same register. */
-    --scroll-progress-rim-radius: var(--radius-pill, 9999px);
-    /* BI.W-SCROLL-PROGRESS-RIM (UF-D1: "thinner") — the THIN RIM rung (~4px), a RIM
-       indicator STRICTLY below the 10-14px card-envelope floor (a card chrome), not the
-       prior chunky 11px band ss-02 read as a gray slab. Tuned against the ~67px vertical
-       pill so the rainbow band reads as the dock's own thin edge. */
-    --scroll-progress-rim-width: 4px;
-    /* BI.W-DOCK-RETIRES — the `[data-dock-morphing]` ring dissolve (continuity across
-       the V↔H morph) is DEFINITION-ABSENT (the shell dock no longer morphs orientation). */
-    transition: opacity 180ms var(--ease-out, ease-out);
+
+/* Route settlement focuses the noninteractive landmark for assistive technology,
+   so its browser-default viewport outline is never the right visual target. */
+.demo-main-scroller:focus {
+    outline: none;
 }
 
-/* ════════════════════════════════════════════════════════════════════════
-   BG.W-DOCK-RAIL-REINVENT (F3.R4) — the in-flow `.demo-facet-rail`/`.demo-facet-chip`
-   tablist recipe is RETIRED (clean break, no dead orphan) ──────────────────
-   The BE-era always-visible facet tablist inside the dock box is superseded by the
-   reinvented CONTAINED `<DockStack mode="facets">` rail in the shell docks' `#rail` slot
-   (the contained core + `--dock-rail-hairline`, fanning across the edge on hover). The
-   facet-chip layout / `--glass-capsule-fill` accent / one-shot `demo-facet-flood` recipe
-   moved onto the library `<DockStack>` facet mode (the per-facet `--glass-accent` rim), so
-   these demo-local `.demo-facet-*` rules + the `demo-facet-flood` keyframes are DELETED — no
-   double facet-nav, no orphan CSS.
-   ════════════════════════════════════════════════════════════════════════ */
-
-/* ════════════════════════════════════════════════════════════════════════
-   BD.W-SHELL-ROUTE-BLOOM (V-b) — the route-bloom SKELETON layout (kills the void)
-   ───────────────────────────────────────────────────────────────────────
-   The matched-but-pending <main> void is filled by a glass placeholder LAYOUT that
-   mirrors the SectionLanding silhouette (eyebrow bar + √φ title block + bento shimmer
-   grid). It COMPOSES the SHIPPED <Skeleton surface="glass"> primitive (the translucent
-   over-glass base reads the warm field THROUGH); this file owns ONLY the demo-private
-   LAYOUT geometry (the silhouette proportions + the bento grid), never a 2nd skeleton
-   engine. The whole block blooms THROUGH on content-resolve via useBloomUp (AppShell).
-   ════════════════════════════════════════════════════════════════════════ */
-.section-landing-skeleton {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-.section-landing-skeleton__hero {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-}
-/* The mono eyebrow bar (category · story) — a short caption-height pill. */
-.section-landing-skeleton__eyebrow {
-    block-size: 0.85rem;
-    inline-size: min(40%, 14rem);
-}
-/* The √φ display title block — the dominant mass (the hero title silhouette). */
-.section-landing-skeleton__title {
-    block-size: 2.75rem;
-    inline-size: min(72%, 30rem);
-    border-radius: var(--radius-card, 0.75rem);
-}
-/* The Fira-Code subpath chip beneath the title. */
-.section-landing-skeleton__chip {
-    block-size: 1.1rem;
-    inline-size: min(28%, 10rem);
-}
-/* The bento shimmer grid — rhymes with SectionLanding's
-   `grid-cols-1 sm:grid-cols-2 lg:grid-cols-3` so the placeholder reads as the SAME
-   bento it resolves into (zero layout jump on the bloom-through). */
-.section-landing-skeleton__bento {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    margin-block-start: 0.5rem;
-}
-@media (min-width: 640px) {
-    .section-landing-skeleton__bento {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-@media (min-width: 1024px) {
-    .section-landing-skeleton__bento {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-.section-landing-skeleton__card {
-    block-size: 9rem;
-    border-radius: var(--radius-card, 0.75rem);
+/* Keyboard navigation receives a localized route-destination cue on the title;
+   pointer navigation keeps the same semantic focus transfer without extra chrome. */
+.demo-main-scroller[data-route-focus="keyboard"]:focus .story-hero-title {
+    border-radius: var(--radius-sm);
+    box-shadow: var(--focus-ring-shadow);
 }

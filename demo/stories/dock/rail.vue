@@ -15,10 +15,7 @@ import {
 } from "@lucide/vue";
 import {
     DockControl,
-    DockLayer,
-    DockLayerGroup,
     DockSeparator,
-    DockStack,
     GlassDock,
 } from "@glass/components/dock";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@glass/components/tooltip";
@@ -44,19 +41,11 @@ const entries: Entry[] = [
 
 const active = ref<string>("primitives");
 
-// BC.W-DOCK-STACK-RAIL — the macOS hover-expand STACK (the clean-break rebuild of the
-// retired divider-carousel). A `<DockStack>` is a core anchor item whose members fan OUT
-// next to the rail on hover/focus, extending BEYOND the dock edge into its gutter (the
-// kept `.glass-dock-frame` escape). The `railLayer` ref is bound to BOTH the
-// `<DockLayerGroup v-model:active>` AND `<DockStack v-model:selected>` (ONE registry — the
-// stack writes the same ref the layer group reads; no parallel state). The members ARE
-// `railLayers` (id + label + icon).
-const railLayer = ref<string>("assets");
-const railLayers = [
-    { id: "assets", label: "Assets", icon: Shapes },
-    { id: "layers", label: "Layers", icon: Boxes },
-    { id: "libraries", label: "Libraries", icon: Database },
-];
+const initialPostures = [
+    { startCollapsed: true, label: "Starts compact" },
+    { startCollapsed: false, label: "Starts open" },
+] as const;
+
 </script>
 
 <template>
@@ -157,104 +146,45 @@ const railLayers = [
                 <code class="rounded bg-muted px-1">height</code> on the
                 <code class="rounded bg-muted px-1">--dock-morph-t</code> spring. Hover to expand;
                 the dock grows its block axis open and shrinks back to the collapsed circle on idle.
+                Both examples remain collapsible — the open posture is not pinned.
             </p>
-            <div class="flex min-h-[18rem] items-start justify-start p-6">
-                <GlassDock
-                    orientation="vertical"
-                    :start-collapsed="true"
-                    aria-label="Collapsible vertical dock"
-                    data-testid="dock-vertical-collapsible"
+            <div class="flex min-h-[18rem] flex-wrap items-start gap-8 p-6">
+                <div
+                    v-for="posture in initialPostures"
+                    :key="posture.label"
+                    class="flex flex-col items-start gap-3"
                 >
-                    <template #persistent>
-                        <DockControl type="button" aria-label="Home">
-                            <Home />
-                        </DockControl>
-                    </template>
-                    <DockSeparator />
-                    <DockControl
-                        v-for="e in entries.slice(0, 5)"
-                        :key="e.id"
-                        type="button"
-                        class="text-muted-foreground"
-                        :aria-label="e.label"
+                    <span class="text-mono-caption text-muted-foreground">{{ posture.label }}</span>
+                    <GlassDock
+                        orientation="vertical"
+                        role="toolbar"
+                        aria-orientation="vertical"
+                        :start-collapsed="posture.startCollapsed"
+                        :aria-label="`${posture.label} vertical dock`"
+                        :data-testid="`dock-vertical-${posture.startCollapsed ? 'collapsed' : 'expanded'}-first-paint`"
                     >
-                        <component :is="e.icon" />
-                    </DockControl>
-                    <template #collapsed>
-                        <DockControl type="button" aria-label="Open navigation">
-                            <component :is="NavigationIcon" />
-                        </DockControl>
-                    </template>
-                </GlassDock>
-            </div>
-        </StorySection>
-
-        <StorySection heading="Stack fan — the macOS hover-expand stack in the TOP LAYER" gap="md">
-            <p class="text-small text-muted-foreground">
-                <code class="rounded bg-muted px-1">&lt;DockStack&gt;</code> is the macOS Dock
-                hover-expand STACK. Its core anchor is a NORMAL dock control; hover (or focus) it
-                and its members FAN OUT of a native
-                <code class="rounded bg-muted px-1">popover</code> promoted to the
-                <strong>top layer</strong> — a column of fully-visible glass icons springing open
-                past the dock body, each on the iOS liquid clock. The top layer is exempt from
-                the dock's clip/contain/transform BY SPEC, so the fan paints OVER the dock body
-                with nothing to escape — the box stays INVIOLATE (the fan feeds no size into it),
-                and placement is a transform-safe
-                <code class="rounded bg-muted px-1">getBoundingClientRect</code> one-shot (no
-                <code class="rounded bg-muted px-1">anchor()</code> CSS — the SAF-1 fence). The
-                members write the SAME
-                <code class="rounded bg-muted px-1">railLayer</code> ref the
-                <code class="rounded bg-muted px-1">&lt;DockLayerGroup&gt;</code> reads (one
-                registry, no parallel state). 3 visible at rest; a longer stack scrolls.
-            </p>
-            <p class="text-mono-caption text-muted-foreground" data-testid="dock-rail-readout">
-                active layer = {{ railLayer }}
-            </p>
-            <div class="flex min-h-[20rem] items-start justify-start p-10">
-                <GlassDock
-                    orientation="vertical"
-                    :start-collapsed="true"
-                    aria-label="Dock with a top-layer stack fan"
-                    data-testid="dock-with-rail"
-                >
-                    <template #persistent>
-                        <DockControl type="button" aria-label="Home">
-                            <Home />
-                        </DockControl>
-                    </template>
-                    <DockSeparator />
-                    <DockLayerGroup
-                        v-model:active="railLayer"
-                        :show-rail="false"
-                        data-testid="dock-with-rail-group"
-                    >
-                        <DockLayer
-                            v-for="l in railLayers"
-                            :key="l.id"
-                            :id="l.id"
-                            :label="l.label"
-                            :icon="l.icon"
+                        <template #persistent>
+                            <DockControl type="button" aria-label="Home">
+                                <Home />
+                            </DockControl>
+                        </template>
+                        <DockSeparator />
+                        <DockControl
+                            v-for="e in entries.slice(0, 5)"
+                            :key="e.id"
+                            type="button"
+                            class="text-muted-foreground"
+                            :aria-label="e.label"
                         >
-                            <component :is="l.icon" class="h-4 w-4" />
-                            <span class="px-1 text-sm font-medium">{{ l.label }}</span>
-                        </DockLayer>
-                    </DockLayerGroup>
-                    <!-- The macOS hover-expand stack — the core anchor is an in-flow dock
-                         control; hover/focus fans its members OUT of a top-layer popover past
-                         the dock body. Clicking one switches the active layer (the ONE registry
-                         it shares with the DockLayerGroup above). -->
-                    <DockStack
-                        v-model:selected="railLayer"
-                        :items="railLayers"
-                        core-label="Dock layers"
-                        data-testid="dock-stack-control"
-                    />
-                    <template #collapsed>
-                        <DockControl type="button" aria-label="Open navigation">
-                            <component :is="NavigationIcon" />
+                            <component :is="e.icon" />
                         </DockControl>
-                    </template>
-                </GlassDock>
+                        <template #collapsed>
+                            <DockControl type="button" aria-label="Open navigation">
+                                <component :is="NavigationIcon" />
+                            </DockControl>
+                        </template>
+                    </GlassDock>
+                </div>
             </div>
         </StorySection>
     </StoryPage>

@@ -1,14 +1,31 @@
 <script setup lang="ts">
-import { type DropdownMenuGroupProps } from 'reka-ui'
-// BI.W-MENU-TRIGGER — the trigger axis switches the reka Group family.
-import { useMenuPart } from './useMenuTrigger'
+import { computed, useAttrs, type HTMLAttributes } from "vue";
+import { cn } from "../_shared/class-names";
+import { fixedHostAttrs } from "../_shared/primitive";
+import { useMenuPart } from "./useMenuTrigger";
 
-const props = defineProps<DropdownMenuGroupProps>()
-const GroupComp = useMenuPart('Group')
+export interface DropdownMenuGroupProps {
+    class?: HTMLAttributes["class"];
+}
+
+defineOptions({ name: "DropdownMenuGroup", inheritAttrs: false });
+
+const props = defineProps<DropdownMenuGroupProps>();
+defineSlots<{ default?: () => unknown }>();
+
+const attrs = useAttrs();
+const forwardedAttrs = computed(() => fixedHostAttrs(attrs));
+const GroupComp = useMenuPart("Group");
 </script>
 
 <template>
-  <component :is="GroupComp" v-bind="props">
-    <slot />
-  </component>
+    <component
+        :is="GroupComp"
+        v-bind="forwardedAttrs"
+        as="div"
+        data-slot="dropdown-menu-group"
+        :class="cn(props.class)"
+    >
+        <slot />
+    </component>
 </template>

@@ -31,6 +31,14 @@ describe("valueDomain", () => {
         ]);
     });
 
+    it("keeps fractional and nearly coincident marks exact instead of step-rounding them", () => {
+        expect(resolveValueMarks([0.125, 0.1251, -0.25], -0.5, 0.5)).toEqual([
+            { value: -0.25, position: 0.25 },
+            { value: 0.125, position: 0.625 },
+            { value: 0.1251, position: 0.6251 },
+        ]);
+    });
+
     it("omits endpoints and out-of-range values rather than piling them up", () => {
         expect(resolveValueMarks([-20, -10, 0, 10, 20], -10, 10)).toEqual([
             { value: 0, position: 0.5 },

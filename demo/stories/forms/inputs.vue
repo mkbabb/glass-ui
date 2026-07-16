@@ -1,14 +1,12 @@
 <script setup lang="ts">
+import { defineAsyncComponent, ref } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
-import type { StoryBody } from "../../chassis/body/story-body";
-import { defineAsyncComponent } from "vue";
+import StorySection from "../../chassis/section/StorySection.vue";
+import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import FamilyTabs, { type FamilyMember } from "../../chassis/family/FamilyTabs.vue";
 import { Input } from "@glass/components/input";
 import { Label } from "@glass/components/label";
-import { SearchBar } from "@glass/components/search";
 
-// The Forms INPUT family. Textarea, select, combobox (single + multiple), and
-// label render as members of this ONE input-family page via the switcher below.
 const familyMembers: FamilyMember[] = [
     {
         id: "textarea",
@@ -32,166 +30,176 @@ const familyMembers: FamilyMember[] = [
     },
 ];
 
-// The page as data — the section stack + its controlled-state harness. Each field
-// binds through the EXPLICIT `models` map (the anti-no-op floor); the compound
-// fields (Label over Input over hint) are one `stack` frame, not three.
-const body: StoryBody = {
-    kind: "sections",
-    scope: {
-        plain: "",
-        withLabel: "",
-        errored: "not-an-email",
-        apiKey: "locked-down-xxxxxxxxxxxx",
-        searchTerm: "",
-        pillBare: "",
-    },
-    sections: [
-        {
-            heading: "Default",
-            blurb: "Bare Input, no label.",
-            size: "sm",
-            specimens: [
-                {
-                    component: Input,
-                    models: { modelValue: "plain" },
-                    props: {
-                        placeholder: "Type something…",
-                        "aria-label": "Plain text input",
-                    },
-                },
-            ],
-        },
-        {
-            heading: "With label",
-            blurb: "Label + Input, explicit for binding.",
-            size: "sm",
-            specimens: [
-                {
-                    stack: [
-                        {
-                            component: Label,
-                            props: { for: "story-email" },
-                            slots: { default: "Email" },
-                        },
-                        {
-                            component: Input,
-                            models: { modelValue: "withLabel" },
-                            props: {
-                                id: "story-email",
-                                type: "email",
-                                placeholder: "name@domain.tld",
-                            },
-                        },
-                    ],
-                },
-            ],
-        },
-        {
-            heading: "With error",
-            blurb: "Error messaging lives below the field and borrows the destructive token.",
-            size: "sm",
-            specimens: [
-                {
-                    stack: [
-                        {
-                            component: Label,
-                            props: {
-                                for: "story-email-err",
-                                class: "text-destructive",
-                            },
-                            slots: { default: "Email" },
-                        },
-                        {
-                            component: Input,
-                            models: { modelValue: "errored" },
-                            props: {
-                                id: "story-email-err",
-                                "aria-invalid": "true",
-                                "aria-describedby": "story-email-err-msg",
-                                class: "border-destructive focus:border-destructive focus:shadow-[0_0_0_2px_color-mix(in_srgb,var(--destructive)_30%,transparent)]",
-                            },
-                        },
-                        {
-                            component: "p",
-                            props: {
-                                id: "story-email-err-msg",
-                                class: "text-small text-destructive",
-                            },
-                            slots: {
-                                default:
-                                    "That doesn’t look like an email address.",
-                            },
-                        },
-                    ],
-                },
-            ],
-        },
-        {
-            heading: "Disabled",
-            blurb: "The disabled attribute dims opacity and blocks pointer events.",
-            size: "sm",
-            specimens: [
-                {
-                    stack: [
-                        {
-                            component: Label,
-                            props: {
-                                for: "story-disabled",
-                                class: "opacity-60",
-                            },
-                            slots: { default: "API key" },
-                        },
-                        {
-                            component: Input,
-                            models: { modelValue: "apiKey" },
-                            props: { id: "story-disabled", disabled: true },
-                        },
-                    ],
-                },
-            ],
-        },
-        {
-            heading: "SearchBar",
-            blurb: "SearchBar from the search subpath, icon baked in.",
-            size: "sm",
-            specimens: [
-                {
-                    component: SearchBar,
-                    models: { modelValue: "searchTerm" },
-                    props: {
-                        placeholder: "Search the catalogue…",
-                        "aria-label": "Search the catalogue",
-                    },
-                },
-            ],
-        },
-        {
-            heading: ".input-pill utility",
-            blurb: "Raw .input-pill from glass.css, no component wrapper.",
-            size: "sm",
-            specimens: [
-                {
-                    component: "input",
-                    models: { modelValue: "pillBare" },
-                    props: {
-                        class: "input-pill text-sm",
-                        placeholder: "Bare pill input…",
-                        "aria-label": "bare pill input",
-                    },
-                },
-            ],
-        },
-        {
-            heading: "The input family",
-            bespoke: {
-                component: FamilyTabs,
-                props: { members: familyMembers, ariaLabel: "Input family" },
-            },
-        },
-    ],
-};
+const plain = ref("");
+const filled = ref("Ada Lovelace");
+const required = ref("");
+const invalid = ref("not-an-email");
+const email = ref("");
+const password = ref("");
+const search = ref("");
+const telephone = ref("");
+const website = ref("");
 </script>
 
 <template>
-    <StoryPage :body="body" />
+    <StoryPage>
+        <StorySection
+            label="editing states"
+            blurb="One native input owns editing, form submission, autocomplete, and keyboard behavior; the component owns only its field material and semantic size/state attributes."
+        >
+            <div class="grid gap-4 md:grid-cols-2">
+                <ShowcaseFrame class="flex flex-col gap-3">
+                    <Label for="input-placeholder">Default · placeholder</Label>
+                    <Input
+                        id="input-placeholder"
+                        v-model="plain"
+                        autocomplete="off"
+                        placeholder="Type a project name"
+                    />
+                </ShowcaseFrame>
+
+                <ShowcaseFrame class="flex flex-col gap-3">
+                    <Label for="input-filled">Filled</Label>
+                    <Input
+                        id="input-filled"
+                        v-model="filled"
+                        autocomplete="name"
+                    />
+                </ShowcaseFrame>
+
+                <ShowcaseFrame class="flex flex-col gap-3">
+                    <Label for="input-required" requirement="required">
+                        Required workspace
+                    </Label>
+                    <Input
+                        id="input-required"
+                        v-model="required"
+                        name="workspace"
+                        required
+                        autocomplete="organization"
+                        placeholder="Studio"
+                    />
+                </ShowcaseFrame>
+
+                <ShowcaseFrame class="flex flex-col gap-3">
+                    <Label for="input-invalid">Invalid email</Label>
+                    <Input
+                        id="input-invalid"
+                        v-model="invalid"
+                        type="email"
+                        invalid
+                        aria-describedby="input-invalid-message"
+                    />
+                    <p id="input-invalid-message" class="text-small text-destructive">
+                        Enter an address such as name@example.com.
+                    </p>
+                </ShowcaseFrame>
+
+                <ShowcaseFrame class="flex flex-col gap-3">
+                    <Label for="input-readonly">Read only</Label>
+                    <Input
+                        id="input-readonly"
+                        model-value="report-2026-07"
+                        readonly
+                    />
+                </ShowcaseFrame>
+
+                <ShowcaseFrame class="flex flex-col gap-3">
+                    <Label for="input-disabled" disabled>Disabled</Label>
+                    <Input
+                        id="input-disabled"
+                        model-value="Archived workspace"
+                        disabled
+                    />
+                </ShowcaseFrame>
+            </div>
+        </StorySection>
+
+        <StorySection
+            label="native input types"
+            blurb="Type, inputmode, autocomplete, and enter-key hints pass directly to the single-line native control."
+        >
+            <div class="grid gap-4 md:grid-cols-2">
+                <ShowcaseFrame class="flex flex-col gap-3">
+                    <Label for="input-email">Email</Label>
+                    <Input
+                        id="input-email"
+                        v-model="email"
+                        type="email"
+                        inputmode="email"
+                        autocomplete="email"
+                        enterkeyhint="next"
+                        placeholder="you@example.com"
+                    />
+                </ShowcaseFrame>
+
+                <ShowcaseFrame class="flex flex-col gap-3">
+                    <Label for="input-password">Password</Label>
+                    <Input
+                        id="input-password"
+                        v-model="password"
+                        type="password"
+                        autocomplete="current-password"
+                        placeholder="Eight or more characters"
+                    />
+                </ShowcaseFrame>
+
+                <ShowcaseFrame class="flex flex-col gap-3">
+                    <Label for="input-search">Search</Label>
+                    <Input
+                        id="input-search"
+                        v-model="search"
+                        type="search"
+                        enterkeyhint="search"
+                        placeholder="Search the catalogue"
+                    />
+                </ShowcaseFrame>
+
+                <ShowcaseFrame class="flex flex-col gap-3">
+                    <Label for="input-tel">Telephone</Label>
+                    <Input
+                        id="input-tel"
+                        v-model="telephone"
+                        type="tel"
+                        inputmode="tel"
+                        autocomplete="tel"
+                        placeholder="+1 919 555 0142"
+                    />
+                </ShowcaseFrame>
+
+                <ShowcaseFrame class="flex flex-col gap-3 md:col-span-2">
+                    <Label for="input-url">Website</Label>
+                    <Input
+                        id="input-url"
+                        v-model="website"
+                        type="url"
+                        inputmode="url"
+                        autocomplete="url"
+                        placeholder="https://example.com"
+                    />
+                </ShowcaseFrame>
+            </div>
+        </StorySection>
+
+        <StorySection label="size contract">
+            <div class="grid items-end gap-4 md:grid-cols-3">
+                <ShowcaseFrame
+                    v-for="size in ['sm', 'md', 'lg'] as const"
+                    :key="size"
+                    class="flex flex-col gap-3"
+                >
+                    <Label :for="`input-${size}`">{{ size }}</Label>
+                    <Input
+                        :id="`input-${size}`"
+                        :size="size"
+                        :placeholder="`${size} field`"
+                    />
+                </ShowcaseFrame>
+            </div>
+        </StorySection>
+
+        <StorySection label="input family">
+            <FamilyTabs :members="familyMembers" aria-label="Input family" />
+        </StorySection>
+    </StoryPage>
 </template>

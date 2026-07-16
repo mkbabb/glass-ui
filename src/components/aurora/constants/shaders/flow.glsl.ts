@@ -74,24 +74,6 @@ vec2 flowField(vec2 p, float t) {
     float a = a0 + da * w * uCursorStrength;
     dir = vec2(cos(a), sin(a));
   }
-  // AW.W8.1 — velocity-reactive swirl-BURST: a fast flick (uCursorBurst, decaying
-  // over ~1s) injects a transient flow bias along the pointer velocity, distinct from
-  // the steady attraction above (the stateless swirl is SUPERSEDED by this form). The
-  // burst is gated by the master tempo scalar on the CPU side (it decays to 0 under
-  // PRM/pause), so this term cannot leak motion under reduced-motion.
-  if (uCursorBurst > 0.001) {
-    vec2 toCur = uCursor - p;
-    float d = length(toCur);
-    float r = max(uCursorRadius, 0.01);
-    float w = exp(-(d * d) / (r * r * 0.7));
-    // Bias the flow toward the velocity direction, scaled by the decaying burst.
-    vec2 velDir = uCursorVelocity / max(length(uCursorVelocity), 1e-4);
-    float a0 = atan(dir.y, dir.x);
-    float a1 = atan(velDir.y, velDir.x);
-    float da = atan(sin(a1 - a0), cos(a1 - a0));
-    float a = a0 + da * w * uCursorBurst * 0.8;
-    dir = vec2(cos(a), sin(a));
-  }
   return dir;
 }
 `;

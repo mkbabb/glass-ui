@@ -24,7 +24,7 @@ import DockLayer from "@glass/components/dock/DockLayer.vue";
  * wrapping a `<DockLayerGroup>` with two `<DockLayer>` panes. The group's
  * `active` v-model starts at "a".
  */
-async function mountRail() {
+async function mountRail(withThirdFace = false) {
     const active = ref("a");
     const Host = defineComponent({
         setup() {
@@ -43,6 +43,20 @@ async function mountRail() {
                             h(DockLayer, { id: "b", label: "Layers" }, () =>
                                 h("button", { class: "pane-b-btn" }, "in-b"),
                             ),
+                            ...(withThirdFace
+                                ? [
+                                      h(
+                                          DockLayer,
+                                          { id: "c", label: "Libraries" },
+                                          () =>
+                                              h(
+                                                  "button",
+                                                  { class: "pane-c-btn" },
+                                                  "in-c",
+                                              ),
+                                      ),
+                                  ]
+                                : []),
                         ],
                     ),
                 ]);
@@ -73,6 +87,34 @@ describe("AU.W8.4 — dock rail a11y contract (APG tabs)", () => {
         const tabs = wrapper.findAll('[role="tab"]');
         expect(tabs).toHaveLength(2);
         for (const t of tabs) expect(t.classes()).toContain("dock-layer-tab");
+    });
+
+    it("inherits a vertical dock as a horizontal switcher rail", async () => {
+        const active = ref("a");
+        const wrapper = mount(defineComponent({
+            setup: () => () =>
+                h(GlassDock, { orientation: "vertical" }, () =>
+                    h(
+                        DockLayerGroup,
+                        {
+                            active: active.value,
+                            "onUpdate:active": (value: string) =>
+                                (active.value = value),
+                        },
+                        () => [
+                            h(DockLayer, { id: "a", label: "A" }, () => "A"),
+                            h(DockLayer, { id: "b", label: "B" }, () => "B"),
+                        ],
+                    ),
+                ),
+        }));
+        await nextTick();
+        await nextTick();
+
+        expect(wrapper.get(".dock-layer-group").classes()).toContain("vertical");
+        expect(wrapper.get('[role="tablist"]').attributes("aria-orientation")).toBe(
+            "horizontal",
+        );
     });
 
     it("2. SELECTED-NOT-PRESSED — aria-selected on the active tab; NO aria-pressed anywhere", async () => {
@@ -181,6 +223,77 @@ describe("AU.W8.4 — dock rail a11y contract (APG tabs)", () => {
         expect(indicator.exists()).toBe(true);
         expect(indicator.attributes("style")).toBeDefined();
         expect(indicator.attributes("aria-hidden")).toBe("true");
+    });
+
+    it("keeps entering and leaving faces co-present until the spring settles", async () => {
+        const { wrapper, active } = await mountRail();
+
+        active.value = "b";
+        await nextTick();
+        await nextTick();
+
+        const crossfade = wrapper.get(".dock-crossfade");
+        const entering = wrapper
+            .get(".pane-b-btn")
+            .element.closest<HTMLElement>(".dock-face")!;
+        const leaving = wrapper
+            .get(".pane-a-btn")
+            .element.closest<HTMLElement>(".dock-face")!;
+
+        expect(crossfade.attributes("data-crossfading")).toBe("");
+        expect(entering.classList).toContain("is-active");
+        expect(entering.hasAttribute("inert")).toBe(false);
+        expect(leaving.classList).toContain("is-leaving");
+        expect(leaving.hasAttribute("inert")).toBe(true);
+
+        await vi.advanceTimersByTimeAsync(24);
+        const progress = Number.parseFloat(
+            entering.style.getPropertyValue("--dock-t"),
+        );
+        expect(progress).toBeGreaterThan(0);
+        expect(progress).toBeLessThan(1);
+        expect(leaving.style.getPropertyValue("--dock-t")).toBe(
+            entering.style.getPropertyValue("--dock-t"),
+        );
+
+        await vi.advanceTimersByTimeAsync(1200);
+        expect(crossfade.attributes("data-crossfading")).toBeUndefined();
+        expect(wrapper.find(".dock-face.is-leaving").exists()).toBe(false);
+        expect(entering.style.getPropertyValue("--dock-t")).toBe("");
+        expect(leaving.style.getPropertyValue("--dock-t")).toBe("");
+        wrapper.unmount();
+    });
+
+    it("preserves the partially entered face across a distinct third switch", async () => {
+        const { wrapper, active } = await mountRail(true);
+
+        active.value = "b";
+        await nextTick();
+        await vi.advanceTimersByTimeAsync(24);
+        const paneB = wrapper
+            .get(".pane-b-btn")
+            .element.closest<HTMLElement>(".dock-face")!;
+        const before = Number.parseFloat(paneB.style.getPropertyValue("--dock-t"));
+        expect(before).toBeGreaterThan(0);
+        expect(before).toBeLessThan(1);
+
+        active.value = "c";
+        await nextTick();
+        const paneC = wrapper
+            .get(".pane-c-btn")
+            .element.closest<HTMLElement>(".dock-face")!;
+        const leavingT = Number.parseFloat(
+            paneB.style.getPropertyValue("--dock-t"),
+        );
+
+        expect(paneB.classList).toContain("is-leaving");
+        expect(paneC.classList).toContain("is-active");
+        expect(1 - leavingT).toBeCloseTo(before, 8);
+        expect(paneC.style.getPropertyValue("--dock-t")).toBe("0");
+
+        await vi.advanceTimersByTimeAsync(1200);
+        expect(wrapper.find(".dock-face.is-leaving").exists()).toBe(false);
+        wrapper.unmount();
     });
 
     /* BI.W-DOCK-CROSSFADE — the focus-transfer-on-dissolve assert (X4). The post-swap

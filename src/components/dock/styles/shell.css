@@ -16,7 +16,7 @@
     .glass-dock {
         /* BG.W-GLASS-BLUR-PEER — the dock's backdrop re-points onto the SHARED
            `--glass-blur-resting` (the unified 8px material), so the dock reads the
-           SAME `blur(8px)` RADIUS LEG as the glass button (`.btn-glass`), the
+           SAME `blur(8px)` radius leg as the ordinary `.button`, the
            default-Card, and the menu-row — ONE liquid-glass material (the
            resolved-radius peer lock, proof:glass-cal). `--glass-blur-resting`
            carries a `saturate()` companion (it concentrates light like every
@@ -97,12 +97,12 @@
            card radius + tile size ride the density cascade, never magic numbers. */
         --dock-card-radius: var(--radius-dock-card);
         --dock-tile-min: 4.5rem;
-        /* Individual-transform identity base (AQ.W3 §W3.2). `scale: 1` at rest
-           mints the stacking context once so a portaled popover over `--z-dock`
-           stays above the dock during a hover scale (the load-bearing
-           stacking-context guarantee). Covers every dock scale site. */
-        scale: 1;
         position: relative;
+        /* The explicit local stack contains the L0 plate's negative z-index without
+           leaving the backdrop plate under an identity transform at rest. Morph and
+           collapsed-hover scales arm only on their state selectors; fixed/sticky dock
+           helpers below raise this same stack onto `--z-dock`. */
+        z-index: 0;
         /* AZ.W-ADAPTIVE-AUTO Arm 1 — the dock self-darkens over light backdrops by
            default via the UNCONDITIONAL `:where(.glass-dock)` self-engage rule in
            dock/morph.css (mirroring the overlay band's `ladder.css:169`): it re-points
@@ -376,6 +376,12 @@
             box-shadow var(--dock-motion-standard),
             transform var(--dock-motion-resize),
             scale var(--dock-motion-resize);
+    }
+
+    /* The morph writes `scale` from the dock spring every frame; do not re-ease that
+       value through the vertical rail's separate at-rest hover transition. */
+    .glass-dock.vertical[data-morphing] {
+        transition-property: box-shadow, transform;
     }
 
     /* BC.W-DOCK-ENGINE move 2 — the rail polish transition is COMPOSITOR-PROMOTED

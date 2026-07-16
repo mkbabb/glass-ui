@@ -1,0 +1,70 @@
+.expandable-container {
+    position: relative;
+}
+
+.expandable-container[data-state="expanded"] {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-modal);
+    display: flex;
+    flex-direction: column;
+}
+
+.expandable-container__chrome {
+    display: contents;
+}
+
+.expandable-container__chrome[hidden] {
+    display: none;
+}
+
+.expandable-container [data-part="trigger"] {
+    position: absolute;
+    inset-block-start: 0.5rem;
+    z-index: 1;
+    display: inline-grid;
+    min-inline-size: var(--control-h-md);
+    min-block-size: var(--control-h-md);
+    place-items: center;
+    border: 1px solid color-mix(in srgb, var(--border) 40%, transparent);
+    border-radius: var(--radius-button);
+    background: color-mix(in srgb, var(--card) 70%, transparent);
+    color: var(--muted-foreground);
+    box-shadow: var(--shadow-sm);
+    backdrop-filter: var(--glass-blur-wash);
+    transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.expandable-container [data-part="trigger"][data-position="left"] {
+    inset-inline-start: 0.5rem;
+}
+
+.expandable-container [data-part="trigger"][data-position="right"] {
+    inset-inline-end: 0.5rem;
+}
+
+.expandable-container [data-part="trigger"]:hover {
+    color: var(--foreground);
+}
+
+.expandable-container [data-part="trigger"]:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: 2px;
+}
+
+.expandable-container[data-state="expanded"] [data-part="panel"] {
+    min-block-size: 0;
+    inline-size: 100%;
+    block-size: 100%;
+}
+
+.expandable-container__icon {
+    inline-size: var(--icon-sm);
+    block-size: var(--icon-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .expandable-container [data-part="trigger"] {
+        transition: none;
+    }
+}

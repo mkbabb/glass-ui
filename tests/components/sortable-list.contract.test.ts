@@ -59,6 +59,11 @@ describe("SortableList transaction contract", () => {
         expect(wrapper.findAll("button")).toHaveLength(3);
         expect(wrapper.get('[data-sortable-id="a"] button').attributes("aria-label"))
             .toBe("Reorder Alpha");
+        expect(
+            wrapper
+                .get('[data-sortable-id="a"] button')
+                .attributes("data-control-target"),
+        ).toBe("");
         expect(wrapper.get('[data-sortable-id="b"] button').attributes("disabled"))
             .toBeDefined();
         expect(wrapper.get("[aria-live]").attributes("aria-live")).toBe("polite");

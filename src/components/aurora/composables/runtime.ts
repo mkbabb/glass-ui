@@ -1,22 +1,17 @@
 /**
- * Aurora v4.1 runtime — the GL-lifecycle orchestrator over the `useWebGLCanvas`
- * substrate (AU.W6, the DEC-AT-1 transposition).
+ * Aurora runtime over the shared WebGPU/WebGL2 substrate.
  *
  * This module composes four cohesive seams atop the substrate:
- *   - glSetup       — compile/link + geometry + the uniform location cache
- *   - uniformBridge — the reactive-config → GL-uniform translation + enum dispatch
+ *   - engine setup  — WebGPU or WebGL2 program resources
+ *   - uniform bridges — reactive config translated to the selected engine
  *   - pointerField  — the shared `usePointerVelocityField` (the retired cursorModel's
  *                     successor, BI.W-FIELD-CORE): the mass-spring attractor + engagement
  *                     the `auroraCursorMapping` projects onto the `uCursor*` uniforms
  *   - frameLoop     — the per-frame draw + the render-demand gate
  *
- * It owns ONLY the aurora-specific glue: threading the seams through the
- * substrate's `setup`/`frame`/`shouldContinue`/`resize`/`time`/`teardown`
- * callbacks, the reduced-motion frozen-t, the DPR policy, and the imperative
- * setters/pause/resume. The generic WebGL2 lifecycle — context creation, the
- * three-reason suspend/resume model, the demand-driven rAF loop, the tab-visibility
- * owner, the ResizeObserver, and the webglcontextlost/restored robustness — lives
- * in the substrate.
+ * It owns only Aurora-specific configuration, pointer state, frame work, and
+ * imperative controls. Context/device acquisition, resize, suspension, reduced
+ * motion, visibility, scheduling, recovery, and disposal belong to the substrate.
  *
  * Y-origin convention: config authoring is CSS-top-origin (0 = top). The seams
  * flip Y at the uniform boundary (`flipY` in uniformBridge/frameLoop).
@@ -32,7 +27,7 @@ import {
     type BackingSize,
     type RendererStatus,
 } from "../../../composables/glass/webgpu/useGpuSubstrate";
-import { cssRenderer } from "../../../composables/glass/webgpu/rendererStatus";
+import { rendererFailure } from "../../../composables/glass/webgpu/rendererStatus";
 import { isSoftwareWebGLRenderer } from "../constants/renderMode";
 import type { AuroraConfig, AuroraInstance } from "../constants/presets";
 import { createGlProgram } from "./glSetup";
@@ -44,30 +39,34 @@ import { usePointerVelocityField } from "../../../composables/motion/usePointerV
 export type AuroraRuntimeMode = "live" | "capture";
 
 /**
- * The three independent reasons the rAF loop may be suspended. Owned by the
- * `useWebGLCanvas` substrate as a `Set<reason>`: the loop runs IFF the set is
+ * The three independent reasons the frame loop may be suspended. Owned by the
+ * shared lifecycle as a `Set<reason>`: the loop runs IFF the set is
  * empty and each reason is cleared ONLY by the source that set it. This makes
  * resume-while-still-suspended structurally unreachable — a `resume("tab-hidden")`
  * cannot lift an `"off-screen"` suspension.
  *
  * - `"tab-hidden"` — the substrate's `document.visibilitychange` owner.
- * - `"off-screen"` — viewport-intersection, driven by `useIntersectionPause`.
+ * - `"off-screen"` — the shared content-visibility owner.
+ * - `"off-screen-io"` — the deferred pre-arm intersection owner.
  * - `"manual"` — the public `pause()`/`resume()` API (and capture-mode seed).
  */
-export type SuspendReason = "tab-hidden" | "off-screen" | "manual";
+export type SuspendReason =
+    | "tab-hidden"
+    | "off-screen"
+    | "off-screen-io"
+    | "manual";
 
 /**
- * When the expensive WebGL path (context creation, shader compile + GPU link,
- * first uniform upload, rAF arm) actually runs.
+ * When expensive GPU initialization actually runs.
  *
  * - `"deferred"` (default) — `createAurora` constructs a cheap, un-armed instance
- *   and returns immediately; the GL work is invoked later via `instance.arm()`.
- *   The Vue wrapper `useAurora` schedules `arm()` past first paint on an idle
+ *   and returns immediately; GPU work is invoked later via `instance.armAsync()`.
+ *   The Vue wrapper `useAurora` schedules that acquisition past first paint on an idle
  *   tick, gated on canvas visibility — so the shader compile-link never lands on
  *   the consumer's first-paint critical path.
- * - `"eager"` — `createAurora` arms synchronously before returning. Capture /
- *   thumbnail-baking consumers need this: `renderAt` must draw a real frame the
- *   instant `createAurora` returns. `mode: "capture"` forces eager regardless.
+ * - `"eager"` — acquisition starts immediately. Capture / thumbnail-baking
+ *   consumers then await `armAsync()` before `renderAt`. `mode: "capture"`
+ *   forces eager regardless.
  */
 export type AuroraInitStrategy = "eager" | "deferred";
 
@@ -75,41 +74,28 @@ export interface AuroraRuntimeOptions {
     mode?: AuroraRuntimeMode;
     preserveDrawingBuffer?: boolean;
     /**
-     * When to run the expensive WebGL init. Defaults to `"deferred"`.
+     * When to run expensive GPU initialization. Defaults to `"deferred"`.
      * `mode: "capture"` forces `"eager"` (a capture runtime must be able to
      * `renderAt` synchronously). See {@link AuroraInitStrategy}.
      */
     initStrategy?: AuroraInitStrategy;
     /**
-     * Init-failure handler. A WebGL2/shader-compile/link failure is a
-     * library-internal contract violation (O invariant 24). On the EAGER path
-     * `createAurora` throws synchronously and `useAurora` rethrows by default so
-     * the signal reaches the consumer's error boundary / dev console. On the
-     * DEFERRED path the failure happens on an idle tick — outside any mount-time
-     * boundary — so the runtime routes it here, and `useAurora` re-surfaces it on
-     * the microtask queue (so it still reaches the dev console) when no handler
-     * is supplied. `Aurora.vue` adapts its Vue `app.config.errorHandler` into
-     * this callback; direct composable consumers provide their own handler.
+     * Optional attributed init-failure callback. Runtime status remains the
+     * always-available failure surface; `Aurora.vue` additionally adapts Vue's
+     * app error handler here when installed. `armAsync()` rejects so imperative
+     * consumers can own failure directly.
      *
-     * NOTE: this is the `useAurora` Vue-wrapper contract surface. The imperative
-     * `createAurora(...)` runtime throws on eager init failure and — for
-     * `instance.arm()` on the deferred path — rethrows from `arm()`.
-     *
-     * BB.W-AURORA-SWRASTER — a SOFTWARE-RASTER fall is NOT a contract violation:
-     * it never reaches `onInitError`. The wedge catch (see {@link createAurora})
-     * recognizes the software-raster signal at arm time, leaves the canvas
-     * un-armed (the placeholder stays the surface), and returns CLEANLY — so a
-     * consumer who pins `mode:"capture"`/`mode:"webgl"` under SwiftShader never
-     * has to wire `onInitError` to avoid the hang. The handler is preserved for
-     * GENUINE violations (a malformed shader, an OOM, a real link failure).
+     * A direct runtime that cannot animate under software rasterization reports
+     * that capability failure here and rejects `armAsync()`. `Aurora.vue` resolves
+     * the same host to its explicit CSS surface before constructing the runtime.
      */
     onInitError?: (err: Error) => void;
     onRendererStatus?: (status: RendererStatus) => void;
     /**
      * BB.W-AURORA-SWRASTER — opt OUT of the runtime software-raster wedge catch.
-     * Default `false`: the wedge catch is the safe default — `createAurora`
-     * recognizes a software renderer at arm time and falls cleanly to the
-     * placeholder rather than arming the page-wedging live GL layer. `true` (the
+     * Default `false`: `createAurora` recognizes a software renderer and surfaces
+     * an attributed unavailable error rather than arming the page-wedging live GL
+     * layer. `true` (the
      * named, recorded escape for a deterministic test that ACCEPTS the cost)
      * arms WebGL even under a detected software renderer. Mirrors the
      * `resolveRenderMode` escape of the same name — ONE consumer-facing flag,
@@ -152,6 +138,23 @@ function shouldPreserveDrawingBuffer(options: AuroraRuntimeOptions): boolean {
 }
 
 /**
+ * The canvas-present contract is mode-owned, not engine-owned. A live Aurora covers its
+ * stage, so both GPU backends present an opaque drawing buffer and the public pigment alpha
+ * is applied once by CSS over the palette ground. Capture keeps the historical transparent,
+ * premultiplied buffer so readback bytes retain their authored alpha.
+ */
+export function resolveAuroraPresentation(mode: AuroraRuntimeMode = "live") {
+    const opaque = mode !== "capture";
+    return {
+        opaque,
+        alphaMode: opaque ? "opaque" : "premultiplied",
+        contextAlpha: !opaque,
+    } as const;
+}
+
+const clampAlpha = (alpha: number): number => Math.min(1, Math.max(0, alpha));
+
+/**
  * The concrete `createAurora` return shape. It IS an {@link AuroraInstance}
  * (structurally assignable — every member matches) but widens `pause`/`resume` to
  * carry an optional {@link SuspendReason}, defaulting to `"manual"`. The Vue
@@ -173,8 +176,32 @@ export interface AuroraRuntime extends Omit<AuroraInstance, "pause" | "resume"> 
      * the WebGL2 fallback resolves immediately. Idempotent + safe post-dispose.
      */
     armAsync(): Promise<void>;
+    /** Drive the opt-in scroll-linked palette/breath phase in normalized 0..1 space. */
+    setScrollProgress(progress: number): void;
     /** AW.W8.1 — the live reduced-motion state (the cursor listener early-outs on it). */
     readonly reducedMotion: boolean;
+}
+
+/** One medium-aware predicate shared by pointer writes and uniform projection. */
+export function isAuroraPointerEnabled(config: AuroraConfig): boolean {
+    return (
+        config.interactivity?.swirl === true ||
+        (config.medium !== "smooth" && config.interactivity?.light === true)
+    );
+}
+
+const REDUCED_MOTION_TIME = 3.7;
+
+/** One shader-time projection shared by the WebGPU and WebGL2 bridges. */
+export function resolveAuroraRenderTime(
+    config: AuroraConfig,
+    elapsedSec: number,
+    progress: number,
+    reducedMotion: boolean,
+): number {
+    if (reducedMotion) return REDUCED_MOTION_TIME;
+    if (config.interactivity?.scroll !== true) return elapsedSec;
+    return elapsedSec + Math.min(1, Math.max(0, progress)) * config.breathPeriod;
 }
 
 export function createAurora(
@@ -183,6 +210,13 @@ export function createAurora(
     options: AuroraRuntimeOptions = {},
 ): AuroraRuntime {
     const preserveDrawingBuffer = shouldPreserveDrawingBuffer(options);
+    const presentation = resolveAuroraPresentation(options.mode);
+    const initialCanvasOpacity = canvas.style.opacity;
+
+    const syncPresentationAlpha = (alpha: number): void => {
+        if (presentation.opaque) canvas.style.opacity = String(clampAlpha(alpha));
+    };
+    syncPresentationAlpha(initial.alpha);
 
     // BB.W-AURORA-SWRASTER — THE WEDGE CATCH (the guard's second leg). A consumer
     // that bypasses `resolveRenderMode` (a direct `createAurora(canvas, cfg,
@@ -190,11 +224,10 @@ export function createAurora(
     // un-probed. We re-run the SAME software-raster predicate here (ONE detector,
     // shared from renderMode.ts — no second `getContext("webgl2")` is minted; this
     // composes the substrate's single probe): when a software renderer is detected
-    // AND the escape is OFF, we NEVER create the WebGL canvas. The runtime returns
-    // inert handles — the placeholder stays the surface, `renderAt`/`arm` are
-    // no-ops — so the page never wedges and `onInitError` is NOT fired (a
-    // software-raster fall is a recognized substrate decision, not a contract
-    // violation). The `forceWebGLUnderSoftwareRaster` escape opts back in.
+    // AND the escape is OFF, we NEVER create the WebGL canvas. The component owns
+    // an explicit CSS render mode; direct runtime callers instead receive an
+    // attributed failure and a rejecting `armAsync()` — never a fake-ready blank
+    // canvas. The `forceWebGLUnderSoftwareRaster` escape opts back in.
     const wedgeBlocked =
         !options.forceWebGLUnderSoftwareRaster && isSoftwareWebGLRenderer();
 
@@ -204,20 +237,19 @@ export function createAurora(
     // (via `setConfig`); until then the imperative setters mutate them harmlessly
     // and `setup` picks up the latest values.
     let config: AuroraConfig = initial;
+    let scrollProgress = 0;
     // AV.W7 G1 — the reduced-motion freeze is LIFTED into the `useWebGLCanvas`
     // substrate, which now OWNS + LIVE-MONITORS the query (a `matchMedia` `change`
     // listener that re-arms one static frame on un-reduce). Aurora reads the
     // substrate's live `reducedMotion` getter instead of an init-once local —
     // toggling reduced-motion at runtime now freezes/wakes without the duplicate
     // consumer-side listener `useAurora` used to install.
-    const frozenOffset = 3.7;
-
     // BI.W-FIELD-CORE — the shared viz-pointer-physics field IS the cursor now (the retired
     // `cursorModel.ts` is GONE). A light responsive tuning (the cursor should track snappily,
     // not lag like the heavy blob): the mass-spring attractor is the cursor position, the
     // engagement envelope drives the attraction strength (so the cursor-local luminance lean
-    // reads on the `smooth` medium — the T-38 dead-swirl-axis fix), the velocity + burst pass
-    // onto the `uCursor*` uniforms. The field owns NO own rAF — it is FED `tick(deltaMs)` from
+    // reads on the `smooth` medium — the T-38 dead-swirl-axis fix), while burst and the named
+    // amplitude fold into that same strength before either engine sees it. The field owns NO own rAF — it is FED `tick(deltaMs)` from
     // inside the EXISTING createCanvasLifecycle frame callback (the one-loop / offscreen-pause
     // discipline), and FREEZES under PRM (tick(0)). The pointer POSITION write is event-driven
     // (`setCursor` → `setPointer`, PRM-gated inside the field); velocity/accel are DERIVED in
@@ -233,10 +265,17 @@ export function createAurora(
     // engagement envelope scales the ceiling; the field-mapped strength = engagement·ceil.
     let cursorStrengthCeil = 0.8;
     let cursorRadius = 0.25;
-    const getCursorScalars = (): AuroraCursorScalars => ({
-        strength: cursorStrengthCeil,
-        radius: cursorRadius,
-    });
+    const getCursorScalars = (): AuroraCursorScalars => {
+        const interactivity = config.interactivity;
+        const enabled = isAuroraPointerEnabled(config);
+        return {
+            strength: enabled ? cursorStrengthCeil : 0,
+            radius: cursorRadius,
+            amplitude: enabled
+                ? Math.min(1, Math.max(0, interactivity?.amplitude ?? 0.5))
+                : 0,
+        };
+    };
 
     // `setConfig` is (re)assigned by `setup(gl)`; before the first arm (and across
     // a context-loss/restore window) it is null and `update()` only stashes
@@ -257,19 +296,32 @@ export function createAurora(
     type CanvasHandle = {
         arm: () => void;
         armAsync?: () => Promise<void>;
-        suspend: (reason?: "tab-hidden" | "off-screen" | "manual") => void;
-        resume: (reason?: "tab-hidden" | "off-screen" | "manual") => void;
+        suspend: (reason?: SuspendReason) => void;
+        resume: (reason?: SuspendReason) => void;
         wake: () => void;
         renderAt: (timeSec: number) => void;
         dispose: () => void;
         readonly reducedMotion: boolean;
     };
 
-    // The inert handle the wedge catch returns under a software renderer: every
-    // member is a no-op, so the placeholder stays the surface and the page never
-    // arms a software-rastered GL layer (BB.W-AURORA-SWRASTER).
-    const inertHandle: CanvasHandle = {
-        arm: () => {},
+    const unavailableError = wedgeBlocked
+        ? new Error("[Aurora] GPU animation is unavailable under software rasterization")
+        : null;
+    let unavailableReported = false;
+    function reportUnavailable(): void {
+        if (!unavailableError || unavailableReported) return;
+        unavailableReported = true;
+        options.onInitError?.(unavailableError);
+    }
+
+    // Direct runtime callers have no placeholder owner. Preserve the cheap handle
+    // shape, but make readiness fail explicitly instead of resolving a blank canvas.
+    const unavailableHandle: CanvasHandle = {
+        arm: reportUnavailable,
+        armAsync: () => {
+            reportUnavailable();
+            return Promise.reject(unavailableError);
+        },
         suspend: () => {},
         resume: () => {},
         wake: () => {},
@@ -279,9 +331,10 @@ export function createAurora(
     };
 
     const canvasHandle: CanvasHandle = wedgeBlocked
-        ? inertHandle
+        ? unavailableHandle
         : createGpuSubstrate(canvas, {
         mode: options.mode === "capture" ? "capture" : "live",
+        alphaMode: presentation.alphaMode,
         // BG.W-VIZ-RESIZE-ADOPT — the leaf owns backing-store measurement + sizing
         // (round(gBCR × dprPolicy)); every viz `resize` is upload-only.
         dprPolicy: resolveAuroraWashDpr,
@@ -293,8 +346,8 @@ export function createAurora(
         revealBloom: options.revealBloom ?? false,
         contextAttrs: {
             antialias: false,
-            alpha: true,
-            premultipliedAlpha: true,
+            alpha: presentation.contextAlpha,
+            premultipliedAlpha: presentation.contextAlpha,
             // Live canvases default false; capture/thumbnail runtimes opt in for
             // readPixels/toDataURL after a deterministic renderAt() draw.
             preserveDrawingBuffer,
@@ -306,9 +359,17 @@ export function createAurora(
         // byte-untouched WebGL2 fallback.
         setupWGPU: createAuroraWGPUSetup({
             canvas,
+            opaquePresentation: presentation.opaque,
             getCursorScalars,
             getConfig: () => config,
             getReducedMotion: () => canvasHandle.reducedMotion,
+            getRenderTime: (elapsedSec) =>
+                resolveAuroraRenderTime(
+                    config,
+                    elapsedSec,
+                    scrollProgress,
+                    canvasHandle.reducedMotion,
+                ),
             // BI.W-FIELD-CORE — the shared pointer field, FED tick() from the WGPU frame
             // callback (the SAME field instance the WebGL2 loop feeds — one source).
             pointerField,
@@ -351,7 +412,12 @@ export function createAurora(
                 gl.useProgram(prog);
             }
 
-            const uploadConfig = createUniformBridge(gl, prog, uniforms);
+            const uploadConfig = createUniformBridge(
+                gl,
+                prog,
+                uniforms,
+                presentation.opaque,
+            );
             const loop = createFrameLoop({
                 gl,
                 prog,
@@ -363,13 +429,25 @@ export function createAurora(
                 getConfig: () => config,
                 // Read the substrate's live reduced-motion state (G1).
                 getReducedMotion: () => canvasHandle.reducedMotion,
+                getRenderTime: (elapsedSec) =>
+                    resolveAuroraRenderTime(
+                        config,
+                        elapsedSec,
+                        scrollProgress,
+                        canvasHandle.reducedMotion,
+                    ),
             });
 
-            // GL state setup — clear-to-transparent, premultiplied-alpha blend.
-            gl.clearColor(0, 0, 0, 0);
+            // Live presentation owns a fully opaque drawing buffer; capture retains the
+            // transparent premultiplied buffer its readback contract requires.
+            gl.clearColor(0, 0, 0, presentation.opaque ? 1 : 0);
             gl.disable(gl.DEPTH_TEST);
-            gl.enable(gl.BLEND);
-            gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+            if (presentation.opaque) {
+                gl.disable(gl.BLEND);
+            } else {
+                gl.enable(gl.BLEND);
+                gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+            }
 
             // Upload the latest config into the fresh program. Publish the uploader
             // so the imperative `update()` can re-upload post-arm.
@@ -388,11 +466,6 @@ export function createAurora(
                 frame: loop.frame,
                 shouldContinue: loop.needsAnimation,
                 resize,
-                // reduced-motion freezes time at the authored offset; otherwise
-                // pass the substrate's elapsed seconds straight through. The
-                // substrate owns + live-monitors the PRM state (G1).
-                time: (elapsedSec) =>
-                    canvasHandle.reducedMotion ? frozenOffset : elapsedSec,
                 teardown: () => {
                     gl.deleteProgram(prog);
                     gl.deleteShader(vs);
@@ -410,9 +483,14 @@ export function createAurora(
         onStatus: options.onRendererStatus,
     });
 
-    if (wedgeBlocked) options.onRendererStatus?.(cssRenderer());
+    if (unavailableError) {
+        options.onRendererStatus?.(
+            rendererFailure("webgl2", "Software renderer", unavailableError),
+        );
+    }
 
     function setCursor(x: number, y: number, strength: number = 0.8) {
+        if (!isAuroraPointerEnabled(config)) return;
         cursorStrengthCeil = strength;
         // BI.W-FIELD-CORE — feed the shared field the RAW pointer target ONCE (the POSITION
         // write the velocity/acceleration/attractor all derive from; PRM-gated INSIDE
@@ -436,39 +514,30 @@ export function createAurora(
         // drawn (the loop re-parks immediately if the cursor is at rest).
         canvasHandle.wake();
     }
-    function setReducedMotion(_flag: boolean) {
-        // AV.W7 G1 — the reduced-motion state is now OWNED + live-monitored by the
-        // substrate (it installs the `matchMedia` `change` listener and re-arms one
-        // static frame on un-reduce). This setter is retained only as a public
-        // wake() nudge for a consumer that mutates the OS query in a test harness;
-        // the substrate's own listener is the source of truth.
-        canvasHandle.wake();
+    function setScrollProgress(progress: number) {
+        const next = Math.min(1, Math.max(0, progress));
+        if (next === scrollProgress) return;
+        scrollProgress = next;
+        if (config.interactivity?.scroll === true && !canvasHandle.reducedMotion) {
+            canvasHandle.wake();
+        }
     }
-
-    // The expensive path runs now (eager / capture) or is invoked later by the
-    // consumer (`useAurora` schedules it past first paint). Capture mode already
-    // armed inside the substrate; the eager-live path arms here. On either eager
-    // path a WebGL2/compile/link failure throws straight out of `createAurora`,
-    // exactly as a pre-lazy-arm runtime did (O invariant 24); the deferred path
-    // throws from `arm()`.
+    // The expensive path starts now (eager / capture) or later through the
+    // consumer (`useAurora` schedules it past first paint). The actual ready /
+    // failure boundary is the idempotent `armAsync()` promise below.
     //
-    // BB.W-AURORA-SWRASTER — under the wedge catch `canvasHandle` is the inert
-    // handle, so this `arm()` (and the returned `arm`/`renderAt`) are no-ops: the
-    // eager / capture path falls cleanly to the placeholder, never the hang, and
-    // never a thrown `onInitError` (a software-raster fall is not a violation).
+    // Under the software-raster catch, `armAsync()` rejects the attributed
+    // capability error and the callback is notified once. No fake-ready blank
+    // canvas can pass this boundary.
     // BB.W-VIZ-SUITE (W-AURORA-WGPU) — the arm seam is now backend-aware. The WebGPU
-    // path needs the async device-acquire (`armAsync`); the WebGL2 fallback arms
-    // synchronously off `arm()`. `armRuntime()` calls `armAsync` when the picker
-    // exposes it (the WebGPU backend) and routes a device-init failure to
-    // `onInitError` (or rethrows on the microtask queue via the default the Vue
-    // wrapper installs); otherwise the synchronous `arm()`.
+    // path needs the async device-acquire (`armAsync`); the same promise also
+    // covers the synchronous WebGL2 fallback and carries its attributed failure.
     function armRuntime(): void {
         if (canvasHandle.armAsync) {
-            void canvasHandle.armAsync().catch((err: unknown) => {
-                options.onInitError?.(
-                    err instanceof Error ? err : new Error(String(err)),
-                );
-            });
+            // The substrate owns status + the installed failure callback. The eager
+            // starter consumes the rejection; imperative callers use `armAsync()` to
+            // observe it directly without a duplicate notification.
+            void canvasHandle.armAsync().catch(() => undefined);
         } else {
             canvasHandle.arm();
         }
@@ -478,8 +547,7 @@ export function createAurora(
     // awaits THIS before the first `renderAt` so the WebGPU device is present (a
     // synchronous `renderAt` right after `createAurora(…,{mode:"capture"})` paints
     // a BLANK frame — the dead-preview defect). The WebGL2 fallback resolves
-    // immediately; the inert (software-raster wedge) handle resolves immediately
-    // too (a no-op renderAt is the placeholder, never a hang).
+    // immediately; the software-raster handle rejects explicitly.
     function armRuntimeAsync(): Promise<void> {
         if (canvasHandle.armAsync) return canvasHandle.armAsync();
         canvasHandle.arm();
@@ -501,6 +569,10 @@ export function createAurora(
             // Post-arm: upload immediately. Either way the next drawn frame is
             // correct.
             config = cfg;
+            syncPresentationAlpha(cfg.alpha);
+            if (!isAuroraPointerEnabled(cfg)) {
+                pointerField.setActive(false);
+            }
             setConfig?.(cfg);
             imageCoord.ensureDecoded(cfg); // BG.W-AUR-IMAGE-SOURCE — a `src` swap re-decodes
             // A config change may raise a drift uniform (slider drag) — re-arm a
@@ -511,7 +583,7 @@ export function createAurora(
         setCursor,
         clearCursor,
         setCursorRadius,
-        setReducedMotion,
+        setScrollProgress,
         // BI.W-FIELD-CORE — the live reduced-motion read (the cursor pointermove listener
         // early-outs on it; the field's setPointer is PRM-gated too).
         get reducedMotion() {
@@ -524,6 +596,9 @@ export function createAurora(
         pause: (reason: SuspendReason = "manual") => canvasHandle.suspend(reason),
         resume: (reason: SuspendReason = "manual") => canvasHandle.resume(reason),
         renderAt: (t) => canvasHandle.renderAt(t),
-        dispose: () => canvasHandle.dispose(),
+        dispose: () => {
+            canvasHandle.dispose();
+            if (presentation.opaque) canvas.style.opacity = initialCanvasOpacity;
+        },
     };
 }

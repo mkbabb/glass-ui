@@ -135,6 +135,12 @@ export interface DockProps {
      */
     containerName?: string;
     /**
+     * Opt this dock into a consumer-owned shared-element View Transition. Leave
+     * unset for ordinary route transitions so the dock remains in the root
+     * snapshot rather than becoming a separate backdrop-filter snapshot.
+     */
+    viewTransitionName?: string;
+    /**
      * Idle-collapse delay in ms (default 2000). Inert on an always-expanded dock.
      */
     collapseDelay?: number;

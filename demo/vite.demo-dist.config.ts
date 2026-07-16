@@ -2,6 +2,7 @@ import { resolve } from "node:path";
 import tailwindcss from "@tailwindcss/vite";
 import vue from "@vitejs/plugin-vue";
 import { defineConfig } from "vite";
+import { glassCssTarget } from "../vite.targets";
 
 // The paint-judge demo-dist build. This config builds the demo as a static SPA
 // so the paint-judge can serve BUILT bytes (`vite preview`) instead of the dev
@@ -37,6 +38,7 @@ export default defineConfig({
     },
     plugins: [tailwindcss(), vue()],
     build: {
+        cssTarget: glassCssTarget,
         // A dedicated output dir — NEVER the library `dist/` (which the
         // published package + the d.ts emit own).
         outDir: resolve(repoRoot, "dist-demo"),

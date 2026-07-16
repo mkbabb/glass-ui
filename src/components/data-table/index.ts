@@ -4,5 +4,7 @@ export type {
     DataTableSort,
     DataTableProps,
     DataTableRowAttrs,
+    DataTableRowIndex,
     DataTableRowRef,
+    DataTableStatus,
 } from "./types";

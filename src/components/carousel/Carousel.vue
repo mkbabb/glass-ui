@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import type { CarouselEmits, CarouselProps, WithClassAsProps } from './interface'
 import type { UnwrapRefCarouselApi } from './interface'
-import { watch } from 'vue'
+import { computed, watch } from 'vue'
 import { cn } from '../_shared/class-names'
 import { useProvideCarousel } from './useCarousel'
 
 const props = withDefaults(defineProps<CarouselProps & WithClassAsProps>(), {
   orientation: 'horizontal',
 })
+const accessibleName = computed(() => props.ariaLabel?.trim() || undefined)
 
 const emits = defineEmits<CarouselEmits>()
 
@@ -82,9 +83,9 @@ function onKeyDown(event: KeyboardEvent) {
   <div
     data-slot="carousel"
     :class="cn('relative', props.class)"
-    role="region"
-    aria-roledescription="carousel"
-    aria-label="Carousel"
+    :role="accessibleName ? 'region' : undefined"
+    :aria-roledescription="accessibleName ? 'carousel' : undefined"
+    :aria-label="accessibleName"
     tabindex="0"
     @keydown="onKeyDown"
   >

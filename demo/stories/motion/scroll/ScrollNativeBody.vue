@@ -132,7 +132,7 @@ const REVEAL_ITEMS = Array.from({ length: 8 }, (_, i) => `Reveal card ${i + 1}`)
             blurb="Reorder the list — each row animates from its old slot to its new one through the startViewTransition substrate + the .gl-list-item group recipe. On an engine without View Transitions the swap is instant (functional, just unanimated)."
         >
             <div class="flex flex-col gap-3">
-                <Button variant="default" class="self-start" @click="shuffle">Rotate order</Button>
+                <Button class="self-start" @click="shuffle">Rotate order</Button>
                 <ul class="flex flex-col gap-2">
                     <li
                         v-for="row in rows"

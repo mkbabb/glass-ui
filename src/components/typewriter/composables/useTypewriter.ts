@@ -1,4 +1,5 @@
-import { ref, computed } from "vue";
+import { computed, onScopeDispose, ref, watch } from "vue";
+import { useReducedMotion } from "../../../composables/motion/useReducedMotion";
 import type { TypewriterOptions, TypewriterWord, CancellationToken } from "../types";
 import { DEFAULTS } from "../types";
 import { calculateKeyDelay } from "../utils/keyboard";
@@ -10,7 +11,6 @@ import {
     stochasticDelay,
     backspaceDelay as calcBackspaceDelay,
     pickNgramSize,
-    prefersReducedMotion,
 } from "../utils/timing";
 import {
     nextTypoAction,
@@ -22,6 +22,7 @@ import {
 export function useTypewriter(options: TypewriterOptions) {
     // Merge options with defaults
     const opts = { ...DEFAULTS, ...options };
+    const reducedMotion = opts.respectReducedMotion ? useReducedMotion() : ref(false);
 
     // Determine mode
     const isWordRotation = opts.words != null && opts.words.length > 0;
@@ -256,16 +257,8 @@ export function useTypewriter(options: TypewriterOptions) {
         isTyping.value = true;
 
         // Reduced motion: show final text immediately
-        if (opts.respectReducedMotion && prefersReducedMotion()) {
-            if (isWordRotation) {
-                displayText.value = opts.words![0].text;
-                currentWord.value = opts.words![0];
-            } else {
-                displayText.value = targetText;
-            }
-            isTyping.value = false;
-            isFirstAnimation.value = false;
-            opts.onComplete?.();
+        if (reducedMotion.value) {
+            settleReducedMotion();
             return;
         }
 
@@ -317,6 +310,21 @@ export function useTypewriter(options: TypewriterOptions) {
         currentToken = null;
         isTyping.value = false;
         isDeleting.value = false;
+    }
+
+    function settleReducedMotion(): void {
+        const wasTyping = isTyping.value;
+        stopTyping();
+        if (isWordRotation) {
+            const first = opts.words![0];
+            currentWordIndex.value = 0;
+            currentWord.value = first;
+            targetText = first.text;
+            targetChars = splitGraphemes(targetText);
+        }
+        displayText.value = targetText;
+        isFirstAnimation.value = false;
+        if (wasTyping) opts.onComplete?.();
     }
 
     function reset(): void {
@@ -372,6 +380,19 @@ export function useTypewriter(options: TypewriterOptions) {
         setCharPosition(charPos);
     }
 
+    const stopReducedMotionWatch = watch(
+        reducedMotion,
+        (reduced) => {
+            if (reduced && isTyping.value) settleReducedMotion();
+        },
+        { flush: "sync" },
+    );
+
+    onScopeDispose(() => {
+        stopReducedMotionWatch();
+        stopTyping();
+    });
+
     return {
         // State
         displayText,
@@ -380,6 +401,7 @@ export function useTypewriter(options: TypewriterOptions) {
         isDeleting,
         currentWordIndex: computed(() => currentWordIndex.value),
         currentWord: computed(() => currentWord.value),
+        reducedMotion,
 
         // Single-text API
         startTyping,

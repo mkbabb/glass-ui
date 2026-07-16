@@ -1,118 +1,153 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed, useAttrs, useId } from 'vue'
-import { Separator, type SeparatorProps } from 'reka-ui'
-import { cn } from '../_shared/class-names'
+import { computed, type HTMLAttributes, useAttrs, useId } from "vue";
+import { Separator as RekaSeparator } from "reka-ui";
+import type { Orientation } from "../_shared/axes";
+import { cn } from "../_shared/class-names";
 
-defineOptions({ inheritAttrs: false })
+defineOptions({ inheritAttrs: false });
 
-// BC.W-SEPARATOR-FIX — the labelled arm is a SPLIT-RULE flexbox, not an
-// absolute label floated over a 1px line.
-//
-// The un-labelled separator is the reka `Separator` primitive's single warm
-// hairline (`--separator-ink`, the BA.W-NO-GRAY warm rule — never grey
-// `--border`). A LABELLED separator is the textbook `[rule] [label] [rule]`
-// divider: a flex row (horizontal) / column (vertical) where the label is
-// centered by the flexbox AT ITS NORMAL SIZE, between two rule segments that
-// grow to fill (`flex-1`). The rule is genuinely two segments — so it reads as
-// "─── or ───" on ANY host, glass or opaque, with NO absolute-occlusion trick
-// (the retired floated-label design rode a single 1px line + a `bg-background`
-// occluder behind the label, which fails on the rebuilt translucent material:
-// the line bled through). The split-rule needs no occluder — the rules simply
-// stop at the gap. The label keeps a small `bg-background` chip backplate (the
-// sanctioned legibility-allowlist survivor) so the centered caption reads
-// clearly over a busy glass/aurora host, but it is a label chip, not an
-// occluder over a continuous line. reka's `Separator` carries
-// `role="separator"` + `aria-orientation`;
-// the labelled arm wraps it as `role="separator"` with the label as its
-// accessible name.
-const props = defineProps<
-  SeparatorProps & {
-    class?: HTMLAttributes['class']
-    label?: string
-  }
->()
+export interface SeparatorProps {
+    orientation?: Orientation;
+    decorative?: boolean;
+    class?: HTMLAttributes["class"];
+    label?: string;
+}
 
-const isVertical = computed(() => props.orientation === 'vertical')
-const attrs = useAttrs()
-const labelId = `${useId()}-label`
+const props = withDefaults(defineProps<SeparatorProps>(), {
+    orientation: "horizontal",
+    decorative: false,
+});
+
+const attrs = useAttrs();
+const labelId = `${useId()}-label`;
+const visibleLabel = computed(() => props.label?.trim());
+const forwardedAttrs = computed(() => {
+    const {
+        as: _as,
+        asChild: _asChild,
+        "as-child": _asChildKebab,
+        ...forwarded
+    } = attrs;
+    return forwarded;
+});
 
 const delegatedProps = computed(() => {
-  const {
-    class: _class,
-    label: _label,
-    ...delegated
-  } = props
-
-  return delegated
-})
+    const { class: _class, label: _label, ...delegated } = props;
+    return delegated;
+});
 
 const labelledAttrs = computed(() => {
-  const {
-    role: _role,
-    'aria-orientation': _orientation,
-    'aria-label': rawAriaLabel,
-    'aria-labelledby': rawAriaLabelledby,
-    ...rest
-  } = attrs
-  if (props.decorative) return { ...rest, role: 'none' }
+    const {
+        role: _role,
+        "aria-orientation": _orientation,
+        "aria-label": rawAriaLabel,
+        "aria-labelledby": rawAriaLabelledby,
+        ...rest
+    } = forwardedAttrs.value;
 
-  const ariaLabel = typeof rawAriaLabel === 'string' ? rawAriaLabel : undefined
-  const ariaLabelledby = typeof rawAriaLabelledby === 'string' ? rawAriaLabelledby : undefined
-  const labelledby = ariaLabelledby ?? (ariaLabel ? undefined : labelId)
-  return {
-    ...rest,
-    role: 'separator',
-    'aria-orientation': isVertical.value ? ('vertical' as const) : undefined,
-    'aria-label': labelledby ? undefined : ariaLabel,
-    'aria-labelledby': labelledby,
-  }
-})
+    if (props.decorative) {
+        return {
+            ...rest,
+            role: "none",
+            "data-orientation": props.orientation,
+        };
+    }
 
-// The rule-segment class (one axis painted, the warm hairline ink).
-const ruleClass = computed(() =>
-  cn(
-    'shrink-0 bg-(--separator-ink)',
-    isVertical.value ? 'w-px flex-1' : 'h-px flex-1',
-  ),
-)
+    const ariaLabel =
+        typeof rawAriaLabel === "string" && rawAriaLabel.trim()
+            ? rawAriaLabel
+            : undefined;
+    const ariaLabelledby =
+        typeof rawAriaLabelledby === "string" && rawAriaLabelledby.trim()
+            ? rawAriaLabelledby
+            : ariaLabel
+              ? undefined
+              : labelId;
+
+    return {
+        ...rest,
+        role: "separator",
+        "data-orientation": props.orientation,
+        "aria-orientation":
+            props.orientation === "vertical" ? ("vertical" as const) : undefined,
+        "aria-label": ariaLabelledby ? undefined : ariaLabel,
+        "aria-labelledby": ariaLabelledby,
+    };
+});
 </script>
 
 <template>
-  <!-- LABELLED: the split-rule flexbox. role="separator" on the wrapper; the
-       visible label is the accessible name. -->
-  <div
-    v-if="props.label"
-    v-bind="labelledAttrs"
-    data-slot="separator"
-    :class="
-      cn(
-        'flex items-center',
-        isVertical ? 'flex-col w-px h-full gap-2' : 'flex-row w-full gap-3',
-        props.class,
-      )
-    "
-  >
-    <span :class="ruleClass" />
-    <!-- The label chip carries a legible opaque backplate (the sanctioned
-         legibility-allowlist survivor — a label floated between two rule
-         segments must read clearly over ANY host, glass or paper, so it gets a
-         small `bg-background` chip; this is the chip backplate, NOT the retired
-         absolute-occlusion trick — the rule is genuinely two segments). -->
-    <span :id="labelId" class="text-mono-caption text-muted-foreground bg-background shrink-0 px-1.5 rounded-sm">{{ props.label }}</span>
-    <span :class="ruleClass" />
-  </div>
+    <div
+        v-if="visibleLabel"
+        v-bind="labelledAttrs"
+        data-slot="separator"
+        :class="cn('separator separator-labelled', props.class)"
+    >
+        <span class="separator-segment" aria-hidden="true" />
+        <span :id="labelId" class="separator-label">{{ visibleLabel }}</span>
+        <span class="separator-segment" aria-hidden="true" />
+    </div>
 
-  <!-- UN-LABELLED: the reka single hairline, warm-ink. -->
-  <Separator
-    v-else
-    data-slot="separator"
-    v-bind="{ ...$attrs, ...delegatedProps }"
-    :class="
-      cn(
-        'shrink-0 bg-(--separator-ink)',
-        isVertical ? 'w-px h-full' : 'h-px w-full',
-        props.class,
-      )
-    "
-  />
+    <RekaSeparator
+        v-else
+        v-bind="{ ...forwardedAttrs, ...delegatedProps }"
+        data-slot="separator"
+        :class="cn('separator', props.class)"
+    />
 </template>
+
+<style scoped>
+.separator {
+    flex: none;
+    background: var(--separator-ink);
+}
+
+.separator[data-orientation="horizontal"] {
+    inline-size: 100%;
+    block-size: 1px;
+}
+
+.separator[data-orientation="vertical"] {
+    inline-size: 1px;
+    block-size: 100%;
+}
+
+.separator-labelled {
+    display: flex;
+    align-items: center;
+    background: transparent;
+}
+
+.separator-labelled[data-orientation="horizontal"] {
+    gap: 0.75rem;
+}
+
+.separator-labelled[data-orientation="vertical"] {
+    flex-direction: column;
+    inline-size: max-content;
+    gap: 0.5rem;
+}
+
+.separator-segment {
+    flex: 1 1 auto;
+    background: var(--separator-ink);
+}
+
+[data-orientation="horizontal"] > .separator-segment {
+    min-inline-size: 1rem;
+    block-size: 1px;
+}
+
+[data-orientation="vertical"] > .separator-segment {
+    inline-size: 1px;
+    min-block-size: 1rem;
+}
+
+.separator-label {
+    flex: none;
+    color: var(--muted-foreground);
+    font-family: var(--font-mono);
+    font-size: var(--type-caption);
+    line-height: var(--type-leading-caption);
+}
+</style>

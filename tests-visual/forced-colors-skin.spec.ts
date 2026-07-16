@@ -5,20 +5,16 @@
 // glass register — `backdrop-filter` is dropped, the `--glass-*` inset/box-shadow rungs
 // vanish, and every meaning-bearing chroma flattens to one system color. A `.glass-
 // floating` Dialog over a `.glass-resting` Card reads as two borderless transparent
-// rectangles, and a green-vs-red StatusDot reads as one indistinguishable dot. The skin
-// (glass.css + utilities.css) restores the STRUCTURE: tier panes → a `CanvasText`
-// border, floating rungs → a `Canvas` fill + edge, StatusDot hue → a bordered system-
-// color glyph keyed off `data-status`, focus → a `Highlight` outline.
+// rectangles. The skin restores the STRUCTURE: tier panes → a `CanvasText` border,
+// floating rungs → a `Canvas` fill + edge, focus → a `Highlight` outline.
 //
 // THE SOURCE GATE (proof-forced-colors-skin.mjs) proves the RECIPE STRUCTURE; THIS SPEC
 // PROVES THE RENDER — Playwright launches with `forcedColors: 'active'` (the Chromium
-// Windows-High-Contrast simulation), injects synthetic `.glass-*` panes + a StatusDot
-// row + a focusable control onto the live demo (which loads the `/styles` cascade), and
+// Windows-High-Contrast simulation), injects synthetic `.glass-*` panes + a focusable
+// control onto the live demo (which loads the `/styles` cascade), and
 // reads back the PAINTED result off the live DOM:
 //   - every glass-material tier pane resolves a non-`none` border (born-RED: `none`);
 //   - the floating rung resolves an opaque fill (the boxed-region separation);
-//   - two StatusDots of different `data-status` resolve DISTINGUISHABLE painted fills
-//     (born-RED: the same flat system color);
 //   - a focused control resolves a `Highlight`-keyed outline (born-RED: no outline).
 //
 // THE BINDING ASSERTION IS THE getComputedStyle READBACK under forcedColors:'active'
@@ -34,8 +30,8 @@ import { test, expect } from "@playwright/test";
 import type { Page } from "@playwright/test";
 import { resolveScene } from "./pi-manifest.ts";
 
-// The canonical glass-language render — the five-rung ladder + StatusDot stories live
-// here; ANY route loads the global `/styles` cascade so the synthetic `.glass-*`
+// The canonical glass-language render. Any route loads the global `/styles` cascade,
+// so the synthetic `.glass-*`
 // fixtures resolve, but the glass-material story is the on-topic stable surface. Resolved
 // against the re-sourced manifest (fails the resolution rather than driving a dead route).
 const GLASS_SCENE = resolveScene("substrates", "glass-material");
@@ -55,8 +51,6 @@ const LADDER = [
     "glass-overlay",
     "glass-card",
 ] as const;
-
-const STATUSES = ["active", "paused", "error", "idle"] as const;
 
 interface LadderReadout {
     /** The resolved border-style (born-RED under WHC: `none`). */
@@ -98,65 +92,6 @@ async function readLadder(page: Page, kind: string): Promise<LadderReadout> {
         document.getElementById(FIXTURE_ID)?.remove();
         return out;
     }, kind);
-}
-
-/**
- * Render a StatusDot-shaped dot that MIRRORS the shipped component markup — the outer
- * `.status-dot__dot[data-status]` glyph PLUS the inner `.status-dot__fill` span that
- * carries the component's inline glass-ui hue (`background-color`). The inline fill is
- * the load-bearing trap: it outranks the stylesheet AND `forced-color-adjust`-remaps to
- * one Canvas color, collapsing the row UNLESS the WHC skin yields the inner fill so the
- * outer system-color glyph reads. We screenshot the dot and sample its PAINTED center
- * pixel (the live-truth path — the computed style of the OUTER dot would pass even with
- * the inner-fill cover bug; only the painted pixel catches it). Returns [r,g,b].
- */
-async function readDotPaintedFill(
-    page: Page,
-    status: string,
-): Promise<[number, number, number]> {
-    const HUE: Record<string, string> = {
-        active: "hsl(142 71% 45%)",
-        paused: "hsl(48 96% 53%)",
-        error: "var(--destructive)",
-        idle: "var(--muted-foreground)",
-        custom: "var(--muted-foreground)",
-    };
-    await page.evaluate(
-        ({ status, hue }) => {
-            const FIXTURE_ID = "__w36_dot__";
-            document.getElementById(FIXTURE_ID)?.remove();
-            const dot = document.createElement("span");
-            dot.id = FIXTURE_ID;
-            dot.className = "status-dot__dot relative inline-flex shrink-0 rounded-pill";
-            dot.setAttribute("data-status", status);
-            dot.style.cssText =
-                "position:fixed;left:40px;top:40px;width:40px;height:40px;z-index:99999;";
-            // The inner painted fill — the shipped component paints THIS inline (the trap).
-            const fill = document.createElement("span");
-            fill.className = "status-dot__fill relative inline-block h-full w-full rounded-pill";
-            fill.style.backgroundColor = hue;
-            dot.appendChild(fill);
-            document.body.appendChild(dot);
-            void dot.offsetHeight;
-        },
-        { status, hue: HUE[status] ?? "var(--muted-foreground)" },
-    );
-    // Sample the painted center pixel via a clip screenshot (DPR-aware center).
-    const buf = await page.locator("#__w36_dot__").screenshot();
-    const px = await decodeCenterPixel(buf);
-    await page.evaluate(() => document.getElementById("__w36_dot__")?.remove());
-    return px;
-}
-
-/** Decode the center pixel [r,g,b] of a PNG buffer (the painted-truth sampler). */
-async function decodeCenterPixel(buf: Buffer): Promise<[number, number, number]> {
-    // pngjs is a tests-visual devDependency (the substrate specs sample canvas pixels).
-    const { PNG } = await import("pngjs");
-    const png = PNG.sync.read(buf);
-    const cx = Math.floor(png.width / 2);
-    const cy = Math.floor(png.height / 2);
-    const i = (png.width * cy + cx) * 4;
-    return [png.data[i]!, png.data[i + 1]!, png.data[i + 2]!];
 }
 
 /** Inject a focusable `.glass-btn`, focus it via keyboard, read back the outline. */
@@ -235,34 +170,7 @@ test.describe("forced-colors-skin (π lane — the WHC structure-survival readba
                 ).toBeGreaterThan(0.99);
             }
 
-            // ── (3) Different-status StatusDots resolve DISTINGUISHABLE PAINTED fills ───
-            // The PAINTED-pixel readback (not the outer computed style) — the shipped
-            // component paints the dot via an INLINE fill on `.status-dot__fill`, which
-            // `forced-color-adjust`-remaps to one Canvas color AND covers the outer glyph
-            // (the row collapses to one white dot) UNLESS the WHC skin yields the inner
-            // fill so the outer system-color triplet reads. Only the painted center pixel
-            // catches this inline-cover class; the outer computed style would pass.
-            const paintedFills: Record<string, [number, number, number]> = {};
-            for (const status of STATUSES) {
-                paintedFills[status] = await readDotPaintedFill(page, status);
-            }
-            const fillKey = (p: [number, number, number]) => p.join(",");
-            const distinctFills = new Set(STATUSES.map((s) => fillKey(paintedFills[s]!)));
-            expect(
-                distinctFills.size,
-                `the StatusDot row collapsed to ${distinctFills.size} distinct PAINTED fill(s) under WHC (${JSON.stringify(
-                    paintedFills,
-                )}) — meaning did not survive the chroma collapse (the inline fill covered the system-color glyph); expected ok/warn/error/idle distinguishable`,
-            ).toBeGreaterThanOrEqual(3);
-            // The strongest pairwise tell: ok (active→Highlight) ≠ error (→CanvasText).
-            expect(
-                fillKey(paintedFills["active"]!),
-                `the ok and error StatusDots painted the SAME fill under WHC (${fillKey(
-                    paintedFills["active"]!,
-                )}) — green-vs-red is indistinguishable`,
-            ).not.toBe(fillKey(paintedFills["error"]!));
-
-            // ── (4) A focused control resolves a Highlight outline (born-RED: none) ─────
+            // ── (3) A focused control resolves a Highlight outline (born-RED: none) ─────
             const focus = await readFocusOutline(page);
             expect(
                 focus.outlineStyle,

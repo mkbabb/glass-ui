@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
-import { ref, watch, useTemplateRef } from "vue";
+import { ref } from "vue";
 import {
     Home,
     Search,
@@ -42,23 +42,18 @@ import {
     SelectItem,
     SelectValue,
 } from "@glass/components/select";
-import { Aurora } from "@glass/components/aurora";
-import { DEFAULT_AURORA_CONFIG } from "@glass/components/aurora";
 import DockStage from "./_frame/DockStage.vue";
 
 const playing = ref(false);
 
-// The background-toggle section wires the toggle to a real contained Aurora so
-// pausing genuinely parks the renderer (not a text readout). `bgAuroraRef` is the
-// Aurora instance; the watch drives its exposed pause()/resume().
+// The background toggle parks DockStage's one shared route field. No second
+// contained GPU surface is mounted merely to demonstrate the same lifecycle seam.
 const bgPaused = ref(false);
-const bgAuroraRef = useTemplateRef<{ pause: () => void; resume: () => void }>(
-    "bgAuroraRef",
-);
-watch(bgPaused, (paused) => {
-    if (paused) bgAuroraRef.value?.pause();
-    else bgAuroraRef.value?.resume();
-});
+
+const initialPostures = [
+    { startCollapsed: true, label: "Starts compact" },
+    { startCollapsed: false, label: "Starts open" },
+] as const;
 const volume = ref<number[]>([42]);
 const mix = ref<number[]>([55]);
 const track = ref("The Garden");
@@ -113,15 +108,14 @@ function togglePlay() {
              shared, offscreen-paused aurora field (DockStage), replacing the flat
              bg-card/40 panels. Each demo is a transparent `.dock-stage-tile` framed
              slot so the dock floats DIRECTLY over the live field (the BG-2 lesson).
-             ONE GL context for the band's decorative staging — the prior per-demo
-             collapsible aurora folds INTO the shared field (the pause-toggle keeps
-             its OWN functional aurora below, which the toggle genuinely controls). -->
+             ONE GL context for the band's decorative staging — the former per-demo
+             fields and the pause-toggle's duplicate renderer fold into the shared field. -->
         <!-- BI.W-DOCK-LUMA-SHARE — the 10 per-dock `:background-canvas` bindings COLLAPSE
              onto DockStage's ONE shared per-route backdrop-luminance observer: every staged
              dock inherits `--glass-backdrop-luma` / `--glass-backdrop` / `--glass-ambient-*`
              from the stage scope (the registered inheriting @property cascade) + stands down
              its own getImageData readback (12 → 1). -->
-        <DockStage>
+        <DockStage :paused="bgPaused">
         <StorySection heading="Collapsible (hover to expand)" gap="md">
             <p class="text-sm text-muted-foreground">
                 The collapsed pill scales up on hover on the same
@@ -129,22 +123,35 @@ function togglePlay() {
                 expand morph uses, so hover-to-expand reads as one continuous spring.
                 The controls cascade in outer-to-inward, reversed on collapse. Under
                 <code class="rounded bg-muted px-1">prefers-reduced-motion</code> the
-                scale and stagger snap; the state still toggles.
+                scale and stagger snap; the state still toggles. Both examples remain
+                collapsible — the open posture is not pinned.
             </p>
-            <div
-                class="dock-stage-tile flex justify-center rounded-[var(--radius-card)] border border-border/30 p-8"
-            >
-                <GlassDock class="relative z-10">
-                    <!-- Home is a persistent control: it stays visible in both the
-                         collapsed and expanded states via the #persistent slot. -->
-                    <template #persistent>
-                        <DockControl aria-label="Home"><Home /></DockControl>
-                    </template>
-                    <DockControl aria-label="Search"><Search /></DockControl>
-                    <DockSeparator />
-                    <DockControl aria-label="Notifications"><Bell /></DockControl>
-                    <DockControl aria-label="Settings"><Settings /></DockControl>
-                </GlassDock>
+            <div class="grid gap-3 md:grid-cols-2">
+                <div
+                    v-for="posture in initialPostures"
+                    :key="posture.label"
+                    class="dock-stage-tile flex flex-col items-center gap-4 rounded-[var(--radius-card)] border border-border/30 p-8"
+                >
+                    <span class="text-mono-caption text-muted-foreground">{{ posture.label }}</span>
+                    <GlassDock
+                        class="relative z-10"
+                        role="toolbar"
+                        aria-orientation="horizontal"
+                        :aria-label="`${posture.label} workspace dock`"
+                        :start-collapsed="posture.startCollapsed"
+                        :data-testid="`dock-horizontal-${posture.startCollapsed ? 'collapsed' : 'expanded'}-first-paint`"
+                    >
+                        <!-- Home is a persistent control: it stays visible in both the
+                             collapsed and expanded states via the #persistent slot. -->
+                        <template #persistent>
+                            <DockControl aria-label="Home"><Home /></DockControl>
+                        </template>
+                        <DockControl aria-label="Search"><Search /></DockControl>
+                        <DockSeparator />
+                        <DockControl aria-label="Notifications"><Bell /></DockControl>
+                        <DockControl aria-label="Settings"><Settings /></DockControl>
+                    </GlassDock>
+                </div>
             </div>
         </StorySection>
 
@@ -302,10 +309,10 @@ function togglePlay() {
 
         <StorySection heading="With popover triggers" gap="md">
             <p class="text-sm text-muted-foreground">
-                <code class="rounded bg-muted px-1">Popover trigger="hover" keep-dock-open</code>
-                pins the parent dock open while the popover is visible. The
-                fine-hover branch (reka's HoverCardRoot) handles hover-trigger,
-                defer-on-leave, and adaptive side/align collision avoidance.
+                <code class="rounded bg-muted px-1">Popover keep-dock-open</code>
+                gives these command panels click and tap disclosure semantics while
+                pinning the parent dock open. Hover previews belong to HoverCard;
+                these actionable menus stay keyboard-reachable and explicit.
             </p>
             <div
                 class="dock-stage-tile flex justify-center rounded-[var(--radius-card)] border border-border/30 p-8"
@@ -313,13 +320,13 @@ function togglePlay() {
                 <GlassDock always-expanded>
                     <DockControl aria-label="New"><Plus /></DockControl>
 
-                    <Popover trigger="hover" keep-dock-open>
+                    <Popover keep-dock-open>
                         <PopoverTrigger as-child>
                             <DockControl aria-label="Share">
                                 <Share2 />
                             </DockControl>
                         </PopoverTrigger>
-                        <PopoverContent role="card" side="bottom" align="center" class="w-auto p-1">
+                        <PopoverContent side="bottom" align="center" class="w-auto p-1">
                             <div class="flex min-w-44 flex-col gap-1">
                                 <p
                                     class="px-2 py-1 text-[10px] uppercase tracking-wider text-muted-foreground"
@@ -345,13 +352,13 @@ function togglePlay() {
                         </PopoverContent>
                     </Popover>
 
-                    <Popover trigger="hover" keep-dock-open>
+                    <Popover keep-dock-open>
                         <PopoverTrigger as-child>
                             <DockControl aria-label="Export">
                                 <Download />
                             </DockControl>
                         </PopoverTrigger>
-                        <PopoverContent role="card" side="bottom" align="end" class="w-auto p-1">
+                        <PopoverContent side="bottom" align="end" class="w-auto p-1">
                             <div class="flex min-w-44 flex-col gap-1">
                                 <p
                                     class="px-2 py-1 text-[10px] uppercase tracking-wider text-muted-foreground"
@@ -379,7 +386,7 @@ function togglePlay() {
 
                     <DockSeparator />
 
-                    <Popover trigger="hover" keep-dock-open>
+                    <Popover keep-dock-open>
                         <PopoverTrigger as-child>
                             <DockControl aria-label="Track">
                                 <span class="flex items-center gap-1">
@@ -388,7 +395,7 @@ function togglePlay() {
                                 </span>
                             </DockControl>
                         </PopoverTrigger>
-                        <PopoverContent role="card" side="bottom" align="center" class="w-auto p-1">
+                        <PopoverContent side="bottom" align="center" class="w-auto p-1">
                             <div class="flex min-w-44 flex-col gap-1">
                                 <button
                                     v-for="t in tracks"
@@ -645,20 +652,11 @@ function togglePlay() {
                 <code class="rounded bg-muted px-1">aria-pressed</code>
                 and a Pause↔Play glyph swap, available to all users.
             </p>
-            <!-- The toggle controls a real contained Aurora: pausing genuinely parks
-                 the renderer's rAF. The dock is collapsible — the collapsed slot shows
-                 the live Pause/Play glyph so the control reads in both states
-                 (expanded row + the collapsed circle). -->
+            <!-- The toggle controls DockStage's one shared Aurora: pausing genuinely
+                 parks the route renderer without mounting a duplicate GPU field. -->
             <div
-                class="relative flex justify-center overflow-hidden rounded-[var(--radius-card)] border border-border/40 p-8"
+                class="dock-stage-tile relative flex justify-center rounded-[var(--radius-card)] border border-border/40 p-8"
             >
-                <Aurora
-                    ref="bgAuroraRef"
-                    :config="DEFAULT_AURORA_CONFIG"
-                    :opacity-ceiling="0.4"
-                    class="absolute inset-0"
-                    aria-hidden="true"
-                />
                 <GlassDock class="relative z-10">
                     <DockBackgroundToggle v-model:paused="bgPaused" />
                     <DockControl aria-label="Home"><Home /></DockControl>

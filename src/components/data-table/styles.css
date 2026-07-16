@@ -1,0 +1,114 @@
+.data-table {
+    overflow: hidden;
+}
+
+.data-table-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.data-table-card,
+.data-table-state {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    padding: 0.75rem;
+}
+
+.data-table-state {
+    padding-block: 2.618rem;
+    color: var(--muted-foreground);
+    text-align: center;
+}
+
+.data-table-card-skeleton-title {
+    width: 50%;
+    height: 1rem;
+    margin-block-end: 0.5rem;
+}
+
+.data-table-cell-skeleton {
+    width: 75%;
+    height: 1rem;
+}
+
+.data-table-action-skeleton {
+    width: 1.5rem;
+    height: 1rem;
+}
+
+.data-table-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.data-table-card-title,
+.data-table-card-value {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.data-table-card-title {
+    font-weight: 600;
+}
+
+.data-table-card-fields {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.25rem 0.75rem;
+    margin-block-start: 0.5rem;
+}
+
+.data-table-card-label,
+.data-table-header-row {
+    color: var(--muted-foreground);
+}
+
+.data-table-actions,
+.data-table-actions-cell {
+    width: 2.5rem;
+    flex: none;
+}
+
+.data-table-sort {
+    display: inline-flex;
+    width: 100%;
+    align-items: center;
+    gap: 0.25rem;
+    justify-content: flex-start;
+    border: 0;
+    border-radius: var(--radius-sm);
+    padding: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.data-table [data-align="center"] {
+    justify-content: center;
+    text-align: center;
+}
+
+.data-table [data-align="right"] {
+    justify-content: flex-end;
+    text-align: right;
+}
+
+.data-table-row-interactive {
+    cursor: pointer;
+    transition: background-color var(--duration-fast) var(--ease-standard);
+}
+
+.data-table-row-interactive:hover,
+.data-table-row-interactive[data-state="selected"] {
+    background: var(--surface-tint-8);
+}
+
+.data-table-card.data-table-row-interactive[data-state="selected"] {
+    border-color: var(--focus-ring-color);
+    box-shadow: var(--focus-ring-shadow);
+}

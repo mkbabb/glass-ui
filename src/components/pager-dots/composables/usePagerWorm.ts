@@ -6,7 +6,7 @@
 // springs toward `centerOf(active)`, a TRAIL edge lags then catches up (`useLeadTrail`,
 // the ONE shared two-edge driver). The gap between the edges is the worm's live
 // elongation; the barbell (bodyA at `lo`, a welling neck, bodyB at `hi`) is projected
-// off the (lo, hi) edges each frame and merged by the `#pager-worm-goo` filter (Arm A,
+// off the (lo, hi) edges each frame and merged by the instance-local filter (Arm A,
 // the shipped register) — the un-merged clip-path barbell is the `@supports`-not degrade
 // floor (Arm B). Interruption is FREE (a rapid re-select re-seats the lead target, the
 // velocity carries); release-at-arrival is EMERGENT (the trail catching the lead — no

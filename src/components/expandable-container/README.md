@@ -1,8 +1,8 @@
 # ExpandableContainer
 
-The expand-to-fullscreen container (`@mkbabb/glass-ui/expandable-container`, OFF the root
-barrel). A panel that expands from its in-flow rect to a fullscreen overlay and collapses back
-— the `v-model:open` teleport-to-fullscreen register.
+The expand-to-fullscreen container (`@mkbabb/glass-ui/expandable-container`, off the root
+barrel). One content subtree moves between its in-flow position and a fullscreen
+overlay through a disabled/enabled Teleport.
 
 ```vue
 <ExpandableContainer v-model:open="open">
@@ -12,14 +12,12 @@ barrel). A panel that expands from its in-flow rect to a fullscreen overlay and 
 
 ## Export
 
-- **`ExpandableContainer`** — the container. The behaviour is byte-fixed: the body-overflow
-  lock + `<Teleport :disabled>` + Escape exit + the un-walled `glass-overlay` tier
-  (`surface="opaque"` restores the solid wall).
+- **`ExpandableContainer`** — owns body locking, Escape exit, direct Reka focus
+  containment/restoration, and the fullscreen `glass-overlay` tier
+  (`surface="opaque"` opts into a solid wall).
 
-## The chrome is a CONTRACTED hook (BC.W-EXPANDABLE-PART)
+## Chrome hooks
 
-The expand/fullscreen CHROME is a re-skin/replace hook — `data-part="trigger|overlay|panel"`
-(+ `data-mode="expand|collapse"`) reached via a PLAIN descendant selector (a light-DOM
-`::part()`-analogue, NO `:deep()`) + the `#expand-trigger`/`#fullscreen-chrome` named-slot
-REPLACEMENT hooks (each defaults byte-identical). The consumer changes the CHROME; the library
-keeps the BEHAVIOUR. Machine-locked by `proof:expandable-part`.
+Use `data-part="trigger|panel"`, `data-mode="expand|collapse"`, and the
+`#expand-trigger`/`#fullscreen-chrome` slots to repaint or replace chrome. These hooks
+share the same `v-model:open`; Teleport, locking, Escape, and focus remain component-owned.

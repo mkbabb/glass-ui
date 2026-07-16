@@ -100,7 +100,7 @@ describe("GlassDock isTransitioning — spring-settle source (BG.NF.1 W-FALLBACK
         expect(vm.isTransitioning).toBe(false);
     });
 
-    it("a superseded morph does not leak a busy flag — expand→collapse settles to false once", async () => {
+    it("an exact-origin reversal does not fabricate a busy window", async () => {
         const wrapper = mount(GlassDock, {
             props: { startCollapsed: true, autoLuminance: false },
         });
@@ -108,14 +108,45 @@ describe("GlassDock isTransitioning — spring-settle source (BG.NF.1 W-FALLBACK
 
         (vm.expand as () => void)();
         await wrapper.vm.$nextTick();
-        (vm.collapse as () => void)(); // supersedes the expand morph (interruptible re-base)
+        (vm.collapse as () => void)();
         await wrapper.vm.$nextTick();
-        expect(vm.isTransitioning).toBe(true);
+        expect(vm.isTransitioning).toBe(false);
 
-        // Flushing the rAF loop: the spring lifecycle clears the flag — no superseded
-        // morph leaves it stuck true, no wrong-clock timer re-opens it.
+        // No spring frame painted between the two commands, so the reversal is already
+        // back at its origin. A synthetic busy interval would describe motion that never
+        // existed; later frames must not resurrect one.
         vi.runAllTimers();
         expect(vm.isTransitioning).toBe(false);
+    });
+
+    it("reverses from the live plate position without reseating its expandedness", async () => {
+        const wrapper = mount(GlassDock, {
+            props: { startCollapsed: true, autoLuminance: false },
+        });
+        const vm = wrapper.vm as unknown as Record<string, unknown>;
+        const root = wrapper.get<HTMLElement>(".glass-dock");
+
+        (vm.expand as () => void)();
+        await wrapper.vm.$nextTick();
+        await vi.advanceTimersByTimeAsync(64);
+        const beforeReverse = Number.parseFloat(
+            root.element.style.getPropertyValue("--dock-morph-t"),
+        );
+        expect(beforeReverse).toBeGreaterThan(0);
+        expect(beforeReverse).toBeLessThan(1);
+
+        (vm.collapse as () => void)();
+        await wrapper.vm.$nextTick();
+        const afterReverse = Number.parseFloat(
+            root.element.style.getPropertyValue("--dock-morph-t"),
+        );
+        expect(afterReverse).toBeCloseTo(1 - beforeReverse, 8);
+        expect(1 - afterReverse).toBeCloseTo(beforeReverse, 8);
+
+        vi.runAllTimers();
+        expect(root.classes()).toContain("collapsed");
+        expect(vm.isTransitioning).toBe(false);
+        wrapper.unmount();
     });
 
     it("settles an active morph immediately when reduced motion becomes preferred", async () => {
@@ -166,7 +197,6 @@ describe("GlassDock isTransitioning — spring-settle source (BG.NF.1 W-FALLBACK
 
             expect(vm.isTransitioning).toBe(false);
             expect(root.hasAttribute("data-morphing")).toBe(false);
-            expect(root.hasAttribute("data-pane-swap")).toBe(false);
             expect((root as HTMLElement).style.getPropertyValue("--dock-morph-t")).toBe(
                 "",
             );

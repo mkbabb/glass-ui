@@ -1,12 +1,13 @@
 import { describe, expect, it } from "vitest";
 
 import {
-    srgbToOKLab,
-    oklabToLinearSRGB,
-    oklabToRgb255,
-    rawOklabToOklch,
-    rawOklchToOklab,
-} from "@mkbabb/value.js";
+    convertColor,
+    oklch,
+    toRgba8,
+    type ColorIssue,
+    type Result,
+} from "@mkbabb/value.js/color";
+import { parseCssColor } from "@mkbabb/value.js/css";
 
 import {
     oklchToLinear,
@@ -53,11 +54,23 @@ const HEXES = [
 
 const EPS = 1e-6;
 
+function value<T>(result: Result<T, ColorIssue>): T {
+    if (!result.ok) throw new Error(result.error.code);
+    return result.value;
+}
+
+function finalOklch(stop: OklchStop) {
+    return value(oklch(stop.L, stop.C, stop.h));
+}
+
+function linearChannels(stop: OklchStop): number[] {
+    return value(convertColor(finalOklch(stop), "srgb-linear")).channels.map(Number);
+}
+
 describe("aurora color ≡ value.js canonical core (inv-K-2)", () => {
-    it("oklchToLinear === composed value.js [rawOklchToOklab → oklabToLinearSRGB] + aurora's Math.max wrap", () => {
+    it("oklchToLinear === Value final-object conversion + aurora's Math.max wrap", () => {
         for (const s of STOPS) {
-            const [L, a, b] = rawOklchToOklab(s.L, s.C, s.h);
-            const lin = oklabToLinearSRGB(L, a, b);
+            const lin = linearChannels(s);
             const expected = [
                 Math.max(0, lin[0]),
                 Math.max(0, lin[1]),
@@ -70,12 +83,11 @@ describe("aurora color ≡ value.js canonical core (inv-K-2)", () => {
         }
     });
 
-    it("oklchStopToHex === value.js [rawOklchToOklab → oklabToRgb255 → hex] (exact string)", () => {
-        const toHex = (v: number) => Math.round(v).toString(16).padStart(2, "0");
+    it("oklchStopToHex === Value toRgba8 (exact string)", () => {
+        const toHex = (v: number) => v.toString(16).padStart(2, "0");
         for (const s of STOPS) {
-            const [L, a, b] = rawOklchToOklab(s.L, s.C, s.h);
-            const [r, g, bch] = oklabToRgb255(L, a, b);
-            const expected = `#${toHex(r)}${toHex(g)}${toHex(bch)}`;
+            const [r, g, b] = value(toRgba8(finalOklch(s), { gamut: "clip" }));
+            const expected = `#${toHex(r)}${toHex(g)}${toHex(b)}`;
             expect(oklchStopToHex(s)).toBe(expected);
         }
     });
@@ -86,16 +98,15 @@ describe("aurora color ≡ value.js canonical core (inv-K-2)", () => {
         }
     });
 
-    it("hexToOklchStop agrees with the value.js srgbToOKLab → rawOklabToOklch path (1e-6)", () => {
+    it("hexToOklchStop agrees with Value parseCssColor → convertColor (1e-6)", () => {
         for (const hex of HEXES) {
-            const h = hex.replace("#", "");
-            const r = parseInt(h.slice(0, 2), 16);
-            const g = parseInt(h.slice(2, 4), 16);
-            const b = parseInt(h.slice(4, 6), 16);
-            const [L, a, bch] = srgbToOKLab(r / 255, g / 255, b / 255);
-            const [Lo, C, H] = rawOklabToOklch(L, a, bch);
+            const parsed = parseCssColor(hex);
+            if (!parsed.ok) throw new Error(parsed.diagnostics[0].code);
+            const [L, C, H] = value(
+                convertColor(parsed.value, "oklch"),
+            ).channels as readonly number[];
             const got = hexToOklchStop(hex);
-            expect(Math.abs(got.L - Lo)).toBeLessThanOrEqual(EPS);
+            expect(Math.abs(got.L - L!)).toBeLessThanOrEqual(EPS);
             expect(Math.abs(got.C - C)).toBeLessThanOrEqual(EPS);
             // hue is undefined for achromatic stops; only compare when chromatic
             if (C > 1e-4) expect(Math.abs(got.h - H)).toBeLessThanOrEqual(EPS);
@@ -117,8 +128,7 @@ describe("aurora color ≡ value.js canonical core (inv-K-2)", () => {
         const buf = flattenPalette(palette, 8);
         // independent reference via the value.js path
         for (let i = 0; i < palette.length; i++) {
-            const [L, a, b] = rawOklchToOklab(palette[i]!.L, palette[i]!.C, palette[i]!.h);
-            const lin = oklabToLinearSRGB(L, a, b);
+            const lin = linearChannels(palette[i]!);
             const expected = [Math.max(0, lin[0]), Math.max(0, lin[1]), Math.max(0, lin[2])];
             for (let c = 0; c < 3; c++) {
                 expect(Math.abs(buf[i * 3 + c]! - expected[c]!)).toBeLessThanOrEqual(EPS);

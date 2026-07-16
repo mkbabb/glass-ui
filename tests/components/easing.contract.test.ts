@@ -2,6 +2,7 @@ import { flushPromises, mount } from "@vue/test-utils";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import EasingPicker from "@glass/components/easing/EasingPicker.vue";
 import { COPY_ATTEMPT_TIMEOUT_MS } from "@glass/components/easing/constants";
+import type { EasingPickerValue } from "@glass/components/easing/composables/useEasingPicker";
 
 const clipboardDescriptor = Object.getOwnPropertyDescriptor(navigator, "clipboard");
 
@@ -13,16 +14,95 @@ function mountPicker() {
     return mount(EasingPicker, { attachTo: document.body });
 }
 
+const curve = (overrides: Partial<EasingPickerValue> = {}): EasingPickerValue => ({
+    mode: "bezier",
+    css: "cubic-bezier(0.2, 0.3, 0.8, 0.9)",
+    fn: (t: number) => t,
+    points: [0.2, 0.3, 0.8, 0.9] as const,
+    steps: 4,
+    term: "jump-end",
+    ...overrides,
+});
+
 afterEach(() => {
     vi.useRealTimers();
     vi.restoreAllMocks();
     vi.unstubAllGlobals();
-    if (clipboardDescriptor) Object.defineProperty(navigator, "clipboard", clipboardDescriptor);
+    if (clipboardDescriptor)
+        Object.defineProperty(navigator, "clipboard", clipboardDescriptor);
     else Reflect.deleteProperty(navigator, "clipboard");
     document.body.innerHTML = "";
 });
 
 describe("EasingPicker product contract", () => {
+    it("hydrates and replaces the complete authored value without remounting or echo churn", async () => {
+        const updates: EasingPickerValue[] = [];
+        const wrapper = mount(EasingPicker, {
+            attachTo: document.body,
+            props: {
+                modelValue: curve(),
+                "onUpdate:modelValue": (value) => {
+                    if (value) updates.push(value);
+                },
+            },
+        });
+
+        expect(wrapper.get("code").text()).toBe("cubic-bezier(0.2, 0.3, 0.8, 0.9)");
+        expect(updates).toHaveLength(1);
+        const canonical = updates[0]!;
+        await wrapper.setProps({ modelValue: canonical });
+        expect(updates).toHaveLength(1);
+
+        await wrapper.setProps({
+            modelValue: curve({
+                mode: "steps",
+                css: "steps(7, jump-start)",
+                steps: 7,
+                term: "jump-start",
+            }),
+        });
+        expect(wrapper.attributes("data-mode")).toBe("steps");
+        expect(wrapper.get("code").text()).toBe("steps(7, jump-start)");
+        expect(updates).toHaveLength(2);
+
+        await wrapper.setProps({
+            modelValue: curve({
+                points: [0.1, -0.2, 0.9, 1.2],
+                css: "cubic-bezier(0.1, -0.2, 0.9, 1.2)",
+            }),
+        });
+        expect(wrapper.attributes("data-mode")).toBe("bezier");
+        expect(wrapper.get("code").text()).toBe("cubic-bezier(0.1, -0.2, 0.9, 1.2)");
+        expect(updates).toHaveLength(3);
+        wrapper.unmount();
+    });
+
+    it("normalizes externally supplied authoring bounds before writing them back", () => {
+        const updates: EasingPickerValue[] = [];
+        const wrapper = mount(EasingPicker, {
+            attachTo: document.body,
+            props: {
+                modelValue: curve({
+                    points: [-2, 10, 2, -10] as const,
+                    steps: 99,
+                    term: "unknown" as EasingPickerValue["term"],
+                }),
+                "onUpdate:modelValue": (value) => {
+                    if (value) updates.push(value);
+                },
+            },
+        });
+
+        expect(wrapper.get("code").text()).toBe("cubic-bezier(0, 1.6, 1, -0.6)");
+        expect(updates).toHaveLength(1);
+        expect(updates[0]).toMatchObject({
+            points: [0, 1.6, 1, -0.6],
+            steps: 12,
+            term: "jump-end",
+        });
+        wrapper.unmount();
+    });
+
     it("exposes two named keyboard sliders that update the authored literal", async () => {
         const wrapper = mountPicker();
         const canvas = wrapper.get("svg");
@@ -50,7 +130,12 @@ describe("EasingPicker product contract", () => {
     it("shows pending and copied states, then cancels the reset timer on unmount", async () => {
         vi.useFakeTimers();
         let resolveCopy!: () => void;
-        const writeText = vi.fn(() => new Promise<void>((resolve) => { resolveCopy = resolve; }));
+        const writeText = vi.fn(
+            () =>
+                new Promise<void>((resolve) => {
+                    resolveCopy = resolve;
+                }),
+        );
         setClipboard({ writeText });
         const wrapper = mountPicker();
 
@@ -74,7 +159,9 @@ describe("EasingPicker product contract", () => {
         await flushPromises();
 
         expect(wrapper.attributes("data-copy-state")).toBe("failed");
-        expect(wrapper.get('[role="status"]').text()).toContain("Clipboard unavailable");
+        expect(wrapper.get('[role="status"]').text()).toContain(
+            "Clipboard unavailable",
+        );
         expect(wrapper.get("code").classes()).toContain("break-all");
         expect(wrapper.get("code").classes()).not.toContain("truncate");
         await wrapper.get('[data-testid="easing-select-literal"]').trigger("click");
@@ -83,7 +170,9 @@ describe("EasingPicker product contract", () => {
     });
 
     it("turns Clipboard denial into failure and lets the same action retry", async () => {
-        const denied = vi.fn().mockRejectedValue(new DOMException("Denied", "NotAllowedError"));
+        const denied = vi
+            .fn()
+            .mockRejectedValue(new DOMException("Denied", "NotAllowedError"));
         setClipboard({ writeText: denied });
         const wrapper = mountPicker();
         const copy = wrapper.get('[data-testid="easing-copy"]');
@@ -104,8 +193,14 @@ describe("EasingPicker product contract", () => {
     it("times out a stalled Clipboard write and keeps retry and unmount timer-safe", async () => {
         vi.useFakeTimers();
         let resolveStalled!: () => void;
-        const writeText = vi.fn()
-            .mockImplementationOnce(() => new Promise<void>((resolve) => { resolveStalled = resolve; }))
+        const writeText = vi
+            .fn()
+            .mockImplementationOnce(
+                () =>
+                    new Promise<void>((resolve) => {
+                        resolveStalled = resolve;
+                    }),
+            )
             .mockResolvedValueOnce(undefined);
         setClipboard({ writeText });
         const wrapper = mountPicker();
@@ -115,7 +210,9 @@ describe("EasingPicker product contract", () => {
         expect(wrapper.attributes("data-copy-state")).toBe("pending");
         await vi.advanceTimersByTimeAsync(COPY_ATTEMPT_TIMEOUT_MS);
         expect(wrapper.attributes("data-copy-state")).toBe("failed");
-        expect(wrapper.find('[data-testid="easing-select-literal"]').exists()).toBe(true);
+        expect(wrapper.find('[data-testid="easing-select-literal"]').exists()).toBe(
+            true,
+        );
 
         await copy.trigger("click");
         await flushPromises();
@@ -132,27 +229,40 @@ describe("EasingPicker product contract", () => {
         const reducedMotionListeners: Array<(event: { matches: boolean }) => void> = [];
         const mediaQuery = {
             matches: false,
-            addEventListener: vi.fn((_type: string, listener: (event: { matches: boolean }) => void) => {
-                reducedMotionListeners.push(listener);
-            }),
+            addEventListener: vi.fn(
+                (_type: string, listener: (event: { matches: boolean }) => void) => {
+                    reducedMotionListeners.push(listener);
+                },
+            ),
             removeEventListener: vi.fn(),
         };
-        vi.stubGlobal("matchMedia", vi.fn(() => mediaQuery));
+        vi.stubGlobal(
+            "matchMedia",
+            vi.fn(() => mediaQuery),
+        );
 
         let nextFrame = 0;
         const frames = new Map<number, FrameRequestCallback>();
-        vi.stubGlobal("requestAnimationFrame", vi.fn((callback: FrameRequestCallback) => {
-            const id = ++nextFrame;
-            frames.set(id, callback);
-            return id;
-        }));
-        vi.stubGlobal("cancelAnimationFrame", vi.fn((id: number) => frames.delete(id)));
+        vi.stubGlobal(
+            "requestAnimationFrame",
+            vi.fn((callback: FrameRequestCallback) => {
+                const id = ++nextFrame;
+                frames.set(id, callback);
+                return id;
+            }),
+        );
+        vi.stubGlobal(
+            "cancelAnimationFrame",
+            vi.fn((id: number) => frames.delete(id)),
+        );
         vi.spyOn(performance, "now").mockReturnValue(0);
 
         const wrapper = mountPicker();
         await wrapper.get('[data-testid="easing-playback"]').trigger("click");
         expect(wrapper.attributes("data-playback-state")).toBe("playing");
-        expect(wrapper.get('[data-testid="easing-playback"]').text()).toContain("Restart");
+        expect(wrapper.get('[data-testid="easing-playback"]').text()).toContain(
+            "Restart",
+        );
         expect(wrapper.get('[data-testid="easing-cancel"]').text()).toContain("Cancel");
 
         const staleFrame = [...frames.values()][0]!;
@@ -167,7 +277,9 @@ describe("EasingPicker product contract", () => {
         finalFrame(1200);
         await wrapper.vm.$nextTick();
         expect(wrapper.attributes("data-playback-state")).toBe("complete");
-        expect(wrapper.get('[data-testid="easing-playback"]').text()).toContain("Replay");
+        expect(wrapper.get('[data-testid="easing-playback"]').text()).toContain(
+            "Replay",
+        );
 
         await wrapper.get('[data-testid="easing-playback"]').trigger("click");
         for (const listener of reducedMotionListeners) listener({ matches: true });
@@ -175,9 +287,35 @@ describe("EasingPicker product contract", () => {
         expect(wrapper.attributes("data-playback-state")).toBe("complete");
         expect(wrapper.attributes("data-reduced-motion")).toBe("");
         expect(frames.size).toBe(0);
-        expect(wrapper.get('[data-testid="easing-playback"]').text()).toContain("Replay");
+        expect(wrapper.get('[data-testid="easing-playback"]').text()).toContain(
+            "Replay",
+        );
 
         wrapper.unmount();
-        expect(mediaQuery.removeEventListener).toHaveBeenCalled();
+        expect(mediaQuery.removeEventListener).not.toHaveBeenCalled();
+    });
+
+    it("stays idle under initial PRM and completes only after a requested preview", async () => {
+        const mediaQuery = {
+            matches: true,
+            addEventListener: vi.fn(),
+            removeEventListener: vi.fn(),
+        };
+        vi.stubGlobal(
+            "matchMedia",
+            vi.fn(() => mediaQuery),
+        );
+        const requestFrame = vi.fn();
+        vi.stubGlobal("requestAnimationFrame", requestFrame);
+
+        const wrapper = mountPicker();
+        expect(wrapper.attributes("data-playback-state")).toBe("idle");
+        expect(wrapper.find('[data-testid="easing-travel-dot"]').exists()).toBe(false);
+
+        await wrapper.get('[data-testid="easing-playback"]').trigger("click");
+        expect(wrapper.attributes("data-playback-state")).toBe("complete");
+        expect(wrapper.find('[data-testid="easing-travel-dot"]').exists()).toBe(true);
+        expect(requestFrame).not.toHaveBeenCalled();
+        wrapper.unmount();
     });
 });

@@ -85,6 +85,22 @@ const emit = defineEmits<{ (e: "select", index: number): void }>();
 /** v-model:active — the active 0-based index. */
 const active = defineModel<number>("active", { default: 0 });
 
+const count = computed(() =>
+    Number.isFinite(props.count) ? Math.max(0, Math.trunc(props.count)) : 0,
+);
+const activeIndex = computed(() =>
+    count.value === 0
+        ? 0
+        : Math.min(count.value - 1, Math.max(0, Math.round(active.value || 0))),
+);
+watch(
+    [count, active],
+    ([, index]) => {
+        if (index !== activeIndex.value) active.value = activeIndex.value;
+    },
+    { immediate: true },
+);
+
 // SVG resource references resolve document-wide. Namespace both definitions and
 // their consumers per component instance so co-mounted pagers cannot alias.
 const resourceId = useId().replace(/[^a-zA-Z0-9_-]/g, "");
@@ -120,9 +136,9 @@ const vertical = computed(() => props.orientation === "vertical");
 
 const win = computed(() =>
     props.windowFit && props.windowFit > 0
-        ? pagerWindow(props.count, active.value, props.windowFit)
+        ? pagerWindow(count.value, activeIndex.value, props.windowFit)
         : {
-              shown: Array.from({ length: Math.max(0, props.count) }, (_, i) => i),
+              shown: Array.from({ length: count.value }, (_, i) => i),
               clippedStart: false,
               clippedEnd: false,
           },
@@ -141,7 +157,7 @@ usePagerWorm({
     bedDotEls,
     shown,
     vertical,
-    active,
+    active: activeIndex,
 });
 
 // keyboard focus survives a window recompute: if the focused dot scrolled out of
@@ -153,7 +169,7 @@ watch(shown, (next) => {
     const focused = document.activeElement as HTMLElement;
     const stillShown = next.some((i) => dotEls.get(i) === focused);
     if (!stillShown) {
-        void nextTick(() => dotEls.get(active.value)?.focus());
+        void nextTick(() => dotEls.get(activeIndex.value)?.focus());
     }
 });
 
@@ -176,7 +192,7 @@ function select(i: number): void {
 const tabStopIndex = computed(() => {
     const s = shown.value;
     if (s.length === 0) return -1;
-    return s.includes(active.value) ? active.value : s[0]!;
+    return s.includes(activeIndex.value) ? activeIndex.value : s[0]!;
 });
 function rovingTabindex(i: number): number {
     return i === tabStopIndex.value ? 0 : -1;
@@ -192,7 +208,7 @@ function focusSlide(i: number): void {
 // native `disabled` (no dot is disabled today — the skip is honest, not a fabricated prop;
 // an off-window index is `undefined` → treated enabled → select+recompute+focus).
 function stepTo(from: number, dir: 1 | -1): void {
-    const n = props.count;
+    const n = count.value;
     if (n === 0) return;
     for (let step = 1; step <= n; step++) {
         const i = (from + dir * step + n * step) % n; // wrap
@@ -203,7 +219,7 @@ function stepTo(from: number, dir: 1 | -1): void {
     }
 }
 function edgeTo(edge: "first" | "last"): void {
-    const n = props.count;
+    const n = count.value;
     if (n === 0) return;
     const order =
         edge === "first"
@@ -217,7 +233,7 @@ function edgeTo(edge: "first" | "last"): void {
     }
 }
 function onKeydown(e: KeyboardEvent): void {
-    const from = active.value;
+    const from = activeIndex.value;
     const nextKey = vertical.value ? "ArrowDown" : "ArrowRight";
     const prevKey = vertical.value ? "ArrowUp" : "ArrowLeft";
     let handled = true;
@@ -322,7 +338,7 @@ function onKeydown(e: KeyboardEvent): void {
                 :key="i"
                 :ref="(el) => setBedDot(i, el as Element | null)"
                 class="goo-dot"
-                :data-active="i === active ? '' : undefined"
+                :data-active="i === activeIndex ? '' : undefined"
                 :data-edge="
                     (i === shown[0] && win.clippedStart) ||
                     (i === shown[shown.length - 1] && win.clippedEnd)
@@ -352,11 +368,11 @@ function onKeydown(e: KeyboardEvent): void {
             :ref="(el) => setDot(i, el as Element | null)"
             type="button"
             :role="pattern === 'group' ? undefined : 'tab'"
-            :aria-selected="pattern === 'group' ? undefined : i === active"
-            :aria-current="pattern === 'group' && i === active ? 'true' : undefined"
+            :aria-selected="pattern === 'group' ? undefined : i === activeIndex"
+            :aria-current="pattern === 'group' && i === activeIndex ? 'true' : undefined"
             :aria-label="`Go to slide ${i + 1}`"
             :tabindex="rovingTabindex(i)"
-            :data-active="i === active ? '' : undefined"
+            :data-active="i === activeIndex ? '' : undefined"
             :data-edge="
                 (k === 0 && win.clippedStart) || (k === shown.length - 1 && win.clippedEnd)
                     ? ''

@@ -10,7 +10,7 @@
 // bite: remove the gamutMapStop guard from a derive branch → an over-1 neon stop REDs.
 
 import { describe, it, expect } from "vitest";
-import { rawOklchToOklab, oklabToLinearSRGB } from "@mkbabb/value.js";
+import { convertColor, oklch } from "@mkbabb/value.js/color";
 import {
     deriveAurora,
     type AuroraHarmony,
@@ -48,8 +48,11 @@ const EASINGS: DeriveEasing[] = ["linear", "sine", "bell"];
 const TEMPS = [0, 0.5, 1.0];
 
 function rawLinear(stop: { L: number; C: number; h: number }): number[] {
-    const [L, a, b] = rawOklchToOklab(stop.L, stop.C, stop.h);
-    return oklabToLinearSRGB(L, a, b);
+    const source = oklch(stop.L, stop.C, stop.h);
+    if (!source.ok) throw new Error(source.error.code);
+    const converted = convertColor(source.value, "srgb-linear");
+    if (!converted.ok) throw new Error(converted.error.code);
+    return converted.value.channels.map(Number);
 }
 
 describe("deriveAurora — neon-seed gamut matrix (W5.2)", () => {
@@ -116,4 +119,3 @@ describe("deriveAurora — neon-seed gamut matrix (W5.2)", () => {
         }
     });
 });
-

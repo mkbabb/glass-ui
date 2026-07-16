@@ -2,12 +2,12 @@
 import { computed, ref, watch } from "vue";
 import { useSpring } from "../../composables/motion/useSpring";
 import { useLiquidFlex } from "../../composables/motion/useLiquidFlex";
-import { useSpringPress } from "../../composables/motion/useSpringPress";
+import { useLiquidPress } from "../../composables/motion/useLiquidPress";
 import { vSpecular } from "../../composables/glass";
 
 // BG.W-SPRING-REGISTER-TIDY — the head/fill/press clocks are ScrubberTimeline-LOCAL
 // per-primitive spring defaults (presets-in-consumers). They are JS-only registers
-// (no CSS `--spring-*` token, no MOTION_CURVES twin) that serve THIS ONE surface, so
+// (no CSS `--spring-*` token) that serve THIS ONE surface, so
 // they live HERE, not in the global SPRING_PRESETS vocabulary (which drained back to
 // the canonical 6 — the register-sprawl fix). Each (response, ζ) pair is byte-preserved
 // off the retired `timeline-*` rows (no motion delta) and is a sanctioned per-primitive
@@ -32,7 +32,7 @@ const PRESS_SPRING = { response: 0.22, dampingFraction: 0.7 }; // grab-anticipat
  * motion engine): travel rides a `useSpring`/SpringProgress position written
  * to `transform: translateX()` (NEVER `style.left` — Safari composites
  * transform, not left); `useLiquidFlex` `"tanh"` velocity-squish multiplies
- * into the SAME matrix (vol-preserving, cap ≤1.12); `useSpringPress` grab
+ * into the SAME matrix (vol-preserving, cap ≤1.12); `useLiquidPress` grab
  * anticipation; the velocity term is the head spring's own derivative (the
  * self-extinguishing per-frame velocity SpringProgress already computes — the
  * GOLDEN §0 "drive off the spring derivative" path, no free-running rAF); the
@@ -99,13 +99,14 @@ watch(
 // the resolved squish scalar (≥1) — paired reciprocally in the matrix.
 const headStretch = computed(() => flex.stretch.value);
 
-// ── Beat 1 · ANTICIPATION — `useSpringPress` grab-squash on pointerdown.
-const press = useSpringPress({
+// ── Beat 1 · ANTICIPATION — the public uniform `useLiquidPress` register.
+const press = useLiquidPress({
     response: PRESS_SPRING.response,
     dampingFraction: PRESS_SPRING.dampingFraction,
+    shrinkDepth: 0.04,
+    squish: false,
+    pressVar: "--timeline-press-t",
 });
-// 1 at rest → 0.96 floor at full press (the --scale-press anticipation dip).
-const pressScale = computed(() => 1 - 0.04 * press.value.value);
 
 // ── Beat 4 · ACCENT-FLOOD — a one-shot wash that ripples down the fill from
 // the landed position then clears (PRM-static; the gesture still lands).
@@ -153,7 +154,11 @@ function onTrackUp() {
 
 function onTrackKeydown(e: KeyboardEvent) {
     const step = e.shiftKey ? 0.1 : 0.01;
-    if (e.key === "ArrowRight" || e.key === "ArrowUp") {
+    if (e.key === "Home" || e.key === "End") {
+        e.preventDefault();
+        emit("update:modelValue", e.key === "Home" ? 0 : 1);
+        fireFlood();
+    } else if (e.key === "ArrowRight" || e.key === "ArrowUp") {
         e.preventDefault();
         emit("update:modelValue", Math.min(1, props.modelValue + step));
         fireFlood();
@@ -165,19 +170,20 @@ function onTrackKeydown(e: KeyboardEvent) {
 }
 
 // ── The head transform: travel = translateX (compositor, % of channel),
-// squish = scale(sx, 1/sx) (vol-preserving, center-pinned) × the press dip.
+// squish = scale(sx, 1/sx) (vol-preserving, center-pinned); the individual
+// `scale` property from useLiquidPress composes the uniform anticipation dip.
 // translateX is expressed in % of the head's own box so it tracks the
 // channel; the channel-relative offset is the spring fraction × 100%.
 const headStyle = computed(() => {
     const t = headSpring.value.value;
     const sx = headStretch.value;
-    const sy = (1 / sx) * pressScale.value;
     return {
+        ...press.pressStyle.value,
         // travel rides translateX (NEVER left) — the channel offset is the
         // spring fraction; `calc` keeps the bead centred on its own width.
         transform:
             `translateX(calc(${(t * 100).toFixed(3)}cqw - 50%)) ` +
-            `scale(${(sx * pressScale.value).toFixed(4)}, ${sy.toFixed(4)})`,
+            `scale(${sx.toFixed(4)}, ${(1 / sx).toFixed(4)})`,
         "--flex-vel": flex.flexVel.value.toFixed(4),
     };
 });
@@ -206,6 +212,7 @@ const fillStyle = computed(() => ({
             role="slider"
             tabindex="0"
             :aria-valuenow="Number(modelValue ?? 0)"
+            :aria-valuetext="label || undefined"
             aria-valuemin="0"
             aria-valuemax="1"
             aria-label="Timeline"
@@ -285,8 +292,7 @@ const fillStyle = computed(() => ({
 
 .glass-track:focus-visible {
     box-shadow:
-        var(--glass-material-rim),
-        var(--glass-under-shadow-default),
+        var(--glass-material-rim), var(--glass-under-shadow-default),
         var(--focus-ring-shadow);
 }
 

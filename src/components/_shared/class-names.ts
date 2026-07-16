@@ -1,16 +1,20 @@
-import { type ClassValue, clsx } from "clsx";
+export type ClassValue =
+    | string
+    | number
+    | false
+    | null
+    | undefined
+    | ClassValue[]
+    | { readonly [className: string]: unknown };
 
 /**
  * `cn()` — class-name compositor for glass-ui components.
  *
- * Rationale (W3.b.2 / A5 §3 Split 6): `tailwind-merge` ships ~22 KB
- * gzipped of full Tailwind config to resolve every conflict pair across
- * the framework. Glass-ui exercises a small, stable subset of Tailwind
- * utilities; the conflict surface is enumerable. We replace twMerge with
- * a hand-rolled deduplicator that handles the ~30 conflict pairs glass-ui
- * actually relies on, paying ~0.5 KB gzipped instead.
+ * Glass-ui uses a small, stable subset of Tailwind utilities, so a compact
+ * local conflict table is sufficient. This keeps class normalization and
+ * last-write-wins deduplication in one dependency-free owner.
  *
- * Semantics: clsx normalises the variadic argument shape (strings,
+ * Semantics: `joinClassValues` normalises the variadic argument shape (strings,
  * arrays, conditional objects, falsy filtering). The deduplicator then
  * walks the joined string left-to-right, computes each token's
  * conflict-key (the CSS-property bucket the utility writes to), and
@@ -26,7 +30,26 @@ import { type ClassValue, clsx } from "clsx";
  * not in the conflict table).
  */
 export function cn(...inputs: ClassValue[]): string {
-    return dedupClasses(clsx(inputs));
+    return dedupClasses(joinClassValues(...inputs));
+}
+
+/** Normalize Vue-compatible class values without shipping a runtime class helper. */
+export function joinClassValues(...inputs: ClassValue[]): string {
+    const classes: string[] = [];
+    const visit = (value: ClassValue): void => {
+        if (!value) return;
+        if (typeof value === "string" || typeof value === "number") {
+            classes.push(String(value));
+        } else if (Array.isArray(value)) {
+            value.forEach(visit);
+        } else {
+            for (const [name, enabled] of Object.entries(value)) {
+                if (enabled) classes.push(name);
+            }
+        }
+    };
+    inputs.forEach(visit);
+    return classes.join(" ");
 }
 
 /**

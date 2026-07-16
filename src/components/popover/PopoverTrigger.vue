@@ -1,27 +1,52 @@
 <script setup lang="ts">
-// PopoverTrigger — root-adaptive (BI.W-OVERLAY-UNION). Renders the reka
-// HoverCardTrigger under the union's fine-hover root, else the reka
-// PopoverTrigger. Injects the resolved-root flag from `<Popover>`; a trigger
-// used without a union parent falls to the PopoverTrigger (click) branch.
-import { computed } from "vue";
+import { computed, useAttrs, type HTMLAttributes } from "vue";
 import {
-    PopoverTrigger,
-    HoverCardTrigger,
-    type PopoverTriggerProps,
+    HoverCardTrigger as RekaHoverCardTrigger,
+    PopoverTrigger as RekaPopoverTrigger,
 } from "reka-ui";
+import type { PrimitiveProps } from "../_shared/primitive";
 import { usePopoverUnion } from "./popoverContext";
 
-const props = defineProps<PopoverTriggerProps>();
+export interface PopoverTriggerProps {
+    /** Merge trigger behavior into one interactive child. */
+    asChild?: PrimitiveProps["asChild"];
+    class?: HTMLAttributes["class"];
+}
 
+defineOptions({ name: "PopoverTrigger", inheritAttrs: false });
+
+const props = withDefaults(defineProps<PopoverTriggerProps>(), {
+    asChild: false,
+});
+defineSlots<{ default?: () => unknown }>();
+
+const attrs = useAttrs();
+const forwardedAttrs = computed(() => {
+    const { as: _as, reference: _reference, ...forwarded } = attrs;
+    return props.asChild ? forwarded : { ...forwarded, type: "button" };
+});
 const union = usePopoverUnion();
 const usesHoverRoot = computed(() => union?.usesHoverRoot.value ?? false);
 </script>
 
 <template>
-    <HoverCardTrigger v-if="usesHoverRoot" :as="props.as" :as-child="props.asChild">
+    <RekaHoverCardTrigger
+        v-if="usesHoverRoot"
+        v-bind="forwardedAttrs"
+        as="button"
+        :as-child="asChild"
+        :class="props.class"
+    >
         <slot />
-    </HoverCardTrigger>
-    <PopoverTrigger v-else v-bind="props">
+    </RekaHoverCardTrigger>
+
+    <RekaPopoverTrigger
+        v-else
+        v-bind="forwardedAttrs"
+        as="button"
+        :as-child="asChild"
+        :class="props.class"
+    >
         <slot />
-    </PopoverTrigger>
+    </RekaPopoverTrigger>
 </template>

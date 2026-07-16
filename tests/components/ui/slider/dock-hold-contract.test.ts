@@ -86,7 +86,7 @@ describe("AX.W03 — dock keepDockOpen host-native hold contract", () => {
                     held,
                 } as unknown as DockContext;
                 provideDockContext(ctx);
-                return () => h("div", { class: "spy-host" }, [h(Slider, { modelValue: [42], max: 100 })]);
+                return () => h("div", { class: "spy-host" }, [h(Slider, { modelValue: [42], max: 100, "aria-label": "Dock hold value" })]);
             },
         });
 
@@ -135,7 +135,7 @@ describe("AX.W03 — dock keepDockOpen host-native hold contract", () => {
                     held,
                 } as unknown as DockContext;
                 provideDockContext(ctx);
-                return () => h(Slider, { modelValue: [42], max: 100 });
+                return () => h(Slider, { modelValue: [42], max: 100, "aria-label": "Dock hold value" });
             },
         });
 
@@ -167,6 +167,7 @@ describe("AX.W03 — dock keepDockOpen host-native hold contract", () => {
                             default: () => [
                                 h(Slider, {
                                     modelValue: v.value,
+                                    "aria-label": "Dock hold value",
                                     "onUpdate:modelValue": (n: number[] | undefined) =>
                                         (v.value = n ?? v.value),
                                     max: 100,

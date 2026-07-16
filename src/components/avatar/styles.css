@@ -1,0 +1,88 @@
+@layer components {
+    .glass-avatar {
+        --avatar-size: var(--control-h-md);
+        position: relative;
+        display: inline-grid;
+        flex: none;
+        inline-size: var(--avatar-size);
+        block-size: var(--avatar-size);
+        vertical-align: middle;
+        isolation: isolate;
+    }
+
+    .glass-avatar[data-size="md"] {
+        --avatar-size: 4rem;
+    }
+
+    .glass-avatar[data-size="lg"] {
+        --avatar-size: 8rem;
+    }
+
+    .glass-avatar__identity,
+    .glass-avatar__image,
+    .glass-avatar__fallback {
+        inline-size: 100%;
+        block-size: 100%;
+    }
+
+    .glass-avatar__identity {
+        display: grid;
+        overflow: hidden;
+        place-items: center;
+        border: 1px solid var(--glass-border-wash);
+        background: var(--glass-bg-wash);
+        color: var(--foreground);
+        box-shadow: var(--glass-specular), var(--shadow-sm);
+    }
+
+    .glass-avatar[data-shape="circle"] .glass-avatar__identity {
+        border-radius: var(--radius-pill);
+    }
+
+    .glass-avatar[data-shape="square"] .glass-avatar__identity {
+        border-radius: var(--radius-input);
+    }
+
+    .glass-avatar__image,
+    .glass-avatar__fallback {
+        grid-area: 1 / 1;
+    }
+
+    .glass-avatar__image {
+        object-fit: cover;
+    }
+
+    .glass-avatar__fallback {
+        display: grid;
+        place-items: center;
+        background: color-mix(in srgb, var(--secondary) 82%, transparent);
+        font-size: var(--type-caption);
+        font-weight: var(--font-weight-semibold);
+        letter-spacing: var(--tracking-tight);
+        line-height: 1;
+        user-select: none;
+    }
+
+    .glass-avatar[data-size="md"] .glass-avatar__fallback {
+        font-size: var(--type-subheading);
+    }
+
+    .glass-avatar[data-size="lg"] .glass-avatar__fallback {
+        font-size: var(--type-display-2);
+    }
+
+    .glass-avatar__status {
+        position: absolute;
+        inset-inline-end: -0.125rem;
+        inset-block-end: -0.125rem;
+        z-index: 1;
+        display: grid;
+        min-inline-size: 0.875rem;
+        min-block-size: 0.875rem;
+        place-items: center;
+        padding: 0.125rem;
+        border-radius: var(--radius-pill);
+        background: var(--background);
+        box-shadow: 0 0 0 1px var(--glass-border-wash);
+    }
+}

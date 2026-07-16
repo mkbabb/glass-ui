@@ -1,0 +1,106 @@
+@layer components {
+    .field-control {
+        --field-control-height: var(--control-h-md);
+        --field-control-font: var(--control-text);
+        --control-surface-bg: var(--input-on-glass);
+        --glass-defined-plate: var(--control-surface-bg);
+
+        display: block;
+        inline-size: 100%;
+        max-inline-size: 100%;
+        min-inline-size: 0;
+        border: 1.5px solid var(--control-surface-border);
+        background: var(--control-surface-bg);
+        backdrop-filter: var(--glass-cell-backdrop-filter, var(--control-surface-blur));
+        box-shadow: var(--glass-rim-top), var(--glass-rim-bottom);
+        padding-inline: calc(1rem * var(--ui-scale));
+        color: var(--foreground);
+        caret-color: currentColor;
+        font: inherit;
+        font-size: var(--field-control-font);
+    }
+
+    .field-control[data-size="sm"] {
+        --field-control-height: var(--control-h-sm);
+        --field-control-font: var(--control-text-sm);
+    }
+
+    .field-control[data-size="lg"] {
+        --field-control-height: var(--control-h-lg);
+    }
+
+    .field-control[data-kind="input"] {
+        block-size: var(--field-control-height);
+        border-radius: var(--radius-pill);
+    }
+
+    .field-control[data-kind="textarea"] {
+        min-block-size: max(5lh, calc(5rem * var(--ui-scale)));
+        border-radius: var(--radius-field);
+        padding-block: calc(0.75rem * var(--ui-scale));
+        line-height: var(--type-leading-body);
+        overflow: auto;
+    }
+
+    .field-control::placeholder {
+        color: var(--muted-foreground);
+        opacity: 0.68;
+    }
+
+    .field-control:focus-visible {
+        outline: none;
+        border-color: var(--color-accent-opaque, var(--focus-ring-color));
+        box-shadow: var(--focus-ring-shadow);
+    }
+
+    .field-control:is(:user-invalid, [data-state="invalid"]) {
+        --control-surface-bg: color-mix(
+            in srgb,
+            var(--destructive) 8%,
+            var(--input-on-glass)
+        );
+        border-color: var(--destructive);
+    }
+
+    .field-control:is(:user-invalid, [data-state="invalid"]):focus-visible {
+        box-shadow: var(--invalid-ring);
+    }
+
+    .field-control[data-state="readonly"] {
+        --control-surface-bg: color-mix(
+            in oklab,
+            var(--input-on-glass),
+            var(--muted) 18%
+        );
+        cursor: text;
+    }
+
+    .field-control[data-state="disabled"] {
+        cursor: not-allowed;
+        opacity: var(--opacity-disabled);
+    }
+
+    .field-control[data-kind="textarea"][data-resize="none"] {
+        resize: none;
+    }
+
+    .field-control[data-kind="textarea"][data-resize="horizontal"] {
+        resize: horizontal;
+    }
+
+    .field-control[data-kind="textarea"][data-resize="both"] {
+        resize: both;
+    }
+
+    .field-control[data-kind="textarea"]:is(
+            [data-resize="vertical"],
+            [data-resize="content"]
+        ) {
+        resize: vertical;
+    }
+
+    .field-control[data-kind="textarea"][data-resize="content"] {
+        field-sizing: content;
+        max-block-size: var(--textarea-content-max, 12lh);
+    }
+}

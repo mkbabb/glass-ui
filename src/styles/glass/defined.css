@@ -19,8 +19,8 @@
        both legs read it, so the scalar is genuinely load-bearing (dead-knob-proof) and a
        host dials definition on any ancestor.
 
-   The DEFAULT flip (the wave's PURPOSE): the control cohort — Button glass variants
-   (.btn-glass) · .input-pill (Input/Textarea/NumberField) · .control-surface
+   The default flip applies to the form-control cohort — .input-pill
+   (Input/Textarea/NumberField) · .control-surface
    (SelectTrigger) — is DEFINED by default, so a control reads as a control over a flat
    page (the AX.W54 over-reach transposition BD §3.3 invited). A CONTENT surface composes
    NO .glass-defined and stays transmissive (the negative arm — the flip does not bleed).
@@ -40,7 +40,6 @@
        so the floor sits under the fill it actually paints; a bare `.glass-*` rung +
        .glass-defined falls back to the ladder-rung plate (--glass-plate-tinted). */
     .glass-defined,
-    .btn-glass,
     .input-pill,
     .control-surface {
         --glass-definition: 1;
@@ -75,12 +74,8 @@
         border-color: var(--glass-border-defined);
     }
 
-    /* Per-family plate mapping — the floor layers under the fill each family PAINTS
-       (btn-glass composes its own tinted --glass-fill; the form controls read the shared
-       --control-surface-bg REST register). */
-    .btn-glass {
-        --glass-defined-plate: var(--glass-fill);
-    }
+    /* Per-family plate mapping — form controls read the shared
+       --control-surface-bg REST register. */
     .input-pill,
     .control-surface {
         --glass-defined-plate: var(--control-surface-bg);

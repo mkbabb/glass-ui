@@ -1,25 +1,17 @@
 <script setup lang="ts">
-import { computed, type HTMLAttributes } from 'vue'
-import { ToastDescription, type ToastDescriptionProps } from 'reka-ui'
-import { cn } from '../_shared/class-names'
+import type { HTMLAttributes } from "vue";
+import { ToastDescription as RekaToastDescription } from "reka-ui";
+import { cn } from "../_shared/class-names";
 
-interface Props extends ToastDescriptionProps {
-  class?: HTMLAttributes['class']
+export interface ToastDescriptionProps {
+    class?: HTMLAttributes["class"];
 }
 
-const props = defineProps<Props>()
-
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
-  return delegated
-})
+const props = defineProps<ToastDescriptionProps>();
 </script>
 
 <template>
-  <ToastDescription
-    v-bind="delegatedProps"
-    :class="cn('text-sm opacity-90', props.class)"
-  >
-    <slot />
-  </ToastDescription>
+    <RekaToastDescription :class="cn('text-sm opacity-90', props.class)">
+        <slot />
+    </RekaToastDescription>
 </template>

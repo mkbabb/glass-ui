@@ -3,8 +3,8 @@
  * ── Thin @import ROOT (cohesion-aware carve) ───────────────────────────────
  * The utility body is carved into cohesive `utilities/*.css` partials (each
  * under the 500-line no-god-module bound), @import-ed below in CASCADE ORDER.
- * The @layer components base block (split at the metric-badge seam into
- * base/components AND, at BB.W-CARVE3, at the
+ * The @layer components base block (split into base/components and, at
+ * BB.W-CARVE3, at the
  * post-tap-squish seam into base/base-misc — all adjacent same-layer blocks,
  * isomorphic), and the @utility button cluster keep their source order.
  * Accessibility modes load once at the end of styles/index.css. See

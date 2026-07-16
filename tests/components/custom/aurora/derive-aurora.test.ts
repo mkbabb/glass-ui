@@ -1,10 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import {
-    isInSRGBGamut,
-    oklabToLinearSRGB,
-    rawOklchToOklab,
-} from "@mkbabb/value.js";
+import { convertColor, oklch } from "@mkbabb/value.js/color";
 
 import { deriveAurora, cssToOklch, oklchToLinear } from "@glass/components/aurora/composables/color";
 import type { AuroraHarmony } from "@glass/components/aurora/composables/color";
@@ -24,7 +20,7 @@ import type { OklchStop } from "@glass/components/aurora/constants/presets";
  *
  * AS.W7-W3 hardening (H4): the original seed set was all moderate-chroma; this
  * suite adds ADVERSARIAL seeds — neon primaries, near-black, near-white, and
- * non-hex CSS formats — that drive `gamutMapOKLab` onto the gamut hull where
+ * non-hex CSS formats — that drive `mapColorToGamut` onto the gamut hull where
  * float round-trip error escapes [0,1]³. See `gamutMapStop`'s doc: the over-1
  * overshoot (the only escape the GPU bake does not clamp) is nudged to 0; a
  * sub-1.1e-4 negative hull residual remains but is clamped by `oklchToLinear`'s
@@ -62,20 +58,22 @@ const ADVERSARIAL_SEEDS = [
     "oklch(0.7 0.37 30)",
 ];
 
-// isInSRGBGamut is a hard [0,1]³ test; allow a float-boundary epsilon so a stop
-// landing exactly on the gamut hull (gamutMapOKLab's target) is not a false fail.
+// Allow a float-boundary epsilon so a stop landing exactly on the mapped hull is
+// not a false fail.
 // The measured worst hull-float residual across the adversarial × harmony matrix
 // is ~1.04e-4 (≈ 0.027/255 — sub-perceptible); 2e-4 covers it with headroom.
 const GAMUT_EPS = 2e-4;
 
 function inGamut(stop: OklchStop): boolean {
-    const [L, a, b] = rawOklchToOklab(stop.L, stop.C, stop.h);
-    const [lr, lg, lb] = oklabToLinearSRGB(L, a, b);
-    if (isInSRGBGamut(lr, lg, lb)) return true;
+    const source = oklch(stop.L, stop.C, stop.h);
+    if (!source.ok) return false;
+    const converted = convertColor(source.value, "srgb-linear");
+    if (!converted.ok) return false;
+    const [lr, lg, lb] = converted.value.channels as readonly number[];
     // tolerate a hull-boundary stop within epsilon on each channel
     const clamp01 = (v: number) =>
         v < -GAMUT_EPS || v > 1 + GAMUT_EPS ? false : true;
-    return clamp01(lr) && clamp01(lg) && clamp01(lb);
+    return clamp01(lr!) && clamp01(lg!) && clamp01(lb!);
 }
 
 /**
@@ -136,7 +134,7 @@ describe("deriveAurora — seed → gamut-safe N-stop aurora palette (D10b)", ()
                           .h
                     : seed.h;
             for (const stop of out) {
-                // gamutMapOKLab preserves hue exactly in OKLab; the OKLCh hue can
+                // mapColorToGamut preserves hue; the OKLCh hue can
                 // wobble only for near-achromatic stops (C→0). Compare on a
                 // circular delta and skip the achromatic-apex case.
                 if (stop.C < 1e-3) continue;
@@ -252,6 +250,34 @@ describe("deriveAurora — seed → gamut-safe N-stop aurora palette (D10b)", ()
         // analogous stays a narrow neighbourhood — well under a quarter-turn
         expect(span).toBeGreaterThan(20);
         expect(span).toBeLessThan(90);
+    });
+
+    it("uses degree-domain temperature arcs without midpoint shift or pole overshoot", () => {
+        const options = {
+            stopCount: 3,
+            harmony: "monochrome" as const,
+            lightnessSpread: 0.1,
+            chromaFalloff: 1,
+            chromaEasing: "linear" as const,
+        };
+        const unshifted = deriveAurora("oklch(0.6 0.04 350)", {
+            ...options,
+            temperatureShift: 0,
+        });
+        const shifted = deriveAurora("oklch(0.6 0.04 350)", {
+            ...options,
+            temperatureShift: 1,
+        });
+
+        expect(hueDelta(shifted[0]!.h, 328)).toBeLessThan(0.1);
+        expect(hueDelta(shifted[1]!.h, unshifted[1]!.h)).toBeLessThan(1e-6);
+        expect(hueDelta(shifted[2]!.h, 12)).toBeLessThan(0.1);
+        expect(hueDelta(shifted[0]!.h, 250)).toBeLessThan(
+            hueDelta(unshifted[0]!.h, 250),
+        );
+        expect(hueDelta(shifted[2]!.h, 70)).toBeLessThan(
+            hueDelta(unshifted[2]!.h, 70),
+        );
     });
 
     it("respects a custom hueSpread for analogous (wider seed → wider walk)", () => {

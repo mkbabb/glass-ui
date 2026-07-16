@@ -18,13 +18,13 @@
  *   ints0    : vec4<i32>   off  80   (uStopCount, uNucleiCount, uWarpMode, uNoiseOctaves)
  *   ints1    : vec4<i32>   off  96   (uMedium, uHuePath, _, _)
  *   palette  : array<vec4<f32>, 8>  off 112  (rgb linear-sRGB stop + pad)
- *   nuc0     : array<vec4<f32>, 6>  off 240  (pos.x, pos.y, radius, paletteBias)
- *   nuc1     : array<vec4<f32>, 6>  off 336  (valueBias, driftRadius, driftPhase, elong)
- *   nuc2     : array<vec4<f32>, 6>  off 432  (angle, _, _, _)
- *   scalars4 : vec4<f32>   off 528  (uStrokeAmount, uStrokeScale, uStrokeAnisotropy, uCanvasGrain)
- *   scalars5 : vec4<f32>   off 544  (uWetEdge, uGranulation, uBrokenColor, uKuwaharaQ)
- *   kuwahara : vec4<f32>   off 560  (uKuwaharaRadius, uKuwaharaSectors, _, _)
- *   total    : 576 bytes (16-aligned)
+ *   nuc0     : array<vec4<f32>, 8>  off 240  (pos.x, pos.y, radius, paletteBias)
+ *   nuc1     : array<vec4<f32>, 8>  off 368  (valueBias, driftRadius, driftPhase, elong)
+ *   nuc2     : array<vec4<f32>, 8>  off 496  (angle, _, _, _)
+ *   scalars4 : vec4<f32>   off 624  (uStrokeAmount, uStrokeScale, uStrokeAnisotropy, uCanvasGrain)
+ *   scalars5 : vec4<f32>   off 640  (uWetEdge, uGranulation, uBrokenColor, uKuwaharaQ)
+ *   kuwahara : vec4<f32>   off 656  (uKuwaharaRadius, uKuwaharaSectors, _, _)
+ *   total    : 672 bytes (16-aligned)
  *
  * BC.W-VIZ-AURORA (T4) — the painterly-medium scalar lanes (scalars4/scalars5/kuwahara)
  * are APPENDED after the arrays, so EVERY pre-existing offset is byte-identical and the
@@ -53,7 +53,7 @@ import {
 import type { AuroraCursorUniforms } from "./uniformBridge";
 
 /** The total uniform-buffer byte size (16-aligned). */
-export const AURORA_WGPU_UNIFORM_BYTES = 576;
+export const AURORA_WGPU_UNIFORM_BYTES = 672;
 
 // Float32 word offsets (byte / 4) into the buffer.
 const OFF = {
@@ -66,12 +66,11 @@ const OFF = {
     ints1: 24, // viewed as Int32
     palette: 28, // 8 stops × 4 words
     nuc0: 28 + 8 * 4, // 60
-    nuc1: 28 + 8 * 4 + 6 * 4, // 84
-    nuc2: 28 + 8 * 4 + 12 * 4, // 108
-    // BC.W-VIZ-AURORA (T4) — the appended painterly-medium lanes (words 132/136/140).
-    scalars4: 28 + 8 * 4 + 18 * 4, // 132 → byte 528
-    scalars5: 28 + 8 * 4 + 18 * 4 + 4, // 136 → byte 544
-    kuwahara: 28 + 8 * 4 + 18 * 4 + 8, // 140 → byte 560
+    nuc1: 28 + 8 * 4 + 8 * 4, // 92
+    nuc2: 28 + 8 * 4 + 16 * 4, // 124
+    scalars4: 28 + 8 * 4 + 24 * 4, // 156 → byte 624
+    scalars5: 28 + 8 * 4 + 24 * 4 + 4, // 160 → byte 640
+    kuwahara: 28 + 8 * 4 + 24 * 4 + 8, // 164 → byte 656
 } as const;
 
 // BC.W-VIZ-AURORA (T4) — Kuwahara recipe defaults (mirror mediums.glsl.ts mediumKuwahara):
@@ -115,6 +114,7 @@ export function packAuroraWGPUUniforms(
     cfg: AuroraConfig,
     cursor: AuroraCursorUniforms,
     timeSec: number,
+    outputAlpha = cfg.alpha,
 ): AuroraWGPUUniformScratch {
     const { f32, i32, paletteScratch } = scratch;
 
@@ -131,7 +131,7 @@ export function packAuroraWGPUUniforms(
     f32[OFF.scalars1 + 3] = cfg.paperGrain;
 
     // scalars2: uAlpha, uNucleiDrift, uPaletteDrift, uBreathDepth
-    f32[OFF.scalars2 + 0] = cfg.alpha;
+    f32[OFF.scalars2 + 0] = outputAlpha;
     f32[OFF.scalars2 + 1] = cfg.nucleiDrift;
     f32[OFF.scalars2 + 2] = cfg.paletteDrift;
     f32[OFF.scalars2 + 3] = cfg.breathDepth;
@@ -146,7 +146,7 @@ export function packAuroraWGPUUniforms(
 
     // cursor: uCursor.x, flipY(uCursor.y), uMetalPolish, uMetalHeightScale
     // BG.W-AUR-METAL-FINISH — the two FREE cursor pad lanes carry the metal-medium knobs
-    // (ZERO new struct lanes; the 576-byte offset lockstep is preserved). A non-metal
+    // (zero new struct lanes; the cursor lane remains shared). A non-metal
     // config never reads them on the WGSL primary (applyMedium at uMedium≠8/9 skips
     // metalShade), so packing them never perturbs the smooth-default parity capture.
     f32[OFF.cursor + 0] = cursor.x;

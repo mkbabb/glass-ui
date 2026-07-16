@@ -1,16 +1,37 @@
-<script setup lang="ts">
-import type { HTMLAttributes } from 'vue'
-import { SelectLabel, type SelectLabelProps } from 'reka-ui'
-import { cn } from '../_shared/class-names'
+<script lang="ts">
+import type { HTMLAttributes } from "vue";
 
-const props = defineProps<SelectLabelProps & { class?: HTMLAttributes['class'] }>()
+export interface SelectLabelProps {
+    class?: HTMLAttributes["class"];
+}
+</script>
+
+<script setup lang="ts">
+import { computed, useAttrs } from "vue";
+import { SelectLabel as RekaSelectLabel } from "reka-ui";
+import { cn } from "../_shared/class-names";
+import { fixedHostAttrs } from "../_shared/primitive";
+
+defineOptions({ name: "SelectLabel", inheritAttrs: false });
+
+const props = defineProps<SelectLabelProps>();
+const attrs = useAttrs();
+const forwardedAttrs = computed(() => {
+    const { for: _for, ...forwarded } = fixedHostAttrs(attrs);
+    return forwarded;
+});
 </script>
 
 <template>
-  <!-- AX.W50 D17 — the section label reads the family SECONDARY rung
+    <!-- AX.W50 D17 — the section label reads the family SECONDARY rung
        (`text-dropdown-secondary`), resolving the witness-2 scale contradiction (the
        label role now matches the Combobox/Command group-heading scale family-wide). -->
-  <SelectLabel :class="cn('py-1.5 pl-8 pr-2 text-dropdown-secondary font-semibold', props.class)">
-    <slot />
-  </SelectLabel>
+    <RekaSelectLabel
+        v-bind="forwardedAttrs"
+        :class="
+            cn('py-1.5 pl-8 pr-2 text-dropdown-secondary font-semibold', props.class)
+        "
+    >
+        <slot />
+    </RekaSelectLabel>
 </template>

@@ -14,7 +14,7 @@ Five principles govern the library.
 
 **Orthogonal variants.** Surface tier (opacity + blur + border + shadow) is independent of semantic variant (intent) is independent of structural variant (shape geometry). A ghost Button sits flat on any Card variant. These axes never collapse into one vocabulary.
 
-**Aristotelian proportion + the iOS-27 canon.** Geometry is golden, never arbitrary: the type ladder steps by √φ (≈1.272), long-form leading is φ (1.618), the rest motion-weight is 1/φ (≈0.62), and every free radius / spacing / measure derives from the φ family rather than a round px (§L6). And the library is not "iOS-inspired" — it builds **reference-grade canonical iOS-27 Liquid-Glass demos that MATCH or BETTER** the analyzed reference set (`docs/tranches/BD/viz/video-audit/IOS27-REFERENCE.md`, the bar T1–T17): perfected transmissive warm-cream glass (a colorful field behind glass + a defined edge, NEVER gray/dark/opaque, both modes), visible paper grain, audacious √φ type, cartoon flow & punch, golden proportion, and liquid weight on all motion. A primitive that merely *approximates* the reference has not shipped. Proportion is a *bias*, not a tyranny — hit targets, optical corrections, and the 1px hairline stay literal.
+**Aristotelian proportion + the iOS-27 canon.** Geometry is golden, never arbitrary: the type ladder steps by √φ (≈1.272), long-form leading is φ (1.618), the rest motion-weight is 1/φ (≈0.62), and every free radius / spacing / measure derives from the φ family rather than a round px (§L6). And the library is not "iOS-inspired" — it builds **reference-grade canonical iOS-27 Liquid-Glass demos that MATCH or BETTER** the analyzed reference set (`docs/tranches/BD/viz/video-audit/IOS27-REFERENCE.md`, the bar T1–T17): perfected transmissive warm-cream glass (a colorful field behind glass + a defined edge, NEVER gray/dark/opaque, both modes), visible paper grain, audacious √φ type, cartoon flow & punch, golden proportion, and liquid weight on all motion. A primitive that merely _approximates_ the reference has not shipped. Proportion is a _bias_, not a tyranny — hit targets, optical corrections, and the 1px hairline stay literal.
 
 ---
 
@@ -26,7 +26,7 @@ Seven precepts compose the language. Each precept is canonical: when a primitive
 
 ### §L1 — Liquid Glass
 
-Liquid Glass is the iOS 26 material — a real-time refractive surface, not a Gaussian frost. Traditional `UIBlurEffect` *scattered* light through a convolution; Liquid Glass *bends and concentrates* light, closer to physical glass than to plastic. We adopt that mental model: glass-ui surfaces are lensing layers, not blur swatches.
+Liquid Glass is the iOS 26 material — a real-time refractive surface, not a Gaussian frost. Traditional `UIBlurEffect` _scattered_ light through a convolution; Liquid Glass _bends and concentrates_ light, closer to physical glass than to plastic. We adopt that mental model: glass-ui surfaces are lensing layers, not blur swatches.
 
 **The six-layer composite.** Every glass surface composes six optical layers. A primitive that omits one reads as iOS-7-flat, not iOS-26-liquid. We require all six (or the documented degraded fallback under §L5):
 
@@ -41,15 +41,15 @@ The substrate values live in `tokens.css §11..§14` and `glass.css`; the consum
 
 **The seven tiers.** I promulgate seven glass tiers as the canonical surface ladder. Each tier names what the surface IS in the composition, not which utility class it happens to use. The light-α / blur / border / shadow values cascade through §Glass Surfaces:
 
-| Tier | Class | Role | When it lands | iOS analogue |
-|---|---|---|---|---|
-| **Wash** | `.glass-wash` | Permeable veil over a kinetic backdrop | Dock substrate, input chrome, hover bg — anywhere the backdrop must read through | TabBar / Toolbar |
-| **Quiet** | `.glass-quiet` | Inline workspace chrome — present but recessive | Sidebar, inline panel, secondary chrome | Sidebar / inline panel |
-| **Resting** | `.glass-resting` | Canonical translucent + frosted plate; the default a primitive reaches for | Cards, sheets, the `<Surface>` default tier | Sheet / Card |
-| **Floating** | `.glass-floating` | Elevated transient surface | Popovers, tooltips, dropdowns, context menus | Popover / ContextMenu |
-| **Overlay** | `.glass-overlay` | Modal-over-modal; takeover surface | Dialogs, command palette, action sheets | Dialog / Action Sheet |
-| **Dock** | `.glass-dock` | Translucent plate over backdrop motion; `blur(0)` floor by design so the backdrop's blur reads through | DynamicIsland / Dock / floating action bar | DynamicIsland / Dock |
-| **Chassis** | `.glass-chassis` (via `<InstrumentChassis>`) | Engraved-bezel composition substrate hosting multi-region content | A meter + readout pair, a survey + flow-status pair, any multi-region instrument | NavigationStack container |
+| Tier         | Class                 | Role                                                                                                   | When it lands                                                                    | iOS analogue           |
+| ------------ | --------------------- | ------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------- | ---------------------- |
+| **Wash**     | `.glass-wash`         | Permeable veil over a kinetic backdrop                                                                 | Dock substrate, input chrome, hover bg — anywhere the backdrop must read through | TabBar / Toolbar       |
+| **Quiet**    | `.glass-quiet`        | Inline workspace chrome — present but recessive                                                        | Sidebar, inline panel, secondary chrome                                          | Sidebar / inline panel |
+| **Resting**  | `.glass-resting`      | Canonical translucent + frosted plate; the default a primitive reaches for                             | Cards, sheets, the `<Surface>` default tier                                      | Sheet / Card           |
+| **Floating** | `.glass-floating`     | Elevated transient surface                                                                             | Popovers, tooltips, dropdowns, context menus                                     | Popover / ContextMenu  |
+| **Overlay**  | `.glass-overlay`      | Modal-over-modal; takeover surface                                                                     | Dialogs, command palette, action sheets                                          | Dialog / Action Sheet  |
+| **Dock**     | `.glass-dock`         | Translucent plate over backdrop motion; `blur(0)` floor by design so the backdrop's blur reads through | DynamicIsland / Dock / floating action bar                                       | DynamicIsland / Dock   |
+| **Chassis**  | `<InstrumentChassis>` | Physical sleeve for one stage, optional inspector, and optional action region                          | An application-level instrument workbench                                        | Instrument housing     |
 
 The table above is the **vocabulary**. When I describe a primitive's surface I name the tier ("popover content is `floating`"; "dock is `dock`"; "modal is `overlay`"), and the reader knows the entire substrate cascade those words invoke.
 
@@ -71,15 +71,15 @@ The keyframes.js `useSpringOrchestrator` composable (§Composables) accepts both
 
 **Three canonical springs.** The iOS-17 named-preset trio is the workhorse vocabulary; each names a **feeling**, not a curve shape:
 
-| Preset | ζ (damping) | Bounce | Overshoot | Feels like | When it lands |
-|---|---|---|---|---|---|
-| `--spring-smooth` | 1.0 | 0.0 | 0% | "Sustained glide" | Pane swap, metric crossfade, sheet present, list reorder — anywhere the system speaks calmly |
-| `--spring-snappy` | 0.65 | 0.15 | ~7% | "Confident tap" | Tap release, toggle flip, dropdown enter, dock layer swap — anywhere the user just touched a pixel |
-| `--spring-bouncy` | 0.45 | 0.30 | ~20% | "Playful arrival" | Sheet entrance, modal entrance, toast arrival, blob morph, celebratory reveal |
+| Preset            | ζ (damping) | Bounce | Overshoot | Feels like        | When it lands                                                                                      |
+| ----------------- | ----------- | ------ | --------- | ----------------- | -------------------------------------------------------------------------------------------------- |
+| `--spring-smooth` | 1.0         | 0.0    | 0%        | "Sustained glide" | Pane swap, metric crossfade, sheet present, list reorder — anywhere the system speaks calmly       |
+| `--spring-snappy` | 0.65        | 0.15   | ~7%       | "Confident tap"   | Tap release, toggle flip, dropdown enter, dock layer swap — anywhere the user just touched a pixel |
+| `--spring-bouncy` | 0.45        | 0.30   | ~20%      | "Playful arrival" | Sheet entrance, modal entrance, toast arrival, blob morph, celebratory reveal                      |
 
 The `--spring-gentle` curve (ζ=0.85, < 1% overshoot) lives alongside as the patient-settle variant for scroll-driven choreography and ambient transitions; it is the smooth-bouncy bridge for cases where `smooth` reads as too inert. See §Easing → Spring curves for the full `linear()` interpolation values.
 
-**The Cartoon punch curve — `--ease-cartoon-punch` (§Easing).** The four springs are the calm Liquid-Glass vocabulary; their overshoot is bounded to ≤10% by invariant (a tighter, "pointed" spring is the too-springy defect). The **Cartoon register** (§L4 → universal exaggeration; §Shadows → the moving cast) reaches *past* that ceiling for its deliberate exaggeration via a **shaped `linear()` keyframe**, not a spring: `--ease-cartoon-punch` anticipates (a real ~4% dip *below* origin — the §L4 anticipation principle made a curve, which no damped spring can express, since a single damped spring approaches its target monotonically from one side), then overshoots ~22%, then settles. It ships as a plain CSS easing token in §Easing — NOT a `SPRING_PRESETS` row (the ≤10% overshoot invariant + the analytic spring solver stay intact) and NOT a typed `MOTION_CURVES` entry (`MotionCurveKind` is the closed `"spring" | "bezier"` union; a hand-shaped `linear()` is neither, so it lives as a raw `--ease-*` custom property, requiring no engine extension). It is loud by design and opt-in; the workhorse remains `snappy`. PRM collapses it to `--ease-standard` like every spring (§L5).
+**The Cartoon punch curve — `--ease-cartoon-punch` (§Easing).** The four springs are the calm Liquid-Glass vocabulary; their overshoot is bounded to ≤10% by invariant (a tighter, "pointed" spring is the too-springy defect). The **Cartoon register** (§L4 → universal exaggeration; §Shadows → the moving cast) reaches _past_ that ceiling for its deliberate exaggeration via a **shaped `linear()` keyframe**, not a spring: `--ease-cartoon-punch` anticipates (a real ~4% dip _below_ origin — the §L4 anticipation principle made a curve, which no damped spring can express, since a single damped spring approaches its target monotonically from one side), then overshoots ~22%, then settles. It ships only as a plain CSS easing token in §Easing — NOT a `SPRING_PRESETS` row and without a JavaScript mirror. It is loud by design and opt-in; the workhorse remains `snappy`. PRM collapses it to `--ease-standard` like every spring (§L5).
 
 **Two cubic-bezier fallbacks** coexist as the substrate-cheap path for micro-interactions and the iOS-native decelerate register:
 
@@ -110,30 +110,30 @@ The `useTouchGate` composable mediates the pointer / touch event distinction so 
 
 ### §L4 — Motion Tiers
 
-Disney's 12 principles are the canonical taxonomy for UI motion. **The library ships substrate for all twelve** — the *Liquid Weight is Universal* law: every **driver** motion (a motion the user's finger or a route-change caused) carries weight, inertia, bounce, and squish; it anticipates, overshoots, follows through, and travels an arc, and it morphs MORE the faster it moves (`useLiquidFlex` velocity-coupled squish). Motion that snaps tight with no give — instant, fade-only, no settle — is the anti-pattern, not a style. The principles split into two tiers by **who orchestrates them** (one primitive vs a scene), never by whether the library ships them.
+Disney's 12 principles are the canonical taxonomy for UI motion. **The library ships substrate for all twelve** — the _Liquid Weight is Universal_ law: every **driver** motion (a motion the user's finger or a route-change caused) carries weight, inertia, bounce, and squish; it anticipates, overshoots, follows through, and travels an arc, and it morphs MORE the faster it moves (`useLiquidFlex` velocity-coupled squish). Motion that snaps tight with no give — instant, fade-only, no settle — is the anti-pattern, not a style. The principles split into two tiers by **who orchestrates them** (one primitive vs a scene), never by whether the library ships them.
 
-**`--motion-weight` (0 → 1, rest `0.62 ≈ 1/φ`).** One scalar names *how much cartoon* a surface carries; it co-scales the squash depth, the overshoot share, the anticipation pull-back, and the cartoon-shadow travel together so they read as one proportioned deformation, never four unrelated tics. A primitive picks it once at rest (`0` = still, with a documented reason; dock / celebration push toward `1`). It is **driver-scoped**: an *observer* content-snap — a content carousel settling, a list reordering under the user's scroll — stays calm-overdamped per the §L2 driver-vs-observer rule (an over-springy carousel reads cheap; iOS reserves the bounce for open/morph). Liquid weight is universal on DRIVERS, not on every pixel that moves. PRM → `--motion-weight: 0` (the §L5 cascade zeroes the extra squash, overshoot, anticipation, arc, and stagger in one assignment). The token's value lands in §Motion per the Feature-token-home rule.
+**`--motion-weight` (0 → 1, rest `0.62 ≈ 1/φ`).** One scalar names _how much cartoon_ a surface carries; it co-scales the squash depth, the overshoot share, the anticipation pull-back, and the cartoon-shadow travel together so they read as one proportioned deformation, never four unrelated tics. A primitive picks it once at rest (`0` = still, with a documented reason; dock / celebration push toward `1`). It is **driver-scoped**: an _observer_ content-snap — a content carousel settling, a list reordering under the user's scroll — stays calm-overdamped per the §L2 driver-vs-observer rule (an over-springy carousel reads cheap; iOS reserves the bounce for open/morph). Liquid weight is universal on DRIVERS, not on every pixel that moves. PRM → `--motion-weight: 0` (the §L5 cascade zeroes the extra squash, overshoot, anticipation, arc, and stagger in one assignment). The token's value lands in §Motion per the Feature-token-home rule.
 
 **Universal tier — every primitive shipping driver motion honors these:**
 
-| # | Principle | iOS-27 embodiment | Glass-ui substrate (live) |
-|---|---|---|---|
-| 1 | **Squash & stretch** | press → scale 0.96, bounce back; vol-preserving X·Y squish on move | `--scale-press` + `--spring-snappy` (§L3); `useLiquidFlex` (X·Y≈1) |
-| 2 | **Anticipation** | a control dips before it launches; a sheet pulls back before sliding up | `--ease-cartoon-punch` pre-dip (§L2 / §Easing); `--motion-weight` |
-| 5 | **Follow-through / overlap** | a child glyph settles *after* its parent; a label cross-fades trailing the indicator glide | `useStagger` / `useStaggerReveal` per-element delay (× `--motion-weight`) |
-| 6 | **Slow in / slow out** | every non-spring decelerates | `--ease-standard`; springs carry it intrinsically |
-| 7 | **Arc** | a morph travels a curved path, not a straight lerp | the fission `--split-dx`/`--split-dy` two-axis travel + the `useLiquidReveal` source-rect FLIP path — a real curve, not a line |
-| 9 | **Timing** | tap < 250ms; transition 400–600ms; modal 500–800ms | `--duration-fast` / `-base` / `-slow` (§Duration) |
-| 10 | **Exaggeration** | spring overshoot; pull-to-refresh elastic; the cartoon PUNCH | `--spring-bouncy` (§L2) → the cartoon `--ease-cartoon-punch` ceiling |
-| 11 | **Solid drawing** | glass depth conveys z; the cartoon layered-offset shadow gives a 2.5-D pop | the §L1 seven-tier ladder + `--z-*`; the §Shadows Cartoon register |
-| 12 | **Appeal** | distinctive personality — refraction, blob/meatball morph, technicolor punch | `<Aurora>` + the meatball goo (§L7) + the Cartoon register |
+| #   | Principle                    | iOS-27 embodiment                                                                          | Glass-ui substrate (live)                                                                                                      |
+| --- | ---------------------------- | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
+| 1   | **Squash & stretch**         | press → scale 0.96, bounce back; vol-preserving X·Y squish on move                         | `--scale-press` + `--spring-snappy` (§L3); `useLiquidFlex` (X·Y≈1)                                                             |
+| 2   | **Anticipation**             | a control dips before it launches; a sheet pulls back before sliding up                    | `--ease-cartoon-punch` pre-dip (§L2 / §Easing); `--motion-weight`                                                              |
+| 5   | **Follow-through / overlap** | a child glyph settles _after_ its parent; a label cross-fades trailing the indicator glide | `useStagger` / `useStaggerReveal` per-element delay (× `--motion-weight`)                                                      |
+| 6   | **Slow in / slow out**       | every non-spring decelerates                                                               | `--ease-standard`; springs carry it intrinsically                                                                              |
+| 7   | **Arc**                      | a morph travels a curved path, not a straight lerp                                         | the fission `--split-dx`/`--split-dy` two-axis travel + the `useLiquidReveal` source-rect FLIP path — a real curve, not a line |
+| 9   | **Timing**                   | tap < 250ms; transition 400–600ms; modal 500–800ms                                         | `--duration-fast` / `-base` / `-slow` (§Duration)                                                                              |
+| 10  | **Exaggeration**             | spring overshoot; pull-to-refresh elastic; the cartoon PUNCH                               | `--spring-bouncy` (§L2) → the cartoon `--ease-cartoon-punch` ceiling                                                           |
+| 11  | **Solid drawing**            | glass depth conveys z; the cartoon layered-offset shadow gives a 2.5-D pop                 | the §L1 seven-tier ladder + `--z-*`; the §Shadows Cartoon register                                                             |
+| 12  | **Appeal**                   | distinctive personality — refraction, blob/meatball morph, technicolor punch               | `<Aurora>` + the meatball goo (§L7) + the Cartoon register                                                                     |
 
-**Scene-orchestrated tier — a composition orchestrates these from the universal substrate; the library *enables* them, no longer disclaims them:**
+**Scene-orchestrated tier — a composition orchestrates these from the universal substrate; the library _enables_ them, no longer disclaims them:**
 
-| # | Principle | Why it is scene-level | How the library enables it |
-|---|---|---|---|
-| 3 | **Staging** | backdrop-dim + non-focal desaturate is a scene decision, not a widget's | the drawer `--glass-drawer-t → scrim / page-scale` coupling + `<Aurora>` tone controls — the substrate provides the scrim + scale tokens, the consumer stages |
-| 8 | **Secondary action** | which sibling reacts to a primary is a cascade the scene owns | `useStagger` / `useStaggerReveal` chains in a composition recipe + the tab-indicator glide (`--tab-indicator-*`) carrying a trailing label cross-fade |
+| #   | Principle            | Why it is scene-level                                                   | How the library enables it                                                                                                                                    |
+| --- | -------------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 3   | **Staging**          | backdrop-dim + non-focal desaturate is a scene decision, not a widget's | the drawer `--glass-drawer-t → scrim / page-scale` coupling + `<Aurora>` tone controls — the substrate provides the scrim + scale tokens, the consumer stages |
+| 8   | **Secondary action** | which sibling reacts to a primary is a cascade the scene owns           | `useStagger` / `useStaggerReveal` chains in a composition recipe + the tab-indicator glide (`--tab-indicator-*`) carrying a trailing label cross-fade         |
 
 Principle 4 (straight-ahead vs. pose-to-pose) is not a tier — it is the §L2 spring-vs-ease decision (gestures = straight-ahead spring; transitions = pose-to-pose keyframe).
 
@@ -145,11 +145,11 @@ Apple's HIG mandates three a11y fallbacks for Liquid Glass; glass-ui inherits th
 
 Each bracket disables a specific subsystem rather than degrading the entire vocabulary uniformly. The tokens honor the media queries automatically — consumers do not roll their own checks.
 
-| User preference | Subsystem disabled | Glass-ui behavior |
-|---|---|---|
-| `prefers-reduced-transparency` | Transparency / blur | Surface α → 1.0; `backdrop-filter` → none; grain → 0; rim → solid border. Glass becomes opaque tinted surface; legibility floor guaranteed. |
-| `prefers-reduced-motion` | Springs + morphs + ambient motion | Springs → `--ease-standard` (no overshoot); rubber-band → cross-fade; `<Aurora>` pauses via `useIntersectionPause` siblings; tilt-gyro and shimmer off; tap-squish duration → instant or replaced with subtle opacity cue. |
-| `prefers-contrast: more` | Vibrancy + thin rim | Rim opacity → 1.0; rim width × 2; text color → max contrast (`--text-strong` floor); vibrancy / saturation boost off; contrast ratio guaranteed against the worst-case underlying content (WCAG 4.5:1 against any backdrop pixel, not just the midtone). |
+| User preference                | Subsystem disabled                | Glass-ui behavior                                                                                                                                                                                                                                        |
+| ------------------------------ | --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `prefers-reduced-transparency` | Transparency / blur               | Surface α → 1.0; `backdrop-filter` → none; grain → 0; rim → solid border. Glass becomes opaque tinted surface; legibility floor guaranteed.                                                                                                              |
+| `prefers-reduced-motion`       | Springs + morphs + ambient motion | Springs → `--ease-standard` (no overshoot); rubber-band → cross-fade; `<Aurora>` pauses via `useIntersectionPause` siblings; tilt-gyro and shimmer off; tap-squish duration → instant or replaced with subtle opacity cue.                               |
+| `prefers-contrast: more`       | Vibrancy + thin rim               | Rim opacity → 1.0; rim width × 2; text color → max contrast (`--text-strong` floor); vibrancy / saturation boost off; contrast ratio guaranteed against the worst-case underlying content (WCAG 4.5:1 against any backdrop pixel, not just the midtone). |
 
 **Worst-case contrast.** The contrast requirement on glass surfaces is NOT against the midtone backdrop — it is against the **worst-case** underlying content. A glass surface over `<Aurora>` must hold WCAG 4.5:1 against the brightest pixel Aurora can paint AND against the darkest. The §Glass Surfaces accessibility fallback rules + the §Default Color Palette text-color tokens encode this floor; primitives composing glass over kinetic backdrops must verify the floor at consumer build-time (Playwright-MCP visual contrast probe is the canonical verification path).
 
@@ -174,13 +174,15 @@ Proportion is a governing axis, peer to glass and motion. **Nothing dimensional 
 Every glass, motion, and meatball precept must render **identically perfect in Chrome AND Safari/WebKit** — a hard gate, not best-effort (the reference bar is iOS; a WebKit defect is a failed surface). The floor names the sanctioned + forbidden mechanisms ONCE so every precept cross-references one rule instead of re-litigating "Safari-safe" per section.
 
 **Sanctioned (identical on both engines):**
+
 - **Compositor channels only for steady-state animation** — `transform`, `opacity`, and a surface's OWN `filter` (blur-settle, brightness) are GPU-composited on both engines.
-- **Meatball goo = a STATIC inline-SVG `filter: url()` over a frozen layer** — the `feGaussianBlur` + `feColorMatrix` alpha-threshold goo (`DockGooFilter` / `GlassGooFilter` / `#glass-goo`, `fission-bridge.css`) is applied to a layer whose *children* move on `transform`; the filter element itself is static. The merge is a **real metaball** — two blurred shapes whose alpha thresholds fuse at the waist (necks stretch, thin, and SNAP), **never a naive ellipsoid tween**. **`color-interpolation-filters: sRGB` is mandatory**: WebKit renders SVG filters in sRGB *regardless* of the `color-interpolation-filters` value (a known WebKit limitation — see `WatercolorDot.vue`), while Chrome/FF honor `linearRGB`; declaring `sRGB` forces Chrome to match WebKit's forced-sRGB threshold so the waist reads identically on both (the live filters already set it).
+- **Meatball goo = a STATIC inline-SVG `filter: url()` over a frozen layer** — the `feGaussianBlur` + `feColorMatrix` alpha-threshold goo (`DockGooFilter` / `GlassGooFilter` / `#glass-goo`, `fission-bridge.css`) is applied to a layer whose _children_ move on `transform`; the filter element itself is static. The merge is a **real metaball** — two blurred shapes whose alpha thresholds fuse at the waist (necks stretch, thin, and SNAP), **never a naive ellipsoid tween**. **`color-interpolation-filters: sRGB` is mandatory**: WebKit renders SVG filters in sRGB _regardless_ of the `color-interpolation-filters` value (a known WebKit limitation — see `WatercolorDot.vue`), while Chrome/FF honor `linearRGB`; declaring `sRGB` forces Chrome to match WebKit's forced-sRGB threshold so the waist reads identically on both (the live filters already set it).
 - **`@supports` + PRM floors** — every glass / motion / goo precept ships its degraded arm (`@supports not (backdrop-filter)` solid arm; PRM → instant topology swap, zero neck frames).
 
 **Forbidden (breaks or janks on WebKit):**
-- **`backdrop-filter: url(#…)` for the goo or any steady-state** — WebKit drops an SVG-filter reference through `backdrop-filter`; the goo is a normal `filter` on the surface's own layer (the §L1 "glass cannot sample glass" trap is adjacent). *Sanctioned exception:* a **`@supports (backdrop-filter: url(#…))`-GATED, Chromium-only refraction enhancement with a plain-blur WebKit fallback** (the live `glass-refract` lens, `glass-refract.css`) — the gate + the fallback arm are what make it cross-engine-honest, never an un-gated declaration.
-- **A goo `filter: url(#…)` on an ANCESTOR of a transmissive glass surface** — an ancestor `filter` creates an isolated rendering buffer that KILLS `backdrop-filter` on EVERY descendant (both Chrome and WebKit), so the glass renders a flat opaque slab instead of transmitting the field behind it (a §3 / BA.W-NO-GRAY violation — the dock-hub goo-tear lesson). The goo metaball neck/bridge and a transmissive glass surface are mutually exclusive *under a shared ancestor filter*. The neck must be a **SIBLING** layer (the `fission-bridge.css` / goo-morph pattern — the goo rides its own layer next to the glass, never wrapping it), never an ancestor of the glass.
+
+- **`backdrop-filter: url(#…)` for the goo or any steady-state** — WebKit drops an SVG-filter reference through `backdrop-filter`; the goo is a normal `filter` on the surface's own layer (the §L1 "glass cannot sample glass" trap is adjacent). _Sanctioned exception:_ a **`@supports (backdrop-filter: url(#…))`-GATED, Chromium-only refraction enhancement with a plain-blur WebKit fallback** (the live `glass-refract` lens, `glass-refract.css`) — the gate + the fallback arm are what make it cross-engine-honest, never an un-gated declaration.
+- **A goo `filter: url(#…)` on an ANCESTOR of a transmissive glass surface** — an ancestor `filter` creates an isolated rendering buffer that KILLS `backdrop-filter` on EVERY descendant (both Chrome and WebKit), so the glass renders a flat opaque slab instead of transmitting the field behind it (a §3 / BA.W-NO-GRAY violation — the dock-hub goo-tear lesson). The goo metaball neck/bridge and a transmissive glass surface are mutually exclusive _under a shared ancestor filter_. The neck must be a **SIBLING** layer (the `fission-bridge.css` / goo-morph pattern — the goo rides its own layer next to the glass, never wrapping it), never an ancestor of the glass.
 - **Per-frame `backdrop-filter` re-blur in a steady-state loop** — re-samples the backdrop every frame (pathological on WebKit). Backdrop-blur ENGAGE is gated to a one-shot overlay-pull window, never a loop.
 - **`light-dark()` wrapping an inset-shadow fragment** — computes the whole `box-shadow` to none on both engines (the live `feedback_lightdark_inset_shadow` trap); per-mode arms only.
 - **Naive ellipsoid "blob" tweens** masquerading as metaballs — they read as two shapes sliding, not merging; the goo threshold is the only sanctioned merge.
@@ -211,7 +213,7 @@ Tokens live in `src/styles/tokens.css` under `:root`, with `.dark` overrides. Co
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "@mkbabb/glass-ui/styles";
-@import "./preset.css";        /* consumer token overrides */
+@import "./preset.css"; /* consumer token overrides */
 @variant dark (&:where(.dark, .dark *));
 ```
 
@@ -243,7 +245,7 @@ utilities.css  (density rungs)   ← --dock-tab-h-*, --dock-label-size  ← SPLI
 
 W3 Lane A consolidated the density assignments under `src/components/dock/styles/`, making dock match the timeline shape.
 
-**Forward reference — W4 token promotions.** The metric-stack value-clamp tokens (`--metric-stack-value-clamp-*`) and the timeline dot-fill tokens (`--timeline-dot-fill`, `--timeline-dot-stroke`) that land in W4 are required to follow this rule: they define in tokens.css under the relevant `§<feature>` block, and the feature stylesheet or SFC reads them. No new tokens may be assigned inside utilities.css or a secondary feature file.
+**Forward reference — W4 token promotions.** The timeline dot-fill tokens (`--timeline-dot-fill`, `--timeline-dot-stroke`) that land in W4 are required to follow this rule: they define in tokens.css under the relevant `§<feature>` block, and the feature stylesheet or SFC reads them. No new tokens may be assigned inside utilities.css or a secondary feature file.
 
 ---
 
@@ -251,16 +253,16 @@ W3 Lane A consolidated the density assignments under `src/components/dock/styles
 
 Eight timings form a rhythmic vocabulary:
 
-| Token                | Value    | Typical use                                 |
-|----------------------|----------|---------------------------------------------|
-| `--duration-instant` | 0.1s     | Near-instant feedback (fade visibility)     |
-| `--duration-fast`    | 0.2s     | Quick UI feedback (hover, small transforms) |
-| `--duration-normal`  | 0.3s     | Standard transitions                        |
-| `--duration-slow`    | 0.45s    | Deliberate reveal                           |
-| `--duration-panel`   | 0.55s    | Slide/dock expand                           |
-| `--duration-xl`      | 1.0s     | Long ambient animation                      |
-| `--duration-xxl`     | 1.5s     | Page-level mood                             |
-| `--duration-linger`  | 2.5s     | Background atmosphere, shimmer              |
+| Token                | Value | Typical use                                 |
+| -------------------- | ----- | ------------------------------------------- |
+| `--duration-instant` | 0.1s  | Near-instant feedback (fade visibility)     |
+| `--duration-fast`    | 0.2s  | Quick UI feedback (hover, small transforms) |
+| `--duration-normal`  | 0.3s  | Standard transitions                        |
+| `--duration-slow`    | 0.45s | Deliberate reveal                           |
+| `--duration-panel`   | 0.55s | Slide/dock expand                           |
+| `--duration-xl`      | 1.0s  | Long ambient animation                      |
+| `--duration-xxl`     | 1.5s  | Page-level mood                             |
+| `--duration-linger`  | 2.5s  | Background atmosphere, shimmer              |
 
 Shimmer-specific durations: `--duration-shimmer-fast` 3s · `--duration-shimmer` 5s · `--duration-shimmer-slow` 8s.
 
@@ -275,45 +277,48 @@ Dock internals: `--duration-popup-swap` 180ms.
 Generated from damped spring physics. Use `easing-function: var(--spring-*)` or Tailwind `ease-spring-*`.
 
 - **`--spring-smooth`** (ζ=1.0, critically damped, zero overshoot):
-  ```
-  linear(0, 0.0974, 0.2816, 0.4656, 0.6189, 0.7361, 0.821, 0.8806, 0.9213,
-         0.9487, 0.9668, 0.9787, 0.9864, 0.9914, 0.9945, 0.9966, 0.9978,
-         0.9987, 0.9992, 0.9995, 0.9997, 0.9998, 0.9999, 0.9999, 1)
-  ```
+
+    ```
+    linear(0, 0.0974, 0.2816, 0.4656, 0.6189, 0.7361, 0.821, 0.8806, 0.9213,
+           0.9487, 0.9668, 0.9787, 0.9864, 0.9914, 0.9945, 0.9966, 0.9978,
+           0.9987, 0.9992, 0.9995, 0.9997, 0.9998, 0.9999, 0.9999, 1)
+    ```
 
 - **`--spring-snappy`** (ζ=0.65, ~7% overshoot, quick settle):
-  ```
-  linear(0, 0.0727, 0.2386, 0.4363, 0.6262, 0.7861, 0.9075, 0.9902, 1.0395,
-         1.0628, 1.068, 1.0619, 1.0501, 1.0366, 1.0239, 1.0133, 1.0054,
-         1.0001, 0.997, 0.9956, 0.9954, 0.9959, 0.9967, 0.9976, 0.9985,
-         0.9992, 0.9997, 1, 1.0002, 1.0003, 1.0003)
-  ```
+
+    ```
+    linear(0, 0.0727, 0.2386, 0.4363, 0.6262, 0.7861, 0.9075, 0.9902, 1.0395,
+           1.0628, 1.068, 1.0619, 1.0501, 1.0366, 1.0239, 1.0133, 1.0054,
+           1.0001, 0.997, 0.9956, 0.9954, 0.9959, 0.9967, 0.9976, 0.9985,
+           0.9992, 0.9997, 1, 1.0002, 1.0003, 1.0003)
+    ```
 
 - **`--spring-bouncy`** (ζ=0.45, ~20% overshoot, elastic settle):
-  ```
-  linear(0, 0.0492, 0.1748, 0.3455, 0.5335, 0.7169, 0.8796, 1.0117, 1.1087,
-         1.1706, 1.2005, 1.2039, 1.1874, 1.1575, 1.1206, 1.0818, 1.0454,
-         1.0141, 0.9895, 0.9723, 0.962, 0.958, 0.959, 0.9635, 0.9703,
-         0.9781, 0.986, 0.9931, 0.9991, 1.0036, 1.0066, 1.0082, 1.0087,
-         1.0082, 1.007, 1.0055, 1.0039, 1.0023, 1.0009)
-  ```
+
+    ```
+    linear(0, 0.0492, 0.1748, 0.3455, 0.5335, 0.7169, 0.8796, 1.0117, 1.1087,
+           1.1706, 1.2005, 1.2039, 1.1874, 1.1575, 1.1206, 1.0818, 1.0454,
+           1.0141, 0.9895, 0.9723, 0.962, 0.958, 0.959, 0.9635, 0.9703,
+           0.9781, 0.986, 0.9931, 0.9991, 1.0036, 1.0066, 1.0082, 1.0087,
+           1.0082, 1.007, 1.0055, 1.0039, 1.0023, 1.0009)
+    ```
 
 - **`--spring-gentle`** (ζ=0.85, barely perceptible overshoot, slow ease):
-  ```
-  linear(0, 0.1018, 0.3031, 0.5094, 0.6812, 0.8083, 0.8945, 0.9486, 0.98,
-         0.9964, 1.0038, 1.0061, 1.006, 1.0049, 1.0036, 1.0024, 1.0015,
-         1.0008, 1.0004, 1.0002, 1.0001, 1, 1, 1, 1)
-  ```
+    ```
+    linear(0, 0.1018, 0.3031, 0.5094, 0.6812, 0.8083, 0.8945, 0.9486, 0.98,
+           0.9964, 1.0038, 1.0061, 1.006, 1.0049, 1.0036, 1.0024, 1.0015,
+           1.0008, 1.0004, 1.0002, 1.0001, 1, 1, 1, 1)
+    ```
 
 ### Cartoon punch (`linear()`—shaped keyframe, NOT a spring)
 
-The Cartoon register's motion half (§L2, §Shadows). A shaped `linear()` with an explicit negative anticipation leg: it dips below origin (anticipation — a thing no damped spring can express), crosses 1.0, peaks ~1.22 (the punch overshoot, deliberately past the spring ≤10% fence — which is why it is a *register*, not a spring), then settles. Compositor-safe (drives `transform` only). Opt-in, loud by design. PRM → `--ease-standard`. Not a `SPRING_PRESETS` row and not a typed `MOTION_CURVES` entry — a raw CSS easing token.
+The Cartoon register's motion half (§L2, §Shadows). A shaped `linear()` with an explicit negative anticipation leg: it dips below origin (anticipation — a thing no damped spring can express), crosses 1.0, peaks ~1.22 (the punch overshoot, deliberately past the spring ≤10% fence — which is why it is a _register_, not a spring), then settles. Compositor-safe (drives `transform` only). Opt-in, loud by design. PRM → `--ease-standard`. Not a `SPRING_PRESETS` row and intentionally without a JavaScript mirror — a raw CSS easing token.
 
 - **`--ease-cartoon-punch`**:
-  ```
-  linear(0, -0.012, -0.038 33%, 0 42%, 0.62, 0.93, 1.12, 1.22 66%, 1.18,
-         1.09, 1.02, 0.985, 0.98, 0.99, 0.997, 1)
-  ```
+    ```
+    linear(0, -0.012, -0.038 33%, 0 42%, 0.62, 0.93, 1.12, 1.22 66%, 1.18,
+           1.09, 1.02, 0.985, 0.98, 0.99, 0.997, 1)
+    ```
 
 ### Cubic-bezier (fallback, exits, non-spring)
 
@@ -328,45 +333,45 @@ The Cartoon register's motion half (§L2, §Shadows). A shaped `linear()` with a
 
 Twelve-tier stacking, plus two out-of-band tiers:
 
-| Token             | Value | Surfaces                             |
-|-------------------|-------|--------------------------------------|
-| `--z-background`  | 0     | Aurora, decorative layers            |
-| `--z-content`     | 10    | Main content                         |
-| `--z-controls`    | 20    | Inline controls                      |
-| `--z-bar`         | 30    | Status bars                          |
-| `--z-header`      | 35    | Headers                              |
-| `--z-dock`        | 40    | Docks                                |
-| `--z-panel`       | 45    | Floating editor panels               |
-| `--z-overlay`     | 50    | Full-screen overlays                 |
-| `--z-hovercard`   | 60    | Hover cards                          |
-| `--z-tooltip`     | 60    | Tooltips (coequal with hover cards)  |
-| `--z-popover`     | 70    | Popovers, dropdowns                  |
-| `--z-modal`       | 80    | Dialogs, sheets                      |
-| `--z-fullscreen`  | 90    | Fullscreen takeovers                 |
-| `--z-toast`       | 100   | Toast notifications                  |
-| `--z-max`         | 9999  | Emergency escape hatch               |
-| `--z-debug`       | 99999 | Debug overlays                       |
+| Token            | Value | Surfaces                            |
+| ---------------- | ----- | ----------------------------------- |
+| `--z-background` | 0     | Aurora, decorative layers           |
+| `--z-content`    | 10    | Main content                        |
+| `--z-controls`   | 20    | Inline controls                     |
+| `--z-bar`        | 30    | Status bars                         |
+| `--z-header`     | 35    | Headers                             |
+| `--z-dock`       | 40    | Docks                               |
+| `--z-panel`      | 45    | Floating editor panels              |
+| `--z-overlay`    | 50    | Full-screen overlays                |
+| `--z-hovercard`  | 60    | Hover cards                         |
+| `--z-tooltip`    | 60    | Tooltips (coequal with hover cards) |
+| `--z-popover`    | 70    | Popovers, dropdowns                 |
+| `--z-modal`      | 80    | Dialogs, sheets                     |
+| `--z-fullscreen` | 90    | Fullscreen takeovers                |
+| `--z-toast`      | 100   | Toast notifications                 |
+| `--z-max`        | 9999  | Emergency escape hatch              |
+| `--z-debug`      | 99999 | Debug overlays                      |
 
 ---
 
 ## Border Radius
 
-| Token            | Value              | Pixel (at 16 px base) | Use                        |
-|------------------|--------------------|-----------------------|----------------------------|
-| `--radius`       | 0.5rem             | 8 px                  | Default                    |
-| `--radius-sm`    | 4px                | 4 px                  | Tight corners (kbd, badge) |
-| `--radius-md`    | 6px                | 6 px                  | Medium                     |
-| `--radius-lg`    | var(--radius)      | 8 px                  | Interactive                |
-| `--radius-xl`    | 12px               | 12 px                 | Panels                     |
-| `--radius-2xl`   | 1rem               | 16 px                 | Large cards, dialogs       |
-| `--radius-pill`  | 9999px             | 9999 px               | Pills                      |
-| `--radius-card`  | var(--radius-2xl)  | 16 px                 | Card surfaces              |
-| `--radius-panel` | var(--radius-xl)   | 12 px                 | Panels                     |
-| `--radius-dialog`| var(--radius-2xl)  | 16 px                 | Modal dialogs              |
-| `--radius-input` | var(--radius)      | 8 px                  | Inputs                     |
-| `--radius-button`| var(--radius)      | 8 px                  | Buttons                    |
-| `--radius-badge` | var(--radius-pill) | 9999 px               | Badges                     |
-| `--radius-dock`  | var(--radius-pill) | 9999 px               | Dock container             |
+| Token             | Value              | Pixel (at 16 px base) | Use                        |
+| ----------------- | ------------------ | --------------------- | -------------------------- |
+| `--radius`        | 0.5rem             | 8 px                  | Default                    |
+| `--radius-sm`     | 4px                | 4 px                  | Tight corners (kbd, badge) |
+| `--radius-md`     | 6px                | 6 px                  | Medium                     |
+| `--radius-lg`     | var(--radius)      | 8 px                  | Interactive                |
+| `--radius-xl`     | 12px               | 12 px                 | Panels                     |
+| `--radius-2xl`    | 1rem               | 16 px                 | Large cards, dialogs       |
+| `--radius-pill`   | 9999px             | 9999 px               | Pills                      |
+| `--radius-card`   | var(--radius-2xl)  | 16 px                 | Card surfaces              |
+| `--radius-panel`  | var(--radius-xl)   | 12 px                 | Panels                     |
+| `--radius-dialog` | var(--radius-2xl)  | 16 px                 | Modal dialogs              |
+| `--radius-input`  | var(--radius)      | 8 px                  | Inputs                     |
+| `--radius-button` | var(--radius)      | 8 px                  | Buttons                    |
+| `--radius-badge`  | var(--radius-pill) | 9999 px               | Badges                     |
+| `--radius-dock`   | var(--radius-pill) | 9999 px               | Dock container             |
 
 **φ-derivation + the concentric rule (§L6).** The ladder is the √φ family, not arbitrary px: read `sm` (4px) as the base, `md` ≈ base·√φ, `--radius`/`lg` ≈ base·φ (the live 8px default), `xl` ≈ base·φ·√φ (12px), `2xl` ≈ base·φ² (16px) — the live values already sit on the ladder, so this is a derivation re-statement, not a visual break. **Nested surfaces are concentric**: an inner radius is `calc(var(--radius-outer) − var(--gap))` so the corners of a chip inside a card stay parallel to the card's (the iOS concentric-radius law; `BD.W-CONCENTRIC-RADIUS`). A new free radius earns a √φ-indexed rung, never a magic number.
 
@@ -409,9 +414,9 @@ The cartoon shadow is not just an elevation token — it is the **visual half of
                      -6px 6px 2px color-mix(in srgb, var(--shadow-color)  8%, transparent);
 ```
 
-> A *warm-tinted* (technicolor-color) cartoon cast — re-pointing the cartoon family off the neutral `--shadow-color`/`--foreground` toward a warm or chromatic ink — is a deliberate token decision deferred to the `cartoon-shadow` greenfield (`docs/tranches/BD/greenfield/cartoon-shadow/`), not asserted here.
+> A _warm-tinted_ (technicolor-color) cartoon cast — re-pointing the cartoon family off the neutral `--shadow-color`/`--foreground` toward a warm or chromatic ink — is a deliberate token decision deferred to the `cartoon-shadow` greenfield (`docs/tranches/BD/greenfield/cartoon-shadow/`), not asserted here.
 
-**The cast is a MOVING cast.** Under the register, the offset travels with the gesture: as a surface translates or presses, the cartoon-shadow offset slides *opposite* the motion (the cel's light source stays fixed while the object moves), scaled by `--motion-weight`. The travel is a `transform` on a `::after` shadow-caster layer — **never an animated `box-shadow`** (box-shadow is paint-bound, not compositor-cheap; §L7). The cast deepens on press (the object lifts off its shadow) and snaps back on release. A surface enters the register by composing a cartoon-shadow rung (the `.shadow-cartoon-{sm,md,lg}` utilities, or `<Card surface="cartoon">` / the `.cartoon-surface` utility, which read `--shadow-cartoon` directly) **with** `--ease-cartoon-punch` on its interactive transitions + the exaggerated `--scale-press` snap-and-settle. The register is opt-in (loud by design) — the default glass surface stays the calm six-layer composite. PRM → static cast, no travel, no punch. `prefers-contrast: more` → the cast opacity floors UP (the inked edge is a legibility asset); `prefers-reduced-transparency` does NOT touch it (opaque ink, not a transmissive layer — it survives as a bonus legibility anchor).
+**The cast is a MOVING cast on explicit controls.** Button and Badge punch treatments may drive the inert `.cartoon-cast` child through `--cartoon-press-t`; Card's `cartoon` decoration is deliberately static and adds no interaction engine. The travel stays compositor-only and PRM resolves to a static cast.
 
 ### Card flat-offset shadows
 
@@ -442,13 +447,13 @@ The cartoon shadow is not just an elevation token — it is the **visual half of
 
 Five tiers compose background opacity, backdrop-blur, border, shadow, grain. Dark mode boosts opacity and shifts grain blend (`overlay` → `soft-light`) for legibility. v0.8.0 renamed and extended the ladder: the prior four-rung ladder (subtle / default / medium / elevated) becomes a five-rung ladder (wash / quiet / resting / floating / overlay)—`quiet` is a new mid-low rung, `overlay` is a new modal-over-modal rung, and the others are renamed for tier semantics rather than utility-class register.
 
-| Tier      | Class               | Light opacity | Dark opacity | Blur                          | Border               | Shadow                     | Use                                 |
-|-----------|---------------------|---------------|--------------|-------------------------------|----------------------|----------------------------|-------------------------------------|
-| Wash      | `.glass-wash`       | 30%           | 38%          | `blur(1px) saturate(1.05)`    | 8% foreground        | `--glass-shadow-wash`      | Dock bg, input bg, hover overlays   |
-| Quiet     | `.glass-quiet`      | 50%           | 58%          | `blur(3px)`                   | 10% foreground       | `--glass-shadow-quiet`     | Inline workspace chrome             |
-| Resting   | `.glass-resting`    | 65%           | 72%          | `blur(12px) saturate(1.05)`   | 12% foreground       | `--glass-shadow-resting`   | Cards and the canonical plate; **`<Surface>` default tier**                                       |
-| Floating  | `.glass-floating`   | 80%           | 88%          | `blur(16px) saturate(1.4)`    | 15% foreground       | `--glass-shadow-floating`  | Popovers, tooltips, dropdowns       |
-| Overlay   | `.glass-overlay`    | 95%           | 96%          | `blur(24px) saturate(1.5)`    | 18% foreground       | `--glass-shadow-overlay`   | Dialogs, command palette, modals    |
+| Tier     | Class             | Light opacity | Dark opacity | Blur                        | Border         | Shadow                    | Use                                                         |
+| -------- | ----------------- | ------------- | ------------ | --------------------------- | -------------- | ------------------------- | ----------------------------------------------------------- |
+| Wash     | `.glass-wash`     | 30%           | 38%          | `blur(1px) saturate(1.05)`  | 8% foreground  | `--glass-shadow-wash`     | Dock bg, input bg, hover overlays                           |
+| Quiet    | `.glass-quiet`    | 50%           | 58%          | `blur(3px)`                 | 10% foreground | `--glass-shadow-quiet`    | Inline workspace chrome                                     |
+| Resting  | `.glass-resting`  | 65%           | 72%          | `blur(12px) saturate(1.05)` | 12% foreground | `--glass-shadow-resting`  | Cards and the canonical plate; **`<Surface>` default tier** |
+| Floating | `.glass-floating` | 80%           | 88%          | `blur(16px) saturate(1.4)`  | 15% foreground | `--glass-shadow-floating` | Popovers, tooltips, dropdowns                               |
+| Overlay  | `.glass-overlay`  | 95%           | 96%          | `blur(24px) saturate(1.5)`  | 18% foreground | `--glass-shadow-overlay`  | Dialogs, command palette, modals                            |
 
 ### Tokens per tier
 
@@ -463,9 +468,9 @@ For each tier, `--glass-bg-{tier}` (rgba), `--glass-blur-{tier}` (full filter st
 
 User feedback at N open suggested "top dock blur is a bit much, and generally our dock blurs need to be resolved to be more subtle." Source-of-truth audit at HEAD:
 
-| Surface | `backdrop-filter` value | Blur radius |
-|---|---|---|
-| `.glass-dock` (any dock; horizontal or vertical) | `blur(var(--glass-blur-dock-radius))` | **`0px`** |
+| Surface                                              | `backdrop-filter` value                       | Blur radius                       |
+| ---------------------------------------------------- | --------------------------------------------- | --------------------------------- |
+| `.glass-dock` (any dock; horizontal or vertical)     | `blur(var(--glass-blur-dock-radius))`         | **`0px`**                         |
 | `.glass-wash`, `.glass-quiet`, ..., `.glass-overlay` | `blur(<tier-radius>) saturate(<tier-factor>)` | `1` / `3` / `12` / `16` / `24` px |
 
 The dock filter contributes ZERO blur—the compositor still emits a backdrop-filter pass (the property is set + composes the `saturate(1.05)` from `--glass-blur-wash` if the dock token is missing, but with the dock token present the `saturate` channel is also omitted), but the radius is at the floor. Any perceived dock blur visible at the page level is contributed by the **backdrop** the dock sits over (e.g., the `<Aurora>` ambient layer); the dock is purely a translucent plate of `--glass-bg-dock` (32 % opacity) admitting backdrop pixels through.
@@ -476,21 +481,37 @@ NO-OP for N.W2 Lane B. No token change; no cascade adjustment. The audit lands h
 
 ### Canonical translucent + frosted—`<Surface>` default
 
-`<Surface>` (`src/components/surface/Surface.vue`) defaults to `tier="resting"`
-and `surface="glass"`, which composes the `.glass-resting` recipe above:
+`<Surface>` (`src/components/surface/Surface.vue`) defaults to
+`material="elevated"` and `surface="glass"`. The material role resolves to the
+`resting` tier and composes the `.glass-resting` recipe above:
 **65% background opacity + 12 px backdrop-blur + 1.05 saturation + 12%
 foreground border**. This is the canonical
 "translucent + frosted" surface; consumers asking for "the translucent
-frosted panel" should reach for `<Surface>` (or `<Card>` for the
-cartoon-shadowed sibling) without a tier override. The class chain is
+frosted panel" should reach for `<Surface>` (or `<Card>` for structured card
+anatomy) without a tier override. `content`, `elevated`, `functional`, and
+`overlay` resolve to `quiet`, `resting`, `floating`, and `overlay`; an explicit
+`tier` is the precise override. `deep` resolves truthfully to floating glass.
+Shadow, grain, and `off | subtle | full` specular are Surface-owned facilities.
+The class chain is
 `Surface.vue` → `.glass-resting` → `src/styles/glass.css`; grain is an
 independent opt-in through the `grain` prop.
 
+### Surface, Card, and command ownership
+
+`Surface` owns material role, tier, depth, shadow, grain, and specular paint.
+`Card` is a semantic content group over Surface: it owns only `sm | md` anatomy
+spacing, header/content/footer structure, and optional selection or static
+decoration. Card does not infer interactivity from its rendered element. Put an
+explicit `Button` or `Link` inside the card when the composition has a command;
+that control owns focus, keyboard activation, disabled state, and press motion.
+Card headers use a min-content-safe text column, footers wrap, and adjacent
+content/footer regions contribute one intentional gap without a default divider.
+
 ### Convenience shorthands
 
-- `.glass-card`—**static surface utility**: `.glass-resting` + `border-radius: var(--radius-card)` + offset card shadow. No hover lift; interactive cards live in `<Card>` (which composes its own hover via the `surface` ladder — `surface="cartoon"` → `.cartoon-surface`, or a hover tier) or in components that explicitly opt into a hover variant.
+- `.glass-card`—**static surface utility**: `.glass-resting` + `border-radius: var(--radius-card)` + offset card shadow. Card remains a static content group; explicit Button or Link descendants own commands.
 - `.glass-pill`—`.glass-resting` + pill radius + press feedback (scale 0.97 on active)
-- `.cartoon-surface`—**the cartoon decoration utility** (`src/components/card/styles.css`), composed by `<Card surface="cartoon">`: a 2px inked bezel + the layered-offset cel-shadow stamp (`--shadow-cartoon-md` → `-lg` on hover), and (the Cartoon register, §Shadows) the moving caster that punches on interaction. It composes ON TOP of the host's resolved glass tier — it is NOT itself a tier. (The former `.glass-cartoon` recipe + the `<CartoonCard>` sibling primitive are retired; this is the live carrier.)
+- `.cartoon-surface`—**the static cartoon decoration utility** (`src/components/card/styles.css`), composed by `<Card cartoon>`: a 2px inked bezel and layered-offset cel-shadow stamp. It composes over the Surface-owned material and is not a surface-axis member.
 
 ### Accessibility fallbacks
 
@@ -504,18 +525,17 @@ independent opt-in through the `grain` prop.
 
 Every interactive element implements the four-state contract plus focus and toggle.
 
-| State                     | Behavior                         | Token                                                            |
-|---------------------------|----------------------------------|------------------------------------------------------------------|
-| Rest                      | Default appearance               |—                                                               |
-| Hover                     | Scale up, or bg tint             | `--scale-hover` (1.08) · `--scale-hover-dock` (1.1)              |
-| Active / pressed          | Scale down                       | `--scale-press` (0.96, the canonical iOS rung — see §L3) · `--scale-press-btn` (0.97; aliases `--scale-press-sm`) · `--scale-press-dock` (0.92) |
-| Disabled                  | Reduced opacity, no pointer events | `--opacity-disabled` (0.50)                                    |
-| Focus-visible             | Ring + glow                      | `--focus-ring-shadow`: 0 0 0 2px rgba(ring, 0.30), 0 0 8px rgba(ring, 0.15) |
-| `aria-pressed` / `.is-active` | Tinted bg, full-opacity text | Component-scoped                                                 |
+| State                         | Behavior                           | Token                                                                                                                                           |
+| ----------------------------- | ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| Rest                          | Default appearance                 | —                                                                                                                                               |
+| Hover                         | Scale up, or bg tint               | `--scale-hover` (1.08) · `--scale-hover-dock` (1.1)                                                                                             |
+| Active / pressed              | Scale down                         | `--scale-press` (0.96, the canonical iOS rung — see §L3) · `--scale-press-btn` (0.97; aliases `--scale-press-sm`) · `--scale-press-dock` (0.92) |
+| Disabled                      | Reduced opacity, no pointer events | `--opacity-disabled` (0.50)                                                                                                                     |
+| Focus-visible                 | Ring + glow                        | `--focus-ring-shadow`: 0 0 0 2px rgba(ring, 0.30), 0 0 8px rgba(ring, 0.15)                                                                     |
+| `aria-pressed` / `.is-active` | Tinted bg, full-opacity text       | Component-scoped                                                                                                                                |
 
 ### Composable base classes
 
-- `.btn-interactive`—scale-based four-state + focus ring
 - `.interactive-item`—bg-tint four-state (50% accent) + focus ring
 - `.active-scale`—atomic `:active { transform: scale(0.97) }`
 - `.disabled-base`—atomic `:disabled { opacity + pointer-events }`
@@ -571,10 +591,10 @@ Glass-ui self-hosts its font subsystem under `src/fonts/`. Faces must ship under
 
 The library ships two OFL face families as bundled woff2 assets. Both pair their primary face with a paired calibrated `... Fallback` face that wraps the platform's system stack via `local()` + Capsize-derived `size-adjust` / `ascent-override` / `descent-override` overrides; the swap from fallback to primary is geometry-neutral, zero CLS contribution.
 
-| Family                  | Role                  | License | Subsets         | `font-display` | Path                                                 |
-|-------------------------|-----------------------|---------|-----------------|----------------|------------------------------------------------------|
-| **Plus Jakarta Sans**   | Brand display sans    | OFL 1.1 | latin, latin-ext| `optional`     | `src/fonts/plus-jakarta-sans/*.woff2`                |
-| **Fira Code**           | Canonical mono        | OFL 1.1 | latin, latin-ext| `swap`         | `src/fonts/fira-code/*.woff2`                        |
+| Family                | Role               | License | Subsets          | `font-display` | Path                                  |
+| --------------------- | ------------------ | ------- | ---------------- | -------------- | ------------------------------------- |
+| **Plus Jakarta Sans** | Brand display sans | OFL 1.1 | latin, latin-ext | `optional`     | `src/fonts/plus-jakarta-sans/*.woff2` |
+| **Fira Code**         | Canonical mono     | OFL 1.1 | latin, latin-ext | `swap`         | `src/fonts/fira-code/*.woff2`         |
 
 Both are variable fonts—a single woff2 per subset covers the full wght axis (Plus Jakarta Sans: 200..800; Fira Code: 300..700). The `font-display` policy differs by register: `optional` for the LCP-critical display sans (paint never blocks on font); `swap` for the post-LCP mono (FOUT acceptable; geometry stays no-shift via the fallback face).
 
@@ -584,13 +604,13 @@ The OFL license file ships next to the binaries (`OFL.txt` per family) and the c
 
 The brand display sans family was selected by speedtest's AC.W6b 5-way visual-fidelity test against the pre-substitution General Sans baseline (Fontshare ITF-FFL) at 1200×766 hero size + 96 px body sample. Five OFL-1.1 candidates were evaluated:
 
-| # | Candidate            | Source                          | Notes                                                                |
-|---|----------------------|---------------------------------|----------------------------------------------------------------------|
-| 1 | **Plus Jakarta Sans**| Tokotype / Gumpita Rahayu       | **Selected.** Geometric humanist; closest character match to General Sans; well-tested at hero sizes; variable wght 200..800. |
-| 2 | Onest                | IndianTypeFoundry               | Geometric humanist; mild width contrast; reads slightly wider.       |
-| 3 | Manrope              | Mikhail Sharanda                | More geometric; tighter letter-spacing; diverges from General Sans's humanist warmth. |
-| 4 | Inter                | RSMS                            | Modern grotesque; very neutral; loses brand audacity.                |
-| 5 | Geist                | Vercel                          | Modern grotesque; very crisp; too geometric for the brand.           |
+| #   | Candidate             | Source                    | Notes                                                                                                                         |
+| --- | --------------------- | ------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| 1   | **Plus Jakarta Sans** | Tokotype / Gumpita Rahayu | **Selected.** Geometric humanist; closest character match to General Sans; well-tested at hero sizes; variable wght 200..800. |
+| 2   | Onest                 | IndianTypeFoundry         | Geometric humanist; mild width contrast; reads slightly wider.                                                                |
+| 3   | Manrope               | Mikhail Sharanda          | More geometric; tighter letter-spacing; diverges from General Sans's humanist warmth.                                         |
+| 4   | Inter                 | RSMS                      | Modern grotesque; very neutral; loses brand audacity.                                                                         |
+| 5   | Geist                 | Vercel                    | Modern grotesque; very crisp; too geometric for the brand.                                                                    |
 
 Plus Jakarta Sans matched General Sans's "4" open-top + "9" hook-tail + "2" rounded-curl + "8" balanced-lobe gestures at hero size; the "Mbps" lowercase register tracked near-identically. Receipts at `speedtest/docs/tranches/AC/artefacts/W6b/visual-fidelity/`.
 
@@ -610,9 +630,10 @@ Consumers default to the library's pre-existing `--font-stack-sans` ("Helvetica 
 
 ```css
 :root {
-    --font-brand-sans: "Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif;
+    --font-brand-sans:
+        "Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif;
     --font-display: var(--font-brand-sans);
-    --font-serif:   var(--font-brand-sans);
+    --font-serif: var(--font-brand-sans);
 }
 ```
 
@@ -626,24 +647,24 @@ Future tranches should not re-introduce non-OFL display sans-serif at glass-ui. 
 
 ### Size tokens
 
-| Token               | Value                                     | Px (at 16)  | Tailwind  | Use                          |
-|---------------------|-------------------------------------------|-------------|-----------|------------------------------|
-| `--type-micro`      | 0.6875rem                                 | 11          | `text-2xs`| Badges, fine print           |
-| `--type-caption`    | 0.75rem                                   | 12          | `text-xs` | Labels, timestamps           |
-| `--type-small`      | 0.875rem                                  | 14          | `text-sm` | Secondary body               |
-| `--type-body`       | 1rem                                      | 16          | `text-base` | Default body copy          |
-| `--type-prose`      | 1.125rem                                  | 18          | `text-lg` | Long-form reading            |
-| `--type-subheading` | 1.272rem                                  | 20.4        | `text-xl` | Card titles, labels          |
-| `--type-heading`    | 1.618rem                                  | 25.9        | `text-2xl`| Subsection heads             |
-| `--type-title`      | 2.058rem                                  | 32.9        | `text-3xl`| Page heads                   |
-| `--type-display-1`  | clamp(1.618rem, 1.2rem + 1.6vw, 2.618rem) | 25.9–41.9   | `text-4xl`| Display                      |
-| `--type-display-2`  | clamp(2.058rem, 1.5rem + 2.2vw, 3.33rem)  | 32.9–53.3   | `text-5xl`| Large display                |
-| `--type-display-3`  | clamp(2.618rem, 2rem + 3vw, 4.236rem)     | 41.9–67.8   | `text-6xl`| Extra-large display          |
-| `--type-display-4`  | clamp(3.33rem, 2.5rem + 4vw, 5.382rem)    | 53.3–86.1   |—        | Splash (custom)              |
-| `--type-display-5`  | clamp(4.236rem, 3.5rem + 6vw, 6.854rem)   | 67.8–109.7  |—        | Mega hero (custom)           |
-| `--type-display-mega`      | clamp(5.382rem, 4rem + 9vw, 11.089rem)   | 86.1–177.4  |—        | Poster: section / pane title (v1.0.3) |
-| `--type-display-hero`      | clamp(6.854rem, 4.5rem + 12vw, 17.942rem) | 109.7–287.1 |—       | Poster: page hero / metric value (v1.0.3) |
-| `--type-display-audacious` | clamp(8.728rem, 5rem + 16vw, 22rem)      | 139.6–352   |—        | Fast.com-scale single number (v1.0.3) |
+| Token                      | Value                                     | Px (at 16)  | Tailwind    | Use                                       |
+| -------------------------- | ----------------------------------------- | ----------- | ----------- | ----------------------------------------- |
+| `--type-micro`             | 0.6875rem                                 | 11          | `text-2xs`  | Badges, fine print                        |
+| `--type-caption`           | 0.75rem                                   | 12          | `text-xs`   | Labels, timestamps                        |
+| `--type-small`             | 0.875rem                                  | 14          | `text-sm`   | Secondary body                            |
+| `--type-body`              | 1rem                                      | 16          | `text-base` | Default body copy                         |
+| `--type-prose`             | 1.125rem                                  | 18          | `text-lg`   | Long-form reading                         |
+| `--type-subheading`        | 1.272rem                                  | 20.4        | `text-xl`   | Card titles, labels                       |
+| `--type-heading`           | 1.618rem                                  | 25.9        | `text-2xl`  | Subsection heads                          |
+| `--type-title`             | 2.058rem                                  | 32.9        | `text-3xl`  | Page heads                                |
+| `--type-display-1`         | clamp(1.618rem, 1.2rem + 1.6vw, 2.618rem) | 25.9–41.9   | `text-4xl`  | Display                                   |
+| `--type-display-2`         | clamp(2.058rem, 1.5rem + 2.2vw, 3.33rem)  | 32.9–53.3   | `text-5xl`  | Large display                             |
+| `--type-display-3`         | clamp(2.618rem, 2rem + 3vw, 4.236rem)     | 41.9–67.8   | `text-6xl`  | Extra-large display                       |
+| `--type-display-4`         | clamp(3.33rem, 2.5rem + 4vw, 5.382rem)    | 53.3–86.1   | —           | Splash (custom)                           |
+| `--type-display-5`         | clamp(4.236rem, 3.5rem + 6vw, 6.854rem)   | 67.8–109.7  | —           | Mega hero (custom)                        |
+| `--type-display-mega`      | clamp(5.382rem, 4rem + 9vw, 11.089rem)    | 86.1–177.4  | —           | Poster: section / pane title (v1.0.3)     |
+| `--type-display-hero`      | clamp(6.854rem, 4.5rem + 12vw, 17.942rem) | 109.7–287.1 | —           | Poster: page hero / metric value (v1.0.3) |
+| `--type-display-audacious` | clamp(8.728rem, 5rem + 16vw, 22rem)       | 139.6–352   | —           | Fast.com-scale single number (v1.0.3)     |
 
 Consumers extending beyond display-audacious add tokens in their preset—the library exposes the mechanism, not every conceivable step.
 
@@ -659,7 +680,11 @@ container) wraps its own clamp with these tokens as the ceiling:
 
 ```css
 /* speedtest SpeedtestResults.vue:763—cqi axis with audacious ceiling */
-font-size: clamp(6rem, calc(38cqi * 3 / max(3, var(--digit-count))), var(--type-display-audacious));
+font-size: clamp(
+    6rem,
+    calc(38cqi * 3 / max(3, var(--digit-count))),
+    var(--type-display-audacious)
+);
 ```
 
 The φ-ladder progression (`√φ ≈ 1.272` between steps) continues
@@ -686,44 +711,46 @@ the tokens but want a smaller ceiling can reset them locally:
 
 ### Line height
 
-| Token                | Value  | Use                                    |
-|----------------------|--------|----------------------------------------|
-| `--leading-micro`    | 1.2    | Very tight (micro text)                |
-| `--leading-caption`  | 1.3    | Captions                               |
-| `--leading-small`    | 1.4    | Small body copy                        |
-| `--leading-body`     | 1.5    | Default body text                      |
-| `--leading-prose`    | 1.618  | Long-form reading (golden)             |
-| `--leading-heading`  | 1.2    | Headlines                              |
-| `--leading-display`  | 1.1    | Display / hero text (tight)            |
+| Token               | Value | Use                         |
+| ------------------- | ----- | --------------------------- |
+| `--leading-micro`   | 1.2   | Very tight (micro text)     |
+| `--leading-caption` | 1.3   | Captions                    |
+| `--leading-small`   | 1.4   | Small body copy             |
+| `--leading-body`    | 1.5   | Default body text           |
+| `--leading-prose`   | 1.618 | Long-form reading (golden)  |
+| `--leading-heading` | 1.2   | Headlines                   |
+| `--leading-display` | 1.1   | Display / hero text (tight) |
 
 ### Letter spacing
 
-| Token                 | Value       | At body (px) | Use                  |
-|-----------------------|-------------|--------------|----------------------|
-| `--tracking-tight`    | −0.025em    | −0.4         | Headers, display     |
-| `--tracking-normal`   | 0           | 0            | Default body         |
-| `--tracking-wide`     | 0.025em     | 0.4          | Captions, labels     |
-| `--tracking-wider`    | 0.05em      | 0.8          | Uppercase mono       |
-| `--tracking-caps`     | 0.1em       | 1.6          | Section labels (caps)|
+| Token               | Value    | At body (px) | Use                   |
+| ------------------- | -------- | ------------ | --------------------- |
+| `--tracking-tight`  | −0.025em | −0.4         | Headers, display      |
+| `--tracking-normal` | 0        | 0            | Default body          |
+| `--tracking-wide`   | 0.025em  | 0.4          | Captions, labels      |
+| `--tracking-wider`  | 0.05em   | 0.8          | Uppercase mono        |
+| `--tracking-caps`   | 0.1em    | 1.6          | Section labels (caps) |
 
 ### Typography Tokens
 
-| Token            | Value                                                       | Semantic Use                                          |
-|------------------|-------------------------------------------------------------|-------------------------------------------------------|
-| `--font-display` | Fraunces (variable; `opsz`/`wght`/`SOFT`/`WONK`)            | Ornamental display voice; headings with personality   |
-| `--font-serif`   | Computer Modern Serif → Georgia fallback                    | Body, prose, headings, math                           |
-| `--font-brand-sans` | Helvetica Neue → Arial → system-ui                       | Brand/system sans stack used by presets and overrides |
-| `--font-sans`    | `var(--font-brand-sans)`                                    | System sans fallback (rarely direct)                  |
-| `--font-mono`    | Fira Code → Fira Mono → monospace                           | Code, monospace, admin labels                         |
-| `--font-display-variation-settings` | `"WONK" 1, "SOFT" 0`                    | Display font axis defaults                            |
-| `--font-display-weight` | 400                                                 | Display utility weight default                        |
+| Token                               | Value                                            | Semantic Use                                          |
+| ----------------------------------- | ------------------------------------------------ | ----------------------------------------------------- |
+| `--font-display`                    | Fraunces (variable; `opsz`/`wght`/`SOFT`/`WONK`) | Ornamental display voice; headings with personality   |
+| `--font-serif`                      | Computer Modern Serif → Georgia fallback         | Body, prose, headings, math                           |
+| `--font-brand-sans`                 | Helvetica Neue → Arial → system-ui               | Brand/system sans stack used by presets and overrides |
+| `--font-sans`                       | `var(--font-brand-sans)`                         | System sans fallback (rarely direct)                  |
+| `--font-mono`                       | Fira Code → Fira Mono → monospace                | Code, monospace, admin labels                         |
+| `--font-display-variation-settings` | `"WONK" 1, "SOFT" 0`                             | Display font axis defaults                            |
+| `--font-display-weight`             | 400                                              | Display utility weight default                        |
 
 ```css
---font-display: "Fraunces", Georgia, serif;                                         /* display voice */
---font-serif:   "Computer Modern Serif", "Latin Modern Roman", "CMU Serif", Georgia, serif; /* body serif */
---font-brand-sans: "Helvetica Neue", "Arial Nova", Arial, system-ui, sans-serif;    /* independent brand/system sans */
---font-sans:    var(--font-brand-sans);                                             /* system sans */
---font-mono:    "Fira Code", "Fira Mono", monospace;
+--font-display: "Fraunces", Georgia, serif; /* display voice */
+--font-serif:
+    "Computer Modern Serif", "Latin Modern Roman", "CMU Serif", Georgia, serif; /* body serif */
+--font-brand-sans:
+    "Helvetica Neue", "Arial Nova", Arial, system-ui, sans-serif; /* independent brand/system sans */
+--font-sans: var(--font-brand-sans); /* system sans */
+--font-mono: "Fira Code", "Fira Mono", monospace;
 --font-display-variation-settings: "WONK" 1, "SOFT" 0;
 --font-display-weight: 400;
 ```
@@ -735,7 +762,7 @@ that need a uniform sans voice set `--font-brand-sans` and apply the
 root preset:
 
 ```html
-<html data-typography-preset="brand-uniform-sans">
+<html data-typography-preset="brand-uniform-sans"></html>
 ```
 
 The preset maps `--font-serif` and `--font-display` to
@@ -754,27 +781,27 @@ Fraunces axes available: `wght` (300–700), `opsz`, `WONK` (0–1), `SOFT` (0�
 
 ### Semantic typography classes
 
-| Class                  | Font         | Size                 | Weight | Line    | Tracking  | Axes                        |
-|------------------------|--------------|----------------------|--------|---------|-----------|-----------------------------|
-| `.text-display-audacious` | display   | `--type-display-audacious` | display-weight | 1.1 | tight | `WONK` 1, `SOFT` 0     |
-| `.text-display-hero`   | display      | `--type-display-hero` | display-weight | 1.1 | tight | `WONK` 1, `SOFT` 0          |
-| `.text-display-mega`   | display      | `--type-display-mega` | display-weight | 1.1 | tight | `WONK` 1, `SOFT` 0          |
-| `.text-display-5`      | display      | `--type-display-5`   | 300    | 1.1     | tight     | `WONK` 1, `SOFT` 0          |
-| `.text-display-4`      | display      | `--type-display-4`   | 350    | 1.1     | tight     | `WONK` 1, `SOFT` 0          |
-| `.text-display-3`      | display      | `--type-display-3`   | 350    | 1.1     | tight     | `WONK` 1, `SOFT` 0          |
-| `.text-display-2`      | display      | `--type-display-2`   | 350    | 1.1     | tight     | `WONK` 1, `SOFT` 0          |
-| `.text-display`        | display      | `--type-display-1`   | 350    | 1.1     | tight     | `WONK` 1, `SOFT` 0          |
-| `.text-title`          | display      | `--type-title`       | 400    | 1.2     | tight     |—                          |
-| `.text-heading`        | display      | `--type-heading`     | 500    | 1.2     | normal    |—                          |
-| `.text-subheading`     | serif        | `--type-subheading`  | 600    | 1.5     | normal    |—                          |
-| `.text-prose`          | serif        | `--type-prose`       | 400    | 1.618   | normal    |—                          |
-| `.text-body`           | serif        | `--type-body`        | 400    | 1.5     | normal    |—                          |
-| `.text-small`          | serif        | `--type-small`       | 400    | 1.4     | normal    |—                          |
-| `.text-caption`        | serif        | `--type-caption`     | 400    | 1.3     | wide      |—                          |
-| `.text-micro`          | serif        | `--type-micro`       | 500    | 1.2     | wide      |—                          |
-| `.text-mono-caption`   | mono         | `--type-caption`     |—     | 1.3     | wider     | `text-transform: uppercase` |
-| `.text-mono-small`     | mono         | `--type-small`       |—     | 1.4     | normal    |—                          |
-| `.section-label`       | mono         | `--type-caption`     |—     |—      | caps      | `text-transform: uppercase`, muted-foreground color |
+| Class                     | Font    | Size                       | Weight         | Line  | Tracking | Axes                                                |
+| ------------------------- | ------- | -------------------------- | -------------- | ----- | -------- | --------------------------------------------------- |
+| `.text-display-audacious` | display | `--type-display-audacious` | display-weight | 1.1   | tight    | `WONK` 1, `SOFT` 0                                  |
+| `.text-display-hero`      | display | `--type-display-hero`      | display-weight | 1.1   | tight    | `WONK` 1, `SOFT` 0                                  |
+| `.text-display-mega`      | display | `--type-display-mega`      | display-weight | 1.1   | tight    | `WONK` 1, `SOFT` 0                                  |
+| `.text-display-5`         | display | `--type-display-5`         | 300            | 1.1   | tight    | `WONK` 1, `SOFT` 0                                  |
+| `.text-display-4`         | display | `--type-display-4`         | 350            | 1.1   | tight    | `WONK` 1, `SOFT` 0                                  |
+| `.text-display-3`         | display | `--type-display-3`         | 350            | 1.1   | tight    | `WONK` 1, `SOFT` 0                                  |
+| `.text-display-2`         | display | `--type-display-2`         | 350            | 1.1   | tight    | `WONK` 1, `SOFT` 0                                  |
+| `.text-display`           | display | `--type-display-1`         | 350            | 1.1   | tight    | `WONK` 1, `SOFT` 0                                  |
+| `.text-title`             | display | `--type-title`             | 400            | 1.2   | tight    | —                                                   |
+| `.text-heading`           | display | `--type-heading`           | 500            | 1.2   | normal   | —                                                   |
+| `.text-subheading`        | serif   | `--type-subheading`        | 600            | 1.5   | normal   | —                                                   |
+| `.text-prose`             | serif   | `--type-prose`             | 400            | 1.618 | normal   | —                                                   |
+| `.text-body`              | serif   | `--type-body`              | 400            | 1.5   | normal   | —                                                   |
+| `.text-small`             | serif   | `--type-small`             | 400            | 1.4   | normal   | —                                                   |
+| `.text-caption`           | serif   | `--type-caption`           | 400            | 1.3   | wide     | —                                                   |
+| `.text-micro`             | serif   | `--type-micro`             | 500            | 1.2   | wide     | —                                                   |
+| `.text-mono-caption`      | mono    | `--type-caption`           | —              | 1.3   | wider    | `text-transform: uppercase`                         |
+| `.text-mono-small`        | mono    | `--type-small`             | —              | 1.4   | normal   | —                                                   |
+| `.section-label`          | mono    | `--type-caption`           | —              | —     | caps     | `text-transform: uppercase`, muted-foreground color |
 
 ### Kinetic typography utilities
 
@@ -790,68 +817,27 @@ All kinetic utilities respect `prefers-reduced-motion`: transforms eliminated, o
 
 ## Buttons
 
-### `Button` CVA component (primary API)
+`Button` is the sole command/action control. It renders a native `<button>` by
+default, preserves native form submission and disabled behavior, and supports
+Reka `as` / `asChild` composition without creating another styling authority.
 
-Base class `.btn-pill`:
-- border-radius pill
-- padding `0.5rem 1rem`
-- font-size 1rem
-- gap `0.375rem` (6 px)
-- transition `all 200ms var(--ease-standard)`
-- `:focus-visible` → `outline: none; box-shadow: var(--focus-ring-shadow)`
-- `:disabled` → `opacity: 0.50; pointer-events: none`
-- `[aria-pressed="true"]` → 15% primary bg, 30% primary border
+### Semantic axes
 
-### Variants
+| Prop | Values | Default | Meaning |
+| --- | --- | --- | --- |
+| `emphasis` | `primary \| secondary \| quiet \| text` | `secondary` | Visual priority only |
+| `tone` | shared `Tone` (`neutral \| success \| warning \| info \| destructive`) | `neutral` | Command intent, independent of priority |
+| `size` | `xs \| sm \| md \| lg` | `md` | Shared control-height rung |
 
-| Variant              | Rest                                                                                            | Hover                                                       |
-|----------------------|-------------------------------------------------------------------------------------------------|-------------------------------------------------------------|
-| `default`            | Primary bg, primary-foreground text                                                             | `bg-primary/90`                                             |
-| `primary-audacious`  | Primary bg + `@utility btn-audacious` recipe (disco-grain + sparkle-sweep + specular-highlight) | `scale-[var(--scale-hover)]` + recipe-internal hue lift     |
-| `destructive`        | Destructive bg, destructive-foreground text                                                     | `bg-destructive/90`                                         |
-| `outline`            | Border 70%, bg 60%, foreground text                                                             | 60% accent bg, 90% border                                   |
-| `secondary`          | Secondary bg                                                                                    | `bg-secondary/80`                                           |
-| `accent`             | `.btn-pill-accent` (opaque theme accent)                                                        | 90% opacity                                                 |
-| `ghost`              | Transparent, 85% foreground                                                                     | 12% foreground bg                                           |
-| `glass`              | `.glass-wash` + default border                                                                  | `--glass-shadow-resting`                                    |
-| `glass-wash`         | `.glass-wash`                                                                                   | 60% border                                                  |
-| `ai`                 | amber-500/15 bg, amber-700 text                                                                 | amber-500/25                                                |
-| `link`               | Text-only, underline on hover                                                                   | underline                                                   |
+`iconOnly` selects square geometry but never supplies an accessible name;
+callers provide `aria-label`. `loading` sets `aria-busy` and suppresses activation.
+The native default `type="button"` prevents accidental form submission; explicit
+`type="submit"` retains normal form semantics.
 
-`destructive` is the canonical "danger" variant (clears WCAG AA).
-
-#### `primary-audacious`—K W6 architectural transposition (K HEADLINE)
-
-K W6 lifted the disco-grain + sparkle-sweep + specular-highlight composite from `dock.css` (where it had lived under `.dock-tab-button[data-tier="primary"]`) into a canonical `@utility btn-audacious` in `src/styles/utilities.css`. The composite reads:
-
-- **Disco-grain texture**—radial gradient noise band over the primary fill, anchored to `--primary` so the recipe inherits theme hue automatically.
-- **Sparkle-sweep glyph**—`@keyframes sparkle-sweep` (already in `animations.css:151`) drives a diagonal specular streak across the button face on a long cadence, PRM-gated via `prefers-reduced-motion: no-preference` (matches the `.gold-shimmer` precedent).
-- **Specular-highlight backplate**—soft white-stop highlight at upper-left composing against the disco-grain layer for the "polished plastic" reading.
-
-Existing tokens consumed: `--primary`, `--shadow-cartoon`, `--surface-tint-*`, `--scale-press-btn`, `--scale-hover`, `--duration-sparkle`, `--ease-apple-spring`. No new keyframes were introduced.
-
-**Phase-color decoupling—Option B (per K W6 decision per Rε E3 recommendation)**: the canonical `@utility btn-audacious` recipe binds the radial to `--primary`, NOT to `--phase-color`. The recipe is reusable from any audacious primary-CTA context without inheriting an instrument-chassis phase cascade. The dock primary tier composes the canonical recipe via class-list inclusion (`btn-audacious` on `.dock-tab-button[data-tier="primary"]`) AND retains a dock-local extension that overrides the radial with `--phase-color` when a dock descendant of `<InstrumentChassis>` sets the phase variable. This keeps the canonical recipe axis-agnostic (≥ 2 consumer bar met: `<Button variant="primary-audacious">` + dock primary tier) while preserving the chassis-aware phase-tint flourish where it earns its keep.
-
-All variants scale `var(--scale-press-btn)` on `:active`.
-
-### Sizes
-
-| Size      | Class          | Height        | Padding                |
-|-----------|----------------|---------------|------------------------|
-| `default` | `h-10`         | 40 px         | `px-4 py-2`            |
-| `xs`      | `h-7`          | 28 px         | `px-2`                 |
-| `sm`      | `h-9`          | 36 px         | `px-3`                 |
-| `lg`      | `h-11`         | 44 px         | `px-8`                 |
-| `icon`    | `h-10 w-10`    | 40 × 40 px    | 0                      |
-
-### `.glass-btn` (CSS class)
-
-Standalone circular icon button for non-Vue contexts.
-- Size `--size-icon-btn` = 2.5rem (40 px)
-- Border-radius pill
-- Border 1.5px `--glass-border-subtle`
-- Background `--glass-bg-subtle`
-- Backdrop-filter `--glass-blur-subtle`
+Primary and secondary neutral commands compose the shared glass material,
+specular, focus-ring, and spring-press primitives. Quiet and text emphasis remove
+the plate while retaining the same target floor and interaction contract. Tone
+changes intent paint; it does not mint a second variant or surface axis.
 
 ---
 
@@ -863,20 +849,20 @@ Pill primitive for inline metadata, status chips, and count indicators. CVA root
 
 ### Variants
 
-| Variant       | Rest                                                  |
-|---------------|-------------------------------------------------------|
-| `default`     | Primary bg, primary-foreground text, transparent border |
-| `secondary`   | Secondary bg, secondary-foreground text                |
-| `destructive` | Destructive bg, destructive-foreground text            |
+| Variant       | Rest                                                     |
+| ------------- | -------------------------------------------------------- |
+| `default`     | Primary bg, primary-foreground text, transparent border  |
+| `secondary`   | Secondary bg, secondary-foreground text                  |
+| `destructive` | Destructive bg, destructive-foreground text              |
 | `outline`     | Foreground text on transparent fill, border-from-context |
 
 ### Sizes (J.W6 size axis)
 
-| Size  | Typography           | Padding         | Use                                                        |
-|-------|----------------------|-----------------|------------------------------------------------------------|
-| `sm`  | `text-xs leading-4`  | `px-2 py-0.5`   | Sits inside `text-xs` rows or compact inline metadata      |
-| `md`  | `text-sm leading-5`  | `px-2.5 py-1`   | **Default.** Aligns baseline-to-baseline with `text-sm` row text—canonical for table status cells |
-| `lg`  | `text-base leading-6`| `px-3 py-1.5`   | Standalone callouts inside `text-base` body copy           |
+| Size | Typography            | Padding       | Use                                                                                               |
+| ---- | --------------------- | ------------- | ------------------------------------------------------------------------------------------------- |
+| `sm` | `text-xs leading-4`   | `px-2 py-0.5` | Sits inside `text-xs` rows or compact inline metadata                                             |
+| `md` | `text-sm leading-5`   | `px-2.5 py-1` | **Default.** Aligns baseline-to-baseline with `text-sm` row text—canonical for table status cells |
+| `lg` | `text-base leading-6` | `px-3 py-1.5` | Standalone callouts inside `text-base` body copy                                                  |
 
 The `md` default matches the baseline of the most common surrounding context (table rows + card body—both `text-sm`). Consumers nesting a Badge inside an explicitly compact context (`text-xs` mono cells, dense filter rows) opt down to `size="sm"`.
 
@@ -889,6 +875,7 @@ bg-section-N/15 text-section-N border-section-N/30
 ```
 
 paired with `<Badge variant="outline" size="md">`. The `outline` variant supplies the focus-ring/border substrate and yields foreground text; the section triplet then overrides fill, foreground, and border with the section-tinted hue. The recipe is intentionally **not** lifted into a `tone` axis on `badgeVariants`—the section-N family is a 13-rung tinted ladder, not a 4-state semantic tone (`success/warning/destructive/info`), and a CVA-side enumeration would be overfit to the current demo consumers (1 src consumer count). When a second consumer surfaces with semantic tone needs (success/warning/destructive/info), introduce a `tone` axis at that point.
+
 - Color `var(--muted-foreground)`
 - Hover: 85% bg lighten, 20% foreground border, 15% foreground color, `transform: scale(1.08)`
 - Active: `transform: scale(0.95)`
@@ -940,22 +927,22 @@ used by ToggleGroup lives at
 
 ### Components
 
-| Component              | Shape                                             | Hover                                                  | Use                                             |
-|------------------------|---------------------------------------------------|--------------------------------------------------------|-------------------------------------------------|
-| `GlassDock`            | Pill container, height ≈ 55 px                    |—                                                     | Outer dock surface                              |
-| `DockIconButton`       | Fixed square `--size-icon-btn` (40 × 40 px); `compact` prop auto-sizes to content | Bg darken + `--scale-hover-dock` (1.1)       | Icon-only buttons inside a dock                 |
-| `DockSelectTrigger`    | Variable width, text + chevron                    | Bg darken only (no scale—anchors popover)            | `<Select>` triggers inside a dock               |
-| `DockDropdownTrigger`  | Variable width, text + icon + chevron             | Bg darken + scale (1.1)                                | `<DropdownMenu>` triggers inside a dock         |
-| `DockLayer`            | Grid cell, fades in/out by slot key               |—                                                     | Layer-active switching                          |
-| `DockLayerGroup`       | Grid wrapper, animates width across layers        |—                                                     | Multi-layer dock (expanded / collapsed / compact) |
+| Component             | Shape                                                                             | Hover                                     | Use                                               |
+| --------------------- | --------------------------------------------------------------------------------- | ----------------------------------------- | ------------------------------------------------- |
+| `GlassDock`           | Pill container, height ≈ 55 px                                                    | —                                         | Outer dock surface                                |
+| `DockIconButton`      | Fixed square `--size-icon-btn` (40 × 40 px); `compact` prop auto-sizes to content | Bg darken + `--scale-hover-dock` (1.1)    | Icon-only buttons inside a dock                   |
+| `DockSelectTrigger`   | Variable width, text + chevron                                                    | Bg darken only (no scale—anchors popover) | `<Select>` triggers inside a dock                 |
+| `DockDropdownTrigger` | Variable width, text + icon + chevron                                             | Bg darken + scale (1.1)                   | `<DropdownMenu>` triggers inside a dock           |
+| `DockLayer`           | Grid cell, fades in/out by slot key                                               | —                                         | Layer-active switching                            |
+| `DockLayerGroup`      | Grid wrapper, animates width across layers                                        | —                                         | Multi-layer dock (expanded / collapsed / compact) |
 
 ### Geometry
 
 ```css
---size-icon-btn:         2.5rem;   /* 40 px */
---dock-h:                calc(var(--size-icon-btn) + 0.75rem + 3px);  /* ≈ 55 px */
---dock-margin:           0.5rem;
---dock-menubar-reserve:  4rem;
+--size-icon-btn: 2.5rem; /* 40 px */
+--dock-h: calc(var(--size-icon-btn) + 0.75rem + 3px); /* ≈ 55 px */
+--dock-margin: 0.5rem;
+--dock-menubar-reserve: 4rem;
 ```
 
 ### Position prop
@@ -974,6 +961,20 @@ used by ToggleGroup lives at
 - `orientation`—`horizontal` (default) or `vertical`
 - `density`—`compact | comfortable | spacious`; controls padding, gaps, layer height, and inherited dock control sizing through root-overridable CSS variables
 - `<template #collapsed>`—summary content shown when compacted
+
+### HeaderRibbon command band
+
+`HeaderRibbon` is the persistent corner command band on the public `/header-ribbon`
+subpath. Its default `persistent` mode renders the `items` action row immediately. Explicit
+`mode="collapsible"` requires `anchorLabel` and renders a component-owned native disclosure
+button; the `anchor` slot is decorative and exposes only `{ pinned }` for its visual state.
+`placement="left|right"` changes visual direction without changing DOM or action order.
+Pointer and focus presence reveal collapsible actions, while click or touch activation pins
+them. `Escape` unpins and returns focus to the owned anchor button.
+
+The band composes the shared functional glass `Surface` and shared motion tokens. Its
+semantic `data-placement`, `data-expanded`, and `data-pinned` attributes own styling;
+reduced motion removes the reveal transition without changing state or focus behavior.
 
 ### Density variables
 
@@ -1007,7 +1008,7 @@ Density overrides are named by tier, for example
   for text labels INSIDE `.dock-tab-button` (Start, Next, Submit, Done, New
   Test, survey labels). `font-family: var(--font-serif)` picks up the
   consumer's brand-uniform-sans preset; `font-size: var(--dock-label-size,
-  var(--type-subheading))` composes the audacious-dock label-size knob
+var(--type-subheading))` composes the audacious-dock label-size knob
   (14–15px at narrow viewports, falls back to `--type-subheading` at
   desktop); `font-weight: 500` (medium rung—present but NOT bold). Use
   this instead of `.text-heading` for dock control labels; `.text-heading`
@@ -1050,18 +1051,25 @@ Three orthogonal vocabularies. Never mix.
 Applied to floating surfaces. v0.8.0 retired the four-rung `variant="subtle | default | medium | elevated"` enum on `Card` in favour of a `tier` prop naming a single class on the five-rung canon `wash | quiet | resting | floating | overlay`. Adjacent surface-bearing primitives (`PopoverContent`, `DropdownMenuContent`, `HoverCardContent`, `DialogContent`, `SheetContent`, `TooltipContent`, `.floating-panel`) hard-code `glass-floating` directly because the popover family always wants the elevated rung; they don't need a `tier` prop.
 
 ```vue
-<Card>...</Card>                              <!-- default tier="resting" -->
-<Card tier="floating">...</Card>              <!-- explicit elevated rung -->
-<Card tier="resting" as="section">...</Card>  <!-- polymorphic root via reka-ui Primitive -->
-<Card :shadow="false">...</Card>              <!-- nested: drop the surface shadow -->
-<Card :grain="false">...</Card>               <!-- drop the ::after grain overlay -->
+<Card>...</Card>
+<!-- default tier="resting" -->
+<Card tier="floating">...</Card>
+<!-- explicit elevated rung -->
+<Card tier="resting" as="section">...</Card>
+<!-- polymorphic root via reka-ui Primitive -->
+<Card :shadow="false">...</Card>
+<!-- nested: drop the surface shadow -->
+<Card :grain="false">...</Card>
+<!-- drop the ::after grain overlay -->
 ```
 
 `<ScrollPane>` and `<CartoonCard>` are sibling primitives lifted from the retired `variant="pane"` and `variant="cartoon"` rungs. `<ScrollPane>` is `glass-wash` + `overflow:auto` + `scrollbar-hidden` + grain disabled (the grain overlay conflicts with overflow:auto repaint). `<CartoonCard>` resolves through `.glass-cartoon`.
 
-### Semantic variant (intent)
+### Semantic intent
 
-Used on `Button`: `default | primary-audacious | secondary | ghost | outline | destructive | accent | link | ai | glass | glass-wash`. Scoped to intent, independent of elevation. A ghost button sits flat on any tier. `primary-audacious` (K W6) composes the canonical `@utility btn-audacious` recipe over the primary intent—see `## Buttons → primary-audacious` for the disco-grain + sparkle-sweep + specular-highlight composite and the phase-color decoupling decision (Option B). `destructive` is the canonical danger variant.
+Interactive components use the shared `Tone` vocabulary for intent; visual
+priority stays on each component's explicit emphasis axis. For Button, see
+`## Buttons` above.
 
 ### Structural variant (geometry)
 
@@ -1080,7 +1088,12 @@ The selectors hook on `[data-slot="card-title"]` + `[data-slot="card-description
 **Required ancestor**: the choreography reads the `--card-scroll` named timeline, which is emitted by the canonical `.card-scroll-host` utility. Apply `.card-scroll-host` to the scroll-overflow ancestor (typically the `<Card>` host's scroll wrapper). Without that ancestor the named timeline never emits and the choreography sits idle — silent no-op, no crash.
 
 ```vue
-<Card tier="wash" :shadow="false" :grain="false" class="card-scroll-host overflow-y-auto">
+<Card
+    tier="wash"
+    :shadow="false"
+    :grain="false"
+    class="card-scroll-host overflow-y-auto"
+>
   <CardHeader shrink class="sticky top-0 z-1 backdrop-blur-md">
     <CardTitle>Account</CardTitle>
     <CardDescription>Billing summary</CardDescription>
@@ -1093,29 +1106,31 @@ The sticky-position + backdrop-blur classes (and the `--card-header-bg` tint tok
 
 **Named timeline + tokens**
 
-| Symbol | Type | Default | Use |
-|---|---|---|---|
-| `--card-scroll` | named scroll-timeline | (emitted by `.card-scroll-host`) | The timeline `<CardHeader shrink>` binds to. `block` axis. |
-| `--card-header-bg` | color | `color-mix(in srgb, var(--card) 60%, transparent)` | Canonical sticky-header backdrop tint. Auto-dark via `--card`. |
-| `.card-scroll-host` | `@utility` | (in `utilities.css`) | The scroll-overflow host that emits `--card-scroll` + isolates it via `contain: layout style paint`. |
+| Symbol              | Type                  | Default                                            | Use                                                                                                  |
+| ------------------- | --------------------- | -------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `--card-scroll`     | named scroll-timeline | (emitted by `.card-scroll-host`)                   | The timeline `<CardHeader shrink>` binds to. `block` axis.                                           |
+| `--card-header-bg`  | color                 | `color-mix(in srgb, var(--card) 60%, transparent)` | Canonical sticky-header backdrop tint. Auto-dark via `--card`.                                       |
+| `.card-scroll-host` | `@utility`            | (in `utilities.css`)                               | The scroll-overflow host that emits `--card-scroll` + isolates it via `contain: layout style paint`. |
 
 **PRM contract**: the scoped CSS forces `animation-duration: 0.01ms` on all three lanes under `@media (prefers-reduced-motion: reduce)`. Reduced-motion users see the rest-state (full padding, full title size, full description visibility); the scroll-timeline degrades gracefully when the user has no scrolled offset — the explicit PRM bracket belt-and-braces the contract.
 
-**Slider variants**: shipped via `sliderVariants` CVA (J.W5.A) with both a `variant` axis and a `size` axis. All share tokens `--slider-track-bg`, `--slider-track-height`, `--slider-thumb-bg`, `--slider-thumb-size`, `--slider-thumb-border-color`, `--slider-range-bg`, `--slider-thumb-shadow`. Restyle on a wrapper, never via `:deep()`.
+**Slider axes**: `variant="standard|spectrum"` and `size="sm|md|lg"` are typed
+component props reflected through `data-variant` and `data-size`; the component's
+colocated CSS owns their paint and geometry. All recipes share
+`--slider-track-bg`, `--slider-track-height`, `--slider-thumb-bg`,
+`--slider-thumb-size`, `--slider-thumb-border-color`, `--slider-range-bg`, and
+`--slider-thumb-shadow`.
 
-| Variant         | Track                       | Thumb                                | Use                              |
-|-----------------|-----------------------------|--------------------------------------|----------------------------------|
-| `standard`      | 6 px muted/50               | 14 px circle                         | Default                          |
-| `spectrum`      | 24 px secondary             | thin bar                             | Range selection                  |
-| `timeline`      | 24 px glass-blurred         | 24 px disc                           | Video/timeline scrubbing (slider variant—see also the standalone `<GlassTimeline>` primitive below) |
-| `glass-pill`    | pill substrate w/ gradient  | halo on hover (`--surface-tint-12`)  | Audacious primary control        |
-| `glass-cartoon` | cartoon-surface track       | cartoon-shadow disc                  | Editorial / paper-design context |
+| Variant         | Track                      | Thumb                               | Use                                                                                                 |
+| --------------- | -------------------------- | ----------------------------------- | --------------------------------------------------------------------------------------------------- |
+| `standard`      | thick recessed capsule     | fill edge; semantic thumb is unpainted | General numeric binding |
+| `spectrum`      | consumer-supplied gradient | thin visible bar                       | Color-ramp selection      |
 
-| Size  | Track height | Thumb size | Use                   |
-|-------|--------------|------------|-----------------------|
-| `sm`  | 4 px         | 12 px      | Density-tight UIs     |
-| `md`  | 6 px         | 16 px      | Default               |
-| `lg`  | 12 px        | 24 px      | Hero / featured       |
+| Size | Track height | Thumb size | Use               |
+| ---- | ------------ | ---------- | ----------------- |
+| `sm` | 12 px        | 8 px       | Density-tight UIs |
+| `md` | 20 px        | 16 px      | Default           |
+| `lg` | 28 px        | 24 px      | Hero / featured   |
 
 ### Slider keep-dock-open contract
 
@@ -1146,7 +1161,7 @@ The canonical mechanism for letting a consumer retint or reshape a primitive's i
 2. **Primitive surfaces the token in DESIGN.md**: a token row in the component's section, with the property name, accepted value type, and default. This is the contract.
 3. **Consumer overrides via inline style OR a wrapper class**: `<Primitive :style="{ '--token-name': '...' }">` or `.consumer-wrap { --token-name: ...; }`. Either form reaches every descendant via the cascade.
 
-**Worked example—MetricRow per-row phase tint.** The primitive's value cell consumes `var(--phase-color)`; the consumer sets `--phase-color: <hex>` on each row via the `phaseColor` prop (which serializes to the inline style). No `:deep` reach, no slot-class plumb—the cascade alone carries the override.
+**Worked example—Metric ledger geometry.** `MetricStack` owns the shared responsive grid and each `MetricRow` reads it through subgrid. Product-specific phase tint and animation stay outside the static metric family, so no internal selector or compatibility token is required.
 
 **Worked example—Timeline continuous-fill opacity.** `<ContinuousTimeline>` reads `var(--timeline-continuous-fill-opacity, 1)` on its internal `.continuous-region-fill` selector. The consumer sets the variable on the wrapping context (`.timeline-wrap { --timeline-continuous-fill-opacity: 0.74; }`) and the cascade flows into the primitive's internal selectors. Replaces the prior `:deep(.continuous-region-fill) { opacity: ... }` workaround.
 
@@ -1156,13 +1171,13 @@ The canonical mechanism for letting a consumer retint or reshape a primitive's i
 - The property must address a structural slot (e.g., a specific child's `grid-template-rows`). **Add a slot-class prop** (per the `ScrollPaneHeader` precedent)—that's the cascade analogue for class-based overrides.
 - The override needs to traverse a portal boundary (e.g., reka-ui's `HoverCardPortal`). **Use a non-scoped `<style>` block** in the primitive's SFC that targets the portaled class (the `.timeline-popover` precedent in `ContinuousTimeline.vue`).
 
-The acceptance bar for adding a new custom-property cascade is two-fold: (a) the override is single-property (a token, not a structural rewrite), and (b) the primitive has at least one consumer demonstrating the override path. The cohort shipped at v1.6.0—`--phase-color` on `MetricRow`, `--digit-count` on `AnimatedDigit`/`MetricRow`, `--timeline-dot-size-touch` on the timeline dots—each cleared both bars.
+The acceptance bar for adding a new custom-property cascade is two-fold: (a) the override is single-property (a token, not a structural rewrite), and (b) the primitive has at least one consumer demonstrating the override path. Product-only state does not qualify merely because a former consumer exposed it.
 
 ---
 
 ## Timeline Primitive
 
-`<GlassTimeline>` is the canonical primitive for time-axis displays: scrubbing, multi-phase progress, and per-section status indication. Three variants form an orthogonal taxonomy. **Note**: the `timeline` slider variant in the table above is a *separate* primitive (a `<Slider>` with the timeline visual treatment for video-style scrubbing); `<GlassTimeline>` is a standalone Vue component with its own variant enum.
+`<GlassTimeline>` is the canonical primitive for time-axis displays: scrubbing, multi-phase progress, and per-section status indication. Three variants form an orthogonal taxonomy. **Note**: the `timeline` slider variant in the table above is a _separate_ primitive (a `<Slider>` with the timeline visual treatment for video-style scrubbing); `<GlassTimeline>` is a standalone Vue component with its own variant enum.
 
 ### `variant="scrubber"` (default; pre-Z baseline)
 
@@ -1178,10 +1193,10 @@ Adjacent gradient bands—N rectangles in a row, one per phase, with boundary do
 
 ```vue
 <GlassTimeline
-  variant="segmented"
-  :segments="phases"
-  @hover="onPhaseHover"
-  @click="onPhaseClick"
+    variant="segmented"
+    :segments="phases"
+    @hover="onPhaseHover"
+    @click="onPhaseClick"
 />
 ```
 
@@ -1191,10 +1206,10 @@ ONE rounded-pill rail substrate with N absolute-positioned region children spann
 
 ```vue
 <GlassTimeline
-  variant="continuous"
-  :segments="phases"
-  @hover="onPhaseHover"
-  @click="onPhaseClick"
+    variant="continuous"
+    :segments="phases"
+    @hover="onPhaseHover"
+    @click="onPhaseClick"
 />
 ```
 
@@ -1202,13 +1217,13 @@ ONE rounded-pill rail substrate with N absolute-positioned region children spann
 
 ```ts
 interface TimelineSegment {
-    key: string;                                          // stable id; emitted on hover/click
-    label: string;                                        // display name; surfaces in dot aria-label
-    state: "pending" | "active" | "completed";            // lifecycle—drives fill + dot affordance
-    progress?: number;                                    // 0..1, overrides state-default fill
-    gradient?: { from: string; to: string } | string;    // `{from,to}` pair or raw CSS gradient
-    value?: unknown;                                      // hover/click event payload
-    weight?: number;                                      // continuous-variant width share (default 1)
+    key: string; // stable id; emitted on hover/click
+    label: string; // display name; surfaces in dot aria-label
+    state: "pending" | "active" | "completed"; // lifecycle—drives fill + dot affordance
+    progress?: number; // 0..1, overrides state-default fill
+    gradient?: { from: string; to: string } | string; // `{from,to}` pair or raw CSS gradient
+    value?: unknown; // hover/click event payload
+    weight?: number; // continuous-variant width share (default 1)
 }
 ```
 
@@ -1220,17 +1235,22 @@ The `continuous` variant emits an optional `#detail` scoped slot rendered as a s
 
 ```ts
 {
-  segment:    TimelineSegment | null;      // the effective segment (hovered ?? current; null when idle)
-  source:     "hovered" | "current" | "idle";
-  currentKey: string | null;               // the original currentSegmentKey prop (null when unset)
-  hoveredKey: string | null;               // the transient hovered marker key (null when no hover)
+    segment: TimelineSegment | null; // the effective segment (hovered ?? current; null when idle)
+    source: "hovered" | "current" | "idle";
+    currentKey: string | null; // the original currentSegmentKey prop (null when unset)
+    hoveredKey: string | null; // the transient hovered marker key (null when no hover)
 }
 ```
 
 Consumers own the choreography. The canonical shape is a Vue `<Transition mode="out-in">` keyed on the segment's stable `key`, swapping the active-segment body with an idle placeholder:
 
 ```vue
-<GlassTimeline variant="continuous" :segments="phases" :current-segment-key="active.key" ...>
+<GlassTimeline
+    variant="continuous"
+    :segments="phases"
+    :current-segment-key="active.key"
+    ...
+>
   <template #detail="{ segment, source }">
     <Transition name="phase-detail" mode="out-in">
       <div v-if="segment" :key="`detail-${segment.key}`" :data-source="source">
@@ -1254,32 +1274,32 @@ Consumers own the choreography. The canonical shape is a Vue `<Transition mode="
 
 ### Tokens (`§16 TIMELINE`)
 
-| Token | Default | Use |
-|---|---|---|
-| `--timeline-scrubber-height`            | `0.5rem`           | Scrubber-variant rail height |
-| `--timeline-segmented-height`           | `0.625rem`         | Segmented-variant rail height |
-| `--timeline-continuous-height`          | `0.75rem`          | Continuous-variant rail height |
-| `--timeline-dot-size`                   | `0.875rem`         | Boundary dot diameter (segmented + continuous; pointer: fine) |
-| `--timeline-dot-size-touch`             | `1.25rem`          | Boundary dot diameter under `@media (pointer: coarse)` |
-| `--timeline-touch-target`               | `44px`             | WCAG 2.5.5 target-size floor for the dot `::before` hit-area (AC.W6d F2.I-04) |
-| `--timeline-segment-flex`               | `1 1 0`            | Per-cell flex distribution (segmented) |
-| `--timeline-continuous-seam-opacity`    | `0.25`             | Continuous inter-region 1px divider opacity (`0` to suppress) |
-| `--timeline-continuous-seam-color`      | `color-mix(...)`   | Seam tint (composes from opacity by default) |
-| `--timeline-segment-default-gradient`   | wash → mid wash    | Fallback gradient when `segment.gradient` is omitted |
-| `--timeline-segment-gradient-ping`      | (chart-ping)       | Per-phase canonical default—`ping` |
-| `--timeline-segment-gradient-download`  | (chart-download)   | Per-phase canonical default—`download` |
-| `--timeline-segment-gradient-upload`    | (chart-upload)     | Per-phase canonical default—`upload` |
-| `--timeline-segment-gradient-jitter`    | (chart-jitter)     | Per-phase canonical default—`jitter` |
-| `--timeline-detail-min-height`          | `1.25rem`          | Continuous `#detail` slot mount min-height (idle ↔ active transition reflow guard; AI.W1-δ) |
+| Token                                  | Default          | Use                                                                                          |
+| -------------------------------------- | ---------------- | -------------------------------------------------------------------------------------------- |
+| `--timeline-scrubber-height`           | `0.5rem`         | Scrubber-variant rail height                                                                 |
+| `--timeline-segmented-height`          | `0.625rem`       | Segmented-variant rail height                                                                |
+| `--timeline-continuous-height`         | `0.75rem`        | Continuous-variant rail height                                                               |
+| `--timeline-dot-size`                  | `0.875rem`       | Boundary dot diameter (segmented + continuous; pointer: fine)                                |
+| `--timeline-dot-size-touch`            | `1.25rem`        | Boundary dot diameter under `@media (pointer: coarse)`                                       |
+| `--timeline-touch-target`              | `44px`           | WCAG 2.5.5 target-size floor for the dot `::before` hit-area (AC.W6d F2.I-04)                |
+| `--timeline-segment-flex`              | `1 1 0`          | Per-cell flex distribution (segmented)                                                       |
+| `--timeline-continuous-seam-opacity`   | `0.25`           | Continuous inter-region 1px divider opacity (`0` to suppress)                                |
+| `--timeline-continuous-seam-color`     | `color-mix(...)` | Seam tint (composes from opacity by default)                                                 |
+| `--timeline-segment-default-gradient`  | wash → mid wash  | Fallback gradient when `segment.gradient` is omitted                                         |
+| `--timeline-segment-gradient-ping`     | (chart-ping)     | Per-phase canonical default—`ping`                                                           |
+| `--timeline-segment-gradient-download` | (chart-download) | Per-phase canonical default—`download`                                                       |
+| `--timeline-segment-gradient-upload`   | (chart-upload)   | Per-phase canonical default—`upload`                                                         |
+| `--timeline-segment-gradient-jitter`   | (chart-jitter)   | Per-phase canonical default—`jitter`                                                         |
+| `--timeline-detail-min-height`         | `1.25rem`        | Continuous `#detail` slot mount min-height (idle ↔ active transition reflow guard; AI.W1-δ) |
 
 ### A11y contract
 
 - **Scrubber**: `role="slider"` + `aria-valuemin/max/now` + keyboard arrow-key step. `aria-valuenow` is always rendered as a numeric attribute (the binding coerces via `Number(modelValue ?? 0)`; AA.W1.T2 / A4 §S-16 fix). Defaults to `0` when `modelValue` is `undefined` or `null`.
 - **Segmented**: `role="group"` on the wrapper, per-dot `<button>` with composed `aria-label` (`"{label}: {state}"`). Per-segment payload surfaces via the `hover` + `click` events.
 - **Continuous**: `role="group"` on the wrapper, plus an **Option C structural split** (AB.W2.T4 / A4 §nested-interactive) under the wrapper:
-  - `.continuous-track[role="progressbar"]` with `aria-valuemin="0"`, `aria-valuemax=N`, `aria-valuenow` derived from completed-segment-count + fractional active progress (rounded to 2 decimals). The rail is **non-interactive**—it carries no focusable descendants, satisfying axe `nested-interactive` (serious; WCAG 2.0 A—4.1.2). Each region renders a `.continuous-region-fill` child that paints the per-phase gradient up to the inline `--continuous-fill-width` (load-bearing: the var actually paints, it is not merely computed; W3 will lean on this substrate for the phase-bus echo).
-  - `.continuous-markers[role="list"]` carries the interactive `<button class="continuous-dot">` markers as `<li role="listitem">` siblings. Each button has composed `aria-label` (`"{label}: {state}"`), per-segment data hooks (`data-state`, `data-current`, `data-completed`), and a `<Popover trigger="hover">` wrap that surfaces `{ label, value, description, state }` on hover (color-coded via the segment's gradient endpoint).
-  - The `currentSegmentKey?: string` prop stamps `data-current="true"` on the matching marker so consumers (panel rendering, W3 raised-rivet styling) can distinguish active phase from transient hovered phase without DOM surgery. Hover affects only the floating popover; the data-current marker survives hover-leave.
+    - `.continuous-track[role="progressbar"]` with `aria-valuemin="0"`, `aria-valuemax=N`, `aria-valuenow` derived from completed-segment-count + fractional active progress (rounded to 2 decimals). The rail is **non-interactive**—it carries no focusable descendants, satisfying axe `nested-interactive` (serious; WCAG 2.0 A—4.1.2). Each region renders a `.continuous-region-fill` child that paints the per-phase gradient up to the inline `--continuous-fill-width` (load-bearing: the var actually paints, it is not merely computed; W3 will lean on this substrate for the phase-bus echo).
+    - `.continuous-markers[role="list"]` carries the interactive `<button class="continuous-dot">` markers as `<li role="listitem">` siblings. Each button has composed `aria-label` (`"{label}: {state}"`), per-segment data hooks (`data-state`, `data-current`, `data-completed`), and a `<Popover trigger="hover">` wrap that surfaces `{ label, value, description, state }` on hover (color-coded via the segment's gradient endpoint).
+    - The `currentSegmentKey?: string` prop stamps `data-current="true"` on the matching marker so consumers (panel rendering, W3 raised-rivet styling) can distinguish active phase from transient hovered phase without DOM surgery. Hover affects only the floating popover; the data-current marker survives hover-leave.
 
 The continuous variant's event surface adds `hoverEnd` (mirror of `hover`) so consumers can blend hover-over-current in panels via `effective = hovered ?? current`. The events fire from the Popover's debounced `update:open` cadence (configured through `openDelay` + `closeDelay`), eliminating the pointer-skim flicker the raw `@mouseenter`/`@mouseleave` model produced when the popover content overlapped the trigger.
 
@@ -1299,6 +1319,7 @@ The configurator family is the canonical chrome for live token / preset editing 
 - `useConfiguratorState`—reactive preset state (active key, draft buffer, commit / reset / cycle, persistence).
 
 The family reaches the ≥ 2-consumer bar via:
+
 1. `demo/stories/primitives/configurator.vue` (V-tranche fb38034—primitive-side story consuming `<ConfiguratorRow>` + `useConfiguratorState`).
 2. `demo/stories/aurora.vue` (L.W7 Lane B—`cloneMode: "per-preset"` consumer; absorbed the retired `useAuroraStudio` parallel chrome).
 
@@ -1319,15 +1340,15 @@ The family reaches the ≥ 2-consumer bar via:
 
 ## Overlays
 
-| Type             | Components                                  | Tier       | Transition                              | Z-index             |
-|------------------|---------------------------------------------|------------|-----------------------------------------|---------------------|
-| Dialog           | `Dialog`, `DialogContent`                   | elevated   | `dialog-scale`                          | `--z-modal` (80)    |
-| Popover          | `Popover`, `PopoverContent`                 | elevated   | `.popover-animate .slide-in-from-side`  | `--z-popover` (70)  |
-| Dropdown         | `DropdownMenu`, `DropdownMenuContent`       | elevated   | `.popover-animate .slide-in-from-side`  | `--z-popover` (70)  |
-| Sheet            | `Sheet`, `SheetContent`                     |—         | slide from side                         | `--z-modal` (80)    |
-| Hover card       | `HoverCard`, `HoverCardContent`             |—         | `fade-slide`                            | `--z-hovercard` (60)|
-| Tooltip          | `Tooltip` + `TooltipProvider`               |—         | fade                                    | `--z-tooltip` (60)  |
-| Floating panel   | `.floating-panel`                           | medium     | `floating-panel-in`                     | `--z-overlay` (50)  |
+| Type           | Components                            | Tier     | Transition                             | Z-index              |
+| -------------- | ------------------------------------- | -------- | -------------------------------------- | -------------------- |
+| Dialog         | `Dialog`, `DialogContent`             | elevated | `dialog-scale`                         | `--z-modal` (80)     |
+| Popover        | `Popover`, `PopoverContent`           | elevated | `.popover-animate .slide-in-from-side` | `--z-popover` (70)   |
+| Dropdown       | `DropdownMenu`, `DropdownMenuContent` | elevated | `.popover-animate .slide-in-from-side` | `--z-popover` (70)   |
+| Sheet          | `Sheet`, `SheetContent`               | —        | slide from side                        | `--z-modal` (80)     |
+| Hover card     | `HoverCard`, `HoverCardContent`       | —        | `fade-slide`                           | `--z-hovercard` (60) |
+| Tooltip        | `Tooltip` + `TooltipProvider`         | —        | fade                                   | `--z-tooltip` (60)   |
+| Floating panel | `.floating-panel`                     | medium   | `floating-panel-in`                    | `--z-overlay` (50)   |
 
 `--popover-offset` (6 px) governs anchor-to-content spacing. `--popover-viewport-pad` (8 px) keeps popovers from viewport edges.
 
@@ -1339,20 +1360,20 @@ The family reaches the ≥ 2-consumer bar via:
 
 Reusable sets in `transitions.css`. Each defines enter/leave-active + enter-from/leave-to.
 
-| Name              | Effect                                 | Enter                          | Leave                           | Use                            |
-|-------------------|----------------------------------------|--------------------------------|---------------------------------|--------------------------------|
-| `fade`            | Opacity                                | 200 ms `--ease-standard`       | 200 ms `--ease-standard`        | Simple show/hide               |
-| `fade-slide`      | Opacity + translateY                   | 300 ms `--ease-out`            | 200 ms `--ease-in`              | Dropdown items, list entries   |
-| `expand-fade`     | Opacity + max-height                   | 300 ms `--spring-smooth`       | 300 ms `--ease-in`              | Collapsible sections           |
-| `dialog-scale`    | Opacity + scale + translateY           | 450 ms `--spring-bouncy`       | 300 ms `--ease-standard`        | Modal entrance                 |
-| `pop`             | Scale + opacity                        | 200 ms `--spring-bouncy`       | 200 ms `--ease-out`             | Badge / toast entrance         |
-| `dropdown`        | Opacity + translateY + scale           | 300 ms `--spring-snappy`       | 100 ms opacity-only             | Dropdown menus                 |
-| `tab-fade`        | Opacity                                | 200 ms `--ease-standard`       | 200 ms `--ease-standard`        | Tab content swap               |
-| `pane-swap`       | Opacity + translateX (mode="out-in")   | 300 ms `--spring-smooth`       | 300 ms `--ease-out`             | Pane content swap              |
-| `metric-swap`     | Opacity + translateY + scale(0.95)     | 300 ms `--spring-smooth`       | 200 ms `--ease-standard`        | Metric value crossfade         |
-| `pane-slide`      | Opacity + max-height                   | 550 ms `--spring-gentle`       | 550 ms `--ease-out`             | Collapsible panes              |
-| `pane-left`       | translateX(−110%) + rotate(−2°)        | 450 ms `--spring-snappy`       | 300 ms `--ease-out`             | Left pane nav                  |
-| `pane-right`      | translateX(110%) + rotate(2°)          | 450 ms `--spring-snappy`       | 300 ms `--ease-out`             | Right pane nav                 |
+| Name           | Effect                               | Enter                    | Leave                    | Use                          |
+| -------------- | ------------------------------------ | ------------------------ | ------------------------ | ---------------------------- |
+| `fade`         | Opacity                              | 200 ms `--ease-standard` | 200 ms `--ease-standard` | Simple show/hide             |
+| `fade-slide`   | Opacity + translateY                 | 300 ms `--ease-out`      | 200 ms `--ease-in`       | Dropdown items, list entries |
+| `expand-fade`  | Opacity + max-height                 | 300 ms `--spring-smooth` | 300 ms `--ease-in`       | Collapsible sections         |
+| `dialog-scale` | Opacity + scale + translateY         | 450 ms `--spring-bouncy` | 300 ms `--ease-standard` | Modal entrance               |
+| `pop`          | Scale + opacity                      | 200 ms `--spring-bouncy` | 200 ms `--ease-out`      | Badge / toast entrance       |
+| `dropdown`     | Opacity + translateY + scale         | 300 ms `--spring-snappy` | 100 ms opacity-only      | Dropdown menus               |
+| `tab-fade`     | Opacity                              | 200 ms `--ease-standard` | 200 ms `--ease-standard` | Tab content swap             |
+| `pane-swap`    | Opacity + translateX (mode="out-in") | 300 ms `--spring-smooth` | 300 ms `--ease-out`      | Pane content swap            |
+| `metric-swap`  | Opacity + translateY + scale(0.95)   | 300 ms `--spring-smooth` | 200 ms `--ease-standard` | Metric value crossfade       |
+| `pane-slide`   | Opacity + max-height                 | 550 ms `--spring-gentle` | 550 ms `--ease-out`      | Collapsible panes            |
+| `pane-left`    | translateX(−110%) + rotate(−2°)      | 450 ms `--spring-snappy` | 300 ms `--ease-out`      | Left pane nav                |
+| `pane-right`   | translateX(110%) + rotate(2°)        | 450 ms `--spring-snappy` | 300 ms `--ease-out`      | Right pane nav               |
 
 All transitions respect `prefers-reduced-motion`: fades preserved at 150 ms, transforms eliminated.
 
@@ -1384,33 +1405,34 @@ classes, including `.gold-shimmer`, live in `utilities.css`.
 
 ## Composables
 
-Library-tier composables decompose into three rough registers. The first register exposes platform primitives behind a Vue-shaped seam (timers, intersection, resize, dark mode). The second wraps `@mkbabb/keyframes.js` motion primitives so consumers don't reach into the engine directly. The third wraps cross-cutting orchestration patterns that consumers were rolling by hand.
+Library-tier composables decompose into three rough registers. The first exposes platform primitives behind a Vue-shaped seam (timers, intersection, resize, dark mode). Motion composables own Vue lifecycle and interaction composition while engine primitives remain directly owned by `@mkbabb/keyframes.js`. The third register wraps cross-cutting orchestration patterns that consumers were rolling by hand.
 
-| Composable | Register | Purpose |
-|---|---|---|
-| `useGlobalDark` | platform | Single shared dark-mode ref + toggle. |
-| `useInterval` / `useTimer` | platform | Lifecycle-clean `setInterval` / `setTimeout` wrappers. |
-| `useResizeObserver` | platform | ResizeObserver behind `onScopeDispose`. |
-| `useTouchGate` | platform | Pointer-event coalescing for touch + mouse. |
-| `useKeyboardShortcuts` | platform | Scoped keybinding registration. |
-| `useTokenColor` | platform | Reactive read of a CSS custom property; re-resolves on dark-mode transitions. Replaces ad-hoc `getComputedStyle(html).getPropertyValue("--xxx")` reads in canvas + Aurora consumers. |
-| `useStagger` | orchestration | Fixed-count timed reveal cascade—`revealed.value[i]` flips true at `initialDelayMs + i * delayMs`. Distinct from `useStaggerReveal`: that one gates on IntersectionObserver thresholds; this one fires on a pure timer. The two compose. |
-| `useStaggerReveal` | orchestration | IntersectionObserver-gated entrance choreography for grids and lists. |
-| `useAnimatedNumber` | motion (`/motion`) | Hysteresis-smoothed live numeric tracking via keyframes.js `SmoothProgress`. |
-| `useAnimatedNumberMap` | motion (`/motion`) | N-up `useAnimatedNumber` fan-out behind a `Record<K, ComputedRef<number \| null>>`. Replaces hand-rolled per-key smoother arrays where consumers can't run the composable inside a `v-for`. |
-| `useSpringOrchestrator` | motion (`/motion`) | Multi-spring snapshot engine for choreographed transitions. |
-| `useRAFLoop` | motion (`/motion`) | rAF loop with start/stop/dispose + per-frame timing. |
-| `useDarkModeSync` | motion (`/motion`) | Reactive bridge between `useGlobalDark` and animation engine state. |
-| `useScrollProgress` | motion (`/motion`) | Scroll-position-driven progress ref. |
-| `useIntersectionPause` | motion (`/motion`) | Pause/resume long-running animation when target is offscreen. |
-| `useGlassRenderer` | glass | Glass-surface renderer wiring (filter, mask, backdrop). |
-| `useSidebarFollow` / `useTreeIndex` / etc. | sidebar | Sidebar layout + active-section tracking. |
-| `useInfiniteScroll` | data | Infinite scroll engine wired to a backing source. |
-| `useSortable` | data | SortableJS wrapper preserving Vue reactivity. |
+| Composable                                 | Register           | Purpose                                                                                                                                                                                                                                  |
+| ------------------------------------------ | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `useGlobalDark`                            | platform           | Single shared dark-mode ref + toggle.                                                                                                                                                                                                    |
+| `useInterval` / `useTimer`                 | platform           | Lifecycle-clean `setInterval` / `setTimeout` wrappers.                                                                                                                                                                                   |
+| `useResizeObserver`                        | platform           | ResizeObserver behind `onScopeDispose`.                                                                                                                                                                                                  |
+| `useTouchGate`                             | platform           | Pointer-event coalescing for touch + mouse.                                                                                                                                                                                              |
+| `useKeyboardShortcuts`                     | platform           | Scoped keybinding registration.                                                                                                                                                                                                          |
+| `useTokenColor`                            | platform           | Reactive read of a CSS custom property; re-resolves on dark-mode transitions. Replaces ad-hoc `getComputedStyle(html).getPropertyValue("--xxx")` reads in canvas + Aurora consumers.                                                     |
+| `useStagger`                               | orchestration      | Fixed-count timed reveal cascade—`revealed.value[i]` flips true at `initialDelayMs + i * delayMs`. Distinct from `useStaggerReveal`: that one gates on IntersectionObserver thresholds; this one fires on a pure timer. The two compose. |
+| `useStaggerReveal`                         | orchestration      | IntersectionObserver-gated entrance choreography for grids and lists.                                                                                                                                                                    |
+| `useAnimatedNumber`                        | motion (`/motion`) | Hysteresis-smoothed live numeric tracking via keyframes.js `SmoothProgress`.                                                                                                                                                             |
+| `useAnimatedNumberMap`                     | motion (`/motion`) | N-up `useAnimatedNumber` fan-out behind a `Record<K, ComputedRef<number \| null>>`. Replaces hand-rolled per-key smoother arrays where consumers can't run the composable inside a `v-for`.                                              |
+| `useLiquidPress`                           | motion (`/motion`) | Complete pointer/keyboard press lifecycle with one interruptible spring drive.                                                                                                                                                           |
+| `useElementMorph`                          | motion (`/motion`) | Shared compositor-only geometry writer over keyframes.js managed playback.                                                                                                                                                               |
+| `useRAFLoop`                               | orchestration (`/motion-core`) | Lifecycle-safe rAF loop with start/stop/dispose + per-frame timing.                                                                                                                                                             |
+| `useScrollProgress`                        | orchestration (`/motion-core`) | Scroll-position-driven progress ref.                                                                                                                                                                                           |
+| `useIntersectionPause`                     | orchestration (`/motion-core`) | Pause/resume long-running animation when target is offscreen.                                                                                                                                                                  |
+| `useGlassRenderer`                         | glass              | Glass-surface renderer wiring (filter, mask, backdrop).                                                                                                                                                                                  |
+| `useSidebarFollow` / `useTreeIndex` / etc. | sidebar            | Sidebar layout + active-section tracking.                                                                                                                                                                                                |
+| `useInfiniteScroll`                        | data               | Infinite scroll engine wired to a backing source.                                                                                                                                                                                        |
+| `useSortable`                              | data               | SortableJS wrapper preserving Vue reactivity.                                                                                                                                                                                            |
 
 ### When to add a new composable
 
 Reach for a new composable when:
+
 1. The pattern duplicates across two or more consumers (the "lifts on first duplication" rule).
 2. The consumer wraps a library primitive in a hand-rolled scheduler / fan-out / lifecycle loop. That's a library gap; fix it upstream.
 3. The platform API needs an `onScopeDispose` cleanup pair to be safe inside Vue components.
@@ -1421,10 +1443,10 @@ The composables registry is consumed via the root `@mkbabb/glass-ui` barrel for 
 carved off the root barrel into flat subpaths so consumers opt into the
 heavy peers explicitly and bundlers shake them when unused:
 
-| Subpath | Heavy peer | Symbols | Closure ref |
-|---|---|---|---|
-| `@mkbabb/glass-ui/forms` + `/dark` + `/keyboard` + `/carousel` | `@vueuse/core` | `Input`, `Textarea`, `Combobox*`, `useGlobalDark`, `useKeyboardShortcuts`, `registerShortcut`, `formatCombo`, `useCarousel`, `Carousel*` | L.W1 Lane C (vueuse SCC trap closure, v1.0) |
-| `@mkbabb/glass-ui/motion` | `@mkbabb/keyframes.js` | `useSpringOrchestrator`, `useAnimatedNumber`, `useAnimatedNumberMap`, `useStagger`, `useStaggerReveal`, `useScrollProgress`, `useRAFLoop`, `useIntersectionPause`, `installDarkModeSync`, `DAMPING`, `SNAP_THRESHOLD` (+ types `RAFLoopTiming`, `PausableRuntime`, `AnimatedNumber`, `UseAnimatedNumberOptions`, `SpringSnapshot`) | AI.W3 R3 (keyframes static-reach closure, v2.0) |
+| Subpath                                                        | Heavy peer             | Symbols                                                                                                                                                                                                                                                                                                                            | Closure ref                                     |
+| -------------------------------------------------------------- | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
+| `@mkbabb/glass-ui/forms` + `/dark` + `/keyboard` + `/carousel` | `@vueuse/core`         | `Input`, `Textarea`, `Combobox*`, `useGlobalDark`, `useKeyboardShortcuts`, `registerShortcut`, `formatCombo`, `useCarousel`, `Carousel*`                                                                                                                                                                                           | L.W1 Lane C (vueuse SCC trap closure, v1.0)     |
+| `@mkbabb/glass-ui/motion`                                      | `@mkbabb/keyframes.js` | Glass-owned Vue motion bindings including `useSpring`, `useLiquidPress`, `useElementMorph`, `useAnimatedNumber`, and `SPRING_PRESETS`; engine classes are imported directly from keyframes.js | BI.W-P023/P027/P028 |
 
 Acceptance bar for adding a new heavy-peer subpath: (a) the peer's
 transitive footprint is ≥ ~30 KB gz in the consumer's entry chunk, AND
@@ -1434,14 +1456,10 @@ canon is small on purpose — `forms`/`dark`/`keyboard`/`carousel`/`motion`
 are the only carve-outs to date; every other public composable rides the
 root barrel.
 
-The motion subpath additionally rolls in keyframes-free composables
-(`useStagger`, `useStaggerReveal`, `useScrollProgress`, `useRAFLoop`,
-`useIntersectionPause`, `installDarkModeSync`) because the sub-tree's
-`index.ts` walks every leaf with `export *` — Rollup treats the
-sub-tree as one SCC, so the move is all-or-nothing. The motion subpath
-is the canonical home for every kinetic composable; consumers reach
-`/motion` for any kinetic primitive regardless of whether it currently
-touches keyframes.js.
+Engine-free motion orchestration (`useStagger`, `useStaggerReveal`,
+`useScrollProgress`, `useRAFLoop`, `useIntersectionPause`) lives on
+`/motion-core`. Engine classes and easing functions are not mirrored by Glass;
+consumers import them from keyframes.js and value.js respectively.
 
 ---
 
@@ -1467,10 +1485,12 @@ glass-ui versions into one page) would observe state divergence between
 the copies. Per Rδ verification: no DI-able alternative is cleaner; the
 process-singleton pattern is canonical for these substrates.
 
-DataTable instead owns two per-instance registries inside
-`src/components/data-table/composables/useDataTableRowIdentity.ts`:
-`generatedRowIds` preserves object-row identity across recomputes, while
-`warnedRowIdentityIssues` de-duplicates development warnings for that table.
+DataTable requires a stable, unique row identity from `getRowId` or `rowKey`.
+It never invents index or object-identity fallbacks, so sorting, selection,
+responsive projection, and caller-windowed rendering share one key.
+Callers retain query, filtering, sorting, pagination, and virtual-window state.
+The component renders only the supplied rows and exposes absolute row indices,
+row attributes, element refs, and one controlled mounted tab stop.
 
 The `useToast` subsystem additionally preserves shadcn-vue parity, so
 consumers migrating from shadcn-vue retain a drop-in compatible API.
@@ -1495,6 +1515,16 @@ Utility classes `.icon-xs`..`.icon-xl` set width + height.
 
 ### Input & form constraints
 
+`Input` and `Textarea` render one native control each and share the colocated
+`field-control` material, `sm | md | lg` size axis, and semantic
+`default | invalid | readonly | disabled` state attribute. Native form,
+autocomplete, input-mode, wrapping, constraint-validation, and keyboard behavior
+remain on the underlying element rather than a wrapper.
+
+`Textarea` adds only multiline concerns. Its `resize` axis is
+`vertical | horizontal | both | none | content`; `content` uses bounded native
+`field-sizing`, while every fixed or non-resizable mode remains scrollable.
+
 ```
 --mask-fade-width:     1rem    (16 px)
 --max-width-input:     24rem   (384 px)
@@ -1502,43 +1532,12 @@ Utility classes `.icon-xs`..`.icon-xl` set width + height.
 --min-width-input-sm:  var(--input-min-width-sm)
 ```
 
-### Chassis sizing—dock-adjusted viewport (AB.W1)
+### Instrument sleeve spacing
 
-```
---chassis-max-block-size: calc(
-    100dvh
-    - var(--dock-footer-space, 5.75rem)
-    - var(--page-padding-top, 0rem)
-    - 1rem
-)
-```
-
-A guardrail for consumer-app chassis cards (e.g. speedtest's
-`.results-card`). The recipe subtracts the consumer-owned
-`--dock-footer-space` (dock height + dock inset + card-edge inset) and
-`--page-padding-top` from the dynamic viewport, then keeps one further
-rem of breathing room so the card never butts the dock—the user
-mandate is `≥ 1rem visible gap above dock`.
-
-Consumers should:
-
-1. **Centre the card vertically inside the dock-adjusted viewport.**
-   The dock-adjusted viewport is `100dvh − dock-footer-space − page-padding-top`;
-   the chassis lives above the dock, not behind it.
-
-2. **Clamp internal regions to that area before any scroll falls out.**
-   In a meter-and-readout chassis the yielding order is:
-   meter → readout → timeline → (last resort) `overflow-y: auto` with
-   `scrollbar-gutter: stable both-edges` + scroll-shadow guards.
-
-3. **Treat scroll as a documented fallback, never the primary passing
-   path.** Clamp-first / no-scroll-first is the canon. If `overflow-y:
-   auto` is needed it must be after every internal region has reached
-   its minimum.
-
-Speedtest's AB.W1.T2 consumes the token to repair B1 (chassis-too-tall
-occlusion), B10 (mobile/desktop fit) and H3 (mobile-375 CLS 0.926 → ≤
-0.15) at the chassis level.
+`InstrumentChassis` privately owns the stage/inspector rhythm and action padding.
+Consumers control only housing state, tone, proportion, explicit boundaries, and
+optional stage/inspector reserves; the sleeve never derives geometry from a viewport,
+dock, child count, or internal metric layout.
 
 ### Chart dimensions (consumer-facing tokens)
 
@@ -1596,58 +1595,50 @@ Also exposed as literal constants via `@mkbabb/glass-ui/tokens` for Canvas 2D / 
 ### Paper textures
 
 ```
---paper-texture-size:    200px 200px
---paper-clean-texture:   url("data:image/svg+xml,...")   /* baseFrequency 0.65, 4 octaves */
---paper-aged-texture:    url("data:image/svg+xml,...")   /* baseFrequency 0.5, 5 octaves */
+--paper-grain-tooth:   <warm raster stack>
+--paper-grain-relief:  none | <optional fine relief>
+--paper-grain-tile:    140px
+--paper-grain-opacity: <route-owned strength>
 ```
 
-Classes `.paper-texture` and `.paper-texture-aged` apply the overlay with `multiply` blend (light) / `screen` blend (dark).
+The shared recipe uses `multiply` in light mode and `screen` in dark mode. Reduced
+transparency removes the decorative tooth; print omits it because the physical sheet
+already supplies the paper stratum.
 
 ---
 
 ## Texture system
 
-The canonical paper-texture substrate is two composable `@utility` declarations plus one wrapper SFC. Consumers never reach inside scoped styles to retint texture—they override the `--paper-*` CSS custom properties at `:root`, which cascades through the utilities transparently.
+The canonical paper substrate is two composable utilities plus one semantic mount.
+Routes own the paper variables; components consume the inherited recipe without
+manufacturing local material variants.
 
 ### Substrate
 
-- `<PaperBackdrop>` (`src/components/paper-backdrop/PaperBackdrop.vue`)—the wrapper SFC. Props: `opacity?: number | string`, `frequency?: "clean" | "aged"`, `class?`. Renders a single `<div class="paper-underpaint" aria-hidden="true">`; the `frequency="aged"` prop swaps `backgroundImage` to `var(--paper-aged-texture)` inline.
-- `paper-underpaint` (`src/styles/paper.css`)—`@utility` declaration. `position: fixed; inset: 0; z-index: -1; pointer-events: none` plus the canonical feTurbulence-noise SVG data-url at 60 × 60 tile. Bound to `--glass-grain-opacity` for the alpha rung and `multiply` / `soft-light` blend (light / dark mode).
-- `paper-grain-overlay` (`src/styles/paper.css`)—`@utility` declaration. `::after` overlay variant for individual surfaces (the underpaint is fullscreen-fixed; the overlay is a card-shaped pseudo-element). Same texture / opacity / blend cascade.
+- `<PaperBackdrop>` mounts one decorative `<div class="paper-underpaint" aria-hidden="true">`.
+  Its public props contain only `class`; it owns no opacity, frequency, or texture branch.
+- `paper-underpaint` is the fixed content-field recipe.
+- `paper-grain-overlay` applies the same tooth to an individual surface through one
+  non-interactive pseudo-element.
 
 ### Custom-property cascade pattern
 
-Consumers retint texture via `:root` overrides:
+The owning route adjusts the shared recipe through inherited variables:
 
 ```css
 :root {
-    /* Swap the texture image data-url. */
-    --paper-clean-texture: url("data:image/svg+xml,...");
-    --paper-aged-texture:  url("data:image/svg+xml,...");
-
-    /* Or recolor the grain blend strength (used by both utilities). */
-    --glass-grain-opacity: 0.18;
+    --paper-grain-opacity: 0.12;
 }
 ```
 
-The cascade parallels the `--phase-color-*` substrate documented at AC.W6c / v1.5.1—consumers never edit library source; they declare overrides at `:root` (or a scoped ancestor) and the utilities cascade through. Per the J invariant (token-first), no consumer needs to fork `PaperBackdrop.vue` to add a third frequency—they ship `--paper-handmade-texture: url(...)` at `:root` and apply `class="paper-grain-overlay"` with an inline `style="background-image: var(--paper-handmade-texture)"` override.
-
-### Migration path—consumers shipping a parallel `useTextureSystem` composable
-
-Per P11/a §G3 + §I2, words/frontend ships ~500 LOC of parallel substrate at HEAD: `useTextureSystem.ts` (162 LOC) + `TextureCard.vue` / `TextureBackground.vue` / `TextureOverlay.vue` (341 LOC). The composable + 3 SFCs reconstruct the `--paper-clean-texture` / `--paper-aged-texture` switching plus blend-mode + intensity register that the canonical substrate already covers. The migration shape:
-
-1. Drop `useTextureSystem.ts` + the 3 texture SFCs (~500 LOC).
-2. Replace `<TextureCard>` / `<TextureBackground>` / `<TextureOverlay>` call sites with raw `class="paper-grain-overlay"` (per-surface overlay) or `<PaperBackdrop>` (fullscreen substrate). The `frequency` prop replaces the `:type="clean | aged"` consumer-side switch.
-3. Override `--paper-*-texture` / `--glass-grain-opacity` at `:root` (or a scoped ancestor) when retinting is needed—consumers stop dispatching `setTextureType('aged')` programmatically and start declaring tone in CSS.
-4. The local `texture-paper-{clean,aged,handmade,kraft}` Tailwind plugin block (in consumer-side `tailwind.config.ts`) collapses to two utilities—`paper-underpaint` and `paper-grain-overlay`—both already shipped via `@import '@mkbabb/glass-ui/styles'`.
-
-Pin against the types from the owning subpath (the `/api` discovery layer was folded at 5.0.0):
+Import the component and its sole prop type from the owning subpath:
 
 ```ts
-import type { PaperBackdropFrequency, PaperBackdropProps, PaperBackdrop } from "@mkbabb/glass-ui/paper-backdrop";
+import {
+    PaperBackdrop,
+    type PaperBackdropProps,
+} from "@mkbabb/glass-ui/paper-backdrop";
 ```
-
-The `PaperBackdropFrequency` union is the canonical surface enum; consumers exposing a domain-specific texture knob (e.g. a settings panel "Texture: clean / aged") type their prop against this rather than redeclaring `"clean" | "aged"` locally.
 
 ---
 

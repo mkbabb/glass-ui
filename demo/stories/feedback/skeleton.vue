@@ -3,115 +3,59 @@ import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import { Skeleton } from "@glass/components/skeleton";
-import { IconChip } from "@glass/components/icon-chip";
-import { LoaderCircle } from "@lucide/vue";
-// BB.W-SUFFUSE3 — the feedback band's --section-color-8 ruby identity.
-const FEEDBACK_STOP = 8;
 </script>
 
 <template>
     <StoryPage>
-        <!-- BB.W-SUFFUSE3 — the feedback-band identity COLOR EVENT (the tinted
-             eyebrow + the inline accent rail + the focal IconChip, all on
-             --section-color-8). The page-level color identity, DISTINCT from the
-             StorySection labels below — it carries NO heading rung (not an
-             idiom-B second header; PH3). -->
-        <header
-            class="story-color-event flex items-center gap-4 pl-5"
-            :style="{
-                '--section-label-accent': `var(--section-color-${FEEDBACK_STOP})`,
-            }"
-        >
-            <IconChip :icon="LoaderCircle" :section="FEEDBACK_STOP" bloom reveal />
-            <div class="flex flex-col gap-1">
-                <span class="section-label--tinted text-admin-label">
-                    Feedback · Skeletons
-                </span>
+        <StorySection label="text">
+            <ShowcaseFrame
+                class="flex max-w-xl flex-col gap-3"
+                aria-busy="true"
+                aria-label="Loading article summary"
+            >
+                <Skeleton class="h-5 w-2/5" />
+                <Skeleton class="h-4 w-full" />
+                <Skeleton class="h-4 w-11/12" />
+                <Skeleton class="h-4 w-3/5" />
+            </ShowcaseFrame>
+        </StorySection>
+
+        <StorySection label="avatar">
+            <ShowcaseFrame
+                class="flex max-w-md items-center gap-4"
+                aria-busy="true"
+                aria-label="Loading profile"
+            >
+                <Skeleton class="size-12 shrink-0 rounded-full" />
+                <div class="flex min-w-0 flex-1 flex-col gap-2">
+                    <Skeleton class="h-4 w-2/5" />
+                    <Skeleton class="h-3 w-3/5" />
+                </div>
+            </ShowcaseFrame>
+        </StorySection>
+
+        <StorySection label="card">
+            <ShowcaseFrame
+                class="flex max-w-lg flex-col gap-4"
+                aria-busy="true"
+                aria-label="Loading project card"
+            >
+                <Skeleton class="aspect-[16/9] w-full rounded-card" />
+                <Skeleton class="h-5 w-1/2" />
+                <div class="flex flex-col gap-2">
+                    <Skeleton class="h-3.5 w-full" />
+                    <Skeleton class="h-3.5 w-4/5" />
+                </div>
+            </ShowcaseFrame>
+        </StorySection>
+
+        <StorySection label="light · dark · reduced motion">
+            <ShowcaseFrame class="flex max-w-xl flex-col gap-4">
                 <p class="text-small text-muted-foreground">
-                    Loading surfaces — the placeholder shimmer reads neutral; the
-                    section identity is the ONE page event.
+                    The reserved shapes follow the active color scheme. Their scan
+                    becomes a static highlight when reduced motion is requested.
                 </p>
-            </div>
-        </header>
-
-        <StorySection label="variants">
-            <div class="grid gap-4 sm:grid-cols-2">
-                <div class="flex flex-col gap-2">
-                    <p class="font-mono text-xs text-muted-foreground">pulse</p>
-                    <Skeleton class="h-4 w-full" />
-                    <Skeleton class="h-4 w-4/5" />
-                    <Skeleton class="h-4 w-2/3" />
-                </div>
-                <div class="flex flex-col gap-2">
-                    <p class="font-mono text-xs text-muted-foreground">shimmer</p>
-                    <Skeleton variant="shimmer" class="h-4 w-full" />
-                    <Skeleton variant="shimmer" class="h-4 w-4/5" />
-                    <Skeleton variant="shimmer" class="h-4 w-2/3" />
-                </div>
-            </div>
-        </StorySection>
-
-        <StorySection label="card skeleton">
-            <!-- BA.W-DEMO-AFFORDANCES — the hand-rolled bg-card/60 plates re-point
-                 onto the glass-routed <ShowcaseFrame> (the resting glass tier over
-                 the staged backdrop), not a dead opaque slab (FD-FS X-2). -->
-            <div class="grid gap-6 sm:grid-cols-2">
-                <ShowcaseFrame class="flex flex-col gap-4">
-                    <div class="flex items-center gap-3">
-                        <Skeleton class="size-10 rounded-full" />
-                        <div class="flex flex-1 flex-col gap-2">
-                            <Skeleton class="h-3.5 w-1/2" />
-                            <Skeleton class="h-3 w-1/3" />
-                        </div>
-                    </div>
-                    <Skeleton class="aspect-[16/9] w-full rounded-lg" />
-                    <div class="flex flex-col gap-2">
-                        <Skeleton class="h-3.5 w-full" />
-                        <Skeleton class="h-3.5 w-11/12" />
-                        <Skeleton class="h-3.5 w-3/4" />
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <Skeleton class="h-8 w-24 rounded-full" />
-                        <Skeleton class="h-8 w-16 rounded-full" />
-                    </div>
-                </ShowcaseFrame>
-
-                <ShowcaseFrame class="flex flex-col gap-4">
-                    <div class="flex items-center gap-3">
-                        <Skeleton variant="shimmer" class="size-10 rounded-full" />
-                        <div class="flex flex-1 flex-col gap-2">
-                            <Skeleton variant="shimmer" class="h-3.5 w-1/2" />
-                            <Skeleton variant="shimmer" class="h-3 w-1/3" />
-                        </div>
-                    </div>
-                    <Skeleton variant="shimmer" class="aspect-[16/9] w-full rounded-lg" />
-                    <div class="flex flex-col gap-2">
-                        <Skeleton variant="shimmer" class="h-3.5 w-full" />
-                        <Skeleton variant="shimmer" class="h-3.5 w-11/12" />
-                        <Skeleton variant="shimmer" class="h-3.5 w-3/4" />
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <Skeleton variant="shimmer" class="h-8 w-24 rounded-full" />
-                        <Skeleton variant="shimmer" class="h-8 w-16 rounded-full" />
-                    </div>
-                </ShowcaseFrame>
-            </div>
-        </StorySection>
-
-        <StorySection label="list rows">
-            <ShowcaseFrame pad="sm" class="flex flex-col gap-3">
-                <div
-                    v-for="row in 4"
-                    :key="row"
-                    class="flex items-center gap-3"
-                >
-                    <Skeleton variant="shimmer" class="size-8 rounded-md" />
-                    <div class="flex flex-1 flex-col gap-1.5">
-                        <Skeleton variant="shimmer" class="h-3.5 w-1/3" />
-                        <Skeleton variant="shimmer" class="h-3 w-1/2" />
-                    </div>
-                    <Skeleton variant="shimmer" class="h-3 w-10" />
-                </div>
+                <Skeleton data-testid="skeleton-motion" class="h-8 w-full" />
             </ShowcaseFrame>
         </StorySection>
     </StoryPage>

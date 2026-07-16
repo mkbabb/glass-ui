@@ -47,8 +47,8 @@
         position: absolute;
         inset: 0;
         /* Paint BELOW the in-flow control run, ABOVE the box's (empty) bg/border +
-           drop-shadow: `.glass-dock` mints a stacking context at rest (`scale: 1`,
-           shell.css), so a negative-z child stays WITHIN that context — the plate seats
+           drop-shadow: `.glass-dock` explicitly owns a local stacking context
+           (`z-index: 0`, shell.css), so a negative-z child stays WITHIN it — the plate seats
            at the bottom (glass lens), the `display: contents` control run paints over it.
            This keeps the control LAYOUT byte-identical to HEAD (the controls stay direct
            flex children of `.glass-dock`) with the plate added behind. */

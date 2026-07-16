@@ -1,15 +1,64 @@
 <script setup lang="ts">
-import { CollapsibleRoot, useForwardPropsEmits } from 'reka-ui'
-import type { CollapsibleRootEmits, CollapsibleRootProps } from 'reka-ui'
+import { computed, useAttrs, type HTMLAttributes } from "vue";
+import { CollapsibleRoot as RekaCollapsibleRoot } from "reka-ui";
+import { cn } from "../_shared/class-names";
+import { provideDisclosureIds } from "../_shared/disclosure-context";
 
-const props = defineProps<CollapsibleRootProps>()
-const emits = defineEmits<CollapsibleRootEmits>()
+export interface CollapsibleProps {
+    /** Controlled disclosure state. */
+    open?: boolean;
+    /** Initial state for an uncontrolled disclosure. */
+    defaultOpen?: boolean;
+    disabled?: boolean;
+    class?: HTMLAttributes["class"];
+}
 
-const forwarded = useForwardPropsEmits(props, emits)
+export interface CollapsibleEmits {
+    "update:open": [value: boolean];
+}
+
+defineOptions({ name: "Collapsible", inheritAttrs: false });
+
+const props = withDefaults(defineProps<CollapsibleProps>(), {
+    defaultOpen: false,
+    disabled: false,
+});
+const emit = defineEmits<CollapsibleEmits>();
+defineSlots<{
+    default?: (props: { open: boolean }) => unknown;
+}>();
+
+provideDisclosureIds();
+
+const attrs = useAttrs();
+const forwardedAttrs = computed(() => {
+    const {
+        as: _as,
+        asChild: _asChild,
+        "as-child": _asChildKebab,
+        unmountOnHide: _unmountOnHide,
+        "unmount-on-hide": _unmountOnHideKebab,
+        ...forwarded
+    } = attrs;
+    return forwarded;
+});
 </script>
 
 <template>
-  <CollapsibleRoot data-slot="collapsible" v-slot="{ open }" v-bind="forwarded">
-    <slot :open="open" />
-  </CollapsibleRoot>
+    <RekaCollapsibleRoot
+        v-bind="forwardedAttrs"
+        v-slot="{ open: currentOpen }"
+        as="div"
+        data-slot="collapsible"
+        data-disclosure="collapsible"
+        :open="open"
+        :default-open="defaultOpen"
+        :disabled="disabled"
+        :class="cn('disclosure', props.class)"
+        @update:open="emit('update:open', $event)"
+    >
+        <slot :open="currentOpen" />
+    </RekaCollapsibleRoot>
 </template>
+
+<style src="../_shared/disclosure.css"></style>

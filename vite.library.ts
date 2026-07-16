@@ -21,21 +21,19 @@ export function libraryFileName(_format: string, entryName: string) {
 // strings `lucide-vue-next` (renamed → `@lucide/vue` at v1.0) and `vaul-vue`
 // (abrogated at BB.W-DRAWER-ABROGATE — the house reka substrate owns the snap
 // math now) externalized packages no longer in the graph — removed (no alias).
-// Machine-locked by `proof:external-payload` (every peer src JS-imports is here;
-// every entry here is a declared peer — no dead string). `perfect-freehand` is
-// VENDORED into handmark/freehand.ts (zero `from "perfect-freehand"`), so it
-// does NOT leak and is correctly absent.
+// Every runtime peer imported by source is externalized here. `perfect-freehand`
+// is vendored into handmark/freehand.ts, so it is intentionally absent.
 export const libraryExternal = [
     "vue",
     "reka-ui",
     "@vueuse/core",
     "@mkbabb/keyframes.js",
-    "@mkbabb/value.js",
+    "@mkbabb/value.js/color",
+    "@mkbabb/value.js/css",
+    "@mkbabb/value.js/easing",
     // BA.W-HANDMARK — the hand-mark family's L1 geometry peer (optional). Externalized
     // so the /handmark chunk imports it rather than bundling the optional peer.
     "@mkbabb/pencil-boil",
-    "class-variance-authority",
-    "clsx",
     "embla-carousel-vue",
     "@lucide/vue",
 ];

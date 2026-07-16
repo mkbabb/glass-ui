@@ -7,6 +7,7 @@ import {
     libraryFileName,
 } from "./vite.library";
 import { publishStyleAssets } from "./vite.style-assets";
+import { glassCssTarget } from "./vite.targets";
 
 export default defineConfig({
     plugins: [
@@ -15,6 +16,7 @@ export default defineConfig({
         publishStyleAssets(),
     ],
     build: {
+        cssTarget: glassCssTarget,
         sourcemap: false,
         // The iter build OVERWRITES the measured JS/CSS chunks in place; emptying
         // dist/ would also nuke the flat per-subpath d.ts set the full build's

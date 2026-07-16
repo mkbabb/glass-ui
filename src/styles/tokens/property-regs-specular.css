@@ -26,7 +26,7 @@
     --glass-specular-intensity-active: 0.16;
     /* BB.W-BUTTON-GLASS (d) — the BUTTON-SCOPED hover gleam bump. The lit glass
        button should read a notch brighter at the grazing edge than the global
-       hover whisper (0.10). `.btn-glass` re-points its own
+       hover whisper (0.10). `.button` re-points its own
        `--glass-specular-intensity-hover` to this knob (surfaces.css), so ONLY the
        button lifts — the global cohort above is UNTOUCHED. A consumer retints the
        button gleam from this ONE override. */
@@ -44,7 +44,7 @@
 }
 
 /* BB.W-BUTTON-GLASS (b)/(e) — the press DRIVE scalar. ONE typed 0..1 custom
-   property Button.vue writes off the `useSpringPress` spring (0 released → 1
+   property Button.vue writes off the `useLiquidPress` spring (0 released → 1
    pressed, with the ~5% overshoot the spring carries). It is the SINGLE drive the
    press SQUISH (the `useLiquidFlex` reciprocal X/Y deform), the coupled specular/
    brightness lift, and the optional `.glass-refract` lens-swell all read — the "one
@@ -69,7 +69,7 @@
 
    • --seal-draw (<percentage>) — the stroke-reveal extent (the stroke-dashoffset wipe
      drive: 0% undrawn → 100% fully drawn). `inherits: false` (each seal owns its own
-     draw, the per-surface ownership of the specular/border-progress cohort — a sealed
+     draw, matching the per-surface ownership of the specular cohort — a sealed
      parent must not push its draw onto a child seal). `initial-value: 100%` is the
      SAFE fully-drawn resting seal: on a non-supporting engine (no @property) the seal
      paints fully drawn, NEVER a blank — the editorial draw-on degrades to the finished
@@ -116,25 +116,6 @@
     syntax: "<color>";
     inherits: true;
     initial-value: oklch(0.751 0.147 84.2);
-}
-
-/* BC.W-SCROLL-TRIGGER — the native scroll-ramp custom. The continuous 0..1 scroll
-   progress the `useScrollTrigger` reader exposes rides this registered custom on a
-   `supportsScrollTimeline()` engine: a `.scroll-progress`-style recipe writes it via
-   `animation-timeline: scroll(self)` so a consumer's CSS ramp (the BC.W-SCROLL-CHROME
-   shrink/opacity) reads `--scroll-t` with ZERO JS (the dual-path single-writer — the JS
-   `progress` ref attaches NOTHING on a supporting engine). `inherits: true` (the
-   cascading-scalar idiom — a scroll-driven ancestor exposes the ramp to descendant
-   chrome, the `--ui-scale`/`--glass-level` pattern), distinct from the per-element
-   non-inheriting specular/progress cohort. `initial-value: 0` is the safe resting ramp
-   (the unregistered fallback paints it; on a non-supporting engine the JS reader writes
-   `progress.value` and the consumer reads the ref, not this custom). The typed
-   `<number>` lets the engine interpolate the ramp rather than the textual rep (a bare
-   unregistered var() snaps — the `--border-progress-fill`/`--dock-morph-t` precedent). */
-@property --scroll-t {
-    syntax: "<number>";
-    inherits: true;
-    initial-value: 0;
 }
 
 /* BC.W-SCROLL-CHROME — the floating-chrome COLLAPSE fraction. `--chrome-collapse-t`

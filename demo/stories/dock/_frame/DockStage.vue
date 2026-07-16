@@ -15,10 +15,9 @@
 //
 // Each dock demo wraps its specimen in a `<DockStageTile>`-shaped transparent framed
 // slot (the `.dock-stage-tile` class) so the dock floats DIRECTLY over the shared
-// field with NO opaque card between (the BG-2 lesson). The pause-toggle demo keeps its
-// OWN functional aurora (it must, to demonstrate pause/resume on a real renderer) — it
-// is NOT a transparent tile; it self-stages.
-import { computed, useTemplateRef } from "vue";
+// field with no opaque card between. The optional `paused` input parks this same
+// route field for the pause-toggle specimen; it never mounts a second renderer.
+import { computed, useTemplateRef, watchEffect } from "vue";
 import { Aurora, type AuroraConfig } from "@glass/components/aurora";
 import {
     useGlassBackdropLuminance,
@@ -26,10 +25,12 @@ import {
 } from "@glass/composables/glass/useGlassBackdropLuminance";
 import { heroAuroraConfig } from "../../../chassis/hero/aurora-hero";
 
-withDefaults(
+const props = withDefaults(
     defineProps<{
         /** How far back the shared field recedes behind the demos. */
         opacityCeiling?: number;
+        /** Parks the one shared route field through Aurora's public lifecycle seam. */
+        paused?: boolean;
         /**
          * The staged aurora field. Defaults to the WARM colorful dock hero field
          * (`heroAuroraConfig("cat-dock")` — a coral/amber warm-projected drift, chroma
@@ -43,7 +44,11 @@ withDefaults(
          */
         config?: AuroraConfig;
     }>(),
-    { opacityCeiling: 0.55, config: () => heroAuroraConfig("cat-dock") },
+    {
+        opacityCeiling: 0.55,
+        paused: false,
+        config: () => heroAuroraConfig("cat-dock"),
+    },
 );
 
 // The shared aurora <canvas>, surfaced through the scoped slot. BI.W-DOCK-LUMA-SHARE
@@ -53,9 +58,16 @@ withDefaults(
 // sibling dock stories (layers / sections / cta-receive / dock-search) that still bind
 // `:background-canvas` — a now-harmless no-op there (those docks stand down under the same
 // shared marker), migrated off in the story-band pass. <Aurora> exposes its `canvasRef`.
-const auroraRef = useTemplateRef<{ canvasRef: HTMLCanvasElement | null }>("auroraRef");
+const auroraRef = useTemplateRef<{
+    canvasRef: HTMLCanvasElement | null;
+    pause: () => void;
+    resume: () => void;
+}>("auroraRef");
 const backgroundCanvas = computed<HTMLCanvasElement | null>(
     () => auroraRef.value?.canvasRef ?? null,
+);
+watchEffect(() =>
+    props.paused ? auroraRef.value?.pause() : auroraRef.value?.resume(),
 );
 
 // BI.W-DOCK-LUMA-SHARE (PERF-6/FAM-5) — the ONE shared backdrop-luminance observer per
@@ -79,7 +91,7 @@ useGlassBackdropLuminance(stageEl, {
     <div
         ref="stageEl"
         class="dock-stage"
-        data-material="functional-glass"
+        data-material="functional"
         :[GLASS_BACKDROP_SHARED_ATTR]="''"
     >
         <!-- The ONE shared field behind the whole demo column. The field's backing
@@ -170,7 +182,6 @@ useGlassBackdropLuminance(stageEl, {
 .dock-stage .dock-stage-field {
     position: sticky;
     top: 0;
-    display: block;
     height: 100dvh;
     width: 100%;
     pointer-events: none;

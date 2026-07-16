@@ -1,20 +1,23 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
-import type { ComboboxEmptyProps } from 'reka-ui'
-import { ComboboxEmpty } from 'reka-ui'
-import { cn } from '../_shared/class-names'
+import { computed, useAttrs } from "vue";
+import { ComboboxEmpty as RekaComboboxEmpty } from "reka-ui";
+import { cn } from "../_shared/class-names";
+import { fixedHostAttrs } from "../_shared/primitive";
+import type { ComboboxEmptyProps } from "../combobox/types";
 
-const props = defineProps<ComboboxEmptyProps & { class?: HTMLAttributes['class'] }>()
+defineOptions({ name: "CommandEmpty", inheritAttrs: false });
 
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
-
-  return delegated
-})
+const props = defineProps<ComboboxEmptyProps>();
+const attrs = useAttrs();
+const forwardedAttrs = computed(() => fixedHostAttrs(attrs));
 </script>
 
 <template>
-  <ComboboxEmpty v-bind="delegatedProps" :class="cn('py-6 text-center text-dropdown', props.class)">
-    <slot />
-  </ComboboxEmpty>
+    <RekaComboboxEmpty
+        v-bind="forwardedAttrs"
+        data-slot="command-empty"
+        :class="cn('command__empty', props.class)"
+    >
+        <slot />
+    </RekaComboboxEmpty>
 </template>

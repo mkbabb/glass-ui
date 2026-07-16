@@ -33,7 +33,7 @@
 
        The composition is `color-mix(in oklab, <current rim color>, var(--glass-
        accent) var(--glass-accent-strength))` — the PERCEPTUAL oklab mix the W55
-       glass-tint seam + the `<IconChip>` chip already speak (NOT in-srgb — the
+       glass-tint seam + the static `<Chip>` plate already speak (NOT in-srgb — the
        in-srgb fence is the `--surface-tint-*` brand-overlay family, a SEPARATE
        axis this never touches). At the resting `--glass-accent-strength: 0%` (the
        `@property` default) + `--glass-accent: transparent` (the neutral identity)

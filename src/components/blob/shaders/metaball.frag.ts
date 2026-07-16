@@ -29,7 +29,7 @@ import {
     FBM_ROT_GLSL,
     OETF_GLSL,
     OKLCH_MATRICES_GLSL,
-} from "../../../composables/glass/webgl/shaders/procedural-color.glsl";
+} from "../../../composables/glass/procedural/color.glsl";
 import { METABALL_SDF_GLSL } from "./sdf-body.glsl";
 import {
     METABALL_EDGE_NOISE_PRE_GLSL,
@@ -61,7 +61,7 @@ export const METABALL_FRAGMENT_SRC =
 //
 // The OETF (srgbToLinear/linearToSrgb) + the four Ottosson matrices + their space
 // conversions are SPLICED from the shared chunk (AV.W2 —
-// src/composables/glass/webgl/shaders/procedural-color.glsl.ts). They live there
+// src/composables/glass/procedural/color.glsl.ts). They live there
 // ONCE so the OETF can never diverge from aurora's; the line-for-line TS port
 // (__tests__/metaball-color.glsl-port.ts) mirrors that chunk. The gamut-clamp
 // below stays blob-local (aurora has no in-shader OKLCh path).
@@ -337,7 +337,7 @@ void main() {
 
     // ── BD.W-GOO-CAROUSEL-DECK — the blob to meatball SHADING MORPH (uMorphT). ──
     // The user #1 ask: the goo should MORPH BLOB and MEATBALL from one to another
-    // — a CONTINUOUS in-between, not a hard variant cut. The KEY FACT: the body
+    // — a CONTINUOUS in-between, not a hard cut. The KEY FACT: the body
     // GEOMETRY is IDENTICAL across blob/meatball (the smin SDF field, the satellites,
     // the fwidth-AA — all computed ABOVE, before this gate). ONLY the SURFACE shading
     // (flat fill vs lit/shadow/iridescence/SSS) differs. So the morph is a uMorphT
@@ -349,8 +349,8 @@ void main() {
     //                   the old else path);
     //   0 < uMorphT < 1 -> the CONTINUOUS in-between (the morph the user asked for).
     //
-    // uMorphT resolves from variant for back-compat (blob -> 0, meatball -> 1); a
-    // consumer ANIMATING config.morphT 0..1 gets the live morph. The smin field is
+    // uMorphT is the single clamped config surface axis; a consumer ANIMATING
+    // config.morphT 0..1 gets the live morph. The smin field is
     // byte-UNTOUCHED (the geometry is shared — that is the whole point).
     //
     // The flat color is computed ALWAYS (cheap); the EXPENSIVE dressing (the soft-shadow
@@ -428,7 +428,7 @@ void main() {
     //    light, DARKEN the OKLCh L — a soft grounded contact band under the dome
     //    (PROCEDURAL, silhouette-following, unlike the static CSS gel-dome drop-shadow).
     //    Rim-weighted (1 - thickness) so the lit interior stays bright. Gated uShadow > 0.5;
-    //    variant=blob (STAGE 1) ships shadowless via the uStage early-return above. ──
+    //    morphT=0 ships shadowless via the uStage early-return above. ──
     if (uShadow > 0.5) {
         vec2 L2 = normalize(uLightDir.xy + vec2(1e-6));
         float sh = softShadow2D(uv, L2, max(aa, 0.004), bodyR * 1.5, max(uShadowSoftness, 4.0));

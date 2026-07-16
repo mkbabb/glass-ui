@@ -7,8 +7,7 @@
 // into either would re-drag value.js into the eager `<Chip>` chunk. The ink SOLVE
 // (the only value.js consumer) lives in the dynamically-imported `./accent-tone-solve`
 // leaf, reached ONLY behind a dynamic `import()` boundary INSIDE this composable —
-// the BC.W-AX-BP-LAZY / spectrum-walk precedent (the eager-graph payload move; the
-// value.js-bearing math is a code-split chunk, the sync shell carries the
+// the eager-graph payload move: value.js-bearing math is a code-split chunk, while the sync shell carries the
 // var()-passthrough fast path).
 //
 // Two paths, split by TONE KIND:
@@ -25,17 +24,14 @@
 //     contrast-safe value the next tick (imperceptible on a determinate chip).
 //
 // The math source is value.js (in the leaf) — glass-ui re-implements ZERO OKLCh
-// contrast/lightness math (`proof:single-color-core` holds; the `useBorderSpectrum`
-// precedent). The public API (`useAccentTone(tone, opts) → { toneStyle, ink }`) +
+// contrast/lightness math (`proof:single-color-core` holds). The public API
+// (`useAccentTone(tone, opts) → { toneStyle, ink }`) +
 // the option/return types are byte-preserved; only the value.js math moved behind
 // the dynamic boundary.
 
 import { computed, ref, toValue, type ComputedRef, type MaybeRefOrGetter } from "vue";
 
 export interface UseAccentToneOptions {
-    /** Idle fill strength (0..1). Default 0.08. The CSS `--accent-fill-strength`
-     *  twin — passed here so the JS ink-solve composites the matching band. */
-    fillStrength?: number;
     /** Active band strength (0..1). Default 0.18 (the CSS `--accent-band-strength`). */
     bandStrength?: number;
     /** Target ink-over-band contrast. Default 4.5 (AA). */
@@ -59,11 +55,10 @@ export interface UseAccentToneReturn {
 
 // The load-once cache for the dynamic ink solve — keyed by tone + the solve-relevant
 // opts. A concrete tone is solved ONCE; a repeated call with the SAME key reads the
-// cached ink synchronously (no re-import, no re-solve). A `""` result (unparseable
-// tone) is cached too, so a bad tone never re-fires the import.
+// cached ink synchronously (no re-import, no re-solve).
 const inkCache = new Map<string, string>();
 const cacheKey = (toneCss: string, opts: UseAccentToneOptions) =>
-    `${toneCss}|${opts.surface ?? ""}|${opts.inkContrast ?? ""}|${opts.bandStrength ?? ""}|${opts.fillStrength ?? ""}`;
+    `${toneCss}|${opts.surface ?? ""}|${opts.inkContrast ?? ""}|${opts.bandStrength ?? ""}`;
 
 /**
  * `useAccentTone(tone, opts)` — resolve the contrast-safe label ink for the tonal
@@ -99,7 +94,8 @@ export function useAccentTone(
         const cached = inkCache.get(key);
         if (cached !== undefined) return cached;
 
-        void import("./accent-tone-solve").then(({ solveAccentInk }) => { // lazy-boundary: BI.W-CHIP-FOLD value.js-free fast path; the concrete-tone ink solve is the ONLY value.js consumer
+        void import("./accent-tone-solve").then(({ solveAccentInk }) => {
+            // lazy-boundary: BI.W-CHIP-FOLD value.js-free fast path; the concrete-tone ink solve is the ONLY value.js consumer
             inkCache.set(key, solveAccentInk(toneCss, opts));
             solveVersion.value++;
         });
@@ -107,7 +103,9 @@ export function useAccentTone(
     });
 
     const toneStyle = computed<Record<string, string>>(() => {
-        const style: Record<string, string> = { "--tone": toValue(tone) || "var(--primary)" };
+        const style: Record<string, string> = {
+            "--tone": toValue(tone) || "var(--primary)",
+        };
         const resolved = ink.value;
         if (resolved) style["--accent-ink-resolved"] = resolved;
         return style;

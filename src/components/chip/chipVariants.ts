@@ -1,84 +1,39 @@
-import { type VariantProps, cva } from "class-variance-authority";
+import { joinClassValues, type ClassValue } from "../_shared/class-names";
 
-/**
- * chipVariants — the ONE congruent chip recipe (BI.W-CHIP-FOLD; BD.W-CHIP-CONGRUENT-GLASS).
- *
- * The chip family (the retired ToggleChip + SelectableChip + the toggle-group
- * children) is FOLDED onto ONE `<Chip shape × tone>`: a stadium-pill warm-glass
- * LENS that PUNCHES when you pick it. The Kronecker factorization (BI.W-CHIP-FOLD)
- * observed that ToggleChip's `variant` (`chip`/`cell`) was a pure NAME-SYNONYM of
- * SelectableChip's `shape` (`pill`/`cell`) over the SAME CVA — so the two surfaces
- * merge compile-time onto this ONE recipe (clean break, no alias — the no-legacy
- * law; the `selectableChipVariants`/`SelectableChipVariants` shim was SWEPT at
- * BG.W-DEAD-SWEEP). The tonal-accent register (`tone`) is a per-instance style
- * layered ON this recipe by `Chip.vue`, not a CVA axis.
- *
- * The recipe is STRUCTURE + the shared-register hooks: it COMPOSES the read-only
- * shared registers, never re-forks a parallel glass/cartoon/motion system —
- *   · `.glass-chip`         — the chip-family material/motion layer (the warm idle
- *                             floor + the `--glass-fill-tint` plate tint + the ONE
- *                             scale write + the `::after` colour-flood punch).
- *   · `.glass-capsule`      — the warm-transmissive lozenge BODY (fill + rim +
- *                             shadow + blur, on `--radius-pill` → the stadium
- *                             end-cap at every rung). Radius is INVARIANT — the
- *                             capsule re-rounds itself at every height; no
- *                             `rounded-*` rung (retires the 4/6/10px grab-bag).
- *   · `.glass-capsule-hover`— the SHARED specular-lift + press-snap on hover.
- *   · `.accent-tone`        — the contrast-floored tonal channels (idle fill /
- *                             active band / active edge / contrast-safe ink).
- *
- * The geometry: radius invariant (the capsule's `--radius-pill`); only padding/
- * text vary, on a √φ ladder (φ≈1.618). The `cell` is the ONE documented exception
- * (`.glass-chip--cell` → `--radius-card`): a 72px icon+label tile is a CARD, not a
- * pill — a DELIBERATE 2-silhouette family, composing the SAME material + motion.
- *
- * NO scale CVA — the ONE `scale` write lives on `.glass-chip` (hover/press/punch
- * folded into a single source of truth; a CVA `hover:scale-*` would collide).
- * The CVA carries no `color-mix(…--primary…)` literal — the tonal COLOUR is the
- * `.accent-tone` register's (driven by the `tone` prop's per-instance style).
- */
-export const chipVariants = cva(
-    [
-        // the shared registers (read-only, composed — never re-forked)
-        "glass-chip glass-capsule glass-capsule-hover accent-tone",
-        "focus-ring select-none cursor-pointer outline-none font-sans",
-        // idle ink (the band swaps to --accent-ink on data-state=on, in glass-chip.css)
-        "text-muted-foreground",
-        "disabled:opacity-disabled disabled:pointer-events-none disabled:cursor-not-allowed",
-    ].join(" "),
-    {
-        variants: {
-            /**
-             * The size axis — the STRUCTURAL padding/text rungs only. Radius is
-             * size-INVARIANT (the stadium re-rounds at every height — the capsule
-             * owns it). The pad-x derives from height × ~1/φ (the golden inset, the
-             * iOS-27 chip's pad-x ≈ 0.6× its height); the family shares ONE rhythm.
-             */
-            size: {
-                sm: "inline-flex items-center justify-center gap-1 px-2.5 py-1 text-caption",
-                md: "inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 text-small",
-                lg: "inline-flex items-center justify-center gap-2 px-5 py-2 text-base",
-            },
-            /**
-             * The SHAPE axis (BI.W-CHIP-FOLD; BH.W-SIZE-UNIFY) — a silhouette word
-             * is NEVER a scale rung (the axes.ts sub-range law). `pill` (default)
-             * is the stadium capsule (the retired ToggleChip `variant="chip"`);
-             * `cell` is the square icon+label TILE (a card, not a pill — the retired
-             * `variant="cell"`): `.glass-chip--cell` re-points the silhouette to
-             * `--radius-card`, the material + motion stay the shared register.
-             * Composed WITH `size`; the cell geometry overrides the inline-flex pill
-             * padding at the element.
-             */
-            shape: {
-                pill: "",
-                cell: "glass-chip--cell flex flex-col items-center justify-center gap-1.5 px-2 py-2.5 text-micro",
-            },
-        },
-        defaultVariants: {
-            size: "md",
-            shape: "pill",
-        },
-    },
-);
+const BASE =
+    "glass-chip glass-capsule accent-tone inline-flex items-center justify-center font-sans text-muted-foreground select-none";
+const INTERACTIVE =
+    "glass-chip--interactive glass-capsule-hover focus-ring cursor-pointer outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-disabled";
+const SIZE = {
+    sm: "gap-1 px-2.5 py-1 text-caption",
+    md: "gap-1.5 px-3.5 py-1.5 text-small",
+    lg: "gap-2 px-5 py-2 text-base",
+} as const;
+const SHAPE = {
+    pill: "",
+    cell: "glass-chip--cell flex-col gap-1.5 px-2 py-2.5 text-micro",
+    icon: "glass-chip--icon aspect-square p-0",
+} as const;
+const ICON_SIZE = { sm: "size-8", md: "size-10", lg: "size-12" } as const;
 
-export type ChipVariants = VariantProps<typeof chipVariants>;
+export interface ChipVariants {
+    interactive?: boolean | null;
+    size?: keyof typeof SIZE | null;
+    shape?: keyof typeof SHAPE | null;
+    class?: ClassValue;
+    className?: ClassValue;
+}
+
+export function chipVariants(options: ChipVariants = {}): string {
+    const size = options.size ?? "md";
+    const shape = options.shape ?? "pill";
+    return joinClassValues(
+        BASE,
+        options.interactive && INTERACTIVE,
+        SIZE[size],
+        SHAPE[shape],
+        shape === "icon" && ICON_SIZE[size],
+        options.class,
+        options.className,
+    );
+}

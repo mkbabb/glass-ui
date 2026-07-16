@@ -23,7 +23,7 @@
 import {
     OETF_WGSL,
     OKLCH_MATRICES_WGSL,
-} from "../../aurora/constants/shaders/procedural-color.wgsl";
+} from "../../../composables/glass/procedural/color.wgsl";
 
 export const FOURIER_FIELD_RENDER_WGSL = /* wgsl */ `
 // The instanced-ribbon LAYER selector (a pipeline-overridable constant — 5 pipelines share the

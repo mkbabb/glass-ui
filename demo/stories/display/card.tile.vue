@@ -3,15 +3,17 @@
 // A real glass <Card> (the floating tier) with a title bar + two rule bars — the
 // live surface the /display landing curates. Inert + 0-GL by the fenced stage; the
 // glass composites the warm §3 field behind it (the library's headline material).
-import { Card } from "@glass/components/card";
+import { Card, CardContent } from "@glass/components/card";
 </script>
 
 <template>
     <div class="card-tile-wrap">
-        <Card tier="floating" class="card-tile">
-            <span class="card-tile-head" />
-            <span class="card-tile-bar" />
-            <span class="card-tile-bar card-tile-bar--short" />
+        <Card tier="floating" size="sm" class="card-tile">
+            <CardContent class="card-tile-content">
+                <span class="card-tile-head" />
+                <span class="card-tile-bar" />
+                <span class="card-tile-bar card-tile-bar--short" />
+            </CardContent>
         </Card>
     </div>
 </template>
@@ -24,10 +26,11 @@ import { Card } from "@glass/components/card";
 }
 .card-tile {
     inline-size: clamp(6rem, 70cqw, 12rem);
+}
+.card-tile-content {
     display: flex;
     flex-direction: column;
     gap: clamp(0.4rem, 7cqh, 0.8rem);
-    padding: clamp(0.7rem, 9cqmin, 1.2rem);
 }
 .card-tile-head {
     block-size: clamp(0.5rem, 9cqh, 0.9rem);

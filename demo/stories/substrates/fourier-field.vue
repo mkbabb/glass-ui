@@ -32,14 +32,21 @@ import { GlassTimeline } from "@glass/components/timeline";
 import {
     Configurator,
     ConfiguratorLayer,
-    ConfiguratorRow,
     useConfiguratorState,
     type ConfiguratorPreset,
 } from "@glass/components/configurator";
 import {
     LabeledSelect,
     LabeledSlider,
+    LabeledSwitch,
 } from "@glass/components/labeled-field";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@glass/components/select";
 import { FOURIER_SHAPES, getFourierShape } from "./fourier-field/fourier-paths";
 
 // ── The ONE view config (the variant bundles fold into config PRESETS). ──
@@ -365,142 +372,106 @@ const rendererStatus = ref<RendererStatus>(pendingRenderer("webgpu"));
                                     />
                                 </div>
                                 <div class="w-28 shrink-0">
-                                    <LabeledSelect
-                                        v-model="speed"
-                                        v-model:is-open="speedOpen"
-                                        :items="SPEED_OPTIONS"
-                                        label="Speed"
-                                        hide-label
-                                        tooltip="Clock speed — scales how fast the epicycle chain advances."
-                                    />
+                                    <Select v-model="speed" v-model:open="speedOpen">
+                                        <SelectTrigger aria-label="Clock speed">
+                                            <SelectValue />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem
+                                                v-for="option in SPEED_OPTIONS"
+                                                :key="option"
+                                                :value="option"
+                                            >
+                                                {{ option }}
+                                            </SelectItem>
+                                        </SelectContent>
+                                    </Select>
                                 </div>
                             </div>
                         </div>
                     </template>
                     <template #controls>
                         <ConfiguratorLayer label="Spectrum" sub="--harmonics" dividers>
-                            <ConfiguratorRow label="Source" name="source">
-                                <LabeledSelect
-                                    v-model="studio.config.source"
-                                    v-model:is-open="sourceOpen"
-                                    :items="SOURCE_OPTIONS.map((o) => o.value)"
-                                    label="Source"
-                                    hide-label
-                                    tooltip="A generated elliptic spectrum, or a curated shape traced by its own forward DFT (dftFromPoints)."
-                                />
-                            </ConfiguratorRow>
-                            <ConfiguratorRow label="Harmonics (N)" name="harmonics">
-                                <LabeledSlider
-                                    v-model="studio.config.harmonics"
-                                    :min="1"
-                                    :max="maxHarmonics"
-                                    :step="1"
-                                    label="Harmonics"
-                                    hide-label
-                                    tooltip="The partial-sum term count — TRUNCATE the spectrum and watch the curve assemble: 1 = a single ellipse, climbing to the full reconstruction."
-                                />
-                            </ConfiguratorRow>
-                            <ConfiguratorRow label="Harmonic scale" name="harmonicScale">
-                                <LabeledSlider
-                                    v-model="studio.config.harmonicScale"
-                                    :min="0.05"
-                                    :max="0.4"
-                                    :step="0.01"
-                                    label="Harmonic scale"
-                                    hide-label
-                                    tooltip="Character of the generated elliptic spectrum — smooth ellipse → crinkled."
-                                />
-                            </ConfiguratorRow>
+                            <LabeledSelect
+                                v-model="studio.config.source"
+                                v-model:open="sourceOpen"
+                                :items="SOURCE_OPTIONS.map((o) => o.value)"
+                                label="Source"
+                                description="A generated elliptic spectrum, or a curated shape traced by its own forward DFT (dftFromPoints)."
+                            />
+                            <LabeledSlider
+                                v-model="studio.config.harmonics"
+                                :min="1"
+                                :max="maxHarmonics"
+                                :step="1"
+                                label="Harmonics"
+                                description="The partial-sum term count — TRUNCATE the spectrum and watch the curve assemble: 1 = a single ellipse, climbing to the full reconstruction."
+                            />
+                            <LabeledSlider
+                                v-model="studio.config.harmonicScale"
+                                :min="0.05"
+                                :max="0.4"
+                                :step="0.01"
+                                label="Harmonic scale"
+                                description="Character of the generated elliptic spectrum — smooth ellipse → crinkled."
+                            />
                         </ConfiguratorLayer>
                         <ConfiguratorLayer label="Epicycles" sub="orthogonal to N" dividers>
-                            <ConfiguratorRow label="Show chain" name="showEpicycles">
-                                <label class="flex items-center gap-2 text-small">
-                                    <input
-                                        v-model="studio.config.showEpicycles"
-                                        type="checkbox"
-                                        class="accent-[var(--viz-fourier)]"
-                                        aria-label="Show epicycle chain"
-                                    />
-                                    <span class="text-muted-foreground">rotating chain</span>
-                                </label>
-                            </ConfiguratorRow>
-                            <ConfiguratorRow
+                            <LabeledSwitch
+                                v-model="studio.config.showEpicycles"
+                                label="Show chain"
+                                description="Draw the rotating epicycle chain."
+                            />
+                            <LabeledSlider
                                 v-if="studio.config.showEpicycles"
-                                label="Arms drawn"
-                                name="epicycleArms"
-                            >
-                                <LabeledSlider
-                                    v-model="studio.config.epicycleArms"
-                                    :min="1"
-                                    :max="maxHarmonics"
-                                    :step="1"
-                                    label="Epicycle arms"
-                                    hide-label
-                                    tooltip="How many epicycle arms to draw — independent of N (the orthogonal axis)."
-                                />
-                            </ConfiguratorRow>
-                            <ConfiguratorRow
+                                v-model="studio.config.epicycleArms"
+                                :min="1"
+                                :max="maxHarmonics"
+                                :step="1"
+                                label="Epicycle arms"
+                                description="How many epicycle arms to draw — independent of N (the orthogonal axis)."
+                            />
+                            <LabeledSwitch
                                 v-if="studio.config.showEpicycles"
+                                v-model="studio.config.rainbowChain"
                                 label="Rainbow chain"
-                                name="rainbowChain"
-                            >
-                                <label class="flex items-center gap-2 text-small">
-                                    <input
-                                        v-model="studio.config.rainbowChain"
-                                        type="checkbox"
-                                        class="accent-[var(--viz-fourier)]"
-                                        aria-label="Rainbow chain"
-                                    />
-                                    <span class="text-muted-foreground">warm hue sweep</span>
-                                </label>
-                            </ConfiguratorRow>
+                                description="Paint the chain as a warm hue sweep."
+                            />
                         </ConfiguratorLayer>
                         <ConfiguratorLayer label="Comet" sub="--trail" dividers>
-                            <ConfiguratorRow label="Trail arc" name="trailArc">
-                                <LabeledSlider
-                                    v-model="studio.config.trailArc"
-                                    :min="0.15"
-                                    :max="1"
-                                    :step="0.01"
-                                    label="Trail arc"
-                                    hide-label
-                                    tooltip="Comet body length as a fraction of the period."
-                                />
-                            </ConfiguratorRow>
-                            <ConfiguratorRow label="Trail width" name="trailWidth">
-                                <LabeledSlider
-                                    v-model="studio.config.trailWidth"
-                                    :min="1"
-                                    :max="6"
-                                    :step="0.1"
-                                    label="Trail width"
-                                    hide-label
-                                    tooltip="Comet stroke weight in px."
-                                />
-                            </ConfiguratorRow>
-                            <ConfiguratorRow label="Intensity" name="intensity">
-                                <LabeledSlider
-                                    v-model="studio.config.intensity"
-                                    :min="0"
-                                    :max="2"
-                                    :step="0.05"
-                                    label="Intensity"
-                                    hide-label
-                                    tooltip="Outer loudness envelope (per-layer alpha multiply)."
-                                />
-                            </ConfiguratorRow>
+                            <LabeledSlider
+                                v-model="studio.config.trailArc"
+                                :min="0.15"
+                                :max="1"
+                                :step="0.01"
+                                label="Trail arc"
+                                description="Comet body length as a fraction of the period."
+                            />
+                            <LabeledSlider
+                                v-model="studio.config.trailWidth"
+                                :min="1"
+                                :max="6"
+                                :step="0.1"
+                                label="Trail width"
+                                description="Comet stroke weight in px."
+                            />
+                            <LabeledSlider
+                                v-model="studio.config.intensity"
+                                :min="0"
+                                :max="2"
+                                :step="0.05"
+                                label="Intensity"
+                                description="Outer loudness envelope (per-layer alpha multiply)."
+                            />
                         </ConfiguratorLayer>
                         <ConfiguratorLayer label="Color" sub="--viz-*" dividers>
-                            <ConfiguratorRow label="Curve hue" name="color">
-                                <LabeledSelect
-                                    v-model="studio.config.color"
-                                    v-model:is-open="colorOpen"
-                                    :items="COLOR_OPTIONS.map((o) => o.value)"
-                                    label="Curve hue"
-                                    hide-label
-                                    tooltip="The curve hue — the shipped library viz palette (Fourier warm / Chebyshev cool / Legendre violet)."
-                                />
-                            </ConfiguratorRow>
+                            <LabeledSelect
+                                v-model="studio.config.color"
+                                v-model:open="colorOpen"
+                                :items="COLOR_OPTIONS.map((o) => o.value)"
+                                label="Curve hue"
+                                description="The curve hue — the shipped library viz palette (Fourier warm / Chebyshev cool / Legendre violet)."
+                            />
                         </ConfiguratorLayer>
                     </template>
     </VizStudio>

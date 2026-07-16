@@ -15,18 +15,18 @@
 // token tier stays native (guarded) — this leaf governs only the runtime-JS tier.
 
 import {
-    colorUnit2,
-    gamutMapOKLab,
+    convertColor,
     interpolateHue,
-    isInSRGBGamut,
-    oklabToLinearSRGB,
-    oklabToRgb255,
-    parseCSSColor,
-    rawOklabToOklch,
-    rawOklchToOklab,
-    srgbToOKLab,
+    mapColorToGamut,
+    toRgba8,
     type HueInterpolationMethod,
-} from "@mkbabb/value.js";
+} from "@mkbabb/value.js/color";
+import {
+    colorValue,
+    numericChannel,
+    oklchColor,
+    opaqueCssColor,
+} from "./value";
 
 /** An OKLCh color stop. `L` 0..1, `C` 0..~0.4, `h` 0..360. */
 export interface OklchStop {
@@ -50,14 +50,20 @@ export type ColorResolver = (css: string) => [number, number, number];
  * OKLCh stop → LINEAR-sRGB in [0,1] — aurora's bundle-canonical bake target (the
  * shader ACES-tonemaps in linear, so the LUT stays linear).
  *
- * value.js's canonical Ottosson path (`rawOklchToOklab → oklabToLinearSRGB`,
- * inv-K-2). The `Math.max(0,·)` wrap is the ACES-in-linear contract — value.js
+ * value.js's canonical `oklch → convertColor(…, "srgb-linear")` path. The
+ * `Math.max(0,·)` wrap is the ACES-in-linear contract — value.js
  * does not clamp negative linear (an out-of-gamut stop yields negatives; the wrap
  * keeps them off the GPU). The equivalence canary asserts the COMPOSED path.
  */
 export function oklchToLinear(stop: OklchStop): [number, number, number] {
-    const [L, a, b] = rawOklchToOklab(stop.L, stop.C, stop.h);
-    const [lr, lg, lb] = oklabToLinearSRGB(L, a, b);
+    const converted = colorValue(
+        "oklchToLinear",
+        convertColor(oklchColor(stop), "srgb-linear"),
+    );
+    const [r, g, b] = converted.channels;
+    const lr = numericChannel(r, "oklchToLinear");
+    const lg = numericChannel(g, "oklchToLinear");
+    const lb = numericChannel(b, "oklchToLinear");
     return [Math.max(0, lr), Math.max(0, lg), Math.max(0, lb)];
 }
 
@@ -94,41 +100,54 @@ export function warmCatchLight(
 
 /**
  * OKLCh stop → GAMMA-sRGB in [0,1] — the blob's faithful-lift exit (DEC-AT-7's W7
- * GAMMA space). value.js's `oklabToRgb255` returns gamma-encoded 0..255 (HSV/sRGB,
- * no extra OETF); divide to [0,1]. The blob's default resolver returns THIS space
+ * GAMMA space). value.js's `toRgba8` returns clipped gamma-encoded 0..255; divide
+ * to [0,1]. The blob's default resolver returns THIS space
  * so the W7 lift paints at parity (the LINEAR shader-quality flip + `linearToSrgb`
  * is the AU.W7 stage). Channels are clamped to [0,1] (an out-of-gamut stop is
  * already gamut-mapped upstream; this is the float-edge guard).
  */
 export function oklchToGammaRgb(stop: OklchStop): [number, number, number] {
-    const [L, a, b] = rawOklchToOklab(stop.L, stop.C, stop.h);
-    const [r, g, bch] = oklabToRgb255(L, a, b);
-    const c = (v: number) => Math.min(1, Math.max(0, v / 255));
-    return [c(r), c(g), c(bch)];
+    const [r, g, b] = colorValue(
+        "oklchToGammaRgb",
+        toRgba8(oklchColor(stop), { gamut: "clip" }),
+    );
+    return [r / 255, g / 255, b / 255];
 }
 
 /**
  * Resolve any CSS color string to an OKLCh stop via value.js's parser — the single
  * canonical core (inv-K-2). DOM-free (SSR / happy-dom safe — no 1×1-canvas).
  *
- * Semantics: an INVALID string THROWS; ALPHA is dropped (OklchStop has no alpha);
- * out-of-gamut inputs are NOT byte-clamped. Callers feeding user / possibly-
- * transparent strings should wrap in try/catch and decide an alpha policy.
+ * Invalid, contextual, and non-opaque inputs throw one `GlassColorError` carrying
+ * the parser diagnostics or the named local alpha failure. No catch-to-default
+ * recovery occurs at this boundary.
  */
 export function cssToOklch(css: string): OklchStop {
-    const parsed = parseCSSColor(css) as Parameters<typeof colorUnit2>[0];
-    const rgb = colorUnit2(parsed, "rgb").value;
-    const [L, a, bch] = srgbToOKLab(Number(rgb.r), Number(rgb.g), Number(rgb.b));
-    const [Lo, C, H] = rawOklabToOklch(L, a, bch);
-    return { L: Lo, C, h: H };
+    const converted = colorValue(
+        "cssToOklch",
+        convertColor(opaqueCssColor(css, "cssToOklch"), "oklch"),
+    );
+    const [L, C, h] = converted.channels;
+    const chroma = numericChannel(C, "cssToOklch");
+    return {
+        L: numericChannel(L, "cssToOklch"),
+        C: chroma,
+        // Hue is powerless for an achromatic color. Value represents that truth
+        // as `none`; the numeric renderer projection canonically seats it at 0°.
+        h: h === "none" && Math.abs(chroma) <= 1e-12
+            ? 0
+            : numericChannel(h, "cssToOklch"),
+    };
 }
 
-/** OKLCh stop → `#rrggbb` gamma hex (value.js `oklabToRgb255`). */
+/** OKLCh stop → `#rrggbb` gamma hex through value.js `toRgba8`. */
 export function oklchStopToHex(s: OklchStop): string {
-    const [L, a, b] = rawOklchToOklab(s.L, s.C, s.h);
-    const [r, g, bch] = oklabToRgb255(L, a, b);
-    const toHex = (v: number) => Math.round(v).toString(16).padStart(2, "0");
-    return `#${toHex(r)}${toHex(g)}${toHex(bch)}`;
+    const [r, g, b] = colorValue(
+        "oklchStopToHex",
+        toRgba8(oklchColor(s), { gamut: "clip" }),
+    );
+    const hex = (value: number) => value.toString(16).padStart(2, "0");
+    return `#${hex(r)}${hex(g)}${hex(b)}`;
 }
 
 /**
@@ -184,9 +203,8 @@ const wrapDeg = (h: number) => ((h % 360) + 360) % 360;
 
 /**
  * Hue per harmony, walked across the ramp parameter `t` (0..1) THROUGH value.js's
- * `interpolateHue` in the NORMALIZED-TURNS domain (`/360` in, `*360` out — value.js
- * takes turns [0,1], NOT degrees; the `.5` short-arc threshold is a half-TURN). The
- * single canonical hue-walk both backdrops consume.
+ * degree-domain `interpolateHue`. The single canonical hue-walk both backdrops
+ * consume.
  */
 export function deriveHue(
     anchorHue: number,
@@ -196,7 +214,12 @@ export function deriveHue(
 ): number {
     const method = HARMONY_METHOD[harmony];
     const arc = (h0: number, h1: number): number =>
-        wrapDeg(interpolateHue(wrapDeg(h0) / 360, wrapDeg(h1) / 360, t, method) * 360);
+        wrapDeg(
+            colorValue(
+                "deriveHue",
+                interpolateHue(wrapDeg(h0), wrapDeg(h1), t, method),
+            ),
+        );
     switch (harmony) {
         case "monochrome":
             return wrapDeg(anchorHue);
@@ -215,23 +238,20 @@ export function deriveHue(
 }
 
 /**
- * Gamut-map one OklchStop through value.js's Ottosson core
- * (`rawOklchToOklab → gamutMapOKLab → rawOklabToOklch`) with a bounded inward-chroma
- * nudge for the over-1 hull-placement escape. Hue is preserved exactly; the result
- * is in-sRGB to the pipeline's tolerance. The single gamut-mapper both backdrops use.
+ * Gamut-map one OklchStop through value.js's final-object `mapColorToGamut`.
+ * The single gamut-mapper both backdrops use.
  */
 export function gamutMapStop(stop: OklchStop): OklchStop {
-    const [L, a, b] = rawOklchToOklab(stop.L, stop.C, stop.h);
-    const [Lm, am, bm] = gamutMapOKLab(L, a, b);
-    const [Lo, C, H] = rawOklabToOklch(Lm, am, bm);
-    let safeC = C;
-    for (let k = 0; k < 6; k++) {
-        const [lx, ax, bx] = rawOklchToOklab(Lo, safeC, H);
-        const [lr, lg, lb] = oklabToLinearSRGB(lx, ax, bx);
-        if (isInSRGBGamut(lr, lg, lb)) break;
-        safeC *= 0.999; // pull chroma 0.1% inward — hue/L preserved
-    }
-    return { L: Lo, C: safeC, h: H };
+    const mapped = colorValue(
+        "gamutMapStop",
+        mapColorToGamut(oklchColor(stop), "srgb"),
+    );
+    const [L, C, h] = mapped.channels;
+    return {
+        L: numericChannel(L, "gamutMapStop"),
+        C: numericChannel(C, "gamutMapStop"),
+        h: numericChannel(h, "gamutMapStop"),
+    };
 }
 
 /** Tuning for {@link deriveBlobPalette}. */

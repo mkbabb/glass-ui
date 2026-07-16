@@ -1,40 +1,59 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
+import { computed, useAttrs, type HTMLAttributes } from "vue";
 import {
-  AccordionHeader,
-  AccordionTrigger,
-  type AccordionTriggerProps,
-} from 'reka-ui'
-import { ChevronDown } from "@lucide/vue"
-import { cn } from '../_shared/class-names'
+    AccordionHeader as RekaAccordionHeader,
+    AccordionTrigger as RekaAccordionTrigger,
+    injectAccordionItemContext,
+} from "reka-ui";
+import { ChevronDown } from "@lucide/vue";
+import { cn } from "../_shared/class-names";
+import { useDisclosureIds } from "../_shared/disclosure-context";
 
-const props = defineProps<AccordionTriggerProps & { class?: HTMLAttributes['class'] }>()
+export interface AccordionTriggerProps {
+    class?: HTMLAttributes["class"];
+}
 
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
+defineOptions({ name: "AccordionTrigger", inheritAttrs: false });
 
-  return delegated
-})
+const props = defineProps<AccordionTriggerProps>();
+defineSlots<{
+    default?: () => unknown;
+    icon?: () => unknown;
+}>();
+
+const ids = useDisclosureIds();
+const itemContext = injectAccordionItemContext();
+itemContext.triggerId = ids.trigger;
+
+const attrs = useAttrs();
+const forwardedAttrs = computed(() => {
+    const {
+        as: _as,
+        asChild: _asChild,
+        "as-child": _asChildKebab,
+        ...forwarded
+    } = attrs;
+    return forwarded;
+});
 </script>
 
 <template>
-  <AccordionHeader class="flex">
-    <AccordionTrigger
-      data-slot="accordion-trigger"
-      v-bind="delegatedProps"
-      :class="
-        cn(
-          'focus-ring flex flex-1 items-center justify-between rounded-control px-1 py-4 font-medium transition-control hover:underline disabled:pointer-events-none disabled:opacity-disabled [&[data-state=open]>svg]:rotate-180',
-          props.class,
-        )
-      "
-    >
-      <slot />
-      <slot name="icon">
-        <ChevronDown
-          class="h-4 w-4 shrink-0 transition-disclosure"
-        />
-      </slot>
-    </AccordionTrigger>
-  </AccordionHeader>
+    <RekaAccordionHeader as="h3" data-slot="accordion-header" class="disclosure-header">
+        <RekaAccordionTrigger
+            v-bind="forwardedAttrs"
+            as="button"
+            data-slot="accordion-trigger"
+            :id="ids.trigger"
+            :aria-controls="ids.content"
+            :class="cn('disclosure-trigger disclosure-group-trigger', props.class)"
+        >
+            <slot />
+            <slot name="icon">
+                <ChevronDown
+                    aria-hidden="true"
+                    class="disclosure-icon transition-disclosure"
+                />
+            </slot>
+        </RekaAccordionTrigger>
+    </RekaAccordionHeader>
 </template>

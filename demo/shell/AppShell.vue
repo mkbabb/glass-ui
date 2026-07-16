@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, nextTick, onMounted, provide, ref, watch } from "vue";
+import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import {
     Dialog,
@@ -9,7 +9,6 @@ import {
     DialogTitle,
 } from "@glass/components/dialog";
 import { Aurora } from "@glass/components/aurora";
-import { GooFilter } from "@glass/components/dock";
 import {
     formatCombo,
     formatComboParts,
@@ -17,7 +16,6 @@ import {
     useRegisteredShortcuts,
 } from "@glass/composables/keyboard";
 import { useStoryNavigation } from "../chassis/useStoryNavigation";
-import { SHELL_SCROLL_PROGRESS } from "./useShellScrollProgress";
 import { warmFieldHue } from "../chassis/hero/warm-field";
 import {
     shellAuroraConfig as buildShellAuroraConfig,
@@ -54,47 +52,16 @@ const shortcuts = useRegisteredShortcuts();
 // `<component>` swap there is no <Transition> leave window to race.
 const route = useRoute();
 const mainEl = ref<HTMLElement | null>(null);
+const showRouteFocus = ref(false);
+let pendingRouteInput: "keyboard" | "pointer" | null = null;
 
-// ── BG.W-DOCK-SCROLL-PROGRESS — the scroll fraction the dock ring wears ──────
-// The standalone `.demo-scroll-progress` bar is RETIRED (clean break); the page
-// scroll position is now a BORDER ITEM on the leftside dock (SidebarDock mounts
-// `<ScrollProgressRim>` reading this fraction). ONE writer: a rAF-coalesced passive
-// scroll listener on the route scroller + a route-settle recompute (the scroller
-// persists across the keyed route swap, so the listener attaches once).
-const shellScrollProgress = ref(0);
-provide(SHELL_SCROLL_PROGRESS, shellScrollProgress);
+function markKeyboardInput(): void {
+    pendingRouteInput = "keyboard";
+}
 
-let scrollRafId = 0;
-function computeShellScrollProgress(): void {
-    const el = mainEl.value;
-    if (!el) return;
-    const span = el.scrollHeight - el.clientHeight;
-    shellScrollProgress.value =
-        span > 0 ? Math.min(1, Math.max(0, el.scrollTop / span)) : 0;
+function markPointerInput(): void {
+    pendingRouteInput = "pointer";
 }
-function onShellScroll(): void {
-    if (scrollRafId) return;
-    scrollRafId = requestAnimationFrame(() => {
-        scrollRafId = 0;
-        computeShellScrollProgress();
-    });
-}
-watch(
-    mainEl,
-    (el, _prev, onCleanup) => {
-        if (!el) return;
-        el.addEventListener("scroll", onShellScroll, { passive: true });
-        window.addEventListener("resize", onShellScroll, { passive: true });
-        computeShellScrollProgress();
-        onCleanup(() => {
-            el.removeEventListener("scroll", onShellScroll);
-            window.removeEventListener("resize", onShellScroll);
-            if (scrollRafId) cancelAnimationFrame(scrollRafId);
-            scrollRafId = 0;
-        });
-    },
-    { immediate: true },
-);
 
 // BG.W-ROUTE-TRANSITION (P4-F) — the SR route-change announce. The atomic keyed swap
 // has no skeleton `aria-busy`, so the live region is the only route-change signal AT
@@ -107,11 +74,10 @@ watch(
     () => {
         mainEl.value?.scrollTo({ top: 0 });
         routeAnnounce.value = String(route.meta?.title ?? "");
+        showRouteFocus.value = pendingRouteInput === "keyboard";
+        pendingRouteInput = null;
         void nextTick(() => {
             mainEl.value?.focus({ preventScroll: true });
-            // BG.W-DOCK-SCROLL-PROGRESS — the new page's scroll span settles
-            // post-swap; recompute so the dock ring reads 0 at the new top.
-            computeShellScrollProgress();
         });
     },
 );
@@ -182,9 +148,7 @@ onMounted(() => {
     registerShortcut(
         ",",
         () =>
-            window.dispatchEvent(
-                new CustomEvent("glass-ui-demo:toggle-configurator"),
-            ),
+            window.dispatchEvent(new CustomEvent("glass-ui-demo:toggle-configurator")),
         { label: "Toggle configurator", group: "UI" },
     );
     registerShortcut("?", () => (showHelp.value = !showHelp.value), {
@@ -192,7 +156,6 @@ onMounted(() => {
         group: "UI",
     });
 });
-
 </script>
 
 <template>
@@ -217,40 +180,37 @@ onMounted(() => {
          surface that wants tactile paper composes `paper-grain-overlay` or mounts its
          own <PaperBackdrop>). No universal grain plane rides over the whole page. -->
 
-    <!-- BD.W-MORPH-FIELD-WELD (M1) — the ONE library goo `<filter>` mount, ONCE at the
-         shell root. It exposes EVERY library metaball id off one byte-identical sRGB graph
-         (`#glass-goo` carousel/deck · `#pager-goo` / `#pager-worm-goo` worm · `#morph-goo`
-         generic) — the DRY union. A global `<defs>` referenced by id; mounting twice dups
-         the ids, so it lives HERE once and every route's morph reaches it. -->
-    <GooFilter />
-
     <!-- BG.W-FIELD-AURORA (C7) — `data-paper-field` on the CONTENT ANCESTOR of
          <main> (NOT the fixed Aurora sibling). The `cards.css` opaque-fallback
          suppressor is a DESCENDANT selector reading this attr, so it must sit above
          the cards. Set only while the shell field is active (a focal route's own
          field needs no suppression). -->
     <div
-        class="relative flex h-screen overflow-hidden text-foreground"
+        class="demo-app-shell relative flex h-screen overflow-hidden text-foreground"
         :data-paper-field="shellFieldActive ? '' : null"
+        @keydown.capture="markKeyboardInput"
+        @pointerdown.capture="markPointerInput"
     >
         <!-- Fixed vertical sidebar rail dock (off-canvas below the mobile breakpoint —
              see dock-nav.css; the BottomDock owns the off-canvas Sheet trigger).
              BI.W-DOCK-RETIRES — the in-situ V↔H orientation morph retired; the shell
              dock is a STATIC vertical sidebar rail (no morph driver, no goo teardrop). -->
-        <aside class="demo-sidebar-rail">
+        <aside class="demo-sidebar-rail" data-shell-region="category-navigation">
             <SidebarDock />
         </aside>
 
         <div class="flex min-h-0 min-w-0 flex-1 flex-col">
-            <!-- `<main>` owns route scroll. The extra bottom padding clears the
-                 viewport-anchored BottomDock that floats over this region.
+            <!-- `<main>` owns route scroll. BottomDock is the adjacent shell footer,
+                 so its actual block-size reserves the interaction-safe region without
+                 a guessed route spacer.
                  `tabindex="-1"` (BG.W-ROUTE-TRANSITION P4-F) lets the route-settle
                  watch move focus here, so the atomic keyed swap doesn't strand focus
                  at <body> + keyboard tab order resets to the new page. -->
             <main
                 ref="mainEl"
                 tabindex="-1"
-                class="demo-main-scroller smooth-scroll relative flex-1 min-h-0 min-w-0 overflow-y-auto px-4 pt-6 pb-28 md:px-8 md:pt-10 md:pb-32"
+                :data-route-focus="showRouteFocus ? 'keyboard' : null"
+                class="demo-main-scroller smooth-scroll relative flex-1 min-h-0 min-w-0 overflow-y-auto"
             >
                 <!-- BG.W-ROUTE-TRANSITION (P4-F) — the SR route-change announce. The
                      atomic keyed swap has no skeleton `aria-busy`, so this polite live
@@ -259,37 +219,20 @@ onMounted(() => {
                 <p class="sr-only" aria-live="polite" role="status">
                     {{ routeAnnounce }}
                 </p>
-                <!-- BG.W-DOCK-SCROLL-PROGRESS — the standalone scroll-progress bar is
-                     RETIRED (clean break, no alias): the page-scroll position is now a
-                     BORDER ITEM on the leftside dock (SidebarDock wears the
-                     `<ScrollProgressRim>` off the provided shell scroll fraction).
-                     The `.scroll-progress` LIBRARY recipe stays (its consumer is the
-                     /motion/scroll story, native register). -->
-                <!-- BG.W-ROUTE-TRANSITION (M1) — the route swap is a BARE KEYED ATOMIC
-                     SWAP: NO Vue <Transition>, NO Suspense, NO v-if/skeleton/no-match
-                     branch chain. A keyed `<component>` unmounts the old + mounts the new
-                     in ONE patch — `<main>` carries exactly the new page at every settle
-                     (the SR announce + this component; the standalone scroll-progress
-                     bar retired at BG.W-DOCK-SCROLL-PROGRESS — the dock ring wears the
-                     scroll position), exactly one route root, h1 === dest, with NO leave hook to
-                     wedge (the `.scroll-build`×<Transition>-leave collision that froze the
-                     route is structurally impossible). The liquid enter is the on-mount
-                     `.route-enter` @keyframes (transitions.css) — it lands on the keyed
-                     component so it reaches EVERY route root. Plain-lazy: vue-router holds
-                     the OLD page mounted through the async chunk resolve, so the swap lands
-                     on the resolved component, never a void (no skeleton needed). Keyed on
-                     `route.path` (a query/hash change is not a page swap). -->
+                <!-- The route mutation is wrapped by the demo's native View Transition
+                     owner. This keyed node carries no local animation, so native snapshots
+                     and the immediate unsupported/reduced path never compete. -->
                 <RouterView v-slot="{ Component }">
-                    <component :is="Component" :key="route.path" class="route-enter" />
+                    <component :is="Component" :key="route.path" />
                 </RouterView>
             </main>
+
+            <!-- Shell-anchored story navigation. It remains fixed relative to the
+                 viewport because only <main> scrolls, while participating in flex
+                 layout keeps route controls outside its hit-test plane. -->
+            <BottomDock />
         </div>
-
-        <!-- Viewport-anchored bottom-bar story dock (floats over <main>'s
-             bottom inset; not in document flow). -->
-        <BottomDock />
     </div>
-
 
     <!-- BI.W-DOCK-RETIRES — the in-situ V↔H dock-morph stage is DEFINITION-ABSENT
          (decided-terminal). No modal, no goo teardrop, no `startViewTransition` on the

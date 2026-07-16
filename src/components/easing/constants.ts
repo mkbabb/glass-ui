@@ -14,7 +14,7 @@ export const DEFAULT_BEZIER_PRESET = "ease-out-back" as const;
 
 /** The default steps-mode jump count + term. */
 export const DEFAULT_STEP_COUNT = 4;
-export const DEFAULT_STEP_TERM = "end" as const;
+export const DEFAULT_STEP_TERM = "jump-end" as const;
 
 /** The steps-mode slider bounds. */
 export const STEP_COUNT_MIN = 1;

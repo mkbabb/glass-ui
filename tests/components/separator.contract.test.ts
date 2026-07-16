@@ -18,6 +18,7 @@ describe("Separator semantics", () => {
         expect(separator.attributes("aria-orientation")).toBeUndefined();
         expect(separator.attributes("aria-label")).toBeUndefined();
         expect(separator.attributes("aria-labelledby")).toBeUndefined();
+        expect(separator.attributes("data-orientation")).toBe("vertical");
         expect(separator.text()).toBe("or");
     });
 
@@ -30,6 +31,7 @@ describe("Separator semantics", () => {
         expect(separator.attributes("aria-orientation")).toBeUndefined();
         expect(separator.attributes("aria-label")).toBeUndefined();
         expect(separator.attributes("aria-labelledby")).toBe(label.attributes("id"));
+        expect(separator.findAll(".separator-segment")).toHaveLength(2);
     });
 
     it("exposes vertical orientation and an explicit accessible name", () => {
@@ -52,8 +54,23 @@ describe("Separator semantics", () => {
         const decorative = mount(Separator, { props: { decorative: true } });
         const vertical = mount(Separator, { props: { orientation: "vertical" } });
 
-        expect(decorative.get('[data-slot="separator"]').attributes("role")).toBe("none");
-        expect(vertical.get('[data-slot="separator"]').attributes("role")).toBe("separator");
-        expect(vertical.get('[data-slot="separator"]').attributes("aria-orientation")).toBe("vertical");
+        expect(decorative.get('[data-slot="separator"]').attributes("role")).toBe(
+            "none",
+        );
+        expect(vertical.get('[data-slot="separator"]').attributes("role")).toBe(
+            "separator",
+        );
+        expect(
+            vertical.get('[data-slot="separator"]').attributes("aria-orientation"),
+        ).toBe("vertical");
+    });
+
+    it("treats a blank label as an unlabelled separator", () => {
+        const wrapper = mount(Separator, { props: { label: "   " } });
+
+        expect(wrapper.get('[data-slot="separator"]').attributes("role")).toBe(
+            "separator",
+        );
+        expect(wrapper.find(".separator-label").exists()).toBe(false);
     });
 });

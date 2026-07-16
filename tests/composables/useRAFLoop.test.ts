@@ -100,4 +100,48 @@ describe("useRAFLoop", () => {
         expect(raf.cancel).toHaveBeenCalledTimes(1);
         expect(raf.callbacks.size).toBe(0);
     });
+
+    it("parks live work under reduced motion and re-arms only while requested", () => {
+        let listener: ((event: MediaQueryListEvent) => void) | undefined;
+        vi.spyOn(window, "matchMedia").mockReturnValue({
+            matches: false,
+            addEventListener: vi.fn(
+                (_type: string, next: (event: MediaQueryListEvent) => void) => {
+                    listener = next;
+                },
+            ),
+            removeEventListener: vi.fn(),
+        } as unknown as MediaQueryList);
+        const raf = installManualRAF();
+        const loop = useRAFLoop(() => {}, { pauseWhenHidden: false });
+
+        expect(raf.callbacks.size).toBe(1);
+        listener?.({ matches: true } as MediaQueryListEvent);
+        expect(loop.isActive.value).toBe(false);
+        expect(loop.isPaused.value).toBe(true);
+        expect(raf.callbacks.size).toBe(0);
+
+        listener?.({ matches: false } as MediaQueryListEvent);
+        expect(loop.isActive.value).toBe(true);
+        expect(raf.callbacks.size).toBe(1);
+
+        loop.stop();
+        listener?.({ matches: true } as MediaQueryListEvent);
+        listener?.({ matches: false } as MediaQueryListEvent);
+        expect(raf.callbacks.size).toBe(0);
+        loop.dispose();
+    });
+
+    it("detaches its visibility listener on explicit dispose", () => {
+        installManualRAF();
+        const remove = vi.spyOn(document, "removeEventListener");
+        const loop = useRAFLoop(() => {}, {
+            immediate: false,
+            respectReducedMotion: false,
+        });
+
+        loop.dispose();
+
+        expect(remove).toHaveBeenCalledWith("visibilitychange", expect.any(Function));
+    });
 });

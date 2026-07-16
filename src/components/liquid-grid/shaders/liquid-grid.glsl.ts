@@ -11,7 +11,7 @@
 // `setupGL` callback compiles + the JS↔GLSL math the round-trip gate matches against
 // `liquidGrid.ts`.
 
-import { OETF_GLSL } from "../../../composables/glass/webgl/shaders/procedural-color.glsl";
+import { OETF_GLSL } from "../../../composables/glass/procedural/color.glsl";
 import { CURL_FBM_GLSL } from "../../../composables/glass/webgl/shaders/flow.glsl";
 import { WAVE_FIELD_GLSL } from "../../../composables/glass/wave/waveField.glsl";
 

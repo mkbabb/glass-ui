@@ -20,7 +20,7 @@
 //   M9/π — the dogfood-render sweep: the SHELL's morph toggle + liquid-preview toggle
 //          render as <Button>/<Switch> markup (the composed component DOM shape, not a
 //          raw <button>/<input>); the "Pick a story" empty state renders a <Card>; a
-//          <SectionPreviewCard> resolves its <IconChip> SVG + the .fira-code subpath
+//          <SectionPreviewCard> resolves its static icon Chip + the .fira-code subpath
 //          chip (the bento dogfood exemplar paints).
 //
 // THE BINDING ASSERTION IS THE RESOLVED READBACK. It loads :5199 →
@@ -245,8 +245,8 @@ test.describe("BC.W-STORYBOOK-META — the whole-storybook design-quality π", (
             });
         });
 
-        // ── M9d/π — a <SectionPreviewCard> bento resolves its IconChip + subpath ──
-        test(`M9d — the SectionPreviewCard bento paints (IconChip + fira-code subpath) [${mode}]`, async ({
+        // ── M9d/π — a <SectionPreviewCard> bento resolves its icon plate + subpath ──
+        test(`M9d — the SectionPreviewCard bento paints (static Chip + fira-code subpath) [${mode}]`, async ({
             page,
         }) => {
             await page.setViewportSize({ width: 1280, height: 1200 });
@@ -260,7 +260,11 @@ test.describe("BC.W-STORYBOOK-META — the whole-storybook design-quality π", (
                 if (!card) return { present: false };
                 return {
                     present: true,
-                    hasIconChip: Boolean(card.querySelector(".icon-chip svg")),
+                    hasIconPlate: Boolean(
+                        card.querySelector(
+                            '.glass-chip[data-mode="static"][data-shape="icon"] svg',
+                        ),
+                    ),
                     hasSubpathChip: Boolean(card.querySelector(".fira-code")),
                 };
             });
@@ -270,7 +274,7 @@ test.describe("BC.W-STORYBOOK-META — the whole-storybook design-quality π", (
             // door carries no preview cards on this route, the sweep is informational.
             if (bento.present) {
                 expect(
-                    bento.hasIconChip && bento.hasSubpathChip,
+                    bento.hasIconPlate && bento.hasSubpathChip,
                     `the SectionPreviewCard bento does not resolve its composed primitives: ${JSON.stringify(bento)}`,
                 ).toBe(true);
             }

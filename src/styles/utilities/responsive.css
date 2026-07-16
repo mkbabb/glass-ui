@@ -1,0 +1,8 @@
+/* Interactive faces opt into the shared coarse-pointer floor. Their fine-pointer
+   geometry remains component-owned and byte-for-byte unchanged. */
+@media (pointer: coarse) {
+    [data-control-target] {
+        min-block-size: var(--touch-target, 2.75rem);
+        min-inline-size: var(--touch-target, 2.75rem);
+    }
+}

@@ -10,9 +10,7 @@
  *
  * The IA is a coherent category tree — Foundations, Substrates (render
  * backgrounds), Forms, Display, Containers, Navigation, Dock (the headline
- * primitive's own section), Data, Feedback, Motion, and Compositions. (The
- * reference-only Composables shelf was removed at AZ.W-SHELL-CONFIG — the demo
- * IA no longer carries the 22-story reference category; clean break, no alias.)
+ * primitive's own section), Data, Feedback, Motion, and Compositions.
  */
 import type { Component } from "vue";
 import type { StoryBackground } from "../chassis/hero/aurora-hero";
@@ -73,14 +71,6 @@ export interface Story {
      */
     hero?: boolean;
     /**
-     * The explicit Fira-Code subpath chip in the hero eyebrow (BC.W-PAGE-CHASSIS).
-     * A published component subpath (`@mkbabb/glass-ui/<sp>`) where one fits, else
-     * the route path (`/category/story`) for token/scene/facility pages with no
-     * import surface. The Title (display name) may differ from the subpath,
-     * so this is an explicit per-row literal, never an inferred default.
-     */
-    subpath?: string;
-    /**
      * The hero title size rung (the depth-keyed √φ ladder). Resolved from `depth`
      * when unset; an explicit value (a marquee `hero` on a live-GL sub-page) wins.
      */
@@ -98,11 +88,8 @@ export interface Story {
      * component imports stay code-split — the manifest never eager-imports a page's
      * components. A hero scene / bespoke composition declares no `body`.
      *
-     * ruling 9 (the ≥2-consumer law self-applied): the proposed SpecimenSpec
-     * `prefix` field was DROPPED — only badge would have consumed it (1 consumer),
-     * so badge uses the SpecimenFrame slot/label escape instead. A 1-consumer
-     * schema field is over-fit exactly as a 1-site component is; no `prefix`
-     * survives in `story-body.ts`.
+     * Story-specific composition stays in the existing slots or bespoke node;
+     * the shared schema grows only for repeated product-shaped demand.
      */
     body?: StoryBody;
     /**
@@ -143,8 +130,6 @@ export interface SectionLanding {
     title: string;
     /** The one-line section subtitle. */
     blurb: string;
-    /** The section's import-namespace root (a published subpath or the route path). */
-    subpath: string;
     /** The section field — the category's idiom-true background. */
     background: StoryBackground;
     /** D1 always — the largest audacious rung, out-sizing every page beneath it. */
@@ -159,19 +144,8 @@ export interface SectionLanding {
 // below stays flat by DESIGN; a change to `./*/*/index.vue` renders every flat story
 // blank (the runtime route-walk hazard the wave warns about).
 //
-// δ5 (carve `manifest.ts`) is the surviving deliverable, and it "accepts" the row +
-// map structure IN PLACE: this file is the single parseable source-of-truth ~13
-// device-free gates read by literal path + regex — the `s()` rows (proof:runtime /
-// proof:page-prune / proof:no-orphan-demo-route / proof:substrate-staging / …), the
-// SUBPATHS map (proof:page-chassis), the category-id order (proof:storybook-ia), the
-// `Story` interface fields subpath/heroScale/depth (proof:page-chassis), the
-// sectionLanding heroScale (proof:hero-audacious). Moving any of those OUT breaks a
-// foreign gate this wave does not own; `demo/` is exempt from proof:no-god-module
-// (which scans `src/` only), so no machine bound is violated by keeping them. The ONE
-// cleanly-carveable concern — the glob-resolved SFC `lazy` resolver — is colocated in
-// `./manifest/lazy.ts` (the spec's `lazy` carve target); the glob record stays here so
-// the relative path + keys are unchanged. This reconciles BG.W-MANIFEST-COLOCATE
-// ("keep manifest.ts") with δ5.
+// Keep the typed route rows in place and the glob-resolved SFC loader in
+// `./manifest/lazy.ts`; no generated catalogue or parallel route registry exists.
 const modules = import.meta.glob<{ default: Component }>("./*/*.vue");
 
 const lazy = makeLazy(modules);
@@ -207,8 +181,6 @@ interface StoryOptions {
      * live-GL marquee story sets `heroScale: "hero"` so it keeps the largest sub-rung.
      */
     heroScale?: HeroScale;
-    /** The section-landing root subpath — the category landing's import namespace. */
-    landingSubpath?: string;
     /** The section-landing field — the category's idiom-true background. */
     landingBackground?: StoryBackground;
 }
@@ -259,179 +231,6 @@ const CATEGORY_DEFAULT_BG: Record<string, StoryBackground> = {
     compositions: "grid",
 };
 
-/**
- * The explicit Fira-Code subpath chip per route (BC.W-PAGE-CHASSIS — the binding
- * per-route table). A route maps to a published `@mkbabb/glass-ui/<sp>` IFF `<sp>`
- * is a package export (the subpath-resolution rule); a token/scene/facility route
- * with no import surface carries its route path `/category/story`. Title ≠ subpath,
- * so this is an explicit literal per row — never an inferred default (the map IS the
- * per-route enumeration the user's "EVERY PAGE STANDARDIZED" mandate rides; PC5 reads
- * it). Keyed `category/id`.
- */
-const SUBPATHS: Record<string, string> = {
-    // Foundations — token/ink pages carry the route path; the import-surface ones win.
-    "foundations/intro": "/foundations/intro",
-    "foundations/colors": "/foundations/colors",
-    "foundations/typography": "/foundations/typography",
-    "foundations/radii": "/foundations/radii",
-    "foundations/shadows": "/foundations/shadows",
-    "foundations/motion": "/foundations/motion",
-    "foundations/paper-glass": "/foundations/paper-glass",
-    "foundations/icons": "@mkbabb/glass-ui/icon-chip",
-    "foundations/surface-tints": "/foundations/surface-tints",
-    "foundations/surface-taxonomy": "@mkbabb/glass-ui/surface",
-    "foundations/overlays-scrims": "/foundations/overlays-scrims",
-    "foundations/chart-chassis-palette": "/foundations/chart-chassis-palette",
-    "foundations/paper-texture": "@mkbabb/glass-ui/paper-backdrop",
-    "foundations/css-utilities": "/foundations/css-utilities",
-    // Substrates — the shipped viz subpaths.
-    "substrates/aurora": "@mkbabb/glass-ui/aurora",
-    "substrates/blob": "@mkbabb/glass-ui/blob",
-    "substrates/constellation": "@mkbabb/glass-ui/constellation",
-    "substrates/fourier-field": "@mkbabb/glass-ui/fourier-field",
-    "substrates/glass-material": "/substrates/glass-material",
-    "substrates/glass-panel": "@mkbabb/glass-ui/glass-panel",
-    "substrates/liquid-grid": "@mkbabb/glass-ui/liquid-grid",
-    // Forms — the input/select/toggle family via /forms + the own subpaths.
-    "forms/inputs": "@mkbabb/glass-ui/forms",
-    "forms/textarea": "@mkbabb/glass-ui/forms",
-    "forms/checks": "@mkbabb/glass-ui/switch",
-    "forms/slider": "@mkbabb/glass-ui/slider",
-    "forms/number-field": "@mkbabb/glass-ui/number-field",
-    "forms/select": "@mkbabb/glass-ui/select",
-    "forms/combobox": "@mkbabb/glass-ui/forms",
-    "forms/toggle": "@mkbabb/glass-ui/toggle-group",
-    "forms/toggle-chip": "@mkbabb/glass-ui/chip",
-    "forms/selectable-chip": "@mkbabb/glass-ui/chip",
-    "forms/label": "@mkbabb/glass-ui/label",
-    // BI.W-COMPOSITIONS-PRUNE — the LabeledField forms family, relocated out of the
-    // compositions band (a single-family control demo, not a composed scene).
-    "forms/labeled-field": "@mkbabb/glass-ui/labeled-field",
-    // Display — the atomic primitives.
-    "display/buttons": "@mkbabb/glass-ui/button",
-    "display/card": "@mkbabb/glass-ui/card",
-    "display/badge": "@mkbabb/glass-ui/badge",
-    "display/separator": "@mkbabb/glass-ui/separator",
-    "display/metric-badge": "@mkbabb/glass-ui/metric-badge",
-    "display/status-dot": "@mkbabb/glass-ui/status-dot",
-    "display/pulse": "@mkbabb/glass-ui/pulse",
-    "display/dark-mode-toggle": "@mkbabb/glass-ui/controls",
-    // BG.W-DEMO-IA-REDESIGN — the Display ATOMS wall (folds separator · pulse ·
-    // status-dot · dark-mode-toggle · avatar as family members).
-    "display/atoms": "/display/atoms",
-    // Containers — the glass surfaces.
-    "containers/dialog": "@mkbabb/glass-ui/dialog",
-    "containers/sheet": "@mkbabb/glass-ui/dialog",
-    "containers/drawer": "@mkbabb/glass-ui/drawer",
-    "containers/popover": "@mkbabb/glass-ui/popover",
-    "containers/dropdown-menu": "@mkbabb/glass-ui/dropdown-menu",
-    "containers/context-menu": "@mkbabb/glass-ui/dropdown-menu",
-    "containers/hover-card": "@mkbabb/glass-ui/popover",
-    "containers/tooltip": "@mkbabb/glass-ui/tooltip",
-    "containers/accordion": "/containers/accordion",
-    "containers/collapsible": "@mkbabb/glass-ui/collapsible",
-    "containers/hover-popover": "@mkbabb/glass-ui/popover",
-    "containers/expandable-container": "@mkbabb/glass-ui/expandable-container",
-    "containers/command": "@mkbabb/glass-ui/command",
-    "containers/spa-view": "@mkbabb/glass-ui/spa-view",
-    "containers/card-pressable": "@mkbabb/glass-ui/card",
-    // BI.W-COMPOSITIONS-PRUNE — the Configurator studio shell + the IconTooltip
-    // auto-provider (a Tooltip preset), relocated out of the compositions band: each
-    // is a single-library-family surface demo, not a composed scene.
-    "containers/configurator": "@mkbabb/glass-ui/configurator",
-    "containers/icon-tooltip": "@mkbabb/glass-ui/icon-tooltip",
-    // Navigation — the glass nav chrome.
-    "navigation/tabs": "@mkbabb/glass-ui/tabs",
-    "navigation/carousel": "@mkbabb/glass-ui/carousel",
-    "navigation/header-ribbon": "@mkbabb/glass-ui/header-ribbon",
-    "navigation/toc-tracking": "@mkbabb/glass-ui/sidebar",
-    // Dock — the whole family is /dock.
-    "dock/overview": "@mkbabb/glass-ui/dock",
-    "dock/layers": "@mkbabb/glass-ui/dock",
-    "dock/rail": "@mkbabb/glass-ui/dock",
-    "dock/sections": "@mkbabb/glass-ui/dock",
-    "dock/controls": "@mkbabb/glass-ui/dock",
-    "dock/overflow": "@mkbabb/glass-ui/dock",
-    "dock/cta-receive": "@mkbabb/glass-ui/dock",
-    "dock/dock-search": "@mkbabb/glass-ui/dock",
-    // Data — the ledger surfaces.
-    "data/table": "@mkbabb/glass-ui/data-table",
-    "data/data-table": "@mkbabb/glass-ui/data-table",
-    "data/tags-input": "/data/tags-input",
-    "data/avatar": "/data/avatar",
-    "data/sortable-list": "@mkbabb/glass-ui/sortable-list",
-    "data/infinite-scroll": "@mkbabb/glass-ui/infinite-scroll",
-    "data/timeline": "@mkbabb/glass-ui/timeline",
-    "data/search": "@mkbabb/glass-ui/search",
-    "data/virtual-section": "@mkbabb/glass-ui/virtual",
-    "data/metric-cell": "@mkbabb/glass-ui/metric-cell",
-    "data/metric-stack": "@mkbabb/glass-ui/metric-stack",
-    // BG.W-DEMO-IA-REDESIGN — the Data METRICS family (folds metric-cell ·
-    // metric-stack · metric-badge as members). scrolling-text left
-    // the family at BI.W-SPEEDTEST-ONLY-PAIR (RETIRE-RELOCATED to speedtest).
-    "data/metrics": "/data/metrics",
-    // BI.W-COMPOSITIONS-PRUNE — the InstrumentChassis telemetry chassis, relocated out
-    // of the compositions band (the ping/jitter/download metric-strip host is a data
-    // instrument surface, not a composed scene).
-    "data/instrument-chassis": "@mkbabb/glass-ui/instrument-chassis",
-    // Feedback — the status surfaces.
-    "feedback/alert": "/feedback/alert",
-    "feedback/toast": "@mkbabb/glass-ui/toast",
-    "feedback/toaster": "@mkbabb/glass-ui/toast",
-    "feedback/notification": "@mkbabb/glass-ui/notification",
-    "feedback/progress": "@mkbabb/glass-ui/progress",
-    "feedback/skeleton": "/feedback/skeleton",
-    "feedback/confirm-dialog": "@mkbabb/glass-ui/dialog",
-    "feedback/completion-seal": "@mkbabb/glass-ui/completion-seal",
-    // Motion — the spring/curve/reveal vocabulary.
-    "motion/springs": "@mkbabb/glass-ui/motion",
-    "motion/tempo": "@mkbabb/glass-ui/motion",
-    "motion/curve-gallery": "@mkbabb/glass-ui/easing",
-    "motion/countup": "@mkbabb/glass-ui/motion",
-    "motion/reveal": "@mkbabb/glass-ui/motion-core",
-    "motion/deck": "@mkbabb/glass-ui/deck",
-    "motion/typewriter": "@mkbabb/glass-ui/typewriter",
-    "motion/handmark": "@mkbabb/glass-ui/handmark",
-    "motion/animated-digit": "@mkbabb/glass-ui/animated-digit",
-    "motion/split-chars": "@mkbabb/glass-ui/motion-core",
-    // BG.W-DEMO-DUP-MERGE (F7.3) — the Motion SCROLL family: the native · reader ·
-    // choreography registers are MERGED into ONE motion/scroll.vue page (3
-    // <StorySection> registers over colocated body sub-components; the scroll-vt ·
-    // scroll-system · scroll-choreography member wrappers deleted). The TYPE & NUMBER
-    // family (folds typewriter · split-chars · animated-digit · countup) stays a fold.
-    // The scroll page shares /motion-core with reveal — the DECLARED motion-core family.
-    "motion/scroll": "@mkbabb/glass-ui/motion-core",
-    "motion/text-motion": "/motion/text-motion",
-    // Compositions — real scenes carry the ROUTE path (a single-library-family demo
-    // carries an `@mkbabb/glass-ui/*` subpath and belongs on its family band, not here;
-    // the compositions-census keeps only composed scenes — drawer-live-behind folded
-    // into containers/drawer, configurator/icon-tooltip → containers, instrument-chassis
-    // → data, labeled-field → forms; BI.W-COMPOSITIONS-PRUNE. The former
-    // `compositions/hero` row (BI.W-HERO-DEMOTE) left the band entirely — it is the
-    // `/compositions` section landing now, so it carries no SUBPATHS row.
-    "compositions/auth-shell": "/compositions/auth-shell",
-    "compositions/settings": "/compositions/settings",
-    "compositions/empty-states": "/compositions/empty-states",
-    "compositions/form-validation": "/compositions/form-validation",
-    "compositions/gate-pattern": "/compositions/gate-pattern",
-    "compositions/chassis": "/compositions/chassis",
-};
-
-/** The per-category section-landing import-namespace root (the D1 hero's chip). */
-const LANDING_SUBPATHS: Record<string, string> = {
-    foundations: "@mkbabb/glass-ui/styles",
-    substrates: "@mkbabb/glass-ui/aurora",
-    forms: "@mkbabb/glass-ui/forms",
-    display: "@mkbabb/glass-ui/button",
-    containers: "@mkbabb/glass-ui/dialog",
-    navigation: "@mkbabb/glass-ui/tabs",
-    dock: "@mkbabb/glass-ui/dock",
-    data: "@mkbabb/glass-ui/data-table",
-    feedback: "@mkbabb/glass-ui/toast",
-    motion: "@mkbabb/glass-ui/motion",
-    compositions: "@mkbabb/glass-ui/configurator",
-};
-
 /** The per-category section-landing one-line subtitle. */
 const LANDING_BLURBS: Record<string, string> = {
     foundations: "The token, ink, and paper vocabulary the system is built from.",
@@ -447,88 +246,6 @@ const LANDING_BLURBS: Record<string, string> = {
     compositions: "Real scenes — dashboards, auth shells, the math-paper idiom.",
 };
 
-/**
- * BG.W-DEMO-IA-REDESIGN — the family-collapse registry (the `demo-earns-page` floor).
- *
- * The demo was a 120-page spec-sheet inventory where 8 component subpaths were split
- * across ≥2 near-duplicate pages (inputs/textarea/combobox all demoing `/forms`,
- * table/data-table both `/data-table`, timeline ×3, …). This wave collapses each
- * redundant set onto ONE FAMILY page (`forms/inputs`, `data/table`, `data/metrics`,
- * `motion/scroll`, …) that shows the members as sections via `<FamilyTabs>` (each
- * member composed BARE — its own SFC, zero content re-authored, the STORY_NESTED_KEY
- * seam). The member routes below are DROPPED from the nav (`foldFamilies` filters
- * them out), shrinking the routed set ~120 → ~94 designed pages.
- *
- * The member SFCs STAY on disk (composed by their family page), so the no-orphan
- * bijection holds — they are simply UN-ROUTED here. `proof:demo`'s `demo-earns-page`
- * arm reads this set to subtract the folded members before measuring the REAL routed
- * subpath collisions. Keyed `category/id`.
- */
-export const FOLDED_STORY_IDS: ReadonlySet<string> = new Set<string>([
-    // Forms → forms/inputs (the input family) + forms/toggle (the toggles family).
-    "forms/textarea",
-    "forms/select",
-    "forms/combobox",
-    "forms/label",
-    "forms/toggle-chip",
-    "forms/selectable-chip",
-    // Display atoms → display/atoms; the metric atoms move OUT to data/metrics.
-    "display/separator",
-    "display/pulse",
-    "display/status-dot",
-    "display/dark-mode-toggle",
-    "display/metric-badge",
-    // Data → data/table (data-table) · data/metrics · display/atoms (avatar).
-    // (timeline-segmented/continuous MERGED into data/timeline at F7.3 — the member
-    // files are deleted, so they are no longer routed rows to fold here.)
-    "data/data-table",
-    "data/metric-cell",
-    "data/metric-stack",
-    "data/avatar",
-    // Feedback → feedback/toast.
-    "feedback/toaster",
-    // Motion → motion/scroll · motion/text-motion.
-    // (scroll-vt/system/choreography MERGED into motion/scroll at F7.3 — the member
-    // files are deleted, so they are no longer routed rows to fold here.)
-    "motion/typewriter",
-    "motion/split-chars",
-    "motion/animated-digit",
-    "motion/countup",
-    // Foundations → foundations/paper-glass (the paper chapter).
-    "foundations/paper-texture",
-]);
-
-/**
- * BG.W-DEMO-IA-REDESIGN — the DECLARED families: the subpaths a routed collision is
- * SANCTIONED on. After the family collapse, three subpaths are legitimately shared
- * by >1 routed page: `/dock` (the headline dock family — 4.11's counts), `/motion-core`
- * (the broad composable barrel `reveal` + the `scroll` family both live on), and
- * `/card` (BI.W-DEMO-CARD-DECLARE — `display/card` demos the Card surface-tier facets,
- * `containers/card-pressable` demos the `:pressable` interaction facet: two distinct
- * Card mechanisms each earning a routed page, the `/motion-core` scroll+reveal
- * precedent — NOT a fold, both facets are load-bearing), and `/motion` (BI.W-TEMPO —
- * `motion/springs` demos the useSpring ORCHESTRATOR, `motion/tempo` demos the distinct
- * `--motion-tempo` axis over the same /motion primitives: two load-bearing motion
- * mechanisms each earning a routed page, the SAME scroll+reveal precedent — NOT a
- * fold). Every OTHER shared subpath is a redundant-page defect. `proof:demo`'s
- * `demo-earns-page` arm reads this allowlist.
- */
-export const DECLARED_FAMILY_SUBPATHS: ReadonlySet<string> = new Set<string>([
-    "@mkbabb/glass-ui/dock",
-    "@mkbabb/glass-ui/motion-core",
-    "@mkbabb/glass-ui/motion",
-    "@mkbabb/glass-ui/card",
-    // BI B28/B68 fold families — each subpath is one primitive worn by sibling
-    // demo pages, an INTENTIONAL shared surface (not an accidental collision):
-    // `/dialog` ← dialog + sheet (Sheet is a Dialog placement) + confirm-dialog
-    // (BI.W-DIALOG-PLACEMENT preset); `/popover` ← popover + hover-card +
-    // hover-popover (BI.W-OVERLAY-UNION trigger="hover"); `/dropdown-menu` ←
-    // dropdown-menu + context-menu (one MenuTrigger primitive).
-    "@mkbabb/glass-ui/dialog",
-    "@mkbabb/glass-ui/popover",
-    "@mkbabb/glass-ui/dropdown-menu",
-]);
-
 function s(
     cat: string,
     id: string,
@@ -541,11 +258,6 @@ function s(
     // the proof:stage W1 witness). A category with no default entry would leave a
     // route keyless — the map above covers every category in CATEGORIES.
     const background = opts?.background ?? CATEGORY_DEFAULT_BG[cat];
-    // The subpath is the explicit per-route chip (BC.W-PAGE-CHASSIS PC5) — the map
-    // above is the binding per-route enumeration; the route path is the fallback for
-    // a row the map has not yet declared (a new story is keyless until enrolled —
-    // the gate's no-blank-subpath assert keeps the map ≡ the route set).
-    const subpath = SUBPATHS[`${cat}/${id}`] ?? `/${cat}/${id}`;
     return {
         id,
         title,
@@ -556,7 +268,6 @@ function s(
         component: lazy(cat, id),
         background,
         hero: opts?.hero,
-        subpath,
         // BI.W-LIVE-TILES — the AUTHORED landing-tile rung: resolved from the
         // `./*/*.tile.vue` glob (undefined when no co-located tile file exists, so
         // the tile ladder falls through to the frozen still / body marquee / identity).
@@ -589,7 +300,6 @@ function sectionLanding(cat: Category): SectionLanding {
     return {
         title: cat.title,
         blurb: LANDING_BLURBS[cat.id] ?? `The ${cat.title.toLowerCase()} family.`,
-        subpath: LANDING_SUBPATHS[cat.id] ?? `/${cat.id}`,
         background,
         heroScale: "hero",
         depth: "D1",
@@ -624,8 +334,7 @@ function assignDepths(categories: Category[]): void {
             }
             story.depth = depth;
             if (!story.heroScale) {
-                story.heroScale =
-                    depth === "D0" ? "mega" : depth === "D2" ? "5" : "4";
+                story.heroScale = depth === "D0" ? "mega" : depth === "D2" ? "5" : "4";
             }
         });
         cat.landing = sectionLanding(cat);
@@ -696,27 +405,15 @@ export const CATEGORIES: Category[] = [
             ),
             s(
                 "foundations",
-                "surface-taxonomy",
-                "Surface Taxonomy",
-                "The full tier × decoration matrix on the ONE <Surface> primitive — glass / veil / opaque / clear over every glass-ladder rung, plus the deep / shadow / grain axes.",
-            ),
-            s(
-                "foundations",
                 "overlays-scrims",
                 "Overlays & Scrims",
-                "Three scrim weights + ModalOverlay + motion / lift offsets.",
+                "Three scrim weights + Dialog motion / lift offsets.",
             ),
             s(
                 "foundations",
-                "chart-chassis-palette",
-                "Chart & Chassis Palette",
-                "Chart aliases (ping / download / upload / jitter) + chassis-tier opacities + specular tokens.",
-            ),
-            s(
-                "foundations",
-                "paper-texture",
-                "Paper Texture",
-                "The PaperBackdrop frequency register (clean / aged), cascade-overridable paper tokens, the per-instance opacity knob, and the layered composition recipe.",
+                "chart-palette",
+                "Chart Palette",
+                "Visualization aliases shown as a token ladder and direct color swatches.",
             ),
             s(
                 "foundations",
@@ -737,7 +434,7 @@ export const CATEGORIES: Category[] = [
                 "Aurora",
                 "Procedural painterly gradients — multi-nuclei composition, four mediums, cursor-driven swirl. Shipped /aurora.",
                 {
-                    background: "aurora",
+                    background: "paper",
                     hero: true,
                     // The D2 marquee main of the live-GL band — the largest sub-rung.
                     heroScale: "hero",
@@ -839,32 +536,42 @@ export const CATEGORIES: Category[] = [
         title: "Forms",
         icon: FormInput,
         stories: [
-            s("forms", "inputs", "Inputs"),
-            s("forms", "textarea", "Textarea"),
-            s("forms", "checks", "Checkbox · Radio · Switch"),
+            s(
+                "forms",
+                "inputs",
+                "Inputs",
+                "Text, email, and password fields with clear focus, invalid, disabled, and read-only states.",
+            ),
+            s(
+                "forms",
+                "checks",
+                "Checkbox · Radio · Switch",
+                "Selection controls with native labels, keyboard behavior, indeterminate state, and shared disabled treatment.",
+            ),
             s(
                 "forms",
                 "slider",
                 "Slider",
                 "Two recipes — standard (continuous glass fill, no visible thumb) + spectrum (gradient-track color slider).",
             ),
-            s("forms", "number-field", "Number Field"),
-            s("forms", "select", "Select"),
-            s("forms", "combobox", "Combobox"),
-            s("forms", "toggle", "Toggle · Toggle Group"),
             s(
                 "forms",
-                "toggle-chip",
-                "Toggle Chip",
-                "The folded <Chip>: pill vs cell shapes over a reka-ui Toggle root; aria-pressed semantics.",
+                "number-field",
+                "Number Field",
+                "Bounded numeric entry with step controls, keyboard parity, and explicit invalid and disabled states.",
             ),
             s(
                 "forms",
-                "selectable-chip",
-                "Selectable Chip",
-                "The contrast-floored tonal-accent register — one tone per chip, idle-legible at ≥3:1, bold when active, ink stays correct.",
+                "toggle",
+                "Toggle Group",
+                "Single- and multi-select action strips with roving focus and honest pressed state.",
             ),
-            s("forms", "label", "Label"),
+            s(
+                "forms",
+                "chip",
+                "Chip",
+                "Explicit static, selectable, action, and removable semantics over pill, cell, and icon geometry.",
+            ),
             // BI.W-COMPOSITIONS-PRUNE — the LabeledField family (parent SFC + 4
             // wrappers over Input · Select · Slider · Switch), relocated from the
             // compositions band: a single forms family, not a composed scene.
@@ -872,7 +579,7 @@ export const CATEGORIES: Category[] = [
                 "forms",
                 "labeled-field",
                 "Labeled Field",
-                "Parent SFC + 4 wrappers (Input · Select · Slider · Switch) with shared IconTooltip label.",
+                "Parent SFC + 4 wrappers with a real label, persistent supplemental description, and keyboard-reachable help trigger.",
             ),
         ],
     },
@@ -881,7 +588,18 @@ export const CATEGORIES: Category[] = [
         title: "Display",
         icon: Shapes,
         stories: [
-            s("display", "buttons", "Buttons"),
+            s(
+                "display",
+                "buttons",
+                "Buttons",
+                "Action hierarchy across emphasis, size, loading, disabled, icon, and composed-link states.",
+            ),
+            s(
+                "display",
+                "surface",
+                "Surface",
+                "Four semantic material roles, three orthogonal decorations, and the deep, grain, and specular facilities on the canonical plate primitive.",
+            ),
             // BA.W-STAGE scope 2 / page-backgrounds.md §5 DRIFT — the §5 cite says
             // `/display/card` is "currently blank" and should be staged over an
             // aurora HERO. At HEAD card.vue ALREADY self-stages: it hand-rolls TWO
@@ -897,18 +615,13 @@ export const CATEGORIES: Category[] = [
                 "display",
                 "card",
                 "Card",
-                "Five-tier glass surface — wash · quiet · resting · floating · overlay; orthogonal surface=cartoon decoration; scroll-pane recipe; polymorphic root via reka-ui Primitive.",
+                "Semantic content groups with proportional anatomy, explicit density and selection; compose Button or Link for commands.",
             ),
-            s("display", "badge", "Badge"),
-            s("display", "separator", "Separator"),
-            s("display", "metric-badge", "Metric Badge"),
-            s("display", "status-dot", "Status Dot"),
-            s("display", "pulse", "Pulse"),
             s(
                 "display",
-                "dark-mode-toggle",
-                "Dark Mode Toggle",
-                "Size axis (sm · md · lg · control standalone; dock sizes to its GlassDock host); composes useGlobalDark.",
+                "badge",
+                "Badge",
+                "Compact status and metadata labels across neutral, semantic, and data-viz tones.",
             ),
             s(
                 "display",
@@ -929,15 +642,60 @@ export const CATEGORIES: Category[] = [
                 "Dialog",
                 "Glass + opaque variants, a confirm-dialog, and the native top-layer opt-in — a real dialog element with commandfor and the glass-top-layer entry grammar.",
             ),
-            s("containers", "sheet", "Sheet"),
-            s("containers", "drawer", "Drawer"),
-            s("containers", "popover", "Popover"),
-            s("containers", "dropdown-menu", "Dropdown Menu"),
-            s("containers", "context-menu", "Context Menu"),
-            s("containers", "hover-card", "Hover Card"),
-            s("containers", "tooltip", "Tooltip"),
-            s("containers", "accordion", "Accordion"),
-            s("containers", "collapsible", "Collapsible"),
+            s(
+                "containers",
+                "sheet",
+                "Sheet",
+                "Side-placed dialog surfaces with modal focus, dismissal, and placement semantics.",
+            ),
+            s(
+                "containers",
+                "drawer",
+                "Drawer",
+                "Detented side and bottom drawers with reversible motion and optional live-behind content.",
+            ),
+            s(
+                "containers",
+                "popover",
+                "Popover",
+                "Click-anchored floating panels with collision-aware placement, dismissal, and focus restoration.",
+            ),
+            s(
+                "containers",
+                "dropdown-menu",
+                "Dropdown Menu",
+                "Trigger-anchored action menus with groups, checks, submenus, disabled items, and keyboard navigation.",
+            ),
+            s(
+                "containers",
+                "context-menu",
+                "Context Menu",
+                "Pointer-positioned contextual actions with the same grouped menu and keyboard semantics.",
+            ),
+            s(
+                "containers",
+                "hover-card",
+                "Hover Card",
+                "Non-interactive previews disclosed from keyboard-reachable triggers after deliberate hover or focus.",
+            ),
+            s(
+                "containers",
+                "tooltip",
+                "Tooltip",
+                "Concise descriptions for keyboard- and pointer-reachable triggers with collision-aware placement.",
+            ),
+            s(
+                "containers",
+                "accordion",
+                "Accordion",
+                "Stacked disclosure sections with linked triggers, panels, disabled state, and keyboard traversal.",
+            ),
+            s(
+                "containers",
+                "collapsible",
+                "Collapsible",
+                "A single labelled disclosure region with reversible motion and reduced-motion parity.",
+            ),
             s(
                 "containers",
                 "hover-popover",
@@ -954,34 +712,15 @@ export const CATEGORIES: Category[] = [
                 "containers",
                 "command",
                 "Command Palette",
-                "Fuzzy command tool — a search/command overlay surface, dropdown / context-menu / command-palette family.",
+                "Searchable command groups inline or in a titled Dialog, with shared selection, keyboard navigation, empty and disabled states.",
             ),
-            s(
-                "containers",
-                "spa-view",
-                "SpaView",
-                "Bounded view-cache router pane — <SpaView :max> over Vue's <KeepAlive> + an out-in cross-fade; inactive views stay mounted (state survives the switch) up to the LRU cap.",
-            ),
-            s(
-                "containers",
-                "card-pressable",
-                "Pressable Card",
-                "The tappable list-card — <Card as=\"button\"> presses on the shared iOS spring (reciprocal squish + the --card-press-t brightness drive, one clock family with Button); a static content card never presses.",
-            ),
-            // BI.W-COMPOSITIONS-PRUNE — the Configurator studio shell + the IconTooltip
-            // auto-provider (a Tooltip preset), relocated from the compositions band:
-            // each is a single-library-family surface demo, not a composed scene.
+            // BI.W-COMPOSITIONS-PRUNE — the Configurator studio shell relocated from
+            // the compositions band as a single-library-family surface demo.
             s(
                 "containers",
                 "configurator",
                 "Configurator",
                 "Studio shell — preset row + grouped <ConfiguratorLayer> + a live specimen stage. Aurora is its real consumer.",
-            ),
-            s(
-                "containers",
-                "icon-tooltip",
-                "Icon Tooltip",
-                "Auto-provider tooltip for label co-location with display typography baked in.",
             ),
         ],
     },
@@ -996,14 +735,24 @@ export const CATEGORIES: Category[] = [
                 "Tabs",
                 "Two tab materials on one engine — pill (glass) and underline (paper) — with a spring-slider indicator, horizontal and vertical orientation, draggable pills, and a responsive collapse to a Select.",
             ),
-            s("navigation", "carousel", "Carousel", undefined, {
-                background: "aurora",
-            }),
+            s(
+                "navigation",
+                "carousel",
+                "Carousel",
+                "Drag and keyboard navigation over crisp slides with direct, bounded pager controls.",
+                { background: "aurora" },
+            ),
+            s(
+                "navigation",
+                "pager-dots",
+                "Pager Dots",
+                "Accessible direct page navigation with an instance-local liquid indicator, bounded windowing, and dynamic count recovery.",
+            ),
             s(
                 "navigation",
                 "header-ribbon",
                 "Header Ribbon",
-                "Hover-tracking ribbon — an anchor button reveals a control row, then auto-collapses; the anchor slot exposes pinned / toggled state. Shipped /header-ribbon.",
+                "Glass command band — action-only ribbons stay persistent by default; collapsible pointer/focus reveal and activation pinning are explicit opt-ins. Shipped /header-ribbon.",
             ),
             s(
                 "navigation",
@@ -1043,20 +792,15 @@ export const CATEGORIES: Category[] = [
             // DEFINITION-ABSENT (the V↔H goo morph retired decided-terminal — the platform
             // cannot continuously interpolate a flex-column→row topology change; the swap
             // is the crossfade). Clean break, no alias.
-            // BA.W-DOCK-SECTIONS — the declarative tripartite section chassis. A
-            // `sections` descriptor array renders the rail-core | divided sections |
-            // nav zones over the dock's in-flow controls by composing <DockSeparator>
-            // (display: contents — the dock box shrink-wraps as before, no inflation).
-            // No live substrate: <DockSection> is chrome over existing controls.
             s(
                 "dock",
                 "sections",
                 "Dock Sections",
-                "The declarative <DockSection> chassis — pass one `sections: DockSectionDescriptor[]` array and the dock body renders the three-zone gestalt (a leading home/brand region, named divider-demarcated section groups, a trailing nav group) by composing <DockSeparator> over the controls a consumer already places. The dock box shrink-wraps unchanged; a 5-section dock renders from the array, never a hardcoded literal.",
+                "Semantic groups and DockSeparator express dock hierarchy with ordinary DOM, accessible names, and no descriptor layer.",
             ),
             // BI.W-DOCK-CONTROLS — the reference CONTROLS demo. The dock IS
             // SegmentedTabs/ToggleGroup wearing chrome: its control run is driven by
-            // the SAME headless useSelectionGroup engine, its controls are the folded
+            // the SAME headless useSelectionGroup engine, its controls are the unified
             // <DockControl> (icon + tab shape axis) + <DockTrigger> (the 3 overlay
             // triggers), and the leading #persistent + trailing #persistent-end slots.
             s(
@@ -1065,17 +809,11 @@ export const CATEGORIES: Category[] = [
                 "Dock Controls",
                 "The dock IS SegmentedTabs/ToggleGroup wearing chrome. Its controls are ordinary members of the selection-control family: one <DockControl> (icon + tab shapes), one <DockTrigger> (select/dropdown/popover), and one headless useSelectionGroup engine driving roving focus, the traveling indicator, role-per-mode ARIA, and the scrollIntoView recenter. The painted plate insets while the hit cell stays the full control size (hit box ≠ paint box) so the target-size floor holds; both the leading #persistent and trailing #persistent-end slots ship natively.",
             ),
-            // BI.W-DOCK-OVERFLOW — the overflow FACILITY. A native inline scroll track
-            // (overflow-x: auto) with the FadingScroll edge mask + scrollIntoView-on-select
-            // recenter (a selection past the fold pulls itself into view with a ≥1px port
-            // gutter), side-by-side with the pure-CSS Gaussian fisheye that engages IFF the
-            // row FITS. The two are EXCLUSIVE modes, never composed (PASS-4B ruling 1); the
-            // fisheye is transform/scale-only so the hit cell holds its ≥44px touch floor.
             s(
                 "dock",
                 "overflow",
                 "Dock Overflow",
-                "The dock overflow facility — a native inline scroll track (overflow-x: auto) with the FadingScroll edge mask and scrollIntoView-on-select recenter (a control past the fold scrolls itself into view with a ≥1px port gutter), side-by-side with the pure-CSS Gaussian fisheye that magnifies the controls under the pointer IFF the row FITS. The two are exclusive modes, never composed: a scrollable row runs native scroll with fisheye OFF; the fisheye is transform/scale-only so the hit cell holds its ≥44px touch floor, and coarse-pointer / reduced-motion paints flat.",
+                "Native inline scrolling with an edge mask and scrollIntoView recentering when a control moves past the dock's size cap.",
             ),
             // BB.B2 W-DOCKMORPH-CTA — the external-CTA-morphs-into-dock seam (the iOS
             // bloom-from-source INVERSE). An external CTA button flies + reshapes from
@@ -1108,22 +846,47 @@ export const CATEGORIES: Category[] = [
         stories: [
             // AZ.W-SUFFUSE D4-4 — the ledger / engineering-paper-shaped surfaces
             // are the most NATIVE blueprint-grid-underlay fit; the grid was
-            // applied by accident-of-authoring to metric-cell/stack while these
+            // applied by accident-of-authoring to metric surfaces while these
             // bare table surfaces (the canonical candidates) declared nothing.
             // The calm grid wash (StoryHero drops the card to `wash` over it) is
             // the ONE content event — no live substrate (the over-spend fence).
-            s("data", "table", "Table", undefined, {
-                background: "grid",
-            }),
-            s("data", "data-table", "Data Table", undefined, {
-                background: "grid",
-            }),
-            s("data", "tags-input", "Tags Input"),
-            s("data", "avatar", "Avatar"),
-            s("data", "sortable-list", "Sortable List"),
-            s("data", "infinite-scroll", "Infinite Scroll"),
-            s("data", "timeline", "Timeline"),
-            s("data", "search", "Fuzzy Search"),
+            s(
+                "data",
+                "table",
+                "Table",
+                "Semantic table anatomy with sortable headers, captions, and responsive overflow.",
+                { background: "grid" },
+            ),
+            s(
+                "data",
+                "tags-input",
+                "Tags Input",
+                "Keyboard-editable tags with paste, duplicate prevention, removal, and invalid-state feedback.",
+            ),
+            s(
+                "data",
+                "sortable-list",
+                "Sortable List",
+                "Pointer and keyboard reordering over stable row identities, handles, and announced movement.",
+            ),
+            s(
+                "data",
+                "infinite-scroll",
+                "Infinite Scroll",
+                "A progressive event feed that loads near the edge while preserving status and recovery.",
+            ),
+            s(
+                "data",
+                "timeline",
+                "Timeline",
+                "Continuous and segmented timelines with semantic events, selection, and proportional markers.",
+            ),
+            s(
+                "data",
+                "search",
+                "Fuzzy Search",
+                "Fuzzy ranking, match highlighting, keyboard navigation, and virtualized result presentation.",
+            ),
             s(
                 "data",
                 "virtual-section",
@@ -1132,39 +895,18 @@ export const CATEGORIES: Category[] = [
             ),
             s(
                 "data",
-                "metric-cell",
-                "Metric Cell",
-                "Compact metric card — icon + label over value/unit on a wash-tier surface; dashboard / compact / bare registers. Shipped /metric-cell.",
+                "metric",
+                "Metric",
+                "One static numeric-readout family: base readout, bounded cell, and responsive ledger rows with truthful empty/loading states.",
                 {
                     background: "grid",
                 },
             ),
-            s(
-                "data",
-                "metric-stack",
-                "Metric Stack",
-                "Subgrid layout shell hosting a column of <MetricRow> children — audacious poster vs compact result registers, per-row phase tint + active aura. Shipped /metric-stack.",
-                {
-                    background: "grid",
-                },
-            ),
-            s(
-                "data",
-                "metrics",
-                "Metrics",
-                "The numeric-readout family — MetricCell, MetricStack, and MetricBadge on ONE page, sectioned by the family switcher.",
-                {
-                    background: "grid",
-                },
-            ),
-            // BI.W-COMPOSITIONS-PRUNE — the InstrumentChassis telemetry chassis,
-            // relocated from the compositions band: the ping/jitter/download metric-strip
-            // host is a single data-instrument surface, not a composed scene.
             s(
                 "data",
                 "instrument-chassis",
                 "Instrument Chassis",
-                "Three-region chassis with twin-line bezel grooves and phase cascade; the GlassDock instrument-strip host.",
+                "One landmark-neutral physical sleeve for a stage, optional inspector, and explicit actions.",
             ),
         ],
     },
@@ -1179,17 +921,30 @@ export const CATEGORIES: Category[] = [
                 "Alert",
                 'role="alert" status surface — a feedback primitive.',
             ),
-            s("feedback", "toast", "Toast"),
             s(
                 "feedback",
-                "toaster",
-                "Toaster",
-                "Drop-in <ToastProvider> wrapper composed at the layout root.",
+                "toast",
+                "Toast",
+                "Transient status messages with tone, action, dismissal, queueing, and screen-reader announcements.",
             ),
-            s("feedback", "notification", "Notification"),
-            s("feedback", "progress", "Progress"),
-            s("feedback", "skeleton", "Skeleton"),
-            s("feedback", "confirm-dialog", "Confirm Dialog"),
+            s(
+                "feedback",
+                "progress",
+                "Progress",
+                "Continuous progress with optional checkpoint marks, indeterminate states, and vertical, gradient, and liquid presentations.",
+            ),
+            s(
+                "feedback",
+                "skeleton",
+                "Skeleton",
+                "Neutral loading placeholders for text, avatars, and cards, with motion reduced when requested.",
+            ),
+            s(
+                "feedback",
+                "confirm-dialog",
+                "Confirm Dialog",
+                "A Dialog composition for explicit confirmation, destructive emphasis, pending state, and focus restoration.",
+            ),
             s(
                 "feedback",
                 "completion-seal",
@@ -1203,9 +958,13 @@ export const CATEGORIES: Category[] = [
         title: "Motion",
         icon: Sparkles,
         stories: [
-            s("motion", "springs", "Spring Orchestrator", undefined, {
-                background: "constellation",
-            }),
+            s(
+                "motion",
+                "springs",
+                "Spring Orchestrator",
+                "Tune damping, stiffness, mass, and velocity while the live response and timing curve stay in sync.",
+                { background: "constellation" },
+            ),
             s(
                 "motion",
                 "tempo",
@@ -1220,8 +979,8 @@ export const CATEGORIES: Category[] = [
             s(
                 "motion",
                 "curve-gallery",
-                "Curve Gallery",
-                "The FULL curve canon live, 1:1 isomorphic to the keyframes easing inventory (Standard/Sine/Quad/Cubic/Expo/Circ/Back/Bounce/Steps/Linear()/Springs/Custom) — every plot driven by its REAL JS twin, plus a live editable cubic-bezier in the Custom family.",
+                "Motion Lab",
+                "Glass's compact motion vocabulary: semantic spring presets, the real overlay transition grammar, and the accessible easing authoring boundary. Engine primitives remain direct keyframes.js imports.",
                 {
                     // R7 D2 — the calm rich substrate so the glass POPs (the
                     // grey-on-grey kill). A blueprint `grid` wash, NOT another GL
@@ -1229,12 +988,6 @@ export const CATEGORIES: Category[] = [
                     // constellation budget in this band).
                     background: "grid",
                 },
-            ),
-            s(
-                "motion",
-                "countup",
-                "Count-up",
-                "Walk [data-countup] figures and tween textContent on the keyframes NumericAnimation engine.",
             ),
             s(
                 "motion",
@@ -1248,12 +1001,11 @@ export const CATEGORIES: Category[] = [
                 "Deck",
                 "The full-viewport keyboard-paged aria-live PRESENTATION register (DISTINCT from /carousel) — useDeck (headless index/progress/liveMessage) + useDeckKeyboard (focus-guarded Arrow/Space/digit) + <DeckPager> (windowed dots over PagerDots' ONE oracle). The story's visible slide settle reads the canonical --spring-smooth token directly.",
             ),
-            s("motion", "typewriter", "Typewriter"),
             s(
                 "motion",
                 "handmark",
                 "Hand Mark",
-                "HandMark — the platform's hand voice. The pen underline, the boil natural morphology, the highlighter (multiply over the page), draw-on, the brush continuum, and a hand-circled datum — over the paper-grain register. GlassUnderline RETIRED onto HandMark shape='underline' (DEC-8).",
+                "HandMark — the platform's hand voice. The pen underline, the boil natural morphology, the highlighter (multiply over the page), draw-on, the brush continuum, and a hand-circled datum — over the paper-grain register.",
                 {
                     // BA.W-STAGE scope 1 — the per-route exception: the hand-voice
                     // demo IS a paper-grain register surface (its blurb + its own
@@ -1262,18 +1014,6 @@ export const CATEGORIES: Category[] = [
                     // (a static wash, within the one-GL budget).
                     background: "paper",
                 },
-            ),
-            s(
-                "motion",
-                "animated-digit",
-                "Animated Digit",
-                "Single-figure smoothed reel over useAnimatedNumber — tweens a metric toward its bound value so it never snaps; null reads the placeholder.",
-            ),
-            s(
-                "motion",
-                "split-chars",
-                "Split Chars",
-                "SplitChars / useCharStagger — the per-glyph split partner to the shipped .char-stagger CSS: mints the .char spans + --char-index/--char-total the recipe reads, accessible by construction (the aria-label keeps the word ONE accessible name; the glyphs are aria-hidden). Char / word / grapheme (Intl.Segmenter) split units.",
             ),
             s(
                 "motion",
@@ -1288,7 +1028,7 @@ export const CATEGORIES: Category[] = [
                 "motion",
                 "text-motion",
                 "Text Motion",
-                "The type & number motion family — Typewriter, SplitChars, AnimatedDigit, and Countup on ONE page, sectioned by the family switcher.",
+                "The type & number motion family — Typewriter, AnimatedDigit, and Countup on ONE page, sectioned by the family switcher.",
                 {
                     background: "constellation",
                 },
@@ -1300,11 +1040,6 @@ export const CATEGORIES: Category[] = [
         title: "Compositions",
         icon: LayoutDashboard,
         stories: [
-            // BI.W-HERO-DEMOTE (UF-K2) — the standalone `compositions/hero` story is
-            // RETIRED: it duplicated the `/compositions` D1 section landing (the chassis
-            // already renders the real-scene bento over the section hero, and the landing
-            // blurb carries the "Real scenes" identity). No standalone route survives; the
-            // `/compositions/hero` is no longer a route. auth-shell is now the D2 main.
             // BI.W-AUTH-SHELL-BG (PERF-2 / UF-K4) — the auth-shell no longer mounts the
             // library's HEAVIEST shader (a 4.87MP live Fourier SDF) as a decorative page
             // wash behind the form: a teaching SDF is never an ambient background. The page
@@ -1312,31 +1047,47 @@ export const CATEGORIES: Category[] = [
             // context is the brand-panel aurora (auth-shell.vue). The route is enrolled in
             // SELF_STAGES_GL (focal.ts) so the recessive shell aurora stands down — one GL
             // per route (down from 3: fourier + brand aurora + shell aurora).
-            s("compositions", "auth-shell", "Auth Shell", undefined, {
-                background: "grid",
-                hero: true,
-                // A full-bleed scene specimen — keeps the largest D3 sub-rung.
-                heroScale: "hero",
-            }),
+            s(
+                "compositions",
+                "auth-shell",
+                "Auth Shell",
+                "A split authentication scene with a live brand field, clear form hierarchy, trust cues, and alternate sign-in.",
+                {
+                    background: "grid",
+                    hero: true,
+                    // A full-bleed scene specimen — keeps the largest D3 sub-rung.
+                    heroScale: "hero",
+                },
+            ),
             // AZ.W-SUFFUSE D4-1 — the canonical thin offender: a page literally
             // ABOUT grain / paper / type rendered flat white-on-white. The calm
             // blueprint-grid wash (StoryHero drops the card to `wash` over it) +
             // the math-paper section-accent rail idiom are its ONE content event
             // — no live substrate (the over-spend fence).
-            s("compositions", "settings", "Settings", undefined, {
-                background: "grid",
-            }),
-            s("compositions", "empty-states", "Empty States", undefined, {
-                // The empty-states page carries its OWN contained Blob mascot
-                // (a small pointer-leaning companion); it does not need — and a
-                // Blob cannot be — a full-bleed page-field (W-BLOB-REBUILD).
-                background: "paper",
-            }),
+            s(
+                "compositions",
+                "settings",
+                "Settings",
+                "A responsive settings surface for account, appearance, notifications, and accessibility preferences.",
+                { background: "grid" },
+            ),
+            s(
+                "compositions",
+                "empty-states",
+                "Empty States",
+                "Actionable empty, loading, error, and no-result states with a restrained visual companion.",
+                {
+                    // The empty-states page carries its OWN contained Blob mascot
+                    // (a small pointer-leaning companion); it does not need — and a
+                    // Blob cannot be — a full-bleed page-field (W-BLOB-REBUILD).
+                    background: "paper",
+                },
+            ),
             s(
                 "compositions",
                 "form-validation",
                 "Form Validation",
-                "The user-invalid / user-valid rungs, the aria-invalid bridge, a required asterisk, an error slot, and Textarea autosize.",
+                "Native constraint validation, the aria-invalid bridge, linked errors, and Textarea content sizing.",
             ),
             s(
                 "compositions",
@@ -1358,23 +1109,7 @@ export const CATEGORIES: Category[] = [
     },
 ];
 
-// BG.W-DEMO-IA-REDESIGN — the family collapse + the narrative arc re-order, applied
-// AFTER the category tree is built but BEFORE the depth ladder is derived (so the
-// FIRST *surviving* story per category is the D2 main).
-//
-// (1) foldFamilies — drop the folded member routes from the nav. The member SFCs
-//     stay on disk (composed by their family page via <FamilyTabs>), so the
-//     no-orphan bijection holds; they are just un-routed here.
-function foldFamilies(categories: Category[]): void {
-    for (const cat of categories) {
-        cat.stories = cat.stories.filter(
-            (st) => !FOLDED_STORY_IDS.has(`${cat.id}/${st.id}`),
-        );
-    }
-}
-foldFamilies(CATEGORIES);
-
-// (2) The narrative arc (D3-C1) — Foundations → Material (substrates) → Elements
+// The narrative arc (D3-C1) — Foundations → Material (substrates) → Elements
 //     (DISPLAY atoms, then FORMS controls — the display↔forms swap) → Surfaces
 //     (containers · navigation · dock) → Data → Feedback → Motion → Compositions.
 const ACT_ORDER: readonly string[] = [
@@ -1390,9 +1125,7 @@ const ACT_ORDER: readonly string[] = [
     "motion",
     "compositions",
 ];
-CATEGORIES.sort(
-    (a, b) => ACT_ORDER.indexOf(a.id) - ACT_ORDER.indexOf(b.id),
-);
+CATEGORIES.sort((a, b) => ACT_ORDER.indexOf(a.id) - ACT_ORDER.indexOf(b.id));
 
 // BC.W-PAGE-CHASSIS — finalize the depth-keyed √φ title ladder + the section
 // landings AFTER the category tree is built (the FIRST story per category is the

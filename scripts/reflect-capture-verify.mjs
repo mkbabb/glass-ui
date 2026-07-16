@@ -12,9 +12,11 @@
 //
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync, statSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { inflateSync } from "node:zlib";
-import { ROOT } from "./constellation.mjs";
+
+const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
 const PNG_MAGIC = Buffer.from([0x89, 0x50, 0x4e, 0x47]);
 

@@ -1,7 +1,8 @@
+// Establish the global cascade order before any component stylesheet is evaluated.
+import "./demo.css";
 import { createApp, nextTick, type App } from "vue";
 import App_ from "./App.vue";
 import { router } from "./router";
-import "./demo.css";
 
 declare global {
     interface Window {
@@ -27,8 +28,7 @@ app.config.errorHandler = (err, _instance, info) => {
 // SETTLED-FRAME mode (real-paint-protocol §6): the entrance animations +
 // compositing promotions are neutralized (the `html[data-capture]` capture
 // stylesheet) so an OFF-SCREEN WKWebView snapshot captures the FULL route content
-// into the base layer (today it captures a BLANK `<main>` — the `.route-enter`
-// transform-promoted layer is dropped off-screen), an in-pixel engine badge is
+// into the base layer, an in-pixel engine badge is
 // painted as the SOLE provenance source, and readiness is signalled via
 // `window.__captureReady` + `<html data-capture-ready>` so the harness polls
 // instead of guessing a fixed sleep. WebKit RENDERS correctly — this is a HARNESS
@@ -76,8 +76,7 @@ if (captureRoute) {
 /**
  * Boot the demo into the C18 settled-frame capture mode. The order is
  * load-bearing: the color scheme + `data-capture` flag are set BEFORE mount, so
- * the `.route-enter` entrance never plays (the keyed component jumps straight to
- * its settled frame — no transform-promoted layer to drop off-screen).
+ * animation recipes never play; the keyed component mounts at its settled frame.
  */
 async function bootCaptureMode(
     appInstance: App,

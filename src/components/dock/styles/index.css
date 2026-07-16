@@ -59,21 +59,10 @@
 @import "./shape.css";
 @import "./layers.css";
 @import "./layer-group.css";
-/* BI.W-DOCK-CROSSFADE — the ONE crossfade-slot rule (`.dock-crossfade`/`.dock-face`/
-   `.dock-face-content`), the FOLD of `DockLayerGroup`/`DockLayer`/`useLayerTransition`
-   into a two-child opacity overlap on the per-face `--dock-t` + a measure-once peak
-   `min-block-size` + the G12 content-wrapper clip. @import-ed AFTER layers/layer-group
-   (their `.dock-layer-item-host` FLIP crossfade is superseded — the element no longer
-   renders) into its own `@layer components`. */
+/* The face-swap crossfade: one two-child opacity overlap on per-face `--dock-t`,
+   a measure-once peak reserve, and the collapse content clip. */
 @import "./crossfade.css";
 @import "./overflow.css";
-/* BI.W-DOCK-OVERFLOW — the fits-branch pure-CSS Gaussian fisheye (the EXCLUSIVE-mode
-   enhancement, opt-in behind [data-dock-fisheye]; the native scroll track above is the
-   universal floor). @import-ed AFTER overflow.css so the fisheye scale reads the same
-   [data-dock-overflow] mode signal in source order. */
-@import "./fisheye.css";
-@import "./popover.css";
-@import "./section.css";
 /* BI.W-DOCK-RETIRES — `morph-bridge.css` (the V↔H goo teardrop), `fission-bridge.css` +
    `fission-island.css` (the 1→N fission goo), and `siri.css` (the Siri island) are
    DEFINITION-ABSENT (decided-terminal, clean break, no alias). The goo `filter:url()`
@@ -89,7 +78,7 @@
    glide (box-inviolate); CONSUMES the W55 tint seam + the menu-row recipe, re-authors neither. */
 @import "./search.css";
 
-/* AX.W01 — the SINGLE morph scalar. `useLayerTransition` writes it once per frame
+/* AX.W01 — the SINGLE morph scalar. The dock morph orchestrator writes it once per frame
    to the `.glass-dock` root; EVERY morph axis (box size, padding, radius, scale,
    background/border color, child stagger) is a pure `calc()` read off it — one
    driver, one clock, on every engine (the View-Transitions collapse fork is
@@ -100,8 +89,8 @@
    `inherits:true` (NOT false) — the SOTA inheritance-bomb guard is specifically
    "never write the scalar to `:root`" (a whole-document subtree recalc per frame
    over 1300+ elements). The scalar is written LOCALLY on the small `.glass-dock`
-   subtree, and its CONSUMERS are DESCENDANTS (`.dock-layers`/`.dock-layer-stack`
-   size + the active pane's child stagger) that read it via inheritance, so it MUST
+   subtree, and its CONSUMERS are DESCENDANTS (`.dock-layers` sizing, the active
+   pane's child stagger, and `.dock-face-content` clipping) that read it via inheritance, so it MUST
    inherit. Writing one inheriting var over a ~10–20-element dock subtree is the
    exact pattern the prior `--dock-morph-progress` used (on `.dock-layers`); the
    bomb only fires from a `:root` write, which never happens here. The root-chrome
@@ -164,8 +153,6 @@
 @layer components {
     :where(
         .glass-dock,
-        .dock-layer-stack,
-        .dock-layer-item-host,
         .dock-layer-tab,
         .dock-icon-button,
         .dark-mode-toggle-button,

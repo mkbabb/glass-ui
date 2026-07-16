@@ -1,22 +1,15 @@
 <script setup lang="ts">
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { DataTable } from "@glass/components/data-table";
 import type {
     DataTableColumn,
     DataTableSort,
+    DataTableStatus,
 } from "@glass/components/data-table";
 import { Input } from "@glass/components/input";
 import { Button } from "@glass/components/button";
-import { IconChip } from "@glass/components/icon-chip";
-import { cn } from "@glass/components/_shared/class-names";
-import { Database } from "@lucide/vue";
-
-// BC.W-SUFFUSE-reconcile — the data band's ONE coherent --section-color-9
-// identity. PH3-safe (inline borderLeft, not the border-l-[3px] + <IconChip>
-// double-header shape).
-const DATA_STOP = 9;
 
 interface Repo {
     _id: string;
@@ -95,10 +88,13 @@ const rows: Repo[] = [
 ];
 
 const filter = ref("");
-const page = ref(1);
-const pageSize = 5;
 const sort = ref<DataTableSort | undefined>({ key: "stars", direction: "desc" });
 const selectedRowId = ref<PropertyKey | null>("3");
+const tabbableRowId = ref<PropertyKey | null>("3");
+const scenario = ref<"data" | "virtual" | "loading" | "empty" | "error">("data");
+const projection = ref<"wide" | "narrow">("wide");
+const scenarioOptions = ["data", "virtual", "loading", "empty", "error"] as const;
+const projectionOptions = ["wide", "narrow"] as const;
 const selectedRepo = computed(() =>
     rows.find((row) => row._id === selectedRowId.value),
 );
@@ -154,76 +150,115 @@ const sorted = computed(() => {
     });
 });
 
-const paged = computed(() => {
-    const start = (page.value - 1) * pageSize;
-    return sorted.value.slice(start, start + pageSize);
+const status = computed<DataTableStatus>(() =>
+    scenario.value === "loading" || scenario.value === "error"
+        ? scenario.value
+        : "ready",
+);
+const visibleRows = computed(() => {
+    if (["loading", "empty", "error"].includes(scenario.value)) return [];
+    return scenario.value === "virtual" ? sorted.value.slice(2, 5) : sorted.value;
+});
+const filteredState = computed(() => scenario.value === "data" && filter.value.trim() !== "");
+
+function absoluteRowIndex(row: Repo): number {
+    return sorted.value.findIndex(({ _id }) => _id === row._id) + 2;
+}
+
+function setScenario(next: typeof scenario.value): void {
+    scenario.value = next;
+    tabbableRowId.value = (next === "virtual" ? sorted.value[2] : sorted.value[0])?._id ?? null;
+}
+
+function resetDemo(): void {
+    filter.value = "";
+    sort.value = { key: "stars", direction: "desc" };
+    selectedRowId.value = "3";
+    tabbableRowId.value = "3";
+    scenario.value = "data";
+    projection.value = "wide";
+}
+
+watch(filter, () => {
+    tabbableRowId.value = filtered.value[0]?._id ?? null;
 });
 </script>
 
 <template>
     <StoryPage>
-        <header
-            class="story-color-event flex items-center gap-4 pl-5"
-            :style="{
-                '--section-label-accent': `var(--section-color-${DATA_STOP})`,
-            }"
+        <StorySection
+            label="Data table"
+            heading="Repository catalogue"
+            blurb="Sort, select, reflow, and inspect caller-windowed rows through one controlled shell."
         >
-            <IconChip :icon="Database" :section="DATA_STOP" bloom reveal />
-            <div class="flex flex-col gap-1">
-                <span class="section-label--tinted text-admin-label">
-                    Data · Data table
-                </span>
-                <p class="text-small text-muted-foreground">
-                    Column sorting and filtering helpers — the section identity
-                    is the ONE color event.
-                </p>
+            <div class="flex flex-wrap items-center justify-between gap-3">
+                <Input
+                    v-model="filter"
+                    placeholder="Filter name or language…"
+                    class="max-w-xs"
+                    :disabled="scenario !== 'data'"
+                />
+                <div role="group" aria-label="Table state" class="flex flex-wrap gap-1">
+                    <Button
+                        v-for="option in scenarioOptions"
+                        :key="option"
+                        size="sm"
+                        :emphasis="scenario === option ? 'primary' : 'quiet'"
+                        @click="setScenario(option)"
+                    >
+                        {{ option }}
+                    </Button>
+                </div>
             </div>
-        </header>
 
-        <div class="flex items-end justify-between gap-4">
-            <!-- D1-5 (AZ.W-HIERARCHY): the in-card eyebrow 'Data table' was a DUP of
-                 the page-chrome eyebrow ('DATA · DATA TABLE'); dropped. The card
-                 heading 'Repositories' is the canonical StorySection heading rung —
-                 one clear primary, no two equal-weight titles. -->
-            <StorySection heading="Repositories" />
-            <Input
-                v-model="filter"
-                placeholder="Filter by name or language…"
-                class="max-w-xs"
-            />
-        </div>
+            <div class="flex flex-wrap items-center justify-between gap-3 text-small">
+                <p aria-live="polite">
+                    Selected: <strong>{{ selectedRepo?.name ?? "None" }}</strong>
+                    <span class="text-muted-foreground"> · Arrow keys move; Enter or Space selects.</span>
+                </p>
+                <div class="flex flex-wrap gap-2">
+                    <div role="group" aria-label="Projection" class="flex gap-1">
+                        <Button
+                            v-for="option in projectionOptions"
+                            :key="option"
+                            size="sm"
+                            :emphasis="projection === option ? 'primary' : 'quiet'"
+                            @click="projection = option"
+                        >
+                            {{ option }}
+                        </Button>
+                    </div>
+                    <Button size="sm" emphasis="quiet" @click="resetDemo">Reset</Button>
+                </div>
+            </div>
 
-        <div class="flex items-center justify-between gap-4 text-small">
-            <p aria-live="polite">
-                Selected repository:
-                <strong>{{ selectedRepo?.name ?? "None" }}</strong>
-            </p>
-            <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                :disabled="selectedRowId === null"
-                @click="selectedRowId = null"
+            <div
+                :class="[
+                    'rounded-card border border-border bg-card shadow-cartoon transition-[max-width] duration-normal',
+                    projection === 'narrow' && 'max-w-sm',
+                ]"
             >
-                Clear selection
-            </Button>
-        </div>
-
-        <div :class="cn('rounded-card border border-border bg-card shadow-cartoon')">
-            <DataTable
-                :columns="columns"
-                :rows="paged"
-                :total="sorted.length"
-                :page="page"
-                :page-size="pageSize"
-                :sort="sort"
-                v-model:selected-row-id="selectedRowId"
-                row-key="_id"
-                selectable
-                responsive
-                @update:page="page = $event"
-                @update:sort="sort = $event"
-            />
-        </div>
+                <DataTable
+                    :columns="columns"
+                    :rows="visibleRows"
+                    :sort="sort"
+                    :status="status"
+                    :filtered="filteredState"
+                    :aria-row-count="sorted.length + 1"
+                    :get-row-index="absoluteRowIndex"
+                    v-model:selected-row-id="selectedRowId"
+                    v-model:tabbable-row-id="tabbableRowId"
+                    row-key="_id"
+                    aria-label="Repository catalogue"
+                    selectable
+                    responsive
+                    @update:sort="sort = $event"
+                >
+                    <template #error>Repository data could not be loaded.</template>
+                    <template #empty>No repositories yet.</template>
+                    <template #filtered-empty>No repositories match this filter.</template>
+                </DataTable>
+            </div>
+        </StorySection>
     </StoryPage>
 </template>

@@ -6,18 +6,15 @@
 // hand-rolled control. It wraps a real <Button> (the content-width pill, the
 // glass `default` register that POPs over the W-STAGE-staged backdrop now that
 // W-DARK-MATERIAL's dark glass transmits) with the Lucide <Play>/<Pause> glyph
-// as a LEADING icon — never the `▶` U+25B6 text glyph, and never the
-// fixed-square `.glass-btn` primitive (the R8-17 collision: `.glass-btn`
-// width/height: var(--size-icon-btn) + contain:paint clips a wrapped text label
-// into a ~40px blob — the two mutually-exclusive size registers must NEVER stack).
+// as a LEADING icon — never the `▶` U+25B6 text glyph. The same Button contract
+// owns both content-width and icon-only geometry.
 //
 // The `playing` register mirrors the dock transport idiom
 // (dock/overview.vue: <Pause v-if="playing"/> / <Play v-else/>). Omitting `label`
 // gives the icon-only register; passing it gives the leading-icon + text pill.
 import { computed } from "vue";
 import { Play, Pause } from "@lucide/vue";
-import { Button } from "@glass/components/button";
-import type { ButtonVariants } from "@glass/components/button";
+import { Button, type ButtonEmphasis, type ButtonSize } from "@glass/components/button";
 
 const props = withDefaults(
     defineProps<{
@@ -31,17 +28,17 @@ const props = withDefaults(
          * When provided the control reads as a toggle; the glyph reflects state.
          */
         playing?: boolean;
-        /** The Button variant. Defaults to the glass `default` register. */
-        variant?: ButtonVariants["variant"];
+        /** The Button emphasis. Defaults to the ordinary command register. */
+        emphasis?: ButtonEmphasis;
         /** The Button size rung. Defaults to `md`. */
-        size?: ButtonVariants["size"];
+        size?: ButtonSize;
         /** Disabled passthrough. */
         disabled?: boolean;
     }>(),
     {
         label: "Play",
         playing: undefined,
-        variant: "default",
+        emphasis: "secondary",
         size: "md",
     },
 );
@@ -61,7 +58,7 @@ function onClick(): void {
 
 <template>
     <Button
-        :variant="variant"
+        :emphasis="emphasis"
         :size="size"
         :icon-only="iconOnly"
         :disabled="disabled"

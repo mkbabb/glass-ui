@@ -14,6 +14,7 @@ const quantity = ref<number>(3);
 const tip = ref<number>(0.18);
 const steps = ref<number>(50);
 const bounded = ref<number>(5);
+const invalidValue = ref<number>();
 </script>
 
 <template>
@@ -26,6 +27,7 @@ const bounded = ref<number>(5);
                     v-model="quantity"
                     :min="0"
                     :max="99"
+                    :format-options="{ maximumFractionDigits: 0 }"
                     aria-labelledby="nf-qty-label"
                 >
                     <NumberFieldContent>
@@ -45,6 +47,7 @@ const bounded = ref<number>(5);
                     :min="0"
                     :max="1"
                     :step="0.01"
+                    locale="de-DE"
                     :format-options="{ style: 'percent' }"
                     aria-labelledby="nf-tip-label"
                 >
@@ -73,7 +76,9 @@ const bounded = ref<number>(5);
                         <NumberFieldIncrement />
                     </NumberFieldContent>
                 </NumberField>
-                <p class="text-mono-caption text-muted-foreground">Step 5 · 0..100</p>
+                <p class="text-mono-caption text-muted-foreground">
+                    Moves in fives · use ± or arrow keys
+                </p>
             </div>
 
             <!-- Disabled. -->
@@ -92,59 +97,32 @@ const bounded = ref<number>(5);
                 </NumberField>
                 <p class="text-mono-caption text-muted-foreground">Locked</p>
             </div>
-        </section>
 
-        <!--
-            Label-binding contract. The focusable <NumberFieldInput> and its
-            NumberField group each carry the same contextual name. Bind it via one
-            of three channels — each lands on both semantic owners below.
-        -->
-        <section class="grid grid-cols-1 gap-10 md:grid-cols-3">
-            <!-- Channel 1: <Label for> → input id. -->
             <div class="flex flex-col gap-3">
-                <Label id="nf-servings-label" for="nf-label-input">Servings</Label>
+                <Label id="nf-invalid-label" for="nf-invalid-input"
+                    >Required amount</Label
+                >
                 <NumberField
-                    v-model="quantity"
-                    :min="0"
-                    aria-labelledby="nf-servings-label"
+                    v-model="invalidValue"
+                    invalid
+                    required
+                    aria-labelledby="nf-invalid-label"
+                    aria-describedby="nf-invalid-error"
                 >
                     <NumberFieldContent>
                         <NumberFieldDecrement />
-                        <NumberFieldInput id="nf-label-input" />
+                        <NumberFieldInput
+                            id="nf-invalid-input"
+                            aria-describedby="nf-invalid-error"
+                        />
                         <NumberFieldIncrement />
                     </NumberFieldContent>
                 </NumberField>
-                <p class="text-mono-caption text-muted-foreground">
-                    <code class="fira-code">&lt;Label for&gt;</code> → input id
-                </p>
-            </div>
-
-            <!-- Channel 2: aria-labelledby → external label id. -->
-            <div class="flex flex-col gap-3">
-                <span id="nf-aria-by" class="text-admin-label text-foreground">Portions</span>
-                <NumberField v-model="quantity" :min="0" aria-labelledby="nf-aria-by">
-                    <NumberFieldContent>
-                        <NumberFieldDecrement />
-                        <NumberFieldInput aria-labelledby="nf-aria-by" />
-                        <NumberFieldIncrement />
-                    </NumberFieldContent>
-                </NumberField>
-                <p class="text-mono-caption text-muted-foreground">
-                    <code class="fira-code">aria-labelledby</code>
-                </p>
-            </div>
-
-            <!-- Channel 3: aria-label directly on the input. -->
-            <div class="flex flex-col gap-3">
-                <NumberField v-model="quantity" :min="0" aria-label="Helpings">
-                    <NumberFieldContent>
-                        <NumberFieldDecrement />
-                        <NumberFieldInput aria-label="Helpings" />
-                        <NumberFieldIncrement />
-                    </NumberFieldContent>
-                </NumberField>
-                <p class="text-mono-caption text-muted-foreground">
-                    <code class="fira-code">aria-label</code> on input
+                <p
+                    id="nf-invalid-error"
+                    class="text-mono-caption text-destructive"
+                >
+                    Enter an amount.
                 </p>
             </div>
         </section>

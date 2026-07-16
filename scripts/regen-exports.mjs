@@ -21,9 +21,8 @@
 //      proves the explicit classification is a faithful re-expression of the
 //      shipped surface, not a behaviour change.
 //
-// READ-ONLY by default (the gate's check mode). `--write` is the B2.1-swap
-// capability (re-pins package.json against the LANDED post-WS12 surface); it is
-// never invoked by `proof:subpath-classify`.
+// READ-ONLY by default. `--write` re-pins package.json against the classified
+// source surface.
 //
 // MODES (CLI):
 //   (default)             — real tree; exit 0 IFF classified + fidelity + exact.

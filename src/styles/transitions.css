@@ -24,48 +24,6 @@
        entrance rides `.glass-reveal` + its `data-reveal` register, not a hand-rolled
        Vue-<Transition> recipe. */
 
-    /* ── Route-enter (BG.W-ROUTE-TRANSITION — the bare keyed atomic swap entrance) ──
-     *
-     * The AppShell route swap is a bare keyed `<component :is :key="route.path"
-     * class="route-enter">` — NO Vue `<Transition>` wrapper (the swap unmounts the old +
-     * mounts the new in ONE atomic patch, so it cannot wedge by construction; the
-     * leave-window race + the `.scroll-build`×`<Transition>` collision that froze the
-     * route are structurally impossible). The liquid enter is therefore a pure ON-MOUNT
-     * `@keyframes` on the keyed component — it lands on EVERY route root (StoryPage,
-     * SectionLanding, hero, intro, auth-shell, NotFound), closing the old
-     * `.story-page-article`-only selector gap. The iOS-NavStack vertical settle: a
-     * SPATIAL spring rise (snappy, P2/P4), fade COUPLED to the transform (P3),
-     * `backwards` fill-mode so the from-state holds before the first frame (no
-     * flash-of-final).
-     *
-     * BG.W-CORNER-ALIAS-KILL — the fill is `backwards`, NEVER `both`/`forwards`.
-     * The route root is the universal ancestor: a `both` fill keeps APPLYING the
-     * `to` keyframe's transform forever (the engine reports a filled identity
-     * `matrix(1,0,0,1,0,0)` — a computed transform ≠ `none`), which makes the
-     * route root a PERMANENT fixed-position containing block (CSS Transforms
-     * §containing-block) and silently re-parents every `position: fixed`
-     * descendant (the full-bleed field wash trapped to the article box — the
-     * white square-corner wedge behind every rounded card). `to` ≡ base
-     * (opacity 1 / transform none), so `backwards` is paint-identical at rest
-     * and RELEASES the transform channel at settle.
-     *
-     * ── BI.W-E10-AURORA-ENTRANCE — THE FIELD / CONTENT SPLIT ──────────────────
-     * `gl-route-enter` is the CONTENT-enter register ONLY — the opacity fade is
-     * COUPLED to the transform rise (P3), so it is a content settle, NEVER an
-     * atomic whole-root neutral fade of the FIELD. The full-bleed page FIELD is a
-     * frame-0 PERSISTENT layer that lives OUTSIDE this animated subtree: the shell
-     * `<Aurora>` mounts at the AppShell root ABOVE the keyed route component, and a
-     * hero route's own full-bleed field `<Teleport>`s to `<body>` (the same
-     * corner-alias escape above). So the field paints its palette-derived GROUND
-     * from frame 0 and the CONTENT enters OVER the already-colored field — the
-     * content fades/rises, the field does NOT fade in from a repulsive gray
-     * (UF-E10 / value.js T-60). This register must never be re-scoped to fade a
-     * `position: fixed` full-bleed field: keep the field a persistent frame-0
-     * layer and the enter content-only. */
-    .route-enter {
-        animation: gl-route-enter var(--spring-snappy-duration) var(--spring-snappy) backwards;
-    }
-
     /* BI.W-REGISTER-TABLE — `dialog-scale` / `pop` / `dropdown` RETIRED (census-dead:
        0 src/ consumers each; the demo showcase tiles are deleted with them). Clean
        break, no alias. The overlay/menu entrances they duplicated now ride the ONE
@@ -188,41 +146,5 @@
             transform: none !important;
         }
 
-        /* P6 — route-enter KEEPS the fade, DROPS the spatial rise (the vestibular
-           floor; the page settles to its terminal state with zero transform frames).
-           `backwards` fill (BG.W-CORNER-ALIAS-KILL — the same release discipline;
-           opacity-only here, but ONE fill register across both arms). */
-        .route-enter {
-            animation: gl-route-fade var(--duration-fast) var(--ease-out) backwards;
-        }
-    }
-}
-
-/* The route-enter keyframes — unlayered (pure `@keyframes`, layer-agnostic, the
-   animations.css convention). Referenced by the `.route-enter` recipe above.
-
-   BG.W-ROUTE-ENTER-VISIBLE (fix b) — the rise lifts 0.75rem (12px) → 1.25rem (20px),
-   the perceptible 16–24px band the §2.6 fix names. 12px was sub-perceptual once the
-   route-chunk stall (now pre-resolved off the beat, router.ts fix a) is out of the
-   clock — the surviving rise-tail read as a plain fade. 20px on --spring-snappy +
-   `backwards` (P2/P4 — the SPATIAL leg on the spring, the from-state held before the
-   first composited frame) makes the decelerating vertical settle READ in paint. The
-   distance is the sole change; the spring clock + fill register are untouched. */
-@keyframes gl-route-enter {
-    from {
-        opacity: 0;
-        transform: translateY(1.25rem);
-    }
-    to {
-        opacity: 1;
-        transform: none;
-    }
-}
-@keyframes gl-route-fade {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
     }
 }

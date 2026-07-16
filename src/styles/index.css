@@ -1,3 +1,5 @@
+@layer theme, base, components, utilities;
+
 /*
  * @mkbabb/glass-ui — Unified design system styles
  *
@@ -10,7 +12,7 @@
  *
  * AN.W1 — the single `@mkbabb/glass-ui/styles` import resolves the COMPLETE
  * stylesheet: this @import cascade PLUS the per-component `<style scoped>`
- * payload (Aurora grid layering, Progress/Slider/Notification/… scoped rules).
+ * payload (Aurora grid layering, Progress/Slider/Toast/… scoped rules).
  * The build folds the SFC bundle (`dist/glass-ui.css`) into the dist copy of
  * this file (vite.config.ts `publishStyleAssets`), so a consumer never needs
  * a second `@import "@mkbabb/glass-ui/styles.css"` line. The `./styles.css`
@@ -99,8 +101,7 @@
  *                              `.feedback-tone-{success,warning,info,destructive}`
  *                              tint a glass rung a bounded % toward a house tone
  *                              token on the EXISTING color-mix(in oklab, …) seam.
- *                              Toast / Notification / Alert consume it (the three
- *                              tone maps collapse). Loads after cards.css (it reads
+ *                              Toast / Alert consume it. Loads after cards.css (it reads
  *                              the same `--glass-bg-*` rung tokens cards.css/the
  *                              ladder mint).
  *   8. floating-panel.css    — RETIRED (BI.W-GLASS-DEDUP / FAM-9): the
@@ -108,7 +109,7 @@
  *                              consumers; the still-live `.dropdown-menu-content`
  *                              font/inner-pad rules moved to menu.css.
  *   9. transitions.css       — Vue <Transition> classes (fade, tab-fade,
- *                              route-enter, pane-swap, metric-swap, dock-in).
+ *                              pane-swap, metric-swap, dock-in).
  *                              BI.W-REGISTER-TABLE retired fade-slide/pop/
  *                              dialog-scale/dropdown (census-dead) — overlay/menu
  *                              enters ride the .glass-reveal data-reveal register.
@@ -136,8 +137,7 @@
  *                              `useViewTransition` substrate's CSS half).
  *  11. utilities.css         — thin @import root over utilities/{animate,base,
  *                              components,btn}.css. focus-ring,
- *                              btn-audacious + btn-interactive (press cluster;
- *                              K W6 + Q.W3 Lane E), rainbow-vivid +
+ *                              shared focus/press recipes, rainbow-vivid +
  *                              rainbow-pastel. Consumes earlier animations +
  *                              tokens.
  *  11a. components/_shared/menu.css — the glass MENU-ROW + MENU-SECTION
@@ -145,8 +145,8 @@
  *                              `@layer components` hover/highlight rules source-
  *                              order-win over `.interactive-item:hover` (same layer
  *                              + specificity) — the cascade-trap-safe placement.
- *  12. components/instrument-chassis/styles.css — chassis bezel +
- *                              groove dividers). Loaded after utilities so
+ *  12. components/instrument-chassis/styles.css — physical sleeve +
+ *                              private region grooves. Loaded after utilities so
  *                              component-local recipes can override.
  *  13. components/drawer/styles.css — detented bottom-sheet grammar (glass
  *                             sheet surface + peek handle + snap-stop rules).
@@ -179,6 +179,8 @@
 @import "./glass-specular-track.css";
 @import "./glass-refract.css";
 @import "./paper.css";
+@import "../components/dark-mode-toggle/dark-mode-toggle.css";
+@import "../components/header-ribbon/styles.css";
 @import "../components/dock/styles/index.css";
 @import "../components/dock/styles/controls.css";
 @import "../components/card/styles.css";
@@ -188,10 +190,7 @@
 @import "./viz-reveal.css";
 @import "./scroll-driven.css";
 @import "./scroll-choreography.css";
-/* BG.W-SCROLL-SHRINK-UNIFY — the EXTERNALIZED <CardHeader shrink> scroll-shrink
-   choreography (lifted out of the CardHeader.vue <style scoped> block into ONE
-   global, un-hashed home; the shared @keyframes title-collapse SCALE leg). A
-   scroll-choreography partial — bucketed DEFERRED in critical-partition.mjs. */
+/* Component-owned real-box contraction for <CardHeader shrink>. */
 @import "../components/card/card-scroll.css";
 @import "./scroll-chrome.css";
 @import "./view-transition.css";
@@ -203,6 +202,7 @@
    the cascade-trap-safe placement, mirroring glass/surface-axis.css's "import
    AFTER ladder.css" discipline. */
 @import "../components/_shared/menu.css";
+@import "../components/button/styles.css";
 @import "../components/configurator/styles.css";
 @import "../components/instrument-chassis/styles.css";
 /* BI.W-OVERLAY-UNION — hover-popover.css DELETED: <HoverPopover> folded onto the
@@ -225,10 +225,8 @@
    drawer). :where()-wrapped so a consumer sizing utility still wins. Locked by
    proof:emission (overlay-band inverse clause). */
 @import "../components/dialog/placement.css";
-/* BA.W-ICON-CHIP — the <IconChip> section-color pop recipe + the three axes
-   (duotone/bloom/reveal). A component partial; the token arms (--section-color-N
-   / --muted) auto-flip under .dark so the chip is mode-robust by construction. */
-@import "../components/icon-chip/styles.css";
+/* BI.W-P117 — the one static numeric-readout family. */
+@import "../components/metric/styles.css";
 /* The thin, radius-following masked scroll-progress band. */
 @import "../components/scroll-progress-rim/styles.css";
 

@@ -53,13 +53,6 @@ function onPopoverOpenChange(seg: TimelineSegment, open: boolean) {
     if (open) emit("hover", seg);
     else emit("hoverEnd", seg);
 }
-
-function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
-    if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        emit("click", seg);
-    }
-}
 </script>
 
 <template>
@@ -92,11 +85,11 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
                         type="button"
                         class="continuous-dot segmented-dot"
                         :aria-label="`${seg.label}: ${seg.state}`"
+                        :aria-current="seg.key === currentSegmentKey ? 'step' : undefined"
                         :data-state="seg.state"
                         :data-current="seg.key === currentSegmentKey || undefined"
                         :data-completed="seg.state === 'completed' || undefined"
                         @click="emit('click', seg)"
-                        @keydown="onSegmentKeydown($event, seg)"
                     >
                         <span class="sr-only">{{ seg.label }}</span>
                         <svg
@@ -111,7 +104,6 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
                     </button>
                 </PopoverTrigger>
                 <PopoverContent
-                    role="card"
                     side="top"
                     :side-offset="10"
                     :class="`timeline-popover timeline-popover-${seg.key}`"
@@ -158,6 +150,7 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
                 type="button"
                 class="continuous-dot segmented-dot"
                 :aria-label="`${seg.label}: ${seg.state}`"
+                :aria-current="seg.key === currentSegmentKey ? 'step' : undefined"
                 :data-state="seg.state"
                 :data-current="seg.key === currentSegmentKey || undefined"
                 :data-completed="seg.state === 'completed' || undefined"
@@ -166,7 +159,6 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
                 @focus="emit('hover', seg)"
                 @blur="emit('hoverEnd', seg)"
                 @click="emit('click', seg)"
-                @keydown="onSegmentKeydown($event, seg)"
             >
                 <span class="sr-only">{{ seg.label }}</span>
                 <svg

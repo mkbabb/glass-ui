@@ -1,5 +1,6 @@
 /* utilities/a11y-overrides.css
-   The accessibility + capability tail — @media (prefers-reduced-motion: reduce) (+ the .no-transition class), @media (forced-colors: active) focus/silhouette, @media (pointer: coarse) touch-target floor, and the @utility touch-hit-area. LAST in cascade.
+   The accessibility + capability tail — reduced motion, forced-colors focus,
+   and the size-agnostic touch-hit-area utility. LAST in cascade.
    Carved from the utilities.css cascade root; @import-ed by utilities.css in
    cascade order. See docs/precepts/design-idioms.md §cohesion-aware partials. */
 /* ── Reduced motion: nuanced — preserve opacity, remove spatial motion ── */
@@ -12,7 +13,8 @@
     /* Keep opacity transitions (safe, non-spatial) but shorten */
     *:not([data-allow-motion]) {
         transition-duration: 0.1s !important;
-        transition-property: opacity, color, background-color, border-color, box-shadow !important;
+        transition-property:
+            opacity, color, background-color, border-color, box-shadow !important;
     }
 
     /* BA.W-ATLAS-RECONCILE A-3 (d6 2755ebbd re-land) — Reduced-motion OVERRIDES
@@ -22,7 +24,7 @@
        per-element motion-allow. So motion-allowed elements ALSO snap their spatial
        (transform) transition + any animation here; accessibility is absolute. (The
        DarkModeToggle icon animates through a flip under full motion, and SNAPS
-       under PRM — both arms gated by the ported icon-morph test.) */
+       under PRM.) */
     [data-allow-motion] {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
@@ -65,7 +67,7 @@ html.no-transition *:not([data-allow-motion])::after {
    AX.W36 — the focus-survival selector set is GENERALIZED to the broader
    interactive surface: the dock CONTROLS (`.dock-icon-button` / `.dock-tab-button`
    / `.dock-select-trigger` / `.dock-dropdown-trigger`) + the pill button base
-   (`.btn-pill`) all carry a box-shadow focus ring (dock.css / utilities.css) that
+   (`.button`) all carry a box-shadow focus ring (dock.css / utilities.css) that
    vanishes under WHC just like the original five. This is the SAME `Highlight`
    outline rung extended to cover them — ONE block, ONE path (the glass-language
    structure-survival skin for the tier panes / StatusDot / floating surfaces lives
@@ -77,13 +79,13 @@ html.no-transition *:not([data-allow-motion])::after {
    activates under forced-colors), so no nested guard. */
 @media (forced-colors: active) {
     .focus-ring:focus-visible,
-    .glass-btn:focus-visible,
     .interactive-item:focus-visible,
-    .btn-pill:focus-visible,
     .dock-icon-button:focus-visible,
     .dock-tab-button:focus-visible,
     .dock-select-trigger:focus-visible,
     .dock-dropdown-trigger:focus-visible,
+    .dark-mode-toggle-button:focus-visible,
+    .field-control:focus-visible,
     .input-pill:focus,
     .input-pill:focus-visible {
         outline: 2px solid Highlight;
@@ -100,24 +102,6 @@ html.no-transition *:not([data-allow-motion])::after {
     .hairline-accent,
     .glass-dock {
         border: 1px solid CanvasText;
-    }
-}
-
-/* ── Coarse-pointer touch-target floor (AQ.W3 §7) ───────────────────────────
-   General-surface companion to the dock-scoped R0G-6 floor (dock.css). On
-   coarse pointers the small icon-button/trigger surfaces OUTSIDE the dock lift
-   to the WCAG 2.5.5 (44px) minimum — ONE amendment retiring the per-consumer
-   `min-h-[44px]` one-liners. Token-driven (`--touch-target`); fine-pointer
-   byte-identical. Targets `Button iconOnly` (via the `data-icon-only`
-   attr Button.vue reflects), ExpandableContainer + SegmentedTabs (responsive
-   mobile Select) triggers.
-   `min-block/inline-size` only RAISES — a larger explicit size is never lost. */
-@media (pointer: coarse) {
-    [data-icon-only],
-    [data-part="trigger"],
-    .segmented-tabs__trigger {
-        min-block-size: var(--touch-target, 2.75rem);
-        min-inline-size: var(--touch-target, 2.75rem);
     }
 }
 

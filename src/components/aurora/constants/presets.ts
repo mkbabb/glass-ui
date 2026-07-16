@@ -23,7 +23,7 @@ export type { OklchStop };
 // (the union color-ownership contract — the same reason the OKLCH matrices are
 // locked to value.js's Ottosson constants), so we IMPORT the type, never re-invent
 // it. `AuroraHuePath` is a public ALIAS of `HueInterpolationMethod`, not a copy.
-import type { HueInterpolationMethod } from "@mkbabb/value.js";
+import type { HueInterpolationMethod } from "@mkbabb/value.js/color";
 export type AuroraHuePath = HueInterpolationMethod;
 
 // BG.W-AUR-IMAGE-SOURCE — the color-source axis. `palette` (default) is the procedural
@@ -144,27 +144,24 @@ export type WarpMode = "fbm" | "cellular" | "hybrid" | "curl";
  * AW.W6/W8 — the interactivity flag SHAPE (declared at W6, default OFF; behavior
  * wired at W8). Each axis opts the aurora into a pointer/scroll response:
  * - `light`  — the cursor drives the impasto `uLightDir` (cursor-as-light + idle orbit).
- * - `flow`   — pointer/scroll VELOCITY injects a transient swirl-burst (velocity-reactive).
  * - `scroll` — palette/breath progress couples to scroll (via `useScrollProgress`).
- * - `wake`   — the WebGPU stateful pointer wake (a ping-pong velocity texture; AW.W8.2).
+ * - `swirl`  — cursor-local warp and luminance lean on both engines.
+ * - `amplitude` — sizes the transient burst folded into cursor strength on the CPU.
  * Every axis is suppressed under `prefers-reduced-motion` + the DockBackgroundToggle
  * pause (the master tempo scalar is the single suppression seam). The wispy-sky
  * default carries no `interactivity` (every axis OFF — the default stays static).
  */
 export interface AuroraInteractivity {
     light?: boolean;
-    flow?: boolean;
     scroll?: boolean;
-    wake?: boolean;
     /**
-     * BI.W-FIELD-CORE (FC6/T-38) — the MEDIUM-GATED cursor swirl/luminance-lean (reads on the
-     * `smooth` medium via the engagement-driven `auroraCursorMapping` strength, ZERO shader
-     * edit — the T-38 dead-swirl-axis fix). The atoms door defaults it ON when interactive.
+     * BI.W-FIELD-CORE (FC6/T-38) — cursor-local field warp and luminance lean. The atoms
+     * door defaults it ON when interactive, including on the smooth medium.
      */
     swirl?: boolean;
     /**
-     * BI.W-FIELD-CORE (FC6) — the SIZED amplitude of the cursor's field influence (0..1) —
-     * how much the velocity burst perturbs the domain-warp path near the cursor.
+     * BI.W-FIELD-CORE (FC6) — the sized burst amplitude (0..1). The CPU projection folds
+     * the pointer-field burst into the shared cursor strength before either engine sees it.
      */
     amplitude?: number;
 }
@@ -308,8 +305,8 @@ export interface AuroraConfig {
 
     /**
      * AW.W6/W8 — the pointer/scroll interactivity opt-in (default OFF — the wispy-sky
-     * default stays static). W6 declares the SHAPE; W8 wires the cursor-as-light /
-     * velocity-reactive flow / scroll-coupling / WebGPU-wake behavior. Omitted = every
+     * default stays static). W6 declares the shape; W8 wires cursor-as-light,
+     * field warp/luminance, and scroll coupling. Omitted = every
      * axis off. Aliased on `/api` as part of the `AuroraConfig` surface.
      */
     interactivity?: AuroraInteractivity;
@@ -327,12 +324,10 @@ export interface AuroraCursorApi {
 
 export interface AuroraInstance extends AuroraCursorApi {
     /**
-     * Run the expensive WebGL init — context creation, shader compile + GPU
-     * link, first uniform upload, rAF arm. Idempotent. On the `"eager"` /
+     * Start GPU initialization. Idempotent. On the `"eager"` /
      * capture `initStrategy` `createAurora` already calls this before
      * returning; on `"deferred"` the consumer (e.g. `useAurora`) invokes it
-     * past first paint. Throws on WebGL2/compile/link failure (O invariant
-     * 24). A no-op once armed or once `dispose()` has run.
+     * past first paint. A no-op once armed or once `dispose()` has run.
      */
     arm(): void;
     /**
@@ -348,13 +343,12 @@ export interface AuroraInstance extends AuroraCursorApi {
     renderAt(timeSec: number): void;
     pause(): void;
     resume(): void;
-    setReducedMotion(flag: boolean): void;
     dispose(): void;
 }
 
 // ── Constants ──────────────────────────────────────────────────────────
 
-export const MAX_NUCLEI = 6;
+export const MAX_NUCLEI = 8;
 export const MAX_STOPS = 8;
 
 // ── BD.W-AUR-VIVIDNESS — the §3 chroma-floor constants ──────────────────────

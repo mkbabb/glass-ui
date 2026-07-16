@@ -14,7 +14,7 @@
 //        swatch renders ABOVE the core role grid in layout order (vertical Y) — the
 //        promotion landed (D2).
 //   P3 — the icons pane's Pops row renders ABOVE the monochrome icon grid (vertical
-//        Y) + the IconChips carry the [data-reveal] pop-entrance hook (D2/D4).
+//        Y) + its icon plates stay semantically static (D2/D4).
 //   P4 — the buttons pane's primary-audacious CTA renders ABOVE the destructive
 //        register (vertical Y) — the CTA out-presents destructive (D5) + the glass
 //        cluster sits in a field host (transparent plate — the BG-2 fix, D3).
@@ -140,8 +140,8 @@ test.describe("BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π)"
             });
         });
 
-        // ── P3 — the icons Pops row leads + carries the pop-entrance hook ─────────
-        test(`P3 — the Pops row leads the icons pane + carries the reveal hook [${mode}]`, async ({
+        // ── P3 — the icons Pops row leads without false control semantics ────────
+        test(`P3 — the Pops row leads the icons pane as static plates [${mode}]`, async ({
             page,
         }) => {
             await page.setViewportSize({ width: 1280, height: 1200 });
@@ -151,10 +151,9 @@ test.describe("BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π)"
             await page.waitForTimeout(400);
 
             const pops = await page.evaluate(() => {
-                // The Pops row chips carry the icon-chip--reveal class + a data-reveal
-                // hook (the W-SUFFUSE3 pop-entrance). The first chip + the reference
-                // grid heading vertical order.
-                const chip = document.querySelector<HTMLElement>("article .icon-chip--reveal");
+                const chip = document.querySelector<HTMLElement>(
+                    'article .glass-chip[data-mode="static"][data-shape="icon"]',
+                );
                 const refHead = Array.from(
                     document.querySelectorAll<HTMLElement>("article h2"),
                 ).find((h) => /Lucide reference/i.test(h.textContent ?? ""));
@@ -162,7 +161,11 @@ test.describe("BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π)"
                 return {
                     chipY: chip.getBoundingClientRect().top,
                     refY: refHead.getBoundingClientRect().top,
-                    hasReveal: chip.hasAttribute("data-reveal"),
+                    inert:
+                        chip.tagName === "SPAN" &&
+                        !chip.hasAttribute("role") &&
+                        !chip.hasAttribute("tabindex") &&
+                        !chip.hasAttribute("aria-pressed"),
                 };
             });
             paired[`p3-${mode}`] = pops;
@@ -171,7 +174,7 @@ test.describe("BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π)"
                 pops!.chipY,
                 `the Pops row (Y=${pops!.chipY}) must lead above the reference grid (Y=${pops!.refY})`,
             ).toBeLessThan(pops!.refY);
-            expect(pops!.hasReveal, "the Pops chips carry the [data-reveal] pop-entrance hook").toBe(true);
+            expect(pops!.inert, "the Pops icon plates remain inert spans").toBe(true);
 
             await page.screenshot({
                 path: `${VISUAL_DIR}/W-DEMO-DESIGN-icons-${mode}.png`,

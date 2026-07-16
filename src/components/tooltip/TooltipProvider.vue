@@ -1,11 +1,27 @@
 <script setup lang="ts">
-import { TooltipProvider, type TooltipProviderProps } from 'reka-ui'
+import { TooltipProvider as RekaTooltipProvider } from "reka-ui";
 
-const props = defineProps<TooltipProviderProps>()
+export interface TooltipProviderProps {
+    /** Pointer dwell before the first tooltip opens, in milliseconds. */
+    delayDuration?: number;
+    /** Grace period for moving between sibling tooltips, in milliseconds. */
+    skipDelayDuration?: number;
+}
+
+defineOptions({ name: "TooltipProvider", inheritAttrs: false });
+
+const props = withDefaults(defineProps<TooltipProviderProps>(), {
+    delayDuration: 700,
+    skipDelayDuration: 300,
+});
+defineSlots<{ default?: () => unknown }>();
 </script>
 
 <template>
-  <TooltipProvider v-bind="props">
-    <slot />
-  </TooltipProvider>
+    <RekaTooltipProvider
+        :delay-duration="delayDuration"
+        :skip-delay-duration="skipDelayDuration"
+    >
+        <slot />
+    </RekaTooltipProvider>
 </template>

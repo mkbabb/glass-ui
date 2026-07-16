@@ -7,7 +7,7 @@
 // aria-live announcer surfaces
 // "Slide N of M" per step. A focused control inside a slide gets Space/digit (NOT
 // hijacked).
-import { computed, onMounted, onBeforeUnmount, ref, watch, nextTick } from "vue";
+import { computed, onMounted, ref, useId, watch, nextTick } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import {
@@ -16,7 +16,8 @@ import {
     DeckPager,
 } from "@glass/components/deck";
 import { Button } from "@glass/components/button";
-import { useGooMorph } from "@glass/composables/motion/useGooMorph";
+import DeckGooFilter from "./deck/DeckGooFilter.vue";
+import { useDeckGoo } from "./deck/useDeckGoo";
 
 const slides = [
     { title: "Welcome", body: "Arrow / PageDown advances. Home / End jump." },
@@ -37,98 +38,32 @@ const index = computed({
     set: (i: number) => deck.go(i),
 });
 
-// BD.W-GOO-BARBELL-NECK — the deck slide GOO-MORPH (the demo is consumer #3 of
-// `useGooMorph` — the pager #1, the carousel #2, the deck #3). The library SHIP is
-// `useGooMorph` + the shell `<GooFilter>` mount; this demo CONSUMES them. The outgoing→incoming slide
-// bridge is the BARBELL: two warm-cream bodies neck a concave waist between them at the
-// calmer deck register (`--deck-goo-flow`, no-overshoot — the vestibular floor;
-// `--goo-weight: 0.4` zeroes the arc-lob). The `useDeck` library surface is byte-untouched.
 const gooStageEl = ref<HTMLElement | null>(null);
 const gooBodyAEl = ref<HTMLElement | null>(null);
 const gooBodyBEl = ref<HTMLElement | null>(null);
 const gooNeckEl = ref<HTMLElement | null>(null);
-const verticalFalse = ref(false);
-
-// The deck slides are full-viewport, stacked at inset:0 — there is no physical gap to
-// travel, so the goo neck rides a VIRTUAL slot model: slot 0 is the RESTING center, and
-// slot ±1 is the half-stage-width neighbor the neck reaches toward (the bridge direction).
-// On an index change we travel `(direction → 0)` so the neck wells IN from the
-// incoming-slide side and settles at center — a metaball bridge between the slides.
-function deckCenterOf(i: number): number | null {
-    const host = gooStageEl.value;
-    if (!host) return null;
-    const w = host.clientWidth || 1;
-    return w / 2 + i * (w * 0.5); // slot 0 = center, ±1 = ± half-stage neighbor
-}
-function deckRestSize(): number {
-    // the slot PITCH — the engine takes D = pitch/φ as the body diameter. A 0.97·width
-    // pitch lands D ≈ 0.6·width (the prior plate inline-size), a big viewport-scale blob.
-    const host = gooStageEl.value;
-    return host ? Math.max(8, (host.clientWidth || 1) * 0.97) : 64;
-}
-
-const deckGoo = useGooMorph({
-    barbellRefs: { bodyARef: gooBodyAEl, bodyBRef: gooBodyBEl, neckRef: gooNeckEl },
-    hostRef: gooStageEl,
-    vertical: verticalFalse,
-    centerOf: deckCenterOf,
-    restSize: deckRestSize,
-    tokenPrefix: "deck-goo",
-    // the bodies near to 0.85·D at the midpoint — the calmest, widest waist (a full-viewport
-    // page-flip necks BARELY; the vestibular floor).
-    neckGap: 0.85,
+const resourceId = useId().replace(/[^a-zA-Z0-9_-]/g, "");
+const filterId = `deck-goo-filter-${resourceId}`;
+const clipId = `deck-goo-clip-${resourceId}`;
+const deckGoo = useDeckGoo({
+    host: gooStageEl,
+    bodyA: gooBodyAEl,
+    bodyB: gooBodyBEl,
+    neck: gooNeckEl,
 });
-
-// The goo glass bridge fades IN during travel + OUT a beat after the morph settles —
-// mirroring the carousel's `markTraveling` (JUDGE-2 §1: at REST the deck must show ZERO
-// slab — a permanent 0.5 layer over the light page reads as a flat gray slab, exactly
-// what BA.W-NO-GRAY forbids). The goo is a TRANSIENT travel-only bridge; the legible
-// resting backing is the slide's OWN warm `glass-quiet` plate (JUDGE-2 §2(a)).
-let travelOffTimer: ReturnType<typeof setTimeout> | null = null;
-function markDeckTraveling(): void {
-    const host = gooStageEl.value;
-    if (!host) return;
-    host.setAttribute("data-traveling", "");
-    if (travelOffTimer) clearTimeout(travelOffTimer);
-    const durMs =
-        (parseFloat(
-            getComputedStyle(host).getPropertyValue("--deck-goo-duration"),
-        ) || 1.1) * 1000;
-    travelOffTimer = setTimeout(() => {
-        host.removeAttribute("data-traveling");
-        travelOffTimer = null;
-    }, durMs + 120);
-}
-
-/** Reserve the body diameter D = pitch/φ in px (the engine's bare transforms land on this
- *  base — the bodies are sized to D, no scale-to-fit). */
-function setDeckBodyGeometry(): void {
-    const host = gooStageEl.value;
-    if (!host) return;
-    const D = deckRestSize() / 1.618033988749895;
-    host.style.setProperty("--deck-body-d", `${D.toFixed(2)}px`);
-}
 
 onMounted(() =>
     void nextTick(() => {
-        setDeckBodyGeometry();
-        deckGoo.snap(0);
+        deckGoo.snap();
     }),
 );
-onBeforeUnmount(() => {
-    if (travelOffTimer) clearTimeout(travelOffTimer);
-});
 watch(
     () => deck.index.value,
     (to, from) => {
         // direction of travel: forward (next) → the neck reaches in from the RIGHT
         // (slot +1) and settles at center (slot 0); backward → from the LEFT (slot -1).
         const dir = to >= (from ?? to) ? 1 : -1;
-        markDeckTraveling();
-        void nextTick(() => {
-            setDeckBodyGeometry();
-            deckGoo.travel(dir, 0);
-        });
+        void nextTick(() => deckGoo.travel(dir));
     },
 );
 </script>
@@ -144,19 +79,15 @@ watch(
                 <!-- The deck stage — one slide active at a time, the rest faded out
                      on the canonical --spring-smooth curve, with the GOO-MORPH neck
                      bridging the outgoing→incoming slide (BD.W-GOO-CAROUSEL-DECK). -->
-                <div ref="gooStageEl" class="deck-demo-stage glass-quiet rounded-card">
-                    <!-- BD.W-MORPH-FIELD-WELD — the goo `<filter>` is the ONE `<GooFilter>`
-                         mount at the app/shell root (`url(#glass-goo)`); the deck references
-                         it by id. No per-deck mount → zero duplicate `<filter id>`. -->
-                    <!-- the concave NECK-THROAT clipPath (the deck-scale `--neck-waist`
-                         hourglass; objectBoundingBox cubic-Bézier sides, Safari-safe). -->
-                    <svg class="deck-neck-defs" width="0" height="0" aria-hidden="true" focusable="false">
-                        <defs>
-                            <clipPath id="deck-neck-throat" clipPathUnits="objectBoundingBox">
-                                <path d="M0,0 C0.25,0 0.36,0.34 0.5,0.34 C0.64,0.34 0.75,0 1,0 L1,1 C0.75,1 0.64,0.66 0.5,0.66 C0.36,0.66 0.25,1 0,1 Z" />
-                            </clipPath>
-                        </defs>
-                    </svg>
+                <div
+                    ref="gooStageEl"
+                    class="deck-demo-stage glass-quiet rounded-card"
+                    :style="{
+                        '--deck-goo-filter': `url(#${filterId})`,
+                        '--deck-neck-clip': `url(#${clipId})`,
+                    }"
+                >
+                    <DeckGooFilter :filter-id="filterId" :clip-id="clipId" />
                     <!-- the goo silhouette layer — the BARBELL (two warm-cream bodies + a
                          welling concave neck): the outgoing/incoming bodies bud apart, the
                          neck wells a concave waist, the filter merges them into one waisted
@@ -182,7 +113,7 @@ watch(
                              StorySection <h2> (PH1/PH3 unaffected). -->
                         <h3 class="text-display-2" :style="{ color: 'var(--motion-accent)' }">{{ s.title }}</h3>
                         <p class="text-body">{{ s.body }}</p>
-                        <Button v-if="s.title === 'Focus-guarded'" variant="default">
+                        <Button v-if="s.title === 'Focus-guarded'">
                             Focusable control
                         </Button>
                     </section>
@@ -190,12 +121,12 @@ watch(
 
                 <!-- The windowed dot pager (the group register), centered. -->
                 <div class="flex items-center justify-between gap-4">
-                    <Button variant="ghost" :disabled="deck.index.value === 0" @click="deck.prev()">
+                    <Button emphasis="quiet" :disabled="deck.index.value === 0" @click="deck.prev()">
                         Prev
                     </Button>
                     <DeckPager v-model:index="index" :total="deck.total" :window-fit="6" />
                     <Button
-                        variant="ghost"
+                        emphasis="quiet"
                         :disabled="deck.index.value === deck.total - 1"
                         @click="deck.next()"
                     >
@@ -226,8 +157,6 @@ watch(
     --motion-weight: var(--goo-weight);
     /* BD.W-GOO-BARBELL-NECK — the deck barbell tokens (demo-scoped). The widest, calmest
        waist (a full-viewport flip necks barely — the vestibular floor). */
-    --deck-goo-neck-gap: 0.85;
-    --neck-waist: 0.34;
     /* BD.W-CAROUSEL-DECK-GLASS §3 — the WARM FIELD behind the goo (presets-in-consumers,
        a DEMO-surface change, NOT a library token). The live deck slide resolved a flat
        taupe `oklab(0.793 0.005 0.012)` (C≈0.0128, near-gray) with NO colorful field — the
@@ -294,7 +223,7 @@ watch(
     inset: 0;
     z-index: 2; /* ABOVE the crisp slides — the glass bridge travels over them */
     pointer-events: none;
-    filter: url(#glass-goo);
+    filter: var(--deck-goo-filter);
     opacity: 0; /* invisible at rest; fades in only during travel */
     transition: opacity var(--duration-fast) var(--ease-out);
     /* warm-cream plate ink — NEVER gray (BA.W-NO-GRAY). */
@@ -328,8 +257,7 @@ watch(
 }
 /* fade the glass bridge IN during travel (the translucent warm lens — the slide reads
    through the bridge). At rest the layer is gone: ZERO gray slab (JUDGE-2 §1). The
-   `data-traveling` flag is written by `markDeckTraveling()` on the STAGE host (the
-   `gooStageEl` ref), so the gate keys off the ancestor stage. */
+   spring episode owns `data-traveling` on the stage and clears it on settle. */
 .deck-demo-stage[data-traveling] .deck-goo-layer {
     opacity: var(--deck-goo-layer-opacity, 0.62);
 }
@@ -343,11 +271,11 @@ watch(
    elevation register (W-DARK-MATERIAL): `oklch(from var(--card) 0.68 0.05 h)` keeps
    the warm hue, pins L→0.68 + RE-SATURATES C→0.05, NOT a gray `white N%` mix. The
    `saturate(1.3) brightness(1.3)` companion (plain CSS filters appended after
-   `url(#glass-goo)`, Safari-native) reads the warm chroma as LIT glass and pushes
+   the instance-local SVG filter reads the warm chroma as LIT glass and pushes
    the composited mass over L 0.5 — the dark aurora glows THROUGH a warm membrane. */
 .dark .deck-goo-layer {
     color: oklch(from var(--card) 0.68 0.05 h);
-    filter: url(#glass-goo) saturate(1.3) brightness(1.3);
+    filter: var(--deck-goo-filter) saturate(1.3) brightness(1.3);
 }
 /* THE BARBELL BODIES — two round warm-cream droplets (the viewport-scale metaball masses).
    Sized to the body diameter D = pitch/φ (set via --deck-body-d), border-radius:50% (a
@@ -355,7 +283,7 @@ watch(
    droplet, not a flat gray box; the CENTER stop drops to 0.82 alpha (a warm
    `oklch(from currentColor … / 0.82)`, NOT a white-mix that would gray it) so the warm
    field reads THROUGH the body's thinnest part — the "field through the neck + edge"
-   transmission read. The travel + squash are ALL transform (useGooMorph). */
+   transmission read. The private spring episode writes transform only. */
 .deck-goo-body {
     position: absolute;
     top: 50%;
@@ -372,12 +300,11 @@ watch(
             currentColor 74%
         );
     transform-origin: center;
-    scale: var(--stretch, 1) calc(1 / var(--stretch, 1));
     will-change: transform;
 }
 /* THE CONCAVE NECK — the welling hourglass throat between the two bodies (the
-   `#deck-neck-throat` objectBoundingBox clipPath: cubic-Bézier sides pulling IN to the
-   --neck-waist midpoint — a STRUCTURAL concave waist, never faceted, never `inset()`). The
+   instance-local objectBoundingBox clipPath: cubic-Bézier sides pulling IN to a
+   STRUCTURAL concave waist, never faceted, never `inset()`). The
    engine writes the well + the girth-following opacity. */
 .deck-goo-neck {
     position: absolute;
@@ -393,21 +320,10 @@ watch(
             oklch(from currentColor l c h / 0.82) 50%,
             currentColor 78%
         );
-    clip-path: url(#deck-neck-throat);
+    clip-path: var(--deck-neck-clip);
     transform-origin: center;
     opacity: 0; /* the engine writes the girth-following opacity */
     will-change: transform, opacity;
-}
-.deck-neck-defs {
-    position: absolute;
-    width: 0;
-    height: 0;
-    pointer-events: none;
-}
-@supports not (filter: url(#glass-goo)) {
-    .deck-goo-layer {
-        display: none;
-    }
 }
 @media (prefers-reduced-motion: reduce) {
     .deck-demo-stage {

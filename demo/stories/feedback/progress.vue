@@ -5,13 +5,19 @@ import { onMounted, onUnmounted, ref } from "vue";
 import { Progress } from "@glass/components/progress";
 import { Button } from "@glass/components/button";
 import { ScrollProgressRim } from "@glass/components/scroll-progress-rim";
-import { IconChip } from "@glass/components/icon-chip";
-import { Gauge } from "@lucide/vue";
+import { GlassDock } from "@glass/components/dock";
 // BB.W-SUFFUSE3 — the feedback band's --section-color-8 ruby identity.
-const FEEDBACK_STOP = 8;
 
 const determinate = ref(42);
 const segmentProgress = [1, 0.72, 0.35, 0] as const;
+const progressVariants = ["default", "gradient", "liquid"] as const;
+const rimStates = [0, 50, 100] as const;
+const rimWidths = ["1px", "4px", "12px"] as const;
+const rimEdges = [
+    { label: "Block end", coverage: "bottom-edge", dir: "ltr" },
+    { label: "Inline end", coverage: "inline-end-edge", dir: "ltr" },
+    { label: "Inline end · RTL", coverage: "inline-end-edge", dir: "rtl" },
+] as const;
 
 const animated = ref(0);
 let timer: number | undefined;
@@ -42,27 +48,10 @@ onUnmounted(stopAnimated);
 <template>
     <StoryPage>
         <!-- BB.W-SUFFUSE3 — the feedback-band identity COLOR EVENT (the tinted
-             eyebrow + the inline accent rail + the focal IconChip, all on
+             eyebrow + the inline accent rail, both on
              --section-color-8). The page-level color identity, DISTINCT from the
              StorySection labels + the range content below — it carries
              NO heading rung (not an idiom-B second header; PH3). -->
-        <header
-            class="story-color-event flex items-center gap-4 pl-5"
-            :style="{
-                '--section-label-accent': `var(--section-color-${FEEDBACK_STOP})`,
-            }"
-        >
-            <IconChip :icon="Gauge" :section="FEEDBACK_STOP" bloom reveal />
-            <div class="flex flex-col gap-1">
-                <span class="section-label--tinted text-admin-label">
-                    Feedback · Progress
-                </span>
-                <p class="text-small text-muted-foreground">
-                    Continuous progress, optional checkpoints, and a quiet
-                    radius-following completion rim.
-                </p>
-            </div>
-        </header>
 
         <StorySection label="determinate">
             <div class="flex flex-col gap-3">
@@ -72,14 +61,12 @@ onUnmounted(stopAnimated);
                     </p>
                     <div class="flex items-center gap-2">
                         <Button
-                            variant="outline"
                             class="h-7 px-2 text-xs"
                             @click="determinate = Math.max(0, determinate - 10)"
                         >
                             −10
                         </Button>
                         <Button
-                            variant="outline"
                             class="h-7 px-2 text-xs"
                             @click="determinate = Math.min(100, determinate + 10)"
                         >
@@ -92,42 +79,47 @@ onUnmounted(stopAnimated);
                     :marks="[20, 40, 60, 80]"
                     aria-label="Checkpointed completion"
                 />
-                <div class="flex items-center justify-between gap-4">
-                    <span class="font-mono text-xs text-muted-foreground">
-                        Arbitrary domain · 0.5 / 1
-                    </span>
-                    <Progress
-                        :model-value="0.5"
-                        :max="1"
-                        :marks="[0.25, 0.5, 0.75]"
-                        class="max-w-sm"
-                        aria-label="Normalized checkpoint example"
-                    />
+                <div class="grid gap-4 md:grid-cols-2">
+                    <div class="grid gap-2">
+                        <span class="font-mono text-xs text-muted-foreground">
+                            Arbitrary domain · 0.5 / 1
+                        </span>
+                        <Progress
+                            :model-value="0.5"
+                            :max="1"
+                            :marks="[0.25, 0.5, 0.75]"
+                            aria-label="Normalized checkpoint example"
+                        />
+                    </div>
+                    <div dir="rtl" class="grid gap-2">
+                        <span class="font-mono text-xs text-muted-foreground">
+                            RTL · 25 / 100
+                        </span>
+                        <Progress
+                            :model-value="25"
+                            :marks="[25, 50, 75]"
+                            aria-label="RTL checkpoint example"
+                        />
+                    </div>
                 </div>
             </div>
         </StorySection>
 
         <StorySection label="animated (loop)">
-            <p class="font-mono text-xs text-muted-foreground">
-                Auto-advancing driver resets at 100. The bar below overrides its
-                fill with <code>[&amp;>[data-state=loading]]:bg-viz-fourier</code>
-                for the red basis colour.
-            </p>
             <Progress
                 :model-value="animated"
-                class="[&>[data-state=loading]]:bg-viz-fourier"
+                :style="{ '--progress-fill': 'var(--viz-fourier)' }"
+                aria-label="Looping progress demonstration"
             />
         </StorySection>
 
         <StorySection label="indeterminate">
             <p class="font-mono text-xs text-muted-foreground">
-                No <code>model-value</code> passed — the fill pulses to signal
-                unknown duration. Honours <code>prefers-reduced-motion</code>
-                via <code>motion-safe:</code>.
+                <code>indeterminate</code> removes the numeric value and the rail sweeps
+                to signal unknown duration. It becomes static under
+                <code>prefers-reduced-motion</code>.
             </p>
-            <Progress
-                class="motion-safe:[&>[data-state=loading]]:animate-pulse [&>[data-state=loading]]:bg-primary/60"
-            />
+            <Progress indeterminate />
         </StorySection>
 
         <StorySection label="sizes">
@@ -138,12 +130,42 @@ onUnmounted(stopAnimated);
             </div>
         </StorySection>
 
-        <!-- gradient variant — the lifecycle motion grammar dispatcher arm. -->
+        <StorySection label="complete · error">
+            <div class="grid gap-4 md:grid-cols-2">
+                <div class="grid gap-2">
+                    <span class="text-small text-foreground">Complete</span>
+                    <Progress :model-value="100" aria-label="Complete" />
+                </div>
+                <div class="grid gap-2">
+                    <span class="text-small text-foreground">Failed at 63%</span>
+                    <Progress
+                        :model-value="63"
+                        status="error"
+                        aria-label="Upload failed at 63 percent"
+                    />
+                </div>
+            </div>
+        </StorySection>
+
+        <StorySection label="vertical">
+            <div class="flex h-48 items-stretch justify-center gap-6">
+                <Progress
+                    v-for="variant in progressVariants"
+                    :key="variant"
+                    :variant="variant"
+                    orientation="vertical"
+                    :model-value="62"
+                    :marks="[25, 50, 75]"
+                    :aria-label="`Vertical ${variant} progress`"
+                />
+            </div>
+        </StorySection>
+
+        <!-- Gradient paint over the shared progress geometry and semantics. -->
         <StorySection label="gradient variant">
             <p class="font-mono text-xs text-muted-foreground">
-                <code>variant="gradient"</code> routes to ProgressGradient — a
-                lifecycle motion grammar with an optional indeterminate sweep
-                (a slow left-to-right pan, retired under
+                <code>variant="gradient"</code> adds the lifecycle motion grammar and
+                optional indeterminate sweep (a slow left-to-right pan, retired under
                 <code>prefers-reduced-motion</code>).
             </p>
             <div class="grid gap-4">
@@ -158,10 +180,9 @@ onUnmounted(stopAnimated);
              per-site glass knowledge. -->
         <StorySection label="liquid variant (shared glass-cylinder fill)">
             <p class="font-mono text-xs text-muted-foreground">
-                <code>variant="liquid"</code> routes to ProgressLiquid — the ONE
-                <code>.glass-liquid-fill</code> register the Slider re-reads. The tint
-                rides <code>--progress-fill</code> (or <code>--liquid-fill-tint</code>);
-                the register owns the blur / rim / under-shadow.
+                <code>variant="liquid"</code> selects the shared
+                <code>.glass-liquid-fill</code> paint that Slider also reads. The tint
+                rides <code>--progress-fill</code> (or <code>--liquid-fill-tint</code>).
             </p>
             <div class="grid gap-4">
                 <Progress variant="liquid" :model-value="determinate" />
@@ -175,31 +196,95 @@ onUnmounted(stopAnimated);
 
         <StorySection label="scroll progress rim">
             <p class="font-mono text-xs text-muted-foreground">
-                A thin rainbow band follows the host radius without changing layout.
+                The inset band follows real Dock and compact host silhouettes without
+                changing their footprint.
             </p>
-            <div class="glass-card relative rounded-card p-6">
-                <ScrollProgressRim
-                    :value="determinate"
-                    :max="100"
-                    aria-label="Example scroll progress"
-                />
-                <div class="flex flex-col gap-1">
-                    <span class="text-display-1 tabular-nums">{{ determinate }}%</span>
-                    <span class="section-label--tinted text-admin-label">
-                        Coverage · full-ring
+            <div class="flex flex-wrap items-center gap-4">
+                <div
+                    v-for="value in rimStates"
+                    :key="`dock-${value}`"
+                    class="relative inline-grid rounded-[var(--radius-dock)]"
+                >
+                    <GlassDock always-expanded backdrop-mode="static">
+                        <span class="px-3 font-mono text-xs tabular-nums">
+                            {{ value }}%
+                        </span>
+                    </GlassDock>
+                    <ScrollProgressRim
+                        :value="value"
+                        :max="100"
+                        :aria-label="`Dock rim at ${value} percent`"
+                    />
+                </div>
+                <div class="relative inline-grid rounded-[var(--radius-dock)]">
+                    <GlassDock
+                        :start-collapsed="true"
+                        :collapse-delay="60_000"
+                        backdrop-mode="static"
+                        style="pointer-events: none"
+                    >
+                        <span class="px-3 font-mono text-xs">Expanded</span>
+                        <template #collapsed>
+                            <span
+                                class="size-2 rounded-full bg-foreground/60"
+                                aria-hidden="true"
+                            />
+                        </template>
+                    </GlassDock>
+                    <ScrollProgressRim
+                        :value="50"
+                        :max="100"
+                        aria-label="Collapsed Dock rim at 50 percent"
+                    />
+                </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-2">
+                <div
+                    v-for="width in rimWidths"
+                    :key="width"
+                    class="relative grid h-12 min-w-0 place-items-center rounded-card bg-card/40"
+                >
+                    <ScrollProgressRim
+                        :value="50"
+                        :max="100"
+                        :style="{ '--scroll-progress-rim-width': width }"
+                        :aria-label="`${width} rim at 50 percent`"
+                    />
+                    <span class="font-mono text-micro text-muted-foreground">
+                        {{ width }}
+                    </span>
+                </div>
+                <div
+                    v-for="edge in rimEdges"
+                    :key="edge.label"
+                    :dir="edge.dir"
+                    class="relative grid h-12 min-w-0 place-items-center rounded-card bg-card/40"
+                >
+                    <ScrollProgressRim
+                        :value="50"
+                        :max="100"
+                        :coverage="edge.coverage"
+                        :aria-label="`${edge.label} rim at 50 percent`"
+                    />
+                    <span class="font-mono text-micro text-muted-foreground">
+                        {{ edge.label }}
                     </span>
                 </div>
             </div>
-            <div class="glass-card relative rounded-card p-6">
+
+            <div class="glass-card relative rounded-card px-4 py-3">
                 <ScrollProgressRim
                     :value="2.07"
                     :max="4"
                     :segments="segmentProgress"
                     aria-label="Segment progress"
                 />
-                <div class="flex flex-col gap-1">
-                    <span class="text-display-1 tabular-nums">4 stages</span>
-                    <span class="section-label--tinted text-admin-label">
+                <div class="flex flex-col gap-0.5">
+                    <span class="font-mono text-sm font-medium tabular-nums">
+                        4 stages
+                    </span>
+                    <span class="font-mono text-micro text-muted-foreground">
                         Per-item · 1.00 / 0.72 / 0.35 / 0.00
                     </span>
                 </div>

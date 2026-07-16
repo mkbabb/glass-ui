@@ -42,7 +42,7 @@ const VISUAL_DIR = fileURLToPath(
 );
 
 // The dropdown-menu demo route — loads the global `/styles` cascade + a real
-// DropdownMenu whose items compose the shared menuItemVariants CVA.
+// DropdownMenu whose items compose the shared glass row treatment.
 const HOST_ROUTE = "/containers/dropdown-menu";
 
 const VIEWPORTS = [

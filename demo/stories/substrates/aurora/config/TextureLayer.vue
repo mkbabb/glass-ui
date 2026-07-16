@@ -69,7 +69,7 @@ function setNoiseOctaves(v: string | string[]) {
         <LabeledSlider
             :model-value="config.strokeAmount"
             label="Stroke amount"
-            tooltip="0..1 · overall strength of medium texture"
+            description="0..1 · overall strength of medium texture"
             :min="0"
             :max="1"
             :step="0.01"
@@ -78,7 +78,7 @@ function setNoiseOctaves(v: string | string[]) {
         <LabeledSlider
             :model-value="config.strokeScale"
             label="Stroke scale"
-            tooltip="Reciprocal density for strokes"
+            description="Reciprocal density for strokes"
             :min="40"
             :max="320"
             :step="2"
@@ -87,7 +87,7 @@ function setNoiseOctaves(v: string | string[]) {
         <LabeledSlider
             :model-value="config.strokeAnisotropy"
             label="Anisotropy"
-            tooltip="0..1 · stroke elongation along flow"
+            description="0..1 · stroke elongation along flow"
             :min="0"
             :max="1"
             :step="0.01"
@@ -96,7 +96,7 @@ function setNoiseOctaves(v: string | string[]) {
         <LabeledSlider
             :model-value="config.impasto"
             label="Impasto"
-            tooltip="0..1 · edge catch-light for oil"
+            description="0..1 · edge catch-light for oil"
             :min="0"
             :max="1"
             :step="0.01"
@@ -105,7 +105,7 @@ function setNoiseOctaves(v: string | string[]) {
         <LabeledSlider
             :model-value="config.brokenColor"
             label="Broken color"
-            tooltip="0..1 · per-stroke hue jitter"
+            description="0..1 · per-stroke hue jitter"
             :min="0"
             :max="1"
             :step="0.01"
@@ -114,7 +114,7 @@ function setNoiseOctaves(v: string | string[]) {
         <LabeledSlider
             :model-value="config.canvasGrain"
             label="Canvas grain"
-            tooltip="0..0.1 · oil canvas weave strength"
+            description="0..0.1 · oil canvas weave strength"
             :min="0"
             :max="0.1"
             :step="0.002"
@@ -123,7 +123,7 @@ function setNoiseOctaves(v: string | string[]) {
         <LabeledSlider
             :model-value="config.wetEdge"
             label="Wet edge"
-            tooltip="0..1 · watercolor cauliflower darkening"
+            description="0..1 · watercolor cauliflower darkening"
             :min="0"
             :max="1"
             :step="0.01"
@@ -132,7 +132,7 @@ function setNoiseOctaves(v: string | string[]) {
         <LabeledSlider
             :model-value="config.granulation"
             label="Granulation"
-            tooltip="0..1 · paper-fiber pigment settle"
+            description="0..1 · paper-fiber pigment settle"
             :min="0"
             :max="1"
             :step="0.01"
@@ -141,7 +141,7 @@ function setNoiseOctaves(v: string | string[]) {
         <LabeledSlider
             :model-value="config.paperGrain"
             label="Paper grain"
-            tooltip="0..0.02 · final film-grain"
+            description="0..0.02 · final film-grain"
             :min="0"
             :max="0.02"
             :step="0.001"

@@ -11,8 +11,8 @@
 //   2. still     — a GL-viz route (`/substrates/<id>`) resolves a frozen `vizPreviewStill`
 //                  data-URI raster. The one honest 0-GL answer for a live-GL target on a
 //                  multi-tile landing (a single parked paint, NOT a masking fallback).
-//   3. identity  — the terminal floor: the story's own identity as a real glass
-//                  typographic specimen (title + subpath chip over the warm field).
+//   3. identity  — the terminal floor: the story's own title as a quiet
+//                  typographic specimen.
 //                  Per-STORY distinct (the title differs), 0-GL, honest — never the
 //                  repeated compass glyph. A page reaches this until it earns a
 //                  `.tile.vue` (the full per-story authoring is the extrapolated G5
@@ -31,7 +31,7 @@ import { vizPreviewStill } from "./vizPreviewStill";
 export type TileResolution =
     | { kind: "authored"; loader: () => Promise<Component> }
     | { kind: "still"; src: string }
-    | { kind: "identity"; title: string; subpath: string };
+    | { kind: "identity"; title: string };
 
 /**
  * Resolve a story's landing tile via the ladder. `categoryId` + the story row are
@@ -48,9 +48,5 @@ export function resolveStoryTile(categoryId: string, story: Story): TileResoluti
     if (src) return { kind: "still", src };
 
     // 3. identity — the terminal per-story floor (a real glass typographic specimen).
-    return {
-        kind: "identity",
-        title: story.title,
-        subpath: story.subpath ?? `/${categoryId}/${story.id}`,
-    };
+    return { kind: "identity", title: story.title };
 }

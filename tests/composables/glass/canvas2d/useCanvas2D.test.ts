@@ -14,6 +14,10 @@ import { useCanvas2D } from "@glass/composables/glass/canvas2d/useCanvas2D";
 let rafQueue: Array<() => void>;
 let docListeners: Record<string, Array<(e: any) => void>>;
 let reducedMatches: boolean;
+let resizeCallbacks: Array<() => void>;
+let resizeObserverConstructs: number;
+let intersectionObserverConstructs: number;
+let intersectionOptions: IntersectionObserverInit | undefined;
 
 function makeCtx() {
     return {
@@ -65,6 +69,10 @@ beforeEach(() => {
     rafQueue = [];
     docListeners = {};
     reducedMatches = false;
+    resizeCallbacks = [];
+    resizeObserverConstructs = 0;
+    intersectionObserverConstructs = 0;
+    intersectionOptions = undefined;
     vi.stubGlobal("requestAnimationFrame", (cb: () => void) => {
         rafQueue.push(cb);
         return rafQueue.length;
@@ -73,6 +81,10 @@ beforeEach(() => {
     vi.stubGlobal(
         "ResizeObserver",
         class {
+            constructor(cb: () => void) {
+                resizeObserverConstructs += 1;
+                resizeCallbacks.push(cb);
+            }
             observe() {}
             disconnect() {}
             unobserve() {}
@@ -81,6 +93,13 @@ beforeEach(() => {
     vi.stubGlobal(
         "IntersectionObserver",
         class {
+            constructor(
+                _cb: IntersectionObserverCallback,
+                options?: IntersectionObserverInit,
+            ) {
+                intersectionObserverConstructs += 1;
+                intersectionOptions = options;
+            }
             observe() {}
             disconnect() {}
             unobserve() {}
@@ -121,7 +140,13 @@ describe("useCanvas2D — the Canvas2D substrate park/freeze contract (AW.W17)",
         // arm() runs on autoStart; the substrate handed the consumer ITS ctx.
         expect(setup).toHaveBeenCalledWith(ctx);
         expect(handle.isRunning()).toBe(true);
-        // dpr-clamped resize applied the transform (dpr=2).
+        // The shared lifecycle owns one resize observer + one intersection park.
+        expect(resizeObserverConstructs).toBe(1);
+        expect(intersectionObserverConstructs).toBe(1);
+        expect(intersectionOptions?.rootMargin).toBe("200px");
+        // dpr-clamped shared sizing + the Canvas2D CSS-pixel transform (dpr=2).
+        expect(canvas.value?.width).toBe(200);
+        expect(canvas.value?.height).toBe(100);
         expect(ctx.setTransform).toHaveBeenCalledWith(2, 0, 0, 2, 0, 0);
 
         // the live loop draws frames as the queue is pumped (delta-asserted so the
@@ -144,6 +169,35 @@ describe("useCanvas2D — the Canvas2D substrate park/freeze contract (AW.W17)",
         expect(handle.isRunning()).toBe(true);
         expect(runFrames(() => frames, 5)).toBeGreaterThan(0);
 
+        handle.dispose();
+    });
+
+    it("repaints a genuinely resized parked surface once", () => {
+        const ctx = makeCtx();
+        const element = makeCanvas(ctx);
+        const canvas = ref<HTMLCanvasElement | null>(element);
+        let frames = 0;
+        const handle = useCanvas2D({
+            canvas,
+            setup: () => ({
+                render: () => {
+                    frames += 1;
+                },
+            }),
+        });
+
+        handle.suspend();
+        element.getBoundingClientRect = () =>
+            ({ width: 140, height: 70 } as DOMRect);
+        resizeCallbacks[0]?.();
+
+        expect(element.width).toBe(280);
+        expect(element.height).toBe(140);
+        expect(frames).toBe(1);
+
+        // An idempotent observer tick does not repaint.
+        resizeCallbacks[0]?.();
+        expect(frames).toBe(1);
         handle.dispose();
     });
 

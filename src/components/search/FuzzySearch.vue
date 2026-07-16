@@ -2,11 +2,11 @@
 import { ref, watch, nextTick, computed, useId } from "vue";
 import { Search, X, Maximize2, Minimize2 } from "@lucide/vue";
 import { Popover, PopoverContent, PopoverTrigger } from "../popover";
-import { Dialog, DialogContent } from "../dialog";
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from "../dialog";
 import { Button } from "../button";
 import { Badge } from "../badge";
 import { cn } from "../_shared/class-names";
-import type { Surface } from "../_shared/useSurfaceAxis";
+import type { Surface } from "../_shared/axes";
 import {
     type ControlSize,
     type SearchVariant,
@@ -53,6 +53,7 @@ const inputRef = ref<HTMLInputElement | null>(null);
 const modalInputRef = ref<HTMLInputElement | null>(null);
 const inlineListRef = ref<HTMLElement | null>(null);
 const modalListRef = ref<HTMLElement | null>(null);
+const resultAnnouncement = ref("");
 
 const inlineOpen = computed({
     get: () =>
@@ -73,6 +74,19 @@ watch(() => props.state.isOpen.value, (open) => {
 watch(() => props.state.isExpanded.value, (expanded) => {
     if (expanded) nextTick(() => modalInputRef.value?.focus());
 });
+watch(
+    [() => props.state.query.value.trim(), () => props.state.results.value],
+    ([query, results]) => {
+        if (!query) resultAnnouncement.value = "";
+        else {
+            const count = results.length === 0
+                ? "No results"
+                : `${results.length} ${results.length === 1 ? "result" : "results"}`;
+            resultAnnouncement.value = `${count} for “${query}”`;
+        }
+    },
+    { immediate: true },
+);
 
 function focus() { inputRef.value?.focus(); }
 defineExpose({ focus });
@@ -104,6 +118,9 @@ function labelParts(r: SearchResult) {
 
 <template>
     <div class="fuzzy-search relative" :class="`fuzzy-search--${variant}`">
+        <span class="sr-only" role="status" aria-live="polite" aria-atomic="true">
+            {{ resultAnnouncement }}
+        </span>
         <Popover v-model:open="inlineOpen">
             <PopoverTrigger as-child>
                 <div class="input-bar" :data-surface="surface"
@@ -119,13 +136,13 @@ function labelParts(r: SearchResult) {
                         @keydown="state.onKeydown" @focus="state.isOpen.value = true"
                     />
                     <Button v-if="state.query.value && state.results.value.length > 0"
-                        type="button" variant="ghost" iconOnly class="size-(--search-button-size)"
+                        type="button" emphasis="quiet" iconOnly class="size-(--search-button-size)"
                         :aria-label="state.isExpanded.value ? 'Collapse search' : 'Expand search'"
                         :title="state.isExpanded.value ? 'Collapse' : 'Expand'" @click="state.toggleExpanded()">
                         <Maximize2 v-if="!state.isExpanded.value" class="size-(--search-icon-size)" />
                         <Minimize2 v-else class="size-(--search-icon-size)" />
                     </Button>
-                    <Button v-if="state.query.value" type="button" variant="ghost" iconOnly class="size-(--search-button-size)"
+                    <Button v-if="state.query.value" type="button" emphasis="quiet" iconOnly class="size-(--search-button-size)"
                         aria-label="Clear search" title="Clear search" @click="state.close()">
                         <X class="size-(--search-icon-size)" />
                     </Button>
@@ -169,6 +186,10 @@ function labelParts(r: SearchResult) {
             <DialogContent :surface="surface"
                 class="max-w-(--search-modal-width) max-h-[70vh] [--overlay-pad-inline:0] [--overlay-pad-block:0] [--search-modal-width:36rem] overflow-hidden flex flex-col gap-0"
                 @open-auto-focus="(e: Event) => e.preventDefault()">
+                <DialogTitle class="sr-only">{{ ariaLabel }}</DialogTitle>
+                <DialogDescription class="sr-only">
+                    Search and choose from the available results.
+                </DialogDescription>
                 <div class="flex items-center gap-2 border-b border-border/50 [--overlay-pad-inline:1rem] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)] px-(--overlay-pad-inline) py-(--overlay-pad-block)">
                     <Search class="size-(--search-icon-size) shrink-0 text-muted-foreground/70" />
                     <input ref="modalInputRef" type="search" role="combobox" class="input-bar-field flex-1 text-(length:--search-result-text)" :placeholder="placeholder"
@@ -178,7 +199,7 @@ function labelParts(r: SearchResult) {
                         :value="state.query.value"
                         @input="state.query.value = ($event.target as HTMLInputElement).value"
                         @keydown="state.onKeydown" />
-                    <Button type="button" variant="ghost" iconOnly class="size-(--search-button-size)" aria-label="Collapse search" title="Collapse" @click="state.toggleExpanded()">
+                    <Button type="button" emphasis="quiet" iconOnly class="size-(--search-button-size)" aria-label="Collapse search" title="Collapse" @click="state.toggleExpanded()">
                         <Minimize2 class="size-(--search-icon-size)" />
                     </Button>
                 </div>

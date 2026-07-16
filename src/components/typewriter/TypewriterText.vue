@@ -1,10 +1,36 @@
 <template>
     <span class="tw-root">
-        <span>{{ leadingText }}</span>
-        <span v-if="tailChar !== null" class="tw-tail">
-            {{ tailChar }}
+        <!-- Assistive technology gets one complete phrase, never partial glyph frames. -->
+        <span class="sr-only tw-accessible">{{ accessibleText }}</span>
+
+        <!-- These hidden settled candidates alone size the inline grid. Word rotation
+             therefore reserves the largest settled phrase before any typing begins. -->
+        <span
+            v-for="(reservedText, index) in reservedTexts"
+            :key="`${index}:${reservedText}`"
+            class="tw-reserve"
+            aria-hidden="true"
+        >
+            {{ reservedText }}
+        </span>
+
+        <span class="tw-visual" aria-hidden="true">
+            <span>{{ leadingText }}</span>
+            <span v-if="tailChar !== null" class="tw-tail">
+                {{ tailChar }}
+                <span
+                    v-if="cursorVisible"
+                    class="tw-cursor"
+                    :class="{
+                        'tw-cursor--blink':
+                            cursorBlink && !typewriter.isTyping.value,
+                    }"
+                >
+                    {{ cursorChar }}
+                </span>
+            </span>
             <span
-                v-if="cursorVisible"
+                v-else-if="cursorVisible"
                 class="tw-cursor"
                 :class="{
                     'tw-cursor--blink': cursorBlink && !typewriter.isTyping.value,
@@ -12,15 +38,6 @@
             >
                 {{ cursorChar }}
             </span>
-        </span>
-        <span
-            v-else-if="cursorVisible"
-            class="tw-cursor"
-            :class="{
-                'tw-cursor--blink': cursorBlink && !typewriter.isTyping.value,
-            }"
-        >
-            {{ cursorChar }}
         </span>
     </span>
 </template>
@@ -115,6 +132,18 @@ const typewriter = useTypewriter({
 
 const { displayText, startTyping, stopTyping, reset } = typewriter;
 
+const accessibleText = computed(() =>
+    props.words && props.words.length > 0
+        ? typewriter.currentWord.value.text
+        : (props.text ?? ""),
+);
+
+const reservedTexts = computed(() =>
+    props.words && props.words.length > 0
+        ? props.words.map((word) => word.text)
+        : [props.text ?? ""],
+);
+
 const displayTextChars = computed(() => splitGraphemes(displayText.value));
 const leadingText = computed(() => displayTextChars.value.slice(0, -1).join(""));
 const tailChar = computed(() =>
@@ -143,11 +172,24 @@ function clearTypewriterTimers() {
 
 function scheduleStart() {
     clearTypewriterTimers();
+    if (typewriter.reducedMotion.value) {
+        emit("start");
+        void startTyping();
+        return;
+    }
     scheduleTimer(() => {
         emit("start");
         void startTyping();
     }, props.startDelay);
 }
+
+watch(
+    typewriter.reducedMotion,
+    (reduced) => {
+        if (reduced && activeTimers.size > 0) scheduleStart();
+    },
+    { flush: "sync" },
+);
 
 // Watch for text changes in single-text mode
 watch(
@@ -190,7 +232,26 @@ defineExpose({
 
 <style scoped>
 .tw-root {
-    display: inline;
+    position: relative;
+    display: inline-grid;
+    max-width: 100%;
+    vertical-align: baseline;
+}
+
+.tw-reserve {
+    grid-area: 1 / 1;
+    min-width: 0;
+    visibility: hidden;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    pointer-events: none;
+}
+
+.tw-visual {
+    position: absolute;
+    inset: 0;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
 }
 
 .tw-tail {

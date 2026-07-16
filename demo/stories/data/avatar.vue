@@ -2,150 +2,244 @@
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import { Avatar, AvatarFallback, AvatarImage } from "@glass/components/avatar";
-import { Card } from "@glass/components/card";
-import { cn } from "@glass/components/_shared/class-names";
+import { StatusDot } from "@glass/components/status-dot";
+import { Surface } from "@glass/components/surface";
 
-interface Member {
-    id: string;
-    name: string;
-    initials: string;
-    avatar?: string;
-    tone: string; // section-N
-}
+const portrait = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
+        <defs><linearGradient id="g" x2="1" y2="1"><stop stop-color="#314a74"/><stop offset="1" stop-color="#b76d55"/></linearGradient></defs>
+        <rect width="160" height="160" fill="url(#g)"/>
+        <circle cx="80" cy="62" r="29" fill="#f1d3b5"/>
+        <path d="M35 158c5-38 23-56 45-56s40 18 45 56" fill="#efe9dc"/>
+        <path d="M52 58c2-26 17-40 33-40 19 0 32 16 31 43-13-7-22-17-27-30-6 14-18 23-37 27Z" fill="#261e27"/>
+    </svg>
+`)}`;
 
-const people: Member[] = [
-    { id: "a", name: "Ada Lovelace",   initials: "AL", tone: "0" },
-    { id: "b", name: "Alan Turing",    initials: "AT", tone: "2" },
-    { id: "c", name: "Grace Hopper",   initials: "GH", tone: "4" },
-    { id: "d", name: "Edsger Dijkstra",initials: "ED", tone: "5" },
-    { id: "e", name: "Claude Shannon", initials: "CS", tone: "7" },
-    { id: "f", name: "Barbara Liskov", initials: "BL", tone: "8" },
-    { id: "g", name: "Donald Knuth",   initials: "DK", tone: "11" },
+const members = [
+    { id: "ada", name: "Ada Lovelace", initials: "AL" },
+    { id: "alan", name: "Alan Turing", initials: "AT" },
+    { id: "grace", name: "Grace Hopper", initials: "GH" },
+    { id: "claude", name: "Claude Shannon", initials: "CS" },
 ];
-
 const sizes = ["sm", "md", "lg"] as const;
 </script>
 
 <template>
     <StoryPage>
-        <StorySection heading="Sizes">
-            <Card surface="veil" class="flex items-end gap-6 p-6">
-                <div v-for="s in sizes" :key="s" class="flex flex-col items-center gap-2">
-                    <Avatar :size="s">
-                        <AvatarImage
-                            src="https://i.pravatar.cc/200?img=32"
-                            alt="Sample avatar"
-                        />
+        <StorySection
+            heading="Load and fallback"
+            blurb="One Reka image path owns loading and failure; the identity name remains stable as pixels resolve or fail."
+        >
+            <Surface material="content" surface="veil" class="avatar-grid">
+                <figure class="avatar-specimen">
+                    <Avatar label="Ada Lovelace" size="md">
+                        <AvatarImage :src="portrait" />
                         <AvatarFallback>AL</AvatarFallback>
                     </Avatar>
-                    <span class="text-mono-caption text-muted-foreground">{{ s }}</span>
-                </div>
-            </Card>
-        </StorySection>
+                    <figcaption>
+                        <strong>Image loaded</strong>
+                        <span>Named once by the Avatar</span>
+                    </figcaption>
+                </figure>
 
-        <StorySection heading="Shapes, fallbacks, tones">
-            <Card surface="veil" class="flex flex-wrap items-center gap-4 p-6">
-                <Avatar v-for="p in people" :key="p.id" size="md" shape="circle">
-                    <!-- F2.R2 W-DARK-READABILITY-REPAIR (paint re-open): the initials sit
-                         on the --section-color ramp whose DARK ARM LIGHTENS the fill (L≈0.72-0.81),
-                         so a hardcoded white collapses to WCAG ~1.8-2.8 in dark. The native
-                         contrast-color() picks the max-contrast ink per fill on the census
-                         engines (Chrome 149 / Safari 26) — the SAME fix F2.R1 shipped for the
-                         timeline step-numbers; text-white is the pre-modern base it overrides. -->
-                    <AvatarFallback
-                        :class="
-                            cn(
-                                'font-medium text-white',
-                            )
-                        "
-                        :style="{
-                            background: `var(--section-color-${p.tone})`,
-                            color: `contrast-color(var(--section-color-${p.tone}))`,
-                        }"
-                    >
-                        {{ p.initials }}
-                    </AvatarFallback>
-                </Avatar>
-                <Avatar size="md" shape="square">
-                    <AvatarFallback class="bg-muted fira-code text-foreground">
-                        ℱ
-                    </AvatarFallback>
-                </Avatar>
-            </Card>
+                <figure class="avatar-specimen">
+                    <Avatar label="Alan Turing" size="md">
+                        <AvatarFallback>AT</AvatarFallback>
+                    </Avatar>
+                    <figcaption>
+                        <strong>Initials fallback</strong>
+                        <span>No image request</span>
+                    </figcaption>
+                </figure>
+
+                <figure class="avatar-specimen">
+                    <Avatar label="Grace Hopper" size="md">
+                        <AvatarImage src="/__glass_avatar_intentional_failure__.png" />
+                        <AvatarFallback>GH</AvatarFallback>
+                    </Avatar>
+                    <figcaption>
+                        <strong>Broken URL</strong>
+                        <span>Failure resolves to initials</span>
+                    </figcaption>
+                </figure>
+            </Surface>
         </StorySection>
 
         <StorySection
-            heading="Contributor group"
-            blurb="A compact, static roster preview with an explicit remainder count."
+            heading="Identity policy"
+            blurb="Use a direct label, bind a visible entity name, or mark the image decorative. Initials and image alt never duplicate that name."
         >
-            <Card surface="veil" class="flex items-center gap-6 p-6">
-                <ul
-                    class="isolate flex items-center"
-                    aria-label="Project contributors"
-                >
-                    <li
-                        v-for="(person, index) in people.slice(0, 4)"
-                        :key="person.id"
-                        :class="index > 0 ? '-ms-2' : ''"
-                        :style="{ zIndex: 5 - index }"
-                    >
-                        <Avatar
-                            size="sm"
-                            class="h-10 w-10 border-2 border-background"
-                        >
-                            <!-- F2.R2 W-DARK-READABILITY-REPAIR — per-fill contrast-color() ink
-                                 (the dark-arm-lightened --section-color fill washes text-white). -->
-                            <AvatarFallback
-                                class="text-xs font-medium text-white"
-                                :style="{ background: `var(--section-color-${person.tone})`, color: `contrast-color(var(--section-color-${person.tone}))` }"
-                            >
-                                <span aria-hidden="true">{{ person.initials }}</span>
-                                <span class="sr-only">{{ person.name }}</span>
-                            </AvatarFallback>
-                        </Avatar>
-                    </li>
-                    <li
-                        v-if="people.length > 4"
-                        class="relative -ms-1 flex h-8 min-w-8 items-center justify-center rounded-full border-2 border-background bg-muted px-1.5 text-xs font-semibold text-muted-foreground shadow-cartoon-sm"
-                    >
-                        <span aria-hidden="true">+{{ people.length - 4 }}</span>
-                        <span class="sr-only">{{ people.length - 4 }} more contributors</span>
-                    </li>
-                </ul>
-                <div class="flex flex-col">
-                    <span class="text-subheading">Project contributors</span>
-                    <span class="text-mono-caption text-muted-foreground">
-                        4 shown, {{ people.length - 4 }} more
-                    </span>
+            <Surface material="content" surface="veil" class="avatar-grid">
+                <figure class="avatar-specimen">
+                    <Avatar label="Claude Shannon portrait" size="md" shape="square">
+                        <AvatarFallback>CS</AvatarFallback>
+                    </Avatar>
+                    <figcaption>
+                        <strong>Directly labelled</strong>
+                        <span>aria-label identity</span>
+                    </figcaption>
+                </figure>
+
+                <div class="avatar-entity">
+                    <Avatar labelled-by="avatar-entity-name" size="md">
+                        <AvatarImage :src="portrait" />
+                        <AvatarFallback>AL</AvatarFallback>
+                    </Avatar>
+                    <p>
+                        <strong id="avatar-entity-name">Ada Lovelace</strong>
+                        <span>Visible entity name is authoritative</span>
+                    </p>
                 </div>
-            </Card>
+
+                <figure class="avatar-specimen">
+                    <Avatar decorative size="md" shape="square">
+                        <AvatarFallback>ℱ</AvatarFallback>
+                    </Avatar>
+                    <figcaption>
+                        <strong>Decorative mark</strong>
+                        <span>Excluded from the reading order</span>
+                    </figcaption>
+                </figure>
+            </Surface>
         </StorySection>
 
-        <StorySection heading="Roster">
-            <ul class="flex flex-col divide-y divide-border rounded-card border border-border bg-card shadow-cartoon">
-                <li
-                    v-for="p in people.slice(0, 5)"
-                    :key="p.id"
-                    class="interactive-item flex items-center gap-4 px-4 py-3"
-                >
-                    <Avatar size="sm">
-                        <!-- F2.R2 W-DARK-READABILITY-REPAIR — per-fill contrast-color() ink
-                             (the dark-arm-lightened --section-color fill washes text-white). -->
-                        <AvatarFallback
-                            class="text-xs font-medium text-white"
-                            :style="{ background: `var(--section-color-${p.tone})`, color: `contrast-color(var(--section-color-${p.tone}))` }"
-                        >
-                            {{ p.initials }}
-                        </AvatarFallback>
+        <StorySection
+            heading="Status composition"
+            blurb="Avatar positions the existing semantic StatusDot; it does not translate status names or colors itself."
+        >
+            <Surface material="content" surface="veil" class="avatar-status-row">
+                <Avatar label="Grace Hopper" size="md">
+                    <AvatarFallback>GH</AvatarFallback>
+                    <template #status>
+                        <StatusDot state="online" size="md" label="Grace Hopper is online" />
+                    </template>
+                </Avatar>
+                <div>
+                    <strong>Grace Hopper</strong>
+                    <p>Compiler systems · online</p>
+                </div>
+            </Surface>
+        </StorySection>
+
+        <StorySection heading="Sizes and group">
+            <Surface material="content" surface="veil" class="avatar-sizes">
+                <figure v-for="size in sizes" :key="size" class="avatar-specimen">
+                    <Avatar :label="`${size} Ada Lovelace avatar`" :size="size">
+                        <AvatarImage :src="portrait" />
+                        <AvatarFallback>AL</AvatarFallback>
                     </Avatar>
-                    <div class="flex flex-col">
-                        <span class="text-small font-medium">{{ p.name }}</span>
-                        <span class="text-mono-caption text-muted-foreground">
-                            section-{{ p.tone }}
-                        </span>
-                    </div>
-                </li>
-            </ul>
+                    <figcaption><strong>{{ size }}</strong></figcaption>
+                </figure>
+            </Surface>
+
+            <Surface material="content" surface="veil" class="avatar-group-panel">
+                <ul class="avatar-group" aria-label="Compiler research team">
+                    <li v-for="member in members" :key="member.id">
+                        <Avatar :label="member.name">
+                            <AvatarFallback>{{ member.initials }}</AvatarFallback>
+                        </Avatar>
+                    </li>
+                </ul>
+                <p>
+                    <strong>Compiler research team</strong>
+                    <span>{{ members.length }} contributors</span>
+                </p>
+            </Surface>
         </StorySection>
     </StoryPage>
 </template>
+
+<style scoped>
+.avatar-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    padding: 1.25rem;
+}
+
+.avatar-specimen,
+.avatar-entity,
+.avatar-status-row,
+.avatar-group-panel {
+    display: flex;
+    min-inline-size: 0;
+    align-items: center;
+    gap: 0.875rem;
+}
+
+.avatar-specimen {
+    margin: 0;
+}
+
+.avatar-specimen figcaption,
+.avatar-entity p,
+.avatar-status-row div,
+.avatar-group-panel > p {
+    display: grid;
+    min-inline-size: 0;
+    gap: 0.2rem;
+    margin: 0;
+}
+
+.avatar-specimen span,
+.avatar-entity span,
+.avatar-status-row p,
+.avatar-group-panel span {
+    margin: 0;
+    color: var(--muted-foreground);
+    font-size: var(--type-caption);
+    line-height: 1.35;
+}
+
+.avatar-status-row,
+.avatar-group-panel,
+.avatar-sizes {
+    padding: 1.25rem;
+}
+
+.avatar-sizes {
+    display: flex;
+    align-items: end;
+    gap: 1.5rem;
+}
+
+.avatar-sizes .avatar-specimen {
+    flex-direction: column;
+}
+
+.avatar-group-panel {
+    margin-block-start: 1rem;
+}
+
+.avatar-group {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.avatar-group li + li {
+    margin-inline-start: -0.625rem;
+}
+
+.avatar-group :deep(.glass-avatar__identity) {
+    box-shadow:
+        0 0 0 2px var(--background),
+        var(--shadow-sm);
+}
+
+@media (max-width: 42rem) {
+    .avatar-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .avatar-sizes {
+        flex-wrap: wrap;
+    }
+
+    .avatar-group-panel {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+</style>

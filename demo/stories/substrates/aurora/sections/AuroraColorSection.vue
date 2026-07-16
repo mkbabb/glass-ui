@@ -9,7 +9,6 @@ import {
     LabeledSlider,
 } from "@glass/components/labeled-field";
 import { SortableList, SortableItem } from "@glass/components/sortable-list";
-import { ColorSwatch } from "@glass/components/color-swatch";
 import type {
     AuroraAtoms,
     AuroraConfig,
@@ -21,6 +20,7 @@ import {
     oklchStopToHex,
 } from "@glass/components/aurora";
 import OklchStopRow from "../OklchStopRow.vue";
+import ColorSwatch from "../config/ColorSwatch.vue";
 import { usePaletteStops } from "../config/usePaletteStops";
 
 /**
@@ -56,8 +56,8 @@ const seedHexAtom = computed(() =>
     typeof props.atoms.seed === "string" ? props.atoms.seed : "#3a7bd5",
 );
 
-// reka's CONTROLLED `:open` prop must round-trip via `v-model:is-open` (a
-// literal `:is-open="false"` keeps the select controlled-shut forever).
+// reka's controlled `open` prop must round-trip through the adapter (a
+// literal `:open="false"` keeps the select controlled-shut forever).
 const harmonyOpen = ref(false);
 
 function setHarmony(label: string) {
@@ -122,22 +122,26 @@ function derive() {
              visual weight of a full slider. -->
         <LabeledField
             label="Seed"
-            tooltip="Base color the harmony derives from"
+            description="Base color the harmony derives from"
             data-atom="seed"
         >
-            <ColorSwatch
-                :model-value="seedHexAtom"
-                show-hex
-                aria-label="Seed color"
-                @update:model-value="setSeed"
-            />
+            <template #default="{ controlId, describedBy }">
+                <ColorSwatch
+                    :id="controlId"
+                    :model-value="seedHexAtom"
+                    :aria-describedby="describedBy"
+                    show-hex
+                    aria-label="Seed color"
+                    @update:model-value="setSeed"
+                />
+            </template>
         </LabeledField>
 
         <LabeledSelect
             label="Harmony"
-            tooltip="Color relationship the palette is built from"
+            description="Color relationship the palette is built from"
             :items="harmonyItems"
-            :is-open="harmonyOpen"
+            :open="harmonyOpen"
             :model-value="harmonyLabel"
             data-atom="harmony"
             @update:model-value="setHarmony"
@@ -146,7 +150,7 @@ function derive() {
 
         <LabeledSlider
             label="Energy"
-            tooltip="0..1 · chroma/contrast of the palette"
+            description="0..1 · chroma/contrast of the palette"
             :model-value="atoms.colorEnergy ?? 0.5"
             :min="0"
             :max="1"
@@ -197,7 +201,6 @@ function derive() {
                     <span class="text-mono-caption text-muted-foreground">Stops</span>
                     <div class="flex items-center gap-1.5">
                         <Button
-                            variant="glass"
                             iconOnly
                             class="h-6 w-6"
                             :disabled="!canStepDown"
@@ -212,7 +215,6 @@ function derive() {
                             {{ stopCount }}
                         </span>
                         <Button
-                            variant="glass"
                             iconOnly
                             class="h-6 w-6"
                             :disabled="!canStepUp"
@@ -224,7 +226,7 @@ function derive() {
                     </div>
                 </div>
                 <Button
-                    variant="primary-audacious"
+                    emphasis="primary"
                     size="sm"
                     class="h-7 gap-1.5 px-3 text-caption"
                     @click="derive"
@@ -240,7 +242,6 @@ function derive() {
                 Stops ({{ config.palette.length }}/{{ MAX_STOPS }})
             </p>
             <Button
-                variant="glass"
                 size="sm"
                 class="h-7 gap-1.5 px-2 text-caption"
                 :disabled="!canAddStop"

@@ -9,17 +9,14 @@ export * from "./checkbox";
 export * from "./collapsible";
 export * from "./combobox";
 export * from "./command";
-// BI.W-MENU-TRIGGER — context-menu folded onto dropdown-menu (`trigger="context"`).
 export * from "./data-table";
 export * from "./dialog";
 export * from "./drawer";
 export * from "./dropdown-menu";
-export * from "./focus-scope";
 // BI.W-OVERLAY-UNION — `./hover-card` RETIRED (folds onto `<Popover trigger="hover">`).
 export * from "./input";
 export * from "./label";
 // BI.W-MULTISELECT-FOLD — `./multi-select` RETIRED (folds onto `<Combobox multiple>`).
-export * from "./notification";
 export * from "./number-field";
 export * from "./popover";
 export * from "./progress";
@@ -38,6 +35,5 @@ export * from "./table";
 export * from "./tags-input";
 export * from "./textarea";
 export * from "./toast";
-export * from "./toggle";
 export * from "./toggle-group";
 export * from "./tooltip";

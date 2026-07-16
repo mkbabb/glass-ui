@@ -1,6 +1,6 @@
 // AX.W16 — `resolveTokenColor`: the ONE `var(--token)` → concrete-rgb un-wrap leaf.
 //
-// value.js's `parseCSSColor` cannot parse a `var(--token)` wrapper — it threw once
+// value.js's `parseCssColor` reports `color_context_required` for a `var(--token)` wrapper
 // per frame on a token color (the AW.W13 `374b98e` throw-fix). So a token color MUST
 // be un-wrapped to a concrete `rgb(...)` BEFORE the renderer's injected
 // `ColorResolver` (value.js) ever sees it. That un-wrap was bolted on TWICE — once in

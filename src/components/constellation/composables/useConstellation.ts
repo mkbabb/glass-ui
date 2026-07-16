@@ -11,6 +11,7 @@ import {
 import { useCanvas2D } from "../../../composables/glass/canvas2d";
 import { hashString, mulberry32 } from "../../../composables/glass/procedural/prng";
 import { usePointerVelocityField } from "../../../composables/motion/usePointerVelocityField";
+import { readReducedMotion } from "../../../composables/motion/useReducedMotion";
 import {
     constellationWellMapping,
     snapshotField,
@@ -159,8 +160,7 @@ export function useConstellation(
         let holdTimer: ReturnType<typeof setTimeout> | undefined;
 
         const reducedMotionNow = (): boolean =>
-            handle?.reducedMotion ??
-            !!window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+            handle?.reducedMotion ?? readReducedMotion();
         const toLocal = (point: {
             clientX: number;
             clientY: number;

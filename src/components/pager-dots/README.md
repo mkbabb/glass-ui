@@ -8,7 +8,7 @@ lead/trail barbell that STRETCHES → TRAVELS → RE-FORMS between dots with liq
 (the Google-worm edict), driven by `useLeadTrail` (the ONE shared two-edge integrator —
 NO `--spring-dock`/CSS-transition clock; release-at-arrival is emergent). The paint is a
 THREE-LAYER split — a crisp BED (N pips, never filtered), the WORM masses (the goo
-`#pager-worm-goo` filter + translucency ONCE), and the transparent hit-target buttons —
+an instance-local filter + translucency ONCE), and the transparent hit-target buttons —
 so the σ8 whole-layer-filter empty-pill annihilation is structurally impossible. Inactive
 52% / hover 72% / active-under-worm dims ~35% / the worm masses paint full
 `--pager-dot-active`. This is the SHARED oracle — the carousel ships it (`CarouselDots`

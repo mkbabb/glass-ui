@@ -121,56 +121,6 @@
         display: none;
     }
 
-    /* Meaning-bearing hue identity → a bordered glyph that keeps ok/warn/error
-       distinguishable by a WHC-HONORED system color, NOT a glass-ui hue (which WHC
-       strips to one fill). StatusDot reflects its variant onto `data-status`
-       (StatusDot.vue) and the inner dot carries `.status-dot__dot`; the
-       `role="img"` + `aria-label` accessible name already ships, so this is the
-       VISUAL differentiation only. A bare bordered dot + the per-status fill triplet
-       below means a sighted WHC user can still tell the row apart.
-
-       `!important` IS load-bearing here: StatusDot paints the dot fill via an INLINE
-       `:style="dotStyle"` (`background-color`, specificity 1,0,0,0), which outranks
-       any stylesheet selector AND which forced-colors then `forced-color-adjust:
-       auto`-remaps to a single Canvas-white — collapsing the row to one indistinct
-       dot. The WHC arm must override that inline fill, and inline can only be beaten
-       by `!important`; this is the documented forced-colors degradation path (the
-       arm only activates under WHC). The component keeps its inline hue in normal
-       mode untouched. */
-    .status-dot__dot {
-        border: 1px solid CanvasText;
-        /* The bordered ring alone separates a dot from its surround; the per-status
-           fill below adds the WHC-honored distinction. */
-    }
-    /* The inner painted fill (`.status-dot__fill`, `h-full w-full`) + the pulse ring
-       carry the SAME inline glass-ui hue StatusDot paints — under WHC they cover the
-       outer `.status-dot__dot` glyph with a `forced-color-adjust`-remapped Canvas
-       fill (the row collapses to one white dot even with the outer system color set).
-       Yield them so the outer bordered + system-color glyph is the sole visible dot. */
-    .status-dot__fill,
-    .status-dot__pulse {
-        display: none;
-    }
-    /* The ok/warn/error/idle distinction rides the standard WHC keyword palette:
-         active (ok)   → Highlight   (the affirmative system accent)
-         paused (warn) → Mark        (the marked/attention system color)
-         error         → CanvasText  (a solid filled dot — the strongest weight)
-         idle/custom   → Canvas      (a hollow dot — only the CanvasText ring reads)
-       Each stays distinguishable by the system color the user's palette assigns,
-       never glass-ui chroma. The `!important` beats the component's inline fill. */
-    .status-dot__dot[data-status="active"] {
-        background: Highlight !important;
-    }
-    .status-dot__dot[data-status="paused"] {
-        background: Mark !important;
-    }
-    .status-dot__dot[data-status="error"] {
-        background: CanvasText !important;
-    }
-    .status-dot__dot[data-status="idle"],
-    .status-dot__dot[data-status="custom"] {
-        background: Canvas !important;
-    }
 }
 
 /* ── Legacy backdrop-filter + :has() capability ladders COLLAPSED

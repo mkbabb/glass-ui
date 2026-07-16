@@ -111,6 +111,32 @@ const peaks: { cls: string; label: string; peg: string; word: string }[] = [
             </ShowcaseFrame>
         </StorySection>
 
+        <StorySection
+            heading="A proportional pair"
+            blurb="One fluid headline determines the smaller kicker, keeping their size and line-box interval at 1/√φ from narrow floor through wide ceiling. Font voice remains a consumer choice."
+        >
+            <ShowcaseFrame
+                tier="field"
+                pad="lg"
+                caption="Family-neutral geometry · consumer-applied serif + mono"
+            >
+                <div class="flex flex-col gap-3">
+                    <p
+                        data-testid="proportional-kicker"
+                        class="cm-serif text-proportional-kicker text-muted-foreground"
+                    >
+                        The measured interval
+                    </p>
+                    <p
+                        data-testid="proportional-headline"
+                        class="fira-code text-proportional-headline text-foreground"
+                    >
+                        1 / √φ
+                    </p>
+                </div>
+            </ShowcaseFrame>
+        </StorySection>
+
         <!-- The signature glyph — the one designed moment, lifted onto ShowcaseFrame. -->
         <StorySection heading="Signature glyph">
             <ShowcaseFrame tier="field" pad="xl" caption=".fourier-f — Plus Jakarta Sans display italic, viz-fourier red">

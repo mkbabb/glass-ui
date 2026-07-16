@@ -8,7 +8,7 @@ import { Input } from "@glass/components/input";
 import { Label } from "@glass/components/label";
 import { Separator } from "@glass/components/separator";
 import { Aurora } from "@glass/components/aurora";
-import { IconChip } from "@glass/components/icon-chip";
+import { Chip } from "@glass/components/chip";
 import { cn } from "@glass/components/_shared/class-names";
 import { heroAuroraConfig } from "../../chassis/hero/aurora-hero";
 
@@ -100,13 +100,13 @@ const trustBadges = [
                         :key="badge.text"
                         class="flex items-center gap-3"
                     >
-                        <IconChip
-                            :icon="badge.icon"
-                            :section="badge.section"
-                            :size="32"
-                            :glyph-size="16"
-                            :stroke-width="2"
-                        />
+                        <Chip
+                            shape="icon"
+                            size="sm"
+                            :tone="`var(--section-color-${badge.section})`"
+                        >
+                            <component :is="badge.icon" class="size-4" aria-hidden="true" />
+                        </Chip>
                         <span class="text-small">{{ badge.text }}</span>
                     </li>
                 </ul>
@@ -180,7 +180,7 @@ const trustBadges = [
                         <Separator class="flex-1" />
                     </div>
 
-                    <Button type="button" variant="outline" size="lg" class="w-full">
+                    <Button type="button" size="lg" class="w-full">
                         Continue with SSO
                     </Button>
                 </form>

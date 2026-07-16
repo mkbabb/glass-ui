@@ -1,119 +1,145 @@
 <script setup lang="ts">
-import StoryPage from "../../chassis/page/StoryPage.vue";
-import StorySection from "../../chassis/section/StorySection.vue";
 import { ref } from "vue";
+import { ChevronDown } from "@lucide/vue";
+import { Button } from "@glass/components/button";
 import {
     Collapsible,
     CollapsibleContent,
     CollapsibleTrigger,
 } from "@glass/components/collapsible";
-import { Button } from "@glass/components/button";
-import { IconChip } from "@glass/components/icon-chip";
-import { ChevronDown } from "@lucide/vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 
-// BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2
-// blue identity. PH3-safe (inline borderLeft, not the border-l-[3px] +
-// <IconChip> double-header shape).
-const CONTAINERS_STOP = 2;
-
-const open = ref(true);
+const controlledOpen = ref(true);
+const keyboardOpen = ref(false);
 </script>
 
 <template>
     <StoryPage>
-        <header
-            class="story-color-event flex items-center gap-4 pl-5"
-            :style="{
-                '--section-label-accent': `var(--section-color-${CONTAINERS_STOP})`,
-            }"
+        <StorySection
+            heading="Disclosure state"
+            blurb="One trigger controls one linked region. Uncontrolled state is concise; v-model:open makes the same contract externally controlled."
         >
-            <IconChip :icon="ChevronDown" :section="CONTAINERS_STOP" bloom reveal />
-            <div class="flex flex-col gap-1">
-                <span class="section-label--tinted text-admin-label">
-                    Containers · Collapsible
-                </span>
-                <p class="text-small text-muted-foreground">
-                    A single show/hide region — the container identity is the ONE
-                    color event.
-                </p>
-            </div>
-        </header>
-
-            <StorySection heading="Basic" gap="lg">
-                <p class="text-sm text-muted-foreground">
-                    Open — <code class="font-mono text-xs">{{ open }}</code>.
-                </p>
-                <Collapsible
-                    v-model:open="open"
-                    class="grid gap-2 rounded-xl border border-border bg-card/50 p-4"
-                >
-                    <div class="flex items-center justify-between">
-                        <p class="font-display text-base">Build artifacts</p>
+            <div class="grid gap-4 sm:grid-cols-2">
+                <ShowcaseFrame caption="Closed" pad="sm">
+                    <Collapsible data-scenario="collapsible-closed" class="grid gap-3">
                         <CollapsibleTrigger as-child>
-                            <Button variant="ghost" iconOnly>
+                            <Button emphasis="quiet">Show release notes</Button>
+                        </CollapsibleTrigger>
+                        <CollapsibleContent class="text-small">
+                            The region opens from its measured block size.
+                        </CollapsibleContent>
+                    </Collapsible>
+                </ShowcaseFrame>
+
+                <ShowcaseFrame caption="Open" pad="sm">
+                    <Collapsible
+                        data-scenario="collapsible-open"
+                        default-open
+                        class="grid gap-3"
+                    >
+                        <CollapsibleTrigger as-child>
+                            <Button emphasis="quiet">Hide release notes</Button>
+                        </CollapsibleTrigger>
+                        <CollapsibleContent class="text-small">
+                            Trigger and content remain linked throughout the transition.
+                        </CollapsibleContent>
+                    </Collapsible>
+                </ShowcaseFrame>
+            </div>
+        </StorySection>
+
+        <StorySection
+            heading="Controlled"
+            blurb="The slot and aria-expanded state reflect the same controlled boolean; no parallel visual state is maintained."
+        >
+            <ShowcaseFrame tier="quiet" pad="md">
+                <Collapsible
+                    v-model:open="controlledOpen"
+                    data-scenario="collapsible-controlled"
+                    class="grid gap-3"
+                >
+                    <div class="flex items-center justify-between gap-3">
+                        <div>
+                            <p class="font-medium">Build artifacts</p>
+                            <p class="text-small text-muted-foreground">
+                                Open · {{ controlledOpen }}
+                            </p>
+                        </div>
+                        <CollapsibleTrigger as-child>
+                            <Button
+                                emphasis="quiet"
+                                icon-only
+                                :aria-label="controlledOpen ? 'Hide artifacts' : 'Show artifacts'"
+                            >
                                 <ChevronDown
-                                    class="size-4 transition-transform"
-                                    :class="open ? 'rotate-180' : ''"
+                                    aria-hidden="true"
+                                    class="size-4 transition-disclosure"
+                                    :class="controlledOpen && 'rotate-180'"
                                 />
-                                <span class="sr-only">Toggle</span>
                             </Button>
                         </CollapsibleTrigger>
                     </div>
-                    <div
-                        class="font-mono text-xs text-muted-foreground rounded-md border border-border bg-background/50 px-3 py-2"
-                    >
-                        dist/glass-ui.js — 142.3 kB
-                    </div>
-                    <CollapsibleContent class="grid gap-2">
-                        <div
-                            class="font-mono text-xs text-muted-foreground rounded-md border border-border bg-background/50 px-3 py-2"
-                        >
-                            dist/glass-ui.css — 38.9 kB
-                        </div>
-                        <div
-                            class="font-mono text-xs text-muted-foreground rounded-md border border-border bg-background/50 px-3 py-2"
-                        >
-                            dist/index.d.ts — 12.4 kB
-                        </div>
-                        <div
-                            class="font-mono text-xs text-muted-foreground rounded-md border border-border bg-background/50 px-3 py-2"
-                        >
-                            dist/assets/paper-clean.svg — 1.1 kB
-                        </div>
-                    </CollapsibleContent>
-                </Collapsible>
-            </StorySection>
-
-            <StorySection heading="Inline &quot;show more&quot;" gap="lg">
-                <p class="text-sm text-muted-foreground">
-                    Wrap an overflow paragraph in
-                    <code class="font-mono text-xs">CollapsibleContent</code>;
-                    the trigger toggles it.
-                </p>
-                <Collapsible class="grid gap-3">
-                    <p class="text-sm leading-relaxed">
-                        Fourier's series represents any periodic function on the
-                        circle as an infinite sum of harmonically related sines
-                        and cosines.
+                    <p class="font-mono text-xs text-muted-foreground">
+                        dist/glass-ui.js · 142.3 kB
                     </p>
-                    <CollapsibleContent class="grid gap-2 text-sm leading-relaxed text-muted-foreground">
-                        <p>
-                            The coefficients are inner products against the
-                            basis — projection onto an orthonormal family.
+                    <CollapsibleContent class="grid gap-2">
+                        <p class="font-mono text-xs text-muted-foreground">
+                            dist/glass-ui.css · 38.9 kB
                         </p>
-                        <p>
-                            Convergence is subtle. Pointwise convergence fails
-                            in general; L² convergence succeeds for every
-                            square-integrable function.
+                        <p class="font-mono text-xs text-muted-foreground">
+                            dist/index.d.ts · 12.4 kB
                         </p>
                     </CollapsibleContent>
-                    <CollapsibleTrigger as-child>
-                        <Button variant="link" class="justify-self-start px-0">
-                            Toggle details
-                        </Button>
-                    </CollapsibleTrigger>
                 </Collapsible>
-            </StorySection>
-        
+            </ShowcaseFrame>
+        </StorySection>
+
+        <StorySection
+            heading="Input and motion modes"
+            blurb="Native button semantics cover pointer, Enter, and Space. Disabled state is inert; reduced motion preserves the state change while collapsing travel."
+        >
+            <div class="grid gap-4 sm:grid-cols-3">
+                <ShowcaseFrame caption="Disabled" pad="sm">
+                    <Collapsible data-scenario="collapsible-disabled" disabled>
+                        <CollapsibleTrigger as-child>
+                            <Button disabled emphasis="quiet">Unavailable details</Button>
+                        </CollapsibleTrigger>
+                        <CollapsibleContent>Unavailable body</CollapsibleContent>
+                    </Collapsible>
+                </ShowcaseFrame>
+
+                <ShowcaseFrame caption="Keyboard" pad="sm">
+                    <Collapsible
+                        v-model:open="keyboardOpen"
+                        data-scenario="collapsible-keyboard"
+                        class="grid gap-3"
+                    >
+                        <CollapsibleTrigger as-child>
+                            <Button emphasis="quiet">Press Enter or Space</Button>
+                        </CollapsibleTrigger>
+                        <CollapsibleContent class="text-small">
+                            Keyboard activation uses the native button path.
+                        </CollapsibleContent>
+                    </Collapsible>
+                </ShowcaseFrame>
+
+                <ShowcaseFrame caption="Reduced motion" pad="sm">
+                    <Collapsible
+                        data-scenario="collapsible-prm"
+                        default-open
+                        class="grid gap-3"
+                    >
+                        <CollapsibleTrigger as-child>
+                            <Button emphasis="quiet">Motion-aware region</Button>
+                        </CollapsibleTrigger>
+                        <CollapsibleContent class="text-small">
+                            PRM makes the measured-size transition effectively immediate.
+                        </CollapsibleContent>
+                    </Collapsible>
+                </ShowcaseFrame>
+            </div>
+        </StorySection>
     </StoryPage>
 </template>

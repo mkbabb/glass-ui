@@ -6,5 +6,21 @@ export { default as ComboboxInput } from './ComboboxInput.vue'
 export { default as ComboboxItem } from './ComboboxItem.vue'
 export { default as ComboboxItemIndicator } from './ComboboxItemIndicator.vue'
 export { default as ComboboxList } from './ComboboxList.vue'
-
-export { ComboboxTrigger } from 'reka-ui'
+export { default as ComboboxTrigger } from './ComboboxTrigger.vue'
+export type {
+  ComboboxAnchorProps,
+  ComboboxEmits,
+  ComboboxEmptyProps,
+  ComboboxGroupProps,
+  ComboboxInputEmits,
+  ComboboxInputProps,
+  ComboboxItemEmits,
+  ComboboxItemIndicatorProps,
+  ComboboxItemProps,
+  ComboboxListEmits,
+  ComboboxListProps,
+  ComboboxModelValue,
+  ComboboxProps,
+  ComboboxTriggerProps,
+  ComboboxValue,
+} from './types'

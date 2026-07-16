@@ -1,0 +1,140 @@
+@keyframes disclosure-open {
+    from {
+        block-size: 0;
+        opacity: 0;
+    }
+
+    to {
+        block-size: var(--disclosure-content-size);
+        opacity: 1;
+    }
+}
+
+@keyframes disclosure-close {
+    from {
+        block-size: var(--disclosure-content-size);
+        opacity: 1;
+    }
+
+    to {
+        block-size: 0;
+        opacity: 0;
+    }
+}
+
+@layer components {
+    .disclosure {
+        inline-size: 100%;
+        min-inline-size: 0;
+    }
+
+    .disclosure-item {
+        border-block-end: 1px solid var(--glass-border-defined);
+    }
+
+    .disclosure-header {
+        display: flex;
+        margin: 0;
+    }
+
+    .disclosure-trigger {
+        border-radius: var(--radius-control);
+        touch-action: manipulation;
+    }
+
+    .disclosure-trigger:focus-visible {
+        outline: none;
+        box-shadow: var(--focus-ring-shadow);
+    }
+
+    .disclosure-trigger:is(:disabled, [data-disabled]) {
+        pointer-events: none;
+        opacity: var(--opacity-disabled);
+    }
+
+    .disclosure-group-trigger {
+        display: flex;
+        flex: 1 1 auto;
+        align-items: center;
+        justify-content: space-between;
+        min-block-size: 2.75rem;
+        padding: 1rem 0.25rem;
+        border: 0;
+        color: var(--foreground);
+        background: transparent;
+        font: inherit;
+        font-weight: 600;
+        text-align: start;
+        cursor: pointer;
+        transition:
+            background-color var(--duration-control) var(--ease-standard),
+            color var(--duration-control) var(--ease-standard),
+            box-shadow var(--duration-control) var(--ease-standard);
+    }
+
+    .disclosure-group-trigger:hover:not(:disabled, [data-disabled]) {
+        background: var(--control-surface-bg-hover);
+    }
+
+    .disclosure-icon {
+        flex: none;
+        inline-size: 1rem;
+        block-size: 1rem;
+        color: var(--muted-foreground-strong);
+    }
+
+    .disclosure-group-trigger[data-state="open"] > .disclosure-icon {
+        rotate: 180deg;
+    }
+
+    .disclosure-content {
+        overflow: hidden;
+        color: var(--muted-foreground-strong);
+        font-size: var(--type-small);
+        line-height: var(--leading-small);
+        animation-duration: var(--spring-smooth-duration);
+        animation-timing-function: var(--spring-smooth);
+    }
+
+    .disclosure-content[data-disclosure="collapsible"] {
+        --disclosure-content-size: var(--reka-collapsible-content-height);
+    }
+
+    .disclosure-content[data-disclosure="accordion"] {
+        --disclosure-content-size: var(--reka-accordion-content-height);
+    }
+
+    .disclosure-content[data-state="open"] {
+        animation-name: disclosure-open;
+    }
+
+    .disclosure-content[data-state="closed"] {
+        animation-name: disclosure-close;
+    }
+
+    .disclosure-content-body {
+        padding: 0 0.25rem 1rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .disclosure-content {
+        animation-duration: 0.01ms;
+    }
+
+    .disclosure-icon {
+        transition-duration: 0.01ms;
+    }
+}
+
+@media (forced-colors: active) {
+    .disclosure-item {
+        border-color: CanvasText;
+    }
+
+    .disclosure-trigger:focus-visible {
+        outline: 2px solid Highlight;
+        outline-offset: 2px;
+        box-shadow: none;
+    }
+}

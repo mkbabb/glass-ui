@@ -1,37 +1,44 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
-import {
-  type DropdownMenuSubTriggerProps,
-  useForwardProps,
-} from 'reka-ui'
-import { ChevronRight } from "@lucide/vue"
-import { cn } from '../_shared/class-names'
-import { menuItemVariants } from '../_shared/menuItemVariants'
-// BI.W-MENU-TRIGGER — the trigger axis switches the reka SubTrigger family.
-import { useMenuPart } from './useMenuTrigger'
+import { computed, useAttrs, type HTMLAttributes } from "vue";
+import { ChevronRight } from "@lucide/vue";
+import { cn } from "../_shared/class-names";
+import { fixedHostAttrs } from "../_shared/primitive";
+import { useMenuPart } from "./useMenuTrigger";
 
-const props = defineProps<DropdownMenuSubTriggerProps & { class?: HTMLAttributes['class'] }>()
+export interface DropdownMenuSubTriggerProps {
+    disabled?: boolean;
+    textValue?: string;
+    class?: HTMLAttributes["class"];
+}
 
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
+defineOptions({ name: "DropdownMenuSubTrigger", inheritAttrs: false });
 
-  return delegated
-})
+const props = withDefaults(defineProps<DropdownMenuSubTriggerProps>(), {
+    disabled: false,
+});
+defineSlots<{ default?: () => unknown }>();
 
-const forwardedProps = useForwardProps(delegatedProps)
-const SubTriggerComp = useMenuPart('SubTrigger')
+const attrs = useAttrs();
+const forwardedAttrs = computed(() => fixedHostAttrs(attrs));
+const SubTriggerComp = useMenuPart("SubTrigger");
 </script>
 
 <template>
-  <component
-    :is="SubTriggerComp"
-    v-bind="forwardedProps"
-    :class="cn(
-      menuItemVariants({ indicator: 'none' }),
-      props.class,
-    )"
-  >
-    <slot />
-    <ChevronRight class="ml-auto h-4 w-4" />
-  </component>
+    <component
+        :is="SubTriggerComp"
+        v-bind="forwardedAttrs"
+        as="div"
+        :disabled="disabled"
+        :text-value="textValue"
+        data-slot="dropdown-menu-sub-trigger"
+        :class="
+            cn(
+                'dropdown-menu__sub-trigger interactive-item glass-menu-row',
+                props.class,
+            )
+        "
+    >
+        <slot />
+        <ChevronRight class="dropdown-menu__sub-chevron" aria-hidden="true" />
+    </component>
 </template>

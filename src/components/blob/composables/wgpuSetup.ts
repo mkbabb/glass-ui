@@ -47,6 +47,10 @@ export interface BlobWGPUSetupDeps {
     shouldContinue: () => boolean;
     /** Reduced-motion read (the substrate owns the query; the renderer drives tempo). */
     getReducedMotion: () => boolean;
+    /** Records the backing geometry already measured by the shared lifecycle. */
+    onResize: (size: BackingSize) => void;
+    /** Records a frame only after its draw submission succeeds. */
+    onDraw: (frame: BlobFrameState) => void;
 }
 
 /**
@@ -61,7 +65,16 @@ export function createBlobWGPUSetup(
     context: GPUCanvasContext,
     format: GPUTextureFormat,
 ) => WebGPUCanvasFrame {
-    const { canvas, config, pointer, satellites, resolveFrame, shouldContinue } = deps;
+    const {
+        canvas,
+        config,
+        pointer,
+        satellites,
+        resolveFrame,
+        shouldContinue,
+        onResize,
+        onDraw,
+    } = deps;
 
     return function setupWGPU(device, context, format) {
         const module = device.createShaderModule({
@@ -131,7 +144,9 @@ export function createBlobWGPUSetup(
         // quality axis); WGPU's swap chain auto-resizes to the backing on the next
         // `getCurrentTexture`, and `frame()` reads `canvas.width/height` directly, so the
         // WGSL leg has nothing to upload — the closure is an intentional no-op.
-        function resize(_s?: BackingSize): void {}
+        function resize(s?: BackingSize): void {
+            if (s) onResize(s);
+        }
 
         function frame(timeSec: number): void {
             const frameState = resolveFrame(timeSec);
@@ -157,6 +172,7 @@ export function createBlobWGPUSetup(
             pass.draw(3, 1, 0, 0);
             pass.end();
             device.queue.submit([encoder.finish()]);
+            onDraw(frameState);
         }
 
         return {

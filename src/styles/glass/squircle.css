@@ -4,8 +4,8 @@
    order, each in its own @layer components (isomorphic to the monolith).
    See docs/precepts/design-idioms.md §cohesion-aware partials. */
 /* ── AX.W56 — the rounded-vs-squircle POLICY (re-homes AW.W23's squircle) ─────
-   Cards, glass buttons, and pills stay ROUND. The earlier AW.W23 block applied
-   `corner-shape: squircle` to `.glass-card`/`.glass-btn`/`.btn-pill`, which
+   Cards, buttons, and pills stay ROUND. The earlier AW.W23 block applied
+   `corner-shape: squircle` to the small glass control family, which
    inverted the design intent — the superellipse is imperceptible at a 16px card
    radius or a stadium pill, so the squircle on those surfaces was visual cost
    without read. The squircle is RE-HOMED onto the one surface where it reads: the

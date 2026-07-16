@@ -8,12 +8,11 @@
  * control families themselves, carved into cohesive partials each under the
  * 500-line bound, @import-ed below in CASCADE ORDER into the SAME
  * `@layer components` (the carve moves rules across files in the same source
- * position → byte-isomorphic dist; the no-god-module import-order gate witnesses):
+ * position → byte-isomorphic dist):
  *   1. dock-controls/icon-button.css      `.dock-icon-button` (base / states / glyph / --compact)
- *   2. dock-controls/dark-mode-toggle.css `.dark-mode-toggle-button` (sizes / in-dock glyph inset)
- *   3. dock-controls/tab-button.css       `.dock-tab-button` (base / tier-primary / tier-secondary)
- *   4. dock-controls/triggers.css         `.dock-select-trigger` / `.dock-dropdown-trigger` (base / states / __chevron)
- *   5. dock-controls/touch-floor.css      the coarse @media touch floor + the vertical-rail SELECTED register
+ *   2. dock-controls/tab-button.css       `.dock-tab-button` (base / tier-primary / tier-secondary)
+ *   3. dock-controls/triggers.css         `.dock-select-trigger` / `.dock-dropdown-trigger` (base / states / __chevron)
+ *   4. dock-controls/touch-floor.css      the coarse @media touch floor + the vertical-rail SELECTED register
  *
  * The shared cross-family `:where()` group (the small-tile specular sizing
  * re-point) stays at THIS root — exactly as the dock.css carve kept its shared
@@ -35,7 +34,6 @@
  * partial re-sets that property, so its source position (after the imports vs
  * before) is cascade-immaterial; the byte-isomorphism witness (§4) is the arbiter. */
 @import "./controls/icon-button.css";
-@import "../../controls/dark-mode-toggle.css";
 @import "./controls/tab-button.css";
 @import "./controls/triggers.css";
 @import "./controls/touch-floor.css";

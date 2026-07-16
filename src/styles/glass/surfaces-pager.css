@@ -38,8 +38,7 @@
             var(--glass-bg-floating),
             var(--glass-tint-source) var(--glass-tint-strength)
         );
-        backdrop-filter: var(--glass-blur-floating);
-        -webkit-backdrop-filter: var(--glass-blur-floating);
+        backdrop-filter: var(--glass-cell-backdrop-filter, var(--glass-blur-floating));
         box-shadow:
             var(--glass-edge-light),
             var(--glass-specular),

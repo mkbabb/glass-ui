@@ -1,26 +1,25 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { Aurora, useCursorInteraction } from "@glass/components/aurora";
 import type { AuroraConfig } from "@glass/components/aurora";
+import { isAuroraPointerEnabled } from "@glass/components/aurora/composables/runtime";
 import NucleiOverlay from "./NucleiOverlay.vue";
 import RendererStatusView from "../_frame/RendererStatus.vue";
-import { pendingRenderer, type RendererStatus } from "@glass/composables/glass/webgpu/rendererStatus";
+import {
+    pendingRenderer,
+    type RendererStatus,
+} from "@glass/composables/glass/webgpu/rendererStatus";
+import { useReducedMotion } from "@glass/composables/motion/useReducedMotion";
 
-/**
- * Stage shell — canvas + nuclei overlay + cursor interaction. Lives inside
- * `ExpandableContainer`'s slot so the inline and fullscreen modes each get a
- * fresh WebGL context and fresh pointer listeners (the slot remounts on
- * toggle). Studio state stays at the parent so preset selection and config
- * edits survive the remount.
- */
+/** Stage shell — canvas, nuclei overlay, and pointer interaction inside the
+ * parent-owned VizStudio aperture. Studio state stays with the parent. */
 const props = withDefaults(
     defineProps<{
         config: AuroraConfig;
         /**
-         * BC.W-VIZ-AURORA (T5) — enable the live pointer interaction (drag-swirl +
-         * flick-burst + the accel gel snap-back). Default `true` — the studio stage is
-         * interactive; pass `false` for a static specimen. The cursor write-path is
-         * PRM-gated in the runtime regardless.
+         * BC.W-VIZ-AURORA (T5) — master switch for configured pointer shaping.
+         * The Aurora config still opts each interaction axis in. Pass `false` for a
+         * static specimen; the runtime independently gates the cursor path under PRM.
          */
         interactive?: boolean;
     }>(),
@@ -30,6 +29,15 @@ const props = withDefaults(
 const stageRef = ref<HTMLDivElement | null>(null);
 const auroraRef = ref<InstanceType<typeof Aurora> | null>(null);
 const rendererStatus = ref<RendererStatus>(pendingRenderer("webgl2"));
+const reducedMotion = useReducedMotion();
+const pointerAffordanceEnabled = computed(
+    () =>
+        props.interactive &&
+        !reducedMotion.value &&
+        rendererStatus.value.phase === "ready" &&
+        rendererStatus.value.engine !== "css" &&
+        isAuroraPointerEnabled(props.config),
+);
 
 useCursorInteraction(stageRef, () => props.config, {
     setCursor: (x, y, strength) => {
@@ -48,23 +56,29 @@ useCursorInteraction(stageRef, () => props.config, {
          (`rounded-card overflow-hidden`) so the radius reaches the canvas PIXELS, not
          just the Configurator panel frame; `.aurora-root` keeps its `contain:content`
          so the corners clip the live field, never a square canvas behind a round panel. -->
-    <!-- BI.W-AURORA-VIBRANCY (UF-E4) — the `min-h-[30rem]` floor grows the "core chosen
-         aurora space" (the studio canvas larger); the stage still flexes `h-full` up to the
-         bumped VizStudio height envelope, but never collapses below a generous minimum. -->
+    <!-- V-A94 — VizStudio/Configurator owns the painted aperture. The field fills that
+         definite grid track and may shrink with it; a second child-owned minimum would
+         overflow the aperture and clip the bottom interaction cue. -->
     <div
         ref="stageRef"
-        class="relative h-full w-full min-h-[30rem] cursor-crosshair touch-none select-none rounded-card overflow-hidden"
+        class="relative h-full min-h-0 w-full touch-none select-none rounded-card overflow-hidden"
+        :class="{ 'cursor-crosshair': pointerAffordanceEnabled }"
     >
-        <Aurora ref="auroraRef" :config="config" @renderer-status="rendererStatus = $event" />
-        <RendererStatusView :status="rendererStatus" class="pointer-events-none absolute top-3 left-3" />
-        <NucleiOverlay
-            :nuclei="config.nuclei"
-            :dimmed="config.medium === 'smooth'"
+        <Aurora
+            ref="auroraRef"
+            :config="config"
+            @renderer-status="rendererStatus = $event"
         />
+        <RendererStatusView
+            :status="rendererStatus"
+            class="pointer-events-none absolute top-3 left-3"
+        />
+        <NucleiOverlay :nuclei="config.nuclei" :dimmed="config.medium === 'smooth'" />
         <div
+            v-if="pointerAffordanceEnabled"
             class="pointer-events-none absolute bottom-3 left-3 text-mono-caption uppercase tracking-widest text-foreground/50 mix-blend-difference"
         >
-            drag to swirl
+            move to shape the field
         </div>
     </div>
 </template>

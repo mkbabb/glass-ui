@@ -126,8 +126,7 @@ export function warmProjectHue(deg: number): number {
     const t = (h - 95) / (340 - 95); // 0 green-edge → 1 magenta-edge
     return WARM_LO + 20 + t * (WARM_HI - (WARM_LO + 20));
 }
-const clampWarm = (h: number): number =>
-    Math.max(WARM_LO, Math.min(WARM_HI, h));
+const clampWarm = (h: number): number => Math.max(WARM_LO, Math.min(WARM_HI, h));
 
 /**
  * Derive a painterly hero palette from a `--section-color-N` ramp index — the
@@ -296,7 +295,7 @@ export function shellAuroraConfig(hue: number): AuroraConfig {
         // the C≤0.10 ceiling (no conic foil, no brown, no speckle). The L band is
         // LIFTED ~0.02–0.03 brighter than the prior 0.88–0.94 (BG.W-FIELD-AURORA
         // re-paint #3): a brighter recessive field clears the secondary light-mode
-        // eyebrow/blurb `--muted-foreground` register over the composited field
+        // supporting-copy `--muted-foreground` register over the composited field
         // (3.85:1 → ≥4.5:1) while staying L≥0.85 (the recessive precondition) and
         // unmistakably WARM (the chroma is kept).
         palette: [

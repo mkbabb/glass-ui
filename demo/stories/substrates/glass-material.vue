@@ -151,7 +151,7 @@ const ACCENT_STRENGTH = "48%";
                 <div class="flex flex-wrap items-center gap-6">
                     <div
                         class="relative h-28 w-56 overflow-hidden rounded-card"
-                        data-material="content-field"
+                        data-material="content"
                     >
                         <canvas
                             ref="liveCanvas"
@@ -165,7 +165,7 @@ const ACCENT_STRENGTH = "48%";
                             ref="liveCardEl"
                             data-glass-sample="live"
                             class="glass-card relative flex size-full flex-col items-center justify-center gap-1 rounded-card px-3 text-center text-sm font-medium"
-                            data-material="functional-glass"
+                            data-material="functional"
                         >
                             <span>live canvas sample</span>
                             <span class="text-mono-caption text-muted-foreground">
@@ -339,7 +339,6 @@ const ACCENT_STRENGTH = "48%";
                     <Button
                         v-for="s in tintSamples"
                         :key="s.label"
-                        variant="glass"
                         size="sm"
                         :data-tint-sample="s.source"
                         :aria-pressed="tint.label === s.label"
@@ -407,7 +406,7 @@ const ACCENT_STRENGTH = "48%";
 
         <StorySection
             label="The opt-in deep-glass tier — .glass-deep"
-            blurb="The maximal iOS-27 Liquid-Glass register above the calm default: .glass-deep (or <Card tier='deep'>) reaches the Apple deep band (saturate 1.5 / blur 16px) — the backdrop reads softer and more saturated through the deeper plate. A separate --glass-blur-deep-* family on the --glass-depth scalar (the --glass-level twin); the calm content default is unchanged. Opt-in only — the calm .glass-floating plate beside it stays the calm ceiling. The deep tier composes --glass-level, so the opaque escape and the contrast brackets reach it, and inherits the over-light darken."
+            blurb="The maximal Liquid-Glass register above the calm default: compose Surface with deep, or add .glass-deep to a bare material. The backdrop reads softer and more saturated while the calm content default remains unchanged."
         >
             <ShowcaseFrame pad="lg" tier="field">
                 <!-- the deep-vs-calm contrast device: the .glass-deep plate reads

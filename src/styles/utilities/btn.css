@@ -1,5 +1,6 @@
 /* utilities/btn.css
-   The interactive/button @utility cluster — scale-on-hover, twin-line-divider, transition-control/collapse, sheet-animate, table-cell/head density, rainbow-vivid/pastel, the text-highlight paint, and btn-interactive. (The btn-audacious/btn-audacious-gold disco recipes + the btn-gold-bg-sweep keyframes were RETIRED at BA.W-GLASS-CAL.)
+   The shared utility cluster — scale-on-hover, transition-control/disclosure,
+   sheet animation, table density, rainbow color, and text-highlight paint.
    Carved from the utilities.css cascade root; @import-ed by utilities.css in
    cascade order. See docs/precepts/design-idioms.md §cohesion-aware partials. */
 /* ── Hover scale (O.W6 Lane C) ──
@@ -25,26 +26,6 @@
     }
 }
 
-/* ── Twin-line divider — the chassis catch-light / under-shadow groove ───────
-   AW.W15 DRY extraction. The twin-line idiom (a 1px white catch-light over a
-   1px black under-shadow reading as one engraved hairline groove) is the
-   chassis-divider signature. This utility is the SINGLE source of that
-   α pair: it publishes `--twin-line-catch` (the top catch-light) and
-   `--twin-line-shadow` (the bottom under-shadow) as cascade tokens, dark-adaptive
-   by construction (the `.dark &` arm re-resolves them). `instrument-chassis.css`
-   (`.bezel-line.top`/`.bottom`) `@apply`s it and reads the tokens; a retint
-   touches one rule. (The prior `instrument-rail.css` co-consumer retired at
-   AZ.W-PRUNE2 with its component — the α pair stays canonicalised here.) */
-@utility twin-line-divider {
-    --twin-line-catch: rgb(255 255 255 / 0.10);
-    --twin-line-shadow: rgb(0 0 0 / 0.12);
-
-    :where(.dark) & {
-        --twin-line-catch: rgb(255 255 255 / 0.06);
-        --twin-line-shadow: rgb(0 0 0 / 0.18);
-    }
-}
-
 /* ── Control transition recipe (AU.W8b.4) ───────────────────────────────
    Shared compound transition for interactive controls that animate their
    surface (background-color/color/box-shadow/border-color) on the four-state
@@ -60,23 +41,13 @@
    prior 0.2s dragged the colour/border/shadow VISIBLY behind the press (the §F
    "super laggy" read). The bezier `--ease-standard` STAYS (a colour cross-fade
    on a spring wobbles — §6 binding); the property list stays SURFACE-ONLY (no
-   `transform` leg — the press-squish is `.tap-squish`/`useSpringPress`'s spring
+   `transform` leg — the press-squish is `.tap-squish`/`useLiquidPress`'s spring
    job, the canonical split). One token re-times the whole 12-consumer control
    family. */
 @utility transition-control {
     transition-property: background-color, color, box-shadow, border-color;
     transition-duration: var(--duration-control);
     transition-timing-function: var(--ease-standard);
-}
-
-/* ── Collapse transition recipe (AU.W8b.4) ──────────────────────────────
-   Shared height+opacity transition for reka-ui collapse surfaces (Accordion
-   content, Collapsible content). Replaces the per-site `transition-[height,opacity]`
-   wrap at ≥2 sites. The duration/easing rides the data-state
-   `animate-accordion-*`/`animate-collapsible-*` keyframes (this only declares
-   WHICH properties transition; the keyframes own the timing). */
-@utility transition-collapse {
-    transition-property: height, opacity;
 }
 
 /* ── Disclosure chevron register (BG.W-DISCLOSURE-ROTATE) ────────────────
@@ -114,91 +85,6 @@
            data-[state=open]:fade-in data-[state=closed]:fade-out
            data-[state=open]:duration-[calc(var(--duration-panel)*var(--motion-tempo))]
            data-[state=closed]:duration-[calc(var(--duration-fast)*var(--motion-tempo))];
-}
-
-/* ── Calm CTA register (BA.W-GLASS-CAL, H2a — the disco retired) ──────────
-   The `@utility btn-audacious` + `@utility btn-audacious-gold` recipes + the
-   `@keyframes btn-gold-bg-sweep` are RETIRED (clean break, no alias). The user
-   removed the "disco effect" wholesale: the sparkle `::after` glyph, the
-   disco-grain hover (`--paper-clean-texture` + `--primary`/gold radial), the
-   gold-sweep shimmer, and the typed `--ripple-radius` press-ripple are GONE.
-
-   The `primary-audacious`/`gold-audacious` Button variants (button/index.ts)
-   now collapse onto the calm glass-first register — the `glass-wash`/`btn-glass`
-   surface + the `--glass-specular` edge catch-light, hover/press on the §6
-   doctrine (surface→`--ease-standard`, scale→`--spring-smooth`). `gold-audacious`
-   keeps a STATIC warm-gold tint (no animated sweep). The fenced-out GOOD pops
-   (`.gold-shimmer` static text gradient, the specular gleam, the press-scale)
-   STAY — they were never disco. */
-
-/* ── BD.W-BUTTON-GLASS-CONSUME — `.btn-punch`, the ONE new opt-in cartoon tier ──
-   The LOUD hero interaction decoration that sits ON TOP of the shared `.glass-capsule`
-   (it is NOT a material — buttons own no material). Composed via Button.vue's
-   `punchDecoration` (default-ON for `primary-audacious`/`gold-audacious`, opt-in via the
-   `punch` prop). It re-targets the EXISTING press primitives — ZERO second spring/rAF,
-   ZERO re-forked caster:
-
-     • the LOUD register — `--motion-weight: 1` (the same loud-register coupling
-       `.cartoon-surface` carries) so the cast travel + the glyph pop are never muted to
-       the rest 0.618 (the BD.W-CARTOON-PUNCH loud-register guard). The `:root` PRM carve
-       still zeroes it under reduce (handled below).
-     • the ANTICIPATION + OVERSHOOT — the host `scale` transition leg re-points off the
-       calm `--spring-smooth` (the `.btn-pill` base) onto `--ease-cartoon-punch` (DEPEND,
-       the booked raw `linear()` with the real pre-dip-below-origin + overshoot arm). The
-       JS `useLiquidFlex` writes the reciprocal `scale` inline DURING the press (single
-       source, it wins); on RELEASE the inline scale is removed and THIS transition curve
-       carries the scale back to rest with the cartoon follow-through. ONE scalar drive,
-       no double-drive on the same property.
-     • the louder squish amplitude is the JS side (Button.vue `maxStretch` 1.04→1.09,
-       fenced ≤1.14 composed area) — the css only owns the curve + the weight.
-     • the moving inked cast is the BD.W-CARTOON-CASTER inert `.cartoon-cast` child
-       (emitted by Button.vue, driven by `--cartoon-press-t × --motion-weight`); its
-       travel/spread/lag recipe lives ONCE in cards.css — composed here, not re-forked.
-
-   The GLYPH overlapping-pop (the label settles a beat AFTER the capsule — child trails
-   parent) REFERENCES the BD.W-TABS-LIQUID glyph scale-pop register: the pop reads the
-   SAME `--motion-weight` scalar via a button-scoped `--btn-glyph-pop` magnitude (the
-   literal lives ONCE here, not re-pasted from the tabs `0.06`), delayed `--duration-fast`
-   so it lags the capsule. Exactly 1 under PRM (`--motion-weight: 0`). */
-.btn-punch {
-    /* anchor the absolute inert `.cartoon-cast` child to THIS host (the glass variants
-       already get `position: relative` from `.glass-wash`; this guarantees it for an
-       opt-in `punch` on a non-glass variant too). */
-    position: relative;
-    --motion-weight: 1;
-    /* the press ramp the inert cast reads at REST (0); Button.vue overrides it live off
-       the spring during the press. */
-    --cartoon-press-t: 0;
-    /* re-point the scale leg onto the cartoon-punch curve (anticipation + overshoot on
-       the release leg); the surface legs stay on the bezier (the §6 doctrine). */
-    transition:
-        scale var(--spring-smooth-duration) var(--ease-cartoon-punch);
-}
-
-/* the glyph overlapping-action pop — the label/icon settles a beat AFTER the capsule
-   (child trails parent). DEPENDS `--motion-weight` (CONSUMED, the tabs glyph-pop idiom);
-   the magnitude literal lives once as `--btn-glyph-pop`. Delayed so it lags. */
-.btn-punch > :not(.cartoon-cast) {
-    --btn-glyph-pop: 0.05;
-    transition: scale var(--duration-fast) var(--ease-cartoon-punch) var(--duration-fast);
-}
-.btn-punch:active > :not(.cartoon-cast) {
-    scale: calc(1 + var(--btn-glyph-pop) * var(--motion-weight));
-}
-
-/* PRM carve — under reduced-motion the LOUD register zeroes in ONE assignment (every
-   `calc(… * --motion-weight)` — the cast travel/spread + the glyph pop — collapses to
-   rest) and `--ease-cartoon-punch` degrades to the calm `--ease-standard`; the press
-   still FUNCTIONS (the spring snaps, the squish physics off), the warm capsule fill +
-   rim + lift are STATIC (present for everyone). */
-@media (prefers-reduced-motion: reduce) {
-    .btn-punch {
-        --motion-weight: 0;
-        transition: scale var(--spring-smooth-duration) var(--ease-standard);
-    }
-    .btn-punch > :not(.cartoon-cast) {
-        transition: none;
-    }
 }
 
 /* ── Table density utilities — AN.R0 ─────────────────────────────────────
@@ -248,59 +134,4 @@
         var(--rainbow-pastel-indigo),
         var(--rainbow-pastel-violet)
     );
-}
-
-/* ── Interactive-button four-state recipe ────────────────────────────────
-   `.btn-interactive` carries the canonical "Button-with-spring-hover"
-   four-state contract — transition + hover-scale + active-press + disabled-
-   opacity + focus-ring fade-in. The Button primitive's variants emit the four
-   states except `hover:scale-*`; this is the canonical opt-in that adds the
-   spring-hover lift. Consumed by keyframes.js at 7 sites.
-
-   AX.W52 §6 — the hover lift is the restrained `--scale-hover-btn` (1.05, NOT
-   the emphatic 1.08 `--scale-hover`) routed through `--spring-smooth` — the ONE
-   button scale register the §6 doctrine records and the gate asserts across
-   `.btn-pill`/`.tap-squish`/`.glass-btn`/`btn-interactive`. The surface legs
-   stay on the bezier `--ease-standard` (a colour cross-fade reads as a wobble
-   on a spring); only the `scale` transform leg springs.
-
-   BG.W-LIQUID-WEIGHT-DEFAULT (F5.2) — the `scale` leg now reads the shared
-   `--transition-liquid-spatial` vocabulary token (byte-identical at the default —
-   it resolves to `--spring-smooth` — while the settle clock stays `--spring-smooth-
-   duration`), so a `.motion-calm` scope opts the button lift out of overshoot in
-   lockstep with the base interactive atoms. */
-@utility btn-interactive {
-    /* AQ.W3 §W3.2 identity base */
-    scale: 1;
-    transition:
-        background-color var(--duration-fast) var(--ease-standard),
-        color var(--duration-fast) var(--ease-standard),
-        scale var(--spring-smooth-duration) var(--transition-liquid-spatial),
-        opacity var(--duration-fast) var(--ease-standard);
-
-    &:hover {
-        scale: var(--scale-hover-btn);
-    }
-
-    &:active {
-        scale: var(--scale-press);
-    }
-
-    &:disabled {
-        opacity: var(--opacity-disabled);
-        pointer-events: none;
-    }
-
-    &:focus-visible {
-        box-shadow: var(--focus-ring-shadow);
-        outline: none;
-        /* Fade in; base state has no box-shadow transition → instant
-           removal. The `scale` leg keeps the `--spring-smooth` register. */
-        transition:
-            background-color var(--duration-fast) var(--ease-standard),
-            color var(--duration-fast) var(--ease-standard),
-            scale var(--spring-smooth-duration) var(--transition-liquid-spatial),
-            opacity var(--duration-fast) var(--ease-standard),
-            box-shadow var(--duration-fast) var(--ease-standard);
-    }
 }

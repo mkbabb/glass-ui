@@ -1,10 +1,3 @@
-// Trigger and close preserve reka's native as-child contract. Portal ownership stays
-// internal to DrawerContent so each drawer has exactly one teleport boundary.
-export {
-    DialogTrigger as DrawerTrigger,
-    DialogClose as DrawerClose,
-} from "reka-ui";
-
 /**
  * Drawer drag/slide direction (BB.W-DRAWER-ABROGATE). `bottom` (default) + `top`
  * can carry peek/half/full detents; `left`/`right` are the side-lens full-slide
@@ -26,17 +19,21 @@ export type DrawerMode = "modal" | "live-behind";
 /**
  * BD.W-OVERLAY-STAGE-COUPLE — the honest scene-staging enum. `none` leaves the page
  * untouched; `dim` deepens the scrim only (the PRM-safe luminance depth cue); `scale`
- * recedes +
- * scales the page (the iOS card-recede); `immersive` adds the backdrop-blur engage.
+ * recedes + scales the page (the iOS card-recede); `immersive` adds one fixed-radius
+ * scrim backdrop sample while the scalar continues to drive dimming only.
  * `modal` defaults to `scale`; `live-behind` to `none`. PRM degrades `scale`/
  * `immersive` to `dim`. All four couplings ride the ONE `--stage-t` scalar the snap
- * engine writes at `:root`.
+ * engine writes directly on each reader root.
  */
 export type DrawerStage = "none" | "dim" | "scale" | "immersive";
 
 export { default as Drawer } from "./Drawer.vue";
-export { default as DrawerContent } from "./DrawerContent.vue";
+export { default as DrawerContent, type DrawerContentProps } from "./DrawerContent.vue";
 export { default as DrawerHeader } from "./DrawerHeader.vue";
 export { default as DrawerFooter } from "./DrawerFooter.vue";
-export { default as DrawerTitle } from "./DrawerTitle.vue";
-export { default as DrawerDescription } from "./DrawerDescription.vue";
+export { default as DrawerTitle, type DrawerTitleProps } from "./DrawerTitle.vue";
+export {
+    default as DrawerDescription,
+    type DrawerDescriptionProps,
+} from "./DrawerDescription.vue";
+export type { DrawerOverlayProps } from "./DrawerOverlay.vue";

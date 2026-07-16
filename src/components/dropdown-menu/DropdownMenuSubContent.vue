@@ -1,42 +1,69 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
-import {
-  type DropdownMenuSubContentEmits,
-  type DropdownMenuSubContentProps,
-  useForwardPropsEmits,
-} from 'reka-ui'
-import { cn } from '../_shared/class-names'
-// BI.W-MENU-TRIGGER — the trigger axis switches the reka SubContent + Portal family.
-import { useMenuPart } from './useMenuTrigger'
+import { computed, useAttrs, type HTMLAttributes } from "vue";
+import { cn } from "../_shared/class-names";
+import { floatingContentAttrs } from "../_shared/floating";
+import type { DismissableContentEmits } from "../_shared/interaction";
+import { useMenuPart } from "./useMenuTrigger";
 
-const props = defineProps<DropdownMenuSubContentProps & { class?: HTMLAttributes['class'] }>()
-const emits = defineEmits<DropdownMenuSubContentEmits>()
+export interface DropdownMenuSubContentProps {
+    sideOffset?: number;
+    alignOffset?: number;
+    class?: HTMLAttributes["class"];
+}
 
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
+export interface DropdownMenuSubContentEmits extends DismissableContentEmits {
+    entryFocus: [event: Event];
+}
 
-  return delegated
-})
+defineOptions({ name: "DropdownMenuSubContent", inheritAttrs: false });
 
-const forwarded = useForwardPropsEmits(delegatedProps, emits)
-const SubContentComp = useMenuPart('SubContent')
-const PortalComp = useMenuPart('Portal')
+const props = withDefaults(defineProps<DropdownMenuSubContentProps>(), {
+    sideOffset: 0,
+    alignOffset: 0,
+});
+const emit = defineEmits<DropdownMenuSubContentEmits>();
+defineSlots<{ default?: () => unknown }>();
+
+const attrs = useAttrs();
+const forwardedAttrs = computed(() => {
+    const {
+        side: _side,
+        align: _align,
+        loop: _loop,
+        ...forwarded
+    } = floatingContentAttrs(attrs);
+    return forwarded;
+});
+const SubContentComp = useMenuPart("SubContent");
+const PortalComp = useMenuPart("Portal");
 </script>
 
 <template>
-  <!-- The SubContent MUST portal (the same Portal wrapper Content uses).
-       DropdownMenuContent carries `max-h overflow-y-auto`; an un-portaled submenu
-       paints INSIDE that scroll container and is clipped invisible — ARIA-expanded but
-       pointer-unreachable. Portaling teleports the submenu to the body so it escapes the
-       parent's scroll clip, matching how Content portals (both trigger families). -->
-  <component :is="PortalComp">
-    <component
-      :is="SubContentComp"
-      v-bind="forwarded"
-      data-reveal="menu"
-      :class="cn('dropdown-sub-content z-popover min-w-32 overflow-hidden rounded-panel border glass-floating text-popover-foreground glass-reveal', props.class)"
-    >
-      <slot />
+    <!-- Submenus share the content portal so scroll clipping cannot hide them. -->
+    <component :is="PortalComp">
+        <component
+            :is="SubContentComp"
+            v-bind="forwardedAttrs"
+            :side-offset="sideOffset"
+            :align-offset="alignOffset"
+            :avoid-collisions="true"
+            data-slot="dropdown-menu-sub-content"
+            data-reveal="menu"
+            :class="
+                cn(
+                    'dropdown-sub-content dropdown-menu__sub-content glass-floating glass-reveal',
+                    props.class,
+                )
+            "
+            @escape-key-down="emit('escapeKeyDown', $event)"
+            @pointer-down-outside="emit('pointerDownOutside', $event)"
+            @focus-outside="emit('focusOutside', $event)"
+            @interact-outside="emit('interactOutside', $event)"
+            @open-auto-focus="emit('openAutoFocus', $event)"
+            @close-auto-focus="emit('closeAutoFocus', $event)"
+            @entry-focus="emit('entryFocus', $event)"
+        >
+            <slot />
+        </component>
     </component>
-  </component>
 </template>

@@ -1,56 +1,40 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
-import type { ComboboxContentEmits, ComboboxContentProps } from 'reka-ui'
-import { ComboboxContent, useForwardPropsEmits } from 'reka-ui'
-import { cn } from '../_shared/class-names'
-// BC.W-OVERLAY-UNIFORM — thread the SHARED {glass·veil·opaque} surface axis + the
-// φ --overlay-pad-* ladder onto the Command list + token-back `max-h-[300px]` onto
-// `--overlay-max-block`. The Command HOST is a Dialog (CommandDialog) — its
-// `surface` flows through `<Dialog surface>`; the list carries the axis so the
-// standalone `<Command>` (not Dialog-hosted) also reads the golden uniformity.
-// Default `glass` is byte-identical to HEAD.
-import { surfaceClass, type Surface } from '../_shared/useSurfaceAxis'
+import { computed, useAttrs } from "vue";
+import { ComboboxContent as RekaComboboxContent } from "reka-ui";
+import { cn } from "../_shared/class-names";
+import { floatingContentAttrs } from "../_shared/floating";
+import type { ComboboxListEmits } from "../combobox/types";
+import { useOptionalCommandDialogContext } from "./dialogContext";
+import type { CommandListProps } from "./types";
 
-const props = withDefaults(defineProps<ComboboxContentProps & { class?: HTMLAttributes['class']; surface?: Surface }>(), {
-  disableOutsidePointerEvents: false,
-  surface: 'glass',
-})
-const emits = defineEmits<ComboboxContentEmits>()
+defineOptions({ name: "CommandList", inheritAttrs: false });
 
-const delegatedProps = computed(() => {
-  const { class: _, surface: __, ...delegated } = props
+const props = withDefaults(defineProps<CommandListProps>(), { surface: "glass" });
+const emit = defineEmits<ComboboxListEmits>();
+const attrs = useAttrs();
+const forwardedAttrs = computed(() => floatingContentAttrs(attrs));
+const commandDialog = useOptionalCommandDialogContext();
 
-  return delegated
-})
-
-const forwarded = useForwardPropsEmits(delegatedProps, emits)
+function handleEscape(event: KeyboardEvent): void {
+    emit("escapeKeyDown", event);
+    if (!event.defaultPrevented) commandDialog?.dismiss();
+}
 </script>
 
 <template>
-  <ComboboxContent
-    v-bind="forwarded"
-    :data-surface="props.surface"
-    :class="cn(
-      'max-h-(--overlay-max-block) overflow-y-auto overflow-x-hidden',
-      // BI.W-COMMAND-JITTER — the classic-scrollbar-platform reflow guard on the
-      // inner scroll port: as rows filter in/out, a classic (non-overlay)
-      // scrollbar appears/disappears and reflows the row width, which the R5b
-      // keyboard-lift decouple would otherwise still leave twitching on
-      // Windows/Linux. `scrollbar-gutter: stable` reserves the gutter so the
-      // width never reflows (a no-op on macOS overlay scrollbars, which measure 0).
-      'scroll-gutter-stable',
-      // The glass PLATE is the Command/Dialog host's (the list is an inner
-      // scrollable region — no second glass tier); the `:data-surface` binding
-      // records the axis so a standalone `<Command surface=…>` reaches the
-      // surface-axis.css decoration over its host plate. The φ --overlay-pad-*
-      // ladder (tight menu anchor) gives the row gutter the golden sqrt-φ cadence,
-      // `:root`-retunable in lockstep with every overlay.
-      '[--overlay-pad-inline:--spacing(1)] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)] px-(--overlay-pad-inline) py-(--overlay-pad-block)',
-      props.class,
-    )"
-  >
-    <div role="presentation">
-      <slot />
-    </div>
-  </ComboboxContent>
+    <RekaComboboxContent
+        v-bind="forwardedAttrs"
+        data-slot="command-list"
+        :disable-outside-pointer-events="false"
+        :data-surface="props.surface"
+        :class="cn('command__list', props.class)"
+        @escape-key-down="handleEscape"
+        @pointer-down-outside="emit('pointerDownOutside', $event)"
+        @focus-outside="emit('focusOutside', $event)"
+        @interact-outside="emit('interactOutside', $event)"
+    >
+        <div role="presentation">
+            <slot />
+        </div>
+    </RekaComboboxContent>
 </template>

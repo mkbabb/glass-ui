@@ -1,60 +1,18 @@
 <script setup lang="ts">
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
-import { computed, defineAsyncComponent, ref } from "vue";
-import FamilyTabs, { type FamilyMember } from "../../chassis/family/FamilyTabs.vue";
+import { ref } from "vue";
 import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight } from "@lucide/vue";
-import { Toggle } from "@glass/components/toggle";
 import { ToggleGroup, ToggleGroupItem } from "@glass/components/toggle-group";
-import { Chip } from "@glass/components/chip";
 
-// BG.W-DEMO-IA-REDESIGN — the Forms TOGGLES family. The chip toggles (toggle-chip,
-// selectable-chip) collapse onto this ONE toggles page as members (bare,
-// STORY_NESTED_KEY) via the switcher below.
-const familyMembers: FamilyMember[] = [
-    {
-        id: "toggle-chip",
-        label: "Toggle chip",
-        component: defineAsyncComponent(() => import("./toggle-chip.vue")),
-    },
-    {
-        id: "selectable-chip",
-        label: "Selectable chip",
-        component: defineAsyncComponent(() => import("./selectable-chip.vue")),
-    },
-];
-
-const bold = ref<boolean>(false);
 const marks = ref<string[]>(["bold"]);
 const align = ref<string>("left");
 const density = ref<string>("comfortable");
 const densityOptions = ["Compact", "Comfortable", "Spacious", "Touch", "Presentation"];
-const filters = ref<{ fourier: boolean; chebyshev: boolean; legendre: boolean }>({
-    fourier: true,
-    chebyshev: false,
-    legendre: false,
-});
-type FilterKey = keyof typeof filters.value;
-const filterKeys: FilterKey[] = ["fourier", "chebyshev", "legendre"];
-const selectedFilters = computed(() => filterKeys.filter((key) => filters.value[key]));
-const cell = ref<string>("warm");
 </script>
 
 <template>
     <StoryPage>
-        <!-- Single toggle. -->
-        <section class="flex flex-col gap-3">
-            <p class="section-label">single toggle</p>
-            <div class="flex items-center gap-4">
-                <Toggle v-model="bold" aria-label="Bold">
-                    <Bold class="h-4 w-4" />
-                </Toggle>
-                <span class="text-mono-caption text-muted-foreground">
-                    pressed · {{ bold }}
-                </span>
-            </div>
-        </section>
-
         <!-- ToggleGroup type=multiple. -->
         <section class="flex flex-col gap-3">
             <p class="section-label">toggle-group · multiple</p>
@@ -120,58 +78,5 @@ const cell = ref<string>("warm");
             </p>
         </StorySection>
 
-        <!-- Chip: pill shape. -->
-        <section class="flex flex-col gap-3" data-testid="toggle-chip-chip-section">
-            <p class="section-label">chip · pill shape</p>
-            <div class="flex flex-wrap items-center gap-2">
-                <Chip
-                    v-for="key in filterKeys"
-                    :key="key"
-                    v-model="filters[key]"
-                    shape="pill"
-                    :aria-label="`Toggle ${key} filter`"
-                    :data-testid="`toggle-chip-chip-${key}`"
-                    data-toggle-chip-variant="chip"
-                >
-                    {{ key }}
-                </Chip>
-            </div>
-            <p
-                class="text-mono-caption text-muted-foreground"
-                data-testid="toggle-chip-chip-state"
-            >
-                chip filters · [{{ selectedFilters.join(", ") || "none" }}]
-            </p>
-        </section>
-
-        <!-- Chip: cell shape — icon + label. -->
-        <section class="flex flex-col gap-3" data-testid="toggle-chip-cell-section">
-            <p class="section-label">chip · cell shape</p>
-            <div class="flex flex-wrap items-stretch gap-3">
-                <Chip
-                    v-for="opt in ['warm', 'cool', 'mono'] as const"
-                    :key="opt"
-                    :model-value="cell === opt"
-                    shape="cell"
-                    class="w-24"
-                    :aria-label="`Select ${opt} palette`"
-                    :data-testid="`toggle-chip-cell-${opt}`"
-                    data-toggle-chip-variant="cell"
-                    @update:model-value="cell = opt"
-                >
-                    <span class="h-6 w-6 rounded-full bg-viz-fourier" />
-                    <span class="capitalize">{{ opt }}</span>
-                </Chip>
-            </div>
-            <p
-                class="text-mono-caption text-muted-foreground"
-                data-testid="toggle-chip-cell-state"
-            >
-                cell · {{ cell }}
-            </p>
-        </section>
-        <StorySection heading="The chip toggles">
-            <FamilyTabs :members="familyMembers" aria-label="Toggle family" />
-        </StorySection>
     </StoryPage>
 </template>

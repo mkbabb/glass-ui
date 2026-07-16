@@ -1,5 +1,5 @@
 /* utilities/base-misc.css
-   The @layer components FORM/INTERACTION TAIL — status-dot, depth-text,
+   The @layer components FORM/INTERACTION TAIL — depth-text,
    preserve-3d, ios input fix, fading-scroll (scroll-state-driven edge fade) +
    the @supports (animation-timeline: scroll()) native path, deferred-section,
    card-scroll-host, gold-shimmer, kbd.
@@ -12,18 +12,6 @@
    docs/precepts/design-idioms.md §cohesion-aware partials. */
 
 @layer components {
-    /* ── Status dot indicator ── */
-    .status-dot {
-        display: inline-block;
-        width: 0.5rem;
-        height: 0.5rem;
-        border-radius: var(--radius-pill);
-        flex-shrink: 0;
-        transition:
-            color var(--duration-fast) var(--ease-standard),
-            background var(--duration-fast) var(--ease-standard),
-            box-shadow var(--duration-fast) var(--ease-standard);
-    }
     /* ── Depth text (layered offset stamp) ──
        AW.W26 — composes the `--text-shadow-depth` @theme identity token (the
        hard offset stack + soft ambient tail) instead of a hand-rolled multi-stop
@@ -192,24 +180,10 @@
         contain-intrinsic-size: auto var(--deferred-section-size, 30rem);
     }
 
-    /* ── Card scroll-timeline host (AI.W1-α) ───────────────────────────────
-       Canonical scroll-overflow host that emits the `--card-scroll` named
-       scroll-timeline consumed by `<CardHeader shrink>`. Apply to the
-       scroll-overflow ancestor (typically the `<Card>` itself OR a wrapper
-       inside it that carries `overflow-y: auto`).
-
-       `contain: layout style paint` isolates the named timeline so child
-       animations respond to THIS host's scroll only — not to portal-
-       triggered layout shifts in ancestor containers (the load-bearing
-       isolation guarantee the value.js `PaneHeader.vue:18-29` comment
-       called out and the AI.W1 spec §1.2 ratified as canon).
-
-       Disambiguated from `.fading-scroll` (the `<FadingScroll>` mask-image
-       edge fade at the container's leading/trailing edge) — `.card-scroll-host`
-       does NOT paint any visual; it only emits the timeline. */
+    /* Scroll owner for the discrete <CardHeader shrink> state. It paints no
+       affordance of its own and isolates the sticky header from outer layout. */
     .card-scroll-host {
         contain: layout style paint;
-        scroll-timeline: --card-scroll block;
     }
 
     /* ── Stable scroll gutter — the no-shift discipline for overlay-hosting
@@ -233,17 +207,9 @@
         scrollbar-gutter: stable;
     }
 
-    /* ── Shimmer text effects ──
-       BB.W-METAL-SHIMMER — the gold-only `gold-shimmer-slide` is RETIRED (clean
-       break, no alias); `.gold-shimmer` re-points onto the metal-PARAMETERIZED
-       `metal-shimmer-sweep` keyframe with `--metal-shimmer-color: gold`. The gold
-       gradient stops + the `background-size`/`background-clip` + the PRM bracket are
-       byte-PRESERVED — the gold READ is unchanged; only the keyframe NAME generalizes.
-       The text-fill + background-clip composition is load-bearing visual (the gold
-       gradient itself); only the `animation:` line is wrapped in the PRM no-preference
-       bracket so PRM users see the static gradient without the slide. */
+    /* The static gold gradient remains visible under reduced motion; only its
+       position sweep is gated. */
     .gold-shimmer {
-        --metal-shimmer-color: gold;
         background: linear-gradient(90deg, var(--color-gold-dark), var(--color-gold-light), var(--color-gold), var(--color-gold-light), var(--color-gold-dark));
         background-size: 250% 100%;
         background-clip: text;

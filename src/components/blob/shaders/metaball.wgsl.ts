@@ -31,7 +31,7 @@ import {
     FBM_ROT_WGSL,
     OETF_WGSL,
     OKLCH_MATRICES_WGSL,
-} from "../../aurora/constants/shaders/procedural-color.wgsl";
+} from "../../../composables/glass/procedural/color.wgsl";
 // BC.W-CARVE6 — the noise/FBM + the OKLCh gamut-clamp/palette helper groups carved
 // into sibling chunks (the no-god-module bound; the shared-chunk SPLICE precedent).
 // Spliced back IN POSITION below — the noise chunk after `${FBM_ROT_WGSL}` (its
@@ -72,10 +72,8 @@ struct Uniforms {
   // s6: (uBrightnessShift, uColorNoiseFreq, uColorNoiseSpeed, uStretch)
   s6: vec4<f32>,
   // s7: (uPointerActive, uPointerAttraction, uPointerStrength, uStage)
-  // BC.W-GOOBLOB-PLAIN — uStage gates the STAGE-1 stripped floor: 1.0 = the plain
-  // shadowless lightless fill-only floor (variant="blob"); 0.0 = the full lit
-  // pipeline (variant="meatball" / STAGE 2). It rides the spare s7.w lane the typed-
-  // struct SoT (uniformBridgeWGPU.ts) reserved.
+  // uStage gates the stripped floor: 1.0 = flat and shadowless; 0.0 = dressed. It
+  // is derived from the single morph scalar and rides the spare s7.w lane.
   s7: vec4<f32>,
   // ptr: (uPointer.x, uPointer.y, uVelocity.x, uVelocity.y)
   ptr: vec4<f32>,
@@ -88,7 +86,7 @@ struct Uniforms {
   // res: (uResolution.x, uResolution.y, uShadow, uShadowSoftness)
   // BC.W-GOOBLOB-MEATBALL — the soft-shadow march rides the spare res.z/res.w lanes the
   // typed-struct SoT (uniformBridgeWGPU.ts) reserved (the EXTEND, never a re-fork): res.z
-  // = uShadow (1.0 = the variant=meatball shadow ON), res.w = uShadowSoftness (the
+  // = uShadow (1.0 = the dressed shadow ON), res.w = uShadowSoftness (the
   // penumbra hardness, inverse light-source size → 4-48).
   res: vec4<f32>,
   // ints: (uStopCount, uSatCount, uTrailCount, _pad)
@@ -388,7 +386,7 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
   oklch.y = max(oklch.y + (colorNoise - 0.5) * uSatShift, 0.0);
   oklch.x = clamp(oklch.x + uBrightnessShift, 0.0, 1.0);
 
-  // ── BC.W-GOOBLOB-PLAIN — the STAGE-1 stripped floor (variant=blob). ──
+  // ── The stripped flat floor (morphT=0). ──
   // The minimal verifiable floor: SDF + smin (the meatball field, already in d/
   // alpha above) + fwidth-AA (the crisp alpha above) + warm-cream fill. NO surface
   // normal, NO Fresnel, NO lit glint, NO iridescence, NO fake-SSS, NO shadow —
@@ -449,7 +447,7 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
   //    drop-shadow. Concentrated on the AWAY-facing lower rim (an away-facing weight × a
   //    thin-rim Gaussian band) so the deep-lit interior + the light-facing edge stay bright
   //    and the grounded shadow reads at the lower silhouette edge — the warm-cream body mean
-  //    holds. Gated uShadow > 0.5; variant=blob (STAGE 1) ships shadowless. ──
+  //    holds. Gated uShadow > 0.5; morphT=0 ships shadowless. ──
   if (uShadow > 0.5) {
     let L2 = normalize(uLightDir.xy + vec2<f32>(1e-6));
     // w increases with the inverse light-source size → uShadowSoftness (a harder penumbra at a

@@ -21,6 +21,51 @@ import type { MaybeRef, Ref } from "vue";
 import { useResizeObserver } from "../../../composables/dom/useResizeObserver";
 import { NATIVE_SCROLL_TIMELINE, SNAP_TOLERANCE } from "../constants";
 
+type RtlScrollType = "negative" | "positive-ascending" | "positive-descending";
+
+let rtlScrollType: RtlScrollType | undefined;
+
+function getRtlScrollType(): RtlScrollType {
+    if (rtlScrollType || typeof document === "undefined")
+        return rtlScrollType ?? "negative";
+
+    const port = document.createElement("div");
+    const content = document.createElement("div");
+    port.dir = "rtl";
+    port.style.cssText =
+        "position:absolute;inset:-9999px auto auto -9999px;width:4px;height:1px;overflow:scroll";
+    content.style.width = "8px";
+    port.append(content);
+    document.body.append(port);
+
+    if (port.scrollLeft > 0) rtlScrollType = "positive-descending";
+    else {
+        port.scrollLeft = 1;
+        rtlScrollType = port.scrollLeft === 0 ? "negative" : "positive-ascending";
+    }
+
+    port.remove();
+    return rtlScrollType;
+}
+
+/** Normalize every browser RTL scrollLeft model to distance from inline-start. */
+export function normalizeHorizontalScrollLeft(
+    scrollLeft: number,
+    max: number,
+    direction: string,
+    type?: RtlScrollType,
+): number {
+    const rtlType = type ?? (direction === "rtl" ? getRtlScrollType() : undefined);
+    const logical = direction !== "rtl"
+        ? scrollLeft
+        : rtlType === "negative"
+          ? -scrollLeft
+          : rtlType === "positive-descending"
+            ? max - scrollLeft
+            : scrollLeft;
+    return Math.min(max, Math.max(0, logical));
+}
+
 export interface UseFadingScrollOptions {
     /** Scroll axis. `"x"` reads scrollLeft/Width; `"y"` reads scrollTop/Height. Default `"x"`. */
     axis?: MaybeRef<"x" | "y">;
@@ -79,11 +124,17 @@ export function useFadingScroll(
         const el = unref(target);
         if (!el) return;
         const horizontal = unref(axis) === "x";
-        const pos = horizontal ? el.scrollLeft : el.scrollTop;
         const max =
             horizontal
                 ? el.scrollWidth - el.clientWidth
                 : el.scrollHeight - el.clientHeight;
+        const pos = horizontal
+            ? normalizeHorizontalScrollLeft(
+                  el.scrollLeft,
+                  max,
+                  getComputedStyle(el).direction,
+              )
+            : Math.min(max, Math.max(0, el.scrollTop));
         const atStart = pos <= SNAP_TOLERANCE;
         const atEnd = pos >= max - SNAP_TOLERANCE;
         applyEdges(unref(fadeStart) && !atStart, unref(fadeEnd) && !atEnd);

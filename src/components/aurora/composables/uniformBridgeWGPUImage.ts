@@ -2,7 +2,7 @@
  * Aurora WGSL IMAGE uniform bridge — the typed-struct source-of-truth for the
  * `source:"image"` WebGPU program (BG.W-AUR-IMAGE-SOURCE).
  *
- * DISTINCT from `uniformBridgeWGPU.ts` (the 576-byte PALETTE struct): the image program
+ * DISTINCT from `uniformBridgeWGPU.ts` (the 672-byte palette struct): the image program
  * is a SEPARATE compiled pipeline with its OWN, smaller uniform buffer + its own bind
  * group (uniform + texture + sampler). The image lane never touches the palette struct —
  * the construction-time permutation's isolation, so the palette parity capture is
@@ -17,9 +17,9 @@
  *   image    : vec4<f32>            off  48   (uBlurMin, uBlurMax, uImageAspect, _)
  *   cursor   : vec4<f32>            off  64   (uCursor.x, uCursor.y, _, _)
  *   ints     : vec4<i32>            off  80   (uNucleiCount, uNoiseOctaves, _, _)
- *   nuc0     : array<vec4<f32>, 6>  off  96   (pos.x, pos.y, radius, valueBias)
- *   nuc1     : array<vec4<f32>, 6>  off 192   (driftRadius, driftPhase, elong, angle)
- *   total    : 288 bytes (16-aligned)
+ *   nuc0     : array<vec4<f32>, 8>  off  96   (pos.x, pos.y, radius, valueBias)
+ *   nuc1     : array<vec4<f32>, 8>  off 224   (driftRadius, driftPhase, elong, angle)
+ *   total    : 352 bytes (16-aligned)
  */
 
 import {
@@ -32,7 +32,7 @@ import {
 import type { AuroraCursorUniforms } from "./uniformBridge";
 
 /** The total image-uniform-buffer byte size (16-aligned). */
-export const AURORA_IMAGE_WGPU_UNIFORM_BYTES = 288;
+export const AURORA_IMAGE_WGPU_UNIFORM_BYTES = 352;
 
 // Float32 word offsets (byte / 4) into the buffer.
 const OFF = {
@@ -42,8 +42,8 @@ const OFF = {
     image: 12,
     cursor: 16,
     ints: 20, // viewed as Int32
-    nuc0: 24, // 6 rows × 4 words
-    nuc1: 48, // 6 rows × 4 words
+    nuc0: 24, // 8 rows × 4 words
+    nuc1: 56, // 8 rows × 4 words
 } as const;
 
 const flipY = (y: number): number => 1.0 - y;
@@ -70,6 +70,7 @@ export function packAuroraImageWGPUUniforms(
     cursor: AuroraCursorUniforms,
     timeSec: number,
     aspect: number,
+    outputAlpha = cfg.alpha,
 ): AuroraImageWGPUScratch {
     const { f32, i32 } = scratch;
 
@@ -88,7 +89,7 @@ export function packAuroraImageWGPUUniforms(
     // scalars2: uSaturation, uPaperGrain, uAlpha, uVividness
     f32[OFF.scalars2 + 0] = cfg.saturation;
     f32[OFF.scalars2 + 1] = cfg.paperGrain;
-    f32[OFF.scalars2 + 2] = cfg.alpha;
+    f32[OFF.scalars2 + 2] = outputAlpha;
     f32[OFF.scalars2 + 3] = cfg.vividness ?? DEFAULT_VIVIDNESS;
 
     // image: uBlurMin, uBlurMax, uImageAspect, _

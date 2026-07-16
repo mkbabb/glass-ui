@@ -1,12 +1,13 @@
 import { describe, expect, it } from "vitest";
 
 import {
-    oklabToLinearSRGB,
-    oklabToRgb255,
-    rawOklabToOklch,
-    rawOklchToOklab,
-    srgbToOKLab,
-} from "@mkbabb/value.js";
+    convertColor,
+    oklab,
+    oklch,
+    rgb,
+    type ColorIssue,
+    type Result,
+} from "@mkbabb/value.js/color";
 
 import {
     applyFakeSss,
@@ -55,6 +56,31 @@ function maxAbsDelta(a: readonly number[], b: readonly number[]): number {
     return m;
 }
 
+function value<T>(result: Result<T, ColorIssue>): T {
+    if (!result.ok) throw new Error(result.error.code);
+    return result.value;
+}
+
+function valueOklabFromRgb01(color: Vec3): Vec3 {
+    const source = value(rgb(color[0] * 255, color[1] * 255, color[2] * 255));
+    return [...value(convertColor(source, "oklab")).channels] as Vec3;
+}
+
+function valueOklchFromOklab(color: Vec3): Vec3 {
+    const source = value(oklab(color[0], color[1], color[2]));
+    return [...value(convertColor(source, "oklch")).channels] as Vec3;
+}
+
+function valueOklabFromOklchDegrees(color: Vec3): Vec3 {
+    const source = value(oklch(color[0], color[1], color[2]));
+    return [...value(convertColor(source, "oklab")).channels] as Vec3;
+}
+
+function valueLinearFromOklab(color: Vec3): Vec3 {
+    const source = value(oklab(color[0], color[1], color[2]));
+    return [...value(convertColor(source, "srgb-linear")).channels] as Vec3;
+}
+
 // value.js's EXACT linear→gamma sRGB transfer (transfer.ts / gamut.ts inline:
 // gamma 2.4, offset 0.055, slope 12.92, transition 0.04045/12.92 = 0.0031308).
 // value.js does not export it; reconstructed here from its published constants as
@@ -71,12 +97,16 @@ function valueJsLinearToSrgb(c: number): number {
 // perturbation and the same hue-preserving gamut clamp the port runs. Mirrors
 // `blobColorChain` using value.js for every space hop.
 function valueJsBlobChain(gammaRgb: Vec3): Vec3 {
-    const [L, a, b] = srgbToOKLab(gammaRgb[0], gammaRgb[1], gammaRgb[2]);
-    const [Lo, C, Hdeg] = rawOklabToOklch(L, a, b);
+    const [L, a, b] = valueOklabFromRgb01(gammaRgb);
+    const [Lo, C, Hdeg] = valueOklchFromOklab([L, a, b]);
     // gamut clamp in OKLCh radians (port-equivalent), then back via value.js.
     const clamped = gamutClampOklch([Lo, C, Hdeg * DEG2RAD]);
-    const [La, aa, bb] = rawOklchToOklab(clamped[0], clamped[1], (clamped[2] / DEG2RAD));
-    const lin = oklabToLinearSRGB(La, aa, bb);
+    const lab = valueOklabFromOklchDegrees([
+        clamped[0],
+        clamped[1],
+        clamped[2] / DEG2RAD,
+    ]);
+    const lin = valueLinearFromOklab(lab);
     return [
         Math.min(1, Math.max(0, valueJsLinearToSrgb(lin[0]))),
         Math.min(1, Math.max(0, valueJsLinearToSrgb(lin[1]))),
@@ -97,7 +127,9 @@ const hexToRgb01 = (hex: string): Vec3 => {
 // error cannot pass this by symmetry.
 const WITNESS = "#3a7bd5";
 
-const SPACE_COLORS = ["#ff0000", "#00ff00", "#0000ff"];
+// Interior red/green/blue witnesses avoid the non-convex exact-corner cusp where
+// either matrix's sub-1e-7 hue rounding legitimately selects a different chroma hull.
+const SPACE_COLORS = ["#cc3345", "#33cc66", "#3366cc"];
 
 describe("goo-blob OKLCh color path ≡ value.js Ottosson core (AU.W7, DEC-AT-7)", () => {
     // (1) round-trip identity — gamma → … → gamma on a mid gray returns the input.
@@ -113,12 +145,12 @@ describe("goo-blob OKLCh color path ≡ value.js Ottosson core (AU.W7, DEC-AT-7)
     it("(2) exact-matrix witness #3a7bd5: port srgbToOklab === value.js (1e-6, trap detector)", () => {
         const rgb = hexToRgb01(WITNESS);
         const portLab = srgbToOklab(rgb);
-        const refLab = srgbToOKLab(rgb[0], rgb[1], rgb[2]);
+        const refLab = valueOklabFromRgb01(rgb);
         const delta = maxAbsDelta(portLab, refLab);
         expect(delta).toBeLessThanOrEqual(EPS);
         // and the reverse leg: OKLab → linear sRGB.
         const portLin = oklabToLinearSrgb(portLab);
-        const refLin = oklabToLinearSRGB(refLab[0]!, refLab[1]!, refLab[2]!);
+        const refLin = valueLinearFromOklab(refLab);
         expect(maxAbsDelta(portLin, refLin)).toBeLessThanOrEqual(EPS);
     });
 
@@ -137,8 +169,8 @@ describe("goo-blob OKLCh color path ≡ value.js Ottosson core (AU.W7, DEC-AT-7)
         expect(maxAbsDelta(portV, refV)).toBeLessThanOrEqual(EPS);
     });
 
-    // (4) full-chain space check — 3 known colors agree with the value.js chain.
-    it("(4) full chain matches value.js on red/green/blue (1e-6)", () => {
+    // (4) full-chain space check — 3 interior colors agree with the value.js chain.
+    it("(4) full chain matches value.js across red/green/blue interiors (1e-6)", () => {
         for (const hex of SPACE_COLORS) {
             const rgb = hexToRgb01(hex);
             const got = blobColorChain(rgb);
@@ -208,8 +240,8 @@ describe("goo-blob OKLCh color path ≡ value.js Ottosson core (AU.W7, DEC-AT-7)
     it("(7) hue is in radians (not degrees)", () => {
         // value.js gives hue in degrees; convert and confirm the port round-trips it.
         const rgb = hexToRgb01(WITNESS);
-        const refLab = srgbToOKLab(rgb[0], rgb[1], rgb[2]);
-        const [, , HdegRef] = rawOklabToOklch(refLab[0]!, refLab[1]!, refLab[2]!);
+        const refLab = valueOklabFromRgb01(rgb);
+        const [, , HdegRef] = valueOklchFromOklab(refLab);
         const portLch = oklabToOklch(srgbToOklab(rgb));
         const portHdeg = (portLch[2] / DEG2RAD); // radians → degrees for comparison
         expect(Math.abs(portHdeg - HdegRef)).toBeLessThanOrEqual(1e-4);

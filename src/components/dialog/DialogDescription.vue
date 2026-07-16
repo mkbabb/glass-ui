@@ -1,24 +1,17 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
-import { DialogDescription, type DialogDescriptionProps, useForwardProps } from 'reka-ui'
-import { cn } from '../_shared/class-names'
+import type { HTMLAttributes } from "vue";
+import { DialogDescription as RekaDialogDescription } from "reka-ui";
+import { cn } from "../_shared/class-names";
 
-const props = defineProps<DialogDescriptionProps & { class?: HTMLAttributes['class'] }>()
+export interface DialogDescriptionProps {
+    class?: HTMLAttributes["class"];
+}
 
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
-
-  return delegated
-})
-
-const forwardedProps = useForwardProps(delegatedProps)
+const props = defineProps<DialogDescriptionProps>();
 </script>
 
 <template>
-  <DialogDescription
-    v-bind="forwardedProps"
-    :class="cn('text-sm text-muted-foreground', props.class)"
-  >
-    <slot />
-  </DialogDescription>
+    <RekaDialogDescription :class="cn('text-sm text-muted-foreground', props.class)">
+        <slot />
+    </RekaDialogDescription>
 </template>

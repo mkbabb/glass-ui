@@ -46,22 +46,22 @@ import { statsFromResolvedBg, paintBand, bandForTier } from "../scripts/lib/pain
 
 // The enrolled calm-page routes (the spec's named floor — /display/card, /dock/overview,
 // /containers/dialog over a calm light page). /substrates/glass-material is OMITTED: it is a
-// busy-aurora route (manifest `background: aurora`, hero: true), so its glass plates carry
+// page-aurora route (manifest `background: aurora`, hero: true), so its glass plates carry
 // the adaptive darken (the observer writes a non-zero --glass-tint-strength over the bright
 // field, pulling the card to L≈0.73 — the LEGITIMATE dynamic-range shift, NOT the calm-light
-// REST identity). The busy-field treatment is the dock-at-REST read below (AURORA_ROUTE),
-// twinned across both aurora-backed routes; the over-busy darken itself is W-ADAPTIVE-RECONCILE's.
+// REST identity). The busy-field treatment is the dock-at-REST read below; the over-busy
+// darken itself is W-ADAPTIVE-RECONCILE's. The Aurora route is not in this class: its paper
+// page contains one studio-owned field rather than wearing an aurora page backing.
 const ROUTES = [
     "/display/card",
     "/dock/overview",
     "/containers/dialog",
 ] as const;
 
-// The aurora routes read the dock-over-busy-field BASE: at REST the dock plate must read
+// Glass Material reads the dock-over-busy-field BASE: at REST the dock plate must read
 // warm-cream (not pre-greyed — the dock holds the calm floor at rest, the content tiers
-// darken); the dynamic darken over the busy field is W-ADAPTIVE-RECONCILE's. Both
-// aurora-backed routes (the dedicated aurora + glass-material's hero aurora) carry it.
-const AURORA_ROUTES = ["/substrates/aurora", "/substrates/glass-material"] as const;
+// darken); the dynamic darken over the busy field is W-ADAPTIVE-RECONCILE's.
+const PAGE_AURORA_ROUTE = "/substrates/glass-material" as const;
 
 interface SurfaceReadout {
     selector: string;
@@ -179,28 +179,26 @@ test.describe("glass-identity (the warm-cream partial-transparency base over a c
 
     // The dock over the busy aurora reads warm-cream at REST: the BASE plate is not
     // pre-greyed (the dynamic darken over the busy field is BC.W-ADAPTIVE-RECONCILE's job).
-    // The dock holds the calm floor at REST on BOTH aurora-backed routes (the dedicated
-    // aurora + glass-material's hero aurora); the content tiers on those routes carry the
-    // earned darken, so only the dock's at-REST plate is the calm-identity assertion here.
-    for (const auroraRoute of AURORA_ROUTES) {
-        test(`light: the dock over the busy aurora reads warm-cream at REST (the base is not pre-greyed) — ${auroraRoute}`, async ({ page }) => {
-            await page.goto(auroraRoute, { waitUntil: "networkidle" });
-            await setMode(page, "light");
+    // The dock holds the calm floor at REST over Glass Material's page-owned aurora; its
+    // content tiers carry the earned darken. Aurora's separate studio-owned field does not
+    // back the route dock and therefore does not belong in this classification.
+    test(`light: the dock over the busy aurora reads warm-cream at REST (the base is not pre-greyed) — ${PAGE_AURORA_ROUTE}`, async ({ page }) => {
+        await page.goto(PAGE_AURORA_ROUTE, { waitUntil: "networkidle" });
+        await setMode(page, "light");
 
-            const readouts = await readGlassSurfaces(page);
-            const dock = readouts.find((r) => r.selector === ".glass-dock");
-            expect(dock, `${auroraRoute}: no dock glass surface found (the dock-over-aurora base read)`).toBeTruthy();
+        const readouts = await readGlassSurfaces(page);
+        const dock = readouts.find((r) => r.selector === ".glass-dock");
+        expect(dock, `${PAGE_AURORA_ROUTE}: no dock glass surface found (the dock-over-aurora base read)`).toBeTruthy();
 
-            const stats = statsFromResolvedBg(dock!.surfaceBg);
-            expect(
-                stats,
-                `${auroraRoute} ${dock!.selector}: could not decompose "${dock!.surfaceBg}" (the dock-over-aurora base read is degenerate)`,
-            ).not.toBeNull();
-            const verdict = paintBand(stats, bandForTier(dock!.selector, "light"));
-            expect(
-                verdict.pass,
-                `${auroraRoute} ${dock!.selector}: the dock plate over the aurora is "${dock!.surfaceBg}" — NOT warm-cream at REST (${verdict.reasons.join("; ")}). This wave asserts the BASE is not pre-greyed; the dynamic over-busy darken is BC.W-ADAPTIVE-RECONCILE's.`,
-            ).toBe(true);
-        });
-    }
+        const stats = statsFromResolvedBg(dock!.surfaceBg);
+        expect(
+            stats,
+            `${PAGE_AURORA_ROUTE} ${dock!.selector}: could not decompose "${dock!.surfaceBg}" (the dock-over-aurora base read is degenerate)`,
+        ).not.toBeNull();
+        const verdict = paintBand(stats, bandForTier(dock!.selector, "light"));
+        expect(
+            verdict.pass,
+            `${PAGE_AURORA_ROUTE} ${dock!.selector}: the dock plate over the aurora is "${dock!.surfaceBg}" — NOT warm-cream at REST (${verdict.reasons.join("; ")}). This wave asserts the BASE is not pre-greyed; the dynamic over-busy darken is BC.W-ADAPTIVE-RECONCILE's.`,
+        ).toBe(true);
+    });
 });

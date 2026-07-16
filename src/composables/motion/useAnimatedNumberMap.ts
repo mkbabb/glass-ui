@@ -4,8 +4,7 @@
 // cleanup pair. It cannot be invoked inside a `v-for` because the surrounding
 // reactive scope is the wrong owner — the loop may unmount/recreate while
 // the smoother needs a stable rAF subscription. Consumers that want N-up
-// smoothing have hand-rolled the static fan-out (see speedtest's
-// `MetricPillCluster.vue:125-134` post-W4 rolled into `useMetricResult`).
+// smoothing otherwise hand-roll the static fan-out.
 //
 // `useAnimatedNumberMap` lifts the fan-out behind a single call. The keys
 // are fixed at creation; per-key sources are resolved lazily so consumers

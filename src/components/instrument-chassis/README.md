@@ -1,43 +1,37 @@
 # InstrumentChassis
 
-The instrument-panel chassis surface (`@mkbabb/glass-ui/instrument-chassis` + the root
-barrel). A bezelled glass instrument frame with groove dividers and a phase bus — the host
-for a live meter/dial (a speedtest gauge, a scoring readout) that reads as a physical
-instrument panel, not a flat card.
+One landmark-neutral physical instrument sleeve at
+`@mkbabb/glass-ui/instrument-chassis`.
 
 ```vue
-<InstrumentChassis :phase="phase">
-    <template #default>
-        <canvas ref="meter" />
-    </template>
+<InstrumentChassis
+    state="active"
+    tone="var(--accent)"
+    proportion="golden"
+    :boundaries="['stage-inspector', 'inspector-action']"
+>
+    <template #stage>Specimen</template>
+    <template #inspector>Controls</template>
+    <template #action>Actions</template>
 </InstrumentChassis>
-
-<InstrumentChassis variant="structure">…</InstrumentChassis>  <!-- the cool-metal register -->
 ```
 
-## Exports
+`stage` is the primary region. `inspector` and `action` render only when supplied.
+Wide compositions use the exact golden or preview-dominant ratio; narrow hosts keep
+stage → inspector → action document order. An absent inspector gives stage the full
+width.
 
-- **`InstrumentChassis`** — the chassis surface. `variant`: the default warm-glass register,
-  or `structure` (the silver cool-metal register — W-NO-GRAY's ONE sanctioned cool-neutral
-  exception, a brand METAL identity).
-- **`ChassisDivider`** — the groove-divider rule between chassis regions.
-- **`InstrumentChassisPhase`** / **`InstrumentChassisVariant`** — the phase + variant type
-  unions.
+Boundaries and reserves are explicit and default to none. The sleeve publishes one spacing
+tuple: `--instrument-dial-padding-inline`, `--instrument-dial-padding-block`, and
+`--instrument-dial-gap` govern the stage/inspector composition; the corresponding
+`--instrument-control-padding-inline`, `--instrument-control-padding-block`, and
+`--instrument-control-gap` properties govern the action region. The separate inherited
+`--instrument-title-gap` defaults to the dial inline padding divided by `2.618` for consumer title
+pairs; it is not another region-spacing value. The sleeve owns no universal minimum block size.
+When stable physical space is required, consumers opt into `stage`, `inspector`, or `both` reserve
+and supply `--instrument-stage-reserve` or `--instrument-inspector-reserve`; the component never
+derives either value from a viewport or dock.
 
-## The phase bus — the InstrumentChassis phase canon (BB.W-PHASE-PALETTE / N18)
-
-The `InstrumentChassisPhase` union (`ready | ping | download | upload | jitter | complete`)
-carries `"ping"` as the canonical generic-active phase (map any active-but-unspecialised
-state onto it; there is no per-domain `"scoring"` member). The four active arms read a
-consumer-registerable `--chart-{phase}` (with a `--viz-*` library fallback) so the bus carries
-phase IDENTITY. The `complete` phase resolves `--phase-complete-color` (default `--color-gold`)
-— gold is EARNED at completion, and a consumer (or any ancestor) re-inks completion by
-overriding the token, no library edit. Machine-locked by `proof:phase-palette`.
-
-## The wide-axis dial reserve — CLS≈0 (BB.W-DESKTOP-RESERVE)
-
-The dial cell reserves its settled block extent from frame 0 on BOTH axes (a STATIC
-`min-block-size` reservation, never an animated height), so the meter `<canvas>` + readout
-hydrate into an already-correct envelope. The desktop dial reads
-`--instrument-dial-min-block-size-desktop` (default the library's dock-adjusted dynamic-
-viewport guardrail); a consumer retunes THIS token. Machine-locked by `proof:desktop-reserve`.
+The component emits no landmark, title, interaction, product phase, or brand meaning.
+Consumers own all region semantics and map their domain state to `ready`, `active`,
+`complete`, or `loading`.

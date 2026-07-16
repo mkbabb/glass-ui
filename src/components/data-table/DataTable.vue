@@ -2,6 +2,7 @@
 import {
     computed,
     mergeProps,
+    nextTick,
     onBeforeUpdate,
     onUpdated,
     ref,
@@ -18,101 +19,51 @@ import {
     TableEmpty,
 } from "../table";
 import { Skeleton } from "../skeleton";
-// BI.W-MENU-TRIGGER — ContextMenu folded onto the Menu family as `trigger="context"`.
-import {
-    DropdownMenu,
-    DropdownMenuTrigger,
-    DropdownMenuContent,
-} from "../dropdown-menu";
-import DataTablePagination from "./DataTablePagination.vue";
-import type {
-    DataTableColumn,
-    DataTableRowAttrs,
-    DataTableRowRef,
-    DataTableSort,
-} from "./types";
+import type { DataTableColumn, DataTableProps, DataTableSort } from "./types";
 import {
     useDataTableRowIdentity,
     type RowEntry,
 } from "./composables/useDataTableRowIdentity";
 import { useDataTableResponsive } from "./composables/useDataTableResponsive";
-import { cn } from '../_shared/class-names';
+import { cn } from "../_shared/class-names";
 
-const props = withDefaults(
-    defineProps<{
-        columns: DataTableColumn<T>[];
-        rows: T[];
-        total: number;
-        pageSize: number;
-        isLoading?: boolean;
-        rowKey?: string;
-        getRowId?: (row: T) => PropertyKey | null | undefined;
-        role?: "grid";
-        ariaLabel?: string;
-        ariaColCount?: number;
-        ariaRowCount?: number;
-        getRowAttrs?: DataTableRowAttrs<T>;
-        rowRef?: DataTableRowRef<T>;
-        tabbableRowId?: PropertyKey | null;
-        sort?: DataTableSort;
-        /** Enables the controlled single-row selection contract. */
-        selectable?: boolean;
-        /** Stable identity of the selected row when `selectable` is true. */
-        selectedRowId?: PropertyKey | null;
-        infinite?: boolean;
-        hasMore?: boolean;
-        /**
-         * When true, the table collapses to a stacked card-per-row
-         * projection once its own container measures below
-         * `cardBreakpoint`. A dense multi-column table has no responsive
-         * story at narrow widths — a horizontal-scroll wrapper leaves
-         * half the columns invisible. The card projection keeps every
-         * field reachable: the first column becomes the card header
-         * (with the row-actions menu docked beside it), every other
-         * column renders as a label/value pair below. At/above the
-         * breakpoint the unchanged tabular layout renders.
-         */
-        responsive?: boolean;
-        /**
-         * Container-width (CSS px) below which `responsive` swaps to the
-         * card projection. Container-driven (not viewport-driven) so a
-         * table inside a narrow column collapses at any viewport width.
-         */
-        cardBreakpoint?: number;
-        class?: string;
-    }>(),
-    {
-        isLoading: false,
-        rowKey: "_id",
-        selectable: false,
-        infinite: false,
-        hasMore: false,
-        responsive: false,
-        cardBreakpoint: 640,
-    },
-);
-
-// Vue 3.5 defineModel — the page model ONLY. `update:sort` stays a plain emit
-// below: it carries a `{ key, direction }` payload and is an EVENT, not a
-// two-way model.
-const page = defineModel<number>("page", { required: true });
+const props = withDefaults(defineProps<DataTableProps<T>>(), {
+    status: "ready",
+    filtered: false,
+    rowKey: "_id",
+    selectable: false,
+    responsive: false,
+    cardBreakpoint: 640,
+});
 
 const emit = defineEmits<{
     "update:sort": [sort: DataTableSort];
     "update:selectedRowId": [id: PropertyKey];
+    "update:tabbableRowId": [id: PropertyKey];
     select: [row: T];
-    "load-more": [];
 }>();
 
 const slots = useSlots();
 const hasRowActions = computed(() => !!slots["row-actions"]);
-const hasRowContextMenu = computed(() => !!slots["row-context-menu"]);
+const tableRole = computed(
+    () =>
+        props.role ??
+        (props.selectable || props.tabbableRowId !== undefined ? "grid" : undefined),
+);
+const logicalColumnCount = computed(
+    () => props.ariaColCount ?? props.columns.length + (hasRowActions.value ? 1 : 0),
+);
+const logicalRowCount = computed(
+    () => props.ariaRowCount ?? (tableRole.value ? props.rows.length + 1 : undefined),
+);
+const renderedState = computed(() => {
+    if (props.status === "error") return "error";
+    if (props.status === "loading" && props.rows.length === 0) return "loading";
+    if (props.rows.length === 0) return props.filtered ? "filtered-empty" : "empty";
+    return props.status;
+});
 
-// Container-driven card mode — the SFC owns the `useResizeObserver` binding
-// (it holds the root element ref); `useDataTableResponsive` owns the
-// projection derivation (`isCard` + the card column split). The extraction
-// keeps the orchestrator/template here and the two orthogonal concerns
-// (row identity ≠ responsive layout) in colocated internal composables (W14).
+// The root owns measurement; the composable derives only the projection.
 const rootRef = ref<HTMLElement | null>(null);
 const rootWidth = ref(0);
 useResizeObserver(rootRef, (rect) => {
@@ -126,12 +77,11 @@ const { isCard, headerColumn, bodyColumns } = useDataTableResponsive<T>({
     containerWidth: rootWidth,
 });
 
-// Row identity — stable keying with missing/duplicate validation + a generated
-// fallback — lives in `useDataTableRowIdentity`.
+// Stable identity validation stays separate from rendering and interaction.
 const { rowEntries } = useDataTableRowIdentity<T>({
     rows: () => props.rows,
     rowKey: () => props.rowKey,
-    getRowId: () => props.getRowId,
+    getRowId: computed(() => props.getRowId),
 });
 
 const rowEls = new Map<PropertyKey, HTMLElement>();
@@ -155,12 +105,8 @@ onUpdated(() => {
     focusedRowKey = null;
 });
 
-const skeletonRows = computed(() =>
-    Array.from({ length: Math.min(props.pageSize, 5) }, (_, i) => i),
-);
+const skeletonRows = Array.from({ length: 5 }, (_, index) => index);
 
-// `getNestedValue` stays in the SFC — the template's per-cell `:value` bindings
-// read it directly (it is not a row-identity concern).
 function getNestedValue(obj: unknown, key: string): unknown {
     return key.split(".").reduce<unknown>((o, k) => {
         if (o == null || typeof o !== "object") return undefined;
@@ -172,12 +118,6 @@ function getCellValue(row: T, col: DataTableColumn<T>): string {
     const raw = getNestedValue(row, col.key);
     if (col.formatter) return col.formatter(raw, row);
     return raw == null ? "—" : String(raw);
-}
-
-function getAlignClass(align?: string): string {
-    if (align === "right") return "text-right";
-    if (align === "center") return "text-center";
-    return "text-left";
 }
 
 function toggleSort(col: DataTableColumn<T>) {
@@ -193,7 +133,9 @@ function toggleSort(col: DataTableColumn<T>) {
     }
 }
 
-function ariaSort(col: DataTableColumn<T>): "none" | "ascending" | "descending" | undefined {
+function ariaSort(
+    col: DataTableColumn<T>,
+): "none" | "ascending" | "descending" | undefined {
     if (!col.sortable) return undefined;
     if (props.sort?.key !== col.key) return "none";
     return props.sort.direction === "asc" ? "ascending" : "descending";
@@ -211,7 +153,9 @@ function isSelected(entry: RowEntry<T>): boolean {
 
 function selectRow(entry: RowEntry<T>): void {
     emit("update:selectedRowId", entry.key);
+    emit("update:tabbableRowId", entry.key);
     emit("select", entry.row);
+    rowEls.get(entry.key)?.focus({ preventScroll: true });
 }
 
 function onRowClick(event: MouseEvent, entry: RowEntry<T>): void {
@@ -223,29 +167,55 @@ function onRowClick(event: MouseEvent, entry: RowEntry<T>): void {
 }
 
 function onRowKeydown(event: KeyboardEvent, entry: RowEntry<T>): void {
-    if (event.target !== event.currentTarget || !["Enter", " "].includes(event.key)) {
+    if (event.target !== event.currentTarget) return;
+    if (["Enter", " "].includes(event.key)) {
+        if (!props.selectable) return;
+        event.preventDefault();
+        selectRow(entry);
         return;
     }
+    const edge =
+        event.key === "Home"
+            ? 0
+            : event.key === "End"
+              ? rowEntries.value.length - 1
+              : -1;
+    const delta = event.key === "ArrowUp" ? -1 : event.key === "ArrowDown" ? 1 : 0;
+    if (edge < 0 && delta === 0) return;
+    const current = rowEntries.value.findIndex(({ key }) => Object.is(key, entry.key));
+    const nextIndex = Math.max(
+        0,
+        Math.min(rowEntries.value.length - 1, edge >= 0 ? edge : current + delta),
+    );
+    const next = rowEntries.value[nextIndex];
+    if (!next) return;
     event.preventDefault();
-    selectRow(entry);
+    emit("update:tabbableRowId", next.key);
+    void nextTick(() => rowEls.get(next.key)?.focus({ preventScroll: true }));
 }
 
-function rowInteraction(
-    entry: RowEntry<T>,
-    card = false,
-): Record<string, unknown> {
+const tabbableKey = computed<PropertyKey | null>(() => {
+    if (props.tabbableRowId !== undefined) {
+        return rowEntries.value.some(({ key }) => Object.is(key, props.tabbableRowId))
+            ? props.tabbableRowId
+            : null;
+    }
+    if (!props.selectable) return null;
+    const selected = rowEntries.value.find(({ key }) =>
+        Object.is(key, props.selectedRowId),
+    );
+    return selected?.key ?? rowEntries.value[0]?.key ?? null;
+});
+
+function rowInteraction(entry: RowEntry<T>, card = false): Record<string, unknown> {
     if (!props.selectable) return {};
     const selected = isSelected(entry);
     return {
-        class: card
-            ? "interactive-item focus-ring cursor-pointer"
-            : "focus-ring cursor-pointer",
+        class: "data-table-row-interactive",
         role: card ? "option" : undefined,
-        tabindex: 0,
         "aria-selected": selected,
         "data-state": selected ? "selected" : undefined,
         onClick: (event: MouseEvent) => onRowClick(event, entry),
-        onKeydown: (event: KeyboardEvent) => onRowKeydown(event, entry),
     };
 }
 
@@ -258,27 +228,50 @@ function rowBindings(
         ...props.getRowAttrs?.(entry.row, index),
     } as Record<string, unknown>;
     if (card) delete attrs["aria-rowindex"];
-    const roving =
-        props.tabbableRowId === undefined
-            ? {}
-            : { tabindex: Object.is(props.tabbableRowId, entry.key) ? 0 : -1 };
+    else if (props.getRowIndex)
+        attrs["aria-rowindex"] = props.getRowIndex(entry.row, index);
+    const focusable = props.selectable || props.tabbableRowId !== undefined;
+    const roving = focusable
+        ? {
+              class: "focus-ring",
+              tabindex: Object.is(tabbableKey.value, entry.key) ? 0 : -1,
+              onFocus: () => emit("update:tabbableRowId", entry.key),
+              onKeydown: (event: KeyboardEvent) => onRowKeydown(event, entry),
+          }
+        : {};
     return mergeProps(attrs, rowInteraction(entry, card), roving);
 }
-
 </script>
 
 <template>
-    <div data-slot="data-table" ref="rootRef" :class="cn('overflow-hidden', props.class)">
+    <div
+        data-slot="data-table"
+        ref="rootRef"
+        :class="cn('data-table', props.class)"
+        :data-state="renderedState"
+        :aria-busy="status === 'loading' || undefined"
+    >
         <!-- ── Card projection (responsive, narrow container) ────────── -->
         <template v-if="isCard">
             <!-- Loading skeleton -->
-            <div v-if="isLoading && rows.length === 0" class="flex flex-col gap-2">
+            <div
+                v-if="status === 'error'"
+                class="data-table-state glass-quiet"
+                role="alert"
+            >
+                <slot name="error">Unable to load data</slot>
+            </div>
+
+            <div
+                v-else-if="status === 'loading' && rows.length === 0"
+                class="data-table-cards"
+            >
                 <div
                     v-for="i in skeletonRows"
                     :key="'skel-card-' + i"
-                    class="rounded-lg border border-border p-3"
+                    class="data-table-card glass-quiet"
                 >
-                    <Skeleton class="mb-2 h-4 w-1/2" />
+                    <Skeleton class="data-table-card-skeleton-title" />
                     <Skeleton class="h-3 w-3/4" />
                 </div>
             </div>
@@ -286,134 +279,92 @@ function rowBindings(
             <!-- Data cards -->
             <div
                 v-else-if="rows.length > 0"
-                class="flex flex-col gap-2"
+                class="data-table-cards"
                 :role="selectable ? 'listbox' : undefined"
-                :aria-label="selectable ? 'Rows' : undefined"
+                :aria-label="selectable ? (ariaLabel ?? 'Rows') : undefined"
             >
-                <template v-for="(entry, index) in rowEntries" :key="entry.key">
-                    <component
-                        :is="hasRowContextMenu ? DropdownMenu : 'div'"
-                        :trigger="hasRowContextMenu ? 'context' : undefined"
-                    >
-                        <component
-                            :is="hasRowContextMenu ? DropdownMenuTrigger : 'div'"
-                            :as-child="hasRowContextMenu ? true : undefined"
+                <div
+                    v-for="(entry, index) in rowEntries"
+                    :key="entry.key"
+                    :ref="(el) => setRowEl(entry, index, el)"
+                    v-bind="rowBindings(entry, index, true)"
+                    class="data-table-card glass-quiet"
+                >
+                    <div class="data-table-card-header">
+                        <div class="data-table-card-title">
+                            <component
+                                v-if="headerColumn?.component"
+                                :is="headerColumn.component"
+                                :value="getNestedValue(entry.row, headerColumn.key)"
+                                :row="entry.row"
+                            />
+                            <template v-else-if="headerColumn">
+                                {{ getCellValue(entry.row, headerColumn) }}
+                            </template>
+                        </div>
+                        <div
+                            v-if="hasRowActions"
+                            class="data-table-actions"
+                            @click.stop
                         >
-                            <div
-                                :ref="(el) => setRowEl(entry, index, el)"
-                                v-bind="rowBindings(entry, index, true)"
-                                class="rounded-lg border border-border p-3 transition-colors"
-                            >
-                                <!-- Header line — first column + actions -->
-                                <div class="flex items-start justify-between gap-2">
-                                    <div class="min-w-0 font-medium">
-                                        <component
-                                            v-if="headerColumn?.component"
-                                            :is="headerColumn.component"
-                                            :value="getNestedValue(entry.row, headerColumn.key)"
-                                            :row="entry.row"
-                                        />
-                                        <template v-else-if="headerColumn">
-                                            {{ getCellValue(entry.row, headerColumn) }}
-                                        </template>
-                                    </div>
-                                    <div
-                                        v-if="hasRowActions"
-                                        class="shrink-0"
-                                        @click.stop
-                                    >
-                                        <slot name="row-actions" :row="entry.row" />
-                                    </div>
-                                </div>
+                            <slot name="row-actions" :row="entry.row" />
+                        </div>
+                    </div>
 
-                                <!-- Body — every other column as label/value -->
-                                <dl
-                                    v-if="bodyColumns.length > 0"
-                                    class="mt-2 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1"
-                                >
-                                    <template
-                                        v-for="col in bodyColumns"
-                                        :key="col.key"
-                                    >
-                                        <dt class="text-muted-foreground">
-                                            {{ col.label }}
-                                        </dt>
-                                        <dd
-                                            :class="
-                                                cn(
-                                                    'min-w-0 break-words',
-                                                    col.align === 'right' && 'text-right',
-                                                    col.class,
-                                                )
-                                            "
-                                        >
-                                            <component
-                                                v-if="col.component"
-                                                :is="col.component"
-                                                :value="getNestedValue(entry.row, col.key)"
-                                                :row="entry.row"
-                                            />
-                                            <template v-else>
-                                                {{ getCellValue(entry.row, col) }}
-                                            </template>
-                                        </dd>
-                                    </template>
-                                </dl>
-                            </div>
-                        </component>
-                        <DropdownMenuContent v-if="hasRowContextMenu">
-                            <slot name="row-context-menu" :row="entry.row" />
-                        </DropdownMenuContent>
-                    </component>
-                </template>
+                    <dl v-if="bodyColumns.length > 0" class="data-table-card-fields">
+                        <template v-for="col in bodyColumns" :key="col.key">
+                            <dt class="data-table-card-label">{{ col.label }}</dt>
+                            <dd
+                                :class="cn('data-table-card-value', col.class)"
+                                :data-align="col.align ?? 'left'"
+                            >
+                                <component
+                                    v-if="col.component"
+                                    :is="col.component"
+                                    :value="getNestedValue(entry.row, col.key)"
+                                    :row="entry.row"
+                                />
+                                <template v-else>{{
+                                    getCellValue(entry.row, col)
+                                }}</template>
+                            </dd>
+                        </template>
+                    </dl>
+                </div>
             </div>
 
             <!-- Empty state -->
-            <div
-                v-else
-                class="rounded-lg border border-border p-6 text-center text-muted-foreground"
-            >
-                <slot name="empty">No results found</slot>
+            <div v-else class="data-table-state glass-quiet">
+                <slot v-if="filtered" name="filtered-empty">No matching rows</slot>
+                <slot v-else name="empty">No rows yet</slot>
             </div>
         </template>
 
         <!-- ── Tabular layout (default + wide container) ─────────────── -->
         <Table
             v-else
-            :role="role"
+            :role="tableRole"
             :aria-label="ariaLabel"
-            :aria-col-count="ariaColCount"
-            :aria-row-count="ariaRowCount"
+            :aria-col-count="logicalColumnCount"
+            :aria-row-count="logicalRowCount"
         >
             <TableHeader>
                 <TableRow
-                    class="text-muted-foreground"
-                    :aria-rowindex="role === 'grid' ? 1 : undefined"
+                    class="data-table-header-row"
+                    :aria-rowindex="tableRole === 'grid' ? 1 : undefined"
                 >
                     <TableHead
                         v-for="col in columns"
                         :key="col.key"
-                        :class="
-                            cn(
-                                getAlignClass(col.align),
-                                col.headerClass,
-                            )
-                        "
+                        :class="col.headerClass"
+                        :data-align="col.align ?? 'left'"
                         :aria-sort="ariaSort(col)"
                     >
                         <button
                             v-if="col.sortable"
                             type="button"
-                            :class="
-                                cn(
-                                    'focus-ring inline-flex w-full cursor-pointer items-center gap-1 rounded-sm',
-                                    col.align === 'right'
-                                        ? 'justify-end'
-                                        : col.align === 'center'
-                                          ? 'justify-center'
-                                          : 'justify-start',
-                                )
-                            "
+                            class="data-table-sort focus-ring"
+                            :data-align="col.align ?? 'left'"
                             @click="toggleSort(col)"
                         >
                             <span>{{ col.label }}</span>
@@ -422,111 +373,85 @@ function rowBindings(
                         <template v-else>{{ col.label }}</template>
                     </TableHead>
                     <!-- Trailing actions column header (auto when row-actions slot is provided) -->
-                    <TableHead v-if="hasRowActions" class="w-10" />
+                    <TableHead v-if="hasRowActions" class="data-table-actions-cell" />
                 </TableRow>
             </TableHeader>
 
             <TableBody>
                 <!-- Loading skeleton -->
-                <template v-if="isLoading && rows.length === 0">
+                <TableEmpty
+                    v-if="status === 'error'"
+                    :colspan="columns.length + (hasRowActions ? 1 : 0)"
+                    :role="tableRole === 'grid' ? 'presentation' : undefined"
+                >
+                    <span role="alert"
+                        ><slot name="error">Unable to load data</slot></span
+                    >
+                </TableEmpty>
+
+                <template v-else-if="status === 'loading' && rows.length === 0">
                     <TableRow v-for="i in skeletonRows" :key="'skel-' + i">
                         <TableCell
                             v-for="col in columns"
                             :key="col.key"
-                            :class="getAlignClass(col.align)"
+                            :data-align="col.align ?? 'left'"
                         >
-                            <Skeleton class="h-4 w-3/4" />
+                            <Skeleton class="data-table-cell-skeleton" />
                         </TableCell>
-                        <TableCell v-if="hasRowActions" class="w-10">
-                            <Skeleton class="h-4 w-6" />
+                        <TableCell v-if="hasRowActions" class="data-table-actions-cell">
+                            <Skeleton class="data-table-action-skeleton" />
                         </TableCell>
                     </TableRow>
                 </template>
 
                 <!-- Data rows -->
                 <template v-else-if="rows.length > 0">
-                    <template v-for="(entry, index) in rowEntries" :key="entry.key">
-                        <!-- Row with right-click context menu -->
-                        <DropdownMenu v-if="hasRowContextMenu" trigger="context">
-                            <DropdownMenuTrigger as-child>
-                                <TableRow
-                                    :ref="(el) => setRowEl(entry, index, el)"
-                                    v-bind="rowBindings(entry, index)"
-                                >
-                                    <TableCell
-                                        v-for="col in columns"
-                                        :key="col.key"
-                                        :class="cn(getAlignClass(col.align), col.class)"
-                                    >
-                                        <component
-                                            v-if="col.component"
-                                            :is="col.component"
-                                            :value="getNestedValue(entry.row, col.key)"
-                                            :row="entry.row"
-                                        />
-                                        <template v-else>
-                                            {{ getCellValue(entry.row, col) }}
-                                        </template>
-                                    </TableCell>
-                                    <TableCell v-if="hasRowActions" class="w-10" @click.stop>
-                                        <slot name="row-actions" :row="entry.row" />
-                                    </TableCell>
-                                </TableRow>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent>
-                                <slot name="row-context-menu" :row="entry.row" />
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-
-                        <!-- Plain row (no context menu) -->
-                        <TableRow
-                            v-else
-                            :ref="(el) => setRowEl(entry, index, el)"
-                            v-bind="rowBindings(entry, index)"
+                    <TableRow
+                        v-for="(entry, index) in rowEntries"
+                        :key="entry.key"
+                        :ref="(el) => setRowEl(entry, index, el)"
+                        v-bind="rowBindings(entry, index)"
+                    >
+                        <TableCell
+                            v-for="col in columns"
+                            :key="col.key"
+                            :class="col.class"
+                            :data-align="col.align ?? 'left'"
                         >
-                            <TableCell
-                                v-for="col in columns"
-                                :key="col.key"
-                                :class="cn(getAlignClass(col.align), col.class)"
-                            >
-                                <component
-                                    v-if="col.component"
-                                    :is="col.component"
-                                    :value="getNestedValue(entry.row, col.key)"
-                                    :row="entry.row"
-                                />
-                                <template v-else>
-                                    {{ getCellValue(entry.row, col) }}
-                                </template>
-                            </TableCell>
-                            <TableCell v-if="hasRowActions" class="w-10" @click.stop>
-                                <slot name="row-actions" :row="entry.row" />
-                            </TableCell>
-                        </TableRow>
-                    </template>
+                            <component
+                                v-if="col.component"
+                                :is="col.component"
+                                :value="getNestedValue(entry.row, col.key)"
+                                :row="entry.row"
+                            />
+                            <template v-else>{{
+                                getCellValue(entry.row, col)
+                            }}</template>
+                        </TableCell>
+                        <TableCell
+                            v-if="hasRowActions"
+                            class="data-table-actions-cell"
+                            @click.stop
+                        >
+                            <slot name="row-actions" :row="entry.row" />
+                        </TableCell>
+                    </TableRow>
                 </template>
 
                 <!-- Empty state -->
                 <TableEmpty
                     v-else
                     :colspan="columns.length + (hasRowActions ? 1 : 0)"
-                    :role="role === 'grid' ? 'presentation' : undefined"
+                    :role="tableRole === 'grid' ? 'presentation' : undefined"
                 >
-                    <slot name="empty">No results found</slot>
+                    <slot v-if="filtered" name="filtered-empty">No matching rows</slot>
+                    <slot v-else name="empty">No rows yet</slot>
                 </TableEmpty>
             </TableBody>
         </Table>
 
-        <!-- Infinite scroll sentinel -->
-        <slot v-if="infinite" name="sentinel" />
-
-        <!-- Pagination -->
-        <DataTablePagination
-            v-if="!infinite && total > 0"
-            :page="page"
-            :page-size="pageSize"
-            :total="total"
-            @update:page="page = $event"
-        />
+        <slot name="sentinel" />
     </div>
 </template>
+
+<style src="./styles.css"></style>

@@ -81,9 +81,7 @@ import type {
  */
 export function supportsWebGPU(): boolean {
     return (
-        typeof navigator !== "undefined" &&
-        "gpu" in navigator &&
-        navigator.gpu != null
+        typeof navigator !== "undefined" && "gpu" in navigator && navigator.gpu != null
     );
 }
 
@@ -133,7 +131,10 @@ function acquireSharedDevice(
     if (sharedDevicePromise) return sharedDevicePromise;
     if (!supportsWebGPU()) {
         return Promise.reject(
-            new WebGPUInitError("no-navigator-gpu", "[useWebGPUCanvas] navigator.gpu unavailable"),
+            new WebGPUInitError(
+                "no-navigator-gpu",
+                "[useWebGPUCanvas] navigator.gpu unavailable",
+            ),
         );
     }
     const warm = (async (): Promise<SharedGPUDevice> => {
@@ -195,6 +196,7 @@ export function createWebGPUCanvas(
     let frameHooks: WebGPUCanvasFrame | null = null;
     let disposed = false;
     let acquiring: Promise<void> | null = null;
+    let fatalError: unknown = null;
     let adapterClass = "Acquiring adapter";
 
     // The leaf-supplied self-heal callbacks (set by `bindContextEvents`). On a device
@@ -252,19 +254,23 @@ export function createWebGPUCanvas(
             frame: (t) => frameHooks?.frame(t),
             shouldContinue: () => frameHooks?.shouldContinue() ?? false,
             time: (e) => frameHooks?.time?.(e) ?? e,
-            teardown: () => {
-                frameHooks?.teardown?.();
-                device?.removeEventListener("uncapturederror", onUncapturedError);
-                context = null;
-                frameHooks = null;
-                validationProbe = null;
-            },
+            teardown: releaseContext,
         };
     }
 
     function onUncapturedError(e: Event): void {
         const err = (e as GPUUncapturedErrorEvent).error;
         options.onInitError?.(err);
+    }
+
+    /** Release this canvas's presentation resources without destroying the shared device. */
+    function releaseContext(): void {
+        frameHooks?.teardown?.();
+        device?.removeEventListener("uncapturederror", onUncapturedError);
+        context?.unconfigure();
+        context = null;
+        frameHooks = null;
+        validationProbe = null;
     }
 
     /**
@@ -296,9 +302,29 @@ export function createWebGPUCanvas(
         composeIntersectionPark: options.composeIntersectionPark,
         intersectionRootMargin: options.intersectionRootMargin,
         revealBloom: options.revealBloom,
+        onContextStateChange: (state) => {
+            if (state === "lost") {
+                options.onContextStateChange?.(state);
+                return;
+            }
+
+            // A rebuilt context is not ready until its pipeline probe settles cleanly.
+            // Keep the existing renderer-status channel pending across that promise;
+            // `buildContext` already projects a failed probe through `onInitError`.
+            const probe = validationProbe;
+            if (!probe) {
+                options.onContextStateChange?.(state);
+                return;
+            }
+            void probe.then((error) => {
+                if (!disposed && !error && validationProbe === probe) {
+                    options.onContextStateChange?.(state);
+                }
+            });
+        },
+        onContextError: (error) => options.onInitError?.(error),
         buildContext,
-        // The leaf hands the freshly-computed BackingSize (when it owns sizing); forward
-        // it to the consumer's upload-only resize. Legacy consumers ignore the arg.
+        // Forward the leaf's freshly-computed BackingSize to the consumer.
         resize: (s) => frameHooks?.resize(s),
         // Bind the WebGPU device-loss self-heal (the twin of the WebGL
         // `webglcontextlost`/`restored` pair). The leaf hands us `rebuild`
@@ -367,19 +393,31 @@ export function createWebGPUCanvas(
             if (disposed) return;
             // The dead device's hooks are stale — park the surface.
             markContextLostFromLeaf?.();
+            releaseContext();
             device = null;
-            if (info.reason === "destroyed") return; // intentional dispose
+            if (info.reason === "destroyed") {
+                const error = new Error(
+                    `[useWebGPUCanvas] device destroyed${info.message ? ` (${info.message})` : ""}`,
+                );
+                fatalError = error;
+                options.onInitError?.(error);
+                return;
+            }
             // Driver TDR / unexpected loss — re-acquire then rebuild.
             void acquireDevice()
                 .then(() => {
                     if (!disposed) rebuildFromLeaf?.();
                 })
-                .catch((err) => options.onInitError?.(err));
+                .catch((err) => {
+                    fatalError = err;
+                    options.onInitError?.(err);
+                });
         });
     }
 
     async function armAsync(): Promise<void> {
         if (disposed) return;
+        if (fatalError) throw fatalError;
         if (acquiring) return acquiring;
         if (device) {
             lifecycle.arm();
@@ -403,11 +441,9 @@ export function createWebGPUCanvas(
                 // ran `buildContext` → `setup` + the one-shot probe draw inside the
                 // `pushErrorScope("validation")` bracket; `validationProbe` is the pop
                 // promise. AWAIT it: a non-null error means the consumer's pipeline/shader
-                // failed validation on THIS host (a headless software-Metal adapter that
-                // reports `apple/metal-3` yet cannot validate the metaball pipeline). Park
-                // + reject with the typed signal so the picker falls to the WebGL2 net,
-                // never the per-frame `[Invalid RenderPipeline]` flood. On a real GPU the
-                // pipeline validates → null → the WebGPU path is byte-untouched.
+                // failed validation on THIS host. Park + reject with the typed signal so
+                // the attributed pipeline failure remains explicit and the per-frame
+                // `[Invalid RenderPipeline]` flood never starts.
                 if (validationProbe) {
                     // Hold the loop parked across the (async) validation pop so the rAF
                     // never submits an as-yet-unverified pipeline (no flood window). The
@@ -422,12 +458,14 @@ export function createWebGPUCanvas(
                     if (validationError) {
                         throw new WebGPUInitError(
                             "pipeline-validation",
-                            `[useWebGPUCanvas] pipeline failed validation (${validationError.message}) — falling to the WebGL2 net`,
+                            `[useWebGPUCanvas] pipeline failed validation (${validationError.message})`,
                         );
                     }
                     if (parkAcrossProbe) lifecycle.resume("manual");
                 }
             } catch (err) {
+                fatalError = err;
+                releaseContext();
                 // A recognized init failure (no adapter / device reject / no
                 // navigator.gpu) is a SUBSTRATE DECISION the picker handles — REJECT so
                 // the picker's `try` falls to the WebGL2 net, but do NOT fire

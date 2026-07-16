@@ -20,13 +20,10 @@ import {
 } from "@glass/components/carousel";
 import { PagerDots } from "@glass/components/pager-dots";
 import { FadingScroll } from "@glass/components/fading-scroll";
-import { IconChip } from "@glass/components/icon-chip";
-import { GalleryHorizontal } from "@lucide/vue";
 import { cn } from "@glass/components/_shared/class-names";
 
 // BC.W-SUFFUSE-reconcile — the navigation band's ONE coherent --section-color-12 indigo
 // identity (PH3-safe inline borderLeft, not the double-header shape).
-const NAV_STOP = 12;
 
 const swatches = [
     { hue: 24, title: "Warm Cream", note: "base surface" },
@@ -53,10 +50,7 @@ const windowed = Array.from({ length: 12 }, (_, i) => ({
     hue: 24 + i * 26,
 }));
 
-// ── Exhibit 1 — hero: single-card glass scroller + the drag-scrub worm focal ─────────
-// The worm SCRUB position feeds PagerDots continuously: it follows embla `scrollProgress`
-// during a drag (and the weighty programmatic snap), so the pager worm morphs with the
-// finger — driving PagerDots' internal `useLeadTrail` through the fractional `:active`.
+// ── Exhibit 1 — hero: single-card glass scroller + semantic pager ────────────────────
 const heroApi = ref<CarouselApi>();
 const heroScrub = ref(0);
 
@@ -84,21 +78,10 @@ function stopAutoplay() {
 }
 onBeforeUnmount(stopAutoplay);
 
-// The drag-scrub — the finger-follow core. On every embla `scroll` the worm scrub tracks
-// the live fractional slide position (`scrollProgress() × lastIndex`); PagerDots receives it
-// as a fractional `:active` and drives its worm's `useLeadTrail` toward the nearest dot, so
-// the worm morphs WITH the scroll. On `select` (settle) the scrub lands on the integer snap.
-function onHeroScroll() {
-    const api = heroApi.value;
-    if (!api) return;
-    const last = Math.max(1, api.scrollSnapList().length - 1);
-    heroScrub.value = Math.min(last, Math.max(0, api.scrollProgress() * last));
-}
 function setHeroApi(api: CarouselApi | undefined) {
     if (!api) return;
     heroApi.value = api;
     heroScrub.value = api.selectedScrollSnap();
-    api.on("scroll", onHeroScroll);
     api.on("select", () => {
         heroScrub.value = api.selectedScrollSnap();
     });
@@ -116,22 +99,6 @@ const windowActive = ref(0);
 
 <template>
     <StoryPage>
-        <header
-            class="story-color-event flex items-center gap-4 pl-5"
-            :style="{
-                '--section-label-accent': `var(--section-color-${NAV_STOP})`,
-            }"
-        >
-            <IconChip :icon="GalleryHorizontal" :section="NAV_STOP" bloom reveal />
-            <div class="flex flex-col gap-1">
-                <span class="section-label--tinted text-admin-label">
-                    Navigation · Carousel
-                </span>
-                <p class="text-small text-muted-foreground">
-                    Crisp weighty embla scrollers — the pager worm is the ONE metaball morph.
-                </p>
-            </div>
-        </header>
 
         <!-- ── EXHIBIT 1 — hero: single-card glass scroller + drag-scrub worm focal ── -->
         <StorySection heading="Hero — single-card scroller, worm focal" gap="md">

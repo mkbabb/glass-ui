@@ -5,7 +5,7 @@
 // dominant shape is so uniform that the page can be DATA, not hand-authored
 // template: a `StoryBody` object declares the sections + their specimens, and
 // `StoryBodyRenderer` expands it into the ONE specimen kit (StorySection →
-// SpecimenFrame / PermutationGrid → CodeBlock). "Real permutations, no oversize
+// ShowcaseFrame → CodeBlock). "Real permutations, no oversize
 // specimen, no meta prose" becomes UN-EXPRESSIBLE by construction, not gate-caught.
 //
 // This module is PURE DATA — types only, ZERO Vue runtime (no `ref`/`reactive`,
@@ -21,10 +21,8 @@
 import type { Component } from "vue";
 
 /**
- * The reading-measure cap forwarded to each <SpecimenFrame>. `md` (default) bounds
- * the specimen well under the article width; `fluid` is UNCAPPED and must be
- * declared (a full-bleed grid cell), so an accidental full-width specimen — the
- * ss-14 "outrageously sized" trigger — cannot ship from a data page either.
+ * The reading-measure cap applied to a section's flat specimen row. `fluid` leaves
+ * the row uncapped; the other rungs preserve an intentional reading measure.
  */
 export type SpecimenSize = "sm" | "md" | "prose" | "fluid";
 
@@ -42,16 +40,12 @@ export type SpecimenTag = Component | string;
  * + " Active" label). Recursive, but still pure data — a node is `{ component,
  * props, slots }`, never a closure.
  */
-export type SlotContent =
-    | string
-    | SpecimenSpec
-    | ReadonlyArray<string | SpecimenSpec>;
+export type SlotContent = string | SpecimenSpec | ReadonlyArray<string | SpecimenSpec>;
 
 /**
- * ONE specimen — a real library instance the renderer mounts inside a SpecimenFrame
- * (or a PermutationGrid cell). A leaf node (`component` + props + models + slots)
- * OR a composed field (`stack` of child nodes in one frame, e.g. Label + Input +
- * hint). Never both.
+ * ONE specimen — a real library instance the renderer mounts bare in a section or
+ * inside a ShowcaseFrame permutation cell. A leaf node (`component` + props +
+ * models + slots) OR a composed field (`stack` of child nodes). Never both.
  */
 export interface SpecimenSpec {
     /**
@@ -83,14 +77,8 @@ export interface SpecimenSpec {
      * over its Input over its error hint reads as one control, not three frames).
      */
     stack?: SpecimenSpec[];
-    /** An optional per-frame heading / eyebrow / blurb. */
-    heading?: string;
-    label?: string;
-    blurb?: string;
-    /** The per-specimen frame size cap (else inherits the section's `size`). */
-    size?: SpecimenSize;
     /**
-     * An explicit accessible name for the specimen frame. Absent, the renderer
+     * An explicit accessible name for the specimen. Absent, the renderer
      * AUTO-derives one from the model/prop combo (`variant: outline, size: sm`) so
      * a permutation cell is never an unlabeled swatch.
      */
@@ -99,7 +87,7 @@ export interface SpecimenSpec {
 
 /**
  * One axis of a cartesian permutation: `prop` takes each of `values` in turn. The
- * PermutationGrid multiplies axes into a bounded labeled grid of REAL instances,
+ * The renderer multiplies axes into a bounded labeled grid of REAL instances,
  * each cell its own isolated model (a permute cell never shares state with its
  * neighbour) + an auto aria-label from the combo.
  */
@@ -123,7 +111,7 @@ export interface PermuteSpec {
     base: SpecimenSpec;
     /** The axes multiplied into the grid. */
     axes: PermuteAxis[];
-    /** The min cell inline-size the auto-fit grid reflows against (PermutationGrid). */
+    /** The min cell inline-size the ordinary auto-fit grid reflows against. */
     minCell?: string;
 }
 
@@ -140,16 +128,15 @@ export interface SectionSpec {
     label?: string;
     /** Muted supporting prose under the header, before the specimens. */
     blurb?: string;
-    /** The size cap forwarded to every specimen frame in this section. */
+    /** The size cap applied to this section's flat specimen row. */
     size?: SpecimenSize;
-    /** A cartesian variant grid (rendered as a <PermutationGrid>). */
+    /** A cartesian variant grid rendered as ShowcaseFrame cells. */
     permute?: PermuteSpec;
     /**
      * A flat list of specimens — rendered as a BARE wrap-row directly under the
      * <StorySection> (a row of Badges, an Alert, an Input in its measure), never a
-     * redundant glass-on-glass SpecimenFrame per item (byte-identical to the
-     * hand-authored original). The SpecimenFrame host earns its keep in `permute`,
-     * where PermutationGrid frames each variant cell.
+     * redundant glass-on-glass frame per item (byte-identical to the hand-authored
+     * original). ShowcaseFrame is reserved for labeled permutation cells.
      */
     specimens?: SpecimenSpec[];
     /**
@@ -157,7 +144,7 @@ export interface SectionSpec {
      * quirk hatch. A section the schema cannot frame as clean permute/specimens
      * (prose with an inline specimen, a `data-*`-hooked container, a page-specific
      * scene) names a node that renders VERBATIM — directly under the section, with
-     * NO SpecimenFrame — so the page's irreducible custom markup is honest. A page
+     * NO ShowcaseFrame — so the page's irreducible custom markup is honest. A page
      * whose MEAN drifts below the as-data bar has reached for this too often: the
      * honest signal to keep the page `bespoke` at the StoryPage slot, not to grow
      * the schema a quirk field.

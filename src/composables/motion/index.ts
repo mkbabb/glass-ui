@@ -17,12 +17,11 @@
 export * from "./constants";
 export * from "./useSpring";
 export * from "./useSpringMount";
-export * from "./useSpringPress";
 // BB.W-PRESS-UNIFY — the ONE interruptible, coupled spring-press. Composes the
-// shipped `useSpringPress` (the velocity-continuous re-seat) + `useLiquidFlex`
+// private spring driver (the velocity-continuous re-seat) + `useLiquidFlex`
 // (the volume-preserving reciprocal squish) + a `--press-t` drive write into one
 // `pressStyle` object. Bound on ≥2 binaries (Button + Card + dock control — the
-// J-inv-10 dead-primitive flag cleared). Keyframes-bearing (via useSpringPress) →
+// J-inv-10 dead-primitive flag cleared). Keyframes-bearing →
 // ships on `/motion` ONLY, never the root barrel (the SCC-trap discipline).
 export * from "./useLiquidPress";
 // BB.W-DRAG-MORPH — the pull/drag-to-morph-squish primitive. Composes the
@@ -32,14 +31,13 @@ export * from "./useLiquidPress";
 // the heavy-peer `/motion` barrel — NOT `/motion-core`.
 export * from "./useDragMorph";
 // BG.W-MOTION-SPINE — the ONE compositor FLIP/morph runner (`useElementMorph` +
-// `asElement` + `lockSpatialTransition`). ONE `new ElementMorph`, ONE rAF `step()`, ONE
-// PRM snap, ONE compositor-only invariant, sampled from `SPRING_PRESETS`. The reveal + cta
-// leaves below COLLAPSE onto it — each a ≤20-line-config wrapper that declares the
-// direction + channels + endpoints, never a second rAF loop (useBloomUp's fold is booked).
-// Keyframes-bearing (via `ElementMorph`) → the heavy-peer `/motion` barrel, NOT /motion-core.
+// `asElement` + `lockSpatialTransition`). One NumericAnimation owns playback,
+// interruption, PRM seating and the coupled transform/effect channels. Reveal, CTA,
+// bloom and drag declare endpoints/configuration rather than minting runners.
+// Keyframes-bearing → the heavy-peer `/motion` barrel, NOT /motion-core.
 export * from "./useElementMorph";
 // BB.W-LIQUID-REVEAL — the iOS-27 bloom-from-source-rect open primitive. Now a THIN
-// wrapper over `useElementMorph` (BG.W-MOTION-SPINE): a `direction: "in"` FLIP inversion
+// wrapper over `useElementMorph` (BG.W-MOTION-SPINE): an explicit source→surface FLIP
 // blooming FROM the trigger (scale+fade+filter-blur-settle), compositor-only + PRM-snap.
 // The CSS `.glass-reveal` recipe is the zero-JS floor the ≥8 overlays compose; this leaf
 // is the source-rect REFINEMENT (the dialog-from-button, the dock-from-pill).
@@ -48,7 +46,7 @@ export * from "./useLiquidReveal";
 // kf `ElementMorph` + `springTimingFunction` substrate useLiquidReveal activates,
 // driven FORWARD (the reveal's inverse): an EXTERNAL CTA flies + reshapes from its
 // own rect ONTO a dock control's rect, fades + congests into the glass, then hands
-// off. A CONSUMING seam BESIDE W-DOCK-MORPH-FAMILY (no dockMorphContext/DOCK_SPRING
+// off. A CONSUMING seam BESIDE W-DOCK-MORPH-FAMILY (no useDockMorph/DOCK_SPRING
 // edit). Keyframes-bearing → `/motion` ONLY, never the root barrel (the SCC-trap
 // discipline). Compositor-only + PRM-seats.
 export * from "./useDockCtaReceive";
@@ -66,8 +64,8 @@ export * from "./useNumericTransition";
 export * from "./useAnimatedNumber";
 // AW.W19/Item-5 (extended) — useAnimatedNumberMap re-instated: removed at the AV
 // cbbaeb0 orphan sweep, but it has ≥2 LIVE external consumers over /motion
-// (muster ×3: ssr-entry/useReRank/RankedVerdict; speedtest ×2:
-// useMetricResult/MetricGaugeCards) — the same internal-only-rg blind spot that
+// (muster ×3: ssr-entry/useReRank/RankedVerdict; speedtest ×2 numeric readouts)
+// — the same internal-only-rg blind spot that
 // mis-pruned the /dom leaves. Keyframes-bearing (composes useAnimatedNumber).
 export * from "./useAnimatedNumberMap";
 // AV.W3 — the editorial count-up animator. Rides the keyframes LIGHT
@@ -75,25 +73,11 @@ export * from "./useAnimatedNumberMap";
 // so it ships ONLY here (`/motion`), NOT on `/motion-core` and NOT on the root.
 export * from "./useCountup";
 
-// AY.W-MOTION2 — `/motion` is the documented home of the keyframes.js motion
-// system. The keyframes.js STATIC suite (NumericAnimation, Sequence, the spring/
-// FLIP/gesture/stagger constructors, loadAnimationEngine itself) re-exported
-// verbatim; the DYNAMIC engine surface stays behind `loadAnimationEngine()`
-// (suite.ts header).
-export * from "./suite";
-// The (response, ζ) shared table is re-exported here too (value.js-FREE pure data),
-// so a `/motion` consumer reaches SPRING_PRESETS without the curve-library peer edge.
+// The semantic spring register is Glass-owned pure data. Engine primitives stay
+// at their authority: consumers import them directly from @mkbabb/keyframes.js.
 export {
     SPRING_PRESETS,
     springPreset,
     type SpringPresetRow,
     type SpringPresetName,
 } from "./springPresets";
-//
-// The complete CURVE LIBRARY (MOTION_CURVES + the value.js `ease*` family +
-// CSSCubicBezier) ships on the FLAT SIBLING `@mkbabb/glass-ui/motion-curves`
-// (`src/motion-curves.ts` → `./curves`), NOT here — §2.2 MEASUREMENT decided it:
-// value.js is a ~124 KB peer with no granular `/easing` sub-entry, and `/motion`'s
-// composables are value.js-FREE; statically importing the `ease*` family here would
-// drag value.js onto `/motion`'s eager graph (the AP.W3 "a cheap import must not
-// drag a heavy peer" carve, again). The curve table rides the `/color`-leaf pattern.

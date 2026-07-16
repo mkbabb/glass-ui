@@ -35,7 +35,7 @@ import { createSpecularWriter } from "./useSpecularTracking";
  * teardown.
  *
  * BG.W-GLASS-DYNAMICS — the OPTIONAL press-couple (absorbs 13.5, soft-gated by F5.1).
- * A consumer may pass `press` (a 0..1 press scalar — a `useSpringPress` `.value`, or
+ * A consumer may pass `press` (a 0..1 press scalar — a `useLiquidPress` `.value`, or
  * any press signal); it is folded reactively into the emitted style as the ONE
  * `--glass-btn-press-t` channel the `.glass-material::before` specular magnitude reads
  * (material.css). Reusing the SINGLE press channel (never a forked `--*-press-t`) keeps

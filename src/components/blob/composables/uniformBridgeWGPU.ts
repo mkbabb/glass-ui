@@ -47,6 +47,7 @@ import type { BlobConfig, MoodParams } from "../types";
 import type { BlobPointer } from "./useBlobPointer";
 import type { BlobSatelliteSystem } from "./useBlobSatellites";
 import type { BlobFrameState } from "./uploadBlobUniforms";
+import { resolveBlobSurface } from "./resolveBlobSurface";
 
 /** The total uniform-buffer byte size (16-aligned). */
 export const BLOB_WGPU_UNIFORM_BYTES = 352 + TRAIL_N * 16; // 592
@@ -173,18 +174,8 @@ export function packBlobWGPUUniforms(
     f32[OFF.s1 + 2] = cMem.noiseSpeed;
     f32[OFF.s1 + 3] = cMem.warpAmp;
 
-    // BD.W-GOO-CAROUSEL-DECK — the blob↔meatball SHADING-MORPH scalar (the WGSL twin).
-    // `morphT` resolves from `config.morphT` (explicit) or `variant` (back-compat: blob →
-    // 0, meatball → 1). The dressing uniforms (uLit/uShadow) flip ON for ANY morph in
-    // progress (morphT > 0) so an intermediate frame HAS the dressed surface to lerp
-    // toward; uStage is DERIVED (1.0 at morphT <= 0 = the flat floor, else 0.0).
-    const morphT =
-        typeof config.morphT === "number"
-            ? Math.max(0, Math.min(1, config.morphT))
-            : config.variant === "blob"
-              ? 0
-              : 1;
-    const isDressed = morphT > 0;
+    // The same single clamped surface decision the WebGL2 bridge consumes.
+    const { morphT, dressed: isDressed } = resolveBlobSurface(config);
 
     // s2: uSmoothK, uMerge, uMaxReach, uLit
     f32[OFF.s2 + 0] = smoothK;
@@ -218,8 +209,7 @@ export function packBlobWGPUUniforms(
 
     // s7: uPointerActive, uPointerAttraction, uPointerStrength, uStage
     // BC.W-GOOBLOB-PLAIN — uStage rides the spare s7.w lane the SoT reserved (the
-    // typed-struct extend, never a re-fork). 1.0 = the STAGE-1 plain floor
-    // (variant="blob"); 0.0 = the full lit pipeline (variant="meatball").
+    // typed-struct extend, never a re-fork). 1.0 = the flat endpoint; 0.0 = dressed.
     f32[OFF.s7 + 0] = pointer.active.value ? 1.0 : 0.0;
     f32[OFF.s7 + 1] = netAttraction;
     f32[OFF.s7 + 2] = cInt.pointerStrength * POS_SCALE;
@@ -254,9 +244,8 @@ export function packBlobWGPUUniforms(
 
     // res: uResolution.xy, uShadow, uShadowSoftness
     // BC.W-GOOBLOB-MEATBALL — the soft-shadow march rides the spare res.z/res.w lanes the
-    // typed-struct SoT reserved (the EXTEND, never a re-fork). variant=meatball flips
-    // uShadow on (T1); variant=blob keeps it OFF (the STAGE-1 shadowless floor). The
-    // surface.shadow flag owns the on/off WITHIN the meatball register.
+    // typed-struct SoT reserved. `morphT > 0` enables the shadow input while the
+    // surface flag still owns whether the dressed endpoint paints it.
     f32[OFF.res + 0] = canvas.width;
     f32[OFF.res + 1] = canvas.height;
     f32[OFF.res + 2] = isDressed && cSurf.shadow ? 1.0 : 0.0;

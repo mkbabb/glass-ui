@@ -1,13 +1,16 @@
-export { default as Command } from './Command.vue'
-export { default as CommandDialog } from './CommandDialog.vue'
-export { default as CommandEmpty } from './CommandEmpty.vue'
-export { default as CommandGroup } from './CommandGroup.vue'
-export { default as CommandInput } from './CommandInput.vue'
-export { default as CommandItem } from './CommandItem.vue'
-export { default as CommandList } from './CommandList.vue'
-export { default as CommandSeparator } from './CommandSeparator.vue'
-export { default as CommandShortcut } from './CommandShortcut.vue'
-// The menu/picker item four-state CVA union — the published home for the type the
-// dropped `/api` discovery layer pinned (MIGRATION.md 5.0.0 /api-fold: `MenuItemVariants`
-// → `/command`). Type-only re-export of the `_shared` source (private-to-ui at runtime).
-export type { MenuItemVariants } from '../_shared'
+export { default as Command } from "./Command.vue";
+export { default as CommandDialog } from "./CommandDialog.vue";
+export { default as CommandEmpty } from "./CommandEmpty.vue";
+export { default as CommandGroup } from "./CommandGroup.vue";
+export { default as CommandInput } from "./CommandInput.vue";
+export { default as CommandItem } from "./CommandItem.vue";
+export { default as CommandList } from "./CommandList.vue";
+export { default as CommandSeparator } from "./CommandSeparator.vue";
+export { default as CommandShortcut } from "./CommandShortcut.vue";
+export type {
+    CommandDialogEmits,
+    CommandDialogProps,
+    CommandEmits,
+    CommandListProps,
+    CommandProps,
+} from "./types";

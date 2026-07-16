@@ -7,7 +7,10 @@ import {
 // SegmentedTabs/ToggleGroup wearing chrome; ONE roving machine, never re-forked).
 // `useTabRovingFocus` imports `vue` only (engine-FREE + vueuse-FREE), so pulling it
 // into the `/motion-core`-eligible engine keeps the keyframes/vueuse fence.
-import { useTabRovingFocus } from "../../components/tabs/composables/useTabRovingFocus";
+import {
+    useTabRovingFocus,
+    type TabActivation,
+} from "../../components/tabs/composables/useTabRovingFocus";
 
 /**
  * useSelectionGroup — the library's ONE headless selection engine
@@ -57,6 +60,8 @@ export interface UseSelectionGroupParams<O extends SelectionOption> {
     role?: ComputedRef<SelectionRole> | SelectionRole;
     /** True for the vertical (block-axis) orientation. */
     vertical?: ComputedRef<boolean>;
+    /** Whether roving focus selects immediately. Defaults to automatic. */
+    activation?: ComputedRef<TabActivation> | TabActivation;
     /** The container scroller root (observed by the indicator's ResizeObserver). */
     containerRef: Ref<HTMLElement | null>;
     /**
@@ -122,6 +127,9 @@ export function useSelectionGroup<O extends SelectionOption>(
         ),
     );
     const isVertical = computed<boolean>(() => vertical?.value ?? false);
+    const activation = computed<TabActivation>(() =>
+        unwrap(params.activation, "automatic"),
+    );
 
     // ── The selection model (single string | multiple string[]) ──
 
@@ -185,6 +193,7 @@ export function useSelectionGroup<O extends SelectionOption>(
         stripOptions: options,
         stripValue: indicatorModel,
         isVertical,
+        activation,
         buttonRefs,
         select,
     });

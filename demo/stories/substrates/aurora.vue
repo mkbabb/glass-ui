@@ -11,27 +11,18 @@ import VizStudio from "./_frame/VizStudio.vue";
 import PresetPickerRow from "./aurora/PresetPickerRow.vue";
 import AuroraStage from "./aurora/AuroraStage.vue";
 import AuroraConfigDock from "./aurora/AuroraConfigDock.vue";
-import {
-    PRESETS,
-    PRESET_KEYS,
-    PRESET_META,
-    type PresetKey,
-} from "./aurora/presets";
+import { PRESETS, PRESET_KEYS, PRESET_META, type PresetKey } from "./aurora/presets";
 import { mediumOptions } from "./aurora/config/options";
 import { usePresetThumbnails } from "./aurora/usePresetThumbnails";
 
 /**
  * Aurora studio — the FIRST exemplar of the shared VizStudio chassis
- * (BC.W-VIZ-CONFIGURATOR-SUITE). The configurator-on-the-RIGHT + the rounded
- * studio frame + the audacious shrink-on-scroll hero + the explicit
- * @mkbabb/glass-ui/aurora Fira-Code subpath chip are the SHARED chassis's
- * (VizStudio composes StoryPage + <Configurator asideSide="right"> + the rounded
- * clip) — aurora no longer hand-rolls the studio frame (the single-writer chassis
- * discipline). The viz's OWN parts are the three slots:
- *   - #stage    — AuroraStage (the live GL field, interactive pointer swirl).
+ * (BC.W-VIZ-CONFIGURATOR-SUITE). VizStudio owns the page and controls-right
+ * frame; Aurora supplies three subject-specific slots:
+ *   - #stage    — AuroraStage (pointer-movement shaping plus nucleus gestures).
  *   - #controls — AuroraConfigDock (the FULL config schema, every axis a live
  *                 <ConfiguratorRow> over <ConfiguratorLayer> sections, the
- *                 <ColorSwatch> palette editor — never a two-state Switch).
+ *                 color-swatch palette editor — never a two-state Switch).
  *   - #presets  — PresetPickerRow (the baked-thumbnail preset row; the thumbnail
  *                 capture AWAITS armAsync on the WebGPU backend — no dead cards).
  *
@@ -94,21 +85,21 @@ onMounted(() => {
         studio.config.medium = forcedOpt.value;
     }
 
-    const unregLeft = registerShortcut(
-        "ArrowLeft",
-        () => studio.cyclePreset(-1),
-        { label: "Previous preset", group: "Aurora", allowInInput: false },
-    );
-    const unregRight = registerShortcut(
-        "ArrowRight",
-        () => studio.cyclePreset(1),
-        { label: "Next preset", group: "Aurora", allowInInput: false },
-    );
-    const unregReset = registerShortcut(
-        "Mod+Shift+R",
-        () => studio.resetCurrent(),
-        { label: "Reset preset", group: "Aurora", preventDefault: true },
-    );
+    const unregLeft = registerShortcut("ArrowLeft", () => studio.cyclePreset(-1), {
+        label: "Previous preset",
+        group: "Aurora",
+        allowInInput: false,
+    });
+    const unregRight = registerShortcut("ArrowRight", () => studio.cyclePreset(1), {
+        label: "Next preset",
+        group: "Aurora",
+        allowInInput: false,
+    });
+    const unregReset = registerShortcut("Mod+Shift+R", () => studio.resetCurrent(), {
+        label: "Reset preset",
+        group: "Aurora",
+        preventDefault: true,
+    });
 
     onBeforeUnmount(() => {
         unregLeft();
@@ -118,34 +109,24 @@ onMounted(() => {
 });
 
 const hintText = computed(() => [
-    "Drag inside the stage to swirl the field.",
+    "Move inside the stage to shape the field.",
     "alt-click to spawn a nucleus · shift-click or right-click a ring to remove.",
     "Drag a nucleus ring to move it. Arrow keys cycle presets.",
 ]);
 </script>
 
 <template>
-    <!-- BC.W-VIZ-CONFIGURATOR-SUITE — aurora composes the SHARED VizStudio chassis
-         (the configurator-RIGHT + rounded + hero-subpath shape every viz obeys),
-         passing its own three slots. The preset row's REAL baked thumbnails ride
+    <!-- The preset row's baked thumbnails ride
          the #presets slot; the live field rides #stage; the FULL config schema rides
          #controls. -->
     <VizStudio
         heading="Aurora"
         label="procedural painterly gradients · multi-nuclei · four mediums"
-        blurb="A WebGPU-first procedural painterly gradient field — multi-nuclei composition, four mediums (smooth · oil · oil-pastel · van-Gogh) + the anisotropic-Kuwahara finish, cursor-driven swirl. Drag inside the stage to swirl the field; alt-click to spawn a nucleus. The configurator on the RIGHT drives EVERY axis: the OKLCh palette (the per-stop ColorSwatch editor), the composition (medium · zones · arrangement), the motion register, the warp/noise. The warm-cream Dawn identity is the default lead; the blue Sky is a named non-default preset. Shipped /aurora."
+        blurb="A WebGPU-first procedural painterly gradient field — multi-nuclei composition, four mediums (smooth · oil · oil-pastel · van-Gogh) + the anisotropic-Kuwahara finish. Move inside the stage to shape the field; drag a nucleus ring to move it, or alt-click to add one. The configurator on the RIGHT drives EVERY axis: the OKLCh palette (the per-stop color editor), the composition (medium · zones · arrangement), the motion register, and the warp/noise. The warm-cream Dawn identity is the default lead; the blue Sky is a named non-default preset. Shipped /aurora."
         height-class="h-[min(86vh,880px)]"
         scroll-mode="never"
         gallery-placement="top"
     >
-        <!-- BG.W-CHASSIS-ADOPT-OR-RETIRE — the studio identity is the ONE StoryHeader
-             cluster the adopted VizStudio/StoryPage chassis renders (eyebrow → subpath
-             → the audacious display <h1> "Aurora" → blurb, rendered ONCE). The prior
-             inline #masthead <header> ("Aurora Studio" at text-display-3) restated the
-             page identity a SECOND time at display scale — the forbidden double-header;
-             it is EXCISED at the source AND the masthead slot is removed from the
-             chassis root so no viz can re-author its identity. -->
-
         <!-- BG.W-PRESET-RIBBON-TOP — the presets are a LARGE full-width TOP RIBBON.
              The `gallery-placement="top"` axis (threaded through VizStudio to the ONE
              library <Configurator>) lifts the gallery OUT of the 360px aside gutter and
@@ -162,17 +143,16 @@ const hintText = computed(() => [
             />
         </template>
 
-        <!-- The live GL field, interactive (drag-swirl + flick-burst + the accel
-             gel snap-back); the field is FED tick() from the aurora frame loop. The
-             #stage content carries its own rounded-card overflow-hidden reaching the
-             canvas pixels (AuroraStage owns it). -->
+        <!-- Pointer movement shapes the live field and feeds its velocity-derived burst;
+             dragging is reserved for moving a nucleus ring. AuroraStage owns the
+             canvas-reaching rounded clip inside VizStudio's aperture. -->
         <template #stage>
             <AuroraStage :config="studio.config" :interactive="true" />
         </template>
 
         <!-- The FULL config schema — the layered Color → Composition → Motion →
              Warp&Noise → Nuclei stack (every axis a live ConfiguratorRow, the
-             per-stop ColorSwatch palette editor) — never a two-state Switch. -->
+             per-stop color editor) — never a two-state Switch. -->
         <template #controls>
             <AuroraConfigDock
                 :config="studio.config"

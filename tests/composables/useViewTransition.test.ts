@@ -1,8 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
-    navigate,
     startViewTransition,
-    supportsRouteTransitions,
     supportsViewTransitions,
 } from "@glass/composables/motion/core";
 
@@ -70,9 +68,7 @@ describe("startViewTransition — native path (API present)", () => {
     });
 
     it("resolves finished when the native transition settles", async () => {
-        docMut.startViewTransition = (
-            cb: () => void,
-        ) => {
+        docMut.startViewTransition = (cb: () => void) => {
             cb();
             return { finished: Promise.resolve() };
         };
@@ -82,9 +78,7 @@ describe("startViewTransition — native path (API present)", () => {
     });
 
     it("never rejects even when the native finished promise rejects", async () => {
-        docMut.startViewTransition = (
-            cb: () => void,
-        ) => {
+        docMut.startViewTransition = (cb: () => void) => {
             cb();
             return { finished: Promise.reject(new Error("skipped")) };
         };
@@ -141,7 +135,6 @@ describe("startViewTransition — native path (API present)", () => {
         expect(mutate).toHaveBeenCalledTimes(1);
         expect(result.transitioned).toBe(false);
     });
-
 });
 
 // ── BA.W-ATLAS-RECONCILE A-4b — async update + reduced-motion instant-path ────
@@ -201,7 +194,7 @@ describe("startViewTransition — async update (A-4b)", () => {
 });
 
 describe("startViewTransition — JS-level reduced-motion instant-path (A-4b)", () => {
-    it("instantUnderReducedMotion takes the instant path under PRM (no snapshot)", async () => {
+    it("takes the only instant path under PRM without capturing a snapshot", async () => {
         const restore = stubReducedMotion(true);
         try {
             const native = vi.fn((cb: () => void) => {
@@ -211,9 +204,7 @@ describe("startViewTransition — JS-level reduced-motion instant-path (A-4b)", 
             docMut.startViewTransition = native;
 
             const mutate = vi.fn();
-            const result = startViewTransition(mutate, {
-                instantUnderReducedMotion: true,
-            });
+            const result = startViewTransition(mutate);
             await result.finished;
 
             // The instant path ran mutate directly and NEVER called the native API.
@@ -225,76 +216,4 @@ describe("startViewTransition — JS-level reduced-motion instant-path (A-4b)", 
         }
     });
 
-    it("WITHOUT the opt-in, PRM still takes the native (CSS-handled) path", async () => {
-        const restore = stubReducedMotion(true);
-        try {
-            const native = vi.fn((cb: () => void) => {
-                cb();
-                return { finished: Promise.resolve() };
-            });
-            docMut.startViewTransition = native;
-
-            const result = startViewTransition(() => {});
-            await result.finished;
-
-            // No opt-in → the existing behaviour (native VT, PRM handled in CSS).
-            expect(native).toHaveBeenCalledTimes(1);
-            expect(result.transitioned).toBe(true);
-        } finally {
-            restore();
-        }
-    });
-});
-
-describe("navigate — the route/navigation convenience (A-4b)", () => {
-    it("runs the (async) navigation and morphs under support", async () => {
-        const native = vi.fn((
-            arg: (() => void | Promise<void>) | { update: () => void | Promise<void> },
-        ) => {
-            const update = typeof arg === "function" ? arg : arg.update;
-            return { finished: Promise.resolve(update()) };
-        });
-        docMut.startViewTransition = native as unknown as typeof docMut.startViewTransition;
-
-        let navigated = false;
-        const result = navigate(async () => {
-            await Promise.resolve();
-            navigated = true;
-        });
-        await result.finished;
-
-        expect(navigated).toBe(true);
-        expect(result.transitioned).toBe(true);
-    });
-
-    it("takes the instant path under reduced motion (route always changes, no morph)", async () => {
-        const restore = stubReducedMotion(true);
-        try {
-            const native = vi.fn((cb: () => void) => {
-                cb();
-                return { finished: Promise.resolve() };
-            });
-            docMut.startViewTransition = native;
-
-            let navigated = false;
-            const result = navigate(() => {
-                navigated = true;
-            });
-            await result.finished;
-
-            // Information parity: the navigation ran; the morph did not.
-            expect(navigated).toBe(true);
-            expect(native).not.toHaveBeenCalled();
-            expect(result.transitioned).toBe(false);
-        } finally {
-            restore();
-        }
-    });
-
-    it("supportsRouteTransitions mirrors supportsViewTransitions", () => {
-        delete docMut.startViewTransition;
-        expect(supportsRouteTransitions()).toBe(false);
-        docMut.startViewTransition = () => ({ finished: Promise.resolve() });
-        expect(supportsRouteTransitions()).toBe(true);
-    });
 });

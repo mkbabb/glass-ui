@@ -14,7 +14,7 @@
 //       baseline → 0); the gold CTA's label stays warm-ink (no white flip).
 //   (c) DOCK — the dock-tab primary tier hover composes the glass register, NOT the
 //       grain (no --glass-grain-opacity-disco / --paper-clean-texture in its rule).
-//   (d) CHIP — a <ToggleChip> hover lifts (a non-1 scale + a §6-timed surface
+//   (d) CHIP — an interactive <Chip> hover lifts (a non-1 scale + a §6-timed surface
 //       cross-fade), not a flat color-snap.
 //
 // Runner-truth: it LOADS :5199 (the harness auto-spawns + reuses the dev server), so
@@ -156,15 +156,15 @@ test.describe("BA.W-GLASS-CAL — the blur dial-back + the disco retirement (π)
         }
     });
 
-    test("(d) CHIP — a ToggleChip hover lifts on §6, not a flat snap", async ({ page }) => {
+    test("(d) CHIP — an interactive Chip hover lifts on §6, not a flat snap", async ({ page }) => {
         await page.goto(BLOB_ROUTE);
         await page.waitForLoadState("networkidle");
         await setScheme(page, "light");
 
-        // Find a toggle-chip in the studio configurator; if present, hover it and
+        // Find a selectable Chip in the studio configurator; if present, hover it and
         // read the transition + the on-hover scale (the §6 lift). The chip base now
         // composes a `scale`/`--spring-smooth` transition leg + a hover scale.
-        const chip = page.locator("[class*='toggle-chip'], .toggle-chip, [data-state]").filter({ hasText: /.+/ }).first();
+        const chip = page.locator('.glass-chip[data-mode="selectable"]').filter({ hasText: /.+/ }).first();
         const present = await chip.count();
         if (present > 0) {
             const transition = await chip.first().evaluate((el) => getComputedStyle(el).transition);
@@ -172,7 +172,7 @@ test.describe("BA.W-GLASS-CAL — the blur dial-back + the disco retirement (π)
             // `transition-colors` (which would not name `scale`/`transform`).
             const hasScaleLeg = /scale/.test(transition);
             const noFastSnap = !/0\.15s/.test(transition) || /scale/.test(transition);
-            expect(hasScaleLeg || noFastSnap, `toggle-chip transition (${transition}) carries a §6 scale lift`).toBeTruthy();
+            expect(hasScaleLeg || noFastSnap, `chip transition (${transition}) carries a §6 scale lift`).toBeTruthy();
         }
         await page.screenshot({ path: resolve(VISUAL_DIR, "W-GLASS-CAL-chip-blob-light.png"), fullPage: true });
     });

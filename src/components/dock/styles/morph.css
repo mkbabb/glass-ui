@@ -29,7 +29,7 @@
        resolve every expanded dock to expand-t 0 → the collapsed resting look (the
        pill-radius + collapsed bg/border/padding regression). So the resting value is
        stated STATICALLY per class, and ONLY while a morph is in flight
-       (`[data-morphing]` armed on the root by useLayerTransition, cleared on settle)
+       (`[data-morphing]` armed by the dock morph orchestrator and cleared on settle)
        does expand-t track the live spring scalar. The class is ALREADY the END state
        during the morph, so the read resolves the correct in-flight blend (collapse
        1→0 via `1 - t`; expand 0→1 via `t`); on settle `[data-morphing]` clears and
@@ -53,26 +53,14 @@
         --dock-expand-t: 0;
     }
 
-    /* BG.W-DOCK-PANE-OVERLAP (F3.R2, box axis) — the `[data-morphing]` derivation arms
-       are gated `:not([data-pane-swap])`. During a NESTED `<DockLayerGroup>` pane swap the
-       orchestrator arms `[data-pane-swap]` (dockMorphContext.ensureSpringRunning), so these
-       arms DO NOT match and `--dock-expand-t` falls back to the static class endpoint above
-       (`.expanded` → 1). The plate box (`--dock-live`, layers.css) + the root chrome
-       (bg/border/padding/blur, below) therefore HOLD at the expanded look while
-       `--dock-morph-t` still glides 0→1 for the overlapped crossfade + the inner stagger
-       (both read `--dock-morph-t` directly, unaffected by this pin). A pane swap on an
-       already-expanded nested dock no longer collapses the plate to the 53.68px pill (the
-       §2.2 box-dips-below-both-endpoints defect). The OUTER collapse↔expand pair carries no
-       `[data-pane-swap]`, so its box morph is byte-identical to HEAD. The inner
-       `.dock-layer-stack`/`.dock-layer--summary` `--dock-expand-t` writes are DESCENDANT
-       overrides (still `[data-morphing]`-gated, unscoped) so the stagger/summary reveal is
-       untouched. */
-    .glass-dock.expanded[data-morphing]:not([data-pane-swap]),
-    .glass-dock.always-expanded[data-morphing]:not([data-pane-swap]) {
+    /* Only the outer collapsed/expanded pair arms `[data-morphing]`. Controlled
+       face changes run inside DockCrossfade and leave the shell endpoint alone. */
+    .glass-dock.expanded[data-morphing],
+    .glass-dock.always-expanded[data-morphing] {
         --dock-expand-t: var(--dock-morph-t);
     }
 
-    .glass-dock.collapsed[data-morphing]:not([data-pane-swap]) {
+    .glass-dock.collapsed[data-morphing] {
         --dock-expand-t: calc(1 - var(--dock-morph-t));
     }
 
@@ -293,7 +281,7 @@
        and the root's symmetric collapsed padding keeps the pill a circle. The glyph
        sits centred on both axes. The `aspect-ratio: 1` belt-and-braces guarantees
        1:1 even if a consumer's collapsed-slot content is wider than the floor. */
-    .glass-dock.collapsed .dock-layer--summary {
+    .glass-dock .dock-layer--summary {
         min-width: var(
             --dock-collapsed-summary-min-size,
             var(--dock-layer-height, 2.5rem)
@@ -344,7 +332,7 @@
        exactly — and a flat `:empty` avoids the nested-`:has()` form Lightning CSS
        drops. An authored `#collapsed` slot (non-empty summary) keeps its circle
        pill. */
-    .glass-dock.collapsed .dock-layer--summary:empty {
+    .glass-dock .dock-layer--summary:empty {
         min-width: 0;
         inline-size: 0;
         padding: 0;
@@ -393,7 +381,7 @@
        collapse-onset scale-pop fix, C2-2). `.collapsed` flips on SYNCHRONOUSLY when
        a hovered dock begins collapsing, but the box is still painted at EXPANDED
        width for the morph's leading frames (the `onSwap` pin + 1-rAF measure-defer
-       in dockMorphContext.ts). The bare `.collapsed:hover { scale: 1.1 }` multiplied
+       in useDockMorph.ts). The bare `.collapsed:hover { scale: 1.1 }` multiplied
        that transient ~535px box, painting a ±24-34px right-edge pop (the user's
        "flashing"). Scoping the SCALE to `:not([data-morphing])` makes the +1.1 lift
        apply ONLY at rest (the box is the 54px circle then) — during `[data-morphing]`

@@ -50,6 +50,11 @@ function restart(): void {
             >
                 Typewriter
             </span>
+            <p class="max-w-2xl text-small text-muted-foreground">
+                Visual glyphs reveal progressively while assistive technology receives
+                each complete phrase once. Settled text reserves the final footprint,
+                so typing and deletion never push adjacent layout.
+            </p>
         </header>
 
         <!-- Hero display: Plus Jakarta Sans display type hosting the rotating phrase. -->
@@ -157,7 +162,7 @@ function restart(): void {
             </div>
 
             <div class="md:col-span-2 flex justify-end">
-                <Button variant="secondary" @click="restart">Restart</Button>
+                <Button @click="restart">Restart</Button>
             </div>
         </section>
     </StoryPage>

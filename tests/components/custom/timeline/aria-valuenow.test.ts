@@ -42,4 +42,18 @@ describe("GlassTimeline scrubber aria-valuenow", () => {
         const track = wrapper.find(".glass-track");
         expect(track.attributes("aria-valuenow")).toBe("0.5");
     });
+
+    it("announces the human label and supports Home and End", async () => {
+        const wrapper = mount(GlassTimeline, {
+            props: { modelValue: 0.5, label: "50% · Build" },
+        });
+        const track = wrapper.find(".glass-track");
+
+        expect(track.attributes("aria-valuetext")).toBe("50% · Build");
+
+        await track.trigger("keydown", { key: "Home" });
+        await track.trigger("keydown", { key: "End" });
+
+        expect(wrapper.emitted("update:modelValue")).toEqual([[0], [1]]);
+    });
 });

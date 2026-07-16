@@ -2,12 +2,10 @@
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import type { StoryBody, SpecimenSpec } from "../../chassis/body/story-body";
 import { Badge } from "@glass/components/badge";
-import { IconChip } from "@glass/components/icon-chip";
 import { cn } from "@glass/components/_shared/class-names";
 import { BadgeCheck } from "@lucide/vue";
 
 // The display band's ONE coherent --section-color-5 identity.
-const DISPLAY_STOP = 5;
 
 // The section-color tone axis as a documented Badge fill row (the 13-stop
 // jewel-tone ramp as a saturated-pill teaching axis). Each pill's label reads a
@@ -139,7 +137,7 @@ const body: StoryBody = {
         },
         {
             label: "semantic tones",
-            blurb: "Compose --success / --warning / --info plates with their --*-foreground glyph counterparts. Pair with status-dot for richer pulse compositions.",
+            blurb: "Compose --success / --warning / --info plates with their --*-foreground glyph counterparts. Pair with StatusDot when a compact noncolor state mark is useful.",
             specimens: [
                 ...semanticTones.map((tone) => ({
                     component: Badge,
@@ -183,22 +181,5 @@ const body: StoryBody = {
 
 <template>
     <StoryPage :body="body">
-        <header
-            class="story-color-event flex items-center gap-4 pl-5"
-            :style="{
-                '--section-label-accent': `var(--section-color-${DISPLAY_STOP})`,
-            }"
-        >
-            <IconChip :icon="BadgeCheck" :section="DISPLAY_STOP" bloom reveal />
-            <div class="flex flex-col gap-1">
-                <span class="section-label--tinted text-admin-label">
-                    Display · Badge
-                </span>
-                <p class="text-small text-muted-foreground">
-                    Loud-pill status badges — the section identity is the ONE
-                    color event; the loud pills carry their own register.
-                </p>
-            </div>
-        </header>
     </StoryPage>
 </template>

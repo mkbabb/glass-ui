@@ -1,48 +1,39 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
-import type { ComboboxRootEmits, ComboboxRootProps } from 'reka-ui'
-import { ComboboxRoot, useForwardPropsEmits } from 'reka-ui'
-import { cn } from '../_shared/class-names'
-// BA.W-SURFACE-AXIS — Command CONSUMES the shared {glass·veil·opaque} axis (the
-// IG-C4 residual: the plate is already `glass-floating`; `surface="veil"` lands
-// the busy-substrate legibility feather — the SAME --veil-feather axis the floating
-// feedback band rides).
-import { decorationClass, type Surface } from '../_shared/useSurfaceAxis'
+import { ComboboxRoot as RekaComboboxRoot } from "reka-ui";
+import { cn } from "../_shared/class-names";
+import type { ComboboxValue } from "../combobox/types";
+import { isSelectionValue } from "../_shared/selection";
+import type { CommandEmits, CommandProps } from "./types";
 
-const props = withDefaults(defineProps<ComboboxRootProps & { class?: HTMLAttributes['class']; surface?: Surface }>(), {
-  open: true,
-  modelValue: '',
-  surface: 'glass',
-})
+defineOptions({ name: "Command", inheritAttrs: false });
 
-const emits = defineEmits<ComboboxRootEmits>()
+const props = withDefaults(defineProps<CommandProps>(), {
+    open: true,
+    surface: "glass",
+});
+const emit = defineEmits<CommandEmits>();
 
-const delegatedProps = computed(() => {
-  const { class: _, surface: __, ...delegated } = props
-
-  return delegated
-})
-
-const forwarded = useForwardPropsEmits(delegatedProps, emits)
-
-// BA.W-SURFACE-AXIS — the veil/opaque decoration over the baked `glass-floating`
-// plate. BI.W-SURFACE-EXTRACT — decoration-only, no `.replace` tier-strip wart;
-// `:data-surface` drives the seam.
-const surfaceDecoration = computed(() =>
-  decorationClass(props.surface),
-)
+function updateModelValue(value: unknown): void {
+    if (value !== null && !isSelectionValue(value)) {
+        throw new TypeError("[glass-ui] Command received a non-scalar value.");
+    }
+    emit("update:modelValue", value as ComboboxValue);
+}
 </script>
 
 <template>
-  <!-- AW.W25 — the overlay-band material carve: Command joins the shared
-       `glass-floating` substrate every overlay sibling already uses, retiring the
-       flat `bg-popover`. -->
-  <ComboboxRoot
-    data-slot="command"
-    v-bind="forwarded"
-    :data-surface="props.surface"
-    :class="cn('glass-floating flex h-full w-full flex-col overflow-hidden rounded-panel text-popover-foreground', surfaceDecoration, props.class)"
-  >
-    <slot />
-  </ComboboxRoot>
+    <RekaComboboxRoot
+        data-slot="command"
+        :model-value="props.modelValue"
+        :open="props.open"
+        :disabled="props.disabled"
+        :data-surface="props.surface"
+        :class="cn('command glass-floating', props.class)"
+        @update:model-value="updateModelValue"
+        @update:open="emit('update:open', $event)"
+    >
+        <slot />
+    </RekaComboboxRoot>
 </template>
+
+<style src="./styles.css"></style>

@@ -1,23 +1,26 @@
 <script setup lang="ts">
-import type { ComboboxAnchorProps } from 'reka-ui'
-import type { HTMLAttributes } from 'vue'
-import { reactiveOmit } from '@vueuse/core'
-import { ComboboxAnchor, useForwardProps } from 'reka-ui'
-import { cn } from '../_shared/class-names'
+import { computed, useAttrs } from "vue";
+import { ComboboxAnchor as RekaComboboxAnchor } from "reka-ui";
+import { cn } from "../_shared/class-names";
+import { fixedHostAttrs } from "../_shared/primitive";
+import type { ComboboxAnchorProps } from "./types";
 
-const props = defineProps<ComboboxAnchorProps & { class?: HTMLAttributes['class'] }>()
+defineOptions({ name: "ComboboxAnchor", inheritAttrs: false });
 
-const delegatedProps = reactiveOmit(props, 'class')
-
-const forwarded = useForwardProps(delegatedProps)
+const props = defineProps<ComboboxAnchorProps>();
+const attrs = useAttrs();
+const forwardedAttrs = computed(() => {
+    const { reference: _reference, ...forwarded } = fixedHostAttrs(attrs);
+    return forwarded;
+});
 </script>
 
 <template>
-  <ComboboxAnchor
-    data-slot="combobox-anchor"
-    v-bind="forwarded"
-    :class="cn('w-popover', props.class)"
-  >
-    <slot />
-  </ComboboxAnchor>
+    <RekaComboboxAnchor
+        data-slot="combobox-anchor"
+        v-bind="forwardedAttrs"
+        :class="cn('w-popover', props.class)"
+    >
+        <slot />
+    </RekaComboboxAnchor>
 </template>

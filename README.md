@@ -22,14 +22,14 @@ import { Input, Textarea, Combobox } from "@mkbabb/glass-ui/forms";
 
 // per-package subpaths — one component family per dist chunk
 import { GlassDock, DockLayerGroup, DockLayer } from "@mkbabb/glass-ui/dock";
-import { DarkModeToggle } from "@mkbabb/glass-ui/controls";
+import { DarkModeToggle } from "@mkbabb/glass-ui/dark-mode-toggle";
 import { Configurator, useConfiguratorState } from "@mkbabb/glass-ui/configurator";
 import { Popover, PopoverTrigger, PopoverContent } from "@mkbabb/glass-ui/popover";
 
 // public types + constants live on their OWNING subpath (the 5.0.0 export reshape
 // dropped the `/api` discovery layer — every symbol re-homes to its family subpath)
 import type { AuroraConfig } from "@mkbabb/glass-ui/aurora";
-import type { ButtonVariants } from "@mkbabb/glass-ui/button";
+import type { ButtonEmphasis, ButtonProps } from "@mkbabb/glass-ui/button";
 import type { CardTier } from "@mkbabb/glass-ui/card";
 import { DEFAULT_AURORA_CONFIG, MAX_NUCLEI } from "@mkbabb/glass-ui/aurora";
 ```
@@ -37,9 +37,9 @@ import { DEFAULT_AURORA_CONFIG, MAX_NUCLEI } from "@mkbabb/glass-ui/aurora";
 ```vue
 <Popover trigger="hover" :open-delay="120">
     <PopoverTrigger as-child>
-        <Button variant="primary-audacious" size="lg">Run audit</Button>
+        <Button emphasis="primary" size="lg">Run audit</Button>
     </PopoverTrigger>
-    <PopoverContent role="card">Quicker reveal for chassis actions</PopoverContent>
+    <PopoverContent>Quicker reveal for chassis actions</PopoverContent>
 </Popover>
 ```
 
@@ -47,7 +47,8 @@ import { DEFAULT_AURORA_CONFIG, MAX_NUCLEI } from "@mkbabb/glass-ui/aurora";
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "@mkbabb/glass-ui/styles";
-@source "../node_modules/@mkbabb/glass-ui/dist";   /* template-utility content-scan */
+@import "@mkbabb/glass-ui/styles/fonts";
+@source "../node_modules/@mkbabb/glass-ui/dist"; /* template-utility content-scan */
 @variant dark (&:where(.dark, .dark *));
 
 /* override tokens locally for your project */
@@ -58,6 +59,10 @@ import { DEFAULT_AURORA_CONFIG, MAX_NUCLEI } from "@mkbabb/glass-ui/aurora";
     --glass-blur-resting-radius: 8px;
 }
 ```
+
+The optional `styles/fonts` entry carries the packaged Plus Jakarta Sans and
+Fira Code faces as self-contained WOFF2 data URLs. Consumers that need raw font
+files can address the same built assets through `@mkbabb/glass-ui/fonts/*`.
 
 ## Documentation
 
@@ -78,7 +83,7 @@ consumer-facing migration path in [`MIGRATION.md`](./MIGRATION.md):
 npm run dev             # storybook demo (multi-page, dock + carousel navigation)
 npm run build           # library → dist/glass-ui.js + glass-ui.css + index.d.ts + per-subpath chunks
 npm run typecheck       # vue-tsc --noEmit
-npm run profile:bundle  # inspect the built bundle
+npm run profile:bundle  # inspect bundle sizes and exact value.js capability imports
 ```
 
 ## Storybook
@@ -87,7 +92,7 @@ npm run profile:bundle  # inspect the built bundle
 
 ## Structure
 
-The `src/` tree is machine-generated into [`docs/canon/structure.md`](./docs/canon/structure.md) by `npm run gen:structure`. At a glance:
+The source tree follows the concise ownership map in [`docs/canon/structure.md`](./docs/canon/structure.md):
 
 ```
 src/
@@ -117,11 +122,11 @@ import { Input, Textarea, Combobox } from "@mkbabb/glass-ui/forms";
 
 // per-package subpaths — substrate isolation
 import { GlassDock, DockLayerGroup, DockLayer } from "@mkbabb/glass-ui/dock";
-import { DarkModeToggle } from "@mkbabb/glass-ui/controls";
+import { DarkModeToggle } from "@mkbabb/glass-ui/dark-mode-toggle";
 import { Aurora, useAurora } from "@mkbabb/glass-ui/aurora";
 import { Configurator, useConfiguratorState } from "@mkbabb/glass-ui/configurator";
 import { Popover, PopoverTrigger, PopoverContent } from "@mkbabb/glass-ui/popover";
-import { InstrumentChassis, ChassisDivider } from "@mkbabb/glass-ui/instrument-chassis";
+import { InstrumentChassis } from "@mkbabb/glass-ui/instrument-chassis";
 import { useSidebarState } from "@mkbabb/glass-ui/sidebar";
 ```
 
@@ -135,15 +140,15 @@ for the owning-family re-home table.
 
 Five tiers with 1:1 alignment across opacity, blur, background, border, and shadow. Each tier defines `--glass-{opacity,blur,bg,border,shadow}-{tier}`; consumers override the primitives at `:root` to tune intensity. `--glass-level` (a typed inheriting `@property`) is the ONE opacity+blur knob — `level=1` is the hand-tuned ladder, `level=0` is the opaque escape.
 
-| Tier | Class | Use |
-|------|-------|-----|
-| Wash | `.glass-wash` | Dock backgrounds, input fills, hover overlays |
-| Quiet | `.glass-quiet` | Inline workspace chrome |
-| Resting | `.glass-resting` | Cards, content containers |
-| Floating | `.glass-floating` | Popovers, tooltips, dropdowns |
-| Overlay | `.glass-overlay` | Dialogs, command palette, modals |
+| Tier     | Class             | Use                                           |
+| -------- | ----------------- | --------------------------------------------- |
+| Wash     | `.glass-wash`     | Dock backgrounds, input fills, hover overlays |
+| Quiet    | `.glass-quiet`    | Inline workspace chrome                       |
+| Resting  | `.glass-resting`  | Cards, content containers                     |
+| Floating | `.glass-floating` | Popovers, tooltips, dropdowns                 |
+| Overlay  | `.glass-overlay`  | Dialogs, command palette, modals              |
 
-Convenience classes bundle a tier with a shape: `.glass-card` (resting + `--radius-card` + offset card shadow), `.glass-pill` (resting + pill radius + press feedback), `.glass-btn`. See [`docs/canon/glass-system.md`](./docs/canon/glass-system.md) for the adaptive-legibility axes (`--glass-tint-*`, `--glass-accent`, the dark transmissive-material arm).
+Convenience classes bundle a tier with a shape: `.glass-card` (resting + `--radius-card` + offset card shadow) and `.glass-pill` (resting + pill radius + press feedback). Commands use `<Button>` so geometry, semantics, focus, and press behavior retain one owner. See [`docs/canon/glass-system.md`](./docs/canon/glass-system.md) for the adaptive-legibility axes (`--glass-tint-*`, `--glass-accent`, the dark transmissive-material arm).
 
 ## Design Tokens
 
@@ -157,9 +162,9 @@ Type scale based on √φ ≈ 1.272 (modulated golden ratio); each step is φ^(n
 
 - TypeScript `strict:true`, `verbatimModuleSyntax:true`; `moduleResolution:bundler`, `target:ES2022`, `lib:ES2023`
 - `import type` for all type-only imports; named exports only, no defaults
-- shadcn-vue component pattern: reka-ui `Primitive` / `useForwardPropsEmits`, CVA for variants, `cn()` for class composition
+- reka-ui primitives for polymorphic/accessibility behavior; typed semantic props and owner-colocated CSS for component appearance
 - Color tokens are **complete `hsl()` colors** — `--primary: hsl(24 10% 10%)`, consumed directly as `var(--primary)`. NEVER `hsl(var(--token))` (double-wrapping is invalid and never paints); for an alpha derivative use `color-mix(in srgb, var(--token) N%, transparent)`
-- `cn()` is `clsx` + a hand-rolled conflict-bucket deduplicator (replaced `tailwind-merge` at v0.9.2 — a deliberate keep, not a gap to re-upgrade)
+- `cn()` normalizes Vue-compatible class values and applies a small conflict-bucket deduplicator
 
 See [`docs/canon/conventions.md`](./docs/canon/conventions.md) for the full set.
 
@@ -167,21 +172,18 @@ See [`docs/canon/conventions.md`](./docs/canon/conventions.md) for the full set.
 
 All runtime deps are peer — glass-ui declares them in `peerDependencies` and ships none in its own `dependencies` bundle, so the consumer's single Vue / Tailwind / reka-ui spine is reused rather than re-vendored.
 
-| Package | Role |
-|---------|------|
-| `vue` ^3.5 | Framework |
-| `reka-ui` ^2.0 | Headless UI primitives |
-| `@vueuse/core` ^14.0 | useDark, createGlobalState, useEventListener (optional peer) |
-| `tailwindcss` ^4.0 | Utility CSS |
-| `class-variance-authority` ^0.7 | Component variant definitions |
-| `clsx` ^2.0 | Conditional class joining (`cn()` ships its own deduplicator) |
-| `embla-carousel-vue` ^8.0 | Carousel substrate (optional peer) |
-| `@lucide/vue` ^1.16.0 | Icon set (the renamed v1 package; was `lucide-vue-next` pre-v1.0) |
-| `@mkbabb/keyframes.js` ^5.2.0 | Spring/keyframe runtime (optional peer) |
-| `@mkbabb/value.js` ^3.1.0 | Color/value normalization (optional peer) |
-| `@mkbabb/pencil-boil` ^0.4.1 | Hand-mark freehand core (optional peer) |
-| `perfect-freehand` ^1.2.3 | Variable-width stroke geometry (optional peer) |
-| `tw-animate-css` ^1.2.5 | `animate-in`/`animate-out` data-state utilities (optional peer) |
+| Package                         | Role                                                              |
+| ------------------------------- | ----------------------------------------------------------------- |
+| `vue` ^3.5                      | Framework                                                         |
+| `reka-ui` ^2.0                  | Headless UI primitives                                            |
+| `@vueuse/core` ^14.0            | useDark, createGlobalState, useEventListener (optional peer)      |
+| `tailwindcss` ^4.0              | Utility CSS                                                       |
+| `embla-carousel-vue` ^8.0       | Carousel substrate (optional peer)                                |
+| `@lucide/vue` ^1.16.0           | Icon set (the renamed v1 package; was `lucide-vue-next` pre-v1.0) |
+| `@mkbabb/keyframes.js` ^6.0.0   | Spring/keyframe runtime (optional peer)                           |
+| `@mkbabb/value.js` ^4.0.0       | Color and easing capabilities (optional peer)                     |
+| `@mkbabb/pencil-boil` ^0.9.2    | Hand-mark freehand core (optional peer)                           |
+| `tw-animate-css` ^1.2.5         | `animate-in`/`animate-out` data-state utilities (optional peer)   |
 
 `tw-animate-css` is required only for the animated overlay surfaces (Dialog / Sheet / Popover / DropdownMenu emit `animate-in`/`animate-out` data-state utilities); a Button-only consumer never needs it. See [`docs/canon/dependencies.md`](./docs/canon/dependencies.md).
 

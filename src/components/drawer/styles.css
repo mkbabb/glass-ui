@@ -33,8 +33,9 @@
 
 /* BD.W-OVERLAY-STAGE-COUPLE — `--stage-t`, the ONE registered STAGING scalar (0 =
  * closed/un-staged → 1 = fully staged). The whole modal band rides this ONE knob:
- * the drawer's surface FREEZE (A), the scrim DEEPEN (B), the page RECEDE+SCALE (C),
- * the opt-in blur ENGAGE (D) are all pure `calc()` reads OF it.
+ * the drawer's surface CONGEAL (A), scrim DEEPEN (B), and page RECEDE+SCALE (C)
+ * are pure `calc()` reads OF it. The opt-in immersive scrim (D) switches between
+ * fixed material depths; its blur radius never reads this per-frame scalar.
  *
  * BI.W-DRAWER-PERF — `inherits: false`. The scalar is SCOPED-written onto each reader
  * root DIRECTLY (the sheet · the scrim `[data-stage-scrim]` · the page-wrapper
@@ -123,48 +124,6 @@
 }
 
 /*
- * BA.W-SURFACE-AXIS — the shared {glass·veil·opaque} surface decoration ON TOP of
- * the `.glass-drawer` recipe. `.glass-drawer` is UNLAYERED (this file), so the
- * `@layer components` `[data-surface]` seam in glass/surface-axis.css would LOSE
- * to it (an unlayered rule always beats a layered one — the AZ.W-DOCK-RAIL
- * cascade-win trap). The fix is the SAME-LAYER carve: these `.glass-drawer[data-
- * surface=…]` rules sit unlayered alongside `.glass-drawer` and win by specificity
- * (attr+class > class), composing the SAME veil/opaque deltas the shared seam
- * declares — NO `glass-drawer`-local recipe fork (they read the same `--veil-*` /
- * `--glass-level` machinery). The `glass` rung is the identity (no rule).
- */
-.glass-drawer[data-surface="veil"] {
-    --veil-bg: color-mix(
-        in oklab,
-        var(--glass-bg-quiet),
-        var(--glass-tint-source) var(--glass-tint-strength)
-    );
-    --veil-blur: var(--glass-blur-quiet);
-    background: var(--veil-bg);
-    backdrop-filter: var(--veil-blur);
-    -webkit-backdrop-filter: var(--veil-blur);
-    border: none;
-    box-shadow: none;
-}
-
-.glass-drawer[data-surface="opaque"] {
-    /* The solid-card escape. The `.glass-drawer` background reads the `:root`-baked
-       `--glass-bg-overlay` token (which substitutes `--glass-level` at :root), so a
-       per-element `--glass-level: 0` cannot re-resolve it — the substitution-vs-
-       inheritance trap (mirrors surface-axis.css). Set the SOLID plate AT THE
-       ELEMENT; still flip the level/tint knobs for a nested glass descendant. */
-    --glass-level: 0;
-    --glass-tint-strength: 0%;
-    /* The SOLID --card plate via the house color-mix idiom (solid --card, expressed
-       as the cohesion-sanctioned mix the token ladder speaks — NOT the bare
-       `var(--card)` the cohesion D1 check forbids for the always-on drawer plate;
-       this is the EXPLICIT opt-out behind `surface="opaque"`, not the default). */
-    background: color-mix(in srgb, var(--card), transparent 0%);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-}
-
-/*
  * Detented (snap-point) sheets fill the viewport height. The house engine positions
  * the sheet by translating it along its drag axis by `(1 - --glass-drawer-t) * 100%`
  * (DrawerContent.vue's inline transform) — so for a snap fraction to read as that
@@ -193,8 +152,9 @@
 /*
  * BD.W-OVERLAY-STAGE-COUPLE — coupling (A): the surface FREEZE, composed AT THE
  * ELEMENT. A detented sheet is SEE-THROUGH at peek/half (the page bleeds) and
- * SOLIDIFIES toward a warm-tinted card at full (page does not bleed, blur → 0). This
- * is the iOS-27 bottom-sheet crown the live α-0.95-at-every-detent flattened.
+ * SOLIDIFIES toward a warm-tinted card at full (the opaque plate ends visible bleed
+ * while its blur kernel stays fixed). This is the iOS-27 bottom-sheet crown the
+ * live α-0.95-at-every-detent flattened.
  *
  * A TWO-SEGMENT lerp on the ONE `--stage-t` knob (the self-standing crown — the wave
  * owns BOTH endpoints so it does not block on BE.W-SHEET-TRANSLUCENT, fold C3·R1):
@@ -203,15 +163,14 @@
  *     0.74`). At peek/half the page bleeds through.
  *   • SOLIDIFY t ∈ [0.85, 1] — `--sheet-freeze` lerps the descended plate toward a
  *     WARM-TINTED card-mix (NOT bare `--card` — the gray-at-full carve hole, fold
- *     C1·R4); `backdrop-filter` blur decays to 0 (a solid plate has no backdrop to
- *     bend — a Safari win, no wasted sample behind an opaque plate).
+ *     C1·R4). The plate opacity congeals; the blur kernel remains fixed so a drag
+ *     never reallocates backdrop material.
  *
- * Composed AT THE ELEMENT (the `[data-surface=opaque]` substitution-safe path) via
- * element-level `color-mix` — NEVER an ancestor `filter` (which would clobber the
- * sheet's own backdrop-filter, the dock-hub goo-tear lesson, §7). `--stage-t` reads
- * the `:root` scalar the single writer drives (mirrored from `--glass-drawer-t`).
+ * Composed at the default glass element via `color-mix`, never an ancestor filter
+ * that would clobber the sheet's own backdrop sampling. Veil and opaque surfaces
+ * remain entirely owned by the shared surface axis.
  */
-.glass-drawer[data-glass-drawer-snap-points="true"] {
+.glass-drawer[data-glass-drawer-snap-points="true"][data-surface="glass"] {
     /* the DESCENT fraction — 0 at closed → 1 at the commit floor (t=0.85). */
     --sheet-descent: clamp(0, calc(var(--stage-t) / 0.85), 1);
     /* the SOLIDIFY fraction — 0 below the commit floor → 1 at full (t=1). */
@@ -243,44 +202,11 @@
         var(--sheet-crown),
         var(--sheet-solid) calc(var(--sheet-freeze) * 100%)
     );
-    /* BG.W-BACKDROP-BLUR-ENGAGE (F5.4) — the sheet's own backdrop blur ENGAGES off the
-       LIVE gesture scalar `--glass-drawer-t`, not a fixed duration: it builds 0 → full as
-       the finger pulls the sheet in (reaching full by the shared `--glass-blur-engage-knee`
-       ~35% pull — the iOS quick-coalesce), tracks the finger 1:1 during the drag (the
-       scalar is written per-frame), and de-blurs on the trailing dismiss over the
-       DRAWER_SNAP spring's OWN settle (the scalar glides to 0 on close) — the ONE
-       sanctioned fixed-clock leg, delivered for free by the drag scalar's spring. The
-       SOLIDIFY leg (`1 - --sheet-freeze`) still decays the blur to 0 at the full-commit
-       floor (a solid plate has no backdrop to bend — the Safari win). The engage scalar
-       + the `--glass-blur-engage-knee` curve constant are the shared engage primitive
-       minted in surfaces.css; the blur recipe is inlined here (the raw `/styles` partial
-       ships unresolved-`@apply`-free) reading `--glass-blur-engage-t` on the SAME
-       `--glass-blur-overlay-radius` rung, with the sheet's own `saturate` leg on top. At
-       `--glass-drawer-t: 0` (closed) the engage resolves 0 → NO blur (no wasted sample
-       behind an offscreen sheet; NO-MASKING-FALLBACK — a dead writer shows an un-blurred
-       plate, never a masking full blur). NO `transition: backdrop-filter` — the gesture
-       IS the clock. */
-    --glass-blur-engage-t: calc(
-        clamp(0, calc(var(--glass-drawer-t) / var(--glass-blur-engage-knee, 0.35)), 1) *
-            (1 - var(--sheet-freeze))
-    );
-    /* Unprefixed ONLY — Lightning CSS emits the `-webkit-` companion (the single-source
-       authorship discipline, per `.btn-glass`); hand-authoring both doubles the prefix. */
-    backdrop-filter: blur(
-            calc(var(--glass-blur-overlay-radius, 20px) * var(--glass-blur-engage-t))
-        )
-        saturate(1.6);
-}
-
-/* The `surface=opaque` explicit escape still wins (it sets the solid plate
-   unconditionally regardless of detent) — the freeze is the DEFAULT glass crown; the
-   opt-out plate is the consumer's hard override. Source order keeps the opaque rule
-   (declared above) — re-assert it here so it beats the snap-points freeze at equal
-   specificity for a detented opaque sheet. */
-.glass-drawer[data-glass-drawer-snap-points="true"][data-surface="opaque"] {
-    background: color-mix(in srgb, var(--card), transparent 0%);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
+    /* BI.W-Q023 — Drawer translates through one material-constant overlay sample.
+       `--stage-t` still congeals the plate above, but neither the gesture nor settle
+       changes the blur radius. Unprefixed only; the style build emits Safari's
+       companion declaration. */
+    backdrop-filter: var(--glass-blur-overlay);
 }
 
 /* Direction variants — the content root tags itself with the drag axis
@@ -293,8 +219,11 @@
     margin-top: 0;
     margin-bottom: 6rem;
     border-top: 0;
-    border-bottom: 1px solid var(--glass-border-overlay);
     border-radius: 0 0 var(--radius-panel) var(--radius-panel);
+}
+
+.glass-drawer[data-glass-drawer-direction="top"]:not([data-surface="veil"]) {
+    border-bottom: 1px solid var(--glass-border-overlay);
 }
 
 .glass-drawer[data-glass-drawer-direction="left"],
@@ -305,6 +234,10 @@
     max-height: 100%;
     width: min(24rem, 92vw);
     margin: 0;
+}
+
+.glass-drawer[data-glass-drawer-direction="left"]:not([data-surface="veil"]),
+.glass-drawer[data-glass-drawer-direction="right"]:not([data-surface="veil"]) {
     border: 1px solid var(--glass-border-overlay);
 }
 
@@ -391,7 +324,8 @@
  * fixed-α-0.8 at every detent is the born-RED). Reuses the SHIPPED warm
  * `--overlay-scrim-ink` (the F7 warm near-black, never flat black), now t-coupled.
  * `clamp(0,…,1)` bounds the fling overshoot. The scrim element gains
- * `[data-stage-scrim]` (DrawerOverlay.vue) and reads the inherited `:root` scalar.
+ * `[data-stage-scrim]` (DrawerOverlay.vue) and reads the scalar written directly on
+ * that scrim root.
  */
 [data-stage-scrim] {
     background: color-mix(
@@ -423,20 +357,18 @@
 }
 
 /*
- * BD.W-OVERLAY-STAGE-COUPLE — coupling (D): the blur ENGAGE (opt-in `immersive`, the
- * Command spotlight). BI.W-DRAWER-PERF — the scrim's backdrop blur ENGAGES at a FIXED
- * depth (16px), NOT a per-frame radius ramp on `--stage-t`. A `blur(calc(--stage-t *
+ * BD.W-OVERLAY-STAGE-COUPLE — coupling (D): the opt-in `immersive` Command spotlight.
+ * BI.W-DRAWER-PERF — the scrim owns one FIXED 16px backdrop depth, never a per-frame
+ * radius ramp on `--stage-t`. A `blur(calc(--stage-t *
  * 16px))` re-rasterizes the blur kernel EVERY frame (the cardinal Safari sin, §L7 /
  * fold C2·R); the DIM ramps instead via the scrim α coupling (the `[data-stage-scrim]`
- * rule above, already `--stage-t`-driven) — the backdrop blur snaps to depth while the
- * dim tracks the detent (MOTION-LADDER §1.3: the backdrop blur engages fast at a fixed
- * depth, the dim ramps; a symmetric radius ramp reads wrong). The scrim fades in over
+ * rule above, already `--stage-t`-driven) — the backdrop depth is material-constant
+ * while the dim tracks the detent. The scrim fades in over
  * its `animate="fade"` enter, so the fixed blur reads as coalescing, never a pop.
  * Default OFF.
  */
 [data-stage-scrim][data-stage-immersive] {
     backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
 }
 
 /* Reduced-motion — the house `SpringProgress` snaps the detent deterministically

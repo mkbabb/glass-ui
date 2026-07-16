@@ -3,7 +3,6 @@ import { computed } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import SectionPreviewCard from "../../chassis/landing/SectionPreviewCard.vue";
 import { CATEGORIES } from "../manifest";
-import { categoryHero } from "../../chassis/hero/category-hero";
 import { resolveStoryTile } from "../../chassis/landing/storyTile";
 
 // The storybook front-door hero declares a live aurora wash on its manifest row;
@@ -33,50 +32,42 @@ const SUMMARIES: Record<string, string> = {
 // lead/rest rhythm so the set is not eight identical boxes. Each card carries the
 // category's DISTINCT icon + section hue from the ONE CATEGORY_HERO source (the
 // per-category {icon, sectionHue} — never a hand-rolled SECTION_HUE duplicate),
-// its landing subpath (the route identity), and an inline non-text preview
-// (BC.W-HERO-AUDACIOUS — the front door is a section-landing peer; the cards link
+// and an inline non-text preview (BC.W-HERO-AUDACIOUS — the front door is a
+// section-landing peer; the cards link
 // the 11 section LANDINGS, each preview a budget-safe still).
 const categories = computed(() =>
     CATEGORIES.filter((c) => !c.reference).map((c, idx) => {
-        const hero = categoryHero(c.id);
         // BI.W-LIVE-TILES — the front-door card previews a REAL representative
         // component from the section (the ss-01 "empty brown tile + lone compass"
         // cure). Resolve the tile of the category's LEAD story (skipping the D0
         // front door itself) via the SAME per-story ladder the landings use — a
         // Button cluster for display, a frozen aurora still for substrates, a mini
         // GlassDock for dock — never a repeated glyph.
-        const leadStory =
-            c.stories.find((story) => story.id !== "intro") ?? c.stories[0];
+        const leadStory = c.stories.find((story) => story.id !== "intro");
         return {
             slug: c.id,
             title: c.title,
             blurb: SUMMARIES[c.id] ?? c.stories[0]?.blurb ?? "",
-            subpath: c.landing?.subpath ?? `/${c.id}`,
-            icon: hero?.icon ?? c.icon,
-            section: hero?.sectionHue ?? 7,
             lead: idx === 0,
-            tile: leadStory ? resolveStoryTile(c.id, leadStory) : null,
+            tile: leadStory
+                ? resolveStoryTile(c.id, leadStory)
+                : { kind: "identity" as const, title: c.title },
         };
     }),
 );
 </script>
 
 <template>
-    <!-- BG.W-HERO-FIT — ONE chassis title path: the chassis renders the single hero
-         <h1> (the MANDATORY short front-door wordmark `displayTitle` "glass-ui" through
-         the height-aware fit-cap), the eyebrow + the blurb. The THREE prior display
-         moments (the ℱ + serif wordmark, the display-4 tagline, the bare text-display-mega
-         <h1>) collapse to the ONE chassis display <h1>; this page provides ONLY the inline
-         ℱ ornament (#title-ornament) + the category index (the default slot). -->
+    <!-- StoryPage owns the one title and lede; this route contributes only its
+         inline mark and the category index. -->
     <StoryPage>
-        <!-- The ℱ wordmark, rendered inline INSIDE the ONE chassis <h1> as the brand
-             serif ornament; the eyebrow + body prose stay warm ink (one-color-event). -->
+        <!-- The ℱ wordmark stays an inline title ornament. -->
         <template #title-ornament>
             <span class="fourier-f italic">ℱ&nbsp;</span>
         </template>
 
         <!-- Category index — one SectionPreviewCard per category, navigating to the
-             category's SECTION-LANDING hero. Each card carries its IconChip POP + an
+             category's SECTION-LANDING hero. Each card carries a quiet static plate + an
              inline non-text preview (BC.W-PAGE-CHASSIS — no text-only redirect card
              survives on the front door, PC7). The cards ride the resting glass rung so
              the aurora the chassis paints reads THROUGH them. -->
@@ -91,9 +82,6 @@ const categories = computed(() =>
                     :to="`/${cat.slug}`"
                     :title="cat.title"
                     :blurb="cat.blurb"
-                    :subpath="cat.subpath"
-                    :icon="cat.icon"
-                    :section="cat.section"
                     :lead="cat.lead"
                     :tile="cat.tile"
                 />

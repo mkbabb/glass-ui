@@ -1,24 +1,24 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
-import { SelectScrollUpButton, type SelectScrollUpButtonProps, useForwardProps } from 'reka-ui'
-import { ChevronUp } from "@lucide/vue"
-import { cn } from '../_shared/class-names'
+import { computed, useAttrs, type HTMLAttributes } from "vue";
+import { SelectScrollUpButton as RekaSelectScrollUpButton } from "reka-ui";
+import { ChevronUp } from "@lucide/vue";
+import { cn } from "../_shared/class-names";
+import { fixedHostAttrs } from "../_shared/primitive";
 
-const props = defineProps<SelectScrollUpButtonProps & { class?: HTMLAttributes['class'] }>()
+defineOptions({ name: "SelectScrollUpButton", inheritAttrs: false });
 
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
-
-  return delegated
-})
-
-const forwardedProps = useForwardProps(delegatedProps)
+const props = defineProps<{ class?: HTMLAttributes["class"] }>();
+const attrs = useAttrs();
+const forwardedAttrs = computed(() => fixedHostAttrs(attrs));
 </script>
 
 <template>
-  <SelectScrollUpButton v-bind="forwardedProps" :class="cn('flex cursor-default items-center justify-center py-1', props.class)">
-    <slot>
-      <ChevronUp class="h-4 w-4" />
-    </slot>
-  </SelectScrollUpButton>
+    <RekaSelectScrollUpButton
+        v-bind="forwardedAttrs"
+        :class="cn('flex cursor-default items-center justify-center py-1', props.class)"
+    >
+        <slot>
+            <ChevronUp class="h-4 w-4" />
+        </slot>
+    </RekaSelectScrollUpButton>
 </template>

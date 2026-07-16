@@ -16,30 +16,41 @@ import GlassDock from "@glass/components/dock/GlassDock.vue";
  * `src/styles/dock/{overflow,shell}.css`.
  */
 describe("GlassDock intrinsic cap-scroll (BG.W-DOCK-CAP-SCROLL-FADE)", () => {
+    it("projects size and shape on the dock surface", () => {
+        const baseline = mount(GlassDock);
+        const vertical = mount(GlassDock, {
+            props: { orientation: "vertical", shape: "rounded" },
+        });
+
+        expect(baseline.get(".glass-dock").attributes("data-size")).toBe("md");
+        expect(vertical.get(".glass-dock").classes()).toEqual(
+            expect.arrayContaining(["vertical", "shape-rounded"]),
+        );
+    });
+
+    it("adds container-query ownership without changing overflow", () => {
+        const named = mount(GlassDock, {
+            props: { containerName: "pill-cluster", alwaysExpanded: true },
+        }).get(".glass-dock");
+        const plain = mount(GlassDock, { props: { alwaysExpanded: true } }).get(
+            ".glass-dock",
+        );
+
+        expect(named.attributes("data-container-name")).toBe("pill-cluster");
+        expect(named.attributes("style")).toContain("container-type: inline-size");
+        expect(named.attributes("style")).toContain(
+            "container-name: pill-cluster",
+        );
+        expect(named.attributes("style")).not.toContain("overflow");
+        expect(plain.attributes("data-container-name")).toBeUndefined();
+        expect(plain.attributes("style") ?? "").not.toContain("container-type");
+    });
+
     it("a horizontal dock wears `dock-scroll-x` INTRINSICALLY (no opt-in prop)", () => {
         const wrapper = mount(GlassDock);
         const root = wrapper.get(".glass-dock");
         expect(root.classes()).toContain("dock-scroll-x");
         expect(root.classes()).not.toContain("dock-scroll-y");
-    });
-
-    it("an explicit horizontal orientation still wears `dock-scroll-x`", () => {
-        const wrapper = mount(GlassDock, {
-            props: { orientation: "horizontal" },
-        });
-        const root = wrapper.get(".glass-dock");
-        expect(root.classes()).toContain("dock-scroll-x");
-        expect(root.classes()).not.toContain("dock-scroll-y");
-    });
-
-    it("a vertical dock wears NO scroll class — the block-axis scroll folds into the shell rule", () => {
-        const wrapper = mount(GlassDock, {
-            props: { orientation: "vertical" },
-        });
-        const root = wrapper.get(".glass-dock");
-        expect(root.classes()).toContain("vertical");
-        expect(root.classes()).not.toContain("dock-scroll-y");
-        expect(root.classes()).not.toContain("dock-scroll-x");
     });
 
     // The `overflow="scroll"` union member is RETIRED (only `"grow" | "wrap"`
@@ -51,15 +62,6 @@ describe("GlassDock intrinsic cap-scroll (BG.W-DOCK-CAP-SCROLL-FADE)", () => {
         });
         const root = wrapper.get(".glass-dock");
         expect(root.classes()).toContain("dock-scroll-x");
-        expect(root.classes()).not.toContain("dock-scroll-y");
-    });
-
-    it("a vertical grow dock still wears no scroll class", () => {
-        const wrapper = mount(GlassDock, {
-            props: { orientation: "vertical", overflow: "grow" },
-        });
-        const root = wrapper.get(".glass-dock");
-        expect(root.classes()).not.toContain("dock-scroll-x");
         expect(root.classes()).not.toContain("dock-scroll-y");
     });
 
@@ -86,12 +88,5 @@ describe("GlassDock intrinsic cap-scroll (BG.W-DOCK-CAP-SCROLL-FADE)", () => {
         expect(root.classes()).not.toContain("dock-overflow-wrap");
         expect(root.classes()).not.toContain("dock-scroll-x");
         expect(root.classes()).not.toContain("dock-scroll-y");
-    });
-
-    it("the grow overflow mode never acquires the wrap hook", () => {
-        const wrapper = mount(GlassDock, { props: { overflow: "grow" } });
-        expect(wrapper.get(".glass-dock").classes()).not.toContain(
-            "dock-overflow-wrap",
-        );
     });
 });

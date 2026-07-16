@@ -1,107 +1,121 @@
 <script setup lang="ts">
-// compositions/chassis — the demo-kit reference (BI.W-SPECIMEN-FRAME). ONE page
-// showing the folded storybook chassis: the ONE `<SpecimenFrame>` specimen host
-// (across its glass-tier axis) + the ONE `<PermutationGrid>` variant grid — the
-// gestalt-cohesion cure "N bespoke spec-sheets → one product with natural variation."
-// Every specimen reads as glass over the shared warm field, and a lone interactive
-// child never balloons to the article width (the bounded w-full carve).
+// compositions/chassis — the demo-kit reference. StorySection owns hierarchy;
+// ShowcaseFrame is the one specimen surface; matrices are ordinary local grids.
 import StoryPage from "../../chassis/page/StoryPage.vue";
-import {
-    SpecimenFrame,
-    PermutationGrid,
-    type PermutationGridCell,
-} from "../../chassis";
+import StorySection from "../../chassis/section/StorySection.vue";
+import { ShowcaseFrame } from "../../chassis";
+import { ref } from "vue";
 import { Button } from "@glass/components/button";
 import { Badge } from "@glass/components/badge";
 import { Switch } from "@glass/components/switch";
 
 // The grid cells — each renders a glassy specimen cell hosting a Badge.
-const toneCells: (PermutationGridCell & {
-    variant: "default" | "secondary" | "outline";
-})[] = [
+const toneCells = [
     { id: "default", heading: "default", variant: "default" },
     { id: "secondary", heading: "secondary", variant: "secondary" },
     { id: "outline", heading: "outline", variant: "outline" },
-];
+] as const;
 
-const cellVariant = (id: string | number) =>
-    toneCells.find((c) => c.id === id)?.variant ?? "default";
+const runState = ref<"idle" | "running">("idle");
 </script>
 
 <template>
     <StoryPage>
-        <!-- SPECIMEN — one glassy sub-card hosting a single specimen (the base). A
-             lone Button is a direct body child yet sizes to its content (the bounded
-             w-full carve), never the column. -->
-        <SpecimenFrame
+        <StorySection
             heading="Specimen"
-            label="chassis · specimen"
-            blurb="One glassy sub-card hosting a single demo specimen — the conformity floor. A lone interactive child sizes to content, never the article width."
+            blurb="One specimen surface hosting real components at their intrinsic widths."
         >
-            <div class="flex flex-wrap items-center gap-3">
-                <Button>Default</Button>
-                <Button variant="primary-audacious">Primary</Button>
-                <Badge tone="success">shipped</Badge>
-            </div>
-        </SpecimenFrame>
+            <ShowcaseFrame>
+                <div class="flex flex-wrap items-center gap-3">
+                    <Button>Default</Button>
+                    <Button emphasis="primary">Primary</Button>
+                    <Badge tone="success">shipped</Badge>
+                </div>
+            </ShowcaseFrame>
+        </StorySection>
 
-        <!-- INTERACTION — the library's own interactives on the lifted `floating`
-             tier (never a hand-rolled lozenge). -->
-        <SpecimenFrame
-            tier="floating"
+        <StorySection
             heading="Interaction"
-            label="chassis · interaction"
-            blurb="A glassy card hosting the library's own interactives — real Buttons and Switches on the lifted glass tier."
+            blurb="Real Buttons and Switches on the quieter specimen tier."
         >
-            <div class="flex flex-wrap items-center gap-3">
-                <Button variant="glass" size="sm">Run</Button>
-                <Button variant="ghost" size="sm">Reset</Button>
-            </div>
-            <div class="flex items-center justify-between gap-3">
-                <span id="chassis-reduced-motion" class="text-small">Reduced motion</span>
-                <Switch aria-labelledby="chassis-reduced-motion" />
-            </div>
-        </SpecimenFrame>
+            <ShowcaseFrame tier="quiet">
+                <div class="flex max-w-2xl flex-col gap-3">
+                    <div class="flex flex-wrap items-center gap-3">
+                        <Button size="sm" @click="runState = 'running'">
+                            Run
+                        </Button>
+                        <Button
+                            emphasis="quiet"
+                            size="sm"
+                            :disabled="runState === 'idle'"
+                            @click="runState = 'idle'"
+                        >
+                            Reset
+                        </Button>
+                        <span class="text-small text-muted-foreground" role="status">
+                            {{ runState === "running" ? "Running" : "Idle" }}
+                        </span>
+                    </div>
+                    <div class="flex items-center justify-between gap-3">
+                        <span id="chassis-reduced-motion" class="text-small"
+                            >Reduced motion</span
+                        >
+                        <Switch aria-labelledby="chassis-reduced-motion" />
+                    </div>
+                </div>
+            </ShowcaseFrame>
+        </StorySection>
 
-        <!-- GRID — a responsive grid of specimen cells (the variant matrix). -->
-        <PermutationGrid
+        <StorySection
             heading="Grid"
-            label="chassis · grid"
-            blurb="A responsive grid of specimen cells — the variant matrix / preset gallery, each cell a glassy sub-card."
-            :cells="toneCells"
-            min-cell="12rem"
+            blurb="A responsive variant matrix built from the same specimen surface."
         >
-            <template #cell="{ cell }">
-                <Badge :variant="cellVariant(cell.id)">{{ cell.heading }}</Badge>
-            </template>
-        </PermutationGrid>
+            <div
+                class="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(min(12rem,100%),1fr))]"
+            >
+                <ShowcaseFrame
+                    v-for="cell in toneCells"
+                    :key="cell.id"
+                    tier="quiet"
+                    pad="sm"
+                    :caption="cell.heading"
+                >
+                    <Badge :variant="cell.variant">{{ cell.heading }}</Badge>
+                </ShowcaseFrame>
+            </div>
+        </StorySection>
 
-        <!-- COMPOSITION — a glassy scene composing ≥2 library components into the
-             surface they were built for. The `lg` pad gives the scene room. -->
-        <SpecimenFrame
-            pad="lg"
+        <StorySection
             heading="Composition"
-            label="chassis · composition"
-            blurb="A glassy scene composing ≥2 library components into the surface they were built for."
+            blurb="A composed scene with one clear surface and no nested specimen hierarchy."
         >
-            <div class="flex items-center justify-between gap-4">
-                <div class="flex flex-col gap-1">
-                    <span id="chassis-notifications" class="text-subheading">Notifications</span>
-                    <span class="text-small text-muted-foreground">
-                        Email me when a run completes.
-                    </span>
+            <ShowcaseFrame pad="lg">
+                <div class="flex max-w-2xl flex-col gap-4">
+                    <div class="flex items-center justify-between gap-4">
+                        <div class="flex flex-col gap-1">
+                            <span id="chassis-notifications" class="text-subheading"
+                                >Notifications</span
+                            >
+                            <span class="text-small text-muted-foreground">
+                                Email me when a run completes.
+                            </span>
+                        </div>
+                        <Switch
+                            :default-value="true"
+                            aria-labelledby="chassis-notifications"
+                        />
+                    </div>
+                    <div class="flex items-center justify-between gap-4">
+                        <div class="flex flex-col gap-1">
+                            <span class="text-subheading">Theme</span>
+                            <span class="text-small text-muted-foreground">
+                                Follow the system appearance.
+                            </span>
+                        </div>
+                        <Badge variant="outline">system</Badge>
+                    </div>
                 </div>
-                <Switch :default-value="true" aria-labelledby="chassis-notifications" />
-            </div>
-            <div class="flex items-center justify-between gap-4">
-                <div class="flex flex-col gap-1">
-                    <span class="text-subheading">Theme</span>
-                    <span class="text-small text-muted-foreground">
-                        Follow the system appearance.
-                    </span>
-                </div>
-                <Button variant="outline" size="sm">System</Button>
-            </div>
-        </SpecimenFrame>
+            </ShowcaseFrame>
+        </StorySection>
     </StoryPage>
 </template>

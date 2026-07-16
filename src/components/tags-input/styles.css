@@ -1,0 +1,95 @@
+@layer components {
+    .tags-input {
+        display: flex;
+        min-height: var(--control-h-md);
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5rem;
+        border-radius: var(--radius-field);
+        padding: 0.5rem 0.75rem;
+        font-size: var(--control-text);
+        transition:
+            background-color var(--duration-fast) var(--ease-standard),
+            border-color var(--duration-fast) var(--ease-standard),
+            box-shadow var(--duration-fast) var(--ease-standard);
+    }
+
+    .tags-input:where([aria-invalid="true"], [data-invalid]) {
+        border-color: var(--destructive);
+        box-shadow: var(--invalid-ring);
+    }
+
+    .tags-input:focus-within:not([aria-invalid="true"], [data-invalid]) {
+        border-color: var(--color-accent-opaque, var(--focus-ring-color));
+        box-shadow: var(--focus-ring-shadow);
+    }
+
+    .tags-input__input {
+        min-width: 8rem;
+        min-height: 1.5rem;
+        flex: 1;
+        border: 0;
+        outline: 0;
+        background: transparent;
+        color: inherit;
+        font: inherit;
+    }
+
+    .tags-input__input::placeholder {
+        color: var(--surface-tint-35);
+    }
+
+    .tags-input__item {
+        display: inline-flex;
+        outline: none;
+    }
+
+    .tags-input__item[data-state="active"] .tags-input__chip {
+        box-shadow: var(--focus-ring-shadow);
+    }
+
+    .tags-input__delete {
+        position: relative;
+        display: inline-flex;
+        flex: none;
+        align-items: center;
+        justify-content: center;
+        inline-size: 1.5rem;
+        block-size: 1.5rem;
+        padding: 0;
+        border: 0;
+        border-radius: var(--radius-control);
+        background: transparent;
+        color: inherit;
+        cursor: pointer;
+    }
+
+    .tags-input__delete:disabled {
+        cursor: not-allowed;
+    }
+
+    .tags-input__text {
+        min-width: 0;
+    }
+
+    @media (pointer: coarse) {
+        .tags-input__chip {
+            min-block-size: var(--touch-target, 2.75rem);
+        }
+
+        .tags-input__chip::after {
+            content: "";
+            flex: none;
+            inline-size: var(--touch-target, 2.75rem);
+        }
+
+        .tags-input__delete {
+            position: absolute;
+            inset-block-start: 50%;
+            inset-inline-end: 0;
+            inline-size: var(--touch-target, 2.75rem);
+            block-size: var(--touch-target, 2.75rem);
+            translate: 0 -50%;
+        }
+    }
+}

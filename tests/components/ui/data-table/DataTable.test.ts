@@ -46,10 +46,6 @@ function mountTable(rows: Row[], props: Record<string, unknown> = {}) {
         props: {
             columns,
             rows,
-            total: rows.length,
-            page: 1,
-            pageSize: 10,
-            infinite: true,
             ...props,
         },
     });
@@ -81,73 +77,6 @@ afterEach(() => {
     vi.unstubAllGlobals();
 });
 
-describe("DataTable page defineModel round-trip", () => {
-    // AU.W8b.5 — the `page` model is now `defineModel<number>("page")`; the
-    // `update:sort` channel STAYS a plain emit (it carries {key,direction}).
-    it("emits update:page when a pagination control is clicked", async () => {
-        const rows: Row[] = Array.from({ length: 30 }, (_, i) => ({
-            _id: String(i),
-            name: `Row ${i}`,
-        }));
-        const wrapper = mount(DataTable as Component, {
-            props: {
-                columns,
-                rows: rows.slice(0, 10),
-                total: 30,
-                page: 1,
-                pageSize: 10,
-                infinite: false,
-            },
-        });
-        const next = wrapper.find('button[aria-label="Next page"]');
-        expect(next.exists()).toBe(true);
-        await next.trigger("click");
-        expect(wrapper.emitted("update:page")?.at(-1)?.[0]).toBe(2);
-    });
-
-    it("reflects an external page write in the active pagination control", async () => {
-        const rows: Row[] = Array.from({ length: 30 }, (_, i) => ({
-            _id: String(i),
-            name: `Row ${i}`,
-        }));
-        const wrapper = mount(DataTable as Component, {
-            props: {
-                columns,
-                rows: rows.slice(10, 20),
-                total: 30,
-                page: 1,
-                pageSize: 10,
-                infinite: false,
-            },
-        });
-        await wrapper.setProps({ page: 2 });
-        // The Previous-page control is enabled only when page > 1.
-        const prev = wrapper.find('button[aria-label="Previous page"]');
-        expect(prev.attributes("disabled")).toBeUndefined();
-    });
-
-    it("keeps update:sort as a plain event emit (not a model)", async () => {
-        const sortableColumns: DataTableColumn[] = [
-            { key: "name", label: "Name", sortable: true },
-        ];
-        const wrapper = mount(DataTable as Component, {
-            props: {
-                columns: sortableColumns,
-                rows: [{ _id: "1", name: "Ada" }],
-                total: 1,
-                page: 1,
-                pageSize: 10,
-                infinite: true,
-            },
-        });
-        await wrapper.find("thead th button").trigger("click");
-        expect(wrapper.emitted("update:sort")?.at(-1)?.[0]).toEqual({
-            key: "name",
-            direction: "asc",
-        });
-    });
-});
-
 describe("DataTable interaction semantics", () => {
     it("keeps sortable-header focus and exposes truthful aria-sort", async () => {
         const sortableColumns: DataTableColumn[] = [
@@ -164,6 +93,10 @@ describe("DataTable interaction semantics", () => {
         expect(head.attributes("aria-sort")).toBe("ascending");
         (command.element as HTMLButtonElement).focus();
         await command.trigger("click");
+        expect(wrapper.emitted("update:sort")?.at(-1)?.[0]).toEqual({
+            key: "name",
+            direction: "desc",
+        });
         await wrapper.setProps({ sort: { key: "name", direction: "desc" } });
 
         expect(head.attributes("aria-sort")).toBe("descending");
@@ -177,6 +110,8 @@ describe("DataTable interaction semantics", () => {
         expect(row.attributes("tabindex")).toBeUndefined();
         expect(row.attributes("aria-selected")).toBeUndefined();
         expect(row.classes()).not.toContain("cursor-pointer");
+        expect(row.classes()).not.toContain("hover:bg-muted/50");
+        expect(row.classes()).not.toContain("data-[state=selected]:bg-muted");
         await row.trigger("click");
         expect(wrapper.emitted("select")).toBeUndefined();
     });
@@ -220,8 +155,10 @@ describe("DataTable interaction semantics", () => {
         });
         const rows = wrapper.findAll("tbody tr");
 
+        expect(rows[0].classes()).toContain("data-table-row-interactive");
         expect(rows[0].attributes("aria-selected")).toBe("true");
         expect(rows[1].attributes("aria-selected")).toBe("false");
+        expect(rows.map((row) => row.attributes("tabindex"))).toEqual(["0", "-1"]);
         (rows[1].element as HTMLElement).focus();
         await rows[1].trigger("keydown", { key: "Enter" });
 
@@ -232,6 +169,46 @@ describe("DataTable interaction semantics", () => {
         const movedGrace = wrapper.findAll("tbody tr")[0];
         expect(movedGrace.attributes("aria-selected")).toBe("true");
         expect(document.activeElement).toBe(movedGrace.element);
+    });
+
+    it("moves the sole mounted tab stop without owning off-window navigation", async () => {
+        const wrapper = mountTable(
+            [
+                { _id: "1", name: "Ada" },
+                { _id: "2", name: "Grace" },
+                { _id: "3", name: "Katherine" },
+            ],
+            { selectable: true, selectedRowId: "1", tabbableRowId: "1" },
+        );
+        const rows = wrapper.findAll("tbody tr");
+
+        (rows[0].element as HTMLElement).focus();
+        await rows[0].trigger("keydown", { key: "ArrowDown" });
+        expect(wrapper.emitted("update:tabbableRowId")?.at(-1)?.[0]).toBe("2");
+
+        await wrapper.setProps({ tabbableRowId: "2" });
+        expect(rows.map((row) => row.attributes("tabindex"))).toEqual(["-1", "0", "-1"]);
+        expect(document.activeElement).toBe(rows[1].element);
+    });
+
+    it("roves a focus-only virtual shell without turning rows into selectors", async () => {
+        const wrapper = mountTable(
+            [
+                { _id: "40", name: "Ada" },
+                { _id: "41", name: "Grace" },
+            ],
+            { tabbableRowId: "40" },
+        );
+        const rows = wrapper.findAll("tbody tr");
+
+        expect(rows.map((row) => row.attributes("tabindex"))).toEqual(["0", "-1"]);
+        expect(rows[0].attributes("aria-selected")).toBeUndefined();
+        await rows[0].trigger("keydown", { key: "ArrowDown" });
+        expect(wrapper.emitted("update:tabbableRowId")?.at(-1)?.[0]).toBe("41");
+
+        await rows[0].trigger("keydown", { key: "Enter" });
+        expect(wrapper.emitted("select")).toBeUndefined();
+        expect(wrapper.emitted("update:selectedRowId")).toBeUndefined();
     });
 
     it("projects the same controlled selection contract onto responsive cards", async () => {
@@ -265,8 +242,8 @@ describe("DataTable interaction semantics", () => {
                 selectable: true,
                 ariaRowCount: 101,
                 tabbableRowId: "41",
+                getRowIndex: (row: Row) => row.absoluteIndex!,
                 getRowAttrs: (row: Row) => ({
-                    "aria-rowindex": row.absoluteIndex,
                     "data-absolute-index": row.absoluteIndex,
                 }),
             },
@@ -296,8 +273,8 @@ describe("DataTable interaction semantics", () => {
         const wrapper = mountTable(rows, {
             ariaRowCount: 101,
             tabbableRowId: "41",
+            getRowIndex: (row: Row) => row.absoluteIndex!,
             getRowAttrs: (row: Row) => ({
-                "aria-rowindex": row.absoluteIndex,
                 "data-absolute-index": row.absoluteIndex,
             }),
             rowRef,
@@ -348,22 +325,26 @@ describe("DataTable interaction semantics", () => {
         expect(wrapper.find("table").attributes("aria-rowcount")).toBe("1");
         expect(wrapper.find("tbody tr").attributes("role")).toBe("presentation");
     });
+
+    it("distinguishes loading, filtered-empty, and error states", async () => {
+        const wrapper = mountTable([], { status: "loading" });
+        expect(wrapper.attributes("data-state")).toBe("loading");
+        expect(wrapper.attributes("aria-busy")).toBe("true");
+
+        await wrapper.setProps({ status: "ready", filtered: true });
+        expect(wrapper.attributes("data-state")).toBe("filtered-empty");
+        expect(wrapper.text()).toContain("No matching rows");
+
+        await wrapper.setProps({ status: "error", filtered: false });
+        expect(wrapper.attributes("data-state")).toBe("error");
+        expect(wrapper.find('[role="alert"]').text()).toContain("Unable to load data");
+    });
 });
 
 describe("DataTable row identity", () => {
-    it("falls back to stable object identity when the configured row key is missing", async () => {
-        const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
-        const rows: Row[] = [{ name: "Ada" }, { name: "Grace" }];
-        const wrapper = mountTable(rows);
-
-        expect(rowText(wrapper, 0)).toContain("Ada->Ada");
-
-        await wrapper.setProps({ rows: [rows[1], rows[0]] });
-
-        expect(rowText(wrapper, 0)).toContain("Grace->Grace");
-        expect(rowText(wrapper, 1)).toContain("Ada->Ada");
-        expect(warn).toHaveBeenCalledWith(
-            expect.stringContaining("Missing row identity"),
+    it("rejects rows with missing identity", () => {
+        expect(() => mountTable([{ name: "Ada" }])).toThrow(
+            "Row 0 has no stable identity",
         );
     });
 
@@ -415,20 +396,11 @@ describe("DataTable row identity", () => {
         expect(warn).not.toHaveBeenCalled();
     });
 
-    it("warns and falls back to object identity for duplicate row keys", async () => {
-        const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    it("rejects duplicate row identities", () => {
         const rows: Row[] = [
             { _id: "same", name: "Ada" },
             { _id: "same", name: "Grace" },
         ];
-        const wrapper = mountTable(rows);
-
-        await wrapper.setProps({ rows: [rows[1], rows[0]] });
-
-        expect(rowText(wrapper, 0)).toContain("Grace->Grace");
-        expect(rowText(wrapper, 1)).toContain("Ada->Ada");
-        expect(warn).toHaveBeenCalledWith(
-            expect.stringContaining("Duplicate row identity"),
-        );
+        expect(() => mountTable(rows)).toThrow("Duplicate row identity same");
     });
 });

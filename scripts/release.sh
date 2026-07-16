@@ -21,6 +21,7 @@ if [[ -n "$(git status --porcelain)" ]]; then
 fi
 
 npm run prepublishOnly
+npm run verify:package
 
 if [[ ! -f dist/index.d.ts ]]; then
     echo "ERROR: build did not leave dist/index.d.ts" >&2

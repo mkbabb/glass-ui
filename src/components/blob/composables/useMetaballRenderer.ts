@@ -5,7 +5,6 @@ import {
     type RendererStatus,
 } from "../../../composables/glass/webgpu/useGpuSubstrate";
 import { pendingRenderer } from "../../../composables/glass/webgpu/rendererStatus";
-import { useIntersectionPause } from "../../../composables/motion/useIntersectionPause";
 import { usePointerVelocityField } from "../../../composables/motion/usePointerVelocityField";
 import { resolveBudgetDpr } from "../../aurora/constants/budget";
 import { cssToOklch, oklchToGammaRgb } from "../../../composables/color";
@@ -57,6 +56,34 @@ export interface UseMetaballRendererOptions {
     revealBloom?: boolean;
 }
 
+/** The exact terminal frame last drawn while the Blob engine was quiescent. */
+export interface BlobSettledFrame {
+    readonly timeSec: number;
+    readonly simulationTimeMs: number;
+    readonly buffer: {
+        readonly width: number;
+        readonly height: number;
+        readonly dpr: number;
+    };
+    /** Normalized transparent-buffer coordinate of the body simulation origin. */
+    readonly simulationOrigin: { readonly x: 0.5; readonly y: 0.5 };
+}
+
+/** Maps the already-drawn terminal frame onto the public immutable snapshot. */
+export function resolveBlobSettledFrame(
+    frame: BlobFrameState | null,
+    size: BackingSize | null,
+): BlobSettledFrame | null {
+    return frame && size
+        ? {
+              timeSec: frame.timeSec,
+              simulationTimeMs: frame.simTimeMs,
+              buffer: { width: size.w, height: size.h, dpr: size.dpr },
+              simulationOrigin: { x: 0.5, y: 0.5 },
+          }
+        : null;
+}
+
 /** The renderer's public control surface — pause/resume + wake the demand loop. */
 export interface UseMetaballRendererReturn {
     pause: () => void;
@@ -84,6 +111,8 @@ export interface UseMetaballRendererReturn {
      * consumer observes it, never writes it.
      */
     settled: Readonly<Ref<boolean>>;
+    /** Last quiescent frame actually drawn by either backend; `null` before settle. */
+    settledFrame: Readonly<Ref<BlobSettledFrame | null>>;
     readonly rendererStatus: Readonly<Ref<RendererStatus>>;
 }
 
@@ -199,6 +228,31 @@ export function useMetaballRenderer(
     // demand-loop park — there is NO parallel busy-flag (the U3 single-signal
     // discipline). Starts `false`: a cold mount is materializing/armed, not at rest.
     const settled = ref(false);
+    const settledFrame = shallowRef<BlobSettledFrame | null>(null);
+    let lastDrawnFrame: BlobFrameState | null = null;
+    let backingSize: BackingSize | null = null;
+
+    function recordBackingSize(size: BackingSize): void {
+        backingSize = size;
+    }
+
+    const isQuiescent = (): boolean =>
+        mood.isSettled() && pointer.isAtRest() && satellites.isQuiescent();
+
+    function syncSettled(): boolean {
+        const next = isQuiescent();
+        settled.value = next;
+        if (next)
+            settledFrame.value = resolveBlobSettledFrame(lastDrawnFrame, backingSize);
+        return next;
+    }
+
+    function recordDraw(frame: BlobFrameState): void {
+        lastDrawnFrame = frame;
+        // Reduced motion deliberately skips the lifecycle demand predicate after its
+        // sole frame, so publish quiescence from that successful draw as well.
+        syncSettled();
+    }
 
     // AX.W16 (arm 2) — the satellite-phase WAKE scheduler. When the quiescence gate
     // parks a fully-at-rest blob, a `setTimeout` re-arms the loop exactly when the next
@@ -224,27 +278,6 @@ export function useMetaballRenderer(
             canvasHandle?.wake();
         }, delayMs);
     }
-
-    // AV.W7 F4 — wire the RAF through the viewport-intersection seam so a blob
-    // scrolled out of the viewport (the `rootMargin:200px` warm band) parks its
-    // loop; this is the IntersectionObserver fallback for engines without
-    // `contentvisibilityautostatechange` (the substrate's F1 content-visibility path).
-    // The substrate owns `tab-hidden` itself, so `pauseWhenHidden:false`.
-    //
-    // AX.W16 F6 — the IO fallback writes its OWN reason key `off-screen-io`, DISTINCT
-    // from the content-visibility path's `off-screen` (createCanvasLifecycle owns that
-    // key). Both gate the same empty-`Set` `isRunning()` check, ORed — so the loop runs
-    // ONLY when BOTH detectors agree the surface is visible. Before this split both
-    // wrote `off-screen`, so an IO `resume` could lift a legitimately-skipped CV
-    // suspend (the one-writer-per-reason breach this closes).
-    useIntersectionPause(
-        canvasRef,
-        {
-            pause: () => canvasHandle?.suspend("off-screen-io"),
-            resume: () => canvasHandle?.resume("off-screen-io"),
-        },
-        { rootMargin: "200px", pauseWhenHidden: false },
-    );
 
     // ── The SHARED simulation advance (substrate-agnostic) ──────────────────────
     //
@@ -351,9 +384,7 @@ export function useMetaballRenderer(
         // false for any phase !== "orbiting", so a mid-FISSIONING beat holds it live —
         // zero-in-flight-fission-beat by construction). Written before the `paused`
         // short-circuit so the seam reflects the real physics state even while paused.
-        const quiescent =
-            mood.isSettled() && pointer.isAtRest() && satellites.isQuiescent();
-        settled.value = quiescent;
+        const quiescent = syncSettled();
         if (paused) return false;
         if (!quiescent) {
             clearWakeTimer();
@@ -380,6 +411,9 @@ export function useMetaballRenderer(
     function start(canvas: HTMLCanvasElement) {
         canvasHandle = createGpuSubstrate(canvas, {
             dprPolicy: blobDprPolicy,
+            // P043/P054 — one lifecycle owns the IO warm-band park.
+            composeIntersectionPark: true,
+            intersectionRootMargin: "200px",
             // BI.W-E10-AURORA-ENTRANCE (value.js T-60) — the reveal-bloom door (twin of
             // the aurora runtime's). DEFAULT ON: the blob keeps a materialize entrance,
             // but the `substrate-reveal-bloom` keyframe is now PALETTE-HONEST (no
@@ -405,6 +439,8 @@ export function useMetaballRenderer(
                 resolveFrame,
                 shouldContinue,
                 getReducedMotion: () => canvasHandle?.reducedMotion ?? false,
+                onResize: recordBackingSize,
+                onDraw: recordDraw,
             }),
             // Build the program + quad + uniform cache on a fresh context. The substrate
             // calls this on arm() AND on every webglcontextrestored, so a GPU context loss
@@ -415,12 +451,24 @@ export function useMetaballRenderer(
                 // BG.W-VIZ-RESIZE-ADOPT — upload-only: the leaf already sized the backing
                 // (round(gBCR × blobDprPolicy)); the closure only uploads the viewport.
                 function resize(s?: BackingSize) {
+                    if (s) recordBackingSize(s);
                     gl.viewport(0, 0, s?.w ?? canvas.width, s?.h ?? canvas.height);
                 }
 
                 function drawFrame(timeSec: number) {
                     const frame = resolveFrame(timeSec);
-                    uploadBlobUniforms(gl, prog, vao, locs, canvas, config, pointer, satellites, frame);
+                    uploadBlobUniforms(
+                        gl,
+                        prog,
+                        vao,
+                        locs,
+                        canvas,
+                        config,
+                        pointer,
+                        satellites,
+                        frame,
+                    );
+                    recordDraw(frame);
                 }
 
                 return {
@@ -475,6 +523,7 @@ export function useMetaballRenderer(
     return {
         pause: () => {
             paused = true;
+            clearWakeTimer();
             canvasHandle?.suspend("manual");
         },
         resume: () => {
@@ -491,7 +540,8 @@ export function useMetaballRenderer(
         // plain ref widened to `Readonly<Ref<boolean>>` so the consumer observes
         // `.value` but the type forbids writing it (the single writer is
         // `shouldContinue`, the U3 single-signal discipline).
-        settled,
+        settled: readonly(settled),
+        settledFrame: readonly(settledFrame),
         rendererStatus: readonly(rendererStatus),
     };
 }

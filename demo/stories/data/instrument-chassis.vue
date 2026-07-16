@@ -1,363 +1,193 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
+import { Activity, RotateCcw } from "@lucide/vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
+import { Button } from "@glass/components/button";
+import { Card, CardContent } from "@glass/components/card";
 import {
     InstrumentChassis,
-    ChassisDivider,
-    type InstrumentChassisPhase,
+    type InstrumentChassisReserve,
+    type InstrumentChassisState,
 } from "@glass/components/instrument-chassis";
-import { MetricBadge } from "@glass/components/metric-badge";
-import { DockControl } from "@glass/components/dock";
-import {
-    ArrowLeft,
-    RotateCcw,
-    Play,
-    Settings,
-    type LucideIcon,
-} from "@lucide/vue";
+import { Metric, MetricCell, MetricRow, MetricStack } from "@glass/components/metric";
 
-type PhaseOption = { value: InstrumentChassisPhase; label: string };
-
-const phaseOptions: PhaseOption[] = [
-    { value: "ready", label: "READY" },
-    { value: "ping", label: "PING" },
-    { value: "download", label: "DOWNLOAD" },
-    { value: "upload", label: "UPLOAD" },
-    { value: "complete", label: "COMPLETE" },
-];
-
-const phase = ref<InstrumentChassisPhase>("ready");
-
-interface PillSpec {
-    key: string;
-    label: string;
-    amount: string | number | null;
-    unit: string;
-    cssVar: string;
-}
-
-const pills = computed<PillSpec[]>(() => {
-    const isLive = phase.value !== "ready";
-    return [
-        {
-            key: "ping",
-            label: "PING",
-            amount: isLive ? 18 : null,
-            unit: "ms",
-            cssVar: "var(--chart-ping)",
-        },
-        {
-            key: "jitter",
-            label: "JITTER",
-            amount: isLive ? "1.4" : null,
-            unit: "ms",
-            cssVar: "var(--chart-jitter)",
-        },
-        {
-            key: "download",
-            label: "DOWN",
-            amount: phase.value === "download" || phase.value === "upload" || phase.value === "complete" ? 482 : null,
-            unit: "Mbps",
-            cssVar: "var(--chart-download)",
-        },
-        {
-            key: "upload",
-            label: "UP",
-            amount: phase.value === "upload" || phase.value === "complete" ? 64 : null,
-            unit: "Mbps",
-            cssVar: "var(--chart-upload)",
-        },
-    ];
-});
-
-const heroValue = computed(() => {
-    switch (phase.value) {
-        case "ping": return "18";
-        case "download": return "482";
-        case "upload": return "64";
-        case "complete": return "482";
-        default: return "0";
-    }
-});
-
-const heroUnit = computed(() => {
-    switch (phase.value) {
-        case "ping": return "ms";
-        case "download":
-        case "upload":
-        case "complete": return "Mbps";
-        default: return "Mbps";
-    }
-});
-
-const phaseLabel = computed(() => {
-    switch (phase.value) {
-        case "ping": return "PINGING";
-        case "download": return "DOWNLOADING";
-        case "upload": return "UPLOADING";
-        case "complete": return "COMPLETE";
-        default: return "READY";
-    }
-});
-
-const isIdle = computed(() => phase.value === "ready");
-
-function needleAngle(p: InstrumentChassisPhase): number {
-    switch (p) {
-        case "ping":     return -100;
-        case "download": return -10;
-        case "upload":   return -45;
-        case "complete": return -10;
-        default:         return -135;
-    }
-}
-
-const primaryGlyph = computed<{ icon: LucideIcon; label: string }>(() => {
-    switch (phase.value) {
-        case "complete":
-            return { icon: RotateCcw, label: "Again" };
-        default:
-            return { icon: Play, label: "Start" };
-    }
-});
+const state = ref<InstrumentChassisState>("ready");
+const coolTone = ref(false);
+const tone = computed(() => coolTone.value ? "var(--viz-fourier)" : "var(--viz-amber)");
+const states: InstrumentChassisState[] = ["ready", "active", "complete", "loading"];
+const reserves: InstrumentChassisReserve[] = ["none", "stage", "inspector", "both"];
 </script>
 
 <template>
     <StoryPage>
-        <!-- Phase controls — drives `--phase-color` cascade. -->
-        <section class="flex flex-col gap-3">
-            <p class="section-label">phase</p>
-            <div class="flex flex-wrap gap-2">
-                <button
-                    v-for="opt in phaseOptions"
-                    :key="opt.value"
-                    type="button"
-                    class="rounded-pill border border-border px-3 py-1 text-mono-caption transition-colors"
-                    :class="phase === opt.value
-                        ? 'bg-foreground text-background'
-                        : 'bg-card text-muted-foreground hover:bg-accent'"
-                    @click="phase = opt.value"
+        <StorySection
+            label="live instrument"
+            blurb="One landmark-neutral sleeve keeps the specimen, inspector, and actions in a stable physical hierarchy."
+        >
+            <div class="mb-4 flex flex-wrap gap-2">
+                <Button
+                    v-for="option in states"
+                    :key="option"
+                    size="sm"
+                    :emphasis="state === option ? 'primary' : 'secondary'"
+                    :aria-pressed="state === option"
+                    @click="state = option"
                 >
-                    {{ opt.label }}
-                </button>
+                    {{ option }}
+                </Button>
+                <Button size="sm" @click="coolTone = !coolTone">
+                    {{ coolTone ? "Warm tone" : "Cool tone" }}
+                </Button>
             </div>
-            <p class="text-mono-caption text-muted-foreground">
-                The chassis carries one `--phase-color` cascade via `data-phase`.
-                Phase label, hero number, and primary-action disco-grain all retint
-                from a single mutation.
-            </p>
-        </section>
 
-        <!-- Live chassis. -->
-        <section class="flex flex-col gap-3">
-            <p class="section-label">composed chassis</p>
-            <InstrumentChassis :phase="phase" class="instrument-chassis-demo">
-                <template #strip>
-                    <div class="flex flex-1 flex-wrap items-center gap-3">
-                        <div
-                            v-for="pill in pills"
-                            :key="pill.key"
-                            class="flex flex-col gap-0.5"
-                        >
-                            <span class="text-admin-label text-muted-foreground">
-                                {{ pill.label }}
-                            </span>
-                            <MetricBadge
-                                :value="pill.amount"
-                                :unit="pill.unit"
-                                :color="pill.cssVar"
-                            />
-                        </div>
-                    </div>
-                    <DockControl aria-label="Settings">
-                        <Settings :stroke-width="2" class="size-5 text-muted-foreground" />
-                    </DockControl>
-                </template>
-
-                <template #dial>
-                    <div class="dial-canvas-placeholder">
-                        <div class="dial-ring" />
-                        <div class="dial-ring dial-ring--mid" />
-                        <div class="dial-ring dial-ring--inner" />
-                        <div
-                            class="dial-needle"
-                            :style="{ '--needle-rotate': `${needleAngle(phase)}deg` }"
-                        />
-                        <div class="dial-center" />
-                    </div>
-                    <ChassisDivider orientation="vertical" class="dial-divider" />
-                    <div class="readout-column">
-                        <span
-                            class="text-admin-label transition-colors"
-                            :style="{ color: 'var(--phase-color)' }"
-                        >
-                            {{ phaseLabel }}
-                        </span>
-                        <div class="flex items-baseline gap-2">
-                            <span
-                                :class="['text-display-3 tabular-nums tracking-tight transition-colors', isIdle && 'text-engraved']"
-                                :style="!isIdle ? { color: 'var(--phase-color)' } : undefined"
-                            >
-                                {{ heroValue }}
-                            </span>
-                            <span class="text-mono-caption text-muted-foreground">
-                                {{ heroUnit }}
-                            </span>
-                        </div>
-                    </div>
-                </template>
-
-                <template #control>
-                    <div class="flex items-center gap-2">
-                        <DockControl aria-label="Back">
-                            <ArrowLeft :stroke-width="2.5" class="size-5" />
-                        </DockControl>
-                        <DockControl aria-label="Retake">
-                            <RotateCcw :stroke-width="2.5" class="size-5" />
-                        </DockControl>
-                    </div>
-                    <div class="dock-spacer" />
-                    <DockControl shape="tab" data-tier="primary" class="primary-action-demo">
-                        <component :is="primaryGlyph.icon" :stroke-width="2.5" class="size-5 text-foreground" />
-                        <span class="text-heading font-medium">{{ primaryGlyph.label }}</span>
-                    </DockControl>
-                </template>
-            </InstrumentChassis>
-            <p class="text-mono-caption text-muted-foreground">
-                Hover the primary action to see specular swap + sparkle sweep + phase-tinted
-                disco grain — three rules layered on `:hover` only. At rest the button reads
-                Vignelli-restrained.
-            </p>
-        </section>
-
-        <!-- Empty-slot variant — just the chassis chrome. -->
-        <section class="flex flex-col gap-3">
-            <p class="section-label">chrome alone (slots empty)</p>
-            <InstrumentChassis phase="ready" class="instrument-chassis-demo instrument-chassis-demo--mini">
-                <template #strip><span class="text-mono-caption text-muted-foreground">strip</span></template>
-                <template #dial><span class="text-mono-caption text-muted-foreground">dial</span></template>
-                <template #control><span class="text-mono-caption text-muted-foreground">control</span></template>
-            </InstrumentChassis>
-            <p class="text-mono-caption text-muted-foreground">
-                Engraved-bezel `::before` stroke, twin-line region dividers, and the
-                radial-gradient curvature overlay all read at rest with no slot content.
-            </p>
-        </section>
-
-        <!-- Silver structure variant — BA.W-ATLAS-RECONCILE C-3. The cool
-             milled-metal register: bezel + grooves re-point to the silver quad. -->
-        <section class="flex flex-col gap-3">
-            <p class="section-label">structure variant (silver milled-metal)</p>
             <InstrumentChassis
-                phase="ready"
-                variant="structure"
-                class="instrument-chassis-demo instrument-chassis-demo--mini"
+                :state="state"
+                :tone="tone"
+                proportion="golden"
+                :boundaries="['stage-inspector', 'inspector-action']"
             >
-                <template #strip>
-                    <span class="text-mono-caption text-muted-foreground">
-                        polished-steel bezel + silver twin-line grooves
-                    </span>
+                <template #stage>
+                    <div class="instrument-demo__stage">
+                        <div class="instrument-demo__dial" aria-hidden="true">
+                            <div class="instrument-demo__needle" />
+                        </div>
+                        <Metric
+                            label="Throughput"
+                            :value="state === 'loading' ? null : 482.7"
+                            unit="Mbps"
+                            size="lg"
+                            orientation="stacked"
+                            :loading="state === 'loading'"
+                        />
+                    </div>
                 </template>
-                <template #dial>
-                    <ChassisDivider orientation="vertical" class="dial-divider" />
-                    <span class="text-mono-caption text-muted-foreground">dial</span>
+
+                <template #inspector>
+                    <MetricStack density="compact">
+                        <MetricRow label="Latency" :value="18" unit="ms" />
+                        <MetricRow label="Jitter" :value="1.4" unit="ms" />
+                        <MetricRow label="Loss" :value="0" unit="%" context="No dropped packets" />
+                    </MetricStack>
                 </template>
-                <template #control>
-                    <span class="text-mono-caption text-muted-foreground">control</span>
+
+                <template #action>
+                    <Button
+                        size="sm"
+                        :disabled="state === 'ready'"
+                        @click="state = 'ready'"
+                    >
+                        <RotateCcw class="size-4" />
+                        Reset state
+                    </Button>
                 </template>
             </InstrumentChassis>
-            <p class="text-mono-caption text-muted-foreground">
-                The `variant="structure"` register re-points the engraved bezel + the
-                structural grooves onto the cool `--silver` quad — an industrial
-                precision-instrument housing, the cool-metal twin of the warm-gold
-                COMPLETE affirmation. The phase cascade stays orthogonal (a structure
-                chassis still retints on `data-phase`). Consumer #2 of the silver quad.
-            </p>
-        </section>
+        </StorySection>
+
+        <StorySection
+            label="composition"
+            blurb="Preview-dominant and stage-only sleeves preserve the same outer spacing without manufacturing empty regions."
+        >
+            <div class="grid gap-4">
+                <InstrumentChassis proportion="preview-dominant" state="active" tone="var(--viz-chebyshev)">
+                    <template #stage>
+                        <div class="instrument-demo__preview">Container-scaled preview</div>
+                    </template>
+                    <template #inspector>
+                        <MetricCell
+                            :icon="Activity"
+                            label="Samples"
+                            :value="2048"
+                            context="Inspector remains subordinate"
+                        />
+                    </template>
+                </InstrumentChassis>
+
+                <InstrumentChassis>
+                    <template #stage>
+                        <Card>
+                            <CardContent>
+                                A nested Card remains visibly distinct from the physical sleeve.
+                            </CardContent>
+                        </Card>
+                    </template>
+                </InstrumentChassis>
+            </div>
+        </StorySection>
+
+        <StorySection
+            label="explicit reserve"
+            blurb="The caller may reserve either physical region, or both, without changing the chassis spacing authority."
+        >
+            <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                <InstrumentChassis
+                    v-for="reserve in reserves"
+                    :key="reserve"
+                    :reserve="reserve"
+                    :style="{
+                        '--instrument-stage-reserve': '6rem',
+                        '--instrument-inspector-reserve': '4.5rem',
+                    }"
+                >
+                    <template #stage>
+                        <span class="text-admin-label">Stage · {{ reserve }}</span>
+                    </template>
+                    <template #inspector>
+                        <span class="text-mono-caption text-muted-foreground">
+                            Inspector
+                        </span>
+                    </template>
+                </InstrumentChassis>
+            </div>
+        </StorySection>
     </StoryPage>
 </template>
 
 <style scoped>
-.instrument-chassis-demo {
-    margin-inline: auto;
-    width: 100%;
-    max-width: 56rem;
+.instrument-demo__stage {
+    display: grid;
+    grid-template-columns: minmax(8rem, 0.8fr) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(1rem, 3cqi, 2rem);
 }
 
-.instrument-chassis-demo--mini :deep(.instrument-strip),
-.instrument-chassis-demo--mini :deep(.instrument-dial),
-.instrument-chassis-demo--mini :deep(.instrument-control) {
-    min-height: 3rem;
-    justify-content: center;
-}
-
-.dial-canvas-placeholder {
+.instrument-demo__dial {
     position: relative;
-    aspect-ratio: 1.6 / 1;
-    width: 100%;
-    border-radius: 50% / 30%;
-    background: radial-gradient(
-        ellipse at 50% 30%,
-        color-mix(in srgb, var(--card) 60%, transparent) 0%,
-        transparent 70%
-    );
-    overflow: hidden;
-}
-
-.dial-ring {
-    position: absolute;
-    inset: 10%;
-    border: 1px solid color-mix(in srgb, var(--phase-color) 22%, transparent);
-    border-radius: 50% / 60%;
-    pointer-events: none;
-    transition: border-color 0.45s var(--spring-smooth);
-}
-
-.dial-ring--mid {
-    inset: 20%;
-    border-color: color-mix(in srgb, var(--phase-color) 16%, transparent);
-}
-
-.dial-ring--inner {
-    inset: 30%;
-    border-color: color-mix(in srgb, var(--phase-color) 12%, transparent);
-}
-
-.dial-needle {
-    position: absolute;
-    bottom: 20%;
-    left: 50%;
-    width: 2px;
-    height: 38%;
-    transform-origin: bottom center;
-    background: var(--phase-color);
-    border-radius: 1px;
-    transform: translateX(-50%) rotate(var(--needle-rotate, -135deg));
-    transition: transform 0.45s var(--spring-snappy), background 0.45s var(--spring-smooth);
-    box-shadow: 0 0 6px color-mix(in srgb, var(--phase-color) 40%, transparent);
-}
-
-.dial-center {
-    position: absolute;
-    bottom: 18%;
-    left: 50%;
-    width: 8px;
-    height: 8px;
-    transform: translateX(-50%);
+    aspect-ratio: 1;
+    border: 1px solid var(--glass-border-resting);
     border-radius: 50%;
-    background: var(--phase-color);
-    box-shadow: 0 0 12px color-mix(in srgb, var(--phase-color) 50%, transparent);
-    transition: background 0.45s var(--spring-smooth), box-shadow 0.45s var(--spring-smooth);
+    background:
+        radial-gradient(circle, transparent 54%, var(--surface-tint-8) 55% 56%, transparent 57%),
+        var(--glass-bg-wash);
 }
 
-.readout-column {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    padding-inline: 0.5rem;
+.instrument-demo__needle {
+    position: absolute;
+    inset: 50% 50% auto auto;
+    inline-size: 38%;
+    block-size: 2px;
+    transform-origin: right center;
+    rotate: 25deg;
+    border-radius: var(--radius-pill);
+    background: var(--instrument-tone, var(--foreground));
 }
 
-.primary-action-demo {
-    gap: 0.5rem;
+.instrument-demo__preview {
+    display: grid;
+    min-block-size: 12rem;
+    place-items: center;
+    border-radius: var(--radius-card);
+    background: var(--glass-bg-wash);
+    color: var(--muted-foreground);
+}
+
+@container (max-width: 30rem) {
+    .instrument-demo__stage {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .instrument-demo__dial {
+        max-inline-size: 12rem;
+    }
 }
 </style>

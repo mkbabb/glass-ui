@@ -101,17 +101,17 @@ function revealNow() {
                     <Button
                         v-if="!received"
                         ref="ctaEl"
-                        variant="primary-audacious"
+                        emphasis="primary"
                         class="cta-receive-vehicle"
                         @click="onCta"
                     >
                         <Plus class="size-4" />
                         Add to dock
                     </Button>
-                    <Button v-else variant="default" @click="replay">Replay</Button>
+                    <Button v-else @click="replay">Replay</Button>
 
                     <div v-if="!received" class="flex flex-wrap justify-center gap-2">
-                        <Button v-if="playing" variant="ghost" @click="onCta">
+                        <Button v-if="playing" emphasis="quiet" @click="onCta">
                             Restart receive
                         </Button>
                         <Button
@@ -119,14 +119,14 @@ function revealNow() {
                                 observables.phase !== 'idle' &&
                                 observables.phase !== 'reset'
                             "
-                            variant="ghost"
+                            emphasis="quiet"
                             @click="replay"
                         >
                             Reset
                         </Button>
                         <Button
                             v-if="pending"
-                            variant="ghost"
+                            emphasis="quiet"
                             class="text-mono-caption"
                             @click="revealNow"
                         >

@@ -1,19 +1,18 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
-import { TagsInputItemText, type TagsInputItemTextProps, useForwardProps } from 'reka-ui'
-import { cn } from '../_shared/class-names'
+import type { HTMLAttributes } from "vue";
+import { TagsInputItemText as RekaTagsInputItemText } from "reka-ui";
+import { cn } from "../_shared/class-names";
 
-const props = defineProps<TagsInputItemTextProps & { class?: HTMLAttributes['class'] }>()
+export interface TagsInputItemTextProps {
+    class?: HTMLAttributes["class"];
+}
 
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
-
-  return delegated
-})
-
-const forwardedProps = useForwardProps(delegatedProps)
+const props = defineProps<TagsInputItemTextProps>();
 </script>
 
 <template>
-  <TagsInputItemText v-bind="forwardedProps" :class="cn('py-1 px-2 text-sm rounded bg-transparent', props.class)" />
+    <RekaTagsInputItemText
+        data-slot="tags-input-item-text"
+        :class="cn('tags-input__text', props.class)"
+    />
 </template>

@@ -2,16 +2,15 @@
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import type { StoryBody, SpecimenSpec } from "../../chassis/body/story-body";
 import { Alert, AlertDescription, AlertTitle } from "@glass/components/alert";
-import { IconChip } from "@glass/components/icon-chip";
-import { Info, CircleAlert, TriangleAlert, CircleCheck, Sparkles, Bell } from "@lucide/vue";
+import { Info, CircleAlert, TriangleAlert, CircleCheck, Sparkles } from "@lucide/vue";
 import type { Component } from "vue";
 // The feedback band's ONE coherent --section-color-8 ruby (warm-status) identity.
-const FEEDBACK_STOP = 8;
 
 // One Alert specimen — the icon (optional) + title + description compose the CVA
 // grid through the default slot; the tone is the CVA `tone` prop.
 function alertSpec(a: {
     tone?: string;
+    announce?: "off" | "polite" | "assertive";
     icon?: Component;
     title: string;
     desc: string;
@@ -22,7 +21,10 @@ function alertSpec(a: {
     children.push({ component: AlertDescription, slots: { default: a.desc } });
     return {
         component: Alert,
-        props: a.tone ? { tone: a.tone } : {},
+        props: {
+            ...(a.tone && { tone: a.tone }),
+            ...(a.announce && { announce: a.announce }),
+        },
         slots: { default: children },
     };
 }
@@ -81,6 +83,29 @@ const body: StoryBody = {
                 }),
             ],
         },
+        {
+            heading: "Announcement policy",
+            blurb: "Persistent alerts are silent by default. Opt into polite status updates or reserve assertive announcements for urgent interruption.",
+            specimens: [
+                alertSpec({
+                    announce: "off",
+                    title: "Silent by default",
+                    desc: "Existing page content does not re-announce itself.",
+                }),
+                alertSpec({
+                    announce: "polite",
+                    tone: "info",
+                    title: "Background sync complete",
+                    desc: "Polite updates wait for the current announcement to finish.",
+                }),
+                alertSpec({
+                    announce: "assertive",
+                    tone: "destructive",
+                    title: "Connection lost",
+                    desc: "Assertive delivery is explicit and reserved for urgent failures.",
+                }),
+            ],
+        },
     ],
 };
 </script>
@@ -88,25 +113,8 @@ const body: StoryBody = {
 <template>
     <StoryPage :body="body">
         <!-- The feedback-band identity COLOR EVENT (the tinted eyebrow + accent rail
-             + focal IconChip, all on --section-color-8). The page-level color
+             on --section-color-8). The page-level color
              identity, distinct from the section headings below — no heading rung,
              so it is not a second header. -->
-        <header
-            class="story-color-event flex items-center gap-4 pl-5"
-            :style="{
-                '--section-label-accent': `var(--section-color-${FEEDBACK_STOP})`,
-            }"
-        >
-            <IconChip :icon="Bell" :section="FEEDBACK_STOP" bloom reveal />
-            <div class="flex flex-col gap-1">
-                <span class="section-label--tinted text-admin-label">
-                    Feedback · Alerts
-                </span>
-                <p class="text-small text-muted-foreground">
-                    Status surfaces — the alert tones carry their own variant
-                    color; the section identity is the ONE page event.
-                </p>
-            </div>
-        </header>
     </StoryPage>
 </template>

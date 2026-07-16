@@ -34,9 +34,9 @@ const { runActive, settle, cancel } = useCountup(host, { easeFn: easeOutBack });
             </p>
 
             <div class="flex flex-wrap items-center gap-3">
-                <Button variant="default" @click="runActive">Run</Button>
-                <Button variant="outline" @click="settle">Settle</Button>
-                <Button variant="ghost" @click="cancel">Cancel</Button>
+                <Button @click="runActive">Run</Button>
+                <Button @click="settle">Settle</Button>
+                <Button emphasis="quiet" @click="cancel">Cancel</Button>
             </div>
 
             <!-- BA.W-SUFFUSE2 — the motion band's ONE coherent violet event

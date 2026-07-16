@@ -105,7 +105,7 @@ describe("useDockCtaReceive observables", () => {
         unmount();
     });
 
-    it("reports fine-path geometry and completion inside the selected spring band", () => {
+    it("reports fine-path geometry and completion inside the selected spring band", async () => {
         media();
         const { cta, target } = elements();
         const frames: FrameRequestCallback[] = [];
@@ -127,6 +127,8 @@ describe("useDockCtaReceive observables", () => {
         frames.shift()?.(100);
         clock = 2920;
         frames.shift()?.(2020);
+        await Promise.resolve();
+        await Promise.resolve();
 
         expect(result.observables.value).toMatchObject({
             phase: "completed",

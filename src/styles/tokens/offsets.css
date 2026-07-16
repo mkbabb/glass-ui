@@ -1,7 +1,6 @@
 /* tokens/offsets.css
    §9 animation offsets — hover-lift offsets, the layout tokens, the public
-   --fade-scroll-width ramp, the dock content-overflow caps, the chassis
-   max-block-size/mobile dial-reserve, the popover width, the panel inner-padding
+   --fade-scroll-width ramp, the dock content-overflow caps, the popover width, the panel inner-padding
    rung, the chart geometry.
    Carved (BB.W-CARVE3) from the former tokens/offsets-sizing.css §9/§10 split;
    @import-ed by tokens.css at offsets-sizing's old cascade slot, immediately
@@ -40,55 +39,6 @@
        there is no breakpoint threshold to name. */
     --dock-max-inline-size: min(80vw, 64rem);
     --dock-max-block-size: min(80vh, 48rem);
-
-    /* AB.W1.T1 — chassis max-block-size guardrail.
-       Maximum block size a centred consumer-app card may consume while
-       preserving the inline dock footprint. The recipe subtracts the
-       consumer-owned `--dock-footer-space` (dock height + dock inset +
-       card-edge inset) and `--page-padding-top` from the dynamic viewport,
-       then takes one further rem of breathing room so the card never
-       butts the dock — the user mandate is `≥ 1rem visible gap above
-       dock`. Both consumer tokens carry safe fallbacks for callers that
-       have not declared them.
-
-       Consumers should shrink internal regions (meter, readout, timeline)
-       before falling back to scroll. This token is a guardrail against
-       chassis overflow, NOT a license to make the card scroll as the
-       default solution; clamp-first / no-scroll-first is the canon.
-       See DESIGN.md `## Chassis sizing — dock-adjusted viewport`. */
-    --chassis-max-block-size: calc(
-        100dvh
-        - var(--dock-footer-space, 5.75rem)
-        - var(--page-padding-top, 0rem)
-        - 1rem
-    );
-    /* R0G-2 (AO.W3/W4) — chassis mobile dial-reserve canon. instrument-
-       chassis.css's mobile breakpoint reserves the dial's final box from
-       frame 0 via these vars (with the same values as inline fallbacks, the
-       safety net). Token-first home so the vars resolve canonically. */
-    --instrument-dial-min-height-mobile: 24rem;
-    --instrument-dial-meter-reserve-mobile: minmax(0, 1fr);
-    /* BB.W-DESKTOP-RESERVE (B3) — the chassis WIDE-AXIS (desktop) dial reserve
-       canon, the complement of the mobile rung above. The mobile reflow
-       reserves the dial box from frame 0 via the rung above; the WIDE box axis
-       had NO library reserve, so on desktop a `1fr` meter row collapsed to its
-       pre-hydration intrinsic `<canvas>` size and grew on hydration, pushing
-       the results card + dock down (the measured desktop-1440 CLS the speedtest
-       App.vue interim authored a local `min-block-size` to cure). This rung is
-       the library home: the dial cell reserves its settled height from frame 0
-       on the wide axis, so the inner card mounts into an already-correct
-       envelope (CLS≈0, no post-hydration growth).
-
-       The default IS `--chassis-max-block-size` — the library's own
-       chassis-sizing guardrail (the dock-adjusted dynamic-viewport budget a
-       centred consumer card clamps to), a pure CSS calc that resolves at first
-       paint with NO JS. This is the DESKTOP DIAL: a consumer whose meter is a
-       different block-size retunes THIS token (the speedtest-specific value
-       stays in speedtest — presets-in-consumers). A consumer deletes its local
-       App.vue wide-axis interim once it consumes this rung. Both knobs are CSS
-       custom properties (token-first), the inline fallback in
-       instrument-chassis.css carries the contract if the token is unset. */
-    --instrument-dial-min-block-size-desktop: var(--chassis-max-block-size);
 
     --max-width-input: 24rem;
     --input-min-width-sm: 5rem;

@@ -22,17 +22,13 @@ export * from "../useStaggerReveal";
 export * from "../useStagger";
 export * from "../useScrollProgress";
 export * from "../useRAFLoop";
+export * from "../useReducedMotion";
 export * from "../useIntersectionPause"; // exports PausableRuntime too
 // AQ.W3 §6 — the INP-under-load lever. Keyframes-FREE + vueuse-FREE (pure
 // native `scheduler.yield` + MessageChannel/setTimeout fallback), so it ships on
 // the engine-free `/motion-core` surface alongside `useRAFLoop` (its companion
 // for the chunked-work case) — NOT on the keyframes-bearing `/motion` barrel.
 export * from "../useYieldToMain";
-// AS.W3 §G4 — the `scheduler.postTask` priority lever, companion to
-// `useYieldToMain` for the schedule-at-priority case. Keyframes-FREE +
-// vueuse-FREE (native `scheduler.postTask` + `MessageChannel`/`setTimeout`
-// fallback), so it ships on the engine-free `/motion-core` surface.
-export * from "../usePrioritizedTask";
 // AQ.W5 §Design 3 — the View-Transitions motion substrate (the cross-repo
 // coupling contract muster J.W5 consumes). Dependency-free (no `vue`, no
 // `@mkbabb/keyframes.js`, no `@vueuse/core`), so it ships on the engine-free
@@ -67,17 +63,6 @@ export * from "../useLiquidFlex";
 // precedent). ≥2 consumers: the pager worm + the B3 eyeglass release
 // (docs/consumer-evidence/use-lead-trail.md).
 export * from "../useLeadTrail";
-// BD.W-GOO-CAROUSEL-DECK — the ONE goo-morph engine (the de-dup of the pager WORM):
-// a two-edge stretch→merge→pinch→settle driver consumed by the pager dot (worm scale),
-// the carousel slide PLATE, and the deck slide PLATE — ONE engine, per-consumer tokens.
-// Composes `useLiquidFlex` + Vue only (engine-FREE + vueuse-FREE), so it ships on the
-// `/motion-core` surface AND the root barrel (the `useLiquidFlex` precedent). ≥2
-// consumers: PagerDots (worm) + CarouselContent (slide plate) + the deck demo.
-export * from "../useGooMorph";
-// BG.W-DEAD-COMPOSABLE-CUT — the morph SIGNATURE DATA (the dead `useMorphField()` weld's
-// only live surface). `MORPH_SIGNATURES` + the signature types are pure DATA the goo /
-// dock-fission recipes read. Vue-free, so it ships on `/motion-core` AND the root barrel.
-export * from "../morphSignatures";
 // BB.B4 (W-VIZ-POINTER) — the shared viz-pointer-physics field (pointer position +
 // derived velocity + the ACCEL term), fed by the renderer's frame `tick` (NO own
 // rAF), frozen under PRM (`tick(0)`). Imports `vue` only — engine-FREE + vueuse-FREE,
@@ -93,15 +78,6 @@ export * from "../usePointerVelocityField";
 // on the `/motion-core` surface AND the root barrel (the usePointerVelocityField precedent).
 export * from "../useRoutePointer";
 export * from "../pointerFieldMappings";
-// BC.W-SPLIT-CHARS — the per-glyph split partner the shipped `.char-stagger` CSS
-// recipe (typography/utilities.css) has been waiting for. It reads a target's
-// `textContent`, mints `.char` spans + the `--char-index`/`--char-total` customs
-// the recipe reads, sets `aria-label` to the full text + `aria-hidden` on every
-// glyph (the load-bearing a11y fact), and `Intl.Segmenter` grapheme mode is
-// emoji/ZWJ safe. Imports `vue` only — engine-FREE + vueuse-FREE, so it ships on
-// the `/motion-core` surface AND the root barrel (the `vReveal` precedent). The
-// `<SplitChars>` component face composes it (root barrel + /motion-core).
-export * from "../useCharStagger";
 // BC.W-SCROLL-TRIGGER — useScrollTrigger: the ONE scroll reader (continuous 0..1
 // progress off the SAME rAF read + discrete onCross/onEnter/onLeave trigger-point
 // events, direction + per-second velocity + the flip-delta debounce). Composes the

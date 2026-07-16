@@ -131,15 +131,15 @@ function back() {
             <p class="text-small text-muted-foreground">
                 Pass <code class="rounded bg-muted px-1">show-rail</code> to render the built-in switcher.
                 Each <code class="rounded bg-muted px-1">DockLayer</code>'s icon + label populates the rail.
-                With <code class="rounded bg-muted px-1">draggable</code> the rail is pull-to-switch:
-                drag along the rail axis and fling to the nearest layer (the <code class="rounded bg-muted px-1">useDragMorph</code>
-                consumer #2; the reka Arrow-key roving stays).
+                With <code class="rounded bg-muted px-1">motion="full"</code> the rail is pull-to-switch:
+                drag along the rail axis and fling to the nearest layer; click and Arrow-key
+                navigation remain available at every motion setting.
             </p>
             <div class="dock-stage-tile flex justify-center rounded-card border border-border/30 p-10">
                 <GlassDock :background-canvas="backgroundCanvas" always-expanded fit-content>
                     <DockLayerGroup
                         v-model:active="switcherLayer"
-                        draggable
+                        motion="full"
                         data-testid="dock-layer-rail-group"
                     >
                         <DockLayer
@@ -201,9 +201,9 @@ function back() {
         <StorySection heading="Collapse while switching layers" gap="md">
             <p class="text-small text-muted-foreground">
                 A layer group inside a <strong>collapsible</strong> dock. Hover to expand;
-                switch panes via the rail. The dock box and the nested pane stack morph on
-                ONE spring (one <code class="rounded bg-muted px-1">--dock-morph-t</code> clock)
-                — no second engine, no double-animated pixels.
+                switch panes via the rail. The shell geometry and face dissolve use the same
+                Dock spring authority on separate size and opacity channels, so neither
+                channel double-drives the other.
             </p>
             <div class="dock-stage-tile flex justify-center rounded-card border border-border/30 p-10">
                 <GlassDock :background-canvas="backgroundCanvas" fit-content data-testid="dock-nested-collapsible">
@@ -279,8 +279,8 @@ function back() {
         <StorySection heading="Controlled — no rail" gap="md">
             <p class="text-small text-muted-foreground">
                 The thin <code class="rounded bg-muted px-1">&lt;DockCrossfade :active&gt;</code>
-                core consumed DIRECTLY — a controlled 4-pane crossfade with NO switcher rail
-                (the speedtest pattern). An external strip drives <code class="rounded bg-muted px-1">active</code>;
+                core consumed DIRECTLY — a controlled 4-pane crossfade with NO switcher rail.
+                An external strip drives <code class="rounded bg-muted px-1">active</code>;
                 the faces cross-dissolve on the per-face <code class="rounded bg-muted px-1">--dock-t</code>
                 spring, the box holds the PEAK face (differing heights never jump).
             </p>

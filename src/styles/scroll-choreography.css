@@ -12,10 +12,8 @@
  * natively, off the compositor at 60fps (the no-net-dep fence; the 2026
  * universal-support convergence). NO Lenis/GSAP/Locomotive dependency, ever.
  *
- *   .scroll-build   — RETIRED (BG.W-ROUTE-TRANSITION). The route-enter page-build
- *                     is now the bare keyed `<component class="route-enter">` on-mount
- *                     `@keyframes gl-route-enter` (transitions.css), not a per-child
- *                     `.scroll-build` stagger.
+ *   .scroll-build   — RETIRED. Route changes use the native View Transition owner,
+ *                     not a per-child mount stagger.
  *   .scroll-cascade — the orchestrated section cascade (per-child view() timeline,
  *                     the implicit stagger [NO setTimeout], the spring-clocked
  *                     coupled transform+opacity build).
@@ -76,14 +74,10 @@
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
- * .scroll-build — RETIRED (BG.W-ROUTE-TRANSITION).
+ * .scroll-build — RETIRED.
  *
- * The route-enter page-build is no longer a per-child staggered `.scroll-build`
- * recipe. Under the bare keyed `<component :is :key="route.path" class="route-enter">`
- * atomic swap, the page entrance is ONE on-mount `@keyframes gl-route-enter` on the
- * keyed component (transitions.css `.route-enter`) — it reaches EVERY route root
- * (StoryPage/SectionLanding/hero/intro/auth-shell/NotFound) without a per-beat
- * `--i` stagger and without the `<Transition>` leave-window the old build raced.
+ * Route navigation is owned by one native View Transition around the atomic route
+ * update, with no per-child `--i` stagger or Vue leave window.
  * The `gl-page-build`/`gl-page-build-fade` keyframes + the `--scroll-build-rise`/
  * `--scroll-build-step` tokens are deleted with it (clean break, no alias). The
  * `.scroll-cascade`/`.scroll-pin`/`.smooth-scroll` registers below are UNTOUCHED —

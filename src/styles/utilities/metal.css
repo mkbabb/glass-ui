@@ -2,25 +2,22 @@
    BB.W-METAL-SHIMMER — the brand-metal utility family
    ═══════════════════════════════════════════════════════════════════════════
    ONE single-home partial for the gold·silver·bronze metal register (so a new
-   metal pop is ONE class, not a re-paste — the W-SUFFUSE icon-chip consolidation
-   discipline). Three registers, ALL metal-PARAMETERIZED off the SAME shared recipe
-   reading the `--metal-shimmer-color` channel + its four resolved stop slots:
+   metal pop is ONE class, not a re-paste). Three registers share the same
+   resolved stop slots:
 
      • `.metal-{gold,silver,bronze}` — the text-clip metal gradient (the
        `.gold-shimmer` recipe GENERALIZED): a `linear-gradient(90deg, dark, light,
        base, light, dark)` band off the bound metal quad, `background-clip: text`.
      • `.metal-{gold,silver,bronze}-border` — the swept metallic RIM (the §N6
-       selected-item-border consumer): the SAME `--metal-shimmer-color`-bound
-       gradient painted as a MASKED BAND on a `::before` overlay (the house
+       selected-item-border consumer): the same gradient painted as a masked
+       band on a `::before` overlay (the house
        border-ring idiom, BI.W-METAL-RIM-BAND), swept by the SAME keyframe — so the
        rim FOLLOWS `border-radius` (a `border-image` squared the corners).
      • `.metal-rainbow-rim` — the prismatic gilt-figure / record-badge rim: it
        COMPOSES W-GLASS-ACCENT's `--glass-accent` rim seam (it does NOT re-author
        the rim) by binding the accent channel to a swept rainbow hue.
 
-   The PARAMETERIZATION: `--metal-shimmer-color` is the metal-NAME marker each
-   `.metal-{name}` SETS (`gold`/`silver`/`bronze`); the shared recipe resolves the
-   gradient off the four `--metal-stop-*` slots each class binds to its quad. The
+   Each class binds the shared `--metal-stop-*` slots to its palette. The
    `metal-shimmer-sweep` keyframe (animations.css) is PURE position — ZERO baked
    metal color — so the SAME keyframe sweeps any of the three metals depending only
    on which slots the class bound. A silver/bronze sweep is a NEW CLASS that binds
@@ -36,11 +33,7 @@
 
 @layer components {
     /* ── The shared metal recipe (the metal-agnostic engine) ─────────────────
-       The four stop slots default to GOLD (the neutral metal — so a bare
-       `--metal-shimmer-color`-bearing surface paints gold, matching the
-       `.gold-shimmer` precedent); each `.metal-{name}` re-binds them to its quad.
-       The `--metal-shimmer-color` marker carries the metal NAME for the gate's
-       parameterization assert + for any consumer query. */
+       The stop slots default to gold; each named class rebinds them to its palette. */
     .metal-gold,
     .metal-silver,
     .metal-bronze {
@@ -87,21 +80,18 @@
         );
     }
 
-    /* Per-metal: set the channel marker + re-bind the stop slots to the quad. */
+    /* Per-metal palette bindings. */
     .metal-gold {
-        --metal-shimmer-color: gold;
         --metal-stop-dark: var(--color-gold-dark);
         --metal-stop-light: var(--color-gold-light);
         --metal-stop-base: var(--color-gold);
     }
     .metal-silver {
-        --metal-shimmer-color: silver;
         --metal-stop-dark: var(--color-silver-dark);
         --metal-stop-light: var(--color-silver-light);
         --metal-stop-base: var(--color-silver);
     }
     .metal-bronze {
-        --metal-shimmer-color: bronze;
         --metal-stop-dark: var(--color-bronze-dark);
         --metal-stop-light: var(--color-bronze-light);
         --metal-stop-base: var(--color-bronze);
@@ -110,10 +100,9 @@
     /* ── The swept metallic RIM — a MASKED BAND on a dedicated ::before overlay ──
        (BI.W-METAL-RIM-BAND — the ruling-10 band-on-overlay reform.)
 
-       `border-image` SQUARES the corners on a rounded host (UF-A7 / FAM-4 — the
-       exact defect BorderProgress's masked-conic avoided), so the swept rim is
-       re-expressed as the house border-ring idiom (the in-repo precedent at
-       border-progress.css:55-66): a `--metal-shimmer-color`-bound gradient painted
+       `border-image` SQUARES the corners on a rounded host, so the swept rim is
+       re-expressed as the house masked border-ring idiom: a
+       the shared metal gradient painted
        on a `::before` OVERLAY whose `mask-composite: exclude` cuts a border-box
        fill AGAINST a padding-box fill, leaving ONLY the border band — which FOLLOWS
        `border-radius` exactly. The band lives on the OVERLAY, never the host
@@ -156,7 +145,7 @@
             border: var(--metal-border-width, 2px) solid transparent;
             pointer-events: none;
             /* the swept metal gradient — the SAME --metal-stop-* slots the
-               text-clip metals resolve, off the host's --metal-shimmer-color quad
+               text-clip metals resolve from the host's stop slots
                (custom properties inherit onto the ::before). */
             background: linear-gradient(
                 90deg,
@@ -196,19 +185,16 @@
     }
 
     .metal-gold-border {
-        --metal-shimmer-color: gold;
         --metal-stop-dark: var(--color-gold-dark);
         --metal-stop-light: var(--color-gold-light);
         --metal-stop-base: var(--color-gold);
     }
     .metal-silver-border {
-        --metal-shimmer-color: silver;
         --metal-stop-dark: var(--color-silver-dark);
         --metal-stop-light: var(--color-silver-light);
         --metal-stop-base: var(--color-silver);
     }
     .metal-bronze-border {
-        --metal-shimmer-color: bronze;
         --metal-stop-dark: var(--color-bronze-dark);
         --metal-stop-light: var(--color-bronze-light);
         --metal-stop-base: var(--color-bronze);
@@ -232,7 +218,6 @@
            strength (the accent channel — NOT a second rim recipe). */
         --glass-accent: var(--color-gold);
         --glass-accent-strength: 45%;
-        --metal-shimmer-color: rainbow;
         /* The swept prismatic band rides the host's own background-image (the rim
            ring + border come from the W-GLASS-ACCENT seam the host already carries). */
         background-image: linear-gradient(

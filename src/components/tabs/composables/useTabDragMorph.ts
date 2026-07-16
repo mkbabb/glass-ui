@@ -16,7 +16,7 @@ import type { SegmentedTabOption } from "../SegmentedTabs.vue";
  * Package-private composable for `SegmentedTabs.vue` — BB.W-DRAG-MORPH, the LIQUID
  * TAB (the `:draggable` axis). Carved out of the SFC at BB.W-CARVE4 to hold the
  * no-god-module bound, mirroring the `useTabIndicator` colocation sibling; the SFC
- * IMPORTS it and binds `drag.dragStyle`/`drag.dragging` in its template.
+ * IMPORTS it and binds only its state; the shared morph owner writes geometry.
  *
  * When `:draggable`, the `pill` indicator is wired to `useDragMorph` with the snap
  * targets resolved off the CENTER-ANCHORED button geometry (the SAME measure
@@ -48,7 +48,7 @@ export interface UseTabDragMorphParams {
 export interface UseTabDragMorphReturn {
     /** True when the drag is live (the `pill` material + the `:draggable` prop). */
     dragEnabled: ComputedRef<boolean>;
-    /** The `useDragMorph` handle (the SFC binds `dragStyle`/`dragging`). */
+    /** The `useDragMorph` handle (the SFC binds its gesture state). */
     drag: UseDragMorphReturn;
 }
 
@@ -100,7 +100,7 @@ export function useTabDragMorph(
     }
 
     const drag = useDragMorph<string>({
-        el: indicatorRef,
+        handle: indicatorRef,
         axis: () => (isVertical.value ? "y" : "x"),
         snapTargets: resolveSnapTargets,
         maxStretch: readMaxStretch,

@@ -75,7 +75,7 @@ function replayLoad() {
                     line
                 </p>
                 <div>
-                    <Button variant="outline" @click="replayLoad">Replay draw</Button>
+                    <Button @click="replayLoad">Replay draw</Button>
                 </div>
             </div>
         </StorySection>

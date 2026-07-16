@@ -10,6 +10,8 @@ export interface UseDockStateOptions {
     rootEl: Ref<HTMLElement | null>;
     /** Disable collapse behavior and keep the dock expanded. */
     alwaysExpanded?: Ref<boolean> | boolean;
+    /** Mount-only posture for a collapsible dock. */
+    initialExpanded?: boolean;
     /** Ref that suppresses click-away during an active dock animation. */
     isTransitioning?: Ref<boolean>;
     /** Owner id for dock-owned teleported targets. */
@@ -80,15 +82,24 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
     // enter-dwell (a genuine UX sweep-past guard) is KEPT; BI.W-DOCK-RETIRES deleted the
     // AZ.W-DOCK-FLICKER moving-edge-sweep recheck (`EDGE_BAND_PX`), dead once W-DOCK-SPINE
     // moved the hit frame onto a stationary, state-sized box that never sweeps the cursor.
-    const { collapseDelay = 3600, rootEl, alwaysExpanded = false, isTransitioning, dockId, onStateChange } = options;
+    const {
+        collapseDelay = 3600,
+        rootEl,
+        alwaysExpanded = false,
+        initialExpanded = false,
+        isTransitioning,
+        dockId,
+        onStateChange,
+    } = options;
 
     const getAlwaysExpanded = () =>
         typeof alwaysExpanded === "boolean" ? alwaysExpanded : alwaysExpanded.value;
 
-    const initiallyExpanded = getAlwaysExpanded();
-    const state = ref<DockState>(initiallyExpanded ? "pinned" : "collapsed");
-    const expanded = ref(initiallyExpanded);
-    const isPinned = ref(initiallyExpanded);
+    const state = ref<DockState>(
+        getAlwaysExpanded() ? "pinned" : initialExpanded ? "hover" : "collapsed",
+    );
+    const expanded = computed(() => state.value !== "collapsed");
+    const isPinned = computed(() => state.value === "pinned");
 
     let collapseTimer: ReturnType<typeof setTimeout> | null = null;
     /* J.W5.C — `keepOpenCount` lifted to a reactive ref so descendants
@@ -127,8 +138,6 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         if (getAlwaysExpanded()) {
             state.value = "pinned";
         }
-        expanded.value = state.value !== "collapsed";
-        isPinned.value = state.value === "pinned";
         if (onStateChange && prevState !== state.value) {
             onStateChange(state.value, prevState);
         }
@@ -309,11 +318,14 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
             // Grace period: don't collapse immediately after a child releases
             // (e.g., dialog dismissed via Escape). Give the user time to re-engage.
             clearTimer();
-            collapseTimer = setTimeout(() => {
-                if (keepOpenCount.value === 0 && state.value === "hover") {
-                    scheduleCollapse();
-                }
-            }, Math.min(collapseDelay, 800));
+            collapseTimer = setTimeout(
+                () => {
+                    if (keepOpenCount.value === 0 && state.value === "hover") {
+                        scheduleCollapse();
+                    }
+                },
+                Math.min(collapseDelay, 800),
+            );
         }
     }
 
@@ -338,34 +350,39 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         collapse();
     }
 
-    watch(expanded, (isExpanded) => {
-        if (isExpanded) {
-            removeClickAwayListener();
-            // Defer attachment past the current event's propagation.
-            // nextTick alone isn't enough — the opening pointerdown can still
-            // reach a capture-phase listener attached in the same microtask.
-            // requestAnimationFrame ensures we wait until the next frame.
-            installClickAwayFrame = requestAnimationFrame(() => {
-                installClickAwayFrame = null;
-                if (!expanded.value) return;
-                document.addEventListener(
-                    "pointerdown",
-                    onPointerDownOutside,
-                    true,
-                );
-                removeClickAway = () => {
-                    document.removeEventListener(
+    watch(
+        expanded,
+        (isExpanded) => {
+            if (isExpanded) {
+                if (typeof document === "undefined") return;
+                removeClickAwayListener();
+                // Defer attachment past the current event's propagation.
+                // nextTick alone isn't enough — the opening pointerdown can still
+                // reach a capture-phase listener attached in the same microtask.
+                // requestAnimationFrame ensures we wait until the next frame.
+                installClickAwayFrame = requestAnimationFrame(() => {
+                    installClickAwayFrame = null;
+                    if (!expanded.value) return;
+                    document.addEventListener(
                         "pointerdown",
                         onPointerDownOutside,
                         true,
                     );
-                    removeClickAway = null;
-                };
-            });
-        } else {
-            removeClickAwayListener();
-        }
-    });
+                    removeClickAway = () => {
+                        document.removeEventListener(
+                            "pointerdown",
+                            onPointerDownOutside,
+                            true,
+                        );
+                        removeClickAway = null;
+                    };
+                });
+            } else {
+                removeClickAwayListener();
+            }
+        },
+        { immediate: true },
+    );
 
     if (typeof alwaysExpanded !== "boolean") {
         watch(alwaysExpanded, (forceOpen) => {
@@ -377,7 +394,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
             }
             state.value = "collapsed";
             syncDerived();
-        }, { immediate: true });
+        });
     } else if (alwaysExpanded) {
         state.value = "pinned";
         syncDerived();

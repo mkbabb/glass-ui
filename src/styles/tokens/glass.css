@@ -76,11 +76,8 @@
        BG.W-GLASS-BLUR-PEER — the resting rung pulls 10→8 to mint the ONE unified
        8px glass material: the dock + the default-Card (`--glass-blur-quiet`) + the
        menu-row (the quiet tier) all resolve the SAME `blur(8px)` RADIUS LEG (the
-       resolved-radius peer lock, proof:glass-cal). BI.W-BLUR-MUTE dials the glass
-       BUTTON cohort a HAIR below this peer via its own `--glass-blur-btn-radius`
-       primitive (see below) — the button is the muted glass CTA, dock/Card/menu-row
-       stay the unified 8px. The MORE-glass DEEP register is the hero CTA only
-       (`.glass-deep` re-points `--glass-blur-btn` → `--glass-blur-deep`). Radius-only —
+       resolved-radius peer lock, proof:glass-cal). Ordinary Buttons consume this
+       resting material; primary Buttons consume the shared deep register. Radius-only —
        the per-rung saturate()/brightness() companions stay (the saturate-revert is a
        later WS1-gated paint, not this collapse). */
     --glass-blur-wash-radius:     1px;
@@ -154,36 +151,6 @@
     /* BG.W-CLOSEFIX-9SITE — the composed `--glass-blur-dock` token RETIRED (orphaned by
        BG.W-GLASS-BLUR-PEER's `--dock-surface-blur: var(--glass-blur-resting)` re-point).
        The dock reads the unified 8px resting material; there is no dock-own blur rung. */
-
-    /* BG.W-GLASS-BLUR-PEER / BI.W-BLUR-MUTE — the GLASS BUTTON blur cohort. Every
-       `.btn-glass` (the `default`/`glass`/`outline`/`secondary`/`accent`/`ai` glass
-       register) reads `backdrop-filter: var(--glass-blur-btn)` (surfaces.css), and
-       `--glass-blur-btn` is the button's OWN composed token reading a button-cohort
-       RADIUS PRIMITIVE `--glass-blur-btn-radius` through the ONE `--glass-level` scalar
-       + the resting saturate companion — the override-the-PRIMITIVE idiom
-       (proof:doc-override-idiom): a consumer retunes the WHOLE button cohort with one
-       `:root { --glass-blur-btn-radius: … }`, NEVER a hardcoded composite `blur()`.
-
-       BI.W-BLUR-MUTE (UF-B3/B4 — "the blur could be muted ever so slightly" / "dialed
-       back globally just a bit") dials the button cohort a HAIR below the 8px resting
-       material (`--glass-blur-btn-radius: 6px` — the backdrop's structure reads a touch
-       more through the button plate). The RADIUS axis ONLY (the W-GLASS-CAL
-       anti-overreach discipline): the saturate leg is the resting 1.4 unchanged,
-       `--glass-level` untouched. The button now diverges from the
-       dock·default-Card·menu-row 8px peer by a deliberate cohort hair — NOT the
-       ONE-material break: dock/Card/menu-row stay the unified 8px, the button is the
-       muted glass CTA. The `.btn-glass.glass-deep` HERO arm (surfaces.css) still
-       re-points the WHOLE `--glass-blur-btn` onto `--glass-blur-deep`, so the
-       apple.com-nav-grade DEEP CTA (`primary-audacious`/`:liquid`/host `.glass-deep`) is
-       UNAFFECTED (it overrides the composed token, not the primitive). The wash TILE
-       tier (MetricCell et al.) keeps its 1px. Machine-locked by `proof:glass-cal` (the
-       blur-mute clause — the button resolves the muted radius via the `-radius`
-       PRIMITIVE, a hair below the peer, never a composite) + `proof:glass-legibility` L3
-       (the muted button is real content-tier glass) + `proof:button-glass` BG-IOS-1 (the
-       button-cohort tier + the saturate floor). The binding composited-ΔL certification
-       rides the #92 π batch. */
-    --glass-blur-btn-radius: 6px;
-    --glass-blur-btn:      blur(calc(var(--glass-blur-btn-radius) * var(--glass-level))) saturate(var(--glass-saturate-resting));
 
     /* Dock-specific opacity (0.42) — lighter than `resting` (0.65) so the dock
        reads as a translucent overlay rather than a panel, backdrop bleed
@@ -334,7 +301,7 @@
     /* ── BG.W-GLASS-CONSUMER-BAND — the SHARED per-instance PLATE recipe (the fold
        home) ───────────────────────────────────────────────────────────────────────
        `--glass-fill-tinted` is the ONE `color-mix(in oklab, …)` per-instance data-hue
-       plate the fill-tint CONSUMERS (Badge-glass · SelectableChip · IconChip-glass via
+       plate the fill-tint CONSUMERS (Badge-glass · Chip via
        `.glass-atom`/`.glass-chip`) READ instead of each re-spelling it — the DRY fold
        of the two forked `--glass-atom-tinted`/`--glass-chip-tinted` inline re-spells
        onto ONE plate. It reads the `--glass-fill-tint`/`--glass-fill-strength` axis

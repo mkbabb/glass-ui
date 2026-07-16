@@ -20,7 +20,7 @@
 //   PC-4 — PRM: with prefers-reduced-motion: reduce the scale stays 1 across scroll.
 //   PC-5 — exactly ONE chassis glass card per page (off the PC3 allowlist).
 //   PC-6 — the section-landing + inline preview: each <SectionPreviewCard> renders an
-//          IconChip svg + a .fira-code chip + a non-empty preview slot that is a real
+//          static icon-shaped Chip + a .fira-code chip + a non-empty preview slot that is a real
 //          element (not a text link) + pointer-events: none; the landing mounts ≤1
 //          live-GL context (the one-GL budget).
 //
@@ -302,7 +302,9 @@ test.describe("BC.W-PAGE-CHASSIS — the ONE standardized page idiom (π)", () =
             await page.waitForTimeout(500);
             const readback = await page.evaluate(() => {
                 const cards = [...document.querySelectorAll(".section-preview-card")];
-                const withIcon = cards.filter((c) => c.querySelector("svg")).length;
+                const withIcon = cards.filter((c) =>
+                    c.querySelector('.glass-chip[data-mode="static"][data-shape="icon"] svg'),
+                ).length;
                 const withChip = cards.filter((c) =>
                     c.querySelector(".fira-code, .section-preview-card-subpath"),
                 ).length;
@@ -349,7 +351,7 @@ test.describe("BC.W-PAGE-CHASSIS — the ONE standardized page idiom (π)", () =
                 glCount: number;
             };
             expect(r.cards, `${route} renders bento cards`).toBeGreaterThan(0);
-            expect(r.withIcon, `${route} every card has an IconChip svg`).toBe(r.cards);
+            expect(r.withIcon, `${route} every card has a static icon-shaped Chip`).toBe(r.cards);
             expect(r.withChip, `${route} every card has a subpath chip`).toBe(r.cards);
             expect(r.previews, `${route} every card has a preview`).toBe(r.cards);
             expect(r.previewInert, `${route} previews pointer-events: none`).toBe(true);

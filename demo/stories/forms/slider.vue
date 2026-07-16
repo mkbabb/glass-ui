@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import { ref } from "vue";
-import { Slider, type SliderVariants } from "@glass/components/slider";
+import {
+    Slider,
+    type SliderSize,
+    type SliderVariant,
+} from "@glass/components/slider";
 import { cn } from "@glass/components/_shared/class-names";
 
 const volume = ref<number[]>([42]);
@@ -10,8 +14,13 @@ const range = ref<number[]>([22, 78]);
 const spectrum = ref<number[]>([50]);
 const disabled = ref<number[]>([30]);
 const rtl = ref<number[]>([38]);
-const inverted = ref<number[]>([62]);
+const inverted = ref<number[]>([38]);
 const vertical = ref<number[]>([54]);
+const verticalInverted = ref<number[]>([54]);
+const invalid = ref<number[]>([84]);
+const keyboard = ref<number[]>([40]);
+const touch = ref<number[]>([55]);
+const reduced = ref<number[]>([48]);
 
 const irregularMarks = [14, 37, 68, 89] as const;
 const rangeMarks = [10, 25, 50, 75, 90] as const;
@@ -19,8 +28,8 @@ const rangeMarks = [10, 25, 50, 75, 90] as const;
 // Variant × size matrix (2 variants × 3 sizes = 6 cells).
 // Each cell binds an independent reactive value so drag interactions
 // don't cross-couple. Hard gate requires every cell renders.
-const variants: NonNullable<SliderVariants["variant"]>[] = ["standard", "spectrum"];
-const sizes: NonNullable<SliderVariants["size"]>[] = ["sm", "md", "lg"];
+const variants: SliderVariant[] = ["standard", "spectrum"];
+const sizes: SliderSize[] = ["sm", "md", "lg"];
 
 type MatrixKey = `${(typeof variants)[number]}__${(typeof sizes)[number]}`;
 const matrix = ref<Record<MatrixKey, number[]>>(
@@ -117,13 +126,26 @@ const matrix = ref<Record<MatrixKey, number[]>>(
                     />
                 </div>
             </div>
-            <div class="flex h-48 justify-center">
-                <Slider
-                    v-model="vertical"
-                    orientation="vertical"
-                    :marks="irregularMarks"
-                    aria-label="Vertical checkpoints"
-                />
+            <div class="flex min-h-56 justify-center gap-12">
+                <div class="grid justify-items-center gap-2">
+                    <span class="text-small text-foreground">Vertical</span>
+                    <Slider
+                        v-model="vertical"
+                        orientation="vertical"
+                        :marks="irregularMarks"
+                        aria-label="Vertical checkpoints"
+                    />
+                </div>
+                <div class="grid justify-items-center gap-2">
+                    <span class="text-small text-foreground">Inverted vertical</span>
+                    <Slider
+                        v-model="verticalInverted"
+                        orientation="vertical"
+                        inverted
+                        :marks="irregularMarks"
+                        aria-label="Inverted vertical checkpoints"
+                    />
+                </div>
             </div>
         </section>
 
@@ -155,6 +177,42 @@ const matrix = ref<Record<MatrixKey, number[]>>(
                 disabled
                 aria-label="Disabled slider"
             />
+        </section>
+
+        <section class="flex flex-col gap-3">
+            <p class="section-label">invalid</p>
+            <Slider
+                v-model="invalid"
+                invalid
+                aria-label="Invalid threshold"
+                aria-describedby="slider-invalid-message"
+            />
+            <p id="slider-invalid-message" class="text-small text-destructive">
+                Choose a threshold below 80.
+            </p>
+        </section>
+
+        <section class="grid gap-5 md:grid-cols-3">
+            <div class="grid gap-3">
+                <p class="section-label">keyboard</p>
+                <Slider
+                    v-model="keyboard"
+                    :step="10"
+                    aria-label="Keyboard stepped value"
+                />
+            </div>
+            <div class="grid gap-3">
+                <p class="section-label">touch</p>
+                <Slider v-model="touch" aria-label="Coarse touch value" />
+            </div>
+            <div class="grid gap-3">
+                <p class="section-label">reduced motion</p>
+                <Slider
+                    v-model="reduced"
+                    motion="reduced"
+                    aria-label="Reduced-motion value"
+                />
+            </div>
         </section>
 
         <!-- Variant × size matrix. -->

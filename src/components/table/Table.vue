@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import type { HTMLAttributes } from "vue";
+import { useAttrs, type HTMLAttributes } from "vue";
 import { cn } from '../_shared/class-names';
+
+defineOptions({ inheritAttrs: false });
 
 const props = defineProps<{
     class?: HTMLAttributes["class"];
@@ -9,11 +11,15 @@ const props = defineProps<{
     ariaColCount?: number;
     ariaRowCount?: number;
 }>();
+
+const attrs = useAttrs();
 </script>
 
 <template>
-    <div data-slot="table" class="relative w-full overflow-auto">
+    <div data-slot="table-container" class="relative w-full overflow-auto">
         <table
+            v-bind="attrs"
+            data-slot="table"
             :class="cn('w-full caption-bottom text-sm', props.class)"
             :role="props.role"
             :aria-label="props.ariaLabel"

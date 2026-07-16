@@ -1,5 +1,5 @@
 // IntersectionObserver-gated sequenced reveal — returns per-target revealed state for stagger entrance.
-import { onBeforeUnmount, reactive, ref } from "vue";
+import { onScopeDispose, reactive, ref } from "vue";
 import { supportsViewTimeline } from "./supportsCssTimeline";
 
 interface StaggerRevealConfig {
@@ -37,9 +37,7 @@ const NATIVE_VIEW_TIMELINE = supportsViewTimeline();
  * sole writer when the native feature is absent); under native, `register()`
  * reveals immediately so the terminal state is correct and the CSS animates.
  */
-export function useStaggerReveal(
-    options: StaggerRevealConfig = {},
-) {
+export function useStaggerReveal(options: StaggerRevealConfig = {}) {
     const {
         staggerMs = 60,
         once = true,
@@ -91,7 +89,7 @@ export function useStaggerReveal(
         }
     }
 
-    onBeforeUnmount(() => {
+    onScopeDispose(() => {
         observer?.disconnect();
         for (const t of timers) clearTimeout(t);
         timers.clear();
@@ -99,54 +97,3 @@ export function useStaggerReveal(
 
     return { targets, register, revealed };
 }
-
-/**
- * The `[data-scroll-reveal-once]` latch — BC.W-MOTION-PRESETS.
- *
- * The `scroll-driven.css` `[data-scroll-reveal]` recipe rides a native `view()`
- * timeline that RE-FIRES its entrance every time a child re-enters the entry range
- * — wrong for a virtualized/teleporting list (a row scrolls out + back and re-plays
- * the fade-lift). A `view()` timeline cannot latch "play once" (the CSS limit), so
- * the `[data-scroll-reveal-once]` opt-in plays the entrance ONCE: this directive
- * adds `data-revealed=""` to each child on its FIRST cross and `unobserve`s it (the
- * SAME `once: true` discipline `useStaggerReveal` runs above — `if (once)
- * observer?.unobserve(el)`); the CSS plays the one-shot `gl-reveal-once` keyframe
- * keyed off `[data-revealed]`, NOT the live `view()` range. NO second observer
- * engine — the same `IntersectionObserver` the composable speaks for the `once`
- * case, packaged as a Vue directive a consumer binds on the scroller.
- *
- * On an engine without `IntersectionObserver` (SSR/old) it reveals immediately so
- * the terminal state is correct (the CSS animation simply never plays). Under PRM
- * the scroll-driven.css `@media` outer gate drops the entrance and the row paints
- * in-place (a flourish — the reveal carve, not a legibility cue).
- */
-export const vScrollRevealOnce = {
-    mounted(scroller: HTMLElement) {
-        const children = Array.from(scroller.children) as HTMLElement[];
-        if (typeof IntersectionObserver === "undefined") {
-            for (const el of children) el.setAttribute("data-revealed", "");
-            return;
-        }
-        const observer = new IntersectionObserver(
-            (entries) => {
-                for (const entry of entries) {
-                    if (!entry.isIntersecting) continue;
-                    const el = entry.target as HTMLElement;
-                    if (el.hasAttribute("data-revealed")) continue; // already played — idempotent.
-                    el.setAttribute("data-revealed", "");
-                    observer.unobserve(el); // the `once` leg — never re-fire.
-                }
-            },
-            { threshold: 0.15 },
-        );
-        for (const el of children) observer.observe(el);
-        scrollRevealOnceObservers.set(scroller, observer);
-    },
-    unmounted(scroller: HTMLElement) {
-        scrollRevealOnceObservers.get(scroller)?.disconnect();
-        scrollRevealOnceObservers.delete(scroller);
-    },
-};
-
-/** Per-scroller observer handles so `unmounted` can disconnect the right one. */
-const scrollRevealOnceObservers = new WeakMap<HTMLElement, IntersectionObserver>();

@@ -1,1 +1,5 @@
-export { default as Label } from './Label.vue'
+export {
+    default as Label,
+    type LabelProps,
+    type LabelRequirement,
+} from "./Label.vue";

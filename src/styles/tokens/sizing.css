@@ -2,7 +2,7 @@
    §10 sizing — the --ui-scale doctrine, control-height/font/glyph cohorts,
    dropdown/carousel/stack-overlap, the dock geometry cascade (--dock-scale +
    collapsed-pill + rail hairline + active-state ladder + iOS register + touch
-   floor), MetricBadge stacked geometry, the Configurator density + HIERARCHY
+   floor), the Configurator density + HIERARCHY
    vocabulary, the single-column stage floor, the section tonal step, the
    component-font override.
    Carved (BB.W-CARVE3) from the former tokens/offsets-sizing.css §9/§10 split;
@@ -22,7 +22,7 @@
        GAP + FONT-SIZE + GLYPH in LOCKSTEP, proportion preserved, no per-component
        hack. The cohorts below (`--control-h-*` heights, `--control-text*` control
        fonts, `--ui-glyph*` glyphs) are its reading surfaces; the CVA bases + the
-       `.btn-pill`/`.input-pill` pills consume them.
+       `.button`/`.input-pill` controls consume them.
 
        ONE scale system, not three. The dock (`--dock-scale`) and the dropdown
        family (`--dropdown-text`, W50) are SPECIALIZATIONS that read this axis:
@@ -124,7 +124,7 @@
 
     /* ── The search-family magnitude rungs (BC.W-SEARCH-CUSTOM) ───────────────
        The SearchBar/FuzzySearch compound surfaces read these indirection rungs
-       for the glyph / icon-button / result-label magnitudes — so a consumer
+       for the glyph / icon-button / ledger-label magnitudes — so a consumer
        retunes the WHOLE search family from ONE `:root` override, not a fork of
        per-element px literals (`w-3.5 h-3.5`, `!h-6 !w-6`, `text-[0.6rem]`). Each
        DEFAULTS to the existing cohort it replaces, so the bare search surface is
@@ -170,8 +170,6 @@
 
     /* Dock geometry — consumers may override locally */
     --dock-h: calc(var(--size-icon-btn) + 0.75rem + 3px);
-    --dock-margin: 0.5rem;
-    --dock-menubar-reserve: 4rem;
 
     /* AX.W45 — the dock geometry multiplier. `--dock-scale` threads the WHOLE
        `.glass-dock[data-size]` geometry cascade (box, padding, gap, tab,
@@ -288,22 +286,6 @@
        coherently on touch. The 0.25rem base stays the ratified tight floor. */
     --dock-collapsed-padding: calc(0.25rem * var(--dock-scale));
 
-    /* BI.W-DOCK-OVERFLOW (§Inbound T-52 c — DECIDED BUILD, not optional). `--dock-pill-h`
-       is THE ONE authoritative EXPORTED dock-pill (outer block) height rung. A consumer
-       reserving a band for the floating dock (a scroll-padding-bottom, a fixed spacer, an
-       anti-collision gutter) reads THIS token instead of RE-DERIVING control-height +
-       padding per repo — the T-57 band-reservation re-derivation drift class the speedtest
-       consumer cures locally today. Tracks the EXPANDED control row (`--dock-layer-height`)
-       plus the dock's own block padding (`--dock-padding-block`, the shell.css pad); it
-       resolves at `:root` off the fallback ladder AND re-resolves inside each
-       `[data-size]`/coarse scope transitively (`--dock-layer-height` already threads
-       `--dock-scale` at every density rung), so ONE token tracks the painted pill height on
-       every rung + pointer. Consumers override the pieces (`--dock-layer-height` via density
-       / `--dock-padding-block`), never re-derive the sum. */
-    --dock-pill-h: calc(
-        var(--dock-layer-height, 2.5rem) + 2 * var(--dock-padding-block, 0.375rem)
-    );
-
     /* BI.W-DOCK-OVERFLOW (§Inbound T-52 b) — the native-scroll-track ring-room reserve.
        `--dock-scroll-safe-inset` is ≥ the focus-ring weight (`--focus-ring-width`, 2px) so
        a FLUSH first/last item's focus-ring arc renders WHOLE inside the scroll port's
@@ -314,17 +296,6 @@
        selected member with ≥1px port slack, never jammed flush against the port edge. */
     --dock-scroll-safe-inset: calc(var(--focus-ring-width, 2px) + 1px);
     --dock-scroll-gutter: var(--dock-scroll-safe-inset);
-
-    /* BI.W-DOCK-OVERFLOW — the pure-CSS Gaussian fisheye knobs (dock/fisheye.css). The
-       fits-branch magnify amplitude + the falloff sigma (a UNITLESS px window — the writer
-       writes `--x`/`--dock-px` as unitless numbers so `pow()`/`exp()` operate on
-       `<number>`). Consumers retune the hump strength/spread from these two handles. */
-    --dock-fisheye-amp: 0.6;
-    --dock-fisheye-sigma: 64;
-    /* The per-frame `--dock-px` ease clock (fisheye.css `transition: --dock-px … linear`).
-       80ms is the G4-measured buttery-hump ease (not the settle of a spring — a linear
-       pointer-follow smoothing); tokenized so it is retunable + coherence-clean. */
-    --dock-fisheye-duration: 80ms;
 
     /* AX.W45-TUNE Q3/C3 + C5 — the dock-control family reads a real GLASS register
        on hover/active, NOT a same-hue `--card` mix at an alpha adjacent to the dock's
@@ -380,15 +351,6 @@
        Consumers retune the rail-tab size via this one handle. */
     --dock-layer-tab-size: calc(1.75rem * var(--dock-scale));
 
-    /* BA.W-DOCK-SECTIONS — the divider-seam rail knobs.
-       `--dock-rail-extend-length` (declared in rail-extend.css) was RE-SEMANTICIZED:
-       it is no longer a one-way connector length but the SYMMETRIC per-side overrun of
-       the seam line (the line's cross-extent = dock extent + 2× the knob, centered on
-       the seam). The `--dock-section-zone-gap` is the inter-control rhythm inside a
-       <DockSection> zone (defaults to the dock's own `--dock-gap`, so the section
-       grouping adds no box). */
-    --dock-section-zone-gap: var(--dock-gap, 0.25rem);
-
     /* Dock active-state ladder (O.W6 Lane B)
        Token-overridable active paint for `.dock-icon-button`. Promoted
        from hardcoded `background: var(--muted); color: var(--foreground)`
@@ -443,9 +405,8 @@
        hosts consumer indicator content in its active seat carries `data-ring-yield`
        — the dock's own ring/accent defers so the consumer's own indicator reads
        (the seam value.js's letter-rail ask names). The standalone letter-rail
-       PRIMITIVE is declined-terminal: the greenfield dock + the DockStack facet
-       mode IS the rail register (a future letter-rail consumer binds the DockStack
-       seam + `data-ring-yield`, never a second rail component). */
+       primitive remains declined; consumers compose ordinary controls with
+       `data-ring-yield`. */
     --dock-ring: var(--focus-ring-shadow);
 
     /* AZ.W-REGISTER-IOS — the iOS press-DARKEN. Press today scales only
@@ -459,14 +420,10 @@
         var(--foreground) 7%
     );
 
-    /* Q.W3 Lane G (Q-cos-13) — the O.W6 Lane D `--icon-tooltip-hit-area`
-       token retired here. IconTooltip no longer owns a wrap-span; the
-       slotted child carries its own WCAG 2.5.5 hit-area (interactive
-       children via their four-state contract, bare glyphs via a
-       `min-h-11 min-w-11` host). No orphaned token left behind. */
+    /* TooltipTrigger does not wrap or resize its slotted control; each
+       interactive trigger owns its target floor. */
 
-    /* O.W6 Lane D — Dock touch-target floor. Mirrors the IconTooltip
-       hit-area but for the dock-control surface. The base value tracks
+    /* O.W6 Lane D — Dock touch-target floor. The base value tracks
        the desktop default (`--size-icon-btn`); the
        `@media (pointer: coarse)` block at `dock.css` lifts it to the
        WCAG 2.5.5 floor on touch devices. */
@@ -496,10 +453,5 @@
        dock floor and the general floor can be retuned independently. */
     --touch-target: 2.75rem; /* 44px */
 
-    /* The MetricBadge stacked geometry + the Configurator family (density ladder,
-       AZ.W-HIERARCHY section/label/preset vocabulary, stage-floor, dark-adaptive
-       divider register, section tonal step) + the --select-font override are carved
-       into tokens/sizing-config.css (a cohesive §10 tail, the no-god-module re-drain)
-       — @import-ed by tokens.css IMMEDIATELY AFTER sizing.css (adjacent same-selector
-       :root blocks, byte-isomorphic). */
+    /* The Configurator density and hierarchy tokens live in sizing-config.css. */
 }

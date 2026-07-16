@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import { ref, computed, toRef, useId } from "vue";
+import { computed, toRef, useAttrs, useId, type HTMLAttributes } from "vue";
 import { useWatercolorBlob } from "./useWatercolorBlob";
 import { hashString } from "./prng";
+
+defineOptions({ inheritAttrs: false });
 
 /**
  * WatercolorDot — an organic pastel blob swatch. A CSS/SVG primitive (NO drawing
  * context — no WebGL/WebGPU/Canvas2D; the deliberate suite counterexample, the mark
  * that documents WHY it is not a GPU context): the blob shape is a deterministic
- * per-vertex `border-radius` morph (seeded by `color + seed`), and the wet, bleeding
+ * `border-radius` silhouette (seeded by `color + seed`), and the wet, bleeding
  * edge is an SVG turbulence + displacement filter that is INTERNALISED — the component
  * mounts its own namespaced `<filter>` so there is zero consumer plumbing. Mount the
  * dot and the filter just works.
@@ -35,7 +37,7 @@ const props = withDefaults(
          *                       color; the existing register, unchanged).
          *   `ghost`  — the SAME seeded blob SILHOUETTE traced as a DASHED outline: a
          *              dashed CSS BORDER reading the SAME seeded `border-radius`
-         *              silhouette the solid dot fills (`activeBorderRadius`), carrying
+         *              silhouette the solid dot fills (`borderRadius`), carrying
          *              the SAME wet `feDisplacementMap` filter so the displacement
          *              wobbles the dashed border INTO the seeded organic outline. A
          *              CSS dashed border hugs its own `border-radius`, so the outline
@@ -43,14 +45,12 @@ const props = withDefaults(
          *              NOT a dashed rectangle. A low-alpha `color` fill is kept behind
          *              the border. A `ghost` of a given `color + seed` traces the SAME
          *              outline the `solid` dot of that seed fills (both read the same
-         *              `useWatercolorBlob` morph — the ONE shape source). The empty-
+         *              `useWatercolorBlob` silhouette — the ONE shape source). The empty-
          *              palette-slot / placeholder affordance.
          */
         variant?: "solid" | "ghost";
         /** Run the rAF-driven compositor transform wobble (default false → static). */
         animate?: boolean;
-        /** Host tag — `div` (decorative) or `button` (interactive). */
-        tag?: "div" | "button";
         /** Base morph cycle duration in ms (default 4000). */
         cycleDuration?: number;
         /** Border-radius range [lo, hi] as percentages (default [20, 80]). */
@@ -61,12 +61,17 @@ const props = withDefaults(
     {
         variant: "solid",
         animate: false,
-        tag: "div",
         cycleDuration: 4000,
         range: () => [20, 80],
         seed: "",
     },
 );
+
+// A WatercolorDot is paint, never the seat. Suppress every semantic/action
+// fallthrough attribute and forward only the two visual composition channels.
+const attrs = useAttrs();
+const visualClass = computed(() => attrs.class as HTMLAttributes["class"]);
+const visualStyle = computed(() => attrs.style as HTMLAttributes["style"]);
 
 // Per-instance namespaced filter id — internalises the SVG filter with zero global
 // state and zero cross-mount coupling. Sanitised for a CSS `url(#…)` reference.
@@ -81,58 +86,38 @@ const filterUrl = computed(() => `url(#${filterId})`);
 const filterSeed = computed(() => hashString(props.color + props.seed) % 256);
 
 const colorRef = toRef(props, "color");
-const hovered = ref(false);
-
-const blob = useWatercolorBlob(colorRef, {
+const { borderRadius, transform } = useWatercolorBlob(colorRef, {
     animate: props.animate,
     cycleDuration: props.cycleDuration,
     range: props.range,
     seed: props.seed,
 });
-
-function onMouseEnter() {
-    hovered.value = true;
-    if (props.animate) blob.nudge();
-}
-
-// The seeded `border-radius` silhouette is STATIC under animate (the box never repaints
-// its radius per frame — the §H fix). On hover (static mode) it morphs to the hover
-// shape; the CSS transition smooths it. Both modes keep the seeded silhouette identity.
-const activeBorderRadius = computed(() => {
-    if (props.animate) return blob.borderRadius.value;
-    return hovered.value ? blob.hoverBorderRadius.value : blob.borderRadius.value;
-});
-
-// The animate-mode liveness is a seeded COMPOSITOR transform wobble (identity when
-// static) — the compositor accelerates it without re-rastering the cached filter.
-const activeTransform = computed(() =>
-    props.animate ? blob.transform.value : "none",
-);
 </script>
 
 <template>
-    <component
-        :is="tag"
-        :class="['watercolor-swatch', animate && 'watercolor-animated']"
-        :type="tag === 'button' ? 'button' : undefined"
+    <span
+        aria-hidden="true"
+        :class="[visualClass, 'watercolor-swatch', animate && 'watercolor-animated']"
         data-testid="watercolor-swatch"
         :data-variant="variant"
-        :style="{
-            // The solid register fills with the color; the ghost register keeps a
-            // low-alpha fill (the CSS half) and traces the silhouette as a dashed
-            // BORDER reading the SAME seeded `border-radius` silhouette the solid
-            // fills. The SILHOUETTE (`borderRadius`) is the SAME seeded blob in both
-            // — a ghost of a given seed traces the solid dot's outline (the ONE shape
-            // source). The animate wobble rides `--watercolor-wobble` (a compositor
-            // transform, NOT a per-frame radius paint under the filter).
-            backgroundColor: variant === 'ghost' ? undefined : color,
-            borderRadius: activeBorderRadius,
-            '--watercolor-color': color,
-            '--watercolor-filter': filterUrl,
-            '--watercolor-wobble': activeTransform,
-        }"
-        @mouseenter="onMouseEnter"
-        @mouseleave="hovered = false"
+        :style="[
+            visualStyle,
+            {
+                // The solid register fills with the color; the ghost register keeps a
+                // low-alpha fill (the CSS half) and traces the silhouette as a dashed
+                // BORDER reading the SAME seeded `border-radius` silhouette the solid
+                // fills. The SILHOUETTE (`borderRadius`) is the SAME seeded blob in both
+                // — a ghost of a given seed traces the solid dot's outline (the ONE shape
+                // source). The animate wobble rides `--watercolor-wobble` (a compositor
+                // transform, NOT a per-frame radius paint under the filter).
+                backgroundColor: variant === 'ghost' ? undefined : color,
+                borderRadius,
+                pointerEvents: 'none',
+                '--watercolor-color': color,
+                '--watercolor-filter': filterUrl,
+                '--watercolor-wobble': transform,
+            },
+        ]"
     >
         <!--
           Internalised watercolor filter — namespaced per instance, auto-mounted,
@@ -197,7 +182,7 @@ const activeTransform = computed(() =>
         <!--
           The GHOST register (BC.W-VIZ-WATERCOLOR · BD.W-VIZ-BROKEN-FIX D4) — the seeded
           blob silhouette traced as a DASHED outline that FOLLOWS THE SAME SHAPE the solid
-          dot fills. ONE shape source: this dashed BORDER `<div>` reads `activeBorderRadius`
+          dot fills. ONE shape source: this dashed BORDER `<span>` reads `borderRadius`
           — the SAME seeded 8-value `border-radius` superellipse the solid box takes from
           `useWatercolorBlob` — and a CSS dashed border hugs its OWN `border-radius` exactly,
           so the outline traces the seeded organic blob BY CONSTRUCTION (never an ellipse,
@@ -206,19 +191,19 @@ const activeTransform = computed(() =>
           silhouette). The wet `feDisplacementMap` filter wobbles the dashed border INTO the
           hand-painted organic edge (the design intent). Static → PRM-neutral.
         -->
-        <div
+        <span
             v-if="variant === 'ghost'"
             class="watercolor-ghost-stroke"
             aria-hidden="true"
-            :style="{ borderRadius: activeBorderRadius, filter: filterUrl }"
+            :style="{ borderRadius, filter: filterUrl }"
         />
-        <slot />
-    </component>
+    </span>
 </template>
 
 <style scoped>
 /* Watercolor swatch — organic pastel blobs. */
 .watercolor-swatch {
+    display: inline-block;
     border-radius: 48% 52% 55% 45% / 52% 48% 45% 55%;
     filter: var(--watercolor-filter);
     /* The animate-mode liveness — a seeded COMPOSITOR transform wobble (identity when
@@ -256,11 +241,7 @@ const activeTransform = computed(() =>
    traced by the `.watercolor-ghost-stroke` SVG <ellipse> `stroke-dasharray` overlay
    (a dashed OUTLINE following the silhouette). */
 .watercolor-swatch[data-variant="ghost"] {
-    background-color: color-mix(
-        in srgb,
-        var(--watercolor-color) 12%,
-        transparent
-    );
+    background-color: color-mix(in srgb, var(--watercolor-color) 12%, transparent);
     box-shadow:
         inset 0 0 6px color-mix(in srgb, var(--background) 25%, transparent),
         0 1px 4px color-mix(in srgb, var(--foreground) 6%, transparent);
@@ -282,17 +263,9 @@ const activeTransform = computed(() =>
     }
 }
 
-.watercolor-swatch[data-variant="ghost"]:hover {
-    background-color: color-mix(
-        in srgb,
-        var(--watercolor-color) 18%,
-        transparent
-    );
-}
-
-/* The GHOST dashed outline (BD.W-VIZ-BROKEN-FIX D4) — a div clipped to the SAME seeded
+/* The GHOST dashed outline (BD.W-VIZ-BROKEN-FIX D4) — a span clipped to the SAME seeded
    `border-radius` silhouette the solid dot fills (the ONE shape source: it reads
-   `activeBorderRadius` inline, the SAME `blob.borderRadius` the solid box takes). A dashed
+   `borderRadius` inline, the SAME value the solid box takes). A dashed
    CSS border hugs its own border-radius, so the outline traces the seeded organic blob
    EXACTLY — never an ellipse, never a circle, never a dashed rectangle. The wet
    `feDisplacementMap` filter (set inline) wobbles the dashed border into the hand-painted
@@ -301,7 +274,7 @@ const activeTransform = computed(() =>
     position: absolute;
     inset: 0;
     border: var(--watercolor-ghost-weight, 2px) dashed var(--watercolor-color);
-    /* border-radius set inline off activeBorderRadius (the seeded silhouette). */
+    /* border-radius is the same seeded silhouette as the solid face. */
     pointer-events: none;
 }
 
@@ -309,11 +282,7 @@ const activeTransform = computed(() =>
    outline still reads (mirrors the glass legibility brackets). */
 @media (prefers-reduced-transparency: reduce) {
     .watercolor-swatch[data-variant="ghost"] {
-        background-color: color-mix(
-            in srgb,
-            var(--watercolor-color) 24%,
-            transparent
-        );
+        background-color: color-mix(in srgb, var(--watercolor-color) 24%, transparent);
     }
 }
 
@@ -335,19 +304,6 @@ const activeTransform = computed(() =>
     }
 }
 
-.watercolor-swatch:hover {
-    transform: scale(1.06);
-    filter: var(--watercolor-filter) brightness(1.05);
-    box-shadow:
-        inset 0 0 8px color-mix(in srgb, var(--background) 40%, transparent),
-        inset 0 -2px 4px color-mix(in srgb, var(--foreground) 6%, transparent),
-        0 4px 12px color-mix(in srgb, var(--foreground) 15%, transparent);
-}
-
-.watercolor-swatch:active {
-    transform: scale(0.97);
-}
-
 /* The internalised filter host contributes no layout — it only carries the def. */
 .watercolor-filter-host {
     position: absolute;
@@ -355,20 +311,5 @@ const activeTransform = computed(() =>
     height: 0;
     overflow: hidden;
     pointer-events: none;
-}
-
-/* Remove default button border from watercolor swatches (palette dots). */
-button.watercolor-swatch {
-    border: none;
-    padding: 0;
-    outline: none;
-}
-
-button.watercolor-swatch:focus-visible {
-    outline: none;
-    box-shadow:
-        inset 0 0 6px color-mix(in srgb, var(--background) 35%, transparent),
-        inset 0 -2px 4px color-mix(in srgb, var(--foreground) 6%, transparent),
-        0 2px 8px color-mix(in srgb, var(--foreground) 20%, transparent);
 }
 </style>

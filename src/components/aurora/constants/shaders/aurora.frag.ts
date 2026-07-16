@@ -32,7 +32,7 @@ import {
     OKLCH_MATRICES_GLSL,
     PALETTE_RAMP_GLSL,
     PCG_HASH_GLSL,
-} from "../../../../composables/glass/webgl/shaders/procedural-color.glsl";
+} from "../../../../composables/glass/procedural/color.glsl";
 import { CURL_FBM_GLSL } from "../../../../composables/glass/webgl/shaders/flow.glsl";
 import { AURORA_COMPOSITION_GLSL } from "./composition.glsl";
 import { AURORA_FLOW_GLSL } from "./flow.glsl";
@@ -55,7 +55,7 @@ precision highp float;
 in vec2 vUv;
 out vec4 fragColor;
 
-#define MAX_NUCLEI 6
+#define MAX_NUCLEI 8
 #define MAX_STOPS  8
 
 // ── Uniforms ───────────────────────────────────────────────────────────────
@@ -103,12 +103,6 @@ uniform float uFlowCurl;
 uniform vec2  uCursor;          // in 0..1 screen space (matches pN)
 uniform float uCursorStrength;  // 0..1 attraction amount
 uniform float uCursorRadius;    // radius of influence (0.05..0.5)
-// AW.W8.1 — the velocity-reactive flow: a fast flick injects a transient swirl-burst
-// (uCursorBurst, decaying over ~1s) along the pointer velocity (uCursorVelocity),
-// distinct from the steady uCursorStrength attraction. Both are PRM-gated (the cursor
-// write-path early-outs on reduced-motion, and the master tempo scalar zeroes them).
-uniform vec2  uCursorVelocity;  // smoothed pointer velocity (normalized-screen/move)
-uniform float uCursorBurst;     // 0..1 transient flick burst
 uniform float uStrokeAmount;
 uniform float uStrokeScale;
 uniform float uStrokeAnisotropy;
@@ -446,6 +440,13 @@ void main() {
   // the smooth default + every existing medium are byte-unchanged by these arms).
   else if (uMedium == 8) col = mediumMetal(col, pN, t);
   else if (uMedium == 9) col = mediumMetalGradient(col, pN, t);
+
+  // Cursor-local luminance lean. Position, radius, and the CPU-folded strength are the
+  // same four packed values on WebGL2 and WebGPU; absent interactivity writes strength 0.
+  vec2 cursorDelta = pN - uCursor;
+  float cursorRadius = max(uCursorRadius, 0.01);
+  float cursorLean = exp(-dot(cursorDelta, cursorDelta) / (cursorRadius * cursorRadius * 0.5));
+  col *= 1.0 + 0.12 * cursorLean * uCursorStrength;
 
   // Saturation trim
   col = saturate3(col, uSaturation);

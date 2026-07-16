@@ -299,22 +299,7 @@
        is the desired default there, NOT a sub-perceptual floor, so the floor is a light-mode knob. */
     --glass-tint-strength-floor: 4%;
 
-    /* The on-glass FOREGROUND register (BB.W-ON-GLASS-FG) lives in tokens/on-glass-fg.css. */
-    /* R5-7 — the VEIL text-plate feather. The `veil-surface` decoration
-       (cards.css) paints a borderless/rimless translucent glass plate as a LOCAL
-       text-legibility surface over a busy backdrop; its `--veil-feather` axis is
-       an OPTIONAL `mask-image` that fades the plate edges into the page (the
-       soft-edged "bleed" the slides deck text plates use). The default is `none`
-       (a clean rectangle); a consumer opts into the feather by pointing
-       `--veil-feather` at this ready-made radial, or any `mask-image` value.
-       The 70%→100% falloff feathers the outer ~30% of the plate; override the
-       token to retune the fade radius library-wide. */
-    --veil-feather-radial: radial-gradient(
-        ellipse 100% 100% at 50% 50%,
-        black 0%,
-        black 70%,
-        transparent 100%
-    );
+    /* The on-glass FOREGROUND register lives in tokens/on-glass-fg.css. */
 
     /* AW.W23 — chromatic edge dispersion (the "polished glass" rim fringe Apple
        shows). A warm fringe on one edge + a cool fringe on the other, low-alpha,
@@ -352,51 +337,12 @@
         hsl(40 30% 96% / var(--glass-curvature-intensity)),
         transparent 38%
     );
-    /* The light-arm dark alias kept on the same warm-cream + token recipe so a
-       non-`.dark` consumer reading `…-overlay-dark` still resolves a softened
-       sheen; the `.dark` block below lowers `--glass-curvature-intensity` so the
-       deep-canvas arm is genuinely softer (the prior byte-identical dark arm read
-       HARDER over the dark canvas). */
-    --glass-curvature-overlay-dark: var(--glass-curvature-overlay);
-
     /* Chart palette aliases — speedtest et al. read these for phase tinting.
        Defaults map to viz-basis hues; consumers can override per app. */
     --chart-ping:     var(--viz-chebyshev);
     --chart-download: var(--viz-fourier);
     --chart-upload:   var(--viz-amber);
     --chart-jitter:   var(--viz-legendre);
-
-    /* O.W6 Lane D — WCAG companion `--chart-{phase}-label` tokens
-       (speedtest AC.W6c.T2 — F1.V-04 closure).
-
-       The canvas-side hues above preserve their saturated brand register
-       (correct against the meter dial); the COMPANION tokens darken to
-       L≈0.40 so phase-label text on `--background` clears the WCAG 2.1
-       AA-body 4.5:1 contrast floor. Mirrors the two-token discipline
-       already established by `--meter-{background-color,track-stroke}`:
-       one token feeds the canvas/visual, the second feeds the label
-       text.
-
-       Light-mode L≈0.40 in OKLCH preserves the hue rotation while
-       dropping luminance enough for body contrast; dark-mode flips to
-       L≈0.85 against the dark canvas. Consumers reach these via
-       `color: var(--chart-ping-label)` (etc.) on label elements ONLY —
-       chart strokes/fills continue to read `--chart-ping`. */
-    --chart-ping-label:     oklch(0.40 0.18 230);
-    --chart-download-label: oklch(0.40 0.20 22);
-    --chart-upload-label:   oklch(0.40 0.16 55);
-    --chart-jitter-label:   oklch(0.40 0.20 305);
-
-    /* O.W6 Lane D — Meter track stroke (speedtest AC.W6c.T3 — F1.V-02
-       closure). Promoted from speedtest's consumer-side declaration so
-       glass-ui owns the canonical light + dark values. The light-mode
-       value reads opaque foreground (composes through canvas
-       `globalAlpha` in consumer renderers; e.g., speedtest's `rings.ts`
-       `globalAlpha = 0.22` lands the phantom-track at the perceptual
-       sweet-spot). The dark-mode companion lives under `.dark` below
-       and ALSO reads `var(--foreground)` — the prior speedtest value
-       `var(--background)` rendered bg-on-bg invisible at dark mode. */
-    --meter-track-stroke: var(--foreground);
 
     /* Shadow per tier — complete box-shadow lists for glass surface classes */
     --glass-shadow-wash:     var(--shadow-sm), var(--glass-highlight);
@@ -410,39 +356,15 @@
         var(--glass-highlight);
 
     /* ─────────────────────────────────────────────────────────────
-       AL-W1-α augmented — SPINE 8th tier (HOUSING register)
-
-       Closes the AK W2 chassis-spine architectural underclaim per
-       AL-X5 §4.1. The spine register is a polished SLEEVE, not glass:
-       NO backdrop-filter, NO plate opacity, hairline outer stroke,
-       interior radial vignette that subtly carries the phase-color
-       cascade. Consumed exclusively by `<InstrumentChassis variant="spine">`
-       at App-level mount paths (quiet-content routes).
-
-       The 4 tokens here cover the minimum viable substrate the SLIM
-       Y4/Y6/Y7 retention set ratified. The 35 rejected axes (saturate
-       band, edge-light per tier, depth-shadow per tier, tier-up macro)
-       stay rejected per the conservative-creation mandate.
-       ───────────────────────────────────────────────────────────── */
-    --glass-spine-border: var(--surface-tint-8);
-    --glass-spine-vignette: radial-gradient(
-        ellipse at 50% 0%,
-        color-mix(in oklab, var(--phase-color, var(--surface-tint-8)) 8%, transparent),
-        transparent 60%
-    );
-
-    /* ─────────────────────────────────────────────────────────────
        AL-W10 SLIM — UNDER-SHADOW recipe rungs
 
        Per AL-X5 §4 + Y7 §3. iOS Liquid Glass surfaces carry a 0.5px
        dark hairline along the bottom edge (reads as under-shadow /
        glass thickness). The substrate `--hairline-under-shadow`
-       already publishes one quiet rung; the four-rung ladder here
-       names the SLIM retention set (Y4 §3.2 / Y6 §4.3) — `quiet`,
-       `default`, `vivid`, `spine` cover the consumer landings without
+       already publishes one quiet rung; the three-rung ladder here
+       names the retained set — `quiet`, `default`, and `vivid` cover the consumer landings without
        multiplying tokens per tier. The 3 hand-rolled literals at
-       `instrument-chassis.css:52`, `dock.css:279`, `dock.css:952`
-       retire to these.
+       dock literals retire to these.
 
        Composes as a NON-INSET box-shadow layer alongside the existing
        `--glass-shadow-*` recipe (the inset under-shadow stays at the
@@ -451,12 +373,10 @@
        ───────────────────────────────────────────────────────────── */
     /* atlas GU-1/O-E2 — the X cast leans off the ONE `--glass-key-direction` ratio
        (default 0 → byte-identical straight-down cast; atlas sets -0.375 for the
-       cel-coherent down-left FILL lean). Y/blur/spread/α byte-unchanged. The spine
-       rung stays INTENTIONALLY-OMNIDIRECTIONAL (an edge-thickness cue, no cast). */
+       cel-coherent down-left FILL lean). Y/blur/spread/α byte-unchanged. */
     --glass-under-shadow-quiet:   calc(2px * var(--glass-key-direction)) 2px 8px -1px oklch(0 0 0 / 0.04);
     --glass-under-shadow-default: calc(4px * var(--glass-key-direction)) 4px 16px -2px oklch(0 0 0 / 0.08);
     --glass-under-shadow-vivid:   calc(8px * var(--glass-key-direction)) 8px 32px -4px oklch(0 0 0 / 0.12);
-    --glass-under-shadow-spine:   0 1px 0 0 oklch(0 0 0 / 0.06);
 
     /* Overlay scrim rungs — substrate-aware modal/dialog backdrop tints.
        Three weights cover the deployed range: dialog-scroll (subtle),

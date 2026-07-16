@@ -16,10 +16,9 @@
 // closure holds). The paired CSS substrate is `src/styles/view-transition.css`
 // (the `.gl-list-item` group recipe + `--vt-*` tokens).
 //
-// Baseline: same-document `view-transitions` + `view-transition-class` = Newly
-// Available → adopt with the ≤ 20-LOC instant fallback below. Reduced-motion is
-// handled in CSS (`view-transition.css` sets `animation: none` on the VT
-// pseudos under PRM — the swap still runs, just without motion).
+// Unsupported engines and reduced motion share one immediate state-update path;
+// neither captures snapshots. The paired CSS PRM rule is a defensive floor for
+// direct native callers outside this helper.
 //
 // Cross-repo coupling (the AQ ↔ muster J seam): J.W5's `useVerdictMoment`
 // re-rank + dialog reveal import `startViewTransition` from
@@ -53,17 +52,6 @@ interface DocumentWithViewTransition {
  *  (one symmetric curve), which is functionally identical (the swap still runs). */
 export interface ViewTransitionOptions {
     types?: string[];
-    /**
-     * BA.W-ATLAS-RECONCILE A-4b — take the JS-level INSTANT path under
-     * `prefers-reduced-motion: reduce` (run `mutate` directly, NO snapshot
-     * captured). The HEAD default pushes PRM to CSS only (`view-transition.css`
-     * sets `animation: none` on the VT pseudos) — but that STILL captures a
-     * snapshot. For the navigation case a reduced-motion user wants the swap to
-     * happen with no transition machinery at all; `navigate()` sets this true.
-     * Defaults to `false` so the existing sync-VT consumers (muster J.W5 row
-     * re-rank) keep their exact CSS-handled PRM behaviour. @default false
-     */
-    instantUnderReducedMotion?: boolean;
 }
 
 export interface ViewTransitionResult {
@@ -91,10 +79,8 @@ export function supportsViewTransitions(): boolean {
 }
 
 /**
- * BA.W-ATLAS-RECONCILE A-4b — `prefers-reduced-motion: reduce` matchMedia probe.
- * SSR/no-matchMedia → `false` (no reduce signal, full path). Used by the
- * `instantUnderReducedMotion` JS-level instant-path (the navigation case wants no
- * snapshot machinery at all under reduce, beyond the CSS `animation: none`).
+ * `prefers-reduced-motion: reduce` matchMedia probe. SSR/no-matchMedia returns
+ * false because no reduced-motion preference is available.
  */
 function prefersReducedMotion(): boolean {
     if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
@@ -123,12 +109,10 @@ function runInstant(mutate: () => void | Promise<void>): ViewTransitionResult {
 }
 
 /**
- * Wrap a synchronous DOM mutation in `document.startViewTransition` with an
- * instant fallback. `mutate` performs the DOM/state change and is called
- * synchronously in BOTH paths (native and fallback), so the post-mutation DOM
- * is identical regardless of support.
+ * Wrap a DOM mutation in `document.startViewTransition` with an instant
+ * fallback. The mutation may be synchronous or asynchronous.
  *
- * @param mutate the synchronous DOM/state change to animate between.
+ * @param mutate the DOM/state change to animate between.
  * @param options optional `{ types }` — directional transition types tagged on
  *   the active transition for `:active-view-transition-type(<t>)` CSS curves
  *   (Chrome 140+; feature-detected, degrades to one symmetric curve elsewhere).
@@ -152,8 +136,8 @@ export function startViewTransition(
             ? undefined
             : (document as DocumentWithViewTransition);
 
-    // BA.W-ATLAS-RECONCILE A-4b — the instant path: no API, OR the opt-in
-    // JS-level reduced-motion instant-path. Run `mutate` directly (awaited so an
+    // The single instant path covers no API and reduced motion. Run `mutate`
+    // directly (awaited so an
     // async navigation completes before `finished` resolves), NO snapshot. The
     // `async` IIFE normalizes BOTH a sync-throwing AND an async-rejecting `mutate`
     // into one settled promise (the function boundary catches the sync throw), so
@@ -162,7 +146,7 @@ export function startViewTransition(
     if (
         !doc ||
         typeof doc.startViewTransition !== "function" ||
-        (options?.instantUnderReducedMotion && prefersReducedMotion())
+        prefersReducedMotion()
     ) {
         return runInstant(mutate);
     }
@@ -191,52 +175,4 @@ export function startViewTransition(
         ),
         transitioned: true,
     };
-}
-
-// ── BA.W-ATLAS-RECONCILE A-4b — the route/navigation convenience ─────────────
-// The atlas's route-transition idiom (the gallery-card-title ↔ dashboard-masthead-
-// title morph across a `router.push`) is the ASYNC-update + reduced-motion-instant
-// case. Rather than a PARALLEL `useRouteTransition` wrapper (the DEC-8 anti-pattern
-// the fork's standalone helper would re-introduce), `navigate` is a THIN convenience
-// over the ONE `startViewTransition` substrate: it forwards a possibly-async
-// navigation callback and pins `instantUnderReducedMotion: true` (a reduced-motion
-// user gets the route change instantly, unanimated — information parity absolute;
-// the route ALWAYS changes, only the motion is conditional). Router-agnostic: the
-// navigation callback is the consumer's (no `vue-router` import).
-
-/** Options for `navigate` — the directional transition `types` (Chrome 140+,
- *  feature-detected; tag `["forward"]`/`["back"]` off the navigation direction). */
-export type NavigateOptions = ViewTransitionOptions;
-
-/**
- * Run a (possibly ASYNC) navigation callback wrapped in a View Transition, with
- * the reduced-motion + unsupported instant-paths. The navigation ALWAYS runs
- * (awaited); the morph is conditional on support + motion preference. Returns the
- * same `{ finished, transitioned }` contract — `await navigate(go).finished` then
- * route focus (the a11y MANDATORY).
- *
- * @example  the card → masthead route morph
- *   // both the card title + masthead title carry
- *   //   view-transition-class: gl-shared-element; view-transition-name: dash-title
- *   await navigate(() => router.push(`/${slug}`), { types: ["forward"] }).finished;
- *   mastheadTitle.value?.focus();
- */
-export function navigate(
-    nav: () => void | Promise<void>,
-    options?: NavigateOptions,
-): ViewTransitionResult {
-    return startViewTransition(nav, {
-        ...options,
-        instantUnderReducedMotion: true,
-    });
-}
-
-/**
- * True when the route-transition morph can run (native VT available). A consumer
- * gates VT-only navigation styling on this (alias of `supportsViewTransitions`
- * named for the navigation call site). Under reduced motion the `navigate` helper
- * still takes the instant path even when this is `true`.
- */
-export function supportsRouteTransitions(): boolean {
-    return supportsViewTransitions();
 }

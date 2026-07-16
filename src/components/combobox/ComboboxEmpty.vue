@@ -1,21 +1,23 @@
 <script setup lang="ts">
-import type { ComboboxEmptyProps } from 'reka-ui'
-import type { HTMLAttributes } from 'vue'
-import { reactiveOmit } from '@vueuse/core'
-import { ComboboxEmpty } from 'reka-ui'
-import { cn } from '../_shared/class-names'
+import { computed, useAttrs } from "vue";
+import { ComboboxEmpty as RekaComboboxEmpty } from "reka-ui";
+import { cn } from "../_shared/class-names";
+import { fixedHostAttrs } from "../_shared/primitive";
+import type { ComboboxEmptyProps } from "./types";
 
-const props = defineProps<ComboboxEmptyProps & { class?: HTMLAttributes['class'] }>()
+defineOptions({ name: "ComboboxEmpty", inheritAttrs: false });
 
-const delegatedProps = reactiveOmit(props, 'class')
+const props = defineProps<ComboboxEmptyProps>();
+const attrs = useAttrs();
+const forwardedAttrs = computed(() => fixedHostAttrs(attrs));
 </script>
 
 <template>
-  <ComboboxEmpty
-    data-slot="combobox-empty"
-    v-bind="delegatedProps"
-    :class="cn('py-6 text-center text-dropdown', props.class)"
-  >
-    <slot />
-  </ComboboxEmpty>
+    <RekaComboboxEmpty
+        data-slot="combobox-empty"
+        v-bind="forwardedAttrs"
+        :class="cn('py-6 text-center text-dropdown', props.class)"
+    >
+        <slot />
+    </RekaComboboxEmpty>
 </template>

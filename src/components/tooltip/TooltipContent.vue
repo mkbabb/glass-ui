@@ -1,51 +1,70 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
-import { TooltipContent, type TooltipContentEmits, type TooltipContentProps, TooltipPortal, useForwardPropsEmits } from 'reka-ui'
-import { cn } from '../_shared/class-names'
-// BC.W-OVERLAY-UNIFORM — thread the SHARED {glass·veil·opaque} surface axis + the
-// φ --overlay-pad-* ladder (tight tooltip anchor) onto the tooltip chip + token-
-// back the bare `text-sm` onto `--tooltip-text` (the overlay golden uniformity +
-// the class-3 type-literal close). Default `glass` is byte-identical to HEAD.
-import { surfaceClass, type Surface } from '../_shared/useSurfaceAxis'
+import { computed, useAttrs, type HTMLAttributes } from "vue";
+import {
+    TooltipContent as RekaTooltipContent,
+    TooltipPortal as RekaTooltipPortal,
+} from "reka-ui";
+import type { Surface } from "../_shared/axes";
+import { cn } from "../_shared/class-names";
+import { floatingContentAttrs, type FloatingPlacementProps } from "../_shared/floating";
+import { resolveSurfaceClass } from "../_shared/resolveSurfaceClass";
 
-defineOptions({
-  inheritAttrs: false,
-})
+export interface TooltipContentProps extends FloatingPlacementProps {
+    class?: HTMLAttributes["class"];
+    surface?: Surface;
+    /** Override the text announced through the trigger's description relation. */
+    ariaLabel?: string;
+}
 
-const props = withDefaults(defineProps<TooltipContentProps & { class?: HTMLAttributes['class']; surface?: Surface }>(), {
-  sideOffset: 4,
-  surface: 'glass',
-})
+export interface TooltipContentEmits {
+    escapeKeyDown: [event: KeyboardEvent];
+    pointerDownOutside: [event: Event];
+}
 
-const emits = defineEmits<TooltipContentEmits>()
+defineOptions({ name: "TooltipContent", inheritAttrs: false });
 
-const delegatedProps = computed(() => {
-  const { class: _, surface: __, ...delegated } = props
+const props = withDefaults(defineProps<TooltipContentProps>(), {
+    side: "top",
+    sideOffset: 4,
+    align: "center",
+    alignOffset: 0,
+    surface: "glass",
+});
+const emit = defineEmits<TooltipContentEmits>();
+defineSlots<{ default?: () => unknown }>();
 
-  return delegated
-})
-
-const forwarded = useForwardPropsEmits(delegatedProps, emits)
+const attrs = useAttrs();
+const forwardedAttrs = computed(() => floatingContentAttrs(attrs));
+const placementProps = computed(() => ({
+    side: props.side,
+    sideOffset: props.sideOffset,
+    align: props.align,
+    alignOffset: props.alignOffset,
+    avoidCollisions: true,
+}));
+const contentClass = computed(() =>
+    cn(
+        "z-tooltip overflow-hidden rounded-tooltip border text-popover-foreground glass-reveal",
+        resolveSurfaceClass("floating"),
+        "[--overlay-pad-inline:--spacing(2)] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)] px-(--overlay-pad-inline) py-(--overlay-pad-block) text-(length:--tooltip-text)",
+        props.class,
+    ),
+);
 </script>
 
 <template>
-  <TooltipPortal>
-    <TooltipContent
-      v-bind="{ ...forwarded, ...$attrs }"
-      :data-surface="props.surface"
-      data-material="transient-overlay"
-      data-reveal="tooltip"
-      :class="cn(
-        'z-tooltip overflow-hidden rounded-tooltip border text-popover-foreground glass-reveal',
-        surfaceClass(props.surface, 'floating'),
-        // The tooltip is a compact chip — a TIGHT inline anchor (--spacing(2) =
-        // 0.5rem); the block axis lifts by sqrt-φ (`*1.272`). The bare `text-sm`
-        // routes onto the `--tooltip-text` golden caption rung (`:root`-retunable).
-        '[--overlay-pad-inline:--spacing(2)] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)] px-(--overlay-pad-inline) py-(--overlay-pad-block) text-(length:--tooltip-text)',
-        props.class,
-      )"
-    >
-      <slot />
-    </TooltipContent>
-  </TooltipPortal>
+    <RekaTooltipPortal>
+        <RekaTooltipContent
+            v-bind="{ ...placementProps, ...forwardedAttrs }"
+            :aria-label="ariaLabel"
+            :data-surface="surface"
+            data-material="overlay"
+            data-reveal="tooltip"
+            :class="contentClass"
+            @escape-key-down="emit('escapeKeyDown', $event)"
+            @pointer-down-outside="emit('pointerDownOutside', $event)"
+        >
+            <slot />
+        </RekaTooltipContent>
+    </RekaTooltipPortal>
 </template>

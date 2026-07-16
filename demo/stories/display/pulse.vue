@@ -1,97 +1,146 @@
 <script setup lang="ts">
+import { ref } from "vue";
+import { Button } from "@glass/components/button";
+import { Pulse, type PulseState } from "@glass/components/pulse";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
-import { Pulse } from "@glass/components/pulse";
+import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
+
+const states: PulseState[] = ["active", "idle", "success", "warning"];
+const announced = ref<PulseState>("active");
 </script>
 
 <template>
     <StoryPage>
-        <!-- Dots: vary speed and count. -->
-        <StorySection label="dots variant">
-            <div class="flex flex-wrap items-center gap-8">
-                <div class="flex flex-col items-center gap-2">
-                    <Pulse variant="dots" speed="slow" :count="3" class="text-foreground" />
-                    <span class="text-mono-caption text-muted-foreground">slow · 3</span>
+        <StorySection
+            heading="Truthful liveness"
+            blurb="One mark, four earned states. Only active work moves; every settled state is still."
+        >
+            <ShowcaseFrame class="pulse-states">
+                <div v-for="state in states" :key="state" class="pulse-state">
+                    <Pulse :state="state" />
+                    <span>{{ state }}</span>
                 </div>
-                <div class="flex flex-col items-center gap-2">
-                    <Pulse variant="dots" speed="normal" :count="3" class="text-foreground" />
-                    <span class="text-mono-caption text-muted-foreground">normal · 3</span>
-                </div>
-                <div class="flex flex-col items-center gap-2">
-                    <Pulse variant="dots" speed="fast" :count="3" class="text-foreground" />
-                    <span class="text-mono-caption text-muted-foreground">fast · 3</span>
-                </div>
-                <div class="flex flex-col items-center gap-2">
-                    <Pulse variant="dots" :count="5" class="text-foreground" />
-                    <span class="text-mono-caption text-muted-foreground">5 dots</span>
-                </div>
-            </div>
+            </ShowcaseFrame>
         </StorySection>
 
-        <!-- Ring: speed variants. -->
-        <StorySection label="ring variant">
-            <div class="flex flex-wrap items-center gap-8">
-                <div class="flex flex-col items-center gap-2">
-                    <Pulse variant="ring" speed="slow" class="text-foreground" />
-                    <span class="text-mono-caption text-muted-foreground">slow</span>
-                </div>
-                <div class="flex flex-col items-center gap-2">
-                    <Pulse variant="ring" speed="normal" class="text-foreground" />
-                    <span class="text-mono-caption text-muted-foreground">normal</span>
-                </div>
-                <div class="flex flex-col items-center gap-2">
-                    <Pulse variant="ring" speed="fast" class="text-foreground" />
-                    <span class="text-mono-caption text-muted-foreground">fast</span>
-                </div>
-            </div>
+        <StorySection
+            heading="Identity policy"
+            blurb="Adjacent text names the decorative mark. A solitary mark takes one explicit accessible label."
+        >
+            <ShowcaseFrame class="pulse-identities">
+                <p><Pulse state="active" /> Synchronizing catalogue</p>
+                <Pulse state="warning" label="Catalogue synchronization needs attention" />
+            </ShowcaseFrame>
         </StorySection>
 
-        <!-- currentColor demo — tint by setting text color. -->
-        <StorySection label="currentColor tint">
-            <div class="flex flex-wrap items-center gap-8">
-                <Pulse variant="dots" class="text-viz-fourier" />
-                <Pulse variant="dots" class="text-viz-chebyshev" />
-                <Pulse variant="dots" class="text-viz-legendre" />
-                <Pulse variant="ring" class="text-viz-fourier" />
-            </div>
+        <StorySection
+            heading="Announcements belong to the parent"
+            blurb="Changing paint never creates a second live region. The status line owns the single announcement."
+        >
+            <ShowcaseFrame class="pulse-announcer">
+                <div class="pulse-actions">
+                    <Button
+                        v-for="state in states"
+                        :key="state"
+                        size="sm"
+                        :emphasis="announced === state ? 'primary' : 'quiet'"
+                        @click="announced = state"
+                    >
+                        {{ state }}
+                    </Button>
+                </div>
+                <p role="status" aria-live="polite" aria-atomic="true">
+                    <Pulse :state="announced" />
+                    Catalogue is {{ announced }}
+                </p>
+            </ShowcaseFrame>
         </StorySection>
 
-        <!-- Inline in a status line. -->
-        <StorySection label="inline usage">
-            <div
-                class="flex items-center gap-3 rounded-card border border-border bg-card px-4 py-3"
-            >
-                <Pulse variant="dots" class="text-viz-chebyshev" />
-                <span class="text-small text-foreground">Computing projection…</span>
-            </div>
-        </StorySection>
-
-        <!-- Aura variant — a surface-scope ambient halo. The host MUST be
-             `position: relative` + own a size (the documented Pulse-aura contract):
-             the aura is `position: absolute; inset: 0`, so it fills + is bounded BY
-             this relative host. A bare non-positioned flow parent would let the aura's
-             containing block escape to a distant ancestor (the Atlas A-8 spill). -->
-        <StorySection label="aura variant (ambient halo)">
-            <div class="flex flex-wrap items-center gap-8">
-                <div class="flex flex-col items-center gap-2">
-                    <div class="relative grid h-16 w-16 place-items-center rounded-2xl border border-border/40">
-                        <Pulse variant="aura" speed="slow" class="text-viz-fourier" />
-                    </div>
-                    <span class="text-mono-caption text-muted-foreground">slow · fourier</span>
-                </div>
-                <div class="flex flex-col items-center gap-2">
-                    <div class="relative grid h-16 w-16 place-items-center rounded-2xl border border-border/40">
-                        <Pulse variant="aura" speed="normal" class="text-viz-chebyshev" />
-                    </div>
-                    <span class="text-mono-caption text-muted-foreground">normal · chebyshev</span>
-                </div>
-                <div class="flex flex-col items-center gap-2">
-                    <div class="relative grid h-16 w-16 place-items-center rounded-2xl border border-border/40">
-                        <Pulse variant="aura" speed="fast" class="text-viz-legendre" />
-                    </div>
-                    <span class="text-mono-caption text-muted-foreground">fast · legendre</span>
-                </div>
+        <StorySection
+            heading="Light, dark, narrow, reduced motion"
+            blurb="The state silhouettes survive either scheme and wrap at narrow widths. With reduced motion, active keeps a quiet static orbit."
+        >
+            <div class="pulse-modes">
+                <ShowcaseFrame class="pulse-mode">
+                    <Pulse state="active" />
+                    <Pulse state="success" />
+                    <Pulse state="warning" />
+                    <span>Light</span>
+                </ShowcaseFrame>
+                <ShowcaseFrame class="pulse-mode pulse-mode--dark" data-probe="prm">
+                    <Pulse state="active" />
+                    <Pulse state="success" />
+                    <Pulse state="warning" />
+                    <span>Dark · PRM probe</span>
+                </ShowcaseFrame>
             </div>
         </StorySection>
     </StoryPage>
 </template>
+
+<style scoped>
+.pulse-states,
+.pulse-identities,
+.pulse-announcer,
+.pulse-mode {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.pulse-states,
+.pulse-actions,
+.pulse-modes {
+    flex-wrap: wrap;
+}
+
+.pulse-state,
+.pulse-identities p,
+.pulse-announcer p {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    margin: 0;
+}
+
+.pulse-state span,
+.pulse-mode span {
+    color: var(--muted-foreground);
+    font-family: var(--font-mono);
+    font-size: var(--type-caption);
+}
+
+.pulse-identities {
+    justify-content: space-between;
+}
+
+.pulse-actions,
+.pulse-modes {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.pulse-announcer {
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.pulse-mode {
+    min-inline-size: min(100%, 14rem);
+    flex: 1;
+}
+
+.pulse-mode--dark {
+    color-scheme: dark;
+    background: var(--card);
+    color: var(--foreground);
+}
+
+@media (max-width: 36rem) {
+    .pulse-identities {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+</style>

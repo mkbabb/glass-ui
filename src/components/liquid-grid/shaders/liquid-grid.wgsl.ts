@@ -19,7 +19,7 @@
 // JS↔WGSL↔GLSL paths at a fixed sample set. The curl operator is the SHARED `flow.wgsl.ts` chunk
 // (ONE curl source per backend).
 
-import { OETF_WGSL } from "../../aurora/constants/shaders/procedural-color.wgsl";
+import { OETF_WGSL } from "../../../composables/glass/procedural/color.wgsl";
 import { CURL_FBM_WGSL } from "../../../composables/glass/webgl/shaders/flow.wgsl";
 import { WAVE_FIELD_WGSL } from "../../../composables/glass/wave/waveField.wgsl";
 

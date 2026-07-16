@@ -1,74 +1,64 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed, onBeforeUnmount, onMounted, useAttrs, useTemplateRef } from 'vue'
-import type { SliderRootEmits, SliderRootProps } from 'reka-ui'
-import { SliderRange, SliderRoot, SliderThumb, SliderTrack, useForwardPropsEmits } from 'reka-ui'
-import { cn } from '../_shared/class-names'
-import { useTouchGate } from '../../composables/dom/useTouchGate'
-import { useDragVelocity } from '../../composables/dom/useDragVelocity'
-import { useOptionalDockContext } from '../dock/composables/dockContext'
-import { useDockHold } from '../dock/composables/useDockHold'
-import { resolveValueMarks } from '../_shared/valueDomain'
-import { sliderVariants, type SliderVariants } from './index'
-// BH.W-MOTION-AXIS — the `liquidDrag` boolean dies onto the ONE `motion` axis.
-import type { Motion } from '../_shared/axes'
-import { useMotionAxis } from '../_shared/useMotionAxis'
+import { computed, onBeforeUnmount, onMounted, useAttrs, useTemplateRef } from "vue";
+import {
+    SliderRange,
+    SliderRoot,
+    SliderThumb,
+    SliderTrack,
+    useForwardPropsEmits,
+} from "reka-ui";
+import { useTouchGate } from "../../composables/dom/useTouchGate";
+import { useDragVelocity } from "../../composables/dom/useDragVelocity";
+import { useOptionalDockContext } from "../dock/composables/dockContext";
+import { useDockHold } from "../dock/composables/useDockHold";
+import { resolveValueMarks } from "../_shared/valueDomain";
+import { useMotionAxis } from "../_shared/useMotionAxis";
+import type { SliderProps, SliderSize, SliderVariant } from "./types";
 
-const props = withDefaults(defineProps<SliderRootProps & {
-  class?: HTMLAttributes['class']
-  /** Substrate recipe — see `sliderVariants` for axis docs. */
-  variant?: SliderVariants['variant']
-  /** Track + thumb geometry — sm | md (default) | lg. */
-  size?: SliderVariants['size']
-  /** Quiet, paint-only checkpoints in the slider's numeric domain. */
-  marks?: readonly number[]
-  /**
-   * Acquire a `dockKeepOpen` token while the user drags the slider, so
-   * an enclosing dock doesn't auto-collapse mid-gesture. The slider also
-   * subscribes to the dock's `dockHeld` flag and reflects it via
-   * `data-held` on its root, intensifying the thumb halo. Default: true.
-   */
-  keepDockOpen?: boolean
-  /**
-   * BH.W-MOTION-AXIS — the ONE motion-weight axis (the `liquidDrag` boolean's
-   * clean-break successor). `full` (default) arms the BD.W-GLASS-ATOM-REGISTER liquid
-   * weight-train on the fill: anticipation dip on grab → BOUNDED saturating smear while
-   * pulling (the cel cast lagging by `--motion-weight × velocity`) → follow-through
-   * overshoot on release (the `useDragVelocity` bridge writes `--atom-drag-v`). `reduced`
-   * degrades to the plain non-uniform squish floor (the SAME state PRM produces). `off`
-   * unbinds the velocity bridge AND writes `--motion-weight: 0`; the drag still sets the
-   * value. PRM forces `full → reduced` regardless (a11y absolute).
-   */
-  motion?: Motion
-}>(), {
-  // Vue casts an ABSENT boolean prop to `false`, not `undefined` — so the prior
-  // `props.keepDockOpen ?? true` never reached `true` for the common
-  // no-prop call site (the documented `Default: true` silently disarmed the
-  // hold). `withDefaults` resolves an absent prop to `true`; an explicit
-  // `:keep-dock-open="false"` still disarms. (AX.W03.)
-  keepDockOpen: true,
-})
-const emits = defineEmits<SliderRootEmits>()
+const props = withDefaults(defineProps<SliderProps>(), {
+    variant: "standard",
+    size: "md",
+    invalid: false,
+    // Vue casts an ABSENT boolean prop to `false`, not `undefined` — so the prior
+    // `props.keepDockOpen ?? true` never reached `true` for the common
+    // no-prop call site (the documented `Default: true` silently disarmed the
+    // hold). `withDefaults` resolves an absent prop to `true`; an explicit
+    // `:keep-dock-open="false"` still disarms. (AX.W03.)
+    keepDockOpen: true,
+});
+const emits = defineEmits<{
+    "update:modelValue": [value: number[] | undefined];
+    valueCommit: [value: number[]];
+}>();
 
-const v = computed<NonNullable<SliderVariants['variant']>>(() => props.variant ?? 'standard')
-const s = computed<NonNullable<SliderVariants['size']>>(() => props.size ?? 'md')
-const keepDockOpen = computed(() => props.keepDockOpen)
-const marks = computed(() => resolveValueMarks(props.marks, props.min ?? 0, props.max ?? 100))
+const v = computed<SliderVariant>(() => props.variant);
+const s = computed<SliderSize>(() => props.size);
+const keepDockOpen = computed(() => props.keepDockOpen);
+const marks = computed(() =>
+    resolveValueMarks(props.marks, props.min ?? 0, props.max ?? 100),
+);
 
 const delegatedProps = computed(() => {
-  const { class: _, variant: __, size: ___, marks: ____, keepDockOpen: _____, motion: ______, ...delegated } = props
-  // BOTH recipes inscribe the thumb within the capsule so it never overshoots the
-  // rounded ends — reka-ui's `contain` alignment enforces the containment law. The
-  // standard slider paints NO VISIBLE THUMB at all (the filled glass track's leading
-  // edge IS the handle); the invisible thumb element rides `contain` so its
-  // value-follow centre clamps to the fill edge and never overhangs the capsule. The
-  // spectrum squircle spans the tall gradient track; neither floats past the capsule.
-  if (!delegated.thumbAlignment) {
-    delegated.thumbAlignment = 'contain'
-  }
-  return delegated
-})
+    const {
+        class: _,
+        variant: __,
+        size: ___,
+        marks: ____,
+        invalid: _____,
+        keepDockOpen: ______,
+        motion: _______,
+        ...delegated
+    } = props;
+    // BOTH recipes inscribe the thumb within the capsule so it never overshoots the
+    // rounded ends — reka-ui's `contain` alignment enforces the containment law. The
+    // standard slider paints NO VISIBLE THUMB at all (the filled glass track's leading
+    // edge IS the handle); the invisible thumb element rides `contain` so its
+    // value-follow centre clamps to the fill edge and never overhangs the capsule. The
+    // spectrum squircle spans the tall gradient track; neither floats past the capsule.
+    return { ...delegated, thumbAlignment: "contain" as const };
+});
 
-const forwarded = useForwardPropsEmits(delegatedProps, emits)
+const forwarded = useForwardPropsEmits(delegatedProps, emits);
 
 /* AX.W03 — the host-native dock hold (one owner, one acquire path).
    The Slider subscribes to the dock's reactive `held` flag (surfaced on
@@ -89,20 +79,22 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
    window-`pointerup` re-implementation, AND the parallel
    `watch(touchGate.isActive)` acquire path are all GONE — collapsed onto
    the one `useDockHold` owner. */
-const dock = useOptionalDockContext()
-const sliderRootRef = useTemplateRef<{ $el: HTMLElement } | HTMLElement | null>('sliderRootRef')
+const dock = useOptionalDockContext();
+const sliderRootRef = useTemplateRef<{ $el: HTMLElement } | HTMLElement | null>(
+    "sliderRootRef",
+);
 
 function getRootEl(): HTMLElement | null {
-  const ref = sliderRootRef.value
-  if (!ref) return null
-  if (ref instanceof HTMLElement) return ref
-  return (ref.$el as HTMLElement | undefined) ?? null
+    const ref = sliderRootRef.value;
+    if (!ref) return null;
+    if (ref instanceof HTMLElement) return ref;
+    return (ref.$el as HTMLElement | undefined) ?? null;
 }
 
 // The native hold resolves the reka forwardRef host at its own `onMounted`
 // (template refs are live by then). A resolver getter — not a ref Slider
 // populates in a sibling `onMounted` — sidesteps the onMounted-ordering trap.
-useDockHold(getRootEl, { enabled: () => keepDockOpen.value })
+useDockHold(getRootEl, { enabled: () => keepDockOpen.value });
 
 /* BD.W-GLASS-ATOM-REGISTER — the weight-train velocity bridge. Writes the BOUNDED
    `--atom-drag-v` (0..1, saturating `tanh`) on the resolved host during the drag
@@ -113,11 +105,11 @@ useDockHold(getRootEl, { enabled: () => keepDockOpen.value })
    hold). The same resolver getter sidesteps the onMounted-ordering trap.
    BH.W-MOTION-AXIS — `motion.armed` is the PROP door (full → armed), the bridge's own
    PRM pin is the OS door; both close to the plain-squish floor. */
-const motionAxis = useMotionAxis(() => props.motion)
+const motionAxis = useMotionAxis(() => props.motion);
 useDragVelocity({
-  host: () => (motionAxis.armed.value ? getRootEl() : null),
-  axis: () => props.orientation === 'vertical' ? 'y' : 'x',
-})
+    host: () => (motionAxis.armed.value ? getRootEl() : null),
+    axis: () => (props.orientation === "vertical" ? "y" : "x"),
+});
 
 /* N.W0 Lane A1 — useTouchGate scroll-vs-drag arbitration (a SEPARATE
    concern from the hold: it decides whether a touch is a drag or a
@@ -130,52 +122,52 @@ useDragVelocity({
    dropped across the same reka forwarding boundary as `@pointerdown`,
    so a template binding never fired. It FEEDS the one hold (the native
    `touchstart` in `useDockHold` acquires); it no longer races it. */
-const touchGate = useTouchGate()
+const touchGate = useTouchGate();
 
 function onTouchStart(event: TouchEvent): void {
-  const root = getRootEl()
-  const touch = event.touches[0]
-  if (!root || !touch) return
+    const root = getRootEl();
+    const touch = event.touches[0];
+    if (!root || !touch) return;
 
-  if (!touchGate.handleTouchStart(root, touch.clientY)) {
-    // Gate is pending activation — swallow this initial tap so the
-    // SliderRoot doesn't treat it as a drag while the gate decides
-    // (matches the canonical GlassDock pattern).
-    event.preventDefault()
-    event.stopPropagation()
-  }
+    if (!touchGate.handleTouchStart(root, touch.clientY)) {
+        // Gate is pending activation — swallow this initial tap so the
+        // SliderRoot doesn't treat it as a drag while the gate decides
+        // (matches the canonical GlassDock pattern).
+        event.preventDefault();
+        event.stopPropagation();
+    }
 }
 
 function onTouchMove(event: TouchEvent): void {
-  touchGate.handleScrollCheck(event)
+    touchGate.handleScrollCheck(event);
 }
 
 function onTouchEnd(): void {
-  touchGate.handleTouchEnd()
+    touchGate.handleTouchEnd();
 }
 
 onMounted(() => {
-  const root = getRootEl()
-  if (!root) return
-  // Native touch-arbitration listeners on the resolved host — same reason
-  // as the hold: the template chain is dropped across reka's forwarding.
-  // `touchstart` is NON-passive (the arbitration calls preventDefault on a
-  // pending tap); move/end are passive reads.
-  root.addEventListener('touchstart', onTouchStart, { passive: false })
-  root.addEventListener('touchmove', onTouchMove, { passive: true })
-  root.addEventListener('touchend', onTouchEnd, { passive: true })
-})
+    const root = getRootEl();
+    if (!root) return;
+    // Native touch-arbitration listeners on the resolved host — same reason
+    // as the hold: the template chain is dropped across reka's forwarding.
+    // `touchstart` is NON-passive (the arbitration calls preventDefault on a
+    // pending tap); move/end are passive reads.
+    root.addEventListener("touchstart", onTouchStart, { passive: false });
+    root.addEventListener("touchmove", onTouchMove, { passive: true });
+    root.addEventListener("touchend", onTouchEnd, { passive: true });
+});
 
 onBeforeUnmount(() => {
-  const root = getRootEl()
-  if (!root) return
-  root.removeEventListener('touchstart', onTouchStart)
-  root.removeEventListener('touchmove', onTouchMove)
-  root.removeEventListener('touchend', onTouchEnd)
-})
+    const root = getRootEl();
+    if (!root) return;
+    root.removeEventListener("touchstart", onTouchStart);
+    root.removeEventListener("touchmove", onTouchMove);
+    root.removeEventListener("touchend", onTouchEnd);
+});
 
-const isHeld = computed(() => dock?.held.value === true)
-const isTouchActive = computed(() => touchGate.isActive.value)
+const isHeld = computed(() => dock?.held.value === true);
+const isTouchActive = computed(() => touchGate.isActive.value);
 
 /* BI.W-SLIDER-THUMB-NAME — the never-nameless floor's DX signal. reka's
    SliderThumbImpl names the thumb `$attrs['aria-label'] || getLabel(index, count)`,
@@ -184,58 +176,87 @@ const isTouchActive = computed(() => touchGate.isActive.value)
    <Slider> with no `aria-label`/`aria-labelledby` yields a role="slider" thumb that
    is nameless to a screen reader (the axe `aria-input-field-name` class). Warn in
    DEV only — no runtime name is invented (that would be a lie); the fix is to wrap in
-   <LabeledSlider> or pass an explicit `aria-label`. No-op in production. */
-const attrs = useAttrs()
+   <LabeledField> or pass an explicit `aria-label`. No-op in production. */
+const attrs = useAttrs();
 onMounted(() => {
-    if (!import.meta.env.DEV) return
-    const named = attrs['aria-label'] != null || attrs['aria-labelledby'] != null
-    const mv = props.modelValue
-    const singleThumb = !Array.isArray(mv) || mv.length <= 1
+    if (!import.meta.env.DEV) return;
+    const named = attrs["aria-label"] != null || attrs["aria-labelledby"] != null;
+    const values = props.modelValue ?? props.defaultValue ?? [0];
+    const singleThumb = values.length <= 1;
     if (!named && singleThumb) {
         console.warn(
-            '[Slider] no accessible name: a single-thumb <Slider> has no `aria-label` ' +
+            "[Slider] no accessible name: a single-thumb <Slider> has no `aria-label` " +
                 'or `aria-labelledby`, so its role="slider" thumb is nameless to a screen ' +
-                'reader (reka mints no fallback name for one thumb). Wrap it in ' +
-                '<LabeledSlider>, or pass an explicit `aria-label`.',
-        )
+                "reader (reka mints no fallback name for one thumb). Wrap it in " +
+                "<LabeledField>, or pass an explicit `aria-label`.",
+        );
     }
-})
+});
 </script>
 
 <template>
-  <SliderRoot data-slot="slider"
-    ref="sliderRootRef"
-    :class="cn(sliderVariants({ variant: v, size: s }), props.class)"
-    :data-variant="v"
-    :data-size="s"
-    :data-held="isHeld || undefined"
-    :data-touch-active="isTouchActive || undefined"
-    :data-inverted="props.inverted || undefined"
-    :data-motion="motionAxis.dataMotion.value"
-    :style="motionAxis.hostStyle.value"
-    v-bind="forwarded"
-  >
-    <SliderTrack class="slider-track">
-      <span v-if="marks.length" class="slider-marks" aria-hidden="true">
-        <span
-          v-for="mark in marks"
-          :key="mark.value"
-          class="slider-mark"
-          :style="{ '--value-mark-position': `${mark.position * 100}%` }"
+    <SliderRoot
+        v-slot="{ modelValue: values }"
+        data-slot="slider"
+        ref="sliderRootRef"
+        class="glass-slider"
+        data-control-target
+        :class="props.class"
+        :data-variant="v"
+        :data-size="s"
+        :data-invalid="props.invalid || undefined"
+        :data-held="isHeld || undefined"
+        :data-touch-active="isTouchActive || undefined"
+        :data-inverted="props.inverted || undefined"
+        :data-motion="motionAxis.dataMotion.value"
+        :style="motionAxis.hostStyle.value"
+        v-bind="forwarded"
+    >
+        <SliderTrack class="slider-track">
+            <span v-if="marks.length" class="slider-marks" aria-hidden="true">
+                <span
+                    v-for="mark in marks"
+                    :key="mark.value"
+                    class="slider-mark"
+                    :style="{ '--value-mark-position': `${mark.position * 100}%` }"
+                />
+            </span>
+            <SliderRange class="slider-range glass-liquid-fill" />
+        </SliderTrack>
+        <SliderThumb
+            v-for="(_, key) in values"
+            :key="key"
+            :aria-label="($attrs['aria-label'] as string) ?? undefined"
+            :aria-labelledby="($attrs['aria-labelledby'] as string) ?? undefined"
+            :aria-describedby="($attrs['aria-describedby'] as string) ?? undefined"
+            :aria-errormessage="($attrs['aria-errormessage'] as string) ?? undefined"
+            :aria-invalid="props.invalid || undefined"
+            class="slider-thumb glass-specular-track"
         />
-      </span>
-      <SliderRange class="slider-range glass-liquid-fill" />
-    </SliderTrack>
-    <SliderThumb
-      v-for="(_, key) in modelValue"
-      :key="key"
-      :aria-label="$attrs['aria-label'] as string ?? undefined"
-      class="slider-thumb glass-specular-track touch-hit-area"
-    />
-  </SliderRoot>
+    </SliderRoot>
 </template>
 
 <style scoped>
+.glass-slider {
+    --slider-range-origin: left center;
+    position: relative;
+    display: flex;
+    inline-size: 100%;
+    align-items: center;
+    touch-action: none;
+    user-select: none;
+    transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.glass-slider[data-inverted],
+.glass-slider:dir(rtl) {
+    --slider-range-origin: right center;
+}
+
+.glass-slider:dir(rtl)[data-inverted] {
+    --slider-range-origin: left center;
+}
+
 /* ── The SIZE GEOMETRY axis — [data-size]-scoped, SHIPPED CSS (BA.W-EMISSION) ──
    BA-VJS-A3: the size geometry was a DEAD arbitrary-property CVA
    (`[--slider-track-height:1.25rem]` &c. in slider/index.ts) that compiled only
@@ -289,7 +310,8 @@ onMounted(() => {
 }
 
 .glass-slider[data-inverted] .slider-mark {
-    inset-inline: auto var(--value-mark-position);
+    inset-inline-start: auto;
+    inset-inline-end: var(--value-mark-position);
 }
 
 .slider-mark::before {
@@ -362,9 +384,8 @@ onMounted(() => {
     /* The press-give still rides the transform channel (the `:active` scale below
        gives the WHOLE track a felt squish via the focus ring + range, not a visible
        knob). Per §6 the transform leg rides `--spring-smooth`. */
-    transition:
-        transform var(--duration-fast)
-            var(--slider-thumb-spring, var(--spring-smooth));
+    transition: transform var(--duration-fast)
+        var(--slider-thumb-spring, var(--spring-smooth));
 }
 
 /* AY.W-SCALE2 — the coarse `touch-hit-area` ::before halo (44×44 tap-target)
@@ -376,10 +397,6 @@ onMounted(() => {
    (getComputedStyle reads min-width/height, not pointer-events), while the
    pointer falls through to the thumb so the drag still tracks. No new token —
    the overlay still reads `var(--touch-target)` via the utility. */
-.slider-thumb.touch-hit-area::before {
-    pointer-events: none;
-}
-
 /* Hover brightens the TRACK FILL (there is no knob to halo) — the continuous
    glass cylinder lifts its edge rim so the grab affordance reads on the track.
    Standard-only: the spectrum recipe halos its own VISIBLE thumb (below). */
@@ -409,11 +426,11 @@ onMounted(() => {
    squish floor; the warm tint + rim persist.
 
    ANTICIPATION + PRESS-SQUASH (grab): the fill compresses Y + widens X — a
-   NON-uniform squash, NOT the live uniform `scale(0.97)` shrink. `transform-origin:
-   left center` keeps the squash anchored at the rail's start. */
+   NON-uniform squash, NOT the live uniform `scale(0.97)` shrink. The range stays
+   anchored at its logical value origin across direction and inversion. */
 .glass-slider:active .slider-range {
     transform: scale(1.02, 0.94);
-    transform-origin: left center;
+    transform-origin: var(--slider-range-origin);
     transition: transform var(--duration-fast)
         var(--slider-thumb-spring, var(--spring-smooth));
 }
@@ -431,7 +448,7 @@ onMounted(() => {
         calc(1.02 + 0.16 * var(--smear)),
         calc(0.94 - 0.06 * var(--smear))
     );
-    transform-origin: left center;
+    transform-origin: var(--slider-range-origin);
 }
 
 /* FOLLOW-THROUGH (release): the `--ease-cartoon-punch` curve on the transform
@@ -457,6 +474,16 @@ onMounted(() => {
 
 .glass-slider[data-disabled] .slider-range {
     opacity: var(--opacity-disabled);
+}
+
+.glass-slider[data-invalid] .slider-track {
+    box-shadow: inset 0 0 0 1px var(--destructive);
+}
+
+.glass-slider[data-invalid]:focus-within .slider-track {
+    box-shadow:
+        var(--focus-ring-shadow),
+        inset 0 0 0 1px var(--destructive);
 }
 
 /* J.W5.C — held-state: when a dock-keep-open token is held by THIS slider's drag
@@ -555,9 +582,7 @@ onMounted(() => {
    double-paint). Never a bare `outline: none` without the ring beside it. */
 .glass-slider[data-variant="spectrum"] .slider-thumb:focus-visible {
     outline: none;
-    box-shadow:
-        var(--focus-ring-shadow),
-        var(--shadow-sm);
+    box-shadow: var(--focus-ring-shadow), var(--shadow-sm);
 }
 
 .glass-slider[data-orientation="vertical"] {
@@ -592,13 +617,15 @@ onMounted(() => {
 
 .glass-slider[data-orientation="vertical"] .slider-mark {
     inset-inline: 0;
-    inset-block: auto var(--value-mark-position);
+    inset-block-start: auto;
+    inset-block-end: var(--value-mark-position);
     width: 100%;
     height: 0;
 }
 
 .glass-slider[data-orientation="vertical"][data-inverted] .slider-mark {
-    inset-block: var(--value-mark-position) auto;
+    inset-block-start: var(--value-mark-position);
+    inset-block-end: auto;
 }
 
 .glass-slider[data-orientation="vertical"][data-variant="spectrum"] {

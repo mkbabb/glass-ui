@@ -18,6 +18,7 @@ import {
     FISSION_REACH_MAX,
 } from "../constants";
 import type { UniformName } from "../constants";
+import { resolveBlobSurface } from "./resolveBlobSurface";
 
 // The compile-time shape budget (MAX_SATS / TRAIL_N / MAX_BLOB_STOPS / POS_SCALE /
 // UNIFORM_NAMES + the UniformName type) lives in `../constants` — the single source
@@ -311,18 +312,9 @@ export function uploadBlobUniforms(
     gl.uniform1f(U.uSmoothK, nominalBand * orbitWiden * POS_SCALE);
     gl.uniform1f(U.uMerge, cMem.merge === "circular" ? 1.0 : 0.0);
 
-    // BD.W-GOO-CAROUSEL-DECK — the blob↔meatball SHADING MORPH. `morphT` resolves from
-    // `config.morphT` (an explicit consumer-animated 0..1 scalar) or, when absent, from
-    // `variant` for back-compat (blob → 0 = flat, meatball → 1 = lit). `uStage` is now
-    // DERIVED: at morphT <= 0 it is 1.0 (the byte-identical STAGE-1 flat floor — the pure
-    // blob pays zero dressing cost via the early-return); for any morphT > 0 it is 0.0 so
-    // the shader runs the dressing pipeline and LERPS flat→dressed on `uMorphT`.
-    const morphT =
-        typeof config.morphT === "number"
-            ? Math.max(0, Math.min(1, config.morphT))
-            : config.variant === "blob"
-              ? 0
-              : 1;
+    // The single clamped surface axis. `uStage` is derived: the flat endpoint skips
+    // dressing work; every value above it runs and interpolates the dressed surface.
+    const { morphT, dressed: isDressed } = resolveBlobSurface(config);
     gl.uniform1f(U.uMorphT, morphT);
     gl.uniform1f(U.uStage, morphT <= 0 ? 1.0 : 0.0);
 
@@ -381,12 +373,11 @@ export function uploadBlobUniforms(
     // the SAME `resolveColor` memo (the `/color` leaf) as `uBaseColor`,
     // never the DOM. Gated behind `uLit` (default lit).
     // BD.W-GOO-CAROUSEL-DECK — the dressing uniforms flip ON for ANY morph in progress
-    // (morphT > 0), not just the discrete meatball variant — so an intermediate morph
+    // (morphT > 0), so an intermediate morph
     // frame HAS the dressed surface to LERP toward (the shader's `mix(flatRgb, rgb,
     // morphT)`). At morphT == 0 (pure blob) the shader early-returns before reaching the
     // lit/shadow blocks (zero cost), so leaving uLit/uShadow on for morphT == 0 is moot,
     // but we gate them off there anyway for clarity + a true byte-identical blob upload.
-    const isDressed = morphT > 0;
     gl.uniform1f(U.uLit, isDressed && cSurf.lit ? 1.0 : 0.0);
     const rim = resolveColor(rimColor);
     gl.uniform3f(U.uRimColor, rim[0], rim[1], rim[2]);

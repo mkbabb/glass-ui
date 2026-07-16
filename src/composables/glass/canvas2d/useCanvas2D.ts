@@ -16,16 +16,9 @@
 //     unavailable) + the consumer's `setup(ctx)` → `Canvas2DFrame`. A Canvas2D
 //     context cannot be lost the WebGL way, so NO `bindContextEvents` is passed
 //     (the core's self-heal-on-restore machinery is WebGL-only and stays unused).
-//   - dpr-clamped RESIZE — a `ResizeObserver` sets `canvas.width/height` to the
-//     dpr-clamped backing size (`dpr = Math.min(devicePixelRatio||1, 2)`) and
-//     applies `ctx.setTransform(dpr,0,0,dpr,0,0)` so the consumer draws in CSS px;
-//     a parked surface repaints one static frame after a resize.
-//   - IntersectionObserver OFFSCREEN FALLBACK — for engines without
-//     `contentvisibilityautostatechange` + the scrolled-offscreen case. It writes
-//     its OWN `"off-screen-io"` reason (AX.W16 F6 — distinct from the content-
-//     visibility path's `"off-screen"`, so an IO `resume` can never lift a
-//     legitimately-held CV suspend; the WebGL leaf already split the key, the 2D
-//     fork carried the latent collision, the de-fork inherits the fix).
+//   - CSS-PIXEL DRAWING — the shared lifecycle sizes the backing store and hands
+//     this adapter a `BackingSize`; the adapter applies the DPR transform and
+//     repaints a genuinely resized parked surface once.
 //   - the time-base BRIDGE — the core's `frame(timeSec)` + `time(elapsedSec)`
 //     hooks feed the consumer's `Canvas2DFrame.render(ctx, now)` raw
 //     `performance.now()` ms (the `time` hook returns `performance.now()`, so the
@@ -47,8 +40,10 @@ import {
 } from "vue";
 import {
     createCanvasLifecycle,
+    type BackingSize,
     type CanvasFrameHooks,
     type CanvasLifecycleHandle,
+    type DprPolicy,
 } from "../webgl/createCanvasLifecycle";
 
 /**
@@ -91,6 +86,11 @@ export interface Canvas2DOptions {
     respectReducedMotion?: boolean;
     /** `getContext("2d", …)` attributes. */
     contextAttrs?: CanvasRenderingContext2DSettings;
+    /**
+     * Backing-store DPR policy. Defaults to the existing Canvas2D ceiling:
+     * `min(devicePixelRatio, 2)`.
+     */
+    dprPolicy?: DprPolicy;
     /** IntersectionObserver `rootMargin` for the offscreen seam. Default `200px`. */
     rootMargin?: string;
 }
@@ -132,107 +132,46 @@ export function useCanvas2D(options: Canvas2DOptions): Canvas2DHandle {
     const resolveCanvas = (): HTMLCanvasElement | null => toValue(options.canvas);
 
     const hasWindow = typeof window !== "undefined";
+    const dprPolicy: DprPolicy =
+        options.dprPolicy ??
+        (() => Math.min((hasWindow && window.devicePixelRatio) || 1, 2));
 
     let ctx: CanvasRenderingContext2D | null = null;
     let hooks: Canvas2DFrame | null = null;
     let lifecycle: CanvasLifecycleHandle | null = null;
     let disposed = false;
 
-    // ── backend observers (the 2D-specific seams the core threads through
-    // buildContext; the core owns the schedule, the suspend Set, the visibility
-    // owner, the content-visibility park, and the reduced-motion re-monitor). ──
-    let ro: ResizeObserver | null = null;
-    let io: IntersectionObserver | null = null;
-    // `true` only during the core's initial arm resize, so resizeTo defers the
-    // first paint to the core's own static-or-loop decision (no double-paint at
-    // startup). The continuous RO resizes (arming false) repaint a parked surface.
-    let arming = false;
-
     /** Paint ONE static frame out of loop (post-resize-while-parked). */
     function paintStatic(): void {
         if (ctx && hooks) hooks.render(ctx, hasWindow ? performance.now() : 0);
     }
 
-    function resizeTo(canvas: HTMLCanvasElement): void {
+    function resizeTo(size: BackingSize): void {
         if (!ctx) return;
-        const w = canvas.clientWidth || canvas.offsetWidth || 0;
-        const h = canvas.clientHeight || canvas.offsetHeight || 0;
-        if (!w || !h) return;
-        const dpr = Math.min((hasWindow && window.devicePixelRatio) || 1, 2);
-        const nextW = Math.round(w * dpr);
-        const nextH = Math.round(h * dpr);
-        // Idempotent (twins the leaf `sizeBacking` `changed` guard): a same-box tick
-        // — the leaf's presize double-rAF layout-settle defense fires `resize()`
-        // twice on a stable box, and a same-size RO/wake tick costs nothing — must
-        // NOT re-alloc (which clears the buffer) NOR repaint. Without this guard the
-        // presize defense painted two extra static frames under reduced-motion (the
-        // "exactly ONE static frame" contract breach) and cleared the live buffer on
-        // a no-op tick. The backing only changes (and only then repaints) on a genuine
-        // box change.
-        const changed = canvas.width !== nextW || canvas.height !== nextH;
-        if (changed) {
-            canvas.width = nextW;
-            canvas.height = nextH;
-        }
-        // The transform must be (re)applied whenever we (re)allocated the buffer
-        // (a width/height write resets the 2D transform to identity).
-        if (changed) ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        // Presize can allocate the backing before the 2D context exists, so apply the
+        // transform on every upload. This is cheap and guarantees a newly acquired
+        // context draws in CSS pixels even when the backing size is already current.
+        ctx.setTransform(size.dpr, 0, 0, size.dpr, 0, 0);
         // A parked surface (offscreen / reduced) repaints one static frame so a
-        // resize does not leave a stale or blank canvas — but NOT during the
-        // initial arm (the core's own first-paint owns that), NOT while the live
-        // loop is running (the next tick paints the new size), and NOT on an
-        // idempotent same-box tick (nothing to repaint). "Parked" = the loop is not
-        // actively scheduling, which the core's getters expose: suspend-set non-empty
-        // OR reduced-motion (where running is true but the loop draws a single static
-        // frame, not a perpetual one).
-        const parked = !lifecycle || !lifecycle.running || lifecycle.reducedMotion;
-        if (changed && !arming && parked) paintStatic();
-    }
-
-    function bindResize(canvas: HTMLCanvasElement): void {
-        if (ro || typeof ResizeObserver === "undefined") return;
-        ro = new ResizeObserver(() => {
-            const c = resolveCanvas();
-            if (c) resizeTo(c);
-        });
-        ro.observe(canvas);
-    }
-
-    // ── IntersectionObserver offscreen seam (the fallback for engines without
-    // contentvisibilityautostatechange + the scrolled-offscreen case). It writes
-    // its OWN "off-screen-io" reason (AX.W16 F6) so an IO resume can never lift a
-    // legitimately-held content-visibility "off-screen" suspend. The content-
-    // visibility path itself lives in the core (createCanvasLifecycle).
-    function bindIntersection(canvas: HTMLCanvasElement): void {
-        if (io || typeof IntersectionObserver === "undefined") return;
-        io = new IntersectionObserver(
-            (entries) => {
-                for (const entry of entries) {
-                    if (entry.isIntersecting || entry.intersectionRatio > 0) {
-                        lifecycle?.resume("off-screen-io");
-                    } else {
-                        lifecycle?.suspend("off-screen-io");
-                    }
-                }
-            },
-            { rootMargin },
-        );
-        io.observe(canvas);
+        // resize does not leave a stale or blank canvas. A live loop paints on its
+        // next tick; an idempotent same-box observation needs no repaint.
+        const parked =
+            lifecycle !== null &&
+            (!lifecycle.running || lifecycle.reducedMotion);
+        if (size.changed && parked) paintStatic();
     }
 
     /**
      * The Canvas2D BACKEND seam — the backend-specific concerns the agnostic core
      * threads through `buildContext`. Acquire the 2D context + run the consumer's
-     * `setup` + bind the dpr-clamped RO + the IO fallback; return the core's
-     * frame hooks (the time-base bridged through `time`).
+     * `setup` and return the core's frame hooks. Resize and offscreen observers
+     * are owned by `createCanvasLifecycle`.
      */
     function buildContext(canvas: HTMLCanvasElement): CanvasFrameHooks {
         const c2d = canvas.getContext("2d", contextAttrs);
         if (!c2d) throw new Error("[useCanvas2D] 2D context unavailable");
         ctx = c2d;
         hooks = setup(ctx);
-        bindResize(canvas);
-        bindIntersection(canvas);
         return {
             // The core computes `t = time(elapsed)` then calls `frame(t)`. Bridging
             // the time base: `time` returns the raw `performance.now()` ms so the
@@ -249,10 +188,6 @@ export function useCanvas2D(options: Canvas2DOptions): Canvas2DHandle {
             shouldContinue: () => true,
             teardown: () => {
                 hooks?.teardown?.();
-                io?.disconnect();
-                io = null;
-                ro?.disconnect();
-                ro = null;
                 ctx = null;
                 hooks = null;
             },
@@ -270,16 +205,14 @@ export function useCanvas2D(options: Canvas2DOptions): Canvas2DHandle {
             canvas,
             respectReducedMotion,
             buildContext: () => buildContext(canvas),
-            resize: () => resizeTo(canvas),
+            dprPolicy,
+            composeIntersectionPark: true,
+            intersectionRootMargin: rootMargin,
+            resize: (size) => resizeTo(size!),
             // NO bindContextEvents — a 2D context cannot be lost the WebGL way, so
             // the core's self-heal-on-restore machinery stays unused (correct).
         });
-        // The core's arm runs buildContext + resize + the schedule decision; guard
-        // the initial resize from the parked-static-repaint (arm's own first-paint
-        // owns it).
-        arming = true;
         lifecycle.arm();
-        arming = false;
     }
 
     function suspend(reason: Canvas2DSuspendReason = "manual"): void {
@@ -297,8 +230,8 @@ export function useCanvas2D(options: Canvas2DOptions): Canvas2DHandle {
     function dispose(): void {
         if (disposed) return;
         disposed = true;
-        // The core disconnects its own observers + listeners + cancels the rAF +
-        // calls our teardown (which disconnects the RO + IO and nulls ctx/hooks).
+        // The core disconnects its observers + listeners, cancels the rAF, and calls
+        // our backend teardown.
         lifecycle?.dispose();
         lifecycle = null;
     }

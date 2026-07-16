@@ -1,18 +1,23 @@
-/* The public material hierarchy. Content and elevated content own their paint here;
-   functional glass and transient overlays keep their component-specific anatomy. */
+/* Surface's semantic material hierarchy. The tier paints the plate; a role only
+   selects its opt-in elevation shadow. */
 @layer components {
-    [data-material="content-field"] {
-        background: var(--background);
-        color: var(--foreground);
+    [data-material="content"] {
+        --surface-role-shadow: var(--shadow-sm);
     }
 
-    /* A content card is elevation, not another glass pane. Keep nested controls free
-       to remain functional glass by changing only the card root's paint. */
-    [data-material="elevated-content"][data-surface="glass"] {
-        background: var(--card);
-        border-color: var(--border-soft);
-        box-shadow: var(--card-shadow);
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
+    [data-material="elevated"] {
+        --surface-role-shadow: var(--shadow-card);
+    }
+
+    [data-material="functional"] {
+        --surface-role-shadow: var(--shadow-dock);
+    }
+
+    [data-material="overlay"] {
+        --surface-role-shadow: var(--shadow-modal);
+    }
+
+    [data-material][data-shadow] {
+        box-shadow: var(--surface-role-shadow);
     }
 }

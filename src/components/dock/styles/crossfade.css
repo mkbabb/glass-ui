@@ -1,14 +1,11 @@
 /* Dock crossfade styles — the ONE crossfade-slot rule.
  *
- * `DockLayerGroup`/`DockLayer`/`useLayerTransition` FOLD to ONE crossfade slot
- * (PASS-1 §2.6): the content layer hosts ONE active face; a switch is a two-child
+ * `DockLayerGroup` composes this one controlled slot; each `DockLayer` renders a face.
+ * A switch is a two-child
  * OPACITY OVERLAP on the per-face `--dock-t` scalar (written by `useDockSpring` in
  * `DockCrossfade.vue` — velocity-continuous + interruptible, NOT a UA-eased View
  * Transition; G6 CLOSED). The reserved box is sized to the PEAK face as a MEASURE-ONCE
- * `min-block-size` (set inline by the crossfade slot — a running max, never a per-swap
- * FLIP). The clip-era `.dock-layer-item-host` FLIP crossfade in `layers.css`/
- * `layer-group.css` is superseded (its element no longer renders — DockLayer renders
- * `.dock-face`).
+ * `min-block-size` (set inline by the crossfade slot — a running max, never per-swap).
  *
  * `--dock-t` is `@property`-registered `inherits: false` (dock.css, the plate scalar),
  * so writing it per-FACE is local to that face — each face reads its OWN `--dock-t` for
@@ -23,17 +20,19 @@
     .dock-crossfade {
         position: relative;
         display: grid;
+        isolation: isolate;
     }
 
     /* A face host — the grid cell + the crossfade opacity channel (the INTERACTIVE run:
        hover plates overflow it, NEVER clipped here). The inactive default is
-       out-of-flow (absolute + inset:0, opacity 0, inert) so the grid shrink-wraps to
-       the ACTIVE face while the peak reserve holds the box. */
+       out-of-flow (absolute + inset:0, opacity 0, inert and non-hit-testable) so the
+       grid shrink-wraps to the ACTIVE face while the peak reserve holds the box. */
     .dock-crossfade > .dock-face {
         grid-area: 1 / 1;
         position: absolute;
         inset: 0;
         opacity: 0;
+        pointer-events: none;
         will-change: opacity;
     }
 
@@ -45,9 +44,11 @@
     .dock-crossfade > .dock-face.is-active {
         position: relative;
         inset: auto;
+        z-index: 1;
         inline-size: max-content;
         min-inline-size: 0;
         opacity: 1;
+        pointer-events: auto;
     }
 
     /* LEAVING — out of flow (the entering active face sizes the box); stays painted +
@@ -55,6 +56,7 @@
     .dock-crossfade > .dock-face.is-leaving {
         position: absolute;
         inset: 0;
+        z-index: 0;
         pointer-events: none;
         visibility: visible;
     }

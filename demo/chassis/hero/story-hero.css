@@ -1,114 +1,17 @@
-/*
- * StoryHero — the page-redesign container layout + the blueprint-grid background.
- *
- * The page chassis wraps every story body in a glass card floating over a
- * per-page background. This partial owns the LAYOUT (the relative-isolate
- * container, the -z-10 substrate placement) + the one background recipe that is
- * pure CSS (the ruled blueprint grid). The live substrates (aurora /
- * constellation / fourier) are shipped components; paper is the shipped grain
- * utility. Every magnitude reads a token — no buried literal.
- */
-
 :root {
-    /* BC.W-GRID-SIMPLE — the blurry, oddly-spaced, in-card `--story-grid-*` grid is
-       ABROGATED (clean break, no alias). The crisp full-bleed page grid (`.grid-bg`
-       below) reads the ONE shared `--grid-pitch` 1rem / `--grid-major` 5rem /
-       `--grid-line` 3% / `--grid-line-major` 11% rhythm minted in scale-paper.css
-       (the keyframes.js `EditorShell` magnitudes). NO demo-local grid token, NO 28px
-       pitch, NO `center center`, NO blurred-through-`wash` mount — the static grid
-       escapes the rounded card box and is the WHOLE-PAGE wash. The dark arm re-tints
-       FOR FREE (the `--foreground` flip re-resolves the `--grid-*` color-mix); there
-       is NO parallel `--grid-*-dark` family. */
-
-    /* The static-paper wash base (BA.W-STAGE scope 4). The paper background is a
-       warm-cream tint under the grain overlay.
-       D2 / metallic-wash fold — light was `transparent` on the assumption "the page
-       is already cream", which held while the universal warm `.paper-field`/grain
-       plane existed. BG.W-PAPER-GRAIN-OPTIN retired that plane, so the bleed grain
-       now sits over the bare RECESSIVE shell aurora — and `paper-grain-overlay`'s
-       `isolation: isolate` walls its `mix-blend-mode: multiply` to its OWN box, so
-       a TRANSPARENT base gives the gray tooth nothing warm to multiply over: the
-       grain reads DEAD in Chrome (multiply over transparent → near-invisible) and
-       GRAY/metallic in Safari (the off-screen composite shows the bare tooth). A
-       faint warm-cream base (mirroring the working `.dark` arm's magnitude) gives
-       the tooth a warm substrate, so the bleed grain reads PLAINLY-VISIBLE + WARM
-       in BOTH engines — the BD.W-PAPER-MORPHISM "grain must be visible" goal AND
-       the warm-everywhere/no-gray floor, on every paper hero page. */
     --story-paper-wash: color-mix(in srgb, var(--card) 70%, transparent);
-
-    /* The exposed-substrate margin (W-SB-STAGE §2.1b). Over a LIVE substrate the
-       glass card no longer fills the container EXACTLY — an inset gutter lets the
-       field RIM the card so "a glass card floating over a substrate" literally
-       floats. Off a live substrate the gutter is 0 (the default-path canary). */
-    --story-hero-inset: clamp(1.25rem, 2.5vw, 2rem);
-
-    /* ── BG.W-HERO-FIT (D10) — the height-aware fit-cap single-source factors ──
-       The hero <h1> fit-cap (`.story-hero-title[data-hero-scale]`) bounds the √φ
-       rung to MIN(rung, width-budget, svh-budget). These are the two factors the
-       budgets read — single-sourced here so the wordmark-length divisor and the
-       short-viewport line estimate are tuned in ONE place (R3): `--story-hero-cpl`
-       ≡ the chars-per-line wordmark factor (≈7ch holds a short wordmark at the
-       column edge); `--story-hero-est-lines` ≡ the FIXED line estimate (2 — NO
-       ResizeObserver; the svh term is only a short-viewport guard, near-inert on a
-       normal viewport since routing through the chassis is the primary cap). */
     --story-hero-cpl: 7;
     --story-hero-est-lines: 2;
-
-    /* BC.W-STORYBOOK-META — the page-level whitespace RHYTHM, tokenized (axis-3).
-       The HEAD `StoryPage.vue` hardcoded `gap-10`/`max-w-6xl`/`gap-2`; promoting
-       them to named rhythm tokens is the "every page breathes consistently" bar
-       (a meta-gate measures the inter-section gap is ≥ `--story-page-section-gap`
-       on every route — no cramped page). The herostudios generous-whitespace
-       north-star (a steady vertical rhythm, the article width bounded) is the bar
-       these magnitudes meet. Clean break (no `gap-10` literal survives on the
-       chassis), single retune point. */
-    --story-page-max-inline: 72rem; /* the bounded article width (was max-w-6xl). */
-    --story-page-section-gap: 2.5rem; /* the section cadence (was gap-10 = 2.5rem). */
-    --story-page-header-gap: 0.5rem; /* the chrome-header micro-rhythm (was gap-2). */
-
-    /* ── BD.W-CUT page-chrome — the chrome/hero SCALE SPLIT (the one-token seam) ──
-       The over-scale on the CONTENT-page chrome <h1> was a SELECTION bug (the
-       `text-display-${heroScale≥4}` floor pinned the chrome page-title to the
-       PROTAGONIST rung — ~109px live, ~2× too loud for a calm page LABEL). The
-       split: the chrome page-title reads this CALM rung (the φ^2 display band, the
-       same √φ ladder, byte-untouched); the protagonist hero <h1> KEEPS the
-       audacious heroScale tiers (variant="hero"). A consumer who wants a louder
-       chrome title re-points `--chrome-title-rung` (presets-in-consumers). */
-    --chrome-title-rung: var(--type-display-1); /* φ^2, the calm display band — ~½ the audacious */
-
-    /* ── BD.W-CUT page-chrome — the ONE `--chrome-rule` seam (one token, N readers) ──
-       The dark-adaptive masthead→body dividing rule. Reuses the shipped
-       `--configurator-divider` family (a `light-dark()` warm-ink hairline that
-       survives the dark glass plate). USED ONLY as `border-color` — never an inset
-       shadow — so the MEMORY light-dark inset-shadow trap NEVER fires here. It
-       RETIRES the phantom `--story-header-rule` (referenced nowhere in src). */
-    --chrome-rule: var(--configurator-divider);
-
-    /* ── BD.W-CUT page-chrome — the corner-AA clip radius (demo-chassis chrome) ──
-       The chrome glass surfaces (the chrome header, the subpath stamp) clip their
-       backdrop/halo to their OWN radius so the saturate halo never bleeds a SQUARE
-       behind the rounded silhouette. The clip lands on a backdrop-only CHILD layer
-       (`.chrome-aa-clip`), NEVER the shadow-bearing host — the host's box-shadow /
-       floating lift / iOS under-shadow is left UNCLIPPED (a `clip-path` on the host
-       amputates the entire outer box-shadow; CSS Masking spec). Each surface points
-       this token at its own radius before composing the clip. */
-    --chrome-aa-radius: var(--radius-card);
+    --story-page-max-inline: 72rem;
+    --story-page-section-gap: clamp(1.5rem, 3vw, 2.5rem);
+    --story-page-header-gap: 0.5rem;
+    --chrome-title-rung: var(--type-display-1);
 }
 
-/* BA.W-STAGE scope 4 — the DARK static-PAPER wash recalibration (BG-3 / DARK-4). The
-   paper wash gains a faint warm-cream base (the soft-light grain alone reads
-   near-nothing over the W-DARK-MATERIAL near-black page — it needs a tint under it)
-   so the paper register reads THROUGH the card in dark. (BC.W-GRID-SIMPLE — the
-   parallel dark `--story-grid-*` arm is RETIRED with the grid token abrogation: the
-   full-bleed `--grid-*` line re-tints off the `--foreground` flip automatically, no
-   `-dark` arm; the grid is the page wash BEHIND content now, not a faint line read
-   through a wash card that needed a dark over-lift to survive.) */
 .dark {
     --story-paper-wash: color-mix(in srgb, var(--foreground) 7%, transparent);
 }
 
-/* The container: an isolating positioning context so the -z-10 substrate sits
-   behind the glass card without escaping to the page. */
 .story-hero {
     position: relative;
     isolation: isolate;
@@ -117,24 +20,12 @@
     border-radius: var(--radius-card);
 }
 
-/* Full-bleed hero (W-SB-REVERIFY — B16/B22): the substrate is the PAGE
-   background, so the container must NOT isolate or clip — the fixed substrate
-   has to reach a page-level negative z behind the StoryPage header (its sibling)
-   and the rounded box must not clip a viewport-filling field. */
 .story-hero[data-full-bleed="true"] {
     isolation: auto;
     overflow: visible;
     border-radius: 0;
 }
 
-/* Every background substrate fills the container behind the card.
-   BG.W-CORNER-ALIAS-KILL — the CORNER-BACKPLATE DISCIPLINE: a boxed backplate
-   layer under a rounded host FOLLOWS the host's rendered corner
-   (`border-radius: inherit` off the rounded `.story-hero` container) so it can
-   never paint a square corner behind the radius curve, even if a future variant
-   un-clips the host (the `.story-hero` `overflow: hidden` stays the belt; the
-   inherited radius is the braces). The bleed arm resets to 0 (a viewport layer
-   has no host corner to follow). */
 .story-hero-bg {
     position: absolute;
     inset: 0;
@@ -142,706 +33,110 @@
     border-radius: inherit;
 }
 
-/* The full-bleed substrate escapes to the viewport — the live field IS the page
-   background (the KonamiAurora idiom), pinned BEHIND the page content but ABOVE
-   the AppShell PaperBackdrop (`fixed inset-0 -z-10`), so the painterly drift
-   shows on the whole page rather than a boxed card well. `pointer-events: none`
-   keeps the content interactive; the substrates are `aria-hidden`. */
 .story-hero-bg--bleed {
     position: fixed;
     inset: 0;
     z-index: -5;
     pointer-events: none;
-    /* The bleed layer is the whole-viewport field — no host corner to follow
-       (BG.W-CORNER-ALIAS-KILL; it teleports to <body> in StoryHero.vue so no
-       transformed route ancestor can ever trap it back to the article box). */
     border-radius: 0;
 }
 
-/* The full-bleed field keeps the library's mode-calibrated neutral palette and
-   raises only presence. The page does not fork physical node/line colours. */
 .constellation.story-hero-bg--bleed {
     --constellation-edge-alpha: 0.32;
     --constellation-edge-focus-alpha: 0.45;
     --constellation-alpha: 0.95;
 }
 
-/* The full-bleed hero content floats DIRECTLY over the live field — a generous
-   pad + a thin local readability scrim (a soft radial fade keyed off the page
-   background) under the prose so the headline stays legible over the bright
-   drift WITHOUT a hard card box. The scrim is sub-perceptual at the edges (the
-   field reads) and lifts toward the text. */
 .story-hero-bleed-content {
     position: relative;
     z-index: 1;
-    padding: clamp(1.5rem, 4vw, 4rem) clamp(1rem, 3vw, 3rem);
+    padding: clamp(1.25rem, 3vw, 3rem) clamp(1rem, 2.5vw, 2.5rem);
+}
+
+.story-hero-bleed-content[data-live="true"] {
     border-radius: var(--radius-card);
     background: radial-gradient(
         ellipse 120% 100% at 30% 35%,
-        color-mix(in srgb, var(--background) 58%, transparent) 0%,
+        color-mix(in srgb, var(--background) 58%, transparent),
         color-mix(in srgb, var(--background) 30%, transparent) 45%,
         transparent 78%
     );
 }
-.story-hero-bleed-content > * {
+
+.story-hero-bleed-content > *,
+.story-hero-card-content > * {
     width: 100%;
 }
 
-/* The hero register sits richer + taller so the live substrate reads as a
-   front-door wash; the page register is a quiet contained well. */
-.story-hero[data-variant="hero"] .story-hero-card {
-    --story-hero-pad: clamp(2rem, 4vw, 4rem);
-    padding: var(--story-hero-pad);
-}
-
-.story-hero[data-variant="page"] .story-hero-card {
-    --story-hero-pad: clamp(1.25rem, 2.5vw, 2rem);
-    padding: var(--story-hero-pad);
-}
-
-/* The glass card hosting the body — let the StorySection stack flow inside. */
-.story-hero-card > * {
-    width: 100%;
-}
-
-/* The audacious chassis hero <h1> (AZ.W-SUFFUSE D2-1). The display register is
-   the chassis affordance — the thin substrate hero pages that hand-author no
-   title gain the audacious moment the flat type ladder starved. The bottom
-   margin sets it off from the body section stack below. */
 .story-hero-title {
+    max-inline-size: min(14ch, 100%);
     margin-block-end: clamp(1.5rem, 3vw, 2.5rem);
     margin-inline-start: -0.035em;
-    color: var(--foreground);
-    max-inline-size: min(14ch, 100%);
-
-    /* ── BD.W-CUT page-chrome — HERO-OVERFLOW: the audacious title always FITS ──
-       The √φ display ladder (`text-display-{4,5,mega,hero,audacious}`) is tuned on
-       a `vw` axis with poster-peak maxima (display-5 110px · mega 177px · hero
-       287px · audacious 352px). On a NARROW viewport a long unbreakable wordmark
-       (e.g. "Substrates") at that rung clips OFF the right edge — the verbatim
-       user defect. The fix bounds the resolved `font-size` to the hero's actual
-       inline-size BUDGET: `min(<the √φ ladder rung>, <the budget that fits>)`. The rung
-       (`--story-hero-title-rung`) is captured from the SAME `--type-display-*`
-       token the utility class resolves (set per `data-hero-scale` below — the
-       ladder stays BYTE-UNTOUCHED, the fence); the budget is the hero inline
-       measure minus the chassis padding, divided by a √φ wordmark-length factor —
-       a rung that always lands inside the column. `overflow-wrap`/`hyphens` give a
-       multi-letter wordmark a break opportunity as the last-resort floor, so even
-       the longest single word can never run past the edge. The `font-size` fit-cap
-       lives on the HIGHER-specificity `[data-hero-scale]` / `.story-chrome-title`
-       selectors below (0,2,0 / 0,2,0) so it always WINS the bare `text-display-*`
-       utility (0,1,0) regardless of Tailwind source order. */
     overflow-wrap: break-word;
-    word-break: normal;
-    hyphens: auto;
+    color: var(--foreground);
+    text-wrap: balance;
 }
 
-/* The protagonist hero rung captured from the SAME √φ ladder token the
-   `text-display-*` utility resolves — so the `min()` fit-cap bounds the audacious
-   tier WITHOUT re-typing the ladder value (DRY; the ladder is the utility's,
-   byte-untouched). The chassis stamps `data-hero-scale` from the `heroScale` prop
-   (StoryHero.vue); these map it onto the rung token AND carry the fit-cap at
-   0,2,0 specificity (beats the bare utility). The `/7` wordmark factor in the fit
-   budget holds an ~7ch wordmark at the column edge; longer words hyphenate. */
 .story-hero-title[data-hero-scale] {
-    /* BG.W-HERO-FIT (D10) — the height-aware fit-cap. The audacious √φ rung is now
-       bounded to MIN of THREE terms: the rung itself, the width budget (the hero
-       inline measure ÷ the wordmark `--story-hero-cpl` factor), AND a viewport-
-       HEIGHT budget — a SHORT-VIEWPORT GUARD that caps the rendered block so its
-       font-size × leading × est-lines never exceeds ≈0.62 (1/φ) of the small
-       viewport height. `100svh` (NOT `dvh` — `dvh` jumps as mobile browser chrome
-       collapses on scroll) keeps a laptop/phone hero proportioned, never viewport-
-       dominating. A static `min()` resolution, NOT a layout-animated step
-       (proof:no-layout-animation SAFE). On a normal viewport the chassis routing +
-       the rung is the primary cap and this term is near-inert (the load-bearing
-       fix is the MANDATORY short displayTitle, P4-C). */
     font-size: min(
         var(--story-hero-title-rung, var(--type-display-4)),
-        var(
-            --story-hero-title-fit,
-            calc((100cqi - 2 * var(--story-hero-pad, 2rem)) / var(--story-hero-cpl, 7))
-        ),
-        var(
-            --story-hero-title-svh,
-            calc(0.62 * 100svh / var(--story-hero-est-lines, 2))
-        )
+        calc((100cqi - 2 * var(--story-hero-pad, 2rem)) / var(--story-hero-cpl)),
+        calc(0.62 * 100svh / var(--story-hero-est-lines))
     );
 }
+
 .story-hero-title[data-hero-scale="4"] {
     --story-hero-title-rung: var(--type-display-4);
 }
+
 .story-hero-title[data-hero-scale="5"] {
     --story-hero-title-rung: var(--type-display-5);
 }
+
 .story-hero-title[data-hero-scale="mega"] {
     --story-hero-title-rung: var(--type-display-mega);
 }
+
 .story-hero-title[data-hero-scale="hero"] {
     --story-hero-title-rung: var(--type-display-hero);
 }
+
 .story-hero-title[data-hero-scale="audacious"] {
     --story-hero-title-rung: var(--type-display-audacious);
 }
 
-/* ── BD.W-CUT page-chrome — the chrome/hero SCALE SPLIT (the calm page LABEL) ──
-   The CONTENT-page chrome <h1> (variant="page", StoryPage's <header>) reads the
-   CALM `--chrome-title-rung` (~½ the audacious), NOT the protagonist heroScale —
-   so the breadcrumb/page-title chrome is a calm LABEL while the hero stays
-   audacious. It STILL respects the fit-cap (a narrow viewport shrinks even the
-   calm rung). The explicit `.story-chrome-title` class marks the chrome <h1>
-   (StoryPage.vue); the `.story-hero-title.story-chrome-title` compound is 0,2,0
-   so it WINS any stray `text-display-*` utility regardless of source order. */
 .story-hero-title.story-chrome-title {
-    --story-hero-title-rung: var(--chrome-title-rung);
+    font-family: var(--font-display);
     font-size: min(
         var(--chrome-title-rung),
         calc(100vw - 2 * var(--story-hero-pad, 1.5rem) - 1rem)
     );
-    /* the calm display label keeps the display face/weight the retired
-       `text-display-*` utility carried — only the SIZE drops to the calm rung. */
-    font-family: var(--font-display);
     font-weight: var(--type-weight-display);
     line-height: var(--type-leading-display);
     letter-spacing: var(--type-tracking-display);
     font-optical-sizing: auto;
-    text-wrap: balance;
 }
 
-/* ── BD.W-CUT page-chrome — the `--chrome-rule` masthead→body dividing rule ──────
-   The chrome/hero SCALE SPLIT pairs a calm page-title with a STRUCK dividing rule
-   (the user ask: "the small breadcrumb/page-title chrome ... gets a dividing
-   rule"). ONE token `--chrome-rule`, read as a `border-color` ONLY (so the MEMORY
-   light-dark inset-shadow trap never fires — the token IS a `light-dark()` value
-   but is never an inset shadow here). It reads in THREE places by design: this
-   resting masthead→body rule, the condensed-bar bottom edge, and the toc edge
-   (those two are the sibling waves' readers — this lane owns the resting rule +
-   the token mint). The rule is a decorative `::after` (no semantics) on the chrome
-   header cluster, drawn the full route-column width with a φ gap to the body. */
-.story-page-article > header > .story-hero-cluster::after {
-    content: "";
-    display: block;
-    block-size: 0;
-    border-block-end: 1px solid var(--chrome-rule);
-    margin-block-start: calc(0.75rem * var(--phi, 1.618));
-    transform: scaleX(1);
-    transform-origin: left;
-}
-/* The rule is STRUCK left→right on entrance on the codified NO-OVERSHOOT draw-in
-   register (BI.W-DRAW-IN — the shared `draw-rule-in` scaleX keyframe on the arrival
-   ease `--ease-out-expo`, at `--draw-in-duration`, staged 240ms after the cluster
-   settles). The prior `--ease-cartoon-punch` (+22% overshoot) + the demo-local
-   `chrome-rule-strike` keyframe are RETIRED (clean break): a rule drawing ITSELF never
-   overshoots past full width — that read as jitter, not craft (UF-G6, "too bouncy").
-   The base rule above stays scaleX(1) — the static paint on a gap engine AND the PRM
-   (reduce) end-state (the strike engages only under no-preference, so under reduce the
-   rule simply reads full-width, zero motion frames). */
-@media (prefers-reduced-motion: no-preference) {
-    .story-page-article > header > .story-hero-cluster.story-hero-shrink::after {
-        --draw-in-delay: 240ms;
-        transform: scaleX(0);
-        animation: draw-rule-in var(--draw-in-duration) var(--ease-out-expo)
-            var(--draw-in-delay) both;
-    }
-}
-
-/* ── BB.W-HIERARCHY2 — the ordered StoryHeader cluster + the cluster rhythm ──────
-   The reading-order inversion fix: the eyebrow → display <h1> → blurb render as
-   ONE coherent stacked unit (A4-INVERSION). The cluster owns ONE tight micro-rhythm
-   (a single `gap` through the whole header — A4-RHYTHM), then ONE major gap to the
-   first section below; the three-spacing-scale cliff (the chrome-header gap-2, the
-   mt-8 boundary jump, the gap-10 section cadence) is gone. Inside the cluster the
-   title's own `margin-block-end` is RELAXED to the cluster gap (the major gap moves
-   to the cluster root) so the blurb sits CLOSE under the title (the subordinate
-   rung), not pushed away by the title's body-margin. */
 .story-hero-cluster {
     display: flex;
     flex-direction: column;
-    /* BC.W-STORYBOOK-META — the chrome-header micro-rhythm reads the tokenized
-       `--story-page-header-gap` (was the hardcoded 0.5rem / gap-2) so the cluster
-       cadence retunes from the ONE page-rhythm family (axis-3). */
-    gap: var(--story-page-header-gap); /* the tight cluster micro-rhythm — eyebrow → title → blurb */
-    margin-block-end: clamp(1.5rem, 3vw, 2.5rem); /* the ONE major gap to the body */
+    gap: var(--story-page-header-gap);
+    margin-block-end: clamp(1.5rem, 3vw, 2.5rem);
 }
-/* Inside the cluster the title carries no body-margin — the cluster gap is the
-   intra-cluster rhythm; the cluster root owns the major gap to the body. */
+
 .story-hero-cluster .story-hero-title {
     margin-block-end: 0;
 }
 
-/* One page-level colour event: demos select the existing section accent seam;
-   the chassis owns its logical rail so pages do not restate paint geometry. */
-.story-color-event {
-    border-inline-start: 3px solid
-        color-mix(in oklab, var(--section-label-accent, var(--section-color-7)) 55%, transparent);
-}
-
-/* BG.W-FIELD-AURORA (re-paint #1) — the LIGHT-mode chrome-header muted ink over the
-   recessive warm shell field. The brighter warm field clears the hero h1 (>13:1) but
-   the page-muted eyebrow/blurb sat ~4.2:1 over it on Chrome (its aurora renders the
-   warm field ~0.09 relLum DARKER than WebKit, where it clears ~4.7). Darken the
-   cluster muted ink a touch — a warm mix of `--neutral-5` toward the warm `--foreground`
-   — so the eyebrow + blurb clear AA 4.5 over the warm field in BOTH engines, WITHOUT
-   washing the warm field toward white (the warm-everywhere identity is the wave's
-   point). LIGHT mode + over the shell field ONLY: in dark mode the field is dark-ember
-   and the muted ink is LIGHT, so darkening there would HURT (the primary AA fix). */
 :root:not(.dark) [data-paper-field] .story-header-cluster {
     --muted-foreground: color-mix(in oklab, var(--neutral-5), var(--foreground) 22%);
 }
 
-/* ── BD.W-CUT page-chrome — the corner-AA backdrop-child clip register ───────────
-   The library-wide corner-AA law: a `backdrop-filter` saturate halo bleeds a
-   SQUARE behind the rounded silhouette → a jaggy corner fringe (worst on WebKit).
-   The clip must NEVER land on the shadow-bearing host: `clip-path` clips the
-   host's ENTIRE rendering INCLUDING its outer `box-shadow` (CSS Masking spec) →
-   it amputates the floating lift + the iOS under-shadow. The register clips a
-   nested backdrop-only CHILD instead — the child owns the `backdrop-filter` +
-   `clip-path: inset(0 round <own-radius>)`, the host keeps its UNCLIPPED
-   box-shadow (the floating lift preserved). `inset(round)` is Safari-native
-   (`-webkit-clip-path` baseline; the halo squares WORST on WebKit so the clip is
-   load-bearing there). A chassis surface composes `.chrome-aa-host` on the
-   shadow-bearing host + a `.chrome-aa-clip` child carrying the backdrop, each
-   pointing `--chrome-aa-radius` at its OWN tier radius (NEVER the 10px global
-   `--radius`, which inner-notches a 16px box). */
-.chrome-aa-host {
-    position: relative;
-    /* the host carries the box-shadow / floating lift — left UNCLIPPED. */
-}
-.chrome-aa-clip {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    border-radius: var(--chrome-aa-radius, var(--radius-card));
-    /* the clip lands on THIS backdrop-only child, not the shadow-bearing host */
-    clip-path: inset(0 round var(--chrome-aa-radius, var(--radius-card)));
-    /* the backdrop-only child carries the saturate halo (no box-shadow here) */
-    backdrop-filter: var(--glass-blur-quiet, blur(8px) saturate(1.4));
-    -webkit-backdrop-filter: var(--glass-blur-quiet, blur(8px) saturate(1.4));
-}
-
-/* BC.W-PAGE-CHASSIS — the explicit Fira-Code subpath chip. The route identity in
-   the eyebrow cluster — a code-rung mono caption that reads as the import line, and
-   PERSISTS through the scroll-shrink (it is the route identity, never faded away).
-   BD.W-CUT page-chrome — the chip plate is a flat color-mix (NO backdrop-filter),
-   so it has no saturate halo to clip — corner-AA-correct by construction (the
-   backdrop-child clip register is for the glass tiers that DO carry a halo). */
-.story-header-subpath {
-    align-self: flex-start;
-    color: var(--muted-foreground);
-    /* a faint code-chip plate so the import line reads as code over the field */
-    padding: 0.125rem 0.5rem;
-    border-radius: var(--radius-sm);
-    background: color-mix(in srgb, var(--foreground) 5%, transparent);
-    border: 1px solid color-mix(in srgb, var(--foreground) 8%, transparent);
-}
-
-/* ── BC.W-PAGE-CHASSIS — the scroll-shrink CONTENT-page header register (CSS-native) ──
-   On a CONTENT page (StoryPage.vue, variant="page") the page header SHRINKS as you
-   scroll: a large audacious title collapses into a slim sticky page-header that holds
-   the title + the subpath chip (the iOS-27 large-title collapse — a genuine slim nav
-   header for a prose/spec page). The mechanism is the NATIVE scroll() timeline — NO
-   Lenis/GSAP/rAF scroll engine (the binding fence, CLAUDE.md §BB.W-SCROLL-MOTION); the
-   shrink is COMPOSITOR-ONLY (transform: scale + translateY + opacity, NEVER font-size/
-   width/layout — the text lays out ONCE, the proof:no-layout-animation floor,
-   BB.W-CARD-COMPOSITE). The whole register is gated by @supports (animation-timeline:
-   scroll()) (progressive enhancement — a non-supporting engine paints the static large
-   header, the correct fallback; Baseline: scroll-driven animations Chrome 115+ /
-   Safari 26+) AND @media (prefers-reduced-motion: no-preference) (PRM → the large static
-   header holds, no shrink — the vestibular floor).
-
-   ── BD.W-VIZ-BROKEN-FIX D5 — the sticky collapse is the CONTENT-PAGE register ONLY ──
-   The verbatim user defect — "the hero text should NOT scroll like this on every page"
-   — was this sticky collapse applied to the HERO / substrate-viz pages too, where a
-   giant `text-display-hero` word STUCK at full opacity over the viz canvas (22.8% canvas
-   overlap measured live, title opacity 1.0 at every scroll). The iOS large-title collapse
-   is the WRONG model for a viz page: a 0.82-scaled display-hero word is still a 200px
-   focal mass plastered over the very surface the page exists to show. The DECISIVE fix
-   (the user's literal ask): the hero cluster on a hero/viz page SCROLLS AWAY (the
-   `.story-hero-scroll-away` register below — NOT sticky, the field owns the viewport),
-   and the sticky collapse stays scoped HERE, to the content-page chrome header. */
-
-/* ── BI.W-SHRINK-HERO (G7-STICKY) — the sticky containing-block carve ──────────────
-   Pass-2 measured the shrink register's sticky persistence BROKEN: a `position: sticky`
-   box is bound to its CONTAINING BLOCK, and the content-page cluster's containing block
-   was the chrome `<header>` — a box only ~126px tall (the cluster's own height). So the
-   title unstuck after ONE header-height of scroll instead of persisting against the
-   route scroller. The fix (proven on both engines, pass-3): the intermediate `<header>`
-   ancestor establishes NO box (`display: contents`), so the sticky `.story-hero-shrink`
-   cluster's containing block becomes the `<article>.story-page-article` route-column —
-   which spans the FULL scroll content, so the pinned title persists against
-   `<main>.demo-main-scroller` for the whole page. `display: contents` keeps the DOM
-   structure intact (the `> header > .story-hero-cluster::after` dividing rule + the `--i`
-   custom prop inherit unchanged) — it removes only the box, never a transformed/overflow/
-   contain ancestor into the chain (the silent sticky+timeline killer stays absent). The
-   carve scopes to the CONTENT-page header only (the HERO page has no `> header` — its
-   cluster is the scroll-away twin inside StoryHero). */
-.story-page-article > header {
-    display: contents;
-}
-
-/* The CONTENT-page header sticks to the top of the <main> route-scroller so the shrunk
-   header persists while the body slides up under it. The sticky positioning is OUTSIDE
-   the @supports/PRM gate (it is harmless on every engine — a non-shrinking sticky header
-   is the correct static fallback); the shrink ANIMATION is gated below. The cluster
-   shrinks toward its leading edge (transform-origin: left top) so it collapses into a
-   slim leading-aligned header, the iOS-27 large-title-collapse read. */
-.story-hero-shrink {
-    position: sticky;
-    top: 0;
-    z-index: 2;
-    transform-origin: left top;
-    /* The condense register knobs (the single retune seam). A gentle settle (0.82) +
-       a sooner-and-holds range + the eyebrow/blurb FADE (reclaiming visual room).
-       BG.W-SCROLL-SHRINK-UNIFY — the scale settle rides `--title-collapse-scale` (the
-       SHARED scale token the card + page/hero large-title collapse both read via the
-       ONE `@keyframes title-collapse`; the page/hero supply 0.82, the card 0.695). */
-    --title-collapse-scale: 0.82;
-    --hero-condense-range: 160px;
-    --hero-condense-fade-range: 120px;
-}
-
-/* ── BI.W-SHRINK-HERO (G7-STICKY) — the pinned-header painted backing ──────────────
-   A stuck header must lift PAINTED, not transparent: once the cluster pins to the top and
-   the body slides up UNDER it, a bare cluster lets the body text bleed straight through
-   the title. This backing is a frosted-glass plate BEHIND the pinned title — a nested
-   backdrop-only pseudo (the `.chrome-aa-clip` idiom: z-index -1 so the title + subpath
-   chip read ON TOP, `backdrop-filter` on the child, no box-shadow to amputate). The plate
-   tint reads `--card` (so the dark arm re-tints FOR FREE off the token flip — no parallel
-   `.dark` rule). It rides the cluster's own scale, so title + plate shrink as ONE coherent
-   pinned chip. At rest it is opacity 0 — the resting large title floats plate-free; only
-   the PINNED chip gains the frosted lift (the iOS-27 large-title-into-nav-bar read). The
-   fade-in is the native scroll() timeline (below, gated) so under reduce / a gap engine
-   the plate stays hidden and the header is a static large sticky header (the honest
-   reduced form). `pointer-events: none` keeps the plate inert. */
-.story-hero-shrink::before {
-    content: "";
-    position: absolute;
-    inset: -0.5rem -0.75rem;
-    z-index: -1;
-    border-radius: var(--radius-card);
-    background: color-mix(in srgb, var(--card) 72%, transparent);
-    backdrop-filter: var(--glass-blur-quiet, blur(8px) saturate(1.4));
-    -webkit-backdrop-filter: var(--glass-blur-quiet, blur(8px) saturate(1.4));
-    opacity: 0;
-    pointer-events: none;
-}
-
-/* ── BD.W-VIZ-BROKEN-FIX D5 — the HERO / substrate-viz scroll-away register ───────────
-   On a HERO page (variant="hero" — every substrate viz: blob, dot-matrix, fourier-field,
-   aurora, …) the title cluster is NOT sticky: it sits in normal flow and SCROLLS UP AND
-   OFF with the body as you scroll, so the viz owns the viewport (the verbatim user ask).
-   This is the disjoint twin of `.story-hero-shrink` — same cluster, opposite scroll
-   behaviour: the content-page header CONDENSES + STICKS (a slim nav bar); the viz-page
-   header SCROLLS AWAY (the field is the content, the title is its label, not chrome).
-
-   A liquid-weight gentle LEAVE (the [[feedback-liquid-weight-universal]] law): as the
-   cluster scrolls toward the top edge it eases its opacity + lifts a touch (a parallax
-   feather off the top), so the giant word DISSOLVES off the top rather than hard-clipping
-   at the scroller edge — inertia on the exit, never a snap. COMPOSITOR-ONLY (opacity +
-   translateY — never layout); native scroll() timeline (NO Lenis/GSAP); gated under
-   @supports + PRM (under reduce / a gap engine the cluster simply scrolls off in plain
-   flow — the correct static fallback, no fade). The cluster's intrinsic flow height is
-   reclaimed by the scroll (it is NOT sticky, so the body never scrolls UNDER it — the
-   overlap is structurally impossible). */
-.story-hero-scroll-away {
-    position: relative;
-    z-index: 1;
-    transform-origin: left top;
-    /* The leave register knobs (the single retune seam). The fade-leave window opens a
-       touch into the scroll (so the title reads FULL at rest) and completes as the giant
-       word clears the top. Px offsets against the scroll() timeline (the working
-       `.story-hero-shrink` precedent — `vh` offsets mis-anchor a scroll() timeline and
-       pin the END state at scrollTop 0). */
-    --hero-leave-range-start: 120px;
-    --hero-leave-range-end: 340px;
-    --hero-leave-lift: -1.5rem;
-}
-
-@supports (animation-timeline: scroll()) {
-    @media (prefers-reduced-motion: no-preference) {
-        /* The cluster feathers off the top as it scrolls away — opacity 1 → 0 coupled
-           with a small upward lift (the liquid-weight parallax leave). It rides the
-           <main> route-scroller's own scroll() timeline over the cluster's leave window.
-           COMPOSITOR-ONLY (opacity + translateY). It is COMMA-APPENDED to the cluster's
-           3-stage GRAVITY entrance (the entrance on the document timeline `auto`, this
-           leave on `scroll()` — the per-animation timeline list pairs them positionally
-           so neither clobbers the other). */
-        @keyframes story-hero-scroll-leave {
-            from {
-                opacity: 1;
-                transform: translateY(0);
-            }
-            to {
-                opacity: 0;
-                transform: translateY(var(--hero-leave-lift, -1.5rem));
-            }
-        }
-        .story-hero-scroll-away {
-            animation: story-hero-scroll-leave linear both;
-            animation-timeline: scroll();
-            animation-range: var(--hero-leave-range-start, 120px)
-                var(--hero-leave-range-end, 340px);
-        }
-    }
-}
-
-@supports (animation-timeline: scroll()) {
-    @media (prefers-reduced-motion: no-preference) {
-        /* The cluster condenses GENTLY: scale(1 → ~0.82) (a settle, NOT a half-zoom),
-           coupled with a slight upward translate so the shrunk header hugs the top.
-           COMPOSITOR-ONLY — scale + translate, NEVER font-size/width/height (the text
-           lays out ONCE; the proof:no-layout-animation floor, BB.W-CARD-COMPOSITE). The
-           scroll-shrink rides the cluster WRAPPER (not the entrance-animated children),
-           so it never collides with the 3-stage GRAVITY entrance on the
-           eyebrow/title/blurb — two disjoint registers, one wrapper.
-
-           BG.W-SCROLL-SHRINK-UNIFY — the SCALE leg is DECOMPOSED onto the SHARED
-           `@keyframes title-collapse` (byte-identical to the card's copy in
-           src/styles/card-scroll.css — the DRY fold; the page/hero supply
-           `--title-collapse-scale: 0.82`, the card 0.695). The hero keeps its OWN tiny
-           translate leg (`story-hero-shrink-lift`) — the `scale:`/`translate:` LONGHANDS
-           stack independently (the scroll-choreography.css `.scroll-pin` idiom), so the
-           two keyframes compose to the same final transform as the prior combined
-           `transform: scale() translateY()` with ZERO clobber. */
-        @keyframes title-collapse {
-            to {
-                scale: var(--title-collapse-scale, 0.82);
-            }
-        }
-        @keyframes story-hero-shrink-lift {
-            to {
-                translate: 0 -0.25rem;
-            }
-        }
-
-        /* The condense completes within the first ~160px of scroll then HOLDS the
-           condensed state (animation-fill-mode: forwards). The native scroll() timeline
-           is the <main> route-scroller (the nearest scroll-container ancestor) — NO JS,
-           NO Lenis/GSAP (the binding fence). The scale + lift ride the ONE scroll()
-           timeline over the ONE condense window (the per-animation timeline/range lists
-           pair them positionally so neither clobbers the other). */
-        .story-hero-shrink {
-            animation: title-collapse linear both,
-                story-hero-shrink-lift linear both;
-            animation-timeline: scroll(), scroll();
-            animation-range: 0 var(--hero-condense-range, 160px),
-                0 var(--hero-condense-range, 160px);
-            animation-fill-mode: forwards;
-        }
-
-        /* BI.W-SHRINK-HERO (G7-STICKY) — the pinned-header frosted plate fades IN over
-           the SAME condense window (opacity 0 → 1 across 0..--hero-condense-range), so
-           the resting large title has no plate and only the pinned chip lifts painted. It
-           rides its own scroll() timeline (bidirectional by construction — scroll up
-           reverses the fade); compositor-friendly opacity only. Inside the @supports + PRM
-           bracket so under reduce / a gap engine no plate paints (the static large
-           header). */
-        @keyframes story-hero-pin-backing {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-        .story-hero-shrink::before {
-            animation: story-hero-pin-backing linear both;
-            animation-timeline: scroll();
-            animation-range: 0 var(--hero-condense-range, 160px);
-        }
-
-        /* The SUBORDINATE-RUNG fade (the iOS large-title-collapse read): the eyebrow +
-           blurb evaporate as you scroll (reclaiming the visual room the half-zoom used to
-           overlap), while the title + subpath chip persist. Compositor-only (opacity);
-           gated under the same @supports + PRM bracket as the condense (the static large
-           hero holds under reduce / a gap engine). It is COMMA-APPENDED to the 3-stage
-           GRAVITY entrance below (an element carries ONE animation property — the entrance
-           keyframe runs on the document timeline, this fade on the scroll() timeline, both
-           in the SAME shorthand so neither clobbers the other; the per-animation
-           animation-timeline list pairs them positionally). */
-        @keyframes story-hero-subordinate-fade {
-            from {
-                opacity: 1;
-            }
-            to {
-                opacity: 0;
-            }
-        }
-    }
-}
-
-/* BB.W-SCROLL-MOTION — the hero <h1> entrance is the page's HERO-BEAT title rise.
-   Audacious type arrives with GRAVITY, NOT bounce: the keyframe rides --ease-out (a
-   strictly monotone bezier, NO overshoot past the terminal transform — never
-   --spring-bouncy/--spring-snappy, the §6 doctrine + the W-ANIMATE W4 negative
-   fence; the no-overshoot leg per P1/P3 — the audacious-type-arrives-with-gravity
-   register W-HIERARCHY2 names). It reads the `--story-hero-rise` distance token (the
-   hero-title register's own rise; BG.W-ROUTE-TRANSITION re-pointed it off the retired
-   `--scroll-build-rise` when the `.scroll-build` page-build recipe was deleted). ONE
-   deliberate event on the title. Gated under prefers-reduced-motion: no-preference —
-   under reduce the <h1> mounts at its static terminal state (no animation declared). */
-@media (prefers-reduced-motion: no-preference) {
-    @keyframes story-hero-title-rise {
-        from {
-            opacity: 0;
-            transform: translateY(var(--story-hero-rise, 1.5rem));
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    .story-hero-title--enter {
-        animation: story-hero-title-rise 0.62s var(--ease-out, ease-out) both;
-    }
-
-    /* BB.W-HIERARCHY2 — the 3-stage GRAVITY cluster entrance (A4-ENTRANCE). The
-       cluster arrives as a tight 3-stage fade-rise that REINFORCES the corrected
-       reading order: the eyebrow LEADS (stage 0), the display title SETTLES
-       (stage 1), the blurb fades in LAST (stage 2). Each stage is COMPOSITOR-ONLY
-       (transform: translateY + coupled opacity — NEVER font-size/margin/top, the
-       W-MOTION-CANON P5 floor) on the no-overshoot SETTLE register (--ease-out — the
-       audacious title NEVER bounces, P2; this EXTENDS the shipped
-       .story-hero-title--enter GRAVITY precedent to the eyebrow + blurb, it forks no
-       new spring). The fade is COUPLED to the rise (opacity + translateY in the SAME
-       keyframe, P3), clocked on the per-element settle (--spring-smooth-duration, the
-       A4-named clock — read-only, the W-GLASS-CAL clock fence). The stagger is the
-       keyframe `animation-delay` per stage (a deterministic CSS stagger, NO
-       setTimeout cascade). The whole block lives inside the no-preference gate so
-       under reduce the cluster paints its static terminal state with ZERO in-between
-       frames (no rise, no fade-in delay — the P6 floor; nothing here binds under
-       reduce). */
-    @keyframes story-hero-cluster-rise {
-        from {
-            opacity: 0;
-            transform: translateY(var(--story-hero-rise, 1.5rem));
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    /* The eyebrow LEADS — stage 0, no delay. The D5 scroll-fade is comma-appended: the
-       FIRST animation is the document-timeline entrance, the SECOND is the scroll()-driven
-       subordinate fade (the per-animation animation-timeline/-range lists pair them
-       positionally — `auto` for the entrance, `scroll()` for the fade). */
-    .story-hero-cluster .story-header-eyebrow.story-header-cluster--enter {
-        animation:
-            story-hero-cluster-rise var(--spring-smooth-duration, 0.36s)
-                var(--ease-out, ease-out) both,
-            story-hero-subordinate-fade linear both;
-        animation-delay: 0ms, 0s;
-        animation-timeline: auto, scroll();
-        /* BG.W-DEMO-IA-REDESIGN (SHRINK-NOT-FADE, USER 07-05) — the subordinate
-           eyebrow/blurb feather ONLY AFTER the title pins. The SHRINK (the
-           title-collapse scale over 0..--hero-condense-range) is the PRIMARY scroll
-           read; opacity may only COUPLE to it, never LEAD. So the subordinate fade
-           opens at --hero-condense-range (the pin) and completes one fade-range
-           later — the title holds full opacity across the whole condense window, and
-           only the eyebrow/blurb reclaim room AFTER the header has settled. The
-           standalone opacity-led leave (fade from scroll 0) is RETIRED. */
-        animation-range: normal,
-            var(--hero-condense-range, 160px)
-                calc(
-                    var(--hero-condense-range, 160px) +
-                        var(--hero-condense-fade-range, 120px)
-                );
-    }
-    /* BG.W-ROUTE-ENTER-VISIBLE (fix c) — the subpath chip JOINS the reading-order
-       cascade. It carried `story-header-cluster--enter` (StoryHeader.vue) but had NO
-       matching keyframe rule, so it appeared STATIC while the eyebrow/title/blurb rose
-       — a dead class + a broken 4-band cascade. It now rides the SAME
-       story-hero-cluster-rise on the SAME clock, staggered ~30ms (between the eyebrow's
-       0 and the title's 60) so the eyebrow→subpath→title→blurb bands read top-to-bottom.
-       No D5 scroll-fade here (the subpath is the route identity — it PERSISTS through the
-       scroll-shrink, never fades). */
-    .story-hero-cluster .story-header-subpath.story-header-cluster--enter {
-        animation: story-hero-cluster-rise var(--spring-smooth-duration, 0.36s)
-            var(--ease-out, ease-out) both;
-        animation-delay: 30ms;
-    }
-    /* The display title SETTLES — stage 1, ~60ms after the eyebrow. It keeps its OWN
-       .story-hero-title--enter keyframe (the audacious-type GRAVITY register, 0.62s
-       --ease-out); the cluster adds ONLY the stage delay so it settles after the
-       eyebrow leads. */
-    .story-hero-cluster .story-hero-title--enter {
-        animation-delay: 60ms;
-    }
-    /* The blurb fades in LAST — stage 2, ~120ms. The D5 scroll-fade is comma-appended (see
-       the eyebrow rule above — the entrance on the document timeline, the fade on scroll()). */
-    .story-hero-cluster .story-header-blurb.story-header-cluster--enter {
-        animation:
-            story-hero-cluster-rise var(--spring-smooth-duration, 0.36s)
-                var(--ease-out, ease-out) both,
-            story-hero-subordinate-fade linear both;
-        animation-delay: 120ms, 0s;
-        animation-timeline: auto, scroll();
-        /* BG.W-DEMO-IA-REDESIGN (SHRINK-NOT-FADE, USER 07-05) — the subordinate
-           eyebrow/blurb feather ONLY AFTER the title pins. The SHRINK (the
-           title-collapse scale over 0..--hero-condense-range) is the PRIMARY scroll
-           read; opacity may only COUPLE to it, never LEAD. So the subordinate fade
-           opens at --hero-condense-range (the pin) and completes one fade-range
-           later — the title holds full opacity across the whole condense window, and
-           only the eyebrow/blurb reclaim room AFTER the header has settled. The
-           standalone opacity-led leave (fade from scroll 0) is RETIRED. */
-        animation-range: normal,
-            var(--hero-condense-range, 160px)
-                calc(
-                    var(--hero-condense-range, 160px) +
-                        var(--hero-condense-fade-range, 120px)
-                );
-    }
-}
-
-/* The exposed-substrate margin over a LIVE backdrop. The card no longer fills
-   `.story-hero` exactly — the inset gutter shows the substrate AROUND the plate.
-   A page-variant card takes a symmetric small gutter; a hero card takes an
-   asymmetric offset (a touch more breathing room at the top, the composition
-   gesture). The `> * { width: 100% }` rule above governs the card's CHILDREN,
-   not the card's own fill, so the inset is purely the card box's margin. */
-.story-hero-card--live {
-    margin: var(--story-hero-inset);
-}
-
-.story-hero[data-variant="hero"] .story-hero-card--live {
-    /* Asymmetric — the substrate bleeds a little wider at the top + leading edge. */
-    margin: calc(var(--story-hero-inset) * 1.5) var(--story-hero-inset)
-        var(--story-hero-inset) calc(var(--story-hero-inset) * 1.25);
-}
-
-/* The static-paper wash base (BA.W-STAGE scope 4). The paper background <div>
-   carries `paper-grain-overlay` (the library grain utility, soft-light in dark)
-   PLUS this base tint so the paper register reads THROUGH the wash-tier card in
-   DARK. In light the base is transparent (the cream page already reads); in dark
-   it's a faint warm-cream wash (--story-paper-wash, the .dark lift above) under
-   the grain — the calm warm-paper read the grain alone could not deliver over the
-   W-DARK-MATERIAL near-black page. */
 .story-bg-paper {
     background-color: var(--story-paper-wash);
 }
 
-/* BC.W-GRID-SIMPLE — the crisp engineering-graph-paper page grid (the keyframes.js
-   `EditorShell` foil to glass; pure CSS, NO GL). Four hard-stop repeating-linear-
-   gradients — a major pair (5rem, 11%, listed FIRST so it dominates intersections)
-   + a fine pair (1rem, 3%) — on the ONE shared `--grid-*` rhythm. CRISP BY
-   CONSTRUCTION: the hard color stops (`var(--line) 0 1px, transparent 1px …`) are a
-   sharp transparent↔ink edge (NOT a soft gradient ramp — a ramp is what blurs a
-   gradient grid); the rem-relative pitch divides cleanly at DPR 1/2/3; and
-   `background-position: 0 0` pins the tile to the box origin so every line lands on a
-   device-pixel boundary (the prior `center center` offset the tile a half-cell on
-   odd-pixel viewports → the lines drifted off the device-pixel grid → softening). NO
-   filter, NO backdrop-filter, NO opacity layer, NO transform — one compositor-cached
-   static raster. Mounted FULL-BLEED (`.story-hero-bg--bleed`, StoryHero.vue) so it is
-   the WHOLE-PAGE wash BEHIND the content, NOT a `-z-10` layer clipped inside the
-   rounded card and NOT a crisp grid blurred through a `backdrop-filter` glass plate.
-   Static under reduced-motion by construction (a grid does not animate). */
 .grid-bg {
-    /* BG.W-CORNER-ALIAS-KILL — NO opaque `background-color`. The grid is a
-       translucent TEXTURE over the ONE shell warm field (BG.W-FIELD-AURORA owns
-       the page background); an opaque `var(--background)` base here was a SECOND
-       page background that white-out the field wherever the layer painted (the
-       trapped square plate behind the rounded landing card = the white corner
-       wedges). The line inks are `--foreground`-derived, so they read over the
-       warm field in both modes with no base plate. */
     background-image:
         repeating-linear-gradient(
             to right,
@@ -864,97 +159,4 @@
             transparent 1px var(--grid-pitch)
         );
     background-position: 0 0;
-}
-
-/* ── BC.W-PAGE-HIERARCHY (Part B) — the section-delimiter chassis affordance ─────
- *
- * The user's bar (USER-DEFECTS §C): "Each section on a page must be properly
- * delimited with hr lines OR in different cards." At HEAD the StoryPage body was
- * an undelimited `gap-10` gap-stack — every block blurred into the next (~0% of
- * routes met the bar). This register draws a visible hairline rule BETWEEN
- * consecutive top-level body sections AUTOMATICALLY — the chassis applies it, no
- * per-SFC hand-rolled `<hr>`.
- *
- * The seam reads the dark-adaptive `--configurator-divider` token (CLAUDE.md
- * §BA.W-CONFIG-CHASSIS — a `light-dark()` warm-ink hairline that survives the dark
- * glass plate), NEVER an inline `border-border/N` alpha that vanishes on the dark
- * card. It is a hairline whisper (the `.glass-menu-section --border-hairline`
- * register precedent), never a hard `1px solid` page-rule.
- *
- * The `> * + *` adjacent-sibling form delimits between top-level sections only —
- * the first section stays flush (no leading rule), the seam sits BETWEEN named
- * sections (≥2 sections → ≥1 delimiter). It rides the `gap-10` stack: the
- * border-top draws at the existing gap, with a touch of breathing padding so the
- * rule does not crowd the next section's heading. The delimiter sits INSIDE the
- * `.scroll-cascade` build (it does not re-author the section entrance). */
-.story-sections--delimited > * + *,
-/* The dock walkthroughs stage their sections inside a <DockStage> backdrop
-   column (`.dock-stage-column`, a flex stack of StorySection children over the
-   shared field) — the ONE structural grouping wrapper in the demo. Reach one
-   level into it so the staged walkthrough steps are delimited too (the
-   "EVERY PAGE STANDARDIZED" bar reaches the dock band). */
-.story-sections--delimited .dock-stage-column > section + section {
-    border-top: 1px solid var(--configurator-divider);
-    padding-top: var(--story-section-delimiter-gap, 1.5rem);
-}
-
-/* ─────────────────────────────────────────────────────────────────────────
- * BG.W-SECTION-TYPEWRITER-FADEUP — the per-glyph section-heading reveal.
- *
- * The `.story-section__heading` (a `<StorySection heading>` `<h2>`) wraps a
- * `<SplitChars :stagger=false>`, so the shipped `.char-stagger` mount `fade-in`
- * is DROPPED and this IO-gated reveal OWNS the entrance. `useSectionReveal`
- * arms the node with `data-reveal-armed` SYNCHRONOUSLY on mount (pre-paint) and
- * flips it to `data-revealed` as it crosses into view; the body sibling rides the
- * native `.scroll-cascade` view() cascade (the disjoint congruent register).
- *
- * The `--char-stagger-step` (scheme-motion.css, 30ms) is the SINGLE-SOURCE
- * per-glyph increment — shared with the `.char-stagger` recipe (DRY). The rise
- * rides the per-spring `--spring-smooth`/`--spring-smooth-duration` clock; the
- * keyframe animates ONLY `opacity` + `transform` (compositor-only).
- * ───────────────────────────────────────────────────────────────────────── */
-
-/* `:stagger=false` drops `.char-stagger`, so restate the glyph inline-block the
-   translate needs (the transform has no effect on an inline element). */
-.story-section__heading .char {
-    display: inline-block;
-}
-
-/* The INVERTED FOUC-safe floor — armed but NOT-yet-revealed → hide the glyphs.
-   Absent `data-reveal-armed` (no JS / no provider) the heading stays VISIBLE. */
-.story-section__heading[data-reveal-armed]:not([data-revealed]) .char {
-    opacity: 0;
-    transform: translateY(0.4em);
-}
-
-/* The reveal — each glyph rises on the spring clock, staggered per `--char-index`
-   by the single-source `--char-stagger-step`; `backwards` holds the from-state
-   through the delay so a late glyph never flashes at its settled position. */
-.story-section__heading[data-revealed] .char {
-    animation: gl-char-rise var(--spring-smooth-duration) var(--spring-smooth, ease)
-        backwards;
-    animation-delay: calc(var(--char-index, 0) * var(--char-stagger-step));
-}
-
-@keyframes gl-char-rise {
-    from {
-        opacity: 0;
-        transform: translateY(0.4em);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* PRM — the reveal is a legibility-neutral flourish, so under reduce the heading
-   is terminally VISIBLE with zero transform/animation frames (fade-keeps is moot
-   here — the char text must read; the vestibular floor drops the rise). */
-@media (prefers-reduced-motion: reduce) {
-    .story-section__heading[data-reveal-armed]:not([data-revealed]) .char,
-    .story-section__heading[data-revealed] .char {
-        opacity: 1;
-        transform: none;
-        animation: none;
-    }
 }

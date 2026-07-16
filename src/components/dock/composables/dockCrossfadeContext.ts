@@ -7,14 +7,13 @@ import { DOCK_LAYER_GROUP_LABEL } from "../constants";
  *
  * `<DockCrossfade :active>` provides this; each face host (`<DockLayer>`) registers
  * its id + label + icon + host element on mount. The crossfade slot owns ONE face
- * registry — the registration machinery FOLDED here from the retired
- * `DockLayerGroup` `register`/`unregister` + `useLayerTransition` FLIP (PASS-1 §2.6).
+ * registry.
  * A switcher rail (where one exists — `<DockLayerGroup>`) reads `faces` for its chip
  * run; the controlled-no-rail 5-pane case (speedtest) consumes `<DockCrossfade>`
  * DIRECTLY and reads only `activeId`/`leavingId` (no rail, no selection engine).
  *
  * The context is DISTINCT from `DockContext` (a `<DockCrossfade>` need not live inside
- * a `<GlassDock>`) and from `DockMorphContext` (the plate collapse orchestrator) — the
+ * a `<GlassDock>`) and from the plate collapse orchestrator — the
  * face crossfade is orthogonal to the box morph (the compound: a face-swap DURING a
  * simultaneous collapse rides two independent scalars — per-face `--dock-t` for the
  * opacity overlap, the inheriting `--dock-morph-t` for the plate clip). It keeps its

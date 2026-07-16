@@ -15,13 +15,10 @@
 // the picked hue is written as a complete `oklch()` at a FIXED sub-perceptual
 // chroma/L so the plate absorbs the CAST, never the backdrop's saturation.
 //
-// The sRGB→OKLCh conversion routes through value.js's `srgbToOKLab` +
-// `rawOklabToOklch` (the EXACT primitives `composables/color`'s `cssToOklch`
-// composes) — the ONE color-math source, NO hand-rolled rgb→oklch matrix
-// (`proof:single-color-core` holds; raw 0..255 pixel triples cannot ride the
-// CSS-string `cssToOklch`, so the underlying value.js primitives are imported
-// directly — the aurora-swraster fallback precedent).
-import { srgbToOKLab, rawOklabToOklch } from "@mkbabb/value.js";
+// The sRGB→OKLCh conversion routes through Value's final-object `rgb` factory and
+// `convertColor`; no matrix or CSS-text detour lives here.
+import { convertColor, rgb } from "@mkbabb/value.js/color";
+import { colorValue, numericChannel } from "../color/value";
 
 const AMBIENT_HUE_BUCKETS = 12; // 30° per bucket — the coarse modal-hue resolution.
 // The fixed sub-perceptual chroma + lightness the ambient HUE is written at. The
@@ -72,9 +69,14 @@ export function accumulateHuePixel(
     alpha: number,
 ): void {
     h.n++;
-    // value.js Ottosson primitives — the EXACT `cssToOklch` composition path.
-    const [L, a, bch] = srgbToOKLab(r, g, b);
-    const [, C, H] = rawOklabToOklch(L, a, bch);
+    const source = colorValue("accumulateHuePixel:rgb", rgb(r, g, b));
+    const converted = colorValue(
+        "accumulateHuePixel:oklch",
+        convertColor(source, "oklch"),
+    );
+    const [, chroma, hue] = converted.channels;
+    const C = numericChannel(chroma, "accumulateHuePixel");
+    const H = numericChannel(hue, "accumulateHuePixel");
     if (!Number.isFinite(C) || !Number.isFinite(H) || C <= 0) return;
     const mass = C * alpha; // chroma × alpha — a gray pixel weighs ~0 (the null floor).
     if (mass <= 0) return;

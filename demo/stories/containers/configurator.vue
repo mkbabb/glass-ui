@@ -10,10 +10,11 @@ import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import CodeBlock from "../../chassis/code/CodeBlock.vue";
+import ConfiguratorExample from "../../examples/ConfiguratorExample.vue";
+import configuratorExampleSource from "../../examples/ConfiguratorExample.vue?raw";
 import {
     Configurator,
     ConfiguratorLayer,
-    ConfiguratorRow,
     useConfiguratorState,
     type ConfiguratorPreset,
 } from "@glass/components/configurator";
@@ -32,20 +33,6 @@ interface Cfg {
 
 const mediums = ["aurora", "ink", "gouache"] as const;
 
-// The `useConfiguratorState` API surface, rendered through the ONE <CodeBlock>
-// register (real, copy-able, syntax-highlighted) — not a hand-rolled raw <pre>.
-const apiSnippet = `const cfg = useConfiguratorState<T>({
-  presets,                  // readonly ConfiguratorPreset<T>[]
-  initialPreset: "default", // optional preset key
-});
-
-cfg.config         // reactive T (the live config)
-cfg.activePreset   // ComputedRef<string | undefined>
-cfg.isDirty        // ComputedRef<boolean>
-cfg.selectPreset(key)
-cfg.resetCurrent()
-cfg.cyclePreset()`;
-
 // Each medium tilts the specimen's hue triad — the stage reads the medium
 // as a distinct palette so the Select is visibly load-bearing, not decorative.
 // The triad reads INDIRECT `--bloom-*` tokens (defined on `.configurator-specimen`)
@@ -55,21 +42,9 @@ cfg.cyclePreset()`;
 // FD-R2 #3 dark defect), so dark mode swaps to the full-chroma ramp + a deep
 // base, recovering the chromatic bloom.
 const MEDIUM_HUES: Record<string, readonly [string, string, string]> = {
-    aurora: [
-        "var(--bloom-blue)",
-        "var(--bloom-indigo)",
-        "var(--bloom-violet)",
-    ],
-    ink: [
-        "var(--bloom-indigo)",
-        "var(--bloom-blue)",
-        "var(--bloom-green)",
-    ],
-    gouache: [
-        "var(--bloom-orange)",
-        "var(--bloom-red)",
-        "var(--bloom-yellow)",
-    ],
+    aurora: ["var(--bloom-blue)", "var(--bloom-indigo)", "var(--bloom-violet)"],
+    ink: ["var(--bloom-indigo)", "var(--bloom-blue)", "var(--bloom-green)"],
+    gouache: ["var(--bloom-orange)", "var(--bloom-red)", "var(--bloom-yellow)"],
 };
 
 const presets: readonly ConfiguratorPreset<Cfg>[] = [
@@ -100,9 +75,7 @@ const mediumOpen = ref(false);
 // Live specimen geometry — every axis is driven off the config so the stage
 // SHOWS the configurator rather than printing it. Spread fans the three
 // nuclei apart; bloom feathers each blob's radius + blur.
-const hues = computed(
-    () => MEDIUM_HUES[cfg.config.medium] ?? MEDIUM_HUES.aurora!,
-);
+const hues = computed(() => MEDIUM_HUES[cfg.config.medium] ?? MEDIUM_HUES.aurora!);
 
 // BD.W-CONFIG-GALLERY-DOCK — the device-free preset field-well. Each gallery tile
 // paints its preset's field from the SAME medium hue triad the live stage uses —
@@ -191,8 +164,8 @@ const size = computed(() => (isNarrow.value ? "sm" : "md"));
 <template>
     <StoryPage>
         <StorySection
-            label="studio shell — top gallery · layer · live stage"
-            blurb="One responsive configurator with the preset gallery UP-TOP (galleryPlacement=&quot;top&quot;) — a large, full-width, scrollable warm-glass dock of device-free preset tiles (each well a CSS field, no GL device, never blank). The stage paints the live config — drag spread to fan the field, bloom to feather it, grain to layer the paper overlay. Density reads `mobile` at narrow widths and `comfortable` when there is room; the gallery drives useConfiguratorState (active-preset / isDirty / reset)."
+            heading="Preset studio"
+            blurb="Choose a visual preset, then adjust spread, bloom, medium, and grain while the stage and edited-state feedback update immediately."
         >
             <ShowcaseFrame pad="lg" tier="quiet">
                 <Configurator
@@ -216,7 +189,9 @@ const size = computed(() => (isNarrow.value ? "sm" : "md"));
                             role="group"
                             aria-label="Presets"
                         >
-                            <p class="text-admin-label text-muted-foreground">Presets</p>
+                            <p class="text-admin-label text-muted-foreground">
+                                Presets
+                            </p>
                             <div
                                 class="configurator-gallery-track flex gap-3 overflow-x-auto px-1 py-2 scrollbar-thin"
                             >
@@ -226,7 +201,9 @@ const size = computed(() => (isNarrow.value ? "sm" : "md"));
                                     type="button"
                                     data-preset-tile
                                     class="configurator-preset-tile group glass-capsule glass-capsule-hover shadow-cartoon-md focus-ring relative flex flex-shrink-0 flex-col overflow-hidden text-left"
-                                    :class="p.key === cfg.activePreset.value && 'is-active'"
+                                    :class="
+                                        p.key === cfg.activePreset.value && 'is-active'
+                                    "
                                     :aria-pressed="p.key === cfg.activePreset.value"
                                     @click.stop="cfg.selectPreset(p.key)"
                                 >
@@ -235,12 +212,19 @@ const size = computed(() => (isNarrow.value ? "sm" : "md"));
                                         :style="{ background: presetWell(p.config) }"
                                         aria-hidden="true"
                                     />
-                                    <div class="configurator-preset-label flex flex-col gap-0.5 px-3 py-2">
-                                        <span class="text-small font-medium text-foreground">
+                                    <div
+                                        class="configurator-preset-label flex flex-col gap-0.5 px-3 py-2"
+                                    >
+                                        <span
+                                            class="text-small font-medium text-foreground"
+                                        >
                                             {{ p.label }}
                                         </span>
-                                        <span class="text-admin-label text-muted-foreground">
-                                            {{ p.config.medium }} · spread {{ p.config.spread }}
+                                        <span
+                                            class="text-admin-label text-muted-foreground"
+                                        >
+                                            {{ p.config.medium }} · spread
+                                            {{ p.config.spread }}
                                         </span>
                                     </div>
                                 </button>
@@ -252,7 +236,9 @@ const size = computed(() => (isNarrow.value ? "sm" : "md"));
                              the config. The aurora story swaps this for a real
                              WebGL canvas; here a token-driven gradient stands
                              in so the primitive reads honestly. -->
-                        <div class="configurator-specimen relative h-full w-full overflow-hidden">
+                        <div
+                            class="configurator-specimen relative h-full w-full overflow-hidden"
+                        >
                             <div
                                 aria-hidden="true"
                                 class="absolute inset-0 transition-[filter] duration-300 ease-out motion-reduce:transition-none"
@@ -268,57 +254,50 @@ const size = computed(() => (isNarrow.value ? "sm" : "md"));
                             <div
                                 class="absolute bottom-3 left-3 flex items-center gap-2 rounded-pill border border-border/40 bg-card/70 px-3 py-1 backdrop-blur-sm"
                             >
-                                <span class="text-micro font-mono text-muted-foreground">
+                                <span
+                                    class="text-micro font-mono text-muted-foreground"
+                                >
                                     {{ cfg.config.medium }}
                                 </span>
-                                <span class="text-micro font-mono text-muted-foreground/60">
-                                    spread {{ cfg.config.spread }} · bloom {{ cfg.config.bloom }}
+                                <span
+                                    class="text-micro font-mono text-muted-foreground/60"
+                                >
+                                    spread {{ cfg.config.spread }} · bloom
+                                    {{ cfg.config.bloom }}
                                 </span>
                             </div>
                         </div>
                     </template>
                     <template #controls>
                         <ConfiguratorLayer label="Field" sub="--field-*">
-                            <ConfiguratorRow label="Medium" name="medium">
-                                <LabeledSelect
-                                    v-model="cfg.config.medium"
-                                    v-model:is-open="mediumOpen"
-                                    :items="mediums as unknown as readonly string[]"
-                                    label="Medium"
-                                    hide-label
-                                    tooltip="Painterly medium — tilts the field's hue triad."
-                                />
-                            </ConfiguratorRow>
-                            <ConfiguratorRow label="Spread" name="spread">
-                                <LabeledSlider
-                                    v-model="cfg.config.spread"
-                                    :min="0"
-                                    :max="100"
-                                    :step="1"
-                                    label="Spread"
-                                    hide-label
-                                    tooltip="Fans the nuclei apart, 0-100."
-                                />
-                            </ConfiguratorRow>
-                            <ConfiguratorRow label="Bloom" name="bloom">
-                                <LabeledSlider
-                                    v-model="cfg.config.bloom"
-                                    :min="0"
-                                    :max="100"
-                                    :step="1"
-                                    label="Bloom"
-                                    hide-label
-                                    tooltip="Diffusion radius — feathers each blob."
-                                />
-                            </ConfiguratorRow>
-                            <ConfiguratorRow label="Grain" name="grain">
-                                <LabeledSwitch
-                                    v-model:checked="cfg.config.grain"
-                                    label="Grain"
-                                    hide-label
-                                    tooltip="Layer the paper grain overlay."
-                                />
-                            </ConfiguratorRow>
+                            <LabeledSelect
+                                v-model="cfg.config.medium"
+                                v-model:open="mediumOpen"
+                                :items="mediums as unknown as readonly string[]"
+                                label="Medium"
+                                description="Painterly medium — tilts the field's hue triad."
+                            />
+                            <LabeledSlider
+                                v-model="cfg.config.spread"
+                                :min="0"
+                                :max="100"
+                                :step="1"
+                                label="Spread"
+                                description="Fans the nuclei apart, 0-100."
+                            />
+                            <LabeledSlider
+                                v-model="cfg.config.bloom"
+                                :min="0"
+                                :max="100"
+                                :step="1"
+                                label="Bloom"
+                                description="Diffusion radius — feathers each blob."
+                            />
+                            <LabeledSwitch
+                                v-model="cfg.config.grain"
+                                label="Grain"
+                                description="Layer the paper grain overlay."
+                            />
                         </ConfiguratorLayer>
                     </template>
                 </Configurator>
@@ -326,12 +305,13 @@ const size = computed(() => (isNarrow.value ? "sm" : "md"));
         </StorySection>
 
         <StorySection
-            label="API surface"
-            blurb="useConfiguratorState<T> returns config + activePreset + isDirty + selectPreset + resetCurrent + cyclePreset. Generic over the live shape T; structuredClone-based by default with optional cloner / equality hooks."
+            heading="Preset state"
+            blurb="Cycle between named presets, edit the live intensity, and observe when the current values diverge from the selected preset."
         >
             <ShowcaseFrame pad="md" tier="quiet">
-                <CodeBlock lang="ts" :code="apiSnippet" />
+                <ConfiguratorExample />
             </ShowcaseFrame>
+            <CodeBlock lang="vue" :code="configuratorExampleSource" />
         </StorySection>
     </StoryPage>
 </template>

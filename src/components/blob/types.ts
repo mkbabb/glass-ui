@@ -6,22 +6,6 @@ export type BlobMood = "idle" | "happy" | "curious" | "sleepy" | "excited";
 export type BlobMerge = "quadratic" | "circular";
 
 /**
- * The render-variant axis (BC.W-GOOBLOB-PLAIN — STAGE 1 owns the first two members).
- *
- * - `"blob"` — the STAGE-1 first-principles floor: a plain shadowless lightless
- *   fill-only droplet (SDF + smin satellites + fwidth-AA + warm-cream fill). The
- *   minimal verifiable "it renders, it meatballs, it works on Safari" register the
- *   `uStage` gate strips the lit/shadow blocks for. NO specular, NO iridescence, NO
- *   SSS, NO shadow — deliberately minimal.
- * - `"meatball"` — the full lit register (the default): STAGE 2 builds the lit-glass
- *   surface / Fresnel rim / iridescence / SSS / shadow ON the same field via the
- *   `uLit`/`uShadow` flags. Byte-identical to the pre-STAGE-1 default pipeline.
- *
- * `"dot-matrix"` / `"dot-sphere"` are the later-sub-wave siblings (not STAGE 1).
- */
-export type BlobVariant = "blob" | "meatball";
-
-/**
  * Render-quality axis (AX.W16) — `full` (default) renders the metaball pass at the
  * clamped DPR; `half` renders the backing store at HALF resolution and lets the
  * browser bilinear-upsample on composite (~4× fragment savings for weak GPUs — the
@@ -126,8 +110,8 @@ export interface SatelliteInternal {
 //    discipline, mirroring the aurora seed/harmony/mood/medium/zones/motion door).
 //
 // The flat ~50-knob surface is collapsed to EIGHT top-level atoms: every tunable
-// length/weight/duration lives BEHIND the atom it belongs to (J §6.3 "the variant IS
-// the bundle"), so a consumer reaches for ONE cohesive cluster (`geometry`, `surface`,
+// length/weight/duration lives BEHIND the atom it belongs to, so a consumer reaches for
+// ONE cohesive cluster (`geometry`, `surface`,
 // `membrane`, …) rather than scanning a flat sibling list of ~50 knobs. The three
 // derived-but-unread fields the AX synthesis flagged (`orbitSpeedScale`, `wobbleScale`,
 // `mergeRate`) are DELETED — they were config-level identity no-ops (read only off the
@@ -243,13 +227,13 @@ export interface BlobSurface {
 
     /**
      * BD.W-GOOBLOB-MERCURY-COLONY — the MERCURY-COLONY split register (the OPT-IN scalar,
-     * 0..1, default the calm floor `0`). At `0` the shipped `variant:"blob"` default stays
+     * 0..1, default the calm floor `0`). At `0` a flat-surface configuration stays
      * calm + gate-faithful: a permanently-bonded merge/un-merge breath, NO pinch (so
      * `proof:blob-render`/`-studio`/`-page` are UNMOVED — `orbitRadius 0.17` is NOT
      * re-based). Lifting it toward `1` arms the `fissioning` beat: the colony breathes a
      * satellite OUT through a thinning neck whose gap exceeds the smin reach so it SNAPS
      * into a free orbiting bead (the mercury pinch), then re-merges next cycle. This is a
-     * DERIVED bundling over the EXISTING `surface` atom (the variant IS the bundle) — NOT
+     * DERIVED bundling over the EXISTING `surface` atom — NOT
      * a 9th geometry atom; the split rides MOTION (the satellite moves) on the EXISTING
      * phase machine, NOT a global smin-band re-base (which would lean-regress per
      * AZ.W-BLOB-STUDIO D2). Mood-coupled: `excited` splits more, `sleepy` barely. The
@@ -291,26 +275,11 @@ export interface BlobConfig {
     interaction: BlobInteraction;
 
     /**
-     * The render variant (BC.W-GOOBLOB-PLAIN) — `"meatball"` (default, the full lit
-     * pipeline) | `"blob"` (the STAGE-1 plain shadowless fill-only floor). `"blob"`
-     * sets the shader `uStage` gate so the lit/shadow/iridescence/SSS blocks are NOT
-     * reached — the minimal verifiable floor. `"meatball"` is byte-identical to the
-     * pre-STAGE-1 default (the `surface.lit` flag still owns the lit-on/off within it).
+     * The sole flat↔dressed surface axis. Values are clamped to `[0, 1]`: `0` is the
+     * flat warm-cream blob, `1` is the fully dressed lit meatball, and intermediate
+     * values smoothly interpolate the surface over the shared smin geometry.
      */
-    variant: BlobVariant;
-
-    /**
-     * BD.W-GOO-CAROUSEL-DECK — the blob↔meatball SHADING-MORPH scalar (0..1). The user's
-     * "MORPH BLOB and MEATBALL from one to another" — a CONTINUOUS in-between, not a hard
-     * `variant` cut. `0` = the flat warm-cream blob (byte-identical to `variant: "blob"`);
-     * `1` = the fully-dressed lit meatball (byte-identical to `variant: "meatball"`);
-     * `0 < morphT < 1` lerps the SURFACE shading (the smin GEOMETRY is shared, so only the
-     * fill→lit/shadow/iridescence dressing interpolates). UNSET (the default) → the value
-     * is resolved from `variant` (blob → 0, meatball → 1), so the existing `variant` prop
-     * is byte-back-compat. A consumer ANIMATING this (a `useSpring`/registered-scalar) gets
-     * the live morph.
-     */
-    morphT?: number;
+    morphT: number;
 
     // Render quality (AX.W16) — `full` (default) | `half` (half-res backing store +
     // free bilinear upsample, ~4× fragment savings for weak GPUs). NON-length.
@@ -496,10 +465,8 @@ export const BLOB_CONFIG_DEFAULTS: BlobConfig = {
         clickImpulse: 0.5,
     },
 
-    // BC.W-GOOBLOB-PLAIN — the full lit register by default (byte-identical to the
-    // pre-STAGE-1 pipeline); a consumer opts into the plain STAGE-1 floor via
-    // `variant: "blob"` (the shadowless fill-only register the `uStage` gate strips).
-    variant: "meatball",
+    // The fully dressed endpoint; consumers set `morphT: 0` for the flat floor.
+    morphT: 1,
 
     // AX.W16 — full-resolution by default; weak-GPU consumers opt into `half`.
     quality: "full",

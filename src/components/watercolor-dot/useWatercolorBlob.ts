@@ -57,17 +57,19 @@ const CHANNEL_AMP: Record<(typeof CHANNELS)[number], number> = {
  * touching the cached filter — the HandMark static-filter idiom. The wobble is driven
  * by the library's ONE `useRAFLoop` (BG.W-WATERCOLOR-RAF) — parked when the tab is
  * hidden, frozen under `prefers-reduced-motion` — never a hand-rolled zombie rAF.
- * `nudge()` retargets the wobble for a quick jiggle on hover.
  */
 export function useWatercolorBlob(
     color: Ref<string> | (() => string),
     options: UseWatercolorBlobOptions = {},
 ) {
-    const { animate = false, cycleDuration = 4000, range = [20, 80], seed = "" } =
-        options;
+    const {
+        animate = false,
+        cycleDuration = 4000,
+        range = [20, 80],
+        seed = "",
+    } = options;
 
     const borderRadius = ref("");
-    const hoverBorderRadius = ref("");
     // The seeded COMPOSITOR transform wobble (the animate-mode liveness; default
     // identity so a static dot reads untransformed).
     const transform = ref("none");
@@ -79,23 +81,15 @@ export function useWatercolorBlob(
     const initial = randomRadii(rng, range[0], range[1]);
     borderRadius.value = radiiToCSS(initial);
 
-    // Generate a second deterministic shape for hover state.
-    const hoverShape = randomRadii(rng, range[0], range[1]);
-    hoverBorderRadius.value = radiiToCSS(hoverShape);
-
-    // No-op nudge for non-animated blobs.
-    let nudge = () => {};
-
     // Re-seed when color changes (non-animated mode).
     if (!animate) {
         if (typeof color !== "function") {
             watch(color, (c) => {
                 const r = mulberry32(hashString(c + seed));
                 borderRadius.value = radiiToCSS(randomRadii(r, range[0], range[1]));
-                hoverBorderRadius.value = radiiToCSS(randomRadii(r, range[0], range[1]));
             });
         }
-        return { borderRadius, hoverBorderRadius, transform, nudge };
+        return { borderRadius, transform };
     }
 
     // --- Per-channel independent COMPOSITOR transform wobble ---
@@ -118,7 +112,6 @@ export function useWatercolorBlob(
         });
     }
 
-    let lastNow = 0;
     const current = channels.map(() => 0);
 
     function composeTransform(): string {
@@ -133,7 +126,6 @@ export function useWatercolorBlob(
     }
 
     function tick(now: number) {
-        lastNow = now;
         for (let i = 0; i < channels.length; i++) {
             const c = channels[i];
             if (!c) continue;
@@ -158,23 +150,6 @@ export function useWatercolorBlob(
         transform.value = composeTransform();
     }
 
-    /**
-     * Nudge: immediately retarget all wobble channels to new positions with short
-     * durations, creating a visible "jiggle" on the compositor transform.
-     */
-    nudge = () => {
-        const now = lastNow || performance.now();
-        for (let i = 0; i < channels.length; i++) {
-            const c = channels[i];
-            if (!c) continue;
-            c.from = current[i] ?? c.from;
-            c.to = -1 + rng() * 2;
-            // Fast transition (25-50% of normal cycle).
-            c.duration = cycleDuration * (0.25 + rng() * 0.25);
-            c.startTime = now;
-        }
-    };
-
     // The ONE rAF loop drives the wobble. `pauseWhenHidden` parks the schedule when
     // the tab is backgrounded; `respectReducedMotion` (live-monitored) freezes it to a
     // single static frame under `prefers-reduced-motion: reduce`. The loop registers
@@ -185,7 +160,7 @@ export function useWatercolorBlob(
         respectReducedMotion: true,
     });
 
-    return { borderRadius, hoverBorderRadius, transform, nudge };
+    return { borderRadius, transform };
 }
 
 export type WatercolorBlob = ReturnType<typeof useWatercolorBlob>;

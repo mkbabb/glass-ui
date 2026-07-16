@@ -16,7 +16,7 @@
     /* AX.W45 D13-a — the PERSISTENT region (the iOS Now-Playing / Stage-Manager
        idiom done STRUCTURALLY). The `#persistent` slot lives in-flow as a root flex
        SIBLING of the morph-region (`.dock-layers`) in BOTH collapsed AND expanded —
-       NEVER `:inert`, NEVER a crossfade pane, NEVER a `registerGroup` morph target.
+       NEVER `:inert` and NEVER a crossfade pane.
        It is a stable always-present rail beside the expand-on-demand content region,
        so a consumer keeps a control visible while collapsed WITHOUT hand-duplicating
        it into both the `#default` and `#collapsed` slots. The region co-laid by the

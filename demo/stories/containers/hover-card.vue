@@ -1,42 +1,19 @@
 <script setup lang="ts">
 // BI.W-OVERLAY-UNION — HoverCard folded onto the sealed <Popover trigger="hover">
 // union (the Kronecker fold: 3 overlays → 1). A hover-reveal preview card is the
-// union under trigger="hover" role="card" (role="group" + aria-label). Tooltip
-// SURVIVES the fold as a distinct mechanism (IconTooltip is its preset).
+// union under trigger="hover" (role="group" + aria-label). Tooltip
+// SURVIVES the fold as a distinct, terse description mechanism.
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import { Popover, PopoverContent, PopoverTrigger } from "@glass/components/popover";
 import { Avatar, AvatarFallback, AvatarImage } from "@glass/components/avatar";
-import { Button } from "@glass/components/button";
-import { IconTooltip } from "@glass/components/icon-tooltip";
-import { IconChip } from "@glass/components/icon-chip";
-import { Info, CircleHelp, Sparkles, IdCard } from "@lucide/vue";
 
 // BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2
 // blue identity. PH3-safe (inline borderLeft, not the border-l-[3px] +
-// <IconChip> double-header shape).
-const CONTAINERS_STOP = 2;
 </script>
 
 <template>
     <StoryPage>
-        <header
-            class="story-color-event flex items-center gap-4 pl-5"
-            :style="{
-                '--section-label-accent': `var(--section-color-${CONTAINERS_STOP})`,
-            }"
-        >
-            <IconChip :icon="IdCard" :section="CONTAINERS_STOP" bloom reveal />
-            <div class="flex flex-col gap-1">
-                <span class="section-label--tinted text-admin-label">
-                    Containers · Hover card
-                </span>
-                <p class="text-small text-muted-foreground">
-                    Hover-reveal preview cards — the container identity is the ONE
-                    color event.
-                </p>
-            </div>
-        </header>
 
             <StorySection heading="Profile preview" gap="lg">
                 <p class="text-sm text-muted-foreground">
@@ -53,10 +30,10 @@ const CONTAINERS_STOP = 2;
                                 @joseph-fourier
                             </button>
                         </PopoverTrigger>
-                        <PopoverContent role="card" aria-label="Fourier profile" class="w-80">
+                        <PopoverContent aria-label="Fourier profile" class="w-80">
                             <div class="flex gap-4">
-                                <Avatar class="size-12">
-                                    <AvatarImage src="" alt="Fourier" />
+                                <Avatar label="Joseph Fourier" class="size-12">
+                                    <AvatarImage src="" />
                                     <AvatarFallback>JF</AvatarFallback>
                                 </Avatar>
                                 <div class="grid gap-1">
@@ -77,31 +54,5 @@ const CONTAINERS_STOP = 2;
                     on the analytic theory of heat.
                 </p>
             </StorySection>
-
-            <StorySection heading="Icon tooltips" gap="lg">
-                <p class="text-sm text-muted-foreground">
-                    <code class="font-mono text-xs">IconTooltip</code> is a
-                    preset of the tooltip primitive — Plus Jakarta Sans body text,
-                    hover on an icon button.
-                </p>
-                <div class="flex items-center gap-3">
-                    <IconTooltip text="Inline help">
-                        <Button variant="ghost" iconOnly aria-label="Inline help">
-                            <CircleHelp class="size-5" />
-                        </Button>
-                    </IconTooltip>
-                    <IconTooltip text="Surface details">
-                        <Button variant="ghost" iconOnly aria-label="Surface details">
-                            <Info class="size-5" />
-                        </Button>
-                    </IconTooltip>
-                    <IconTooltip text="Run the magic sparkles">
-                        <Button variant="glass" iconOnly aria-label="Run the magic sparkles">
-                            <Sparkles class="size-5" />
-                        </Button>
-                    </IconTooltip>
-                </div>
-            </StorySection>
-        
     </StoryPage>
 </template>

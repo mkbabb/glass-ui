@@ -1,44 +1,4 @@
-<template>
-    <LabeledField
-        :label="label"
-        :tooltip="tooltip"
-        :label-class="labelClass"
-        :required="required"
-        :hide-label="hideLabel"
-        v-slot="{ controlId }"
-    >
-        <Select
-            :model-value="modelValue"
-            :open="isOpen"
-            @update:open="(v: boolean) => emit('update:open', v)"
-            @update:model-value="(v: any) => emit('update:modelValue', v)"
-        >
-            <SelectTrigger :id="controlId" class="fira-code">
-                <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-                <SelectGroup class="fira-code">
-                    <SelectItem
-                        v-for="item in items"
-                        :key="item"
-                        :value="item"
-                    >
-                        {{ item }}
-                        <template #description>
-                            <span
-                                v-if="descriptions?.[item]"
-                                class="ml-auto pl-2 text-micro text-muted-foreground whitespace-nowrap"
-                            >{{ descriptions[item] }}</span>
-                        </template>
-                    </SelectItem>
-                </SelectGroup>
-            </SelectContent>
-        </Select>
-    </LabeledField>
-</template>
-
 <script setup lang="ts">
-import LabeledField from "./LabeledField.vue";
 import {
     Select,
     SelectContent,
@@ -47,27 +7,55 @@ import {
     SelectTrigger,
     SelectValue,
 } from "../select";
+import LabeledField from "./LabeledField.vue";
+import type { LabeledSelectProps } from "./types";
 
-defineProps<{
-    modelValue: string;
-    isOpen: boolean;
-    items: readonly string[];
-    descriptions?: Record<string, string>;
-    label: string;
-    tooltip: string;
-    labelClass?: string;
-    /** AQ.W4 §W4.5 — thread the required-field asterisk onto the label. */
-    required?: boolean;
-    /**
-     * AZ.W-BLOB-REDRESS — render the label `sr-only` (kept for a11y, hidden
-     * visually) when an enclosing chrome row (a `<ConfiguratorRow>`) already
-     * supplies the visible human label. Avoids the double-label leak.
-     */
-    hideLabel?: boolean;
-}>();
+defineOptions({ name: "LabeledSelect" });
 
+const props = defineProps<LabeledSelectProps>();
 const emit = defineEmits<{
     "update:modelValue": [value: string];
     "update:open": [value: boolean];
 }>();
 </script>
+
+<template>
+    <LabeledField
+        :label="label"
+        :description="description"
+        :requirement="required ? 'required' : requirement"
+        :layout="layout"
+        :error-live="errorLive"
+        :invalid="invalid"
+        :disabled="disabled"
+    >
+        <template #default="{ controlId, labelledBy, describedBy, errorId, required: effectiveRequired }">
+            <Select
+                :model-value="modelValue"
+                :open="open"
+                :disabled="disabled"
+                :required="effectiveRequired"
+                @update:open="emit('update:open', $event)"
+                @update:model-value="emit('update:modelValue', String($event))"
+            >
+                <SelectTrigger
+                    :id="controlId"
+                    :aria-labelledby="labelledBy"
+                    :aria-describedby="describedBy"
+                    :aria-errormessage="errorId"
+                    :aria-invalid="invalid || undefined"
+                >
+                    <SelectValue :placeholder="placeholder" />
+                </SelectTrigger>
+                <SelectContent>
+                    <SelectGroup>
+                        <SelectItem v-for="item in items" :key="item" :value="item">
+                            {{ item }}
+                        </SelectItem>
+                    </SelectGroup>
+                </SelectContent>
+            </Select>
+        </template>
+        <template v-if="$slots.error" #error><slot name="error" /></template>
+    </LabeledField>
+</template>

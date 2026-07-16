@@ -61,4 +61,16 @@ describe("useIntersectionPause", () => {
         controls.dispose();
         expect(observer?.disconnect).toHaveBeenCalledTimes(1);
     });
+
+    it("detaches its visibility listener on explicit dispose", () => {
+        const remove = vi.spyOn(document, "removeEventListener");
+        const controls = useIntersectionPause(ref(null), {
+            pause: () => {},
+            resume: () => {},
+        });
+
+        controls.dispose();
+
+        expect(remove).toHaveBeenCalledWith("visibilitychange", expect.any(Function));
+    });
 });

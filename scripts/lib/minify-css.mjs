@@ -7,7 +7,7 @@
 // fallbacks. A real CSS minifier (lightningcss/esbuild) would drop the
 // "redundant" webkit prefix, prune a "dead" `@supports` fallback branch, or
 // choke on the non-standard Tailwind at-rules — every one a semantic change that
-// breaks a consumer's Tailwind build OR trips `proof:no-masking-fallback`. So the
+// breaks a consumer's Tailwind build. So the
 // minify is DELIBERATELY conservative + purely lexical: strip comments + collapse
 // whitespace runs to ONE space, NEVER a structural transform. It preserves
 // `calc(a + b)` spacing (whitespace-run → single space, never removed around

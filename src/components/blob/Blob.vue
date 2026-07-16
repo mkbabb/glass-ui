@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { inject, useTemplateRef, watch, ref, computed, onScopeDispose } from "vue";
 import { createTokenColorCache } from "../../composables/dom";
-import type { BlobMood, BlobConfig, BlobVariant } from "./types";
+import type { BlobMood, BlobConfig } from "./types";
 import { BLOB_CONFIG_KEY } from "./types";
 import { POS_SCALE } from "./constants";
 import { useBlobMood } from "./composables/useBlobMood";
@@ -10,7 +10,7 @@ import { useBlobSatellites } from "./composables/useBlobSatellites";
 import { useMetaballRenderer } from "./composables/useMetaballRenderer";
 
 /**
- * Blob — a gooey metaball creature on a WebGL2 canvas.
+ * Blob — a gooey metaball creature on a WebGPU/WebGL2 canvas.
  *
  * Renders a pulsing SDF body with orbiting satellites that periodically merge in,
  * get absorbed, then re-emerge. Mood, pointer-attraction and a deterministic
@@ -34,7 +34,6 @@ import { useMetaballRenderer } from "./composables/useMetaballRenderer";
 const {
     color,
     config,
-    variant,
     seed = "",
     paused = false,
     pressLabel,
@@ -48,14 +47,6 @@ const {
      * The metaball tuning. Pass `BLOB_CONFIG_DEFAULTS` for the stock look.
      */
     config?: BlobConfig;
-    /**
-     * BC.W-GOOBLOB-PLAIN — the render-variant axis. `"blob"` is the STAGE-1
-     * shadowless lightless fill-only floor; `"meatball"` (default) is the full lit
-     * register. When set it WINS the resolved config's `variant` (the per-instance
-     * override); unset, the config's own `variant` rules. STAGE 1's `uStage` gate
-     * strips the lit/shadow blocks for the `"blob"` register.
-     */
-    variant?: BlobVariant;
     /** Extra seed string mixed into the satellite PRNG for a unique-but-reproducible system. */
     seed?: string;
     /**
@@ -102,22 +93,6 @@ if (!cfg) {
 // always resolves the CURRENT stops, not the stale snapshot.
 const liveConfig = (): BlobConfig => config ?? injectedConfig ?? cfg!;
 
-// BC.W-GOOBLOB-PLAIN — the per-instance `variant` override. The renderer reads
-// `config.variant` per frame (the WGSL/GLSL bridges write the `uStage` gate off it).
-// When the `variant` PROP is set it WINS the resolved config's `variant`; unset, the
-// config's own `variant` rules. `renderConfig` is a thin Proxy over `cfg` whose ONLY
-// override is `variant` — every other atom forwards straight through to the (possibly
-// reactive) `cfg` (the demo's `stageConfig`) so the live config stays live and the
-// renderer closes over ONE config object (no second config, no parallel state path).
-// No `reactive()` double-wrap: the upload reads per-frame from inside the rAF (not a
-// reactive effect), so the forward-through `get` is all the renderer needs.
-const renderConfig: BlobConfig = new Proxy(cfg!, {
-    get(target, key, receiver) {
-        if (key === "variant" && variant != null) return variant;
-        return Reflect.get(target, key, receiver);
-    },
-});
-
 const canvasRef = useTemplateRef<HTMLCanvasElement>("canvasRef");
 const wrapperRef = useTemplateRef<HTMLElement>("wrapperRef");
 const hitLayerRef = useTemplateRef<HTMLButtonElement>("hitLayerRef");
@@ -149,7 +124,7 @@ const satelliteSystem = useBlobSatellites(cfg, color + seed);
 
 // AX.W16 (arm 4) — un-wrap EVERY color string (base + rim + every palette stop) to a
 // CONCRETE value HERE, in the SFC, via the ONE `resolveTokenColor` leaf, BEFORE handing
-// strings to the renderer. value.js's `parseCSSColor` cannot parse a `var(--token)`
+// strings to the renderer. value.js's `parseCssColor` requires a concrete color;
 // wrapper and THROWS once per frame on a token color (the AW.W13 live bug); a token
 // also resolves differently under `.dark`. The leaf paints the string onto the host
 // `color:` and reads back the browser-resolved `rgb(...)` (the single cached
@@ -193,7 +168,7 @@ const renderer = useMetaballRenderer({
     mood,
     pointer,
     satellites: satelliteSystem,
-    config: renderConfig,
+    config: cfg,
 });
 if (renderer.rendererStatus) {
     watch(renderer.rendererStatus, (status) => emit("rendererStatus", status), {
@@ -320,6 +295,7 @@ defineExpose({
     // rest, no satellite mid-transition incl. a fission beat). A consumer parks its own
     // idle/arming ONLY while `settled` is true, so an armed hero never freezes mid-split.
     settled: renderer.settled,
+    settledFrame: renderer.settledFrame,
     rendererStatus: renderer.rendererStatus,
 });
 </script>
@@ -382,7 +358,7 @@ defineExpose({
        Two CHAINED drop-shadow() filters — each follows the irregular metaball
        silhouette (a box-shadow would stamp a rectangle, missing the necking
        satellites). The Memphis offset-stamp stays the identity of
-       <Card surface="cartoon"> only. Adaptive-by-construction via the token's
+       <Card cartoon> only. Adaptive-by-construction via the token's
        `--shadow-color`/`--foreground` base (re-resolves under .dark, no hardcoded
        .dark block here). */
     filter: drop-shadow(var(--blob-shadow-ambient)) drop-shadow(var(--blob-shadow-contact));

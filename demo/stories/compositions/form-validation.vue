@@ -1,41 +1,41 @@
 <script setup lang="ts">
-import { nextTick, onMounted, onUnmounted, ref } from "vue";
+import { nextTick, reactive, ref } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
-import { useUserInvalidAria } from "@glass/composables/dom/useUserInvalidAria";
 import { Textarea } from "@glass/components/textarea";
 import { Button } from "@glass/components/button";
 import { LabeledField, LabeledInput } from "@glass/components/labeled-field";
 
-// The bridge: `aria-invalid` tracks the visual `:user-invalid` state.
-const { bind } = useUserInvalidAria();
 const formEl = ref<HTMLFormElement | null>(null);
 const hasErrors = ref(false);
-
-onMounted(() => {
-    if (formEl.value) {
-        const stop = bind(formEl.value);
-        onUnmounted(stop);
-    }
-});
+const invalid = reactive({ email: false, name: false, zip: false });
 
 const bio = ref("");
 const email = ref("");
 const zip = ref("");
 const name = ref("");
 
+function syncValidity(): void {
+    const form = formEl.value;
+    if (!form) return;
+
+    for (const field of Object.keys(invalid) as (keyof typeof invalid)[]) {
+        invalid[field] = !(form.elements.namedItem(field) as HTMLInputElement).checkValidity();
+    }
+    hasErrors.value = Object.values(invalid).some(Boolean);
+}
+
 async function submit(): Promise<void> {
     const form = formEl.value;
     if (!form) return;
 
-    const firstInvalid = form.querySelector<HTMLElement>(":invalid");
-    hasErrors.value = Boolean(firstInvalid);
+    syncValidity();
     await nextTick();
-    firstInvalid?.focus();
+    form.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
 }
 
 function clearSummaryWhenValid(): void {
-    if (hasErrors.value && formEl.value?.checkValidity()) hasErrors.value = false;
+    if (hasErrors.value) syncValidity();
 }
 </script>
 
@@ -66,7 +66,9 @@ function clearSummaryWhenValid(): void {
                 <div class="grid gap-4 sm:grid-cols-2">
                     <LabeledInput
                         v-model="email"
+                        :invalid="invalid.email"
                         label="Email"
+                        name="email"
                         type="email"
                         required
                         error-live="off"
@@ -80,7 +82,9 @@ function clearSummaryWhenValid(): void {
 
                     <LabeledInput
                         v-model="zip"
+                        :invalid="invalid.zip"
                         label="ZIP"
+                        name="zip"
                         type="text"
                         required
                         error-live="off"
@@ -95,7 +99,9 @@ function clearSummaryWhenValid(): void {
 
                     <LabeledInput
                         v-model="name"
+                        :invalid="invalid.name"
                         label="Workspace name"
+                        name="name"
                         required
                         error-live="off"
                         autocomplete="organization"
@@ -112,7 +118,7 @@ function clearSummaryWhenValid(): void {
                         <Textarea
                             :id="controlId"
                             v-model="bio"
-                            autosize
+                            resize="content"
                             placeholder="A short introduction…"
                         />
                     </template>

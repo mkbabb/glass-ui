@@ -27,7 +27,7 @@ import {
     FBM_ROT_GLSL,
     OETF_GLSL,
     OKLCH_MATRICES_GLSL,
-} from "../../../../composables/glass/webgl/shaders/procedural-color.glsl";
+} from "../../../../composables/glass/procedural/color.glsl";
 
 const NL = "\n";
 
@@ -45,7 +45,7 @@ precision highp float;
 in vec2 vUv;
 out vec4 fragColor;
 
-#define MAX_NUCLEI 6
+#define MAX_NUCLEI 8
 #define BLUR_RINGS ${IMAGE_BLUR_RINGS}
 #define BLUR_SECTORS ${IMAGE_BLUR_SECTORS}
 const float PI = 3.141592653589793;
@@ -258,6 +258,11 @@ void main() {
   // Per-fragment blur radius — near-sharp at zone 0, dissolved at zone 1.
   float radius = mix(uBlurMin, uBlurMax, zone);
   vec3 col = zoneBlur(uv, radius);
+
+  vec2 cursorDelta = uv - uCursor;
+  float cursorRadius = max(uCursorRadius, 0.01);
+  float cursorLean = exp(-dot(cursorDelta, cursorDelta) / (cursorRadius * cursorRadius * 0.5));
+  col *= 1.0 + 0.12 * cursorLean * uCursorStrength;
 
   // Saturation trim + the source-agnostic vividness floor (a washed photo blooms).
   col = saturate3(col, uSaturation);

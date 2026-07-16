@@ -16,10 +16,10 @@
  * NO-OP `overflow-y: clip` pin + the `.dock-layers` re-clip are GONE — post-SPINE the
  * L0 `.dock-plate` `clip-path` owns the silhouette, the L1 controls run is
  * `overflow: visible`, and the scroll port clips ONLY its own over-cap inline content.
- * Two EXCLUSIVE modes (PASS-4B ruling 1, never composed): FITS (`:not([data-dock-
- * overflow])`) is `overflow-x: visible` + `mask-image: none` (the fisheye's branch);
+ * Two measured modes: FITS (`:not([data-dock-overflow])`) is
+ * `overflow-x: visible` + `mask-image: none`;
  * OVERFLOW (`[data-dock-overflow]`, set by `useDockOverflowFit`'s RO) is
- * `overflow-x: auto` + the `<FadingScroll>` edge mask, fisheye OFF. The cross axis is
+ * `overflow-x: auto` + the `<FadingScroll>` edge mask. The cross axis is
  * honestly `visible` (the ring-room reserved via the `--dock-scroll-safe-inset`
  * padding/negative-margin no-clip idiom — T-52 b), and `scroll-padding-inline` gutters
  * the `scrollIntoView` recenter.
@@ -34,17 +34,15 @@
        the SPINE L1 `overflow: visible` run) — the plate's `clip-path` (dock.css)
        owns the dock silhouette, the L1 controls run is `overflow: visible`, and
        the scroll port clips ONLY its own over-cap content on the inline axis.
-       Two EXCLUSIVE modes, NEVER composed (PASS-4B ruling 1):
+       Two measured modes:
 
          • FITS (default — `:not([data-dock-overflow])`): the row fits the cap, so
            the port is `overflow-x: visible` (no scroll) and its `mask-image` is
-           `none` (T-52 a — no fade, no 0px-fade transparent-stop shave). The
-           fits-branch fisheye (fisheye.css) is FREE to scale its hump over the
-           `overflow: visible` L1 run.
+           `none` (T-52 a — no fade, no 0px-fade transparent-stop shave).
          • OVERFLOW (`[data-dock-overflow]`, set by `useDockOverflowFit`'s RO — ZERO
            scroll listener, G9/O5): the row exceeds the cap, so the port is
            `overflow-x: auto` (native inline scroll) with the `<FadingScroll>` edge
-           mask; fisheye is OFF (the `:not([data-dock-overflow])` gate). */
+           mask. */
 
     /* min-width:0 releases the flex `min-content` floor so the active full layer
        can shrink under the `--dock-max-inline-size`-clamped `.dock-layers` track
@@ -159,20 +157,8 @@
                 var(--dock-expand-t)
         );
 
-        /* F1 — the card-tier elevation morph ("material thickens as glass flexes
-           larger", WWDC25 §219). The wrap dock lifts from the flat thin-pill
-           `--shadow-dock` glow onto the FLOATING-tier stack (the `--shadow-dock-wrap`
-           token names the canonical composite on `:root`; a consumer retints the
-           whole card shadow by overriding THAT one token per the cartoon-shadow
-           contract). The three floating layers — drop / material-rim / under-cast —
-           fade in driven by the SAME `--dock-expand-t` scalar the radius glides on:
-           `--dock-wrap-elev` is the scalar as a 0→1 percent, so each layer's alpha
-           tracks the corner morph in LOCKSTEP (ONE clock, ONE register). At
-           expand-t 0 (collapsed/pill) the floating layers are 0%-alpha (invisible)
-           → only the base `--shadow-dock` glow shows; at expand-t 1 (expanded/card)
-           the full floating stack grounds the multi-row silhouette. The per-layer
-           recipe mirrors `--shadow-dock-wrap` (= `--shadow-xl` + `--glass-material-rim`
-           + `--glass-under-shadow-vivid`) so the token stays the source-of-record. */
+        /* The expansion scalar fades the drop, rim, and under-cast in with the
+           radius morph, keeping one clock for shape and elevation. */
         --dock-wrap-elev: calc(var(--dock-expand-t) * 100%);
         box-shadow:
             var(--glass-edge-light),

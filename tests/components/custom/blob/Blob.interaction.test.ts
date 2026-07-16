@@ -12,6 +12,7 @@ vi.mock("@glass/components/blob/composables/useMetaballRenderer", () => ({
     useMetaballRenderer: () => ({
         ...renderer,
         settled: readonly(ref(true)),
+        settledFrame: readonly(ref(null)),
     }),
 }));
 
@@ -40,6 +41,12 @@ describe("Blob press surface", () => {
         expect(wrapper.attributes("tabindex")).toBeUndefined();
         expect(wrapper.attributes("role")).toBeUndefined();
 
+        wrapper.unmount();
+    });
+
+    it("exposes the renderer's settled frame beside its settled signal", () => {
+        const wrapper = mountBlob();
+        expect(wrapper.vm.$.exposed?.settledFrame).toBeDefined();
         wrapper.unmount();
     });
 

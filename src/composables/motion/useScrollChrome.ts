@@ -42,6 +42,7 @@ import {
     type Ref,
 } from "vue";
 import { useScrollTrigger } from "./useScrollTrigger";
+import { useReducedMotion } from "./useReducedMotion";
 
 export interface UseScrollChromeOptions {
     /** Opt-in: collapse on scroll. DEFAULT FALSE — persistent-by-default (the iOS-27 lesson). */
@@ -87,8 +88,6 @@ export interface UseScrollChromeReturn {
     recalculate: () => void;
 }
 
-const PRM_QUERY = "(prefers-reduced-motion: reduce)";
-
 function clamp01(v: number): number {
     return v < 0 ? 0 : v > 1 ? 1 : v;
 }
@@ -125,18 +124,7 @@ export function useScrollChrome(
     const collapseT = ref(0);
     const collapsed = ref(false);
 
-    // ── The cached PRM ref (the AV.W7 substrate pattern) — ONE matchMedia + change
-    // listener for the machine's lifetime. PRM drops the ramp to a discrete snap; the
-    // `collapsed` STATE stays correct (the useFadingScroll discrete-survives model).
-    const canMatch =
-        typeof window !== "undefined" && typeof window.matchMedia === "function";
-    const prmQuery = canMatch ? window.matchMedia(PRM_QUERY) : null;
-    let reduced = respectReducedMotion && (prmQuery?.matches ?? false);
-    const onPrmChange = (e: MediaQueryListEvent): void => {
-        reduced = respectReducedMotion && e.matches;
-        apply(collapseT.value);
-    };
-    prmQuery?.addEventListener("change", onPrmChange);
+    const reduced = respectReducedMotion ? useReducedMotion() : ref(false);
 
     let stopTimer: ReturnType<typeof setTimeout> | null = null;
     // The scroll position at which the current ramp leg anchored (the from-position for
@@ -153,7 +141,7 @@ export function useScrollChrome(
     // ONE writer — the JS leg of the dual-path single-writer (the native CSS ramp, on a
     // supporting engine, writes the same custom off `animation-timeline: scroll(self)`).
     function apply(t: number): void {
-        const next = reduced ? (t >= snapMidpoint ? 1 : 0) : clamp01(t);
+        const next = reduced.value ? (t >= snapMidpoint ? 1 : 0) : clamp01(t);
         collapseT.value = next;
         collapsed.value = next >= snapMidpoint;
         const el = resolveChrome();
@@ -240,6 +228,11 @@ export function useScrollChrome(
             rampAnchorPos = null; // a direction flip re-anchors the leg
         },
     );
+    const stopReducedMotionWatch = watch(
+        reduced,
+        () => apply(collapseT.value),
+        { flush: "sync" },
+    );
     watch(
         () => velocity.value,
         (vel) => {
@@ -257,7 +250,7 @@ export function useScrollChrome(
     onBeforeUnmount(() => {
         if (stopTimer) clearTimeout(stopTimer);
         stopTimer = null;
-        prmQuery?.removeEventListener("change", onPrmChange);
+        stopReducedMotionWatch();
     });
 
     return { collapseT, collapsed, direction, recalculate: recalc };

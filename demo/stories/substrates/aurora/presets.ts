@@ -18,7 +18,15 @@ import { mediumOptions } from "./config/options";
 type PresetOverrides = Partial<AuroraConfig>;
 
 function cfg(overrides: PresetOverrides): AuroraConfig {
-    return { ...DEFAULT_AURORA_CONFIG, ...overrides };
+    return {
+        ...DEFAULT_AURORA_CONFIG,
+        ...overrides,
+        interactivity: {
+            swirl: true,
+            amplitude: 0.45,
+            ...overrides.interactivity,
+        },
+    };
 }
 
 // One-source the medium display name off the canonical mediumOptions map (the

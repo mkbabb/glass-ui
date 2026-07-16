@@ -6,6 +6,7 @@ import {
     type Category,
     type Story,
 } from "../stories/manifest";
+import { pushRoute } from "./routeTransition";
 
 export interface CategoryStoryLocation {
     kind: "category";
@@ -44,14 +45,14 @@ export function useStoryNavigation() {
     });
 
     function goTo(categoryId: string, storyId: string): void {
-        void router.push(`/${categoryId}/${storyId}`);
+        void pushRoute(router, `/${categoryId}/${storyId}`);
     }
 
     /** First story of a category (used by rail clicks + jump-to-category shortcuts). */
     function firstOfCategory(categoryId: string): void {
         const category = findCategory(categoryId);
         if (!category || category.stories.length === 0) return;
-        void router.push(`/${category.id}/${category.stories[0]!.id}`);
+        void pushRoute(router, `/${category.id}/${category.stories[0]!.id}`);
     }
 
     function next(): void {
@@ -59,7 +60,7 @@ export function useStoryNavigation() {
         if (!loc) return;
         const nextStory = loc.category.stories[loc.storyIndex + 1];
         if (nextStory) {
-            void router.push(`/${loc.category.id}/${nextStory.id}`);
+            void pushRoute(router, `/${loc.category.id}/${nextStory.id}`);
         }
     }
 
@@ -68,7 +69,7 @@ export function useStoryNavigation() {
         if (!loc) return;
         const prevStory = loc.category.stories[loc.storyIndex - 1];
         if (prevStory) {
-            void router.push(`/${loc.category.id}/${prevStory.id}`);
+            void pushRoute(router, `/${loc.category.id}/${prevStory.id}`);
         }
     }
 

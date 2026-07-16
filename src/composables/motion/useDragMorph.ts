@@ -58,13 +58,14 @@
 import { Draggable, SpringProgress } from "@mkbabb/keyframes.js";
 import {
     computed,
+    nextTick,
     onScopeDispose,
     readonly,
     ref,
-    type ComputedRef,
     type Ref,
 } from "vue";
 import { useLiquidFlex } from "./useLiquidFlex";
+import { useElementMorph } from "./useElementMorph";
 import { springPreset } from "./springPresets";
 
 /** The morph axis — `"x"` tracks the inline (horizontal) travel, `"y"` the block. */
@@ -81,8 +82,10 @@ export interface DragMorphSnapTarget<V = string> {
 }
 
 export interface UseDragMorphParams<V = string> {
-    /** The draggable element ref (the indicator/handle the gesture captures). */
-    el: Ref<HTMLElement | null>;
+    /** The element that captures the pointer gesture. */
+    handle: Ref<HTMLElement | null>;
+    /** The surface that follows the gesture. Defaults to `handle`. */
+    surface?: Ref<HTMLElement | null>;
     /** The morph axis (`"x"` horizontal · `"y"` vertical). May be a getter. */
     axis: DragMorphAxis | (() => DragMorphAxis);
     /**
@@ -112,8 +115,6 @@ export interface UseDragMorphReturn {
     position: Readonly<Ref<number>>;
     /** The live squish scalar (≥1, capped at the live cap). 1 at rest / under PRM. */
     stretch: Readonly<Ref<number>>;
-    /** The `transform: translate` style the consumer binds on the morph element. */
-    dragStyle: ComputedRef<Record<string, string>>;
     /**
      * Re-resolve the snap centers + axis (kf reads `snap` at construction, so a
      * geometry change — a resize, an option change, an orientation flip — calls
@@ -142,8 +143,8 @@ function prefersReducedMotion(): boolean {
  *
  * @example
  * ```ts
- * const { dragging, stretch, dragStyle, detach } = useDragMorph({
- *   el: indicatorRef,
+ * const { dragging, stretch, detach } = useDragMorph({
+ *   handle: indicatorRef,
  *   axis: () => (isVertical.value ? "y" : "x"),
  *   snapTargets: () => buttonRefs.value.map((b, i) => ({
  *     value: options.value[i].value,
@@ -164,6 +165,12 @@ export function useDragMorph<V = string>(
             ? params.snapTargets()
             : params.snapTargets;
     const respectPRM = params.respectReducedMotion !== false;
+    const morph = useElementMorph(params.surface ?? params.handle, {
+        source: "self",
+        destination: "self",
+        channels: { opacity: false },
+        respectReducedMotion: false,
+    });
 
     const dragging = ref(false);
     const position = ref(0);
@@ -192,6 +199,11 @@ export function useDragMorph<V = string>(
         spring = s;
         unsubscribe = s.subscribe((v: number) => {
             position.value = v;
+            if (hasGestured) {
+                const delta = v - dragOrigin.value;
+                if (axisOf() === "y") morph.offset(0, delta);
+                else morph.offset(delta, 0);
+            }
             // Drive the squish off the NORMALIZED live position (the "tanh" law).
             // PRM-gated — no deform.
             if (!(respectPRM && prefersReducedMotion())) {
@@ -205,6 +217,9 @@ export function useDragMorph<V = string>(
                     committed = true;
                     hasGestured = false;
                     params.onSnap(value);
+                    // The model update seats the indicator's base translate while the
+                    // morph lock is held; then release the gesture delta without a jump.
+                    void nextTick(() => morph.clear());
                 }
             }
         });
@@ -233,19 +248,9 @@ export function useDragMorph<V = string>(
         respectPRM && prefersReducedMotion() ? 1 : liquid.stretch.value,
     );
 
-    // The follow maps the spring position onto a compositor `translate` on the
-    // morph axis. The drag is an OFFSET from the settled footprint: the spring
-    // tracks the pointer-coordinate domain, so the rendered translate is the
-    // delta from the grab origin. NEVER `inline-size`/`left`/`top` (compositor-only).
+    // The follow is an offset from the settled footprint. `useElementMorph` owns
+    // the transform write; this gesture owns only pointer physics and snap value.
     const dragOrigin = ref(0);
-    const dragStyle = computed<Record<string, string>>(() => {
-        if (!dragging.value && (spring?.settled ?? true))
-            return {} as Record<string, string>;
-        const delta = position.value - dragOrigin.value;
-        return {
-            translate: axisOf() === "y" ? `0 ${delta}px` : `${delta}px 0`,
-        };
-    });
 
     // The normalized travel domain for the squish — the span across the first/last
     // snap centers. `drive(t)` wants 0→1, so map the live position onto that span.
@@ -304,16 +309,20 @@ export function useDragMorph<V = string>(
     // above — deferred to the first gesture-arm, not setup.)
 
     let detachDrag: (() => void) | null = null;
+    let handleEl: HTMLElement | null = null;
 
     // Re-attach the drag whenever the element appears (the indicator mounts after
     // the first paint). Re-resolve the axis on attach so an orientation flip
     // re-binds the correct pointer axis.
     function reattach(): void {
+        handleEl?.removeEventListener("pointerdown", onPointerDownCapture);
+        handleEl = null;
         detachDrag?.();
         detachDrag = null;
         draggable?.detach();
-        const node = params.el.value;
+        const node = params.handle.value;
         if (!node) return;
+        handleEl = node;
         // (Re)build the Draggable over OUR reused spring (the physics core stays the
         // single source of truth across rebuilds; a rebuild re-resolves the axis on
         // an orientation flip AND re-reads the snap centers — kf reads `snap` at
@@ -376,14 +385,16 @@ export function useDragMorph<V = string>(
     bindWindowUp();
 
     function detach(): void {
-        const node = params.el.value;
-        node?.removeEventListener("pointerdown", onPointerDownCapture);
+        handleEl?.removeEventListener("pointerdown", onPointerDownCapture);
+        handleEl = null;
         detachDrag?.();
         detachDrag = null;
         unbindWindowUp();
         unsubscribe?.();
         draggable?.dispose();
         draggable = null;
+        morph.cancel();
+        morph.clear();
     }
 
     onScopeDispose(detach);
@@ -392,7 +403,6 @@ export function useDragMorph<V = string>(
         dragging: readonly(dragging),
         position: readonly(position),
         stretch: readonly(stretch) as Readonly<Ref<number>>,
-        dragStyle,
         refresh,
         detach,
     };

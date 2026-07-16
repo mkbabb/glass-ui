@@ -68,18 +68,6 @@
        the plate then caps, a gooey settle, never a taffy-pull (≤1.2 anti-taffy bar). */
     --dock-morph-max-stretch: 1.14;
 
-    /* ── BC.W-LIQUID-MORPH — the reserve floor (the white morph can never paint) ──
-       The morph box reserves `inline-size`/`block-size: max(var(--dock-morph-to),
-       var(--dock-morph-min))` (layers.css). A degenerate `to:0` measurement (the
-       BA-VJS-1 nested-group race, glass-dock-codebase.md §2.2) would otherwise reserve
-       a ZERO-width footprint → `overflow: clip` blanks the content → the white/invisible
-       morph the user reports. The floor seats it at the collapsed-pill minimum (~44px,
-       the WCAG touch floor / `--dock-control-floor`), so a missed measurement degrades to
-       "visible at the floor," never "white." A SAFETY NET: on every healthy measurement
-       the `max()` resolves to the real `to` (inert above the floor); it fires ONLY on the
-       degenerate race. Density-scaled, riding `--dock-scale` transitively. */
-    --dock-morph-min: max(2.75rem, var(--dock-control-floor, 0px));
-
     /* ── BC.W-DOCK-SEARCH — the collapse-on-scroll trigger-points ─────────────────
        The dock-search optional shrink-on-scroll (composing useScrollChrome — the
        native dual-path reader, persistent-default) reads these two tunable px

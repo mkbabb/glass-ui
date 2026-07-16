@@ -17,6 +17,8 @@ import { getCurrentScope, onScopeDispose, ref, type Ref } from "vue";
 export interface UseDocumentVisibilityReturn {
     /** Reactive `document.hidden` — `false` under SSR / when the API is absent. */
     hidden: Ref<boolean>;
+    /** Detach the visibility listener before scope teardown. */
+    dispose: () => void;
 }
 
 function getDocument(): Document | null {
@@ -26,24 +28,27 @@ function getDocument(): Document | null {
 export function useDocumentVisibility(): UseDocumentVisibilityReturn {
     const doc = getDocument();
     const hidden = ref(Boolean(doc?.hidden));
-
-    if (!doc) {
-        return { hidden };
-    }
-
-    const onVisibilityChange = (): void => {
-        hidden.value = Boolean(doc.hidden);
-    };
-
-    doc.addEventListener("visibilitychange", onVisibilityChange);
+    let disposed = false;
 
     const dispose = (): void => {
-        doc.removeEventListener("visibilitychange", onVisibilityChange);
+        if (disposed) return;
+        disposed = true;
+        doc?.removeEventListener("visibilitychange", onVisibilityChange);
     };
+
+    const onVisibilityChange = (): void => {
+        hidden.value = Boolean(doc?.hidden);
+    };
+
+    if (!doc) {
+        return { hidden, dispose };
+    }
+
+    doc.addEventListener("visibilitychange", onVisibilityChange);
 
     if (getCurrentScope()) {
         onScopeDispose(dispose);
     }
 
-    return { hidden };
+    return { hidden, dispose };
 }

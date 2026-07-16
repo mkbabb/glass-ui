@@ -1,44 +1,53 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
-import {
-  type DropdownMenuRadioItemEmits,
-  type DropdownMenuRadioItemProps,
-  useForwardPropsEmits,
-} from 'reka-ui'
-import { cn } from '../_shared/class-names'
-import { menuItemVariants } from '../_shared/menuItemVariants'
-// BI.W-MENU-TRIGGER — the trigger axis switches the reka RadioItem + ItemIndicator.
-import { useMenuPart } from './useMenuTrigger'
+import { computed, useAttrs, type HTMLAttributes } from "vue";
+import type { SelectionValue } from "../_shared/selection";
+import { cn } from "../_shared/class-names";
+import { fixedHostAttrs } from "../_shared/primitive";
+import { useMenuPart } from "./useMenuTrigger";
 
-const props = defineProps<DropdownMenuRadioItemProps & { class?: HTMLAttributes['class'] }>()
+export interface DropdownMenuRadioItemProps {
+    value: SelectionValue;
+    disabled?: boolean;
+    textValue?: string;
+    class?: HTMLAttributes["class"];
+}
 
-const emits = defineEmits<DropdownMenuRadioItemEmits>()
+export interface DropdownMenuRadioItemEmits {
+    select: [event: Event];
+}
 
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
+defineOptions({ name: "DropdownMenuRadioItem", inheritAttrs: false });
 
-  return delegated
-})
+const props = withDefaults(defineProps<DropdownMenuRadioItemProps>(), {
+    disabled: false,
+});
+const emit = defineEmits<DropdownMenuRadioItemEmits>();
+defineSlots<{ default?: () => unknown }>();
 
-const forwarded = useForwardPropsEmits(delegatedProps, emits)
-const RadioItemComp = useMenuPart('RadioItem')
-const ItemIndicatorComp = useMenuPart('ItemIndicator')
+const attrs = useAttrs();
+const forwardedAttrs = computed(() => fixedHostAttrs(attrs));
+const RadioItemComp = useMenuPart("RadioItem");
+const ItemIndicatorComp = useMenuPart("ItemIndicator");
 </script>
 
 <template>
-  <component
-    :is="RadioItemComp"
-    v-bind="forwarded"
-    :class="cn(
-      menuItemVariants({ indicator: 'start' }),
-      props.class,
-    )"
-  >
-    <span class="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
-      <component :is="ItemIndicatorComp">
-        <span class="inline-block w-2 h-2 rounded-pill bg-current"></span>
-      </component>
-    </span>
-    <slot />
-  </component>
+    <component
+        :is="RadioItemComp"
+        v-bind="forwardedAttrs"
+        as="div"
+        :value="value"
+        :disabled="disabled"
+        :text-value="textValue"
+        data-slot="dropdown-menu-radio-item"
+        data-indicator="start"
+        :class="cn('dropdown-menu__item interactive-item glass-menu-row', props.class)"
+        @select="emit('select', $event)"
+    >
+        <span class="dropdown-menu__indicator">
+            <component :is="ItemIndicatorComp">
+                <span class="dropdown-menu__radio-dot"></span>
+            </component>
+        </span>
+        <slot />
+    </component>
 </template>

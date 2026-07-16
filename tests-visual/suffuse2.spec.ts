@@ -2,18 +2,18 @@
 // per-category color identity spread (the binding browser criterion; G2).
 // Device-free assertions cover structure; this scenario covers the render.
 //
-// The source arm can parse the eyebrow/rail/chip markup while the RESOLVED render
+// The source arm can parse the eyebrow/rail markup while the RESOLVED render
 // is still flat (the identity did not take) or rainbow (a second event slipped
 // in). Only the resolved getComputedStyle readback binds it — the AZ/P-1
 // source-green/visually-broken gap.
 //
 // It asserts, off the LIVE painted :5199 DOM, in BOTH modes:
 //   S1 — a forms page (/forms/checks, stop 3 teal) — the eyebrow color + the rail
-//        border-color + the chip backplate resolve to the SAME hue family (the
+//        border-color resolve to the SAME hue family (the
 //        POSITIVE per-category token test, not a ≠-string).
-//   S2 — a containers page (/containers/accordion, stop 2 blue) — same three-site
+//   S2 — a containers page (/containers/accordion, stop 2 blue) — same two-site
 //        coherence on the mapped stop.
-//   S3 — a data page (/data/table, stop 9 slate) — same three-site coherence.
+//   S3 — a data page (/data/table, stop 9 slate) — same two-site coherence.
 //   S4 — a content page's chrome <h1> font-size resolves strictly ABOVE the
 //        section <h2> font-size (the HS-2 rung grade).
 //   S5 — the motion band (/motion/countup) reads --motion-accent violet (hue
@@ -121,13 +121,11 @@ async function setDark(page: Page, dark: boolean): Promise<void> {
     await page.waitForTimeout(150);
 }
 
-// Read the three-site identity on an enrolled page: the tinted eyebrow color, the
-// rail (the header's border-inline-start-color), and the IconChip glyph color.
-async function readThreeSite(page: Page): Promise<{
+// Read the two-site identity on an enrolled page: the tinted eyebrow color and the
+// rail (the header's border-inline-start-color).
+async function readTwoSite(page: Page): Promise<{
     eyebrow: string;
     rail: string;
-    chipGlyph: string;
-    chipPlate: string;
 } | null> {
     return page.evaluate(() => {
         // The section-accent RAIL is the story's own header carrying border-l-[3px]
@@ -141,11 +139,7 @@ async function readThreeSite(page: Page): Promise<{
         const eyebrowEl = document.querySelector(
             "article .section-label--tinted",
         ) as HTMLElement | null;
-        const chip = document.querySelector(
-            "article .icon-chip",
-        ) as HTMLElement | null;
-        const glyph = chip?.querySelector(".icon-chip__glyph") as HTMLElement | null;
-        if (!header || !eyebrowEl || !chip || !glyph) return null;
+        if (!header || !eyebrowEl) return null;
         const cs = getComputedStyle(header);
         return {
             eyebrow: getComputedStyle(eyebrowEl).color,
@@ -153,8 +147,6 @@ async function readThreeSite(page: Page): Promise<{
                 cs.borderInlineStartColor ||
                 cs.borderLeftColor ||
                 cs.getPropertyValue("border-left-color"),
-            chipGlyph: getComputedStyle(glyph).color,
-            chipPlate: getComputedStyle(chip).backgroundColor,
         };
     });
 }
@@ -171,11 +163,11 @@ const PER_CATEGORY = [
 ];
 
 test.describe("BA.W-SUFFUSE2 — the per-category color identity (π)", () => {
-    // ── S1-S3 — the per-category three-site coherence in BOTH modes ──────────────
+    // ── S1-S3 — the per-category two-site coherence in BOTH modes ────────────────
     for (const { route, category, stop } of PER_CATEGORY) {
         for (const dark of [false, true]) {
             const mode = dark ? "dark" : "light";
-            test(`${category} (${route}) — eyebrow + rail + chip resolve to the SAME --section-color-${stop} hue (${mode})`, async ({
+            test(`${category} (${route}) — eyebrow + rail resolve to the SAME --section-color-${stop} hue (${mode})`, async ({
                 page,
             }) => {
                 await page.setViewportSize({ width: 1280, height: 900 });
@@ -183,10 +175,10 @@ test.describe("BA.W-SUFFUSE2 — the per-category color identity (π)", () => {
                 await setDark(page, dark);
                 await page.waitForTimeout(250);
 
-                const sites = await readThreeSite(page);
+                const sites = await readTwoSite(page);
                 expect(
                     sites,
-                    `${route}: the eyebrow + rail + chip identity renders`,
+                    `${route}: the eyebrow + rail identity renders`,
                 ).not.toBeNull();
 
                 // The mapped stop's resolved hue (the page-root --section-color-N).
@@ -202,32 +194,24 @@ test.describe("BA.W-SUFFUSE2 — the per-category color identity (π)", () => {
                 expect(stopRgb, `--section-color-${stop} resolves`).not.toBeNull();
                 const stopHue = rgbHueDeg(...stopRgb!);
 
-                // The eyebrow + chip glyph read the FULL stop hue (≤25° apart).
+                // The eyebrow and rail read the stop hue (≤25° apart).
                 const eyebrowRgb = parseColor(sites!.eyebrow);
-                const glyphRgb = parseColor(sites!.chipGlyph);
                 const railRgb = parseColor(sites!.rail);
                 expect(eyebrowRgb, "the eyebrow resolves a color").not.toBeNull();
-                expect(glyphRgb, "the chip glyph resolves a color").not.toBeNull();
                 expect(railRgb, "the rail resolves a color").not.toBeNull();
 
                 const eyebrowHue = rgbHueDeg(...eyebrowRgb!);
-                const glyphHue = rgbHueDeg(...glyphRgb!);
                 const railHue = rgbHueDeg(...railRgb!);
 
                 (paired as Record<string, unknown>)[`${category}_${mode}`] = {
                     stopHue: Math.round(stopHue * 10) / 10,
                     eyebrowHue: Math.round(eyebrowHue * 10) / 10,
-                    glyphHue: Math.round(glyphHue * 10) / 10,
                     railHue: Math.round(railHue * 10) / 10,
                 };
 
                 expect(
                     hueDelta(eyebrowHue, stopHue),
                     `${category} eyebrow hue ${eyebrowHue.toFixed(1)}° must match --section-color-${stop} ${stopHue.toFixed(1)}°`,
-                ).toBeLessThan(25);
-                expect(
-                    hueDelta(glyphHue, stopHue),
-                    `${category} chip glyph hue ${glyphHue.toFixed(1)}° must match the SAME stop ${stopHue.toFixed(1)}°`,
                 ).toBeLessThan(25);
                 expect(
                     hueDelta(railHue, stopHue),

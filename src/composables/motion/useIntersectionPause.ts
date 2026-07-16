@@ -66,11 +66,12 @@ export function useIntersectionPause(
     let observedTarget: Element | null = null;
     let lastPauseState: boolean | null = null;
     let observer: IntersectionObserver | null = null;
+    let stopVisibilityWatch: (() => void) | null = null;
+    let disposeVisibility: (() => void) | null = null;
 
     function applyRuntimeState(): void {
         if (disposed) return;
-        const shouldPause =
-            !isIntersecting.value || !isDocumentVisible.value;
+        const shouldPause = !isIntersecting.value || !isDocumentVisible.value;
         isPaused.value = shouldPause;
         if (lastPauseState === shouldPause) return;
 
@@ -116,11 +117,13 @@ export function useIntersectionPause(
     );
 
     if (pauseWhenHidden) {
-        const { hidden } = useDocumentVisibility();
+        const visibility = useDocumentVisibility();
+        const { hidden } = visibility;
+        disposeVisibility = visibility.dispose;
         isDocumentVisible.value = !hidden.value;
         // `flush: 'sync'` so the visibility reaction is synchronous — matches
         // the prior hand-rolled `visibilitychange` listener's timing exactly.
-        watch(
+        stopVisibilityWatch = watch(
             hidden,
             (next) => {
                 isDocumentVisible.value = !next;
@@ -134,6 +137,10 @@ export function useIntersectionPause(
         if (disposed) return;
         disposed = true;
         stopTargetWatch();
+        stopVisibilityWatch?.();
+        stopVisibilityWatch = null;
+        disposeVisibility?.();
+        disposeVisibility = null;
         observer?.disconnect();
         observer = null;
         observedTarget = null;

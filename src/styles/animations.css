@@ -3,29 +3,6 @@
 /* (BI.W-GLASS-DEDUP — the `floating-panel-in` entrance @keyframes retired with
    floating-panel.css / `--animate-floating-panel-in`; FAM-9 clean break.) */
 
-/* ── Collapsible (reka-ui) ── */
-@keyframes collapsible-open {
-    from {
-        height: 0;
-        opacity: 0;
-    }
-    to {
-        height: var(--reka-collapsible-content-height);
-        opacity: 1;
-    }
-}
-
-@keyframes collapsible-close {
-    from {
-        height: var(--reka-collapsible-content-height);
-        opacity: 1;
-    }
-    to {
-        height: 0;
-        opacity: 0;
-    }
-}
-
 /* ── Tooltip entrance ── */
 @keyframes tooltip-in {
     from {
@@ -126,9 +103,8 @@
 /* ── Metal shimmer: the metal-PARAMETERIZED text/border highlight sweep ──
  * BB.W-METAL-SHIMMER — the ONE metal-agnostic sweep (the gold-only
  * `gold-shimmer-slide` RETIRED onto it — clean break, no alias). The keyframe is
- * PURE position (ZERO baked metal color): the metal hue is the recipe's job via
- * the `--metal-shimmer-color`-bound gradient (see utilities/metal.css). The SAME
- * keyframe sweeps a gold, silver, or bronze gradient depending only on the channel,
+ * PURE position (ZERO baked metal color): each recipe binds its own gradient
+ * stops. The same keyframe sweeps a gold, silver, or bronze gradient,
  * usable for BOTH text-clip (the `.metal-*` text register) AND border/mask (the
  * `.metal-*-border` swept RIM) — the position pass shifts whatever gradient the
  * surface paints. The `200% 0`→`-200% 0` shape carries the gold READ exactly
@@ -147,26 +123,6 @@
  * keyframes above, never sparkle-sweep.
  */
 
-/* ── Pulse dot bounce: dots variant of <Pulse> ──
- *
- * Three-dot loading indicator. Opacity 0.35 ↔ 1, scale 0.8 ↔ 1.2. Consumer
- * (.pulse-dot in Pulse.vue) sets duration via --pulse-duration and staggers
- * via animation-delay using --pulse-index.
- */
-@keyframes pulse-dot-bounce {
-    0%, 80%, 100% { opacity: 0.35; transform: scale(0.8); }
-    40%           { opacity: 1;    transform: scale(1.2); }
-}
-
-/* ── Pulse ring spin: ring variant of <Pulse> ──
- *
- * Continuous-rotation spinner. Consumer (.pulse-ring in Pulse.vue) sets
- * duration via --pulse-duration.
- */
-@keyframes pulse-ring-spin {
-    to { transform: rotate(360deg); }
-}
-
 /* ── Typewriter cursor blink: cursor for <TypewriterText> ──
  *
  * Hard-edged step blink (50/50 duty). Consumer (.tw-cursor--blink in
@@ -175,119 +131,6 @@
 @keyframes typewriter-blink {
     0%, 50%   { opacity: 1; }
     51%, 100% { opacity: 0; }
-}
-
-/* ── Ambient pulse: aura variant of <Pulse> ──
- *
- * Slow breathing cycle for the surface-scope `Pulse variant="aura"`.
- * Tokens at tokens.css §AMBIENT MOTION drive the duration/scale/easing
- * so consumers do not redefine the rhythm per site. The breath travels
- * from scale-min @ opacity-min → scale-max @ opacity-max → back, with
- * a 6s default cycle. The Pulse.vue scoped block consumes this keyframe
- * directly; consumer-side rules must not re-declare it.
- *
- * Reduced-motion fallback is in Pulse.vue (animation: none + static
- * mid-cycle render) — the keyframe itself doesn't gate, but it COULD
- * collapse here if a future consumer composes `ambient-pulse` outside
- * the Pulse primitive. The current contract: every aura caller goes
- * through <Pulse variant="aura">.
- */
-@keyframes ambient-pulse {
-    /* AX.W57 (P6) — the aura breath reads its OWN element-opacity range
-       (`--pulse-aura-breath-{min,max}`, 0.28↔0.42), decoupled from the
-       shared `--pulse-aura-opacity-*` skeleton-shimmer stops so the halo
-       breathes as an ambient wash, never up to the 0.95 shimmer peak.
-
-       BC.W-GLASS-GLOW-FIX (Atlas A-8 root) — the breath SCALE is driven via the
-       `--pulse-aura-breath-scale` registered custom property (a `<number>`, typed
-       in property-regs.css so it INTERPOLATES per-frame), NOT a `transform: scale()`
-       on `.pulse-aura` itself. The `.pulse-aura::before` child reads the scale; the
-       `.pulse-aura` element stays UNSCALED at `inset:0` as the `overflow: clip`
-       boundary. Scaling the CHILD (clipped by the unscaled parent) is what makes the
-       1.15× peak STAY inside the host box — scaling the clip element itself scaled the
-       clip rect too, so the radial escaped (the prior incomplete fix). The element-
-       opacity breath stays HERE (it does not change geometry). */
-    0%,
-    100% {
-        --pulse-aura-breath-scale: var(--animate-ambient-pulse-scale-min, 1);
-        opacity: var(--pulse-aura-breath-min, 0.28);
-    }
-    50% {
-        --pulse-aura-breath-scale: var(--animate-ambient-pulse-scale-max, 1.15);
-        opacity: var(--pulse-aura-breath-max, 0.42);
-    }
-}
-
-/* ── Scrim breath: gentle opacity oscillation for portaled dialog scrims ──
- *
- * Canon keyframe for the `--scrim-animation: scrim-breath 6s ease-in-out
- * infinite` shorthand that CellularWarningDialog (and any DialogContent
- * consumer that opts in) writes onto the portaled overlay via
- * `<ModalOverlay scrim-animation="…">`. The cascade rule below
- * (`[data-scrim-animation]`) consumes the shorthand; this keyframe
- * resolves the animation-name half of that shorthand.
- *
- * Amplitude is ~6% (0.92 → 0.98), slow enough to read as breath rather
- * than throb. The var() fallbacks let a consumer retune the band
- * (`--scrim-opacity-min` / `--scrim-opacity-max`) without re-declaring
- * the keyframe. Duration + easing live in the shorthand the consumer
- * writes — not here — so the rhythm stays composable.
- *
- * Reduced-motion fallback is double-gated: the cascade rule below sets
- * `animation: none` under PRM (primary gate), AND the keyframe itself
- * collapses to a flat opacity under PRM (defensive — protects future
- * consumers that compose `scrim-breath` outside `[data-scrim-animation]`).
- * Mirrors the `sparkle-sweep` PRM convention above.
- */
-@keyframes scrim-breath {
-    0%, 100% { opacity: var(--scrim-opacity-min, 0.92); }
-    50%      { opacity: var(--scrim-opacity-max, 0.98); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    @keyframes scrim-breath {
-        0%, 100% { opacity: var(--scrim-opacity-min, 0.92); }
-    }
-}
-
-/* ── Scrim animation cascade (AJ-W4-δ) ─────────────────────────────────
- *
- * reka-ui's DialogPortal teleports the overlay outside the consumer's
- * component subtree, so a consumer-side scoped `--scrim-animation`
- * declaration on a parent of `<Dialog>` never reaches the portaled
- * `<DialogOverlay>`. The publisher closes the gap: `<ModalOverlay
- * scrim-animation="…">` writes the value to the typed `--scrim-animation`
- * cascade variable on the overlay's inline style + tags the element with
- * `data-scrim-animation`, and this rule consumes the variable.
- *
- * The rule lives in animations.css (global, not scoped) precisely because
- * the portaled element sits outside any scoped-style boundary. The
- * `data-scrim-animation` attribute selector is opt-in: only overlays that
- * pass the prop receive an animation declaration, so the default scrim
- * (which relies on `tw-animate-css`'s data-state fade) stays untouched.
- *
- * The two animation grammars compose cleanly:
- *   - `[data-state]` keys the `tw-animate-css` enter/exit fade
- *     (open → fade-in, closed → fade-out)
- *   - `[data-scrim-animation]` keys this long-running scrim-breath
- *     (independent rhythm, runs while the dialog is open)
- *
- * Distinct selectors → no cascade fight. The breath plays underneath the
- * data-state fade because the latter wins via shorter-lived specificity
- * during transitions; the former resumes once the data-state transition
- * settles.
- *
- * Reduced-motion contract: PRM users retire the breath. The fallback
- * resolves to `none` via the var() default + the @media block below.
- */
-[data-scrim-animation] {
-    animation: var(--scrim-animation, none);
-}
-
-@media (prefers-reduced-motion: reduce) {
-    [data-scrim-animation] {
-        animation: none;
-    }
 }
 
 /* ── .glass-reveal EXIT (BG.W-OVERLAY-ENTER-PAINT / F5.R1) ──────────────────
@@ -350,9 +193,8 @@
  * allow-discrete` + `overlay`.
  *
  * SCOPE: this applies ONLY to elements tagged `.glass-top-layer`. It does NOT
- * touch reka-ui's portaled overlays — those keep their `tw-animate-css`
- * data-state fade (distinct selectors, no cascade fight, mirroring the
- * `[data-scrim-animation]` discipline above). `DialogContent`'s `spring` opt-in
+ * touch reka-ui's portaled overlays — those keep their single `sheet-animate`
+ * data-state episode. `DialogContent`'s `spring` opt-in
  * (`useSpringMount`) is also untouched — a legitimate iOS-physics variant, not a
  * duplicate of this fade.
  *

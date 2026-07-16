@@ -10,7 +10,13 @@ import { mount } from "@vue/test-utils";
 import { defineComponent, h, nextTick } from "vue";
 import { describe, expect, it } from "vitest";
 
-import { Dialog, DialogContent, DialogTrigger } from "@glass/components/dialog/index";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogTitle,
+    DialogTrigger,
+} from "@glass/components/dialog/index";
 
 function mountDialog(showClose?: boolean, scroll?: boolean) {
     const Host = defineComponent({
@@ -26,7 +32,11 @@ function mountDialog(showClose?: boolean, scroll?: boolean) {
                             ...(scroll !== undefined ? { scroll } : {}),
                             class: "test-dialog",
                         },
-                        () => h("p", "body"),
+                        () => [
+                            h(DialogTitle, { class: "sr-only" }, () => "Test dialog"),
+                            h(DialogDescription, { class: "sr-only" }, () => "Dialog close-control fixture."),
+                            h("p", "body"),
+                        ],
                     ),
                 ]);
         },
@@ -58,7 +68,7 @@ describe("DialogContent — AU.W9.C showClose prop", () => {
         await nextTick();
         const portal = findDialog();
         expect(portal).not.toBeNull();
-        expect(portal?.getAttribute("data-material")).toBe("transient-overlay");
+        expect(portal?.getAttribute("data-material")).toBe("overlay");
         expect(hasCloseButton(portal!)).toBe(true);
         wrapper.unmount();
     });

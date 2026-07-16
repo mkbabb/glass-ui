@@ -139,9 +139,18 @@ describe("AX.W10 — resolveAtoms total-function fuzz", () => {
     it("every atom combination yields a valid in-range config (TOTAL)", () => {
         const violations: string[] = [];
         let count = 0;
-        const check = (atoms: AuroraAtoms) => {
+        const check = (
+            input: Omit<AuroraAtoms, "medium" | "interactivity"> & {
+                medium?: AuroraAtoms["medium"];
+            },
+        ) => {
+            const { medium, ...common } = input;
+            const atoms: AuroraAtoms =
+                medium?.kind !== undefined && medium.kind !== "smooth"
+                    ? { ...common, medium }
+                    : { ...common, ...(medium ? { medium } : {}) };
             const cfg = resolveAtoms(atoms);
-            violations.push(...configViolations(cfg, JSON.stringify(atoms)));
+            violations.push(...configViolations(cfg, JSON.stringify(input)));
             count++;
         };
 
@@ -195,18 +204,18 @@ describe("AX.W10 — resolveAtoms total-function fuzz", () => {
         expect(violations, violations.slice(0, 5).join("\n")).toHaveLength(0);
     });
 
-    it("the worst-case combination (max energy × 6 zones × vangogh × max texture × max noise) stays in-range", () => {
+    it("the worst-case combination (max energy × 8 zones × vangogh × max texture × max noise) stays in-range", () => {
         const cfg = resolveAtoms({
             seed: "#00ff00",
             harmony: "tetradic",
             colorEnergy: 1,
-            zones: { count: 6, arrangement: "scattered" },
+            zones: { count: MAX_NUCLEI, arrangement: "scattered" },
             noise: 1,
             medium: { kind: "vangogh", amount: 1 },
             motion: "drifting",
         });
         expect(configViolations(cfg, "worst-case")).toHaveLength(0);
-        expect(cfg.nuclei.length).toBe(6);
+        expect(cfg.nuclei.length).toBe(MAX_NUCLEI);
     });
 });
 
@@ -246,6 +255,19 @@ describe("AX.W10 — texture is structurally absent on a smooth medium", () => {
     });
 });
 
+describe("P046 — interactivity is discriminated by medium", () => {
+    it("rejects directional light on smooth while retaining its field axes", () => {
+        // @ts-expect-error — smooth has no directional impasto light.
+        const invalid: AuroraAtoms = { medium: { kind: "smooth" }, interactivity: { light: true } };
+        const valid: AuroraAtoms = {
+            medium: { kind: "smooth" },
+            interactivity: { swirl: true, scroll: true, amplitude: 0.5 },
+        };
+        expect(invalid.medium?.kind).toBe("smooth");
+        expect(valid.interactivity?.swirl).toBe(true);
+    });
+});
+
 describe("AX.W10 — the ZONES arrangement re-places the nuclei (ONE nucleiPrior)", () => {
     it("scattered / composed / centred produce DISTINCT layouts for the same count", () => {
         const composed = nucleiPrior(4, "composed");
@@ -269,6 +291,11 @@ describe("AX.W10 — the ZONES arrangement re-places the nuclei (ONE nucleiPrior
         expect(nucleiPrior(99).length).toBe(MAX_NUCLEI);
         expect(nucleiPrior(-5).length).toBe(1);
     });
+
+    it("the terminal composed substrate gives all eight zones distinct centers", () => {
+        const centers = nucleiPrior(MAX_NUCLEI, "composed").map(({ x, y }) => `${x}:${y}`);
+        expect(new Set(centers).size).toBe(MAX_NUCLEI);
+    });
 });
 
 describe("AX.W10 — the default atoms preserve the wispy-sky default", () => {
@@ -291,6 +318,26 @@ describe("AX.W10 — the default atoms preserve the wispy-sky default", () => {
 
     it("the interactivity flag defaults OFF (the wispy-sky default stays non-interactive)", () => {
         expect(resolveAtoms(DEFAULT_ATOMS).interactivity).toBeUndefined();
+    });
+
+    it("smooth interactivity retains the field axes without synthesizing a light axis", () => {
+        const cfg = resolveAtoms({
+            medium: { kind: "smooth" },
+            interactivity: { swirl: true, scroll: true, amplitude: 0.75 },
+        });
+        expect(cfg.interactivity).toEqual({
+            scroll: true,
+            swirl: true,
+            amplitude: 0.75,
+        });
+    });
+
+    it("textured media may opt into cursor light alongside the shared field", () => {
+        const cfg = resolveAtoms({
+            medium: { kind: "oil", amount: 0.6 },
+            interactivity: { light: true, swirl: true, amplitude: 1 },
+        });
+        expect(cfg.interactivity).toEqual({ light: true, swirl: true, amplitude: 1 });
     });
 });
 
@@ -353,6 +400,22 @@ describe("AY.W-AUR-STUDIO — configToAtoms projects a config back onto the ≤7
         const m = configToAtoms(cfg).medium;
         expect(m?.kind).toBe("smooth");
         expect((m as { amount?: number }).amount).toBeUndefined();
+    });
+
+    it("projects only the interaction axes valid for the active medium", () => {
+        const smooth = configToAtoms({
+            ...DEFAULT_AURORA_CONFIG,
+            medium: "smooth",
+            interactivity: { light: true, scroll: true, swirl: true, amplitude: 0.7 },
+        });
+        expect(smooth.interactivity).toEqual({ scroll: true, swirl: true, amplitude: 0.7 });
+
+        const oil = configToAtoms({
+            ...DEFAULT_AURORA_CONFIG,
+            medium: "oil",
+            interactivity: { light: true, swirl: true, amplitude: 0.7 },
+        });
+        expect(oil.interactivity).toEqual({ light: true, swirl: true, amplitude: 0.7 });
     });
 
     it("resolveAtoms refines OVER a base config (the non-atom fields survive the touch)", () => {

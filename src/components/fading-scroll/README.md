@@ -17,7 +17,7 @@ import { FadingScroll } from "@mkbabb/glass-ui/fading-scroll";
 
 <template>
     <!-- horizontal chip strip — feathers the right edge while it overflows -->
-    <FadingScroll axis="x" class="flex gap-2 scrollbar-hidden">
+    <FadingScroll axis="x" aria-label="Filters" class="flex gap-2 scrollbar-hidden">
         <button v-for="c in chips" :key="c.id">{{ c.label }}</button>
     </FadingScroll>
 
@@ -37,10 +37,13 @@ import { FadingScroll } from "@mkbabb/glass-ui/fading-scroll";
 | `axis`      | `"x"` \| `"y"`  | `"x"`   | scroll axis (horizontal strip / vertical column) |
 | `fadeStart` | `boolean`       | `true`  | feather the start edge once scrolled past start  |
 | `fadeEnd`   | `boolean`       | `true`  | feather the end edge while trailing overflow      |
+| `ariaLabel` / `ariaLabelledby` | `string` | — | optional accessible name; named ports become `role="region"` |
 
 The root IS the scroll port; the default slot IS the scrolled content. Pass the
 flex/overflow/scrollbar utilities (`flex gap-2`, `scrollbar-hidden`, `min-h-0`)
 on `<FadingScroll>` itself — they land on the scroll-port root.
+Unnamed ports remain ordinary focusable scroll containers; Glass does not create
+repeated, indistinguishable region landmarks.
 
 ## The dual-path single-writer mechanism
 
@@ -57,11 +60,13 @@ registered `@property <length-percentage>` customs — `--fade-start` and
   and closes `--fade-end` when there is no trailing overflow. ZERO JS.
 - **JS fallback** — `useFadingScroll(el, { axis, fadeStart, fadeEnd })` (this
   dir's composable, promoted from the bespoke `PresetPickerRow` measure loop)
-  writes the SAME customs off `scrollLeft/Top` + `scrollWidth/Height −
+  writes the SAME customs off logical inline/block progress + `scrollWidth/Height −
   clientWidth/Height` with a `ResizeObserver` (the shared `useResizeObserver`
   substrate) + a rAF-coalesced `scroll` listener. It is feature-detect-gated OFF
   (`supportsScrollTimeline()`) when the native timeline is supported, so the two
-  paths NEVER both write — no double-feather (the `scroll-driven.css` /
+  paths NEVER both write. Horizontal RTL progress normalizes negative,
+  positive-ascending, and positive-descending `scrollLeft` models before edge
+  selection — no double-feather (the `scroll-driven.css` /
   `useScrollProgress` discipline).
 
 ## `useFadingScroll` — the composable form

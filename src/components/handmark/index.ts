@@ -6,9 +6,9 @@
  * (call `shapeGeom`/`ellipsePoints` to ink a path), even canvas.
  *
  * The DEFAULT is `pen` (clean ink, grain:0 ⇒ no filter, zero extra dep). The
- * `@mkbabb/pencil-boil` geometry + `perfect-freehand` body are OPTIONAL PEERS;
- * only `ribbon:'hull'` (the highlighter) touches the vendored pf core (treeshaken
- * otherwise).
+ * `@mkbabb/pencil-boil` geometry is an OPTIONAL PEER. The perfect-freehand body
+ * is vendored; only `ribbon:'hull'` (the highlighter) touches that core
+ * (treeshaken otherwise).
  *
  * BA.W-HANDMARK: `GlassUnderline`/the `/underline` subpath RETIRED onto
  * `HandMark shape="underline"` (DEC-8 outcome 1; clean break, no alias). The

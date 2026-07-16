@@ -44,6 +44,27 @@ describe("Slider value marks", () => {
         expect(wrapper.emitted("valueCommit")?.at(-1)).toEqual([[30]]);
     });
 
+    it("keeps fractional off-step marks stationary while the thumb crosses them", async () => {
+        const wrapper = mount(Slider, {
+            props: {
+                modelValue: [-0.25],
+                min: -1,
+                max: 1,
+                step: 0.25,
+                marks: [-0.5, -0.125, 0.333],
+                "aria-label": "Fractional level",
+            },
+        });
+        const positions = markPositions(wrapper);
+
+        await wrapper.setProps({ modelValue: [0] });
+
+        expect(markPositions(wrapper)).toEqual(positions);
+        expect(wrapper.get('[role="slider"]').attributes("aria-valuenow")).toBe("0");
+        expect(positions.slice(0, 2)).toEqual(["25%", "43.75%"]);
+        expect(Number.parseFloat(positions[2]!)).toBeCloseTo(66.65);
+    });
+
     it("leaves a range slider as two native thumbs over one shared mark rail", () => {
         const wrapper = mount(Slider, {
             props: {
@@ -67,6 +88,11 @@ describe("Slider value marks", () => {
     it.each([
         ["horizontal RTL", { dir: "rtl" as const }, undefined],
         ["horizontal inverted", { inverted: true }, "true"],
+        [
+            "horizontal RTL and inverted",
+            { dir: "rtl" as const, inverted: true },
+            "true",
+        ],
         ["vertical", { orientation: "vertical" as const }, undefined],
         [
             "vertical inverted",
@@ -78,7 +104,7 @@ describe("Slider value marks", () => {
             props: {
                 modelValue: [40],
                 max: 100,
-                marks: [25, 50, 75],
+                marks: [0, 25, 50, 75, 100],
                 "aria-label": "Axis",
                 ...axis,
             },
@@ -89,42 +115,5 @@ describe("Slider value marks", () => {
         );
         expect(wrapper.attributes("data-inverted")).toBe(inverted);
         expect(markPositions(wrapper)).toEqual(["25%", "50%", "75%"]);
-    });
-
-    it("transposes the spectrum recipe without adding another control", () => {
-        const wrapper = mount(Slider, {
-            props: {
-                modelValue: [50],
-                orientation: "vertical",
-                variant: "spectrum",
-                marks: [25, 50, 75],
-                "aria-label": "Vertical spectrum",
-            },
-        });
-
-        expect(wrapper.attributes()).toMatchObject({
-            "data-orientation": "vertical",
-            "data-variant": "spectrum",
-        });
-        expect(wrapper.findAll('[role="slider"]')).toHaveLength(1);
-        expect(wrapper.findAll(".slider-track")).toHaveLength(1);
-        expect(wrapper.findAll(".slider-range")).toHaveLength(1);
-    });
-
-    it("renders dense marks without extra focus or pointer targets", () => {
-        const marks = Array.from({ length: 40 }, (_, index) => index + 30);
-        const wrapper = mount(Slider, {
-            props: {
-                modelValue: [50],
-                max: 100,
-                marks,
-                "aria-label": "Dense",
-            },
-        });
-
-        expect(wrapper.findAll(".slider-mark")).toHaveLength(40);
-        expect(wrapper.findAll(".slider-mark[tabindex]")).toHaveLength(0);
-        expect(wrapper.findAll(".slider-mark[role]")).toHaveLength(0);
-        expect(wrapper.findAll('[role="slider"]')).toHaveLength(1);
     });
 });

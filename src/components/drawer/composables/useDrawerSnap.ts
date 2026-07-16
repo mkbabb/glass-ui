@@ -2,7 +2,7 @@
 // own, on the HOUSE motion engine).
 //
 // ONE `SpringProgress` (the dock-morph `linear()`-curve clock, the §6 doctrine —
-// `dockMorphContext.ts:215` precedent) writes a `--glass-drawer-t` snap-fraction
+// `useDockMorph.ts` precedent) writes a `--glass-drawer-t` snap-fraction
 // scalar (0 = closed, 1 = the fullest detent) the content root reads as a
 // translate. The drag gesture is a pointer-capture on the peek handle reusing the
 // `useDockState`-style velocity decision (a fling past `DRAWER_FLING_VELOCITY`
@@ -38,6 +38,8 @@ export interface UseDrawerSnapOptions {
 }
 
 export interface UseDrawerSnapReturn {
+    /** Internal Presence hold: true through the closing spring's settle. */
+    present: Ref<boolean>;
     /** Whether a pointer drag is in flight (drives the grip's "live" affordance). */
     dragging: Ref<boolean>;
     /** Programmatically settle to a detent fraction (the open-sheet re-snap seam). */
@@ -85,6 +87,7 @@ function steppedDetent(from: number, dir: 1 | -1, ladder: number[]): number {
 export function useDrawerSnap(options: UseDrawerSnapOptions): UseDrawerSnapReturn {
     const { contentEl, handleEl, ctx } = options;
     const dragging = ref(false);
+    const present = ref(ctx.open.value);
 
     // The ONE snap driver — owns its own rAF via `.play(onFrame)`, writes the
     // `--glass-drawer-t` scalar once per frame. Created lazily on the first settle;
@@ -95,22 +98,51 @@ export function useDrawerSnap(options: UseDrawerSnapOptions): UseDrawerSnapRetur
     let spring: SpringProgress | null = null;
 
     // The two CROSS-SUBTREE `--stage-t` reader roots — the scrim (a PORTAL SIBLING) +
-    // the page-wrapper (OUTSIDE the portal). Neither descends from the sheet, so each
-    // needs its OWN scoped write. Resolved lazily + cached for the open window; a ref is
-    // re-queried only while absent-or-detached (a late-mounting portal scrim backfills;
-    // a stale ref drops). A `querySelector` on an attribute marker reads NO layout —
-    // unlike the retired per-frame `getBoundingClientRect`, it triggers no reflow.
+    // the page-wrapper (OUTSIDE the portal). The Drawer root and its private overlay
+    // register both through this instance's context. The spring caches only those owned
+    // refs for close cleanup; it never searches the document and therefore cannot write
+    // another concurrently mounted Drawer's portal.
     let scrimEl: HTMLElement | null = null;
     let wrapperEl: HTMLElement | null = null;
+    function applyStageGates(
+        wrapper: HTMLElement | null,
+        scrim: HTMLElement | null,
+        active: boolean,
+    ) {
+        const stage = ctx.stage.value;
+        wrapper?.toggleAttribute(
+            "data-stage-scale",
+            active && (stage === "scale" || stage === "immersive"),
+        );
+        scrim?.toggleAttribute(
+            "data-stage-immersive",
+            active && stage === "immersive",
+        );
+    }
+
+    function syncStageGates(active: boolean) {
+        refreshStageRoots();
+        applyStageGates(wrapperEl, scrimEl, active);
+    }
+
+    function refreshStageRoots() {
+        const nextScrim = ctx.scrimEl.value;
+        const nextWrapper = ctx.wrapperEl.value;
+        if (nextScrim?.isConnected) scrimEl = nextScrim;
+        else if (scrimEl && !scrimEl.isConnected) scrimEl = null;
+        if (nextWrapper?.isConnected) wrapperEl = nextWrapper;
+        else if (wrapperEl && !wrapperEl.isConnected) wrapperEl = null;
+    }
+
     function crossSubtreeStageRoots(): HTMLElement[] {
-        if (typeof document === "undefined") return [];
-        if (!scrimEl?.isConnected) {
-            scrimEl = document.querySelector<HTMLElement>("[data-stage-scrim]");
-        }
-        if (!wrapperEl?.isConnected) {
-            wrapperEl =
-                document.querySelector<HTMLElement>("[data-stage-wrapper]");
-        }
+        const priorScrim = scrimEl;
+        const priorWrapper = wrapperEl;
+        refreshStageRoots();
+        if (
+            present.value &&
+            (scrimEl !== priorScrim || wrapperEl !== priorWrapper)
+        )
+            applyStageGates(wrapperEl, scrimEl, true);
         const roots: HTMLElement[] = [];
         if (scrimEl) roots.push(scrimEl);
         if (wrapperEl) roots.push(wrapperEl);
@@ -141,11 +173,7 @@ export function useDrawerSnap(options: UseDrawerSnapOptions): UseDrawerSnapRetur
         }
     }
 
-    function disposeSpring() {
-        if (spring) {
-            spring.dispose();
-            spring = null;
-        }
+    function clearStageScalars() {
         // BI.W-DRAWER-PERF — clear the scoped inline `--stage-t` on close so each reader
         // root reverts to the registered `initial-value: 0` (drawer.css) and the NEXT
         // open does not latch a stale full-staged value (the stale-latch fix, fold
@@ -157,6 +185,31 @@ export function useDrawerSnap(options: UseDrawerSnapOptions): UseDrawerSnapRetur
         if (wrapperEl) wrapperEl.style.removeProperty("--stage-t");
         scrimEl = null;
         wrapperEl = null;
+    }
+
+    function disposeSpring() {
+        spring?.dispose();
+        spring = null;
+        clearStageScalars();
+    }
+
+    function finishCloseIfSettled() {
+        if (
+            ctx.open.value ||
+            !spring ||
+            spring.target !== 0 ||
+            !spring.settled
+        )
+            return;
+        writeScalar(0);
+        present.value = false;
+        syncStageGates(false);
+        clearStageScalars();
+    }
+
+    function onSpringFrame(t: number) {
+        writeScalar(t);
+        finishCloseIfSettled();
     }
 
     function ensureSpring(initial?: number): SpringProgress {
@@ -175,7 +228,6 @@ export function useDrawerSnap(options: UseDrawerSnapOptions): UseDrawerSnapRetur
             initial: initial ?? currentFraction(),
             respectReducedMotion: true,
         });
-        spring.play((t) => writeScalar(t));
         return spring;
     }
 
@@ -195,11 +247,14 @@ export function useDrawerSnap(options: UseDrawerSnapOptions): UseDrawerSnapRetur
     /** Settle the spring toward `fraction`, writing back the active-snap-point. */
     function settleTo(fraction: number) {
         const s = ensureSpring();
+        // Assign the target before arming playback. Under reduced motion the target
+        // setter settles synchronously; the following play emits that settled endpoint
+        // once, so paint and Presence cannot remain latched at the prior target.
+        s.target = fraction;
         // Re-arm the per-frame callback — a drag's `spring.stop()` detaches it, so a
         // settle after a gesture must re-bind to resume the rAF loop and PAINT the
-        // trajectory (idempotent: no second loop). Then the target re-seats + resumes.
-        s.play((t) => writeScalar(t));
-        s.target = fraction;
+        // trajectory (idempotent: no second loop).
+        s.play(onSpringFrame);
         ctx.activeSnapPoint.value = fraction;
     }
 
@@ -260,7 +315,9 @@ export function useDrawerSnap(options: UseDrawerSnapOptions): UseDrawerSnapRetur
         startCoord = axisCoord(e);
         lastCoord = startCoord;
         lastTime = e.timeStamp;
-        startFraction = currentFraction();
+        // A grab can interrupt an in-flight open, close, or re-snap. Start from the
+        // scalar actually on screen, not the destination already stored in the model.
+        startFraction = readScalar();
         velocity = 0;
         // Measure the drag span ONCE, here — the per-frame move path reads the cache.
         cachedDragSpan = measureDragSpan();
@@ -297,7 +354,7 @@ export function useDrawerSnap(options: UseDrawerSnapOptions): UseDrawerSnapRetur
         // settle animates FROM where the finger left the sheet — not the stale pre-drag
         // value the suspended spring still holds (which would jump the sheet on release).
         const live = readScalar();
-        ensureSpring().reset(live, 0);
+        ensureSpring().reset(live, velocity / cachedDragSpan);
         // The useDockState-style velocity decision: a fling past the threshold
         // advances a detent in the drag direction; a slow release snaps to nearest.
         let target: number;
@@ -349,32 +406,53 @@ export function useDrawerSnap(options: UseDrawerSnapOptions): UseDrawerSnapRetur
         { immediate: true },
     );
 
-    // On open, seat the scalar at the opening detent (the consumer's chosen
-    // activeSnapPoint, or the fullest detent) and run the open-settle. On close,
-    // dispose the spring (the content unmounts; the scalar resets next open).
+    // One Presence hold and one spring own both edges. Re-targeting the existing
+    // spring preserves its live value and velocity; close unmounts only at t=0 settle.
     watch(
         ctx.open,
         (isOpen) => {
             if (isOpen) {
-                // The content mounts on this same flush; defer one microtask so the
-                // live resolver reaches the freshly-portaled sheet. Seat the CLOSED
-                // start (t=0 — the fail-loud base: a dead writer leaves the sheet
-                // offscreen, NEVER a masked full-open) then seed the spring at CLOSED
-                // and settle to the opening detent, so DRAWER_SNAP paints a real
-                // slide-in from closed rather than a settled no-op at the seat. Even
-                // if the sheet is a beat late, the spring's rAF loop resolves the live
-                // element on its next frame — the timing is robust by construction.
+                present.value = true;
+                syncStageGates(true);
                 queueMicrotask(() => {
-                    writeScalar(0);
-                    ensureSpring(0);
+                    if (!ctx.open.value) return;
+                    if (!spring) {
+                        writeScalar(0);
+                        ensureSpring(0);
+                    }
                     settleTo(currentFraction());
                 });
             } else {
-                disposeSpring();
+                if (!present.value) return;
+                if (!spring) {
+                    writeScalar(0);
+                    present.value = false;
+                    syncStageGates(false);
+                    clearStageScalars();
+                    return;
+                }
+                if (dragging.value) {
+                    spring.reset(
+                        readScalar(),
+                        velocity / cachedDragSpan,
+                    );
+                    if (pointerId !== null) {
+                        handleEl.value?.releasePointerCapture?.(pointerId);
+                        pointerId = null;
+                    }
+                    dragging.value = false;
+                }
+                spring.target = 0;
+                spring.play(onSpringFrame);
+                finishCloseIfSettled();
             }
         },
-        { immediate: true },
+        { immediate: true, flush: "sync" },
     );
+
+    watch([ctx.stage, ctx.wrapperEl, ctx.scrimEl], () => {
+        if (present.value) syncStageGates(true);
+    });
 
     // An EXTERNAL activeSnapPoint write on an ALREADY-OPEN sheet re-snaps it (the
     // vaul controllable-shadowing limitation the house engine dissolves — the
@@ -397,15 +475,18 @@ export function useDrawerSnap(options: UseDrawerSnapOptions): UseDrawerSnapRetur
                     ctx.snapPoints.value,
                     ctx.direction.value,
                 );
-                ensureSpring().target = nearestDetent(next, ladder);
+                const s = ensureSpring();
+                s.target = nearestDetent(next, ladder);
+                s.play(onSpringFrame);
             }
         },
     );
 
     onUnmounted(() => {
         detach?.();
+        syncStageGates(false);
         disposeSpring();
     });
 
-    return { dragging, snapTo };
+    return { present, dragging, snapTo };
 }

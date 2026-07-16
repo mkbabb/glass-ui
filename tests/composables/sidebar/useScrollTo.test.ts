@@ -1,17 +1,20 @@
-import { ref } from "vue";
+import { effectScope, ref, type EffectScope } from "vue";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { useScrollTo } from "@glass/composables/sidebar/useScrollTo";
 import type { TreeIndexEntry } from "@glass/composables/sidebar/types";
 
 // These specs assert the SYNCHRONOUS ensureTargetLoaded partial-load (the
-// visibleCount math), not the rAF scroll settle. The composable is invoked bare
-// (no mounted scope), so its rAF-retry loop would otherwise leak frames past
-// teardown (a 60-attempt "does-not-exist" retry surfacing an unhandled error in a
-// later spec under battery load). Stub rAF to a no-op — the loop never runs.
+// visibleCount math), not the rAF scroll settle. Stub rAF to a no-op so the
+// retry loop stays outside this focused contract; each invocation still owns a
+// real Vue effect scope and teardown.
+let scope: EffectScope;
+
 beforeEach(() => {
+    scope = effectScope();
     vi.stubGlobal("requestAnimationFrame", () => 0);
 });
 afterEach(() => {
+    scope.stop();
     vi.unstubAllGlobals();
 });
 
@@ -37,12 +40,12 @@ describe("useScrollTo.ensureTargetLoaded (the partial-load)", () => {
     it("loads only up to the target's rootIndex + 2 when a treeIndex is passed", () => {
         const visibleCount = ref(2);
         const treeIndex = makeIndex(10);
-        const { scrollTo } = useScrollTo({
+        const { scrollTo } = scope.run(() => useScrollTo({
             scrollContainer: ref<HTMLElement | null>(null),
             totalCount: 10,
             visibleCount,
             treeIndex,
-        });
+        }))!;
 
         // Targeting sec-5 (rootIndex 5) loads up to 5 + 2 = 7, NOT all 10.
         scrollTo("sec-5");
@@ -52,12 +55,12 @@ describe("useScrollTo.ensureTargetLoaded (the partial-load)", () => {
     it("clamps the partial-load to totalCount (never overshoots)", () => {
         const visibleCount = ref(2);
         const treeIndex = makeIndex(10);
-        const { scrollTo } = useScrollTo({
+        const { scrollTo } = scope.run(() => useScrollTo({
             scrollContainer: ref<HTMLElement | null>(null),
             totalCount: 10,
             visibleCount,
             treeIndex,
-        });
+        }))!;
 
         // Targeting the last section (rootIndex 9): 9 + 2 = 11 clamps to 10.
         scrollTo("sec-9");
@@ -67,12 +70,12 @@ describe("useScrollTo.ensureTargetLoaded (the partial-load)", () => {
     it("never shrinks an already-larger visibleCount (Math.max guard)", () => {
         const visibleCount = ref(8);
         const treeIndex = makeIndex(10);
-        const { scrollTo } = useScrollTo({
+        const { scrollTo } = scope.run(() => useScrollTo({
             scrollContainer: ref<HTMLElement | null>(null),
             totalCount: 10,
             visibleCount,
             treeIndex,
-        });
+        }))!;
 
         // Targeting sec-1 would want rootIndex+2 = 3, but 8 is already larger.
         scrollTo("sec-1");
@@ -81,12 +84,12 @@ describe("useScrollTo.ensureTargetLoaded (the partial-load)", () => {
 
     it("falls back to loading everything (totalCount) without a treeIndex", () => {
         const visibleCount = ref(2);
-        const { scrollTo } = useScrollTo({
+        const { scrollTo } = scope.run(() => useScrollTo({
             scrollContainer: ref<HTMLElement | null>(null),
             totalCount: 10,
             visibleCount,
             // no treeIndex
-        });
+        }))!;
 
         scrollTo("sec-5");
         expect(visibleCount.value).toBe(10);
@@ -95,12 +98,12 @@ describe("useScrollTo.ensureTargetLoaded (the partial-load)", () => {
     it("falls back to totalCount when the id is absent from the treeIndex", () => {
         const visibleCount = ref(2);
         const treeIndex = makeIndex(10);
-        const { scrollTo } = useScrollTo({
+        const { scrollTo } = scope.run(() => useScrollTo({
             scrollContainer: ref<HTMLElement | null>(null),
             totalCount: 10,
             visibleCount,
             treeIndex,
-        });
+        }))!;
 
         scrollTo("does-not-exist");
         expect(visibleCount.value).toBe(10);

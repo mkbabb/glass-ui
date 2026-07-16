@@ -122,6 +122,16 @@
     --type-title: 2.058rem; /* 32.9px — φ^(3/2) */
     --type-display-1: clamp(1.618rem, 1.2rem + 1.6vw, 2.618rem); /* φ^2 */
     --type-display-2: clamp(2.058rem, 1.5rem + 2.2vw, 3.33rem); /* φ^(5/2) */
+    /* A paired editorial interval. The kicker is derived from the headline's
+       ONE fluid value, so 1/√φ holds at the clamp floor, throughout its
+       fluid arm, and at the ceiling. The shared unitless leading preserves the
+       same ratio between their computed pixel line boxes. */
+    --type-proportional-ratio: 0.7861513777574233; /* 1/√φ */
+    --type-proportional-headline-size: var(--type-display-2);
+    --type-proportional-kicker-size: calc(
+        var(--type-proportional-headline-size) * var(--type-proportional-ratio)
+    );
+    --type-proportional-leading: 1;
     --type-display-3: clamp(2.618rem, 2rem + 3vw, 4.236rem); /* φ^3 */
     --type-display-4: clamp(3.33rem, 2.5rem + 4vw, 5.382rem); /* φ^(7/2) */
     --type-display-5: clamp(4.236rem, 3.5rem + 6vw, 6.854rem); /* φ^4 */

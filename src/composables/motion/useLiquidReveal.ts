@@ -7,8 +7,8 @@
 // never flies in on a flat fixed-bezier zoom-95.
 //
 // BG.W-MOTION-SPINE — this is now a THIN wrapper over `useElementMorph` (the ONE compositor
-// FLIP runner). It owns NO rAF loop, NO `ElementMorph`, NO spring sample — it declares the
-// reveal as a FLIP inversion (`direction: "in"`, `to: trigger`, origin at the trigger) with
+// FLIP runner). It owns NO rAF loop, NO geometry fallback, NO spring sample — it declares
+// the trigger as source and the surface as destination, with
 // the opacity + blur channels, and the runner drives it. The reveal is the surface arriving
 // at its OWN settled rect FROM the trigger; the CSS `.glass-reveal` recipe is the zero-JS
 // everywhere floor, this leaf is the source-rect REFINEMENT (the dialog-from-button, the
@@ -31,8 +31,8 @@ export interface UseLiquidRevealOptions {
      * The trigger element the surface blooms FROM — the source rect (the button, the
      * collapsed dock pill). A templateRef to the trigger ELEMENT or to a COMPONENT (e.g.
      * `<Button>`), whose root element is resolved via `.$el` (the binding-verification
-     * cure). When null at reveal time, the bloom degrades to a center-anchored self-scale
-     * (still spring-clocked, never the flat bezier zoom).
+     * cure). When null at reveal time, the explicit-endpoint episode completes
+     * immediately; no invented geometry substitutes for a missing trigger.
      */
     trigger?: Ref<HTMLElement | ComponentPublicInstance | null>;
     /** The spring register (default `snappy`). */
@@ -53,8 +53,8 @@ export interface UseLiquidRevealReturn {
 
 /**
  * The iOS-27 source-rect bloom. A ≤20-line adapter over `useElementMorph` — declares the
- * reveal as a `direction: "in"` FLIP inversion blooming FROM the trigger, opacity + blur
- * coupled. See `useElementMorph` for the runner (rAF/spring/PRM/compositor-only).
+ * reveal as an explicit trigger→surface episode, with opacity + blur
+ * coupled. See `useElementMorph` for managed playback, PRM, and compositor writes.
  *
  * @example
  * ```ts
@@ -67,9 +67,8 @@ export function useLiquidReveal(
     options: UseLiquidRevealOptions = {},
 ): UseLiquidRevealReturn {
     const engine = useElementMorph(surface, {
-        direction: "in",
-        to: options.trigger ?? "self",
-        origin: options.trigger ? "to" : "center",
+        source: options.trigger ?? "self",
+        destination: "self",
         preset: options.preset ?? "snappy",
         respectReducedMotion: options.respectReducedMotion,
         channels: { opacity: true, blur: options.blur ?? 4 },

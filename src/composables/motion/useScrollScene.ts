@@ -30,10 +30,12 @@ import {
     readonly,
     ref,
     toValue,
+    watch,
     type MaybeRefOrGetter,
     type Ref,
 } from "vue";
 import { createScrollReader, type ScrollReader, type ScrollSource } from "./scrollReader";
+import { useReducedMotion } from "./useReducedMotion";
 
 /** The smoother register — a pure-lag low-pass (`SmoothProgress`) or an overshooting
  *  spring (`SpringProgress`). The FELT reveal wants the spring (it overshoots, then
@@ -85,8 +87,6 @@ export interface UseScrollSceneReturn {
     dispose: () => void;
 }
 
-const PRM_QUERY = "(prefers-reduced-motion: reduce)";
-
 function clamp01(v: number): number {
     return v < 0 ? 0 : v > 1 ? 1 : v;
 }
@@ -103,15 +103,6 @@ function scrubToDamping(scrub: number): number {
     const s = clamp01(scrub);
     const FLOOR = 0.08; // the heaviest-drift damping — still converges (no stall)
     return 1 - s * (1 - FLOOR);
-}
-
-/** True when the engine reports prefers-reduced-motion: reduce (SSR-safe). */
-function prefersReducedMotion(): boolean {
-    return (
-        typeof window !== "undefined" &&
-        typeof window.matchMedia === "function" &&
-        window.matchMedia(PRM_QUERY).matches
-    );
 }
 
 /**
@@ -140,8 +131,7 @@ export function useScrollScene(options: UseScrollSceneOptions): UseScrollSceneRe
         respectReducedMotion = true,
     } = options;
 
-    const reduced = respectReducedMotion && prefersReducedMotion();
-    const effectiveScrub = reduced ? 0 : scrub;
+    const reduced = respectReducedMotion ? useReducedMotion() : ref(false);
 
     const progress = ref(0);
 
@@ -154,13 +144,13 @@ export function useScrollScene(options: UseScrollSceneOptions): UseScrollSceneRe
                   response: 0.5,
                   dampingFraction,
                   initial: 0,
-                  respectReducedMotion,
+                  respectReducedMotion: false,
               })
             : new SmoothProgress({
-                  damping: scrubToDamping(effectiveScrub),
+                  damping: scrubToDamping(scrub),
                   initial: 0,
                   clamp: true,
-                  respectReducedMotion,
+                  respectReducedMotion: false,
               });
 
     function setTarget(t: number): void {
@@ -193,7 +183,7 @@ export function useScrollScene(options: UseScrollSceneOptions): UseScrollSceneRe
     function onTick(r: ScrollReader): void {
         const raw = mapRaw(r);
         // PRM (or scrub 0) → 1:1 snap, no interpolated drift (the vestibular floor).
-        if (reduced) {
+        if (reduced.value) {
             setTarget(raw);
             smoother.snap();
             emit(raw);
@@ -216,7 +206,20 @@ export function useScrollScene(options: UseScrollSceneOptions): UseScrollSceneRe
         reader?.stop();
         reader = null;
         smoother.stop();
+        stopReducedMotionWatch();
     }
+
+    const stopReducedMotionWatch = watch(
+        reduced,
+        (next) => {
+            if (!next || !reader) return;
+            const raw = mapRaw(reader);
+            setTarget(raw);
+            smoother.snap();
+            emit(raw);
+        },
+        { flush: "sync" },
+    );
 
     onMounted(attach);
     if (getCurrentScope()) onScopeDispose(dispose);

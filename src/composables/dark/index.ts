@@ -11,6 +11,7 @@
 // beside installDarkModeSync (the dark-mode-sync family).
 export { useGlobalDark } from "./useGlobalDark";
 export type {
+    GlobalColorSchema,
     UseGlobalDarkOptions,
     UseGlobalDarkReturn,
     DarkFlipSettledCallback,

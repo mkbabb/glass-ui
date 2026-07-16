@@ -30,6 +30,7 @@ import {
     type ConfiguratorPreset,
 } from "@glass/components/configurator";
 import {
+    LabeledInput,
     LabeledSelect,
     LabeledSlider,
     LabeledSwitch,
@@ -111,6 +112,8 @@ interface BlobStudioCfg {
     // ── BC.W-GOOBLOB-MEATBALL §6 Surface — the STAGE-2 lit/shadow axes, surfaced LIVE.
     /** Lit-glass surface (Blinn-Phong glint + Fresnel rim) — STAGE-2 dressing. */
     lit: boolean;
+    /** Flat-to-dressed surface interpolation. */
+    morphT: number;
     /** The procedural 2D SDF soft contact shadow following the silhouette (STAGE-2). */
     shadow: boolean;
     /** Soft-shadow penumbra hardness (4–48; a higher value = a harder penumbra). */
@@ -183,6 +186,7 @@ const STUDIO_GEO_BASE = {
     // BC.W-GOOBLOB-MEATBALL — the STAGE-2 lit/shadow surface baseline (the meatball
     // default: lit-glass ON, the procedural soft contact shadow ON, mid-penumbra).
     lit: BLOB_CONFIG_DEFAULTS.surface.lit,
+    morphT: BLOB_CONFIG_DEFAULTS.morphT,
     shadow: BLOB_CONFIG_DEFAULTS.surface.shadow,
     shadowSoftness: BLOB_CONFIG_DEFAULTS.surface.shadowSoftness,
 } as const;
@@ -392,12 +396,28 @@ watch(
             studio.config.eccentricity,
             studio.config.smoothK,
             studio.config.merge,
+            studio.config.morphT,
             studio.config.lit,
             studio.config.shadow,
             studio.config.shadowSoftness,
             paletteStops.value,
         ] as const,
-    ([attraction, clickImpulse, responsiveness, satCount, orbit, satRadius, ecc, smoothK, merge, lit, shadow, shadowSoftness, stops]) => {
+    ([
+        attraction,
+        clickImpulse,
+        responsiveness,
+        satCount,
+        orbit,
+        satRadius,
+        ecc,
+        smoothK,
+        merge,
+        morphT,
+        lit,
+        shadow,
+        shadowSoftness,
+        stops,
+    ]) => {
         stageConfig.interaction.pointerAttraction = attraction;
         stageConfig.interaction.clickImpulse = clickImpulse;
         stageConfig.interaction.pointerStrength = leanStrength(responsiveness);
@@ -408,6 +428,7 @@ watch(
         stageConfig.geometry.eccentricity = ecc;
         stageConfig.membrane.smoothK = smoothK;
         stageConfig.membrane.merge = merge;
+        stageConfig.morphT = morphT;
         stageConfig.surface.lit = lit;
         stageConfig.surface.shadow = shadow;
         stageConfig.surface.shadowSoftness = shadowSoftness;
@@ -418,13 +439,13 @@ watch(
 
 // BC.W-GOOBLOB-PLAIN — the STAGE-1 plain-blob register. The first-principles floor:
 // the canonical separation geometry (orbit 0.30 OUTSIDE body 0.22, 4 satellites) so the
-// orbit→merge→absorb→emerge meatball show reads, with `variant: "blob"` setting the
-// shader's `uStage` gate to the shadowless lightless fill-only path (NO lit dressing —
+// orbit→merge→absorb→emerge meatball show reads, with `morphT: 0` selecting the
+// shadowless lightless fill-only path (NO lit dressing —
 // the teaching contrast with the lit studio hero above). `surface.lit` is left at the
 // default; the `uStage` gate strips the lit block regardless.
 const plainConfig: BlobConfig = {
     ...BLOB_CONFIG_DEFAULTS,
-    variant: "blob",
+    morphT: 0,
     geometry: {
         ...BLOB_CONFIG_DEFAULTS.geometry,
         satelliteCount: 4,
@@ -590,68 +611,51 @@ watch(studioPaused, () => {
                     -->
                     <template #controls>
                         <ConfiguratorLayer label="Interaction" sub="--interaction-*" dividers>
-                            <ConfiguratorRow label="Attraction" name="attraction">
-                                <LabeledSlider
-                                    v-model="studio.config.attraction"
-                                    :min="-1"
-                                    :max="1"
-                                    :step="0.05"
-                                    label="Attraction"
-                                    hide-label
-                                    tooltip="Pointer lean — +1 leans IN toward the cursor, -1 shies AWAY."
-                                />
-                            </ConfiguratorRow>
-                            <ConfiguratorRow label="Click impulse" name="clickImpulse">
-                                <LabeledSlider
-                                    v-model="studio.config.clickImpulse"
-                                    :min="0"
-                                    :max="1.5"
-                                    :step="0.05"
-                                    label="Click impulse"
-                                    hide-label
-                                    tooltip="The one-shot bouncy spring impulse fired on a click."
-                                />
-                            </ConfiguratorRow>
-                            <ConfiguratorRow label="Responsiveness" name="responsiveness">
-                                <LabeledSlider
-                                    v-model="studio.config.responsiveness"
-                                    :min="0"
-                                    :max="1"
-                                    :step="0.05"
-                                    label="Responsiveness"
-                                    hide-label
-                                    tooltip="The LOUDER-lean register — scales the pointer-lean strength + the velocity squash-stretch UP from the calm default. At 1 a fast flick reads a visible taffy-pull; 0 is the shipped calm bead."
-                                />
-                            </ConfiguratorRow>
+                            <LabeledSlider
+                                v-model="studio.config.attraction"
+                                :min="-1"
+                                :max="1"
+                                :step="0.05"
+                                label="Attraction"
+                                description="Pointer lean — +1 leans IN toward the cursor, -1 shies AWAY."
+                            />
+                            <LabeledSlider
+                                v-model="studio.config.clickImpulse"
+                                :min="0"
+                                :max="1.5"
+                                :step="0.05"
+                                label="Click impulse"
+                                description="The one-shot bouncy spring impulse fired on a click."
+                            />
+                            <LabeledSlider
+                                v-model="studio.config.responsiveness"
+                                :min="0"
+                                :max="1"
+                                :step="0.05"
+                                label="Responsiveness"
+                                description="The LOUDER-lean register — scales the pointer-lean strength + the velocity squash-stretch UP from the calm default. At 1 a fast flick reads a visible taffy-pull; 0 is the shipped calm bead."
+                            />
                         </ConfiguratorLayer>
                         <ConfiguratorLayer label="Mood + palette" sub="--color-*" dividers>
-                            <ConfiguratorRow label="Mood" name="mood">
-                                <LabeledSelect
-                                    v-model="studio.config.mood"
-                                    v-model:is-open="moodOpen"
-                                    :items="MOODS as unknown as readonly string[]"
-                                    label="Mood"
-                                    hide-label
-                                    tooltip="The named mood — drives the {valence, arousal} affect model (orbit speed, wobble, sheen)."
-                                />
-                            </ConfiguratorRow>
-                            <ConfiguratorRow label="Seed">
-                                <input
-                                    v-model="studio.config.seed"
-                                    class="input-pill fira-code w-full"
-                                    aria-label="Palette seed color"
-                                />
-                            </ConfiguratorRow>
-                            <ConfiguratorRow label="Harmony" name="harmony">
-                                <LabeledSelect
-                                    v-model="studio.config.harmony"
-                                    v-model:is-open="harmonyOpen"
-                                    :items="HARMONIES as unknown as readonly string[]"
-                                    label="Harmony"
-                                    hide-label
-                                    tooltip="The color harmony the seed ramps through (deriveBlobPalette)."
-                                />
-                            </ConfiguratorRow>
+                            <LabeledSelect
+                                v-model="studio.config.mood"
+                                v-model:open="moodOpen"
+                                :items="MOODS as unknown as readonly string[]"
+                                label="Mood"
+                                description="The named mood — drives the {valence, arousal} affect model (orbit speed, wobble, sheen)."
+                            />
+                            <LabeledInput
+                                v-model="studio.config.seed"
+                                label="Seed"
+                                description="Base color used to derive the palette."
+                            />
+                            <LabeledSelect
+                                v-model="studio.config.harmony"
+                                v-model:open="harmonyOpen"
+                                :items="HARMONIES as unknown as readonly string[]"
+                                label="Harmony"
+                                description="The color harmony the seed ramps through (deriveBlobPalette)."
+                            />
                             <ConfiguratorRow label="Stops">
                                 <div class="flex flex-wrap gap-2">
                                     <WatercolorDot
@@ -673,33 +677,32 @@ watch(studioPaused, () => {
                           slider widens/tightens the contact band.
                         -->
                         <ConfiguratorLayer label="Surface (STAGE 2)" sub="--surface-*" dividers>
-                            <ConfiguratorRow label="Lit glass" name="lit">
-                                <LabeledSwitch
-                                    v-model:checked="studio.config.lit"
-                                    label="Lit glass"
-                                    hide-label
-                                    tooltip="The lit-glass dressing (Blinn-Phong glint + Fresnel rim) — the STAGE-2 surface."
-                                />
-                            </ConfiguratorRow>
-                            <ConfiguratorRow label="Soft shadow" name="shadow">
-                                <LabeledSwitch
-                                    v-model:checked="studio.config.shadow"
-                                    label="Soft shadow"
-                                    hide-label
-                                    tooltip="The procedural 2D SDF soft contact shadow following the irregular silhouette (NOT a hard disc shadow)."
-                                />
-                            </ConfiguratorRow>
-                            <ConfiguratorRow label="Shadow softness" name="shadowSoftness">
-                                <LabeledSlider
-                                    v-model="studio.config.shadowSoftness"
-                                    :min="4"
-                                    :max="48"
-                                    :step="1"
-                                    label="Shadow softness"
-                                    hide-label
-                                    tooltip="The penumbra hardness — higher is a harder, tighter shadow band."
-                                />
-                            </ConfiguratorRow>
+                            <LabeledSlider
+                                v-model="studio.config.morphT"
+                                :min="0"
+                                :max="1"
+                                :step="0.01"
+                                label="Surface morph"
+                                description="The sole surface axis: 0 is flat, 1 is fully dressed, and values between interpolate smoothly."
+                            />
+                            <LabeledSwitch
+                                v-model="studio.config.lit"
+                                label="Lit glass"
+                                description="The lit-glass dressing (Blinn-Phong glint + Fresnel rim) — the STAGE-2 surface."
+                            />
+                            <LabeledSwitch
+                                v-model="studio.config.shadow"
+                                label="Soft shadow"
+                                description="The procedural 2D SDF soft contact shadow following the irregular silhouette (NOT a hard disc shadow)."
+                            />
+                            <LabeledSlider
+                                v-model="studio.config.shadowSoftness"
+                                :min="4"
+                                :max="48"
+                                :step="1"
+                                label="Shadow softness"
+                                description="The penumbra hardness — higher is a harder, tighter shadow band."
+                            />
                         </ConfiguratorLayer>
                         <!--
                           AZ.W-BLOB-STUDIO §3.3 + §3.2 — the TERTIARY Geometry / Satellites
@@ -713,77 +716,59 @@ watch(studioPaused, () => {
                           metaballs in (circular merge rounds the seam crease).
                         -->
                         <ConfiguratorLayer label="Geometry / Satellites" sub="--geometry-* · --membrane-*" dividers>
-                            <ConfiguratorRow label="Satellites" name="satelliteCount">
-                                <LabeledSlider
-                                    v-model="studio.config.satelliteCount"
-                                    :min="0"
-                                    :max="MAX_SATS"
-                                    :step="1"
-                                    label="Satellites"
-                                    hide-label
-                                    tooltip="How many satellites orbit the body (0–4)."
-                                />
-                            </ConfiguratorRow>
-                            <ConfiguratorRow label="Orbit radius" name="orbitRadius">
-                                <LabeledSlider
-                                    v-model="studio.config.orbitRadius"
-                                    :min="0.1"
-                                    :max="0.42"
-                                    :step="0.01"
-                                    label="Orbit radius"
-                                    hide-label
-                                    tooltip="The orbit radius. Body radius is ~0.22 — dial PAST it to separate the satellites into orbiting droplets and WATCH the metaballing."
-                                />
-                            </ConfiguratorRow>
-                            <ConfiguratorRow label="Satellite radius" name="satelliteRadius">
-                                <LabeledSlider
-                                    v-model="studio.config.satelliteRadius"
-                                    :min="0.04"
-                                    :max="0.16"
-                                    :step="0.005"
-                                    label="Satellite radius"
-                                    hide-label
-                                    tooltip="Each satellite's radius."
-                                />
-                            </ConfiguratorRow>
-                            <ConfiguratorRow label="Eccentricity" name="eccentricity">
-                                <LabeledSlider
-                                    v-model="studio.config.eccentricity"
-                                    :min="0"
-                                    :max="0.3"
-                                    :step="0.01"
-                                    label="Eccentricity"
-                                    hide-label
-                                    tooltip="The orbit-ellipse Y-inflation — 0 is a circular orbit, higher stretches it vertically."
-                                />
-                            </ConfiguratorRow>
-                            <ConfiguratorRow label="Merge bridge" name="smoothK">
-                                <LabeledSlider
-                                    v-model="studio.config.smoothK"
-                                    :min="0.02"
-                                    :max="0.16"
-                                    :step="0.005"
-                                    label="Merge bridge"
-                                    hide-label
-                                    tooltip="The smin blend-band — wider stretches a gooier body→satellite NECK as a satellite metaballs in (vs a hard pop)."
-                                />
-                            </ConfiguratorRow>
-                            <ConfiguratorRow label="Merge variant" name="merge">
-                                <LabeledSelect
-                                    v-model="studio.config.merge"
-                                    v-model:is-open="mergeOpen"
-                                    :items="MERGES as unknown as readonly string[]"
-                                    label="Merge variant"
-                                    hide-label
-                                    tooltip="quadratic = cheap, slightly creased; circular = a true quarter-circle fillet at the seam (rounder menisci)."
-                                />
-                            </ConfiguratorRow>
+                            <LabeledSlider
+                                v-model="studio.config.satelliteCount"
+                                :min="0"
+                                :max="MAX_SATS"
+                                :step="1"
+                                label="Satellites"
+                                description="How many satellites orbit the body (0–4)."
+                            />
+                            <LabeledSlider
+                                v-model="studio.config.orbitRadius"
+                                :min="0.1"
+                                :max="0.42"
+                                :step="0.01"
+                                label="Orbit radius"
+                                description="The orbit radius. Body radius is ~0.22 — dial PAST it to separate the satellites into orbiting droplets and WATCH the metaballing."
+                            />
+                            <LabeledSlider
+                                v-model="studio.config.satelliteRadius"
+                                :min="0.04"
+                                :max="0.16"
+                                :step="0.005"
+                                label="Satellite radius"
+                                description="Each satellite's radius."
+                            />
+                            <LabeledSlider
+                                v-model="studio.config.eccentricity"
+                                :min="0"
+                                :max="0.3"
+                                :step="0.01"
+                                label="Eccentricity"
+                                description="The orbit-ellipse Y-inflation — 0 is a circular orbit, higher stretches it vertically."
+                            />
+                            <LabeledSlider
+                                v-model="studio.config.smoothK"
+                                :min="0.02"
+                                :max="0.16"
+                                :step="0.005"
+                                label="Merge bridge"
+                                description="The smin blend-band — wider stretches a gooier body→satellite NECK as a satellite metaballs in (vs a hard pop)."
+                            />
+                            <LabeledSelect
+                                v-model="studio.config.merge"
+                                v-model:open="mergeOpen"
+                                :items="MERGES as unknown as readonly string[]"
+                                label="Merge variant"
+                                description="quadratic = cheap, slightly creased; circular = a true quarter-circle fillet at the seam (rounder menisci)."
+                            />
                         </ConfiguratorLayer>
                     </template>
 
         <StorySection
             label="STAGE 1 — the plain blob, from first principles"
-            blurb="The minimal verifiable floor (variant='blob'): SDF circle + smin satellites +
+            blurb="The minimal verifiable floor (morphT=0): SDF circle + smin satellites +
                 fwidth-AA + warm-cream fill — NO specular, NO shadow, NO iridescence. Deliberately
                 FLAT. This is the 'it renders, it meatballs, it works on Safari' floor that proves
                 the field is alive before STAGE 2 dresses it. A satellite passing near the body MERGES
@@ -793,7 +778,6 @@ watch(studioPaused, () => {
             <ShowcaseFrame class="flex items-center justify-center">
                 <div class="relative aspect-square w-[min(60%,22rem)]">
                     <Blob
-                        variant="blob"
                         color="var(--card)"
                         :config="plainConfig"
                         seed="plain"

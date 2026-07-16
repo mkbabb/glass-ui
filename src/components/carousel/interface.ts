@@ -12,6 +12,8 @@ type CarouselPlugin = UseCarouselParameters[1]
 export type UnwrapRefCarouselApi = UnwrapRef<CarouselApi>
 
 export interface CarouselProps {
+  /** Accessible name that opts the carousel into a named region landmark. */
+  ariaLabel?: string
   opts?: CarouselOptions
   plugins?: CarouselPlugin
   orientation?: 'horizontal' | 'vertical'

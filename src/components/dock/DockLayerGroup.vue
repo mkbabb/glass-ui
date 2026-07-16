@@ -133,7 +133,8 @@ function resolveRailSnapTargets(): DragMorphSnapTarget<string>[] {
 }
 
 const railDrag = useDragMorph<string>({
-    el: railListEl,
+    handle: railListEl,
+    surface: railIndicatorEl,
     axis: () => railDragAxis.value,
     snapTargets: resolveRailSnapTargets,
     onSnap: (id) => {
@@ -215,12 +216,8 @@ onBeforeUnmount(() => {
             :class="[
                 railPosition,
                 motionAxis.armed.value && 'glass-drag-grabbable',
-                motionAxis.armed.value &&
-                    railDrag.dragging.value &&
-                    'glass-drag-lift',
             ]"
             :aria-orientation="railOrientation"
-            :style="motionAxis.armed.value ? railDrag.dragStyle.value : undefined"
             @keydown="selection.onKeydown"
             @focusin="onRailFocusIn"
             @focusout="onRailFocusOut"
@@ -247,7 +244,10 @@ onBeforeUnmount(() => {
             </button>
             <div
                 ref="railIndicatorEl"
-                class="dock-layer-tab-indicator"
+                :class="[
+                    'dock-layer-tab-indicator',
+                    motionAxis.armed.value && railDrag.dragging.value && 'glass-drag-lift',
+                ]"
                 :style="selection.singleSliderStyle.value"
                 aria-hidden="true"
             />
@@ -256,7 +256,7 @@ onBeforeUnmount(() => {
              children (<DockLayer>) register with it; it owns the two-child opacity
              overlap on `--dock-t`, the measure-once peak reserve, and the
              focus-transfer-on-dissolve. -->
-        <DockCrossfade ref="crossfade" :active="activeLayer" class="dock-layer-stack">
+        <DockCrossfade ref="crossfade" :active="activeLayer">
             <slot />
         </DockCrossfade>
     </div>

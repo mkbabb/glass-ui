@@ -1,24 +1,54 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
-import { AccordionContent, type AccordionContentProps } from 'reka-ui'
-import { cn } from '../_shared/class-names'
+import { computed, useAttrs, type HTMLAttributes } from "vue";
+import {
+    AccordionContent as RekaAccordionContent,
+    injectCollapsibleRootContext,
+} from "reka-ui";
+import { cn } from "../_shared/class-names";
+import { useDisclosureIds } from "../_shared/disclosure-context";
 
-const props = defineProps<AccordionContentProps & { class?: HTMLAttributes['class'] }>()
+export interface AccordionContentProps {
+    /** Keep the region mounted while closed, for measurement or external animation. */
+    forceMount?: boolean;
+    class?: HTMLAttributes["class"];
+}
 
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
+defineOptions({ name: "AccordionContent", inheritAttrs: false });
 
-  return delegated
-})
+const props = withDefaults(defineProps<AccordionContentProps>(), {
+    forceMount: false,
+});
+defineSlots<{ default?: () => unknown }>();
+
+const ids = useDisclosureIds();
+const rootContext = injectCollapsibleRootContext();
+rootContext.contentId = ids.content;
+
+const attrs = useAttrs();
+const forwardedAttrs = computed(() => {
+    const {
+        as: _as,
+        asChild: _asChild,
+        "as-child": _asChildKebab,
+        ...forwarded
+    } = attrs;
+    return forwarded;
+});
 </script>
 
 <template>
-  <AccordionContent
-    v-bind="delegatedProps"
-    class="overflow-hidden text-sm transition-collapse data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
-  >
-    <div :class="cn('pb-4 pt-0', props.class)">
-      <slot />
-    </div>
-  </AccordionContent>
+    <RekaAccordionContent
+        v-bind="forwardedAttrs"
+        as="div"
+        data-slot="accordion-content"
+        data-disclosure="accordion"
+        :force-mount="forceMount"
+        :id="ids.content"
+        :aria-labelledby="ids.trigger"
+        class="disclosure-content"
+    >
+        <div :class="cn('disclosure-content-body', props.class)">
+            <slot />
+        </div>
+    </RekaAccordionContent>
 </template>

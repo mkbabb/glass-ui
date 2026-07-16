@@ -27,16 +27,15 @@
 // PRM (motion-canon P6): under `prefers-reduced-motion: reduce` `drive` SEATS the
 // edges at the target instantly (zero in-between frames, no spring) — the worm is
 // ONE body on the target; only the consumer's fade survives. The PRM signal is a
-// SINGLE cached `matchMedia` listener (the AV.W7 `useWebGLCanvas` substrate pattern).
+// SINGLE shared reduced-motion authority.
 //
 // VUE-ONLY (off the SCC trap): imports `vue` only — no `@vueuse/core`, no
 // `@mkbabb/keyframes.js` — so it ships on the engine-free `/motion-core` subpath AND
 // the root barrel (the `usePointerVelocityField` / `useLiquidFlex` precedent). The
 // integrator is hand-rolled; no spring engine is introduced.
 
-import { onScopeDispose, readonly, ref, type Ref } from "vue";
-
-const PRM_QUERY = "(prefers-reduced-motion: reduce)";
+import { onScopeDispose, readonly, ref, watch, type Ref } from "vue";
+import { useReducedMotion } from "./useReducedMotion";
 
 // The dock register (response, ζ) reused as bare numerics for the hand-rolled
 // critically-damped LEAD spring — NOT a keyframes `SpringProgress` (the SCC-trap +
@@ -101,7 +100,7 @@ export interface UseLeadTrail {
     drive(target: number): void;
     /** Snap BOTH edges to `value` instantly (mount / resize / PRM). Paints once. */
     seat(value: number): void;
-    /** Tear down the rAF + the cached PRM listener (auto-run on scope dispose). */
+    /** Tear down the rAF + shared-preference watch (auto-run on scope dispose). */
     dispose(): void;
 }
 
@@ -132,19 +131,6 @@ export function useLeadTrail(options: UseLeadTrailOptions = {}): UseLeadTrail {
 
     const omega = (2 * Math.PI) / response; // the natural angular frequency
 
-    // ── The cached PRM ref (AV.W7 substrate pattern) — ONE matchMedia + change
-    // listener for the field's lifetime, never a fresh matchMedia per drive.
-    const canMatch =
-        typeof window !== "undefined" && typeof window.matchMedia === "function";
-    const prmQuery = canMatch ? window.matchMedia(PRM_QUERY) : null;
-    let reduced = prmQuery?.matches ?? false;
-    const onPrmChange = (e: MediaQueryListEvent): void => {
-        reduced = e.matches;
-        // A flip TO reduced snaps the worm to rest immediately (no lingering motion).
-        if (reduced) seat(target);
-    };
-    prmQuery?.addEventListener("change", onPrmChange);
-
     const lead = ref(0);
     const trail = ref(0);
     const settled = ref(true);
@@ -155,6 +141,7 @@ export function useLeadTrail(options: UseLeadTrailOptions = {}): UseLeadTrail {
     let target = 0;
     let rafId = 0;
     let lastNow = 0;
+    const reduced = respectPRM ? useReducedMotion() : ref(false);
 
     const canRaf =
         typeof window !== "undefined" &&
@@ -235,7 +222,7 @@ export function useLeadTrail(options: UseLeadTrailOptions = {}): UseLeadTrail {
         if (!Number.isFinite(next)) return;
         target = next;
         // PRM (P6) — seat instantly, zero in-between frames (no spring, no elongation).
-        if (respectPRM && reduced) {
+        if (reduced.value) {
             seat(next);
             return;
         }
@@ -254,9 +241,17 @@ export function useLeadTrail(options: UseLeadTrailOptions = {}): UseLeadTrail {
         publish();
     }
 
+    const stopReducedMotionWatch = watch(
+        reduced,
+        (next) => {
+            if (next) seat(target);
+        },
+        { flush: "sync" },
+    );
+
     function dispose(): void {
         stop();
-        prmQuery?.removeEventListener("change", onPrmChange);
+        stopReducedMotionWatch();
     }
 
     onScopeDispose(dispose);

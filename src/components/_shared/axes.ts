@@ -1,11 +1,10 @@
 // src/components/_shared/axes.ts — the ONE grammar home (BH.W-AXIS-GRAMMAR).
 //
-// Every axis union in the library derives from a tuple here or in
-// useSurfaceAxis.ts. A private surface/tier/size/orientation/motion-shaped union
+// Every axis union in the library derives from a tuple here. A private
+// surface/tier/size/orientation/motion-shaped union
 // anywhere else in src/ is forbidden by construction (proof:encapsulation ·
-// axis-grammar). `useSurfaceAxis` is the ONE axis done right — a union + a
-// resolver + a `[data-surface]` seam — and this file mints the missing three in
-// the SAME neighborhood so all four grammar types have ONE import.
+// axis-grammar). This file is vocabulary only; the private class resolver and
+// `[data-surface]` paint seam consume these tuples without re-minting them.
 //
 // THE SUB-RANGE LAW (binding on every component): a component NEVER mints a
 // size/orientation/motion/surface string union — it declares a RESTRICTION of the
@@ -17,12 +16,15 @@
 // `icon`-only button, a `card` shape) NEVER appears in a `size` union — shape is
 // its own per-family axis, not a scale rung.
 //
-// THE MEMBERSHIP FENCE (the anti-grab-bag clause): this file exports ONLY axis
-// unions + their frozen tuples + the two re-exported surface types. NO function,
-// NO component, NO grab-bag helper — it is the vocabulary, not a toolbox (the
-// honest `/api` discovery successor: 4 axis types, not a 203-symbol grab-bag).
+// THE MEMBERSHIP FENCE: this file exports only axis tuples and their derived unions.
 
-export type { Surface, SurfaceTier } from "./useSurfaceAxis"; // KEEP-VERBATIM leaf; re-exported, never moved
+/** The surface-decoration axis. */
+export const SURFACES = ["glass", "veil", "opaque"] as const;
+export type Surface = (typeof SURFACES)[number];
+
+/** The five-rung glass ladder. */
+export const SURFACE_TIERS = ["wash", "quiet", "resting", "floating", "overlay"] as const;
+export type SurfaceTier = (typeof SURFACE_TIERS)[number];
 
 /** The scale axis — one honest ordinal; rung names ≡ the `--control-h-*` token cohort. */
 export const SIZES = ["xs", "sm", "md", "lg", "xl"] as const;
@@ -35,9 +37,6 @@ export type Orientation = (typeof ORIENTATIONS)[number]; // default "horizontal"
 /** The motion-weight axis — opt-DOWN, not opt-in (liquid-weight universal). */
 export const MOTIONS = ["full", "reduced", "off"] as const;
 export type Motion = (typeof MOTIONS)[number]; // default "full"; PRM > prop > default
-
-/** The surface-decoration axis — mirrors `useSurfaceAxis`'s `Surface` (gate-asserted ≡). */
-export const SURFACES = ["glass", "veil", "opaque"] as const; // `clear` RETIRED at BI.W-CLEAR-FOLD (dead substrate, 0 consumers)
 
 // ── BI.W-AXES-GATES — the three factor-band axes (the axes-ext membership fence).
 // TONES / PLACEMENTS / TRIGGERS join the four grammar unions so the Kronecker
@@ -66,12 +65,13 @@ export type Trigger = (typeof TRIGGERS)[number]; // default "click"
 // mint the tuple + its type AND list it here, or the gate's axes-ext arm reds the
 // inconsistency. `AXIS_TUPLES` ≡ every exported `const … as const` tuple name;
 // `AXIS_TYPE_NAMES` ≡ every derived-union type name; `ALLOWED_EXPORTS` ≡ the WHOLE
-// admissible export set (tuples + types + the two re-exported surface types).
+// admissible export set (tuples + types).
 const AXIS_TUPLES = [
     "SIZES",
     "ORIENTATIONS",
     "MOTIONS",
     "SURFACES",
+    "SURFACE_TIERS",
     "TONES",
     "PLACEMENTS",
     "TRIGGERS",
@@ -80,6 +80,8 @@ const AXIS_TYPE_NAMES = [
     "Size",
     "Orientation",
     "Motion",
+    "Surface",
+    "SurfaceTier",
     "Tone",
     "Placement",
     "Trigger",
@@ -87,8 +89,6 @@ const AXIS_TYPE_NAMES = [
 const ALLOWED_EXPORTS = [
     ...AXIS_TUPLES,
     ...AXIS_TYPE_NAMES,
-    "Surface",
-    "SurfaceTier",
 ] as const;
 void AXIS_TUPLES;
 void AXIS_TYPE_NAMES;

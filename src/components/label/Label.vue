@@ -1,40 +1,87 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
-import { Label, type LabelProps } from 'reka-ui'
-import { cn } from '../_shared/class-names'
+import { computed, type HTMLAttributes, useAttrs } from "vue";
+import { Label as RekaLabel } from "reka-ui";
+import { cn } from "../_shared/class-names";
 
-const props = defineProps<
-  LabelProps & {
-    class?: HTMLAttributes['class']
-    /**
-     * AQ.W4 §W4.5 — render a required-field asterisk after the label text.
-     * The asterisk is decorative-to-AT (the `required` attribute on the input
-     * is the semantic carrier), so it is marked `aria-hidden`. Indicate
-     * required fields visually BEFORE interaction (required-field-feedback
-     * guide).
-     */
-    required?: boolean
-  }
->()
+export type LabelRequirement = "required" | "optional";
+
+export interface LabelProps {
+    for?: string;
+    class?: HTMLAttributes["class"];
+    requirement?: LabelRequirement;
+    disabled?: boolean;
+}
+
+defineOptions({ inheritAttrs: false });
+
+const props = defineProps<LabelProps>();
+const attrs = useAttrs();
+
+const forwardedAttrs = computed(() => {
+    const {
+        as: _as,
+        asChild: _asChild,
+        "as-child": _asChildKebab,
+        ...forwarded
+    } = attrs;
+    return forwarded;
+});
 
 const delegatedProps = computed(() => {
-  const { class: _, required: _r, ...delegated } = props
+    const {
+        class: _class,
+        requirement: _requirement,
+        disabled: _disabled,
+        ...delegated
+    } = props;
 
-  return delegated
-})
+    return delegated;
+});
+
+const annotation = computed(() => {
+    if (props.requirement === "required") return "*";
+    if (props.requirement === "optional") return "optional";
+    return undefined;
+});
 </script>
 
 <template>
-  <Label data-slot="label"
-    v-bind="delegatedProps"
-    :class="
-      cn(
-        'text-small font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70',
-        props.class,
-      )
-    "
-  >
-    <slot />
-    <span v-if="required" class="text-destructive" aria-hidden="true"> *</span>
-  </Label>
+    <RekaLabel
+        v-bind="{ ...forwardedAttrs, ...delegatedProps }"
+        data-slot="label"
+        :data-requirement="requirement"
+        :data-disabled="disabled || undefined"
+        :class="cn('glass-label', props.class)"
+    >
+        <slot />
+        <span v-if="annotation" class="label-requirement" aria-hidden="true">{{
+            annotation
+        }}</span>
+    </RekaLabel>
 </template>
+
+<style scoped>
+.glass-label {
+    color: var(--foreground);
+    font-family: var(--font-text);
+    font-size: var(--type-small);
+    font-weight: 500;
+    line-height: var(--type-leading-small);
+}
+
+.glass-label[data-disabled] {
+    cursor: not-allowed;
+    opacity: var(--opacity-disabled);
+}
+
+.label-requirement {
+    margin-inline-start: 0.35em;
+    color: var(--muted-foreground);
+    font-size: var(--type-caption);
+    font-weight: 400;
+}
+
+.glass-label[data-requirement="required"] .label-requirement {
+    color: var(--destructive);
+}
+</style>

@@ -44,10 +44,14 @@ import type { UsePointerVelocityField } from "../../../composables/motion/usePoi
 
 export interface AuroraWGPUSetupDeps {
     canvas: HTMLCanvasElement;
+    /** Live canvases present opaque; capture canvases retain premultiplied alpha. */
+    opaquePresentation: boolean;
     /** The cursor strength ceiling + radius (the runtime's imperative setters write these). */
     getCursorScalars: () => AuroraCursorScalars;
     getConfig: () => AuroraConfig;
     getReducedMotion: () => boolean;
+    /** Resolve shader time while pointer physics retain the real frame delta. */
+    getRenderTime: (elapsedSec: number) => number;
     /**
      * BC.W-VIZ-AURORA (T5) — the shared viz-pointer-physics field (BB.B4). FED
      * `tick(deltaMs)` from the WGPU frame callback (the SAME field instance the WebGL2
@@ -80,6 +84,19 @@ const BUFFER_USAGE_UNIFORM = 0x40;
 const BUFFER_USAGE_COPY_DST = 0x8;
 const SHADER_STAGE_FRAGMENT = 0x2;
 
+const PREMULTIPLIED_BLEND: GPUBlendState = {
+    color: {
+        srcFactor: "one",
+        dstFactor: "one-minus-src-alpha",
+        operation: "add",
+    },
+    alpha: {
+        srcFactor: "one",
+        dstFactor: "one-minus-src-alpha",
+        operation: "add",
+    },
+};
+
 /**
  * Build the aurora `setupWGPU(device, context, format)` callback. Closes over the
  * aurora-specific state (cursor/config/reduced-motion) the runtime owns — identical to
@@ -90,9 +107,11 @@ export function createAuroraWGPUSetup(
 ): (device: GPUDevice, context: GPUCanvasContext, format: GPUTextureFormat) => WebGPUCanvasFrame {
     const {
         canvas,
+        opaquePresentation,
         getCursorScalars,
         getConfig,
         getReducedMotion,
+        getRenderTime,
         pointerField,
         getDecodedImage,
         registerImageUploader,
@@ -109,9 +128,11 @@ export function createAuroraWGPUSetup(
         if (getConfig().source === "image") {
             return setupImageWGPU(device, context, format, {
                 canvas,
+                opaquePresentation,
                 getCursorScalars,
                 getConfig,
                 getReducedMotion,
+                getRenderTime,
                 pointerField,
                 getDecodedImage,
                 registerImageUploader,
@@ -152,20 +173,9 @@ export function createAuroraWGPUSetup(
                 targets: [
                     {
                         format,
-                        // Premultiplied-alpha blend over the transparent clear — matches
-                        // the WebGL2 `gl.blendFunc(ONE, ONE_MINUS_SRC_ALPHA)`.
-                        blend: {
-                            color: {
-                                srcFactor: "one",
-                                dstFactor: "one-minus-src-alpha",
-                                operation: "add",
-                            },
-                            alpha: {
-                                srcFactor: "one",
-                                dstFactor: "one-minus-src-alpha",
-                                operation: "add",
-                            },
-                        },
+                        blend: opaquePresentation
+                            ? undefined
+                            : PREMULTIPLIED_BLEND,
                     },
                 ],
             },
@@ -200,7 +210,14 @@ export function createAuroraWGPUSetup(
             const cursor = mapAuroraCursor(pointerField, getCursorScalars(), tempo);
 
             // Pack + upload the uniforms (slider drag refills the scratch in place).
-            packAuroraWGPUUniforms(scratch, getConfig(), cursor, timeSec);
+            const config = getConfig();
+            packAuroraWGPUUniforms(
+                scratch,
+                config,
+                cursor,
+                getRenderTime(timeSec),
+                opaquePresentation ? 1 : config.alpha,
+            );
             device.queue.writeBuffer(uniformBuffer, 0, scratch.buffer);
 
             const view = context.getCurrentTexture().createView();
@@ -209,8 +226,12 @@ export function createAuroraWGPUSetup(
                 colorAttachments: [
                     {
                         view,
-                        // clear to transparent — premultiplied-alpha over the page.
-                        clearValue: { r: 0, g: 0, b: 0, a: 0 },
+                        clearValue: {
+                            r: 0,
+                            g: 0,
+                            b: 0,
+                            a: opaquePresentation ? 1 : 0,
+                        },
                         loadOp: "clear",
                         storeOp: "store",
                     },
@@ -239,9 +260,6 @@ export function createAuroraWGPUSetup(
             frame,
             shouldContinue,
             resize,
-            // reduced-motion freezes time at the authored offset (matches the WebGL2
-            // runtime's `frozenOffset` of 3.7); otherwise pass elapsed seconds through.
-            time: (elapsedSec) => (getReducedMotion() ? 3.7 : elapsedSec),
             teardown: () => {
                 uniformBuffer.destroy();
             },
@@ -263,9 +281,11 @@ function setupImageWGPU(
 ): WebGPUCanvasFrame {
     const {
         canvas,
+        opaquePresentation,
         getCursorScalars,
         getConfig,
         getReducedMotion,
+        getRenderTime,
         pointerField,
         getDecodedImage,
         registerImageUploader,
@@ -318,10 +338,9 @@ function setupImageWGPU(
             targets: [
                 {
                     format,
-                    blend: {
-                        color: { srcFactor: "one", dstFactor: "one-minus-src-alpha", operation: "add" },
-                        alpha: { srcFactor: "one", dstFactor: "one-minus-src-alpha", operation: "add" },
-                    },
+                    blend: opaquePresentation
+                        ? undefined
+                        : PREMULTIPLIED_BLEND,
                 },
             ],
         },
@@ -370,7 +389,15 @@ function setupImageWGPU(
 
         const aspect =
             canvas.height > 0 ? canvas.width / canvas.height : 1.0;
-        packAuroraImageWGPUUniforms(scratch, getConfig(), cursor, timeSec, aspect);
+        const config = getConfig();
+        packAuroraImageWGPUUniforms(
+            scratch,
+            config,
+            cursor,
+            getRenderTime(timeSec),
+            aspect,
+            opaquePresentation ? 1 : config.alpha,
+        );
         device.queue.writeBuffer(uniformBuffer, 0, scratch.buffer);
 
         const view = context.getCurrentTexture().createView();
@@ -379,7 +406,12 @@ function setupImageWGPU(
             colorAttachments: [
                 {
                     view,
-                    clearValue: { r: 0, g: 0, b: 0, a: 0 },
+                    clearValue: {
+                        r: 0,
+                        g: 0,
+                        b: 0,
+                        a: opaquePresentation ? 1 : 0,
+                    },
                     loadOp: "clear",
                     storeOp: "store",
                 },
@@ -407,7 +439,6 @@ function setupImageWGPU(
         frame,
         shouldContinue,
         resize,
-        time: (elapsedSec) => (getReducedMotion() ? 3.7 : elapsedSec),
         teardown: () => {
             registerImageUploader(null);
             imageTexture.destroy();

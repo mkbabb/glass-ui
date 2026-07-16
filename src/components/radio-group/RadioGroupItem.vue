@@ -1,44 +1,43 @@
-<script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
-import {
-  RadioGroupIndicator,
-  RadioGroupItem,
-  type RadioGroupItemProps,
-  useForwardProps,
-} from 'reka-ui'
-import { Circle } from "@lucide/vue"
-import { cn } from '../_shared/class-names'
+<script lang="ts">
+import type { HTMLAttributes } from "vue";
+import type { SelectionValue } from "../_shared/selection";
 
-const props = defineProps<RadioGroupItemProps & { class?: HTMLAttributes['class'] }>()
+export interface RadioGroupItemProps {
+    value: SelectionValue;
+    id?: string;
+    disabled?: boolean;
+    class?: HTMLAttributes["class"];
+}
+</script>
+
+<script setup lang="ts">
+import { computed } from "vue";
+import { RadioGroupIndicator, RadioGroupItem, useForwardProps } from "reka-ui";
+import { cn } from "../_shared/class-names";
+
+const props = defineProps<RadioGroupItemProps>();
 
 const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
+    const { class: _class, ...delegated } = props;
+    return delegated;
+});
 
-  return delegated
-})
-
-const forwardedProps = useForwardProps(delegatedProps)
+const forwardedProps = useForwardProps(delegatedProps);
 </script>
 
 <template>
-  <RadioGroupItem
-    data-slot="radio-group-item"
-    v-bind="forwardedProps"
-    :class="
-      cn(
-        // BD.W-SELECT-WELL — the radio composes `.glass-control-edge` (the keyed
-        // warm rim, select.css) so its faint `--control-ring` (foreground 12%) edge
-        // does not melt over the warm field — a defined warm lifted edge at rest.
-        // The focus-ring + checked-bg layer over by source order.
-        'glass-control-edge tap-squish focus-ring relative touch-hit-area aspect-square h-4 w-4 rounded-pill border border-(--control-ring) text-primary transition-control disabled:cursor-not-allowed disabled:opacity-disabled data-[state=checked]:border-(--control-checked-bg) data-[state=checked]:bg-(--control-checked-bg) data-[state=checked]:text-primary-foreground',
-        props.class,
-      )
-    "
-  >
-    <RadioGroupIndicator
-      class="flex items-center justify-center text-current"
+    <RadioGroupItem
+        data-slot="radio-group-item"
+        v-bind="forwardedProps"
+        :class="cn('radio-group__item', props.class)"
     >
-      <Circle class="h-2.5 w-2.5 fill-current" />
-    </RadioGroupIndicator>
-  </RadioGroupItem>
+        <span class="radio-group__face" aria-hidden="true">
+            <RadioGroupIndicator
+                data-slot="radio-group-indicator"
+                class="radio-group__indicator"
+            />
+        </span>
+    </RadioGroupItem>
 </template>
+
+<style src="./styles.css"></style>

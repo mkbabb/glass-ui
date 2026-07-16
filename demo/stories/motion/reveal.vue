@@ -70,12 +70,12 @@ function toggleBloom() {
                 </p>
 
                 <div class="flex flex-wrap items-center gap-3">
-                    <Button variant="default" @click="replay">Replay</Button>
+                    <Button @click="replay">Replay</Button>
                     <Button
                         v-for="value in [0.7, 1, 1.3]"
                         :key="value"
                         size="sm"
-                        :variant="tempo === value ? 'secondary' : 'ghost'"
+                        :emphasis="tempo === value ? 'secondary' : 'quiet'"
                         :aria-pressed="tempo === value"
                         @click="tempo = value"
                     >
@@ -111,7 +111,7 @@ function toggleBloom() {
                 <div class="relative flex flex-col items-start gap-4">
                     <Button
                         ref="triggerRef"
-                        variant="primary-audacious"
+                        emphasis="primary"
                         @click="toggleBloom"
                     >
                         {{ open ? "Conceal" : "Bloom from here" }}

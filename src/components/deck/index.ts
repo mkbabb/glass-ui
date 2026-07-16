@@ -16,5 +16,3 @@ export type {
 export { default as DeckPager } from "./DeckPager.vue";
 
 export { CONTROL_SELECTOR } from "./constants";
-
-export type { PagerWindow } from "../pager-dots/pagerWindow";

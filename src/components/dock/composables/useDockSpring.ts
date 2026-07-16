@@ -4,16 +4,10 @@ import { motionTempo } from "../../../composables/motion/motionTempo";
 /**
  * BG.W-DOCK-ENGINE-UNIFY — the ONE `SpringProgress` owner for the dock band.
  *
- * The dock's collapse↔expand morph (`dockMorphContext`), the V↔H orientation
- * morph (`useDockOrientationMorph`), and the fission detach (`useDockFission`)
- * each hand-rolled their OWN `new SpringProgress` on the SAME `DOCK_SPRING` clock
- * (the demo-only `useDockItemDrag` fling — a fourth copy — retired at
- * BI.W-DOCK-FOLD, counted by W-DOCK-SPRING-UNIFY SU1) — copies of the
- * identical iOS interruptible-physics dance (create-carrying-prior-velocity →
- * play the glide writing the scalar → self-dispose on settle → PRM-jump). This
- * factory owns that dance ONCE. A consumer supplies the `(response, ζ)` pair +
- * its per-frame writer; the spring construction, the velocity-continuous
- * re-base, and the teardown live here — the sole `new SpringProgress` site.
+ * The outer dock morph and controlled face crossfade share this one spring
+ * factory instead of duplicating the interruptible-physics lifecycle. A consumer
+ * supplies the `(response, ζ)` pair and per-frame writer; construction, velocity-
+ * continuous re-base, and teardown live here — the sole `new SpringProgress` site.
  *
  * `SpringProgress` owns its own rAF via `.play(onFrame)` and carries no static
  * value.js edge, so this leaf never imports `AnimationGroup`/`./engine`. The
@@ -42,6 +36,8 @@ export interface DockSpringPlayOptions {
      * `|velocity|`). Called once per frame while the glide runs.
      */
     onFrame: (value: number, velocity: number) => void;
+    /** Coordinate transform applied when carrying a live episode's velocity. */
+    inheritVelocityScale?: number;
     /** Fired ONCE on settle, immediately BEFORE the self-dispose. */
     onSettle?: () => void;
 }
@@ -92,7 +88,9 @@ export function useDockSpring(config: DockSpringConfig): DockSpring {
         // The interruptible re-base — a re-toggle mid-flight seeds the fresh
         // spring with the prior spring's live velocity so the trajectory stays
         // C¹ (the iOS interruptible-physics continuity).
-        const inheritedVelocity = isLive() ? spring!.velocity : 0;
+        const inheritedVelocity = isLive()
+            ? spring!.velocity * (options.inheritVelocityScale ?? 1)
+            : 0;
         dispose();
         const active = new SpringProgress({
             // BI.W-TEMPO — co-scale the DOCK response by the global `--motion-tempo`

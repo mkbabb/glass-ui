@@ -1,12 +1,9 @@
-// AY.W-AUR-PAINTERLY — proof:π aurora-arresting — the live-GPU "arresting" bar.
+// AY.W-AUR-PAINTERLY — live-GPU Aurora painterly measurement.
 //
-// The born-RED "stunning / van-Gogh-congruent" gate becomes a MEASURED live-GPU readback
+// The subjective "stunning / van-Gogh-congruent" goal becomes a measured live-GPU readback
 // against the three W-AUR1 reference-anchored bands (RESEARCH.md §4), computed on each
-// painterly medium's REAL Metal-GPU full-bleed render — not asserted by eye, not a
-// SwiftShader skip-to-green (H-convergence F4). It IMPORTS the same readback math the
-// W-AUR1 static-plate harness (scripts/aurora-arresting-metric.mjs) carries
-// (aurora-arresting-readback.ts — the substrate-with-consumer ≥2 bar; this spec is
-// consumer #2). The bands (off starry-night-crop.png, the W-AUR1 anchor):
+// painterly medium's real Metal-GPU full-bleed render. It imports the one retained
+// readback-math module. The bands (off starry-night-crop.png, the W-AUR1 anchor):
 //   §4.1 colorfulness  C ∈ [55.67, 95.67]   (ref 70.67 ± 15/+25; bidirectional)
 //   §4.2 anisotropy    A ∈ [0.732, 0.932]    (ref 0.832 ± 0.10) + no histogram pinwheel
 //   §4.3 spectrum slope β ∈ [−1.85, −1.45]   (the −5/3 Kolmogorov band)

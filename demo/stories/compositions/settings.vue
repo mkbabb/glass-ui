@@ -47,6 +47,7 @@ const DENSITY_SPACING: Record<(typeof densityOptions)[number], string> = {
     Comfortable: "0rem",
     Compact: "-0.5rem",
 };
+const cardSize = computed(() => (density.value === "Compact" ? "sm" : "md"));
 
 const surfaceStyle = computed<Record<string, string>>(() => {
     const grainAlpha = (grain.value / 100).toFixed(4);
@@ -58,9 +59,8 @@ const surfaceStyle = computed<Record<string, string>>(() => {
         // (the latter shadows the glass fallback, so the overlay is driven direct).
         "--glass-grain-opacity": grainAlpha,
         "--paper-grain-opacity": grainAlpha,
-        // Density select → the card gap/pad the CardContent grids already read.
+        // Density select → local field rhythm; Card owns its own typed padding.
         "--density-gap": spacing,
-        "--density-pad": spacing,
     };
     // Reduce-motion switch → zero the `--motion-weight` scalar the cartoon-caster
     // (cards.css) multiplies every travel/squash term by.
@@ -121,20 +121,20 @@ const groups: Record<string, Group> = {
                         {{ groups.account.blurb }}
                     </p>
                 </div>
-                <Card class="border-2 border-foreground/10">
+                <Card material="content" :size="cardSize">
                     <CardContent
-                        class="grid grid-cols-[minmax(10rem,14rem)_1fr] items-center gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))] p-[calc(var(--card-pad-inline)_+_var(--density-pad,0rem))]"
+                        class="grid grid-cols-[minmax(10rem,14rem)_1fr] items-center gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))]"
                     >
                         <LabeledInput
                             v-model="displayName"
                             label="Display name"
-                            tooltip="Shown on your profile and in comments."
+                            description="Shown on your profile and in comments."
                         />
                         <LabeledInput
                             v-model="email"
                             label="Email"
                             type="email"
-                            tooltip="Used for sign-in and account recovery."
+                            description="Used for sign-in and account recovery."
                         />
                     </CardContent>
                 </Card>
@@ -152,21 +152,21 @@ const groups: Record<string, Group> = {
                         {{ groups.appearance.blurb }}
                     </p>
                 </div>
-                <Card class="border-2 border-foreground/10">
+                <Card material="content" :size="cardSize">
                     <CardContent
                         :class="
                             cn(
                                 'grid grid-cols-[minmax(10rem,14rem)_1fr] items-center',
-                                'gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))] p-[calc(var(--card-pad-inline)_+_var(--density-pad,0rem))]',
+                                'gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))]',
                             )
                         "
                     >
                         <LabeledSelect
                             :model-value="theme"
-                            :is-open="themeOpen"
+                            :open="themeOpen"
                             :items="themeOptions"
                             label="Theme"
-                            tooltip="Controls the overall colour and contrast."
+                            description="Controls the overall colour and contrast."
                             @update:model-value="
                                 (v: string) =>
                                     (theme = v as (typeof themeOptions)[number])
@@ -175,10 +175,10 @@ const groups: Record<string, Group> = {
                         />
                         <LabeledSelect
                             :model-value="bodyFont"
-                            :is-open="bodyFontOpen"
+                            :open="bodyFontOpen"
                             :items="fontOptions"
                             label="Body font"
-                            tooltip="Typeface used for long-form reading."
+                            description="Typeface used for long-form reading."
                             @update:model-value="
                                 (v: string) =>
                                     (bodyFont = v as (typeof fontOptions)[number])
@@ -187,10 +187,10 @@ const groups: Record<string, Group> = {
                         />
                         <LabeledSelect
                             :model-value="density"
-                            :is-open="densityOpen"
+                            :open="densityOpen"
                             :items="densityOptions"
                             label="Density"
-                            tooltip="Padding scale for every container."
+                            description="Padding scale for every container."
                             @update:model-value="
                                 (v: string) =>
                                     (density = v as (typeof densityOptions)[number])
@@ -200,7 +200,7 @@ const groups: Record<string, Group> = {
                         <LabeledSlider
                             v-model="baseSize"
                             label="Base size"
-                            tooltip="Root font size in pixels."
+                            description="Root font size in pixels."
                             :min="12"
                             :max="20"
                             :step="1"
@@ -208,7 +208,7 @@ const groups: Record<string, Group> = {
                         <LabeledSlider
                             v-model="radius"
                             label="Radius"
-                            tooltip="Corner rounding in pixels."
+                            description="Corner rounding in pixels."
                             :min="0"
                             :max="16"
                             :step="1"
@@ -216,22 +216,22 @@ const groups: Record<string, Group> = {
                         <LabeledSlider
                             v-model="grain"
                             label="Grain"
-                            tooltip="Paper-texture opacity × 100."
+                            description="Paper-texture opacity × 100."
                             :min="0"
                             :max="10"
                             :step="0.5"
                         />
                         <LabeledSwitch
-                            :checked="cartoonShadow"
+                            :model-value="cartoonShadow"
                             label="Cartoon shadows"
-                            tooltip="3px offset card shadow signature."
-                            @update:checked="(v: boolean) => (cartoonShadow = v)"
+                            description="3px offset card shadow signature."
+                            @update:model-value="(v: boolean) => (cartoonShadow = v)"
                         />
                         <LabeledSwitch
-                            :checked="paperGrain"
+                            :model-value="paperGrain"
                             label="Paper underpaint"
-                            tooltip="SVG turbulence layer fixed behind content."
-                            @update:checked="(v: boolean) => (paperGrain = v)"
+                            description="SVG turbulence layer fixed behind content."
+                            @update:model-value="(v: boolean) => (paperGrain = v)"
                         />
                     </CardContent>
                 </Card>
@@ -249,27 +249,27 @@ const groups: Record<string, Group> = {
                         {{ groups.notifications.blurb }}
                     </p>
                 </div>
-                <Card class="border-2 border-foreground/10">
+                <Card material="content" :size="cardSize">
                     <CardContent
-                        class="grid grid-cols-[minmax(10rem,14rem)_1fr] items-center gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))] p-[calc(var(--card-pad-inline)_+_var(--density-pad,0rem))]"
+                        class="grid grid-cols-[minmax(10rem,14rem)_1fr] items-center gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))]"
                     >
                         <LabeledSwitch
-                            :checked="emailAlerts"
+                            :model-value="emailAlerts"
                             label="Email alerts"
-                            tooltip="Deploys, incidents, and security events."
-                            @update:checked="(v: boolean) => (emailAlerts = v)"
+                            description="Deploys, incidents, and security events."
+                            @update:model-value="(v: boolean) => (emailAlerts = v)"
                         />
                         <LabeledSwitch
-                            :checked="desktopNotifs"
+                            :model-value="desktopNotifs"
                             label="Desktop notifications"
-                            tooltip="Native OS notifications while the app is open."
-                            @update:checked="(v: boolean) => (desktopNotifs = v)"
+                            description="Native OS notifications while the app is open."
+                            @update:model-value="(v: boolean) => (desktopNotifs = v)"
                         />
                         <LabeledSwitch
-                            :checked="weeklyDigest"
+                            :model-value="weeklyDigest"
                             label="Weekly digest"
-                            tooltip="Friday morning summary of the week's activity."
-                            @update:checked="(v: boolean) => (weeklyDigest = v)"
+                            description="Friday morning summary of the week's activity."
+                            @update:model-value="(v: boolean) => (weeklyDigest = v)"
                         />
                     </CardContent>
                 </Card>
@@ -287,15 +287,15 @@ const groups: Record<string, Group> = {
                         {{ groups.accessibility.blurb }}
                     </p>
                 </div>
-                <Card class="border-2 border-foreground/10">
+                <Card material="content" :size="cardSize">
                     <CardContent
-                        class="grid grid-cols-[minmax(10rem,14rem)_1fr] items-center gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))] p-[calc(var(--card-pad-inline)_+_var(--density-pad,0rem))]"
+                        class="grid grid-cols-[minmax(10rem,14rem)_1fr] items-center gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))]"
                     >
                         <LabeledSwitch
-                            :checked="reducedMotion"
+                            :model-value="reducedMotion"
                             label="Reduce motion"
-                            tooltip="Override prefers-reduced-motion for this session."
-                            @update:checked="(v: boolean) => (reducedMotion = v)"
+                            description="Override prefers-reduced-motion for this session."
+                            @update:model-value="(v: boolean) => (reducedMotion = v)"
                         />
                     </CardContent>
                 </Card>

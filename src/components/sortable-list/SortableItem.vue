@@ -47,10 +47,4 @@ provideSortableItemContext({ id: props.id, label, binding });
     -webkit-user-select: none;
 }
 
-@media (pointer: coarse) {
-    .sortable-item :deep([data-sortable-handle]) {
-        min-width: 2.75rem;
-        min-height: 2.75rem;
-    }
-}
 </style>

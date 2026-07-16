@@ -124,8 +124,48 @@ describe("GlassTimeline continuous — Option C structural split", () => {
         expect(dotByKey("ping")?.attributes("data-current")).toBeUndefined();
         expect(dotByKey("download")?.attributes("data-current")).toBe("true");
         expect(dotByKey("upload")?.attributes("data-current")).toBeUndefined();
+        expect(dotByKey("ping")?.attributes("aria-current")).toBeUndefined();
+        expect(dotByKey("download")?.attributes("aria-current")).toBe("step");
+        expect(dotByKey("upload")?.attributes("aria-current")).toBeUndefined();
         // Silence unused-var lint on the dataCurrentFor helper.
         expect(typeof dataCurrentFor).toBe("function");
+    });
+
+    it("leaves Enter and Space activation to the native marker button", async () => {
+        const wrapper = mount(GlassTimeline, {
+            props: {
+                variant: "continuous",
+                segments,
+                currentSegmentKey: "download",
+                disablePopover: true,
+            },
+        });
+        const marker = wrapper.findAll("button.continuous-dot")[1]!;
+
+        await marker.trigger("keydown", { key: "Enter" });
+        await marker.trigger("keydown", { key: " " });
+        expect(wrapper.emitted("click")).toBeUndefined();
+
+        await marker.trigger("click");
+        expect(wrapper.emitted("click")).toHaveLength(1);
+    });
+
+    it("gives the segmented current step one native activation path", async () => {
+        const wrapper = mount(GlassTimeline, {
+            props: { variant: "segmented", segments },
+        });
+        const dots = wrapper.findAll("button.segmented-dot");
+
+        expect(dots[0]?.attributes("aria-current")).toBeUndefined();
+        expect(dots[1]?.attributes("aria-current")).toBe("step");
+        expect(dots[2]?.attributes("aria-current")).toBeUndefined();
+
+        await dots[1]!.trigger("keydown", { key: "Enter" });
+        await dots[1]!.trigger("keydown", { key: " " });
+        expect(wrapper.emitted("click")).toBeUndefined();
+
+        await dots[1]!.trigger("click");
+        expect(wrapper.emitted("click")).toHaveLength(1);
     });
 
     it("data-completed reflects per-segment completed state", () => {

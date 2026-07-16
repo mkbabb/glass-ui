@@ -1,12 +1,9 @@
 // aurora-arresting-readback — the THREE reference-anchored painterly metrics
 // (RESEARCH.md §4), factored as importable readback math.
 //
-// This is the SHARED implementation: `scripts/aurora-arresting-metric.mjs` (the W-AUR1
-// static-plate harness, consumer #1) carries a byte-equivalent copy for the standalone
-// node CLI; the live-GPU `aurora-arresting.spec.ts` (W-AUR-PAINTERLY, consumer #2)
-// imports THIS module so the colorfulness / structure-tensor anisotropy / power-spectrum
-// slope read identically on the rendered medium readback (the substrate-with-consumer ≥2
-// bar). One math home — keep this in lock-step with the metric script if either moves.
+// This is the single implementation imported by the live Aurora readbacks, so
+// colorfulness, structure-tensor anisotropy, and power-spectrum slope cannot drift
+// between rendered-surface measurements.
 //
 // §4.1 Hasler-Süsstrunk colorfulness   C = σ_rgyb + 0.3·μ_rgyb
 // §4.2 structure-tensor anisotropy     A = (λ₁−λ₂)/(λ₁+λ₂)  (mean interior) + pinwheel ratio

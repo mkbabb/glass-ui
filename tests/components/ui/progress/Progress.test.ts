@@ -21,7 +21,9 @@ describe("Progress", () => {
                 "aria-valuemax": "1",
             });
             expect(
-                wrapper.findAll(".progress-value-mark").map((mark) => mark.attributes("style")),
+                wrapper
+                    .findAll(".progress-value-mark")
+                    .map((mark) => mark.attributes("style")),
             ).toEqual([
                 "--value-mark-position: 25%;",
                 "--value-mark-position: 50%;",
@@ -44,20 +46,33 @@ describe("Progress", () => {
         );
     });
 
+    it("moves continuously across a stationary checkpoint", async () => {
+        const wrapper = mount(Progress, {
+            props: { modelValue: 0.49, max: 1, marks: [0.5] },
+        });
+        const markStyle = wrapper.get(".progress-value-mark").attributes("style");
+
+        await wrapper.setProps({ modelValue: 0.51 });
+
+        expect(root(wrapper).attributes("style")).toContain(
+            "--progress-value-percent: 51%",
+        );
+        expect(wrapper.get(".progress-value-mark").attributes("style")).toBe(markStyle);
+    });
+
     it("renders only sorted, unique, interior marks as decorative paint", () => {
         const wrapper = mount(Progress, {
-            props: { modelValue: 40, marks: [100, 75, 25, 25, -1, Number.NaN] },
+            props: { modelValue: 40, marks: [100, 75, 25, 25, 0, -1, Number.NaN] },
         });
 
         expect(wrapper.get(".progress-value-marks").attributes("aria-hidden")).toBe(
             "true",
         );
         expect(
-            wrapper.findAll(".progress-value-mark").map((mark) => mark.attributes("style")),
-        ).toEqual([
-            "--value-mark-position: 25%;",
-            "--value-mark-position: 75%;",
-        ]);
+            wrapper
+                .findAll(".progress-value-mark")
+                .map((mark) => mark.attributes("style")),
+        ).toEqual(["--value-mark-position: 25%;", "--value-mark-position: 75%;"]);
     });
 
     it("adds no decorative layer when marks are omitted", () => {
@@ -78,6 +93,52 @@ describe("Progress", () => {
         expect(wrapper.get(".progress-value-mark").attributes("style")).toContain(
             "--value-mark-position: 25%",
         );
+    });
+
+    it.each(["default", "liquid"] as const)(
+        "keeps %s indeterminate progress numeric-free",
+        (variant) => {
+            const wrapper = mount(Progress, {
+                props: { variant, modelValue: 75, indeterminate: true },
+            });
+
+            expect(root(wrapper).attributes("data-indeterminate")).toBe("true");
+            expect(root(wrapper).attributes("data-state")).toBe("indeterminate");
+            expect(root(wrapper).attributes("aria-valuenow")).toBeUndefined();
+        },
+    );
+
+    it("derives completion without inventing it for an error", () => {
+        const complete = mount(Progress, { props: { modelValue: 100 } });
+        const error = mount(Progress, {
+            props: { modelValue: 63, status: "error" },
+        });
+
+        expect(root(complete).attributes("data-state")).toBe("complete");
+        expect(root(error).attributes()).toMatchObject({
+            "aria-invalid": "true",
+            "aria-valuenow": "63",
+            "data-state": "loading",
+            "data-status": "error",
+        });
+    });
+
+    it("transposes the same value and marks into vertical geometry", () => {
+        const wrapper = mount(Progress, {
+            props: {
+                modelValue: 40,
+                orientation: "vertical",
+                marks: [25, 50, 75],
+            },
+        });
+
+        expect(root(wrapper).attributes()).toMatchObject({
+            "aria-orientation": "vertical",
+            "aria-valuenow": "40",
+            "data-orientation": "vertical",
+        });
+        expect(wrapper.findAll(".progress-value-fill")).toHaveLength(1);
+        expect(wrapper.findAll(".progress-value-mark")).toHaveLength(3);
     });
 
     describe("gradient lifecycle", () => {
@@ -112,10 +173,16 @@ describe("Progress", () => {
             expect(root(wrapper).attributes("aria-valuenow")).toBeUndefined();
         });
 
-        it("refuses numeric marks on indeterminate progress", () => {
+        it.each([
+            ["explicit indeterminate", { indeterminate: true }],
+            ["null model", { modelValue: null }],
+        ] as const)("refuses numeric marks for %s progress", (_, state) => {
             expect(() =>
                 mount(Progress, {
-                    props: { indeterminate: true, variant: "gradient", marks: [25] },
+                    props: {
+                        marks: [25],
+                        ...state,
+                    },
                 }),
             ).toThrow(/marks.*determinate progress/);
         });

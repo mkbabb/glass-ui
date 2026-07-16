@@ -22,7 +22,7 @@ function fireAgain() {
         
         <div class="grid gap-8">
             <div class="flex items-center gap-4">
-                <Button variant="outline" @click="fireAgain">
+                <Button @click="fireAgain">
                     Replay the draw
                 </Button>
                 <p class="text-small text-muted-foreground">

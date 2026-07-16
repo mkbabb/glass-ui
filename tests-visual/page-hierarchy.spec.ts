@@ -19,9 +19,7 @@
 //   PH-π-2 — a multi-section page renders ≥1 visible delimiter between sections, and
 //            its computed border-top-color is non-transparent in BOTH modes (the
 //            dark-adaptive hairline survives the dark glass plate).
-//   PH-π-3 — no idiom-B double-header (a `border-l-[3px]` + <IconChip> HEADER cluster)
-//            inside the StoryPage body on the enrolled routes.
-//   PH-π-4 — the per-TYPE delimiter MODE: /forms/inputs + /dock/overview (hr type)
+//   PH-π-3 — the per-TYPE delimiter MODE: /forms/inputs + /dock/overview (hr type)
 //            render the hairline delimiter between R2 sections.
 
 import { test, expect } from "@playwright/test";
@@ -122,19 +120,7 @@ test.describe("BC.W-PAGE-HIERARCHY — the standardized section hierarchy + dark
                         }
                     }
 
-                    // The idiom-B double-header count inside the body (the live DOM
-                    // shape: a `border-l-[3px]`-keyed header carrying an icon-chip).
-                    // We approximate via the rendered class string presence.
-                    const idiomB = [
-                        ...document.querySelectorAll("article header"),
-                    ].filter((h) => {
-                        const cls = h.className || "";
-                        const hasRail = /border-l-\[3px\]/.test(cls);
-                        const hasChip = h.querySelector(".icon-chip, [class*=icon-chip]");
-                        return hasRail && hasChip;
-                    }).length;
-
-                    return { h2s, delimiters, idiomB };
+                    return { h2s, delimiters };
                 });
 
                 perRoute[route] = readback;
@@ -160,13 +146,7 @@ test.describe("BC.W-PAGE-HIERARCHY — the standardized section hierarchy + dark
                     ).toBeLessThanOrEqual(TOL);
                 }
 
-                // PH-π-3 — no idiom-B double-header.
-                expect(
-                    readback.idiomB as number,
-                    `${route} (${mode}) renders no idiom-B border-l-[3px] IconChip double-header inside the body`,
-                ).toBe(0);
-
-                // PH-π-2 + PH-π-4 — a multi-section page renders ≥1 visible delimiter
+                // PH-π-2 + PH-π-3 — a multi-section page renders ≥1 visible delimiter
                 // whose computed border-top-color is non-transparent (the dark-adaptive
                 // hairline survives BOTH modes — the §BA.W-CONFIG-CHASSIS bite).
                 const painting = delimiters.filter(

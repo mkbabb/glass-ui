@@ -1,31 +1,42 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
-import { CollapsibleTrigger, type CollapsibleTriggerProps } from 'reka-ui'
-import { cn } from '../_shared/class-names'
+import { computed, useAttrs, type HTMLAttributes } from "vue";
+import { CollapsibleTrigger as RekaCollapsibleTrigger } from "reka-ui";
+import type { PrimitiveProps } from "../_shared/primitive";
+import { cn } from "../_shared/class-names";
+import { useDisclosureIds } from "../_shared/disclosure-context";
 
-const props = defineProps<CollapsibleTriggerProps & { class?: HTMLAttributes['class'] }>()
+export interface CollapsibleTriggerProps {
+    /** Merge disclosure behavior into one interactive child. */
+    asChild?: PrimitiveProps["asChild"];
+    class?: HTMLAttributes["class"];
+}
 
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
+defineOptions({ name: "CollapsibleTrigger", inheritAttrs: false });
 
-  return delegated
-})
+const props = withDefaults(defineProps<CollapsibleTriggerProps>(), {
+    asChild: false,
+});
+defineSlots<{ default?: () => unknown }>();
+
+const ids = useDisclosureIds();
+const attrs = useAttrs();
+const forwardedAttrs = computed(() => {
+    const { as: _as, ...forwarded } = attrs;
+    return forwarded;
+});
 </script>
 
 <template>
-  <!-- AW.W25 — the CollapsibleTrigger carried NO focus paint at HEAD (UA outline
-       only). It now composes the canonical `.focus-ring` + the iOS press-spring
-       (`.tap-squish`) + `transition-control` so it speaks the four-state contract
-       like every other interactive atom. The trigger is content-shaped, so the
-       focus/press recipes ride a `rounded-control` corner. -->
-  <CollapsibleTrigger
-    data-slot="collapsible-trigger"
-    v-bind="delegatedProps"
-    :class="cn(
-      'tap-squish focus-ring rounded-control transition-control disabled:pointer-events-none disabled:opacity-disabled',
-      props.class,
-    )"
-  >
-    <slot />
-  </CollapsibleTrigger>
+    <RekaCollapsibleTrigger
+        v-bind="forwardedAttrs"
+        as="button"
+        :as-child="asChild"
+        data-slot="collapsible-trigger"
+        data-disclosure="collapsible"
+        :id="ids.trigger"
+        :aria-controls="ids.content"
+        :class="cn('disclosure-trigger', props.class)"
+    >
+        <slot />
+    </RekaCollapsibleTrigger>
 </template>

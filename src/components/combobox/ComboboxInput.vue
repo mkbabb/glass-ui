@@ -1,24 +1,21 @@
 <script setup lang="ts">
-import type { HTMLAttributes, InputHTMLAttributes } from 'vue'
-import { reactiveOmit } from '@vueuse/core'
-import { SearchIcon } from "@lucide/vue"
-import { ComboboxInput, type ComboboxInputEmits, type ComboboxInputProps, useForwardPropsEmits } from 'reka-ui'
-import { cn } from '../_shared/class-names'
+import { computed, useAttrs } from "vue";
+import { SearchIcon } from "@lucide/vue";
+import { ComboboxInput as RekaComboboxInput } from "reka-ui";
+import { cn } from "../_shared/class-names";
+import { fixedHostAttrs } from "../_shared/primitive";
+import type { ComboboxInputEmits, ComboboxInputProps } from "./types";
 
-defineOptions({
-  inheritAttrs: false,
-})
+defineOptions({ name: "ComboboxInput", inheritAttrs: false });
 
-const props = defineProps<ComboboxInputProps & {
-  class?: HTMLAttributes['class']
-  placeholder?: InputHTMLAttributes['placeholder']
-}>()
+const props = defineProps<ComboboxInputProps>();
+const emit = defineEmits<ComboboxInputEmits>();
+const attrs = useAttrs();
 
-const emits = defineEmits<ComboboxInputEmits>()
-
-const delegatedProps = reactiveOmit(props, 'class')
-
-const forwarded = useForwardPropsEmits(delegatedProps, emits)
+const forwardedAttrs = computed(() => ({
+    ...fixedHostAttrs(attrs),
+    placeholder: props.placeholder,
+}));
 </script>
 
 <template>
@@ -30,12 +27,12 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
        fork. The text-destructive tint on the input STAYS as the supplementary
        non-color-redundant cue. -->
   <div
-    data-slot="command-input-wrapper"
+    data-slot="combobox-input-wrapper"
     class="flex h-9 items-center gap-2 border-b px-3 rounded-input has-[[aria-invalid='true']]:border-(--destructive) has-[:user-invalid]:border-(--destructive) has-[[aria-invalid='true']]:shadow-(--invalid-ring) has-[:user-invalid]:shadow-(--invalid-ring)"
   >
     <SearchIcon class="size-4 shrink-0 opacity-50" />
-    <ComboboxInput
-      data-slot="command-input"
+    <RekaComboboxInput
+      data-slot="combobox-input"
       :class="cn(
         // AX.W51 D18 — the filter-input HEIGHT reads the shared `--dropdown-input-height`
         // register (= W51's `--control-h-md`, unifying the Combobox h-10 / Command h-11
@@ -44,10 +41,13 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
         'placeholder:text-muted-foreground flex h-(--dropdown-input-height) w-full rounded-input bg-transparent py-3 text-dropdown outline-hidden disabled:cursor-not-allowed disabled:opacity-disabled aria-invalid:text-destructive aria-invalid:placeholder:text-[color-mix(in_srgb,var(--destructive)_60%,transparent)]',
         props.class,
       )"
-
-      v-bind="{ ...forwarded, ...$attrs }"
+      v-bind="forwardedAttrs"
+      :model-value="props.modelValue"
+      :auto-focus="props.autoFocus"
+      :disabled="props.disabled"
+      @update:model-value="emit('update:modelValue', $event)"
     >
       <slot />
-    </ComboboxInput>
+    </RekaComboboxInput>
   </div>
 </template>

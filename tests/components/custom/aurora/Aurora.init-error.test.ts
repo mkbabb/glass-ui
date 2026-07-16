@@ -1,10 +1,13 @@
 import { createApp, defineComponent, h, type App } from "vue";
+import { flushPromises } from "@vue/test-utils";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const runtime = vi.hoisted(() => ({
     arm: vi.fn(),
+    armAsync: vi.fn(),
     create: vi.fn(),
     dispose: vi.fn(),
+    setScrollProgress: vi.fn(),
 }));
 
 vi.mock("@glass/components/aurora/composables/runtime", () => ({
@@ -36,9 +39,10 @@ function mountAurora(options: {
         }),
     );
     app.config.errorHandler = options.errorHandler;
-    app.mount(document.createElement("div"));
+    const host = document.createElement("div");
+    app.mount(host);
     mountedApps.push(app);
-    return app;
+    return { app, host };
 }
 
 describe("Aurora initialization error ownership", () => {
@@ -52,14 +56,15 @@ describe("Aurora initialization error ownership", () => {
             }),
         );
         vi.stubGlobal("cancelIdleCallback", vi.fn());
-        runtime.arm.mockImplementation(() => {
-            throw initError;
-        });
+        runtime.armAsync.mockRejectedValue(initError);
         runtime.create.mockReturnValue({
             arm: runtime.arm,
+            armAsync: runtime.armAsync,
+            update: vi.fn(),
             dispose: runtime.dispose,
             pause: vi.fn(),
             resume: vi.fn(),
+            setScrollProgress: runtime.setScrollProgress,
         });
     });
 
@@ -69,9 +74,10 @@ describe("Aurora initialization error ownership", () => {
         vi.unstubAllGlobals();
     });
 
-    it("routes deferred failures to the owning app handler without warning", () => {
+    it("routes deferred failures to the owning app handler without warning", async () => {
         const errorHandler = vi.fn();
         mountAurora({ errorHandler });
+        await flushPromises();
 
         expect(errorHandler).toHaveBeenCalledWith(
             initError,
@@ -81,11 +87,12 @@ describe("Aurora initialization error ownership", () => {
         expect(console.warn).not.toHaveBeenCalled();
     });
 
-    it("prefers the component prop over runtime and app handlers", () => {
+    it("prefers the component prop over runtime and app handlers", async () => {
         const errorHandler = vi.fn();
         const runtimeOnInitError = vi.fn();
         const onInitError = vi.fn();
         mountAurora({ errorHandler, onInitError, runtimeOnInitError });
+        await flushPromises();
 
         expect(onInitError).toHaveBeenCalledOnce();
         expect(onInitError).toHaveBeenCalledWith(initError);
@@ -94,14 +101,31 @@ describe("Aurora initialization error ownership", () => {
         expect(console.warn).not.toHaveBeenCalled();
     });
 
-    it("prefers the runtime handler over the app handler", () => {
+    it("prefers the runtime handler over the app handler", async () => {
         const errorHandler = vi.fn();
         const runtimeOnInitError = vi.fn();
         mountAurora({ errorHandler, runtimeOnInitError });
+        await flushPromises();
 
         expect(runtimeOnInitError).toHaveBeenCalledOnce();
         expect(runtimeOnInitError).toHaveBeenCalledWith(initError);
         expect(errorHandler).not.toHaveBeenCalled();
         expect(console.warn).not.toHaveBeenCalled();
+    });
+
+    it("keeps the live canvas hidden until backend readiness resolves", async () => {
+        let resolveReady!: () => void;
+        runtime.armAsync.mockReturnValue(
+            new Promise<void>((resolve) => {
+                resolveReady = resolve;
+            }),
+        );
+        const { host } = mountAurora({ errorHandler: vi.fn() });
+        const canvas = host.querySelector("canvas")!;
+
+        expect(canvas.classList.contains("aurora-canvas--armed")).toBe(false);
+        resolveReady();
+        await flushPromises();
+        expect(canvas.classList.contains("aurora-canvas--armed")).toBe(true);
     });
 });

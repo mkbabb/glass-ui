@@ -7,7 +7,7 @@
 // preserved ~5-10%-tail path; this `.wgsl` is the WebGPU-first path).
 //
 // SCOPE: this transcribes the ALWAYS-ON CORE pipeline the default config exercises
-// end-to-end — domainWarp (all three warp modes + the cursor swirl), nucleiField
+// end-to-end — domainWarp (all four warp modes + the cursor swirl), nucleiField
 // (anisotropic Gaussian softmax + drift + palette drift), samplePalette (the shared OKLCh
 // ramp), the breath wobble, saturate3, the PBR-Neutral `aces`, the film grain, the OETF,
 // the IGN display-space dither — AND, since BC.W-VIZ-AURORA (T4), the PAINTERLY MEDIUMS
@@ -35,15 +35,16 @@ import {
     OETF_WGSL,
     OKLCH_MATRICES_WGSL,
     PALETTE_RAMP_WGSL,
-} from "./procedural-color.wgsl";
+} from "../../../../composables/glass/procedural/color.wgsl";
+import { CURL_FBM_WGSL } from "../../../../composables/glass/webgl/shaders/flow.wgsl";
 import { AURORA_MEDIUMS_WGSL } from "./aurora-mediums.wgsl";
 
-// MAX_NUCLEI=6 / MAX_STOPS=8 mirror aurora.frag.ts's #defines (and the JS-side
+// MAX_NUCLEI=8 / MAX_STOPS=8 mirror aurora.frag.ts's #defines (and the JS-side
 // AURORA_UNIFORM_LAYOUT). Each per-nucleus row + each palette stop is packed into a
 // vec4 lane so the uniform array stride is the natural 16 bytes (no std140 stride trap —
 // the parity-blowout suspect the wave's §Triumvirate names).
 export const AURORA_WGSL = /* wgsl */ `
-const MAX_NUCLEI: i32 = 6;
+const MAX_NUCLEI: i32 = 8;
 const MAX_STOPS: i32 = 8;
 const PI: f32 = 3.141592653589793;
 
@@ -71,9 +72,9 @@ struct Uniforms {
   // ints1: (uMedium, uHuePath, _, _)
   ints1: vec4<i32>,
   palette: array<vec4<f32>, 8>,
-  nuc0: array<vec4<f32>, 6>,
-  nuc1: array<vec4<f32>, 6>,
-  nuc2: array<vec4<f32>, 6>,
+  nuc0: array<vec4<f32>, 8>,
+  nuc1: array<vec4<f32>, 8>,
+  nuc2: array<vec4<f32>, 8>,
   // BC.W-VIZ-AURORA (T4) — the painterly-medium scalar lanes. APPENDED after the
   // arrays so EVERY existing offset (and the smooth-default parity capture) is
   // byte-identical (these lanes are written 0 on a smooth config). scalars4:
@@ -133,6 +134,9 @@ fn fbm(p0: vec2<f32>) -> f32 {
   return v;
 }
 
+fn potentialFBM(p: vec2f) -> f32 { return fbm(p); }
+${CURL_FBM_WGSL}
+
 ${OETF_WGSL}
 ${OKLCH_MATRICES_WGSL}
 ${PALETTE_RAMP_WGSL}
@@ -158,7 +162,7 @@ fn cellular(p: vec2<f32>) -> f32 {
   return sqrt(m);
 }
 
-// ── Warp (Quilez double warp + the three warp modes + the cursor swirl) ──
+// ── Warp (Quilez double warp + the four warp modes + the cursor swirl) ──
 fn domainWarp(p: vec2<f32>, t: f32) -> vec2<f32> {
   let warpScale = u.scalars1.x;
   let warpDrift = u.scalars1.y;
@@ -184,6 +188,9 @@ fn domainWarp(p: vec2<f32>, t: f32) -> vec2<f32> {
     let c1 = cellular(p * warpScale * 1.2);
     let c2 = cellular(p * warpScale * 1.2 + vec2<f32>(11.0, 7.0));
     warp = mix(r, vec2<f32>(c1, c2), 0.5);
+  } else if (warpMode == 3) {
+    let fp = p * warpScale + vec2<f32>(t * warpDrift * K_WARP);
+    warp = curlFBM(fp);
   }
   var warped = p + warpAmount * warp;
 
@@ -368,6 +375,12 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
   // bodies (pastel/watercolor/crayon/kuwahara) or the anisotropic-Kuwahara finish
   // (oil/vangogh/oil-pastel) — never a silent smooth degrade on Safari 26.
   col = applyMedium(col, pN, t);
+
+  // Cursor-local luminance lean, byte-parallel with the GLSL path.
+  let cursorDelta = pN - u.cursor.xy;
+  let cursorRadius = max(u.scalars3.z, 0.01);
+  let cursorLean = exp(-dot(cursorDelta, cursorDelta) / (cursorRadius * cursorRadius * 0.5));
+  col = col * (1.0 + 0.12 * cursorLean * u.scalars3.y);
 
   // Saturation trim.
   col = saturate3(col, saturation);

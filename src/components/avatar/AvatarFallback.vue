@@ -1,11 +1,29 @@
 <script setup lang="ts">
-import { AvatarFallback, type AvatarFallbackProps } from 'reka-ui'
+import { computed, useAttrs } from "vue";
+import { AvatarFallback as RekaAvatarFallback } from "reka-ui";
 
-const props = defineProps<AvatarFallbackProps>()
+defineOptions({ name: "AvatarFallback", inheritAttrs: false });
+
+const attrs = useAttrs();
+const forwardedAttrs = computed(() => {
+    const {
+        as: _as,
+        asChild: _asChild,
+        "as-child": _asChildKebab,
+        delayMs: _delayMs,
+        "delay-ms": _delayMsKebab,
+        ...forwarded
+    } = attrs;
+    return forwarded;
+});
 </script>
 
 <template>
-  <AvatarFallback v-bind="props">
-    <slot />
-  </AvatarFallback>
+    <RekaAvatarFallback
+        v-bind="forwardedAttrs"
+        class="glass-avatar__fallback"
+        aria-hidden="true"
+    >
+        <slot />
+    </RekaAvatarFallback>
 </template>

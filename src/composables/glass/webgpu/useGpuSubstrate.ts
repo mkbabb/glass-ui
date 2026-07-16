@@ -1,60 +1,15 @@
-// BC.W-WEBGPU-EVERYWHERE — `useGpuSubstrate`: the transparent feature-detect picker
-// that NEVER crashes to black. WebGPU-first WHERE THE PLATFORM ALLOWS IT (the
-// June-2026 Baseline fact: Chrome/Edge 113+, Safari 26+ on Metal no-flags, Firefox
-// 141+); the WebGL2 substrate is the INVISIBLE don't-crash-to-black insurance for the
-// ~5-10% tail (Linux Firefox where WebGPU is still flagged, pre-A12 iPhones, headless/
-// software-raster CI where `requestAdapter()` returns null).
+// WebGPU-preferred procedural substrate with one declared WebGL2 path. Presence of
+// `navigator.gpu` is only an optimistic hint: `armAsync()` performs the real adapter
+// and device acquisition. Recognized acquisition failures happen before a WebGPU canvas
+// context exists, so the original element can safely host WebGL2. Once WebGPU owns the
+// canvas, setup and pipeline-validation failures remain attributed WebGPU errors; the
+// substrate never replaces the consumer's DOM node or paints through an unrelated engine.
 //
-// THE KEYSTONE FIX (the BB disease): the picker USED to commit the backend
-// SYNCHRONOUSLY off a `supportsWebGPU()` PRESENCE check ("the decision made ONCE at
-// construction"). But `supportsWebGPU()` only reads `"gpu" in navigator` — it NEVER
-// calls `requestAdapter()`. On a host where `navigator.gpu` EXISTS but
-// `requestAdapter()` returns null (headless, SwiftShader, GPU-blocklisted, a
-// locked-down VM, the live demo CI), the WebGPU backend was already committed and its
-// `armAsync()` THREW `no GPU adapter` to the page with no fallback path — the literal
-// `no GPU adapter` PAGEERROR + the pure-black void the audit observed (D8/D8'/D9).
-//
-// THE TRY-WebGPU-THEN-REBUILD-WebGL2 SHAPE (procedural-refs.md §0 form 2, the more
-// robust of the two — it also catches a device that creates then immediately loses,
-// the Safari device-lost-at-birth class): the backend is no longer chosen at
-// construction. `armAsync()` ATTEMPTS the WebGPU leaf's async init inside a `try`; on
-// ANY init failure (`requestAdapter()` null, `requestDevice()` reject, a device.lost
-// at birth, a validation throw) the picker DISPOSES the WebGPU leaf + REBUILDS on the
-// WebGL2 leaf (`setupGL`) + arms it. The fallback is INVISIBLE — the user never sees a
-// "downgrade", the SAME viz just renders via the WebGL2 net. NO blank canvas on any
-// tier, no uncaught throw spewed to the console.
-//
-// A viz consumer authors TWO `setup` callbacks — one WGSL pipeline (`setupWGPU`), one
-// GLSL program (`setupGL`) — and reaches for `createGpuSubstrate(canvas, options)`.
-// The handle surface (`arm`/`armAsync`/`suspend`/`resume`/`wake`/`renderAt`/`dispose`/
-// `reducedMotion`) is byte-identical across the WebGPU and WebGL2 backends, so a viz's
-// lifecycle wiring (offscreen pause via `useIntersectionPause`, the
-// `DockBackgroundToggle` pause/resume, `wake()` on pointer) is substrate-AGNOSTIC. The
-// `backend` field starts at the OPTIMISTIC choice (`"webgpu"` where the platform allows
-// it + a WGSL path is provided) and resolves to the ACTUAL backend after `armAsync()`
-// (it falls to `"webgl2"` if the WebGPU init failed).
-//
-// The shared `createCanvasLifecycle` leaf carries the demand-gate, the three-reason
-// suspend Set, the offscreen-park, the live-PRM re-monitor, the device-loss self-heal —
-// all sound. BD.W-SUBSTRATE-SIZE-UNIFY adds the ONE backing-store sizer + the leaf RO/IO
-// to that leaf; the PICKER threads the consumer's `dprPolicy` to both legs so a viz that
-// adopts the leaf sizer is sized SYNCHRONOUSLY at mount before the async acquire, on
-// either backend, identically.
-//
-// ── BD.W-SUBSTRATE-SIZE-UNIFY (G4) — THE READBACK CONTRACT (documented, not folklore) ──
-//
-// All live consumers create their context with `preserveDrawingBuffer:false`. So a live
-// `getImageData`/`readPixels` after the compositor has cleared returns ALL-ZERO — this is
-// CORRECT behaviour in BOTH engines (and it AVOIDS WebKit's always-allocated readback
-// buffer), NOT a substrate defect. A live π-gate therefore reads pixels via the COMPOSITOR
-// (`locator.screenshot()`), never `getImageData`. The EXACT-PIXEL in-page read is
-// `captureFrame(timeSec)`: in `mode:"capture"` the substrate auto-flips
-// `preserveDrawingBuffer:true` at context creation (free only there), `renderAt(timeSec)`,
-// then reads back. The all-zero live `readPixels` is a FEATURE; capture-mode is the read.
+// Both engines expose the same lifecycle handle and compose `createCanvasLifecycle`
+// for backing size, visibility, reduced motion, scheduling, and teardown.
 
 import {
     createWebGLCanvas,
-    canvasCanHostWebGL2,
     type WebGLCanvasFrame,
     type WebGLCanvasOptions,
 } from "../webgl/useWebGLCanvas";
@@ -136,7 +91,11 @@ export interface GpuSubstrateOptions {
      * (e.g. record the tier-readout for the substrate DELTA), NOT an error. The error
      * (if any) that triggered the fall is passed for telemetry.
      */
-    onBackendFallback?: (info: { from: "webgpu"; to: "webgl2"; error: unknown }) => void;
+    onBackendFallback?: (info: {
+        from: "webgpu";
+        to: "webgl2";
+        error: unknown;
+    }) => void;
     onStatus?: (status: RendererStatus) => void;
 }
 
@@ -168,7 +127,9 @@ export interface GpuSubstrateHandle {
      * the awaited `armAsync`). A no-op when no `dprPolicy` was supplied (legacy).
      */
     presize: () => void;
-    suspend: (reason?: "tab-hidden" | "off-screen" | "off-screen-io" | "manual") => void;
+    suspend: (
+        reason?: "tab-hidden" | "off-screen" | "off-screen-io" | "manual",
+    ) => void;
     resume: (reason?: "tab-hidden" | "off-screen" | "off-screen-io" | "manual") => void;
     wake: () => void;
     renderAt: (timeSec: number) => void;
@@ -181,7 +142,8 @@ function buildWebGL2(
     canvas: HTMLCanvasElement,
     options: GpuSubstrateOptions,
 ): ReturnType<typeof createWebGLCanvas> {
-    return createWebGLCanvas(canvas, {
+    let handle: ReturnType<typeof createWebGLCanvas>;
+    handle = createWebGLCanvas(canvas, {
         mode: options.mode,
         respectReducedMotion: options.respectReducedMotion,
         contextAttrs: options.contextAttrs,
@@ -189,66 +151,34 @@ function buildWebGL2(
         composeIntersectionPark: options.composeIntersectionPark,
         intersectionRootMargin: options.intersectionRootMargin,
         revealBloom: options.revealBloom,
+        onContextStateChange: (state) => {
+            options.onStatus?.(
+                state === "lost"
+                    ? pendingRenderer("webgl2")
+                    : {
+                          phase: "ready",
+                          engine: "webgl2",
+                          adapter: describeWebGL2Adapter(handle.gl),
+                      },
+            );
+        },
         setup: options.setupGL,
+        onContextError: (error) => {
+            options.onStatus?.(rendererFailure("webgl2", "WebGL 2 context", error));
+            options.onInitError?.(error);
+        },
     });
-}
-
-/**
- * Replace a WebGPU-POISONED canvas with a fresh clone in the SAME DOM position — the
- * prerequisite for the WebGL2 fall (BC.W-WEBGPU-EVERYWHERE the lying-adapter close).
- *
- * The HTML canvas one-context-type rule: once `getContext("webgpu")` is called on a
- * canvas, `getContext("webgl2")` on the SAME element returns `null` forever (the canvas
- * is locked to the `webgpu` context type). So when the picker falls from a failed-to-
- * validate WebGPU pipeline to the WebGL2 net, that canvas can NEVER host WebGL2 — the net
- * would throw `WebGL2 unavailable` even on a WebGL2-capable host (the headless software-
- * Metal class). The fix: clone the canvas (copying its attributes + class + inline style
- * so the layout/aria are byte-identical) and swap it in place, returning the fresh
- * un-poisoned element for the WebGL2 net to acquire.
- *
- * BUT THE SWAP IS ONLY DONE WHEN THE CANVAS IS ACTUALLY POISONED. A fall triggered BEFORE
- * `getContext("webgpu")` ever ran — a no-adapter host, a `requestDevice()` reject, or the
- * acquire-TIMEOUT (the device-hang class) — never poisoned the canvas: it can host WebGL2
- * directly. Swapping it anyway was a LIVE BUG: the swap orphans the original element, and a
- * consumer's `setup`/`resize` closure that captured the ORIGINAL canvas reference (e.g.
- * `resizeBacking(canvas)` in `useMetaballRenderer`) then sizes the now-detached original
- * (its `clientWidth` is 0 → the backing falls to a tiny default) while the live clone's
- * backing is never written — the canvas renders into the untouched 300×150 default that CSS
- * upscales (the blurry-viz defect). So we SWAP ONLY when the original cannot host WebGL2
- * (genuinely poisoned). The probe `getContext("webgl2")` is the canonical poison test (a
- * poisoned canvas returns null); on a clean canvas it returns the very context the net will
- * re-acquire (getContext is idempotent for the same type), so the probe costs nothing.
- *
- * SSR / detached-canvas safe: with no `parentNode` (never mounted) the clone cannot swap
- * — the original is returned unchanged (a never-mounted canvas was never poisoned anyway).
- */
-function freshCanvasForFallback(poisoned: HTMLCanvasElement): HTMLCanvasElement {
-    const parent = poisoned.parentNode;
-    if (!parent || typeof document === "undefined") return poisoned;
-    // Not actually poisoned (the fall came before getContext("webgpu") — no-adapter /
-    // device-reject / acquire-timeout): the original can host WebGL2, so KEEP it. Swapping
-    // would orphan the consumer's captured canvas reference (the blurry-viz clone-mismatch).
-    // The poison probe lives in the WebGL2 substrate (`canvasCanHostWebGL2` — the sole
-    // webgl2-bootstrap home, proof:webgl-substrate-single clause B); the picker composes it.
-    if (canvasCanHostWebGL2(poisoned)) return poisoned;
-    // Genuinely poisoned (a `getContext("webgpu")` ran — the pipeline-validation fall): the
-    // original is locked to the webgpu context type and can never host WebGL2. Clone + swap.
-    const fresh = poisoned.cloneNode(false) as HTMLCanvasElement;
-    // cloneNode(false) copies attributes (class/aria-hidden/data-*/inline style) but the
-    // backing-store width/height are reset by the next `resize()`; the CSS box is carried
-    // by the copied class/style.
-    parent.replaceChild(fresh, poisoned);
-    return fresh;
+    return handle;
 }
 
 /**
  * Pick the backend + return the uniform handle. WebGPU-first (`supportsWebGPU()` AND a
  * `setupWGPU` callback is provided); otherwise the WebGL2 net. The decision is NO
  * LONGER committed at construction off a presence check — `armAsync()` ATTEMPTS the
- * WebGPU init and FALLS to the WebGL2 net on ANY failure (no adapter, device reject,
- * device-lost-at-birth, validation throw). The WebGL2 leaf is built lazily — only if
- * the WebGPU path fails OR no WGSL path was provided — so a Baseline host pays no
- * WebGL2-context cost.
+ * WebGPU init and falls to WebGL2 only for recognized acquisition failures that occur
+ * before a WebGPU context is acquired. Setup/pipeline validation stays an explicit
+ * WebGPU error. The WebGL2 leaf is built lazily, so a Baseline host pays no fallback
+ * context cost.
  */
 export function createGpuSubstrate(
     canvas: HTMLCanvasElement,
@@ -264,10 +194,17 @@ export function createGpuSubstrate(
     let webgl2: ReturnType<typeof createWebGLCanvas> | null = null;
     let backend: GpuBackend = attemptWebGPU ? "webgpu" : "webgl2";
     let disposed = false;
-    // The live canvas — swapped for a fresh clone on the WebGPU→WebGL2 fall (the WebGPU
-    // context-type poison forbids reusing the original for the net; see `freshCanvasForFallback`).
-    let liveCanvas = canvas;
     const emitStatus = (status: RendererStatus): void => options.onStatus?.(status);
+    const emitRendererContextState = (
+        state: "lost" | "restored",
+        engine: GpuBackend,
+        adapter: () => string,
+    ): void =>
+        emitStatus(
+            state === "lost"
+                ? pendingRenderer(engine)
+                : { phase: "ready", engine, adapter: adapter() },
+        );
     emitStatus(pendingRenderer(backend));
 
     // Build the WebGL2 net NOW only when WebGPU is not even attempted (no WGSL path /
@@ -287,6 +224,13 @@ export function createGpuSubstrate(
             alphaMode: options.alphaMode,
             adapterOptions: options.adapterOptions,
             deviceDescriptor: options.deviceDescriptor,
+            onContextStateChange: (state) => {
+                emitRendererContextState(
+                    state,
+                    "webgpu",
+                    () => webgpu?.adapterClass ?? "Hardware adapter",
+                );
+            },
             // The picker OWNS the init-error contract on the WebGPU path: a recognized
             // init failure (no adapter / device reject) is caught by `armAsync`'s try
             // and routed to the WebGL2 net — it is NOT surfaced as `onInitError` (that
@@ -294,19 +238,20 @@ export function createGpuSubstrate(
             // the W-AURORA-SWRASTER precedent: a no-adapter fall is a recognized
             // substrate decision, not a contract violation). A POST-arm validation/
             // device-loss error still reaches the consumer's `onInitError`.
-            onInitError: options.onInitError,
+            onInitError: (error) => {
+                emitStatus(
+                    rendererFailure(
+                        "webgpu",
+                        webgpu?.adapterClass ?? "Hardware adapter",
+                        error,
+                    ),
+                );
+                options.onInitError?.(error);
+            },
         });
     }
 
-    /**
-     * Fall from a failed WebGPU init to the WebGL2 net (the invisible insurance). The
-     * WebGPU leaf may have already poisoned the canvas (`getContext("webgpu")` ran inside
-     * `buildContext` before the pipeline-validation reject), so the net is built on a
-     * FRESH cloned canvas swapped in place — the original can never host WebGL2 again. The
-     * net build + arm is guarded: a genuine WebGL2-unavailable (a host with NEITHER
-     * working substrate) surfaces via `onInitError`, never an uncaught page throw (the
-     * D8' no-spew floor extends to the second-leg failure).
-     */
+    /** Fall from a recognized pre-context WebGPU acquisition failure to WebGL2. */
     function fallToWebGL2(error: unknown): void {
         // Dispose the half-built WebGPU leaf (releases the device, unbinds the
         // device-loss promise) before standing up the net.
@@ -314,14 +259,15 @@ export function createGpuSubstrate(
         webgpu = null;
         backend = "webgl2";
         emitStatus(pendingRenderer("webgl2"));
-        // Swap the WebGPU-poisoned canvas for a fresh clone so the WebGL2 net can acquire
-        // a context (the canvas one-context-type rule — see `freshCanvasForFallback`).
-        liveCanvas = freshCanvasForFallback(liveCanvas);
         options.onBackendFallback?.({ from: "webgpu", to: "webgl2", error });
         try {
-            webgl2 = buildWebGL2(liveCanvas, options);
+            webgl2 = buildWebGL2(canvas, options);
             webgl2.arm();
-            emitStatus({ phase: "ready", engine: "webgl2", adapter: describeWebGL2Adapter(webgl2.gl) });
+            emitStatus({
+                phase: "ready",
+                engine: "webgl2",
+                adapter: describeWebGL2Adapter(webgl2.gl),
+            });
         } catch (netErr) {
             // The host has NEITHER a working WebGPU pipeline NOR a WebGL2 context (a
             // genuinely GL-less env). Surface for telemetry, never spew an uncaught throw.
@@ -344,15 +290,21 @@ export function createGpuSubstrate(
                 // no longer throws an uncaught error to the page — D8'); the reject is
                 // caught HERE and routed to the net.
                 await webgpu.armAsync();
-                emitStatus({ phase: "ready", engine: "webgpu", adapter: webgpu.adapterClass });
+                emitStatus({
+                    phase: "ready",
+                    engine: "webgpu",
+                    adapter: webgpu.adapterClass,
+                });
                 return;
             } catch (err) {
                 if (disposed) return;
-                // The WebGPU path could not arm (no adapter, device reject,
-                // device-lost-at-birth, validation throw) — fall to the net, silently.
-                // `fallToWebGL2` builds + arms the net (on a fresh canvas) inside its own
-                // guard, so the net is live on return.
-                if (err instanceof WebGPUInitError && err.kind !== "pipeline-validation") {
+                // Recognized acquisition failures occur before WebGPU owns the canvas,
+                // so the same element can safely host the WebGL2 path. Setup/pipeline
+                // validation errors remain attributed WebGPU failures.
+                if (
+                    err instanceof WebGPUInitError &&
+                    err.kind !== "pipeline-validation"
+                ) {
                     fallToWebGL2(err);
                     return;
                 }
@@ -363,7 +315,11 @@ export function createGpuSubstrate(
         // The WebGL2 net is synchronous — arm it immediately.
         try {
             webgl2?.arm();
-            emitStatus({ phase: "ready", engine: "webgl2", adapter: describeWebGL2Adapter(webgl2?.gl ?? null) });
+            emitStatus({
+                phase: "ready",
+                engine: "webgl2",
+                adapter: describeWebGL2Adapter(webgl2?.gl ?? null),
+            });
         } catch (err) {
             emitStatus(rendererFailure("webgl2", "WebGL 2 context", err));
             options.onInitError?.(err);

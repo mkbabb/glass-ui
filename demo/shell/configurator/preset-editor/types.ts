@@ -45,12 +45,6 @@ export interface ConfigBaseline {
      * for free via its `calc(var(--ui-scale) * var(--dock-local-scale))` derivation).
      */
     scale: number;
-    /**
-     * The optional reduced-motion override — writes a live `--demo-reduce-motion`
-     * signal to `:root` (consumed by the demo-local reduce bracket in demo.css).
-     * false = honour the system `prefers-reduced-motion`; true = force-reduce.
-     */
-    motion: boolean;
 }
 
 /**
@@ -69,7 +63,6 @@ export interface ConfigDelta {
     cartoonShadow?: boolean;
     glassLevel?: number;
     scale?: number;
-    motion?: boolean;
 }
 
 export interface FontOption {
@@ -82,10 +75,9 @@ export type DeltaKey = keyof ConfigDelta;
 
 /**
  * The subset of `ConfigBaseline` keys backed by a CSS-variable writer in
- * `css-writers.ts` (everything except `preset` and `font`). The three
- * post-W54 axes (`glassLevel` → `--glass-level`, `scale` → `--ui-scale`,
- * `motion` → `--demo-reduce-motion`) each write a `:root` custom property, so
- * they ride the same writable-field path as the token controls.
+ * `css-writers.ts` (everything except `preset` and `font`). The post-W54 axes
+ * (`glassLevel` → `--glass-level`, `scale` → `--ui-scale`) each write a `:root`
+ * custom property, so they ride the same writable-field path as the token controls.
  */
 export type WritableField =
     | "scaleBase"
@@ -95,8 +87,7 @@ export type WritableField =
     | "radius"
     | "cartoonShadow"
     | "glassLevel"
-    | "scale"
-    | "motion";
+    | "scale";
 
 export interface PresetEditor {
     /** Sparse reactive delta — only fields the user has touched. */

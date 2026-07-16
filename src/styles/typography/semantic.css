@@ -17,6 +17,18 @@ body {
     line-height: var(--type-leading-body);
 }
 
+/* A family-neutral headline/kicker pair. Consumers choose the font family,
+   weight, and tracking; these utilities own only the proportional geometry. */
+@utility text-proportional-headline {
+    font-size: var(--type-proportional-headline-size);
+    line-height: var(--type-proportional-leading);
+}
+
+@utility text-proportional-kicker {
+    font-size: var(--type-proportional-kicker-size);
+    line-height: var(--type-proportional-leading);
+}
+
 /* ═══════════════════════════════════════════════
    DISPLAY — Plus Jakarta Sans display, tracking-tight
    ═══════════════════════════════════════════════ */

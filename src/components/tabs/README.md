@@ -26,6 +26,10 @@ When omitted, compatibility defaults preserve the historical pairing: pill is
 toggle semantics and underline is tab semantics. Material remains independent,
 so `variant="pill" semantics="tabs"` is the glass-pill panel-navigation form.
 
+`activation="automatic"` (default) selects as roving focus moves.
+`activation="manual"` moves focus independently and selects only on Enter,
+Space, or click. The active indicator always follows selection, never focus.
+
 `:responsive` (`true` or
 `{ breakpoint, desktopOptions, ariaLabel, triggerClass }`) collapses the strip to
 a `<Select>` below the breakpoint.

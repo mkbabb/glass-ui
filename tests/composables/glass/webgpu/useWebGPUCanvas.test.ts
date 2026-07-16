@@ -27,6 +27,7 @@ import {
     WebGPUInitError,
     __resetSharedGpuDeviceForTest,
 } from "@glass/composables/glass/webgpu/useWebGPUCanvas";
+import { RESTORE_DEBOUNCE_MS } from "@glass/composables/glass/webgl/createCanvasLifecycle";
 
 let rafQueue: Array<() => void>;
 let listeners: Record<string, Array<(e: any) => void>>;
@@ -100,13 +101,18 @@ beforeEach(() => {
     vi.stubGlobal("window", {});
 });
 
-afterEach(() => vi.unstubAllGlobals());
+afterEach(() => {
+    vi.useRealTimers();
+    vi.unstubAllGlobals();
+});
 
 describe("useGpuSubstrate — the transparent picker degrade contract (W-GPU-SUBSTRATE)", () => {
     it("degrades to the WebGL2 backend when navigator.gpu is absent (jsdom)", async () => {
         // No navigator.gpu → the picker must select WebGL2.
         vi.stubGlobal("navigator", {});
-        const glStub = { getExtension: () => null } as unknown as WebGL2RenderingContext;
+        const glStub = {
+            getExtension: () => null,
+        } as unknown as WebGL2RenderingContext;
         const canvas = makeCanvas((id) => (id === "webgl2" ? glStub : null));
 
         let frames = 0;
@@ -199,7 +205,7 @@ describe("createWebGPUCanvas — the async device-acquisition prelude (W-GPU-SUB
             getPreferredCanvasFormat: vi.fn(() => "bgra8unorm"),
         };
         vi.stubGlobal("navigator", { gpu });
-        const gpuContext = { configure: vi.fn() };
+        const gpuContext = { configure: vi.fn(), unconfigure: vi.fn() };
         (canvas.getContext as any).mockImplementation((id: string) =>
             id === "webgpu" ? gpuContext : null,
         );
@@ -235,8 +241,92 @@ describe("createWebGPUCanvas — the async device-acquisition prelude (W-GPU-SUB
         expect(gpuContext.configure).toHaveBeenCalledTimes(1);
         expect(setupCalledWith).not.toBeNull();
         expect(setupCalledWith!.format).toBe("bgra8unorm");
-        expect(statuses.at(-1)).toMatchObject({ phase: "ready", engine: "webgpu", adapter: "Apple · M3 · Metal" });
+        expect(statuses.at(-1)).toMatchObject({
+            phase: "ready",
+            engine: "webgpu",
+            adapter: "Apple · M3 · Metal",
+        });
 
+        substrate.dispose();
+        expect(gpuContext.unconfigure).toHaveBeenCalledOnce();
+    });
+
+    it("projects device loss and recovery through the existing renderer status", async () => {
+        vi.useFakeTimers();
+        let resolveLoss!: (info: GPUDeviceLostInfo) => void;
+        let resolveRecoveryProbe!: (error: GPUError | null) => void;
+        const firstLost = new Promise<GPUDeviceLostInfo>((resolve) => {
+            resolveLoss = resolve;
+        });
+        const recoveryProbe = new Promise<GPUError | null>((resolve) => {
+            resolveRecoveryProbe = resolve;
+        });
+        const makeDevice = (
+            lost: Promise<GPUDeviceLostInfo>,
+            probe: Promise<GPUError | null> = Promise.resolve(null),
+        ) =>
+            ({
+                lost,
+                pushErrorScope: vi.fn(),
+                popErrorScope: vi.fn(() => probe),
+                addEventListener: vi.fn(),
+                removeEventListener: vi.fn(),
+            }) as unknown as GPUDevice;
+        const devices = [
+            makeDevice(firstLost),
+            makeDevice(new Promise<GPUDeviceLostInfo>(() => undefined), recoveryProbe),
+        ];
+        const adapter = {
+            info: { vendor: "Apple", architecture: "M3", description: "Metal" },
+            requestDevice: vi.fn(async () => devices.shift()!),
+        };
+        const gpu = {
+            requestAdapter: vi.fn(async () => adapter),
+            getPreferredCanvasFormat: vi.fn(() => "bgra8unorm"),
+        };
+        vi.stubGlobal("navigator", { gpu });
+        const gpuContext = { configure: vi.fn(), unconfigure: vi.fn() };
+        const canvas = makeCanvas((id) => (id === "webgpu" ? gpuContext : null));
+        const statuses: RendererStatus[] = [];
+        const substrate = createGpuSubstrate(canvas, {
+            setupWGPU: () => ({
+                frame: vi.fn(),
+                shouldContinue: () => false,
+                resize: vi.fn(),
+            }),
+            setupGL: () => {
+                throw new Error("setupGL must not run during WebGPU recovery");
+            },
+            onStatus: (status) => statuses.push(status),
+        });
+
+        await substrate.armAsync();
+        expect(statuses.at(-1)).toMatchObject({
+            phase: "ready",
+            engine: "webgpu",
+        });
+
+        resolveLoss({ reason: "unknown", message: "device reset" });
+        await Promise.resolve();
+        await Promise.resolve();
+        expect(statuses.at(-1)).toMatchObject({
+            phase: "initializing",
+            engine: "webgpu",
+        });
+
+        await vi.advanceTimersByTimeAsync(RESTORE_DEBOUNCE_MS + 1);
+        expect(statuses.at(-1)).toMatchObject({
+            phase: "initializing",
+            engine: "webgpu",
+        });
+
+        resolveRecoveryProbe(null);
+        await Promise.resolve();
+        expect(statuses.at(-1)).toMatchObject({
+            phase: "ready",
+            engine: "webgpu",
+        });
+        expect(adapter.requestDevice).toHaveBeenCalledTimes(2);
         substrate.dispose();
     });
 
@@ -244,7 +334,11 @@ describe("createWebGPUCanvas — the async device-acquisition prelude (W-GPU-SUB
         const canvas = makeCanvas(() => null);
         const { gpu } = stubWebGPU(canvas);
         const handle = createWebGPUCanvas(canvas, {
-            setup: () => ({ frame: vi.fn(), shouldContinue: () => false, resize: vi.fn() }),
+            setup: () => ({
+                frame: vi.fn(),
+                shouldContinue: () => false,
+                resize: vi.fn(),
+            }),
         });
         await handle.armAsync();
         await handle.armAsync();
@@ -266,7 +360,11 @@ describe("createWebGPUCanvas — the async device-acquisition prelude (W-GPU-SUB
         vi.stubGlobal("navigator", { gpu });
         const onInitError = vi.fn();
         const handle = createWebGPUCanvas(canvas, {
-            setup: () => ({ frame: vi.fn(), shouldContinue: () => false, resize: vi.fn() }),
+            setup: () => ({
+                frame: vi.fn(),
+                shouldContinue: () => false,
+                resize: vi.fn(),
+            }),
             onInitError,
         });
         await expect(handle.armAsync()).rejects.toBeInstanceOf(WebGPUInitError);
@@ -289,7 +387,9 @@ describe("createGpuSubstrate — the try-WebGPU-then-rebuild-WebGL2 picker (BC.W
             getPreferredCanvasFormat: vi.fn(() => "bgra8unorm"),
         };
         vi.stubGlobal("navigator", { gpu });
-        const glStub = { getExtension: () => null } as unknown as WebGL2RenderingContext;
+        const glStub = {
+            getExtension: () => null,
+        } as unknown as WebGL2RenderingContext;
         const canvas = makeCanvas((id) => (id === "webgl2" ? glStub : null));
 
         let glFrames = 0;
@@ -334,6 +434,9 @@ describe("createGpuSubstrate — the try-WebGPU-then-rebuild-WebGL2 picker (BC.W
         // The WebGL2 net armed + the consumer's frame runs — the substrate PAINTS, never
         // a black void (the D8 close).
         expect(canvas.getContext).toHaveBeenCalledWith("webgl2", undefined);
+        // The recognized failure happened before WebGPU acquired a context: the picker
+        // uses the original canvas directly, with no same-canvas probe or replacement.
+        expect(canvas.getContext).toHaveBeenCalledTimes(1);
         // the WebGL2 net's loop runs the consumer's frame (delta-asserted so the presize
         // layout-settle rAFs sharing the queue don't skew the count).
         expect(pumpFrames(() => glFrames, 5)).toBeGreaterThan(0);
@@ -343,18 +446,42 @@ describe("createGpuSubstrate — the try-WebGPU-then-rebuild-WebGL2 picker (BC.W
 
     it("attributes WebGPU setup failure without painting through WebGL2", async () => {
         const canvas = makeCanvas(() => null);
-        const device = { lost: new Promise(() => {}), pushErrorScope: vi.fn(), popErrorScope: vi.fn(async () => null), addEventListener: vi.fn(), removeEventListener: vi.fn() };
-        vi.stubGlobal("navigator", { gpu: { requestAdapter: vi.fn(async () => ({ info: { vendor: "Apple" }, requestDevice: vi.fn(async () => device) })), getPreferredCanvasFormat: vi.fn(() => "bgra8unorm") } });
-        (canvas.getContext as any).mockImplementation((id: string) => id === "webgpu" ? { configure: vi.fn() } : null);
+        const device = {
+            lost: new Promise(() => {}),
+            pushErrorScope: vi.fn(),
+            popErrorScope: vi.fn(async () => null),
+            addEventListener: vi.fn(),
+            removeEventListener: vi.fn(),
+        };
+        vi.stubGlobal("navigator", {
+            gpu: {
+                requestAdapter: vi.fn(async () => ({
+                    info: { vendor: "Apple" },
+                    requestDevice: vi.fn(async () => device),
+                })),
+                getPreferredCanvasFormat: vi.fn(() => "bgra8unorm"),
+            },
+        });
+        const gpuContext = { configure: vi.fn(), unconfigure: vi.fn() };
+        (canvas.getContext as any).mockImplementation((id: string) =>
+            id === "webgpu" ? gpuContext : null,
+        );
         const statuses: RendererStatus[] = [];
         const setupGL = vi.fn();
         const substrate = createGpuSubstrate(canvas, {
-            setupWGPU: () => { throw new Error("shader setup failed"); },
+            setupWGPU: () => {
+                throw new Error("shader setup failed");
+            },
             setupGL,
             onStatus: (status) => statuses.push(status),
         });
         await expect(substrate.armAsync()).rejects.toThrow("shader setup failed");
         expect(setupGL).not.toHaveBeenCalled();
-        expect(statuses.at(-1)).toMatchObject({ phase: "error", engine: "webgpu", error: "shader setup failed" });
+        expect(statuses.at(-1)).toMatchObject({
+            phase: "error",
+            engine: "webgpu",
+            error: "shader setup failed",
+        });
+        expect(gpuContext.unconfigure).toHaveBeenCalledOnce();
     });
 });

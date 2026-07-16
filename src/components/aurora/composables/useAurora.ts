@@ -1,4 +1,5 @@
 import {
+    computed,
     onBeforeUnmount,
     onMounted,
     readonly,
@@ -7,11 +8,7 @@ import {
     watch,
     type Ref,
 } from "vue";
-import {
-    createAurora,
-    type AuroraRuntime,
-    type AuroraRuntimeOptions,
-} from "./runtime";
+import { createAurora, type AuroraRuntime, type AuroraRuntimeOptions } from "./runtime";
 import { asGetter, type ConfigSource } from "./configSource";
 import { useIntersectionPause } from "../../../composables/motion/useIntersectionPause";
 import { useScrollProgress } from "../../../composables/motion/useScrollProgress";
@@ -24,16 +21,15 @@ import {
 } from "../../../composables/glass/webgpu/rendererStatus";
 
 /**
- * Adaptive-substrate options threaded down from `Aurora.vue` (AM.W1). The
- * render mode is the RESOLVED concrete substrate (`"auto"` already collapsed
- * to `"webgl"`/`"css"` at the component boundary via `resolveRenderMode`).
+ * Adaptive-substrate options threaded down from `Aurora.vue`. `"webgl"` is the
+ * historical name of the animated GPU mode; the runtime itself prefers WebGPU
+ * and uses its supported WebGL2 path when acquisition cannot start.
  */
 export interface UseAuroraAdaptiveOptions {
     /**
-     * Resolved render substrate. `"css"` short-circuits the WebGL arm schedule
-     * entirely — no webgl2 context is ever created; the `Aurora.vue`
-     * placeholder stays the permanent surface. `"webgl"` (default) arms the
-     * deferred WebGL path as before.
+     * Resolved render substrate. `"css"` short-circuits GPU initialization and
+     * keeps the `Aurora.vue` placeholder as the permanent surface. `"webgl"`
+     * (default) arms the deferred GPU runtime.
      */
     renderMode?: "webgl" | "css";
 }
@@ -59,11 +55,10 @@ export interface UseAuroraReturn {
     pause: () => void;
     resume: () => void;
     /**
-     * `true` once the WebGL runtime has armed (shader compiled + linked, first
+     * `true` once the GPU runtime has armed (device/context ready and first
      * frame drawable). `Aurora.vue` watches this to cross-fade the canvas in
-     * over the static CSS-gradient placeholder. Eager / capture consumers see
-     * it flip `true` synchronously within `onMounted`; deferred consumers see
-     * it flip on the post-first-paint idle tick.
+     * over the static palette ground. It stays false through asynchronous device
+     * acquisition and flips only when the backend readiness promise resolves.
      */
     isArmed: Readonly<Ref<boolean>>;
     rendererStatus: Readonly<Ref<RendererStatus>>;
@@ -126,26 +121,18 @@ function scheduleAfterFirstPaint(task: () => void): () => void {
  * use; passing a getter or ref works for preset-switch scenarios.
  *
  * Lazy-arm: by default (`initStrategy: "deferred"`) `createAurora` constructs
- * a cheap, un-armed instance and the expensive WebGL init (shader compile +
- * GPU link — the dominant synchronous cost) is deferred past first paint via
+ * a cheap, un-armed instance and expensive GPU initialization is deferred past first paint via
  * `requestIdleCallback`, gated on the canvas's first viewport intersection
- * (composing `useIntersectionPause`). `Aurora.vue` paints a CSS-gradient
+ * (composing `useIntersectionPause`). `Aurora.vue` paints a palette-derived
  * placeholder under the canvas so the consumer's first paint is never blocked
- * on the shader. Capture / `initStrategy: "eager"` consumers arm synchronously
- * inside `createAurora` and skip the defer entirely.
+ * on the shader. Capture / `initStrategy: "eager"` consumers begin acquisition
+ * immediately and skip the defer; readiness still awaits the backend.
  *
- * Init-failure contract (O invariant 24 — "fails explicitly by default"). A
- * WebGL2/shader-compile/link failure is a library-internal contract violation.
- * On the DEFERRED path the failure lands on an idle tick, OUTSIDE any
- * mount-time error boundary, so the consumer MUST handle it through exactly one
- * of three paths:
- *   1. pass an `onInitError(err)` handler in `runtimeOptions` (the explicit
- *      opt-in — receives the error directly), OR
- *   2. when using `Aurora.vue`, install a Vue global `app.config.errorHandler`
- *      (the component adapts it into `onInitError`), OR
- *   3. knowingly accept the unhandled rejection (the dev console still gets it).
- * Armed deferred with NO `onInitError`, `useAurora` dev-warns ONCE so the
- * silent-by-omission case is visible. WebGL2-unavailable still throws HARD.
+ * Init failures remain explicit through `rendererStatus`. An optional
+ * `onInitError` receives the attributed error; `Aurora.vue` adapts Vue's app
+ * error handler into that seam when present. The wrapper awaits backend
+ * readiness before exposing the live canvas and leaves the palette ground in
+ * place on failure.
  */
 export function useAurora(
     canvasRef: Ref<HTMLCanvasElement | null>,
@@ -154,9 +141,9 @@ export function useAurora(
     adaptiveOptions: UseAuroraAdaptiveOptions = {},
 ): UseAuroraReturn {
     const getCfg = asGetter(configSource);
-    // `"css"` (resolved by `Aurora.vue`) means: never arm the WebGL path. The
+    // `"css"` (resolved by `Aurora.vue`) means: never arm the GPU path. The
     // construction below is skipped and the placeholder is the permanent
-    // surface. `"webgl"` (default) arms the deferred path exactly as before.
+    // surface. `"webgl"` (default) arms the deferred GPU path.
     const cssOnly = adaptiveOptions.renderMode === "css";
     let inst: AuroraRuntime | null = null;
     let stopWatch: (() => void) | null = null;
@@ -164,37 +151,40 @@ export function useAurora(
     let stopScrollWatch: (() => void) | null = null;
     let cancelSchedule: (() => void) | null = null;
     let intersection: ReturnType<typeof useIntersectionPause> | null = null;
-    let reducedMq: MediaQueryList | null = null;
     // Guards a single arm attempt (success OR failure both consume it).
     let armAttempted = false;
     // Exposed to `Aurora.vue` so it can cross-fade the canvas in over the
-    // static gradient placeholder once the GL runtime is live. Stays `false`
-    // on init failure — the placeholder then remains as the WebGL-unavailable
+    // static gradient placeholder once the GPU runtime is live. Stays `false`
+    // on init failure — the placeholder then remains as the unavailable-runtime
     // visual fallback (HA4 §1.5).
     const isArmed = ref(false);
     const rendererStatus = shallowRef<RendererStatus>(
         cssOnly ? cssRenderer() : pendingRenderer("webgl2"),
     );
+    const scrollEnabled = computed(
+        () => !cssOnly && getCfg().interactivity?.scroll === true,
+    );
+    // Composables must register during setup, not after asynchronous GPU arm.
+    // Aurora consumes the numeric value in shader time, so it requests the live
+    // reader even on browsers where CSS timelines exist.
+    const scrollProgress = useScrollProgress({
+        target: canvasRef,
+        trackExit: true,
+        reactive: true,
+        enabled: scrollEnabled,
+    });
+    stopScrollWatch = watch(
+        scrollProgress,
+        (progress) => inst?.setScrollProgress(progress),
+        { flush: "sync" },
+    );
 
     // Capture mode forces eager; an explicit "eager" strategy does too. Any
     // other case takes the deferred path.
     const eager =
-        runtimeOptions.mode === "capture" ||
-        runtimeOptions.initStrategy === "eager";
+        runtimeOptions.mode === "capture" || runtimeOptions.initStrategy === "eager";
 
-    function onReducedChange() {
-        if (reducedMq && inst) inst.setReducedMotion(reducedMq.matches);
-    }
-
-    /**
-     * Surface an init failure per O invariant 24. On the deferred path the
-     * failure happens on an idle tick, outside any mount-time error boundary —
-     * so when no `onInitError` is supplied we re-throw on the microtask queue
-     * (`Promise.reject`), which reaches the dev console. `Aurora.vue` supplies
-     * its app-level Vue error handler through `onInitError` when one exists.
-     * This preserves invariant 24's "fails explicitly by default" semantics
-     * across the synchronous → deferred move.
-     */
+    /** Publish one attributed init failure and notify the installed owner. */
     function surfaceInitError(err: unknown): void {
         const error = err instanceof Error ? err : new Error(String(err));
         rendererStatus.value = rendererFailure(
@@ -205,24 +195,20 @@ export function useAurora(
         runtimeOptions.onInitError?.(error);
     }
 
-    /**
-     * Run `inst.arm()` and wire the post-arm reactive seams (config watch,
-     * reduced-motion listener). Idempotent. Init failures route through
-     * `surfaceInitError`, preserving O invariant 24 on the deferred path.
-     */
-    function armRuntime(): void {
+    /** Resolve the actual device/context before exposing the live canvas. */
+    async function armRuntime(): Promise<void> {
         if (armAttempted || !inst) return;
         armAttempted = true;
+        const runtime = inst;
         try {
-            inst.arm();
+            await runtime.armAsync();
         } catch (err) {
-            // fail-explicit: the deferred-path arm() failure is SURFACED via
-            // surfaceInitError (onInitError or a re-raised microtask rejection),
-            // and isArmed stays false so Aurora.vue keeps the CSS placeholder as
-            // the WebGL-unavailable fallback. Not swallowed.
-            surfaceInitError(err);
+            // The substrate publishes attributed setup/pipeline failure before
+            // rejecting. Only synthesize it when a direct runtime failed first.
+            if (rendererStatus.value.phase !== "error") surfaceInitError(err);
             return;
         }
+        if (inst !== runtime || rendererStatus.value.engine === "css") return;
         isArmed.value = true;
 
         // BI.W-AURORA-VIBRANCY (GAP-ARM) — the cold-load arm-replay. On the DEFERRED path
@@ -231,46 +217,24 @@ export function useAurora(
         // switch before the canvas armed — is captured neither by construction (stale) nor
         // by the NON-immediate watch below (it only fires on the NEXT change). One honest
         // replay of the CURRENT config seats it, closing the silently-dropped-change gap.
-        inst.update(getCfg());
+        runtime.update(getCfg());
+        runtime.setScrollProgress(scrollProgress.value);
 
-        if (typeof window.matchMedia === "function") {
-            reducedMq = window.matchMedia("(prefers-reduced-motion: reduce)");
-            reducedMq.addEventListener("change", onReducedChange);
-        }
-
-        stopWatch = watch(getCfg, (next) => inst?.update(next), { deep: true });
-
-        // AW.W8.1 — scroll coupling: when interactivity.scroll is on, bind palette/
-        // breath progress to scroll via the EXISTING useScrollProgress public
-        // composable (no new substrate). The coupling is PRM-suppressed because it
-        // routes through the runtime's reducedMotion gate — under reduce the runtime
-        // ignores the nudge (the master tempo zeroes it). The progress modulates the
-        // cursor radius subtly (a benign per-frame axis that does not fight the config
-        // deep-watch). Only wired when the flag is on (the default stays static).
-        if (getCfg().interactivity?.scroll && canvasRef.value) {
-            const progress = useScrollProgress({ target: canvasRef, trackExit: true });
-            stopScrollWatch = watch(progress, (p) => {
-                if (!inst || inst.reducedMotion) return; // PRM-suppressed
-                // Couple scroll to the cursor radius (a wide, gentle palette breathe).
-                inst.setCursorRadius(0.2 + p * 0.25);
-            });
-        }
+        stopWatch = watch(getCfg, (next) => runtime.update(next), { deep: true });
     }
 
     onMounted(() => {
         const canvas = canvasRef.value;
         if (!canvas) return;
 
-        // Adaptive substrate `"css"` (AM.W1): never arm WebGL. We skip runtime
+        // Adaptive substrate `"css"`: never arm the GPU runtime. We skip runtime
         // construction, the intersection gate, and the idle arm schedule
         // entirely — `inst` stays null, `isArmed` stays false, and `Aurora.vue`
         // keeps the `paletteToCssGradient` placeholder as the permanent warm
-        // wash. No webgl2 context is ever created on this path.
+        // wash. No GPU context is created on this path.
         if (cssOnly) return;
 
-        // Construction is cheap on the deferred path (no GL work yet) and
-        // throws on the eager path exactly as before — invariant 24 holds
-        // synchronously for eager / capture consumers.
+        // Construction is cheap; backend acquisition remains behind armAsync.
         try {
             inst = createAurora(canvas, getCfg(), {
                 // Deferred is the default; an explicit field still wins.
@@ -278,28 +242,26 @@ export function useAurora(
                 ...runtimeOptions,
                 onRendererStatus: (status) => {
                     rendererStatus.value = status;
+                    isArmed.value = status.phase === "ready";
                     runtimeOptions.onRendererStatus?.(status);
                 },
             });
         } catch (err) {
-            // fail-explicit: surface the synchronous (eager-path) init failure
-            // through surfaceInitError — onInitError if provided, else re-raised
-            // on the microtask queue (reaches the dev console).
+            // A direct construction failure still enters the same attributed
+            // status/callback channel as asynchronous backend failure.
             surfaceInitError(err);
             return;
         }
 
         if (eager) {
-            // `createAurora` already armed synchronously. Run `armRuntime`
-            // to wire the post-arm seams; `inst.arm()` inside it is an
-            // idempotent no-op and `isArmed` flips `true` within onMounted.
-            armRuntime();
+            // Reuse the idempotent device-ready promise already in flight.
+            void armRuntime();
             return;
         }
 
-        // Deferred path. Compose `useIntersectionPause` as the SINGLE owner of
-        // the viewport-intersection seam — it drives ONLY the `"off-screen"`
-        // suspend reason. Document-visibility is the runtime's concern now (it
+        // Deferred path. The pre-arm observer writes only `"off-screen-io"`,
+        // distinct from the shared lifecycle's content-visibility `"off-screen"`.
+        // Document visibility remains the runtime's concern (it
         // owns the lifted `"tab-hidden"` listener), so we disable this
         // observer's own visibility arm with `pauseWhenHidden: false`; exactly
         // one observer writes each reason and they never alias. We additionally
@@ -309,8 +271,8 @@ export function useAurora(
         intersection = useIntersectionPause(
             canvasRef,
             {
-                pause: () => inst?.pause("off-screen"),
-                resume: () => inst?.resume("off-screen"),
+                pause: () => inst?.pause("off-screen-io"),
+                resume: () => inst?.resume("off-screen-io"),
             },
             { pauseWhenHidden: false },
         );
@@ -331,12 +293,12 @@ export function useAurora(
                 // the *whether* — HA4 §1.3).
                 cancelSchedule = scheduleAfterFirstPaint(() => {
                     cancelSchedule = null;
-                    // Arm the WebGL2 fragment path PAST first paint (the CSS
+                    // Arm the GPU path PAST first paint (the CSS
                     // placeholder already painted). Re-check visibility — an
                     // Aurora the observer later reports off-screen is not armed
                     // until it genuinely intersects.
                     if (!visibility.value) return; // still off-screen — re-trigger later
-                    armRuntime();
+                    void armRuntime();
                 });
             },
             { immediate: true },
@@ -349,7 +311,6 @@ export function useAurora(
         stopWatch?.();
         stopScrollWatch?.();
         intersection?.dispose();
-        reducedMq?.removeEventListener("change", onReducedChange);
         inst?.dispose();
         inst = null;
     });

@@ -1,19 +1,26 @@
+<script lang="ts">
+import type { HTMLAttributes } from "vue";
+
+export interface SelectGroupProps {
+    class?: HTMLAttributes["class"];
+}
+</script>
+
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
-import { SelectGroup, type SelectGroupProps } from 'reka-ui'
-import { cn } from '../_shared/class-names'
+import { computed, useAttrs } from "vue";
+import { SelectGroup as RekaSelectGroup } from "reka-ui";
+import { cn } from "../_shared/class-names";
+import { fixedHostAttrs } from "../_shared/primitive";
 
-const props = defineProps<SelectGroupProps & { class?: HTMLAttributes['class'] }>()
+defineOptions({ name: "SelectGroup", inheritAttrs: false });
 
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
-
-  return delegated
-})
+const props = defineProps<SelectGroupProps>();
+const attrs = useAttrs();
+const forwardedAttrs = computed(() => fixedHostAttrs(attrs));
 </script>
 
 <template>
-  <SelectGroup :class="cn('p-1 w-full', props.class)" v-bind="delegatedProps">
-    <slot />
-  </SelectGroup>
+    <RekaSelectGroup v-bind="forwardedAttrs" :class="cn('p-1 w-full', props.class)">
+        <slot />
+    </RekaSelectGroup>
 </template>

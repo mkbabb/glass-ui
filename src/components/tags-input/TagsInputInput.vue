@@ -1,19 +1,52 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
-import { TagsInputInput, type TagsInputInputProps, useForwardProps } from 'reka-ui'
-import { cn } from '../_shared/class-names'
+import { type HTMLAttributes, computed, inject, nextTick, ref } from "vue";
+import {
+    injectTagsInputRootContext,
+    TagsInputInput as RekaTagsInputInput,
+} from "reka-ui";
+import { cn } from "../_shared/class-names";
+import { tagsInputContextKey } from "./context";
 
-const props = defineProps<TagsInputInputProps & { class?: HTMLAttributes['class'] }>()
+export interface TagsInputInputProps {
+    placeholder?: string;
+    autoFocus?: boolean;
+    maxLength?: number;
+    class?: HTMLAttributes["class"];
+}
 
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
+const props = defineProps<TagsInputInputProps>();
+const context = inject(tagsInputContextKey);
+const root = injectTagsInputRootContext();
+const invalid = computed(
+    () => context?.invalid.value === true || root.isInvalidInput.value,
+);
+const composing = ref(false);
 
-  return delegated
-})
+function beginComposition() {
+    composing.value = true;
+}
 
-const forwardedProps = useForwardProps(delegatedProps)
+function endComposition() {
+    nextTick(() => {
+        composing.value = false;
+    });
+}
+
+function guardCompositionInput(event: Event) {
+    if (composing.value) event.stopImmediatePropagation();
+}
 </script>
 
 <template>
-  <TagsInputInput v-bind="forwardedProps" :class="cn('text-sm min-h-6 focus:outline-none flex-1 bg-transparent px-1', props.class)" />
+    <RekaTagsInputInput
+        :placeholder="props.placeholder"
+        :auto-focus="props.autoFocus"
+        :max-length="props.maxLength"
+        data-slot="tags-input-input"
+        :aria-invalid="invalid || undefined"
+        :class="cn('tags-input__input', props.class)"
+        @compositionstart.capture="beginComposition"
+        @compositionend.capture="endComposition"
+        @input.capture="guardCompositionInput"
+    />
 </template>

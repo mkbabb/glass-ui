@@ -26,7 +26,7 @@
 import { computed, ref, useAttrs, type Component } from "vue";
 import { Search } from "@lucide/vue";
 import { cn } from "../_shared/class-names";
-import type { Surface } from "../_shared/useSurfaceAxis";
+import type { Surface } from "../_shared/axes";
 import {
     type ControlSize,
     type SearchVariant,

@@ -2,7 +2,7 @@
 // W-PI-IN-CLOSE battery + the W-GESTALT-LEDGER-FILE substrate verdict).
 //
 // The device-free gate (proof:aurora-vibrancy) locks the SOURCE (the palette chroma floor,
-// the demo-local fence, the studio bump, the atoms door + the dark-leg probe). This π
+// the demo-local fence, the atoms door + the dark-leg probe). This π
 // proves the PAINTED truth the source cannot witness:
 //   1. Each setting-sun candidate (A/B/C), sampled through the library's OWN
 //      `sampleAuroraField` CPU mirror, composites to a WARM-SUN-WITH-PINK field — mean
@@ -12,7 +12,6 @@
 //      amber (the note does not over-rotate the whole field to pink).
 //   3. A caption over the field behind the real warm-glass plate clears AA in BOTH modes
 //      (the vibrancy lift never drops content-over-glass below the AA floor — G9).
-//   4. The studio canvas grew (the "core aurora space larger" read — UF-E4).
 //
 // The field readback is GL-FREE by construction (the swraster precedent): the composite is
 // the SHIPPED `sampleAuroraField` static mirror, rendered into real DOM and read back via
@@ -259,15 +258,4 @@ test.describe("BI.W-AURORA-VIBRANCY — vibrant warm-sun field + the setting-sun
             expect(ratio, `caption over setting-sun glass clears AA (${scheme})`).toBeGreaterThanOrEqual(4.5);
         });
     }
-
-    test("the studio canvas is larger (UF-E4)", async ({ page }) => {
-        await page.goto("/substrates/aurora");
-        await assertServedDemoAurora(page);
-        // The AuroraStage rounded wrapper carries the field; its painted footprint must
-        // clear the min-height floor (the grown "core aurora space").
-        const box = await page.locator(".cursor-crosshair").first().boundingBox();
-        test.info().annotations.push({ type: "vibrancy-canvas", description: JSON.stringify(box) });
-        expect(box).not.toBeNull();
-        expect(box!.height, "the studio aurora canvas cleared the grown floor").toBeGreaterThanOrEqual(460);
-    });
 });

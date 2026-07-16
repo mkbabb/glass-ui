@@ -13,7 +13,13 @@ import { mount } from "@vue/test-utils";
 import { defineComponent, h, nextTick } from "vue";
 import { describe, expect, it } from "vitest";
 
-import { Dialog, DialogContent, DialogTrigger } from "@glass/components/dialog/index";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogTitle,
+    DialogTrigger,
+} from "@glass/components/dialog/index";
 
 type PresetValue = "smooth" | "snappy" | "bouncy" | "gentle";
 
@@ -30,7 +36,11 @@ function mountDialog(springPreset?: PresetValue) {
                             ...(springPreset !== undefined ? { springPreset } : {}),
                             class: "test-dialog",
                         },
-                        () => h("p", "body"),
+                        () => [
+                            h(DialogTitle, { class: "sr-only" }, () => "Test dialog"),
+                            h(DialogDescription, { class: "sr-only" }, () => "Dialog motion fixture."),
+                            h("p", "body"),
+                        ],
                     ),
                 ]);
         },

@@ -5,6 +5,95 @@ records the breaking changes that landed in that cut, newest first. Clean breaks
 — no legacy aliases, no back-compat shims (L invariant 4); every break is a one-line
 rename or import re-point per call site.
 
+## 7.0.0 (unreleased)
+
+The packed public map changes from 82 to 73 export keys. It removes
+`./color-swatch`, `./controls`, `./focus-scope`, `./icon-chip`, `./icon-tooltip`,
+`./metric-badge`, `./metric-cell`, `./metric-stack`, `./motion-curves`,
+`./notification`, and `./spa-view`, and adds `./dark-mode-toggle` plus `./metric`.
+These are clean removals or replacements, without aliases or compatibility shims.
+
+`InstrumentChassis` is now one landmark-neutral physical sleeve on the explicit
+`/instrument-chassis` subpath. It is no longer exported from the root.
+
+| 6.x surface | 7.0 migration |
+|---|---|
+| `phase="ping|download|upload|jitter|complete"` | Map product phases locally to `state="ready|active|complete|loading"` and pass the consumer color through `tone`. |
+| `variant="glass|spine|structure"` | Remove the variant. The component has one housing material. |
+| `strip`, `dial`, `control` slots | Use `stage`, `inspector`, and `action` in that document order. |
+| `ChassisDivider` | Use explicit `boundaries` on the sleeve for region grooves, or ordinary `Separator` outside it. |
+| Fixed meter/dock reserve tokens | Own product viewport and content sizing locally; use the explicit `reserve` axis only for a present stage or inspector. |
+| `FocusScope` / `@mkbabb/glass-ui/focus-scope` | Import `FocusScope` from `reka-ui` when building a custom focus boundary. Existing Glass overlays keep focus behavior internally. |
+| `SpaView` / `SpaViewProps` / `@mkbabb/glass-ui/spa-view` | Compose Vue's `KeepAlive` and `Transition` in the concrete product shell that owns view identity and cache policy. |
+| `Notification` / `@mkbabb/glass-ui/notification` | Use the retained `Toast` queue and presentation family. |
+| `SplitChars` / `useCharStagger` | Render ordinary accessible text. Own product-specific grapheme treatment at that product boundary. |
+| `ColorSwatch` / `@mkbabb/glass-ui/color-swatch` | Use a native color input in the owning form; Aurora's proportioned swatch is now demo-private. |
+| standalone `Toggle`, `toggleVariants`, `ToggleVariants` | Use `ToggleGroupItem` inside `ToggleGroup`, or a native `<button aria-pressed>` for a standalone pressed command. The styling recipe is private to ToggleGroup. |
+| `DockSection`, `DockSectionDescriptor`, `DockSectionKind` | Use ordinary named groups and `DockSeparator` inside `GlassDock`. |
+| `DockStack`, `DockStackItem` | Compose the existing dropdown family with `DockControl` for a compact facet or layer menu. |
+| Implicit per-instance Dock `view-transition-name` | Pass a stable `viewTransitionName` only when the consumer owns a Dock shared-element route morph. Leave it unset for ordinary route transitions. |
+| `Label required` | Use `requirement="required"`; use `requirement="optional"` for the optional annotation. Keep the native control’s `required` attribute as the semantic owner. |
+| `avatarVariants`, `AvatarVariants` | Use `Avatar`’s typed `size` and `shape` props plus `AvatarSize` / `AvatarShape`. Identity is required through `label`, `labelledBy`, or `decorative`. |
+| `AvatarImage alt` | Name the identity once on `Avatar`; `AvatarImage` and fallback content are hidden from AT. |
+| `Skeleton variant` / `surface` | Use the single decorative reserved-shape recipe. Put `aria-busy` and the loading name on the owning region. |
+| `@mkbabb/glass-ui/controls` | Import `DarkModeToggle` from `@mkbabb/glass-ui/dark-mode-toggle`. The collective alias is removed. |
+| `DarkModeToggle eclipse` | Remove the long-press mode. The component is one native pressed theme command. |
+| `PaperBackdrop opacity` / `frequency` | Scope the shared paper variables at the owning route. `PaperBackdrop` only mounts the global content-field recipe. |
+| `HeaderRibbon hideTimeoutMs` | Remove the prop. Reveal now derives directly from pointer, focus, or pinned presence with no private timeout. |
+| Implicit collapsible `HeaderRibbon` anchor slot | Action-only ribbons are persistent by default. Add `mode="collapsible"` and a non-empty `anchor-label` to opt into disclosure behavior; the component owns the native button and the `anchor` slot supplies decorative content only. |
+| `HeaderRibbon` anchor slot `{ pinned, toggled }` | Read `{ pinned }`; the duplicate `toggled` name is removed. |
+| `HeaderRibbon` `left` slot | Compose that content beside `HeaderRibbon`; its public slots are `anchor` and `items`. |
+
+The Dock fisheye enhancement and its deep `useDockFisheye` import are removed. Capped
+control runs retain the measured native-scroll path and `scrollIntoView` recentering.
+
+`HeaderRibbon` retains the `/header-ribbon` subpath and the `placement="left|right"`
+contract introduced in 5.0. Its default persistent mode renders actions immediately. Its
+explicit collapsible mode owns the named native anchor button, while the `anchor` slot is
+decorative; touch/click pins the actions and Escape returns focus to the owned control.
+DOM/action order is stable across placements; only visual direction changes.
+
+Wide stage/inspector composition uses `proportion="golden|preview-dominant"`; an
+absent inspector leaves stage at 100%. Boundaries and reserve default to none.
+
+`Slider` now owns its two visual recipes directly. Replace imports of
+`sliderVariants` or `SliderVariants` with the typed `variant`/`size` props and the
+`SliderVariant`, `SliderSize`, or `SliderProps` types from `/slider`; no styling
+function remains. `invalid` adds the error boundary and `aria-invalid` to each thumb.
+
+`Progress` adds typed `status="default|error"` and
+`orientation="horizontal|vertical"` axes. Error preserves the current numeric value
+and marks it invalid; it never reports completion. Both Progress and Slider keep their
+paint and geometry in the owning component stylesheet. The unused
+`.glass-progress-rail` utility is removed; set `--progress-size`, `--progress-track`,
+and `--progress-fill` on `Progress` when a consumer needs a local rail treatment.
+
+Motion ownership is now explicit. Replace keyframes primitives imported from
+`@mkbabb/glass-ui/motion` with the same named imports from
+`@mkbabb/keyframes.js`; `/motion` retains Glass-owned Vue composables and
+`SPRING_PRESETS`. The `@mkbabb/glass-ui/motion-curves` entry and its `CurveFn`,
+`MotionCurve`, `MotionCurveKind`, `MOTION_CURVES`, `MOTION_CURVES_CANONICAL`, and
+`motionCurve` exports are removed. Import callable easing math directly from
+`@mkbabb/value.js/easing`; CSS easing aliases intentionally have no JavaScript mirror.
+`useSpringPress` is also removed from `/motion`; use `useLiquidPress`, whose
+`squish: false` option supplies the same uniform press register while retaining the complete
+pointer, keyboard, disabled, and re-entry lifecycle.
+
+The 7.0 package line requires `@mkbabb/value.js@^4.0.0` and optional
+`@mkbabb/pencil-boil@^0.9.2`; its Keyframes range is finalized from the immutable
+packed compatibility check. Glass imports only Value's `/color`, `/css`, and
+`/easing` capabilities; the removed Value root has no compatibility external.
+`perfect-freehand` is no longer a peer because its stroke core is vendored in
+HandMark. The obsolete shadcn generator metadata is removed.
+
+`EasingPicker` now uses the canonical CSS jump terms `jump-start`, `jump-end`,
+`jump-none`, and `jump-both`. Replace the former `start`, `end`, `none`, and `both`
+values; the default is `jump-end`, and no spelling aliases remain.
+
+Import `@mkbabb/glass-ui/styles/fonts` when the packaged Plus Jakarta Sans and Fira
+Code faces are desired. That stylesheet embeds its WOFF2 payload; raw built faces
+remain addressable through `@mkbabb/glass-ui/fonts/*`.
+
 ## 6.0.0
 
 The BI cut removes public wrappers and aliases whose lifecycle belongs to their parent,
@@ -20,7 +109,7 @@ and `HandMark` remain public. The package export-map delta is exactly the remova
 | `GlassCarouselPager` | Compose the retained carousel controls/pager primitives at the carousel owner. |
 | `DialogScrollContent` | Use `DialogContent`; it owns scrolling. |
 | `ComboboxCancel`, `ComboboxSeparator`, `ComboboxViewport` | Compose the retained Combobox root/input/content/item surface; these members are internal. |
-| `DataTablePagination` | Own paging beside `DataTable` using the table's controlled state. |
+| `DataTablePagination` | Use `DataTable`'s controlled `page`, `pageSize`, `total`, and `pagination` surface. |
 | `DrawerOverlay`, `DrawerPortal` | Use `DrawerContent`; it owns one overlay and portal boundary. |
 | `DropdownMenuPortal` | Use `DropdownMenuContent`; it owns the portal boundary. |
 | `ProgressDefault`, `ProgressGradient`, `ProgressLiquid` | Use `<Progress variant="default|gradient|liquid">`. |
@@ -30,7 +119,11 @@ and `HandMark` remain public. The package export-map delta is exactly the remova
 | `parseColorRGBA` from `/constellation` | Resolve paint in the consumer or use the component's palette input; the renderer-local parser is no longer public. |
 | `<Blob @click>` relying on the implicit hit layer | Add `press-label="…"` to opt into the SDF-shaped native button. Omit it for a decorative, listener-free Blob; use `disabled` to disable the button. |
 | `installDeckSpring`, `deckEase`, `DECK_SPRING` | Keep `useDeck` for deck state/navigation and own presentation motion at the presentation boundary. |
+| `useGooMorph`, `MORPH_SIGNATURES`, `GooFilter` | These showcase-only goo facilities are private to the Deck story; keep application motion at its owning presentation boundary. |
+| `pagerWindow`, `PagerWindow` | Use `PagerDots` or `DeckPager`; their windowing math is an implementation detail. |
 | `<TypewriterText interactive>` / `backspaceToPosition()` | Remove the hidden per-glyph action; render a named native button for an editing command. |
+| `IconChip` / `@mkbabb/glass-ui/icon-chip` | Use `<Chip shape="icon">` with a slotted glyph for a meaningful static plate, or render the glyph directly when no plate is needed. The old icon, section, glyph-size, stroke, bare, duotone, bloom, saturated, glass, and reveal axes are deleted. |
+| `MetricBadge`, `/metric-badge`, `/metric-cell`, `/metric-stack` | Import `Metric`, `MetricCell`, `MetricRow`, and `MetricStack` from `/metric`. Keep phase, aura, protagonist, result animation, and fixed-row layout in the product composition. |
 | `InkMark` | Rename to `HandMark` from `@mkbabb/glass-ui/handmark`. |
 | `StackedIconGroup` / `@mkbabb/glass-ui/stacked-icons` | Render ordinary owner-local DOM with explicit names, overflow, and detail controls. |
 
@@ -83,7 +176,8 @@ paint upgrade — no public-prop break beyond the rows below.
 `@mkbabb/glass-ui/api` (the pure types + constants discovery layer) is FOLD-DELETED. The
 `./api` key is the ONLY dropped key. 185 of its symbols re-home onto their OWNING published
 subpath — so a consumer swaps the import PATH with zero symbol loss (the 6 deleted-viz types
-+ the 4 retired `/virtual` windowing types + the 4 retired `/border-progress` ring types
+
+- the 4 retired `/virtual` windowing types + the 4 retired `/border-progress` ring types
 below are the exception — they are DELETED / RETIRED, not re-homed):
 
 ```ts
@@ -109,9 +203,8 @@ BI.W-BORDER-PROGRESS-RETIRE (see "The `/border-progress` subpath retirement" sec
 the component is BANKED dormant off the public surface, so those types have no owning subpath
 until the speedtest adopt re-publishes it. The surface-axis
 grammar types (`Surface` / `SurfaceTier`) publish via the dedicated `/axes` grammar
-subpath (BH.W-AXIS-GRAMMAR — the honest `/api` successor). Only two `components/_shared`
-convenience unions re-home to a barrel that ADDS one type-only export: `MenuItemVariants`
-→ `/command`, `ControlSize` → `/forms`. The three root-barrel `*Variants` types
+subpath (BH.W-AXIS-GRAMMAR — the honest `/api` successor). The `components/_shared`
+`ControlSize` convenience union re-homes to `/forms`. The three root-barrel `*Variants` types
 (`AlertVariants` / `AvatarVariants` / `ToggleVariants`) resolve off the root
 `@mkbabb/glass-ui` barrel. value.js's 18 consumed specifiers (root + 15 subpaths +
 `/easing` + `/styles/fonts`) are all named in the table below, so the compound-import
@@ -169,17 +262,18 @@ The full 199-symbol map (grouped alphabetically by symbol; `kind` is the TS expo
 | `StrokeOrient` | type | `/aurora` |
 | `WarpMode` | type | `/aurora` |
 | `BadgeVariants` | type | `/badge` |
-| `ButtonVariants` | type | `/button` |
+| `ButtonEmphasis` | type | `/button` |
+| `ButtonProps` | type | `/button` |
+| `ButtonSize` | type | `/button` |
 | `Canvas2DFrame` | type | `/canvas` |
 | `Canvas2DHandle` | type | `/canvas` |
 | `Canvas2DOptions` | type | `/canvas` |
 | `Canvas2DSuspendReason` | type | `/canvas` |
 | `CardMetal` | type | `/card` |
-| `CardSurface` | type | `/card` |
+| `CardProps` | type | `/card` |
+| `CardSize` | type | `/card` |
 | `CardTier` | type | `/card` |
 | `CardVariant` | type | `/card` |
-| `ScrollCardHeaderProps` | type | `/card` |
-| `ScrollCardProps` | type | `/card` |
 | `UseAccentToneOptions` | type | `/color` |
 | `UseAccentToneReturn` | type | `/color` |
 | `CompletionSealProps` | type | `/completion-seal` |
@@ -223,22 +317,25 @@ The full 199-symbol map (grouped alphabetically by symbol; `kind` is the TS expo
 | `InkPath` | type | `/handmark` |
 | `MarkBox` | type | `/handmark` |
 | `TaperSpec` | type | `/handmark` |
+| `HeaderRibbonAnchorSlotProps` | type | `/header-ribbon` |
+| `HeaderRibbonMode` | type | `/header-ribbon` |
 | `HeaderRibbonPlacement` | type | `/header-ribbon` |
 | `HeaderRibbonProps` | type | `/header-ribbon` |
-| `IconChipIcon` | type | `/icon-chip` |
-| `IconChipProps` | type | `/icon-chip` |
-| `IconChipSection` | type | `/icon-chip` |
-| `IconChipTone` | type | `/icon-chip` |
-| `InstrumentChassisPhase` | type | `/instrument-chassis` |
-| `MetricBadgeLabelPosition` | type | `/metric-badge` |
-| `MetricBadgeProps` | type | `/metric-badge` |
-| `MetricBadgeSize` | type | `/metric-badge` |
-| `MetricCellAppearance` | type | `/metric-cell` |
-| `MetricCellProps` | type | `/metric-cell` |
-| `MetricRowProps` | type | `/metric-stack` |
-| `MetricStackProps` | type | `/metric-stack` |
+| `InstrumentChassisProps` | type | `/instrument-chassis` |
+| `InstrumentChassisState` | type | `/instrument-chassis` |
+| `InstrumentChassisProportion` | type | `/instrument-chassis` |
+| `InstrumentChassisBoundary` | type | `/instrument-chassis` |
+| `InstrumentChassisReserve` | type | `/instrument-chassis` |
+| `MetricProps` | type | `/metric` |
+| `MetricCellProps` | type | `/metric` |
+| `MetricRowProps` | type | `/metric` |
+| `MetricStackProps` | type | `/metric` |
+| `MetricDensity` | type | `/metric` |
+| `MetricOrientation` | type | `/metric` |
+| `MetricSize` | type | `/metric` |
+| `MetricValue` | type | `/metric` |
+| `MetricValueProps` | type | `/metric` |
 | `BloomUpPreset` | type | `/motion` |
-| `Countup` | type | `/motion` |
 | `DockCtaReceivePreset` | type | `/motion` |
 | `DragMorphAxis` | type | `/motion` |
 | `DragMorphSnapTarget` | type | `/motion` |
@@ -255,7 +352,6 @@ The full 199-symbol map (grouped alphabetically by symbol; `kind` is the TS expo
 | `UseLiquidRevealOptions` | type | `/motion` |
 | `UseLiquidRevealReturn` | type | `/motion` |
 | `HighlightMatcher` | type | `/motion-core` |
-| `NavigateOptions` | type | `/motion-core` |
 | `PointerVec2` | type | `/motion-core` |
 | `TriggerPoint` | type | `/motion-core` |
 | `UseCharStaggerOptions` | type | `/motion-core` |
@@ -269,14 +365,10 @@ The full 199-symbol map (grouped alphabetically by symbol; `kind` is the TS expo
 | `UseTextHighlightControls` | type | `/motion-core` |
 | `ViewTransitionOptions` | type | `/motion-core` |
 | `ViewTransitionResult` | type | `/motion-core` |
-| `CurveFn` | type | `/motion-curves` |
-| `MotionCurve` | type | `/motion-curves` |
-| `MotionCurveKind` | type | `/motion-curves` |
-| `SpringPresetName` | type | `/motion-curves` |
-| `SpringPresetRow` | type | `/motion-curves` |
+| `SpringPresetName` | type | `/motion` |
+| `SpringPresetRow` | type | `/motion` |
 | `PagerDotsProps` | type | `/pager-dots` |
 | `PagerWindow` | type | `/pager-dots` |
-| `PaperBackdropFrequency` | type | `/paper-backdrop` |
 | `PaperBackdropProps` | type | `/paper-backdrop` |
 | `LiquidGridConfig` | type | `/liquid-grid` |
 | `LiquidGridHandle` | type | `/liquid-grid` |
@@ -310,7 +402,6 @@ The full 199-symbol map (grouped alphabetically by symbol; `kind` is the TS expo
 | `TimelineSegmentState` | type | `/timeline` |
 | `ToastType` | type | `/toast` |
 | `ControlSize` | type | `/forms` |
-| `MenuItemVariants` | type | `/command` |
 | `Surface` | type | `/axes` |
 | `SurfaceTier` | type | `/axes` |
 ### `--ring` → `--focus-ring-color` (focus-ring token rename)
@@ -401,7 +492,8 @@ md5 ≠ the glass-ui copy), never `@mkbabb/glass-ui/virtual` — 0 external bina
 the "internal live consumer" (the dock-search results list) does NOT compose the windower —
 the library dock only accepts an optional `ensureTargetWindow` callback. There are 0 src/
 production consumers; the mechanism is DEMO-ONLY (3 demo sites). Under the mechanism-distinctness
-+ ≥2-binary-consumer law the PUBLISHED SUBPATH does not earn its keep, so it retires:
+
+- ≥2-binary-consumer law the PUBLISHED SUBPATH does not earn its keep, so it retires:
 
 | dropped surface | disposition |
 |---|---|
@@ -446,7 +538,8 @@ to speedtest (the consumer-truth adjudication; XR-3 / UF-K1). Clean break, no al
 code").** `ScrollingText` is an overflow-detection marquee lifted from the speedtest fleet at W.W2;
 at the 5.0.0 cut the fresh registry+sibling probe (`npm view @mkbabb/glass-ui` + a read-only grep of
 the constellation) reads its ONLY binary consumers as **speedtest, 2 sites** — `ResultDetailSheet.vue:6`
-+ `AppSettingsButton.vue:97`, both `import { ScrollingText } from "@mkbabb/glass-ui/scrolling-text"`;
+
+- `AppSettingsButton.vue:97`, both `import { ScrollingText } from "@mkbabb/glass-ui/scrolling-text"`;
 **0** across muster · sci-report · atlas · slides · value.js · keyframes.js · words · bbnf-buddy. The
 ≥2-**repo**-binary-consumer bar is UNMET (one consuming repo), and the mechanism is a distinct
 overflow-marquee no survivor expresses — so the law does NOT fold it onto a sibling, it RELOCATES to the
@@ -471,16 +564,26 @@ import — the by-name ASK (with the paired kf `^5.2.0` / value `^3.1.0` peer bu
 Recorded in `proof:consumer-evidence-true` (the SP1 arm — source-anchored: component + mirror + root-barrel
 re-export + demo story DEFINITION-ABSENT).
 
-#### The `icon-tooltip` disposition (Tooltip preset — no subpath change)
+#### The `icon-tooltip` clean break
 
-**BI.W-SPEEDTEST-ONLY-PAIR (consumer-truth) · BI.W-OVERLAY-UNION (mechanism).** The overlay Kronecker fold
-(BI.W-OVERLAY-UNION) already re-expressed `IconTooltip` as a **Tooltip PRESET** — it composes the `ui/tooltip`
-family verbatim (the distinct mechanism: `aria-describedby` naming, `role="tooltip"`, the SR mirror,
-non-focusable content), NOT its own overlay root. This wave owns the consumer-truth consequence: speedtest is
-the sole binary consumer (`Dock.vue:17` `import { IconTooltip } from "@mkbabb/glass-ui/icon-tooltip"` +
-`AddressAutocomplete.vue:103`), so the fold PAIRS a speedtest ADOPT ask (migrate the two sites onto the
-Tooltip preset) on the same cut — rostered on the `crossrepo-asks:bi` book. Recorded in
-`proof:consumer-evidence-true` (the SP2 arm — source-anchored: `IconTooltip.vue` composes the Tooltip family).
+`IconTooltip` and the `@mkbabb/glass-ui/icon-tooltip` subpath are deleted. Compose the canonical Tooltip
+family directly, placing one provider around the nearest real control group:
+
+```vue
+<TooltipProvider :delay-duration="250">
+  <Tooltip>
+    <TooltipTrigger as-child>
+      <Button type="button" aria-label="Surface details">…</Button>
+    </TooltipTrigger>
+    <TooltipContent>Surface details</TooltipContent>
+  </Tooltip>
+</TooltipProvider>
+```
+
+The trigger remains a named native control; Tooltip content is a terse, noninteractive description.
+Required instructions must remain visible because touch does not synthesize hover. `LabeledField` keeps
+its real `<label for>` and renders supporting copy beside the control, linked through the slotted
+`describedBy` value. It does not add a help trigger or conceal required field guidance.
 
 **BG.W-GRID-AFFINE — `PaperGrid` (the viz) RENAMED to `LiquidGrid`; `/paper-grid` →
 `/liquid-grid`. Clean break, no alias ("No legacy code").** The WebGPU-first liquid AA-grid
@@ -517,11 +620,9 @@ regardless (a11y absolute).
   DEFAULT.** The drag is now the DEFAULT (a click-only strip opts DOWN with
   `motion="reduced"`). DockLayerGroup's drag flips default-ON (the boolean defaulted
   `false`) — the pull is an enrichment over the always-present click/keyboard model write.
-- **`<Card pressable>` → interactivity + `motion`.** A Card presses IFF it renders
-  interactive (`as="button"` / `as="a"` / `href` / `role="button"` on the root) AND
-  `motion !== "off"`. MIGRATE: a former `<Card pressable @click>` becomes
-  `<Card as="button" @click>` (a static plate never presses — the derivation, not a
-  default). A former `<Card pressable="false">` is a bare `<Card>` (already static).
+- **`<Card pressable>` → explicit command composition.** Card no longer infers
+  interaction or mounts a press engine. Put a `Button` or `Link` inside the Card so
+  native focus, keyboard, disabled, naming, and activation semantics stay together.
 - **`<Slider liquidDrag>` → `motion`.** `liquidDrag="false"` → `motion="reduced"` (or
   `"off"`); the default `full` is byte-identical to the prior `liquidDrag: true`.
 - **`<DialogContent spring>` / `<SheetContent spring>` → `springPreset` + `motion`.** The
@@ -554,7 +655,8 @@ the edge-asymmetric `useLeadTrail` integrator).
   (viewport-invariant by construction).
 - **The eyeglass `SPRING_PRESETS` row.** The loupe travel is its own measured register
   (`eyeglass`, response 0.36 / ζ 0.64) — the CSS `--spring-eyeglass` + `--spring-eyeglass-duration`
-  tokens + the `MOTION_CURVES` twin derive from it. Consumers reading `var(--spring-eyeglass)`
+  tokens derive from it. JavaScript consumers pass that same preset row directly to
+  keyframes.js; consumers reading `var(--spring-eyeglass)`
   get the Find My loupe curve.
 Machine-locked by `proof:eyeglass-tabs` (E7 default-is-eyeglass · E8 the bounded sizing
 axis · E9 the culled variants definition-absent · E10 `useLeadTrail` consumed, no second
@@ -639,30 +741,27 @@ useDockItemDrag-retired + 3 self-test bites).
 
 The Kronecker fold (UF-P7/UF-J6): the three overlays with the SAME positioned-glass
 mechanism collapse onto ONE sealed `<Popover>` with a `trigger` axis (`click` default
-· `hover` · `context`) that switches the reka ROOT internally (fine-hover → reka
-`HoverCardRoot`; click/context/coarse-hover → `PopoverRoot`), a `role` axis on
-`<PopoverContent>` (`dialog` default · `card` → `role="group"` + `aria-label`
-passthrough), and the shared `surface` axis. `keepDockOpen` is ONE `watch(open)`
+· `hover`) that switches the reka ROOT internally (fine-hover → reka
+`HoverCardRoot`; click/coarse-hover → `PopoverRoot`) and therefore owns the content
+semantics: hover previews are named non-modal groups; click surfaces are non-modal
+dialogs. `<PopoverContent>` retains the shared `surface` axis. `keepDockOpen` is ONE `watch(open)`
 serving both roots. Coarse-pointer hover auto-promotes to tap-toggle (reka's
 `excludeTouch` leaves the hover root structurally dead on touch). **Tooltip SURVIVES**
 the fold as a genuinely distinct mechanism (`aria-describedby` naming, `role="tooltip"`,
-the SR mirror, non-focusable content); `IconTooltip` is its canonical preset. Clean
+the SR mirror, non-focusable content). Clean
 break, no alias — every consumer re-points by name.
 
 | Retired (5.0.0) | Survivor | Rename |
 |---|---|---|
-| `HoverPopover` (`@mkbabb/glass-ui/hover-popover`) | `Popover` (`@mkbabb/glass-ui/popover`) | `<HoverPopover content side align>…</HoverPopover>` → `<Popover trigger="hover"><PopoverTrigger as-child>…</PopoverTrigger><PopoverContent role="card" :side>…</PopoverContent></Popover>` |
-| `HoverCard` / `HoverCardTrigger` / `HoverCardContent` (`@mkbabb/glass-ui/hover-card`) | `Popover` / `PopoverTrigger` / `PopoverContent` | `<HoverCard>…</HoverCard>` → `<Popover trigger="hover">…</Popover>`; `<HoverCardContent>` → `<PopoverContent role="card" aria-label="…">` (the reka `HoverCardRoot` substrate is PRESERVED — imported by the union's fine-hover branch) |
+| `HoverPopover` (`@mkbabb/glass-ui/hover-popover`) | `Popover` (`@mkbabb/glass-ui/popover`) | `<HoverPopover content side align>…</HoverPopover>` → `<Popover trigger="hover"><PopoverTrigger as-child>…</PopoverTrigger><PopoverContent :side>…</PopoverContent></Popover>` |
+| `HoverCard` / `HoverCardTrigger` / `HoverCardContent` (`@mkbabb/glass-ui/hover-card`) | `Popover` / `PopoverTrigger` / `PopoverContent` | `<HoverCard>…</HoverCard>` → `<Popover trigger="hover">…</Popover>`; `<HoverCardContent>` → `<PopoverContent aria-label="…">` (the reka `HoverCardRoot` substrate is PRESERVED — imported by the union's fine-hover branch) |
 | `hoverOpenDelay` prop | `openDelay` prop | `:hover-open-delay="80"` → `:open-delay="80"` |
 | `./hover-popover` subpath export | `./popover` | delete the import spec; import `Popover`/`PopoverTrigger`/`PopoverContent` from `@mkbabb/glass-ui/popover` |
 | `./hover-card` subpath export | `./popover` | as above |
 | `hover-popover.css` substrate sheet (`.hover-popover-panel` / `.hover-popover-label`) | none | the union content rides the shared `glass-floating` + `glass-reveal` recipe; the bespoke panel substrate is deleted |
 
-`role="dialog"` under `trigger="hover"` is REFUSED (a hover surface cannot be a
-modal-adjacent dialog — WCAG 1.4.13): the union dev-warns and falls to `role="card"`
-(the documented fallback is `role="dialog" aria-modal="false"`). `IconTooltip` is
-byte-unchanged at the call site (it composes the Tooltip family — the disposition only
-records it as a preset, NOT its own overlay root). Cross-repo: the `words` hover-card
+The trigger chooses the role; callers cannot create a hover dialog or a click-triggered
+group whose `aria-haspopup` promises the wrong target. Cross-repo: the `words` hover-card
 ×12-13 migration + the `atlas` `EasterEgg.vue` hover-popover fold ride the `^5.0.0`
 peer-bump asks (`docs/tranches/BI/coordination/asks-and-consumes.md`, filed by
 W-FACTOR-ASKS). Machine-locked by `proof:fold-delete` (overlay clause: retired
@@ -681,14 +780,13 @@ belongs on that family's band. `proof:demo`'s compositions-census (CP1) enforces
 | demo | was | now |
 |---|---|---|
 | Configurator | `/compositions/configurator` | `/containers/configurator` |
-| Icon Tooltip | `/compositions/icon-tooltip` | `/containers/icon-tooltip` |
 | Instrument Chassis | `/compositions/instrument-chassis` | `/data/instrument-chassis` |
 | Labeled Field | `/compositions/labeled-field` | `/forms/labeled-field` |
 | Drawer Live-Behind | `/compositions/drawer-live-behind` | folded into `/containers/drawer` (a Live-behind mode section — one comprehensive Drawer page: snap · fixed · live-behind) |
 
-The shipped subpaths (`@mkbabb/glass-ui/{configurator,icon-tooltip,instrument-chassis,labeled-field,drawer}`)
-are UNCHANGED — only the demo routes moved. Retired demo paths resolve to the semantic 404; use the current
-routes in the table above.
+The listed surviving subpaths (`@mkbabb/glass-ui/{configurator,instrument-chassis,labeled-field,drawer}`)
+are unchanged by this demo-only relocation. Retired demo paths resolve to the semantic 404; use the current
+routes in the table above. The Tooltip-family break is documented separately above.
 
 ### BI.W-HERO-DEMOTE — the standalone `/compositions/hero` demo is demoted to the `/compositions` section landing
 
@@ -712,8 +810,8 @@ The retired `/compositions/hero` path resolves to the semantic 404; `/compositio
 ### BI.W-MENU-TRIGGER — ContextMenu folds onto the Menu family as `trigger="context"`
 
 The Kronecker fold (UF-P7 / FAM-10): ContextMenu owns NO distinct mechanism vs
-DropdownMenu — identical reka roving-focus + typeahead, and the items already share ONE
-`menuItemVariants` CVA. So the whole `ContextMenu*` family collapses onto the Menu
+DropdownMenu — identical reka roving-focus + typeahead and the same row treatment. So the
+whole `ContextMenu*` family collapses onto the Menu
 (`DropdownMenu*`) family with a `trigger` axis (`click` default · `context`) that switches
 the reka anchoring family internally (`context` → the reka `ContextMenu*` substrate at the
 pointer; `click` → the reka `DropdownMenu*` substrate at the button). ONE menu engine, one
@@ -759,41 +857,26 @@ Combobox `multiple` capability present) + the a11y-axe multiple-arm (selected-op
 announcements) + the story-fold π (the chips-in-trigger read, both modes; rides the B-close
 gestalt ceremony).
 
-### BI.W-CHIP-FOLD — ToggleChip + SelectableChip fold onto ONE `<Chip>`
+### BI.W-CHIP-FOLD — one explicit `<Chip>` family
 
-The Kronecker fold (D-FACTOR FACTOR-B / UF-P7 / FAM-10): `ToggleChip` and `SelectableChip`
-were ONE interactive lozenge over ONE CVA — `ToggleChip`'s `variant` (`chip`/`cell`) is a
-pure NAME-SYNONYM of `SelectableChip`'s `shape` (`pill`/`cell`). They collapse onto ONE
-`<Chip>` with `shape: pill | cell` × an opt-in `tone` (the contrast-floored tonal-accent
-register) × the shared `surface` axis. The `variant`/`shape` merge is compile-time (the CVA
-folds); `shape=pill` ≡ the retired `ToggleChip variant="chip"`, `shape=cell` ≡ `variant="cell"`,
-and an unset `tone` ≡ the plain warm-floor glass toggle (byte-identical). `<Chip>` ships
-subpath-ONLY (`/chip`, OFF the value.js-free root barrel): its tonal ink solve is
-value.js-bearing, quarantined behind a dynamic `import('./accent-tone-solve')` boundary
-INSIDE `useAccentTone` (the sync value.js-FREE shell — the measured 26KB payload rides the
-dynamic leaf, the `/border-progress` BC.W-AX-BP-LAZY carve-off precedent), so a plain-boolean
-toggle (a `var()` / unset tone) stays ~1KB value.js-free. `IconChip` is KEPT (a distinct
-mechanism, resolved-by-distinctness); `Badge` SURVIVES (static, non-interactive). Clean
+`<Chip>` is the single compact plate/control family. Its independent axes are
+`mode: static | selectable | action | removable`, `shape: pill | cell | icon`, `size`,
+`tone`, and `surface`. Static is the default and renders an inert `<span>` with no role,
+focus, pressed state, pointer cursor, or forwarded listeners. Selectable uses toggle
+semantics, action is a native button, and removable keeps an inert root with one named
+remove button. Shape controls geometry only; `shape="icon"` accepts a slotted glyph rather
+than owning icon rendering. `Badge` remains a distinct static label. Clean
 break, no alias.
 
 | Retired (5.0.0) | Survivor | Rename |
 |---|---|---|
-| `ToggleChip` (`@mkbabb/glass-ui/toggle-chip`) | `Chip` (`@mkbabb/glass-ui/chip`) | `<ToggleChip v-model="on" variant="chip">…</ToggleChip>` → `<Chip v-model="on" shape="pill">…</Chip>`; `variant="cell"` → `shape="cell"` (`pill` is the default, so `variant="chip"` may drop to bare `<Chip>`) |
-| `SelectableChip` (`@mkbabb/glass-ui/selectable-chip`) | `Chip` (`@mkbabb/glass-ui/chip`) | `<SelectableChip v-model="on" :tone="t" size="lg">…</SelectableChip>` → `<Chip v-model="on" :tone="t" size="lg">…</Chip>` (the `tone` prop is unchanged — the tonal register is now opt-in on the ONE `<Chip>`) |
-| `toggleChipVariants` / `ToggleChipVariants` (`/toggle-chip`) | `chipVariants` / `ChipVariants` (`/chip`) | rename the recipe + type; the CVA axis is now `size × shape` (the `variant`→`shape` name-synonym; the `selectableChipVariants`→`chipVariants` shim was already SWEPT at BG.W-DEAD-SWEEP) |
+| `ToggleChip` (`@mkbabb/glass-ui/toggle-chip`) | `Chip` (`@mkbabb/glass-ui/chip`) | `<ToggleChip v-model="on" variant="chip">…</ToggleChip>` → `<Chip v-model="on" mode="selectable" shape="pill">…</Chip>`; `variant="cell"` → `shape="cell"`. |
+| `SelectableChip` (`@mkbabb/glass-ui/selectable-chip`) | `Chip` (`@mkbabb/glass-ui/chip`) | `<SelectableChip v-model="on" :tone="t">…</SelectableChip>` → `<Chip v-model="on" mode="selectable" :tone="t">…</Chip>`. |
+| `toggleChipVariants` / `ToggleChipVariants` (`/toggle-chip`) | `chipVariants` / `ChipVariants` (`/chip`) | Rename the recipe and type; the recipe axes are now `interactive × size × shape`. |
 | `./toggle-chip` + `./selectable-chip` subpath exports | `./chip` | delete the import specs; import `Chip` / `chipVariants` from `@mkbabb/glass-ui/chip` (a value.js-bearing subpath — NOT re-added to the root barrel) |
 
-`<Chip>`'s eager `/chip` chunk is value.js-FREE (a static-only critical-path walk reaches ZERO
-value.js; `accent-tone-solve.ts` is reached ONLY by the dynamic `import()`), so a `var()` tone
-never loads the 26KB value.js math — a concrete `#hex`/`oklch(…)` tone lazily upgrades the
-label ink the next tick. Cross-repo `ToggleChip`/`SelectableChip` consumers ride the `^5.0.0`
-peer-bump asks (`docs/tranches/BI/coordination/asks-and-consumes.md`, filed by W-FACTOR-ASKS;
-confirm via the invariant-11 registry probe). Machine-locked by `proof:fold-delete` (chip
-clause: retired `toggle-chip` + `selectable-chip` dir/subpath/export absent ×2, no consumer
-import, survivor `Chip` present) + `proof:accent-tone` A2 (the value.js QUARANTINE — the
-`accent-tone-solve` leaf bears value.js, the sync shell does NOT) + the value.js-boundary walk
-(the `proof:bp-lazy`-style eager-graph assert) + the B-close gestalt ceremony (the pill/cell/
-tonal chip byte-faithful to the retired pair, both modes).
+The `/chip` subpath remains value.js-light: concrete colors resolve through the existing
+lazy accent-tone solver while CSS variables stay on the synchronous path.
 
 ### BI.W-SURFACE-EXTRACT — `CardTier` folds onto the `surface` axis
 
@@ -804,7 +887,12 @@ Clean break, no alias.
 | Retired (5.0.0) | Replacement |
 |---|---|
 | `CardTier` `"opaque"` (tier prop spelling) | `surface="opaque"` on `Card`/`Surface` |
-| `CardTier` `"deep"` (tier prop spelling) | `surface="deep"` on `Card`/`Surface` |
+| `CardTier` `"deep"` (tier prop spelling) | `deep` on `Card`/`Surface` |
+
+Card's former `surface="cartoon"` superset is now the explicit `cartoon` boolean;
+`surface` accepts only the shared `glass | veil | opaque` material axis. The demo-only
+`ScrollCard` and `ScrollCardHeader` wrappers are removed; compose `Card` with
+`class="card-scroll-host"` and `CardHeader shrink` where the live timeline is needed.
 
 Machine-locked by `proof:surface-axis` W7/W8 (the wart census is zero + `<Surface>`
 publishes; the private-union floor holds).
@@ -1257,7 +1345,8 @@ pill. Two breaks:
 **BA.W-HANDMARK — `GlassUnderline` + the `/underline` subpath RETIRED onto
 `<HandMark shape="underline">`. Clean break, no alias (DEC-8 outcome 1).** The d6
 hand-voice family re-landed on `@mkbabb/glass-ui/handmark` (`<HandMark>` / `<InkMark>`
-+ the flat `BRUSHES` continuum + the pure L1–L3 stages), and the editorial underline
+
+- the flat `BRUSHES` continuum + the pure L1–L3 stages), and the editorial underline
 is now ONE shape of that ONE hand voice — not a parallel component. Two breaks:
 
 1. **`@mkbabb/glass-ui/underline` (`<GlassUnderline>`) is GONE.** The `/underline`
@@ -1907,7 +1996,6 @@ The following 11 runtime exports + 2 type exports move from root → `/motion`:
 | `SNAP_THRESHOLD` | constant |
 | `RAFLoopTiming` | type |
 | `PausableRuntime` | type |
-| `AnimatedNumber` | type (also reachable via `/api`) |
 | `UseAnimatedNumberOptions` | type (also reachable via `/api`) |
 | `SpringSnapshot` | type (also reachable via `/api`) |
 
@@ -2130,9 +2218,9 @@ consumer can decide how to handle it.
 
 ## v1.3.0—`avatarVariant` → `avatarVariants` (O.W4 Lane C)
 
-Renamed for consistency with every other CVA variants const in the library
-(`buttonVariants`, `toggleVariants`, `badgeVariants`, `sliderVariants`,
-`menuItemVariants`, ...). The singular `avatarVariant` was the only
+Renamed for consistency with the other variants constants in the library
+(`buttonVariants`, `toggleVariants`, `badgeVariants`, `sliderVariants`, ...).
+The singular `avatarVariant` was the only
 non-pluralized CVA constant in the codebase. One-line consumer migration:
 
 ```ts
@@ -2175,36 +2263,21 @@ at O.W6 cross-repo cohort. No other constellation references.
 
 ---
 
-## The metric family — KEPT (a THREE-repo public surface: speedtest + muster + sci-report) — BI.W-METRICS-DEMO
+## Metric consolidation — BI.W-P117
 
-The whole compact-metric family SHIPS: `metric-cell` (`MetricCell`), `metric-stack`
-(`MetricStack` + `MetricRow`), `metric-badge` (`MetricBadge`), `instrument-chassis`
-(`InstrumentChassis` + `ChassisDivider`), and `pulse` (`Pulse`). Their flat
-`src/components/{metric-cell,metric-stack,metric-badge,instrument-chassis,pulse}`
-owners, generated `package.json` exports and `typesVersions` rows, and the
-`--metric-row-*` value-clamp token family are all live. Public entries and declaration
-paths derive from the semantic entry graph; no `src/subpaths/` or `/api` mirror layer
-sits between consumers and these owners.
-
-**Not speedtest-only — a three-repo public API.** The earlier "speedtest-consumed"
-framing (and the FAM-10 "speedtest-only sextet" premise / the UF-K1 move-to-speedtest
-carry) is CORRECTED: the family is consumed by speedtest, muster, AND sci-report — with
-`metric-badge` spanning all three. It clears the ≥2-binary-consumer bar (J inv 10) by a
-wide margin; a metrics relocate or retire would silently break muster + sci-report, so
-it is NOT a speedtest-transfer candidate. Per-site consumer evidence:
-`docs/consumer-evidence/metrics.md`. No migration action is required; the family STAYS.
-(The overfit UF-K1 flagged lands on the `/data/metrics` DEMO page, redesigned by
-W-AFFORDANCE-REDESIGN — not the components.)
-
-Import them via their flat subpaths:
+The three parallel metric packages are replaced by one static numeric-readout family.
+`MetricBadge` becomes `Metric`; `MetricCell`, `MetricRow`, and `MetricStack` retain their
+general roles without the former status, phase, animation, fixed-row, or presentation
+matrix. There are no aliases or compatibility barrels.
 
 ```ts
-import { MetricCell } from "@mkbabb/glass-ui/metric-cell";
-import { MetricStack, MetricRow } from "@mkbabb/glass-ui/metric-stack";
-import { MetricBadge } from "@mkbabb/glass-ui/metric-badge";
-import { InstrumentChassis } from "@mkbabb/glass-ui/instrument-chassis";
-import { Pulse } from "@mkbabb/glass-ui/pulse";
+import { Metric, MetricCell, MetricRow, MetricStack } from "@mkbabb/glass-ui/metric";
 ```
+
+Consumers keep phase color, animation, result state, and layout composition locally.
+Finite values including `0` and `-0` remain real; blank, absent, and non-finite values
+use the placeholder. Loading masks any present value behind one stable ellipsis and marks
+the owning static readout `aria-busy`.
 
 ---
 
@@ -2385,10 +2458,10 @@ recipes (the sparkle `✦` glyph, the disco-grain hover, the gold-sweep shimmer,
 and their `@keyframes sparkle-sweep` / `btn-gold-bg-sweep` + the `--duration-sparkle` /
 `--glass-grain-opacity-disco` / `--ripple-radius-max` / `--motion-duration-ripple` knobs are **DELETED —
 clean break, no alias** (house no-backwards-compat). The `primary-audacious` / `gold-audacious` Button
-**variant keys are KEPT and re-pointed** onto the calm glass-first register (hinge H2 arm a — *gold
-survives CALM*), so a `<Button variant="primary-audacious">` / `variant="gold-audacious">` call site needs
+**variant keys are KEPT and re-pointed** onto the calm glass-first register (hinge H2 arm a — _gold
+survives CALM_), so a `<Button variant="primary-audacious">` / `variant="gold-audacious">` call site needs
 **no change** — it inherits the new register automatically. Only a consumer that applied the `btn-audacious`
-*utility class directly* (not via the variant) must migrate.
+_utility class directly_ (not via the variant) must migrate.
 
 | was | now |
 |---|---|
@@ -2402,7 +2475,7 @@ The dock-tab PRIMARY tier (`<DockTabButton data-tier="primary">`) no longer auto
 paints the phase-grain hover/halo — it reads the plain de-red'd dock-control glass hover register. The
 `data-tier="primary"` styling hook is **unchanged** (the taller/wider structural shell stays); only the disco
 accents drop. **Speedtest + slides:** any direct `btn-audacious` class binding migrates to the calm glass
-register per the table; the `gold-audacious` / `primary-audacious` *variant* consumers are untouched. This is
+register per the table; the `gold-audacious` / `primary-audacious` _variant_ consumers are untouched. This is
 a **breaking change for direct-utility consumers** (an input to the 4.0.0-vs-3.14.0 version call at W-CLOSE).
 
 ### Per-spring duration clock minted — `--spring-<name>-duration` (BA.W-GLASS-CAL Unit 3)
@@ -2413,20 +2486,6 @@ A `transition` that pairs `--spring-<name>` with a generic `--duration-*` now re
 `--spring-<name>-duration` so the spring plays at its physical settle (the prior generic clock dragged a dead
 sub-pixel tail). A consumer reading `var(--spring-snappy)` directly gains the option of `var(--spring-snappy-duration)`
 for the matched clock; the existing generic-clock pairings still work.
-
-### The section-color pop primitive — `<IconChip>` + the `@mkbabb/glass-ui/icon-chip` subpath (BA.W-ICON-CHIP, additive)
-
-ADDITIVE — no breaking change, a NET-NEW primitive + subpath. `<IconChip :icon :section>` (or
-`:tone="var(--chart-download)"`) is the library's single section-color POP vehicle — the
-`color-mix(… 25%, transparent)` backplate + full-chroma glyph the demo previously hand-rolled as an
-inline `:style` paste. It enforces the chip≤glyph proportion IN the component (the
-`--icon-chip-glyph-ratio` floor, default 2.18 — a consumer cannot collapse the plate under the glyph)
-and ships three opt-in axes (`:duotone` filled-tonal fill / `:bloom` smooth-glass hover / `:reveal`
-entrance, all PRM-gated, disco-FREE). A consumer wanting a proportioned section-color pop reaches for
-`<IconChip>` instead of re-pasting the recipe. Reachable on the root barrel AND
-`@mkbabb/glass-ui/icon-chip`; the types ride `@mkbabb/glass-ui/api` (`IconChipProps`,
-`IconChipSection`, `IconChipTone`). `MetricCell`'s `iconColor` prop is unchanged (it now reconciles
-internally onto `<IconChip bare :tone>` — the value/unit ink stays neutral; no consumer change).
 
 ---
 
@@ -2460,7 +2519,7 @@ touched 15 src/ files:
 | `Input` + `Textarea` → `/forms` | 10 sites | ~10 min (multi-cursor pass) |
 | `useGlobalDark` → `/dark` | 2 sites | ~2 min |
 | `registerShortcut` → `/keyboard` | 2 sites (incl. 1 test mock) | ~2 min |
-| Build + typecheck + lighthouse re-probe |—| ~15 min |
+| Build + typecheck + lighthouse re-probe | — | ~15 min |
 
 Cross-repo observed deltas (from
 `docs/tranches/L/coordination/speedtest-Y.md`):
@@ -2617,24 +2676,23 @@ The library-canon recessive-ground crayon calibration partial returns ADOPTED VE
 the `/aurora` barrel + `/api`. Spread it over a consumer's pole-derived pigment:
 `const cfg = { ...consumerBase, ...PAPER_WASH_GROUND }`.
 
-### A-4b — the route transition: `navigate` over the ONE VT substrate (ONE-LINE RENAME)
+### A-4b — route transitions use the View Transition substrate directly
 
-The d6 `useRouteTransition()` standalone wrapper is SUPERSEDED — there is NO parallel route
-wrapper. `navigate` is a thin convenience over the ONE `useViewTransition` substrate
-(`startViewTransition` gained an async update + a JS-level reduced-motion instant-path).
+The standalone route wrapper and route-named aliases are retired. Pass an asynchronous
+router mutation directly to `startViewTransition`; opt into the JavaScript reduced-motion
+instant path when the route should avoid snapshot work.
 
 ```ts
-// OLD (d6 fork)
-const { navigate } = useRouteTransition();
-await navigate(() => router.push(`/${slug}`));
+import { startViewTransition } from "@mkbabb/glass-ui";
 
-// NEW (mainline) — `navigate` is a DIRECT named import (root barrel or /motion-core)
-import { navigate } from "@mkbabb/glass-ui";
-await navigate(() => router.push(`/${slug}`), { types: ["forward"] }).finished;
+await startViewTransition(() => router.push(`/${slug}`), {
+    types: ["forward"],
+    instantUnderReducedMotion: true,
+}).finished;
 ```
 
-`supportsRouteTransitions()` mirrors `supportsViewTransitions()`. Under reduced motion (or an
-unsupported engine) the navigation runs instantly, unanimated — information parity absolute.
+Use `supportsViewTransitions()` only when optional View-Transition styling needs a
+capability gate. The mutation itself always runs.
 
 ### C-3 — the silver structure quad + `variant="structure"` (NEW, additive)
 
@@ -2699,7 +2757,7 @@ arm stays).
 
 The shared `{glass · veil · opaque}` `surface` axis is adopted across
 Card / GlassPanel / Dialog / Sheet / Drawer / Popover / Command / ExpandableContainer / Skeleton
-(`surface-axis.css` + `useSurfaceAxis`). It is ADDITIVE where it extends a union, but two breaks
+(`surface-axis.css` + the private tier resolver). It is ADDITIVE where it extends a union, but two breaks
 a consumer re-pins:
 - **The Dialog `variant`→`surface` move `[value.js]`** — Dialog's prior `variant` discriminant
   is the `surface` axis now. A consumer setting `<Dialog variant="…">` re-points to `surface="…"`.
@@ -2728,13 +2786,10 @@ The indicator paints ONE elastic register (the oval-blob default-ON `TabsIndicat
 
 ### The menu-row glass default flip (W-MENU-GLASS) `[value.js]`
 
-The `.glass-menu-row` register is minted on the shared `menuItemVariants` CVA — DropdownMenuItem /
-ContextMenuItem / Select / Combobox / Command items inherit the element-level oklab-tint hover/
-highlight by DEFAULT. The base flat-fill (`hover:bg-accent` / `focus:bg-accent` /
-`data-[highlighted]:bg-accent` / `data-[state=open]:bg-accent`) is DROPPED — `accent` is now the
-explicit opt-out ESCAPE, not the base. **Consumer re-pin:** a consumer relying on the flat
-`bg-accent` highlight re-points; the `.glass-menu-section` mono-caption/hairline recipe is the
-section register. `[value.js]` — the dropdown/context-menu glass register.
+Select and Combobox use `.glass-menu-row` through one private row-class owner. The former
+flat-accent alternative is removed; consumers needing product-specific flat paint own that
+composition. DropdownMenu and Command keep their component-local row classes, while
+`.glass-menu-section` remains the section caption/hairline register.
 
 ### The `/underline`→`/handmark` DEC-8 fold (W-HANDMARK)
 

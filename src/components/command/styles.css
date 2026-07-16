@@ -1,0 +1,124 @@
+.command {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: var(--radius-panel);
+    color: var(--popover-foreground);
+}
+
+.command-dialog__content {
+    overflow: hidden;
+    padding: 0;
+}
+
+.command__input-wrapper {
+    display: flex;
+    align-items: center;
+    border-block-end: 1px solid var(--border);
+    padding-inline: 0.75rem;
+}
+
+.command__input-icon {
+    width: 1rem;
+    height: 1rem;
+    flex: none;
+    margin-inline-end: 0.5rem;
+    opacity: 0.5;
+}
+
+.command-dialog__content .command__input-icon,
+.command-dialog__content .command__item > svg {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.command__input {
+    width: 100%;
+    height: var(--dropdown-input-height);
+    border: 0;
+    border-radius: var(--radius-input);
+    outline: 0;
+    background: transparent;
+    padding-block: 0.75rem;
+    color: inherit;
+    font: inherit;
+    font-size: var(--dropdown-text);
+}
+
+.command-dialog__content .command__input {
+    height: 3rem;
+}
+
+.command__input::placeholder {
+    color: var(--muted-foreground);
+}
+
+.command__input:disabled {
+    cursor: not-allowed;
+    opacity: var(--opacity-disabled);
+}
+
+.command__list {
+    max-height: var(--overlay-max-block);
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    padding: var(--panel-padding);
+}
+
+.command__group {
+    overflow: hidden;
+    padding: 0.25rem;
+    color: var(--foreground);
+}
+
+.command__group-label {
+    padding: 0.375rem 0.5rem;
+    color: var(--muted-foreground);
+    font-size: var(--dropdown-text-secondary);
+    font-weight: 500;
+}
+
+.command__item {
+    position: relative;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding: 0.375rem 0.5rem;
+    cursor: default;
+    outline: none;
+    color: inherit;
+    font-size: var(--dropdown-text);
+    user-select: none;
+}
+
+.command-dialog__content .command__item {
+    padding-block: 0.75rem;
+}
+
+.command__item[data-disabled] {
+    pointer-events: none;
+    cursor: not-allowed;
+    opacity: var(--opacity-disabled);
+}
+
+.command__empty {
+    padding-block: 1.5rem;
+    text-align: center;
+    font-size: var(--dropdown-text);
+}
+
+.command__separator {
+    height: 1px;
+    margin-inline: -0.25rem;
+    background: var(--border);
+}
+
+.command__shortcut {
+    margin-inline-start: auto;
+    color: var(--muted-foreground);
+    font-size: var(--dropdown-text-secondary);
+    letter-spacing: 0.1em;
+}

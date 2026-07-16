@@ -1,27 +1,32 @@
 <script setup lang="ts">
-import type { ComboboxGroupProps } from 'reka-ui'
-import type { HTMLAttributes } from 'vue'
-import { reactiveOmit } from '@vueuse/core'
-import { ComboboxGroup, ComboboxLabel } from 'reka-ui'
-import { cn } from '../_shared/class-names'
+import { computed, useAttrs } from "vue";
+import {
+    ComboboxGroup as RekaComboboxGroup,
+    ComboboxLabel as RekaComboboxLabel,
+} from "reka-ui";
+import { cn } from "../_shared/class-names";
+import { fixedHostAttrs } from "../_shared/primitive";
+import type { ComboboxGroupProps } from "./types";
 
-const props = defineProps<ComboboxGroupProps & {
-  class?: HTMLAttributes['class']
-  heading?: string
-}>()
+defineOptions({ name: "ComboboxGroup", inheritAttrs: false });
 
-const delegatedProps = reactiveOmit(props, 'class')
+const props = defineProps<ComboboxGroupProps>();
+const attrs = useAttrs();
+const forwardedAttrs = computed(() => fixedHostAttrs(attrs));
 </script>
 
 <template>
-  <ComboboxGroup
-    data-slot="combobox-group"
-    v-bind="delegatedProps"
-    :class="cn('overflow-hidden p-1 text-foreground', props.class)"
-  >
-    <ComboboxLabel v-if="heading" class="px-2 py-1.5 text-dropdown-secondary font-medium text-muted-foreground">
-      {{ heading }}
-    </ComboboxLabel>
-    <slot />
-  </ComboboxGroup>
+    <RekaComboboxGroup
+        data-slot="combobox-group"
+        v-bind="forwardedAttrs"
+        :class="cn('overflow-hidden p-1 text-foreground', props.class)"
+    >
+        <RekaComboboxLabel
+            v-if="props.heading"
+            class="px-2 py-1.5 text-dropdown-secondary font-medium text-muted-foreground"
+        >
+            {{ props.heading }}
+        </RekaComboboxLabel>
+        <slot />
+    </RekaComboboxGroup>
 </template>

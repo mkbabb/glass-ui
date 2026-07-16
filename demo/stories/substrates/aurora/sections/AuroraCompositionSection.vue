@@ -4,10 +4,11 @@ import {
     LabeledSelect,
     LabeledSlider,
 } from "@glass/components/labeled-field";
-import type {
-    AuroraAtoms,
-    AuroraMedium,
-    AuroraZoneArrangement,
+import {
+    MAX_NUCLEI,
+    type AuroraAtoms,
+    type AuroraMedium,
+    type AuroraZoneArrangement,
 } from "@glass/components/aurora";
 import { mediumOptions } from "../config/options";
 
@@ -88,9 +89,9 @@ function setNoise(v: number) {
     <div class="flex flex-col gap-3">
         <LabeledSelect
             label="Medium"
-            tooltip="Painterly body the field is rendered with"
+            description="Painterly body the field is rendered with"
             :items="mediaItems"
-            :is-open="mediumOpen"
+            :open="mediumOpen"
             :model-value="mediumLabel"
             data-atom="medium"
             @update:model-value="setMedium"
@@ -101,7 +102,7 @@ function setNoise(v: number) {
         <LabeledSlider
             v-if="isTextured"
             label="Texture"
-            tooltip="0..1 · strength of the painterly texture"
+            description="0..1 · strength of the painterly texture"
             :model-value="textureAmount"
             :min="0"
             :max="1"
@@ -112,10 +113,10 @@ function setNoise(v: number) {
 
         <LabeledSlider
             label="Zones"
-            tooltip="1..6 · number of color zones"
+            :description="`1..${MAX_NUCLEI} · number of color zones`"
             :model-value="atoms.zones?.count ?? 2"
             :min="1"
-            :max="6"
+            :max="MAX_NUCLEI"
             :step="1"
             data-atom="zones-count"
             @update:model-value="setZonesCount"
@@ -123,9 +124,9 @@ function setNoise(v: number) {
 
         <LabeledSelect
             label="Arrangement"
-            tooltip="How the zones are placed across the field"
+            description="How the zones are placed across the field"
             :items="arrangementItems"
-            :is-open="arrangementOpen"
+            :open="arrangementOpen"
             :model-value="arrangementLabel"
             data-atom="zones-arrangement"
             @update:model-value="setArrangement"
@@ -137,7 +138,7 @@ function setNoise(v: number) {
              exposes the deep warp fields directly; this is the intuitive knob. -->
         <LabeledSlider
             label="Organic boundary"
-            tooltip="0..1 · how irregular the zone edges read"
+            description="0..1 · how irregular the zone edges read"
             :model-value="atoms.noise ?? 0.5"
             :min="0"
             :max="1"

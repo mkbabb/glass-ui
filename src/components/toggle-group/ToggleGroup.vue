@@ -1,87 +1,134 @@
-<script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
-import { ToggleGroupRoot, type ToggleGroupRootEmits, type ToggleGroupRootProps, useForwardPropsEmits } from 'reka-ui'
-import { provideToggleGroupContext, type ToggleGroupVariants } from './toggleGroupContext'
-import { cn } from '../_shared/class-names'
+<script setup lang="ts" generic="TMode extends SelectionMode">
+import { computed, useAttrs, type HTMLAttributes } from "vue";
+import { ToggleGroupRoot as RekaToggleGroupRoot } from "reka-ui";
+import {
+    provideToggleGroupContext,
+    type ToggleGroupSize,
+    type ToggleGroupVariant,
+} from "./toggleGroupContext";
+import { cn } from "../_shared/class-names";
+import type { Orientation } from "../_shared/axes";
+import {
+    fixedHostAttrs,
+    type Direction,
+    type FormFieldProps,
+} from "../_shared/primitive";
+import {
+    isSelectionValue,
+    type SelectionMode,
+    type SelectionValue,
+} from "../_shared/selection";
 
-const props = defineProps<ToggleGroupRootProps & {
-  class?: HTMLAttributes['class']
-  variant?: ToggleGroupVariants['variant']
-  size?: ToggleGroupVariants['size']
-}>()
-const emits = defineEmits<ToggleGroupRootEmits>()
+export type ToggleGroupValue<TMode extends SelectionMode = SelectionMode> =
+    TMode extends "single" ? SelectionValue | undefined : SelectionValue[];
+
+export interface ToggleGroupProps<TMode extends SelectionMode = SelectionMode>
+    extends FormFieldProps {
+    type: TMode;
+    modelValue?: TMode extends "single" ? SelectionValue : SelectionValue[];
+    defaultValue?: TMode extends "single" ? SelectionValue : SelectionValue[];
+    rovingFocus?: boolean;
+    disabled?: boolean;
+    orientation?: Orientation;
+    dir?: Direction;
+    loop?: boolean;
+    class?: HTMLAttributes["class"];
+    variant?: ToggleGroupVariant;
+    size?: ToggleGroupSize;
+}
+
+export interface ToggleGroupEmits<TMode extends SelectionMode = SelectionMode> {
+    "update:modelValue": [value: ToggleGroupValue<TMode>];
+}
+
+export interface ToggleGroupSlotProps<TMode extends SelectionMode = SelectionMode> {
+    modelValue: ToggleGroupValue<TMode>;
+}
+
+defineOptions({ name: "ToggleGroup", inheritAttrs: false });
+
+const props = withDefaults(defineProps<ToggleGroupProps<TMode>>(), {
+    rovingFocus: true,
+    disabled: false,
+    loop: true,
+});
+const emit = defineEmits<ToggleGroupEmits<TMode>>();
+defineSlots<{ default?: (props: ToggleGroupSlotProps<TMode>) => unknown }>();
+const attrs = useAttrs();
+const forwardedAttrs = computed(() => fixedHostAttrs(attrs));
 
 provideToggleGroupContext({
-  variant: props.variant,
-  size: props.size,
-})
+    get variant() {
+        return props.variant;
+    },
+    get size() {
+        return props.size;
+    },
+});
 
-// BB.W-CONTROL-TOKENS (RADIO) — a `type="single"` group is semantically a
-// single-select chooser (a radio group); reka renders `role="group"` + items
-// as `aria-pressed` toggles in BOTH modes, so a screen reader announces N
-// independent toggles, not "1 of N selected". On the single-select arm the
-// wrapper routes `role="radiogroup"`; `<ToggleGroupItem>` carries the per-item
-// `role="radio"`/`aria-checked` (reading the live reka selection). The
-// `multiple` (or unset) arm keeps `role="group"` — reka's native toggle-strip
-// semantic — and the items keep reka's `aria-pressed`. The role-per-type
-// discipline lives on the ONE wrapper, never a fork.
-//
-// reka hardcodes `role="group"` on its inner Primitive, and its Slot merges the
-// CHILD's props OVER the incoming attrs (`mergeProps(attrs, child.props)`), so a
-// `:role` fall-through attr on `<ToggleGroupRoot>` LOSES to reka's group. The
-// idiomatic override is `as-child` over our OWN root element: reka merges its
-// roving-focus/dir/tabindex props onto OUR div whose explicit `:role` wins.
-const groupRole = computed(() =>
-  props.type === 'single' ? 'radiogroup' : 'group',
-)
+function inputValue(value: unknown, name: "modelValue" | "defaultValue") {
+    if (value === undefined) return undefined;
+    if (props.type === "single" && isSelectionValue(value)) return value;
+    if (
+        props.type === "multiple" &&
+        Array.isArray(value) &&
+        value.every(isSelectionValue)
+    ) {
+        return value as SelectionValue[];
+    }
+    throw new TypeError(
+        `[glass-ui] ToggleGroup type="${props.type}" received an invalid ${name}.`,
+    );
+}
 
-// BD.W-CHIP-CONGRUENT-GLASS — congruence-by-inheritance. An EXCLUSIVE
-// (`type="single"`) group is a segmented control: its chips sit in a RECESSED
-// warm channel — the SHARED `.glass-capsule-track` (the tabs-extract sunken well,
-// composed read-only, never re-forked). The multi-select arm keeps the bare flex
-// row (each chip carries its own punch — no traveling indicator). The gliding
-// `useTabIndicator` indicator is a DEFERRED follow-on (the tabs convergence); the
-// base group earns the well by inheritance with ZERO chip-specific work. A
-// recessed track needs inset padding so the chips do not paint over its rim.
-const groupTrack = computed(() =>
-  props.type === 'single'
-    ? 'glass-capsule-track p-1'
-    : '',
-)
+function outputValue(value: unknown): ToggleGroupValue<TMode> {
+    if (props.type === "single" && (value === undefined || isSelectionValue(value))) {
+        return value as ToggleGroupValue<TMode>;
+    }
+    if (
+        props.type === "multiple" &&
+        Array.isArray(value) &&
+        value.every(isSelectionValue)
+    ) {
+        return value as ToggleGroupValue<TMode>;
+    }
+    throw new TypeError(
+        `[glass-ui] ToggleGroup type="${props.type}" emitted an invalid selection model.`,
+    );
+}
 
-// BI.W-RADIUS-GRAMMAR (GEO-6 · Law-1 concentric relay). The single-select
-// segmented track is the concentric CONTAINER (Ruling 11 relay site): it
-// publishes `--radius-ctx` (the item's concentric corner) + `--radius-inset`
-// (the `p-1` gap = 0.25rem) on itself and derives its OWN corner as
-// `track = ctx + inset`, so the outer wraps its inner concentrically. Default
-// (pill items) → ctx = --radius-pill → track = pill + 4px (a stadium end-cap,
-// byte-identical to the prior `rounded-pill`); `variant="card"` items →
-// ctx = --radius-card → track = card + 4px, killing the pill-track-vs-card-item
-// mismatch (GEO-6 auto-fall). The multi-select arm publishes nothing (byte-identical).
-const groupTrackStyle = computed<Record<string, string>>(() => ({
-  justifyContent: 'safe center',
-  ...(props.type === 'single'
-    ? {
-        '--radius-inset': '0.25rem',
-        '--radius-ctx':
-          props.variant === 'card' ? 'var(--radius-card)' : 'var(--radius-pill)',
-        borderRadius: 'calc(var(--radius-ctx) + var(--radius-inset))',
-      }
-    : {}),
-}))
-
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
-  return delegated
-})
-
-const forwarded = useForwardPropsEmits(delegatedProps, emits)
+function updateModelValue(value: unknown): void {
+    emit("update:modelValue", outputValue(value));
+}
 </script>
 
 <template>
-  <ToggleGroupRoot v-bind="forwarded" as-child>
-    <div data-slot="toggle-group" :role="groupRole" :style="groupTrackStyle" :class="cn('flex items-center gap-1', groupTrack, props.class)">
-      <slot />
-    </div>
-  </ToggleGroupRoot>
+    <RekaToggleGroupRoot
+        v-slot="{ modelValue: currentValue }"
+        as-child
+        :type="type"
+        :model-value="inputValue(modelValue, 'modelValue')"
+        :default-value="inputValue(defaultValue, 'defaultValue')"
+        :name="name"
+        :required="required"
+        :roving-focus="rovingFocus"
+        :disabled="disabled"
+        :orientation="orientation"
+        :dir="dir"
+        :loop="loop"
+        @update:model-value="updateModelValue"
+    >
+        <div
+            v-bind="forwardedAttrs"
+            data-slot="toggle-group"
+            :data-type="props.type"
+            :data-variant="props.variant || 'default'"
+            :data-size="props.size || 'md'"
+            :class="cn('toggle-group', props.class)"
+        >
+            <slot :model-value="outputValue(currentValue)" />
+        </div>
+    </RekaToggleGroupRoot>
 </template>
+
+<style src="./styles.css"></style>

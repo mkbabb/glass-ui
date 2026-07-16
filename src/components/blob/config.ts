@@ -8,14 +8,13 @@
 // the metaball shaders) statically reaches the value.js `/color` OKLCh graph on its
 // FIRST-PAINT critical path; this config leaf re-exports only `types.ts` + `presets.ts`
 // (both value.js-FREE), so a config-only consumer never drags the ~33 KiB value.js
-// eager weight (the `/border-progress` bp-lazy critical-path discipline, one door over).
+// eager weight through the same dynamic-leaf discipline used elsewhere.
 //
 // The `/blob` barrel STILL re-exports every symbol here (the union stays whole); this
 // is the narrower value.js-free door, not a fork.
 export type {
     BlobMood,
     BlobMerge,
-    BlobVariant,
     BlobQuality,
     MoodParams,
     MetaballSource,

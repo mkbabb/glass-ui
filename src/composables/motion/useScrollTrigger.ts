@@ -45,6 +45,7 @@ import {
 } from "vue";
 import { supportsScrollTimeline } from "./supportsCssTimeline";
 import { createScrollReader, type ScrollReader, type ScrollSource } from "./scrollReader";
+import { useReducedMotion } from "./useReducedMotion";
 
 /**
  * A declared trigger-point on the scroll source: a pixel offset, a 0..1 progress
@@ -97,8 +98,6 @@ export interface UseScrollTriggerReturn {
     /** Force a re-read + re-evaluate every trigger (post-resize/layout). */
     recalculate: () => void;
 }
-
-const PRM_QUERY = "(prefers-reduced-motion: reduce)";
 
 /**
  * True when the engine supports native scroll-driven animations. On a supporting
@@ -168,17 +167,7 @@ export function useScrollTrigger(
     const direction = ref<"down" | "up" | null>(null);
     const velocity = ref(0);
 
-    // ── The cached PRM ref (the AV.W7 substrate pattern) — ONE matchMedia + change
-    // listener for the reader's lifetime. PRM snaps the continuous ramp to a discrete
-    // endpoint; the crossing events fire REGARDLESS (the useFadingScroll model).
-    const canMatch =
-        typeof window !== "undefined" && typeof window.matchMedia === "function";
-    const prmQuery = canMatch ? window.matchMedia(PRM_QUERY) : null;
-    let reduced = respectReducedMotion && (prmQuery?.matches ?? false);
-    const onPrmChange = (e: MediaQueryListEvent): void => {
-        reduced = respectReducedMotion && e.matches;
-    };
-    prmQuery?.addEventListener("change", onPrmChange);
+    const reduced = respectReducedMotion ? useReducedMotion() : ref(false);
 
     let reader: ScrollReader | null = null;
     // Per-trigger crossing state: whether the source is currently PAST the trigger
@@ -207,7 +196,7 @@ export function useScrollTrigger(
         if (trackProgress && !NATIVE_SCROLL_TIMELINE) {
             const extent = reader.extent();
             const raw = extent > 0 ? pos / extent : 0;
-            progress.value = reduced ? Math.round(clamp01(raw)) : clamp01(raw);
+            progress.value = reduced.value ? Math.round(clamp01(raw)) : clamp01(raw);
         }
 
         // ── Velocity (Δpos / Δt, px/s — framerate-independent so 60/120Hz read the
@@ -286,7 +275,7 @@ export function useScrollTrigger(
         if (trackProgress && !NATIVE_SCROLL_TIMELINE) {
             const extent = reader.extent();
             const raw = extent > 0 ? pos / extent : 0;
-            progress.value = reduced ? Math.round(clamp01(raw)) : clamp01(raw);
+            progress.value = reduced.value ? Math.round(clamp01(raw)) : clamp01(raw);
         }
         reader.schedule();
     }
@@ -316,11 +305,12 @@ export function useScrollTrigger(
         (source) => attach(source),
         { flush: "post" },
     );
+    const stopReducedMotionWatch = watch(reduced, recalculate, { flush: "sync" });
 
     onBeforeUnmount(() => {
         reader?.stop();
         reader = null;
-        prmQuery?.removeEventListener("change", onPrmChange);
+        stopReducedMotionWatch();
     });
 
     return { progress, direction, velocity, recalculate };

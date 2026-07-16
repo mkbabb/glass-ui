@@ -1,29 +1,19 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
-import { DialogTitle, type DialogTitleProps, useForwardProps } from 'reka-ui'
-import { cn } from '../_shared/class-names'
+import type { HTMLAttributes } from "vue";
+import { DialogTitle as RekaDialogTitle } from "reka-ui";
+import { cn } from "../_shared/class-names";
 
-const props = defineProps<DialogTitleProps & { class?: HTMLAttributes['class'] }>()
+export interface DialogTitleProps {
+    class?: HTMLAttributes["class"];
+}
 
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
-
-  return delegated
-})
-
-const forwardedProps = useForwardProps(delegatedProps)
+const props = defineProps<DialogTitleProps>();
 </script>
 
 <template>
-  <DialogTitle
-    v-bind="forwardedProps"
-    :class="
-      cn(
-        'text-subheading leading-none tracking-tight',
-        props.class,
-      )
-    "
-  >
-    <slot />
-  </DialogTitle>
+    <RekaDialogTitle
+        :class="cn('text-subheading leading-none tracking-tight', props.class)"
+    >
+        <slot />
+    </RekaDialogTitle>
 </template>

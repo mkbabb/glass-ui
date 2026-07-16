@@ -27,9 +27,8 @@
        (the cascade COMPOSES them, it never re-tunes them). All distances are
        compositor (transform) channels; the clocks are the per-spring settle clocks
        (scheme-motion.css), threaded, never re-tuned. */
-    /* BG.W-ROUTE-TRANSITION — the page-build `.scroll-build` recipe is RETIRED (the
-       route entrance is now the bare keyed `<component class="route-enter">` on-mount
-       `@keyframes` in transitions.css, NOT a per-child staggered scroll-build). The
+    /* The page-build `.scroll-build` recipe is RETIRED; route navigation is owned
+       by the native View Transition substrate, not a per-child stagger. The
        `--scroll-build-rise`/`--scroll-build-step` tokens are deleted with it; the ONE
        surviving reader (the StoryHero `<h1>` entrance rise) owns its own
        `--story-hero-rise` distance with an inline fallback default

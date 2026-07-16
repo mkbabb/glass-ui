@@ -15,8 +15,10 @@
 import {
     onScopeDispose,
     ref,
+    watch,
     type Ref,
 } from "vue";
+import { useReducedMotion } from "./useReducedMotion";
 
 export interface UseStaggerOptions {
     /** Count of staggered slots. Each slot maps to one boolean in `revealed`. */
@@ -43,22 +45,11 @@ export interface UseStaggerOptions {
      * When true, honour `prefers-reduced-motion: reduce` by flipping every
      * slot true synchronously instead of cascading the timeline. Mirrors
      * the canonical opt-in on `useAnimatedNumber` and the global
-     * `transitions.css` / `utilities.css` reduced-motion brackets. SSR
-     * environments (no `window.matchMedia`) treat the option as a no-op.
+     * `transitions.css` / `utilities.css` reduced-motion brackets. SSR treats the
+     * option as a no-op.
      * Default true.
      */
     respectReducedMotion?: boolean;
-}
-
-/** Feature-detect reduced-motion preference. SSR-safe (returns false). */
-function prefersReducedMotion(): boolean {
-    if (
-        typeof window === "undefined" ||
-        typeof window.matchMedia !== "function"
-    ) {
-        return false;
-    }
-    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
 export interface UseStaggerControls {
@@ -85,10 +76,12 @@ export function useStagger(options: UseStaggerOptions): UseStaggerControls {
     const initialDelayMs = options.initialDelayMs ?? 0;
     const immediate = options.immediate !== false;
     const respectReducedMotion = options.respectReducedMotion !== false;
+    const reducedMotion = respectReducedMotion ? useReducedMotion() : ref(false);
 
     const revealed = ref<boolean[]>(new Array(itemCount).fill(false));
     const isComplete = ref<boolean>(itemCount === 0);
     const timers = new Set<ReturnType<typeof setTimeout>>();
+    let started = false;
 
     function clearAll(): void {
         for (const handle of timers) clearTimeout(handle);
@@ -96,6 +89,7 @@ export function useStagger(options: UseStaggerOptions): UseStaggerControls {
     }
 
     function reset(): void {
+        started = false;
         clearAll();
         revealed.value = new Array(itemCount).fill(false);
         isComplete.value = itemCount === 0;
@@ -108,6 +102,7 @@ export function useStagger(options: UseStaggerOptions): UseStaggerControls {
 
     function start(): void {
         reset();
+        started = true;
         if (itemCount === 0) {
             isComplete.value = true;
             return;
@@ -116,7 +111,7 @@ export function useStagger(options: UseStaggerOptions): UseStaggerControls {
         // synchronously. The cue is honoured as "instant", matching the
         // canonical brackets in `transitions.css:144` / `utilities.css:467`.
         // (Per audit U.W0.A5 §"library gaps".)
-        if (respectReducedMotion && prefersReducedMotion()) {
+        if (reducedMotion.value) {
             flushAll();
             return;
         }
@@ -137,9 +132,22 @@ export function useStagger(options: UseStaggerOptions): UseStaggerControls {
         }
     }
 
+    const stopReducedMotionWatch = watch(
+        reducedMotion,
+        (reduced) => {
+            if (!reduced || !started) return;
+            clearAll();
+            flushAll();
+        },
+        { flush: "sync" },
+    );
+
     if (immediate) start();
 
-    onScopeDispose(clearAll);
+    onScopeDispose(() => {
+        stopReducedMotionWatch();
+        clearAll();
+    });
 
     return { revealed, start, reset, isComplete };
 }

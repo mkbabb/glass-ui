@@ -18,9 +18,11 @@
 // (the misconfiguration is loud, not silently swallowed). This pairs with
 // `darkModeSyncScript()` — the parse-time `<head>` script that sets the theme
 // before first paint so the seed and the FOUC eliminator agree.
-import type { BasicColorSchema } from "@vueuse/core";
 import { createGlobalState, useDark, useToggle } from "@vueuse/core";
 import { ref, watch, type Ref, type WritableComputedRef } from "vue";
+
+/** Stable color-scheme seed accepted by the shared dark-mode controller. */
+export type GlobalColorSchema = "auto" | "light" | "dark";
 
 /**
  * A post-flip settle callback. Receives the dark-mode flag's NEW value. Runs in
@@ -71,11 +73,11 @@ export interface UseGlobalDarkOptions {
      * Pair with `darkModeSyncScript()` so the parse-time `<head>` script and this
      * runtime seed agree.
      */
-    initialValue?: BasicColorSchema;
+    initialValue?: GlobalColorSchema;
 }
 
 // The first-call seed the memoized factory reads at construction time.
-let seededInitialValue: BasicColorSchema | undefined;
+let seededInitialValue: GlobalColorSchema | undefined;
 
 /** Single shared dark mode instance — avoids multiple useDark() watchers racing on classList. */
 const createGlobalDark = createGlobalState(() => {

@@ -21,42 +21,54 @@
                solid `--card` + `blur(0)` through the ONE level knob, the tint axis
                zeroed (a solid plate has no translucent backdrop to darken-over).
 
-   NO second axis: `cartoon` stays a Card-local decoration (it is NOT a
-   {glass·veil·opaque} member — the shared axis is the three-rung MATERIAL
-   decoration; cartoon rides Card's own `surface` superset). The `Surface` union +
-   the `surfaceClass(surface, tier)` resolver are the TS half
-   (`src/components/_shared/useSurfaceAxis.ts`); this file is the CSS half.
+   Cartoon and grid remain Card-local decoration booleans; neither extends this
+   material axis. The `Surface` alias in `_shared/axes.ts` is the typed half and
+   the private resolver maps only the tier/deep class pair.
 
    Cascade: `@layer components`, @import-ed AFTER ladder.css so the attr rules
    (specificity 0-1-0, equal to the `.glass-*` classes) win by source order over
    the base rung's border/box-shadow. */
 @layer components {
+    [data-grain="false"]::after {
+        display: none;
+    }
+
     /* ── veil — the borderless text-legibility plate ──────────────────────────
-       Composes the SAME deltas as the `veil-surface` @utility (cards.css), keyed
-       off the SAME `--glass-bg-quiet` + `--glass-tint-*` tokens (no recipe fork).
-       Each delta is an overridable `--veil-*` rung so a consumer re-points the
-       plate to any other ladder rung. */
+       The alpha is composed at the element so the named calibration survives
+       custom-property substitution. Clarity is one overrideable filter value;
+       dark mode changes only the measured alpha and brightness inputs. */
     [data-surface="veil"] {
-        --veil-bg: color-mix(
+        --veil-alpha: 44.3%;
+        --veil-brightness: 1.02;
+        --veil-color: color-mix(
             in oklab,
-            var(--glass-bg-quiet),
+            var(--card),
             var(--glass-tint-source) var(--glass-tint-strength)
         );
-        --veil-blur: var(--glass-blur-quiet);
-        /* The three veil deltas over a bare rung — each overridable. */
+        --veil-bg: color-mix(
+            in srgb,
+            var(--veil-color) var(--veil-alpha),
+            transparent
+        );
+        --veil-clarity: blur(
+                calc(var(--glass-blur-quiet-radius) * var(--glass-level))
+            )
+            saturate(var(--glass-saturate-quiet))
+            brightness(var(--veil-brightness));
         --veil-border: none;
         --veil-shadow: none;
         --veil-feather: none;
 
         background: var(--veil-bg);
-        backdrop-filter: var(--veil-blur);
-        -webkit-backdrop-filter: var(--veil-blur);
+        backdrop-filter: var(--veil-clarity);
         border: var(--veil-border);
         box-shadow: var(--veil-shadow);
-        /* The optional radial feather — a `mask-image` only painted when
-           `--veil-feather` is set to a gradient (default `none` = no mask = a
-           clean rectangle). `mask-image: none` is the identity. */
         mask-image: var(--veil-feather);
+    }
+
+    :where(.dark) [data-surface="veil"] {
+        --veil-alpha: 56%;
+        --veil-brightness: 1.16;
     }
 
     /* ── opaque — the solid-card escape ───────────────────────────────────────
@@ -87,7 +99,6 @@
            the token ladder already speaks. */
         background: color-mix(in srgb, var(--card), transparent 0%);
         backdrop-filter: none;
-        -webkit-backdrop-filter: none;
     }
 
     /* ── .paper-ink-mark — the PAPER ink-hairline MARK register ────────────────

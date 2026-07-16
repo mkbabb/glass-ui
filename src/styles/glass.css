@@ -13,13 +13,12 @@
  *
  * The discipline bans PLATE-in-PLATE: a second `.glass-*` PANEL nested inside a
  * glass panel is a violation (the blur stacks muddy, the rim doubles, the read
- * collapses) — the inner PANEL should read as a flat tier. But CONTROL-on-plate
- * is SANCTIONED: under the glass-first maximal default, `btn-glass` (a real
- * backdrop-filter control) inside `.glass-card` inside a glass Dialog is the
- * COMMON composition. The depth-3 ceiling + `contain: paint` budget that keeps
- * the nested blur cheap is gated by W-A11Y-PERF (the enforcement half); this
- * header is the doc half. Bottom line: do not nest a glass PANEL inside a glass
- * panel; a glass CONTROL on a glass plate is fine and budget-gated.
+ * collapses) — the inner PANEL should read as a flat tier. CONTROL-on-plate is
+ * sanctioned as a material composition, not as a second backdrop read: the
+ * control keeps its translucent fill, rim, specular, and interaction while it
+ * reuses the enclosing plate's filtered field. A standalone control still owns
+ * its blur. Bottom line: one backdrop sample per visual plate; nested cells do
+ * not allocate another filtered backing.
  *
  * ── iOS-spring-on-controls cross-ref (AV.W15 C/M cross-ref) ────────────────
  * The momentum-gated press squish (the control's "lift up on touch, quiet at
@@ -106,5 +105,4 @@
    fills win over control-surfaces.css/surfaces.css at equal specificity) and BEFORE the
    squircle override. */
 @import "./glass/defined.css";
-@import "./glass/progress-rail.css";
 @import "./glass/squircle.css";

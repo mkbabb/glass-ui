@@ -1,79 +1,70 @@
 <script setup lang="ts">
-import StoryPage from "../../chassis/page/StoryPage.vue";
 import { ref } from "vue";
-import { Label } from "@glass/components/label";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
+import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import { Input } from "@glass/components/input";
-import { Checkbox } from "@glass/components/checkbox";
-import { Switch } from "@glass/components/switch";
-import { RadioGroup, RadioGroupItem } from "@glass/components/radio-group";
+import { Label } from "@glass/components/label";
 
-const email = ref<string>("");
-const agree = ref<boolean>(false);
-const notify = ref<boolean>(true);
-const plan = ref<string>("pro");
+const email = ref("");
+const project = ref("");
+const note = ref("");
 </script>
 
 <template>
     <StoryPage>
-        <!-- Labelled input via `for`. -->
-        <section class="flex flex-col gap-3 max-w-sm">
-            <p class="section-label">for-attribute coupling</p>
-            <Label for="lbl-email">Email address</Label>
-            <Input id="lbl-email" v-model="email" type="email" placeholder="you@domain.com" />
-            <p class="text-mono-caption text-muted-foreground">
-                Click the label to focus the input.
-            </p>
-        </section>
+        <StorySection label="associated control">
+            <ShowcaseFrame class="flex max-w-md flex-col gap-3">
+                <Label for="label-email">Email address</Label>
+                <Input
+                    id="label-email"
+                    v-model="email"
+                    type="email"
+                    autocomplete="email"
+                    placeholder="you@example.com"
+                />
+                <p class="text-small text-muted-foreground">
+                    Activating the label moves focus to its input.
+                </p>
+            </ShowcaseFrame>
+        </StorySection>
 
-        <!-- Nested checkbox. -->
-        <section class="flex flex-col gap-3">
-            <p class="section-label">nested control</p>
-            <Label class="flex items-center gap-2 cursor-pointer">
-                <Checkbox v-model="agree" />
-                <span>I agree to the paper-and-glass manifesto.</span>
-            </Label>
-            <p class="text-mono-caption text-muted-foreground">agreed · {{ agree }}</p>
-        </section>
+        <StorySection label="requirement annotations">
+            <div class="grid gap-4 sm:grid-cols-2">
+                <ShowcaseFrame class="flex flex-col gap-3">
+                    <Label for="label-project" requirement="required">
+                        Project name
+                    </Label>
+                    <Input
+                        id="label-project"
+                        v-model="project"
+                        required
+                        placeholder="Aurora study"
+                    />
+                </ShowcaseFrame>
 
-        <!-- Switch + label pair, label-left layout. -->
-        <section class="flex flex-col gap-3 max-w-sm">
-            <p class="section-label">switch row</p>
-            <div class="flex items-center justify-between rounded-card border border-border bg-card p-4">
-                <div class="flex flex-col gap-1">
-                    <Label for="lbl-notify">Ship notifications</Label>
-                    <span class="text-small text-muted-foreground">
-                        Email summaries, weekly digest.
-                    </span>
-                </div>
-                <Switch id="lbl-notify" v-model="notify" />
+                <ShowcaseFrame class="flex flex-col gap-3">
+                    <Label for="label-note" requirement="optional"> Review note </Label>
+                    <Input id="label-note" v-model="note" placeholder="Add context" />
+                </ShowcaseFrame>
             </div>
-        </section>
+        </StorySection>
 
-        <!-- Radio group — each radio gets a label. -->
-        <section class="flex flex-col gap-3">
-            <p class="section-label">radio group</p>
-            <RadioGroup v-model="plan" class="flex flex-col gap-2" aria-label="Plan">
-                <Label class="flex items-center gap-2 cursor-pointer">
-                    <RadioGroupItem value="free" />
-                    <span>Free — library on the house.</span>
-                </Label>
-                <Label class="flex items-center gap-2 cursor-pointer">
-                    <RadioGroupItem value="pro" />
-                    <span>Pro — private palettes.</span>
-                </Label>
-                <Label class="flex items-center gap-2 cursor-pointer">
-                    <RadioGroupItem value="studio" />
-                    <span>Studio — onboarding + ghostwritten tokens.</span>
-                </Label>
-            </RadioGroup>
-            <p class="text-mono-caption text-muted-foreground">plan · {{ plan }}</p>
-        </section>
+        <StorySection label="disabled state">
+            <ShowcaseFrame class="flex max-w-md flex-col gap-3">
+                <Label for="label-disabled" disabled>Archived field</Label>
+                <Input id="label-disabled" disabled default-value="No longer editable" />
+            </ShowcaseFrame>
+        </StorySection>
 
-        <!-- Disabled input → label's peer-disabled: hooks apply. -->
-        <section class="flex flex-col gap-3 max-w-sm">
-            <p class="section-label">peer-disabled dims the label</p>
-            <Label for="lbl-disabled">Disabled field</Label>
-            <Input id="lbl-disabled" class="peer" disabled placeholder="Locked" />
-        </section>
+        <StorySection label="wrapped · narrow">
+            <ShowcaseFrame class="flex max-w-56 flex-col gap-3">
+                <Label for="label-narrow" requirement="optional">
+                    A deliberately long label that wraps without losing its control
+                    association
+                </Label>
+                <Input id="label-narrow" placeholder="Narrow field" />
+            </ShowcaseFrame>
+        </StorySection>
     </StoryPage>
 </template>

@@ -14,8 +14,8 @@
 // The interactive-glass tier's pointer-following gleam is a PROPERTY OF THE TIER,
 // not a per-consumer opt-in. This dependency-free `ObjectDirective` (the `vReveal`
 // playbook) attaches the rAF-coalesced `pointermove` position write to its host on
-// `mounted` and tears it down on `unmounted` — so a bare `<Button variant="glass">`
-// / `<DockControl>` / `.glass-btn` control follows the pointer with ZERO
+// `mounted` and tears it down on `unmounted` — so an ordinary glass Button
+// / `<DockControl>` control follows the pointer with ZERO
 // `useSpecularTracking` call site, no `:style`/`@pointermove` pair.
 //
 // SINGLE-SOURCE: the directive does NOT re-implement the rAF/PRM/coordinate write —
@@ -24,7 +24,7 @@
 // the `:style`-ref delivery; this directive is the zero-wiring tier-root delivery —
 // ONE position-write source, TWO deliveries. A consumer with a NET-NEW interactive
 // glass surface auto-arms it with `v-specular` (the ≥2-consumer generality bar met by
-// the in-library Button + dock + glass-btn consumers at birth).
+// the in-library Button + dock consumers at birth).
 //
 // The write lands on the directive HOST — the element that owns the material
 // `::before` gleam. Apply `v-specular` on the same node the `.glass-material` /

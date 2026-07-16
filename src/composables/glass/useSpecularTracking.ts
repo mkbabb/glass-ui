@@ -1,4 +1,5 @@
-import { onScopeDispose, ref, type CSSProperties } from "vue";
+import { onScopeDispose, ref, watch, type CSSProperties } from "vue";
+import { useReducedMotion } from "../motion/useReducedMotion";
 
 /**
  * `useSpecularTracking` — the pointer-anchored moving-specular write seam
@@ -22,16 +23,15 @@ import { onScopeDispose, ref, type CSSProperties } from "vue";
  *
  * PRM-aware: under `prefers-reduced-motion: reduce` the seam DOES NOT write the
  * position (the CSS half pins the catch-light static at the centred `50%`
- * fallback). The PRM signal is read from a SINGLE cached `matchMedia` listener
- * minted once at composable setup (NOT a fresh `matchMedia` per pointer event) —
- * the AV.W7 `useWebGLCanvas` substrate pattern.
+ * fallback). The PRM signal comes from the shared reduced-motion authority, never a
+ * fresh `matchMedia` read per pointer event.
  *
  * AY.W-A11Y-PERF O-3 — the pointer write is rAF-COALESCED: `onPointerMove` only
  * stashes the raw event + schedules ONE `requestAnimationFrame`; the rAF callback
  * does the single `getBoundingClientRect()` + style write, so a 120–1000 Hz pointer
  * collapses to ONE batched layout read + ONE style write per animation frame (under
  * W54 maximal-glass every blurred-surface repaint is amortized to the frame, not the
- * event). The composable cancels the pending rAF + removes the matchMedia listener on
+ * event). The composable cancels the pending rAF + its shared-preference watch on
  * scope dispose (cleanup discipline).
  *
  * BB.W-LIQUIDHOVER — the rAF-coalesce + cached-PRM + cleanup LOGIC is extracted to
@@ -53,8 +53,8 @@ export interface UseSpecularTracking {
  * PRM-aware `--mouse-x/y` write seam, sink-agnostic. `sink(x, y)` receives the
  * percentage position once per animation frame; the composable sinks into its
  * `specularStyle` ref, the `vSpecular` directive sinks into `el.style.setProperty`.
- * Returns the event handler + a `dispose` (cancel the pending rAF + drop the cached
- * PRM listener) so BOTH deliveries share ONE cleanup discipline.
+ * Returns the event handler + a `dispose` (cancel the pending rAF + preference watch)
+ * so BOTH deliveries share ONE cleanup discipline.
  */
 export interface SpecularWriter {
     onPointerMove: (event: PointerEvent) => void;
@@ -64,18 +64,7 @@ export interface SpecularWriter {
 export function createSpecularWriter(
     sink: (xPct: number, yPct: number) => void,
 ): SpecularWriter {
-    // ── The cached PRM ref (AV.W7 substrate pattern) — ONE matchMedia + change
-    // listener minted once for the seam's lifetime, NOT a fresh matchMedia per event.
-    const canMatch =
-        typeof window !== "undefined" && typeof window.matchMedia === "function";
-    const prmQuery = canMatch
-        ? window.matchMedia("(prefers-reduced-motion: reduce)")
-        : null;
-    let reduced = prmQuery?.matches ?? false;
-    const onPrmChange = (e: MediaQueryListEvent): void => {
-        reduced = e.matches;
-    };
-    prmQuery?.addEventListener("change", onPrmChange);
+    const reduced = useReducedMotion();
 
     // ── The rAF-coalesce state — one pending frame coalesces a burst of events. We
     // capture the host element + the client coords AT EVENT TIME (NOT the event
@@ -103,7 +92,7 @@ export function createSpecularWriter(
     function onPointerMove(event: PointerEvent): void {
         // PRM: leave the position at the centred CSS fallback (the recipe's
         // reduced-motion bracket pins `--specular-x/y` to 50%); skip the write.
-        if (reduced) return;
+        if (reduced.value) return;
         // Snapshot the host + coords AT EVENT TIME (currentTarget is valid only during
         // dispatch); schedule ONE rAF (a burst coalesces to one read).
         pendingTarget = event.currentTarget as HTMLElement | null;
@@ -118,13 +107,26 @@ export function createSpecularWriter(
         }
     }
 
+    const stopReducedMotionWatch = watch(
+        reduced,
+        (next) => {
+            if (!next) return;
+            if (rafId !== 0 && typeof cancelAnimationFrame === "function") {
+                cancelAnimationFrame(rafId);
+            }
+            rafId = 0;
+            pendingTarget = null;
+        },
+        { flush: "sync" },
+    );
+
     function dispose(): void {
         if (rafId !== 0 && typeof cancelAnimationFrame === "function") {
             cancelAnimationFrame(rafId);
         }
         rafId = 0;
         pendingTarget = null;
-        prmQuery?.removeEventListener("change", onPrmChange);
+        stopReducedMotionWatch();
     }
 
     return { onPointerMove, dispose };

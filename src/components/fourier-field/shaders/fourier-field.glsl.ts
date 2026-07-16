@@ -21,7 +21,7 @@
 import {
     OETF_GLSL,
     OKLCH_MATRICES_GLSL,
-} from "../../../composables/glass/webgl/shaders/procedural-color.glsl";
+} from "../../../composables/glass/procedural/color.glsl";
 
 /** The instanced ribbon VERTEX — expands the unit quad to each instance's covered bbox. */
 export const FOURIER_FIELD_VERT_GLSL = /* glsl */ `#version 300 es

@@ -9,13 +9,11 @@ import {
 } from "node:fs";
 import { gzipSync } from "node:zlib";
 import { dirname, extname, join, resolve } from "node:path";
-import { ROOT } from "./constellation.mjs";
-// Shared transitive-import discovery for the root-barrel critical-path profile.
-import { findReach } from "./lib/critical-path-walk.mjs";
+import { fileURLToPath } from "node:url";
 
-// ROOT is the glass-ui repo root — sourced from constellation.mjs (the single
-// constellation/path authority), not re-derived locally.
-const root = ROOT;
+const root = process.env.GLASS_UI_PROFILE_ROOT
+    ? resolve(process.env.GLASS_UI_PROFILE_ROOT)
+    : resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const profileCacheDir = resolve(root, ".cache/profiles");
 const isProfileSnapshot = process.env.GLASS_UI_PROFILE_SNAPSHOT === "1";
 
@@ -135,7 +133,7 @@ const startedAt = Date.now();
 // idiom feature landing, not per-wave creep.
 //
 // AW re-base (the 3.5.0 cut): the dock clip-reveal aperture grammar, the
-// GlassPanel five-rung per-tier CSS, the .glass-progress-rail recipe, and the
+// GlassPanel five-rung per-tier CSS and the
 // at-rest affordance pass lift the measured draw to gzip ~118315 / raw ~472108
 // (the raw is still under, the gzip tipped 0.3% over). Lifted to gzip 124000 /
 // raw 486000 — the FOURTH one-time conscious lift, sized to carry the rest of
@@ -166,8 +164,8 @@ const startedAt = Date.now();
 // aurora band (the painterly GLSL growth + the bundled WGSL aurora/painterly/wake
 // twins), NOT open-ended per-wave creep. An overrun HALTS the wave and triggers the
 // W4 §3a field-bake-hoist triumvirate (a structural transposition, not a tap-count
-// tweak). Orthogonal to `profile:aurora` (the FPS/ALU floor) — this bounds gzip
-// chunk SIZE, that bounds runtime draw cost.
+// tweak). This bounds emitted chunk size; runtime behavior is inspected in the
+// native product surface rather than a second browser-driver workflow.
 // AX re-base (the 3.8.0 cut): the dock content-driven wrap recipe + card-tier
 // shadow/radius morph (W04), the van-Gogh/oil-pastel medium ground + profile fields
 // (W13), the /deck-progress rail + carousel dot rail (W23/W24), and the font-register
@@ -297,95 +295,69 @@ function combinedStylesDraw(distRoot) {
     return { raw: Buffer.byteLength(css), gzip: gzipSync(css).length };
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// BB.W-PAYLOAD-DEFER — the critical-path-WEIGHT arm.
-//
-// The JS critical path (the cost a Card/Button-only consumer pays through
-// `@mkbabb/glass-ui`) is DEFENDED by a gate, not by accident. The arm has three
-// falsifiable sub-witnesses, all extending the bundle profile in place
-// row — the registry stays single-owner). It is born-RED on the arm's ABSENCE at
-// HEAD (the favourable HEAD is LOCKED so a regression reds), NOT on a violation.
-//
-//   W1 — the WebGL substrate + the GL shader strings + the value.js color-math
-//        leaf stay OFF the root barrel's eager graph. Two tiers, mirroring
-//        proof-vueuse-free-root.mjs:
-//          SOURCE tier — the shared transitive walk from src/index.ts reaches ZERO
-//            heavy-leaf module/specifier (the inverse-DataTable bite: re-exporting
-//            the WebGL substrate or a value.js color core into any root-reachable
-//            module reddens the SOURCE tier EVEN WHILE the DIST tier passes, because
-//            the consumer's bundler walks the eager graph the dist split tree-shook).
-//          DIST tier — the built dist/glass-ui.js names ZERO value.js color-math
-//            symbol / GL string (the literal-floor).
-//   W2 — the four WebGL entry chunks each carry a recorded gzip ceiling (in BUDGETS
-//        above) — handled by the standard budget loop, surfaced here as a roll-up.
-//   W3 — the aurora MEDIUM tail's lazy-split status. At HEAD the painterly mediums
-//        are eagerly template-spliced into the single-program FRAGMENT_SRC (a
-//        compile-time splice, not a runtime-selectable module — the scope-reveal
-//        recorded in W-PAYLOAD-DEFER-DELTA.md), so the witness records the eager
-//        medium count as a FACT (not a fail — the GL-fence-respecting split is a
-//        named successor). A future module split that makes the mediums lazy flips
-//        this to a separate-chunk assert; until then it is an informational fact
-//        the DELTA cites, never a green-faking pass.
-
-const CRIT_HEAVY_LEAVES = [
-    // The WebGL substrate (the rAF/GL-context lifecycle the renderers compose).
-    { name: "useWebGLCanvas", kind: "webgl-substrate" },
-    { name: "useGlassRenderer", kind: "webgl-substrate" },
-    // The GL shader-string modules (the .frag/.glsl payload).
-    { name: "aurora.frag", kind: "gl-shader" },
-    { name: "metaball.frag", kind: "gl-shader" },
-    { name: "procedural-color.glsl", kind: "gl-shader" },
-    // The value.js color-math peer (the ~124 KB peer a root-reachable import would
-    // force the consumer's bundler to resolve for a Button-only import).
-    { name: "@mkbabb/value.js", kind: "value-js" },
-];
-// A SOURCE-graph reach is a heavy-leaf IMPORT SPECIFIER naming one of the leaves
-// (a `from "…/glass/webgl/useWebGLCanvas"`, a `from "…/aurora.frag"`, a
-// `from "@mkbabb/value.js"`) OR a bare named-symbol reach to the GL rotation
-// constant FBM_ROT (belt-and-suspenders — the shader-module import carries it, but
-// a future direct `import { FBM_ROT }` is also caught).
-const CRIT_SPECIFIER_RE =
+// The source census accepts only Glass's three Value 4 capabilities. Rollup uses
+// the same exact literals; unknown entries are reported, never externalized by prefix.
+const VALUE_JS_CAPABILITIES = new Set([
+    "@mkbabb/value.js/color",
+    "@mkbabb/value.js/css",
+    "@mkbabb/value.js/easing",
+]);
+const VALUE_JS_PACKAGE = "@mkbabb/value.js";
+const IMPORT_SPECIFIER_RE =
     /(?:import|export)\s+[^"';]*?from\s*["']([^"']+)["']|import\(\s*["']([^"']+)["']\s*\)|import\s+["']([^"']+)["']/g;
-function critHeavyMatch(source) {
-    for (const m of source.matchAll(CRIT_SPECIFIER_RE)) {
-        const spec = m[1] ?? m[2] ?? m[3];
-        if (!spec) continue;
-        for (const leaf of CRIT_HEAVY_LEAVES) {
-            // value.js is a bare peer specifier (exact); the others are path tails.
-            const hit =
-                leaf.kind === "value-js"
-                    ? spec === leaf.name
-                    : spec.includes(leaf.name);
-            if (hit) return { specifier: `${spec} (${leaf.kind})` };
+
+function evaluateValueCapabilities() {
+    const accepted = Object.fromEntries(
+        [...VALUE_JS_CAPABILITIES].map((specifier) => [specifier, 0]),
+    );
+    const rejected = [];
+    const sourceRoot = resolve(root, "src");
+    const sourceFiles = walk(sourceRoot).filter((file) =>
+        /\.(?:[cm]?[jt]sx?|vue)$/.test(file),
+    );
+
+    for (const file of sourceFiles) {
+        const source = readFileSync(file, "utf8");
+        for (const match of source.matchAll(IMPORT_SPECIFIER_RE)) {
+            const specifier = match[1] ?? match[2] ?? match[3];
+            if (!specifier) continue;
+            if (VALUE_JS_CAPABILITIES.has(specifier)) {
+                accepted[specifier]++;
+                continue;
+            }
+            // The namespace check only rejects unknown Value entries. Acceptance and
+            // Rollup externalization remain the three exact literals above.
+            if (
+                specifier === VALUE_JS_PACKAGE
+                || specifier.startsWith(`${VALUE_JS_PACKAGE}/`)
+            ) {
+                rejected.push({
+                    specifier,
+                    file: file.slice(root.length + 1),
+                });
+            }
         }
     }
-    // Direct FBM_ROT named import (the GL rotation constant) — a non-specifier reach.
-    if (/\bimport\b[^;]*\bFBM_ROT\b/.test(source))
-        return { specifier: "FBM_ROT (gl-shader symbol)" };
-    return null;
+
+    return {
+        facts: { accepted, rejected, scannedFiles: sourceFiles.length },
+        violations: rejected.map(
+            ({ specifier, file }) =>
+                `VALUE CAPABILITY: ${file} imports rejected ${specifier}`,
+        ),
+    };
 }
 
-// The DIST literal-floor — the built root barrel names ZERO of these (value.js
-// color-math symbols + GL strings). Mirrors proof-vueuse-free-root.mjs's DIST tier.
+// The built root barrel must not contain eager color-math or renderer payload.
 const CRIT_DIST_FLOOR_RE =
     /oklabToLinearSRGB|interpolateHue|rawOklchToOklab|colorUnit|useWebGLCanvas|useGlassRenderer|FBM_ROT|gl_FragColor/g;
 
 function evaluateCriticalPath(distRootDir) {
-    const entry = resolve(root, "src/index.ts");
     const facts = {};
     const violations = [];
 
-    // W1 SOURCE tier — the shared transitive walk reaches ZERO heavy leaf.
-    const reach = findReach(entry, critHeavyMatch);
-    facts.sourceReach = reach ? reach.specifier : null;
-    if (reach) {
-        const rel = (p) => p.slice(root.length + 1);
-        violations.push(
-            `CRITICAL-PATH SOURCE: the root barrel reaches ${reach.specifier} via ${reach.path.map(rel).join(" → ")}`,
-        );
-    }
-
-    // W1 DIST tier — the built root barrel literal-floor.
+    // The built root is the useful eager-payload truth. A source walker cannot
+    // distinguish an intentional dynamic leaf from an eager edge, so it is not used.
     const distGlassUi = resolve(distRootDir, "glass-ui.js");
     if (existsSync(distGlassUi)) {
         const hits = (
@@ -399,16 +371,11 @@ function evaluateCriticalPath(distRootDir) {
     } else {
         facts.distHits = "(dist absent — run npm run build)";
         violations.push(
-            "CRITICAL-PATH DIST: dist/glass-ui.js absent — build before the gate (the dist-floor tier cannot run)",
+            "CRITICAL-PATH DIST: dist/glass-ui.js absent — build before profiling",
         );
     }
 
-    // W3 — the aurora MEDIUM tail status. At HEAD the mediums are template-spliced
-    // into the single-program aurora.js (the scope-reveal); record the eager medium
-    // count as a FACT, and whether a lazy aurora-medium chunk exists. This is
-    // informational until the GL-fence-respecting module split lands (the named
-    // successor in the DELTA) — it never reds the budget (a compile-time splice is
-    // not a regression, it is the as-shipped architecture).
+    // Report whether Aurora's medium code remains in the entry or a lazy chunk.
     const distAurora = resolve(distRootDir, "aurora.js");
     if (existsSync(distAurora)) {
         const src = readFileSync(distAurora, "utf8");
@@ -429,11 +396,7 @@ function evaluateCriticalPath(distRootDir) {
         facts.auroraMediumSplit = "(dist absent)";
     }
 
-    // W4 — the dts build-arm wall-clock fact slot. `.2` supplies the measured
-    // emit-types arm wall-clock via GLASS_UI_DTS_ARM_MS (cold) /
-    // GLASS_UI_DTS_ARM_WARM_MS (warm re-emit); the gate RECORDS them (the perf
-    // witness the DELTA cites). Absent → null (the fact is supplied out-of-band by
-    // the build the DELTA captures, not measured inside the budget run).
+    // Optional declaration-build timings are supplied by the calling workflow.
     const dtsCold = process.env.GLASS_UI_DTS_ARM_MS;
     const dtsWarm = process.env.GLASS_UI_DTS_ARM_WARM_MS;
     facts.dtsArmMs = dtsCold ? Number(dtsCold) : null;
@@ -677,10 +640,11 @@ for (const [name, cur] of currentEntries) {
     });
 }
 
-// BB.W-PAYLOAD-DEFER — evaluate the critical-path-weight arm (W1 SOURCE+DIST clean,
-// W3 aurora-medium status, W4 dts-arm fact). Its SOURCE/DIST violations FAIL the
-// budget gate (the lock — a heavy-leaf reach onto the root path reds), folded into
-// the same anyBudgetExceeded flag the per-entry ceilings (W2) use.
+const valueCapabilities = evaluateValueCapabilities();
+if (valueCapabilities.violations.length > 0) anyBudgetExceeded = true;
+
+// Evaluate only built eager payload plus the retained informational renderer/type
+// facts. Dynamic source imports are deliberately not guessed to be eager.
 const criticalPath = evaluateCriticalPath(distRoot);
 if (criticalPath.violations.length > 0) anyBudgetExceeded = true;
 
@@ -778,6 +742,7 @@ const profile = {
     budgets: BUDGETS,
     budgetReport,
     subpathReport,
+    valueCapabilities,
     criticalPath: { facts: criticalPath.facts, violations: criticalPath.violations },
     externalPayload: {
         facts: externalPayload.facts,
@@ -918,15 +883,24 @@ for (const row of subpathReport) {
     );
 }
 
-// BB.W-PAYLOAD-DEFER — the critical-path-weight report. Same rg-friendly format.
 console.log("");
-console.log("Critical-path-weight report (BB.W-PAYLOAD-DEFER):");
+console.log("Value capability report:");
+{
+    const f = valueCapabilities.facts;
+    for (const [specifier, count] of Object.entries(f.accepted)) {
+        console.log(`  [ACCEPT] ${specifier}: ${count} source import${count === 1 ? "" : "s"}`);
+    }
+    console.log(
+        `  [REJECT] removed/private Value entries: ${f.rejected.length === 0 ? "none ✓" : f.rejected.map(({ specifier, file }) => `${specifier} (${file})`).join("; ")}`,
+    );
+}
+
+// Built critical-path report. Same rg-friendly format.
+console.log("");
+console.log("Built critical-path-weight report:");
 {
     const f = criticalPath.facts;
-    console.log(
-        `  [W1 SOURCE] root-barrel heavy-leaf reach : ${f.sourceReach ?? "none ✓"}`,
-    );
-    console.log(`  [W1 DIST]   dist/glass-ui.js heavy hits : ${f.distHits}`);
+    console.log(`  [DIST]   dist/glass-ui.js heavy hits : ${f.distHits}`);
     console.log(
         `  [W3 AURORA] medium tail                  : ${f.auroraMediumSplit} (${f.auroraEagerMediumHits} eager hits)`,
     );

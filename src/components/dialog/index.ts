@@ -5,11 +5,14 @@
 // exports), so the 3-line wrapper IS the floor. Decision: KEEP all three —
 // the typed prop+emit forwarding via useForwardPropsEmits IS scope-providing
 // behaviour, and excising would require breaking the SFC import path.
-export { default as Dialog } from './Dialog.vue'
-export { default as DialogClose } from './DialogClose.vue'
-export { default as DialogTrigger } from './DialogTrigger.vue'
-export { default as DialogHeader } from './DialogHeader.vue'
-export { default as DialogTitle } from './DialogTitle.vue'
-export { default as DialogDescription } from './DialogDescription.vue'
-export { default as DialogContent } from './DialogContent.vue'
-export { default as DialogFooter } from './DialogFooter.vue'
+export { default as Dialog, type DialogProps } from "./Dialog.vue";
+export { default as DialogClose, type DialogCloseProps } from "./DialogClose.vue";
+export { default as DialogTrigger, type DialogTriggerProps } from "./DialogTrigger.vue";
+export { default as DialogHeader } from "./DialogHeader.vue";
+export { default as DialogTitle, type DialogTitleProps } from "./DialogTitle.vue";
+export {
+    default as DialogDescription,
+    type DialogDescriptionProps,
+} from "./DialogDescription.vue";
+export { default as DialogContent, type DialogContentProps } from "./DialogContent.vue";
+export { default as DialogFooter } from "./DialogFooter.vue";

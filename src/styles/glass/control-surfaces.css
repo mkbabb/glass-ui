@@ -21,7 +21,7 @@
         /* BC.W-CONTROL-CUSTOM — the height reads the `--control-pill-h` element-
            override seam, DEFAULTING to the cohort `--control-h-md` so a bare
            control is byte-identical to HEAD. The shared `controlSizeClass(size)`
-           (_shared/useControlSize.ts) re-points the seam per rung
+           (_shared/control-size.ts) re-points the seam per rung
            (sm→`--control-h-sm`, lg→`--control-h-lg`), so the `size` prop retunes
            the field height WITHOUT a recipe fork — ONE substitution rung, the
            cohort is still the source. */
@@ -46,7 +46,7 @@
         /* The control's REAL glass blur — the shared register's quiet-tier radius
            (the same `--control-surface-blur` pairs with `--control-surface-bg`); the
            `--glass-level` knob clarifies it in lockstep with every surface. */
-        backdrop-filter: var(--control-surface-blur);
+        backdrop-filter: var(--glass-cell-backdrop-filter, var(--control-surface-blur));
         padding: 0 calc(1rem * var(--ui-scale));
         /* BC.W-CONTROL-CUSTOM — the font reads the `--control-pill-text` seam,
            DEFAULTING to `--control-text` (byte-identical at unset). The `sm` rung
@@ -78,8 +78,7 @@
     .control-surface {
         background: var(--control-surface-bg);
         border: 1px solid var(--control-surface-border);
-        backdrop-filter: var(--control-surface-blur);
-        -webkit-backdrop-filter: var(--control-surface-blur);
+        backdrop-filter: var(--glass-cell-backdrop-filter, var(--control-surface-blur));
     }
     .control-surface:hover:not(:disabled, [data-disabled]) {
         background: var(--control-surface-bg-hover);
@@ -87,7 +86,7 @@
 
     /* AQ.W4 §W4.6 — keyboard-focus ring only. Was bare `:focus` (showed the
        accent ring on a mouse click); `:focus-visible` matches the
-       `.focus-ring` / `.glass-btn` / dock-control discipline. Ordered BEFORE
+       `.focus-ring` / Button / dock-control discipline. Ordered BEFORE
        the `:user-invalid` rungs so an invalid focused field shows destructive,
        not accent (the `:user-invalid:focus-visible` rule below wins by order +
        specificity). `:focus-visible` Baseline Widely — no fallback. */
@@ -135,22 +134,6 @@
            token; the `8%` at-rest bg arm above stays `.input-pill`-local (a
            glass-tint substrate the bare-ring surfaces do not carry). */
         box-shadow: var(--invalid-ring);
-    }
-
-    /* AQ.W4 §W4.3 — `field-sizing: content` autosize (opt-in via the Textarea
-       `autosize` prop → `[data-autosize]`). The textarea grows vertically with
-       content between a 3-line floor and a token-driven ceiling, then scrolls.
-       `field-sizing` Baseline Newly (Chromium 2024) — on a non-supporting
-       engine the declaration is ignored and the element keeps the
-       `min/max-block-size` bounds + standard scroll (no JS, no `@supports`,
-       no grid-mirror polyfill). The fixed-size path (default, `min-h-20`) is
-       the unchanged no-op fallback. */
-    .input-pill[data-autosize] {
-        field-sizing: content;
-        width: 100%;
-        min-block-size: 3lh;
-        max-block-size: var(--textarea-autosize-max, 12lh);
-        resize: vertical;
     }
 
     .input-pill:disabled {

@@ -114,8 +114,8 @@ useResizeObserver(rootEl, () => measurePeak());
 // ── The interruptible crossfade spring. Composes the ONE `useDockSpring` factory (the
 //    band's sole `new SpringProgress` site — NO second engine, the dock-single-engine
 //    fence). A re-toggle mid-flight re-bases the fresh episode onto the live velocity
-//    (the iOS interruptible-physics continuity), seeded from the entering face's CURRENT
-//    painted opacity so the crossfade never hard-cuts (the VT arm's failure). ──
+//    (the iOS interruptible-physics continuity), preserving each face's current painted
+//    opacity so ping-pong and distinct-third switches never hard-cut. ──
 const spring = useDockSpring({
     response: DOCK_SPRING.response,
     dampingFraction: DOCK_SPRING.dampingFraction,
@@ -139,6 +139,7 @@ function clamp01(v: number): number {
 
 const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
 let settleCrossfade: (() => void) | null = null;
+let activeSlope = 1;
 
 watch(prefersReducedMotion, (reduced) => {
     if (!reduced) return;
@@ -178,27 +179,27 @@ watch(
         if (!enterHost || !leaveHost) {
             leavingId.value = null;
             clearT(next);
+            activeSlope = 1;
             return;
         }
 
         // Snap any STALE leaving face (a rapid third swap) to idle so at most two faces
         // ever animate — the two-child invariant.
         const stale = leavingId.value;
+        const enterT = Number.parseFloat(enterHost.style.getPropertyValue("--dock-t"));
+        const leaveT = Number.parseFloat(leaveHost.style.getPropertyValue("--dock-t"));
+        const enterStart =
+            stale === next && Number.isFinite(enterT) ? 1 - clamp01(enterT) : 0;
+        const leaveStart = Number.isFinite(leaveT) ? clamp01(leaveT) : 1;
         if (stale && stale !== next && stale !== prev) clearT(stale);
 
         leavingId.value = prev;
 
-        // Seed the spring from the entering face's CURRENT painted opacity so a
-        // mid-flight re-toggle continues from where the pixels are (no hard cut). A
-        // fresh swap seeds 0 (the idle face is invisible); a ping-pong seeds the live
-        // opacity. The leaving face reads `calc(1 - --dock-t)`, so writing the same seed
-        // to both keeps the pair complementary + continuous.
-        const seed =
-            typeof getComputedStyle === "function"
-                ? clamp01(parseFloat(getComputedStyle(enterHost).opacity) || 0)
-                : 0;
-        writeT(next, seed);
-        writeT(prev, seed);
+        // Preserve each face's own painted opacity. A ping-pong face enters from its
+        // live leaving opacity; on a distinct third switch, the partially-entered face
+        // leaves from that partial value instead of jumping back to fully opaque.
+        writeT(next, enterStart);
+        writeT(prev, 1 - leaveStart);
 
         void transferFocusOnDissolve(prev, next);
 
@@ -211,6 +212,7 @@ watch(
             clearT(prev);
             rootEl.value?.removeAttribute("data-crossfading");
             leavingId.value = null;
+            activeSlope = 1;
             if (settleCrossfade === settle) settleCrossfade = null;
         };
         settleCrossfade = settle;
@@ -222,15 +224,21 @@ watch(
             return;
         }
 
-        spring.playTo(seed, 1, {
-            onFrame: (t: number) => {
+        const inheritedVelocityScale =
+            leaveStart > 0.001 ? -activeSlope / leaveStart : 0;
+        activeSlope = 1 - enterStart;
+        spring.playTo(0, 1, {
+            inheritVelocityScale: inheritedVelocityScale,
+            onFrame: (progress: number) => {
                 // Clamp the opacity drive to [0,1]: the spring's ζ<1 overshoot is a box-
                 // morph affordance, meaningless for a cross-dissolve (opacity must reach 1
                 // and hold — an overshoot would flicker the leaving face back at
                 // `1 - 1.03 → 0` clamp boundaries during the ring-down).
-                const c = clamp01(t);
-                writeT(next, c);
-                writeT(prev, c);
+                writeT(
+                    next,
+                    clamp01(enterStart + (1 - enterStart) * progress),
+                );
+                writeT(prev, clamp01(1 - leaveStart * (1 - progress)));
             },
             onSettle: settle,
         });

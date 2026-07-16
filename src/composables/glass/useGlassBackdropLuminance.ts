@@ -47,6 +47,7 @@
 
 import { onScopeDispose, readonly, ref, watch, type Ref } from "vue";
 import { useRAFLoop, type RAFLoopControls } from "../motion/useRAFLoop";
+import { useReducedMotion } from "../motion/useReducedMotion";
 import { useIntersectionPause } from "../motion/useIntersectionPause";
 import { useResizeObserver } from "../dom/useResizeObserver";
 // BI.W-ENCAP-REDRAIN — the stateless backdrop-sampling + OKLab-reduce family (the
@@ -163,7 +164,6 @@ export interface GlassBackdropTargetRect {
     height: number;
 }
 
-const PRM_QUERY = "(prefers-reduced-motion: reduce)";
 /**
  * BI.W-DOCK-LUMA-SHARE — the shared-coverage marker. A SHARED route observer
  * (`shared: true`) stamps this attribute on its target (the route/stage scope); a
@@ -246,10 +246,7 @@ export function useGlassBackdropLuminance(
         };
     }
 
-    // PRM monitor (mirrors the useWebGLCanvas substrate's live matchMedia change
-    // listener) — under reduce the live re-sample loop collapses to a single sample.
-    const prmMql = window.matchMedia(PRM_QUERY);
-    let prefersReduced = prmMql.matches;
+    const prefersReduced = useReducedMotion();
 
     // A reusable offscreen downsample canvas for the animated case.
     let downCanvas: HTMLCanvasElement | null = null;
@@ -418,7 +415,7 @@ export function useGlassBackdropLuminance(
     // ── The rAF loop — THROTTLED to ≤ 4 Hz, only ticks while live + not reduced ──────
     const loop: RAFLoopControls = useRAFLoop(
         ({ now }) => {
-            if (prefersReduced) return; // PRM → the loop is parked (single mount sample)
+            if (prefersReduced.value) return; // PRM → one static sample, then park
             if (now - lastSampleAt < sampleIntervalMs) return; // ≤ 4 Hz throttle
             sampleNow();
         },
@@ -434,7 +431,7 @@ export function useGlassBackdropLuminance(
                 // A covered per-surface observer stays parked (it inherits — never a loop).
                 const el = target.value;
                 if (el && coveredByShared(el)) return;
-                if (wantsLiveLoop() && !prefersReduced) loop.resume();
+                if (wantsLiveLoop() && !prefersReduced.value) loop.resume();
             },
         },
         { rootMargin: "200px" },
@@ -445,7 +442,6 @@ export function useGlassBackdropLuminance(
 
     // ── Arm/disarm the live loop on PRM flips (mirrors the substrate's live monitor) ─
     function applyMotionState(): void {
-        prefersReduced = prmMql.matches;
         // A covered per-surface observer never runs the loop nor samples (it inherits the
         // shared route signal via the cascade — the 12→1 collapse).
         const el = target.value;
@@ -453,7 +449,7 @@ export function useGlassBackdropLuminance(
             loop.stop();
             return;
         }
-        if (prefersReduced) {
+        if (prefersReduced.value) {
             loop.stop();
             sampleNow(); // one static frame under reduce (the substrate freezes too)
         } else if (wantsLiveLoop()) {
@@ -461,10 +457,7 @@ export function useGlassBackdropLuminance(
             loop.start();
         }
     }
-    const onPrmChange = () => applyMotionState();
-    if (typeof prmMql.addEventListener === "function") {
-        prmMql.addEventListener("change", onPrmChange);
-    }
+    const stopMotionWatch = watch(prefersReduced, applyMotionState, { flush: "sync" });
 
     // First sample once the target is present; arm the loop for the live case.
     const stopTargetWatch = watch(
@@ -486,12 +479,10 @@ export function useGlassBackdropLuminance(
 
     function dispose(): void {
         stopTargetWatch();
+        stopMotionWatch();
         loop.dispose();
         io.dispose();
         ro.stop();
-        if (typeof prmMql.removeEventListener === "function") {
-            prmMql.removeEventListener("change", onPrmChange);
-        }
         downCanvas = null;
         downCtx = null;
     }

@@ -2,7 +2,6 @@ export { default as Blob } from "./Blob.vue";
 export type {
     BlobMood,
     BlobMerge,
-    BlobVariant,
     BlobQuality,
     MoodParams,
     MetaballSource,
@@ -33,5 +32,6 @@ export {
 } from "./composables/useBlobSatellites";
 export {
     useMetaballRenderer,
+    type BlobSettledFrame,
     type UseMetaballRendererOptions,
 } from "./composables/useMetaballRenderer";

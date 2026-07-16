@@ -1,47 +1,41 @@
 import { mount } from "@vue/test-utils";
 import { describe, expect, it } from "vitest";
+import { Skeleton } from "@glass/components/skeleton";
 
-import { Skeleton } from "@glass/components/skeleton/index";
-
-describe("Skeleton", () => {
-    it("renders with the pulse variant by default (animate-pulse class)", () => {
+describe("Skeleton contract", () => {
+    it("renders one explicitly decorative reserved shape", () => {
         const wrapper = mount(Skeleton);
-        expect(wrapper.classes()).toContain("animate-pulse");
-        expect(wrapper.classes()).not.toContain("skeleton-shimmer");
-        expect(wrapper.classes()).not.toContain("skeleton-breath");
+
+        expect(wrapper.attributes("data-slot")).toBe("skeleton");
+        expect(wrapper.attributes("aria-hidden")).toBe("true");
+        expect(wrapper.attributes("role")).toBeUndefined();
+        expect(wrapper.element.children).toHaveLength(0);
     });
 
-    it("renders the shimmer class on variant=\"shimmer\"", () => {
-        const wrapper = mount(Skeleton, { props: { variant: "shimmer" } });
-        expect(wrapper.classes()).toContain("skeleton-shimmer");
-        expect(wrapper.classes()).not.toContain("animate-pulse");
-        expect(wrapper.classes()).not.toContain("skeleton-breath");
-    });
-
-    // AI.W4-M.3 — the breath variant is the known-imminent loading
-    // register, distinct from pulse (short-wait) and shimmer (sliding
-    // gradient). The class binding is the contract.
-    it("renders the breath class on variant=\"breath\"", () => {
-        const wrapper = mount(Skeleton, { props: { variant: "breath" } });
-        expect(wrapper.classes()).toContain("skeleton-breath");
-        expect(wrapper.classes()).not.toContain("animate-pulse");
-        expect(wrapper.classes()).not.toContain("skeleton-shimmer");
-    });
-
-    it("merges consumer class with the variant class", () => {
+    it("keeps loading semantics on the parent rather than accepting them itself", () => {
         const wrapper = mount(Skeleton, {
-            props: { variant: "breath", class: "h-12 w-32" },
+            attrs: {
+                role: "status",
+                "aria-label": "Loading",
+                "aria-busy": "true",
+            },
         });
-        expect(wrapper.classes()).toContain("skeleton-breath");
-        expect(wrapper.classes()).toContain("h-12");
-        expect(wrapper.classes()).toContain("w-32");
+
+        expect(wrapper.attributes("aria-hidden")).toBe("true");
+        expect(wrapper.attributes("role")).toBeUndefined();
+        expect(wrapper.attributes("aria-label")).toBeUndefined();
+        expect(wrapper.attributes("aria-busy")).toBeUndefined();
     });
 
-    it("keeps the bg-muted + rounded-input base classes for all variants", () => {
-        for (const variant of ["pulse", "shimmer", "breath"] as const) {
-            const wrapper = mount(Skeleton, { props: { variant } });
-            expect(wrapper.classes()).toContain("bg-muted");
-            expect(wrapper.classes()).toContain("rounded-input");
-        }
+    it("leaves geometry and composition classes to the caller", () => {
+        const wrapper = mount(Skeleton, {
+            props: { class: "h-12 w-32 rounded-full" },
+            attrs: { style: "max-width: 10rem" },
+        });
+
+        expect(wrapper.classes()).toEqual(
+            expect.arrayContaining(["skeleton", "h-12", "w-32", "rounded-full"]),
+        );
+        expect(wrapper.attributes("style")).toContain("max-width: 10rem");
     });
 });

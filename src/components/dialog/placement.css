@@ -33,6 +33,110 @@
     z-index: var(--z-modal);
 }
 
+/* The side sheet is the stationary plate. One stable inner region owns intrinsic
+ * flow; `scroll` adds bounds and overflow to that region only, so toggling it
+ * never reparents focusable content or moves the graded sampler with the scrollport. */
+:where(
+    [data-slot="dialog-content"][data-placement] > [data-slot="dialog-content-region"]
+) {
+    display: grid;
+    align-content: start;
+    gap: 1rem;
+}
+
+:where(
+    [data-slot="dialog-content"][data-placement][data-scroll]
+        > [data-slot="dialog-content-region"]
+) {
+    min-block-size: 0;
+    max-block-size: calc(100dvh - var(--overlay-pad-block) - var(--overlay-pad-block));
+    overflow-y: auto;
+}
+
+:where(
+    [data-slot="dialog-content"][data-placement="left"]
+        > [data-slot="dialog-content-region"],
+    [data-slot="dialog-content"][data-placement="right"]
+        > [data-slot="dialog-content-region"]
+) {
+    display: flex;
+    flex-direction: column;
+    block-size: 100%;
+    min-block-size: 0;
+}
+
+:where(
+    [data-slot="dialog-content"][data-placement="left"]
+        > [data-slot="dialog-content-region"]
+        > :only-child,
+    [data-slot="dialog-content"][data-placement="right"]
+        > [data-slot="dialog-content-region"]
+        > :only-child
+) {
+    min-block-size: 0;
+}
+
+/* BI.W-Q023 — the folded side sheet's graded material edge.
+ *
+ * One fixed 40px backdrop sample is mask-graded from 13/40 opacity at the
+ * viewport-facing edge to full depth 120px inward. That gives the observed
+ * near-sharp crown → deep-frost field without animating a blur radius. The glass
+ * host's flat backdrop sample is removed on this arm, so the decorative child is
+ * the sole sampler for the sheet rather than a nested plate. Ordinary blur() plus
+ * mask-image is Safari-safe: no url() filter, parallel clock, or Drawer coupling.
+ * Opaque and veil sheets keep their own material and render no band. */
+:where([data-slot="dialog-content"][data-placement][data-surface="glass"]) {
+    isolation: isolate;
+    backdrop-filter: none;
+}
+
+:where([data-slot="dialog-graded-edge"]) {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(
+        var(--sheet-edge-direction),
+        color-mix(in oklab, var(--glass-bg-overlay) 10%, transparent) 0,
+        color-mix(in oklab, var(--glass-bg-overlay) 16%, transparent) 40px,
+        color-mix(in oklab, var(--glass-bg-overlay) 34%, transparent) 120px,
+        color-mix(in oklab, var(--glass-bg-overlay) 34%, transparent) 100%
+    );
+    backdrop-filter: blur(calc(40px * var(--glass-level)))
+        saturate(var(--glass-saturate-overlay));
+    mask-image: linear-gradient(
+        var(--sheet-edge-direction),
+        rgb(0 0 0 / 0.325) 0,
+        rgb(0 0 0 / 0.45) 40px,
+        black 120px,
+        black 100%
+    );
+}
+
+:where([data-slot="dialog-content"][data-placement="top"])
+    > [data-slot="dialog-graded-edge"] {
+    --sheet-edge-direction: to top;
+}
+:where([data-slot="dialog-content"][data-placement="bottom"])
+    > [data-slot="dialog-graded-edge"] {
+    --sheet-edge-direction: to bottom;
+}
+:where([data-slot="dialog-content"][data-placement="left"])
+    > [data-slot="dialog-graded-edge"] {
+    --sheet-edge-direction: to left;
+}
+:where([data-slot="dialog-content"][data-placement="right"])
+    > [data-slot="dialog-graded-edge"] {
+    --sheet-edge-direction: to right;
+}
+
+@media (prefers-reduced-transparency: reduce), (forced-colors: active) {
+    :where([data-slot="dialog-graded-edge"]) {
+        display: none;
+    }
+}
+
 /* Top/bottom side sheets span the full width (left:0;right:0), anchor to their edge. */
 :where([data-slot="dialog-content"][data-placement="top"]) {
     left: 0;

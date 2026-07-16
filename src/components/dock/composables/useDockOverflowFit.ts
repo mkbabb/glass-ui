@@ -6,8 +6,7 @@ import { onMounted, onUnmounted, watch, type Ref } from "vue";
  * container-query / measured branch"): it toggles `[data-dock-overflow]` on the dock root
  * when content exceeds the horizontal full-layer port or vertical root scroll host.
  * The overflow.css scroll track + FadingScroll edge mask engage ONLY under that attr, so
- * at rest (fits) the mask is `none` (T-52 a — no 0px-fade shave) and the fisheye is FREE
- * (fisheye.css gates on `:not([data-dock-overflow])`, the exclusive-mode ruling).
+ * at rest (fits) the mask is `none` (T-52 a — no 0px-fade shave).
  *
  * G9 / O5 — ZERO SCROLL LISTENER. The measure is RESIZE- and CONTENT-driven (a
  * `ResizeObserver` on the dock + the port, plus a narrowly filtered `MutationObserver`
@@ -36,7 +35,7 @@ export function useDockOverflowFit(dockEl: Ref<HTMLElement | null>) {
         const vertical = dock.classList.contains("vertical");
         const scrollHost = vertical ? dock : p;
         // > 1 (not > 0) tolerates sub-pixel rounding so a flush-fitting row never flickers
-        // the attr on/off (which would thrash the mask + fisheye gate).
+        // the attr on/off (which would thrash the mask).
         const overflow = vertical
             ? scrollHost.scrollHeight - scrollHost.clientHeight > 1
             : scrollHost.scrollWidth - scrollHost.clientWidth > 1;

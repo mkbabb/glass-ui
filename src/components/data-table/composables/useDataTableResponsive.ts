@@ -1,14 +1,4 @@
-// AW.W14 — DataTable responsive card-vs-table projection (colocated, INTERNAL).
-//
-// The second of the two orthogonal concerns extracted from DataTable.vue: the
-// container-driven card-vs-table projection. Given the container width signal +
-// the `responsive` / `cardBreakpoint` props + the columns, it derives `isCard`
-// (the projection toggle) and the card column split (`headerColumn` = the first
-// column's header line, `bodyColumns` = the rest as label/value pairs). The SFC
-// owns the `useResizeObserver` binding (it holds the root element ref) and feeds
-// the measured width in; this composable owns only the derivation.
-//
-// NOT exported from the package barrel; the SFC is its only consumer.
+// Internal container-driven table/card projection.
 import { computed, type ComputedRef, type MaybeRefOrGetter, toValue } from "vue";
 import type { DataTableColumn } from "../types";
 

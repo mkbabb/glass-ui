@@ -133,8 +133,8 @@
 
     /* ── BG.W-DOCK-GLYPH-RIGID — RIGID CONTENT over the morphing box ───────────────
        The box-scale rule above scales the WHOLE `.glass-dock` subtree — including the
-       glyphs — by `--dock-size-scale` on the morph axis. The two direct-child CONTENT
-       containers (`.dock-persistent` + `.dock-layers`) carry the PER-FRAME INVERSE of
+       glyphs — by `--dock-size-scale` on the morph axis. The two `.dock-controls`
+       children (`.dock-persistent` + `.dock-layers`) carry the PER-FRAME INVERSE of
        that size factor so the composited glyph reads its intrinsic 1:1 aspect in every
        frame while the box scales the footprint. A child multiplies its parent's
        `scale`, so `1 / max(--dock-size-scale, 0.06)` on the morph axis exactly cancels
@@ -150,13 +150,13 @@
        `[data-morphing]` (the residual transform lives ONLY mid-morph); at settle the
        attr clears → both rules drop to `scale: none` over the TRUE box, content
        byte-rigid, ZERO compositing cost at rest (`proof:no-layout-animation` holds). */
-    .glass-dock[data-morphing]:not(.vertical) > .dock-persistent,
-    .glass-dock[data-morphing]:not(.vertical) > .dock-layers {
+    .glass-dock[data-morphing]:not(.vertical) > .dock-controls > .dock-persistent,
+    .glass-dock[data-morphing]:not(.vertical) > .dock-controls > .dock-layers {
         scale: calc(1 / max(var(--dock-size-scale, 1), 0.06)) 1;
         will-change: transform;
     }
-    .glass-dock[data-morphing].vertical > .dock-persistent,
-    .glass-dock[data-morphing].vertical > .dock-layers {
+    .glass-dock[data-morphing].vertical > .dock-controls > .dock-persistent,
+    .glass-dock[data-morphing].vertical > .dock-controls > .dock-layers {
         scale: 1 calc(1 / max(var(--dock-size-scale, 1), 0.06));
         will-change: transform;
     }
@@ -180,7 +180,7 @@
        dock's elevation is carried by `--shadow-dock` (the omni drop-shadow painted
        from the dock box, so it escapes the radius correctly + in-gamut) +
        `--glass-key` (the cel rim) — both KEPT. The shared `.cartoon-cast` base rule
-       (cards.css) + its glass-atom / btn-punch consumers are UNTOUCHED — only the
+       (cards.css) + its glass-atom consumers are untouched — only the
        DOCK cast is retired. */
     @media (prefers-reduced-motion: reduce) {
         .glass-dock {

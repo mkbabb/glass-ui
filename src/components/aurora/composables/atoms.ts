@@ -87,15 +87,13 @@ export type AuroraMediumAtom =
  * (`frameLoop.ts`/`useAurora.ts`); the declared-but-unwired `flow`/`wake` axes are
  * EXCISED from the shipped atom shape (no declared-but-dead axis — excise-or-wire).
  */
-export interface AuroraInteractivityAtom {
-    /** cursor drives the impasto light direction (cursor-as-light + idle orbit). */
-    light?: boolean;
+export interface AuroraFieldInteractivityAtom {
     /** palette/breath progress couples to scroll (via useScrollProgress). */
     scroll?: boolean;
     /**
      * BI.W-FIELD-CORE (FC6/T-38) — the cursor SWIRL/luminance-lean axis, MEDIUM-GATED. On the
      * `smooth` medium the cursor reads as a local LUMINANCE LEAN (engagement-driven, via the
-     * `auroraCursorMapping` strength → `uCursorStrength`, ZERO shader edit) instead of the dead
+     * `auroraCursorMapping` strength → `uCursorStrength`) instead of the dead
      * impasto light the `light` axis drives ONLY on the painterly mediums — the T-38 "the
      * swirl/burst axes are perceptually DEAD on the smooth medium" fix. Default coupled to
      * `light` when unset (an interactive config reads on EVERY medium, not just painterly).
@@ -103,18 +101,31 @@ export interface AuroraInteractivityAtom {
     swirl?: boolean;
     /**
      * BI.W-FIELD-CORE (FC6) — the SIZED amplitude atom (0..1, default 0.5). Sizes the cursor's
-     * field influence — how much the velocity BURST perturbs the domain-warp path near the
-     * cursor (routed through the existing `uCursorBurst`/`uWarp*` uniforms — no shader edit).
+     * field influence — how much the velocity burst lifts the CPU-projected cursor strength.
      */
     amplitude?: number;
 }
+
+/** Smooth fields expose the cursor field but have no directional impasto light. */
+export interface AuroraSmoothInteractivityAtom extends AuroraFieldInteractivityAtom {
+    light?: never;
+}
+
+/** Textured media may additionally steer their directional light from the cursor. */
+export interface AuroraPainterlyInteractivityAtom extends AuroraFieldInteractivityAtom {
+    light?: boolean;
+}
+
+export type AuroraInteractivityAtom =
+    | AuroraSmoothInteractivityAtom
+    | AuroraPainterlyInteractivityAtom;
 
 /**
  * The Tier-1 atoms of control (≤7) — the user's named control elements. EVERY atom is
  * OPTIONAL; an absent atom keeps the wispy-sky default for the fields it would drive,
  * so `DEFAULT_ATOMS` (the empty set) resolves to `DEFAULT_AURORA_CONFIG`.
  */
-export interface AuroraAtoms {
+interface AuroraAtomsBase {
     // ── COLOR (the user's "color" control element — seed + scheme + energy) ──
     /** A seed color (CSS string or an OklchStop anchor) → drives the derived palette. */
     seed?: string | OklchStop;
@@ -182,18 +193,30 @@ export interface AuroraAtoms {
      */
     noise?: number;
 
-    // ── MEDIUM (the user's "medium" control element — medium + texture) ──
-    /** The painterly medium + (textured mediums only) its dominant texture amount. */
-    medium?: AuroraMediumAtom;
-
     // ── MOTION (the user's "motion" control element) ──
     /** still | breathing | drifting — the three motion registers. */
     motion?: AuroraMotionAtom;
 
-    // ── interactivity (only the wired axes) ──
-    /** The pointer/scroll interactivity axes (default OFF). Only `light`/`scroll` ship. */
-    interactivity?: AuroraInteractivityAtom;
 }
+
+/**
+ * The medium-discriminated atoms surface. Smooth fields retain swirl/scroll/amplitude but
+ * reject the directional `light` axis; textured media expose it explicitly.
+ */
+export type AuroraAtoms = AuroraAtomsBase &
+    (
+        | {
+              medium?: { kind: "smooth" };
+              interactivity?: AuroraSmoothInteractivityAtom;
+          }
+        | {
+              medium: {
+                  kind: Exclude<AuroraMedium, "smooth">;
+                  amount?: number;
+              };
+              interactivity?: AuroraPainterlyInteractivityAtom;
+          }
+    );
 
 /**
  * The default atoms — the EMPTY set. `resolveAtoms(DEFAULT_ATOMS)` deep-equals the
@@ -238,8 +261,10 @@ export function nucleiPrior(
         [0.67, 0.67],
         [0.67, 0.33],
         [0.33, 0.67],
-        [0.5, 0.5],
         [0.5, 0.33],
+        [0.5, 0.67],
+        [0.33, 0.5],
+        [0.67, 0.5],
     ];
 
     const placeAt = (i: number): [number, number] => {
@@ -476,11 +501,15 @@ export function resolveAtoms(
     //    sized amplitude atom; default OFF). MEDIUM-GATED: `swirl` defaults ON whenever
     //    interactivity is engaged so the cursor reads on the `smooth` medium (the T-38
     //    dead-axis fix — the engagement-driven `auroraCursorMapping` strength paints the
-    //    cursor-local luminance lean without a shader edit), not just the painterly `light`.
+    //    cursor-local luminance lean), not just the painterly `light`.
     if (atoms.interactivity !== undefined) {
         const it = atoms.interactivity;
+        const light = atoms.medium?.kind !== undefined && atoms.medium.kind !== "smooth"
+            ? atoms.interactivity.light
+            : undefined;
         cfg.interactivity = {
-            ...it,
+            ...(light !== undefined ? { light } : {}),
+            ...(it.scroll !== undefined ? { scroll: it.scroll } : {}),
             // The smooth-medium interactivity reads by default (swirl ON) — the dead-axis fix.
             swirl: it.swirl ?? true,
             // The sized amplitude atom — clamped 0..1 (default balanced 0.5).
@@ -516,12 +545,17 @@ export function resolveAtoms(
  */
 export function configToAtoms(cfg: AuroraConfig): AuroraAtoms {
     const kind = cfg.medium;
-    const medium: AuroraMediumAtom =
-        kind === "smooth"
-            ? { kind }
-            : { kind, amount: textureAmountFor(cfg, kind) };
-
-    return {
+    const it = cfg.interactivity;
+    const field =
+        it &&
+        (it.scroll !== undefined || it.swirl !== undefined || it.amplitude !== undefined)
+            ? {
+                  ...(it.scroll !== undefined ? { scroll: it.scroll } : {}),
+                  ...(it.swirl !== undefined ? { swirl: it.swirl } : {}),
+                  ...(it.amplitude !== undefined ? { amplitude: it.amplitude } : {}),
+              }
+            : undefined;
+    const base: AuroraAtomsBase = {
         // COLOR — seed off palette[0]; harmony is baked into the palette (door default).
         seed: cfg.palette.length > 0 ? oklchStopToHex(cfg.palette[0]!) : "#3a7bd5",
         harmony: "analogous",
@@ -539,7 +573,20 @@ export function configToAtoms(cfg: AuroraConfig): AuroraAtoms {
         },
         // NOISE inverts off warpAmount (the applyNoise primary axis: lerp(0.2, 0.6, t)).
         noise: unlerp(cfg.warpAmount, 0.2, 0.6),
-        medium,
         motion: motionFor(cfg),
     };
+    return kind === "smooth"
+        ? { ...base, medium: { kind }, ...(field ? { interactivity: field } : {}) }
+        : {
+              ...base,
+              medium: { kind, amount: textureAmountFor(cfg, kind) },
+              ...(field || it?.light !== undefined
+                  ? {
+                        interactivity: {
+                            ...field,
+                            ...(it?.light !== undefined ? { light: it.light } : {}),
+                        },
+                    }
+                  : {}),
+          };
 }

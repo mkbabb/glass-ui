@@ -8,10 +8,9 @@
 // reveal's inverse. CTA-rect → fly+reshape → land-on-dock-control → hand-off.
 //
 // BG.W-MOTION-SPINE — this is now a THIN wrapper over `useElementMorph` (the ONE compositor
-// FLIP runner). It owns NO rAF loop, NO `ElementMorph`, NO spring sample — it declares the
-// morph as a FORWARD play (`direction: "out"`, `to: dockControl`, center origin) with the
-// opacity + blur channels and the runner's `onSettled` hand-off. A CONSUMING seam BESIDE
-// W-DOCK-MORPH-FAMILY — it does NOT touch `dockMorphContext`/`dockMorphMeasure`/`DOCK_SPRING`
+// FLIP runner). It owns no scheduler or private spring; it declares the CTA and dock
+// control as explicit endpoints with opacity + blur on the owner's clock. A consuming seam beside
+// W-DOCK-MORPH-FAMILY — it does NOT touch `useDockMorph`/`dockMorphMeasure`/`DOCK_SPRING`
 // (the dock's own collapse/expand morph is W-DOCK-MORPH-FAMILY's; this morphs an EXTERNAL
 // element onto a dock control beside it). Keyframes-bearing (via the runner) → `/motion`
 // ONLY, never the root barrel (the SCC-trap discipline).
@@ -131,9 +130,8 @@ export interface UseDockCtaReceiveReturn {
 }
 
 /**
- * The external-CTA-into-dock-control morph. A ≤20-line adapter over `useElementMorph` —
- * declares the receive as a `direction: "out"` FORWARD play flying ONTO the dock control,
- * opacity + blur coupled, the runner's `onSettled` firing the seat clear + `onReceived`.
+ * The external-CTA-into-dock-control morph. A small adapter over `useElementMorph`
+ * declares the CTA→control endpoints and couples opacity + blur to its settle hand-off.
  * The seat writes (`setPending`/`clearPending`) stay wrapper-local (data-attr, not motion).
  *
  * @example
@@ -240,9 +238,8 @@ export function useDockCtaReceive(
     }
 
     const engine = useElementMorph(cta, {
-        direction: "out",
-        to: options.dockControl,
-        origin: "center",
+        source: "self",
+        destination: options.dockControl,
         preset: options.preset ?? "snappy",
         respectReducedMotion: options.respectReducedMotion,
         channels: { opacity: true, blur: options.blur ?? 4 },

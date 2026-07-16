@@ -169,7 +169,7 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
                 { storyId: "checks", label: "Checkbox · Radio · Switch" },
                 { storyId: "slider", label: "Slider" },
                 { storyId: "toggle", label: "Toggle · Toggle Group" },
-                { storyId: "toggle-chip", label: "Toggle Chip" },
+                { storyId: "chip", label: "Chip" },
             ],
         },
     ],
@@ -192,7 +192,6 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             entries: [
                 { storyId: "buttons", label: "Buttons" },
                 { storyId: "badge", label: "Badge" },
-                { storyId: "metric-badge", label: "Metric Badge" },
                 { storyId: "status-dot", label: "Status Dot" },
             ],
         },
@@ -294,8 +293,7 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             accent: "var(--section-color-7)",
             entries: [
                 { storyId: "timeline", label: "Timeline" },
-                { storyId: "metric-cell", label: "Metric Cell" },
-                { storyId: "metric-stack", label: "Metric Stack" },
+                { storyId: "metric", label: "Metric" },
             ],
         },
     ],
@@ -308,7 +306,6 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             entries: [
                 { storyId: "alert", label: "Alert" },
                 { storyId: "toast", label: "Toast" },
-                { storyId: "notification", label: "Notification" },
             ],
         },
         {
@@ -330,7 +327,7 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             accent: "var(--section-color-2)",
             entries: [
                 { storyId: "springs", label: "Spring Orchestrator" },
-                { storyId: "curve-gallery", label: "Curve Gallery" },
+                { storyId: "curve-gallery", label: "Motion Lab" },
             ],
         },
         {

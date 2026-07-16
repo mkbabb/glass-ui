@@ -1,9 +1,5 @@
 <script setup lang="ts">
-// LabeledField family — a parent SFC + 4 sibling primitives forwarding to the
-// underlying Input / Select / Slider / Switch with a baked-in tooltip-bearing
-// label. The LabeledField parent owns the IconTooltip + label layer.
-import { computed, ref } from "vue";
-import { Eye, EyeOff, X } from "@lucide/vue";
+import { ref } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
@@ -14,151 +10,111 @@ import {
     LabeledSlider,
     LabeledSwitch,
 } from "@glass/components/labeled-field";
-import { Input } from "@glass/components/input";
-import { Button } from "@glass/components/button";
+import { Textarea } from "@glass/components/textarea";
 
-const text = ref("hello");
-const choice = ref("Alpha");
+const name = ref("");
+const email = ref("not-an-address");
+const bio = ref("");
+const choice = ref("Balanced");
 const choiceOpen = ref(false);
-const slider = ref(40);
+const intensity = ref(64);
 const enabled = ref(true);
-
-const choices = ["Alpha", "Beta", "Gamma"];
-
-// BC.W-CONTROL-SMOOTH move C (kf-G3) — the ≥2-consumer bar for the LabeledField
-// `#action` slot: the canonical horizontal-action cases. Consumer #1 a clear-input
-// (an `X` that empties the field); consumer #2 a reveal-password (an eye that toggles
-// the input type). Each action button binds `:aria-label` (an icon-only button has no
-// text content — the name-on-the-focusable contract) + inherits `.focus-ring` +
-// `.tap-squish` + the quick `transition-control` clock + the pill radius by construction.
-const search = ref("aurora preset");
-const password = ref("hunter2");
-const revealed = ref(false);
-const revealLabel = computed(() => (revealed.value ? "Hide password" : "Show password"));
+const choices = ["Quiet", "Balanced", "Vivid"];
 </script>
 
 <template>
     <StoryPage>
         <StorySection
-            label="four siblings"
-            blurb="LabeledInput, LabeledSelect, LabeledSlider, LabeledSwitch — each forwards to an underlying primitive with shared label + IconTooltip + .labeled-field-label typography. The parent <LabeledField> owns the layer."
+            label="field anatomy"
+            blurb="One visible label, optional supporting copy, the control, and an explicit error. Requirement and state stay aligned with the control rather than becoming decoration."
         >
             <ShowcaseFrame pad="lg">
                 <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                    <LabeledInput v-model="name" label="Workspace name" />
                     <LabeledInput
-                        v-model="text"
-                        label="Name"
-                        tooltip="The display name surfaces across the dock."
+                        v-model="name"
+                        label="Display name"
+                        description="Shown to collaborators in shared workspaces."
+                        requirement="optional"
                     />
+                    <LabeledInput
+                        v-model="name"
+                        label="Release name"
+                        description="Names the published revision."
+                        requirement="required"
+                    />
+                    <LabeledInput
+                        v-model="email"
+                        label="Notification email"
+                        description="Used only for release notices."
+                        type="email"
+                        invalid
+                    >
+                        <template #error>Enter a valid email address.</template>
+                    </LabeledInput>
+                    <LabeledInput
+                        model-value="Locked by policy"
+                        label="Organization"
+                        description="Managed by your workspace administrator."
+                        disabled
+                    />
+                </div>
+            </ShowcaseFrame>
+        </StorySection>
+
+        <StorySection
+            label="control adapters"
+            blurb="Thin adapters share the same field anatomy while Input, Select, Slider, and Switch retain their own behavior and paint."
+        >
+            <ShowcaseFrame pad="lg">
+                <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                     <LabeledSelect
                         v-model="choice"
-                        v-model:is-open="choiceOpen"
-                        label="Variant"
-                        tooltip="Which preset baseline to start from."
+                        v-model:open="choiceOpen"
                         :items="choices"
+                        label="Atmosphere"
+                        description="Sets the starting visual intensity."
                     />
                     <LabeledSlider
-                        v-model="slider"
-                        label="Spread"
-                        tooltip="Field spread, 0-100."
+                        v-model="intensity"
                         :min="0"
                         :max="100"
-                        :step="1"
+                        label="Intensity"
+                        description="Balances the procedural field against the content."
                     />
                     <LabeledSwitch
-                        v-model:checked="enabled"
-                        label="Grain overlay"
-                        tooltip="Layer the paper-grain SVG above the underlying surface."
+                        v-model="enabled"
+                        label="Paper grain"
+                        description="Adds a quiet material texture above the field."
                     />
-                </div>
-            </ShowcaseFrame>
-        </StorySection>
-
-        <StorySection
-            label="horizontal action-slot"
-            blurb="A labeled control carrying a TRAILING action affordance beside the field via the #action slot. The slot is additive (no #action slot leaves the plain stacked field unchanged); the action button binds :aria-label (an icon-only button needs a name), inherits .focus-ring + .tap-squish + the quick transition-control clock + the pill radius. Two canonical cases: a clear-input + a reveal-password."
-        >
-            <ShowcaseFrame pad="lg">
-                <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-                    <!-- consumer #1 — clear-input -->
                     <LabeledField
-                        label="Search"
-                        tooltip="Type to filter; clear with the trailing button."
+                        label="Release notes"
+                        description="A direct slot covers controls outside the adapter set."
                     >
-                        <template #default="{ controlId }">
-                            <Input :id="controlId" v-model="search" placeholder="Search presets" />
-                        </template>
-                        <template #action>
-                            <Button
-                                variant="ghost"
-                                iconOnly
-                                aria-label="Clear search"
-                                :disabled="!search"
-                                @click="search = ''"
-                            >
-                                <X />
-                            </Button>
-                        </template>
-                    </LabeledField>
-
-                    <!-- consumer #2 — reveal-password -->
-                    <LabeledField
-                        label="Password"
-                        tooltip="Toggle visibility with the trailing button."
-                    >
-                        <template #default="{ controlId }">
-                            <Input
+                        <template #default="{ controlId, describedBy }">
+                            <Textarea
                                 :id="controlId"
-                                v-model="password"
-                                :type="revealed ? 'text' : 'password'"
+                                v-model="bio"
+                                :aria-describedby="describedBy"
+                                resize="content"
+                                placeholder="Summarize this revision…"
                             />
                         </template>
-                        <template #action>
-                            <Button
-                                variant="ghost"
-                                iconOnly
-                                :aria-label="revealLabel"
-                                @click="revealed = !revealed"
-                            >
-                                <EyeOff v-if="revealed" />
-                                <Eye v-else />
-                            </Button>
-                        </template>
                     </LabeledField>
                 </div>
             </ShowcaseFrame>
         </StorySection>
 
         <StorySection
-            label="parent SFC — direct slot composition"
-            blurb="LabeledField directly accepts any form control via <slot /> for cases where the four wrappers don't fit (e.g. multi-select, custom popover)."
+            label="responsive composition"
+            blurb="The horizontal field preserves label-before-control document order and returns to the same stacked anatomy at the narrow viewport."
         >
-            <ShowcaseFrame pad="md">
-                <LabeledField
-                    label="Custom"
-                    tooltip="Passes through any slotted control."
-                    v-slot="{ controlId }"
-                >
-                    <input
-                        :id="controlId"
-                        type="email"
-                        class="rounded-md border border-border bg-background px-3 py-1.5 text-sm"
-                        placeholder="user@example.com"
-                    />
-                </LabeledField>
-            </ShowcaseFrame>
-        </StorySection>
-
-        <StorySection
-            label="labelClass override"
-            blurb="Each wrapper accepts labelClass / inputClass overrides for the rare case where the canonical typography needs to bend."
-        >
-            <ShowcaseFrame pad="md">
+            <ShowcaseFrame pad="lg">
                 <LabeledInput
-                    v-model="text"
-                    label="Custom Label"
-                    tooltip="With a custom label class."
-                    label-class="text-warning font-bold"
+                    v-model="name"
+                    label="Project title"
+                    description="Horizontal with room; stacked when the viewport narrows."
+                    layout="horizontal"
                 />
             </ShowcaseFrame>
         </StorySection>

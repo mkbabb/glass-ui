@@ -9,8 +9,8 @@
 // `stopPropagation` (SAF-1); PASSIVE so it can NEVER `preventDefault`; it NEVER focuses or
 // steals a click — it only READS the pointer and broadcasts the normalized position.
 //
-// PRM + paused gated: under `prefers-reduced-motion: reduce` (a single cached matchMedia,
-// the AV.W7 substrate pattern) OR while the route reports `paused` (the WCAG-2.2.2 pause
+// PRM + paused gated: under the shared reduced-motion authority OR while the route
+// reports `paused` (the WCAG-2.2.2 pause
 // control), the broadcaster HOLDS its last value + reports inactive — the backgrounds freeze.
 //
 // ONE listener per route: the first caller (the route chassis, `StoryHero`) provides the
@@ -23,11 +23,13 @@ import {
     readonly,
     ref,
     toValue,
+    watch,
     type InjectionKey,
     type MaybeRefOrGetter,
     type Ref,
 } from "vue";
 import type { PointerVec2 } from "./usePointerVelocityField";
+import { useReducedMotion } from "./useReducedMotion";
 
 export type { PointerVec2 };
 
@@ -43,8 +45,6 @@ export interface RoutePointerContext {
 const ROUTE_POINTER_KEY: InjectionKey<RoutePointerContext> = Symbol(
     "glass-ui:route-pointer",
 );
-
-const PRM_QUERY = "(prefers-reduced-motion: reduce)";
 
 export interface UseRoutePointerOptions {
     /**
@@ -93,18 +93,13 @@ export function useRoutePointer(
     const respectPRM = options.respectReducedMotion !== false;
     const canWindow = typeof window !== "undefined";
 
-    // The cached PRM ref (ONE matchMedia + change listener, not per-event).
-    const prmQuery =
-        canWindow && typeof window.matchMedia === "function"
-            ? window.matchMedia(PRM_QUERY)
-            : null;
-    let reduced = prmQuery?.matches ?? false;
+    const reduced = respectPRM ? useReducedMotion() : ref(false);
 
     const pointer = ref<PointerVec2>({ x: 0.5, y: 0.5 });
     const active = ref(false);
 
     function silenced(): boolean {
-        return (respectPRM && reduced) || toValue(options.paused) === true;
+        return reduced.value || toValue(options.paused) === true;
     }
 
     function onMove(event: PointerEvent): void {
@@ -127,10 +122,13 @@ export function useRoutePointer(
         active.value = false;
     }
 
-    const onPrmChange = (e: MediaQueryListEvent): void => {
-        reduced = e.matches;
-        if (reduced) active.value = false;
-    };
+    const stopReducedMotionWatch = watch(
+        reduced,
+        (next) => {
+            if (next) active.value = false;
+        },
+        { flush: "sync" },
+    );
 
     if (canWindow) {
         // Capture-phase + passive: survives a foreground child stopPropagation (SAF-1),
@@ -139,7 +137,6 @@ export function useRoutePointer(
         // The pointer leaving the viewport / the tab blurring drops active (no ghost well).
         document.addEventListener("pointerleave", onLeaveOrBlur);
         window.addEventListener("blur", onLeaveOrBlur);
-        prmQuery?.addEventListener("change", onPrmChange);
     }
 
     function dispose(): void {
@@ -147,7 +144,7 @@ export function useRoutePointer(
         window.removeEventListener("pointermove", onMove, { capture: true } as EventListenerOptions);
         document.removeEventListener("pointerleave", onLeaveOrBlur);
         window.removeEventListener("blur", onLeaveOrBlur);
-        prmQuery?.removeEventListener("change", onPrmChange);
+        stopReducedMotionWatch();
     }
 
     onScopeDispose(dispose);

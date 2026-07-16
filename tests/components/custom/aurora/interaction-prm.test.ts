@@ -1,7 +1,7 @@
 // BI.W-FIELD-CORE — the interaction PRM-suppression suite (re-pointed off the retired
 // cursorModel onto the shared `usePointerVelocityField`, the aurora cursor's successor).
 //
-// Every interactive axis (cursor-as-light, velocity-burst, scroll, the WebGPU wake) routes
+// Every cursor-field axis routes
 // through the MASTER TEMPO SCALAR — the single suppression seam PRM + the DockBackgroundToggle
 // pause converge on. In the field era the tempo gates the field TICK: `pointerField.tick(0)`
 // (the deterministic FREEZE) zeroes the velocity + burst; a live tick retains them. This suite
@@ -21,6 +21,11 @@ import {
     auroraCursorMapping,
     snapshotField,
 } from "@glass/composables/motion/pointerFieldMappings";
+import {
+    isAuroraPointerEnabled,
+    resolveAuroraRenderTime,
+} from "@glass/components/aurora/composables/runtime";
+import { DEFAULT_AURORA_CONFIG } from "@glass/components/aurora/constants/presets";
 
 // The field calls `onScopeDispose`; run it inside an effect scope so the disposer registers.
 // `respectReducedMotion:false` so the deterministic tick(0) drives the freeze (not the env's
@@ -46,6 +51,49 @@ function flick(field: ReturnType<typeof usePointerVelocityField>): void {
 }
 
 describe("BI.W-FIELD-CORE — the master tempo scalar (tick(0)) freezes the interactive field under PRM", () => {
+    it("uses one medium-aware predicate for pointer writes and uniforms", () => {
+        expect(
+            isAuroraPointerEnabled({
+                ...DEFAULT_AURORA_CONFIG,
+                medium: "smooth",
+                interactivity: { light: true },
+            }),
+        ).toBe(false);
+        expect(
+            isAuroraPointerEnabled({
+                ...DEFAULT_AURORA_CONFIG,
+                medium: "smooth",
+                interactivity: { swirl: true },
+            }),
+        ).toBe(true);
+        expect(
+            isAuroraPointerEnabled({
+                ...DEFAULT_AURORA_CONFIG,
+                medium: "oil",
+                interactivity: { light: true },
+            }),
+        ).toBe(true);
+    });
+
+    it("maps opt-in scroll progress to shader time while PRM stays frozen", () => {
+        const config = {
+            ...DEFAULT_AURORA_CONFIG,
+            breathPeriod: 40,
+            interactivity: { scroll: true },
+        };
+        expect(resolveAuroraRenderTime(config, 2, 0.5, false)).toBe(22);
+        expect(resolveAuroraRenderTime(config, 2, 2, false)).toBe(42);
+        expect(resolveAuroraRenderTime(config, 2, 0.5, true)).toBe(3.7);
+        expect(
+            resolveAuroraRenderTime(
+                { ...config, interactivity: undefined },
+                2,
+                0.5,
+                false,
+            ),
+        ).toBe(2);
+    });
+
     it("tick(0) FREEZES the velocity + burst to stillness", () => {
         withField((field) => {
             flick(field);
@@ -97,6 +145,17 @@ describe("BI.W-FIELD-CORE — the master tempo scalar (tick(0)) freezes the inte
             const active = auroraCursorMapping(snapshotField(field), { strength: 0.8 });
             expect(active.strength).toBeGreaterThan(rest.strength);
             expect(active.strength).toBeLessThanOrEqual(0.8);
+        });
+    });
+
+    it("folds the named burst amplitude into the shared bounded strength", () => {
+        withField((field) => {
+            flick(field);
+            const snap = snapshotField(field);
+            const steady = auroraCursorMapping(snap, { strength: 0.8, amplitude: 0 });
+            const responsive = auroraCursorMapping(snap, { strength: 0.8, amplitude: 0.75 });
+            expect(responsive.strength).toBeGreaterThan(steady.strength);
+            expect(responsive.strength).toBeLessThanOrEqual(1);
         });
     });
 

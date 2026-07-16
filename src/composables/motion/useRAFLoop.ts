@@ -13,6 +13,7 @@ import {
 // engine-free (`/motion-core`), so this import introduces no keyframes/vueuse
 // edge.
 import { yieldToMain } from "./useYieldToMain";
+import { useReducedMotion } from "./useReducedMotion";
 // AV.W14 — the shared `visibilitychange` leaf (engine-free, vue-only): the
 // single source for the document-visibility listener the motion composables
 // previously hand-rolled. Imported directly (not via the dom/ barrel) so it
@@ -67,8 +68,6 @@ export interface RAFLoopControls {
     yieldToMain: () => Promise<void>;
 }
 
-const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
-
 function getRequestAnimationFrame(): typeof requestAnimationFrame | null {
     return typeof globalThis.requestAnimationFrame === "function"
         ? globalThis.requestAnimationFrame.bind(globalThis)
@@ -79,10 +78,6 @@ function getCancelAnimationFrame(): typeof cancelAnimationFrame | null {
     return typeof globalThis.cancelAnimationFrame === "function"
         ? globalThis.cancelAnimationFrame.bind(globalThis)
         : null;
-}
-
-function getWindow(): Window | null {
-    return typeof window === "undefined" ? null : window;
 }
 
 /**
@@ -100,7 +95,8 @@ export function useRAFLoop(
     } = options;
 
     const isActive = ref(false);
-    const isReducedMotion = ref(false);
+    const reducedPreference = respectReducedMotion ? useReducedMotion() : ref(false);
+    const isReducedMotion = computed(() => reducedPreference.value);
     // Seeded from the visibility leaf below when `pauseWhenHidden`; `false` otherwise.
     const isDocumentHidden = ref(false);
     const isRequested = ref(false);
@@ -112,7 +108,7 @@ export function useRAFLoop(
             !isActive.value &&
             (isManuallyPaused.value ||
                 isDocumentHidden.value ||
-                (respectReducedMotion && isReducedMotion.value) ||
+                isReducedMotion.value ||
                 !getRequestAnimationFrame()),
     );
 
@@ -121,7 +117,9 @@ export function useRAFLoop(
     let elapsed = 0;
     let frame = 0;
     let disposed = false;
-    let removeReducedMotionListener: (() => void) | null = null;
+    let stopReducedMotionWatch: (() => void) | null = null;
+    let stopVisibilityWatch: (() => void) | null = null;
+    let disposeVisibility: (() => void) | null = null;
 
     function canRun(): boolean {
         return (
@@ -129,7 +127,7 @@ export function useRAFLoop(
             isRequested.value &&
             !isManuallyPaused.value &&
             !isDocumentHidden.value &&
-            !(respectReducedMotion && isReducedMotion.value) &&
+            !isReducedMotion.value &&
             Boolean(getRequestAnimationFrame())
         );
     }
@@ -156,8 +154,7 @@ export function useRAFLoop(
                 return;
             }
 
-            const delta =
-                lastFrameTime === null ? 0 : Math.max(0, now - lastFrameTime);
+            const delta = lastFrameTime === null ? 0 : Math.max(0, now - lastFrameTime);
             lastFrameTime = now;
             elapsed += delta;
             callback({ now, delta, elapsed, frame: frame++ });
@@ -212,11 +209,13 @@ export function useRAFLoop(
     }
 
     if (pauseWhenHidden) {
-        const { hidden } = useDocumentVisibility();
+        const visibility = useDocumentVisibility();
+        const { hidden } = visibility;
+        disposeVisibility = visibility.dispose;
         isDocumentHidden.value = hidden.value;
         // `flush: 'sync'` so the visibility reaction is synchronous — matches
         // the prior hand-rolled `visibilitychange` listener's timing exactly.
-        watch(
+        stopVisibilityWatch = watch(
             hidden,
             (next) => {
                 isDocumentHidden.value = next;
@@ -226,35 +225,18 @@ export function useRAFLoop(
         );
     }
 
-    if (respectReducedMotion) {
-        const win = getWindow();
-        const mediaQuery =
-            typeof win?.matchMedia === "function"
-                ? win.matchMedia(REDUCED_MOTION_QUERY)
-                : null;
-
-        if (mediaQuery) {
-            const onReducedMotionChange = (event: MediaQueryListEvent) => {
-                isReducedMotion.value = event.matches;
-                syncLoop();
-            };
-
-            isReducedMotion.value = mediaQuery.matches;
-            // `MediaQueryList.addEventListener('change')` is the sole path (Safari
-            // 14+, Baseline on the target set) — the legacy `addListener` shim was
-            // COLLAPSED at BG.NF.2 W-LEGACY-LADDER-COLLAPSE.
-            mediaQuery.addEventListener("change", onReducedMotionChange);
-            removeReducedMotionListener = () =>
-                mediaQuery.removeEventListener("change", onReducedMotionChange);
-        }
-    }
+    stopReducedMotionWatch = watch(isReducedMotion, syncLoop, { flush: "sync" });
 
     function dispose(): void {
         if (disposed) return;
         disposed = true;
         stop();
-        removeReducedMotionListener?.();
-        removeReducedMotionListener = null;
+        stopVisibilityWatch?.();
+        stopVisibilityWatch = null;
+        disposeVisibility?.();
+        disposeVisibility = null;
+        stopReducedMotionWatch?.();
+        stopReducedMotionWatch = null;
     }
 
     if (getCurrentScope()) {
@@ -268,7 +250,7 @@ export function useRAFLoop(
     return {
         isActive: readonly(isActive),
         isPaused: readonly(isPaused),
-        isReducedMotion: readonly(isReducedMotion),
+        isReducedMotion,
         start,
         stop,
         pause,

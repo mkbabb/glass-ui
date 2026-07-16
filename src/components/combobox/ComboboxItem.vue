@@ -1,29 +1,33 @@
 <script setup lang="ts">
-import type { ComboboxItemEmits, ComboboxItemProps } from 'reka-ui'
-import type { HTMLAttributes } from 'vue'
-import { reactiveOmit } from '@vueuse/core'
-import { ComboboxItem, useForwardPropsEmits } from 'reka-ui'
-import { cn } from '../_shared/class-names'
-import { menuItemVariants } from '../_shared/menuItemVariants'
+import { computed, useAttrs } from "vue";
+import { ComboboxItem as RekaComboboxItem } from "reka-ui";
+import { cn } from "../_shared/class-names";
+import { menuRowClass } from "../_shared/menuRowClass";
+import { fixedHostAttrs } from "../_shared/primitive";
+import type { ComboboxItemEmits, ComboboxItemProps } from "./types";
 
-const props = defineProps<ComboboxItemProps & { class?: HTMLAttributes['class'] }>()
-const emits = defineEmits<ComboboxItemEmits>()
+defineOptions({ name: "ComboboxItem", inheritAttrs: false });
 
-const delegatedProps = reactiveOmit(props, 'class')
-
-const forwarded = useForwardPropsEmits(delegatedProps, emits)
+const props = defineProps<ComboboxItemProps>();
+const emit = defineEmits<ComboboxItemEmits>();
+const attrs = useAttrs();
+const forwardedAttrs = computed(() => fixedHostAttrs(attrs));
 </script>
 
 <template>
-  <ComboboxItem
+  <RekaComboboxItem
     data-slot="combobox-item"
-    v-bind="forwarded"
+    v-bind="forwardedAttrs"
+    :value="props.value"
+    :disabled="props.disabled"
+    :text-value="props.textValue"
     :class="cn(
-      menuItemVariants({ indicator: 'none' }),
+      menuRowClass(),
       `gap-2 [&_svg:not([class*='text-'])]:text-muted-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4`,
       props.class,
     )"
+    @select="emit('select', $event)"
   >
     <slot />
-  </ComboboxItem>
+  </RekaComboboxItem>
 </template>

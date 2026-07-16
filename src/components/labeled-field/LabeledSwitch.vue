@@ -1,42 +1,52 @@
+<script setup lang="ts">
+import { computed } from "vue";
+import { Switch } from "../switch";
+import LabeledField from "./LabeledField.vue";
+import type { LabeledSwitchProps } from "./types";
+
+defineOptions({ name: "LabeledSwitch" });
+
+const props = defineProps<LabeledSwitchProps>();
+const emit = defineEmits<{ "update:modelValue": [value: boolean] }>();
+
+const controlProps = computed(() => {
+    const {
+        label: _label,
+        description: _description,
+        requirement: _requirement,
+        layout: _layout,
+        errorLive: _errorLive,
+        invalid: _invalid,
+        modelValue: _modelValue,
+        ...control
+    } = props;
+    return control;
+});
+</script>
+
 <template>
     <LabeledField
         :label="label"
-        :tooltip="tooltip"
-        :label-class="labelClass"
-        :required="required"
-        :hide-label="hideLabel"
-        v-slot="{ controlId }"
+        :description="description"
+        :requirement="required ? 'required' : requirement"
+        :layout="layout"
+        :error-live="errorLive"
+        :invalid="invalid"
+        :disabled="disabled"
     >
-        <div class="flex items-center">
+        <template #default="{ controlId, labelledBy, describedBy, errorId, required: effectiveRequired }">
             <Switch
+                v-bind="controlProps"
                 :id="controlId"
-                :model-value="checked"
-                @update:model-value="(v: boolean) => emit('update:checked', v)"
+                :model-value="modelValue"
+                :aria-labelledby="labelledBy"
+                :aria-describedby="describedBy"
+                :aria-errormessage="errorId"
+                :invalid="invalid"
+                :required="effectiveRequired"
+                @update:model-value="emit('update:modelValue', $event)"
             />
-        </div>
+        </template>
+        <template v-if="$slots.error" #error><slot name="error" /></template>
     </LabeledField>
 </template>
-
-<script setup lang="ts">
-import LabeledField from "./LabeledField.vue";
-import { Switch } from "../switch";
-
-defineProps<{
-    checked: boolean;
-    label: string;
-    tooltip: string;
-    labelClass?: string;
-    /** AQ.W4 §W4.5 — thread the required-field asterisk onto the label. */
-    required?: boolean;
-    /**
-     * AZ.W-BLOB-REDRESS — render the label `sr-only` (kept for a11y, hidden
-     * visually) when an enclosing chrome row (a `<ConfiguratorRow>`) already
-     * supplies the visible human label. Avoids the double-label leak.
-     */
-    hideLabel?: boolean;
-}>();
-
-const emit = defineEmits<{
-    "update:checked": [value: boolean];
-}>();
-</script>

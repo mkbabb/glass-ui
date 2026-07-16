@@ -96,9 +96,3 @@ export function pickNgramSize(config: number | { min: number; max: number }): nu
 export function randomInRange(min: number, max: number): number {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-
-/** Check if user prefers reduced motion. SSR-safe. */
-export function prefersReducedMotion(): boolean {
-    if (typeof window === "undefined") return false;
-    return window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
-}

@@ -16,7 +16,7 @@ export interface InfiniteScrollOptions {
 export interface InfiniteScrollReturn {
     /** Ref to bind to the sentinel element */
     sentinelRef: Ref<HTMLElement | null>;
-    /** Manually trigger a check (e.g., after DOM updates) */
+    /** Reconnect observation after a caller-owned DOM update. */
     check: () => void;
     /** Stop observing */
     stop: () => void;

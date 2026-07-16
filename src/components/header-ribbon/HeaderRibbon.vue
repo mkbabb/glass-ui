@@ -1,172 +1,138 @@
-<template>
-    <div
-        :class="[
-            'fixed z-dock pointer-events-none w-fit flex items-center px-4 pt-4 pb-2',
-            placement === 'left' ? 'top-0 left-0' : 'top-0 right-0',
-        ]"
-        @mouseleave="onGroupMouseLeave"
-        @focusin="onGroupFocusIn"
-        @focusout="onGroupFocusOut"
-    >
-        <!-- Optional extra slot anchored alongside the ribbon (e.g. a logo). -->
-        <div v-if="$slots.left" class="pointer-events-auto shrink-0 mr-2">
-            <slot name="left" />
-        </div>
-
-        <div
-            class="pointer-events-auto flex items-center h-6"
-            @mouseenter="onRibbonMouseEnter"
-        >
-            <!-- placement=right: items first (expand left), then anchor. -->
-            <template v-if="placement === 'right'">
-                <div
-                    :class="[
-                        'header-items-wrapper header-items-right flex items-center gap-3',
-                        isVisible ? '' : 'header-collapsed-right',
-                    ]"
-                    :inert="!isVisible || undefined"
-                >
-                    <slot name="items" />
-                </div>
-            </template>
-
-            <div class="shrink-0" @click="onAnchorClick">
-                <slot name="anchor" :pinned="isPinned" :toggled="isToggled" />
-            </div>
-
-            <!-- placement=left: anchor first, then items expand right. -->
-            <template v-if="placement === 'left'">
-                <div
-                    :class="[
-                        'header-items-wrapper header-items-left flex items-center gap-3',
-                        isVisible ? '' : 'header-collapsed-left',
-                    ]"
-                    :inert="!isVisible || undefined"
-                >
-                    <slot name="items" />
-                </div>
-            </template>
-        </div>
-    </div>
-</template>
-
 <script setup lang="ts">
-import { computed, onBeforeUnmount, ref } from "vue";
-import type { HeaderRibbonProps } from "./types";
+import { computed, ref, useAttrs, useId, watch } from "vue";
+import { cn } from "../_shared/class-names";
+import { fixedHostAttrs } from "../_shared/primitive";
+import { Surface } from "../surface";
+import type {
+    HeaderRibbonAnchorSlotProps,
+    HeaderRibbonCollapsibleProps,
+    HeaderRibbonPersistentProps,
+} from "./types";
 
-const props = withDefaults(defineProps<HeaderRibbonProps>(), {
-    placement: "left",
-    hideTimeoutMs: 2000,
-});
+defineOptions({ inheritAttrs: false });
 
-const isExpanded = ref(false);
+const props = defineProps<
+    HeaderRibbonPersistentProps | HeaderRibbonCollapsibleProps
+>();
+defineSlots<{
+    anchor?(props: HeaderRibbonAnchorSlotProps): unknown;
+    items?(): unknown;
+}>();
+const attrs = useAttrs();
+const forwardedAttrs = computed(() => fixedHostAttrs(attrs));
+const actionsId = `${useId()}-actions`;
+const anchor = ref<HTMLButtonElement | null>(null);
 const isPinned = ref(false);
-const isToggled = ref(false);
-// Presence guards prevent premature collapse while pointer or keyboard focus
-// remains inside the ribbon.
-const isMouseOver = ref(false);
+const isPointerWithin = ref(false);
 const isFocusWithin = ref(false);
+const placement = computed(() => props.placement ?? "left");
+const ariaLabel = computed(() => props.ariaLabel?.trim() || "Header actions");
+const anchorLabel = computed(() => props.anchorLabel?.trim());
+const isCollapsible = computed(
+    () => props.mode === "collapsible" && Boolean(anchorLabel.value),
+);
+const isVisible = computed(
+    () =>
+        !isCollapsible.value ||
+        isPinned.value ||
+        isPointerWithin.value ||
+        isFocusWithin.value,
+);
 
-let hoverTimeout: ReturnType<typeof setTimeout> | undefined;
-
-const isVisible = computed(() => isExpanded.value || isPinned.value);
-
-function clearHoverTimeout(): void {
-    if (hoverTimeout != null) {
-        clearTimeout(hoverTimeout);
-        hoverTimeout = undefined;
-    }
-}
-
-function startHideTimeout(): void {
-    // Don't schedule collapse while the user is still interacting with the ribbon.
-    if (isMouseOver.value || isFocusWithin.value) return;
-    clearHoverTimeout();
-    hoverTimeout = setTimeout(() => {
-        isExpanded.value = false;
-    }, props.hideTimeoutMs);
-}
-
-function onRibbonMouseEnter(): void {
-    isMouseOver.value = true;
-    clearHoverTimeout();
-    isExpanded.value = true;
-}
-
-function onGroupMouseLeave(): void {
-    isMouseOver.value = false;
-    if (!isPinned.value) {
-        startHideTimeout();
-    }
-}
-
-function onGroupFocusIn(): void {
-    isFocusWithin.value = true;
-    clearHoverTimeout();
-    isExpanded.value = true;
-}
-
-function onGroupFocusOut(event: FocusEvent): void {
-    const root = event.currentTarget as HTMLElement;
-    if (event.relatedTarget instanceof Node && root.contains(event.relatedTarget)) return;
-    isFocusWithin.value = false;
-    if (!isPinned.value) startHideTimeout();
-}
-
-function onAnchorClick(): void {
-    if (isPinned.value) {
+watch(
+    [() => props.mode, () => Boolean(props.anchorLabel?.trim())] as const,
+    ([mode, hasLabel]) => {
         isPinned.value = false;
-        isToggled.value = false;
-        startHideTimeout();
-    } else {
-        isPinned.value = true;
-        isExpanded.value = true;
-        isToggled.value = true;
-        clearHoverTimeout();
-    }
+
+        if (import.meta.env.DEV && mode === "collapsible" && !hasLabel) {
+            console.warn(
+                "[HeaderRibbon] `mode=\"collapsible\"` requires a non-empty `anchorLabel`; rendering persistent actions.",
+            );
+        }
+    },
+    { flush: "pre", immediate: true },
+);
+
+function onPointerEnter(event: PointerEvent): void {
+    if (event.pointerType !== "touch") isPointerWithin.value = true;
 }
 
-onBeforeUnmount(clearHoverTimeout);
+function onPointerLeave(): void {
+    isPointerWithin.value = false;
+}
 
-defineExpose({ isPinned, isExpanded, isVisible, isToggled });
+function onFocusIn(): void {
+    isFocusWithin.value = true;
+}
+
+function onFocusOut(event: FocusEvent): void {
+    const root = event.currentTarget as HTMLElement;
+    if (event.relatedTarget instanceof Node && root.contains(event.relatedTarget))
+        return;
+    isFocusWithin.value = false;
+}
+
+function togglePinned(): void {
+    if (!isCollapsible.value) return;
+    isPinned.value = !isPinned.value;
+}
+
+function closeAndReturnFocus(event: KeyboardEvent): void {
+    if (!isCollapsible.value) return;
+    event.stopPropagation();
+    event.preventDefault();
+    isPinned.value = false;
+    isPointerWithin.value = false;
+    anchor.value?.focus();
+}
 </script>
 
-<style scoped>
-/*
- * Header-ribbon collapse animation.
- *
- * `--header-max-width` is the canonical override hook — consumers set the
- * variable on the ribbon root (or any ancestor) to widen / narrow the
- * expanded-state envelope without forking the component.
- */
-.header-items-wrapper {
-    --header-max-width: 30rem;
-    max-width: var(--header-max-width);
-    opacity: 1;
-    overflow: visible;
-    transition:
-        max-width var(--duration-slow) var(--ease-standard),
-        margin var(--duration-slow) var(--ease-standard),
-        opacity var(--duration-normal) var(--ease-decelerate);
-}
+<template>
+    <div
+        v-bind="forwardedAttrs"
+        :class="cn('header-ribbon', props.class)"
+        :data-placement="placement"
+        :data-expanded="isVisible || undefined"
+        :data-pinned="isPinned || undefined"
+        data-slot="header-ribbon"
+        role="toolbar"
+        :aria-label="ariaLabel"
+        @pointerenter="onPointerEnter"
+        @pointerleave="onPointerLeave"
+        @focusin="onFocusIn"
+        @focusout="onFocusOut"
+        @keydown.esc="closeAndReturnFocus"
+    >
+        <Surface
+            class="header-ribbon__band"
+            material="functional"
+            surface="glass"
+            specular="subtle"
+        >
+            <button
+                v-if="isCollapsible"
+                ref="anchor"
+                type="button"
+                class="header-ribbon__anchor"
+                data-slot="header-ribbon-anchor"
+                :aria-label="anchorLabel"
+                :aria-controls="actionsId"
+                :aria-expanded="isVisible"
+                :aria-pressed="isPinned"
+                @click="togglePinned"
+            >
+                <slot name="anchor" :pinned="isPinned" />
+            </button>
 
-.header-items-left {
-    margin-left: 0.75rem;
-}
-.header-items-right {
-    margin-right: 0.75rem;
-}
-
-:is(.header-collapsed-left, .header-collapsed-right) {
-    max-width: 0;
-    opacity: 0;
-    pointer-events: none;
-    overflow: hidden;
-}
-.header-collapsed-left {
-    margin-left: 0;
-}
-.header-collapsed-right {
-    margin-right: 0;
-}
-</style>
+            <div
+                :id="actionsId"
+                class="header-ribbon__actions"
+                data-slot="header-ribbon-actions"
+                :inert="!isVisible || undefined"
+                :aria-hidden="!isVisible"
+            >
+                <slot name="items" />
+            </div>
+        </Surface>
+    </div>
+</template>

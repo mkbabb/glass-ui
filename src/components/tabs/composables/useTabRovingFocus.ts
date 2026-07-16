@@ -1,4 +1,4 @@
-import { computed } from "vue";
+import { computed, ref, watch } from "vue";
 import type { ComputedRef, Ref } from "vue";
 
 /**
@@ -13,6 +13,8 @@ export interface RovingSelectionOption {
     disabled?: boolean;
 }
 
+export type TabActivation = "automatic" | "manual";
+
 /**
  * Package-private composable for `SegmentedTabs.vue` — BG.W-COLOCATE (the WS4
  * roving-focus/responsive carve; ratchet-drain #13). The WAI-ARIA tablist/toolbar
@@ -22,14 +24,11 @@ export interface RovingSelectionOption {
  * chrome — ONE roving machine, never re-forked). The SFC IMPORTS it and binds
  * `:tabindex="rovingTabindex(idx)"` + `@keydown="onStripKeydown"` in its template.
  *
- * EXACTLY ONE tab in the focus order (the active tab `tabindex="0"`, the rest `-1`);
- * the arrow keys move focus + activate (selection-follows-focus). The arrow AXIS is
- * derived off `isVertical` (ArrowRight/Left horizontal, ArrowDown/Up vertical),
- * Home/End jump, wrapping at the ends, skipping disabled. This is the keyboard contract
- * EVERY strip owes — NOT gated on `:draggable` (a draggable tab that is keyboard-broken
- * is the worse failure). The keyboard activation IS a selection → the SFC's `select(...)`
- * path (with its `squishOnTravel`), passed in as a callback (byte-behaviour identical to
- * the prior inline block).
+ * EXACTLY ONE tab remains in the focus order. Automatic activation keeps that tabstop
+ * on the selection; manual activation moves it independently and commits only on
+ * Enter/Space. The arrow axis derives from `isVertical`, Home/End jump, navigation
+ * wraps, and disabled options are skipped. This keyboard contract is never gated by
+ * pointer motion.
  */
 export interface UseTabRovingFocusParams {
     /** The options the strip renders (index-aligned to `buttonRefs`). */
@@ -38,6 +37,8 @@ export interface UseTabRovingFocusParams {
     stripValue: ComputedRef<string | undefined>;
     /** True for the vertical (block-axis) orientation — flips the arrow axis. */
     isVertical: ComputedRef<boolean>;
+    /** Automatic selection-follows-focus or manual Enter/Space activation. */
+    activation: ComputedRef<TabActivation>;
     /** Per-option button refs, index-aligned to `stripOptions`. */
     buttonRefs: Ref<HTMLElement[]>;
     /** The SFC's selection handler (focus-follows activation → model write + squish). */
@@ -45,9 +46,9 @@ export interface UseTabRovingFocusParams {
 }
 
 export interface UseTabRovingFocusReturn {
-    /** The active index in the rendered strip — the ONE tabstop. */
+    /** The selected index in the rendered strip. */
     activeIndex: ComputedRef<number>;
-    /** The roving tabindex for option `idx`: `0` for the active tab, `-1` otherwise. */
+    /** The roving tabindex for option `idx`: exactly one `0`, all others `-1`. */
     rovingTabindex: (idx: number) => number;
     /** The strip-root keydown handler (axis-derived arrows + Home/End). */
     onStripKeydown: (e: KeyboardEvent) => void;
@@ -56,20 +57,65 @@ export interface UseTabRovingFocusReturn {
 export function useTabRovingFocus(
     params: UseTabRovingFocusParams,
 ): UseTabRovingFocusReturn {
-    const { stripOptions, stripValue, isVertical, buttonRefs, select } = params;
+    const { stripOptions, stripValue, isVertical, activation, buttonRefs, select } =
+        params;
 
-    // The active index in the rendered strip — the ONE tabstop. Falls back to 0 so a
-    // strip whose model points off the desktop subset still has a single focusable tab.
+    // The selected index in the rendered strip. If selection is absent or disabled,
+    // anchor roving focus on the first enabled item; a fully-disabled strip has no
+    // dishonest tab stop.
     const activeIndex = computed(() => {
         const idx = stripOptions.value.findIndex(
             (o) => o.value === stripValue.value,
         );
-        return idx >= 0 ? idx : 0;
+        if (idx >= 0 && !stripOptions.value[idx]?.disabled) return idx;
+        return stripOptions.value.findIndex((option) => !option.disabled);
     });
 
-    // The roving tabindex for option `idx`: `0` for the active tab, `-1` otherwise.
+    const focusedIndex = ref(activeIndex.value);
+    const focusResetKey = computed(() =>
+        [
+            stripValue.value ?? "",
+            ...stripOptions.value.map(
+                (option) => `${option.value}:${option.disabled ? "1" : "0"}`,
+            ),
+        ].join("\u0000"),
+    );
+    watch(
+        focusResetKey,
+        () => {
+            // A controlled selection update must not steal manual focus already
+            // inside the strip. Outside the strip, the next Tab entry follows the
+            // newly-selected (or first enabled) item.
+            const activeElement =
+                typeof document === "undefined" ? null : document.activeElement;
+            const domIndex = buttonRefs.value.findIndex(
+                (button, index) =>
+                    button === activeElement && !stripOptions.value[index]?.disabled,
+            );
+            focusedIndex.value = domIndex >= 0 ? domIndex : activeIndex.value;
+        },
+        { flush: "post" },
+    );
+
+    const tabstopIndex = computed(() =>
+        activation.value === "manual" &&
+        focusedIndex.value >= 0 &&
+        !stripOptions.value[focusedIndex.value]?.disabled
+            ? focusedIndex.value
+            : activeIndex.value,
+    );
+
+    // The roving tabindex follows selection automatically or focus in manual mode.
     function rovingTabindex(idx: number): number {
-        return idx === activeIndex.value ? 0 : -1;
+        return idx === tabstopIndex.value ? 0 : -1;
+    }
+
+    function focusOption(idx: number) {
+        const option = stripOptions.value[idx];
+        if (!option || option.disabled) return;
+        focusedIndex.value = idx;
+        buttonRefs.value[idx]?.focus();
+        if (activation.value === "automatic") select(option.value, idx);
     }
 
     // Move focus to (and activate) the next enabled tab in `dir` (+1/-1), wrapping.
@@ -80,8 +126,7 @@ export function useTabRovingFocus(
             const idx = (fromIdx + dir * step + n * step) % n;
             const option = stripOptions.value[idx];
             if (option && !option.disabled) {
-                buttonRefs.value[idx]?.focus();
-                select(option.value, idx);
+                focusOption(idx);
                 return;
             }
         }
@@ -97,27 +142,42 @@ export function useTabRovingFocus(
         for (const idx of range) {
             const option = stripOptions.value[idx];
             if (option && !option.disabled) {
-                buttonRefs.value[idx]?.focus();
-                select(option.value, idx);
+                focusOption(idx);
                 return;
             }
         }
     }
 
     function onStripKeydown(e: KeyboardEvent) {
-        const from = activeIndex.value;
+        const targetIndex = buttonRefs.value.indexOf(e.target as HTMLElement);
+        const from =
+            targetIndex >= 0 && !stripOptions.value[targetIndex]?.disabled
+                ? targetIndex
+                : tabstopIndex.value;
         // Axis-derived next/prev keys: vertical strips navigate on the BLOCK axis
         // (ArrowDown/Up), horizontal on the INLINE axis (ArrowRight/Left).
         const nextKey = isVertical.value ? "ArrowDown" : "ArrowRight";
         const prevKey = isVertical.value ? "ArrowUp" : "ArrowLeft";
+        const currentTarget = e.currentTarget as HTMLElement | null;
+        const computedDirection = currentTarget
+            ? getComputedStyle(currentTarget).direction
+            : "";
+        const declaredDirection = currentTarget
+            ?.closest<HTMLElement>("[dir]")
+            ?.getAttribute("dir")
+            ?.toLowerCase();
+        const rtl =
+            !isVertical.value &&
+            (computedDirection === "rtl" || declaredDirection === "rtl");
+        const nextDirection: 1 | -1 = rtl ? -1 : 1;
         switch (e.key) {
             case nextKey:
                 e.preventDefault();
-                focusEnabled(from, 1);
+                focusEnabled(from, nextDirection);
                 break;
             case prevKey:
                 e.preventDefault();
-                focusEnabled(from, -1);
+                focusEnabled(from, nextDirection === 1 ? -1 : 1);
                 break;
             case "Home":
                 e.preventDefault();
@@ -127,6 +187,17 @@ export function useTabRovingFocus(
                 e.preventDefault();
                 focusEdge("last");
                 break;
+            case "Enter":
+            case " ": {
+                if (activation.value !== "manual") break;
+                e.preventDefault();
+                const option = stripOptions.value[from];
+                if (option && !option.disabled) {
+                    focusedIndex.value = from;
+                    select(option.value, from);
+                }
+                break;
+            }
             default:
                 break;
         }

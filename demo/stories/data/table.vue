@@ -14,14 +14,11 @@ import {
     TableEmpty,
 } from "@glass/components/table";
 import { Badge } from "@glass/components/badge";
-import { IconChip } from "@glass/components/icon-chip";
 import { cn } from "@glass/components/_shared/class-names";
-import { Table as TableIcon, Table2 } from "@lucide/vue";
+import { Table as TableIcon } from "@lucide/vue";
 
 // BC.W-SUFFUSE-reconcile — the data band's ONE coherent --section-color-9
-// identity. PH3-safe (inline borderLeft, not the border-l-[3px] + <IconChip>
 // double-header shape).
-const DATA_STOP = 9;
 
 // BG.W-DEMO-IA-REDESIGN — the Data TABLE family. The sortable/filterable data-table
 // folds onto this ONE table page as a member (bare, STORY_NESTED_KEY) via the
@@ -63,23 +60,6 @@ const fmt = (n: number) => new Intl.NumberFormat("en-US", { style: "currency", c
 
 <template>
     <StoryPage>
-        <header
-            class="story-color-event flex items-center gap-4 pl-5"
-            :style="{
-                '--section-label-accent': `var(--section-color-${DATA_STOP})`,
-            }"
-        >
-            <IconChip :icon="Table2" :section="DATA_STOP" bloom reveal />
-            <div class="flex flex-col gap-1">
-                <span class="section-label--tinted text-admin-label">
-                    Data · Table
-                </span>
-                <p class="text-small text-muted-foreground">
-                    Sortable, filterable data tables — the section identity is
-                    the ONE color event; the cells stay ink.
-                </p>
-            </div>
-        </header>
 
         <div>
             <p class="text-admin-label mb-4 text-muted-foreground">Basic table</p>

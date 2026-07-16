@@ -45,9 +45,6 @@ export const UNIFORM_NAMES = [
     "uCursor",
     "uCursorStrength",
     "uCursorRadius",
-    // AW.W8.1 — the velocity-reactive flow uniforms.
-    "uCursorVelocity",
-    "uCursorBurst",
     "uStrokeAmount",
     "uStrokeScale",
     "uStrokeAnisotropy",

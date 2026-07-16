@@ -59,7 +59,7 @@ This primitive OWNS only the chassis — the editable SVG canvas, the family/pre
 selector, the re-parseable readout, the travelling-dot playback — and REACHES for
 its math by COMPOSITION:
 
-- the bezier curve is value.js `CSSCubicBezier(x1,y1,x2,y2)`;
+- the bezier curve is value.js `CubicBezier(x1,y1,x2,y2)`;
 - the staircase is value.js `steppedEase(n, term)`;
 - the preset catalogue is value.js `bezierPresets`;
 - the jump-term family is value.js `jumpTerms`.
@@ -94,8 +94,8 @@ playback mechanism.
 
 ## Consumers (the ≥2-consumer bar)
 
-1. the curve-gallery demo (`demo/stories/motion/curve-gallery.vue`) — binds the
-   picker in BOTH modes (bezier + steps), two live in-repo bindings;
+1. the Motion Lab route (`demo/stories/motion/curve-gallery.vue`) — binds the picker
+   in BOTH modes (bezier + steps), two live in-repo bindings;
 2. value.js's `GradientPane` — consumes `<EasingPicker>` for the ease-along-the-ramp
    axis on its next pin bump (the cross-repo CONSUME contract, recorded by name; the
    foreign-tree fence holds — this primitive does NOT edit value.js).

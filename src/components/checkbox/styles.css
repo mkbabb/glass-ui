@@ -1,0 +1,66 @@
+@layer components {
+    .checkbox {
+        position: relative;
+        display: inline-grid;
+        flex: none;
+        place-items: center;
+        inline-size: 1rem;
+        block-size: 1rem;
+        padding: 0;
+        border: 1px solid var(--control-ring);
+        border-radius: var(--radius-control);
+        color: var(--primary-foreground);
+        cursor: pointer;
+        appearance: none;
+        touch-action: manipulation;
+        transition:
+            background-color var(--duration-fast) var(--ease-standard),
+            border-color var(--duration-fast) var(--ease-standard),
+            box-shadow var(--duration-fast) var(--ease-standard),
+            opacity var(--duration-fast) var(--ease-standard);
+    }
+
+    .checkbox__seat {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        inline-size: var(--touch-target, 2.75rem);
+        block-size: var(--touch-target, 2.75rem);
+        border-radius: var(--radius-pill);
+        translate: -50% -50%;
+    }
+
+    .checkbox__indicator {
+        display: grid;
+        place-items: center;
+        inline-size: 100%;
+        block-size: 100%;
+    }
+
+    .checkbox:is([data-state="checked"], [data-state="indeterminate"]) {
+        border-color: var(--control-checked-bg);
+        background: var(--control-checked-bg);
+    }
+
+    .checkbox[aria-invalid="true"] {
+        border-color: var(--destructive);
+        box-shadow: var(--invalid-ring);
+    }
+
+    .checkbox:is(:disabled, [data-disabled]) {
+        opacity: var(--opacity-disabled);
+        cursor: not-allowed;
+    }
+
+    @media (forced-colors: active) {
+        .checkbox {
+            border-color: ButtonText;
+        }
+
+        .checkbox:is([data-state="checked"], [data-state="indeterminate"]) {
+            border-color: Highlight;
+            background: Highlight;
+            color: HighlightText;
+        }
+    }
+}

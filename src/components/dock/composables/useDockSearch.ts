@@ -14,17 +14,13 @@
 //     `onClickCollapsed()` (collapsed → pinned) + `keepOpen()` (the ref-counted hold so
 //     the dock stays open through the search gesture); `disarmSearch()` is `release()`.
 //     NO new state machine.
-//   - it does NOT import `dockMorphContext`/`dockMorphMeasure`/`DOCK_SPRING` for an
+//   - it does NOT import `useDockMorph`/`dockMorphMeasure`/`DOCK_SPRING` for an
 //     EDIT (the box-inviolate fence). The pill→field morph rides the dock's OWN
 //     `--dock-morph-t`/`--dock-t` plate glide — NO second spring.
 //
-// THE L2 POPOVER MOUNT (BI.W-DOCK-ESCAPE). The composable is HEADLESS (the consumer
-// authors the field + dropdown). The FIELD is the morphed dock pill (an L1 in-flow
-// control). The RESULTS DROPDOWN re-hosts on a TOP-LAYER `popover` surface (composing
-// `useDockPopover` — the JS one-shot placement anchored to the field), exempt from the
-// dock's ancestor clip/contain/transform BY SPEC: the ranked list overflows the dock box
-// without clipping. The `/search` pipeline (`useFuzzySearch`/`useVirtualSectionWindow`/
-// `ensureTargetWindow`+`useScrollTo`) is UNCHANGED — only the dropdown's MOUNT moves to L2.
+// The composable is headless: consumers author the field and portaled results surface.
+// The `/search` pipeline (`useFuzzySearch`/`useVirtualSectionWindow`/
+// `ensureTargetWindow`+`useScrollTo`) remains unchanged.
 //
 // THE ONE-OF-EACH DISCIPLINE. The matcher is `useFuzzySearch` (the VSCode subsequence
 // scorer — composed, NEVER re-forked); the results window is `useVirtualSectionWindow`
@@ -131,9 +127,9 @@ export interface UseDockSearchReturn<T extends SearchableItem = SearchableItem> 
  * `useScrollChrome`); the `armSearch`/`disarmSearch`/`autocompleteText`/
  * `acceptAutocomplete` surface; the async `onSearch` adapter; the `onResultSelect` →
  * `ensureTargetWindow` + `scrollTo` wire. Does NOT edit the morph engine
- * (`dockMorphContext`/`DOCK_SPRING` byte-untouched — the box-inviolate fence); the
+ * (`useDockMorph`/`DOCK_SPRING` byte-untouched — the box-inviolate fence); the
  * pill→field morph is the dock's OWN `--dock-morph-t`/`--dock-t` plate glide, and the
- * results dropdown re-hosts on a top-layer `popover` (BI.W-DOCK-ESCAPE — `useDockPopover`).
+ * results surface is consumer-authored and can be portaled independently of the dock.
  *
  * @example
  * ```ts

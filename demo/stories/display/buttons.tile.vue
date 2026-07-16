@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // display/buttons — the landing-tile vignette (BI.W-LIVE-TILES, the AUTHORED rung).
-// A real Button variant cluster (primary-audacious · glass · ghost) at REST — the
+// A real Button emphasis cluster at rest — the
 // live component the /display landing curates, never a silhouette. Inert + 0-GL by
 // the fenced stage (SectionPreviewCard); no own rAF.
 import { Button } from "@glass/components/button";
@@ -8,10 +8,10 @@ import { Button } from "@glass/components/button";
 
 <template>
     <div class="buttons-tile">
-        <Button variant="primary-audacious" size="sm" tabindex="-1">Launch</Button>
+        <Button emphasis="primary" size="sm" tabindex="-1">Primary</Button>
         <div class="buttons-tile-row">
-            <Button variant="glass" size="sm" tabindex="-1">Glass</Button>
-            <Button variant="ghost" size="sm" tabindex="-1">Ghost</Button>
+            <Button size="sm" tabindex="-1">Default</Button>
+            <Button emphasis="quiet" size="sm" tabindex="-1">Quiet</Button>
         </div>
     </div>
 </template>

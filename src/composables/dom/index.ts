@@ -39,7 +39,7 @@
 //                        3.4.x broke (MISSING_EXPORT) until they were restored.
 //                        Re-instated on their ≥2-external-consumer load-bearing
 //                        rationale (the same internal-only-rg blind spot as the
-//                        metric-cell/stack mis-prune).
+//                        component-family mis-prune).
 export * from "./useResizeObserver";
 export * from "./useTouchGate";
 // useDragVelocity — BD.W-GLASS-ATOM-REGISTER: the drag-window-gated velocity bridge

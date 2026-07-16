@@ -5,7 +5,7 @@ export type { UseDockStateOptions, UseDockStateReturn, DockState } from "./useDo
 // the SHIPPED /search fuzzy pipeline (useFuzzySearch, the VSCode scorer — no re-fork) +
 // the dock's own --dock-morph-t metaball morph + the optional useScrollChrome shrink +
 // the ToC ensureTargetWindow/scrollTo subsume. A consuming seam BESIDE the morph engine
-// (dockMorphContext/DOCK_SPRING byte-untouched — the box-inviolate fence).
+// (useDockMorph/DOCK_SPRING byte-untouched — the box-inviolate fence).
 export { useDockSearch } from "./useDockSearch";
 export type { UseDockSearchOptions, UseDockSearchReturn } from "./useDockSearch";
 
@@ -21,9 +21,7 @@ export {
     type DockContext,
     type DockOrientation,
 } from "./dockContext";
-// BI.W-DOCK-CROSSFADE — the crossfade face-registration context (the FOLD destination
-// of the retired DockLayerGroup register/unregister + useLayerTransition FLIP). Provided
-// by <DockCrossfade>; consumed by <DockLayer> faces + read by the switcher rail.
+// The face registry provided by DockCrossfade, consumed by DockLayer and the switcher rail.
 export {
     provideDockCrossfadeContext,
     useDockCrossfadeContext,
@@ -35,15 +33,9 @@ export {
 } from "./dockCrossfadeContext";
 export {
     useDockMorphOrchestrator,
-    provideDockMorphContext,
-    useOptionalDockMorphContext,
-    DOCK_MORPH_KEY,
-    type DockMorphContext,
-    type DockMorphGroupRegistration,
-    type DockMorphGroupHandle,
     type UseDockMorphOrchestratorOptions,
     type UseDockMorphOrchestratorReturn,
-} from "./dockMorphContext";
+} from "./useDockMorph";
 
 // BI.W-DOCK-RETIRES — the V↔H orientation morph (`useDockOrientationMorph`), the fission
 // facility (`useDockFission` + `dockFissionSignatures`), and the Siri island (`useSiriDock`)

@@ -2,9 +2,8 @@
 // BB.W-DEMO-DESIGN — the icons pane as a DESIGNED specimen. The Pops row (the
 // user-cited "colorful audacious pops, like in our icons") LEADS the pane — the
 // icons-as-color-event IS the story; the monochrome grid is the supporting
-// reference. Each chip blooms in on the W-SUFFUSE3 IconChip `:reveal` spring-clock
-// entrance (scale 0.85→1, the snappy ~+7% overshoot, PRM-gated by vReveal — NOT a
-// demo-local @keyframes) with a staggered `--d` step. The icon grid gains the calm
+// reference. Static icon plates use Chip geometry without acquiring button semantics.
+// The icon grid gains the calm
 // wash read-through (ShowcaseFrame quiet tier) + the glass-tier hover lift; its
 // glyphs stay ink (the monochrome proportion held). The library `--section-color`
 // tokens are NOT demo color (D6 fence).
@@ -35,7 +34,7 @@ import {
     Zap,
 } from "@lucide/vue";
 import type { Component } from "vue";
-import { IconChip } from "@glass/components/icon-chip";
+import { Chip } from "@glass/components/chip";
 
 interface IconRow {
     name: string;
@@ -98,15 +97,12 @@ const pops: { icon: Component; section: number }[] = [
 
 <template>
     <StoryPage>
-        <!-- POPS — PROMOTED to LEAD the pane. The icon chip is the brand's color
-             event, walked across the 13-stop ramp; each chip blooms in on the
-             IconChip `:reveal` spring-clock entrance (the `:saturated` + `:bloom`
-             axes deepen the chroma + the hover register). The monochrome grid below
-             is the supporting reference. -->
+        <!-- Static plated glyphs walk the 13-stop ramp without false hover or
+             button affordance. The monochrome grid below is the supporting reference. -->
         <StorySection label="Foundations · Icons" heading="Pops · the color event">
             <p class="text-small max-w-2xl text-muted-foreground">
-                The icon chip is the brand's color event: a
-                <span class="font-mono text-xs">color-mix(… 25%, transparent)</span>
+                The plated icon is the brand's color event: a
+                <span class="font-mono text-xs">warm 0-alpha → tone</span>
                 backplate under a full-chroma glyph, walked across the 13-stop
                 <span class="font-mono text-xs">--section-color-*</span> ramp.
                 <span class="text-foreground">The proportion rule:</span> a surface
@@ -117,17 +113,17 @@ const pops: { icon: Component; section: number }[] = [
             <ShowcaseFrame tier="field" pad="lg">
                 <div class="grid grid-cols-5 gap-4 sm:grid-cols-7 md:grid-cols-13">
                     <div
-                        v-for="(pop, i) in pops"
+                        v-for="pop in pops"
                         :key="pop.section"
                         class="flex flex-col items-center gap-2"
                     >
-                        <IconChip
-                            :icon="pop.icon"
-                            :section="pop.section"
-                            saturated
-                            bloom
-                            :reveal="i + 1"
-                        />
+                        <Chip
+                            shape="icon"
+                            size="lg"
+                            :tone="`var(--section-color-${pop.section})`"
+                        >
+                            <component :is="pop.icon" class="size-5" aria-hidden="true" />
+                        </Chip>
                         <span class="text-mono-caption text-muted-foreground">{{
                             pop.section
                         }}</span>

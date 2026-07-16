@@ -1,0 +1,158 @@
+@layer components {
+    :where(.metric, .metric-cell, .metric-row) {
+        min-inline-size: 0;
+        color: var(--foreground);
+    }
+
+    .metric {
+        display: inline-grid;
+        grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+        align-items: baseline;
+        gap: 0.125rem 0.5rem;
+    }
+
+    .metric[data-orientation="stacked"] {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .metric__label,
+    .metric__context {
+        min-inline-size: 0;
+        overflow-wrap: anywhere;
+        color: var(--muted-foreground);
+    }
+
+    .metric__label {
+        font-size: var(--type-micro);
+        font-weight: 550;
+        letter-spacing: var(--type-tracking-wide);
+        text-transform: uppercase;
+    }
+
+    .metric__context {
+        grid-column: 1 / -1;
+        font-size: var(--type-caption);
+        line-height: 1.35;
+    }
+
+    .metric__reading {
+        display: inline-flex;
+        min-inline-size: 0;
+        align-items: baseline;
+        gap: 0.3em;
+    }
+
+    .metric__value {
+        min-inline-size: 3ch;
+        overflow-wrap: anywhere;
+        font-family: var(--font-mono);
+        font-size: var(--type-prose);
+        font-weight: 650;
+        font-variant-numeric: tabular-nums lining-nums;
+        letter-spacing: var(--type-tracking-tight);
+        line-height: 1;
+    }
+
+    .metric__unit {
+        flex: none;
+        color: var(--muted-foreground);
+        font-family: var(--font-mono);
+        font-size: var(--type-caption);
+        line-height: 1;
+    }
+
+    .metric[data-size="sm"] .metric__value {
+        font-size: var(--type-small);
+    }
+
+    .metric[data-size="lg"] .metric__value,
+    .metric-cell .metric__value {
+        font-size: var(--type-title);
+    }
+
+    .metric[data-size="xl"] .metric__value {
+        font-size: var(--type-display-3);
+    }
+
+    :where(.metric, .metric-cell, .metric-row)[data-empty] .metric__value {
+        color: var(--muted-foreground);
+    }
+
+    :where(.metric, .metric-cell, .metric-row)[data-loading] .metric__value {
+        color: transparent;
+        border-radius: var(--radius-sm);
+        background: var(--surface-tint-15);
+    }
+
+    :where(.metric, .metric-cell, .metric-row)[data-loading] .metric__unit {
+        visibility: hidden;
+    }
+
+    .metric-cell {
+        display: grid;
+        align-content: start;
+        gap: 0.375rem;
+        padding: clamp(0.75rem, 2cqi, 1rem);
+        border: 1px solid var(--glass-border-wash);
+        border-radius: var(--radius-card);
+        background: var(--glass-bg-wash);
+        backdrop-filter: var(--glass-blur-wash);
+    }
+
+    .metric-cell__heading {
+        display: flex;
+        min-inline-size: 0;
+        align-items: center;
+        gap: 0.375rem;
+    }
+
+    .metric-cell__icon {
+        flex: none;
+        color: var(--muted-foreground);
+    }
+
+    .metric-stack {
+        container: metric-stack / inline-size;
+        display: grid;
+        grid-template-columns: minmax(7rem, 1fr) minmax(0, auto);
+        gap: 0.75rem 1.25rem;
+        inline-size: 100%;
+    }
+
+    .metric-stack[data-density="compact"] {
+        gap: 0.5rem 1rem;
+    }
+
+    .metric-row {
+        display: grid;
+        grid-column: 1 / -1;
+        grid-template-columns: subgrid;
+        align-items: baseline;
+        padding-block: 0.25rem;
+    }
+
+    .metric-row__term {
+        display: grid;
+        min-inline-size: 0;
+        gap: 0.125rem;
+    }
+
+    .metric-row > .metric__reading {
+        justify-self: end;
+    }
+
+    .metric-row .metric__context {
+        grid-column: auto;
+    }
+
+    @container metric-stack (max-width: 24rem) {
+        .metric-row {
+            grid-template-columns: minmax(0, 1fr);
+            gap: 0.25rem;
+        }
+
+        .metric-row > .metric__reading {
+            justify-self: start;
+        }
+    }
+}

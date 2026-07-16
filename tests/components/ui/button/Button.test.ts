@@ -1,20 +1,51 @@
 import { mount } from "@vue/test-utils";
 import { describe, expect, it, vi } from "vitest";
-
-import { Button } from "@glass/components/button/index";
+import * as buttonModule from "@glass/components/button";
+import { Button } from "@glass/components/button";
 
 describe("Button", () => {
-    it("hands pointer and keyboard press state to the hydrated liquid owner", async () => {
+    it("defaults to an ordinary native command", () => {
+        const wrapper = mount(Button, { slots: { default: "Save" } });
+        const button = wrapper.get("button");
+
+        expect(button.attributes("type")).toBe("button");
+        expect(button.attributes("data-emphasis")).toBe("secondary");
+        expect(button.attributes("data-tone")).toBe("neutral");
+        expect(button.attributes("data-size")).toBe("md");
+        expect(button.attributes("data-control-target")).toBeUndefined();
+        expect(button.classes()).toContain("button");
+        expect(button.find(".cartoon-cast").exists()).toBe(false);
+        expect("buttonVariants" in buttonModule).toBe(false);
+    });
+
+    it("publishes semantic emphasis, tone, size, and icon geometry", () => {
+        const wrapper = mount(Button, {
+            props: {
+                emphasis: "primary",
+                tone: "destructive",
+                size: "sm",
+                iconOnly: true,
+            },
+            attrs: { "aria-label": "Delete item" },
+            slots: { default: "×" },
+        });
+        const button = wrapper.get("button");
+
+        expect(button.attributes("data-emphasis")).toBe("primary");
+        expect(button.attributes("data-tone")).toBe("destructive");
+        expect(button.attributes("data-size")).toBe("sm");
+        expect(button.attributes("data-icon-only")).toBe("true");
+        expect(button.attributes("data-control-target")).toBe("");
+        expect(button.attributes("aria-label")).toBe("Delete item");
+    });
+
+    it("hands pointer and keyboard feedback to one hydrated press owner", async () => {
         vi.useFakeTimers();
         const wrapper = mount(Button, { slots: { default: "Save" } });
         const button = wrapper.get("button");
 
         try {
             expect(button.attributes("data-press-armed")).toBe("");
-            expect(button.classes().some((name) => name.startsWith("active:scale"))).toBe(
-                false,
-            );
-
             await button.trigger("keydown", { key: "Enter" });
             await vi.advanceTimersByTimeAsync(400);
             expect(
@@ -40,38 +71,13 @@ describe("Button", () => {
         }
     });
 
-    it("renders the requested button variant and size", () => {
-        const wrapper = mount(Button, {
-            props: {
-                variant: "secondary",
-                size: "sm",
-            },
-            slots: {
-                default: "Save",
-            },
-        });
-
-        const button = wrapper.get("button");
-
-        expect(button.text()).toBe("Save");
-        // BC.W-BUTTON-GLASS-IOS (BG-IOS-6) — the un-reskinned shadcn-neutral
-        // `secondary` (`bg-secondary`) RE-POINTED onto the quiet GLASS register
-        // (`glass-wash btn-glass text-foreground`), a clean break with no alias.
-        expect(button.classes()).toContain("glass-wash");
-        expect(button.classes()).toContain("btn-glass");
-        expect(button.classes()).toContain("text-foreground");
-        // AX.W51 — the size rungs read the `--control-h-*` comfort cohort, not raw h-N.
-        // AY.W-CSS1 — the var-in-arbitrary shorthand: `h-(--control-h-sm)`, not `h-[var(--control-h-sm)]`.
-        expect(button.classes()).toContain("h-(--control-h-sm)");
-    });
-
-    it("publishes loading state and suppresses native submit activation", () => {
+    it("preserves native submit and loading suppression", async () => {
         const onSubmit = vi.fn();
         const wrapper = mount({
             components: { Button },
             setup: () => ({ onSubmit }),
             template:
-                '<form @submit.prevent="onSubmit"><Button type="submit" loading>Saving changes</Button></form>',
+                '<form @submit.prevent="onSubmit"><Button type="submit" loading>Saving</Button></form>',
         });
         const button = wrapper.get("button");
 
@@ -79,22 +85,18 @@ describe("Button", () => {
         expect(button.attributes("data-loading")).toBe("true");
         expect(button.attributes("aria-busy")).toBe("true");
         expect(button.attributes("type")).toBe("submit");
-
         (button.element as HTMLButtonElement).click();
         expect(onSubmit).not.toHaveBeenCalled();
-    });
 
-    it("restores native activation when loading clears", async () => {
-        const wrapper = mount(Button, {
+        const direct = mount(Button, {
             props: { loading: true },
             slots: { default: "Save" },
         });
-
-        await wrapper.setProps({ loading: false });
-        const button = wrapper.get("button");
-        expect((button.element as HTMLButtonElement).disabled).toBe(false);
-        expect(button.attributes("data-loading")).toBeUndefined();
-        expect(button.attributes("aria-busy")).toBeUndefined();
+        await direct.setProps({ loading: false });
+        expect((direct.get("button").element as HTMLButtonElement).disabled).toBe(
+            false,
+        );
+        expect(direct.get("button").attributes("aria-busy")).toBeUndefined();
     });
 
     it("normalizes native disabled Booleanish values", async () => {
@@ -102,17 +104,36 @@ describe("Button", () => {
             props: { disabled: "true" },
             slots: { default: "Save" },
         });
-        expect((wrapper.get("button").element as HTMLButtonElement).disabled).toBe(true);
-
-        await wrapper.setProps({ disabled: "false" });
-        expect((wrapper.get("button").element as HTMLButtonElement).disabled).toBe(false);
-
-        const emptyAttribute = mount({
-            components: { Button },
-            template: "<Button disabled>Save</Button>",
-        });
-        expect((emptyAttribute.get("button").element as HTMLButtonElement).disabled).toBe(
+        expect((wrapper.get("button").element as HTMLButtonElement).disabled).toBe(
             true,
         );
+
+        await wrapper.setProps({ disabled: "false" });
+        expect((wrapper.get("button").element as HTMLButtonElement).disabled).toBe(
+            false,
+        );
+    });
+
+    it("preserves an asChild link and suppresses disabled activation", () => {
+        const active = mount({
+            components: { Button },
+            template: '<Button as-child><a href="/docs">Docs</a></Button>',
+        });
+        const link = active.get("a");
+        expect(link.attributes("href")).toBe("/docs");
+        expect(link.attributes("data-slot")).toBe("button");
+        expect(link.attributes("type")).toBeUndefined();
+        expect(link.classes()).toContain("glass-capsule-hover");
+
+        const disabled = mount({
+            components: { Button },
+            template: '<Button as-child disabled><a href="/docs">Docs</a></Button>',
+        });
+        const disabledLink = disabled.get("a");
+        const event = new MouseEvent("click", { bubbles: true, cancelable: true });
+        disabledLink.element.dispatchEvent(event);
+        expect(disabledLink.attributes("aria-disabled")).toBe("true");
+        expect(disabledLink.classes()).not.toContain("glass-capsule-hover");
+        expect(event.defaultPrevented).toBe(true);
     });
 });

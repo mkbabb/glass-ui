@@ -1,20 +1,33 @@
 # HeaderRibbon
 
-A banner ribbon surface (`@mkbabb/glass-ui/header-ribbon`). A full-width header banner — a
-page/section masthead strip — that carries a title, optional actions, and the glass register.
+`HeaderRibbon` is a persistent glass command band exported from
+`@mkbabb/glass-ui/header-ribbon`. Its default `persistent` mode keeps the action row
+available on the first render without a disclosure anchor.
 
 ```vue
-<HeaderRibbon>
-    <template #title>Foundations</template>
-    <template #actions>…</template>
+<HeaderRibbon placement="right" aria-label="Editor actions">
+    <template #items>…named actions…</template>
 </HeaderRibbon>
 ```
 
-## Export
+Opt into disclosure behavior explicitly. In `collapsible` mode, `anchorLabel` names the
+native button owned by `HeaderRibbon`; the `anchor` slot supplies only decorative content.
+The button exposes `aria-expanded` and `aria-controls` for the action region.
+An omitted or blank runtime label falls back to persistent behavior instead of rendering an
+unnamed disclosure control.
 
-- **`HeaderRibbon`** — the banner. It exposes its ribbon prop/type surface and reads the glass
-  tier so the banner reads as a glass strip over the page substrate.
+```vue
+<HeaderRibbon
+    mode="collapsible"
+    anchor-label="Toggle editor actions"
+    aria-label="Editor actions"
+>
+    <template #anchor><MenuIcon aria-hidden="true" /></template>
+    <template #items>…named actions…</template>
+</HeaderRibbon>
+```
 
-A live keyframes.js consumer (restored at AZ.W-PRUNE2). The ribbon is the banner-strip register
-distinct from the demo `<StoryHero>` masthead — reach for it when a surface needs a persistent
-header band rather than a one-shot hero.
+Pointer hover or keyboard focus reveals a collapsible row, while click or touch activation
+pins it. `Escape` unpins the row and returns focus to the ribbon-owned button; focus presence
+keeps the row revealed until focus leaves. Placement changes visual order only; DOM and
+action order remain stable. Slot content is never inspected to choose behavior.

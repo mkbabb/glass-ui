@@ -17,8 +17,9 @@
  * `min(24rem, 60dvh)` (kf design-idioms.css `--easing-dropdown-max-h`; the U8
  * bounded-scroll reference), TIGHTENED by reka's measured
  * `--reka-popper-available-height` on a short viewport via the inner `min()`.
- * `overflow-y: auto` (already on the content via the CVA base) gives the inner
- * scroll. The behaviour is identical to the authored class — it now SHIPS.
+ * SelectContent clips at that bound while SelectViewport owns the vertical scroll.
+ * Keeping the viewport as the only scroll owner preserves Reka's active-option
+ * visibility and scroll-button behavior without nested scrollports.
  *
  * --select-content-max-h is the ONE retint knob (a consumer widens/narrows the cap
  * by overriding it on any ancestor). The default folds reka's available-height in:
@@ -43,10 +44,8 @@
         var(--select-content-max-h),
         var(--reka-popper-available-height, var(--select-content-max-h))
     );
-    /* The inner-scroll affordance ships with the bound (the CVA base also sets
-       overflow-y-auto; restated here so the bound + scroll travel together as one
-       precompiled contract). */
-    overflow-y: auto;
+    /* The bounded plate clips; SelectViewport is the only vertical scroll owner. */
+    overflow: hidden;
 }
 
 /* ════════════════════════════════════════════════════════════════════════

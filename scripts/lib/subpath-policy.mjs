@@ -46,13 +46,13 @@ export const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../..
 
 // --- src/components/<dir> ---
 export const COMPONENT_CLASS = {
-    // PUBLISH (24) — BI.W-MENU-TRIGGER retired context-menu (folded onto dropdown-menu);
+    // PUBLISH (23) — BI.W-MENU-TRIGGER retired context-menu (folded onto dropdown-menu);
     // BI.W-OVERLAY-UNION retired hover-card (folded onto <Popover trigger="hover">).
     badge: "PUBLISH", button: "PUBLISH", card: "PUBLISH", collapsible: "PUBLISH",
     command: "PUBLISH", "data-table": "PUBLISH",
     dialog: "PUBLISH", drawer: "PUBLISH", "dropdown-menu": "PUBLISH",
-    "focus-scope": "PUBLISH", label: "PUBLISH",
-    notification: "PUBLISH", "number-field": "PUBLISH", popover: "PUBLISH",
+    label: "PUBLISH",
+    "number-field": "PUBLISH", popover: "PUBLISH",
     progress: "PUBLISH", select: "PUBLISH", separator: "PUBLISH",
     // BI.W-DIALOG-PLACEMENT retired sheet (folded onto <DialogContent placement>).
     // BI.W-SURFACE-EXTRACT — the extracted bare (tier × decoration) glass plate.
@@ -63,32 +63,32 @@ export const COMPONENT_CLASS = {
     _shared: "INTERNAL", accordion: "INTERNAL", alert: "INTERNAL", avatar: "INTERNAL",
     carousel: "INTERNAL", checkbox: "INTERNAL", combobox: "INTERNAL", input: "INTERNAL",
     "radio-group": "INTERNAL",
-    section: "INTERNAL", skeleton: "INTERNAL", table: "INTERNAL",
-    "tags-input": "INTERNAL", textarea: "INTERNAL", toggle: "INTERNAL",
-    // INTERNAL (3)
-    "goo-filter": "INTERNAL", "infinite-scroll": "INTERNAL", "split-chars": "INTERNAL",
-    // PUBLISH (42) — goo-dot-matrix RETIRED at BG.W-GOODOT-PRUNE (0 external consumers);
+    skeleton: "INTERNAL", table: "INTERNAL",
+    "tags-input": "INTERNAL", textarea: "INTERNAL",
+    // INTERNAL (2)
+    "infinite-scroll": "INTERNAL",
+    // PUBLISH (33) — goo-dot-matrix RETIRED at BG.W-GOODOT-PRUNE (0 external consumers);
     // dot-flow-field / concentric / dot-matrix DELETED at BI.W-VIZ-DELETIONS (the user-ordered
     // clean-break prune — the 30+-attempt viz family retired, breaking → the 5.0.0 MAJOR cut).
     "animated-digit": "PUBLISH", aurora: "PUBLISH",
-    "color-swatch": "PUBLISH", "completion-seal": "PUBLISH",
-    // BI.W-CHIP-FOLD: toggle-chip + selectable-chip → the one <Chip> (pressed | selected).
+    "completion-seal": "PUBLISH",
+    // BI.W-CHIP-FOLD: the one explicit-mode <Chip> family.
     chip: "PUBLISH",
     // BI.W-DIALOG-PLACEMENT demoted confirm-dialog to a consumer Dialog preset.
     configurator: "PUBLISH", constellation: "PUBLISH",
-    controls: "PUBLISH", deck: "PUBLISH", dock: "PUBLISH",
+    "dark-mode-toggle": "PUBLISH", deck: "PUBLISH", dock: "PUBLISH",
     easing: "PUBLISH", "expandable-container": "PUBLISH",
     // BI.W-GLASS-DEDUP retired glass-panel (FAM-10; the Surface/Card axis is the one plate).
     "fading-scroll": "PUBLISH", "fourier-field": "PUBLISH",
     blob: "PUBLISH", handmark: "PUBLISH",
     // BI.W-OVERLAY-UNION retired hover-popover (folded onto <Popover trigger="hover">).
-    "header-ribbon": "PUBLISH", "icon-chip": "PUBLISH",
-    "icon-tooltip": "PUBLISH", "instrument-chassis": "PUBLISH", "labeled-field": "PUBLISH",
-    "metric-badge": "PUBLISH", "metric-cell": "PUBLISH", "metric-stack": "PUBLISH",
+    "header-ribbon": "PUBLISH",
+    "instrument-chassis": "PUBLISH", "labeled-field": "PUBLISH",
+    metric: "PUBLISH",
     "pager-dots": "PUBLISH", "paper-backdrop": "PUBLISH", "liquid-grid": "PUBLISH",
     pulse: "PUBLISH", search: "PUBLISH", "scroll-progress-rim": "PUBLISH",
     // BI.W-SPEEDTEST-ONLY-PAIR: scrolling-text RETIRED (speedtest-only; the ask-row offers the mechanism).
-    "sortable-list": "PUBLISH", "spa-view": "PUBLISH",
+    "sortable-list": "PUBLISH",
     "status-dot": "PUBLISH", tabs: "PUBLISH",
     timeline: "PUBLISH", typewriter: "PUBLISH",
     "watercolor-dot": "PUBLISH",
@@ -147,7 +147,7 @@ export const CURATED = {
     "blob-config": "src/components/blob/config.ts",
 };
 
-// The 7 composable subpaths whose entry source is a nested leaf (name ≠ leaf).
+// Additional composable entries whose source is not a curated root barrel.
 export const COMPOSABLE_SUBPATHS = {
     color: "src/composables/color/index.ts",
     dom: "src/composables/dom/index.ts",
@@ -155,7 +155,6 @@ export const COMPOSABLE_SUBPATHS = {
     // BI.W-VIRTUAL-TRUTH: /virtual RETIRED terminal — the row leaves the published map
     // (the engine stays internal at src/composables/virtual/).
     canvas: "src/composables/glass/canvas2d/index.ts", // name "canvas" ≠ leaf "canvas2d"
-    "motion-curves": "src/composables/motion/curves.ts", // nested file, name ≠ leaf
     "fourier-math": "src/components/fourier-field/math.ts", // nested, name ≠ leaf
 };
 

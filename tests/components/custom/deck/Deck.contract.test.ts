@@ -1,12 +1,19 @@
 import { mount } from "@vue/test-utils";
 import { describe, expect, it, vi } from "vitest";
 import * as Deck from "@glass/components/deck";
+import * as Glass from "@glass/index";
+import * as MotionCore from "@glass/composables/motion/core";
 
 describe("Deck public contract", () => {
     it("keeps navigation and announcements without the retired motion fork", () => {
         expect(Deck).not.toHaveProperty("installDeckSpring");
         expect(Deck).not.toHaveProperty("deckEase");
         expect(Deck).not.toHaveProperty("DECK_SPRING");
+        expect(Deck).not.toHaveProperty("PagerWindow");
+        expect(Glass).not.toHaveProperty("useGooMorph");
+        expect(Glass).not.toHaveProperty("MORPH_SIGNATURES");
+        expect(MotionCore).not.toHaveProperty("useGooMorph");
+        expect(MotionCore).not.toHaveProperty("MORPH_SIGNATURES");
 
         const changed = vi.fn();
         const deck = Deck.useDeck(3, {

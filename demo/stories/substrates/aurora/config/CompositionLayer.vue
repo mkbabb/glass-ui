@@ -63,7 +63,7 @@ function onImageFile(e: Event) {
         <LabeledSlider
             :model-value="config.warpAmount"
             label="Warp amount"
-            tooltip="0..0.6 · domain warp amplitude"
+            description="0..0.6 · domain warp amplitude"
             :min="0"
             :max="0.6"
             :step="0.01"
@@ -72,7 +72,7 @@ function onImageFile(e: Event) {
         <LabeledSlider
             :model-value="config.warpScale"
             label="Warp scale"
-            tooltip="0.5..3 · warp noise frequency"
+            description="0.5..3 · warp noise frequency"
             :min="0.5"
             :max="3"
             :step="0.05"
@@ -81,7 +81,7 @@ function onImageFile(e: Event) {
         <LabeledSlider
             :model-value="config.warpDrift"
             label="Warp drift"
-            tooltip="0..0.015 · warp evolution speed"
+            description="0..0.015 · warp evolution speed"
             :min="0"
             :max="0.015"
             :step="0.0005"
@@ -90,7 +90,7 @@ function onImageFile(e: Event) {
         <LabeledSlider
             :model-value="config.softmaxBeta"
             label="Softmax β"
-            tooltip="3..10 · nucleus blend sharpness"
+            description="3..10 · nucleus blend sharpness"
             :min="1"
             :max="10"
             :step="0.1"
@@ -99,7 +99,7 @@ function onImageFile(e: Event) {
         <LabeledSlider
             :model-value="config.saturation"
             label="Saturation"
-            tooltip="0.6..1.3 · global saturation trim"
+            description="0.6..1.3 · global saturation trim"
             :min="0.5"
             :max="1.3"
             :step="0.01"
@@ -108,7 +108,7 @@ function onImageFile(e: Event) {
         <LabeledSlider
             :model-value="config.valueVariance"
             label="Value variance"
-            tooltip="0..0.3 · within-region L/C mottling"
+            description="0..0.3 · within-region L/C mottling"
             :min="0"
             :max="0.3"
             :step="0.01"

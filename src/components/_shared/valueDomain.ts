@@ -12,7 +12,8 @@ export function resolveValueFraction(
     max: number,
 ): number {
     if (!validDomain(min, max)) return 0;
-    const finiteValue = typeof value === "number" && Number.isFinite(value) ? value : min;
+    const finiteValue =
+        typeof value === "number" && Number.isFinite(value) ? value : min;
     return (Math.min(max, Math.max(min, finiteValue)) - min) / (max - min);
 }
 
@@ -23,7 +24,11 @@ export function resolveValueMarks(
 ): ResolvedValueMark[] {
     if (!marks?.length || !validDomain(min, max)) return [];
 
-    return [...new Set(marks.filter((mark) => Number.isFinite(mark) && mark > min && mark < max))]
+    return [
+        ...new Set(
+            marks.filter((mark) => Number.isFinite(mark) && mark > min && mark < max),
+        ),
+    ]
         .sort((a, b) => a - b)
         .map((value) => ({ value, position: (value - min) / (max - min) }));
 }

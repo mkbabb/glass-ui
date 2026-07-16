@@ -62,7 +62,7 @@ const NextIcon = computed(() =>
         "
     >
         <Button
-            variant="ghost"
+            emphasis="quiet"
             iconOnly
             :disabled="!canScrollPrev"
             :aria-label="orientation === 'vertical' ? 'Previous slide (up)' : 'Previous slide'"
@@ -86,7 +86,7 @@ const NextIcon = computed(() =>
         </span>
 
         <Button
-            variant="ghost"
+            emphasis="quiet"
             iconOnly
             :disabled="!canScrollNext"
             :aria-label="orientation === 'vertical' ? 'Next slide (down)' : 'Next slide'"

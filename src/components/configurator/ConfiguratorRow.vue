@@ -41,21 +41,19 @@ import { useOptionalConfiguratorSize, type ConfiguratorSize } from "./size";
  * `"md"` rung is functionally identical to the no-size
  * fallback; it exists so consumers can be explicit.
  *
- * # ConfiguratorRow vs LabeledField — recorded divergence (AZ.W-METRIC-UNIFY §B)
+ * # ConfiguratorRow vs LabeledField
  *
  * Both are "label (+ meta) above/beside a slotted control", but they are NOT
  * interchangeable — they emphasize DIFFERENT features:
  *  - **ConfiguratorRow** (this) — for TOKEN / PRESET controls. Carries the
  *    token-`name` reference, the opt-in `reset` affordance (`canReset`), and the
  *    three-rung `size` axis (local-prop-over-inject). No a11y for/id wiring.
- *  - **LabeledField** — for FORM fields. Carries the `for`/`id` label↔control
- *    a11y wiring (`controlId`/`labelId`/`errorId`), the `tooltip`, the `required`
- *    asterisk, and the `aria-live` `error` region.
+ *  - **LabeledField** — for form controls. Carries stable label, description,
+ *    error, requirement, state, and layout associations without styling the control.
  *
- * Reach for ConfiguratorRow inside a `<Configurator>` for token sliders/selects;
- * reach for LabeledField for accessible form inputs. The divergence is recorded
- * (NOT a forced merge — no ≥2-consumer shared-chassis need surfaced) in
- * `docs/precepts/design-idioms.md §9`, alongside the `cn`/`focus-ring` keeps.
+ * Reach for ConfiguratorRow only when token metadata or reset is the content;
+ * use LabeledField directly for an accessible form control, including inside a
+ * Configurator. Never nest both solely to repeat a label.
  */
 const props = defineProps<{
     /** Display label (top-left, primary). */
@@ -142,20 +140,7 @@ const resolvedSize = computed<ConfiguratorSize | undefined>(
                 <RotateCcw class="h-3 w-3" aria-hidden="true" />
             </button>
         </div>
-        <!-- THE WIDTH CONTRACT (BA.W-CONFIG-CHASSIS.1, S1 / CFG-1). The control
-             slot establishes a DEFINITE-WIDTH block context so a slotted control
-             fills the row's free inline axis regardless of its intrinsic content
-             width — the 0px-slider class (a percentage track resolving against a
-             content-sized flex item → circular → 0) dies here at the chassis,
-             library-wide, not per-consumer. `w-full` makes the wrapper fill the
-             column; `min-w-0` lets it shrink below content min; the immediate
-             child gets `flex-1 min-w-0 w-full` (via `[&>*]`) so a `LabeledField`
-             root / a bare slider claims the full inline span (the `.labeled-field`
-             root also claims `width:100%` in base.css — belt and suspenders for
-             the `hide-label` regression where the label was the only width
-             contributor). Width-bearing controls (Select trigger, the swatch
-             chip) are unaffected — `flex-1` on an already-sized child is a no-op
-             on its intrinsic width but lets it fill the row when it would not. -->
+        <!-- Establish a definite, shrinkable inline size for the slotted token control. -->
         <div class="flex w-full min-w-0 items-center [&>*]:min-w-0 [&>*]:w-full [&>*]:flex-1">
             <slot />
         </div>

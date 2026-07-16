@@ -1,13 +1,35 @@
-// HeaderRibbon — canonical public types (O.W6 Lane A promotion).
+import type { HTMLAttributes } from "vue";
 
-// BI.W-SYNONYM-RENAMES — the `position` synonym renamed to the shared `placement`
-// axis vocabulary (a subset of the PLACEMENTS tuple, _shared/axes.ts); "left"|"right"
-// unchanged, zero value change.
+export type HeaderRibbonMode = "persistent" | "collapsible";
 export type HeaderRibbonPlacement = "left" | "right";
 
-export interface HeaderRibbonProps {
+interface HeaderRibbonCommonProps {
     /** Side of the viewport the ribbon anchors against. Defaults to `"left"`. */
     placement?: HeaderRibbonPlacement;
-    /** Milliseconds after the pointer leaves the ribbon before items collapse. Defaults to `2000`. */
-    hideTimeoutMs?: number;
+    /** Accessible name for the persistent action toolbar. */
+    ariaLabel?: string;
+    /** Additional class names. */
+    class?: HTMLAttributes["class"];
+}
+
+export interface HeaderRibbonPersistentProps extends HeaderRibbonCommonProps {
+    /** Keeps the action row available without a disclosure control. */
+    mode?: "persistent";
+    anchorLabel?: never;
+}
+
+export interface HeaderRibbonCollapsibleProps extends HeaderRibbonCommonProps {
+    /** Adds the ribbon-owned disclosure control and collapses the action row. */
+    mode: "collapsible";
+    /** Accessible name for the ribbon-owned disclosure control. */
+    anchorLabel: string;
+}
+
+export type HeaderRibbonProps =
+    | HeaderRibbonPersistentProps
+    | HeaderRibbonCollapsibleProps;
+
+export interface HeaderRibbonAnchorSlotProps {
+    /** Whether the collapsible action row is pinned open. */
+    pinned: boolean;
 }

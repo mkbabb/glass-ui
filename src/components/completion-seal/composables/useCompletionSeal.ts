@@ -10,8 +10,8 @@
 //
 // It owns NO rAF loop / no spring integrator (the draw is the CSS `@property`
 // interpolation on the SPRING-EASE clock — the no-second-engine fence; the
-// border-progress/press-unify precedent where the registered typed property IS the
-// animation). The seal is COMPOSITOR-ONLY (the recipe rides stroke-dashoffset /
+// registered typed property itself is the animation drive. The seal is COMPOSITOR-ONLY
+// (the recipe rides stroke-dashoffset /
 // transform / filter) — this leaf writes only the boolean seam + the PRM-snap flag.
 
 import {
@@ -23,7 +23,7 @@ import {
     watch,
     type Ref,
 } from "vue";
-import { useMediaQuery } from "@vueuse/core";
+import { useReducedMotion } from "../../../composables/motion/useReducedMotion";
 
 export interface UseCompletionSealOptions {
     /**
@@ -54,9 +54,7 @@ export interface UseCompletionSeal {
     draw: () => void;
 }
 
-function readPlay(
-    play: UseCompletionSealOptions["play"],
-): boolean | undefined {
+function readPlay(play: UseCompletionSealOptions["play"]): boolean | undefined {
     if (play == null) return undefined;
     return typeof play === "function" ? play() : play.value;
 }
@@ -76,10 +74,8 @@ export function useCompletionSeal(
 
     const playing = ref(false);
     const drawn = ref(false);
-    const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
-    const reduced = computed(
-        () => respectReducedMotion && prefersReducedMotion.value,
-    );
+    const prefersReducedMotion = useReducedMotion();
+    const reduced = computed(() => respectReducedMotion && prefersReducedMotion.value);
     let drawFrame: number | null = null;
 
     function snap(): void {

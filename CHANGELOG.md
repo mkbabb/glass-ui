@@ -1,5 +1,34 @@
 # Changelog
 
+## 7.0.0 (unreleased)
+
+- `HeaderRibbon` is now one named toolbar whose pointer, focus, and pinned presence
+  directly own its action reveal. It uses the shared functional glass surface and motion
+  tokens, ignores hover emulation from touch pointers, and collapses on Escape while
+  restoring focus to its anchor control. The timeout prop, duplicate anchor state, and
+  extra layout slot are removed.
+- `Progress` adds typed error and vertical states while retaining one numeric owner,
+  one indicator, truthful indeterminate semantics, arbitrary maxima, and optional
+  decorative marks.
+- `Slider` replaces the public `sliderVariants` CVA with typed `variant`, `size`, and
+  `invalid` props plus colocated CSS. Its Reka single/range, orientation, keyboard,
+  touch, form, dock-hold, motion, and marks behavior is unchanged; coarse pointers use
+  a real 44px root hit region without enlarging the visible rail.
+- Dock removes the unconsumed `DockSection`, `DockStack`, and fisheye surfaces. Semantic
+  groups use ordinary DOM plus `DockSeparator`; compact facet menus compose the existing
+  dropdown family. Native overflow scrolling remains.
+- Label now owns typed required/optional and disabled states in colocated CSS. Avatar
+  owns one accessible identity, fallback/loading behavior, geometry, and status placement
+  without the public CVA. Skeleton is one decorative reserved-shape recipe whose shimmer
+  is absent under reduced motion; Separator retains its semantic/decorative hairline.
+- `DarkModeToggle` moves from the vague `/controls` entry to `/dark-mode-toggle` with no
+  alias. The eclipse long-press fork is removed; one native pressed command uses the
+  shared interruptible press response and snaps spatial motion under reduced motion.
+- `PaperBackdrop` is now a thin mount over the shared paper content-field recipe. Its
+  per-instance opacity and frequency material forks are removed.
+- `ScrollProgressRim` now paints above the glass material pseudo-layer so its inset band
+  remains continuous at corners and cardinal edges.
+
 ## 6.0.0
 
 The BI consolidation cut: fewer public names and interaction owners, one truthful
@@ -3827,6 +3856,7 @@ The bundled glass-tier ladder rename + Card API redesign + dual-slot MetricBadge
     Migration codemod for callers:
 
     ```vue
+    <!-- v0.7 -->                                      <!-- v0.8 -->
     <!-- v0.7 -->                                      <!-- v0.8 -->
     <Card variant="default">                          → <Card>
     <Card variant="medium">                           → <Card tier="resting">

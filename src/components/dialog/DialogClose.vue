@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import { DialogClose, type DialogCloseProps } from 'reka-ui'
+import { DialogClose as RekaDialogClose } from "reka-ui";
+import type { PrimitiveProps } from "../_shared/primitive";
 
-const props = defineProps<DialogCloseProps>()
+export interface DialogCloseProps extends PrimitiveProps {}
+
+const props = defineProps<DialogCloseProps>();
 </script>
 
 <template>
-  <DialogClose v-bind="props">
-    <slot />
-  </DialogClose>
+    <RekaDialogClose v-bind="props">
+        <slot />
+    </RekaDialogClose>
 </template>

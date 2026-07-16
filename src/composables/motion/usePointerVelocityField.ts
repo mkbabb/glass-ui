@@ -31,9 +31,8 @@
 // field FREEZES: the pointer-position write is skipped (the createSpecularWriter PRM
 // gate) AND `tick` advances with an effective `tempo`/`delta` of 0 — the velocity +
 // acceleration + burst snap to zero and stay there (no live velocity). The viz reads
-// a still field; the dynamics are off. The PRM signal is a SINGLE cached `matchMedia`
-// listener minted once (the AV.W7 useWebGLCanvas substrate pattern), never a fresh
-// matchMedia per event.
+// a still field; the dynamics are off. The PRM signal comes from the SINGLE shared
+// reduced-motion authority, never a fresh media-query read per event.
 //
 // THE ATTRACTOR + ENGAGEMENT EVOLUTION (BI.W-FIELD-CORE). Layer 0 grows TWO additive
 // outputs beside the byte-FROZEN velocity/acceleration/burst chain:
@@ -59,7 +58,8 @@
 // the hand-rolled mass-spring-damper attractor (no spring engine), so no keyframes edge
 // is introduced.
 
-import { onScopeDispose, readonly, ref, type Ref } from "vue";
+import { onScopeDispose, readonly, ref, watch, type Ref } from "vue";
+import { useReducedMotion } from "./useReducedMotion";
 
 /** A 2-vector in normalized-host space (0..1 across the host box). */
 export interface PointerVec2 {
@@ -200,11 +200,9 @@ export interface UsePointerVelocityField {
     tick: (deltaMs: number) => void;
     /** Snap the whole field to rest (position held, velocity/accel/burst zeroed). */
     reset: () => void;
-    /** Tear down the cached PRM listener (auto-run on scope dispose). */
+    /** Tear down the shared-preference watch (auto-run on scope dispose). */
     dispose: () => void;
 }
-
-const PRM_QUERY = "(prefers-reduced-motion: reduce)";
 
 function clamp01(v: number): number {
     return v < 0 ? 0 : v > 1 ? 1 : v;
@@ -250,18 +248,7 @@ export function usePointerVelocityField(
     // ε below which the engagement envelope reads exactly 0 (the demand-park contract).
     const ENGAGE_EPS = 1e-3;
 
-    // ── The cached PRM ref (AV.W7 substrate pattern) — ONE matchMedia + change
-    // listener for the field's lifetime, NOT a fresh matchMedia per pointer event.
-    const canMatch =
-        typeof window !== "undefined" && typeof window.matchMedia === "function";
-    const prmQuery = canMatch ? window.matchMedia(PRM_QUERY) : null;
-    let reduced = prmQuery?.matches ?? false;
-    const onPrmChange = (e: MediaQueryListEvent): void => {
-        reduced = e.matches;
-        // A flip TO reduced freezes the field immediately (no lingering velocity).
-        if (reduced) reset();
-    };
-    prmQuery?.addEventListener("change", onPrmChange);
+    const reduced = respectPRM ? useReducedMotion() : ref(false);
 
     const active = ref(false);
     const position = ref<PointerVec2>({ x: 0.5, y: 0.5 });
@@ -289,16 +276,24 @@ export function usePointerVelocityField(
         attractorVelocity.value = { x: 0, y: 0 };
     }
 
+    const stopReducedMotionWatch = watch(
+        reduced,
+        (next) => {
+            if (next) reset();
+        },
+        { flush: "sync" },
+    );
+
     function setPointer(xNorm: number, yNorm: number): void {
         // PRM: skip the live target write (the field stays at rest — the dynamics are
         // off). The position ref keeps its last value so a static viz reads a stable
         // placement, never a jump.
-        if (respectPRM && reduced) return;
+        if (reduced.value) return;
         position.value = { x: clamp01(xNorm), y: clamp01(yNorm) };
     }
 
     function onPointerMove(event: PointerEvent): void {
-        if (respectPRM && reduced) return;
+        if (reduced.value) return;
         const target = event.currentTarget as HTMLElement | null;
         if (!target) return;
         const rect = target.getBoundingClientRect();
@@ -325,7 +320,7 @@ export function usePointerVelocityField(
     // frame-rate independent.
     function tick(deltaMs: number): void {
         // PRM or a zero step → freeze. No live velocity (the tick(0) discipline).
-        if ((respectPRM && reduced) || !(deltaMs > 0)) {
+        if (reduced.value || !(deltaMs > 0)) {
             reset();
             return;
         }
@@ -401,7 +396,7 @@ export function usePointerVelocityField(
     }
 
     function dispose(): void {
-        prmQuery?.removeEventListener("change", onPrmChange);
+        stopReducedMotionWatch();
     }
 
     onScopeDispose(dispose);

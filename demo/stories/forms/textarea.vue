@@ -1,72 +1,130 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
-import { ref } from "vue";
-import { Textarea } from "@glass/components/textarea";
+import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import { Label } from "@glass/components/label";
+import { Textarea, type TextareaResize } from "@glass/components/textarea";
 
-const plain = ref("");
-const resizable = ref(
-    "This one has the native resize handle enabled — grab the bottom-right corner.",
+const blank = ref("");
+const filled = ref(
+    "A quiet field can still feel materially present: a warm floor, a keyed rim, and no ornamental chrome.",
 );
-const fixed = ref(
-    "Resize is pinned off so the shell layout stays predictable.",
-);
-const locked = ref("This content is read-only and visually muted.");
+const required = ref("");
+const invalid = ref("Too short");
+
+const resizeModes: readonly { value: TextareaResize; label: string }[] = [
+    { value: "vertical", label: "Vertical" },
+    { value: "both", label: "Both axes" },
+    { value: "none", label: "Fixed" },
+    { value: "content", label: "Content sized" },
+];
 </script>
 
 <template>
     <StoryPage>
-        <StorySection heading="With label" gap="lg">
-            <p class="text-small text-muted-foreground">
-                The baseline pairing — <code class="fira-code">Label</code> above, field below.
-            </p>
-            <div class="flex flex-col gap-2 max-w-md">
-                <Label for="story-bio">Bio</Label>
-                <Textarea
-                    id="story-bio"
-                    v-model="plain"
-                    placeholder="A short sentence or three…"
-                />
+        <StorySection
+            label="multiline states"
+            blurb="Textarea keeps native multiline editing, wrapping, validation, and form semantics while sharing Input’s material and size contract."
+        >
+            <div class="grid gap-4 md:grid-cols-2">
+                <ShowcaseFrame class="flex flex-col gap-3">
+                    <Label for="textarea-default">Default · placeholder</Label>
+                    <Textarea
+                        id="textarea-default"
+                        v-model="blank"
+                        name="summary"
+                        rows="4"
+                        wrap="soft"
+                        placeholder="Write a short summary…"
+                    />
+                </ShowcaseFrame>
+
+                <ShowcaseFrame class="flex flex-col gap-3">
+                    <Label for="textarea-filled">Filled</Label>
+                    <Textarea id="textarea-filled" v-model="filled" rows="4" />
+                </ShowcaseFrame>
+
+                <ShowcaseFrame class="flex flex-col gap-3">
+                    <Label for="textarea-required" requirement="required">
+                        Required rationale
+                    </Label>
+                    <Textarea
+                        id="textarea-required"
+                        v-model="required"
+                        required
+                        minlength="20"
+                        placeholder="Explain the decision"
+                    />
+                </ShowcaseFrame>
+
+                <ShowcaseFrame class="flex flex-col gap-3">
+                    <Label for="textarea-invalid">Invalid rationale</Label>
+                    <Textarea
+                        id="textarea-invalid"
+                        v-model="invalid"
+                        invalid
+                        aria-describedby="textarea-invalid-message"
+                    />
+                    <p id="textarea-invalid-message" class="text-small text-destructive">
+                        Add enough detail for another person to act on this note.
+                    </p>
+                </ShowcaseFrame>
+
+                <ShowcaseFrame class="flex flex-col gap-3">
+                    <Label for="textarea-readonly">Read only</Label>
+                    <Textarea
+                        id="textarea-readonly"
+                        model-value="This release note is locked after publication."
+                        readonly
+                    />
+                </ShowcaseFrame>
+
+                <ShowcaseFrame class="flex flex-col gap-3">
+                    <Label for="textarea-disabled" disabled>Disabled</Label>
+                    <Textarea
+                        id="textarea-disabled"
+                        model-value="Archived notes cannot be edited."
+                        disabled
+                    />
+                </ShowcaseFrame>
             </div>
         </StorySection>
 
-        <StorySection heading="Resizable" gap="lg">
-            <p class="text-small text-muted-foreground">
-                Native <code class="fira-code">resize: vertical</code>.
-            </p>
-            <div class="flex flex-col gap-2 max-w-md">
-                <Label for="story-resize">Notes</Label>
-                <Textarea
-                    id="story-resize"
-                    v-model="resizable"
-                    class="resize-y"
-                />
+        <StorySection
+            label="resize contract"
+            blurb="Resize is an explicit component axis. Content sizing grows to a bounded ceiling; fixed fields remain scrollable so narrow content stays reachable."
+        >
+            <div class="grid gap-4 md:grid-cols-2">
+                <ShowcaseFrame
+                    v-for="mode in resizeModes"
+                    :key="mode.value"
+                    class="flex flex-col gap-3"
+                >
+                    <Label :for="`textarea-${mode.value}`">{{ mode.label }}</Label>
+                    <Textarea
+                        :id="`textarea-${mode.value}`"
+                        :resize="mode.value"
+                        :model-value="
+                            mode.value === 'content'
+                                ? 'This field grows with its lines.\nAdd another line to see the bounded content-sized path.'
+                                : 'The native resize handle follows the declared axis.'
+                        "
+                    />
+                </ShowcaseFrame>
             </div>
         </StorySection>
 
-        <StorySection heading="Resize off" gap="lg">
-            <p class="text-small text-muted-foreground">
-                Forced <code class="fira-code">resize: none</code> — height stays where you put it.
-            </p>
-            <div class="flex flex-col gap-2 max-w-md">
-                <Label for="story-fixed">Caption</Label>
+        <StorySection label="narrow measure">
+            <ShowcaseFrame class="flex max-w-64 flex-col gap-3">
+                <Label for="textarea-narrow">Wrapped at a narrow width</Label>
                 <Textarea
-                    id="story-fixed"
-                    v-model="fixed"
-                    class="resize-none"
+                    id="textarea-narrow"
+                    resize="none"
+                    rows="5"
+                    model-value="Long multiline content remains readable and scrollable when a compact composition does not permit resizing."
                 />
-            </div>
-        </StorySection>
-
-        <StorySection heading="Disabled" gap="lg">
-            <p class="text-small text-muted-foreground">
-                <code class="fira-code">disabled</code> drops opacity and blocks interaction.
-            </p>
-            <div class="flex flex-col gap-2 max-w-md">
-                <Label for="story-locked" class="opacity-60">Release notes</Label>
-                <Textarea id="story-locked" v-model="locked" disabled />
-            </div>
+            </ShowcaseFrame>
         </StorySection>
     </StoryPage>
 </template>

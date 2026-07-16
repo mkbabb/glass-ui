@@ -8,13 +8,10 @@ import {
     TooltipTrigger,
 } from "@glass/components/tooltip";
 import { Button } from "@glass/components/button";
-import { IconChip } from "@glass/components/icon-chip";
-import { Bold, Italic, Underline, Save, Share2, Info } from "@lucide/vue";
+import { Bold, Italic, Underline, Save, Share2 } from "@lucide/vue";
 
 // BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2
 // blue identity. PH3-safe (inline borderLeft, not the border-l-[3px] +
-// <IconChip> double-header shape).
-const CONTAINERS_STOP = 2;
 
 type Side = "top" | "right" | "bottom" | "left";
 const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
@@ -22,36 +19,22 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
 
 <template>
     <StoryPage>
-        <header
-            class="story-color-event flex items-center gap-4 pl-5"
-            :style="{
-                '--section-label-accent': `var(--section-color-${CONTAINERS_STOP})`,
-            }"
-        >
-            <IconChip :icon="Info" :section="CONTAINERS_STOP" bloom reveal />
-            <div class="flex flex-col gap-1">
-                <span class="section-label--tinted text-admin-label">
-                    Containers · Tooltip
-                </span>
-                <p class="text-small text-muted-foreground">
-                    Pointer-anchored hint tooltips — the container identity is the
-                    ONE color event.
-                </p>
-            </div>
-        </header>
 
         <TooltipProvider :delay-duration="150">
             <div class="grid gap-12">
                 <StorySection heading="Icon toolbar" gap="lg">
                     <p class="text-sm text-muted-foreground">
-                        Canonical use case — every icon gets a label.
+                        Every icon action remains a named button; the tooltip adds
+                        only a terse description. Required help stays visible or
+                        programmatically associated because touch does not open a
+                        hover tooltip.
                     </p>
                     <div
                         class="flex items-center gap-1 rounded-xl border border-border bg-card/50 p-1.5 w-fit"
                     >
                         <Tooltip>
                             <TooltipTrigger as-child>
-                                <Button variant="ghost" iconOnly aria-label="Bold">
+                                <Button emphasis="quiet" iconOnly aria-label="Bold">
                                     <Bold class="size-4" />
                                 </Button>
                             </TooltipTrigger>
@@ -59,7 +42,7 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
                         </Tooltip>
                         <Tooltip>
                             <TooltipTrigger as-child>
-                                <Button variant="ghost" iconOnly aria-label="Italic">
+                                <Button emphasis="quiet" iconOnly aria-label="Italic">
                                     <Italic class="size-4" />
                                 </Button>
                             </TooltipTrigger>
@@ -67,7 +50,7 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
                         </Tooltip>
                         <Tooltip>
                             <TooltipTrigger as-child>
-                                <Button variant="ghost" iconOnly aria-label="Underline">
+                                <Button emphasis="quiet" iconOnly aria-label="Underline">
                                     <Underline class="size-4" />
                                 </Button>
                             </TooltipTrigger>
@@ -84,7 +67,7 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
                     <div class="flex flex-wrap gap-3">
                         <Tooltip>
                             <TooltipTrigger as-child>
-                                <Button variant="outline">
+                                <Button>
                                     <Save class="size-4" /> Save
                                 </Button>
                             </TooltipTrigger>
@@ -113,7 +96,7 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
                     <div class="flex flex-wrap gap-3">
                         <Tooltip v-for="side in sides" :key="side">
                             <TooltipTrigger as-child>
-                                <Button variant="outline" class="capitalize">
+                                <Button class="capitalize">
                                     {{ side }}
                                 </Button>
                             </TooltipTrigger>

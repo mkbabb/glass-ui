@@ -40,6 +40,8 @@ export type CanvasSuspendReason =
 // lifecycle unchanged (webgpu/index imports `sizeBacking`; useWebGLCanvas/useWebGPUCanvas
 // import the types). The sizer is pure CSS-geometry with ZERO closure state — the
 // schedule + park + reveal machinery live in this file + the `visibility` leaf.
+import { watch } from "vue";
+import { useReducedMotion } from "../../motion/useReducedMotion";
 import { sizeBacking, type BackingSize, type DprPolicy } from "./backingSize";
 import { createCanvasVisibility } from "./visibility";
 export { sizeBacking };
@@ -76,11 +78,9 @@ export interface CanvasLifecycleOptions {
      * shrinking to `gl.viewport(0,0,s.w,s.h)` / `uploadResolution` (a WGPU swap-chain leg
      * is a no-op — it auto-resizes to the backing the leaf set).
      *
-     * BG.W-VIZ-RESIZE-ADOPT: every GL/WGPU procedural viz has HARD-ADOPTED the leaf sizer
-     * (all 9 pass `dprPolicy` + read `s` upload-only; ZERO viz self-measures the backing —
-     * `proof:viz` enforces `backing == round(gBCR × dpr)` with no surviving `canvas.width =`
-     * self-size). The arg stays optional ONLY for the un-migrated `useCanvas2D` leg + the
-     * substrate contract tests; dropping the `?` (the flag-day) is booked to their adopt.
+     * Procedural scenes, including Canvas2D, pass `dprPolicy` and use this upload-only
+     * size. The optional argument remains only for direct legacy WebGL/WebGPU callers
+     * that omit a DPR policy.
      */
     resize: (s?: BackingSize) => void;
     /**
@@ -89,10 +89,8 @@ export interface CanvasLifecycleOptions {
      * `BackingSize` rides every `resize` call. When ABSENT the leaf falls back to the
      * legacy behaviour (the consumer's `resize()` self-measures) — the migration seam.
      *
-     * BG.W-VIZ-RESIZE-ADOPT: the GL/WGPU substrate (the `createGpuSubstrate` picker + both
-     * legs) is UNIVERSALLY on this seam now — every one of the 9 procedural viz threads its
-     * budget DPR here (`resolveBudgetDpr` / `resolveAuroraWashDpr`), so the STANDARD is
-     * `dprPolicy`-present; the ABSENT branch survives only for `useCanvas2D`.
+     * Procedural scenes use the present branch. The absent branch remains for direct
+     * legacy WebGL/WebGPU callers.
      */
     dprPolicy?: DprPolicy;
     /**
@@ -103,6 +101,10 @@ export interface CanvasLifecycleOptions {
      */
     bindContextEvents?: (rebuild: () => void, markContextLost: () => void) => void;
     unbindContextEvents?: () => void;
+    /** Project the lifecycle's existing loss/rebuild state without creating a second clock. */
+    onContextStateChange?: (state: "lost" | "restored") => void;
+    /** Surface a failed restore or a bounded context-loss storm to the owner. */
+    onContextError?: (error: Error) => void;
     /**
      * BD.W-SUBSTRATE-SIZE-UNIFY (G3) — compose the IntersectionObserver park detector
      * at the leaf (DRY) so a consumer inherits the off-screen IO-park ORed with the
@@ -236,12 +238,8 @@ export function createCanvasLifecycle(
     let disposed = false;
 
     // ── reduced-motion (live-monitored — gates the RESCHEDULE not the suspend set).
-    const hasWindow = typeof window !== "undefined";
-    const reducedMq =
-        respectReducedMotion && hasWindow && window.matchMedia
-            ? window.matchMedia("(prefers-reduced-motion: reduce)")
-            : null;
-    let reducedMotion = reducedMq?.matches ?? false;
+    const reducedPreference = respectReducedMotion ? useReducedMotion() : null;
+    let reducedMotion = reducedPreference?.value ?? false;
 
     function tick(): void {
         if (!isRunning() || !hooks) return;
@@ -249,23 +247,30 @@ export function createCanvasLifecycle(
         const t = hooks.time ? hooks.time(elapsed) : elapsed;
         hooks.frame(t);
         raf =
-            !reducedMotion && hooks.shouldContinue()
-                ? requestAnimationFrame(tick)
-                : 0;
+            !reducedMotion && hooks.shouldContinue() ? requestAnimationFrame(tick) : 0;
     }
 
     function wake(): void {
-        if (armed && isRunning() && !raf && hooks) raf = requestAnimationFrame(tick);
+        if (!armed || !isRunning() || raf || !hooks) return;
+        if (reducedMotion) tick();
+        else raf = requestAnimationFrame(tick);
     }
 
-    function onReducedMotionChange(): void {
-        const next = reducedMq?.matches ?? false;
+    function onReducedMotionChange(next: boolean): void {
         if (next === reducedMotion) return;
         reducedMotion = next;
-        if (!next) startTime = performance.now();
-        wake();
+        if (next) {
+            cancelAnimationFrame(raf);
+            raf = 0;
+            if (armed && isRunning() && hooks) tick();
+        } else {
+            startTime = performance.now();
+            if (armed && isRunning() && hooks?.shouldContinue()) wake();
+        }
     }
-    reducedMq?.addEventListener("change", onReducedMotionChange);
+    const stopReducedMotionWatch = reducedPreference
+        ? watch(reducedPreference, onReducedMotionChange, { flush: "sync" })
+        : () => {};
 
     function suspend(reason: CanvasSuspendReason = "manual"): void {
         const wasRunning = isRunning();
@@ -351,8 +356,16 @@ export function createCanvasLifecycle(
                 restoreTimer = setTimeout(() => {
                     restoreTimer = 0;
                     if (disposed || breakerTripped) return;
-                    build();
-                    if (isRunning()) wake();
+                    try {
+                        build();
+                        options.onContextStateChange?.("restored");
+                        if (isRunning()) wake();
+                    } catch (error) {
+                        hooks = null;
+                        options.onContextError?.(
+                            error instanceof Error ? error : new Error(String(error)),
+                        );
+                    }
                 }, RESTORE_DEBOUNCE_MS);
             },
             // markContextLost: the surface is blank — NULL the hooks + cancel the rAF so the
@@ -366,6 +379,7 @@ export function createCanvasLifecycle(
                 hooks = null;
                 cancelAnimationFrame(raf);
                 raf = 0;
+                options.onContextStateChange?.("lost");
                 clearRestoreTimer();
                 const t = nowMs();
                 lossTimestamps.push(t);
@@ -376,7 +390,14 @@ export function createCanvasLifecycle(
                 // loss survives the prune): a later genuine single loss must self-heal, so
                 // the breaker RESETS. A real storm keeps the window full and re-trips.
                 if (lossTimestamps.length <= 1) breakerTripped = false;
-                if (lossTimestamps.length > N_RESTORE_STORM) breakerTripped = true;
+                if (lossTimestamps.length > N_RESTORE_STORM && !breakerTripped) {
+                    breakerTripped = true;
+                    options.onContextError?.(
+                        new Error(
+                            "[Canvas] repeated context loss; rendering is parked",
+                        ),
+                    );
+                }
             },
         );
         // G2 — size synchronously BEFORE building the context (idempotent if presize
@@ -417,7 +438,7 @@ export function createCanvasLifecycle(
         cancelAnimationFrame(raf);
         raf = 0;
         clearRestoreTimer();
-        reducedMq?.removeEventListener("change", onReducedMotionChange);
+        stopReducedMotionWatch();
         // Detach every DOM observer/listener owned by the visibility leaf (the
         // tab-visibility owner, the content-visibility listener, the leaf RO, the IO
         // park, the one-shot reveal IO).

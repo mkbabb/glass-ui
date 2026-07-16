@@ -61,7 +61,7 @@ const aliases: TintRow[] = [
 
         <StorySection
             label="tier aliases"
-            blurb="Semantic tier aliases name the numeric tint rungs. Use these in component-level styles where the rung is implicit (e.g., `<Card tier='quiet'>` paints with --surface-tint-quiet)."
+            blurb="Semantic tier aliases name the numeric tint rungs. Surface resolves these material roles; Card may forward an explicit tier without maintaining a second material system."
         >
             <div class="tint-grid scroll-cascade">
                 <div v-for="row in aliases" :key="row.label" class="tint-cell">

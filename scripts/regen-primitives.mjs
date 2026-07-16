@@ -5,15 +5,11 @@
 // register, GENERATED beside `structure.md`/`dependencies.md` from the EXPORT MANIFEST
 // (`scripts/lib/subpath-policy.mjs` — the SAME single-source the package.json exports
 // regen feeds) + the CANON DOCS (`scripts/lib/canon-doc.mjs` `CANON_HOMES`). It is the
-// ROOT registry atlas's G-M11 "no hand-rolled substitute where a glass-ui primitive
-// exists" gate references — never a consumer copy (co-ownership: atlas M.W0-A.6 authors
-// the consume-canon; glass-ui owns THIS artifact). Atlas builds its viz-subset MANIFEST
-// on top of this root register.
+// canonical primitive inventory. Consumers may derive a bounded subset from it; they
+// should not copy and maintain a second root register.
 //
-// DERIVE-NOT-HAND-AUTHOR — the register is regenerated from disk; the committed file is
-// asserted byte-fresh by proof:canon-homes (the (R) REGISTER-FRESH clause). A subpath
-// add / an export rename that never re-ran `node scripts/regen-primitives.mjs --write`
-// REDs, so the register CANNOT drift from the real export surface. It carries NO
+// DERIVE-NOT-HAND-AUTHOR — regenerate the register from disk after a subpath add or
+// export rename. It carries NO
 // timestamp (a timestamp would make committed != regen every run) — the payload is
 // PURE derived data, deterministic across runs (subpaths + exports sorted).
 //
@@ -21,7 +17,7 @@
 //   (default) — print the generated register to stdout.
 //   --write   — write docs/canon/primitives.json.
 //   --check   — compare the on-disk register to the freshly-generated form; exit 1 on
-//               drift (the parity self-lock, mirroring regen-structure --check).
+//               drift (the parity self-lock for this generated register).
 // ============================================================================
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve, dirname, relative } from "node:path";
@@ -131,11 +127,8 @@ export function buildPrimitivesRegister() {
             "scripts/lib/canon-doc.mjs CANON_HOMES (the canon-doc homes)",
         ],
         _note:
-            "Machine-readable canonical-primitives register — the ROOT registry atlas G-M11 " +
-            "(no-hand-rolled-substitute-where-a-glass-ui-primitive-exists) references. Co-ownership: " +
-            "atlas M.W0-A.6 authors the consume-canon; glass-ui owns this artifact. DERIVE-not-hand-author " +
-            "— regenerate via the generator, never hand-edit; proof:canon-homes asserts committed==regen. " +
-            "BH.B4-canon / ATLAS-M item 7 / the WG-E·PRIMITIVES-REGISTER root.",
+            "Machine-readable canonical-primitives register. Derive consumer subsets from this root; " +
+            "regenerate it from source and the public export map rather than hand-editing it.",
         package: PKG,
         subpathCount: primitives.length,
         primitiveCount: primitives.reduce((n, p) => n + p.exports.length, 0),
@@ -149,8 +142,7 @@ export function generatePrimitivesRegister() {
     return `${JSON.stringify(buildPrimitivesRegister(), null, 2)}\n`;
 }
 
-/** The re-home seam — proof:canon-homes imports this to compare the committed
- *  register to the freshly-generated form WITHOUT the CLI side effects. */
+/** Compare the committed register with the freshly generated form without CLI effects. */
 export function primitivesFreshness() {
     const generated = generatePrimitivesRegister();
     const committed = existsSync(OUT_ABS) ? readFileSync(OUT_ABS, "utf8") : null;

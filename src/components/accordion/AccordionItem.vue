@@ -1,24 +1,51 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
-import { AccordionItem, type AccordionItemProps, useForwardProps } from 'reka-ui'
-import { cn } from '../_shared/class-names'
+import { computed, useAttrs, type HTMLAttributes } from "vue";
+import { AccordionItem as RekaAccordionItem } from "reka-ui";
+import { cn } from "../_shared/class-names";
+import { provideDisclosureIds } from "../_shared/disclosure-context";
 
-const props = defineProps<AccordionItemProps & { class?: HTMLAttributes['class'] }>()
+export interface AccordionItemProps {
+    /** Stable value represented by this item in the root model. */
+    value: string;
+    disabled?: boolean;
+    class?: HTMLAttributes["class"];
+}
 
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
+defineOptions({ name: "AccordionItem", inheritAttrs: false });
 
-  return delegated
-})
+const props = withDefaults(defineProps<AccordionItemProps>(), {
+    disabled: false,
+});
+defineSlots<{ default?: () => unknown }>();
 
-const forwardedProps = useForwardProps(delegatedProps)
+provideDisclosureIds();
+
+const attrs = useAttrs();
+const forwardedAttrs = computed(() => {
+    const {
+        as: _as,
+        asChild: _asChild,
+        "as-child": _asChildKebab,
+        open: _open,
+        defaultOpen: _defaultOpen,
+        "default-open": _defaultOpenKebab,
+        unmountOnHide: _unmountOnHide,
+        "unmount-on-hide": _unmountOnHideKebab,
+        ...forwarded
+    } = attrs;
+    return forwarded;
+});
 </script>
 
 <template>
-  <AccordionItem
-    v-bind="forwardedProps"
-    :class="cn('border-b', props.class)"
-  >
-    <slot />
-  </AccordionItem>
+    <RekaAccordionItem
+        v-bind="forwardedAttrs"
+        as="div"
+        data-slot="accordion-item"
+        :value="value"
+        :disabled="disabled"
+        :class="cn('disclosure-item', props.class)"
+    >
+        <slot />
+    </RekaAccordionItem>
 </template>

@@ -40,11 +40,10 @@ import { effectiveCap, writeVelocityWeight } from "./core/writeVelocityWeight";
  * reduce). The underline material SLIDES (no squish — a hairline does not
  * deform), gated by the caller passing no `indicatorRef` element.
  *
- * AXIS-DERIVED (the `vertical` param): the writer emits width/translateX on the
- * inline axis (horizontal) OR height/translateY on the block axis (vertical),
- * CENTER-ANCHORED (translate = buttonCenter − size/2) so the squish (which
- * scales from `transform-origin: center`) keeps the indicator center pinned to
- * the item center.
+ * The writer emits the selected item's full physical border box from the
+ * container's padding-box origin. Measuring both axes keeps the resting fill
+ * exact across orientation, fractional geometry, and writing direction; the
+ * `vertical` param only selects the transient squish axis.
  *
  * Generic over the minimal `SelectionOption` shape (`value` + optional
  * `disabled`), so it is decoupled from any consumer's option type — the
@@ -125,42 +124,49 @@ export function useSelectionIndicator<O extends SelectionOption>(
     // ── The single-select slider style (the ONE JS writer — no anchor branch) ──
 
     const singleSliderStyle = ref<Record<string, string>>({
+        left: "0px",
+        top: "0px",
         width: "0px",
-        transform: "translateX(0px)",
+        height: "0px",
+        translate: "0px 0px",
         opacity: "0",
     });
 
     function updateSingleSlider() {
-        const idx = options.value.findIndex(
-            (o) => o.value === (model.value as string),
-        );
-        if (idx < 0 || !buttonRefs.value[idx]) return;
-        const btn = buttonRefs.value[idx];
-        if (vertical.value) {
-            // Block axis — the indicator spans the item's height, centered on
-            // the item's vertical center (center-anchored, never a raw
-            // `offsetTop` left-edge write).
-            const h = btn.offsetHeight;
-            const centerY = btn.offsetTop + h / 2;
+        const idx = options.value.findIndex((o) => o.value === (model.value as string));
+        const container = containerRef.value;
+        if (idx < 0) {
             singleSliderStyle.value = {
-                height: `${h}px`,
-                width: "",
-                transform: `translateY(${centerY - h / 2}px)`,
-                opacity: "1",
+                ...singleSliderStyle.value,
+                opacity: "0",
             };
-        } else {
-            // Inline axis — span the item's width, centered on its horizontal
-            // center (algebraically `offsetLeft` but expressed via the center so
-            // the squish stays pinned).
-            const w = btn.offsetWidth;
-            const centerX = btn.offsetLeft + w / 2;
-            singleSliderStyle.value = {
-                width: `${w}px`,
-                height: "",
-                transform: `translateX(${centerX - w / 2}px)`,
-                opacity: "1",
-            };
+            return;
         }
+        if (!container || !buttonRefs.value[idx]) {
+            singleSliderStyle.value = {
+                ...singleSliderStyle.value,
+                opacity: "0",
+            };
+            return;
+        }
+        const btn = buttonRefs.value[idx];
+        const containerRect = container.getBoundingClientRect();
+        const btnRect = btn.getBoundingClientRect();
+        const x =
+            btnRect.left -
+            containerRect.left -
+            container.clientLeft +
+            container.scrollLeft;
+        const y =
+            btnRect.top - containerRect.top - container.clientTop + container.scrollTop;
+        singleSliderStyle.value = {
+            left: "0px",
+            top: "0px",
+            width: `${btnRect.width}px`,
+            height: `${btnRect.height}px`,
+            translate: `${x}px ${y}px`,
+            opacity: "1",
+        };
     }
 
     function updateSliders() {
@@ -238,16 +244,19 @@ export function useSelectionIndicator<O extends SelectionOption>(
 
         // Travel distance on the active axis drives the stretch ratio, normalized
         // by the container extent so the curve is geometry-relative.
+        const containerRect = containerRef.value?.getBoundingClientRect();
+        const fromRect = fromBtn.getBoundingClientRect();
+        const toRect = toBtn.getBoundingClientRect();
         const axisExtent = vertical.value
-            ? containerRef.value?.offsetHeight ||
-              (toBtn.offsetParent as HTMLElement | null)?.offsetHeight ||
-              1
-            : containerRef.value?.offsetWidth ||
-              (toBtn.offsetParent as HTMLElement | null)?.offsetWidth ||
-              1;
+            ? containerRect?.height || 1
+            : containerRect?.width || 1;
         const travel = vertical.value
-            ? Math.abs(toBtn.offsetTop - fromBtn.offsetTop)
-            : Math.abs(toBtn.offsetLeft - fromBtn.offsetLeft);
+            ? Math.abs(
+                  toRect.top + toRect.height / 2 - (fromRect.top + fromRect.height / 2),
+              )
+            : Math.abs(
+                  toRect.left + toRect.width / 2 - (fromRect.left + fromRect.width / 2),
+              );
         const frac = axisExtent > 0 ? Math.min(travel / axisExtent, 1) : 0;
 
         // Resolve the cap SITE-LOCALLY off the live `--motion-weight` via
@@ -314,15 +323,22 @@ export function useSelectionIndicator<O extends SelectionOption>(
 
     let resizeObserver: ResizeObserver | null = null;
 
+    watch(
+        containerRef,
+        (container) => {
+            resizeObserver?.disconnect();
+            if (container) {
+                resizeObserver = new ResizeObserver(updateSliders);
+                resizeObserver.observe(container);
+                nextTick(updateSliders);
+            } else updateSliders();
+        },
+        { flush: "post" },
+    );
+
     onMounted(() => {
-        lastIdx = options.value.findIndex((o) =>
-            activeValues.value.includes(o.value),
-        );
+        lastIdx = options.value.findIndex((o) => activeValues.value.includes(o.value));
         nextTick(updateSliders);
-        if (containerRef.value) {
-            resizeObserver = new ResizeObserver(() => updateSliders());
-            resizeObserver.observe(containerRef.value);
-        }
     });
 
     onUnmounted(() => {

@@ -8,7 +8,7 @@ import {
 // AW.W13 — the goo-blob per-frame `value.js` throw.
 //
 // `defaultBlobColorResolver` resolves its color via `cssToOklch(css)`, which
-// feeds the string straight to value.js's `parseCSSColor`. value.js CANNOT
+// feeds the string straight to value.js's `parseCssColor`. Value reports
 // parse a CSS custom-property reference (`var(--primary)`) and THROWS — once per
 // frame the renderer drew with a token color (the confirmed live runtime bug).
 //
@@ -44,5 +44,11 @@ describe("goo-blob color resolution — the var() → concrete fix (AW.W13)", ()
     it("passes a hex / oklch literal through value.js without a throw", () => {
         expect(() => defaultBlobColorResolver("#1a1717")).not.toThrow();
         expect(() => defaultBlobColorResolver("oklch(0.3 0.02 60)")).not.toThrow();
+    });
+
+    it("rejects transparency at the named numeric-renderer boundary", () => {
+        expect(() => cssToOklch("rgb(26 23 23 / 50%)")).toThrow(
+            /color_non_opaque/,
+        );
     });
 });

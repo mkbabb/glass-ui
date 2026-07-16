@@ -1,27 +1,44 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
-import type { ComboboxItemEmits, ComboboxItemProps } from 'reka-ui'
-import { ComboboxItem, useForwardPropsEmits } from 'reka-ui'
-import { cn } from '../_shared/class-names'
-import { menuItemVariants } from '../_shared/menuItemVariants'
+import { computed, useAttrs } from "vue";
+import { ComboboxItem as RekaComboboxItem } from "reka-ui";
+import { cn } from "../_shared/class-names";
+import { fixedHostAttrs } from "../_shared/primitive";
+import type {
+    ComboboxItemEmits,
+    ComboboxItemProps,
+} from "../combobox/types";
 
-const props = defineProps<ComboboxItemProps & { class?: HTMLAttributes['class'] }>()
-const emits = defineEmits<ComboboxItemEmits>()
+defineOptions({ name: "CommandItem", inheritAttrs: false });
 
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
+const props = defineProps<ComboboxItemProps>();
+const emit = defineEmits<ComboboxItemEmits>();
+const attrs = useAttrs();
+const forwardedAttrs = computed(() => fixedHostAttrs(attrs));
 
-  return delegated
-})
+type CommandSelectEvent = ComboboxItemEmits["select"][0];
 
-const forwarded = useForwardPropsEmits(delegatedProps, emits)
+function handleSelect(event: CommandSelectEvent) {
+    // Reka protects its model from disabled items, but still emits `select` before
+    // checking `disabled`. Keep the public command contract inert as well.
+    if (props.disabled) {
+        event.preventDefault();
+        return;
+    }
+
+    emit("select", event);
+}
 </script>
 
 <template>
-  <ComboboxItem
-    v-bind="forwarded"
-    :class="cn(menuItemVariants({ indicator: 'none' }), props.class)"
-  >
-    <slot />
-  </ComboboxItem>
+    <RekaComboboxItem
+        v-bind="forwardedAttrs"
+        data-slot="command-item"
+        :value="props.value"
+        :disabled="props.disabled"
+        :text-value="props.textValue"
+        :class="cn('command__item interactive-item glass-menu-row', props.class)"
+        @select="handleSelect"
+    >
+        <slot />
+    </RekaComboboxItem>
 </template>

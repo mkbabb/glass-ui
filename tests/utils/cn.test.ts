@@ -134,7 +134,7 @@ describe("cn — AJ.W3-η typography utility ≠ text-color bucket", () => {
 
     it("Button-default variant + consumer text-micro (the §5.D-11 shape)", () => {
         // Mirrors the cn() call inside Button.vue:
-        //   cn(buttonVariants({ variant: 'default' }), 'h-7 px-1 text-micro')
+        //   cn('h-(--control-h-md)', 'h-7 px-1 text-micro')
         const variantClasses =
             "bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80";
         const consumerClasses = "h-7 px-1 text-micro";

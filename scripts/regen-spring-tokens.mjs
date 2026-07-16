@@ -17,11 +17,9 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-// AY.W-MOTION2 — the (response, ζ) pairs are SINGLE-SOURCED in
-// `src/composables/motion/springPresets.ts` so the CSS `linear()` strings here
-// and the `MOTION_CURVES` JS twins both derive from ONE table (the
-// no-second-authority discipline this header names). Node imports the `.ts`
-// directly (native type-stripping); the table is pure value.js-free data.
+// The (response, ζ) pairs are single-sourced in `springPresets.ts`. CSS token
+// generation and Glass composables read the same semantic rows; engine callables
+// remain direct keyframes.js imports. Node imports the pure `.ts` data directly.
 import { SPRING_PRESETS } from "../src/composables/motion/springPresets.ts";
 import {
     springProjection,
@@ -128,7 +126,7 @@ export const BLOCK_START_MARKER =
 // rows OUT of the global table (table→6, presets-in-consumers → ScrubberTimeline-local),
 // so the dead `--spring-timeline-*` CSS twins die and the alternation narrows to the 6.
 // BI.W-REGISTER-TABLE — the `transient` (0.62, 0.90) enter-transient register joins
-// the six-name alternation (the Toast + Notification CENTER-SEED bloom, MOTION-LADDER
+// the six-name alternation (the Toast CENTER-SEED bloom, MOTION-LADDER
 // M5). BI.W-TABS-FACTOR — the `eyeglass` (0.36, 0.64) iOS-27 tab-pill LOUPE register
 // joins it too (ratified judgment (e), POST-M1). A name added to the PRESETS table must
 // be added to BOTH alternations here (the gen WRITE + the sync gate READ both anchor on

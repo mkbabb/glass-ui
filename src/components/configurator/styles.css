@@ -25,6 +25,22 @@
     --configurator-section-gap: 0.5rem; /* 8px — the inter-section card breath */
 }
 
+/* A Configurator is one material envelope around three sibling regions: gallery,
+ * live stage, and inspector. Sampling the backdrop on the outer `.glass-floating`
+ * root makes a GPU canvas in the stage a descendant of its own filtered compositing
+ * group. Keep the root's chromatic fill, rim, grain, and shadow, but move the blur to
+ * the two chrome siblings that never contain the live stage. This preserves one
+ * sample per visible chrome plate while the stage remains outside every filtered
+ * ancestor. Descendant controls still inherit the canonical nested-cell `none`. */
+.configurator {
+    backdrop-filter: none;
+}
+
+.configurator > .configurator-presets,
+.configurator > .configurator-aside {
+    backdrop-filter: var(--glass-blur-floating);
+}
+
 /* 1. Section register — the <ConfiguratorLayer> header label reads as a SECTION
  *    (√φ subheading, 20.4px / 600), NOT a row. Replaces the flat
  *    `text-small font-semibold text-foreground` span (D6-3: "section labels read

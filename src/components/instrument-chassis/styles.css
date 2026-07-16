@@ -1,472 +1,136 @@
-/* InstrumentChassis component styles — chassis surface + region dividers + phase cascade.
- *
- * Composes the three-region <InstrumentChassis> per W2.7 §1, §2, §3, §11, §16.
- * The chassis is one glass surface with an engraved-bezel ::before stroke and
- * a radial-gradient curvature overlay; both persist at all phases (chassis
- * character, not interactive accent).
- *
- * Region dividers compose two 1px lines — top catch-light, bottom under-
- * shadow — into a hairline groove. This twin-line idiom is the chassis
- * signature; every divider in the system uses it.
- *
- * `--phase-color` cascades from the chassis root via `data-phase`. Phase
- * label, hero number, and phase progress fill all read it; one mutation at
- * the chassis level retints every consumer with a single 450ms transition.
- *
- * Disco accents (specular swap, sparkle, phase-glow, disco-grain) live on
- * `.dock-tab-button[data-tier="primary"]` in `dock.css` and on
- * `.metric-badge[data-just-resolved="true"]` in `utilities.css`. They fire
- * on hover / phase-finish only. Idle is purely Vignelli.
- */
-
 @layer components {
     .instrument-chassis {
+        --instrument-tone: var(--muted-foreground);
+        --instrument-state-tint: 0%;
+        --instrument-dial-padding-inline: clamp(1rem, 3cqi, 1.5rem);
+        --instrument-dial-padding-block: clamp(1rem, 3cqi, 1.5rem);
+        --instrument-dial-gap: clamp(1rem, 3cqi, 1.5rem);
+        --instrument-control-padding-inline: clamp(1rem, 3cqi, 1.5rem);
+        --instrument-control-padding-block: clamp(0.75rem, 2cqi, 0.875rem);
+        --instrument-control-gap: calc(var(--spacing) * 2);
+        --instrument-title-gap: calc(
+            var(--instrument-dial-padding-inline, 1.5rem) / 2.618
+        );
+        --instrument-boundary-catch: rgb(255 255 255 / 0.1);
+        --instrument-boundary-shadow: rgb(0 0 0 / 0.12);
+
+        container-type: inline-size;
         position: relative;
-        display: flex;
-        flex-direction: column;
-        /* AI.W4-M.1 — chassis tint companion. The backdrop composes the
-           resting glass plate with a `color-mix` toward `--phase-color`
-           by `--phase-tint-amount`. At idle the typed amount sits at 0%
-           (initial-value from tokens.css §18) so the surface reads the
-           pure resting plate; the [data-phase] selectors below ramp the
-           amount toward `--phase-tint-peak` (6% default), and the
-           transition interpolates the typed percentage over the speed-
-           test-owned phase-handoff clock. Fallback 600ms keeps a non-
-           speedtest consumer's chassis cross-fading smoothly even
-           without the consumer-side token declared. */
+        overflow: clip;
+        border: 1px solid var(--glass-border-wash);
+        border-radius: var(--radius-card);
         background:
             var(--glass-curvature-overlay, none),
             color-mix(
                 in oklab,
                 var(--glass-bg-chassis),
-                var(--phase-color, var(--muted-foreground)) var(--phase-tint-amount, 0%)
+                var(--instrument-tone) var(--instrument-state-tint)
             );
-        transition: --phase-tint-amount var(--motion-duration-phase-handoff, 600ms)
-            var(--motion-ease-standard);
-        backdrop-filter: var(--glass-blur-quiet);
-        /* AK-FD1 §2.4 — glass-variant outer border softened one rung down the
-           foreground-tinted border ladder (quiet 10% → wash 8%) so it reads at
-           the intended resting-glass register. The spine variant carries its
-           own `--glass-spine-border` (re-declared below) and is unaffected. */
-        border: 1px solid var(--glass-border-wash);
-        border-radius: var(--radius-card);
         box-shadow:
             var(--glass-shadow-quiet),
-            inset 0 -0.5px 0 0 rgb(0 0 0 / 0.06);
-        overflow: hidden;
+            inset 0 1px 0 var(--surface-tint-6),
+            inset 0 -0.5px 0 rgb(0 0 0 / 0.06);
+        backdrop-filter: var(--glass-blur-quiet);
+        transition: border-color var(--duration-normal) var(--ease-standard);
+    }
 
-        /* `--phase-color` defaults to muted-foreground at idle. data-phase
-           selectors below retint to the chart hue. Consumers register
-           --chart-* aliases in their preset; tokens.css ships safe defaults.
+    .instrument-chassis[data-state="active"] {
+        --instrument-state-tint: 6%;
+        border-color: color-mix(
+            in oklab,
+            var(--instrument-tone) 24%,
+            var(--glass-border-wash)
+        );
+    }
 
-           `--phase-color-label` is the WCAG companion (AC.W6c F1.V-04). It
-           pairs with `--phase-color` 1:1 — same `data-phase` cascade, but
-           routes through `--chart-{phase}-label` (L≈0.40 in OKLCH) so
-           text-on-background callsites clear the 4.5:1 contrast floor.
-           Canvas / fill / gradient consumers continue to read `--phase-color`
-           (saturated brand register, correct against the meter dial).
-           Label / text consumers read `--phase-color-label` with the
-           untinted token as a fallback so an unhydrated subtree still
-           paints something readable. */
-        --phase-color: var(--muted-foreground);
-        --phase-color-label: var(--muted-foreground);
+    .instrument-chassis[data-state="complete"] {
+        --instrument-state-tint: 9%;
+        border-color: color-mix(
+            in oklab,
+            var(--instrument-tone) 32%,
+            var(--glass-border-wash)
+        );
+    }
 
-        /* BB.W-PHASE-PALETTE (N18) — the `complete` phase ink is a CONSUMER
-           token, not a hardcoded brand metal. The four active phases
-           (ping/download/upload/jitter) already read a consumer-registerable
-           `--chart-{phase}` with a library `--viz-*` fallback (the bus carries
-           phase IDENTITY); `complete` was the one arm that pinned the gold
-           directly, so every completion gilded itself the moment the phase
-           flipped. `--phase-complete-color` (+ its WCAG-twin
-           `--phase-complete-color-label`) DEFAULT to the same gold the arm
-           hardcoded — an un-overriding consumer paints byte-identical gold (the
-           back-compat floor) — but a consumer (or any ancestor) overrides EITHER
-           on its host/preset to re-ink completion (its phase spectrum, an aurora
-           register, …), so gold is EARNED (the dock CTA + personal-best
-           garnish), never the chassis default leaking onto every completion.
-           The default lives at the chassis root (NOT :root/tokens.css) because
-           it is a chassis-phase register, scoped to the surface owning the bus —
-           the same home `--phase-color`'s idle default occupies above. It reads
-           `var(--color-gold)` / `var(--color-gold-dark)` (the existing mode-
-           resolved tokens, unedited), so it inherits the SAME .dark / light-dark
-           resolution the hardcoded form did. */
-        --phase-complete-color: var(--color-gold);
-        --phase-complete-color-label: var(--color-gold-dark, var(--color-gold));
-
-        /* AV.W16 TW3 — inline-size container named `chassis` so the dial reflow
-           below reads the chassis's OWN box, not the viewport (portable into a
-           narrow host). */
-        container: chassis / inline-size;
+    .instrument-chassis[data-state="loading"] {
+        --instrument-state-tint: 3%;
     }
 
     .dark .instrument-chassis {
-        background:
-            var(--glass-curvature-overlay-dark, var(--glass-curvature-overlay, none)),
-            color-mix(
-                in oklab,
-                var(--glass-bg-chassis),
-                var(--phase-color, var(--muted-foreground)) var(--phase-tint-amount, 0%)
-            );
+        --instrument-boundary-catch: rgb(255 255 255 / 0.06);
+        --instrument-boundary-shadow: rgb(0 0 0 / 0.18);
     }
 
-    /* Engraved-bezel inner stroke. Reads as the polished sleeve of an
-       instrument-panel module. Subtle but load-bearing for the disco-skeu
-       reading. */
-    .instrument-chassis::before {
-        content: "";
-        position: absolute;
-        inset: 0.5px;
-        border-radius: calc(var(--radius-card) - 0.5px);
-        border: 1px solid var(--surface-tint-4);
-        pointer-events: none;
-        z-index: 1;
+    .instrument-composition {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: var(--instrument-dial-gap);
+        padding: var(--instrument-dial-padding-block)
+            var(--instrument-dial-padding-inline);
     }
 
-    .dark .instrument-chassis::before {
-        border-color: var(--surface-tint-6);
+    .instrument-chassis[data-proportion="golden"]
+        .instrument-composition[data-has-inspector] {
+        grid-template-columns: minmax(0, 61.8033989fr) minmax(0, 38.1966011fr);
     }
 
-    /* ─────────────────────────────────────────────────────────────
-       AL-W1-α augmented — spine variant (HOUSING register)
-
-       Per AL-X5 §4.1 + Y7. The `variant="spine"` chassis is the
-       polished SLEEVE that frames an inner card on quiet-content
-       App-level mounts. NOT glass:
-         - no opaque plate
-         - NO backdrop-filter (housing is not refracting)
-         - hairline outer stroke at `--glass-spine-border`
-         - interior radial vignette (`--glass-spine-vignette`) that
-           reads the phase-color cascade through `color-mix()` at
-           ~8% opacity — the housing breathes with the active phase
-           without competing with the inner card's saturated register
-         - tight under-shadow rim via `--glass-under-shadow-spine`
-         - inset from viewport by `clamp(0.5rem, 2vw, 1.25rem)` so
-           the chassis edge sits BEYOND the inner card's outer edge
-         - retires the engraved-bezel `::before` (the spine carries
-           its own stroke at the outer edge; the inner bezel would
-           collide with the inner card's hairline ring)
-
-       The phase cascade above (`[data-phase="…"]`) is orthogonal —
-       the `--phase-color` retint reaches the spine vignette via the
-       `color-mix(in oklab, var(--phase-color) 8%, transparent)` recipe
-       at `--glass-spine-vignette`. One mutation at the chassis level
-       still retints every consumer.
-       ───────────────────────────────────────────────────────────── */
-    .instrument-chassis[data-variant="spine"] {
-        background: var(--glass-spine-vignette);
-        backdrop-filter: none;
-        border: 1px solid var(--glass-spine-border);
-        box-shadow: var(--glass-under-shadow-spine);
-        margin: clamp(0.5rem, 2vw, 1.25rem);
+    .instrument-chassis[data-proportion="preview-dominant"]
+        .instrument-composition[data-has-inspector] {
+        grid-template-columns: minmax(0, 66.6666667fr) minmax(0, 33.3333333fr);
     }
 
-    /* The engraved-bezel inner stroke is a `"glass"`-variant feature —
-       retire it at the spine variant so the hairline outer stroke reads
-       alone (the inner card paints its own inner ring). */
-    .instrument-chassis[data-variant="spine"]::before {
-        display: none;
+    .instrument-stage,
+    .instrument-inspector {
+        min-inline-size: 0;
     }
 
-    /* ─────────────────────────────────────────────────────────────
-       BA.W-ATLAS-RECONCILE C-3 — structure variant (SILVER MILLED-METAL register)
-
-       The cool polished-steel housing read: the engraved-bezel `::before` stroke
-       AND the structural twin-line grooves re-point from the warm-cream
-       `--surface-tint-*` default onto the `--silver` quad (gold's cool mirror).
-       The chassis reads as an INDUSTRIAL precision-instrument panel — the
-       cool-metal twin of the warm-gold "complete"-phase affirmation the chassis
-       ships BY DEFAULT (the `--phase-complete-color` consumer token's gold
-       default; BB.W-PHASE-PALETTE — a consumer may re-ink completion, but the
-       silver register's narration is of the warm-gold completion default).
-
-       The phase cascade (`[data-phase="…"]`) stays ORTHOGONAL — a `structure`
-       chassis still retints its phase fills on `data-phase`; only the
-       structure-metal recipe (bezel + grooves) forks here. Consumer #2 of the
-       silver quad (the atlas's structure surface is consumer #1).
-
-       The silver is the W-NO-GRAY NAMED cool-neutral exception (a brand METAL
-       identity, not a neutral — its very-low chroma reads as milled steel, the
-       cool hue distinguishes it from the warm glass plate).
-       ───────────────────────────────────────────────────────────── */
-    .instrument-chassis[data-variant="structure"] {
-        /* The milled-panel edge: the chassis border lifts off the resting glass
-           edge onto a hairline silver structure stroke. */
-        border-color: color-mix(in oklab, var(--color-silver-dark) 55%, transparent);
+    .instrument-composition[data-boundary] .instrument-inspector {
+        box-shadow:
+            inset 1px 0 0 var(--instrument-boundary-catch),
+            inset 2px 0 0 var(--instrument-boundary-shadow);
     }
 
-    /* The engraved bezel re-tints to the cool silver catch (the polished sleeve
-       reads as steel, not warm-cream). */
-    .instrument-chassis[data-variant="structure"]::before {
-        border-color: color-mix(in oklab, var(--color-silver-light) 60%, transparent);
-    }
-    .dark .instrument-chassis[data-variant="structure"]::before {
-        border-color: color-mix(in oklab, var(--color-silver) 40%, transparent);
-    }
-
-    /* The structural grooves re-point to the silver twin-line: the catch reads
-       the light silver, the under-shadow the dark silver — a milled seam, not the
-       default warm twin-line. ONE re-point at the variant root; every
-       `<ChassisDivider>` inside a structure chassis inherits it. */
-    .instrument-chassis[data-variant="structure"] {
-        --twin-line-catch: color-mix(
-            in oklab,
-            var(--color-silver-light) 50%,
-            transparent
-        );
-        --twin-line-shadow: color-mix(
-            in oklab,
-            var(--color-silver-dark) 40%,
-            transparent
-        );
+    .instrument-action {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--instrument-control-gap);
+        padding: var(--instrument-control-padding-block)
+            var(--instrument-control-padding-inline);
     }
 
-    /* Phase-color cascade — single property, full chassis-wide retint.
-       `--phase-color-label` mirrors the cascade through the WCAG companion
-       tokens (AC.W6c F1.V-04). The label register falls back to the canvas
-       hue so a consumer that hasn't migrated its labels still paints.
-
-       AI.W4-M.1 — `--phase-tint-amount` lifts to `--phase-tint-peak`
-       (6% default) on every active phase, including `complete`. The chassis
-       backdrop reads the typed amount in its `color-mix` recipe above; the
-       transition interpolates over the phase-handoff clock so the warmth
-       cross-fades alongside the hue. Idle returns to 0% by inheritance
-       (the typed @property initial-value). */
-    .instrument-chassis[data-phase="ping"] {
-        --phase-color: var(--chart-ping, var(--viz-chebyshev));
-        --phase-color-label: var(
-            --chart-ping-label,
-            var(--chart-ping, var(--viz-chebyshev))
-        );
-        --phase-tint-amount: var(--phase-tint-peak);
-    }
-    .instrument-chassis[data-phase="download"] {
-        --phase-color: var(--chart-download, var(--viz-fourier));
-        --phase-color-label: var(
-            --chart-download-label,
-            var(--chart-download, var(--viz-fourier))
-        );
-        --phase-tint-amount: var(--phase-tint-peak);
-    }
-    .instrument-chassis[data-phase="upload"] {
-        --phase-color: var(--chart-upload, var(--viz-amber));
-        --phase-color-label: var(
-            --chart-upload-label,
-            var(--chart-upload, var(--viz-amber))
-        );
-        --phase-tint-amount: var(--phase-tint-peak);
-    }
-    .instrument-chassis[data-phase="jitter"] {
-        --phase-color: var(--chart-jitter, var(--viz-legendre));
-        --phase-color-label: var(
-            --chart-jitter-label,
-            var(--chart-jitter, var(--viz-legendre))
-        );
-        --phase-tint-amount: var(--phase-tint-peak);
-    }
-    .instrument-chassis[data-phase="complete"] {
-        /* BB.W-PHASE-PALETTE — demoted onto the `--phase-complete-color`
-           consumer seam (the exact `var(--chart-{phase}, …)` idiom the four
-           active arms above run). The arm reads ONLY the consumer token; the
-           gold lives in the token's DEFAULT at the chassis root, not as a
-           hardcoded ink here (a clean break with a back-compat default, NOT a
-           back-compat alias — no `--color-gold` dual-read survives). The warmth
-           ramp stays: `--phase-tint-amount` is orthogonal to the ink choice. */
-        --phase-color: var(--phase-complete-color);
-        --phase-color-label: var(--phase-complete-color-label);
-        --phase-tint-amount: var(--phase-tint-peak);
+    .instrument-action[data-boundary] {
+        box-shadow:
+            inset 0 1px 0 var(--instrument-boundary-catch),
+            inset 0 2px 0 var(--instrument-boundary-shadow);
     }
 
-    /* PRM bracket — the typed-property transition retires; the chassis
-       still cross-fades hue + amount instantaneously on phase change
-       (the discrete state IS the affirmation). */
+    .instrument-chassis:is([data-reserve="stage"], [data-reserve="both"])
+        .instrument-stage {
+        min-block-size: var(--instrument-stage-reserve, 0px);
+    }
+
+    .instrument-chassis:is([data-reserve="inspector"], [data-reserve="both"])
+        .instrument-inspector {
+        min-block-size: var(--instrument-inspector-reserve, 0px);
+    }
+
+    @container (max-width: 44.9375rem) {
+        .instrument-chassis[data-proportion]
+            .instrument-composition[data-has-inspector] {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        .instrument-composition[data-boundary] .instrument-inspector {
+            box-shadow:
+                inset 0 1px 0 var(--instrument-boundary-catch),
+                inset 0 2px 0 var(--instrument-boundary-shadow);
+        }
+    }
+
     @media (prefers-reduced-motion: reduce) {
         .instrument-chassis {
             transition: none;
-        }
-    }
-
-    /* Region wrappers ─────────────────────────────────────────── */
-
-    .instrument-strip {
-        position: relative;
-        display: flex;
-        align-items: center;
-        gap: var(--instrument-strip-gap, 0.75rem);
-        padding: var(--instrument-strip-padding-block, 0.875rem)
-            var(--instrument-strip-padding-inline, 1.25rem);
-        z-index: 2;
-    }
-
-    .instrument-dial {
-        position: relative;
-        display: grid;
-        grid-template-columns: var(
-            --instrument-dial-columns,
-            minmax(0, 1.2fr) 1px minmax(0, 1fr)
-        );
-        align-items: center;
-        gap: var(--instrument-dial-gap, 1.5rem);
-        padding: var(--instrument-dial-padding-block, 1.5rem)
-            var(--instrument-dial-padding-inline, 1.5rem);
-        z-index: 2;
-    }
-
-    .instrument-control {
-        position: relative;
-        display: flex;
-        align-items: center;
-        gap: var(--instrument-control-gap, 0.5rem);
-        padding: var(--instrument-control-padding-block, 0.875rem)
-            var(--instrument-control-padding-inline, 1.25rem);
-        z-index: 2;
-    }
-
-    /* Chassis dividers — twin-line hairline grooves ─────────────── */
-
-    .chassis-divider {
-        /* AW.W15 — consume the shared twin-line α pair (the catch-light +
-           under-shadow tokens publish here; the .bezel-line rules read them). */
-        @apply twin-line-divider;
-        flex-shrink: 0;
-        position: relative;
-        background: transparent;
-        z-index: 2;
-        pointer-events: none;
-    }
-
-    .chassis-divider--horizontal {
-        display: flex;
-        flex-direction: column;
-        height: 2px;
-        width: 100%;
-    }
-
-    .chassis-divider--vertical {
-        display: flex;
-        flex-direction: row;
-        width: 2px;
-        height: var(--chassis-divider-vertical-height, 70%);
-        align-self: center;
-        justify-self: center;
-    }
-
-    .bezel-line {
-        display: block;
-        flex-shrink: 0;
-    }
-
-    .chassis-divider--horizontal .bezel-line {
-        height: 1px;
-        width: 100%;
-    }
-
-    .chassis-divider--vertical .bezel-line {
-        width: 1px;
-        height: 100%;
-    }
-
-    /* AW.W15 — the twin-line α pair now lives in the `twin-line-divider`
-       @utility (single source, dark-adaptive). The `.chassis-divider` host
-       `@apply`s it, publishing `--twin-line-catch` / `--twin-line-shadow`; these
-       rules read the tokens. The prior Q.W4.A light pair (0.10 / 0.12) and the
-       dark pair (0.06 / 0.18) are the values the utility resolves. */
-    .bezel-line.top {
-        background: var(--twin-line-catch);
-    }
-    .bezel-line.bottom {
-        background: var(--twin-line-shadow);
-    }
-
-    /* Inner dial divider — same primitive, vertical on desktop. Speedtest
-       slots its <ChassisDivider orientation="vertical" class="dial-divider" />
-       between the meter canvas and the readout column; consumers may also
-       compose their own vertical dividers via the same primitive. */
-    .instrument-chassis .dial-divider {
-        align-self: stretch;
-    }
-
-    /* Narrow-box reflow — dial stacks vertically; the inner divider rotates
-       from a vertical groove (wide) to a horizontal groove (narrow). AV.W16 TW3
-       — keyed off the `chassis` container (above), not the viewport, so a
-       narrow-host chassis stacks off ITS box. 45rem ≈ 720px at the 16px root
-       (the prior viewport cadence as a box width). */
-    @container chassis (max-width: 44.9375rem) {
-        .instrument-chassis .instrument-dial {
-            grid-template-columns: 1fr;
-            /* R0G-2 (AO.W3) — reserve the dial's FINAL box from frame 0. The
-               desktop axis is already CLS-clean (the 3-column `align-items:
-               center` grid reserves row height from intrinsic min + the AP-Pγ
-               transform-only idle recentre). The mobile reflow previously
-               collapsed to `grid-template-rows: auto auto auto`, which reserves
-               NO height — the meter row, divider, and readout column sit at
-               zero height until the consumer's meter <canvas> + readout
-               numbers hydrate, then grow collapsed → final and push everything
-               below down ~326-331px → mobile-390 CLS 0.32-0.38.
-
-               The fix pins the dial box from frame 0: the meter row carries the
-               dominant reserve (`minmax(0, 1fr)` — it expands to fill the
-               envelope the `min-height` establishes), divider + readout stay
-               intrinsic (`auto`). The load-bearing reserve is `min-height` —
-               it fixes the dial's outer box so the rows distribute WITHIN a
-               reserved envelope rather than growing it post-hydration.
-
-               Both knobs are CSS custom properties (token-first). The
-               `--instrument-dial-min-height-mobile` canonical rung lands in
-               tokens.css at AO.W4; until then the inline `24rem` fallback IS
-               the default and carries the contract. A consumer whose meter is
-               a different size retunes the token — a tuning knob, not a
-               workaround for a missing reserve. */
-            grid-template-rows:
-                var(--instrument-dial-meter-reserve-mobile, minmax(0, 1fr))
-                auto
-                auto;
-            min-height: var(--instrument-dial-min-height-mobile, 24rem);
-            gap: var(--instrument-dial-gap-mobile, 1.5rem);
-        }
-
-        .instrument-chassis .instrument-dial .dial-divider,
-        .instrument-chassis .instrument-dial .chassis-divider--vertical {
-            flex-direction: column;
-            width: 70%;
-            height: 2px;
-            margin-inline: auto;
-        }
-
-        .instrument-chassis .instrument-dial .dial-divider .bezel-line,
-        .instrument-chassis .instrument-dial .chassis-divider--vertical .bezel-line {
-            width: 100%;
-            height: 1px;
-        }
-    }
-
-    /* BB.W-DESKTOP-RESERVE (B3) — the WIDE-AXIS (desktop) dial reserve, the
-       EXACT DISJOINT COMPLEMENT of the mobile `@container chassis (max-width:
-       44.9375rem)` reserve above: 44.9375rem ≈ 719px is the mobile ceiling, so
-       the desktop floor is 45rem ≈ 720px — the two container-query ranges share
-       no width, so a dial cell is reserved by exactly ONE branch at every box
-       width (no overlap, no gap, no competing `min-block-size`).
-
-       The mobile reflow reserves the dial box from frame 0; the wide box axis
-       had NO library reserve, so a `1fr` meter row collapsed to its pre-
-       hydration `<canvas>` intrinsic and grew on hydration, pushing the results
-       card + dock down (the desktop CLS the speedtest App.vue interim authored
-       a local `min-block-size: var(--chassis-max-block-size)` to cure — the
-       consumer interim this rung SUPERSEDES). The reserve is a STATIC
-       `min-block-size` — a frame-0 box reservation, NOT an animated height (no
-       per-frame layout, compositor-safe, `proof:no-layout-animation` holds: a
-       `min-block-size` reserve is never a `@keyframes`/`transition` target).
-
-       Token-first: `--instrument-dial-min-block-size-desktop` is the DESKTOP
-       DIAL a consumer overrides (default `var(--chassis-max-block-size)`, the
-       library's dock-adjusted dynamic-viewport guardrail, resolved at first
-       paint with no JS). The inline `var(--chassis-max-block-size)` fallback
-       carries the contract if the canonical token is unset. */
-    @container chassis (min-width: 45rem) {
-        .instrument-chassis .instrument-dial {
-            min-block-size: var(
-                --instrument-dial-min-block-size-desktop,
-                var(--chassis-max-block-size)
-            );
         }
     }
 }

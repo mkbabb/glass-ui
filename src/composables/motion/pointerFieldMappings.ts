@@ -182,9 +182,8 @@ export function blobPullMapping(
 // ── aurora: the cursor-as-attractor uniform mapping ─────────────────────────────
 //
 // Replaces the retired `cursorModel.ts` ENTIRELY. cx/cy = the attractor (0..1, CSS-top; the
-// uniform bridge flips Y), strength = engagement·cfg.strength (engagement-driven — reads on
-// the `smooth` medium, not a dead swirl axis), velocity/burst pass through onto the EXISTING
-// `uCursor*` uniforms (ZERO shader edit — interactability was a WIRING gap).
+// uniform bridge flips Y), strength = the engagement projection plus a bounded burst lift.
+// Folding the transient on the CPU keeps the WebGL2 and WebGPU shader inputs identical.
 
 /** The default aurora cursor influence radius (the prior cursorModel default). */
 export const AURORA_CURSOR_RADIUS = 0.25;
@@ -194,6 +193,8 @@ export interface AuroraCursorOptions {
     strength?: number;
     /** The influence radius (0.05..0.5; default {@link AURORA_CURSOR_RADIUS}). */
     radius?: number;
+    /** How much the pointer-field burst lifts the projected strength (0..1). */
+    amplitude?: number;
 }
 
 export interface AuroraCursorResult {
@@ -204,31 +205,25 @@ export interface AuroraCursorResult {
     strength: number;
     /** The influence radius. */
     radius: number;
-    /** The velocity for the velocity-reactive swirl (normalized/second). */
-    velX: number;
-    velY: number;
-    /** The transient flick-burst (0..1). */
-    burst: number;
 }
 
 /**
  * The aurora cursor mapping (PURE). The attractor is the cursor position, the engagement
- * envelope drives the strength (so the cursor-local luminance lean reads on the SMOOTH
- * medium), and the velocity + burst pass straight onto the `uCursor*` uniforms.
+ * envelope drives the steady strength and the named amplitude folds the transient burst
+ * into that same scalar. Both engines therefore receive the same cursor field.
  */
 export function auroraCursorMapping(
     snap: PointerFieldSnapshot,
     options: AuroraCursorOptions = {},
 ): AuroraCursorResult {
-    const strengthCeil = options.strength ?? 0.8;
+    const strengthCeil = clamp(options.strength ?? 0.8, 0, 1);
+    const base = clamp(snap.engagement * strengthCeil, 0, 1);
+    const burst = clamp(snap.burst * (options.amplitude ?? 0), 0, 1);
     return {
         cx: snap.attractor.x,
         cy: snap.attractor.y,
-        strength: clamp(snap.engagement * strengthCeil, 0, 1),
+        strength: base + (1 - base) * burst,
         radius: options.radius ?? AURORA_CURSOR_RADIUS,
-        velX: snap.velocity.x,
-        velY: snap.velocity.y,
-        burst: snap.burst,
     };
 }
 

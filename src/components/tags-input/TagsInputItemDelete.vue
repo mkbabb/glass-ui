@@ -1,24 +1,29 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
-import { TagsInputItemDelete, type TagsInputItemDeleteProps, useForwardProps } from 'reka-ui'
-import { X } from "@lucide/vue"
-import { cn } from '../_shared/class-names'
+import { type HTMLAttributes, computed } from "vue";
+import {
+    injectTagsInputItemContext,
+    TagsInputItemDelete as RekaTagsInputItemDelete,
+} from "reka-ui";
+import { X } from "@lucide/vue";
+import { cn } from "../_shared/class-names";
 
-const props = defineProps<TagsInputItemDeleteProps & { class?: HTMLAttributes['class'] }>()
+export interface TagsInputItemDeleteProps {
+    class?: HTMLAttributes["class"];
+}
 
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
-
-  return delegated
-})
-
-const forwardedProps = useForwardProps(delegatedProps)
+const props = defineProps<TagsInputItemDeleteProps>();
+const itemContext = injectTagsInputItemContext();
+const removeLabel = computed(() => `Remove ${itemContext.displayValue.value}`);
 </script>
 
 <template>
-  <TagsInputItemDelete v-bind="forwardedProps" :class="cn('relative touch-hit-area flex rounded bg-transparent mr-1', props.class)">
-    <slot>
-      <X class="w-4 h-4" />
-    </slot>
-  </TagsInputItemDelete>
+    <RekaTagsInputItemDelete
+        data-slot="tags-input-item-delete"
+        :aria-label="removeLabel"
+        :class="cn('tags-input__delete focus-ring', props.class)"
+    >
+        <slot>
+            <X aria-hidden="true" />
+        </slot>
+    </RekaTagsInputItemDelete>
 </template>

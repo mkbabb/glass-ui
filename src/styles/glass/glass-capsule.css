@@ -30,14 +30,14 @@
 
 @layer components {
     /* ── .glass-capsule — the raised lit warm-glass lozenge ──
-       The fill reads the SHARED element-level oklab-tinted floating pair (the W55
-       adaptive seam, `surfaces.css` `:where(.btn-glass, .segmented-indicator,
-       .glass-capsule)`) — over a bright field it darkens-to-legible, over a calm
+       The fill reads the shared element-level oklab-tinted floating pair (the W55
+       adaptive seam on `.segmented-indicator` and `.glass-capsule`) — over a bright
+       field it darkens-to-legible, over a calm
        field it stays warm-cream/near-white. The FORWARD-ness comes from the rim +
        lift, NOT from cranking the same-hue alpha. */
     .glass-capsule {
         /* The WARM-FLOOR re-invent (BD.W-TAB-IOS-CAPSULE C6). The bare
-           `--glass-bg-floating-tinted` desaturates to near-gray over a vibrant
+       `--glass-bg-floating-tinted` can desaturate to near-gray over a vibrant
            aurora (live-measured oklab(0.793 0.005 0.012), chroma 0.0128 < 0.02).
            Compose a SMALL floor toward an explicitly WARM oklch source so the
            CAPSULE's own resolved fill carries chroma — independent of the
@@ -61,8 +61,7 @@
                 var(--glass-capsule-warm) var(--glass-capsule-warm-floor)
             )
         );
-        backdrop-filter: var(--glass-blur-floating);
-        -webkit-backdrop-filter: var(--glass-blur-floating);
+        backdrop-filter: var(--glass-cell-backdrop-filter, var(--glass-blur-floating));
         /* The lifted-plate composite: the directional rim (bright top catch-light +
            warm bottom under-shadow — the iOS-27 top-light/bottom-shadow thickness)
            PLUS a layered glass under-shadow lifting the plate ~2-3px off the quiet
@@ -82,8 +81,7 @@
        target; `proof:no-layout-animation` holds). */
     .glass-capsule-track {
         background: var(--glass-bg-quiet);
-        backdrop-filter: var(--glass-blur-quiet);
-        -webkit-backdrop-filter: var(--glass-blur-quiet);
+        backdrop-filter: var(--glass-cell-backdrop-filter, var(--glass-blur-quiet));
         box-shadow:
             var(--glass-rim-top),
             var(--glass-rim-bottom),
@@ -151,7 +149,7 @@
        cell while the painted plate insets independently.
 
        DOCK-SCOPED (`.glass-dock` descendant) so NO other `.glass-capsule` consumer
-       (a glass Button, a Badge/IconChip/chip OUTSIDE a dock) inherits the content-box
+       (a glass Button, Badge, or Chip OUTSIDE a dock) inherits the content-box
        clip — `--dock-control-safe-inset` resolves to 0 outside a dock anyway, but the
        scope keeps the content-box clip off the broad capsule family. This is the ONE
        home of the safe-inset routing (the standalone `padding`/`background-clip`

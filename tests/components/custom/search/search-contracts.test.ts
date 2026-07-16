@@ -128,6 +128,57 @@ describe("FuzzySearch highlighting", () => {
 
         wrapper.unmount();
     });
+
+    it("announces settled result counts politely without reacting to navigation", async () => {
+        const query = ref("alpha");
+        const results = ref<SearchResult[]>([
+            { item: item("alpha", "Alpha"), score: 1, matchIndices: [] },
+        ]);
+        const selectedIndex = ref(0);
+        const state: FuzzySearchState = {
+            query,
+            results: computed(() => results.value),
+            selectedIndex,
+            isOpen: ref(true),
+            isExpanded: ref(false),
+            onKeydown: vi.fn(),
+            selectResult: vi.fn(),
+            toggleExpanded: vi.fn(),
+            close: vi.fn(),
+            open: vi.fn(),
+        };
+        const wrapper = mount(FuzzySearch, { props: { state } });
+        const status = wrapper.get('[role="status"]');
+
+        expect(status.attributes()).toMatchObject({
+            "aria-live": "polite",
+            "aria-atomic": "true",
+        });
+        expect(status.text()).toBe("1 result for “alpha”");
+
+        query.value = "beta";
+        await nextTick();
+        expect(status.text()).toBe("1 result for “beta”");
+
+        selectedIndex.value = 1;
+        await nextTick();
+        expect(status.text()).toBe("1 result for “beta”");
+
+        results.value = [
+            { item: item("beta-1", "Beta one"), score: 1, matchIndices: [] },
+            { item: item("beta-2", "Beta two"), score: 2, matchIndices: [] },
+        ];
+        await nextTick();
+        expect(status.text()).toBe("2 results for “beta”");
+
+        selectedIndex.value = 0;
+        await nextTick();
+        expect(status.text()).toBe("2 results for “beta”");
+
+        results.value = [];
+        await nextTick();
+        expect(status.text()).toBe("No results for “beta”");
+    });
 });
 
 describe("fuzzy search index caching", () => {

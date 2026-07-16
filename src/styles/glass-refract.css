@@ -1,8 +1,6 @@
-/* BB.W-LENSING — the #glass-refract edge-lensing SVG filter, EVOLVED off the
- * AW.W23 crude-radial garnish onto the real squircle bevel-profile + the typed
- * `--glass-refract` axis driving the animatable displacement `scale` (the press
- * lens-swell). Shipped as a library asset so `.glass-lens` works OUT OF THE BOX
- * (no consumer hand-mounts a filter node).
+/* The #glass-refract edge-lensing SVG filter uses a squircle bevel profile and a
+ * baked displacement scale. It ships as a CSS asset so `.glass-lens` needs no
+ * component, shader runtime, or consumer-mounted filter node.
  *
  * The refraction recipe is the canonical 3-primitive graph (kube.io / ekino /
  * LogRocket, 2025):
@@ -24,7 +22,7 @@
  *                      The map carries ZERO color (the warm-cream identity HOLDS —
  *                      refraction is DEPTH not hue). The asset is baked ONCE (the
  *                      squircle CURVE is fixed, the Apple-preferred profile); only the
- *                      `scale` param animates the magnitude (scope 2 — no map re-bake).
+ *                      baked `scale` sets the magnitude without a runtime map re-bake.
  *   feDisplacementMap— displaces the backdrop by the baked map (R = x-shift,
  *                      G = y-shift, `scale` = max px the `--glass-refract` axis drives).
  *   feImage specular — a soft warm top-left specular highlight (PRESERVED from HEAD —
@@ -36,7 +34,7 @@
  * the scope-2 design split the filter across `var(--…head) var(--glass-refract) var(--…tail)`
  * to splice the typed `@property --glass-refract` value between a head ending `…scale='`
  * and a tail beginning `'…`. That construction is doubly broken, proven on the real edge
- * (Chromium, playwright):
+ * (Chromium engine behavior):
  *   (1) PARSE — head/tail each carry a COMPLETE `url(…)`, so the composite is the three
  *       tokens `url("…") 28 url("…")`, which a `backdrop-filter` REJECTS. The lens
  *       computed-`backdrop-filter: none` — it never rendered. (A var() inside a single
@@ -53,9 +51,7 @@
  * lens-swell (28→44 `scale` on press) is dropped — but it was already inert (it animated
  * a value that reached no rendering filter), so the lived read is UNCHANGED (and the lens
  * now actually renders). The `@property --glass-refract` reg + `--glass-refract-swell`
- * knob are retired with it. The bevel-band width is the `--glass-refract-bevel` knob
- * (default 14% — the iOS edge band); the baked stops fix the squircle CURVE, the knob
- * documents the rim concentration the map encodes.
+ * knob are retired with it. The baked 14% stops define the edge band.
  *
  * The filter ships INLINE as a data-URI in the `backdrop-filter` declaration, so the
  * consumer gets it with zero markup. `backdrop-filter: url(#…)` is Chromium-only (WebKit
@@ -68,9 +64,7 @@
  * `--glass-refract*` AXIS/token names are KEPT (the lens magnitude is the refraction
  * axis). Consumers (`<Button :liquid>`, the demo witness) compose `.glass-lens`. The
  * rename is the only public-surface delta (MIGRATION.md row). The garnish stays PE-only
- * over the blur base; it is NEVER promoted to the card/primitive substrate
- * (feDisplacementMap is resize-expensive — only the `scale` param animates without
- * rebuilding the map).
+ * over the blur base; it is NEVER promoted to the card/primitive substrate.
  */
 
 @layer components {
@@ -80,11 +74,6 @@
        URI is skipped; any other `url("…")` content is mis-resolved as a file). The
        `#glass-refract` id is resolvable in-document (the data-URI is self-contained). */
     .glass-lens {
-        /* The bevel-band width the squircle map encodes (the iOS edge concentration).
-           Documents the rim thickness the baked stops fix; a consumer reads it to tune
-           the perceived rim band on a successor re-bake. */
-        --glass-refract-bevel: 14%;
-
         /* The shipped filter — ONE complete, valid `url("data:…")` token carrying the
            whole 3-primitive graph with the `scale='28'` baked in (the §10 default depth,
            DDR-LENS-BAKE). A single self-contained `data:` URI is (a) the ONLY form that
@@ -101,12 +90,18 @@
        INSIDE the `@supports (backdrop-filter: url(#…))` block;
        the refraction composes the shipped `#glass-refract` filter OVER the host's existing
        blur — additive (the blur already painted, this bends + concentrates the refraction
-       at the rim where the engine supports it). A non-supporting engine never reaches this
-       block and paints the un-gated `--glass-blur-*` + `--glass-tint-*` base ALONE. */
+       at the rim where the engine supports it). A lens nested in a canonical glass plate
+       reuses that plate's backdrop sample through the inherited private cell property;
+       a standalone lens keeps the exact blur + refraction recipe below. A non-supporting
+       engine never reaches this block and paints the un-gated `--glass-blur-*` +
+       `--glass-tint-*` base ALONE. */
     @supports (backdrop-filter: url("#glass-refract")) {
         .glass-material.glass-lens,
         .glass-lens {
-            backdrop-filter: var(--glass-blur-resting) var(--glass-refract-filter);
+            backdrop-filter: var(
+                --glass-cell-backdrop-filter,
+                var(--glass-blur-resting) var(--glass-refract-filter)
+            );
         }
     }
 }

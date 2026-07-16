@@ -79,6 +79,8 @@ export interface WebGPUCanvasOptions {
         context: GPUCanvasContext,
         format: GPUTextureFormat,
     ) => WebGPUCanvasFrame;
+    /** Internal lifecycle projection used by the shared renderer-status owner. */
+    onContextStateChange?: (state: "lost" | "restored") => void;
     /** Surface a device-init / validation failure (no WebGPU adapter, a `setup` throw). */
     onInitError?: (error: unknown) => void;
 }

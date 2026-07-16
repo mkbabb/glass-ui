@@ -1,31 +1,11 @@
 import { mount } from "@vue/test-utils";
+import { renderToString } from "@vue/server-renderer";
 import { describe, expect, it } from "vitest";
-import { defineComponent, h } from "vue";
+import { createSSRApp, defineComponent, h } from "vue";
 
 import GlassDock from "@glass/components/dock/GlassDock.vue";
 import { useDockContext } from "@glass/components/dock/composables/dockContext";
 
-/**
- * AR inv-η — the per-instance id `<GlassDock>` mints (and from which it
- * derives its `.dock-layers` `view-transition-name`) must be PAIRWISE-DISTINCT
- * across every live instance on a page.
- *
- * The regression this guards: the prior module-scoped `++dockInstanceId`
- * counter restarts at 0 for every copy of GlassDock.vue in the module graph
- * (a lazy/eager dist split, or two bundles sharing the page), so two
- * independent docks could BOTH mint `glass-dock-1` — a duplicate id that,
- * applied as a `view-transition-name`, the browser rejects (only one box
- * captures, the other logs an error; fourier's console-error e2e catches it).
- * The fix mints `dockId` from Vue's app-scoped `useId()`, collision-free
- * across module-graph copies (`DockLayerGroup` uses the same idiom).
- *
- * We assert on `dockId` itself — surfaced via the dock context — rather than
- * the rendered inline `view-transition-name`: the name is the pure
- * deterministic `dockId.replace(/[^a-zA-Z0-9_-]/g, "-")`, so distinct ids
- * imply distinct names, and reading the id sidesteps happy-dom not reflecting
- * the (newer) `view-transition-name` CSS property when Vue applies it via the
- * camelCase IDL.
- */
 const DockIdProbe = defineComponent({
     name: "DockIdProbe",
     setup() {
@@ -34,11 +14,8 @@ const DockIdProbe = defineComponent({
     },
 });
 
-describe("GlassDock dockId (AR inv-η pairwise-distinct guard)", () => {
+describe("GlassDock transition identity", () => {
     it("mints strictly-distinct ids for two docks on one page", () => {
-        // Two <GlassDock> in ONE wrapper — they share one app context, so
-        // useId() must hand each a distinct id (the counter bug gave both
-        // `glass-dock-1`). Each hosts a probe reading the dock context id.
         const wrapper = mount({
             render: () =>
                 h("div", [
@@ -55,7 +32,7 @@ describe("GlassDock dockId (AR inv-η pairwise-distinct guard)", () => {
             wrapper
                 .findAll(".glass-dock")
                 .every(
-                    (dock) => dock.attributes("data-material") === "functional-glass",
+                    (dock) => dock.attributes("data-material") === "functional",
                 ),
         ).toBe(true);
 
@@ -70,5 +47,36 @@ describe("GlassDock dockId (AR inv-η pairwise-distinct guard)", () => {
         expect(ids[1]).not.toBe("glass-dock-");
         // The AR inv-η invariant: STRICTLY DISTINCT.
         expect(ids[0]).not.toBe(ids[1]);
+    });
+
+    it("does not extract docks from an ordinary route snapshot", () => {
+        const wrapper = mount({
+            render: () => h(GlassDock),
+        });
+
+        expect(wrapper.get(".glass-dock").attributes("style") ?? "").not.toContain(
+            "view-transition-name",
+        );
+    });
+
+    it("uses the consumer's explicit shared-element name", async () => {
+        const html = await renderToString(
+            createSSRApp({
+                render: () =>
+                    h("div", [
+                        h(GlassDock, {
+                            viewTransitionName: "route-dock-primary",
+                            backdropMode: "static",
+                        }),
+                        h(GlassDock, {
+                            viewTransitionName: "route-dock-secondary",
+                            backdropMode: "static",
+                        }),
+                    ]),
+            }),
+        );
+
+        expect(html).toContain("view-transition-name:route-dock-primary");
+        expect(html).toContain("view-transition-name:route-dock-secondary");
     });
 });

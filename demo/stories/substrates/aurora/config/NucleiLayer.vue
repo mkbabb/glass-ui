@@ -35,7 +35,6 @@ function addNucleus() {
                 Nuclei ({{ config.nuclei.length }}/{{ MAX_NUCLEI }})
             </p>
             <Button
-                variant="glass"
                 size="sm"
                 class="h-7 gap-1.5 px-2 text-caption"
                 :disabled="config.nuclei.length >= MAX_NUCLEI"
@@ -57,7 +56,7 @@ function addNucleus() {
                 <div class="flex items-center justify-between">
                     <span class="text-mono-caption text-muted-foreground">#{{ i + 1 }}</span>
                     <Button
-                        variant="ghost"
+                        emphasis="quiet"
                         size="sm"
                         class="h-6 px-2 text-caption text-muted-foreground hover:text-destructive"
                         :disabled="config.nuclei.length <= 1"
@@ -69,7 +68,7 @@ function addNucleus() {
                 <LabeledSlider
                     :model-value="nu.x"
                     label="X"
-                    tooltip="Horizontal position 0..1 (top-origin)"
+                    description="Horizontal position 0..1 (top-origin)"
                     :min="0"
                     :max="1"
                     :step="0.01"
@@ -78,7 +77,7 @@ function addNucleus() {
                 <LabeledSlider
                     :model-value="nu.y"
                     label="Y"
-                    tooltip="Vertical position 0..1 (top-origin)"
+                    description="Vertical position 0..1 (top-origin)"
                     :min="0"
                     :max="1"
                     :step="0.01"
@@ -87,7 +86,7 @@ function addNucleus() {
                 <LabeledSlider
                     :model-value="nu.radius"
                     label="Radius"
-                    tooltip="Gaussian falloff (larger = broader influence)"
+                    description="Gaussian falloff (larger = broader influence)"
                     :min="0.1"
                     :max="0.8"
                     :step="0.01"
@@ -96,7 +95,7 @@ function addNucleus() {
                 <LabeledSlider
                     :model-value="nu.elongation ?? 1"
                     label="Elongation"
-                    tooltip="Major:minor axis ratio (1 = isotropic)"
+                    description="Major:minor axis ratio (1 = isotropic)"
                     :min="1"
                     :max="3"
                     :step="0.05"
@@ -105,7 +104,7 @@ function addNucleus() {
                 <LabeledSlider
                     :model-value="nu.angle ?? 0"
                     label="Angle"
-                    tooltip="Major-axis orientation in degrees (top-origin)"
+                    description="Major-axis orientation in degrees (top-origin)"
                     :min="-180"
                     :max="180"
                     :step="1"
@@ -114,7 +113,7 @@ function addNucleus() {
                 <LabeledSlider
                     :model-value="nu.paletteBias"
                     label="Palette bias"
-                    tooltip="0..1 · which palette stop this nucleus pulls toward"
+                    description="0..1 · which palette stop this nucleus pulls toward"
                     :min="0"
                     :max="1"
                     :step="0.01"
@@ -123,7 +122,7 @@ function addNucleus() {
                 <LabeledSlider
                     :model-value="nu.valueBias"
                     label="Value bias"
-                    tooltip="-0.3..0.3 · local lightness pull"
+                    description="-0.3..0.3 · local lightness pull"
                     :min="-0.3"
                     :max="0.3"
                     :step="0.01"
@@ -132,7 +131,7 @@ function addNucleus() {
                 <LabeledSlider
                     :model-value="nu.driftRadius"
                     label="Drift radius"
-                    tooltip="0..0.05 · orbit amplitude"
+                    description="0..0.05 · orbit amplitude"
                     :min="0"
                     :max="0.05"
                     :step="0.001"

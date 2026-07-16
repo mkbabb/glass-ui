@@ -1,24 +1,27 @@
 <script setup lang="ts">
-// The minimal shell 404. The prior 404 was a demo/eggs constellation piece —
-// the eggs family was deleted whole (user order 2026-07-13); an unknown path
-// now reads a plain glass card and a way home.
-import { useRouter } from "vue-router";
 import { Button } from "@glass/components/button";
-import { Card } from "@glass/components/card";
-
-const router = useRouter();
+import {
+    Card,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "@glass/components/card";
+import TransitionRouteLink from "../chassis/TransitionRouteLink.vue";
 </script>
 
 <template>
     <div class="grid min-h-[60vh] place-items-center p-8">
-        <Card tier="floating" class="max-w-sm text-center">
-            <h1 class="text-title">Page not found</h1>
-            <p class="text-muted-foreground mt-2">
-                Nothing lives at this route.
-            </p>
-            <Button variant="outline" class="mt-6" @click="router.push('/')">
-                Back to the stories
-            </Button>
+        <Card tier="floating" class="w-full max-w-sm text-center">
+            <CardHeader>
+                <CardTitle as="h1">Page not found</CardTitle>
+                <CardDescription>Nothing lives at this address.</CardDescription>
+            </CardHeader>
+            <CardFooter class="justify-center">
+                <Button as-child>
+                    <TransitionRouteLink to="/">Browse stories</TransitionRouteLink>
+                </Button>
+            </CardFooter>
         </Card>
     </div>
 </template>

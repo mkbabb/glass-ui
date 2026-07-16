@@ -9,14 +9,9 @@
 // styles/index.css); this SFC owns the toggle markup + the anchor/JS indicator-
 // position seam. The `overflow` axis (→ <FadingScroll>) and the `:multi-select`
 // prop (→ ToggleGroup) RETIRED — clean break, no alias (see MIGRATION.md).
-import { ref, computed, type HTMLAttributes } from "vue";
+import { ref, computed, onBeforeUpdate, type HTMLAttributes } from "vue";
 import { cn } from "../_shared/class-names";
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipTrigger,
-    TooltipProvider,
-} from "../tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "../tooltip";
 import {
     Select,
     SelectContent,
@@ -32,10 +27,10 @@ import {
 import { useSelectionIndicator } from "../../composables/motion/useSelectionIndicator";
 import { useTabDragMorph } from "./composables/useTabDragMorph";
 import { useTabResponsive } from "./composables/useTabResponsive";
-import { useTabRovingFocus } from "./composables/useTabRovingFocus";
-// BI.W-TABS-FACTOR — the iOS-27 eyeglass two-rest-state release (SETTLED ⇄ LIVE),
-// consumer #2 of `useLeadTrail` (no second integrator — the R9 dual-path fence).
-import { useEyeglassLive } from "./composables/useEyeglassLive";
+import {
+    useTabRovingFocus,
+    type TabActivation,
+} from "./composables/useTabRovingFocus";
 // BH.W-MOTION-AXIS — the `draggable` boolean dies onto the ONE `motion` axis.
 import type { Motion } from "../_shared/axes";
 import { useMotionAxis } from "../_shared/useMotionAxis";
@@ -66,6 +61,9 @@ export type SegmentedTabsVariant = "pill" | "underline";
 /** The interaction semantic, independent of material. `toggle` exposes a
  *  group of pressed buttons; `tabs` exposes a tablist with selected tabs. */
 export type SegmentedTabsSemantics = "toggle" | "tabs";
+
+/** Whether focus movement also selects. Manual activation waits for Enter/Space. */
+export type SegmentedTabsActivation = TabActivation;
 
 /** The orientation axis — `horizontal` (default) lays children in a row + tracks
  *  the indicator on the inline axis; `vertical` stacks a column + tracks the
@@ -104,6 +102,8 @@ export interface SegmentedTabsProps {
      * historical mapping: `pill` → `toggle`, `underline` → `tabs`.
      */
     semantics?: SegmentedTabsSemantics;
+    /** Selection follows focus by default; manual mode activates with Enter/Space. */
+    activation?: SegmentedTabsActivation;
     /**
      * Orientation — `horizontal` (default) or `vertical`. Axis-derived on the
      * one indicator engine.
@@ -134,6 +134,7 @@ export interface SegmentedTabsProps {
 const props = withDefaults(defineProps<SegmentedTabsProps>(), {
     variant: "pill",
     orientation: "horizontal",
+    activation: "automatic",
     responsive: false,
 });
 
@@ -157,25 +158,6 @@ const isVertical = computed(() => props.orientation === "vertical");
 const isTabsSemantic = computed(
     () => props.semantics === "tabs" || (!props.semantics && isUnderline.value),
 );
-
-// BI.W-TABS-FACTOR — eyeglass IS the tabs DEFAULT (UF-H1: "eyeglass should become the
-// default tabs option … we don't need a million variants"; ratified judgment (e)). The
-// `eyeglass?: boolean` opt-in prop is RETIRED (clean break, no alias — MIGRATION row):
-// the PILL material IS the iOS-27 loupe by construction, so this computed is simply
-// `!isUnderline` (the paper hairline has no plate to loupe — ignored, not an error). The
-// two MATERIALS are pill/eyeglass × underline-paper; the flat capsule survives ONLY as
-// the honest degrade / PRM floor (off `backdrop-filter: url()` engines the refraction
-// falls to the un-gated frost; PRM pins `--eyeglass-y: 1`), never a named variant. A
-// consumer who wants the flat pill sets `--eyeglass-proud`/`--eyeglass-settled` to `1`
-// (the token-first escape). It is the SINGLE gate for the `data-eyeglass` host attr, the
-// `.glass-lens` plate compose, AND the `useEyeglassLive` two-rest-state release.
-const eyeglassOn = computed(() => !isUnderline.value);
-
-const activeValues = computed<string[]>(() =>
-    model.value != null ? [model.value] : [],
-);
-
-const isActive = (value: string) => activeValues.value.includes(value);
 
 // BD.W-TAB-IOS-CAPSULE — the NON-selected PILL tab composes the shared
 // `.glass-capsule-hover` register (specular catch-light lift + press-snap, the iOS
@@ -204,16 +186,25 @@ function pillHoverClass(option: SegmentedTabOption): string | false {
 // the `useTabIndicator`/`useTabDragMorph` sibling pattern). The SFC binds
 // `stripValue`/`stripOptions`/`showMobileSelect` + feeds `stripValue`/`stripOptions`
 // to the indicator + roving-focus concerns below.
-const {
-    responsiveCfg,
-    stripValue,
-    stripOptions,
-    mobileAriaLabel,
-    showMobileSelect,
-} = useTabResponsive({
-    responsive: () => props.responsive,
-    options: computed(() => props.options),
-    model,
+const { responsiveCfg, stripValue, stripOptions, mobileAriaLabel, showMobileSelect } =
+    useTabResponsive({
+        responsive: () => props.responsive,
+        options: computed(() => props.options),
+        model,
+    });
+
+// The rendered strip owns one coherent selection projection. When a responsive
+// desktop subset excludes the mobile-selected value, its enabled fallback drives
+// ARIA, indicator paint, and roving focus together.
+const activeValues = computed<string[]>(() =>
+    stripValue.value == null ? [] : [stripValue.value],
+);
+const isActive = (value: string) => activeValues.value.includes(value);
+
+// Function refs are index-aligned to the rendered options. Clear stale entries
+// before a responsive subset or option list changes shape.
+onBeforeUpdate(() => {
+    buttonRefs.value = [];
 });
 
 // ── JS-measured indicator + travel-squish (package-private composable) ──
@@ -230,20 +221,13 @@ const { singleSliderStyle, squishOnTravel } = useSelectionIndicator({
     vertical: isVertical,
 });
 
-// ── BI.W-TABS-FACTOR — the eyeglass two-rest-state release (SETTLED ⇄ LIVE) ──
-//
-// Owns the `--eyeglass-live-t` scalar (written on the indicator, read by the nested
-// `.segmented-indicator__plate` `scaleY`). CONSUMES `useLeadTrail` (consumer #2 — the
-// ONE lead/trail integrator, no second rAF/spring); the fast-energize / slow-decay
-// edge asymmetry emerges from the two edges. `enabled` gates it to the pill loupe.
-const eyeglass = useEyeglassLive({ indicatorRef, enabled: eyeglassOn });
-
 // ── BB.W-DRAG-MORPH — the LIQUID TAB (the :draggable axis) ──
 //
 // The drag-morph wiring (the center-anchored snap targets, the `useDragMorph` call,
 // the `--stretch` write + the option/axis refresh watchers) lives in the colocated
 // `useTabDragMorph` composable (carved at BB.W-CARVE4, the `useTabIndicator` sibling
-// pattern). The SFC binds `drag.dragStyle`/`drag.dragging` + `dragEnabled` in its
+// pattern). The SFC binds `drag.dragging` + `dragEnabled`; useElementMorph owns
+// the gesture transform.
 // template; the drag is the `pill` material ONLY + the `:draggable` opt-in.
 const { dragEnabled, drag } = useTabDragMorph({
     indicatorRef,
@@ -296,18 +280,7 @@ function select(value: string, idx: number) {
     // the underline SLIDES (no squish — a hairline does not deform), gated inside
     // the composable by the underline early-return.
     squishOnTravel(idx);
-    // BI.W-TABS-FACTOR — energize the eyeglass loupe to LIVE (the keyboard/select
-    // path; the pointer path pre-blooms on pointerdown). No-op off the pill loupe.
-    eyeglass.energize();
-
     model.value = value;
-}
-
-// BI.W-TABS-FACTOR — the §1 pre-motion bloom: a touch-down energizes the loupe ~50–67ms
-// BEFORE the travel. A pointerdown anywhere on the pill strip blooms it to LIVE; the
-// click then commits the selection (the composable no-ops off the pill loupe / under PRM).
-function onStripPointerDown() {
-    eyeglass.energize();
 }
 
 // The mobile Select speaks the single-string model.
@@ -317,19 +290,18 @@ function onMobileUpdate(value: unknown) {
 
 // ── The roving-tabindex keyboard contract (package-private composable — BG.W-COLOCATE) ──
 //
-// The WAI-ARIA tablist/toolbar roving-tabindex (EXACTLY ONE tabstop; axis-derived
-// arrows move focus + activate; Home/End jump; wrapping; disabled-skip) lives in the
-// colocated `useTabRovingFocus` composable (carved to hold the no-god-module bound).
-// It is NOT gated behind `:draggable` — EVERY strip owes it. The keyboard activation
-// IS a selection → the SFC's `select(...)` path (with its `squishOnTravel`), passed in.
+// The WAI-ARIA roving machine keeps exactly one tabstop, derives arrows from the axis,
+// wraps, skips disabled options, and separates focus from selection in manual mode.
+// It is never gated behind pointer motion; committed activation still passes through
+// the SFC's one selection path.
 const { rovingTabindex, onStripKeydown } = useTabRovingFocus({
     stripOptions,
     stripValue,
     isVertical,
+    activation: computed(() => props.activation),
     buttonRefs,
     select,
 });
-
 </script>
 
 <template>
@@ -341,7 +313,13 @@ const { rovingTabindex, onStripKeydown } = useTabRovingFocus({
         <Select :model-value="model" @update:model-value="onMobileUpdate">
             <SelectTrigger
                 :aria-label="props.ariaLabel ?? mobileAriaLabel"
-                :class="cn('segmented-tabs__trigger text-small w-auto min-w-input-sm', responsiveCfg?.triggerClass)"
+                data-control-target
+                :class="
+                    cn(
+                        'segmented-tabs__trigger text-small w-auto min-w-input-sm',
+                        responsiveCfg?.triggerClass,
+                    )
+                "
             >
                 <SelectValue />
             </SelectTrigger>
@@ -350,6 +328,7 @@ const { rovingTabindex, onStripKeydown } = useTabRovingFocus({
                     v-for="opt in options"
                     :key="opt.value"
                     :value="opt.value"
+                    :disabled="opt.disabled"
                 >
                     {{ opt.label }}
                 </SelectItem>
@@ -364,22 +343,24 @@ const { rovingTabindex, onStripKeydown } = useTabRovingFocus({
         ref="containerRef"
         :role="isTabsSemantic ? 'tablist' : 'group'"
         :aria-label="props.ariaLabel"
-        :aria-orientation="isTabsSemantic ? (isVertical ? 'vertical' : 'horizontal') : undefined"
+        :aria-orientation="
+            isTabsSemantic ? (isVertical ? 'vertical' : 'horizontal') : undefined
+        "
         :data-motion="motionAxis.dataMotion.value"
-        :data-eyeglass="eyeglassOn ? '' : undefined"
         :style="motionAxis.hostStyle.value"
-        :class="cn(
-            'segmented-tabs',
-            `segmented-tabs--${variant}`,
-            isVertical && 'segmented-tabs--vertical',
-            // BD.W-TAB-IOS-CAPSULE — the PILL track composes the shared recessed
-            // warm channel `.glass-capsule-track` (the recess + rim live there, ONE
-            // recipe). The underline material is paper (no track), so it does NOT.
-            !isUnderline && 'glass-capsule-track',
-            props.class,
-        )"
+        :class="
+            cn(
+                'segmented-tabs',
+                `segmented-tabs--${variant}`,
+                isVertical && 'segmented-tabs--vertical',
+                // BD.W-TAB-IOS-CAPSULE — the PILL track composes the shared recessed
+                // warm channel `.glass-capsule-track` (the recess + rim live there, ONE
+                // recipe). The underline material is paper (no track), so it does NOT.
+                !isUnderline && 'glass-capsule-track',
+                props.class,
+            )
+        "
         @keydown="onStripKeydown"
-        @pointerdown="onStripPointerDown"
     >
         <!-- The single shared indicator (pill slider). On the anchor path no
              inline `:style` (CSS `position-anchor` + `inset` govern it); on the JS
@@ -387,7 +368,7 @@ const { rovingTabindex, onStripKeydown } = useTabRovingFocus({
              its indicator as the container `::before` pseudo, so no element node
              here. BB.W-DRAG-MORPH — when `:draggable`, the indicator carries the
              `.glass-drag-grabbable` rest affordance + the `.glass-drag-lift` grabbed
-             state + the `useDragMorph` `dragStyle` translate (compositor-only). -->
+             state; the shared morph engine owns its compositor offset. -->
         <div
             v-if="!isUnderline"
             ref="indicatorRef"
@@ -397,41 +378,16 @@ const { rovingTabindex, onStripKeydown } = useTabRovingFocus({
                 // EVERY engine (the CSS-anchor branch retired), so the indicator always
                 // carries `--js` (Safari-identical by construction).
                 'segmented-indicator--js',
+                // The traveling indicator is the selected fill. Its glass material
+                // belongs on this measured box so geometry, clipping, and motion share
+                // one owner and one settled scale.
+                'glass-capsule',
+                'glass-lens',
                 dragEnabled && 'glass-drag-grabbable',
                 dragEnabled && drag.dragging.value && 'glass-drag-lift',
             ]"
-            :style="dragEnabled
-                ? { ...singleSliderStyle, ...drag.dragStyle.value }
-                : singleSliderStyle"
-        >
-            <!-- BI.W-TABS-FACTOR — the plate. The glass-capsule fill + glass-lens
-                 refraction live on this NESTED plate so the eyeglass two-rest-state
-                 block-proud magnify (`transform: scaleY(var(--eyeglass-y))`, reading
-                 `--eyeglass-live-t`) rides its OWN compositor channel — NOT the outer's
-                 `scale` (the travel-squish) nor its `transform` (the glide/drag), so the
-                 per-frame `useLeadTrail` write is never lagged by their transitions. The
-                 outer positions + squishes + glides; the plate paints + magnifies. Both
-                 compose (the outer squish scales the plate too). eyeglass is the DEFAULT
-                 (pill = loupe); `.glass-lens` still rides INSIDE its own
-                 `@supports (backdrop-filter: url(#glass-refract))` gate (glass-refract.css)
-                 so off-Chromium the un-gated `.glass-capsule` frost floor paints — the
-                 honest degrade, NO faked bend. -->
-            <div
-                :class="[
-                    'segmented-indicator__plate',
-                    // BD.W-TAB-IOS-CAPSULE — the plate COMPOSES the shared `.glass-capsule`
-                    // (warm-floor fill + rim + lift, ONE recipe; the dock control selected
-                    // arm + buttons greenfield compose the SAME class).
-                    'glass-capsule',
-                    // BI.W-TABS-FACTOR — the plate COMPOSES the shipped `.glass-lens`
-                    // (glass-refract.css) — the whole refraction rides INSIDE its own
-                    // `@supports (backdrop-filter: url(#glass-refract))` gate, so off that
-                    // engine the plate paints the un-gated `.glass-capsule` frost floor (the
-                    // honest Safari/Firefox degrade — NO faked bend). Eyeglass is the DEFAULT.
-                    eyeglassOn && 'glass-lens',
-                ]"
-            />
-        </div>
+            :style="singleSliderStyle"
+        />
 
         <!-- Buttons. -->
         <template v-for="(option, idx) in stripOptions" :key="option.value">
@@ -440,13 +396,27 @@ const { rovingTabindex, onStripKeydown } = useTabRovingFocus({
                     <TooltipTrigger as-child>
                         <button
                             type="button"
-                            :ref="(el) => { if (el) buttonRefs[idx] = el as HTMLElement }"
+                            :ref="
+                                (el) => {
+                                    if (el) buttonRefs[idx] = el as HTMLElement;
+                                }
+                            "
                             class="segmented-tab"
                             :role="isTabsSemantic ? 'tab' : undefined"
                             :tabindex="rovingTabindex(idx)"
-                            v-bind="isTabsSemantic
-                                ? { 'aria-selected': isActive(option.value) ? 'true' : 'false' }
-                                : { 'aria-pressed': isActive(option.value) ? 'true' : 'false' }"
+                            v-bind="
+                                isTabsSemantic
+                                    ? {
+                                          'aria-selected': isActive(option.value)
+                                              ? 'true'
+                                              : 'false',
+                                      }
+                                    : {
+                                          'aria-pressed': isActive(option.value)
+                                              ? 'true'
+                                              : 'false',
+                                      }
+                            "
                             :disabled="option.disabled"
                             :class="[
                                 option.disabled && 'is-disabled',
@@ -454,7 +424,11 @@ const { rovingTabindex, onStripKeydown } = useTabRovingFocus({
                             ]"
                             @click="select(option.value, idx)"
                         >
-                            <slot name="option" :option="option" :active="isActive(option.value)">
+                            <slot
+                                name="option"
+                                :option="option"
+                                :active="isActive(option.value)"
+                            >
                                 {{ option.label }}
                             </slot>
                         </button>
@@ -468,18 +442,21 @@ const { rovingTabindex, onStripKeydown } = useTabRovingFocus({
             <button
                 v-else
                 type="button"
-                :ref="(el) => { if (el) buttonRefs[idx] = el as HTMLElement }"
+                :ref="
+                    (el) => {
+                        if (el) buttonRefs[idx] = el as HTMLElement;
+                    }
+                "
                 class="segmented-tab"
                 :role="isTabsSemantic ? 'tab' : undefined"
                 :tabindex="rovingTabindex(idx)"
-                v-bind="isTabsSemantic
-                    ? { 'aria-selected': isActive(option.value) ? 'true' : 'false' }
-                    : { 'aria-pressed': isActive(option.value) ? 'true' : 'false' }"
+                v-bind="
+                    isTabsSemantic
+                        ? { 'aria-selected': isActive(option.value) ? 'true' : 'false' }
+                        : { 'aria-pressed': isActive(option.value) ? 'true' : 'false' }
+                "
                 :disabled="option.disabled"
-                :class="[
-                    option.disabled && 'is-disabled',
-                    pillHoverClass(option),
-                ]"
+                :class="[option.disabled && 'is-disabled', pillHoverClass(option)]"
                 @click="select(option.value, idx)"
             >
                 <slot name="option" :option="option" :active="isActive(option.value)">

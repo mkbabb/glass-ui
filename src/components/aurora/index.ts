@@ -62,6 +62,9 @@ export {
     type AuroraZoneArrangement,
     type AuroraMediumAtom,
     type AuroraInteractivityAtom,
+    type AuroraFieldInteractivityAtom,
+    type AuroraSmoothInteractivityAtom,
+    type AuroraPainterlyInteractivityAtom,
 } from "./composables/atoms";
 export {
     cssToOklch,

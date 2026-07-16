@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import { DialogTrigger, type DialogTriggerProps } from 'reka-ui'
+import { DialogTrigger as RekaDialogTrigger } from "reka-ui";
+import type { PrimitiveProps } from "../_shared/primitive";
 
-const props = defineProps<DialogTriggerProps>()
+export interface DialogTriggerProps extends PrimitiveProps {}
+
+const props = defineProps<DialogTriggerProps>();
 </script>
 
 <template>
-  <DialogTrigger v-bind="props">
-    <slot />
-  </DialogTrigger>
+    <RekaDialogTrigger v-bind="props">
+        <slot />
+    </RekaDialogTrigger>
 </template>

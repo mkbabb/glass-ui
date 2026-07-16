@@ -62,16 +62,7 @@
                                           the per-frame cost is super-linear past ~16px
                                           over the deep tier's live animated backdrops
                                           + the W-GLASS-CAL dial-back is binding. */
-    --glass-saturate-deep:       1.8;  /* BD.W-GLASS-ABROGATE-GRAY — lifted 1.5→1.8 (the
-                                          apple.com nav ceiling) IN LOCKSTEP with FIX-D's
-                                          content/floating saturate lift, so the deep tier
-                                          STAYS the richest register (calm floating now 1.6;
-                                          deep must clear it). == --glass-saturate-deep-ceiling
-                                          (1.8 — at the bound, never over-shot, L4 holds). */
-    --glass-saturate-deep-ceiling: 1.8; /* the apple.com-nav saturate CEILING, BAKED as
-                                           the deep-tier load-bearing term (research/
-                                           apple-glass.md §4); the deep saturate never
-                                           exceeds it (the warm-cream identity bound). */
+    --glass-saturate-deep: 1.8; /* Richer than the calm floating tier. */
 
     /* ── The deep LERP is COMPUTED AT THE CONSUMING `.glass-deep` ELEMENT, not here
        (BG.W-GLASS-DEPTH-TIER freeze-fix) ────────────────────────────────────────

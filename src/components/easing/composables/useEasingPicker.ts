@@ -5,21 +5,29 @@
 // Curve math belongs to value.js; this editor owns only its authoring chassis and
 // a bounded normalized one-shot preview. The preview is UI feedback, not reusable
 // physical/keyframes playback. This composable reaches for all curve math:
-//   · the bezier curve callable is value.js `CSSCubicBezier`;
+//   · the bezier curve callable is value.js `CubicBezier`;
 //   · the staircase callable is value.js `steppedEase(n, term)`;
 //   · the bezier preset catalogue is value.js `bezierPresets`;
 //   · the staircase jump-term family is value.js `jumpTerms`.
 // It re-implements NEITHER a cubic-bezier Newton-solver NOR a staircase evaluator
-// (the curves.ts NO-FORK discipline, now in a published component).
+// (direct owner imports; no local solver or catalogue mirror).
 
-import { computed, onScopeDispose, ref, type ComputedRef, type Ref } from "vue";
 import {
-    CSSCubicBezier,
+    computed,
+    onScopeDispose,
+    ref,
+    watch,
+    type ComputedRef,
+    type Ref,
+} from "vue";
+import { useReducedMotion } from "../../../composables/motion/useReducedMotion";
+import {
+    CubicBezier,
     steppedEase,
     jumpTerms,
     bezierPresets,
-    parseSteps,
-} from "@mkbabb/value.js";
+} from "@mkbabb/value.js/easing";
+import { parseTimingFunction } from "@mkbabb/value.js/css";
 import {
     CUSTOM_PRESET,
     DEFAULT_BEZIER_PRESET,
@@ -42,7 +50,7 @@ export type EasingFn = (t: number) => number;
 /** The bezier control-point quad `[x1, y1, x2, y2]`. */
 export type BezierPoints = [number, number, number, number];
 
-/** A value.js step jump-term (`jump-start`/`end`/`both`/`none` + aliases). */
+/** A canonical CSS step jump term. */
 export type JumpTerm = (typeof jumpTerms)[number];
 
 /** The picker's v-model payload — the live curve callable + its re-parseable
@@ -68,7 +76,7 @@ export interface UseEasingPickerOptions {
     initialPreset?: string;
     /** The initial step count (default 4). */
     initialSteps?: number;
-    /** The initial step term (default `"end"`). */
+    /** The initial step term (default `"jump-end"`). */
     initialTerm?: JumpTerm;
 }
 
@@ -90,10 +98,7 @@ export interface UseEasingPickerReturn {
     easingFn: ComputedRef<EasingFn>;
     /** The complete re-parseable readout literal for the active mode. */
     readout: ComputedRef<string>;
-    /** Whether the steps-mode readout round-trips through value.js `parseSteps`
-     *  back to the live (n, term) — the boundary-law proof that the painted
-     *  staircase IS a re-parseable value.js literal, not a hand-rolled string
-     *  the catalogue cannot read back. `true` in bezier mode (no steps literal). */
+    /** Whether the authored readout round-trips through Value's CSS parser. */
     reparseOk: ComputedRef<boolean>;
     /** The full v-model payload (mode + css + fn + raw params). */
     value: ComputedRef<EasingPickerValue>;
@@ -110,13 +115,21 @@ export interface UseEasingPickerReturn {
     progress: Ref<number>;
     playing: Ref<boolean>;
     playbackState: ComputedRef<"idle" | "playing" | "complete">;
-    reducedMotion: Ref<boolean>;
+    reducedMotion: Readonly<Ref<boolean>>;
     playTravel: () => void;
     cancelTravel: () => void;
     stopTravel: () => void;
 }
 
 const PRESET_NAMES = Object.keys(bezierPresets);
+
+function easingValue(
+    operation: string,
+    result: ReturnType<typeof CubicBezier>,
+): EasingFn {
+    if (!result.ok) throw new Error(`${operation}: ${result.error.code}`);
+    return result.value;
+}
 
 /**
  * The <EasingPicker> shared editor state. Composes the value.js math; owns the
@@ -130,9 +143,9 @@ export function useEasingPicker(
 
     // ── bezier ───────────────────────────────────────────────────────────────
     const preset = ref<string>(options.initialPreset ?? DEFAULT_BEZIER_PRESET);
-    const seedKey = (preset.value in bezierPresets
-        ? preset.value
-        : DEFAULT_BEZIER_PRESET) as keyof typeof bezierPresets;
+    const seedKey = (
+        preset.value in bezierPresets ? preset.value : DEFAULT_BEZIER_PRESET
+    ) as keyof typeof bezierPresets;
     const points = ref<BezierPoints>([...bezierPresets[seedKey]] as BezierPoints);
 
     function selectPreset(name: string): void {
@@ -157,16 +170,20 @@ export function useEasingPicker(
     const term = ref<JumpTerm>(options.initialTerm ?? DEFAULT_STEP_TERM);
 
     // ── the REAL value.js twin (mode-aware) ────────────────────────────────────
-    // The bezier callable: value.js CSSCubicBezier(x1,y1,x2,y2). The staircase:
-    // value.js steppedEase(n, term) (which returns undefined only for an unknown
-    // term — never reached, the dropdown is closed over jumpTerms — but the
-    // identity fallback keeps the callable total for the type system).
+    // Both constructors are failure-explicit; this closed editor supplies valid
+    // domains and surfaces any producer contradiction instead of substituting identity.
     const easingFn = computed<EasingFn>(() => {
         if (mode.value === "steps") {
-            return steppedEase(steps.value, term.value) ?? ((t) => t);
+            return easingValue(
+                "EasingPicker:steppedEase",
+                steppedEase(steps.value, term.value),
+            );
         }
         const [x1, y1, x2, y2] = points.value;
-        return CSSCubicBezier(x1, y1, x2, y2);
+        return easingValue(
+            "EasingPicker:CubicBezier",
+            CubicBezier(x1, y1, x2, y2),
+        );
     });
 
     const readout = computed<string>(() => {
@@ -175,16 +192,21 @@ export function useEasingPicker(
         return `cubic-bezier(${x1}, ${y1}, ${x2}, ${y2})`;
     });
 
-    // The boundary-law round-trip: in steps mode the readout `steps(n, term)` is
-    // fed back through value.js `parseSteps` (the catalogue's OWN reader) and the
-    // recovered (count, jumpTerm) must equal the live (n, term). So the staircase
-    // the editor paints IS a re-parseable value.js literal — never a hand-rolled
-    // string the catalogue cannot read back. Bezier mode has no steps literal
-    // (trivially `true`).
+    // Both authored modes reparse through the sole CSS timing-text owner.
     const reparseOk = computed<boolean>(() => {
-        if (mode.value !== "steps") return true;
-        const back = parseSteps(readout.value);
-        return back != null && back.count === steps.value && back.jumpTerm === term.value;
+        const parsed = parseTimingFunction(readout.value);
+        if (!parsed.ok) return false;
+        const value = parsed.value;
+        if (mode.value === "steps") {
+            return value.kind === "steps"
+                && value.count === steps.value
+                && value.position === term.value;
+        }
+        return value.kind === "cubic-bezier"
+            && value.x1 === points.value[0]
+            && value.y1 === points.value[1]
+            && value.x2 === points.value[2]
+            && value.y2 === points.value[3];
     });
 
     const value = computed<EasingPickerValue>(() => ({
@@ -241,11 +263,7 @@ export function useEasingPicker(
     );
     let rafId = 0;
     let runId = 0;
-    const reducedMotion = ref(false);
-    const motionQuery =
-        typeof window === "undefined" || typeof window.matchMedia !== "function"
-            ? null
-            : window.matchMedia("(prefers-reduced-motion: reduce)");
+    const reducedMotion = useReducedMotion();
     function stopTravel(): void {
         runId++;
         if (rafId) cancelAnimationFrame(rafId);
@@ -256,17 +274,16 @@ export function useEasingPicker(
         stopTravel();
         progress.value = 0;
     }
-    const syncReducedMotion = (event: MediaQueryListEvent | MediaQueryList) => {
-        reducedMotion.value = event.matches;
-        if (event.matches) {
-            stopTravel();
-            progress.value = 1;
-        }
-    };
-    if (motionQuery) {
-        syncReducedMotion(motionQuery);
-        motionQuery.addEventListener("change", syncReducedMotion);
-    }
+    const stopReducedMotionWatch = watch(
+        reducedMotion,
+        (reduced) => {
+            if (reduced && playing.value) {
+                stopTravel();
+                progress.value = 1;
+            }
+        },
+        { flush: "sync" },
+    );
     function playTravel(): void {
         stopTravel();
         progress.value = 0;
@@ -290,8 +307,8 @@ export function useEasingPicker(
         rafId = requestAnimationFrame(tick);
     }
     onScopeDispose(() => {
+        stopReducedMotionWatch();
         stopTravel();
-        motionQuery?.removeEventListener("change", syncReducedMotion);
     });
 
     return {

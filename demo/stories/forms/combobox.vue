@@ -54,7 +54,7 @@ const summary = computed(() => selectedMulti.value.map(labelFor).join(", "));
     <StoryPage>
         <section class="flex flex-col gap-3 max-w-sm">
             <Label for="cbx">Basis or palette</Label>
-            <Combobox v-model="selected" by="value">
+            <Combobox v-model="selected">
                 <ComboboxAnchor class="w-full">
                     <ComboboxTrigger as-child>
                         <button

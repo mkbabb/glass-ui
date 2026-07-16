@@ -16,6 +16,12 @@ const MultiPager = defineComponent({
     `,
 });
 
+const BoundaryPager = defineComponent({
+    components: { PagerDots },
+    data: () => ({ active: 7, count: 10 }),
+    template: `<PagerDots v-model:active="active" :count="count" :window-fit="5" />`,
+});
+
 describe("PagerDots SVG resources", () => {
     it("keeps filter and clip ids unique per instance and stable across rerender", async () => {
         const wrapper = mount(MultiPager, { attachTo: document.body });
@@ -54,5 +60,36 @@ describe("PagerDots SVG resources", () => {
             .map((node) => node.element.id);
         wrapper.unmount();
         expect(mountedIds.every((id) => document.getElementById(id) === null)).toBe(true);
+    });
+});
+
+describe("PagerDots boundaries", () => {
+    it("clamps selection when a dynamic count shrinks", async () => {
+        const wrapper = mount(BoundaryPager);
+        await wrapper.setData({ count: 3 });
+
+        expect(wrapper.vm.active).toBe(2);
+        expect(wrapper.findAll('[data-slot="pager-dot"]')).toHaveLength(3);
+        expect(wrapper.get('[aria-selected="true"]').attributes("aria-label")).toContain("3");
+        expect(wrapper.findAll('[tabindex="0"]')).toHaveLength(1);
+    });
+
+    it("renders an empty, valid rail at zero count", async () => {
+        const wrapper = mount(BoundaryPager);
+        await wrapper.setData({ count: 0 });
+
+        expect(wrapper.vm.active).toBe(0);
+        expect(wrapper.findAll('[data-slot="pager-dot"]')).toHaveLength(0);
+        expect(wrapper.findAll('[tabindex="0"]')).toHaveLength(0);
+    });
+
+    it("normalizes fractional semantic selection and keeps keyboard steps integral", async () => {
+        const wrapper = mount(BoundaryPager);
+        await wrapper.setData({ active: 1.6, count: 4 });
+        expect(wrapper.vm.active).toBe(2);
+
+        await wrapper.get('[tabindex="0"]').trigger("keydown", { key: "ArrowRight" });
+        expect(wrapper.vm.active).toBe(3);
+        expect(wrapper.get('[aria-selected="true"]').attributes("aria-label")).toContain("4");
     });
 });

@@ -22,7 +22,8 @@
 // snap to the target with no tween. Every in-flight tween is tracked and
 // cancelled on `cancel()`/scope-dispose, so an unmount mid-tween leaks nothing.
 import { NumericAnimation } from "@mkbabb/keyframes.js";
-import { onScopeDispose, type Ref } from "vue";
+import { onScopeDispose, watch, type Ref } from "vue";
+import { useReducedMotion } from "./useReducedMotion";
 
 /** The `useCountup` return shape. */
 export interface UseCountupReturn {
@@ -46,17 +47,6 @@ export interface UseCountupOptions {
     skip?: () => boolean;
 }
 
-/** Feature-detect reduced-motion preference. SSR-safe (returns false). */
-function prefersReducedMotion(): boolean {
-    if (
-        typeof window === "undefined" ||
-        typeof window.matchMedia !== "function"
-    ) {
-        return false;
-    }
-    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-}
-
 /**
  * Walk `[data-countup]` figures under `hostRef` and tween each from 0 → target.
  *
@@ -70,13 +60,20 @@ export function useCountup(
     opts: UseCountupOptions,
 ): UseCountupReturn {
     const { easeFn, skip } = opts;
+    const reducedMotion = useReducedMotion();
 
     // Every live tween, keyed by its element, so a re-run or a teardown can stop
     // the in-flight animation on that figure (the slides hand-roll leaked the
     // rAF on unmount; tracking the handle fixes it).
     const running = new Map<HTMLElement, NumericAnimation<{ v: number }>>();
+    const delays = new Map<HTMLElement, ReturnType<typeof setTimeout>>();
 
     function stop(el: HTMLElement): void {
+        const timer = delays.get(el);
+        if (timer !== undefined) {
+            clearTimeout(timer);
+            delays.delete(el);
+        }
         const anim = running.get(el);
         if (anim) {
             anim.stop();
@@ -85,62 +82,50 @@ export function useCountup(
     }
 
     function runSlide(slide: HTMLElement): void {
-        slide
-            .querySelectorAll<HTMLElement>("[data-countup]")
-            .forEach((el) => {
-                const target =
-                    parseFloat(el.getAttribute("data-countup") ?? "0") || 0;
-                const dur = parseFloat(
-                    el.getAttribute("data-countup-dur") ?? "1200",
-                );
-                const delay = parseFloat(
-                    el.getAttribute("data-countup-delay") ?? "0",
-                );
+        slide.querySelectorAll<HTMLElement>("[data-countup]").forEach((el) => {
+            const target = parseFloat(el.getAttribute("data-countup") ?? "0") || 0;
+            const dur = parseFloat(el.getAttribute("data-countup-dur") ?? "1200");
+            const delay = parseFloat(el.getAttribute("data-countup-delay") ?? "0");
 
-                stop(el);
+            stop(el);
 
-                if (prefersReducedMotion()) {
-                    el.textContent = String(target);
-                    return;
-                }
+            if (reducedMotion.value) {
+                el.textContent = String(target);
+                return;
+            }
 
-                el.textContent = "0";
+            el.textContent = "0";
 
-                // The engine tweens a single channel `v` from 0 → target over
-                // `dur`, applying the consumer's callable easing. The delay is
-                // honoured by deferring the play (the engine has no delay opt).
-                const anim = new NumericAnimation<{ v: number }>(
-                    [{ v: 0 }, { v: target }],
-                    { duration: dur, timingFunction: easeFn },
-                );
-                running.set(el, anim);
+            // The engine tweens a single channel `v` from 0 → target over
+            // `dur`, applying the consumer's callable easing. The delay is
+            // honoured by deferring the play (the engine has no delay opt).
+            const anim = new NumericAnimation<{ v: number }>(
+                [{ v: 0 }, { v: target }],
+                { duration: dur, timingFunction: easeFn },
+            );
+            running.set(el, anim);
 
-                const play = () => {
-                    if (running.get(el) !== anim) return;
-                    void anim
-                        .play((values) => {
-                            el.textContent = String(Math.round(values.v));
-                        })
-                        .then(() => {
-                            if (running.get(el) === anim) {
-                                el.textContent = String(target);
-                                running.delete(el);
-                            }
-                        });
-                };
+            const play = () => {
+                if (running.get(el) !== anim) return;
+                delays.delete(el);
+                void anim
+                    .play((values) => {
+                        el.textContent = String(Math.round(values.v));
+                    })
+                    .then(() => {
+                        if (running.get(el) === anim) {
+                            el.textContent = String(target);
+                            running.delete(el);
+                        }
+                    });
+            };
 
-                if (delay > 0) {
-                    const timer = setTimeout(play, delay);
-                    // Wrap stop so the deferred play is also cancellable.
-                    const prevStop = anim.stop.bind(anim);
-                    anim.stop = () => {
-                        clearTimeout(timer);
-                        prevStop();
-                    };
-                } else {
-                    play();
-                }
-            });
+            if (delay > 0) {
+                delays.set(el, setTimeout(play, delay));
+            } else {
+                play();
+            }
+        });
     }
 
     function runActive(): void {
@@ -152,19 +137,32 @@ export function useCountup(
     }
 
     function settle(): void {
-        document
-            .querySelectorAll<HTMLElement>("[data-countup]")
-            .forEach((el) => {
-                stop(el);
-                el.textContent = el.getAttribute("data-countup") ?? el.textContent;
-            });
+        document.querySelectorAll<HTMLElement>("[data-countup]").forEach((el) => {
+            stop(el);
+            el.textContent = el.getAttribute("data-countup") ?? el.textContent;
+        });
     }
 
     function cancel(): void {
         for (const el of [...running.keys()]) stop(el);
     }
 
-    onScopeDispose(cancel);
+    const stopReducedMotionWatch = watch(
+        reducedMotion,
+        (reduced) => {
+            if (!reduced) return;
+            for (const el of [...running.keys()]) {
+                stop(el);
+                el.textContent = el.getAttribute("data-countup") ?? el.textContent;
+            }
+        },
+        { flush: "sync" },
+    );
+
+    onScopeDispose(() => {
+        stopReducedMotionWatch();
+        cancel();
+    });
 
     return { runActive, settle, cancel };
 }

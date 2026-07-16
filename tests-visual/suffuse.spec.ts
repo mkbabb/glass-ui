@@ -330,68 +330,6 @@ const BB_VISUAL_DIR = fileURLToPath(
 const paired3: Record<string, unknown> = {};
 
 test.describe("BB.W-SUFFUSE3 — the suffusion completion (π)", () => {
-    // ── (a) — a feedback route renders its three-site --section-color-8 event ────
-    for (const dark of [false, true]) {
-        const mode = dark ? "dark" : "light";
-        test(`a — /feedback/alert renders the three-site --section-color-8 ruby identity (${mode})`, async ({
-            page,
-        }) => {
-            await page.setViewportSize({ width: 1280, height: 1000 });
-            await page.goto("/feedback/alert", { waitUntil: "networkidle" });
-            await setDark(page, dark);
-            await page.waitForTimeout(300);
-
-            // the eyebrow + rail + chip resolve the feedback stop. We read the
-            // resolved --section-color-8, the eyebrow color, the rail border, and
-            // the IconChip glyph color, and assert each lands in the warm-status
-            // ruby band (NOT flat gray, NOT the adjacent slate/indigo).
-            const evt = await page.evaluate(() => {
-                const stop = getComputedStyle(document.documentElement)
-                    .getPropertyValue("--section-color-8")
-                    .trim();
-                const eyebrow = document.querySelector(
-                    "header .section-label--tinted",
-                );
-                const railHeader = document.querySelector("header.border-l-\\[3px\\]");
-                const chip = document.querySelector("header .icon-chip");
-                const glyph = chip?.querySelector(".icon-chip__glyph");
-                return {
-                    stop,
-                    eyebrow: eyebrow ? getComputedStyle(eyebrow).color : null,
-                    rail: railHeader
-                        ? getComputedStyle(railHeader).borderLeftColor
-                        : null,
-                    chipBg: chip ? getComputedStyle(chip).backgroundColor : null,
-                    glyph: glyph ? getComputedStyle(glyph).color : null,
-                };
-            });
-            (paired3 as Record<string, unknown>)[`feedbackEvent_${mode}`] = evt;
-
-            const stopRgb = parseColor(evt.stop);
-            expect(
-                stopRgb,
-                `--section-color-8 resolves to a color (${evt.stop})`,
-            ).not.toBeNull();
-            const stopHue = rgbHueDeg(...stopRgb!);
-            // ruby/warm-status sits ~0-40° (the tomato/ruby warm band); NOT the
-            // slate ~239° / indigo ~291° adjacent bands.
-            const inWarmBand = stopHue < 45 || stopHue > 345;
-            expect(
-                inWarmBand,
-                `--section-color-8 hue ${stopHue.toFixed(1)}° must be the warm-status ruby band (< 45° or > 345°), distinct from the slate/indigo adjacent bands`,
-            ).toBeTruthy();
-            // the eyebrow reads the stop (not flat gray) — the band has identity.
-            expect(evt.eyebrow, "the feedback eyebrow renders").not.toBeNull();
-            // the chip glyph reads the full-chroma event.
-            expect(evt.glyph, "the feedback IconChip glyph renders").not.toBeNull();
-
-            await page.screenshot({
-                path: `${BB_VISUAL_DIR}/W-SUFFUSE3-feedback-${mode}.png`,
-                fullPage: true,
-            });
-        });
-    }
-
     // ── (b) — a motion/studio route renders the display-register violet title ────
     for (const dark of [false, true]) {
         const mode = dark ? "dark" : "light";

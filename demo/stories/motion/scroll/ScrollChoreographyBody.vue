@@ -55,10 +55,8 @@ useScrollPin({
 <template>
         <StorySection heading="The register">
             <p class="text-prose text-muted-foreground max-w-prose">
-                Three recipes on the native substrate, all compositor-only and
+                Two scroll recipes on the native substrate, both compositor-only and
                 reduced-motion-safe:
-                <code class="fira-code">.route-enter</code> (the route-enter
-                page entrance — this page just rose + faded in on the keyed swap),
                 <code class="fira-code">.scroll-cascade</code> (the section cascade —
                 each block below builds in on its own
                 <code class="fira-code">view()</code> timeline), and

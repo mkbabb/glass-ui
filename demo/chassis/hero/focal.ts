@@ -8,11 +8,10 @@
 // specimen aurora inside a card with a page-DOMINANT field), NOT a hand-list:
 //
 //   1. the route's resolved `background.kind` ∈ GL_BG_KINDS — the page's
-//      full-bleed field IS a live GL substrate (substrates/aurora, motion/
-//      constellation, …). `StoryHero.vue` mounts that field; the shell stands down.
-//   2. the route ∈ SELF_STAGES_GL — a dock route that mounts a route-dominant GL
-//      canvas OUTSIDE the `background` channel (the DockStage-hoisted shared aurora
-//      + the morph-showcase functional aurora + the self-staging rail/playground).
+//      full-bleed field IS a live GL substrate (glass-material, constellation, …).
+//      `StoryHero.vue` mounts that field; the shell stands down.
+//   2. the route ∈ SELF_STAGES_GL — it mounts its route-dominant canvas OUTSIDE
+//      the background channel (the sole Aurora studio, DockStage stories, or auth).
 //
 // Contained specimens (buttons.vue / card.vue mount an aurora INSIDE a rounded
 // card) carry a NON-GL `background.kind` and are NOT in SELF_STAGES_GL → NOT focal
@@ -46,14 +45,17 @@ export const CHROMATIC_FIELD_KINDS: ReadonlySet<string> = new Set([
     "liquid-grid",
 ]);
 
-/** Routes that mount a route-DOMINANT GL canvas OUTSIDE the `background` channel —
- *  the dock stories whose page IS the dock-over-a-live-field demonstration. Keyed
- *  by the route id (`<category>/<story>`). `proof:focal-complete` C2 asserts this
+/** Routes that mount a route-DOMINANT GL canvas OUTSIDE the `background` channel,
+ *  including the sole Aurora studio and dock-over-live-field stories. Keyed by
+ *  the route id (`<category>/<story>`). `proof:focal-complete` C2 asserts this
  *  set ⊇ the committed grep of `<DockStage` over the routed SFCs (so adding a new
  *  DockStage route without enrolling it here REDs the gate — never a silent 2-GL
  *  drift). The rail self-stages its OWN `<Aurora>` (not via DockStage) and is
  *  enrolled here directly. */
 export const SELF_STAGES_GL: ReadonlySet<string> = new Set([
+    // The Aurora studio is itself the route-dominant field. Its hero is a quiet
+    // paper wash so the interactive stage remains the route's sole GPU owner.
+    "substrates/aurora",
     "dock/overview",
     "dock/layers",
     "dock/sections",
@@ -98,7 +100,7 @@ export function isFocalRoute(
  * `isFocalRoute` (owns-a-GL-field / one-GL enumeration): the shell stands down IFF
  * the mounted field ITSELF carries the warm-cream identity and so REPLACES it —
  * i.e. a CHROMATIC field (aurora / liquid-grid) on a page that actually MOUNTS it,
- * OR a self-staging dock route. Two gates on the GL-background arm:
+ * OR a self-staging route. Two gates on the GL-background arm:
  *
  * BI.W-E10-AURORA-ENTRANCE — the suppression is of the LIVE field ONLY, never of the
  * palette-derived GROUND. The shell stands down only where the route MOUNTS its OWN
@@ -109,11 +111,9 @@ export function isFocalRoute(
  * and the entrance colors from frame 0 (no bare-page-bg / repulsive-gray first paint).
  * The suppression closes the one-GL budget; it never blanks the frame-0 color.
  *
- *   1. `isHeroPage` — a `background.kind` GL field is rendered by `StoryHero`, which
- *      `StoryPage.vue` mounts ONLY on `variant === "hero"` (a page-variant content
- *      story mounts NO field). A GL-background CONTENT page therefore mounts nothing
- *      to replace the shell → it must KEEP the warm shell field. (Section landings
- *      always mount `StoryHero variant="hero"`, so they pass `isHeroPage: true`.)
+ *   1. `isHeroPage` — `StoryPage.vue` mounts `StoryHero` only for a true hero
+ *      story. A GL-background content page therefore mounts no field and keeps the
+ *      warm shell field. Section landings are hero routes, so they pass `true`.
  *   2. `CHROMATIC_FIELD_KINDS` — `constellation`/`fourier` are achromatic line-art
  *      overlays with no warm identity → they KEEP the shell warm field as underpaint,
  *      never suppress it.

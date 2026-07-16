@@ -1,21 +1,19 @@
 # StatusDot
 
-A status indicator dot (`@mkbabb/glass-ui/status-dot`). A small colored dot signalling a
-status (online / warning / error / idle) — the tiny state glyph beside a label.
+`StatusDot` is the static compact status identity. Every state has a distinct silhouette as well as
+a semantic tone, so the signal survives monochrome and forced-color modes.
 
 ```vue
-<StatusDot tone="success" />
-<StatusDot tone="error" aria-label="Connection lost" />
+<StatusDot state="online" />
+<StatusDot state="error" label="Connection failed" />
 ```
 
-## Export
+Omit `label` when adjacent text names the status; the dot is then explicitly decorative. A labelled
+dot emits `role="img"`. It never owns a live region.
 
-- **`StatusDot`** — the dot. `tone` reads the status color register (the house
-  `--success`/`--warning`/`--info`/`--destructive` tokens).
+## API
 
-## The role contract (AN.W4)
-
-`StatusDot` is a `<span>`-rooted primitive; a bare `<span aria-label>` with no role trips axe's
-`aria-prohibited-attr` rule. So the dot emits `role="img"` ONLY when the consumer binds
-`aria-label` (the decorative case stays role-free), and reaches the consumer's `:aria-label` via
-native single-root attr fall-through.
+- `state`: `online | warning | error | unknown` (default `online`)
+- `size`: `sm | md` (default `sm`)
+- `label`: optional accessible identity
+- `StatusDotState`, `StatusDotSize`: exported types

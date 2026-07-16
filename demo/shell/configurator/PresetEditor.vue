@@ -18,15 +18,9 @@ import {
 } from "@glass/components/select";
 import { Label } from "@glass/components/label";
 import { Button } from "@glass/components/button";
-import {
-    SegmentedTabs,
-    type SegmentedTabOption,
-} from "@glass/components/tabs";
-import {
-    ConfiguratorLayer,
-    ConfiguratorRow,
-} from "@glass/components/configurator";
-import { DarkModeToggle } from "@glass/components/controls";
+import { SegmentedTabs, type SegmentedTabOption } from "@glass/components/tabs";
+import { ConfiguratorLayer, ConfiguratorRow } from "@glass/components/configurator";
+import { DarkModeToggle } from "@glass/components/dark-mode-toggle";
 import { PRESETS } from "./presets/manifest";
 import {
     FONT_OPTIONS,
@@ -97,10 +91,6 @@ const cartoonModel = computed<boolean>({
 // BA.W-CONFIG-CHASSIS.3 — the `darkModel` computed is GONE. The dark row renders
 // the canonical <DarkModeToggle> bound to the live `useGlobalDark` (self-syncing
 // over `isDark`/`toggleDark`); there is no config-store shadow to desync.
-const motionModel = computed<boolean>({
-    get: () => cfg.effective("motion"),
-    set: (v) => cfg.setField("motion", v),
-});
 
 // ─── Preset — a short enum (default · neutral · custom) → the segmented register
 // (R4-4: glassy pill tabs, not bare radios). The active preset's prose rides a
@@ -157,10 +147,7 @@ function effectiveFont(slot: keyof FontSlots): string {
          `glass-ui-demo:toggle-configurator` window event — both still functional)
          + the dock gear, so there is no in-component DialogTrigger. -->
     <Dialog v-model:open="open">
-        <DialogContent
-            placement="right"
-            class="glass-resting w-full sm:max-w-md overflow-y-auto p-0"
-        >
+        <DialogContent placement="right" class="glass-resting w-full sm:max-w-md p-0">
             <div class="flex h-full flex-col">
                 <DialogHeader
                     class="px-(--configurator-pad-inline) pt-6 pb-4 border-b"
@@ -170,8 +157,8 @@ function effectiveFont(slot: keyof FontSlots): string {
                         glass-ui demo Configurator
                     </DialogTitle>
                     <DialogDescription class="text-prose text-sm">
-                        Live-tune the post-W54 design axes — glass, scale, motion,
-                        and the token presets. Changes persist locally.
+                        Live-tune the design axes — glass, scale, and token presets.
+                        Changes persist locally.
                     </DialogDescription>
                 </DialogHeader>
 
@@ -186,14 +173,17 @@ function effectiveFont(slot: keyof FontSlots): string {
                      BI.W-CONFIG-IN-SHEET (FAM-4, ruling 11) — the bare `.configurator
                      glass-floating` root masquerade is GONE: the sections ARE the
                      shipped <ConfiguratorLayer>/<ConfiguratorRow> chassis; this wrapper
-                     is an honest single-column scroll port (the Dialog owns the surface
-                     + overflow; the <Configurator> stage-grid SFC is a studio chassis,
+                     is an honest single-column scroll port (the Dialog owns the surface;
+                     `.configurator-sheet-body` alone owns overflow; the <Configurator>
+                     stage-grid SFC is a studio chassis,
                      a mismatch for a controls-only sheet). The sections read the Law-1
                      concentric card rung off the SHEET's published ctx (site #3), so
                      each reads as a CARD inside the sheet clip (UF-A4); their inline
                      padding + the sheet chrome share the ONE --configurator-pad-inline
                      anchor (UF-A5/GEO-9). -->
-                <div class="configurator-sheet-body flex-1 overflow-y-auto py-3">
+                <div
+                    class="configurator-sheet-body min-h-0 flex-1 overflow-y-auto py-3"
+                >
                     <!-- Appearance — the dark toggle LEADS (R4-3: dark-mode at the TOP
                          of the gear view), now the canonical live <DarkModeToggle>. -->
                     <ConfiguratorLayer label="Appearance" :dividers="true">
@@ -202,7 +192,10 @@ function effectiveFont(slot: keyof FontSlots): string {
                             description="The single chrome dark control — flips the live global mode."
                         >
                             <div class="flex w-full items-center justify-end">
-                                <DarkModeToggle size="control" aria-label="Toggle dark mode" />
+                                <DarkModeToggle
+                                    size="control"
+                                    aria-label="Toggle dark mode"
+                                />
                             </div>
                         </ConfiguratorRow>
                         <ConfiguratorRow
@@ -233,17 +226,6 @@ function effectiveFont(slot: keyof FontSlots): string {
                                 :step="0.05"
                             />
                         </ConfiguratorRow>
-                        <ConfiguratorRow
-                            label="Reduce motion"
-                            name="--demo-reduce-motion"
-                            description="Force-reduce spatial animation this session (overrides the system preference)."
-                            can-reset
-                            @reset="() => cfg.clearField('motion')"
-                        >
-                            <div class="flex w-full items-center justify-end">
-                                <Switch v-model="motionModel" />
-                            </div>
-                        </ConfiguratorRow>
                     </ConfiguratorLayer>
 
                     <!-- Preset — the segmented register (R4-4: glassy pill tabs,
@@ -265,7 +247,12 @@ function effectiveFont(slot: keyof FontSlots): string {
                     <!-- Typography -->
                     <ConfiguratorLayer label="Typography" :dividers="true">
                         <ConfiguratorRow
-                            v-for="slot in (['serif', 'sans', 'display', 'mono'] as const)"
+                            v-for="slot in [
+                                'serif',
+                                'sans',
+                                'display',
+                                'mono',
+                            ] as const"
                             :key="slot"
                             :label="slot[0].toUpperCase() + slot.slice(1)"
                             :name="`--font-${slot}`"
@@ -274,7 +261,9 @@ function effectiveFont(slot: keyof FontSlots): string {
                         >
                             <Select
                                 :model-value="effectiveFont(slot)"
-                                @update:model-value="(v) => v && onFontChange(slot, String(v))"
+                                @update:model-value="
+                                    (v) => v && onFontChange(slot, String(v))
+                                "
                             >
                                 <SelectTrigger class="w-full">
                                     <SelectValue placeholder="Select font" />
@@ -388,11 +377,13 @@ function effectiveFont(slot: keyof FontSlots): string {
                     </ConfiguratorLayer>
                 </div>
 
-                <div class="configurator-footer flex items-center justify-between gap-2 px-(--configurator-pad-inline) py-4 border-t">
+                <div
+                    class="configurator-footer flex items-center justify-between gap-2 px-(--configurator-pad-inline) py-4 border-t"
+                >
                     <Label class="text-micro font-mono text-muted-foreground/70">
                         glass-ui-demo-config
                     </Label>
-                    <Button variant="ghost" size="sm" @click="cfg.reset">
+                    <Button emphasis="quiet" size="sm" @click="cfg.reset">
                         Reset all
                     </Button>
                 </div>

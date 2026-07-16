@@ -76,9 +76,9 @@ const dialogOpen = ref(false);
                     aria-label="Motion tempo"
                 />
                 <div class="flex flex-wrap gap-2 text-mono-caption text-muted-foreground">
-                    <Button variant="ghost" size="sm" @click="tempo = [0.7]">0.70 · quicker</Button>
-                    <Button variant="ghost" size="sm" @click="tempo = [1]">1.00 · identity</Button>
-                    <Button variant="ghost" size="sm" @click="tempo = [1.3]">1.30 · longer</Button>
+                    <Button emphasis="quiet" size="sm" @click="tempo = [0.7]">0.70 · quicker</Button>
+                    <Button emphasis="quiet" size="sm" @click="tempo = [1]">1.00 · identity</Button>
+                    <Button emphasis="quiet" size="sm" @click="tempo = [1.3]">1.30 · longer</Button>
                 </div>
             </div>
         </StorySection>
@@ -90,7 +90,7 @@ const dialogOpen = ref(false);
             <div class="flex flex-wrap items-center gap-3">
                 <DropdownMenu>
                     <DropdownMenuTrigger as-child>
-                        <Button variant="outline">Dropdown</Button>
+                        <Button>Dropdown</Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent class="w-56">
                         <DropdownMenuLabel>enter-menu register</DropdownMenuLabel>
@@ -103,7 +103,7 @@ const dialogOpen = ref(false);
 
                 <Popover>
                     <PopoverTrigger as-child>
-                        <Button variant="outline">Popover</Button>
+                        <Button>Popover</Button>
                     </PopoverTrigger>
                     <PopoverContent class="w-72">
                         <p class="text-subheading text-foreground">enter-overlay register</p>
@@ -116,7 +116,7 @@ const dialogOpen = ref(false);
 
                 <Dialog v-model:open="dialogOpen">
                     <DialogTrigger as-child>
-                        <Button variant="primary-audacious">Dialog</Button>
+                        <Button emphasis="primary">Dialog</Button>
                     </DialogTrigger>
                     <DialogContent class="max-w-md">
                         <DialogTitle>Materialize on the tempo clock</DialogTitle>
@@ -136,7 +136,7 @@ const dialogOpen = ref(false);
             blurb="Hover the dock to run its collapse↔expand morph. useDockSpring reads --motion-tempo at construction and scales the DOCK_SPRING response by it — so the JS morph and the CSS overlays above stretch by the SAME factor (duration ∝ response). Move the slider, then hover: the morph tracks the tempo."
         >
             <div class="dock-demo-stage flex min-h-40 items-center justify-center rounded-card p-8">
-                <GlassDock>
+                <GlassDock :key="tempo[0]">
                     <DockControl aria-label="Assets"><Package /></DockControl>
                     <DockControl aria-label="Layers"><Layers /></DockControl>
                     <DockControl aria-label="Libraries"><Library /></DockControl>

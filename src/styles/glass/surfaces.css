@@ -1,5 +1,5 @@
 /* glass/surfaces.css
-   The convenience-shorthand surfaces — .glass-card / .glass-pill / .glass-btn + the glass pill-input + the chromatic edge-dispersion rim fringe.
+   The convenience-shorthand surfaces — .glass-card / .glass-pill + the glass pill-input + the chromatic edge-dispersion rim fringe.
    Carved from the glass.css cascade root; @import-ed by glass.css in cascade
    order, each in its own @layer components (isomorphic to the monolith).
    See docs/precepts/design-idioms.md §cohesion-aware partials. */
@@ -22,7 +22,7 @@
    consumer band) APPLY this utility. ONE recipe, two delivery seams.
 
    `@utility` (not `@layer components`) so a single-class application lands in
-   @layer utilities and out-ranks a base surface utility — the `glass-progress-rail` /
+   @layer utilities and out-ranks a base surface utility — the
    `veil-surface` pattern. It sets the nestable `--glass-fill` VALUE token too, so a
    consumer that composes the tinted plate INSIDE a bigger mix (a warm-floor, an α-drop)
    reads `var(--glass-fill)` without re-spelling the seam. ZERO-delta at the 0%/floor
@@ -36,42 +36,6 @@
         var(--glass-tint-source) var(--glass-tint-strength)
     );
     background: var(--glass-fill);
-}
-
-/* ── The gesture-coupled backdrop-blur ENGAGE — the shared engage primitive, minted
-   ONCE here (the glass-surface home; BG.W-BACKDROP-BLUR-ENGAGE · F5.4) ─────────────────
-   iOS-27's backdrop blur ENGAGES with the gesture: the material's blur builds AS the
-   finger pulls a surface in (≤33ms on a flick, ~0.77s on a slow pull), NEVER a fixed
-   tween. The LEVER (the finding's own): a gesture surface writes this normalized engage
-   scalar off its OWN LIVE gesture scalar and reads it in a `blur(calc(<rung radius> *
-   var(--glass-blur-engage-t)))` — so the blur's CLOCK IS the gesture's clock (finger-
-   driven on the way in; the settle SPRING on the way out — the ONE sanctioned fixed-clock
-   blur, the trailing dismiss, which the drag scalar's OWN SpringProgress settle delivers
-   for free; one read, both legs correct). There is NEVER a `transition: backdrop-filter
-   <duration>` on an engaging surface — a wall-clock duration would DECOUPLE the blur from
-   the finger (the exact anti-pattern F5.4 excises; the composed `--glass-blur-*` fixed
-   surfaces keep their static blur, this register is the DRAG-DRIVEN one).
-
-   `--glass-blur-engage-t` (the drawer sheet writes it off `--glass-drawer-t`; the dock
-   expand plate off `--dock-expand-t` is the booked 2nd consumer). Registered typed so it
-   is a first-class engage input; `inherits: false` + `initial-value: 0` is the
-   NO-MASKING-FALLBACK floor (USER 07-03): an UNWIRED surface reads 0 → NO blur (an
-   un-blurred plate fails LOUD), NEVER a masking full blur that would hide a dead writer
-   (the `--glass-drawer-t: 0` closed-state precedent). `--glass-blur-engage-knee` is the
-   shared engage-curve constant — the pull fraction by which the material reaches full
-   blur (the iOS quick-coalesce: a see-through peek/half already reads as glass). The
-   recipe is inlined at each surface (drawer.css) — NOT wrapped in a `@utility`, because
-   the per-file `/styles` partial ships Lightning-autoprefixed but NOT `@apply`-resolved
-   (a raw `@apply` would ship dead); the shared home is the registered scalar + the knee. */
-@property --glass-blur-engage-t {
-    syntax: "<number>";
-    inherits: false;
-    initial-value: 0;
-}
-
-:root {
-    /* the pull fraction by which the engaged material reaches full blur (see above). */
-    --glass-blur-engage-knee: 0.35;
 }
 
 @layer components {
@@ -95,7 +59,7 @@
            card's quiet rung. */
         --glass-fill-rung: var(--glass-bg-quiet);
         @apply glass-fill;
-        backdrop-filter: var(--glass-blur-quiet);
+        backdrop-filter: var(--glass-cell-backdrop-filter, var(--glass-blur-quiet));
         /* BB.W-GLASS-ACCENT — the card border feeds its focus-elevation ink into the
            accent-composed `--glass-border-accent` (ladder.css rim group); byte-
            identical at 0% strength. The focus rung still re-points `--card-focus-
@@ -104,13 +68,11 @@
         border: 1px solid var(--glass-border-accent);
         border-radius: var(--radius-card);
         box-shadow: var(--glass-material-rim), var(--card-focus-shadow);
-        /* AY.W-A11Y-PERF O-4 — the nested-backdrop-cost `contain: paint` clip (a
-           glass Button in this card must not escape the card box) is RETIRED off
-           this per-class dialect onto the ONE narrowed clip register in
+        /* AY.W-A11Y-PERF O-4 — the `contain: paint` clip is RETIRED off this
+           per-class dialect onto the ONE narrowed clip register in
            material.css (BG.W-GLASS-CLIP-DISCIPLINE — `.glass-card` is in the
            INCLUDED set). The prior `contain: layout style paint` narrowed to
-           PAINT-only there (the `layout`/`style` axes dropped — paint is what
-           clips the descendant backdrop sample; `layout` would make the card a
+           PAINT-only there (the `layout`/`style` axes dropped; `layout` would make the card a
            containing block for abs/fixed descendants). Do NOT re-declare `contain`
            here — the single register is the clip home. */
         transition:
@@ -128,307 +90,22 @@
         --card-focus-border: var(--glass-border-floating);
     }
 
-    /* ── Glassmorphic circular icon button ── */
-
-    /* BA.W-DEMO-AFFORDANCES (IG-A4) — the two size registers below are
-       MUTUALLY EXCLUSIVE; never stack `.glass-btn` and `.btn-pill` on one
-       element. `.glass-btn` is the FIXED-square icon primitive (width/height:
-       var(--size-icon-btn) + contain:paint) — `.btn-pill` is the CONTENT-WIDTH
-       text pill. Stacked, the fixed square wins and contain:paint clips the
-       wrapped label into a ~40px blob (the R8-17 "play button" defect). A
-       text-bearing `.glass-btn` collapses the same way even without `.btn-pill`.
-       For a play/replay affordance reach for <StoryPlayButton> (demo) or a real
-       <Button> with a leading Lucide glyph, never an icon-button carrying text.
-       Machine-locked by proof:demo-affordances (W1 — no class co-occurrence,
-       no text-bearing icon button). */
-    .glass-btn {
-        @apply flex items-center justify-center cursor-pointer;
-
-        /* Individual-transform identity base (AQ.W3 §W3.2) — `scale: 1` at rest
-           mints the stacking context once so the hover/press scale below does
-           not flicker it into being (the z-index/anchor hazard). */
-        scale: 1;
-        width: var(--size-icon-btn);
-        height: var(--size-icon-btn);
-        border-radius: var(--radius-pill);
-        border: 1.5px solid var(--glass-border-wash);
-        background: var(--glass-bg-wash);
-        backdrop-filter: var(--glass-blur-wash);
-        /* AY.W-A11Y-PERF O-4 — the glass button's paint containment (its own
-           backdrop-filter sample stays inside the box when it nests in a glass
-           card / dialog / dock) is RETIRED off this per-class dialect onto the ONE
-           narrowed clip register in material.css (BG.W-GLASS-CLIP-DISCIPLINE —
-           `.glass-btn` is in the INCLUDED set beside `.glass-card`). Do NOT
-           re-declare `contain` here — the single register is the clip home. */
-        color: var(--muted-foreground);
-        /* AX.W52 §6 doctrine — the surface legs ride the bezier `--ease-standard`;
-           the `scale` leg is reconciled onto `--spring-smooth` (was `--spring-snappy`)
-           so the icon-button hover settles on the SAME ONE register as `.btn-pill` /
-           `.tap-squish` / `btn-interactive` (the gate asserts one scale register
-           across all four). The press still reads crisp — `--spring-smooth` ζ=0.86
-           settles fast without a visible bounce. */
-        transition:
-            background var(--duration-fast) var(--ease-standard),
-            border-color var(--duration-fast) var(--ease-standard),
-            color var(--duration-fast) var(--ease-standard),
-            scale var(--spring-smooth-duration) var(--spring-smooth);
-    }
-
-    .glass-btn:hover:not(:disabled) {
-        background: color-mix(in srgb, var(--background) 85%, transparent);
-        border-color: var(--surface-tint-22);
-        color: var(--foreground);
-        scale: var(--scale-hover);
-    }
-
-    .glass-btn:active:not(:disabled) {
-        scale: var(--scale-press);
-    }
-
-    .glass-btn:focus-visible {
-        outline: none;
-        box-shadow: var(--focus-ring-shadow);
-    }
-
-    .glass-btn:disabled {
-        opacity: 0.35;
-        cursor: not-allowed;
-        pointer-events: none;
-    }
-
-    .glass-btn.is-active,
-    .glass-btn[aria-pressed="true"] {
-        background: var(--surface-tint-10);
-        border-color: var(--surface-tint-25);
-        color: var(--foreground);
-    }
-
-    /* ── Pill button base ─────────────────────────── */
-    .btn-pill {
-        @apply inline-flex items-center justify-center cursor-pointer font-medium border-none;
-
-        /* AX.W52 §6 identity base — `scale: 1` at rest so the hover/press scale
-           below animates the `scale` longhand (not `transform`) coherently and
-           does not flicker the stacking context into being (AQ.W3 §W3.2). */
-        scale: 1;
-        /* AX.W51 D18 — the pill GEOMETRY rides the ONE `--ui-scale` comfort axis.
-           gap / padding scale by the master scalar; the font reads the
-           `--control-text` register (`calc(--type-small * --ui-scale)`, the same
-           `text-sm` register the Button CVA paints), so a bare `.btn-pill` consumer
-           and a `<Button>` agree on the control font, and ONE `--ui-scale` override
-           grows the pill's height (via padding) + gap + font in lockstep. Desktop
-           default is the identity (scale 1 → the prior proportion). */
-        gap: calc(0.375rem * var(--ui-scale));
-        border-radius: var(--radius-pill);
-        padding: calc(0.5rem * var(--ui-scale)) calc(1rem * var(--ui-scale));
-        font-size: var(--control-text);
-        /* AX.W52 — the ONE coherent button transition (RED witness 5/6). The
-           SURFACE legs (bg/border/box-shadow/color/opacity) ride the bezier
-           `--ease-standard` (a colour cross-fade reads as a wobble on a spring);
-           the TRANSFORM leg (`scale`) rides `--spring-smooth` (the sub-perceptual
-           settle), so the hover lift + the surface cross-fade read as ONE glide.
-           The DEAD `transform` leg is retired — the variants animate the `scale`
-           longhand. CRITICAL: `.tap-squish` (composed alongside on the button
-           base, utilities.css) ALSO lists this full coherent set, so neither
-           class's `transition` shorthand can clobber the other down to a
-           scale-only animation — the cascade bug that left every button
-           transitioning ONLY `scale` (the live-readback RED, RED witness 5). The
-           doctrine: surface-props→bezier, transform→spring (tokens.css §2). */
-        transition:
-            background-color var(--duration-fast) var(--ease-standard),
-            border-color var(--duration-fast) var(--ease-standard),
-            box-shadow var(--duration-fast) var(--ease-standard),
-            color var(--duration-fast) var(--ease-standard),
-            opacity var(--duration-fast) var(--ease-standard),
-            scale var(--spring-smooth-duration) var(--spring-smooth);
-    }
-
-    .btn-pill > * {
-        @apply flex-shrink-0;
-    }
-
-
-    .btn-pill:disabled {
-        opacity: var(--opacity-disabled);
-        cursor: not-allowed;
-        pointer-events: none;
-    }
-
-    /* ── Glass-button backdrop ─────────────────────────────────────────────
-       AX.W52 — the `glass`/`glass-wash` Button variants compose `.glass-wash`,
-       which resolves `--glass-blur-wash` = `blur(1px)` — a sub-perceptual
-       diffusion authored for a small detail TILE, not a button the user reads
-       as "glass" (the live readback found the glass variants at a negligible
-       1px). A hero control wants a real glass blur. `.btn-glass` re-points the
-       backdrop at `--glass-blur-btn`, which the token reads through.
-       BG.W-GLASS-BLUR-PEER — `--glass-blur-btn` is now an ALIAS of
-       `--glass-blur-resting` (the unified 8px material), so the calm glass button
-       reads the SAME `blur(8px)` RADIUS LEG the dock, the default-Card, and the
-       menu-row read (ONE liquid-glass material, the resolved-radius peer lock).
-       The `.btn-glass.glass-deep` arm below re-points the SAME `--glass-blur-btn`
-       to `--glass-blur-deep` for the HERO CTA — so reading the alias keeps the
-       hero deep register working unchanged (the more-glass register lives on the
-       deep tier only, no calm-button floating-tier slab). Declares the UNPREFIXED
-       `backdrop-filter` ONLY — Lightning CSS emits the `-webkit-` companion per
-       the single-source authorship discipline above (hand-authoring both forms
-       makes Lightning dedup-and-keep-prefixed, which modern Chromium then drops). */
-    .btn-glass {
-        backdrop-filter: var(--glass-blur-btn);
-
-        /* BB.W-BUTTON-GLASS (d) — the button-scoped DEPTH stack + the hover-specular
-           bump. The glass button was the flattest wash rung (a bare backdrop-filter,
-           no rim, no under-shadow) — it read as a tinted rectangle, not a lifted
-           glass lozenge. The `--glass-btn-*` knobs compose ALREADY-MINTED tokens (the
-           `--glass-edge-light` rim + the `quiet`/`resting`-tier `--glass-under-shadow-*`
-           drop) so a consumer retints the whole button depth from ONE override; NO new
-           compositing axis. The rim+under-shadow lifts the lozenge; the box-shadow is
-           additive over the variant's own focus/press shadow legs (the `.btn-pill`
-           transition carries box-shadow on the §6 bezier, so the depth cross-fades
-           coherently). */
-        --glass-btn-rim: var(--glass-edge-light);
-        --glass-btn-under-shadow: var(--glass-under-shadow-quiet);
-        --glass-btn-under-shadow-hover: var(--glass-under-shadow-default);
-        box-shadow: var(--glass-btn-rim), var(--glass-btn-under-shadow);
-        /* The button-scoped hover gleam bump (0.10 → ~0.14): a hovered glass button
-           reads a notch brighter at the grazing edge than the global hover whisper.
-           Token-scoped to `.btn-glass` (NOT the global `:root` cohort property-regs.css
-           owns) so only the button lifts. The active/rest rungs ride the global cohort
-           (the press whisper + the dormant rest). */
-        --glass-specular-intensity-hover: var(--glass-specular-btn-hover);
-    }
-
-    /* BC.W-BUTTON-GLASS-IOS (move 2 / BG-IOS-2) — the hero CTA reaches DEEP glass.
-       `.btn-glass` reads `--glass-blur-btn` (not `--glass-blur-floating`), so the bare
-       `.glass-deep` axis (which re-points `--glass-blur-floating`) does not deepen a
-       button. This arm re-points `--glass-blur-btn` onto the deep family — the SAME
-       token-substitution model `.glass-deep` uses (glass/deep.css), composing the ONE
-       deep axis, NOT a new blur recipe.
-       BG.W-GLASS-BLUR-PEER — the bare `default` button is DEMOTED off `glass-deep`
-       (button/index.ts), so ONLY the explicit hero opt-ins reach this arm:
-       `primary-audacious`, a `<Button :liquid>`, or a host-applied `.glass-deep`. The
-       hero CTA reads the apple.com-nav-grade thick refractive liquid glass
-       (`--glass-blur-deep`, 16px / saturate 1.5 family), while the calm glass button
-       (`default`/`glass`/`outline`/`secondary`/`accent`/`ai`) stays the unified 8px
-       resting peer (`--glass-blur-btn` → `--glass-blur-resting`). The deep BLUR is
-       budget-FREE (the W-LENSING budget binds the `:liquid` SVG lens, not the deep-blur
-       tier). The a11y `--glass-level:0` brackets reach it for free (the deep blur
-       composes `--glass-level`, the opaque-escape path). */
-    .btn-glass.glass-deep {
-        --glass-blur-btn: var(--glass-blur-deep);
-    }
-
-    /* The depth deepens one rung on hover (the lifted-lozenge read) — additive over
-       the variant's own hover surface legs. The variants paint the bg/border on
-       hover; this adds the deeper drop. */
-    .btn-glass:hover:not(:disabled, [data-disabled]) {
-        box-shadow: var(--glass-btn-rim), var(--glass-btn-under-shadow-hover);
-    }
-
-    /* BC.W-BUTTON-GLASS-IOS (move 3 / BG-IOS-4) — the press is COUPLED (W-MOTION-CANON
-       P3): the ONE `--glass-btn-press-t` 0..1 spring drive (Button.vue writes it off
-       `useSpringPress`) feeds BOTH the squish (the `useLiquidFlex` reciprocal X/Y deform,
-       Button.vue) AND a SPECULAR brightness leg here — the touch-ILLUMINATION (apple-
-       ios27.md §2.5 ".interactive() → scale + bounce + shimmer + touch-illumination").
-       During the press the button's specular tracks the SPRING (not the binary `:active`
-       toggle material.css sets): `--specular-intensity` LERPs from the hover gleam toward
-       the active gleam as `--glass-btn-press-t` travels, so the gleam ILLUMINATES on the
-       SAME spring scalar as the squish (the glass reads as DEFORMING-AND-BRIGHTENING with
-       the spring's alive overshoot, not a uniform shrink). It reads the EXISTING
-       `--glass-specular-intensity-{hover,active}` cohort (property-regs.css) — no new
-       token, ONE drive two legs. Specificity ties material's `.glass-wash:active::before`
-       (0,2,1) and wins by source-order-after (surfaces.css @import-s after material.css),
-       so the button press follows the spring; the hover gleam + the no-JS `:active` floor
-       are untouched. */
-    .btn-glass:active::before {
-        --specular-intensity: calc(
-            var(--glass-specular-intensity-hover) +
-            (var(--glass-specular-intensity-active) - var(--glass-specular-intensity-hover)) *
-            var(--glass-btn-press-t)
-        );
-    }
-
-    /* BB.W-BUTTON-GLASS (a) — the ELEMENT-LEVEL oklab-tinted hover/active fill pair
-       (the substitution-vs-inheritance trap fixed on the button register). The glass
-       button variants painted `hover:bg-(--glass-bg-resting) active:bg-(--glass-bg-
-       floating)` — the RAW `:root` rung tokens, which carry NO `color-mix(in oklab, …,
-       --glass-tint-source --glass-tint-strength)` wrapper. So the W55 adaptive darken
-       + the `contrast-color()` ink flip + the content-tier floor (all of which the REST
-       bg `.glass-wash` composes via the element-level oklab seam) DROPPED the moment the
-       pointer landed — "more glass would cost legibility" exactly inverted from the
-       iOS-27 ask. These two tokens wrap the raw rungs in the SAME element-level oklab
-       seam `ladder.css` composes for the rest bg + `--glass-bg-dock` for the dock — ZERO
-       new compositing axis, the literal darken-over-light recipe reached at the lit
-       fill. ZERO-delta at the `--glass-tint-strength: 0%`/floor default (the mix toward
-       the source is 0%); under the declared/sampled bright bucket the lit fill darkens
-       to AA in lockstep with the rest bg. The `:root` raw `--glass-bg-*` tokens are
-       UNTOUCHED (other surfaces compose them at the element correctly — the raw token +
-       the element-level oklab wrapper is the correct ladder shape). */
-    /* BC.W-TABS-IOS — the tinted-FLOATING seam lifted off the `.btn-glass`-only scope
-       onto a SHARED `:where()` so the iOS-27 segmented-control active pill reads the
-       SAME element-level oklab-tint floating fill the glass button reads (the
+    /* The shared tinted-floating seam lets the segmented-control active pill and
+       glass capsule read the same element-level oklab-tint floating fill (the
        substitution-over-redeclaration discipline: ONE tinted-floating source, NOT a
        tab-local fork). The pill's active plate now reaches the W55 darken-over-bright
        seam — over a bright field the pill darkens-to-legible, over a calm field it
        stays warm-cream/near-white (the iOS adaptive register reaching the pill).
        ZERO-delta at the `--glass-tint-strength: 0%`/floor default. */
-    :where(.btn-glass, .segmented-indicator, .glass-capsule) {
+    :where(.segmented-indicator, .glass-capsule) {
         --glass-bg-floating-tinted: color-mix(
             in oklab,
             var(--glass-bg-floating),
             var(--glass-tint-source) var(--glass-tint-strength)
         );
     }
-    .btn-glass {
-        /* BC.W-BUTTON-GLASS-IOS (BG-IOS-6) — the `quiet` rung gains the SAME element-
-           level oklab-tint wrapper so the de-shadcn `outline`/`secondary` reskin (the
-           QUIETER glass register, prominence-by-tint) reaches the W55 darken on its lit
-           fill too — ZERO new compositing axis, the SAME seam the resting/floating pair
-           composes. The floating rung is minted on the shared `:where()` seam ABOVE
-           (the tab pill reads it too); the quiet rung stays button-scoped (the
-           hover/active fill register the segmented pill does not engage). */
-        --glass-bg-quiet-tinted: color-mix(
-            in oklab,
-            var(--glass-bg-quiet),
-            var(--glass-tint-source) var(--glass-tint-strength)
-        );
-    }
-
-    /* BB.W-BUTTON-GLASS (e) — the optional refraction-edge opt-in. CONSUMES the
-       EXISTING refraction axis (glass-refract.css, the `#glass-refract` SVG-filter
-       lens, `@supports (backdrop-filter: url(#…))`-gated with the un-gated blur base
-       as the off-Chromium floor) — NEVER a button-local lens fork. BB.W-LENSING landed
-       the squircle bevel-profile + the typed `--glass-refract` axis + the `.glass-lens`
-       opt-in class (renamed off `.glass-refract`, clean break); the button COMPOSES
-       `.glass-lens`.
-
-       A `<Button :liquid>` adds `.glass-lens` to the host; on a supporting engine the
-       button reads the edge-bend over its blur base. The base recipe (the
-       `@supports`-gated `.glass-lens` rule in glass-refract.css) already paints the
-       displacement filter over `--glass-blur-resting`; this block adds NOTHING to the
-       filter graph (it would fork the axis) — the button merely COMPOSES `.glass-lens`.
-
-       The `:active` LENS-SWELL is the CHEAP coupled read, NOT a per-frame displacement-
-       map re-rasterize (the §Triumvirate / R2 budget: `feDisplacementMap` is resize-
-       expensive — only the `scale` attr animates without rebuilding the map, and even
-       that re-rasterizes; the one-refractive-element-per-route budget forbids the per-
-       frame cost). The swell is the press SQUISH (Button.vue, the `useLiquidFlex`
-       reciprocal X/Y deform) + the coupled `--glass-specular-intensity-active` gleam
-       lift on the SAME `--glass-btn-press-t` drive — the glass reads as DEFORMING under
-       the press without re-rasterizing the lens map. Off-Chromium the whole arm degrades
-       to the un-gated `.btn-glass` blur+tint base (the no-workaround floor). The
-       `--glass-btn-press-t` typed drive (property-regs.css) is the ONE press scalar the
-       squish + the gleam coupling both read. */
-    .btn-glass.glass-lens {
-        /* The press drive scalar (0 rest → 1 pressed) Button.vue writes off the spring;
-           the resting default is 0 so an unwired refraction button is the static lens.
-           The `:active` LENS-SWELL on this drive lives in material.css's `.glass-lens`
-           block (`--glass-refract` bumps on press); this block only floors the drive. */
-        --glass-btn-press-t: 0;
-    }
-
     /* The .input-pill / .control-surface form-control REST register is carved into
        glass/control-surfaces.css (a cohesive sub-concern, the no-god-module re-drain)
        — @import-ed by glass.css IMMEDIATELY AFTER surfaces.css, same @layer components,
        same source order (byte-isomorphic). */
-
 }

@@ -44,7 +44,7 @@ function resample(): void {
                     />
                 </div>
             </div>
-            <Button variant="outline" class="w-fit" @click="resample">
+            <Button class="w-fit" @click="resample">
                 Resample
             </Button>
         </StorySection>

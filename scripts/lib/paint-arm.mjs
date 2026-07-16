@@ -377,8 +377,7 @@ export function warmIdentityVerdict(stats, band = {}) {
 //
 // The cardinal split (mirroring paintProbe/paintBand): apcaProbe runs LOCAL on a real
 // device (it reads a live :5199 surface's `color`/`background-color`); apcaContrastLc /
-// compositeOver / apcaLcFromResolved / apcaVerdict are DEVICE-FREE (the math + the verdict
-// + the self-test — proof:meta exercises them with no live page).
+// compositeOver / apcaLcFromResolved / apcaVerdict are pure math helpers.
 
 // APCA-W3 0.1.9 constants (the SAPC "4g" locked set — do NOT re-tune; they are a spec).
 const APCA_TRC = 2.4;

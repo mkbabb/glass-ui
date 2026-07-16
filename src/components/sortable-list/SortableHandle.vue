@@ -22,6 +22,7 @@ const accessibleLabel = computed(
         :type="type"
         class="sortable-handle"
         data-sortable-handle
+        data-control-target
         :disabled="item.binding.disabled.value"
         :aria-label="accessibleLabel"
     >
@@ -32,8 +33,6 @@ const accessibleLabel = computed(
 <style scoped>
 .sortable-handle {
     display: inline-flex;
-    min-width: 2.75rem;
-    min-height: 2.75rem;
     align-items: center;
     justify-content: center;
     cursor: grab;

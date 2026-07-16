@@ -1,4 +1,4 @@
-import { computed, onBeforeUnmount, onMounted, ref } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
 import type { ComputedRef, Ref } from "vue";
 import type {
     SegmentedTabOption,
@@ -67,16 +67,18 @@ export function useTabResponsive(
     const isDesktop = ref(true);
     let mql: MediaQueryList | null = null;
     function onMql(e: MediaQueryListEvent | MediaQueryList) {
+        if ("currentTarget" in e && e.currentTarget && e.currentTarget !== mql) return;
         isDesktop.value = e.matches;
     }
 
     // The active value the strip renders — when the model points at a mobile-only
-    // option (absent from `desktopOptions`), fall back to the first desktop option.
+    // option (absent from `desktopOptions`), fall back to the first enabled desktop
+    // option. A fully-disabled subset has no fabricated selection.
     const stripValue = computed(() => {
         if (!responsiveCfg.value) return model.value;
         const opts = desktopOptions.value;
         if (opts.some((o) => o.value === model.value)) return model.value;
-        return (opts[0]?.value ?? model.value) as string;
+        return opts.find((option) => !option.disabled)?.value;
     });
     const stripOptions = computed(() =>
         responsiveCfg.value ? desktopOptions.value : options.value,
@@ -91,19 +93,32 @@ export function useTabResponsive(
         () => !!responsiveCfg.value && !isDesktop.value,
     );
 
-    onMounted(() => {
+    let mounted = false;
+    function bindMediaQuery() {
+        mql?.removeEventListener("change", onMql);
+        mql = null;
         if (
-            responsiveCfg.value &&
-            typeof window !== "undefined" &&
-            window.matchMedia
+            !mounted ||
+            !responsiveCfg.value ||
+            typeof window === "undefined" ||
+            !window.matchMedia
         ) {
-            mql = window.matchMedia(`(min-width: ${breakpoint.value})`);
-            isDesktop.value = mql.matches;
-            mql.addEventListener("change", onMql);
+            isDesktop.value = true;
+            return;
         }
+        mql = window.matchMedia(`(min-width: ${breakpoint.value})`);
+        isDesktop.value = mql.matches;
+        mql.addEventListener("change", onMql);
+    }
+
+    watch([responsiveCfg, breakpoint], bindMediaQuery);
+    onMounted(() => {
+        mounted = true;
+        bindMediaQuery();
     });
 
     onBeforeUnmount(() => {
+        mounted = false;
         mql?.removeEventListener("change", onMql);
         mql = null;
     });

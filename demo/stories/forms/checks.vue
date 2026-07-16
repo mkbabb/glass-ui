@@ -16,6 +16,7 @@ const delivery = ref<string>("standard");
 
 const notifications = ref(true);
 const airplane = ref(false);
+const connection = ref(false);
 </script>
 
 <template>
@@ -48,7 +49,12 @@ const airplane = ref(false);
             <p class="text-small text-muted-foreground">
                 One-of-N. Inline layout with labels for hit-targets.
             </p>
-            <RadioGroup v-model="plan" class="flex flex-wrap gap-6" aria-label="Plan">
+            <RadioGroup
+                v-model="plan"
+                orientation="horizontal"
+                class="flex flex-wrap gap-6"
+                aria-label="Plan"
+            >
                 <div v-for="p in ['solo', 'team', 'org']" :key="p" class="flex items-center gap-2">
                     <RadioGroupItem :id="`plan-${p}`" :value="p" />
                     <Label :for="`plan-${p}`" class="capitalize">{{ p }}</Label>
@@ -60,6 +66,7 @@ const airplane = ref(false);
             </p>
             <RadioGroup
                 v-model="delivery"
+                orientation="horizontal"
                 class="flex flex-wrap gap-6"
                 aria-label="Delivery speed"
             >
@@ -84,12 +91,25 @@ const airplane = ref(false);
             </p>
             <div class="flex flex-wrap items-center gap-8">
                 <div class="flex items-center gap-3">
-                    <Switch id="sw-notifications" v-model="notifications" />
+                    <Switch
+                        id="sw-notifications"
+                        v-model="notifications"
+                        size="sm"
+                    />
                     <Label for="sw-notifications">Notifications</Label>
                 </div>
                 <div class="flex items-center gap-3">
                     <Switch id="sw-airplane" v-model="airplane" />
                     <Label for="sw-airplane">Airplane mode</Label>
+                </div>
+                <div class="flex items-center gap-3">
+                    <Switch
+                        id="sw-connection"
+                        v-model="connection"
+                        size="lg"
+                        invalid
+                    />
+                    <Label for="sw-connection">Connection needs attention</Label>
                 </div>
                 <div class="flex items-center gap-3 opacity-60">
                     <Switch id="sw-disabled" disabled />

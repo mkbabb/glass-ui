@@ -9,6 +9,7 @@ export type {
     SegmentedTabOption,
     SegmentedTabsVariant,
     SegmentedTabsSemantics,
+    SegmentedTabsActivation,
     SegmentedTabsOrientation,
     SegmentedTabsProps,
     SegmentedTabsResponsive,

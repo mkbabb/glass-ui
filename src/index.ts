@@ -8,10 +8,10 @@
 //      the per-package list below. This file IS that barrel.
 //   2. Per-package SUBPATHS (`@mkbabb/glass-ui/<pkg>`) — every public
 //      component package reachable via flat name (verified by
-//      `npm run verify-export-types`). Public types + constants ride
+//      `npm run verify:package`). Public types + constants ride
 //      their OWNING package subpath (e.g. `ConstellationProps` on
 //      `/constellation`, `AuroraConfig` + `MAX_NUCLEI` on `/aurora`,
-//      `ButtonVariants` on `/button`).
+//      `ButtonProps` on `/button`).
 //
 // All subpath barrels at top level (`src/<flat>.ts`) follow the same shape:
 // `export * from "./components/<dir>"` (or composition thereof).
@@ -25,7 +25,7 @@
 //
 //   Symbol(s)                                  Subpath                        Peer
 //   -----------------------------------------  -----------------------------  ---------------------
-//   Input, Textarea, Combobox*                 @mkbabb/glass-ui/forms         @vueuse/core
+//   Input, Textarea                            @mkbabb/glass-ui/forms         @vueuse/core
 //   useGlobalDark, installDarkModeSync         @mkbabb/glass-ui/dark          @vueuse/core
 //   useKeyboardShortcuts, registerShortcut,    @mkbabb/glass-ui/keyboard      @vueuse/core
 //   formatCombo, formatComboParts, isMac,
@@ -36,7 +36,7 @@
 //   CarouselItem, CarouselNext, CarouselPager,
 //   CarouselPrevious,
 //   useCarousel, CarouselApi
-//   useSpring, useSpringMount, useSpringPress, @mkbabb/glass-ui/motion        @mkbabb/keyframes.js
+//   useSpring, useSpringMount, useLiquidPress, @mkbabb/glass-ui/motion        @mkbabb/keyframes.js
 //   useNumericTransition, useAnimatedNumber,
 //   DAMPING, SNAP_THRESHOLD
 //   useStaggerReveal,                          @mkbabb/glass-ui/motion-core   (none — keyframes-FREE + vueuse-FREE)
@@ -51,7 +51,7 @@
 // ── Custom-package cherry-pick rationale ─────────────────────────────────
 //
 // This root barrel re-exports a curated few of the `src/components/`
-// packages (`instrument-chassis`, `configurator`, `icon-chip`, `split-chars`);
+// package (`configurator`);
 // `hover-popover` FOLDED onto the `ui/popover` union (BI.W-OVERLAY-UNION), and
 // `scrolling-text` RETIRE-RELOCATED to speedtest (BI.W-SPEEDTEST-ONLY-PAIR — the
 // overflow-marquee was speedtest-only, the ≥2-binary bar unmet). The rest reach
@@ -71,14 +71,14 @@
 //   - large composite chassis with nested composables (dock, aurora,
 //     configurator domain helpers); OR
 //   - vertical/themed substrate (paper-backdrop, search,
-//     animated-digit, metric-cell, metric-stack, tabs).
+//     animated-digit, metric, tabs).
 // Consumers of those packages explicitly opt into them via subpath, keeping
 // the root barrel's transitive-import graph tight.
 
 // ─── Core UI primitives (vueuse-free) ─────────────────────────────────────
 // Explicit per-package re-exports — the `export * from "./components"`
 // wildcard is intentionally NOT used because it drags vueuse-bearing
-// carousel/combobox/input/textarea barrels into the root SCC walk.
+// carousel/input/textarea barrels into the root SCC walk.
 export * from "./components/accordion";
 export * from "./components/alert";
 export * from "./components/avatar";
@@ -88,8 +88,6 @@ export * from "./components/card";
 export * from "./components/checkbox";
 export * from "./components/collapsible";
 export * from "./components/command";
-// BI.W-MENU-TRIGGER — ContextMenu folded onto DropdownMenu as `trigger="context"`
-// (clean break, no alias). The context-menu family + subpath are retired.
 export * from "./components/data-table";
 export * from "./components/dialog";
 // Drawer is OFF the root barrel — BB.W-DRAWER-ABROGATE rebuilt it on the house
@@ -106,7 +104,6 @@ export * from "./components/label";
 // BI.W-MULTISELECT-FOLD — `ui/multi-select` RETIRED. A MultiSelect is a
 // Popover+Command composition over the same Combobox-family mechanism, so it folds
 // onto `<Combobox multiple>` (array v-model + chips-in-trigger). (clean break, no alias.)
-export * from "./components/notification";
 export * from "./components/number-field";
 export * from "./components/popover";
 export * from "./components/progress";
@@ -132,12 +129,10 @@ export * from "./components/table";
 // reka `--reka-tabs-indicator-*` path is gone. No public barrel re-exported them.
 export * from "./components/tags-input";
 export * from "./components/toast";
-export * from "./components/toggle";
 export * from "./components/toggle-group";
 export * from "./components/tooltip";
 
 // Custom composites — instrument-cluster chassis
-export * from "./components/instrument-chassis";
 // BI.W-OVERLAY-UNION — `custom/hover-popover` FOLDED onto `<Popover trigger="hover">`
 // (the Kronecker fold). HoverPopover the NAME is retired; the mechanism (hover-open
 // timer + keepDockOpen watch) lives on the sealed Popover union. (clean break, no alias.)
@@ -149,22 +144,6 @@ export * from "./components/configurator";
 // The overflow-marquee's only binary consumer was speedtest (2 sites), the
 // ≥2-binary-consumer bar unmet, so the primitive + its `/scrolling-text` subpath
 // leave glass-ui; speedtest brings its own marquee. (clean break, no alias.)
-
-// Custom composites — the section-color pop primitive (BA.W-ICON-CHIP). The ONE
-// color-event vehicle (the `color-mix` backplate + full-chroma glyph + the
-// duotone/bloom/reveal axes). Vueuse-FREE + lightweight (it composes only `cn` +
-// the dependency-free `vReveal` directive — no `@vueuse/core`, no
-// `@mkbabb/keyframes.js`), so it is root-barrel safe and cherry-picked here for
-// BROAD reach; also reachable via `@mkbabb/glass-ui/icon-chip`.
-export * from "./components/icon-chip";
-
-// BC.W-SPLIT-CHARS — the per-glyph split COMPONENT face (`<SplitChars>`). It
-// composes the engine-free `useCharStagger` + the shipped `.char-stagger` CSS +
-// the mandatory `aria-label` (the `text` prop IS the label source). Vueuse-FREE +
-// keyframes-FREE (it adds NO animation engine — the CSS owns the motion), so it
-// is root-barrel safe per the icon-chip/`vReveal` precedent; also reachable via
-// `@mkbabb/glass-ui/motion-core`.
-export * from "./components/split-chars";
 
 // ─── Core composables (vueuse-free) ───────────────────────────────────────
 // `useGlobalDark` and `useKeyboardShortcuts` are intentionally removed
@@ -194,13 +173,7 @@ export * from "./composables/glass";
 export {
     startViewTransition,
     supportsViewTransitions,
-    // BA.W-ATLAS-RECONCILE A-4b — the route/navigation convenience over the ONE
-    // VT substrate (async update + reduced-motion instant-path). NO parallel
-    // useRouteTransition wrapper.
-    navigate,
-    supportsRouteTransitions,
     type ViewTransitionResult,
-    type NavigateOptions,
 } from "./composables/motion/useViewTransition";
 
 // The v-reveal entrance directive. Dependency-free (`vue` type-only — no
@@ -244,31 +217,6 @@ export {
     type UseLeadTrail,
     type UseLeadTrailOptions,
 } from "./composables/motion/useLeadTrail";
-
-// BD.W-GOO-CAROUSEL-DECK — the ONE goo-morph engine (the de-dup of the pager WORM):
-// a two-edge stretch→merge→pinch→settle driver, generalized off the dot-pip register
-// into the library's single liquid metaball-morph transition driver — consumed by the
-// pager dot (worm scale), the carousel slide PLATE, and the deck slide PLATE. Composes
-// `useLiquidFlex` + `vue` only — engine-FREE + vueuse-FREE, root-barrel safe + on
-// `@mkbabb/glass-ui/motion-core` (the `useLiquidFlex` precedent).
-export {
-    useGooMorph,
-    type GooBarbellRefs,
-    type UseGooMorphParams,
-    type UseGooMorphReturn,
-} from "./composables/motion/useGooMorph";
-
-// BG.W-DEAD-COMPOSABLE-CUT — the morph SIGNATURE DATA (the dead `useMorphField()` weld's
-// only live surface; the weld body had ZERO callers so it was DEFINITION-ABSENT'd).
-// `MORPH_SIGNATURES` + the three signature types are pure DATA the goo / dock-fission
-// recipes read — Vue-free, so they stay root-barrel safe + on `@mkbabb/glass-ui/motion-core`
-// (the `useGooMorph` precedent). The function + its function-domain types are gone.
-export {
-    MORPH_SIGNATURES,
-    type MorphSignature,
-    type MorphSignatureName,
-    type MorphVector,
-} from "./composables/motion/morphSignatures";
 
 // BB.B4 (W-VIZ-POINTER) — the shared viz-pointer-physics field (pointer position +
 // derived velocity + the ACCEL term). The viz renderer FEEDS it via its frame `tick`
@@ -317,18 +265,6 @@ export {
     type ConstellationWellResult,
 } from "./composables/motion/pointerFieldMappings";
 
-// BC.W-SPLIT-CHARS — the per-glyph split partner to the shipped `.char-stagger`
-// CSS recipe. Reads a target's `textContent`, mints `.char` spans + the
-// `--char-index`/`--char-total` customs, sets `aria-label` to the full text +
-// `aria-hidden` on every glyph (accessible by construction). Imports `vue` only —
-// engine-FREE + vueuse-FREE and root-barrel safe per the `usePointerVelocityField`
-// precedent; also reachable via `@mkbabb/glass-ui/motion-core`.
-export {
-    useCharStagger,
-    type UseCharStaggerOptions,
-    type UseCharStaggerReturn,
-} from "./composables/motion/useCharStagger";
-
 // BH.W-AXIS-GRAMMAR — the four grammar axis types published on the root barrel
 // (the ONE axis home is `_shared/axes.ts`; the `/axes` subpath is the discovery
 // front door). Types-only re-export — no runtime import, so the vueuse-FREE
@@ -343,12 +279,6 @@ export type {
 
 // Component foundations
 export { cn } from "./components/_shared/class-names";
-export {
-    coalesceMetric,
-    METRIC_PLACEHOLDER,
-    type MetricValue,
-    type MetricValueProps,
-} from "./components/metric/coalesce-metric";
 export {
     supportsScrollTimeline,
     supportsViewTimeline,

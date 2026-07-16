@@ -1,8 +1,8 @@
 // _shared/useMotionAxis.ts — the ONE shared motion-weight resolver (BH.W-MOTION-AXIS).
 //
 // The `Motion` union is minted in `_shared/axes.ts` (the ONE grammar home); this is
-// the resolver every carrier threads — the motion twin of `useSurfaceAxis`'s
-// `surfaceClass`. It collapses the seven-boolean motion scatter
+// the resolver every carrier threads — the motion twin of the private Surface
+// ladder resolver. It collapses the seven-boolean motion scatter
 // (`draggable`/`pressable`/`spring`/`liquidDrag`) onto the single `motion` axis: the
 // liquid-weight-universal law means physics is the DEFAULT, so the axis is an
 // opt-DOWN (`full` → `reduced` → `off`), never an opt-in matrix.
@@ -37,27 +37,25 @@
 // is the OS door; belt-and-suspenders, both close to the same CSS floor.
 
 import { type MaybeRefOrGetter, computed, toValue } from "vue";
+import {
+    readReducedMotion,
+    useReducedMotion,
+} from "../../composables/motion/useReducedMotion";
 import type { Motion } from "./axes";
-
-/** A live `prefers-reduced-motion: reduce` read (SSR-safe; false off-DOM). */
-function prmActive(): boolean {
-    return (
-        typeof window !== "undefined" &&
-        typeof window.matchMedia === "function" &&
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    );
-}
 
 /**
  * Resolve a prop `Motion` value (default `full`) DOWN under live PRM. The prop may
  * only clamp DOWN — PRM forces `full`/`reduced` → `reduced` (never an escalation),
  * `off` is preserved (the prop went below PRM, which is legal).
  */
-export function resolveMotion(motion: Motion | undefined): Motion {
+export function resolveMotion(
+    motion: Motion | undefined,
+    prefersReducedMotion = readReducedMotion(),
+): Motion {
     const requested: Motion = motion ?? "full";
     if (requested === "off") return "off";
     // PRM forces the involuntary floor: full → reduced (reduced stays reduced).
-    return prmActive() ? "reduced" : requested;
+    return prefersReducedMotion ? "reduced" : requested;
 }
 
 /**
@@ -88,8 +86,14 @@ export interface MotionAxis {
  *   // <Root :data-motion="motion.dataMotion.value" :style="motion.hostStyle.value">
  *   // if (motion.armed.value) { …arm the drag/press/spring enrichment… }
  */
-export function useMotionAxis(motion: MaybeRefOrGetter<Motion | undefined>) {
-    const resolved = computed<Motion>(() => resolveMotion(toValue(motion)));
+export function useMotionAxis(
+    motion: MaybeRefOrGetter<Motion | undefined> = undefined,
+) {
+    const prefersReducedMotion = useReducedMotion();
+
+    const resolved = computed<Motion>(() =>
+        resolveMotion(toValue(motion), prefersReducedMotion.value),
+    );
     const armed = computed(() => resolved.value === "full");
     const dataMotion = computed<"reduced" | "off" | undefined>(() =>
         resolved.value === "full" ? undefined : resolved.value,
@@ -97,5 +101,11 @@ export function useMotionAxis(motion: MaybeRefOrGetter<Motion | undefined>) {
     const hostStyle = computed<Record<string, string> | undefined>(() =>
         resolved.value === "off" ? { "--motion-weight": "0" } : undefined,
     );
-    return { resolved, armed, dataMotion, hostStyle };
+    return {
+        resolved,
+        armed,
+        dataMotion,
+        hostStyle,
+        prefersReducedMotion,
+    };
 }

@@ -1,4 +1,4 @@
-import { ref, watch, onScopeDispose, toValue } from "vue";
+import { nextTick, ref, watch, onScopeDispose, toValue } from "vue";
 import type { InfiniteScrollOptions, InfiniteScrollReturn } from "./types";
 
 /**
@@ -12,7 +12,6 @@ export function useInfiniteScroll(options: InfiniteScrollOptions): InfiniteScrol
     const { threshold = 200, hasMore, isLoading, onLoadMore } = options;
     const sentinelRef = ref<HTMLElement | null>(null);
     let observer: IntersectionObserver | null = null;
-    let checkFrame = 0;
 
     function shouldLoad(): boolean {
         return toValue(hasMore) && !toValue(isLoading);
@@ -21,7 +20,9 @@ export function useInfiniteScroll(options: InfiniteScrollOptions): InfiniteScrol
     function handleIntersect(entries: IntersectionObserverEntry[]) {
         for (const entry of entries) {
             if (entry.isIntersecting && shouldLoad()) {
+                observer?.unobserve(entry.target);
                 onLoadMore();
+                break;
             }
         }
     }
@@ -40,16 +41,10 @@ export function useInfiniteScroll(options: InfiniteScrollOptions): InfiniteScrol
             observer.disconnect();
             observer = null;
         }
-        if (checkFrame) {
-            cancelAnimationFrame(checkFrame);
-            checkFrame = 0;
-        }
     }
 
     function check() {
-        if (sentinelRef.value && shouldLoad()) {
-            onLoadMore();
-        }
+        if (sentinelRef.value) setupObserver(sentinelRef.value);
     }
 
     watch(sentinelRef, (el) => {
@@ -57,16 +52,14 @@ export function useInfiniteScroll(options: InfiniteScrollOptions): InfiniteScrol
         else teardown();
     });
 
-    // Re-check when loading finishes (new content may be short enough to need another load)
+    // New content may leave the sentinel visible. Reconnect after Vue commits it;
+    // the observer's fresh intersection record remains the sole load authority.
     watch(
         () => toValue(isLoading),
         (loading) => {
             if (!loading && sentinelRef.value) {
-                // Defer to next tick so DOM updates first
-                if (checkFrame) cancelAnimationFrame(checkFrame);
-                checkFrame = requestAnimationFrame(() => {
-                    checkFrame = 0;
-                    check();
+                nextTick(() => {
+                    if (!toValue(isLoading)) check();
                 });
             }
         },

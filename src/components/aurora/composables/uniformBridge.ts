@@ -25,19 +25,14 @@ import type { UniformLocations } from "./glSetup";
  * BI.W-FIELD-CORE — the aurora cursor UNIFORM shape (the `uCursor*` upload inputs). The
  * retired `cursorModel.ts` `CursorState` is GONE — the cursor is now the mapped readout of
  * the shared `usePointerVelocityField` (`auroraCursorMapping`): x/y = the mass-spring
- * attractor (0..1, CSS-top — the bridge flips Y), strength = engagement·ceil, velX/velY the
- * derived velocity, burst the flick impulse. The GLSL path uploads all seven; the WGPU
- * struct packs only x/y/strength/radius. `AURORA_CURSOR_UNIFORM_REST` is the neutral
- * at-rest seed the bridge inits with (re-sent per frame by the frame loop).
+ * attractor (0..1, CSS-top — the bridge flips Y), and strength is the CPU-folded steady
+ * engagement plus bounded burst. Both engines consume the same four values.
  */
 export interface AuroraCursorUniforms {
     x: number;
     y: number;
     strength: number;
     radius: number;
-    velX: number;
-    velY: number;
-    burst: number;
 }
 
 export const AURORA_CURSOR_UNIFORM_REST: AuroraCursorUniforms = {
@@ -45,9 +40,6 @@ export const AURORA_CURSOR_UNIFORM_REST: AuroraCursorUniforms = {
     y: 0.5,
     strength: 0,
     radius: 0.25,
-    velX: 0,
-    velY: 0,
-    burst: 0,
 };
 import {
     DEFAULT_VIVIDNESS,
@@ -215,6 +207,7 @@ export function createUniformBridge(
     gl: WebGL2RenderingContext,
     prog: WebGLProgram,
     U: UniformLocations,
+    opaquePresentation = false,
 ): (cfg: AuroraConfig) => void {
     // CSS-top-origin → shader bottom-origin.
     const flipY = (y: number): number => 1.0 - y;
@@ -307,10 +300,6 @@ export function createUniformBridge(
         gl.uniform2f(U.uCursor, c.x, flipY(c.y));
         gl.uniform1f(U.uCursorStrength, c.strength);
         gl.uniform1f(U.uCursorRadius, c.radius);
-        // BI.W-FIELD-CORE — the velocity-reactive flow uniforms (re-sent per frame from
-        // the field-mapped cursor).
-        gl.uniform2f(U.uCursorVelocity, c.velX, -c.velY);
-        gl.uniform1f(U.uCursorBurst, c.burst);
         gl.uniform1f(U.uStrokeAmount, cfg.strokeAmount);
         gl.uniform1f(U.uStrokeScale, cfg.strokeScale);
         gl.uniform1f(U.uStrokeAnisotropy, cfg.strokeAnisotropy);
@@ -351,7 +340,7 @@ export function createUniformBridge(
         // Output
         gl.uniform1f(U.uSaturation, cfg.saturation);
         gl.uniform1f(U.uPaperGrain, cfg.paperGrain);
-        gl.uniform1f(U.uAlpha, cfg.alpha);
+        gl.uniform1f(U.uAlpha, opaquePresentation ? 1 : cfg.alpha);
         // BD.W-AUR-VIVIDNESS — the §3 chroma-floor strength (omitted = the vivid default).
         gl.uniform1f(U.uVividness, cfg.vividness ?? DEFAULT_VIVIDNESS);
 

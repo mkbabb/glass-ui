@@ -6,7 +6,7 @@ import { isNonZeroRadius } from "@glass/components/sortable-list/composables/use
  * AS.W7 D9 harden — the drag-ghost gold ring traces the dragged content's
  * VISIBLE corner. `useSortable.createGhost` reads the source's own computed
  * `border-radius`; when it is all-zero it walks descendants depth-first for
- * the first non-zero radius (the PaletteLayer case — unrounded SortableItem
+ * the first non-zero radius (an unrounded SortableItem
  * root, rounded inner card) and stamps it onto the ghost root inline so the
  * `0 0 0 2px` box-shadow ring is round, not square.
  *

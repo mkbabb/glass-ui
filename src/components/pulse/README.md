@@ -1,18 +1,23 @@
 # Pulse
 
-A loading-pulse indicator (`@mkbabb/glass-ui/pulse`). A compositor-only pulse — dots or a ring —
-for an indeterminate "working" state, the calm loading register beside the Skeleton shimmer.
+`Pulse` is the compact liveness mark. It shares the feedback state grammar and animates only the
+`active` state; idle and terminal states are static. Reduced-motion mode keeps a visible static
+orbit.
 
 ```vue
-<Pulse variant="dots" />
-<Pulse variant="ring" />
+<span role="status" aria-live="polite">
+  <Pulse state="active" />
+  Saving changes
+</span>
 ```
 
-## Export
+The parent owns announcements. `Pulse` is decorative by default; pass `label` only when no nearby
+text names the state.
 
-- **`Pulse`** — the indicator. `variant`: `dots` (a row of pulsing dots) or `ring` (a pulsing
-  ring). The pulse rides opacity/scale/transform only (compositor-safe, `proof:no-layout-
-  animation` holds) and collapses to a static frame under `prefers-reduced-motion`.
+## API
 
-Reach for `Pulse` for an indeterminate spinner-analogue; reach for `Skeleton` when you want a
-content-shaped placeholder, `Progress` when the work has a determinate value.
+- `state`: `active | idle | success | warning` (default `active`)
+- `label`: optional accessible identity; emits `role="img"` instead of a live region
+- `PulseState`: exported state type
+
+Use `Progress` for determinate work and `Skeleton` for content-shaped loading.

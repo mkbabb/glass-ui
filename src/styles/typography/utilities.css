@@ -170,17 +170,6 @@
         font-variant-numeric: tabular-nums lining-nums;
     }
 
-    /* Kinetic: per-character stagger. The per-glyph increment is the single-
-       source `--char-stagger-step` token (scheme-motion.css, 30ms) — DRY with
-       the demo's `.story-section__heading` reveal (story-hero.css); a `:root`
-       override retimes both. (BG.W-SECTION-TYPEWRITER-FADEUP — off the hardcoded
-       `* 30ms` literal.) */
-    .char-stagger > .char {
-        display: inline-block;
-        animation: fade-in var(--spring-smooth-duration) var(--spring-smooth, ease) backwards;
-        animation-delay: calc(var(--char-index, 0) * var(--char-stagger-step));
-    }
-
     /* Letter-pressed treatment — reads as text engraved into the panel
        surface. Speedtest's idle hero `0` consumes this via
        `.text-hero[data-idle="true"]`; the `text-engraved` utility is the

@@ -4,7 +4,7 @@
 // the WebGPU backend: `source:"image"` builds THIS separate pipeline (its own bind group
 // carrying the texture + sampler + the image-uniform tail), NEVER a per-fragment runtime
 // source-uniform branch. The palette WGSL program (`aurora.wgsl.ts`) is byte-untouched
-// — the 576-byte palette struct never sees the image lane.
+// — the 672-byte palette struct never sees the image lane.
 //
 // The SAME drifting field (domainWarp → zoneField) that drives the palette program's COLOR
 // drives the per-fragment BLUR RADIUS here — `radius = mix(blurMin, blurMax, zone)` over a
@@ -19,7 +19,7 @@ import {
     FBM_ROT_WGSL,
     OETF_WGSL,
     OKLCH_MATRICES_WGSL,
-} from "./procedural-color.wgsl";
+} from "../../../../composables/glass/procedural/color.wgsl";
 
 // The fixed zone-blur kernel geometry (the bounded-tap witness — a compile-time constant
 // loop bound). 3 rings × 8 sectors = 24 stratified taps; the DISSOLVE is carried by the
@@ -28,13 +28,13 @@ export const IMAGE_BLUR_RINGS_WGSL = 3;
 export const IMAGE_BLUR_SECTORS_WGSL = 8;
 
 export const AURORA_IMAGE_WGSL = /* wgsl */ `
-const MAX_NUCLEI: i32 = 6;
+const MAX_NUCLEI: i32 = 8;
 const PI: f32 = 3.141592653589793;
 const BLUR_RINGS: i32 = ${IMAGE_BLUR_RINGS_WGSL};
 const BLUR_SECTORS: i32 = ${IMAGE_BLUR_SECTORS_WGSL};
 
 // The image program's OWN uniform struct (packed vec4 lanes — trivial std140/WGSL
-// alignment). DISTINCT from the palette program's 576-byte struct (a separate program).
+// alignment). DISTINCT from the palette program's 672-byte struct (a separate program).
 struct ImageUniforms {
   // scalars0: (uTime, uWarpAmount, uWarpScale, uWarpDrift)
   scalars0: vec4<f32>,
@@ -49,8 +49,8 @@ struct ImageUniforms {
   // ints: (uNucleiCount, uNoiseOctaves, _, _)
   ints: vec4<i32>,
   // nuc0[i] = (pos.x, pos.y, radius, valueBias); nuc1[i] = (driftRadius, driftPhase, elong, angle)
-  nuc0: array<vec4<f32>, 6>,
-  nuc1: array<vec4<f32>, 6>,
+  nuc0: array<vec4<f32>, 8>,
+  nuc1: array<vec4<f32>, 8>,
 };
 
 @group(0) @binding(0) var<uniform> u: ImageUniforms;
@@ -256,6 +256,11 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
 
   let radius = mix(blurMin, blurMax, zone);
   var col = zoneBlur(uv, radius);
+
+  let cursorDelta = uv - u.cursor.xy;
+  let cursorRadius = max(u.scalars1.w, 0.01);
+  let cursorLean = exp(-dot(cursorDelta, cursorDelta) / (cursorRadius * cursorRadius * 0.5));
+  col = col * (1.0 + 0.12 * cursorLean * u.scalars1.z);
 
   col = saturate3(col, saturation);
   col = vividnessFloor(col, vividness);

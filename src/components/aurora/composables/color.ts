@@ -20,12 +20,9 @@ import {
     type OklchStop,
 } from "../../../composables/color";
 import {
-    srgbToOKLab,
-    rawOklabToOklch,
-    rawOklchToOklab,
-    oklabToLinearSRGB,
     interpolateHue,
-} from "@mkbabb/value.js";
+} from "@mkbabb/value.js/color";
+import { colorValue } from "../../../composables/color/value";
 
 // Re-export the shared color core from the leaf (AU.W5 hoist — surface preserved).
 // `gamutMapStop` is re-exported so the aurora-domain consumers (atoms.ts's chroma
@@ -100,13 +97,7 @@ export function paletteToCssGradient(stops: OklchStop[]): string {
 }
 
 export function hexToOklchStop(hex: string): OklchStop {
-    const h = hex.replace("#", "");
-    const r = parseInt(h.slice(0, 2), 16);
-    const g = parseInt(h.slice(2, 4), 16);
-    const b = parseInt(h.slice(4, 6), 16);
-    const [L, a, bch] = srgbToOKLab(r / 255, g / 255, b / 255);
-    const [Lo, C, H] = rawOklabToOklch(L, a, bch);
-    return { L: Lo, C, h: H };
+    return cssToOklch(hex);
 }
 
 /**
@@ -220,7 +211,7 @@ function resolveDeriveLBand(
  * no color math is re-implemented here). The seed's `{L,C,h}` is the anchor; the
  * ramp spreads L across a painterly band, falls C off toward the pale apex, and
  * walks the hue per `harmony`. EVERY derived stop is gamut-mapped through
- * value.js's `gamutMapOKLab` so none falls outside sRGB.
+ * value.js's `mapColorToGamut` so none falls outside sRGB.
  *
  * Deterministic and DOM-free (SSR / happy-dom safe — `cssToOklch` is the only
  * string path and it parses via value.js, not a canvas). The returned length is
@@ -272,7 +263,7 @@ export function deriveAurora(
 
     const stops: OklchStop[] = [];
     // BI.W-AURORA-VIBRANCY — the derive contract PROMISES a monotonic-ascending L ramp
-    // (deep base → pale apex). value.js's `gamutMapOKLab` is a NEAREST-in-gamut mapper,
+    // (deep base → pale apex). value.js's `mapColorToGamut` is the gamut authority,
     // NOT L-preserving: at the sRGB hull it nudges a stop's L a sub-perceptible fraction,
     // which on a dense MAX_STOPS ramp can INVERT two adjacent stops (~0.002 L for a neon
     // seed). `floorL` is the running maximum of the emitted L; a stop the map nudged below
@@ -325,8 +316,8 @@ export function deriveAurora(
 /**
  * BI.W-AURORA-VIBRANCY — enforce the monotonic-ascending L contract on a gamut-mapped
  * stop. If the map nudged `stop.L` below the running `floorL`, raise L back to the floor
- * and pull chroma inward until the raised stop re-enters sRGB. The gate is the RAW linear
- * over-1 (value.js's `oklabToLinearSRGB` is the transform — NO color math re-implemented),
+ * and pull chroma inward until the raised stop re-enters sRGB. The gate is the raw linear
+ * over-1 from the shared `oklchToLinear` transform,
  * driven strictly ≤ 0: raising L only ever pushes a channel ABOVE 1 (never below 0, and
  * the negative-side residual on deep blues only IMPROVES as L climbs), so the top channel
  * is the sole escape the bake does not cap. A no-op when `stop.L >= floorL` (the common
@@ -338,10 +329,9 @@ function clampMonotonicInGamut(stop: OklchStop, floorL: number): OklchStop {
     const L = floorL;
     let C = stop.C;
     for (let k = 0; k < 48; k++) {
-        const [lx, ax, bx] = rawOklchToOklab(L, C, h);
-        const [lr, lg, lb] = oklabToLinearSRGB(lx, ax, bx);
+        const [lr, lg, lb] = oklchToLinear({ L, C, h });
         // Drive the TOP channel strictly ≤ 1 (the dangerous escape the bake does NOT cap).
-        // Use the raw over-1, NOT isInSRGBGamut — its boundary epsilon would leave a
+        // Use the raw over-1 rather than an epsilon-bearing boolean gamut oracle; that would leave a
         // sub-LSB overshoot the derive-gamut matrix (OVER_TOL 1e-9) forbids.
         if (Math.max(lr, lg, lb) <= 1) break;
         C *= 0.99; // pull chroma 1% inward — hue/L preserved
@@ -399,7 +389,10 @@ function applyTemperature(h: number, t: number, amount: number): number {
     const pole = signed >= 0 ? WARM_POLE : COOL_POLE;
     // The toward-pole SHORTER-arc direction (value.js owns the cylindrical hue math):
     // a tiny step toward the pole reveals the signed direction without a hand-rolled wrap.
-    const toward = interpolateHue(h, pole, 1, "shorter");
+    const toward = colorValue(
+        "applyTemperature",
+        interpolateHue(h, pole, 1, "shorter"),
+    );
     const signedArc = ((toward - h + 540) % 360) - 180; // [-180, 180], toward the pole
     const dir = Math.sign(signedArc);
     // Bounded throw: never overshoot the pole, never exceed MAX_THROW.

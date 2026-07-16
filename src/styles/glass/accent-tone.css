@@ -2,10 +2,8 @@
    BC.W-ACCENT-TONE — the contrast-floored 3-channel tonal-accent register.
 
    ONE `--tone` (a complete `<color>`, default `var(--primary)`) → a coherent,
-   contrast-SAFE four-channel tonal set:
+   contrast-SAFE three-channel tonal set:
 
-     --accent-fill  idle FILL  — faint but FLOORED (≥3:1 at rest, the load-bearing
-                                 new behavior fourier named: "not just hover/active").
      --accent-band  active BAND — the bolder selected fill.
      --accent-edge  active EDGE — the active rim hairline.
      --accent-ink   label INK  — the contrast-SAFE label colour ON the band, written
@@ -20,12 +18,8 @@
    control (the rim from `--glass-accent`, the fill from `--accent-tone`); they
    never fork, never write each other's channels.
 
-   The strength MAGNITUDES are TOKENS a `:root`/scope override retunes (NOT props —
-   the no-over-prop fence, component-customizability §5): `--accent-fill-strength`
-   (idle, the ~6-8% fourier names) / `--accent-band-strength` (active) /
-   `--accent-edge-strength` (rim). The idle floor is the strength default — the
-   8% over the warm-cream `--card` clears ≥3:1; proof:accent-tone A4 measures the
-   resolved idle fill against the surface (a strength that drops it below 3:1 reds).
+   Consumers can retune active fill and rim strength through
+   `--accent-band-strength` and `--accent-edge-strength`.
 
    @import-ed by glass.css in cascade order IMMEDIATELY AFTER ladder.css (the same
    @layer components; this is the SOLE writer of the `--accent-*` channels, read at
@@ -36,17 +30,9 @@
            token) — a consumer sets it on the scope to point the accent at a
            non-`--card` surface; it defaults to the declared `--card` so the recipe
            resolves at HEAD with zero consumer wiring. */
-        --accent-fill-strength: 8%;
         --accent-band-strength: 18%;
         --accent-edge-strength: 55%;
 
-        /* idle: faint but FLOORED — the resting tint stays ≥3:1 by the strength
-           floor + the perceptual `in oklab` mix (the glass-tint family). */
-        --accent-fill: color-mix(
-            in oklab,
-            var(--surface, var(--card)),
-            var(--tone, var(--primary)) var(--accent-fill-strength)
-        );
         --accent-band: color-mix(
             in oklab,
             var(--surface, var(--card)),

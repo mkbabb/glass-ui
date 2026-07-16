@@ -82,21 +82,20 @@
 
        The SOTA arrival ease is the EXISTING `--ease-out-expo` (alias →
        `--motion-ease-out-expo` = `cubic-bezier(0.16, 1, 0.3, 1)`, the house
-       expo with the value.js `easeOutExpo` JS twin in the MOTION_CURVES table)
+       expo; JavaScript consumers import the `easeOutExpo` twin from value.js)
        — NOT a net-new token. The motion canon NAMES it as the arrival register;
        it is not re-minted (a duplicate alias would fail proof:animation-
        coherence's EASING-TABLE-BOUND arm — the curve already has its canonical
-       + alias row in `curves.ts`).
+       token row).
 
-       The BUTTON family (`.btn-pill` / `.tap-squish` / `.glass-btn` /
-       `btn-interactive`) UNIFIES its `scale` transform leg onto ONE register —
+       The BUTTON family (`.button` / `.tap-squish`) UNIFIES its `scale`
+       transform leg onto ONE register —
        `--spring-smooth` — so hover + press read as one motion language (the
        hover lift is the restrained `--scale-hover-btn` = 1.05, not the 1.08
        `--scale-hover`). Springs read alive on TRANSFORM and ENTER (overshoot =
        physicality); a spring on a COLOR or an EXIT reads as a wobble/hesitation.
-       `--ease-apple` is the ambient-only register (consumed solely by the Pulse
-       aura `--animate-ambient-pulse-easing` — NOT a second smooth-ease authority
-       for interactive transforms; those use `--spring-smooth`).
+       `--ease-apple` remains the platform-native bezier in the public motion
+       catalogue; interactive transforms use `--spring-smooth`.
        ═══════════════════════════════════════════════ */
     --spring-smooth: linear(0, 0.00287 2.041%, 0.01102 4.082%, 0.02379 6.122%, 0.04057 8.163%, 0.06079 10.204%, 0.08395 12.245%, 0.10956 14.286%, 0.13721 16.327%, 0.16649 18.367%, 0.19705 20.408%, 0.22858 22.449%, 0.26077 24.490%, 0.29338 26.531%, 0.32617 28.571%, 0.35893 30.612%, 0.39149 32.653%, 0.42368 34.694%, 0.45536 36.735%, 0.48642 38.776%, 0.51676 40.816%, 0.54628 42.857%, 0.57492 44.898%, 0.60262 46.939%, 0.62933 48.980%, 0.65501 51.020%, 0.67965 53.061%, 0.70322 55.102%, 0.72571 57.143%, 0.74713 59.184%, 0.76748 61.224%, 0.78677 63.265%, 0.80501 65.306%, 0.82223 67.347%, 0.83844 69.388%, 0.85367 71.429%, 0.86796 73.469%, 0.88132 75.510%, 0.89379 77.551%, 0.90541 79.592%, 0.91621 81.633%, 0.92623 83.673%, 0.93549 85.714%, 0.94404 87.755%, 0.95190 89.796%, 0.95912 91.837%, 0.96574 93.878%, 0.97177 95.918%, 0.97726 97.959%, 1);
     --spring-snappy: linear(0, 0.00652 2.041%, 0.02458 4.082%, 0.05211 6.122%, 0.08725 8.163%, 0.12834 10.204%, 0.17392 12.245%, 0.22268 14.286%, 0.27350 16.327%, 0.32540 18.367%, 0.37757 20.408%, 0.42929 22.449%, 0.47998 24.490%, 0.52916 26.531%, 0.57646 28.571%, 0.62156 30.612%, 0.66426 32.653%, 0.70440 34.694%, 0.74187 36.735%, 0.77662 38.776%, 0.80866 40.816%, 0.83800 42.857%, 0.86471 44.898%, 0.88887 46.939%, 0.91058 48.980%, 0.92996 51.020%, 0.94713 53.061%, 0.96223 55.102%, 0.97539 57.143%, 0.98677 59.184%, 0.99649 61.224%, 1.00471 63.265%, 1.01156 65.306%, 1.01716 67.347%, 1.02166 69.388%, 1.02516 71.429%, 1.02778 73.469%, 1.02964 75.510%, 1.03082 77.551%, 1.03142 79.592%, 1.03153 81.633%, 1.03122 83.673%, 1.03057 85.714%, 1.02963 87.755%, 1.02847 89.796%, 1.02713 91.837%, 1.02566 93.878%, 1.02410 95.918%, 1.02249 97.959%, 1);
@@ -166,7 +165,7 @@
        Generated from `scripts/regen-spring-tokens.mjs` — DO NOT hand-edit.
 
        The base interactive-atom recipes (`.interactive-item` / `.tap-squish` in
-       utilities/base.css + the `btn-interactive` @utility) read this on their
+       utilities/base.css) read this on their
        SPATIAL (scale/translate/rotate) leg, so EVERY interactive surface inherits
        spring WEIGHT by default — weight is a property of the transition VOCABULARY,
        not a per-site `--motion-weight` checklist (the inversion: the prior default
@@ -184,38 +183,6 @@
        the EXPLICIT opt-out (→ var(--ease-standard)); the PRM carve re-aliases it the
        same way (no overshoot under reduce — the vestibular floor). */
     --transition-liquid-spatial: var(--spring-smooth);
-
-    /* ── GOO-MORPH SLIDE-TRANSITION FLOW CURVE (BD.W-GOO-CAROUSEL-DECK) ──
-       The per-consumer dwell-flow curve the ONE `useGooMorph` engine reads off its
-       `tokenPrefix` (`--{prefix}-flow`/`-duration`/`-max-stretch`). This is NOT a new
-       spring preset — it is a geometry-law DWELL shape: a curve that rises to ~mid by ~46%
-       of the clock, DWELLS at the midpoint (the FAT metaball NECK held open across the gap),
-       then contracts. The dwell is what makes the morph read as weighty liquid rather than
-       a fast flicker (the W-GLASS-CAL spring fence: a normalized spring `linear()`
-       front-loads — reaches ~0.5 by ~6% REGARDLESS of ζ — so the neck would collapse in
-       ~150ms then sit dead; the dwell curve spreads `--goo-t`'s 0→1 across the REAL clock).
-
-       The DECK slide-plate is the ONE surviving `useGooMorph` consumer. The CAROUSEL
-       content barbell (`--carousel-goo-*`) RETIRED at BI.W-CAROUSEL-REBUILD (the
-       559px-escape category error — the content is crisp weighty embla now, no metaball),
-       and the PAGER dot-pip worm retired its flow/duration tokens at BI.W-PAGER-WORM/-RETIRES:
-       the two-edge `useLeadTrail` spring driver OWNS the settle (release-at-arrival is
-       emergent, no timer), so only `--pager-worm-max-stretch` (the squish cap) survives —
-       beside this family, not on the `useGooMorph` clock. */
-
-    /* --deck-goo-flow: the calm presentation register — the dwell shape with NO
-       terminal overshoot (a full-viewport slide must not bounce — the vestibular floor;
-       the curve clamps at 1.0, no >1 stops). */
-    --deck-goo-flow: linear(
-        0, 0.02206 4.167%, 0.07922 8.333%, 0.15799 12.5%, 0.24486 16.667%,
-        0.32632 20.833%, 0.38889 25%, 0.41905 29.167%, 0.43667 33.333%,
-        0.4575 37.5%, 0.47833 41.667%, 0.49917 45.833%, 0.52 50%, 0.54083 54.167%,
-        0.56167 58.333%, 0.58373 62.5%, 0.64 66.667%, 0.71 70.833%,
-        0.78 75%, 0.85 79.167%, 0.91 83.333%, 0.96 87.5%,
-        0.985 91.667%, 0.997 95.833%, 1
-    );
-    --deck-goo-duration: 1.1s; /* the full-viewport register — slow + dignified. */
-    --deck-goo-max-stretch: 1.1; /* the gentlest swell — a big slide necks barely. */
 
     /* --pager-worm-max-stretch: the dot-worm velocity-swell cap (BI.W-PAGER-WORM R10),
        read LITERALLY by the two-edge worm's `useLiquidFlex` squish (usePagerWorm.ts). The
@@ -244,22 +211,13 @@
     --ease-decelerate: var(--ease-out);
     --ease-accelerate: var(--ease-in);
 
-    /* BC.W-MOTION-PRESETS — the brand "convergence-reveal" / partial-sum settle.
-       The Fourier partial sum converges ONTO its target with a decaying Gibbs
-       ripple — a monotone critically-damped approach, NO sustained overshoot past
-       terminal. That curve IS `gentle` (ζ=1.0, overshoot 0), so this is the ALIAS
-       reuse: `--ease-convergence` resolves to `--spring-gentle` (no new
-       SPRING_PRESETS row, no second curve). The settle clock is the per-spring
-       `--spring-gentle-duration`. The N-term build-up is the `useStagger`
-       orchestration ON this curve (a documented recipe, not a new primitive). */
-    --ease-convergence: var(--spring-gentle);
 }
 
 /* ═══════════════════════════════════════════════
    BG.W-LIQUID-WEIGHT-DEFAULT (F5.2) — the PRM re-alias of the interactive-spatial DEFAULT.
 
    Under `prefers-reduced-motion: reduce` the base interactive scale legs
-   (`.interactive-item` / `.tap-squish` / the `btn-interactive` @utility) lose their spring
+   (`.interactive-item` / `.tap-squish`) lose their spring
    overshoot for the flat no-overshoot `--ease-standard` bezier — the vestibular floor. The
    springs keep their OWN `respectReducedMotion` endpoint-snap; this re-alias strips the
    overshoot CURVE from the CSS scale legs library-wide (the same belt-and-suspenders shape

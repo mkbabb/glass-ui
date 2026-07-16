@@ -1,23 +1,23 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
-import type { ComboboxSeparatorProps } from 'reka-ui'
-import { ComboboxSeparator } from 'reka-ui'
-import { cn } from '../_shared/class-names'
+import { computed, useAttrs } from "vue";
+import { ComboboxSeparator as RekaComboboxSeparator } from "reka-ui";
+import { cn } from "../_shared/class-names";
+import { fixedHostAttrs } from "../_shared/primitive";
+import type { ComboboxSeparatorProps } from "../combobox/types";
 
-const props = defineProps<ComboboxSeparatorProps & { class?: HTMLAttributes['class'] }>()
+defineOptions({ name: "CommandSeparator", inheritAttrs: false });
 
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
-
-  return delegated
-})
+const props = defineProps<ComboboxSeparatorProps>();
+const attrs = useAttrs();
+const forwardedAttrs = computed(() => fixedHostAttrs(attrs));
 </script>
 
 <template>
-  <ComboboxSeparator
-    v-bind="delegatedProps"
-    :class="cn('-mx-1 h-px bg-border', props.class)"
-  >
-    <slot />
-  </ComboboxSeparator>
+    <RekaComboboxSeparator
+        v-bind="forwardedAttrs"
+        data-slot="command-separator"
+        :class="cn('command__separator', props.class)"
+    >
+        <slot />
+    </RekaComboboxSeparator>
 </template>

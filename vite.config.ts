@@ -8,6 +8,7 @@ import {
     libraryFileName,
 } from "./vite.library";
 import { publishStyleAssets } from "./vite.style-assets";
+import { glassCssTarget } from "./vite.targets";
 
 export default defineConfig({
     // BH.B2.0 — the `@glass` source alias (`@glass/*` → `src/*`). Decouples the
@@ -49,6 +50,7 @@ export default defineConfig({
     // (to reach a sibling's `src/` over the `/@fs/` channel) is gone with it —
     // `dist/` resolves inside `node_modules`, no widening needed.
     build: {
+        cssTarget: glassCssTarget,
         lib: {
             entry: libraryEntries(__dirname),
             name: "GlassUI",

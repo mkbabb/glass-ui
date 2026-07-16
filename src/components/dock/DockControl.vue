@@ -114,7 +114,7 @@ const hostAttrs = computed(() =>
 );
 
 // The ONE interruptible spring-press (the icon shape). `useLiquidPress` composes
-// `useSpringPress` → `useSpring` → kf `SpringProgress`, so a rapid re-press
+// its private spring driver reaches kf `SpringProgress`, so a rapid re-press
 // re-seats the LIVE (position, velocity) — the iOS velocity-continuous contract.
 // It reads the `press` SPRING_PRESETS row and writes `--dock-press-t` the
 // dock-controls CSS reads to couple darken/specular to the spring physics. The

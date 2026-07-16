@@ -1,8 +1,8 @@
-// @mkbabb/glass-ui/forms — vueuse-bearing form primitives
+// @mkbabb/glass-ui/forms — curated form primitives
 //
-// This subpath isolates the components that import from `@vueuse/core`
-// (Input, Textarea, the Combobox* family) so consumers can opt into them
-// without dragging the vueuse → Vue runtime SCC into their entry chunk.
+// Input and Textarea remain isolated from the root because they import
+// `@vueuse/core`. Combobox is co-located as the collection-backed form family,
+// but owns its public contracts directly and no longer imports VueUse.
 //
 // Root-barrel re-exports of these symbols remain in place during Phase 1
 // (additive subpath split, v0.9.3). Phase 2 (root-barrel removal) is

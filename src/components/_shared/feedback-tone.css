@@ -1,9 +1,7 @@
-/* Shared feedback-tone styles for Alert, Notification, and Toast.
+/* Shared feedback-tone styles for Alert and Toast.
 
-   THE COLLAPSE: Toast, Notification, and Alert each carried an INDEPENDENT tone map
-   (the Toast variant map painted SOLID `bg-{success,warning,info,destructive}` opaque
-   token plates over a `glass-floating` base; the Notification type map painted
-   `bg-<tone>/90` near-opaque slabs; Alert alone was correct in SHAPE — glass-wash plate
+   THE COLLAPSE: Toast and Alert once carried independent tone maps. Toast painted
+   solid opaque token plates over a `glass-floating` base; Alert was correct in shape — glass-wash plate
    + tone-on-rim — but HARDCODED its `border-<tone>/40` rim per variant). Three tone
    maps, three calibration sites, and TWO of them painted a colored SLAB that occluded
    the backdrop (the R8-12/R8-13 "not glassy at all" defect; the blur track survived but
@@ -25,7 +23,7 @@
    colors). A consumer recalibrates the tone weight with ONE override.
 
    THE RUNG: the register reads `--feedback-tone-rung` (default the floating-chrome rung
-   `--glass-bg-floating`, the Toast/Notification overlay register). Alert RE-POINTS it to
+   `--glass-bg-floating`, the Toast overlay register). Alert RE-POINTS it to
    `--glass-bg-wash` on its own surface (a content panel rides wash, not floating — the
    register difference is correct; only the tone SOURCE unifies, not the rung). The rung
    reads `--glass-bg-*` DIRECTLY (the same tokens W-SURFACE-AXIS's glass arm routes), so
@@ -46,8 +44,8 @@
            tipping toward a slab; the toast-glass §A band is ≈12–22%. ONE knob retunes
            all four tones. */
         --feedback-tone-strength: 18%;
-        /* The rung the tint mixes over — the floating-chrome register (Toast /
-           Notification). Alert re-points it to the wash rung on its own surface. */
+        /* The rung the tint mixes over — the floating-chrome Toast register.
+           Alert re-points it to the wash rung on its own surface. */
         --feedback-tone-rung: var(--glass-bg-floating);
         /* The rim weight — a tone-keyed border, a thin tinted rim (not a loud edge). */
         --feedback-tone-border-strength: 40%;
@@ -78,9 +76,7 @@
     }
 
     /* The four house tone registers — each binds `--tone` to its house token. A surface
-       maps its variant/type onto the matching class (Toast `variant` /
-       Notification `type` / Alert `variant`); the `error` notification type maps to the
-       destructive tone (the three-maps-into-one collapse — `error` IS destructive). */
+       maps its variant onto the matching class (Toast `variant` / Alert `variant`). */
     .feedback-tone-success {
         --tone: var(--success);
     }

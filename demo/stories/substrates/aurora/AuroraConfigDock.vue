@@ -127,21 +127,43 @@ function applyAtoms() {
     const mediumMoved =
         atoms.medium?.kind !== seededMediumKind ||
         currentMediumAmount !== seededMediumAmount;
-    const next: AuroraAtoms = {
-        ...atoms,
-        zones: { ...atoms.zones! },
-        medium: { ...atoms.medium! },
+    const { medium: _medium, interactivity, ...base } = atoms;
+    const common = {
+        ...base,
+        zones: zonesMoved ? { ...atoms.zones! } : undefined,
         ...(colorSourceMoved ? {} : { seed: undefined, harmony: undefined }),
-        // Strip the UNTOUCHED zones atom so the baseline's hand-authored nuclei
-        // survive (the lossy `configToAtoms` count-only recovery would otherwise
-        // clobber them with the generic rule-of-thirds prior).
-        ...(zonesMoved ? {} : { zones: undefined }),
-        // Strip the UNTOUCHED medium atom so the baseline's hand-tuned texture
-        // fields (impasto/canvasGrain) survive (applyTexture would otherwise
-        // re-derive them from the lossy strokeAmount-only recovery).
-        ...(mediumMoved ? {} : { medium: undefined }),
     };
+    const next: AuroraAtoms =
+        mediumMoved &&
+        atoms.medium?.kind !== undefined &&
+        atoms.medium.kind !== "smooth"
+            ? {
+                  ...common,
+                  medium: { ...atoms.medium },
+                  ...(interactivity ? { interactivity: { ...interactivity } } : {}),
+              }
+            : {
+                  ...common,
+                  ...(mediumMoved ? { medium: { kind: "smooth" as const } } : {}),
+                  ...(interactivity
+                      ? {
+                            interactivity: {
+                                scroll: interactivity.scroll,
+                                swirl: interactivity.swirl,
+                                amplitude: interactivity.amplitude,
+                            },
+                        }
+                      : {}),
+              };
     const resolved = resolveAtoms(next, presetBaseline);
+    if (interactivity && (atoms.medium?.kind ?? presetBaseline.medium) !== "smooth") {
+        resolved.interactivity = {
+            ...resolved.interactivity,
+            ...(interactivity.light !== undefined
+                ? { light: interactivity.light }
+                : {}),
+        };
+    }
     Object.assign(props.config, resolved);
 }
 
@@ -206,7 +228,7 @@ function onReset() {
                 </p>
             </div>
             <Button
-                variant="ghost"
+                emphasis="quiet"
                 size="sm"
                 class="h-7 gap-1.5 px-2 text-caption"
                 aria-label="Reset current preset"

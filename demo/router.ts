@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { computed } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
 import type { RouteRecordRaw } from "vue-router";
 import {
@@ -6,18 +6,6 @@ import {
     firstStoryPath,
 } from "./stories/manifest";
 import { isFocalRoute, suppressesShellField } from "./chassis/hero/focal";
-
-/**
- * BG.W-FIELD-AURORA (M2) — the shell-field gate. `false` on a FOCAL route (the
- * route owns its own route-dominant GL field → the shell `<Aurora>` stands down,
- * so exactly ONE GL context is mounted per route — the never-2-contexts law).
- * Flipped in `router.afterEach` on the COMMITTED route (not the live `route.meta`
- * computed) so a non-focal→non-focal nav stays `false→false` and the shell node
- * PERSISTS (the per-route hue re-uploads on the persisted node, no reparent). The
- * `afterEach` fires during `router.isReady()` (the initial navigation) BEFORE the
- * app mounts, so the first paint already reflects the correct shell state.
- */
-export const shellFieldActive = ref(true);
 
 /**
  * Routes are derived from the manifest. Every category produces a
@@ -59,8 +47,8 @@ function buildRoutes(): RouteRecordRaw[] {
                           // derived from its resolved section-landing background.
                           focal: isFocalRoute(category.id, category.landing?.background),
                           // BG.W-PAGE-COMPONENT-AUDIT (17.6) — the shell-field
-                          // suppression flag. A landing always mounts
-                          // `StoryHero variant="hero"` (isHeroPage: true); the shell
+                          // suppression flag. A landing always mounts `StoryHero`
+                          // as a true hero route (`isHeroPage: true`); the shell
                           // stands down only for a CHROMATIC landing field.
                           suppressesShellField: suppressesShellField(
                               category.id,
@@ -124,29 +112,19 @@ export const router = createRouter({
     // owner is the AppShell watch.
 });
 
-// BG.W-FIELD-AURORA (M2) — flip the shell-field gate on the COMMITTED route. The
-// shell `<Aurora>` mounts IFF the destination does NOT suppress it (BG.W-PAGE-
-// COMPONENT-AUDIT 17.6): a CHROMATIC hero field (aurora/liquid-grid) or a self-
-// staging dock route REPLACES the shell; a GL-background CONTENT page (mounts no
-// field) and an achromatic constellation/fourier hero KEEP the warm shell (the
-// latter as a warm underpaint). Reading the committed `to.meta.suppressesShellField`
-// (not a live computed) means a keeps→keeps nav stays `true→true` and the shell node
-// persists (no reparent — the per-route hue re-uploads on the persisted node).
-router.afterEach((to) => {
-    shellFieldActive.value = !to.meta?.suppressesShellField;
-});
+/**
+ * The shell field is a projection of the committed route, not parallel state.
+ * A chromatic hero or self-staging Dock route owns the one page field and suppresses
+ * the shell; ordinary routes retain it. Vue Router updates `currentRoute` only after
+ * navigation commits, so a keeps→keeps navigation preserves the mounted shell node.
+ */
+export const shellFieldActive = computed(
+    () => !router.currentRoute.value.meta?.suppressesShellField,
+);
 
-// BG.W-ROUTE-ENTER-VISIBLE (fix a) — pre-resolve the route chunk BEFORE the swap on
-// EVERY navigation, so the dynamic-import stall PRECEDES the entrance beat instead of
-// landing INSIDE the `.route-enter` animation clock (the stall-eaten window that made
-// 2.1's `gl-route-enter` rise sub-perceptual: the animation start-time is style-resolve,
-// so a ~120ms chunk stall arrived past snappy's half-clock and the surviving 12px-rise
-// tail read as a plain fade). Awaiting the lazy `component: () => import()` in
-// `beforeResolve` means the swap commits with the chunk ALREADY warm — frame 0 of the
-// new route paints the `from` state and the whole rise reads. This SUPERSEDES the
-// W-NAV-DOCK-FIX one-shot (which only warmed the FIRST navigation — the initial-flash
-// fix — and left every subsequent swap stall-eaten): the guard is now every-nav, and a
-// warm chunk resolves synchronously so there is no per-nav cost after the first visit.
+// Pre-resolve each lazy route chunk before the View Transition update callback so
+// snapshot capture never includes an unresolved component. Warm chunks resolve
+// synchronously after the first visit.
 router.beforeResolve(async (to) => {
     const comps = to.matched
         .map((r) => r.components?.default)

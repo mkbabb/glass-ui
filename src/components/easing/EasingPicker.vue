@@ -122,8 +122,62 @@ watch(
     },
 );
 
-// Emit the v-model on every authored change.
-watch(value, (v) => (model.value = v), { immediate: true });
+function sameValue(
+    left: EasingPickerValue | undefined,
+    right: EasingPickerValue,
+): boolean {
+    return !!left
+        && Array.isArray(left.points)
+        && left.points.length === 4
+        && left.mode === right.mode
+        && left.css === right.css
+        && left.fn === right.fn
+        && left.steps === right.steps
+        && left.term === right.term
+        && left.points.every((point, index) => point === right.points[index]);
+}
+
+let lastWritten: EasingPickerValue | undefined;
+
+function writeModel(next: EasingPickerValue): void {
+    if (sameValue(model.value, next) || sameValue(lastWritten, next)) return;
+    lastWritten = next;
+    model.value = next;
+}
+
+function applyModel(next: EasingPickerValue | undefined): void {
+    if (!next) return;
+    if (sameValue(lastWritten, next)) {
+        lastWritten = undefined;
+        return;
+    }
+
+    mode.value = next.mode === "steps" ? "steps" : "bezier";
+    if (
+        Array.isArray(next.points)
+        && next.points.length === 4
+        && next.points.every(Number.isFinite)
+        && next.points.some((point, index) => point !== points.value[index])
+    ) {
+        setHandle(0, next.points[0]!, next.points[1]!);
+        setHandle(1, next.points[2]!, next.points[3]!);
+    }
+    if (Number.isFinite(next.steps)) {
+        steps.value = Math.max(
+            STEP_COUNT_MIN,
+            Math.min(STEP_COUNT_MAX, Math.round(next.steps)),
+        );
+    }
+    if (terms.includes(next.term)) term.value = next.term;
+
+    const canonical = value.value;
+    if (!sameValue(next, canonical)) writeModel(canonical);
+}
+
+// v-model is a genuine two-way authoring surface. Raw authoring fields flow in;
+// css and fn always flow back from the canonical value.js-derived state.
+watch(model, applyModel, { deep: true, immediate: true });
+watch(value, writeModel, { immediate: true });
 
 // ── bezier drag (self-contained pointer-capture, no external seam) ─────────────
 const svgEl = useTemplateRef<SVGSVGElement>("svgEl");
@@ -368,7 +422,14 @@ const stepsModel = computed<number[]>({
                 </template>
 
                 <!-- travelling dot (the playback arm) -->
-                <circle v-if="playback" :cx="progress" :cy="1 - easingFn(progress)" r="0.03" class="fill-(--easing-curve-accent)" />
+                <circle
+                    v-if="playback && playbackState !== 'idle'"
+                    :cx="progress"
+                    :cy="1 - easingFn(progress)"
+                    r="0.03"
+                    class="fill-(--easing-curve-accent)"
+                    data-testid="easing-travel-dot"
+                />
             </svg>
         </div>
 
@@ -424,9 +485,8 @@ const stepsModel = computed<number[]>({
                 </div>
             </template>
 
-            <!-- the complete re-parseable readout + copy. data-reparse-ok proves the
-                 steps literal round-trips through value.js parseSteps (the
-                 boundary-law surface, readable by the π spec). -->
+            <!-- The complete re-parseable readout + copy. Both modes round-trip
+                 through value.js parseTimingFunction. -->
             <div
                 v-if="readout"
                 class="glass-card flex flex-col gap-2 rounded-card px-3 py-2"
@@ -452,7 +512,7 @@ const stepsModel = computed<number[]>({
                     <span role="status" aria-live="polite" :class="copyState === 'failed' ? 'text-destructive' : 'text-muted-foreground'">
                         {{ copyMessage }}
                     </span>
-                    <Button v-if="copyState === 'failed'" variant="outline" class="shrink-0 px-3 py-1" data-testid="easing-select-literal" @click="selectLiteral">
+                    <Button v-if="copyState === 'failed'" class="shrink-0 px-3 py-1" data-testid="easing-select-literal" @click="selectLiteral">
                         Select literal
                     </Button>
                 </div>
@@ -460,12 +520,12 @@ const stepsModel = computed<number[]>({
 
             <!-- the playback travel control -->
             <div v-if="playback" class="flex flex-wrap items-center gap-2">
-                <Button variant="outline" class="w-fit" data-testid="easing-playback" @click="playTravel">
+                <Button class="w-fit" data-testid="easing-playback" @click="playTravel">
                     <RotateCcw v-if="playing || playbackState === 'complete'" />
                     <Play v-else />
                     {{ playbackLabel }}
                 </Button>
-                <Button v-if="playing" variant="outline" class="w-fit" data-testid="easing-cancel" @click="cancelTravel">
+                <Button v-if="playing" class="w-fit" data-testid="easing-cancel" @click="cancelTravel">
                     <Square />
                     Cancel preview
                 </Button>

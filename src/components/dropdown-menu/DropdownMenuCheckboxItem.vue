@@ -1,44 +1,57 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
-import {
-  type DropdownMenuCheckboxItemEmits,
-  type DropdownMenuCheckboxItemProps,
-  useForwardPropsEmits,
-} from 'reka-ui'
-import { Check } from "@lucide/vue"
-import { cn } from '../_shared/class-names'
-import { menuItemVariants } from '../_shared/menuItemVariants'
-// BI.W-MENU-TRIGGER — the trigger axis switches the reka CheckboxItem + ItemIndicator.
-import { useMenuPart } from './useMenuTrigger'
+import { computed, useAttrs, type HTMLAttributes } from "vue";
+import { Check } from "@lucide/vue";
+import type { CheckedState } from "../_shared/selection";
+import { cn } from "../_shared/class-names";
+import { fixedHostAttrs } from "../_shared/primitive";
+import { useMenuPart } from "./useMenuTrigger";
 
-const props = defineProps<DropdownMenuCheckboxItemProps & { class?: HTMLAttributes['class'] }>()
-const emits = defineEmits<DropdownMenuCheckboxItemEmits>()
+export interface DropdownMenuCheckboxItemProps {
+    modelValue?: CheckedState;
+    disabled?: boolean;
+    textValue?: string;
+    class?: HTMLAttributes["class"];
+}
 
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
+export interface DropdownMenuCheckboxItemEmits {
+    select: [event: Event];
+    "update:modelValue": [value: boolean];
+}
 
-  return delegated
-})
+defineOptions({ name: "DropdownMenuCheckboxItem", inheritAttrs: false });
 
-const forwarded = useForwardPropsEmits(delegatedProps, emits)
-const CheckboxItemComp = useMenuPart('CheckboxItem')
-const ItemIndicatorComp = useMenuPart('ItemIndicator')
+const props = withDefaults(defineProps<DropdownMenuCheckboxItemProps>(), {
+    modelValue: false,
+    disabled: false,
+});
+const emit = defineEmits<DropdownMenuCheckboxItemEmits>();
+defineSlots<{ default?: () => unknown }>();
+
+const attrs = useAttrs();
+const forwardedAttrs = computed(() => fixedHostAttrs(attrs));
+const CheckboxItemComp = useMenuPart("CheckboxItem");
+const ItemIndicatorComp = useMenuPart("ItemIndicator");
 </script>
 
 <template>
-  <component
-    :is="CheckboxItemComp"
-    v-bind="forwarded"
-    :class="cn(
-      menuItemVariants({ indicator: 'start-wide' }),
-      props.class,
-    )"
-  >
-    <span class="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
-      <component :is="ItemIndicatorComp">
-        <Check class="w-4 h-4" />
-      </component>
-    </span>
-    <slot />
-  </component>
+    <component
+        :is="CheckboxItemComp"
+        v-bind="forwardedAttrs"
+        as="div"
+        :model-value="modelValue"
+        :disabled="disabled"
+        :text-value="textValue"
+        data-slot="dropdown-menu-checkbox-item"
+        data-indicator="wide"
+        :class="cn('dropdown-menu__item interactive-item glass-menu-row', props.class)"
+        @select="emit('select', $event)"
+        @update:model-value="emit('update:modelValue', $event)"
+    >
+        <span class="dropdown-menu__indicator">
+            <component :is="ItemIndicatorComp">
+                <Check aria-hidden="true" />
+            </component>
+        </span>
+        <slot />
+    </component>
 </template>

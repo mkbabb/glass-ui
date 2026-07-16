@@ -1,32 +1,48 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
-import { type DropdownMenuItemProps, useForwardProps } from 'reka-ui'
-import { cn } from '../_shared/class-names'
-import { menuItemVariants } from '../_shared/menuItemVariants'
-// BI.W-MENU-TRIGGER — the trigger axis switches the reka Item family (one CVA, one engine).
-import { useMenuPart } from './useMenuTrigger'
+import { computed, useAttrs, type HTMLAttributes } from "vue";
+import { cn } from "../_shared/class-names";
+import { fixedHostAttrs } from "../_shared/primitive";
+import { useMenuPart } from "./useMenuTrigger";
 
-const props = defineProps<DropdownMenuItemProps & { class?: HTMLAttributes['class'], inset?: boolean }>()
+export interface DropdownMenuItemProps {
+    disabled?: boolean;
+    /** Text used by the menu's typeahead engine when slot text is not sufficient. */
+    textValue?: string;
+    inset?: boolean;
+    class?: HTMLAttributes["class"];
+}
 
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
+export interface DropdownMenuItemEmits {
+    /** Cancel this event to keep the menu open. */
+    select: [event: Event];
+}
 
-  return delegated
-})
+defineOptions({ name: "DropdownMenuItem", inheritAttrs: false });
 
-const forwardedProps = useForwardProps(delegatedProps)
-const ItemComp = useMenuPart('Item')
+const props = withDefaults(defineProps<DropdownMenuItemProps>(), {
+    disabled: false,
+    inset: false,
+});
+const emit = defineEmits<DropdownMenuItemEmits>();
+defineSlots<{ default?: () => unknown }>();
+
+const attrs = useAttrs();
+const forwardedAttrs = computed(() => fixedHostAttrs(attrs));
+const ItemComp = useMenuPart("Item");
 </script>
 
 <template>
-  <component
-    :is="ItemComp"
-    v-bind="forwardedProps"
-    :class="cn(
-      menuItemVariants({ indicator: inset ? 'start-wide' : 'none' }),
-      props.class,
-    )"
-  >
-    <slot />
-  </component>
+    <component
+        :is="ItemComp"
+        v-bind="forwardedAttrs"
+        as="div"
+        :disabled="disabled"
+        :text-value="textValue"
+        data-slot="dropdown-menu-item"
+        :data-inset="inset ? '' : undefined"
+        :class="cn('dropdown-menu__item interactive-item glass-menu-row', props.class)"
+        @select="emit('select', $event)"
+    >
+        <slot />
+    </component>
 </template>

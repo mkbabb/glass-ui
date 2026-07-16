@@ -6,8 +6,7 @@
  * paint (vertical hairline · horizontal rule · grid section-break), the
  * `.dock-spacer`, the `.dock-layer-group` flex axes, the `.dock-layer-rail`
  * layer-switcher rail (the W45 DK8 rail-bg plate + the axis-aware travelling
- * `.dock-layer-tab-indicator`), the `.dock-layer-stack`, and the axis-aware
- * `.dock-layer-item-host` pane.
+ * `.dock-layer-tab-indicator`).
  *
  * NOTE: this `.dock-layer-rail` is the LAYER-SWITCHER rail inside a
  * `<DockLayerGroup>` — the in-dock switcher tab strip. AZ.W-DOCK-TAXONOMY
@@ -99,7 +98,7 @@
        edge: a thin rule between the switcher column and the dock body. The
        hover/active affordance reads the `--dock-layer-rail-{hover,active}` glass
        tints, so the whole rail ladder is tunable from §sizing. */
-    /* BG.W-DOCK-CONSUMER-FENCE — the switcher-rail + stack + pane internal parts carry
+    /* BG.W-DOCK-CONSUMER-FENCE — the switcher-rail internal parts carry
        the dock-root ANCESTRY anchor (`:where(.glass-dock, .dock-layer-group)`, specificity
        0,0,0) so a consumer element with a coincidental `.dock-layer-*` class OUTSIDE a dock
        is never painted/repositioned. Every internal part here lives under `.dock-layer-group`
@@ -258,7 +257,7 @@
     /* BI.W-DOCK-FOLD — the travelling indicator is AXIS-AWARE and driven by the ONE
        traveling-indicator writer (`useSelectionIndicator`, via `useSelectionGroup`),
        NOT the retired reka `--reka-tabs-indicator-*` path. The writer emits the
-       travel-axis size + a center-anchored `transform` + `opacity` as an INLINE style
+       travel-axis size + a center-anchored `translate` + `opacity` as an INLINE style
        on this element (Chrome ≡ Safari by construction — one code path, no anchor
        branch). The DEFAULT (horizontal-group) rail is a COLUMN of stacked tabs, so the
        indicator travels the BLOCK (Y) axis: the base rule fixes the CROSS-axis size
@@ -287,7 +286,7 @@
         transition:
             width var(--duration-fast) var(--spring-snappy),
             height var(--duration-fast) var(--spring-snappy),
-            transform var(--duration-fast) var(--spring-snappy);
+            translate var(--duration-fast) var(--spring-snappy);
         pointer-events: none;
     }
 
@@ -299,52 +298,4 @@
         height: var(--dock-layer-tab-size, var(--dock-control-size, 1.75rem));
     }
 
-    :where(.glass-dock, .dock-layer-group) .dock-layer-stack {
-        position: relative;
-        display: grid;
-        /* AW.W2 — the morph axis (width for a horizontal group, height for a
-           vertical one) is driven by the `useLayerTransition` SpringProgress in
-           pixel space (FLIP path) or the View-Transition (native path); a CSS
-           `width`/`height` transition here would be a SECOND driver on the same
-           axis (the AV.W9.0 dual-driver race that froze the dock). The cross axis
-           is intrinsic-sized and never morphs. So NO size transition on the stack
-           — one owner per axis. */
-    }
-
-    /* Base layout — the crossfade + hit-test contract is shared with
-       `.dock-layer` above (see "Layer crossfade + hit-test contract"). The
-       default state is inactive: absolute + inset:0. */
-    :where(.glass-dock, .dock-layer-group) .dock-layer-item-host {
-        grid-area: 1 / 1;
-        display: flex;
-        align-items: center;
-        white-space: nowrap;
-        gap: var(--dock-layer-gap, 0.375rem);
-        position: absolute;
-        inset: 0;
-    }
-
-    :where(.glass-dock, .dock-layer-group) .dock-layer-item-host.is-active {
-        position: relative;
-        inset: auto;
-        width: max-content;
-        min-width: 0;
-    }
-
-    /* AP.W3 — axis-aware layer pane. The stack + `useLayerTransition` are
-       axis-aware, but the pane was hardcoded to a no-wrap ROW with
-       `width: max-content` — forcing a `vertical` group's content onto one
-       horizontal line that could not grow down (the vertical-overflow fight).
-       A vertical group stacks in a column, stretches, wraps, and block-sizes
-       to the height the stack animates. Horizontal byte-identical. */
-    .dock-layer-group.vertical .dock-layer-item-host {
-        flex-direction: column;
-        align-items: stretch;
-        white-space: normal;
-    }
-
-    .dock-layer-group.vertical .dock-layer-item-host.is-active {
-        width: auto;
-        height: max-content;
-    }
 }

@@ -16,7 +16,7 @@
 //     OFF when the native timeline is supported (no double-feather).
 // The CSS axis is selected by `data-fade-axis` (the root attr); the fallback
 // reads the same `axis` prop.
-import { ref, toRef, watch } from "vue";
+import { computed, ref, toRef, watch } from "vue";
 import { useFadingScroll } from "./composables/useFadingScroll";
 
 const props = withDefaults(
@@ -27,11 +27,16 @@ const props = withDefaults(
         fadeStart?: boolean;
         /** Feather the end edge while trailing overflow remains. Default `true`. */
         fadeEnd?: boolean;
+        /** Name the scroll port and expose it as a region. */
+        ariaLabel?: string;
+        /** Reference visible naming text and expose the scroll port as a region. */
+        ariaLabelledby?: string;
     }>(),
     { axis: "x", fadeStart: true, fadeEnd: true },
 );
 
 const rootRef = ref<HTMLElement | null>(null);
+const namedRegion = computed(() => Boolean(props.ariaLabel || props.ariaLabelledby));
 
 // The JS fallback. On a native-`scroll(self)`-supporting engine this attaches
 // nothing (the CSS recipe is the sole writer); otherwise it writes the per-edge
@@ -56,8 +61,9 @@ watch(
         :data-fade-axis="axis"
         :data-fade-start="fadeStart ? '' : undefined"
         :data-fade-end="fadeEnd ? '' : undefined"
-        role="region"
-        aria-label="Scrollable content"
+        :role="namedRegion ? 'region' : undefined"
+        :aria-label="ariaLabel"
+        :aria-labelledby="ariaLabelledby"
         tabindex="0"
     >
         <slot />

@@ -60,75 +60,6 @@
         text-wrap: pretty; /* AQ.W3 §W3.3 — prose-register orphan/river fix */
     }
 
-    /* ── Labeled-field label (V.W3.T5 / A5 §5.5) ────────────────────
-       Canonical recipe for `<LabeledField>`'s tooltip-wrapped label
-       layer. Four sibling wrappers (LabeledInput, LabeledSelect,
-       LabeledSlider, LabeledSwitch) used to repeat this literal across
-       their templates; promoting it to a utility lets the parent SFC
-       own one canonical declaration. */
-    .labeled-field-label {
-        font-family: var(--font-display);
-        font-size: var(--type-body);
-        /* AQ.W4 §W3.1c — the label color reads the group-state variable so the
-           `:has(:user-invalid)` rule below reddens it (one source of the
-           override value, shared with the `.has-error` fallback class). */
-        color: var(--field-label-color, var(--muted-foreground));
-        cursor: help;
-    }
-
-    /* AQ.W4 §W3.1c — LabeledField group error highlight. When any descendant
-       control is `:user-invalid`, the whole field group marks (the label
-       reddens via `--field-label-color`, the error region reveals). Scoped to
-       `.labeled-field` — never `body`, never a bare element. `:has()` Baseline
-       Widely; the `.has-error` / `.has-valid` fallback classes (toggled by the
-       `useUserInvalidAria` fallback path) are the SOLE degradation for engines
-       without `:has()`/`:user-invalid` (not a live+dead alias). */
-    .labeled-field {
-        --field-label-color: var(--muted-foreground);
-        /* THE WIDTH CONTRACT (BA.W-CONFIG-CHASSIS.1, S1 / CFG-1). The
-           labeled-field root claims FULL inline width + lays its label/control
-           stack out as a column, so a slotted control (a Slider whose inner
-           `.glass-slider` resolves `width: 100%`) has a DEFINITE width to
-           resolve against — never the content-sized 0 the bare `display:block`
-           default produced inside the configurator row's flex slot. This is the
-           half that survives the `hide-label` register: with the visible label
-           rendered `sr-only`, the label was the only intrinsic width
-           contributor, so the field collapsed; `width:100%` makes the field own
-           its inline axis regardless of label visibility. `min-width:0` lets it
-           shrink below content min inside a constrained row. Standalone use is
-           unaffected (a `<LabeledField>` outside a flex parent fills its block
-           container exactly as the prior `display:block` did). */
-        display: flex;
-        flex-direction: column;
-        inline-size: 100%;
-        min-inline-size: 0;
-    }
-    .labeled-field:has(:where(:user-invalid, [aria-invalid="true"])),
-    .labeled-field.has-error {
-        --field-label-color: var(--destructive);
-    }
-
-    /* The error region: hidden at rest, revealed once a descendant is
-       `:user-invalid` (or the `.has-error` fallback class is set). Non-color
-       reinforcement for the validity tint — the error TEXT is the primary
-       cue, the border/bg shift the supplement (forms guide: never color
-       alone). */
-    .labeled-field-error {
-        display: none;
-        font-size: var(--type-small);
-        color: var(--destructive);
-        margin-block-start: 0.25rem;
-    }
-    .labeled-field:has(:where(:user-invalid, [aria-invalid="true"])) .labeled-field-error,
-    .labeled-field.has-error .labeled-field-error {
-        display: block;
-    }
-    /* Hide the error text once the field reads valid (the user corrected it). */
-    .labeled-field:has(:where(:user-valid, [aria-invalid="false"])) .labeled-field-error,
-    .labeled-field.has-valid .labeled-field-error {
-        display: none;
-    }
-
     /* ── Popover-content recipe (V.W3.T3 / A5 §3.2) ─────────────────
        Canonical recipe for floating-tier portal containers
        (PopoverContent, DropdownMenuContent, SelectContent, etc.).
@@ -247,16 +178,16 @@
        AX.W52 §6 doctrine — the `scale` register is reconciled onto
        `--spring-smooth` (was `--spring-snappy`), the ONE button/interactive
        scale register the §6 easing doctrine records and the gate asserts
-       across `.btn-pill`/`.tap-squish`/`.glass-btn`/`btn-interactive`. At
+       across `.button`/`.tap-squish`. At
        ζ=0.86 `--spring-smooth` settles a press crisply with a sub-perceptual
        (~0.5%) peak — no visible bounce — so press still reads alive while
        hover reads as a smooth glide on the SAME spring.
 
        The transition lists the SURFACE legs (bg/border/box-shadow/color/
        opacity) on the bezier `--ease-standard` alongside the spring `scale`
-       leg — the SAME coherent set `.btn-pill` carries. This is load-bearing:
-       `.tap-squish` and `.btn-pill` are co-composed on the button base and
-       this `transition` shorthand would otherwise CLOBBER `.btn-pill`'s
+       leg — the same coherent set `.button` carries. This is load-bearing:
+       `.tap-squish` and `.button` are co-composed on the button base and
+       this `transition` shorthand must not clobber the Button's
        surface legs down to a scale-only animation (the cascade bug that left
        every button transitioning ONLY `scale` — the live-readback RED). With
        both classes carrying the full set, whichever wins the surface cross-
@@ -292,46 +223,6 @@
                press scale is neutralized under PRM. */
             scale: 1;
         }
-    }
-
-    /* ── Glass-press — the interactive press register (BB.W-PRESS-UNIFY) ──
-       The CSS half of the interactive-glass press (an interactive Card at
-       `motion !== "off"` per BH.W-MOTION-AXIS — the `pressable` boolean's successor
-       is interactivity + the motion axis). Two
-       coupled legs on ONE `--card-press-t` drive (the `useLiquidPress` writes the
-       JS-driven value; the CSS `:active` is the no-JS / SSR floor):
-
-         • The SCALE leg is the co-composed `.tap-squish` (the Card binds both
-           classes), so the no-JS press already scales to `--scale-press` on the
-           `--spring-smooth` clock and the JS reciprocal squish wins while engaged.
-         • The BRIGHTNESS leg reads the `--card-press-t` drive directly — a sub-
-           perceptual `filter: brightness()` lift so the glass reads as DEFORMING +
-           catching light under the press, not just shrinking (the W-MOTION-CANON P3
-           coupling — fade/brightness coupled WITH the transform on the same drive).
-           `filter` is compositor-safe (the P5 ban targets layout props only —
-           `proof:no-layout-animation` greens it), so the lift never re-layouts.
-
-       The brightness leg rides the `--card-press-t` VALUE (the typed press drive),
-       NOT a CSS transition — it tracks the JS spring frame-for-frame and degrades to
-       the resting 0 (no lift) when JS is off. The press surface is INTERACTIVE: the
-       cursor + a WCAG-2.5.5 touch floor (`min-block-size`) read here, not on the
-       static-card register. The interruptibility + the PRM-instant snap are the JS
-       driver's (`useLiquidPress` → the kf `SpringProgress` re-seat + the PRM policy);
-       this is the CSS floor the JS enhances. */
-    .glass-press {
-        cursor: pointer;
-        min-block-size: max(0px, var(--control-floor, 0px));
-        /* The coupled brightness lift on the press drive (rest 0 → ~4% at full
-           press). The drive is the JS-written `--card-press-t`; with JS off it stays
-           the `@property` 0 initial so the filter is a no-op (`brightness(1)`). */
-        filter: brightness(calc(1 + var(--card-press-t, 0) * 0.04));
-    }
-    /* The press-drive typed registration so a downstream `calc()` interpolates the
-       VALUE (number) and an unwired/SSR card is the static rest frame. */
-    @property --card-press-t {
-        syntax: "<number>";
-        inherits: true;
-        initial-value: 0;
     }
 
 }

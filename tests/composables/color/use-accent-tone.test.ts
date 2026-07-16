@@ -7,50 +7,40 @@
 import { describe, expect, it, vi } from "vitest";
 import { useAccentTone } from "@glass/composables/color";
 import {
-    parseCSSColor,
-    colorUnit2,
-    srgbToOKLab,
-    rawOklchToOklab,
-    oklabToRgb255,
-} from "@mkbabb/value.js";
+    convertColor,
+    mixColors,
+    type AnyColor,
+    type ColorIssue,
+    type Result,
+} from "@mkbabb/value.js/color";
+import { parseCssColor } from "@mkbabb/value.js/css";
+import { solveAccentInk } from "@glass/composables/color/accent-tone-solve";
 
-// ── the ONE color core (value.js — composed for the test's own contrast read) ──
-function rgb255OfCss(css: string): [number, number, number] {
-    const v = colorUnit2(parseCSSColor(css), "rgb").value;
-    let r = Number(v.r), g = Number(v.g), b = Number(v.b);
-    if (r <= 1.0001 && g <= 1.0001 && b <= 1.0001) { r *= 255; g *= 255; b *= 255; }
-    return [r, g, b];
+function value<T>(result: Result<T, ColorIssue>): T {
+    if (!result.ok) throw new Error(result.error.code);
+    return result.value;
 }
+
+function parse(css: string): AnyColor {
+    const parsed = parseCssColor(css);
+    if (!parsed.ok) throw new Error(parsed.diagnostics[0].code);
+    return parsed.value;
+}
+
 function labOfCss(css: string): [number, number, number] {
-    const [r, g, b] = rgb255OfCss(css);
-    return srgbToOKLab(r / 255, g / 255, b / 255) as [number, number, number];
+    return [...value(convertColor(parse(css), "oklab")).channels] as [number, number, number];
 }
-/** The band fill = color-mix(in oklab, surface, tone 18%) → rgb255 (numeric mix). */
-function bandRgb(surfaceCss: string, toneCss: string, p = 0.18): [number, number, number] {
-    const [sL, sa, sb] = labOfCss(surfaceCss);
-    const [tL, ta, tb] = labOfCss(toneCss);
-    return oklabToRgb255(sL * (1 - p) + tL * p, sa * (1 - p) + ta * p, sb * (1 - p) + tb * p) as [
-        number,
-        number,
-        number,
-    ];
+/** The band fill = color-mix(in oklab, surface, tone 18%). */
+function band(surfaceCss: string, toneCss: string, p = 0.18): AnyColor {
+    return value(mixColors(parse(surfaceCss), parse(toneCss), p, { space: "oklab" }));
 }
-function srgbLin(c: number) {
-    c /= 255;
-    return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+function relLum(color: AnyColor) {
+    const [r, g, b] = value(convertColor(color, "srgb-linear")).channels as readonly number[];
+    return 0.2126 * r! + 0.7152 * g! + 0.0722 * b!;
 }
-function relLum([r, g, b]: [number, number, number]) {
-    return 0.2126 * srgbLin(r) + 0.7152 * srgbLin(g) + 0.0722 * srgbLin(b);
-}
-function wcag(a: [number, number, number], b: [number, number, number]) {
+function wcag(a: AnyColor, b: AnyColor) {
     const l1 = relLum(a), l2 = relLum(b), hi = Math.max(l1, l2), lo = Math.min(l1, l2);
     return (hi + 0.05) / (lo + 0.05);
-}
-function rgbOfInk(ink: string): [number, number, number] {
-    const m = ink.match(/oklch\(([\d.]+)\s+([\d.]+)\s+([\d.eE+-]+)/);
-    if (!m) throw new Error(`not an oklch ink: ${ink}`);
-    const [l, a, b] = rawOklchToOklab(Number(m[1]), Number(m[2]), Number(m[3]));
-    return oklabToRgb255(l, a, b) as [number, number, number];
 }
 
 const LIGHT_CARD = "hsl(36 48% 97%)";
@@ -101,7 +91,7 @@ describe("useAccentTone — the contrast-safe ink contract", () => {
     it("over the LIGHT card: the band is light, so the ink resolves DARK", async () => {
         const { ink } = useAccentTone(() => "oklch(0.35 0.15 264)", { surface: LIGHT_CARD });
         await settledInk(() => ink.value);
-        const inkLab = labOfCss(`oklch(${ink.value.match(/oklch\(([\d.]+)/)![1]} 0 0)`);
+        const inkLab = labOfCss(ink.value);
         // dark ink over the light band — ink L well below the band L.
         expect(inkLab[0]).toBeLessThan(0.6);
     });
@@ -118,7 +108,7 @@ describe("useAccentTone — the contrast-safe ink contract", () => {
             for (const tone of TONES) {
                 const { ink } = useAccentTone(() => tone, { surface });
                 await settledInk(() => ink.value);
-                const ratio = wcag(rgbOfInk(ink.value), bandRgb(surface, tone));
+                const ratio = wcag(parse(ink.value), band(surface, tone));
                 expect(
                     ratio,
                     `ink-over-band for tone=${tone} on ${surface} was ${ratio.toFixed(2)}:1`,
@@ -133,13 +123,14 @@ describe("useAccentTone — the contrast-safe ink contract", () => {
         const tight = useAccentTone(() => tone, { surface: LIGHT_CARD, inkContrast: 7 });
         await settledInk(() => loose.ink.value);
         await settledInk(() => tight.ink.value);
-        const looseRatio = wcag(rgbOfInk(loose.ink.value), bandRgb(LIGHT_CARD, tone));
-        const tightRatio = wcag(rgbOfInk(tight.ink.value), bandRgb(LIGHT_CARD, tone));
+        const looseRatio = wcag(parse(loose.ink.value), band(LIGHT_CARD, tone));
+        const tightRatio = wcag(parse(tight.ink.value), band(LIGHT_CARD, tone));
         expect(tightRatio).toBeGreaterThan(looseRatio);
     });
 
-    it("an unparseable tone falls back (no throw, empty resolved ink)", () => {
-        const { ink } = useAccentTone(() => "not-a-color");
-        expect(ink.value).toBe("");
+    it("an unparseable concrete tone fails explicitly", () => {
+        expect(() => solveAccentInk("not-a-color")).toThrow(
+            /solveAccentInk:tone/,
+        );
     });
 });

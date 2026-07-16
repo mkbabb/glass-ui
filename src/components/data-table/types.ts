@@ -24,6 +24,8 @@ export interface DataTableSort {
     direction: "asc" | "desc";
 }
 
+export type DataTableStatus = "ready" | "loading" | "error";
+
 /** Caller-owned bindings for a mounted data row. */
 export type DataTableRowAttrs<T> = (
     row: T,
@@ -37,19 +39,18 @@ export type DataTableRowRef<T> = (
     index: number,
 ) => void;
 
+/** One-based absolute row index, including the header row at index 1. */
+export type DataTableRowIndex<T> = (row: T, mountedIndex: number) => number;
+
 export interface DataTableProps<T = any> {
     /** Column definitions */
     columns: DataTableColumn<T>[];
     /** Row data to display */
     rows: T[];
-    /** Total number of rows across all pages (for pagination display) */
-    total: number;
-    /** Current page number (1-indexed) */
-    page: number;
-    /** Number of rows per page */
-    pageSize: number;
-    /** Whether data is currently loading */
-    isLoading?: boolean;
+    /** Current renderer state. Empty rows remain a distinct derived state. */
+    status?: DataTableStatus;
+    /** Distinguishes an empty filtered result from an empty data set. */
+    filtered?: boolean;
     /** Unique key field on each row (defaults to "_id") */
     rowKey?: string;
     /** Optional resolver for stable unique row identities. Takes precedence over rowKey. */
@@ -67,6 +68,8 @@ export interface DataTableProps<T = any> {
      * applies only to the native-table projection and is omitted from cards.
      */
     getRowAttrs?: DataTableRowAttrs<T>;
+    /** Absolute ARIA row index for each caller-windowed row. */
+    getRowIndex?: DataTableRowIndex<T>;
     /** Mounted row element callback for measurement or focus. */
     rowRef?: DataTableRowRef<T>;
     /** Stable id of the sole mounted row placed in the tab order. */
@@ -77,10 +80,6 @@ export interface DataTableProps<T = any> {
     selectable?: boolean;
     /** Stable identity of the selected row when selection is enabled. */
     selectedRowId?: PropertyKey | null;
-    /** When true, hides pagination and shows infinite scroll sentinel */
-    infinite?: boolean;
-    /** Whether more data is available (for infinite scroll mode) */
-    hasMore?: boolean;
     /**
      * When true, the table collapses to a stacked card-per-row
      * projection once its container measures below `cardBreakpoint` —
@@ -90,4 +89,5 @@ export interface DataTableProps<T = any> {
     responsive?: boolean;
     /** Container-width (CSS px) below which `responsive` swaps to cards. Defaults to 640. */
     cardBreakpoint?: number;
+    class?: HTMLAttributes["class"];
 }

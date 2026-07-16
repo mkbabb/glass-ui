@@ -1,9 +1,17 @@
 import { mount } from "@vue/test-utils";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { effectScope, type EffectScope } from "vue";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import TypewriterText from "@glass/components/typewriter/TypewriterText.vue";
 import { useTypewriter } from "@glass/components/typewriter/composables/useTypewriter";
 
+let scope: EffectScope;
+
+beforeEach(() => {
+    scope = effectScope();
+});
+
 afterEach(() => {
+    scope.stop();
     vi.useRealTimers();
     vi.restoreAllMocks();
 });
@@ -25,27 +33,27 @@ describe("TypewriterText contract", () => {
         });
         await vi.runAllTimersAsync();
 
-        expect(wrapper.get(".tw-root").text()).toBe("plain text");
+        expect(wrapper.get(".tw-visual").text()).toBe("plain text");
         expect(wrapper.find(".tw-char--interactive").exists()).toBe(false);
         expect(wrapper.emitted("start")).toHaveLength(1);
         expect(wrapper.emitted("complete")).toHaveLength(1);
 
         await wrapper.get(".tw-root").trigger("click");
         await vi.runAllTimersAsync();
-        expect(wrapper.get(".tw-root").text()).toBe("plain text");
+        expect(wrapper.get(".tw-visual").text()).toBe("plain text");
     });
 
     it("reveals and positions whole graphemes", async () => {
         vi.useFakeTimers();
         const family = "👨‍👩‍👧‍👦";
-        const typewriter = useTypewriter({
+        const typewriter = scope.run(() => useTypewriter({
             text: `A${family}B`,
             ngramSize: 1,
             variance: 0,
             errorRate: 0,
             firstAnimationSpeedFactor: 1,
             respectReducedMotion: false,
-        });
+        }))!;
 
         const typing = typewriter.startTyping();
         expect(typewriter.displayText.value).toBe("A");
@@ -62,13 +70,13 @@ describe("TypewriterText contract", () => {
 
     it("preserves interruption, reset, pause, and resume", async () => {
         vi.useFakeTimers();
-        const typewriter = useTypewriter({
+        const typewriter = scope.run(() => useTypewriter({
             text: "first",
             ngramSize: 1,
             variance: 0,
             errorRate: 0,
             respectReducedMotion: false,
-        });
+        }))!;
 
         void typewriter.startTyping();
         typewriter.pause();
@@ -85,9 +93,9 @@ describe("TypewriterText contract", () => {
     });
 
     it("resets word positioning to the first word's graphemes", () => {
-        const typewriter = useTypewriter({
+        const typewriter = scope.run(() => useTypewriter({
             words: [{ text: "A👨‍👩‍👧‍👦B" }, { text: "stale" }],
-        });
+        }))!;
 
         typewriter.forceWord(1, 5);
         typewriter.reset();
@@ -100,10 +108,42 @@ describe("TypewriterText contract", () => {
         const onComplete = vi.fn();
         vi.spyOn(window, "matchMedia").mockReturnValue({
             matches: true,
-        } as MediaQueryList);
-        const typewriter = useTypewriter({ text: "complete", onComplete });
+            addEventListener: vi.fn(),
+            removeEventListener: vi.fn(),
+        } as unknown as MediaQueryList);
+        const typewriter = scope.run(() =>
+            useTypewriter({ text: "complete", onComplete }),
+        )!;
 
         await typewriter.startTyping();
+
+        expect(typewriter.displayText.value).toBe("complete");
+        expect(typewriter.isTyping.value).toBe(false);
+        expect(onComplete).toHaveBeenCalledOnce();
+    });
+
+    it("settles an active pass when reduced motion turns on", async () => {
+        vi.useFakeTimers();
+        let listener: ((event: MediaQueryListEvent) => void) | undefined;
+        vi.spyOn(window, "matchMedia").mockReturnValue({
+            matches: false,
+            addEventListener: vi.fn(
+                (_type: string, next: (event: MediaQueryListEvent) => void) => {
+                    listener = next;
+                },
+            ),
+            removeEventListener: vi.fn(),
+        } as unknown as MediaQueryList);
+        const onComplete = vi.fn();
+        const typewriter = scope.run(() => useTypewriter({
+            text: "complete",
+            ngramSize: 1,
+            onComplete,
+        }))!;
+
+        void typewriter.startTyping();
+        expect(typewriter.isTyping.value).toBe(true);
+        listener?.({ matches: true } as MediaQueryListEvent);
 
         expect(typewriter.displayText.value).toBe("complete");
         expect(typewriter.isTyping.value).toBe(false);

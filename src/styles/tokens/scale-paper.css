@@ -7,21 +7,6 @@
        §11 INTERACTIVE SCALES & FOCUS
        ═══════════════════════════════════════════════ */
     --scale-hover: 1.08;
-    /* AX.W52 — the restrained BUTTON hover lift. `--scale-hover` (1.08) is an
-       8% jump — emphatic for a marquee CTA, jarring as the general hover. The
-       button family (the audacious CTAs + `btn-interactive`) lifts on the
-       smaller `--scale-hover-btn` routed through `--spring-smooth` (the
-       sub-perceptual settle, not the snappy bounce), so the hover reads as ONE
-       coherent glide with the surface-leg cross-fade rather than a mechanical
-       pop. The dock keeps its proportionally-larger `--scale-hover-dock` (small
-       icon, bigger lift reads smaller).
-       AX.W54 Q3 — lifted 1.035 → 1.05: the 1.035 overshot DOWN (W52 tamed the
-       1.08 snap so hard the lift read as nothing), so the glass hover now reads
-       as THREE legs together on hover — the specular gleam waking, a perceptible
-       scale, and the bg/border cross-fade — distinguishable from rest BEFORE the
-       click. Still sub-perceptual-bounce on `--spring-smooth`; the magnitude
-       moved, the easing register did not. */
-    --scale-hover-btn: 1.05;
     --scale-hover-dock: 1.1;
     --scale-press: 0.96;
 
@@ -130,7 +115,6 @@
        be inlined; if a consumer needs a heavier overlay, they should layer
        a wrapper element with its own `opacity:`/`mix-blend-mode:` atop. */
     --paper-clean-texture: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    --paper-aged-texture: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
 
     /* BC.W-GRID-SIMPLE — the ONE engineering-graph-paper rhythm source. The
        keyframes.js `EditorShell` magnitudes, re-expressed as `--grid-*` tokens:
@@ -215,9 +199,8 @@
     /* ═══════════════════════════════════════════════
        §13b SILVER (the structure metal — BA.W-ATLAS-RECONCILE C-3, d6 register C)
        ═══════════════════════════════════════════════ */
-    /* The cool polished-steel STRUCTURE quad — gold's mirror for the industrial
-       housing register (the InstrumentChassis `variant="structure"` consumer #2).
-       Gold ships; the structure metal never did. The cascade EXACTLY mirrors gold's
+    /* The cool polished-steel STRUCTURE quad — gold's mirror for industrial
+       metal surfaces. The cascade EXACTLY mirrors gold's
        (scale-paper raw → bridges `--color-silver*` alias → both dark arms).
 
        BA.W-NO-GRAY NAMED EXCEPTION (the ONE sanctioned cool-neutral). W-NO-GRAY
@@ -302,8 +285,7 @@
        rendering geometry differs. See DESIGN.md `## Timeline Primitive`.
        ═══════════════════════════════════════════════ */
 
-    /* Heights — per-variant rail thickness */
-    --timeline-scrubber-height: 0.5rem;       /*  8px — single-track scrubber */
+    /* Rail thickness */
     --timeline-continuous-height: 0.75rem;    /* 12px — ONE pill, N regions */
 
     /* Geometry — shared across all variants */
@@ -349,126 +331,12 @@
         transparent
     );
 
-    /* Per-segment default gradient fallback — applied when a segment
-       omits its `gradient` field. Consumers can override per-phase via
-       the `--timeline-segment-gradient-{key}` knobs below. */
+    /* Per-segment default gradient used when a segment omits its own paint. */
     --timeline-segment-default-gradient: linear-gradient(
         90deg,
         var(--surface-tint-15),
         var(--surface-tint-25)
     );
-
-    /* Per-phase gradient defaults — paint the canonical chart palette
-       at the gradient leading edge, fading to a 60%-opacity tail. The
-       speedtest consumer wires these via `gradient: "var(--timeline-segment-gradient-ping)"`
-       per segment; the same names work for any consumer who follows the
-       ping/download/upload/jitter taxonomy. */
-    --timeline-segment-gradient-ping: linear-gradient(
-        90deg,
-        var(--chart-ping),
-        color-mix(in srgb, var(--chart-ping) 60%, transparent)
-    );
-    --timeline-segment-gradient-download: linear-gradient(
-        90deg,
-        var(--chart-download),
-        color-mix(in srgb, var(--chart-download) 60%, transparent)
-    );
-    --timeline-segment-gradient-upload: linear-gradient(
-        90deg,
-        var(--chart-upload),
-        color-mix(in srgb, var(--chart-upload) 60%, transparent)
-    );
-    --timeline-segment-gradient-jitter: linear-gradient(
-        90deg,
-        var(--chart-jitter),
-        color-mix(in srgb, var(--chart-jitter) 60%, transparent)
-    );
-
-    /* ═══════════════════════════════════════════════
-       §17 METRIC
-
-       MetricRow / MetricStack value-clamp dialect. The declared values are the
-       `audacious` poster register — the hero-scale clamp for a single giant
-       number; MetricStack's `[data-register="result"]` selector overrides it
-       locally for the compact multi-row ledger. Three clamp arms each: `min`
-       (floor), `cqi` (the binding container-query middle term), `max`
-       (ceiling); unit carries min/max only (its cqi is a fixed 6cqi).
-       ═══════════════════════════════════════════════ */
-
-    /* Value register — audacious-poster hero clamp */
-    --metric-row-value-clamp-min: 4.5rem;
-    --metric-row-value-clamp-cqi: 34cqi;
-    --metric-row-value-clamp-max: var(--type-display-hero);
-
-    /* Unit register — one tier below the value it qualifies */
-    --metric-row-unit-clamp-min: 1.5rem;
-    --metric-row-unit-clamp-max: 3.25rem;
-
-    /* Label register — uppercase, the binding row-height term in the
-       compact `result` register */
-    --metric-row-label-clamp-min: 1.125rem;
-    --metric-row-label-clamp-cqi: 5cqi;
-    --metric-row-label-clamp-max: 2.75rem;
-
-    /* BB.W-CONTROL-TOKENS — the two CONSUMER-reach knobs (the no-`:deep`
-       precept, Design Axis 2). MetricRow internals a consumer must reach are
-       exposed as tokens, never an internal a `:deep()` overrides.
-
-       • `--metric-row-label-align` — the label `text-align`. Default `left`
-         (byte-identical to the prior render). A cert-grid consumer building a
-         labelled ledger sets `right` at `:root`/a parent/per-row for a
-         right-aligned fixed seam — cascades into `.metric-row__label` with no
-         `:deep()`.
-       • `--metric-row-icon-color` — the leading-glyph ink (the MetricCell
-         `iconColor`→IconChip precedent, mirrored as a token since MetricRow
-         ships a raw `<component :is>`). The per-row `phaseColor` prop seeds it
-         inline so today's consumers paint unchanged; un-set, the component
-         fallback (`inherit`) keeps the icon on the inherited cascade. A consumer
-         wanting a DISTINCT icon ink from the phase tint overrides it directly.
-
-       Both carry their byte-identical defaults — `left` (the prior render) /
-       `inherit` (the prior un-tinted glyph). Declaring them here keeps the
-       `--metric-row-*` family discoverable in one home; the component-level
-       `var(…, fallback)` read preserves the same default if the token is ever
-       un-declared (the defense-in-depth back-compat floor). A per-row
-       `phaseColor` prop still wins over the `:root` `--metric-row-icon-color`
-       (inline cascades higher), so today's phase-tinted icons are unchanged. */
-    --metric-row-label-align: left;
-    --metric-row-icon-color: inherit;
-
-    /* ═══════════════════════════════════════════════
-       §2.D INSTRUMENT-CLUSTER COMPOSITION RHYTHM
-
-       The instrument-chassis family owns the under-meter / progress-cluster
-       grammar.
-
-       • `--meter-progress-inset` — the negative-margin inset that pulls the
-         under-meter bar INTO the unpainted ring lane around the dial canvas
-         (~4% of meter-size). Consumed at `.phase-progress` via
-         `margin-block-start: calc(-1 * var(--meter-progress-inset))`. The
-         `--meter-size` reference resolves against the consumer's own
-         declaration; the 200px fallback keeps the calc well-defined.
-       • `--progress-stack-gap` — vertical rhythm between any two stacked
-         progress rails inside one cluster.
-       ═══════════════════════════════════════════════ */
-    --meter-progress-inset: calc(var(--meter-size, 200px) * 0.04);
-    --progress-stack-gap: clamp(0.1875rem, 0.4cqi, 0.375rem);
-
-    /* ═══════════════════════════════════════════════
-       §2.E CELEBRATION-TIER REGISTER
-
-       Shared peak for any "completion" / "thank-you" surface.
-
-       • `--celebration-row-rhythm` — gap between the cluster's rows (cqi-axis).
-       • `--text-celebration-headline-size` — the single designed peak both
-         celebration surfaces clamp toward (cqi-axis).
-       • `--complete-headline-size` — the per-consumer font-size hook a consumer
-         assigns the canon clamp to so its headline pegs at the shared peak;
-         the default falls back to a smaller hero-rung clamp.
-       ═══════════════════════════════════════════════ */
-    --celebration-row-rhythm: clamp(0.5rem, 1.6cqi, 1rem);
-    --text-celebration-headline-size: clamp(2.5rem, 12cqi, 9rem);
-    --complete-headline-size: clamp(2.25rem, 11cqi, 4rem);
 
     /* ═══════════════════════════════════════════════
        §19 TABLE DENSITY

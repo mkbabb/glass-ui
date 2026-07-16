@@ -63,41 +63,13 @@ export function probeWebGL2Renderer(): string | null {
         if (!gl) return null;
         const ext = gl.getExtension("WEBGL_debug_renderer_info");
         if (!ext) return null;
-        return String(
-            gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) ?? "",
-        ).toLowerCase();
+        return String(gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) ?? "").toLowerCase();
     } catch {
         // fail-explicit: a probe failure (no extension, a getParameter throw) is a
         // benign "cannot prove" — the caller keeps its richer default.
         return null;
     } finally {
         gl?.getExtension("WEBGL_lose_context")?.loseContext();
-    }
-}
-
-/**
- * The WebGPU→WebGL2 fall POISON test — can THIS specific canvas still host WebGL2?
- * (BD.W-VIZ-BROKEN-FIX — the single-bootstrap home for the probe.) Once `getContext("webgpu")`
- * has run on a canvas, the HTML one-context-type rule locks it to `webgpu` forever and
- * `getContext("webgl2")` returns `null`. The picker's fall-to-WebGL2 path probes this to
- * decide whether it must clone+swap the canvas (genuinely poisoned) or can keep the original
- * (a fall that ran BEFORE any `getContext("webgpu")` — no-adapter / device-reject / acquire-
- * timeout — never poisoned it; reusing it avoids orphaning the consumer's captured canvas
- * reference). The `getContext("webgl2")` bootstrap stays in THIS substrate (the sole webgl2-
- * creating module per `proof:webgl-substrate-single` clause B); the picker composes this
- * helper rather than calling `getContext("webgl2")` itself. `getContext` is idempotent for
- * the same type, so on a clean canvas the probe returns the very context the net re-acquires
- * (no extra cost). Returns `true` if the canvas can host WebGL2, `false` if poisoned/unable.
- */
-export function canvasCanHostWebGL2(canvas: HTMLCanvasElement): boolean {
-    try {
-        return canvas.getContext("webgl2") != null;
-    } catch {
-        // fail-explicit: this IS the capability probe — a poisoned/unable canvas
-        // throws on getContext, and `false` is the surfaced verdict the picker reads
-        // to fall to the 2D/CSS substrate. The boolean return IS the explicit signal;
-        // re-raising would defeat the probe's whole purpose.
-        return false;
     }
 }
 
@@ -162,6 +134,10 @@ export interface WebGLCanvasOptions {
      * every `webglcontextrestored`. Returns the per-frame hooks.
      */
     setup: (gl: WebGL2RenderingContext) => WebGLCanvasFrame;
+    /** Internal lifecycle projection used by the shared renderer-status owner. */
+    onContextStateChange?: (state: "lost" | "restored") => void;
+    /** Surface a failed context restore or a bounded loss storm. */
+    onContextError?: (error: Error) => void;
 }
 
 export interface WebGLCanvasHandle {
@@ -244,9 +220,10 @@ export function createWebGLCanvas(
         composeIntersectionPark: options.composeIntersectionPark,
         intersectionRootMargin: options.intersectionRootMargin,
         revealBloom: options.revealBloom,
+        onContextStateChange: options.onContextStateChange,
+        onContextError: options.onContextError,
         buildContext,
-        // The leaf hands the freshly-computed BackingSize (when it owns sizing); forward
-        // it to the consumer's upload-only resize. Legacy consumers ignore the arg.
+        // Forward the leaf's freshly-computed BackingSize to the consumer.
         resize: (s) => frameHooks?.resize(s),
         // Bind the WebGL-specific context-loss/restore pair; on `webglcontextrestored`
         // the core re-runs buildContext (re-creating the program on the fresh context)
@@ -254,7 +231,11 @@ export function createWebGLCanvas(
         bindContextEvents: (rebuild, markLost) => {
             onContextRestored = rebuild;
             markContextLost = markLost;
-            canvas.addEventListener("webglcontextlost", onContextLost as EventListener, false);
+            canvas.addEventListener(
+                "webglcontextlost",
+                onContextLost as EventListener,
+                false,
+            );
             canvas.addEventListener(
                 "webglcontextrestored",
                 onContextRestored as EventListener,
@@ -262,7 +243,11 @@ export function createWebGLCanvas(
             );
         },
         unbindContextEvents: () => {
-            canvas.removeEventListener("webglcontextlost", onContextLost as EventListener, false);
+            canvas.removeEventListener(
+                "webglcontextlost",
+                onContextLost as EventListener,
+                false,
+            );
             if (onContextRestored) {
                 canvas.removeEventListener(
                     "webglcontextrestored",

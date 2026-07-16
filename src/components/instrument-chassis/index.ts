@@ -1,6 +1,8 @@
 export { default as InstrumentChassis } from "./InstrumentChassis.vue";
-export { default as ChassisDivider } from "./ChassisDivider.vue";
 export type {
-    InstrumentChassisPhase,
-    InstrumentChassisVariant,
-} from "./InstrumentChassis.vue";
+    InstrumentChassisBoundary,
+    InstrumentChassisProportion,
+    InstrumentChassisProps,
+    InstrumentChassisReserve,
+    InstrumentChassisState,
+} from "./types";

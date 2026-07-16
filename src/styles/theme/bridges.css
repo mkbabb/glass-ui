@@ -83,7 +83,7 @@
     /* BG.W-DESHADCN — the shadcn `--color-ring` @theme bridge (the `ring`/
        `outline-ring`/`text-ring` utility surface) is DELETED, clean break. The
        house focus accent is the `--focus-ring-color` token / the `.focus-ring`
-       box-shadow utility; the lone `outline-ring` reader (MetricBadge) re-points
+       box-shadow utility; the lone `outline-ring` reader re-points
        onto `outline-(color:--focus-ring-color)`. */
     --color-background: var(--background);
     --color-foreground: var(--foreground);
@@ -218,8 +218,7 @@
     --color-gold-dark: var(--gold-dark);
     --color-gold-deep: var(--gold-deep);
 
-    /* BA.W-ATLAS-RECONCILE C-3 — the silver structure metal (gold's mirror; the
-       InstrumentChassis `variant="structure"` register). The @theme namespace var
+    /* BA.W-ATLAS-RECONCILE C-3 — the silver structure metal (gold's mirror). The @theme namespace var
        a `text-silver`/`bg-silver` utility resolves through. */
     --color-silver: var(--silver);
     --color-silver-light: var(--silver-light);
@@ -299,25 +298,11 @@
     /* ═══════════════════════════════════════════════
        Shadows → shadow-* utilities
        ═══════════════════════════════════════════════ */
-    --shadow-cartoon:       var(--cartoon-shadow);
-    --shadow-cartoon-hover: var(--cartoon-shadow-hover);
-    --shadow-soft:          var(--soft-shadow);
-    --shadow-elevated:      var(--elevated-shadow);
-    --shadow-modal:         var(--modal-shadow);
-
-    --shadow-card:           var(--card-shadow);
-    --shadow-dock:           var(--dock-shadow);
-    --shadow-dock-collapsed: var(--dock-shadow-collapsed);
-
     --shadow-glass-wash:     var(--glass-shadow-wash);
     --shadow-glass-quiet:    var(--glass-shadow-quiet);
     --shadow-glass-resting:  var(--glass-shadow-resting);
     --shadow-glass-floating: var(--glass-shadow-floating);
     --shadow-glass-overlay:  var(--glass-shadow-overlay);
-
-    --shadow-cartoon-sm: var(--cartoon-shadow-sm);
-    --shadow-cartoon-md: var(--cartoon-shadow-md);
-    --shadow-cartoon-lg: var(--cartoon-shadow-lg);
 
     /* BC.W-CONTROL-SMOOTH — the warm focus-ring box-shadow bridged to the
        `shadow-focus-ring` utility (AW.W26 --focus-ring-shadow register). The
@@ -348,7 +333,7 @@
     --ease-spring-gentle: var(--spring-gentle);
     /* BC.W-SPRING-EASE — the minted iOS interactive press register's @theme alias
        (the documented public register the consumers reach by name; the JS path
-       reads it via useSpringPress + --glass-btn-press-t). */
+       reads it via useLiquidPress + --glass-btn-press-t). */
     --ease-spring-press: var(--spring-press);
     --ease-standard: var(--motion-ease-standard);
     --ease-out: var(--motion-ease-out);

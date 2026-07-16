@@ -1,8 +1,8 @@
 # Blob
 
-A WebGL2 metaball "creature" for Vue 3.5 — a lit, pulsing, gooey SDF droplet with up to four
+A WebGPU-first metaball "creature" for Vue 3.5 — a lit, pulsing, gooey SDF droplet with up to four
 orbiting satellites that merge in, get absorbed, and re-emerge, painted with a perceptually-uniform
-OKLCh color perturbation over glass-ui's warm-cream glass identity. It is the WebGL sibling of
+OKLCh color perturbation over glass-ui's warm-cream glass identity. It is the live-GPU sibling of
 [`WatercolorDot`](../watercolor-dot/) (the CSS/SVG dot): the blob is the continuously-animated,
 per-pixel-shaded metaball; the watercolor-dot is the cheap static dot. They are deliberate siblings,
 not redundant — reach for the dot for the ambient/static register, the blob for the interactive/lit
@@ -56,8 +56,9 @@ and accessibility.
 
 ## What it is
 
-The blob is a **single-pass WebGL2 signed-distance-field (SDF) metaball**, not an SVG goo-filter and
-not a CPU marching-squares contour. Each fragment evaluates the field directly on the GPU:
+The blob is a **single-pass GPU signed-distance-field (SDF) metaball**, not an SVG goo-filter or a
+CPU marching-squares contour. WebGPU is preferred and WebGL2 renders the equivalent scene. Each
+fragment evaluates the field directly:
 
 - **Field** — an `sdCircle` body plus up to four satellite circles, merged with the Inigo Quilez
   normalized **smooth-minimum** (`smin`) so they fuse into one gooey mass rather than popping
@@ -84,9 +85,9 @@ not a CPU marching-squares contour. Each fragment evaluates the field directly o
   emerging`), a de-synced breathing pulse (three detuned sines so it never re-phases like a
   metronome), and a critically-damped spring pointer deformation with a velocity squash-and-stretch
   and an elastic pseudopod trail.
-- **Substrate** — it composes the shared `useWebGLCanvas` WebGL2 substrate, which owns the canvas
-  lifecycle, context-loss self-healing, and the full pause machinery (offscreen, tab-hidden,
-  reduced-motion). The blob never bootstraps its own GL context.
+- **Substrate** — it composes one shared GPU lifecycle, which selects an engine once and owns
+  recovery, teardown, resize, offscreen/tab parking, and reduced motion. The scene owns no second
+  scheduler or simulation.
 
 It renders on a transparent canvas, contained on all four sides of its layout footprint (only the
 orbiting satellites peek the edge), so it sits over any glass-ui surface and reads as a soft, living,
@@ -134,6 +135,8 @@ It is **not** a data visualization and conveys no information — the canvas is 
 | `currentMood` | `Readonly<Ref<BlobMood>>`  | The current mood. |
 | `pause()`     | `() => void`               | Parks the render loop — the imperative half of the WCAG-2.2.2 seam (the `v-model:paused` prop is the declarative half; both bind the same substrate suspend). |
 | `resume()`    | `() => void`               | Restarts the render loop. |
+| `settled`     | `Readonly<Ref<boolean>>`    | The renderer's own quiescence verdict. |
+| `settledFrame`| `Readonly<Ref<BlobSettledFrame \| null>>` | The exact last quiescent drawn frame, including simulation clocks, backing size/DPR, and normalized `simulationOrigin: { x: 0.5, y: 0.5 }`. |
 
 ### Emits
 
@@ -145,8 +148,8 @@ It is **not** a data visualization and conveys no information — the canvas is 
 ### `BlobConfig`
 
 The tunable surface (`types.ts`) is EIGHT cohesive atoms — every length/weight/duration lives
-behind the atom it belongs to (the "simplify the options set to atoms" discipline; the variant IS
-the bundle). All fields are concrete with defaults via `BLOB_CONFIG_DEFAULTS`.
+behind the atom it belongs to. All fields are concrete with defaults via
+`BLOB_CONFIG_DEFAULTS`; `morphT` is the sole flat-to-dressed surface axis.
 
 ```ts
 interface BlobConfig {
@@ -220,6 +223,7 @@ interface BlobConfig {
     clickImpulse: number;       // click spring-impulse amplitude (default 0.5)
   };
 
+  morphT: number;             // clamped 0..1: flat blob → dressed meatball (default 1)
   quality: "full" | "half";   // render quality (default "full"); "half" = half-res backing store
   tempo: number;              // ONE scalar multiplying every integrated dt (default 1.0; 0 = freeze)
 }
@@ -279,9 +283,8 @@ impulse resolves to the substrate's static rest pose. See [Accessibility](#acces
   background, wire `v-model:paused` (or `pause()`/`resume()`) to a `DockBackgroundToggle` (WCAG 2.2.2).
   This is binding, not optional.
 - **Reserve `Blob` for the interactive/lit hero; route the static register to `WatercolorDot`** —
-  each `Blob` holds its own WebGL2 context, and browsers cap ~8 live contexts per page. A grid of
-  ambient/decorative thumbnails should be `WatercolorDot`s (zero GL context); reserve the GL blob for
-  the one interactive hero.
+  each Blob owns GPU resources. A grid of ambient thumbnails should use `WatercolorDot`; reserve the
+  live Blob for the focal scene.
 - **Decorative by default** — don't bolt an `aria-label` onto the canvas; it carries no information.
   Omit `pressLabel` to mount no hit surface or pointer listeners. Set `pressLabel` only when pressing
   the blob performs a real action; Blob then renders the named native button over its live silhouette.
@@ -300,7 +303,7 @@ impulse resolves to the substrate's static rest pose. See [Accessibility](#acces
   (`proof:blob-color-equivalence`) lock it.
 - **The renderer is DOM-free.** A `var(--token)` color is un-wrapped to a concrete `rgb(...)` by the
   SFC (the single cached `resolveTokenColor` cascade read) BEFORE the renderer resolves it through the
-  `/color` leaf (`cssToOklch → oklchToGammaRgb`) — value.js's `parseCSSColor` cannot parse a `var()`
+  `/color` leaf (`cssToOklch → oklchToGammaRgb`) — value.js's `parseCssColor` reports `color_context_required` for `var()`
   wrapper, and the renderer never reaches the DOM. The un-wrap re-resolves on a dark-mode flip.
 - **`deriveBlobPalette(seed, options)`** (`@mkbabb/glass-ui/color`) — one seed → 2–4 gamut-mapped OKLCh
   stops distributed across the body + satellites, parallel to aurora's `deriveAurora`, sharing one
@@ -329,6 +332,10 @@ impulse resolves to the substrate's static rest pose. See [Accessibility](#acces
   land MID-FISSION-BEAT (one beat is ~5.2s), freezing the hero mid-split. Read `settled` and park only
   when it is `true` — the engine already knows when it is truly at rest, so consult it rather than
   guessing a wall-clock idle threshold.
+- **`settledFrame` is the exact terminal draw, not a measurement harness.** Once `settled` becomes
+  true it records the frame that was just submitted by the active backend: `timeSec`,
+  `simulationTimeMs`, the lifecycle-owned backing `width`/`height`/`dpr`, and normalized
+  `simulationOrigin: { x: 0.5, y: 0.5 }`. It remains `null` until a quiescent frame has drawn.
 - **The substrate parks aggressively** — offscreen (intersection + `content-visibility`),
   tab-backgrounded (`document.hidden`), and under `prefers-reduced-motion` (one static frame then
   park). An off-screen or hidden blob attaches zero frames; you pay only for visible, in-motion blobs.
@@ -338,13 +345,9 @@ impulse resolves to the substrate's static rest pose. See [Accessibility](#acces
 - **`quality: "full" | "half"`** — `half` renders the metaball pass at half the backing-store
   resolution and lets the browser bilinear-upsample on composite (~4× fragment savings on weak GPUs;
   the soft FBM/AA edge hides the interpolation). One blit, no multi-pass chain.
-- **No WebGPU, no particle migration (research-backed non-goals).** With ≤4 nuclei there is no
-  accumulation bottleneck; single-pass WebGL2 SDF is the SOTA-correct architecture for this body count.
-  A 2D screen-space field beats raymarching for a flat UI droplet on every axis (flat `O(W·H·N)`,
-  zero overdraw, resolution-independent `fwidth`-AA). WebGPU compute is a net loss at ≤4 nuclei (a
-  buffer round-trip + sync barrier with zero field-eval savings) and is a documented substrate-wide
-  decision (aurora's WGSL path), never blob-local; a decorative background cannot carry a hard WebGPU
-  dependency. Both are explicit non-goals.
+- **No compute or particle migration.** With at most four satellites, the direct fragment SDF is the
+  proportionate model on both engines; a compute stage would add synchronization without reducing the
+  field evaluation.
 
 ---
 
@@ -356,9 +359,9 @@ impulse resolves to the substrate's static rest pose. See [Accessibility](#acces
   and Space all reach the same `click`/pulse owner, and its focus ring follows the live silhouette.
   `disabled` and `paused` disable the button and detach pointer response. Under reduced motion the
   semantic action and `click` event remain available while the animated impulse resolves to rest.
-- **`prefers-reduced-motion`** — the `useWebGLCanvas` substrate *live-monitors* PRM (a `matchMedia`
-  `change` listener) and paints one composed-rest-pose static frame then parks under reduce — every
-  surface inherits the freeze, and a CSS reset cannot reach the WebGL rAF, so the substrate owns it.
+- **`prefers-reduced-motion`** — the shared GPU lifecycle live-monitors PRM and paints one composed
+  rest-pose frame before parking — every engine inherits the same freeze, and a CSS reset cannot reach
+  the GPU loop, so the substrate owns it.
   Any interaction collapses to instant/no-op under reduce and hooks the *same* gate (no parallel
   motion path).
 - **WCAG 2.2.2 (Pause, Stop, Hide)** — a continuously-running, auto-starting, > 5s, non-essential blob
@@ -442,23 +445,15 @@ The renderer's **simulation advance (`resolveFrame`) is SHARED** across both bac
 mood / pointer / satellite systems on the tempo-scaled step and returns the settled `BlobFrameState`; the
 WebGL2 `drawFrame` (then `uploadBlobUniforms`) and the WGSL `frame` (then `packBlobWGPUUniforms`) both
 call it, so the physics is identical regardless of backend and only the upload+draw leg differs. The
-worst-case-orbit smin band widen (BA.W-GOO-REDRESS) + the POS_SCALE contract + the maxReach
-bounding-discard thread through the WGSL uniform buffer IDENTICALLY. Both backends compose the SAME
-`createCanvasLifecycle` leaf (the offscreen-pause + live-PRM-freeze + the satellite-phase wake scheduler
-is byte-identical), so the lifecycle wiring (`useIntersectionPause`, `DockBackgroundToggle` pause/resume,
-the `pointer.active → wake()` seam) is substrate-agnostic. Parity is machine-locked by
-`proof:gpu-substrate-single` (the blob row is `verified` with a recorded OKLab ΔE within the
-calibrated bar — mean ≤ 2.0 / p99 ≤ 5.0); the device-free structural-proxy capture-pair is on disk
-(`docs/tranches/BB/audit/visual/blob-wgpu-parity/`), the binding Metal-GPU live capture (including
-the REAL per-GPU `fwidth()` derivative drift) rides W-REFLECT3.
+worst-case-orbit smin band widen, POS_SCALE contract, and maxReach discard thread through the WGSL
+uniform buffer. Both backends compose the same `createCanvasLifecycle` leaf, so lifecycle wiring,
+pause/resume, reduced motion, and pointer wake remain substrate-agnostic.
 
 ---
 
 ## References
 
-The lane's authoritative research artefact is [`RESEARCH.md`](./RESEARCH.md) (the metaball / SDF
-field survey, the OKLCh palette derivation, and the mood/intent model behind the bead). The primary
-techniques, all accessed 2026-06-08:
+Primary techniques:
 
 - Inigo Quilez — [Smooth Minimum](https://iquilezles.org/articles/smin/), [Distance + Gradient
   functions 2D](https://iquilezles.org/articles/distgradfunctions2d/) (the SDF gradient = free fake

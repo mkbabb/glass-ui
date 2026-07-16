@@ -1,39 +1,36 @@
 <script setup lang="ts">
-import type { HTMLAttributes, InputHTMLAttributes } from 'vue'
-import { computed } from 'vue'
-import { Search } from "@lucide/vue"
-import { ComboboxInput, type ComboboxInputProps, useForwardProps } from 'reka-ui'
-import { cn } from '../_shared/class-names'
+import { computed, useAttrs } from "vue";
+import { Search } from "@lucide/vue";
+import { ComboboxInput as RekaComboboxInput } from "reka-ui";
+import { cn } from "../_shared/class-names";
+import { fixedHostAttrs } from "../_shared/primitive";
+import type {
+    ComboboxInputEmits,
+    ComboboxInputProps,
+} from "../combobox/types";
 
-defineOptions({
-  inheritAttrs: false,
-})
+defineOptions({ name: "CommandInput", inheritAttrs: false });
 
-const props = defineProps<ComboboxInputProps & {
-  class?: HTMLAttributes['class']
-  placeholder?: InputHTMLAttributes['placeholder']
-}>()
-
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
-
-  return delegated
-})
-
-const forwardedProps = useForwardProps(delegatedProps)
+const props = defineProps<ComboboxInputProps>();
+const emit = defineEmits<ComboboxInputEmits>();
+const attrs = useAttrs();
+const forwardedAttrs = computed(() => ({
+    ...fixedHostAttrs(attrs),
+    placeholder: props.placeholder,
+}));
 </script>
 
 <template>
-  <!-- AX.W51 D18 — the filter-input HEIGHT reads the shared `--dropdown-input-height`
-       register (= W51's `--control-h-md`; was h-11), unifying the Combobox/Command
-       filter-input register onto ONE comfort-scaled height.
-       AX.W50 D17 — the font reads the family PRIMARY rung (`text-dropdown`). -->
-  <div class="flex items-center border-b px-3" data-cmdk-input-wrapper>
-    <Search class="mr-2 h-4 w-4 shrink-0 opacity-50" />
-    <ComboboxInput
-      v-bind="{ ...forwardedProps, ...$attrs }"
-      auto-focus
-      :class="cn('flex h-(--dropdown-input-height) w-full rounded-input bg-transparent py-3 text-dropdown outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-disabled', props.class)"
-    />
-  </div>
+    <div class="command__input-wrapper" data-slot="command-input-wrapper">
+        <Search class="command__input-icon" aria-hidden="true" />
+        <RekaComboboxInput
+            v-bind="forwardedAttrs"
+            data-slot="command-input"
+            :model-value="props.modelValue"
+            :auto-focus="props.autoFocus"
+            :disabled="props.disabled"
+            :class="cn('command__input', props.class)"
+            @update:model-value="emit('update:modelValue', $event)"
+        />
+    </div>
 </template>

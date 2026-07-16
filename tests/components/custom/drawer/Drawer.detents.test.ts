@@ -1,15 +1,21 @@
 import { mount } from "@vue/test-utils";
 import { defineComponent, nextTick } from "vue";
 import { describe, expect, it } from "vitest";
-import { Drawer, DrawerContent, DrawerTitle } from "@glass/components/drawer";
+import {
+    Drawer,
+    DrawerContent,
+    DrawerDescription,
+    DrawerTitle,
+} from "@glass/components/drawer";
 
 async function mountDrawer(rootProps = "", contentProps = "") {
     const Harness = defineComponent({
-        components: { Drawer, DrawerContent, DrawerTitle },
+        components: { Drawer, DrawerContent, DrawerDescription, DrawerTitle },
         template: `
             <Drawer :open="true" ${rootProps}>
                 <DrawerContent ${contentProps} data-detent-test>
                     <DrawerTitle>Test drawer</DrawerTitle>
+                    <DrawerDescription>Adjust the drawer position.</DrawerDescription>
                 </DrawerContent>
             </Drawer>
         `,
@@ -78,6 +84,31 @@ describe("Drawer detent semantics", () => {
         expect(handle.getAttribute("aria-valuenow")).toBe("1");
         expect(drawer.emitted("update:activeSnapPoint")?.at(-1)).toEqual([1]);
 
+        wrapper.unmount();
+    });
+
+    it("starts an interrupted drag from the painted fraction", async () => {
+        const wrapper = await mountDrawer(':snap-points="[0.25, 1]"');
+        const sheet = document.querySelector<HTMLElement>("[data-detent-test]")!;
+        const handle = sheet.querySelector<HTMLElement>("[data-glass-drawer-handle]")!;
+        sheet.style.setProperty("--glass-drawer-t", "0.4");
+
+        handle.dispatchEvent(
+            new PointerEvent("pointerdown", {
+                bubbles: true,
+                clientY: 100,
+                pointerId: 1,
+            }),
+        );
+        handle.dispatchEvent(
+            new PointerEvent("pointermove", {
+                bubbles: true,
+                clientY: 100,
+                pointerId: 1,
+            }),
+        );
+
+        expect(sheet.style.getPropertyValue("--glass-drawer-t")).toBe("0.4");
         wrapper.unmount();
     });
 });

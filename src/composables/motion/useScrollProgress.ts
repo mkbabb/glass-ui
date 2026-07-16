@@ -14,6 +14,15 @@ interface ScrollProgressConfig {
      * bottom, 1 when target top reaches viewport top.
      */
     trackExit?: boolean;
+    /**
+     * Keep the returned ref live even when CSS scroll timelines are available.
+     * Use this only when JavaScript consumes the value directly (for example a
+     * shader uniform); CSS-authored progress should keep the default compositor
+     * path and attach no reader.
+     */
+    reactive?: boolean;
+    /** Attach the reader only while this source is truthy. */
+    enabled?: MaybeRef<boolean>;
 }
 
 /**
@@ -21,9 +30,9 @@ interface ScrollProgressConfig {
  * 1b — when this holds, the `.scroll-progress` CSS recipe (scroll-driven.css)
  * owns the visual axis on the compositor, so this composable becomes the inert
  * (non-attaching) path: NO `scroll`/`resize` listeners, NO `ResizeObserver`.
- * This is the dual-path-with-a-single-writer rule (no double-run). Consumers
- * that still need a reactive JS number on a supporting engine opted into the
- * wrong tool — the native CSS path is primary, the composable is fallback-tier.
+ * This is the dual-path-with-a-single-writer rule (no double-run). A consumer
+ * that genuinely reads the number in JavaScript may opt into `reactive` mode;
+ * the native CSS path remains primary for CSS-authored progress.
  */
 const NATIVE_SCROLL_TIMELINE = supportsScrollTimeline();
 
@@ -37,16 +46,22 @@ const NATIVE_SCROLL_TIMELINE = supportsScrollTimeline();
  * CSS recipe (scroll-driven.css), which runs the same 0..1 axis on the
  * compositor. This composable is the feature-detected fallback (the sole writer
  * when the native feature is absent); `computeProgress()` still runs once on
- * mount for a correct initial value.
+ * mount for a correct initial value. `reactive: true` is the explicit exception
+ * for a non-CSS consumer such as a shader uniform.
  */
 export function useScrollProgress(
     options: ScrollProgressConfig,
 ): Ref<number> {
     const { offset = 0, trackExit = false } = options;
     const progress = ref(0);
+    const needsReader = options.reactive === true || !NATIVE_SCROLL_TIMELINE;
 
     let rafId = 0;
     let resizeObserver: ResizeObserver | null = null;
+    let mounted = false;
+    let listening = false;
+
+    const isEnabled = (): boolean => unref(options.enabled ?? true);
 
     function computeProgress(): void {
         const el = unref(options.target);
@@ -65,19 +80,17 @@ export function useScrollProgress(
     }
 
     function schedule(): void {
-        if (rafId) return;
+        if (!isEnabled() || rafId) return;
         rafId = requestAnimationFrame(() => {
             rafId = 0;
             computeProgress();
         });
     }
 
-    onMounted(() => {
-        // One correct initial value in both paths.
+    function start(): void {
+        if (!mounted || listening || !needsReader || !isEnabled()) return;
+        listening = true;
         computeProgress();
-        // Native path — the CSS recipe owns the live axis. Attach nothing:
-        // 0 scroll/resize listeners, 0 ResizeObservers (the W0 gate assertion).
-        if (NATIVE_SCROLL_TIMELINE) return;
         window.addEventListener("scroll", schedule, { passive: true });
         window.addEventListener("resize", schedule, { passive: true });
         const el = unref(options.target);
@@ -85,26 +98,51 @@ export function useScrollProgress(
             resizeObserver = new ResizeObserver(schedule);
             resizeObserver.observe(el);
         }
-    });
-
-    // Re-target re-measure — fallback path only (no listeners attached natively).
-    if (!NATIVE_SCROLL_TIMELINE) {
-        watch(
-            () => unref(options.target),
-            (el, prev) => {
-                if (prev && resizeObserver) resizeObserver.unobserve(prev);
-                if (el && resizeObserver) resizeObserver.observe(el);
-                schedule();
-            },
-        );
     }
 
-    onBeforeUnmount(() => {
-        window.removeEventListener("scroll", schedule);
-        window.removeEventListener("resize", schedule);
+    function stop(): void {
+        if (listening) {
+            listening = false;
+            window.removeEventListener("scroll", schedule);
+            window.removeEventListener("resize", schedule);
+        }
         if (rafId) cancelAnimationFrame(rafId);
+        rafId = 0;
         resizeObserver?.disconnect();
         resizeObserver = null;
+    }
+
+    onMounted(() => {
+        mounted = true;
+        if (needsReader) start();
+        else if (isEnabled()) computeProgress();
+    });
+
+    watch(
+        () => unref(options.target),
+        (el, prev) => {
+            if (prev && resizeObserver) resizeObserver.unobserve(prev);
+            if (el && resizeObserver) resizeObserver.observe(el);
+            if (listening) schedule();
+            else if (isEnabled()) computeProgress();
+        },
+    );
+
+    watch(
+        () => isEnabled(),
+        (enabled) => {
+            if (enabled) {
+                if (needsReader) start();
+                else computeProgress();
+            } else {
+                stop();
+            }
+        },
+    );
+
+    onBeforeUnmount(() => {
+        mounted = false;
+        stop();
     });
 
     return progress;

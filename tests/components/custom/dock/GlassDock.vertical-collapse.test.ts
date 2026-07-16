@@ -47,6 +47,52 @@ describe("GlassDock vertical collapse (AZ.W-DOCK-TAXONOMY HG2)", () => {
         wrapper.unmount();
     });
 
+    it.each(["horizontal", "vertical"] as const)(
+        "mounts %s collapsed directly in its summary posture",
+        (orientation) => {
+            const wrapper = mountVertical({ orientation, startCollapsed: true });
+            const root = wrapper.get(".glass-dock");
+            const full = wrapper.get(".dock-layer--full");
+            const summary = wrapper.get(".dock-layer--summary");
+
+            expect(root.classes()).toContain("collapsed");
+            expect(root.attributes("data-morphing")).toBeUndefined();
+            expect(full.attributes("inert")).toBe("");
+            expect(summary.attributes("inert")).toBeUndefined();
+            wrapper.unmount();
+        },
+    );
+
+    it.each(["horizontal", "vertical"] as const)(
+        "mounts %s expanded directly in its full posture",
+        (orientation) => {
+            const wrapper = mountVertical({ orientation, startCollapsed: false });
+            const root = wrapper.get(".glass-dock");
+            const full = wrapper.get(".dock-layer--full");
+            const summary = wrapper.get(".dock-layer--summary");
+
+            expect(root.classes()).toContain("expanded");
+            expect(root.classes()).not.toContain("collapsed");
+            expect(root.attributes("data-morphing")).toBeUndefined();
+            expect(full.attributes("inert")).toBeUndefined();
+            expect(summary.attributes("inert")).toBe("");
+            wrapper.unmount();
+        },
+    );
+
+    it("keeps the initially-expanded posture on the existing click-away path", async () => {
+        const wrapper = mountVertical({ startCollapsed: false });
+        const root = wrapper.get(".glass-dock");
+
+        expect(root.classes()).toContain("expanded");
+        await vi.advanceTimersByTimeAsync(20);
+        document.body.dispatchEvent(new PointerEvent("pointerdown", { bubbles: true }));
+        await nextTick();
+
+        expect(root.classes()).toContain("collapsed");
+        wrapper.unmount();
+    });
+
     it("expand() morphs the vertical dock open; collapse() shrinks it back", async () => {
         const wrapper = mountVertical();
         const root = wrapper.get(".glass-dock");

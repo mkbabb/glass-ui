@@ -9,7 +9,7 @@ import { ref } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
-import { DarkModeToggle } from "@glass/components/controls";
+import { DarkModeToggle } from "@glass/components/dark-mode-toggle";
 import { GlassDock } from "@glass/components/dock";
 
 // Standalone rungs only — `dock` is excluded here because it inherits its
@@ -27,9 +27,16 @@ const disableTransitions = ref(false);
         >
             <ShowcaseFrame pad="lg">
                 <div class="flex flex-wrap items-center gap-6">
-                    <div v-for="size in sizes" :key="size" class="flex flex-col items-center gap-2">
+                    <div
+                        v-for="size in sizes"
+                        :key="size"
+                        class="flex flex-col items-center gap-2"
+                    >
                         <DarkModeToggle :size="size" />
-                        <code class="fira-code text-mono-caption text-muted-foreground">{{ size }}</code>
+                        <code
+                            class="fira-code text-mono-caption text-muted-foreground"
+                            >{{ size }}</code
+                        >
                     </div>
                 </div>
             </ShowcaseFrame>
@@ -37,7 +44,7 @@ const disableTransitions = ref(false);
 
         <StorySection
             label="dock rung — sizes to its GlassDock host"
-            blurb="size=&quot;dock&quot; reads --dock-control-size from the surrounding GlassDock, so the toggle matches its dock siblings at every density. Shown standalone it would fall through to a bare 40px fallback and teach nothing — here it rides three live docks."
+            blurb='size="dock" reads --dock-control-size from the surrounding GlassDock, so the toggle matches its dock siblings at every density. Shown standalone it would fall through to a bare 40px fallback and teach nothing — here it rides three live docks.'
         >
             <ShowcaseFrame pad="lg">
                 <div class="flex flex-wrap items-end gap-6">
@@ -58,26 +65,15 @@ const disableTransitions = ref(false);
         </StorySection>
 
         <StorySection
-            label="eclipse long press"
-            blurb="The opt-in eclipse uses the same toggle state with a slower transition. Hold with a pointer or the Space key; a short activation remains the normal toggle."
-        >
-            <ShowcaseFrame pad="md">
-                <div class="flex items-center gap-4">
-                    <DarkModeToggle eclipse size="lg" aria-describedby="eclipse-help" />
-                    <span id="eclipse-help" class="text-sm text-muted-foreground">
-                        Hold pointer or Space for the slow eclipse
-                    </span>
-                </div>
-            </ShowcaseFrame>
-        </StorySection>
-
-        <StorySection
             label="disableTransitions knob"
             blurb="When true, suppresses CSS transitions on <html> and descendants during the toggle to avoid mid-flight cascade jank. Pair with a transitions-cascading layout to feel the difference."
         >
             <ShowcaseFrame pad="md">
                 <div class="flex items-center gap-4">
-                    <DarkModeToggle size="md" :disable-transitions="disableTransitions" />
+                    <DarkModeToggle
+                        size="md"
+                        :disable-transitions="disableTransitions"
+                    />
                     <label class="flex items-center gap-2 text-sm">
                         <input v-model="disableTransitions" type="checkbox" />
                         suppress transitions during toggle

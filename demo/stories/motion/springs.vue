@@ -232,7 +232,7 @@ async function copyStops(): Promise<void> {
                     </div>
 
                     <StoryPlayButton @play="play" />
-                    <Button variant="secondary" @click="reset">Reset</Button>
+                    <Button @click="reset">Reset</Button>
 
                     <p class="text-small text-muted-foreground ml-auto max-w-md">
                         {{ presetRow.comment }}
@@ -317,7 +317,7 @@ async function copyStops(): Promise<void> {
                     <LabeledSlider
                         :model-value="playResponse"
                         label="response (s)"
-                        tooltip="The spring's period — larger is slower / looser."
+                        description="The spring's period — larger is slower / looser."
                         :min="0.1"
                         :max="1.2"
                         :step="0.01"
@@ -326,7 +326,7 @@ async function copyStops(): Promise<void> {
                     <LabeledSlider
                         :model-value="playDamping"
                         label="dampingFraction ζ"
-                        tooltip="ζ=1 fully damps with no overshoot; below 1 overshoots, above 1 over-damps."
+                        description="ζ=1 fully damps with no overshoot; below 1 overshoots, above 1 over-damps."
                         :min="0.2"
                         :max="1.5"
                         :step="0.01"
