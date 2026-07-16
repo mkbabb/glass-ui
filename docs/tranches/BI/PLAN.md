@@ -74,7 +74,8 @@ BEFORE their breaking waves ship (the peer pin-guards in B0 before ANY publish).
   OVERLAY-UNION · MENU-TRIGGER · DIALOG-PLACEMENT · CHIP-FOLD · MULTISELECT-FOLD ·
   BUTTON-TONE · SYNONYM-RENAMES · AXES-GATES · FACTOR-ASKS
 - **B3**: DOCK-SPINE · TABS-FACTOR · DOCK-ESCAPE · DOCK-CONTROLS · DOCK-CROSSFADE · DOCK-OVERFLOW ·
-  DOCK-SPRING-UNIFY · DOCK-FOLD · DOCK-RETIRES · DOCK-GATE-CULL · DOCK-DEVICE
+  DOCK-SPRING-UNIFY · DOCK-FOLD · DOCK-RETIRES · DOCK-GATE-CULL · DOCK-DEVICE ·
+  DOCK-INTERACTION-AXIS (minted 2026-07-16, the dock-axis triumvirate)
 - **B4+B5**: PAGER-WORM · PAGER-A11Y · CAROUSEL-REBUILD · PAGER-RETIRES · FOURIER-RIBBON ·
   VIZ-DELETIONS · FIELD-CORE · AURORA-VIBRANCY · CONSTELLATION-DEDUPE · STAGE-FIELD-CLAMP ·
   AUTH-SHELL-BG · DOCK-LUMA-SHARE · E10-AURORA-ENTRANCE · BLOB-SEAMS (minted 2026-07-12, the marking pass)
@@ -169,3 +170,17 @@ producer reds WHOLESALE ("B5 + B9-S5", PROMPT-RECAP row 314) without per-ask own
 - The marks ledger `docs/tranches/BI/coordination/INBOUND-MARKS.md` + its completeness gate
   (`proof:inbound-marks`) land with the archive-sweep fold; T-52/T-60/GAP-L2/GAP-L5/PKT-1/T-38/
   T-45/P1-R3/GAP-ARM/U-F4/U-F30 are thereby each owned BY NAME.
+
+## §10 — The dock-interaction-axis triumvirate mint (2026-07-16, BI-addenda)
+
+The BI-addenda dock-interaction-axis triumvirate (RESEARCH → HARDEN, two-consecutive-clean) found
+atlas totality packet §1 (PA-3, the six-close dock disease) + augment §C.1 (the residual
+collapsed-pole seam) had NO owning wave — atlas 7 is registry-HELD on it. Cured:
+- MINTED `BI.W-DOCK-INTERACTION-AXIS` (B3 — the consumer-owned posture axis: one `isQuiet` seam +
+  flip watch + merged touch `quiet` + search reroute; `alwaysExpanded`/`startCollapsed` KEPT
+  byte-identical). Wave count 93 → **94**. Under the 2026-07-16 gate ruling it mints NO proof/gate
+  script — ordinary validation (vue-tsc · focused vitest born-RED→GREEN · `npm run build`) only.
+- atlas owes an **ADOPT** addendum in its own tranche (add `:interaction="manual"` at
+  `src/platform/chrome/dock/Dock.vue:226`) — recorded as a glass-ui-side outbound coordination mark;
+  the one-line edit is atlas-tranche-owned. keyframes.js/slides/sci-report owe NONE.
+- Sources of record: `bi-addenda/reports/dock-axis/research.md` + `…/harden.md` (normative).

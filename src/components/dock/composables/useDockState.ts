@@ -1,6 +1,7 @@
 import { computed, ref, watch, onUnmounted } from "vue";
 import type { ComputedRef, Ref } from "vue";
 import { isTeleportedTarget } from "./isTeleportedTarget";
+import type { DockInteraction } from "./useDockShellProps";
 import { HOVER_INTENT_MS } from "../constants";
 
 export interface UseDockStateOptions {
@@ -10,6 +11,13 @@ export interface UseDockStateOptions {
     rootEl: Ref<HTMLElement | null>;
     /** Disable collapse behavior and keep the dock expanded. */
     alwaysExpanded?: Ref<boolean> | boolean;
+    /**
+     * Posture ownership. `"auto"` (default) runs the built-in FSM; `"manual"`
+     * suppresses every environmental writer (hover, focus, idle timer,
+     * outside-click, collapsed-tap) at BOTH poles, leaving only `expand()` /
+     * `collapse()` operative — the consumer owns posture.
+     */
+    interaction?: Ref<DockInteraction> | DockInteraction;
     /** Mount-only posture for a collapsible dock. */
     initialExpanded?: boolean;
     /** Ref that suppresses click-away during an active dock animation. */
@@ -84,6 +92,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         collapseDelay = 3600,
         rootEl,
         alwaysExpanded = false,
+        interaction = "auto",
         initialExpanded = false,
         isTransitioning,
         dockId,
@@ -92,6 +101,13 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
 
     const getAlwaysExpanded = () =>
         typeof alwaysExpanded === "boolean" ? alwaysExpanded : alwaysExpanded.value;
+    const getInteraction = (): DockInteraction =>
+        typeof interaction === "string" ? interaction : interaction.value;
+    /* The ONE predicate every environmental posture writer early-returns under: an
+       always-expanded dock (force-pinned pole) OR a manual dock (the consumer owns
+       posture). The imperative `expand()`/`collapse()` pair crosses it — in manual
+       they fall through to the real writes so the pole stays free. */
+    const isQuiet = () => getAlwaysExpanded() || getInteraction() === "manual";
 
     const state = ref<DockState>(
         getAlwaysExpanded() ? "pinned" : initialExpanded ? "hover" : "collapsed",
@@ -162,7 +178,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
     }
 
     function scheduleCollapse() {
-        if (getAlwaysExpanded()) return;
+        if (isQuiet()) return;
         if (keepOpenCount.value > 0) return;
         clearTimer();
         collapseTimer = setTimeout(() => {
@@ -220,7 +236,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
     // --- Mouse handlers ---
 
     function onMouseEnter() {
-        if (getAlwaysExpanded()) return;
+        if (isQuiet()) return;
         clearTimer();
         if (state.value === "collapsed") {
             // Defer collapsed→hover expansion by the intent
@@ -233,7 +249,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
             clearHoverIntent();
             hoverIntentTimer = setTimeout(() => {
                 hoverIntentTimer = null;
-                if (getAlwaysExpanded()) return;
+                if (isQuiet()) return;
                 if (state.value === "collapsed") {
                     state.value = "hover";
                     syncDerived();
@@ -244,7 +260,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
     }
 
     function onMouseLeave(e?: MouseEvent) {
-        if (getAlwaysExpanded()) return;
+        if (isQuiet()) return;
         // A leave cancels any pending hover-intent dwell: a
         // sweeping-edge enter immediately chased by a leave never commits the expand.
         clearHoverIntent();
@@ -270,7 +286,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
     // --- Focus handlers ---
 
     function onFocusIn() {
-        if (getAlwaysExpanded()) return;
+        if (isQuiet()) return;
         clearTimer();
         if (state.value === "collapsed") {
             state.value = "hover";
@@ -279,7 +295,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
     }
 
     function onFocusOut(e: FocusEvent) {
-        if (getAlwaysExpanded()) return;
+        if (isQuiet()) return;
         if (state.value !== "hover") return;
         if (keepOpenCount.value > 0) return;
         const root = e.currentTarget as HTMLElement;
@@ -292,11 +308,10 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
     // --- Click on collapsed layer → PINNED ---
 
     function onClickCollapsed() {
-        if (getAlwaysExpanded()) {
-            state.value = "pinned";
-            syncDerived();
-            return;
-        }
+        // Environmental collapsed-tap → PINNED. Suppressed when quiet: an
+        // always-expanded dock is already pinned, and a manual dock reserves
+        // posture for the consumer's imperative `expand()`/`collapse()`.
+        if (isQuiet()) return;
         clearTimer();
         clearHoverIntent();
         state.value = "pinned";
@@ -336,7 +351,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
     // --- Click-away listener ---
 
     function onPointerDownOutside(e: PointerEvent) {
-        if (getAlwaysExpanded()) return;
+        if (isQuiet()) return;
         if (keepOpenCount.value > 0) return;
         // During transitions, pointer-events:none on dock-layers causes clicks
         // to target the parent element — suppress click-away entirely.
@@ -396,6 +411,22 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
     } else if (alwaysExpanded) {
         state.value = "pinned";
         syncDerived();
+    }
+
+    /* Flip → manual freezes any in-flight environmental timer. Load-bearing, not
+       hygiene: `scheduleCollapse`'s setTimeout callback writes `state="collapsed"`
+       with NO fire-time re-guard, so a timer armed in `auto` would collapse after
+       the flip; `clearTimer()` is the sole guarantor against a stale idle collapse
+       overriding the new owner (it also cancels the `release()` grace timer — shared
+       `collapseTimer` handle). Leaving manual re-arms nothing: `isQuiet()` guards
+       re-arm themselves and the pole is preserved. */
+    if (typeof interaction !== "string") {
+        watch(interaction, (mode) => {
+            if (mode === "manual") {
+                clearTimer();
+                clearHoverIntent();
+            }
+        });
     }
 
     // Cleanup

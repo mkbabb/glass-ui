@@ -1,5 +1,5 @@
 export { default as GlassDock } from "./GlassDock.vue";
-export type { DockBackdropMode } from "./composables/useDockShellProps";
+export type { DockBackdropMode, DockInteraction } from "./composables/useDockShellProps";
 export { default as DockLayerGroup } from "./DockLayerGroup.vue";
 export { default as DockLayer } from "./DockLayer.vue";
 // Thin controlled face-swap core. The

@@ -11,8 +11,8 @@
 // `useDockSearch` is a
 // search mode BESIDE the dock state machine + the morph engine, NOT an edit to either:
 //   - it COMPOSES `useDockState` (the existing 3-state machine) — `armSearch()` is
-//     `onClickCollapsed()` (collapsed → pinned) + `keepOpen()` (the ref-counted hold so
-//     the dock stays open through the search gesture); `disarmSearch()` is `release()`.
+//     `expand()` (collapsed → hover) + `keepOpen()` (the ref-counted hold so the dock
+//     stays open through the search gesture); `disarmSearch()` is `release()`.
 //     NO new state machine.
 //   - it does NOT import `useDockMorph`/`dockMorphMeasure`/`DOCK_SPRING` for an
 //     EDIT (the box-inviolate fence). The pill→field morph rides the dock's OWN
@@ -245,9 +245,14 @@ export function useDockSearch<T extends SearchableItem = SearchableItem>(
     function armSearch(): void {
         if (isSearchArmed.value) return;
         isSearchArmed.value = true;
-        // collapsed → pinned (the existing expand-on-click seam) + the ref-counted hold
-        // so the dock stays open through the search gesture (useDockState.ts:328-345).
-        dockState.onClickCollapsed();
+        // A search-arm is a CONSUMER-initiated gesture: open via the imperative
+        // `expand()` (operative even in `interaction="manual"`), NOT the environmental
+        // `onClickCollapsed()` (suppressed in manual, and it left the "pinned" pole so
+        // `disarmSearch`'s grace-collapse — which guards `state === "hover"` — never
+        // returned the dock to the compact PERSISTENT bar). `expand()` sets "hover", so
+        // the documented return fires. Then the ref-counted hold keeps the dock open
+        // through the search gesture.
+        dockState.expand();
         dockState.keepOpen();
         fuzzy.open();
     }

@@ -15,6 +15,7 @@ import {
     Video,
     FileText,
     Map as MapIcon,
+    ChevronRight,
 } from "@lucide/vue";
 import {
     GlassDock,
@@ -75,6 +76,22 @@ const selection = useSelectionGroup<Filter>({
 
 // ── The overlay-trigger fold demo ──
 const view = ref<string>("grid");
+
+// ── interaction="manual" — the consumer owns posture ──
+//
+// On a manual dock every internal environmental writer (hover / focus / idle timer /
+// outside-click / collapsed-tap / touch) is suppressed at BOTH poles; only the
+// imperative `expand()`/`collapse()` write. Here a single reducer (`manualExpanded`)
+// owns posture and drives the exposed methods, and a `#persistent` disclosure button
+// (never inert, reachable in both poles) is the a11y-honest expand affordance the
+// manual contract requires.
+const manualDock = ref<InstanceType<typeof GlassDock> | null>(null);
+const manualExpanded = ref(false);
+function toggleManual() {
+    manualExpanded.value = !manualExpanded.value;
+    if (manualExpanded.value) manualDock.value?.expand();
+    else manualDock.value?.collapse();
+}
 </script>
 
 <template>
@@ -147,6 +164,45 @@ const view = ref<string>("grid");
                     </Select>
                 </GlassDock>
             </DockStage>
+        </StorySection>
+
+        <StorySection heading="interaction=&quot;manual&quot; — the consumer owns posture">
+            <DockStage>
+                <GlassDock
+                    ref="manualDock"
+                    interaction="manual"
+                    start-collapsed
+                    aria-label="Consumer-owned dock"
+                >
+                    <template #persistent>
+                        <DockControl
+                            aria-label="Toggle dock"
+                            :aria-expanded="manualExpanded"
+                            @click="toggleManual"
+                        >
+                            <ChevronRight
+                                class="transition-transform"
+                                :class="{ 'rotate-90': manualExpanded }"
+                            />
+                        </DockControl>
+                    </template>
+
+                    <DockControl aria-label="Home"><Home /></DockControl>
+                    <DockControl aria-label="Search"><Search /></DockControl>
+                    <DockSeparator />
+                    <DockControl aria-label="Starred"><Star /></DockControl>
+
+                    <template #collapsed>
+                        <span class="text-small text-muted-foreground px-2">Docked</span>
+                    </template>
+                </GlassDock>
+            </DockStage>
+            <p class="text-small text-muted-foreground mt-3">
+                Posture is: <strong>{{ manualExpanded ? "expanded" : "collapsed" }}</strong>
+                — hover, focus, idle, and outside-click move nothing. Only the
+                <code>#persistent</code> disclosure (never inert, reachable in both poles)
+                drives <code>expand()</code>/<code>collapse()</code>.
+            </p>
         </StorySection>
     </StoryPage>
 </template>

@@ -8,6 +8,7 @@ import { computed, type ComputedRef } from "vue";
 // Dock scale uses the shared Size ordinal. `xl` is valid for this audacious surface.
 export type DockSize = "sm" | "md" | "lg" | "xl";
 export type DockBackdropMode = "live" | "static";
+export type DockInteraction = "auto" | "manual";
 
 /**
  * The GlassDock prop shape. Every dock—horizontal or vertical—reads the same
@@ -122,6 +123,20 @@ export interface DockProps {
      */
     startCollapsed?: boolean;
     /**
+     * Posture ownership on a COLLAPSIBLE dock.
+     *   `"auto"`   (default) — the built-in FSM owns posture.
+     *   `"manual"` — the consumer owns posture. Every internal environmental writer
+     *                (hover, focus, idle timer, outside-click, collapsed-tap, touch)
+     *                is suppressed at BOTH poles; only `expand()`/`collapse()` write.
+     *                Mount pole from `startCollapsed`. Read posture via `expanded`.
+     *                a11y: the consumer MUST author a focusable disclosure in a
+     *                never-inert slot (`#persistent`/`#collapsed`) — glass does not
+     *                auto-expand on focus in manual and provides no fallback.
+     * Resolved to `"auto"` on an always-expanded dock (that pole is force-pinned;
+     * interaction is meaningless there — no dead combination reaches the FSM).
+     */
+    interaction?: DockInteraction;
+    /**
      * In-cap arrangement. `"linear"` (default) lays the active layer out as a
      * linear row/column. `"grid"` makes the active layer a self-wrapping tile
      * grid (Launchpad/Stage-Manager track symmetry — `auto-fill` columns of
@@ -170,6 +185,7 @@ export interface DockShellProps {
     containerStyle: ComputedRef<Record<string, string> | undefined>;
     collapseDelay: ComputedRef<number>;
     startCollapsed: ComputedRef<boolean>;
+    interaction: ComputedRef<DockInteraction>;
     layoutValue: ComputedRef<"linear" | "grid">;
     shape: ComputedRef<"pill" | "rounded" | "card">;
     orientation: ComputedRef<"horizontal" | "vertical">;
@@ -236,12 +252,20 @@ export function useDockShellProps(props: DockProps): DockShellProps {
     const startCollapsed = computed(() =>
         alwaysExpanded.value ? false : props.startCollapsed ?? true,
     );
+    /* Posture ownership (H1). Resolved to `"auto"` on an always-expanded dock —
+       that pole is force-pinned, so interaction is meaningless there and the
+       `alwaysExpanded + interaction="manual"` dead combination cannot reach the FSM
+       (no `data-interaction` stamp, byte-identical behaviour). */
+    const interaction = computed<DockInteraction>(() =>
+        alwaysExpanded.value ? "auto" : props.interaction ?? "auto",
+    );
     const fitContent = computed(() => props.fitContent ?? false);
 
     return {
         containerStyle,
         collapseDelay,
         startCollapsed,
+        interaction,
         layoutValue,
         shape,
         orientation,

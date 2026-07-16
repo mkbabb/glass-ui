@@ -16,8 +16,14 @@ export interface UseDockTouchGateOptions {
     collapseDelay: number;
     /** The dock body root — the tap discrimination anchors on it. */
     rootEl: Ref<HTMLElement | null>;
-    /** True when the dock cannot collapse (the gate no-ops — no tap-to-expand). */
-    alwaysExpanded: Readonly<Ref<boolean>>;
+    /**
+     * True when every environmental writer is suppressed — an always-expanded dock
+     * (force-pinned) OR a manual dock (the consumer owns posture). The gate no-ops:
+     * no tap-to-expand, no collapse-on-deactivate. Without folding `manual` in here
+     * the gate would leak a `collapse()` on deactivate (in manual `isPinned` is
+     * false and `alwaysExpanded` is false, so the old guard would fire).
+     */
+    quiet: Readonly<Ref<boolean>>;
     /** The painted expand state (`alwaysExpanded || expanded`). */
     visualExpanded: Readonly<Ref<boolean>>;
     /** The raw expand ref (the collapse-on-deactivate guard reads it). */
@@ -41,13 +47,13 @@ export interface UseDockTouchGateReturn {
 export function useDockTouchGate(
     options: UseDockTouchGateOptions,
 ): UseDockTouchGateReturn {
-    const { collapseDelay, rootEl, alwaysExpanded, visualExpanded, expanded, isPinned, expand, collapse } =
+    const { collapseDelay, rootEl, quiet, visualExpanded, expanded, isPinned, expand, collapse } =
         options;
 
     const touchGate = useTouchGate(collapseDelay);
 
     function shouldGateTouch(): boolean {
-        return !alwaysExpanded.value;
+        return !quiet.value;
     }
 
     function onTouchStart(event: TouchEvent): void {
@@ -77,7 +83,7 @@ export function useDockTouchGate(
     }
 
     watch(touchGate.isActive, (isActive) => {
-        if (!isActive && expanded.value && !isPinned.value && !alwaysExpanded.value) {
+        if (!isActive && expanded.value && !isPinned.value && !quiet.value) {
             collapse();
         }
     });

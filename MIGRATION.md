@@ -51,6 +51,16 @@ replacements, without aliases or compatibility shims.
 The Dock fisheye enhancement and its deep `useDockFisheye` import are removed. Capped
 control runs retain the measured native-scroll path and `scrollIntoView` recentering.
 
+`GlassDock` gains an additive `interaction` axis (`DockInteraction = "auto" | "manual"`,
+default `"auto"`). `"auto"` is today's behaviour byte-identical — the built-in FSM owns
+posture. `"manual"` hands posture to the consumer: every internal environmental writer
+(hover, focus, idle timer, outside-click, collapsed-tap, touch) is suppressed at both
+poles and only `expand()`/`collapse()` write. In manual the consumer authors a focusable
+disclosure in a never-inert slot (`#persistent`/`#collapsed`); glass does not auto-expand
+on focus and provides no fallback. Resolved to `"auto"` on an always-expanded dock (that
+pole is force-pinned). Additive — not a break; no alias, no shim. `alwaysExpanded` and
+`startCollapsed` are unchanged.
+
 `HeaderRibbon` retains the `/header-ribbon` subpath and the `placement="left|right"`
 contract introduced in 5.0. It is persistent-only: the action row renders expanded and operable
 from first paint, with no disclosure mode, anchor button, or reveal gesture. DOM/action order is
@@ -302,6 +312,7 @@ The full 199-symbol map (grouped alphabetically by symbol; `kind` is the TS expo
 | `UseGlobalDarkReturn` | type | `/dark` |
 | `DeckCore` | type | `/deck` |
 | `DeckMoves` | type | `/deck` |
+| `DockInteraction` | type | `/dock` |
 | `UseDockSearchOptions` | type | `/dock` |
 | `UseDockSearchReturn` | type | `/dock` |
 | `UseDockStateReturn` | type | `/dock` |

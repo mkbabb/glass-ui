@@ -322,6 +322,53 @@ describe("GlassDock touch-gate behavioural contract (AT.W6-dock-b)", () => {
         wrapper.unmount();
     });
 
+    it("T12 (interaction=manual): a tap on a collapsed dock neither expands nor collapses (quiet gate)", async () => {
+        // BI.W-DOCK-INTERACTION-AXIS — the touch gate takes the merged `quiet`
+        // (alwaysExpanded || manual). Under manual `quiet` is true, so `shouldGateTouch`
+        // no-ops: the tap does not expand, and the isActive→deactivate watch does not
+        // collapse. Without the merged `quiet` the gate would leak a `collapse()` on
+        // deactivate (in manual `isPinned` and `alwaysExpanded` are both false).
+        const onPlay = vi.fn();
+        const Host = defineComponent({
+            setup() {
+                return () =>
+                    h(
+                        GlassDock,
+                        { startCollapsed: true, autoLuminance: false, interaction: "manual" },
+                        {
+                            default: () => h("div", "full"),
+                            collapsed: () =>
+                                h(
+                                    DockControl,
+                                    {
+                                        "aria-label": "Play",
+                                        "data-testid": "collapsed-play",
+                                        onClick: onPlay,
+                                    },
+                                    () => "▶",
+                                ),
+                        },
+                    );
+            },
+        });
+        const wrapper = mount(Host, { attachTo: document.body });
+        const root = wrapper.get(".glass-dock").element;
+        const play = wrapper.get<HTMLElement>("[data-testid='collapsed-play']").element;
+
+        expect(root.classList.contains("collapsed")).toBe(true);
+
+        vi.advanceTimersByTime(1);
+        dispatchTap(play, 0);
+        vi.runAllTimers();
+        await wrapper.vm.$nextTick();
+
+        // The consumer owns posture: the environmental tap does not move it.
+        expect(root.classList.contains("collapsed")).toBe(true);
+        expect(root.classList.contains("expanded")).toBe(false);
+
+        wrapper.unmount();
+    });
+
     it("no-regression: an already-expanded dock taps its control with no double-fire", async () => {
         const { wrapper, onPlay } = mountDockWithCollapsedControl();
         const vm = wrapper.findComponent(GlassDock).vm as unknown as Record<

@@ -73,6 +73,7 @@ const {
     containerStyle,
     collapseDelay,
     startCollapsed,
+    interaction,
     layoutValue,
     shape,
     orientation,
@@ -141,10 +142,20 @@ const {
     collapseDelay: collapseDelay.value,
     rootEl: dockEl,
     alwaysExpanded,
+    interaction,
     initialExpanded: !startCollapsed.value,
     isTransitioning,
     dockId,
 });
+
+/* The FSM-quiet signal the environmental writers early-return under — an
+   always-expanded dock OR a manual dock. It gates the touch gate too, so a manual
+   dock's collapsed-pill tap does not expand and its deactivate does not collapse
+   (interaction already resolves to "auto" under alwaysExpanded, so this is just the
+   manual arm layered onto the always-expanded pole). */
+const fsmQuiet = computed(
+    () => alwaysExpanded.value || interaction.value === "manual",
+);
 
 /* O.W2 — canonical typed-key dock context (invariant 25). The 6 prior
    string-keyed dock provides (`glassDockContext`, `glassDockId`,
@@ -240,7 +251,7 @@ const { onTouchStart, onTouchMove, onTouchEnd, deactivate: touchDeactivate } =
     useDockTouchGate({
         collapseDelay: collapseDelay.value,
         rootEl: dockEl,
-        alwaysExpanded,
+        quiet: fsmQuiet,
         visualExpanded,
         expanded,
         isPinned,
@@ -290,6 +301,7 @@ defineExpose({
         ]"
         :data-size="size"
         :data-backdrop-mode="props.backdropMode"
+        :data-interaction="interaction === 'manual' ? 'manual' : undefined"
         :data-held="isHeld || undefined"
         :data-search="search || undefined"
         :data-container-name="containerName || undefined"
