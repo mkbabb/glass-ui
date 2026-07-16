@@ -326,10 +326,9 @@ function validateCss() {
         const file = pending.pop();
         if (!file || visited.has(file)) continue;
         visited.add(file);
-        const source = readFileSync(resolve(root, file), "utf8").replace(
-            /url\(\s*(["'])data:[\s\S]*?\1\s*\)/g,
-            "",
-        );
+        const source = readFileSync(resolve(root, file), "utf8")
+            .replace(/\/\*[\s\S]*?\*\//g, "")
+            .replace(/url\(\s*(["'])data:[\s\S]*?\1\s*\)/g, "");
         const imports = [...source.matchAll(importPattern)].map((match) =>
             match.slice(1).find(Boolean),
         );
