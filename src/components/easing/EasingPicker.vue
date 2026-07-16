@@ -29,6 +29,7 @@ import {
     SelectValue,
 } from "../select";
 import { Slider } from "../slider";
+import { useClipboard } from "../../composables/dom/useClipboard";
 import {
     useEasingPicker,
     type EasingPickerMode,
@@ -249,49 +250,28 @@ function onHandleKeydown(index: 0 | 1, ev: KeyboardEvent): void {
 }
 
 // ── copy state ────────────────────────────────────────────────────────────────
-type CopyState = "idle" | "pending" | "copied" | "failed";
-const copyState = ref<CopyState>("idle");
 const readoutEl = useTemplateRef<HTMLElement>("readoutEl");
-let copyAttempt = 0;
-let copyResetTimer: ReturnType<typeof setTimeout> | undefined;
-let copyTimeoutTimer: ReturnType<typeof setTimeout> | undefined;
+const { status: copyStatus, copy: writeLiteral } = useClipboard({
+    resetMs: COPY_FEEDBACK_MS,
+    timeoutMs: COPY_ATTEMPT_TIMEOUT_MS,
+});
 
-function clearCopyTimers(): void {
-    if (copyResetTimer !== undefined) clearTimeout(copyResetTimer);
-    if (copyTimeoutTimer !== undefined) clearTimeout(copyTimeoutTimer);
-    copyResetTimer = undefined;
-    copyTimeoutTimer = undefined;
-}
-
-async function copy(): Promise<void> {
-    clearCopyTimers();
-    const attempt = ++copyAttempt;
-    let timeout: ReturnType<typeof setTimeout> | undefined;
-    copyState.value = "pending";
-    try {
-        const clipboard = navigator.clipboard;
-        if (!clipboard?.writeText) throw new Error("Clipboard unavailable");
-        await Promise.race([
-            clipboard.writeText(readoutLiteral.value),
-            new Promise<never>((_, reject) => {
-                timeout = setTimeout(
-                    () => reject(new Error("Clipboard timed out")),
-                    COPY_ATTEMPT_TIMEOUT_MS,
-                );
-                copyTimeoutTimer = timeout;
-            }),
-        ]);
-        if (attempt !== copyAttempt) return;
-        copyState.value = "copied";
-        copyResetTimer = setTimeout(() => {
-            if (attempt === copyAttempt) copyState.value = "idle";
-        }, COPY_FEEDBACK_MS);
-    } catch {
-        if (attempt === copyAttempt) copyState.value = "failed";
-    } finally {
-        if (timeout !== undefined) clearTimeout(timeout);
-        if (copyTimeoutTimer === timeout) copyTimeoutTimer = undefined;
+// The instrument's data-copy-state vocabulary, mapped from the shared owner.
+type CopyState = "idle" | "pending" | "copied" | "failed";
+const copyState = computed<CopyState>(() => {
+    switch (copyStatus.value) {
+        case "success":
+            return "copied";
+        case "failure":
+            return "failed";
+        default:
+            return copyStatus.value;
     }
+});
+
+function copy(): void {
+    if (copyStatus.value === "pending") return;
+    void writeLiteral(readoutLiteral.value);
 }
 
 function selectLiteral(): void {
@@ -320,8 +300,6 @@ const playbackLabel = computed(() => {
 });
 
 onUnmounted(() => {
-    copyAttempt++;
-    clearCopyTimers();
     stopTravel();
 });
 

@@ -7,6 +7,14 @@
 **Terminal owner:** glass-ui orchestrator
 **Evidence root:** `docs/tranches/BI/evidence/BI.W-P025`
 
+> **Test manifest truth-up (2026-07-16, Lane A).** The formation manifest's declared
+> `tests/composables/motion/temporal-authority.test.ts` and
+> `tests-visual/motion-temporal-authority.spec.ts` were renamed during execution. The scope-owned
+> discrete-episode lifecycle (generation-guarded latest-active completion, single reset timer,
+> `invalidate()`, disposal freeze) is asserted on disk in `tests/composables/dom/useClipboard.test.ts`
+> and, through the real story, `tests/demo/springs-story.test.ts`; the one-clock visual arm is
+> `tests-visual/motion-one-clock.spec.ts`.
+
 ## Intent
 
 Give every animated property and semantic episode one proportionate temporal authority, one writer, and a complete lifecycle without pretending the product has one global callback.
@@ -20,6 +28,7 @@ Give every animated property and semantic episode one proportionate temporal aut
 - Delete local physical/easing playback loops, timer-settle approximations, and restart duplication; the Springs playground and morph facilities consume the same engine playback they advertise.
 - Classify authoring previews explicitly: a bounded normalized editor scrubber may retain a proportionate one-shot clock only when it is not represented as reusable physical/keyframes playback and owns playing, restart, PRM snap, and teardown semantics; a surface that claims keyframes ownership must actually consume that owner.
 - Compose visibility, intersection, PRM, interruption, settle, and disposal as applicable, and prove every scheduler/listener/timer/resource returns to baseline.
+- Treat clipboard confirmation as one scope-owned discrete episode: each attempt invalidates prior feedback and its reset timer, only the latest active completion may publish state or callbacks, and disposal invalidates pending completions without a second timer owner at the story.
 
 ## File manifest (136)
 

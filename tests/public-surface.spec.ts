@@ -1,6 +1,9 @@
 import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import * as Aurora from "@glass/components/aurora";
+import * as BlobSurface from "@glass/components/blob";
+// @ts-expect-error the component-internal renderer contract is not public
+import type { UseMetaballRendererOptions } from "@glass/components/blob";
 import * as CarouselSurface from "@glass/components/carousel";
 import * as CardSurface from "@glass/components/card";
 import * as CommandSurface from "@glass/components/command";
@@ -94,12 +97,12 @@ const composableRuntimeExports = [
     // retired off the root barrel (the detection-cascade cluster; its binary
     // consumer GlassPanel retired at the AY prune, no second consumer).
     // O.W6 Lane A — useClipboard composable promotion.
-    // P.W5 Lane A.1 — copyToClipboard bare co-export (Path B). Both must
-    // remain root-barrel reachable so value.js's 19-site bulk import flip
-    // can rename from `useClipboard from "../composables/useClipboard"`
-    // → `copyToClipboard from "@mkbabb/glass-ui"`.
+    // BI.W-P024 (A-f2 ruling) — the stateless clipboard door is writeClipboard,
+    // the honest primitive shared with useClipboard; the lossy copyToClipboard
+    // boolean wrapper is cut, its boolean+callback sugar demoted to a consumer
+    // preset (value.js adopts writeClipboard at W17b).
     "useClipboard",
-    "copyToClipboard",
+    "writeClipboard",
 ];
 
 const rootRuntimeExports = [
@@ -488,6 +491,10 @@ describe("public runtime surface", () => {
 
     it("keeps the exact root runtime surface", () => {
         expect(Object.keys(Glass).sort()).toEqual([...rootRuntimeExports].sort());
+    });
+
+    it("keeps the Blob renderer implementation private", () => {
+        expect(BlobSurface).not.toHaveProperty("useMetaballRenderer");
     });
 
     it.each(subpathRuntimeExports)(

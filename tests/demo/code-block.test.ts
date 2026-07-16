@@ -18,7 +18,16 @@ function setClipboard(writeText: (text: string) => Promise<void>): void {
     });
 }
 
+function deferred<T>() {
+    let resolve!: (value: T | PromiseLike<T>) => void;
+    const promise = new Promise<T>((resolvePromise) => {
+        resolve = resolvePromise;
+    });
+    return { promise, resolve };
+}
+
 afterEach(() => {
+    vi.useRealTimers();
     if (originalClipboard)
         Object.defineProperty(navigator, "clipboard", originalClipboard);
     else delete (navigator as unknown as { clipboard?: Clipboard }).clipboard;
@@ -65,9 +74,7 @@ describe("CodeBlock copy outcome", () => {
     });
 
     it("shows, announces, and reports Clipboard denial", async () => {
-        const denied = new Error("Permission denied");
-        setClipboard(vi.fn().mockRejectedValue(denied));
-        const report = vi.spyOn(console, "error").mockImplementation(() => undefined);
+        setClipboard(vi.fn().mockRejectedValue(new Error("Permission denied")));
         const wrapper = mount(CodeBlock, { props: { code: "const denied = true;" } });
 
         await wrapper.get('[data-testid="code-block-copy"]').trigger("click");
@@ -78,7 +85,6 @@ describe("CodeBlock copy outcome", () => {
         expect(
             wrapper.get('[data-testid="code-block-copy"]').attributes("aria-label"),
         ).toBe("Retry copy code");
-        expect(report).toHaveBeenCalledWith("[CodeBlock] Failed to copy code.", denied);
     });
 
     it("offers manual copy when Clipboard is unavailable", async () => {
@@ -86,7 +92,6 @@ describe("CodeBlock copy outcome", () => {
             configurable: true,
             value: undefined,
         });
-        const report = vi.spyOn(console, "error").mockImplementation(() => undefined);
         const wrapper = mount(CodeBlock, { props: { code: "const manual = true;" } });
 
         await wrapper.get('[data-testid="code-block-copy"]').trigger("click");
@@ -98,9 +103,52 @@ describe("CodeBlock copy outcome", () => {
         expect(
             wrapper.get('[data-testid="code-block-copy"]').attributes("aria-label"),
         ).toBe("Retry copy code");
-        expect(report).toHaveBeenCalledWith(
-            "[CodeBlock] Failed to copy code.",
-            expect.objectContaining({ message: "Clipboard API is unavailable" }),
-        );
+    });
+
+    it("guards repeated activation without removing the focused button", async () => {
+        const pending = deferred<void>();
+        const writeText = vi.fn(() => pending.promise);
+        setClipboard(writeText);
+        const wrapper = mount(CodeBlock, {
+            props: { code: "const once = true;" },
+            attachTo: document.body,
+        });
+        const button = wrapper.get('[data-testid="code-block-copy"]');
+        (button.element as HTMLElement).focus();
+
+        await button.trigger("click");
+        await button.trigger("click");
+
+        expect(writeText).toHaveBeenCalledOnce();
+        expect(button.attributes("aria-disabled")).toBe("true");
+        expect(button.attributes("disabled")).toBeUndefined();
+        expect(document.activeElement).toBe(button.element);
+        expect(wrapper.get('[role="status"]').text()).toBe("Copying code…");
+
+        pending.resolve();
+        await flushPromises();
+        expect(button.attributes("aria-label")).toBe("Code copied");
+        wrapper.unmount();
+    });
+
+    it("invalidates a pending result when the rendered payload changes", async () => {
+        const pending = deferred<void>();
+        const writeText = vi.fn(() => pending.promise);
+        setClipboard(writeText);
+        const wrapper = mount(CodeBlock, { props: { code: "const oldValue = 1;" } });
+        const button = wrapper.get('[data-testid="code-block-copy"]');
+
+        await button.trigger("click");
+        expect(writeText).toHaveBeenCalledWith("const oldValue = 1;");
+        await wrapper.setProps({ code: "const newValue = 2;" });
+
+        expect(button.attributes("aria-label")).toBe("Copy code");
+        expect(button.attributes("aria-disabled")).toBeUndefined();
+        expect(wrapper.get('[role="status"]').text()).toBe("");
+
+        pending.resolve();
+        await flushPromises();
+        expect(button.attributes("aria-label")).toBe("Copy code");
+        expect(wrapper.get('[role="status"]').text()).toBe("");
     });
 });

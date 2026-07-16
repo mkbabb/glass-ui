@@ -7,6 +7,21 @@
 **Terminal owner:** glass-ui orchestrator
 **Evidence root:** `docs/tranches/BI/evidence/BI.W-P024`
 
+> **Test manifest truth-up (2026-07-16, Lane A).** The formation manifest's declared
+> `tests/composables/motion/clean-break.test.ts` was renamed during execution; the clipboard
+> clean-break assertions (no `execCommand`/textarea shadow writer; single write owner) live on
+> disk in `tests/composables/dom/useClipboard.test.ts`.
+>
+> **A-f2 amendment (this wave finishing its own rule).** P024's invariant — "an unowned primitive
+> and its self-justifying tests are deleted together" — was under-applied to the `copyToClipboard`
+> bare export, which foreign (value.js demo) demand shielded. The BI.W-P024 gestalt challenge
+> (A-f2) ruled it CUT: `copyToClipboard` was a lossy `CopyResult`→`boolean` wrapper with a dead
+> `onCopyError` callback on an awaited one-shot, over a private write core that already existed.
+> The honest stateless primitive `writeClipboard` is promoted public (shared with `useClipboard`);
+> its self-justifying test and the public-surface guard row are deleted with it; value.js adopts
+> `writeClipboard` at W17b (see its `docs/tranches/V/GLASS-INBOUND-2026-07-16-clipboard-primitive.md`).
+> The boolean+callback sugar is demoted to a value.js consumer preset, per standing law.
+
 ## Intent
 
 Remove every preserved motion alias and compatibility ladder before new behavior builds on the public contract.
@@ -19,6 +34,7 @@ Remove every preserved motion alias and compatibility ladder before new behavior
 - Re-evaluate every retained public motion primitive from current syntax/import/runtime evidence: tests, type-only imports, barrels, docs, registry rows, and future asks contribute no product-demand credit; an unowned primitive and its self-justifying tests are deleted together.
 - Retire --ease-convergence and its reverse-table/test/prose projections: the exact tracked constellation has no product reader, and a future Fourier sentence cannot preserve an alias of gentle in advance.
 - Retire the public-but-unused vScrollRevealOnce directive, [data-scroll-reveal-once] CSS/capture branch, and its self-test while preserving the shared useStaggerReveal once semantics used by actual owners; the demo's separate private section reveal remains under its own semantic owner rather than becoming retroactive demand.
+- Keep clipboard writes on the current `navigator.clipboard` platform contract; delete the legacy textarea/`execCommand` shadow rather than maintaining two behavioral paths for the supported browser floor.
 - Repoint all local consumers/tests atomically; foreign consumers receive exact owner packets.
 
 ## File manifest (110)

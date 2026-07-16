@@ -1,7 +1,6 @@
 <script setup lang="ts">
-// Named and custom previews use keyframes.js managed playback. Their callable,
-// CSS readout, measured settle, density, and rounding share the token generator's
-// projection; this story owns no frame scheduler.
+// Named and custom previews share managed playback and spring projection;
+// this story owns no frame scheduler.
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import StoryPlayButton from "../../chassis/play/StoryPlayButton.vue";
@@ -11,9 +10,10 @@ import {
     SPRING_PRESETS,
     springPreset,
     type SpringPresetName,
-} from "@glass/composables/motion/springPresets";
-import { springProjection } from "@glass/composables/motion/springProjection";
-import { motionTempo } from "@glass/composables/motion/motionTempo";
+} from "@glass/composables/motion/spring/springPresets";
+import { springProjection } from "@glass/composables/motion/spring/springProjection";
+import { motionTempo } from "@glass/composables/motion/core/motionTempo";
+import { useClipboard } from "@glass/composables/dom/useClipboard";
 import { Button } from "@glass/components/button";
 import { Label } from "@glass/components/label";
 import { LabeledSlider } from "@glass/components/labeled-field";
@@ -72,34 +72,35 @@ function useManagedPreview<K extends string>(onFrame: (values: Snapshot<K>) => v
 }
 
 // ── Animation state ─────────────────────────────────────────────────────────────
-type Keys = "x" | "rotate" | "hue";
-const from: Snapshot<Keys> = { x: 0, rotate: 0, hue: 0 };
-const to: Snapshot<Keys> = { x: 360, rotate: 18, hue: 60 };
+type PreviewKey = "progress";
+const from: Snapshot<PreviewKey> = { progress: 0 };
+const to: Snapshot<PreviewKey> = { progress: 1 };
+
+const RESPONSIVE_TRAVEL =
+    "calc(var(--preview-progress, 0) * max(0px, min(var(--preview-cap), calc((100cqi - var(--preview-start) - var(--preview-end) - var(--preview-envelope)) / var(--preview-peak)))))";
+
+function setPreviewProgress(element: HTMLElement | null, progress: number): void {
+    element?.style.setProperty("--preview-progress", `${progress}`);
+}
 
 const card = shallowRef<HTMLElement | null>(null);
 const preset = ref<PresetId>("smooth");
 
 const presetRow = computed(() => springPreset(preset.value));
 const presetProjection = computed(() => springProjection(presetRow.value));
+const presetPeak = computed(() => presetProjection.value.peak);
 const namedTempo = ref(1);
 const namedDuration = computed(
     () => presetProjection.value.settleSeconds * 1000 * namedTempo.value,
 );
 
-function applySnapshot(values: Snapshot<Keys>): void {
-    const el = card.value;
-    if (!el) return;
-    el.style.setProperty("--demo-x", `${values.x}px`);
-    el.style.setProperty("--demo-rotate", `${values.rotate}deg`);
-    // hue drives a lightness wobble on the SAME violet accent (one color event).
-    el.style.setProperty("--demo-l", `${0.46 + values.hue / 600}`);
-}
-
-const namedPreview = useManagedPreview(applySnapshot);
+const namedPreview = useManagedPreview<PreviewKey>(({ progress }) =>
+    setPreviewProgress(card.value, progress),
+);
 
 function play(): void {
     namedTempo.value = motionTempo(card.value);
-    applySnapshot(from);
+    setPreviewProgress(card.value, 0);
     void namedPreview.play(
         [from, to],
         namedDuration.value,
@@ -109,7 +110,7 @@ function play(): void {
 
 function reset(): void {
     namedPreview.stop();
-    applySnapshot(from);
+    setPreviewProgress(card.value, 0);
 }
 
 watch(preset, reset);
@@ -124,6 +125,7 @@ const playParameters = computed(() => ({
 }));
 const playProjection = computed(() => springProjection(playParameters.value));
 const playStops = computed(() => playProjection.value.stops);
+const playPeak = computed(() => playProjection.value.peak);
 const matchingPreset = computed(() =>
     PRESET_ROWS.find(
         (row) =>
@@ -141,13 +143,7 @@ const shippedToken = computed(() => {
 const tokenMatches = computed(
     () => !!matchingPreset.value && shippedToken.value === playStops.value,
 );
-const playOvershoot = computed(() => {
-    let max = 0;
-    for (let i = 0; i <= 64; i++) {
-        max = Math.max(max, playProjection.value.timingFunction(i / 64));
-    }
-    return ((max - 1) * 100).toFixed(1);
-});
+const playOvershoot = computed(() => ((playPeak.value - 1) * 100).toFixed(1));
 
 function loadPlaygroundPreset(name: PresetId): void {
     const row = springPreset(name);
@@ -160,38 +156,56 @@ const playTempo = ref(1);
 const playDuration = computed(
     () => playProjection.value.settleSeconds * 1000 * playTempo.value,
 );
-const playgroundPreview = useManagedPreview<"x">(({ x }) => {
-    if (playCard.value) {
-        playCard.value.style.transform = `translateX(${x.toFixed(2)}px)`;
-    }
+const playgroundPreview = useManagedPreview<PreviewKey>(({ progress }) =>
+    setPreviewProgress(playCard.value, progress),
+);
+
+watch([playResponse, playDamping], () => {
+    playgroundPreview.stop();
+    setPreviewProgress(playCard.value, 0);
 });
 
 function playgroundPlay(): void {
     if (!playCard.value) return;
     playTempo.value = motionTempo(playCard.value);
-    playCard.value.style.transform = "translateX(0px)";
+    setPreviewProgress(playCard.value, 0);
     void playgroundPreview.play(
-        [{ x: 0 }, { x: 280 }],
+        [from, to],
         playDuration.value,
         playProjection.value.timingFunction,
     );
 }
 
-const copied = ref(false);
-async function copyStops(): Promise<void> {
-    try {
-        await navigator.clipboard.writeText(playStops.value);
-        copied.value = true;
-        setTimeout(() => (copied.value = false), 1400);
-    } catch {
-        /* clipboard unavailable */
+const { status: copyStatus, copy, invalidate: invalidateCopy } = useClipboard({
+    resetMs: 1400,
+});
+const copyLabel = computed(() => {
+    if (copyStatus.value === "pending") return "Copying stops";
+    if (copyStatus.value === "success") return "Copied";
+    if (copyStatus.value === "failure") return "Retry copying linear() stops";
+    return "Copy linear() stops";
+});
+const copyMessage = computed(() => {
+    if (copyStatus.value === "pending") return "Copying stops…";
+    if (copyStatus.value === "success") return "Stops copied.";
+    if (copyStatus.value === "failure") {
+        return "Copy failed. Select the stops above and copy manually.";
     }
+    return "";
+});
+
+function copyStops(): void {
+    if (copyStatus.value === "pending") return;
+    const stops = playStops.value;
+    void copy(stops);
 }
+
+watch(playStops, invalidateCopy);
 </script>
 
 <template>
     <StoryPage>
-        <!-- BB.W-SUFFUSE3 (b) — the under-activated motion title arrives at the
+        <!-- The motion title arrives at the
              DISPLAY register with the --motion-accent violet as the ONE color
              text-event (the existing motion-purple family UNIFIED onto the
              masthead — the plots/dots/spring already carry it; this is the SAME
@@ -209,7 +223,7 @@ async function copyStops(): Promise<void> {
 
         <StorySection
             label="Named registers"
-            blurb="Every shared SPRING_PRESETS row is discovered from the source table; Dock is intentionally demonstrated in its product-specific morph lab. Play uses keyframes.js managed NumericAnimation, the generated measured-settle horizon, and the current --motion-tempo."
+            blurb="Each named motion character balances response and damping for a distinct feel. Play the samples together or one at a time to compare their arrivals."
         >
             <section class="flex flex-col gap-6">
                 <div class="flex flex-wrap items-end gap-4">
@@ -247,14 +261,28 @@ async function copyStops(): Promise<void> {
                             'paper-grain-overlay',
                         )
                     "
+                    :style="{
+                        containerType: 'inline-size',
+                        '--preview-cap': '360px',
+                        '--preview-start': '1.5rem',
+                        '--preview-end': '1.5rem',
+                        '--preview-inline-size': '7rem',
+                        '--preview-block-size': '5rem',
+                        '--preview-envelope':
+                            'calc(var(--preview-inline-size) / 2 + hypot(var(--preview-inline-size) / 2, var(--preview-block-size) / 2))',
+                        '--preview-peak': presetPeak,
+                    }"
                 >
                     <div
                         ref="card"
-                        class="absolute left-6 top-1/2 flex h-20 w-28 -translate-y-1/2 items-center justify-center rounded-panel text-small font-medium text-white shadow-cartoon"
+                        class="absolute top-1/2 flex items-center justify-center rounded-panel text-small font-medium text-white shadow-cartoon"
                         :style="{
-                            transform:
-                                'translate(var(--demo-x, 0px), -50%) rotate(var(--demo-rotate, 0deg))',
-                            backgroundColor: 'oklch(var(--demo-l, 0.46) 0.18 317.5)',
+                            insetInlineStart: 'var(--preview-start)',
+                            inlineSize: 'var(--preview-inline-size)',
+                            blockSize: 'var(--preview-block-size)',
+                            transform: `translate(${RESPONSIVE_TRAVEL}, -50%) rotate(calc(var(--preview-progress, 0) * 18deg))`,
+                            backgroundColor:
+                                'oklch(calc(0.46 + var(--preview-progress, 0) * 0.1) 0.18 317.5)',
                         }"
                     >
                         spring
@@ -310,7 +338,7 @@ async function copyStops(): Promise<void> {
 
         <StorySection
             label="Custom spring authoring"
-            blurb="Tune a custom response/ζ pair through the token generator's measured 2%-settle, 10ms rounding, 48-sample projection, and tempo-scaled managed playback. Seeded values are byte-compared with their shipped CSS token; edited values remain explicitly custom."
+            blurb="Tune response and damping, then play the custom curve beside the named set. The readout shows its measured settling time and projected shape."
         >
             <div class="grid gap-4 lg:grid-cols-[1fr_18rem]">
                 <div class="flex flex-col gap-5">
@@ -333,21 +361,34 @@ async function copyStops(): Promise<void> {
                         @update:model-value="(v: number) => (playDamping = v)"
                     />
 
-                    <!-- live travel stage — BA.W-SUFFUSE2: the violet spent HARDER
+                    <!-- live travel stage —: the violet spent HARDER
                          within proportion (the stage frame reads --motion-accent at a
                          low alpha alongside the travelling dot; ONE family hue, no
                          second). -->
                     <div
                         class="relative h-12 overflow-hidden rounded-pill border bg-[var(--surface-tint-1)]"
                         :style="{
+                            containerType: 'inline-size',
                             borderColor:
                                 'color-mix(in srgb, var(--motion-accent) 35%, transparent)',
+                            '--preview-cap': '280px',
+                            '--preview-start': '0.5rem',
+                            '--preview-end': '0.5rem',
+                            '--preview-inline-size': '2rem',
+                            '--preview-block-size': '2rem',
+                            '--preview-envelope': 'var(--preview-inline-size)',
+                            '--preview-peak': playPeak,
                         }"
                     >
                         <div
                             ref="playCard"
-                            class="absolute left-2 top-1/2 size-8 -translate-y-1/2 rounded-pill bg-[var(--motion-accent)]"
-                            style="will-change: transform"
+                            class="absolute top-1/2 rounded-pill bg-[var(--motion-accent)]"
+                            :style="{
+                                insetInlineStart: 'var(--preview-start)',
+                                inlineSize: 'var(--preview-inline-size)',
+                                blockSize: 'var(--preview-block-size)',
+                                transform: `translate(${RESPONSIVE_TRAVEL}, -50%)`,
+                            }"
                         />
                     </div>
 
@@ -406,16 +447,32 @@ async function copyStops(): Promise<void> {
                         <button
                             type="button"
                             class="shrink-0 rounded-pill p-1.5 text-muted-foreground transition-colors hover:bg-[var(--surface-tint-1)] hover:text-foreground"
-                            :aria-label="copied ? 'Copied' : 'Copy linear() stops'"
+                            :aria-label="copyLabel"
+                            :aria-disabled="
+                                copyStatus === 'pending' ? 'true' : undefined
+                            "
                             @click="copyStops"
                         >
                             <Check
-                                v-if="copied"
+                                v-if="copyStatus === 'success'"
                                 class="size-4 text-(--motion-accent)"
                             />
                             <Copy v-else class="size-4" />
                         </button>
                     </div>
+                    <p
+                        v-if="copyMessage"
+                        class="text-small"
+                        :class="
+                            copyStatus === 'failure'
+                                ? 'text-destructive'
+                                : 'text-muted-foreground'
+                        "
+                        role="status"
+                        aria-live="polite"
+                    >
+                        {{ copyMessage }}
+                    </p>
                     <p
                         v-if="matchingPreset"
                         class="text-small"

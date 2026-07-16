@@ -7,6 +7,19 @@
 **Terminal owner:** glass-ui orchestrator
 **Evidence root:** `docs/tranches/BI/evidence/BI.W-P026`
 
+> **Test manifest truth-up (2026-07-16, Lane A).** The formation manifest's declared
+> `tests/composables/motion/spring-language.test.ts` and `tests-visual/spring-language.spec.ts`
+> were renamed during execution. The shared `springProjection` owner (byte-for-byte token
+> reproduction, rounded settle, and the hoisted `peak` overshoot cross-checked against the shipped
+> stops) is asserted on disk in `tests/composables/motion/springProjection.test.ts`; the Springs
+> lab story in `tests/demo/springs-story.test.ts`; the visual ease arm in
+> `tests-visual/spring-ease.spec.ts`.
+>
+> **Peak hoist (2026-07-16, Lane A).** The overshoot `peak` — formerly re-sampled privately in
+> `springs.vue` and replicated in the test — is now a structural field of `SpringProjection`
+> (internal type; no public-surface change). The Springs lab consumes `projection.peak`; the
+> P026 "exact generated projection" invariant is enforced against the owner, not a hand-kept copy.
+
 ## Intent
 
 Replace arbitrary per-component timing with a small semantic spring language shared by press, selection, morph, dock, and route motion.
@@ -19,6 +32,8 @@ Replace arbitrary per-component timing with a small semantic spring language sha
 - Derive every demo label, parameter readout, trajectory, and explanatory row from the same preset/callable owner; a moving animation with a stale number is still RED.
 - Repair consumer-owned reveal CSS that pairs --spring-bouncy with a literal 500 ms clock: a named spring curve and its generated duration reader come from the same row. Stagger spacing may have its own semantic interval, but its 0.70/1.00/1.30 tempo behavior must be explicit rather than inherited from an unexplained 80 ms literal.
 - Rebuild the Springs lab as an exact generated projection rather than a solver lookalike: visible options/copy derive from the current owned rows, any Dock exclusion is explicit, seeded readouts use the same measured-settle maxDuration/sample/rounding configuration as shipped CSS, and managed playback reads the generated tempo horizon instead of fixed 1100 ms. Counts remain descriptive and adding a row requires no hand-edited numeral.
+- Keep `NumericAnimation` as the Springs lab's sole temporal writer and animate one unclamped normalized progress value from zero to one for both previews. Each stage is an inline-size container and owns its start inset, end inset, child inline/block size, and paint envelope; the child only consumes those values. CSS owns travel as `progress * D`, where `D = max(0, min(cap, (100cqi - startInset - endInset - paintEnvelope) / M))` and `M` is the maximum of the current timing function at the exact generated piecewise-linear nodes `i / sampleCount`. The named preview uses a 360 px wide cap, 1.5 rem start/end insets, a 7 rem by 5 rem card, and the card's derived rotated envelope; the custom preview uses a 280 px wide cap, 0.5 rem start/end insets, and a 2 rem square envelope. Wide stages retain those authored caps while 390 px and 320 px stages yield without clipping the transformed paint.
+- Use that same exact-node `M` for the custom overshoot readout; no arbitrary resampling loop, viewport state, observer, wrapper, second scheduler, or public responsive-motion abstraction is permitted. A response or damping edit stops the custom playback and reseats progress at zero before another run. Preset changes retain the same stop-and-reseat lifecycle; reduced motion resolves directly to progress one.
 - Do not freeze an exact preset count or duplicate a taste value in verification; semantic ownership, current consumers, generated projection, and measured trajectory decide whether a family remains.
 - Measure settle, overshoot, velocity continuity, and input-mode scaling as ranges.
 - Keep duration curves only for transitions whose semantics are not physical springs.
@@ -135,7 +150,7 @@ These paths are part of this wave's one terminal commit but are never builder-la
 
 ## Durable acceptance
 
-**Invariant:** Every spring-driven transition names one semantic family, reads its owning preset and generated horizon directly, stays within observed trajectory bands across input modes, and projects the same current parameters plus generation configuration into CSS, runtime, demos, and docs without a reverse alias table, lookalike solver call, or consumer-local fixed clock.
+**Invariant:** Every spring-driven transition names one semantic family, reads its owning preset and generated horizon directly, stays within observed trajectory bands across input modes, and projects the same current parameters plus generation configuration into CSS, runtime, demos, and docs without a reverse alias table, lookalike solver call, or consumer-local fixed clock. The Springs lab's named card and custom dot remain wholly inside their clipped stages at 1440 px, 390 px, and 320 px through start, peak overshoot, and settle; each retains its authored wide travel cap, uses the current projection's exact-node peak, stops and reseats on parameter changes, and reaches the endpoint under reduced motion.
 
 **Required mutation bite:** Replace press with the route-transition family, restore a token→callable mirror, display 0.32/0.7 while the Dock callable uses 0.30/0.82, pair --spring-bouncy with fixed 500 ms, or omit maxDuration in the seeded lab so its 24-stop readout differs from the shipped 48-stop token; spring-language evidence must turn RED even when the surface still settles.
 

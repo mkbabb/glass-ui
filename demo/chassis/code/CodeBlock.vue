@@ -1,12 +1,13 @@
 <script setup lang="ts">
 // Demo-private, copyable code block. Card owns the plate and spacing; Button owns
 // the copy command; FadingScroll owns overflow.
-import { computed, onBeforeUnmount, ref, toRef, useSlots } from "vue";
+import { computed, onMounted, onUpdated, ref, toRef, useSlots } from "vue";
 import { Check, Copy } from "@lucide/vue";
 import { cn } from "@glass/components/_shared/class-names";
 import { Button } from "@glass/components/button";
 import { Card, CardContent } from "@glass/components/card";
 import { FadingScroll } from "@glass/components/fading-scroll";
+import { useClipboard } from "@glass/composables/dom/useClipboard";
 import { useCodeHighlight } from "./useCodeHighlight";
 // The warm-crayon highlight.js theme — GLOBAL (unscoped) so it reaches the
 // `.hljs-*` spans highlight.js writes into the <pre> innerHTML at runtime.
@@ -27,15 +28,9 @@ const slots = useSlots();
 // The text the copy affordance writes — the explicit `code` prop, else the
 // default slot's text content (resolved at copy time off the rendered <pre>).
 const preRef = ref<HTMLElement | null>(null);
-type CopyState = "idle" | "success" | "failure";
-const copyState = ref<CopyState>("idle");
-let copyResetTimer: ReturnType<typeof setTimeout> | undefined;
-
-function clearCopyResetTimer(): void {
-    if (copyResetTimer === undefined) return;
-    clearTimeout(copyResetTimer);
-    copyResetTimer = undefined;
-}
+const { status: copyStatus, copy, invalidate: invalidateCopy } = useClipboard({
+    resetMs: 1400,
+});
 
 const hasSlot = computed(() => Boolean(slots.default));
 
@@ -47,32 +42,33 @@ useCodeHighlight(preRef, {
     text: () => props.code ?? preRef.value?.textContent ?? "",
 });
 
-async function copy(): Promise<void> {
-    const text = props.code ?? preRef.value?.textContent ?? "";
-    clearCopyResetTimer();
-    try {
-        const clipboard = navigator.clipboard;
-        if (!clipboard?.writeText) throw new Error("Clipboard API is unavailable");
-        await clipboard.writeText(text.trim());
-        copyState.value = "success";
-        copyResetTimer = setTimeout(() => {
-            copyState.value = "idle";
-            copyResetTimer = undefined;
-        }, 1400);
-    } catch (error) {
-        copyState.value = "failure";
-        console.error("[CodeBlock] Failed to copy code.", error);
-    }
+function copyText(): string {
+    return (props.code ?? preRef.value?.textContent ?? "").trim();
+}
+
+function copyCode(): void {
+    if (copyStatus.value === "pending") return;
+    void copy(copyText());
 }
 
 const copyMessage = computed(() => {
-    if (copyState.value === "success") return "Code copied.";
-    if (copyState.value === "failure")
+    if (copyStatus.value === "pending") return "Copying code…";
+    if (copyStatus.value === "success") return "Code copied.";
+    if (copyStatus.value === "failure")
         return "Copy failed. Select the code and copy manually.";
     return "";
 });
 
-onBeforeUnmount(clearCopyResetTimer);
+let currentPayload = "";
+onMounted(() => {
+    currentPayload = copyText();
+});
+onUpdated(() => {
+    const nextPayload = copyText();
+    if (nextPayload === currentPayload) return;
+    currentPayload = nextPayload;
+    invalidateCopy();
+});
 </script>
 
 <template>
@@ -86,7 +82,7 @@ onBeforeUnmount(clearCopyResetTimer);
                 <span v-if="lang" class="text-mono-caption">{{ lang }}</span>
                 <span
                     class="story-code-block-status text-mono-caption"
-                    :class="copyState === 'failure' ? 'text-destructive' : ''"
+                    :class="copyStatus === 'failure' ? 'text-destructive' : ''"
                     role="status"
                     aria-live="polite"
                     aria-atomic="true"
@@ -98,17 +94,20 @@ onBeforeUnmount(clearCopyResetTimer);
                     icon-only
                     class="story-code-block-copy"
                     :aria-label="
-                        copyState === 'success'
+                        copyStatus === 'pending'
+                            ? 'Copying code'
+                            : copyStatus === 'success'
                             ? 'Code copied'
-                            : copyState === 'failure'
+                            : copyStatus === 'failure'
                               ? 'Retry copy code'
                               : 'Copy code'
                     "
+                    :aria-disabled="copyStatus === 'pending' ? 'true' : undefined"
                     data-testid="code-block-copy"
-                    @click="copy"
+                    @click="copyCode"
                 >
                     <Check
-                        v-if="copyState === 'success'"
+                        v-if="copyStatus === 'success'"
                         class="size-4 text-foreground"
                     />
                     <Copy v-else class="size-4" />
