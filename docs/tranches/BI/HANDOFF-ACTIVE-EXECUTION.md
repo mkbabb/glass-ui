@@ -445,7 +445,7 @@ preserve real glass affordance, and restore the honest 4/0 baseline if red. Forb
 opacity cover, inert backing plane, overflow reveal, filter target, second sampler, canvas reset,
 reload cure, engine masking, raster/static replacement, per-site patch, or consumer override.
 The first such bounded experiment has now LANDED in-tree — Aurora.vue gives the live GPU canvas
-permanent compositing isolation (`isolation: isolate` plus `contain: content`, V-A95); it is one
+permanent compositing isolation (`isolation: isolate`, V-A95); it is one
 shared material/layer-ownership change, not a forbidden mask. Cure-confirmation is still owed on
 the real instrument (the second-reverse drag on `/substrates/aurora`).
 

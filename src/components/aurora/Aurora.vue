@@ -104,7 +104,8 @@ const props = withDefaults(
 // is SSR- and missing-API-safe.
 //
 // the universal software-raster GUARD: a forced
-// `mode:"webgl"`/`mode:"capture"` arm under a software renderer (SwiftShader, // llvmpipe, headless) now falls to `"css"` too, not only `"auto"`. The
+// `mode:"webgl"`/`mode:"capture"` arm under a software renderer (SwiftShader,
+// llvmpipe, headless) now falls to `"css"` too, not only `"auto"`. The
 // `forceWebGLUnderSoftwareRaster` runtime option is the named escape (default off
 // the guard is the safe default); it is threaded into BOTH the resolver here AND
 // the runtime wedge catch (via `mergedRuntimeOptions`).
@@ -197,12 +198,12 @@ defineExpose({
         :style="{ opacity: clampedOpacityCeiling }"
     >
         <!--
-          Placeholder GROUND (). The palette-derived
+          Placeholder GROUND. The palette-derived
           field-sampled ground on EVERY substrate — frame 0 is palette-colored,
           the live canvas cross-fades OVER it (same palette, no tone jump) on the
           capable path; on the `"css"` substrate the ground is the permanent
           luminance-faithful certify surface. Sits under the canvas; remains as
-          the WebGL2-unavailable fallback ( §1.5).
+          the WebGL2-unavailable fallback.
         -->
         <div
             class="aurora-placeholder h-full min-h-0 w-full"
@@ -282,13 +283,13 @@ defineExpose({
 .aurora-canvas-layer {
     opacity: 0;
     transition: opacity var(--duration-slow) var(--ease-standard);
-    /* Permanent compositing isolation for the live GPU canvas (V-A95). The
-       opacity cross-fade forms a stacking context only while unarmed; at armed
-       opacity:1 it dissolves, leaving the canvas and the page's backdrop-filter
-       plates sharing one root backing. A GPU frame-present then races a plate's
-       backdrop snapshot to a momentary black sample. `isolate` keeps the canvas
-       subtree its own backdrop root so that race cannot reach the plates; the
-       plates still blur the aurora's composited output, so affordance is intact. */
+    /* Q003/V-A95 EXPERIMENT — RED, efficacy UNCONFIRMED. Hypothesis: at armed
+       opacity:1 the cross-fade's stacking context dissolves, so the live canvas
+       shares one root backing with the page's backdrop-filter plates, letting a
+       GPU present race their backdrop snapshot to a black sample; `isolate`
+       severs that shared backing. Proof owed on the real in-app Chrome arm (the
+       Playwright arm is clean-negative only). Revert if the slab persists on the
+       real instrument or the plate blur visibly changes. */
     isolation: isolate;
 }
 

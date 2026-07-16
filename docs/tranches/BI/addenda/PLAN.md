@@ -113,7 +113,7 @@ baseline count stated above (including the "to 5" simplification target) is the 
 and is superseded. The matched-size adjacency experiment has been RUN and adjacency — with
 canvas-resize/backing-store mutation — is REFUTED, so that Configurator-grid change is declined.
 The one bounded material/layer-ownership experiment has instead LANDED IN-TREE: Aurora.vue gives
-the live GPU canvas permanent compositing isolation (`isolation: isolate` plus `contain: content`,
+the live GPU canvas permanent compositing isolation (`isolation: isolate`,
 V-A95); real-instrument cure-confirmation on the second-reverse drag is still owed. A Playwright arm
 returned a clean NEGATIVE (no slab reproduced) but under synthetic input, DPR1, and a substituted
 compositor path — a non-reproduction, not a closure. V-A95 stays ACTIVE RED until the in-app
