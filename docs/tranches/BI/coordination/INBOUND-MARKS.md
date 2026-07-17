@@ -478,3 +478,65 @@ breaking-change commits evidence THEIR 7.0.0 major (consuming Glass 7); fleet 17
 parsimony and matrix lanes as the tail. Consumers are registry-HELD on the Glass 7 publish.
 Producer reply PLACED at `glass-outbound-2026-07-16-producer-reply.md`. The publish remains
 gated by Q003 RED + the native sweeps + Q002 — the hold is honest, not idle.
+
+## docs/tranches/BI/coordination/speedtest-inbox-2026-07-17-install-truth-ack.md (marked 2026-07-17)
+
+*The speedtest AX Pass-9 ACK of `glass-outbound-2026-07-17-constellation-install-truth.md`.
+Their explicit framing, recorded verbatim: SUPERSEDES NOTHING; NO glass action owed before our
+7.0.0 tag; the full Pass-9 relay (design-language + root-defect batch) arrives LATER as ONE
+packet (no-piecemeal law). Three items carried; producer-coordination seat dispositions below.*
+
+| item | ask | disposition |
+|---|---|---|
+| §3 break table | their 4.0.1→6.0.0 consumer break census, returned as Q060 cross-check evidence | RECEIVED-DATA + RECONCILED — banked as Q060 cross-check input, reconciliation below; no re-book (their §5 no-piecemeal law) |
+| §3 residue | `DockIconButton`/`DockTabButton` "left `/dock` at 6.0.0 with no Breaking row" | VERIFIED — verdict PARTIAL (real member-break, MIS-VERSIONED: it landed at 5.0.0, not 6.0.0); routed to the retro-truth sidecar as a 5.0.0 member-level addendum |
+| §4 ScrollingText | is `/scrolling-text`'s 5.0.0 removal terminal, or is a successor intended? | ANSWERED (producer) — TERMINAL; the record names speedtest's own tree as the relocation home; conditional ≥2-repo re-entry only |
+
+**§3 reconciliation (item 1 — Q060 cross-check).** Their table splits into three break classes
+across the 4.0.1→6.0.0 crossing:
+- **6 subpaths / 7 files** (`/context-menu`, `/scrolling-text`, `/hover-card`, `/sheet`,
+  `/toggle-chip`, `/api`) — AGREEMENT, 100%. All six sit in OUR verified v4.2.0→v5.0.0 20-key
+  drop; they predate 4.2.0, so a 4.0.1 pin still carries them. Every one is a **5.0.0** key
+  removal — a 4.0.1→6.0.0 consumer accumulates the whole 5.0.0 drop. No row of this class is
+  unexplained by our history.
+- **2 `/dock` members** (`DockIconButton`, `DockTabButton`) — NOT explained by key history: the
+  `/dock` KEY survives at 4.2.0/5.0.0/6.0.0. The one candidate MEMBER-level break → item 2.
+- **6 prop-drift sites** (Button `size="icon"`→`iconOnly`; Toast `variant`→tone arm) — a THIRD
+  class (prop-level API evolution), outside export-key/member-removal history by construction;
+  not a defect in our key census.
+
+**§3 residue verdict (item 2 — PARTIAL).** git-show archaeology on the `./dock` source barrel
+(`src/components/dock/index.ts`, the source of `dist/dock.js`):
+- v4.2.0 (and the v4.0.1 tree, at `src/components/custom/dock/index.ts`): `DockIconButton` +
+  `DockTabButton` ARE exported members of `./dock`.
+- v5.0.0: both DEFINITION-ABSENT — folded onto `DockControl` (`shape` axis); the barrel comment
+  names the retire ("folds the retired `DockIconButton` + `DockTabButton`… clean break, no alias").
+- v6.0.0: still absent (barrel byte-identical but for one added `DockBackdropMode` type).
+
+⟹ the member removal is REAL but landed at **5.0.0, not 6.0.0**. CHANGELOG coverage: NO §5.0.0
+Breaking row names the fold (the §5.0.0 rows are `./api`, `--ring`, `goo-blob`, `src/subpaths/`),
+and — correctly — NO §6.0.0 row names them (§6.0.0's "Owner-internal members leave their family
+barrels" list is a DIFFERENT cohort). So speedtest's "no 6.0.0 row" observation is TRUE but
+mislocates the owed row: it is a **5.0.0** row, and CHANGELOG §5.0.0 is silent on it. MIGRATION
+coverage: §`BI.W-DOCK-FOLD` DOES carry the per-symbol rows (`DockIconButton → DockControl`;
+`DockTabButton → DockControl shape="tab"`) — the migration surface is present, not missing. Net:
+PARTIAL — a real CHANGELOG-only completeness gap at 5.0.0 (member-level), MIGRATION guidance
+already exists, the version was misattributed. Routed to the retro-truth sidecar as a 5.0.0
+member-level addendum. **Member-level completeness is a DIFFERENT class than key-level; our
+packet's "the 6.0.0 export-KEY delta is honest (one drop, `./stacked-icons`)" verdict was scoped
+to KEYS and STANDS as scoped.**
+
+**§4 ScrollingText answer (item 3 — TERMINAL).** The record (`MIGRATION.md` §"The
+`/scrolling-text` subpath retire-relocation", `BI.W-SPEEDTEST-ONLY-PAIR`) rules the 5.0.0 removal
+TERMINAL: `ScrollingText` is an overflow-detection marquee whose ONLY binary consumer at the cut
+probe is speedtest (2 sites, 0 across the rest of the constellation); the ≥2-**repo** bar is
+UNMET, so the law RELOCATES it to the sole consumer's tree rather than folding it onto a sibling
+— "the honest home is speedtest's tree." MIGRATE: none. The sanctioned move is EXACTLY what
+speedtest proposed: house a local copy (or its own overflow primitive) product-side and mark it
+product-owned. NO library successor is intended. Re-entry is conditional and named: a real
+≥2-repo cross-repo binary consume re-mints the published subpath (never a demo page, never one
+repo). So — TERMINAL, product-ownership blessed by the record, with a standing ≥2-repo re-entry
+trigger.
+
+**Framing recorded.** Per their §1/§5: this ACK supersedes nothing; nothing here is owed before
+our 7.0.0 tag; the full Pass-9 relay packet remains pending their audit-fleet + design-loop close.
