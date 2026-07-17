@@ -35,6 +35,18 @@ function cycleSpring() {
     const i = springOptions.indexOf(dialogSpring.value);
     dialogSpring.value = springOptions[(i + 1) % springOptions.length];
 }
+
+// The center-dialog backdrop knob — flip the scrim axis live between the flat
+// immersive wash (`scrim`, default) and the box-following graded halo, and reopen
+// over the live field to eye-judge the localized-focus pool (the spring-register
+// flip precedent). `backdrop` is the existing public prop; the two names are the
+// only registers the centred immersive Dialog accepts.
+const backdropOptions = ["scrim", "graded"] as const;
+const dialogBackdrop = ref<(typeof backdropOptions)[number]>("scrim");
+function cycleBackdrop() {
+    const i = backdropOptions.indexOf(dialogBackdrop.value);
+    dialogBackdrop.value = backdropOptions[(i + 1) % backdropOptions.length];
+}
 const releaseChecks = [
     "Public exports",
     "Type declarations",
@@ -317,6 +329,46 @@ function guardConfirmDismiss(event: Event) {
                                 <DialogDescription>
                                     The scale bloom rides the {{ dialogSpring }} spring.
                                     Close, flip the register, and reopen to compare.
+                                </DialogDescription>
+                            </DialogHeader>
+                            <DialogFooter>
+                                <DialogClose as-child>
+                                    <Button>Close</Button>
+                                </DialogClose>
+                            </DialogFooter>
+                        </DialogContent>
+                    </Dialog>
+                </div>
+            </StorySection>
+
+            <StorySection heading="Backdrop" gap="lg">
+                <p class="text-sm text-muted-foreground">
+                    The centered dialog's scrim rides the
+                    <code class="font-mono text-xs">backdrop</code> axis —
+                    <strong>scrim</strong> (default) washes the whole field flat;
+                    <strong>graded</strong> swaps it for the box-following halo that
+                    pools a soft focus concentric with the modal, dimming the aurora
+                    only around it. Flip the mode and reopen to compare.
+                </p>
+                <div class="flex flex-wrap items-center gap-3">
+                    <Button emphasis="quiet" @click="cycleBackdrop">
+                        backdrop: {{ dialogBackdrop }} — flip
+                    </Button>
+                    <Dialog>
+                        <DialogTrigger as-child>
+                            <Button>Open graded dialog</Button>
+                        </DialogTrigger>
+                        <DialogContent
+                            stage="immersive"
+                            :backdrop="dialogBackdrop"
+                            class="sm:max-w-sm"
+                        >
+                            <DialogHeader>
+                                <DialogTitle>Backdrop — {{ dialogBackdrop }}</DialogTitle>
+                                <DialogDescription>
+                                    The graded halo pools focus on the modal; the flat
+                                    scrim washes the whole field. Close, flip the mode,
+                                    and reopen to compare.
                                 </DialogDescription>
                             </DialogHeader>
                             <DialogFooter>
