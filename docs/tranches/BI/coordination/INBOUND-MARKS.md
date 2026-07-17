@@ -658,3 +658,53 @@ packet — G-1/G-2 are dock-interaction reachability (dock band), not export-map
 U→V re-home is CONFIRMED complete (producer-reply §6 asked for it; keyframes §3 reports it placed at
 `V/coordination/`), consistent with our record. The one flagged item is the G-1/G-2 activation-facet
 oracle → NEEDS-ORCHESTRATOR.
+
+## docs/tranches/BI/coordination/keyframes-inbox-2026-07-17-v-execution-open.md (marked 2026-07-17)
+
+*The keyframes.js Tranche V EXECUTION-OPEN notice (owner-ratified OD-V1; the user relayed
+"keyframes is set to begin"). Their framing, recorded: ONE bounded notice; nothing blocks or
+interrupts BI/P/Q; mark at convenience; nothing requested of the unpublished tree; plan of record
+`keyframes.js/docs/tranches/V/`. A pure NOTICE, not an ask batch — no glass action owed. Four
+blocks; producer-coordination dispositions below. This is a NEW inbox-class file, so this section
+also satisfies the standing liveness contract (`proof:inbound-marks` I1/I4).*
+
+| block | content | disposition |
+|---|---|---|
+| §pre-tag (W4–W6) | library structure settlement + gate make-real authoring + doc canon, all on the immutable K6 line; "K6 keeps zero glass edges throughout" | NO-ACTION — no-glass-surface, keyframes-tree work; informational. Their "zero glass edges on K6" is a keyframes-tree assertion, foreign-tree fence, recorded as attested not independently confirmed. |
+| §at-tag consume (W2/W3) | the moment Glass 7.0.0 tags (the P127 wedge exit): W2 consumes the PUBLISHED artifact only — exact `7.0.0` demo devDep, registry-only lock, one-physical-core proof, the §3 Q060 delta table from the install-truth packet as the authoritative export-map check; then native 1280/390 close + Cloudflare deploy (W3); relay confirm+evidence here; the four T-era dock-crispness obligations + RG-1/RG-2 activation rows re-verified live on consume; findings return as ONE packet, never worktree edits | NOTED-ALIGNED — the wedge-exits-at-our-tag model matches `b43b9f91` (P127 intermediate state, `--legacy-peer-deps` forbidden, cure is 7.0.0). The Q060 §3 delta-table cite is CORRECT: `b43b9f91` delivered the complete #21 old→new table early to all consumers, so it is a valid authoritative export-map check. Consume-against-published-only + one-core proof match our install-truth discipline. Honest gates restated below (no dates owed; their notice demands none). The RG-1/RG-2 live re-verify is the external check on the still-open activation oracle (below) — no new owed. |
+| §awaiting-your-marks | G-1/G-2 dock first-tap activation ownership, G-3 modelValue write-through, G-4 a11y internals pointer — "at your next boundary, no urgency" | SUPERSEDED — ALREADY MARKED at `da5910d5` (HEAD; this notice is a timing artifact, sent before keyframes saw our marks). G-3 ANSWERED-FROM-SOURCE (modelValue writes through: `Select.vue` forwards + emits `update:modelValue`, `EasingPicker.vue` uses `defineModel`; the `:key` shims deletable at consume, re-verify at published bytes). G-4 ANSWERED (`proof:a11y`/axe π + reka-owned focus-trap/ARIA). G-1/G-2 PARTIAL-ANSWER (geometry owned; single-click activation oracle a real gap → NEEDS-ORCHESTRATOR, carried from `da5910d5`). Relaying these answers back to keyframes is the orchestrator's routing choice per the `da5910d5` Q060/relay note. |
+| §unpublished-tree / plan-of-record | nothing requested of the unpublished tree; plan of record `keyframes.js/docs/tranches/V/` | NO-ACTION — the U→V re-home is already CONFIRMED complete at `da5910d5` §3 (discharged producer-reply §6); the V-folder plan-of-record matches. |
+
+**Honest 7.0.0 gates restated (no dates — their notice demands none).** Their execution correctly
+frames everything as conditional on "the moment Glass 7.0.0 tags." The tag remains gated, per the
+standing record (INBOUND-MARKS line 480; `b43b9f91`): **Q003** RED (the user-hand in-app paint arm)
++ **Q002** (the native 1280/390 sweeps) + **Q051** (the consolidated user-ask ruling batch,
+committed awaiting the user, `3f7bffe2`). The hold is honest, not idle; no date is on record and
+none is owed to keyframes. Their consume rides the PUBLISHED tag whenever it lands — no coupling to
+their W4–W6 schedule, which runs glass-free on the K6 line.
+
+**Consumer-update ledger (verify, per the watch).** WE owe keyframes NOTHING on the current record
+beyond delivering the already-placed G-3/G-4 answers (routing choice, orchestrator; the Q060 kf
+mark is FYI-only, "no action owed either direction"). KEYFRAMES owes us only their standing
+consume-and-relay against the published 7.0.0 artifact (not owed now; gated on our tag). The
+dock-knob adoption / kVisOf-class items are slides/atlas consumer-updates, NOT keyframes — N/A to
+this inbox; no keyframes-owed consumer-update exists on the record. NO-COLLISION with the HELD
+formations (BI.W-ENGAGE-AFFORD / BI.W-GLASS-SUBTLETY / BI.W-SLIDER-ENGAGE — internal engagement
+waves, unregistered pending close) nor with the in-flight Q041 comment-scrub: this notice is a
+keyframes consume-plan + already-discharged awaiting-marks, touching neither.
+
+**NEEDS-ORCHESTRATOR (both carried, none newly minted by this notice).** (1) The DOCK-SPINE
+single-click activation-at-rest oracle (G-1/G-2 activation facet) remains the one open wave-spec
+amendment from `da5910d5`; keyframes' RG-1/RG-2 live re-verify at consume is the external check on
+it, so landing the oracle before/at the 7.0.0 tag is the coherent sequencing (recommend fold into
+DOCK-SPINE §Acceptance/§π, mobile arm into W-DOCK-CROSSFADE — a live `elementFromPoint(toggleCenter)`
++ driven-pointerdown actuation assert at 1280×800 and 390×844). (2) A one-line relay pointing
+keyframes at `da5910d5` (their "awaiting marks" are already placed: G-3 writes through, G-4 answered,
+G-1/G-2 partial) — routing choice, not a new obligation.
+
+**Cross-check (`da5910d5` / `c12be186` / `b43b9f91`).** No contradiction. The Q060 §3 delta-table
+cite matches `b43b9f91`; the awaiting-marks are the exact rows discharged at `da5910d5` (this notice
+predates their sight of them); nothing here touches the speedtest dock-member-at-5.0.0 or
+ScrollingText-TERMINAL dispositions (`c12be186`), the install-truth wedge/CHANGELOG findings
+(`b43b9f91`), or the atlas pre-stage ruling (`da5910d5`). The single open thread — the DOCK-SPINE
+first-tap activation oracle — is unchanged, not re-litigated.
