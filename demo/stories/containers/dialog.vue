@@ -24,6 +24,17 @@ const confirmOpen = ref(false);
 const confirming = ref(false);
 const confirmed = ref(0);
 const backgroundEdits = ref(0);
+
+// The center-dialog spring register knob — flip the named `springPreset` live
+// and reopen to eye-judge each curve's scale bloom (the dock controls story's
+// interaction-flip precedent). `springPreset` is the existing public prop; the
+// four names are the only registers the center bloom accepts.
+const springOptions = ["smooth", "snappy", "bouncy", "gentle"] as const;
+const dialogSpring = ref<(typeof springOptions)[number]>("bouncy");
+function cycleSpring() {
+    const i = springOptions.indexOf(dialogSpring.value);
+    dialogSpring.value = springOptions[(i + 1) % springOptions.length];
+}
 const releaseChecks = [
     "Public exports",
     "Type declarations",
@@ -281,6 +292,40 @@ function guardConfirmDismiss(event: Event) {
                             </DialogContent>
                         </Dialog>
                     </div>
+                </div>
+            </StorySection>
+
+            <StorySection heading="Spring register" gap="lg">
+                <p class="text-sm text-muted-foreground">
+                    The centered dialog's entrance rides the named JS spring set by
+                    <code class="font-mono text-xs">springPreset</code>. Flip the register
+                    and reopen to eye-judge each curve's scale bloom —
+                    <strong>bouncy</strong> overshoots most (the canonical dialog
+                    entrance), <strong>gentle</strong> settles with none.
+                </p>
+                <div class="flex flex-wrap items-center gap-3">
+                    <Button emphasis="quiet" @click="cycleSpring">
+                        springPreset: {{ dialogSpring }} — flip
+                    </Button>
+                    <Dialog>
+                        <DialogTrigger as-child>
+                            <Button>Open spring dialog</Button>
+                        </DialogTrigger>
+                        <DialogContent :spring-preset="dialogSpring" class="sm:max-w-sm">
+                            <DialogHeader>
+                                <DialogTitle>Spring register — {{ dialogSpring }}</DialogTitle>
+                                <DialogDescription>
+                                    The scale bloom rides the {{ dialogSpring }} spring.
+                                    Close, flip the register, and reopen to compare.
+                                </DialogDescription>
+                            </DialogHeader>
+                            <DialogFooter>
+                                <DialogClose as-child>
+                                    <Button>Close</Button>
+                                </DialogClose>
+                            </DialogFooter>
+                        </DialogContent>
+                    </Dialog>
                 </div>
             </StorySection>
 
