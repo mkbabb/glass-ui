@@ -45,6 +45,13 @@ export interface SegmentedTabOption {
     icon?: string;
     disabled?: boolean;
     tooltip?: string;
+    /**
+     * The `id` of the tabpanel this option reveals. When set and semantics resolve to
+     * `tabs`, it is emitted as the tab's `aria-controls`, completing the APG
+     * tablist↔tabpanel linkage for consumers that own a panel. Ignored in `toggle`
+     * semantics (a toggle group mutates a shared surface, not a distinct panel).
+     */
+    controls?: string;
 }
 
 /** The two materials: `pill` is the default glass-track slider; `underline` is the paper ink hairline. */
@@ -391,6 +398,7 @@ const { rovingTabindex, onStripKeydown } = useTabRovingFocus({
                                           'aria-selected': isActive(option.value)
                                               ? 'true'
                                               : 'false',
+                                          'aria-controls': option.controls || undefined,
                                       }
                                     : {
                                           'aria-pressed': isActive(option.value)
@@ -433,7 +441,10 @@ const { rovingTabindex, onStripKeydown } = useTabRovingFocus({
                 :tabindex="rovingTabindex(idx)"
                 v-bind="
                     isTabsSemantic
-                        ? { 'aria-selected': isActive(option.value) ? 'true' : 'false' }
+                        ? {
+                              'aria-selected': isActive(option.value) ? 'true' : 'false',
+                              'aria-controls': option.controls || undefined,
+                          }
                         : { 'aria-pressed': isActive(option.value) ? 'true' : 'false' }
                 "
                 :disabled="option.disabled"

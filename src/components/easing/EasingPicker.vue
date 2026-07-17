@@ -475,8 +475,8 @@ const stepsModel = computed<number[]>({
                     <code ref="readoutEl" tabindex="0" class="min-w-0 flex-1 break-all text-xs text-foreground select-text">{{ readoutLiteral }}</code>
                     <button
                         type="button"
-                        class="shrink-0 rounded-pill p-1.5 text-muted-foreground transition-colors hover:bg-(--surface-tint-8) hover:text-foreground disabled:cursor-wait disabled:opacity-disabled"
-                        :disabled="copyState === 'pending'"
+                        class="shrink-0 rounded-pill p-1.5 text-muted-foreground transition-colors hover:bg-(--surface-tint-8) hover:text-foreground aria-disabled:cursor-wait aria-disabled:opacity-disabled"
+                        :aria-disabled="copyState === 'pending' || undefined"
                         :aria-label="copyState === 'failed' ? 'Retry copy curve literal' : copyState === 'copied' ? 'Copied' : copyState === 'pending' ? 'Copying curve literal' : 'Copy curve literal'"
                         data-testid="easing-copy"
                         @click="copy"

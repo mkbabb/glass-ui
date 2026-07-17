@@ -10,6 +10,7 @@ const props = withDefaults(defineProps<LabeledFieldProps>(), {
     errorLive: "polite",
     invalid: false,
     layout: "default",
+    controlLabelable: true,
 });
 
 const slots = defineSlots<{
@@ -40,7 +41,7 @@ const required = computed(() => props.requirement === "required");
         <div class="labeled-field-copy">
             <Label
                 :id="labelId"
-                :for="controlId"
+                :for="controlLabelable ? controlId : undefined"
                 :requirement="requirement"
                 :disabled="disabled"
             >

@@ -44,7 +44,11 @@ export async function writeClipboard(text: string): Promise<CopyResult> {
     try {
         await navigator.clipboard.writeText(text);
         return { ok: true };
-    } catch {
+    } catch (error) {
+        // Surface the platform's rejection instead of swallowing it. The discriminated
+        // CopyResult keeps its named-channel shape, so the underlying error rides a
+        // console warning rather than a new result member.
+        console.warn("[useClipboard] clipboard writeText rejected:", error);
         return { ok: false, reason: "clipboard-api" };
     }
 }

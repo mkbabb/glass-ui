@@ -32,6 +32,7 @@ const controlProps = computed(() => {
         :error-live="errorLive"
         :invalid="invalid"
         :disabled="disabled"
+        :control-labelable="false"
     >
         <template #default="{ controlId, labelledBy, describedBy, errorId, required: effectiveRequired }">
             <Slider

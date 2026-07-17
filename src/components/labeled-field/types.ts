@@ -17,6 +17,14 @@ export interface LabeledFieldCommonProps {
 export interface LabeledFieldProps extends LabeledFieldCommonProps {
     invalid?: boolean;
     disabled?: boolean;
+    /**
+     * Whether the control is a native labelable element (`input`, `select`, native
+     * `button`) the label's `for` can target. Defaults to `true`. Composite controls
+     * whose root is a non-labelable element — e.g. reka Slider's `span` root — set
+     * this `false` so the label drops the invalid `for` and the control names itself
+     * through `aria-labelledby` (the slot's `labelledBy`) instead.
+     */
+    controlLabelable?: boolean;
 }
 
 export interface LabeledFieldSlotProps {
