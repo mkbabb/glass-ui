@@ -40,6 +40,19 @@ for (const [k, v] of declMap(read("demo/shell/configurator/presets/neutral.css")
     neutral.set(k, v);
 }
 
+const squircle = read("src/styles/glass/squircle.css");
+const fieldControl = read("src/components/_shared/field-control.css");
+
+// The border-radius declared inside the FIRST rule whose selector block matches
+// `re` — parses the CSS text (happy-dom runs no cascade, so the geometry OUTCOME
+// is read from source).
+const borderRadiusIn = (css: string, re: RegExp): string | undefined => {
+    const block = css.match(re);
+    if (!block) return undefined;
+    const decl = block[1].match(/border-radius\s*:\s*([^;]+);/);
+    return decl ? decl[1].replace(/\s+/g, " ").trim() : undefined;
+};
+
 describe("dialog-corner harmony — the card bind", () => {
     it("binds --radius-dialog directly onto --radius-card", () => {
         expect(radius.get("--radius-dialog")).toBe("var(--radius-card)");
@@ -58,5 +71,42 @@ describe("dialog-corner harmony — the card bind", () => {
     it("routes the concentric relay through the card corner", () => {
         expect(radius.get("--radius-ctx")).toBe("var(--radius-card)");
         expect(resolve(radius, "--radius-ctx")).toBe(resolve(radius, "--radius-dialog"));
+    });
+});
+
+describe("dialog corner shape — the A' round fork (dialog only)", () => {
+    it("retires --corner-shape-dialog so the dialog rounds to match the card", () => {
+        expect(radius.has("--corner-shape-dialog")).toBe(false);
+    });
+
+    it("keeps --corner-shape-sheet on the squircle vocabulary (sheet unchanged)", () => {
+        expect(radius.get("--corner-shape-sheet")).toBe(
+            "superellipse(var(--corner-k-squircle))",
+        );
+    });
+
+    it("drops the .glass-floating.rounded-dialog @supports arm, keeps .sheet-animate", () => {
+        expect(/\.glass-floating\.rounded-dialog\s*\{/.test(squircle)).toBe(false);
+        expect(/\.glass-floating\.sheet-animate\s*\{/.test(squircle)).toBe(true);
+    });
+});
+
+describe("dialog inner controls — the F7 field rung (adopt for the modal input)", () => {
+    it("re-points the modal single-line input onto the 16px field rung", () => {
+        const modal = borderRadiusIn(
+            fieldControl,
+            /\[data-slot="dialog-content"\]\s+\.field-control\[data-kind="input"\]\s*\{([^}]*)\}/,
+        );
+        expect(modal).toBe("var(--radius-field)");
+        // The field rung is the soft 16px rounded-rect, not the stadium pill.
+        expect(resolve(radius, "--radius-field")).toBe("1rem");
+    });
+
+    it("keeps the stadium pill on the base (non-modal) single-line input + CTAs", () => {
+        const base = borderRadiusIn(
+            fieldControl,
+            /(?:^|\n)\s*\.field-control\[data-kind="input"\]\s*\{([^}]*)\}/,
+        );
+        expect(base).toBe("var(--radius-pill)");
     });
 });
