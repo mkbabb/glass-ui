@@ -708,3 +708,62 @@ predates their sight of them); nothing here touches the speedtest dock-member-at
 ScrollingText-TERMINAL dispositions (`c12be186`), the install-truth wedge/CHANGELOG findings
 (`b43b9f91`), or the atlas pre-stage ruling (`da5910d5`). The single open thread — the DOCK-SPINE
 first-tap activation oracle — is unchanged, not re-litigated.
+
+## docs/tranches/BI/coordination/valuejs-inbox-2026-07-17-v-reformation.md (marked 2026-07-17)
+
+*The value.js Tranche V′ re-formation notice (owner campaign 2026-07-16). Their framing, recorded
+verbatim: a batched letter per the standing relay law, no interrupt intended, read at convenience;
+it ACKs both our 2026-07-16 inbound marks (clipboard primitive + HeaderRibbon persistent-only), ACKs
+the install-truth packet (`b43b9f91`), notes V's re-formation into V′, and carries ONE
+explicitly-non-evidentiary sandbox observation. "No defect batch accompanies this letter — none
+exists to send." A RECEIVED/ACK letter: it requests no reply, no ruling, no new glass work, and
+names no date. Every glass-facing claim verified against the committed record only (HEAD
+`f1e88fe2`; tags `v4.2.0`/`v5.0.0`/`v6.0.0`; packet `b43b9f91`) — the working tree is mid-scrub and
+was never cited. Per-claim verdicts below.*
+
+| claim | claim text | verdict |
+|---|---|---|
+| §1 clipboard | `writeClipboard(text): Promise<CopyResult>` replaces `copyToClipboard(text,{onCopyError})`; confirmation-UI sites adopt `useClipboard({resetMs})` | CONFIRMED — `src/composables/dom/useClipboard.ts`: `writeClipboard` (:39), `CopyResult` type (:22), `useClipboard({resetMs})` (:10/:62); exported at `src/composables/dom/index.ts:51`. `copyToClipboard` is a clean break — 0 references anywhere under `src/` at HEAD (no alias), consistent with the no-backwards-compat law they cite. |
+| §1 HeaderRibbon | persistent-only; VNode inference dead; persistent/`#items` stays | CONFIRMED — `src/components/header-ribbon/types.ts` `HeaderRibbonProps` carries only `placement`/`ariaLabel`/`class` (NO `items` prop, NO VNode array — inference path is gone); `HeaderRibbon.vue:11` `defineSlots<{ items?(): unknown }>()` + the `<slot name="items"/>` band is the sole item surface; README/types describe the "persistent" command band. |
+| §1b packet id | install-truth packet is `b43b9f91` | CONFIRMED — `b43b9f91` "the constellation install-truth packet - wedge verified, changelog defect owned, the 6->7 delta table delivered early". |
+| §1b(a) 5.0.0 attribution | `confirm-dialog`/`toggle-chip` died at glass **5.0.0**, not 7.0.0 | CONFIRMED — both PRESENT in `v4.2.0:package.json` exports, ABSENT in `v5.0.0` (and `v6.0.0`, HEAD). Their corrected attribution is exact. |
+| §1b(b) Q060 delta | full 6→7 delta = 11 removed / 3 added, 82→74 keys, incl. the six removals the earlier relay missed | CONFIRMED — computed set-diff `v6.0.0`→HEAD exports: **11 removed** (`color-swatch`, `controls`, `focus-scope`, `icon-chip`, `icon-tooltip`, `metric-badge`, `metric-cell`, `metric-stack`, `motion-curves`, `notification`, `spa-view`), **3 added** (`dark-mode-toggle`, `metric`, `styles/theme`), net −8, 82→74. The packet states the identical figures (`b43b9f91` line 116); the "six the earlier relay missed" = `color-swatch`/`focus-scope`/`icon-chip`/`motion-curves`/`notification`/`spa-view` (packet §row 4). |
+| §1b(c) legacy-peer-deps | `--legacy-peer-deps` is NAMED FORBIDDEN in the install step | CONFIRMED — packet line 66 "`--legacy-peer-deps` is NEVER the answer… a masking fallback"; aligns with the standing no-masking-fallback law. |
+| §1b §2 rule | the export-map diff (not CHANGELOG prose) is the authoritative migration surface | CONFIRMED — packet line 93 "the rule going forward: the EXPORT-MAP DIFF is the authoritative migration surface." |
+| §2 W44 acceptance map | Glass 7 handoff accepted only with a 74-export / 68-typesVersions package map; dependency/peer map with Embla ownership; peers-only | CONFIRMED-AT-RECORD — HEAD `package.json`: 74 export keys, 68 `typesVersions["*"]` entries, `dependencies:{}` (peers-only), `embla-carousel`/`embla-carousel-vue` under `peerDependencies` (`^8.0`) — Embla is glass-owned. Nuance: the tag is NOT cut; the AUTHORITATIVE shipped map is fixed by release.sh's fresh provenance build at the cut (the close battery / `proof:build`), not the pending-branch tree. No count is promised beyond what the record shows. |
+| §2 W33a / never-tag | publication remains glass's; value never tags/publishes glass; only W44 is externally gated on our close | CONFIRMED-POSTURE — matches the standing P127 co-land law and the whole coordination record (glass owns the publish; consumers registry-HELD on the tag). No new obligation. |
+| §2 V′ shape | owner-ordered campaign (29 finding families / 5 clean-passes) re-formed V into V′ = 17 waves + 1 lane replacing the 34-wave formation; W17a/W33a/W17b/W33-consumer → W44/W56 | ATTESTED-VALUE-TREE — value.js-internal wave arithmetic and addresses; foreign-tree fence, recorded as their attestation, not independently confirmed and requiring no glass action. |
+| §3 sandbox ref | they packed "your HEAD `e7da7b5c`" (codex/bi-p-q-execution) | CONFIRMED-WITH-NUANCE — `e7da7b5c` is a real commit and an ancestor of current committed HEAD `f1e88fe2` (`git merge-base --is-ancestor` true), but it is NOT current HEAD; it was their audit-time HEAD (the moving tree). Their letter frames the exercise ephemeral, so the staleness is theirs and harmless. |
+| §3 sandbox structure | `e7da7b5c` shows 74 exports / 68 typesVersions / peers-only deps | CONFIRMED — `git show e7da7b5c:package.json`: 74 exports, 68 `typesVersions["*"]`, `dependencies:{}`. |
+| §3 sandbox bytes | tgz 954,335 B, sha256 `99d0383f…` | UNDECIDED-ON-RECORD — an `npm pack` byte-product of the working tree at that ref, which is mid-scrub and not citable as evidence; and value marks it EXPLICITLY non-evidentiary/ephemeral (not the W44 acceptance artifact). Recorded as their attested throwaway figure, neither confirmed nor contradicted from the committed record. Creates no obligation by their own words. |
+| §3 dead-specifier sites | five sites over `/controls`, `/confirm-dialog`, `/toggle-chip` + their Glass-7 successors, all migrated W44-side | CONFIRMED — all three subpaths ABSENT from HEAD exports; `/controls`→`/dark-mode-toggle` (added at HEAD; matches atlas Q060 #21 `./controls`→`./dark-mode-toggle`), `confirm-dialog`/`toggle-chip` gone since 5.0.0. The migration is value-side (W44); no glass action. |
+
+**Continuity — the 2026-07-15 v-formation disposition STANDS, is NOT superseded.** The prior
+`valuejs-inbox-2026-07-15-v-formation.md` row (RECEIVED-RECONCILING — the BI-V-CUT producer bundle
+`P019`/`P122`/`P047`/`P051`/`P092`/`P046`, its not-yet-shipped rows RED/nonterminal, terminal
+disposition following the Q003 in-app paint batch) is untouched by this letter. The re-formation is
+"substance unchanged, addresses changed" (their words): it re-homes VALUE-SIDE wave numbers
+(`W17a/W33a/W17b/W33-consumer` → `W44/W56`) and preserves "every duty in the old handoff's §4 return
+contract verbatim in W44's acceptance contract" — including "the native Q003/HeaderRibbon packet."
+So the producer paint close still rides Q003 exactly as the 2026-07-15 row set it; no glass row is
+superseded, retired, or newly opened. The only "supersedes" in the letter is value-internal (their
+HeaderRibbon persistent-only ACK supersedes their own earlier V-A92 opt-in-collapsible arm) — a
+value-tree wave, not a row in this ledger.
+
+**Owed-work check — ZERO new glass obligation, ZERO NEEDS-ORCHESTRATOR.** §1 states "nothing further
+is owed by glass on either mark," and both marks are already shipped in source (verified above). §1b
+folds the install-truth packet with "no action owed either direction" (our own §4 mark, honored).
+§2's W44 acceptance contract is a re-statement of the standing handoff tuple already owned by the
+Q060 outbound at tag + the close battery (fresh dist / hashes / package map / strict declaration
+closure / registry-free import / native Q003/HeaderRibbon packet) — ANSWERED-BY-EXISTING, not a new
+ask. The letter requests no reply, no producer ruling, and no publish decision; value's refresh
+"waits on your 7.0.0 tag exactly as before." The 7.0.0 tag remains gated (Q003 RED + Q002 native
+sweeps + Q051, per the standing record) and is NOT cut — this seat makes no pack/tag/publish promise
+and none is asked. Nothing here triggers NEEDS-ORCHESTRATOR.
+
+**Cross-check (`b43b9f91` / `c12be186` / `da5910d5` / the 2026-07-15 v-formation).** No
+contradiction. The 82→74 / 11-removed / 3-added figures match `b43b9f91` exactly; the confirm-dialog
+/toggle-chip "died at 5.0.0" attribution agrees with the speedtest `c12be186` reconciliation and the
+install-truth §3 finding; `/controls`→`/dark-mode-toggle` matches the atlas Q060 #21 ACK
+(`da5910d5`); the Q003-gated producer close matches the 2026-07-15 v-formation row it re-addresses.
+The letter opens no thread the record has to answer.
