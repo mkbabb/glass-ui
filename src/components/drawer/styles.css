@@ -326,8 +326,12 @@
  * `clamp(0,…,1)` bounds the fling overshoot. The scrim element gains
  * `[data-stage-scrim]` (DrawerOverlay.vue) and reads the scalar written directly on
  * that scrim root.
+ *
+ * `:not([data-backdrop="graded"])` — a graded-backdrop Dialog swaps the whole flat
+ * scrim for the box-following halo (placement.css FORM 2), so the flat dim drops
+ * there. Drawer never sets `data-backdrop`, so its paint is byte-identical.
  */
-[data-stage-scrim] {
+[data-stage-scrim]:not([data-backdrop="graded"]) {
     background: color-mix(
         in srgb,
         var(--overlay-scrim-ink)
@@ -366,8 +370,12 @@
  * while the dim tracks the detent. The scrim fades in over
  * its `animate="fade"` enter, so the fixed blur reads as coalescing, never a pop.
  * Default OFF.
+ *
+ * `:not([data-backdrop="graded"])` — the graded-backdrop Dialog replaces this flat
+ * immersive plate with the masked halo (Δ0 plate count); Drawer never opts in, so
+ * its paint is byte-identical.
  */
-[data-stage-scrim][data-stage-immersive] {
+[data-stage-scrim][data-stage-immersive]:not([data-backdrop="graded"]) {
     backdrop-filter: blur(14px);
 }
 

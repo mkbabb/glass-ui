@@ -38,7 +38,7 @@ describe("DialogContent graded sheet edge", () => {
         await nextTick();
         await nextTick();
 
-        expect(document.querySelector('[data-slot="dialog-graded-edge"]')).toBeNull();
+        expect(document.querySelector('[data-slot="glass-graded-halo"]')).toBeNull();
 
         for (const side of ["top", "right", "bottom", "left"] as const) {
             placement.value = side;
@@ -46,7 +46,7 @@ describe("DialogContent graded sheet edge", () => {
                 surface.value = rung;
                 await nextTick();
                 const edge = document.querySelector<HTMLElement>(
-                    '[data-slot="dialog-graded-edge"]',
+                    '[data-slot="glass-graded-halo"]',
                 );
                 if (rung === "glass") {
                     expect(edge?.getAttribute("aria-hidden")).toBe("true");
@@ -98,7 +98,7 @@ describe("DialogContent graded sheet edge", () => {
             '[data-slot="dialog-content"]',
         )!;
         const edge = plate.querySelector<HTMLElement>(
-            ':scope > [data-slot="dialog-graded-edge"]',
+            ':scope > [data-slot="glass-graded-halo"]',
         );
         const region = plate.querySelector<HTMLElement>(
             ':scope > [data-slot="dialog-content-region"]',
@@ -107,7 +107,7 @@ describe("DialogContent graded sheet edge", () => {
         expect(plate.className).not.toContain("overflow-y-auto");
         expect(edge).not.toBeNull();
         expect(region?.textContent).toContain("Scrollable sheet");
-        expect(region?.querySelector('[data-slot="dialog-graded-edge"]')).toBeNull();
+        expect(region?.querySelector('[data-slot="glass-graded-halo"]')).toBeNull();
         const footer = region?.lastElementChild as HTMLElement;
         expect(footer.className).toContain("sm:flex-row");
 

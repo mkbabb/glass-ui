@@ -23,7 +23,7 @@ import {
 import ModalOverlay from "./ModalOverlay.vue";
 // The former `spring` boolean folds into the shared `motion` axis (the preset
 // carves off onto the distinct `springPreset` prop; motion gates the JS entrance).
-import type { Motion, Placement, Surface } from "../_shared/axes";
+import type { Backdrop, Motion, Placement, Surface } from "../_shared/axes";
 import { useMotionAxis } from "../_shared/useMotionAxis";
 // Dialog rides the SHARED {glass·veil·opaque} `surface` axis — the same grammar
 // as Card (clean break, no alias, no Dialog-local `variant`).
@@ -46,6 +46,13 @@ export interface DialogContentProps {
     showClose?: boolean;
     scroll?: boolean;
     stage?: "none" | "dim" | "scale" | "immersive";
+    /**
+     * The scrim backdrop axis. `scrim` (default) is byte-identical to today; `graded`
+     * swaps the flat scrim for the box-following halo. Applies to a centred dialog
+     * (the immersive stage opts in first); side sheets keep their own per-edge graded
+     * edge and ignore it.
+     */
+    backdrop?: Backdrop;
 }
 
 defineOptions({ inheritAttrs: false });
@@ -56,6 +63,7 @@ const props = withDefaults(defineProps<DialogContentProps>(), {
     showClose: true,
     scroll: false,
     stage: "none",
+    backdrop: "scrim",
 });
 const emits = defineEmits<DismissableContentEmits>();
 
@@ -69,6 +77,7 @@ const delegatedProps = computed(() => {
         showClose: _sc,
         scroll: _sl,
         stage: _st,
+        backdrop: _bd,
         // `forceMount` is bound explicitly onto BOTH the Portal and the Content
         // (D4) so the spring's mount-hold survives reka's logical close — never
         // forwarded, or the passthrough would clobber the hold.
@@ -432,6 +441,7 @@ const contentStyle = computed<CSSProperties>(() => ({
     <RekaDialogPortal :force-mount="contentForceMount">
         <ModalOverlay
             :data-stage-scrim="props.stage !== 'none' ? '' : undefined"
+            :backdrop="isCenter ? props.backdrop : undefined"
             :slide-t="scrimSlideT"
             :force-mount="scrimForceMount"
         />
@@ -454,11 +464,12 @@ const contentStyle = computed<CSSProperties>(() => ({
            discipline). -->
             <span v-if="!isCenter" ref="sideAnchorEl" hidden />
             <!-- A side sheet owns one noninteractive, mask-graded
-           backdrop sample. The host's flat blur is disabled for this glass-only
-           arm in placement.css, so this is not a nested second plate. -->
+           backdrop sample (the per-edge FORM 1 of the shared `glass-graded-halo`
+           slot). The host's flat blur is disabled for this glass-only arm in
+           placement.css, so this is not a nested second plate. -->
             <span
                 v-if="!isCenter && props.surface === 'glass'"
-                data-slot="dialog-graded-edge"
+                data-slot="glass-graded-halo"
                 aria-hidden="true"
             />
             <!-- Every side sheet owns one stable inner region: it packs its content at
