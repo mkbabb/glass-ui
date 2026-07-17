@@ -57,7 +57,7 @@ export const SAMPLE_DOWNSAMPLE = 32;
 // state. Below this mean-alpha floor the readback is not a
 // valid sample: `sampleAnimated` returns null and the live caller writes `unavailable`
 // (see useGlassBackdropLuminance.sampleNow). A null live sample NEVER falls to the
-// static stack-walk — that coalescing is deliberately forbidden (P016). Fail-loud,
+// static stack-walk — that coalescing is deliberately forbidden. Fail-loud,
 // never a masking fake value.
 export const FIELD_ALPHA_FLOOR = 0.02;
 
@@ -132,7 +132,7 @@ export function normalizeToRgb(
  * surface's bounding box → mean relative luminance + the ambient-hue histogram (a FREE
  * rider over the SAME pixel pass). Returns null if no source, an all-transparent
  * (unrendered) field, or a tainted canvas — the live caller writes `unavailable` on a
- * null; it NEVER falls to the static stack-walk (that coalescing is forbidden, P016).
+ * null; it NEVER falls to the static stack-walk (that coalescing is forbidden).
  */
 export function sampleAnimated(
     el: HTMLElement,
@@ -190,14 +190,14 @@ export function sampleAnimated(
         }
         // An all-transparent readback carries no painted field content and is not a
         // valid sample. Returning null makes the live caller write `unavailable` (never
-        // the static stack-walk — forbidden by P016) rather than a degenerate luma ≈ 1.0
+        // the static stack-walk — forbidden) rather than a degenerate luma ≈ 1.0
         // with a transparent hue.
         if (n === 0 || alphaSum / n < FIELD_ALPHA_FLOOR) return null;
         return { luma: sum / n, ambientHue: resolveAmbientHue(hist) };
     } catch {
         // fail-loud: a tainted/cross-origin canvas throws on getImageData; the null
         // return SURFACES the miss to the caller, which writes `unavailable` (never the
-        // static stack-walk — forbidden by P016; never a silent wrong answer).
+        // static stack-walk — forbidden; never a silent wrong answer).
         return null;
     }
 }

@@ -19,7 +19,7 @@ import { inject, provide, type InjectionKey } from "vue";
  *  - `createOptionalContext<T>(label)` — a `use()` that returns `T | null`
  *    (befitting-silent; the consumer renders bare when no provider is present).
  *    No strict counterpart is minted — a strict throw would be dead code at
- *    these sites (invariant 25's "per intent" clause).
+ *    these sites (the "per intent" clause).
  *
  * The returned `KEY` is exported by each call site so an external provider can
  * `provide(KEY, …)` directly (the goo-blob `BLOB_CONFIG_KEY` external-provide

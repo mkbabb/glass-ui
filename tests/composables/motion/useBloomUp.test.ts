@@ -1,4 +1,4 @@
-// BE.W-BLOOM-UP — the headless math/seam half of useBloomUp.
+// The headless math/seam half of useBloomUp.
 //
 // The PAINTED truth (the bloom frame-series, the field-hue warm across the SAME frames,
 // the surface-carries-no-hue, the PRM single-paint) is the binding π

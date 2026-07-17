@@ -1,7 +1,7 @@
-// AU.W9.C — Dialog showClose prop.
+// Dialog showClose prop.
 //
 // Validates the surface contract: the default mount renders the built-in
-// top-right close (X) button (byte-identical to the pre-W9 unconditional
+// top-right close (X) button (byte-identical to the pre- unconditional
 // DialogClose); `showClose={false}` suppresses it so a consumer composing its
 // own header / dismiss control (e.g. a hand-composed access modal) does not
 // double-up the X.

@@ -9,7 +9,7 @@ import {
     FISSION_PROB_AT_FULL,
 } from "../constants";
 import { easeIn, easeOut, fissionSnap } from "./easing";
-// BG.W-BLOB-KINEMATICS-LEAF — the stateless orbit/eccentricity/wobble math is the
+// The stateless orbit/eccentricity/wobble math is the
 // colocated satelliteKinematics.ts leaf; the driver COMPOSES it (one writer of the
 // satellite state here, the pure kinematics beside it).
 import {
@@ -64,7 +64,7 @@ export function useBlobSatellites(config: BlobConfig, initialColor: string) {
     let lastMergeTime = -Infinity;
     let lastOrbitRadius = config.geometry.orbitRadius;
 
-    // BD.W-GOOBLOB-MERCURY-COLONY — the SINGLE-FISSIONER token: the index of the satellite
+    // The SINGLE-FISSIONER token: the index of the satellite
     // currently in the `fissioning` beat, or -1 when none is splitting. AT MOST ONE
     // satellite is the fissioning satellite per cycle (the bounded-apex + single-fissioner
     // rule re-prevents the "two unrelated discs" failure WITHOUT the blanket
@@ -74,7 +74,7 @@ export function useBlobSatellites(config: BlobConfig, initialColor: string) {
 
     // A callback the renderer wires so a pinch-off SNAP kicks the EXISTING body-pulse
     // spring (the cartoon follow-through recoil — the SAME `pulseVel` oscillator
-    // BD.W-BLOB-MOTION-TUNE tunes; no new spring, no new clock). Null until wired.
+    // tunes; no new spring, no new clock). Null until wired.
     let onPinchSnap: ((impulse: number) => void) | null = null;
 
     function syncOrbitRadius() {
@@ -119,7 +119,7 @@ export function useBlobSatellites(config: BlobConfig, initialColor: string) {
 
     // The satellites are seeded on the FIRST tick (which carries the canonical
     // tempo clock), NOT at construction — so their phase clocks share the renderer's
-    // tempo-integrated `now` base rather than `performance.now()` (W11.c).
+    // tempo-integrated `now` base rather than `performance.now()`.
 
     function tick(now: number, mood: MoodParams) {
         syncCount(now);
@@ -133,7 +133,7 @@ export function useBlobSatellites(config: BlobConfig, initialColor: string) {
         const orbitDuration = config.satellites.orbitDuration;
         const absorbedDuration = config.satellites.absorbedDuration;
 
-        // BD.W-GOOBLOB-MERCURY-COLONY — the EFFECTIVE fission amp (config × mood). The
+        // The EFFECTIVE fission amp (config × mood). The
         // OPT-IN register `config.surface.fissionAmp` (0 = the calm default, never splits)
         // is mood-coupled: `mergeRate` runs 2.0 (sleepy) → 0.3 (excited), so its inverse is
         // an arousal proxy in ~[0, 1] (sleepy ≈ 0, excited ≈ 1). An excited colony splits
@@ -156,7 +156,7 @@ export function useBlobSatellites(config: BlobConfig, initialColor: string) {
                             s.phaseStart = now;
                             s.phaseDuration = randRange(rng, orbitDuration[0], orbitDuration[1]);
                         } else if (
-                            // BD.W-GOOBLOB-MERCURY-COLONY — the SPLIT branch. When the
+                            // The SPLIT branch. When the
                             // merge window opens AND the colony register is armed AND no
                             // satellite is already mid-split (the single-fissioner rule) AND
                             // the cadence roll passes, this satellite enters the `fissioning`
@@ -199,7 +199,7 @@ export function useBlobSatellites(config: BlobConfig, initialColor: string) {
                     break;
                 }
                 case "fissioning": {
-                    // BD.W-GOOBLOB-MERCURY-COLONY — the SPLIT beat runs for FISSION_BEAT_MS,
+                    // The SPLIT beat runs for FISSION_BEAT_MS,
                     // then the satellite re-merges (returns to the bonded orbit) and releases
                     // the single-fissioner token. The pinch SNAP (the kick to the body-pulse
                     // spring for the cartoon recoil) fires ONCE as the neck crosses the snap
@@ -315,7 +315,7 @@ export function useBlobSatellites(config: BlobConfig, initialColor: string) {
                     break;
                 }
                 case "fissioning": {
-                    // BD.W-GOOBLOB-MERCURY-COLONY — the SPLIT excursion. The orbit RADIUS
+                    // The SPLIT excursion. The orbit RADIUS
                     // rides the named `fissionSnap` curve (easing.ts): a SLOW gather
                     // (anticipation squash) → a FAST snap OUT past the body skin (the neck
                     // thins past the smin reach and the bead pinches free) → a damped recoil
@@ -342,7 +342,7 @@ export function useBlobSatellites(config: BlobConfig, initialColor: string) {
                     // The cartoon SNAP kick — fire ONCE as the neck crosses the snap band
                     // (the steep `fissionSnap` derivative ~[0.30, 0.55]). The impulse kicks
                     // the EXISTING body-pulse spring (the recoil ring, inheriting the tuned
-                    // ζ — BD.W-BLOB-MOTION-TUNE). `snapFired` is the phase-local latch
+                    // ζ). `snapFired` is the phase-local latch
                     // (reset false at beat start), fired once mid-snap.
                     if (!s.snapFired && ft >= 0.42) {
                         s.snapFired = true;
@@ -359,10 +359,10 @@ export function useBlobSatellites(config: BlobConfig, initialColor: string) {
             src.y = y;
             src.radius = satelliteRadius * scale;
             src.opacity = opacity;
-            // BD.W-GOOBLOB-MERCURY-COLONY — publish the per-source SPLIT token so the
+            // Publish the per-source SPLIT token so the
             // uniform packers PHASE-SCOPE `orbitWiden`: drop the bridge to nominal for the
             // fissioning satellite ALONE (its neck snaps), full+capped for every other
-            // (R8-07 cured).
+            // (now cured).
             src.fissioning = s.fissioning;
         }
     }
@@ -380,7 +380,7 @@ export function useBlobSatellites(config: BlobConfig, initialColor: string) {
     }
 
     /**
-     * BD.W-GOOBLOB-MERCURY-COLONY — wire the pinch-off SNAP to the body-pulse spring. The
+     * Wire the pinch-off SNAP to the body-pulse spring. The
      * renderer passes `pointer.click` so a fission snap kicks the EXISTING underdamped
      * oscillator (the cartoon follow-through recoil — the SAME `pulseVel` channel a
      * decel-flick already kicks; no new spring, no new clock). Idempotent re-wire.
@@ -390,7 +390,7 @@ export function useBlobSatellites(config: BlobConfig, initialColor: string) {
     }
 
     /**
-     * AX.W16 (arm 2) — the satellite system is QUIESCENT (the quiescence loop may park)
+     * The satellite system is QUIESCENT (the quiescence loop may park)
      * when NO satellite is mid-TRANSITION — i.e. none is `merging`, `absorbed`, or
      * `emerging`. Those phases are the per-frame morph events (the gooey merge in, the
      * re-emergence) that demand continuous render; a steady `orbiting` satellite is the
@@ -405,7 +405,7 @@ export function useBlobSatellites(config: BlobConfig, initialColor: string) {
     }
 
     /**
-     * AX.W16 (arm 2) — the soonest upcoming phase-boundary across all satellites, in
+     * The soonest upcoming phase-boundary across all satellites, in
      * the SAME tempo-integrated clock `tick` is driven by. The renderer's wake
      * scheduler re-arms the parked loop at this horizon so the next orbit→merge
      * transition animates on time (the demand-loop wake, not a poll). Returns the min

@@ -9,7 +9,7 @@
 // fling-snap.
 //
 // THE LOAD-BEARING REUSE (no second engine). glass-ui peer-depends on
-// `@mkbabb/keyframes.js`, whose `Draggable` class ships UNCONSUMED at HEAD: it owns
+// `@mkbabb/keyframes.js`, whose `Draggable` class ships UNCONSUMED: it owns
 // the complete pointer-capture follow (a `SpringProgress.target` write per
 // `pointermove`), a velocity-windowed sample buffer (robust to a jittery last
 // frame), and on release a fling that re-seats the spring from `(value,
@@ -23,9 +23,8 @@
 // freely. glass-ui hands it `snap: snapTargets.map(t => t.center)` at construction
 // (re-read on every `reattach`, so a resize / option change / orientation flip
 // re-resolves the centers), so the PHYSICS-side snap lives ENTIRELY in the engine —
-// glass-ui owns NO `decayRest` + nearest-center + `spring.target` re-roll (the BB-era
-// published-surface interim is EXCISED; the foreign-tree fence holds — glass-ui edits
-// ZERO kf tree, it wires the published surface). The composable keeps ONLY the
+// glass-ui owns NO `decayRest` + nearest-center + `spring.target` re-roll (it edits
+// ZERO kf tree; it wires the published surface). The composable keeps ONLY the
 // COMMIT-side resolution (`nearestTarget`/`nearestValue`): it maps the settled spring
 // center back to the consumer's domain value V for the single `onSnap` commit (the
 // value domain the engine has no knowledge of).

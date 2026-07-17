@@ -40,7 +40,7 @@ export class WebGPUInitError extends Error {
  * Basic Render Driver, or a UA-supplied `isFallbackAdapter` software fallback) — the
  * WebGPU twin of the `renderMode.ts` WebGL software-raster guard.
  *
- * WHY this forces the WebGL2 net (the BC WebGPU re-home regression this closes): on a
+ * WHY this forces the WebGL2 net (the WebGPU re-home regression this closes): on a
  * headless, GPU-blocklisted, CI host, `navigator.gpu` exists AND `requestAdapter()`
  * SUCCEEDS — it returns a SOFTWARE adapter (SwiftShader). `requestDevice()` succeeds
  * too, so the WebGPU init does NOT reject; `setup()` builds the render pipeline, but the
@@ -92,17 +92,17 @@ export function isSoftwareWebGPUAdapter(adapter: GPUAdapter): boolean {
  * The bound on the adapter/device acquisition (ms). The adapter/device request can
  * resolve NEITHER way on a hanging host (a headless, virtualized-Metal + some-Chrome
  * class). A REAL cold acquire on a healthy Metal-3 host was live-measured at ~3478ms
- * (the FIRST device request on a cold GPU process) — well over the prior tight 2500ms
- * ceiling, which converted a slow-but-fine cold acquire into a FALSE hang so the WGSL
- * primary was never exercised (every viz silently downgraded to WebGL2 forever — the
- * Safari-primary surface the "broken TOTALLY" reports live on, masked by the
+ * (the FIRST device request on a cold GPU process) — well over a tight 2500ms
+ * ceiling, which would convert a slow-but-fine cold acquire into a FALSE hang so the WGSL
+ * primary never runs (every viz silently downgrading to WebGL2 — the
+ * Safari-primary surface masked by the
  * always-winning fallback). 6000ms lets the real cold acquire through while a genuine
  * wedge (a device that never settles) still falls to the WebGL2 net before the user
  * perceives a permanent blank. With the SHARED device warm the ceiling is hit at most
  * ONCE per page, not N-times-per-canvas — a single ≤6s race, never N.
  *
- * carved into this device-acquisition-support leaf beside the typed
- * failure signal it throws (ratchet-drain #4). The substrate re-imports + re-exports it.
+ * homed in this device-acquisition-support leaf beside the typed
+ * failure signal it throws. The substrate re-imports + re-exports it.
  */
 export const WEBGPU_ACQUIRE_TIMEOUT_MS = 6000;
 

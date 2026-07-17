@@ -1,11 +1,11 @@
-// AX.W11 — the warmCatchLight OKLCh derivation gate.
+// The warmCatchLight OKLCh derivation gate.
 //
 // The catch-light seam fix MUST be invisible to the eye: the OKLCh-derived warm-white
 // must reproduce the prior eyeballed [1.0, 0.95, 0.88] linear literal so the live aurora
 // impasto relight reads identically (no perceptible shift — a true equivalence, not a
 // re-tune). It must ALSO reproduce the blob's warmCream OKLCh anchor at THAT anchor, so
-// W15's drop-in re-route onto the SAME helper is a true equivalence (the cross-surface
-// unification W15 inherits).
+// the drop-in re-route onto the SAME helper is a true equivalence (the cross-surface
+// unification inherits).
 
 import { describe, expect, it } from "vitest";
 import { warmCatchLight, oklchToLinear } from "@glass/composables/color";
@@ -16,7 +16,7 @@ import { AURORA_CATCH_LIGHT_ANCHOR } from "@glass/components/aurora/composables/
 const PRIOR_LITERAL: [number, number, number] = [1.0, 0.95, 0.88];
 
 // The blob's warmCream OKLCh anchor — metaball.frag.ts:359
-// `oklabToLinearSrgb(oklchToOklab(vec3(0.97, 0.03, radians(85.0))))`. W15 re-routes the
+// `oklabToLinearSrgb(oklchToOklab(vec3(0.97, 0.03, radians(85.0))))`. re-routes the
 // blob default onto warmCatchLight at THIS anchor.
 const BLOB_WARMCREAM_ANCHOR = { L: 0.97, C: 0.03, h: 85 };
 
@@ -41,7 +41,7 @@ describe("AX.W11 — warmCatchLight OKLCh derivation", () => {
     it("matches the blob warmCream anchor via the SAME helper (W15 drop-in equivalence)", () => {
         // The helper routes through oklchToLinear — so warmCatchLight(0.97,0.03,85) is
         // byte-identical to the blob's `oklchToLinear({L:0.97,C:0.03,h:85})`. This proves
-        // W15's re-route onto warmCatchLight at the blob anchor is a TRUE equivalence
+        // the re-route onto warmCatchLight at the blob anchor is a TRUE equivalence
         // (the blob shader keeps its own anchor; the DERIVATION is shared).
         const viaHelper = warmCatchLight(
             BLOB_WARMCREAM_ANCHOR.L,

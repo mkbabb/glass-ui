@@ -1,4 +1,4 @@
-// AW.W17 — the park/freeze/dispose contract for `useCanvas2D`, the Canvas2D
+// The park/freeze/dispose contract for `useCanvas2D`, the Canvas2D
 // substrate paralleling `useWebGLCanvas`. This test stubs a minimal DOM (a
 // canvas whose getContext returns a stub 2D ctx, a controllable rAF, no-op
 // observers, a controllable document.hidden + matchMedia) and asserts:
@@ -47,7 +47,7 @@ function flushFrames(n: number) {
     }
 }
 
-// BD.W-CUT — the shared leaf's `presize()` (createCanvasLifecycle) schedules a
+// The shared leaf's `presize()` (createCanvasLifecycle) schedules a
 // rAF-double-resize layout-settle defense (the aurora-proven stuck-300×150 cure,
 // promoted to ALL consumers). Those transient resize callbacks share the rAF queue with
 // the render `tick`, so the steady loop is reached only after they drain. `runFrames`

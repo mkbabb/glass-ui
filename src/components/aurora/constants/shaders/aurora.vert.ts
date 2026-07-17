@@ -1,4 +1,4 @@
-// Aurora v4.1 — vertex shader (verbatim port of bundle shader.js VERTEX_SRC).
+// Aurora vertex shader.
 // Full-screen triangle via VBO: three vertices at (-1,-1), (3,-1), (-1,3).
 // `vUv` varies 0..1 across the visible quad.
 

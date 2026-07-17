@@ -3,15 +3,15 @@
    the .fading-scroll rules in base-misc.css), section-description, labeled-field
    (incl. the width-contract + error region), popover-content, scrollbar,
    focus-ring, hairline-accent, interactive-item, tap-squish.
-   BB.W-CARVE3 carved the post-tap-squish tail (status-dot → kbd, incl. the
-   fading-scroll recipe) into the adjacent base-misc.css partial so each stays
+   the post-tap-squish tail (status-dot → kbd, incl. the
+   fading-scroll recipe) lives in the adjacent base-misc.css partial so each stays
    under the no-god-module 500-line bound. The two adjacent same-`@layer
    components` blocks compose identically — the dist is byte-isomorphic.
-   Carved from the utilities.css cascade root; @import-ed by utilities.css in
+   A partial of the utilities.css cascade; @import-ed by utilities.css in
    cascade order. See docs/precepts/design-idioms.md §cohesion-aware partials. */
 
 /* ═══════════════════════════════════════════════
-   §FADING-SCROLL — the per-edge mask-width interpolation customs (BA.W-FADING-SCROLL)
+   §FADING-SCROLL — the per-edge mask-width interpolation customs
 
    `<FadingScroll>`'s scroll-state-driven edge fade is a `mask-image` whose two
    per-edge ramp widths are these registered `@property <length-percentage>`
@@ -22,7 +22,7 @@
    never push a fade-width onto an unrelated descendant strip — mirrors the
    `--progress-crescendo` / `--ripple-radius` non-inheriting registrations).
    `initial-value: 0px` = the SHARP floor: an at-rest, no-overflow edge has NO
-   feather (the R8-08 "Shy" defect — the static `.scroll-fade-*` mask half-erased
+   feather (the "Shy" defect — the static `.scroll-fade-*` mask half-erased
    the first card's chrome at rest — is structurally impossible because the
    default is sharp and the timeline OPENS the feather only on real scroll).
 
@@ -48,7 +48,7 @@
 }
 
 @layer components {
-    /* ── Section description (V.W3.T7) ──────────────────────────────
+    /* ── Section description ──────────────────────────────
        Canonical recipe for the `<Section>` primitive's description
        paragraph. Composes the body type + muted-foreground color in
        one declaration so consumers don't fight twMerge's
@@ -57,16 +57,16 @@
         font-size: var(--type-body);
         color: var(--muted-foreground);
         line-height: 1.5;
-        text-wrap: pretty; /* AQ.W3 §W3.3 — prose-register orphan/river fix */
+        text-wrap: pretty; /* Prose-register orphan/river fix */
     }
 
-    /* ── Popover-content recipe (V.W3.T3 / A5 §3.2) ─────────────────
+    /* ── Popover-content recipe (A5 §3.2) ─────────────────
        Canonical recipe for floating-tier portal containers
        (PopoverContent, DropdownMenuContent, SelectContent, etc.).
        Covers radius + outline + popover-foreground; consumers compose
        this with `.glass-floating` (bg + blur + border + shadow), with
        `.glass-reveal` (the spring-clocked data-state LIQUID-ENTER —
-       BB.W-LIQUID-REVEAL, off the retired `popover-animate`), and with the
+       off the retired `popover-animate`), and with the
        per-host z-rung. The floating-tier shadow comes from
        `--glass-shadow-floating` via `.glass-floating`, replacing the
        `shadow-md`/`shadow-lg` literals that bypassed the canonical
@@ -85,7 +85,7 @@
         display: none;
     }
 
-    /* AQ.W3 §W3.4 — tokenized thin scrollbar. Standard `scrollbar-width` +
+    /* Tokenized thin scrollbar. Standard `scrollbar-width` +
        `scrollbar-color` (Baseline Widely, Chromium 121+) is the primary path,
        reading `--scrollbar-{thumb,track}` (auto-dark via `--muted-foreground`).
        The legacy `::-webkit-scrollbar` family is the SOLE fallback for older
@@ -127,7 +127,7 @@
 
     /* ── Interactive item (hover bg + focus ring + active scale) ── */
     .interactive-item {
-        /* AQ.W3 §W3.2 identity base */
+        /* identity base */
         scale: 1;
         border-radius: var(--radius-lg);
         user-select: none;
@@ -136,7 +136,7 @@
             color var(--duration-fast) var(--ease-standard),
             border-color var(--duration-fast) var(--ease-standard),
             box-shadow var(--duration-fast) var(--ease-standard),
-            /* BG.W-LIQUID-WEIGHT-DEFAULT (F5.2) — the SPATIAL scale leg rides the
+            /* The SPATIAL scale leg rides the
                spring-derived `--transition-liquid-spatial` DEFAULT (the inversion:
                weight is now the vocabulary, not a per-site --motion-weight opt-in;
                was the bare `--ease-standard` bezier). `.motion-calm` opts back out. */
@@ -150,9 +150,9 @@
         box-shadow: var(--focus-ring-shadow);
     }
     .interactive-item:active {
-        /* AW.W31.a — fold the residual literal press scale onto the canonical
-           `--scale-press*` cohort (the prior `0.98` was the sole per-atom press
-           literal surviving the W2/W3/W25 sweeps). `--scale-press-sm` (0.97) is
+        /* Fold the residual literal press scale onto the canonical
+           `--scale-press*` cohort (`0.98` is the last per-atom press
+           literal, folded here). `--scale-press-sm` (0.97) is
            the soft press rung the button + slider recipes consume — ONE press
            vocabulary, no per-atom literal. The 0.98→0.97 delta is sub-perceptual. */
         scale: var(--scale-press-sm);
@@ -165,17 +165,16 @@
     }
 
     /* ── Tap-squish — universal press-state choreography ──
-       AL-W10 SLIM (X6 §M-1 + Y7 §3 + DESIGN.md §L3). I compose this
-       class onto every interactive surface that wants the iOS tap-
+       This class composes onto every interactive surface that wants the iOS tap-
        squish idiom; the press scales to `--scale-press` (0.96, the
        canonical iOS `.regular` control rung). I keep this as a single
        canonical rung — NOT a 3-rung ladder. The one outlier I leave
        alone is the button `0.97` (`--scale-press-btn`), which consumes
        its own slightly-softer token directly. The dock control now
-       tracks the canonical `--scale-press` (0.96) too (AT.W7-dock-b
-       press canon — the prior deeper `0.92` was retired to ONE source).
+       tracks the canonical `--scale-press` (0.96) too (
+       press canon — NOT a deeper `0.92`; ONE source).
 
-       AX.W52 §6 doctrine — the `scale` register is reconciled onto
+       doctrine — the `scale` register is reconciled onto
        `--spring-smooth` (was `--spring-snappy`), the ONE button/interactive
        scale register the §6 easing doctrine records and the gate asserts
        across `.button`/`.tap-squish`. At
@@ -199,7 +198,7 @@
        consumer's own hover/active bg-tint cascade to acknowledge the
        press. */
     .tap-squish {
-        /* AQ.W3 §W3.2 identity base */
+        /* identity base */
         scale: 1;
         transition:
             background-color var(--duration-fast) var(--ease-standard),
@@ -207,7 +206,7 @@
             box-shadow var(--duration-fast) var(--ease-standard),
             color var(--duration-fast) var(--ease-standard),
             opacity var(--duration-fast) var(--ease-standard),
-            /* BG.W-LIQUID-WEIGHT-DEFAULT (F5.2) — the scale leg reads the shared
+            /* The scale leg reads the shared
                `--transition-liquid-spatial` vocabulary token (byte-identical at the
                default — it resolves to `--spring-smooth` — but now `.motion-calm`
                opts the press out of overshoot in lockstep with the atoms above). */

@@ -1,6 +1,5 @@
 /*
  * scroll-choreography.css — the SOTA scroll-driven CHOREOGRAPHY register
- * (BB.W-SCROLL-MOTION).
  *
  * Cascade rung AFTER scroll-driven.css. glass-ui owns the native scroll-driven
  * SUBSTRATE (scroll-driven.css `scroll()`/`view()` + the `--demo-main-progress`
@@ -22,7 +21,7 @@
  *                     against a spring-damped `--pin-t` the keyframes.js scroll spine
  *                     `useScrollPin` writes per scroll tick — EVERY engine, no
  *                     `animation-timeline`. The dead `--gl-pin` named scroll-timeline
- *                     is EXCISED — BD.W-SCROLL-LIQUID-ENGINE).
+ * is EXCISED).
  *   .smooth-scroll  — the native scroll-behavior: smooth opt-in (PRM-gated,
  *                     zero runtime — a smooth-scroll under reduce is a vestibular
  *                     concern, so the smooth interpolation is dropped under PRM).
@@ -37,18 +36,18 @@
  * register needs NO `@supports` gate — its `--pin-t` is JS-written by `useScrollPin`
  * on every engine; under PRM the composable zeroes the scrub (1:1, no drift).
  *
- * COMPOSITOR-ONLY (the proof:no-layout-animation floor BB.W-CARD-COMPOSITE): every
+ * COMPOSITOR-ONLY (the proof:no-layout-animation floor): every
  * @keyframes step + transition animates ONLY transform/translate/scale/opacity/
  * clip-path — NEVER a layout-triggering property (no height/padding/inline-size/
  * top/grid-template). The SPATIAL (transform) legs ride the per-spring `--spring-*`
  * + the matching `--spring-*-duration` settle clock (P2/P4); the EFFECTS (opacity)
  * legs ride the no-overshoot `--ease-out` bezier (P1/P3 — a fade must never
- * overshoot). The spring tokens are READ-ONLY (the W-GLASS-CAL clock fence — this
+ * overshoot). The spring tokens are READ-ONLY (the clock fence — this
  * register THREADS them, it never re-tunes a spring value or a duration).
  */
 
 /* ─────────────────────────────────────────────────────────────────────────────
- * BD.W-SCROLL-LIQUID-ENGINE — the liquid-weight scroll tokens.
+ * The liquid-weight scroll tokens.
  *
  * The `--ease-scroll-spring` is the compositor spring-scrub the cascade rides
  * (ZERO JS). The pin-phase fractions are the calc-friendly window bounds the
@@ -62,7 +61,7 @@
     /* The spring-shaped compositor cascade ease — the `--spring-gentle` twin
        (ζ ≈ 0.85, a `springLinearStops` `linear()` stop-set), which SHIPS
        unconditionally (scheme-motion.css). The Safari < 17.2 `--ease-out` degrade
-       arm was COLLAPSED at BG.NF.2 W-LEGACY-LADDER-COLLAPSE — both targets parse
+       arm was COLLAPSED — both targets parse
        `linear()`, so the spring twin is the sole source. */
     --ease-scroll-spring: var(--spring-gentle);
     /* The pin reveal/expand windows as 0..1 fractions (the `--pin-t` recipes read
@@ -121,7 +120,7 @@
                1:1 with scroll position — a spring on a scrubbed timeline reads as
                a scrubbed spring, which is correct here as the linear progress map).
 
-               BD.W-SCROLL-LIQUID-ENGINE: the easing is the spring-shaped
+               The easing is the spring-shaped
                `--ease-scroll-spring` (a `springLinearStops` `linear()` twin of
                `--spring-gentle`, ζ ≈ 0.85) — each card's scroll-scrubbed entrance
                reads with spring WEIGHT (a hair of overshoot at the end of its
@@ -153,12 +152,12 @@
                 transform: translateY(0);
             }
         }
-        /* BG.W-SCROLL-SHRINK-UNIFY (D14) — the per-column stagger. The stagger is a
-           range PERCENTAGE (view()-timeline units), NOT a time: the prior
-           `--scroll-cascade-column-stagger` default was `60ms`, so
-           `calc(45% + 60ms * 0)` mixed `%` with `ms` (an INVALID calc — the whole
-           animation-range was dropped) AND multiplied by a literal `0` (every column
-           read the SAME range end, zero stagger). Now the offset is a `%` scaled by the
+        /* The per-column stagger. The stagger is a
+           range PERCENTAGE (view()-timeline units), NOT a time: a `ms` value like
+           `60ms` for `--scroll-cascade-column-stagger` makes
+           `calc(45% + 60ms * 0)` mix `%` with `ms` (an INVALID calc — the whole
+           animation-range drops) AND multiply by a literal `0` (every column
+           reads the SAME range end, zero stagger). The offset is a `%` scaled by the
            consumer-set `--col` index, so column N ends its build `N × stagger` later —
            the even/odd column cascade the Codrops nuance intends. */
         .scroll-cascade.scroll-cascade--columns > * {
@@ -177,14 +176,14 @@
 
 /* ─────────────────────────────────────────────────────────────────────────────
  * .scroll-pin — the fixed-stage-advances-time scroll-pinned register, RE-INVENTED
- * on a JS-written `--pin-t` (BD.W-SCROLL-LIQUID-ENGINE).
+ * on a JS-written `--pin-t`.
  *
- * THE DEFECT (excised, no alias): the prior register bound the phase reveals to a
+ * WHY NOT A NAMED SCROLL-TIMELINE: binding the phase reveals to a
  * named `scroll-timeline: --gl-pin` declared on `.scroll-pin` + `timeline-scope:
- * --gl-pin`. A named scroll-timeline measures the DECLARING element's OWN scroll
+ * --gl-pin` is dead. A named scroll-timeline measures the DECLARING element's OWN scroll
  * progress — but `.scroll-pin` is `overflow: visible` with zero internal scroll
- * extent, so it is NOT a scroll port: `--gl-pin`'s `currentTime` was permanently
- * `null` and the bound `gl-pin-reveal` animation parked at its `from` keyframe
+ * extent, so it is NOT a scroll port: `--gl-pin`'s `currentTime` stays permanently
+ * `null` and the bound `gl-pin-reveal` animation parks at its `from` keyframe
  * forever (dead on EVERY engine, including those that fully support the native
  * feature — structural deadness, not a Safari degrade).
  *

@@ -1,5 +1,5 @@
 /*
- * paper.css — Paper-texture primitives (BG.W-PAPER-TEXTURE-UNIFY — ONE warm
+ * paper.css — Paper-texture primitives (ONE warm
  * raster tooth PRIMARY; feTurbulence RETIRED as the primary, DEMOTED to an
  * `@supports`-gated relief enhancement).
  *
@@ -10,9 +10,9 @@
  * THE HISTORY the design is immune to (KS-PAPER §1.1): the paper register was
  * built three times on procedural SVG noise; the user rejected the SVG-noise
  * path TWICE ("disgusting metallic"). The class recurred a third time (D-2): the
- * grey `saturate=0` tooth borrowed ALL its warmth from the substrate, so once
- * the universal warm plane was retired, multiply desaturated surfaces below the
- * C 0.02 warm floor and the tooth read metallic-gray. Two structural causes: (a)
+ * grey `saturate=0` tooth borrowed ALL its warmth from the substrate, so wherever
+ * the universal warm plane is absent, surfaces multiply-desaturate below the
+ * C 0.02 warm floor and the tooth reads metallic-gray. Two structural causes: (a)
  * `feDiffuseLighting` computes normals from a noise bump-map → an anisotropic
  * brushed-metal sheen ("specular IS the metal"); (b) grey-at-source warmth was
  * borrowed, never baked.
@@ -151,7 +151,7 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
-   BG.W-FIELD-AURORA — the WARM COLORFUL FIELD register is RETIRED here.
+   The WARM COLORFUL FIELD register is RETIRED here.
    ───────────────────────────────────────────────────────────────────────
    The `.paper-field` CSS plane (the per-route four-layer technicolor CEL +
    base wash + cel-drift) is SUPERSEDED by the ONE shell `<Aurora>` (a

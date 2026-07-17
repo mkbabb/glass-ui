@@ -48,7 +48,7 @@
 //     `(response, dampingFraction)` convention the four existing hand-rolled integrators
 //     use (`ω = 2π/response`, `mass` scaling the effective response — no second
 //     ω-formula). This is the SINGLE smoothing stage the blob/aurora read; the raw
-//     pointer feeds `setPointer` ONCE (the BI double-smooth kill — a renderer that read
+// pointer feeds `setPointer` ONCE (the double-smooth kill — a renderer that read
 //     the attractor never re-smooths a pre-smoothed input).
 //
 // VUE-ONLY (off the SCC trap). The composable imports `vue` ONLY — no `@vueuse/core`,

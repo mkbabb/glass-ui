@@ -14,7 +14,7 @@
 // `fbmG`/`fbmWarpedG` accumulate the value AND its ANALYTIC GRADIENT per octave
 // (the feed for the analytic surface normal that removes the
 // 4-tap), the warp pass folded directly into `fbmWarpedG`. All read the shared
-// FBM_ROT rotation constant. Two exports: the assembler splices the W2
+// FBM_ROT rotation constant. Two exports: the assembler splices the
 // ${FBM_ROT_GLSL} BETWEEN them (the hash + noised() before the constant, the FBM
 // loops after) so FBM_ROT is in scope for the loop bodies.
 export const METABALL_EDGE_NOISE_PRE_GLSL = /* glsl */ `// --- Noise ---
@@ -48,7 +48,7 @@ vec3 noised(vec2 p) {
     float vc = dot(gc, f - vec2(0.0, 1.0));
     float vd = dot(gd, f - vec2(1.0, 1.0));
 
-    // Value, remapped to [0,1] so it drops in for the prior valueNoise.
+    // Value, remapped to [0,1] so it drops in as the valueNoise.
     float n = va + u.x * (vb - va) + u.y * (vc - va) + u.x * u.y * (va - vb - vc + vd);
     float value = 0.5 + 0.5 * n;
 

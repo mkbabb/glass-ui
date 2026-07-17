@@ -1,5 +1,5 @@
 // `@mkbabb/glass-ui/deck` — the full-viewport keyboard-paged aria-live PRESENTATION
-// register (BC.W-DECK). DISTINCT from `/carousel`'s embla item-scroller. The headless
+// register. DISTINCT from `/carousel`'s embla item-scroller. The headless
 // core is vueuse- and keyframes-free. OFF the root barrel: reached only via
 // `@mkbabb/glass-ui/deck`.
 

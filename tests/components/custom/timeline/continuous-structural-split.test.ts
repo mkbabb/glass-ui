@@ -2,13 +2,13 @@ import { mount } from "@vue/test-utils";
 import { describe, expect, it } from "vitest";
 
 import GlassTimeline from "@glass/components/timeline/GlassTimeline.vue";
-// BI.W-OVERLAY-UNION — HoverPopover folded onto the sealed <Popover trigger="hover">
+// HoverPopover folded onto the sealed <Popover trigger="hover">
 // union; the markers wrap each dot in the survivor, same update:open cadence.
 import { Popover } from "@glass/components/popover";
 import type { TimelineSegment } from "@glass/components/timeline/types";
 
 /**
- * AB.W2.T4 (A4 §nested-interactive) — Option C structural split.
+ * (A4 §nested-interactive) — Option C structural split.
  *
  * The `.continuous-track[role="progressbar"]` rail must NOT nest any
  * focusable descendants (the axe `nested-interactive` rule fires
@@ -16,11 +16,11 @@ import type { TimelineSegment } from "@glass/components/timeline/types";
  * `<ul role="list">` overlay so the rail's aggregate-progress role
  * stays clean.
  *
- * AB.W2.T1 (A4 §B2.a) — the same structural change lifts the marker
+ * The same structural change lifts the marker
  * buttons OUT of the rail's `overflow: hidden` clip so the dots' outer
  * box paints in full (perceived centre coincides with math centre).
  *
- * AB.W2.T3 (A2 §B2.b) — `currentSegmentKey` stamps `data-current`
+ * (A2 §B2.b) — `currentSegmentKey` stamps `data-current`
  * on the matching marker so consumers can distinguish the active phase
  * from the transient hovered phase without DOM surgery.
  */
@@ -223,7 +223,7 @@ describe("GlassTimeline continuous — Option C structural split", () => {
     });
 
     it("emits hover/hoverEnd via the Popover update:open path (default popover enabled)", async () => {
-        // N-2 coverage gap — the W10 ContinuousMarkers split consumes
+        // N-2 coverage gap — the ContinuousMarkers split consumes
         // <Popover trigger="hover"> via `@update:open` (the listen-only uncontrolled
         // defineModel cadence). With the popover ENABLED (default — no
         // `disablePopover`), the dot is wrapped in HoverPopover and the

@@ -19,11 +19,11 @@ const props = withDefaults(defineProps<SliderProps>(), {
     variant: "standard",
     size: "md",
     invalid: false,
-    // Vue casts an ABSENT boolean prop to `false`, not `undefined` — so the prior
-    // `props.keepDockOpen ?? true` never reached `true` for the common
-    // no-prop call site (the documented `Default: true` silently disarmed the
+    // Vue casts an ABSENT boolean prop to `false`, not `undefined` — so a
+    // `props.keepDockOpen ?? true` fallback would never reach `true` for the common
+    // no-prop call site (a documented `Default: true` would silently disarm the
     // hold). `withDefaults` resolves an absent prop to `true`; an explicit
-    // `:keep-dock-open="false"` still disarms. (AX.W03.)
+    // `:keep-dock-open="false"` still disarms.
     keepDockOpen: true,
 });
 const emits = defineEmits<{
@@ -60,10 +60,10 @@ const delegatedProps = computed(() => {
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits);
 
-/* AX.W03 — the host-native dock hold (one owner, one acquire path).
+/* The host-native dock hold (one owner, one acquire path).
    The Slider subscribes to the dock's reactive `held` flag (surfaced on
    the canonical typed `DockContext` alongside the `keepOpen`/`release`
-   pair, O.W2 single-typed-key) and reflects it on the root via
+   pair, single-typed-key) and reflects it on the root via
    `data-held` for the thumb-halo intensification recipe in scoped CSS.
 
    The acquire/release of that hold is owned ENTIRELY by `useDockHold`,
@@ -75,10 +75,10 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
    Slot/forwardRef boundary — reka's own cached `onPointerdown` shadows
    it. vue-tsc + units pass; only a real drag catches it (the canonical
    binding-verification class). A native listener on the resolved host is
-   immune. The prior duplicated acquire/release booleans, the
-   window-`pointerup` re-implementation, AND the parallel
-   `watch(touchGate.isActive)` acquire path are all GONE — collapsed onto
-   the one `useDockHold` owner. */
+   immune. There are no duplicated acquire/release booleans, no
+   window-`pointerup` re-implementation, and no parallel
+   `watch(touchGate.isActive)` acquire path — the one `useDockHold` owner
+   holds it all. */
 const dock = useOptionalDockContext();
 const sliderRootRef = useTemplateRef<{ $el: HTMLElement } | HTMLElement | null>(
     "sliderRootRef",
@@ -96,14 +96,14 @@ function getRootEl(): HTMLElement | null {
 // populates in a sibling `onMounted` — sidesteps the onMounted-ordering trap.
 useDockHold(getRootEl, { enabled: () => keepDockOpen.value });
 
-/* BD.W-GLASS-ATOM-REGISTER — the weight-train velocity bridge. Writes the BOUNDED
+/* The weight-train velocity bridge. Writes the BOUNDED
    `--atom-drag-v` (0..1, saturating `tanh`) on the resolved host during the drag
    window only; the rAF tears DOWN on `pointerup` (the no-idle-cost contract). The
    `.slider-range` smear + the cel cast lag read the var in scoped CSS. The bridge
    honors PRM (pins the var at 0, never opens the rAF) and is gated off when the
    resolved `motion` is not `full` (the host resolver returns the same element as the
    hold). The same resolver getter sidesteps the onMounted-ordering trap.
-   BH.W-MOTION-AXIS — `motion.armed` is the PROP door (full → armed), the bridge's own
+   `motion.armed` is the PROP door (full → armed), the bridge's own
    PRM pin is the OS door; both close to the plain-squish floor. */
 const motionAxis = useMotionAxis(() => props.motion);
 useDragVelocity({
@@ -111,7 +111,7 @@ useDragVelocity({
     axis: () => (props.orientation === "vertical" ? "y" : "x"),
 });
 
-/* N.W0 Lane A1 — useTouchGate scroll-vs-drag arbitration (a SEPARATE
+/* UseTouchGate scroll-vs-drag arbitration (a SEPARATE
    concern from the hold: it decides whether a touch is a drag or a
    scroll, swallowing the initial tap so reka's SliderRoot doesn't treat
    a scroll as a drag). On touch devices the first tap activates the
@@ -169,7 +169,7 @@ onBeforeUnmount(() => {
 const isHeld = computed(() => dock?.held.value === true);
 const isTouchActive = computed(() => touchGate.isActive.value);
 
-/* BI.W-SLIDER-THUMB-NAME — the never-nameless floor's DX signal. reka's
+/* The never-nameless floor's DX signal. reka's
    SliderThumbImpl names the thumb `$attrs['aria-label'] || getLabel(index, count)`,
    and getLabel returns UNDEFINED for a single-thumb slider (it only mints
    "Minimum"/"Maximum"/"Value N of M" for ≥2 thumbs). So a bare single-thumb
@@ -257,8 +257,8 @@ onMounted(() => {
     --slider-range-origin: left center;
 }
 
-/* ── The SIZE GEOMETRY axis — [data-size]-scoped, SHIPPED CSS (BA.W-EMISSION) ──
-   BA-VJS-A3: the size geometry was a DEAD arbitrary-property CVA
+/* ── The SIZE GEOMETRY axis — [data-size]-scoped, SHIPPED CSS ──
+   NOT a DEAD arbitrary-property CVA
    (`[--slider-track-height:1.25rem]` &c. in slider/index.ts) that compiled only
    into a `dist/*.js` chunk no consumer content-scan reaches — so the `size` prop
    was INERT in every consumer and `size=md` fell back to the 6px track. The
@@ -336,7 +336,7 @@ onMounted(() => {
    not a detached disc on a bar. The reka SliderThumb is styled below as the
    inscribed knob (a11y/keyboard/focus stay native on it).
 
-   BG.W-LIQUID-FILL — the glass-cylinder recipe (warm tint + backdrop blur + the
+   The glass-cylinder recipe (warm tint + backdrop blur + the
    unified edge rim + under-shadow) is EXTRACTED into the shared `.glass-liquid-fill`
    register (`src/styles/glass/liquid-fill.css`) the range COMPOSES via the template
    class — the SAME register `<Progress variant="liquid">` reads (fewer-sharper-
@@ -351,15 +351,15 @@ onMounted(() => {
     position: absolute;
     height: 100%;
     /* The token bridge — the Slider's own consumer-override API mapped onto the
-       shared liquid-fill knobs. Each keeps the SAME default the extracted recipe
-       had, so the composed paint is byte-identical to the prior inline fill. */
+       shared liquid-fill knobs. Each keeps the SAME default the shared recipe
+       uses, so the composed paint matches the shared liquid fill. */
     --liquid-fill-tint: var(--slider-range-bg, var(--glass-capsule-warm));
     --liquid-fill-blur: var(--slider-range-blur, var(--glass-blur-quiet));
     --liquid-fill-shadow: var(--slider-range-shadow, var(--glass-under-shadow-quiet));
 }
 
 /* ── The INVISIBLE thumb (standard) — you pull the TRACK itself ──
-   The user's binding bar (USER-AUDIT-2026-06-10 §B3): NO VISIBLE THUMB AT ALL.
+   The design constraint: NO VISIBLE THUMB AT ALL.
    The standard slider is ONE continuous glass segment — the filled `.slider-range`
    cylinder's leading EDGE is the only handle, the grab affordance the cursor/touch
    response. The reka `<SliderThumb>` element STAYS MOUNTED (a11y/keyboard/drag/
@@ -367,7 +367,7 @@ onMounted(() => {
    opacity, transparent fill — its geometry collapses into the fill edge so there
    is no distinct disc/cap/ring paint over the continuous cylinder. Keyboard focus
    does NOT ring the (invisible) thumb — it ribbons the TRACK (the focus-visible
-   block below the track rules), the W-PRIM-POLISH focus register. */
+   block below the track rules), the focus register. */
 .slider-thumb {
     display: block;
     /* INVISIBLE: the thumb has no own paint — width collapses to 0 and opacity to
@@ -388,7 +388,7 @@ onMounted(() => {
         var(--slider-thumb-spring, var(--spring-smooth));
 }
 
-/* AY.W-SCALE2 — the coarse `touch-hit-area` ::before halo (44×44 tap-target)
+/* The coarse `touch-hit-area` ::before halo (44×44 tap-target)
    must NOT swallow the thumb's own pointer-capture: reka's slider drag routes
    through the thumb/root, and a `pointer-events: auto` overlay would become the
    event target and break `setPointerCapture` (the silent drag regression the
@@ -407,7 +407,7 @@ onMounted(() => {
         0 0 0 1px var(--surface-tint-8);
 }
 
-/* D5 / W-PRIM-POLISH — keyboard focus rings the TRACK, not the invisible thumb.
+/* D5 — keyboard focus rings the TRACK, not the invisible thumb.
    The reka `<SliderRoot>` (the `.glass-slider` root) receives focus-within when
    its mounted-but-invisible `<SliderThumb>` takes keyboard focus; the ring rises
    on the .slider-track (the visible surface the user pulls) via the ONE button
@@ -417,7 +417,7 @@ onMounted(() => {
     box-shadow: var(--focus-ring-shadow);
 }
 
-/* BD.W-GLASS-ATOM-REGISTER — the WEIGHT-TRAIN (the headline). The fill is a column
+/* The WEIGHT-TRAIN (the headline). The fill is a column
    of warm tinted glass you PULL — it loads when you grab it, smears toward where you
    drag, and overshoots when you let go. The track does NOT move (box-INVIOLATE) —
    only the fill + cast deform on the compositor. `useDragVelocity` writes
@@ -486,7 +486,7 @@ onMounted(() => {
         inset 0 0 0 1px var(--destructive);
 }
 
-/* J.W5.C — held-state: when a dock-keep-open token is held by THIS slider's drag
+/* Held-state: when a dock-keep-open token is held by THIS slider's drag
    (or any sibling drag the dock observes). The STANDARD recipe (no visible thumb)
    intensifies the TRACK FILL's edge rim; the SPECTRUM recipe (visible thumb)
    intensifies its thumb halo (its range is transparent, so the held register
@@ -504,7 +504,7 @@ onMounted(() => {
         var(--shadow-sm);
 }
 
-/* ── The gradient-track color slider (spectrum, AX.W59) ──
+/* ── The gradient-track color slider (spectrum) ──
    A tall capsule track whose background is a consumer-supplied
    `--slider-track-bg: linear-gradient(...)` (the value.js LCH/hue ramp). The
    range is transparent — the gradient itself IS the fill — and the thumb is a
@@ -523,7 +523,7 @@ onMounted(() => {
 }
 
 .glass-slider[data-variant="spectrum"] .slider-thumb {
-    /* B14 / USER-AUDIT §B14 — the spectrum thumb is the VISIBLE color-picker
+    /* The spectrum thumb is the VISIBLE color-picker
        handle (unlike the standard slider's invisible thumb): it must paint. It
        re-establishes the geometry the standard base collapses (opacity:1, an
        explicit width) and spans the FULL track height — but THIN, matching the
@@ -531,16 +531,16 @@ onMounted(() => {
        over an `h-6` (24px) track — a slim vertical bar HALF the track height in
        width. The spectrum track here is `--slider-thumb-size * 1.5`, so a width
        of `--slider-thumb-size * 0.75` lands the same 0.5×-track ratio (the
-       value.js bar, not the prior chunky 1.1× squircle nor the slightly-too-thin
-       0.6× pass). The width is the ONE geometry leg the user named. */
+       value.js bar, not a chunky 1.1× squircle nor a too-thin
+       0.6×). The width is the ONE geometry leg the user named. */
     width: calc(var(--slider-thumb-size, 1rem) * 0.75);
     height: 100%;
     opacity: 1;
     background: var(--slider-thumb-bg, transparent);
-    /* BI.W-SLIDER-THUMB-NAME (value.js L6) — the thumb border WIDTH joins the
+    /* (value.js L6) — the thumb border WIDTH joins the
        consumer-retunable token surface alongside `--slider-thumb-border-color`, so a
        consumer can retune the spectrum handle's rim weight without forking the recipe
-       (one slider owner). Default 2px (byte-identical to the prior literal). */
+       (one slider owner). Default 2px. */
     border: var(--slider-thumb-border-w, 2px) solid
         var(--slider-thumb-border-color, var(--background));
     /* The cross-engine CONTRACT: a GENEROUS radius proportional to the box reads
@@ -556,17 +556,17 @@ onMounted(() => {
    changes the CURVE within the --radius box, so the round fallback above
    stays honest cross-engine. `var()` is not @supports-evaluable, so the gate
    tests the LITERAL `superellipse(2)` feature (the same Chrome-139 query the
-   big-dock squircle rides — AX.W56). */
+   big-dock squircle rides). */
 @supports (corner-shape: superellipse(2)) {
     .glass-slider[data-variant="spectrum"] .slider-thumb {
         corner-shape: var(--corner-shape-thumb);
     }
 }
 
-/* BI.W-SLIDER-THUMB-NAME (value.js L6) — the spectrum hover recipe joins the
+/* (value.js L6) — the spectrum hover recipe joins the
    consumer-retunable token surface: the hover halo's ring WIDTH + COLOR are tokens a
    consumer can retune (the value.js color-picker hover tune) without forking. Defaults
-   (4px / --surface-tint-8) are byte-identical to the prior literals. */
+   (4px / --surface-tint-8) match the plain hover ring. */
 .glass-slider[data-variant="spectrum"]:hover .slider-thumb {
     box-shadow:
         0 0 0 var(--slider-thumb-hover-ring-w, 4px)

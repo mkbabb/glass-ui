@@ -8,7 +8,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <!-- BB.W-CARD-PAD — the overlay-band golden padding ladder. The Drawer is a
+  <!-- The overlay-band golden padding ladder. The Drawer is a
        non-Card surface, so it mints its OWN self-contained overlay tokens (inline
        anchor 1rem; block lifts by sqrt-phi `*1.272`; the footer gap is phi-stepped
        `/1.618` — the settling cadence). `pt-(--card-pad-footer)` is the tight

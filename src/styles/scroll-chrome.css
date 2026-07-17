@@ -1,6 +1,5 @@
 /*
  * scroll-chrome.css — the scroll-driven floating-CHROME collapse recipe
- * (BC.W-SCROLL-CHROME).
  *
  * Cascade rung AFTER scroll-choreography.css. Where scroll-choreography.css is the
  * ENTRANCE register (the page-build / section-cascade / scroll-pinned reveals), this is
@@ -21,7 +20,7 @@
  * SEPARATION/shadow LIFTS as content scrolls under (Apple "as text scrolls underneath,
  * shadows become more prominent") — `box-shadow` is a paint prop, compositor-safe.
  *
- * THE BLUR STAYS CRISP (the W-DOCK-SHRINK-BLUR fence). The chrome's resting
+ * THE BLUR STAYS CRISP (the fence). The chrome's resting
  * `backdrop-filter` blur is NOT animated by `--chrome-collapse-t` — a shrunken bar is
  * crisp glass, not a blurry mess. The recipe touches ONLY transform/opacity/box-shadow;
  * the surface's own `glass-*` tier owns the (untouched) backdrop blur.

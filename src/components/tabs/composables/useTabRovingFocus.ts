@@ -16,10 +16,10 @@ export interface RovingSelectionOption {
 export type TabActivation = "automatic" | "manual";
 
 /**
- * Package-private composable for `SegmentedTabs.vue` —  (the
- * roving-focus/responsive carve; ratchet-drain #13). The WAI-ARIA tablist/toolbar
- * roving-tabindex keyboard machine lives here, carved out of the SFC to hold the
- * no-god-module bound.  composes it VERBATIM inside the shared
+ * Package-private composable for `SegmentedTabs.vue` (the
+ * roving-focus/responsive carve). The WAI-ARIA tablist/toolbar
+ * roving-tabindex keyboard machine lives here, held under the
+ * no-god-module bound. It is composed VERBATIM inside the shared
  * headless `useSelectionGroup` (the dock IS SegmentedTabs/ToggleGroup wearing
  * chrome — ONE roving machine, never re-forked). The SFC IMPORTS it and binds
  * `:tabindex="rovingTabindex(idx)"` + `@keydown="onStripKeydown"` in its template.

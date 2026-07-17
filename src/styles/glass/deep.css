@@ -1,7 +1,7 @@
-/* glass/deep.css — BB.W-DEEP-GLASS — the OPT-IN `.glass-deep` decoration.
+/* glass/deep.css — the OPT-IN `.glass-deep` decoration.
  *
  * The deep-glass register: the maximal iOS-27 Liquid-Glass tier ABOVE the
- * W-GLASS-CAL calm default (the Apple `saturate(1.8) blur(20px)` family, landed
+ * calm default (the Apple `saturate(1.8) blur(20px)` family, landed
  * at the budget-clearing 16px / saturate 1.5; tokens/glass-deep.css). `.glass-deep`
  * is the OPT-IN surface — a consumer adds it to a glass surface that wants the
  * thick refractive liquid read (the hero glass, the dock, the CTA); the bare
@@ -14,7 +14,7 @@
  * `.glass-deep` re-points the floating-rung blur token to the deep family
  * (`--glass-blur-floating: var(--glass-blur-deep)`), so the base `.glass-floating`
  * rule's `backdrop-filter: var(--glass-blur-floating)` resolves to the DEEP blur —
- * NO cascade fight, NO base-rule edit, the glass edge/rim/under-shadow + the W55
+ * NO cascade fight, NO base-rule edit, the glass edge/rim/under-shadow + the
  * tint axis + the a11y brackets all compose unchanged. The deep tier rides a base
  * rung exactly as `.glass-opaque` does (the CardTier map is `deep →
  * 'glass-floating glass-deep'`).
@@ -23,9 +23,9 @@
  * brackets (`prefers-reduced-transparency: reduce` / `prefers-contrast: more` set
  * `--glass-level: 0` / 0.3 at :root, a11y-fallback.css) reach the deep plate for
  * FREE — the deep blur collapses to blur(0) under reduced-transparency through the
- * SAME level path (the opaque escape). The W55 bright-bucket darken reaches the
+ * SAME level path (the opaque escape). The bright-bucket darken reaches the
  * deep surface by construction too: `.glass-deep` is composed WITH `.glass-floating`,
- * which is already in the W55 `@container style(--glass-backdrop: light)` material
+ * which is already in the `@container style(--glass-backdrop: light)` material
  * group (ladder.css) AND self-engages the overlay-band darken — the deep tier
  * inherits the legibility tint with no selector-list edit.
  *
@@ -37,8 +37,8 @@
     /* The deep decoration: COMPUTE the deep LERP here (at the consuming element) +
        re-point the floating rung's blur token to it.
 
-       THE FREEZE-FIX (BG.W-GLASS-DEPTH-TIER — the C18 dual-engine painted dead-knob,
-       2026-07-05). The LERP intermediates read `var(--glass-depth)`, a REGISTERED
+       THE FREEZE-FIX (the dual-engine painted dead-knob).
+       The LERP intermediates read `var(--glass-depth)`, a REGISTERED
        `@property` (`inherits: true; initial-value: 1`). Per the CSS Properties &
        Values API a `var()` to a registered custom property inside ANOTHER custom
        property is eager-substituted with the referenced property's COMPUTED value AT
@@ -81,7 +81,7 @@
         --glass-blur-floating: var(--glass-blur-deep);
     }
 
-    /* ── The tier-ladder depth MAP (BG.W-GLASS-DEPTH-TIER) ──────────────────────
+    /* ── The tier-ladder depth MAP ──────────────────────
        Map --glass-depth onto the tier ladder so the deep register's thickness
        tracks surface PROMINENCE by construction: the overlay/menu rungs default a
        HIGHER depth than the content rungs (menu > popover > button). Each rung sets
@@ -92,7 +92,7 @@
        the content grade (~14px), a deep overlay/modal reaches the full 16px ceiling
        — thickness tracks prominence by construction, ZERO new machinery.
 
-       D5-SAFE: no rung reads var(--glass-blur-deep) here — --glass-depth only DRIVES
+       No rung reads var(--glass-blur-deep) here — --glass-depth only DRIVES
        the deep LERP (glass-deep.css), so a NON-deep tier surface is BYTE-UNCHANGED
        (a plain popover stays the calm 13px; the calm ladder never reads --glass-depth)
        and only a `.glass-deep`-composed surface consumes the graded depth.

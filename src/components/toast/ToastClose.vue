@@ -12,9 +12,9 @@ const props = defineProps<ToastCloseProps>();
 
 const attrs = useAttrs();
 
-// BG.W-DESHADCN — the close button renders a bare decorative <X> glyph, so it
-// owes a DEFAULT accessible name (the speedtest ASK-GU-A11Y-AXE-CARVEOUTS (A)
-// real defect: reka's ToastClose is a <button> with no discernible text). Ship
+// The close button renders a bare decorative <X> glyph, so it
+// owes a DEFAULT accessible name (a real consumer-facing defect: reka's
+// ToastClose is a <button> with no discernible text). Ship
 // a default `aria-label` "Dismiss", OVERRIDABLE — a consumer's own `aria-label`
 // falls through via $attrs and this computed reads it, so the consumer value
 // wins with zero conflict.
@@ -28,9 +28,9 @@ const ariaLabel = computed(
         :aria-label="ariaLabel"
         :class="
             cn(
-                // BG.W-DESHADCN — the shadcn `group-[.destructive]:text-red-300/-red-50`
+                // The shadcn `group-[.destructive]:text-red-300/-red-50`
                 // raw-tailwind-palette residual is DELETED (clean break, no legacy). The
-                // W-FEEDBACK-TONE destructive toast is a colored-GLASS surface whose body
+                // destructive toast is a colored-GLASS surface whose body
                 // ink stays `--foreground`; the close glyph reads the SAME warm ink on
                 // every variant (the base `text-foreground/50 hover:text-foreground`),
                 // never a palette-red slab-era override.

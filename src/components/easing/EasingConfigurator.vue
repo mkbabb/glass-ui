@@ -1,12 +1,12 @@
 <script setup lang="ts">
-// BB.W-EASING-PRIMITIVE — the <EasingConfigurator> register: <EasingPicker> seated
+// The <EasingConfigurator> register: <EasingPicker> seated
 // in a <ConfiguratorLayer>/<ConfiguratorRow> shell. The fuller register a consumer
 // reaches for when the curve picker is ONE row in a larger controls column (the
 // value.js GradientPane consumer shape — an ease-along-the-ramp picker beside the
 // gradient stops).
 //
 // This is a THIN composition (the picker + the configurator chassis the library
-// already ships — the W-HIERARCHY vocabulary inherited, no per-studio re-author).
+// already ships — the vocabulary inherited, no per-studio re-author).
 // The two names are ONE primitive family: <EasingPicker> is the bare editor,
 // <EasingConfigurator> is the chassis-seated register; both on /easing, sharing the
 // useEasingPicker composable (EasingPicker owns it; this seats EasingPicker, so the

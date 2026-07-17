@@ -8,9 +8,9 @@ import { MAX_STOPS } from "@glass/components/aurora/constants/presets";
 import type { OklchStop } from "@glass/components/aurora/constants/presets";
 
 /**
- * D10b witness — `deriveAurora` seeds ONE color into a harmonious, gamut-safe
+ * `deriveAurora` seeds ONE color into a harmonious, gamut-safe
  * N-stop aurora palette by composing the shipped value.js Ottosson core
- * (inv J-10: no color math re-implemented; the gamut-map step is the reuse).
+ * (no color math re-implemented; the gamut-map step is the reuse).
  *
  * Asserts the load-bearing contracts: stopCount honored + clamped, every output
  * in sRGB gamut (both the strict-hull AND the actual-bake reading), monochrome
@@ -18,7 +18,7 @@ import type { OklchStop } from "@glass/components/aurora/constants/presets";
  * pale apex), each harmony walks the intended hue relationship, and an invalid
  * CSS seed throws rather than silently degrading.
  *
- * AS.W7-W3 hardening (H4): the original seed set was all moderate-chroma; this
+ * Hardening: the original seed set was all moderate-chroma; this
  * suite adds ADVERSARIAL seeds — neon primaries, near-black, near-white, and
  * non-hex CSS formats — that drive `mapColorToGamut` onto the gamut hull where
  * float round-trip error escapes [0,1]³. See `gamutMapStop`'s doc: the over-1
@@ -39,7 +39,7 @@ const HARMONIES: AuroraHarmony[] = [
 const SEED_STRINGS = ["#3a93b6", "#facc15", "#1b1b3a", "#e8d5c4"];
 const SEED_STOP: OklchStop = { L: 0.62, C: 0.16, h: 264 };
 
-// Adversarial seeds (H4 harden): neon primaries that drive the gamut map onto
+// Adversarial seeds: neon primaries that drive the gamut map onto
 // the hull, near-black / near-white edges of the L band, an out-of-gamut OKLCh
 // literal, and non-hex CSS formats (rgb()/hsl()) through the value.js parser.
 const ADVERSARIAL_SEEDS = [
@@ -164,7 +164,7 @@ describe("deriveAurora — seed → gamut-safe N-stop aurora palette (D10b)", ()
         for (const stop of out) expect(inGamut(stop)).toBe(true);
     });
 
-    // ── Adversarial gamut (H4 harden) ──────────────────────────────────────
+    // ── Adversarial gamut ─────────────────────────────────────────────────────
 
     it("ADVERSARIAL: neon / near-black / near-white / multi-format seeds stay gamut-safe", () => {
         for (const seed of ADVERSARIAL_SEEDS) {
@@ -210,7 +210,7 @@ describe("deriveAurora — seed → gamut-safe N-stop aurora palette (D10b)", ()
         }
     });
 
-    // ── Harmony hue relationships (H4 harden) ──────────────────────────────
+    // ── Harmony hue relationships ──────────────────────────────────────────────
 
     it("each harmony walks the intended hue relationship", () => {
         // Use a saturated mid-chroma seed so the gamut map does not collapse the
@@ -297,7 +297,7 @@ describe("deriveAurora — seed → gamut-safe N-stop aurora palette (D10b)", ()
         expect(wideSpan).toBeGreaterThan(narrowSpan);
     });
 
-    // ── Graceful failure (H4 harden) ───────────────────────────────────────
+    // ── Graceful failure ───────────────────────────────────────────────────────
 
     it("throws on an invalid CSS seed (no silent gray-fill degrade)", () => {
         for (const bad of ["not-a-color", "#gggggg", "potato", "rgb(", ""]) {
@@ -311,7 +311,7 @@ describe("deriveAurora — seed → gamut-safe N-stop aurora palette (D10b)", ()
         }
     });
 
-    // ── Ramp-shape options (H4 harden) ─────────────────────────────────────
+    // ── Ramp-shape options ─────────────────────────────────────────────────────
 
     it("chromaFalloff toward 1 keeps chroma flat; lower values fade the apex", () => {
         const seed = "#3a93b6";

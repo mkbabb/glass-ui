@@ -1,4 +1,4 @@
-// src/components/_shared/axes.ts — the ONE grammar home (BH.W-AXIS-GRAMMAR).
+// src/components/_shared/axes.ts — the ONE grammar home.
 //
 // Every axis union in the library derives from a tuple here. A private
 // surface/tier/size/orientation/motion-shaped union
@@ -12,7 +12,7 @@
 // `comfortable`, `spacious`, `audacious`, `mobile`, `compact`) are BANNED in any
 // size-shaped union — the `size-grammar` arm greps for them. `xl` is legal only
 // where a physical register genuinely exceeds `lg` and maps to a real token rung
-// (the dock is the sole HEAD consumer). A SILHOUETTE word (a `cell` tile, an
+// (the dock is the sole such consumer). A SILHOUETTE word (a `cell` tile, an
 // `icon`-only button, a `card` shape) NEVER appears in a `size` union — shape is
 // its own per-family axis, not a scale rung.
 //
@@ -38,9 +38,9 @@ export type Orientation = (typeof ORIENTATIONS)[number]; // default "horizontal"
 export const MOTIONS = ["full", "reduced", "off"] as const;
 export type Motion = (typeof MOTIONS)[number]; // default "full"; PRM > prop > default
 
-// ── BI.W-AXES-GATES — the three factor-band axes (the axes-ext membership fence).
+// ── The three factor-band axes (the axes-ext membership fence).
 // TONES / PLACEMENTS / TRIGGERS join the four grammar unions so the Kronecker
-// factorization has a HOME for the concepts a `variant` map used to smuggle: a tone
+// factorization has a HOME for the concepts a `variant` map must NOT smuggle: a tone
 // (success/warning/info/destructive — proof:variant-residual moves them off `variant`
 // onto `tone`), a surface placement (Sheet's side-slide folds onto Dialog `placement`),
 // and an overlay trigger (HoverPopover/HoverCard/ContextMenu fold onto ONE Popover

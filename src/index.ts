@@ -52,9 +52,9 @@
 //
 // This root barrel re-exports the curated `configurator` package from
 // `src/components/`.
-// `hover-popover` folded onto the `ui/popover` union, and `scrolling-text`
-// relocated to speedtest because the overflow-marquee was speedtest-only and
-// failed the two-binary inclusion bar. The rest reach
+// `hover-popover` is part of the `ui/popover` union, and `scrolling-text`
+// lives in its one consumer because the overflow-marquee is consumer-only and
+// below the two-binary inclusion bar. The rest reach
 // consumers ONLY via their dedicated subpath
 // (`@mkbabb/glass-ui/dock`, `/aurora`, `/sidebar`, ...).
 //
@@ -140,10 +140,10 @@ export * from "./components/tooltip";
 // Custom composites — configurator primitive
 export * from "./components/configurator";
 
-// `custom/scrolling-text` relocated to speedtest.
-// The overflow-marquee's only binary consumer was speedtest (2 sites), the
+// `custom/scrolling-text` lives in its one consumer.
+// The overflow-marquee's only binary consumer is a single app (2 sites), the
 // ≥2-binary-consumer bar unmet, so the primitive + its `/scrolling-text` subpath
-// leave glass-ui; speedtest brings its own marquee. (clean break, no alias.)
+// leave glass-ui; that consumer brings its own marquee. (clean break, no alias.)
 
 // ─── Core composables (vueuse-free) ───────────────────────────────────────
 // `useGlobalDark` and `useKeyboardShortcuts` are intentionally removed

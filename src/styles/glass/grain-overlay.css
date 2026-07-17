@@ -1,19 +1,19 @@
 /* glass/grain-overlay.css
-   The glass-tier paper-grain `::after` overlay (BB.W-LIQUIDHOVER — the always-present
+   The glass-tier paper-grain `::after` overlay (the always-present
    texture + the opacity-only engage + the PRM/reduced-motion carve + the `.dark`
    soft-light arm).
-   Carved from glass/ladder.css at BG.W-CLOSEFIX-9SITE to hold the no-god-module 500-line
-   bound (the five-rung surface ladder + the W55 bright-bucket @container + the calm-tier
+   A partial held under the no-god-module 500-line
+   bound (the five-rung surface ladder + the bright-bucket @container + the calm-tier
    re-point + the contrast-color ink-flip + the opaque escape + the under-shadow modifier
    stay in ladder.css; the rim/accent group is glass/rim.css). @import-ed by glass.css in
    cascade order IMMEDIATELY AFTER ladder.css and BEFORE accent-tone.css — the SAME @layer
    components; the grain `::after` is the SOLE writer of the `.glass-*::after` overlay so
-   the relocation is cascade-order-invariant (the grain block was the tail of ladder.css;
+   the cascade order is invariant (the grain block is the tail of the ladder cascade;
    the dist is byte-isomorphic).
    See docs/precepts/design-idioms.md §cohesion-aware partials. */
 @layer components {
     /* Grain noise overlay — reuses paper texture SVG, no extra assets.
-       BB.W-LIQUIDHOVER — the disco-grain pop (T8-F6) killed at the COMPOSITION CLASS:
+       The disco-grain pop (T8-F6) killed at the COMPOSITION CLASS:
        the `background-image` is ALWAYS PRESENT (decoded once at rest, NEVER toggled to
        `none`), and any STATE-driven grain engagement cross-fades the `opacity` ONLY on
        the thin `--glass-grain-engage-duration` (~120ms linear) clock. A `background-
@@ -47,7 +47,7 @@
         mix-blend-mode: overlay;
     }
 
-    /* BB.W-LIQUIDHOVER — the grain engage collapses to INSTANT under reduced motion (a
+    /* The grain engage collapses to INSTANT under reduced motion (a
        grain that cross-fades on hover under reduce is still motion; accessibility is
        absolute). The reduced-transparency / forced-colors brackets already zero
        `--glass-grain-opacity` (a11y-fallback.css), so the grain is inert there; this
@@ -63,10 +63,10 @@
         }
     }
 
-    /* The unified rim (AW.W22) + the BB.W-GLASS-ACCENT per-INSTANCE chromatic-RIM
+    /* The unified rim + the per-INSTANCE chromatic-RIM
        tint group (the rim-ink + --glass-material-rim ring + the per-rung
        --glass-border-accent border, light + dark arms) lives in glass/rim.css
-       (carved at BB.W-CARVE4 — the next adjacent @layer components block, the SOLE
+       (the next adjacent @layer components block, the SOLE
        writer of --glass-material-rim/--glass-border-accent). */
 
     .dark .glass-wash::after,

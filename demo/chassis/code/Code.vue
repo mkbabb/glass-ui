@@ -9,9 +9,9 @@
 // the DEFAULT chip is the neutral warm event home, never a new hue on a page that
 // already has its color event).
 //
-// The component-name, token, subpath, px, numeric literal that used to spell
-// `font-mono text-xs` (or a raw `class="fira-code"`) inline folds onto this ONE
-// primitive — three dialects retired onto the chip (clean break, no alias).
+// A component-name, token, subpath, px, or numeric literal inline — however it is
+// spelled (`font-mono text-xs`, or a raw `class="fira-code"`) — folds onto this ONE
+// primitive; three dialects unify on the chip (clean break, no alias).
 // Ligatures live (`fira-code` carries liga/calt).
 //
 // A demo-private chassis primitive, not a library export. A consumer styling its own code uses the documented

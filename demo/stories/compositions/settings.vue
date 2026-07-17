@@ -80,8 +80,8 @@ interface Group {
 }
 
 // Section eyebrows read one coherent section-accent
-// register (`.section-label--tinted`), NOT a four-hue rainbow (the prior
-// per-group `section: 2/5/8/11` indigo/amber/red/teal cycle that read as
+// register (`.section-label--tinted`), NOT a four-hue rainbow (a
+// per-group `section: 2/5/8/11` indigo/amber/red/teal cycle would read as
 // arbitrary noise). The page-scope one-color-event rule: settings gets ONE
 // eyebrow-accent identity.
 const groups: Record<string, Group> = {
@@ -315,7 +315,7 @@ const groups: Record<string, Group> = {
 
 /* One coherent section-accent register for the whole page (the violet
    brand anchor, --section-color-7) so the four eyebrows read as one system, not
-   the prior four-hue rainbow. */
+   a four-hue rainbow. */
 .settings-group {
     --section-label-accent: var(--section-color-7);
     /* The math-paper section-accent rail: a thin

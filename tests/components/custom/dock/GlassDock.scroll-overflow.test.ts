@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 import GlassDock from "@glass/components/dock/GlassDock.vue";
 
 /**
- * BG.W-DOCK-CAP-SCROLL-FADE — a capped axis is ALWAYS a scroll axis (the
+ * A capped axis is ALWAYS a scroll axis (the
  * `overflow="scroll"` opt-in RETIRED, clean break). The `scrollClass` computed
  * (useDockShellProps) now emits `dock-scroll-x` on EVERY horizontal dock (the CSS
  * `overflow-x: auto` scrolls only when the inline row exceeds
@@ -65,7 +65,7 @@ describe("GlassDock intrinsic cap-scroll (BG.W-DOCK-CAP-SCROLL-FADE)", () => {
         expect(root.classes()).not.toContain("dock-scroll-y");
     });
 
-    // AT.W7-dock-a — the `wrap` enum member emits the `dock-overflow-wrap` hook.
+    // The `wrap` enum member emits the `dock-overflow-wrap` hook.
     // A wrap dock's over-cap strategy is intrinsic flex REFLOW, not a scroll, so
     // it wears NEITHER scroll class (the one exception to the horizontal intrinsic
     // `.dock-scroll-x`). HORIZONTAL-ONLY: a vertical dock never emits the wrap hook.

@@ -67,7 +67,7 @@ interface UseMetaballRendererReturn {
      * wire calls this so a first hover over a fully-parked blob (all satellites
      * orbiting → the quiescence gate has parked the rAF) repaints on the
      * SAME frame instead of waiting up to an orbit horizon for the next scheduled
-     * satellite wake (root cause 2, BA-goo-3). It is the EXISTING substrate wake
+     * satellite wake (root cause 2). It is the EXISTING substrate wake
      * handle — NO new rAF, NO second wake path (the single-substrate-loop invariant).
      */
     wake: () => void;
@@ -158,7 +158,7 @@ export function useMetaballRenderer(
     function start(canvas: HTMLCanvasElement) {
         canvasHandle = createGpuSubstrate(canvas, {
             dprPolicy: blobDprPolicy,
-            // P043/P054 — one lifecycle owns the IO warm-band park.
+            // One lifecycle owns the IO warm-band park.
             composeIntersectionPark: true,
             intersectionRootMargin: "200px",
             // Blob keeps reveal bloom enabled for its materialize entrance,

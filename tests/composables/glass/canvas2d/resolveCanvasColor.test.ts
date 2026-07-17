@@ -1,4 +1,4 @@
-// AX.W37 — proof:resolve-canvas-color.
+// Proof:resolve-canvas-color.
 //
 // The runtime/readback contract for `resolveCanvasColor`, the shared
 // `light-dark()`→`rgb()` probe-span resolver for a Canvas2D `strokeStyle`/

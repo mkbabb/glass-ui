@@ -1,4 +1,4 @@
-// BC.W-FUZZY-HARDEN — the hardened test floor over the canonical client fuzzy
+// The hardened test floor over the canonical client fuzzy
 // pipeline (the silent-regression guard the dock depends on). The scorer is
 // BYTE-UNTOUCHED; these units PIN its behaviour so a future refactor cannot
 // silently regress the matcher.

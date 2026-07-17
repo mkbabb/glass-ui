@@ -6,7 +6,7 @@
 // "backgrounds should be interactive" mandate is a route-level broadcaster: ONE passive,
 // CAPTURE-phase `pointermove` on `window`, viewport-normalized, shared to every background
 // viz on the route via provide/inject. Capture-phase so it survives a foreground child's
-// `stopPropagation` (SAF-1); PASSIVE so it can NEVER `preventDefault`; it NEVER focuses or
+// `stopPropagation`; PASSIVE so it can NEVER `preventDefault`; it NEVER focuses or
 // steals a click — it only READS the pointer and broadcasts the normalized position.
 //
 // PRM + paused gated: under the shared reduced-motion authority OR while the route
@@ -131,7 +131,7 @@ export function useRoutePointer(
     );
 
     if (canWindow) {
-        // Capture-phase + passive: survives a foreground child stopPropagation (SAF-1),
+        // Capture-phase + passive: survives a foreground child stopPropagation,
         // can never preventDefault (passive), never steals a click.
         window.addEventListener("pointermove", onMove, { capture: true, passive: true });
         // The pointer leaving the viewport / the tab blurring drops active (no ghost well).

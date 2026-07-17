@@ -1,4 +1,4 @@
-// composables/context — the canonical provide/inject DI factory pair (AV.W14).
+// composables/context — the canonical provide/inject DI factory pair.
 export {
     createStrictContext,
     createOptionalContext,

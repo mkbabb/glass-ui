@@ -1,4 +1,4 @@
-// AX.W37 — `resolveCanvasColor`: the shared `light-dark()` → `rgb()` probe-span
+// `resolveCanvasColor`: the shared `light-dark()` → `rgb()` probe-span
 // resolver for a Canvas2D `strokeStyle`/`fillStyle` write.
 //
 // THE DEFECT IT SOLVES. Canvas2D's `ctx.strokeStyle`/`ctx.fillStyle` setters
@@ -20,7 +20,7 @@
 // throwaway node — we never mutate `el`'s own inline style.
 //
 // Single-source: the library's ONE answer to the `light-dark()`-into-Canvas2D
-// class the constellation (constellationField), the W30 slides constellation,
+// class the constellation (constellationField), a consumer constellation,
 // and FourierField (its bespoke per-consumer probe) each hit. A token READER —
 // it injects no style onto a live element, it resolves a value for the
 // consumer's own `ctx` write (the slice-28 token-first / no-`el.style`-color

@@ -2,8 +2,8 @@
    §9 animation offsets — hover-lift offsets, the layout tokens, the public
    --fade-scroll-width ramp, the dock content-overflow caps, the popover width, the panel inner-padding
    rung, the chart geometry.
-   Carved (BB.W-CARVE3) from the former tokens/offsets-sizing.css §9/§10 split;
-   @import-ed by tokens.css at offsets-sizing's old cascade slot, immediately
+   The §9/§10 sizing + offset rungs;
+   @import-ed by tokens.css immediately
    before sizing.css — adjacent same-selector :root blocks resolve identically,
    so the dist is byte-isomorphic. See docs/precepts/design-idioms.md
    §cohesion-aware partials. */
@@ -17,50 +17,50 @@
     --lift-lg: -4px;
 
     /* Layout tokens */
-    /* BA.W-FADING-SCROLL — `--fade-scroll-width` is the public edge-fade ramp
+    /* `--fade-scroll-width` is the public edge-fade ramp
        width knob for `<FadingScroll>` (inheriting, retunable on any ancestor).
        It superseded the scroll-BLIND `.scroll-fade-*` static masks' knob
        `--mask-fade-width`, which retired in a CLEAN BREAK (no alias) at the
-       4.1.0 cut — BB.W-SCROLL-FADE-RETIRE — alongside the static utilities. */
+       4.1.0 cut — alongside the static utilities. */
     --fade-scroll-width: 1rem;
-    /* J.W3.C — dock content overflow caps. When dock content exceeds
+    /* Dock content overflow caps. When dock content exceeds
        these dimensions, the inner `.dock-layers` (horizontal) /
        `.glass-dock.vertical` (rail) container scrolls with a
        `.scroll-fade-{x,y}` mask-fade so the boundary feathers rather
        than cliffs. Defaults clamp to 80vw / 80vh capped at sensible
        desktop widths; consumers override per-dock by setting either
        token directly on a `.glass-dock` instance. User findings 1 + 5a. */
-    /* AX.W04 — `--dock-max-inline-size` is the canonical inline cap EVERY overflow
+    /* `--dock-max-inline-size` is the canonical inline cap EVERY overflow
        strategy reads: `overflow="scroll"` scrolls past it, and `overflow="wrap"`
        wraps to N rows on the over-cap crossing (the dock shrink-wraps to content,
-       `max-inline-size` caps that intrinsic width at this token). The prior
-       `--dock-overflow-bp: 640px` viewport-breakpoint token (the magic-640
-       snap-back) is DELETED — the wrap is content-driven, not viewport-coupled, so
+       `max-inline-size` caps that intrinsic width at this token). There is no
+       `--dock-overflow-bp: 640px` viewport-breakpoint token (no magic-640
+       snap-back) — the wrap is content-driven, not viewport-coupled, so
        there is no breakpoint threshold to name. */
     --dock-max-inline-size: min(80vw, 64rem);
     --dock-max-block-size: min(80vh, 48rem);
 
     --max-width-input: 24rem;
     --input-min-width-sm: 5rem;
-    /* AU.W8b.4 — canonical popover width (Combobox list + anchor). Lifts the
+    /* Canonical popover width (Combobox list + anchor). Lifts the
        `w-[200px]` arbitrary-value wrap to the `w-popover` @theme utility. */
     --popover-width: 200px;
-    /* AZ.R5-4 — the ONE panel inner-padding rung (the consumer-verified "the
+    /* The ONE panel inner-padding rung (the consumer-verified "the
        popover/dropdown content reads TIGHT" finding). The floating-panel +
        DropdownMenuContent recipes read THIS token for their inner pad instead of
-       the prior hand-set `p-1`/literal, so a consumer retunes every teleported
+       a hand-set `p-1`/literal, so a consumer retunes every teleported
        menu/panel surface from one override. The comfortable default is `0.375rem`
-       (a half-rung over the prior 0.25rem tight floor — comfortable both modes
-       without over-padding a dense menu list). BB.W-CARD-PAD — the dead
+       (a half-rung over a 0.25rem tight floor — comfortable both modes
+       without over-padding a dense menu list). The dead
        `--panel-padding-roomy` (1rem) is DELETED here (clean break, no alias): it
        had ZERO `var(--panel-padding-roomy)` consumers (the prose-popover register
        it claimed to back never read it — PopoverContent paints `p-4` directly), so
        it was an orphan declaration the golden-padding cut prunes. */
     --panel-padding:       0.375rem;
 
-    /* BC.W-OVERLAY-UNIFORM — the token-BACKING of the raw floating-overlay
-       literals (the token-beats-prop seam). Each defaults to the byte-identical
-       HEAD magnitude so a bare overlay is pixel-unchanged; a consumer retunes
+    /* The token-BACKING of the raw floating-overlay
+       literals (the token-beats-prop seam). Each defaults to the shipped
+       magnitude so a bare overlay is pixel-stable; a consumer retunes
        EVERY overlay's min-width / max-block / tooltip type / select chevron from
        ONE `:root` override (the uniformity payoff). These are token-backings of
        EXISTING raw literals (`min-w-32` / `max-h-[60vh]` / tooltip `text-sm` /
@@ -72,7 +72,7 @@
        command list (`max-h-[300px]`) read. Defaults to 60vh — the viewport-
        relative ceiling so a long menu scrolls inside the overlay rather than
        running off-screen. (The Select precompiled `[data-slot="select-content"]`
-       max-height in select.css is the BA.W-EMISSION consumer-reach floor — KEPT,
+       max-height in select.css is the consumer-reach floor — KEPT,
        not threaded here; see the census on-the-line row.) */
     --overlay-max-block: 60vh;
     /* The tooltip type rung — the golden quiet caption register (√φ ladder), the

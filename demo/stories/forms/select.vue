@@ -33,7 +33,7 @@ const group = (label: string, items: SpecimenSpec[]): SpecimenSpec => ({
 });
 
 // A labeled picker field — Label over Select. `models` is the EXPLICIT v-model map
-// (ruling 8, no convention magic): the value binds `modelValue`, and the third
+// (no convention magic): the value binds `modelValue`, and the third
 // field controls the reka `open` NAMED v-model — the anti-no-op floor made visible.
 const field = (
     id: string,

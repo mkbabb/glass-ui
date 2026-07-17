@@ -1,4 +1,4 @@
-// @mkbabb/glass-ui/composables/dark — the FOUC parse-time primitive (AU.W9.B #22)
+// @mkbabb/glass-ui/composables/dark — the FOUC parse-time primitive
 //
 // `darkModeSyncScript()` is a PURE function returning the inline `<head>` script
 // STRING that resolves the dark/light theme and stamps `document.documentElement`
@@ -10,8 +10,7 @@
 //
 // vueuse-FREE by construction — this module emits a string and touches no
 // `@vueuse/core` symbol, so it can ride the root barrel; but it homes on `/dark`
-// beside `useGlobalDark` + `installDarkModeSync` (the dark-mode-sync family),
-// per the AP.W3 relocation precedent.
+// beside `useGlobalDark` + `installDarkModeSync` (the dark-mode-sync family).
 //
 // The emitted script MIRRORS the `useGlobalDark` runtime contract EXACTLY so the
 // parse-time and runtime paths agree:

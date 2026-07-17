@@ -1,5 +1,5 @@
 /* theme/literals.css — the trailing plain @theme: directly-authored LITERALS
-   (AZ.W-CARVE partial 3 of 4).
+   .
 
    The override surface here is the namespaced var itself, not a tokens.css
    bridge, so these mint their global variable. The --animate-* composites
@@ -13,8 +13,8 @@
     /* ═══════════════════════════════════════════════
        Animation → animate-* utilities
        ═══════════════════════════════════════════════ */
-    /* BI.W-GLASS-DEDUP — `--animate-floating-panel-in` RETIRED with floating-panel.css
-       (its sole consumer, FAM-9). The `floating-panel-in` @keyframes is deleted too. */
+    /* `--animate-floating-panel-in` RETIRED with floating-panel.css
+       (its sole consumer). The `floating-panel-in` @keyframes is deleted too. */
     --animate-tooltip-in: tooltip-in var(--duration-fast) var(--ease-out);
     --animate-fade-in: fade-in var(--duration-normal) var(--spring-smooth);
     --animate-scale-in: scale-in var(--duration-normal) var(--spring-smooth);
@@ -31,9 +31,9 @@
        band-pass vs one-pass sweep) want different tempos. The pre-V audit
        (C-c §5.3) flagged this as a "naming inversion"; it is intentional —
        documented here so the offset is searchable. The orphan
-       `--duration-shimmer-slow` (8s) was excised in V.W2 T5.
+       `--duration-shimmer-slow` (8s) was excised.
 
-       BB.W-METAL-SHIMMER — `--animate-gold-shimmer` re-points onto the metal-
+       `--animate-gold-shimmer` re-points onto the metal-
        PARAMETERIZED `metal-shimmer-sweep` keyframe (the gold-only
        `gold-shimmer-slide` RETIRED — clean break, no alias); the duration/tempo
        are byte-preserved (the gold READ unchanged). `--animate-metal` is the
@@ -57,16 +57,16 @@
 
        Consumers replace 18+ hardcoded `disabled:opacity-50` literals
        across the primitive slice with `disabled:opacity-disabled`.
-       (Per audit U.W0.C-a §1.2 / §gap.4 — U12.)
+       (Per audit -a §1.2 / §gap.4 — U12.)
        ═══════════════════════════════════════════════ */
     --opacity-disabled:   0.5;
     --opacity-icon-muted: 0.8;
 
     /* ═══════════════════════════════════════════════
-       text-shadow → text-shadow-* utilities (AW.W26)
+       text-shadow → text-shadow-* utilities
 
        text-shadow is the lone shadow family that shipped no `@theme` bridge
-       (Tailwind v4.1 minted the `text-shadow-{2xs,xs,sm,md,lg}` utilities). The
+       (Tailwind provides the `text-shadow-{2xs,xs,sm,md,lg}` utilities). The
        rungs are warm-`--shadow-color`-derived via `color-mix` per the box-shadow
        ladder (tokens.css §7) + the cartoon-shadow precept's one-source chain, so
        they re-tint under `.dark` BY CONSTRUCTION — `--shadow-color: var(--foreground)`
@@ -88,7 +88,7 @@
        + the two-stop EMBOSS (`.text-engraved`). These hold the multi-stop
        literals INSIDE the `@theme` defs so the utilities compose `var(--text-shadow-*)`
        and no raw `text-shadow:` literal survives in `utilities.css`/`typography.css`
-       (AW.W26 gate 4). Both are `--shadow-color`/surface-tint-derived, so they
+       (gate 4). Both are `--shadow-color`/surface-tint-derived, so they
        re-tint under `.dark` BY CONSTRUCTION. */
     --text-shadow-depth: 1px 1px 0 var(--shadow),
                          2px 2px 0 var(--shadow),

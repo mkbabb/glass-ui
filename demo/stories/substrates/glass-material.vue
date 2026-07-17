@@ -251,7 +251,7 @@ const ACCENT_STRENGTH = "48%";
                         >
                     </div>
                 </div>
-                <!-- consumer #2 — the Atlas-shaped data-hue surface (a HoverCard-
+                <!-- consumer #2 — the map-shaped data-hue surface (a HoverCard-
                      shaped accented plate) BESIDE the unset neutral plate: the
                      accented one glows the datum hue at rim + glint, the unset one
                      reads exactly today's warm-cream glass (the byte-identical

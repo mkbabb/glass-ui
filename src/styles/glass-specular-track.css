@@ -1,7 +1,7 @@
 /* Pointer-anchored moving specular — the iOS-26 Liquid Glass illuminate-from-
  * within behaviour.
  *
- * AW.W22 — the moving-specular `::before` body (the masked radial catch-light,
+ * The moving-specular `::before` body (the masked radial catch-light,
  * the rest/hover/active intensity steps, the var() fallback) was FOLDED into the
  * single `.glass-material` mixin in glass.css, where the five ladder rungs +
  * `.glass-card` + the `.dock-icon-button` control + `.glass-specular-track`
@@ -20,7 +20,7 @@
  *      `.glass-material` group (the canonical specular owner) so the guards
  *      cover every band surface, not just the opt-in class.
  *   2. The `@supports`-gated `#glass-refract` refraction garnish — RE-HOMED at
- *      AW.W23 off the (now-folded) `.glass-specular-track.glass-refract`
+ * off the (now-folded) `.glass-specular-track.glass-refract`
  *      compound onto `.glass-material.glass-refract` (see glass-refract.css for
  *      the shipped filter asset + the re-homed consuming selector).
  */
@@ -43,7 +43,7 @@
     .glass-specular-track::before {
         --specular-x: 50%;
         --specular-y: 50%;
-        /* BB.W-LENSING — pin the EDGE-glint angle static too (the conic seats at its
+        /* Pin the EDGE-glint angle static too (the conic seats at its
            `0deg` top-edge rest). The `useSpecularPointer` leaf already skips the angle
            write under PRM; this is the CSS belt-and-braces pin so the rim glint never
            drifts under reduce. The lens-swell drive also snaps (Button.vue / .tap-squish

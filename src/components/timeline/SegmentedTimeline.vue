@@ -251,7 +251,7 @@ function onSegmentClick(seg: TimelineSegment) {
 }
 
 /* per-state tints — a translucent wash of the lifecycle hue over the warm
-   glass (the dot stays glassy; build-trap-(d) 0-alpha is oklch(.../0)). */
+   glass (the dot stays glassy; the black-premultiply trap — 0-alpha is oklch(.../0)). */
 .segmented-cell[data-state="active"] .segmented-dot {
     background: color-mix(
         in oklab,

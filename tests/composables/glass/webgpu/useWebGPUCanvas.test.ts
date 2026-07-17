@@ -1,7 +1,7 @@
-// BB.W-VIZ-SUITE (W-GPU-SUBSTRATE) — the consumer-#2 usability assert for the WebGPU
+// The consumer-#2 usability assert for the WebGPU
 // backend + the transparent picker (`proof:gpu-substrate-single` clause G).
 //
-// Mirrors the WebGL2 consumer-#2 test (AU.W6): the substrate must NOT bake viz choices
+// Mirrors the WebGL2 consumer-#2 test: the substrate must NOT bake viz choices
 // — a SECOND non-aurora consumer with its OWN setup must compose it. This test IS that
 // second consumer. It exercises TWO paths:
 //
@@ -52,7 +52,7 @@ function flushFrames(n: number) {
     }
 }
 
-// BD.W-CUT — the shared leaf's `presize()` (createCanvasLifecycle) schedules a
+// The shared leaf's `presize()` (createCanvasLifecycle) schedules a
 // rAF-double-resize layout-settle defense (the aurora-proven stuck-300×150 cure,
 // promoted to ALL consumers). Those transient resize callbacks share the rAF queue with
 // the render `tick`, so a frame-per-flush count is skewed by the settle rAFs occupying
@@ -69,7 +69,7 @@ function pumpFrames(countFn: () => number, pumps: number): number {
 }
 
 beforeEach(() => {
-    // BD.W-CUT (D3a) — reset the PROCESS-SHARED WebGPU device memo so a prior test's
+    // (D3a) — reset the PROCESS-SHARED WebGPU device memo so a prior test's
     // resolved device never leaks into a later test (which would skip its own
     // `requestAdapter` acquire — the no-adapter / idempotent contracts assert that call
     // count). The shared-device warm is correct in production (one device per page); the
@@ -377,10 +377,10 @@ describe("createWebGPUCanvas — the async device-acquisition prelude (W-GPU-SUB
 
 describe("createGpuSubstrate — the try-WebGPU-then-rebuild-WebGL2 picker (BC.W-WEBGPU-EVERYWHERE D8)", () => {
     it("FALLS to the WebGL2 net SILENTLY when navigator.gpu exists but requestAdapter returns null", async () => {
-        // The keystone bug: navigator.gpu PRESENT (so the old presence-only picker
-        // committed WebGPU) but requestAdapter() returns null (headless/SwiftShader/
-        // blocklisted) — the old picker THREW `no GPU adapter` to the page → black void.
-        // The fix: the picker attempts WebGPU, catches the rejection, and rebuilds on the
+        // The keystone hazard: navigator.gpu PRESENT but requestAdapter() returns null
+        // (headless/SwiftShader/blocklisted). A presence-only picker (committing WebGPU
+        // merely because navigator.gpu exists) THROWS `no GPU adapter` to the page → black void.
+        // The picker instead attempts WebGPU, catches the rejection, and rebuilds on the
         // WebGL2 net — SILENTLY (no onInitError, the user never sees a downgrade).
         const gpu = {
             requestAdapter: vi.fn(async () => null), // adapter-less host

@@ -171,7 +171,7 @@ bool isPainterlyStroke() {
 // OKLab OVER-composite: lerp L,a,b of the over-color toward the under-color (the
 // Ottosson matrices spliced from procedural-color.glsl.ts — no new color math). Two
 // complementary-hued strokes overlapping transition through OKLab, where the midpoint
-// holds chroma, instead of the linear mix() that desaturates toward grey (slice 8 F2).
+// holds chroma, instead of the linear mix() that desaturates toward grey.
 vec3 paintOverOklab(vec3 under, vec3 over, float alpha) {
   vec3 labU = linOklab(under);
   vec3 labO = linOklab(over);
@@ -191,9 +191,9 @@ vec3 paintOverOklab(vec3 under, vec3 over, float alpha) {
 //
 // The internal streak perturbs hue and chroma in OKLCh, not value only,
 // so a single stroke carries a small hue gradient (broken color at the ATOM level —
-// adjacent strokes shimmer like real impasto, not flat stamped swatches; slice 8 F5);
+// adjacent strokes shimmer like real impasto, not flat stamped swatches);
 // and the OVER-composite runs in OKLab on the painterly stroke mediums so overlapping
-// complementaries mix as pigment, not the linear-mix grey (slice 8 F2).
+// complementaries mix as pigment, not the linear-mix grey.
 //   impastoFloor — the per-stroke height-crown floor: oil's 0.4+0.6*edgeN reads
 //                  floor=0.4 (the crown tapers to 40% at the stroke edge); the van-Gogh
 //                  profile passes floor=1.0 so each atomic dab catches a FULL-height
@@ -322,7 +322,7 @@ StrokeHit bestOil(vec2 p, float cellSize, float lenMul, float halfWMul,
       //   uStrokeOrient==1 (tensor) — the structure-tensor minor eigenvector at the
       //                               cell center (the color field's edge-tangent),
       //                               so strokes hug the color zones (van Gogh).
-      // coh carries the per-cell coherence A for the W4.3 energy grading (long
+      // coh carries the per-cell coherence A for the energy grading (long
       // confident strokes where structure is coherent, stubby dabs in flat zones).
       vec2 f;
       float coh = 1.0;

@@ -1,6 +1,6 @@
 /* tokens/scale-paper.css
    §11 interactive scales & focus · §12 paper textures · §13 gold · §14 rainbow · §16 timeline · §17 metric · §19 table density · §20 platform motion.
-   Carved from the tokens.css cascade root; @import-ed by tokens.css in
+   A partial of the tokens.css cascade; @import-ed by tokens.css in
    cascade order. Same :root cascade context as its siblings. */
 :root {
     /* ═══════════════════════════════════════════════
@@ -15,17 +15,17 @@
        reason (DESIGN.md §L3); `--scale-press-btn` aliases the slightly-softer
        `--scale-press-sm` (0.97) the button + slider recipes consume.
 
-       AT.W7-dock-b — press canon. `--scale-press-dock` previously hard-coded a
-       deeper 0.92 (a second magic press value with no documented rationale),
-       so a dock control pressed visibly harder than every other primitive. It
-       now references the canonical `--scale-press` (0.96) — ONE source for the
-       press scale across the system. A consumer wanting the dock's old deeper
+       Press canon. `--scale-press-dock` references the
+       canonical `--scale-press` (0.96) — ONE source for the
+       press scale across the system, NOT a deeper 0.92 (a second magic press
+       value with no documented rationale, pressing visibly harder than every other
+       primitive). A consumer wanting a deeper dock
        press overrides `--scale-press-dock` on the dock instance. */
     --scale-press-dock: var(--scale-press);
     --scale-press-sm: 0.97;
     --scale-press-btn: var(--scale-press-sm);
 
-    /* AX.W53 — the SegmentedTabs travel-squish cap. The active indicator
+    /* The SegmentedTabs travel-squish cap. The active indicator
        (segmented/pill slider OR the underline rule) STRETCHES along its travel
        axis as it glides between tabs, then settles to fit — the Material 3
        ELASTIC / Apple Liquid-Glass "controls insist on animating themselves"
@@ -38,7 +38,7 @@
        source — constant + token never fork); a FAST pull visibly swells the pill so
        the gel-squish READS as liquid — still capped LOW (the anti-taffy-pull bar;
        the pill swells, never taffy-pulls).
-       BD.W-TABS-LIQUID — re-tuned 1.18 → 1.11. The `--tab-blob` area-inflation
+       Re-tuned 1.18 → 1.11. The `--tab-blob` area-inflation
        channel now carries the "grow" (the 5-beat overshoot), so the per-axis stretch
        drops: the FENCE is the COMPOSED visible bbox area `blob × stretch` ≤ ~1.14,
        NOT the bare per-axis scalar. At blob ~1.045 (peak) × stretch ~1.11 (far jump)
@@ -46,31 +46,31 @@
        is volume-preserving) stays ≤ ~1.14 — lively, not taffy. */
     --tab-indicator-max-stretch: 1.11;
 
-    /* BD.W-TABS-LIQUID — the area-inflation cap (the 5-beat blob's overshoot peak).
+    /* The area-inflation cap (the 5-beat blob's overshoot peak).
        The 2nd `useLiquidFlex` channel drives `--tab-blob` toward this on the
        grow-overshoot beat, then de-inflates to 1 at arrival (shrink-to-fit). Kept
        LOW (~1.045) so the COMPOSED bbox area (blob × stretch, the volume-preserving
        squish makes the area ≈ blob²) clears the ≤ ~1.14 anti-taffy fence. A consumer
        dials it (or to 1 for no inflation) without touching source. */
     --tab-indicator-blob-max: 1.045;
-    /* BA.W-TABS — the indicator's OWN travel clock, re-pointed off the generic
+    /* The indicator's OWN travel clock, re-pointed off the generic
        `--duration-normal` (0.3s, which dragged a ~190ms sub-pixel undershoot tail
-       past the ~100ms 90%-travel point — the R10-2 "too slow" read) onto the
-       CALIBRATED `--spring-snappy-duration` (the W-GLASS-CAL Unit 3 per-spring
+       past the ~100ms 90%-travel point — the "too slow" read) onto the
+       CALIBRATED `--spring-snappy-duration` (the per-spring
        2%-band envelope-settle clock for the snappy curve, ~0.34s). The glide +
        squish both read this ONE clock so they cannot desync; consume, never
-       re-mint the spring-duration primitive (W-GLASS-CAL owns it). */
+       re-mint the spring-duration primitive (owns it). */
     --tab-indicator-duration: var(--spring-snappy-duration);
     --opacity-disabled: 0.5;
     --opacity-icon-muted: 0.8;
 
     --focus-ring-width: 2px;
-    /* BG.W-DESHADCN — reads the renamed house `--focus-ring-color` (off the shadcn
+    /* Reads the house `--focus-ring-color` (off the shadcn
        `--ring`); this is the SOLE `--focus-ring-color` reader (the one retint knob). */
     --focus-ring-shadow: 0 0 0 var(--focus-ring-width) color-mix(in srgb, var(--focus-ring-color) 30%, transparent),
         0 0 8px color-mix(in srgb, var(--focus-ring-color) 15%, transparent);
 
-    /* BB.W-INVALID-RING — the destructive twin of --focus-ring-shadow. The
+    /* The destructive twin of --focus-ring-shadow. The
        aria-invalid ring is ONE register: every form control (Input/Textarea/
        NumberField via `.input-pill`, SelectTrigger, ComboboxInput, TagsInput)
        reads `box-shadow: var(--invalid-ring)` instead of re-spelling the recipe
@@ -84,18 +84,18 @@
     --invalid-ring: 0 0 0 var(--focus-ring-width)
         color-mix(in srgb, var(--destructive) var(--invalid-ring-tint), transparent);
 
-    /* BC.W-RADIO-FIX — the selection-control STATE register (the `--focus-ring-shadow`
+    /* The selection-control STATE register (the `--focus-ring-shadow`
        / `--invalid-ring` precedent: one named register, read everywhere — never a
        per-control magic literal). The checks family (Checkbox + RadioGroupItem) reads
        these TWO tokens so a re-tint is ONE edit, library-wide.
 
-       • `--control-ring` — the UNCHECKED outline. Post-BC.W-BLACK-BAR the general glass
+       • `--control-ring` — the UNCHECKED outline. Post- the general glass
          rim is ≤4% warm-ink (`--glass-border-resting`), which reads as a near-invisible
          hairline on a 16px circle — too faint to tell a rest radio from its siblings. So
-         the selection atoms are the NAMED exception (recorded in BC.W-BLACK-BAR's fences):
+         the selection atoms are the NAMED exception (recorded in the fences):
          a slightly-stronger ~12% warm-ink outline that reads as a DEFINED circle at 16px
          without re-introducing the dark `--primary` hairline. Warm-ink-derived (no gray,
-         BA.W-NO-GRAY).
+         ).
        • `--control-checked-bg` — the SELECTED glass-tinted fill. The recipe is minted
          ONCE here (the anti-paste bite: a second inline `color-mix(... --primary 88% ...)`
          literal on a checks atom reds — the recipe IS the token). Mirrors the
@@ -107,8 +107,8 @@
     /* ═══════════════════════════════════════════════
        §12 PAPER TEXTURES
        ═══════════════════════════════════════════════ */
-    /* Canonical subtle paper-texture opacity — restored from fourier-original
-       (`4df1a06:web/src/style.css:53-54`) after A.W3.5.ab confirmed the
+    /* Canonical subtle paper-texture opacity — the calibrated subtle
+       baseline. Testing confirmed the
        heretofore `opacity='1'` URI rendered as an overt grain field in every
        downstream consumer of `.paper-texture`. The SVG `opacity` attribute is
        baked at parse-time and cannot read a CSS var, so the subtle value must
@@ -116,14 +116,14 @@
        a wrapper element with its own `opacity:`/`mix-blend-mode:` atop. */
     --paper-clean-texture: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
 
-    /* BC.W-GRID-SIMPLE — the ONE engineering-graph-paper rhythm source. The
+    /* The ONE engineering-graph-paper rhythm source. The
        keyframes.js `EditorShell` magnitudes, re-expressed as `--grid-*` tokens:
        a fine 1rem cell + a bolder 5rem major rule (the 5× engineering-graph
        rhythm), each line a hairline-crisp single device-pixel. The pitch is
        REM-RELATIVE — 1rem (16px at the default root) and 5rem (80px) divide
        cleanly at DPR 1/2/3, so every line lands on a whole device-pixel column/
-       row (the anti-blur rule; the prior 28px/32px integer pitch landed on
-       sub-pixel boundaries at fractional-DPR zoom and the anti-aliaser softened
+       row (the anti-blur rule; a 28px/32px integer pitch lands on
+       sub-pixel boundaries at fractional-DPR zoom and the anti-aliaser softens
        the 1px lines). The fine 3% is the user's "less busy substrate" — DELIBERATELY
        BELOW the 10% legibility floor — and the major 11% is held STRICTLY ABOVE it
        (the kf weight step). The line INK is a `color-mix(… var(--foreground) N%, …)`
@@ -135,8 +135,8 @@
        — the token-first axis. This is the SINGLE rhythm source: the demo full-bleed
        page grid (`.grid-bg`, story-hero.css) AND the library card-interior register
        (`.paper-grid`, cards.css) both read it (the two-parallel-28px/32px-systems
-       fix). The LIQUID full-bleed sibling (`<LiquidGrid>`, BG.W-GRID-AFFINE — the
-       viz renamed off `<PaperGrid>`; the static `.paper-grid` card register is untouched)
+       fix). The LIQUID full-bleed sibling (`<LiquidGrid>` — the
+       viz keyed off `<PaperGrid>`; the static `.paper-grid` card register is untouched)
        re-uses the SAME rhythm — one pitch, two registers (static page-bg vs liquid). */
     --grid-pitch: 1rem;
     --grid-major: 5rem;
@@ -145,8 +145,8 @@
 
     /* The library card-interior GEOMETRIC register (`.paper-grid`, cards.css) —
        the document-register card's INTERIOR ground, felt THROUGH the glass tint.
-       It UNIFIES its pitch onto the shared `--grid-pitch` (the prior 32px literal
-       retired — ONE rhythm source) and keeps its OWN ambient through-card strength
+       It UNIFIES its pitch onto the shared `--grid-pitch` (ONE rhythm source, NOT a
+       32px literal) and keeps its OWN ambient through-card strength
        register: the `--paper-grid-opacity` single knob (~0.08, the ask's "felt
        THROUGH the card ~0.08"). DISTINCT from the page-bg 3%/11% tier above — a
        card interior reads quieter than a full-bleed page wash — but the PITCH is
@@ -182,7 +182,7 @@
     --gold: oklch(0.751 0.147 84.2);
     --gold-light: oklch(0.890 0.183 96.1);
     --gold-dark: oklch(0.599 0.132 64.2);
-    /* AY.W-PRIM-POLISH D1 — the saturated CTA plate the AW.W13 gold-CTA contract
+    /* The saturated CTA plate the gold-CTA contract
        names. A FIXED deep gold (mode-INVARIANT — the gold-CTA hover backplate must
        be dark in BOTH modes so the white label clears ≥4.5:1; deepening toward the
        mode-flipping `--foreground` brightened the dark plate to a cream-gold and
@@ -197,13 +197,13 @@
     --color-gold-deep: var(--gold-deep);
 
     /* ═══════════════════════════════════════════════
-       §13b SILVER (the structure metal — BA.W-ATLAS-RECONCILE C-3, d6 register C)
+       SILVER (the structure metal)
        ═══════════════════════════════════════════════ */
     /* The cool polished-steel STRUCTURE quad — gold's mirror for industrial
        metal surfaces. The cascade EXACTLY mirrors gold's
        (scale-paper raw → bridges `--color-silver*` alias → both dark arms).
 
-       BA.W-NO-GRAY NAMED EXCEPTION (the ONE sanctioned cool-neutral). W-NO-GRAY
+       NAMED EXCEPTION (the ONE sanctioned cool-neutral). 
        moved the library's NEUTRAL ladder to a warm OKLab H~70° register (no gray).
        Silver is DELIBERATELY COOL near-achromatic (hue ~255, the blue-steel of a
        milled panel) — it is NOT a neutral, it is a brand METAL identity (like gold).
@@ -211,7 +211,7 @@
        as polished metal, not a tinted cast, and the cool hue distinguishes it from
        the warm-cream glass plate so the structure register reads as a DIFFERENT
        material, not a desaturated default. Recorded as the warm-floor exception in
-       the W-ATLAS-RECONCILE DELTA. */
+       the DELTA. */
     --silver: oklch(0.760 0.012 255);
     --silver-light: oklch(0.902 0.010 255);
     --silver-dark: oklch(0.582 0.014 255);
@@ -226,7 +226,7 @@
     --color-silver-deep: var(--silver-deep);
 
     /* ═══════════════════════════════════════════════
-       §13c BRONZE (the THIRD brand-metal — BB.W-METAL-SHIMMER)
+       §13c BRONZE (the THIRD brand-metal)
        ═══════════════════════════════════════════════ */
     /* The warm-brown patina quad — the third member of the gold·silver·bronze
        brand-metal TRIAD (the medal triad, the gilt/aged "third place" figure, the
@@ -235,11 +235,11 @@
        The cascade EXACTLY mirrors gold's and silver's (scale-paper raw → bridges
        `--color-bronze*` alias → both dark arms); `-deep` is mode-invariant.
 
-       BA.W-NO-GRAY brand-metal EXCEPTION — bronze is the THIRD metal on the SAME
+       brand-metal EXCEPTION — bronze is the THIRD metal on the SAME
        sanction silver carries (the ONE cool-neutral exception). Bronze is a WARM
        metal identity with chroma ABOVE the warm floor: each rung resolves OKLab
        C 0.072-0.112 (far above the STRONG_FLOOR 0.020) at hue ~49-60°, so it reads
-       as polished bronze MATERIAL, never a desaturated brown CAST (the W-NO-GRAY
+       as polished bronze MATERIAL, never a desaturated brown CAST (the 
        "warm-not-tinted" bar). It is NOT a neutral — a low-chroma bronze would BE a
        neutral and break the brand-metal read; the chroma is the metal. The hue sits
        between gold and red-orange so it distinguishes from a dark gold at the rim. */
@@ -258,8 +258,8 @@
     --color-bronze-deep: var(--bronze-deep);
 
     /* ═══════════════════════════════════════════════
-       §14 RAINBOW PALETTE — oklch (AV.W16 TW2; mode-independent, no .dark
-       mirror; hue preserved from the prior hsl() cadence)
+       §14 RAINBOW PALETTE — oklch (mode-independent, no .dark
+       mirror; hue matches the hsl() cadence)
        ═══════════════════════════════════════════════ */
     --rainbow-red: oklch(0.636 0.210 25.5);
     --rainbow-orange: oklch(0.737 0.163 58.9);
@@ -291,7 +291,7 @@
     /* Geometry — shared across all variants */
     --timeline-dot-size: 0.875rem;            /* 14px — boundary dot diameter (pointer: fine) */
     --timeline-dot-size-touch: 1.25rem;       /* 20px — boundary dot diameter (pointer: coarse) */
-    --timeline-touch-target: 44px;            /* AC.W6d F2.I-04 — WCAG 2.5.5 target-size floor.
+    --timeline-touch-target: 44px;            /* WCAG 2.5.5 target-size floor.
                                                  The `::before` halo around each dot extends to
                                                  this dimension so finger-precision users meet
                                                  the (target-size: 44×44 minimum) clause without
@@ -299,8 +299,8 @@
                                                  pointer: fine. */
     --timeline-segment-flex: 1 1 0;           /* per-cell flex distribution (segmented) */
 
-    /* Boundary-dot glass knobs (Q.W4 Lane B — promoted from
-       ContinuousTimeline.vue SFC fallbacks; `3cb70db` minted these as a
+    /* Boundary-dot glass knobs (promoted from
+       ContinuousTimeline.vue SFC fallbacks; minted these as a
        private dialect). The continuous-variant dot is a GLASS primitive:
        a translucent tinted fill over a backdrop blur with a hairline
        ring. These knobs let consumers retune the resting glass + the
@@ -354,10 +354,10 @@
     --table-head-h: calc(3rem * var(--table-density));
     --table-head-px: calc(1rem * var(--table-density));
 
-    /* §20 PLATFORM MOTION (AQ.W5) — the scroll-driven/choreography + TOP-LAYER +
-       VIEW-TRANSITION + dock-spring motion knobs — carved WHOLE to
-       tokens/scroll-tokens.css at BB.W-CARVE4 (a contiguous tail carve at the §19/§20
+    /* §20 PLATFORM MOTION — the scroll-driven/choreography + TOP-LAYER +
+       VIEW-TRANSITION + dock-spring motion knobs, in
+       tokens/scroll-tokens.css (a contiguous tail at the §19/§20
        seam; §20 is the file's last section, so the partial @import-s IMMEDIATELY
-       AFTER this one — the dist is byte-isomorphic). The paper/control/display/metal/
+       AFTER this one). The paper/control/display/metal/
        timeline/metric/table families above stay. */
 }

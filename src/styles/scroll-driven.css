@@ -1,5 +1,5 @@
 /*
- * scroll-driven.css — native scroll-driven CSS animations (AQ.W5 §Design 1).
+ * scroll-driven.css — native scroll-driven CSS animations.
  *
  * Cascade rung after animations.css. Two token-first recipe families that move
  * the scroll-progress + stagger-reveal work OFF the main thread (the consumer
@@ -34,12 +34,12 @@
  * the timeline defaults to `scroll(nearest block)` (the nearest ancestor block
  * scroller), overridable by the FULL-value var `--scroll-progress-timeline`.
  *
- * BG.W-SCROLL-PROGRESS-RAIL (D5) — `scroll-origin`+`scaleX(0)` are HOISTED
+ * `scroll-origin`+`scaleX(0)` are HOISTED
  * UNCONDITIONAL so the rest is INVISIBLE (scaleX 0) on ANY unsupported / invalid /
  * PRM path (NOT an opacity-only rest). The timeline is a FULL-value var — NEVER
  * `scroll(var(...))`: a `<dashed-ident>` (a named timeline) substituted into
  * scroll()'s scroller slot is INVALID and silently computes animation-timeline to
- * `auto`, which resolves the keyframe to scaleX(1) full-width (the HEAD D5 defect).
+ * `auto`, which resolves the keyframe to scaleX(1) full-width (the full-width defect).
  * A consumer that needs a named cross-element timeline writes the WHOLE value
  * (`--scroll-progress-timeline: --my-timeline` + `timeline-scope` on an ancestor),
  * never a fragment inside `scroll()`. */

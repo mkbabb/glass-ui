@@ -2,7 +2,7 @@
 // warp/wander/well/pinned-drift state shapes, and the `<Constellation>` consumer
 // prop surface.
 //
-// Carved from constellationField.ts — the ~308 lines of type
+// The ~308 lines of type
 // interfaces split off the step engine (`seedField`/`refitField`/`stepField`
 // stay in constellationField.ts). The draw/interaction siblings + the engine
 // core import these TYPES (no runtime cycle — a pure type module). The package
@@ -71,7 +71,7 @@ export interface ConstellationPalette {
     node: string;
     nodeDim: string;
     line: string;
-    /** The hairline-edge alpha multiplier (was the `0.17` literal). */
+    /** The hairline-edge alpha multiplier. */
     edgeAlpha: number;
     /** The focus-proximity edge multiplier (consumer skins may read it). */
     edgeFocusAlpha: number;
@@ -144,7 +144,7 @@ export interface ConstellationWander {
  * so a flagged point breathes its neighborhood without leaving the dead-space it was
  * anchored in. Stepped inside `stepField` (no second rAF) via a closed-form
  * easeInOutQuad over `now` — no integrator. Absent (`undefined`) → `stepField` skips
- * the block (byte-identical to HEAD).
+ * the block (the field is unchanged).
  */
 export interface ConstellationPinnedDrift {
     /** The anchor (the pinned node's rest position) the drift eases around (px). */
@@ -267,31 +267,31 @@ export interface ConstellationField {
     warp: ConstellationWarp;
     /**
      * The warp-spring tuning `warpStep` reads. Optional — absent
-     * falls back to the shipped `{ response: 0.55, zeta: 1.0 }` defaults (the
-     * byte-identical HEAD spring). A tokenised override (read on mount) reaches
+     * falls back to the shipped `{ response: 0.55, zeta: 1.0 }` defaults.
+     * A tokenised override (read on mount) reaches
      * the integrator through this member.
      */
     warpCfg?: ConstellationWarpConfig;
     /**
      * The optional auto-DRIFT cadence. When set, `stepField`
      * periodically re-points the warp to a random node (the wander source on the
-     * SAME spring). Absent (`undefined`) leaves the field BYTE-IDENTICAL to the
-     * pre-wander HEAD — `stepField` skips the cadence block entirely.
+     * SAME spring). Absent (`undefined`) leaves the field in its plain,
+     * un-wandering state — `stepField` skips the cadence block entirely.
      */
     wander?: ConstellationWander;
     /**
      * The optional gravity-well. When set, `stepField` composes a
      * held-pointer inverse-square pull force (no new rAF) — `well.target → 1`
      * while held, `→ 0` on release, the field renormalising back to `speed` once
-     * the well cools. Absent (`undefined`) leaves the field BYTE-IDENTICAL to the
-     * pre-well HEAD — `stepField` skips the force pass entirely.
+     * the well cools. Absent (`undefined`) leaves the field in its plain,
+     * un-well state — `stepField` skips the force pass entirely.
      */
     well?: ConstellationWell;
     /**
      * The pinned-node designation: the index of a node `stepField`
      * does NOT drift/bounce/steer/pull, so it HOLDS its seeded position (the flagged
      * flagged node the consumer pins). `-1` (the default) = no pin → every node drifts
-     * (byte-identical to HEAD). A designation, NOT a new node — node count is
+     * (unchanged at default). A designation, NOT a new node — node count is
      * conserved. The optional `pinnedDrift` gently wanders it around its anchor; the
      * optional `drawEdges(…, accentIndex)` tints its incident edges.
      */
@@ -308,7 +308,7 @@ export interface ConstellationField {
      * `targetIdx` (→ -1) once the spring has SETTLED on its target — the focal node
      * releases the spring and rides its node's RAW drift (the identity-ride), freeing
      * the spring for the next warp. Default `false`/undefined keeps the held-target
-     * behaviour (the warp chases its node forever — byte-identical to HEAD).
+     * behaviour (the warp chases its node forever — unchanged at default).
      */
     warpAutoRelease?: boolean;
 }
@@ -339,8 +339,8 @@ export interface ConstellationProps {
      * `opacityCeiling`, fourier `intensity` sibling — ONE recession vocabulary
      * across the four live substrates). Scales the painted edge/node/web/ripple
      * alpha OVER the mode-tuned `--constellation-alpha` base so the lattice can
-     * RECEDE behind content (0.4–0.6 in a hero). Default `1` is byte-identical to
-     * HEAD.
+     * RECEDE behind content (0.4–0.6 in a hero). Default `1` is the
+     * fully-opaque lattice.
      */
     opacityCeiling?: number;
     /** Seed for a reproducible field (number or hashed string); omit for `Math.random`. */
@@ -360,7 +360,7 @@ export interface ConstellationProps {
      * random node on a jittered cadence — the wander source on the SAME warp
      * spring (no second mechanic). `true` uses the default cadence (8–16s, the
      * slides rhythm); `{ minIdle, jitter }` tunes it. Default OFF (absent →
-     * byte-identical to HEAD). PRM-gated by the WARP precedent (the cadence never
+     * the field is unchanged). PRM-gated by the WARP precedent (the cadence never
      * advances under reduced-motion — the focal stays at its seed).
      */
     wander?: boolean | { minIdle?: number; jitter?: number };
@@ -370,7 +370,7 @@ export interface ConstellationProps {
      * release and the field cools back to `speed`. INDEPENDENT of `warpOnClick`
      * and `pointerReactive` (a consumer can hold-to-pull on a non-ripple,
      * non-warp lattice). `true` uses the tokenised defaults; an object tunes the
-     * gains. Default OFF (absent → byte-identical to HEAD). PRM-gated by the WARP
+     * gains. Default OFF (absent → the field is unchanged). PRM-gated by the WARP
      * precedent (the held-timer is not registered under reduced-motion). Enabling it
      * gives the host a named keyboard/pointer button contract; keyboard press/release
      * drives the same well target as pointer hold/release.

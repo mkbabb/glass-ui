@@ -1,5 +1,5 @@
 /*
- * view-transition.css — the View-Transitions CSS substrate (AQ.W5 §Design 3b).
+ * view-transition.css — the View-Transitions CSS substrate.
  *
  * Cascade rung after scroll-driven.css. Token-first shared-class recipes for the
  * group-transition case — the substrate the `useViewTransition` helper
@@ -9,9 +9,9 @@
  * per tracked element (the runtime MANDATORY — ≤ 1 element per name per state,
  * else the transition is skipped silently).
  *
- * Consumed across the AQ↔muster J seam: J.W5's verdict re-rank tags each row
+ * Consumed across the list-reorder seam: a verdict re-rank tags each row
  * `view-transition-class: gl-list-item; view-transition-name: row-<id>` and
- * calls `startViewTransition(() => render())`; the dock layer swap (W6) reuses
+ * calls `startViewTransition(() => render())`; the dock layer swap reuses
  * the same group recipe.
  *
  * Baseline: same-document `view-transitions` + `view-transition-class` = Newly
@@ -35,7 +35,7 @@
 /* Shared group class — consumers add `view-transition-class: gl-list-item` on
  * each tracked element plus a unique `view-transition-name` per element. */
 ::view-transition-group(.gl-list-item) {
-    /* BA.W-GLASS-CAL Unit 3 — the duration fallback rides the bouncy spring's
+    /* The duration fallback rides the bouncy spring's
        OWN settle clock (`--spring-bouncy-duration`) so the default VT bounce
        plays at its physical settle; a consumer still overrides via `--vt-duration`. */
     animation-duration: var(--vt-duration, var(--spring-bouncy-duration));
@@ -61,7 +61,7 @@ html:active-view-transition-type(route)::view-transition-new(root) {
 ::view-transition-new(.gl-list-item):only-child { animation-name: gl-vt-slide-in; }
 ::view-transition-old(.gl-list-item):only-child { animation-name: gl-vt-slide-out; }
 
-/* AX.W01 — the dock COLLAPSE View-Transitions recipe is RETIRED. The
+/* The dock COLLAPSE View-Transitions recipe is RETIRED. The
  * `::view-transition-group(.gl-dock-layer)` group + its `:active-view-transition-type
  * (dock-expand|dock-collapse|layer-forward|layer-back)` asymmetric curve fork are
  * DELETED: VT crossfades RASTERIZED snapshots — the wrong primitive for a layout

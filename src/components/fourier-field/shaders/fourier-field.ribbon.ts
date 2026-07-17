@@ -1,4 +1,4 @@
-// BI.W-FOURIER-RIBBON — the shared instanced-ribbon GEOMETRY leaf (the O(covered_pixels) fix).
+// The shared instanced-ribbon GEOMETRY leaf (the O(covered_pixels) fix).
 //
 // The fullscreen per-pixel SDF (`fs_main`/`FOURIER_FIELD_FRAG_GLSL` looping over ALL ≤384
 // segments at EVERY pixel — O(pixels×segments) for a curve covering <5% of the canvas, the

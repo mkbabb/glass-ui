@@ -1,4 +1,4 @@
-// BC.W-VIZ-PAPERGRID — the WebGL2 `setupGL` builder (the ~5-10%-tail path).
+// The WebGL2 `setupGL` builder (the ~5-10%-tail path).
 //
 // A clean aurora/concentric-class fullscreen pass: compile the full-screen-triangle vertex +
 // the `LIQUID_GRID_FRAG_GLSL` fragment (which evaluates the SAME liquid grid the WGSL primary
@@ -95,14 +95,14 @@ export function createLiquidGridGLSetup(
         const uWave2 = u("uWave2");
         const uLineColor = u("uLineColor");
         const uBg = u("uBg");
-        // The FACE (BD.W-PAPERGRID-FACE) — the height-lit filled cell interior.
+        // The FACE — the height-lit filled cell interior.
         const uFace = u("uFace");
         const uLightDir = u("uLightDir");
         const uFaceLo = u("uFaceLo");
         const uFaceMid = u("uFaceMid");
         const uFaceHi = u("uFaceHi");
 
-        // BG.W-VIZ-RESIZE-ADOPT — upload-only (the leaf sized the backing store).
+        // Upload-only (the leaf sized the backing store).
         function resize(s?: BackingSize): void {
             gl.viewport(0, 0, s?.w ?? canvas.width, s?.h ?? canvas.height);
         }
@@ -127,7 +127,7 @@ export function createLiquidGridGLSetup(
             gl.uniform1f(uMajorEvery, config.majorEvery);
             gl.uniform1f(uAspect, aspect);
 
-            // The traveling-wave AFFINE sheet-warp ride (mirrors the WGPU bridge — BG.W-GRID-AFFINE).
+            // The traveling-wave AFFINE sheet-warp ride (mirrors the WGPU bridge).
             gl.uniform4f(uWave, config.waveDir[0], config.waveDir[1], config.waveK, config.waveOmega);
             gl.uniform4f(uWave2, config.waveSigma, config.twistMax, 0.0, getAmp());
             gl.uniform1f(uInteractive, config.interactive ? 1 : 0);
@@ -152,8 +152,8 @@ export function createLiquidGridGLSetup(
             const ink = oklchToLinear(config.lineColor);
             gl.uniform3f(uLineColor, ink[0], ink[1], ink[2]);
 
-            // The FACE (BD.W-PAPERGRID-FACE): faceAlpha:0 default → the face evaporates →
-            // byte-identical to the HEAD line-only render. The 3-stop warm-divergent ramp + the
+            // The FACE: faceAlpha:0 default → the face evaporates →
+            // the line-only render. The 3-stop warm-divergent ramp + the
             // cel key-light (FOLD A/B/D/E).
             gl.uniform4f(uFace, config.faceAlpha, config.faceRelief, config.squashK, config.baseInset);
             gl.uniform2f(uLightDir, config.lightDir[0], config.lightDir[1]);

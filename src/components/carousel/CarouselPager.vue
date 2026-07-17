@@ -72,7 +72,7 @@ const NextIcon = computed(() =>
             <component :is="PrevIcon" class="size-4" />
         </Button>
 
-        <!-- BA.W-PAGER — the counter re-registers OFF the opaque `bg-card` slab
+        <!-- The counter re-registers OFF the opaque `bg-card` slab
              onto the shared `.glass-pager-ring` glass pill chassis (the dark
              `rgb(28,25,23)` slab dies; the dots + counter are ONE register). The
              ring recipe owns the radius/padding/glass; the counter adds only the

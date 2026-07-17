@@ -1,5 +1,5 @@
-// Thin house snap engine (the snap math vaul-vue used to
-// own, on the HOUSE motion engine).
+// Thin house snap engine (house-owned snap math on the
+// HOUSE motion engine).
 //
 // ONE `SpringProgress` (the dock-morph `linear()`-curve clock, the §6 doctrine —
 // `useDockMorph.ts` precedent) writes a `--glass-drawer-t` snap-fraction
@@ -27,7 +27,7 @@ export interface UseDrawerSnapOptions {
      * bound box). A GETTER, never a snapshotted ref — reka's `DialogContent` forwards
      * its root element THROUGH a `<Presence>` swap, so a `$el` captured at first mount
      * is a stale comment placeholder and the writer's `if (el)` guard skips forever
-     * (the F5.R2 model↔paint SEVER — `writeScalar` "never fires"). Resolving the element
+     * (the model↔paint SEVER — `writeScalar` "never fires"). Resolving the element
      * fresh on every write reaches the painted sheet the instant `<Presence>` mounts it.
      */
     contentEl: () => HTMLElement | null;
@@ -176,8 +176,8 @@ export function useDrawerSnap(options: UseDrawerSnapOptions): UseDrawerSnapRetur
     function clearStageScalars() {
         // Clear the scoped inline `--stage-t` on close so each reader
         // root reverts to the registered `initial-value: 0` (drawer.css) and the NEXT
-        // open does not latch a stale full-staged value (the stale-latch fix, fold
-        // C3·R7). The sheet unmounts with the content; clear the cross-subtree roots +
+        // open does not latch a stale full-staged value (the stale-latch fix).
+        // The sheet unmounts with the content; clear the cross-subtree roots +
         // drop the cache so the next open re-resolves a freshly-portaled scrim.
         const sheet = contentEl();
         if (sheet) sheet.style.removeProperty("--stage-t");

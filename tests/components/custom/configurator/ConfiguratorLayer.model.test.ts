@@ -2,8 +2,8 @@ import { mount } from "@vue/test-utils";
 import { describe, expect, it } from "vitest";
 import ConfiguratorLayer from "@glass/components/configurator/ConfiguratorLayer.vue";
 
-// AU.W8b.5 — v-model:open round-trip coverage for the defineModel conversion.
-// Also pins the uncontrolled `defaultOpen` seed (the prior `props.open ??
+// V-model:open round-trip coverage for defineModel(open).
+// Also pins the uncontrolled `defaultOpen` seed (the `props.open ??
 // props.defaultOpen` cadence the model setup preserves).
 
 describe("ConfiguratorLayer defineModel(open) round-trip", () => {
@@ -39,10 +39,10 @@ describe("ConfiguratorLayer defineModel(open) round-trip", () => {
     });
 });
 
-// AU.W9.A — A-1 inter-row divider opt-in (conditional Tailwind arm, no CSS rung).
+// A-1 inter-row divider opt-in (conditional Tailwind arm, no CSS rung).
 describe("ConfiguratorLayer dividers opt-in", () => {
     it("renders the inter-row hairline class when dividers is set", () => {
-        // BA.W-CONFIG-CHASSIS (CFG-4) clean break: the divider COLOR moved off the inline
+        // clean break: the divider COLOR moved off the inline
         // `border-border/30` alpha to the dark-adaptive `--configurator-divider` token,
         // keyed by the `data-dividers` attribute (the scoped COLOR rule). The `border-t`
         // WIDTH + the `pt-2` spacing arbitrary variants stay.

@@ -1,5 +1,5 @@
-// AU.W7 — the TS transcription of the shared procedural-color GLSL chunk's OKLCh
-// color path (AV.W2 re-pointed the provenance: the OETF + the Ottosson matrices +
+// The TS transcription of the shared procedural-color GLSL chunk's OKLCh
+// color path (re-pointed the provenance: the OETF + the Ottosson matrices +
 // the space conversions now live ONCE in
 // `src/composables/glass/procedural/color.glsl.ts`, which both
 // `metaball.frag.ts` and `aurora.frag.ts` splice — this port mirrors THAT chunk).
@@ -162,7 +162,7 @@ export function clamp3(c: Vec3): Vec3 {
     return [clamp01(c[0]), clamp01(c[1]), clamp01(c[2])];
 }
 
-// ── The palette ramp (mirror PALETTE_RAMP_GLSL — AX.W11; the GLSL ORACLE) ──
+// ── The palette ramp (mirror PALETTE_RAMP_GLSL —; the GLSL ORACLE) ──
 // Line-for-line with the shared procedural-color chunk's GLSL ramp. This is the
 // oracle the WGSL port's samplePaletteRamp is asserted against to 1e-6 (the
 // proof:aurora-wgsl-equivalence samplePalette gate-hole close).
@@ -250,7 +250,7 @@ export function samplePaletteRamp(
     return mixPaletteOklab(a, b, t);
 }
 
-// ── W11 iridescence + fake-SSS (OKLCh modifications mirroring metaball.frag.ts) ──
+// ── iridescence + fake-SSS (OKLCh modifications mirroring metaball.frag.ts) ──
 
 const TWO_PI = 2 * PI;
 
@@ -301,7 +301,7 @@ export function applyFakeSss(
     return [L, lch[1], h];
 }
 
-// ── W11.b multi-stop palette — OKLab interpolation with a midpoint chroma-bump ──
+// ── multi-stop palette — OKLab interpolation with a midpoint chroma-bump ──
 
 /**
  * Interpolate between two OKLCh stops in OKLab (the shader's `uPalette[N]` interp),
@@ -325,7 +325,7 @@ export function oklabLerpStop(a: Vec3, b: Vec3, t: number, bump: number): Vec3 {
     return [lch[0], lch[1] + bump * bell, lch[2]];
 }
 
-// ── F9.R1 (BG.W-BLOB-SATELLITE-SHADE) — the per-satellite explicit-shade blend ──
+// ── The per-satellite explicit-shade blend ──
 // The color half of the shader `blendSatColor` (metaball.frag.ts). One satellite carries
 // a GAMMA-sRGB shade + an effective mix weight (the shader's `w = (1 - smoothstep(-r, k,
 // d)) * amt` proximity term — a scalar INPUT here; the SDF geometry is asserted at the

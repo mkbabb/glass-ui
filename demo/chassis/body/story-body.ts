@@ -60,7 +60,7 @@ export interface SpecimenSpec {
      */
     props?: Record<string, unknown>;
     /**
-     * The EXPLICIT v-model map (ruling 8): `{ modelProp: scopeKey }`. EVERY
+     * The EXPLICIT v-model map: `{ modelProp: scopeKey }`. EVERY
      * reactive binding is written here — no convention magic. `{ modelValue:
      * "plain" }` for a default v-model; `{ pressed: "on" }` / `{ open: "isOpen" }`
      * for a named v-model. The map is the anti-no-op FLOOR (a named v-model

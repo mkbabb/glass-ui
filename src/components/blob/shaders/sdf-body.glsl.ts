@@ -2,8 +2,8 @@
 //
 // `sdCircle` is the signed-distance to a circle. The smooth-minimum is the IQ
 // 2024 NORMALIZED form: `uSmoothK` is a real blend-thickness in DISTANCE units.
-// The prior `h*h*k*0.25` form folded a 0.25 magic factor into k, which is why
-// `useMetaballRenderer.ts` divided the config `smoothK` by `0.22` before upload —
+// An un-normalized `h*h*k*0.25` form would fold a 0.25 magic factor into k, forcing
+// `useMetaballRenderer.ts` to divide the config `smoothK` by `0.22` before upload —
 // a fudge papering over the un-normalized scale. The `k *= 4.0` pre-scale makes
 // the polynomial's effective blend band equal to `k`, so a `uSmoothK` of `0.2`
 // reads as a ~0.2-unit-wide meniscus — measurable, not magic (the

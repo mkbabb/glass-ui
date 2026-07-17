@@ -1,9 +1,9 @@
-// BG.W-HANDMARK-PERFECT (b) — the hull se-guard (born-RED at the fork's silent vanish).
+// The hull se-guard (a born-RED guard against the fork's silent vanish).
 // `getSvgPathFromStroke` returns "" when the perfect-freehand outline has < 4 points (a
 // degenerate near-point centerline — a hull brush over a 1ch / tiny box-mode datum), so a
 // bare `<path d="">` renders NOTHING. The guard falls back to a plain STROKED body so the
 // mark ALWAYS paints a visible band. This is the FUNCTIONAL witness (the source-presence
-// clause rides proof:handmark W7 + proof:handmark-audit A3; the box-mode render is the π).
+// clause rides proof:handmark + proof:handmark-audit A3; the box-mode render is the π).
 
 import { describe, expect, it } from "vitest";
 import { ink } from "@glass/components/handmark/ink";

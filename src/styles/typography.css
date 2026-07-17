@@ -5,7 +5,7 @@
  * Golden-ratio scale (√φ ≈ 1.272). ONE brand register: Plus Jakarta Sans
  * carries the text register — body, headings, prose, display, and math — and
  * Fira Code carries mono. The library DEFAULT is the register every live
- * surface paints (the demo + speedtest render Plus Jakarta everywhere). There
+ * surface paints (the demo and consumers render Plus Jakarta everywhere). There
  * is no display-serif voice and no preset opt-out: the default IS the register.
  *
  * Semantic type classes expose both Tailwind-friendly utility names
@@ -21,8 +21,8 @@
  * to --font-text/-display/-mono in theme.css; consumers override --font-text
  * once to rebrand, no third-party CDN dependency on the LCP-critical path.
  *
- * BA.W-CARVE2 — the §1-§10 face/scale/semantic/utility registers grew past the
- * no-god-module 500-line bound (W-SUFFUSE/W-HIERARCHY's display-ladder +
+ * The §1-§10 face/scale/semantic/utility registers grew past the
+ * no-god-module 500-line bound (the display-ladder +
  * section-rung additions). This file is now a thin @import root over cohesive
  * typography/*.css partials (each under bound), @import-ed below in CASCADE
  * ORDER. The ordering is load-bearing: the faces + --type-* scale tokens FIRST

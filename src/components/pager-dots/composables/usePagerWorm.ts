@@ -82,7 +82,7 @@ export function usePagerWorm(refs: UsePagerWormRefs): void {
 
     // The squish — the ONE shared engine (`useLiquidFlex`, "linear" law): the stretch
     // rises with the worm's elongation FRACTION, capped LOW off `--pager-worm-max-stretch`
-    // (the R10 1.08–1.2 band; the 1.45 taffy value retired). The bodies read it via the
+    // (the 1.08–1.2 band). The bodies read it via the
     // CSS `scale: var(--stretch)` reciprocal; we own NO second squish write.
     const liquidSquish = useLiquidFlex({
         from: 0,

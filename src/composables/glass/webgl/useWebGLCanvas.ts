@@ -7,7 +7,7 @@
 // so a thin context wrapper shares the EXACT same machinery — no forked second copy.
 // This module is the WebGL2 BACKEND: it owns ONLY the `getContext("webgl2")`
 // acquisition, the `webglcontextlost`/`restored` robustness, the `ResizeObserver`, and
-// the consumer-`setup`/`frame`/`resize`/`time` hook seam (C6 must-fix #4 — the
+// the consumer-`setup`/`frame`/`resize`/`time` hook seam (the
 // substrate must NOT bake aurora's quad/DPR/uniforms; those are threaded through the
 // consumer callbacks). The schedule lives in the core.
 //

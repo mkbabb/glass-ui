@@ -223,12 +223,12 @@ export function useFourierField(
         return fit;
     };
 
-    // ──  B3 — the REAL 2-D cursor FOLLOW (critically-damped, correct
+    // ── The REAL 2-D cursor FOLLOW (critically-damped, correct
     // coordinate space). ──  When interactive + active, the figure CENTROID genuinely REACHES
-    // toward the cursor (the prior  D6b 0.12 model-space whisper never
-    // arrived — the "abysmal tracking" defect). The follow reads the SHARED
+    // toward the cursor (a 0.12 model-space whisper never
+    // arrives — the "abysmal tracking" defect). The follow reads the SHARED
     // `usePointerVelocityField.smoothedPosition` (the critically-damped lerp — ZERO snap/
-    // teleport by construction; the prior `headT = pointerX` absolute-X snap class stays
+    // teleport by construction; an absolute-X `headT = pointerX` snap class stays
     // dead) and maps it through the SAME model→clip fit the render inverts:
     //   • pointer [0,1] (getBoundingClientRect-normalized — dpr/scroll-safe, the 6.1 sizer
     //     box↔backing mapping) → clip [-1,1]; DOM y grows DOWN so the y clip is INVERTED
@@ -247,8 +247,8 @@ export function useFourierField(
         const canvas = canvasRef.value;
         if (!canvas || !canvas.width || !canvas.height) return { x: 0, y: 0 };
         // the SUBTLE lean via the shared PURE `fourierLeanMapping`
-        // (FOLLOW_LEAN ≈ 0.15, engagement-scaled — the RETIRED FOLLOW_REACH=0.7 centroid-
-        // teleport is gone). The curve draws TOWARD the cursor without translating the figure;
+        // (FOLLOW_LEAN ≈ 0.15, engagement-scaled — a subtle lean, NOT an absolute centroid-
+        // teleport). The curve draws TOWARD the cursor without translating the figure;
         // engagement fades it in/out (a lifted pointer relaxes to the ambient register).
         const { leanX, leanY } = fourierLeanMapping(
             snapshotField(pointer),

@@ -82,7 +82,7 @@ const axis = computed(
 const crossfade = useTemplateRef<{ faces: DockFaceDescriptor[] } | null>("crossfade");
 const layers = computed<DockFaceDescriptor[]>(() => crossfade.value?.faces ?? []);
 
-/*  DK8 — the rail's visual axis is PERPENDICULAR to the group axis: a horizontal
+/*  The rail's visual axis is PERPENDICULAR to the group axis: a horizontal
    group renders the rail as a COLUMN of stacked tabs (indicator travels Y); a vertical
    group renders the rail as a ROW (indicator travels X). */
 const railOrientation = computed<"horizontal" | "vertical">(() =>

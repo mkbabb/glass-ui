@@ -12,7 +12,7 @@ import type { TimelineSegment } from "./types";
  * <GlassTimeline variant="continuous">.
  *
  * Used by multi-phase progress UIs where
- * the phases are conceptually one progression bar (speedtest ping →
+ * the phases are conceptually one progression bar (a consumer ping →
  * download → upload).
  *
  * The progressbar rail and
@@ -28,7 +28,7 @@ import type { TimelineSegment } from "./types";
  *
  * The `currentSegmentKey` prop stamps
  * `data-current="true"` on the matching marker so consumers (panel /
- * W3 raised-rivet styling) can distinguish the active phase from the
+ * raised-rivet styling) can distinguish the active phase from the
  * transient hovered phase. Hover affects the popover only; the
  * underlying current marker survives hover-leave.
  *
@@ -109,10 +109,9 @@ const continuousAriaLabel = computed<string>(() => {
 });
 
 /**
- * The continuous variant owns hovered-key tracking.
- * owns the hovered-segment state (the previously consumer-side
- * `hoveredSegmentKey` ref that lived in speedtest's PhaseTimeline.vue
- * migrates inward). The `#detail` slot then receives both the current
+ * The continuous variant owns hovered-key tracking — the
+ * `hoveredSegmentKey` state lives in the primitive, not the consumer.
+ * The `#detail` slot then receives both the current
  * key AND the hovered key in its scoped payload, and the primitive
  * computes the `effectiveSegment` (hovered overrides current) +
  * `detailSource` (`"hovered"` / `"current"` / `"idle"`) so consumers do
@@ -266,11 +265,11 @@ function onSegmentClick(seg: TimelineSegment) {
        hover scale uplift). Pure layout — paints nothing itself. */
     padding-block: calc(var(--timeline-dot-size, 14px) * 0.6);
     margin-block: calc(var(--timeline-dot-size, 14px) * -0.6);
-    /* Consumer opacity knob — speedtest paints the bottom timeline as a
+    /* Consumer opacity knob — a consumer paints the bottom timeline as a
        quieter echo of the under-meter phase bus (default 1; the consumer
        sets `--continuous-fill-opacity: 0.74` and lifts to 1 on hover via
        the cascade). Decouples consumer-side dim from this primitive's
-       internal selector tree (retires the prior `:deep()` reach). */
+       internal selector tree (no `:deep()` reach). */
     opacity: var(--continuous-fill-opacity, 1);
     transition: opacity var(--duration-normal, 0.3s) var(--ease-out, ease-out);
 }

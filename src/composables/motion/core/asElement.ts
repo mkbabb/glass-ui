@@ -9,7 +9,7 @@ import type { ComponentPublicInstance } from "vue";
 // This is the ONE home for the resolver. It lives in engine-free `core/` because the
 // keyframes-free `/motion-core` leaves (useScrollChrome, useScrollPin) cannot import from
 // the keyframes-bearing `useElementMorph` without pulling the engine onto that subpath —
-// the SCC boundary that previously forced three byte-identical copies. `useElementMorph`
+// the SCC boundary that would otherwise force three duplicate copies. `useElementMorph`
 // re-exports this symbol so the public `/motion` `asElement` is unchanged.
 export function asElement(
     value: HTMLElement | ComponentPublicInstance | null | undefined,

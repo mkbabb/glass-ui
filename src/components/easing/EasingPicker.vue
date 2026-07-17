@@ -1,7 +1,7 @@
 <script setup lang="ts">
-// BB.W-EASING-PRIMITIVE — the ONE published curve-authoring component (the C-3 fold
+// The ONE published curve-authoring component (the C-3 fold
 // landed). The two demo editors (BezierEditor / StepsEditor) re-home onto this; the
-// kf donor (EasingEditor/EasingCurveCanvas) stays in the kf demo (the cross-repo
+// donor editors (EasingEditor/EasingCurveCanvas) stay in the keyframes.js demo (the cross-repo
 // fence) and is the DESIGN REFERENCE for the props-in/events-out, state-shape-
 // agnostic shape.
 //
@@ -417,7 +417,7 @@ const stepsModel = computed<number[]>({
             <div v-if="mode === 'bezier'" class="flex flex-col gap-2">
                 <span class="text-mono-caption text-muted-foreground">Preset</span>
                 <Select :model-value="preset" @update:model-value="(v) => selectPreset(String(v))">
-                    <!-- BI.W-SLIDER-THUMB-NAME (proof:a11y EasingPicker arm) — the preset
+                    <!-- (proof:a11y EasingPicker arm) — the preset
                          combobox carries a real accessible name. The visible "Preset"
                          caption above is a bare <span> (not a <label for>), so without
                          this the SelectTrigger's name was only its selected value — the

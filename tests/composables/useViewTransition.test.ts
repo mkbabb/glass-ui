@@ -6,7 +6,7 @@ import {
 
 // happy-dom does not implement `document.startViewTransition`; we stub it on
 // the global `document` to exercise the native path and `delete` it to exercise
-// the instant fallback (the W5 hard-gate #4).
+// the instant fallback (the hard-gate assertion).
 
 // Mutable view of `document` so the stub/delete dance type-checks (the lib DOM
 // types do not carry `startViewTransition` on every target).
@@ -137,7 +137,7 @@ describe("startViewTransition — native path (API present)", () => {
     });
 });
 
-// ── BA.W-ATLAS-RECONCILE A-4b — async update + reduced-motion instant-path ────
+// ── Async update + reduced-motion instant-path ────
 
 /** Override `window.matchMedia` so `prefers-reduced-motion: reduce` reads as the
  *  given value (happy-dom defaults non-matching). Returns a restore fn. */

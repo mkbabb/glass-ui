@@ -3,7 +3,7 @@ import { computed } from "vue";
 import { useOptionalDockContext } from "./composables/dockContext";
 
 /**
- * <DockSeparator> —  D13-c, DK5.
+ * <DockSeparator>.
  *
  * An orientation-aware divider that demarcates dock item GROUPS (transport |
  * navigation | settings) for affordance hierarchy. The raw `.dock-separator`

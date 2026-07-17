@@ -4,11 +4,10 @@ import { describe, expect, it } from "vitest";
 import GlassTimeline from "@glass/components/timeline/GlassTimeline.vue";
 
 /**
- * Regression specs for AA.A4 §S-16 — the W5 axe scan found the scrubber's
- * `aria-valuenow` attribute missing from the rendered DOM when the
- * consumer renders <GlassTimeline /> without an explicit `modelValue`
- * (Vue omits `:aria-valuenow="undefined"` from output, breaking the
- * `aria-required-attr` axe rule).
+ * Specs for the scrubber's `aria-valuenow` attribute. Without an explicit
+ * `modelValue`, a rendered <GlassTimeline /> must still expose a numeric
+ * `aria-valuenow` (Vue omits `:aria-valuenow="undefined"` from output, which
+ * would break the `aria-required-attr` axe rule).
  *
  * The fix coerces the binding via `Number(modelValue ?? 0)`, which
  * guarantees a numeric `aria-valuenow="0"` renders even when the

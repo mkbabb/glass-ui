@@ -96,7 +96,7 @@ export interface InkPath {
     stroke?: string;
     opacity: number;
     blend: BlendMode;
-    /** geometry finish — bound to the SVG `stroke-linecap` on the path (C-1(d)). */
+    /** geometry finish — bound to the SVG `stroke-linecap` on the path (d). */
     cap?: "round" | "square" | "butt";
 }
 
@@ -106,7 +106,7 @@ export interface InkPath {
  * (the curvature-coupled variable-width body); `pencil`/`ring` stay clean stroke.
  */
 export const BRUSHES = {
-    // ── PEN — the DEFAULT. Clean ink, no grain, smooth. (slides / atlas masthead) ──
+    // ── PEN — the DEFAULT. Clean ink, no grain, smooth. (masthead use) ──
     pen: {
         weight: 6,
         weightJitter: 0.1,
@@ -251,7 +251,7 @@ export const BRUSHES = {
         cap: "square",
     },
     // ── HIGHLIGHTER — wide flat translucent slab BEHIND text, multiply blend.
-    //    BA.W-HANDMARK C-1: the five field deltas ENGAGED. `ribbon:'hull'` (b) — the
+    // The five field deltas ENGAGED. `ribbon:'hull'` (b) — the
     //    perfect-freehand variable-width slab (the fork shipped 'stroke', a hard
     //    rectangle); a non-zero `taper` (c) — the marker's lift-on/dry-run-out so
     //    the ends ramp like a real marker (paints once hull engages); `cap:'square'`

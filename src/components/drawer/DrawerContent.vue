@@ -8,14 +8,14 @@ import {
 } from "reka-ui";
 import DrawerOverlay from "./DrawerOverlay.vue";
 import { cn } from "../_shared/class-names";
-// BA.W-SURFACE-AXIS — Drawer carries the SHARED {glass·veil·opaque} surface axis.
+// Drawer carries the SHARED {glass·veil·opaque} surface axis.
 // The `.glass-drawer` recipe is a parallel glass recipe (NOT on the 5-rung ladder);
 // the `[data-surface]` decoration applies ON TOP of it — the veil rung strips the
 // border/rim, the opaque rung sets `--glass-level:0` on the host — both ride the
 // shared seam, NO `glass-drawer`-local fork. PRESERVED byte-for-byte through the
 // abrogation (the public surface axis is inviolate).
 import type { Surface } from "../_shared/axes";
-// BB.W-DRAWER-ABROGATE — the house snap engine (the snap math vaul-vue used to own,
+// The house snap engine (house-owned snap math
 // on the HOUSE `SpringProgress` clock). The content binds it against the snap seam
 // `<Drawer>` provides; the engine drives `--glass-drawer-t` (the snap-fraction
 // scalar) this content root reads as a translate.
@@ -32,17 +32,17 @@ export interface DrawerContentProps {
 }
 
 /**
- * `showOverlay` — render the scrim (AN.W3). Defaults `true` for the modal sheet. The
+ * `showOverlay` — render the scrim. Defaults `true` for the modal sheet. The
  * live-behind pattern (`<Drawer mode="live-behind">`) passes `:show-overlay="false"`
  * so the page-behind stays visible AND interactive; reka's `:modal="false"` already
  * drops outside-pointer-capture + the focus trap, but a painted scrim would still
  * visually occlude the live surface, so the overlay is opt-out at the content level.
  */
-// BG.W-SHEET-INSET-ROOT (portal-attrs) — reka DialogPortal roots a Teleport, which
+// (portal-attrs) — reka DialogPortal roots a Teleport, which
 // cannot carry Vue's default attr-fallthrough, so a consumer's aria-label/aria-labelledby/
 // data-testid on <DrawerContent> would be DROPPED. Turn off auto-inherit and spread
 // `...$attrs` explicitly onto the forwarded content node (the SheetContent discipline), so
-// the a11y name reaches the teleported drawer content. Locked by proof:emission (W7).
+// the a11y name reaches the teleported drawer content. Locked by proof:emission.
 defineOptions({
     inheritAttrs: false,
 });
@@ -67,11 +67,11 @@ const delegatedProps = computed(() => {
 });
 const forwarded = useForwardPropsEmits(delegatedProps, emits);
 
-// BB.W-DRAWER-ABROGATE — bind the house snap engine. The snap seam is OPTIONAL (a
+// Bind the house snap engine. The snap seam is OPTIONAL (a
 // `<DrawerContent>` outside a `<Drawer>` renders bare); when present the engine owns
 // the `--glass-drawer-t` scalar + the handle drag gesture.
 //
-// BG.W-DRAWER-PAINT-BIND (F5.R2) — the content element is resolved LIVE from the
+// The content element is resolved LIVE from the
 // proven-live `handleEl` string-ref, NOT snapshotted off reka's `DialogContent.$el`.
 // reka forwards its root through a `<Presence>` swap, so a `$el` captured when the
 // function-ref first fires is a stale comment placeholder that never refreshes when
@@ -159,7 +159,7 @@ function onHandleKeydown(event: KeyboardEvent) {
 const snapStyle = computed<CSSProperties | undefined>(() => {
     if (!snapCtx) return undefined;
     // `1 - t` of the sheet remains off the open edge; for a side lens it is the inline
-    // axis. BG.W-DRAWER-PAINT-BIND (NO-MASKING-FALLBACK edict) — the un-written fallback
+    // axis. (NO-MASKING-FALLBACK edict) — the un-written fallback
     // is `0` (the CSS CLOSED state, the design), NEVER `1`: a `1` fallback seated the
     // sheet FULL-OPEN whenever the writer was dead, silently masking the sever. At `0`
     // an un-written sheet reads offscreen (fail LOUD); the live writer seats + slides it.

@@ -29,10 +29,10 @@
 //                        keyframes-FREE+vueuse-FREE `/motion-core` surface its
 //                        named consumers pin. No `/dom` re-export survives.
 //   - useBreakpoint / useIdleReady / useViewportReady — reinstated after the
-//                        prior speedtest-
-//                        ownership" wave (cbbaeb0) removed these 3 /dom leaves as
+//                        prior a consumer-
+//                        ownership" removed these 3 /dom leaves as
 //                        orphans, but they have LIVE external consumers reached
-//                        over the /dom subpath — speedtest imports all three
+//                        over the /dom subpath — a consumer imports all three
 //                        (AdminDataSourceToggle + App + the route transitions),
 //                        value.js's demo imports useBreakpoint. A consumer bump to
 //                        3.4.x broke (MISSING_EXPORT) until they were restored.

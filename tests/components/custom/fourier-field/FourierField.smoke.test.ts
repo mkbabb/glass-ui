@@ -1,4 +1,4 @@
-// BC.W-VIZ-FOURIER — the FourierField mount-smoke + the `/fourier-math` consumer-#1.
+// The FourierField mount-smoke + the `/fourier-math` consumer-#1.
 //
 // Two jobs in one spec:
 //   1. MOUNT-SMOKE — the GPU-substrate component mounts with the ambient color
@@ -90,7 +90,7 @@ describe("/fourier-math leaf (the published subpath consumer-#1)", () => {
 
     it("does NOT ship the deleted evalFourier export (the clean-break proof)", () => {
         expect("evalFourier" in fourierMath).toBe(false);
-        // the leaf carries the promoted shape (the W-FF1 §4.3 PROMOTE set).
+        // the leaf carries the promoted shape (the PROMOTE set).
         expect(typeof fourierMath.positionsAt).toBe("function");
         expect(typeof fourierMath.makeEllipticSpectrum).toBe("function");
         expect(typeof fourierMath.comp).toBe("function");

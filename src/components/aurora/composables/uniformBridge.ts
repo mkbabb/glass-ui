@@ -310,7 +310,7 @@ export function createUniformBridge(
             const ld = cfg.lightDir ?? [-0.5, 0.6, 0.62];
             // The catch-light is OKLCh-derived by `warmCatchLight` from
             // the shared /color leaf, not an eyeballed [1.0,0.95,0.88] literal; the anchor
-            // reproduces the prior warm-white perceptually. A consumer may author it as an
+            // reproduces that warm-white perceptually. A consumer may author it as an
             // {L,C,h} OKLCh anchor or a raw linear triple — resolveLightColor handles both.
             const lc = resolveLightColor(cfg.lightColor);
             gl.uniform3f(U.uLightDir, ld[0], ld[1], ld[2]);

@@ -1,13 +1,12 @@
-// The metal-medium GLSL bodies (uMedium==8/9) are carved out of
-// mediums.glsl.ts to hold it under the no-god-module 500-line bound (the
-// carve discipline). This is a MECHANICAL carve: the chunk splices back into
+// The metal-medium GLSL bodies (uMedium==8/9) are a cohesive GLSL chunk
+// held under the no-god-module 500-line bound. The chunk splices back into
 // AURORA_MEDIUMS_POST_BRUSH_GLSL immediately after the mediumKuwahara body (the same
 // join point the metal bodies occupied inline), so the ASSEMBLED shader string is
 // byte-identical. Every symbol the bodies read (packGrad/unpackGrad/structureTensorField
 // in mediums.glsl.ts PRE_BRUSH, flowField in flow.glsl.ts, W_LUMA/hash21/uCursor/
 // uMetalPolish/uMetalHeightScale in aurora.frag.ts) is in-scope in the final composed
-// FRAGMENT_SRC. The sibling is a pure position-preserving relocation, following the
-// vangogh-medium.glsl.ts precedent. The assembler reads the metal bodies here.
+// FRAGMENT_SRC. The sibling is a pure position-preserving chunk, mirroring the
+// vangogh-medium.glsl.ts sibling. The assembler reads the metal bodies here.
 
 // The gradient PACK helpers (packGrad/unpackGrad) — spliced into PRE_BRUSH BEFORE
 // structureTensorField (which calls packGrad); the metal bodies call unpackGrad.

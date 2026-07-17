@@ -5,11 +5,11 @@ import { cn } from "../_shared/class-names";
 import { pagerWindow } from "./pagerWindow";
 import { usePagerWorm } from "./composables/usePagerWorm";
 
-/* PagerDots — the ONE position-dot rail register (BA.W-PAGER, R10-1 + R10-3).
+/* PagerDots — the ONE position-dot rail register.
    The shared oracle the carousel ships and the slides deck adopts. ≥2 consumers by
    construction: the carousel + the slides DeckPager (a THIN PagerDots wrapper).
 
-   THE LIQUID DOT-MORPH WORM (BI.W-PAGER-WORM). The selected indicator STRETCHES,
+   THE LIQUID DOT-MORPH WORM. The selected indicator STRETCHES,
    TRAVELS, and RE-FORMS on the next dot with liquid weight (the Google-worm edict) —
    a two-edge worm: a LEAD edge springs toward the target dot, a TRAIL edge lags then
    catches up (`useLeadTrail`, the ONE shared driver), and the gap between them is the
@@ -32,7 +32,7 @@ import { usePagerWorm } from "./composables/usePagerWorm";
      layer) — all a11y (role/aria/keyboard/focus-ring), windowFit, and click live here.
      The bed + worm layers are PRESENTATIONAL.
 
-   THE PAINT ARM (ruling 13). Arm A (the shipped register) merges the barbell with the
+   THE PAINT ARM. Arm A (the shipped register) merges the barbell with the
    instance-scoped worm filter (a true smooth throat — single-body peak 0.72 >
    the 0.33 threshold). Arm B (the `@supports`-not degrade FLOOR) renders the un-merged
    instance-scoped neck clip-path — a VISIBLE honest partial, NEVER the empty
@@ -146,7 +146,7 @@ const win = computed(() =>
 const shown = computed(() => win.value.shown);
 
 // The worm geometry (`centerOf`) + the `useLeadTrail` driver + the active/shown/resize
-// watchers live in the colocated composables/ leaf (BH.B2.4a). The SFC keeps the
+// watchers live in the colocated composables/ leaf. The SFC keeps the
 // interaction layer (the dot maps + the keyboard focus recovery below).
 usePagerWorm({
     rootEl,
@@ -178,9 +178,9 @@ function select(i: number): void {
     emit("select", i);
 }
 
-// ── The roving-tabindex keyboard contract (BI.W-PAGER-A11Y) ──────────────────────────
+// ── The roving-tabindex keyboard contract ──────────────────────────
 // The WAI-ARIA tabs/toolbar roving-tabindex mirrored onto the windowed dot rail (the
-// SegmentedTabs contract — BB.W-DRAG-MORPH the model): EXACTLY ONE tab stop (the active
+// SegmentedTabs contract — the model): EXACTLY ONE tab stop (the active
 // dot `tabindex="0"`, the rest `-1`); a root `@keydown` handles the AXIS-DERIVED arrows
 // (ArrowRight/Left horizontal ⇄ ArrowDown/Up vertical, off the orientation), Home/End jump,
 // wrapping at the ends, skipping any disabled dot. The keyboard step IS a selection →
@@ -387,7 +387,7 @@ function onKeydown(e: KeyboardEvent): void {
 
 <style scoped>
 /* ── PagerDots — the ONE position-dot register + the liquid dot-MORPH worm
-   (BI.W-PAGER-WORM) ─────────────────────────────────────────────────────────────
+   ─────────────────────────────────────────────────────────────
    The shared oracle (carousel dots ≡ slides DeckPager). The active indicator is a
    LIQUID worm (a two-edge lead/trail barbell) that STRETCHES → TRAVELS → RE-FORMS
    between dots. Three layers: a crisp bed (no filter), the worm masses (filter once),
@@ -397,7 +397,7 @@ function onKeydown(e: KeyboardEvent): void {
     /* the per-rail dot tokens — a consumer retints by overriding these. KEPT. */
     --pager-dot-size: 0.8125rem; /* 13px base pip diameter (the worm body D). A real
        dot, not a speck: bigger dot → fatter worm body → wider bridging fringe → the goo
-       has mass to merge (ruling 13, ONE arm at 13px). */
+       has mass to merge (ONE arm at 13px). */
     --pager-dot-elongated: 2.25rem; /* 36px — the worm's max elongation (the LEAD↔TRAIL
        gap clamp; a multi-hop worm travels bounded, never taffy). */
     --pager-dot-active: var(--foreground); /* the solid ink the worm masses paint */
@@ -412,11 +412,11 @@ function onKeydown(e: KeyboardEvent): void {
        reciprocal). Written per-frame off `useLiquidFlex` by the worm driver. */
     --stretch: 1;
 
-    /* the roving hit target (BI.W-PAGER-A11Y). The transparent `<button>` grows to a ≥28px
+    /* the roving hit target. The transparent `<button>` grows to a ≥28px
        comfort target while the painted pip (the BED layer, 13px in a 24px cell) is UNMOVED;
        the symmetric negative margin pulls the 28px box back into a 24px flow cell so the
-       button centers stay aligned with the bed pips (24px meets WCAG 2.5.8 AA; the deliberate
-       below-44px exemption is recorded in W-PAGER-A11Y-hit-target.md). */
+       button centers stay aligned with the bed pips (24px meets WCAG 2.5.8 AA; the
+       below-44px target is a deliberate exemption). */
     --pager-hit-target: 28px;
     --pager-hit-inset: -2px; /* = (24px cell − 28px target) / 2 — the flow-cell pull-back */
 
@@ -552,7 +552,7 @@ function onKeydown(e: KeyboardEvent): void {
     z-index: 1; /* above the bed + worm layers (interaction) */
     /* the ≥28px hit box; the negative margin pulls it back into a 24px flow cell so the
        button center stays aligned with the bed pip (the pip is UNMOVED — it lives in the
-       bed layer). BI.W-PAGER-A11Y. */
+       bed layer). */
     width: var(--pager-hit-target);
     height: var(--pager-hit-target);
     margin: var(--pager-hit-inset);

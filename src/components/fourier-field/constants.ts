@@ -37,14 +37,13 @@ export const MAX_FOURIER_STOPS = 4;
  * The cursor-velocity → head_t clock-coupling gain. Cursor motion (not absolute X)
  * nudges the loop clock: a flick fast-
  * forwards, a still cursor lets the field drift at its config speed. Velocity-continuous —
- * the head never teleports (the prior `headT = pointerX` absolute-X scrub read as "not
+ * the head never teleports (an absolute-X `headT = pointerX` scrub reads as "not
  * following" a 2-D cursor).
  */
 export const SCRUB_GAIN = 0.15;
 
-// `FOLLOW_REACH = 0.7` (the centroid-TELEPORT — the figure lunged its
-// whole centroid two-thirds of the frame toward the cursor) is RETIRED (clean break, no
-// alias). The subtle centroid LEAN + the directional DRAW-BIAS are now the shared PURE
+// The centroid does NOT teleport (no lunging its whole centroid two-thirds of the
+// frame toward the cursor). The subtle centroid LEAN + the directional DRAW-BIAS are the shared PURE
 // `fourierLeanMapping` (`composables/motion/pointer/pointerFieldMappings.ts`, FOLLOW_LEAN ≈ 0.15,
 // engagement-scaled): the curve "gracefully draws TOWARD" the cursor WITHOUT translating the
 // figure. The velocity SCRUB (`SCRUB_GAIN`, the WHEN-on-the-curve nudge) is orthogonal + preserved.
@@ -170,7 +169,7 @@ export const DEFAULT_FOURIER_CONFIG: FourierFieldConfig = {
     epicycleArms: 6,
     rainbowChain: true,
     trailArc: 0.43,
-    //  B1 — a THICK luminous ribbon head (was 3). The head→tail taper
+    //  B1 — a THICK luminous ribbon head. The head→tail taper
     // (RIBBON_TAIL_FRAC) + the RIBBON_HEAD_FLOOR_PX floor keep the mid-body ≥2.5px CSS.
     trailWidth: 5,
     intensity: 1,

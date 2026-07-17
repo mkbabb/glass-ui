@@ -1,4 +1,4 @@
-// Shared seeded, deterministic procedural PRNG leaf (AV.W14) — the single source for the
+// Shared seeded, deterministic procedural PRNG leaf — the single source for the
 // byte-identical `mulberry32` + `hashString` that the watercolor-dot and
 // goo-blob both seed their organic shapes from. A dot/blob keyed by
 // `color + seed` reproduces the same shape across mounts. Component-specific

@@ -1,4 +1,4 @@
-// BB.W-EASING-PRIMITIVE — the SVG-geometry + sampling magic-number home for the
+// The SVG-geometry + sampling magic-number home for the
 // <EasingPicker> family (the colocation `constants.ts` clause — the editors carried
 // these inline as module-scope consts; homed here so the composable + SFCs stay
 // magic-number-free).

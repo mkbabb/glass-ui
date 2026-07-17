@@ -3,9 +3,8 @@
 // `samplePalette` reads the CPU-baked linear-sRGB palette LUT; `nucleiField`
 // accumulates the softmax-Gaussian over the active nuclei and applies the slow
 // palette drift. IN: warped UV + time. OUT (nucleiField): (paletteId, valueMod).
-// Spliced verbatim into FRAGMENT_SRC by the aurora.frag.ts assembler — the emitted
-// shader string is character-equivalent to the prior hand-inlined source.
-export const AURORA_COMPOSITION_GLSL = /* glsl */ `// ── Palette LUT (W5 — OKLCh/OKLab interpolation) ──────────────────────────────
+// Spliced verbatim into FRAGMENT_SRC by the aurora.frag.ts assembler.
+export const AURORA_COMPOSITION_GLSL = /* glsl */ `// ── Palette LUT (OKLCh/OKLab interpolation) ──────────────────────────────
 // The endpoints stay CPU-baked to LINEAR sRGB (the Aras precompute pattern); only
 // the between-endpoint interpolation runs in perceptual space. The ramp
 // itself (the smoothstep ease + the OKLab-rectangular-vs-OKLCh-hue-arc dispatch on

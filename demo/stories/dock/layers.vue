@@ -47,7 +47,7 @@ const layers = [
 ];
 
 /* The CONTROLLED-NO-RAIL case (X3): the thin <DockCrossfade:active> consumed directly
-   (the speedtest 5-pane pattern), driven by an external strip — no switcher rail, no
+   (the 5-pane pattern), driven by an external strip — no switcher rail, no
    selection engine. Faces of genuinely differing height exercise the peak reserve. */
 const controlled = ref("assets");
 const controlledPanes = [
@@ -340,7 +340,7 @@ function back() {
 </template>
 
 <style scoped>
-/*  scope 9 — transparent demo tiles over the shared DockStage field. */
+/* Transparent demo tiles over the shared DockStage field. */
 .dock-stage-tile {
     background: transparent;
 }

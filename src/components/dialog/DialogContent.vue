@@ -25,12 +25,11 @@ import ModalOverlay from "./ModalOverlay.vue";
 // carves off onto the distinct `springPreset` prop; motion gates the JS entrance).
 import type { Motion, Placement, Surface } from "../_shared/axes";
 import { useMotionAxis } from "../_shared/useMotionAxis";
-// Dialog's binary `variant: glass|opaque` string retires onto
-// the SHARED {glass·veil·opaque} `surface` axis (clean break, no alias — the prior
-// `variant` was Dialog-local and never matched the Card grammar; MIGRATION.md row).
+// Dialog rides the SHARED {glass·veil·opaque} `surface` axis — the same grammar
+// as Card (clean break, no alias, no Dialog-local `variant`).
 // Attribute-driven veil/opaque decoration rides
 // the placement != center slide path (the folded Sheet composes glass-floating in its
-// slide base; the decoration layers the same shared W55 seam).
+// slide base; the decoration layers the same shared seam).
 import { resolveSurfaceClass } from "../_shared/resolveSurfaceClass";
 import { useOptionalDialogStageContext } from "./dialogStageContext";
 import { sheetSlideTransform, type SidePlacement } from "./sheet-motion";
@@ -85,7 +84,7 @@ const isCenter = computed(() => placement.value === "center");
 
 // The resolved motion state. The JS spring entrance arms iff a
 // `springPreset` is named AND the resolved motion is not `off` (a preset-less dialog
-// keeps the `.glass-reveal` CSS bloom — byte-identical to HEAD's unset `spring`).
+// keeps the `.glass-reveal` CSS bloom).
 const motionAxis = useMotionAxis(() => props.motion);
 // The centered scale bloom arms iff a `springPreset` is named AND motion is not
 // `off` (a preset-less centered dialog keeps the `.glass-reveal` CSS bloom).
@@ -211,7 +210,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
 
 // Center fade + zoom only — no slide animation. The glass-floating tier
 // (composed via `variantClasses` below) paints `--glass-shadow-floating`;
-// the prior `shadow-xl` literal clobbered it.
+// no `shadow-xl` literal clobbers it.
 // The overlay-band golden padding ladder. The overlay anchor is
 // `--overlay-pad-inline` (--spacing(6) = 24px for the modal band); the block axis
 // lifts by sqrt-phi (`*1.272`) so the heading clears the top edge against a 24px
@@ -232,8 +231,8 @@ const defaultMotionClasses = "-translate-x-1/2 -translate-y-1/2 glass-reveal";
 // rides the SAME glass-floating tier (edge, rim, under-shadow preserved) + adds
 // `.glass-opaque` (`--glass-level:0` through the ONE knob, NOT a parallel solid
 // recipe); the `veil` rung overlays the borderless text-legibility plate — the
-// byte-identical `glass`/`opaque` output the prior binary string emitted, now
-// reached through the ONE axis with the `veil` rung gained for free.
+// `glass`/`opaque` output reached through the ONE axis, with the `veil` rung
+// gained for free.
 const variantClasses = computed(() =>
     cn(resolveSurfaceClass("floating"), "rounded-dialog"),
 );
@@ -250,7 +249,7 @@ const variantClasses = computed(() =>
 // The side sheet keeps ONLY its decoration (inner rounding + inner-edge border). The
 // slide is the JS spring's `translate` longhand now, so the `slide-in/out-*` keyframes
 // are gone — an interrupted keyframe restarted from the resting-open origin and snapped
-// the sheet to fully-open (the FAIL-1 defect this wave cures).
+// the sheet to fully-open.
 const PLACEMENT_SLIDE: Record<Exclude<Placement, "center">, string> = {
     top: "rounded-b-dialog border-b",
     bottom: "rounded-t-dialog border-t",
@@ -289,8 +288,7 @@ const contentClass = computed(() =>
 );
 
 // The side sheet relays the concentric-radius context
-// formerly published by SheetContent for the
-// gear-sheet Configurator's nested cards): it PUBLISHES its resolved corner
+// (for the gear-sheet Configurator's nested cards): it PUBLISHES its resolved corner
 // (--radius-dialog) as --radius-ctx + its content pad (--overlay-pad-inline) as
 // --radius-inset, so a nested card-class surface DERIVES its own corner concentric with
 // the outer. Center dialogs need no relay (they are terminal, not a nesting host).
@@ -327,7 +325,7 @@ const springStyle = computed<CSSProperties | undefined>(() => {
     }
     if (!centerSpringActive.value) return undefined;
     // Centered-dialog squish via `scale:`/`translate:`
-    // LONGHANDS, never `transform: translate() scale()` (build-trap (e): a
+    // LONGHANDS, never `transform: translate() scale()` (the centered-squish trap: a
     // `transform:scale()` over a centering translate composes ONE matrix, so the squish
     // would re-derive the -50% offset off the scaled box and drift the dialog off
     // center mid-bloom). The centering rides `translate: -50% -50%` (its OWN channel);
@@ -453,7 +451,7 @@ const contentStyle = computed<CSSProperties>(() => ({
         >
             <!-- Hidden anchor — the focus-handoff watch resolves the live content
            root via `closest`, never a Presence-transient `$el` (the DrawerContent
-           F5.R2 discipline). -->
+           discipline). -->
             <span v-if="!isCenter" ref="sideAnchorEl" hidden />
             <!-- A side sheet owns one noninteractive, mask-graded
            backdrop sample. The host's flat blur is disabled for this glass-only

@@ -3,8 +3,8 @@
 //
 // The WGSL `Uniforms` struct (`metaball.wgsl.ts`) and the JS `ArrayBuffer` write offsets
 // are generated from the SAME layout table here, so a std140-vs-WGSL alignment mismatch
-// (the parity-ΔE-blowout trap the wave's §Triumvirate names) is structurally impossible:
-// the field order + the byte offsets are ONE declaration. The aurora migration (#1)
+// (the parity-ΔE-blowout trap) is structurally impossible:
+// the field order + the byte offsets are ONE declaration. The aurora uniform bridge
 // established this pattern; this is its goo-blob twin.
 //
 // The struct packs every scalar into a vec4 lane + every per-satellite / per-trail /
@@ -149,7 +149,7 @@ export function packBlobWGPUUniforms(
     // Colony-register fission-apex pad (the WGSL twin
     // of uploadBlobUniforms): when surface.fissionAmp > 0 the freed bead reaches the
     // bounded apex FISSION_REACH_MAX + the snap overshoot, further than worstOrbitDist;
-    // the bounding-discard radius must cover it. Zero (byte-identical to HEAD) at amp 0.
+    // the bounding-discard radius must cover it. Zero at amp 0 (no reach added).
     const fissionWorst =
         (config.surface.fissionAmp ?? 0) > 0 ? FISSION_REACH_MAX * 1.12 : 0;
     const satWorst = Math.max(worstOrbitDist, fissionWorst) + cGeo.satelliteRadius;
@@ -251,7 +251,7 @@ export function packBlobWGPUUniforms(
     f32[OFF.res + 2] = isDressed && cSurf.shadow ? 1.0 : 0.0;
     f32[OFF.res + 3] = cSurf.shadowSoftness;
 
-    // ── palette (W11.b) — write rgb into the vec4 lanes (a=0); empty → uBaseColor. ──
+    // ── palette — write rgb into the vec4 lanes (a=0); empty → uBaseColor. ──
     const stops = paletteStops;
     const stopCount = Math.min(stops.length, MAX_BLOB_STOPS);
     for (let i = 0; i < MAX_BLOB_STOPS; i++) {
@@ -288,7 +288,7 @@ export function packBlobWGPUUniforms(
         }
     }
 
-    // ── trail (W10) — trailPos[i] = (pos.x, pos.y, radius, _pad). The base radius
+    // ── trail — trailPos[i] = (pos.x, pos.y, radius, _pad). The base radius
     //    rides reachFactor exactly as the GLSL path. ──
     const trail = pointer.trailSources(cGeo.satelliteRadius * 0.7 * reachFactor);
     for (let i = 0; i < TRAIL_N; i++) {

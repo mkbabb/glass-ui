@@ -91,7 +91,7 @@ if (!("PointerEvent" in window)) {
 
 // happy-dom lacks `document.elementsFromPoint` (the hit-test stack-walk). The
 // adaptive-glass backdrop sampler (`useGlassBackdropLuminance`, wired ON by
-// default for the dock via BG.W-GLASS-SIGNAL-TRUTH's `autoLuminance` default-TRUE
+// default for the dock via the `autoLuminance` default-TRUE
 // signal) calls it on mount; without the stub every dock unit test crashes at the
 // first sample. The product path is CORRECT and unchanged — a happy-dom stub is
 // HONEST (the test env genuinely has no painted stack to hit-test), NOT a product

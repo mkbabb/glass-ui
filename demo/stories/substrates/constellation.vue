@@ -120,7 +120,7 @@ const wellRef = useTemplateRef<InstanceType<typeof Constellation>>("wellRef");
 // anchor-drift (G5 pinnedDrift), and the exposed warpSettled() signal (G6). The
 // drawOverlay is a neutralized anomaly recipe (a pulse ring + halo + core dot + dashed
 // monospace callout) pinned to field.nodes[field.pinnedIndex] (the engine-held pin),
-// NOT a hand-frozen node. This is the slides anomaly skin re-expressed over library
+// NOT a hand-frozen node. This is a consumer anomaly skin re-expressed over library
 // surface: ≈30 lines of consumer recipe over the engine, not a ≈250-line bespoke class.
 const genRef = useTemplateRef<InstanceType<typeof Constellation>>("genRef");
 const genSettled = ref(true);
@@ -182,7 +182,7 @@ const drawPinnedAnomaly = computed(
 );
 
 // DEMO-PRIVATE π-lane hook: expose the live warp field + the imperative warpTo
-// on `window` so the W00 visual-runtime lane can read `field.warp`/`field.nodes`
+// on `window` so the visual-runtime lane can read `field.warp`/`field.nodes`
 // per frame and dispatch a synthetic warp (a runtime-observation probe, NOT a
 // grep). Never shipped — this is a demo-story test seam only.
 onMounted(() => {
@@ -361,8 +361,8 @@ onMounted(() => {
             <ShowcaseFrame pad="none">
                 <!-- The wander cadence runs short here so the drift is observable.
                      `data-testid` lets the π refit-live spec target THIS host
-                     deterministically — the StoryHero now mounts a constellation
-                     background canvas at index 0 for this hero route, so the prior
+                     deterministically — the StoryHero mounts a constellation
+                     background canvas at index 0 for this hero route, so a
                      `.constellation-canvas` nth() index is fragile. -->
                 <div
                     ref="refitHostRef"

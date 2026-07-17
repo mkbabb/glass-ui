@@ -128,7 +128,7 @@ defineExpose({
     inline-size: 100%;
     block-size: 100%;
     overflow: hidden;
-    /* AV.W7 F1 — content-visibility lets the browser content-skip the field when it scrolls
+    /* Content-visibility lets the browser content-skip the field when it scrolls
        offscreen; the substrate's contentvisibilityautostatechange listener then parks the
        rAF. contain isolates it as a layout/paint root. */
     contain: content;

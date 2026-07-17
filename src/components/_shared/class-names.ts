@@ -75,7 +75,7 @@ const RULES: ReadonlyArray<readonly [string, RegExp]> = [
     // utility from a `cva` variant (e.g. Button `default` →
     // `text-primary-foreground`) coexist with a consumer's typography
     // utility (`text-micro`) instead of shadowing it. This conflict-bucket
-    // fix is the publisher-side resolution for AJ.W3-η / A3 §5.D-11
+    // fix is the publisher-side resolution
     // (dashboard map "DL" chip text invisibility — `text-micro` from
     // the consumer was clobbering `text-primary-foreground` from the
     // Button variant under the previous catch-all `text-color` bucket).

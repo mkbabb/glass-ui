@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// Toaster — wrap-around <ToastProvider> consumer that the speedtest
+// Toaster — wrap-around <ToastProvider> consumer that a downstream app
 // (and any non-glass-ui app) drops into the layout root. Composes
 // useToast for the ToastViewport rendering loop.
 import StoryPage from "../../chassis/page/StoryPage.vue";

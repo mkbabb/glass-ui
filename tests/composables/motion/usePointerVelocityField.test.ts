@@ -6,7 +6,7 @@ import { mountComposable } from "../../utils/mountComposable";
 // `tick(delta)` from its OWN frame loop (no own rAF here). These tests drive the
 // derivation chain (position → velocity → acceleration) with synthetic ticks, and
 // assert the PRM tick(0) freeze. The painted truth (a viz reading the field) rides
-// the W-REFLECT3 π once the born-WebGPU viz land; this is the headless math half.
+// the π once the born-WebGPU viz land; this is the headless math half.
 
 // Install / uninstall a matchMedia stub so the PRM-reduced path is reachable.
 function installMatchMedia(reduced: boolean): void {

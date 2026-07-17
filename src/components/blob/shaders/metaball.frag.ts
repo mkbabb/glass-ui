@@ -3,14 +3,12 @@
 // PERCEPTUALLY-UNIFORM color perturbation in OKLCh.
 //
 // The GLSL is composed from cohesive partials, template-spliced into one source
-// string at module load. The emitted METABALL_FRAGMENT_SRC is character-equivalent
-// to the prior hand-inlined shader (the splice boundaries fall on original line
-// breaks). Seams: sdf-body (sdCircle + smin) · watercolor-edges (the FBM noise that
+// string at module load. Seams: sdf-body (sdCircle + smin) · watercolor-edges (the FBM noise that
 // displaces the edge) · oklch-perturb (inGamut + gamutClampOklch). The uniforms +
-// the three W2 splices + the per-pixel perturbation in main() stay inline here.
+// the three splices + the per-pixel perturbation in main() stay inline here.
 //
 // The base color arrives GAMMA-sRGB (the `/color` leaf's `oklchToGammaRgb` output). The
-// shader-quality flip (DEC-AT-7 LINEAR half): srgbToLinear(uBaseColor) → OKLab →
+// shader-quality flip (LINEAR half): srgbToLinear(uBaseColor) → OKLab →
 // OKLCh, perturb L/C/h perceptually, OKLCh → OKLab → linear sRGB, hue-preserving
 // gamut clamp, then the MANDATORY `linearToSrgb()` OETF before output — a linear-in
 // WITHOUT an OETF-out ships visibly too dark; the explicit color-space contract forbids it.
@@ -38,9 +36,7 @@ import { METABALL_OKLCH_PERTURB_GLSL } from "./oklch-perturb.glsl";
 
 import { METABALL_UNIFORMS_GLSL } from "./metaball-uniforms.glsl";
 
-// A single newline joins every adjacent stage — the splice boundaries land on the
-// original source's line breaks, so the emitted shader is character-equivalent to
-// the prior hand-inlined METABALL_FRAGMENT_SRC.
+// A single newline joins every adjacent stage.
 const NL = "\n";
 
 export const METABALL_FRAGMENT_SRC =
@@ -88,7 +84,7 @@ float breath(float phase) {
 // so the surface normal reads the field gradient DIRECTLY (the 4-tap finite
 // difference is DELETED — its 4 full evals per lit pixel are gone).
 //
-// The ANISOTROPIC SQUASH (W10 volume-preserving stretch) is a linear map
+// The ANISOTROPIC SQUASH (volume-preserving stretch) is a linear map
 // bodyUv = D·R·uv (R rotates world→(motion-axis, perp); D = diag(1/sa, sa)). The
 // body field's gradient is computed in bodyUv space, so it MUST be transformed back
 // to uv space by M^T = R^T·D (the inverse-transpose handling the SOTA-deepening [2]
@@ -101,7 +97,7 @@ vec3 sceneDistG(vec2 uv) {
     // sa is the stretch along motion, exactly 1/sa perpendicular (area-preserving).
     // The basis (ax, perp) is captured so the gradient can be transformed back below.
     //
-    // The W10 form sa = 1 + speed*uStretch rode an UNBOUNDED critically-damped spring
+    // The form sa = 1 + speed*uStretch rode an UNBOUNDED critically-damped spring
     // velocity (O(5-8)/s on a fast flick) -> sa ~ 1.78-2.25x elongation, a violent
     // taffy-pull. A tanh saturation sa = 1 + tanh(speed*k)*uStretch caps the elongation
     // at 1 + uStretch (~1.5x at the default stretch 0.5) no matter how fast the flick —
@@ -206,7 +202,7 @@ float softShadow2D(vec2 ro, vec2 rd, float mint, float maxt, float w) {
     return clamp(res, 0.0, 1.0);
 }
 
-// W11.b — sample the multi-stop palette at t in [0,1], interpolating adjacent
+// Sample the multi-stop palette at t in [0,1], interpolating adjacent
 // stops in OKLab with a MIDPOINT CHROMA-BUMP (a linear OKLab mix of a vivid pair
 // dips chroma through grey; the bump lifts it back). Falls back to uBaseColor when
 // uStopCount <= 1. Returns an OKLCh stop [L, C, h(rad)].
@@ -229,7 +225,7 @@ vec3 samplePaletteOklch(float t) {
 
 // The per-satellite explicit-shade blend widens the GL color contract for the hero blob.
 // It is off by default: uSatColorActive == 0 returns oklch
-// UNCHANGED (uniform control flow, zero cost, byte-identical to HEAD). When ON, each
+// UNCHANGED (uniform control flow, zero cost). When ON, each
 // satellite carrying a positive uSatColorAmt tints the fragments in its smin-field
 // neighbourhood toward its explicit shade — mixed in OKLab (the samplePaletteOklch
 // convention; no hue wrap). The proximity weight rides the SAME opacity-inflated distance
@@ -271,7 +267,7 @@ void main() {
         return;
     }
 
-    // Pointer deformation — honor the SIGN of uPointerAttraction (W10): a positive
+    // Pointer deformation — honor the SIGN of uPointerAttraction: a positive
     // attraction leans the body IN toward the cursor, a negative shies it AWAY. The
     // signed influence flows straight into the UV shift (no hardcoded repulsion).
     //
@@ -288,7 +284,7 @@ void main() {
     // now true in the render.
     //
     // The falloff radius narrows from 0.65 to 0.5 for a calmer lean.
-    // The W15 REDRESS widened it to 0.65 to clear a synthetic floor; the live π-lane
+    // The REDRESS widened it to 0.65 to clear a synthetic floor; the live π-lane
     // read the result as a LUNGE. The drama lives in the STRENGTH (pointerStrength,
     // dropped to 0.18 in types.ts), NOT the falloff — the falloff's job is purely to keep
     // the lean COHERENT across the creature so the body, satellites and trail all tilt
@@ -322,7 +318,7 @@ void main() {
 
     // Edit #4 — perceptually-uniform OKLCh variation. Gamma base → linear → OKLab
     // → OKLCh; perturb L/C/h; OKLCh → OKLab → linear; hue-preserving gamut clamp.
-    // The base is the multi-stop palette sample (W11.b) — distributed across the
+    // The base is the multi-stop palette sample — distributed across the
     // body/satellites by the color noise field — or uBaseColor when single-stop.
     float colorNoise = fbm(uv * uColorNoiseFreq + uTime * uColorNoiseSpeed, 3);
     vec3 oklch = samplePaletteOklch(colorNoise);
@@ -341,10 +337,8 @@ void main() {
     // (flat fill vs lit/shadow/iridescence/SSS) differs. So the morph is a uMorphT
     // scalar LERPING the SHADING — NOT a geometry rebuild, NOT a path interpolation.
     //
-    //   uMorphT = 0  -> the flat warm-cream blob (the STAGE-1 floor, byte-identical to
-    //                   the old uStage > 0.5 early-return);
-    //   uMorphT = 1  -> the lit meatball (the full STAGE-2 dressing, byte-identical to
-    //                   the old else path);
+    //   uMorphT = 0  -> the flat warm-cream blob (the STAGE-1 floor);
+    //   uMorphT = 1  -> the lit meatball (the full STAGE-2 dressing);
     //   0 < uMorphT < 1 -> the CONTINUOUS in-between (the morph the user asked for).
     //
     // uMorphT is the single clamped config surface axis; a consumer ANIMATING
@@ -353,7 +347,7 @@ void main() {
     //
     // The flat color is computed ALWAYS (cheap); the EXPENSIVE dressing (the soft-shadow
     // secondary march) is gated uMorphT > 0.0 so a pure blob pays ZERO shadow-march
-    // cost (the SLOW-fix discipline — a flat blob is as cheap as the old early-return).
+    // cost (the SLOW-fix discipline — a flat blob is as cheap as an early-return).
     float morphT = clamp(uMorphT, 0.0, 1.0);
 
     // STAGE-1 flat fill — the warm-cream blob color, off the PRE-dressing oklch (the
@@ -372,14 +366,14 @@ void main() {
     }
 
     // Surface normal from the analytic field gradient; the 4-tap is
-    // deleted. Computed once here and reused by the iridescence (W11.a), the
-    // fake-SSS (W11.a), and the lit glass block (W9.b).
+    // deleted. Computed once here and reused by the iridescence, the
+    // fake-SSS, and the lit glass block.
     vec3 N = surfaceNormalFromGrad(fieldGrad, d, bodyR);
     vec3 V = vec3(0.0, 0.0, 1.0);
     float thickness = clamp(-d / max(bodyR, 1e-4), 0.0, 1.0); // 0 at rim, ~1 deep in
     float fres = pow(1.0 - max(dot(N, V), 0.0), 2.5);          // rim-weighted angle
 
-    // ── W11.a iridescence — warm-biased IQ cosine palette driving OKLCh HUE ──
+    // ── iridescence — warm-biased IQ cosine palette driving OKLCh HUE ──
     //
     // A thin-film-like sheen on the RIM (fres-weighted), NOT the cold-blue default:
     // an IQ cosine palette (a + b*cos(2pi(c*t + d))) maps the Fresnel/edge angle +
@@ -399,11 +393,11 @@ void main() {
         oklch.x = min(oklch.x + 0.05 * w, 1.0); // a touch brighter at the sheen
     }
 
-    // ── W11.a fake subsurface translucency — thickness inner-glow + back-light ──
+    // ── fake subsurface translucency — thickness inner-glow + back-light ──
     //
     // A bright translucent CORE fading to a light-leaking EDGE (the -d ramp) plus
     // the fast-SSS back-light (light wrapping through the thin rim). Both lift OKLCh
-    // L and warm the hue, consuming the W9 normal. In OKLCh before the gamut clamp.
+    // L and warm the hue, consuming the normal. In OKLCh before the gamut clamp.
     if (uCoreGlow > 0.0 || uSssScale > 0.0) {
         // Beer-Lambert inner luminosity uses a saturating 1 - exp(-k·thickness)
         // curve — a flat thick core with a fast warm rim falloff — NOT the linear
@@ -445,7 +439,7 @@ void main() {
 
     vec3 lin = oklabToLinearSrgb(oklchToOklab(oklch));
 
-    // ── W9.b lit glass surface — Blinn-Phong glint + Fresnel rim, in LINEAR ──
+    // ── lit glass surface — Blinn-Phong glint + Fresnel rim, in LINEAR ──
     //
     // The lit terms enter lin in LINEAR space BEFORE the OETF (linearToSrgb)
     // and BEFORE the * alpha premultiply — a post-OETF apply double-gammas the

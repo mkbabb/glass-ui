@@ -260,13 +260,13 @@ export interface DeriveBlobPaletteOptions {
     /** Midpoint chroma-bump (keeps a vivid pair off the grey midpoint). Default ~0.03. */
     chromaBump?: number;
     /**
-     *  E1 — the OKLCh-chroma CEILING on every derived stop (OKLCh C
+     * The OKLCh-chroma CEILING on every derived stop (OKLCh C
      * units). When set, each stop's chroma is clamped to AT MOST this value AFTER
      * the midpoint bump and BEFORE the gamut-map — so the seed→palette derivation
      * can never amplify a vivid seed into the neon register the shader's
      * SSS/iridescence then over-drives. This is a CHROMA CAP, not a hue re-map: a
      * blue seed stays blue, just bounded to the non-neon chroma. `undefined` (the
-     * default) leaves the derivation byte-identical to HEAD. The blob substrate
+     * default) leaves the derivation unchanged. The blob substrate
      * caps the MOOD/seed path into the warm-register band the FourierField comet +
      * the constellation focal share (the set-cohesion accent identity).
      */
@@ -278,7 +278,7 @@ export interface DeriveBlobPaletteOptions {
      * lightest satellite). When set, the body stop (t=0) anchors at exactly this L and
      * the satellites still climb `lightnessSpread` from it — so a consumer picks the
      * body luminance directly (the deep-body read) without moving the seed hue/chroma.
-     * `undefined` (the default) leaves the derivation byte-identical to HEAD.
+     * `undefined` (the default) leaves the derivation unchanged.
      */
     bodyLightness?: number;
     /**
@@ -318,9 +318,9 @@ export function deriveBlobPalette(
 
     // the BODY-stop L anchor. When `bodyLightness` is set,
     // the body (t=0) sits at exactly that L; otherwise the ramp centres on the seed
-    // (`anchor.L - lightnessSpread/2` — the byte-identical HEAD baseline, same eval order).
+    // (`anchor.L - lightnessSpread/2`, in the same eval order).
     const baseL = bodyLightness !== undefined ? bodyLightness : anchor.L - lightnessSpread / 2;
-    // The low clamp (default 0.05, the HEAD floor) is the `lightnessFloor` knob.
+    // The low clamp (default 0.05) is the `lightnessFloor` knob.
     const lowClamp = lightnessFloor !== undefined ? lightnessFloor : 0.05;
 
     const n = Math.max(2, Math.min(4, Math.round(stopCount)));
@@ -333,7 +333,7 @@ export function deriveBlobPalette(
         //  E1 — the warm-register chroma cap. Applied AFTER the bump,
         // BEFORE the gamut-map, so a vivid seed cannot be derived into the neon
         // band the shader then over-drives. Hue + L are untouched (a cap, not a
-        // re-map). `undefined` → byte-identical to HEAD.
+        // re-map). `undefined` → no cap applied.
         if (chromaCeiling !== undefined) C = Math.min(C, chromaCeiling);
         const h = deriveHue(anchor.h, harmony, hueSpread, t);
         stops.push(gamutMapStop({ L: Math.min(0.98, Math.max(lowClamp, L)), C, h }));

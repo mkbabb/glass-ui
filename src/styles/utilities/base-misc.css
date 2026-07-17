@@ -3,7 +3,7 @@
    preserve-3d, ios input fix, fading-scroll (scroll-state-driven edge fade) +
    the @supports (animation-timeline: scroll()) native path, deferred-section,
    card-scroll-host, gold-shimmer, kbd.
-   BB.W-CARVE3 carved this off utilities/base.css (the post-tap-squish tail) so
+   this partial holds the post-tap-squish tail so
    each partial stays under the no-god-module 500-line bound. @import-ed by
    utilities.css IMMEDIATELY AFTER base.css — two adjacent same-`@layer
    components` blocks compose identically, so the dist is byte-isomorphic. The
@@ -13,7 +13,7 @@
 
 @layer components {
     /* ── Depth text (layered offset stamp) ──
-       AW.W26 — composes the `--text-shadow-depth` @theme identity token (the
+       Composes the `--text-shadow-depth` @theme identity token (the
        hard offset stack + soft ambient tail) instead of a hand-rolled multi-stop
        literal. The token holds the stack inside the `@theme` defs (gate 4) and
        re-tints under `.dark` via `--shadow`/`--shadow-color` BY CONSTRUCTION. */
@@ -37,7 +37,7 @@
         font-size: max(1rem, 1em);
     }
 
-    /* ── Fading scroll — the scroll-STATE-driven edge fade (BA.W-FADING-SCROLL) ──
+    /* ── Fading scroll — the scroll-STATE-driven edge fade ──
        `<FadingScroll>`'s recipe. Each edge's ramp width is a registered
        `--fade-start` / `--fade-end` custom (above, default 0px = SHARP), driven
        by the
@@ -157,9 +157,9 @@
         }
     }
 
-    /* ── Deferred section — render-skip an offscreen subtree (AQ.W3 §5) ──────
+    /* ── Deferred section — render-skip an offscreen subtree ──────
        `content-visibility: auto` skips layout/paint/style of an offscreen
-       subtree — the INP-under-load lever (fourier γ, muster, speedtest, words).
+       subtree — the INP-under-load lever (heavy-substrate consumers).
        `contain-intrinsic-size: auto <estimate>` is measurement-safe: the `auto`
        prefix makes the engine REMEMBER the last-rendered size (no scroll-jump on
        re-entry); plain `<estimate>` freezes the section + thrashes the scrollbar
@@ -187,7 +187,7 @@
     }
 
     /* ── Stable scroll gutter — the no-shift discipline for overlay-hosting
-       route scrollers (BC.W-DROPDOWN-FIX) ──────────────────────────────────
+       route scrollers ──────────────────────────────────
        An app-shell route scroller that hosts portaled picker/menu overlays
        (Select / DropdownMenu / any reka overlay that locks body scroll on open)
        RESERVES a stable scrollbar gutter so the lock-induced scrollbar removal
@@ -241,7 +241,7 @@
 
 }
 
-/* ── @utility ghost-slot (BC.W-GHOST-DASHED) ────────────────────────────────
+/* ── @utility ghost-slot ────────────────────────────────
    The ONE dashed-outline placeholder register: everywhere a slot is empty / a
    thing is a placeholder / an affordance is "add something here", the surface
    reads this — a dashed-outline plate, consistently rounded (--radius-card),
@@ -251,11 +251,11 @@
    pads) COLLAPSE onto this ONE register: ONE radius, ONE faint-wash host, ONE
    muted ink, ONE warm dashed hairline.
 
-   WARM-NOT-GREY (BA.W-NO-GRAY): the dashed hairline is the warm-ink at 22%
+   WARM-NOT-GREY: the dashed hairline is the warm-ink at 22%
    (a color-mix off --foreground, the warm identity), NEVER a grey
    `border-border` — the ghost must read warm-material, not grey.
 
-   GLASS-ADJACENT, not opaque: the host is a faint glass-wash (the rebuilt W55
+   GLASS-ADJACENT, not opaque: the host is a faint glass-wash (the rebuilt
    material reads THROUGH it), NOT a flat opaque `bg-card` slab — so the ghost
    reads "empty," not "filled," and the D1 grey-plate regression cannot re-enter
    through the placeholder.

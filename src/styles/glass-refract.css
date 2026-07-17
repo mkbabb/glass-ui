@@ -12,7 +12,7 @@
  *                      (neutral 128 = no shift). The squircle slope is near-flat past
  *                      the outer ~14% band and STEEP at the rim, so the bend
  *                      CONCENTRATES at the edge (thin interior) — the iOS edge-lensing
- *                      read, NOT a uniform radial bulge (the retired AW.W23 placeholder).
+ *                      read, NOT a uniform radial bulge (the retired placeholder).
  *                      Encoding: TWO crossed linear gradients — a HORIZONTAL gradient
  *                      drives the R channel (255 @0% → 128 across the flat interior →
  *                      0 @100%, the squircle ramp held in the bevel band) and a VERTICAL
@@ -25,13 +25,13 @@
  *                      baked `scale` sets the magnitude without a runtime map re-bake.
  *   feDisplacementMap— displaces the backdrop by the baked map (R = x-shift,
  *                      G = y-shift, `scale` = max px the `--glass-refract` axis drives).
- *   feImage specular — a soft warm top-left specular highlight (PRESERVED from HEAD —
- *                      the polished-glass catch).
+ *   feImage specular — a soft warm top-left specular highlight (the
+ *                      polished-glass catch).
  *   feBlend screen   — blended `screen` over the displaced backdrop.
  *
- * DDR-LENS-BAKE — the displacement `scale` is a BAKED LITERAL (`scale='28'`, the §10
- * default depth), NOT a var()-driven axis. WHY (the reversal of BB.W-LENSING scope 2):
- * the scope-2 design split the filter across `var(--…head) var(--glass-refract) var(--…tail)`
+ * The displacement `scale` is a BAKED LITERAL (`scale='28'`, the §10
+ * default depth), NOT a var()-driven axis. WHY:
+ * an axis-driven design would split the filter across `var(--…head) var(--glass-refract) var(--…tail)`
  * to splice the typed `@property --glass-refract` value between a head ending `…scale='`
  * and a tail beginning `'…`. That construction is doubly broken, proven on the real edge
  * (Chromium engine behavior):
@@ -59,8 +59,8 @@
  * `@supports (backdrop-filter: url(#…))`; a non-supporting engine paints the un-gated blur
  * base alone (no broken `url()` reference — the no-workaround degrade floor, PRESERVED).
  *
- * CLASS RENAME (BB.W-LENSING scope 5 — clean break, no alias, BB inv-7). The AW.W23
- * `.glass-refract` opt-in class is RENAMED to `.glass-lens` (the §2 vocabulary); the
+ * The public opt-in class is `.glass-lens` (clean break, no alias — the §2
+ * vocabulary); the internal `#glass-refract` filter id and the
  * `--glass-refract*` AXIS/token names are KEPT (the lens magnitude is the refraction
  * axis). Consumers (`<Button :liquid>`, the demo witness) compose `.glass-lens`. The
  * rename is the only public-surface delta (MIGRATION.md row). The garnish stays PE-only
@@ -68,21 +68,21 @@
  */
 
 @layer components {
-    /* The shipped filter graph as ONE self-contained data-URI SVG (`scale='28'` baked,
-       DDR-LENS-BAKE). A single `url("data:…")` token is the only form that PARSES as a
+    /* The shipped filter graph as ONE self-contained data-URI SVG (`scale='28'`
+       baked). A single `url("data:…")` token is the only form that PARSES as a
        `backdrop-filter` value AND survives a consumer bundler's url()-rewrite (a `data:`
        URI is skipped; any other `url("…")` content is mis-resolved as a file). The
        `#glass-refract` id is resolvable in-document (the data-URI is self-contained). */
     .glass-lens {
         /* The shipped filter — ONE complete, valid `url("data:…")` token carrying the
-           whole 3-primitive graph with the `scale='28'` baked in (the §10 default depth,
-           DDR-LENS-BAKE). A single self-contained `data:` URI is (a) the ONLY form that
-           PARSES as a `backdrop-filter` value — the prior var()-spliced head/tail emitted
+           whole 3-primitive graph with the `scale='28'` baked in (the §10 default depth).
+           A single self-contained `data:` URI is (a) the ONLY form that
+           PARSES as a `backdrop-filter` value — a var()-spliced head/tail emits
            `url("…") <n> url("…")`, three tokens a `backdrop-filter` rejects, so the lens
-           silently rendered `none`; and (b) bundler-SAFE — a consumer's CSS url()-rewriter
+           silently renders `none`; and (b) bundler-SAFE — a consumer's CSS url()-rewriter
            skips a `data:` URI but mis-resolves any `url("…")` whose content starts with a
-           bare char (the old tail began `'…` → ENOENT, breaking every bundler consumer).
-           See the DDR-LENS-BAKE note in the header for the lost-tunability tradeoff. */
+           bare char (a tail beginning `'…` → ENOENT, breaking every bundler consumer).
+           See the baked-scale note in the header for the lost-tunability tradeoff. */
         --glass-refract-filter: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27%3E%3Cfilter id=%27glass-refract%27 x=%270%27 y=%270%27 width=%27100%25%27 height=%27100%25%27%3E%3CfeImage href=%27data:image/svg+xml,%253Csvg xmlns=%2522http://www.w3.org/2000/svg%2522 width=%2522100%2522 height=%2522100%2522%253E%253ClinearGradient id=%2522hx%2522 x1=%25220%2522 y1=%25220%2522 x2=%2522100%2525%2522 y2=%25220%2522%253E%253Cstop offset=%25220%2525%2522 stop-color=%2522rgb(255,0,0)%2522/%253E%253Cstop offset=%252214%2525%2522 stop-color=%2522rgb(128,0,0)%2522/%253E%253Cstop offset=%252286%2525%2522 stop-color=%2522rgb(128,0,0)%2522/%253E%253Cstop offset=%2522100%2525%2522 stop-color=%2522rgb(0,0,0)%2522/%253E%253C/linearGradient%253E%253ClinearGradient id=%2522vy%2522 x1=%25220%2522 y1=%25220%2522 x2=%25220%2522 y2=%2522100%2525%2522%253E%253Cstop offset=%25220%2525%2522 stop-color=%2522rgb(0,255,0)%2522/%253E%253Cstop offset=%252214%2525%2522 stop-color=%2522rgb(0,128,0)%2522/%253E%253Cstop offset=%252286%2525%2522 stop-color=%2522rgb(0,128,0)%2522/%253E%253Cstop offset=%2522100%2525%2522 stop-color=%2522rgb(0,0,0)%2522/%253E%253C/linearGradient%253E%253Crect width=%2522100%2522 height=%2522100%2522 fill=%2522black%2522/%253E%253Crect width=%2522100%2522 height=%2522100%2522 fill=%2522url(%2523hx)%2522/%253E%253Crect width=%2522100%2522 height=%2522100%2522 fill=%2522url(%2523vy)%2522 style=%2522mix-blend-mode:screen%2522/%253E%253C/svg%253E%27 result=%27map%27/%3E%3CfeDisplacementMap in=%27SourceGraphic%27 in2=%27map%27 scale=%2728%27 xChannelSelector=%27R%27 yChannelSelector=%27G%27 result=%27disp%27/%3E%3CfeImage href=%27data:image/svg+xml,%253Csvg xmlns=%2522http://www.w3.org/2000/svg%2522 width=%2522100%2522 height=%2522100%2522%253E%253CradialGradient id=%2522s%2522 cx=%252230%2525%2522 cy=%252225%2525%2522 r=%252260%2525%2522%253E%253Cstop offset=%25220%2525%2522 stop-color=%2522rgba(255,255,255,0.5)%2522/%253E%253Cstop offset=%2522100%2525%2522 stop-color=%2522rgba(255,255,255,0)%2522/%253E%253C/radialGradient%253E%253Crect width=%2522100%2522 height=%2522100%2522 fill=%2522url(%2523s)%2522/%253E%253C/svg%253E%27 result=%27spec%27/%3E%3CfeBlend in=%27disp%27 in2=%27spec%27 mode=%27screen%27/%3E%3C/filter%3E%3C/svg%3E%23glass-refract");
     }
 

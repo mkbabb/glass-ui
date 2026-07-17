@@ -140,8 +140,8 @@ const stageStyle = computed(() => {
 });
 
 // Responsive density — ONE configurator reads `mobile` at narrow widths and
-// `comfortable` when the viewport has room (the responsive merge that retires
-// the prior side-by-side `configurator-mobile` route). A small reactive
+// `comfortable` when the viewport has room (a responsive merge — one configurator,
+// not a separate `configurator-mobile` route). A small reactive
 // matchMedia ref, no vueuse dependency.
 const isNarrow = ref(false);
 let mql: MediaQueryList | null = null;

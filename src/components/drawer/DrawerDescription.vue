@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-// BB.W-DRAWER-ABROGATE — the description on the HOUSE reka `DialogDescription` (off
+// The description on the HOUSE reka `DialogDescription` (off
 // vaul's). The type-bind + the typography class are PRESERVED; only the component
 // identity changes.
 import { DialogDescription as RekaDialogDescription } from "reka-ui";

@@ -1,6 +1,6 @@
 /* Dialog placement styles.
  * dialog-placement.css — the overlay-band Dialog side-slide structural positioning,
- * precompiled (BI.W-DIALOG-PLACEMENT — the Sheet fold; the BG.W-SHEET-INSET-ROOT
+ * precompiled (the Sheet fold; the 
  * emission INVERSE, terminalized onto Dialog `placement`).
  *
  * THE FOLD: Sheet's side-slide is a Dialog PAINT axis now (`<DialogContent placement=
@@ -76,7 +76,7 @@
     min-block-size: 0;
 }
 
-/* BI.W-Q023 — the folded side sheet's graded material edge.
+/* The folded side sheet's graded material edge.
  *
  * One fixed 40px backdrop sample is mask-graded from 13/40 opacity at the
  * viewport-facing edge to full depth 120px inward. That gives the observed
@@ -167,6 +167,6 @@
 @media (min-width: 40rem) {
     :where([data-slot="dialog-content"][data-placement="left"]),
     :where([data-slot="dialog-content"][data-placement="right"]) {
-        max-width: 24rem; /* the prior sm:max-w-sm */
+        max-width: 24rem; /* matches sm:max-w-sm */
     }
 }

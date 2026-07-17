@@ -81,7 +81,7 @@ const currentSegmentKey = ref<string>("download");
 
 function onClick(payload: { key: string; segment: TimelineSegment }) {
     // Click stamps a sticky selection — consumers compose `current-segment-key`
-    // with their own click-stick semantics. (Speedtest's PhaseTimeline does
+    // with their own click-stick semantics. (a consumer's timeline does
     // this for the running route.)
     currentSegmentKey.value = payload.segment.key;
 }

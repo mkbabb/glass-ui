@@ -7,15 +7,15 @@
  * are shared, so they live at the import root, not per-control), and the
  * `@import`s of the cohesive `dock/*.css` partials.
  *
- * AX.W06 — the 1762-line dock.css god-module (slice 25) was CARVED into
- * src/styles/dock/ cohesive single-axis partials, each under the 500-line bound,
- * @import-ed below in cascade order into the SAME `@layer components` so the
- * carve is isomorphic (same layer, same source order → ZERO visual delta):
- *   - dock/shell.css       — the `.glass-dock` structural skeleton (root, W02
+ * The dock CSS is composed from src/styles/dock/ cohesive single-axis partials,
+ * each under the 500-line bound, @import-ed below in cascade order into the
+ * SAME `@layer components` (same layer, same source order → one deterministic
+ * cascade):
+ * - dock/shell.css — the `.glass-dock` structural skeleton (root,
  *                            morph-clip aperture, grain, vertical-root, shape /
- *                            variant plates, position, W45 #persistent + vertical
+ * variant plates, position, #persistent + vertical
  *                            three-region body).
- *   - dock/morph.css       — the W01 single-scalar morph chrome + state response
+ * - dock/morph.css — the single-scalar morph chrome + state response
  *                            (--dock-expand-t interp, collapsed/summary, held /
  *                            open).
  *   - dock/adaptive-legibility.css — the darken-over-light self-engage (the
@@ -23,15 +23,15 @@
  *                            dock ink, the @container light bucket, contrast-color()
  *                            refinement, the PRM reveal-blur carve). Split from
  *                            morph.css to keep both partials under the 500-line bound.
- *   - dock/density.css     — the W45 density × --dock-scale cascade.
+ * - dock/density.css — the density × --dock-scale cascade.
  *   - dock/layers.css      — the `.dock-layer` crossfade + hit-test + reveal-
  *                            stagger contract + the `layout="grid"` tile grid.
  *   - dock/layer-group.css — `.dock-layer-group` / layer-switcher rail / stack.
  *   - dock/overflow.css    — the `overflow=` scroll/wrap strategies + the coarse
  *                            multiplier.
  *
- * The FIVE interactive control families stay in dock-controls.css (the AU.W8b.3
- * carve, @import-ed by index.css directly after this file). The Vue SFCs own
+ * The FIVE interactive control families stay in dock-controls.css (@import-ed
+ * by index.css directly after this file). The Vue SFCs own
  * structure + runtime behavior; selectors, motion, glass, and layering tokens
  * live here + in the partials so consumers have one public CSS path. */
 
@@ -40,18 +40,18 @@
    @import in cascade order; each opens its own `@layer components` so the layered
    cascade is preserved bit-for-bit (the carve-isomorphism gate is the witness). */
 @import "./shell.css";
-/* BG.W-CLOSEFIX-9SITE — the `#persistent` region + vertical layer-stack body carved out
-   of shell.css's tail to hold the no-god-module 500-line bound. @import-ed IMMEDIATELY
+/* The `#persistent` region + vertical layer-stack body, a partial held
+   under the no-god-module 500-line bound. @import-ed IMMEDIATELY
    AFTER dock/shell.css and BEFORE dock/morph.css, in the SAME @layer components — the
    persistent-region block was the tail of shell.css (disjoint selectors), so the carve
    is isomorphic (same layer, same source order → ZERO visual delta). */
 @import "./shell-regions.css";
-/* BI.W-DOCK-SPINE — the GREENFIELD three-z-layer plate SPINE (L0 `.dock-plate` clip-path
+/* The GREENFIELD three-z-layer plate SPINE (L0 `.dock-plate` clip-path
    lens off `--dock-t` / L1 `.dock-controls` overflow:visible / L2 top-layer). @import-ed
    AFTER the structural shell + BEFORE morph.css so the plate BASE surface lands first and
    morph.css's collapsed↔expanded interp (retargeted onto `.dock-plate`) source-order-wins.
    Splits `.glass-dock`'s triple identity (surface + clip aperture + item container) — the
-   FAM-3 dock-disease terminal cure. */
+   dock-disease terminal cure. */
 @import "./dock.css";
 @import "./morph.css";
 @import "./adaptive-legibility.css";
@@ -63,22 +63,22 @@
    a measure-once peak reserve, and the collapse content clip. */
 @import "./crossfade.css";
 @import "./overflow.css";
-/* BI.W-DOCK-RETIRES — `morph-bridge.css` (the V↔H goo teardrop), `fission-bridge.css` +
+/* `morph-bridge.css` (the V↔H goo teardrop), `fission-bridge.css` +
    `fission-island.css` (the 1→N fission goo), and `siri.css` (the Siri island) are
    DEFINITION-ABSENT (decided-terminal, clean break, no alias). The goo `filter:url()`
-   stacked over `backdrop-filter` was the prime UF-C3 Safari suspect; it is gone. The V↔H
+   stacked over `backdrop-filter` was the prime Safari suspect; it is gone. The V↔H
    swap is the crossfade (`crossfade.css`). */
-/* BC.W-AX-DOCK-CTA-SEAT — the [data-cta-pending] CTA-receive landing seat (the static
+/* The [data-cta-pending] CTA-receive landing seat (the static
    resting-geometry reserve + the plain transition:opacity FLIP reveal). Last in the
    dock cascade — a net-new surface around the byte-untouched useDockCtaReceive morph. */
 @import "./cta-seat.css";
-/* BC.W-DOCK-SEARCH — the dock-as-native-dynamic-search-bar field surface (the W55
+/* The dock-as-native-dynamic-search-bar field surface (the
    active-field tint legibility seam + the `.glass-menu-row` result rows). A net-new
    surface on a `[data-search]` dock; the pill→field morph is the dock's OWN `--dock-morph-t`
-   glide (box-inviolate); CONSUMES the W55 tint seam + the menu-row recipe, re-authors neither. */
+   glide (box-inviolate); CONSUMES the tint seam + the menu-row recipe, re-authors neither. */
 @import "./search.css";
 
-/* AX.W01 — the SINGLE morph scalar. The dock morph orchestrator writes it once per frame
+/* The SINGLE morph scalar. The dock morph orchestrator writes it once per frame
    to the `.glass-dock` root; EVERY morph axis (box size, padding, radius, scale,
    background/border color, child stagger) is a pure `calc()` read off it — one
    driver, one clock, on every engine (the View-Transitions collapse fork is
@@ -92,7 +92,7 @@
    subtree, and its CONSUMERS are DESCENDANTS (`.dock-layers` sizing, the active
    pane's child stagger, and `.dock-face-content` clipping) that read it via inheritance, so it MUST
    inherit. Writing one inheriting var over a ~10–20-element dock subtree is the
-   exact pattern the prior `--dock-morph-progress` used (on `.dock-layers`); the
+   established local-subtree scalar pattern (a `.dock-layers`-scoped write); the
    bomb only fires from a `:root` write, which never happens here. The root-chrome
    reads (padding/bg/border) sit on the same element it is written to. */
 @property --dock-morph-t {
@@ -101,10 +101,10 @@
     initial-value: 0;
 }
 
-/* BI.W-DOCK-SPINE — the ONE plate scalar. `useDockSpring` (W-DOCK-SPRING-UNIFY) writes it
+/* The ONE plate scalar. `useDockSpring` writes it
    per-frame onto the L0 `.dock-plate` element; the plate's `clip-path` visible-extent
    morph reads it, and NO control-family selector does — so a per-frame write recomputes
-   the plate clip ONLY, not the 10-selector control `:where()` subtree (the A′-4 ~13fps
+   the plate clip ONLY, not the 10-selector control `:where()` subtree (the ~13fps
    restyle-storm cure). `inherits: false` is LOAD-BEARING here (the opposite of
    `--dock-morph-t`, which MUST inherit to its descendant readers): the plate scalar has
    NO descendant reader, so keeping it un-inherited is what scopes the per-frame restyle to
@@ -118,13 +118,13 @@
     initial-value: 0;
 }
 
-/* BB.W-DOCK-MORPH-FAMILY (e) — the `@property`-registered dock-scale axis. The
+/* The `@property`-registered dock-scale axis. The
    dock-scale cascade is `--dock-scale: calc(var(--ui-scale) * var(--dock-local-scale,
    1))` (tokens/sizing.css). UNregistered, that `calc()` substitutes ONCE at `:root`
    against the `:root` identity `--dock-local-scale: 1`, so a consumer-scope
    `--dock-local-scale` override is INHERITED but never RE-EVALUATED — the dock keeps
    `--dock-scale: calc(1 * 1)` and stays at the unscaled base (the 3rd recurrence of
-   the AX.W55 substitution-vs-inheritance trap; the documented-but-broken `:root`
+   the substitution-vs-inheritance trap; the documented-but-broken `:root`
    preset). Registering `--dock-local-scale` as an INHERITING `@property <number>`
    makes a registered inheriting custom property re-substitute PER-ELEMENT, so a
    `--dock-local-scale` override on ANY dock scope re-evaluates the `calc()` at that
@@ -133,7 +133,7 @@
    idiom above is the precedent). `--dock-scale` itself is ALSO registered (the
    derived axis) so its `calc()` re-resolves per-element when `--dock-local-scale`
    shifts. ADDITIVE ONLY: `initial-value: 1` is the identity, so at the default
-   `--dock-local-scale: 1` the resolved `--dock-scale` is byte-IDENTICAL to HEAD (no
+   `--dock-local-scale: 1` the resolved `--dock-scale` is unchanged (no
    rung re-tune); the `@media (pointer: coarse)` re-declare (overflow.css) STAYS the
    `:root`-equivalent re-resolve, and this registration is the complementary
    non-`:root`-scope thread. DOCK_SPRING is untouched (this is a token registration,
@@ -162,10 +162,10 @@
     ) {
         --dock-motion-fast: var(--duration-fast) var(--ease-standard);
         --dock-motion-standard: var(--duration-normal) var(--ease-standard);
-        /* AT.W6-dock-c — the FLIP-fallback timing. `--dock-resize-spring` (the
+        /* The FLIP-fallback timing. `--dock-resize-spring` (the
            `--spring-dock` linear()) is the single source curve the native
            View-Transition path ALSO consumes, so the morph is timing-identical
-           across engines. BA.W-GLASS-CAL Unit 3 — the duration leg re-times off
+           across engines. The duration leg re-times off
            the generic `--duration-normal` (0.3s) onto `--spring-dock-duration`
            (0.28s, the dock spring's OWN 2%-band envelope settle). */
         --dock-motion-resize: var(--spring-dock-duration) var(--dock-resize-spring);
@@ -183,7 +183,7 @@
     .dock-tab-button:focus-visible,
     .dock-select-trigger:focus-visible,
     .dock-dropdown-trigger:focus-visible {
-        /* BI.W-DOCK-CONTROLS (value.js P5) — the ONE ring register. Every dock
+        /* (value.js P5) — the ONE ring register. Every dock
            control reads `--dock-ring` (defaults to `--focus-ring-shadow`, byte-
            identical), so a consumer retunes every dock ring from one token. */
         box-shadow: var(--dock-ring);

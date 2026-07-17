@@ -2,10 +2,9 @@
 // The Motion Scroll family.
 // The three scroll registers (native scroll-driven · the reader trigger system · the
 // choreography register) render as THREE <StorySection> registers on this ONE page in
-// dependency order (native → reader → choreography). The prior routed
-// `scroll-vt.vue`, `scroll-system.vue`, `scroll-choreography.vue` member wrappers +
-// the <FamilyTabs> switcher are RETIRED (clean break) — each render body moved bare
-// into a colocated PascalCase body sub-component (Scroll{Native,Reader,Choreography}Body).
+// dependency order (native → reader → choreography). Each render body lives bare
+// in a colocated PascalCase body sub-component (Scroll{Native,Reader,Choreography}Body) —
+// no per-member wrapper route or <FamilyTabs> switcher (clean break).
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import ScrollNativeBody from "./scroll/ScrollNativeBody.vue";

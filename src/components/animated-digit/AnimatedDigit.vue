@@ -95,7 +95,7 @@ const derivedDigitCount = computed(() => {
 <style scoped>
 .animated-digit {
     /* Tabular-numerals + stylistic set 1 + lining numerals — the
-       speedtest hero number register lifted to primitive scope. */
+       consumer hero number register lifted to primitive scope. */
     font-feature-settings: "ss01", "tnum", "lnum";
     font-variant-numeric: tabular-nums lining-nums;
 }

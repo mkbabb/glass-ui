@@ -2,7 +2,7 @@
 // CONFIG-DEFAULT constants (the reference geometry, the neutral palette, the warp
 // spring + gravity-well + wander cadence DEFAULTS the `--constellation-*` tokens
 // override) live HERE (the feature-dir `constants.ts` convention) rather than at the
-// top of each carved feature module. The algorithm-LOCAL physics tuning (the well
+// top of each feature module. The algorithm-LOCAL physics tuning (the well
 // cool/ramp rates + their interlocking derivations, the dt-clamp, the settle band)
 // stays INTERNAL to `constellationInteraction.ts` — it travels with the algorithm,
 // not the package config surface.
@@ -88,7 +88,7 @@ export const DEFAULT_PINNED_DRIFT_DUR = 2600; // ms — per-leg easeInOutQuad du
 export const DEFAULT_PINNED_DRIFT_IDLE = 6000; // ms — min rest between legs
 export const DEFAULT_PINNED_DRIFT_JITTER = 8000; // ms — random extra rest per leg
 
-/** R5-8 — the shipped visual-size floor: `kVisOf` === `k` for every canvas
+/** The visual-size floor: `kVisOf` === `k` for every canvas
  *  ≥ ~0.72·BASE_WIDTH ≈ 922px (incl. the 1280 export frame — byte-identical
  *  there by construction); below it the marks stop crushing sub-pixel. */
 export const DEFAULT_K_FLOOR = 0.72;
@@ -109,9 +109,9 @@ export const E_MAX = MAX_NODES * MAX_DEGREE;
  * The pointer-parallax depth default (§6). Each node carries a seeded depth `z ∈ [0,1]`;
  * the pointer offsets node screen positions by `parallax · z · (pointer − center)` — a
  * cheap pointer-parallax giving the flat lattice apparent depth (the Awwwards "living
- * network" register). DEFAULT-OFF (`0` — the flat lattice). The prior default-on `0.08`
- * slid the WHOLE lattice ~58px on a center→corner pointer sweep (every node tracked the
- * cursor, read as a bug, not depth — `proof` D1-constellation live measure). Depth is now
+ * network" register). DEFAULT-OFF (`0` — the flat lattice). A default-on `0.08`
+ * slides the WHOLE lattice ~58px on a center→corner pointer sweep (every node tracks the
+ * cursor, reads as a bug, not depth). Depth is
  * OPT-IN: a consumer that wants the living-network parallax passes `parallax` (e.g. a
  * sub-perceptual `0.02`); the bare lattice never tracks the cursor.
  */

@@ -1,8 +1,8 @@
 /* glass/surface-axis.css — the ONE shared {glass·veil·opaque} surface-decoration
-   axis (BA.W-SURFACE-AXIS).
+   axis.
 
-   The house minted `--glass-level` (the opacity knob, AX.W54) and `--glass-tint-*`
-   (the legibility seam, AX.W55) as SHARED inheriting axes, but left the
+   The house minted `--glass-level` (the opacity knob) and `--glass-tint-*`
+   (the legibility seam) as SHARED inheriting axes, but left the
    {glass·veil·opaque} surface-DECORATION choice as a per-component one-off
    (`<Card>` had the only true axis; `<Dialog>` a binary string; everyone else
    none). This seam factors that choice ONCE — every enrolled surface composes a
@@ -14,7 +14,7 @@
      veil    — the borderless/rimless text-legibility plate: the `--glass-bg-quiet`
                fill + blur with the box border AND rim STRIPPED (the boxed look
                reads as a dividing line on a text plate). Reads `--glass-bg-quiet`
-               + the W55 `--glass-tint-*` seam through the SAME `--glass-*` ladder,
+               + the `--glass-tint-*` seam through the SAME `--glass-*` ladder,
                so `--glass-level` / the bright-bucket darken retune it in lockstep
                with every glass surface — NO veil-local recipe fork.
      opaque   — the `--glass-level:0` solid-card escape (the `.glass-opaque` rung):
@@ -76,7 +76,7 @@
        with `blur(0)`. A surface that ALSO carries a base tier keeps its glass
        edge/rim/under-shadow (a solid plate with a glass edge, not a bare div).
 
-       THE SUBSTITUTION-VS-INHERITANCE TRAP (the recurring AX.W55 / dock-scale
+       THE SUBSTITUTION-VS-INHERITANCE TRAP (the recurring dock-scale
        class, live-found in the π readback): the `--glass-bg-*` tier tokens bake
        `var(--glass-level)` at their `:root` DECLARATION (where level=1), so a
        DESCENDANT element's `--glass-level: 0` does NOT re-resolve the `:root`-baked
@@ -102,7 +102,7 @@
     }
 
     /* ── .paper-ink-mark — the PAPER ink-hairline MARK register ────────────────
-       (BA.W-SURFACE-AXIS scope 8). The 2px `--foreground` ink mark on a paper
+       The 2px `--foreground` ink mark on a paper
        surface — NO plate, NO blur, NO glass. This is a MARK register, NOT a
        `[data-surface]` plate rung: a `[data-surface]` value DECORATES a glass
        plate (fill + edge + rim); `.paper-ink-mark` is the opposite — a bare ink
@@ -111,8 +111,8 @@
        the plate axis but DISTINCT from it — the canon note is in CLAUDE.md.
 
        ≥2 consumers at birth: (1) the math-paper section rail (the `border-l-[3px]`
-       family composes it for a VERTICAL left-edge ink rail); (2) W-TABS's re-cut
-       underline indicator (a HORIZONTAL 2px ink mark — W-TABS CONSUMES this seam,
+       family composes it for a VERTICAL left-edge ink rail); (2) the re-cut
+       underline indicator (a HORIZONTAL 2px ink mark — CONSUMES this seam,
        a shape gap there triumvirates HERE per the DAG §5 seam rule). The register
        exposes ONE knob (`--paper-ink-mark-weight`, default 2px) + the ink color;
        the consumer applies the weight on whichever edge/axis it draws (a left
@@ -123,7 +123,7 @@
     }
 
     /* ── .glass-well — the recessed SEATED field register ──────────────────────
-       (BI.W-SURFACE-EXTRACT, value.js P3 WELL rung ADMIT). A field/track seated
+       (value.js P3 WELL rung ADMIT). A field/track seated
        INTO the surface: the `--card` plate stepped a whisper darker toward the warm
        `--foreground` ink + a soft inset groove, so a nested input/meter reads as
        recessed. It is a FIELD register (like `.input-bar`), NOT a `[data-surface]`

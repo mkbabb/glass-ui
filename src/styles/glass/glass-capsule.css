@@ -1,5 +1,5 @@
 /* ════════════════════════════════════════════════════════════════════════
-   .glass-capsule — the ONE shared glassy register (BD.W-TAB-IOS-CAPSULE).
+   .glass-capsule — the ONE shared glassy register.
 
    The warm-transmissive lifted lozenge + the recessed warm channel it rides in
    + the glass hover/press register, factored ONCE so EVERY consumer (segmented
@@ -8,8 +8,8 @@
    overfitting bar cleared by extraction. The tabs facility is the reference
    implementation; "make buttons glassy like the tabs" is a one-recipe substitution.
 
-   Clean break — the prior inline `.segmented-indicator` composite (fill + rim +
-   lift) moves here VERBATIM and the pill COMPOSES the class. No alias, no legacy.
+   The `.segmented-indicator` composite (fill + rim + lift) lives here and the
+   pill COMPOSES the class. No alias, no legacy.
 
    @layer components, @import-ed in index.css AFTER the glass ladder (so the
    `--glass-bg-*`/`--glass-rim-*`/`--glass-shadow-*` tokens resolve) and BEFORE
@@ -30,13 +30,13 @@
 
 @layer components {
     /* ── .glass-capsule — the raised lit warm-glass lozenge ──
-       The fill reads the shared element-level oklab-tinted floating pair (the W55
+       The fill reads the shared element-level oklab-tinted floating pair (the
        adaptive seam on `.segmented-indicator` and `.glass-capsule`) — over a bright
        field it darkens-to-legible, over a calm
        field it stays warm-cream/near-white. The FORWARD-ness comes from the rim +
        lift, NOT from cranking the same-hue alpha. */
     .glass-capsule {
-        /* The WARM-FLOOR re-invent (BD.W-TAB-IOS-CAPSULE C6). The bare
+        /* The WARM-FLOOR re-invent. The bare
        `--glass-bg-floating-tinted` can desaturate to near-gray over a vibrant
            aurora (live-measured oklab(0.793 0.005 0.012), chroma 0.0128 < 0.02).
            Compose a SMALL floor toward an explicitly WARM oklch source so the
@@ -45,7 +45,7 @@
            and only lifts under the bright bucket). This exercises the REAL
            `color-mix(in oklab)` seam over the live light-dark() fill (NOT a
            hardcoded hsl look-alike — the amendment's fake-gate ban). The source is
-           a warm oklch (build-trap-(d) safe form — warm color, never bare
+           a warm oklch (the black-premultiply-safe form — warm color, never bare
            `transparent`); at `--glass-capsule-warm-floor: 16%` the painted capsule
            clears meanChroma ≥ 0.02 BOTH modes with negligible L lift (stays near-
            white). `--glass-capsule-warm` is a warm cream amber both modes. */
@@ -108,11 +108,11 @@
             --specular-intensity var(--duration-fast) var(--ease-standard);
     }
     /* The SHARED specular-lift step — declared ONCE here, COMPOSED by both the hover
-       register AND the drag-lift (BD.W-TAB-IOS-CAPSULE C7: one declaration of the
+       register AND the drag-lift (C7: one declaration of the
        `--glass-specular` catch-light step, never a parallel fork). `.glass-drag-lift`
        (segmented-tabs.css) re-points its grabbed-state catch-light onto THIS step
        rather than re-declaring `--glass-specular`; it adds only its distinct grabbing
-       bits (the grab cursor + the `will-change` compositor hint). The W-GLASS-CAL
+       bits (the grab cursor + the `will-change` compositor hint). The 
        sub-perceptual catch — a hair brighter at the specular edge, disco-FREE. */
     .glass-capsule-hover:hover,
     .glass-drag-lift {
@@ -139,12 +139,12 @@
         }
     }
 
-    /* ── BI.W-DOCK-CONTROLS — the folded dock-control safe-inset (the face token) ──
+    /* ── The folded dock-control safe-inset (the face token) ──
        The `--dock-control-safe-inset` 10% band-aid the user rejected FOLDS into the
        FACE: the painted plate insets (`background-clip: content-box` over the inset
        `padding`), while the HIT CELL stays the full `--dock-control-size` (the WCAG
        2.5.5 ≥44px touch floor on the CELL, never the plate). Hit box ≠ paint box —
-       the clip fix (W-DOCK-SPINE's L1 `overflow: visible`) and the touch floor are
+       the clip fix (the L1 `overflow: visible`) and the touch floor are
        now DECOUPLED: A11Y-5's 17×40px defect dies because the hit box reads the full
        cell while the painted plate insets independently.
 

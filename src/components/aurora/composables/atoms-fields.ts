@@ -37,7 +37,7 @@ export const COLOR_ENERGY = {
     saturation: { calm: 0.85, vivid: 1.2 }, // 0.6..1.3 budget; 0.5→1.0 (default)
     valueVariance: { calm: 0.04, vivid: 0.14 }, // 0..0.3; 0.5→0.09
     breathDepth: { calm: 0.03, vivid: 0.08 }, // 0..0.15; 0.5→0.055
-    temperatureShift: { calm: 0.15, vivid: 0.5 }, // the palette warm/cool coupling (folded from the old mood recipe)
+    temperatureShift: { calm: 0.15, vivid: 0.5 }, // the palette warm/cool coupling
     // Chroma-adaptive hue-walk width in degrees. A calm
     // field stays a tight analogous neighbourhood (16°); a vivid field widens the walk to
     // ~44° so the derived ramp carries a real SECOND accent hue (a monochrome ramp reads
@@ -48,8 +48,8 @@ export const COLOR_ENERGY = {
 export const MOTION_FIELDS: Record<AuroraMotionAtom, MotionFields> = {
     still: { nucleiDrift: 0, paletteDrift: 0, warpDrift: 0, breathDepth: 0 },
     // `breathing` uses actual spatial and chromatic drift.
-    // HEAD shipped all three spatial/chromatic drift terms ZERO, so the frag's
-    // surviving `col *= 1 + 0.05·breath·0.5` was a ±2.5% global luminance pulse
+    // All three spatial/chromatic drift terms are ZERO, so the frag's
+    // surviving `col *= 1 + 0.05·breath·0.5` is a ±2.5% global luminance pulse
     // only (gl.readPixels ±1–2/255, SUB-perceptible — the register read DEAD on
     // any calm seed for every consumer). The terms gain SMALL non-zero life — ~1/3
     // of `drifting`'s drift + a touch more breath amplitude — so a calm-seed aurora

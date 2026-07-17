@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   BB.W-METAL-SHIMMER — the brand-metal utility family
+   The brand-metal utility family
    ═══════════════════════════════════════════════════════════════════════════
    ONE single-home partial for the gold·silver·bronze metal register (so a new
    metal pop is ONE class, not a re-paste). Three registers share the same
@@ -11,17 +11,17 @@
      • `.metal-{gold,silver,bronze}-border` — the swept metallic RIM (the §N6
        selected-item-border consumer): the same gradient painted as a masked
        band on a `::before` overlay (the house
-       border-ring idiom, BI.W-METAL-RIM-BAND), swept by the SAME keyframe — so the
+       border-ring idiom), swept by the SAME keyframe — so the
        rim FOLLOWS `border-radius` (a `border-image` squared the corners).
      • `.metal-rainbow-rim` — the prismatic gilt-figure / record-badge rim: it
-       COMPOSES W-GLASS-ACCENT's `--glass-accent` rim seam (it does NOT re-author
+       COMPOSES the `--glass-accent` rim seam (it does NOT re-author
        the rim) by binding the accent channel to a swept rainbow hue.
 
    Each class binds the shared `--metal-stop-*` slots to its palette. The
    `metal-shimmer-sweep` keyframe (animations.css) is PURE position — ZERO baked
    metal color — so the SAME keyframe sweeps any of the three metals depending only
    on which slots the class bound. A silver/bronze sweep is a NEW CLASS that binds
-   the slots, NEVER a forked keyframe (the N-copy this wave exists to kill).
+   the slots, NEVER a forked keyframe (no N-copy duplication).
 
    THE PRM-STATIC BRACKET (the §6 calm register, the `.gold-shimmer` model byte-
    faithfully): every utility paints the FULL static metal gradient at REST (the
@@ -53,7 +53,7 @@
         -webkit-background-clip: text;
         color: transparent;
 
-        /* ── BC.W-AX-METAL-GLOW — the gold catch-light (the lit-metal halo) ──────
+        /* ── The gold catch-light (the lit-metal halo) ──────
            A soft glow halo of the metal's OWN base hue behind the gradient text-clip
            so the gold reads as LIT metal (light catching its surface), not a flat
            gradient fill. Because `background-clip: text` makes the text transparent,
@@ -98,17 +98,15 @@
     }
 
     /* ── The swept metallic RIM — a MASKED BAND on a dedicated ::before overlay ──
-       (BI.W-METAL-RIM-BAND — the ruling-10 band-on-overlay reform.)
 
        `border-image` SQUARES the corners on a rounded host, so the swept rim is
-       re-expressed as the house masked border-ring idiom: a
-       the shared metal gradient painted
-       on a `::before` OVERLAY whose `mask-composite: exclude` cuts a border-box
+       re-expressed as the house masked border-ring idiom: the shared metal
+       gradient painted on a `::before` OVERLAY whose `mask-composite: exclude` cuts a border-box
        fill AGAINST a padding-box fill, leaving ONLY the border band — which FOLLOWS
        `border-radius` exactly. The band lives on the OVERLAY, never the host
-       (ruling 10): the host's own content/backdrop is untouched (a glass card
-       keeps its interior; the rim hugs its radii — the pass-4b direct-host
-       application was the regression pass-5 re-forms).
+       the host's own content/backdrop is untouched (a glass card
+       keeps its interior; the rim hugs its radii — a direct-host fill would
+       tint the host's own interior).
 
        The `metal-shimmer-sweep` keyframe (pure `background-position`, animations.css)
        rides the ::before band UNCHANGED — ONE keyframe, both registers (text-clip +
@@ -201,25 +199,25 @@
     }
 
     /* ── The prismatic rainbow rim (the gilt-figure / record-badge sheen) ─────
-       COMPOSES W-GLASS-ACCENT's `--glass-accent` rim seam (it binds the accent
+       COMPOSES the `--glass-accent` rim seam (it binds the accent
        channel, it does NOT re-author the rim `color-mix`/`::before`). The host is
        a glass surface (carrying the `--glass-material-rim` ring + the
-       `--glass-border-accent` border W-GLASS-ACCENT minted); this utility drives
+       `--glass-border-accent` border minted); this utility drives
        the accent through the spectrum so the rim sheen SHIFTS through the rainbow.
        `--glass-accent` is a typed `<color>` `@property` (NOT animatable as a
        conic per-frame), so the prismatic shift is the swept metal-gradient overlay
        PLUS the accent engaged at a metal-warm hue — the rim reads as a shifting
-       metallic sheen over the W-GLASS-ACCENT rim. The accent STRENGTH lifts to a
+       metallic sheen over the rim. The accent STRENGTH lifts to a
        rim whisper (the demo specimen engages ~45%, the accent's documented ceiling
        for the rim/glint). The sweep is the SAME `metal-shimmer-sweep` over the
        rainbow band on the host's own background. */
     .metal-rainbow-rim {
-        /* Engage W-GLASS-ACCENT's rim seam at a warm-metal hue + the rim whisper
+        /* Engage the rim seam at a warm-metal hue + the rim whisper
            strength (the accent channel — NOT a second rim recipe). */
         --glass-accent: var(--color-gold);
         --glass-accent-strength: 45%;
         /* The swept prismatic band rides the host's own background-image (the rim
-           ring + border come from the W-GLASS-ACCENT seam the host already carries). */
+           ring + border come from the seam the host already carries). */
         background-image: linear-gradient(
             90deg,
             var(--rainbow-red),
@@ -241,7 +239,7 @@
        slow `--duration-metal` (6s) clock — the calm dignified pass. */
     @media (prefers-reduced-motion: no-preference) {
         /* the text-clip metals + the rainbow rim sweep on the HOST background; the
-           `-border` metals sweep on their `::before` band overlay (BI.W-METAL-RIM-
+           `-border` metals sweep on their `::before` band overlay (
            BAND — the band now lives on the overlay, so the sweep does too). ONE
            keyframe, both registers. */
         .metal-gold,

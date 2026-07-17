@@ -1,4 +1,4 @@
-// BC.W-VIZ-FOURIER — the typed-struct SOURCE OF TRUTH for the WebGPU compute + render
+// The typed-struct SOURCE OF TRUTH for the WebGPU compute + render
 // uniform buffers + the phasor table + the CPU view-fit.
 //
 // The WGSL `ComputeUniforms` / `RenderUniforms` structs and the JS `ArrayBuffer` write
@@ -72,7 +72,7 @@ export function packFourierComputeUniforms(
 //   r3      : vec4<f32>  off  48  (squashGain, celGain, edgeMargin, _pad)  ← FOURIER-LOOM §2b/§3b
 //             (the head tangent + speed are derived IN-shader from curveSamples[0] vs [1] —
 //              the SAME evaluator on both engines, so the anisotropy is parity-safe by
-//              construction; only the two scalar GAINS are uploaded. BI.W-FOURIER-RIBBON adds
+// construction; only the two scalar GAINS are uploaded; it also adds
 //              `edgeMargin` — the instanced-quad AA-feather slop in MODEL units.)
 //   ints    : vec4<i32>  off  64  (sampleCount, armCount, stopCount, _pad)
 //   palette : array<vec4<f32>, 4>  off 80  (linear-sRGB rgb + _pad)
@@ -140,7 +140,7 @@ export function trailWidthToModel(
     scale: number,
     canvasCssMin: number,
 ): number {
-    // BG.W-FOURIER-BEAUTY B1 — FLOOR the head width so the tapered MID-BODY clears
+    // FLOOR the head width so the tapered MID-BODY clears
     // RIBBON_MID_FLOOR_PX (2.5px CSS) at every DPR: even a consumer setting `trailWidth: 1`
     // paints a ≥2.5px mid-body ribbon, never a 1px hairline polyline.
     const headPx = Math.max(trailWidthPx, RIBBON_HEAD_FLOOR_PX);
@@ -186,7 +186,7 @@ export function packFourierRenderUniforms(
     f32[R_OFF.r2 + 3] = rainbowChain ? 1 : 0;
 
     // r3 — FOURIER-LOOM §2b/§3b: the squash + cel gains (the tangent is derived in-shader) +
-    // BI.W-FOURIER-RIBBON: the instanced-quad AA-feather slop (model units) padding each bbox.
+    // The instanced-quad AA-feather slop (model units) padding each bbox.
     f32[R_OFF.r3 + 0] = squashGain;
     f32[R_OFF.r3 + 1] = celGain;
     f32[R_OFF.r3 + 2] = edgeMargin;

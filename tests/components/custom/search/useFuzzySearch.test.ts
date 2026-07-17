@@ -1,7 +1,7 @@
-// BC.W-FUZZY-HARDEN — the composable behaviour floor: the 120ms debounce, the
+// The composable behaviour floor: the 120ms debounce, the
 // selectedIndex reset on results change, the onKeydown Arrow/Enter/Escape nav,
 // and the onScopeDispose cleanup. The surface here is EXACTLY what the dock
-// composes (BC.W-DOCK-SEARCH) — these units pin it stable.
+// composes — these units pin it stable.
 import { effectScope, nextTick } from "vue";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { useFuzzySearch } from "@glass/components/search/composables/useFuzzySearch";

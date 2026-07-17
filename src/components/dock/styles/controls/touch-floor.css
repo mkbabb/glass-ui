@@ -1,19 +1,18 @@
-/* Dock control touch-floor overrides (AZ.W-CARVE partial 5 of 5;
-   carved out of dock-controls.css).
+/* Dock control touch-floor overrides.
 
    Two cohorts, both scoped overrides that MUST cascade AFTER the base control
    families (so they @import last):
      1. the coarse-pointer per-button touch-target floor on the STANDALONE
         `.dock-icon-button` (the in-dock floor is the `--dock-scale` × `max(…,44px)`
         clamp; this is the no-`.glass-dock`-ancestor half).
-     2. the vertical-dock rail SELECTED register (AX.W06 F2/F3 hoist +
-        AZ.W-REGISTER-IOS — the selected glyph reads warm-ink `--foreground` and
+     2. the vertical-dock rail SELECTED register (hoist +
+        The selected glyph reads warm-ink `--foreground` and
         the leading-edge accent BAR is the translucent `--dock-selected-accent`
         luminance-lift, the iOS-26/27 register).
    Opens its OWN `@layer components`; @import-ed after triggers.css. */
 
 @layer components {
-    /* AX.W45 D15 — coarse-pointer touch floor, button-level half. The IN-DOCK floor
+    /* Coarse-pointer touch floor, button-level half. The IN-DOCK floor
        is subsumed into the `--dock-scale` multiplier + the `max(…, 44px)` clamp in
        the dock.css density cascade (the in-dock control-size grows ~1.5× past the
        44px target, the clamp guarantees the floor even below 1.0× scale). This
@@ -28,13 +27,13 @@
             min-inline-size: var(--dock-touch-target, 2.75rem);
         }
 
-        /* ATLAS-N C3 (NF.1 rider) — the compact/dense DOCK-TRIGGER 44px tap floor via a
+        /* the compact/dense DOCK-TRIGGER 44px tap floor via a
            HIT-SLOP, not a box grow. The select/dropdown triggers size off
            `min-height: auto` + padding (NOT `--dock-control-size`), so on a compact/dense
            rung a coarse-pointer trigger paints ~32×24 — below the WCAG-2.5.5 chrome floor
-           (the atlas census `.dock-trigger.dock-dropdown-trigger` = 32×24). A centred
+           (the measured census `.dock-trigger.dock-dropdown-trigger` = 32×24). A centred
            `::after` hit-slop extends the POINTER target to `--dock-touch-target` in each
-           axis WITHOUT painting or growing the box (the atlas N-SPEC §4.5 chrome-floor
+           axis WITHOUT painting or growing the box (the chrome-floor
            idiom — `--dock-control-floor`/`--dock-touch-target` names survive per Q4). The
            slop is a transparent child of the button, so a tap anywhere within it fires the
            button; `max(100%, …)` is SELF-LIMITING — a trigger already ≥ floor gets a slop
@@ -54,33 +53,28 @@
         }
     }
 
-    /* AX.W06 F2/F3 — the HOISTED refined rail nav-item polish. The demo's
-       `SidebarDock` dogfooded the active-category affordance (accent glyph tint +
-       a left-edge accent rule) as DEMO-PRIVATE chrome (`demo/layout/dock-nav.css`
-       `.demo-sidebar-item.is-active`), so a consumer reaching for a vertical nav
-       dock (AZ.W-DOCK-TAXONOMY — `orientation="vertical"`, the prior `variant="rail"`)
-       got the UN-refined bare `.is-active` colour shift. This hoists the refined
-       treatment into the shipped vertical-dock CSS so the demo == the shipped contract
-       (the demo no longer re-derives a worse rail by hand). The tap-squish press
+    /* The refined vertical-nav active-item polish, shipped. A consumer reaching for a
+       vertical nav dock (`orientation="vertical"`) gets the refined active-category
+       affordance (accent glyph tint + a leading-edge accent rule) from the shipped
+       vertical-dock CSS, not a bare `.is-active` colour shift. The tap-squish press
        feedback (the `:active` `--scale-press-dock` squish) + the right-anchored
-       tooltips are already the dock-control family + the consumer's `<Tooltip
-       side="right">` — this carries the active-item ACCENT, the half the variant
-       CSS did not own.
+       tooltips are the dock-control family + the consumer's `<Tooltip side="right">`;
+       this rule carries the active-item ACCENT.
 
-       AZ.W-REGISTER-IOS — the SELECTED register is now the iOS luminance-lift, at
-       the ROOT (R3-6): the selected GLYPH reads warm-ink `--foreground` (NOT a
-       saturated brand hue — the prior `var(--dock-rail-active-accent, var(--primary))`
-       brand fallback is retired off the GLYPH), and the leading-edge accent BAR
-       demotes to `--dock-selected-accent` (a translucent foreground luminance-lift,
+       The SELECTED register is the iOS luminance-lift, at
+       the ROOT: the selected GLYPH reads warm-ink `--foreground` (NOT a
+       saturated brand hue — NOT a `var(--dock-rail-active-accent, var(--primary))`
+       brand fallback on the GLYPH), and the leading-edge accent BAR
+       is `--dock-selected-accent` (a translucent foreground luminance-lift,
        NOT a solid brand stripe). A selected rail item reads as the glass material-
        lift plate (`--dock-control-active-bg` = `--glass-bg-floating`) + this quiet
        luminance bar — the iOS-26/27 register. The `--dock-selected-accent` token
-       (offsets-sizing.css) is the SINGLE retint knob; the demo no longer overrides
-       it to `--viz-fourier` (the brand red survives only as static wordmark/viz/CTA
+       (offsets-sizing.css) is the SINGLE retint knob; the demo does not override
+       it to `--viz-fourier` (the brand red is reserved for static wordmark/viz/CTA
        ink). The active state reads the SHIPPED four-state hooks the dock-control
-       family already activates (`.is-active`, `aria-current="page"`,
+       family activates (`.is-active`, `aria-current="page"`,
        `[aria-pressed="true"]`). Scoped to a `.glass-dock.vertical` descendant
-       icon-button — a horizontal dock or the layer-switcher rail are untouched. */
+       icon-button — a horizontal dock or the layer-switcher rail are unaffected. */
     .glass-dock.vertical .dock-icon-button {
         position: relative;
     }
@@ -98,8 +92,8 @@
        it short + centred. The width/inset all read `--dock-rail-accent-*` tokens so
        the geometry is tunable from one place.
 
-       AZ.W-REGISTER-IOS — the bar paints `--dock-selected-accent` (a translucent
-       foreground luminance-lift), NOT the prior `var(--dock-rail-active-accent,
+       The bar paints `--dock-selected-accent` (a translucent
+       foreground luminance-lift), NOT a `var(--dock-rail-active-accent,
        var(--primary))` saturated brand stripe. The selected read is the glass plate
        + this quiet luminance bar — the iOS register, no brand hue on an interactive
        state. `--dock-selected-accent` is the single retint knob (offsets-sizing.css). */

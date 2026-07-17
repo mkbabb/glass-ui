@@ -1,12 +1,12 @@
 <script setup lang="ts">
 // DockStage — the demo-private dock-staging chassis.
 //
-// ONE shared procedural backdrop behind a column of dock demos. The flagship dock
-// demos used to sit on FLAT `bg-card/40 p-8` panels (glass over a flat substrate is
-// invisible glass); this chassis stages them over a single live aurora field so the
+// ONE shared procedural backdrop behind a column of dock demos. This chassis stages the
+// flagship dock demos over a single live aurora field — NOT FLAT `bg-card/40 p-8` panels,
+// where glass over a flat substrate is invisible glass — so the
 // dock's glass + adaptive-luminance read as LIQUID glass, not a gray pill on charcoal.
 //
-// ONE GL context per page (the one-GL-per-route budget, BA invariant 9): the chassis
+// ONE GL context per page (the one-GL-per-route budget): the chassis
 // renders the shared <Aurora> ONCE behind the slotted column, NOT one aurora per demo.
 // The backdrop is OFFSCREEN-PAUSED BY CONSTRUCTION — <Aurora> composes the shipped
 // `useIntersectionPause` seam + `content-visibility: auto` internally, so when the
@@ -35,12 +35,11 @@ const props = withDefaults(
          * The staged aurora field. Defaults to the WARM colorful dock hero field
          * (`heroAuroraConfig("cat-dock")` — a coral/amber warm-projected drift, chroma
          * 0.13) so the dock's warm-cream glass reads as LIQUID glass over a rich field
-         * that BELONGS to the warm-cream identity (the §L1 lens needs a colorful
-         * backdrop to bend + concentrate — warmth is the identity, not blue). The prior
-         * OPENAI_SKY cerulean default read the dock FIELD cold/blue, contradicting the
-         * warm identity the composited-gestalt gate enforces (-
-         * GATE — the aurora-studio doctrine: "warm-cream Dawn is the DEFAULT lead; the
-         * blue Sky is a named non-default preset"). A consumer may stage a different config.
+         * that BELONGS to the warm-cream identity (the lens needs a colorful
+         * backdrop to bend + concentrate — warmth is the identity, not blue). A cerulean
+         * default (e.g. OPENAI_SKY) would read the dock FIELD cold/blue, contradicting the
+         * warm identity — the aurora-studio doctrine: "warm-cream Dawn is the DEFAULT lead; the
+         * blue Sky is a named non-default preset". A consumer may stage a different config.
          */
         config?: AuroraConfig;
     }>(),
@@ -57,7 +56,7 @@ const props = withDefaults(
 // dock no longer needs the canvas. The scoped `backgroundCanvas` is RETAINED for the
 // sibling dock stories (layers, sections, cta-receive, dock-search) that still bind
 // `:background-canvas` — a now-harmless no-op there (those docks stand down under the same
-// shared marker), migrated off in the story-band pass. <Aurora> exposes its `canvasRef`.
+// shared marker). <Aurora> exposes its `canvasRef`.
 const auroraRef = useTemplateRef<{
     canvasRef: HTMLCanvasElement | null;
     pause: () => void;

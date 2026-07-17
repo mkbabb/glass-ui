@@ -1,7 +1,7 @@
 /*
  * fonts.css — payload-bearing @font-face declarations (OFL woff2 faces)
  *
- * AM-W1-α (entry-path weight split) — these are the ONLY @font-face rules
+ * AM- (entry-path weight split) — these are the ONLY @font-face rules
  * that carry a font binary. At publish time the build plugin
  * (vite.config.ts → publishStyleAssets) base64-inlines each
  * `url("@mkbabb/glass-ui/fonts/<family>/<face>.woff2")` into a
@@ -22,7 +22,7 @@
  * payload and remain in `typography.css` on the critical path — they are
  * what paints during the `font-display: optional`/`swap` window, so they
  * are genuinely first-paint critical. The metric overrides on those
- * fallback faces (Capsize-calibrated; AC.W6b) reference the exact
+ * fallback faces (Capsize-calibrated) reference the exact
  * geometry of the faces declared here, so the split is purely a
  * load-order/weight concern: the cascade is identical once both files load.
  *
@@ -33,21 +33,21 @@
  * closure), so the inline rewrite applies here exactly as it did when these
  * faces lived in typography.css. No `url()` resolves out of `dist/`.
  *
- * AM-W7-δ separate-files refinement — DEFERRED (base64 KEPT). The W1-close
+ * AM--δ separate-files refinement — DEFERRED (base64 KEPT). The -close
  * audit proposed de-base64ing THIS file to dist-relative
  * `url("../fonts/<face>.woff2")` (referencing the already-shipped
  * `dist/fonts/*` woff2 via the `./fonts/*` export), so the browser would
  * fetch only the USED faces — unicode-range-deferring the ~35 KB latin-ext
  * pair + gaining per-face HTTP caching. That refinement is STRUCTURALLY
- * BLOCKED by the consumer's font-delivery idiom, verified at AM-W7-δ:
+ * BLOCKED by the consumer's font-delivery idiom, verified at AM--δ:
  *
- *   speedtest's W1-α.2 consumer loads this file via a Vite `?url` import
+ *   a consumer loads this file via a Vite `?url` import
  *   (`import fontsHref from "@mkbabb/glass-ui/styles/fonts?url"`), which
  *   emits fonts.css VERBATIM as a content-hashed asset into the consumer's
  *   OWN `dist/assets/fonts-<hash>.css` and injects it as an async `<link>`.
  *   `?url` does NOT parse the CSS or follow its `url()` refs — so the
  *   referenced woff2 are NEVER copied across the package boundary into the
- *   consumer's dist (confirmed: zero `*.woff2` in speedtest/dist). A
+ *   consumer's dist (confirmed: zero `*.woff2` in the consumer dist). A
  *   dist-relative `url("../fonts/…")` inside the emitted
  *   `/assets/fonts-<hash>.css` would resolve at runtime to `/fonts/…` on
  *   the CONSUMER's origin, which has no such file → 404 on every face,
@@ -90,7 +90,7 @@
 }
 
 /* Plus Jakarta Sans — Latin-ext subset (extended Latin diacritics, IPA,
-   wider Latin script). Carried because speedtest's ISP-name register
+   wider Latin script). Carried because a consumer's long-string register
    may surface non-ASCII Latin (e.g., Spectrum, Frontier, AT&T variants
    transliterated). Lazy: only loads if a glyph in the range renders. */
 @font-face {

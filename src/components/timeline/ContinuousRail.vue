@@ -13,10 +13,8 @@ import type { TimelineSegment } from "./types";
  * focusable descendants; the interactive markers are a sibling overlay
  * rendered by <ContinuousMarkers>.
  *
- * The split is a pure transposition out of the prior monolithic
- * ContinuousTimeline.vue: same DOM, same class names, same inline-style
- * bindings, same scoped CSS rules. The orchestrator owns state/geometry and
- * passes exactly the props this rail paints today.
+ * The orchestrator (`<ContinuousTimeline>`) owns state/geometry and
+ * passes exactly the props this rail paints.
  */
 defineProps<{
     segments: TimelineSegment[];

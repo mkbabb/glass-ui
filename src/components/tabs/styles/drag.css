@@ -1,9 +1,9 @@
 /* SegmentedTabs drag styles.
    The additive decoration tail of the SegmentedTabs grammar: the
    `.glass-drag-lift`/`.glass-drag-grabbable` pull affordance.
-   Carved from segmented-tabs.css to hold the no-god-module 500-line bound (BI.W-STYLE-REDRAIN); @import-ed by styles/index.css IMMEDIATELY AFTER segmented-tabs.css. Unlayered (matches segmented-tabs.css) — the tail is additive decoration with unique selectors, so the relocation is byte-isomorphic. */
+   A partial held under the no-god-module 500-line bound; @import-ed by styles/index.css IMMEDIATELY AFTER segmented-tabs.css. Unlayered (matches segmented-tabs.css) — the tail is additive decoration with unique selectors. */
 /* ════════════════════════════════════════════════════════════════════════
-   BB.W-DRAG-MORPH — the `.glass-drag-lift` decoration (the pull affordance).
+   The `.glass-drag-lift` decoration (the pull affordance).
 
    The `useDragMorph` consumer adds this class to the morph element while
    `dragging` is true (the SegmentedTabs indicator or DockLayerGroup travelling
@@ -28,7 +28,7 @@
     /* Promote to its own compositor layer for the 1:1 follow (the translate write
        is compositor-only; the hint keeps the plate off the main-thread paint). */
     will-change: transform;
-    /* BD.W-TAB-IOS-CAPSULE C7 — the grabbed-state catch-light COMPOSES the SHARED
+    /* The grabbed-state catch-light COMPOSES the SHARED
        specular-lift step declared ONCE in glass/glass-capsule.css (the
        `.glass-capsule-hover:hover, .glass-drag-lift { --glass-specular }` group), NOT
        a parallel `--glass-specular` fork. This block carries only the grabbing-distinct
@@ -36,7 +36,7 @@
 }
 
 /* ════════════════════════════════════════════════════════════════════════
-   BI.W-DRAG-REATTACH — the tabs `:draggable` z-order double-repair (Kill B).
+   The tabs `:draggable` z-order double-repair (Kill B).
 
    The SegmentedTabs pill indicator is a SIBLING behind the tab buttons: at rest
    `.segmented-indicator` is `z-0` (segmented-tabs.css) UNDER `.segmented-tab`

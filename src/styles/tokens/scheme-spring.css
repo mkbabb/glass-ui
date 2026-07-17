@@ -2,7 +2,7 @@
    EASING — Spring curves via linear() · per-spring duration clocks ·
    goo-morph dwell-flow curves · cubic-bezier cores + aliases.
 
-   Carved from scheme-motion.css's easing block to hold the 500-line bound. Imported by
+   A partial held under the 500-line bound. Imported by
    tokens.css immediately after scheme-motion.css — adjacent same-selector
    `:root {}` at the same cascade slot, so the spring/easing tokens resolve in the
    same order their consumers (color-radius and the later partials) expect.
@@ -112,7 +112,7 @@
        reads + the `--tab-indicator-duration` / `--dock-motion-resize` aliases)
        inherits tempo with zero edits; the public name is the reader, not a rename.
        At `--motion-tempo: 1` the reader resolves
-       `settle * 1`, byte-identical to the prior flat `-duration` value (no-op-at-
+       `settle * 1`, so the reader is inert at the identity tempo (no-op-at-
        rest). The JS spring engines read the SAME `--motion-tempo` (motionTempo.ts)
        and scale `response *= tempo`, so CSS_t90 == JS_t90 at any tempo.
 
@@ -158,8 +158,8 @@
        utilities/base.css) read this on their
        SPATIAL (scale/translate/rotate) leg, so EVERY interactive surface inherits
        spring WEIGHT by default — weight is a property of the transition VOCABULARY,
-       not a per-site `--motion-weight` checklist (the inversion: the prior default
-       was a bare `--ease-standard` bezier with ZERO weight).
+       not a per-site `--motion-weight` checklist — NOT a bare `--ease-standard`
+       bezier with ZERO weight.
 
        Spring-DERIVED — an alias to the canon interactive scale register (`smooth`,
        the single button/interactive scale spring). It is

@@ -88,7 +88,7 @@ uniform int   uMedium;
 // consulted when the hue-arc path is requested; OKLab-rectangular ramps (the
 // default for adjacent-hue stops) ignore it.
 uniform int   uHuePath;
-uniform int   uFlowPattern;   // 0 none, 1 radial, 2 swirl, 3 diagonal, 4 multi, 5 tensor/ETF (W4.1)
+uniform int   uFlowPattern;   // 0 none, 1 radial, 2 swirl, 3 diagonal, 4 multi, 5 tensor/ETF
 uniform vec2  uFlowFocal;
 uniform float uFlowAngle;
 uniform float uFlowCurl;
@@ -223,7 +223,7 @@ ${PCG_HASH_GLSL}
 // closes the color-space seam with this transfer before fragColor.
 ${OETF_GLSL}
 
-// W5 — the four Ottosson OKLab/OKLCh matrices + their space fns, spliced from the
+// The four Ottosson OKLab/OKLCh matrices + their space fns, spliced from the
 // SAME shared chunk the goo-blob uses (zero new payload, 1e-6-verified). PI is
 // defined first because the chunk's oklabToOklch folds the hue into [0, 2pi).
 const float PI = 3.141592653589793;
@@ -320,7 +320,7 @@ vec2 domainWarp(vec2 p, float t) {
     NL +
     AURORA_FLOW_GLSL +
     NL +
-    /* glsl */ `// ── Color utils (OKLCh — W5; the sRGB YIQ hueShift matrix is DELETED) ──────────
+    /* glsl */ `// ── Color utils (OKLCh; the sRGB YIQ hueShift matrix is DELETED) ──────────
 const vec3 W_LUMA = vec3(0.2126, 0.7152, 0.0722);
 
 // Linear sRGB → OKLab (the cbrt-LMS path; the goo-blob's srgbToOklab takes gamma,
@@ -330,7 +330,7 @@ vec3 linOklab(vec3 lin) {
   return LMS_TO_OKLAB * (sign(lms) * pow(abs(lms), vec3(1.0 / 3.0)));
 }
 
-// Broken color (W5) — hue + chroma jitter at fixed PERCEPTUAL lightness, in OKLCh.
+// Broken color — hue + chroma jitter at fixed PERCEPTUAL lightness, in OKLCh.
 // Broken color is hue variation at constant VALUE, which only OKLCh makes true (the
 // prior YIQ-style sRGB rotation muddied value). Van-Gogh and oil-pastel consume
 // this seam for per-stroke pigment jitter.
@@ -344,7 +344,7 @@ vec3 brokenColorJitter(vec3 c, float hueSeed, float valueSeed, float strength) {
   return max(oklabToLinearSrgb(oklchToOklab(lch)), vec3(0.0));
 }
 
-// Saturation (W5) — chroma scale at fixed L/H in OKLCh (the perceptual saturation,
+// Saturation — chroma scale at fixed L/H in OKLCh (the perceptual saturation,
 // replacing the luma-mix sRGB form). amt=1 is identity; amt<1 desaturates toward
 // the achromatic axis with NO lightness shift (the muddy-luma-mix grey is gone).
 vec3 saturate3(vec3 c, float amt) {
@@ -416,7 +416,7 @@ void main() {
   //   7 kuwahara (anisotropic-Kuwahara edge-preserving painterly finish).
   // van-Gogh is no longer a mediumOil passthrough; oil-pastel and crayon no longer
   // share a body — they share the SUBSTRATE (the tooth/placement helpers), not the
-  // dispatch body (slice 8 F0/F1). Kuwahara is OPT-IN (default-off — no preset selects
+  // dispatch body. Kuwahara is OPT-IN (default-off — no preset selects
   // it unless a config explicitly sets medium:"kuwahara"); the smooth default + the
   // van-Gogh HERO + the existing painterly bodies are byte-unchanged by its addition.
   if (uMedium == 1) col = mediumPastel(col, pN, t);

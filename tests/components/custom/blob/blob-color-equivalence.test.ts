@@ -26,14 +26,14 @@ import {
     type Vec3,
 } from "./metaball-color.glsl-port";
 
-// F9.R1 (BG.W-BLOB-SATELLITE-SHADE) — the REAL src `deriveBlobPalette` (the `/color`
-// leaf), for the bodyLightness/lightnessFloor companion assertions. Born-RED on HEAD:
-// the options are ignored until the src wire lands.
+// The REAL src `deriveBlobPalette` (the `/color`
+// leaf), for the bodyLightness/lightnessFloor companion assertions (the options
+// are ignored until the src wire lands).
 import { deriveBlobPalette } from "../../../../src/composables/color";
 
 /**
- * AU.W7 — the 8-assertion CPU-equivalence gate for the goo-blob OKLCh shader path
- * (DEC-AT-7 LINEAR half). `metaball-color.glsl-port.ts` is a line-for-line TS
+ * The 8-assertion CPU-equivalence gate for the goo-blob OKLCh shader path
+ * (LINEAR half). `metaball-color.glsl-port.ts` is a line-for-line TS
  * transcription of `metaball.frag.ts`'s color half; this gate asserts the port
  * matches value.js's canonical Ottosson core (`@mkbabb/value.js`) to 1e-6.
  *
@@ -277,7 +277,7 @@ describe("goo-blob OKLCh color path ≡ value.js Ottosson core (AU.W7, DEC-AT-7)
         expect(maxAbsDelta(correct, wrong)).toBeGreaterThan(1e-3);
     });
 
-    // (9) W11.a iridescence — the warm-biased sheen, after the gamut clamp, is
+    // (9) iridescence — the warm-biased sheen, after the gamut clamp, is
     // IN-GAMUT (the spectral term never pushes a pixel out of sRGB) AND the chroma
     // stays below the warm-pearl cap (the warm-bias holds; it never goes garish).
     it("(9) iridescence stays in gamut + holds the warm-pearl chroma cap", () => {
@@ -301,7 +301,7 @@ describe("goo-blob OKLCh color path ≡ value.js Ottosson core (AU.W7, DEC-AT-7)
         expect(maxChromaAfter).toBeLessThan(base[1] + 0.1);
     });
 
-    // (10) W11.a fake-SSS — the inner-glow + back-light only LIFT OKLCh L (and warm
+    // (10) fake-SSS — the inner-glow + back-light only LIFT OKLCh L (and warm
     // the hue), never darken; and the result clamps into gamut.
     it("(10) fake-SSS lifts L (never darkens) + stays in gamut", () => {
         const base = oklabToOklch(srgbToOklab(hexToRgb01("#3a7bd5")));
@@ -317,7 +317,7 @@ describe("goo-blob OKLCh color path ≡ value.js Ottosson core (AU.W7, DEC-AT-7)
         }
     });
 
-    // (11) W11.b multi-stop — OKLab interp of a VIVID pair with the midpoint
+    // (11) multi-stop — OKLab interp of a VIVID pair with the midpoint
     // chroma-bump holds chroma ABOVE the plain-mix midpoint (the linear OKLab mix
     // dips through grey on a hue-opposed pair; the bump corrects it).
     it("(11) OKLab interp midpoint chroma-bump holds chroma above the plain mix", () => {
@@ -332,7 +332,7 @@ describe("goo-blob OKLCh color path ≡ value.js Ottosson core (AU.W7, DEC-AT-7)
         expect(bumped[1]).toBeGreaterThan(plain[1]);
     });
 
-    // (12) F9.R1 — the per-satellite explicit-shade blend (the GL color-seam widen).
+    // (12) The per-satellite explicit-shade blend (the GL color-seam widen).
     describe("(12) per-satellite explicit-shade blend (blendSatColor)", () => {
         const base: Vec3 = oklabToOklch(srgbToOklab(hexToRgb01("#3a7bd5")));
 
@@ -400,8 +400,8 @@ describe("goo-blob OKLCh color path ≡ value.js Ottosson core (AU.W7, DEC-AT-7)
         });
     });
 
-    // (13) F9.R1 — the deriveBlobPalette bodyLightness/lightnessFloor companion. Born-RED
-    // on HEAD (the options are ignored → the pins/floors never fire).
+    // (13) The deriveBlobPalette bodyLightness/lightnessFloor companion (the options
+    // are ignored → the pins/floors never fire without the wire).
     describe("(13) deriveBlobPalette bodyLightness/lightnessFloor (the uSatColor companion)", () => {
         const seed = { L: 0.6, C: 0.1, h: 60 } as const;
         const SPREAD = 0.18; // the derivation default

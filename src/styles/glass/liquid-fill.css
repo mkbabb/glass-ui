@@ -1,5 +1,5 @@
 /* ════════════════════════════════════════════════════════════════════════
-   .glass-liquid-fill — the ONE shared liquid-fill register (BG.W-LIQUID-FILL).
+   .glass-liquid-fill — the ONE shared liquid-fill register.
 
    The warm glass-cylinder fill — a continuous rounded pill of warm tinted glass
    over a track — factored ONCE out of the Slider's `.slider-range` composite so
@@ -11,7 +11,7 @@
      · #1  Slider's `.slider-range` RE-READS it (the reference implementation —
            the glass cylinder you pull; it bridges its own `--slider-range-*`
            consumer-override tokens onto the register's knobs).
-     · #2  `<Progress variant="liquid">` — the glass meter (the speedtest fill
+     · #2  `<Progress variant="liquid">` — the glass meter (the fill
            meter consumes it on the 5.0.0 bump).
 
    PHASE-COLOUR COMPOSABLE, ZERO PER-SITE GLASS KNOWLEDGE. A surface tints the
@@ -33,7 +33,7 @@
    prefers-reduced-transparency / forced-colors flatten it with the rest of the
    band); no `backdrop-filter: url()`, no SVG goo, no WebGL. The 0-alpha mix leg is
    a WARM `oklch(… / 0)`, NEVER bare `transparent` (the WebKit black-premultiply
-   hole, build-trap-(d)).
+   hole).
    ════════════════════════════════════════════════════════════════════════ */
 
 @layer components {
@@ -55,7 +55,7 @@
             --glass-cell-backdrop-filter,
             var(--liquid-fill-blur, var(--glass-blur-quiet))
         );
-        /* The unified edge rim (W52) reads the cylinder's curvature; the under-shadow
+        /* The unified edge rim reads the cylinder's curvature; the under-shadow
            lays the glass-thickness floor at the leading edge. */
         box-shadow:
             var(--glass-material-rim),

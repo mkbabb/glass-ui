@@ -1,11 +1,11 @@
-// BE.W-AMBIENT-TINT — the ambient-hue histogram (a FREE rider), carved to this
-// colocated leaf at BG.W-COLOCATE (the WS4 luminance carve; ratchet-drain #9). The
+// The ambient-hue histogram (a FREE rider), in this
+// colocated leaf (the luminance leaf). The
 // `useGlassBackdropLuminance` observer COMPOSES it — the histogram accumulate/resolve
 // math + the value.js color-source live HERE ONCE, the observer keeps the sampling
 // loop + the DOM/canvas plumbing. Moving the value.js import WITH the histogram keeps
 // `proof:single-color-core` following the ONE color source into the leaf.
 //
-// iOS-27's defining glass move is richer than the W55 legibility darken: the plate
+// iOS-27's defining glass move is richer than the legibility darken: the plate
 // ABSORBS the room's HUE — a now-playing pill warms violet over "Your Essentials",
 // teal over "Chill" (the same pill, a sub-perceptual cast per album). This rides as
 // a 12-bucket chroma×alpha-weighted OKLCh hue histogram accumulated INSIDE the

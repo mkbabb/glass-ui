@@ -1,6 +1,6 @@
 /* tokens/shadow.css
    §7 shadows — the cartoon offset-stamp signature + the shadow-color base.
-   Carved from the tokens.css cascade root; @import-ed by tokens.css in
+   A partial of the tokens.css cascade; @import-ed by tokens.css in
    cascade order. Same :root cascade context as its siblings. */
 :root {
     /* ═══════════════════════════════════════════════
@@ -37,16 +37,16 @@
     /* The material rim remains a reusable shadow layer for finite glass plates. */
     --glass-material-rim:    0 0 0 0.5px color-mix(in srgb, var(--shadow-color) 5%, transparent);
 
-    /* ── BG.W-CARTOON-INK-GAMUT — the cartoon register's OWN warm-brown cel ink ──────
+    /* ── The cartoon register's OWN warm-brown cel ink ──────
        Decoupled from `--shadow-color` so a consumer retunes the cast without
        disturbing every elevation box-shadow. Built by EXTRACTING the warm
        `--foreground` hue (`oklch from`) at an IN-GAMUT warm-brown lightness+chroma:
        `clamp(0.28, l, 0.34)` lifts the near-black `--foreground` L into the brown
        midtone band, and `clamp(0.030, c, 0.050)` holds chroma in the range sRGB can
-       actually represent at that L. The maroon DEFECT this kills: the prior
-       `max(c, 0.11)` floor at `clamp(0.14, l, 0.18)` was OUT OF GAMUT at low L — sRGB
-       cannot hold C 0.11 at L 0.18, so the browser clamped each channel and the ink
-       collapsed to a flat maroon `rgb(49,0,0)` (B=0). Chroma-vs-darkness here is a
+       actually represent at that L. The maroon DEFECT this kills: a
+       `max(c, 0.11)` floor at `clamp(0.14, l, 0.18)` is OUT OF GAMUT at low L — sRGB
+       cannot hold C 0.11 at L 0.18, so the browser clamps each channel and the ink
+       collapses to a flat maroon `rgb(49,0,0)` (B=0). Chroma-vs-darkness here is a
        DESIGN choice, NOT a gamut law (the false "gamut-necessity"/"TECHNICOLOR-floor"
        comment is retired). The pin resolves a warm brown (R>G>B>0) at OKLab hue ~57°
        (light) / ~77° (dark) — both inside the [45,85]° warm register, never the maroon.
@@ -63,11 +63,11 @@
     /* `@supports not (oklch from …)` floors the ink to a named warm sRGB literal
        (a legacy engine gets a WARM — not gray, not maroon — stamp; NO dead inline
        literal). Re-derived from the in-gamut pin's RESOLVED sRGB at the light
-       `--foreground` (the painted L floors below the old `#4a3320` nominal):
+       `--foreground` (the painted L floors below a `#4a3320` nominal):
        `oklch(0.28 0.030 56°)` → ~rgb(52,37,26). */
     --cartoon-ink-fallback: #34251a;
 
-    /* BD.W-CARTOON-CEL-INK — the tiered cel-ink STAMP, re-pointed to the warm
+    /* The tiered cel-ink STAMP, re-pointed to the warm
        `--cartoon-ink` rungs at HARD 0-BLUR (lead + mid + contact all 0px — the cel
        edge; the landed 1–2px soft blur is the gray-smudge defect), keeping the LANDED
        down-LEFT geometry (REFINE-not-flip — the direction is coherent with the
@@ -84,7 +84,7 @@
         -4px 4px 0 var(--cartoon-ink-lead),
         -7px 7px 0 var(--cartoon-ink-mid),
        -11px 11px 0 var(--cartoon-ink-contact);
-    /* AY.W-COHERE E2 — the gel-bead ambient contact shadow (the GooBlob lit dome).
+    /* The gel-bead ambient contact shadow (the GooBlob lit dome).
        The metaball bead is NOT a Memphis sticker — it is a lit gel dome sitting IN
        a scene, so it casts a SOFT, NEAR-CENTERED, low-offset ambient contact
        shadow (small downward offset, a large soft blur, ambient-tinted), in the
@@ -110,7 +110,7 @@
     --blob-shadow-ambient: var(--blob-shadow-offset) var(--blob-shadow-blur)
         color-mix(in srgb, var(--blob-shadow-color) var(--blob-shadow-strength), transparent);
 
-    /* AZ.W-BLOB-STUDIO D4 — the GROUNDED gel-dome read. A single soft ambient cast
+    /* The GROUNDED gel-dome read. A single soft ambient cast
        reads as a swatch FLOATING — there is no contact, no AO, nothing that says the
        dome SITS on a surface. The grounded read is a TWO-RUNG drop-shadow composite
        (drop-shadow filters chain, and EACH follows the irregular metaball silhouette —
@@ -143,7 +143,7 @@
 
 }
 
-/* BD.W-CARTOON-CEL-INK — the relative-color-syntax fallback. On a legacy engine that
+/* The relative-color-syntax fallback. On a legacy engine that
    lacks `oklch(from …)`, `--cartoon-ink` would be invalid (the whole cast drops). Floor
    it to the named warm sRGB literal `--cartoon-ink-fallback` (NOT a dead inline literal)
    so the cel stamp degrades to a WARM — never gray, never empty — ink. The three
@@ -154,7 +154,7 @@
     }
 }
 
-/* BG.W-CARTOON-INK-GAMUT — prefers-contrast / reduced-transparency floor the inked edge
+/* Prefers-contrast / reduced-transparency floor the inked edge
    UP (the cel cast is a legibility ASSET, not decoration; PRT is NOT a no-op — the cast
    is translucent ink). The two byte-identical arms fold into ONE comma-joined query (the
    DRY dup pass). The deepen rides ALPHA (32→42%), NEVER chroma — the in-gamut warm-brown

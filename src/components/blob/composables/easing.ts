@@ -1,13 +1,13 @@
-// blob/composables/easing.ts — the component-scoped easing helpers (AV.W5.E,
-// D7). The blob hand-rolled three quadratic easing curves across two
+// blob/composables/easing.ts — the component-scoped easing helpers (D7).
+// The blob hand-rolled three quadratic easing curves across two
 // composables (`easeInOut` in useBlobMood, `easeIn`/`easeOut` in
 // useBlobSatellites). The use is SINGLE-COMPONENT (the blob alone), so the
 // correct fold is this component-scoped module — NOT a keyframes consumption (the
 // helpers are not in the keyframes LIGHT tier) nor a glass-ui-public composable.
 // PRIVATE to `/blob`: not re-exported from blob/index.ts, not on /api.
 //
-// The curves are byte-identical to the prior inline hand-rolls — the de-dup is
-// runtime-equivalent, not a re-derivation. The distinct smoothstep at
+// The curves are the shared de-dup of the per-site hand-rolls — runtime-equivalent,
+// not a re-derivation. The distinct smoothstep at
 // useBlobSatellites (`bt * bt * (3 - 2 * bt)`) is a different cubic form and
 // stays inline at its single site (KISS — no forced consolidation).
 
@@ -26,8 +26,8 @@ export function easeOut(t: number): number {
     return 1 - (1 - t) * (1 - t);
 }
 
-// BD.W-GOOBLOB-MERCURY-COLONY — the cartoon PINCH-OFF velocity curve (the named snap,
-// the C3·R1 cartoon-punch fold). A fission satellite's neck must NOT butter-morph open:
+// The cartoon PINCH-OFF velocity curve (the named snap,
+// the cartoon-punch curve). A fission satellite's neck must NOT butter-morph open:
 // the excursion rides anticipation (a hair of inward squash toward the bud point) →
 // FAST snap (the neck thins past the smin reach in a SHORT window) → overshoot → damped
 // recoil. This is the POSITION envelope `t in [0,1] → reach in [0,1]` (0 = merged

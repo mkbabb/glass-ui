@@ -235,7 +235,7 @@ fn fs_main(in: VSOut) -> @location(0) vec4f {
   }
   // transparent ground: the FACE composites UNDER the line, the SOURCE-OVER operator in
   // PREMULTIPLIED space (the page reads through the gutters). faceAlpha:0 → faceA=0 → the face
-  // term vanishes → vec4f(col·line, line) = byte-identical to the HEAD line-only render.
+  // term vanishes → vec4f(col·line, line) = the line-only render.
   let linePremult = (col * line) * u.field.x;            // line layer (the FieldAlpha global subtlety)
   let lineA = line * u.field.x;
   let facePremult = faceInk * faceA;                     // face layer premultiplied (faceA folds field.x)

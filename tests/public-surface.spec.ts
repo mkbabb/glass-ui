@@ -54,21 +54,21 @@ const uiRuntimeExports = [
     "DataTable",
     "Dialog",
     "DropdownMenu",
-    // BI.W-OVERLAY-UNION — HoverCard folded onto <Popover trigger="hover"> (clean break).
+    // HoverCard folded onto <Popover trigger="hover"> (clean break).
     "Label",
-    // BI.W-MULTISELECT-FOLD — MultiSelect folded onto <Combobox multiple> (clean break).
+    // MultiSelect folded onto <Combobox multiple> (clean break).
     "NumberField",
     "Popover",
     "Progress",
     "RadioGroup",
     "Select",
     "Separator",
-    // BI.W-DIALOG-PLACEMENT — Sheet folded onto <DialogContent placement> (clean break).
+    // Sheet folded onto <DialogContent placement> (clean break).
     "Skeleton",
     "Slider",
     "Switch",
     "Table",
-    // BA.W-TABS — `ui/Tabs` (the reka wrapper family) LEFT the public root barrel
+    // `ui/Tabs` (the reka wrapper family) LEFT the public root barrel
     // (the canonical panel-nav surface is now `<SegmentedTabs variant="underline">`
     // on `@mkbabb/glass-ui/tabs`; the reka substrate stays INTERNAL for the dock-rail
     // consumer only). The retirement is asserted in nonCoreRootRetirements below.
@@ -78,7 +78,7 @@ const uiRuntimeExports = [
     "Tooltip",
 ];
 
-// L.W1 — vueuse-bearing form primitives (Input, Textarea, Combobox*) and the
+// Vueuse-bearing form primitives (Input, Textarea, Combobox*) and the
 // Carousel family moved to the `/forms` + `/carousel` subpaths; the dark-mode
 // + keyboard composables moved to `/dark` + `/keyboard`. Root barrel no
 // longer re-exports any vueuse-bearing symbol (SCC trap closure).
@@ -93,14 +93,14 @@ const composableRuntimeExports = [
     "useTouchGate",
     "useTimer",
     "useInterval",
-    // AZ.W-PRUNE2 (E4-3) — useGlassRenderer/createGlassFilter/destroyGlassFilter
+    // UseGlassRenderer/createGlassFilter/destroyGlassFilter
     // retired off the root barrel (the detection-cascade cluster; its binary
-    // consumer GlassPanel retired at the AY prune, no second consumer).
-    // O.W6 Lane A — useClipboard composable promotion.
-    // BI.W-P024 (A-f2 ruling) — the stateless clipboard door is writeClipboard,
+    // consumer GlassPanel retired at the prune, no second consumer).
+    // UseClipboard composable promotion.
+    // The stateless clipboard door is writeClipboard,
     // the honest primitive shared with useClipboard; the lossy copyToClipboard
     // boolean wrapper is cut, its boolean+callback sugar demoted to a consumer
-    // preset (value.js adopts writeClipboard at W17b).
+    // preset (value.js adopts writeClipboard).
     "useClipboard",
     "writeClipboard",
 ];
@@ -237,8 +237,8 @@ const rootRuntimeExports = [
 ] as const;
 
 const subpathRuntimeExports = [
-    // Drawer moved OFF the root barrel to the /drawer subpath (BB.W-DRAWER-ABROGATE
-    // — keyframes-bearing heavy component, dock/aurora isolation pattern).
+    // Drawer moved OFF the root barrel to the /drawer subpath
+    // (keyframes-bearing heavy component, dock/aurora isolation pattern).
     { subpath: "drawer", surface: DrawerSurface, name: "Drawer" },
     { subpath: "drawer", surface: DrawerSurface, name: "DrawerContent" },
     { subpath: "drawer", surface: DrawerSurface, name: "DrawerHeader" },
@@ -247,8 +247,8 @@ const subpathRuntimeExports = [
     { subpath: "drawer", surface: DrawerSurface, name: "DrawerDescription" },
     { subpath: "search", surface: Search, name: "FuzzySearch" },
     { subpath: "search", surface: Search, name: "useFuzzySearch" },
-    // AI.W5-δ — `ProgressiveSidebar` SFC retired (Path B archive per
-    // G-AI-D26). The `./sidebar` subpath now surfaces composables only.
+    // The `ProgressiveSidebar` SFC is gone; the `./sidebar` subpath now
+    // surfaces composables only.
     { subpath: "sidebar", surface: Sidebar, name: "useScrollTracker" },
     { subpath: "sidebar", surface: Sidebar, name: "useSidebarFollow" },
     { subpath: "sidebar", surface: Sidebar, name: "useTreeIndex" },
@@ -277,7 +277,7 @@ const subpathRuntimeExports = [
     { subpath: "pulse", surface: PulseSurface, name: "Pulse" },
     { subpath: "paper-backdrop", surface: PaperBackdropSurface, name: "PaperBackdrop" },
     { subpath: "handmark", surface: HandMarkSurface, name: "HandMark" },
-    // BI.W-CHIP-FOLD — ToggleChip + SelectableChip FOLDED onto the ONE <Chip>
+    // ToggleChip + SelectableChip FOLDED onto the ONE <Chip>
     // (shape × tone; clean break, no alias). Chip ships subpath-ONLY (/chip, OFF the
     // value.js-free root barrel — the value.js-bearing ink solve rides the dynamic
     // accent-tone-solve leaf; the dynamic color-leaf precedent).
@@ -294,15 +294,15 @@ const subpathRuntimeExports = [
         surface: ExpandableContainerSurface,
         name: "ExpandableContainer",
     },
-    // L.W1 — vueuse-bearing subpaths (new in v1.0)
+    // Vueuse-bearing subpaths
     { subpath: "forms", surface: Forms, name: "Input" },
     { subpath: "forms", surface: Forms, name: "Textarea" },
     { subpath: "forms", surface: Forms, name: "Combobox" },
     { subpath: "forms", surface: Forms, name: "ComboboxInput" },
     { subpath: "carousel", surface: CarouselSurface, name: "useCarousel" },
     { subpath: "dark", surface: Dark, name: "useGlobalDark" },
-    // AP.W3 R0G-7 — installDarkModeSync (keyframes-free, vueuse-bearing) relocated
-    // from /motion to /dark (its vueuse home).
+    // installDarkModeSync (keyframes-free, vueuse-bearing) lives on the /dark
+    // subpath (its vueuse home).
     { subpath: "dark", surface: Dark, name: "installDarkModeSync" },
     { subpath: "keyboard", surface: Keyboard, name: "registerShortcut" },
     { subpath: "keyboard", surface: Keyboard, name: "useRegisteredShortcuts" },
@@ -311,24 +311,24 @@ const subpathRuntimeExports = [
     // keyframes.js-BEARING motion composables on the `/motion` subpath.
     { subpath: "motion", surface: Motion, name: "useNumericTransition" },
     { subpath: "motion", surface: Motion, name: "useAnimatedNumber" },
-    // AP.W3 R0G-7 — the keyframes-FREE leaves carved to the flat `/motion-core`
-    // subpath (a cheap-leaf import no longer statically reaches the keyframes
-    // engine). `constants` (DAMPING/SNAP_THRESHOLD) is duplicate-exported on both.
+    // the keyframes-free leaves live on the flat `/motion-core` subpath (a
+    // cheap-leaf import no longer statically reaches the keyframes engine).
+    // `constants` (DAMPING/SNAP_THRESHOLD) is duplicate-exported on both.
     { subpath: "motion-core", surface: MotionCore, name: "useStaggerReveal" },
     { subpath: "motion-core", surface: MotionCore, name: "useScrollProgress" },
     { subpath: "motion-core", surface: MotionCore, name: "useRAFLoop" },
     { subpath: "motion-core", surface: MotionCore, name: "useReducedMotion" },
     { subpath: "motion-core", surface: MotionCore, name: "readReducedMotion" },
     { subpath: "motion-core", surface: MotionCore, name: "useIntersectionPause" },
-    // AQ.W3 §6 — the INP-under-load lever. Engine-free (`/motion-core`).
+    // The INP-under-load lever. Engine-free (`/motion-core`).
     { subpath: "motion-core", surface: MotionCore, name: "useYieldToMain" },
     { subpath: "motion-core", surface: MotionCore, name: "yieldToMain" },
     { subpath: "motion", surface: Motion, name: "DAMPING" },
     { subpath: "motion", surface: Motion, name: "SNAP_THRESHOLD" },
     { subpath: "motion-core", surface: MotionCore, name: "DAMPING" },
     { subpath: "motion-core", surface: MotionCore, name: "SNAP_THRESHOLD" },
-    // AL.W4 — sub-barrel publishing phase 2 (G-AL-D7 ABSORB). Six remaining
-    // `ui/` primitive families speedtest still imports from the root barrel
+    // Sub-barrel publishing phase 2. Six remaining
+    // `ui/` primitive families a consumer still imports from the root barrel
     // get flat-name subpaths so consumers can shake unrelated families out
     // of the entry chunk. Closes AL-CARRY-REMAINING-ROOT-BARREL-IMPORTS.
     { subpath: "popover", surface: PopoverSurface, name: "Popover" },
@@ -427,39 +427,39 @@ const exactSubpathRuntimeSurfaces = [
     {
         subpath: "dock",
         surface: Dock,
-        // P.W1 Lane B added the dock-context canonical DI primitives so
-        // consumers can migrate from the retired pre-O.W2 string keys
+        // added the dock-context canonical DI primitives so
+        // consumers can migrate from the retired pre- string keys
         // without reaching for the deep-import path. The DOCK_CONTEXT_KEY
         // symbol + 3 helpers join the SFC default-exports here.
         //
-        // BI.W-DOCK-FOLD — regenerated from disk. The retired DockIconButton /
+        // Regenerated from disk. The retired DockIconButton /
         // DockTabButton / DockSelectTrigger / DockDropdownTrigger / DockPopoverTrigger
         // fold onto DockControl + DockTrigger (the survivors); the fission
         // (DOCK_SPLIT_SIGNATURES / useDockFission), the V↔H morph
         // (useDockOrientationMorph), and the Siri island (SIRI_* / SiriDockCapability /
-        // useSiriDock) are DEFINITION-ABSENT (BI.W-DOCK-RETIRES). This list is EXACT to
+        // useSiriDock) are DEFINITION-ABSENT. This list is EXACT to
         // the `@mkbabb/glass-ui/dock` runtime barrel.
         names: [
             "DOCK_CONTEXT_KEY",
             "DockBackgroundToggle",
-            // BI.W-DOCK-CONTROLS / BI.W-DOCK-FOLD — the ONE dock control (folds the
+            // The ONE dock control (folds the
             // retired DockIconButton + DockTabButton onto a shape axis).
             "DockControl",
-            // BI.W-DOCK-CROSSFADE — the thin controlled face-swap core.
+            // The thin controlled face-swap core.
             "DockCrossfade",
             "DockLayer",
             "DockLayerGroup",
-            // AX.W45 D13-c — the orientation+layout-aware divider primitive.
+            // The orientation+layout-aware divider primitive.
             "DockSeparator",
-            // BI.W-DOCK-CONTROLS / BI.W-DOCK-FOLD — the ONE overlay trigger (folds the
+            // The ONE overlay trigger (folds the
             // retired DockSelectTrigger/DockDropdownTrigger/DockPopoverTrigger onto the
             // shared `.dock-trigger` recipe).
             "DockTrigger",
             "GlassDock",
-            // BC.W-AX-DOCK-CTA-SEAT — the external-CTA-morphs-into-dock receive seam
+            // The external-CTA-morphs-into-dock receive seam
             // (the /motion export STAYS — a re-export, not a move).
             "useDockCtaReceive",
-            // BC.W-DOCK-SEARCH — the dock-as-native-dynamic-search-bar seam.
+            // The dock-as-native-dynamic-search-bar seam.
             "useDockSearch",
             "provideDockContext",
             "useDockContext",

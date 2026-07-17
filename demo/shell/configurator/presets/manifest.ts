@@ -1,7 +1,7 @@
 // demo/shell/configurator/presets/manifest.ts — available shell presets.
 // The library's own tokens are the "default" preset. "neutral" is a single
 // contrasting preset whose CSS lives beside this manifest (added by
-// W1-D). At runtime the configurator toggles a <link rel="stylesheet"> that
+//). At runtime the configurator toggles a <link rel="stylesheet"> that
 // points at `cssHref` — null means the library defaults apply unchanged.
 
 export interface PresetDef {

@@ -5,8 +5,8 @@
 // The token tour reads against a contrasting
 // reference field. A translucent `--surface-tint-N` (a color-mix(…transparent)
 // foreground-over-transparent overlay) painted over a same-tone `bg-card` plate is
-// IMPERCEPTIBLE (the prior `border-2 bg-card` swatch demonstrated zero of the visual
-// the token names). The swatch now paints the tint as a translucent FILL over a
+// IMPERCEPTIBLE (a `border-2 bg-card` swatch demonstrates zero of the visual
+// the token names). The swatch paints the tint as a translucent FILL over a
 // checkerboard reference field (`.tint-checker`) so each rung's alpha + warm→cool
 // gradation reads against the contrasting field — and a dense grid layout kills the
 // one-rung-per-full-width-row dead-space.
@@ -86,7 +86,7 @@ const aliases: TintRow[] = [
 </template>
 
 <style scoped>
-/* The dense token-tour grid — a multi-column auto-fill that kills the prior
+/* The dense token-tour grid — a multi-column auto-fill that kills the
    one-rung-per-full-width-row dead space. */
 .tint-grid {
     display: grid;

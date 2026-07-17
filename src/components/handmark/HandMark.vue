@@ -19,9 +19,9 @@
     - text mode (default): wraps a slotted word, lays the mark under/over/behind it.
     - positioned mode (`:box`): laid over an explicit datum rect (circle an anomaly).
 
-  BA.W-HANDMARK C-1 — THE HIGHLIGHTER ENGAGED:
+  THE HIGHLIGHTER ENGAGED:
     (d) `cap:"square"` reaches the DOM — the per-path `stroke-linecap` binds the
-        brush `cap` field (the prior hardcoded `stroke-linecap: round` is GONE).
+        brush `cap` field (not a hardcoded `stroke-linecap: round`).
     (e) the multiply un-walled — `.hm` carries NO `isolation: isolate` (that walled
         the `mix-blend-mode: multiply` off the PAGE backdrop, defeating its purpose;
         one mark per word, so sibling-mark bleed is a non-issue). The behind-band
@@ -67,7 +67,7 @@ const uid = `hm-${useId().replace(/[^a-zA-Z0-9_-]/g, "")}`;
 // `null` until measured (the pre-measure / jsdom / SSR frame falls back in geometry).
 const baselineFrac = ref<number | null>(null);
 
-// ── the aspect-correct viewBox (BG.W-HANDMARK-PERFECT (a); SPEC §3 residual a) ────
+// ── the aspect-correct viewBox (SPEC §3 residual a) ────
 // A text-mode underline's `.hm` box renders far WIDER than the 2.5 viewBox aspect
 // (a short word → px-aspect 11-17), and `preserveAspectRatio="none"` then x-stretches
 // the wobble into a flat bar (the headless-green trap — a gate reading the path `d`
@@ -105,9 +105,9 @@ let drawFrame: number | null = null;
 
 const drawTransition = computed(() => {
     if (!draws.value) return "none";
-    // (d) the draw-on easing is the token, not a hardcoded literal (byte-identical to
-    // the prior `cubic-bezier(.16,1,.3,1)`) — the bold-decelerating ARRIVAL ease is the
-    // liquid-weight register, retuned library-wide from ONE token.
+    // (d) the draw-on easing is the token, not a hardcoded literal — the
+    // bold-decelerating ARRIVAL ease is the liquid-weight register, tuned
+    // library-wide from ONE token.
     const ease = "var(--ease-out-expo)";
     const prop = drawKind.value === "clip" ? "clip-path" : "stroke-dashoffset";
     return `${prop} ${props.drawMs}ms ${ease} ${props.drawDelayMs}ms`;

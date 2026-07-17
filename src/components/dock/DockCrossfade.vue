@@ -23,7 +23,7 @@ import {
  *
  * Faces register through the crossfade context (`<DockLayer>` children). Where a rail
  * exists, `useSelectionGroup` (the switcher run) drives `:active` — the composing
- * `<DockLayerGroup>` case. The controlled-no-rail 5-pane case (speedtest) consumes this
+ * `<DockLayerGroup>` case. The controlled-no-rail 5-pane case (a consumer) consumes this
  * DIRECTLY: a no-selection face-swap does NOT route through a selection engine (the
  * roving machine + indicator + selection model are all inert in that mode; don't
  * abstract them over a case that never selects).

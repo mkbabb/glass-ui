@@ -40,8 +40,8 @@ const AURORA_PRESETS: ConfiguratorPreset<AuroraConfig>[] = PRESET_KEYS.map((key)
 }));
 
 // the studio LEADS with the warm-vivid SETTING_SUN (the
-// pink-note horizon), the setting-sun candidate-A default. It supersedes the prior warm
-// Dawn lead (still a named, selectable preset); the blue OPENAI_SKY survives as a
+// pink-note horizon), the setting-sun default. Warm
+// Dawn is a named, selectable preset (not the lead); the blue OPENAI_SKY is a
 // non-default theme (presets-in-consumers — a blue sky is a theme, never the lead).
 // /substrates/aurora reads warm-vivid-sunset at rest and exercises pointer shaping
 // over the palette-honest entrance.

@@ -1,13 +1,13 @@
-// R5-TAP (R5-3) — the GlassDock CLICK-INTEGRITY guard. The architectural fix for
-// the two manifestations of the collapsed-tap / hover-approach MORPH-RACE the
-// slides consumer reproduced with real input (USER-AUDIT-2026-06-11-R5 §R5-3):
+// The GlassDock CLICK-INTEGRITY guard. The architectural fix for
+// the two manifestations of the collapsed-tap / hover-approach MORPH-RACE a
+// consumer reproduced with real input:
 //
 //   (a) TOUCH pass-through. A tap on a COLLAPSED dock expands it AND lets the
 //       browser's native tap→click compatibility event flow to the control under
 //       the finger (the iOS Now-Playing single-tap contract — useDockState shape
 //       B′). But the expand swaps the summary layer out for the full layer
 //       SYNCHRONOUSLY, so the compat click lands at the SAME COORDINATES on a
-//       DIFFERENT element (on the slides deck: a Home link under a gear tap →
+//       DIFFERENT element (in a consumer deck: a Home link under a gear tap →
 //       navigate-away).
 //   (b) FINE-POINTER morph-race. An approach-then-click DURING the hover-expand
 //       FLIP lands the click on the EXPANDED layer's control at the old
@@ -31,7 +31,7 @@
 // morph, or a settled click on a stable control) passes through untouched — the
 // pass-through is scoped to identity, NEVER to post-swap coordinates.
 //
-// This makes the consumer's interim arms (slides' `@touchend.prevent` +
+// This makes the consumer's interim arms (the `@touchend.prevent` +
 // 320ms capture-phase guard keyed off the exposed `expanded` ref) UNNECESSARY: the
 // guard lives inside GlassDock. The exposed `expanded` ref STAYS exposed (a
 // protected binary-consumer surface) — the consumer simply no longer needs a guard
@@ -62,7 +62,7 @@ export interface UseDockClickIntegrityOptions {
 }
 
 /**
- * The dock click-integrity guard (R5-3). Returns the three capture-phase handlers
+ * The dock click-integrity guard. Returns the three capture-phase handlers
  * the GlassDock SFC wires onto its root. The guard is a pure DOM-timing concern: it
  * holds the press-time element identity + the settle-window deadline and decides, on
  * the click, whether the click landed on the SAME control it was aimed at. Owns its
@@ -222,11 +222,11 @@ export function useDockClickIntegrity(
         // we observed (assistive-tech activation, keyboard-synthesized click, a
         // touch stack that emitted only Touch events) carries no race context — the
         // guard judges only gestures it saw begin. Swallowing here would break AT
-        // activation and the iOS one-tap contract (AT.W6-dock-b).
+        // activation and the iOS one-tap contract.
         if (!pressTarget && !pressedDuringMorphSnapshot) {
             return;
         }
-        // THE iOS ONE-TAP CONTRACT (AT.W6-dock-b) comes FIRST: a press that began AT
+        // THE iOS ONE-TAP CONTRACT comes FIRST: a press that began AT
         // REST (not mid-morph) on a control that SURVIVED into the click — the
         // collapsed pill's live Play button, the Now-Playing mini-bar tap — is a
         // genuine activation even while the expand it triggered is still in flight.

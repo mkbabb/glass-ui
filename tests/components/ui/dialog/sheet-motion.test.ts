@@ -1,4 +1,4 @@
-// BI.W-SHEET-INTERRUPTIBLE-MOTION — the side sheet's spring-mount convergence.
+// The side sheet's spring-mount convergence.
 //
 // The former CSS `slide-*` keyframe restarted an interrupted exit from the
 // resting-open origin, so a reverse-mid-enter snapped the sheet to fully-open

@@ -187,8 +187,8 @@ export function useLiquidFlex(params: UseLiquidFlexParams): UseLiquidFlexReturn 
     //                tanh(speed·k)·uStretch` saturating velocity register (a fast
     //                morph swells then caps, never a taffy-pull). The morph/blob law.
     //   • "linear" — 1 + travel·(max−1): the tabs-indicator's geometry-relative
-    //                travel-FRACTION register (byte-identical to its prior local
-    //                `1 + frac·(cap−1)` write — the load-bearing local detail, §7).
+    //                travel-FRACTION register (`1 + frac·(cap−1)` — the
+    //                load-bearing local detail, §7).
     const stretch = computed(() => {
         const cap = maxStretchOf();
         const raw =

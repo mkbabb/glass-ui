@@ -4,17 +4,17 @@
    solid opaque token plates over a `glass-floating` base; Alert was correct in shape — glass-wash plate
    + tone-on-rim — but HARDCODED its `border-<tone>/40` rim per variant). Three tone
    maps, three calibration sites, and TWO of them painted a colored SLAB that occluded
-   the backdrop (the R8-12/R8-13 "not glassy at all" defect; the blur track survived but
+   the backdrop (the "not glassy at all" defect; the blur track survived but
    was inert behind a 100%-opaque plate).
 
    This file mints the tone register ONCE. Every feedback tone reads as COLORED GLASS:
    a tinted-glass wash (the rung bg mixed a BOUNDED % toward the tone, the SAME
-   `color-mix(in oklab, <rung bg>, <tint> <strength>)` seam the W55 `--glass-tint-*`
+   `color-mix(in oklab, <rung bg>, <tint> <strength>)` seam the `--glass-tint-*`
    legibility lift and the `--veil-bg` plate already run — ZERO new compositing path) +
    a tone-keyed rim + a full-chroma glyph. The backdrop STILL shows through (α stays
-   translucent, the W2 π floor < ~0.92). The body ink stays `--foreground` /
+   translucent, the π floor < ~0.92). The body ink stays `--foreground` /
    `--card-foreground` for legibility (the Alert discipline — body never tone-tinted),
-   so the tone is ONE deliberate color event per surface (the AZ.W-SUFFUSE one-color-
+   so the tone is ONE deliberate color event per surface (the one-color-
    event idiom), never a full-bleed fill.
 
    THE ONE KNOB: `--feedback-tone-strength` tints all four tones at once (the bounded
@@ -26,17 +26,17 @@
    `--glass-bg-floating`, the Toast overlay register). Alert RE-POINTS it to
    `--glass-bg-wash` on its own surface (a content panel rides wash, not floating — the
    register difference is correct; only the tone SOURCE unifies, not the rung). The rung
-   reads `--glass-bg-*` DIRECTLY (the same tokens W-SURFACE-AXIS's glass arm routes), so
+   reads `--glass-bg-*` DIRECTLY (the same tokens the glass arm routes), so
    the tone tint rides ON the glass surface — a re-point, not a fork.
 
-   THE SUBSTITUTION TRAP (the recurring AX.W55 / dock-scale class): `--feedback-tone-rung`
+   THE SUBSTITUTION TRAP (the recurring dock-scale class): `--feedback-tone-rung`
    resolves the `--glass-bg-floating` token, which BAKES `var(--glass-level)` at its
    `:root` declaration (level=1). A descendant `--glass-level: 0` does NOT re-resolve the
    baked rung — but that is the CORRECT register here: a feedback surface IS translucent
-   glass by design; the `opaque`/level-0 escape is W-SURFACE-AXIS's `[data-surface]`
+   glass by design; the `opaque`/level-0 escape is the `[data-surface]`
    concern, not a tone-register knob. The tone register composes the tint AT THE ELEMENT
    off the resolved rung, so the `color-mix` re-resolves whenever `--tone`/`--feedback-
-   tone-strength`/the rung change (the W55 element-level tint discipline). */
+   tone-strength`/the rung change (the element-level tint discipline). */
 @layer components {
     :root {
         /* The bounded mix % — the tone wash strength. 18% reads as colored GLASS

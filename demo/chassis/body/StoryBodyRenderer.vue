@@ -42,7 +42,7 @@ import type {
 // DESUGARS to `value` + an input listener, and a manual `h()` render never gets
 // that desugar for free, so a native `modelValue` model is expanded by hand into
 // the `value` + `onInput` pair (the `.input-pill` bare input reads `value`, not
-// `modelValue` — the parity floor for the migrated forms/inputs page).
+// `modelValue` — the parity floor for the forms/inputs page).
 function bindProps(node: SpecimenSpec, scope: StoryScope): Record<string, unknown> {
     const bound: Record<string, unknown> = { ...(node.props ?? {}) };
     const isNative = typeof node.component === "string";
@@ -221,7 +221,7 @@ export default defineComponent({
             }
 
             // The flat specimen list — a BARE wrap-row of REAL instances under the
-            // section (byte-identical to the hand-authored original: a row of
+            // section (a row of
             // badges, an alert, an input in its measure). The section `size` caps
             // the reading measure so a lone Input never balloons to the article.
             const specimens = section.specimens ?? [];

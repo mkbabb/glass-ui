@@ -7,10 +7,10 @@ import { cn } from "@glass/components/_shared/class-names";
 
 // The Data Timeline family.
 // The three timeline registers (discrete scrubber · segmented multi-phase · one-rail
-// continuous) render as THREE <StorySection> registers on this ONE page. The prior
-// routed `timeline-segmented.vue`, `timeline-continuous.vue` member wrappers +
-// the <FamilyTabs> switcher are RETIRED (clean break) — each render body moved bare
-// into a colocated PascalCase body sub-component (Timeline{Segmented,Continuous}Body).
+// continuous) render as THREE <StorySection> registers on this ONE page. Each render
+// body lives bare in a colocated PascalCase body sub-component
+// (Timeline{Segmented,Continuous}Body) — no per-member wrapper route or <FamilyTabs>
+// switcher (clean break).
 import TimelineSegmentedBody from "./timeline/TimelineSegmentedBody.vue";
 import TimelineContinuousBody from "./timeline/TimelineContinuousBody.vue";
 

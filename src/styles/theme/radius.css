@@ -1,5 +1,5 @@
 /* theme/radius.css — the LEADING plain @theme: the radius primitives + the
-   radius semantic aliases + the corner-SHAPE axis (AZ.W-CARVE partial 1 of 4).
+   radius semantic aliases + the corner-SHAPE axis.
 
    Plain (not inline) on purpose — the radius scale has no tokens.css twin, so
    each `--radius-*` is the lone declaration + single override point. Inline is
@@ -19,7 +19,7 @@
     --radius-md: 6px;
     --radius-xl: 12px;
     --radius-2xl: 1rem;
-    /* AW.W3b — a finite radius rung above --radius-2xl (16px), below
+    /* A finite radius rung above --radius-2xl (16px), below
        --radius-pill (the stadium). The big-dock card shell's corner geometry. */
     --radius-3xl: 1.5rem;
     --radius-pill: 9999px;
@@ -34,7 +34,7 @@
     --radius-dialog:  var(--radius-2xl);
     --radius-input:   var(--radius);
     --radius-button:  var(--radius);
-    /* AW.W25 — form-radius unification. `--radius-field` is the non-pill field
+    /* Form-radius unification. `--radius-field` is the non-pill field
        rung the multi-line / stepper form atoms (Textarea, NumberFieldInput)
        resolve so a multi-line box stops inheriting the `9999px` stadium pill;
        single-line controls (Input, SelectTrigger) keep the pill. `--radius-control`
@@ -42,16 +42,16 @@
        on Checkbox + base Tabs onto a softer, named radius. One geometry language
        across the form family — token + class only, no new primitive. */
     --radius-field:   var(--radius-2xl);
-    /* BI.W-RADIUS-GRAMMAR (Law 2 — capsule-vs-card) — the BOUNDED strip rung a
+    /* (Law 2 — capsule-vs-card) — the BOUNDED strip rung a
        COLUMN-STACK variant of a stadium base re-binds onto. A multi-row segmented
        track cannot wear the `9999px` pill: on a tall box the stadium clamps its
-       end-caps to a ~46px half-height balloon (UF-A2/FAM-4). ≈12px sits between
+       end-caps to a ~46px half-height balloon. ≈12px sits between
        --radius-control (the stadium pill) and --radius-card (1rem) — a soft
        rounded-rect, never a stadium. The vertical SegmentedTabs track reads it;
        the shipped concentric track calc re-resolves the corner off it for free. */
     --radius-strip:   0.75rem;
-    /* BC.W-CONTROL-SMOOTH — the small-inline-control corner rung is a STADIUM, not a
-       fixed small px. The prior `--radius-md` (6px) read SQUARE on a 16-24px control
+    /* The small-inline-control corner rung is a STADIUM, not a
+       fixed small px. A fixed `--radius-md` (6px) reads SQUARE on a 16-24px control
        (6px on a 16px box = 0.38-of-height — a rounded-rect, not a pill); the iOS-27
        small-control silhouette is a near-stadium pill where the radius SCALES with the
        control (clamped to half-height by `--radius-pill`'s 9999px geometry, so a 16px
@@ -64,18 +64,18 @@
     --radius-control: var(--radius-pill);
     --radius-badge:   var(--radius-pill);
     --radius-dock:    var(--radius-pill);
-    /* BC.W-TABS-IOS — the iOS-27 segmented-control stadium register. The pill is a
+    /* The iOS-27 segmented-control stadium register. The pill is a
        stadium by construction (--radius-pill clamps to half-height on a short box →
        a true end-cap), so the tab strip stops being a squared rounded-rect. The
        value.js DESIGN.md idiom: the role-bearing pill token, NOT a hand-rolled
        `rounded-full`. A consumer retunes the tab geometry via `:root { --radius-tab }`. */
     --radius-tab:     var(--radius-pill);
-    /* AW.W3b — the big-dock card shell's default (comfortable-density) radius.
+    /* The big-dock card shell's default (comfortable-density) radius.
        The density-scaled --dock-card-radius (dock.css) resolves through this. */
     --radius-dock-card: var(--radius-3xl);
     --radius-tooltip: var(--radius-lg);
 
-    /* ── BI.W-RADIUS-GRAMMAR — the concentric-radius RELAY (Law 1). ──────────────
+    /* ── The concentric-radius RELAY (Law 1). ──────────────
        The Apple `ConcentricRectangle` grammar (iOS 26) as a plain INHERITED
        custom-property relay: a container PUBLISHES its resolved corner as
        `--radius-ctx` + its inner pad as `--radius-inset` on itself; a nested
@@ -92,7 +92,7 @@
     --radius-ctx:     var(--radius-card);
     --radius-inset:   0px;
 
-    /* ── AX.W56 — the corner-SHAPE axis (parallel to the corner-RADIUS ladder above).
+    /* ── The corner-SHAPE axis (parallel to the corner-RADIUS ladder above).
        `corner-shape` only changes the CURVE within the `border-radius` box; the
        region is still the `--radius-*` token. These are plain @theme (the radius
        siblings' rationale applies — each alias is its own override point, and the
@@ -105,9 +105,9 @@
        Superellipse exponent (MDN authoritative): `superellipse(K)` paints
        |x|^(2K) + |y|^(2K) = 1, so the curve exponent n = 2K. The CSS `squircle`
        keyword == `superellipse(2)` == n=4 — the iOS-idiomatic web squircle. The
-       k-PRIMITIVE band (a consumer dials 1.7–2.4 to taste; W42's dock-morph calc()s
+       k-PRIMITIVE band (a consumer dials 1.7–2.4 to taste; the dock-morph calc()s
        its animated k against this ONE vocabulary — do not re-define a second k).
-       (BB.W-DEAD-SWEEP re-ground: --corner-k-soft / --corner-k-sharp have no
+       (re-ground: --corner-k-soft / --corner-k-sharp have no
        runtime var() consumer but ARE pinned by proof:squircle-language (the
        TOKEN-AXIS-EXISTS clause asserts both rungs are minted) — so KEPT, not
        swept; the clean-break delete is a coordination follow-up once the gate
@@ -121,7 +121,7 @@
        ~--radius-xl/12px and up). The SQUIRCLE set = bigdock, dialog, sheet, panel,
        hero (the large-radius glass overlays where the iOS-26 silhouette reads — the
        blur halo + cartoon under-shadow follow the shape); ALL ride the ONE
-       --corner-k-squircle vocab. W56b (USER-DECISION R1) extended the family off
+       --corner-k-squircle vocab. extended the family off
        big-dock-only onto the large glass overlays; @supports-gated in
        glass/squircle.css over the `border-radius` round CONTRACT. A consumer dials
        any squircle surface back to round (or opts one in) by re-pointing its
@@ -130,7 +130,7 @@
        carries NO shape alias: the CSS `corner-shape` INITIAL VALUE is `round`, and
        glass.css writes no `corner-shape` on .glass-card/.button (the
        CARD-REHOMED policy), so those surfaces are round BY DEFAULT — the dead
-       `--corner-shape-card`/`-pill: round` no-op knobs were SWEPT (BG.W-DEAD-SWEEP,
+       `--corner-shape-card`/`-pill: round` no-op knobs were SWEPT (
        net-negative; the round policy is identical, expressed structurally not by a
        dead token). A consumer wanting a squircle card mints its own alias and adds
        the surface to squircle.css's @supports block. */
@@ -138,9 +138,9 @@
     --corner-shape-dialog:  superellipse(var(--corner-k-squircle));
     --corner-shape-sheet:   superellipse(var(--corner-k-squircle));
     --corner-shape-panel:   superellipse(var(--corner-k-squircle));
-    /* BI.W-GLASS-DEDUP — `--corner-shape-hero` RETIRED with the `.glass-hero`
-       overlay utility (FAM-9, 0-consumer clean break). */
-    /* AX.W59 — the spectrum slider's track-height thumb reads as a SQUIRCLE
+    /* `--corner-shape-hero` RETIRED with the `.glass-hero`
+       overlay utility (0-consumer clean break). */
+    /* The spectrum slider's track-height thumb reads as a SQUIRCLE
        (the iOS color-picker idiom). It rides the same --corner-k-squircle
        vocabulary; @supports-gated in Slider.vue over a --radius-* round
        fallback. A consumer dials it to round (a circular knob) or to soft. */

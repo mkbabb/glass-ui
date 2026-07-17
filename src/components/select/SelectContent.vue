@@ -30,9 +30,9 @@ import SelectScrollUpButton from "./SelectScrollUpButton.vue";
 import { cn } from "../_shared/class-names";
 import { floatingContentAttrs } from "../_shared/floating";
 import { useOptionalDockContext } from "../dock/composables/dockContext";
-// BC.W-OVERLAY-UNIFORM — thread the SHARED {glass·veil·opaque} surface axis + the
+// Thread the SHARED {glass·veil·opaque} surface axis + the
 // φ --overlay-pad-* ladder onto the Select listbox (the overlay golden uniformity).
-// Default `glass` is byte-identical to the prior bare `glass-floating` plate.
+// Default `glass` is the bare `glass-floating` plate.
 import { resolveSurfaceClass } from "../_shared/resolveSurfaceClass";
 
 defineOptions({
@@ -69,7 +69,7 @@ const placementProps = computed(() => ({
 }));
 const dockContext = useOptionalDockContext();
 
-// BD.W-SELECT-WELL — re-emit the route's warm-field hue onto the portalled menu.
+// Re-emit the route's warm-field hue onto the portalled menu.
 // Only writes `--field-h` when the consumer supplies it (a bare Select inherits the
 // select.css `--field-h: 48` floor); `data-field-palette` is a paint-inert marker.
 const fieldStyle = computed(() =>
@@ -80,15 +80,15 @@ const fieldStyle = computed(() =>
 <template>
     <RekaSelectPortal>
         <!--
-      BA.W-EMISSION (BA-VJS-A2-WO1/WO2): the collision-bound moved OUT of the dead
+      The collision-bound moved OUT of the dead
       arbitrary-bracket class `[max-height:var(--reka-popper-available-height,60dvh)]`
       (which compiled only into a dist/*.js chunk no consumer content-scan reaches)
       into the PRECOMPILED `[data-slot="select-content"]` rule in src/styles/select.css
       — it now SHIPS in dist/glass-ui.css regardless of consumer JIT reach, so a 16-item
       dropdown bounds inside the viewport with SelectViewport owning scroll in EVERY
-      consumer. The `origin-(--reka-select-content-transform-origin)` STAYS (WO-2):
+      consumer. The `origin-(--reka-select-content-transform-origin)` STAYS:
       once the box is
-      bounded the `.glass-reveal` spring-clocked scale-in (BB.W-LIQUID-REVEAL, off the
+      bounded the `.glass-reveal` spring-clocked scale-in (off the
       retired `popover-animate` bezier zoom-95) no longer sweeps an unbounded column,
       and the scale origin tracks reka's measured anchor edge for non-center triggers
       (the panel blooms from the trigger edge with no lateral settle).
@@ -106,7 +106,7 @@ const fieldStyle = computed(() =>
                     'relative z-popover min-w-(--overlay-min-width) overflow-hidden rounded-panel border text-popover-foreground glass-reveal origin-(--reka-select-content-transform-origin)',
                     'data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1',
                     resolveSurfaceClass('floating'),
-                    // BD.W-SELECT-WELL — the portal escapes the route's field to <body>, so the
+                    // The portal escapes the route's field to <body>, so the
                     // menu carries its OWN clipped warm field. `.glass-field-portal` (select.css)
                     // paints a 3-stop warm spine keyed to `--field-h` BEHIND the plate so the
                     // floating `backdrop-filter` finally has warm chroma to bend (the un-gray

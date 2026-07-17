@@ -8,7 +8,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <!-- BB.W-CARD-PAD — the overlay-band golden padding ladder. The Drawer is a
+  <!-- The overlay-band golden padding ladder. The Drawer is a
        non-Card surface (the `.glass-drawer` recipe owns its base), so it mints its
        OWN self-contained overlay tokens (inline anchor 1rem; block lifts by sqrt-phi
        `*1.272`; the title gap is phi-squared-tight `/2.618`). `pb-0` drops the

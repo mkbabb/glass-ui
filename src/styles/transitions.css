@@ -1,6 +1,6 @@
 /* Reusable Vue <Transition> class sets.
  *
- * Q.W4 Lane C (Q-sty-4): these class rules are wrapped in
+ * (Q-sty-4): these class rules are wrapped in
  * `@layer components` so they share the cascade layer of every other
  * recipe sheet. Unlayered rules land in the implicit unlayered origin,
  * which outranks every `@layer` block at equal specificity — an
@@ -19,12 +19,12 @@
         opacity: 0;
     }
 
-    /* BI.W-REGISTER-TABLE — `fade-slide` RETIRED (census-dead: 0 src/ consumers; the
+    /* `fade-slide` RETIRED (census-dead: 0 src/ consumers; the
        demo showcase tile is deleted with it). Clean break, no alias — an overlay
        entrance rides `.glass-reveal` + its `data-reveal` register, not a hand-rolled
        Vue-<Transition> recipe. */
 
-    /* BI.W-REGISTER-TABLE — `dialog-scale` / `pop` / `dropdown` RETIRED (census-dead:
+    /* `dialog-scale` / `pop` / `dropdown` RETIRED (census-dead:
        0 src/ consumers each; the demo showcase tiles are deleted with them). Clean
        break, no alias. The overlay/menu entrances they duplicated now ride the ONE
        `.glass-reveal` recipe bound by `data-reveal` (enter-overlay / enter-menu) — the
@@ -84,7 +84,7 @@
         transform-origin: center bottom;
     }
 
-    /* ── Toast contract (BI.W-REGISTER-TABLE — the enter-transient binding) ──
+    /* ── Toast contract (the enter-transient binding) ──
      *
      * `<Toast>` (reka-ui `ToastRoot`, components/toast/Toast.vue) MATERIALIZES via
      * the `enter-transient` register — `.glass-reveal[data-reveal="transient"]` — a
@@ -92,9 +92,9 @@
      * spring; MOTION-LADDER M5), NOT the retired slide-in-from-viewport-edge. The reka
      * `tw-animate-css` data-state choreography (`data-[state=open]:animate-in` /
      * `animate-out` / `slide-in-from-*-full` / `fade-out-80`) + the Toast's own
-     * `transition-[opacity,transform]` are RETIRED (clean break, no alias). The prior
-     * AY.W-MOTION "§6 DELIBERATE KEEP" exemption is SUPERSEDED: every glass-ui overlay now
-     * speaks ONE enter grammar, the register table. `.glass-reveal` owns:
+     * `transition-[opacity,transform]` are RETIRED (clean break, no alias):
+     * every glass-ui overlay speaks ONE enter grammar, the register table.
+     * `.glass-reveal` owns:
      *
      *   • ENTRANCE — the @starting-style bloom (transform-origin center → the surface
      *     coalesces from its own seed), on the transient spring + its 2%-settle clock.

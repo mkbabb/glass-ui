@@ -1,9 +1,8 @@
 // The GooBlob metaball fragment-shader UNIFORM-DECLARATION block — the `#version`
 // header, the precision/IO decls, the full uniform cohort (resolution/time/color,
 // pointer, body, surface, satellite, trail, palette, velocity), and the shared
-// `PI` const — carved out of metaball.frag.ts as the leading GLSL chunk. The
-// assembler splices it FIRST into METABALL_FRAGMENT_SRC; the emitted shader string
-// is character-equivalent to the prior single leading literal.
+// `PI` const — the leading GLSL chunk. The
+// assembler splices it FIRST into METABALL_FRAGMENT_SRC.
 export const METABALL_UNIFORMS_GLSL = /* glsl */ `#version 300 es
 precision highp float;
 
@@ -14,7 +13,7 @@ uniform vec2 uResolution;
 uniform float uTime;
 uniform vec3 uBaseColor;
 
-// Multi-stop palette (W11.b) — 2-4 in-family OKLCh stops (uploaded GAMMA sRGB, like
+// Multi-stop palette — 2-4 in-family OKLCh stops (uploaded GAMMA sRGB, like
 // uBaseColor). uStopCount <= 1 falls back to uBaseColor (the single-color default,
 // zero regression). MAX_BLOB_STOPS is a compile-time #define.
 #define MAX_BLOB_STOPS 4
@@ -64,7 +63,7 @@ uniform float uMaxReach;
 // Membrane — domain-warp strength on the FBM edge displacement (0 = plain fbm).
 uniform float uWarpAmp;
 
-// Lit glass surface (W9.b) — gated behind uLit so the flat fill stays default.
+// Lit glass surface — gated behind uLit so the flat fill stays default.
 uniform float uLit;             // 0 = flat fill (default), 1 = lit droplet
 uniform vec3 uRimColor;         // Fresnel rim tint (GAMMA sRGB, via the /color leaf)
 uniform vec3 uLightDir;         // normalized light direction (x, y, z)
@@ -79,7 +78,7 @@ uniform float uRimStrength;     // Fresnel rim weight
 uniform float uShadow;          // 0 = no shadow, 1 = the soft contact shadow ON
 uniform float uShadowSoftness;  // penumbra hardness (inverse light-source size, 4-48)
 
-// Iridescence + fake subsurface (W11.a) — translucent-gel read.
+// Iridescence + fake subsurface — translucent-gel read.
 uniform float uIridescence;     // warm-pearl rim sheen weight (0 = off)
 uniform float uIridHue;         // base hue (radians) the cosine palette biases toward (warm)
 uniform float uIridSpeed;       // animated-thickness scroll for the iridescent t
@@ -103,7 +102,7 @@ uniform float uSatOpacity[MAX_SATS];
 
 // The per-satellite explicit-shade seam widens the GL color contract for the hero blob.
 // uSatColorActive == 0 is the default (the derived
-// palette shade — byte-identical to HEAD): blendSatColor() early-returns and touches
+// palette shade, UNCHANGED): blendSatColor() early-returns and touches
 // nothing. When a consumer supplies explicit per-satellite shades (uSatColor[i], GAMMA
 // sRGB, at uSatColorAmt[i] weight — typically 1) the fragment blends the base palette
 // OKLCh toward each satellite's shade, weighted by that satellite's smin-field proximity
@@ -112,7 +111,7 @@ uniform int uSatColorActive;
 uniform vec3 uSatColor[MAX_SATS];
 uniform float uSatColorAmt[MAX_SATS];
 
-// Pointer trail (W10) — a decaying-radius pseudopod toward the cursor. uTrail is a
+// Pointer trail — a decaying-radius pseudopod toward the cursor. uTrail is a
 // COMPILE-TIME-SIZED array (GLSL ES 3.00 forbids a uniform-sized array) with a
 // DYNAMIC break on uTrailCount, mirroring the satellite loop. Later samples paint
 // smaller metaballs (r *= 1 - i/N) so the trail tapers into a tail.
@@ -121,7 +120,7 @@ uniform int uTrailCount;
 uniform vec2 uTrailPos[TRAIL_N];
 uniform float uTrailRadius[TRAIL_N];
 
-// Velocity-driven volume-preserving squash-and-stretch (W10).
+// Velocity-driven volume-preserving squash-and-stretch.
 uniform vec2 uVelocity;   // smoothed pointer velocity (motion direction + speed)
 uniform float uStretch;   // squash-stretch magnitude (0 = off)
 

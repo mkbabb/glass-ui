@@ -1,12 +1,12 @@
-// BB.W-VIZ-SUITE (W-AURORA-WGPU) — the shared procedural-color/noise WGSL chunk.
+// The shared procedural-color/noise WGSL chunk.
 //
-// The WGSL TWIN of the AV.W2 shared GLSL chunk
+// The WGSL TWIN of the shared GLSL chunk
 // (`src/composables/glass/procedural/color.glsl.ts`). ONE source for the
 // GPU-side color/noise math the WebGPU primaries (`aurora.wgsl`, later
 // `metaball.wgsl`/`concentric.wgsl`) splice — exactly as the GLSL chunk is the one
 // source the WebGL2 `.frag.ts` fallbacks splice. So the OETF + the Ottosson OKLCh
 // matrices + the FBM rotation + the palette ramp can never DRIFT between the WGSL
-// primary and the GLSL fallback (the AV.W1 root cause, transposed to the cross-backend
+// primary and the GLSL fallback (the root cause, transposed to the cross-backend
 // axis): the parity-ΔE bar measures the two paths against ONE math.
 //
 // Mechanism mirror: each `export const` is a `/* wgsl */` template-literal STRING the
@@ -111,7 +111,7 @@ fn oklchToOklab(lch: vec3<f32>) -> vec3<f32> {
   return vec3<f32>(lch.x, lch.y * cos(lch.z), lch.y * sin(lch.z));
 }`;
 
-// ── Palette ramp (the AX.W11 stop-to-stop interpolation) ──────────────────────
+// ── Palette ramp (the stop-to-stop interpolation) ──────────────────────
 // The WGSL twin of PALETTE_RAMP_GLSL: a smoothstep ease then a huePath dispatch —
 // OKLab-rectangular (chroma-holding) for the default/adjacent ramp, the OKLCh hue-arc
 // only for huePath increasing(2)/decreasing(3). Depends on OKLCH_MATRICES (the space

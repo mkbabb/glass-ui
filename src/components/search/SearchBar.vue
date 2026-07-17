@@ -42,7 +42,7 @@ const props = withDefaults(
         placeholder?: string;
         icon?: Component;
         tag?: string;
-        // BC.W-SEARCH-CUSTOM — the SAME three-layer customization surface every
+        // The SAME three-layer customization surface every
         // glass-ui control carries.
         //   size    — the shared control-size rung off the `--control-h-*`/`--control-text`
         //             cohort (sm quieter, default the golden pill, lg taller). The

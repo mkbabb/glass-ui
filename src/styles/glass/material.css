@@ -1,11 +1,11 @@
 /* glass/material.css
-   The unified .glass-material atom (AW.W22) + the shared ::before grain/specular wiring across the glass family — ONE source for the three material atoms.
-   Carved from the glass.css cascade root; @import-ed by glass.css in cascade
+   The unified.glass-material atom + the shared ::before grain/specular wiring across the glass family — ONE source for the three material atoms.
+   A partial of the glass.css cascade; @import-ed by glass.css in cascade
    order, each in its own @layer components (isomorphic to the monolith).
    See docs/precepts/design-idioms.md §cohesion-aware partials. */
 @layer components {
-    /* ── The unified glass material (AW.W22) ──────────────────────────────
-       ONE source for the three material atoms that AV.W15 scattered onto
+    /* ── The unified glass material ──────────────────────────────
+       ONE source for the three material atoms that scattered onto
        opt-in classes + single tiers:
          (a) the moving-specular `::before` catch-light (folded here from
              glass-specular-track.css — that file now keeps only the thin
@@ -22,7 +22,7 @@
        The `.glass-dock` SHELL is OUT of this group BY DESIGN — it hand-rolls a
        parallel surface (its own `--glass-*-dock` family + a local rim) the dock arm
        owns. The COHESION CONSEQUENCE is DELIBERATE: the dock shell carries NO shared
-       edge-gleam / moving-specular `::before` (AZ.W-DOCK-TAXONOMY retired the
+       edge-gleam / moving-specular `::before` (retired the
        `instrument-strip` engraved-bezel `::before` — the dock shell now has none).
        The dock's catch-light lives on
        its CONTROLS (`.dock-icon-button` et al., listed below + in the opt-in
@@ -66,7 +66,7 @@
         --glass-cell-backdrop-filter: none;
     }
 
-    /* ── BG.W-GLASS-CLIP-DISCIPLINE — the ONE paint-box clip register ───────────
+    /* ── The ONE paint-box clip register ───────────
        Content glass and `.glass-card` share this one paint-containment register,
        keeping descendant paint inside their rounded host.
 
@@ -81,7 +81,7 @@
          survives cell).
        • EXCLUDED — the 4 DOCK CONTROLS (`.dock-icon-button`/`.dock-tab-button`/
          `.dock-select-trigger`/`.dock-dropdown-trigger`) carry NO clip: the
-         BA.W-DOCK-GEOMETRY freed cross-axis + the 1.1× hover plate + the
+         freed cross-axis + the 1.1× hover plate + the
          `--dock-control-safe-inset` must stay un-clipped (proof:dock-plate-
          clearance).
 
@@ -104,15 +104,14 @@
     }
 
     /* (b) The rim — UNIFORM across all rungs (ONE `--glass-edge-light` token,
-       not a per-rung family). The floating/overlay tiers previously wired it
-       into their box-shadow stack; it now rides the material group as a
+       not a per-rung family). It rides the material group as a
        dedicated `::after` inset ring so it composes alongside (not inside) each
        tier's own shadow recipe. The `::after` grain overlay already claims the
        five rungs' `::after`; the rim is folded INTO that same overlay's
        box-shadow below (the grain `::after` gets the rim inset ring) so no
        pseudo-element collides.
 
-       ── BE.W5 — `--glass-edge-light` IS A WHOLE BOX-SHADOW LAYER, NEVER A COLOR ──
+       ── `--glass-edge-light` IS A WHOLE BOX-SHADOW LAYER, NEVER A COLOR ──
        `--glass-edge-light` resolves to a COMPLETE box-shadow layer (the token is
        `inset 0 0 0 0.75px hsl(0 0% 100% / 0.18)` — geometry + color, glass-fx.css:70;
        the `.dark` arm re-points it to `--glass-edge-light-dark`). It is consumed as a
@@ -164,7 +163,7 @@
            longer defeated by a floor. Hover/active lift it through the same
            cohort (the interaction-light state machine below).
 
-           BG.W-GLASS-DYNAMICS — the press-COUPLED magnitude (absorbs 13.5, soft-
+           The press-COUPLED magnitude (absorbs 13.5, soft-
            gated by F5.1). The specular reads the ONE `--glass-btn-press-t` spring
            drive (Button.vue / a dock control writes it off `useLiquidPress`), so on
            RELEASE — after the binary CSS `:active` lets go — the gleam SETTLES with
@@ -183,18 +182,18 @@
                     var(--glass-btn-press-t, 0)
             )
         );
-        /* AX.W52 D19 — a thin, BOUNDED, pointer-anchored EDGE gleam (not the prior
-           full-plate central disc that washed small tiles muddy). The geometry is an
+        /* A thin, BOUNDED, pointer-anchored EDGE gleam (not a
+           full-plate central disc that would wash small tiles muddy). The geometry is an
            EXPLICIT-radius circle bounded by `--glass-specular-size` (36% of the
            plate) whose falloff reaches `/0` well INSIDE the plate (70%) — a tracked
            catch-light reading the surface near the lit edge, NEVER a whole-surface
            wash. The core is genuinely WARM-CREAM (L < 100% so the warm hue survives;
-           the prior `hsl(40 30% 100%)` blew out to white). The `--specular-intensity`
+           an `hsl(40 30% 100%)` would blow out to white). The `--specular-intensity`
            multiplier drives the layer `opacity`, NOT a per-stop alpha (a
            registered-`@property` var() nested in an hsl() alpha computes to 0 in
            Chromium — the cross-engine-safe path); the per-stop alphas are literals so
            even the lifted hover/active states read as a lens, not a flash. */
-        /* BB.W-LENSING (scope 3) — the motion-reactive EDGE glint UNIFIED with the
+        /* The motion-reactive EDGE glint UNIFIED with the
            centered catch-light disc on ONE `::before`. TWO background layers compose:
            (TOP) the angle-keyed EDGE-anchored conic sweep — a warm-cream arc that
            brightens the RIM where the pointer's `--specular-angle` grazes (the
@@ -203,29 +202,29 @@
            intensity` cohort (the `opacity` below) + `plus-lighter` blend + warm-cream
            core `hsl(40 35% 92%)` — NEVER a second color/blend fork. The conic is masked
            to the rim band only (the `--glass-edge-glint-band` radial mask, scope 3),
-           so the glint is a bounded RIM ring, NOT a whole-plate wash (the AX.W52 D19
+           so the glint is a bounded RIM ring, NOT a whole-plate wash (the D19
            bounded-gleam discipline). The `--specular-angle` floor `0deg` sits the glint
            at the top edge when unwired (static rest — no ambient drift, no blowout). */
-        /* BB.W-GLASS-ACCENT — the catch-light CORE COLOR composes the per-instance
+        /* The catch-light CORE COLOR composes the per-instance
            chromatic accent. The warm-cream `hsl(40 35% 92%)` core resolves through
            the ONE `--glass-specular-core` var, OKLab-mixed toward `var(--glass-
            accent)` at `var(--glass-accent-strength)`. This tints the CORE only — it
-           is the COLOR axis; W-LENSING owns the GEOMETRY (the conic angle-keyed
+           is the COLOR axis; owns the GEOMETRY (the conic angle-keyed
            edge-glint + the radial disc + the masks + the `plus-lighter` blend, all
            BELOW, untouched). Tinting the ONE core tints BOTH the centered disc AND
            the rim glint (they share the core), so the data hue reads at the glint
            where the pointer grazes — the data-keyed colored catch-light. At
            `--glass-accent-strength: 0%` + `--glass-accent: transparent` (the
-           `@property` defaults) the mix === `hsl(40 35% 92%)` byte-identical (the W2
+           `@property` defaults) the mix === `hsl(40 35% 92%)` byte-identical (the
            warm-cream floor). Each gradient stop reproduces its original alpha via
-           `color-mix(in srgb, <core> N%, transparent)` (=== the prior `<core> / 0.NN`),
+           `color-mix(in srgb, <core> N%, transparent)` (=== `<core> / 0.NN`),
            so the geometry + falloff is byte-identical at rest. */
-        /* BG.W-GLASS-DYNAMICS — the iOS-27 backdrop-HUE sample seam (the 2nd of the
-           ≤2 chromatic pairs, beside W-GLASS-ACCENT). BG.W-GLASS-SIGNAL-TRUTH (M9) —
+        /* The iOS-27 backdrop-HUE sample seam (the 2nd of the
+           ≤2 chromatic pairs, beside). —
            ONE hue channel, ONE writer: the seam reads `--glass-ambient-hue` (the REAL
            observer write — `useGlassBackdropLuminance` writes a sampled `oklch()` modal
-           hue there, tokens/glass.css §BE.W-AMBIENT-TINT), NOT the never-written
-           `--glass-backdrop-hue` the prior comment falsely claimed the observer wrote.
+           hue there, tokens/glass.css §), NOT the never-written
+           `--glass-backdrop-hue` (no observer writes it).
            So a dock/card catch-light picks up the field hue SUB-PERCEPTUALLY over a live
            aurora WHERE THE OBSERVER IS WIRED, at the bounded `--glass-ambient-strength`
            (the companion write-strength knob the observer's target owns). NEUTRAL BY
@@ -235,7 +234,7 @@
            surface reads the warm-cream core exactly (the REFERENCE FENCE: no chromatic
            pickup until the observer writes the hue). The REST hairline (the `box-shadow`
            below) reads the RAW neutral `hsl(40 35% 92%)` — NOT this core — so the
-           RESTING hairline is NEVER chromatic (prismatic reserved for WS6). */
+           RESTING hairline is NEVER chromatic (prismatic reserved). */
         --glass-specular-core: color-mix(
             in oklab,
             color-mix(
@@ -260,14 +259,14 @@
                 transparent 70%,
                 transparent 100%
             );
-        /* BG.W-GLASS-DYNAMICS — the resting NEUTRAL specular HAIRLINE (the read-carrier
-           at the calmer blur). WS3 demoted the blur ladder (quiet/resting → 8px), so a
+        /* The resting NEUTRAL specular HAIRLINE (the read-carrier
+           at the calmer blur). demoted the blur ladder (quiet/resting → 8px), so a
            demoted plate needs a thin bright rim to still read as GLASS at rest. This
            inset warm-cream ring FOLLOWS the rounded box (`border-radius: inherit`) and
            composites `plus-lighter` with the disc/conic above (a bright additive edge).
            It is NEUTRAL — the raw `hsl(40 35% 92%)`, NEVER the `--glass-specular-core`
            (which carries the accent + backdrop-hue) — so the resting hairline is never
-           chromatic (the REFERENCE FENCE; prismatic reserved for WS6). It is a STATIC
+           chromatic (the REFERENCE FENCE; prismatic reserved). It is a STATIC
            paint (no transition, no @keyframes → `proof:no-layout-animation` + the
            0-idle-track discipline hold; the interaction transition stays scoped to the
            :hover/:active block below). It is the SUPPLEMENTARY rim beside the primary
@@ -283,7 +282,7 @@
            read-carrier) while the interaction lift still rides `--specular-intensity`
            (hover 0.10 / active 0.16 both clear the floor). `--glass-specular-rest-
            hairline` (0.07) is a low whisper — at this floor the interaction disc/conic
-           stay sub-perceptual (well under the AX.W52 muddy ceiling), so it reads as a
+           stay sub-perceptual (well under the muddy ceiling), so it reads as a
            rim hairline, not a center wash. */
         opacity: max(
             var(--specular-intensity, 0),
@@ -293,7 +292,7 @@
            order): the EDGE conic is masked to the RIM BAND ONLY — transparent across
            the interior, opaque in the outer `--glass-edge-glint-band` (default 22%) — so
            the angle-keyed glint reads as a THICKNESS rim, not a center wash; the centered
-           disc keeps its own-radius clip (AX.W52 D19). `mask-image` Baseline 2023-12-07;
+           disc keeps its own-radius clip. `mask-image` Baseline 2023-12-07;
            a non-supporting engine ignores it and the `inset: 0` + in-paint falloff still
            bound the gleam. */
         mask-image:
@@ -310,8 +309,8 @@
                 black 60%,
                 transparent 100%
             );
-        /* AX.W52 D19 — `plus-lighter` (additive but HDR-clamped, Safari 16.4+) over
-           the prior `screen` (a non-linear lightener that lifted the whole tile
+        /* `plus-lighter` (additive but HDR-clamped, Safari 16.4+), NOT
+           `screen` (a non-linear lightener that lifts the whole tile
            toward white — the muddy-card defect). A non-supporting engine degrades to
            a plain low-alpha warm overlay (the gleam composes normally — no blend, no
            blowout), the no-workaround floor; NOT a `screen` fallback. */
@@ -323,7 +322,7 @@
            ONLY the WIRED + interactive surfaces — the opt-in scoped block below. */
     }
 
-    /* AY.W-GLASS — the moving-specular transition is OPT-IN (the Card wire-or-omit
+    /* The moving-specular transition is OPT-IN (the Card wire-or-omit
        pattern, generalized). It attaches ONLY to a WIRED surface
        (`.glass-specular-track` — Card emits it conditionally, the dock controls + the
        Slider thumb compose it) OR to any glass surface under `:hover`/`:active` (the
@@ -378,7 +377,7 @@
            `.dark` cohort runs a lower hover/active rung (tokens.css §specular-
            intensity `.dark` arm); the rest rung is already 0 so the dark arm only
            softens hover/active via the cohort. The rest rung re-reads the (dark)
-           token here so a dark `:root` override resolves. BG.W-GLASS-DYNAMICS — the
+           token here so a dark `:root` override resolves. The
            dark arm mirrors the base press-couple `max()` so the `--glass-btn-press-t`
            release-settle is NOT dropped in dark (the base opacity floor + the neutral
            box-shadow hairline are inherited unchanged). */
@@ -473,7 +472,7 @@
         transition: none;
     }
 
-    /* BB.W-LENSING (scope 2) — the `:active` LENS-SWELL is RETIRED (DDR-LENS-BAKE,
+    /* The `:active` LENS-SWELL is gone (the baked-scale note,
        glass-refract.css header). The swell drove the displacement `scale` by mutating
        the `--glass-refract` axis on the `--glass-btn-press-t` press drive (28 rest → 44
        pressed). That depended on the var()-spliced head/`scale`/tail filter — which never

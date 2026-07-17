@@ -1,10 +1,10 @@
 /* glass/squircle.css
-   The AX.W56 rounded-vs-squircle policy + the @supports (corner-shape: superellipse(2)) squircle coupling onto the overlay-band glass. After the base ladder (overrides it).
-   Carved from the glass.css cascade root; @import-ed by glass.css in cascade
+   The rounded-vs-squircle policy + the @supports (corner-shape: superellipse(2)) squircle coupling onto the overlay-band glass. After the base ladder (overrides it).
+   A partial of the glass.css cascade; @import-ed by glass.css in cascade
    order, each in its own @layer components (isomorphic to the monolith).
    See docs/precepts/design-idioms.md §cohesion-aware partials. */
-/* ── AX.W56 — the rounded-vs-squircle POLICY (re-homes AW.W23's squircle) ─────
-   Cards, buttons, and pills stay ROUND. The earlier AW.W23 block applied
+/* ── The rounded-vs-squircle POLICY (re-homes the squircle) ─────
+   Cards, buttons, and pills stay ROUND. The earlier block applied
    `corner-shape: squircle` to the small glass control family, which
    inverted the design intent — the superellipse is imperceptible at a 16px card
    radius or a stadium pill, so the squircle on those surfaces was visual cost
@@ -13,18 +13,18 @@
    `@supports (corner-shape: superellipse(2))`). This is a clean break — no alias,
    no `corner-shape` rule on the card/button/pill surfaces at all: the CSS
    `corner-shape` INITIAL VALUE is `round`, so those surfaces are round by DEFAULT.
-   The dead `--corner-shape-card`/`-pill` no-op tokens were SWEPT (BG.W-DEAD-SWEEP);
+   The dead `--corner-shape-card`/`-pill` no-op tokens were SWEPT;
    the SQUIRCLE members of the `--corner-shape-*` token axis (bigdock/dialog/sheet/
    panel/hero) live in `theme.css`. A consumer who WANTS a squircle card mints its
    own `--corner-shape-card` alias and adds the surface to the @supports block below.
    Do NOT re-add a squircle rule to the card/button/pill surfaces — they are round
    by policy. */
 
-/* ── AX.W56(R1) + W56b — squircle coupling onto the large-radius glass FAMILY ───
-   W54 makes GLASS the default for the overlay-band surfaces; W56(R1)+W56b couple
+/* ── (R1) — squircle coupling onto the large-radius glass FAMILY ───
+   makes GLASS the default for the overlay-band surfaces; (R1)+ couple
    the SQUIRCLE onto the whole LARGE-RADIUS glass family — Dialog + Sheet content
    (`.glass-floating.{rounded-dialog,sheet-animate}`) and the Configurator PANEL
-   (`.configurator`). (BI.W-GLASS-DEDUP retired `.floating-panel` + the `.glass-hero`
+   (`.configurator`). (retired `.floating-panel` + the `.glass-hero`
    overlay utility — both DELETED clean-break.) Every one
    sits AT or ABOVE the ~--radius-xl threshold where the superellipse READS — the
    same iOS-26 idiom the big-dock card shell carries (the backdrop-filter blur halo
@@ -50,7 +50,7 @@
         }
     }
 }
-/* BI.W-GLASS-DEDUP (FAM-9) — `.floating-panel` (its recipe RETIRED with
+/* `.floating-panel` (its recipe RETIRED with
    floating-panel.css) + `.glass-hero` (the thin large-radius editorial overlay
    utility, 0-consumer verified) are DELETED clean-break. A straggler folds onto a
    `tier`+`deep` glass surface (`<Surface tier deep>` / `.glass-floating.glass-deep`).

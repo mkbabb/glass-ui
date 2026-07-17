@@ -1,4 +1,4 @@
-// BD.W-VIZ-RESPEC — the shared wave-field leaf barrel (INTERNAL — off the public glass
+// The shared wave-field leaf barrel (INTERNAL — off the public glass
 // barrel, the substrate-leaf posture the flow.* chunks share). paper-grid + concentric
 // splice the GLSL/WGSL chunks via a direct relative import; the JS twin is the round-trip
 // source-of-truth.

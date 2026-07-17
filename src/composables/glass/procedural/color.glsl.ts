@@ -1,11 +1,11 @@
-// AV.W2 — the shared procedural-color/noise GLSL chunk.
+// The shared procedural-color/noise GLSL chunk.
 //
 // ONE source for the GPU-side color/noise math shared by the procedural scenes.
 // Each renderer resolves OKLCh through the
-// `/color` leaf (AU.W5) CPU-side — but their in-shader math was authored
+// `/color` leaf CPU-side — but their in-shader math was authored
 // INDEPENDENTLY, so the sRGB OETF DIVERGED: the blob applied `linearToSrgb()`
-// (AU.W7), aurora did not (it output linear → ~2.2× too dark, the AV.W1 defect).
-// AV.W1 fixed aurora by COPYING the blob's OETF — a two-copy duplication. This
+// aurora did not (it output linear → ~2.2× too dark, the defect).
+// fixed aurora by COPYING the blob's OETF — a two-copy duplication. This
 // chunk DELETES that duplication: the OETF lives here ONCE, both shaders splice
 // it, so it can NEVER again drift between them.
 //
@@ -14,13 +14,13 @@
 // load. NO `#include` preprocessor, NO new bundler step — the emitted shader is
 // character-identical to a hand-inlined one (the splice boundary is the only diff).
 //
-// What lives here (the genuinely-shared-AND-identical math, AV.W2 §3a):
+// What lives here (the genuinely-shared-AND-identical math):
 //   - OETF_GLSL          — the sRGB transfer + inverse (the headline convergence).
 //   - OKLCH_MATRICES_GLSL — the four Ottosson `mat3` literals + their space fns.
 //   - FBM_ROT_GLSL       — the byte-identical rotated-octave FBM rotation constant.
-//   - PALETTE_RAMP_GLSL  — the smoothstep-eased OKLab/OKLCh stop-ramp (AX.W11).
+// - PALETTE_RAMP_GLSL — the smoothstep-eased OKLab/OKLCh stop-ramp.
 //   - PCG_HASH_GLSL      — the Jarzynski PCG2D integer-bit hash + the 2D simplex
-//                          gradient-noise leaf (AX.W12 — the painterly-medium organic
+// gradient-noise leaf (the painterly-medium organic
 //                          basis; integer-bit kills the `sin()` periodicity-banding,
 //                          gradient noise kills the value-noise axis-aligned lattice).
 //                          The painterly mediums OPT INTO `gnoise`/`pcgHash2`; the
@@ -140,7 +140,7 @@ vec3 oklchToOklab(vec3 lch) {
     return vec3(lch.x, lch.y * cos(lch.z), lch.y * sin(lch.z));
 }`;
 
-// ── Palette ramp (AX.W11) ─────────────────────────────────────────────────────
+// ── Palette ramp ─────────────────────────────────────────────────────
 // The stop-to-stop interpolation: a smoothstep ease on the inter-stop parameter,
 // then a huePath dispatch — OKLab-rectangular (chroma-holding, no grey midpoint)
 // for the default/adjacent ramp, the OKLCh hue-arc (deliberate rainbow travel)
@@ -206,7 +206,7 @@ vec3 samplePaletteRamp(vec3 a, vec3 b, float tRaw, int huePath) {
   return mixPaletteOklab(a, b, t);
 }`;
 
-// ── PCG2D integer-bit hash + 2D simplex gradient noise (AX.W12) ───────────────
+// ── PCG2D integer-bit hash + 2D simplex gradient noise ───────────────
 // The painterly-medium organic noise basis. The value-noise/`sin()`-hash basis the
 // smooth aurora rides (aurora's local hash21/vnoise) is the WRONG primitive for
 // organic paper/pigment grain — its chained `fract(p*…)`/`fract(sin(p)*…)` lattice

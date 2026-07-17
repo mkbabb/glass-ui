@@ -16,9 +16,7 @@ import type { TimelineSegment } from "./types";
  * clip and is a SIBLING of the progressbar rail (Option C structural
  * split).
  *
- * The split is a pure transposition out of the prior monolithic
- * ContinuousTimeline.vue: same DOM, same class names, same data
- * attributes, same scoped CSS rules. The orchestrator owns the hovered-key
+ * The orchestrator (`<ContinuousTimeline>`) owns the hovered-key
  * state + the `#detail` resolution; this child emits the raw
  * hover/hoverEnd/click signals (popover-open-change drives hover/hoverEnd
  * on the default path; raw mouseenter/leave on the bare-fallback path) and
@@ -269,7 +267,7 @@ function onPopoverOpenChange(seg: TimelineSegment, open: boolean) {
        (the inverse of the segmented float-dot): an INNER keyed shadow reads it
        as PRESSED-IN at the phase joint of the one bar. Lit top-inset +
        shaded bottom-inset = the one key-light, sunk. A faint outer rim keeps
-       the perceived centre on the math centre. build-trap-(d): 0-alpha arms
+       the perceived centre on the math centre. The black-premultiply trap: 0-alpha arms
        are oklch(.../0), never bare transparent. */
     box-shadow:
         var(--glass-material-rim),

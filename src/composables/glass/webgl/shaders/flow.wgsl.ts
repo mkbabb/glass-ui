@@ -1,4 +1,4 @@
-// BC.W-VIZ-PAPERGRID — the shared curl-noise flow chunk, WGSL twin (`curlFBM`).
+// The shared curl-noise flow chunk, WGSL twin (`curlFBM`).
 //
 // The WGSL twin of `flow.glsl.ts`'s `CURL_FBM_GLSL` — the booked procedural-tail
 // chunk (research/viz/paper-grid.md §3.3, §10). paper-grid is the FIRST WGSL curl
@@ -18,10 +18,8 @@
 // the curl operator, which is basis-agnostic). The chunk imports NO value.js +
 // declares no uniforms — it is a pure WGSL string.
 //
-// The ≥3-consumer booking (`docs/consumer-evidence/curl-fbm.md`) is DISCHARGED at
-// this wave: consumer #1 aurora-curl-warp (the `.frag` arm), #2 B5 paper-grid-breathe
-// (THIS wave — the WGSL primary), #3 W-FLOWFIELD (the dot-flow-field). With #2 LIVE the
-// ≥3 bar is MET.
+// Shared by three consumers: aurora-curl-warp (the `.frag` arm),
+// paper-grid-breathe (the WGSL primary), and the dot-flow-field.
 
 // ── Curl-noise flow (WGSL) ──────────────────────────────────────────────────────
 // The 2D curl of a scalar fbm potential. `potentialFBM(vec2f) -> f32` MUST be defined

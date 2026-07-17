@@ -1,35 +1,35 @@
 /* Dock three-layer plate spine.
  *
- * THE FAM-3 dock-disease terminal cure (PASS-1 §0/§2.1/§2.2). The unanimous root
+ * THE dock-disease terminal cure. The unanimous root
  * cause: `.glass-dock` was SIMULTANEOUSLY the glass surface, the morph clip aperture
  * (`overflow: clip` + `contain: layout style paint`, shell.css), AND the interactive
- * item container — every named clip/morph defect (UF-C5/C6/C7) was a downstream
+ * item container — every named clip/morph defect was a downstream
  * compensation for that triple identity. This partial SPLITS it into three z-layers so
  * the defects become UNREPRESENTABLE, not patched:
  *
  *   L0 — THE PLATE (`.dock-plate`).  ONE absolute element owning `backdrop-filter` + the
  *        `--glass-*` glass surface + rim + grain (the shipped ladder verbatim — reads the
  *        inheriting `--dock-surface-blur`/`--glass-tint-*` tokens the shell + adaptive-
- *        legibility partials re-point on `.glass-dock`, so the AZ self-engage darken +
+ * legibility partials re-point on `.glass-dock`, so the self-engage darken +
  *        the dark-arm glow reach the plate via inheritance, ZERO re-author). Its VISIBLE
  *        EXTENT morphs via `clip-path: inset(… )` off the ONE plate-scoped `@property
  *        --dock-t` (paint-only, compositor-composited, ZERO endpoint measurement — self-
  *        describing over the reserved box). It is a SIBLING of the control run, NEVER its
  *        ancestor — so a control hover plate overhangs the plate edge UN-CLIPPED
- *        (UF-C6/C7 unrepresentable). The drop-shadow ELEVATION stays on `.glass-dock`
+ *        (the clip defect is structurally unrepresentable). The drop-shadow ELEVATION stays on `.glass-dock`
  *        (box-shadow OUTSIDE the border box would be clipped by the plate's clip-path).
  *
  *   L1 — THE CONTROLS (`.dock-controls`).  A normal-flow flex run OVER the plate,
  *        `overflow: visible` BOTH axes ALWAYS. No ancestor clips it — "afford enough room
- *        from first principles" (UF-C6) IS this layer.
+ *        from first principles" IS this layer.
  *
- *   L2 — TRANSIENT SURFACES.  Top-layer popovers (W-DOCK-ESCAPE) — nothing to escape FROM.
+ * L2 — TRANSIENT SURFACES. Top-layer popovers — nothing to escape FROM.
  *
- * ONE ENGINE, ONE SCALAR (PASS-1 §2.2). `--dock-t` is `@property`-registered `<number>`
- * (initial 0), `inherits: false` + scoped to the PLATE — the A′-4 restyle-scope cure (a
+ * ONE ENGINE, ONE SCALAR. `--dock-t` is `@property`-registered `<number>`
+ * (initial 0), `inherits: false` + scoped to the PLATE — the restyle-scope cure (a
  * per-frame write recomputes the plate clip only, not the 10-selector control subtree).
  *
- * TRANSITIONAL COEXISTENCE (the interlock, forbidden-at-close). Until W-DOCK-SPRING-UNIFY
+ * TRANSITIONAL COEXISTENCE (the interlock, forbidden-at-close). Until SPRING-UNIFY
  * re-points `useDockSpring` to write `--dock-t` directly + deletes the scalar zoo, the
  * plate ALIASES `--dock-t` to the live `--dock-morph-t` progress (the honest bridge — a
  * registered scalar, never a masking fallback) and the collapse insets are gated behind
@@ -50,7 +50,7 @@
            drop-shadow: `.glass-dock` explicitly owns a local stacking context
            (`z-index: 0`, shell.css), so a negative-z child stays WITHIN it — the plate seats
            at the bottom (glass lens), the `display: contents` control run paints over it.
-           This keeps the control LAYOUT byte-identical to HEAD (the controls stay direct
+           This keeps the control LAYOUT unchanged (the controls stay direct
            flex children of `.glass-dock`) with the plate added behind. */
         z-index: -1;
         /* The pill IS a surface — clicks on the glass between controls are absorbed by
@@ -68,7 +68,7 @@
            the inheriting token). ONE backdrop-filter in the dock — the box no longer
            carries it (no double-blur). */
         backdrop-filter: var(--dock-surface-blur);
-        /* The glass surface — the element-level oklab adaptive tint (the AZ.W-ADAPTIVE-
+        /* The glass surface — the element-level oklab adaptive tint (the 
            AUTO self-engage re-points the inheriting `--glass-tint-source`/`-strength` on
            `.glass-dock`; the plate composes them AT THE ELEMENT so the darken-over-light
            reaches the plate). Zero-delta at the 0% rest default. morph.css OVERRIDES this
@@ -118,7 +118,7 @@
     /* ── L1 — THE CONTROLS ─────────────────────────────────────────────────────────
        A normal-flow run OVER the plate, `overflow: visible` BOTH axes ALWAYS. A hover/
        press plate on an edge control overhangs the plate edge freely — NO ancestor clips
-       it, so UF-C6/C7 ("Dock hover items clip") are structurally impossible. The control
+       it, so "Dock hover items clip" defects are structurally impossible. The control
        run inherits the box's flex layout via `display: contents` (it groups the controls
        the SFC places without interposing a flex context of its own — the dock's own
        `display: inline-flex` on `.glass-dock` lays the controls out). */
@@ -129,20 +129,20 @@
     }
 
     /* When a consumer needs the control run to be a real box (a scroll port lands here at
-       W-DOCK-OVERFLOW), it stays `overflow: visible` on the cross axis — never a clip. */
+       ), it stays `overflow: visible` on the cross axis — never a clip. */
     .glass-dock > .dock-controls {
         overflow-x: visible;
         overflow-y: visible;
     }
 
-    /* ── Reserved-footprint pass-through (G3, PASS-1 §2.1) ──────────────────────────
+    /* ── Reserved-footprint pass-through (G3) ──────────────────────────
        A collapse-morphing dock that reserves its EXPANDED footprint out of flow (a
        floating pill) must let click/wheel over the TRANSPARENT reserved margin fall
        THROUGH to the page — `pointer-events: none` on the reserve wrapper, `auto` on the
        plate + control run. Opt-in via a class-neutral `[data-reserve]` wrapper a genuine
-       reserved-footprint host (SPRING-UNIFY / OVERFLOW) sets. BI.W-DOCK-RETIRES retired the
+       reserved-footprint host (SPRING-UNIFY / OVERFLOW) sets. Retired the
        `.glass-dock-frame` `display:contents` rail-escape (the fan/menu/search surfaces are
-       TOP-LAYER popovers now — W-DOCK-ESCAPE — nothing to escape from), so the reserve is a
+       TOP-LAYER popovers now — nothing to escape from), so the reserve is a
        plain `[data-reserve]` attribute, never the retired escape frame. */
     [data-reserve] {
         pointer-events: none;
@@ -154,10 +154,10 @@
         pointer-events: auto;
     }
 
-    /* ── Transform-free centering (PASS-4B ruling 2 — the SAF-1 landmine fence) ──────
+    /* ── Transform-free centering (the landmine fence) ──────
        The fixed floating dock centers `inset-inline: 0; margin-inline: auto; inline-size:
        max-content` — NEVER `translateX(-50%)`. Load-bearing: the top-layer escape
-       (W-DOCK-ESCAPE) mis-resolves native `anchor()` through ANY transformed ancestor
+       mis-resolves native `anchor()` through ANY transformed ancestor
        chain, so a transform-free dock keeps that door open. GlassDock.vue's fixed class
        chain (`fixed bottom-(--dock-pos) inset-x-0 mx-auto w-max`) resolves to this; the
        rule is the explicit CSS witness the gate reads. A fixed/absolute element is
@@ -171,14 +171,14 @@
     }
 }
 
-/* ── §Inbound U-F4 (value.js, A-class) — the desktop-PRM SNAP-TO-END-STATE ───────────
+/* ── The desktop-PRM SNAP-TO-END-STATE ──────────────────────────────────────────────
    Under `prefers-reduced-motion: reduce` the reduced-motion cure is SNAP-TO-END-STATE,
    NEVER freeze-at-start (WCAG 2.4.3/2.4.7/1.4.13). The EXPANDED / always-expanded dock
    resolves its EXPANDED plate geometry STATICALLY — the plate scalar pins to its END
    state so the clip reveals the FULL plate (every control reachable, full-width desktop
-   viewport), never the collapsed-from sliver the frozen morph clock left (HEAD's
+   viewport), never the collapsed-from sliver the frozen morph clock left (the
    `--dock-expand-t = 0` freeze). The plate-scalar pin is the GREENFIELD guarantee: when
-   W-DOCK-SPRING-UNIFY re-points the plate clip to be the sole extent driver, this arm
+   re-points the plate clip to be the sole extent driver, this arm
    makes the PRM end-state correct BY CONSTRUCTION (independent of the JS morph seat). Not
    inside the `@layer components` block (an `@media` at-rule sits at the stylesheet root;
    it re-declares the `.dock-plate` scalar with the same class-specificity so it wins over

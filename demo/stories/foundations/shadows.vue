@@ -25,7 +25,7 @@ const shadows: { cls: string; label: string }[] = [
 
 <template>
     <StoryPage>
-        <!-- Grid of static shadow demos.  scope 7 — the elevation grid
+        <!-- Grid of static shadow demos. The elevation grid
              sits on a contrasting "stage" so the cast shadows read in DARK: a
              dark drop-shadow over the near-black page is invisible,
              so the `.shadow-stage` paints a mid-tone backing in dark (transparent in
@@ -82,7 +82,7 @@ const shadows: { cls: string; label: string }[] = [
 </template>
 
 <style scoped>
-/*  scope 7 — the dark "stage" tile so cast shadows read in DARK. In
+/* The dark "stage" tile so cast shadows read in DARK. In
    light the cream page already shows the shadows (transparent stage); in dark a
    neutral mid-tone backing lifts off the near-black page so a dark drop-shadow has
    a surface to cast onto. Token-driven so it tracks the warm-neutral identity. */

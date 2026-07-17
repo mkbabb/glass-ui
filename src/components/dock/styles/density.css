@@ -1,6 +1,6 @@
 /* Dock density and scale styles.
  *
- * Carved from the dock.css god-module (slice 25). This partial owns the W45
+ * This partial owns the
  * density cascade: every per-density geometry axis (padding / control-size /
  * layer-height / gap / tile-min / trigger+tab padding) is `calc(<base> *
  * var(--dock-scale))` so the ONE `--dock-scale` multiplier grows box+pad+gap+
@@ -11,9 +11,9 @@
  * @import-ed by dock.css in cascade order, in the SAME `@layer components` — the
  * carve is isomorphic (same layer, same source order → ZERO visual delta). */
 
-/* ── BB.W-HIERARCHY2 — the CONTENT-side anti-collision gutter ───────────────────
+/* ── The CONTENT-side anti-collision gutter ───────────────────
    `--dock-content-safe-inset` is the structural CONTENT-side counterpart to the
-   dock-collision SEAT fix (W-CHIP-GRAZE + W-DOCK-RAIL-SEAT-FINAL own the chip-fan
+   dock-collision SEAT fix (+ own the chip-fan
    SEAT — the chips fan off-canvas into the rail's dead gutter, chipOverMain:false on
    EVERY route by topology). This token reserves a guaranteed safe-inset gutter on the
    CONTENT column so the page-title band is structurally clear of any chip reach even
@@ -24,7 +24,7 @@
 
    THE DE-OVERLOAD IS BINDING (distinct geometry concerns, distinct tokens):
    `--dock-control-safe-inset` (per-density, below) is the dock CONTROL plate-clearance
-   inset (the painted plate floors a notch below its track cell — BA.W-DOCK-GEOMETRY,
+   inset (the painted plate floors a notch below its track cell —
    owned by proof:dock-plate-clearance); `--dock-content-safe-inset` is the CONTENT-band
    gutter (the content column reserves dead inline space the chips can never share).
    The two close the collision from BOTH sides — the chip seat (the SEAT waves) AND the
@@ -34,8 +34,8 @@
 :root {
     --dock-content-safe-inset: var(--dock-rail-extend-length, 2.5rem);
 
-    /* ── BC.W-DOCK-ARBITRARY — the arbitrary-shape morph tokens ─────────────────
-       The dock morph is no longer locked to circle↔pill. The shape is now a SCALAR
+    /* ── The arbitrary-shape morph tokens ─────────────────
+       The dock morph is not locked to circle↔pill: the shape is a SCALAR
        PARAMETER: a `--dock-shape-from`/`--dock-shape-to` corner-radius pair the chrome
        radius arm interpolates on `--dock-morph-t`, an OPT-IN `--dock-shape-clip-from`/
        `--dock-shape-clip-to` clip-path silhouette pair (compositor-only, no layout),
@@ -43,8 +43,8 @@
        collapsed-perfect-circle ↔ expanded-pill identity (CLAUDE.md `aspect-ratio: 1` +
        `--radius-dock` 9999px), so the common case needs no consumer override; a consumer
        sets these to morph to an arbitrary silhouette (a wide bar, a teardrop, a tall
-       rail). Clean break (MEMORY: no backwards compat) — the prior hardcoded circle/pill
-       endpoints become these token DEFAULTS, no `--dock-radius-legacy`. */
+       rail). Clean break (MEMORY: no backwards compat) — the circle/pill endpoints
+       ARE these token DEFAULTS, no `--dock-radius-legacy`. */
 
     /* The corner profile span — the `from`-radius (the collapsed perfect circle, a
        9999px pill that rounds the height-pinned square into a circle) ↔ the `to`-radius
@@ -62,13 +62,13 @@
     --dock-shape-clip-to: none;
 
     /* The squish cap — the LOW volume-preserving `--stretch` ceiling for the shape-morph
-       deformation, mirroring the tab-indicator's iOS-segmented register. BD.W-ANIM-IOS27-
+       deformation, mirroring the tab-indicator's iOS-segmented register. 
        TUNE lifts 1.08 → 1.14 so the box-morph reads as FLOWING MASS (the "MORPH MORE on
        move" mandate; the dock is the most-visible morph surface) — a fast morph swells
        the plate then caps, a gooey settle, never a taffy-pull (≤1.2 anti-taffy bar). */
     --dock-morph-max-stretch: 1.14;
 
-    /* ── BC.W-DOCK-SEARCH — the collapse-on-scroll trigger-points ─────────────────
+    /* ── The collapse-on-scroll trigger-points ─────────────────
        The dock-search optional shrink-on-scroll (composing useScrollChrome — the
        native dual-path reader, persistent-default) reads these two tunable px
        trigger-points: the shrink BEGINS at `--dock-search-shrink-start` of scroll and
@@ -84,7 +84,7 @@
 }
 
 @layer components {
-    /* AX.W45 — the density cascade is threaded by the ONE `--dock-scale`
+    /* The density cascade is threaded by the ONE `--dock-scale`
        multiplier (default 1, lifted to `--dock-mobile-scale` on coarse pointers).
        EVERY per-density geometry axis is `calc(<base> * var(--dock-scale))` so a
        single knob grows box+pad+gap+tab+tile-min in lockstep on touch — the desktop
@@ -93,11 +93,11 @@
        block sets `--dock-control-floor: var(--dock-touch-target)`) so a consumer
        dialing `--dock-mobile-scale` below 1.0 cannot drop the touch target under the
        floor — the floor survives as a CLAMP, not a parallel `@media` rule. `--dock-
-       tile-min` is now IN the cascade (DK4-b) so the grid tile scales with the
+       tile-min` is now IN the cascade so the grid tile scales with the
        control + glyph; it is a proportional `calc(control-size + tile-pad)` so the
        icon-to-tile margin is ONE knob, not a per-density literal. */
     .glass-dock[data-size="sm"] {
-        /* BD.W-DOCK-CORE (A11) — the OUTER pill pad floors lifted ~+50% for the generous
+        /* The OUTER pill pad floors lifted ~+50% for the generous
            warm-cream liquid breath (the sliver-pill defect). The inner
            `--dock-control-safe-inset` plate clearance is untouched (a distinct axis). */
         --dock-padding-block: calc(
@@ -114,7 +114,7 @@
             calc(var(--dock-density-compact-layer-height, 2rem) * var(--dock-scale)),
             var(--dock-control-floor, 0px)
         );
-        /* BA.W-DOCK-GEOMETRY — the control-plate clearance inset (DC-2). The
+        /* The control-plate clearance inset. The
            painted control plate floors a notch BELOW its track cell so the maximal
            hover (×--scale-hover-dock 1.1) / active silhouette stays inside the
            cross-axis clip box with ≥1px margin (the lozenge dies at the plate
@@ -153,7 +153,7 @@
     /* Comfortable density — the GlassDock default. Sits between compact
        and spacious. */
     .glass-dock[data-size="md"] {
-        /* BD.W-DOCK-CORE (A11) — the generous liquid-pill pad: inline 0.5 → 0.75rem (+8px
+        /* The generous liquid-pill pad: inline 0.5 → 0.75rem (+8px
            total breath), block 0.375 → 0.5rem (softer). The vertical sliver-around-40px
            becomes a soft warm-cream capsule. */
         --dock-padding-block: calc(
@@ -174,7 +174,7 @@
             ),
             var(--dock-control-floor, 0px)
         );
-        /* BA.W-DOCK-GEOMETRY — see the compact rung. */
+        /* See the compact rung. */
         --dock-control-safe-inset: calc(var(--dock-control-size) * 0.1);
         --dock-layer-gap: calc(
             var(--dock-density-comfortable-gap, 0.375rem) * var(--dock-scale)
@@ -202,7 +202,7 @@
     }
 
     .glass-dock[data-size="lg"] {
-        /* BD.W-DOCK-CORE (A11) — the spacious rung breathes in lockstep (~+33%). */
+        /* The spacious rung breathes in lockstep (~+33%). */
         --dock-padding-block: calc(
             var(--dock-density-spacious-padding-block, 0.625rem) * var(--dock-scale)
         );
@@ -221,7 +221,7 @@
             ),
             var(--dock-control-floor, 0px)
         );
-        /* BA.W-DOCK-GEOMETRY — see the compact rung. */
+        /* See the compact rung. */
         --dock-control-safe-inset: calc(var(--dock-control-size) * 0.1);
         --dock-layer-gap: calc(
             var(--dock-density-spacious-gap, 0.5rem) * var(--dock-scale)
@@ -266,7 +266,7 @@
             calc(var(--dock-density-audacious-layer-height, 4rem) * var(--dock-scale)),
             var(--dock-control-floor, 0px)
         );
-        /* BA.W-DOCK-GEOMETRY — see the compact rung. */
+        /* See the compact rung. */
         --dock-control-safe-inset: calc(var(--dock-control-size) * 0.1);
         --dock-layer-gap: calc(
             var(--dock-density-audacious-gap, 0.875rem) * var(--dock-scale)
@@ -296,11 +296,11 @@
         );
     }
 
-    /* ── BC.W-AX-DOCK-COCKPIT — the `cockpit` geometry PRESET ─────────────────────
+    /* ── The `cockpit` geometry PRESET ─────────────────────
        The tight instrument-cockpit register: a FIXED `2.75rem` control floor (the
        Gate-1 Q6 fixed value — NOT a range) with COMPACT-tight chrome (the tightest
        padding/gap/tile-pad, distinct from `spacious`'s LOOSE chrome at the SAME
-       2.75rem control). It closes the dock-oversize chronic (speedtest A-9): a
+       2.75rem control). It closes the dock-oversize chronic: a
        consumer opts into a dense, proportioned instrument strip — `2.75rem` control,
        compact chrome, the label tracking the control by `--dock-label-ratio` (so the
        label never reads OVERSIZE on the tight pill).
@@ -339,7 +339,7 @@
         --dock-layer-gap: calc(
             var(--dock-density-compact-gap, 0.25rem) * var(--dock-scale)
         );
-        /* BA.W-DOCK-GEOMETRY — the control-plate clearance inset, in lockstep with
+        /* The control-plate clearance inset, in lockstep with
            the rungs (the 10%-per-side painted-plate inset). */
         --dock-control-safe-inset: calc(var(--dock-control-size) * 0.1);
         --dock-tile-min: calc(
@@ -365,9 +365,9 @@
            font-size is `calc(--dock-control-size * --dock-label-ratio)`; the cockpit
            tunes the ratio DOWN so a 2.75rem cockpit control carries a label sized for
            the dense strip, not the comfortable-default proportion.
-           BI.W-DOCK-CONTROLS (§Inbound speedtest) — adopts the consumer-calibrated
+           — adopts the consumer-calibrated
            0.275 (their measured cockpit ask; was 0.42) so the greenfield cockpit
-           matches the shipped speedtest SurveyResultDock label proportion. */
+           matches a consumer dock label proportion. */
         --dock-label-ratio: 0.275;
         /* RE-RESOLVE the density-painted glyph tokens against the cockpit
            `--dock-layer-height` (the same substitution-vs-inheritance trap the
@@ -382,13 +382,13 @@
         --dock-control-glyph-size: var(--dock-icon-glyph);
     }
 
-    /* BB.W-PERF-PRODUCER A′-6 — RE-RESOLVE the glyph token inside the density-painted
+    /* RE-RESOLVE the glyph token inside the density-painted
        scope. `--dock-icon-glyph` (offsets-sizing.css) is a RATIO of
        `--dock-layer-height`, but density.css paints `--dock-layer-height` ONLY on
        `.glass-dock[data-size]` — the `:root` `--dock-icon-glyph` definition reads
        `--dock-layer-height` at `:root` (the inline fallback ladder), so it would
        FREEZE at the fallback rather than track the per-rung painted height (the SAME
-       substitution-vs-inheritance trap the R5-1 sweep fixed for
+       substitution-vs-inheritance trap the dock-scale sweep fixed for
        `--dock-collapsed-summary-min-size` in overflow.css). Re-resolving it HERE, on
        the element that paints `--dock-layer-height`, lets the per-density height flow
        into the glyph so a `spacious` dock's glyph grows in lockstep with the shelf
@@ -404,7 +404,7 @@
             ),
             var(--dock-icon-glyph-floor)
         );
-        /* BC.W-DOCK-ENGINE move 3 (the Atlas A-9 fold) — RE-RESOLVE the in-dock
+        /* (the dock-glyph fold) — RE-RESOLVE the in-dock
            control-glyph knob against the density-painted `--dock-icon-glyph` (the
            same substitution-vs-inheritance trap as the glyph above: a `:root`-only
            `--dock-control-glyph-size` would freeze at the `:root` glyph while
@@ -415,19 +415,19 @@
         --dock-control-glyph-size: var(--dock-icon-glyph);
     }
 
-    /* Density-audacious narrow-box carve (AV.W16 TW3) — when the dock's OWN
+    /* Density-audacious narrow-box carve — when the dock's OWN
        box is narrow the audacious-dock label glyphs compress so the chrome
        doesn't overflow its host (≤14px below 30rem, 15px 30–45rem). Keyed off
-       the dock's `dock` inline-size container — now OPT-IN via the
-       `containerName="dock"` prop (AW.W1 removed the always-on default that
-       broke shrink-to-fit), so it fires only for a dock the consumer has
+       the dock's `dock` inline-size container — OPT-IN via the
+       `containerName="dock"` prop (no always-on default, which would
+       break shrink-to-fit), so it fires only for a dock the consumer has
        width-CONSTRAINED into a host (the 320px sidebar case) where the
        compression is meaningful and the containment does not collapse the box.
        A free-floating dock shrink-wraps (box == content) so there is nothing to
        compress. The var
        is set on the `.dock-label` descendant (which reads it via
        `font-size: var(--dock-label-size)`, typography.css). Thresholds keep
-       the prior 479/719px viewport cadence as box widths (30rem ≈ 480px,
+       the 479/719px breakpoint cadence as box widths (30rem ≈ 480px,
        45rem ≈ 720px at the 16px root). */
     @container dock (max-width: 29.9375rem) {
         .glass-dock[data-size="xl"] .dock-label {

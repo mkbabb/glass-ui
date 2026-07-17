@@ -1,5 +1,5 @@
-// the WebGPU backend's public TYPE surface, carved out of
-// useWebGPUCanvas.ts to hold the 500-line no-god-module bound (ratchet-drain #4). Pure
+// the WebGPU backend's public TYPE surface, a leaf held under
+// the 500-line no-god-module bound. Pure
 // types — NO WebGPU bootstrap token (`navigator.gpu`/`getContext("webgpu")`/
 // `requestAdapter` live ONLY in the substrate —  clause A);
 // the substrate + the picker (`useGpuSubstrate`) re-import these unchanged.

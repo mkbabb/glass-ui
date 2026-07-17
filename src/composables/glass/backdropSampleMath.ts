@@ -1,5 +1,4 @@
-// backdropSampleMath — the pure sRGB sampling primitives, carved from
-// useGlassBackdropLuminance.ts (the no-god-module colocation carve: position-
+// backdropSampleMath — the pure sRGB sampling primitives (the no-god-module colocation leaf: position-
 // preserving, behaviour-identical). The WCAG relative-luminance linearization, the
 // `rgb()/rgba()` string parse, and the HTMLCanvasElement type-guard are DOM-free
 // (modulo the `instanceof` global) leaves the observer composes; lifting them keeps

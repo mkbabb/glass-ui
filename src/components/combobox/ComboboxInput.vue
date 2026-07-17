@@ -19,7 +19,7 @@ const forwardedAttrs = computed(() => ({
 </script>
 
 <template>
-  <!-- BB.W-INVALID-RING — the combobox input is a borderless `bg-transparent`
+  <!-- The combobox input is a borderless `bg-transparent`
        box, so the shared --invalid-ring (a box-shadow) is ROUTED onto the
        ring-bearing WRAPPER ROW (it carries the `border-b`) via `:has()` reaching
        the descendant input's `aria-invalid`/`:user-invalid` — the destructive ring
@@ -34,10 +34,10 @@ const forwardedAttrs = computed(() => ({
     <RekaComboboxInput
       data-slot="combobox-input"
       :class="cn(
-        // AX.W51 D18 — the filter-input HEIGHT reads the shared `--dropdown-input-height`
-        // register (= W51's `--control-h-md`, unifying the Combobox h-10 / Command h-11
+        // The filter-input HEIGHT reads the shared `--dropdown-input-height`
+        // register (= the `--control-h-md`, unifying the Combobox h-10 / Command h-11
         // split onto ONE comfort-scaled register).
-        // AX.W50 D17 — the font reads the family PRIMARY rung (`text-dropdown`).
+        // The font reads the family PRIMARY rung (`text-dropdown`).
         'placeholder:text-muted-foreground flex h-(--dropdown-input-height) w-full rounded-input bg-transparent py-3 text-dropdown outline-hidden disabled:cursor-not-allowed disabled:opacity-disabled aria-invalid:text-destructive aria-invalid:placeholder:text-[color-mix(in_srgb,var(--destructive)_60%,transparent)]',
         props.class,
       )"

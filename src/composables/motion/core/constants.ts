@@ -1,9 +1,8 @@
 /**
  * Shared damping factors for live numeric motion.
  *
- * These values preserve the app-level tuning that used to live in
- * speedtest's local animation utility while making glass-ui the owner of the
- * generic motion contract.
+ * These values are the app-level tuning glass-ui owns for the generic motion
+ * contract.
  */
 export const DAMPING = {
     canvasNeedle: 0.08,

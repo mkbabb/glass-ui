@@ -1,13 +1,12 @@
 /*
- * glass-deep.css — BG.W-DEEP-GLASS-DECIDE — the OPT-IN deep-glass token family.
+ * glass-deep.css — the OPT-IN deep-glass token family.
  *
  * DEEP-GLASS-DECIDED: retired-at-16px-cost-0B-profile-budget-per-frame-blind
  *
- * ── THE TERMINAL VERDICT — the 5-tranche ride ENDS here (GA-7) ──────────────
+ * ── The 16px blur ceiling ──────────────────────────────────────────────────
  * The deep tier ships at 16px / saturate 1.8. The Apple `blur(20px)` push is NOT
- * "the successor" — it is DECIDED: 16px IS this substrate's blur ceiling, stated
- * as IDENTITY, not debt. The BB->BC->BD->BE->BF->BG ride TERMINATES. The recorded
- * number that fenced it:
+ * a successor: 16px IS this substrate's blur ceiling — IDENTITY, not debt. Two
+ * fences hold it there:
  *   - `profile:budget` (the repo's ONLY committed budget gate) is BYTE-measuring:
  *     the 16->20px change is a 2-char CSS literal that gzip-compresses IDENTICALLY,
  *     so a 20px bump "clears" it at delta-0 bytes (dist/glass-ui.css gzip ~10.04
@@ -20,18 +19,18 @@
  *     tier renders over LIVE animated backdrops (the dock over aurora, the hero
  *     CTA) — the worst case for per-frame backdrop re-rasterization. No committed
  *     per-frame render-cost harness clears 20px on that surface.
- *   - The whole design trajectory dials blur DOWN: W-GLASS-CAL cut every calm rung
- *     ~15-20% (floating 16->13px) on the user's "a hair too much" over-diffusion
- *     call. 20px would push the deep tier BACK toward the diffusion the user
- *     rejected — wrong direction. The warm-cream light-concentration ceiling
- *     (AX.W52 D19 — a saturate/blur that over-juices a colored substrate reads as
- *     a garish smear) keeps 16px "just-rich" over warm-aurora.
- * So: 16px is the ceiling. The saturate ALREADY reached the Apple 1.8 ceiling
- * (BD.W-GLASS-ABROGATE-GRAY), so the deep tier IS at its design-language depth on
- * BOTH axes — deeper blur than calm floating (16>13px), richer saturate (1.8>1.6).
+ *   - The whole design trajectory dials blur DOWN: every calm rung is cut ~15-20%
+ *     (floating 16->13px) on the "a hair too much" over-diffusion call. 20px would
+ *     push the deep tier BACK toward that rejected diffusion — wrong direction. The
+ *     warm-cream light-concentration ceiling (a saturate/blur that over-juices a
+ *     colored substrate reads as a garish smear) keeps 16px "just-rich" over warm-
+ *     aurora.
+ * So: 16px is the ceiling. The saturate ALREADY reached the Apple 1.8 ceiling, so
+ * the deep tier IS at its design-language depth on BOTH axes — deeper blur than
+ * calm floating (16>13px), richer saturate (1.8>1.6).
  *
  * ── The family shape ───────────────────────────────────────────────────────
- * A SEPARATE `--glass-blur-deep-*` token family ABOVE the W-GLASS-CAL calm
+ * A SEPARATE `--glass-blur-deep-*` token family ABOVE the calm
  * default. The calm content default is BYTE-UNTOUCHED — this family is minted
  * ALONGSIDE the calm `--glass-blur-*` ladder (tokens/glass.css), which NEVER reads
  * these tokens, so `proof:glass-cal` B1-B3 stay GREEN by construction (the calm
@@ -39,12 +38,12 @@
  * sibling of tokens/glass.css (kept OUT so glass.css stays under the 500-line
  * ratchet); @import-ed in tokens.css AFTER glass.css (the deep family resolves in
  * the same :root cascade slot, adjacent same-selector blocks). The dark deep arm
- * lives in tokens/dark-arm.css (the W-DARK-MATERIAL luminous-dark companion).
+ * lives in tokens/dark-arm.css (the luminous-dark companion).
  *
  * ── The Apple-range derivation (DELTA cross-ref) ───────────────────────────
  * Apple home nav:        saturate(1.8) blur(20px)  (the canonical measure)
  * Apple product tiers:   blur(14-20px)             (the band)
- * glass-ui calm ceiling: floating 13px / saturate 1.6   (W-GLASS-CAL dial-back)
+ * glass-ui calm ceiling: floating 13px / saturate 1.6 (dial-back)
  * glass-ui DEEP (ship):  16px / saturate 1.8       (STRICTLY deeper blur + richer
  *                        saturate; 16px is the DECIDED ceiling — see the verdict
  *                        above, IDENTITY not debt).
@@ -55,17 +54,17 @@
        is the depth-0 floor; the deep recipe LERPs between the two on `--glass-depth`
        so the axis is a genuine driver, not a literal. */
     --glass-blur-deep-radius:    16px; /* in [14,20], STRICTLY > calm floating 13px.
-                                          DECIDED CEILING (BG.W-DEEP-GLASS-DECIDE):
+                                          DECIDED CEILING:
                                           16px IS this substrate's blur ceiling —
                                           IDENTITY, not debt. The 20px push is RETIRED
                                           (per the header verdict), never a successor:
                                           the per-frame cost is super-linear past ~16px
                                           over the deep tier's live animated backdrops
-                                          + the W-GLASS-CAL dial-back is binding. */
+                                          + the dial-back is binding. */
     --glass-saturate-deep: 1.8; /* Richer than the calm floating tier. */
 
     /* ── The deep LERP is COMPUTED AT THE CONSUMING `.glass-deep` ELEMENT, not here
-       (BG.W-GLASS-DEPTH-TIER freeze-fix) ────────────────────────────────────────
+       (freeze-fix) ────────────────────────────────────────
        The deep blur/saturate LERP intermediates — `--glass-blur-deep-active-radius`,
        `--glass-saturate-deep-active`, `--glass-blur-deep` — are NOT declared in this
        `:root` block. They live on the `.glass-deep` rule (glass/deep.css). WHY: they
@@ -77,7 +76,7 @@
        here at `:root`, `--glass-depth` computes to its `@property` `initial-value` 1,
        so the LERP would BAKE `calc(… * 1)` and inherit that FROZEN string down — every
        deep surface would paint the depth-1 (16px / saturate 1.8) ceiling REGARDLESS of
-       its tier grade (the painted DEAD-KNOB the C18 dual-engine judge caught 2026-07-05:
+       its tier grade (the painted DEAD-KNOB:
        a deep BUTTON read as thick as a deep MENU). The tier map (glass/deep.css
        `:where()` rules) sets `--glass-depth` PER TIER on the base rung; the LERP must
        therefore be declared on `.glass-deep` — the SAME element, at/below the tier-grade
@@ -86,7 +85,7 @@
        GRADES stay here (they are literals — no registered-`@property` read — so their
        `:root` declaration is safe); the COMPOSITION moves to the consuming element. */
 
-    /* ── The tier-depth MAP — thickness tracks surface PROMINENCE (BG.W-GLASS-DEPTH-TIER) ──
+    /* ── The tier-depth MAP — thickness tracks surface PROMINENCE ──
        iOS-27 grammar: larger glass = thicker material AUTOMATICALLY — a control
        flexing into a menu GAINS depth as part of the morph (WWDC25). glass-ui's deep
        tier was opt-in per class at a UNIFORM --glass-depth: 1, so thickness did NOT

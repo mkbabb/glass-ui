@@ -9,7 +9,7 @@ import {
 import type { TimelineSegment } from "@glass/components/timeline/types";
 
 /**
- * AC.W9 (Lane B / B2) — the `continuous` variant paints ONE rail-
+ * The `continuous` variant paints ONE rail-
  * spanning stitched gradient. Each region windows into the SAME
  * gradient via `background-size` / `background-position-x`, so the
  * phase hues cross-fade smoothly across the boundaries — one

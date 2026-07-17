@@ -1,5 +1,5 @@
-// the canvas VISIBILITY, park, reveal observers, carved into this
-// colocated leaf (the canvas-lifecycle carve; ratchet-drain #3). `createCanvasLifecycle`
+// the canvas VISIBILITY, park, reveal observers, in this
+// colocated leaf (the canvas-lifecycle leaf). `createCanvasLifecycle`
 // (the SCHEDULER — the suspend Set + rAF tick/wake gate + the live reduced-motion
 // re-monitor + the context-loss circuit-breaker) COMPOSES this leaf: the observers OWN
 // only the DOM-observer plumbing (the tab-visibility owner, the content-visibility
@@ -54,8 +54,7 @@ export interface CanvasVisibility {
 
 /**
  * The canvas visibility observers. Constructing this binds the tab-visibility owner +
- * seeds the initial `document.hidden` suspend (the pre-arm seed), matching the prior
- * inline behaviour byte-for-byte.
+ * seeds the initial `document.hidden` suspend (the pre-arm seed).
  */
 export function createCanvasVisibility(
     deps: CanvasVisibilityDeps,

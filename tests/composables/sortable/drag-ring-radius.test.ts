@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { isNonZeroRadius } from "@glass/components/sortable-list/composables/useSortable";
 
 /**
- * AS.W7 D9 harden — the drag-ghost gold ring traces the dragged content's
+ * harden — the drag-ghost gold ring traces the dragged content's
  * VISIBLE corner. `useSortable.createGhost` reads the source's own computed
  * `border-radius`; when it is all-zero it walks descendants depth-first for
  * the first non-zero radius (an unrounded SortableItem
@@ -11,7 +11,7 @@ import { isNonZeroRadius } from "@glass/components/sortable-list/composables/use
  * `0 0 0 2px` box-shadow ring is round, not square.
  *
  * `isNonZeroRadius` is the predicate that gates that walk. These lock the
- * adversarial edges surfaced in W7 challenge: zero (square ring correct),
+ * adversarial edges surfaced challenge: zero (square ring correct),
  * asymmetric, elliptical, percent, and non-length tokens.
  */
 describe("isNonZeroRadius — drag-ring corner predicate", () => {

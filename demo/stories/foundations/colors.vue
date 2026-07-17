@@ -77,7 +77,7 @@ const viz: { id: string; glyph: string; label: string; sub: string }[] = [
              voice the user asked back), laid out with a hand-laid vertical stagger and
              popping in on the `.scroll-cascade--columns` register (the
              column-stagger spring-clocked build — the focal pop-entrance, no
-             demo-local @keyframes). The blobs are LARGER than the buried HEAD chip. -->
+             demo-local @keyframes). The blobs are LARGER than the buried chip. -->
         <StorySection label="Foundations · Color" heading="Section ramp · 13 stops">
             <p class="text-small max-w-prose text-muted-foreground">
                 The chapter palette — <code class="fira-code">--section-color-0..12</code>,

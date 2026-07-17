@@ -1,11 +1,10 @@
 // The constellation INTERACTION machinery — the pointer-driven well + warp +
-// wander clusters carved out of the field engine. ONE pointer-interaction
+// wander clusters. ONE pointer-interaction
 // concern: the held-pointer gravity-well force, the focal-node warp spring, and
 // the auto-drift cadence that re-targets the warp on a jittered clock. The engine
 // core (`constellationField.ts`) imports these as DIRECT function calls inside its
 // per-frame `stepField`; this module imports only the field TYPES from the core
-// (`import type` — no runtime cycle). NO logic edits: the function bodies are the
-// byte-for-byte lift of the prior in-engine cluster.
+// (`import type` — no runtime cycle).
 
 import type {
     ConstellationField,
@@ -45,7 +44,7 @@ export {
  * Returns `{ warp, well }` configs the field carries; every member falls back to
  * the shipped default when the token is absent (an SSR / no-token mount reads the
  * byte-identical spring). The tokens are PLAIN numbers (`0.55`, `12000`), immune
- * to the W30 `light-dark()`-into-Canvas2D leak (they never reach a `fillStyle`).
+ * to the `light-dark()`-into-Canvas2D leak (they never reach a `fillStyle`).
  */
 export function readInteractionConfig(canvas: HTMLCanvasElement): {
     warp: ConstellationWarpConfig;
@@ -75,7 +74,7 @@ export function readInteractionConfig(canvas: HTMLCanvasElement): {
     return { warp, well, wander };
 }
 
-// The gravity-well FORCE (the WELL_* tuning consts + stepWell) is carved into the sibling
+// The gravity-well FORCE (the WELL_* tuning consts + stepWell) lives in the sibling
 // constellationWell.ts leaf (the no-god-module re-drain); re-exported below so the field
 // engine + the package barrel reach `stepWell` through this module unchanged.
 export { stepWell } from "./constellationWell";
@@ -315,7 +314,7 @@ function easeInOutQuad(p: number): number {
  * easeInOutQuad over `now` (no integrator, no second rAF — it rides `stepField`'s ONE
  * per-frame call). No-ops (skipped) when there is no `field.pinnedDrift`, no pinned
  * node, or `now <= 0` (the default unit callers stay green) — so an absent
- * `pinnedDrift` is byte-identical to HEAD.
+ * `pinnedDrift` leaves the plain field untouched.
  *
  * The anchor is captured ON the first armed frame off the pinned node's CURRENT
  * position (its seeded rest), so a consumer that re-anchors the pin (a resize re-fit)

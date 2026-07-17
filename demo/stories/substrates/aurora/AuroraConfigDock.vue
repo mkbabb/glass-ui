@@ -20,15 +20,14 @@ import NucleiLayer from "./config/NucleiLayer.vue";
 
 /**
  * The aurora studio controls column — ONE cohesive progressive-disclosure
- * stack, rebuilt on the library's own `<ConfiguratorLayer>` sections (B21).
+ * stack, built on the library's own `<ConfiguratorLayer>` sections.
  *
- * The prior surface forked into a top-level "Atoms ↔ Advanced" pill toggle:
- * a cramped flat atoms scroll on one face, a bare collapsible-stack on the
- * other. That split fragmented the control surface (the user's "janky mess,
- * doesn't have the same configurability"). The rebuild UNIFIES the two faces
- * into a single column where each section carries BOTH its few intuitive
+ * A single unified column — NOT a top-level "Atoms ↔ Advanced" pill toggle that
+ * splits into a cramped flat atoms scroll on one face and a bare collapsible-stack
+ * on the other (that split fragments the control surface). Each section carries
+ * BOTH its few intuitive
  * knobs (the atoms — seeded FROM the preset, refining over its baseline) AND
- * its deep parameters (the raw config fields), so every historical control is
+ * its deep parameters (the raw config fields), so every control is
  * reachable in one scroll with a clear Color → Composition → Motion → … →
  * Nuclei hierarchy:
  *

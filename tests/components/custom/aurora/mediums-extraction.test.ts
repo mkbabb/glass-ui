@@ -1,9 +1,9 @@
-// AX.W12 — the StrokeProfile-extraction byte/1e-6-equivalence regression (slice 8 F6).
+// The StrokeProfile-extraction byte/1e-6-equivalence regression.
 //
 // The extraction (the mediumOil per-mode if-ladder + the four hand-unrolled stroke
 // layers → struct StrokeProfile + profileFor(medium, mode) + paintStrokeLayers(profile))
 // is a PURE STRUCTURAL TRANSPOSITION: the oil/knife/brushwork bakes must be byte-equal
-// (or 1e-6-equal accounting for float-eval reorder) to HEAD. A live GLSL bake is the
+// (or 1e-6-equal accounting for float-eval reorder) to the mediumOil reference. A live GLSL bake is the
 // π-lane's job (orchestrator-owned); this headless test locks the transposition was
 // VALUE-PRESERVING — the profile fields carry the EXACT if-ladder constants and the
 // cascade preserves the EXACT bestOil/paintOver call topology (offsets, seeds,
@@ -57,7 +57,7 @@ describe("AX.W12 — the StrokeProfile extraction is a value-preserving transpos
         const oilBody = (C.match(/vec3 mediumOil\(vec3 col, vec2 p, float t\)\s*\{[\s\S]*?\n\}/) || [""])[0];
         expect(oilBody.length).toBeGreaterThan(0);
         // The thin body fetches a profile + paints via the shared stroke substrate
-        // (AX.W13 paintStrokeMedium wraps the four-layer cascade + tooth/relight/ground),
+        // (paintStrokeMedium wraps the four-layer cascade + tooth/relight/ground),
         // NOT an inline if-ladder.
         expect(/StrokeProfile prof = profileFor\(MEDIUM_OIL, mode\);/.test(oilBody)).toBe(true);
         expect(/paintStrokeMedium\(col, p, t, prof, mode\);/.test(oilBody)).toBe(true);
@@ -105,17 +105,17 @@ describe("AX.W12 — the StrokeProfile extraction is a value-preserving transpos
     });
 
     // ── The cascade TOPOLOGY: the four layers + crosshatch preserve the EXACT placement
-    // call args (offsets, seeds, scale/density/streak multipliers) the HEAD mediumOil used. ──
+    // call args (offsets, seeds, scale/density/streak multipliers) the mediumOil reference uses. ──
     it("paintStrokeLayers preserves the exact 4-layer + crosshatch call topology", () => {
         const body = (flat.match(/void paintStrokeLayers\([\s\S]*?\n\}\s*$/) || flat.match(/void paintStrokeLayers\(([\s\S]*?)\}\s*vec3 mediumOil/) || ["", ""])[0];
         // Layer 1 — big gestural: sBig, lenMulBig, widMulBig, jitter*0.55, seed 1.3.
-        // Each bestOil carries the AX.W13 trailing prof.energyGrade arg (the SBR length
+        // Each bestOil carries the trailing prof.energyGrade arg (the SBR length
         // cascade as a profile field; 0 for oil → byte-stable placement). Layer 4's fill
-        // density is AX.W13 prof.densityFill (oil 0.95, van-Gogh sparse) not a literal.
-        // The §4.2 anisotropy-lift rebuild (W-AUR-PAINTERLY / W-AUR-VANGOGH-REBUILD) tamed
+        // density is prof.densityFill (oil 0.95, van-Gogh sparse) not a literal.
+        // The §4.2 anisotropy-lift rebuild tamed
         // the small/fill positional jitter (1.3→0.9, 1.5→0.8) so the fine layers stay
         // flow-aligned, and made smlShape/fillShape inherit prof.shapeType (the round-dab
-        // isotropic sparkle that dragged A down is gone) — re-baselined here to the new source.
+        // isotropic sparkle that dragged A down is gone).
         expect(flat.includes("bestOil(p, sBig, lenMulBig, widMulBig, jitterAmt * 0.55, prof.densityBig, prof.shapeType, prof.bristleAmp, flow, t, 1.3, prof.energyGrade)")).toBe(true);
         // Layer 2 — medium body: offset (11.3, 3.7), seed 2.7.
         expect(flat.includes("bestOil(p + vec2(11.3, 3.7), sMed, lenMulMed, widMulMed, jitterAmt, prof.densityMed, prof.shapeType, prof.bristleAmp, flow, t, 2.7, prof.energyGrade)")).toBe(true);
@@ -137,7 +137,7 @@ describe("AX.W12 — the StrokeProfile extraction is a value-preserving transpos
         expect(flat.includes("float sMed = baseScale * 1.1")).toBe(true);
         expect(flat.includes("float sSml = baseScale * 0.45")).toBe(true);
         expect(flat.includes("float sFill = baseScale * 0.22")).toBe(true);
-        // The §4.2 anisotropy lift (W-AUR-PAINTERLY) elongated the strokes HARD (long·thin)
+        // The §4.2 anisotropy lift elongated the strokes HARD (long·thin)
         // so the field reads strongly directional — the len muls climbed + the width muls
         // pulled tighter. Re-baselined here to the rebuilt source.
         expect(flat.includes("float lenMulBig = mix(3.0, 5.2, uStrokeAnisotropy)")).toBe(true);

@@ -121,8 +121,8 @@ export function useIntersectionPause(
         const { hidden } = visibility;
         disposeVisibility = visibility.dispose;
         isDocumentVisible.value = !hidden.value;
-        // `flush: 'sync'` so the visibility reaction is synchronous — matches
-        // the prior hand-rolled `visibilitychange` listener's timing exactly.
+        // `flush: 'sync'` so the visibility reaction is synchronous — matching
+        // a native `visibilitychange` listener's timing exactly.
         stopVisibilityWatch = watch(
             hidden,
             (next) => {

@@ -1,6 +1,6 @@
 export { default as FuzzySearch } from "./FuzzySearch.vue";
 export { default as SearchBar } from "./SearchBar.vue";
-// BC.W-SEARCH-CUSTOM — the field-chrome variant CVA + its `/api` type surface (the
+// The field-chrome variant CVA + its `/api` type surface (the
 // SFCs cannot re-export a type, so the CVA home is the type source). The size axis
 // rides the shared `controlSizeClass` (re-exported through searchVariants).
 export { searchFieldVariants } from "./searchVariants";

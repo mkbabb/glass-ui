@@ -20,17 +20,17 @@
  * its blur. Bottom line: one backdrop sample per visual plate; nested cells do
  * not allocate another filtered backing.
  *
- * ── iOS-spring-on-controls cross-ref (AV.W15 C/M cross-ref) ────────────────
+ * ── iOS-spring-on-controls cross-ref (C/M cross-ref) ────────────────
  * The momentum-gated press squish (the control's "lift up on touch, quiet at
  * rest" register — scale toward `--scale-press-dock` / `--scale-press-btn`) is
  * the SPRING half of one Liquid Glass behaviour the rim/specular folds here are
  * the MATERIAL half of. The spring wiring is OWNED by the dock-motion arm
- * (AV.W9, velocity continuity) and the slider arm (AV.W11); it is cross-
+ * (velocity continuity) and the slider arm; it is cross-
  * referenced here and authored there, not re-derived. See
  * `src/components/dock/README.md` for the canonical discipline.
  *
  * ── Thin @import ROOT (cohesion-aware carve) ───────────────────────────────
- * The glass rule body is carved into cohesive `glass/*.css` partials (each
+ * The glass rule body is split across cohesive `glass/*.css` partials (each
  * under the 500-line no-god-module bound), @import-ed below in CASCADE ORDER.
  * The base ladder splits into three adjacent `@layer components` blocks
  * (material · ladder · surfaces) — same layer, same source order, so the carve
@@ -45,45 +45,44 @@
    squircle override): */
 @import "./glass/material.css";
 @import "./glass/ladder.css";
-/* BI.W-STYLE-REDRAIN — the .glass-opaque level-0 escape + the content-aware under-shadow
-   modifier carved out of ladder.css's tail to hold the no-god-module 500-line bound; its
+/* The .glass-opaque level-0 escape + the content-aware under-shadow
+   modifier, a partial held under the no-god-module 500-line bound; its
    own @layer components block @import-ed IMMEDIATELY AFTER ladder.css and BEFORE
-   grain-overlay.css (the ladder @layer tail, unique selectors, source-order-after — the
-   dist is byte-isomorphic). */
+   grain-overlay.css (the ladder @layer tail, unique selectors, source-order-after). */
 @import "./glass/ladder-undershadow.css";
-/* BG.W-CLOSEFIX-9SITE — the glass-tier paper-grain `::after` overlay carved out of
-   ladder.css's tail to hold the no-god-module 500-line bound. @import-ed IMMEDIATELY
+/* The glass-tier paper-grain `::after` overlay, a partial held under
+   the no-god-module 500-line bound. @import-ed IMMEDIATELY
    AFTER ladder.css and BEFORE accent-tone.css — the SAME @layer components; the grain
    `::after` is the SOLE writer of the `.glass-*::after` overlay (the grain block was the
-   tail of ladder.css), so the relocation is cascade-order-invariant. */
+   tail of ladder.css), so the cascade order is invariant. */
 @import "./glass/grain-overlay.css";
-/* BC.W-ACCENT-TONE — the contrast-floored 3-channel tonal-accent register
+/* The contrast-floored 3-channel tonal-accent register
    (.accent-tone: one --tone → idle/active/edge/ink). AFTER ladder.css (reads the
    warm-cream --card surface the ladder mints); the SOLE writer of the --accent-*
    channels, so the placement is cascade-order-invariant. */
 @import "./glass/accent-tone.css";
 @import "./glass/rim.css";
 @import "./glass/surfaces.css";
-/* BI.W-STYLE-REDRAIN — the .glass-pager-ring pager-pill chassis + the .glass-chromatic
-   edge-dispersion rim fringe carved out of surfaces.css's tail to hold the 500-line
+/* The .glass-pager-ring pager-pill chassis + the .glass-chromatic
+   edge-dispersion rim fringe, a partial held under the 500-line
    bound; its own @layer components block @import-ed IMMEDIATELY AFTER surfaces.css and
    BEFORE control-surfaces.css (the surfaces @layer tail, unique selectors,
-   source-order-after — the dist is byte-isomorphic). */
+   source-order-after). */
 @import "./glass/surfaces-pager.css";
-/* BC.W-CARVE6 — the .input-pill / .control-surface form-control REST register
-   carved out of surfaces.css to hold the 500-line bound, @import-ed IMMEDIATELY
+/* The .input-pill / .control-surface form-control REST register
+   a partial held under the 500-line bound, @import-ed IMMEDIATELY
    AFTER surfaces.css and BEFORE surface-axis.css (same @layer components, same
    source order — the dist is byte-isomorphic). */
 @import "./glass/control-surfaces.css";
-/* BD.W-TAB-IOS-CAPSULE — the ONE shared glassy register (`.glass-capsule` +
+/* The ONE shared glassy register (`.glass-capsule` +
    `.glass-capsule-track` + `.glass-capsule-hover`) the tabs/dock-tab/buttons/chips/
    cards consumers compose. @import-ed AFTER surfaces.css (so the `--glass-bg-floating-
    tinted` seam + the `--glass-rim-*`/`--glass-shadow-floating` tokens resolve) and
    BEFORE the consuming recipes (segmented-tabs.css et al, imported by index.css). */
 @import "./glass/glass-capsule.css";
-/* BG.W-LIQUID-FILL — the ONE shared liquid-fill register (`.glass-liquid-fill`):
-   the warm glass-cylinder fill extracted from the Slider's `.slider-range` so the
-   Slider AND `<Progress variant="liquid">` COMPOSE it (fewer-sharper-primitives).
+/* The ONE shared liquid-fill register (`.glass-liquid-fill`):
+   the warm glass-cylinder fill the Slider's `.slider-range` AND
+   `<Progress variant="liquid">` COMPOSE (fewer-sharper-primitives).
    @import-ed AFTER glass-capsule.css (same `@layer components`, so the
    `--glass-capsule-warm`/`--glass-blur-quiet`/`--glass-material-rim`/
    `--glass-under-shadow-quiet` tokens resolve) and BEFORE the consuming
@@ -92,13 +91,13 @@
 @import "./glass/surface-axis.css";
 @import "./glass/material-roles.css";
 @import "./glass/reveal.css";
-/* BD.W-LIQUID-ENTRANCE-GENERAL — the UNIVERSAL `.liquid-enter` mount recipe
+/* The UNIVERSAL `.liquid-enter` mount recipe
    (the four coupled channels as @keyframes-on-mount + the `.is-cel` cel-slam + the
    lagging cartoon cast). @import-ed AFTER reveal.css (it extends the same
    `--lq-enter-*` channel substrate the `.glass-reveal` TRANSITION floor speaks). */
 @import "./glass/liquid-enter.css";
 @import "./glass/deep.css";
-/* BG.W-GLASS-DEFAULT-DEFINITION (GA-1) — the .glass-defined DEFINED-tier decoration
+/* The .glass-defined DEFINED-tier decoration
    (rim + warm-cream floor-fill + the control-cohort default flip), a token-substitution
    decoration ON a base rung (the .glass-opaque/.glass-deep precedent), @import-ed
    IMMEDIATELY AFTER deep.css (same @layer components, source-order-after so its cohort

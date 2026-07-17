@@ -1,4 +1,4 @@
-// popoverContext.ts — the sealed-Popover union context (BI.W-OVERLAY-UNION).
+// popoverContext.ts — the sealed-Popover union context.
 //
 // The Kronecker fold collapses HoverPopover + HoverCard + Popover onto ONE sealed
 // `<Popover>` whose `trigger` axis switches the reka ROOT internally (fine-hover →

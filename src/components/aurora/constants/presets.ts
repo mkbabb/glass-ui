@@ -260,8 +260,8 @@ export interface AuroraConfig {
     /**
      * Relight tint for the impasto catch-light. Optional;
      * omitted = the canonical warm-white the shared `warmCatchLight` OKLCh helper
-     * derives (the `(0.985, 0.0125, 77.5°)` anchor — perceptually the prior eyeballed
-     * warm-white, now on the OKLCh core). Author it either as a raw LINEAR-light
+     * derives (the `(0.985, 0.0125, 77.5°)` anchor — perceptually a warm-white, on
+     * the OKLCh core). Author it either as a raw LINEAR-light
      * `[r,g,b]` triple OR as an `{L,C,h}` OKLCh anchor (the bridge derives the linear
      * triple via `warmCatchLight`). The diffuse + Blinn-specular terms modulate by it.
      */
@@ -391,14 +391,14 @@ export const IMAGE_BLUR_MAX_DEFAULT = 0.06;
 export const DEFAULT_AURORA_CONFIG: AuroraConfig = {
     // The warm-cream library identity. NOT teal/navy — a
     // soft warm-amber-to-cream ramp (hue 45..70, the warm-amber family)
-    // so a bare `<Aurora>` reads warm-cream at rest. The prior blue/teal default
-    // (h:220/200) was the teal-on-navy disease in the library identity. Named
+    // so a bare `<Aurora>` reads warm-cream at rest. A blue/teal default
+    // (h:220/200) would be the teal-on-navy disease in the library identity. Named
     // themed presets (Sky, Ocean, …) live in the consumer (presets-in-consumers).
     // Authored vivid identity (the
-    // floor is the runtime guarantee; this is the authored chroma). The pre-BI ramp's pale
-    // apex (C:0.095) dragged the mean OKLab chroma BELOW the 0.13 warm-vivid floor and the
-    // hues sat in a near-monochrome 45–68 cluster (a flat amber ramp). BI lifts every stop
-    // into the 0.13–0.17 warm-vivid band AND spreads the hue into a real SUNSET sweep —
+    // floor is the runtime guarantee; this is the authored chroma). A pale-apex ramp
+    // (C:0.095) would drag the mean OKLab chroma BELOW the 0.13 warm-vivid floor with the
+    // hues in a near-monochrome 45–68 cluster (a flat amber ramp); instead every stop sits
+    // in the 0.13–0.17 warm-vivid band AND the hue spreads into a real SUNSET sweep —
     // a warm coral-amber base (h:30), an amber body (h:55), a warm-gold apex (h:82): a
     // SECOND warm accent hue per the DAWN-lilac, SUNSET-rose model (a monochrome ramp
     // reads flat), all warm (NO teal/navy — the warm-floor law; NO pink — that setting-sun
@@ -445,8 +445,8 @@ export const DEFAULT_AURORA_CONFIG: AuroraConfig = {
 };
 
 /**
- * `PAPER_WASH_GROUND` — the library-canon recessive-ground crayon calibration
- * ( A-4a; d6 9467bd16 adopt). A pure PRESET PARTIAL (no
+ * `PAPER_WASH_GROUND` — the library-canon recessive-ground crayon calibration.
+ * A pure PRESET PARTIAL (no
  * palette/nuclei/motion) pinning the recessive crayon-ground deposition dials so a
  * data-ground aurora reads as paper-on-tooth without each consumer dial-tuning the
  * same recessive calibration by hand. It carries NO palette/nuclei — the consumer
@@ -455,8 +455,8 @@ export const DEFAULT_AURORA_CONFIG: AuroraConfig = {
  *
  * House-rule clean (presets-in-consumers): this is the LIBRARY's own recessive-ground
  * IDENTITY, not a consumer theme — admissible at the root. `satisfies
- * Partial<AuroraConfig>` holds (every key is a first-class `AuroraConfig` field at
- * HEAD; the `crayon` medium is `uMedium==4`).
+ * Partial<AuroraConfig>` holds (every key is a first-class `AuroraConfig` field;
+ * the `crayon` medium is `uMedium==4`).
  */
 export const PAPER_WASH_GROUND = {
     medium: "crayon",

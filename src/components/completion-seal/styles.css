@@ -1,12 +1,12 @@
 /* CompletionSeal component styles.
- * BC.W-AX-COMPLETION-SEAL — the hero-scale earned-GOLD completion seal.
+ * The hero-scale earned-GOLD completion seal.
  *
  * A determinate process completes and a HERO-SCALE gold mark DRAWS itself onto the
  * surface: the stroke INKS (a `stroke-dashoffset` wipe on the registered `--seal-draw`
  * <percentage>), settles with a small spring overshoot (the `--seal-scale` SPATIAL leg
  * on the seal's own `--spring-snappy`/`--spring-bouncy` clock), and glints ONCE on
- * settle (the `--seal-glint` + the W-AX-METAL-GLOW gold catch-light). It is GOLD because
- * completion is EARNED — the ink reads the W-PHASE-PALETTE completion register
+ * settle (the `--seal-glint` + the gold catch-light). It is GOLD because
+ * completion is EARNED — the ink reads the completion register
  * (`--phase-complete-color`/`--color-gold`), so a consumer re-inking completion re-inks
  * the seal in lockstep. The seal mints NO new gold token + does NOT re-author the metal
  * glow — it COMPOSES both (the earned-gold register has ONE home).
@@ -37,7 +37,7 @@
     transform: scale(var(--seal-scale, 1));
 }
 
-/* The PERSONAL-BEST earned-gold garnish (BG.W-SEAL-DISC) — a result that beat the user's
+/* The PERSONAL-BEST earned-gold garnish — a result that beat the user's
    historical best re-points the seal ink onto the brighter earned-gold register. The seal
    mints NO new gold literal — `--seal-best` COMPOSES the gold FAMILY (`--color-gold-light`,
    the brighter earned gold), so a consumer re-tuning the gold family re-tunes the
@@ -69,7 +69,7 @@
 
 /* The hero-scale gold-draw glyph — an SVG <path>/<circle> stroked in `--seal-ink`. The
    stroke INKS itself via the `--seal-draw` wipe (a stroke-dashoffset paint, never a
-   fade). The glint reads the W-AX-METAL-GLOW catch-light (composed, not re-authored). */
+   fade). The glint reads the catch-light (composed, not re-authored). */
 .completion-seal__mark {
     fill: none;
     stroke: var(--seal-ink);
@@ -81,7 +81,7 @@
        length). pathLength="100" normalizes the glyph so the wipe is path-agnostic. */
     stroke-dasharray: 100;
     stroke-dashoffset: calc(100 - var(--seal-draw, 100%) / 1%);
-    /* The one-pass gold glint on settle — the W-AX-METAL-GLOW catch-light, scaled by
+    /* The one-pass gold glint on settle — the catch-light, scaled by
        `--seal-glint` (0 at rest → 1 on settle-pass). A drop-shadow halo of the seal's
        OWN gold ink at the metal-glow radius/strength — composed, never re-authored.
        The seal is NOT a `.metal-*` element, so the bare `--metal-glow-blur`/`-opacity`
@@ -158,7 +158,7 @@
     }
 }
 
-/* The disc FACE materialize (BG.W-SEAL-DISC) — the earned-coin face fades in before the
+/* The disc FACE materialize — the earned-coin face fades in before the
    ring draws around it (the first beat of the disc→ring→check gesture). Compositor-only
    (opacity — a paint channel, NO layout property). `both` fill holds the settled visible
    face; under PRM (this whole @media block is inert) the face is the static visible coin

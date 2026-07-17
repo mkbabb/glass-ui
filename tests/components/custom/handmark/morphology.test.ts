@@ -1,5 +1,5 @@
-// BA.W-HANDMARK C-2 — the natural-underline morphology (born-RED at the fork's
-// "renders pen today" no-op). The atlas's four axes, on the ONE seeded pencil-boil
+// The natural-underline morphology (born-RED at the fork's
+// "renders pen today" no-op). The four brush axes, on the ONE seeded pencil-boil
 // engine fed by the house prng leaf:
 //   - scale-relative amplitude (two widths → proportional peak deviation);
 //   - irregular 2–4 periods (a seeded period count, varying across seeds);

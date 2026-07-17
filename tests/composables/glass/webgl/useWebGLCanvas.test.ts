@@ -1,4 +1,4 @@
-// AU.W6 — the consumer-#2 usability assert (C6 must-fix #4) + the scheduling
+// The consumer-#2 usability assert + the scheduling
 // contract for `useWebGLCanvas`.
 //
 // The substrate must NOT bake aurora's quad/attrs/DPR/frozen-t — a SECOND
@@ -24,7 +24,7 @@ import {
 // controllable rAF, a no-op ResizeObserver, a controllable document.hidden. ──
 let rafQueue: Array<() => void>;
 let listeners: Record<string, Array<(e: any) => void>>;
-// A controllable clock the breaker's sliding window reads (BC.W-SAFARI-WEBGL): a
+// A controllable clock the breaker's sliding window reads: a
 // test advances `clockMs` so loss timestamps land at distinct times (a storm clusters
 // inside T; a healthy single loss is far apart).
 let clockMs: number;
@@ -74,7 +74,7 @@ function flushFrames(n: number) {
     }
 }
 
-// BD.W-CUT — the shared leaf's `presize()` (createCanvasLifecycle) schedules a
+// The shared leaf's `presize()` (createCanvasLifecycle) schedules a
 // rAF-double-resize layout-settle defense (the aurora-proven stuck-300×150 cure,
 // promoted to ALL consumers). Those transient resize callbacks share the rAF queue with
 // the render `tick`, so a frame-per-flush count is skewed by the settle rAFs occupying
@@ -95,7 +95,7 @@ beforeEach(() => {
     rafQueue = [];
     listeners = {};
     clockMs = 1000;
-    // Fake timers so the BC.W-SAFARI-WEBGL restore-debounce (`setTimeout`) is
+    // Fake timers so the restore-debounce (`setTimeout`) is
     // controllable; a test advances `vi.advanceTimersByTime` past RESTORE_DEBOUNCE_MS
     // to fire the coalesced rebuild.
     vi.useFakeTimers();
@@ -310,7 +310,7 @@ describe("useWebGLCanvas — the consumer-#2 substrate contract (AU.W6)", () => 
 
         // ── context restored ── the substrate re-creates its GL resources
         // (re-runs setup on the fresh context) and resumes the rAF loop. The rebuild is
-        // DEBOUNCED (BC.W-SAFARI-WEBGL — a burst coalesces to one rebuild per settle), so
+        // DEBOUNCED (a burst coalesces to one rebuild per settle), so
         // advance past the debounce window to fire the coalesced re-arm.
         dispatch("webglcontextrestored");
         expect(setups).toBe(1); // not yet — the rebuild is debounced
@@ -386,7 +386,7 @@ describe("useWebGLCanvas — the consumer-#2 substrate contract (AU.W6)", () => 
     });
 });
 
-// ── BC.W-SAFARI-WEBGL — the context-loss circuit-breaker (the §H Safari flash kill).
+// ── The context-loss circuit-breaker (the §H Safari flash kill).
 //
 // The self-heal above is correct for a single GPU-TDR loss, but on WebKit the per-page
 // WebGL-context cap is overrun and an eviction storm fires loss→restore→loss→restore in a

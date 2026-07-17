@@ -1,23 +1,23 @@
 /* glass/surfaces.css
    The convenience-shorthand surfaces — .glass-card / .glass-pill + the glass pill-input + the chromatic edge-dispersion rim fringe.
-   Carved from the glass.css cascade root; @import-ed by glass.css in cascade
+   A partial of the glass.css cascade; @import-ed by glass.css in cascade
    order, each in its own @layer components (isomorphic to the monolith).
    See docs/precepts/design-idioms.md §cohesion-aware partials. */
 
-/* ── @utility glass-fill — the tint-recipe HOME, applied AT the element (BG.W-GLASS-
+/* ── @utility glass-fill — the tint-recipe HOME, applied AT the element (
    REGISTER-UNIFY · R9) ──────────────────────────────────────────────────────────
    The ONE element-level tint compose. A surface composes `glass-fill` + sets its own
-   `--glass-fill-rung` (the rung bg to tint), and the W55 adaptive-legibility seam —
+   `--glass-fill-rung` (the rung bg to tint), and the adaptive-legibility seam —
    `color-mix(in oklab, <rung bg>, var(--glass-tint-source) var(--glass-tint-strength))`
    — resolves AT THE ELEMENT (never pre-baked at a `:root`/ancestor scope). This kills
    the substitution trap STRUCTURALLY: an ancestor that re-points --glass-tint-source /
-   -strength (the W55 @container bright bucket) reaches every descendant `glass-fill`
+   -strength (the @container bright bucket) reaches every descendant `glass-fill`
    surface, because the mix is composed where the surface paints — the exact failure the
    pre-baked `--glass-bg-dock` :root token hits (composed once, read at a descendant,
    blind to the descendant's tint override).
 
    It is the applied twin of the ladder-rung recipe `--glass-plate-tinted` (ladder.css,
-   BG.W-GLASS-IDIOM-FACTOR — the SAME oklab seam, reading `--glass-bg-rung`): the ladder
+   The SAME oklab seam, reading `--glass-bg-rung`): the ladder
    rungs read the token, the NON-ladder surfaces (Card / the button/tab/select/capsule
    consumer band) APPLY this utility. ONE recipe, two delivery seams.
 
@@ -27,8 +27,8 @@
    consumer that composes the tinted plate INSIDE a bigger mix (a warm-floor, an α-drop)
    reads `var(--glass-fill)` without re-spelling the seam. ZERO-delta at the 0%/floor
    rest default — `color-mix(…, X, transparent 0%) ≡ X`, byte-identical to the raw rung
-   bg (the field-independent token-collapse; the WS1-gated bias-hue outer leg is the
-   later W-GLASS-TINT-UNIFY atomic step, added in this ONE home, never N pastes). */
+   bg (the field-independent token-collapse; the -gated bias-hue outer leg is the
+   later atomic step, added in this ONE home, never N pastes). */
 @utility glass-fill {
     --glass-fill: color-mix(
         in oklab,
@@ -45,13 +45,13 @@
        Interactive cards live in <Card> (which owns its own hover composition)
        or in components that explicitly opt into a hover variant. */
     .glass-card {
-        /* Focus-elevation rungs (AQ.W3 §W3.1a) — identity = at-rest paint; the
+        /* Focus-elevation rungs — identity = at-rest paint; the
            `:has(:focus-visible)` rule redefines them (one source, shared with
            the fallback). */
         --card-focus-shadow: var(--shadow-card);
         --card-focus-border: var(--glass-border-quiet);
         position: relative;
-        /* BG.W-GLASS-REGISTER-UNIFY — the glass-card plate reads the ONE tint-recipe
+        /* The glass-card plate reads the ONE tint-recipe
            HOME (`@utility glass-fill`) instead of an inline `color-mix` re-spell. Byte-
            identical at rest: `@apply` inlines `--glass-fill: color-mix(in oklab,
            var(--glass-fill-rung), --glass-tint-source --glass-tint-strength); background:
@@ -60,7 +60,7 @@
         --glass-fill-rung: var(--glass-bg-quiet);
         @apply glass-fill;
         backdrop-filter: var(--glass-cell-backdrop-filter, var(--glass-blur-quiet));
-        /* BB.W-GLASS-ACCENT — the card border feeds its focus-elevation ink into the
+        /* The card border feeds its focus-elevation ink into the
            accent-composed `--glass-border-accent` (ladder.css rim group); byte-
            identical at 0% strength. The focus rung still re-points `--card-focus-
            border`, which flows through `--glass-border-rung`. */
@@ -68,11 +68,11 @@
         border: 1px solid var(--glass-border-accent);
         border-radius: var(--radius-card);
         box-shadow: var(--glass-material-rim), var(--card-focus-shadow);
-        /* AY.W-A11Y-PERF O-4 — the `contain: paint` clip is RETIRED off this
+        /* The `contain: paint` clip is RETIRED off this
            per-class dialect onto the ONE narrowed clip register in
-           material.css (BG.W-GLASS-CLIP-DISCIPLINE — `.glass-card` is in the
-           INCLUDED set). The prior `contain: layout style paint` narrowed to
-           PAINT-only there (the `layout`/`style` axes dropped; `layout` would make the card a
+           material.css (`.glass-card` is in the
+           INCLUDED set). That register is `contain: paint` — PAINT-only
+           (no `layout`/`style` axes; `layout` would make the card a
            containing block for abs/fixed descendants). Do NOT re-declare `contain`
            here — the single register is the clip home. */
         transition:
@@ -84,7 +84,7 @@
        pointer). Scoped to `.glass-card`. `:has()` is Baseline on the target set
        (Chrome 105+/Safari 15.4+) so this is the SOLE focus-elevation mechanism —
        the legacy `@supports not selector(:has(*))` `.is-focus-within` class
-       fallback was COLLAPSED at BG.NF.2 (its toggler never existed on disk). */
+       fallback was COLLAPSED (its toggler never existed on disk). */
     .glass-card:has(:focus-visible) {
         --card-focus-shadow: var(--shadow-md);
         --card-focus-border: var(--glass-border-floating);
@@ -93,7 +93,7 @@
     /* The shared tinted-floating seam lets the segmented-control active pill and
        glass capsule read the same element-level oklab-tint floating fill (the
        substitution-over-redeclaration discipline: ONE tinted-floating source, NOT a
-       tab-local fork). The pill's active plate now reaches the W55 darken-over-bright
+       tab-local fork). The pill's active plate now reaches the darken-over-bright
        seam — over a bright field the pill darkens-to-legible, over a calm field it
        stays warm-cream/near-white (the iOS adaptive register reaching the pill).
        ZERO-delta at the `--glass-tint-strength: 0%`/floor default. */
@@ -104,7 +104,7 @@
             var(--glass-tint-source) var(--glass-tint-strength)
         );
     }
-    /* The .input-pill / .control-surface form-control REST register is carved into
+    /* The .input-pill / .control-surface form-control REST register lives in
        glass/control-surfaces.css (a cohesive sub-concern, the no-god-module re-drain)
        — @import-ed by glass.css IMMEDIATELY AFTER surfaces.css, same @layer components,
        same source order (byte-isomorphic). */

@@ -50,7 +50,7 @@ const props = withDefaults(
         snapPoints?: (number | string)[];
         /** The active detent fraction (`v-model:active-snap-point`). */
         activeSnapPoint?: number | string | null;
-        /** Drag/slide axis (BB-2 default-ladder source). */
+        /** Drag/slide axis (the default-ladder source). */
         direction?: DrawerDirection;
         /**
          * The scene-staging enum. `none` leaves the

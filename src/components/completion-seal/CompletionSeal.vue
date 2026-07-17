@@ -84,7 +84,7 @@ export interface CompletionSealProps {
     shape?: CompletionSealShape;
     /**
      * The accessible completion announcement (the `role="status"`/`aria-live` text — a
-     * screen reader hears "Speedtest complete", etc.). The gold mark is the visual.
+     * screen reader hears "Task complete", etc.). The gold mark is the visual.
      */
     label?: string;
     /**

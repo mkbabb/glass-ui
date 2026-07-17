@@ -3,9 +3,9 @@
 // `useKeyboardShortcuts` builds on `createGlobalState` + `useEventListener`
 // from `@vueuse/core`. Subpath isolates the registry from the root barrel
 // so consumers that don't reach for it don't drag vueuse into the entry
-// chunk via the SCC trap (see `docs/tranches/K/waves/W-S.md`).
+// chunk via the SCC trap.
 //
-// L.W2 — Implementation lives at `src/composables/keyboard/useKeyboardShortcuts.ts`;
+// Implementation lives at `src/composables/keyboard/useKeyboardShortcuts.ts`;
 // the sub-tree's `index.ts` re-exports it, and the flat
 // `@mkbabb/glass-ui/keyboard` public entry resolves
 // through that sub-tree index.
@@ -186,7 +186,7 @@ export function formatCombo(raw: string): string {
     return formatComboParts(raw).join(isMac ? "" : "+");
 }
 
-// BI.W-ESC-STACK / FAM-2 — the Escape "dismiss-topmost" test. Escape (and its
+// The Escape "dismiss-topmost" test. Escape (and its
 // `Esc` alias) resolves LIFO so the most-recently-registered OPEN overlay wins;
 // every other key keeps the forward first-match dispatch (a multi-target
 // accelerator is correct there — only Escape carries the stack semantic).
@@ -200,7 +200,7 @@ function dispatchShortcut(
     eventType: ShortcutEventType,
     e: KeyboardEvent,
 ): void {
-    // BI.W-ESC-STACK — resolve Escape LIFO (dismiss-topmost). Overlays register
+    // Resolve Escape LIFO (dismiss-topmost). Overlays register
     // their Escape handler ONLY WHILE OPEN (register-on-open / unregister-on-
     // close), and the registry Set preserves insertion order, so the reversed
     // walk lands on the top-most live overlay first: it consumes and returns, a

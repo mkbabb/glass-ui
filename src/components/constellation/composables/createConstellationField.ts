@@ -1,9 +1,8 @@
 // The constellation FIELD-STATE construction — the field literal + the
-// wander/well state derivation carved out of Constellation.vue's setup. A pure
+// wander/well state derivation. A pure
 // factory: it reads the resolved `wander`/`gravityWell` prop values and returns
 // the seeded field (focal/warp engine state) plus the per-instance overrides the
-// render closure re-layers over the on-mount token read. NO logic edits — the
-// derivation is the byte-for-byte lift of the prior inline setup block.
+// render closure re-layers over the on-mount token read.
 
 import {
     DEFAULT_WELL_CONFIG,
@@ -44,7 +43,7 @@ export interface ConstellationFieldState {
  * Build the per-instance field state. The focal node is engine-owned:
  * `focalIndex` names the pinned node, `warp` is the per-axis critically-damped
  * spring the engine steps inside `stepField`. `wander`/`gravityWell` absent/false
- * leaves `field.wander`/`field.well` undefined (byte-identical to HEAD — stepField
+ * leaves `field.wander`/`field.well` undefined (the plain field — stepField
  * skips the cadence / force pass); `true` / an object seeds the cold state with the
  * built-in defaults + any prop override layered on (the on-mount
  * `readInteractionConfig` token read re-points the un-overridden members, with the

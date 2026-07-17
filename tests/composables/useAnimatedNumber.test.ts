@@ -75,9 +75,9 @@ describe("useAnimatedNumber", () => {
         animated.dispose();
     });
 
-    // Regression test for the phase-boundary "rewind" bug (audit U.W0.A5 §1).
+    // Regression test for the phase-boundary "rewind" bug (audit
     // When a progress consumer drops the target from 100 → 0 (e.g. across a
-    // speedtest engine phase boundary), the displayed value must never sit
+    // an engine phase boundary), the displayed value must never sit
     // outside [0, 100]. Pre-fix, the SmoothProgress carried a stale 100 in
     // its internal currentValue and damped backward through the rail; the
     // post-fix internal scaling keeps the smoother in [0, 1] so the clamp

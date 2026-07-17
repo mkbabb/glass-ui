@@ -1,14 +1,14 @@
-// AW.W4 — the painterly engine unit suite.
+// The painterly engine unit suite.
 //
 // Two arms:
-//   (1) the structure-tensor eigen-decomposition (W4.1) — a TS port of the GLSL
+// (1) the structure-tensor eigen-decomposition — a TS port of the GLSL
 //       closed-form 2x2 eigen-decomposition asserted against a synthetic linear-
 //       gradient field of KNOWN orientation. The minor eigenvector is the edge
 //       TANGENT (the stroke direction); a synthetic vertical gradient (color
 //       changing along +x) yields a tensor whose minor eigenvector points along
 //       +y (the iso-band tangent). The MAJOR-eigenvector swap (the bite) points
 //       along the gradient instead, which the orientation assertion rejects.
-//   (2) the medium-uniform resolution (W4.3/W4.4) — `resolveMediumId` /
+// (2) the medium-uniform resolution — `resolveMediumId` /
 //       `resolveStrokeOrientId` map the vangogh + oil-pastel mediums to their
 //       shader ints and FORCE the structure-tensor orientation.
 
@@ -23,7 +23,7 @@ import {
 import { DEFAULT_AURORA_CONFIG } from "@glass/components/aurora/constants/presets";
 import type { AuroraConfig } from "@glass/components/aurora/constants/presets";
 
-// ── A TS port of the GLSL structureTensorField eigen-decomposition (W4.1). ────
+// ── A TS port of the GLSL structureTensorField eigen-decomposition. ────
 // MIRRORS mediums.glsl.ts structureTensorField: form the 2x2 structure tensor from
 // a gradient (Gx, Gy), closed-form eigen-decompose, return the MINOR eigenvector
 // (the edge tangent). The shader Sobel-samples luma(sampleBase); here the gradient

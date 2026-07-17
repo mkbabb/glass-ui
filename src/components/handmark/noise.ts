@@ -43,14 +43,14 @@ export function smootherstep(t: number): number {
  *     φₖ = seeded per-octave phase (house mulberry32)
  *     vnoiseₖ = seeded lattice value-noise, smootherstep-faired
  *
- * The four atlas axes:
+ * The four brush axes:
  *   - amplitude SCALES with the rendered span (`(x2−x1) × NOISE_AMP_FRAC × ampScale`),
  *     not a viewBox-stretched constant (a long word and a short word wobble in
  *     proportion); `ampScale` is the excursion knob (default 1
  *     ⇒ byte-identical; the SFC derives it from the brush `wobble` scalar, decoupling
  *     excursion from stroke `weight`);
  *   - the hump-to-hump spacing is IRREGULAR (the φ-incommensurate octave sum — the
- *     honest non-periodicity teeth, spacing-CV ~0.41 at the paint count vs the prior
+ *     honest non-periodicity teeth, spacing-CV ~0.41 at the paint count vs a
  *     sinusoid's ~0.14, over 400 seeds);
  *   - the non-uniform body gives the pf hull a pressure-taper-friendly point stream;
  *   - the seed is the HOUSE mulberry32.

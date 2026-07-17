@@ -283,7 +283,7 @@ defineExpose({
 .aurora-canvas-layer {
     opacity: 0;
     transition: opacity var(--duration-slow) var(--ease-standard);
-    /* Q003/V-A95 EXPERIMENT — RED, efficacy UNCONFIRMED. Hypothesis: at armed
+    /* Experimental, efficacy unverified. Hypothesis: at armed
        opacity:1 the cross-fade's stacking context dissolves, so the live canvas
        shares one root backing with the page's backdrop-filter plates, letting a
        GPU present race their backdrop snapshot to a black sample; `isolate`

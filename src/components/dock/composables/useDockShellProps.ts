@@ -252,7 +252,7 @@ export function useDockShellProps(props: DockProps): DockShellProps {
     const startCollapsed = computed(() =>
         alwaysExpanded.value ? false : props.startCollapsed ?? true,
     );
-    /* Posture ownership (H1). Resolved to `"auto"` on an always-expanded dock —
+    /* Posture ownership. Resolved to `"auto"` on an always-expanded dock —
        that pole is force-pinned, so interaction is meaningless there and the
        `alwaysExpanded + interaction="manual"` dead combination cannot reach the FSM
        (no `data-interaction` stamp, byte-identical behaviour). */

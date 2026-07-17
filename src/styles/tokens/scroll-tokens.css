@@ -1,9 +1,8 @@
 /* tokens/scroll-tokens.css
-   §20 PLATFORM MOTION (AQ.W5) — the native-platform motion substrate knobs.
-   Carved WHOLE from tokens/scale-paper.css at BB.W-CARVE4 to hold the no-god-module
-   bound (the paper/control/display/metal/timeline/metric/table families §11–§19 stay
-   in scale-paper.css; §20 is the file's last section, so this is a contiguous tail
-   carve at the §19/§20 seam). @import-ed by tokens.css in cascade order IMMEDIATELY
+   §20 PLATFORM MOTION — the native-platform motion substrate knobs.
+   Separate from scale-paper.css (§11–§19: paper/control/display/metal/timeline/
+   metric/table) so each partial holds the no-god-module bound; §20 is the last
+   section, the tail at the §19/§20 seam. @import-ed by tokens.css in cascade order IMMEDIATELY
    AFTER scale-paper.css — an adjacent same-selector :root{} block carrying the SAME
    declarations in the SAME relative order, so the dist is byte-isomorphic.
 
@@ -15,13 +14,13 @@
     /* SCROLL-DRIVEN (scroll-driven.css). Values mirror the JS-fallback composable
        defaults (`useScrollProgress` / `useStaggerReveal`) so the native CSS path and
        the fallback path read identically — no visual seam at the `@supports` boundary.
-       BG.W-SCROLL-PROGRESS-RAIL — `--scroll-progress-scroller` is RETIRED (clean break,
+       `--scroll-progress-scroller` is RETIRED (clean break,
        no alias): the recipe reads a FULL-value `--scroll-progress-timeline` (default
        `scroll(nearest block)`), never a `<dashed-ident>` fragment inside `scroll()`. */
     --scroll-reveal-rise: 6px;
     --scroll-reveal-range-end: 60%;
 
-    /* BB.W-SCROLL-MOTION — the scroll-CHOREOGRAPHY register knobs (the page-build /
+    /* The scroll-CHOREOGRAPHY register knobs (the page-build /
        section-cascade / scroll-pinned recipes in scroll-choreography.css). These
        EXTEND the --scroll-reveal-* substrate above; the existing three are READ-ONLY
        (the cascade COMPOSES them, it never re-tunes them). All distances are
@@ -39,7 +38,7 @@
        --scroll-reveal-rise 6px to a perceptible SOTA build; the range-end is the
        reveal window (a touch tighter than the bare reveal so each section lands
        crisply rather than dragging a long fade tail). The column-stagger delay is
-       the opt-in .scroll-cascade--columns grid-variant knob (BG.W-SCROLL-SHRINK-UNIFY
+       the opt-in.scroll-cascade--columns grid-variant knob (
        D14 — a range PERCENTAGE, NOT a time: it is ADDED to the `%` range-end and
        scaled by the per-child `--col` index, so a `60ms` time would make the calc
        invalid `% + ms`). */
@@ -59,13 +58,13 @@
     /* TOP-LAYER (animations.css §TOP-LAYER). The `@starting-style` entry/exit
        grammar for native `<dialog>` / `[popover]` glass surfaces. The backdrop dim
        uses the house alpha-derivative `color-mix(in srgb, var(--background) Npct,
-       transparent)` (AZ.W-ADAPTIVE-AUTO A5-1). It is NOT the `hsl(var(--background)
+       transparent)` (A5-1). It is NOT the `hsl(var(--background)
        / α)` channel form: `--background` is a COMPLETE `hsl()` color
        (`= hsl(48 12% 98%)`), so `hsl(var(--background) / α)` double-wraps to
        `hsl(hsl(…) / α)` — invalid, never paints (the modal dim was silently dead).
        The genuine channel form would require `--background` declared as a bare
        `H S% L%` triple, which it never is — hence the alpha-derivative mix. */
-    /* BI.W-REGISTER-TABLE — the native top-layer enter is FOLDED onto the `enter-overlay`
+    /* The native top-layer enter is FOLDED onto the `enter-overlay`
        register (the FOURTH register RETIRED — one enter grammar). The scale/blur knobs
        SOURCE the register (so the native `.glass-top-layer` enter matches the reka Dialog
        enter); a consumer still retunes the top-layer enter here, but the value tracks the
@@ -78,9 +77,9 @@
 
     /* VIEW-TRANSITION (view-transition.css). The shared `.gl-list-item` group recipe
        + the `--vt-*` axes the `useViewTransition` substrate consumers (dock layer
-       swap, muster J's verdict re-rank) tune their swap against. */
+       swap, a list verdict re-rank) tune their swap against. */
     --vt-duration: var(--duration-normal);
-    /* AX.W05 — ONE iOS-spring vocabulary: every spring-flavored transition reads
+    /* ONE iOS-spring vocabulary: every spring-flavored transition reads
        a governed `--spring-*` register. The legacy apple-spring cubic-bezier
        (+27.5% overshoot) was a SECOND authority beside the regen `--spring-*`
        cohort; it is EXCISED. Its emphatic-overshoot register maps to the playful
@@ -91,26 +90,26 @@
     --vt-ease: var(--spring-bouncy);
     --vt-rise: 8px;
 
-    /* AT.W6-dock-c / AU.W8 — the dock layer-swap morph timing, minted ONCE so
+    /* The dock layer-swap morph timing, minted ONCE so
        both engine paths are timing-IDENTICAL: the FLIP fallback (via
        `--dock-motion-resize`), the native View-Transition group (its
        `animation-timing-function`), AND the runtime SpringProgress driver
-       (AU.W8.3) consume this same source curve. Retires the AQ.W6
+       consume this same source curve. Retires the 
        fork where the VT path ran `--vt-ease` (apple-spring, +27.5% overshoot)
        while the FLIP ran the snappy spring. `--vt-ease` still defaults the
        other VT recipes (`.gl-list-item`).
 
-       BD.W-DOCK-CORE — the WEIGHTY iOS-27 re-tune. `--spring-dock` is now the
+       The WEIGHTY iOS-27 re-tune. `--spring-dock` is now the
        slow inertial gooey-morph register: (0.56s, ζ=0.58), an audacious overshoot
        ~+11% then a deliberate settle over the 0.6s analytic clock — the
-       liquid-weight law (collapse/expand + V↔H + fission all share it). The prior
-       tight (0.32, 0.7) near-critical snap (~+4.6%) is retired. The runtime
+       liquid-weight law (collapse/expand + V↔H + fission all share it) — NOT a
+       tight (0.32, 0.7) near-critical snap (~+4.6%). The runtime
        driver's DOCK_SPRING const DERIVES from the `dock` PRESETS row via
        `springPreset("dock")` (the no-second-authority fence — ONE table row, the
        CSS token + the JS-driven morph + the const all flow from it). */
     --dock-resize-spring: var(--spring-dock);
 
-    /* AT.W7-dock-b — dock-control press micro-feedback spring. A TRANSFORM-ONLY
+    /* Dock-control press micro-feedback spring. A TRANSFORM-ONLY
        spring (`scale`/`rotate`) the dock controls apply to their hover/press
        activation so the squish reads with a touch of spring-back rather than a
        flat ease. STRICTLY transform-scoped: it must never touch the surface-tier
@@ -118,17 +117,16 @@
        `--duration-fast var(--ease-standard)`. The duration pairs with
        `--duration-fast`; consumers retune the whole feel via this one token.
 
-       AY.W-DOCK2 (D6) — the register is `--spring-smooth`, the §6 easing-doctrine
+       The register is `--spring-smooth`, the §6 easing-doctrine
        transform-press register (tokens.css §2: transform hover/press/active →
        `--spring-smooth`/`--spring-snappy`, NEVER `--spring-bouncy`; a press must
-       settle, never overshoot into a visible bounce). The prior `--spring-bouncy`
-       ROOT default was off-doctrine, shadowed for the four named controls by a
-       per-surface re-point in dock-controls.css — the exact per-surface fork the
-       doctrine kills. The re-point is now a DEAD byte-identical redeclaration and is
-       DELETED; the ROOT token IS the doctrine register, so any other consumer of
+       settle, never overshoot into a visible bounce). A `--spring-bouncy`
+       ROOT default would be off-doctrine; there is NO per-surface re-point fork in
+       dock-controls.css — the exact per-surface fork the
+       doctrine kills. The ROOT token IS the doctrine register, so any consumer of
        `--dock-press-spring` inherits the correct smooth register.
 
-       BA.W-GLASS-CAL Unit 3 — the duration leg re-times off the generic
+       The duration leg re-times off the generic
        `--duration-fast` (0.2s) onto `--spring-smooth-duration` (0.36s, the
        smooth spring's OWN 2%-band envelope settle), so the press transform plays
        at its physical settle rather than a generic clock. */

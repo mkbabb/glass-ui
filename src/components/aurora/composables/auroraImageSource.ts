@@ -1,7 +1,7 @@
 /**
  * Aurora image-source coordination seam.
  *
- * The `source:"image"` decode + upload state machine, carved out of `runtime.ts` (the
+ * The `source:"image"` decode + upload state machine (the
  * no-god-module bound; the same colocation seam `glSetup`/`wgpuSetup` carry). It owns:
  *   - the ONE decode (through the shared `resolveImageSource` normalisation), de-duped on
  *     the same `src` so an `update()` burst never re-decodes;

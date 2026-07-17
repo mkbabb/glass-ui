@@ -1,12 +1,12 @@
 /**
- * AX.W03 — the born-RED dock-hold MOUNT gate.
+ * The born-RED dock-hold MOUNT gate.
  *
  * The keepDockOpen contract: a `<Slider>` dragged inside a `<GlassDock>` must
  * acquire a keep-open token from the slider's REAL host element so the dock does
  * not idle-collapse mid-gesture, and the dock's `held` edge must light
  * `data-held` on BOTH the dock root and the slider root.
  *
- * This FAILS at HEAD: `Slider.vue` binds `@pointerdown` on reka's `<SliderRoot>`,
+ * The failure mode this guards: `Slider.vue` binds `@pointerdown` on reka's `<SliderRoot>`,
  * a forwarding component whose `$attrs` listeners are DROPPED across the
  * Slot/forwardRef boundary (reka's own cached `onPointerdown` shadows the merged
  * handler through `SliderRoot → SliderHorizontal → SliderImpl`). So a real
@@ -68,7 +68,7 @@ describe("AX.W03 — dock keepDockOpen host-native hold contract", () => {
         // A spy DockContext over the canonical typed key — the SAME shape
         // `<GlassDock>` provides. Mounting the Slider under it lets us assert the
         // EXACT `keepOpen()` invocation the contract demands while the `held`
-        // edge drives `data-held` (the W01 single-writer reflected on the root).
+        // edge drives `data-held` (the single-writer reflected on the root).
         const Host = defineComponent({
             components: { Slider },
             setup() {
@@ -96,7 +96,7 @@ describe("AX.W03 — dock keepDockOpen host-native hold contract", () => {
         const host = wrapper.element.querySelector('[data-slot="slider"]');
         expect(host, "the resolved slider host element exists").not.toBeNull();
 
-        // RED at HEAD: the template `@pointerdown` never fires through reka's
+        // The failure mode: the template `@pointerdown` never fires through reka's
         // forwarding component; `keepOpen` stays 0, `data-held` never appears.
         firePointer(host!, "pointerdown");
         await nextTick();
@@ -194,7 +194,7 @@ describe("AX.W03 — dock keepDockOpen host-native hold contract", () => {
         await nextTick();
         await nextTick();
 
-        // The W01 single writer reflects the held edge on the dock root, and the
+        // The single writer reflects the held edge on the dock root, and the
         // slider subscribes to the same `held` computed for the thumb-halo.
         expect(dockRoot!.hasAttribute("data-held"), "the dock root paints data-held during the held drag").toBe(true);
         expect(sliderRoot!.hasAttribute("data-held"), "the slider root paints data-held during the held drag").toBe(true);

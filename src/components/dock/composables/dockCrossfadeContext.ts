@@ -9,7 +9,7 @@ import { DOCK_LAYER_GROUP_LABEL } from "../constants";
  * its id + label + icon + host element on mount. The crossfade slot owns ONE face
  * registry.
  * A switcher rail (where one exists — `<DockLayerGroup>`) reads `faces` for its chip
- * run; the controlled-no-rail 5-pane case (speedtest) consumes `<DockCrossfade>`
+ * run; the controlled-no-rail 5-pane case (a consumer) consumes `<DockCrossfade>`
  * DIRECTLY and reads only `activeId`/`leavingId` (no rail, no selection engine).
  *
  * The context is DISTINCT from `DockContext` (a `<DockCrossfade>` need not live inside
@@ -17,7 +17,7 @@ import { DOCK_LAYER_GROUP_LABEL } from "../constants";
  * face crossfade is orthogonal to the box morph (the compound: a face-swap DURING a
  * simultaneous collapse rides two independent scalars — per-face `--dock-t` for the
  * opacity overlap, the inheriting `--dock-morph-t` for the plate clip). It keeps its
- * own module-local key (canonical typed-key DI, invariant 25).
+ * own module-local key (canonical typed-key DI).
  */
 export interface DockFaceDescriptor {
     id: string;

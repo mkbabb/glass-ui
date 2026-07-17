@@ -157,7 +157,7 @@ const resolvedSize = computed<ConfiguratorSize | undefined>(
  * picks up its gap from the `gap-1.5` Tailwind utility above.
  *
  * Block padding follows the same density ladder so the row breathes the
- * same way the gap does. `comfortable` keeps the prior `py-2` (0.5rem).
+ * same way the gap does. `comfortable` keeps the base `py-2` (0.5rem).
  */
 .configurator-row[data-size="sm"] {
     gap: var(--configurator-row-gap-compact);
@@ -189,7 +189,7 @@ const resolvedSize = computed<ConfiguratorSize | undefined>(
  * utilities (0,1,0) — so the container path overrides the bare recipe, yet
  * a row carrying BOTH the attribute and a `--configurator-size` ancestor lands on the
  * attribute rule (identical token, identical paint). `[data-size]` stays
- * the SOLE fallback (inv 47 — not a dead mirror).
+ * the SOLE fallback (not a dead mirror).
  *
  * No `@supports` wrapper: unlike the sibling scroll-state recipe (which probes
  * `@supports (container-type: scroll-state)` — a probeable container-type

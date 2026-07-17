@@ -1,13 +1,13 @@
 /* tokens/light-dark.css
    §-1a coarse-pointer comfort + §-1b light-dark() color architecture — the @media (pointer:coarse) / @media (min-resolution) / @supports (light-dark()) overrides. After the master token partials (overrides them).
-   Carved from the tokens.css cascade root; @import-ed by tokens.css in
+   A partial of the tokens.css cascade; @import-ed by tokens.css in
    cascade order. Same :root cascade context as its siblings. */
 
-/* AX.W51 D18 — the GLOBAL coarse-pointer comfort amplification. The WHOLE library
+/* The GLOBAL coarse-pointer comfort amplification. The WHOLE library
    — buttons, inputs, badges, toggles, the dock (a specialization that reads
-   `--ui-scale`) — grows ~1.5× on touch from this ONE place, the W45 dock-only 1.5×
+   `--ui-scale`) — grows ~1.5× on touch from this ONE place, the dock-only 1.5×
    lifted to the master scalar so the touch scale is CONSISTENT across the library
-   (at HEAD the dock grew but the buttons did not — the three-scale split). The
+   (without this the dock grows but the buttons do not — a three-scale split). The
    WCAG-2.5.5 44px touch floor is enforced HERE too: `--control-floor` lifts to
    `--touch-target`, so every scaled control-height `max(scaled, floor)` clamps at
    ≥ 44px regardless of the scalar (a consumer dialing `--ui-scale` below 1 still
@@ -21,14 +21,14 @@
     }
 }
 
-/* AV.W7 F2 — high-resolution overlay-blur restore. On a 2dppx+ display the
+/* High-resolution overlay-blur restore. On a 2dppx+ display the
    richer overlay wash is amortised by the extra device pixels (the blur samples
    a denser backing store), so a higher ceiling is restored where it is
    affordable. Standard-density displays keep the 13px budget radius set in §-1a
    `:root`. Token-only override — every overlay surface that reads
    `--glass-blur-overlay-radius` inherits the restored value automatically.
 
-   BA.W-GLASS-CAL Unit 1 — the restore pulled 24→20px in lockstep with the base
+   The restore pulled 24→20px in lockstep with the base
    ladder's ~15-20% dial-back (the base overlay rung moved 15→13). 20px stays the
    amortised high-DPI ceiling; standard density reads the dialed-back 13px. */
 @media (min-resolution: 2dppx) {
@@ -38,7 +38,7 @@
 }
 
 /* ═══════════════════════════════════════════════
-   §-1b  LIGHT-DARK() COLOR ARCHITECTURE (AQ.W2 §2)
+   §-1b LIGHT-DARK() COLOR ARCHITECTURE
 
    Every PAIRED color token (a token whose `:root` and `.dark` values are
    BOTH a <color> and differ) folds onto one `light-dark(light, dark)`
@@ -52,7 +52,7 @@
    `@property … syntax:"<color>"`). A registered <color> would resolve ONCE
    at the declaring element and inherit the RESOLVED color, freezing the
    descendant re-resolution. glass-ui's only `@property` registrations (§18)
-   are non-color (percentage/length), so the discipline holds — W2 adds NO
+   are non-color (percentage/length), so the discipline holds — adds NO
    color `@property`.
 
    The semantic `var()`-aliases (`--background`, `--muted`, `--border`,
@@ -63,13 +63,13 @@
 
    FALLBACK (§2c): this whole block is `@supports`-gated, so an engine
    WITHOUT `light-dark()` skips it and the retained `.dark` class block (the
-   fallback floor) drives dark exactly as at HEAD. `light-dark()` is the
+   fallback floor) drives dark identically. `light-dark()` is the
    enhancement OVER the class — not a parallel alias. Baseline Newly
    Available; the fallback floor is the pre-existing class block (net-zero
    new fallback LOC).
 
    IDIOM-REVERSAL — the CANONICAL single source for COLOR
-   (BG.W-GLASS-BASIS-CONSOLIDATE, R16 MN-1). colors → `light-dark()` only is
+   colors → `light-dark()` only is
    now the CANON: this block is the single source of truth for every paired
    COLOR token. The `.dark {}` color re-declarations (dark-arm.css) are the
    fallback-floor LOCKSTEP WITNESSES only — they MUST byte-agree with the dark
@@ -84,16 +84,16 @@
    ═══════════════════════════════════════════════ */
 @supports (color: light-dark(white, black)) {
     :root {
-        /* Neutral ladder — the source the var()-aliases track. BA.W-DARK-MATERIAL scope 1:
+        /* Neutral ladder — the source the var()-aliases track. scope 1:
            the dark --neutral-0 page floor DEEPENS L6→L4 (LOCKSTEP dark-arm.css:32) so the
            lifted L16 --card sits ~5× its relL — a real dark elevation step.
-           BA.W-NO-GRAY — THE WARM-CHROMA FLOOR, BOTH ARMS in lockstep. The LIGHT arm warms
+           THE WARM-CHROMA FLOOR, BOTH ARMS in lockstep. The LIGHT arm warms
            off the achromatic hsl-48 yellow-green onto the warm identity (hsl 28-40, OKLab
            H 62-85°, C off the gray floor; LOCKSTEP color-radius.css). The DARK arm warms in
-           lockstep on the W-DARK-MATERIAL base (hsl 28-36, the dark neutrals carry chroma on
+           lockstep on the base (hsl 28-36, the dark neutrals carry chroma on
            the NEW dark page/card — secondary→border C 0.0138-0.0286, muted-fg C 0.0255). The
-           dark page --neutral-0 hsl(24 9% 4%) is W-DARK-MATERIAL's (KEEP — its luminance floor).
-           Chroma-only at constant L — every L within ±0.01 of HEAD, the AA contract preserved. */
+           dark page --neutral-0 hsl(24 9% 4%) is the (KEEP — its luminance floor).
+           Chroma-only at constant L — the AA contract preserved. */
         --neutral-0: light-dark(hsl(40 30% 98%), hsl(24 9% 4%));
         --neutral-1: light-dark(hsl(38 26% 95%), hsl(28 12% 11%));
         --neutral-2: light-dark(hsl(34 28% 90%), hsl(28 14% 16%));
@@ -102,25 +102,25 @@
         --neutral-5: light-dark(hsl(30 22% 40%), hsl(34 14% 62%));
         --neutral-6: light-dark(hsl(28 24% 30%), hsl(36 14% 72%));
 
-        /* Core surfaces + ink. BB.W-DARK-INK-WARM — the DARK arg warmed off the H95.1°
+        /* Core surfaces + ink. The DARK arg warmed off the H95.1°
            yellow-green hsl(48 10% 90%) onto the no-gray identity hsl(30 14% 90%) (OKLab
            H75.4°, L held) in LOCKSTEP with the .dark fallback floor (dark-arm.css:60). The
            LIGHT arg hsl(24 10% 10%) is already the warm-amber identity (H56°) — untouched. */
         --foreground:                 light-dark(hsl(24 10% 10%), hsl(30 14% 90%));
-        /* BA.W-DARK-MATERIAL scope 1 — the dark --card plate LIFTS L10→L16 (LOCKSTEP
+        /* The dark --card plate LIFTS L10→L16 (LOCKSTEP
            dark-arm.css:51); the public-data panel re-anchors L12→L18 to stay above it.
-           BA.W-NO-GRAY L1 — the LIGHT arm DECOUPLES off the near-achromatic page onto the
+           The LIGHT arm DECOUPLES off the near-achromatic page onto the
            warm-cream plate hsl(36 48% 97%) (LOCKSTEP color-radius.css --card) so the light
-           glass plate reads warm-not-gray; the dark arm is UNCHANGED (W-DARK-MATERIAL's). */
+           glass plate reads warm-not-gray; the dark arm is UNCHANGED. */
         --card:                       light-dark(hsl(30 85% 96%), hsl(26 22% 17%));
         --popover:                    light-dark(hsl(30 85% 96%), hsl(26 22% 17%));
         --surface-public-data-panel:  light-dark(hsl(44 16% 96%), hsl(36 9% 18%));
 
-        /* BA.W-DARK-MATERIAL scope 4 — the chromatic dark --primary (legendre-violet house
-           hue, oklab chroma 0.134; off the HEAD achromatic cream). LOCKSTEP dark-arm.css:59. */
+        /* The chromatic dark --primary (legendre-violet house
+           hue, oklab chroma 0.134; decoupled from the achromatic cream). LOCKSTEP dark-arm.css:59. */
         --primary:                 light-dark(hsl(24 10% 10%), oklch(0.739 0.134 318.1));
         --primary-foreground:      light-dark(var(--neutral-0), hsl(24 10% 10%));
-        /* AX.W44 — dark-arm lift. The stock shadcn dark `hsl(0 62.8% 30.6%)`
+        /* Dark-arm lift. The stock shadcn dark `hsl(0 62.8% 30.6%)`
            (L≈30.6) was a saturated-PLATE value used AS INK over `--card` by the
            Alert destructive variant — 1.75:1 over card (illegible) / 1.91:1 vs the
            page. Lifted to `hsl(0 80% 60%)`: 4.60:1 as text over `--card` (clears the
@@ -129,7 +129,7 @@
            the `.dark` fallback floor below (§2c). */
         --destructive:             light-dark(hsl(0 72% 50%), hsl(0 80% 60%));
         --destructive-foreground:  light-dark(var(--neutral-0), hsl(48 10% 90%));
-        /* BG.W-DESHADCN — the light-dark() arm of the renamed house focus-accent
+        /* The light-dark() arm of the house focus-accent
            register (off the shadcn `--ring`; both halves byte-identical). */
         --focus-ring-color:        light-dark(hsl(24 10% 10%), hsl(48 10% 70%));
         --shadow:                  light-dark(hsl(24 10% 10%), hsl(0 0% 5%));
@@ -141,7 +141,7 @@
         --accent-color:            light-dark(var(--primary), var(--focus-ring-color));
 
         /* Section palette — jewel tones brightened L for dark (oklch pairs;
-           AV.W16 TW2 — hue preserved, L evened) */
+           Hue preserved, L evened) */
         --section-color-0:   light-dark(oklch(0.552 0.192 359.8), oklch(0.721 0.145 354.0));
         --section-color-1:   light-dark(oklch(0.502 0.165 305.9), oklch(0.733 0.113 308.2));
         --section-color-2:   light-dark(oklch(0.484 0.163 265.5), oklch(0.718 0.107 268.4));
@@ -184,19 +184,19 @@
         --gold-light: light-dark(oklch(0.890 0.183 96.1), oklch(0.898 0.182 97.4));
         --gold-dark:  light-dark(oklch(0.599 0.132 64.2), oklch(0.678 0.150 63.8));
 
-        /* Silver family (BA.W-ATLAS-RECONCILE C-3) — the `light-dark()` arm
+        /* Silver family — the `light-dark()` arm
            mirroring gold's exact shape: light value, dark-lifted value. The cool
-           near-achromatic structure metal (the W-NO-GRAY named exception).
+           near-achromatic structure metal (the named exception).
            `--silver-deep` is mode-invariant — not a `light-dark()` pair, exactly as
            `--gold-deep` is omitted from this block. */
         --silver:       light-dark(oklch(0.760 0.012 255), oklch(0.792 0.012 255));
         --silver-light: light-dark(oklch(0.902 0.010 255), oklch(0.912 0.010 255));
         --silver-dark:  light-dark(oklch(0.582 0.014 255), oklch(0.648 0.014 255));
 
-        /* Bronze family (BB.W-METAL-SHIMMER) — the `light-dark()` arm mirroring
+        /* Bronze family — the `light-dark()` arm mirroring
            gold's exact shape: light value, dark-lifted value (~+0.03 L so the warm
            metal reads on the deep canvas). The third brand metal (warm-brown ~54°,
-           chroma above the W-NO-GRAY floor). `--bronze-deep` is mode-invariant —
+           chroma above the floor). `--bronze-deep` is mode-invariant —
            not a `light-dark()` pair, exactly as `--gold-deep`/`--silver-deep` are
            omitted from this block. */
         --bronze:       light-dark(oklch(0.620 0.092 54.0), oklch(0.650 0.090 54.0));

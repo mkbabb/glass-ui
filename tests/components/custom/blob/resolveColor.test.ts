@@ -5,7 +5,7 @@ import {
     defaultBlobColorResolver,
 } from "@glass/composables/color/index";
 
-// AW.W13 — the goo-blob per-frame `value.js` throw.
+// The goo-blob per-frame `value.js` throw.
 //
 // `defaultBlobColorResolver` resolves its color via `cssToOklch(css)`, which
 // feeds the string straight to value.js's `parseCssColor`. Value reports

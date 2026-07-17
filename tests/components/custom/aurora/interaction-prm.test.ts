@@ -1,4 +1,4 @@
-// BI.W-FIELD-CORE — the interaction PRM-suppression suite (re-pointed off the retired
+// The interaction PRM-suppression suite (re-pointed off the retired
 // cursorModel onto the shared `usePointerVelocityField`, the aurora cursor's successor).
 //
 // Every cursor-field axis routes

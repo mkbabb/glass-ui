@@ -24,7 +24,7 @@ export const SOURCE_DRAGGING_CLASS = "is-sortable-dragging";
  *   drop === length      → bottom of last row (DROP_BELOW on last)
  *
  * Two rows adjacent to the insertion line sharing the line visually equals one
- * drawn border (not two) — picking a single row eliminates the prior "doubled
+ * drawn border (not two) — picking a single row prevents a "doubled
  * and wrong" appearance.
  *
  * `rowIndex` is the row's current index in the list; pass `< 0` (not found) to

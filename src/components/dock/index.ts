@@ -5,7 +5,7 @@ export { default as DockLayer } from "./DockLayer.vue";
 // Thin controlled face-swap core. The
 // two-child opacity overlap on the per-face `--dock-t` + measure-once peak reserve +
 // focus-transfer-on-dissolve. `<DockLayerGroup>` COMPOSES it where a rail exists; the
-// controlled-no-rail 5-pane case (speedtest) consumes it DIRECTLY (no selection engine).
+// controlled-no-rail 5-pane case (a consumer) consumes it DIRECTLY (no selection engine).
 // The crossfade context helpers stay INTERNAL (the composables barrel) — only the
 // component + its discovery types publish on `/dock` (the dockLayerContext precedent).
 export { default as DockCrossfade } from "./DockCrossfade.vue";
@@ -31,9 +31,9 @@ export { default as DockBackgroundToggle } from "./DockBackgroundToggle.vue";
 // full-row section break in a grid dock).
 export { default as DockSeparator } from "./DockSeparator.vue";
 // Re-export composable types so consumers can
-// type wrappers around the published surface. Previously `UseDockStateOptions`
-// and `DockState` were exported only from `./composables/index.ts`, which is
-// not reachable through the `@mkbabb/glass-ui/dock` subpath.
+// type wrappers around the published surface. `UseDockStateOptions`
+// and `DockState` need to be reachable through the `@mkbabb/glass-ui/dock`
+// subpath, not only `./composables/index.ts`.
 //
 // `UseDockStateReturn` joins the named composable-return cohort
 // composable-return shape paralleling `UseClipboardReturn` / `UseAuroraReturn`.
@@ -44,7 +44,7 @@ export type { UseDockStateOptions, UseDockStateReturn, DockState } from "./compo
 // old string keys (`"dockKeepOpen"` / `"dockRelease"`) to the typed-key
 // helpers without reaching for the deep-import path. fourier-analysis's 2
 // silent `inject<...>("dockKeepOpen", null)` sites at SliderControl.vue + GlassTimeline.vue
-// (which silently no-op at v1.7.0; functional regression on scrub gestures)
+// (which silently no-op without it; a functional regression on scrub gestures)
 // migrate via `useOptionalDockContext()` once this re-export ships.
 export {
     DOCK_CONTEXT_KEY,
@@ -81,8 +81,8 @@ export {
 // morph (the byte-untouched `morph-bridge.css` — box-inviolate, no second engine) + the
 // optional `useScrollChrome` shrink + the ToC `ensureTargetWindow`/`scrollTo` subsume.
 // A consuming seam BESIDE the morph engine; `<GlassDock search>` opts into it. The words
-// `SearchBar` + its 7 search composables retire onto this register on the `^4.x` consume
-// (THEIR edit — the foreign-tree fence; the network source plugs via `onSearch`).
+// `SearchBar` + its 7 search composables retire onto this register; the network
+// source plugs via `onSearch`.
 export { useDockSearch } from "./composables";
 export type { UseDockSearchOptions, UseDockSearchReturn } from "./composables";
 
@@ -90,6 +90,6 @@ export type { UseDockSearchOptions, UseDockSearchReturn } from "./composables";
 // `fission-bridge.css`/`fission-island.css`) and the Siri island (`<SiriDockCapability>` +
 // `useSiriDock` + the `SIRI_FORMS` ladder + `siri.css`) are DEFINITION-ABSENT
 // (decided-terminal, clean break, no alias). Fission was a demo-only spectacle AND the
-// prime UF-C3 Safari suspect (the ONLY dock mechanism stacking goo `filter:url()` over
+// prime Safari suspect (the ONLY dock mechanism stacking goo `filter:url()` over
 // `backdrop-filter`); Siri was a demo-only zero-binary-consumer capability. The
 // Siri capability are absent from the public dock surface.

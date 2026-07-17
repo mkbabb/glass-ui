@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import { useTokenColor } from "@glass/composables/dom/useTokenColor";
 
-// AW.W15 — the `useTokenColor` injection seam.
+// The `useTokenColor` injection seam.
 //
 // `useTokenColor` read `document.documentElement` directly with no injection
 // point, breaking DI closure for SSR / test. The optional `resolver` arg (last

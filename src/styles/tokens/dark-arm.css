@@ -1,12 +1,12 @@
 /* tokens/dark-arm.css
    The .dark {} dark-mode re-resolution (foreground / shadow-color / section-palette / constellation dark arm). After light-dark.css (the non-light-dark() fallback floor).
-   Carved from the tokens.css cascade root; @import-ed by tokens.css in
+   A partial of the tokens.css cascade; @import-ed by tokens.css in
    cascade order. Same :root cascade context as its siblings. */
 
 /* ═══════════════════════════════════════════════
    DARK MODE — warm dark, section palette brightened ~20% L
 
-   FALLBACK FLOOR (AQ.W2 §2c): this class block is the SOLE non-light-dark()
+   FALLBACK FLOOR: this class block is the SOLE non-light-dark()
    dark path. On a `light-dark()`-supporting engine with `.dark` present,
    `.dark { color-scheme: dark }` (§1) makes every §-1b token resolve to its
    dark arm and these explicit dark values agree with it (kept as the floor
@@ -16,7 +16,7 @@
    `--neutral-*` ladder + `--foreground` resolved above; only EXPLICIT-color
    dark values (and the non-color overrides §2d) stay.
 
-   IDIOM-REVERSAL (BG.W-GLASS-BASIS-CONSOLIDATE, R16 MN-1) — one mechanism per
+   IDIOM-REVERSAL — one mechanism per
    token TYPE. COLOR tokens: light-dark.css is the CANONICAL single source; the
    `.dark {}` color values below are the fallback-floor LOCKSTEP WITNESSES —
    they MUST byte-agree with the light-dark() dark arg, never a second value
@@ -41,38 +41,38 @@
        FLOOR — kept verbatim for non-light-dark() engines (§2c); on a
        supporting engine `color-scheme: dark` (above) drives the §-1b
        light-dark() arms and these agree. */
-    /* BA.W-DARK-MATERIAL scope 1 — the luminous-dark elevation widen. The page floor
+    /* The luminous-dark elevation widen. The page floor
        deepens (L6→L4, +1 warmth-sat) and the --card plate LIFTS (L10→L16, below) so the
-       page↔card gap goes from the HEAD 4-L collapse (card/page relL ≈ 2.0×, a 0.003-luma
+       page↔card gap widens from a 4-L collapse (card/page relL ≈ 2.0×, a 0.003-luma
        band) to a real iOS/Material dark elevation step (card/page relL ≈ 5×, the five glass
        rungs composite into a perceptible ladder). LOCKSTEP with light-dark.css:70/80.
-       BA.W-NO-GRAY — the WARM-CHROMA FLOOR dark arm, in LOCKSTEP with light-dark.css. The
+       The WARM-CHROMA FLOOR dark arm, in LOCKSTEP with light-dark.css. The
        dark neutrals warm off the achromatic hsl-24/48 onto the warm identity (hsl 28-36,
        OKLab C off the gray floor on the NEW dark base — chip→border C 0.0138-0.0286, muted-fg
-       C 0.0255). The --neutral-0 page (hsl 24 9% 4%) is W-DARK-MATERIAL's luminance floor —
+       C 0.0255). The --neutral-0 page (hsl 24 9% 4%) is the luminance floor —
        KEEP (chroma-only on the rungs above it). L held — the dark AA contract preserved. */
-    --neutral-0: hsl(24 9% 4%);    /* L 4  — page surface (dark, deepened — W-DARK-MATERIAL) */
+    --neutral-0: hsl(24 9% 4%);    /* L 4 — page surface (dark, deepened) */
     --neutral-1: hsl(28 12% 11%);  /* L 11 — soft field (warm) */
     --neutral-2: hsl(28 14% 16%);  /* L 16 — chip / tab-inactive (warm, C≈0.014) */
     --neutral-3: hsl(30 18% 22%);  /* L 22 — hover / highlight (warm, C≈0.022) */
     --neutral-4: hsl(30 16% 34%);  /* L 34 — subtle border (warm, C≈0.029) */
     --neutral-5: hsl(34 14% 62%);  /* L 62 — muted text (warm, C≈0.026; WCAG AA: 7.64:1 vs page) */
-    /* W7-α' (AK-FD1) — strong-muted text. Same principled ladder step as
+    /* Strong-muted text. Same principled ladder step as
        light, mirrored: 10 L LIGHTER than muted (62→72) toward --foreground
        (L90), the 1/3 point of the L62→L90 muted→primary gap. By-colour.
-       BA.W-NO-GRAY — re-saturated onto the warm identity (hsl 36 14% — OKLab
+       Re-saturated onto the warm identity (hsl 36 14% — OKLab
        C≈0.019, warm). WCAG AA: 10.29:1 vs L4 page (cf. neutral-5's 7.64:1). */
     --neutral-6: hsl(36 14% 72%);  /* L 72 — strong-muted text (secondary register, warm) */
 
     /* --background / --card-foreground / --popover-foreground / --muted /
        --muted-foreground{,-strong} / --secondary{,-foreground} /
        --accent{,-foreground} / --border / --input are pure var()-aliases —
-       DELETED here (AQ.W2 §2a): they auto-track the --neutral-* ladder +
+       DELETED here: they auto-track the --neutral-* ladder +
        --foreground above. Re-declaring them would be redundant. */
-    /* BB.W-DARK-INK-WARM — the dark --foreground warmed off hsl(48 10% 90%) (OKLab H95.1°,
-       the EXACT yellow-green W-NO-GRAY condemned as "a cast, not warm material") onto the
+    /* The dark --foreground warmed off hsl(48 10% 90%) (OKLab H95.1°,
+       the EXACT yellow-green condemned as "a cast, not warm material") onto the
        no-gray warm identity hsl(30 14% 90%) (OKLab L0.926 C0.0063 H75.4° — the --foreground
-       56° warm-amber family, L held within ±0.001 of HEAD, chroma off the gray floor,
+       56° warm-amber family, L held within ±0.001, chroma off the gray floor,
        chroma-only at constant L). The contrast contract holds (the dark ink over the L4 page
        stays ≥ the body floor). EVERY dark var(--foreground) consumer (body copy, the lifted
        muted register, --glass-tint-ink, the cartoon shadow, the configurator divider, the
@@ -80,42 +80,42 @@
        warm in lockstep, zero per-site edit. LOCKSTEP light-dark.css:92 (the §2c discipline —
        both mode arms warm together or the FOUC/enhancement split paints two inks). */
     --foreground: hsl(30 14% 90%);
-    /* BA.W-DARK-MATERIAL scope 1 — the --card plate LIFTS L10→L16 (a warm-dark elevated
+    /* The --card plate LIFTS L10→L16 (a warm-dark elevated
        surface, macOS-window territory) so it sits ~5× the deepened L4 page relL — a
        clearly distinct surface the five glass rungs ladder up from. LOCKSTEP light-dark.css:80. */
     --card: hsl(26 22% 17%);
     --popover: hsl(26 22% 17%);
 
-    /* R0G-5 (AO.W4) — dark mirror of the warm-neutral public-data panel.
+    /* Dark mirror of the warm-neutral public-data panel.
        --card's dark hsl(24 8% 16%) nudged one warmth step toward amber
        (24→36) + +1 sat + +2 L so the dark dashboard panel lifts off the page.
-       BA.W-DARK-MATERIAL — re-anchored L12→L18 to stay ABOVE the lifted L16 card
+       Re-anchored L12→L18 to stay ABOVE the lifted L16 card
        (LOCKSTEP light-dark.css:82). */
     --surface-public-data-panel: hsl(36 9% 18%);
 
-    /* BA.W-DARK-MATERIAL scope 4 — the chromatic dark --primary. HEAD was an achromatic
-       cream hsl(48 10% 90%) (oklab chroma ≈ 0.005 — every filled/active/selected control
-       painted a flat pale-grey slab). Re-anchored onto the legendre-violet house identity
+    /* The chromatic dark --primary. An achromatic
+       cream hsl(48 10% 90%) (oklab chroma ≈ 0.005) paints every filled/active/selected control
+       a flat pale-grey slab, so it anchors onto the legendre-violet house identity
        hue (--section-color-7 / --viz-legendre's oklch register — a LIBRARY-identity chroma,
        NOT a borrowed demo preset), oklab chroma 0.134. The dark ink --primary-foreground
        stays hsl(24 10% 10%): 7.15:1 over the violet (clears the 4.5 text + 3.0 graphic
-       floors). Critical now the disco/audacious texture retires (R8-18) — the accent's
+       floors). Critical now the disco/audacious texture retires — the accent's
        COLOR carries the identity. LOCKSTEP light-dark.css:84. */
     --primary: oklch(0.739 0.134 318.1);
     --primary-foreground: hsl(24 10% 10%);
-    /* AX.W44 — the `.dark` class fallback floor, in LOCKSTEP with the light-dark()
+    /* The `.dark` class fallback floor, in LOCKSTEP with the light-dark()
        enhancement arm above (§2c). Same lifted `hsl(0 80% 60%)` so a
        @supports-split engine and a class-toggle engine paint the SAME dark red
        (4.60:1 as ink over --card / 5.03:1 as a plate vs page). */
     --destructive: hsl(0 80% 60%);
     --destructive-foreground: hsl(48 10% 90%);
-    /* BG.W-DESHADCN — the dark arm of the renamed house focus-accent register
-       (off the shadcn `--ring` token; the value is byte-identical to the prior
+    /* The dark arm of the house focus-accent register
+       (off the shadcn `--ring` token; the value is byte-identical to the
        dark `--ring` mid-tone). */
     --focus-ring-color: hsl(48 10% 70%);
     --shadow: hsl(0 0% 5%);
 
-    /* Section palette — brightened for dark backgrounds (oklch; AV.W16 TW2 —
+    /* Section palette — brightened for dark backgrounds (oklch —
        mirrors the light-dark() dark halves above; hue preserved) */
     --section-color-0:  oklch(0.721 0.145 354.0);
     --section-color-1:  oklch(0.733 0.113 308.2);
@@ -139,7 +139,7 @@
     --viz-chebyshev: oklch(0.718 0.107 268.4);
     --viz-legendre:  oklch(0.739 0.134 318.1);
 
-    /* BA.W-CONFIG-CHASSIS.1 (CFG-4) — the `.dark` class fallback floor for the
+    /* The `.dark` class fallback floor for the
        configurator divider register, in LOCKSTEP with the `light-dark()`
        enhancement arm minted in offsets-sizing.css (the dark halves). A
        @supports-split engine (no `light-dark()`) and a class-toggle engine paint
@@ -167,7 +167,7 @@
     --warning-foreground: hsl(24 10% 10%);
     --info-foreground:    hsl(48 10% 96%);
 
-    /* BG.W-CARTOON-INK-GAMUT — the DRY-collapse. The dark `--cartoon-ink:` re-declaration
+    /* The DRY-collapse. The dark `--cartoon-ink:` re-declaration
        is DELETED — the `:root` in-gamut pin (shadow.css) cascades through the dark
        `--foreground` directly. In dark, `--foreground` is near-cream (high L) so the
        pin's `clamp(0.28, l, 0.34)` clamps L UP to its 0.34 ceiling — a warm-brown dark
@@ -180,7 +180,7 @@
     --cartoon-ink-mid:     color-mix(in oklab, var(--cartoon-ink) 38%, transparent);
     --cartoon-ink-contact: color-mix(in oklab, var(--cartoon-ink) 26%, transparent);
     /* Re-derived from the dark pin's RESOLVED sRGB at the dark `--foreground`
-       (`oklch(0.34 0.030 75°)` → ~rgb(65,54,38)); the old `#5a3f28` assumption is dropped
+       (`oklch(0.34 0.030 75°)` → ~rgb(65,54,38)); a `#5a3f28` assumption is wrong
        (the painted L floors below nominal — a warm-brown, never gray, never maroon). */
     --cartoon-ink-fallback: #413626;
 
@@ -192,7 +192,7 @@
         -4px 4px 0px 0px var(--cartoon-ink-lead),
         0 24px 64px color-mix(in srgb, var(--foreground) 18%, transparent);
 
-    /* §5c CONSTELLATION — dark arm (AX.W17). The H.W4 dark-mode lift: the node
+    /* §5c CONSTELLATION — dark arm. The dark-mode lift: the node
        tones step UP off the ink ground (the light arm's mid-grey would vanish on
        L6 black), the hairline goes warm off-white, the field carries a touch more
        presence to read at all. PLAIN-hsl literals, NEVER light-dark()/var(). */
@@ -210,15 +210,14 @@
        the dark alpha is modestly HIGHER than the light arm — but still BELOW the
        slides 1.0 max-legibility reference (the recessive midpoint, not 1.0). */
     --constellation-alpha:               0.88;
-    /* ACCENT-edge skin — dark arm (AZ.W-CON-GEN G3). The floor stays 0 (the dark
+    /* ACCENT-edge skin — dark arm. The floor stays 0 (the dark
        ground already lifts the hairlines, so no perceptual-floor lift is needed); the
        accent-incident multiplier runs a touch louder on the deeper ground so the
        flagged-node tether reads (the 0.34 dark reference). */
     --constellation-edge-floor:          0;
     --constellation-edge-accent-alpha:   0.34;
 
-    /* Glass opacity + grain for dark — the per-tier canonical alpha, DARK arm
-       (BB.W-CARD-TIER-ALPHA). The SAME named `--glass-opacity-{tier}` register as
+    /* Glass opacity + grain for dark — the per-tier canonical alpha, DARK arm. The SAME named `--glass-opacity-{tier}` register as
        the light arm (tokens/glass.css), per-mode — the dark identity. Five-tier
        ladder, alpha-monotonic; each rung lifts ~0.08 from its light counterpart so
        the dark surfaces carry comparable read-weight against the deeper canvas. A
@@ -231,7 +230,7 @@
     --glass-opacity-floating: 0.88;
     --glass-opacity-overlay:  0.96;
     --glass-opacity-chassis:  0.36;
-    /* BC.W-DIALOG-GLASS — the dialog dark register lifts ~0.08 over the light arm
+    /* The dialog dark register lifts ~0.08 over the light arm
        (0.68 → 0.76) for read-weight over the deep canvas, mirroring the dark opacity
        ladder (it sits between dark `resting` 0.72 and `floating` 0.88 — see-through
        but legible over the deep page). The SAME named token as the light arm, per-
@@ -239,7 +238,7 @@
        automatically per mode. */
     --glass-opacity-dialog:   0.76;
     --glass-grain-opacity: 0.045;
-    /* BD.W-PAPER-MORPHISM — re-calibrated to the JND floor for the CORRECTED coarse
+    /* Re-calibrated to the JND floor for the CORRECTED coarse
        tooth + SCREEN blend (std ≥ 3.86 dark): screen on the ink pole BITES HARD so it
        needs LESS alpha (the honest inversion the measurements force — the opacity
        ladder light→dark 0.22→0.16 ≈ ×1/√φ, dark steps DOWN). Was 0.11 on the
@@ -247,14 +246,14 @@
     --paper-grain-opacity: 0.16;
     --glass-highlight: inset 0 0.5px 0 0 hsl(0 0% 100% / 0.08);
 
-    /* BA.W-DARK-MATERIAL scope 3 — the dark arm of the adaptive --glass-tint-* seam (the
-       SAME seam, NO third fork). The W55 self-engage block (glass/ladder.css) re-points
+    /* The dark arm of the adaptive --glass-tint-* seam (the
+       SAME seam, NO third fork). The self-engage block (glass/ladder.css) re-points
        --glass-tint-source → --glass-tint-ink at --glass-tint-strength-aa. In LIGHT that is
        a darken-over-bright; in DARK --glass-tint-ink resolves the light-cream --foreground,
        so the SAME re-point becomes a gentle LIFT toward a luminous translucent dark (the
        MIRROR of the light darken — the plate lifts OFF the deep page rather than dying into
-       it). HEAD applied the light 20% strength in dark too (the wrong-direction over-wash —
-       it flattened the silhouette toward cream). The dark arm re-declares the BOUNDED
+       it). Applying the light 20% strength in dark over-washes (the wrong-direction —
+       it flattens the silhouette toward cream). The dark arm re-declares the BOUNDED
        strength to a gentle luminous-dark lift (12%) — over-light's 20% is a light-mode
        concern (the bright bucket never engages in dark — there is no white backdrop). The
        --glass-tint-ink token stays var(--foreground) (the light cream is the correct LIFT
@@ -263,12 +262,11 @@
        self-engage uses the AA arm directly (the luminous-dark lift is the desired default,
        not a sub-perceptual silhouette). */
     --glass-tint-strength-aa: 12%;
-    /* BD.W-DOCK-CORE (D4) — the dark §2c dock-ink lockstep (the MIRROR of the light
+    /* The dark §2c dock-ink lockstep (the MIRROR of the light
        darken). In dark the dock tint is a LIFT toward a luminous warm-cream (L 0.90,
        C 0.045) — `oklch(from var(--foreground) …)` extracts the dark foreground's warm
        hue/chroma and lifts L (the dark `--foreground` is the light cream, so this stays a
-       luminous lift). The dark `--glass-tint-strength-aa` stays 12% (FROZEN,
-       W-DARK-MATERIAL). The dock self-engage reads this dock-scoped ink in BOTH modes. */
+       luminous lift). The dark `--glass-tint-strength-aa` stays 12% (FROZEN). The dock self-engage reads this dock-scoped ink in BOTH modes. */
     --glass-tint-ink-dock: oklch(from var(--foreground) 0.90 0.045 h);
     /* The unconditional content-tier self-engage (glass/ladder.css) reads
        --glass-tint-strength-floor. In LIGHT that is the 4% sub-perceptual silhouette (the
@@ -278,7 +276,7 @@
        mode arms — the content-tier self-engage needs no mode branch. */
     --glass-tint-strength-floor: 12%;
 
-    /* BB.W-ON-GLASS-FG — the surface-aware FOREGROUND register, DARK arm (the N13
+    /* The surface-aware FOREGROUND register, DARK arm (the N13
        whisper collapse where it bites hardest). The dark page-muted --neutral-5 (L62,
        "AA: 7.64:1 vs page") COLLAPSES over the lifted luminous-dark plate (the L16 card
        at the 12% --glass-tint-strength-floor composites the bright backdrop UP — the
@@ -286,39 +284,39 @@
        light arm's darkening) so it clears AA over the composited dark plate WHILE
        staying subordinate to the L90 --foreground ink (the quiet-subordinate hierarchy
        preserved — NOT a blanket lift to full ink, which the bright bucket already does).
-       Warm-amber (the BB.W-DARK-INK-WARM identity), NOT the slides deck hsl(45 …) literal
+       Warm-amber (the identity), NOT the slides deck hsl(45 …) literal
        (the deck is the REFERENCE; the library re-derives against its own --card). The
        light arm lives in tokens/glass.css (the plain per-mode pair — the house idiom). */
-    --on-glass-muted:        hsl(34 16% 72%);   /* brighter than the collapsed --neutral-5 L62 (WCAG 7.52:1 / APCA |Lc| 61.7 vs the luminous-dark composited quiet plate; subordinate to --foreground — F2.R1 census witness) */
-    --on-glass-muted-strong: hsl(36 13% 81%);   /* the -strong rung, one step more present. RECALIBRATED at F2.R2 (paint re-open) from L78 → L81: the full-route re-run census found the BRIGHTEST on-glass mid-tone plate (the configurator preset-label glass-capsule, composited [100,85,68] L≈0.10) drove the -strong caption to WCAG 4.33 — below AA. L81 clears the whole census plate set (configurator 4.68 · shadow-stage 6.89 · texture-panel 6.47 · feedback-tone 6.74 · selected-chip 5.10) while STAYING subordinate to the L90 --foreground ink (L0.634 < L0.794). One register re-point, all -strong consumers lift in lockstep — the DRY register-level fix, NOT a per-site paste. */
+    --on-glass-muted:        hsl(34 16% 72%);   /* brighter than the collapsed --neutral-5 L62 (WCAG 7.52:1 / APCA |Lc| 61.7 vs the luminous-dark composited quiet plate; subordinate to --foreground) */
+    --on-glass-muted-strong: hsl(36 13% 81%);   /* the -strong rung, one step more present. Held at L81: at L78 the BRIGHTEST on-glass mid-tone plate (the configurator preset-label glass-capsule, composited [100,85,68] L≈0.10) drives the -strong caption to WCAG 4.33 — below AA. L81 clears the whole plate set (configurator 4.68 · shadow-stage 6.89 · texture-panel 6.47 · feedback-tone 6.74 · selected-chip 5.10) while STAYING subordinate to the L90 --foreground ink (L0.634 < L0.794). One register re-point lifts all -strong consumers in lockstep — the DRY register-level fix, NOT a per-site paste. */
     --input-on-glass:        hsl(26 12% 22%);   /* the form-well fill — grounded warm-dark so the L90 input TEXT reads against a stable base (9.3:1) */
     --progress-track-on-glass: hsl(28 14% 26%); /* the recessed meter track — a warm-dark channel distinct from the fill silhouette */
 
-    /* BA.W-DARK-MATERIAL scope 5 + BB.W-DARK-INK-WARM — the --surface-tint-* dark arm,
+    /* The --surface-tint-* dark arm,
        --foreground-DERIVED. The light family is color-mix(in srgb, var(--foreground) N%,
        transparent) — over a near-black dark card a LIGHT-ink (dark --foreground IS light
        cream) tint composites to near-black: the 9-rung chip/hairline/divider scale is
        INVISIBLE in dark. The dark arm re-anchors the mix ink to a BRIGHTER warm off-white
        so a chip/hairline LIFTS off the deep card (the inverse intent of light's dark-ink
-       tint). BA executed that intent as a hardcoded hsl(48 12% 96%) literal ×12 — at the
-       EXACT OKLab H95.1° yellow-green the SAME tranche's W-NO-GRAY ruled "a cast, not warm
-       material", AND a per-rung literal a --foreground re-point can never reach (the
+       tint). A hardcoded hsl(48 12% 96%) literal ×12 would sit at the
+       EXACT OKLab H95.1° yellow-green — a cast, not warm
+       material — and be a per-rung literal a --foreground re-point can never reach (the
        architectural asymmetry with the light arm + the substitution-vs-redeclaration trap
-       at the token mint). BB re-expresses each rung as a oklch(from var(--foreground) 0.975
+       at the token mint); so each rung is a oklch(from var(--foreground) 0.975
        c h) RELATIVE-COLOR derivation: the recipe extracts the (now-warmed) dark --foreground's
-       warm hue + chroma and lifts the lightness to 0.975 (≈ HEAD's 0.973 ink L, so the chip
+       warm hue + chroma and lifts the lightness to 0.975 (so the chip
        lift off the L16 card is preserved) — the ink CARRIES the --foreground's warm hue
        (OKLab H75.4°) BY DERIVATION (re-point the dark ink → every rung re-resolves warm; a
        future re-tune reaches all 12 from ONE --foreground edit — the symmetry the light arm
-       has had since L.W5). The OUTER mix STAYS color-mix(in srgb, … N%, transparent) — the
+       has had). The OUTER mix STAYS color-mix(in srgb, … N%, transparent) — the
        SAME 12-rung α ladder + the SAME in-srgb interpolation space the light arm uses (the
-       AW.W26 fence holds — the oklch(from …) is the INK SOURCE, not the tint mix space).
+       fence holds — the oklch(from …) is the INK SOURCE, not the tint mix space).
        This re-resolves every --surface-tint-* consumer (chip backplates, the dock-rail
        divider, the spine, the timeline dot) in lockstep, zero per-site edit. The 0.975 lift
-       sits well under the sRGB gamut edge (the AX css-relative-color book's "browsers don't
+       sits well under the sRGB gamut edge (the css-relative-color book's "browsers don't
        gamut-map yet" caveat does not bite — at 0.975 the small high-L chroma resolves clean;
        lift→1.0 drifts the hue, so 0.975 is the calibrated pin). The css-relative-color
-       chronic's FIRST live consumer (the tolerant α-mix the AX book was waiting for). */
+       chronic's FIRST live consumer (the tolerant α-mix the book was waiting for). */
     --surface-tint-4:  color-mix(in srgb, oklch(from var(--foreground) 0.975 c h)  4%, transparent);
     --surface-tint-6:  color-mix(in srgb, oklch(from var(--foreground) 0.975 c h)  6%, transparent);
     --surface-tint-8:  color-mix(in srgb, oklch(from var(--foreground) 0.975 c h)  8%, transparent);
@@ -339,18 +337,18 @@
     /* Specular + curvature — softened for dark backdrops. Disco-grain stays
        at the same opacity ceiling; the dark grain blend already lifts it. */
     --glass-specular: inset 0 1.5px 0 0 hsl(0 0% 100% / 0.30);
-    /* AV.W15 M3 — the full-perimeter rim remaps to its dark weight inside
+    /* The full-perimeter rim remaps to its dark weight inside
        `.dark` (mirroring the `--glass-specular` remap above). The lit token
        resolves to the `-dark` alpha on the deeper canvas. */
     --glass-edge-light: var(--glass-edge-light-dark);
 
-    /* BC.W-BLACK-BAR D2 — the DIRECTIONAL rim dark arm (plain per-mode pair, NEVER
+    /* The DIRECTIONAL rim dark arm (plain per-mode pair, NEVER
        light-dark() round an inset — MEMORY: the inset-shadow trap). The top
        catch-light lifts to 0.40 (the dark plate's fill barely separates from the deep
        page, so the rim is the PRIMARY silhouette device — dark glass glows where light
        passes; mirrors the --glass-edge-light-dark 0.18→0.22 lift). The bottom warm
        under-shadow holds at 6% — the shadow grounds the plate in BOTH modes. */
-    /* BD.W-GLASS-KEY-EDGE — the dark rim rides the SAME `--glass-key-{lit,shade}-{x,y}`
+    /* The dark rim rides the SAME `--glass-key-{lit,shade}-{x,y}`
        sign tokens (inherited from :root — not re-declared here) so the dark plate's
        lit edge agrees with the cartoon cast's key in both modes. The top/lit catch
        lifts to 0.40 (the dark silhouette device); the key-facing side stop a touch
@@ -362,19 +360,19 @@
         inset 0 var(--glass-key-shade-y) 0 color-mix(in srgb, var(--foreground) 6%, transparent),
         inset var(--glass-key-shade-x) 0 0 color-mix(in srgb, var(--foreground) 4%, transparent);
 
-    /* BD.W-TAB-IOS-CAPSULE — the `.glass-capsule-track` recess ink, DARK arm (the
+    /* The `.glass-capsule-track` recess ink, DARK arm (the
        PLAIN per-mode pair's dark leg; the light arm is in `tokens/glass-fx.css`).
        NEVER a `light-dark()` fragment (the inset-shadow trap). Deeper on the dark
        canvas (11%) so the sunken well still reads against the near-black page. */
     --tab-track-recess-ink: color-mix(in srgb, var(--foreground) 11%, transparent);
 
-    /* AW.W23 — the chromatic-fringe + adaptive-tint dark arm. The fringe drops
+    /* The chromatic-fringe + adaptive-tint dark arm. The fringe drops
        to a lower-luminance warm/cool pair on the deep canvas; `--glass-tint-
        source` auto-flips with `--card` (no override needed — the default already
        resolves the dark card). */
     --glass-fringe-warm: oklch(0.78 0.07 40 / 0.18);
     --glass-fringe-cool: oklch(0.74 0.06 230 / 0.14);
-    /* AX.W52 D19 — the curvature sheen is genuinely SOFTER on the deep canvas (the
+    /* The curvature sheen is genuinely SOFTER on the deep canvas (the
        prior dark arm re-declared the overlay BYTE-IDENTICAL to light, so it read
        HARDER over the dark substrate — an unsoftened-dark defect). The `:root`
        `--glass-curvature-overlay` already reads `var(--glass-curvature-intensity)`,
@@ -382,12 +380,12 @@
        a softer alpha — no byte-identical re-declaration. */
     --glass-curvature-intensity: 0.012;
 
-    /* Gold — boosted for dark (oklch; AV.W16 TW2) */
+    /* Gold — boosted for dark (oklch) */
     --gold: oklch(0.784 0.143 86.0);
     --gold-light: oklch(0.898 0.182 97.4);
     --gold-dark: oklch(0.678 0.150 63.8);
 
-    /* Silver — lifted for dark (BA.W-ATLAS-RECONCILE C-3; mirrors gold's dark
+    /* Silver — lifted for dark (mirrors gold's dark
        arm: the polished metal lifts ~+0.03 L so the structure register reads on
        the deep canvas. `--silver-deep` is mode-invariant — NOT re-declared here,
        exactly as `--gold-deep` is omitted from this dark block). The cool hue
@@ -396,11 +394,11 @@
     --silver-light: oklch(0.912 0.010 255);
     --silver-dark: oklch(0.648 0.014 255);
 
-    /* Bronze — lifted for dark (BB.W-METAL-SHIMMER; mirrors gold's dark arm: the
+    /* Bronze — lifted for dark (mirrors gold's dark arm: the
        warm metal lifts ~+0.03 L so the bronze register reads on the deep canvas.
        `--bronze-deep` is mode-invariant — NOT re-declared here, exactly as
        `--gold-deep`/`--silver-deep` are omitted from this dark block). The warm hue
-       holds; the chroma stays above the W-NO-GRAY floor. The `.dark`-class fallback
+       holds; the chroma stays above the floor. The `.dark`-class fallback
        for engines without `light-dark()` (the §2c lockstep — the light-dark arm AND
        this dark fallback move TOGETHER). */
     --bronze: oklch(0.650 0.090 54.0);

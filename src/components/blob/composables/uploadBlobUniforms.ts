@@ -3,8 +3,7 @@
 // (advancing the mood/pointer/satellite systems and the tempo-scaled clock) and the
 // renderer's WebGL2 bridge hands those resolved values here;
 // this leaf does ONLY the uniform writes + the draw call. NO Vue, NO substrate,
-// NO closure-state mutation — every value it reads is a parameter. The upload math
-// matches the prior inline body.
+// NO closure-state mutation — every value it reads is a parameter.
 
 import type { BlobConfig } from "../types";
 import type { BlobPointer } from "./useBlobPointer";
@@ -38,8 +37,8 @@ export interface MetaballUniformLocations {
 /**
  * Write the resolved frame state into the metaball program's uniforms and issue
  * the draw call. Pure: it mutates GL state only (the bound program/VAO + the
- * uniform values) and never reads the renderer's closure. The body is the
- * byte-identical lift of the prior inline `drawFrame` uniform-upload section.
+ * uniform values) and never reads the renderer's closure. The body performs the
+ * `drawFrame` uniform-upload writes.
  */
 export function uploadBlobUniforms(
     gl: WebGL2RenderingContext,
@@ -87,7 +86,7 @@ export function uploadBlobUniforms(
     gl.uniform1f(U.uTime, simTimeMs / 1000);
     gl.uniform3f(U.uBaseColor, rgb[0], rgb[1], rgb[2]);
 
-    // Multi-stop palette (W11.b) — 2-4 in-family stops. EMPTY falls
+    // Multi-stop palette — 2-4 in-family stops. EMPTY falls
     // back to uBaseColor (uStopCount <= 1). The stops arrive ALREADY
     // CONCRETE (the SFC un-wrapped any var()-token via resolveTokenColor
     // before the renderer resolves them through the `resolveColor`
@@ -108,7 +107,7 @@ export function uploadBlobUniforms(
 
     // Per-satellite explicit shade (the GL
     // color-seam widen). DEFAULT OFF: no satColors → uSatColorActive 0 → the shader's
-    // blendSatColor early-returns → BYTE-IDENTICAL to HEAD. When a consumer supplies
+    // blendSatColor early-returns → the derived palette is UNCHANGED. When a consumer supplies
     // explicit shades (index-aligned to the satellite array), upload each + the per-
     // satellite blend weight (1 where a shade is set, 0 where the satellite stays on the
     // derived palette). The shade strings arrive CONCRETE (the SFC un-wrapped any
@@ -154,7 +153,7 @@ export function uploadBlobUniforms(
     // nothing.
     const reachFactor = Math.max(0, Math.min(1, netAttraction));
 
-    // Velocity-driven squash-and-stretch (W10). The spring velocity
+    // Velocity-driven squash-and-stretch. The spring velocity
     // (normalized [-1,1]/s) maps into body space like the pointer.
     const vel = pointer.velocity.value;
     gl.uniform2f(
@@ -164,7 +163,7 @@ export function uploadBlobUniforms(
     );
     gl.uniform1f(U.uStretch, cInt.stretch);
 
-    // Pointer trail (W10) — decaying-radius pseudopod. The trail is
+    // Pointer trail — decaying-radius pseudopod. The trail is
     // in the same normalized [-1,1] space as the pointer, so map it
     // exactly like uPointer (`* 0.5 * POS_SCALE`). The base radius rides
     // `reachFactor` (D2) so the pseudopod reaches toward the cursor ONLY
@@ -196,7 +195,7 @@ export function uploadBlobUniforms(
         U.uPulsePhase,
         timeSec * cMem.pulseFreq * params.pulseFreq * Math.PI * 2,
     );
-    // normalize to idle baseline + the one-shot click impulse (W10).
+    // normalize to idle baseline + the one-shot click impulse.
     // The pulse rings ± so it transiently fattens/thins the throb
     // amplitude — the click is FELT through the EXISTING uPulseAmp
     // channel (no parallel pulse path).
@@ -220,7 +219,7 @@ export function uploadBlobUniforms(
     // space: the smin is IQ-normalized (`k *= 4.0` in
     // sdf-body.glsl.ts) so the band == k (the seam dip at a==b is
     // exactly the uploaded k). The `/0.22` normalizer stayed deleted
-    // (W9.a — the right deletion), but the smin band RIDES `POS_SCALE`
+    // The right deletion), but the smin band RIDES `POS_SCALE`
     // like every other length-like uniform (uBodyRadius/satRadius/
     // uPointer/noiseAmp all carry the 0.625 inner-region compression):
     // the merge inflation is measured in the SAME UV space as the
@@ -239,7 +238,7 @@ export function uploadBlobUniforms(
     // bounding-discard below already sums). At the high excursion the
     // satellite NEAR-EDGE (`worstOrbitDist − satelliteRadius`) leaves the
     // body edge by a GAP the nominal band cannot bridge → an instantaneous
-    // fully-detached disc with no gooey neck (the R8-07 fail state). The
+    // fully-detached disc with no gooey neck (the fail state). The
     // fix scales the band by the worst-case orbit GAP so the smin neck
     // persists across the WHOLE orbit envelope, not only the nominal frame.
     //
@@ -294,7 +293,7 @@ export function uploadBlobUniforms(
     // smin blend band + the FBM edge amplitude + the click-pulse — all
     // riding POS_SCALE (the same inner-region compression the radii ride),
     // plus a 0.10 UV safety pad for the pointer-lean excursion and the
-    // squash stretch. NO length constant is edited (W08/W15 own those);
+    // squash stretch. NO length constant is edited (own those);
     // this is a READ of them.
     //
     // The pad sums the widened smin band (`nominalBand *
@@ -308,7 +307,7 @@ export function uploadBlobUniforms(
     // than the bonded `worstOrbitDist`. The bounding-discard radius must cover that
     // pinch reach or the freed bead clips the pre-FBM early-out. A READ of the
     // config register (no new uniform); zero when fissionAmp is 0 so the calm
-    // default's maxReach is BYTE-IDENTICAL to HEAD (the gate-faithful contract).
+    // default's maxReach is UNCHANGED at fissionAmp 0 (the zero-delta-default contract).
     const fissionWorst =
         (config.surface.fissionAmp ?? 0) > 0 ? FISSION_REACH_MAX * 1.12 : 0;
     const satWorst = Math.max(worstOrbitDist, fissionWorst) + cGeo.satelliteRadius;
@@ -331,7 +330,7 @@ export function uploadBlobUniforms(
     gl.uniform1f(U.uColorNoiseFreq, cCol.colorNoiseFreq);
     gl.uniform1f(U.uColorNoiseSpeed, cCol.colorNoiseSpeed);
 
-    // Lit glass surface (W9.b) — Blinn-Phong glint + Fresnel rim.
+    // Lit glass surface — Blinn-Phong glint + Fresnel rim.
     // `uRimColor` arrives ALREADY CONCRETE (the SFC un-wrapped any
     // var()-token via resolveTokenColor) and resolves through
     // the SAME `resolveColor` memo (the `/color` leaf) as `uBaseColor`,
@@ -361,7 +360,7 @@ export function uploadBlobUniforms(
     gl.uniform1f(U.uShadow, isDressed && cSurf.shadow ? 1.0 : 0.0);
     gl.uniform1f(U.uShadowSoftness, cSurf.shadowSoftness);
 
-    // Iridescence + fake-SSS (W11.a). iridHue is degrees in config,
+    // Iridescence + fake-SSS. iridHue is degrees in config,
     // radians in-shader. Mood routes the sheen intensity (excited =
     // stronger shimmer, sleepy = nearly flat) via params.iridScale.
     gl.uniform1f(

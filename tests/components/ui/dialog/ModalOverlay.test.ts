@@ -42,7 +42,7 @@ describe("ModalOverlay", () => {
         wrapper.unmount();
     });
 
-    // BI.W-SHEET-INTERRUPTIBLE-MOTION — the scrim opacity is driven from the surface's
+    // The scrim opacity is driven from the surface's
     // live slide scalar (position → 1−p), so the two never desync through an interrupt.
     it("drives opacity from slideT and drops the sheet-animate fade keyframe when set", () => {
         const wrapper = mount(SlideHost, {

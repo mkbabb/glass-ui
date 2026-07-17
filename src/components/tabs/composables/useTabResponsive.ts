@@ -6,18 +6,17 @@ import type {
 } from "../SegmentedTabs.vue";
 
 /**
- * Package-private composable for `SegmentedTabs.vue` —  (the
- * roving-focus/responsive carve; ratchet-drain #13). The responsive-collapse concern
- * (the `<Select>`-below-the-breakpoint fold) lives here, carved out of the SFC to hold
+ * Package-private composable for `SegmentedTabs.vue` (the
+ * roving-focus/responsive carve). The responsive-collapse concern
+ * (the `<Select>`-below-the-breakpoint fold) lives here, held under
  * the no-god-module bound — the `useTabIndicator`/`useTabDragMorph` colocation-sibling
  * pattern. The SFC IMPORTS it and binds `stripValue`/`stripOptions`/`showMobileSelect`
  * in its template + feeds `stripValue`/`stripOptions` to the indicator/roving concerns.
  *
  * Owns the `matchMedia((min-width: <breakpoint>))` lifecycle END-TO-END (the
  * `onMounted`/`onBeforeUnmount` wiring lives HERE — a composable is a legitimate
- * lifecycle-hook owner), so the SFC never re-declares the `mql` listener. Byte-behaviour
- * identical to the prior inline block (the SSR/desktop-first default, the mobile-only
- * model fall-back, the accessible name resolution).
+ * lifecycle-hook owner), so the SFC never re-declares the `mql` listener. It owns the SSR/desktop-first
+ * default, the mobile-only model fall-back, and the accessible name resolution.
  */
 export interface UseTabResponsiveParams {
     /** The `:responsive` prop — `false` | `true` | a tuning object. */

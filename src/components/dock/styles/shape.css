@@ -1,7 +1,7 @@
 /* Dock arbitrary-shape morph styles.
  *
  * The dock is no longer locked to "a rectangle that grows wider/taller." Its SHAPE
- * is a SCALAR PARAMETER on the ONE `--dock-morph-t` clock (the BC.W-DOCK-ENGINE
+ * is a SCALAR PARAMETER on the ONE `--dock-morph-t` clock (the 
  * buttery scalar): the corner profile LERPS between a `--dock-shape-from`/
  * `--dock-shape-to` radius pair, an OPT-IN `clip-path` silhouette LERPS between a
  * `--dock-shape-clip-from`/`--dock-shape-clip-to` pair, and a `useLiquidFlex`
@@ -18,16 +18,16 @@
  *
  * THE LIBRARY DEFAULT IS THE CIRCLE↔PILL IDENTITY (CLAUDE.md the collapsed-perfect-
  * circle): `--dock-shape-from`/`--dock-shape-to` default to `--radius-dock` (9999px)
- * on both endpoints — a no-op lerp byte-identical to the prior static
+ * on both endpoints — a no-op lerp that resolves to a static
  * `border-radius: var(--radius-dock)` — and the clip pair defaults `none`/`none`
  * (the rectangle/pill common case needs no clip). The arbitrary teardrop/blob
  * silhouette is OPT-IN: a consumer sets the shape tokens on the dock scope
- * (presets-in-consumers). Clean break (MEMORY: no backwards compat) — the prior
- * hardcoded circle/pill radius becomes the token DEFAULT, no `--dock-radius-legacy`.
+ * (presets-in-consumers). Clean break (MEMORY: no backwards compat) — the circle/pill
+ * radius is the token DEFAULT, no `--dock-radius-legacy`.
  *
  * @import-ed by dock.css in cascade order, in the SAME `@layer components`. */
 
-/* BI.W-DOCK-SPRING-UNIFY (SU2) — the cartoon-punch channel is RETIRED (clean break,
+/* The cartoon-punch channel is RETIRED (clean break,
    no alias). `@property --dock-punch-stretch`, the `[data-punching]` driver, and the
    per-child punch counter-scale are DEFINITION-ABSENT: the dock morph carries ONE
    deformation-free box-size scale off `--dock-size-scale` (the box RESERVES its
@@ -35,26 +35,26 @@
    `transform-origin: center`), and the liquid weight lives in the DOCK spring's own
    overshoot-recovery tail (DOCK-LADDER §8), not a second parallel punch transition on
    a wrong clock. The orientation/fission `--stretch` squish is likewise gone with its
-   V↔H-goo owner (W-DOCK-RETIRES) — the scale is a pure size morph, ONE compositor
+   V↔H-goo owner — the scale is a pure size morph, ONE compositor
    channel, ONE clock. */
 
 @layer components {
-    /* ── The corner-profile lerp (A1 — the shape is a scalar parameter) ───────────
+    /* ── The corner-profile lerp (the shape is a scalar parameter) ────────────────
        The dock surface radius interpolates the `--dock-shape-from`/`--dock-shape-to`
        token pair on the ONE `--dock-expand-t` scalar (the directional expanded-ness
-       the BC.W-DOCK-ENGINE chrome interp rides; at rest it resolves to the class
+       the chrome interp rides; at rest it resolves to the class
        endpoint, 0 collapsed / 1 expanded, so the resting corner is exact). This
-       GENERALIZES the prior two hardcoded class endpoints into a consumer-targetable
-       parameter: `from` is the collapsed silhouette's corner (the perfect circle,
+       exposes the two corner endpoints as consumer-targetable tokens: `from` is the
+       collapsed silhouette's corner (the perfect circle,
        9999px), `to` is the expanded silhouette's corner (the pill / an arbitrary
        profile). A consumer overrides either token on the dock scope to morph to an
        arbitrary corner.
 
-       This is the SINGLE radius authority (shell.css's prior static `border-radius:
-       var(--radius-dock)` is GENERALIZED here — no dead static, no duplicate, clean
-       break). Both tokens default to `--radius-dock` (9999px) so the lerp is a NO-OP at
-       the library default — byte-identical to the prior static, the circle↔pill identity
-       preserved. The token-driven `border-radius` interp is a compositor/paint property
+       This is the SINGLE radius authority — shell.css carries no static
+       `border-radius: var(--radius-dock)` for the dock (no duplicate, clean break).
+       Both tokens default to `--radius-dock` (9999px) so the lerp is a NO-OP at
+       the library default — the circle↔pill identity, resolving to a static
+       `border-radius: var(--radius-dock)`. The token-driven `border-radius` interp is a compositor/paint property
        on the registered `--dock-expand-t` `<number>`, NOT a transition
        (proof:no-layout-animation stays GREEN). shape.css is imported AFTER shell.css so
        this rule is the cascade winner for the dock corner. */
@@ -84,9 +84,9 @@
        the morph crosses, the `from`-clip before. The web platform cannot continuously
        interpolate two arbitrary mismatched-topology `clip-path` functions, so the
        opt-in consumer supplies TOPOLOGY-COMPATIBLE endpoints (two `inset()`s, or two
-       `path()`s with equal command counts) — the AX.W42 fold-7 topology limit is
+       `path()`s with equal command counts) — the topology limit is
        RESPECTED (a mismatched-topology V↔H morph occludes its reflow in the goo-merge,
-       BC.W-LIQUID-MORPH, not a continuous clip morph THROUGH the change). The default
+       not a continuous clip morph THROUGH the change). The default
        `none`/`none` opts the whole register off so the limit never bites the common
        case. The custom property carries the consumer's interpolable pair; the engine
        resolves it on the scalar only when set. */
@@ -110,15 +110,14 @@
     }
 
     /* ── The box-size morph — the deformation-FREE convex-blend scale ─────────────
-       BI.W-DOCK-SPRING-UNIFY (SU2) — the visible box size rides ONE factor:
+       The visible box size rides ONE factor:
        `--dock-size-scale` (layers.css — the ratio-FREE convex blend of the two
        measure-ONCE endpoints, BOUNDED [0.06, 1] by construction, grown from
-       `transform-origin: center`). The prior 7-factor product (size × `--stretch`
-       squish × `--dock-punch-stretch` cartoon-punch, reciprocated on the cross axis)
-       is RETIRED (clean break): `--stretch` died with its V↔H-goo owner
-       (W-DOCK-RETIRES) and the punch channel is DEFINITION-ABSENT (above). So the
-       scale is a PURE size morph on ONE compositor channel — no reciprocal squish,
-       no cross-axis deformation, no `[data-punching]` co-driver. Scoped to
+       `transform-origin: center`). The scale is a PURE size morph on ONE compositor
+       channel — NOT a multi-factor product: no `--stretch` squish, no
+       `--dock-punch-stretch` cartoon-punch, no reciprocal cross-axis deformation, no
+       `[data-punching]` co-driver (clean break; `--stretch` and the punch channel are
+       DEFINITION-ABSENT). Scoped to
        `[data-morphing]` (a morph-transient); at settle the attr clears → `scale:
        none` over the TRUE box. Horizontal scales the inline axis; vertical the block
        axis (the cross axis stays 1 — the size morph moves the footprint, it does not
@@ -131,7 +130,7 @@
         scale: 1 var(--dock-size-scale, 1);
     }
 
-    /* ── BG.W-DOCK-GLYPH-RIGID — RIGID CONTENT over the morphing box ───────────────
+    /* ── RIGID CONTENT over the morphing box ───────────────
        The box-scale rule above scales the WHOLE `.glass-dock` subtree — including the
        glyphs — by `--dock-size-scale` on the morph axis. The two `.dock-controls`
        children (`.dock-persistent` + `.dock-layers`) carry the PER-FRAME INVERSE of
@@ -161,12 +160,12 @@
         will-change: transform;
     }
 
-    /* ── The dock is a LOUD MOTION DRIVER (design.md §L4) ──────────────────────────
+    /* ── The dock is a LOUD MOTION DRIVER (design §L4) ──────────────────────────
        The dock pins `--motion-weight: 1` on its own scope so the descendant control
        motion (the glass-atom / btn cartoon-press punch recipes, which read
        `--motion-weight` for their amplitude) reads at the full loud register inside
-       the dock chrome. The dock's OWN cartoon box-punch is RETIRED (SU2 above —
-       `--dock-punch-stretch` DEFINITION-ABSENT), so this pin now serves ONLY the
+       the dock chrome. The dock's OWN cartoon box-punch is gone (`--dock-punch-stretch` is
+       DEFINITION-ABSENT), so this pin now serves ONLY the
        descendant register; the PRM carve below still collapses the loud weight to 0
        under reduce (the cards.css / glass-atom.css pattern — descendant motion
        confirms without the cartoon overshoot). */
@@ -174,7 +173,7 @@
         --motion-weight: 1;
     }
 
-    /* ── BG.W-GLASS-CLIP-DISCIPLINE (absorbs W-DOCK-CAST-RETIRE) — the dock cast
+    /* ── The dock cast
        is RETIRED ───────────────────────────────────────────────────────────────
        The kinetic `.cartoon-cast` offset-shadow CHILD is GONE from the dock; the
        dock's elevation is carried by `--shadow-dock` (the omni drop-shadow painted

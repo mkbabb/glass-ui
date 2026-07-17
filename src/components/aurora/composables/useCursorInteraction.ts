@@ -128,7 +128,7 @@ export function useCursorInteraction(
             getCfg().nuclei[dragIndex]!.x = Math.max(0, Math.min(1, x));
             getCfg().nuclei[dragIndex]!.y = Math.max(0, Math.min(1, y));
         }
-        // BI.W-FIELD-CORE — a single position write; the shared field DERIVES the velocity
+        // A single position write; the shared field DERIVES the velocity
         // + acceleration + burst from the smoothed position deltas in its tick (the ONE
         // smoothing stage — the per-move delta re-implementation retired with cursorModel).
         options.setCursor(x, y, 1.0);

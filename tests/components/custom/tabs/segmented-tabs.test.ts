@@ -3,7 +3,7 @@ import { defineComponent, nextTick, ref } from "vue";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import SegmentedTabs from "@glass/components/tabs/SegmentedTabs.vue";
 
-// AX.W53 — the unified SegmentedTabs replaced BouncyToggle/BouncyTabs/UnderlineTabs +
+// The unified SegmentedTabs replaced BouncyToggle/BouncyTabs/UnderlineTabs +
 // ResponsiveTabs. v-model round-trip across the variant axis (segmented default = group/
 // aria-pressed; underline = tablist/aria-selected), keyed off the Vue 3.5 defineModel.
 const OPTIONS = [

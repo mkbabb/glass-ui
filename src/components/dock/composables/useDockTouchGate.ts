@@ -21,7 +21,7 @@ export interface UseDockTouchGateOptions {
      * (force-pinned) OR a manual dock (the consumer owns posture). The gate no-ops:
      * no tap-to-expand, no collapse-on-deactivate. Without folding `manual` in here
      * the gate would leak a `collapse()` on deactivate (in manual `isPinned` is
-     * false and `alwaysExpanded` is false, so the old guard would fire).
+     * false and `alwaysExpanded` is false, so the collapse guard would fire).
      */
     quiet: Readonly<Ref<boolean>>;
     /** The painted expand state (`alwaysExpanded || expanded`). */

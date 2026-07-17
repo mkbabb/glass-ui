@@ -1,14 +1,14 @@
-// AU.W8.4 / BI.W-DOCK-FOLD — the dock rail APG a11y contract (proof:dock-a11y-contract).
+// The dock rail APG a11y contract (proof:dock-a11y-contract).
 //
 // The rail carries the APG tabs contract (role=tablist/tab + aria-selected + roving
-// tabindex + Arrow/Home/End + a travelling indicator). BI.W-DOCK-FOLD retired the reka
+// tabindex + Arrow/Home/End + a travelling indicator). retired the reka
 // `ui/tabs` substrate; the rail is now driven by the library's ONE headless selection
 // engine `useSelectionGroup` (roving + role-per-mode ARIA + the ONE traveling-indicator
 // writer, Safari-identical). This test asserts the RENDERED roles/attributes — NOT just
 // mount success — per the glass-ui-binding-verification discipline: a stale binding
 // silently no-ops and only a rendered-attr assertion catches it.
 //
-// Bite-check (AU.W8 hard gate): flip `aria-selected` back to `aria-pressed`
+// Bite-check (hard gate): flip `aria-selected` back to `aria-pressed`
 // (in the component or here) → the SELECTED-NOT-PRESSED assertion reddens.
 
 import { mount } from "@vue/test-utils";
@@ -151,7 +151,7 @@ describe("AU.W8.4 — dock rail a11y contract (APG tabs)", () => {
     });
 
     it("4. KEYBOARD — ArrowDown/Home/End move selection (reka APG handler)", async () => {
-        // AX.W45 DK8 — the DEFAULT (horizontal-group) rail is a COLUMN of stacked
+        // The DEFAULT (horizontal-group) rail is a COLUMN of stacked
         // tabs, so reka's orientation is now "vertical" (the rail's visual axis), and
         // the APG keyboard for a vertical tablist is Up/Down (the correct mapping for
         // a column rail). A vertical-group ROW rail uses Left/Right.
@@ -212,13 +212,13 @@ describe("AU.W8.4 — dock rail a11y contract (APG tabs)", () => {
 
     it("8. TRAVELLING-INDICATOR — the .dock-layer-tab-indicator rides the ONE selection-indicator writer", async () => {
         const { wrapper } = await mountRail();
-        // BI.W-DOCK-FOLD — the reka `ui/tabs` substrate is retired; the rail is driven
+        // The reka `ui/tabs` substrate is retired; the rail is driven
         // by the ONE headless selection engine `useSelectionGroup`, and the travelling
         // indicator is a PLAIN `.dock-layer-tab-indicator` element carrying the
         // `useSelectionIndicator` writer's inline style (Safari-identical, no anchor
         // branch). Unlike the geometry-gated reka element, this plain div always renders,
         // so assert the element EXISTS with an inline style attribute (its transform/
-        // opacity/size are 0 in happy-dom; the painted placement rides W-DOCK-DEVICE).
+        // opacity/size are 0 in happy-dom; the painted placement rides).
         const indicator = wrapper.find(".dock-layer-tab-indicator");
         expect(indicator.exists()).toBe(true);
         expect(indicator.attributes("style")).toBeDefined();
@@ -296,8 +296,8 @@ describe("AU.W8.4 — dock rail a11y contract (APG tabs)", () => {
         wrapper.unmount();
     });
 
-    /* BI.W-DOCK-CROSSFADE — the focus-transfer-on-dissolve assert (X4). The post-swap
-       focus re-home FOLDED from `DockLayer.vue` into the ONE crossfade slot
+    /* The focus-transfer-on-dissolve assert. The post-swap
+       focus re-home lives in the ONE crossfade slot
        (`DockCrossfade.transferFocusOnDissolve`): when a layer swap dissolves the
        previously-active face, a focus that lived inside it is orphaned for keyboard/AT
        users; the crossfade slot re-homes focus to the revealed successor host

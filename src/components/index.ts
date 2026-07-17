@@ -13,23 +13,23 @@ export * from "./data-table";
 export * from "./dialog";
 export * from "./drawer";
 export * from "./dropdown-menu";
-// BI.W-OVERLAY-UNION — `./hover-card` RETIRED (folds onto `<Popover trigger="hover">`).
+// `./hover-card` RETIRED (folds onto `<Popover trigger="hover">`).
 export * from "./input";
 export * from "./label";
-// BI.W-MULTISELECT-FOLD — `./multi-select` RETIRED (folds onto `<Combobox multiple>`).
+// `./multi-select` RETIRED (folds onto `<Combobox multiple>`).
 export * from "./number-field";
 export * from "./popover";
 export * from "./progress";
 export * from "./radio-group";
 export * from "./select";
 export * from "./separator";
-// `sheet` RETIRED at BI.W-DIALOG-PLACEMENT — folded onto `<DialogContent placement>`
+// `sheet` RETIRED — folded onto `<DialogContent placement>`
 // (see src/index.ts for the rationale). Clean break, no alias.
 export * from "./skeleton";
 export * from "./slider";
 export * from "./switch";
 export * from "./table";
-// BA.W-TABS — `ui/Tabs` retired from the public barrel (the standardized family is
+// `ui/Tabs` retired from the public barrel (the standardized family is
 // `SegmentedTabs`). The reka substrate stays INTERNAL for the dock-rail consumer
 // only (`DockLayerGroup.vue`); see src/index.ts for the full rationale.
 export * from "./tags-input";

@@ -17,7 +17,7 @@ import {
 import { HOVER_INTENT_MS } from "@glass/components/dock/constants";
 
 /**
- * BI.W-DOCK-INTERACTION-AXIS — the consumer-owned posture axis (atlas §1, the
+ * The consumer-owned posture axis (the
  * six-close dock disease). `interaction="manual"` suppresses EVERY internal
  * environmental posture writer (hover / focus / idle timer / outside-click /
  * collapsed-tap) at BOTH poles, leaving only the imperative `expand()` /
@@ -26,7 +26,7 @@ import { HOVER_INTENT_MS } from "@glass/components/dock/constants";
  * Each test asserts a STATE OUTCOME across a simulated gesture (never "the guard
  * returned early"). jsdom + fake timers. The exhaustive DOM hover/focus/touch
  * suppression + the live mid-hover flip ride the visual-sweep native debt
- * (W-DOCK-INTERACTION-AXIS §π/DELTA); these unit contracts pin the FSM seam.
+ *; these unit contracts pin the FSM seam.
  */
 
 // ── useDockState composable harness (the FSM seam under test) ──────────────────
@@ -340,7 +340,7 @@ describe("GlassDock — manual + collapsed keyboard-reachability contract (H8)",
     });
 });
 
-// ── useDockSearch: the armSearch reroute (H5) ──────────────────────────────────
+// ── useDockSearch: the armSearch reroute ───────────────────────────────────────
 function mountSearch(interaction: DockInteraction, collapseDelay = 3600) {
     let dock!: UseDockStateReturn;
     let search!: ReturnType<typeof useDockSearch>;

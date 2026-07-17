@@ -1,8 +1,7 @@
 // The gravity-well force is isolated from constellationInteraction.ts as one cohesive
 // sub-concern: the held-pointer inverse-square
 // pull + the asymmetric |v|→speed cool-back (the field-heats-while-held / cools-on-release
-// invariant). The function body is the byte-for-byte lift of the prior in-interaction cluster;
-// `constellationInteraction.ts` re-exports `stepWell` so the field engine + the package barrel
+// invariant). `constellationInteraction.ts` re-exports `stepWell` so the field engine + the package barrel
 // reach it through that module unchanged. The token read (`readInteractionConfig`) stays in
 // the interaction module (it spans warp+well+wander); this leaf owns only the per-frame force.
 
@@ -66,7 +65,7 @@ const WELL_DT_CLAMP = 0.05;
  * (the `max(d, soften)` no-singularity floor + the `cfg.maxSpeed` no-slingshot
  * clamp); ALWAYS ease every node's |v| back toward `speed` (the field-cools
  * invariant — so a released well re-settles). No-ops (entirely skipped) when
- * `field.well` is undefined → the default render is byte-identical to HEAD.
+ * `field.well` is undefined → the default render is the plain field.
  *
  * `dt` is clamped to {@link WELL_DT_CLAMP} (the same park-resume guard the warp
  * uses) so a tab-throttle gap cannot slingshot the field in one giant step.

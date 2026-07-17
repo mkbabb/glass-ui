@@ -1,6 +1,5 @@
 /**
- * Authored Aurora v4.1 presets. Ported verbatim from the Claude Design bundle
- * (`aurora/project/aurora/presets.js`) with TypeScript typing.
+ * Authored Aurora presets, typed for TypeScript.
  *
  * Nuclei y-coordinates are CSS-top-origin (0 = top, 1 = bottom). The runtime
  * flips Y at the uniform boundary — see runtime.ts AUTHOR_Y_ORIGIN_IS_TOP
@@ -398,12 +397,12 @@ const OILPASTEL_RAINBOW = cfg({
 });
 
 // ── SPEEDTEST ─────────────────────────────────────────────────────────────
-// Six-hue OKLCH palette mapped to six nuclei. Soft drifting backdrop ported
-// verbatim from `../speedtest/src/config/auroraConfig.ts` (the live config
-// used by the speedtest dashboard). The reactive light/dark + idle/running
-// alpha fork stays in the speedtest repo; this preset ships the static
+// Six-hue OKLCH palette mapped to six nuclei. Soft drifting backdrop — the
+// static baseline of a dashboard ambient config (the live config
+// used by a consumer dashboard). The reactive light/dark + idle/running
+// alpha fork stays in the consumer repo; this preset ships the static
 // `alpha: 0.26` baseline so consumers can see the canvas at the same tone
-// the user sees at first paint of the speedtest landing page.
+// the user sees at first paint of a consumer landing page.
 const SPEEDTEST = cfg({
     palette: [
         { L: 0.72, C: 0.22, h: 300 }, // --aurora-1 purple (#c084fc)
@@ -424,7 +423,7 @@ const SPEEDTEST = cfg({
         { x: 0.22, y: 0.82, radius: 0.50, paletteBias: 0.8, valueBias:  0.02, driftRadius: 0.042, driftPhase: 2.1 },
         { x: 0.55, y: 0.58, radius: 0.58, paletteBias: 1.0, valueBias:  0.00, driftRadius: 0.030, driftPhase: 4.6 },
     ],
-    // B21 — speedtest "more cloud-like + actually change over time". CLOUDIER:
+    // B21 — a consumer "more cloud-like + actually change over time". CLOUDIER:
     // a softer nucleus blend (lower softmaxBeta — masses merge like cumulus,
     // not hard cells), MORE billowy organic warp (warpAmount up, warpScale down
     // for broader puffs, +1 noise octave for wispy edge detail). EVOLVING: the
@@ -529,7 +528,7 @@ const CRAYON = cfg({
     // B21 — crayon "a bit too oily": dry it out. A lighter waxy STAMP (lower
     // strokeAmount), no sheen (impasto 0 + wetEdge 0), MORE dry paper tooth
     // (canvasGrain + paperGrain up), less creamy color-mixing (brokenColor
-    // down), and a MATTE saturation (down off 1.04) so it reads dry-tooth
+    // down), and a MATTE saturation (dialed down) so it reads dry-tooth
     // crayon, not a creamy oil-pastel.
     strokeAmount: 0.48,
     strokeScale: 132,

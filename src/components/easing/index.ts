@@ -1,5 +1,5 @@
 // @mkbabb/glass-ui/easing — the published <EasingPicker>/<EasingConfigurator>
-// curve-authoring family (BB.W-EASING-PRIMITIVE — the C-3 fold landed).
+// curve-authoring family (the C-3 fold landed).
 export { default as EasingPicker } from "./EasingPicker.vue";
 export { default as EasingConfigurator } from "./EasingConfigurator.vue";
 export {

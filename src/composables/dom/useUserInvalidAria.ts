@@ -4,17 +4,16 @@
 // sync ARIA. A screen reader announces nothing when a field paints invalid.
 // This composable is the single canonical bridge: it keeps `aria-invalid` in
 // step with native validity, mirroring the native "after first interaction"
-// timing so a pristine required-empty field is NOT flagged on mount. The legacy
-// fallback-class toggle was retired because `:user-invalid` is Baseline on the
+// timing so a pristine required-empty field is NOT flagged on mount. There is no
+// fallback-class toggle — `:user-invalid` is Baseline on the
 // target set (Chrome 119+/Safari 16.5+), so the aria-invalid bridge is the whole job.
 //
 // vueuse-free by construction: native `addEventListener`/`removeEventListener`
 // only (no `@vueuse/core`), so it remains safe to export from the root barrel.
 
 /**
- * Options for {@link useUserInvalidAria}. Empty since the legacy
- * `fallbackClasses` knob was retired because `:user-invalid` is Baseline on the
- * target set; the shape is kept as the
+ * Options for {@link useUserInvalidAria}. Empty because `:user-invalid` is
+ * Baseline on the target set (no `fallbackClasses` knob); the shape is the
  * canonical options seam for future extension.
  */
 export interface UseUserInvalidAriaOptions {}

@@ -1,5 +1,5 @@
 // @mkbabb/glass-ui/blob-config — the value.js-FREE blob CONFIG surface
-// (BI.W-BLOB-SEAMS, RP-2 / L20 — the eager-budget win).
+// The eager-budget win.
 //
 // A consumer that needs ONLY the blob config SHAPE (the `BlobConfig` types, the
 // config defaults + inject key, the calibrated hero preset + the derived-palette

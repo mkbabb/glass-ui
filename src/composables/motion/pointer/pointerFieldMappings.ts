@@ -46,12 +46,12 @@ function clamp(v: number, lo: number, hi: number): number {
 // The head "gracefully draws TOWARD the cursor" WITHOUT translating the figure: the clock
 // phase-rate advances a hair faster when the head's travel tangent aligns with the direction
 // to the cursor (bounded by BIAS_GAIN), and the centroid LEANS a subtle fraction toward the
-// pointer (FOLLOW_LEAN ≈ 0.15 — NOT the retired FOLLOW_REACH=0.7 centroid-teleport). Both
+// pointer (FOLLOW_LEAN ≈ 0.15 — a subtle lean, NOT an absolute centroid-teleport). Both
 // scale by engagement, so a lifted pointer relaxes to the ambient (byte-identical) register.
 
 /** The default bias gain — the curve advances at most ±BIAS_GAIN faster/slower (≤0.15). */
 export const FOURIER_BIAS_GAIN = 0.15;
-/** The default centroid-lean fraction (the subtle lean; supersedes FOLLOW_REACH=0.7). */
+/** The default centroid-lean fraction (the subtle lean). */
 export const FOURIER_FOLLOW_LEAN = 0.15;
 
 export interface FourierLeanGeometry {
@@ -185,11 +185,11 @@ export function blobPullMapping(
 // uniform bridge flips Y), strength = the engagement projection plus a bounded burst lift.
 // Folding the transient on the CPU keeps the WebGL2 and WebGPU shader inputs identical.
 
-/** The default aurora cursor influence radius (the prior cursorModel default). */
+/** The default aurora cursor influence radius. */
 export const AURORA_CURSOR_RADIUS = 0.25;
 
 export interface AuroraCursorOptions {
-    /** The active strength ceiling (cfg.strength; default 0.8 — the prior setCursor default). */
+    /** The active strength ceiling (cfg.strength; default 0.8). */
     strength?: number;
     /** The influence radius (0.05..0.5; default {@link AURORA_CURSOR_RADIUS}). */
     radius?: number;

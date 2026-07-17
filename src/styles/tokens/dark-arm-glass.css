@@ -1,25 +1,25 @@
 /* tokens/dark-arm-glass.css
-   The .dark saturate/brightness luminosity-lift companion cohort (BA.W-DARK-MATERIAL scope 2): the dark transmissive --glass-saturate-* knobs + the composed --glass-blur-* rungs (the "dark glass glows where light passes" lift) + the BB.W-DEEP-GLASS dark --glass-blur-deep arm.
-   Carved from tokens/dark-arm.css to hold the no-god-module 500-line bound (BI.W-STYLE-REDRAIN); its own .dark block @import-ed by tokens.css IMMEDIATELY AFTER dark-arm.css. These tokens are the sole .dark writers, so the relocation is cascade-order-invariant (computed values byte-identical). */
+   The .dark saturate/brightness luminosity-lift companion cohort: the dark transmissive --glass-saturate-* knobs + the composed --glass-blur-* rungs (the "dark glass glows where light passes" lift) + the dark --glass-blur-deep arm.
+   A partial held under the no-god-module 500-line bound; its own .dark block @import-ed by tokens.css IMMEDIATELY AFTER dark-arm.css. These tokens are the sole .dark writers, so the cascade order is invariant. */
 .dark {
-    /* BA.W-DARK-MATERIAL scope 2 — dark glass is TRANSMISSIVE. The dark rung
+    /* Dark glass is TRANSMISSIVE. The dark rung
        backdrop-filter carries a saturate/brightness LUMINOSITY LIFT (the iOS-dark
        "dark glass glows where light passes" model) so a backdrop GLOWS through the
        plate instead of dying behind it. The light arm sits at saturate(1.05) — over a
        near-black canvas that reads as no transmission; the dark arm lifts it so the
        aurora/page behind reads with chroma + a glow. The blur() RADIUS is the
-       light-arm primitive UNTOUCHED (W-GLASS-CAL owns the radius dial-back) — only the
+       light-arm primitive UNTOUCHED (owns the radius dial-back) — only the
        saturate/brightness COMPANIONS lift here. The lower rungs lift more (they're
        thinner, the backdrop carries the read); the heavy overlay lifts least.
 
-       BC.W-GLASS-LEGIBILITY-MEASURED — the per-rung `--glass-saturate-{tier}` knob
-       (the speedtest-AX BC-W10 fold) is the SAME named register as the light arm
+       The per-rung `--glass-saturate-{tier}` knob
+       (the cross-consumer fold) is the SAME named register as the light arm
        (tokens/glass.css), per-mode — the dark identity. The dark values ARE this
        scope's luminosity lift (wash/quiet 1.35, resting 1.30, floating 1.28, overlay
        1.22) become the dark token defaults, and each `--glass-blur-{tier}` reads
        `saturate(var(--glass-saturate-{tier}))` THROUGH — so a `.dark` override re-
        resolves the rung saturation with ZERO recipe edit, AND the composed dark blur
-       is BYTE-IDENTICAL to the old baked literal. The `brightness()` companions stay
+       is UNCHANGED at these defaults. The `brightness()` companions stay
        baked (this fold mints ONLY the saturate knob). The dark dock/deep saturate stay
        baked (off-ladder footprint rungs, not part of the {wash..overlay} ladder).
        Machine-locked by `proof:glass-legibility` L7. */
@@ -33,13 +33,13 @@
     --glass-blur-resting:  blur(calc(var(--glass-blur-resting-radius) * var(--glass-level))) saturate(var(--glass-saturate-resting)) brightness(1.14);
     --glass-blur-floating: blur(calc(var(--glass-blur-floating-radius) * var(--glass-level))) saturate(var(--glass-saturate-floating)) brightness(1.10);
     --glass-blur-overlay:  blur(calc(var(--glass-blur-overlay-radius) * var(--glass-level))) saturate(var(--glass-saturate-overlay)) brightness(1.06);
-    /* BG.W-CLOSEFIX-9SITE — the dark `--glass-blur-dock` chain (`--glass-saturate-dock`
+    /* The dark `--glass-blur-dock` chain (`--glass-saturate-dock`
        + the composite) RETIRED with its light-arm sibling (clean break, no alias). The
        dark dock reads the dark `--glass-blur-resting` (its saturate + luminosity lift)
        through the `--dock-surface-blur: var(--glass-blur-resting)` peer. */
 
-    /* BB.W-DEEP-GLASS — the DARK arm of the OPT-IN deep tier (the luminous-dark
-       deep mirror, the W-DARK-MATERIAL scope-2 "dark glass glows where light
+    /* The DARK arm of the OPT-IN deep tier (the luminous-dark
+       deep mirror, the scope-2 "dark glass glows where light
        passes" model). The deep tier is even more transmissive in dark — the deep
        dark glass glows MORE where the backdrop passes — so its saturate/brightness
        companion lifts HARDER than the calm dark floating (1.28/1.10): the deep

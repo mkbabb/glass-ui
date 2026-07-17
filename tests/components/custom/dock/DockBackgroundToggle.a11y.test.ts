@@ -1,5 +1,5 @@
-// AV.W7 G2 — the WCAG 2.2.2 (Pause, Stop, Hide), Level-A pause/play toggle for
-// the AV backgrounds. The control is available to ALL users (NOT gated behind
+// The WCAG 2.2.2 (Pause, Stop, Hide), Level-A pause/play toggle for
+// the backgrounds. The control is available to ALL users (NOT gated behind
 // reduced-motion), binds an EXISTING renderer seam (pause()/resume()), and
 // reflects state via aria-pressed + a Pause↔Play glyph swap.
 //

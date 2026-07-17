@@ -1,5 +1,5 @@
 /* ════════════════════════════════════════════════════════════════════════
-   .glass-atom — BD.W-GLASS-ATOM-REGISTER: the ONE shared warm-glass register
+   .glass-atom — : the ONE shared warm-glass register
    the small atoms (Badge-glass · slider fill · the `+N`
    chip) consume in two registers (loud opaque identity vs quiet transmissive
    glass).
@@ -13,7 +13,7 @@
                                  BOTH classes (`class="glass-capsule glass-atom"`)
                                  or composes the capsule body via the glass tier
                                  the host already wears.
-     · `--glass-fill-tint` / `--glass-fill-strength` (BE.W-TINTED-CHIP, glass.css)
+     · `--glass-fill-tint` / `--glass-fill-strength` (glass.css)
                                  — the per-instance plate-fill data hue. The atom
                                  is its ≥Nth consumer; it APPLIES the axis on the
                                  quiet register, never re-mints a tint.
@@ -25,7 +25,7 @@
    recipes. Every channel is compositor-only + Safari-native (no
    `backdrop-filter: url()`, no goo — Fence 8). The warm 0-alpha sources are
    explicit `oklch(L C H / 0)` (NEVER bare `transparent` — the WebKit
-   black-premultiply hole, build-trap-(d)).
+   black-premultiply hole).
    ════════════════════════════════════════════════════════════════════════ */
 
 @layer components {
@@ -49,13 +49,12 @@
     /* Material changes cross-fade without creating a hover or press affordance. */
     .glass-atom {
         /* The quiet register's tint application reads the SHARED per-instance PLATE
-           recipe `--glass-fill-tinted` (BG.W-GLASS-CONSUMER-BAND, tokens/glass.css) —
+           recipe `--glass-fill-tinted` (tokens/glass.css) —
            NOT a forked `color-mix` re-spell. The plate tints toward the per-instance
            DATA hue (`--glass-fill-tint` at `--glass-fill-strength`), so a semantic
-           badge (`destructive`/`success`/`info`) reaches its hue — closing the prior
-           `.glass-atom` fork that mixed a FIXED `--glass-capsule-warm` cream regardless
-           of the data hue (the comment claimed "toward the per-instance data hue" while
-           the code ignored it). At the `@property` defaults this is the byte-identical
+           badge (`destructive`/`success`/`info`) reaches its hue — NOT a
+           `.glass-atom` fork that mixes a FIXED `--glass-capsule-warm` cream regardless
+           of the data hue. At the `@property` defaults this is the byte-identical
            no-op (`color-mix(in oklab, X, transparent 0%)` ≡ X); the capsule's own warm
            floor above keeps the idle body warm. ONE plate, ONE rim (`--glass-material-
            rim`, the capsule carries it) — the shared plate/rim pair. */
@@ -130,12 +129,12 @@
     .badge-atom--glass {
         background-color: transparent !important;
         /* The quiet capsule tints toward the variant's SEMANTIC hue via the shared
-           `--glass-fill-tint` axis (BE.W-TINTED-CHIP) — colored glass, never a
+           `--glass-fill-tint` axis — colored glass, never a
            forked tint. The strength is a calm stop (the body ink stays legible).
            A consumer overrides `--glass-fill-tint` per-instance for a bespoke hue. */
         --glass-fill-strength: var(--badge-glass-strength, 16%);
     }
-    /* Per-axis glass tint — the data hue the quiet body mixes toward. BI.W-SYNONYM-
+    /* Per-axis glass tint — the data hue the quiet body mixes toward. 
        RENAMES: the STYLE plate keys off `[data-variant]` (default/secondary/outline),
        the SEMANTIC hue off `[data-tone]` (destructive/success/warning/info — a tone
        is not a style). A set tone's rule follows the variant rule in source order, so

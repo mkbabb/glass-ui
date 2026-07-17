@@ -3,7 +3,7 @@
 // The value.js-FREE config surface: named presets + the derived-palette ink-floor
 // bracket, all plain serializable data + pure math (NO `<Blob>` SFC, NO renderer, NO
 // `/color` value.js reach). This is the source that backs the `/blob/config` value.js-free
-// subpath (the RP-2 one-window eager-budget win) — a consumer importing JUST the config
+// subpath (the one-window eager-budget win) — a consumer importing JUST the config
 // shape + a hero preset never drags value.js onto its critical path. It re-exports the
 // atom types/defaults from `./types` (see `../../../subpaths/blob-config.ts`).
 

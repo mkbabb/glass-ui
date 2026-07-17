@@ -1,4 +1,4 @@
-// BC.W-VIZ-PAPERGRID — the typed-struct SOURCE OF TRUTH for the WebGPU liquid-grid uniform
+// The typed-struct SOURCE OF TRUTH for the WebGPU liquid-grid uniform
 // buffer.
 //
 // The WGSL `LiquidGridUniforms` struct and the JS `ArrayBuffer` write offsets are generated
@@ -85,8 +85,8 @@ export function packLiquidGridUniforms(
     f32[OFF.u0 + 2] = config.cellSize;
     f32[OFF.u0 + 3] = config.majorEvery;
 
-    // The FACE lane (re-points the retired LINE-warp lane — BD.W-PAPERGRID-FACE). faceAlpha:0
-    // default → the face evaporates → byte-identical to HEAD. lightDir rides warp2.zw; aspect
+    // The FACE lane (re-points the retired LINE-warp lane). faceAlpha:0
+    // default → the face evaporates → the line-only render. lightDir rides warp2.zw; aspect
     // stays on warp2.y.
     f32[OFF.face + 0] = config.faceAlpha;
     f32[OFF.face + 1] = config.faceRelief;

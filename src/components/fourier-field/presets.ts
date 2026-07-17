@@ -1,6 +1,6 @@
 // The FourierField variant PRESETS — the configuration-BUNDLE definitions
 // (`hero` epicycles-on/fewer-harmonics, `final` epicycles-off/denser) + the
-// VariantPreset shape they fill. Carved out of FourierField.vue as a pure data
+// VariantPreset shape they fill. A pure data
 // module (no Vue, no DOM). The variant IS the bundle: every paint magnitude is a
 // per-variant field scaled by the ONE outer `intensity` prop at the paint layer.
 export interface VariantPreset {
@@ -22,16 +22,16 @@ export interface VariantPreset {
     /** The parameter `t` of the static best-frame painted under `freeze`. */
     frozenT: number;
 
-    // ── The render BUNDLE (W-FF3 — the fourier-analysis renderer's procedural
+    // ── The render BUNDLE (the fourier-analysis renderer's procedural
     // sibling register: a PRESENT stroke weight, a real phosphor glow in BOTH
     // modes, a glowing comet head, rainbow epicycle scaffolding). Every paint
     // magnitude is a per-variant field scaled by the ONE outer `intensity` prop —
     // the variant IS the bundle.
     /** Comet-trail PEAK alpha (the head segment). The reference trail rides ~0.9
-     *  near-opaque — present, not the prior 0.45 hairline whisper. */
+     *  near-opaque — present, not a 0.45 hairline whisper. */
     peakAlpha: number;
     /** Trail stroke weight in CSS px (the reference is a BOLD 3.5px stroke, not
-     *  the prior 1.6 hairline). The single biggest faintness lever. */
+     *  a 1.6 hairline). The single biggest faintness lever. */
     trailWidth: number;
     /** Head-glow alpha — the STRONGEST layer (head-forward: > peakAlpha). */
     headGlowAlpha: number;
@@ -41,7 +41,7 @@ export interface VariantPreset {
      *  saturated core + white highlight + soft halo). 0 disables it. */
     headDotRadius: number;
     /** Epicycle scaffolding alphas ÷ peak (hero only; {0,0} disables the scaffold).
-     *  The reference circles/arms are PRESENT (≈0.5/0.75), not the prior 0.18 ghost. */
+     *  The reference circles/arms are PRESENT (≈0.5/0.75), not a 0.18 ghost. */
     epicycleRatios: { circle: number; arm: number };
     /** Epicycle circle / arm stroke weights in CSS px (the reference uses a bold
      *  ≈2.5/2 chain, the joints carry filled dots). */

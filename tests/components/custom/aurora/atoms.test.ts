@@ -1,4 +1,4 @@
-// AX.W10 — the resolveAtoms total-function + default-roundtrip suite, re-derived for
+// The resolveAtoms total-function + default-roundtrip suite, re-derived for
 // the zones/noise/color atom shape.
 //
 // Properties:
@@ -343,7 +343,7 @@ describe("AX.W10 — the default atoms preserve the wispy-sky default", () => {
     });
 });
 
-// ── AY.W-AUR-STUDIO — the configToAtoms inverse (the seed-from-preset projection). ──
+// ── The configToAtoms inverse (the seed-from-preset projection). ──
 describe("AY.W-AUR-STUDIO — configToAtoms projects a config back onto the ≤7 atoms", () => {
     it("recovers the medium (the headline atom — the dock seeds the live preset's medium)", () => {
         for (const kind of [

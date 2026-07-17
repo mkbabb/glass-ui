@@ -9,7 +9,7 @@
 // composable wires Vue reactivity, target-source tracking, the
 // prefers-reduced-motion fast-path, and lifecycle cleanup on scope dispose.
 //
-// Lands W9-β of the AL SLIM plan. Consumes W9-α (SpringProgress publisher
+// Lands of the AL SLIM plan. Consumes (SpringProgress publisher
 // in `@mkbabb/keyframes.js`).
 
 import { SpringProgress } from "@mkbabb/keyframes.js";

@@ -1,7 +1,7 @@
 /* typography/utilities.css — the MATH / MONO / FONT-FAMILY / ORNAMENTAL / AUX
  * registers.
  *
- * Carved from typography.css (BA.W-CARVE2) — the math/mono variants, the
+ * The math/mono variants, the
  * font-family utilities (.cm-serif/.fira-code), the ornamental .fourier-f, and
  * the @layer components AUX section-label/pane-title/kinetic hooks. @import-ed
  * LAST by the typography.css thin root (after the faces+scale and the semantic
@@ -26,11 +26,11 @@
 /* ═══════════════════════════════════════════════
    MONO variants
    ═══════════════════════════════════════════════ */
-/* BB.W-EYEBROW-UNION — THE canonical mono-caption EYEBROW vocabulary, declared
+/* THE canonical mono-caption EYEBROW vocabulary, declared
    ONCE. The pure color-agnostic register: mono · caption-size · uppercase ·
-   tracking-CAPS. The prior drift (tracking-WIDER 0.05em, weight-500, both off the
-   `.section-label` canon-by-usage) is RECONCILED onto the canon's secondary axes
-   (clean break, no alias): the tracking folds to `--type-tracking-caps` (0.1em),
+   tracking-CAPS. The canon's secondary axes carry no drift (no tracking-WIDER 0.05em
+   or weight-500 off the `.section-label` canon-by-usage; clean break, no alias): the
+   tracking is `--type-tracking-caps` (0.1em),
    the weight-500 drops (a per-use choice a site states inline via `font-medium`,
    not a fork in the eyebrow register), and color stays UNBAKED so a consumer
    pairs any ink (`text-foreground`/`text-muted-foreground`/an accent) — the 17
@@ -110,7 +110,7 @@
         font-optical-sizing: auto;
     }
 
-    /* AV.W16 TW3 — the pane title scales off its PANE's box, not the viewport.
+    /* The pane title scales off its PANE's box, not the viewport.
        An unnamed @container query resolves to the nearest ancestor container,
        so the title grows once its pane clears 40rem (≈ 640px) regardless of the
        viewport. Contract: the consuming pane sets `container-type: inline-size`
@@ -124,7 +124,7 @@
 
     /* Section label (mono, small caps) — the COLORED eyebrow canon. Composes the
        ONE `text-mono-caption` vocabulary (mono · caption · uppercase ·
-       tracking-caps) + bakes the muted ink. BB.W-EYEBROW-UNION: this is the
+       tracking-caps) + bakes the muted ink. : this is the
        canon-by-usage register (the StorySection eyebrow column + Section.vue's
        `label` tone + the `.section-label--tinted` accent build on it); it now
        COMPOSES the vocabulary rather than re-declaring it, so a tracking/size
@@ -134,7 +134,7 @@
         color: var(--muted-foreground);
     }
 
-    /* Section-accent eyebrow (AZ.W-SUFFUSE D3-7 / D1-8). ONE coherent
+    /* Section-accent eyebrow (D3-7 / D1-8). ONE coherent
        section-accent register — the colored mono eyebrow reads as an
        intentional system, not a four-hue rainbow. The accent reads a single
        `--section-label-accent` knob (default `--section-color-7`, the violet
@@ -146,11 +146,10 @@
         color: var(--section-label-accent, var(--section-color-7));
     }
 
-    /* BG.W-GATE-FIELD-AURORA (EYEBROW-LIGHT-POLISH, +3.12) — the light-arm twin
-       of the dark eyebrow fix (b3d65eec). The mono-caption eyebrow reads
+    /* The light-arm twin of the dark eyebrow fix. The mono-caption eyebrow reads
        `--muted-foreground` (= `--neutral-5`, L40, calibrated AA-vs-PAGE), which
        composites to only ~4.15:1 over the recessive warm shell field
-       (`[data-paper-field]`, BG.W-FIELD-AURORA) in LIGHT mode — below the
+       (`[data-paper-field]`) in LIGHT mode — below the
        10-14px 4.5 bar (dark already clears 6.73, Safari 4.80). Over the warm
        field ONLY + LIGHT ONLY, warm-mix the eyebrow ink toward `--foreground`
        (the SAME 22%-toward-`--foreground` recipe the demo header-cluster twin
@@ -171,15 +170,15 @@
     }
 
     /* Letter-pressed treatment — reads as text engraved into the panel
-       surface. Speedtest's idle hero `0` consumes this via
+       surface. A consumer's idle hero `0` consumes this via
        `.text-hero[data-idle="true"]`; the `text-engraved` utility is the
        glass-ui contract that any consumer can apply for the same look.
-       Opacity dropped in P.W1.B — the audacious canon mutes by colour
+       Opacity dropped — the audacious canon mutes by colour
        (`--muted-foreground`), not by alpha; opacity ≤ 0.4 over a glass
        surface read as a fade, not as engraving. */
     .text-engraved {
         color: var(--muted-foreground);
-        /* AW.W26 — composes the `--text-shadow-engraved` @theme identity token
+        /* Composes the `--text-shadow-engraved` @theme identity token
            (the two-stop emboss) instead of a hand-rolled literal (gate 4). */
         text-shadow: var(--text-shadow-engraved);
     }

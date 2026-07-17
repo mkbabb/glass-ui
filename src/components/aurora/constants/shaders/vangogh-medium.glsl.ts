@@ -1,5 +1,5 @@
 // The aurora Van-Gogh medium — the DEDICATED atomic-dab body (`vangoghDab` +
-// `mediumVangogh`) carved out of mediums.glsl.ts as a cohesive GLSL chunk. A
+// `mediumVangogh`) as a cohesive GLSL chunk. A
 // purpose-built two-layer DAB pass disjoint from the oil stroke cascade: short
 // loaded comma dabs over a darkened swirl underpainting, oriented off the
 // analytic swirl flow (not the expensive per-cell tensor). `mediums.glsl.ts`
@@ -7,16 +7,16 @@
 // the composed string is byte-identical to the pre-carve single literal
 // The dedicated body is shared by both renderer paths.
 export const AURORA_VANGOGH_MEDIUM_GLSL = /* glsl */ `// ── Van Gogh atomic-dab body ─────────────────────────────────────────────
-// REBUILT FROM FIRST PRINCIPLES. The prior path routed van-Gogh through the shared
+// Van-Gogh does NOT route through the shared
 // oil paintStrokeMedium cascade — four DENSE layers of LONG-THIN tensor-oriented
 // strokes (lenMul up to 5.2, widMul 0.22) hugging a continuous coherent field. Packed
 // that tight, thin strokes that follow continuous iso-bands MERGE into smooth flowing
 // filaments — the "marbled flow-bands" read (a spirograph/fingerprint, not impasto),
 // AND the per-cell 8-tap structure tensor × 4 layers × 9 cells = ~324 sampleBase/pixel
-// made it run at ~4fps. Van Gogh's sky is NOT continuous flow — it is DISCRETE, SHORT,
+// runs at ~4fps. Van Gogh's sky is NOT continuous flow — it is DISCRETE, SHORT,
 // LOADED comma dabs, separated by visible ground, queued into swirl ROWS.
 //
-// The rebuild is a purpose-built two-layer DAB pass, disjoint from the oil cascade:
+// This is a purpose-built two-layer DAB pass, disjoint from the oil cascade:
 //   • orientation from the analytic SWIRL flowField (van-Gogh skies ARE swirl rows) +
 //     per-cell angular jitter — NOT the expensive per-cell tensor (the lag source, and
 //     the marble source: a jittered discrete dab can NOT merge into a continuous
@@ -241,10 +241,10 @@ vec3 mediumVangogh(vec3 col, vec2 p, float t) {
   // keeps the open field clean — only the loaded dab bodies emerge, the tails stay ground.
   result *= mix(0.115, 1.0, smoothstep(0.085, 0.31, height));
 
-  // The van-Gogh chroma — a light OKLCh punch. EASED to 0.92 (off 1.04) in the
+  // The van-Gogh chroma — a light OKLCh punch at 0.92 in the
   // The discrete-dab profile's per-dab OKLCh
   // broken-color jitter (the ±16° hue + ±chroma swing per cell) lifts the field's
-  // colourfulness on its own, so the prior 1.04 punch on TOP overshot the §4.1
+  // colourfulness on its own, so a 1.04 punch on TOP overshoots the
   // reference band (rendered C=100.5 vs the painting's measured 70.67 ± 15/+25 →
   // ceiling 95.67 — neon, not Starry Night's rich-but-not-garish blue/gold). The 0.92
   // demote pulls the rendered colourfulness back IN-band while the broken-color jitter

@@ -18,12 +18,12 @@ import type { FuzzySearchState, SearchableItem, SearchResult } from "./composabl
 const props = withDefaults(
     defineProps<{
         state: FuzzySearchState;
-        // BC.W-SEARCH-CUSTOM — the field-chrome variant axis WIDENED onto the shared
-        // search register (clean break: the prior `sidebar` rung is the boxed `inline`
-        // pill, `floating` keeps its chromeless overlay reading — the MIGRATION row).
-        //   inline   — the boxed glass search pill (the prior `sidebar` default).
+        // The field-chrome variant axis on the shared
+        // search register (clean break, no `sidebar` rung — `inline` is the boxed
+        // pill, `floating` keeps its chromeless overlay reading).
+        //   inline   — the boxed glass search pill (the default).
         //   bare     — the chromeless field seated inside another surface.
-        //   floating — the chromeless overlay/morph aperture (BC.W-DOCK-SEARCH consumes it).
+        // floating — the chromeless overlay/morph aperture (consumes it).
         variant?: SearchVariant;
         // The shared control-size rung (sm quieter, default the golden pill, lg taller)
         // + the shared {glass·veil·opaque} decoration axis (`glass` default → the
@@ -171,8 +171,8 @@ function labelParts(r: SearchResult) {
         </Popover>
 
         <Dialog v-model:open="state.isExpanded.value">
-            <!-- BC.W-SEARCH-CUSTOM — the spotlight modal is GLASS (`:surface`, default
-                 glass → the warm-cream floating plate, NOT the prior opaque slab — the
+            <!-- The spotlight modal is GLASS (`:surface`, default
+                 glass → the warm-cream floating plate, NOT an opaque slab — the
                  user's "glassy dynamic search"). The width reads the `--search-modal-
                  width` knob (cn dedups `max-w-*`, so the token wins over DialogContent's
                  `max-w-lg` with no `!important`). The outer content pad is zeroed by

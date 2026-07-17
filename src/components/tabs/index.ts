@@ -1,4 +1,4 @@
-// BA.W-TABS — the standardized SegmentedTabs family. ONE engine, TWO materials
+// The standardized SegmentedTabs family. ONE engine, TWO materials
 // (`variant`: pill (default, the glass material) · underline (the paper ink-mark)),
 // ONE semantic axis (toggle · tabs), ONE orientation axis (horizontal · vertical),
 // responsive collapse as a prop.

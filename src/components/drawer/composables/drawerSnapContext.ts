@@ -1,4 +1,4 @@
-// BB.W-DRAWER-ABROGATE — the Drawer snap-engine DI seam.
+// The Drawer snap-engine DI seam.
 //
 // `<Drawer>` (the reka `DialogRoot` host) owns the snap state (the resolved
 // detent ladder, the open ref, the live snap-fraction scalar + its writeback) and

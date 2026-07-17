@@ -9,11 +9,11 @@
 // fully mounted, 1 = fully dismissed) and the pointer-drag pipe that re-seats
 // the spring target mid-drag.
 //
-// Reuses `useSpring` (W9-β) end-to-end: entrance is `target = 0` after seeding
+// Reuses `useSpring` end-to-end: entrance is `target = 0` after seeding
 // `initial = 1`; drag tracks the pointer delta into target; release decides
 // bounce-back (target = 0) vs. dismiss (target = 1 + on-settle close). The
 // load-bearing property is SpringProgress mid-flight re-target continuity
-// (G-W2-3) — releasing the pointer at any velocity hands off cleanly to the
+// Releasing the pointer at any velocity hands off cleanly to the
 // spring without a visual jump.
 //
 // PRM bracket: `useSpring`'s `respectReducedMotion` snaps to target instantly,
@@ -104,7 +104,7 @@ export interface SpringMountRef {
  * The host watches `open` to seat the entrance (1 → 0). Pointer drags
  * re-seat the target mid-flight; on release the threshold decides bounce
  * vs. dismiss. The mid-flight re-target preserves spring continuity per
- * SpringProgress (G-W2-3 verified).
+ * SpringProgress.
  */
 export function useSpringMount(options: UseSpringMountOptions): SpringMountRef {
     const preset = SPRING_PRESETS[options.preset ?? "smooth"];

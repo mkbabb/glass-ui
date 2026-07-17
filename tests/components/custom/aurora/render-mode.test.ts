@@ -1,10 +1,10 @@
-// N.W5 Defect-A — the adaptive substrate's software-WebGL signal. `resolveRenderMode("auto")`
+// Defect-A — the adaptive substrate's software-WebGL signal. `resolveRenderMode("auto")`
 // must resolve to `"css"` (the static gradient placeholder, no full-viewport WebGL surface)
 // on a SOFTWARE renderer (SwiftShader / llvmpipe / MS Basic Render — the GPU-blocklisted
 // path), because a full-viewport software-rastered GL layer stalls every pointer-driven
 // composite and hangs the page under interaction.
 //
-// BC.W-VIZ-AURORA (T1) — the DEAD-STATIC `lowConcurrency`/`saveData`/`reducedMotion` `"css"`
+// The DEAD-STATIC `lowConcurrency`/`saveData`/`reducedMotion` `"css"`
 // fall is RETIRED. A 2026-capable base-M-series / throttled-VM tab reporting 4 logical cores
 // no longer gets demoted to a FROZEN gradient (the "renders SLOW" defect root), and
 // reduced-motion is handled SOLELY by the substrate's live `matchMedia` freeze (one static

@@ -1,7 +1,7 @@
 /* Dock CTA-receive landing seat.
- * CTA-SEAT; the speedtest-AX BC-W2 + BC-W3 fold).
+ * CTA-SEAT; the cross-consumer fold).
  *
- * THE MOVE. `useDockCtaReceive` (the BB.B2 morph half) flies an EXTERNAL CTA onto a
+ * THE MOVE. `useDockCtaReceive` (the morph half) flies an EXTERNAL CTA onto a
  * dock control's rect; this partial makes the control it lands on a SEAT that was
  * visibly RESERVED for it. While the CTA is in flight (or pending), the target dock
  * control carries `data-cta-pending` (written by `setPending()` on the
@@ -14,14 +14,14 @@
  * THE NO-BOX-JUMP (T2). The reserve is a STATIC `min-inline-size`/`min-block-size`
  * keyed off `--dock-control-size`/`--dock-layer-height` (the control's resting box) —
  * a ONE-TIME reservation set the instant `setPending()` fires, NEVER an animated
- * dimension (the W-DESKTOP-RESERVE static-frame-0 precedent). The dock's shrink-wrap
+ * dimension (the static-frame-0 precedent). The dock's shrink-wrap
  * is already at the seated width, so the CTA lands into an already-sized hole; the box
  * never grows on reveal. `proof:no-layout-animation` holds — no `transition: width`/
  * animated min-* anywhere here.
  *
  * THE FLIP REVEAL (T3). The seat is a CONTENT swap on an already-sized box, NOT a box
  * morph — so the reveal is a PLAIN `transition: opacity` on the `--ease-out`
- * no-overshoot register (a content reveal must not overshoot — W-MOTION-CANON P2). It
+ * no-overshoot register (a content reveal must not overshoot). It
  * does NOT ride the dock collapse/expand morph-stagger (`--dock-expand-t`/the child
  * stagger); re-using the morph clock would read as a janky stagger-restart on a
  * content reveal.

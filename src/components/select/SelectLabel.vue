@@ -23,7 +23,7 @@ const forwardedAttrs = computed(() => {
 </script>
 
 <template>
-    <!-- AX.W50 D17 — the section label reads the family SECONDARY rung
+    <!-- The section label reads the family SECONDARY rung
        (`text-dropdown-secondary`), resolving the witness-2 scale contradiction (the
        label role now matches the Combobox/Command group-heading scale family-wide). -->
     <RekaSelectLabel

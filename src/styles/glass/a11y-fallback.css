@@ -1,10 +1,10 @@
 /* glass/a11y-fallback.css
    The accessibility + capability overrides — @media (prefers-reduced-transparency) / (prefers-contrast: more) / (forced-colors: active), the non-backdrop-filter @layer components fallback, and the :has()-less @supports fallback. LAST in cascade (they override the base ladder).
-   Carved from the glass.css cascade root; @import-ed by glass.css in cascade
+   A partial of the glass.css cascade; @import-ed by glass.css in cascade
    order, each in its own @layer components (isomorphic to the monolith).
    See docs/precepts/design-idioms.md §cohesion-aware partials. */
 /* ── Accessibility: reduced transparency ──────────
-   AX.W54 — the gestalt collapse: ONE `--glass-level: 0` replaces the ten per-rung
+   The gestalt collapse: ONE `--glass-level: 0` replaces the ten per-rung
    opacity+blur clobbers. The level-0 path resolves solid `--card` + `blur(0)`
    through the SAME machinery (the opacity seam → 1, the blur seam → 0), so every
    glass surface — current and future — flattens with no per-rung enumeration. The
@@ -18,12 +18,12 @@
 }
 
 /* ── Accessibility: high contrast ─────────────────
-   AX.W54 — a single bounded `--glass-level: 0.3` (mostly-solid, not fully flat)
+   A single bounded `--glass-level: 0.3` (mostly-solid, not fully flat)
    replaces the five per-rung opacity clobbers: every rung firms up toward solid
    for AA while keeping a hint of the glass register. ONE knob, every rung.
 
-   AX.W55 — the Clear↔Tinted user-escape (Apple's iOS-26.2 analog) COORDINATES the
-   two axes here: the OPACITY axis rides W54's `--glass-level` (firm up toward solid)
+   The Clear↔Tinted user-escape (Apple's iOS-26.2 analog) COORDINATES the
+   two axes here: the OPACITY axis rides the `--glass-level` (firm up toward solid)
    AND the TINT axis biases toward ink — `--glass-tint-source` → the warm-ink +
    `--glass-tint-strength` → the AA floor, the same darken the automatic bright
    bucket applies, now reached by the explicit "more contrast" user request. The two
@@ -35,7 +35,7 @@
         --glass-level: 0.3;
         --glass-tint-source: var(--glass-tint-ink);
         --glass-tint-strength: var(--glass-tint-strength-aa);
-        /* BG.W-GLASS-DEFAULT-DEFINITION (GA-1) — definition is the MID rung of the SAME
+        /* Definition is the MID rung of the SAME
            a11y ladder `--glass-level: 0.3` rides: an explicit "more contrast" request
            lifts every glass surface to the DEFINED tier library-wide (a read-carrying
            warm rim + the warm-cream floor), joining the level+tint escape as ONE
@@ -45,7 +45,7 @@
 }
 
 /* ── Accessibility: forced-colors (Windows High Contrast) glass-language skin ──
-   AX.W36 — when the OS forces a palette (Windows High Contrast), the platform
+   When the OS forces a palette (Windows High Contrast), the platform
    strips the whole decorative glass register: `backdrop-filter` is dropped, the
    `--glass-*` inset/box-shadow rungs vanish, and every meaning-bearing chroma
    flattens to one system color. A `.glass-floating` Dialog over a `.glass-resting`
@@ -57,12 +57,12 @@
    standard WHC system keywords are used (`Canvas`/`CanvasText`/`Highlight`) — no
    glass-ui token leaks into the WHC arm.
 
-   COORDINATES WITH W54 — the same `--glass-level: 0` opaque escape the reduced-
+   COORDINATES WITH — the same `--glass-level: 0` opaque escape the reduced-
    transparency / high-contrast brackets ride. Setting the ONE clarity knob to 0
    collapses the `--glass-bg-*` opacity recipe to solid `--card` + `blur(0)` through
    the SAME machinery (no parallel solid recipe), so the platform sees opaque plates
    it maps to `Canvas`. The grain + highlight kills match the reduce bracket (they
-   sit off the level axis). The W55 tint axis is moot under WHC (the user's palette
+   sit off the level axis). The tint axis is moot under WHC (the user's palette
    supersedes the ink-darken) but harmless — the opaque plate is system-painted. */
 @media (forced-colors: active) {
     :root {
@@ -124,15 +124,15 @@
 }
 
 /* ── Legacy backdrop-filter + :has() capability ladders COLLAPSED
-   (BG.NF.2 W-LEGACY-LADDER-COLLAPSE — the NO-MASKING-FALLBACK floor).
+   (the NO-MASKING-FALLBACK floor).
    The former GUARD-1 (no-blur opaque plate) + GUARD-2 (webkit-only glass-mix
    restatement) `@supports` arms served engines supporting NEITHER form / the
    webkit-only form (Safari ≤17) — years pre-target (target = current Chrome +
    current Safari). `backdrop-filter` is Baseline on that set, and the real
    webkit path is the BUILD-EMITTED `-webkit-backdrop-filter:` prefix pair
-   (`vite.style-assets.ts` O-2a), asserted in the shipped dist by
+   (`vite.style-assets.ts`), asserted in the shipped dist by
    `proof:webkit-backdrop`, NOT a live source-side restatement. The
-   `@supports not selector(:has(*))` `.is-focus-within` arm (AQ.W3) collapsed
+   `@supports not selector(has(*))` `.is-focus-within` arm collapsed
    too — `:has()` is Chrome 105+/Safari 15.4+ AND its `Card.vue` toggler never
    existed on disk (an orphan behind a lying comment); `.glass-card:has(:focus-
    visible)` (`glass/surfaces.css`) is the sole focus-elevation mechanism. */

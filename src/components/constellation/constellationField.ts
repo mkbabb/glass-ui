@@ -132,7 +132,7 @@ export function stepField(
     // The pinned node is held by every step pass — its drift,
     // wall-bounce, pointer-steer, and gravity-well are all skipped so it stays at its
     // seeded anchor (the gentle `pinnedDrift` mode is the ONLY thing that moves it).
-    // `pinnedIndex === -1` (the default) skips no node → byte-identical to HEAD.
+    // `pinnedIndex === -1` (the default) skips no node → the plain field.
     const pinned = field.pinnedIndex;
     for (let i = 0; i < nodes.length; i++) {
         if (i === pinned) continue;
@@ -162,10 +162,10 @@ export function stepField(
         // useConstellation off the smoothed pointer). A FAST sweep (`velMag` large) drags a
         // stronger directional lean (the nodes follow the cursor's MOMENTUM, biased along
         // the sweep direction), a slow hover is the gentle local gather (velMag ≈ 0 →
-        // byte-identical to the prior position-only lean). The magnitude scale is bounded
+        // the position-only lean). The magnitude scale is bounded
         // (≤ VEL_LEAN_CAP) so a flick never slingshots; the |v|→sp renorm preserves the
         // slow geometric drift speed (the cool-down invariant holds). pointerVel null (no
-        // shared field) → velBoost 0 → the position-only lean (byte-identical to HEAD).
+        // shared field) → velBoost 0 → the position-only lean.
         const velMag = pointerVel ? Math.hypot(pointerVel.x, pointerVel.y) : 0;
         const VEL_LEAN_GAIN = 0.05; // per (px/frame) of sweep speed
         const VEL_LEAN_CAP = 0.16; // the bounded extra lean magnitude (anti-slingshot)
@@ -202,14 +202,14 @@ export function stepField(
     // back toward `speed` (the field-cools invariant), so once the well releases
     // (`target → 0`, `strength` eases to 0) the lattice re-settles. Absent
     // (`field.well` undefined) → the entire pass + ease-back are skipped, so the
-    // default render is BYTE-IDENTICAL to the pre-well HEAD.
+    // default render is the plain pre-well field.
     stepWell(field, k, speed, dt);
 
     // The autonomous pinned-anchor drift gently eases the pinned
     // node around its seeded anchor on a jittered cadence (a closed-form easeInOutQuad
     // over `now`; no integrator, no second rAF). DISTINCT from `wander` (which
     // re-targets the warp among random nodes). Absent (`field.pinnedDrift` undefined)
-    // OR no pinned node → no-op → byte-identical to HEAD. Runs BEFORE warpStep so a
+    // OR no pinned node → no-op → the plain field. Runs BEFORE warpStep so a
     // warp chasing the pinned node tracks its drifted position this frame.
     stepPinnedDrift(field, now, rng);
 
@@ -307,8 +307,7 @@ export function buildEdges(
 }
 
 /**
- * Append the POINTER-WEB tether edges to an existing edge set (the `drawPointerWeb` math
- * relocated): the cursor is a "virtual node" whose incident edges (to every node within
+ * Append the POINTER-WEB tether edges to an existing edge set (the `drawPointerWeb` math): the cursor is a "virtual node" whose incident edges (to every node within
  * `reach`) carry `focus = 1` (the render strokes them at the focus alpha). No-op when the
  * pointer is inactive (`x < 0`). The `eMax` budget is shared with the ambient set.
  */

@@ -1,5 +1,5 @@
 // demo/shell/configurator/useConfiguratorOpen.ts — the shared open-state singleton
-// for the gear-hosted demo Configurator (AZ.R4-SHELL).
+// for the gear-hosted demo Configurator.
 //
 // ONE source of truth for "is the gear view open": the PresetEditor binds the
 // Sheet's `v-model:open` to this ref, and the SidebarDock gear control reflects

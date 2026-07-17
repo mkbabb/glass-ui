@@ -1,23 +1,23 @@
-/* BI.W-E10-AURORA-ENTRANCE (value.js T-60) — the PALETTE-HONEST one-shot
+/* (value.js T-60) — the PALETTE-HONEST one-shot
  * cold-first-VISIBLE procedural-viz entrance.
  *
  * A procedural-viz CANVAS materializes: it fades in from transparent (`opacity`) with
  * a gentle warm LIFT (`filter: brightness()/saturate()` PULSES up and settles). The
  * whole ramp is PALETTE-HONEST — brightness and saturate NEVER dip below 1, so the
  * entrance never transits a `brightness<1`/`saturate<1` GRAY VEIL over the chromatic
- * field (the T-60 condemned form: the prior `from { brightness(0.4) saturate(0.7) }`
- * dim floor, which — stamped while the canvas still sat at the consumer's `opacity:0`
- * — opened the visible arrival INSIDE a `brightness 0.54–0.83` desaturated stage: the
+ * field (the condemned form: a `from { brightness(0.4) saturate(0.7) }`
+ * dim floor, which — stamped while the canvas still sits at the consumer's `opacity:0`
+ * — would open the visible arrival INSIDE a `brightness 0.54–0.83` desaturated stage: the
  * "pulses to gray" the owner named). The field's OWN colors carry the entrance; the
  * bloom only lifts their light, it never dims or desaturates them.
  *
  * A FIELD bloom — the canvas rect stays scale(1) (no box-zoom gutter). Compositor-only
- * (opacity + filter, the W-MOTION-CANON P5 EFFECTS channel). The peak is EXPLICIT in
+ * (opacity + filter, the EFFECTS channel). The peak is EXPLICIT in
  * the keyframe (the 55% stop), so the animation rides a monotone `--ease-out` (NOT the
  * extrapolating `--ease-cartoon-punch`, whose overshoot would dip the settle segment
  * BELOW 1 and re-introduce the condemned dim tail).
  *
- * THE DOOR (BI.W-E10 / T-60): the aurora runtime opts OUT of this bloom by default
+ * THE DOOR (T-60): the aurora runtime opts OUT of this bloom by default
  * (`revealBloom: false`) — the aurora materializes as its palette-derived GROUND with
  * the canvas OPACITY cross-fade over it, so a second `filter`-bloom would double the
  * entrance; it never sets `data-substrate-reveal`. The blob + the line-art vizzes keep

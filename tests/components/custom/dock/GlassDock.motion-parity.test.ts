@@ -4,8 +4,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import GlassDock from "@glass/components/dock/GlassDock.vue";
 
 /**
- * GlassDock `isTransitioning` — the spring-settle-driven busy flag (BG.NF.1
- * W-FALLBACK-EXCISE). The CSS-transition-era `useDockMorphWindow` (a wrong-clock
+ * GlassDock `isTransitioning` — the spring-settle-driven busy flag (
+ *). The CSS-transition-era `useDockMorphWindow` (a wrong-clock
  * `max(2×--duration-normal, 600ms)` settle TIMER + a DEAD `@transitionend` resolver
  * that could NEVER fire — the morph runs on the `--dock-morph-t` spring, NOT a CSS
  * width/padding transition) is EXCISED. `isTransitioning` now resolves from the morph
@@ -37,7 +37,7 @@ function dispatchTransitionEnd(root: Element, propertyName: string): void {
 }
 
 // These specs drive the morph spring to settle with the unbounded `vi.runAllTimers()`.
-// The dock's `autoLuminance` default-TRUE backdrop sampler (BG.W-GLASS-SIGNAL-TRUTH) is
+// The dock's `autoLuminance` default-TRUE backdrop sampler is
 // a PERPETUAL `useRAFLoop` monitor — never settling — so it spins `runAllTimers` past the
 // 10000-timer abort before the spring can settle. Luminance is ORTHOGONAL to the
 // isTransitioning spring-settle contract under test, so it is mounted OFF here (the

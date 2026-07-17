@@ -4,11 +4,10 @@
 // `@vueuse/core`. Combobox is co-located as the collection-backed form family,
 // but owns its public contracts directly and no longer imports VueUse.
 //
-// Root-barrel re-exports of these symbols remain in place during Phase 1
-// (additive subpath split, v0.9.3). Phase 2 (root-barrel removal) is
-// scheduled with v1.0. See `docs/tranches/K/waves/W-S.md`.
+// Root-barrel re-exports of these symbols remain in place alongside the
+// additive subpath split.
 //
-// AQ.W4 — the form-validity bridge ships here too. `useUserInvalidAria` is
+// The form-validity bridge ships here too. `useUserInvalidAria` is
 // vueuse-free (native listeners only), so it is ALSO reachable on the root
 // barrel; co-locating it on `/forms` lets a consumer pull the validation
 // vocabulary (Input/Textarea + the `aria-invalid` bridge) from one subpath.

@@ -1,7 +1,7 @@
 /* Dock persistent and vertical shell-region styles.
- * body (AX.W45 D13-a / AZ.W-DOCK-TAXONOMY).
+ * body (D13-a /).
  *
- * Carved from dock/shell.css at BG.W-CLOSEFIX-9SITE to hold the no-god-module 500-line
+ * A partial held under the no-god-module 500-line
  * bound. This partial owns the always-present `.dock-persistent` rail beside the
  * expand-on-demand morph region (the iOS Now-Playing / Stage-Manager idiom done
  * STRUCTURALLY) + the vertical dock's column layer-stack. The `.glass-dock` structural
@@ -13,7 +13,7 @@
  * selectors), so the carve is isomorphic (same layer, same source order → ZERO visual
  * delta). */
 @layer components {
-    /* AX.W45 D13-a — the PERSISTENT region (the iOS Now-Playing / Stage-Manager
+    /* The PERSISTENT region (the iOS Now-Playing / Stage-Manager
        idiom done STRUCTURALLY). The `#persistent` slot lives in-flow as a root flex
        SIBLING of the morph-region (`.dock-layers`) in BOTH collapsed AND expanded —
        NEVER `:inert` and NEVER a crossfade pane.
@@ -54,10 +54,9 @@
         margin-block-start: var(--dock-layer-gap, 0.375rem);
     }
 
-    /* AZ.W-DOCK-TAXONOMY (move 2) — the VERTICAL dock's layer panes lay their content
-       out as a COLUMN. The dock body is now the SAME orientation-agnostic
-       `.dock-layers` full/summary morph pair the horizontal dock uses (the prior
-       static `.dock-layer--vertical-body` single-stack RETIRED — a vertical dock now
+    /* The VERTICAL dock's layer panes lay their content
+       out as a COLUMN. The dock body is the SAME orientation-agnostic
+       `.dock-layers` full/summary morph pair the horizontal dock uses (a vertical dock
        collapses its block axis too). The base `.dock-layer { display: flex;
        align-items: center }` is row by default; here the full/summary panes flip to a
        stretched column stack carrying the dock's `--dock-layer-gap` rhythm, so

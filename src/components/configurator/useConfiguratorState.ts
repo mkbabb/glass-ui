@@ -136,15 +136,14 @@ export function useConfiguratorState<T extends object>(
     // `reactive` typing on a generic T requires the cast; equivalent to
     // `reactive<T>(initialConfig)` in non-generic contexts.
     const config = reactive(initialConfig) as T;
-    /* K.W7 — `activeKey` is a `ref` so the `activePreset` computed (and any
+    /* `activeKey` is a `ref` so the `activePreset` computed (and any
        template / consumer reading `studio.activePreset.value`) re-evaluates
        on `selectPreset` / `cyclePreset` / `resetCurrent`. Prior to this
        fix `activeKey` was a plain `let` binding wrapped in a `computed` with
        no reactive dependency — the computed cached its first read forever,
        so consumers reading `activePreset.value` saw stale data. Combined
        with the metaballs `colorDraft ↔ cfg.colors` watch-write loop this
-       produced "Maximum recursive updates exceeded" on `/motion/metaballs`
-       (Lighthouse 2026-05-08 P0-1). */
+       produced "Maximum recursive updates exceeded" on `/motion/metaballs`. */
     const activeKey = ref<string | undefined>(initialKey);
 
     // Per-preset live clones (only allocated in `"per-preset"` clone-mode).

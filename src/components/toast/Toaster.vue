@@ -40,8 +40,7 @@ function toastRootProps(toast: QueuedToast) {
 
 // Invariant viewport chrome — identical across every anchor. The anchor
 // fragment (flex-direction + edge) is interleaved between the two halves
-// so the `bottom-right` default reproduces the pre-W3 hardcoded class
-// byte-for-byte (proven in docs/tranches/AO — see W1.4 R0G-4).
+// so the `bottom-right` default composes to the base viewport class.
 const VIEWPORT_BASE = "fixed top-0 z-toast flex max-h-screen w-full";
 const VIEWPORT_PAD = "p-4";
 const VIEWPORT_WIDTH = "md:max-w-[420px]";
@@ -90,18 +89,18 @@ const viewportClass = computed(() => {
             <ToastClose />
         </Toast>
         <!--
-      AY.W-ANIM1 (W-ANIM-FIX) — the glass-first × position:fixed trap guard.
+      The glass-first × position:fixed trap guard.
       A `fixed` ToastViewport mounted inside a glass surface re-anchors to that
       surface's box: any ancestor with `backdrop-filter` (or `filter`/`transform`/
       `will-change`) establishes a CONTAINING BLOCK for fixed descendants, so the
       viewport's `bottom-0`/`right-0` resolve against the glass card, not the
-      viewport — the toasts paint glued to the card. With W54 making
+      viewport — the toasts paint glued to the card. With making
       backdrop-filter ubiquitous this bites ANY fixed overlay inside glass.
       ToastPortal teleports the viewport to <body>, escaping every glass
       containing block so `fixed` anchors to the viewport as intended.
     -->
         <!--
-      BB.W-CONTROL-TOKENS (A11Y) — the toast announce contract. reka's
+      The toast announce contract. reka's
       ToastViewport carries `role="region"` but NOT `aria-live`, so a screen
       reader gets the landmark but no announce-on-toast. Marking the viewport
       region `aria-live="polite"` (+ `aria-atomic="false"` so each toast

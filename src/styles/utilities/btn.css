@@ -1,9 +1,9 @@
 /* utilities/btn.css
    The shared utility cluster — scale-on-hover, transition-control/disclosure,
    sheet animation, table density, rainbow color, and text-highlight paint.
-   Carved from the utilities.css cascade root; @import-ed by utilities.css in
+   A partial of the utilities.css cascade; @import-ed by utilities.css in
    cascade order. See docs/precepts/design-idioms.md §cohesion-aware partials. */
-/* ── Hover scale (O.W6 Lane C) ──
+/* ── Hover scale ──
    Canonical hover-transform utility consuming the `--scale-hover` token
    (tokens.css §11). Promoted from consumer-side `hover:scale-105`
    recipe — 13 sites in keyframes.js demo + 9 sites in words/frontend
@@ -13,9 +13,9 @@
    `class="scale-on-hover"`; transition + easing bind to the canonical
    `--duration-fast` + `--ease-standard` tokens. */
 @utility scale-on-hover {
-    /* Individual-transform identity base (AQ.W3 §W3.2). Transition the `scale`
-       longhand (not `transform`) so the migrated hover scale animates.
-       AX.W52 §6 doctrine — the `scale` transform leg rides `--spring-smooth`
+    /* Individual-transform identity base. Transition the `scale`
+       longhand (not `transform`) so the hover scale animates.
+       doctrine — the `scale` transform leg rides `--spring-smooth`
        (the settle register), NOT the bezier `--ease-standard` (a transform on a
        bezier reads mechanical; springs read alive on transform). */
     scale: 1;
@@ -26,7 +26,7 @@
     }
 }
 
-/* ── Control transition recipe (AU.W8b.4) ───────────────────────────────
+/* ── Control transition recipe ───────────────────────────────
    Shared compound transition for interactive controls that animate their
    surface (background-color/color/box-shadow/border-color) on the four-state
    contract. Replaces the per-site
@@ -34,7 +34,7 @@
    arbitrary wraps at ≥2 sites (TabsTrigger, SelectTrigger, Toggle `card`
    variant).
 
-   BC.W-CONTROL-SMOOTH — the surface legs read the QUICK control clock
+   The surface legs read the QUICK control clock
    `--duration-control` (0.12s, the named iOS control-press surface beat,
    scheme-motion.css), NOT the 0.2s calm `--duration-fast`. A control the user
    actively pokes wants the ~100-120ms quick beat that tracks the cursor; the
@@ -50,7 +50,7 @@
     transition-timing-function: var(--ease-standard);
 }
 
-/* ── Disclosure chevron register (BG.W-DISCLOSURE-ROTATE) ────────────────
+/* ── Disclosure chevron register ────────────────
    ONE canonical chevron-rotate gesture — the SAME settle clock + arrival curve
    across EVERY disclosure caret (Accordion / Select / Configurator). The three
    diverged: Accordion rode a flat `transition-transform duration-200` bezier
@@ -60,7 +60,7 @@
    SNAPPED). This register collapses them onto ONE (substitution over
    re-declaration): the `rotate` property (the longhand the toggle actually
    writes), the spring's OWN settle clock `--spring-snappy-duration` (the
-   W-GLASS-CAL per-spring-duration doctrine, not a generic `--duration-*`), and
+   per-spring-duration doctrine, not a generic `--duration-*`), and
    the weighty `--ease-cartoon-punch` arrival (the liquid-weight "morph more on
    move" register — a small quick control that still carries inertia). PRM:
    `--ease-cartoon-punch` self-re-aliases to the no-overshoot `--ease-standard`
@@ -72,14 +72,13 @@
 
 /* ── Sheet/drawer slide-out animation grammar ──
    The sheet/drawer-panel analogue of the overlay enter (the popover-class
-   surfaces now ride the spring-clocked `.glass-reveal`, BB.W-LIQUID-REVEAL).
+   surfaces now ride the spring-clocked `.glass-reveal`).
    Pairs with
    `slide-in-from-{top,right,bottom,left}-N` to compose side-keyed entries.
    The open path uses --duration-panel (slow, deliberate); the close path uses
    --duration-fast so dismiss feels snappy. Both base clocks multiply the ONE
    inherited --motion-tempo reader here, so portaled panels and scrims co-scale
-   without a story/consumer bridge or a second duration alias. R5 vocab.γ gap row 6;
-   consumed by W2.A sheet/drawer migration. */
+   without a story/consumer bridge or a second duration alias. */
 @utility sheet-animate {
     @apply data-[state=open]:animate-in data-[state=closed]:animate-out
            data-[state=open]:fade-in data-[state=closed]:fade-out
@@ -87,7 +86,7 @@
            data-[state=closed]:duration-[calc(var(--duration-fast)*var(--motion-tempo))];
 }
 
-/* ── Table density utilities — AN.R0 ─────────────────────────────────────
+/* ── Table density utilities ───────────────────────────────────────────────
    `table-cell` and `table-head` replace the former Tailwind `p-4` / `h-12`
    literals in TableCell.vue / TableHead.vue. Both read `--table-density`
    (tokens.css §19) so a single CSS-var assignment on a wrapping element
@@ -109,7 +108,7 @@
    (tokens.css §14). Consumed by keyframes.js's demo transport chrome —
    `TransportDock.vue` / `RibbonBar.vue` bind `rainbow-vivid` (playing/active)
    vs `rainbow-pastel` (idle) on the play + Apply buttons (re-confirmed live at
-   AZ.W-PRUNE2 E4-2). */
+   -2). */
 @utility rainbow-vivid {
     background: linear-gradient(
         to right,

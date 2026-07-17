@@ -13,7 +13,7 @@
  *  - `ring`  — a ring/circle around the completion (a seal around the event).
  *  - `disc`  — the composed earned-coin gesture: a filled gold disc FACE with the ring
  *    stroke-draw affirmation around it and the check draw-in inside, SEQUENCED
- *    disc→ring→check (the hero completion coin — SPEEDTEST-AX #1).
+ *    disc→ring→check (the hero completion coin).
  *  - `wordmark` — a self-contained seal mark (a stylized seal glyph).
  *
  * `check`/`ring`/`wordmark` share the ONE gold-draw mechanism (the `--seal-draw`

@@ -172,10 +172,10 @@ const DERIVE_L_BAND: readonly [number, number] = [0.35, 0.95];
  * The luminous-dark L band. A deep base + a deep apex makes a `scheme:"dark"` derived field read
  * as a rich luminous-dark wash — never a washed-pale composite behind glass in a dark shell.
  *
- * RECALIBRATED at BI: the prior apex `0.72` let a dark-scheme field composite to
- * L≈0.716 (dark cocoa cards floating on a bright salmon field — the O-26 dark-leg defect).
- * The apex is dropped to `0.42` so the whole ramp lands INSIDE the required deep window
- * [0.18, 0.42] — the dark scheme now IS the luminous-dark band, reachable by construction.
+ * An apex of `0.72` lets a dark-scheme field composite to
+ * L≈0.716 (dark cocoa cards floating on a bright salmon field — the dark-leg defect).
+ * The apex is `0.42` so the whole ramp lands INSIDE the required deep window
+ * [0.18, 0.42] — the dark scheme IS the luminous-dark band, reachable by construction.
  * The `lBand` escape hatch overrides it for a bespoke window.
  */
 const DERIVE_L_BAND_DARK: readonly [number, number] = [0.18, 0.42];
@@ -197,8 +197,8 @@ function resolveDeriveLBand(
 /**
  * Seed ONE color into a harmonious, gamut-safe N-stop aurora palette.
  *
- * A thin COMPOSING producer over the shipped value.js Ottosson core (inv J-10:
- * no color math is re-implemented here). The seed's `{L,C,h}` is the anchor; the
+ * A thin COMPOSING producer over the shipped value.js Ottosson core
+ * (no color math is re-implemented here). The seed's `{L,C,h}` is the anchor; the
  * ramp spreads L across a painterly band, falls C off toward the pale apex, and
  * walks the hue per `harmony`. EVERY derived stop is gamut-mapped through
  * value.js's `mapColorToGamut` so none falls outside sRGB.
@@ -344,9 +344,8 @@ function bell(t: number): number {
  * The named temperature poles (OKLCh hue degrees). The lights warm toward
  * `WARM_POLE` (orange); the shadows cool toward `COOL_POLE` (blue) — the single
  * most-cited painting rule. ONE retunable source: shift a pole here and the whole
- * warm/cool axis re-anchors. Previously the model was a blind ±degree nudge whose
- * comment NAMED these poles but never used them (the documented-model-≠-implementation
- * seam  closes — the model IS the implementation now).
+ * warm/cool axis re-anchors. The model IS the implementation — the hue tints
+ * genuinely toward these named poles, not a blind ±degree nudge that never reads them.
  */
 const WARM_POLE = 70; // orange — the lit edge
 const COOL_POLE = 250; // blue — the shadow
@@ -356,9 +355,8 @@ const COOL_POLE = 250; // blue — the shadow
  * t-extremes. The temperature coupling tints the hue TOWARD the named pole but the
  * throw is BOUNDED to this cap, so a hue near a pole moves the same perceptual
  * distance as a hue far from it (a symmetric warm/cool swing) and never snaps onto
- * the pole. 22° matches the prior ±22° throw — a regression-safe re-derivation that
- * keeps the warm-light/cool-shadow swing magnitude identical at the boundaries while
- * the DIRECTION now genuinely tracks the named poles.
+ * the pole. 22° caps the warm-light/cool-shadow swing magnitude at the boundaries
+ * while the DIRECTION genuinely tracks the named poles.
  */
 const TEMPERATURE_MAX_THROW = 22;
 

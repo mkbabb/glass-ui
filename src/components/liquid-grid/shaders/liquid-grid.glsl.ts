@@ -193,7 +193,7 @@ void main() {
   }
   // transparent ground: the FACE composites UNDER the line, the SOURCE-OVER operator in
   // PREMULTIPLIED space. faceAlpha:0 → faceA=0 → the face term vanishes → vec4(col·line, line) =
-  // byte-identical to the HEAD line-only render.
+  // identical to the plain line-only render.
   vec3 linePremult = (col * line) * uFieldAlpha;          // line layer (the FieldAlpha subtlety)
   float lineA = line * uFieldAlpha;
   vec3 facePremult = faceInk * faceA;                     // face layer premultiplied (faceA folds field)

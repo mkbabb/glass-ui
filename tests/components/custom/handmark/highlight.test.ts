@@ -1,4 +1,4 @@
-// BA.W-HANDMARK C-1 — the highlighter's FIVE field deltas ENGAGED (born-RED at the
+// The highlighter's FIVE field deltas ENGAGED (born-RED at the
 // fork's inert state by construction). The fork shipped the highlighter ~90% dormant:
 // the brush machinery existed, but every delta was mis-set or swallowed. This test
 // is the highlighter's FIRST consumer (the fork carried no highlight demo/test).
@@ -139,7 +139,7 @@ describe("C-1 highlighter — the five field deltas engaged", () => {
     });
 
     it("(e) the isolation is un-walled — the SFC root carries NO isolation: isolate", () => {
-        // the C-1(e) source bite: the `.hm` root must NOT isolate (that walls the
+        // the (e) source bite: the `.hm` root must NOT isolate (that walls the
         // multiply off the page). We can't read computed CSS in jsdom reliably, so the
         // contract is the SOURCE arm in proof:handmark; here we assert the behind band
         // is z-index -1 (behind the word) so the multiply has page content to composite.

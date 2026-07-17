@@ -1,21 +1,20 @@
 /* Dock single-scalar morph styles.
  *
- * Carved from the dock.css god-module (slice 25). This partial owns the dock's
- * DYNAMIC chrome: the W01 `--dock-expand-t` directional expanded-ness derivation,
+ * This partial owns the dock's
+ * DYNAMIC chrome: the `--dock-expand-t` directional expanded-ness derivation,
  * the root background/border/padding interpolation on the ONE `--dock-morph-t`
- * clock, the collapsed/summary state (the W45-TUNE Q1 proportioned pill + the
+ * clock, the collapsed/summary state (the proportioned pill + the
  * summary glyph reveal), the held / open-descendant surface response, and the
- * W55 adaptive-legibility `--glass-backdrop: light` bucket. The static structural
+ * adaptive-legibility `--glass-backdrop: light` bucket. The static structural
  * surface (root, clip, variants, persistent) lives in dock/shell.css.
  *
  * @import-ed by dock.css in cascade order, in the SAME `@layer components` — the
  * carve is isomorphic (same layer, same source order → ZERO visual delta). */
 
 @layer components {
-    /* AX.W01 — the root chrome morphs off the SINGLE `--dock-morph-t` scalar, NOT a
-       CSS transition (the prior `padding/scale/radius var(--dock-motion-resize)` +
-       `background/border-color var(--dock-motion-standard)` transition list — TWO
-       curves on TWO durations — is DELETED). `--dock-expand-t` is the directional
+    /* The root chrome morphs off the SINGLE `--dock-morph-t` scalar, NOT a
+       CSS transition (a `padding/scale/radius` + `background/border-color` transition
+       list would run TWO curves on TWO durations). `--dock-expand-t` is the directional
        expanded-ness (0 = collapsed look, 1 = expanded look) derived from the
        per-swap morph scalar + the synchronously-set `.expanded`/`.collapsed` class:
        the box width AND the root padding/radius/color move on ONE clock. The
@@ -34,7 +33,7 @@
        during the morph, so the read resolves the correct in-flight blend (collapse
        1→0 via `1 - t`; expand 0→1 via `t`); on settle `[data-morphing]` clears and
        expand-t snaps to the exact class endpoint. */
-    /* BB.W-DOCK-MORPH-FAMILY (f) — the `--dock-expand-t` directional derivation is
+    /* The `--dock-expand-t` directional derivation is
        ORIENTATION-AGNOSTIC. The derivation reads the per-swap morph scalar + the
        synchronously-set `.expanded`/`.collapsed` class — there is NO axis in this
        blend (a `t`-vs-`1-t` directional read), so the `:not(.vertical)` qualifier is
@@ -64,9 +63,9 @@
         --dock-expand-t: calc(1 - var(--dock-morph-t));
     }
 
-    /* BC.W-DOCK-SHRINK-BLUR — the BB.W-LIQUID-REVEAL bloom-from-source decongest is a
-       TRANSIENT, not a resting state. HEAD keyed the bare `.glass-dock` self-blur off
-       `--dock-expand-t`, which AT REST resolves to the class endpoint → a PERMANENT 3px
+    /* The bloom-from-source decongest is a
+       TRANSIENT, not a resting state. A bare `.glass-dock` self-blur keyed off
+       `--dock-expand-t`, AT REST, resolves to the class endpoint → a PERMANENT 3px
        self-blur on the resting collapsed dock, STACKED on the 9px backdrop (the "blurry
        mess when shrunken", glass-dock-codebase §2.4). The FIX gates the self-blur (a
        SURFACE `filter` arm on the dock's own pixels — NOT `backdrop-filter`, so the glass
@@ -78,7 +77,7 @@
         --dock-reveal-blur: 0px; /* resting: CRISP — no own-pixel self-blur */
     }
     .glass-dock[data-morphing] {
-        /* BD.W-DOCK-CORE (A4) — the blur DIAL-BACK. The peak drops 3px → 1.25px AND the
+        /* The blur DIAL-BACK. The peak drops 3px → 1.25px AND the
            decay is FRONT-LOADED: the `clamp(0, (0.5 - expand-t)/0.5, 1)` ramp drives the
            blur 1.25px → 0 as expand-t crosses 0 → 0.5, then HOLDS 0 for the back half — a
            brief decongest FLASH, crisp by the morph's midpoint (the icons never read soft
@@ -103,15 +102,15 @@
        `.collapsed` discrete bg/border declarations are RETIRED — this block is the
        single authority, and at rest `--dock-expand-t` resolves to the class endpoint
        (0 collapsed / 1 expanded) so the resting look is exact.
-       AZ.W-DOCK-TAXONOMY — the `variant-dock` class is gone; `.glass-dock:not(.vertical)`
+       The `variant-dock` class is gone; `.glass-dock:not(.vertical)`
        IS the horizontal dock now (no second-way to express orientation). */
-    /* BI.W-DOCK-SPINE — the collapsed↔expanded SURFACE interp retargeted onto the L0
+    /* The collapsed↔expanded SURFACE interp retargeted onto the L0
        `.dock-plate` (the box is structural; the plate is the glass). The interp still
        reads the SAME `--dock-expand-t` scalar + the inheriting `--glass-tint-*` tokens;
        only the paint target moves to the plate so the box carries no competing bg. */
     .glass-dock:not(.vertical) .dock-plate {
-        /* AY.W-A11Y-PERF O-1 / AZ.W-ADAPTIVE-AUTO Arm 1 — BOTH morph endpoints compose
-           the W55 oklab adaptive tint so the self-engage darken (the unconditional
+        /* BOTH morph endpoints compose
+           the oklab adaptive tint so the self-engage darken (the unconditional
            `:where(.glass-dock)` rule in the sibling adaptive-legibility.css partial
            re-points the element-level
            `--glass-tint-source`/`--glass-tint-strength`) reaches the LIVE
@@ -145,7 +144,7 @@
         );
     }
 
-    /* BB.W-DOCK-MORPH-FAMILY (f) — the VERTICAL chrome-interp un-gate (BB-1). The
+    /* The VERTICAL chrome-interp un-gate. The
        bg/border interp is AXIS-INVARIANT (a color mix reads the scalar with no
        axis), so the vertical dock interpolates its plate between the SAME
        collapsed↔expanded endpoints on the SAME `--dock-expand-t` scalar the
@@ -159,7 +158,7 @@
        the rest endpoints `--dock-expand-t` resolves to the class value (0 collapsed
        / 1 expanded), so the resting look is exact — byte-equivalent to the shell.css
        static plate it supersedes during the morph. */
-    /* BI.W-DOCK-SPINE — the VERTICAL surface interp retargeted onto `.dock-plate`
+    /* The VERTICAL surface interp retargeted onto `.dock-plate`
        (0,3,0 — wins over shell.css's static `.glass-dock.vertical .dock-plate` during the
        morph). */
     .glass-dock.vertical .dock-plate {
@@ -186,10 +185,10 @@
     }
 
     /* The padding morph is split out + scoped `:not(.dock-overflow-wrap)` so the
-       wrap variant's own padding rules (W04 territory — `.dock-overflow-wrap` +
+       wrap variant's own padding rules (territory — `.dock-overflow-wrap` +
        its `@media` snap-back) are NOT clobbered by this higher-specificity longhand.
 
-       AY.W-DOCK-CHROME §1 — the LAYOUT-ISOLATION fix: the collapse↔expand morph is
+       The LAYOUT-ISOLATION fix: the collapse↔expand morph is
        an INLINE-WIDTH aperture by contract ("horizontal docks animate width"), so
        the BLOCK axis MUST be invariant across the morph — otherwise the dock's
        outer height shrinks ~4px on collapse (the collapsed-pad 0.25rem vs the
@@ -229,7 +228,7 @@
         );
     }
 
-    /* BB.W-DOCK-MORPH-FAMILY (f) — the VERTICAL padding interp is the AXIS-INVERSE
+    /* The VERTICAL padding interp is the AXIS-INVERSE
        of the horizontal layout-isolation contract above. The vertical collapse↔
        expand is a BLOCK-HEIGHT aperture (the box-size arm morphs `block-size`,
        layers.css), so the CROSS (inline) axis MUST be invariant across the morph —
@@ -258,7 +257,7 @@
         );
     }
 
-    /* AX.W01 — the collapsed padding / background / border-color are RETIRED here
+    /* The collapsed padding / background / border-color are RETIRED here
        (the `--dock-expand-t` morph block above is the single authority for those
        three axes — they interpolate, never snap). `.collapsed` keeps only its
        non-morphing concerns: the pointer affordance, the centred summary layout,
@@ -271,7 +270,7 @@
         box-shadow: var(--shadow-dock-override, var(--shadow-dock-collapsed));
     }
 
-    /* AY.W-DOCK-NAV B4 — the collapsed summary is a PERFECT CIRCLE. The `.dock-layer`
+    /* The collapsed summary is a PERFECT CIRCLE. The `.dock-layer`
        base rule (`.glass-dock:not(.vertical) .dock-layer`) locks `height:
        var(--dock-layer-height)` (40px) on EVERY layer including the summary; against
        the 0.85× `--dock-collapsed-summary-min-size` min-width that made the pane
@@ -302,11 +301,11 @@
         justify-content: center;
     }
 
-    /* AX.W45 DK1 — the collapsed/summary glyph appears WITH the pill, no added
+    /* The collapsed/summary glyph appears WITH the pill, no added
        delay. The `--summary` pane is the INCOMING pane on collapse, but the shared
-       stagger ramp reads `--dock-expand-t` which runs 1→0 on collapse — so the
-       summary glyph used to fade OUT over the back half of the morph and pop in only
-       at settle (the "shrunken icon does not appear for a while" defect). Keying the
+       stagger ramp reads `--dock-expand-t` which runs 1→0 on collapse — keying the
+       summary glyph to it would fade it OUT over the back half of the morph and pop it
+       in only at settle (the "shrunken icon does not appear for a while" defect). Keying the
        summary pane's stagger scalar to `--dock-morph-t` directly (the per-swap
        incoming-ness, 0→1) reveals it as the box settles — appearing WITH the pill.
        The summary is a single front-loaded glyph (onset 0), so this lands it at full
@@ -318,7 +317,7 @@
         --dock-expand-t: var(--dock-morph-t);
     }
 
-    /* AY.W-DOCK-NAV B15 — the EMPTY-collapsed-summary trap. A dock with a
+    /* The EMPTY-collapsed-summary trap. A dock with a
        `#persistent` control but NO `#collapsed` slot (the overview first-section
        dock) still renders a `.dock-layer--summary` pane that floors to the circle
        min-width — so collapsed it read as a WIDE pill: the persistent Home glyph on
@@ -348,7 +347,7 @@
         margin-inline-start: 0;
     }
 
-    /* BD.W-DOCK-CORE (A5) — the collapsed persistent pill centers its single glyph on
+    /* The collapsed persistent pill centers its single glyph on
        BOTH axes (the empty-summary case where the #persistent control IS the collapsed
        circle). The `--dock-control-safe-inset` padding (background-clip: content-box) must
        not shift the glyph off the pill's geometric center — `place-items: center`
@@ -361,7 +360,7 @@
     .glass-dock.collapsed:has(.dock-layer--summary:empty) .dock-persistent > * {
         place-self: center;
     }
-    /* BD.W-DOCK-CORE (A5) — floor the collapsed glyph at the 16px-min the rail glyph
+    /* Floor the collapsed glyph at the 16px-min the rail glyph
        carries (never a sliver inside an inline-flex column). */
     .glass-dock.collapsed .dock-persistent svg,
     .glass-dock.collapsed .dock-layer--summary svg {
@@ -369,7 +368,7 @@
         min-height: 1rem;
     }
 
-    /* AW.W3 — the collapsed-hover scale rides the unified dock spring vocabulary.
+    /* The collapsed-hover scale rides the unified dock spring vocabulary.
        The `scale var(--dock-motion-resize)` arm was added to the `.glass-dock`
        root transition above, so this hover scale settles on the SAME spring curve
        the expand morph uses — a collapsed→hover→expand gesture is one continuous
@@ -377,7 +376,7 @@
        and the press squish (`--scale-press-dock`) are now one register on the dock
        surface.
 
-       AZ.W-DOCK-FLICKER — the `scale` arm is GATED on `:not([data-morphing])` (the
+       The `scale` arm is GATED on `:not([data-morphing])` (the
        collapse-onset scale-pop fix, C2-2). `.collapsed` flips on SYNCHRONOUSLY when
        a hovered dock begins collapsing, but the box is still painted at EXPANDED
        width for the morph's leading frames (the `onSwap` pin + 1-rAF measure-defer
@@ -392,7 +391,7 @@
     .glass-dock.collapsed:hover {
         box-shadow: var(--shadow-dock-override, var(--shadow-dock));
     }
-    /* BI.W-DOCK-SPINE — the collapsed-hover surface lift retargeted onto the plate
+    /* The collapsed-hover surface lift retargeted onto the plate
        (the box keeps the box-shadow elevation above; the plate carries the glass). */
     .glass-dock.collapsed:hover .dock-plate {
         background: var(--glass-bg-wash);
@@ -401,10 +400,10 @@
 
     .glass-dock.collapsed:hover:not([data-morphing]) {
         scale: var(--dock-collapsed-hover-scale);
-        will-change: transform; /* BC.W-DOCK-ENGINE move 2 — promote the armed-at-rest scale lift */
+        will-change: transform; /* Promote the armed-at-rest scale lift */
     }
 
-    /* J.W5.C — held-state substrate response.
+    /* Held-state substrate response.
      *
      * When a descendant signals `dockKeepOpen` (e.g. an active slider drag),
      * `useDockState.isHeld` flips true and the root carries `data-held`.
@@ -413,11 +412,11 @@
      * movement on `--duration-fast` so it reads as a held-cursor cue, not
      * a state change. The same flag is consumed by descendants (Slider
      * thumb halo) via `useOptionalDockContext().held` for cross-substrate
-     * coordination (typed-key canonical shape; O.W2 invariant 25).
+     * coordination (typed-key canonical shape).
      */
-    /* BI.W-DOCK-SPINE — the held-tier surface lift retargeted onto the plate. */
+    /* The held-tier surface lift retargeted onto the plate. */
     .glass-dock[data-held] .dock-plate {
-        /* AX.W55 — the held tier threads the oklab tint wrapper (zero-delta at the
+        /* The held tier threads the oklab tint wrapper (zero-delta at the
            `0%` rest default) so the adaptive darken reaches the held state too. */
         background: color-mix(
             in oklab,
@@ -430,9 +429,9 @@
             border-color var(--duration-fast) var(--ease-standard);
     }
 
-    /* BD.W-DOCK-CORE (A7) — the whole-plate open-descendant recolor is DELETED (clean
-       break, no alias). HEAD repainted the ENTIRE dock plate to the floating tier when ANY
-       descendant overlay opened (a dropdown/select/popover) — 44%α warm-cream → 80.8%α
+    /* The whole-plate open-descendant recolor is DELETED (clean
+       break, no alias). Repainting the ENTIRE dock plate to the floating tier when ANY
+       descendant overlay opens (a dropdown/select/popover) pushes 44%α warm-cream → 80.8%α
        floating, the user's "a dropdown changes the color of the ENTIRE dock" bug. A
        dropdown opening now leaves the dock plate INVARIANT; the open affordance is
        TRIGGER-scoped (the trigger's own `[aria-expanded]`/`[data-state=open]` active-fill

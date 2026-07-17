@@ -92,11 +92,11 @@ export {
 } from "./composables/auroraFallbackGround";
 // D10b — the seed-one-color → N-stop palette producer (composes the shipped
 // value.js OKLab/gamut core). T6 wires it into the Palette configurator tab.
-// W5 — the derive-color superset: more harmonies + easing + temperature.
+// The derive-color superset: more harmonies + easing + temperature.
 export type {
     AuroraHarmony,
     DeriveAuroraOptions,
     DeriveEasing,
 } from "./composables/color";
-// W5 — the value.js HueInterpolationMethod alias for the palette hue-arc atom.
+// The value.js HueInterpolationMethod alias for the palette hue-arc atom.
 export type { AuroraHuePath } from "./constants/presets";

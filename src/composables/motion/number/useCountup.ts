@@ -63,7 +63,7 @@ export function useCountup(
     const reducedMotion = useReducedMotion();
 
     // Every live tween, keyed by its element, so a re-run or a teardown can stop
-    // the in-flight animation on that figure (the slides hand-roll leaked the
+    // the in-flight animation on that figure (a prior hand-roll leaked the
     // rAF on unmount; tracking the handle fixes it).
     const running = new Map<HTMLElement, NumericAnimation<{ v: number }>>();
     const delays = new Map<HTMLElement, ReturnType<typeof setTimeout>>();

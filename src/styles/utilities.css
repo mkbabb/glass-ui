@@ -1,10 +1,10 @@
 /* Shared utility classes
  *
  * ── Thin @import ROOT (cohesion-aware carve) ───────────────────────────────
- * The utility body is carved into cohesive `utilities/*.css` partials (each
+ * The utility body is split across cohesive `utilities/*.css` partials (each
  * under the 500-line no-god-module bound), @import-ed below in CASCADE ORDER.
  * The @layer components base block (split into base/components and, at
- * BB.W-CARVE3, at the
+ * at the
  * post-tap-squish seam into base/base-misc — all adjacent same-layer blocks,
  * isomorphic), and the @utility button cluster keep their source order.
  * Accessibility modes load once at the end of styles/index.css. See
@@ -12,9 +12,9 @@
  */
 
 /* CSS @import rules must precede every other rule. The partials @import in
-   cascade order (base.css's post-tap-squish tail was carved into base-misc.css at
-   BB.W-CARVE3 — an adjacent same-`@layer components` block at the next slot, so
-   the cascade is unchanged). BB.W-METAL-SHIMMER homes `metal.css` right after
+   cascade order (base.css's post-tap-squish tail lives in base-misc.css —
+   an adjacent same-`@layer components` block at the next slot, so
+   the cascade is unchanged). homes `metal.css` right after
    `base-misc.css` (its `.gold-shimmer` sibling — both `@layer components` metal
    registers; the metal family is cohesive with the re-pointed gold-shimmer): */
 @import "./utilities/base.css";

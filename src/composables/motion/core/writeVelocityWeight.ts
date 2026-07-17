@@ -20,8 +20,8 @@
 // all from this one write.
 //
 // `--flex-vel` is registered `inherits: false` (property-regs.css §18) so the
-// per-frame write invalidates exactly ONE element, never a subtree (the C2·R1
-// perf bite). The weight write rides the SAME element (driver-scoped, the local
+// per-frame write invalidates exactly ONE element, never a subtree (the
+// subtree-storm perf bite). The weight write rides the SAME element (driver-scoped, the local
 // override the consumer's cap getter re-reads).
 //
 // Engine-FREE + vueuse-FREE (no `vue`, no `@mkbabb/keyframes.js`) — ships on the

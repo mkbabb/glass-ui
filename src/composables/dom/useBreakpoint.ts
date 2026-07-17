@@ -26,9 +26,9 @@ export interface UseBreakpointControls {
  * permanently-`false` ref. Consumers should treat the initial frame as
  * "mobile-first / narrow-default" because the matchMedia subscription only
  * mounts client-side. This is the same shape consumers wrote by hand at the
- * speedtest origin sites.
+ * consumer origin sites.
  *
- * Why this exists (speedtest origin, glass-ui promotion W6-β): the survey
+ * Why this exists (promoted from a consumer): the survey
  * cockpit (`SurveyWizard.vue`) and the admin data-source toggle
  * (`AdminDataSourceToggle.vue`) both hand-rolled the same `matchMedia`
  * subscribe-on-mount + tear-down-on-unmount pattern. Two hand-rolls of one
@@ -65,7 +65,7 @@ export function useBreakpoint(query: string): UseBreakpointControls {
         mql = null;
     }
 
-    // Same call-site contract as the speedtest origin: subscribe on mount so
+    // Same call-site contract as the origin: subscribe on mount so
     // the matchMedia handle never escapes the consumer's setup scope. When
     // there is no scope (test harness / outside-setup call) we subscribe
     // synchronously so the composable still resolves; the caller owns

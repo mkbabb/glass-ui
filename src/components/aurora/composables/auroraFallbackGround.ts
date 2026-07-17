@@ -2,7 +2,7 @@
  * Aurora luminance-faithful fallback ground.
  *
  * The headless, software-raster substrate cannot run the live WebGL field, but
- * speedtest's CI/witness harness must still certify text-on-aurora AA contrast
+ * a consumer's CI/witness harness must still certify text-on-aurora AA contrast
  * floors HEADLESS (no `--use-gl=angle`). The flat `paletteToCssGradient`
  * placeholder (`color.ts`) is a deliberate "visually-adjacent approximation" — a
  * gamma-sRGB-stop `linear-gradient(135deg, …)` band whose MEAN luminance and

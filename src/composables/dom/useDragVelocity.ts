@@ -1,4 +1,4 @@
-// BD.W-GLASS-ATOM-REGISTER — useDragVelocity: the ONE honest velocity bridge.
+// UseDragVelocity: the ONE honest velocity bridge.
 //
 // The slider weight-train (anticipation → saturating smear → follow-through) needs
 // a LIVE drag velocity the fill `transform` + the inert `.cartoon-cast` `translate`

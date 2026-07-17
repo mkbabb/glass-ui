@@ -10,7 +10,7 @@
  * shadows, radii, grain opacities) are consumer-overridable.
  *
  * This file is the thin @import ROOT of the token cascade. The token body is
- * carved into cohesive `tokens/*.css` partials (each under the no-god-module
+ * split across cohesive `tokens/*.css` partials (each under the no-god-module
  * 500-line bound), @import-ed below in CASCADE ORDER. The cascade is isomorphic:
  * the master :root sub-ranges each carry their own :root{} (adjacent
  * same-selector blocks resolve identically), and the post-root overrides
@@ -22,20 +22,18 @@
  */
 
 /* CSS @import rules must precede every other rule. The partials @import in
-   cascade order (offsets-sizing.css was carved into offsets.css + sizing.css at
-   BB.W-CARVE3, and scheme-motion's §2 EASING block into scheme-spring.css at
-   BD.W-CUT — adjacent same-selector :root blocks at the same cascade slot): */
+   cascade order (adjacent same-selector :root blocks resolve at the same cascade slot): */
 @import "./tokens/scheme-motion.css";
-/* BD.W-CUT (no-god-module carve) — scheme-motion's §2 EASING block (spring
+/* (no-god-module carve) — scheme-motion's §2 EASING block (spring
    linear() curves + per-spring duration clocks + goo-flow curves + bezier
-   cores/aliases) carved into scheme-spring.css to hold the 500-line bound,
+   cores/aliases) live in scheme-spring.css to hold the 500-line bound,
    @import-ed IMMEDIATELY AFTER scheme-motion.css (adjacent same-selector :root
    blocks at the same cascade slot — the spring/easing tokens resolve in order). */
 @import "./tokens/scheme-spring.css";
-/* BI.W-REGISTER-TABLE — the named motion registers (enter-overlay/menu/tooltip/
+/* The named motion registers (enter-overlay/menu/tooltip/
    transient + the named exit clocks) over the ONE `.glass-reveal` recipe. @import-ed
    IMMEDIATELY AFTER scheme-spring.css because it READS the parity-fixed `--spring-*` /
-   `--spring-*-duration` clocks (READ-ONLY — the W-GLASS-CAL fence); adjacent same-
+   `--spring-*-duration` clocks (READ-ONLY — the fence); adjacent same-
    selector :root block at the same cascade slot (order-invariant custom properties). */
 @import "./tokens/motion-registers.css";
 @import "./tokens/color-radius.css";
@@ -46,23 +44,23 @@
 @import "./tokens/on-glass-fg.css";
 @import "./tokens/offsets.css";
 @import "./tokens/sizing.css";
-/* BC.W-CARVE6 — sizing.css's §10 tail (the Configurator
+/* Sizing.css's §10 tail (the Configurator
    density/HIERARCHY/divider family + the --select-font override)
-   carved into sizing-config.css to hold the 500-line bound, @import-ed IMMEDIATELY
-   AFTER sizing.css (adjacent same-selector :root blocks — byte-isomorphic). */
+   lives in sizing-config.css to hold the 500-line bound, @import-ed IMMEDIATELY
+   AFTER sizing.css (adjacent same-selector :root blocks). */
 @import "./tokens/sizing-config.css";
 @import "./tokens/scale-paper.css";
 @import "./tokens/scroll-tokens.css";
 @import "./tokens/light-dark.css";
 @import "./tokens/dark-arm.css";
-/* BI.W-STYLE-REDRAIN — the .dark saturate/brightness luminosity-lift companion cohort
-   carved out of dark-arm.css to hold the no-god-module 500-line bound; its own .dark
+/* The .dark saturate/brightness luminosity-lift companion cohort
+   a partial held under the no-god-module 500-line bound; its own .dark
    block @import-ed IMMEDIATELY AFTER dark-arm.css (the tokens are the sole .dark
-   writers → cascade-order-invariant, computed values byte-identical). */
+   writers → cascade-order-invariant). */
 @import "./tokens/dark-arm-glass.css";
 @import "./tokens/property-regs.css";
-/* BI.W-STYLE-REDRAIN — the §11b moving-specular :root/.dark magnitude cohort + the
-   interaction/scroll DRIVE @property registrations carved out of property-regs.css to
-   hold the 500-line bound; @import-ed IMMEDIATELY AFTER it (order-invariant @property
+/* The §11b moving-specular :root/.dark magnitude cohort + the
+   interaction/scroll DRIVE @property registrations, a partial held under
+   the 500-line bound; @import-ed IMMEDIATELY AFTER it (order-invariant @property
    registrations + the sole-writer specular :root/.dark cohort → byte-isomorphic). */
 @import "./tokens/property-regs-specular.css";

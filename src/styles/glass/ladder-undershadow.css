@@ -1,8 +1,8 @@
 /* glass/ladder-undershadow.css
-   The ladder tail: the AX.W54 .glass-opaque level-0 escape + the AV.W15 M4 content-aware under-shadow modifier (.glass-over-text / [data-over-content]).
-   Carved from glass/ladder.css to hold the no-god-module 500-line bound (BI.W-STYLE-REDRAIN); its own @layer components block @import-ed by glass.css IMMEDIATELY AFTER ladder.css (the tail of the ladder @layer, unique selectors, source-order-after — byte-isomorphic). */
+   The ladder tail: the .glass-opaque level-0 escape + the content-aware under-shadow modifier (.glass-over-text / [data-over-content]).
+   A partial held under the no-god-module 500-line bound; its own @layer components block @import-ed by glass.css IMMEDIATELY AFTER ladder.css (the tail of the ladder @layer, unique selectors, source-order-after). */
 @layer components {
-    /* ── The opaque escape (AX.W54) ───────────────────
+    /* ── The opaque escape ───────────────────
        The level-0 endpoint of the SAME glass machinery — a solid `--card` plate
        (the opacity seam → 1) with `blur(0)` (the blur seam → 0), routed through
        the ONE `--glass-level` knob. NOT a parallel solid `background:` recipe:
@@ -13,7 +13,7 @@
        a consumer that wants a flat surface). */
     .glass-opaque {
         --glass-level: 0;
-        /* BA.W-DARK-MATERIAL scope 7 — the opaque escape suppresses the adaptive TINT axis
+        /* The opaque escape suppresses the adaptive TINT axis
            too (not just the opacity/blur level). A solid opaque plate has no translucent
            backdrop to darken-over, so the self-engage tint is meaningless on it; zeroing the
            strength keeps the opaque escape bucket-INVARIANT (the unset floor and the bright
@@ -23,7 +23,7 @@
         --glass-tint-strength: 0%;
     }
 
-    /* ── Content-aware under-shadow modifier (AV.W15 M4) ──────────────
+    /* ── Content-aware under-shadow modifier ──────────────
        Apple raises the under-shadow over text (so the glass reads as
        lifting OFF the text) and drops it over solid light. The modifier
        is ATTRIBUTE-DRIVEN, no JS: a consumer adds `.glass-over-text`

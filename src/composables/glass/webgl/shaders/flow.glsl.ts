@@ -1,7 +1,7 @@
-// BB.B1 — the shared curl-noise flow chunk (`curlFBM`).
+// The shared curl-noise flow chunk (`curlFBM`).
 //
 // ONE source for the divergence-free curl-noise flow field the procedural surfaces
-// need. This is the AV.W2 precedent applied to FLOW: the curl of an fbm potential is
+// need. This is the precedent applied to FLOW: the curl of an fbm potential is
 // the SOTA flow-field warp (Bridson's "Curl-Noise for Procedural Fluid Flow",
 // SIGGRAPH 2007) — a divergence-free vector field that swirls without sources/sinks,
 // so a domain warped along it folds and stretches like real fluid advection rather
@@ -30,7 +30,7 @@
 // The ≥3-consumer booking (the shared-chunk bar): consumer #1 is B1 aurora-curl-warp
 // (the `.frag` arm, this cut — aurora's `warpMode: "curl"` domain warp); the booked
 // #2/#3 are B5 paper-grid-breathe (`<Card grid animated>` — the ¼-res curl-driven
-// grid breathe) + the W-FLOWFIELD flow-field viz. Recorded in
+// grid breathe) + the flow-field viz. Recorded in
 // docs/consumer-evidence/curl-fbm.md.
 
 // ── Curl-noise flow ──────────────────────────────────────────────────────────

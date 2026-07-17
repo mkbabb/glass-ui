@@ -30,7 +30,7 @@ export type DarkFlipSettledCallback = (isDark: boolean) => void;
  * The `useGlobalDark` return shape. The
  * single shared dark-mode instance: the reactive `isDark` flag, a `toggleDark`
  * that optionally suppresses transitions, the transition-suppression switch, and
- * the post-flip settle hook ( A-1 — d6 9467bd16 adopt).
+ * the post-flip settle hook.
  */
 export interface UseGlobalDarkReturn {
     /** Reactive dark-mode flag (vueuse `useDark` ref — writable). */
@@ -44,7 +44,7 @@ export interface UseGlobalDarkReturn {
     /**
      *  A-1 — the post-flip SETTLE hook. Register a callback
      * that runs in ONE coalesced task AFTER each dark↔light flip's instant chrome
-     * paint, so consumers BATCH N expensive re-theme operations (e.g. the atlas's
+     * paint, so consumers BATCH N expensive re-theme operations (e.g. a consumer's
      * palette memo + N-chart `merge-setOption` palette tween + aurora
      * re-derivation) into a single beat instead of N watchers firing in N
      * sequential storms on the critical frame. The class toggle is synchronous
@@ -92,7 +92,7 @@ const createGlobalDark = createGlobalState(() => {
     function toggleDark() {
         if (disableTransitions.value) {
             document.documentElement.classList.add("no-transition");
-            //  B-2 (d6 fee5e3cd re-land) — NO forced reflow.
+            //  B-2 — NO forced reflow.
             // The E9b.1 profile caught the removed `void offsetHeight` read at
             // ~40ms/flip on a dense page (a synchronous whole-document
             // style+layout flush). None is needed: the `.no-transition` class and

@@ -1,12 +1,12 @@
 // Global type augmentation — `data-*` attributes are universally valid on every
 // HTML/SVG element (the HTML custom-data-attribute contract), but Vue 3.5's
 // `HTMLAttributes`/`SVGAttributes` omit the `data-${string}` index signature. With
-// AU.W3's `vueCompilerOptions.checkUnknownProps` keystone, that omission makes
+// the `vueCompilerOptions.checkUnknownProps` keystone, that omission makes
 // strict-templates wrongly reject a valid `data-state="open"` on a native `<div>`.
 //
 // Declaring the index signature here states the TRUE FACT — `data-*` is allowed,
 // library-wide — instead of enumerating each native-element site or suppressing it
-// per-line (the AU inv-P1 idiomatic-root rule: no `@ts-expect-error`). The genuine
+// per-line (the inv-P1 idiomatic-root rule: no `@ts-expect-error`). The genuine
 // strict-templates signal (a BOGUS prop on a glass-ui COMPONENT, e.g.
 // `<GlassDock bogus-prop>`) is unaffected: component prop checking does not consult
 // `HTMLAttributes`, so this augmentation cannot mask a real unknown-prop bug.

@@ -1,4 +1,4 @@
-// BC.W-VIZ-PAPERGRID — the WebGPU `setupWGPU` builder (the primary path).
+// The WebGPU `setupWGPU` builder (the primary path).
 //
 // A pure fullscreen fragment pass (the aurora/concentric shape-class — no compute, no
 // particles): the full-screen-triangle `vs_main` + the `fs_main` liquid-grid evaluator. Each
@@ -104,7 +104,7 @@ export function createLiquidGridWGPUSetup(
             entries: [{ binding: 0, resource: { buffer: uniformBuffer } }],
         });
 
-        // BG.W-VIZ-RESIZE-ADOPT — upload-only. The LEAF sized the backing store (the Golus
+        // Upload-only. The LEAF sized the backing store (the Golus
         // AA reads the ACTUAL backing pixel; the capped DPR rides the call-site dprPolicy);
         // the WGPU swap chain auto-resizes to it — no-op.
         function resize(_s?: BackingSize): void {}

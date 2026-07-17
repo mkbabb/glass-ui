@@ -1,7 +1,7 @@
 /* typography/semantic.css — the BODY cascade + the DISPLAY / HEADING / BODY /
  * MICRO / ADMIN-LABEL semantic type classes.
  *
- * Carved from typography.css (BA.W-CARVE2) — the semantic register classes
+ * The semantic register classes
  * that read the scale tokens declared in typography/scale.css. @import-ed
  * SECOND by the typography.css thin root (after the faces+scale, before the
  * aux/mono utilities). The carve moves rules in the SAME cascade position →
@@ -39,7 +39,7 @@ body {
     letter-spacing: var(--type-tracking-display);
     font-optical-sizing: auto;
     font-weight: var(--type-weight-display);
-    /* AQ.W3 §W3.3 — balance multi-line display headlines. Text-only (no box) so
+    /* Balance multi-line display headlines. Text-only (no box) so
        balance is safe; degrades to unbalanced wrapping with zero break. */
     text-wrap: balance;
 }
@@ -61,7 +61,7 @@ body {
     font-optical-sizing: auto;
     display: inline-block;
     max-inline-size: 100%;
-    /* AQ.W3 §W3.3 — `text-wrap: nowrap` (modern) sits AFTER `white-space:
+    /* `text-wrap: nowrap` (modern) sits AFTER `white-space:
        nowrap` (legacy fallback) so supporting engines honor the modern form and
        older ones fall through to `white-space`. Forgiving parse, no `@supports`. */
     white-space: nowrap;
@@ -75,7 +75,7 @@ body {
     letter-spacing: var(--type-tracking-display);
     font-optical-sizing: auto;
     font-weight: var(--type-weight-display);
-    text-wrap: balance; /* AQ.W3 §W3.3 */
+    text-wrap: balance;
 }
 
 @utility text-display-mega {
@@ -85,7 +85,7 @@ body {
     letter-spacing: var(--type-tracking-display);
     font-optical-sizing: auto;
     font-weight: var(--type-weight-display);
-    text-wrap: balance; /* AQ.W3 §W3.3 */
+    text-wrap: balance;
 }
 
 @utility text-display-5 {
@@ -95,7 +95,7 @@ body {
     letter-spacing: var(--type-tracking-display);
     font-optical-sizing: auto;
     font-weight: var(--type-weight-display);
-    text-wrap: balance; /* AQ.W3 §W3.3 */
+    text-wrap: balance;
 }
 
 @utility text-display-4 {
@@ -105,7 +105,7 @@ body {
     letter-spacing: var(--type-tracking-display);
     font-optical-sizing: auto;
     font-weight: var(--type-weight-display);
-    text-wrap: balance; /* AQ.W3 §W3.3 */
+    text-wrap: balance;
 }
 
 @utility text-display-3 {
@@ -115,7 +115,7 @@ body {
     letter-spacing: var(--type-tracking-display);
     font-optical-sizing: auto;
     font-weight: var(--type-weight-display);
-    text-wrap: balance; /* AQ.W3 §W3.3 */
+    text-wrap: balance;
 }
 
 @utility text-display-2 {
@@ -125,7 +125,7 @@ body {
     letter-spacing: var(--type-tracking-display);
     font-optical-sizing: auto;
     font-weight: var(--type-weight-display);
-    text-wrap: balance; /* AQ.W3 §W3.3 */
+    text-wrap: balance;
 }
 
 @utility text-display {
@@ -135,7 +135,7 @@ body {
     letter-spacing: var(--type-tracking-display);
     font-optical-sizing: auto;
     font-weight: var(--type-weight-display);
-    text-wrap: balance; /* AQ.W3 §W3.3 */
+    text-wrap: balance;
 }
 
 /* ═══════════════════════════════════════════════
@@ -147,7 +147,7 @@ body {
     line-height: var(--type-leading-heading);
     letter-spacing: var(--type-tracking-tight);
     font-weight: var(--type-weight-title);
-    text-wrap: balance; /* AQ.W3 §W3.3 */
+    text-wrap: balance;
 }
 
 @utility text-heading {
@@ -155,7 +155,7 @@ body {
     font-size: var(--type-heading);
     line-height: var(--type-leading-heading);
     font-weight: var(--type-weight-heading);
-    text-wrap: balance; /* AQ.W3 §W3.3 */
+    text-wrap: balance;
 }
 
 @utility text-subheading {
@@ -163,7 +163,7 @@ body {
     font-size: var(--type-subheading);
     line-height: var(--type-leading-body);
     font-weight: 600;
-    text-wrap: balance; /* AQ.W3 §W3.3 */
+    text-wrap: balance;
 }
 
 /* Canonical dock control label register — text labels INSIDE
@@ -172,8 +172,8 @@ body {
    a dock pill). Weight 400 — Plus Jakarta reads heavier than its numeric weight
    at pill size, so regular is the not-bold register.
 
-   BC.W-AX-DOCK-COCKPIT — the label TRACKS the control height by ratio (the
-   dock-oversize chronic close, speedtest A-9): the font is a PROPORTION of the
+   The label TRACKS the control height by ratio (the
+   dock-oversize chronic close): the font is a PROPORTION of the
    control (`calc(var(--dock-control-size) * var(--dock-label-ratio))`) so a
    tighter control (the `[data-preset="cockpit"]` 2.75rem floor + compact chrome)
    carries a proportionally tighter label — never the fixed `--type-subheading`
@@ -199,7 +199,7 @@ body {
     font-size: var(--type-prose);
     line-height: var(--type-leading-prose);
     font-weight: 400;
-    /* AQ.W3 §W3.3 — `pretty` fixes orphans/rivers in prose. Prose registers
+    /* `pretty` fixes orphans/rivers in prose. Prose registers
        only (not every text class); degrades to default wrapping, zero break. */
     text-wrap: pretty;
 }
@@ -209,7 +209,7 @@ body {
     font-size: var(--type-body);
     line-height: var(--type-leading-body);
     font-weight: 400;
-    text-wrap: pretty; /* AQ.W3 §W3.3 */
+    text-wrap: pretty;
 }
 
 @utility text-small {

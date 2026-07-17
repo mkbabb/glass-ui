@@ -1,17 +1,17 @@
 /* tokens/on-glass-fg.css
-   The surface-aware FOREGROUND register (BB.W-ON-GLASS-FG — N13). Carved out of
-   tokens/glass.css to keep that partial under the no-god-module bound; @import-ed
+   The surface-aware FOREGROUND register (N13). A partial held
+   under the no-god-module bound; @import-ed
    by tokens.css in cascade order AFTER glass.css (the rungs derive against the
    glass-bg-quiet composite, so they must resolve after the §8 ladder). Same :root
    cascade context as its sibling token partials.
 
    A THREE-RUNG on-glass family whose contrast TARGET is the COMPOSITED content-
-   tier glass FILL, not the canvas. The glass-first MAXIMAL default (AX.W54) makes
+   tier glass FILL, not the canvas. The glass-first MAXIMAL default makes
    a caption/well/track rendering over a TRANSLUCENT content plate the common case;
    --muted-foreground (= --neutral-5, "AA vs page") collapses on its OWN surface
-   (the speedtest ask measured 1.15-3.29:1 in dark theme — the "whisper collapse").
+   (the dark-theme contrast ask measured 1.15-3.29:1 — the "whisper collapse").
 
-   This is the THIRD state the BA adaptive-glass seam never expressed (the SAME
+   This is the THIRD state the adaptive-glass seam never expressed (the SAME
    --glass-tint-* cascade context, NOT a fork): (a) bright/darkened plate → full
    ink (the @container bright bucket + the overlay band, shipped — glass/ladder.css);
    (b) opaque canvas → page-muted (--neutral-5, kept); (c) THIS — calm translucent
@@ -19,8 +19,8 @@
    a caption stays quieter than body ink WHILE clearing AA on the composited plate).
 
    The values are DERIVED against the LIBRARY composite (--card over --neutral-0
-   through --glass-bg-quiet at --glass-tint-strength-floor), warm-amber (the BA.W-
-   NO-GRAY identity, OKLab gray floor cleared at the warm hue) — NOT copied from
+   through --glass-bg-quiet at --glass-tint-strength-floor), warm-amber (the
+   identity, OKLab gray floor cleared at the warm hue) — NOT copied from
    the slides deck.css §1 reference (the deck's NC-State-red warm-cream literals
    hsl(24 6% 44%)/hsl(45 12% 64%) are a CONSUMER divergence; the library re-derives).
    NO ppmycota/demo hue. The page-muted register (--muted-foreground/-strong) is

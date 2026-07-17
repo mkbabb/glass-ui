@@ -79,7 +79,7 @@ const filterId = `watercolor-filter-${useId().replace(/[^a-zA-Z0-9_-]/g, "")}`;
 const filterUrl = computed(() => `url(#${filterId})`);
 
 // Per-instance wet-edge seed — derived off the SAME house PRNG hash (src/composables/glass/procedural/prng.ts
-// single-source, AV.W14) the shape morph uses. The prior hardcoded `seed="2"` made
+// single-source) the shape morph uses. A shared hardcoded `seed` would make
 // every dot share ONE wet-edge displacement (twelve clones); deriving it off
 // `hashString(color + seed)` gives each dot a unique wet edge coherent with its
 // silhouette. % 256 keeps it in the feTurbulence seed's comfortable integer range.
@@ -131,7 +131,7 @@ const { borderRadius, transform } = useWatercolorBlob(colorRef, {
         <svg class="watercolor-filter-host" aria-hidden="true" focusable="false">
             <defs>
                 <!--
-                  Device-px-resolved wet edge (AZ.W-BLOB-PAGE D1). The displacement
+                  Device-px-resolved wet edge. The displacement
                   keeps the hand-painted wet bleed crisp:
                   • linearRGB filter math → smoother edge antialiasing on Chrome/FF.
                     CAVEAT (WebKit): Safari renders SVG filters in sRGB regardless of
@@ -180,14 +180,14 @@ const { borderRadius, transform } = useWatercolorBlob(colorRef, {
             </defs>
         </svg>
         <!--
-          The GHOST register (BC.W-VIZ-WATERCOLOR · BD.W-VIZ-BROKEN-FIX D4) — the seeded
+          The GHOST register — the seeded
           blob silhouette traced as a DASHED outline that FOLLOWS THE SAME SHAPE the solid
           dot fills. ONE shape source: this dashed BORDER `<span>` reads `borderRadius`
           — the SAME seeded 8-value `border-radius` superellipse the solid box takes from
           `useWatercolorBlob` — and a CSS dashed border hugs its OWN `border-radius` exactly,
           so the outline traces the seeded organic blob BY CONSTRUCTION (never an ellipse,
-          never a circle, never a dashed rect — the prior hardcoded `<ellipse rx=46 ry=46>`
-          + random noise was a noise-jittered CIRCLE geometrically disconnected from the
+          never a circle, never a dashed rect — a hardcoded `<ellipse rx=46 ry=46>`
+          + random noise is a noise-jittered CIRCLE geometrically disconnected from the
           silhouette). The wet `feDisplacementMap` filter wobbles the dashed border INTO the
           hand-painted organic edge (the design intent). Static → PRM-neutral.
         -->
@@ -234,7 +234,7 @@ const { borderRadius, transform } = useWatercolorBlob(colorRef, {
     --watercolor-ghost-weight: 2px;
 }
 
-/* The GHOST register (BC.W-VIZ-WATERCOLOR) — the box keeps the SAME seeded
+/* The GHOST register — the box keeps the SAME seeded
    `border-radius` silhouette the solid dot of that seed renders (set inline by
    useWatercolorBlob), plus a low-alpha `--watercolor-color` fill BEHIND the dashed
    stroke overlay. NO solid box border, NO dashed box border — the silhouette is
@@ -263,7 +263,7 @@ const { borderRadius, transform } = useWatercolorBlob(colorRef, {
     }
 }
 
-/* The GHOST dashed outline (BD.W-VIZ-BROKEN-FIX D4) — a span clipped to the SAME seeded
+/* The GHOST dashed outline — a span clipped to the SAME seeded
    `border-radius` silhouette the solid dot fills (the ONE shape source: it reads
    `borderRadius` inline, the SAME value the solid box takes). A dashed
    CSS border hugs its own border-radius, so the outline traces the seeded organic blob

@@ -1,30 +1,29 @@
 /* tokens/glass.css
    §8 glassmorphism — the five-tier surface ladder (opacity/blur/saturate rungs +
    composed bg/border) + the --glass-level axis + the control-REST register.
-   Carved from the tokens.css cascade root; @import-ed by tokens.css in
+   A partial of the tokens.css cascade; @import-ed by tokens.css in
    cascade order. Same :root cascade context as its siblings. The decorative/fx
    tail (grain/specular/edge-light + the adaptive tint-source/backdrop-luma bucket +
    fringe/curvature/chart-palette + the per-tier shadow/spine/under-shadow/overlay-
-   scrim) carved to tokens/glass-fx.css at BB.W-CARVE4 — @import-ed IMMEDIATELY AFTER
+   scrim) in tokens/glass-fx.css — @import-ed IMMEDIATELY AFTER
    this partial so the two adjacent same-selector :root{} blocks resolve identically
    (the dist is byte-isomorphic). */
 :root {
     /* ═══════════════════════════════════════════════
-       §8  GLASSMORPHISM — Five-tier surface ladder (v0.8.0)
+       §8  GLASSMORPHISM — Five-tier surface ladder
 
        Tier semantics, alpha-monotonic:
-         wash      ~0.30α  + light blur      (was `subtle`)
-         quiet     ~0.50α  + medium blur     (the formerly missing rung)
-         resting   ~0.65α  + canonical blur  (was `default`; the speedtest plate)
-         floating  ~0.80α  + heavier blur    (was `elevated`)
-         overlay   ~0.95α  + heaviest blur   (NEW; modal-over-modal)
+         wash      ~0.30α  + light blur
+         quiet     ~0.50α  + medium blur
+         resting   ~0.65α  + canonical blur  (the consumer plate)
+         floating  ~0.80α  + heavier blur
+         overlay   ~0.95α  + heaviest blur   (modal-over-modal)
 
-       v0.8.0 retires the four-tier `subtle | default | medium | elevated`
-       ladder outright. No legacy aliases. Consumers migrate at the same
-       breaking change. R3-spec §A.
+       There is no four-tier `subtle | default | medium | elevated`
+       ladder. No legacy aliases.
        ═══════════════════════════════════════════════ */
 
-    /* ── Per-tier alpha — the CANONICAL named opacity register (BB.W-CARD-TIER-ALPHA) ──
+    /* ── Per-tier alpha — the CANONICAL named opacity register ──
        Each `--glass-opacity-{tier}` IS the library's canonical alpha for that tier —
        a NAMED, documented input to the ONE compose recipe below, NOT a magic number
        a consumer re-pins. The values here are the library IDENTITY: the warm-cream
@@ -35,7 +34,7 @@
 
        A consumer that wants the LIBRARY register reads these named tokens (or composes
        a `<Card tier>` rung) and re-pins NOTHING; a consumer whose surface needs a
-       divergent composited luminance (the speedtest dark-AA register: instrument 0.72 /
+       divergent composited luminance (the dark-AA register: instrument 0.72 /
        document 0.78) keeps that as a NAMED preset IN ITS OWN repo (presets-in-consumers)
        — the library default is its identity, the consumer preset is the consumer's.
 
@@ -48,7 +47,7 @@
        the documented retune path, mirroring the dock's own `--glass-bg-dock` self-re-point.
        The named alpha is the canonical INPUT; the per-scope `--glass-bg-*` re-declaration is
        the sanctioned consumer pin. (The `--glass-level` recipe MECHANISM below is the
-       AX.W54 seam — UNTOUCHED by this register; this canonicalizes the alpha INPUTS only.)
+       seam — UNTOUCHED by this register; this canonicalizes the alpha INPUTS only.)
        Machine-locked by `proof:card-tier-alpha`. */
     /* Opacity primitives — the per-tier canonical alpha (light arm). */
     --glass-opacity-wash:     0.30;
@@ -63,43 +62,43 @@
        The resting blur sits at 10px so a glass plate reads as a diffusion
        without consumer-side override.
 
-       BA.W-GLASS-CAL Unit 1 — the ladder dialed back ~15-20% UNIFORMLY (the
+       The ladder dialed back ~15-20% UNIFORMLY (the
        user's "a hair too much" over-diffusion): quiet 10→8, resting 12→10,
        floating 16→13, overlay 15→13, dock 11→9; wash stays 1px (sub-perceptual).
        The pull is proportional (it preserves tier separation) and keeps every
-       rung in the AV.W7-F2 8-15px band — the backdrop's structure reads a hair
+       rung in the 8-15px band — the backdrop's structure reads a hair
        more through the plate while the glass still reads unmistakably as glass.
        The radius axis ONLY: `--glass-level` + every `saturate()`/`brightness()`
-       companion below are UNTOUCHED (the W-DARK-MATERIAL dark-recipe saturate/
+       companion below are UNTOUCHED (the dark-recipe saturate/
        brightness companions preserved — radius-only, the gate's B3 assert).
 
-       BG.W-GLASS-BLUR-PEER — the resting rung pulls 10→8 to mint the ONE unified
+       The resting rung pulls 10→8 to mint the ONE unified
        8px glass material: the dock + the default-Card (`--glass-blur-quiet`) + the
        menu-row (the quiet tier) all resolve the SAME `blur(8px)` RADIUS LEG (the
        resolved-radius peer lock, proof:glass-cal). Ordinary Buttons consume this
        resting material; primary Buttons consume the shared deep register. Radius-only —
        the per-rung saturate()/brightness() companions stay (the saturate-revert is a
-       later WS1-gated paint, not this collapse). */
+       later paint, not this collapse). */
     --glass-blur-wash-radius:     1px;
     --glass-blur-quiet-radius:    8px;
     --glass-blur-resting-radius:  8px;
     --glass-blur-floating-radius: 13px;
-    /* AV.W7 F2 — clamped from 24px into the 8–15px budget band. A blur radius
+    /* Clamped from 24px into the 8–15px budget band. A blur radius
        past ~20px is exponentially costlier (`backdrop-filter` is glass-ui's most
        expensive idiom — the radius is the dominant cost). 15px is the band
-       ceiling; BA.W-GLASS-CAL dialed the overlay rung to 13px (off 15) so the
+       ceiling; dialed the overlay rung to 13px (off 15) so the
        whole ladder pulls back in proportion. A high-resolution display restores
        a richer wash via the @media arm in light-dark.css — the cost is amortised
        by the extra device pixels. */
     --glass-blur-overlay-radius:  13px;
-    /* BG.W-CLOSEFIX-9SITE — the `--glass-blur-dock` chain (radius + composite +
+    /* The `--glass-blur-dock` chain (radius + composite +
        `--glass-saturate-dock` + the `--blur-dock` @theme bridge) is RETIRED (clean
        break, no alias). The dock now paints blur via `--dock-surface-blur:
-       var(--glass-blur-resting)` (the unified 8px material, BG.W-GLASS-BLUR-PEER),
+       var(--glass-blur-resting)` (the unified 8px material),
        so its own rung token was orphaned. */
 
-    /* ── Per-rung SATURATE — the CANONICAL named saturate register (BC.W-GLASS-
-       LEGIBILITY-MEASURED, the speedtest-AX BC-W10 fold) ───────────────────────
+    /* ── Per-rung SATURATE — the CANONICAL named saturate register (
+       LEGIBILITY-MEASURED, the cross-consumer fold) ───────────────────────
        The saturate term is the LOAD-BEARING glass knob (research/apple-glass.md §4:
        the apple.com nav rides `saturate(1.8)` — the highest term, blur moderate).
        Each `--glass-saturate-{tier}` is the library's canonical saturation for that
@@ -107,13 +106,13 @@
        reads THROUGH, the SAME substitution-vs-redeclaration discipline as the
        `--glass-opacity-{tier}` alpha register above. A `:root { --glass-saturate-
        quiet: … }` override re-resolves the rung's saturation with ZERO recipe edit
-       (the speedtest "dark cards" chronic + the apple-glass saturate-as-load-bearing
-       lever). The values here ARE the W52-D19 bake (wash/quiet/resting 1.05,
+       (the "dark cards" chronic + the apple-glass saturate-as-load-bearing
+       lever). The values here ARE the bake (wash/quiet/resting 1.05,
        floating 1.18, overlay 1.2) become the token defaults — so the composed blur
-       is BYTE-IDENTICAL to the old baked literal (proof:glass-cal / proof:card-tier-
+       is UNCHANGED at these defaults (proof:glass-cal / proof:card-tier-
        alpha stay GREEN by construction). The deep-tier `--glass-saturate-deep` 1.8
        ceiling (glass-deep.css) is the upper bound; no rung saturate exceeds it. The
-       dark arm (tokens/dark-arm.css) re-declares this register with the W-DARK-
+       dark arm (tokens/dark-arm.css) re-declares this register with the 
        MATERIAL luminosity lift — the SAME named tokens, per-mode (the plain per-mode
        pair idiom). The brightness() companions stay baked (this fold mints ONLY the
        saturate knob). Machine-locked by `proof:glass-legibility` L7. */
@@ -122,18 +121,18 @@
     --glass-saturate-resting:  1.4;
     --glass-saturate-floating: 1.6;
     --glass-saturate-overlay:  1.6;
-    /* BG.W-CLOSEFIX-9SITE — `--glass-saturate-dock` RETIRED with the `--glass-blur-dock`
+    /* `--glass-saturate-dock` RETIRED with the `--glass-blur-dock`
        chain (its sole reader). The dock reads `--glass-saturate-resting` through the
        `--glass-blur-resting` peer now. */
 
-    /* AX.W54 — each blur radius is scaled by the ONE `--glass-level` scalar (in
+    /* Each blur radius is scaled by the ONE `--glass-level` scalar (in
        lockstep with the opacity seam above): level=1 byte-identical; level=0 →
        blur(0) (the clean solid floor with the opacity); level>1 → more diffusion.
        The per-rung `saturate()` companion reads the named `--glass-saturate-{tier}`
-       knob (BC.W-GLASS-LEGIBILITY-MEASURED); `brightness()` stays baked (the level
-       scales the RADIUS, not the saturation — W52's calm light-concentration). */
+       knob; `brightness()` stays baked (the level
+       scales the RADIUS, not the saturation — the calm light-concentration). */
     --glass-blur-wash:     blur(calc(var(--glass-blur-wash-radius) * var(--glass-level))) saturate(var(--glass-saturate-wash));
-    /* AV.W15 M1 — the `quiet` rung gained `saturate(1.05) brightness(1.02)`
+    /* The `quiet` rung gained `saturate(1.05) brightness(1.02)`
        so the lower ladder reads with the same saturation life as `resting`+
        (Apple: Liquid Glass concentrates light, it does not desaturate). The
        `brightness(1.02)` is the small lift the spec names — it lands `quiet`
@@ -142,14 +141,14 @@
        `--glass-blur-quiet: none`, so this whole chain drops with the blur. */
     --glass-blur-quiet:    blur(calc(var(--glass-blur-quiet-radius) * var(--glass-level))) saturate(var(--glass-saturate-quiet)) brightness(1.02);
     --glass-blur-resting:  blur(calc(var(--glass-blur-resting-radius) * var(--glass-level))) saturate(var(--glass-saturate-resting));
-    /* AX.W52 D19 — the floating/overlay backdrop saturate tamed from 1.4/1.5 to a
-       gentle ~1.18/1.2 (real liquid glass concentrates light ~1.1–1.2×; the prior
-       1.4–1.5× over-juiced the bleed-through into a garish smear over a colored
-       substrate). wash/quiet/resting already sit at 1.05 — untouched. */
+    /* The floating/overlay backdrop saturate sits at a
+       gentle ~1.18/1.2 (real liquid glass concentrates light ~1.1–1.2×; a
+       1.4–1.5× over-juices the bleed-through into a garish smear over a colored
+       substrate). wash/quiet/resting sit at 1.05. */
     --glass-blur-floating: blur(calc(var(--glass-blur-floating-radius) * var(--glass-level))) saturate(var(--glass-saturate-floating));
     --glass-blur-overlay:  blur(calc(var(--glass-blur-overlay-radius) * var(--glass-level))) saturate(var(--glass-saturate-overlay));
-    /* BG.W-CLOSEFIX-9SITE — the composed `--glass-blur-dock` token RETIRED (orphaned by
-       BG.W-GLASS-BLUR-PEER's `--dock-surface-blur: var(--glass-blur-resting)` re-point).
+    /* The composed `--glass-blur-dock` token RETIRED (orphaned by
+       the `--dock-surface-blur: var(--glass-blur-resting)` re-point).
        The dock reads the unified 8px resting material; there is no dock-own blur rung. */
 
     /* Dock-specific opacity (0.42) — lighter than `resting` (0.65) so the dock
@@ -157,12 +156,12 @@
        visible through it. Consumed by `.glass-dock` via `--glass-bg-dock`. The
        value holds the surface register against the tightened 11px blur so the
        dock reads as painted chrome, not a frosted ghost. */
-    /* BD.W-DOCK-CORE (D3) — the dock base alpha lifts 0.42 → 0.50 (margin-insurance for
+    /* The dock base alpha lifts 0.42 → 0.50 (margin-insurance for
        the warm-chromatic darken: the base composite chroma closes a notch before any tint
        engages). Stays the lightest chrome tier (below resting 0.65), mode-invariant. */
     --glass-opacity-dock: 0.50;
 
-    /* Dialog-specific opacity (0.68) — BC.W-DIALOG-GLASS. The iOS-27 control-
+    /* Dialog-specific opacity (0.68) —. The iOS-27 control-
        center modal register: SEE-THROUGH frosted glass that reveals the page
        beneath, NOT the floating-tier near-opaque slab (0.80 read as "NOT glassy
        at all"). 0.68 sits between `resting` (0.65 — transparent enough to read
@@ -170,7 +169,7 @@
        the bright bucket), so the modal floats with the FLOATING-tier lift (edge/
        rim/under-shadow) while reading at the RESTING-tier transparency. The
        LIBRARY iOS-modal identity (presets-in-consumers — a consumer retunes
-       `--glass-bg-dialog` via :root). BI.W-GLASS-TOKEN-PRUNE — the α-band probe
+       `--glass-bg-dialog` via :root). The α-band probe
        DECIDED this is genuinely-distinct physics (Δ plate-α 0.12 vs floating; ΔL
        0.06–0.10 over a busy/dark page → KEEP). Consumed by DialogContent.vue, which
        re-points the internal `--glass-bg-rung` compose slot onto `--glass-bg-dialog`
@@ -178,14 +177,14 @@
        var(--glass-bg-dialog)` double-name re-declaration). */
     --glass-opacity-dialog: 0.68;
 
-    /* Sheet-specific opacity (0.74) — BE.W-SHEET-TRANSLUCENT. The iOS-27 bottom-
+    /* Sheet-specific opacity (0.74) —. The iOS-27 bottom-
        sheet register: SEE-THROUGH frosted glass whose lifted crown reveals the
        page/album grid beneath, NOT the near-opaque overlay slab (0.95 read as "not
        glassy"). 0.74 sits BETWEEN the dialog 0.68 (transparent enough that the
        backdrop reads through) and the overlay 0.95 (opaque enough for AA body text
        against a busy grid) — a sheet is content-bearing, so it sits a hair above the
        dialog. The composed `--glass-bg-sheet` rides the SAME oklab-tint-wrapped
-       recipe `--glass-bg-dialog` speaks, so the W55 bright-bucket darken + the
+       recipe `--glass-bg-dialog` speaks, so the bright-bucket darken + the
        `--glass-level` opaque escape + the dark-arm saturate companions reach the
        sheet with ZERO new compositing seam. Drawer + Sheet self-re-point onto it.
        Presets-in-consumers — a consumer retunes `--glass-opacity-sheet` via :root. */
@@ -201,7 +200,7 @@
        today; a consumer overrides it per-backdrop (e.g. a near-white over a
        dark aurora) without touching library source.
 
-       AX.W55 — this is the FOREGROUND half of the adaptive story, now reconciled
+       This is the FOREGROUND half of the adaptive story, now reconciled
        INTO the `--glass-backdrop` probe (not a third fork): under the bright bucket
        (`@container style(--glass-backdrop: light)` in dock.css) it re-points toward
        the contrast-clearing ink, and an `@supports (color: contrast-color(…))`
@@ -218,7 +217,7 @@
        `glass-bg-medium` (0.65) down to its own 0.32. */
     --glass-opacity-chassis: 0.28;
 
-    /* Composed backgrounds — AX.W54: the opacity is threaded through the ONE
+    /* Composed backgrounds — : the opacity is threaded through the ONE
        `--glass-level` clarity scalar. Each rung's effective alpha is
        `1 - (1 - <rung-opacity>) * --glass-level`: at level=1 it collapses to the
        hand-tuned `<rung-opacity>` (byte-identical); at level=0 it resolves `1`
@@ -229,16 +228,16 @@
     --glass-bg-resting:  color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-resting)) * var(--glass-level)) * 100%), transparent);
     --glass-bg-floating: color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-floating)) * var(--glass-level)) * 100%), transparent);
     --glass-bg-overlay:  color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-overlay)) * var(--glass-level)) * 100%), transparent);
-    /* The dock bg ALSO rides the oklab tint seam (AX.W54 amendment): the same
+    /* The dock bg ALSO rides the oklab tint seam (amendment): the same
        `color-mix(in oklab, …, --glass-tint-source --glass-tint-strength)` wrapper
-       the rungs reach for, ZERO-delta at `--glass-tint-strength: 0%` — so W55's
+       the rungs reach for, ZERO-delta at `--glass-tint-strength: 0%` — so the
        adaptive darken can reach the dock (the G2 over-light surface) without a
        second hand-rolled recipe.
 
-       BG.W-GLASS-REGISTER-UNIFY note — this `:root`-baked oklab tint IS the
+       note — this `:root`-baked oklab tint IS the
        substitution trap the `@utility glass-fill` HOME (glass/surfaces.css, R9) kills:
        the outer tint here resolves --glass-tint-source/-strength at `:root` (0%), so a
-       descendant `.glass-dock` that re-points the tint under the W55 bright bucket does
+       descendant `.glass-dock` that re-points the tint under the bright bucket does
        NOT re-tint through this token. The dock/shell/morph surfaces already escape it by
        composing the element-level oklab tint AT the element (dock/shell.css,
        dock/morph.css) — the applied `glass-fill` shape. De-tinting this `:root` token
@@ -246,29 +245,29 @@
        (proof:dialog-glass DG1 pins `--glass-bg-dialog` to the same wrapper form). */
     --glass-bg-dock:     color-mix(in oklab, color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-dock)) * var(--glass-level)) * 100%), transparent), var(--glass-tint-source) var(--glass-tint-strength));
     --glass-bg-chassis:  color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-chassis)) * var(--glass-level)) * 100%), transparent);
-    /* BC.W-DIALOG-GLASS — the dialog plate bg, composed the SAME oklab-tint-wrapped
-       way the dock self-re-points (so the BC.W-ADAPTIVE-RECONCILE darken reaches the
+    /* The dialog plate bg, composed the SAME oklab-tint-wrapped
+       way the dock self-re-points (so the darken reaches the
        modal over a bright backdrop without a second hand-rolled recipe). The 0.68
        opacity is the iOS-27 control-center register (see `--glass-opacity-dialog`).
-       BI.W-GLASS-TOKEN-PRUNE — DialogContent.vue re-points the internal `--glass-bg-
+       DialogContent.vue re-points the internal `--glass-bg-
        rung` slot onto `--glass-bg-dialog` on the dialog scope (the ONE-DOOR read —
        NOT a `--glass-bg-floating` double-name alias) so the floating edge/rim/under-
        shadow LIFT survives the transparency drop. */
     --glass-bg-dialog:   color-mix(in oklab, color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-dialog)) * var(--glass-level)) * 100%), transparent), var(--glass-tint-source) var(--glass-tint-strength));
-    /* BE.W-SHEET-TRANSLUCENT — the bottom-sheet plate bg, composed the SAME oklab-
-       tint-wrapped way `--glass-bg-dialog` is (so the W55 darken + the dark-arm
+    /* The bottom-sheet plate bg, composed the SAME oklab-
+       tint-wrapped way `--glass-bg-dialog` is (so the darken + the dark-arm
        saturate companion reach the see-through sheet without a second hand-rolled
        recipe — byte-isomorphic to `--glass-bg-dialog`, only the opacity token
-       differs). BI.W-GLASS-TOKEN-PRUNE — the α-band probe DECIDED this is genuinely-
+       differs). The α-band probe DECIDED this is genuinely-
        distinct physics (Δ plate-α 0.21 vs overlay; ΔL 0.10–0.18 over a busy/dark page
        → KEEP). Its LIVE consumer is the Drawer descent gradient (drawer.css), where
        the transmissive crown sinks the `--glass-bg-overlay` fill toward this see-
        through floor across the pull. (SheetContent renders the floating tier at rest;
        wiring the resting sheet plate onto this 0.74 register is a booked BE follow —
-       held OUT of this reconcile by the wave's 0-delta plate constraint.) */
+       held OUT of this reconcile by the 0-delta plate constraint.) */
     --glass-bg-sheet:    color-mix(in oklab, color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-sheet)) * var(--glass-level)) * 100%), transparent), var(--glass-tint-source) var(--glass-tint-strength));
 
-    /* ── BI.W-SURFACE-EXTRACT — the recessed WELL rung (value.js P3 ADMIT) ──────────
+    /* ── The recessed WELL rung (value.js P3 ADMIT) ──────────
        A SEATED field register: the `--card` plate stepped a whisper DARKER toward the
        warm `--foreground` ink so a nested control/field reads as recessed INTO the
        surface (the input-well / meter-track / seated-chrome look) — the tone-step is
@@ -280,7 +279,7 @@
        inheritance discipline). */
     --glass-well-tone: 8%;
 
-    /* ── BE.W-TINTED-CHIP — the per-INSTANCE PLATE-FILL tint axis (`--glass-fill-tint`
+    /* ── The per-INSTANCE PLATE-FILL tint axis (`--glass-fill-tint`
        / `--glass-fill-strength`) ──────────────────────────────────────────────────
        The THIRD per-instance chromatic axis (BESIDE the rim `--glass-accent` and the
        whole-plate legibility `--glass-tint-source`): `--glass-fill-tint` tints the
@@ -290,15 +289,15 @@
        RIM + the `::before` specular CORE — file-line-disjoint): the fill writes the
        plate body, the accent writes the rim; a chip may carry BOTH. The mix is `in
        oklab` (the perceptual glass-tint family — NOT the in-srgb `--surface-tint-*`
-       brand-overlay fence, AW.W26). It rides ON TOP of the W55 legibility composite
+       brand-overlay fence). It rides ON TOP of the legibility composite
        (the plate still darkens-over-light for AA AND carries the data hue — additive,
        never a replacement). At the `@property` defaults (transparent + 0%) the body is
        byte-identical to today (`color-mix(in oklab, X, transparent 0%)` ≡ X — the no-op
-       floor). `<GlassChip :tone>` is the first-class consumer (BE.W-TINTED-CHIP
+       floor). `<GlassChip :tone>` is the first-class consumer (
        component) — the fill is read on the surface, never written into a `--glass-bg-*`
        token here. The `@property` registration is below (the typed no-op floor). */
 
-    /* ── BG.W-GLASS-CONSUMER-BAND — the SHARED per-instance PLATE recipe (the fold
+    /* ── The SHARED per-instance PLATE recipe (the fold
        home) ───────────────────────────────────────────────────────────────────────
        `--glass-fill-tinted` is the ONE `color-mix(in oklab, …)` per-instance data-hue
        plate the fill-tint CONSUMERS (Badge-glass · Chip via
@@ -315,7 +314,7 @@
        event alone. At the `@property` defaults (transparent + 0%) it is the byte-
        identical no-op (`color-mix(in oklab, X, transparent 0%)` ≡ X). The 0-alpha stop
        is warm `oklch(… / 0)`, NEVER bare `transparent` (the WebKit black-premultiply
-       hole, build-trap-(d)). Pairs with the SHARED rim `--glass-material-rim` the
+       hole). Pairs with the SHARED rim `--glass-material-rim` the
        capsule carries — the plate/rim pair every consumer composes. */
     --glass-fill-tinted: color-mix(
         in oklab,
@@ -323,16 +322,15 @@
         oklch(0.9 0.05 75 / 0)
     );
 
-    /* Composed borders — foreground-tinted. BC.W-BLACK-BAR D2 — the perimeter
-       hairline is RETIRED as the silhouette device. The old 11-22% warm-ink rung
-       borders rode --foreground (oklab L 0.216, near-black warm ink); over a
-       near-white cream plate the full-perimeter hairline read as the user's "wtf
-       is this black bar" — worst on the TOP edge where the bright white catch-light
-       ring sat just inside a dark border (a bright rim and a dark line at war on the
-       SAME edge). The silhouette is now carved by the directional rim
+    /* Composed borders — foreground-tinted. The perimeter
+       hairline is NOT the silhouette device: a full-perimeter warm-ink hairline
+       at 11-22% α (near-black --foreground ink) over a near-white cream plate reads
+       as a black bar — worst on the TOP edge where the bright white catch-light
+       ring sits just inside a dark border (a bright rim and a dark line at war on the
+       SAME edge). The silhouette is instead carved by the directional rim
        (--glass-rim-top catch-light + --glass-rim-bottom under-shadow, glass-fx.css),
        NOT by this perimeter ink. So each rung drops to ≤5% α — the warm hue stays
-       --foreground (the warm-not-tinted identity, BA.W-NO-GRAY), only the PRESENCE
+       --foreground (the warm-not-tinted identity), only the PRESENCE
        falls below the read-threshold so the hairline can never read as a bar. The
        +1% on the two heaviest rungs (floating/overlay) holds a faint tier-presence
        ordering without crossing the threshold (apple-ios27.md §5 "top ≤4%" target). */
@@ -341,15 +339,15 @@
     --glass-border-resting:  color-mix(in srgb, var(--foreground) 4%, transparent);
     --glass-border-floating: color-mix(in srgb, var(--foreground) 5%, transparent);
     --glass-border-overlay:  color-mix(in srgb, var(--foreground) 5%, transparent);
-    /* W-NAV-DOCK-FIX — the dock is FLOATING chrome over an UNKNOWN backdrop (unlike a
+    /* The dock is FLOATING chrome over an UNKNOWN backdrop (unlike a
        content card on the page), so it earns a readable warm-INK hairline (the iOS-27
        edge-rim layer). 8% warm-ink is still a whisper, never a black bar (--foreground
        H≈56° → a WARM rim, never a gray line). */
     --glass-border-dock:     color-mix(in srgb, var(--foreground) 8%, transparent);
     --glass-border:          var(--glass-border-quiet);
 
-    /* ── The DEFINED control tier (BG.W-GLASS-DEFAULT-DEFINITION · GA-1) ───────
-       Glass is the maximal default (AX.W54), but its blur is imperceptible over a
+    /* ── The DEFINED control tier ──────────────
+       Glass is the maximal default, but its blur is imperceptible over a
        FLAT page — a bare <Button>/.input-pill reads as a near-gray shape (chroma
        0.0138, BD GOLDEN, root cause `--glass-tint-strength: 0%`). The DEFINED tier
        gives a CONTROL a read-carrying warm rim + a warm-cream floor over ANY backdrop,
@@ -371,15 +369,15 @@
        hairline above; --foreground H≈56° so the defined rim reads WARM, never gray. */
     --glass-border-defined:  color-mix(in srgb, var(--foreground) calc(var(--glass-definition) * 14%), transparent);
 
-    /* ── The control REST register (BA.W-SURFACE-AXIS scope 7) ────────────────
+    /* ── The control REST register ─────────────────────────
        ONE shared resting surface for the FORM family — Input/Textarea/Select/
        Combobox/NumberField/TagsInput — so the whole control band is ONE material
        at rest, not a per-control fork. Input rode the warm near-white `quiet`
-       glass register while Select rode the lighter `glass-wash` gray (live-probed
-       at R10 SM-3/NF-4: input `oklab(0.986)` near-white vs select `oklab(0.636)`
+       glass register while Select rode the lighter `glass-wash` gray (live-probed:
+       input `oklab(0.986)` near-white vs select `oklab(0.636)`
        gray — the "no gray" bar at a control-family seam). The unified register
        adopts the WARMER input rung (the no-gray choice); the per-control recipes
-       re-point to read these tokens, no per-control fork. The W-NO-GRAY warm floor
+       re-point to read these tokens, no per-control fork. The warm floor
        lands underneath in Batch 1b (it warms the VALUES); this register unifies
        the TIER. The hover lift mixes the rest fill one step toward the resting
        rung so a control brightens on hover in lockstep. */
@@ -390,21 +388,21 @@
 
     /* The decorative/fx tail (grain/specular/edge-light + the adaptive tint-source/
        backdrop-luma bucket + fringe/curvature/chart-palette + per-tier shadow/spine/
-       under-shadow/overlay-scrim) lives in tokens/glass-fx.css (carved at BB.W-CARVE4
-       — the next adjacent :root{} block in the cascade). */
+       under-shadow/overlay-scrim) lives in tokens/glass-fx.css
+       (the next adjacent :root{} block in the cascade). */
 }
 
-/* ── BE.W5 foundation — the typed per-instance axes (the @property no-op floors) ──
+/* ── foundation — the typed per-instance axes (the @property no-op floors) ──
    Registered HERE beside the §8 glass tokens (the canonical @property idiom home is
    tokens/property-regs.css; these foundation axes live with the §8 ladder they
-   compose so the BE Tier-0 foundation is one self-contained partial). Each mirrors the
+   compose so the Tier-0 foundation is one self-contained partial). Each mirrors the
    `--glass-accent`/`--glass-accent-strength` registration shape: a `<color>` HUE +
    a `<percentage>` STRENGTH, both `inherits: true` (a host sets them on any ancestor
    to retune the sub-tree) with the NEUTRAL no-op identity (`transparent` / `0%`) so
    an unset surface is byte-identical to today — `color-mix(in oklab, X, <hue> 0%)` ≡ X.
    A malformed override CLAMPS to the initial-value (the typed fail-safe). */
 
-/* BE.W-AMBIENT-TINT — the backdrop hue the glass absorbs. `useGlassBackdropLuminance`
+/* The backdrop hue the glass absorbs. `useGlassBackdropLuminance`
    writes a sampled `oklch()` modal hue here (at a FIXED sub-perceptual chroma — a HUE
    event, never the backdrop's saturation); a gray backdrop writes `transparent` (the
    room tints nothing). The `transparent` initial-value is the neutral identity. */
@@ -416,7 +414,7 @@
 
 /* The opt-in ambient bias knob — the EXISTING `--glass-tint-source` self-engage
    re-point biases toward `--glass-ambient-hue` at this strength (bounded ≤ 8% in the
-   cascade — sub-perceptual under the W55 `--glass-tint-strength-aa` bound). `0%`
+   cascade — sub-perceptual under the `--glass-tint-strength-aa` bound). `0%`
    default is the no-op floor (the un-biased `--glass-tint-ink`); the dock wires it on. */
 @property --glass-ambient-strength {
     syntax: "<percentage>";
@@ -424,8 +422,8 @@
     initial-value: 0%;
 }
 
-/* BE.W-TINTED-CHIP — the per-INSTANCE PLATE-FILL tint. A complete `<color>` data hue
-   the plate BODY mixes toward (`in oklab`, ON TOP of the W55 legibility composite —
+/* The per-INSTANCE PLATE-FILL tint. A complete `<color>` data hue
+   the plate BODY mixes toward (`in oklab`, ON TOP of the legibility composite —
    DISTINCT from the rim `--glass-accent`). `transparent` is the neutral identity (the
    no-op floor: `color-mix(in oklab, X, transparent 0%)` ≡ X). */
 @property --glass-fill-tint {
@@ -436,7 +434,7 @@
 
 /* The fill-tint bounded strength — `0%` default (an unset surface carries no fill
    tint, byte-identical to today). A consumer (`<GlassChip :strength>`) dials it for a
-   louder colored-glass chip; the body ink stays legible (the W-ON-GLASS-FG floor). */
+   louder colored-glass chip; the body ink stays legible (the floor). */
 @property --glass-fill-strength {
     syntax: "<percentage>";
     inherits: true;

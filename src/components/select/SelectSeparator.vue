@@ -20,7 +20,7 @@ const forwardedAttrs = computed(() => fixedHostAttrs(attrs));
 </script>
 
 <template>
-    <!-- BC.W-DROPDOWN-FIX / DESHADCN census — the divider hairline reads the WARM
+    <!-- / DESHADCN census — the divider hairline reads the WARM
        ink, not the neutral shadcn `bg-muted` slab (the residual the census names
        for the select band). `color-mix(in srgb, var(--foreground) N%, transparent)`
        is the warm-hairline identity (re-tints under .dark via --foreground, the same

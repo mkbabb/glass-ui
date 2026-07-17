@@ -24,7 +24,7 @@ const PRESS_SPRING = { response: 0.22, dampingFraction: 0.7 }; // grab-anticipat
  * Owns the single-track contract: pointer-capture drag, keyboard
  * a11y (role=slider + arrow-key step + shift-step), `label` tooltip caret.
  *
- *  §S-16 — the `aria-valuenow` binding coerces `Number(modelValue ?? 0)`
+ * The `aria-valuenow` binding coerces `Number(modelValue ?? 0)`
  * so a numeric attribute always renders (axe `aria-required-attr` regression).
  *
  * The head is a warm-glass
@@ -302,7 +302,7 @@ const fillStyle = computed(() => ({
     left: 0;
     bottom: 0;
     /* the warm accent lane — a translucent flood (the field bleeds through),
-       NOT the gray --surface-tint. build-trap-(d): 0-alpha is oklch(.../0). */
+       NOT the gray --surface-tint. The black-premultiply trap: 0-alpha is oklch(.../0). */
     background: color-mix(
         in oklab,
         var(--cel-accent, var(--accent, var(--foreground))) 30%,

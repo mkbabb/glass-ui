@@ -42,7 +42,7 @@ export function writeField(root: HTMLElement, field: WritableField, value: unkno
             );
             return;
         case "glassLevel":
-            // The W54 maximal-glass knob. The library's `@property --glass-level`
+            // The maximal-glass knob. The library's `@property --glass-level`
             // (<number>, inherits:true, initial 1) threads BOTH glass ladders; the
             // demo writes the inheriting `:root` value the descendant surfaces read.
             s.setProperty("--glass-level", `${value as number}`);

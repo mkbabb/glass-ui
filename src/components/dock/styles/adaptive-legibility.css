@@ -1,26 +1,26 @@
-/* Dock adaptive-legibility styles (carved
- * from dock/morph.css to hold both partials under the 500-line no-god-module bound).
+/* Dock adaptive-legibility styles (a partial held
+ * under the 500-line no-god-module bound).
  *
  * This partial owns the darken-over-light legibility concern, distinct from the morph
- * chrome: the unconditional `:where(.glass-dock)` self-engage (AZ.W-ADAPTIVE-AUTO), the
- * continuous backdrop-luma tint clamp (BC.W-ADAPTIVE-RECONCILE), the BD.W-DOCK-CORE D2
+ * chrome: the unconditional `:where(.glass-dock)` self-engage, the
+ * continuous backdrop-luma tint clamp, the 
  * warm-chromatic dock ink, the ancestor `@container style(--glass-backdrop: light)`
- * descendant bucket, the AX.W55 contrast-color() progressive refinement, and the
- * BB.W-LIQUID-REVEAL / BC.W-DOCK-SHRINK-BLUR PRM reveal-blur carve.
+ * descendant bucket, the contrast-color() progressive refinement, and the
+ * PRM reveal-blur carve.
  *
  * @import-ed by dock.css in cascade order, in the SAME `@layer components` as morph.css
  * (the carve is isomorphic — same layer, source order preserved → ZERO visual delta). */
 
 @layer components {
     /* ── Adaptive legibility: SELF-ENGAGE the dock over a light backdrop by default
-       (AZ.W-ADAPTIVE-AUTO Arm 1 — the literal G2 surface; "Glass dock over VERY
+       The literal G2 surface; "Glass dock over VERY
        LIGHT materials is unreadable, darken DYNAMICALLY like iOS 27") ─────────────
        The dock floats over WHATEVER the consumer painted — frequently a light/near-
-       white app surface (the canonical G2 case the user reported). AY.W-A11Y-PERF
-       O-1 set `--glass-backdrop: light` on the dock's OWN root (shell.css) intending
-       a self-darken, but CSS style queries NEVER self-match (the `@container
-       style()` block below reads an ANCESTOR — verified on Chrome 148), so the
-       self-declaration was a NO-OP. This `:where(.glass-dock)` rule is the genuine
+       white app surface (the canonical G2 case the user reported). 
+       A self-declared `--glass-backdrop: light` on the dock's OWN root (shell.css)
+       would be a NO-OP: CSS style queries NEVER self-match (the `@container
+       style()` block below reads an ANCESTOR — verified on Chrome 148), so a
+       self-declaration cannot self-darken. This `:where(.glass-dock)` rule is the genuine
        UNCONDITIONAL self-engage — mirroring the overlay band's `ladder.css:169` —
        re-pointing the INHERITING tint tokens DIRECTLY on the dock root so the
        shell (`--glass-bg-dock`), chassis-strip, and held/open tiers (which compose
@@ -39,13 +39,13 @@
        inappropriate over a busy glass plate, so it resolves to the legible dark
        ink, which clears ~10:1). */
     :where(.glass-dock) {
-        /* BD.W-DOCK-CORE (D2) — the dock self-engage reads the warm-CHROMATIC dock ink
-           (glass-fx.css), NOT the frozen global `--glass-tint-ink` (W-DARK-MATERIAL's
+        /* The dock self-engage reads the warm-CHROMATIC dock ink
+           (glass-fx.css), NOT the frozen global `--glass-tint-ink` (the
            whole-system register). So the darken-over-light RAISES chroma toward a warm
            material (H ≈ 62°, C ≈ 0.016 at AA) rather than dropping L with chroma flat (the
            gray dock). ONE dock tint source, ONE global ink — file-line-disjoint. */
         --glass-tint-source: var(--glass-tint-ink-dock);
-        /* BC.W-ADAPTIVE-RECONCILE — the dock JOINS the continuous observer driver (the
+        /* The dock JOINS the continuous observer driver (the
            literal G2 surface: "darken DYNAMICALLY like iOS 27"). The dock's own
            `useGlassBackdropLuminance` observer samples the threaded `:background-canvas`
            (aurora/blob) and WRITES `--glass-backdrop-luma`; this clamp READS it and lerps
@@ -86,7 +86,7 @@
         }
     }
 
-    /* AX.W55 — the `contrast-color()` flip for the dock control foreground (Chrome
+    /* The `contrast-color()` flip for the dock control foreground (Chrome
        147+/Safari 26+; progressive enhancement, NEVER the load-bearing floor). The
        declarative bucket above already carries AA on all engines (it darkens the dock
        plate so the warm-dark `--dock-fg-on-aurora` clears ~17:1 over white at the 18%
@@ -129,10 +129,10 @@
     }
 }
 
-/* BB.W-LIQUID-REVEAL — the dock-expand bloom beat's blur-settle is OFF under
+/* The dock-expand bloom beat's blur-settle is OFF under
    `prefers-reduced-motion: reduce` (the vestibular floor): a reduced-motion dock reads
    crisp at every state, no in-between blur frames.
-   BC.W-DOCK-SHRINK-BLUR — the self-blur is now gated to `[data-morphing]`, so the PRM
+   The self-blur is now gated to `[data-morphing]`, so the PRM
    carve zeroes it on the ARMED scope too (specificity 0,2,0) — a PRM dock that briefly
    arms `[data-morphing]` carries no 3px bloom; the resting `.glass-dock` is already
    crisp by the re-gate. */

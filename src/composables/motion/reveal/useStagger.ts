@@ -1,6 +1,6 @@
 // One-shot staggered reveal-flag array. Replaces hand-rolled `setTimeout`
 // cascades in consumers (the climax row-tint sweep at
-// `SpeedtestResults.vue:251-267` is the source pattern).
+// the consumer results view is the source pattern).
 //
 // `useStaggerReveal` already exists in glass-ui's motion/ folder, but it
 // gates on IntersectionObserver — it animates entrance as elements cross
@@ -27,7 +27,7 @@ export interface UseStaggerOptions {
      * Delay between consecutive reveals.
      *
      * Default 80ms — mirrors the `--motion-stagger-default` token in
-     * `tokens.css` (AJ-W4-κ canon). Consumers driving per-row CSS
+     * `tokens.css` (AJ--κ canon). Consumers driving per-row CSS
      * `animation-delay` cascades on the same surface should also read
      * `--motion-stagger-default` so the JS-driven cascade (this composable)
      * and the CSS-driven cascade stay in lockstep.

@@ -11,10 +11,10 @@ import { vSpecular } from "../../composables/glass";
 import DropdownMenuTrigger from "../dropdown-menu/DropdownMenuTrigger.vue";
 
 /**
- * <DockTrigger> — the ONE dock overlay trigger (BI.W-DOCK-CONTROLS; folds
+ * <DockTrigger> — the ONE dock overlay trigger (folds
  * `DockSelectTrigger` / `DockDropdownTrigger` / `DockPopoverTrigger` onto the one
  * shared `.dock-trigger` recipe). The three were already byte-identical geometry +
- * style + baseline alignment (BD.W-DOCK-CORE A8's unified family); this collapses
+ * style + baseline alignment (the unified family); this collapses
  * them to ONE component with a `for` discriminant selecting the reka trigger it
  * hosts:
  *

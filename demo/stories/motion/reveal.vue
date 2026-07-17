@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // the reveal pane: routed through <StorySection heading> (the
-//  census catches the prior hand-rolled top-level text-prose), and
+//  census catches hand-rolled top-level text-prose), and
 // promoted to the FLAGSHIP — a bloom-from-source overlay demo
 // (the iOS-27 surface that materializes FROM its trigger's rect, composing the
 // shipped `useLiquidReveal` leaf — NO demo-local re-implementation) alongside the

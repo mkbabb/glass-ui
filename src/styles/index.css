@@ -80,8 +80,8 @@
  *                              registration, the shared cross-control four-state
  *                              comma-groups, and the `@import`s of the cohesive
  *                              `dock/*.css` partials (shell · morph · density ·
- *                              layers · layer-group · overflow, carved from
- *                              the 1762-line god-module into single-axis partials,
+ *                              layers · layer-group · overflow —
+ *                              single-axis partials of the dock cascade,
  *                              each < 500 lines, all in the SAME @layer components
  *                              so the cascade is isomorphic). Component utility
  *                              layer; consumes (1) + (3).
@@ -106,7 +106,7 @@
  *   8. floating-panel.css    — retired: the
  *                              `.floating-panel` fixed-overlay recipe had ZERO
  *                              consumers; the still-live `.dropdown-menu-content`
- *                              font/inner-pad rules moved to menu.css.
+ *                              font/inner-pad rules live in menu.css.
  *   9. transitions.css       — Vue <Transition> classes (fade, tab-fade,
  *                              pane-swap, metric-swap, dock-in).
  *                              Retired unused fade-slide/pop/
@@ -211,8 +211,8 @@
 @import "../components/drawer/styles.css";
 @import "../components/tabs/styles/segmented.css";
 /* The SegmentedTabs additive decoration tail (the .glass-drag-lift
-   pull affordance) carved out of
-   segmented-tabs.css to hold the 500-line bound; imported immediately after it
+   pull affordance), a partial held under
+   the 500-line bound; imported immediately after it
    (unlayered, unique selectors, source-order-after — byte-isomorphic). */
 @import "../components/tabs/styles/drag.css";
 @import "../components/_shared/field-surfaces.css";
@@ -255,15 +255,15 @@
    classes they emit (CVA variant classes like text-destructive-foreground,
    layout utilities like h-full/shrink-0).
 
-   The source directive was re-pointed from the dead components-mirror glob (the prior
-   `../components` target). That glob resolved correctly in glass-ui's OWN build
+   The source directive points at `../*.js`, NOT the components-mirror glob
+   `../components`. That glob resolves correctly in glass-ui's OWN build
    (`src/styles/index.css` → `src/components` carries the real `.vue` source), but the
-   SHIPPED dist copy of this file (`dist/styles/index.css`) resolved `../components` to
+   SHIPPED dist copy of this file (`dist/styles/index.css`) resolves `../components` to
    `dist/components/` — a
    directory that carries ONLY `.d.ts` mirror files (zero `.js`, zero `.vue`). The
-   compiled render-functions live FLAT at `dist/*.js`. So in every consumer that
-   re-imported this `@source` line, Tailwind scanned an empty dir and glass-ui's own
-   arbitrary utilities silently died.
+   compiled render-functions live FLAT at `dist/*.js`. So a consumer that
+   re-imports a `@source "../components"` line has Tailwind scan an empty dir and glass-ui's own
+   arbitrary utilities silently die.
 
    `../*.js` reaches the compiled render-functions PRECISELY in the SHIPPED context:
    in dist it is `dist/*.js` (the 150+ flat compiled chunks that carry glass-ui's

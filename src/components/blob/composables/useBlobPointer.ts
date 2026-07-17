@@ -85,8 +85,8 @@ export function useBlobPointer(
 
     // the SDF engage radius in the listener's normalized [-1, 1] space. The
     // blob silhouette ≈ the body disc (satellites orbit OUTSIDE the listener box);
-    // `hitRadius()` returns that radius, UNSET → Infinity (the whole box, byte-identical
-    // to the prior always-on `active`). `pulse` swells the body on a click, so the
+    // `hitRadius()` returns that radius, UNSET → Infinity (the whole box is always
+    // active). `pulse` swells the body on a click, so the
     // engage radius widens with it (a click on the just-swollen edge still lands).
     function sdfRadius(): number {
         const r = hitRadius ? hitRadius() : Infinity;
@@ -172,8 +172,8 @@ export function useBlobPointer(
         springX.target = tx;
         springY.target = ty;
         // keyframes.js 4.x: `tickDt(dt)` advances by MILLISECONDS (the canonical
-        // Tickable step the shared RAFPlayback loop drives) — the 2.x `tick(seconds)`
-        // seam was renamed + re-based to ms. Pass the ms-clamped delta directly.
+        // Tickable step the shared RAFPlayback loop drives). Pass the ms-clamped
+        // delta directly.
         springX.tickDt(dtClampedMs);
         springY.tickDt(dtClampedMs);
 

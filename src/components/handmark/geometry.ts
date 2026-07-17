@@ -61,9 +61,9 @@ export interface ShapeGeom {
  * The text-mode underline anchors to a MEASURED baseline: `baselineFrac` is the
  * slotted word's alphabetic baseline as a fraction of the `.hm` box height (the SFC
  * measures it via ResizeObserver + `document.fonts.ready`). The underline y is then
- * `H × (baselineFrac + UNDERLINE_GAP)` — never the old hardcoded `32` (80% of the
- * box), which struck through tight-leading headings. `null` ⇒ not yet measured: fall
- * back to the legacy `H − 8` constant so first paint (and jsdom/SSR) still renders a
+ * `H × (baselineFrac + UNDERLINE_GAP)` — not a hardcoded fraction (a fixed `32`,
+ * 80% of the box, strikes through tight-leading headings). `null` ⇒ not yet measured: fall
+ * back to a fixed `H − 8` constant so first paint (and jsdom/SSR) still renders a
  * line, replaced the instant the measure lands.
  *
  * `natural` routes the underline through the φ-incommensurate value-noise

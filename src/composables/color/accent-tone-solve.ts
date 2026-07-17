@@ -1,4 +1,4 @@
-// BI.W-CHIP-FOLD — the value.js-BEARING dynamic leaf of the accent-tone register.
+// The value.js-BEARING dynamic leaf of the accent-tone register.
 //
 // The contrast-safe INK solve (the ONE channel that needs value.js) is quarantined
 // HERE, reached ONLY behind a dynamic `import("./accent-tone-solve")` boundary from

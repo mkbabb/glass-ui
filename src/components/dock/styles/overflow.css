@@ -1,14 +1,14 @@
 /* Dock over-cap overflow styles.
  *
- * Carved from the dock.css god-module (slice 25). This partial owns the
+ * This partial owns the
  * `overflow=` axis: the HORIZONTAL inline scroll port (`.dock-scroll-x`, hidden
- * scrollbar, momentum-trapped), the W04 CONTENT-DRIVEN `overflow="wrap"`
+ * scrollbar, momentum-trapped), the CONTENT-DRIVEN `overflow="wrap"`
  * intrinsic-flex recipe (the `.dock-overflow-wrap` pill↔card radius + floating-
- * tier elevation morph on the ONE `--dock-expand-t` scalar — RELOCATED verbatim,
- * never re-authored), and the W45 D15 single coarse-pointer `--dock-scale`
+ * tier elevation morph on the ONE `--dock-expand-t` scalar), and the
+ * single coarse-pointer `--dock-scale`
  * multiplier.
  *
- * BI.W-DOCK-OVERFLOW — the GREENFIELD native scroll track (PASS-1 §2.5). A capped
+ * The GREENFIELD native scroll track. A capped
  * axis is INTRINSICALLY a scroll axis: `.dock-scroll-x` is emitted on EVERY
  * horizontal dock (scrollClass in useDockShellProps), and the VERTICAL block-axis
  * scroll folds into the unconditional cap-derived rule in shell.css. The clip-era
@@ -27,7 +27,7 @@
  * @import-ed by dock.css in cascade order, in the SAME `@layer components`. */
 
 @layer components {
-    /* ── The native inline scroll TRACK (BI.W-DOCK-OVERFLOW, PASS-1 §2.5) ──
+    /* ── The native inline scroll TRACK ──
        The GREENFIELD overflow facility: a DISTINCT inner scroll track. The
        clip-era band-aids are GONE (the `overflow-clip-margin` cross-axis fudge +
        the NO-OP `overflow-y: clip` pin + the `.dock-layers` re-clip that fought
@@ -111,12 +111,12 @@
 
     /* The VERTICAL block-axis scroll port lives in shell.css (the unconditional
        cap-derived `.glass-dock.vertical…:not([data-morphing])` rule) — the
-       `.dock-scroll-y` opt-in class is RETIRED here (BG.W-DOCK-CAP-SCROLL-FADE,
+       `.dock-scroll-y` opt-in class is RETIRED here (
        clean break: a capped vertical axis is intrinsically a scroll axis, ONE
        home, no second opt-in port). */
 
     /* ── `overflow="wrap"` recipe — CONTENT-DRIVEN intrinsic flex reflow ──
-       (AX.W04 F0). Parallel to the `.dock-scroll-{x,y}` hooks the
+       Parallel to the `.dock-scroll-{x,y}` hooks the
        `overflow="scroll"` member emits, `overflow="wrap"` emits this class.
        (HORIZONTAL-ONLY — GlassDock.vue guards the emit on
        `orientation !== 'vertical'`; a vertical rail grows-to-fit + clamps via
@@ -129,7 +129,7 @@
        per-instance). So the layer wraps to N rows EXACTLY when its intrinsic row
        exceeds the cap — at ANY viewport width — and collapses to one row when it
        fits. The magic-640 `@media` snap-back + the `--dock-overflow-bp` token are
-       DELETED (the inherited mobile-responsive debt, origin 078dd79). */
+       DELETED (the inherited mobile-responsive debt). */
     .glass-dock.dock-overflow-wrap {
         white-space: normal;
         /* The content-driven cap. The dock ALREADY shrink-wraps to its content's
@@ -148,7 +148,7 @@
         /* F4 — the pill↔card radius morph. A wrap dock is a FINITE multi-row CARD
            surface when expanded and a stadium PILL when collapsed — the SAME
            pill↔card morph the big-dock `shape-card` path rides. The corner glides
-           on the `--dock-expand-t` W01 single-scalar: `--radius-pill` at expand-t 0
+           on the `--dock-expand-t` single-scalar: `--radius-pill` at expand-t 0
            (collapsed), `--dock-card-radius` at expand-t 1 (expanded — UNIFIED on
            the SAME finite-radius token the big-dock card uses; the bare 16px
            `--radius-2xl` literal is DELETED). ONE register, no discrete snap. */
@@ -190,11 +190,11 @@
         min-height: var(--dock-wrap-layer-min-height, var(--dock-layer-height, 2rem));
         gap: var(--dock-wrap-row-gap, 0.25rem)
             var(--dock-wrap-column-gap, var(--dock-layer-gap, 0.375rem));
-        /* AX.W04 — NO `transition: min-height` JS-morph (the AW.W3b spring-keyed
+        /* NO `transition: min-height` JS-morph (the spring-keyed
            min-height detector is RETIRED — the false `proof:dock-layering-polish`
            wrap-reflow claim is STRUCK). The reflow is intrinsic flex: rows
            appear/vanish on the cap crossing with no second clock. The radius +
-           shadow lift ride the `--dock-expand-t` scalar (the W01 single clock),
+           shadow lift ride the `--dock-expand-t` scalar (the single clock),
            NOT a CSS transition on the retired `--dock-motion-resize` list. */
     }
 
@@ -218,14 +218,14 @@
         white-space: nowrap;
     }
 
-    /* AX.W45 D15 / AX.W51 D18 RECONCILE — the coarse-pointer dock growth now rides
+    /* RECONCILE — the coarse-pointer dock growth now rides
        the GLOBAL `--ui-scale` comfort axis, NOT a parallel dock-only 1.5×. The
        library-wide `@media (pointer: coarse) { :root { --ui-scale:
        var(--ui-coarse-scale, 1.5) } }` block (tokens.css) lifts the master scalar,
        and `--dock-scale: calc(var(--ui-scale) * var(--dock-local-scale, 1))` (its
        re-homed definition) inherits it FOR FREE — so the dock grows ~1.5× on touch
-       WITH the buttons/inputs/badges (ONE consistent touch scale; at HEAD the dock
-       grew but the rest of the library did not — the three-scale split this resolves).
+       WITH the buttons/inputs/badges (ONE consistent touch scale; without this a
+       three-scale split grows the dock but not the rest of the library).
        The whole density cascade (box + padding + gap + tab + tile-min + glyph) scales
        in LOCKSTEP through its existing `calc(<base> * --dock-scale)` chain, zero edit.
 
@@ -242,13 +242,13 @@
            surfaces (a routed gear, no dock ancestor) that read it directly.
        Fine pointer byte-identical (`--ui-scale` stays 1).
 
-       AP.W3 R0G-6 — selector is `.glass-dock[data-size]`, not bare `.glass-dock`:
+       -6 — selector is `.glass-dock[data-size]`, not bare `.glass-dock`:
        the always-present density setter (0,2,0) would shadow a bare (0,1,0) rule. The
        presence-selector (0,2,0) wins by source order, lifting `--dock-local-scale` +
        the floor so the cascade re-resolves at touch scale. */
     @media (pointer: coarse) {
         .glass-dock[data-size] {
-            /* R5-2 — the coarse-register DEFAULT lives in the FALLBACK, NOT a
+            /* The coarse-register DEFAULT lives in the FALLBACK, NOT a
                hard-pin. The coarse dock painted ~22% too big (the global
                --ui-coarse-scale 1.5 → an ~80px collapsed pill). The dock-layer
                comfort floors at a TIGHTER coarse register than the global --ui-scale
@@ -265,13 +265,13 @@
                 --dock-mobile-scale,
                 var(--dock-coarse-scale, 0.78)
             );
-            /* R5-1 — RE-DECLARE --dock-scale HERE so the consumer knob reaches the
+            /* RE-DECLARE --dock-scale HERE so the consumer knob reaches the
                geometry cascade. The :root definition (offsets-sizing.css) computes
                `calc(var(--ui-scale) * var(--dock-local-scale, 1))` AT :root, where
                --dock-local-scale is the frozen identity 1 — custom-property
                SUBSTITUTION resolves --dock-scale once at its declaring element, so
                the descendant --dock-local-scale lift on THIS block never re-flowed
-               into it (the AX.W55 substitution-vs-inheritance trap, 3rd recurrence).
+               into it (the substitution-vs-inheritance trap).
                Re-declaring --dock-scale on the SAME element that lifts
                --dock-local-scale makes the var() resolve against the lifted value, so
                the --dock-mobile-scale / --dock-coarse-scale knobs reach every
@@ -280,24 +280,24 @@
             --dock-scale: calc(var(--ui-scale) * var(--dock-local-scale, 1));
             --dock-control-floor: var(--dock-touch-target, 2.75rem);
             --size-icon-btn: var(--dock-touch-target, 2.75rem);
-            /* R5-1 SWEEP — the OTHER :root tokens that derive from --dock-scale freeze
+            /* SWEEP: the OTHER :root tokens that derive from --dock-scale freeze
                it at the :root value (where --dock-local-scale is the identity 1), so the
-               R5-2 dock-local 0.78 register never reaches them: the SAME
+               dock-local 0.78 register never reaches them: the SAME
                substitution-vs-inheritance trap, one level out. With --dock-scale now
                re-declared ABOVE, RE-RESOLVE each derived token on THIS element so it
                reads the dock-local --dock-scale (else --dock-icon-glyph /
                --dock-collapsed-padding / --dock-layer-tab-size paint at the global 1.5×
-               while the density box paints at 1.17× — a desync the R5-2 register would
+               while the density box paints at 1.17× — a desync the dock-local register would
                introduce). The formulas are IDENTICAL to their :root definitions; only
                the resolution element moves so the lifted --dock-scale flows in.
-               BB.W-PERF-PRODUCER A′-6 — --dock-icon-glyph is now a RATIO of the
+               --dock-icon-glyph is now a RATIO of the
                density-painted --dock-layer-height (offsets-sizing.css + the density.css
                [data-size] re-resolve). This coarse block @imports AFTER density.css
                in the SAME @layer at the SAME specificity, so its --dock-icon-glyph
                source-order-WINS on coarse pointers — it MUST carry the density-aware
                formula too (the flat `1.25rem * --dock-scale` here would re-freeze the
-               glyph at the flat rem on touch, re-introducing the D5-1 defect the wave
-               fixes). --dock-layer-height re-resolves transitively at the lifted
+               glyph at the flat rem on touch, re-introducing the D5-1 defect).
+               --dock-layer-height re-resolves transitively at the lifted
                --dock-scale (re-declared above), so the glyph tracks both the density
                box AND the coarse register. Formula identical to the :root + density
                re-resolve; only the resolution element moves. */
@@ -308,11 +308,11 @@
                 ),
                 var(--dock-icon-glyph-floor)
             );
-            /* BC.W-DOCK-ENGINE move 3 (the Atlas A-9 fold) — RE-DECLARE the in-dock
+            /* (the dock-glyph fold) — RE-DECLARE the in-dock
                toggle glyph knob on coarse beside `--dock-icon-glyph`. Its `:root`
                default tracks `--dock-icon-glyph`, but a `:root`-only default would
                freeze at the `:root` `--dock-scale` (the identity 1) while the coarse
-               `--dock-icon-glyph` above lifts — the AZ.R5-TOKENS substitution-vs-
+               `--dock-icon-glyph` above lifts — the substitution-vs-
                inheritance dead-knob (the SAME trap the dock-scale re-declare closed,
                mirrored for the toggle glyph). Re-declaring it HERE, against the
                coarse-re-resolved `--dock-icon-glyph`, keeps the in-dock dark-toggle
@@ -326,7 +326,7 @@
                density-resolved control height on .glass-dock[data-size]) — but its
                :root definition reads --dock-layer-height at :root, where density.css
                never sets it, so it froze at the inline 2.5rem fallback × 0.85 = 34px
-               (the pre-existing freeze, independent of R5-2). Re-resolving it HERE reads
+               (the pre-existing freeze, independent of the dock-local register). Re-resolving it HERE reads
                the density-painted --dock-layer-height so the collapsed circle FLOOR
                tracks the dock scale (the "perfect circle" the user named scales on touch
                with the box, not a frozen 34px floor). */

@@ -83,18 +83,18 @@ export function supportsWebGPU(): boolean {
     );
 }
 
-// ── The PROCESS-SHARED device warm (D3a — pay the cold acquire ONCE, not per-canvas). ──
+// ── The PROCESS-SHARED device warm (pay the cold acquire ONCE, not per-canvas). ──
 //
-// Each `createWebGPUCanvas.armAsync()` USED to call `requestAdapter()` + `requestDevice()`
-// itself and race EACH against the timeout. With N viz on a page, the cold acquire was
-// re-paid + re-raced N times, and the FIRST slow one (a cold GPU process at ~3.5s) tripped
-// the (then 2500ms) ceiling → every viz silently downgraded to WebGL2 forever, the WGSL
-// primary never exercised. The fix is the standard WebGPU pattern: ONE device, MANY
+// Without sharing, each `createWebGPUCanvas.armAsync()` would call `requestAdapter()` + `requestDevice()`
+// itself and race EACH against the timeout. With N viz on a page, the cold acquire is
+// re-paid + re-raced N times, and the FIRST slow one (a cold GPU process at ~3.5s) trips
+// a tight ceiling → every viz silently downgrades to WebGL2, the WGSL
+// primary never exercised. The standard WebGPU pattern instead: ONE device, MANY
 // contexts. The FIRST canvas pays the cold acquire (raced ONCE against the relaxed ceiling);
 // every subsequent canvas `await`s the SAME resolved device (instant — no re-race). A
 // `device.lost` invalidates the cache so the next acquire re-warms it (the self-heal stays);
 // a rejected warm clears the cache so a later page can retry (a transient failure is never
-// pinned). The memo lives in THIS substrate (the single WebGPU-bootstrap home — clause A).
+// pinned). The memo lives in THIS substrate (the single WebGPU-bootstrap home).
 interface SharedGPUDevice {
     device: GPUDevice;
     adapterClass: string;

@@ -7,9 +7,9 @@
  *
  *   - `ribbon` picks the L2 body: 'stroke' (pen/pencil/ring — a plain stroked <path>)
  *     vs 'hull' (the opt-in vendored perfect-freehand variable-width fill — the boil/
- *     crayon/marker/highlighter voices, the BA.W-HANDMARK C-1(b) slab). The hull body
+ * crayon/marker/highlighter voices, the (b) slab). The hull body
  *     carries the se-GUARD: a degenerate near-point outline falls back to a stroked
- *     path so a tiny-datum hull mark never vanishes (BG.W-HANDMARK-PERFECT (b)).
+ * path so a tiny-datum hull mark never vanishes ((b)).
  *   - `passes` + `passOpacity` → the crayon offset-overdraw heavy-core look.
  *   - `grain > 0` flips on the L3 filter (texture.ts); 0 ⇒ no filter (pen is free).
  *   - `blend` unlocks highlighter ('multiply'); no other field needs it.
@@ -18,8 +18,8 @@
  *   - `stamp` (SPEC §5) REPLACES the built-in ink stage only — it inherits draw-on
  *     + boil + the seeded variant for free.
  *
- * THE SEED RECONCILE (BA.W-HANDMARK [S2]): the per-pass jitter rng is the HOUSE
- * `mulberry32` (src/composables/glass/procedural/prng.ts — the AV.W14 single-source), NOT pencil-boil's
+ * THE SEED RECONCILE ([S2]): the per-pass jitter rng is the HOUSE
+ * `mulberry32` (src/composables/glass/procedural/prng.ts — the single-source), NOT pencil-boil's
  * mulberry32. ONE seed leaf in glass-ui code.
  *
  * The renderer emits a fragment the SFC binds; it owns no DOM and no reactivity.
@@ -95,8 +95,8 @@ function curvatureAt(pts: [number, number][], i: number): number {
  * profile is clamped 0.05..1; the seed leaf is the HOUSE `mulberry32`.
  *
  * On a low-curvature centerline (the highlighter's near-flat slab) the curvature term
- * is ~0, so the pressure floors to the straight baseline ≈ the prior mean swell — the
- * A8 highlighter-fence holds (the re-author is a near-no-op on a flat brush).
+ * is ~0, so the pressure floors to the straight baseline — the highlighter-fence
+ * holds (a flat brush is essentially a no-op).
  */
 const CURVATURE_GAIN = 2.5; // how much a tight wobble thins the line (the body variation)
 const PRESSURE_BASE = 0.9; // the straight-segment pressure (a firm press)
@@ -192,7 +192,7 @@ export function ink(
                 end: { taper: b.taper.end, easing: easeFor(b.taper.ease) },
             });
             const hullD = getSvgPathFromStroke(outline);
-            // ── (b) THE HULL se-GUARD (BG.W-HANDMARK-PERFECT; SPEC §3 residual b) ──
+            // ── (b) THE HULL se-GUARD (SPEC §3 residual b) ──
             // `getSvgPathFromStroke` returns "" when `outline.length < 4` (a degenerate
             // short/tiny-datum centerline → a near-point hull), so a bare `<path d="">`
             // renders NOTHING — the highlighter/marker/crayon/boil hull marks all VANISH

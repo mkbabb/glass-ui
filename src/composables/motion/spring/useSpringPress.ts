@@ -8,7 +8,7 @@
 // (precept: keyboard focus rides its own non-spring `--motion-ease-apple`
 // curve — see X4 §5 risk 5 on tap-press double-fire avoidance).
 //
-// Lands W9-β of the AL SLIM plan alongside `useSpring`.
+// Lands of the AL SLIM plan alongside `useSpring`.
 
 import { ref } from "vue";
 import { useSpring, type UseSpringOptions, type SpringRef } from "./useSpring";

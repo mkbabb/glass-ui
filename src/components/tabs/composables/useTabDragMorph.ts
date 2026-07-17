@@ -14,8 +14,8 @@ import type { SegmentedTabOption } from "../SegmentedTabs.vue";
 
 /**
  * Package-private composable for `SegmentedTabs.vue` — the LIQUID
- * TAB (the `:draggable` axis). Carved out of the SFC at  to hold the
- * no-god-module bound, mirroring the `useTabIndicator` colocation sibling; the SFC
+ * TAB (the `:draggable` axis). A composable held under the
+ * no-god-module bound, beside the `useTabIndicator` colocation sibling; the SFC
  * IMPORTS it and binds only its state; the shared morph owner writes geometry.
  *
  * When `:draggable`, the `pill` indicator is wired to `useDragMorph` with the snap

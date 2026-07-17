@@ -200,7 +200,7 @@ export function makeEllipticSpectrum(
     return components;
 }
 
-// ── BG.W-FOURIER-BEAUTY B2 — the coefficient-driven closed-figure family ─────────
+// ── The coefficient-driven closed-figure family ─────────
 //
 // A DELIBERATE figure, not a scribble: a few-term INTEGER-index harmonic stack. Because
 // every phasor index is an INTEGER, `exp(2πi·k·t)` has period 1, so the sum CLOSES at t=1

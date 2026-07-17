@@ -244,7 +244,7 @@ export interface LiquidGridSampleParams {
     // ── The FACE — the height-lit filled cell interior ──────────────
     // OPTIONAL: a line-only caller (e.g. the parity capture) omits them → the face evaporates
     // (faceAlpha→0), line-identical. The live SFC path always supplies them from the config.
-    /** The filled-FACE opacity (0 → the face evaporates → byte-identical to HEAD). */
+    /** The filled-FACE opacity (0 → the face evaporates → the line-only render). */
     faceAlpha?: number;
     /** The slope-shade ∇H Lambert gain. */
     faceReliefGain?: number;

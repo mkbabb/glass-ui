@@ -4,7 +4,7 @@
 // NOT spring physics — this composable interpolates between two numeric
 // snapshots over a fixed duration via an easing function (linear / cubic
 // bezier / keyframes.js timing-function names). True spring physics
-// (mass / stiffness / damping / overshoot) lives in `useSpring` (W9-β),
+// (mass / stiffness / damping / overshoot) lives in `useSpring`,
 // which owns the reserved "spring" name in the composable surface.
 import { NumericAnimation } from "@mkbabb/keyframes.js";
 import type {

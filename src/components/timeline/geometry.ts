@@ -229,7 +229,7 @@ export function continuousFillWidth(seg: TimelineSegment): number {
  * Default popover content payload shape.
  *
  * Reads `value` shape if the consumer supplied the AA-canonical
- * `{ label, value, description, state }` payload (the speedtest
+ * `{ label, value, description, state }` payload (a consumer
  * PhaseDetail), otherwise falls back to the segment's own label/state.
  * The slot scope exposes the full segment so consumers can override
  * entirely.

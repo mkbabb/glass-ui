@@ -6,13 +6,11 @@ import GlassDock from "@glass/components/dock/GlassDock.vue";
 import DockControl from "@glass/components/dock/DockControl.vue";
 
 /**
- * AZ.W-DOCK-TAXONOMY (HG2) — a COLLAPSIBLE vertical dock morphs/shrinks.
+ * A COLLAPSIBLE vertical dock morphs/shrinks.
  *
  * The mandate: a vertical dock carries the SAME collapse/morph machinery a
- * horizontal dock does (the machinery the old `variant="rail"` force-pin denied).
- * Before this wave a vertical dock was always-expanded-by-construction
- * (`startCollapsed` resolved `false`, `alwaysExpanded` resolved `true`); after it,
- * a vertical dock with no `always-expanded` is collapsible — it starts collapsed,
+ * horizontal dock does. A vertical dock with no `always-expanded` is
+ * collapsible — it starts collapsed,
  * its outer collapse pair morphs the BLOCK axis (`outerLayerAxis` = the resolved
  * orientation → `vertical` → `block-size`), and expand()/collapse() drive the
  * `visualExpanded` aperture the morph rides.

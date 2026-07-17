@@ -216,7 +216,7 @@ const emit = defineEmits<{
    RETIRES the opaque `gradientFor(seg)` `chart-*` fill: a translucent
    `--cel-accent` glass over the warm rail (the field bleeds UP through it)
    with a keyed inner cel edge so it reads as a DEFINED chip, not a pastel
-   ghost. build-trap-(d): the 0-alpha arm is `oklch(... / 0)`, NEVER bare
+   ghost. The black-premultiply trap: the 0-alpha arm is `oklch(... / 0)`, NEVER bare
    `transparent` (the WebKit black-premultiply hole). */
 .timeline-cel {
     background: color-mix(

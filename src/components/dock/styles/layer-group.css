@@ -1,26 +1,26 @@
 /* Dock layer-group and switcher rail styles.
- * (AX.W06 carve).
+ * (carve).
  *
- * Carved from the dock.css god-module (slice 25). This partial owns the
+ * This partial owns the
  * `<DockLayerGroup>` family: the `<DockSeparator>` orientation+layout-aware
  * paint (vertical hairline · horizontal rule · grid section-break), the
  * `.dock-spacer`, the `.dock-layer-group` flex axes, the `.dock-layer-rail`
- * layer-switcher rail (the W45 DK8 rail-bg plate + the axis-aware travelling
+ * layer-switcher rail (the rail-bg plate + the axis-aware travelling
  * `.dock-layer-tab-indicator`).
  *
  * NOTE: this `.dock-layer-rail` is the LAYER-SWITCHER rail inside a
- * `<DockLayerGroup>` — the in-dock switcher tab strip. AZ.W-DOCK-TAXONOMY
+ * `<DockLayerGroup>` — the in-dock switcher tab strip. 
  * de-overloaded the "rail" noun: the `GlassDock variant="rail"` vertical-nav
  * variant is GONE (a vertical nav column is now `orientation="vertical"`), and
- * `<InstrumentRail>` retired at AY W-IC1. `.dock-layer-rail` is the ONLY surviving
+ * `<InstrumentRail>` retired at AY. `.dock-layer-rail` is the ONLY surviving
  * "rail" in the dock band; the noun is otherwise free (reserved for the
- * W-RAIL-EXTEND beyond-dock facility).
+ * beyond-dock facility).
  *
  * @import-ed by dock.css in cascade order, in the SAME `@layer components` — the
  * carve is isomorphic (same layer, same source order → ZERO visual delta). */
 
 @layer components {
-    /* AX.W45 D13-c / DK5 — the `<DockSeparator>` paint source. The separator is now
+    /* The `<DockSeparator>` paint source. The separator is now
        a first-class orientation+layout-aware primitive (DockSeparator.vue) that
        carries the orientation contract the bare class could not. It demarcates dock
        item GROUPS (transport | navigation | settings) for affordance hierarchy. The
@@ -89,16 +89,16 @@
         flex-direction: column-reverse;
     }
 
-    /* AZ.W-DOCK-RAIL — the rail is a HAIRLINE register, not a fused plate. The
-       AX.W45 `--surface-tint-8` filled plate + `--radius-md` rounded background
-       (the "heavy dark blob column" R3-1) are RETIRED: the rail box paints NO fill
+    /* The rail is a HAIRLINE register, not a fused plate. The
+       `--surface-tint-8` filled plate + `--radius-md` rounded background
+       (the "heavy dark blob column") are gone: the rail box paints NO fill
        (`--dock-layer-rail-bg` defaults transparent at §sizing) and carries no
        rounded plate background. The single `border-right` hairline — re-keyed to
        the tunable `--dock-layer-rail-divider` token — is the only visible rail
        edge: a thin rule between the switcher column and the dock body. The
        hover/active affordance reads the `--dock-layer-rail-{hover,active}` glass
        tints, so the whole rail ladder is tunable from §sizing. */
-    /* BG.W-DOCK-CONSUMER-FENCE — the switcher-rail internal parts carry
+    /* The switcher-rail internal parts carry
        the dock-root ANCESTRY anchor (`:where(.glass-dock, .dock-layer-group)`, specificity
        0,0,0) so a consumer element with a coincidental `.dock-layer-*` class OUTSIDE a dock
        is never painted/repositioned. Every internal part here lives under `.dock-layer-group`
@@ -108,7 +108,7 @@
         display: flex;
         flex-direction: column;
         flex-shrink: 0;
-        /* AY.W-DOCK-NAV B6 — `align-self: start` (not the group's `stretch`
+        /* `align-self: start` (not the group's `stretch`
            default) so the column rail reports its OWN intrinsic content height
            (the stacked tabs) to the group's cross-axis sizing rather than being
            stretched to the group's content-row height. Under `stretch` the rail's
@@ -162,7 +162,7 @@
             );
     }
 
-    /* AU.W8.4 — the rail is a reka-ui Tabs contract. The travelling
+    /* The rail is a reka-ui Tabs contract. The travelling
        `.dock-layer-tab-indicator` (the reka TabsIndicator) now carries the
        active affordance; the rail is `position: relative` so the indicator's
        absolute placement is rail-local. */
@@ -175,7 +175,7 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        /* AY.W-DOCK-NAV B6 — `flex-shrink: 0` so the stacked tabs in the column rail
+        /* `flex-shrink: 0` so the stacked tabs in the column rail
            hold their full size and the rail demands its natural content height (no
            tab squish). With the rail's `align-self: start` this makes the rail report
            its true column height to the group's cross-axis sizing, growing the dock
@@ -186,7 +186,7 @@
         border: 0;
         border-radius: var(--dock-layer-tab-radius, var(--radius-sm));
         background: transparent;
-        /* AZ.W-DOCK-RAIL — the rest glyph lifts OFF the low-contrast
+        /* The rest glyph lifts OFF the low-contrast
            `--muted-foreground` (which read sub-AA over the now-hairline transparent
            backdrop) to the nav-glyph contrast register: a strong warm-ink tint of
            the dock foreground (`--dock-fg-on-aurora` → `--foreground`), tempered to
@@ -210,10 +210,10 @@
             color var(--dock-motion-fast);
     }
 
-    /* AZ.W-DOCK-RAIL — floor the rail glyph. The `size-4` (16px) icon class on the
+    /* Floor the rail glyph. The `size-4` (16px) icon class on the
        lucide component does not survive the column inline-flex: with no concrete
        `width`/`flex-shrink`, the un-floored SVG collapsed to a 4px sliver
-       (F2-R3-1). This rule floors BOTH axes to 1rem (16px) and pins
+       This rule floors BOTH axes to 1rem (16px) and pins
        `flex-shrink: 0` so the glyph never re-squishes inside the flex tab. */
     :where(.glass-dock, .dock-layer-group) .dock-layer-rail .dock-layer-tab svg {
         width: 1rem;
@@ -229,11 +229,11 @@
         color: var(--dock-fg-on-aurora, var(--foreground));
     }
 
-    /* AU.W8.4 — KEEP the active glyph tint on the selected tab (reka emits
+    /* KEEP the active glyph tint on the selected tab (reka emits
        `data-state="active"` + `aria-selected="true"`); the per-button active
        BACKGROUND is RETIRED — the travelling indicator carries that affordance.
-       AZ.W-DOCK-RAIL — the selected glyph reads the full warm-ink register (the
-       nav-glyph contrast canon), deferring the exact accent to W-REGISTER-IOS's
+       The selected glyph reads the full warm-ink register (the
+       nav-glyph contrast canon), deferring the exact accent to the
        root via `--dock-rail-active-accent` (defaults to the dock foreground, NOT
        a saturated brand `--primary`). */
     :where(.glass-dock, .dock-layer-group)
@@ -245,7 +245,7 @@
         );
     }
 
-    /* AU.W8.4 — the dock control focus-ring contract does not cover
+    /* The dock control focus-ring contract does not cover
        `.dock-layer-tab` (the rail tab is not in the `.dock-icon-button` family).
        The roving tabindex means only the active tab is in the tab order; a
        focus-visible tab paints the shared dock ring. */
@@ -254,7 +254,7 @@
         outline: none;
     }
 
-    /* BI.W-DOCK-FOLD — the travelling indicator is AXIS-AWARE and driven by the ONE
+    /* The travelling indicator is AXIS-AWARE and driven by the ONE
        traveling-indicator writer (`useSelectionIndicator`, via `useSelectionGroup`),
        NOT the retired reka `--reka-tabs-indicator-*` path. The writer emits the
        travel-axis size + a center-anchored `translate` + `opacity` as an INLINE style
@@ -266,7 +266,7 @@
        fills width + translateX. The active-tab plate reads the tunable
        `--dock-layer-rail-active` rung.
 
-       AY.W-DOCK2 (D5 one-clock) — a rail tab switch is a DISCRETE selection (the user
+       (D5 one-clock) — a rail tab switch is a DISCRETE selection (the user
        picks a pane), NOT the box collapse↔expand morph, so the indicator glides on the
        `--spring-snappy` register (the SAME curve `SegmentedTabs`' indicator rides),
        never a fixed-linear `--dock-motion-resize` timer. */
@@ -277,7 +277,7 @@
         width: var(--dock-layer-tab-size, var(--dock-control-size, 1.75rem));
         opacity: 0;
         border-radius: var(--dock-layer-tab-radius, var(--radius-sm));
-        /* AZ.W-DOCK-RAIL — the travelling indicator paints the glass-register
+        /* The travelling indicator paints the glass-register
            `--dock-layer-rail-active` (defaults to `--glass-bg-floating`, the
            "selected reads as glass" register). The inline fallback is the SAME
            glass tier — NOT the saturated `--primary 15%` warm-red mix. This token

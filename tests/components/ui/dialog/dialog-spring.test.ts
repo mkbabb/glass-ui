@@ -1,10 +1,10 @@
-// W13 — Dialog spring entrance opt-in (BH.W-MOTION-AXIS re-pointed).
+// Dialog spring entrance opt-in (re-pointed).
 //
 // The `spring` boolean RETIRED onto the ONE `motion` axis + a distinct `springPreset`
 // prop (the curve choice carved off motion INTENSITY). Validates the surface contract:
 // when `springPreset` is set, DialogContent emits the `data-spring` hook + inline
 // transform/opacity driven by useSpringMount; when `springPreset` is unset, the
-// spring-clocked `.glass-reveal` LIQUID-ENTER path is composed (BB.W-LIQUID-REVEAL — off
+// spring-clocked `.glass-reveal` LIQUID-ENTER path is composed (off
 // the retired `popover-animate` bezier zoom-95). The composable's drag-dismiss +
 // continuity properties are exercised at `useSpringMount.test.ts` against the underlying
 // useSpring engine directly.
@@ -66,7 +66,7 @@ describe("DialogContent — W13 spring entrance (BH.W-MOTION-AXIS)", () => {
         expect(portal).not.toBeNull();
         expect(portal!.getAttribute("data-spring")).toBeNull();
         // The spring-clocked .glass-reveal LIQUID-ENTER recipe is the default path
-        // (off the retired bezier popover-animate zoom-95 — BB.W-LIQUID-REVEAL).
+        // (off the retired bezier popover-animate zoom-95).
         expect(portal!.className).toContain("glass-reveal");
         expect(portal!.className).not.toContain("popover-animate");
         wrapper.unmount();

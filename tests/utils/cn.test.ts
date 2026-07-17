@@ -116,14 +116,14 @@ describe("cn — conflict-pair deduplication (last-write-wins)", () => {
 });
 
 describe("cn — AJ.W3-η typography utility ≠ text-color bucket", () => {
-    // Regression suite for A3 §5.D-11 — dashboard map "DL" chip text
+    // Regression suite — dashboard map "DL" chip text
     // invisibility. The Button `default` variant emits
     // `text-primary-foreground`; the consumer adds `text-micro` (a
-    // glass-ui typography utility, NOT a colour). Previously both
+    // glass-ui typography utility, NOT a colour). If both
     // matched the catch-all `^text-/` rule under one `text-color`
-    // bucket, so `text-micro` (later token) shadowed the colour →
-    // bg-primary on bg-primary → invisible. After the fix the typography
-    // utilities live in a separate `font-size` bucket and colour
+    // bucket, `text-micro` (later token) would shadow the colour →
+    // bg-primary on bg-primary → invisible. The typography
+    // utilities live in a separate `font-size` bucket so colour
     // coexists with size.
     it("text-micro does NOT shadow text-primary-foreground", () => {
         const out = cn("bg-primary text-primary-foreground", "text-micro");

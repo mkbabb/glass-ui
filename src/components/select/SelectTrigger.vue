@@ -34,7 +34,7 @@ const forwardedAttrs = computed(() => {
     return forwarded;
 });
 
-// BD.W-SELECT-WELL — the trigger composes the SHARED control register over the warm
+// The trigger composes the SHARED control register over the warm
 // field: `.control-surface` (the bg/border REST register, control-surfaces.css) +
 // `.glass-control-edge` (the keyed two-stop warm rim, select.css — fixes the
 // box-shadow:none cream-on-cream melt so the trigger reads as a lifted glass plate
@@ -47,7 +47,7 @@ const variantClass = computed(() =>
         : "control-surface glass-control-edge glass-capsule-hover",
 );
 
-// AX.W51 D18 — the trigger height rides the `--control-h-*` comfort cohort.
+// The trigger height rides the `--control-h-*` comfort cohort.
 const sizeClass = computed(() => {
     switch (props.size) {
         case "sm":
@@ -67,7 +67,7 @@ const sizeClass = computed(() => {
             cn(
                 variantClass,
                 sizeClass,
-                // BB.W-INVALID-RING — the aria-invalid ring reads the SHARED --invalid-ring
+                // The aria-invalid ring reads the SHARED --invalid-ring
                 // token (the --focus-ring-shadow sibling), no inline 35% re-spell. Per the
                 // §Divergence-decisions table: the ring is UNIFIED onto the .input-pill
                 // FOCUS-GATE (`focus-visible:aria-invalid:`) so a long form is not a wall of
@@ -82,11 +82,11 @@ const sizeClass = computed(() => {
     >
         <slot />
         <RekaSelectIcon as-child>
-            <!-- BG.W-DISCLOSURE-ROTATE — the chevron rides the ONE `transition-disclosure`
+            <!-- The chevron rides the ONE `transition-disclosure`
            register (btn.css): the `rotate` longhand on the spring's own settle clock
            `--spring-snappy-duration` + the weighty `--ease-cartoon-punch` arrival, PRM
-           re-aliased to non-overshoot. Byte-identical to the prior BD.W-SELECT-WELL
-           arbitrary form — folded onto the shared register so the Accordion + Configurator
+           re-aliased to non-overshoot. Folded onto the shared register so the
+           Accordion + Configurator
            carets settle on the SAME clock+curve (one register, no re-declaration). -->
             <ChevronDown
                 class="transition-disclosure in-data-[state=open]:rotate-180 h-4 w-4 shrink-0 opacity-(--select-chevron-opacity)"

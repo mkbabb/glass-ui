@@ -15,8 +15,8 @@
 // bodies, and oil/vangogh/oil-pastel render the anisotropic-Kuwahara painterly finish (a
 // real oil-paint read, NEVER a silent smooth degrade — the user's "WebGPU EVERYWHERE …
 // NO FALLBACKS on Safari" mandate). The smooth default (`medium: "smooth"`/`warpMode:"fbm"`)
-// is byte-identical to the prior WGSL primary (applyMedium is a no-op pass-through at
-// uMedium 0) so the smooth parity capture stays byte-equivalent on both backends. The full
+// is a no-op pass-through (applyMedium at uMedium 0) so the smooth render stays
+// byte-equivalent on both backends. The full
 // per-dab Starry-Night STROKE cascade (bestOil/paintOver/StrokeProfile) stays the WebGL2
 // `aurora.frag.ts` full-fidelity register (byte-untouched — the GL-shader fence); its WGSL
 // port remains a separate full-fidelity path.
@@ -42,7 +42,7 @@ import { AURORA_MEDIUMS_WGSL } from "./aurora-mediums.wgsl";
 // MAX_NUCLEI=8, MAX_STOPS=8 mirror aurora.frag.ts's #defines (and the JS-side
 // AURORA_UNIFORM_LAYOUT). Each per-nucleus row + each palette stop is packed into a
 // vec4 lane so the uniform array stride is the natural 16 bytes (no std140 stride trap —
-// the parity-blowout suspect the wave's §Triumvirate names).
+// the parity-blowout suspect).
 export const AURORA_WGSL = /* wgsl */ `
 const MAX_NUCLEI: i32 = 8;
 const MAX_STOPS: i32 = 8;
@@ -370,8 +370,8 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
   col = col * (1.0 + breathDepth * breath * 0.5);
 
   // Painterly-medium dispatch. uMedium 0 (smooth) is a
-  // no-op pass-through so the DEFAULT smooth config is byte-identical to the prior
-  // WGSL primary (the parity capture); uMedium 1-7 render the ported painterly
+  // no-op pass-through so the DEFAULT smooth config renders unchanged
+  // (the parity capture); uMedium 1-7 render the painterly
   // bodies (pastel/watercolor/crayon/kuwahara) or the anisotropic-Kuwahara finish
   // (oil/vangogh/oil-pastel) — never a silent smooth degrade on Safari 26.
   col = applyMedium(col, pN, t);

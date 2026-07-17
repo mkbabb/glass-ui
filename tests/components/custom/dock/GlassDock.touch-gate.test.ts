@@ -6,20 +6,20 @@ import GlassDock from "@glass/components/dock/GlassDock.vue";
 import DockControl from "@glass/components/dock/DockControl.vue";
 
 /**
- * AT.W6-dock-b — the BEHAVIOURAL touch-gate contract over the LIVE `<GlassDock>`
+ * The BEHAVIOURAL touch-gate contract over the LIVE `<GlassDock>`
  * (the constellation `dock:touch-gate` residual, inv-16′ / inv ε).
  *
  * keyframes.js filed a field defect — "glass-ui dock buttons require a
  * double-click; fix in glass-ui root": on a COLLAPSED dock the first tap
  * expands the pill but does NOT activate the tapped control, so users must tap
- * twice. glass-ui's own AT W0b dock audit concluded "no SHIPPED dock bug". The
+ * twice. glass-ui's own AT dock audit concluded "no SHIPPED dock bug". The
  * disagreement is resolved here by INSTRUMENT, not assertion: a mounted-dock
  * integration test that drives the real `touchstart`→`touchend` sequence and
  * asserts the iOS Now-Playing mini-bar contract — ONE tap on a collapsed dock
  * control BOTH expands the dock AND activates that control.
  *
- * WHY a gate-level `useTouchGate` unit test cannot catch this (the §C-2
- * correction): the gate is correct in isolation — it tests `activate()`, which
+ * WHY a gate-level `useTouchGate` unit test cannot catch this: the gate is
+ * correct in isolation — it tests `activate()`, which
  * is right. The bug lives in the `GlassDock`↔gate INTEGRATION: `GlassDock`
  * `preventDefault()`s the activating `touchstart`/`touchend`, which suppresses
  * the browser's native compatibility `click`, so the tapped control fires
@@ -323,7 +323,7 @@ describe("GlassDock touch-gate behavioural contract (AT.W6-dock-b)", () => {
     });
 
     it("T12 (interaction=manual): a tap on a collapsed dock neither expands nor collapses (quiet gate)", async () => {
-        // BI.W-DOCK-INTERACTION-AXIS — the touch gate takes the merged `quiet`
+        // The touch gate takes the merged `quiet`
         // (alwaysExpanded || manual). Under manual `quiet` is true, so `shouldGateTouch`
         // no-ops: the tap does not expand, and the isActive→deactivate watch does not
         // collapse. Without the merged `quiet` the gate would leak a `collapse()` on

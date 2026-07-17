@@ -1,10 +1,9 @@
 <script setup lang="ts">
 // Carousel track host: a clean Embla viewport and track.
 //
-// THE CATEGORY ERROR RETIRED (D-PAGER PASS-1 §0 Defect 2). The prior build painted a
-// content BARBELL over the slides — a 265px goo body flying 559px OUTSIDE the 414px card
-// and sweeping the description text every advance (a whole-layer filtered goo cast).
-// Unanimous verdict across families: RETIRE wholesale. The content-barbell composable +
+// NO content barbell over the slides: a filtered goo body flying far OUTSIDE the
+// card and sweeping the description text every advance (a whole-layer filtered goo
+// cast) is the category error this avoids. The content-barbell composable +
 // its goo tokens are definition-absent (a clean break with no
 // alias, no dormant stub). A metaball-merge is the INDICATOR's job (the pager worm,
 // PagerDots) — the CONTENT is crisp weighty embla scroll, with ZERO filter (the 559px-escape

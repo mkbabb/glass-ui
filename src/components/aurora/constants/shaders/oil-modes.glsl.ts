@@ -1,5 +1,5 @@
 // Aurora oil-stroke MODE selector — the `profileFor(medium, mode) -> StrokeProfile`
-// (medium, mode) selector carved out of mediums.glsl.ts as a cohesive GLSL chunk
+// (medium, mode) selector as a cohesive GLSL chunk
 // The if-ladder's knobs are the
 // StrokeProfile's fields (logic-as-DATA); a new stroke medium AUTHORS a case here.
 // `mediums.glsl.ts` splices this export back into AURORA_MEDIUMS_POST_BRUSH_GLSL via
@@ -36,20 +36,20 @@ export const AURORA_OIL_MODES_GLSL = /* glsl */ `StrokeProfile profileFor(int me
             //               to carry directional gradient; a flat untextured region reads as
             //               an isotropic/degenerate tensor and drags mean A down). The fill
             //               is now directional + low-streak, so dense coverage textures
-            //               WITHOUT the prior round-dab speckle.
+            //               WITHOUT the round-dab speckle.
     1.0     // groundFloor — oil keeps the full base (no ground darken; fills everywhere)
   );
 
-  // The Van Gogh medium no longer routes through this oil
+  // The Van Gogh medium does NOT route through this oil
   // StrokeProfile cascade. It is a DEDICATED atomic-dab body (mediumVangogh / vangoghDab
-  // below) — the prior profile-driven cascade (four dense layers of long-thin
-  // tensor-oriented strokes) merged into the "marbled flow-bands" read and ran at ~4fps.
+  // below) — a profile-driven cascade (four dense layers of long-thin
+  // tensor-oriented strokes) merges into the "marbled flow-bands" read and runs at ~4fps.
   // profileFor now serves ONLY the oil + oil-pastel stroke mediums; the MEDIUM_VANGOGH
   // case is removed (no caller). MEDIUM_VANGOGH stays #define'd (the main() dispatch +
   // isPainterlyStroke still key off uMedium==5).
 
   // ── Oil-pastel — broad smeared directional strokes deposited via the brush engine
-  // (slice 8 F1). Creamy soft edges (low hardness), heavy build-up, and a chroma punch.
+  // Creamy soft edges (low hardness), heavy build-up, and a chroma punch.
   // Distinct from the dry-crayon tooth-multiply (mediumCrayon): oil-pastel LAYS strokes.
   if (medium == MEDIUM_OILPASTEL) {
     prof.shapeType   = 0;     // tapered directional smear — a round dab reads locally
@@ -67,7 +67,7 @@ export const AURORA_OIL_MODES_GLSL = /* glsl */ `StrokeProfile profileFor(int me
     prof.hardness    = 0.42;  // CREAMY — soft compositing, strokes blend on overlap
     prof.toothScale  = 280.0;
     prof.toothAmp    = 0.12;  // the pastel tooth reads stronger
-    prof.pigmentSat  = 0.80;  // the waxy chroma — eased off 1.16 so the rendered C clears
+    prof.pigmentSat  = 0.80;  // the waxy chroma — kept low so the rendered C clears
                               // the §4.1 band ceiling with margin while the K-M subtractive
                               // overlap path (paintOverOklab) keeps the chroma OFF the grey floor
     prof.hardness    = 0.58;  // creamy but the strokes still REGISTER — a too-soft blend

@@ -20,7 +20,7 @@ import { DRAG_GHOST_CLASS } from "./transitionTiming";
  * to 0; a non-length token (`%`, `auto`) counts as non-zero so we never miss a
  * rounded corner.
  *
- * Exported (and re-exported from `useSortable`) for the D9 drag-ring regression
+ * Exported (and re-exported from `useSortable`) for the drag-ring regression
  * test — keep it a pure string predicate.
  */
 export function isNonZeroRadius(radius: string): boolean {

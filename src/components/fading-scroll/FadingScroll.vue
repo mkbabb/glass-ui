@@ -1,9 +1,9 @@
 <script setup lang="ts">
 // FadingScroll — the library's single scroll-state-driven edge-fade primitive
-// (BA.W-FADING-SCROLL). A thin default-slotted scroll-port wrapper: the root IS
+// A thin default-slotted scroll-port wrapper: the root IS
 // the scroll port, the default slot IS the scrolled content. The start edge
 // feathers ONLY past `scroll > 0`, the end edge ONLY while trailing overflow
-// remains — so the at-rest no-overflow edge is SHARP (the R8-08 "Shy" defect,
+// remains — so the at-rest no-overflow edge is SHARP (the "Shy" defect,
 // where the static `.scroll-fade-*` mask half-erased the first card's chrome at
 // rest, is structurally impossible here).
 //

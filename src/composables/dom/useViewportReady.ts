@@ -37,7 +37,7 @@ export interface UseViewportReadyOptions {
     idleTimeout?: number;
     /**
      * IntersectionObserver `threshold`. Default 0.01 (1 % visible). Mirrors
-     * the speedtest origin-site semantic — "any pixel visible counts".
+     * the origin-site semantic — "any pixel visible counts".
      */
     threshold?: number;
 }
@@ -72,9 +72,9 @@ export interface UseViewportReadyControls {
  *
  * Both
  * `AdminOverviewView` and `ChartsView` shipped a near-identical `chartReady`
- * flag flipped by `requestIdleCallback` alone. The W3-R1 idiom in those
+ * flag flipped by `requestIdleCallback` alone. The idiom in those
  * sites — gate visibility first, then schedule rIC inside the IO callback —
- * is generic across heavy-widget hydration; the speedtest 2-consumer trigger
+ * is generic across heavy-widget hydration; the 2-consumer trigger
  * fired for a publisher-side absorption per `feedback_generic_components`.
  *
  * Usage:
@@ -189,7 +189,7 @@ export function useViewportReady(
         } else {
             // No host — schedule idle so the gate still flips on
             // environments where the host never materialises (e.g.
-            // SSR-flushed shell). Matches the speedtest origin-site semantic.
+            // SSR-flushed shell). Matches the origin-site semantic.
             scheduleIdle();
         }
     }

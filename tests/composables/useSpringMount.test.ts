@@ -1,11 +1,11 @@
-// W13 — useSpringMount composable: spring-driven mount + drag-dismiss state.
+// UseSpringMount composable: spring-driven mount + drag-dismiss state.
 //
 // Validates the load-bearing pieces of the iOS Spring-Dialog/Sheet primitive:
 // (a) `open` flips drive target 0↔1, (b) pointer drag re-seats target by
 // pointer-y delta, (c) release above threshold fires `onDismiss` on settle,
 // (d) release below threshold bounces back to 0, (e) mid-flight pointer
 // re-target preserves spring continuity (no position jump on release —
-// SpringProgress G-W2-3), (f) PRM bracket snaps to target without animating.
+// SpringProgress), (f) PRM bracket snaps to target without animating.
 
 import { defineComponent, h, nextTick, ref } from "vue";
 import { mount as vueMount } from "@vue/test-utils";
@@ -224,7 +224,7 @@ describe("useSpringMount", () => {
     });
 });
 
-// BI.W-SHEET-INTERRUPTIBLE-MOTION — the `present` mount-hold. The spring, not a
+// The `present` mount-hold. The spring, not a
 // keyframe, owns unmount timing: `present` stays true through the exit and releases
 // only once the dismiss-spring settles at the endpoint while the host is closed.
 describe("useSpringMount — present mount-hold (SHEET-INTERRUPTIBLE-MOTION)", () => {

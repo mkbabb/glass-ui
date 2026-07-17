@@ -32,19 +32,19 @@ import {
     OETF_WGSL,
     OKLCH_MATRICES_WGSL,
 } from "../../../composables/glass/procedural/color.wgsl";
-// The noise/FBM and OKLCh gamut-clamp/palette helper groups are carved
-// into sibling chunks (the no-god-module bound; the shared-chunk SPLICE precedent).
+// The noise/FBM and OKLCh gamut-clamp/palette helper groups live
+// in sibling chunks (the no-god-module bound; spliced into the assembled shader).
 // Spliced back IN POSITION below — the noise chunk after `${FBM_ROT_WGSL}` (its
 // FBM_ROT source), the palette chunk after `${OKLCH_MATRICES_WGSL}` (its matrix
 // source). The ASSEMBLED METABALL_WGSL is byte-equivalent (the goo-dot FIELD slice
-// + the GL fence hold); the chunks carry NO `${...}` so the W7 assembler resolves
+// + the GL fence hold); the chunks carry NO `${...}` so the assembler resolves
 // them to complete bodies.
 import { METABALL_NOISE_WGSL } from "./metaball-noise.wgsl";
 import { METABALL_PALETTE_WGSL } from "./metaball-palette.wgsl";
 
 // MAX_SATS=4, TRAIL_N=15, MAX_BLOB_STOPS=4 mirror metaball-uniforms.glsl.ts's #defines
 // (and the JS-side BLOB_WGPU_UNIFORM layout). FBM_LACUNARITY, FBM_GAIN (the blob-local
-// LIQUID-not-rocky constants, watercolor-edges.glsl.ts) are declared in the carved
+// LIQUID-not-rocky constants, watercolor-edges.glsl.ts) are declared in the
 // metaball-noise.wgsl chunk beside their only consumers.
 export const METABALL_WGSL = /* wgsl */ `
 const MAX_SATS: i32 = 4;
@@ -55,7 +55,7 @@ const PI: f32 = 3.141592653589793;
 // ── Uniforms (the typed-struct source-of-truth — see uniformBridgeWGPU.ts) ──
 // Scalars packed into vec4 lanes; per-satellite, per-trail, per-palette rows packed
 // into a vec4 so the array stride is the natural 16 bytes (no std140 stride trap — the
-// parity-blowout suspect the wave's §Triumvirate names).
+// parity-blowout suspect).
 struct Uniforms {
   // s0: (uTime, uBodyRadius, uPulsePhase, uPulseAmp)
   s0: vec4<f32>,
@@ -418,7 +418,7 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
   let thickness = clamp(-d / max(bodyR, 1e-4), 0.0, 1.0);
   let fres = pow(1.0 - max(dot(N, V), 0.0), 2.5);
 
-  // ── W11.a iridescence — warm-biased IQ cosine palette driving OKLCh HUE ──
+  // ── iridescence — warm-biased IQ cosine palette driving OKLCh HUE ──
   if (uIridescence > 0.0) {
     let t = fres + 0.3 * colorNoise + uTime * uIridSpeed;
     let iridHue = uIridHue + 0.18 * PI * cos(2.0 * PI * t);
@@ -428,7 +428,7 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
     oklch.x = min(oklch.x + 0.05 * w, 1.0);
   }
 
-  // ── W11.a fake subsurface translucency — thickness inner-glow + back-light ──
+  // ── fake subsurface translucency — thickness inner-glow + back-light ──
   if (uCoreGlow > 0.0 || uSssScale > 0.0) {
     oklch.x = min(oklch.x + uCoreGlow * (1.0 - exp(-3.0 * thickness)), 1.0);
     let L = normalize(uLightDir + vec3<f32>(1e-6));
@@ -471,7 +471,7 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
 
   var lin = oklabToLinearSrgb(oklchToOklab(oklch));
 
-  // ── W9.b lit glass surface — Blinn-Phong glint + Fresnel rim, in LINEAR ──
+  // ── lit glass surface — Blinn-Phong glint + Fresnel rim, in LINEAR ──
   if (uLit > 0.5) {
     let L = normalize(uLightDir + vec3<f32>(1e-6));
     let H = normalize(L + V);
@@ -493,8 +493,8 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
     let lack = clamp((0.22 - dL) / 0.22, 0.0, 1.0);
     // target is a WGSL RESERVED word (W3C WGSL 16.2) so a "var target" declaration is an
     // invalid identifier: the shader module fails to compile and the WGSL primary never
-    // arms. Renamed to
-    // a valid identifier; the math + the value are byte-identical.
+    // arms, so it is named targetL, a valid identifier; the math + the value
+    // are identical.
     var targetL = 0.18;
     if (bodyL < 0.5) { targetL = 0.92; }
     rimOkl.x = clamp(mix(rimOkl.x, targetL, lack), 0.0, 1.0);

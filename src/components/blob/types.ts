@@ -338,7 +338,7 @@ export const BLOB_CONFIG_DEFAULTS: BlobConfig = {
         // the warm-cream living bead the docs have always promised — because the body
         // reads the deepest stop of a LIGHT cream ramp, NOT the empty-palette fallback to
         // a near-black `color`. The ramp is DERIVED ONCE via the shared `/color` producer
-        // (inv J-10, no parallel ramp):
+        // (no parallel ramp):
         //
         //   deriveBlobPalette(
         //     { L: 0.78, C: 0.05, h: 78 },               // a light warm-cream OKLCh anchor
@@ -384,8 +384,8 @@ export const BLOB_CONFIG_DEFAULTS: BlobConfig = {
         shadow: true,
         shadowSoftness: 16,
         // ── The rim re-anchored for the LIGHT cream body ──────────────────
-        // `var(--foreground)` (near-black) over the OLD dark default read as the rim; over
-        // the new LIGHT cream body it would ring a hard near-black band (the
+        // `var(--foreground)` (near-black) over the LIGHT cream body would ring a hard
+        // near-black band (the
         // body↔foreground L gap ≈0.66 sits OUTSIDE the shader's 0.22 min-contrast guard,
         // so the guard would NOT soften it). The rim is re-anchored to a warm MID-TONE
         // OKLCh stop — `#8c694e` = oklch(0.55 0.06 60), a warm amber. On the cream body
@@ -416,14 +416,10 @@ export const BLOB_CONFIG_DEFAULTS: BlobConfig = {
         // ── Interaction magnitudes: a calm lean ──────────────────
         // A gentle "the creature notices you" lean, the velocity squash SATURATED
         // in-shader (a lively flick capped at a tasteful ceiling), and a bouncy click
-        // impulse.  D2 — the shader's lean SIGN was inverted at HEAD, so
-        // the prior `pointerStrength` 0.18 was calibrated against a body-lean that
-        // SUBTRACTED from the trail baseline (the net read calm only by cancellation).
-        // With the sign corrected the body lean now ADDS to the trail-pseudopod reach
-        // (the dominant lean channel) instead of subtracting from it, so the strength
-        // drops 0.18 → 0.10 to keep the default a CALM coherent lean while the negative
-        // half now genuinely shies away (the body shifts away AND the pseudopod
-        // retracts, reachFactor 0).
+        // impulse. The body lean ADDS to the trail-pseudopod reach
+        // (the dominant lean channel), so `pointerStrength` 0.10 keeps the default a
+        // CALM coherent lean while the negative half genuinely shies away (the body
+        // shifts away AND the pseudopod retracts, reachFactor 0).
         pointerAttraction: 0.35,
         pointerStrength: 0.1,
         stretch: 0.5,

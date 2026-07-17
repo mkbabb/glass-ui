@@ -29,7 +29,7 @@ export default defineConfig({
     // server root, not relative to the route path.
     base: "/",
     resolve: {
-        // BH.B2.0 — the `@glass` source alias (`@glass/*` → `src/*`), mirrored
+        // The `@glass` source alias (`@glass/*` → `src/*`), mirrored
         // from the dev `vite.config.ts`. A stale alias = broken build (492 demo
         // call sites resolve through it).
         alias: {

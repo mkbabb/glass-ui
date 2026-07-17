@@ -1,4 +1,4 @@
-// AX.W37 — proof:text-highlight.
+// Proof:text-highlight.
 //
 // VERIFIES (does not re-ship — §4 note 12) the `useTextHighlight` re-home onto
 // `/motion-core` as a low-level, caller-styled CSS Highlights API:

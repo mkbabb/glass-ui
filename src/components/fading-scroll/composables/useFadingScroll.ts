@@ -1,6 +1,6 @@
-// useFadingScroll — the JS fallback writer for the scroll-state-driven edge fade
-// (BA.W-FADING-SCROLL). Promoted from the bespoke `PresetPickerRow` measure loop
-// (the ONLY scroll-aware path before this wave, trapped in one demo file).
+// useFadingScroll — the JS fallback writer for the scroll-state-driven edge
+// fade. The single shared scroll-aware measurement path (it generalizes the
+// per-row measure loop into one writer).
 //
 // DUAL-PATH with a SINGLE writer (the `scroll-driven.css` / `useScrollProgress`
 // discipline). The native `@supports (animation-timeline: scroll())` CSS recipe

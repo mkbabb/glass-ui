@@ -16,7 +16,7 @@ import { yieldToMain } from "./useYieldToMain";
 import { useReducedMotion } from "./useReducedMotion";
 // Shared `visibilitychange` leaf (engine-free, Vue-only): the
 // single source for the document-visibility listener the motion composables
-// previously hand-rolled. Imported directly (not via the dom/ barrel) so it
+// share. Imported directly (not via the dom/ barrel) so it
 // stays off the public root surface.
 import { useDocumentVisibility } from "../../dom/useDocumentVisibility";
 
@@ -213,8 +213,8 @@ export function useRAFLoop(
         const { hidden } = visibility;
         disposeVisibility = visibility.dispose;
         isDocumentHidden.value = hidden.value;
-        // `flush: 'sync'` so the visibility reaction is synchronous — matches
-        // the prior hand-rolled `visibilitychange` listener's timing exactly.
+        // `flush: 'sync'` so the visibility reaction is synchronous — matching
+        // a native `visibilitychange` listener's timing exactly.
         stopVisibilityWatch = watch(
             hidden,
             (next) => {

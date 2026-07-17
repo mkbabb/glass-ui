@@ -35,20 +35,20 @@ export const HIGHLIGHT_FALLBACK_FRAC = 0.66;
  * The boil voice — φ-incommensurate fractal value-noise (the masthead morphology).
  * ─────────────────────────────────────────────────────────────────────────────
  * The boil centerline is a 1-D fractal value-noise displacement off the HOUSE
- * `mulberry32`, NOT a seeded sinusoid. A sinusoid (the prior body) self-correlates
+ * `mulberry32`, NOT a seeded sinusoid. A sinusoid self-correlates
  * into a near-period — it reads as a spell-check squiggle and a clean sine fails any
  * honest non-periodicity discriminator (a sine's extrema are near-uniformly spaced).
  * The value-noise sums octaves at φ-stepped frequencies (mutually irrational → the
  * sum NEVER closes into a period); each octave's amplitude decays by 1/φ. The result
  * is a hump-to-hump-IRREGULAR hand line whose inter-extremum spacing-CV is the honest
  * teeth (measured: ~0.41 at the paint's segment count, ~0.71 resampled at RES=64,
- * over 400 seeds — vs the prior sinusoid's ~0.14; a clean separation either side of a
+ * over 400 seeds — vs a sinusoid's ~0.14; a clean separation either side of a
  * 0.30 floor). The amplitude is SCALE-RELATIVE (a fraction of the rendered span), so
  * a long word and a short word wobble in proportion. FILTER-FREE — the wander lives
  * in the control points + the hull width, never a feTurbulence.
  *
- * Constants pinned against a 400-seed spacing-CV spike (NOT the seed-overfit autocorr
- * peak the prior gate keyed — autocorr cannot separate smooth low-frequency value-
+ * Constants pinned against a 400-seed spacing-CV spike (NOT a seed-overfit autocorr
+ * peak — autocorr cannot separate smooth low-frequency value-
  * noise from a sinusoid at any resolution).
  */
 /** φ — the per-octave frequency step (mutually irrational → never periodic). */
@@ -66,7 +66,7 @@ export const NOISE_EDGE = 0.12;
  * The AMPLITUDE-KNOB reference wobble ( (c)). The natural-underline
  * excursion is `span × NOISE_AMP_FRAC × f(wobble)` where `f(wobble) = wobble, NOISE_WOBBLE_REF`
  * repurposing the existing Brush `wobble` scalar to drive the centerline amplitude,
- * decoupling excursion from stroke `weight` (the atlas's published `amplitude` ask, no 13th
+ * decoupling excursion from stroke `weight` (the published `amplitude` contract, no 13th
  * scalar). Pinned to the shipped `boil` brush's wobble (1.4) so `f(1.4) = 1` ⇒ the default
  * boil render is BYTE-IDENTICAL; a consumer lifts excursion by raising `wobble` (or the
  * explicit `amplitude` prop, which wins). A lower-wobble brush wobbles proportionally less.

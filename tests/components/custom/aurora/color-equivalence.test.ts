@@ -19,7 +19,7 @@ import {
 import type { OklchStop } from "@glass/components/aurora/constants/presets";
 
 /**
- * inv-K-2 canary (value.js-K, K.W2c). glass-ui's aurora color helpers were
+ * inv-K-2 canary (value.js-K, c). glass-ui's aurora color helpers were
  * de-duplicated to consume value.js's canonical Ottosson core. This test asserts
  * the rewired helpers agree with the value.js path to 1e-6 (it is near-tautological
  * NOW — the helpers call value.js directly — but it is the drift guard: if anyone

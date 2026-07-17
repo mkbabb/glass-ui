@@ -182,7 +182,7 @@ vec3 mediumCrayon(vec3 col, vec2 p, float t) {
   vec3 paper = col * mix(0.80, 0.94, pressure);             // the paper showing through
   result = mix(paper, result, scumbleCoverage);
 
-  // ── Broken-color pigment: stable wax/pigment patches in OKLCh (W5), not flicker.
+  // ── Broken-color pigment: stable wax/pigment patches in OKLCh, not flicker.
   vec2 pigmentCell = floor(pr * max(scale * 0.18, 32.0));
   float pigmentMask = smoothstep(0.28, 0.82, vnoise(pr * scale * 0.21 + 19.0));
   result = brokenColorJitter(
@@ -219,7 +219,7 @@ struct StrokeProfile {
   float densitySml;  // layer-3 (small dabs) placement density gate
   float energyGrade; // SBR energy-grade magnitude (0 off; 1 the van-Gogh
                      // Starry-Night length cascade). The energy grade is a PROFILE
-                     // field, NOT a buried uMedium==5 bestOil branch (slice 8 F0).
+                     // field, NOT a buried uMedium==5 bestOil branch.
   float impastoFloor;// Per-stroke height-crown floor (0.4 oil falloff;
                      // 1.0 van-Gogh FULL-height crown so each dab catches its glint).
   float densityFill; // Layer-4 fill-dab density. Oil/oil-pastel fill the
@@ -480,11 +480,11 @@ vec3 mediumKuwahara(vec3 col, vec2 p, float t) {
 
 `
     // The metal bodies (uMedium==8/9) splice in here, after
-    // mediumKuwahara + before vangogh (carved to metal-medium.glsl.ts for the bound).
+    // mediumKuwahara + before vangogh (in metal-medium.glsl.ts for the bound).
     + AURORA_METAL_MEDIUM_GLSL
     + AURORA_VANGOGH_MEDIUM_GLSL
     + /* glsl */ `// The oil-pastel medium (uMedium==6) is a distinct stroke-deposition body,
-// split out of the dry-crayon tooth-multiply (mediumCrayon) (slice 8 F1). It DEPOSITS
+// separate from the dry-crayon tooth-multiply (mediumCrayon). It DEPOSITS
 // broad smeared directional strokes via the same brush engine with a creamy soft
 // hardness, heavy pigment build-up where strokes overlap, and a chroma punch — the
 // stroke-deposition model that gives oil-pastel its depth and less-uniform read.

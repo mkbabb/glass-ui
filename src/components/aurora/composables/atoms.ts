@@ -141,7 +141,7 @@ interface AuroraAtomsBase {
      * (the default when a seed is set) is the light-pastel band; `"dark"` shifts the WHOLE
      * ramp into the luminous-dark band [0.18, 0.42] so a derived-from-seed field reads as a
      * rich luminous-dark wash behind glass in a dark shell — never a washed-pale salmon
-     * field with dark cards floating on it (the O-26 dark-leg defect). CONFIG-LEVEL: routes
+     * field with dark cards floating on it (the dark-leg defect). CONFIG-LEVEL: routes
      * to `deriveAurora`'s `scheme`; ZERO shader edit. Only read when a `seed` is set (the
      * door drives the DERIVE path; an authored-palette config has no scheme to resolve).
      */

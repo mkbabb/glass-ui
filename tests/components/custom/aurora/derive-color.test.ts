@@ -1,4 +1,4 @@
-// AW.W5.2 — the derive-color gamut matrix (the proof:aurora-derive-gamut backing).
+// The derive-color gamut matrix (the proof:aurora-derive-gamut backing).
 //
 // Every stop of every (harmony × lightnessEasing × chromaEasing × temperature)
 // combination over a NEON-SEED matrix must be in sRGB after the internal

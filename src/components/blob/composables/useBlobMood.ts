@@ -3,7 +3,7 @@ import type { BlobMood, MoodParams } from "../types";
 import { IDLE_SLEEP_MS, MOOD_TARGETS, TRANSITION_MS } from "../constants";
 import { easeInOut } from "./easing";
 
-// W11.c — the mood model reframed on a 2-axis {valence, arousal} core (the
+// The mood model reframed on a 2-axis {valence, arousal} core (the
 // circumplex affect model). Each named mood is a POINT in that space; the
 // per-mood MoodParams are DERIVED from valence/arousal by `paramsFor`, so the five
 // moods are not hand-tuned in isolation — they read off one principled surface
@@ -16,10 +16,9 @@ import { easeInOut } from "./easing";
 // `idle/curious/sleepy/excited` drift never clobbers a user-pinned mood. The latch
 // RELEASES on a genuine FRESH interaction signal (a click or a pointer-over the live
 // canvas), so hovering the live blob still hands control back to the auto-arc. ONE
-// precedence rule — manual > auto until interrupted — generalizing the prior one-shot
-// `excitedHoldMs` click latch; NOT a parallel mood path, NOT a flag soup. Before this
-// `update` drove `setMood` UNCONDITIONALLY every frame, so an imperative `setMood` was
-// clobbered back to idle within ~16ms (the shipped expose silently no-op'd — the
+// precedence rule — manual > auto until interrupted — NOT a parallel mood path, NOT a
+// flag soup. Without the latch, `update` driving `setMood` UNCONDITIONALLY every frame
+// would clobber an imperative `setMood` back to idle within ~16ms (the
 // binding-verification class).
 
 function lerpParams(a: MoodParams, b: MoodParams, t: number): MoodParams {
@@ -115,7 +114,7 @@ export function useBlobMood() {
     }
 
     /**
-     * Wire the mood from the interaction/idle state (W11.c). Priority: a fresh
+     * Wire the mood from the interaction/idle state. Priority: a fresh
      * click → `excited` (held briefly); pointer over → `curious`; long idle →
      * `sleepy`; otherwise `idle`. The internal AUTONOMIC caller of `setMood` (always
      * `source: "auto"`).

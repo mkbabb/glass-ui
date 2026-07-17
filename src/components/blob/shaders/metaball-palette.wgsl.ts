@@ -1,6 +1,6 @@
 // Goo-blob metaball OKLCh gamut-clamp and palette-sample helper
-// chunk, carved out of `metaball.wgsl.ts` to hold the no-god-module line bound
-// (the shared-chunk SPLICE precedent — the ASSEMBLED shader byte-equivalent).
+// chunk, held under the no-god-module line bound
+// (a shared WGSL helper block spliced into the assembled shader).
 //
 // The hue-preserving inward chroma gamut clamp + the multi-stop palette sample
 // (OKLab mix + midpoint chroma-bump) + the de-synced `breath` pulse. It references
@@ -32,7 +32,7 @@ fn gamutClampOklch(lch: vec3<f32>) -> vec3<f32> {
   return vec3<f32>(lch.x, lo, lch.z);
 }
 
-// W11.b — sample the multi-stop palette at t, OKLab mix + midpoint chroma-bump. Returns
+// Sample the multi-stop palette at t, OKLab mix + midpoint chroma-bump. Returns
 // an OKLCh stop [L, C, h(rad)]. Falls back to uBaseColor when uStopCount <= 1.
 fn samplePaletteOklch(t: f32) -> vec3<f32> {
   let uStopCount = u.ints.x;

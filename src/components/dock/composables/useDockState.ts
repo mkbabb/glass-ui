@@ -187,24 +187,23 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         }, collapseDelay);
     }
 
-    /* The synthetic `document.body.dispatchEvent(new
-       PointerEvent("pointerdown", …))` that `scheduleCollapse`/`collapse` used to
-       fire ("let open portals run their normal outside dismissal") is DELETED (clean
-       break, no shim). It was a forbidden GLOBAL FAKE GESTURE: reka-ui's
-       `DismissableLayer` reads ANY `document` pointerdown as an OUTSIDE interaction,
-       so a body-target synthetic event dismissed EVERY open dismissable layer —
-       including a Dialog / Select / Popover whose TRIGGER is a dock CHILD (a verified
-       dns-analysis repro: a Select opened inside a dock-anchored Dialog dismissed the
-       whole Dialog on first click). The real cases are already covered WITHOUT a fake
+    /* `scheduleCollapse`/`collapse` must NOT fire a synthetic
+       `document.body.dispatchEvent(new PointerEvent("pointerdown", …))` (to "let
+       open portals run their normal outside dismissal"): it is a forbidden GLOBAL
+       FAKE GESTURE. reka-ui's `DismissableLayer` reads ANY `document` pointerdown as
+       an OUTSIDE interaction, so a body-target synthetic event dismisses EVERY open
+       dismissable layer — including a Dialog / Select / Popover whose TRIGGER is a
+       dock CHILD (repro: a Select opened inside a dock-anchored Dialog dismisses the
+       whole Dialog on first click). The real cases are covered WITHOUT a fake
        gesture: (1) a genuine click-away is dismissed by reka's own outside-pointerdown
        detection on the SAME real event — the `onPointerDownOutside` collapse below runs
-       beside it, so the synthetic re-dispatch was pure redundancy; (2) the timer path
+       beside it, so a synthetic re-dispatch is pure redundancy; (2) the timer path
        is gated by `keepOpenCount` — a dock-anchored overlay that must hold its dock
        open takes a `keepOpen` token (the Slider / DockLayerGroup seam; a consumer wires
        its overlay's `@update:open` → `keepOpen`/`release`), so the dock never
        times-out-collapses while a held overlay is open. The dock owns ITS OWN state; it
        never reaches into a third-party layer with a synthesized DOM gesture. The
-       `keepOpen`/`release`/`isHeld` (`keepDockOpen`/`dockHeld`) contract is untouched. */
+       `keepOpen`/`release`/`isHeld` (`keepDockOpen`/`dockHeld`) contract stands. */
 
     function collapse() {
         if (getAlwaysExpanded()) {

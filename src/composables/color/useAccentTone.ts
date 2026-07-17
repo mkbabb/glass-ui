@@ -1,5 +1,5 @@
-// BC.W-ACCENT-TONE — the contrast-safe INK half of the tonal-accent register (the
-// JS half of `.accent-tone`). BI.W-CHIP-FOLD — the value.js QUARANTINE (the sync
+// The contrast-safe INK half of the tonal-accent register (the
+// JS half of `.accent-tone`). The value.js QUARANTINE (the sync
 // value.js-FREE shell).
 //
 // This module is value.js-FREE: it carries NO top-level `@mkbabb/value.js` and NO
@@ -95,7 +95,7 @@ export function useAccentTone(
         if (cached !== undefined) return cached;
 
         void import("./accent-tone-solve").then(({ solveAccentInk }) => {
-            // lazy-boundary: BI.W-CHIP-FOLD value.js-free fast path; the concrete-tone ink solve is the ONLY value.js consumer
+            // lazy-boundary: value.js-free fast path; the concrete-tone ink solve is the ONLY value.js consumer
             inkCache.set(key, solveAccentInk(toneCss, opts));
             solveVersion.value++;
         });

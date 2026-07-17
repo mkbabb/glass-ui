@@ -3,8 +3,8 @@ import { getCurrentScope, onScopeDispose, ref, type Ref } from "vue";
 export interface UseIdleReadyOptions {
     /**
      * `requestIdleCallback` timeout, in ms. Default 2_000 — the canonical
-     * value at every speedtest hand-rolled site (App.vue + useIPInfo both
-     * pass `{ timeout: 2000 }`). Unlike useViewportReady's 10s (which fronts
+     * value at every hand-rolled consumer site (consumers pass
+     * `{ timeout: 2000 }`). Unlike useViewportReady's 10s (which fronts
      * the budget with an IO gate), useIdleReady has no visibility stage, so
      * the timeout is the only ceiling — 2s matches the consumer sites and
      * keeps the deferred work inside a reasonable post-paint window.
@@ -54,9 +54,8 @@ export interface UseIdleReadyControls {
  * consumers don't stall.
  *
  * This gate is
- * hand-rolled at 5 speedtest sites (App.vue, MapView.vue, DashboardMap.vue,
- * useAutoStart.ts, useIPInfo.ts) — the ≥2-consumer substrate-promotion gate
- * (J inv 10 / L inv 8) fires for a publisher-side absorption.
+ * hand-rolled at 5 consumer sites — the ≥2-consumer substrate-promotion gate
+ * fires for a publisher-side absorption.
  *
  * @param options.timeout Default `2000` ms — forwarded to `requestIdleCallback`.
  * @param options.onReady Optional one-shot task run on the idle flip.

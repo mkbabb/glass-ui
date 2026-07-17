@@ -2,9 +2,9 @@
 //
 // This entry exposes only the keyframes-bearing set. The keyframes-free leaves
 // (useStaggerReveal, useScrollProgress, useRAFLoop, useIntersectionPause,
-// constants) carved out to the flat `@mkbabb/glass-ui/motion-core`
+// constants) live on the flat `@mkbabb/glass-ui/motion-core`
 // sibling subpath (`composables/motion/core/index.ts`); the keyframes-free but
-// vueuse-bearing `installDarkModeSync` relocated to `composables/dark/`. This
+// vueuse-bearing `installDarkModeSync` lives on `composables/dark/`. This
 // barrel ships ONLY the leaves whose module-eval reaches `@mkbabb/keyframes.js`
 // (directly or transitively) so a `/motion-core` import stays engine-free.
 //
@@ -13,8 +13,8 @@
 // directly from its `core/` owner.
 // Duplicate-exporting a pure-data module from two entries is benign.
 //
-// No alias remains for the relocated free leaves or `installDarkModeSync`;
-// consumers rename per call site (see MIGRATION.md / CHANGELOG.md).
+// No back-compat aliases: each free leaf and `installDarkModeSync` ships from
+// exactly ONE entry.
 export * from "./core/constants";
 export * from "./spring/useSpring";
 export * from "./spring/useSpringMount";

@@ -1,4 +1,4 @@
-// BC.W-ACCENT-TONE — the contrast-safe ink resolver π (the JS half of the tonal
+// The contrast-safe ink resolver π (the JS half of the tonal
 // register). The ink is a pure tone→ink map: value.js `safeAccentColor` shifts the
 // ink's OKLCh lightness AWAY from the resolved active-band fill until it clears the
 // contrast target. This test proves the contrast-safe CONTRACT holds for N synthetic
@@ -46,7 +46,7 @@ function wcag(a: AnyColor, b: AnyColor) {
 const LIGHT_CARD = "hsl(36 48% 97%)";
 const DARK_CARD = "hsl(24 8% 16%)";
 
-// BI.W-CHIP-FOLD carved the ink SOLVE behind a dynamic import (the value.js
+// carved the ink SOLVE behind a dynamic import (the value.js
 // quarantine — the eager /chip chunk stays value.js-free): `ink` is the synchronous
 // interim "" until the solve leaf loads and the reactive counter bumps. The contract
 // tests await that settle; the CONTRACT itself (contrast-safe ink) is unchanged.

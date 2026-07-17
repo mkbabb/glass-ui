@@ -1,20 +1,20 @@
 /* Dock search field styles.
  *
  * The active dock-search field + its placeholder + the result rows read CLEARLY forward
- * over whatever backdrop the dock floats on (≥4.5:1, the W55 darken seam) — never the
+ * over whatever backdrop the dock floats on (≥4.5:1, the darken seam) — never the
  * pale-ghost-fading-into-content trap (the NN/g defect, WWDC §219 "buttons remain
- * legible"). The field surface composes the W55 `--glass-tint-strength-aa` bright-bucket
+ * legible"). The field surface composes the `--glass-tint-strength-aa` bright-bucket
  * darken at the ELEMENT level (the `color-mix(in oklab, <rung>, var(--glass-tint-source)
  * var(--glass-tint-strength))` seam glass/ladder.css + morph.css already compose) — NOT
  * the RAW pre-substituted `--glass-bg-dock` token (the substitution-vs-inheritance trap
  * the dock surfaces already hit: a surface reading the pre-baked `--glass-bg-dock` baked
  * at `:root` 0% strength does NOT darken — the pale-fade). At the 0%/floor default the
  * inner oklab mix is a no-op (byte-identical to the un-tinted rung); under the bright
- * bucket it darkens-over-light (and lifts-over-dark per W-DARK-MATERIAL).
+ * bucket it darkens-over-light (and lifts-over-dark).
  *
- * The result rows ride `.glass-menu-row` (the glass-quiet hover-lift, BA.W-MENU-GLASS —
- * CONSUMED here, the glassify is BC.W-SEARCH-CUSTOM's). The customization-surface axes
- * (size/surface/variant) are BC.W-SEARCH-CUSTOM's — this partial only seats the field +
+ * The result rows ride `.glass-menu-row` (the glass-quiet hover-lift, CONSUMED
+ * here; the glassify is this partial's). The customization-surface axes
+ * (size/surface/variant) are this partial's — it only seats the field +
  * the legibility seam. The morph itself is the dock's OWN `--dock-morph-t` + the
  * byte-untouched `morph-bridge.css` metaball (READ-ONLY — bound, never edited). */
 
@@ -31,7 +31,7 @@
         gap: var(--dock-search-field-gap, 0.375rem);
     }
 
-    /* The ACTIVE field surface — the W55 element-level oklab tint (NOT the raw
+    /* The ACTIVE field surface — the element-level oklab tint (NOT the raw
        `--glass-bg-dock`). The field reads the floating rung darkened toward the warm-ink
        at the bright-bucket strength, so it reads ≥4.5:1 over a busy backdrop. The
        `--glass-tint-source`/`--glass-tint-strength` are the SAME element-level customs
@@ -58,7 +58,7 @@
     }
 
     /* The dropdown result rows ride the shared `.glass-menu-row` glass-quiet hover-lift
-       (BA.W-MENU-GLASS — CONSUMED, not re-authored). The dock-search list applies
+       CONSUMED, not re-authored). The dock-search list applies
        `.glass-menu-row` per row; this rule reaches the selected/highlighted row through
        the SAME register the menu families use (no flat `bg-accent`/`bg-muted` fork). The
        active result reads the data-highlighted state the menu recipe already paints. */

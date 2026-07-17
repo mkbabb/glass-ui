@@ -1,7 +1,7 @@
 /* glass/defined.css
-   BG.W-GLASS-DEFAULT-DEFINITION (GA-1) — the DEFINED glass tier.
+   The DEFINED glass tier.
 
-   Glass is the maximal default (AX.W54), but the blur is imperceptible over a FLAT page
+   Glass is the maximal default, but the blur is imperceptible over a FLAT page
    — a bare <Button>/.input-pill reads as a near-gray shape (chroma 0.0138, BD GOLDEN).
    This tier splits glass into TWO registers on the ONE existing --glass-level/edge
    machinery (NOT a fork of the cascade, NOT a competing backdrop-filter, NOT a parallel
@@ -13,7 +13,7 @@
        .glass-opaque/.glass-deep precedent) that reads as a SHAPE over ANY backdrop by
        composing three things the material ALREADY owns: (a) a stronger warm rim
        (--glass-border-defined), (b) a warm-cream floor-fill (--glass-floor-fill) layered
-       UNDER the transmissive plate, (c) the shipped W-BUTTON-GLASS lit register
+       UNDER the transmissive plate, (c) the shipped lit register
        (specular + --glass-btn-* depth stack, unchanged). ONE engage scalar,
        @property --glass-definition (property-regs.css; 0 = transmissive, 1 = defined) —
        both legs read it, so the scalar is genuinely load-bearing (dead-knob-proof) and a
@@ -22,7 +22,7 @@
    The default flip applies to the form-control cohort — .input-pill
    (Input/Textarea/NumberField) · .control-surface
    (SelectTrigger) — is DEFINED by default, so a control reads as a control over a flat
-   page (the AX.W54 over-reach transposition BD §3.3 invited). A CONTENT surface composes
+   page (the over-reach transposition BD §3.3 invited). A CONTENT surface composes
    NO .glass-defined and stays transmissive (the negative arm — the flip does not bleed).
    Menu ROWS stay transmissive inside an already-defined panel (KS-GLASS §3.2 decided
    sub-question — a row inside a defined panel needs state fills, not its own floor).

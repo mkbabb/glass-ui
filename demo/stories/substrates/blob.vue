@@ -519,16 +519,16 @@ watch(studioPaused, () => {
                             class="relative flex h-full w-full items-center justify-center overflow-hidden"
                         >
                             <!--
-                               §3.1 (D1) +  — the LARGE
+                               The LARGE
                               centered hero, sized off the SMALLER stage axis so it stays a
                               true SQUARE with margin on BOTH axes regardless of the stage's
-                              aspect. The prior `h-[min(78%,30rem)] max-w-[88%]` drove the
-                              square off HEIGHT alone, so on a PORTRAIT stage (the mobile
-                              single-column band, stage 240w × 288h) the `max-w-[88%]` width
-                              cap (211px) clamped BELOW the 225px height — the box went
-                              NON-square and the 1.6×-overflow canvas clipped tight to the
+                              aspect. Sizing off HEIGHT alone (e.g. `h-[min(78%,30rem)] max-w-[88%]`)
+                              breaks on a PORTRAIT stage (the mobile
+                              single-column band, stage 240w × 288h): the `max-w-[88%]` width
+                              cap (211px) clamps BELOW the 225px height — the box goes
+                              NON-square and the 1.6×-overflow canvas clips tight to the
                               wrapper, pushing the orbiting satellites onto the frame edge
-                              (the four-side containment check read 0.97 — red). Now
+                              (the four-side containment check fails). Instead
                               the box wants full width but is capped at `max-w`/`max-h` (78%
                               of each axis, ≤30rem), and `aspect-square` resolves it to the
                               LARGEST square fitting both caps = min(78% w, 78% h) — so the

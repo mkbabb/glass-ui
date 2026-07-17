@@ -1,4 +1,4 @@
-// V.W2 T4 — empty-wrapper decisions:
+// Empty-wrapper decisions:
 // Dialog / DialogTrigger / DialogClose are pure forwarding wrappers around
 // reka-ui's DialogRoot / DialogTrigger / DialogClose. Per B3 §2.6: Vue SFCs
 // cannot be 1-line re-exports (only `.ts` files can do non-component default

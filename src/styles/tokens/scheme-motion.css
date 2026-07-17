@@ -2,14 +2,14 @@
    §-1 color-scheme · §0 font · §1 duration · §2.W/§2.X motion-weight + cartoon-punch ·
    §2.A ambient-motion · §2.B/§2.C · §3 z-index.
    The §2 EASING block (spring linear() curves + per-spring duration clocks +
-   goo-flow curves + cubic-bezier cores/aliases) is carved into the adjacent
+   goo-flow curves + cubic-bezier cores/aliases) live in the adjacent
    scheme-spring.css to hold the no-god-module 500-line bound; it @imports
    IMMEDIATELY AFTER this file (same :root cascade slot).
-   Carved from the tokens.css cascade root; @import-ed by tokens.css in
+   A partial of the tokens.css cascade; @import-ed by tokens.css in
    cascade order. Same :root cascade context as its siblings. */
 :root {
     /* ═══════════════════════════════════════════════
-       §-1  COLOR-SCHEME (AQ.W2 §1)
+       §-1 COLOR-SCHEME
 
        Lets native UI (scrollbars, spinbuttons, form-control chrome, the
        default focus ring) honor the OS preference when the consumer has
@@ -21,7 +21,7 @@
 
        Baseline Widely Available → adopt natively, no `@supports` guard
        (older engines ignore the property and keep default-light chrome).
-       `accent-color` (AQ.W2 §4) is the companion native-control brand;
+       `accent-color` is the companion native-control brand;
        both are inherited built-in <color>/keyword properties re-specified
        inside `.dark`. The `--accent-color` token is defined in the §5
        color block below (custom properties resolve order-independently).
@@ -40,7 +40,7 @@
        ONE brand register: Plus Jakarta Sans (text + display) + Fira Code (mono).
        --font-stack-text drives the body/heading/prose/display register — the
        library DEFAULT is the register every live surface paints (the demo +
-       speedtest render Plus Jakarta everywhere). The calibrated "Plus Jakarta
+       consumers render Plus Jakarta everywhere). The calibrated "Plus Jakarta
        Sans Fallback" / "Fira Code Fallback" faces (declared in typography.css)
        wrap the system stacks with Capsize metric overrides so the swap window
        is geometry-neutral (zero CLS). --font-stack-display aliases the text
@@ -57,13 +57,13 @@
     --type-leading-body: 1.5;
     --type-leading-prose: 1.618;
     --type-leading-heading: 1.2;
-    /* BB.W-DISPLAY-TRACKING — the display leading is tightened to the Apple
-       84/80 ≈ 1.05 signature (was 1.1). The DISPLAY ladder ONLY reads this rung;
+    /* The display leading is tightened to the Apple
+       84/80 ≈ 1.05 signature. The DISPLAY ladder ONLY reads this rung;
        --type-leading-heading (1.2) carries the heading/title register. */
     --type-leading-display: 1.05;
 
     --type-tracking-tight: -0.025em;
-    /* BB.W-DISPLAY-TRACKING — the DISPLAY-ONLY proportional negative tracking
+    /* The DISPLAY-ONLY proportional negative tracking
        rung (the Apple −1.5%-of-size signature: 80px → −1.2px = −0.015em). It is
        em-relative, so the single value is a constant −1.5% across the whole
        clamp() ladder (φ² → φ^(11/2)). MINTED as its OWN rung so the display
@@ -80,7 +80,7 @@
        §1  DURATION
        ═══════════════════════════════════════════════ */
     --duration-instant: 0.1s;
-    /* BC.W-CONTROL-SMOOTH — the named control-press SURFACE clock (the W-GLASS-CAL
+    /* The named control-press SURFACE clock (the 
        per-register-clock discipline). An interactive control the user actively pokes
        (hover-in, press, toggle) wants the iOS quick ~100-120ms surface beat, NOT the
        0.2s calm card-crossfade beat — at 0.2s the colour/border/shadow easing drags
@@ -105,13 +105,13 @@
     --duration-xxl: 1.5s;
     --duration-shimmer-fast: 3s;
     --duration-shimmer: 5s;
-    /* BB.W-METAL-SHIMMER — the brand-metal family's OWN slow dignified one-pass
+    /* The brand-metal family's OWN slow dignified one-pass
        clock (slower than the 5s generic shimmer). The metal sweep (gold·silver·
        bronze, text-clip + border/mask) reads as a calm slow patina catch, not a
        fast band-pass — the §6 calm register. (`--duration-seal` was never landed;
        this is net-new, NOT a retirement re-point.) */
     --duration-metal: 6s;
-    /* BA.W-GLASS-CAL (H2a) — `--duration-sparkle` (600ms) DELETED with the disco
+    /* `--duration-sparkle` (600ms) DELETED with the disco
        recipe retirement: the sparkle-sweep keyframe + its sole `btn-audacious`
        consumer are gone. */
 
@@ -119,7 +119,7 @@
     --motion-stagger-default: 80ms;
 
     /* ═══════════════════════════════════════════════
-       §2.W BD.W-MOTION-WEIGHT — the GOVERNING motion scalar (rest decl)
+       §2.W — the GOVERNING motion scalar (rest decl)
 
        The universal driver-motion governor (the @property reg lives in
        property-regs.css §18 beside --ui-scale). 0 = still, 1 = full cel. Rest
@@ -141,7 +141,7 @@
     --motion-weight: 0.618;
 
     /* ═══════════════════════════════════════════════
-       §2.X BD.W-CARTOON-PUNCH — the third pole, a RAW shaped linear()
+       §2.X — the third pole, a RAW shaped linear()
 
        A single damped spring is monotone-from-one-side — it CANNOT dip below origin
        then overshoot past it. iOS-27's loudest moments want ANTICIPATION (pull back
@@ -178,7 +178,7 @@
         1
     );
 
-    /* §2.Y BG.W-VIZ-REVEAL-BLOOM — the procedural-viz entrance-bloom clock (the ONE
+    /* §2.Y — the procedural-viz entrance-bloom clock (the ONE
        consumer-retune knob for the one-shot `@keyframes substrate-reveal-bloom` in
        viz-reveal.css; rides `--ease-cartoon-punch` for the ~+13% brightness overshoot). */
     --substrate-reveal-duration: 1100ms;
@@ -186,7 +186,7 @@
     /* ═══════════════════════════════════════════════
        §2.C ANIMATION EXPRESSIVENESS
 
-       The audacious press-ripple RETIRED at BA.W-GLASS-CAL. The retained family is:
+       The audacious press-ripple RETIRED. The retained family is:
        • Progress lifecycle — the progress bar rides an intake pulse on
          rising-edge, a crescendo brightening at ≥85%, and a one-shot discharge
          flash at 100% (the crescendo is the typed `@property --progress-crescendo`).
@@ -197,7 +197,7 @@
     --motion-duration-progress-crescendo: 240ms; /* leading-edge brighten */
     --motion-duration-progress-indeterminate: 4s; /* indeterminate sweep period */
 
-    /* BA.W-GLASS-CAL (H2a) — the `btn-audacious` press-ripple knobs
+    /* The `btn-audacious` press-ripple knobs
        (`--ripple-radius-max` 12rem, `--motion-duration-ripple` 340ms) DELETED
        with the disco recipe retirement: the ripple was btn-audacious-private and
        has no surviving consumer (the calm CTA register's press is the §6
@@ -207,8 +207,8 @@
     /* ═══════════════════════════════════════════════
        §3  Z-INDEX SCALE
        ═══════════════════════════════════════════════ */
-    /* V.W2 T12 — Aurora background tier (sits behind --z-background).
-       Consumed by `<Aurora>` in speedtest's App.vue (`-z-10` literal today). */
+    /* Aurora background tier (sits behind --z-background).
+       Consumed by `<Aurora>` in a consumer's app root (`-z-10` literal today). */
     --z-behind: -10;
     --z-background: 0;
     --z-content: 10;
@@ -229,7 +229,7 @@
 }
 
 /* ═══════════════════════════════════════════════
-   BD.W-MOTION-WEIGHT — the driver / observer carve (design.md §L4, gate C8)
+   The driver / observer carve (design.md §L4, gate C8)
 
    The governing weight rests at the 1/φ centroid. LOUD DRIVERS — the dock morph
    stage, an earned celebration — pin it to 1 so even a SLOW user-driven morph
@@ -245,11 +245,11 @@
 }
 
 /* ═══════════════════════════════════════════════
-   BI.W-TEMPO — the loud-scope tempo re-pin (the deliberate-weight carve, M11).
+   The loud-scope tempo re-pin (the deliberate-weight carve, M11).
 
    `--motion-tempo` (property-regs.css, initial 1.0 identity) is the global motion
    TIME knob — a consumer sets `:root { --motion-tempo: 0.85 }` (the "options for
-   longer" clause of UF-G1) and every utility-UI spring clock + JS response tightens
+   longer" clause) and every utility-UI spring clock + JS response tightens
    in lockstep. Drawer and deck remain deliberately fixed cinematic episodes; Dock is
    interactive utility chrome and therefore inherits the effective tempo. `:where()`
    keeps the fixed surfaces' specificity at 0 so a consumer's explicit per-instance
@@ -263,7 +263,7 @@
 }
 
 /* ═══════════════════════════════════════════════
-   BG.W-LIQUID-WEIGHT-DEFAULT (F5.2) — the calm opt-out
+   The calm opt-out
 
    The DEFAULT interactive-transition SPATIAL register is now spring-derived
    (`--transition-liquid-spatial` = the `smooth` spring, generated in scheme-spring.css),
@@ -278,7 +278,7 @@
 }
 
 /* ═══════════════════════════════════════════════
-   BD.W-MOTION-WEIGHT / BD.W-CARTOON-PUNCH — the PRM carve
+   The PRM carve
 
    ONE assignment zeroes ALL of the goo that rides on top of the springs. Because
    every squish/punch/shadow-travel reads through `--motion-weight` (the site-local
@@ -295,7 +295,7 @@
     :root {
         --motion-weight: 0;
         --ease-cartoon-punch: var(--ease-standard);
-        /* BG.W-LIQUID-WEIGHT-DEFAULT (F5.2) — the interactive-spatial DEFAULT loses its
+        /* The interactive-spatial DEFAULT loses its
            overshoot under reduce (the vestibular floor). The re-alias is homed in
            scheme-spring.css BESIDE its base `--transition-liquid-spatial: var(--spring-*)`
            default (NOT here): both target `:root` at equal specificity, and scheme-spring.css

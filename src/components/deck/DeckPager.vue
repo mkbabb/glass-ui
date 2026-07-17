@@ -2,7 +2,7 @@
 import PagerDots from "../pager-dots/PagerDots.vue";
 
 /* DeckPager — the deck's windowed dot register. A THIN wrapper over `<PagerDots>`'s
-   already-factored `pagerWindow` oracle (BA.W-PAGER lifted the windowing math + the
+   already-factored `pagerWindow` oracle (lifted the windowing math + the
    per-index focus-survival into PagerDots), carrying ONLY the deck's PRESENTATION
    aria register: `role="group"`/`aria-current` (vs PagerDots' `role="tablist"`/
    `aria-selected`), selected via the `pattern="group"` axis. ZERO re-implementation

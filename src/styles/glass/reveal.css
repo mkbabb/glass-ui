@@ -33,8 +33,8 @@
  * Uses the `scale:` / `translate:` LONGHANDS (not `transform:`), so it composes with
  * any identity-base transform and mints no stacking context (the `.glass-top-layer`
  * `scale:` discipline). NEVER animates a layout property (the zoom is `scale`, the
- * side-slide is `translate` — the directional slide-in `popover-animate` +
- * `slide-in-from-side` used to carry, now folded onto the compositor `translate` leg).
+ * side-slide is `translate` — the directional slide rides the compositor `translate`
+ * leg, not `popover-animate` + `slide-in-from-side`).
  */
 
 @layer components {
@@ -193,8 +193,7 @@
            Scale, opacity, and filter keep the exit compositor-only. It rides the named
            exit register (`--reveal-exit-clock` = `--exit-overlay-duration` 150ms by
            default, `--exit-transient-duration` 100ms on `[data-reveal=transient]`) on
-           the no-overshoot `--reveal-exit-curve` (= `--ease-out`),
-           tightening the prior 200ms --duration-fast. */
+           the no-overshoot `--reveal-exit-curve` (= `--ease-out`). */
         animation: glass-reveal-out var(--reveal-exit-clock) var(--reveal-exit-curve) both;
         /* The side-popover `translate` slide-out stays a TRANSITION — a DIFFERENT
            property, so it coexists with the scale/opacity/filter animation (no cascade

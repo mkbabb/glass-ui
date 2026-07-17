@@ -1,14 +1,14 @@
 /* glass/ladder.css
-   The five-tier .glass-{wash,quiet,resting,floating,overlay} surface ladder + the W55 adaptive-legibility @container style(--glass-backdrop: light) bucket (co-located with its rung) + the .glass-opaque escape + the content-aware under-shadow.
-   Carved from the glass.css cascade root; @import-ed by glass.css in cascade
+   The five-tier .glass-{wash,quiet,resting,floating,overlay} surface ladder + the adaptive-legibility @container style(--glass-backdrop: light) bucket (co-located with its rung) + the .glass-opaque escape + the content-aware under-shadow.
+   A partial of the glass.css cascade; @import-ed by glass.css in cascade
    order, each in its own @layer components (isomorphic to the monolith).
    See docs/precepts/design-idioms.md §cohesion-aware partials. */
 @layer components {
-    /* ── Five-tier surface ladder (v0.8.0; visual only, no geometry) ──
-       Tier semantics, alpha-monotonic per R3-spec §A:
+    /* ── Five-tier surface ladder (visual only, no geometry) ──
+       Tier semantics, alpha-monotonic:
          wash      ~0.30α  + light blur      (was `subtle`)
          quiet     ~0.50α  + medium blur     (the missing rung)
-         resting   ~0.65α  + canonical blur  (was `default`; the speedtest plate)
+         resting   ~0.65α  + canonical blur  (was `default`; the consumer plate)
          floating  ~0.80α  + heavier blur    (was `elevated`)
          overlay   ~0.95α  + heaviest blur   (NEW; modal-over-modal) */
 
@@ -16,7 +16,7 @@
        `backdrop-filter` only IN SOURCE. Authoring both forms manually here
        caused Lightning CSS in Tailwind v4 to dedup-and-keep-prefixed,
        which modern Chromium then dropped from the CSSOM (the prefixed
-       alias is parser-rejected post-Chrome 113). AY.W-A11Y-PERF O-2a — the
+       alias is parser-rejected post-Chrome 113). The
        build now OWNS the prefix: `vite.style-assets.ts publishStyleAssets()`
        injects the `-webkit-backdrop-filter:` pair into the SHIPPED
        `dist/styles/*.css` as a LAST pass (the source stays unprefixed, so
@@ -26,7 +26,7 @@
        Safari ≤17 engine (webkit-form-only) paints the blur instead of
        silently dropping the unprefixed rule. Verified by
        `proof:webkit-backdrop` (count-parity over the shipped dist). */
-    /* AW.W23 — every rung's background composes the adaptive-tint recipe
+    /* Every rung's background composes the adaptive-tint recipe
        (`color-mix(in oklab, <rung bg>, var(--glass-tint-source) var(--glass-tint-
        strength))`). With the default `--glass-tint-strength: 0%` the mix is a
        no-op = byte-identical to the un-tinted rung; a consumer biases the surface
@@ -34,16 +34,16 @@
        strength ≤30%. oklab is the mwg-preferred tint space for the TINT mix here
        (NEVER an `oklch(from …)` lightness-shift in the GLASS-TINT mix). The
        `oklch(from var(--foreground) …)` relative-color recipe DID land its first
-       live consumer at BB.W-DARK-INK-WARM — the dark `--surface-tint-*` arm
+       live consumer — the dark `--surface-tint-*` arm
        (`tokens/dark-arm.css`), where the tolerant α-mix absorbs the small high-L
        chroma (the gamut-map caveat documented + pinned under the gamut edge there).
        That is the INK derivation, separate from THIS glass-tint mix space. */
 
-    /* BG.W-GLASS-IDIOM-FACTOR — the DRY plate-tint recipe, DECLARED ONCE.
+    /* The DRY plate-tint recipe, DECLARED ONCE.
        The five-rung surface ladder each composed the SAME element-level oklab tint
        INLINE (5 byte-identical `color-mix(in oklab, var(--glass-bg-<rung>),
        var(--glass-tint-source) var(--glass-tint-strength))` pastes). The recipe is
-       the W55 adaptive-legibility seam — the rung bg mixed TOWARD the sampled/ink
+       the adaptive-legibility seam — the rung bg mixed TOWARD the sampled/ink
        `--glass-tint-source` at the continuous `--glass-tint-strength`; at the `0%`
        rest default the mix is a no-op (`color-mix(…, X, transparent 0%) ≡ X`),
        byte-identical to the raw rung bg.
@@ -55,15 +55,15 @@
        its `var(--glass-bg-rung)` / `--glass-tint-source` / `--glass-tint-strength`
        at the rung element where it is composed (a custom property substitutes its
        var() refs against the SAME element's other customs), so the per-rung bg AND
-       the per-element W55 re-points (the `:where()` content-tier + overlay-band tint
+       the per-element re-points (the `:where()` content-tier + overlay-band tint
        cascades below) reach it unchanged — net-neutral, dist byte-isomorphic. This
-       single home is the ONE place a later wave (BG.W-GLASS-TINT-UNIFY) adds the
+       single home is the ONE place a later wave adds the
        bias outer-leg, instead of N pastes.
 
-       BG.W-GLASS-REGISTER-UNIFY — `--glass-plate-tinted` is the LADDER-RUNG spelling
+       `--glass-plate-tinted` is the LADDER-RUNG spelling
        of the ONE tint recipe; its applied-at-the-element twin for NON-ladder surfaces
        is `@utility glass-fill` (glass/surfaces.css, reading `--glass-fill-rung`). Same
-       oklab W55 seam, two delivery seams: the ladder rungs read the token, a Card /
+       oklab seam, two delivery seams: the ladder rungs read the token, a Card /
        button / dock surface APPLIES the utility. A NON-ladder surface never re-spells
        the `color-mix(in oklab, …)` — it composes `glass-fill`; the `--glass-bg-*-tinted`
        pre-composed tokens + the `:root --glass-bg-dock` inline tint are the substitution-
@@ -86,14 +86,14 @@
         --glass-bg-rung: var(--glass-bg-wash);
         background: var(--glass-plate-tinted);
         backdrop-filter: var(--glass-cell-backdrop-filter, var(--glass-blur-wash));
-        /* BB.W-GLASS-ACCENT — the rung border ink feeds the accent-composed
+        /* The rung border ink feeds the accent-composed
            `--glass-border-accent` (rim group above); byte-identical at 0%. */
         --glass-border-rung: var(--glass-border-wash);
         border: 1px solid var(--glass-border-accent);
         box-shadow: var(--glass-material-rim), var(--glass-shadow-wash);
     }
 
-    /* AL-W10 SLIM under-shadow wiring (tokens.css §AL-W10 SLIM —
+    /* SLIM under-shadow wiring (tokens.css §SLIM —
        UNDER-SHADOW recipe rungs). Each tier composes its canonical
        iOS Liquid Glass under-shadow (a 0.5px dark hairline along the
        bottom edge reading as glass thickness) as a NON-INSET layer
@@ -131,13 +131,13 @@
             var(--glass-shadow-resting);
     }
 
-    /* AV.W15 M3 / AW.W22 — the floating tier carries the full-perimeter rim (the
+    /* The floating tier carries the full-perimeter rim (the
        catch-light that "defines the silhouette", WWDC25 sess. 219). The rim now
        comes from the unified `--glass-material-rim` (= `--glass-edge-light`) so
        it shares ONE source with the rest of the ladder; it rides INSIDE the
        box-shadow stack so it composes with the under-shadow floor + the lift. */
     .glass-floating {
-        /* AY.W-A11Y-PERF O-1 — engage the W55 bright-backdrop bucket BY DEFAULT on
+        /* Engage the bright-backdrop bucket BY DEFAULT on
            the overlay band: a floating surface floats over WHATEVER the consumer
            painted (frequently a light/near-white app surface — the canonical G2
            case), so the library opts its own overlay-band glass in at its own root
@@ -160,7 +160,7 @@
     }
 
     .glass-overlay {
-        /* AY.W-A11Y-PERF O-1 — the overlay band engages the W55 bucket by default
+        /* The overlay band engages the bucket by default
            (see .glass-floating). */
         --glass-backdrop: light;
         position: relative;
@@ -172,7 +172,7 @@
         box-shadow: var(--glass-material-rim), var(--glass-shadow-overlay);
     }
 
-    /* ── Adaptive legibility: the bright-backdrop bucket (AX.W55 — the iOS-26/27
+    /* ── Adaptive legibility: the bright-backdrop bucket (the iOS-26/27
        "locally darken the glass over light content" move; G2) ──────────────────
        When a consumer sets `--glass-backdrop: light` on any ancestor (a near-white
        card surface, a pale aurora bleed, a bright data grid), the `@container
@@ -184,13 +184,13 @@
        already reads, so re-pointing them on the material group re-resolves the
        EXISTING `color-mix(in oklab, <rung bg>, …)` toward ink — ZERO new compositing
        seam, the literal darken-over-light recipe. The `.glass-*::before` specular
-       `plus-lighter` gleam (W52) is untouched (it composes ON the darkened plate;
+       `plus-lighter` gleam is untouched (it composes ON the darkened plate;
        the darkening is the orthogonal oklab-tint axis). No `@supports` wrapper:
        style queries introduce no new `container-type` value (every element is a
        style container by default), so an engine without style-query support parses
        the unknown at-rule as invalid, drops the block, and keeps the zero-delta
-       glass (the graceful degradation — the surface is today's-glass, the pre-W55
-       state; see utilities.css §density for the same precedent). */
+       glass (the graceful degradation — the surface keeps its un-darkened base
+       glass; see utilities.css §density for the same precedent). */
     @container style(--glass-backdrop: light) {
         .glass-material,
         .glass-wash,
@@ -201,7 +201,7 @@
         .glass-card {
             --glass-tint-source: var(--glass-tint-ink);
             --glass-tint-strength: var(--glass-tint-strength-aa);
-            /* BA.W-DARK-MATERIAL scope 7 — the --muted-foreground lift moves HERE, into the
+            /* The --muted-foreground lift moves HERE, into the
                declared/sampled BRIGHT condition. The muted L40 tier cannot clear 4.5:1 on a
                translucent FULL-AA-darkened plate (darkening moves the plate toward muted's
                own luminance), so it lifts to the full ink ONLY where the plate actually
@@ -211,7 +211,7 @@
         }
     }
 
-    /* AY.W-A11Y-PERF O-1 — SELF-ENGAGE the overlay band by default. The
+    /* SELF-ENGAGE the overlay band by default. The
        `@container style()` rule above queries an ANCESTOR (CSS style queries never
        self-match — verified on Chrome 148), so the `.glass-floating { --glass-backdrop:
        light }` default we set on the rung would NOT darken the rung's OWN surface, only
@@ -232,18 +232,12 @@
        `--surface-tint-*` family is never touched (this edits only the in-oklab glass
        tint axis).
 
-       AZ.W-ADAPTIVE-AUTO Arm 1 — the self-engage now EXTENDS to the plain CONTENT
+       The self-engage now EXTENDS to the plain CONTENT
        tiers (`.glass-card`/`.glass-resting`/`.glass-quiet`/`.glass-wash`), not just
-       the overlay band. The W54 glass-first MAXIMAL default makes content-on-glass-
+       the overlay band. The glass-first MAXIMAL default makes content-on-glass-
        over-a-bright-backdrop the common case, so every content tier self-darkens over
        light WITHOUT consumer opt-in — closing the C5-7 asymmetry (the content tiers
-       painted near-invisible over light on every route). The prior W55 overlay-only
-       scoping (which kept the default-path byte-identity canary green by testing
-       `.glass-card`/`.glass-resting` with a bare no-ancestor div) is SUPERSEDED: the
-       three now-self-engaged kinds are no longer byte-identical to the dark bucket
-       (the canary narrows to the legitimately-zero-delta surfaces — the `.glass-opaque`
-       escape + an explicit per-surface `--glass-backdrop: dark` override — and the new
-       in-situ G1 π readback becomes the binding default-path truth). The muted body
+       would otherwise paint near-invisible over light on every route). The muted body
        register lifts to the full warm-ink under the engaged plate: the muted L40 tier
        cannot clear 4.5:1 on a translucent darkened plate (darkening moves the plate
        TOWARD muted's own luminance), so the low-contrast muted register resolves to
@@ -259,13 +253,13 @@
        `--glass-tint-strength: 0%`. */
     :where(.glass-floating, .glass-overlay) {
         --glass-tint-source: var(--glass-tint-ink);
-        /* BC.W-ADAPTIVE-RECONCILE (the fourier-analysis-M Tier-1 #1 fold, CONTINUOUS half)
-           — the OVERLAY band SPECIFICALLY JOINS the continuous observer driver, the SAME
+        /* The adaptive-reconcile fold (CONTINUOUS half):
+           the OVERLAY band SPECIFICALLY JOINS the continuous observer driver, the SAME
            clamp the content tiers get. The dropdown/Dialog/Popover/Select-content plate
            FLOORS to warm-cream when the measured backdrop is calm/dark, and darkens
            CONTINUOUSLY only under a measured bright backdrop — NOT the binary `@container`
            bucket jump, NOT a blanket unconditional darken (the retired 4.0.x 20% slab).
-           The `BC.W-AUDIT` pre-fix already closed the UNCONDITIONAL-darken half (the band
+           The `` pre-fix already closed the UNCONDITIONAL-darken half (the band
            floored by default); THIS is the continuous earned-darken half. The MEASURED AA
            bar (the overlay plate clears 4.5:1 WHILE α < 0.86) is GLASS-LEGIBILITY-
            MEASURED's roster addition — the driver here, the bar there, no double-ownership. */
@@ -278,7 +272,7 @@
             ),
             var(--glass-tint-strength-aa)
         );
-        /* BC.W-DIALOG-GLASS — the overlay band's muted caption keeps the on-glass MUTED
+        /* The overlay band's muted caption keeps the on-glass MUTED
            register on a CALM modal (the SAME `--on-glass-muted` the content tiers read on
            their calm path — legible-AND-subordinate against the composited glass fill),
            NOT an UNCONDITIONAL lift to full `--foreground` that blackened the caption on a
@@ -290,8 +284,8 @@
         --muted-foreground-strong: var(--on-glass-muted-strong);
     }
 
-    /* BA.W-DARK-MATERIAL scope 7 — the plain CONTENT tiers self-engage the SUB-PERCEPTUAL
-       FLOOR unconditionally, NOT the full AA darken (the R9-1 slides gray-slab fix). Over a
+    /* The plain CONTENT tiers self-engage the SUB-PERCEPTUAL
+       FLOOR unconditionally, NOT the full AA darken (the gray-slab fix). Over a
        calm LIGHT page the floor (--glass-tint-strength-floor: 4%) is a silhouette whisper —
        the translucent cream card stays warm (L ≈ 0.94), no gray slab. Over a DARK page the
        floor re-resolves to the luminous-dark lift (12% in the dark arm — the plate lifts off
@@ -301,9 +295,9 @@
        here: on the calm-light floor the caption keeps the muted register (the slides read).
        A consumer opts a light-page card out via `--glass-tint-strength: 0%` on an ancestor.
 
-       BB.W-ON-GLASS-FG (N13) — the THIRD-STATE on-glass FOREGROUND re-point lands HERE,
-       BESIDE the BA seam (the SAME cascade context, the SAME content-tier set, NOT a new
-       competing layer). The calm-light floor keeps the page-muted --neutral-5 at HEAD —
+       The THIRD-STATE on-glass FOREGROUND re-point lands HERE,
+       BESIDE the seam (the SAME cascade context, the SAME content-tier set, NOT a new
+       competing layer). The calm-light floor keeps the page-muted --neutral-5 as declared —
        but the muted ink is calibrated against the CANVAS, and on a TRANSLUCENT content
        plate (the glass-first common case) it composites toward the lifted backdrop and
        its contrast COLLAPSES (1.15-3.29:1 measured in dark). The re-point targets the
@@ -311,7 +305,7 @@
        (+ the -strong twin), a register BETWEEN the page-muted and the bright-bucket full
        ink (legible-AND-subordinate; the caption stays quieter than body --foreground).
        This is NOT a fork of --glass-tint-* — it READS the seam context and expresses the
-       third state; it NEVER re-declares --glass-tint-ink/-strength-* (W-DARK-MATERIAL's
+       third state; it NEVER re-declares --glass-tint-ink/-strength-* (the
        frozen bound). The BA bright-bucket lift (@container --glass-backdrop:light above,
        --muted-foreground → --foreground) STILL WINS where the plate darkens — the
        @container conditional overrides this unconditional :where() when it engages, so a
@@ -321,8 +315,8 @@
        mode (the on-glass rungs carry their own light/dark per-mode arms in tokens). */
     :where(.glass-card, .glass-resting, .glass-quiet, .glass-wash) {
         --glass-tint-source: var(--glass-tint-ink);
-        /* BC.W-ADAPTIVE-RECONCILE — the CONTINUOUS observer-driven darken (the dead-knob
-           closed; req #7). The strength is no longer a flat floor: it is a clamp that
+        /* The CONTINUOUS observer-driven darken (the dead-knob
+           closed). The strength is no longer a flat floor: it is a clamp that
            READS the observer's measured `--glass-backdrop-luma` and lerps from the calm
            warm-cream floor toward the ≤24% AA ceiling as the backdrop brightens past the
            `--glass-backdrop-luma-knee` (the iOS-27 dynamic-range shift, apple-ios27.md
@@ -330,9 +324,9 @@
            clamp resolves EXACTLY `--glass-tint-strength-floor` (the GLASS-IDENTITY calm
            identity, byte-equal); rising luma ramps the lift CONTINUOUSLY; the clamp floors
            at the 4% identity and ceilings at the bounded AA — never an unconditional 20%
-           slab (the AZ grey-slab is the OPPOSITE of this earned, measured track).
+           slab (the grey-slab is the OPPOSITE of this earned, measured track).
 
-           BG.W-GLASS-SIGNAL-TRUTH (M7) — THE BAND-DRIVER DECISION (reconciled to ONE):
+           THE BAND-DRIVER DECISION (reconciled to ONE):
            the declarative `@container --glass-backdrop: light` bucket below is THE BAND
            DRIVER (a consumer/shell writes `--glass-backdrop: light` on an ancestor where
            it KNOWS the backdrop is bright — the AA darken then reaches every descendant
@@ -342,10 +336,9 @@
            wires the observer to. On a content-tier Card with no wired observer + no
            ancestor bucket, `--glass-backdrop-luma` reads the registered initial 0 → the
            clamp resolves the calm floor (the honest calm identity — a plate over an
-           UNKNOWN backdrop stays warm, never a false darken). The prior claim that this
-           clamp "RETIRES the bucket as THE driver" was the contradictory-canon half the
-           M7 audit named (glass-fx.css declared the bucket the default path); the bucket
-           is the band driver, the clamp is the refinement — no double-ownership. */
+           UNKNOWN backdrop stays warm, never a false darken). The bucket is the band
+           driver, the clamp is the refinement — no double-ownership (the clamp does
+           NOT retire the bucket as the driver). */
         --glass-tint-strength: clamp(
             var(--glass-tint-strength-floor),
             calc(
@@ -359,8 +352,7 @@
         --muted-foreground-strong: var(--on-glass-muted-strong);
     }
 
-    /* F2.R1 W-DARK-READABILITY-REPAIR (paint re-open — the full-route dark census Class-3
-       mustFix) — the on-glass MUTED lift EXTENDS to the mid-tone / tone-tinted / selected-
+    /* The on-glass MUTED lift EXTENDS to the mid-tone / tone-tinted / selected-
        glass surfaces the calm content-tier :where() above does NOT reach. The muted register
        (--muted-foreground = --neutral-5, calibrated "AA vs the OPAQUE page") COLLAPSES on a
        composited TINTED / mid-tone glass plate exactly as it does on the calm content tier —
@@ -384,7 +376,7 @@
         --muted-foreground-strong: var(--on-glass-muted-strong);
     }
 
-    /* AX.W55 — the `contrast-color()` foreground-ink flip (Chrome 147+/Safari 26+).
+    /* The `contrast-color()` foreground-ink flip (Chrome 147+/Safari 26+).
        A PROGRESSIVE-ENHANCEMENT layer, NEVER the load-bearing floor (Open-Q #5
        ratified): the declarative bucket above already carries AA on ALL engines (it
        darkens the translucent plate so dark text clears ~11:1 over white at the 18%
@@ -397,13 +389,13 @@
        this is the native refinement. Scoped to the bright bucket. */
     @supports (color: contrast-color(white)) {
         /* The bright-bucket ink flip — the content tiers + overlay band over a DECLARED/
-           sampled bright backdrop. BA.W-DARK-MATERIAL scope 6 — the SYSTEMIC contrast-color()
-           selection-inversion fix (approach A, lockstep-lift). At HEAD this block lifted only
+           sampled bright backdrop. The SYSTEMIC contrast-color()
+           selection-inversion fix (approach A, lockstep-lift). Lifting only
            --muted-foreground (and the surface `color`) to contrast-color(--card) (white over
            a light plate, L100), but the ACTIVE control register (a SegmentedTabs active tab,
            the curve-picker selected label) reads var(--foreground) DIRECTLY (L90, un-lifted) —
            a control sets its OWN `color: var(--foreground)` which wins over the inherited
-           surface `color`, so the inactive (muted→white) read BRIGHTER than the active
+           surface `color`, so the inactive (muted→white) reads BRIGHTER than the active
            (--foreground), inverting selection. The fix lifts --foreground ITSELF in lockstep
            with --muted-foreground: now an active register reading --foreground resolves the
            SAME anchored contrast-color ink as the lifted inactive, so selected ≥ unselected
@@ -423,7 +415,7 @@
                 --muted-foreground: contrast-color(var(--card));
             }
         }
-        /* BC.W-DIALOG-GLASS / BC.W-ADAPTIVE-RECONCILE (overlay-band arm) — the overlay
+        /* The overlay
            band's `contrast-color()` ink flip is now GATED in the bright bucket above
            (the @container --glass-backdrop:light block already lists `.glass-floating,
            .glass-overlay` alongside the content tiers), NOT here as an UNCONDITIONAL
@@ -439,7 +431,7 @@
            overlay band STILL self-darkens UNCONDITIONALLY (the tint-strength clamp above,
            it floats over unknown) — only the INK flips in the bright bucket. ONE
            reconciled flip, not two forks (ladder.css stays the single source). */
-        /* BA.W-DARK-MATERIAL scope 7 — the content-tier ink flip is GATED on the bright
+        /* The content-tier ink flip is GATED on the bright
            signal (it moved INTO the @container bucket above), NOT unconditional. Over a calm
            LIGHT page the content tiers only carry the 4% silhouette floor (still a warm cream
            plate), so flipping the ink to the contrast-color DARK ink there is correct only

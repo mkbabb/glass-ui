@@ -1,5 +1,5 @@
 /* theme/bridges.css — the `@theme inline` block: the tokens.css `var(--token)`
-   BRIDGES (color/shadow/blur/duration/ease/typography) (AZ.W-CARVE partial 2 of 4).
+   BRIDGES (color/shadow/blur/duration/ease/typography).
 
    Inline substitutes the referenced value and mints no second var, so the
    tokens.css token stays the single override point (plain would emit
@@ -22,9 +22,9 @@
     --text-subheading:  var(--type-subheading);
     --text-heading:     var(--type-heading);
     --text-title:       var(--type-title);
-    /* AX.W50 D17 — the picker-family type-scale → `text-dropdown` /
+    /* The picker-family type-scale → `text-dropdown` /
        `text-dropdown-secondary` utilities, bridging the `--dropdown-text` token pair
-       (tokens.css §10, a specialization of W51's `--control-text` comfort register)
+       (tokens.css §10, a specialization of the `--control-text` comfort register)
        so a Tailwind `text-dropdown` utility resolves the family scale. Mirrors the
        `--text-small: var(--type-small)` ladder-bridge idiom above. */
     --text-dropdown:           var(--dropdown-text);
@@ -47,7 +47,7 @@
 
     /* Letter spacing → tracking-* utilities */
     --tracking-tight:  var(--type-tracking-tight);
-    /* BB.W-DISPLAY-TRACKING — the display-ONLY Apple −1.5% tracking rung bridged
+    /* The display-ONLY Apple −1.5% tracking rung bridged
        to the `tracking-display` utility (the token-first consumer affordance). */
     --tracking-display: var(--type-tracking-display);
     --tracking-snug:   var(--type-tracking-snug);
@@ -76,11 +76,11 @@
        Colors — core
        ═══════════════════════════════════════════════ */
     --color-border: var(--border);
-    /* AQ.W2 §3d — the whisper-alpha border hairline rung (border-border-soft /
+    /* The whisper-alpha border hairline rung (border-border-soft /
        bg-border-soft utilities). Auto-dark via --border. */
     --color-border-soft: var(--border-soft);
     --color-input: var(--input);
-    /* BG.W-DESHADCN — the shadcn `--color-ring` @theme bridge (the `ring`/
+    /* The shadcn `--color-ring` @theme bridge (the `ring`/
        `outline-ring`/`text-ring` utility surface) is DELETED, clean break. The
        house focus accent is the `--focus-ring-color` token / the `.focus-ring`
        box-shadow utility; the lone `outline-ring` reader re-points
@@ -96,7 +96,7 @@
 
     --color-muted: var(--muted);
     --color-muted-foreground: var(--muted-foreground);
-    /* AU.W8b.4 — the muted-foreground-strong bridge (text-muted-foreground-strong
+    /* The muted-foreground-strong bridge (text-muted-foreground-strong
        utility). The base token already exists (tokens.css:362); only the
        --color-muted-foreground bridge was present. CardDescription consumes
        text-muted-foreground-strong through this. NOT @property-registered (a
@@ -115,14 +115,14 @@
     --color-card: var(--card);
     --color-card-foreground: var(--card-foreground);
 
-    /* R0G-5 — bg-surface-public-data-panel utility. */
+    /* Bg-surface-public-data-panel utility. */
     --color-surface-public-data-panel: var(--surface-public-data-panel);
 
     --color-shadow: var(--shadow);
 
     /* Semantic foregrounds — bg-{success,warning,info}-foreground +
        text-{success,warning,info}-foreground. Companions to the existing
-       --color-{success,warning,info} bridges below. R5 vocab.γ gap row 4. */
+       --color-{success,warning,info} bridges below. */
     --color-success-foreground: var(--success-foreground);
     --color-warning-foreground: var(--warning-foreground);
     --color-info-foreground:    var(--info-foreground);
@@ -131,7 +131,7 @@
     --color-muted-soft:   var(--muted-soft);
     --color-muted-medium: var(--muted-medium);
 
-    /* AU.W8b.4 — glass-tier surface/border bridges (bg-glass-quiet /
+    /* Glass-tier surface/border bridges (bg-glass-quiet /
        border-glass-quiet). Companions to the existing --shadow-glass-quiet
        bridge below; lets the Toggle `card` variant compose bg-glass-quiet /
        border-glass-quiet / shadow-glass-quiet instead of bg-[var(--glass-…)]
@@ -154,7 +154,7 @@
     --color-surface-tint-40: var(--surface-tint-40);
     --color-surface-tint-70: var(--surface-tint-70);
 
-    /* Surface-tint tier aliases (V.W3.T10) — semantic names mapped to
+    /* Surface-tint tier aliases — semantic names mapped to
        the canonical numeric scale. Lets consumers compose
        `bg-surface-tint-quiet|floating|modal` without picking a numeric
        rung; the alias resolves to the rung that matches the surface
@@ -218,14 +218,14 @@
     --color-gold-dark: var(--gold-dark);
     --color-gold-deep: var(--gold-deep);
 
-    /* BA.W-ATLAS-RECONCILE C-3 — the silver structure metal (gold's mirror). The @theme namespace var
+    /* The silver structure metal (gold's mirror). The @theme namespace var
        a `text-silver`/`bg-silver` utility resolves through. */
     --color-silver: var(--silver);
     --color-silver-light: var(--silver-light);
     --color-silver-dark: var(--silver-dark);
     --color-silver-deep: var(--silver-deep);
 
-    /* BB.W-METAL-SHIMMER — the bronze brand metal (the third member of the
+    /* The bronze brand metal (the third member of the
        gold·silver·bronze triad; the @theme namespace bridge so a `text-bronze`/
        `bg-bronze` utility resolves through, mirroring gold/silver). */
     --color-bronze: var(--bronze);
@@ -275,7 +275,7 @@
     --height-chart-large:   var(--chart-height-large);
     --min-width-input-sm:   var(--input-min-width-sm);
     --spacing-chart-margin: var(--chart-margin);
-    /* AU.W8b.4 — w-popover utility (Combobox list width). Lifts `w-[200px]`. */
+    /* W-popover utility (Combobox list width). Lifts `w-[200px]`. */
     --width-popover:        var(--popover-width);
 
     /* Golden-ratio spacing — p-phi-5 / m-phi-6 etc. via Tailwind's spacing
@@ -283,7 +283,7 @@
     --spacing-phi-5: var(--space-phi-5);
     --spacing-phi-6: var(--space-phi-6);
 
-    /* V.W2 T13 — Icon-size ladder bridge → `size-icon-*`/`h-icon-*`/`w-icon-*`
+    /* Icon-size ladder bridge → `size-icon-*`/`h-icon-*`/`w-icon-*`
        utilities. Consumers can compose via `class="size-icon-2xl"` etc.
        directly without the `size-[var(--icon-2xl)]` arbitrary-property form. */
     --spacing-icon-xs:  var(--icon-xs);
@@ -304,8 +304,8 @@
     --shadow-glass-floating: var(--glass-shadow-floating);
     --shadow-glass-overlay:  var(--glass-shadow-overlay);
 
-    /* BC.W-CONTROL-SMOOTH — the warm focus-ring box-shadow bridged to the
-       `shadow-focus-ring` utility (AW.W26 --focus-ring-shadow register). The
+    /* The warm focus-ring box-shadow bridged to the
+       `shadow-focus-ring` utility (--focus-ring-shadow register). The
        `.focus-ring` utility auto-arms on :focus-visible; this bridge lets a
        surface compose the SAME warm ring on a NON-:focus-visible state (the
        TagsInputItem reka roving-tabindex `data-[state=active]` selection) via the
@@ -320,7 +320,7 @@
     --blur-glass-resting:  var(--glass-blur-resting-radius);
     --blur-glass-floating: var(--glass-blur-floating-radius);
     --blur-glass-overlay:  var(--glass-blur-overlay-radius);
-    /* BG.W-CLOSEFIX-9SITE — the `--blur-dock` @theme bridge (→ the `blur-dock`/
+    /* The `--blur-dock` @theme bridge (→ the `blur-dock`/
        `backdrop-blur-dock` Tailwind utility) RETIRED with the `--glass-blur-dock` chain
        it read (zero utility consumers; the dock reads `--dock-surface-blur`). */
 
@@ -331,7 +331,7 @@
     --ease-spring-snappy: var(--spring-snappy);
     --ease-spring-bouncy: var(--spring-bouncy);
     --ease-spring-gentle: var(--spring-gentle);
-    /* BC.W-SPRING-EASE — the minted iOS interactive press register's @theme alias
+    /* The minted iOS interactive press register's @theme alias
        (the documented public register the consumers reach by name; the JS path
        reads it via useLiquidPress + --glass-btn-press-t). */
     --ease-spring-press: var(--spring-press);
@@ -354,12 +354,12 @@
     --transition-duration-panel: var(--duration-panel);
     --transition-duration-xl: var(--duration-xl);
     --transition-duration-xxl: var(--duration-xxl);
-    /* BC.W-CONTROL-SMOOTH — the named iOS control-press surface beat (0.12s, the
+    /* The named iOS control-press surface beat (0.12s, the
        calm bg/color/box-shadow cross-fade clock the `.control-surface`/Toggle
        family rides). Bridged to the `duration-control` utility so a control
        composes the named clock, not a `duration-[var(--duration-control)]` wrap. */
     --transition-duration-control: var(--duration-control);
-    /* BA.W-GLASS-CAL — `--transition-duration-sparkle` bridge DELETED with the
+    /* `--transition-duration-sparkle` bridge DELETED with the
        `--duration-sparkle` token (the disco retirement); no `duration-sparkle`
        utility consumer. */
 }

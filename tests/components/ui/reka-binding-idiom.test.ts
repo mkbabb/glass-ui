@@ -1,4 +1,4 @@
-// AW.W26 — the binding-correctness render-effect canary (proof:reka-binding-idiom).
+// The binding-correctness render-effect canary (proof:reka-binding-idiom).
 //
 // The standing `feedback_glass_ui_binding_verification` memory note: stale reka
 // prop/emit bindings (`:pressed`, `v-model:search-term`, `tag=`) silently no-op

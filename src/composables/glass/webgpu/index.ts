@@ -1,4 +1,4 @@
-// BB.W-VIZ-SUITE (W-GPU-SUBSTRATE) — the WebGPU backend subtree barrel.
+// The WebGPU backend subtree barrel.
 //
 // INTERNAL (not on the public `src/composables/glass/index.ts` barrel — the WebGL2
 // substrate is likewise internal; aurora/blob/the new viz compose it via a direct
@@ -20,7 +20,7 @@ export {
     type GpuSubstrateHandle,
     type GpuSubstrateOptions,
 } from "./useGpuSubstrate";
-// BD.W-SUBSTRATE-SIZE-UNIFY — the ONE backing-store sizer's types, so a consumer that
+// The ONE backing-store sizer's types, so a consumer that
 // adopts the leaf sizer types its `resize(s: BackingSize)` + its `dprPolicy`.
 export {
     sizeBacking,

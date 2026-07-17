@@ -8,7 +8,7 @@ import type {
 } from "./types";
 import { isSelectionValue } from "../_shared/selection";
 
-// BI.W-MULTISELECT-FOLD — MultiSelect folded onto `<Combobox multiple>` (clean
+// MultiSelect folded onto `<Combobox multiple>` (clean
 // break, no alias). reka's ComboboxRoot carries the `multiple` capability natively
 // (array v-model); glass-ui surfaces it first-class: the
 // `data-multiple` hook + the forwarded root default-slot state (`open`, `modelValue`)

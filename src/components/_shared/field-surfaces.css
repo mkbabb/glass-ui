@@ -1,7 +1,7 @@
 /* Shared field and portaled list surface styles.
  * Select content collision bounds remain precompiled.
  *
- * THE DEFECT (BA-VJS-A2-WO1 / valuejs-fold A-2): SelectContent.vue authored its
+ * THE DEFECT: SelectContent.vue authored its
  * collision-bound as a Tailwind ARBITRARY-BRACKET utility
  *   [max-height:var(--reka-popper-available-height,60dvh)]
  * which is correct in SOURCE but compiles ONLY into a `dist/*.js` render-function
@@ -49,7 +49,7 @@
 }
 
 /* ════════════════════════════════════════════════════════════════════════
-   BD.W-SELECT-WELL (P4 select-forms) — the welling WARM-GLASS listbox + the
+   The welling WARM-GLASS listbox + the
    keyed warm control EDGE. The Select is the REFERENCE consumer of the shared
    field + capsule + accent + reveal union — every leg COMPOSES a shipped/sibling
    register, ZERO new component, ZERO fork.
@@ -215,6 +215,6 @@
 
 /* ── PRM is colour-static here — the field + floor + edge + cartoon shadow are PAINT,
    not motion, so they REMAIN under `prefers-reduced-motion: reduce` (un-gray and
-   selection-legibility need no motion). The reveal/pour/chevron motion legs are
-   carved in their own home recipes (reveal.css / menu.css) — this consumer file
+   selection-legibility need no motion). The reveal/pour/chevron motion legs
+   live in their own home recipes (reveal.css / menu.css) — this consumer file
    introduces no motion to gate. */

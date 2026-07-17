@@ -698,7 +698,7 @@ function togglePlay() {
 </template>
 
 <style scoped>
-/*  scope 9 — the transparent demo tile. NO opaque bg-card plate; the
+/* The transparent demo tile. NO opaque bg-card plate; the
    dock floats directly over the shared DockStage Aurora field,
    framed by a faint hairline only. */
 .dock-stage-tile {

@@ -92,7 +92,7 @@ export const WARM_IDENTITY_INK: OklchStop = { L: 0.62, C: 0.05, h: 62 };
 
 /**
  * The library-default FACE ramp stops — a CALM warm-divergent fold the face would paint IF lit
- * (the `faceAlpha:0` default keeps the face evaporated, so these never paint at HEAD; they are
+ * (the `faceAlpha:0` default keeps the face evaporated, so these never paint by default; they are
  * the warm-identity SSR fallback the vivid demo preset overrides). ALL hues ∈ [20,90] — the
  * teal/navy exclusion is clear by construction.
  *   trough → rose-umber, mid → ember-amber, crest → warm-wheat.
@@ -123,9 +123,9 @@ export const DEFAULT_LIQUID_GRID_CONFIG: LiquidGridConfig = {
     bulgeRadius: 2.5, // cells
     bulgeMode: "repel",
     lineColor: WARM_IDENTITY_INK,
-    // The FACE — OPT-IN, calm default byte-identical (faceAlpha:0 → the face evaporates → the
-    // HEAD line-only render is unchanged; the demo LIQUID_GRID_PRESET_RIPPLE lifts it).
-    faceAlpha: 0, // the structurally-absent FACE stays OFF by default (byte-identical to HEAD)
+    // The FACE — OPT-IN, calm default (faceAlpha:0 → the face evaporates → the
+    // line-only render; the demo LIQUID_GRID_PRESET_RIPPLE lifts it).
+    faceAlpha: 0, // the structurally-absent FACE stays OFF by default (the line-only render)
     faceRelief: 2.6, // the ∇H Lambert gain (so shade traverses ~[0.15,0.95] across a crest)
     squashK: 0.42, // the crest face visibly inflates (inset retreats) — bounded by the CV<0.15 fence
     baseInset: 0.14, // the soft inset tile inside the warped cell

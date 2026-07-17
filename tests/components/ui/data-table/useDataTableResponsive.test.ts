@@ -16,7 +16,7 @@ const columns: DataTableColumn<Row>[] = [
     { key: "latency", label: "Latency" },
 ];
 
-// AW.W14 — the responsive card-vs-table projection extracted from DataTable.vue.
+// The responsive card-vs-table projection DataTable.vue consumes.
 describe("useDataTableResponsive (AW.W14)", () => {
     it("stays tabular at/above the card breakpoint", () => {
         const width = ref(800);

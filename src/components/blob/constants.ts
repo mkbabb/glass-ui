@@ -29,7 +29,7 @@ export const POS_SCALE = 1 / 1.6;
 
 /** The full ordered scalar/vector uniform-name list the program builder caches a location per. */
 // ── mood model constants (consumed by composables/useBlobMood.ts) ─────────────
-// W11.c — the mood model is a 2-axis {valence, arousal} circumplex. Each named mood
+// The mood model is a 2-axis {valence, arousal} circumplex. Each named mood
 // is a POINT in that space (`MOOD_AVA`); the per-mood `MoodParams` are DERIVED from
 // valence/arousal by `paramsFor`, so the five moods read off ONE principled surface
 // rather than being hand-tuned in isolation. The derivation + the resolved target
@@ -75,27 +75,27 @@ export function paramsFor({ valence, arousal }: AffectPoint): MoodParams {
         // smin band (NOT an absolute distance) — the config holds the one length
         // authority (`BLOB_CONFIG_DEFAULTS.smoothK`, POS_SCALE'd in the renderer),
         // mood only scales it. Excited (high arousal) merges gooier, sleepy (low
-        // arousal) crisper; idle sits ≈ 1.0 (arousal 0.35 → ~1.03). The range is the
-        // prior absolute 0.16–0.32 lerp re-expressed around 1.0 (~5× down) so the smin
-        // band stays inside the contained-droplet seam-pull at BOTH arousal extremes.
+        // arousal) crisper; idle sits ≈ 1.0 (arousal 0.35 → ~1.03). The range centers on
+        // ~1.0 so the smin band stays inside the contained-droplet seam-pull at BOTH
+        // arousal extremes.
         smoothK: lerp(0.85, 1.35, arousal),
         // Pleasant + activated leans IN; unpleasant shies AWAY.
         //
-        // AX.W46 D5 — the arousal multiplier is FLATTENED (`0.4 + 0.6·arousal` →
-        // `0.7 + 0.15·arousal`). The old multiplier reached 1.0 at full arousal, so a
-        // plain hover (which auto-promotes to `curious`, arousal 0.5) scaled the pointer
-        // attraction UP and COMPOUNDED with the config `pointerStrength` into the lunge
-        // the live π-lane flagged. The flattened band (0.775 at curious, 0.85 at
+        // The arousal multiplier is FLATTENED to
+        // `0.7 + 0.15·arousal`. A multiplier reaching 1.0 at full arousal makes a
+        // plain hover (which auto-promotes to `curious`, arousal 0.5) scale the pointer
+        // attraction UP and COMPOUND with the config `pointerStrength` into a lunge.
+        // The flattened band (0.775 at curious, 0.85 at
         // excited) keeps the auto-`curious` hover lean CALM — the mood still warms the
-        // attraction with arousal, but it no longer auto-jumps a hover toward the
-        // excited-regime lean. The lean magnitude now lives in `config.pointerStrength`
+        // attraction with arousal, but it does not auto-jump a hover toward the
+        // excited-regime lean. The lean magnitude lives in `config.pointerStrength`
         // (0.18), not a mood-compounded multiplier.
         pointerAttraction: lerp(-0.2, 0.6, valence * 0.5 + 0.5) * (0.7 + 0.15 * arousal),
         // Energized = faster merge cycling (lower stagger scale).
         mergeRate: lerp(2.0, 0.3, arousal),
         // The iridescence/SSS sheen intensity (excited shimmers, sleepy is calm —
         // NOT flat: sleepy stays ALIVE at ~0.55, an `arousal=0` blob reads asleep,
-        // not dead). AX.W15: with lit/iridescence/SSS now DEFAULT-ON, this multiplier
+        // not dead). : with lit/iridescence/SSS now DEFAULT-ON, this multiplier
         // is load-bearing for the FIRST time — the excited CEILING drops 1.8 → 1.35
         // so the excited extreme stays a WARM wet bead, never an over-saturated neon
         // thin-film on the now-default-lit warm body.
@@ -139,29 +139,29 @@ export const REST_EPS = 1e-3;
 
 // ── satellite system (consumed by composables/useBlobSatellites.ts) ───────────
 
-// BA.W-GOO-REDRESS (root cause 1 / BA-goo-2, direction i — composed with the
-// uploadBlobUniforms.ts band widen, direction ii) — the ORBIT ENVELOPE bounds.
-// The prior per-satellite orbit random (×0.8..1.2) + wobble amplitudes (≤0.08)
-// pushed the worst-case satellite near-edge a GAP beyond the body edge that the
-// widened smin band still cannot bridge (the gap reaches ~0.13 UV with wobble at
-// the studio orbit 0.30; the band ceiling is ~0.06). Direction ii alone
+// The ORBIT ENVELOPE bounds — composed with the
+// uploadBlobUniforms.ts band widen.
+// A per-satellite orbit random (×0.8..1.2) + wobble amplitudes (≤0.08)
+// push the worst-case satellite near-edge a GAP beyond the body edge that the
+// widened smin band cannot bridge (the gap reaches ~0.13 UV with wobble at
+// the studio orbit 0.30; the band ceiling is ~0.06). The band widen alone
 // over-inflates past the lean ceiling before it can close that gap, so the
-// envelope is TIGHTENED here (the spec's compose-(i)+(ii) path): the random
+// envelope is TIGHTENED here: the random
 // multiplier is RE-CENTERED on the nominal and CAPPED (×0.85..1.05) and the
 // wobble amplitudes are calmed, so the worst-case near-edge stays within the
 // widened band's reach across the WHOLE orbit. The orbit→merge→absorb→emerge
 // show survives — the satellites still visibly sweep OUT to ~1.05× the nominal
-// orbit and back; the envelope is bounded, NOT collapsed (the §Triumvirate
+// orbit and back; the envelope is bounded, NOT collapsed (the
 // register-design constraint: tighten without killing the show). ONE source the
 // create + re-randomize sites both read (no per-site drift).
 export const ORBIT_RANDOM_BASE = 0.85; // the low end of the per-satellite orbit multiplier
-export const ORBIT_RANDOM_SPAN = 0.2; // → ×0.85..1.05 (was ×0.8..1.2; capped high end)
+export const ORBIT_RANDOM_SPAN = 0.2; // → ×0.85..1.05 (capped high end)
 export const SAT_WOBBLE1_BASE = 0.015;
-export const SAT_WOBBLE1_SPAN = 0.02; // → 0.015..0.035 (was 0.02..0.08)
+export const SAT_WOBBLE1_SPAN = 0.02; // → 0.015..0.035
 export const SAT_WOBBLE2_BASE = 0.01;
-export const SAT_WOBBLE2_SPAN = 0.015; // → 0.01..0.025 (was 0.015..0.055)
+export const SAT_WOBBLE2_SPAN = 0.015; // → 0.01..0.025
 
-// BA.W-GOO-REDRESS note — the orbiting satellite opacity drives the smin BRIDGE
+// note — the orbiting satellite opacity drives the smin BRIDGE
 // through the shader's opacity→distance inflation: metaball.frag.ts inflates a
 // satellite's SDF by `(1 - uSatOpacity) * 0.3`, so a lower-opacity satellite reads
 // as FURTHER for the merge. The bridge-hold is carried by the capped orbit
@@ -177,14 +177,14 @@ export const ORBIT_BLEND_MS = 2000;
 /** Minimum spacing (ms) between satellite merge events. */
 export const MERGE_STAGGER_MS = 3000;
 
-// ── BD.W-GOOBLOB-MERCURY-COLONY — the SPLIT (fission) engine constants ─────────────
+// ── The SPLIT (fission) engine constants ─────────────
 //
 // The MERCURY-COLONY split is an OPT-IN register (config.surface.fissionAmp, default 0).
 // When armed, AT MOST ONE satellite per cycle is the `fissioning` satellite: it buds OUT
 // through a thinning neck whose gap exceeds the smin reach so it SNAPS into a free
 // orbiting bead (the mercury pinch), then re-merges next cycle. The split rides MOTION
 // (the satellite radius rises along the `fissionSnap` curve), NOT a global smin-band
-// re-base — sidestepping the AZ.W-BLOB-STUDIO D2 lean-regression. The bounded apex
+// re-base — sidestepping the lean-regression. The bounded apex
 // `FISSION_REACH_MAX` is TUNED against the proof:blob-render calm-lean ceiling (0.10): at
 // orbit 0.30, apex 0.40 paints at 0.40·POS_SCALE = 0.25 uv (clears the canvas edge) — the
 // spike (golden/fission-topology-spike.mjs) sweeps this and reports the worst-case lean.
@@ -245,7 +245,7 @@ export const UNIFORM_NAMES = [
     "uSpecShininess",
     "uRimPower",
     "uRimStrength",
-    // BC.W-GOOBLOB-MEATBALL — the procedural soft-shadow march (T2).
+    // The procedural soft-shadow march (T2).
     "uShadow",
     "uShadowSoftness",
     "uIridescence",
@@ -261,7 +261,7 @@ export const UNIFORM_NAMES = [
     "uColorNoiseSpeed",
     "uStopCount",
     "uSatCount",
-    // F9.R1 (BG.W-BLOB-SATELLITE-SHADE) — the per-satellite explicit-shade active flag
+    // The per-satellite explicit-shade active flag
     // (the uSatColor[]/uSatColorAmt[] arrays cache their locations in buildMetaballProgram).
     "uSatColorActive",
     "uTrailCount",

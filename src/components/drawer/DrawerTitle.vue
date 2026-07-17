@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-// BB.W-DRAWER-ABROGATE — the title on the HOUSE reka `DialogTitle` (off vaul's). The
+// The title on the HOUSE reka `DialogTitle` (off vaul's). The
 // type-bind + the typography class are PRESERVED; only the component identity changes.
 import { DialogTitle as RekaDialogTitle } from "reka-ui";
 import type { HtmlHTMLAttributes } from "vue";

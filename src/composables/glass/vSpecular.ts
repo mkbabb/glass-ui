@@ -1,7 +1,7 @@
-// v-specular — the tier-root moving-specular AUTO-ARM (BB.W-LIQUIDHOVER).
+// v-specular — the tier-root moving-specular AUTO-ARM.
 //
 // This directive is the GLEAM-TRACK primitive of the affordance vocabulary
-// (`docs/precepts/affordance-map.md`, BC.W-AFFORDANCE-MAP — the closed five-primitive
+// (`docs/precepts/affordance-map.md` — the closed five-primitive
 // set: hover-lift · gleam-track · press-squish · drag-morph · focus-ring). It feeds the
 // host `--mouse-x/y` write; the `.glass-material::before` recipe maps it onto the typed
 // `--specular-x/y` channel and reads the `--glass-specular-intensity-{rest,hover,active}`
@@ -28,7 +28,7 @@
 //
 // The write lands on the directive HOST — the element that owns the material
 // `::before` gleam. Apply `v-specular` on the same node the `.glass-material` /
-// `glass-specular-track` / `.dock-*` `::before` paints on (the §Triumvirate
+// `glass-specular-track` / `.dock-*` `::before` paints on (the
 // host-geometry rule: the `--mouse-x/y` host write must be the gleam-painting box,
 // not an unrelated ancestor).
 //

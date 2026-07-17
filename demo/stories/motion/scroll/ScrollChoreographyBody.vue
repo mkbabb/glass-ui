@@ -33,8 +33,8 @@ onMounted(() => {
 });
 
 // ── Spring-damped scroll pin ─────────────────────────
-// The prior `.scroll-pin` named `scroll-timeline` was structurally DEAD (its
-// `currentTime` was `null` on every engine — `.scroll-pin` is not a scroll port).
+// A `.scroll-pin`-named `scroll-timeline` is structurally DEAD (its
+// `currentTime` reads `null` on every engine — `.scroll-pin` is not a scroll port).
 // `useScrollPin` drives a spring-damped `--pin-t` onto the sticky stage off the REAL
 // scroll port (`main.demo-main-scroller`, the AppShell route scroller) via
 // `SpringProgress` over the ONE `createScrollReader` — so the reveal arrives with

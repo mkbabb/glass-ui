@@ -561,8 +561,8 @@ export const CATEGORIES: Category[] = [
                 "Explicit static, selectable, action, and removable semantics over pill, cell, and icon geometry.",
             ),
             // the LabeledField family (parent SFC + 4
-            // wrappers over Input · Select · Slider · Switch), relocated from the
-            // compositions band: a single forms family, not a composed scene.
+            // wrappers over Input · Select · Slider · Switch): a single forms
+            // family, not a composed scene.
             s(
                 "forms",
                 "labeled-field",
@@ -693,8 +693,8 @@ export const CATEGORIES: Category[] = [
                 "Command Palette",
                 "Searchable command groups inline or in a titled Dialog, with shared selection, keyboard navigation, empty and disabled states.",
             ),
-            // the Configurator studio shell relocated from
-            // the compositions band as a single-library-family surface demo.
+            // the Configurator studio shell as a
+            // single-library-family surface demo.
             s(
                 "containers",
                 "configurator",
@@ -807,9 +807,9 @@ export const CATEGORIES: Category[] = [
                 "Dock Search",
                 "The dock IS the search bar — tap the collapsed pill and it morphs continuously (the dock's own --dock-morph-t glide, not a hard swap) into a search field; type and the fuzzy dropdown ranks live with subsequence-match highlighting plus a ghost-text completion of the top match; arrow keys walk the results, Enter routes, a select scrolls-to-and-warms the windowed section below. useDockSearch composes the shipped useFuzzySearch matcher, the virtual-section window, and the scroll-to subuse — the dock owns the gesture, the consumer plugs the data source.",
             ),
-            // the "Siri Island" story is DEFINITION-ABSENT (the Siri
-            // dock capability retired decided-terminal; the siri-*-on-public-/dock
-            // adjudication is terminal, ruling 18). Clean break, no alias.
+            // the "Siri Island" story is DEFINITION-ABSENT (the Siri dock
+            // capability is not part of the public dock surface).
+            // Clean break, no alias.
         ],
     },
     {

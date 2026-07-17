@@ -12,7 +12,7 @@ const accessibleName = computed(() => props.ariaLabel?.trim() || undefined)
 
 const emits = defineEmits<CarouselEmits>()
 
-// BI.W-CAROUSEL-REBUILD — embla is the ONE authority. `v-model:active` reflects the
+// Embla is the ONE authority. `v-model:active` reflects the
 // selected snap; the consumer binds it (or leaves it emit-free). NO shadow active ref —
 // `selectedScrollSnap()` is the source of truth, guarded by the `previousScrollSnap`
 // delta so a rapid click + Next-hammer never double-writes (G7): on `select` the model is

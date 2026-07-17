@@ -1,4 +1,4 @@
-// AW.W17 — the pure field-engine contract. seedField lays out `count` nodes
+// The pure field-engine contract. seedField lays out `count` nodes
 // within bounds; stepField drifts + bounces a node off a wall (the velocity sign
 // flips); the four neutral passes paint without throwing on a stub 2D context.
 
@@ -32,7 +32,7 @@ import {
 } from "@glass/components/constellation/constellationInteraction";
 import { DEFAULT_PALETTE } from "@glass/components/constellation/constellationRender";
 
-/** A complete `ConstellationField` (focalIndex + warp) — AX.W17. */
+/** A complete `ConstellationField` (focalIndex + warp) */
 function makeField(
     nodes: ConstellationNode[],
     w = 800,
@@ -442,7 +442,7 @@ describe("constellation warp ω-reconcile + gravity-well (AY.W-CON2)", () => {
     /**
      * Integrate the warp spring from a known start over a step target and return
      * the per-frame |x−target| gap. `response`/`zeta` ride field.warpCfg (the
-     * tokenised override seam — AY.W-CON2). Still nodes so the target does not drift.
+     * tokenised override seam). Still nodes so the target does not drift.
      */
     function warpGapTrace(
         response: number,
@@ -652,7 +652,7 @@ describe("constellation warp ω-reconcile + gravity-well (AY.W-CON2)", () => {
     });
 });
 
-// ── AZ.W-CON-GEN — the six-item generalization (R5-6) ───────────────────────
+// ── The six-item generalization ───────────────────────
 describe("constellation generalization (AZ.W-CON-GEN)", () => {
     it("G1 — a PINNED node is HELD: stepField does not drift/bounce it while others move", () => {
         const nodes = seedField(mulberry32(0xa11), 20, 800, 600, 0.16);
@@ -796,11 +796,11 @@ describe("constellation generalization (AZ.W-CON-GEN)", () => {
         field.warp.y = field.nodes[3].y;
         setWarpTarget(field, 3);
         for (let f = 0; f < 10; f++) stepField(field, 1, 0.16, null, 1 / 60);
-        expect(field.warp.targetIdx).toBe(3); // held forever (byte-identical to HEAD)
+        expect(field.warp.targetIdx).toBe(3); // held forever (unchanged)
     });
 });
 
-// R5-8 (the slides-consumer kVis floor) — the two-axis split: SIZES floor at
+// The kVis floor — the two-axis split: SIZES floor at
 // kVis = max(k, kFloor) while TRUE k keeps positions/reach. Byte-identical
 // at/above kFloor·BASE_WIDTH by construction (kVis === k there).
 import { BASE_WIDTH } from "@glass/components/constellation/constellationField";

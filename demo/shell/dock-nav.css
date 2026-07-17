@@ -11,7 +11,7 @@
  *
  * Every visual axis reads a library token (`--z-dock`, `--viz-fourier`,
  * `--radius-*`, `--duration-*`, `--spring-*`) or a demo-local `--demo-nav-*`
- * custom property — no brittle magic literal where a token resolves (the W20
+ * custom property — no brittle magic literal where a token resolves (the
  * styling-assay discipline).
  */
 
@@ -55,15 +55,12 @@
     margin: 0;
 }
 
-/* The contained rail paints the library's default topology; no demo-only re-seat
-   survives.
-   The BE-era `.demo-sidebar-rail … .dock-hairline-slot` / `.dock-stack.vertical` re-seat
-   forced the OLD always-OUTSIDE stack into the LOWER gutter (fanning UP off the dock floor)
-   because the old topology floated the WHOLE stack outside the dock box, abutting <main>.
-   The reinvented topology (stack-rail.css) INVERTS that: at REST the stack is ENTIRELY
+/* The contained rail paints the library's default topology; the demo adds no
+   re-seat of the slot.
+   The topology (stack-rail.css): at REST the stack is ENTIRELY
    CONTAINED in the dock box (zero gutter presence — just the core + the `--dock-rail-hairline`
-   line), and the fan is TRANSIENT (crossing the trailing edge only on hover/focus). So the
-   demo no longer overrides the slot at all — the library default paints, and the transient
+   line), and the fan is TRANSIENT (crossing the trailing edge only on hover/focus). The
+   demo does not override the slot — the library default paints, and the transient
    fan reach is cleared from the content side by `--dock-content-safe-inset` (the
    `.demo-main-scroller` scroll-padding below), NOT by re-seating the whole rail. The library
    box stays INVIOLATE (deltaW=deltaH=0). */

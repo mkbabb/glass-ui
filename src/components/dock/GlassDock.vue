@@ -3,16 +3,16 @@
 // the container-query style + the discriminated-union prop types) lives in
 // ./composables/useDockShellProps; the `isTransitioning` flag resolves from the
 // morph orchestrator's OWN spring settle (`morphing`) —
-// BG.NF.1 W-FALLBACK-EXCISE excised the CSS-transition-era wrong-clock settle timer +
+// excised the CSS-transition-era wrong-clock settle timer +
 // dead `@transitionend` resolver (useDockMorphWindow). The collapsed-pill touch-gate
 // lives in ./composables/useDockTouchGate. This SFC composes the dual-layer grid, the
 // axis-aware expand/collapse transition, and the pointer/focus hold machinery.
-// BI.W-DOCK-RETIRES — the fission split facility is DEFINITION-ABSENT (decided-terminal;
-// clean break, no alias — demo-only spectacle + the prime UF-C3 Safari suspect).
+// The fission split facility is DEFINITION-ABSENT (decided-terminal;
+// clean break, no alias — demo-only spectacle + the prime Safari suspect).
 import { computed, ref, useId, useTemplateRef, watch } from "vue";
-// AZ.W-ADAPTIVE-AUTO Arm 2 (H3 arm a) — the sampled-luminance observer is wired ON by
+// The sampled-luminance observer is wired ON by
 // DEFAULT for the dock (the surface the user reported unreadable over light, and the
-// one most often over a live/bright backdrop). It REFINES the W55 declarative bucket +
+// one most often over a live/bright backdrop). It REFINES the declarative bucket +
 // the Arm-1 self-engage (both stay the floor); a dark-substrate consumer opts out via
 // `--glass-tint-strength: 0%` on the dock or `:auto-luminance="false"`. Imported
 // directly (NOT via the glass barrel) — the composable is demo-private (path B): the
@@ -26,14 +26,14 @@ import { useDockExpandedSize } from "./composables/dockMorphMeasure";
 import { useDockShellProps, type DockProps } from "./composables/useDockShellProps";
 import { useDockClickIntegrity } from "./composables/useDockClickIntegrity";
 import { useDockTouchGate } from "./composables/useDockTouchGate";
-// BI.W-DOCK-OVERFLOW — the fits-vs-scrollable mode signal. An RO measures the active
+// The fits-vs-scrollable mode signal. An RO measures the active
 // full layer's inline overflow and toggles `[data-dock-overflow]` on the dock root, so
 // overflow.css's native scroll track + FadingScroll mask engage ONLY when the row exceeds
 // the cap (at rest the mask is `none` — T-52 a). ZERO scroll listener (RO + a light
 // MutationObserver only — O5/G9).
 import { useDockOverflowFit } from "./composables/useDockOverflowFit";
 
-/* AZ R4-RAIL attrs contract — the `.glass-dock-frame` shell is STRUCTURAL chrome
+/* The attrs contract — the `.glass-dock-frame` shell is STRUCTURAL chrome
    (the rail's non-clipping positioning context), never the consumer's surface.
    Fall-through attrs (class, data-testid, aria-*, the container styles every
    gate + consumer targets via `.glass-dock[...]`) belong on the `.glass-dock`
@@ -42,18 +42,17 @@ import { useDockOverflowFit } from "./composables/useDockOverflowFit";
    every existing selector contract. */
 defineOptions({ inheritAttrs: false });
 
-/* AZ.W-DOCK-TAXONOMY (arm a) — the prop contract is ONE shape (DockProps, in
+/* The prop contract is ONE shape (DockProps, in
    useDockShellProps): no `variant` discriminant, "vertical" is `orientation="vertical"`
    alone, and collapse↔expand applies on BOTH orientations (single opt-out
    `alwaysExpanded`). Defaults resolve at each read site via `?? default`. */
-/* BG.W-GLASS-SIGNAL-TRUTH (NF.3, paint re-open) — `autoLuminance` MUST default TRUE
+/* `autoLuminance` MUST default TRUE
    via `withDefaults`, NOT via a bare optional `boolean` type. Vue's boolean-prop
    CASTING resolves an ABSENT `boolean`-typed prop (no default) to `false`, NOT
-   `undefined` — so the old `props.autoLuminance !== false` guard read `false !== false`
-   → the sampled-luminance observer was NEVER wired on ANY dock (0 of 12 stamped the
-   writer-fired witness; the whole dock adaptive-luminance band was dead library-wide,
-   not just the demo). The explicit `autoLuminance: true` default makes an unpassed dock
-   default-ON (the documented H3 arm-a intent) while `:auto-luminance="false"` still opts
+   `undefined` — so a `props.autoLuminance !== false` guard would read `false !== false`
+   and NEVER wire the sampled-luminance observer on an unpassed dock (the whole dock
+   adaptive-luminance band would be dead library-wide). The explicit `autoLuminance: true` default makes an unpassed dock
+   default-ON (the documented intent) while `:auto-luminance="false"` still opts
    out — the ONE place the boolean default resolves (the other shell defaults stay the
    `?? default` read-site pattern in useDockShellProps). */
 const props = withDefaults(defineProps<DockProps>(), {
@@ -63,12 +62,12 @@ const props = withDefaults(defineProps<DockProps>(), {
 
 /* The resolved shell-prop computeds — shape/orientation/density, the collapse
    surface (`collapseDelay`/`startCollapsed`/`layoutValue`), the intrinsic
-   scroll-overflow class (BG.W-DOCK-CAP-SCROLL-FADE — `scrollClass` is
+   scroll-overflow class (`scrollClass` is
    `dock-scroll-x` on EVERY horizontal dock and `null` on vertical, whose
    block-axis scroll folds into the unconditional cap-derived shell.css rule; the
    `overflow="scroll"` opt-in is retired), `alwaysExpanded`/`fitContent`, and the
    container-query `containerStyle`. (See useDockShellProps for the full
-   `containerName` always-expanded-only rationale — AY.W-DOCK2 §F1.) */
+   `containerName` always-expanded-only rationale) */
 const {
     containerStyle,
     collapseDelay,
@@ -89,21 +88,21 @@ const layersEl = useTemplateRef<HTMLElement>("layersEl");
 const fullEl = useTemplateRef<HTMLElement>("fullEl");
 const summaryEl = useTemplateRef<HTMLElement>("summaryEl");
 
-// BI.W-DOCK-OVERFLOW — the native-scroll-track mode signal (the universal floor). The RO
+// The native-scroll-track mode signal (the universal floor). The RO
 // toggles `[data-dock-overflow]` when the active full layer's over-cap inline content
 // exceeds its clamped port, so the scroll track + FadingScroll edge mask (overflow.css)
 // engage only when scrollable and the mask is honestly `none` at rest (T-52 a). The
-// scrollIntoView recenter CALL lives in useSelectionGroup (W-DOCK-CONTROLS); this owns the
+// scrollIntoView recenter CALL lives in useSelectionGroup; this owns the
 useDockOverflowFit(dockEl);
 
-/* AZ.W-ADAPTIVE-AUTO Arm 2 (H3 arm a) — wire the sampled-luminance observer ON for
+/* Wire the sampled-luminance observer ON for
    the dock by default. It writes `--glass-backdrop-luma` + derives the
    `--glass-backdrop: light|dark` bucket on the dock root, DYNAMICALLY tracking the
    painted backdrop (a live aurora bleed) the static bucket is too coarse for. The
    Arm-1 self-engage + the declarative bucket stay the FLOOR — this REFINES. Opt out
    with `:auto-luminance="false"`. */
 if (props.backdropMode === "live" && props.autoLuminance !== false) {
-    // BG.W-GLASS-SIGNAL-TRUTH (ST3) — hand the field canvas as a REACTIVE GETTER, not
+    // Hand the field canvas as a REACTIVE GETTER, not
     // a by-value snapshot. `props.backgroundCanvas` is the DockStage aurora canvas,
     // which resolves POST-MOUNT (the scoped-slot `canvasRef` is null during this
     // setup). Passing the raw value captured null forever → the observer never entered
@@ -157,7 +156,7 @@ const fsmQuiet = computed(
     () => alwaysExpanded.value || interaction.value === "manual",
 );
 
-/* O.W2 — canonical typed-key dock context (invariant 25). The 6 prior
+/* Canonical typed-key dock context. The 6 prior
    string-keyed dock provides (`glassDockContext`, `glassDockId`,
    `dockKeepOpen`, `dockRelease`, `dockHeld`, `dockExpanded`) collapse
    into this single typed provide. `dockExpanded` is retired (zero
@@ -189,7 +188,7 @@ const {
 } = useDockMorphOrchestrator({
     rootEl: dockEl,
     outerActiveLayer,
-    // BG.NF.1 W-FALLBACK-EXCISE — `isTransitioning` resolves from the morph's OWN
+    // `isTransitioning` resolves from the morph's OWN
     // spring settle: the orchestrator notifies arm→true / settle→false (alongside the
     // single `[data-morphing]` busy signal). The CSS-transition-era wrong-clock settle
     // timer + dead `@transitionend` resolver (useDockMorphWindow) are excised — no
@@ -199,7 +198,7 @@ const {
     },
 });
 
-/* BD.W-DOCK-CORE (the width-seizure cure) — measure the two convex-blend endpoints
+/* (the width-seizure cure) — measure the two convex-blend endpoints
    ONCE per content change (`--dock-expanded-px`/`--dock-collapsed-px`); the visible
    size is a ratio-FREE blend off `--dock-morph-t` (shape.css), so the unbounded
    per-swap ratio is gone by construction. See dockMorphMeasure for the floors. */
@@ -212,7 +211,7 @@ useDockExpandedSize({
     expanded: visualExpanded,
 });
 
-/* AX.W01 — collapse and layer motion stay on the Dock spring. A consumer may opt a
+/* Collapse and layer motion stay on the Dock spring. A consumer may opt a
    dock into its own shared-element route morph with a stable custom-ident; ordinary
    route transitions leave the dock in the root snapshot. Extracting every glass dock
    into an independent backdrop-filter snapshot overloaded page-wide transitions and
@@ -223,7 +222,7 @@ const rootVtStyle = computed<Record<string, string> | undefined>(() =>
         : undefined,
 );
 
-/* R5-TAP (R5-3) — the CLICK-INTEGRITY guard. Scopes the collapsed-tap / hover-
+/* The CLICK-INTEGRITY guard. Scopes the collapsed-tap / hover-
    approach pass-through to the TAPPED ELEMENT'S IDENTITY (captured at pointerdown)
    so a mid-morph layer swap can never activate a DIFFERENT control under the
    stationary pointer (the deck's Home-under-gear-tap + gear-click-advances-slide
@@ -243,7 +242,7 @@ const {
     visualExpanded,
 });
 
-/* BG.W-DOCK-DECOMPOSE — the collapsed-pill tap-to-expand touch gate (shape B′). The
+/* The collapsed-pill tap-to-expand touch gate (shape B′). The
    gate owns its own `useTouchGate` + the tap/scroll discrimination + the
    collapse-on-deactivate watch; the SFC only binds the handlers + reaches
    `deactivate()` on a collapse flip. */
@@ -261,7 +260,7 @@ const { onTouchStart, onTouchMove, onTouchEnd, deactivate: touchDeactivate } =
 
 watch(visualExpanded, (isExpanded) => {
     if (isExpanded) {
-        // R5-TAP (R5-3) — a collapsed→expanded flip (tap-to-expand or hover/focus
+        // A collapsed→expanded flip (tap-to-expand or hover/focus
         // approach) marks the click-integrity window; a click that races the FLIP and
         // lands on a swapped-in control is swallowed by the integrity guard.
         // (`isTransitioning` is owned by the `dockMorphing` spring-settle watch above.)
@@ -323,27 +322,27 @@ defineExpose({
             its layout, and the SPINE plate owns the visual clip.
         -->
         <!--
-            BI.W-DOCK-SPINE — L0 THE PLATE (the lens). One absolute, non-interactive
+            L0 THE PLATE (the lens). One absolute, non-interactive
             (aria-hidden, decoration) element that owns backdrop-filter + the glass surface
             + rim + grain, and whose VISIBLE EXTENT morphs via clip-path off the ONE
             plate-scoped `--dock-t` (dock/dock.css). It seats at z-index:-1 within the box's
             stacking context (below the in-flow control run, above the box's drop-shadow),
             a SIBLING of the controls — never their ancestor — so a control hover plate
-            overhangs the plate edge UN-CLIPPED (UF-C6/C7). The box (`.glass-dock`) is now
+            overhangs the plate edge UN-CLIPPED. The box (`.glass-dock`) is now
             structural (layout + the drop-shadow elevation); the plate is the surface.
         -->
         <div class="dock-plate" aria-hidden="true"></div>
 
         <!--
-            BI.W-DOCK-SPINE — L1 THE CONTROLS. The normal-flow control run OVER the plate.
+            L1 THE CONTROLS. The normal-flow control run OVER the plate.
             `display: contents` (dock/dock.css) so it GROUPS the controls the SFC places
             WITHOUT interposing a flex context — the controls stay direct flex children of
-            `.glass-dock` (the layout is byte-identical to HEAD), and NO ancestor clips them
+            `.glass-dock` (the flex layout is unchanged), and NO ancestor clips them
             (`overflow: visible` both axes; the box carries no clip/contain).
         -->
         <div class="dock-controls">
         <!--
-            AX.W45 D13-a — the PERSISTENT region. The `#persistent` slot is a root
+            The PERSISTENT region. The `#persistent` slot is a root
             flex SIBLING of the morph-region, in-flow in BOTH collapsed AND expanded,
             NEVER `:inert`, NEVER a crossfade pane. It is the iOS Now-Playing /
             Stage-Manager idiom done STRUCTURALLY: a stable always-present rail beside
@@ -356,11 +355,11 @@ defineExpose({
             so a dock with no persistent controls is byte-identical to before.
         -->
         <!--
-            BG.W-GLASS-CLIP-DISCIPLINE (absorbs W-DOCK-CAST-RETIRE) — the kinetic
-            `.cartoon-cast` offset-shadow child is RETIRED from the dock (the
-            self-defeating maroon-halo mechanism, D3). The dock's elevation is
-            carried by `--shadow-dock` + `--glass-key` (shape.css). BI.W-DOCK-SPRING-UNIFY
-            (SU2) — the cartoon box-punch is RETIRED; the morph carries ONE
+            The dock has no kinetic
+            `.cartoon-cast` offset-shadow child (it drove a self-defeating
+            maroon-halo). The dock's elevation is
+            carried by `--shadow-dock` + `--glass-key` (shape.css).
+            No cartoon box-punch; the morph carries ONE
             deformation-free `--dock-size-scale` box morph on the `scale:` channel.
         -->
         <div v-if="$slots.persistent" class="dock-persistent">
@@ -368,21 +367,19 @@ defineExpose({
         </div>
 
         <!--
-            AZ.W-DOCK-TAXONOMY (move 2) — the built-in two-layer morph pattern (full +
-            collapsed summary) is now ORIENTATION-AGNOSTIC. Both orientations stack
+            The built-in two-layer morph pattern (full +
+            collapsed summary) is ORIENTATION-AGNOSTIC. Both orientations stack
             the full/summary panes on a 1/1 CSS grid and crossfade with the
             FLIP-driven aperture morph: a horizontal dock morphs `width`, a vertical
             dock morphs `height` (the morph orchestrator keys its axis off the
-            resolved `orientation` via `outerLayerAxis`). The prior split — a
-            horizontal full/summary FLIP pair vs. a static vertical single-body —
-            denied the vertical dock the collapse/shrink machinery; unifying the
-            structure gives a collapsible vertical dock the height morph the
-            mandate names. An `always-expanded` dock renders the `full` pane in-flow
-            and the `summary` pane out-of-flow (no morph fires), so a vertical nav
-            column that opts out of collapse reads exactly as before.
+            resolved `orientation` via `outerLayerAxis`). The unified structure gives
+            a collapsible vertical dock the same collapse/shrink machinery — the height
+            morph the mandate names. An `always-expanded` dock renders the `full` pane
+            in-flow and the `summary` pane out-of-flow (no morph fires), so a vertical nav
+            column that opts out of collapse reads as a plain static column.
         -->
         <div ref="layersEl" class="dock-layers">
-            <!-- BC.W-DOCK-VERTICAL-FIX — `inert` and `is-active` read the SAME
+            <!-- `inert` and `is-active` read the SAME
                  orchestrator layer identity (NOT the raw `expanded`). The bug:
                  an `alwaysExpanded`/mid-flip vertical dock has `visualExpanded` true
                  (pane painted active) yet `expanded` false → the pane was `:inert`
@@ -413,13 +410,13 @@ defineExpose({
             </div>
 
             <!--
-                BC.W-DOCK-SEARCH — the dock-as-native-dynamic-search-bar field region.
+                The dock-as-native-dynamic-search-bar field region.
                 Rendered ONLY when `search` is set (additive default-false → byte-
-                identical to HEAD otherwise). It seats INSIDE the `.dock-layers` morph
+                identical to the plain dock otherwise). It seats INSIDE the `.dock-layers` morph
                 aperture so the pill→field reveal rides the dock's OWN `--dock-morph-t`
                 glide (the box shrink-wraps; no second engine).
                 The consumer composes `useDockSearch` and slots its search field + the
-                fuzzy dropdown here; the `.dock-search-field` surface reads the W55 tint
+                fuzzy dropdown here; the `.dock-search-field` surface reads the tint
                 seam (dock/search.css) so the active field reads ≥4.5:1 over the backdrop
                 (the no-pale-fade legibility floor).
             -->
@@ -429,7 +426,7 @@ defineExpose({
         </div>
 
         <!--
-            BI.W-DOCK-CONTROLS (atlas M25 #persistent-end) — the TRAILING persistent
+            The TRAILING persistent
             region, the mirror of the leading `#persistent` slot. A stable, always-
             present control cluster on the TRAILING edge (the iOS trailing-utility
             group), in-flow in BOTH collapsed AND expanded, NEVER `:inert`, NEVER a
@@ -445,8 +442,8 @@ defineExpose({
             <slot name="persistent-end" />
         </div>
         </div>
-        <!-- /L1 .dock-controls (BI.W-DOCK-SPINE) -->
-        <!-- BI.W-DOCK-RETIRES — the fission BRIDGE + `#split` slot are DEFINITION-ABSENT
+        <!-- /L1 .dock-controls -->
+        <!-- The fission BRIDGE + `#split` slot are DEFINITION-ABSENT
              (the whole fission facility retired decided-terminal; clean break, no alias). -->
     </div>
 </template>

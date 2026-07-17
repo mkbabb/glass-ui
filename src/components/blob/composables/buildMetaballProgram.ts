@@ -4,7 +4,7 @@
 // `(gl) => { … }` factory: no Vue, no substrate, no closure-state read. The
 // renderer's `setup(gl)` callback calls this once per fresh context (on arm AND
 // on every webglcontextrestored), then closes over the returned handles. The
-// build sequence is the byte-identical lift of the prior inline `setup` body.
+// build sequence is the program's one-time `setup`: compile, link, resolve handles.
 
 import { compileShader, linkProgram } from "../../../composables/glass/webgl/compile";
 import { METABALL_VERTEX_SRC } from "../shaders/metaball.vert";
@@ -87,7 +87,7 @@ export function buildMetaballProgram(gl: WebGL2RenderingContext): MetaballProgra
         trailRadLocs.push(gl.getUniformLocation(prog, `uTrailRadius[${i}]`));
     }
 
-    // Per-palette-stop locations (W11.b — uPalette[MAX_BLOB_STOPS]).
+    // Per-palette-stop locations (uPalette[MAX_BLOB_STOPS]).
     const paletteLocs: (WebGLUniformLocation | null)[] = [];
     for (let i = 0; i < MAX_BLOB_STOPS; i++) {
         paletteLocs.push(gl.getUniformLocation(prog, `uPalette[${i}]`));

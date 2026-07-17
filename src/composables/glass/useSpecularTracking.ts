@@ -10,7 +10,7 @@ import { useReducedMotion } from "../motion/core/useReducedMotion";
  * `.glass-material::before` recipe (`glass.css`) MAPS that host write onto its
  * typed `--specular-x`/`--specular-y` channel and paints the travelling glow.
  *
- * VOCAB (HARDENING §G #28): `--mouse-x`/`--mouse-y` is the HOST WRITE this seam
+ * VOCAB: `--mouse-x`/`--mouse-y` is the HOST WRITE this seam
  * owns; `--specular-x`/`--specular-y` is the CSS-internal MAPPED channel the
  * recipe reads. The host writes `--mouse-x/y`; the recipe maps it.
  *

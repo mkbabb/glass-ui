@@ -331,7 +331,7 @@ const controlsScrolls = computed(() => props.scrollMode !== "never");
                 )
             "
         >
-            <!-- Controls column (layered config body)..1c —
+            <!-- Controls column (layered config body) —
                  the `auto`/`always` scroll modes render the <FadingScroll axis="y">
                  scroll-port (sharp at rest, feathered while overflowing) off the
                  retired `.scroll-fade-y` mask; `never` renders a plain div (the

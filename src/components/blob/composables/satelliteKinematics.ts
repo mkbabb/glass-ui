@@ -10,7 +10,7 @@ import type { SatelliteInternal } from "../types";
 
 /**
  * The stateless satellite KINEMATICS leaf — the
- * orbit, eccentricity, wobble math carved out of `useBlobSatellites.ts`.
+ * orbit, eccentricity, wobble math.
  *
  * Every function here is PURE: it takes the PRNG, the geometry, and the tempo
  * clock as EXPLICIT parameters and owns NO closure state, NO `SpringProgress`,

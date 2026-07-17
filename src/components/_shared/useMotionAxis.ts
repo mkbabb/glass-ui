@@ -7,7 +7,7 @@
 // liquid-weight-universal law means physics is the DEFAULT, so the axis is an
 // opt-DOWN (`full` → `reduced` → `off`), never an opt-in matrix.
 //
-// THE §GQ-4 CONTRACT (verbatim from KS-API-COLOCATION), the three rungs:
+// THE API-COLOCATION CONTRACT, the three rungs:
 //   full     (default) — the FULL register. `armed === true` (gesture enrichments
 //              on). Writes NOTHING (the token/CSS defaults ARE the full register —
 //              zero-delta at default, the no-op floor: no `data-motion` attr, no

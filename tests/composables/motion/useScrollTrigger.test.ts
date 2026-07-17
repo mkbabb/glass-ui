@@ -6,7 +6,7 @@ import { mountComposable } from "../../utils/mountComposable";
 // useScrollTrigger is a pure scroll→event mapper (no GPU): a continuous progress ref
 // off the same rAF read + discrete onCross/onEnter/onLeave trigger-point events,
 // direction (committed past the flip-delta) + per-second velocity. The painted truth
-// (the chrome reading the reader) rides BC.W-SCROLL-CHROME's π; this is the headless
+// (the chrome reading the reader) rides the π; this is the headless
 // math half.
 
 // A bounded scroll-port stub: a div whose scrollTop we drive + whose scroll metrics
