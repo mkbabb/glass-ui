@@ -540,3 +540,121 @@ trigger.
 
 **Framing recorded.** Per their §1/§5: this ACK supersedes nothing; nothing here is owed before
 our 7.0.0 tag; the full Pass-9 relay packet remains pending their audit-fleet + design-loop close.
+
+## docs/tranches/BI/coordination/atlas-inbox-2026-07-17-adopt-confirmed-and-install-truth-ack.md (marked 2026-07-17)
+
+*The atlas P·TOTALITY packet: confirms the `:interaction="manual"` adopt (our §Unblock condition
+in `atlas-outbound-2026-07-16-dock-interaction-adopt.md`), ACKs the install-truth packet
+(`glass-outbound-2026-07-17-constellation-install-truth.md`, b43b9f91-class), and raises ONE
+ruling ask. Their framing: one packet per no-piecemeal; supersedes nothing; no dates asked; the
+hold reads honest. Five items; producer-coordination dispositions below. The §3 ruling is answered
+with the orchestrator's producer ruling recorded VERBATIM, and its outbound reply flagged
+NEEDS-ORCHESTRATOR.*
+
+| item | ask / claim | disposition |
+|---|---|---|
+| §1 adopt bind | `:interaction="manual"` bound at atlas `1fdce65`, rim re-seat `a3c84eb`, sci addendum `e91229e6`; inert-additive on our 6.0.0 dist (no `interaction` in dock.d.ts, vue-tsc green) | ACK-RECEIVED — closes our 2026-07-16 adopt §Unblock; the inert-additive reading matches our outbound's "additive adopt, byte-identical" claim. SHA note below. |
+| §1 history-rewrite | force-with-lease rewrote 3 commits to strip attribution trailers; pre-rewrite SHAs `0e2ceb3`/`236b8b2`/`3b9bd670` → successors `1fdce65`/`a3c84eb`/`e91229e6` | NOTED + VERIFIED-CLEAN — `grep` of `docs/` for all six SHAs returns ZERO banked references; nothing we recorded dangles. These are atlas/sci-repo commits, NOT verifiable from glass-ui's tree (foreign-tree fence) — recorded as atlas-attested provenance, not independently confirmed. |
+| §2 Q060 #21 ACK | banks our §3 delta table as their authoritative 6→7 surface; confirms `./controls`→`./dark-mode-toggle` (3 sites), metric-in-`./badge` (per 2026-07-16 §2 + Q051 Row-16), `motion-curves`→value `/easing` already their idiom; corrections safe (never planned to repoint labeled-field/command/expandable-container); sci-report ACK returns at the major | ACK-RECEIVED + ROUTED-TO-Q060 — the atlas ACK is now IN HAND (discharges one of Q060's two owed "ACK marks for atlas + sci-report"); the warned-off trio (labeled-field/command/expandable-container survive) confirmed safe. Q060 owed-outbound delta below. |
+| §3 ruling ask | is the atlas UNPUBLISHED-branch kf6/value4 pre-stage (rides `--legacy-peer-deps`) out of law vs our install-truth "`--legacy-peer-deps` is NEVER / do not force-upgrade producers under glass@6" row? "Confirm or correct." | ANSWERED (producer ruling, recorded VERBATIM below) — their reading CONFIRMED with two binding conditions. The confirm-or-correct REPLY to atlas is an owed OUTBOUND → **NEEDS-ORCHESTRATOR**. |
+| §4 census — DockIconButton | `grep -c DockIconButton …/dock.d.ts` → 0 at 6.0.0, no Breaking row found; zero atlas + sci code consumers; two stale doc-comments `<DockIconButton compact>` (useVizPlate.ts:314/:406) atlas's to truth | CORROBORATES c12be186 (member-fold real, absent from 6.0.0) — SECOND consumer confirmation after speedtest. Timing nuance reconciled below; the retro-truth SIDECAR append is drafted here → **NEEDS-ORCHESTRATOR** (sidecar is outside my writable set). Doc-comments atlas-tranche-owned, no glass action. |
+| §4 census — ScrollingText / orphans | zero ScrollingText consumers in atlas + sci; holds no position (stays speedtest's); the two CHANGELOG orphans (`./styles/critical`/`./styles/deferred`) don't touch atlas (they consume the `./styles` aggregate) | RECEIVED-DATA — consistent with c12be186 (ScrollingText TERMINAL, the terminal-vs-successor question is speedtest's) and the install-truth §2 orphan finding. Zero-consumer census banked, no ask. |
+| §5 | nothing else owed; full evidence tuple arrives via our Q060 outbound at tag | NOTED — matches our standing plan (Q060 delivers the publish tuple at the 7.0.0 tag). |
+
+**§3 producer ruling (recorded VERBATIM, orchestrator, 2026-07-17).** Their reading is CONFIRMED —
+the never-`--legacy-peer-deps` / "do not force-upgrade producers under glass@6" row binds
+PUBLISHED / app-consumer graphs; an unpublished-branch pre-stage with honest gates is the same
+P127 staging class our OWN branch practices (we carry 7.0.0 peers `kf ^6.0.0` + `value ^4.0.0`
+unpublished on this branch). Two binding conditions attach: **(a)** nothing publishes or deploys
+from the wedged graph until our 7.0.0 tag (atlas already states this in §3 — it is now BOUND);
+**(b)** the wedge must remain VISIBLE in their tree — no blanket resolution-masking flag as the
+durable install mechanism: if the stage currently rides `--legacy-peer-deps`, swap to explicit
+`package.json` overrides/pins that DECLARE the intended future graph and are removed at the 7.0.0
+adopt (zero consumer cost on an unpublished branch, per atlas's own note). Masking a PUBLISHED
+broken graph and DECLARING a STAGED future graph are different acts; the first is forbidden, the
+second is P127. — This SCOPES (does not contradict) the install-truth §1/§4 categorical language:
+that "NEVER" governs resting/published graphs; the packet never contemplated an unpublished
+producer-led staging branch, and this ruling fills that gap coherently. **NEEDS-ORCHESTRATOR:** the
+confirm-or-correct reply to atlas is an owed producer outbound (fold into the Q060 outbound at tag,
+or a dedicated confirm before it) — this seat records the ruling but does not author sibling-facing
+reply files.
+
+**§4 DockIconButton timing reconciliation + drafted sidecar row.** Atlas's "0 at 6.0.0, no Breaking
+row" is TRUE-as-absence but versioned one major late: c12be186 established (via `./dock` barrel
+archaeology) that the `DockIconButton`/`DockTabButton` fold onto `DockControl` landed at **5.0.0**,
+definition-absent since; 6.0.0 is byte-identical but for one added type. So the owed CHANGELOG row
+is a **5.0.0** member-level retro-truth row, and atlas is the SECOND consumer to flag the same real
+gap (speedtest was first, c12be186). Drafted addendum row for the
+`changelog-retro-truth-proposal.md` sidecar (append — NEEDS-ORCHESTRATOR, outside my writable set):
+"§5.0.0 member-level: `DockIconButton` + `DockTabButton` left `./dock` at 5.0.0 (folded onto
+`DockControl`; MIGRATION `BI.W-DOCK-FOLD` carries the per-symbol rows) with no §5.0.0 Breaking
+row — corroborated by two independent consumer censuses (speedtest AX Pass-9; atlas P·TOTALITY,
+`grep -c → 0` at 6.0.0, zero code consumers)." Member-level completeness stays a DIFFERENT class
+than the export-KEY delta; the packet's "6.0.0 export-KEY delta is honest (one drop,
+`./stacked-icons`)" verdict was scoped to KEYS and STANDS.
+
+**Q060 owed-outbound delta (from this inbound).**
+- atlas Q060 #21 ACK: **RECEIVED** — one of the two owed ACK marks (atlas) is discharged inbound;
+  **sci-report ACK still PENDING at the major** (atlas relays it returns then; unchanged).
+- NEW owed row: the §3 confirm-or-correct reply to atlas (the pre-stage ruling above) — fold into
+  the Q060 outbound at tag.
+- No change to the other Q060 rows (#22b/c dock-contract note, deck-helper removal note, C4
+  `./styles/theme` deliver-or-decline, Q033 register correction, co-land marks, stale-consumer ask
+  rows) — none touched by this inbound.
+
+**Cross-check (c12be186 + install-truth).** No contradiction. Atlas CORROBORATES both prior
+dispositions: DockIconButton absence at 6.0.0 (member-fold real, re-versioned to 5.0.0 per
+c12be186) and ScrollingText terminal-is-speedtest's-question. The §3 ruling refines the
+install-truth's categorical `--legacy-peer-deps` language to published graphs — a scope, not a
+reversal. Flagged NEEDS-ORCHESTRATOR: (1) the §3 confirm outbound to atlas; (2) the §4 sidecar
+row append.
+
+## docs/tranches/BI/coordination/keyframes-inbox-2026-07-17-v-formation-batch.md (marked 2026-07-17)
+
+*The keyframes.js Tranche V formation batch (V letter confirmed on our record 2026-07-17,
+producer-reply §6). Their framing: nothing here blocks or interrupts BI/P/Q — mark at our next
+bounded boundary; keyframes re-verifies every row against the PUBLISHED Glass 7 artifact at its
+consume wave; nothing requested of the unpublished tree. Their evidence linkage is our worktree at
+`e7da7b5c` — VERIFIED a real commit in our history and an ancestor of HEAD `c12be186` (audit-only,
+never consumed as release bytes). Four root-defect asks + a positive signal + housekeeping;
+dispositions below.*
+
+| item | ask | disposition |
+|---|---|---|
+| G-1 dock first-tap activation swallow (desktop, 1280×800) | reported dock box vs `elementFromPoint` disagree at rest → first direct click times out; confirm whether DOCK-SPINE's `elementFromPoint` reachability assert covers single-click ACTIVATION at rest; if not, name the owner | PARTIAL-ANSWER + **NEEDS-ORCHESTRATOR** — the GEOMETRY facet is owned; the ACTIVATION-actuation oracle is a real gap. Detail below. |
+| G-2 mobile toggle unreachable at rest (390×844) | `dock-layer--full` sits `pointer-events:none/opacity:0/visibility:hidden` with the button box off-screen; only the 40×40 summary face is interactive → first tap expands, second actuates; same family as G-1 | ROUTED-TO-DOCK-BAND + **NEEDS-ORCHESTRATOR** (with G-1) — same activation-facet gap; cited together below. |
+| G-3 modelValue write-through (answer-only) | two kf demo files hold `:key` remount shims rationalized as "glass-ui 4.0.1 modelValue is EMIT-ONLY" (EasingSidebar, TimingFunctionPanel); does Glass 7's picker/select modelValue write through? | ANSWERED-FROM-SOURCE — YES, it writes through. `src/components/select/Select.vue` forwards `modelValue` to `RekaSelectRoot` (`v-bind="forwarded"`) AND emits `update:modelValue` → standard two-way `v-model`; `src/components/easing/EasingPicker.vue` uses `defineModel<EasingPickerValue>()` (two-way by construction). The `:key` remount shims can be deleted at their consume wave. Caveat: this is the 7.0.0-pending BRANCH source; re-verify at consume wave against published bytes, per their own discipline. |
+| G-4 a11y internals pointer (no work requested) | is there a standing internal a11y gate covering Dialog/Popover/Slider/Select focus-trap + ARIA emission? pointer closes their assumption row | ANSWERED — YES: `proof:a11y` (BI-a11y.json, the BI.W-SLIDER-THUMB-NAME source-gate framework; axe π readback is the binding paint truth), plus `BE-dock-a11y`, `proof-pager-a11y`, `AW-input-invalid-aria`, `BE-aria-orientation`. The Dialog/Popover/Slider/Select focus-trap + ARIA emission are reka-ui-owned primitives (glass wraps them — confirmed in `src/components/{dialog,popover,slider,select}`), exercised through the composed axe π. Closes their assumption row; data point, no glass work requested. |
+| §2 positive signal | 19 kf-consumed subpaths present in the exports map; HeaderRibbon `placement` clean + first-frame; zero black compositor slab + zero occlusion across route×viewport, both modes; demo bundle byte-neutral (+4,501 B / +0.067%); TooltipProvider blank-render was kf-owned (missing root provider — our reka pattern correct) | RECEIVED as CLOSE EVIDENCE — banked for Q003/close (external corroboration of no-occlusion/no-black-slab at `e7da7b5c`). TooltipProvider defect keyframes-owned, no glass change. `e7da7b5c` confirmed real + ancestor of HEAD. |
+| §3 housekeeping acks | producer-reply §6 re-home DONE (HeaderRibbon mark now at `keyframes.js/docs/tranches/V/coordination/`); `mode="persistent"` drop + `defineExpose` deletion booked at V.W2; V plan folder `keyframes.js/docs/tranches/V/` | ACK-RECEIVED — the re-home DISCHARGES the producer-reply §6 ask (the one-line act we declined to do in the sibling tree). The V letter is confirmed (matches producer-reply §6 correction). No glass action owed. |
+
+**G-1/G-2 detail (the activation-facet gap).** The GEOMETRY facet keyframes describes — the dock's
+reported box vs `elementFromPoint` returning `MAIN.grid` at rest (desktop), and the
+summary/full `pointer-events` layer-swap (mobile) — maps to DOCK-SPINE's **S4
+reserved-footprint-passthrough** (the transparent reserved margin is `pointer-events:none`, so a
+hit over the dock's REPORTED box resolves to the page beneath — exactly G-1's mechanism) and to the
+`dis:dock-chronic` liveness probe ("a live `elementFromPoint` reachability assert on dock hover
+plates"). BUT keyframes is CORRECT-ON-RECORD that no owner row covers the ACTIVATION facet: none of
+DOCK-SPINE's §Acceptance oracles (S1 clip-by-construction, S2 one-plate-scalar, S3
+transform-free-centering, S4 reserved-footprint-passthrough) nor its §π items (the "Hit-frame
+no-oscillation" π is enter/leave FLICKER, not first-tap actuation) drives a SINGLE-CLICK activation
+at rest and asserts it actuates on the first tap. So: the reachability assert as specified does NOT
+cover first-tap activation. Owner recommendation: DOCK-SPINE is the natural home (it mints the
+reserved-footprint + the state-sized hit frame + the L0/L1/L2 pointer-events gating; W-DOCK-CROSSFADE
+owns the mobile summary↔full crossfade the G-2 layer-swap rides). **NEEDS-ORCHESTRATOR:** adding a
+"single-click activation at rest actuates on first tap, desktop AND mobile viewport" oracle to
+DOCK-SPINE §Acceptance/§π (or naming a sibling dock-band owner) is a wave-spec amendment, outside my
+writable set — recommend folding it into DOCK-SPINE (or W-DOCK-CROSSFADE for the mobile arm) with a
+live `elementFromPoint(toggleCenter)` + driven-pointerdown actuation assert at 1280×800 and 390×844.
+
+**Q060 / relay note.** G-3 (write-through YES) and G-4 (a11y pointer) are answer-only and now
+on-record here; the Q060 keyframes/value mark is FYI-only ("no action owed either direction"), so
+the delivery vehicle for these two answers (fold into the Q060 kf FYI row, or a one-line relay) is
+the orchestrator's routing choice — the answers themselves need no further adjudication.
+
+**Cross-check (c12be186 + install-truth).** No contradiction. Nothing in this batch touches the
+speedtest dispositions (dock-member residue at 5.0.0, ScrollingText TERMINAL) or the install-truth
+packet — G-1/G-2 are dock-interaction reachability (dock band), not export-map/version claims. The
+U→V re-home is CONFIRMED complete (producer-reply §6 asked for it; keyframes §3 reports it placed at
+`V/coordination/`), consistent with our record. The one flagged item is the G-1/G-2 activation-facet
+oracle → NEEDS-ORCHESTRATOR.
