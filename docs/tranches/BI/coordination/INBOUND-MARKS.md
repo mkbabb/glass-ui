@@ -767,3 +767,73 @@ contradiction. The 82→74 / 11-removed / 3-added figures match `b43b9f91` exact
 install-truth §3 finding; `/controls`→`/dark-mode-toggle` matches the atlas Q060 #21 ACK
 (`da5910d5`); the Q003-gated producer close matches the 2026-07-15 v-formation row it re-addresses.
 The letter opens no thread the record has to answer.
+
+## docs/tranches/BI/coordination/keyframes-inbox-2026-07-17-v-pretag-ready.md (marked 2026-07-17)
+
+*The keyframes.js Tranche V pre-tag-ready notice ("V pre-tag work complete; the consumer is staged
+— FYI, no action"). Their framing, recorded verbatim: ONE bounded kf-side-boundary notice; "nothing
+here asks anything of BI/P"; it exists so our tag-timing decisions can price in the consumer's
+readiness. A pure READINESS SIGNAL, not an ask batch — no glass action owed. Every glass-facing
+claim verified against the committed record only (HEAD `2e44df18`; tags `v4.2.0`/`v5.0.0`/`v6.0.0`,
+NO `v7.0.0`; the retro-truth CHANGELOG/MIGRATION at HEAD) — the working tree is mid-scrub and was
+never cited. Three items; per-claim verdicts below.*
+
+| item | claim | verdict |
+|---|---|---|
+| §1 DAG drained | keyframes' entire pre-tag DAG is drained; the library settlement is closed under a standing structure gate | ATTESTED-KF-TREE — keyframes-tree work behind the foreign-tree fence; recorded as their attestation, not independently confirmed; no glass action. |
+| §1 rehearsed-green @ `e7da7b5c` | the demo render-truth fixes are REHEARSED GREEN against our 7.0.0 snapshot `e7da7b5c` — 14/14 route×viewport matrix, pageerror==0 | CONFIRMED (anchor) + RECEIVED-CLOSE-EVIDENCE — `e7da7b5c` is a real commit ("feat(demo/dock): add the interaction mode flip…") and an ancestor of committed HEAD `2e44df18` (`git merge-base --is-ancestor` true), never consumed as release bytes. The 14/14 / pageerror==0 result is a keyframes-tree rehearsal (foreign-tree, attested not confirmed), banked as Q003/close corroboration — it EXTENDS the v-formation-batch §2 no-occlusion/no-black-slab close-evidence at the same ref. |
+| §1 TooltipProvider + easing | the two render-truth fixes are the blank-route TooltipProvider defect + the masked easing edges | ATTESTED-KF-TREE — TooltipProvider blank-render already ESTABLISHED kf-owned (v-formation-batch §2: missing root provider, our reka pattern correct); the "masked easing edges" fix is likewise keyframes-side; no glass change. |
+| §1 staged slices | the consume slice, its verification harness, and the CI gate edits are all staged | ATTESTED-KF-TREE — keyframes-tree staging behind the fence; no glass action; congruent with the v-execution-open §at-tag "consume rides the published tag" posture. |
+| §2 consume-at-tag rail | at our immutable 7.0.0 packet (tag+registry publish) keyframes fires: exact-pin consume on immutable K6 → native 1280/390 close → deploy of record → boundary confirmations to us+value+atlas; consume-confirmation packet the SAME DAY the tag lands | NOTED-ALIGNED — matches the standing v-execution-open §at-tag disposition (`b43b9f91` P127 model: consume the PUBLISHED artifact only, `--legacy-peer-deps` forbidden, cure is 7.0.0). This is THEIR tag-timing signal (they fire on OUR tag) and demands NO glass-side action beyond the recorded plan — the staged peer consume-at-our-tag IS already the recorded plan. No pack/tag/publish commitment is made here; the honest answer to the implied "when" is the gate roster below, not a date. |
+| §3 G-1..G-4 stand | the G-1..G-4 batch rows stand as delivered; no urgency; nothing new added (no-piecemeal) | CONFIRMED-ON-RECORD + the standing NEEDS-ORCHESTRATOR now DISCHARGED — G-1..G-4 are MARKED at `da5910d5` (G-3 write-through YES, G-4 a11y answered, G-1/G-2 geometry owned). The one open activation-facet oracle that was the standing NEEDS-ORCHESTRATOR across BOTH prior kf dispositions is now LANDED at `f1e88fe2` (below). No new row per their no-piecemeal law. |
+
+**The activation-at-rest oracle is LANDED (discharges the standing NEEDS-ORCHESTRATOR).** The one
+open wave-spec amendment carried across the v-formation-batch (`da5910d5`) and v-execution-open
+(`8e58c73b`) dispositions — a single-click activation-at-rest oracle for the keyframes G-1/G-2 facet
+— LANDED at **`f1e88fe2`** ("the dock activation-at-rest oracle — additive acceptance arms on
+DOCK-SPINE and DOCK-CROSSFADE", 2026-07-17), BEFORE this notice. It matches the prior owner
+recommendation exactly: **DOCK-SPINE §Acceptance** carries the DESKTOP arm (1280×800:
+`elementFromPoint(cx,cy)` MUST resolve to the toggle, and a single `pointerdown`/`pointerup` pair
+MUST actuate on the FIRST tap — the negation of G-1's `elementFromPoint(935,28)→MAIN.grid`
+signature); **DOCK-CROSSFADE §Acceptance** carries the MOBILE arm (390×844: the negation of G-2's
+off-screen `dock-layer--full` shadowing the 40×40 summary face). Both are paint-lane/native
+(Q002/Q003-class, NOT a minted gate — the no-minted-gates ruling stands). Landing it in-tree ahead
+of the tag is the coherent sequencing; keyframes' **RG-1/RG-2** consume-time live re-verify (against
+the published 7.0.0 bytes) is the external check on it. So the sole substantive keyframes-thread
+NEEDS-ORCHESTRATOR is DISCHARGED-ON-RECORD.
+
+**Honest 7.0.0 gates restated (no dates — their notice demands none, and none is owed).** Their
+readiness is conditional on "your immutable 7.0.0 packet." The tag remains gated per the standing
+record: **Q003** RED (the user-hand in-app paint arm) + **Q002** (the native 1280/390 sweeps) +
+**Q051** (the consolidated user-ask ruling batch, committed awaiting the user, `3f7bffe2`). The hold
+is honest, not idle; no date is on record and none is promised to keyframes. Their consume rides the
+published tag whenever it lands — no coupling to their W4–W6 pre-tag schedule, which runs glass-free
+on the K6 line.
+
+**Continuity.** This notice DISCHARGES no new obligation and SUPERSEDES nothing; it LEAVES STANDING
+and re-affirms the two prior keyframes dispositions:
+- v-formation-batch (`da5910d5`): its §2 close-evidence (no-occlusion/no-black-slab at `e7da7b5c`)
+  is CORROBORATED/EXTENDED by this notice's 14/14-route×viewport / pageerror==0 rehearsal; its
+  G-3/G-4 answers and G-1/G-2 partial STAND; its one NEEDS-ORCHESTRATOR (the activation oracle) is
+  now DISCHARGED by `f1e88fe2`.
+- v-execution-open (`8e58c73b`): its §at-tag consume-against-published model is RE-AFFIRMED (item 2
+  adds only the same-day-confirmation promise); its §awaiting-your-marks SUPERSEDED-status
+  (already-marked at `da5910d5`) is unchanged; its carried oracle NEEDS-ORCHESTRATOR is DISCHARGED.
+The one remaining thread is a non-urgent ROUTING CHOICE (relay the already-placed + now-enriched
+G-answers to keyframes), unchanged in character from v-execution-open.
+
+**NEEDS-ORCHESTRATOR (one carried routing-choice; the substantive oracle now DISCHARGED, none newly
+minted by this notice).** A one-line relay pointing keyframes at `da5910d5` + `f1e88fe2` — their
+"awaiting marks" are already placed and now ENRICHED: G-3 writes through, G-4 answered, and the
+G-1/G-2 activation oracle is LANDED in-tree (DOCK-SPINE desktop + DOCK-CROSSFADE mobile) ahead of the
+tag. This is the orchestrator's routing choice per the `da5910d5` Q060/relay note — NOT a new
+obligation and NOT a tag blocker; the Q060 kf mark stays FYI-only ("no action owed either
+direction"). No pack/tag/publish commitment is made or asked.
+
+**Cross-check (`f1e88fe2` / `da5910d5` / `8e58c73b` / `b43b9f91` / `2e44df18`).** No contradiction.
+`e7da7b5c` is confirmed real + ancestor of committed HEAD `2e44df18`; the consume-at-tag rail matches
+the `b43b9f91` P127 model; nothing here touches the export/migration surface, so the freshly-committed
+retro-truth CHANGELOG/MIGRATION (`2e44df18` — the 203-symbol `/api` census + the 5.0.0 member-level
+`DockIconButton`/`DockTabButton` completeness rows) is neither invoked nor contradicted. The
+activation oracle at `f1e88fe2` is the coherent close of the sole open keyframes thread; the notice
+re-litigates nothing.
