@@ -102,6 +102,35 @@ the morph rides the `dockMorphMeasure` ResizeObserver dance, hover plates clip).
 - Self-test bites: a synthetic re-added `contain:paint` on the item layer REDs S1; a synthetic
   `translateX(-50%)` centering REDs S3; a synthetic second `--dock-t` writer REDs S2.
 
+**Activation-at-rest oracle (paint-lane, native — minted 2026-07-17 from the keyframes G-1/G-2 record;
+NOT a `proof:dock-spine` gate assert).** S1–S4 are the static clip/scalar/centering/`pointer-events`-value
+gate; **S4 asserts the reserved-margin `pointer-events` geometry (`none` on the transparent margin, `auto`
+on plate+items) but NOT that a live tap actuates.** Keyframes G-1 is correct-on-record that no existing
+oracle covers first-tap ACTUATION at rest — not S1–S4, not the §π "hit-frame no-oscillation" (which measures
+enter/leave FLICKER), not the `dis:dock-chronic` hover-plate reachability probe. This arm closes that gap and
+COMPOSES on S4 (it presumes S4's pointer-events geometry and adds the live actuation on top — no parallel
+duplication). It rides the Q002/Q003-class native/paint lane (a live-instrument readback, NOT a minted gate
+or CI script — the no-minted-gates ruling stands). Desktop viewport **1280×800**, dock at its DEFAULT rest
+state as rendered (do NOT presume collapsed — G-1's cited toggle is the EXPANDED dock's
+`[aria-label="Close controls"]` at rest; the arm binds to whatever state the dock actually rests in, and
+exercises the toggle in BOTH directions where both are reachable), both schemes, on real GPU (Chrome +
+visible-Metal Safari via W-DOCK-DEVICE):
+- (a) **hit-test-resolves-to-toggle**: query the resting dock's toggle control rect
+  (`el.getBoundingClientRect()`) and compute its center `(cx, cy)`; `document.elementFromPoint(cx, cy)` MUST
+  resolve to the toggle control or a descendant of it — the reserved margin, the page grid, or any overlay
+  MUST NOT intercept. (G-1's failing signature is `elementFromPoint(935,28)` returning `MAIN.grid` over the
+  dock's REPORTED box — the expanded dock's Close-controls center; this arm asserts the negation.)
+- (b) **one-tap-actuates (direction-agnostic)**: dispatch exactly ONE `pointerdown`+`pointerup` pair at
+  `(cx, cy)` and assert the toggle ACTUATES on the FIRST tap — the dock's expansion state visibly changes in
+  the direction that toggle owns (expanded→collapsed for Close-controls; collapsed→expanded for the expand
+  affordance) — no second-tap requirement, no dock-body-then-toggle two-step (the chronic double-click
+  activation facet). Where both rest directions are reachable in the story, exercise BOTH.
+- Provenance: minted 2026-07-17 from keyframes' G-1/G-2 V-formation batch. Keyframes' **RG-1/RG-2**
+  consume-time live re-verify (against the PUBLISHED 7.0.0 artifact) is the external check on this arm —
+  landing it in-tree BEFORE the 7.0.0 tag is the coherent sequencing. The MOBILE facet (390×844, touch
+  semantics) lands on **W-DOCK-CROSSFADE §Acceptance** (its owning surface — the summary↔full layer-swap the
+  G-2 mechanism rides), cross-referenced there.
+
 ## §π/DELTA
 
 - **The morph frame-series (the spine's crux + G12).** Capture the collapse↔expand morph frame-by-frame:

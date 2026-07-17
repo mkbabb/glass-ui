@@ -78,6 +78,27 @@ SpringProgress + the `DockLayerGroup` register/unregister machinery are live).
 - Self-test bites: a synthetic re-added `startViewTransition` REDs X2; a synthetic per-swap FLIP measure REDs
   X1; a synthetic content clip on the interactive run REDs X5.
 
+**Activation-at-rest oracle — MOBILE arm (paint-lane, native — minted 2026-07-17 from the keyframes G-1/G-2
+record; NOT a `proof:dock-crossfade` gate assert).** Companion to **DOCK-SPINE §Acceptance**'s desktop
+activation-at-rest oracle; this wave owns the MOBILE facet because the G-2 mechanism rides the summary↔full
+crossfade this wave mints. G-2's failing signature (390×844): `dock-layer--full` sits `pointer-events:none /
+opacity:0 / visibility:hidden` with the toggle's box off-screen (`x=441` on a 390 viewport), so only the
+40×40 `dock-layer--summary is-active` face is interactive → the first tap expands and only the SECOND
+actuates. This arm asserts the negation. It rides the Q002/Q003-class native/paint lane (a live-instrument
+readback, NOT a minted gate or CI script — the no-minted-gates ruling stands). Mobile viewport **390×844**,
+touch semantics, dock at rest (collapsed, idle), both schemes, on real GPU (Chrome + visible-Metal Safari via
+W-DOCK-DEVICE):
+- (a) **hit-test-resolves-to-toggle**: query the at-rest toggle control rect (`el.getBoundingClientRect()`)
+  and compute its center `(cx, cy)`; `document.elementFromPoint(cx, cy)` MUST resolve to the interactive
+  at-rest toggle face or a descendant — the inert/off-screen `--full` layer box MUST NOT shadow it and no
+  other layer intercepts.
+- (b) **one-tap-actuates**: dispatch exactly ONE `pointerdown`+`pointerup` pair (touch-semantic) at
+  `(cx, cy)` and assert the dock actuates on the FIRST tap — no expand-then-actuate two-step. The crossfade's
+  target face must be reachable/actuating at rest, never gated behind a prior expand.
+- Provenance: minted 2026-07-17 from keyframes' G-1/G-2 V-formation batch. Keyframes' **RG-1/RG-2**
+  consume-time live re-verify (against the PUBLISHED 7.0.0 artifact) is the external check; land in-tree
+  BEFORE the 7.0.0 tag. See **DOCK-SPINE §Acceptance** for the desktop arm and the shared assert recipe.
+
 ## §π/DELTA
 
 - **The mid-swap frame-series** (Chrome + Safari, both modes): a face-swap DURING a simultaneous collapse-
