@@ -24,7 +24,7 @@ reference fission dock. Ratify the retirement, or commission a rebuild?
 bounds, and the reference waist survives ≤33ms (1-2 frames) — our own BF render over-rendered the
 neck into a long strand, so a rebuild must tighten, never lengthen.
 **Evidence.** Q021 packet (retire rationale + DOCK-LADDER bounds + the frame law); **PENDING-Q021**,
-plus reference frames in `reports/media-analysis.md` §I-3.
+plus reference frames in `reports/media-analysis.md` §I-4 (its §6 numbering; = REGISTRY I-3 — the file's own §I-3 is the eyeglass row).
 **DECISION: ____**
 
 ### Row 2 — Judgment-a: dock spring
@@ -146,7 +146,7 @@ user-DELETED — this needs an explicit ruling, never a silent rebuild.
 **Question.** Confirm the metric-badge inversion (pill deleted, badge kept as SHARED)?
 **Recommendation.** Stands-confirmation only — the pill is deleted, the badge is a shared keep;
 confirm the decision is as intended.
-**Evidence.** `proportion-audit.md` DP-A; REGISTRY G-4/RM-2.
+**Evidence.** `docs/tranches/BI/STRUCTURE-ADDENDA.md` §3 (DP-A RULED, option A — carries USER-FLAG #1) + `coordination/asks-and-consumes.md` row 15. (The prior `proportion-audit.md DP-A` cite dead-ends — that file has no DP-A anchor; REGISTRY G-4/RM-2 is Row 12's dir-merge question, not this row's.)
 **DECISION: ____**
 
 ### Row 17 — ~~Version re-baseline (Q080)~~
