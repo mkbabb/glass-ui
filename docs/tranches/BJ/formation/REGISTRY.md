@@ -312,3 +312,34 @@ drift-explain — a materially better outcome than the registry assumed:
 
 R3b (perf DEV-baselines + the A01/A11 engagement sample table) still running on the same
 browser seat; its fold follows.
+
+---
+
+## Round-3b fold (perf DEV-baselines + A01/A11 engagement audit; digest at
+round-3-live/R3B-DIGEST.md; raw traces local-only per the gitignore rule)
+
+**Perf (all DEV-server numbers, product gates re-measure on a build):** cold LCP healthy
+(root 391ms / foundations 405ms / blob 488ms, CLS 0.00 at load, zero console errors) and
+render-delay-dominated (~99%) — the lever is boot JS, not network. The two-boot-long-task
+signature is stable (~208-210ms TBT light pages, 283ms blob). **The dominant cost is
+main-thread churn (MAJOR): the live glass/WebGL fields run rAF continuously at idle — ~40k
+RunTasks / ~1.6-1.7s task time in a 5.3s window on light pages, nearly doubling to ~52k /
+~3.11s on /substrates/blob, which also trips a ForcedReflow insight.** Family E's headline
+gate becomes a rAF-budget / idle-frame-cost gate + the blob forced-reflow fix; LCP gates seed
+from these baselines. Route transition into blob: 119ms freeze (one 83ms long-task) then
+immediate settle, but the swap injects CLS 0.04 — the transition should reserve space.
+
+**Engagement (the A01/A11 presence/absence table = the ENGAGE-AFFORD wave scope):**
+idle-breath — progress (indeterminate/loop) YES, substrate/section fields YES, slider NO,
+button NO, collapsed dock NO. Interaction — dock STRONG (hover-to-expand morph verified live,
+the engagement exemplar), slider STRONG (focus ring + spring fill + live label), button WEAK
+(1.5% scale + faint rim — MAJOR, the edict's weakest link). The wave: (a) idle breath for
+every atom, buttons first; (b) hover/press affordance strengthened well past 1.5% so it reads
+grow/glow/lift.
+
+**Two riders:** (1) interaction-robustness — the slider's role=slider node is NOT the hittable
+target (zero-width thumb span; synthetic pointer no-ops; only trusted CDP keyboard moved it):
+slider tests must target the track or use keyboard — joins the binding-verification lesson
+class. (2) visual-landing — root bento preview areas render empty dark panels + a detached
+yellow goo-blob floats right of the hero: routed to family C (preview/tile work) for
+intended-vs-regression confirmation.
