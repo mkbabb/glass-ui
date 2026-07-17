@@ -34,6 +34,19 @@
         border-radius: var(--radius-pill);
     }
 
+    /* F7 = ADOPT the field rung for the DIALOG-nested single-line input (the
+       "Rename workspace" Slug pill vs the round dialog shell). Inside a modal the
+       stadium pill's scale-invariant geometry visibly disagrees with the soft-rect
+       surface; the 16px field rung nests concentrically and reads coherent. Scoped
+       to the modal context (`[data-slot="dialog-content"]`, minted on every dialog
+       + side-sheet content node): the base single-line input KEEPS the pill, as do
+       the modal Save/Cancel CTAs (the iOS capsule idiom). Reverses the AW.W25
+       keep-the-pill policy (theme/radius.css) for the modal input only. Textarea
+       already reads `--radius-field`, so only single-line inputs change. */
+    [data-slot="dialog-content"] .field-control[data-kind="input"] {
+        border-radius: var(--radius-field);
+    }
+
     .field-control[data-kind="textarea"] {
         min-block-size: max(5lh, calc(5rem * var(--ui-scale)));
         border-radius: var(--radius-field);
