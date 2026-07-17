@@ -2,6 +2,78 @@
 
 ## 7.0.0 (unreleased)
 
+### Export-map delta (the authoritative 6.x → 7.0 migration surface)
+
+11 keys removed, 3 added (82 → 74). Mirrors `MIGRATION.md` §7.0.0.
+
+| 6.0.0 subpath | 7.0.0 disposition |
+|---|---|
+| `./controls` | → `./dark-mode-toggle` (import `DarkModeToggle` there; the collective alias is removed) |
+| `./metric-badge` | consolidated → `./metric` (`Metric`) |
+| `./metric-cell` | consolidated → `./metric` (`MetricCell` — icon-bearing cell) |
+| `./metric-stack` | consolidated → `./metric` (`MetricStack`) |
+| `./icon-tooltip` | removed — compose `./tooltip` over the trigger |
+| `./icon-chip` | removed — compose `./chip` with an icon child |
+| `./color-swatch` | removed — native color input; Aurora's swatch is demo-private |
+| `./focus-scope` | removed — import `FocusScope` from `reka-ui` for a custom boundary |
+| `./motion-curves` | removed — `CurveFn`/`MOTION_CURVES`/`motionCurve` gone; import callable easing from `@mkbabb/value.js/easing` |
+| `./notification` | removed — use the retained `./toast` queue/presentation family |
+| `./spa-view` | removed — compose Vue `KeepAlive` + `Transition` in the product shell |
+| — | ADDED `./dark-mode-toggle`, `./metric`, `./styles/theme` (Tailwind `@theme` registration bridge) |
+
+`InstrumentChassis` remains on `/instrument-chassis` but is no longer root-exported. The
+7.0 peer line is `@mkbabb/keyframes.js@^6.0.0` + `@mkbabb/value.js@^4.0.0` (optional
+`@mkbabb/pencil-boil@^0.9.2`); `perfect-freehand` is no longer a peer (vendored into
+HandMark). See `MIGRATION.md` §7.0.0 for the per-prop rows.
+
+**Survivors (do not migrate):** `./labeled-field`, `./command`, and `./expandable-container`
+are NOT removed — all three ship in 7.0.0 (verified present in the branch `exports`).
+Repointing them would break working imports. But key-level survival does not imply
+member-level survival: the `/command` KEY survives while its `MenuItemVariants` member is
+removed — see the member-level removals below.
+
+**Member-level removals from surviving keys.** Some 7.0.0 breaks drop exported members from
+keys that still ship, so an `exports` keyset diff alone will not surface them. The complete
+v6.0.0→branch member diff over the surviving subpaths (each verified exported by that key's
+`v6.0.0` barrel and absent on the branch), grouped by subpath with a successor or `none`:
+
+- `/motion-core` (the last three also rode the root barrel): `usePrioritizedTask` /
+  `postTaskSafe` → `useYieldToMain` / `yieldToMain`; `vScrollRevealOnce` → `vReveal`;
+  `NavigateOptions` → `ViewTransitionOptions`; `navigate` → `startViewTransition`;
+  `supportsRouteTransitions` → `supportsViewTransitions`. The `usePrioritizedTask` companion
+  types go with it: `UsePrioritizedTaskReturn` → `UseYieldToMainReturn`; `PostTaskOptions` /
+  `TaskPriority` → none (`yieldToMain` / `useYieldToMain` take no options and expose no priority enum).
+- `/surface`: `surfaceClass` / `decorationClass` → none (resolver internalized; compose `<Surface>`).
+- `/card`: `CardSurface` → `CardVariant` + the `Surface` axis; `CardSpecular` → `SurfaceSpecular`
+  (`/surface`); `ScrollCardProps` / `ScrollCardHeaderProps` (+ the `ScrollCard` components) →
+  the ScrollCard family is retired.
+- `/command`: `MenuItemVariants` → none (menu-row treatment internal). `/button`: `ButtonVariants`
+  → `ButtonProps` / `ButtonEmphasis` / `ButtonSize`. `/toast`: `ToastType` → `ToastProps` /
+  `ToastOptions`.
+- `/drawer`: `DrawerClose` / `DrawerTrigger` → `DialogClose` / `DialogTrigger` (`/dialog`).
+- `/instrument-chassis`: `InstrumentChassisVariant` → none (one material). `/blob`: `BlobVariant`
+  → none (`BlobMerge` carries the smin-merge). `/carousel`: `CarouselNext` / `CarouselPrevious`
+  → owner-local buttons from `useCarousel()` (`scrollNext`/`scrollPrev` + `canScroll*`).
+- root `@mkbabb/glass-ui`: `METRIC_PLACEHOLDER` / `coalesceMetric` → none (coalescing is internal;
+  pass `placeholder` on the `/metric` components). `MetricValue` / `MetricValueProps` are re-homed,
+  not removed → import from `@mkbabb/glass-ui/metric`.
+
+Completeness: the diff is complete once you also count the members already carried by a per-prop
+row in `MIGRATION.md` §7.0.0 (`avatarVariants`/`AvatarVariants`, `toggleVariants`/`ToggleVariants`,
+`sliderVariants`/`SliderVariants`, `ChassisDivider`, `InstrumentChassisPhase`→`InstrumentChassisState`,
+`PaperBackdropFrequency`, `DockSection*`/`DockStack*`, `pagerWindow`/`PagerWindow`,
+`SplitChars`/`useCharStagger`, and the goo/metaball facilities `useGooMorph`/`GooBarbellRefs`/`UseGooMorphParams`/`UseGooMorphReturn`,
+`MORPH_SIGNATURES`/`MorphSignature`/`MorphSignatureName`/`MorphVector`, `GooFilter`, and
+`useMetaballRenderer`/`UseMetaballRendererOptions` — all shipping through v6.0.0, removed at 7.0.0),
+the §5.0.0 `/api` census (each `/api` member marked with its removal
+version), and one mechanism-documented family excluded here — the
+~67 `/motion` keyframes re-exports (`Easing`, `TimingFunction`, …). Whole-key drops are the export-map
+delta above, not member removals.
+
+**The recurrence rule:** the authoritative 6→7 migration surface is the export-map keyset
+diff (`git show <tag>:package.json` exports), not this prose. Where the narrative and the
+export keyset disagree, the keyset is load-bearing and wins.
+
 - `HeaderRibbon` is persistent-only: one named toolbar on the shared functional glass
   surface and motion tokens. Its API is props `{ placement?, ariaLabel?, class }` plus a
   single `#items` slot. The collapsible mode, anchor button/slot, `anchorLabel`, and the
@@ -108,11 +180,62 @@ reshape as one major release, one migration event.
 
 ### Breaking
 
-- **The `./api` discovery subpath is folded (the ONLY dropped export key).** Its 203
-  symbols re-home onto their owning subpaths — a pure consumer import-path swap, zero
-  symbol loss (200 were already exported by the owning barrel; the 3 `_shared` orphans —
-  `Surface` → `/card`, `MenuItemVariants` → `/command`, `ControlSize` → `/forms` — add one
-  re-export each). See `MIGRATION.md` `## 5.0.0` for the full 203-row map.
+- **The `./api` discovery subpath is folded.** Its symbols re-home onto their owning
+  subpaths — a pure consumer import-path swap with zero symbol loss for every surviving
+  symbol (the retired viz, `/virtual`, and `/border-progress` types have no re-home target;
+  those subpaths are in the removed-key table above, not re-homed). Most re-homed symbols
+  were already exported by the owning barrel; the `_shared` orphans — `Surface` → `/axes`,
+  `MenuItemVariants` → `/command`, `ControlSize` → `/forms` — each gain a re-export on their
+  owning subpath. `MIGRATION.md` `## 5.0.0` carries the authoritative per-symbol map; the
+  `package.json:exports` keyset diff (`git show <tag>:package.json`) is the load-bearing
+  migration surface, not this prose.
+- **[CORRECTION 2026-07-17] The 5.0.0 export-map dropped 20 keys, not one.** The `./api`
+  bullet above originally read "(the ONLY dropped export key)" — corrected 2026-07-17: the
+  original entry understated the export-key delta. The authoritative surface is the
+  v4.2.0→v5.0.0 `package.json:exports` diff (20 removed, 7 added). Removed keys and where
+  each consumer repoints:
+
+  | Removed subpath (5.0.0) | Disposition | Guidance |
+  |---|---|---|
+  | `./api` | folded into owning barrels | this section + `MIGRATION.md` §5.0.0 |
+  | `./goo-blob` | renamed `./blob` | this section + `MIGRATION.md` §5.0.0 `goo-blob → blob` |
+  | `./context-menu` | folds onto the Menu family (`trigger="context"`) | `MIGRATION.md` §5.0.0 `BI.W-MENU-TRIGGER` |
+  | `./hover-card` | folds onto `<Popover>` | `MIGRATION.md` §5.0.0 `BI.W-OVERLAY-UNION` |
+  | `./hover-popover` | folds onto `<Popover>` | `MIGRATION.md` §5.0.0 `BI.W-OVERLAY-UNION` |
+  | `./sheet` | folds onto `<Dialog placement>` | `MIGRATION.md` §5.0.0 `BI.W-DIALOG-PLACEMENT` |
+  | `./confirm-dialog` | becomes a Dialog preset | `MIGRATION.md` §5.0.0 `BI.W-DIALOG-PLACEMENT` |
+  | `./toggle-chip` | folds onto one explicit `<Chip>` family | `MIGRATION.md` §5.0.0 `BI.W-CHIP-FOLD` |
+  | `./selectable-chip` | folds onto one explicit `<Chip>` family | `MIGRATION.md` §5.0.0 `BI.W-CHIP-FOLD` |
+  | `./glass-panel` | retires onto `Card` / `<Surface>` / `.glass-resting` | `MIGRATION.md` §5.0.0 `BI.W-GLASS-DEDUP` |
+  | `./border-progress` | retired; `./scroll-progress-rim` is the minimal successor | `MIGRATION.md` §5.0.0 (BG/BH retirements) |
+  | `./concentric` | retired viz | `MIGRATION.md` §5.0.0 (BG/BH retirements) |
+  | `./dot-flow-field` | retired viz | `MIGRATION.md` §5.0.0 (BG/BH retirements) |
+  | `./dot-matrix` | retired viz | `MIGRATION.md` §5.0.0 (BG/BH retirements) |
+  | `./goo-dot-matrix` | retired viz (re-home `<Blob>`) | `MIGRATION.md` §5.0.0 (BG/BH retirements) |
+  | `./paper-grid` | renamed `./liquid-grid` | `MIGRATION.md` §5.0.0 `BG.W-GRID-AFFINE` |
+  | `./scrolling-text` | retired; render accessible text | `MIGRATION.md` §5.0.0 (BG/BH retirements) |
+  | `./virtual` | demoted to demo-local; not a library surface | `MIGRATION.md` §5.0.0 (BG/BH retirements) |
+  | `./styles/critical` | removed; split critical-layer CSS unified into `./styles` (`index.css`) / `./styles.css` | net-new row (this entry) |
+  | `./styles/deferred` | removed; split deferred-layer CSS unified into `./styles` (`index.css`) / `./styles.css` | net-new row (this entry) |
+
+  Added at 5.0.0: `./axes`, `./blob`, `./blob-config`, `./chip`, `./liquid-grid`,
+  `./scroll-progress-rim`, `./surface`.
+- **[CORRECTION 2026-07-17] Member-level: the dock control/trigger fold removed exported
+  `/dock` members without a 5.0.0 Breaking row** — corrected 2026-07-17. `DockIconButton`
+  and `DockTabButton` (exported members of `@mkbabb/glass-ui/dock` at 4.2.0) fold onto one
+  `<DockControl>` at 5.0.0 — `shape="icon"` is the default; `<DockTabButton …>` →
+  `<DockControl shape="tab" …>`. Clean break, no alias. The `./dock` export KEY is
+  unchanged; the members are the break. `DockSelectTrigger` / `DockDropdownTrigger` /
+  `DockPopoverTrigger` likewise fold onto `<DockTrigger for=…>`. Per-symbol guidance:
+  `MIGRATION.md` §5.0.0 `BI.W-DOCK-FOLD`.
+- **[CORRECTION 2026-07-17] The orphan-trio's `MenuItemVariants` → `/command` re-export did
+  not survive to the branch.** The `./api` fold bullet above states the three `_shared` orphans
+  (`Surface` → `/axes`, `MenuItemVariants` → `/command`, `ControlSize` → `/forms`) each gained a
+  re-export on their owning subpath. That held at 5.0.0 and 6.0.0 for all three, and `Surface`
+  (`/axes`) and `ControlSize` (`/forms`) still ship on the branch — but `MenuItemVariants` was
+  removed at 7.0.0 (the `/command` KEY survives; the member does not; see §7.0.0). The full
+  v4.2.0→branch accounting is the 203-symbol `/api` census in `MIGRATION.md` §5.0.0 (203 total,
+  141 live on a branch subpath, 62 retired or renamed).
 - **`--ring` → `--focus-ring-color`** — the focus-ring color token renames (clean break,
   no alias). Consumers rename the reference; a transition-window read is
   `var(--focus-ring-color, var(--ring))`.

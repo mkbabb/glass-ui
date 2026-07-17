@@ -29,12 +29,17 @@ replacements, without aliases or compatibility shims.
 | `Notification` / `@mkbabb/glass-ui/notification` | Use the retained `Toast` queue and presentation family. |
 | `SplitChars` / `useCharStagger` | Render ordinary accessible text. Own product-specific grapheme treatment at that product boundary. |
 | `ColorSwatch` / `@mkbabb/glass-ui/color-swatch` | Use a native color input in the owning form; Aurora's proportioned swatch is now demo-private. |
+| `IconChip` / `@mkbabb/glass-ui/icon-chip` | Use `<Chip shape="icon">` with a slotted glyph for a meaningful static plate, or render the glyph directly when no plate is needed. The old icon, section, glyph-size, stroke, bare, duotone, bloom, saturated, glass, and reveal axes are deleted. |
+| `IconTooltip` / `@mkbabb/glass-ui/icon-tooltip` | Compose the canonical Tooltip family (`@mkbabb/glass-ui/tooltip`): one `TooltipProvider` around the nearest real control group, a named native trigger, and a terse noninteractive `TooltipContent`. There is no icon-only tooltip wrapper (the §5.0.0 `icon-tooltip` block below carries the composition example). |
 | standalone `Toggle`, `toggleVariants`, `ToggleVariants` | Use `ToggleGroupItem` inside `ToggleGroup`, or a native `<button aria-pressed>` for a standalone pressed command. The styling recipe is private to ToggleGroup. |
 | `DockSection`, `DockSectionDescriptor`, `DockSectionKind` | Use ordinary named groups and `DockSeparator` inside `GlassDock`. |
 | `DockStack`, `DockStackItem` | Compose the existing dropdown family with `DockControl` for a compact facet or layer menu. |
+| `pagerWindow`, `PagerWindow` | Use `PagerDots` or `DeckPager`; their windowing math is an implementation detail. (These ship through v6.0.0 on `/pager-dots` and `/deck`; the branch internalizes them — a 7.0.0 member removal, not 6.0.0.) |
+| `useGooMorph`, `MORPH_SIGNATURES`, `GooFilter`, `useMetaballRenderer` | Removed; no public successor. These goo/metaball facilities were showcase-only (private to the Deck story) — keep application motion at its owning presentation boundary and let `Blob` own its metaball paint internally. Covers `useGooMorph` (+ `GooBarbellRefs` / `UseGooMorphParams` / `UseGooMorphReturn`) and `MORPH_SIGNATURES` (+ `MorphSignature` / `MorphSignatureName` / `MorphVector`) off the root barrel and `/motion-core`, `GooFilter` off `/dock`, and `useMetaballRenderer` / `UseMetaballRendererOptions` off `/blob`. (All ship through v6.0.0 on those surfaces; the branch removes them — a 7.0.0 member removal, not 6.0.0.) |
 | Implicit per-instance Dock `view-transition-name` | Pass a stable `viewTransitionName` only when the consumer owns a Dock shared-element route morph. Leave it unset for ordinary route transitions. |
 | `Label required` | Use `requirement="required"`; use `requirement="optional"` for the optional annotation. Keep the native control’s `required` attribute as the semantic owner. |
 | `avatarVariants`, `AvatarVariants` | Use `Avatar`’s typed `size` and `shape` props plus `AvatarSize` / `AvatarShape`. Identity is required through `label`, `labelledBy`, or `decorative`. |
+| `menuItemVariants`, `MenuItemVariants` | Removed; no public replacement. `MenuItemVariants` was a `/command` re-export carried over from the 5.0.0 `/api` fold (present and importable at 5.0.0 and 6.0.0); the menu-row four-state treatment is now applied internally by the menu components (command / dropdown-menu / select / combobox) and is no longer an importable CVA. |
 | `AvatarImage alt` | Name the identity once on `Avatar`; `AvatarImage` and fallback content are hidden from AT. |
 | `Skeleton variant` / `surface` | Use the single decorative reserved-shape recipe. Put `aria-busy` and the loading name on the owning region. |
 | `@mkbabb/glass-ui/controls` | Import `DarkModeToggle` from `@mkbabb/glass-ui/dark-mode-toggle`. The collective alias is removed. |
@@ -47,6 +52,52 @@ replacements, without aliases or compatibility shims.
 | `CopyFailureReason` including `"exec-command"` | Remove legacy `execCommand` handling. Clipboard failures are now `"no-api"` or `"clipboard-api"`; use `useClipboard().status` and `invalidate()` for scoped feedback. |
 | `useClipboard().copied` | Removed. Derive it as `status.value === "success"`; the composable now returns `{ status, copy, invalidate }`. |
 | `copyToClipboard(text, { onCopyError })` | Removed. The stateless door is `writeClipboard(text): Promise<CopyResult>` — it returns `{ ok: true } \| { ok: false; reason }` instead of a `boolean`: read `ok`, and `reason` on failure. The old boolean+`onCopyError` signature is a consumer preset — keep a one-line adapter in your own util if you want it. |
+
+Member-level removals from keys that otherwise survive at 7.0.0. An `exports` keyset diff
+never surfaces these because the KEY still ships — only its member set shrinks. Grouped by
+subpath, with a successor or `none`:
+
+- `/motion-core` (these five also rode the root barrel): `usePrioritizedTask` / `postTaskSafe`
+  → `useYieldToMain` / `yieldToMain`; `vScrollRevealOnce` → `vReveal`; `NavigateOptions` →
+  `ViewTransitionOptions`; `navigate` → `startViewTransition`; `supportsRouteTransitions` →
+  `supportsViewTransitions`. The `usePrioritizedTask` companion types go with it:
+  `UsePrioritizedTaskReturn` → `UseYieldToMainReturn`; `PostTaskOptions` / `TaskPriority` → none
+  (`yieldToMain` / `useYieldToMain` take no options and expose no priority enum).
+- `/surface`: `surfaceClass` / `decorationClass` → none (the resolver is now the private
+  `resolveSurfaceClass`; compose `<Surface>` and let it own the class).
+- `/card`: `CardSurface` → `CardVariant` + the shared `Surface` axis (`/axes`); `CardSpecular`
+  → `SurfaceSpecular` (`/surface`; `<Card>` forwards `specular` to `<Surface>`);
+  `ScrollCardProps` / `ScrollCardHeaderProps` (+ the `ScrollCard` / `ScrollCardHeader`
+  components) → the `ScrollCard` family is retired; compose `Card` inside a scroll container.
+- `/command`: `MenuItemVariants` → none (the menu-row treatment is applied internally).
+- `/button`: `ButtonVariants` → the typed `ButtonProps` / `ButtonEmphasis` / `ButtonSize`.
+- `/toast`: `ToastType` → the `Toast` row types `ToastProps` / `ToastOptions`.
+- `/drawer`: `DrawerClose` / `DrawerTrigger` → import `DialogClose` / `DialogTrigger` from
+  `/dialog` (Drawer builds on the reka Dialog primitives; the aliases are gone).
+- `/instrument-chassis`: `InstrumentChassisVariant` → none (one housing material; see the
+  `variant=` row above).
+- `/blob`: `BlobVariant` → none (the `"blob" | "meatball"` enum is retired; `BlobMerge`
+  carries the smin-merge choice and the dressed-meatball look is a continuous config scalar).
+- `/carousel`: `CarouselNext` / `CarouselPrevious` → build owner-local buttons from
+  `useCarousel().scrollNext` / `scrollPrev` + `canScrollNext` / `canScrollPrev`.
+- root `@mkbabb/glass-ui`: `METRIC_PLACEHOLDER` / `coalesceMetric` → none (metric coalescing is
+  internal now; pass the `placeholder` prop on the `/metric` components). `MetricValue` /
+  `MetricValueProps` are re-homed, not removed → import from `@mkbabb/glass-ui/metric`.
+
+Method + completeness: the list above is the v6.0.0→branch member diff of every surviving
+export key (each entry verified exported by that key's barrel at the `v6.0.0` tag and absent
+from it on the branch). It is complete once you also count (a) the members that already carry a
+dedicated per-prop row in the §7.0.0 table above — `avatarVariants` / `AvatarVariants`,
+`toggleVariants` / `ToggleVariants`, `sliderVariants` / `SliderVariants`, `ChassisDivider`,
+`InstrumentChassisPhase` → `InstrumentChassisState`, `PaperBackdropFrequency`, `DockSection*` /
+`DockStack*`, `pagerWindow` / `PagerWindow`, `SplitChars` / `useCharStagger`, and the
+goo/metaball facilities (`useGooMorph`, `GooBarbellRefs`, `UseGooMorphParams`, `UseGooMorphReturn`,
+`MORPH_SIGNATURES`, `MorphSignature`, `MorphSignatureName`, `MorphVector`, `GooFilter`,
+`useMetaballRenderer`, `UseMetaballRendererOptions` — all shipping through v6.0.0, removed at 7.0.0);
+(b) the `## 5.0.0` `/api` per-symbol census, which marks each `/api` member with its removal version;
+and (c) one family excluded here because its own mechanism section documents it — the ~67
+`/motion` keyframes re-exports (`Easing`, `TimingFunction`, …; see the Motion-ownership paragraph
+above). Whole-key drops are the export-map delta, not member removals.
 
 The Dock fisheye enhancement and its deep `useDockFisheye` import are removed. Capped
 control runs retain the measured native-scroll path and `scrollIntoView` recentering.
@@ -139,11 +190,10 @@ and `HandMark` remain public. The package export-map delta is exactly the remova
 | `parseColorRGBA` from `/constellation` | Resolve paint in the consumer or use the component's palette input; the renderer-local parser is no longer public. |
 | `<Blob @click>` relying on the implicit hit layer | Add `press-label="…"` to opt into the SDF-shaped native button. Omit it for a decorative, listener-free Blob; use `disabled` to disable the button. |
 | `installDeckSpring`, `deckEase`, `DECK_SPRING` | Keep `useDeck` for deck state/navigation and own presentation motion at the presentation boundary. |
-| `useGooMorph`, `MORPH_SIGNATURES`, `GooFilter` | These showcase-only goo facilities are private to the Deck story; keep application motion at its owning presentation boundary. |
-| `pagerWindow`, `PagerWindow` | Use `PagerDots` or `DeckPager`; their windowing math is an implementation detail. |
+| `useGooMorph`, `MORPH_SIGNATURES`, `GooFilter` | At 6.0.0 these goo/metaball facilities still ship and still work — no change is required at this cut. They fold out of the public surface at 7.0.0; keep application motion at its owning presentation boundary and migrate then, see `## 7.0.0`. [CORRECTION 2026-07-17: previously read "These showcase-only goo facilities are private to the Deck story; keep application motion at its owning presentation boundary." asserting a 6.0.0 break — `useGooMorph` (+ `GooBarbellRefs` / `UseGooMorphParams` / `UseGooMorphReturn`) and `MORPH_SIGNATURES` (+ `MorphSignature` / `MorphSignatureName` / `MorphVector`) ship through v6.0.0 on the root barrel and `@mkbabb/glass-ui/motion-core`, `GooFilter` on `@mkbabb/glass-ui/dock`, and `useMetaballRenderer` / `UseMetaballRendererOptions` on `@mkbabb/glass-ui/blob` (verified at the `v6.0.0` tag); all are removed only at 7.0.0. The v5→v6 export diff is exactly one key removal (`./stacked-icons`). The per-symbol removal now lives in the §7.0.0 table.] |
 | `<TypewriterText interactive>` / `backspaceToPosition()` | Remove the hidden per-glyph action; render a named native button for an editing command. |
-| `IconChip` / `@mkbabb/glass-ui/icon-chip` | Use `<Chip shape="icon">` with a slotted glyph for a meaningful static plate, or render the glyph directly when no plate is needed. The old icon, section, glyph-size, stroke, bare, duotone, bloom, saturated, glass, and reveal axes are deleted. |
-| `MetricBadge`, `/metric-badge`, `/metric-cell`, `/metric-stack` | Import `Metric`, `MetricCell`, `MetricRow`, and `MetricStack` from `/metric`. Keep phase, aura, protagonist, result animation, and fixed-row layout in the product composition. |
+| `IconChip` / `@mkbabb/glass-ui/icon-chip` | At 6.0.0 `./icon-chip` still ships and still works — no change is required at this cut. `IconChip` folds onto `<Chip shape="icon">` (or a bare glyph) at 7.0.0 — migrate then, see `## 7.0.0`. [CORRECTION 2026-07-17: previously read "Use `<Chip shape="icon">` with a slotted glyph … The old icon, section, glyph-size, stroke, bare, duotone, bloom, saturated, glass, and reveal axes are deleted" asserting a 6.0.0 break — `./icon-chip` ships through v6.0.0 (verified: the `v6.0.0` tag `exports` carries `./icon-chip`) and is removed only at 7.0.0; the 6→7 diff drops `./icon-chip` and adds `./metric`. The per-component guidance now lives in the §7.0.0 table.] |
+| `MetricBadge`, `/metric-badge`, `/metric-cell`, `/metric-stack` | At 6.0.0 these three subpaths still ship and still work — no change is required at this cut. The consolidation into one `/metric` subpath (`Metric`, `MetricCell`, `MetricRow`, `MetricStack`; keep phase, aura, protagonist, result animation, and fixed-row layout in the product composition) happens at 7.0.0 — migrate then, see `## 7.0.0`. [CORRECTION 2026-07-17: previously read "Import `Metric`, `MetricCell`, `MetricRow`, and `MetricStack` from `/metric`" — `./metric` does not exist until 7.0.0.] |
 | `InkMark` | Rename to `HandMark` from `@mkbabb/glass-ui/handmark`. |
 | `StackedIconGroup` / `@mkbabb/glass-ui/stacked-icons` | Render ordinary owner-local DOM with explicit names, overflow, and detail controls. |
 
@@ -181,24 +231,30 @@ and `HandMark` remain public. The package export-map delta is exactly the remova
 ## 5.0.0
 
 The 5.0.0 cut is the joint BG/BH release: the BG visual-convergence band (the warm /
-weighty / liquid iOS-27 redesign) lands alongside the BH structural reshape. **The
-whole consumer break is ONE dropped export key — `./api` — plus its 199-symbol
-re-home** (each symbol swaps its import PATH onto the owning subpath, zero symbol loss);
-every other published key is preserved (the generated export map reproduces every
-retained key). The
-remaining rows are a token rename (`--ring` → `--focus-ring-color`), one
-component/subpath rename (`goo-blob` → `blob`), and the source-only `src/subpaths/`
-deletion + curated flat-barrel relocations (no export break). The BG visual band is a
-paint upgrade — no public-prop break beyond the rows below.
+weighty / liquid iOS-27 redesign) lands alongside the BH structural reshape. **The 5.0.0
+cut dropped 20 export keys** — the `./api` discovery-subpath fold plus 19 component and
+style subpaths. The authoritative enumeration is the 20-key removed-key table in
+`CHANGELOG.md` `## 5.0.0` (`### Breaking`); the per-key migration for each dropped subpath
+lives in this section's own subsections below. The `./api` fold is the largest single piece:
+its 203 canonical symbols re-home onto their owning published subpath or retire with their
+subpath (the per-symbol census below is authoritative and complete).
+[CORRECTION 2026-07-17: previously read "the whole consumer break is ONE dropped export key
+— `./api` — plus its 199-symbol re-home ... every other published key is preserved".]
+Beyond the dropped keys, the remaining rows are a token rename (`--ring` →
+`--focus-ring-color`), one component/subpath rename (`goo-blob` → `blob`), and the
+source-only `src/subpaths/` deletion + curated flat-barrel relocations (no export break).
+The BG visual band is a paint upgrade — no public-prop break beyond the rows below.
 
-### The `/api` discovery-subpath fold — 185-symbol re-home
+### The `/api` discovery-subpath fold — the 203-symbol census
 
-`@mkbabb/glass-ui/api` (the pure types + constants discovery layer) is FOLD-DELETED. The
-`./api` key is the ONLY dropped key. 185 of its symbols re-home onto their OWNING published
-subpath — so a consumer swaps the import PATH with zero symbol loss (the 6 deleted-viz types
-
-- the 4 retired `/virtual` windowing types + the 4 retired `/border-progress` ring types
-below are the exception — they are DELETED / RETIRED, not re-homed):
+`@mkbabb/glass-ui/api` (the pure types + constants discovery layer) is FOLD-DELETED — one
+of the 20 keys the 5.0.0 cut dropped (the removed-key table in `CHANGELOG.md` `## 5.0.0`).
+[CORRECTION 2026-07-17: previously read "The `./api` key is the ONLY dropped key. 185 of its
+symbols re-home".] Its 203 canonical symbols (the v4.2.0 `/api` export set) resolve as
+follows: 141 re-home onto their OWNING published subpath and are still exported there on the
+current branch — a consumer swaps the import PATH with zero symbol loss; the other 62 were
+retired or renamed across 5.0.0, 6.0.0, and 7.0.0 and have no surviving import under their
+old name (the census table below gives each one's branch home or removal version):
 
 ```ts
 // 5.0.0 — the /api discovery layer is gone; import each symbol from its owning subpath
@@ -207,47 +263,45 @@ below are the exception — they are DELETED / RETIRED, not re-homed):
 + import type { CardTier } from "@mkbabb/glass-ui/card";
 ```
 
-183 of the 185 re-homed symbols were ALREADY exported by their owning subpath barrel (the
-fold is a pure import-path swap — the owning subpath needs no new export). The SIX
-`Concentric*` / `DotFlowField*`+`FlowFieldConfig` viz types are NOT re-homed — the
-`/concentric` + `/dot-flow-field` subpaths + their components are DELETED at
-BI.W-VIZ-DELETIONS (see "The BI viz-family deletion" section below), so those types have no
-owning subpath; a consumer of them has no target (the vizzes are retired). The FOUR
-`/virtual` windowing types (`FlatSection` / `ForcedSectionWindowRange` / `SectionLayout` /
-`SectionWindowRange`) are LIKEWISE not re-homed — the `/virtual` subpath is RETIRED at
-BI.W-VIRTUAL-TRUTH (see "The `/virtual` subpath retirement" section below), so those types
-have no owning subpath either. The FOUR `/border-progress` ring types
-(`BorderProgressCoverage` / `BorderProgressMilestone` / `BorderProgressMilestoneEvent` /
-`BorderProgressProps`) are ALSO not re-homed — the `/border-progress` subpath is RETIRED at
-BI.W-BORDER-PROGRESS-RETIRE (see "The `/border-progress` subpath retirement" section below);
-the component is BANKED dormant off the public surface, so those types have no owning subpath
-until the speedtest adopt re-publishes it. The surface-axis
-grammar types (`Surface` / `SurfaceTier`) publish via the dedicated `/axes` grammar
-subpath (BH.W-AXIS-GRAMMAR — the honest `/api` successor). The `components/_shared`
-`ControlSize` convenience union re-homes to `/forms`. The three root-barrel `*Variants` types
-(`AlertVariants` / `AvatarVariants` / `ToggleVariants`) resolve off the root
-`@mkbabb/glass-ui` barrel. value.js's 18 consumed specifiers (root + 15 subpaths +
-`/easing` + `/styles/fonts`) are all named in the table below, so the compound-import
-unbuildable class cannot recur.
+Of the 203 symbols, 141 remain exported on a current-branch public subpath (the fold is a
+pure import-path swap — the owning subpath needs no new export for a surviving symbol) and 62
+were retired or renamed since: 31 at 5.0.0 (the deleted viz types, the `/virtual` and
+`/border-progress` types with no owning subpath, the `glass-panel` / `sheet` / `toggle-chip`
+retirements, the dead-composable sweep of `Haptic*` / `CelebrationBurst*`,
+and the `PaperGrid*` → `LiquidGrid*` / `SelectableChipVariants` → `ChipVariants` /
+`HeaderRibbonPosition` → `HeaderRibbonPlacement` renames), 2 at 6.0.0 (`StackedIconGroupProps`
+and the `Countup` return-alias), and 29 at 7.0.0 (the metric-badge / icon-chip /
+spa-view / motion-curves consolidations, `PagerWindow`, plus the member-level CVA removals —
+`AvatarVariants`, `ToggleVariants`, `SliderVariants`, `ButtonVariants`, and `MenuItemVariants`;
+see `## 7.0.0`).
+[CORRECTION 2026-07-17: previously read "3 at 6.0.0 (`StackedIconGroupProps`, the `Countup`
+return-alias, `PagerWindow`), and 28 at 7.0.0" — `PagerWindow` (and its `pagerWindow` value)
+is exported by the `v6.0.0` `/pager-dots` and `/deck` barrels and dropped only on the branch,
+so it is a 7.0.0 removal; the 5.0.0/6.0.0/7.0.0 split is 31 / 2 / 29.]
+The retired viz, `/virtual`, and `/border-progress` families are detailed in their own
+subsections below.
 
-The `/api` layer carried 199 symbols at the fold (down from the pre-BG 203: the
-dead-composable sweep retired `Haptic*` / `CelebrationBurst*` / `WaveComponent` and the
-`GlassPanelVariant` tier-homonym, and the `PaperGrid*` → `LiquidGrid*` +
-`SelectableChipVariants` → `ChipVariants` renames moved their entries — each documented in
-its own section below or in the BG retirements). Of those, 185 re-home (the table above);
-the 6 `Concentric*` / `DotFlowField*`+`FlowFieldConfig` viz types are DELETED, the 4
-`/virtual` windowing types are RETIRED with their subpath (BI.W-VIRTUAL-TRUTH), and the 4
-`BorderProgress*` ring types are RETIRED with the `/border-progress` subpath
-(BI.W-BORDER-PROGRESS-RETIRE), not re-homed.
+The surface-axis grammar types (`Surface` / `SurfaceTier`) publish via the dedicated `/axes`
+grammar subpath (BH.W-AXIS-GRAMMAR — the honest `/api` successor), and both are still exported
+there on the branch. The `components/_shared` `ControlSize` convenience union re-homes to
+`/forms` and is still exported there. Of the three root-barrel `*Variants` types, only
+`AlertVariants` still resolves off the root `@mkbabb/glass-ui` barrel — `AvatarVariants` and
+`ToggleVariants` were removed at 7.0.0 (the census marks each). value.js's consumed specifiers
+ride the per-family subpaths named in the table below, so the compound-import unbuildable class
+cannot recur.
+[CORRECTION 2026-07-17: previously read "183 of the 185 re-homed symbols were ALREADY
+exported ... The `/api` layer carried 199 symbols at the fold ... Of those, 185 re-home"; the
+scripted v4.2.0→branch census computes 203 total, 141 live, 62 retired/renamed.]
 
-The full 199-symbol map (grouped alphabetically by symbol; `kind` is the TS export kind;
-`new import (owning subpath)` is the 5.0.0 target):
+The full 203-symbol `/api` census (grouped alphabetically by symbol; `kind` is the TS export
+kind; the last column is the symbol's verified home on the current branch, or its removal
+version):
+[CORRECTION 2026-07-17: previously labeled "The full 199-symbol map ... `new import (owning
+subpath)` is the 5.0.0 target".]
 
-| symbol | kind | new import (owning subpath) |
+| symbol | kind | branch home (verified) — or removal version |
 |---|---|---|
 | `AlertVariants` | type | `@mkbabb/glass-ui` (root) |
-| `AvatarVariants` | type | `@mkbabb/glass-ui` (root) |
-| `ToggleVariants` | type | `@mkbabb/glass-ui` (root) |
 | `AnimatedDigitMode` | type | `/animated-digit` |
 | `AnimatedDigitProps` | type | `/animated-digit` |
 | `AuroraAtoms` | type | `/aurora` |
@@ -256,8 +310,6 @@ The full 199-symbol map (grouped alphabetically by symbol; `kind` is the TS expo
 | `AuroraFlow` | type | `/aurora` |
 | `AuroraHarmony` | type | `/aurora` |
 | `AuroraHuePath` | type | `/aurora` |
-| `AuroraImageBlur` | type | `/aurora` |
-| `AuroraImageSource` | type | `/aurora` |
 | `AuroraInstance` | type | `/aurora` |
 | `AuroraInteractivity` | type | `/aurora` |
 | `AuroraInteractivityAtom` | type | `/aurora` |
@@ -267,37 +319,34 @@ The full 199-symbol map (grouped alphabetically by symbol; `kind` is the TS expo
 | `AuroraNucleus` | type | `/aurora` |
 | `AuroraRuntimeMode` | type | `/aurora` |
 | `AuroraRuntimeOptions` | type | `/aurora` |
-| `AuroraSource` | type | `/aurora` |
 | `AuroraZoneArrangement` | type | `/aurora` |
 | `AuroraZones` | type | `/aurora` |
-| `DEFAULT_AURORA_CONFIG` | const | `/aurora` |
-| `DeriveAuroraOptions` | type | `/aurora` |
-| `DeriveEasing` | type | `/aurora` |
-| `FlowPattern` | type | `/aurora` |
-| `MAX_NUCLEI` | const | `/aurora` |
-| `MAX_STOPS` | const | `/aurora` |
-| `OklchStop` | type | `/aurora` |
-| `PAPER_WASH_GROUND` | const | `/aurora` |
-| `StrokeMode` | type | `/aurora` |
-| `StrokeOrient` | type | `/aurora` |
-| `WarpMode` | type | `/aurora` |
+| `AvatarVariants` | type | removed 7.0.0 — use `Avatar` typed `size`/`shape` props + `AvatarSize`/`AvatarShape` (root) |
 | `BadgeVariants` | type | `/badge` |
-| `ButtonEmphasis` | type | `/button` |
-| `ButtonProps` | type | `/button` |
-| `ButtonSize` | type | `/button` |
+| `BezierPoints` | type | `/easing` |
+| `BlendMode` | type | `/handmark` |
+| `BloomUpPreset` | type | `/motion` |
+| `BorderProgressCoverage` | type | removed 5.0.0 — /border-progress retired; the masked band is `ScrollProgressRim` (/scroll-progress-rim) |
+| `BorderProgressMilestone` | type | removed 5.0.0 — /border-progress retired; see `ScrollProgressRim` (/scroll-progress-rim) |
+| `BorderProgressMilestoneEvent` | type | removed 5.0.0 — /border-progress retired; see `ScrollProgressRim` (/scroll-progress-rim) |
+| `BorderProgressProps` | type | removed 5.0.0 — /border-progress retired; see `ScrollProgressRim` (/scroll-progress-rim) |
+| `Brush` | type | `/handmark` |
+| `BrushName` | type | `/handmark` |
+| `ButtonVariants` | type | removed 7.0.0 — use `ButtonProps` / `ButtonEmphasis` / `ButtonSize` (/button) |
 | `Canvas2DFrame` | type | `/canvas` |
 | `Canvas2DHandle` | type | `/canvas` |
 | `Canvas2DOptions` | type | `/canvas` |
 | `Canvas2DSuspendReason` | type | `/canvas` |
 | `CardMetal` | type | `/card` |
-| `CardProps` | type | `/card` |
-| `CardSize` | type | `/card` |
+| `CardSurface` | type | removed 7.0.0 — Card decoration folds onto `CardVariant` (/card) + the `Surface` axis (/axes) |
 | `CardTier` | type | `/card` |
 | `CardVariant` | type | `/card` |
-| `UseAccentToneOptions` | type | `/color` |
-| `UseAccentToneReturn` | type | `/color` |
+| `CelebrationBurstPreset` | type | removed 5.0.0 — dead-composable sweep; `useCelebrationBurst` retired (0 consumers) |
+| `ClickDelegateOptions` | type | `/sidebar` |
 | `CompletionSealProps` | type | `/completion-seal` |
 | `CompletionSealShape` | type | `/completion-seal` |
+| `ConcentricConfig` | type | removed 5.0.0 — /concentric viz DELETED (viz-family prune) |
+| `ConcentricHandle` | type | removed 5.0.0 — /concentric viz DELETED |
 | `ConfiguratorCloneMode` | type | `/configurator` |
 | `ConfiguratorPreset` | type | `/configurator` |
 | `ConfiguratorScrollMode` | type | `/configurator` |
@@ -306,75 +355,142 @@ The full 199-symbol map (grouped alphabetically by symbol; `kind` is the TS expo
 | `ConstellationField` | type | `/constellation` |
 | `ConstellationProps` | type | `/constellation` |
 | `ConstellationWarp` | type | `/constellation` |
+| `ControlSize` | type | `/forms` |
+| `Countup` | type | removed 6.0.0 — the return-type alias dropped; use `UseCountupReturn` (/motion) |
+| `CurveFn` | type | removed 7.0.0 — /motion-curves retired; import easing math from `@mkbabb/value.js/easing` |
 | `DarkFlipSettledCallback` | type | `/dark` |
 | `DarkModeSyncScriptOptions` | type | `/dark` |
-| `UseGlobalDarkOptions` | type | `/dark` |
-| `UseGlobalDarkReturn` | type | `/dark` |
 | `DeckCore` | type | `/deck` |
 | `DeckMoves` | type | `/deck` |
-| `DockInteraction` | type | `/dock` |
-| `UseDockSearchOptions` | type | `/dock` |
-| `UseDockSearchReturn` | type | `/dock` |
-| `UseDockStateReturn` | type | `/dock` |
-| `UseClipboardOptions` | type | `/dom` |
-| `UseClipboardReturn` | type | `/dom` |
-| `UseUserInvalidAriaOptions` | type | `/dom` |
-| `UseUserInvalidAriaReturn` | type | `/dom` |
-| `BezierPoints` | type | `/easing` |
+| `DEFAULT_AURORA_CONFIG` | const | `/aurora` |
+| `DeriveAuroraOptions` | type | `/aurora` |
+| `DeriveEasing` | type | `/aurora` |
+| `DockCtaReceivePreset` | type | `/motion` |
+| `DotFlowFieldHandle` | type | removed 5.0.0 — /dot-flow-field viz DELETED |
+| `DragMorphAxis` | type | `/motion` |
+| `DragMorphSnapTarget` | type | `/motion` |
+| `Easing` | type | removed 7.0.0 — import from `@mkbabb/keyframes.js`; /motion no longer re-exports kf primitives |
 | `EasingFn` | type | `/easing` |
 | `EasingPickerMode` | type | `/easing` |
 | `EasingPickerValue` | type | `/easing` |
-| `JumpTerm` | type | `/easing` |
-| `UseEasingPickerOptions` | type | `/easing` |
-| `UseEasingPickerReturn` | type | `/easing` |
+| `FlatSection` | type | removed 5.0.0 — /virtual subpath retired; no owning subpath |
+| `FlowFieldConfig` | type | removed 5.0.0 — /dot-flow-field viz DELETED |
+| `FlowPattern` | type | `/aurora` |
+| `ForcedSectionWindowRange` | type | removed 5.0.0 — /virtual subpath retired; no owning subpath |
 | `FourierFieldConfig` | type | `/fourier-field` |
 | `FourierFieldProps` | type | `/fourier-field` |
-| `BlendMode` | type | `/handmark` |
-| `Brush` | type | `/handmark` |
-| `BrushName` | type | `/handmark` |
+| `FuzzySearchState` | type | `/search` |
+| `GlassPanelProps` | type | removed 5.0.0 — /glass-panel retired; compose `Card` / `Surface` / `.glass-resting` |
+| `GlassPanelVariant` | type | removed 5.0.0 — /glass-panel retired; the tier-homonym; use `CardTier` (/card) or `SurfaceTier` (/axes) |
 | `HandAnimation` | type | `/handmark` |
 | `HandMarkProps` | type | `/handmark` |
 | `HandShape` | type | `/handmark` |
-| `InkPath` | type | `/handmark` |
-| `MarkBox` | type | `/handmark` |
-| `TaperSpec` | type | `/handmark` |
-| `HeaderRibbonPlacement` | type | `/header-ribbon` |
+| `HapticPattern` | type | removed 5.0.0 — dead-composable sweep; `useHaptic` retired |
+| `HeaderRibbonPosition` | type | removed 5.0.0 — renamed → `HeaderRibbonPlacement` (/header-ribbon) |
 | `HeaderRibbonProps` | type | `/header-ribbon` |
-| `InstrumentChassisProps` | type | `/instrument-chassis` |
-| `InstrumentChassisState` | type | `/instrument-chassis` |
-| `InstrumentChassisProportion` | type | `/instrument-chassis` |
-| `InstrumentChassisBoundary` | type | `/instrument-chassis` |
-| `InstrumentChassisReserve` | type | `/instrument-chassis` |
-| `MetricProps` | type | `/metric` |
+| `HighlightMatcher` | type | `/motion-core` |
+| `IconChipIcon` | type | removed 7.0.0 — /icon-chip retired; use `<Chip shape="icon">` (/chip) |
+| `IconChipProps` | type | removed 7.0.0 — /icon-chip retired; use `<Chip shape="icon">` (/chip) |
+| `IconChipSection` | type | removed 7.0.0 — /icon-chip retired; use `<Chip shape="icon">` (/chip) |
+| `IconChipTone` | type | removed 7.0.0 — /icon-chip retired; use `<Chip shape="icon">` (/chip) |
+| `InkPath` | type | `/handmark` |
+| `InstrumentChassisPhase` | type | removed 7.0.0 — phase → state; use `InstrumentChassisState` (/instrument-chassis) |
+| `JumpTerm` | type | `/easing` |
+| `LazyLoaderOptions` | type | `/sidebar` |
+| `LiquidRevealPreset` | type | `/motion` |
+| `MarkBox` | type | `/handmark` |
+| `MAX_NUCLEI` | const | `/aurora` |
+| `MAX_STOPS` | const | `/aurora` |
+| `MenuItemVariants` | type | removed 7.0.0 — no public replacement; the menu-row treatment is applied internally by the menu components (was /command) |
+| `MetricBadgeLabelPosition` | type | removed 7.0.0 — /metric-badge folded into /metric |
+| `MetricBadgeProps` | type | removed 7.0.0 — /metric-badge folded into /metric; compose `Metric` in `./badge` |
+| `MetricBadgeSize` | type | removed 7.0.0 — /metric-badge folded into /metric; use `MetricSize` (/metric) |
+| `MetricCellAppearance` | type | removed 7.0.0 — /metric-cell consolidated into /metric (`MetricCell`) |
 | `MetricCellProps` | type | `/metric` |
 | `MetricRowProps` | type | `/metric` |
 | `MetricStackProps` | type | `/metric` |
-| `MetricDensity` | type | `/metric` |
-| `MetricOrientation` | type | `/metric` |
-| `MetricSize` | type | `/metric` |
-| `MetricValue` | type | `/metric` |
-| `MetricValueProps` | type | `/metric` |
-| `BloomUpPreset` | type | `/motion` |
-| `DockCtaReceivePreset` | type | `/motion` |
-| `DragMorphAxis` | type | `/motion` |
-| `DragMorphSnapTarget` | type | `/motion` |
-| `Easing` | type | `/motion` |
-| `LiquidRevealPreset` | type | `/motion` |
-| `TimingFunction` | type | `/motion` |
+| `MotionCurve` | type | removed 7.0.0 — /motion-curves retired; import easing math from `@mkbabb/value.js/easing` |
+| `MotionCurveKind` | type | removed 7.0.0 — /motion-curves retired; import easing math from `@mkbabb/value.js/easing` |
+| `NavigateOptions` | type | removed 7.0.0 — use `ViewTransitionOptions` (/motion-core) |
+| `OklchStop` | type | `/aurora` |
+| `PagerDotsProps` | type | `/pager-dots` |
+| `PagerWindow` | type | removed 7.0.0 — windowing math internalized; use `PagerDots` / `DeckPager` |
+| `PAPER_WASH_GROUND` | const | `/aurora` |
+| `PaperBackdropFrequency` | type | removed 7.0.0 — scope the shared paper variables at the owning route |
+| `PaperBackdropProps` | type | `/paper-backdrop` |
+| `PaperGridConfig` | type | removed 5.0.0 — renamed → `LiquidGridConfig` (/liquid-grid) |
+| `PaperGridHandle` | type | removed 5.0.0 — renamed → `LiquidGridHandle` (/liquid-grid) |
+| `PointerVec2` | type | `/motion-core` |
+| `ScrollCardHeaderProps` | type | removed 7.0.0 — ScrollCard family retired; compose `Card` within a scroll container |
+| `ScrollCardProps` | type | removed 7.0.0 — ScrollCard family retired; compose `Card` within a scroll container |
+| `ScrollToOptions` | type | `/sidebar` |
+| `ScrollTrackerOptions` | type | `/sidebar` |
+| `SearchableItem` | type | `/search` |
+| `SearchIndex` | type | `/search` |
+| `SearchResult` | type | `/search` |
+| `SearchVariant` | type | `/search` |
+| `SearchVariants` | type | `/search` |
+| `SectionLayout` | type | removed 5.0.0 — /virtual subpath retired; no owning subpath |
+| `SectionWindowRange` | type | removed 5.0.0 — /virtual subpath retired; no owning subpath |
+| `SegmentedTabOption` | type | `/tabs` |
+| `SegmentedTabsOrientation` | type | `/tabs` |
+| `SegmentedTabsProps` | type | `/tabs` |
+| `SegmentedTabsVariant` | type | `/tabs` |
+| `SelectableChipVariants` | type | removed 5.0.0 — renamed → `ChipVariants` (/chip) |
+| `SheetVariants` | type | removed 5.0.0 — /sheet folded onto `<DialogContent placement>` (/dialog) |
+| `SidebarIndexEntry` | type | `/sidebar` |
+| `SidebarSection` | type | `/sidebar` |
+| `SidebarState` | type | `/sidebar` |
+| `SliderVariants` | type | removed 7.0.0 — use `Slider` `variant`/`size` props + `SliderVariant`/`SliderSize` (/slider) |
+| `SpaViewProps` | type | removed 7.0.0 — /spa-view retired; compose Vue `KeepAlive` + `Transition` |
+| `SpringPresetName` | type | `/motion` |
+| `SpringPresetRow` | type | `/motion` |
+| `StackedIconGroupProps` | type | removed 6.0.0 — /stacked-icons retired; render owner-local DOM |
+| `StrokeMode` | type | `/aurora` |
+| `StrokeOrient` | type | `/aurora` |
+| `Surface` | type | `/axes` |
+| `TaperSpec` | type | `/handmark` |
+| `TimelineSegment` | type | `/timeline` |
+| `TimelineSegmentGradient` | type | `/timeline` |
+| `TimelineSegmentState` | type | `/timeline` |
+| `TimingFunction` | type | removed 7.0.0 — import from `@mkbabb/keyframes.js`; /motion no longer re-exports kf primitives |
+| `ToastType` | type | removed 7.0.0 — use the `Toast` row types on /toast (`ToastProps` / `ToastOptions`) |
+| `ToastVariant` | type | removed 5.0.0 — the tone vocabulary replaces `variant`; use `Tone` (/axes) |
+| `ToggleChipVariants` | type | removed 5.0.0 — /toggle-chip folded onto `<Chip>` (/chip) |
+| `ToggleVariants` | type | removed 7.0.0 — use `ToggleGroupItem` inside `ToggleGroup`; the recipe is private (/toggle-group) |
+| `TreeIndexEntry` | type | `/sidebar` |
+| `TreeNode` | type | `/sidebar` |
+| `TriggerPoint` | type | `/motion-core` |
+| `UseAccentToneOptions` | type | `/color` |
+| `UseAccentToneReturn` | type | `/color` |
 | `UseBloomUpOptions` | type | `/motion` |
 | `UseBloomUpReturn` | type | `/motion` |
+| `UseCelebrationBurstOptions` | type | removed 5.0.0 — dead-composable sweep; `useCelebrationBurst` retired |
+| `UseCelebrationBurstReturn` | type | removed 5.0.0 — dead-composable sweep; `useCelebrationBurst` retired |
+| `UseCharStaggerOptions` | type | removed 7.0.0 — `useCharStagger` / `SplitChars` retired; render ordinary accessible text |
+| `UseCharStaggerReturn` | type | removed 7.0.0 — `useCharStagger` / `SplitChars` retired; render ordinary accessible text |
+| `UseClipboardOptions` | type | `/dom` |
+| `UseClipboardReturn` | type | `/dom` |
+| `UseConcentricOptions` | type | removed 5.0.0 — /concentric viz DELETED |
 | `UseCountupOptions` | type | `/motion` |
 | `UseDockCtaReceiveOptions` | type | `/motion` |
 | `UseDockCtaReceiveReturn` | type | `/motion` |
+| `UseDockSearchOptions` | type | `/dock` |
+| `UseDockSearchReturn` | type | `/dock` |
+| `UseDockStateReturn` | type | `/dock` |
+| `UseDotFlowFieldOptions` | type | removed 5.0.0 — /dot-flow-field viz DELETED |
 | `UseDragMorphParams` | type | `/motion` |
 | `UseDragMorphReturn` | type | `/motion` |
+| `UseEasingPickerOptions` | type | `/easing` |
+| `UseEasingPickerReturn` | type | `/easing` |
+| `UseFuzzySearchOptions` | type | `/search` |
+| `UseGlobalDarkOptions` | type | `/dark` |
+| `UseGlobalDarkReturn` | type | `/dark` |
+| `UseHapticOptions` | type | removed 5.0.0 — dead-composable sweep; `useHaptic` retired |
+| `UseHapticReturn` | type | removed 5.0.0 — dead-composable sweep; `useHaptic` retired |
 | `UseLiquidRevealOptions` | type | `/motion` |
 | `UseLiquidRevealReturn` | type | `/motion` |
-| `HighlightMatcher` | type | `/motion-core` |
-| `PointerVec2` | type | `/motion-core` |
-| `TriggerPoint` | type | `/motion-core` |
-| `UseCharStaggerOptions` | type | `/motion-core` |
-| `UseCharStaggerReturn` | type | `/motion-core` |
+| `UsePaperGridOptions` | type | removed 5.0.0 — renamed → `UseLiquidGridOptions` (/liquid-grid) |
 | `UsePointerVelocityField` | type | `/motion-core` |
 | `UsePointerVelocityFieldOptions` | type | `/motion-core` |
 | `UseScrollChromeOptions` | type | `/motion-core` |
@@ -382,47 +498,13 @@ The full 199-symbol map (grouped alphabetically by symbol; `kind` is the TS expo
 | `UseScrollTriggerOptions` | type | `/motion-core` |
 | `UseScrollTriggerReturn` | type | `/motion-core` |
 | `UseTextHighlightControls` | type | `/motion-core` |
+| `UseUserInvalidAriaOptions` | type | `/dom` |
+| `UseUserInvalidAriaReturn` | type | `/dom` |
 | `ViewTransitionOptions` | type | `/motion-core` |
 | `ViewTransitionResult` | type | `/motion-core` |
-| `SpringPresetName` | type | `/motion` |
-| `SpringPresetRow` | type | `/motion` |
-| `PagerDotsProps` | type | `/pager-dots` |
-| `PagerWindow` | type | `/pager-dots` |
-| `PaperBackdropProps` | type | `/paper-backdrop` |
-| `LiquidGridConfig` | type | `/liquid-grid` |
-| `LiquidGridHandle` | type | `/liquid-grid` |
-| `UseLiquidGridOptions` | type | `/liquid-grid` |
-| `FuzzySearchState` | type | `/search` |
-| `SearchableItem` | type | `/search` |
-| `SearchIndex` | type | `/search` |
-| `SearchResult` | type | `/search` |
-| `SearchVariant` | type | `/search` |
-| `SearchVariants` | type | `/search` |
-| `UseFuzzySearchOptions` | type | `/search` |
-| `ChipVariants` | type | `/chip` |
-| `ClickDelegateOptions` | type | `/sidebar` |
-| `LazyLoaderOptions` | type | `/sidebar` |
-| `ScrollToOptions` | type | `/sidebar` |
-| `ScrollTrackerOptions` | type | `/sidebar` |
-| `SidebarIndexEntry` | type | `/sidebar` |
-| `SidebarSection` | type | `/sidebar` |
-| `SidebarState` | type | `/sidebar` |
-| `TreeIndexEntry` | type | `/sidebar` |
-| `TreeNode` | type | `/sidebar` |
-| `SliderVariants` | type | `/slider` |
-| `SpaViewProps` | type | `/spa-view` |
-| `StackedIconGroupProps` | type | `/stacked-icons` |
-| `SegmentedTabOption` | type | `/tabs` |
-| `SegmentedTabsOrientation` | type | `/tabs` |
-| `SegmentedTabsProps` | type | `/tabs` |
-| `SegmentedTabsVariant` | type | `/tabs` |
-| `TimelineSegment` | type | `/timeline` |
-| `TimelineSegmentGradient` | type | `/timeline` |
-| `TimelineSegmentState` | type | `/timeline` |
-| `ToastType` | type | `/toast` |
-| `ControlSize` | type | `/forms` |
-| `Surface` | type | `/axes` |
-| `SurfaceTier` | type | `/axes` |
+| `WarpMode` | type | `/aurora` |
+| `WaveComponent` | type | removed 5.0.0 — /dot-flow-field viz DELETED |
+
 ### `--ring` → `--focus-ring-color` (focus-ring token rename)
 
 The focus-ring color token `--ring` is renamed `--focus-ring-color` (clean break, no
@@ -586,10 +668,15 @@ import — the by-name ASK (with the paired kf `^5.2.0` / value `^3.1.0` peer bu
 Recorded in `proof:consumer-evidence-true` (the SP1 arm — source-anchored: component + mirror + root-barrel
 re-export + demo story DEFINITION-ABSENT).
 
-#### The `icon-tooltip` clean break
+#### The `icon-tooltip` clean break (a 7.0.0 removal)
 
-`IconTooltip` and the `@mkbabb/glass-ui/icon-tooltip` subpath are deleted. Compose the canonical Tooltip
-family directly, placing one provider around the nearest real control group:
+`IconTooltip` and the `@mkbabb/glass-ui/icon-tooltip` subpath are deleted at 7.0.0 (verified:
+the `v6.0.0` tag `exports` still carries `./icon-tooltip`; the 6→7 diff drops it — see the
+`IconTooltip` row in the §7.0.0 table). This subsection sits under `## 5.0.0` only for
+proximity to the other Tooltip-composition guidance. Compose the canonical Tooltip family
+directly, placing one provider around the nearest real control group:
+[CORRECTION 2026-07-17: this subsection previously opened by asserting a 5.0.0 removal;
+`./icon-tooltip` ships through v6.0.0 and is removed only at 7.0.0.]
 
 ```vue
 <TooltipProvider :delay-duration="250">
@@ -678,13 +765,18 @@ material.
 cuts:
 - **`selectableChipVariants` → `chipVariants`, `SelectableChipVariants` → `ChipVariants`.**
   The `selectableChipVariants.ts` re-point shim (a self-admitted back-compat rename over
-  the ONE congruent `chipVariants` recipe — BD.W-CHIP-CONGRUENT-GLASS) is DELETED. The
-  `@mkbabb/glass-ui/selectable-chip` subpath now exports `chipVariants` (value) +
-  `ChipVariants` (type); `@mkbabb/glass-ui/api` exports the `ChipVariants` type (was
-  `SelectableChipVariants`). MIGRATE: rename `selectableChipVariants` → `chipVariants`
-  and `SelectableChipVariants` → `ChipVariants` at each import site (the recipe body is
-  byte-identical — it always WAS `chipVariants` under the alias). `<SelectableChip>`
-  itself is unchanged.
+  the ONE congruent `chipVariants` recipe — BD.W-CHIP-CONGRUENT-GLASS) is DELETED. The recipe
+  now publishes from `@mkbabb/glass-ui/chip` — `chipVariants` (value) + `ChipVariants` (type)
+  on the chip barrel — because the same 5.0.0 cut removed both the `./selectable-chip` subpath
+  (folded onto the one `<Chip>` family) and the `./api` discovery subpath (fold-deleted); neither
+  key survives to re-export anything. MIGRATE: rename `selectableChipVariants` → `chipVariants`
+  and `SelectableChipVariants` → `ChipVariants` and re-point the import to `@mkbabb/glass-ui/chip`
+  (the recipe body is byte-identical — it always WAS `chipVariants` under the alias). The old
+  `<SelectableChip>` component folds onto `<Chip>` in the same cut.
+  [CORRECTION 2026-07-17: previously read "The `@mkbabb/glass-ui/selectable-chip` subpath now
+  exports `chipVariants` … `@mkbabb/glass-ui/api` exports the `ChipVariants` type" and
+  "`<SelectableChip>` itself is unchanged" — both `./selectable-chip` and `./api` are dropped at
+  5.0.0, so the recipe's surviving home is `./chip`, verified on the branch chip barrel.]
 - **`--corner-shape-card` / `--corner-shape-pill` DELETED.** They were dead `round`
   no-op knobs (zero `var()` readers; the CSS `corner-shape` INITIAL VALUE is `round`, so
   a card/pill with no declaration is already round). The "cards/pills stay round" policy
