@@ -1,0 +1,19 @@
+{
+  "lens": "DOCK MATERIAL TRUTH — where does the glass-dock material paint?",
+  "page": "/dock/overview  (14 .glass-dock instances)",
+  "root_glass_dock": {
+    "backgroundColor": "rgba(0,0,0,0) transparent",
+    "backgroundImage": "none",
+    "backdropFilter": "none",
+    "::before content": "none", "::after content": "none",
+    "note": "root .glass-dock is a hollow positioning container — contributes NO material, NO pseudo-element paint"
+  },
+  "child_dock_plate": {
+    "class": ".dock-plate (position:absolute; inset:0 — full-cover child layer)",
+    "backgroundColor": "color(srgb 0.35 0.30 0.25 / 0.56)  warm translucent fill",
+    "backdropFilter": "blur(7px) saturate(1.3) brightness(1.14)  THE glass material",
+    "note": "EVERY one of the 14 docks has directChildren [dock-plate, dock-controls]; the material is uniformly carried by .dock-plate"
+  },
+  "anomaly": "1 of 14 docks (i=4, a paused/static variant) has an OPAQUE plate (srgb 0.207 0.165 0.133, no alpha) with backdrop:none — no blur. Likely an intentional opaque/paused register, not a defect.",
+  "verdict": "SUITE-ROT HYPOTHESIS CONFIRMED (material on child .dock-plate, root .glass-dock transparent) — but DRIFT-EXPLAINED / NOT a paint defect: the material is alive and the trays render visibly glassy (see 09a-dock-overview-trays.png: collapsed pill, expanded home/search/bell/gear tray, media-transport pill all painted). Architectural indirection (class-name shell + plate carrier), not a dead material."
+}

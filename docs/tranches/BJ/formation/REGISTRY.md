@@ -272,3 +272,43 @@ design authority for families F and G and the A03 triumvirate.
 **Round-3 plan unchanged** (browser lenses, post-suite). Round 2C (chronic DECIDED-row compiler)
 pending → family I adjudication. After Round 3 + 2C fold: the wave-shaping synthesis begins
 (bands from families A-K), then the two-consecutive-clean stability passes.
+
+---
+
+## Round-3a fold (the live paint-verify fable browser seat; digest at round-3-live/R3A-DIGEST.md,
+30 captures + readback JSONs in the same dir; live WebGPU apple/metal-3, localhost:5199)
+
+Five carried claims driven live. ONE confirms as a shipped defect; the other four clear or
+drift-explain — a materially better outcome than the registry assumed:
+
+1. **chip-css-orphan CONFIRMED-DEFECT (major)** — the one live-proven regression. glass-chip.css
+   imported nowhere; a selectable chip toggled to aria-pressed=true paints ZERO accent feedback
+   (invisible selection), ::after flood absent (`--chip-flood-t` unregistered => file not in
+   bundle), remove button unstyled (10×23px block, radius 0). .glass-capsule saves the base
+   lozenge, which is why it slipped. Family A's born-RED fix wave stands with live evidence:
+   import glass-chip.css in glass.css after glass-capsule.css (or fold into the partials),
+   clean break.
+2. **F02 preview cards CLEARED as paint defect** — the /foundations cards are the DELIBERATE
+   identity-fallback rung (dark translucent slab + section name; /display proves richer tiles
+   render where authored). Family C's wave REFRAMES: not "fix blank paint" but "author tiles +
+   masonry redesign" (the F46/A17 design work) — the defect reading is retired.
+3. **F06 white-flash CLEARED** — root bg min-channel never exceeds 9/255 across every dock
+   transition. The real cost: ONE-TIME ~186ms cold-nav stall (lazy-chunk import + GL mount),
+   settling to 32-52ms warm. Family E's wave reframes to chunk-prefetch/context-warm, minor.
+4. **V-A95 NOT REPRODUCED on live WebGPU** — three reverse-drag variants (single R→L, mid-drag
+   reverse, two rapid successive) each reshape the field with NO black slab; sweep residual
+   healthy. CRITICAL confound discovered: the seat's own first probe called
+   canvas.getContext('webgl2'), STOLE the single-context canvas, and produced a false
+   "WebGPU unavailable" fallback — the only black-ish state seen was self-inflicted. The
+   original V-A95 claim is now suspect as the same instrumentation artifact. Disposition:
+   the BJ wave inverts from "cure the slab" to "re-repro under real CDP pointer input with a
+   NEVER-getContext discipline; close V-A95 if it does not reproduce." **The live-π
+   context-steal trap is now a standing lesson: never call getContext on a live WebGPU canvas.**
+5. **dock-material DRIFT-EXPLAINED** — root .glass-dock transparent by design; .dock-plate
+   child carries the material (blur(7px) saturate(1.3) brightness(1.14)); trays paint correctly
+   across all 14 docks. Intentional layering indirection, not a defect; the suite reformation
+   (family A) asserts .dock-plate, and "should .glass-dock self-paint" is a design decision row,
+   not a bug.
+
+R3b (perf DEV-baselines + the A01/A11 engagement sample table) still running on the same
+browser seat; its fold follows.

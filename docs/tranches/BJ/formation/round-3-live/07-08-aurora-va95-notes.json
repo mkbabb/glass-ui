@@ -1,0 +1,11 @@
+{
+  "lens": "V-A95 reverse-drag black-slab + aurora-sweep residual",
+  "CRITICAL_confound": "My first probe called canvas.getContext('webgl2') on the aurora canvas. That STOLE the WebGPU context (a canvas holds one context type), producing a FALSE 'WebGPU context unavailable' red banner + a static non-interactive fallback ground (captures 07b/07c/07d). On a clean reload WITHOUT touching getContext: no banner, navigator.gpu present, requestAdapter() => ADAPTER_OK, banner reads 'WebGPU · apple · metal-3' (live). Lesson = the live-pi context-steal trap; instrumentation corrupted the observation.",
+  "live_renderer_probe": {
+    "reverse_drag_1_RtoL": "field visibly reshaped (magenta wisp intruded top-right) — sweep residual PRESENT; NO black slab (08b)",
+    "reverse_drag_2_mid_reverse": "field reshaped again (coral bloom top-right, magenta bottom-left) — NO black slab (08c)",
+    "two_rapid_successive_reverse_drags": "field reshaped to smooth warm gradient — NO black slab, renderer stayed live (08d)"
+  },
+  "verdict_black_slab": "CLEARED / NOT REPRODUCED on live WebGPU renderer across 3 reverse-drag variants. The only black-ish state observed was the SELF-INFLICTED context-steal fallback. Suspect the original V-A95 'black slab' claim may itself trace to a context-steal / instrumentation artifact.",
+  "verdict_sweep_residual": "CONFIRMED HEALTHY — the live surface visibly responds to cursor/drag every time."
+}

@@ -1,0 +1,12 @@
+{
+  "lens": "F06 TRANSITION FLASH — client-side view-transition between dock stories",
+  "method": "rAF luminance sampler on document.documentElement + body backgroundColor during router nav; maxInterFrameGap = frozen-frame detector; peakRootMin/peakBodyMin = min RGB channel = whiteness detector (255=white, 0=black)",
+  "cold_first_nav": { "rail_to_overview": { "maxInterFrameGapMs": 186, "peakRootBrightnessMin": 9, "peakBodyBrightnessMin": 0, "note": "one-time lazy-chunk import + component/GL mount" } },
+  "warm_navs": [
+    { "overview_to_rail": { "maxGapMs": 52, "peakRootMin": 9, "peakBodyMin": 0 } },
+    { "rail_to_overview": { "maxGapMs": 51, "peakRootMin": 9, "peakBodyMin": 0 } },
+    { "overview_to_rail_warm": { "maxGapMs": 32, "peakRootMin": 9, "peakBodyMin": 0 } }
+  ],
+  "console_errors": "none",
+  "verdict": "NO white flash (root bg min-channel never exceeds 9/255, body 0/255 across all transitions). A one-time ~186ms stall on cold nav (lazy import+mount), settling to ~32-52ms warm-transition jank (2-3 dropped frames). Slow-commit partly real but modest; white-flash NOT reproduced."
+}

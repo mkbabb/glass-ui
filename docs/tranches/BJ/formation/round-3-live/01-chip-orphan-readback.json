@@ -1,0 +1,26 @@
+{
+  "lens": "CHIP-CSS ORPHAN — is glass-chip.css shipped?",
+  "static_grep": {
+    "glass-chip.css_imported_in": "NOWHERE (grep of src/ + demo/ for glass-chip.css / glass/glass-chip returns 0 hits; glass.css @imports glass-capsule.css but NOT glass-chip.css)",
+    "chip_applies_classes": "chipVariants BASE = 'glass-chip glass-capsule accent-tone ...' — Chip composes BOTH; capsule is imported, chip is orphaned"
+  },
+  "live_readback_forms_chip": {
+    "chip_backgroundImage": "none  (glass-chip.css sets linear-gradient(--glass-fill-tinted) — ABSENT)",
+    "chip_flood_t_var": "\"\" EMPTY  (@property --chip-flood-t registered in glass-chip.css with initial 0; empty proves the @property is NOT registered => file not in bundle)",
+    "chip_after_content": "none  (the .glass-chip[data-mode=selectable]::after flood radial — ABSENT)",
+    "selectable_chip_toggled_ON": {
+      "data-state": "on", "aria-pressed": "true",
+      "backgroundColor": "oklab(0.398985 0.0137168 0.032461 / 0.8992)  (IDENTICAL to off-state; glass-capsule base, NOT accent-band)",
+      "borderColor": "rgb(213,208,200)  (unchanged; NOT accent-edge)",
+      "color": "rgb(213,208,200)  (unchanged; NOT accent-ink)",
+      "after_content": "none  (no flood glow)",
+      "verdict": "selected state produces ZERO visual accent feedback — invisible selection"
+    },
+    "remove_button": {
+      "display": "block  (glass-chip.css sets inline-grid — ABSENT)",
+      "size": "10.05 x 23.2 px  (glass-chip.css sets 1.25rem square = 20x20 — ABSENT)",
+      "borderRadius": "0px  (chip remove radius — ABSENT)"
+    }
+  },
+  "verdict": "CONFIRMED-DEFECT (functional). glass-chip.css is imported nowhere. glass-capsule covers the base lozenge so chips are not blank slabs, but ALL chip-specific styling is absent: selectable ON-state gives no accent paint (invisible selection), interactive scale flood absent, ::after radial flood absent, remove button unstyled. Captures: 01-chip-orphan-forms-chip.png, 02-chip-selectable-ON-no-accent-flood.png"
+}
