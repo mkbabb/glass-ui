@@ -4,7 +4,7 @@
    Plain (not inline) on purpose — the radius scale has no tokens.css twin, so
    each `--radius-*` is the lone declaration + single override point. Inline is
    WRONG here: it substitutes the VALUE, so two aliases resolving to one
-   primitive (`--radius-card`/`--radius-dialog` both → `--radius-2xl`) collapse
+   primitive (`--radius-card` → `--radius-2xl`, `--radius-dialog` → `--radius-card`) collapse
    to an identical value and v4 drops one `rounded-*` utility when both are
    scanned. Plain mints each alias's own var, so value-identical siblings never
    collide. This partial MUST @import BEFORE theme/bridges.css (the inline
@@ -31,7 +31,7 @@
     --radius-lg:      var(--radius);
     --radius-card:    var(--radius-2xl);
     --radius-panel:   var(--radius-xl);
-    --radius-dialog:  var(--radius-2xl);
+    --radius-dialog:  var(--radius-card);
     --radius-input:   var(--radius);
     --radius-button:  var(--radius);
     /* Form-radius unification. `--radius-field` is the non-pill field
