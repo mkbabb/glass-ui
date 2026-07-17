@@ -5,7 +5,7 @@ default-slotted scroll-port wrapper whose start edge feathers ONLY past
 `scroll > 0` and whose end edge feathers ONLY while trailing overflow remains. It
 supersedes the scroll-blind static `.scroll-fade-*` mask utilities (a clean
 break, no alias) — those feathered BOTH edges unconditionally, so the first
-card's chrome was half-erased at rest (the R8-08 "Shy" defect). Here the at-rest
+card's chrome was half-erased at rest (the "Shy" defect). Here the at-rest
 no-overflow edge is SHARP by construction.
 
 It reaches consumers via `@mkbabb/glass-ui/fading-scroll`.
@@ -59,8 +59,8 @@ registered `@property <length-percentage>` customs — `--fade-start` and
   `y`) timeline. `animation-range` opens `--fade-start` only once `scroll > 0`
   and closes `--fade-end` when there is no trailing overflow. ZERO JS.
 - **JS fallback** — `useFadingScroll(el, { axis, fadeStart, fadeEnd })` (this
-  dir's composable, promoted from the bespoke `PresetPickerRow` measure loop)
-  writes the SAME customs off logical inline/block progress + `scrollWidth/Height −
+  dir's composable) writes the SAME customs off logical inline/block progress +
+  `scrollWidth/Height −
   clientWidth/Height` with a `ResizeObserver` (the shared `useResizeObserver`
   substrate) + a rAF-coalesced `scroll` listener. It is feature-detect-gated OFF
   (`supportsScrollTimeline()`) when the native timeline is supported, so the two
@@ -92,7 +92,7 @@ the public knob — it supersedes the retired `--mask-fade-width`. The registere
 `@property` interpolation customs `--fade-start` / `--fade-end` are INTERNAL, not
 a public token.
 
-## Colocation map (AY.W-COLOCATE)
+## Colocation map
 
 ```
 fading-scroll/

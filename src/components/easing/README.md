@@ -2,9 +2,9 @@
 
 The ONE published curve-authoring primitive (`@mkbabb/glass-ui/easing`) — a curve
 editor that authors a cubic-bezier (draggable handles) OR a stepped staircase over
-the REAL value.js twin and reads it back as a re-parseable CSS literal. This is the
-C-3 fold landed (BB.W-EASING-PRIMITIVE): the two demo curve editors (the curve-
-gallery's `BezierEditor`/`StepsEditor`) re-home onto it — no fourth fork.
+the REAL value.js twin and reads it back as a re-parseable CSS literal. The two demo
+curve editors (the curve-gallery's `BezierEditor`/`StepsEditor`) re-home onto it — no
+fourth fork.
 
 ```vue
 <EasingPicker v-model="curve" mode="bezier" />   <!-- draggable cubic-bezier -->
@@ -97,5 +97,5 @@ playback mechanism.
 1. the Motion Lab route (`demo/stories/motion/curve-gallery.vue`) — binds the picker
    in BOTH modes (bezier + steps), two live in-repo bindings;
 2. value.js's `GradientPane` — consumes `<EasingPicker>` for the ease-along-the-ramp
-   axis on its next pin bump (the cross-repo CONSUME contract, recorded by name; the
-   foreign-tree fence holds — this primitive does NOT edit value.js).
+   axis (the cross-repo consume contract — this primitive consumes value.js's curve
+   math and does NOT edit value.js).

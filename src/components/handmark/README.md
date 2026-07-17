@@ -25,7 +25,7 @@ optionally animated. The slotted word stays REAL selectable text and the mark is
 | L4 ANIMATION | `composables/useHandMark.ts` — draw-on (dashoffset \| clip-path wipe) + boil | the reveal/living-line clock |
 | L5 SURFACE | `HandMark.vue` — anchor/measure, mount the namespaced filter, a11y | the SFC |
 
-## The colocation layout (AY.W-COLOCATE)
+## The colocation layout
 
 ```
 handmark/
@@ -43,12 +43,12 @@ handmark/
 └── README.md
 ```
 
-## The three-underline-register fence (BA.W-HANDMARK §0.6 — load-bearing)
+## The three-underline-register fence (load-bearing)
 
 Three distinct underline/ink registers exist; they are NOT the same family and the
 fence is binding in BOTH directions:
 
-1. **`.paper-ink-mark`** (W-SURFACE-AXIS mints, W-TABS consumes) — the STRAIGHT
+1. **`.paper-ink-mark`** (minted by the surface layer, consumed by the tabs family) — the STRAIGHT
    structural 2px `--foreground` ink hairline: the tab underline indicator + the
    math-paper section rail. NEVER wobbled, NOT this family.
 2. **`HandMark shape="underline"`** (this family) — the hand-voice wobble. The
@@ -56,9 +56,9 @@ fence is binding in BOTH directions:
 
 ONE pencil-boil engine under every wobble; ZERO wobble under the structural mark.
 `GlassUnderline`/the `/underline` subpath RETIRED onto `HandMark shape="underline"`
-(DEC-8 outcome 1; clean break, no alias).
+(a clean break, no alias).
 
-## Seed discipline (the AV.W14 single-source)
+## Seed discipline (the single-source)
 
 The family seeds via the HOUSE prng leaf (`src/composables/glass/procedural/prng.ts` — `mulberry32` +
 `hashString`) and FEEDS pencil-boil a house-derived integer seed. glass-ui code

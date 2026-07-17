@@ -1,25 +1,25 @@
 # PagerDots
 
-`@mkbabb/glass-ui/pager-dots` — the ONE position-dot rail register (BA.W-PAGER, R10-1 + R10-3).
+`@mkbabb/glass-ui/pager-dots` — the ONE position-dot rail register.
 
 A dot-per-page rail: a crisp `::before`-painted 13px pip centered in each cell, with
-a LIQUID dot-MORPH worm (BI.W-PAGER-WORM) as the active indicator — a two-edge
+a LIQUID dot-MORPH worm as the active indicator — a two-edge
 lead/trail barbell that STRETCHES → TRAVELS → RE-FORMS between dots with liquid weight
 (the Google-worm edict), driven by `useLeadTrail` (the ONE shared two-edge integrator —
 NO `--spring-dock`/CSS-transition clock; release-at-arrival is emergent). The paint is a
 THREE-LAYER split — a crisp BED (N pips, never filtered), the WORM masses (the goo
 an instance-local filter + translucency ONCE), and the transparent hit-target buttons —
-so the σ8 whole-layer-filter empty-pill annihilation is structurally impossible. Inactive
+so the whole-layer-filter empty-pill annihilation is structurally impossible. Inactive
 52% / hover 72% / active-under-worm dims ~35% / the worm masses paint full
 `--pager-dot-active`. This is the SHARED oracle — the carousel ships it (`CarouselDots`
 retired onto it) and the slides deck `DeckPager` adopts it.
 
-Keyboard (BI.W-PAGER-A11Y): the rail is a roving-tabindex tablist/toolbar — EXACTLY ONE
+Keyboard: the rail is a roving-tabindex tablist/toolbar — EXACTLY ONE
 tab stop (the active dot); a root `@keydown` handles the axis-derived arrows
 (ArrowRight/Left horizontal ⇄ ArrowDown/Up vertical), Home/End jump, wrapping. Each
-hit-target grows to a ≥28px comfort box (24px cell, WCAG 2.5.8 AA — the deliberate
-below-44px exemption is recorded in `docs/tranches/BI/audit/W-PAGER-A11Y-hit-target.md`)
-while the painted pip stays UNMOVED.
+hit-target grows to a ≥28px comfort box (24px cell, WCAG 2.5.8 AA — a deliberate,
+documented below-44px exemption for a dense position rail) while the painted pip stays
+UNMOVED.
 
 ## Anatomy
 
@@ -27,7 +27,7 @@ The dots are the shared register the carousel and the slides deck were ALREADY
 running (CarouselDots was "re-authored from first principles against the slides
 DeckPager oracle"). This primitive harvests that convergence; it is not a new
 substrate. ≥2 consumers by construction: the carousel (consumer #1) + the slides
-DeckPager (consumer #2, adopts at the BA cut).
+DeckPager (consumer #2).
 
 ```vue
 <script setup lang="ts">

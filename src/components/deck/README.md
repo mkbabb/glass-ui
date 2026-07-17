@@ -1,7 +1,7 @@
 # Deck
 
 `@mkbabb/glass-ui/deck` — the full-viewport, keyboard-paged, aria-live PRESENTATION
-register (BC.W-DECK). DISTINCT from `/carousel`'s embla item-scroller: a deck pages
+register. DISTINCT from `/carousel`'s embla item-scroller: a deck pages
 between whole slides via the keyboard, announces each step, and renders a windowed
 dot pager — the headless core a presentation consumer composes.
 
@@ -60,7 +60,7 @@ The lifted register is the HEADLESS PRESENTATION CORE. The deck-APP glue stays
 consumer-local: capture/print modes, edge-hover arrows, hash-sync, the settings panel,
 the app shell, the swipe handler. A consumer writes its own thin nav glue over the
 lifted core — the over-lift (dragging the app glue into the primitive) is the
-visual-load-bearing-ness violation the wave forbids.
+visual-load-bearing-ness violation this boundary forbids.
 
 Off the root barrel — reached only via `@mkbabb/glass-ui/deck`. The headless core is
 vueuse- and keyframes-free. Motion remains consumer-owned; a presentation may use the

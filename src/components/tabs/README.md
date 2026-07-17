@@ -53,10 +53,10 @@ Reach for `semantics="tabs"` for mutually-exclusive PANEL navigation and
 The active indicator GLIDES on `--spring-snappy` (the confirmed iOS segmented
 register) AND SQUISHES on travel: a volume-preserving stretch along its travel
 axis (`scale: var(--stretch) calc(1 / var(--stretch))` — the X/Y reciprocal
-pairing), capped LOW by `--tab-indicator-max-stretch` (default `1.11`, ≈ +11% —
-BD.W-TABS-LIQUID re-tuned it DOWN once the `--tab-blob` area-inflation channel took
-over the 5-beat "grow"/overshoot; the FENCE is the COMPOSED bbox area `blob × stretch`
-≤ ~1.14, not the bare per-axis scalar), released back to fit on the same snappy
+pairing), capped LOW by `--tab-indicator-max-stretch` (default `1.11`, ≈ +11% — kept
+low because the `--tab-blob` area-inflation channel carries the 5-beat "grow"/overshoot;
+the FENCE is the COMPOSED bbox area `blob × stretch` ≤ ~1.14, not the bare per-axis
+scalar), released back to fit on the same snappy
 clock (the Material-3 elastic / Apple Liquid-Glass "grow then shrink" register).
 
 The squish is owned by the `useTabIndicator` composable (`composables/`): it
@@ -69,8 +69,7 @@ path — the elastic warp lands on both materials. It is
 
 ## Colocation map
 
-The feature-dir convention (see `docs/precepts/design-idioms.md` §7 + the
-`CLAUDE.md` §Structure colocation convention):
+The feature-dir convention (see `docs/precepts/design-idioms.md` §7):
 
 ```
 src/components/tabs/
@@ -84,11 +83,10 @@ src/components/tabs/
 └── index.ts                   # the package barrel
 ```
 
-The SFC is the carved shell (BG.W-COLOCATE / WS4 ratchet-drain #13): the
-responsive-collapse and roving-focus concerns were carved out of the component
-into their colocated `composables/` leaves, which the SFC IMPORTS back — it does
-not inline them (`proof:colocation` §B2.4b verifies each leaf exists, exports its
-symbol, and is composed by the SFC).
+The SFC is the carved shell: the responsive-collapse and roving-focus concerns live
+in their colocated `composables/` leaves, which the SFC IMPORTS back — it does not
+inline them (`proof:colocation` §B2.4b verifies each leaf exists, exports its symbol,
+and is composed by the SFC).
 
 The indicator's visual axes (`--tab-indicator-max-stretch`, the spring register)
 are tokens (`tokens.css`); a consumer retunes the squish cap by overriding the
@@ -117,8 +115,8 @@ token, no library edit.
   two-value material axis, the independent ARIA semantic, and the single elastic
   indicator. Bite: re-introduce a `Bouncy*` alias or a second indicator → RED.
 - `proof:no-god-module` — `SegmentedTabs.vue` is under the 500-line bound (the
-  BG.W-COLOCATE carve landed: the responsive + roving-focus concerns moved to
-  colocated leaves); the SFC + each composable stay under the bound.
+  responsive + roving-focus concerns live in colocated leaves, not inlined in the
+  SFC); the SFC + each composable stay under the bound.
 - `proof:colocation` — the feature-dir convention (composables under
   `composables/`, a `constants.ts` home, the README present) + the §B2.4b
   leaf-verify clause (each carved leaf exists, exports its symbol, and is

@@ -15,8 +15,8 @@ geometry-neutral (zero CLS).
 
 ## Canonical filenames (Fira Code)
 
-The orchestrator (or release-script) fetches the OFL-licensed woff2 files
-into this directory at the following deterministic paths:
+The OFL-licensed Fira Code woff2 files land in this directory at the
+following deterministic paths:
 
 ```
 src/fonts/FiraCode-Regular.woff2
@@ -50,16 +50,15 @@ subsets are the Google Fonts / fontsource distributions. The Capsize metric
 overrides on the fallback faces (`size-adjust` / `ascent-override` /
 `descent-override`) reference these binaries' exact geometry.
 
-## Why this directory ships, not the fetch step
+## Why this directory ships
 
-This worktree has no network access. Sub-task 1 documents the canonical
-path expectation + threads `src/fonts/**` into `package.json#files` so
-the woff2 files (once dropped in) ship in the published tarball without
-any further plumbing.
+`src/fonts/**` is threaded into `package.json#files`, so the woff2 files ship
+in the published tarball without any further plumbing — a consumer self-hosts
+straight from the package, no CDN fetch at page-load.
 
-## Orchestrator integration step
+## Populating the woff2 files
 
-At W6 close (before tagging v1.3.0), the orchestrator runs:
+The Fira Code faces are fetched from upstream into this directory:
 
 ```bash
 # from glass-ui repo root
@@ -75,7 +74,7 @@ ls -la src/fonts/*.woff2
 ```
 
 OFL-1.1 attribution: include `LICENSE-FiraCode.txt` next to the woff2
-files (copy of upstream `LICENSE` from the FiraCode repo) at the same
+files (a copy of upstream `LICENSE` from the FiraCode repo) at the same
 fetch step.
 
 ## Consumer self-host recipe
@@ -113,12 +112,9 @@ The exact URL resolution mechanism (bundler-managed asset graph, public
 copy, or direct path) is consumer-side; glass-ui guarantees only the
 deterministic file location inside the published tarball.
 
-## Status
+## What ships where
 
-- Path expectation: LANDED (this README + the directory + the
-  `package.json#files` include).
-- woff2 binary files: FLAGGED for orchestrator (no-network in agent
-  worktree). Orchestrator fetches at integration before v1.3.0 tag.
-- Capsize metric overrides (`size-adjust` / `ascent-override` /
-  `descent-override`): out of scope for Lane D — slated for AC.W6b's
-  follow-on glass-ui-side ship (T_GU-FONT-B per AC.r3 synthesis).
+- The canonical path expectation + the `package.json#files` include ship in the
+  repo (this README, the directory, the manifest entry).
+- The woff2 binaries are fetched into place at build (they are not committed to
+  the repo tree); the fetch step above populates them.
