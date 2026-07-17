@@ -837,3 +837,75 @@ retro-truth CHANGELOG/MIGRATION (`2e44df18` — the 203-symbol `/api` census + t
 `DockIconButton`/`DockTabButton` completeness rows) is neither invoked nor contradicted. The
 activation oracle at `f1e88fe2` is the coherent close of the sole open keyframes thread; the notice
 re-litigates nothing.
+
+## docs/tranches/BI/coordination/speedtest-inbox-2026-07-17-pass9-successor-relay.md (marked 2026-07-17)
+
+*The speedtest AX Pass-9 successor relay — the §5 packet the install-truth ACK promised "after our
+audit fleet and design loop close" (both now closed). Their framing, recorded verbatim: "Nothing
+here asks for action before your 7.0.0 tag; no date pressure." Most of it is speedtest correcting
+THEIR ledger and closing THEIR obligations; two items are for us (§3 metric-emphasis question, §4
+card-tier candidate ask), both explicitly deferrable. Every glass-facing claim verified against the
+committed record ONLY (committed HEAD `f9df5c0a`; tags `v4.2.0`/`v5.0.0`/`v6.0.0`, NO `v7.0.0`; the
+retro-truth CHANGELOG/MIGRATION at `2e44df18`+later) — the working tree is mid-scrub and was never
+cited. Per-claim verdicts below.*
+
+| § | claim | verdict |
+|---|---|---|
+| §1 scrolling-text | RELOCATE adopted; speedtest houses the marquee product-owned (2 sites, foreign-tree); their §4 question CLOSED their-side by our `BI.W-SPEEDTEST-ONLY-PAIR`/`c12be186` TERMINAL ruling | CONFIRMED-CONSISTENT — matches the standing ScrollingText TERMINAL producer ruling (INBOUND-MARKS line 493/529-539); speedtest ADOPTS it (relocate to their tree, product-owned). The two consumer sites are foreign-tree, not independently verifiable. No conflict. |
+| §1 icon-tooltip | `/icon-tooltip` removed; the ADOPT is speedtest's; successor = `<Tooltip preset="icon">` | **CORRECTED** — the removal is CONFIRMED (`icon-tooltip` ABSENT from HEAD exports; MIGRATION.md:686-694 records it a 7.0.0 removal, `v6.0.0` still carried the key). BUT the successor API is WRONG: `TooltipProps` at HEAD (`tooltip/Tooltip.vue`) carries only `open`/`defaultOpen`/`delayDuration`/`disabled` — **no `preset`**; the committed MIGRATION authority (MIGRATION.md:33) states "There is no icon-only tooltip wrapper" and sanctions COMPOSING the Tooltip family (`TooltipProvider` + native trigger + `TooltipContent`). Speedtest faithfully cites our OWN wave's PLAN language ("re-expressed as a Tooltip preset"), but that preset did NOT land — the landed disposition is pure composition. Their adopt must target the composed family, not `preset="icon"`. Self-corrects at their consume: the committed MIGRATION carries the right guidance, delivered via the Q060 export-map delta at tag. |
+| §2 SEAL-DISC | `CompletionSealShape` includes `disc`; disc→ring→check personalBest | CONFIRMED — `completion-seal/constants.ts:27` `CompletionSealShape = "check" \| "ring" \| "disc" \| "wordmark"`; the composed earned-coin disc→ring→check gesture is the documented recipe. DISCHARGED on our record; speedtest's self-correction (their Pass-8 "zero disc work" note was wrong) is accurate. |
+| §2 DOCK-LABEL-RATIO | `--dock-label-ratio: 0.275` shipped | CONFIRMED — `dock/styles/density.css:371` `--dock-label-ratio: 0.275` (speedtest cited `:383`; minor line-drift, token+value exact). |
+| §2 LIQUIDFILL | `Progress variant="liquid"` + `glass/liquid-fill.css` | CONFIRMED — `progress/Progress.vue:60-61` applies `glass-liquid-fill`/`progress-liquid-fill` on `variant==="liquid"`; `src/styles/glass/liquid-fill.css` present. Shipped as the `Progress.vue` variant (consolidated from the `ProgressLiquid.vue` our stale line-103 mark named); DISCHARGED stands. |
+| §2 HERO-FACE-PRELOAD | `fonts.css` still base64-inlines (δ-separate-files preload-match unshipped) | CONFIRMED-STILL-INLINED — `src/styles/fonts.css` carries 5 `base64` occurrences, no separate-file `src:url()` preload arm. Disposition UNCHANGED: OWNED — BI.W-STRUCTURE-RESEQUENCE fonts arm (line 106); a 7.0.0-line item still on-roster, NOT "dropped off radar." |
+| §2 PAPER-GRID-BREATHE | no `.paper-grid-breathe` class at HEAD, only shader comments; framed as "accepted at INBOUND:38, awaiting" | CONFIRMED-ABSENT / **CORRECTED-disposition** — the class is genuinely absent (only `flow.glsl.ts:32`/`flow.wgsl.ts:22` comments reference the concept). But our TERMINAL record marks PAPER-GRID-BREATHE **DECLINED-TERMINAL** (SPEEDTEST-AX item 3, line 101): the static utility stays static by proportion; the breathing register is the `/paper-grid` VIZ (BC, curl-warped). The class is absent BY RULING, not accepted-then-dropped — speedtest should stop waiting on it. |
+| §3 MetricRow protagonist | `protagonist` prop GONE at 7.0.0; existed at `v6.0.0` (`MetricRow.vue:93`); metric-sextet consolidated to `/metric`; `grep protagonist src = zero` | CONFIRMED — `v6.0.0:src/components/metric-stack/MetricRow.vue:93 protagonist?: boolean` (exact); HEAD consolidates to `src/components/metric/` (Metric/MetricCell/MetricRow/MetricStack); `git grep protagonist src @HEAD` = ZERO; `MetricRowProps extends MetricTextProps {}` (empty). This rides the Q060-recorded metric consolidation (`metric-badge`/`-cell`/`-stack` removed, `metric` added). |
+| §3 emphasis question (for us) | successor emphasis prop on `/metric`, or protagonist-weight now consumer-CSS? | ANSWERED-FROM-RECORD — NO successor emphasis/focal/weight prop exists on the shipped `/metric` surface (`metric/types.ts`: `MetricRowProps` empty; `MetricProps` = `size`/`orientation`; `MetricCellProps` adds `icon`; `MetricStackProps` = `density` — no emphasis channel anywhere). So the shipped surface supports protagonist-weight ONLY via consumer-CSS; speedtest's assumption is consistent with the surface. Their explicit "either answer is fine, we've moved on" means no forward-intent ruling is owed. |
+| §3 DOCKTAB withdrawals | DockIconButton/DockTabButton removed at 5.0.0 (not 6.0.0); `-GOLD-VARIANT`/`-GLEAM` withdrawn; DockLayerGroup/DockCrossfade survive | CONFIRMED — the 5.0.0 member-fold is on record (retro-truth CHANGELOG:223-226 [CORRECTION 2026-07-17]; install-truth ACK; atlas corroboration). `DockLayerGroup` + `DockCrossfade` both EXPORTED at HEAD (`dock/index.ts:3`/`:11`), `DockControl` the fold target. Withdrawals are speedtest's; no glass ask. |
+| §4 AURORA-SCHEME-LUMA | `deriveAurora` `scheme?:"light"\|"dark"` + `lBand` escape hatch since v5.0.0; `atoms.ts` routes `lightnessScheme→scheme`; `DERIVE_L_BAND_DARK: [0.18,0.42]` (mid ≈0.30) | CONFIRMED — `aurora/composables/color.ts:155/:161/:181` (`scheme`, `lBand`, `DERIVE_L_BAND_DARK=[0.18,0.42]`); `:153` "a raw `lBand` override wins over `scheme`"; `atoms.ts:148/:290` routes `lightnessScheme→scheme`. Present at `v5.0.0` (color.ts:173/:179/:200) AND `v6.0.0` — the "since v5.0.0" attribution is exact. Their one-line consume `deriveAurora(…,{scheme:"dark"})` is supported; no fork. Reconciliation: our OWNED mark (BI.W-AURORA-VIBRANCY §Inbound GAP-L2, lines 109/183) is the FURTHER C/H-variance amplification; the scheme DOOR is the already-shipped-at-5.0.0 base — the door is DISCHARGED-AT-5.0.0, no conflict. |
+| §4 CARD-TIER-ALPHA-PIN | candidate ask (RE-LITIGATE-IF): a per-consumer alpha+blur override token; premise = the tier blur ladder isn't per-consumer-pinnable | NOTED-CANDIDATE — the record CONFIRMS the premise: MIGRATION.md:168-176 states the ~15% recalibration is "primitive values only… No API or token-name change," and instructs compensating consumers to "re-verify legibility on adopting 7.0" — i.e., no per-consumer alpha+blur override token exists today. Purely a future-tranche candidate, "not a request" (their words); no action, consistent with the presets-in-consumers law. |
+| §5 5.0.0-not-6.0.0 witness | rowless member removals landed at 5.0.0; offered as independent consumer witness for Q060 retro-truth | CONFIRMED-CORROBORATES — matches the retro-truth CHANGELOG:223-226 [CORRECTION 2026-07-17] member-level 5.0.0 row (DockIconButton/DockTabButton fold onto `DockControl`) + the 203-symbol `/api` census. Speedtest is the FIRST consumer witness (`c12be186`), atlas the second — banked as Q060 cross-check; no re-book. |
+| §5 GLASS-SUBTLETY | ~15%-subtler blur ladder at 7.0.0 folded into their born-RED material gate | CONFIRMED — MIGRATION.md:168 "The glass blur ladder is recalibrated ~15% subtler across the complete census" (quiet 8→7, floating 13→11, etc.). Speedtest re-verifying every card surface at the 7.0.0 blur values is consistent; no glass action. |
+
+**§3 metric-emphasis answer (from record).** The `/metric` surface at HEAD exposes NO producer
+emphasis channel — the `data-protagonist` weight-lift that lived on `metric-stack/MetricRow.vue`
+(v6.0.0) was dropped in the metric consolidation with no successor prop. So the honest on-record
+answer to "successor prop or consumer-CSS?" is: **consumer-CSS**, by construction of the shipped
+surface. Speedtest's assumption is correct and their re-derivation product-side is sound. Whether the
+library ever re-mints an emphasis prop is a forward design consideration, not owed now (they deferred
+it and moved on); it would re-enter as a fresh ask if a ≥2-consumer emphasis need appears.
+
+**P127 GUARD — ALIGNED, no conflict.** The relay's own net ("nothing owed by glass before your tag";
+"the 7.0.0 npm publish remains our W0 constellation trigger; we stay on the old trio — glass ^4.0.1
++ kf + value — until it lands, then cross once to the co-land trio") is EXACTLY the recorded P127
+model: producers publish before glass tags staged peers, consumers registry-HELD on the tag, no
+force-upgrade of producers under glass@6 (staying on glass ^4.0.1 is the honest resting graph, not a
+`--legacy-peer-deps` mask). No timing commitment is made or asked; the honest answer to any implied
+"when" is the gate roster — **Q003** RED (user-hand in-app paint) + **Q002** (native 1280/390 sweeps)
++ **Q051** (the consolidated user-ask ruling batch, `3f7bffe2`). 7.0.0 is HARD-GATED and NOT cut;
+this seat makes no pack/tag/publish promise and none is asked.
+
+**Continuity.** This relay is the §5 successor packet the install-truth ACK (line 482) promised; it
+DISCHARGES speedtest's own long-open §4 question (scrolling-text/icon-tooltip) their-side by adopting
+our `BI.W-SPEEDTEST-ONLY-PAIR`/`c12be186` ruling. It SUPERSEDES nothing (their explicit framing). It
+LEAVES STANDING and re-affirms every prior speedtest disposition: the **ScrollingText TERMINAL**
+producer ruling (speedtest ADOPTS relocate-to-their-tree/product-owned — it does NOT contest the
+ruling) and the **≥2-repo re-entry** condition (untouched); the **DockIconButton/DockTabButton
+5.0.0** member-fold (speedtest corrects its own 6.0.0→5.0.0, matching our record); and the DISCHARGED
+SEAL-DISC / DOCK-LABEL-RATIO / LIQUIDFILL / AURORA-SCHEME-LUMA rows (speedtest reconciles its
+two-majors-stale ledger to match). Because the relay CONTESTS NEITHER standing producer ruling, no
+seat-exceeding escalation arises from them.
+
+**NEEDS-ORCHESTRATOR: NONE.** Both "for you" items resolve within marks: the §3 emphasis question is
+ANSWERED-FROM-RECORD (no successor prop; consumer-CSS), and the §4 card-tier ask is an explicit
+non-request future candidate (record confirms no override token today). The one factual CORRECTION
+(icon-tooltip successor = compose the Tooltip family, NOT `preset="icon"`) is fully resolved from the
+committed MIGRATION and SELF-DELIVERS to speedtest via the standing Q060 export-map/MIGRATION delta at
+tag — a proactive heads-up before then is the orchestrator's routing choice, not a new obligation or
+tag blocker.
+
+**Cross-check (`f9df5c0a` / `2e44df18` / `c12be186` / `b43b9f91` / v5.0.0·v6.0.0 tags).** No
+contradiction. The 5.0.0 member-fold + ScrollingText-TERMINAL agree with `c12be186` and the
+install-truth ACK; the aurora scheme door is verified present at `v5.0.0`; the ~15% blur recalibration
++ 203-symbol census are the committed retro-truth (`2e44df18`+later); the P127 resting-graph posture
+matches `b43b9f91`. The only delta the record adds is the icon-tooltip successor-API correction
+(preset never landed → compose the family), which the committed MIGRATION already carries.
