@@ -651,3 +651,15 @@ adopt/decline with the F49/F50 π (W3); the track-family fold to one shared mate
 roster feeding follow-on fixes (W5); the 251-site type codemod + coupled default-ramp reset + paint π (W6).
 The band makes the material ladders **auditable and role-coherent** — the
 enforcement rides `BAND-GATES` W3/W4; this band supplies the canon those gates measure against.
+
+**Inbound mark (2026-07-17, speedtest Pass-9 relay §4):** speedtest's WD material-unification
+pins BOTH card-ladder halves consumer-side (fill-alpha via `--glass-bg` re-declaration +
+`--glass-blur-{tier}-radius`) precisely because the tier blur ladder is not per-consumer-pinnable
+— so this band's subtler re-tune (W2) shifts their card material out from under their alpha pins
+AGAIN. Their `ASK-GU-CARD-TIER-ALPHA-PIN` (a RE-LITIGATE-IF, not a request): if the tier
+primitives exposed a per-consumer alpha+blur override token, the whole re-declaration collapses
+into it. W2's ruling must weigh this as a consumer-truth input: either mint the override token
+as part of the re-tune, or state in the wave's outbound that consumers re-pin at each
+recalibration. Also owed the next batched outbound: the §3 protagonist answer — no successor
+emphasis prop exists on /metric at 7.0.0; consumer-CSS is correct for now, and /metric itself is
+under the BJ reduction confrontation (UF-K1/R16), so no new metric surface until that ruling.
