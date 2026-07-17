@@ -17,6 +17,7 @@ import {
     Map as MapIcon,
     ChevronRight,
 } from "@lucide/vue";
+import { Button } from "@glass/components/button";
 import {
     GlassDock,
     DockControl,
@@ -92,6 +93,10 @@ function toggleManual() {
     if (manualExpanded.value) manualDock.value?.expand();
     else manualDock.value?.collapse();
 }
+
+// The mode flip exercises the axis's flip watch live: a timer armed in auto
+// must never fire a ghost collapse after the flip to manual.
+const dockInteraction = ref<"auto" | "manual">("manual");
 </script>
 
 <template>
@@ -170,7 +175,7 @@ function toggleManual() {
             <DockStage>
                 <GlassDock
                     ref="manualDock"
-                    interaction="manual"
+                    :interaction="dockInteraction"
                     start-collapsed
                     aria-label="Consumer-owned dock"
                 >
@@ -203,6 +208,13 @@ function toggleManual() {
                 <code>#persistent</code> disclosure (never inert, reachable in both poles)
                 drives <code>expand()</code>/<code>collapse()</code>.
             </p>
+            <Button
+                emphasis="quiet"
+                class="mt-2"
+                @click="dockInteraction = dockInteraction === 'manual' ? 'auto' : 'manual'"
+            >
+                interaction: {{ dockInteraction }} — flip
+            </Button>
         </StorySection>
     </StoryPage>
 </template>
