@@ -72,7 +72,8 @@ BEFORE their breaking waves ship (the peer pin-guards in B0 before ANY publish).
   BADGE-ALIGN · BP-BOTTOM-LINEAR · SCROLL-PROGRESS-RIM
 - **B2+B8**: SURFACE-EXTRACT · CLEAR-FOLD · GLASS-TOKEN-PRUNE · GLASS-DEDUP · BLUR-MUTE ·
   OVERLAY-UNION · MENU-TRIGGER · DIALOG-PLACEMENT · CHIP-FOLD · MULTISELECT-FOLD ·
-  BUTTON-TONE · SYNONYM-RENAMES · AXES-GATES · FACTOR-ASKS
+  BUTTON-TONE · SYNONYM-RENAMES · AXES-GATES · FACTOR-ASKS · GLASS-SUBTLETY ·
+  GRADED-BACKDROP (minted 2026-07-16/17, the glass-subtlety triumvirate)
 - **B3**: DOCK-SPINE · TABS-FACTOR · DOCK-ESCAPE · DOCK-CONTROLS · DOCK-CROSSFADE · DOCK-OVERFLOW ·
   DOCK-SPRING-UNIFY · DOCK-FOLD · DOCK-RETIRES · DOCK-GATE-CULL · DOCK-DEVICE ·
   DOCK-INTERACTION-AXIS (minted 2026-07-16, the dock-axis triumvirate)
@@ -209,3 +210,41 @@ binding amendments, two-consecutive-clean) found the V6 drawer/sheet sweep **FAI
 - Consumer exposure: **ZERO** (atlas placements are charts/viz; slides' `DeckGate` is a center dialog
   with no placement/preset/motion; sci-report/keyframes.js none). No consumer addendum owed.
 - Sources of record: `bi-addenda/reports/sheet-motion/research.md` + `…/harden.md` (normative).
+
+## §12 — The glass-subtlety triumvirate mint (2026-07-16/17, BI-addenda)
+
+The BI-addenda glass-subtlety triumvirate found the user's 2026-07-16 directive — glass "slightly more
+subtle, all of them" + dialog rounding "consistent with our cards" + "experiment with a gradient blurring
+backdrop for popups and modals" — had NO owning wave (BLUR-MUTE dials only the button cohort; SHEET-RADIUS
+rounds only the sheet; nothing recalibrates the framework-wide blur ladder, binds the dialog corner, or
+generalizes the graded backdrop). The three normative contracts split into TWO waves on the freeze-ready vs
+adopt-or-defer line:
+- MINTED `BI.W-GLASS-SUBTLETY` (B2 — Contracts 1+2: the complete blur recalibration [one subtlety scalar,
+  S≈0.85 primary / 0.78 escalation, integer-rounded; the 20px high-DPI overlay restore co-moved; the 1px
+  wash floor + the 16px deep ceiling HELD] + the dialog-corner harmony [`--radius-dialog:
+  var(--radius-card)` bind unconditional; the squircle A/B fork leans B toward iOS-27, decided at the paint
+  lane]). Rides immutable 7.0.0 unconditionally.
+- MINTED `BI.W-GRADED-BACKDROP` (B2 — Contract 3: the progressive-backdrop halo EXPERIMENT; one
+  box-following four-edge composite [radial STRUCK]; adopt-or-defer, adoption NOT presumed; must resolve
+  pre-freeze or defer). Owns the `BI.W-ENGAGE-AFFORD` token-name coordination.
+- Wave count 95 → **97** (+2; the pending ENGAGE-AFFORD mint is HELD unregistered behind the breath-of-life
+  loop and does not count here).
+- Under the 2026-07-16 gate ruling both mint NO proof/gate script — ordinary validation only; paint truth
+  (the subtlety step, the corner fork, the halo adopt/decline) is the Q002/Q003 Fable lane, never CI.
+- Key HARDEN corrections folded (harden.md normative): the census completed (the 20px retina restore the
+  decisive miss); the ref reframed (its heavy frost is the opt-in immersive scrim, a GRADED-BACKDROP target,
+  not Contract 1's floating ladder); the φ narrative struck (a ~15% integer pull); the 0.68-dialog
+  legibility floor named; the deep ceiling HELD; the squircle direction inverted to lean-B; the
+  radial/linear dual path struck for one mechanism; the plate cost made honest; the ink source corrected
+  (`--glass-bg-overlay` mix).
+- Gate history, honest: the formation closed at FOUR repair rounds + a final confirming pass (per the
+  recorded reset formula), the census-miss class recurring at narrowing depth each round until the census
+  gained a string-pinned interpolant class (C1-DERIVED), a token-name second grep axis, a pre-stale class
+  (C1-PRESTALE), and an out-of-scope table; round 3 was the codex round (the borrowed-authority provenance
+  strike on GRADED — the mechanism itself codex-correct throughout). Reports:
+  `bi-addenda/reports/glass-subtlety/` (research/harden normative; confirm-final.md the closing CLEAN).
+- Consumer census: atlas (pinned 6.0.0) is the one live consumer shifted, ADVERSELY by Contract 1 (subtler
+  blur → more dock bleed-through vs its Dock.css 0.9 pin) — routed to Q060; impact lands on atlas's 7 bump
+  only. slides benefits (deferred); sci-report has no runtime glass-ui dep.
+- Two in-tranche collisions named: `BI.W-BLUR-MUTE` SUBSUMED (buttons ride the root recalibration);
+  `BI.W-SHEET-RADIUS` is the C2-SHAPE coherence dependency (its sheet-squircle revival favors option B).
