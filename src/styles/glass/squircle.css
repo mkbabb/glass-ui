@@ -4,7 +4,8 @@
    order, each in its own @layer components (isomorphic to the monolith).
    See docs/precepts/design-idioms.md §cohesion-aware partials. */
 /* ── The rounded-vs-squircle POLICY (re-homes the squircle) ─────
-   Cards, buttons, and pills stay ROUND. The earlier block applied
+   Cards, buttons, pills — and the centered DIALOG (F6 = A': the dialog rounds to
+   match the card, `--corner-shape-dialog` retired) — stay ROUND. The earlier block applied
    `corner-shape: squircle` to the small glass control family, which
    inverted the design intent — the superellipse is imperceptible at a 16px card
    radius or a stadium pill, so the squircle on those surfaces was visual cost
@@ -14,17 +15,18 @@
    no `corner-shape` rule on the card/button/pill surfaces at all: the CSS
    `corner-shape` INITIAL VALUE is `round`, so those surfaces are round by DEFAULT.
    The dead `--corner-shape-card`/`-pill` no-op tokens were SWEPT;
-   the SQUIRCLE members of the `--corner-shape-*` token axis (bigdock/dialog/sheet/
-   panel/hero) live in `theme.css`. A consumer who WANTS a squircle card mints its
+   the SQUIRCLE members of the `--corner-shape-*` token axis (bigdock/sheet/
+   panel) live in `theme.css`. A consumer who WANTS a squircle card mints its
    own `--corner-shape-card` alias and adds the surface to the @supports block below.
    Do NOT re-add a squircle rule to the card/button/pill surfaces — they are round
    by policy. */
 
 /* ── (R1) — squircle coupling onto the large-radius glass FAMILY ───
    makes GLASS the default for the overlay-band surfaces; (R1)+ couple
-   the SQUIRCLE onto the whole LARGE-RADIUS glass family — Dialog + Sheet content
-   (`.glass-floating.{rounded-dialog,sheet-animate}`) and the Configurator PANEL
-   (`.configurator`). (retired `.floating-panel` + the `.glass-hero`
+   the SQUIRCLE onto the LARGE-RADIUS glass family — the Sheet side slide
+   (`.glass-floating.sheet-animate`) and the Configurator PANEL
+   (`.configurator`). The centered Dialog left the squircle set (F6 = A' — it rounds
+   to match the card; `--corner-shape-dialog` retired). (retired `.floating-panel` + the `.glass-hero`
    overlay utility — both DELETED clean-break.) Every one
    sits AT or ABOVE the ~--radius-xl threshold where the superellipse READS — the
    same iOS-26 idiom the big-dock card shell carries (the backdrop-filter blur halo
@@ -39,9 +41,6 @@
    Chrome-139 feature the token resolves to. */
 @layer components {
     @supports (corner-shape: superellipse(2)) {
-        .glass-floating.rounded-dialog {
-            corner-shape: var(--corner-shape-dialog);
-        }
         .glass-floating.sheet-animate {
             corner-shape: var(--corner-shape-sheet);
         }
@@ -55,4 +54,4 @@
    utility, 0-consumer verified) are DELETED clean-break. A straggler folds onto a
    `tier`+`deep` glass surface (`<Surface tier deep>` / `.glass-floating.glass-deep`).
    `--corner-shape-hero` retired with it (theme.css); the squircle family keeps
-   bigdock/dialog/sheet/panel. */
+   bigdock/sheet/panel. */
