@@ -165,6 +165,21 @@ Import `@mkbabb/glass-ui/styles/theme` to register the package's Tailwind v4
 entry is a registration bridge over the owning token variables, not a standalone
 resolved base-token stylesheet.
 
+The glass blur ladder is recalibrated ~15% subtler across the complete census:
+quiet/resting `8→7`, floating/overlay `13→11`, the high-DPI (2dppx) overlay
+restore `20→17`, the native `::backdrop` scrim `8→7`, the immersive stage scrim
+`16→14`, and the side-sheet graded field `40→34`. No API or token-name change —
+primitive values only; every composed `--glass-blur-*` and the dark arm re-bake
+off the recalibrated primitives. The sub-perceptual wash floor (1px) and the
+opt-in deep ceiling (16px) are held. A consumer with a preset that compensated
+for the heavier blur (a raised `--glass-opacity-*` to fight bleed-through, or a
+panel remapped onto the overlay rung) should re-verify legibility on adopting 7.0.
+
+`--radius-dialog` now binds `var(--radius-card)` (was `var(--radius-2xl)`) — one
+source, so the dialog corner cannot drift from the card. This is value-invariant
+in every shipped config and repaints nothing; a consumer that re-pins
+`--radius-card` now moves the dialog corner with it.
+
 ## 6.0.0
 
 The BI cut removes public wrappers and aliases whose lifecycle belongs to their parent,
