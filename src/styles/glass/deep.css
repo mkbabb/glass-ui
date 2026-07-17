@@ -49,7 +49,7 @@
        16px / 1.8 ceiling, tier grade inert). The tier map below sets `--glass-depth`
        per tier ON THE BASE RUNG the `.glass-deep` decoration composes with (same
        element), so declared here `var(--glass-depth)` resolves to the element's LIVE
-       tier grade and the ladder PAINTS: content ~14px < popover ~15px < menu 16px.
+       tier grade and the ladder PAINTS: content ~13px < popover ~14px < menu 16px.
 
        The composition is IDENTICAL to the retired `:root` form — same endpoints
        (`--glass-blur-floating-radius` depth-0 floor / `--glass-blur-deep-radius`
@@ -88,13 +88,13 @@
        the ONE --glass-depth scalar from its named grade (tokens/glass-deep.css) — a
        pure per-rung DEFAULT, NOT a new blur recipe. So a deep surface inherits its
        tier's depth: a `deep` Card (glass-floating glass-deep) resolves the popover
-       grade (~15px), the primary Button resolves
-       the content grade (~14px), a deep overlay/modal reaches the full 16px ceiling
+       grade (~14px), the primary Button resolves
+       the content grade (~13px), a deep overlay/modal reaches the full 16px ceiling
        — thickness tracks prominence by construction, ZERO new machinery.
 
        No rung reads var(--glass-blur-deep) here — --glass-depth only DRIVES
        the deep LERP (glass-deep.css), so a NON-deep tier surface is BYTE-UNCHANGED
-       (a plain popover stays the calm 13px; the calm ladder never reads --glass-depth)
+       (a plain popover stays the calm 11px; the calm ladder never reads --glass-depth)
        and only a `.glass-deep`-composed surface consumes the graded depth.
 
        SUBSTITUTION-vs-INHERITANCE (the recorded seam): zero-specificity :where() so

@@ -20,14 +20,14 @@
  *     CTA) — the worst case for per-frame backdrop re-rasterization. No committed
  *     per-frame render-cost harness clears 20px on that surface.
  *   - The whole design trajectory dials blur DOWN: every calm rung is cut ~15-20%
- *     (floating 16->13px) on the "a hair too much" over-diffusion call. 20px would
+ *     (floating 16->13->11px) on the "a hair too much" over-diffusion call. 20px would
  *     push the deep tier BACK toward that rejected diffusion — wrong direction. The
  *     warm-cream light-concentration ceiling (a saturate/blur that over-juices a
  *     colored substrate reads as a garish smear) keeps 16px "just-rich" over warm-
  *     aurora.
  * So: 16px is the ceiling. The saturate ALREADY reached the Apple 1.8 ceiling, so
  * the deep tier IS at its design-language depth on BOTH axes — deeper blur than
- * calm floating (16>13px), richer saturate (1.8>1.6).
+ * calm floating (16>11px), richer saturate (1.8>1.6).
  *
  * ── The family shape ───────────────────────────────────────────────────────
  * A SEPARATE `--glass-blur-deep-*` token family ABOVE the calm
@@ -43,17 +43,17 @@
  * ── The Apple-range derivation (DELTA cross-ref) ───────────────────────────
  * Apple home nav:        saturate(1.8) blur(20px)  (the canonical measure)
  * Apple product tiers:   blur(14-20px)             (the band)
- * glass-ui calm ceiling: floating 13px / saturate 1.6 (dial-back)
+ * glass-ui calm ceiling: floating 11px / saturate 1.6 (dial-back)
  * glass-ui DEEP (ship):  16px / saturate 1.8       (STRICTLY deeper blur + richer
  *                        saturate; 16px is the DECIDED ceiling — see the verdict
  *                        above, IDENTITY not debt).
  */
 :root {
     /* The Apple-range deep ENDPOINTS — the radius + saturate the deep tier reaches
-       at full depth (`--glass-depth: 1`). The calm `floating` rung (13px / 1.18)
+       at full depth (`--glass-depth: 1`). The calm `floating` rung (11px / 1.18)
        is the depth-0 floor; the deep recipe LERPs between the two on `--glass-depth`
        so the axis is a genuine driver, not a literal. */
-    --glass-blur-deep-radius:    16px; /* in [14,20], STRICTLY > calm floating 13px.
+    --glass-blur-deep-radius:    16px; /* in [14,20], STRICTLY > calm floating 11px.
                                           DECIDED CEILING:
                                           16px IS this substrate's blur ceiling —
                                           IDENTITY, not debt. The 20px push is RETIRED
@@ -81,7 +81,7 @@
        `:where()` rules) sets `--glass-depth` PER TIER on the base rung; the LERP must
        therefore be declared on `.glass-deep` — the SAME element, at/below the tier-grade
        site — so `var(--glass-depth)` resolves to the element's LIVE tier grade and the
-       ladder PAINTS (content ~14px < popover ~15px < menu 16px). Only the ENDPOINTS +
+       ladder PAINTS (content ~13px < popover ~14px < menu 16px). Only the ENDPOINTS +
        GRADES stay here (they are literals — no registered-`@property` read — so their
        `:root` declaration is safe); the COMPOSITION moves to the consuming element. */
 
@@ -97,19 +97,19 @@
        ZERO new machinery: the deep recipe already LERPs blur+saturate on --glass-depth
        (D1), so a grade is a pure per-rung DEFAULT of the EXISTING scalar — no new blur
        family, no new @property, no new compositing seam. The three grades span the
-       decided deep band [depth 0 ≡ the calm floating 13px floor, depth 1 ≡ the 16px
+       decided deep band [depth 0 ≡ the calm floating 11px floor, depth 1 ≡ the 16px
        Apple-deep ceiling], so a content-tier deep control still clears the calm
        floating floor (depth > 0) while only the menu/overlay rung reaches the full
-       ceiling: content ~14px < popover ~15px < menu 16px, saturate 1.67 < 1.74 < 1.8.
+       ceiling: content ~13px < popover ~14px < menu 16px, saturate 1.67 < 1.74 < 1.8.
 
        The grades are NAMED (not magic literals) so a consumer retunes a WHOLE BAND
        from ONE ancestor override (`--glass-depth-popover: …`) — the per-band twin of
        the global `--glass-depth` ancestor dial; the tier rules (glass/deep.css) read
        these, so the override cascades in. */
     --glass-depth-content: 0.35; /* content/button deep (wash/quiet/resting base) — the
-                                    LEAST-prominent deep rung: ~14.05px / saturate ~1.67. */
+                                    LEAST-prominent deep rung: ~12.75px / saturate ~1.67. */
     --glass-depth-popover: 0.7;  /* popover/dialog/menu-content + Card deep (floating
-                                    base) — the mid rung: ~15.1px / saturate ~1.74. */
+                                    base) — the mid rung: ~14.5px / saturate ~1.74. */
     --glass-depth-menu:    1;    /* menu/modal (overlay base) — the MOST-prominent deep
                                     rung, at the full Apple-deep ceiling (16px / 1.8);
                                     == the resting --glass-depth initial-value. */

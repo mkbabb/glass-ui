@@ -15,8 +15,8 @@
 @layer components {
     .glass-dock {
         /* The dock's backdrop re-points onto the SHARED
-           `--glass-blur-resting` (the unified 8px material), so the dock reads the
-           SAME `blur(8px)` radius leg as the ordinary `.button`, the
+           `--glass-blur-resting` (the unified 7px material), so the dock reads the
+           SAME `blur(7px)` radius leg as the ordinary `.button`, the
            default-Card, and the menu-row — ONE liquid-glass material (the
            resolved-radius peer lock, proof:glass-cal). `--glass-blur-resting`
            carries a `saturate()` companion (it concentrates light like every
@@ -41,9 +41,9 @@
            the `--glass-saturate-resting` KNOB on a descendant does NOT re-resolve the
            inherited composed blur (the exact --glass-bg-{tier}/--glass-opacity-{tier}
            documented trap). So the dock RE-DECLARES the COMPOSED `--glass-blur-resting`
-           here — the SAME recipe (the `--glass-blur-resting-radius` 8px primitive ×
+           here — the SAME recipe (the `--glass-blur-resting-radius` 7px primitive ×
            `--glass-level`, so the `prefers-reduced-transparency` → `--glass-level: 0`
-           bracket firms to `blur(0)` unchanged AND the proof:glass-cal 8px PEER LOCK holds
+           bracket firms to `blur(0)` unchanged AND the proof:glass-cal 7px PEER LOCK holds
            by construction — the radius leg is byte-identical), with the pinned
            `saturate(1.2)`. `--dock-surface-blur: var(--glass-blur-resting)` reads the
            re-composed dock-scoped value; the content-tier resting plate keeps `:root`'s
@@ -212,7 +212,7 @@
        (`saturate(1.30) brightness(1.14)`) — otherwise the light `.glass-dock` re-compose
        (which wins over the dark `:root` value by cascade order) would strip the dark glow
        to 1.2. This is the plain per-mode pair, the house idiom; the SAME radius primitive
-       (8px × `--glass-level`, peer-lock byte-identical). The dark content-tier resting
+       (7px × `--glass-level`, peer-lock byte-identical). The dark content-tier resting
        plate keeps the dark `:root` value untouched (this override is `.glass-dock`-scoped). */
     .dark .glass-dock {
         --glass-blur-resting: blur(
