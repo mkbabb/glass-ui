@@ -82,7 +82,7 @@ BEFORE their breaking waves ship (the peer pin-guards in B0 before ANY publish).
 - **B6**: STORY-SCHEMA · SPECIMEN-FRAME · CODEBLOCK · SHRINK-HERO · LIVE-TILES · DEMETA ·
   AFFORDANCE-REDESIGN · FOLDED-REDIRECTS · SUBSTRATE-INDEX-TILES
 - **B7**: SPRING-PARITY · REGISTER-TABLE · TEMPO · ENTER-EXIT-LANDING · COMMAND-JITTER · DRAWER-PERF ·
-  ACCORDION-PRESS · DRAW-IN
+  ACCORDION-PRESS · DRAW-IN · SHEET-INTERRUPTIBLE-MOTION (minted 2026-07-16, the sheet-motion triumvirate)
 - **B8-PRUNES (band NAME; the wave headers' scheme governs)**: ESC-STACK · DRAG-REATTACH · GRAIN-WIRE · SLIDER-THUMB-NAME · DEMO-SOURCE-SCAN ·
   SPLITCHARS-ARIA · METRICS-DEMO · MATH-PAPER-REMOVE · HERO-DEMOTE · COMPOSITIONS-PRUNE ·
   SPEEDTEST-ONLY-PAIR · ORPHAN-BINARY-SPLIT · BORDER-PROGRESS-RETIRE · VIRTUAL-TRUTH · XR-PRODUCER-REPAIRS (minted 2026-07-12, the marking pass)
@@ -184,3 +184,28 @@ collapsed-pole seam) had NO owning wave — atlas 7 is registry-HELD on it. Cure
   `src/platform/chrome/dock/Dock.vue:226`) — recorded as a glass-ui-side outbound coordination mark;
   the one-line edit is atlas-tranche-owned. keyframes.js/slides/sci-report owe NONE.
 - Sources of record: `bi-addenda/reports/dock-axis/research.md` + `…/harden.md` (normative).
+
+## §11 — The sheet-interruptible-motion triumvirate mint (2026-07-16, BI-addenda)
+
+The BI-addenda sheet-interruptible-motion triumvirate (RESEARCH → HARDEN, Option-B ADOPTED with five
+binding amendments, two-consecutive-clean) found the V6 drawer/sheet sweep **FAIL-1** (the placed
+`<DialogContent>` sheet jumps to fully-open then slides out on an interrupted enter — captured trace
+`tx=341→2`) had NO owning wave across the corpus. Cured:
+- MINTED `BI.W-SHEET-INTERRUPTIBLE-MOTION` (B7 — converge the four side placements onto the shared
+  `useSpringMount`→`useSpring`→`SpringProgress` kernel whose `SpringProgress` engine the Drawer proves
+  interruptible (via its own `useDrawerSnap`), extended with a
+  `present` mount-hold + `forceMount = present||open` on Portal + Content; a pure `sheetSlideTransform`
+  `translate`-longhand helper; scrim opacity off the same live scalar via `scrimOpacity`; deletes the
+  side sheet's keyframe-slide path). Wave count 94 → **95**. Under the 2026-07-16 gate ruling it mints
+  NO proof/gate script — ordinary validation (vue-tsc · focused vitest born-RED→GREEN · `npm run
+  build`) only; the V6 sheet-reverse arm re-runs on the V8 sweep as the born-red-then-green witness.
+- Five HARDEN amendments (harden.md normative): **R1** a ship-blocking bug (the research draft's
+  `translateX()`-as-`translate`-longhand paints nothing → corrected to longhand pairs); **R2** take the
+  center unification now (census-proven invisible; kills the dual exit path); **R3** `smooth` stands on
+  the Dialog-family default (not "drawer-paced"), `gentle` fallback struck, `snappy` flagged a 12px gap
+  trap; **R4** strike the self-defeating overshoot-gap argument; **R5** two file-level collisions —
+  `DialogContent.vue` (Q023 graded-edge) + `ModalOverlay.vue` (Q030 relocation + test) — **sequence,
+  do not parallelize**.
+- Consumer exposure: **ZERO** (atlas placements are charts/viz; slides' `DeckGate` is a center dialog
+  with no placement/preset/motion; sci-report/keyframes.js none). No consumer addendum owed.
+- Sources of record: `bi-addenda/reports/sheet-motion/research.md` + `…/harden.md` (normative).

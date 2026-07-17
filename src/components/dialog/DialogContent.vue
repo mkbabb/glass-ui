@@ -3,6 +3,7 @@ import {
     type HTMLAttributes,
     computed,
     type CSSProperties,
+    ref,
     watch,
     onScopeDispose,
 } from "vue";
@@ -32,6 +33,7 @@ import { useMotionAxis } from "../_shared/useMotionAxis";
 // slide base; the decoration layers the same shared W55 seam).
 import { resolveSurfaceClass } from "../_shared/resolveSurfaceClass";
 import { useOptionalDialogStageContext } from "./dialogStageContext";
+import { sheetSlideTransform, type SidePlacement } from "./sheet-motion";
 import type { DismissableContentEmits } from "../_shared/interaction";
 
 export interface DialogContentProps {
@@ -68,6 +70,10 @@ const delegatedProps = computed(() => {
         showClose: _sc,
         scroll: _sl,
         stage: _st,
+        // `forceMount` is bound explicitly onto BOTH the Portal and the Content
+        // (D4) so the spring's mount-hold survives reka's logical close — never
+        // forwarded, or the passthrough would clobber the hold.
+        forceMount: _fm,
         ...delegated
     } = props;
     return delegated;
@@ -81,15 +87,26 @@ const isCenter = computed(() => placement.value === "center");
 // `springPreset` is named AND the resolved motion is not `off` (a preset-less dialog
 // keeps the `.glass-reveal` CSS bloom — byte-identical to HEAD's unset `spring`).
 const motionAxis = useMotionAxis(() => props.motion);
-// The JS spring entrance is the centered scale bloom only. A
-// placement != center Dialog slides via the CSS `sheet-animate` register (byte-identical
-// to the retired Sheet); the JS slide-spring + drag-dismiss gesture are Drawer's
-// mechanism (the N3 disambiguation), never smuggled into this paint axis.
-const springActive = computed(
+// The centered scale bloom arms iff a `springPreset` is named AND motion is not
+// `off` (a preset-less centered dialog keeps the `.glass-reveal` CSS bloom).
+const centerSpringActive = computed(
     () =>
         props.springPreset != null &&
         motionAxis.resolved.value !== "off" &&
-        (props.placement ?? "center") === "center",
+        isCenter.value,
+);
+// Every side sheet rides the JS slide-spring — the interruptible reverse the CSS
+// `slide-*` keyframe could not do (it snapped to fully-open then slid out). Armed on
+// PLACEMENT ALONE (static per instance, no setup-flip): `off` is handled INSIDE the
+// armed path (`sideSpringLive` false → render at rest, no translate, no mount-hold, so
+// reka Presence unmounts instantly). The drag-dismiss gesture + detents stay Drawer's
+// mechanism (the N3 disambiguation), never smuggled onto this paint axis.
+const sideSpringActive = computed(() => !isCenter.value);
+const sideSpringLive = computed(
+    () => sideSpringActive.value && motionAxis.resolved.value !== "off",
+);
+const springActive = computed(
+    () => centerSpringActive.value || sideSpringActive.value,
 );
 
 // The centered modal flips `--stage-t` 0→1 on open (the
@@ -230,17 +247,22 @@ const variantClasses = computed(() =>
 // `[data-slot="dialog-content"][data-placement]` (src/styles/dialog-placement.css) — a
 // load-bearing geometry utility dies in a consumer's Tailwind content-scan (the D7
 // emission inverse), so it is an attribute-selector rule, never a CVA class.
+// The side sheet keeps ONLY its decoration (inner rounding + inner-edge border). The
+// slide is the JS spring's `translate` longhand now, so the `slide-in/out-*` keyframes
+// are gone — an interrupted keyframe restarted from the resting-open origin and snapped
+// the sheet to fully-open (the FAIL-1 defect this wave cures).
 const PLACEMENT_SLIDE: Record<Exclude<Placement, "center">, string> = {
-    top: "rounded-b-dialog border-b data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top",
-    bottom: "rounded-t-dialog border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom",
-    left: "rounded-r-dialog border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left",
-    right: "rounded-l-dialog border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right",
+    top: "rounded-b-dialog border-b",
+    bottom: "rounded-t-dialog border-t",
+    left: "rounded-r-dialog border-r",
+    right: "rounded-l-dialog border-l",
 };
-// The side base (the retired `sheetVariants` base with the STRUCTURAL utilities stripped):
-// the overlay padding ladder + the `sheet-animate` data-state slide pair + `transition
-// ease-in-out`. `glass-floating` rides the private tier resolver below (no double-name).
+// The side base — the overlay padding ladder only. `sheet-animate` + `transition
+// ease-in-out` are stripped: the JS spring owns the surface motion (a keyframe fade/slide
+// exit from the resting-open origin IS the snap). `glass-floating` rides the private tier
+// resolver below (no double-name).
 const sideBaseClasses =
-    "[--overlay-pad-inline:--spacing(6)] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)] px-(--overlay-pad-inline) py-(--overlay-pad-block) transition ease-in-out sheet-animate";
+    "[--overlay-pad-inline:--spacing(6)] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)] px-(--overlay-pad-inline) py-(--overlay-pad-block)";
 
 const centerScrollClasses = computed(() =>
     props.scroll && isCenter.value ? "max-h-[calc(100dvh-2rem)] overflow-y-auto" : "",
@@ -253,7 +275,7 @@ const contentClass = computed(() =>
     isCenter.value
         ? cn(
               baseClasses,
-              springActive.value ? "" : defaultMotionClasses,
+              centerSpringActive.value ? "" : defaultMotionClasses,
               variantClasses.value,
               centerScrollClasses.value,
               props.class,
@@ -277,22 +299,33 @@ const radiusCtxStyle: CSSProperties = {
     "--radius-inset": "var(--overlay-pad-inline)",
 };
 
-// W13 spring entrance. Inject reka-ui's open ref and wire a useSpringMount
-// (without dragHandlers — Dialog has no drag-dismiss gesture). The position
-// 0→1 drives an inverse-scale + opacity so the dialog grows-in from 95% with
-// a soft bouncy overshoot when preset = 'bouncy'.
-const rootContext = springActive.value ? injectDialogRootContext() : null;
-const springMount =
-    springActive.value && rootContext
-        ? useSpringMount({
-              open: rootContext.open,
-              preset: props.springPreset ?? "smooth",
-          })
-        : null;
+// The ONE spring mount, shared by both paths (KISS — one kernel, one exit). It arms
+// for a centered `springPreset` bloom OR any side sheet (placement alone). Reuses the
+// `dialogRoot` injected above (no re-inject). No `dragHandlers`/`onDismiss` — the
+// drag-dismiss gesture stays Drawer's, and reka owns the open state.
+const springMount = springActive.value
+    ? useSpringMount({
+          open: dialogRoot.open,
+          preset: props.springPreset ?? "smooth",
+      })
+    : null;
 
 const springStyle = computed<CSSProperties | undefined>(() => {
     if (!springMount) return undefined;
     const p = springMount.position.value; // 0 = mounted, 1 = dismissed
+    // The side sheet slides via the `translate` LONGHAND (the center-branch discipline):
+    // an unclamped position drives a placement-keyed off-edge offset, and `p<0` overshoot
+    // IS the liquid settle. `transform/animation/transition: none` make the inline
+    // longhand the sole source (no keyframe, no utility matrix).
+    if (sideSpringLive.value) {
+        return {
+            translate: sheetSlideTransform(placement.value as SidePlacement, p),
+            transform: "none",
+            animation: "none",
+            transition: "none",
+        };
+    }
+    if (!centerSpringActive.value) return undefined;
     // Centered-dialog squish via `scale:`/`translate:`
     // LONGHANDS, never `transform: translate() scale()` (build-trap (e): a
     // `transform:scale()` over a centering translate composes ONE matrix, so the squish
@@ -313,6 +346,56 @@ const springStyle = computed<CSSProperties | undefined>(() => {
         transition: "none",
     };
 });
+
+// Mount-hold — the spring, not a keyframe, owns unmount timing. A live spring (side
+// slide OR centered bloom) keeps the content mounted while `present` (exiting) OR
+// logically open; every other path (an `off` side sheet, a preset-less centered
+// dialog) falls through to the plain `forceMount` passthrough so reka Presence unmounts
+// on its own. Bound onto BOTH the Portal and the Content (D4).
+const contentForceMount = computed(() =>
+    springMount && (sideSpringLive.value || centerSpringActive.value)
+        ? springMount.present.value || dialogRoot.open.value
+        : props.forceMount,
+);
+// A closing springed surface is inert (non-interactive, untabbable, out of the a11y
+// tree) while it animates out — a side sheet sliding out OR a center-spring dialog whose
+// exit stays mounted (R2), so the brief mounted-but-closing window is never tabbable.
+const closingInert = computed(() =>
+    (sideSpringLive.value || centerSpringActive.value) && !dialogRoot.open.value
+        ? ""
+        : undefined,
+);
+// The scrim reads the SAME live scalar as the surface (position → opacity) so the
+// two never desync through an interrupt; `null` on every non-slide path leaves the
+// center scrim on its `sheet-animate` fade.
+const scrimSlideT = computed(() =>
+    springMount && sideSpringLive.value ? springMount.position.value : null,
+);
+const scrimForceMount = computed(() =>
+    springMount && sideSpringLive.value
+        ? springMount.present.value || dialogRoot.open.value
+        : undefined,
+);
+
+// Focus handoff — the closing side sheet keeps a mounted-but-inert Presence beyond
+// reka's logical close, so move focus to the trigger at the LOGICAL close if it would
+// otherwise strand inside the animating-out sheet (mirror DrawerContent; the
+// inert-bounces-to-body → sync-watch-pulls-to-trigger order).
+const sideAnchorEl = ref<HTMLElement | null>(null);
+const resolveSideContentEl = (): HTMLElement | null =>
+    (sideAnchorEl.value?.closest(
+        '[data-slot="dialog-content"]',
+    ) as HTMLElement | null) ?? null;
+watch(
+    () => dialogRoot.open.value,
+    (open) => {
+        if (!sideSpringLive.value || open !== false) return;
+        const active = document.activeElement;
+        if (active && resolveSideContentEl()?.contains(active))
+            dialogRoot.triggerElement.value?.focus({ preventScroll: true });
+    },
+    { flush: "sync" },
+);
 
 // The dialog uses the dedicated see-through glass rung:
 // liquid glass: drop the modal plate from the floating tier (0.80 — "NOT glassy at
@@ -348,10 +431,15 @@ const contentStyle = computed<CSSProperties>(() => ({
 </script>
 
 <template>
-    <RekaDialogPortal>
-        <ModalOverlay :data-stage-scrim="props.stage !== 'none' ? '' : undefined" />
+    <RekaDialogPortal :force-mount="contentForceMount">
+        <ModalOverlay
+            :data-stage-scrim="props.stage !== 'none' ? '' : undefined"
+            :slide-t="scrimSlideT"
+            :force-mount="scrimForceMount"
+        />
         <RekaDialogContent
-            v-bind="{ ...forwarded, ...$attrs }"
+            v-bind="{ ...forwarded, ...$attrs, inert: closingInert }"
+            :force-mount="contentForceMount"
             :class="contentClass"
             :style="contentStyle"
             :data-surface="props.surface"
@@ -361,8 +449,12 @@ const contentStyle = computed<CSSProperties>(() => ({
             :data-scroll="props.scroll ? '' : undefined"
             :data-reveal="isCenter ? 'overlay' : undefined"
             :data-motion="motionAxis.dataMotion.value"
-            :data-spring="springActive ? (props.springPreset ?? 'smooth') : undefined"
+            :data-spring="centerSpringActive ? (props.springPreset ?? 'smooth') : undefined"
         >
+            <!-- Hidden anchor — the focus-handoff watch resolves the live content
+           root via `closest`, never a Presence-transient `$el` (the DrawerContent
+           F5.R2 discipline). -->
+            <span v-if="!isCenter" ref="sideAnchorEl" hidden />
             <!-- A side sheet owns one noninteractive, mask-graded
            backdrop sample. The host's flat blur is disabled for this glass-only
            arm in placement.css, so this is not a nested second plate. -->

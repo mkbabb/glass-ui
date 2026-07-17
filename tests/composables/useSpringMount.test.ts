@@ -223,3 +223,136 @@ describe("useSpringMount", () => {
         wrapper.unmount();
     });
 });
+
+// BI.W-SHEET-INTERRUPTIBLE-MOTION — the `present` mount-hold. The spring, not a
+// keyframe, owns unmount timing: `present` stays true through the exit and releases
+// only once the dismiss-spring settles at the endpoint while the host is closed.
+describe("useSpringMount — present mount-hold (SHEET-INTERRUPTIBLE-MOTION)", () => {
+    beforeEach(() => {
+        vi.useFakeTimers();
+    });
+    afterEach(() => {
+        vi.useRealTimers();
+        vi.restoreAllMocks();
+        vi.unstubAllGlobals();
+    });
+
+    it("is present from the first frame when mounted open", () => {
+        const { sm, wrapper } = mountHost({ initialOpen: true });
+        expect(sm.present.value).toBe(true);
+        wrapper.unmount();
+    });
+
+    it("holds present through the exit, then releases once the dismiss-spring settles — independent of pendingDismiss (no drag)", async () => {
+        const onDismiss = vi.fn();
+        const { sm, open, wrapper } = mountHost({ initialOpen: true, onDismiss });
+        await nextTick();
+        for (let i = 0; i < 80; i++) await vi.advanceTimersByTimeAsync(16);
+        expect(sm.present.value).toBe(true);
+
+        open.value = false;
+        await nextTick();
+        // Mid-exit: still mounted while the spring rides toward the dismissed endpoint.
+        await vi.advanceTimersByTimeAsync(16);
+        expect(sm.present.value).toBe(true);
+        expect(sm.position.value).toBeLessThan(0.95);
+
+        for (let i = 0; i < 160; i++) await vi.advanceTimersByTimeAsync(16);
+        expect(sm.position.value).toBeGreaterThan(0.95);
+        expect(sm.present.value).toBe(false);
+        // No drag ever armed pendingDismiss, so onDismiss never fired — the present
+        // release is a distinct branch from the drag-dismiss settle.
+        expect(onDismiss).not.toHaveBeenCalled();
+        wrapper.unmount();
+    });
+
+    it("re-open before the exit settles keeps present true throughout (never unmounts mid-exit)", async () => {
+        const { sm, open, wrapper } = mountHost({ initialOpen: true });
+        await nextTick();
+        for (let i = 0; i < 80; i++) await vi.advanceTimersByTimeAsync(16);
+
+        open.value = false;
+        await nextTick();
+        for (let i = 0; i < 4; i++) await vi.advanceTimersByTimeAsync(16);
+        expect(sm.present.value).toBe(true);
+
+        open.value = true; // re-open mid-exit, before the dismiss-spring settled
+        await nextTick();
+        for (let i = 0; i < 8; i++) await vi.advanceTimersByTimeAsync(16);
+        expect(sm.present.value).toBe(true);
+        wrapper.unmount();
+    });
+
+    it("entrance interrupt: reversing open→false mid-flight continues from the current position — no snap to either endpoint (the FAIL-1 trace)", async () => {
+        const { sm, open, wrapper } = mountHost({
+            initialOpen: true,
+            respectReducedMotion: false,
+        });
+        await nextTick();
+        // A few frames into the entrance (position 1 → 0): strictly mid-flight, with
+        // velocity still carrying toward the mounted endpoint.
+        for (let i = 0; i < 4; i++) await vi.advanceTimersByTimeAsync(16);
+        const mid = sm.position.value;
+        expect(mid).toBeGreaterThan(0);
+        expect(mid).toBeLessThan(1);
+        expect(sm.present.value).toBe(true);
+
+        // Interrupt: reverse open → false while the entrance is still integrating.
+        open.value = false;
+        await nextTick();
+        await vi.advanceTimersByTimeAsync(16);
+        const afterInterrupt = sm.position.value;
+
+        // Continuity: one frame after the reverse the position is a small spring step
+        // from `mid` (measured ~0.07), NOT the tx=341→2 snap — a jump to fully-open (0)
+        // would displace by |mid|, a jump to gone (1) by |1−mid|; this bound excludes
+        // both. Preserved velocity carries it slightly FURTHER open for a frame first.
+        expect(Math.abs(afterInterrupt - mid)).toBeLessThan(0.15);
+        expect(afterInterrupt).toBeGreaterThan(0);
+        expect(afterInterrupt).toBeLessThan(1);
+        // present holds through the exit (the spring, not a keyframe, owns unmount).
+        expect(sm.present.value).toBe(true);
+
+        // It then rides on to the dismissed endpoint and releases present — the reverse
+        // resolves to gone, not back to open.
+        for (let i = 0; i < 200; i++) await vi.advanceTimersByTimeAsync(16);
+        expect(sm.position.value).toBeGreaterThan(0.95);
+        expect(sm.present.value).toBe(false);
+        wrapper.unmount();
+    });
+
+    it("PRM: close snaps position to 1 in-place AND releases present (the settle condition still fires with no isSettled edge)", async () => {
+        const mql: MediaQueryList = {
+            matches: true,
+            media: "(prefers-reduced-motion: reduce)",
+            onchange: null,
+            addEventListener: vi.fn(),
+            removeEventListener: vi.fn(),
+            addListener: vi.fn(),
+            removeListener: vi.fn(),
+            dispatchEvent: vi.fn(() => true),
+        };
+        vi.stubGlobal("matchMedia", vi.fn(() => mql));
+        Object.defineProperty(window, "matchMedia", {
+            configurable: true,
+            writable: true,
+            value: vi.fn(() => mql),
+        });
+
+        const { sm, open, wrapper } = mountHost({
+            initialOpen: true,
+            respectReducedMotion: true,
+        });
+        await nextTick();
+        await nextTick();
+        expect(sm.position.value).toBe(0);
+        expect(sm.present.value).toBe(true);
+
+        open.value = false;
+        await nextTick();
+        await nextTick();
+        expect(sm.position.value).toBe(1);
+        expect(sm.present.value).toBe(false);
+        wrapper.unmount();
+    });
+});

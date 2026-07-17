@@ -25,6 +25,7 @@ import {
     nextTick,
     onMounted,
     onScopeDispose,
+    readonly,
     ref,
     watch,
     type Ref,
@@ -74,6 +75,13 @@ export interface UseSpringMountOptions {
 export interface SpringMountRef {
     /** Position 0 (mounted) → 1 (dismissed). Bind to `transform: translateY` or scale. */
     position: SpringRef["value"];
+    /**
+     * Mount-hold: true while the surface must stay rendered — logically open, OR
+     * exiting (the spring still riding toward the dismissed endpoint). Bind to
+     * `forceMount` so the spring, not a keyframe, owns unmount timing. Clears once
+     * the dismiss-spring settles while `open` is false.
+     */
+    present: Readonly<Ref<boolean>>;
     /** True while pointer is actively dragging. */
     isDragging: Readonly<Ref<boolean>>;
     /**
@@ -105,6 +113,10 @@ export function useSpringMount(options: UseSpringMountOptions): SpringMountRef {
     // makes the entrance read consistently — without this, an already-open
     // host would start in-frame with no entrance.
     const target = ref(1);
+    // Mount-hold. Seeded from the host's live open-state so an already-open host
+    // renders from the first frame. Set true on any open-flip (before the drag
+    // guard); the settle branch below owns the false transition on dismiss.
+    const present = ref(options.open.value);
     const isDragging = ref(false);
     let pointerStartY = 0;
     let sheetHeight = 0;
@@ -142,6 +154,7 @@ export function useSpringMount(options: UseSpringMountOptions): SpringMountRef {
         () => options.open.value,
         (next, prev) => {
             if (next === prev) return;
+            if (next) present.value = true; // mount before anything else can early-return
             if (isDragging.value) return; // drag owns the target while active
             target.value = next ? 0 : 1;
         },
@@ -156,6 +169,29 @@ export function useSpringMount(options: UseSpringMountOptions): SpringMountRef {
                 pendingDismiss = false;
                 options.onDismiss?.();
             }
+        },
+    );
+
+    // Mount-hold release — the settle owns unmount. Drops `present` once the
+    // dismiss-spring has RIDDEN to the endpoint AND the host is logically closed
+    // (`!open`), so reka Presence unmounts. Independent of the `pendingDismiss` drag
+    // branch (the sheet never drags). Two subtleties, both load-bearing:
+    //   • gated on the spring POSITION (`spring.value.value`), not the local `target`
+    //     ref: `target` flips synchronously on close while the engine still reads
+    //     `settled` from the prior rest — a one-tick stale window that would clear
+    //     `present` before the exit even starts. Position is 0 at rest, so it only
+    //     satisfies the guard once the spring has actually arrived.
+    //   • watched as a CONDITION, not the raw `isSettled` edge: under PRM the snap
+    //     keeps `isSettled` true across the target flip (no edge to fire), so only
+    //     the composed guard transitions.
+    // `!open` keeps a re-open-mid-exit mounted.
+    const stopPresentWatch = watch(
+        () =>
+            spring.isSettled.value &&
+            spring.value.value >= 1 &&
+            !options.open.value,
+        (dismissed) => {
+            if (dismissed) present.value = false;
         },
     );
 
@@ -198,10 +234,12 @@ export function useSpringMount(options: UseSpringMountOptions): SpringMountRef {
     onScopeDispose(() => {
         stopOpenWatch();
         stopSettleWatch();
+        stopPresentWatch();
     });
 
     return {
         position: spring.value,
+        present: readonly(present),
         isDragging: computed(() => isDragging.value),
         dragHandlers: {
             onPointerdown,

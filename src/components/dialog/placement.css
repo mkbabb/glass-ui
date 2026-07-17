@@ -25,8 +25,8 @@
  * PHYSICAL properties (width/height/max-width/top/right/bottom/left) mirror the retired
  * Sheet CVA utilities EXACTLY (`inset-y-0 right-0 h-full w-3/4 sm:max-w-sm` &c.), so a
  * consumer's physical sizing override resolves cleanly by SPECIFICITY against the same
- * property name — no logical-vs-physical cascade ambiguity, and the enter/exit slide travel
- * is byte-identical to the retired Sheet frame-series.
+ * property name — no logical-vs-physical cascade ambiguity, and the slide geometry
+ * is byte-identical to the retired Sheet (the motion is now the interruptible spring).
  */
 :where([data-slot="dialog-content"][data-placement]) {
     position: fixed;

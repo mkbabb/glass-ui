@@ -652,7 +652,8 @@ regardless (a11y absolute).
   "smooth" | "snappy" | "bouncy" | "gentle"` is the curve choice (a distinct concern from
   motion intensity), and `motion` gates the engine. `spring={true}` → `springPreset="smooth"`;
   `spring="bouncy"` → `springPreset="bouncy"`; unset `spring` → unset `springPreset` (the
-  `.glass-reveal` / `sheet-animate` CSS floor, byte-identical). Sheet's `dragDismiss` now
+  `.glass-reveal` centered-dialog CSS floor, byte-identical; a side sheet always rides the
+  interruptible spring). Sheet's `dragDismiss` now
   engages the spring engine on its own (it needs it) — it no longer requires `spring`.
 - **The kept gesture CONTRACTS are UNTOUCHED** (`keepDockOpen` · `dragDismiss` ·
   `responsive`) — a gesture contract is a role/behavior, not motion intensity.
@@ -934,8 +935,9 @@ The Kronecker fold (D-FACTOR FACTOR-B): `Sheet` was the SAME reka `DialogRoot` +
 SAME FocusScope as Dialog — its side-slide is PAINT, not a distinct mechanism — so it
 folds onto a `<DialogContent placement="center | top | right | bottom | left">` axis
 (`center` default = the byte-identical centered modal; the four side values are the
-retired Sheet sides). The per-side rounding/border + the `sheet-animate` slide register
-are the retired `sheetVariants` arms verbatim; the structural positioning ships
+retired Sheet sides). The per-side rounding/border are the retired `sheetVariants`
+decoration arms verbatim; the slide GEOMETRY is byte-identical but the motion is now the
+interruptible spring (not the `sheet-animate` keyframe); the structural positioning ships
 PRECOMPILED off `[data-slot="dialog-content"][data-placement]` (`dialog-placement.css`,
 the renamed `sheet.css`). **`ConfirmDialog` DEMOTES to a Dialog preset** — its
 promise/`v-model:open` opener was thin (a glass `<DialogContent :show-close="false">` +
@@ -964,7 +966,8 @@ slide-spring — Drawer's mechanism).
 
 The folded side sheet reads the Dialog `--glass-bg-dialog` glass rung (the fold's whole
 point — ONE dialog material; the retired Sheet read the floating rung — a plate-α shift,
-NOT a slide-geometry change: the enter travel is byte-identical). Dialog `variant`→`surface`
+NOT a slide-geometry change: the slide geometry is byte-identical, the motion the
+interruptible spring). Dialog `variant`→`surface`
 is the separate BA.W-SURFACE-AXIS clean break (documented above). Cross-repo: no external
 `/sheet` or `/confirm-dialog` consumer found (the configurator gear-sheet is internal-demo,
 ConfirmDialog was demo-only); the `^5.0.0` peer-bump ask covers any downstream importer
