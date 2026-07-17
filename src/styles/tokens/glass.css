@@ -65,6 +65,10 @@
        The ladder dialed back ~15-20% UNIFORMLY (the
        user's "a hair too much" over-diffusion): quiet 10→8, resting 12→10,
        floating 16→13, overlay 15→13, dock 11→9; wash stays 1px (sub-perceptual).
+       A second ~15% integer-rounded pull then followed: quiet/resting 8→7,
+       floating/overlay 13→11 (with the high-DPI overlay 20→17 and the wider
+       ::backdrop/stage/side-sheet census); the deep ceiling holds 16px. The
+       calm default is no longer terminal.
        The pull is proportional (it preserves tier separation) and keeps every
        rung in the 8-15px band — the backdrop's structure reads a hair
        more through the plate while the glass still reads unmistakably as glass.
@@ -72,29 +76,29 @@
        companion below are UNTOUCHED (the dark-recipe saturate/
        brightness companions preserved — radius-only, the gate's B3 assert).
 
-       The resting rung pulls 10→8 to mint the ONE unified
-       8px glass material: the dock + the default-Card (`--glass-blur-quiet`) + the
-       menu-row (the quiet tier) all resolve the SAME `blur(8px)` RADIUS LEG (the
+       The resting rung pulls 10→8→7 to mint the ONE unified
+       7px glass material: the dock + the default-Card (`--glass-blur-quiet`) + the
+       menu-row (the quiet tier) all resolve the SAME `blur(7px)` RADIUS LEG (the
        resolved-radius peer lock, proof:glass-cal). Ordinary Buttons consume this
        resting material; primary Buttons consume the shared deep register. Radius-only —
        the per-rung saturate()/brightness() companions stay (the saturate-revert is a
        later paint, not this collapse). */
     --glass-blur-wash-radius:     1px;
-    --glass-blur-quiet-radius:    8px;
-    --glass-blur-resting-radius:  8px;
-    --glass-blur-floating-radius: 13px;
+    --glass-blur-quiet-radius:    7px;
+    --glass-blur-resting-radius:  7px;
+    --glass-blur-floating-radius: 11px;
     /* Clamped from 24px into the 8–15px budget band. A blur radius
        past ~20px is exponentially costlier (`backdrop-filter` is glass-ui's most
        expensive idiom — the radius is the dominant cost). 15px is the band
-       ceiling; dialed the overlay rung to 13px (off 15) so the
+       ceiling; dialed the overlay rung to 13px (off 15), then to 11px, so the
        whole ladder pulls back in proportion. A high-resolution display restores
        a richer wash via the @media arm in light-dark.css — the cost is amortised
        by the extra device pixels. */
-    --glass-blur-overlay-radius:  13px;
+    --glass-blur-overlay-radius:  11px;
     /* The `--glass-blur-dock` chain (radius + composite +
        `--glass-saturate-dock` + the `--blur-dock` @theme bridge) is RETIRED (clean
        break, no alias). The dock now paints blur via `--dock-surface-blur:
-       var(--glass-blur-resting)` (the unified 8px material),
+       var(--glass-blur-resting)` (the unified 7px material),
        so its own rung token was orphaned. */
 
     /* ── Per-rung SATURATE — the CANONICAL named saturate register (
@@ -149,7 +153,7 @@
     --glass-blur-overlay:  blur(calc(var(--glass-blur-overlay-radius) * var(--glass-level))) saturate(var(--glass-saturate-overlay));
     /* The composed `--glass-blur-dock` token RETIRED (orphaned by
        the `--dock-surface-blur: var(--glass-blur-resting)` re-point).
-       The dock reads the unified 8px resting material; there is no dock-own blur rung. */
+       The dock reads the unified 7px resting material; there is no dock-own blur rung. */
 
     /* Dock-specific opacity (0.42) — lighter than `resting` (0.65) so the dock
        reads as a translucent overlay rather than a panel, backdrop bleed

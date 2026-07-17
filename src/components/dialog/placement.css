@@ -78,7 +78,7 @@
 
 /* The folded side sheet's graded material edge.
  *
- * One fixed 40px backdrop sample is mask-graded from 13/40 opacity at the
+ * One fixed 34px backdrop sample is mask-graded from 13/40 opacity at the
  * viewport-facing edge to full depth 120px inward. That gives the observed
  * near-sharp crown → deep-frost field without animating a blur radius. The glass
  * host's flat backdrop sample is removed on this arm, so the decorative child is
@@ -103,7 +103,7 @@
         color-mix(in oklab, var(--glass-bg-overlay) 34%, transparent) 120px,
         color-mix(in oklab, var(--glass-bg-overlay) 34%, transparent) 100%
     );
-    backdrop-filter: blur(calc(40px * var(--glass-level)))
+    backdrop-filter: blur(calc(34px * var(--glass-level)))
         saturate(var(--glass-saturate-overlay));
     mask-image: linear-gradient(
         var(--sheet-edge-direction),

@@ -24,16 +24,16 @@
 /* High-resolution overlay-blur restore. On a 2dppx+ display the
    richer overlay wash is amortised by the extra device pixels (the blur samples
    a denser backing store), so a higher ceiling is restored where it is
-   affordable. Standard-density displays keep the 13px budget radius set in §-1a
+   affordable. Standard-density displays keep the 11px budget radius set in §-1a
    `:root`. Token-only override — every overlay surface that reads
    `--glass-blur-overlay-radius` inherits the restored value automatically.
 
-   The restore pulled 24→20px in lockstep with the base
-   ladder's ~15-20% dial-back (the base overlay rung moved 15→13). 20px stays the
-   amortised high-DPI ceiling; standard density reads the dialed-back 13px. */
+   The restore pulled 24→20→17px in lockstep with the base
+   ladder's ~15-20% dial-back (the base overlay rung moved 15→13→11). 17px stays the
+   amortised high-DPI ceiling; standard density reads the dialed-back 11px. */
 @media (min-resolution: 2dppx) {
     :root {
-        --glass-blur-overlay-radius: 20px;
+        --glass-blur-overlay-radius: 17px;
     }
 }
 
