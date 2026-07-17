@@ -424,3 +424,16 @@ no refactor gate is dressed as born-RED.
    the hygiene gate if un-migrated; allowlist-with-date (rec) vs block-on-family-C.
 10. Cross-band boundary — `fourier-field/presets.ts` + `useStagger` are dead-code findings but
     family C's to retire; confirm C claims them so they are not double-owned or dropped.
+
+**Lead adjudication (2026-07-17, perfection pass): the Fable colocation amendments 1-12
+(`../formation/perfection/FABLE-COLOCATION.md` §4) are ADOPTED-BINDING on this band; the doc's §1
+principles become the band's canon text and its §2 target tree + §3 migration delta are the
+band's execution reference.** Headlines: Move A superseded (glass/wave/ DELETES with liquid-grid);
+accent-tone re-homes to chip/ but keeps its glass-band @import rung (cascade position ≠ file
+location); handmark helpers go flat to composables/; the _shared carve tightens to
+field/feedback/menu/disclosure with the cross-cutting vocabulary flat at root; the barrel-
+stability premise is struck (true blast radius ~25 leaf rewrites + 5 @imports, stated honestly);
+axes.ts KEEP-root (surface lock untouched); /sidebar drops ride 8.0.0 and carry the 4-file
+test-mirror tail; Purge D = exactly four barrels; the test-mirror's dead ui/custom taxonomy
+flattens as low-priority hygiene; dockContext re-home is CONDITIONAL on the reduction band's
+cycle resolution — this band does not move it.

@@ -517,3 +517,15 @@ born-RED belongs to the design-loop.
     the "external consumers" comment).
 12. Every cut is gated on the family-B sibling-import census clearing the subpath/prop — the
     header-ribbon undeclared-consumer lesson is a HARD precondition, not a nicety.
+
+**Lead adjudication (2026-07-17, perfection pass): the Fable DAG+reduction amendments A1-A8
+(`../formation/perfection/FABLE-DAG-REDUCTION.md` §4) are ADOPTED-BINDING on this band.** In one
+line each: A1 modularization boundary (primitive/selection stay at _shared root — leaf-path
+fan-in truth); A2 W5 timeline scope = ALL FIVE variants named (~1500 LOC family); A3 W1 slider
+keepDockOpen = adoption of the existing dockContext authority; A4 the dock⇄dropdown-menu 2-cycle
++ dockContext 4-family fan-in recorded as structural fact feeding GF-DOCK (the position-axis cut
+owes a null-DELTA on the four consuming families); A5 Card axis OPEN resolved to the
+variant+surface two-axis floor; A6 the orphan-partial fix wave covers BOTH glass-chip.css AND
+glass-atom.css; A7 /metric census = the 4-symbol family incl. MetricRow; A8 Configurator +
+DataTable demo-privatization must also delete the ROOT-barrel export lines (src/index.ts:141,:91).
+The perfection doc's §5 findings are execution-time evidence for their waves.

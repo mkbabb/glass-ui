@@ -541,3 +541,16 @@ flag it as a family-C/component gap).
   short precept in `docs/precepts/`, or fold into the existing story/design-idioms precept? Family
   J owns `design-idioms.md`; a NEW story-copy precept avoids collision. Recommend a new short
   precept; confirm the home so it doesn't drift into a J-owned file.
+
+**Lead adjudication (2026-07-17, perfection pass): the Fable story-framework amendments D-1..D-11
+(`../formation/perfection/FABLE-STORY-FRAMEWORK.md` §7) are ADOPTED-BINDING on this band; the
+doc's §1-§6 (six-type taxonomy, per-type anatomy, tile ladder, configurator ADOPT, copy canon,
+house voice) supersede the draft's corresponding sections; its §9 gates join the band's gate
+set.** Headlines: taxonomy 7→6 (doc folds into spec; landing spans D0 catalog + D1 section;
+studio unifies showcase+configurator; scene contingent on ASK-D1); configurator standard is
+ADOPT+widen, not build (F09 → regression-guard; F11 = the one-grouped-list cure at styles.css:117);
+tile ladder reform is AUTHORSHIP (4/88 → full headline coverage; CatalogLanding routed through
+resolveStoryTile; the live-miniature line STRUCK per the 0-GL contract + R3b idle-rAF); F41's
+site is typewriter.vue:103 (neutral string); F46 double-card cure is structural
+(SectionPreviewCard's inner well loses its second border); StoryBody KEPT as the spec renderer;
+the code-context region joins spec/studio anatomy under the copy canon.
