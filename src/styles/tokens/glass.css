@@ -59,7 +59,7 @@
     /* Blur primitives. The radii here feather the dock + meter card to a
        barely-perceptible diffusion that lets the substrate behind it bleed
        through cleanly while keeping hero typography crisp at meter scale.
-       The resting blur sits at 10px so a glass plate reads as a diffusion
+       The resting blur sits at 7px so a glass plate reads as a diffusion
        without consumer-side override.
 
        The ladder dialed back ~15-20% UNIFORMLY (the
@@ -70,7 +70,7 @@
        ::backdrop/stage/side-sheet census); the deep ceiling holds 16px. The
        calm default is no longer terminal.
        The pull is proportional (it preserves tier separation) and keeps every
-       rung in the 8-15px band — the backdrop's structure reads a hair
+       rung under the 15px budget ceiling — the backdrop's structure reads a hair
        more through the plate while the glass still reads unmistakably as glass.
        The radius axis ONLY: `--glass-level` + every `saturate()`/`brightness()`
        companion below are UNTOUCHED (the dark-recipe saturate/

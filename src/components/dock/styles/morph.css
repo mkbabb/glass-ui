@@ -66,7 +66,7 @@
     /* The bloom-from-source decongest is a
        TRANSIENT, not a resting state. A bare `.glass-dock` self-blur keyed off
        `--dock-expand-t`, AT REST, resolves to the class endpoint → a PERMANENT 3px
-       self-blur on the resting collapsed dock, STACKED on the 9px backdrop (the "blurry
+       self-blur on the resting collapsed dock, STACKED on the 7px backdrop (the "blurry
        mess when shrunken", glass-dock-codebase §2.4). The FIX gates the self-blur (a
        SURFACE `filter` arm on the dock's own pixels — NOT `backdrop-filter`, so the glass
        plate blur is never clobbered; compositor-safe) to `[data-morphing]`: at REST the
@@ -82,7 +82,7 @@
            blur 1.25px → 0 as expand-t crosses 0 → 0.5, then HOLDS 0 for the back half — a
            brief decongest FLASH, crisp by the morph's midpoint (the icons never read soft
            through the slow grow). The resting self-blur stays 0px (above, untouched). The
-           9px BACKDROP blur (the material) is untouched — only the OWN-pixel self-blur is
+           7px BACKDROP blur (the material) is untouched — only the OWN-pixel self-blur is
            dialed. PRM → 0 (the carve below). */
         --dock-reveal-blur: 1.25px; /* the transient decongest bloom — mid-morph only */
         filter: blur(
