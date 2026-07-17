@@ -70,7 +70,9 @@ single boolean-derived `hero | page` variant and the actual per-type behavior is
 StoryPage variant registry keyed by it — the 7 clean types the census supports:
 **`spec | studio | dock | family | scene | landing | doc`** (census:5,15) — folding
 VizStudio/DockStage/FamilyTabs from ad-hoc sibling wrappers into named, registered variants. One
-root, one variant axis, a table you can read.
+root, one variant axis, a table you can read. (**`scene` is CONTINGENT on the compositions ruling —
+OPEN-D9 / `ASK-REDUCTION` D1; the taxonomy is 6 types if the `compositions/` section prunes, 7 if
+any composition page survives as a legit `scene`.**)
 
 ### Exact scope
 
@@ -83,13 +85,19 @@ root, one variant axis, a table you can read.
 | `demo/stories/substrates/_frame/VizStudio.vue` | a standalone shared wrapper (studio idiom) invoked ad-hoc by aurora/blob/fourier | register as the `studio` variant; its stage-left/controls-right anatomy becomes the variant's layout |
 | `demo/stories/dock/_frame/DockStage.vue` | a standalone backdrop-column wrapper used by 7/8 dock routes (census:13) | register as the `dock` variant |
 | `demo/chassis/family/FamilyTabs.vue` + `story-nested.ts` | a standalone family switcher over 7 routes (census:13) | register as the `family` variant |
-| `demo/stories/substrates/liquid-grid.vue:113-123` | hand-reimplements the VizStudio studio pattern with 0 VizStudio import (census:33-39; confirmed: imports `Configurator` directly at :15, no VizStudio) | route through the `studio` variant — kill the fork |
+
+> **liquid-grid DROPPED from the fold roster (adjudicated — DELETE wins, RULING 1 / CHALLENGE-2
+> cross-band).** `liquid-grid` has zero external + zero library consumers; `BAND-REDUCTION` W3 DELETES
+> the component + its `./liquid-grid` export + its `demo/stories/substrates/liquid-grid.vue` story page
+> outright (no fold, no normalize). This wave does NOT route it through the `studio` variant — there is
+> nothing to normalize. The taxonomy still proves out on `studio` via aurora/blob/fourier.
 
 **Out (explicit non-goals):**
 
 - The ~23 bespoke `<style>` blocks on route SFCs (motion/deck.vue 227 lines etc, census:13) are
   NOT bulk-migrated here — the taxonomy names the types; per-page bespoke-CSS removal rides the
-  page's own reduction/redesign wave. This wave proves the registry works on the 4 wrapper types.
+  page's own reduction/redesign wave. This wave proves the registry works on the 3 wrapper types
+  (VizStudio/DockStage/FamilyTabs — liquid-grid is DELETED by `BAND-REDUCTION` W3, not folded).
 - StoryBody (`:body=`) adoption/expansion is NOT this wave — see **OPEN-D2** (retire-or-expand at
   3/88 is a family-C overfit question, census:49-55).
 - Width, hero-scale, and heading-dedup are **Wave 4** (they become per-variant config the registry
@@ -102,17 +110,16 @@ root, one variant axis, a table you can read.
 | --- | --- | --- |
 | G-TAX-1 | `grep -c "pageType" demo/stories/manifest.ts` → **0** (no page-type discriminant) | every `Story` carries a `pageType ∈ {spec,studio,dock,family,scene,landing,doc}`; a registry maps each to a variant |
 | G-TAX-2 | `grep -n 'computed<"hero" \| "page">' demo/chassis/page/StoryPage.vue` → **:32** (single axis) | StoryPage dispatches on `pageType`; `hero` is a variant property, not the axis |
-| G-TAX-3 | `grep -c "VizStudio" demo/stories/substrates/liquid-grid.vue` → **0** while it open-codes the studio pattern (`Configurator` at :15) | liquid-grid renders through the `studio` variant; 0 open-coded studio scaffolds remain |
+| ~~G-TAX-3~~ (RETIRED) | liquid-grid is DELETED by `BAND-REDUCTION` W3 (zero consumers, RULING 1) — there is no fork to route through the `studio` variant; the gate is moot | n/a — the `studio` variant proves out on aurora/blob/fourier |
 | G-TAX-4 | VizStudio/DockStage/FamilyTabs are invoked as bare components, not registered variants (no registry file maps type→wrapper) | the three wrappers are reachable ONLY through the variant registry keyed by `pageType` |
 
 ### π / DELTA obligation
 
 **Required — structural refactor with paint-parity claim.** The taxonomy fold must be visually
 INERT on already-correct pages: capture a paired-π + before/after DELTA screenshot on one route per
-folded type (a studio page e.g. `/substrates/aurora`, a dock page, a family page, and the
-liquid-grid fork target) proving the registered variant renders byte-identically to the ad-hoc
-wrapper it replaces (modulo the liquid-grid fork, which is EXPECTED to change — capture its DELTA
-as the intended studio-normalization). Any unintended visual delta is a regression, not a fold.
+folded type (a studio page e.g. `/substrates/aurora`, a dock page, a family page) proving the
+registered variant renders byte-identically to the ad-hoc wrapper it replaces. Any unintended visual
+delta is a regression, not a fold. (liquid-grid is NOT in this roster — `BAND-REDUCTION` W3 deletes it.)
 
 ### KISS / parsimony (gestalt, not patchwork)
 
@@ -303,7 +310,7 @@ declared data true.
 | # | target | today (born-RED) | the truth |
 | --- | --- | --- | --- |
 | W-1 | `demo/chassis/page/StoryPage.vue:51` + `demo/chassis/hero/story-hero.css` | `maxInlineSize: … 'var(--story-article-w)'` referenced at :51; `grep -rn story-article-w src demo` → that ONE ref, **0 definitions, 0 @property** (confirmed) | DEFINE `--story-article-w` (the intended content reading measure) in `story-hero.css`, OR collapse the `page` variant onto `--story-page-max-inline` (72rem, defined at story-hero.css:5). No undefined-token no-op. **See OPEN-D6** (define-vs-collapse). |
-| W-2 | `demo/chassis/landing/SectionLanding.vue:28` + `CatalogLanding.vue:18` | both hardcode `hero-scale="4"` while `manifest.ts:300-301` returns `heroScale:"hero", depth:"D1"` ("the largest audacious rung", manifest:133) — dead data + a hierarchy inversion (D1 landing renders SMALLER than its own D2 pages) | bind `hero-scale` to `landing.heroScale` (delete the hardcoded `"4"`), OR retire the unused `heroScale` field (census:31). Pick one; the current state is BOTH dead data AND inverted. |
+| W-2 | `demo/chassis/landing/SectionLanding.vue:28` + `CatalogLanding.vue:18` | both hardcode `hero-scale="4"` while `manifest.ts:300-301` returns `heroScale:"hero", depth:"D1"` ("the largest audacious rung", manifest:133) — dead data + a hierarchy inversion (D1 landing renders SMALLER than its own D2 pages) | bind `hero-scale` to `landing.heroScale` (delete the hardcoded `"4"`). **The "retire the `heroScale` field" branch is STRUCK (AMEND-1):** the field is LIVE at `StoryPage.vue:30→:89` (consumed by hero-variant story pages) — the dead-data defect is landing-scoped ONLY. The sound fix is the data-bind on the two landings, not a field retire. |
 | W-3 | StoryHero `<h1>` + `VizStudio.vue:73` `<StorySection :heading>` | studio pages emit the title twice: StoryHero h1 from `story.title` + VizStudio StorySection h2 from `heading="Aurora"` (:122) — same string, two heading levels (census:41-47) | drop the redundant StorySection heading on hero-variant studios, OR suppress the StoryHero title when VizStudio owns the heading. One h1 per page. |
 | W-4 | the three divergent width idioms | hero caps at `--story-page-max-inline:72rem` (story-hero.css:5); landings hardcode `max-w-6xl` (SectionLanding:22, CatalogLanding:13); `page` runs uncapped (W-1) — three idioms where one was intended (census:21) | the width becomes PER-VARIANT config on the Wave-1 registry (each `pageType` declares its measure); the three idioms reconcile to the registry's declared widths |
 
@@ -319,7 +326,7 @@ declared data true.
 | gate | born-RED probe (fails at HEAD) | GREEN condition |
 | --- | --- | --- |
 | G-WID-1 | `grep -rn 'story-article-w' src/ demo/` → exactly **1 hit** (StoryPage.vue:51, the reference) with **0 definitions** → computes to `none` | the token is defined (or the ref collapses to `--story-page-max-inline`); `page` articles cap at a real measure |
-| G-WID-2 | `grep -n 'hero-scale="4"' demo/chassis/landing/SectionLanding.vue demo/chassis/landing/CatalogLanding.vue` → **:28, :18** while `manifest.ts:300` = `heroScale:"hero"` | 0 hardcoded `hero-scale` literals on landings (bound to data) OR the `heroScale` field is retired; DELTA shows landings out-sizing their pages |
+| G-WID-2 | `grep -n 'hero-scale="4"' demo/chassis/landing/SectionLanding.vue demo/chassis/landing/CatalogLanding.vue` → **:28, :18** while `manifest.ts:300` = `heroScale:"hero"` | 0 hardcoded `hero-scale` literals on landings (bound to `landing.heroScale`); DELTA shows landings out-sizing their pages. (The field-retire branch is STRUCK — AMEND-1; `heroScale` is live at `StoryPage.vue:30→:89`.) |
 | G-WID-3 | `grep -n 'heading=' demo/stories/substrates/aurora.vue` → :122 `heading="Aurora"` while the page is `hero:true` (StoryHero also renders "Aurora" as h1) | one `<h1>`-level "Aurora" per studio page (Playwright: `document.querySelectorAll('h1,h2')` shows no duplicate title) |
 | G-WID-4 | `grep -rn 'max-w-6xl\|72rem\|story-article-w' demo/chassis/` → three distinct width idioms | width is declared once per variant on the registry; 0 free-floating `max-w-6xl`/undefined-token widths |
 
@@ -335,8 +342,8 @@ DELTA showing a single title.
 - Prefer COLLAPSE over minting where honest: if `--story-article-w` was always meant to equal the
   reading measure, define it ONCE; if the `page` variant should just share the hero cap, collapse
   the ternary (fewer tokens). Do not define a token nobody else reads (OPEN-D6).
-- The hero-scale fix is a DELETE (the hardcoded `"4"`) + a data-bind, or a field RETIRE — either
-  way it removes lines, not adds them.
+- The hero-scale fix is a DELETE (the hardcoded `"4"`) + a data-bind (NOT a field retire — the
+  `heroScale` field is live at `StoryPage.vue:30→:89`, AMEND-1) — it removes lines, not adds them.
 - No backwards-compat alias for the removed width idioms (feedback_no_backwards_compat).
 
 ### Non-goals
@@ -425,10 +432,13 @@ ASK: a table of `page → breakage@viewport → fix`, each row born-RED with a c
 
 **In:**
 
-- A per-page responsive audit across all 128 story routes at the two governing viewports — mobile
-  (390px) and wide desktop (≥1440px) — flagging: horizontal-space waste on desktop (the F13
-  sortable-list class), non-mobile-first layouts that overflow or crush at 390px, and pages that
-  hand-roll layout instead of dogfooding our own responsive components.
+- A per-page responsive audit across the census's **100 navigable routes** (1 catalog home + 11
+  section landings + 88 story routes, census:4) at the two governing viewports — mobile (390px) and
+  wide desktop (≥1440px) — flagging: horizontal-space waste on desktop (the F13 sortable-list class),
+  non-mobile-first layouts that overflow or crush at 390px, and pages that hand-roll layout instead of
+  dogfooding our own responsive components. (The raw `find demo/stories -name '*.vue'` = **128 is a
+  FILE count** incl. ~28 non-navigable sub-component SFCs; audit the 100 routes, not the 128 files —
+  AMEND-2.)
 - Named born-RED anchors (verified live sites):
   - **F13 sortable-list:** `demo/stories/data/sortable-list.vue` uses `flex flex-col` vertical
     stacks (:69, :109) + a `grid-cols-1 md:grid-cols-3` (:143) — "needs better horizontal use of
@@ -519,11 +529,14 @@ flag it as a family-C/component gap).
   frame / paused viz), and their aggregate boot cost is gated by family E's trace. Confirm the
   handoff: Wave 5 defines the CHEAP-miniature contract (no live loop per card), family E gates the
   boot-graph cost that contract must satisfy.
-- **OPEN-D9 (the `scene` type membership):** the census's 7-type list (census:5) includes `scene`
-  and `doc` without pinning their exact membership. Candidate `scene` = full-bleed composition demos
-  (auth-shell etc); `doc` = the StoryBody data-driven / foundations prose pages. Confirm the two
-  boundary types' membership at Wave 1 so no page is left un-typed (which would force an 8th type —
-  forbidden by KISS).
+- **OPEN-D9 (the `scene` type membership) — CONTINGENT on the compositions ruling (AMEND-3):** the
+  census's 7-type list (census:5) includes `scene` and `doc` without pinning membership. Candidate
+  `scene` = the full-bleed `demo/stories/compositions/` set (auth-shell etc, 6 pages). **But
+  `ASK-REDUCTION` D1 + `BAND-REDUCTION` W3 prune the ENTIRE compositions section** — if pruned, `scene`
+  has ZERO members and MUST NOT be minted (an empty type is the overgrowth the wave's own KISS clause
+  forbids). **So the taxonomy is 6 types (no `scene`) if compositions prunes, 7 if any composition page
+  survives as a legit `scene`.** Wave 1 cross-refs the D1 answer before minting the type; `doc` = the
+  StoryBody data-driven / foundations prose pages regardless. No page left un-typed, no 8th type.
 - **OPEN-D10 (copy-canon home):** the copy canon (Wave 2's allow-list) — does it live as a new
   short precept in `docs/precepts/`, or fold into the existing story/design-idioms precept? Family
   J owns `design-idioms.md`; a NEW story-copy precept avoids collision. Recommend a new short

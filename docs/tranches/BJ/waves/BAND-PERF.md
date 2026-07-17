@@ -39,7 +39,7 @@ Four waves:
 |------|------|--------|--------------------------|------------|
 | 1 | `BJ.W-BOOT-DIET` | Async PresetEditor/Aurora/docks + split `shellAuroraConfig` off the barrel | Yes — 4 static imports; 73 modulepreloads / ~770KB eager JS | LCP/long-task delta PENDING-R3 |
 | 2 | `BJ.W-SHELL-FIELD-GOVERN` | Idle/visibility gate (or static wash) for the always-on shell field | Yes — `fixed inset-0`, only `tab-hidden` pauses; no idle governance | continuous-rAF trace PENDING-R3 |
-| 3 | `BJ.W-DEFERRED-PAINT` | Above-fold cv exemption + intrinsic-size truth + shared filter def | Yes — unconditional `content-visibility:auto`; 13 per-instance filter hosts | intrinsic-size-vs-height PENDING-R3 |
+| 3 | `BJ.W-DEFERRED-PAINT` | Intrinsic-size truth (handoff) + shared filter def + live-trace deferred-paint gate (above-fold cv EDIT + static gate CEDED to STORY W5) | Yes — 13 per-instance filter hosts | intrinsic-size-vs-height + deferred-paint PENDING-R3 |
 | 4 | `BJ.W-ROUTE-PENDING` | Pending affordance (liquid-weight) instead of the frozen atomic swap | Yes — no Suspense/aria-busy/skeleton in the swap | transition-flash trace PENDING-R3 |
 
 **Gate substrate (band-wide decision, `OPEN-P0`).** Per the sibling `BAND-GATES` `OPEN-1` ruling, the tree has
@@ -47,9 +47,10 @@ Four waves:
 The static detectors below are authored as **vitest tests that read the source tree AND the built `dist-demo/`
 via `fs` + grep**, landing in `tests/gates/` under the existing `npm test` step with **zero new CI wiring**.
 The one exception is the modulepreload/eager-KB ceiling, which must read a **built** `dist-demo/` — it needs a
-`vite build --config <demo>` to exist in CI before the assert runs (an `OPEN-P0` question: gate against a
-committed build-manifest snapshot, or add a demo-build step to the test job). Fable rules the substrate. The
-live-trace obligations are NOT vitest — they are the Round-3 Chrome-DevTools recipe.
+`vite build --config <demo>` to exist in CI before the assert runs. **`OPEN-P0` is RULED (adjudication ruling
+9): build `dist-demo/` in the test job** (a demo-build step), NOT read a committed build-manifest snapshot — a
+committed snapshot goes stale silently and greens over a regressed build. The live-trace obligations are NOT
+vitest — they are the Round-3 Chrome-DevTools recipe.
 
 ---
 
@@ -262,15 +263,18 @@ remaining structural sharp edges.
 
 ### §Design — three targeted edits
 
-**(A) Above-fold content-visibility exemption (verified RED).** `demo/chassis/landing/SectionPreviewCard.vue:63-65`
-applies `content-visibility: auto; contain: content; contain-intrinsic-size: auto 19rem;` **unconditionally to
-every card** (`SectionLanding.vue:35-38` renders one `<SectionPreviewCard v-for="(story, idx) in
-category.stories">`; `/foundations` renders 13 — `find demo/stories/foundations -name '*.vue' !
--name '*.tile.vue'` = **13** verified; no `IntersectionObserver` drives them — `grep -rn IntersectionObserver
-demo/` = **0** verified). Drop `content-visibility` on the **first row** (above-fold, `idx < N`) so the initial
-cards never flash blank while the boot thread is busy. `OPEN-P8`: N is the first-row count — responsive
-(2/3/4-up by breakpoint). Draft: exempt the first grid row's worth (bind a `data-above-fold` on `idx < cols`),
-Fable rules the exact N and whether it keys off the CSS grid `cols` count.
+**(A) Above-fold content-visibility exemption — CEDED to `BAND-STORY` W5 (FINDING-2).**
+`demo/chassis/landing/SectionPreviewCard.vue:63-65` applies `content-visibility: auto; contain: content;
+contain-intrinsic-size: auto 19rem;` unconditionally to every card (`SectionLanding.vue:35-38` renders one
+`<SectionPreviewCard v-for>`; `/foundations` renders 13; no `IntersectionObserver` drives them — `grep -rn
+IntersectionObserver demo/` = **0** verified). **`BAND-STORY` W5 (`BJ.W-PREVIEW-CARD`) rewrites this file
+wholesale** (masonry + live miniatures) and therefore owns the above-fold EDIT and its STATIC source gate —
+one owning wave per file (`BAND-STORY.md:24-25`). PERF W3 does NOT author a static above-fold gate here (it
+would double-own the file and double-gate the exemption). PERF's remaining contribution to the above-fold cure
+is the **live-trace deferred-paint gate** (below — the "perf trace gate" `BAND-STORY` W5 already delegates to
+family E) and the **intrinsic-size number handed to `BAND-STORY`** to apply AFTER the masonry rewrite settles
+the true card height. `OPEN-P8` (the exact above-fold N / grid-cols keying) moves with the edit to `BAND-STORY`
+W5.
 
 **(B) Intrinsic-size truth (PENDING-R3 measure).** `contain-intrinsic-size: auto 19rem` is the placeholder
 height that reserves layout before a below-fold card paints; if 19rem ≠ the real rendered card height, each
@@ -279,7 +283,10 @@ so the mismatch bites only on the FIRST paint of each card — but that first-pa
 read. Whether 19rem matches reality is **not statically knowable** — it needs a browser measurement of the
 rendered `SectionPreviewCard` height at each breakpoint. PENDING-R3: measure the real card height on
 `/foundations` (§Band R3 recipe, `getBoundingClientRect().height`) and retune the 19rem to truth (or make it
-per-breakpoint). Do NOT assert a shift RED without the measured height.
+per-breakpoint). Do NOT assert a shift RED without the measured height. **Handoff (FINDING-2):** the retuned
+number is MEASURED here and HANDED to `BAND-STORY` W5 to apply on its rewritten card — PERF supplies the
+measured truth, W5 applies it after the masonry height settles (PERF does not edit `:65` directly, since W5
+rewrites the file).
 
 **(C) Shared feTurbulence filter def (verified — but weaker than round-1 framed).** `foundations/colors`
 renders 13 animated `WatercolorDot` swatches (`colors.vue:47` `rainbow = Array.from({length:13})`, `:91-99`
@@ -298,21 +305,26 @@ minor/optional, gate only the DUPLICATION count, do NOT touch the once-and-cache
 
 ### §Work (EXECUTION-wave obligations)
 
-- `demo/chassis/landing/SectionPreviewCard.vue` / `SectionLanding.vue` — the above-fold exemption (per `OPEN-P8`).
-- `demo/chassis/landing/SectionPreviewCard.vue:65` — retune `contain-intrinsic-size` to the R3-measured height.
+- `demo/chassis/landing/SectionPreviewCard.vue` above-fold exemption EDIT → **CEDED to `BAND-STORY` W5**
+  (it rewrites the file); PERF hands over the intrinsic-size TRUTH, not the edit.
+- `demo/chassis/landing/SectionPreviewCard.vue:65` — the R3-measured `contain-intrinsic-size` number is
+  MEASURED here and HANDED to `BAND-STORY` W5 to apply on its rewritten card (PERF does not edit `:65`).
 - `src/components/watercolor-dot/WatercolorDot.vue` + `demo/stories/foundations/colors.vue` — the shared filter
   def (per `OPEN-P9`, if kept).
-- `tests/gates/deferred-paint.test.ts` (this band authors the detectors, born-RED where static):
-  - **above-fold arm:** assert `SectionPreviewCard`/`SectionLanding` mark the first-row cards as exempt from
-    `content-visibility:auto` (born-RED: unconditional at `:63` today).
+- `tests/gates/deferred-paint.test.ts` (this band authors the detectors):
+  - **~~above-fold arm~~ — CEDED:** the STATIC above-fold source gate lands in `BAND-STORY` W5 (G-PRV-3),
+    not here (one gate asserts the exemption, on the wave that owns the file).
+  - **live-trace deferred-paint gate (PENDING-R3):** the "perf trace gate" family E owns — capture the
+    first-paint / deferred-paint trace on `/foundations` proving the above-fold cards paint (not blank) once
+    the boot thread is freed. This is PERF's above-fold contribution.
   - **filter-duplication arm (optional per `OPEN-P9`):** assert the animated-dot page does not mount N>1
     identical `feTurbulence` filter defs (born-RED: 13 on `/foundations/colors`).
 
 ### §Acceptance — born-RED (static) + PENDING-R3
 
-- **above-fold arm RED at HEAD:** `SectionPreviewCard.vue:63` applies `content-visibility:auto` to ALL cards
-  with no above-fold branch; `grep -rn IntersectionObserver demo/` = 0 (verified). GREEN when the first row is
-  exempted.
+- **above-fold static arm — CEDED to `BAND-STORY` W5 (G-PRV-3):** the static source gate that asserts the
+  above-fold exemption on `SectionPreviewCard.vue:63` lands on the wave that rewrites the file, not here.
+  PERF's above-fold proof is the live-trace deferred-paint gate (PENDING-R3, below).
 - **filter-duplication arm RED at HEAD:** 13 per-instance `feTurbulence` filter hosts on `/foundations/colors`
   (verified). GREEN when a shared def lands (if `OPEN-P9` keeps this arm).
 - **intrinsic-size truth (PENDING-R3):** the measured `SectionPreviewCard` height vs the 19rem placeholder — a
@@ -320,11 +332,11 @@ minor/optional, gate only the DUPLICATION count, do NOT touch the once-and-cache
 
 ### §π/DELTA + live-trace (PENDING-R3)
 
-The above-fold exemption is the direct fix for F02 ("blank white cards") — the π obligation is a captured
-first-paint screenshot of `/foundations` showing the first row painted (not blank) under a throttled boot, per
-MEMORY `live_verify_capture`. The intrinsic-size retune's proof is a CLS/layout-shift trace delta on
-`/foundations` (§Band R3 recipe). No intended change to the below-fold deferral (it is correct browser
-behavior once the boot thread is freed by Wave 1).
+The above-fold exemption's first-paint screenshot π (F02 "blank white cards") rides `BAND-STORY` W5 with the
+EDIT. PERF W3's live-trace obligation is the **deferred-paint trace** on `/foundations` (the first row paints,
+not blank, once Wave 1 frees the boot thread) plus the **CLS/layout-shift trace delta** for the intrinsic-size
+truth (§Band R3 recipe). No intended change to the below-fold deferral (it is correct browser behavior once
+the boot thread is freed by Wave 1).
 
 ### §KISS / parsimony
 
@@ -337,8 +349,10 @@ cure is Wave 1; this wave removes the two structural flashes Wave 1 alone leaves
 
 - NOT replacing `content-visibility` with a JS IntersectionObserver reveal system (that would ADD boot cost —
   the native primitive is correct once the thread is free).
-- NOT the preview-card redesign (masonry + LIVE miniatures) — that is Family D's `preview-card-vacancy`
-  (F01/F02/F46 visual half); this wave owns only the PERF half (blank-flash + intrinsic-size).
+- NOT the preview-card redesign (masonry + LIVE miniatures) NOR the above-fold `content-visibility` EXEMPTION
+  EDIT + its static source gate — both are `BAND-STORY` W5's (`BJ.W-PREVIEW-CARD`), which rewrites the file
+  (FINDING-2). PERF W3 owns only the boot-diet cure (Wave 1), the live-trace deferred-paint gate, and the
+  intrinsic-size number handed to W5.
 - NOT the WatercolorDot once-and-cache raster path — only the def duplication.
 
 ---
@@ -436,7 +450,9 @@ pending state, it does not fake progress the router isn't making.
   `config` leaf export (Family H colocation / the aurora barrel owner).
 - W2 shell-field narrowing (`OPEN-P6`) → the `suppressesShellField` route-meta set overlaps Family D
   transition-choreography + Family G substrate.
-- W3 preview-card PERF vs the card REDESIGN → Family D `preview-card-vacancy` (F01/F02/F46 visual half).
+- W3 above-fold exemption EDIT + static gate + first-paint π → CEDED to `BAND-STORY` W5 (`BJ.W-PREVIEW-CARD`,
+  which rewrites the file, FINDING-2); PERF keeps the boot-diet cure (W1), the live-trace deferred-paint gate,
+  and the intrinsic-size number handed to W5.
 - W4 weighted transition / goo-morph nav → Family D transition-choreography + Family G dock greenfield
   (built once, not double-built).
 
@@ -462,8 +478,8 @@ target route:
    before (HEAD) baseline now, the after once the fix lands. The trace IS the proof; the commit message is not.
 
 **OPEN markers for the Fable two-challenge pass:**
-- `OPEN-P0` — gate substrate: vitest-fs reading a committed dist-demo build-manifest snapshot vs adding a
-  demo-build step to the test job (the build-ceiling arm needs a built `dist-demo/`). [band-wide]
+- `OPEN-P0` — **RULED (ruling 9):** build `dist-demo/` in the test job (a demo-build step); do NOT read a
+  committed build-manifest snapshot (it goes stale silently and greens over a regressed build). [band-wide]
 - `OPEN-P1` — async Aurora placeholder: confirm the CSS-gradient wash placeholder is not itself in the async
   chunk (else the field flashes empty on first paint). [W1]
 - `OPEN-P2` — the `shellAuroraConfig` leaf import target: existing `aurora/constants/presets` subpath vs a new

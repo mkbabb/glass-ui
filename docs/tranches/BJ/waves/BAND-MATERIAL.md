@@ -28,7 +28,7 @@ follow from it. Where a feedback screenshot and the disk have **drifted** (a def
 partly cured), the wave says so and owes a **live-π re-check before it claims a born-RED defect** — never
 a spec written against a stale screenshot.
 
-Five waves:
+Six waves:
 
 | Wave | Name | Motion | Born-RED? |
 |------|------|--------|-----------|
@@ -37,6 +37,7 @@ Five waves:
 | 3 | `BJ.W-GRADED-BACKDROP-JUDGE` | Adopt-or-retire the landed `--glass-halo-*` cohort against the codex law-1 reference | Judgment-gate, not defect-probe — the unresolved-freeze state is the RED |
 | 4 | `BJ.W-TRACK-DRY` | DRY the slider/progress/scrubber shared track mechanics | Yes — three components re-spell the same track with divergent tokens |
 | 5 | `BJ.W-ARISTOTLE-PROPORTION` | The A10 aristotelian-proportion review over cards/dividers/spacing | π-capture obligation, not asserts (paint-taste review) |
+| 6 | `BJ.W-TYPE-CODEMOD` | The 251-site `text-sm`/`text-xs` codemod + the coupled default-ramp reset flip + paint π (owner: material band — RULING 2) | Coupled — flips `BAND-GATES` W4 `type-hygiene` GREEN (that gate is born-RED against these sites) |
 
 **Design authority (band-wide).** The iOS-27 codex (`formation/ios27/IOS27-CODEX.md`) is the material
 authority: **law 1** progressive backdrop blur (waves 2/3), **law 4** radius as concentrically-nested role
@@ -120,7 +121,8 @@ for **raw Tailwind radius utilities** instead of role classes:
 - `theme/radius.css` — rename `--radius-input`→`--radius-media`; delete `--corner-k-soft`/`-sharp` + the
   stale-gate comment; the three media consumers + `tokens/manifest.ts:37`.
 - The four raw-literal repoints (SortableList, segmented ×2).
-- The demo role-class sweep (F15 reset + the F45/F17 compositions).
+- The demo role-class sweep (F15 reset + the F12 tags-input + F45/F17 compositions — the F12/F17 radius
+  remediation owned HERE if the live-π reproduces them, RULING 8).
 
 ### §Acceptance — born-RED
 
@@ -133,9 +135,11 @@ for **raw Tailwind radius utilities** instead of role classes:
 - **`OPEN-1a` disk-vs-screenshot drift (F09/F12/F17):** the configurator container is **already** `--radius-panel`
   (12px) via the concentric relay (`Configurator.vue:211`), NOT the 100%-ovoid F09 shows; tags-input is
   **already** `--radius-field` (16px) container + `--radius-control` chips (`tags-input/styles.css:8,61`). These
-  read role-correct on disk. **This wave must run a live π on F09/F12/F17 before asserting any defect** — if they
-  reproduce, the fix is the demo composition (route F09/F10/F11 to `BAND-STORY` `W-CONFIGURATOR-STD`, which owns
-  the configurator-cramp); if they do not, record the cure and the screenshot drift. No spec against a stale png.
+  read role-correct on disk. **This wave must run a live π on F09/F12/F17 before asserting any defect** — if F09
+  reproduces, the fix is the demo composition (route F09/F10/F11 to `BAND-STORY` `W-CONFIGURATOR-STD`, which owns
+  the configurator-cramp). **F12 (tags-input) + F17 (search) radius remediation, IF the live-π reproduces them,
+  is owned by THIS wave (RULING 8 — this is the radius band)**, not left dangling between material and story; if
+  the live-π clears them, record the cure + the screenshot drift. No spec against a stale png.
 
 ### §π/DELTA
 
@@ -178,15 +182,21 @@ inconsistent — ensure this is **intentional**" (F28).
 
 ### §Design — the ladder has fewer distinct values than names; rule it, document it
 
-The `--glass-blur-*` ladder at HEAD (verified `glass.css:86-97` + `glass-deep.css:56` + `light-dark.css:38-42`):
+> **Anchor re-path (AMEND-4, applied).** Every blur-ladder citation below re-paths off the assumed `theme/`
+> dir: the ladder is defined at **`src/styles/tokens/glass.css:138-153`** (the bare `glass.css:86-97` range is
+> a COMMENT in `src/styles/glass.css`), the 2dppx overlay bump at **`src/styles/tokens/light-dark.css:36`**,
+> the deep rung at **`src/styles/glass/deep.css:78`**. The substance (the collision structure, the DPI arm,
+> the one-7px unification) reproduces; only the anchors were wrong.
+
+The `--glass-blur-*` ladder at HEAD (verified `tokens/glass.css:138-153` + `glass/deep.css:78` + `tokens/light-dark.css:36`):
 
 | Rung | Radius | Note |
 |------|--------|------|
 | wash | 1px | sub-perceptual |
 | quiet | **7px** | ⎫ **collision** — quiet == resting |
-| resting | **7px** | ⎭ the deliberately-unified "ONE 7px material" (`glass.css:79-85`) |
+| resting | **7px** | ⎭ the deliberately-unified "ONE 7px material" (`tokens/glass.css:138-153`) |
 | floating | **11px** | ⎫ **collision** — floating == overlay |
-| overlay | **11px** | ⎭ + **jumps to 17px at `@media (min-resolution: 2dppx)`** (`light-dark.css:40`) |
+| overlay | **11px** | ⎭ + **jumps to 17px at `@media (min-resolution: 2dppx)`** (`tokens/light-dark.css:36`) |
 | deep | 16px | the animated-substrate ceiling |
 
 So **6 rung names resolve to 4 distinct radii** (1/7/11/16), and the overlay rung diverges ~55% by device
@@ -196,13 +206,13 @@ the DPI arm as intentional (`doc-and-canon-drift.md` finding 6), so it is unaudi
 
 The band ruling (the two-challenge decision this wave forces):
 1. **The quiet==resting collision is INTENTIONAL** — it is the shipped "one 7px material" unification
-   (`glass.css:79-85`: dock + default-Card + menu-row resolve the SAME `blur(7px)`). The wave **documents it
+   (`tokens/glass.css:138-153`: dock + default-Card + menu-row resolve the SAME `blur(7px)`). The wave **documents it
    as the unified base material**, not a bug. `OPEN-2a`: keep 6 names at 4 values (document the intentional
    collapse) vs **rename to the 4 real rungs** (fewest-names-that-differ, the parsimony read). Draft leans
    rename-to-real-rungs — a name that never differs is dead vocabulary — but the peer-lock comments
    (`proof:glass-cal` resolved-radius lock) may want the names retained for the compose recipe. Fable rules.
 2. **The floating==overlay collision + the 2dppx arm:** either (a) document the DPI arm as intentional (the
-   comment's rationale: denser backing store amortizes a richer wash, `light-dark.css:29-42`) and give overlay
+   comment's rationale: denser backing store amortizes a richer wash, `tokens/light-dark.css:36`) and give overlay
    a distinct base value from floating, or (b) **kill the 2dppx arm** (F48 wants subtler for ALL, not richer on
    retina; a ~55% device-dependent jump is the opposite of "consistent"). Draft leans **kill the DPI arm** —
    it directly contradicts F48's "subtler for ALL" and is the single most device-inconsistent value in the
@@ -214,7 +224,7 @@ The band ruling (the two-challenge decision this wave forces):
 
 **(D) One material per role (the F28 select-vs-buttons arm).** F28 shows "sibling controls carrying different
 materials (select vs Play/Reset)" (`VISUAL-GESTALT.md:50`). On disk: the form family (Select/Input/…) shares
-`--control-surface-blur: var(--glass-blur-quiet)` (7px, `glass.css:407`); an ordinary Button cell reads
+`--control-surface-blur: var(--glass-blur-quiet)` (7px, `tokens/glass.css:407`); an ordinary Button cell reads
 `--glass-blur-resting` (7px, `button/styles.css:50`); a **primary** Button reads `--glass-blur-deep` (16px,
 `button/styles.css:43`). So an ordinary button and a select **already match at 7px** — but a *primary* button
 (Play?) at 16px genuinely diverges from a select at 7px. **F28's divergence is plausibly the deep-tier primary
@@ -226,17 +236,18 @@ any change — the exact "verify born-RED on disk" discipline.
 
 - The blur-ladder precept section (the rungs + the DPI arm ruling — coordinate `BAND-DOC-TRUTH`; the ladder is
   the `tunable-anim.md` stale-4px-default neighbor, `doc-and-canon-drift.md` finding 5).
-- `glass.css:86-97` — the rung ruling (rename-to-real vs document; the floating/overlay separation).
-- `light-dark.css:38-42` — kill or document the 2dppx overlay arm (per `OPEN-2b`).
+- `tokens/glass.css:138-153` — the rung ruling (rename-to-real vs document; the floating/overlay separation).
+- `tokens/light-dark.css:36` — kill or document the 2dppx overlay arm (per `OPEN-2b`).
 - `drawer/styles.css:379` `backdrop-filter: blur(14px)` → the overlay/deep rung token (raw literal, flips
   `BAND-GATES` W3 `token-hygiene` GREEN — verified RED at HEAD).
 - The F28 material re-check → repoint only if the divergence is unintended.
 
 ### §Acceptance — born-RED
 
-- **Collision RED at HEAD (verified):** `glass.css:87-88` quiet==resting==7px; `:89,97` floating==overlay==11px.
-  GREEN when the ladder is ruled (renamed-to-real or documented-intentional) so name↔value is 1:1 or explained.
-- **DPI-arm RED at HEAD (verified):** `light-dark.css:40` overlay→17px at 2dppx (a value the base ladder never
+- **Collision RED at HEAD (verified):** `tokens/glass.css:138-153` quiet==resting==7px + floating==overlay==11px
+  (within the ladder). GREEN when the ladder is ruled (renamed-to-real or documented-intentional) so name↔value
+  is 1:1 or explained.
+- **DPI-arm RED at HEAD (verified):** `tokens/light-dark.css:36` overlay→17px at 2dppx (a value the base ladder never
   states). GREEN when killed or documented as intentional in the precept.
 - **Raw-blur RED at HEAD (verified):** `drawer/styles.css:379` `blur(14px)`. GREEN when repointed (the
   `BAND-GATES` W3 coordination flip).
@@ -522,6 +533,83 @@ judgment.
 
 ---
 
+## Wave 6 — `BJ.W-TYPE-CODEMOD` — the type-system codemod + the coupled default-ramp reset
+
+### §Mandate
+
+Discharges the typography-codemod obligation `BAND-GATES` W4 authors born-RED but does not own
+(`BAND-GATES.md` §Obligations, OPEN-10; this band's `OPEN-B`, RULED here — adjudication ruling 2 /
+CHALLENGE FINDING-3). The material band owns the type system, so the 251-site `text-sm`/`text-xs`
+codemod + the coupled Tailwind default-ramp reset + its paint π land HERE; `BAND-GATES` W4 keeps the
+`type-hygiene` lint (RED until this wave lands, honestly sequenced) and `BAND-STORY` W2 consumes the
+laddered result. The BI `W-AXES-GATES` idiom: authored born-RED in `BAND-GATES` W4, GREEN by this wave.
+
+### §Design — the atomic reset+codemod flip (the load-bearing coupling)
+
+The √φ ladder is well-formed but unenforceable: the `@theme` bridge only ADDS named rungs and never
+resets Tailwind v4's built-in ramp, so `text-sm` (0.875rem STATIC) / `text-xs` (0.75rem STATIC) silently
+bypass the fluid `--type-small`/`--type-caption` clamps (`BAND-GATES.md` W4 §Mandate). The reset and the
+codemod are ONE atomic flip — resetting the ramp alone makes `text-sm`/`text-xs` inert and regresses every
+site:
+
+1. **The default-ramp reset.** `--text-*: initial; --leading-*: initial; --tracking-*: initial` (the
+   Tailwind v4 `@theme` clears) in `src/styles/theme/bridges.css` so ONLY the named √φ rungs exist
+   (verified absent at HEAD per `BAND-GATES` W4).
+2. **The 251-site codemod.** `text-sm` → `text-small`, `text-xs` → `text-caption`/`text-micro`. **The two
+   scopes are distinct and MUST be stated so:** the born-RED probe `BAND-GATES` W4 reds is the **218 demo
+   sites** (`text-sm` ×118 + `text-xs` ×100, verified exact); the full **251-site** figure (`REGISTRY.md:236`)
+   is the codemod's real reach — the 218 demo + `src` ×19 + the 9 arbitrary `text-[…]`. This wave migrates
+   all 251; the gate greens when the 218-demo class-ban arm finds zero.
+
+The residual-canon tokenization (`BAND-GATES` W4 step 1 / OPEN-9) stays a `BAND-GATES` W4 precondition — this
+wave does NOT re-own it; it consumes the tokenized canon and lands the reset+codemod on top.
+
+### §Work
+
+- `src/styles/theme/bridges.css` — the `--text/leading/tracking: initial` reset (COUPLED to the codemod;
+  neither lands alone).
+- the 251-site codemod across `demo/` + `src/` (`text-sm`→`text-small`, `text-xs`→`text-caption`/`text-micro`;
+  the 9 arbitrary `text-[…]` onto the nearest √φ rung).
+- coordinate with `BAND-STORY` W2 (which strips the ad-hoc mono-caption eyebrows and wants hierarchy from the
+  size ladder) so the two land in the same cut without re-touching the same call-sites.
+
+### §Acceptance — the coupled flip (GREEN'd, not born-RED here)
+
+- The born-RED lives in `BAND-GATES` W4 (`type-hygiene`): 218 `text-sm`/`text-xs` demo sites at HEAD. This
+  wave is the flip — GREEN when the codemod migrates the 218 (and the full 251) onto the named rungs and the
+  reset clears the ramp so a residual `text-sm` is a build-visible unknown.
+- **The two waves MUST land in the same tranche cut** so the gate is never RED-at-tag.
+
+### §π/DELTA — the load-bearing obligation
+
+**The reset+codemod carries a real paint obligation** — the ramp reset can regress 251 element sizes if
+landed before/without the codemod. Capture a before/after paint π on the heaviest pages (`springs.vue`,
+`slider.vue`, `/substrates/glass-material`) proving the migration is size-parity where the rung matches and
+the intended fluid-clamp change where it does not (Safari + Chrome, per MEMORY `live_verify_capture`).
+
+### §KISS / parsimony
+
+The reset is a handful of `initial` lines that COLLAPSE the type vocabulary to a single source; the codemod
+is a mechanical class-substitution, no new abstraction. The parsimony payoff: after it, `text-sm` is a
+build-visible unknown, not a silent bypass.
+
+### §Non-goals
+
+- The `type-hygiene` gate itself (the CSS-declaration + utility-class ban) → `BAND-GATES` W4.
+- The residual-canon literal tokenization (the `utilities.css`/`semantic.css` precondition) → `BAND-GATES` W4
+  (step 1); this wave consumes it.
+- The F10 story-hierarchy SIZE cure (StorySection heading-level axis) → `BAND-STORY` W3 (`W-CONFIGURATOR-STD`);
+  this wave supplies the rungs, that wave applies the level axis.
+- The mono-caps caption idiom kill (demo call-sites) → `BAND-STORY` W2.
+
+### §OPEN
+
+- `OPEN-6a` — the `text-xs` split target: `text-caption` vs `text-micro` per site (some `text-xs` are true
+  captions, some are the smallest micro rung). Resolve per call-site at execution against the √φ rung the
+  site's role wants.
+
+---
+
 ## §Band-level obligations & OPEN roll-up
 
 **Coordination handoffs (values authored here → gate GREEN / fix owned by siblings):**
@@ -534,16 +622,12 @@ judgment.
   rewrites with `BAND-DOC-TRUTH` / `BAND-COLOCATION` (do not duplicate their doc-truth sweep).
 - W5 proportion roster → `BAND-STORY` (F10/F11/preview-card) + Family C (Card default) + the follow-on fixes.
 
-**`OPEN-B` — the typography-codemod ownership gap (band-level, charter-flagged).** The charter scopes this
-band to the FIVE waves above and instructs re: typography "coordinate with `BAND-GATES` W4, **do not
-duplicate**." But `BAND-GATES` W4 (`BAND-GATES.md:309,349-357`, OPEN-9/OPEN-10) assigns the **residual-canon
-tokenization + the 251-site `text-sm`/`text-xs` codemod + the coupled default-ramp reset flip + its paint π**
-to "**the Family F typography wave**" — i.e. THIS band — which the charter's five-wave scope does **not**
-include. This is a genuine unassigned obligation: the ramp-reset gate (`BAND-GATES` W4) is RED until the
-codemod lands, and no drafted wave owns the codemod. **Fable must rule:** is the typography codemod a SIXTH
-wave of this band (`BJ.W-TYPE-CODEMOD`, not drafted here per charter scope), or does it live in `BAND-STORY`
-(where the 232 demo-story sites concentrate), or in `BAND-GATES` W4 itself (all-in)? Flagged, not silently
-dropped (the F14/silent-drop discipline, `FEEDBACK-LEDGER.md:6`).
+**`OPEN-B` — the typography-codemod ownership gap — RULED (adjudication ruling 2 / CHALLENGE FINDING-3).**
+The 251-site `text-sm`/`text-xs` codemod + the coupled default-ramp reset flip + its paint π is now **Wave 6
+of this band (`BJ.W-TYPE-CODEMOD`, drafted above)** — the material band owns the type system. `BAND-GATES` W4
+keeps the `type-hygiene` lint (born-RED, RED until W6 lands, honestly sequenced); the residual-canon
+tokenization stays a `BAND-GATES` W4 precondition (it does NOT move here); `BAND-STORY` W2 consumes the
+laddered result. The two waves land in the same tranche cut so the gate is never RED-at-tag. No longer open.
 
 **OPEN markers for the Fable two-challenge pass:**
 1. `OPEN-1a` — F09/F12/F17 disk-vs-screenshot drift; live-π re-check before any defect claim. [W1, substantive]
@@ -558,11 +642,12 @@ dropped (the F14/silent-drop discipline, `FEEDBACK-LEDGER.md:6`).
 10. `OPEN-4a` — **the track-DRY API shape** (CSS partial vs composable vs component). [W4, substantive]
 11. `OPEN-4b` — ContinuousRail joins the fold vs stays its region-stitch idiom. [W4]
 12. `OPEN-5a/5b` — W5 roster deliverable shape + divider inventory scope. [W5]
-13. `OPEN-B` — **the typography-codemod ownership gap** (a 6th wave here vs `BAND-STORY` vs `BAND-GATES` W4).
-    [band-level, substantive]
+13. `OPEN-B` — **RULED:** the typography-codemod is Wave 6 of this band (`BJ.W-TYPE-CODEMOD`); `BAND-GATES`
+    W4 keeps the lint, born-RED until W6 lands. [band-level, resolved]
 
 **In-scope summary:** one canonized radius role-table + 2 canon-defect reconciles + 4 raw-radius repoints
 (W1); the blur-ladder ruling + the DPI-arm decision + 1 raw-blur repoint (W2); the forced graded-backdrop
 adopt/decline with the F49/F50 π (W3); the track-family fold to one shared material (W4); the A10 proportion
-roster feeding follow-on fixes (W5). The band makes the material ladders **auditable and role-coherent** — the
+roster feeding follow-on fixes (W5); the 251-site type codemod + coupled default-ramp reset + paint π (W6).
+The band makes the material ladders **auditable and role-coherent** — the
 enforcement rides `BAND-GATES` W3/W4; this band supplies the canon those gates measure against.

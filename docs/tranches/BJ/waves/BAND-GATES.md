@@ -26,7 +26,7 @@ Two motions, four waves:
 |------|------|--------|-----------|
 | 1 | `BJ.W-GATE-COLLAPSE` | Reduce the vitest battery to ~45-55 invariant keeps | No — deletions; acceptance is the census delta |
 | 2 | `BJ.W-PIXEL-FLOOR-CI` | Wire the sound pixel floor (substrate-paints-color) into CI | Yes — CI-wiring-absent probe + planted black-render self-test |
-| 3 | `BJ.W-STATIC-HYGIENE` | Three NEW static gates: token-hygiene · orphan-CSS-partial · prop-granularity | Yes — shipped violations red each at HEAD |
+| 3 | `BJ.W-STATIC-HYGIENE` | Two NEW static gates: token-hygiene · orphan-CSS-partial (prop-granularity FOLDED to Family C's overfitting audit per OPEN-8) | Yes — shipped violations red each at HEAD |
 | 4 | `BJ.W-RAMP-RESET` | The Tailwind default-ramp reset as the typography-lint precondition | Yes — 218 ramp-bypass sites red the class-ban probe |
 
 **Gate substrate (band-wide decision, `OPEN-1`).** The current tree has **no** `scripts/gates.mjs` and **no**
@@ -80,6 +80,12 @@ Discharges `gate:gate-count-overshoot` + `gate:pin-implementation-literal` +
 | Zero-assert specs | **6 files** | `tests-visual/{_cohere-capture,_cohere-debug,_cohere-shadow-debug,_fix-glassui-dark-capture,_prim-polish-capture,_wdelta0-capture}.spec.ts` — verified `grep -c 'expect('` = 0 each; green by construction under `testMatch:'*.spec.ts'` (`playwright.config.ts`) |
 | Tooling self-test | 1 file | `tests/scripts/profile-bundle-value-js.test.ts:48-80` — validates the `profile:bundle` dev report against its own classification table, not the shipped lib |
 | Duplicate surface-lock heads | dozens | the `Object.keys(<X>Surface).toEqual([...])` heads in `*.contract.test.ts` (e.g. `slider.contract.test.ts:8-10`) — redundant with the one `public-surface.spec.ts` lock; keep the behavioral bodies, drop the heads |
+
+> **`graded-backdrop.test.ts` literal-collapse — CONTINGENT on `BAND-MATERIAL` W3 (adjudicated,
+> ruling 7).** The `20px`/`13rem`/`7rem`/`34px` pins in the KILL table above collapse into
+> relationship checks ONLY IF `BAND-MATERIAL` W3 (`BJ.W-GRADED-BACKDROP-JUDGE`, OPEN-3a) rules
+> **ADOPT**; on **DECLINE**, W3 STRIPS the whole `--glass-halo-*` cohort + this test, so there is
+> nothing to collapse. Do not land this file's kill until W3 rules adopt/decline.
 
 ### §Work
 
@@ -150,6 +156,12 @@ non-black/coverage FLOORS, not the per-preset hue/chroma parity (that is Family 
 - Add a CI job (new `.github/workflows/` step or a job in `ci.yml`) that: installs the Playwright browser
   (`npx playwright install --with-deps chromium`), builds + serves the routed demo, and runs
   `playwright test substrate-paints-color.spec.ts` (the existing `tests-visual` `test:substrate` script).
+- **Fail-on-SKIP (adjudicated, ruling 5):** the job MUST treat "no GL context / test SKIPped / no browser
+  binary" as **RED**, not pass — assert a context was obtained AND it painted non-black. Without this,
+  SwiftShader's befitting-silent skip re-creates the very `gate:unwired-gate-non-execution` this wave cures.
+- **Force the deterministic path:** prefer/assert the **WebGL floor path** the ubuntu runner actually
+  executes (not WebGPU-on-SwiftShader, which is fragile and may skip); assert which path ran. Keep the floor
+  COARSE (non-black + coverage only — already scoped).
 - Retire the "fail-CLOSED" framing (`playwright.config.ts:46-50`) from any spec that no gate runs — and from
   the 6 zero-assert files (coordinate with wave 1, which relocates them out of the glob).
 
@@ -160,6 +172,8 @@ non-black/coverage FLOORS, not the per-preset hue/chroma parity (that is Family 
 - **Teeth self-test (the gate is not hollow):** a planted defect — force the aurora canvas to paint black
   (or the blob to flood) — must red the floor. Ship this as a `--planted` self-test bite so the gate proves
   it can fail, not merely pass.
+- **SKIP is RED, path is asserted (ruling 5):** a run that obtains no GL context / SKIPs / finds no browser
+  binary FAILS the gate (it does not pass); the job asserts the WebGL floor path ran and painted non-black.
 
 ### §π/DELTA
 
@@ -167,17 +181,26 @@ non-black/coverage FLOORS, not the per-preset hue/chroma parity (that is Family 
 captured CI run showing (a) GREEN on the real render, (b) RED on the planted black-aurora bite — the
 born-RED→GREEN differential per MEMORY `live_verify_capture` (a captured DELTA, not a commit-message claim).
 
-### §OPEN — the CI-runner GPU risk (`OPEN-5`, substantive)
+### §OPEN-5 — the CI-runner GPU risk — AMENDED (ruling 5, empirical not a user preference)
 
-`substrate-paints-color.spec.ts:14-18` documents: on a real GPU (Metal) the substrate paints; a **GPU-less CI
-runner SwiftShader-degrades and the gate driver SKIPs befitting-silent when no browser binary is installed.**
-The `playwright.config.ts` already passes `--enable-unsafe-swiftshader --enable-features=Vulkan`. The
-band-critical question Fable must settle: **does SwiftShader paint a non-black aurora inside a standard GitHub
-ubuntu runner?** If YES → the floor has real teeth in CI. If NO (it SKIPs or paints black) → wiring it into
-`ci.yml` is theater, and the honest disposition is either a self-hosted GPU runner OR keeping the floor as the
-pre-tag `release.sh` gate with a captured artefact. This OPEN gates whether wave 2 lands in `ci.yml` at all.
-The wave MUST NOT claim CI enforcement until a real CI run demonstrates the planted black-render bite goes RED
-on the target runner.
+`substrate-paints-color.spec.ts:14-18` documents: on a real GPU (Metal) the substrate paints; a GPU-less CI
+runner SwiftShader-degrades and the gate driver SKIPs befitting-silent when no browser binary is installed.
+`playwright.config.ts` already passes `--enable-unsafe-swiftshader --enable-features=Vulkan`. The engineering
+reality (adjudicated): SwiftShader renders WebGL correctly, non-black — a coarse `maxChannel>0` + coverage-band
+floor is reliable on it; the real risk is the WebGPU/Dawn-on-Vulkan-on-SwiftShader path, which is fragile and
+SKIPs silently. So the AMENDED posture (not a user ruling — an empirical/engineering call the execution wave
+settles with one CI probe):
+- **Fail-on-SKIP** — no GL context / SKIP / no browser binary = **RED** (assert a context AND non-black paint).
+- **Force the deterministic WebGL floor path** the runner actually executes (assert which path ran); do NOT
+  rely on WebGPU-on-SwiftShader.
+- **Keep it coarse** — non-black + coverage floor only (already scoped correctly).
+- **Empirical acceptance** — the wave MUST NOT claim CI enforcement until a real CI run shows the planted
+  black-render bite goes RED on the target ubuntu runner.
+
+**The lone conditional escalation (a CONDITIONAL ASK row, not a live one):** IF the empirical probe shows the
+coarse floor cannot paint non-black on ubuntu even on the WebGL path, the fallback choice — self-hosted GPU
+runner (infra cost) vs keeping the floor as the pre-tag `release.sh` gate WITH a captured artefact (never a
+silent skip) — surfaces as a user ASK row. It is carried CONDITIONALLY; it only goes live if the probe fails.
 
 ### §Non-goals
 
@@ -186,17 +209,20 @@ on the target runner.
 
 ---
 
-## Wave 3 — `BJ.W-STATIC-HYGIENE` — three NEW born-RED static gates
+## Wave 3 — `BJ.W-STATIC-HYGIENE` — two NEW born-RED static gates (prop-granularity folded to Family C)
 
 ### §Mandate
 
 Discharges `canon:unenforced-token-system` (`round-1/doc-and-canon-drift.md` finding 1) + the orphan-CSS gate
 gap (`round-1/dead-code-and-dual-paths.md` finding 1 / `round-2b` critical
 `orphaned-css-import-closure`) + `surface:decorative-flag-proliferation` (Card, Family C seed). These are the
-Family A wave-candidate-3 gates: "token-hygiene · orphan-CSS-partial · prop-granularity dead-config"
-(`REGISTRY.md:44`). All THREE are authored born-RED against shipped violations.
+Family A wave-candidate-3 gates (`REGISTRY.md:44`): **token-hygiene · orphan-CSS-partial** are authored
+born-RED here against shipped violations; **prop-granularity dead-config is FOLDED into Family C's overfitting
+audit** (a one-shot audit line, not a standing Family-A gate — adjudicated, FINDING-5 / OPEN-8), because its
+defect-status is a Family-C design ruling (should Card default to gold+grain at all?), not an unambiguous
+hygiene violation like the other two.
 
-### §Design — three gates, one wave (all vitest-fs per `OPEN-1`)
+### §Design — two gates, one wave (all vitest-fs per `OPEN-1`); prop-granularity folded to Family C
 
 **(A) `gate:token-hygiene` — raw radius/blur literals off the ladder.** Grep `src/` for raw
 `border-radius`/`backdrop-filter`/`blur()` literals outside the theme/tokens files; every non-exempt literal
@@ -227,22 +253,23 @@ wave authors the GATE born-RED; the CSS re-home flips it GREEN. `OPEN-7`: does t
 retired-`canon-doc.mjs` green-over-stub role (wave 1 `OPEN-3`)? If orphan-CSS-partial ships, `canon-doc`'s
 retire is safe.
 
-**(C) `gate:prop-granularity-dead-config` — decorative-default with zero override + zero coverage.** A
-component prop whose non-trivial default ships on every instance with (a) zero consumer override and (b) zero
-test exercising the non-default branch is dead configurability.
+**(C) prop-granularity dead-config — FOLDED to Family C's overfitting audit (OPEN-8 RULED, FINDING-5).**
+This band does NOT author a standing Family-A `gate:prop-granularity-dead-config`. A component prop whose
+non-trivial default ships on every instance with zero consumer override + zero non-default-branch coverage is
+dead configurability — but whether that is a *defect* is a Family-C design ruling, not a hygiene invariant, so
+a standing born-RED gate here would encode an unmade verdict (if Family C rules gold+grain IS the intended Card
+identity, the gate would have to be removed, not flipped green).
 
-Born-RED violation shipped at HEAD (verified — round-2b `unset-prop-default-no-consumer-override`):
+The finding (verified — round-2b `unset-prop-default-no-consumer-override`) is REAL and is handed to Family C:
 - `src/components/card/Card.vue` `withDefaults`: `grain: true` (:33), `metal: "gold"` (:39) — every Card
   ships gold-metal + grained; `grep '<Card' demo/ | grep -iE 'metal|grain'` = **0** overrides (the only
   `metal`/`grain` hits are `data-metal` on `<span>` in `glass-material.vue`, not a Card prop).
 
-`OPEN-8` (the weakest of the three — Fable must settle its FORM): is this a **standing CI gate** (a
-repo-wide prop-crawler that flags any default-only prop) or a **one-shot audit line** that folds into the
-overfitting audit / Family C surface purge? A repo-wide crawler risks false-positives (a prop legitimately
-defaulted for external consumers, e.g. the `useStagger` external-consumer class). Draft leans a **targeted
-assertion** naming the Card gold+grain finding (born-RED, narrow) over a general crawler — the general
-"is every prop exercised" invariant belongs in Family C's purge, not a Family A standing gate. The design
-question (should Card default to gold+grain at all?) is Family C's ruling, not this gate's.
+**Disposition:** this is a **one-shot audit line in Family C's overfitting audit / surface purge**
+(`BAND-REDUCTION` Wave 2 `G-CARD-DEFAULT-PAINT` is the real born-RED for the Card default; the overfitting
+audit carries the prop-granularity crawl at tranche close), NOT a standing Family-A gate. `token-hygiene`
+(A) and `orphan-CSS-partial` (B) are unambiguous violations and stay standing gates; prop-granularity is not
+in the same class.
 
 ### §Work
 
@@ -250,7 +277,9 @@ question (should Card default to gold+grain at all?) is Family C's ruling, not t
   assert none outside the allowlist. Self-test bite: a planted `blur(9px)` reds.
 - `tests/gates/orphan-css-partial.test.ts` — parse `src/styles/index.css` @import graph, assert every
   `src/styles/**/*.css` is reachable. Self-test bite: a planted orphan partial reds.
-- `tests/gates/prop-granularity.test.ts` (form pending `OPEN-8`) — the Card gold+grain assertion.
+- (No `tests/gates/prop-granularity.test.ts` — the prop-granularity finding is FOLDED to Family C's
+  overfitting audit per OPEN-8; `BAND-REDUCTION` Wave 2 owns the Card gold+grain born-RED. Only the two
+  standing gates above are authored here.)
 
 ### §Acceptance — born-RED
 
@@ -258,7 +287,8 @@ question (should Card default to gold+grain at all?) is Family C's ruling, not t
   `segmented.css` raw radii. GREEN when the fix waves repoint them (Family C/F coordination).
 - orphan-CSS-partial RED at HEAD: glass-chip.css + glass-atom.css absent from the @import closure (0 rules in
   dist). GREEN when the CSS re-home lands.
-- prop-granularity RED at HEAD: Card gold+grain default with 0 overrides. GREEN per the Family C ruling.
+- prop-granularity is NOT a gate here — the Card gold+grain finding folds into Family C's overfitting
+  audit (`BAND-REDUCTION` Wave 2 `G-CARD-DEFAULT-PAINT` owns the born-RED; OPEN-8 RULED).
 - Each gate ships a self-test bite proving it reds on a planted violation (not hollow).
 
 ### §π/DELTA
@@ -344,17 +374,20 @@ canonical literals FIRST or the allowlist rule fails on the source of truth"):
 
 None for the gate. The ramp-reset FLIP (step 2) carries a real paint obligation — it can regress 218 element
 sizes if landed before the codemod — so the reset+codemod pair MUST ship with a paint π (before/after on the
-heaviest pages: `springs.vue`, `slider.vue`) captured by the Family F typography wave, NOT here.
+heaviest pages: `springs.vue`, `slider.vue`) captured by `BAND-MATERIAL` W6 (`BJ.W-TYPE-CODEMOD`), NOT here.
 
 ### §Obligations — the reset/codemod coupling (the load-bearing coordination)
 
 The default-ramp reset (step 2) and the 251-site codemod (`text-sm`→`text-small`, `text-xs`→`text-caption`/
 `text-micro`) are ONE atomic flip — the reset alone regresses. Per the BI `W-AXES-GATES` idiom, this wave
-authors the gate **born-RED**; the **Family F typography wave** owns the codemod + the coupled reset flip +
-its paint π. `OPEN-10`: confirm the split — does `BJ.W-RAMP-RESET` land JUST the gate (RED, flipped by Family
-F), or does it also land the reset+codemod (crossing into Family F's typography retune)? Draft: gate + residual
-tokenization here; reset+codemod in Family F. The two waves MUST land in the same tranche cut so the gate is
-never RED-at-tag.
+authors the gate **born-RED**; **`BAND-MATERIAL` W6 (`BJ.W-TYPE-CODEMOD`)** owns the codemod + the coupled
+reset flip + its paint π (the material band owns the type system — `BAND-MATERIAL.md` OPEN-B, RULED). **The
+two scopes differ and are stated so explicitly:** the born-RED probe THIS gate reds is the **218 demo sites**
+(`text-sm` ×118 + `text-xs` ×100, verified exact); the coupled FLIP W6 lands is the full **251-site** reach
+(`REGISTRY.md:236` — the 218 demo + `src` ×19 + the 9 arbitrary `text-[…]`). `OPEN-10` is RULED: the gate +
+residual tokenization stay here; the reset+codemod land in `BAND-MATERIAL` W6. The two waves MUST land in the
+same tranche cut so the gate is never RED-at-tag (the owner is now assigned, so the FLIP is never held out of
+a cut against an un-owned codemod).
 
 ### §KISS / parsimony
 
@@ -363,7 +396,7 @@ source — the parsimony payoff: after it, `text-sm` is a build-visible unknown,
 
 ### §Non-goals
 
-- The 251-site codemod itself → Family F.
+- The 251-site codemod itself → `BAND-MATERIAL` W6 (`BJ.W-TYPE-CODEMOD`).
 - The F10 story-hierarchy pass (StorySection heading level axis) → Family D/F (`story-hierarchy-flattening`).
 - The mono-caps caption idiom kill (224 refs across 74 files) → Family D (`mono-caps-caption-idiom`) — a
   sweep + StorySection rework, not a gate.
@@ -376,22 +409,24 @@ source — the parsimony payoff: after it, `text-sm` is a build-visible unknown,
 **Coordination handoffs (authored born-RED here → GREEN by siblings):**
 - orphan-CSS-partial (W3) → the CSS re-home of glass-chip/glass-atom (Family C/H).
 - token-hygiene radius/blur (W3) → the ladder repoint (drawer blur, SortableList 999px) (Family F).
-- prop-granularity Card gold+grain (W3) → the Card default decision (Family C).
-- type-hygiene + ramp-reset (W4) → the 251-site codemod + coupled reset flip + paint π (Family F).
+- prop-granularity Card gold+grain → FOLDED to Family C's overfitting audit (not a W3 gate; OPEN-8 RULED, FINDING-5).
+- type-hygiene + ramp-reset (W4) → the 251-site codemod + coupled reset flip + paint π (`BAND-MATERIAL` W6, `BJ.W-TYPE-CODEMOD`).
 
 **OPEN markers for the Fable two-challenge pass:**
 1. Gate substrate: vitest-fs (drafted) vs re-erecting `gates.mjs`/`proof-*.mjs`. [band-wide]
 2. springProjection: derivable device-free physical invariant vs generated-file-edit lint. [W1]
 3. `canon-doc.mjs`: retire (drafted) vs wire `auditCanonHomes` as one doc-integrity gate. [W1]
 4. Collapse count-guard: light meta-gate (drafted) vs ledger-diff only. [W1]
-5. **Pixel-floor CI-runner GPU risk** — does SwiftShader paint non-black in a GitHub ubuntu runner, or does
-   the gate SKIP? Gates whether W2 lands in `ci.yml` at all. [W2, substantive]
+5. **Pixel-floor CI-runner GPU risk** — **AMENDED (ruling 5):** fail-on-SKIP + force the WebGL floor path +
+   keep coarse + empirical acceptance; the infra-vs-pretag fallback is a CONDITIONAL ASK row that surfaces
+   only if the empirical probe fails. [W2, resolved-empirical]
 6. token-hygiene allowlist (true circles / blobs / control resets). [W3]
 7. orphan-CSS-partial vs `canon-doc` role overlap. [W3]
-8. prop-granularity FORM: targeted Card assertion (drafted) vs repo-wide prop-crawler vs fold into Family C
-   overfitting audit. [W3]
+8. prop-granularity FORM — **RULED:** folded into Family C's overfitting audit as a one-shot line, NOT a
+   standing Family-A gate (FINDING-5). [W3, resolved]
 9. Residual-canon tokenization ownership: W4 precondition (drafted) vs Family F. [W4]
-10. Ramp-reset landing: gate-only here + reset/codemod in Family F (drafted) vs all-in-W4. [W4]
+10. Ramp-reset landing — **RULED:** gate + residual tokenization here; reset+codemod in `BAND-MATERIAL` W6
+    (`BJ.W-TYPE-CODEMOD`); the two land in the same cut so the gate is never RED-at-tag. [W4, resolved]
 
 **In-scope count:** ~45-55 keeps after W1; +2 CI-wired pixel floors (W2); +3 static gates (W3); +1
 type-hygiene gate (W4) = the band lands the enforced surface in the mandated 40-60 band with, for the first

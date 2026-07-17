@@ -243,7 +243,10 @@ rounding — the entire compositions section is likely to be pruned."*
   one (e.g. `form-validation` or `empty-states`) as a legitimate story type in the family-D taxonomy?
   And is "compositions" as a *category* retired (F43's "why its own category")?
 - **Unblocks:** Wave 3's compositions delete (+ the confirm-preset test re-home) and the family-D
-  page-type taxonomy (which categories survive).
+  page-type taxonomy (which categories survive). **Taxonomy stake (cross-ref `BAND-STORY` OPEN-D9):**
+  this answer determines whether the `scene` page type has ANY members — `scene`'s only candidates are
+  the `compositions/` pages, so pruning the whole section makes the taxonomy **6 types (no `scene`)**,
+  while keeping any composition page as a legit `scene` makes it **7**. Do not mint an empty `scene` type.
 
 ---
 
@@ -262,7 +265,7 @@ rounding — the entire compositions section is likely to be pruned."*
 | C2 | confirm-dialog | fold already landed; keep-or-fold the story | demo page count + relay |
 | C3 | reveal/scroll | consolidate to ≥2-keeps | scroll-family reduction |
 | C4 | tempo | fold into springs (F29) | motion taxonomy |
-| D1 | compositions | prune whole section | Wave 3 + family-D taxonomy |
+| D1 | compositions | prune whole section | Wave 3 + family-D taxonomy (+ `BAND-STORY` `scene` type: 6-vs-7) |
 
 **Nothing here is a silent drop.** Every F04-relayed reduction question the census could not settle
 is a row above; the DECIDED reductions are in `waves/BAND-REDUCTION.md`. Your answers close the

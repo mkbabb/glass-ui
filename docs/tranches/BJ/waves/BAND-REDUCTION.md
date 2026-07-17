@@ -287,11 +287,14 @@ background** (the `kind === 'liquid-grid'` register), with presets at `demo/chas
 preset.ts` + `demo/stories/substrates/presets.ts`. So the delete is clean on the PUBLIC surface but
 carries a **demo re-home obligation**: `StoryHero`'s suffuse register + `aurora-hero.ts`'s
 `"liquid-grid"` register value must be re-homed onto aurora (which already offers a suffuse mode) or
-dropped. **Scope:** drop the `./liquid-grid` export + delete `src/components/liquid-grid/`; re-home
-the StoryHero suffuse register. `OPEN:` family D (story band) notes `liquid-grid` "hand-reimplements
-VizStudio" (studio-idiom-fork) and owns `StoryHero` — single-owner arbitration: does the StoryHero
-suffuse re-home land HERE (with the delete) or in the story band's hero wave? Recommend HERE (the
-delete must not orphan StoryHero), with the story band notified.
+dropped. **Scope:** drop the `./liquid-grid` export + delete `src/components/liquid-grid/` + **delete the
+`demo/stories/substrates/liquid-grid.vue` story page** (it imports `LiquidGrid` at :18 and cannot
+compile once the component is gone); re-home the StoryHero suffuse register. **RULED (adjudication
+RULING 1):** DELETE wins over fold — this band owns the component + export + STORY-PAGE deletion, and
+`BAND-STORY` W1 drops liquid-grid from its fold roster (no `studio`-variant normalize). The StoryHero
+suffuse re-home lands HERE too (the delete must not orphan StoryHero); the story band is notified.
+(`OPEN:` residual — whether the suffuse register re-homes onto aurora's suffuse mode or drops is a
+§Work execution detail, not an ownership question.)
 
 **Demo-privatize `Configurator` (`./configurator`, 382 LOC).** Verified: 382 lines; `activeLayer,
 asideWidth, layers` = 0 setters; consumers are the demo shell only (`VizStudio.vue`,
@@ -501,8 +504,9 @@ born-RED belongs to the design-loop.
 4. GlassDock 4 dead knobs — confirm the family-G dock greenfield inherits the cut (rec: die regardless).
 5. WatercolorDot — single-external (value.js); keep/relocate is an ASK §B question.
 6. Card one-axis shape — `variant` alone vs `variant + surface` (rec: single `variant` role-axis).
-7. liquid-grid StoryHero re-home — owned HERE (with the delete) vs the story band's hero wave
-   (rec: HERE, so the delete does not orphan StoryHero); story band notified.
+7. liquid-grid — RULED (adjudication R1): DELETE wins; this band owns the component + export +
+   STORY-PAGE (`demo/stories/substrates/liquid-grid.vue`) deletion + the StoryHero suffuse re-home;
+   `BAND-STORY` W1 drops it from the fold roster (no studio-variant normalize).
 8. easing public-surface drop — gated on ASK §B; F31 (family D/G) owns the component redesign.
 9. compositions section — the whole-section prune vs keeping any page as a legit story type is an
    ASK §D taxonomy call; re-home the confirm-preset test fixtures on delete.
