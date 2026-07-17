@@ -17,7 +17,7 @@ import {
 // the value.js boundary: a `var()` wrapper throws (proving the bug the fix
 // avoids), a concrete color resolves clean (proving the resolved value the fix
 // produces is parseable).
-describe("goo-blob color resolution — the var() → concrete fix (AW.W13)", () => {
+describe("goo-blob color resolution — the var() → concrete fix", () => {
     it("THROWS on a bare var() token (the bug the GooBlob computed-style resolve avoids)", () => {
         // This is the exact string the demo story passes; pre-fix it reached
         // value.js every frame and threw.

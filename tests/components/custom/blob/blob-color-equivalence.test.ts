@@ -131,7 +131,7 @@ const WITNESS = "#3a7bd5";
 // either matrix's sub-1e-7 hue rounding legitimately selects a different chroma hull.
 const SPACE_COLORS = ["#cc3345", "#33cc66", "#3366cc"];
 
-describe("goo-blob OKLCh color path ≡ value.js Ottosson core (AU.W7, DEC-AT-7)", () => {
+describe("goo-blob OKLCh color path ≡ value.js Ottosson core", () => {
     // (1) round-trip identity — gamma → … → gamma on a mid gray returns the input.
     it("(1) round-trips a mid gray (gamma→OKLCh→gamma identity)", () => {
         const gray: Vec3 = [0.5, 0.5, 0.5];

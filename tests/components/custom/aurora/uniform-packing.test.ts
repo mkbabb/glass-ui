@@ -33,7 +33,7 @@ const config = {
     })),
 };
 
-describe("P046 — eight-zone WebGPU uniform packing", () => {
+describe("eight-zone WebGPU uniform packing", () => {
     it("keeps every configured zone effect identical across WebGL2 and WebGPU", () => {
         const integers = new Map<string, number>();
         const arrays = new Map<string, Float32Array>();

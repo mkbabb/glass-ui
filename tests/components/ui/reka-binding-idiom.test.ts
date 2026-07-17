@@ -27,7 +27,7 @@ import {
 } from "@glass/components/combobox/index";
 import { Toaster, useToast } from "@glass/components/toast";
 
-describe("reka binding-idiom render-effect canary (AW.W26)", () => {
+describe("reka binding-idiom render-effect canary", () => {
     it("Button: a host-sized icon survives the owned default-icon rule", () => {
         const wrapper = mount(Button, {
             props: { emphasis: "secondary", size: "md" },
@@ -78,7 +78,7 @@ describe("reka binding-idiom render-effect canary (AW.W26)", () => {
         expect(wrapper.get("[data-slot=tags-input]")).toBeTruthy();
     });
 
-    it("Toast: the dismissal rides `onUpdate:open` (NOT the React `onOpenChange`) — RA-anim-suite §6 / AY.W-ANIM1 D1", async () => {
+    it("Toast: the dismissal rides `onUpdate:open` (NOT the React `onOpenChange`)", async () => {
         // The stale-reka-binding class (MEMORY feedback_glass_ui_binding_verification):
         // reka `ToastRoot` emits `update:open`, so the spread listener key MUST be
         // `onUpdate:open`. With the React shadcn `onOpenChange` key the close request

@@ -15,7 +15,7 @@ import GlassDock from "@glass/components/dock/GlassDock.vue";
  * correct axis class hook; the CSS that supplies the scroll regions ships in
  * `src/styles/dock/{overflow,shell}.css`.
  */
-describe("GlassDock intrinsic cap-scroll (BG.W-DOCK-CAP-SCROLL-FADE)", () => {
+describe("GlassDock intrinsic cap-scroll", () => {
     it("projects size and shape on the dock surface", () => {
         const baseline = mount(GlassDock);
         const vertical = mount(GlassDock, {

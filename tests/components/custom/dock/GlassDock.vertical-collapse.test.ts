@@ -15,7 +15,7 @@ import DockControl from "@glass/components/dock/DockControl.vue";
  * orientation → `vertical` → `block-size`), and expand()/collapse() drive the
  * `visualExpanded` aperture the morph rides.
  */
-describe("GlassDock vertical collapse (AZ.W-DOCK-TAXONOMY HG2)", () => {
+describe("GlassDock vertical collapse", () => {
     beforeEach(() => vi.useFakeTimers());
     afterEach(() => vi.useRealTimers());
 

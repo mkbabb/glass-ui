@@ -61,7 +61,7 @@ function hasCloseButton(root: HTMLElement): boolean {
     );
 }
 
-describe("DialogContent — AU.W9.C showClose prop", () => {
+describe("DialogContent — showClose prop", () => {
     it("renders the built-in close button by default (showClose unset)", async () => {
         const wrapper = mountDialog();
         await nextTick();

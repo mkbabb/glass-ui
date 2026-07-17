@@ -75,7 +75,7 @@ async function mountRail(withThirdFace = false) {
     return { wrapper, active };
 }
 
-describe("AU.W8.4 — dock rail a11y contract (APG tabs)", () => {
+describe("dock rail a11y contract (APG tabs)", () => {
     beforeEach(() => vi.useFakeTimers());
     afterEach(() => vi.useRealTimers());
 

@@ -50,7 +50,7 @@ function flick(field: ReturnType<typeof usePointerVelocityField>): void {
     field.tick(16);
 }
 
-describe("BI.W-FIELD-CORE — the master tempo scalar (tick(0)) freezes the interactive field under PRM", () => {
+describe("the master tempo scalar (tick(0)) freezes the interactive field under PRM", () => {
     it("uses one medium-aware predicate for pointer writes and uniforms", () => {
         expect(
             isAuroraPointerEnabled({

@@ -56,7 +56,7 @@ function findSliderHost(root: Element): HTMLElement | null {
     return root.querySelector('[data-slot="slider"]');
 }
 
-describe("AX.W03 — dock keepDockOpen host-native hold contract", () => {
+describe("dock keepDockOpen host-native hold contract", () => {
     afterEach(() => {
         document.body.innerHTML = "";
     });

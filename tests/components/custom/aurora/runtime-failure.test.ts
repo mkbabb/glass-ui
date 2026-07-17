@@ -13,7 +13,7 @@ vi.mock("@glass/composables/glass/webgpu/useGpuSubstrate", () => ({
 import { createAurora } from "@glass/components/aurora/composables/runtime";
 import { DEFAULT_AURORA_CONFIG } from "@glass/components/aurora/constants/presets";
 
-describe("P045 — Aurora runtime failure identity", () => {
+describe("Aurora runtime failure identity", () => {
     beforeEach(() => substrate.create.mockReset());
 
     it("rejects direct software-raster readiness instead of resolving a blank CSS handle", async () => {

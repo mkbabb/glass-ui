@@ -90,7 +90,7 @@ describe("useKeyboardShortcuts", () => {
         );
     });
 
-    it("resolves Escape LIFO — the most-recently-registered handler wins (BI.W-ESC-STACK)", () => {
+    it("resolves Escape LIFO — the most-recently-registered handler wins", () => {
         // Two OPEN overlays register Escape in order; the dispatcher must fire the
         // LAST-registered (top-most) one and consume, leaving the first untouched.
         const order: string[] = [];

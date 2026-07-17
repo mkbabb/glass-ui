@@ -125,7 +125,7 @@ beforeEach(() => {
 
 afterEach(() => vi.unstubAllGlobals());
 
-describe("useCanvas2D — the Canvas2D substrate park/freeze contract (AW.W17)", () => {
+describe("useCanvas2D — the Canvas2D substrate park/freeze contract", () => {
     it("runs the consumer render loop and gates isRunning() on the suspend set", () => {
         const ctx = makeCtx();
         const canvas = ref<HTMLCanvasElement | null>(makeCanvas(ctx));

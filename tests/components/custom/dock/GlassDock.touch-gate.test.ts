@@ -151,7 +151,7 @@ function mountDockWithCollapsedControl() {
     return { wrapper, onPlay };
 }
 
-describe("GlassDock touch-gate behavioural contract (AT.W6-dock-b)", () => {
+describe("GlassDock touch-gate behavioural contract", () => {
     beforeEach(() => {
         vi.useFakeTimers();
         enableTouchDevice();

@@ -106,7 +106,7 @@ afterEach(() => {
     vi.unstubAllGlobals();
 });
 
-describe("useGpuSubstrate — the transparent picker degrade contract (W-GPU-SUBSTRATE)", () => {
+describe("useGpuSubstrate — the transparent picker degrade contract", () => {
     it("degrades to the WebGL2 backend when navigator.gpu is absent (jsdom)", async () => {
         // No navigator.gpu → the picker must select WebGL2.
         vi.stubGlobal("navigator", {});
@@ -186,7 +186,7 @@ describe("useGpuSubstrate — the transparent picker degrade contract (W-GPU-SUB
     });
 });
 
-describe("createWebGPUCanvas — the async device-acquisition prelude (W-GPU-SUBSTRATE)", () => {
+describe("createWebGPUCanvas — the async device-acquisition prelude", () => {
     function stubWebGPU(canvas: HTMLCanvasElement) {
         const device = {
             lost: new Promise(() => {}), // never resolves in this test
@@ -346,7 +346,7 @@ describe("createWebGPUCanvas — the async device-acquisition prelude (W-GPU-SUB
         handle.dispose();
     });
 
-    it("a no-adapter init failure REJECTS with the typed WebGPUInitError + does NOT fire onInitError (BC.W-WEBGPU-EVERYWHERE D8')", async () => {
+    it("a no-adapter init failure REJECTS with the typed WebGPUInitError + does NOT fire onInitError", async () => {
         // The D8' close: a no-adapter host is a RECOGNIZED substrate decision the picker
         // handles — NOT a contract violation. The leaf rejects with the typed signal
         // (NOT a bare uncaught throw) AND does NOT fire the consumer's onInitError (that
@@ -375,7 +375,7 @@ describe("createWebGPUCanvas — the async device-acquisition prelude (W-GPU-SUB
     });
 });
 
-describe("createGpuSubstrate — the try-WebGPU-then-rebuild-WebGL2 picker (BC.W-WEBGPU-EVERYWHERE D8)", () => {
+describe("createGpuSubstrate — the try-WebGPU-then-rebuild-WebGL2 picker", () => {
     it("FALLS to the WebGL2 net SILENTLY when navigator.gpu exists but requestAdapter returns null", async () => {
         // The keystone hazard: navigator.gpu PRESENT but requestAdapter() returns null
         // (headless/SwiftShader/blocklisted). A presence-only picker (committing WebGPU

@@ -22,7 +22,7 @@ function withSetup<T>(setup: () => T): T {
     return result;
 }
 
-describe("useTokenColor — injected resolver seam (AW.W15)", () => {
+describe("useTokenColor — injected resolver seam", () => {
     it("overrides the document read with an injected resolver", async () => {
         const resolver = vi.fn((prop: string) => {
             return prop === "--accent" ? "rgb(10, 20, 30)" : "";

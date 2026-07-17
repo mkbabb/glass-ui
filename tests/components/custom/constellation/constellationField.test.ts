@@ -51,7 +51,7 @@ function makeField(
     };
 }
 
-describe("constellationField — the pure proximity-graph engine (AW.W17)", () => {
+describe("constellationField — the pure proximity-graph engine", () => {
     it("seedField produces `count` nodes within bounds, reproducible under a seed", () => {
         const rng = mulberry32(0xc0ffee);
         const nodes = seedField(rng, 40, 800, 600, 0.16);
@@ -163,7 +163,7 @@ describe("constellationField — the pure proximity-graph engine (AW.W17)", () =
     });
 });
 
-describe("constellation focal-node + warp spring (AX.W17)", () => {
+describe("constellation focal-node + warp spring", () => {
     const stillNodes = (): ConstellationNode[] => [
         { x: 100, y: 100, vx: 0, vy: 0, r: 2, dim: false },
         { x: 500, y: 100, vx: 0, vy: 0, r: 2, dim: false },
@@ -282,7 +282,7 @@ describe("constellation focal-node + warp spring (AX.W17)", () => {
     });
 });
 
-describe("constellation refit + auto-drift wander (AY.W-CON1)", () => {
+describe("constellation refit + auto-drift wander", () => {
     /** A field seeded at a SMALL extent, ready for a re-fit to a larger box. */
     function seededField(w: number, h: number): ConstellationField {
         const field = makeField(seedField(mulberry32(0xa11ce), 24, w, h, 0.16), w, h);
@@ -434,7 +434,7 @@ describe("constellation refit + auto-drift wander (AY.W-CON1)", () => {
     });
 });
 
-describe("constellation warp ω-reconcile + gravity-well (AY.W-CON2)", () => {
+describe("constellation warp ω-reconcile + gravity-well", () => {
     /** The keyframes.js critically-damped 2%-settle: t₂ ≈ 5.83/ω₀ = 5.83·response/(2π). */
     const settleFrames = (response: number, fps = 60) =>
         Math.round(((5.83 * response) / (2 * Math.PI)) * fps);
@@ -653,7 +653,7 @@ describe("constellation warp ω-reconcile + gravity-well (AY.W-CON2)", () => {
 });
 
 // ── The six-item generalization ───────────────────────
-describe("constellation generalization (AZ.W-CON-GEN)", () => {
+describe("the generalized constellation field engine", () => {
     it("G1 — a PINNED node is HELD: stepField does not drift/bounce it while others move", () => {
         const nodes = seedField(mulberry32(0xa11), 20, 800, 600, 0.16);
         const field = makeField(nodes, 800, 600);
@@ -807,7 +807,7 @@ import { BASE_WIDTH } from "@glass/components/constellation/constellationField";
 import { DEFAULT_K_FLOOR } from "@glass/components/constellation/constants";
 import { kVisOf } from "@glass/components/constellation/constellationRender";
 
-describe("constellation kVis floor (R5-8)", () => {
+describe("constellation kVis floor", () => {
     const fieldAt = (k: number, kFloor?: number) =>
         ({ k, kFloor }) as Parameters<typeof kVisOf>[0];
 

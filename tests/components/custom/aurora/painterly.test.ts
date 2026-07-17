@@ -70,7 +70,7 @@ function lineAngle(v: [number, number]): number {
     return a;
 }
 
-describe("AW.W4.1 — structure-tensor / ETF orientation field", () => {
+describe("structure-tensor / ETF orientation field", () => {
     it("the minor eigenvector is the edge TANGENT (perpendicular to the gradient)", () => {
         // A field whose color changes along +x (a vertical band edge): gradient is
         // horizontal (Gx=1, Gy=0). The iso-band TANGENT is vertical (+y).
@@ -107,7 +107,7 @@ describe("AW.W4.1 — structure-tensor / ETF orientation field", () => {
     });
 });
 
-describe("AW.W4.3/W4.4 — medium + stroke-orient resolution", () => {
+describe("medium + stroke-orient resolution", () => {
     const cfg = (over: Partial<AuroraConfig>): AuroraConfig => ({
         ...DEFAULT_AURORA_CONFIG,
         ...over,

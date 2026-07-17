@@ -92,7 +92,7 @@ afterEach(() => {
     window.getComputedStyle = realGetComputedStyle;
 });
 
-describe("resolveCanvasColor — the light-dark()→rgb() probe-span resolver (AX.W37)", () => {
+describe("resolveCanvasColor — the light-dark()→rgb() probe-span resolver", () => {
     it("resolves a bare --token to a canvas-valid rgb() (the actual defect)", () => {
         const host = document.createElement("div");
         document.body.appendChild(host);

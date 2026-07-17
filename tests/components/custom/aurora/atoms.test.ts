@@ -129,7 +129,7 @@ function configViolations(cfg: AuroraConfig, label: string): string[] {
     return v;
 }
 
-describe("AX.W10 — resolveAtoms total-function fuzz", () => {
+describe("resolveAtoms total-function fuzz", () => {
     // The color axes (seed/harmony/colorEnergy) and the composition axes
     // (zones/noise/medium/texture/motion) are INDEPENDENT in resolveAtoms — they touch
     // disjoint config fields. So the totality argument is TWO coordinated sweeps rather
@@ -221,7 +221,7 @@ describe("AX.W10 — resolveAtoms total-function fuzz", () => {
     });
 });
 
-describe("AX.W10 — the NOISE atom fans to the organic-boundary cluster", () => {
+describe("the NOISE atom fans to the organic-boundary cluster", () => {
     it("a rising noise scalar moves warpAmount + warpScale and steps warpMode/noiseOctaves", () => {
         const lo = resolveAtoms({ noise: 0 });
         const hi = resolveAtoms({ noise: 1 });
@@ -234,7 +234,7 @@ describe("AX.W10 — the NOISE atom fans to the organic-boundary cluster", () =>
     });
 });
 
-describe("AX.W10 — texture is structurally absent on a smooth medium", () => {
+describe("texture is structurally absent on a smooth medium", () => {
     it("a smooth medium atom carries no `amount` field (the union narrows it away)", () => {
         const m: AuroraAtoms["medium"] = { kind: "smooth" };
         // @ts-expect-error — the smooth arm of AuroraMediumAtom has no `amount`.
@@ -257,7 +257,7 @@ describe("AX.W10 — texture is structurally absent on a smooth medium", () => {
     });
 });
 
-describe("P046 — interactivity is discriminated by medium", () => {
+describe("interactivity is discriminated by medium", () => {
     it("rejects directional light on smooth while retaining its field axes", () => {
         // @ts-expect-error — smooth has no directional impasto light.
         const invalid: AuroraAtoms = { medium: { kind: "smooth" }, interactivity: { light: true } };
@@ -270,7 +270,7 @@ describe("P046 — interactivity is discriminated by medium", () => {
     });
 });
 
-describe("AX.W10 — the ZONES arrangement re-places the nuclei (ONE nucleiPrior)", () => {
+describe("the ZONES arrangement re-places the nuclei (ONE nucleiPrior)", () => {
     it("scattered / composed / centred produce DISTINCT layouts for the same count", () => {
         const composed = nucleiPrior(4, "composed");
         const scattered = nucleiPrior(4, "scattered");
@@ -300,7 +300,7 @@ describe("AX.W10 — the ZONES arrangement re-places the nuclei (ONE nucleiPrior
     });
 });
 
-describe("AX.W10 — the default atoms preserve the wispy-sky default", () => {
+describe("the default atoms preserve the wispy-sky default", () => {
     it("resolveAtoms(DEFAULT_ATOMS) deep-equals DEFAULT_AURORA_CONFIG", () => {
         const resolved = resolveAtoms(DEFAULT_ATOMS);
         expect(resolved).toEqual(DEFAULT_AURORA_CONFIG);
@@ -344,7 +344,7 @@ describe("AX.W10 — the default atoms preserve the wispy-sky default", () => {
 });
 
 // ── The configToAtoms inverse (the seed-from-preset projection). ──
-describe("AY.W-AUR-STUDIO — configToAtoms projects a config back onto the ≤7 atoms", () => {
+describe("configToAtoms projects a config back onto the ≤7 atoms", () => {
     it("recovers the medium (the headline atom — the dock seeds the live preset's medium)", () => {
         for (const kind of [
             "smooth",

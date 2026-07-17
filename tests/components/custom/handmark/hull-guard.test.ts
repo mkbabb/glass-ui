@@ -19,7 +19,7 @@ const DEGENERATE: [number, number][] = [
     [50.3, 18],
 ];
 
-describe("BG.W-HANDMARK-PERFECT (b) — the hull se-guard", () => {
+describe("the hull empty-path guard (degenerate outline → stroked fallback)", () => {
     it("the raw pf serialiser vanishes on a < 4-point outline (the born-RED root cause)", () => {
         // getSvgPathFromStroke returns "" below 4 outline points — the exact vanish the
         // guard catches (a degenerate near-point hull collapses to fewer than 4 points).

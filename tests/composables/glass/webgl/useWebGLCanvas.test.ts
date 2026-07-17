@@ -128,7 +128,7 @@ afterEach(() => {
     vi.restoreAllMocks();
 });
 
-describe("useWebGLCanvas — the consumer-#2 substrate contract (AU.W6)", () => {
+describe("useWebGLCanvas — the consumer-#2 substrate contract", () => {
     it("drives a NON-aurora consumer (different quad/DPR/demand-gate) generically", () => {
         const glStub = {
             getExtension: () => null,
@@ -394,7 +394,7 @@ describe("useWebGLCanvas — the consumer-#2 substrate contract (AU.W6)", () => 
 // per settle (the debounce), and once N losses land within T ms the substrate STOPS
 // re-arming and HOLDS the parked state WITHOUT throwing (the aurora-swraster inert-handle
 // precedent). A genuine single loss STILL self-heals — the breaker fires only on the storm.
-describe("useWebGLCanvas — the context-loss circuit-breaker (BC.W-SAFARI-WEBGL)", () => {
+describe("useWebGLCanvas — the context-loss circuit-breaker", () => {
     function armed(makeGl: () => object) {
         let setups = 0;
         let frames = 0;

@@ -27,7 +27,7 @@ function maxAbsDelta(
     return Math.max(Math.abs(a[0] - b[0]), Math.abs(a[1] - b[1]), Math.abs(a[2] - b[2]));
 }
 
-describe("AX.W11 — warmCatchLight OKLCh derivation", () => {
+describe("warmCatchLight OKLCh derivation", () => {
     it("reproduces the prior [1.0,0.95,0.88] aurora warm-white at the ratified anchor (no visible shift)", () => {
         const derived = warmCatchLight(
             AURORA_CATCH_LIGHT_ANCHOR.L,

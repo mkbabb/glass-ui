@@ -67,7 +67,7 @@ function linearChannels(stop: OklchStop): number[] {
     return value(convertColor(finalOklch(stop), "srgb-linear")).channels.map(Number);
 }
 
-describe("aurora color ≡ value.js canonical core (inv-K-2)", () => {
+describe("aurora color ≡ value.js canonical core", () => {
     it("oklchToLinear === Value final-object conversion + aurora's Math.max wrap", () => {
         for (const s of STOPS) {
             const lin = linearChannels(s);

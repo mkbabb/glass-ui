@@ -27,7 +27,7 @@ import {
     DialogTrigger,
 } from "@glass/components/dialog/index";
 
-describe("sheetSlideTransform (R1 — translate LONGHAND, never a transform fn)", () => {
+describe("sheetSlideTransform — a translate LONGHAND, never a transform fn", () => {
     it("emits an off-edge longhand pair per placement at p=1", () => {
         expect(sheetSlideTransform("right", 1)).toBe("100% 0");
         expect(sheetSlideTransform("left", 1)).toBe("-100% 0");
@@ -42,7 +42,7 @@ describe("sheetSlideTransform (R1 — translate LONGHAND, never a transform fn)"
         expect(sheetSlideTransform("top", 0)).toBe("0 0%");
     });
 
-    it("is a longhand pair, NOT a translateX()/translateY() transform function (R1 paint-nothing bug)", () => {
+    it("is a longhand pair, NOT a translateX()/translateY() transform function", () => {
         for (const p of ["right", "left", "bottom", "top"] as const) {
             const v = sheetSlideTransform(p, 0.42);
             expect(v).not.toMatch(/translate[XY]?\(/);

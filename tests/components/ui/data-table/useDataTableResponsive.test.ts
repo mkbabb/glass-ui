@@ -17,7 +17,7 @@ const columns: DataTableColumn<Row>[] = [
 ];
 
 // The responsive card-vs-table projection DataTable.vue consumes.
-describe("useDataTableResponsive (AW.W14)", () => {
+describe("useDataTableResponsive", () => {
     it("stays tabular at/above the card breakpoint", () => {
         const width = ref(800);
         const { isCard } = useDataTableResponsive<Row>({

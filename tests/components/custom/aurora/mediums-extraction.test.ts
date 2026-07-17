@@ -34,7 +34,7 @@ const C = code(SRC);
 // Collapse runs of whitespace so a reflowed line still matches.
 const flat = C.replace(/\s+/g, " ");
 
-describe("AX.W12 — the StrokeProfile extraction is a value-preserving transposition", () => {
+describe("the StrokeProfile extraction is a value-preserving transposition", () => {
     it("the substrate exists: struct StrokeProfile + profileFor + paintStrokeLayers", () => {
         expect(/struct StrokeProfile\s*\{/.test(C)).toBe(true);
         expect(/StrokeProfile profileFor\(int medium, int mode\)/.test(C)).toBe(true);
@@ -68,7 +68,7 @@ describe("AX.W12 — the StrokeProfile extraction is a value-preserving transpos
 
     // ── The profile VALUE-FIDELITY: every if-ladder constant survived the move. ──
     // The oil baseline (mode 0) — the StrokeProfile(...) constructor's positional args.
-    it("the OIL baseline (mode 0) profile carries the exact HEAD if-ladder values", () => {
+    it("the OIL baseline (mode 0) profile carries the exact if-ladder values", () => {
         const ctor = (flat.match(/StrokeProfile prof = StrokeProfile\(([^)]*)\)/) || ["", ""])[1];
         const nums = ctor.split(",").map((s) => s.trim().replace(/\/\*.*?\*\//g, "").trim());
         // shapeType, bristleAmp, streakFreq, streakAmp, impastoAmp, hardness,
@@ -79,7 +79,7 @@ describe("AX.W12 — the StrokeProfile extraction is a value-preserving transpos
         ]);
     });
 
-    it("the KNIFE mode (1) profile carries the exact HEAD knife overrides", () => {
+    it("the KNIFE mode (1) profile carries the exact knife overrides", () => {
         const knife = (flat.match(/if \(mode == 1\) \{([\s\S]*?)\} else if/) || ["", ""])[1];
         expect(knife.includes("prof.shapeType  = 3") || knife.includes("prof.shapeType = 3")).toBe(true);
         expect(knife.includes("prof.bristleAmp = 0.12")).toBe(true);
@@ -93,7 +93,7 @@ describe("AX.W12 — the StrokeProfile extraction is a value-preserving transpos
         expect(knife.includes("prof.densitySml = 0.70")).toBe(true);
     });
 
-    it("the BRUSHWORK mode (3) profile carries the exact HEAD brushwork overrides", () => {
+    it("the BRUSHWORK mode (3) profile carries the exact brushwork overrides", () => {
         const brush = (flat.match(/else if \(mode == 3\) \{([\s\S]*?)\} return prof/) || ["", ""])[1];
         expect(brush.includes("prof.shapeType  = 0") || brush.includes("prof.shapeType = 0")).toBe(true);
         expect(brush.includes("prof.bristleAmp = 0.32")).toBe(true);

@@ -115,7 +115,7 @@ describe("cn — conflict-pair deduplication (last-write-wins)", () => {
     });
 });
 
-describe("cn — AJ.W3-η typography utility ≠ text-color bucket", () => {
+describe("cn — typography utility ≠ text-color bucket", () => {
     // Regression suite — dashboard map "DL" chip text
     // invisibility. The Button `default` variant emits
     // `text-primary-foreground`; the consumer adds `text-micro` (a
@@ -132,7 +132,7 @@ describe("cn — AJ.W3-η typography utility ≠ text-color bucket", () => {
         expect(out).toContain("bg-primary");
     });
 
-    it("Button-default variant + consumer text-micro (the §5.D-11 shape)", () => {
+    it("Button-default variant + consumer text-micro coexist", () => {
         // Mirrors the cn() call inside Button.vue:
         //   cn('h-(--control-h-md)', 'h-7 px-1 text-micro')
         const variantClasses =

@@ -44,7 +44,7 @@ function dispatchTransitionEnd(root: Element, propertyName: string): void {
 // product default stays TRUE — this scopes the unit test to the mechanism it verifies,
 // the same test-env accommodation as the happy-dom `elementsFromPoint` stub, NOT a
 // product change).
-describe("GlassDock isTransitioning — spring-settle source (BG.NF.1 W-FALLBACK-EXCISE)", () => {
+describe("GlassDock isTransitioning — spring-settle source", () => {
     beforeEach(() => vi.useFakeTimers());
     afterEach(() => vi.useRealTimers());
 

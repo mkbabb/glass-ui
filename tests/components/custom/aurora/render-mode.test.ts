@@ -76,7 +76,7 @@ describe("resolveRenderMode — adaptive substrate tier", () => {
         expect(resolveRenderMode("auto")).toBe("webgl");
     });
 
-    it("BC.W-VIZ-AURORA (T1) — auto → webgl on a low-core HARDWARE device (the dead-static fall is GONE)", () => {
+    it("auto → webgl on a low-core HARDWARE device (the dead-static fall is GONE)", () => {
         // A 2026-capable device reporting only 4 logical cores (a throttled VM tab, a base
         // M-series laptop) is NO LONGER demoted to a frozen gradient — the "renders SLOW"
         // defect root. The hardware renderer arms webgl; the software-raster guard is the
@@ -90,7 +90,7 @@ describe("resolveRenderMode — adaptive substrate tier", () => {
         expect(resolveRenderMode("auto")).toBe("webgl");
     });
 
-    it("BC.W-VIZ-AURORA (T1) — auto → webgl under prefers-reduced-motion (PRM is the substrate's freeze, NOT a render-mode fall)", () => {
+    it("auto → webgl under prefers-reduced-motion (PRM is the substrate's freeze, NOT a render-mode fall)", () => {
         // Reduced-motion no longer demotes the render mode to "css" — the substrate
         // live-monitors `matchMedia` and freezes to ONE static frame then parks, re-arming
         // on un-reduce. A render-mode "css" fall could never wake (it never armed WebGL), so

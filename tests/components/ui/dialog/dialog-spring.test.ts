@@ -57,7 +57,7 @@ function findDialog(): HTMLElement | null {
     return document.querySelector(".test-dialog") as HTMLElement | null;
 }
 
-describe("DialogContent — W13 spring entrance (BH.W-MOTION-AXIS)", () => {
+describe("DialogContent — spring entrance", () => {
     it("does not emit the data-spring attribute when springPreset is unset", async () => {
         const wrapper = mountDialog();
         await nextTick();
