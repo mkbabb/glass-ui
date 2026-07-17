@@ -28,7 +28,7 @@
          snappy: (0.48s, ζ=0.74)  — quick-but-weighty position morph, overshoot ~+3.2%
          bouncy: (0.60s, ζ=0.60)  — emphatic FLOWING one-shot, overshoot ~+9.5% (≤10% band)
          gentle: (0.82s, ζ=1.00)  — patient critically-damped (NO overshoot by definition)
-         dock:   (0.68s, ζ=0.64)  — the WEIGHTY iOS-27 gooey morph (collapse/expand + V↔H + fission), slow inertial mass, un-pointed settle ~+7.3%
+         dock:   (0.68s, ζ=0.64)  — the WEIGHTY iOS-27 gooey morph (collapse/expand + V↔H + fission), slow inertial mass; the emitted curve is a monotone weighty settle into rest — NO overshoot past 1.0 (it rises to exactly 1.0 over its own settle window and never exceeds it)
          press:  (0.20s, ζ=0.80)  — the iOS interactive tap-press, sub-200ms answer, ~+1.5%
 
        Note on `smooth`: at ζ=0.80 the analytic solver produces a small peak

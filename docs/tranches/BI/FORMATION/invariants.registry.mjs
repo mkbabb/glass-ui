@@ -1,11 +1,14 @@
 /**
- * Authority for the perfected-BI durable invariant taxonomy.
+ * Authority for the perfected-BI durable invariant taxonomy — DESCRIPTIVE CANON.
  *
- * This is formation data, not an executable roster. The implementation creates one
- * cursor-driven verifier that discovers applicable tests and live scenarios from
- * changed semantic subjects. No invariant below receives a command, package-script
- * alias, table file, or independently runnable "gate" identity. Every row names a
- * behavioral property and realistic mutations that must make its evidence RED.
+ * This is formation data, not an executable roster: a human-read reference canon,
+ * never a runner or engine. Verification itself is typecheck + build + unit tests +
+ * the pre-tag lane + the one-time differentials quoted in wave commits (see the
+ * addenda VERIFICATION declaration). No invariant below receives a command,
+ * package-script alias, table file, or independently runnable "gate" identity.
+ * Every row names a behavioral property and realistic mutations that must make its
+ * evidence RED. The generated `invariants.json` is this canon serialized and carries
+ * the same DESCRIPTIVE CANON status.
  */
 
 const device = (id, domain, invariant, oracle, bites, modes = ["local", "ci", "release"]) => ({

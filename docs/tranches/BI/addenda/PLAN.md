@@ -146,6 +146,17 @@ duplicate route, spacing geometry); pass 2 challenges it against the whole Data/
 removes any change that creates a second spacing authority. Q010 remains POST and nonterminal until
 that native pass; no census, proof script, or gate is added.
 
+Adjudication 2026-07-16 (a second route-dedupe routed here by the clipboard wave's gestalt
+critic): `/motion/springs` vs `/motion/curve-gallery` rules KEEP-BOTH, not dedupe. Springs
+("Spring Orchestrator") owns the static projection pipeline exclusively—`springProjection`→
+`linear()` stops, `motionTempo` clock, byte-exact `--spring-*` token verification, clipboard
+copy—while curve-gallery ("Motion Lab") owns the live `SpringProgress` integrator with
+mid-flight momentum reversal, the overlay transition-token grammar, and `EasingPicker`/
+`EasingConfigurator` easing authoring. The lone overlap is the `SPRING_PRESETS` picker, taught
+two disjoint ways (projected token vs live runtime); deduping either would orphan real exported
+surface, so both earn their place. No code mutation; the removed empty `curve-gallery/` husk
+stays removed. Ruling: reports/small-batch/q010-route-ruling.md.
+
 ## Band 3 · MOTION/DOCK — 4 waves
 
 **Q020 EYEGLASS-SPRING-RETIRE** [H-3, I-2#3, I-7, RM-3] · SEQ: POST
