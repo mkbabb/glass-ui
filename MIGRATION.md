@@ -5,7 +5,7 @@ records the breaking changes that landed in that cut, newest first. Clean breaks
 — no legacy aliases, no back-compat shims (L invariant 4); every break is a one-line
 rename or import re-point per call site.
 
-## 7.0.0 (unreleased)
+## 7.0.0 (2026-07-17)
 
 The packed public map changes from 82 to 74 export keys. It removes
 `./color-swatch`, `./controls`, `./focus-scope`, `./icon-chip`, `./icon-tooltip`,

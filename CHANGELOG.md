@@ -1,6 +1,6 @@
 # Changelog
 
-## 7.0.0 (unreleased)
+## 7.0.0 (2026-07-17)
 
 ### Export-map delta (the authoritative 6.x → 7.0 migration surface)
 
