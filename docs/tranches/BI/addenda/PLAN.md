@@ -224,6 +224,14 @@ within ±0.5 CSS px before/after scroll. Keyboard traversal, Escape focus return
 fixed header/close plus body-scroll composition must remain intact. This rider does not close from
 source or ordinary tests alone.
 
+V8b witness (2026-07-17, `reports/visual-sweeps/V8b-sheet.md` + the sheet-motion DELTA doc): the
+graded sheet-edge PAINT arm is closed — the band renders on placed sheets in both schemes with no
+banding or hard line, and it rides the spring translate re-sampling the backdrop per frame
+(artifacts `v8b-sheet-03/04`). The Configurator instrument-sheet composition (fixed header/close +
+body scroll) and Escape/scrim/button focus return are likewise paint-witnessed through interrupts.
+The P106 placement-matrix remainder (actions height, content-sized top/bottom, ±0.5px graded-edge
+scroll bound) still rides the Q002/Q003 pre-tag lane as written above.
+
 **Q024 REGISTER-CALIBRATION** [C2-04: media gap-map state-b targets; I-7] · SEQ: POST
 Only T10 changes: retune the existing `--enter-overlay-scale` from `0.88` to `0.94`, including the
 same-register fallback/prose in the one reveal recipe. Preserve its current spring, clock, blur,
