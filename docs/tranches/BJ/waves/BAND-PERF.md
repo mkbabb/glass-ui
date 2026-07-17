@@ -501,3 +501,8 @@ target route:
 governance-absent, above-fold-cv-exemption + filter-duplication, route-pending-absent), each with a verified
 probe and a self-test bite. 5 live-trace metrics deferred to the Round-3 browser lens with the exact capture
 recipe above — the honest split the census's "live-trace confirmation owed" verdict demands.
+
+**Lead seam ruling (2026-07-17, ASSEMBLY):** `BJ.W-ROUTE-PENDING` OWNS F07's story-transition
+choreography outright — Family D is consulted, not co-owner; OPEN-P10's fork is decided inside
+this wave. R3b baselines seed the gates: 119ms warm transition freeze (one 83ms long-task) +
+CLS 0.04 at the swap (reserve space), 186ms cold-nav stall as the pending-affordance floor case.

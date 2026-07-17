@@ -663,3 +663,7 @@ as part of the re-tune, or state in the wave's outbound that consumers re-pin at
 recalibration. Also owed the next batched outbound: the §3 protagonist answer — no successor
 emphasis prop exists on /metric at 7.0.0; consumer-CSS is correct for now, and /metric itself is
 under the BJ reduction confrontation (UF-K1/R16), so no new metric surface until that ruling.
+
+**Lead amendment (2026-07-17, ASSEMBLY):** W1's RULING-8 conditional on F12/F17 converts to
+REGRESSION-GUARDS — disk shows both sites already role-correct; the wave's live-π confirms, then
+the role assertions pin them against re-drift.
