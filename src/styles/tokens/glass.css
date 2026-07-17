@@ -155,6 +155,23 @@
        the `--dock-surface-blur: var(--glass-blur-resting)` re-point).
        The dock reads the unified 7px resting material; there is no dock-own blur rung. */
 
+    /* ── The graded-backdrop halo cohort (the `data-backdrop="graded"` opt-in) ──
+       ONE box-following masked plate that swaps the immersive Dialog's flat
+       full-viewport scrim for a frost-near / sharp-far bloom (the intersect
+       double-ramp product; radial STRUCK). The immersive Dialog + the
+       ENGAGE-AFFORD slider modal are the two opt-in consumers; `:root`-overridable
+       per presets-in-consumers. The dim rides the proven `--glass-bg-overlay` mix
+       (per-mode arms, placement.css), NOT `--overlay-scrim`.
+       - `--glass-halo-blur`  : the halo plate radius (18-20px sweet spot; 11 reads
+         too close to the modal's own plate, 34 is unnecessarily heavy).
+       - `--glass-halo-core`  : the half-extent out to which the frost holds full
+         (≈ the surface half-extent, measured from the surface/viewport centre).
+       - `--glass-halo-bloom` : the transition band beyond the core out to which the
+         frost eases to the sharp page (~100-120px). */
+    --glass-halo-blur:  20px;
+    --glass-halo-core:  13rem;
+    --glass-halo-bloom: 7rem;
+
     /* Dock-specific opacity (0.42) — lighter than `resting` (0.65) so the dock
        reads as a translucent overlay rather than a panel, backdrop bleed
        visible through it. Consumed by `.glass-dock` via `--glass-bg-dock`. The

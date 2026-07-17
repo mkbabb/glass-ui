@@ -59,6 +59,10 @@ export type Placement = (typeof PLACEMENTS)[number]; // default "center"
 export const TRIGGERS = ["click", "hover", "context"] as const;
 export type Trigger = (typeof TRIGGERS)[number]; // default "click"
 
+/** The overlay-backdrop axis — the flat scrim vs the graded box-following halo. */
+export const BACKDROPS = ["scrim", "graded"] as const;
+export type Backdrop = (typeof BACKDROPS)[number]; // default "scrim" (byte-identical no-op floor)
+
 // ── THE PAIRED-EDIT META-ARRAYS (proof:encapsulation reads these; NOT exported —
 // the membership fence keeps the module's EXPORT surface pure axis vocabulary, so
 // these self-describing const arrays are internal). Adding an axis is a PAIRED edit:
@@ -75,6 +79,7 @@ const AXIS_TUPLES = [
     "TONES",
     "PLACEMENTS",
     "TRIGGERS",
+    "BACKDROPS",
 ] as const;
 const AXIS_TYPE_NAMES = [
     "Size",
@@ -85,6 +90,7 @@ const AXIS_TYPE_NAMES = [
     "Tone",
     "Placement",
     "Trigger",
+    "Backdrop",
 ] as const;
 const ALLOWED_EXPORTS = [
     ...AXIS_TUPLES,
