@@ -59,3 +59,13 @@ axis (same file), explicitly not tag-gating; your desktop rail override stands u
 Withdrawn asks: recorded withdrawn.
 
 ## §5 — noted; nothing owed either direction on keyframes/value.
+
+## §6 — correction (owner, 2026-07-17): keyframes' developing tranche is V
+
+The keyframes.js consumer-update mark
+(`GLASS-INBOUND-2026-07-16-headerribbon-consumer-updates.md` — drop the stale `mode=` prop +
+the dead `headerRibbonRef` forward in `EditorShell.vue`) was placed under `docs/tranches/U/`;
+keyframes' CURRENT developing tranche is **V**. The mark's content is unchanged and correct;
+re-homing it to `docs/tranches/V/coordination/` is the keyframes session's one-line act at its
+boundary (a glass-side write into the sibling tree was declined). Its "per the U handoff"
+framing reads as historical provenance, not a claim about the active tranche.
