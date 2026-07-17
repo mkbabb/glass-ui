@@ -206,3 +206,69 @@ Held for Round 3 (browser seat frees when the Q002 suite exits): live-paint veri
 chip defect + F02 blank cards + F06 transition flash; the perf RED baseline trace; the
 engagement audit (A01/A11); V-A95 live probe. Design-loop passes for the four greenfields form
 Rounds 4+ after the registry stabilizes.
+
+---
+
+## Round-2 fold (13 seats returned: 7 original + 6 confirmation; digests at round-2/ and
+round-2b-confirm/; chronic compiler = Round 2C, pending)
+
+**Stability signal:** all 8 round-1 headline claims CONFIRMED by the adversarial re-proof (the
+only corrections were file paths — demo/ not src/demo/). The chip orphan is proven in SHIPPED
+dist: 0 `.glass-chip`/`.glass-atom` rules in dist/glass-ui.css — upgraded CRITICAL. Independent
+gate census: 180 files / 1055 it-blocks / 248 describes. The duplicated 2B batch-1/2 seats act
+as an unplanned second independent pass over five lenses — their agreement is banked as a
+stability data point. Registry still NOT STABLE: round 2 surfaced material new findings.
+
+**Family B corrections (the Q060 roster truth, from verify-consumer-truth):** round-1's census
+was wrong in FIVE places — (1) /controls→/dark-mode-toggle is consumed by EIGHT repos (~11
+sites: speedtest, muster, words, value.js-demo ×2, bbnf, atlas ×2, sci-report, slides ×2), not
+two; (2) /metric-badge is imported across the ENTIRE fourier-analysis repo (7 files) + speedtest
+SurveyResultDock + muster CommandDock; (3) **header-ribbon "prime delete" REFUTED** — keyframes.js
+EditorShell.vue:116 imports it and MIGRATION.md:115 marks the subpath KEPT (keyframes.js is an
+UNDECLARED glass-ui consumer — the census class that in-repo probes structurally miss); (4) the
+hover-card "atlas ×1" row is PHANTOM (atlas: 0) while real consumers speedtest MapTooltip.vue:36
++ fourier-analysis ×2 were missed; (5) completion-seal adds atlas ×2 (completion.ts:5,
+category.ts:2) beside sci-report. All consumer pins sit BEHIND 7.0.0 — every break is
+prospective on the bump. The corrected break table in round-2/adversarial-verification digest is
+the Q060 mail source.
+
+**Family F additions (typography lens):** CRITICAL enforceability fact — the Tailwind default
+ramp is never reset (`--text-*: initial` absent), so text-sm/text-xs (251 sites) silently bypass
+the √φ fluid scale; no lint can work until the default ramp is cleared. Mono-caption idiom
+saturates 65/128 story pages (126× text-mono-caption + 57× text-admin-label + structural
+injection via StorySection.vue:29). Story hierarchy is typographically flat: ~335 flat carriers
+vs ~34 ladder carriers — the F10 mechanism. Even the canon files don't dogfood their own tokens.
+
+**Family G additions (aurora lens):** the WGSL primary maps mediums 3/5/6/7 (oil, vangogh,
+oil-pastel, kuwahara) ALL to mediumKuwahara (aurora-mediums.wgsl.ts:399-400) — the user's
+"almost identical" verdict is mechanically true on WebGPU; oil-pastel is a constants-skin of oil
+even on WebGL; crayon IS genuinely distinct (own body both backends). 17 presets → 9-10 proposal:
+kill VIVID_SETTING_SUN / OILPASTEL_RAINBOW / OILPASTEL_OCEAN / OIL_GESTURAL / one watercolor;
+relocate SPEEDTEST to its consumer; a PROPER van-Gogh mode requires porting real stroke bodies
+to WGSL — the aurora greenfield's central technical fact. uniformBridge.ts:76-79 comment is
+stale (family J).
+
+**Family H additions (colocation census):** edict ~70% realized; dock/ is the gold standard;
+`index.css @import position IS the cascade order` — §7's central-partial doctrine refuted by 15
+shipped counter-examples. Fewest-move migration: glass/wave→liquid-grid, textureUpload→aurora,
+**src/composables/sidebar (7 files, public ./sidebar export) → demo/** (zero library consumers),
+accent-tone.css→chip, carve _shared/ (21 flat) into 5 submodules, normalize handmark helpers.
+
+**NEW family K — component a11y defects (a11y lens):** SidebarDock's aria-label lands on a
+role-less div with no nav landmark (BottomDock has the correct pattern — divergence, not
+ignorance); DockControl emits aria-pressed only when ON; center-spring dialogs orphan focus on
+body through the exit spring (the side-sheet/drawer guard never covers centerSpringActive);
+two placeholder registers fall below 4.5:1 by different mechanisms; dock has no roving
+tabindex/toolbar role (ruling needed); the hero h1/h2 duplication corroborated. Reduced-motion
+substrate is genuinely strong — carve that as a confirmed KEEP.
+
+**The iOS-27 codex (both Fable seats):** unified at ios27/IOS27-CODEX.md — 13 laws in three
+groups (material: progressive blur / adaptive tint / edge caustic / radius-role grammar; motion:
+origin-anchored morph / goo-morph nav / detent sheets / staggered reactive entry / axis-morph;
+identity: type ladder without meta-captions / restraint floor / fill-pill progress / liquid-metal
+blob) + the five BEST-iOS-27 vectors. Full marks at ios27/MARKS-A.md + MARKS-B.md. This is the
+design authority for families F and G and the A03 triumvirate.
+
+**Round-3 plan unchanged** (browser lenses, post-suite). Round 2C (chronic DECIDED-row compiler)
+pending → family I adjudication. After Round 3 + 2C fold: the wave-shaping synthesis begins
+(bands from families A-K), then the two-consecutive-clean stability passes.
