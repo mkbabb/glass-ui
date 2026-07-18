@@ -6,11 +6,19 @@ workflow edicts) and then UNION the best components with the extant Opus/non-fab
 this Fable agent should go into this with the assumption that the non-fable begat findings are
 straight-up incorrect. Demarcate ALL of these."
 
-This document is the complete demarcation. Every artifact below is OPUS-BEGAT (or presumed so
-where the round record is model-silent on a mechanical-class seat — presumption stated, included
-in scope). Everything not listed was Fable-begat (the round-1/2 judgment lenses, the iOS-27 codex
-seats, all greenfield passes and critics, the perfection passes, the superfluity confrontation,
-all dossiers/critics/judges, the capstones, every stability pass).
+**CENSUS CORRECTION (2026-07-17, post-incident):** the transcript census proved this document's
+scope claim FALSE — a settings-level `CLAUDE_CODE_SUBAGENT_MODEL=opus` override had silently
+forced 332 of 349 seats to opus; only 15 fork seats and lead main-loop work were Fable. The
+paragraph below records the pre-census belief and stands only as history. The complete demarcation
+is now `CENSUS-CLASSIFICATION.md` (42 REDO units, the falsehoods here enumerated in its §2); the
+RF-1..8 units below remain in scope and execute per that registry.
+
+This document was written as the complete demarcation. Every artifact below is OPUS-BEGAT (or
+presumed so where the round record is model-silent on a mechanical-class seat — presumption
+stated, included in scope). ~~Everything not listed was Fable-begat~~ (the round-1/2 judgment
+lenses, the iOS-27 codex seats, all greenfield passes and critics, the perfection passes, the
+superfluity confrontation, all dossiers/critics/judges, the capstones, every stability pass) —
+struck by the census correction above.
 
 ## The units (RF-1 .. RF-8)
 
