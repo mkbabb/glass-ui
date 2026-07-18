@@ -283,3 +283,114 @@ reveal ladder as a ladder, icons clipped behind the dock row; screenshot path, g
 body), `f1-wk-cc-scrub-mid.png` (t=0.5 held desync), `f1-wk-cc-open-settled.png`,
 `f1-wk-cc-held-empty-medium.png` (**video path** — wallpaper as pure blurred color masses, zero
 content), `f1-wk-h4-blur-ramp.png` (video montage). Zero page errors across the session.
+
+## PASS-2 CURES (cure seat F1, 2026-07-18)
+
+verified-model: claude-fable-5 (system-context model ID, verbatim). No browser owned this seat —
+every check needing live paint is queued at `../../passes/PASS-2/reverify-queue.md` §F1 with
+exact steps + acceptance numbers. Provenance: the wall-#9-killed cure seat's partial writes
+(snapshot `../../passes/PASS-2/salvage-wall9/`) were verified byte-identical to the live tree at
+resume, audited gap-by-gap against CRIT-F1 + MARKS PASS-2 CORRECTIONS, and completed. The
+ledger: `../../passes/PASS-2/cures-F1.md`.
+
+What changed in this directory (`node check.mjs` — **38/38 PASS** after the cures):
+
+1. **Constants re-fit to MARKS, not to the pass-1 probe (G2).** Medium clocks 25/140ms →
+   20/120ms (open-medium-95% 107→92ms inside the ≤100ms cliff; close-medium-gone 683→623ms
+   inside MARKS 600–650). Overpull register (0.40, ζ0.34) → **(0.35, ζ0.80)** — the MARKS C2
+   arbitrated register; `pin-release` (0.22, 0.75) kept as DESIGN (C3: bounds-only,
+   INCONCLUSIVE). Every check.mjs band now carries a source tag — `[MARKS §n]` (corpus-derived),
+   `[DESIGN]` (corpus-silent design law), `[REG-LOCK]` (drift lock on adopted constants, not
+   corpus truth) — and the sim value is a point inside its band, never the band's author.
+2. **The mid-detent catch is falsifiable end to end (G3).** Trigger rewritten from the
+   release-state condition (`value > 0.72 && v < −2.2`) to the spec's projected-MOMENTUM path
+   (decayRest-style, v′ = −k·v, k=3/s): a fast fall released at 0.70 now catches, a slow ease
+   and a −3.2 flick-close refuse, upward crossings report symmetrically — a 10-row truth table
+   in check.mjs. Exit is arrival-or-170ms. The page's `#mCatchS`/`#mCatchL` cells are no longer
+   hard-wired PASS: dwell 120–220ms, well proximity ≤0.12, and landing gated live. **The
+   588-vs-406ms delta is explained and eliminated**: sim gated |x|<0.006 ∧ |v|<0.1 while the
+   live page gated the park epsilon (0.0015/0.02) — ~90–180ms apart at the dock register's
+   decay rate. One metric now (the spine's own park epsilon, both sides): sim lands 571ms, live
+   must land 571±40ms.
+3. **ONE blessed parameterization (G5).** The target-conditioned θ rule (0.02 open-intent /
+   0.10 close-intent) is the only occupancy rule in physics, page, spec, and check; the pass-1
+   probe file carries a supersession header marking its per-scenario constants and positional
+   fade ramp as history. Dishonesty #2 below is RESOLVED (the round-2 blessing happened).
+4. **The intent law (G6).** The scrub-time heuristic is now a specced law in the physics block:
+   committed-intent LATCH (drive-time latched), projection p = value + 0.15·v̄ with v̄ through a
+   τ=120ms filter, hysteresis 0.5±0.10, pointer-idle decay (τ=100ms after 80ms still — the
+   stale-LSQ accident is designed away; `scrubIdle` runs per frame in both demos). Six new
+   check gates: zero flips under ±0.04 @ 6Hz dither from either latch state, exactly one flip
+   on a slow cross, early commit (value 0.416 < 0.5) on a fast flick. Both badges now print
+   `intent=` so the latch is observable live; the live dither rows are queued (reverify §F1).
+5. **The G7 PRM defect is fixed.** `scenario(target, fn)` now receives the target and seats to
+   it under PRM before returning — the Maps flick buttons seat correctly from parked. The live
+   PRM re-run (both engines) is queued.
+6. **Gate-cell honesty on the page.** Every live cell's inline gate now matches the check.mjs
+   band ±1 display frame where a wall-clock crossing is sampled; the H5 sim column regenerates
+   from the same physics block check.mjs extracts (unchanged mechanism, new constants).
+
+Dishonesty-ledger disposition (the pass-1 list above stands as history): #2 RESOLVED (blessed
+rule, item 3); #4 ANSWERED in WebKit paint (H4 blur-rides-opacity, safari-arm section); #5
+PARTIALLY SUPERSEDED — the catch landing now uses the park metric on both sides (item 2); the
+pin/overpull settle rows keep the 2px metric, still stated; #9 DEAD (register re-fit, item 1);
+#1, #3, #6, #7, #8, #10, #11 stand unchanged. The pass-1 "Sim numbers at write time" table and
+both VERIFIED live columns predate the re-fit and stand only as history — the re-measurement
+under the corrected bands is the re-verify seat's (queue §F1).
+
+## PASS-2 RE-VERIFY (queue §F1) — the re-fit constants measured live, engine-tagged
+
+verified-model: claude-fable-5 (system-context model ID, verbatim). Re-verify browser seat,
+2026-07-18. Chrome 150.0.7871.128 (Playwright 1.61.1 channel:"chrome", headed, display 120Hz —
+frame 8.3ms) + WebKit 26.5 (webkit-2311, headed, 60Hz — frame 17ms), file://, DPR 2. Sim
+reference re-confirmed at run time: `node check.mjs` = 38/38 PASS. Queue-precondition
+correction: `maps`/`cc` are NOT reachable top-level bindings (the wiring script is an IIFE;
+only `F1` is global) — the intent rows were measured through the page's own observables (the
+badge `intent=` cell, ≤5-frame cadence, and the fade follower's per-rAF direction — the same
+latch's consumer-facing consequence; the two concur on every row).
+
+1. **CC battery (re-fit clocks) — 12/12 live cells PASS, both engines.**
+   Chrome: open medium 95% 96ms (≤115; page sim 92), fade 95% 196ms, stretch 90% 596ms,
+   fade:stretch 1:3.0; close fade 172ms, beat 150ms, medium gone 622ms; interrupt 0.57/0.00.
+   WebKit: 91/206/590 · 1:2.9; 179/151/630; 0.58/0.00. The expected drift is LIVE: medium 95%
+   lands 16–21ms earlier and medium-gone 56–64ms earlier than the banked pass-1 112/686 class
+   — the stale-physics tripwire did not fire.
+2. **Maps battery (C2 register) — all cells PASS, both engines.** Pin covered @83ms 85%/90%
+   (≥75), settle 114/130ms (≤220). Overpull zero-seed overshoot **1.3%/0.8%** (≤3% — the
+   pass-1 32–33% class is DEAD), settle 189/196ms (170–290). Flung overshoot/velocity
+   0.022s/0.030s (0.015–0.030; WebKit at the band edge, page-classed PASS), settle from
+   crossing 151/150ms. Catch: dwell 173/181ms, near 0.007, landed 581/597ms vs sim 571 —
+   Δ10/Δ26 ≤ ±40 (the 588-vs-406 gate is real and held).
+3. **PRM regression (G7) — VERIFIED both engines.** Under PRM each button seats in ONE poll:
+   Maps flick-open computed --gl-t {0.0000→1.0000}, flick-close {1.0000→0.0000}, zero
+   intermediate values, the engine's own fps cell parked THROUGHOUT (never woke); CC open/close
+   seat t/m/f jointly in one step. The pre-cure no-op (t stuck at 0.000) did not reproduce.
+4. **The intent-law live rows (G6) — VERIFIED both engines.**
+   (a) settled open → slow-drag to t=0.500 (~1.5s) → ±13.6px @6Hz ×1.2s: 0 flips (intent held
+   1; 350/170 samples); release glides to the LATCH's target 1.000 — not the nearest detent.
+   (b) same dither reached from closed: 0 flips (intent 0).
+   (c) continue slow to t≈0.75: EXACTLY 1 flip 0→1 at value 0.5813 (Chrome) / 0.5765 (WebKit)
+   — consistent with p = value + 0.15·v̄ ≥ 0.60 at the measured drag speed; release → 1.000.
+   (d) fast downward flick from parked closed: first intent=1 frame at value 0.3529 / 0.2941
+   < 0.5 (early commit; sim ref 0.416) — the badge flip and the fade-rise frame AGREE on both
+   engines; the surface commits open (final 1.000).
+   Corroboration from the capture leg: a 0.55 t/s drag to 0.5 on WebKit latched intent 1
+   mid-drag (velocity-bought commit) — the projection law visible in a second, independent path.
+5. **R1 recalc attribution, Chrome arm — PASS.** Trace across the natural 180-frame run at 40
+   consumers: 182 FireAnimationFrames, Recalculate Style total 52.0ms → **0.289ms/frame avg**
+   (≤2ms), max single recalc 0.70ms; page meter: gap avg 8.33ms, max 9.4ms, 0 dropped >24ms.
+   The WebKit half stays TOOL-DEFER (desktop Safari Web Inspector), per the queue.
+6. **R5 clip-path residency, Chrome arm — GREEN; SPEC-F1 §2-H1 STANDS (no revert).** Trace
+   across 3 flick-open/flick-close cycles (~54 rAF/750ms per flight): Paint events with clip
+   rects intersecting the card body = **0 in all six growth windows** (the ~120 paints/window
+   sit in the instrumentation panel outside the card box); after each flight's first
+   invalidation no recurring per-frame main-thread Paint attributable to the card; frame gaps
+   p95 9.2ms — the only 5 gaps >24ms are the 5 inter-flight PARKED idles (by design), 0
+   in-flight frames >24ms.
+7. **Capture law (SPEC §5) — the re-fit exhibit set stamped `f1-p2-*` / `f1-p2-wk-*`, each
+   with its paired-π computed sample.** Mid-growth ladder held: t 0.4500/0.4494, badge
+   "regime: scrub" in-frame. Held desync: t 0.5000, medium 1.0000, fade 0.0000, intent 0
+   (the WebKit first take latched intent 1 at a 0.55 t/s drag — retaken at the (b)-class
+   speed; the fast take kept as corroboration of row 4, not as the exhibit). Empty-medium
+   beat frame: trigger f 0.043/0.050 with m 1.000; post-shot m 1.000/0.967 — the capture sits
+   inside the beat on both engines. The pass-1 PNGs stand as history per the queue.

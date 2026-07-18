@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>V-PERCH — the corner-perched close (IOS27-MICRO novelty)</title>
+<!--
+  V-PERCH — the corner-perched close. Standalone prototype, no build step.
+  verified-model: claude-fable-5. Seat: novelty:PROTO-2 (PROTO-ATTENTION-EXIT).
+  Roster card 6 (NOVELTY-ROSTER.md:249-261). Mechanism, verbatim from the card:
+    A chrome layer OUTSIDE the plate clip (the F5 z/DOM contract's plane vocabulary;
+    D-LENS protrusion is the shipped precedent — chrome that must escape the plate
+    clip is an architectural layer, not an overflow hack); static position at the
+    corner point (translate(-50%,-50%) on the border intersection); engage envelope
+    only; no new clip machinery. Static at rest; a press envelope on engagement;
+    effectively free. Press-charge acknowledgment iOS's X lacks; commit hands off
+    to V-VAPOR (here: the handoff EVENT is fired and the honest close-order stub
+    runs — content first, beat, medium after; the composed 3-layer dissolve is
+    ../v-vapor's organ, integration QUEUED in PROBE-NOTES).
+  Seat geometry: for corner radius r the border point on the 45-degree diagonal is
+  r(1 - 1/sqrt(2)) from each edge — the perch centers THERE, astride the border,
+  half outside by construction. Squircle correction is a parameter (k), circle k=1.
+  Glass register from F1's good glass (f1-scalar-spine/index.html:109-112, :214-216).
+  Rim light is ENGAGEMENT-ONLY (MARKS §4 note 3 — no idle specular).
+-->
+<style>
+  :root {
+    --engage-t: 0;      /* the perch's charge envelope (FAC --engage-t shape) */
+    --perch-seat: 8.2px; /* stamped from PERCH.seatOffset(28) at load — checked equal */
+    --beat-ms: 140;
+    --medium-relax-ms: 420;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body {
+    background: #0b0e14; color: rgba(255, 255, 255, 0.92);
+    font: 14px/1.45 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+    display: grid; place-items: center; padding: 24px;
+  }
+  .phone {
+    position: relative; width: 420px; height: 720px; border-radius: 36px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), inset 0 0 0 6px #05070b;
+    overflow: hidden;
+  }
+  .world {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(160px 130px at 24% 18%, rgba(255, 158, 94, 0.85), transparent 70%),
+      radial-gradient(200px 170px at 82% 30%, rgba(120, 108, 255, 0.8), transparent 70%),
+      radial-gradient(230px 210px at 50% 86%, rgba(66, 190, 224, 0.75), transparent 70%),
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.10) 0 1px, transparent 1px 14px),
+      #10141c;
+  }
+  .medium {
+    position: absolute; inset: 0; z-index: 1;
+    -webkit-backdrop-filter: blur(18px) saturate(1.2) brightness(0.62);
+    backdrop-filter: blur(18px) saturate(1.2) brightness(0.62);
+    background: rgba(8, 10, 16, 0.35);
+  }
+  .medium.relax {
+    opacity: 0;
+    transition: opacity calc(var(--medium-relax-ms) * 1ms) cubic-bezier(0.2, 0.6, 0.3, 1)
+      calc(var(--beat-ms) * 1ms);
+  }
+  .phone.closed .medium, .phone.closed .surface-root { display: none; }
+  /* ============ THE PLANE VOCABULARY ============
+     .surface-root: NO clip — the architectural root both planes share.
+     .plate: the glass body, ITS OWN clip (radius + overflow for content).
+     .perch: the chrome plane, a SIBLING of the plate — never inside the clip. */
+  .surface-root { position: absolute; left: 40px; right: 40px; top: 190px; z-index: 2; }
+  .plate {
+    border-radius: 28px; padding: 22px; overflow: hidden; /* the plate clip */
+    background: linear-gradient(180deg, rgba(44, 56, 60, 0.52), rgba(24, 32, 36, 0.66));
+    -webkit-backdrop-filter: blur(22px) saturate(1.35);
+    backdrop-filter: blur(22px) saturate(1.35);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  }
+  .plate.leaving .content { opacity: 0; transition: opacity 170ms ease-out; } /* content FIRST */
+  .plate h2 { font-size: 17px; font-weight: 600; margin-bottom: 4px; }
+  .plate .sub { font-size: 13px; color: rgba(255, 255, 255, 0.62); }
+  .plate .rowline {
+    margin-top: 12px; padding: 10px 12px; border-radius: 14px; font-size: 13px;
+    background: rgba(255, 255, 255, 0.07);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10);
+  }
+  /* the perch: 44px hit target, 30px visual, astride the corner point */
+  .perch {
+    position: absolute; top: var(--perch-seat); left: var(--perch-seat);
+    width: 44px; height: 44px; padding: 0; border: 0; background: none; cursor: pointer;
+    transform: translate(-50%, -50%);
+    display: grid; place-items: center;
+  }
+  .perch .dot {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: linear-gradient(180deg, rgba(52, 62, 66, 0.78), rgba(30, 38, 42, 0.88));
+    -webkit-backdrop-filter: blur(10px) saturate(1.2);
+    backdrop-filter: blur(10px) saturate(1.2);
+    /* rim light is engagement-only: hairline at rest, charged under the finger */
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, calc(0.18 + 0.50 * var(--engage-t))),
+      0 4px 10px rgba(0, 0, 0, 0.35);
+    transform: scale(calc(1 + 0.11 * var(--engage-t))); /* cap under phi^(1/4)=1.1279 */
+    display: grid; place-items: center;
+    color: rgba(255, 255, 255, calc(0.72 + 0.28 * var(--engage-t)));
+  }
+  .perch .dot svg { width: 12px; height: 12px; display: block; }
+  .perch:focus-visible .dot { outline: 2px solid rgba(140, 190, 255, 0.9); outline-offset: 2px; }
+  .hud {
+    position: absolute; left: 12px; bottom: 10px; z-index: 4; font-size: 10.5px;
+    color: rgba(255, 255, 255, 0.5); font-family: ui-monospace, monospace;
+  }
+  .restore {
+    position: absolute; left: 50%; bottom: 40px; transform: translateX(-50%); z-index: 3;
+    display: none; padding: 10px 18px; border: 0; border-radius: 16px; cursor: pointer;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.20), rgba(255, 255, 255, 0.10));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.40); color: #fff; font: inherit;
+  }
+  .phone.closed .restore { display: block; }
+  .note { max-width: 420px; margin-top: 14px; font-size: 12px; color: rgba(255,255,255,0.45); }
+</style>
+</head>
+<body>
+<main>
+  <div class="phone" id="phone">
+    <div class="world"></div>
+    <div class="medium" id="medium"></div>
+    <div class="surface-root" id="surfaceRoot">
+      <div class="plate" id="plate">
+        <div class="content">
+          <h2>Shared album invite</h2>
+          <div class="sub">The close is perched astride the corner — found without hunting,
+            honest about which body it kills.</div>
+          <div class="rowline">Coast trip — 44 photos</div>
+          <div class="rowline">From Ray, this morning</div>
+        </div>
+      </div>
+      <button class="perch" id="perch" aria-label="Dismiss the shared album invite">
+        <span class="dot" aria-hidden="true">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <path d="M2 2 L10 10 M10 2 L2 10" /></svg>
+        </span>
+      </button>
+    </div>
+    <button class="restore" id="restore">Restore the card</button>
+    <div class="hud" id="hud">engage-t 0.000 · seat 8.2px · rAF parked</div>
+  </div>
+  <p class="note">V-PERCH: press-charge on the corner close (hold it — the rim charges, release
+  commits, slide off cancels and the charge drains). Commit fires the <code>vapor-handoff</code>
+  event; here the honest close-order stub runs (content → beat → medium).</p>
+</main>
+
+<script>
+/*PERCH-PHYSICS-BEGIN*/
+// The V-PERCH physics — the SAME object drives paint and the node battery.
+// Pure math, no DOM. verified-model: claude-fable-5.
+const PERCH = {
+  R: 28,            // the plate's corner radius (role: card/sheet, codex law 4 band R28-40)
+  VISUAL: 30,       // the perch dot diameter
+  HIT: 44,          // the hit target — never below 44 (the accessibility floor)
+  SQUIRCLE_K: 1,    // superellipse correction; 1 = circular arc (true squircle QUEUED-PAINT)
+  // the corner point: r(1 - 1/sqrt(2)) from each edge, ON the border arc at 45deg
+  seatOffset(r = this.R, k = this.SQUIRCLE_K) { return k * r * (1 - 1 / Math.SQRT2); },
+  // how far the visual dot extends OUTSIDE the plate's box along each axis
+  protrusion() { return this.VISUAL / 2 - this.seatOffset(); },
+  // charge envelope: attack 55ms (t90 ~127ms), drain 120ms (t10 ~276ms — a felt cancel)
+  env: { tauUp: 0.055, tauDown: 0.12, eps: 1e-3 },
+  envStep(e, target, dt) {
+    const tau = target > e ? this.env.tauUp : this.env.tauDown;
+    const next = e + (target - e) * (1 - Math.exp(-dt / tau));
+    return Math.abs(next - target) < this.env.eps ? target : next;
+  },
+  scaleAt(e) { return 1 + 0.11 * e; },        // cap: phi^(1/4) = 1.1279
+  rimAlphaAt(e) { return 0.18 + 0.50 * e; },  // engagement-only light; 0.18 hairline at rest
+  close: { contentMs: 170, beatMs: 140, mediumTau: 0.12 }, // MARKS §5 close order
+  // the press state machine: charge -> commit (release inside) | cancel (slide off)
+  makePress() {
+    let state = "idle"; // idle -> charging -> committed | draining
+    return {
+      down() { if (state === "idle" || state === "draining") state = "charging"; return state; },
+      slideOff() { if (state === "charging") state = "draining"; return state; },
+      slideBack() { if (state === "draining") state = "charging"; return state; },
+      up(inside) {
+        if (state !== "charging") { state = "draining"; return { state, commit: false }; }
+        if (inside) { state = "committed"; return { state, commit: true }; }
+        state = "draining"; return { state, commit: false };
+      },
+      get state() { return state; },
+    };
+  },
+  sims: {
+    rise() {
+      let e = 0, t = 0, t90 = null; const dt = 1 / 240;
+      while (t < 1 && t90 === null) { e = PERCH.envStep(e, 1, dt); t += dt; if (e >= 0.9) t90 = t; }
+      return { t90: t90 * 1000 };
+    },
+    drain() {
+      let e = 1, t = 0, t10 = null, park = null; const dt = 1 / 240;
+      while (t < 2 && park === null) {
+        e = PERCH.envStep(e, 0, dt); t += dt;
+        if (t10 === null && e <= 0.1) t10 = t;
+        if (e === 0) park = t;
+      }
+      return { t10: t10 * 1000, parkMs: park * 1000 };
+    },
+    pressTruthTable() {
+      const a = PERCH.makePress(); a.down(); const ra = a.up(true);            // press, release inside
+      const b = PERCH.makePress(); b.down(); b.slideOff(); const rb = b.up(false); // slide off, release
+      const c = PERCH.makePress(); c.down(); c.slideOff(); c.slideBack(); const rc = c.up(true); // return
+      const d = PERCH.makePress(); const rd = d.up(true);                      // stray up, never pressed
+      return {
+        commitInside: ra.commit ? 1 : 0,
+        slideOffCancels: rb.commit ? 1 : 0,
+        slideBackRecommits: rc.commit ? 1 : 0,
+        strayUpNoCommit: rd.commit ? 1 : 0,
+      };
+    },
+    closeOrder() {
+      const c = PERCH.close;
+      const relax = c.mediumTau * Math.log(1 / 0.05) * 1000;
+      return {
+        contentMs: c.contentMs,
+        beatMs: c.beatMs,
+        mediumTailMs: c.beatMs + relax,
+        orderOK: c.contentMs > 0 && c.beatMs > 0 ? 1 : 0, // content strictly before medium
+      };
+    },
+  },
+};
+/*PERCH-PHYSICS-END*/
+
+// ---------- page wiring (static at rest; press envelope only; event-scoped rAF) ----------
+(function () {
+  const root = document.documentElement;
+  const phone = document.getElementById("phone");
+  const plate = document.getElementById("plate");
+  const medium = document.getElementById("medium");
+  const perch = document.getElementById("perch");
+  const surfaceRoot = document.getElementById("surfaceRoot");
+  const hud = document.getElementById("hud");
+  const prm = matchMedia("(prefers-reduced-motion: reduce)");
+  const press = PERCH.makePress();
+  let e = 0, target = 0, raf = 0, last = 0;
+
+  // stamp the seat from the physics (single source; check.mjs verifies the equality)
+  root.style.setProperty("--perch-seat", `${PERCH.seatOffset().toFixed(1)}px`);
+
+  function tick(now) {
+    const dt = Math.min(0.05, (now - last) / 1000); last = now;
+    e = PERCH.envStep(e, target, dt);
+    root.style.setProperty("--engage-t", e.toFixed(4));
+    hud.textContent = `engage-t ${e.toFixed(3)} · ${press.state} · rAF live`;
+    if (e === target) { raf = 0; hud.textContent = `engage-t ${e.toFixed(3)} · ${press.state} · rAF parked`; return; }
+    raf = requestAnimationFrame(tick);
+  }
+  function drive(t) {
+    target = t;
+    if (prm.matches) { e = t; root.style.setProperty("--engage-t", e.toFixed(4)); return; } // PRM: step
+    if (!raf) { last = performance.now(); raf = requestAnimationFrame(tick); }
+  }
+  function commit() {
+    // THE HANDOFF: V-VAPOR owns the full dissolve; this event is the seam.
+    surfaceRoot.dispatchEvent(new CustomEvent("vapor-handoff", { bubbles: true }));
+    plate.classList.add("leaving");                       // content first (~170ms)
+    medium.classList.add("relax");                        // beat (delay) + relax after
+    const total = PERCH.close.contentMs + PERCH.close.beatMs + PERCH.close.mediumTau * 1000 * 3 + 60;
+    setTimeout(() => phone.classList.add("closed"), prm.matches ? 0 : total);
+    drive(0);
+    hud.textContent = "committed · vapor-handoff dispatched";
+  }
+  perch.addEventListener("pointerdown", (ev) => {
+    perch.setPointerCapture(ev.pointerId); press.down(); drive(1);
+  });
+  perch.addEventListener("pointermove", (ev) => {
+    if (press.state !== "charging" && press.state !== "draining") return;
+    const r = perch.getBoundingClientRect();
+    const inside = ev.clientX >= r.left && ev.clientX <= r.right && ev.clientY >= r.top && ev.clientY <= r.bottom;
+    if (!inside && press.state === "charging") { press.slideOff(); drive(0); }
+    if (inside && press.state === "draining") { press.slideBack(); drive(1); }
+  });
+  perch.addEventListener("pointerup", (ev) => {
+    const r = perch.getBoundingClientRect();
+    const inside = ev.clientX >= r.left && ev.clientX <= r.right && ev.clientY >= r.top && ev.clientY <= r.bottom;
+    const res = press.up(inside);
+    if (res.commit) commit(); else drive(0);
+  });
+  perch.addEventListener("pointercancel", () => { press.up(false); drive(0); });
+  perch.addEventListener("keydown", (ev) => {
+    // the keyboard law: full function, zero pop — deterministic commit, no charge ritual
+    if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); commit(); }
+  });
+  document.getElementById("restore").addEventListener("click", () => {
+    phone.classList.remove("closed"); plate.classList.remove("leaving");
+    medium.classList.remove("relax");
+    hud.textContent = "engage-t 0.000 · idle · rAF parked";
+  });
+})();
+</script>
+</body>
+</html>

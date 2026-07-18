@@ -226,3 +226,146 @@ Video-path (material-true): `f5-wk-u1-chips.png`, `f5-wk-u3-board.png`, `f5-wk-c
 `f5-wk-travel-a/b.png`, `f5-wk-arrival-a/b.png`, `f5-wk-blink-sheet.png`. Screenshot-path
 (geometry only): `f5-wk-u2-held-mid.png`. All eight `-wk-` PNGs left by the crashed earlier
 capture run were overwritten by these provenanced captures. Zero page errors.
+
+## PASS-2 CURES (cure seat F5, 2026-07-18)
+
+verified-model: claude-fable-5 (system-context model ID, verbatim). No browser this seat — every
+check needing live paint is queued at `../../passes/PASS-2/reverify-queue.md` §F5. Ledger:
+`../../passes/PASS-2/cures-F5.md`. Corrections are additive; voids are quoted.
+
+### The pass-1 capture corrections (CRIT-F5 G2) — two evidence claims VOID, three files relabeled
+
+The pass-1 VERIFIED screenshot line claimed transient states its pixels do not contain; the
+orange body beside the capsule in both is the drifting ferry — the exact confound VERIFIED
+itself warned about for `f5-idle.png`:
+
+- ~~"`f5-charge-travel-held.png` (wash=1 during early travel—every sibling label plainly legible,
+  the paint form of the 4.7:1 claim)"~~ VOID — the PNG shows `lens state: rest` with a completed
+  1623ms 3-slot readout; no wash, no barbell, no bloom. Relabeled **`f5-rest-after-3slot.png`**.
+- ~~"`f5-morph-travel-b.png` (arrival: capsule re-formed with the bloom still hot beside it—light
+  and capsule coexist, the second handoff)"~~ VOID — rest state, 1653ms 4-slot readout; the
+  "bloom" is the ferry. Relabeled **`f5-rest-after-4slot.png`**.
+- `f5-morph-mid.png` — the VERIFIED text was honest ("settled end state") but the FILENAME
+  claimed a mid-morph; relabeled **`f5-rest-settled.png`**.
+
+Chrome consequently has ZERO transient-lens paint evidence from pass 1; the Safari arm's
+video-path transients (`f5-wk-charge-held/travel-a/b/arrival-a/b/blink-sheet.png`, ferry frozen)
+are the ONLY transient paint captures in the corpus. Chrome transients are queued (reverify §F5
+row 1) and are now un-confoundable: the page carries ferry-off + clock ×1/×4/×20 capture toggles
+(the critique's freeze-or-clock-scale disjunction, resolved to clock-scale — every clock scales
+coherently and the banded readouts normalize to ×1, so the gates stay honest under capture).
+
+### The harness cures (G5/G6) + the fence re-arm (suffusion forPass2) + G8
+
+- **G5 PRM one-flip:** `body.prm` now suppresses every lens-channel transition (the 0.23→1.0
+  charge RAMP is dead — charge is a discrete flip); `commit()` under PRM skips the charge floor
+  entirely and seats in the same tick (~~the ~250ms deferral, reproduced on both engines~~ dead
+  by construction). The acknowledgment bloom rides the seat flip and clears as a second DISCRETE
+  flip at 220ms — a step, per suffusion §3.5 Q3/Q8. In-between-frame re-check queued (row 4).
+- **G6a** flick-from-closed guarded ("flick ignored—medium at rest"); **G6b** the cliff cell can
+  no longer inherit a relax duration (measure skipped when no transition will run + a disarm
+  window on unarmed listeners); **G6c** the abandoned press now discharges on all three paths
+  (pointerleave, pointercancel, deferred window-pointerup) and a cross-tab commit re-stamps the
+  charge floor — the phantom press→settle write class is closed. Stub-DOM dry-run: boot, 1-slot
+  morph, retarget, abandoned-press discharge, PRM one-flip, U2 chains + guard, writer claim — no
+  throws (scratchpad `f5-p2-cure-dryrun.mjs`; geometry is stubbed, bands are live-paint gates).
+- **The compositor fence (BINDING forPass2 demand):** the default goo anatomy is now
+  additive-gradient metaballs — transform/opacity only, ZERO filter on the travel hot path; the
+  pass-1 SVG-filter merge survives only behind the `svg-arm` duel toggle. The duel (one-body
+  read + cadence, both engines, the 26ms 4-slot frame the suspect) is queued (row 2).
+- **G7 chip D permanent:** the verbatim-form shipped data-URI filter value now sits on the page
+  (`#u1d` + its own `CSS.supports` readout) — the safari-arm's injected probe is reproducible.
+  The WebKit RED verdict is adopted on-page in the U1 legend; the repair is ROUTED to BJ
+  (`docs/tranches/BJ/coordination/ios27micro-inbox-2026-07-18-glass-refract-webkit-gate-lie.md`),
+  src untouched per ruling.
+- **G8a/c/d:** `isolation: isolate` added to the light layer (spec reconciled — mandated, with
+  the region-root prohibition stated); the named lint exists both halves —
+  `lint-layer-contract.mjs` (static: PASSES clean, FAILS on each mutated clause via --self-test)
+  + `window.f5LintLayerContract()` (computed-style + the rogue-writer throw probe, queued row 7);
+  the medium one-writer contract is enforced (`claimMediumWriter`, durable `data-writer` claim,
+  second claimant throws; all cc writes routed through the one writer).
+- **MARKS C5 adopted:** cool-down readout `roCool` gated 350–400ms (±25ms wall-clock slack);
+  mid-cool re-taps re-seat through the retarget path (no reset, no blink — C5's law).
+- **N8/U8 probe:** opacity-0 medium twin + 3s cadence meter on the U2 panel (row 3 prices it).
+
+### Metrology corrections (G10)
+
+- ~~"120 backdrop-filter declarations, 54 files"~~ (SPEC §1) reproduces under no cut; measured
+  2026-07-18: 63 unprefixed `backdrop-filter:` declaration sites / 36 files, 9 `-webkit-` / 8
+  files, 133 mentions / 62 files (cuts printed in the spec). The `-webkit-` prefixes on THIS page
+  remain belt-and-braces for standalone judging, as stated in the dishonesty ledger.
+- ~~"zero per-component DOM additions"~~ → BOUNDED, NONZERO (spec corrected: light hosts ~4,
+  per-region mediums ~overlay family).
+- The analytic 4.7:1 contrast model is now CALIBRATED against paint: WebKit bloom-peak siblings
+  4.53/4.62/4.61/5.03:1 (the model sits inside the read); the on-page note says so. Chrome pixel
+  pair queued (row 1).
+
+## PASS-2 RE-VERIFY (queue §F5) — engine-tagged VERIFIED rows
+
+verified-model: claude-fable-5 (system-context model ID, verbatim). Re-verify browser seat,
+2026-07-18. Chrome 150.0.7871.128 (Playwright 1.61.1 channel:"chrome", headed, 120Hz) +
+WebKit 26.5 (webkit-2311, headed, 60Hz), file://, DPR 2. WebKit material verdicts ride the
+25fps video path per the safari-arm §0 law. Raw: scratchpad `rev/out/f5-*.json`,
+`rev/vid/f5-duel-*.webm` + per-frame analyses `f5-duel-*-analysis.json`.
+
+1. **Transient-lens captures + sibling pixels (Chrome half) — VERIFIED, one calibration flag.**
+   Ferry off + clock ×20. CHARGE held to peak (wash/bloom computed 0.974, state cell "charge"
+   in-frame) → `f5-p2-charge.png`; MID-TRAVEL (barbell gap 47.1px > 0.4 slot, capsule
+   dematerialized 0.096 under lit goo 1.0, state "travel") → `f5-p2-midtravel.png`; ARRIVAL
+   (capsule scale 1.150 computed, bloom 0.9, state "arrival") → `f5-p2-arrival.png`. Event log
+   captured (down→4.7s hold→up→click→travel +342ms charge-floor remainder→arrival→cool→rest).
+   Sibling label pixels (97th-vs-25th percentile luminance per label box, DPR 2): at charge
+   peak People/Items/Places/Me = 15.5/15.1/15.2/15.1:1, under-lens Devices 5.86; at arrival
+   the arrival-lens label People reads 2.36 (under hot bloom — not a sibling), siblings
+   15.1–15.3. Every sibling ≥4.5 with huge margin — legibility PASSES. **The Chrome read sits
+   far OUTSIDE the queue's ~4.2–5.5 model band: per the row's own clause this means the
+   analytic 4.7:1 model needs re-calibration (the wash does not sit under sibling labels in
+   Chrome stills; the WebKit 4.53–5.03 came from the hot video burst), not the clamp legs —
+   the error is in the safe direction.**
+2. **The goo duel — the SVG-filter arm RETIRES.** Video-burst analysis (blueness profile,
+   baseline-differenced, wash-floor-subtracted, per-frame connectivity):
+   - WebKit 26.5: fence 4-slot — 0 separated frames (one body throughout; min in-band presence
+     0.247 above rest — burst min presence > 0 ✓); FILTER arm — 2 separated frames (neck below
+     wash floor). Cadence: fence worst 30.0ms UNDER video-recording load, **18.0ms twice
+     without recording** (the pass-1 26ms class does NOT reproduce off-load; ≤24 holds); filter
+     32.0ms under load.
+   - Chrome 150: 1-slot fence morphs — 0 separations; fence 4-slot at MAX stretch — 6 frames
+     (~240ms) where the neck reads at-or-below the ambient wash floor (never a dark gap:
+     absolute in-span presence ≈0.13 blueness above rest; exhibit
+     `f5-p2-duel-fence-stretch.png`); FILTER arm — 6 separated frames + flat-color look
+     (`f5-p2-duel-filter-separated.png`) and **worst morph frame 133.4ms vs fence 9.1ms**.
+   - Verdict per the row's rule: fence reads one-body (WebKit clean; Chrome clean at 1-slot,
+     thin-neck-at-wash at 4-slot max stretch — a falloff-stop/overlap re-tune rider on the
+     gradient recipe, the fence LAW untouched) AND fence cadence ≥ filter on both engines →
+     **the SVG arm retires from SPEC-F5 §2-H3**; the pass-1 WebKit 26ms long frame adjudicated
+     as video-load artifact (18ms off-load).
+3. **N8/U8 opacity-0 cost — opacity-0 parking CERTIFIED, both engines.** Chrome avg/p95/worst:
+   off 8.3/9.1/9.4 → twin ON 8.3/8.8/9.4 → off 8.3/8.7–8.9/9.3–9.4ms. WebKit ×3: off
+   16.7/18/18–19 → ON 16.6–16.7/18/18–24 → off 16.6–16.9/18–20/19–52 (the 52ms once, twin OFF
+   — ambient hitch). Twin-on avg within 10% of unmounted and worst ≤24ms on both engines →
+   SPEC-F5 §6-U8 keeps opacity-0 parking; U8 CLOSED.
+4. **PRM one-flip — VERIFIED both engines (G5 CLOSED).** Capsule translateX: EXACTLY one
+   inter-frame step (122→6px) at +10.6ms (Chrome, ≤1 frame of the click) / +3ms (WebKit);
+   scale distinct {1} (no oversize); bloom distinct {0, 0.35} with exactly two discrete
+   changes — 0.35 at +11ms/+3ms and the CLEAR at +227ms/+237ms (one step, no interpolation);
+   hold-press wash distinct {0, 1}; state prints "seated (PRM one-flip)". The pre-cure
+   +150..+310ms deferral and the 0.23→0.51→0.82 ramp are DEAD.
+5. **Harness-defect regressions (G6) — VERIFIED both engines.** (a) flick at rest → "flick
+   ignored—medium at rest (nothing to catch)", floor cell stays "—"; (b) open→open→close keeps
+   the cliff cell (Chrome 143ms, WebKit 100ms — never the ~420ms relax class; relax prints in
+   its own cell 417/433ms); (c) press→drag-off→release elsewhere → state "rest", no
+   press→settle write; (d) stale 1s hold on Places abandoned, then adjacent People commit runs
+   from ITS OWN charge floor: press→settle 1331ms (Chrome) / 1325ms (WebKit), page-classed
+   PASS in the 1-slot band — the "3-slot on a 2-slot geometry" class is dead. ((d) verified in
+   a standalone run; the first full-run read hit a harness poll race — event-logged, not a
+   page defect.)
+6. **U2 Chrome pair + trace — VERIFIED.** computed backdrop-filter IDENTICAL at rest-open and
+   mid-relax ("blur(18px) saturate(1.3)"; opacity 1 → 0.706) — constant radius, opacity-only
+   decay (`f5-p2-u2-open/midrelax.png`). Trace across open→close: recalc avg 0.07ms/frame,
+   Paint events in the medium region 0 in both windows (6 total paints/window = readout text)
+   — no recurring per-frame re-raster after first invalidation (the F1-R5 idiom). WebKit
+   re-raster trace REMAINS TOOL-DEFER (desktop Safari Web Inspector), not faked.
+7. **Layer-contract lint, live halves — VERIFIED both engines.** In-page
+   `f5LintLayerContract()` → `pass: true, failures: []` on Chrome AND WebKit;
+   `node lint-layer-contract.mjs --self-test` prints both `[OK]` lines (clean pass=true,
+   mutated pass=false, 5 failures) — the gate can fail, proven this run.

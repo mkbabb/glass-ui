@@ -56,9 +56,10 @@ gesture-coupled; hysteresis lives only in follower state.
 `medium target = value > θ ? 1 : 0` with `θ = 0.02` while the committed intent is OPEN and `0.10`
 while it is CLOSED. The pass-1 probe's per-scenario constants and positional fade ramp are
 SUPERSEDED — its interrupt milestones (medium-min 0.46, fade-min 0.23) are historical; the
-blessed rule's values are medium-min 0.58 sim / 0.60–0.64 live and fade-min ~0.00, and ~0.00 is
-the better corpus match (MARKS: "a pure blurred-dimmed field with NO content"). Probe, spec, and
-prototype now state this one rule.
+blessed rule's values are medium-min 0.58 sim / 0.60–0.64 live (pass-1 clocks — the live column
+under the re-fit clocks is queued, reverify §F1) and fade-min ~0.00, and ~0.00 is the better
+corpus match (MARKS: "a pure blurred-dimmed field with NO content"). Probe (via its pass-2
+supersession header), spec, and prototype now state this one rule.
 
 **The intent law (G6 — written jointly with F3; latch at drive time).** The committed intent is a
 LATCH, the one follower-facing bit of state the spine carries:

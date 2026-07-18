@@ -336,3 +336,39 @@ WebKit 26.5 rows all sit INSIDE the printed gates (the WebKit beat 94 ms — for
 shown band, inside the wider gate" — now sits inside the one honest band 63–217). The bands
 tightened where derivation demanded (geometry hi 700→667, medium-out 560–720→561–679) and no
 measurement was lost — falsifiability increased, evidence held.
+
+## PASS-2 RE-VERIFY (queue §F3) — engine-tagged VERIFIED rows
+
+verified-model: claude-fable-5 (system-context model ID, verbatim). Re-verify browser seat,
+2026-07-18. Chrome 150.0.7871.128 (Playwright 1.61.1 channel:"chrome", headed, 120Hz — frame
+8.3ms) + WebKit 26.5 (webkit-2311, headed, 60Hz — frame 17ms), file://, DPR 2.
+
+1. **Paint-side battery, both engines (G9 CLOSED).** 12/12 gates PASS in PAINT-SIDE mode on
+   Chrome AND WebKit (summary prints "sampling: PAINT-SIDE"), and 12/12 again in internal
+   mode. Chrome paint-side: medium t90 65ms, fade t90 157ms (133–267 ✓), geometry t99 633ms
+   (583–667 ✓), periphery 136ms, content-out 155ms, beat 107ms, medium-out 636ms, interrupt
+   1.0000 / step 0.131 (bound 0.154), sub-sat 0.8333 (want 0.833), park 0 ticks, tempo Δ0.001.
+   WebKit paint-side: 66/158/639/132/162/90/626, interrupt 1.0000/0.234 (bound 0.279), sub-sat
+   0.8333, park 0 ticks, tempo Δ0.014. Per-timing-row |paint − internal|: Chrome ≤1ms (display
+   bound 8.3ms), WebKit ≤11ms — op +6, cc −11, cm −11, others ≤2 (bound 17ms @60Hz). The
+   var→CSS binding layer is certified in paint on both engines.
+2. **Chrome style-recalc attribution on stress (the G2-ruling deepening) — PASS.** Stress ×3
+   baseline: 6.08s window, 2159 rAFs, recalc total 317.7ms → 0.147ms/frame, page cell "avg
+   0.07ms · max 0.40ms · ~120fps". With the queue's 960 injected descendant consumers reading
+   the channel vars inside `.stage`: recalc total 671.8ms / 2156 rAFs → **0.312ms/frame avg
+   (bound ≤6ms — 19× margin)**, max single recalc 1.40ms, frame gaps p95 8.5ms, max 12.0ms,
+   **0 frames >24ms**; fps held 120. Far inside the WebKit differential's parity band.
+3. **Sub-sat medium exhibit, Chrome arm (G4 parity) — VERIFIED.** Real pointer drag from full
+   open, held near-closed: h-g readout 0.081 (window 0.08–0.11), computed scrim opacity
+   0.6710 = the scrubbed g/sat exactly (0.0805/0.12 = 0.671, Δ0.000; measured against the
+   still-settling geometry x 0.0853 the gap is 0.040 — the position-mapped law binds to the
+   scrubbed g, and after the geometry spring settles the two agree within the ±0.02 band).
+   Exhibits: `f3-p2-full-open.png` vs `f3-p2-held-near-closed.png` — home icons readable
+   through the visibly THINNED veil. (WebKit exhibit already banked: `f3-wk-held-near-closed.png`.)
+4. **Tempo-rebuild velocity carry (G13) — VERIFIED both engines.** Open clicked from seated
+   closed; slow-mo ×4 toggled mid-flight (g at toggle 0.454 / 0.430). Per-frame Δg across the
+   rebuild carries at 0.84× (Chrome 0.0318→0.0266/frame; WebKit 0.0637→0.0533) — NO
+   arrest/dead stop (the pre-cure zero-velocity rebuild would read ~0); conductor state stays
+   "running" across the toggle, no park within 60 frames; geometry proceeds to 1.000 with a
+   +0.5% velocity-bought overshoot then settles — the carried velocity made visible. Post-
+   toggle evolution runs on the ×4 clock as designed.

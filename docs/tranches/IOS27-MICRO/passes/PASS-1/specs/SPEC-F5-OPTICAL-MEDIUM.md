@@ -8,6 +8,15 @@ digests.
 Tooling: DesignSync reachable this pass (live `list_projects` call; empty project list — noted for
 pass-2 component seats).
 
+PASS-2 REVISION (cure seat F5, 2026-07-18 — verified-model: claude-fable-5): the one spec revision
+per CRIT-F5 G8 + the binding suffusion forPass2 demand. Deltas, all marked in place: §1 the full
+backdrop-root enumeration + the z/DOM contract table + the named lint artifact + the medium
+one-writer contract + isolation:isolate reconciled + DOM-cost metrology corrected (G10); §2-H3 the
+compositor fence (no SVG filter on the hot path — the fence anatomy is primary, the filter merge
+demoted to a duel arm); §3 the C4/C5 MARKS-correction adoptions; §4 U1 CLOSED-RED with the WebKit
+verdict + the routed repair; §6 rows re-graded on the safari-arm evidence + two NEW rows (U7
+moving-backdrop cost, U8 N8-at-opacity-0). Nothing pass-1 is silently rewritten — voids are quoted.
+
 ---
 
 ## 1. Architecture
@@ -22,8 +31,16 @@ lifetime. Independent lifetime + forced sibling topology = the decomposition is 
 works.
 
 **The layer contract, per region.**
-- One effect-free positioning ancestor — no filter, no opacity < 1, no mask/clip, no blend
-  (enumerated, lintable).
+- One effect-free positioning ancestor — the FULL backdrop-root trigger enumeration
+  (filter-effects-2): no filter, no backdrop-filter, no opacity < 1, no mask, no clip-path, no
+  blend mode, no `isolation: isolate`, no `contain: paint`, no `will-change` naming any of these.
+  (Pass-2 correction: ~~"no filter, no opacity < 1, no mask/clip, no blend"~~ under-enumerated —
+  `contain: paint` and `isolation: isolate` are backdrop-root triggers too and would sever every
+  descendant's sampling; the root may carry NEITHER. Enumerated and now actually lintable — the
+  named lint is `prototypes/f5-optical-medium/lint-layer-contract.mjs` (static, CI-able, with a
+  --self-test falsification arm) + the in-page `window.f5LintLayerContract()` (computed-style,
+  both engines, includes the rogue-writer throw probe). A check that cannot fail is not a gate;
+  the lint's self-test proves it fails on each broken clause.)
 - MEDIUM — the persistent blur/dim field. Per-region singleton (`ModalOverlay`'s `fixed inset-0`
   wash is the seed), pre-mounted, CONSTANT blur radius, opacity-only animation (radius animation is
   paint-bound and fenced — Chrome's own guidance, the Chromium flicker defect, Safari CPU
@@ -31,18 +48,49 @@ works.
   re-entry at any state; the CC empty-blur beat and the held featureless scrim are NAMED states,
   not transients. Enter/exit choreography never animates an ancestor's opacity (it would sever
   sampling) — only the medium's own.
+  **The one-writer contract (pass 2, G8d):** a region's medium has exactly ONE writer. Mechanism:
+  the writer acquires the medium through `claimMediumWriter(el, id)` — the claim is durable and
+  visible (`data-writer="<id>"` on the element, checked by the lint), every state/opacity write
+  routes through the returned writer, and a second claimant THROWS (dev-fatal, never a silent
+  last-write-wins). Scrub, open, close, and interrupt are all verbs of the one controller; a
+  consumer that wants medium influence asks the writer (the `--medium-t` handshake with K reads
+  the medium, it never writes it). Prototype: `index.html` `claimMediumWriter`/`ccWriter`.
 - BODY — the two-tier glass geometry on the existing rung ladder; ONE transform tree; content
   lives inside the transform, so overpull compression is one `scale` and content deforms free;
   own-element opacity only.
 - LIGHT — sibling above body: aria-hidden, pointer-events none, `contain: layout paint` +
   `isolation: isolate`, zero backdrop sampling, luminance-composited via `mix-blend-mode:
-  plus-lighter` (Safari 9.1+). Goo via the in-document SVG filter (Arm A — paints in Safari today,
-  pager precedent) with the `@supports not (filter: url(…))` clip-path floor (Arm B).
-- DOM cost, measured against the repo: zero per-component additions — body layers exist (120
-  backdrop-filter declarations, 54 files), the medium is a per-region singleton (~overlay family),
-  light mounts per lens HOST (~4: tabs, dock, pager, segmented). The `material.css:66`
-  cell-suppression seam (`--glass-cell-backdrop-filter: none` on tier children) is the existing
-  instrument bounding concurrent blur count.
+  plus-lighter` (Safari 9.1+). (Pass-2 G8a reconciliation: the prototype omitted
+  `isolation: isolate`; RULING — MANDATED AND ADDED, not struck. `contain: paint` already implies
+  a stacking context, but the contract is enumerated-and-lintable: isolation names the
+  children-contained compositing boundary as a semantic property the lint checks directly, and
+  the boundary survives any future containment retune. Safe here because the light layer never
+  backdrop-samples; the same property is FORBIDDEN on the region root, where it is a
+  backdrop-root trigger.) Goo anatomy: see §2-H3 — pass 2 re-arms the hot path to the compositor
+  fence; the SVG filter is no longer the primary.
+- DOM cost, measured against the repo: BOUNDED, NONZERO (pass-2 G10 correction — ~~"zero
+  per-component DOM additions"~~ overstated): light hosts (~4 components: tabs, dock, pager,
+  segmented) and per-region mediums (~overlay family) each add one element; body layers exist.
+  Metrology re-measured 2026-07-18 (~~"120 backdrop-filter declarations, 54 files"~~ reproduces
+  under no cut of the tree): 63 unprefixed `backdrop-filter:` declaration sites across 36 files,
+  9 `-webkit-` across 8, 133 total mentions across 62 files — cut:
+  `grep -rEo "(^|[^-])backdrop-filter\s*:" src` / `grep -r "backdrop-filter" src`. The
+  `material.css:66` cell-suppression seam (`--glass-cell-backdrop-filter: none` on tier children)
+  is the existing instrument bounding concurrent blur count.
+
+**The z/DOM contract against arbitrary consumer content (pass 2, G8b).** Ordinals are per-region,
+under the effect-free root; DOM order IS the paint order contract:
+
+| plane | z | DOM position | contract on consumers |
+|---|---|---|---|
+| MEDIUM | 1 | first child of the region root | never carries content; exactly one writer (above); reads via `--medium-t` only |
+| BODY | 2 | after medium (one or more siblings: container glass, control capsules) | backdrop-sampling glass; own-element opacity only; ONE transform tree per body; a sampler nested in a sampler is DEFINED (samples the outer's backdrop-root image — U3, proven both engines) but budget-bounded by the cell-suppression seam |
+| LIGHT | 3 | after the last body, before content | aria-hidden, pointer-events none, contain layout paint + isolation isolate, ONE plus-lighter composite on the layer (children carry no blend of their own), zero sampling, no filter while traveling (§2-H3 fence) |
+| CONTENT | 4 | last | labels/targets; full-contrast text; must not interpose filter/blend/opacity<1 wrappers between itself and the region root (that would re-plane or sever the stack) |
+
+Consumer law: content that needs its own glass becomes a NESTED region (its own effect-free
+root, its own four planes) — never a fifth plane in the parent. Focus/interaction targets live
+on CONTENT; the light layer is invisible to the tree (aria-hidden) and to the pointer.
 
 **Clock consumption seams (no second authority).** Light travel consumes `useLeadTrail` as-is;
 body consumes the winning physics family's channels (`springPreset` rows by name); medium rides
@@ -72,8 +120,18 @@ paints (the source capsule de-materializes under the blob and re-materializes be
 - Press-charge: light-layer bloom past the capsule bounds + whole-bar wash on pointerdown — before
   any travel.
 - Travel: the capsule de-materializes; a light BARBELL travels — two bodies + welling neck off
-  `useLeadTrail`'s (lo, hi) edges, the pager worm at tab-bar scale, Arm A goo merge with the Arm B
-  clip floor. Chromatic fringe as a Chromium-only garnish, never the primary.
+  `useLeadTrail`'s (lo, hi) edges, the pager worm at tab-bar scale. **THE COMPOSITOR FENCE
+  (pass-2 amendment — the suffusion forPass2 demand, binding): the travel hot path is
+  transform/opacity/clip-path ONLY; no SVG filter runs while the lens travels.** Primary anatomy
+  = additive gradient metaballs: the bodies and neck are soft-falloff radial-gradient sprites
+  moved by transform; their overlap SUMS under the layer's one plus-lighter composite, so the
+  merge is optical, not filtered — zero per-frame filter re-render. ~~Arm A goo merge with the
+  Arm B clip floor~~ re-graded: the pass-1 SVG-filter merge (`filter: url(#goo)` on the layer,
+  pager precedent) is DEMOTED to a duel arm — a static-cost challenger that must beat the fence
+  anatomy in the queued pass-2 paint duel (reverify §F5; the WebKit 4-slot morph's one 26ms long
+  frame is the suspect it must answer) or retire. The old Arm B (@supports-not floor) is moot for
+  the fence anatomy, which never filters. Chromatic fringe stays a Chromium-only garnish, never
+  the primary.
 - Arrival: capsule re-forms OVERSIZED (~110–120%, in scale AND light), held ~200ms, cools to rest;
   press→settle 1.2–1.4s total.
 - Sibling legibility — the best-iOS move: sibling labels live OUTSIDE the light layer (they are
@@ -82,7 +140,22 @@ paints (the source capsule de-materializes under the blob and re-materializes be
   because its bloom is opaque; ours is bounded-alpha by construction.
 - Pill self-centering (Safari's second good idea) rides the existing `useSelectionGroup` recenter
   seam.
-The expensive moving backdrop re-sample never happens — resolved by architecture.
+The expensive moving backdrop re-sample never happens FOR THE LENS — resolved by architecture.
+(Pass-2 G4 honesty bound: that resolution is H3-scoped. H1 growth and H2 overpull DO animate a
+live backdrop-sampling body — priced as §6-U7, with the mitigations and the honest boundary
+stated there; the elegant-reduction read of the pass-1 sentence is retracted.)
+
+**MARKS PASS-2 corrections adopted (C4/C5).** C4: the one-body morph is PLATFORM GRAMMAR, proven
+in both apps — Safari's lens travels as one continuous body at control-register speed (~165±35ms);
+the pass-1 framing of one-body as a Find My exclusive is void, and the lens contract's
+control-register clock (travel ≤500ms) is corpus-backed, not merely budgeted. C5: (a) rapid
+re-taps RE-SEAT the lens mid-cool with no reset and no blink — velocity-continuous interruption
+holds on the lens body itself; the machine expresses this through the same retarget path as
+mid-travel interrupts (morph non-null through cool; prototype honors it); (b) cool-down after the
+final arrival is 350–400ms measured — now a gated band (prototype `roCool`); (c) the 1.2–1.4s
+press→settle is the full deliberate ritual of ONE morph, never the geometry's own speed — geometry
+per hop under rapid re-taps runs 150–250ms, which is NOT gated here (different gesture class;
+gates derive from MARKS for the matching gesture, never from what the prototype happens to do).
 
 **H4 material tiers — the family owns this hallmark.** The two-tier rule mapped onto the shipped
 five-rung ladder: container = resting (.65α/7px) or floating (.80α/11px); control = quiet
@@ -126,35 +199,55 @@ tracking.
 ## 4. Safari-2026 feasibility
 
 Every primary sits at the floor: unprefixed `backdrop-filter` (Safari 18+), `plus-lighter` (9.1+),
-in-document `filter: url()` on HTML (shipped, pager Arm A paints today), anchor positioning (26.0)
-if the lens geometry wants it. Refraction (`backdrop-filter: url()`) is Chromium-only and stays a
-garnish — not available at the floor, full stop; no masking fallback pretends otherwise. Blur-radius
-animation is fenced everywhere. One shipped defect carried loud: `glass-refract.css` gates on
-`@supports (backdrop-filter: url(#…))` and sources conflict on whether Safari rejects at parse time
-or accepts-and-drops — if it parses, Safari may compute `blur() url()` as a whole-value drop and
-the lens loses ALL blur on Safari. The same lying-gate class as the happy-dom trap; pass-2 must
-paint-probe and repair per the `supportsCssTimeline` harden pattern (U1).
+in-document `filter: url()` on HTML (shipped, pager precedent — now duel-arm-only per §2-H3),
+anchor positioning (26.0) if the lens geometry wants it. Refraction (`backdrop-filter: url()`) is
+Chromium-only and stays a garnish — not available at the floor, full stop; no masking fallback
+pretends otherwise. Blur-radius animation is fenced everywhere.
+
+**U1 ANSWERED (pass 2 — CLOSED RED).** ~~"sources conflict on whether Safari rejects at parse time
+or accepts-and-drops"~~ — the conflict is over: WebKit 26.5 ACCEPTS at parse (`CSS.supports` true
+on all four probed forms — fragment, blur+fragment, the shipped gate form, the shipped data-URI
+value; computed style retains the full composite) and DROPS THE WHOLE VALUE at paint, blur leg
+included (chips B/C/D stone sharp at 0.0748–0.0749 vs baseline 0.0756; chip A blur-only 0.0018;
+fragment and data-URI die identically — the G7 divergence question: none). Consequence: the
+shipped `glass-refract.css` gate ENGAGES on the Safari floor, the gated declaration overrides the
+un-gated blur base, and `.glass-lens` paints with NO backdrop filter at all — a live defect
+against glass-ui 7.0.0. Chrome 150: the full value paints; the gate tells the truth there. The
+repair is ROUTED, not applied (the do-not-edit-src ruling):
+`docs/tranches/BJ/coordination/ios27micro-inbox-2026-07-18-glass-refract-webkit-gate-lie.md`
+carries the exact gate repair (runtime latch, `supportsCssTimeline`-class harden, born-RED WebKit
+paint gate). Evidence: safari-arm.md §F5 + PROBE-NOTES "PASS-2 SAFARI ARM" + `f5-wk-u1-chips.png`.
 
 ## 5. The prototype that proves the riskiest claim
 
 **Riskiest claim: the lens reads as ONE continuous body in Safari paint — capsule de-materialize,
 light-barbell travel, oversized re-form — with no visible blink at either handoff and sibling
 labels legible throughout.** Build the tab-bar lens demo: rest capsule + press-charge + travel +
-arrival on `useLeadTrail`, Arm A goo with Arm B floor, labels instrumented. Capture per the live-π
-law on Safari 26 AND Chrome: a 12fps-equivalent screenshot burst across one full morph (the
+arrival on `useLeadTrail`, labels instrumented (goo anatomy per §2-H3's fence). Capture per the
+live-π law on Safari 26 AND Chrome: a 12fps-equivalent screenshot burst across one full morph (the
 blink test — no frame may show zero lens presence), a contrast read on sibling labels at bloom
 peak (the best-iOS gate), the U2 medium probe (opacity fade over constant radius — trace for
 re-raster, screenshot pair for the perceptual blur-decay read), the U3 nested two-tier sampling
 probe, and the U1 `@supports` lying-gate probe with the repair if red.
 
-## 6. Open gaps
+PASS-2 STATUS: the Safari half LANDED (safari-arm, WebKit 26.5 — the blink test paint-true at
+25fps/132 frames min presence 0.824, sibling legibility 4.53–5.03:1 at bloom peak, U2/U3/U1 as
+§4/§6; captures ferry-frozen, the G2 confound dead). The capture law is now enforceable by
+harness: the page carries ferry-off + clock ×1/×4/×20 toggles (readouts normalize to ×1), so no
+future capture can be ferry-confounded or transient-starved. Chrome transient captures + the
+Chrome sibling pixel pair remain queued (reverify §F5 rows 1/6). The three pass-1 PNGs whose
+names claimed transient states were RELABELED to their true content (PROBE-NOTES "PASS-2 CURES").
 
-| # | gap | next move |
+## 6. Open gaps (pass-2 re-grade — statuses on the safari-arm evidence + this seat's cures)
+
+| # | gap | status / next move |
 |---|---|---|
-| U1 | the `glass-refract.css` lying gate on Safari (parse vs accept-and-drop; blur-only vs whole-value drop) | §5 paint probe + gate repair |
-| U2 | medium opacity-fade compositing in Safari + the perceptual read of blur-decay-by-opacity | §5 trace + pair; upgrade path is a two-layer stepped crossfade, never an animated radius |
-| U3 | nested control-on-container sampling paints per spec in WebKit | §5 two-tier probe |
-| U4 | positional hue sampling (codex law 2 full form) — no web primitive exists | pass-2 design: consumer hint token vs sampled-swatch approximation; scoped explicitly |
-| U5 | concurrent-blur budget on a CC-like screen vs the ~3–5 mobile guidance | pass-2 device trace on the CC prototype |
-| U6 | stacked-mask progressive blur inside budget when the medium also hosts choreography | bounded 3–4 layers; measured in pass 2 |
-| — | the light-clock boundary with F1/F3 (who drives the barbell's charge/hold states — this spec assumes: physics family supplies the clock, F5 the body) | round-2 boundary call, jointly with F3's U11 |
+| U1 | the `glass-refract.css` lying gate on Safari | **CLOSED RED** (§4): @supports true + whole-value paint drop on WebKit 26.5, both url() forms; repair routed to BJ (inbox row, exact latch design + born-RED gate); src untouched by ruling |
+| U2 | medium opacity-fade compositing in Safari + the perceptual read of blur-decay-by-opacity | **SPLIT**: mechanism ANSWERED in WebKit paint — constant-radius medium, opacity-only decay, blur visibly attenuating with element opacity (F5 ramp + the decisive same-engine F1/F3 ramp artifacts `f1-wk-h4-blur-ramp.png`/`f3-wk-blur-ramp.png`; cliff 104ms, beat 150ms, relax 422ms, 1:4.0, floor 0.09-never-0). OPEN: the re-raster trace (TOOL-DEFER — desktop Safari Web Inspector/Instruments) + the Chrome-side pair, skipped in pass 1 WITHOUT being named — now named and queued (reverify §F5 row 6) |
+| U3 | nested control-on-container sampling paints per spec in WebKit | **CLOSED GREEN** on the engine it existed for: 0.00186 vs 0.00233 (~20% smoother), distinct paint (`f5-wk-u3-board.png`); Chrome green pass 1 |
+| U4 | positional hue sampling (codex law 2 full form) — no web primitive exists | open by design: pass-2/3 design decision (consumer hint token vs sampled-swatch approximation); unchanged |
+| U5 | concurrent-blur budget on a CC-like screen vs the ~3–5 mobile guidance | open: DEVICE-DEFER (real iOS Safari); the WebKit ×3-conductor stress (no nested-backdrop cliff, 67fps) is the interim desktop-proxy datum |
+| U6 | stacked-mask progressive blur inside budget when the medium also hosts choreography | open: bounded 3–4 layers; measured pass 2/3 |
+| **U7** | **NEW (G4): the H1/H2 moving-backdrop cost** — dock-to-card growth and overpull animate a live backdrop-sampling body (translate/scale on container glass, ~600ms per gesture) on the LARGEST surface; exactly the per-frame re-sample H3's architecture avoids for the lens. Priced (desktop proxies, both engines): F4's transform-modulated dock frosts live in WebKit video (U6a/U6b); F1's clip-path growth holds cadence (max 19ms, 0 >24ms, WebKit); F5's own morphs worst 19ms (1-slot) / one 26ms frame (4-slot, filter-arm suspect); Chrome morph worst 11.3ms | MITIGATIONS bound: (a) the medium never re-filters (constant radius, opacity-only); (b) growth prefers clip-path reveal over animated scale where the ladder allows (F1's H1 mechanism — the sample rect stays stable); (c) concurrent samplers bounded by the cell-suppression seam; (d) the light layer never samples. HONEST BOUNDARY: per-frame re-raster ATTRIBUTION is TOOL-DEFER (desktop Safari Instruments — safari-arm §3); the interim gate is cadence (no frame >24ms during any gesture window) and it is a real gate — the 4-slot 26ms frame breached it once and is queued against the fence arm. The body's transform CLOCKS belong to the physics family; the material PRICE is F5's row — this line is the boundary, stated |
+| **U8** | **NEW (suffusion §2-N8 standing obligation): does Safari keep paying for a backdrop-filter parked at opacity 0?** The N8 scrubbed-medium-onset layer idles at opacity 0 by design; if the engine still pays, N8 must park via `display:none` | prototype now mounts an opacity-0 cost twin + a 3s cadence meter (`n8Mount`/`n8Measure`); priced by the re-verify seat on both engines (reverify §F5 row 3); both outcomes actionable — certify opacity-0 parking or mandate display:none parking |
+| — | the light-clock boundary with F1/F3 (who drives the barbell's charge/hold states — this spec assumes: physics family supplies the clock, F5 the body) | owner ASSIGNED at agglomeration (§3-6): the pass-2 arbitration seat, jointly with F3's U11; this spec's assumption stands until that seat rules |

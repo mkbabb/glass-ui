@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>V-ALENS — the gradient-blur attention lens (IOS27-MICRO novelty)</title>
+<!--
+  V-ALENS — the gradient-blur attention lens. Standalone prototype, no build step.
+  verified-model: claude-fable-5. Seat: novelty:PROTO-2 (PROTO-ATTENTION-EXIT).
+  Roster card 2 (NOVELTY-ROSTER.md:171-189). Mechanism, verbatim from the card:
+    3 stacked backdrop-filter layers under STATIC radial-gradient masks (codex law 1
+    recipe; radius ~doubling per band: 4/8/16px); only each layer's OPACITY animates,
+    driven by --engage-t (blur-rides-opacity is paint-proven on WebKit,
+    safari-arm.md:148-150). The center seats ONCE per engagement (a seat, not
+    per-frame tracking); the stack is bounded to the control's container region.
+    Fixed 3-layer count; zero animated blur radii; no overflow:hidden wrapper on the
+    stack (the Chromium stacked-mask weakness); layers exist only while --engage-t>0.
+    PRM: a single-step dim, no ramp. Sibling-legibility (N3): >=AA under the ramp.
+  Glass register derived from F1's good glass (f1-scalar-spine/index.html:109-112):
+    container = linear-gradient(rgba(44,56,60,.52), rgba(24,32,36,.66))
+              + blur(22px) saturate(1.35) + 1px inset rim rgba(255,255,255,.10).
+    No idle specular, no brightness floor — tint does the depth work (MARKS §4).
+-->
+<style>
+  :root {
+    --panel: rgba(255, 255, 255, 0.045);
+    --line: rgba(255, 255, 255, 0.10);
+    --engage-t: 0; /* the FAC scalar this whole prototype rides (SUFFUSION §3.1 #3) */
+    --lens-cx: 50%;
+    --lens-cy: 50%;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body {
+    background: #0b0e14;
+    color: rgba(255, 255, 255, 0.92);
+    font: 14px/1.45 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+    display: grid; place-items: center; padding: 24px;
+  }
+  .phone {
+    position: relative; width: 420px; height: 720px; border-radius: 36px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), inset 0 0 0 6px #05070b;
+    overflow: hidden; /* the PHONE clips; the lens stack root below is NOT a clipping wrapper */
+  }
+  /* the busy world beneath — the field the lens softens */
+  .world {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(160px 130px at 24% 18%, rgba(255, 158, 94, 0.85), transparent 70%),
+      radial-gradient(200px 170px at 82% 30%, rgba(120, 108, 255, 0.8), transparent 70%),
+      radial-gradient(230px 210px at 50% 86%, rgba(66, 190, 224, 0.75), transparent 70%),
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.10) 0 1px, transparent 1px 14px),
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.06) 0 1px, transparent 1px 18px),
+      #10141c;
+  }
+  /* ============ THE LENS STACK ============
+     Three sibling backdrop-filter layers + one dim layer. STATIC masks; the seat
+     (--lens-cx/--lens-cy) is stamped ONCE per engagement. Only opacity animates,
+     as a calc-band ladder of --engage-t (the F1 authoring pattern). The stack root
+     has NO overflow:hidden and NO filter of its own. Hidden entirely at rest. */
+  .lens-stack { position: absolute; inset: 0; pointer-events: none; }
+  .lens-stack[data-parked="1"] { visibility: hidden; } /* layers exist only while engaged */
+  .lens-layer { position: absolute; inset: 0; }
+  .lens-b1 {
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    -webkit-mask-image: radial-gradient(circle at var(--lens-cx) var(--lens-cy),
+      transparent 0 70px, black 150px);
+    mask-image: radial-gradient(circle at var(--lens-cx) var(--lens-cy),
+      transparent 0 70px, black 150px);
+    opacity: calc(clamp(0, (var(--engage-t) - 0.00) / 0.45, 1));
+  }
+  .lens-b2 {
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    -webkit-mask-image: radial-gradient(circle at var(--lens-cx) var(--lens-cy),
+      transparent 0 130px, black 230px);
+    mask-image: radial-gradient(circle at var(--lens-cx) var(--lens-cy),
+      transparent 0 130px, black 230px);
+    opacity: calc(clamp(0, (var(--engage-t) - 0.20) / 0.50, 1));
+  }
+  .lens-b3 {
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    -webkit-mask-image: radial-gradient(circle at var(--lens-cx) var(--lens-cy),
+      transparent 0 200px, black 330px);
+    mask-image: radial-gradient(circle at var(--lens-cx) var(--lens-cy),
+      transparent 0 200px, black 330px);
+    opacity: calc(clamp(0, (var(--engage-t) - 0.45) / 0.55, 1));
+  }
+  /* the dim ramp: DARKENS only (white sibling text gains contrast under it — the
+     analytic N3 gate in check.mjs proves the worst case is the undimmed page) */
+  .lens-dim {
+    background: radial-gradient(circle at var(--lens-cx) var(--lens-cy),
+      transparent 0 90px, rgba(8, 10, 14, 0.85) 340px);
+    opacity: calc(var(--engage-t) * 0.26);
+  }
+  /* ============ the card and its controls (two-tier glass, F1 register) ============ */
+  .card {
+    position: absolute; left: 24px; right: 24px; bottom: 88px; z-index: 2;
+    border-radius: 28px; padding: 20px;
+    background: linear-gradient(180deg, rgba(44, 56, 60, 0.52), rgba(24, 32, 36, 0.66));
+    -webkit-backdrop-filter: blur(22px) saturate(1.35);
+    backdrop-filter: blur(22px) saturate(1.35);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  }
+  .card h2 { font-size: 17px; font-weight: 600; margin-bottom: 4px; }
+  .card .sub { font-size: 13px; color: rgba(255, 255, 255, 0.62); margin-bottom: 16px; }
+  .row { display: flex; gap: 10px; align-items: center; margin-top: 14px; }
+  .row label { flex: 0 0 84px; font-size: 13px; color: rgba(255, 255, 255, 0.78); }
+  /* the slider — the engaged control (control-tier glass rides the container) */
+  .track {
+    position: relative; flex: 1; height: 34px; border-radius: 17px;
+    background: rgba(255, 255, 255, 0.07);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10);
+    touch-action: none; cursor: pointer;
+  }
+  .fill {
+    position: absolute; left: 0; top: 0; bottom: 0; width: 55%;
+    border-radius: 17px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.30), rgba(255, 255, 255, 0.14));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  }
+  .thumb {
+    position: absolute; top: 3px; left: calc(55% - 14px); width: 28px; height: 28px;
+    border-radius: 50%; background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.30);
+    transform: scale(calc(1 + 0.10 * var(--engage-t))); /* under the phi^1/4 cap 1.128 */
+  }
+  .btn {
+    flex: 1; padding: 10px 0; border: 0; border-radius: 14px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.20), rgba(255, 255, 255, 0.10));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.40);
+    color: rgba(255, 255, 255, 0.92); font: inherit; font-weight: 600; cursor: pointer;
+  }
+  /* sibling content the N3 gate protects — full-contrast text, never traded */
+  .feed { position: absolute; left: 24px; right: 24px; top: 24px; z-index: 1; }
+  .feed .item {
+    border-radius: 18px; padding: 12px 14px; margin-bottom: 10px;
+    background: var(--panel); box-shadow: inset 0 0 0 1px var(--line);
+  }
+  .feed .item b { font-size: 14px; }
+  .feed .item span { display: block; font-size: 12.5px; color: rgba(255, 255, 255, 0.60); }
+  .hud {
+    position: absolute; left: 12px; bottom: 10px; z-index: 3; font-size: 10.5px;
+    color: rgba(255, 255, 255, 0.5); font-family: ui-monospace, monospace;
+  }
+  .note { max-width: 420px; margin-top: 14px; font-size: 12px; color: rgba(255,255,255,0.45); }
+</style>
+</head>
+<body>
+<main>
+  <div class="phone" id="stage">
+    <div class="world"></div>
+    <div class="feed" aria-hidden="true">
+      <div class="item"><b>Morning briefing</b><span>Sibling row — must stay ≥AA under the ramp</span></div>
+      <div class="item"><b>Field recording 14</b><span>Second sibling — legibility is never traded</span></div>
+      <div class="item"><b>Trip to the coast</b><span>Third sibling — the world softens, it does not vanish</span></div>
+    </div>
+    <!-- the lens stack: 3 masked backdrop layers + dim, NO clipping wrapper -->
+    <div class="lens-stack" id="lensStack" data-parked="1" aria-hidden="true">
+      <div class="lens-layer lens-b1"></div>
+      <div class="lens-layer lens-b2"></div>
+      <div class="lens-layer lens-b3"></div>
+      <div class="lens-layer lens-dim"></div>
+    </div>
+    <div class="card">
+      <h2>Playback</h2>
+      <div class="sub">Engage the slider or hold a button — the world softens around it.</div>
+      <div class="row">
+        <label for="vol">Volume</label>
+        <div class="track" id="vol" role="slider" aria-label="Volume" aria-valuemin="0"
+             aria-valuemax="100" aria-valuenow="55" tabindex="0">
+          <div class="fill" id="fill"></div>
+          <div class="thumb" id="thumb"></div>
+        </div>
+      </div>
+      <div class="row">
+        <button class="btn" id="bA">Hold me</button>
+        <button class="btn" id="bB">Or me</button>
+      </div>
+    </div>
+    <div class="hud" id="hud">engage-t 0.000 · seat — · rAF parked</div>
+  </div>
+  <p class="note">V-ALENS: attention focused by the medium, not a spotlight border. The blur is
+  3 fixed radii (4/8/16px) under static masks; only layer opacity moves, on <code>--engage-t</code>.
+  Release anywhere — the lens dies on the same envelope, reversibly.</p>
+</main>
+
+<script>
+/*ALENS-PHYSICS-BEGIN*/
+// The V-ALENS physics — the SAME object drives paint and the node battery.
+// All pure math; no DOM. verified-model: claude-fable-5.
+const ALENS = {
+  // --- the engage envelope (FAC --engage-t: the smoothed hover/focus/press envelope) ---
+  // Asymmetric first-order: attack tau 55ms (t90 ~127ms — inside the press-acknowledge
+  // register), release tau 160ms (t10 ~368ms — kin to the law-14c ~250-400ms exit class).
+  env: { tauUp: 0.055, tauDown: 0.16, eps: 1e-3 },
+  envStep(e, target, dt) {
+    const tau = target > e ? this.env.tauUp : this.env.tauDown;
+    const next = e + (target - e) * (1 - Math.exp(-dt / tau));
+    return Math.abs(next - target) < this.env.eps ? target : next;
+  },
+  // --- the opacity ladder: calc bands of --engage-t (mirrors the CSS exactly) ---
+  bands: [
+    { blur: 4, a: 0.00, w: 0.45 },
+    { blur: 8, a: 0.20, w: 0.50 },
+    { blur: 16, a: 0.45, w: 0.55 },
+  ],
+  dim: { max: 0.26, color: [8, 10, 14], rampAlphaFar: 0.85 },
+  layerOpacity(i, t) {
+    const b = this.bands[i];
+    return Math.min(1, Math.max(0, (t - b.a) / b.w));
+  },
+  // --- the seat law: the center seats ONCE per engagement ---
+  makeSeat() {
+    let seated = null;
+    return {
+      engage(x, y) { if (seated === null) seated = { x, y }; return seated; },
+      move(x, y) { return seated; }, // never re-seats — a seat, not tracking
+      release() { const s = seated; seated = null; return s; },
+      get() { return seated; },
+    };
+  },
+  // --- page tokens (single-sourced: CSS stamps FROM here; check.mjs reads here) ---
+  tokens: {
+    baseBg: [16, 20, 28],          // .world base #10141c
+    panelWhiteAlpha: 0.045,        // --panel over base
+    worldAccentPeak: [120, 108, 255, 0.8], // the brightest radial under sibling rows
+    labelColor: [255, 255, 255, 0.92],
+    thumbScaleGain: 0.10,          // scale = 1 + gain*t; cap phi^(1/4) = 1.1279
+  },
+  // WCAG relative luminance of an sRGB triple
+  lum(rgb) {
+    const f = (c) => {
+      c /= 255;
+      return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+    };
+    return 0.2126 * f(rgb[0]) + 0.7152 * f(rgb[1]) + 0.0722 * f(rgb[2]);
+  },
+  over(fg, alpha, bg) { // source-over composite, per channel
+    return [0, 1, 2].map((i) => fg[i] * alpha + bg[i] * (1 - alpha));
+  },
+  // N3 sibling-legibility: contrast of the label over the worst-case backdrop, at a
+  // given dim level d in [0, dim.max]. The dim only DARKENS, so d=0 is the worst case
+  // for white text; the gate sweeps d anyway (falsifiable, not assumed).
+  siblingContrast(d) {
+    const t = this.tokens;
+    let bg = [...t.baseBg];
+    bg = this.over([t.worldAccentPeak[0], t.worldAccentPeak[1], t.worldAccentPeak[2]], t.worldAccentPeak[3], bg);
+    bg = this.over([255, 255, 255], t.panelWhiteAlpha, bg);
+    bg = this.over(this.dim.color, d * this.dim.rampAlphaFar, bg);
+    const Lbg = this.lum(bg);
+    const Ltx = this.lum([t.labelColor[0], t.labelColor[1], t.labelColor[2]]);
+    const [hi, lo] = Ltx > Lbg ? [Ltx, Lbg] : [Lbg, Ltx];
+    return (hi + 0.05) / (lo + 0.05);
+  },
+  // --- deterministic sims for the node battery ---
+  sims: {
+    rise() { // 0 -> 1, report t90 and per-band arrival
+      let e = 0, t = 0, t90 = null; const dt = 1 / 240; const arr = [null, null, null];
+      while (t < 2 && (t90 === null || arr.some((a) => a === null))) {
+        e = ALENS.envStep(e, 1, dt); t += dt;
+        if (t90 === null && e >= 0.9) t90 = t;
+        for (let i = 0; i < 3; i++)
+          if (arr[i] === null && ALENS.layerOpacity(i, e) >= 0.5) arr[i] = t;
+      }
+      return { t90: t90 * 1000, bandArrivalMs: arr.map((a) => a * 1000) };
+    },
+    fall() { // 1 -> 0, report t10 and park time
+      let e = 1, t = 0, t10 = null, park = null; const dt = 1 / 240;
+      while (t < 3 && park === null) {
+        e = ALENS.envStep(e, 0, dt); t += dt;
+        if (t10 === null && e <= 0.1) t10 = t;
+        if (e === 0) park = t;
+      }
+      return { t10: t10 * 1000, parkMs: park * 1000 };
+    },
+    interrupt() { // reversal mid-rise: continuity + monotone approach to the new target
+      let e = 0; const dt = 1 / 240; const trace = [];
+      for (let i = 0; i < 24; i++) { e = ALENS.envStep(e, 1, dt); trace.push(e); } // ~100ms rise
+      const atFlip = e;
+      let maxJump = 0, prev = e, nonMono = 0;
+      for (let i = 0; i < 240; i++) {
+        e = ALENS.envStep(e, 0, dt);
+        maxJump = Math.max(maxJump, Math.abs(e - prev));
+        if (e > prev + 1e-9) nonMono++;
+        prev = e;
+      }
+      return { atFlip, maxJump, nonMono, final: e };
+    },
+    seatLaw() {
+      const s = ALENS.makeSeat();
+      const first = s.engage(100, 200);
+      s.move(340, 60); s.move(10, 10);
+      const during = s.get();
+      const again = s.engage(340, 60); // engage() while seated must NOT re-seat
+      const held = during.x === first.x && during.y === first.y && again === first;
+      s.release();
+      const re = s.engage(340, 60); // a NEW engagement seats anew
+      return { held: held ? 1 : 0, reseated: re.x === 340 ? 1 : 0 };
+    },
+  },
+};
+/*ALENS-PHYSICS-END*/
+
+// ---------- page wiring (event-scoped rAF; parks at rest AND at settled hold) ----------
+(function () {
+  const root = document.documentElement;
+  const stage = document.getElementById("stage");
+  const stack = document.getElementById("lensStack");
+  const hud = document.getElementById("hud");
+  const prm = matchMedia("(prefers-reduced-motion: reduce)");
+  const seat = ALENS.makeSeat();
+  let e = 0, target = 0, raf = 0, last = 0;
+
+  function write(v) {
+    root.style.setProperty("--engage-t", v.toFixed(4));
+    stack.dataset.parked = v > 0 ? "0" : "1"; // layers exist only while engage-t > 0
+  }
+  function tick(now) {
+    const dt = Math.min(0.05, (now - last) / 1000); last = now;
+    e = ALENS.envStep(e, target, dt);
+    write(e);
+    hud.textContent = `engage-t ${e.toFixed(3)} · seat ${fmtSeat()} · rAF live`;
+    if (e === target) { raf = 0; hud.textContent = `engage-t ${e.toFixed(3)} · seat ${fmtSeat()} · rAF parked`; return; }
+    raf = requestAnimationFrame(tick);
+  }
+  function drive(t) {
+    target = t;
+    if (prm.matches) { e = t; write(e); hud.textContent = `engage-t ${e.toFixed(3)} (PRM step) · seat ${fmtSeat()} · rAF parked`; return; }
+    if (!raf) { last = performance.now(); raf = requestAnimationFrame(tick); }
+  }
+  function fmtSeat() {
+    const s = seat.get();
+    return s ? `${Math.round(s.x)},${Math.round(s.y)}` : "—";
+  }
+  function seatAt(clientX, clientY) {
+    const r = stage.getBoundingClientRect();
+    const s = seat.engage(clientX - r.left, clientY - r.top);
+    root.style.setProperty("--lens-cx", `${s.x.toFixed(1)}px`);
+    root.style.setProperty("--lens-cy", `${s.y.toFixed(1)}px`);
+  }
+  function engageFrom(el, ev) {
+    if (ev && ev.clientX !== undefined) seatAt(ev.clientX, ev.clientY);
+    else { // keyboard focus: seat at the control's center, once
+      const r = el.getBoundingClientRect(), sr = stage.getBoundingClientRect();
+      seatAt(r.left + r.width / 2, r.top + r.height / 2);
+    }
+    drive(1);
+  }
+  function releaseAll() { seat.release(); drive(0); }
+
+  // slider: pointer scrub (the seat holds while the finger moves — a seat, not tracking)
+  const vol = document.getElementById("vol"), fill = document.getElementById("fill"),
+    thumb = document.getElementById("thumb");
+  let dragging = false;
+  function setVal(frac) {
+    frac = Math.min(1, Math.max(0, frac));
+    fill.style.width = `${(frac * 100).toFixed(1)}%`;
+    thumb.style.left = `calc(${(frac * 100).toFixed(1)}% - 14px)`;
+    vol.setAttribute("aria-valuenow", Math.round(frac * 100));
+  }
+  vol.addEventListener("pointerdown", (ev) => {
+    dragging = true; vol.setPointerCapture(ev.pointerId);
+    engageFrom(vol, ev);
+    const r = vol.getBoundingClientRect(); setVal((ev.clientX - r.left) / r.width);
+  });
+  vol.addEventListener("pointermove", (ev) => {
+    if (!dragging) return;
+    const r = vol.getBoundingClientRect(); setVal((ev.clientX - r.left) / r.width);
+    seat.move(ev.clientX, ev.clientY); // provably ignored
+  });
+  ["pointerup", "pointercancel"].forEach((n) => vol.addEventListener(n, () => { dragging = false; releaseAll(); }));
+  vol.addEventListener("keydown", (ev) => {
+    const now = +vol.getAttribute("aria-valuenow");
+    if (ev.key === "ArrowRight") { engageFrom(vol); setVal((now + 5) / 100); }
+    if (ev.key === "ArrowLeft") { engageFrom(vol); setVal((now - 5) / 100); }
+  });
+  vol.addEventListener("keyup", releaseAll);
+  vol.addEventListener("blur", releaseAll);
+
+  // hold buttons
+  for (const id of ["bA", "bB"]) {
+    const b = document.getElementById(id);
+    b.addEventListener("pointerdown", (ev) => { b.setPointerCapture(ev.pointerId); engageFrom(b, ev); });
+    ["pointerup", "pointercancel"].forEach((n) => b.addEventListener(n, releaseAll));
+    b.addEventListener("keydown", (ev) => { if (ev.key === " " || ev.key === "Enter") engageFrom(b); });
+    b.addEventListener("keyup", releaseAll);
+    b.addEventListener("blur", releaseAll);
+  }
+})();
+</script>
+</body>
+</html>

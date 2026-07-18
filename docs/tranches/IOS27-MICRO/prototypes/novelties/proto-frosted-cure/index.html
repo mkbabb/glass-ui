@@ -1,0 +1,925 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PROTO-FROSTED-CURE — the glass re-register (R-TABTOGGLE · R-TABS · R-SLIDER · R-EFFERVESCE)</title>
+<!--
+  verified-model: claude-fable-5 (system-context model ID, verbatim)
+  IOS27-MICRO novelty loop · seat novelty:PROTO-3 · 2026-07-18
+
+  THE GOAL OF GLASS, operationalized: glass reads BLURRED and FROSTED — never trite,
+  shiny, or bright. One before/after page, same backdrop per stage, both themes.
+
+  The referent recipe (F1's good glass, f1-scalar-spine/index.html):
+    container  blur(22px) saturate(1.35)                        [f1:110-111]
+               low-luminance tint gradient .52a -> .66a          [f1:109]
+               hairline ring inset 0 0 0 1px white/0.10          [f1:112]
+    law        TINT does the depth work; blur mushes the backdrop into color
+               masses (MARKS §4:154-157); specular/light motion is engagement-only
+               (MARKS §4:165-167, note 3 :174); the ~1px top rim is the licensed
+               static light (MARKS §4 note 4 :175). The one licensed idle light
+               MOTION: the ~8s lens sweep, at most one per view (NOVELTY-ROSTER:308-310).
+
+  The named defects reproduced verbatim in the BEFORE columns:
+    F5 tabs-toggle (POOR):   blur 7px container [f5:69], specular 1.5px white/0.45
+                             [f5:72], control brightness(1.1) [f5:71], idle sweep
+                             5.6s [f5:181-182], cyan light tokens [f5:203-252]
+    F4 tabs (shiny/bright):  saturate(1.65) [f4:81], border white/.13 + inset rim
+                             white/.20 stacked [f4:83-85], white control fill .15 +
+                             border .24 + rim .30 [f4:88-92], cyan overlays
+    F4 slider (too shiny):   near-opaque white fill .95->.78 [f4:218-219], IDLE
+                             knob-ring glow 0.12 [f4:229-234], IDLE cyan cast 0.25
+                             [f4:224-227]
+
+  Discipline: no @supports backdrop gates (the lying-gate law), no SVG-filter
+  composites, plain per-mode theme arms only (the inset-shadow trap avoided),
+  zero idle rAF, no per-frame layout reads. Paint truth is QUEUED-PAINT for the
+  serialized browser arm (WebKit VIDEO path — screenshots are backdrop-blind).
+-->
+<style>
+/* ============================== page chrome ============================== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  padding: 20px 18px 72px;
+  transition: background 300ms ease, color 300ms ease;
+}
+body[data-theme="dark"]  { background: #16130f; color: #efe9df; }
+body[data-theme="light"] { background: #f6f1e7; color: #33291e; }
+main { max-width: 980px; margin: 0 auto; display: grid; gap: 22px; }
+h1 { font-size: 19px; letter-spacing: 0.01em; }
+h2 { font-size: 14px; margin-bottom: 8px; }
+.small { font-size: 12px; opacity: 0.72; }
+code { font: 11.5px/1.4 ui-monospace, "SF Mono", Menlo, monospace; }
+section.panel { border-radius: 18px; padding: 16px; border: 1px solid; }
+body[data-theme="dark"]  section.panel { background: #1d1913; border-color: #2c261d; }
+body[data-theme="light"] section.panel { background: #fdfaf3; border-color: #e4dccb; }
+.controls { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; margin-top: 8px; }
+label.toggle { display: inline-flex; gap: 6px; align-items: center; font-size: 12px; cursor: pointer; }
+button.ctl { font: 600 12px/1.4 inherit; border-radius: 10px; padding: 7px 14px; cursor: pointer; border: 1px solid; }
+body[data-theme="dark"]  button.ctl { background: #292319; color: #efe9df; border-color: #3a3225; }
+body[data-theme="light"] button.ctl { background: #efe8d8; color: #33291e; border-color: #d8cdb4; }
+button.ctl:hover { filter: brightness(1.06); }
+.tag { font: 700 10px/1 ui-monospace, Menlo, monospace; letter-spacing: 0.14em; padding: 4px 8px; border-radius: 6px; }
+.tag.before { background: #7c2d1233; color: #e8927c; }
+.tag.after  { background: #3f6c3a33; color: #8fce85; }
+body[data-theme="light"] .tag.before { background: #7c2d1218; color: #a4472b; }
+body[data-theme="light"] .tag.after  { background: #3f6c3a1e; color: #3f6c3a; }
+
+/* readout chips */
+.readouts { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 8px; margin-top: 12px; }
+.ro { border-radius: 10px; padding: 7px 10px; font-size: 11px; border: 1px solid; }
+body[data-theme="dark"]  .ro { background: #17140e; border-color: #2a241a; color: #b3a892; }
+body[data-theme="light"] .ro { background: #f4eee0; border-color: #e0d6bf; color: #6d5f4b; }
+.ro b { display: block; font: 600 13px/1.3 ui-monospace, Menlo, monospace; }
+body[data-theme="dark"]  .ro b { color: #efe9df; }
+body[data-theme="light"] .ro b { color: #33291e; }
+.ro b.pass { color: #74b96a !important; }
+.ro b.fail { color: #e06c55 !important; }
+
+/* ============================== stages ============================== */
+/* The judging backdrop: vivid color masses + a fine stripe lattice (the blur tell:
+   7px keeps the stripes legible, 22px mushes them into frost) + a drifting bright
+   ferry (backdrop liveness on the video path). Same stage under before AND after. */
+.stage { position: relative; border-radius: 16px; overflow: hidden; }
+.scene { position: absolute; inset: 0; }
+body[data-theme="dark"] .scene {
+  background:
+    radial-gradient(60% 55% at 20% 25%, hsl(18 75% 42%), transparent 62%),
+    radial-gradient(55% 60% at 78% 30%, hsl(258 55% 46%), transparent 60%),
+    radial-gradient(70% 55% at 50% 88%, hsl(165 55% 34%), transparent 62%),
+    repeating-linear-gradient(90deg, hsl(40 30% 80% / 0.13) 0 2px, transparent 2px 11px),
+    hsl(230 24% 12%);
+}
+body[data-theme="light"] .scene {
+  background:
+    radial-gradient(60% 55% at 20% 25%, hsl(26 90% 62%), transparent 62%),
+    radial-gradient(55% 60% at 78% 30%, hsl(210 70% 62%), transparent 60%),
+    radial-gradient(70% 55% at 50% 88%, hsl(150 55% 55%), transparent 62%),
+    repeating-linear-gradient(90deg, hsl(28 40% 22% / 0.16) 0 2px, transparent 2px 11px),
+    hsl(42 55% 82%);
+}
+.ferry {
+  position: absolute; top: 50%; left: -56px; width: 38px; height: 38px; border-radius: 50%;
+  margin-top: -19px;
+  background: radial-gradient(circle at 35% 35%, hsl(45 95% 78%), hsl(20 88% 52%));
+  box-shadow: 0 0 24px 7px hsl(28 90% 55% / 0.5);
+  animation: ferry 13s linear infinite;
+}
+@keyframes ferry { to { transform: translateX(1080px); } }
+body.prm .ferry { animation: none; left: 46%; }
+.rows { position: relative; display: grid; gap: 18px; padding: 20px 22px; }
+.rowline { display: flex; gap: 12px; align-items: center; }
+.rowline .lbl { width: 64px; flex: none; }
+
+/* =====================================================================
+   BEFORE registers — verbatim reproductions of the named defects.
+   Literals below are PINNED by check.mjs; do not "improve" them.
+   ===================================================================== */
+/* ---- b5: the F5 tabs-toggle register (POOR) — f5:68-74,163-183 ---- */
+.b5-bar {
+  position: relative; flex: 1; height: 58px; border-radius: 999px;
+  background: hsl(222 14% 11% / 0.65);
+  -webkit-backdrop-filter: blur(7px) saturate(1.4);
+  backdrop-filter: blur(7px) saturate(1.4);
+  box-shadow: inset 0 1.5px 0 0 hsl(0 0% 100% / 0.45), inset 0 -1px 0 0 hsl(28 30% 8% / 0.45),
+    0 12px 32px -8px hsl(230 40% 4% / 0.7);
+}
+.b5-capsule {
+  position: absolute; top: 5px; left: 5px; width: calc(50% - 10px); height: 48px; border-radius: 999px;
+  background: hsl(0 0% 100% / 0.14);
+  -webkit-backdrop-filter: blur(7px) saturate(1.4) brightness(1.1);
+  backdrop-filter: blur(7px) saturate(1.4) brightness(1.1);
+  box-shadow: inset 0 1.5px 0 0 hsl(0 0% 100% / 0.45), inset 0 0 0 1px hsl(0 0% 100% / 0.08);
+  transition: transform 250ms cubic-bezier(0.3, 0.7, 0.3, 1);
+  overflow: hidden;
+}
+/* the F5 idle sweep, verbatim cadence — 5.6s, busier than the ~8s license */
+.b5-capsule::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit;
+  background: linear-gradient(115deg, transparent 30%, hsl(0 0% 100% / 0.22) 46%, hsl(45 90% 80% / 0.14) 52%, transparent 66%);
+  background-size: 250% 100%;
+  animation: sweep 5.6s ease-in-out infinite;
+}
+body.prm .b5-capsule::after { animation: none; opacity: 0; }
+@keyframes sweep { 0%, 55% { background-position: 130% 0; } 82%, 100% { background-position: -40% 0; } }
+.b5-wash {
+  position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(to bottom, hsl(190 90% 75% / 0.28), hsl(190 90% 75% / 0.05));
+  opacity: calc(var(--engage-t, 0) * 1);
+}
+
+/* ---- b4: the F4 tabs/slider register (too shiny/bright) — f4:78-93,215-234 ---- */
+.b4-container {
+  background: rgba(18, 26, 38, .42);
+  -webkit-backdrop-filter: blur(26px) saturate(1.65);
+  backdrop-filter: blur(26px) saturate(1.65);
+  border: 1px solid rgba(255,255,255,.13);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.20), 0 14px 34px rgba(0,0,0,.35);
+}
+.b4-control {
+  background: rgba(255,255,255,.15);
+  -webkit-backdrop-filter: blur(10px) saturate(1.4);
+  backdrop-filter: blur(10px) saturate(1.4);
+  border: 1px solid rgba(255,255,255,.24);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.30);
+}
+.b4-wash {
+  position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(180deg, rgba(140, 230, 255, .30), rgba(140, 230, 255, .06));
+  opacity: calc(clamp(0, (var(--energy, 0) - 0.3) / 0.7, 1) * 0.55 + var(--engage-t, 0) * 0.40);
+}
+.b4-bloom {
+  position: absolute; inset: -14px -18px; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(60% 80% at 50% 50%, rgba(160, 235, 255, .85), rgba(120, 200, 255, .25) 55%, transparent 75%);
+  filter: blur(2px);
+  opacity: calc(clamp(0, (var(--energy, 0) - 0.3) / 0.7, 1) * 0.85 + var(--engage-t, 0) * 0.55);
+}
+.b4-slider-fill::before {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.78));
+}
+.b4-cast {
+  position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(180deg, rgba(160,225,255,.35), rgba(160,225,255,.10));
+  transform-origin: left center;
+  transform: scaleX(var(--val, 0.55));
+  opacity: calc(0.25 + 0.75 * var(--energy, 0));
+}
+.b4-ring {
+  position: absolute; top: 50%; width: 54px; height: 54px; border-radius: 50%; pointer-events: none;
+  border: 2px solid rgba(170, 230, 255, .6);
+  box-shadow: 0 0 18px rgba(140, 220, 255, .55), inset 0 0 10px rgba(140, 220, 255, .3);
+  opacity: calc(0.12 + 0.88 * var(--energy, 0));
+  transform: translate(-50%, -50%);
+}
+
+/* =====================================================================
+   THE CURED REGISTER — derived from F1's recipe, warmed to the house
+   palette, specular audited to engagement-only. Plain per-mode arms.
+   ===================================================================== */
+:root {
+  /* container tier — F1's budget, warm-shifted */
+  --cure-blur-container: 22px;
+  --cure-sat-container: 1.35;
+  --cure-blur-control: 12px;
+  --cure-sat-control: 1.35;
+  --cure-sweep-period: 8.4s;
+  /* engagement light — warm cream, never cyan */
+  --cure-light: 42 85% 88%;
+}
+body[data-theme="dark"] {
+  --cure-tint-top: rgb(56 50 44 / 0.55);
+  --cure-tint-bot: rgb(36 32 28 / 0.68);
+  --cure-rim: inset 0 0 0 1px rgb(255 250 240 / 0.12);
+  --cure-control-top: rgb(250 244 232 / 0.20);
+  --cure-control-bot: rgb(244 236 222 / 0.12);
+  --cure-control-rim: inset 0 1px 0 rgb(255 248 235 / 0.22);
+  --cure-fill-top: rgb(248 240 226 / 0.66);
+  --cure-fill-bot: rgb(240 230 212 / 0.55);
+  --cure-text: rgb(255 253 248);
+  --cure-shadow: 0 12px 30px -10px rgb(12 8 4 / 0.55);
+}
+body[data-theme="light"] {
+  /* the light arm — codex law 10 (IMG_1874): a warm diffusing layer ~65-75%,
+     hue survives, geometry does not; blur raised, tint carries the frost */
+  --cure-blur-container: 26px;
+  --cure-sat-container: 1.5;
+  --cure-tint-top: rgb(250 246 236 / 0.62);
+  --cure-tint-bot: rgb(244 238 224 / 0.72);
+  --cure-rim: inset 0 0 0 1px rgb(120 100 76 / 0.14);
+  --cure-control-top: rgb(255 253 246 / 0.62);
+  --cure-control-bot: rgb(250 245 234 / 0.48);
+  --cure-control-rim: inset 0 1px 0 rgb(255 255 250 / 0.55);
+  --cure-fill-top: rgb(255 252 244 / 0.68);
+  --cure-fill-bot: rgb(250 244 230 / 0.58);
+  --cure-text: rgb(44 36 28);
+  --cure-shadow: 0 12px 30px -12px rgb(90 70 40 / 0.35);
+}
+.cure-container {
+  background: linear-gradient(180deg, var(--cure-tint-top), var(--cure-tint-bot));
+  -webkit-backdrop-filter: blur(var(--cure-blur-container)) saturate(var(--cure-sat-container));
+  backdrop-filter: blur(var(--cure-blur-container)) saturate(var(--cure-sat-container));
+  box-shadow: var(--cure-rim), var(--cure-shadow);
+  color: var(--cure-text);
+}
+.cure-control {
+  background: linear-gradient(180deg, var(--cure-control-top), var(--cure-control-bot));
+  -webkit-backdrop-filter: blur(var(--cure-blur-control)) saturate(var(--cure-sat-control));
+  backdrop-filter: blur(var(--cure-blur-control)) saturate(var(--cure-sat-control));
+  box-shadow: var(--cure-control-rim), inset 0 0 0 1px rgb(255 250 240 / 0.08);
+}
+/* engagement lights — ZERO constant term: dark at idle by construction */
+.cure-wash {
+  position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(to bottom, hsl(var(--cure-light) / 0.30), hsl(var(--cure-light) / 0.04));
+  opacity: calc(var(--engage-t, 0) * 0.45);
+}
+.cure-bloom {
+  position: absolute; inset: -12px -16px; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(60% 80% at 50% 50%, hsl(var(--cure-light) / 0.55), hsl(38 80% 80% / 0.18) 55%, transparent 75%);
+  opacity: calc(clamp(0, (var(--energy, 0) - 0.3) / 0.7, 1) * 0.6 + var(--engage-t, 0) * 0.4);
+}
+.cure-cast {
+  position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(180deg, hsl(var(--cure-light) / 0.30), hsl(var(--cure-light) / 0.08));
+  transform-origin: left center;
+  transform: scaleX(var(--val, 0.55));
+  opacity: calc(var(--energy, 0) * 0.55);
+}
+.cure-ring {
+  position: absolute; top: 50%; width: 54px; height: 54px; border-radius: 50%; pointer-events: none;
+  border: 1px solid hsl(var(--cure-light) / 0.7);
+  box-shadow: 0 0 14px hsl(var(--cure-light) / 0.45), inset 0 0 8px hsl(var(--cure-light) / 0.25);
+  opacity: calc(var(--energy, 0) * 0.85);
+  transform: translate(-50%, -50%);
+}
+/* the ONE licensed idle light motion: the ~8s sweep, active capsule only, one per view */
+.cure-capsule.idle::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit;
+  background: linear-gradient(115deg, transparent 34%, hsl(44 70% 92% / 0.12) 47%, hsl(38 60% 85% / 0.08) 52%, transparent 64%);
+  background-size: 250% 100%;
+  animation: cure-sweep var(--cure-sweep-period) ease-in-out infinite;
+}
+body.prm .cure-capsule.idle::after { animation: none; }
+@keyframes cure-sweep { 0%, 62% { background-position: 132% 0; } 86%, 100% { background-position: -40% 0; } }
+
+/* ---------- shared component geometry (identical before/after) ---------- */
+.tt-bar { position: relative; flex: 1; height: 58px; border-radius: 999px; }
+.tt-capsule { position: absolute; top: 5px; left: 5px; width: calc(50% - 10px); height: 48px; border-radius: 999px;
+  transition: transform 250ms cubic-bezier(0.3, 0.7, 0.3, 1); }
+.tt-tabs { position: absolute; inset: 0; display: flex; }
+.tt-tab { flex: 1; display: grid; place-items: center; background: none; border: 0; cursor: pointer;
+  font: 600 13px/1 inherit; color: inherit; border-radius: 999px; -webkit-tap-highlight-color: transparent; }
+.b5-bar .tt-tab { color: hsl(210 20% 88%); }
+
+.tabs4 { position: relative; flex: 1; height: 58px; border-radius: 999px;
+  display: grid; grid-template-columns: repeat(4, 1fr); align-items: center; }
+.tabs4 .tab { position: relative; z-index: 2; background: none; border: 0; color: inherit;
+  font: 600 12px/1.2 inherit; height: 100%; cursor: pointer; border-radius: 999px; -webkit-tap-highlight-color: transparent; }
+.b4-container.tabs4 .tab { color: #e6edf5; }
+.tabs4 .lens { position: absolute; z-index: 1; top: 6px; left: 6px; width: calc(25% - 8px); height: 46px;
+  border-radius: 999px; will-change: transform; }
+
+.sliderbox { position: relative; flex: 1; height: 42px; border-radius: 21px; touch-action: none; cursor: ew-resize; }
+.sliderbox .fillwrap { position: absolute; inset: 0; border-radius: inherit; overflow: hidden; }
+.sliderbox .fill { position: absolute; inset: 0; transform-origin: left center; transform: scaleX(var(--val, 0.55)); }
+.cure-fill { background: linear-gradient(180deg, var(--cure-fill-top), var(--cure-fill-bot)); }
+.b4-slider-fill { position: absolute; inset: 0; }
+
+/* ---------- pop-over (R-EFFERVESCE) ---------- */
+.pop-stage { position: relative; height: 240px; }
+.pop-anchor { position: absolute; bottom: 18px; }
+.pop { position: absolute; bottom: 74px; width: 240px; border-radius: 20px; padding: 14px 16px;
+  transform-origin: 50% 100%; opacity: 0; visibility: hidden; will-change: transform, opacity; }
+.pop h3 { font-size: 13px; margin-bottom: 4px; }
+.pop p { font-size: 11.5px; opacity: 0.8; }
+.pop .rim { position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  box-shadow: inset 0 0 0 1px hsl(var(--cure-light) / 0.8), inset 0 0 16px hsl(var(--cure-light) / 0.35);
+  opacity: 0; }
+/* before pop-over: the off-register — lingering rim that never cools */
+.pop.b-reg .rim { box-shadow: inset 0 0 0 1.5px rgba(160,225,255,.75), inset 0 0 18px rgba(140,220,255,.4); }
+
+footer { font-size: 11.5px; opacity: 0.7; max-width: 980px; margin: 26px auto 0; }
+table.delta { border-collapse: collapse; width: 100%; margin-top: 10px; font: 11px/1.5 ui-monospace, Menlo, monospace; }
+table.delta th, table.delta td { text-align: left; padding: 5px 8px; border-bottom: 1px solid rgb(128 112 88 / 0.25); vertical-align: top; }
+table.delta th { opacity: 0.65; font-weight: 600; }
+#auditTable td.ok { color: #74b96a; } #auditTable td.no { color: #e06c55; } #auditTable td.lic { color: #c9a35c; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ferry, .b5-capsule::after, .cure-capsule.idle::after { animation: none !important; }
+  .tt-capsule, .b5-capsule { transition: none !important; }
+}
+</style>
+</head>
+<body data-theme="dark">
+<main>
+<header class="panel" style="border:0;background:none;padding:0">
+  <h1>PROTO-FROSTED-CURE — the glass re-register</h1>
+  <p class="small">verified-model: <code>claude-fable-5</code> · IOS27-MICRO novelty loop, seat novelty:PROTO-3 ·
+  R-TABTOGGLE + R-TABS + R-SLIDER cured to BLURRED-FROSTED against the F1 referent · R-EFFERVESCE retuned to law 14c ·
+  paint truth QUEUED-PAINT (WebKit video path)</p>
+  <div class="controls">
+    <button class="ctl" id="themeBtn">theme: dark</button>
+    <label class="toggle"><input type="checkbox" id="prmSim"> simulate prefers-reduced-motion</label>
+    <button class="ctl" id="captureRun">capture run (deterministic sequence for the video arm)</button>
+    <span class="small" id="rafState">rAF parked</span>
+  </div>
+</header>
+
+<!-- ==================== 1 · R-TABTOGGLE (the F5 cure) ==================== -->
+<section class="panel">
+  <h2>R-TABTOGGLE — F5's tabs-toggle, POOR → frosted <span class="small">(same stage, same stripes: 7px keeps them legible = smoked plastic; 22px mushes them = frost)</span></h2>
+  <div class="stage">
+    <div class="scene"></div>
+    <div class="ferry"></div>
+    <div class="rows">
+      <div class="rowline"><span class="tag before">BEFORE</span>
+        <div class="b5-bar tt-bar" data-engage-root>
+          <div class="b5-capsule tt-capsule" data-capsule></div>
+          <div class="b5-wash" data-audit="b5 wash (engagement leg — idle 0)"></div>
+          <div class="tt-tabs"><button class="tt-tab" data-tab="0" aria-pressed="true">Map</button><button class="tt-tab" data-tab="1" aria-pressed="false">Transit</button></div>
+        </div>
+      </div>
+      <div class="rowline"><span class="tag after">AFTER</span>
+        <div class="cure-container tt-bar" data-engage-root>
+          <div class="cure-control cure-capsule tt-capsule idle" data-capsule></div>
+          <div class="cure-wash" data-audit="cure wash (tabtoggle)"></div>
+          <div class="tt-tabs"><button class="tt-tab" data-tab="0" aria-pressed="true">Map</button><button class="tt-tab" data-tab="1" aria-pressed="false">Transit</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="small">Press and hold: the wash is the engagement display, both columns. The before capsule
+  brightens its backdrop (brightness 1.1) and wears a 1.5px 45%-white rim at idle; the cure's capsule is
+  frosted cream with a 1px 22%-alpha rim, and its only idle light is the licensed 8.4s sweep.</p>
+</section>
+
+<!-- ==================== 2 · R-TABS (the F4 tabs cure) ==================== -->
+<section class="panel">
+  <h2>R-TABS — F4's tabs, trite/shiny/bright → frosted <span class="small">(specular reserved for engagement; press a tab and watch the light die at settle)</span></h2>
+  <div class="stage">
+    <div class="scene"></div>
+    <div class="ferry"></div>
+    <div class="rows">
+      <div class="rowline"><span class="tag before">BEFORE</span>
+        <div class="b4-container tabs4" data-lens-bar data-engage-root>
+          <div class="b4-wash" data-audit="b4 wash (θ-gated — idle 0)"></div>
+          <div class="b4-control lens" data-lens><div class="b4-bloom" data-audit="b4 lens bloom (θ-gated — idle 0)"></div></div>
+          <button class="tab" data-tab="0" aria-selected="true">People</button>
+          <button class="tab" data-tab="1" aria-selected="false">Devices</button>
+          <button class="tab" data-tab="2" aria-selected="false">Items</button>
+          <button class="tab" data-tab="3" aria-selected="false">Me</button>
+        </div>
+      </div>
+      <div class="rowline"><span class="tag after">AFTER</span>
+        <div class="cure-container tabs4" data-lens-bar data-engage-root>
+          <div class="cure-wash" data-audit="cure wash (tabs)"></div>
+          <div class="cure-control lens" data-lens><div class="cure-bloom" data-audit="cure bloom (lens)"></div></div>
+          <button class="tab" data-tab="0" aria-selected="true">People</button>
+          <button class="tab" data-tab="1" aria-selected="false">Devices</button>
+          <button class="tab" data-tab="2" aria-selected="false">Items</button>
+          <button class="tab" data-tab="3" aria-selected="false">Me</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="small">The before bar stacks a white border (.13), an inset rim (.20) and saturate(1.65) at idle,
+  and its lens is a white pill (.15 fill, .24 border, .30 rim). The cure keeps the two-tier law — control
+  brighter and more opaque than container, its own rim (MARKS §4) — but frosted: warm tint gradients, one
+  hairline, saturate 1.35, cyan replaced by cream. Travel physics identical both rows (0.30, ζ0.82).</p>
+</section>
+
+<!-- ==================== 3 · R-SLIDER (the F4 slider cure) ==================== -->
+<section class="panel">
+  <h2>R-SLIDER — too shiny → frosted <span class="small">(the fill becomes a liquid volume the backdrop reads through; idle light drops to exactly zero)</span></h2>
+  <div class="stage">
+    <div class="scene"></div>
+    <div class="ferry"></div>
+    <div class="rows">
+      <div class="rowline"><span class="tag before">BEFORE</span>
+        <div class="b4-container sliderbox" data-slider style="--val:0.55">
+          <div class="fillwrap"><div class="b4-slider-fill fill"></div><div class="b4-cast" data-audit="b4 cast — IDLE 0.25 (the defect)"></div></div>
+          <div class="b4-ring" data-audit="b4 knob ring — IDLE 0.12 (the defect)" data-ring></div>
+        </div>
+      </div>
+      <div class="rowline"><span class="tag after">AFTER</span>
+        <div class="cure-container sliderbox" data-slider style="--val:0.55">
+          <div class="fillwrap"><div class="cure-fill fill"></div><div class="cure-cast" data-audit="cure cast (slider)"></div></div>
+          <div class="cure-ring" data-audit="cure knob ring" data-ring></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="small">Drag either. The before fill is near-opaque white (.95→.78) — a gloss slab that erases
+  its backdrop — and its knob ring glows at idle (0.12) with an idle cyan cast (0.25). The cure's fill is
+  warm cream at .66→.55 over the container's 22px frost; ring and cast are pure energy consumers
+  (E = tanh(|v|/1000)) with zero constant term — release, and every light dies.</p>
+</section>
+
+<!-- ==================== 4 · R-EFFERVESCE (the pop-over retune) ==================== -->
+<section class="panel">
+  <h2>R-EFFERVESCE — the pop-over register, law 14c <span class="small">(snappy tight fade · one earned spring · a one-beat arrival rim that cools immediately — SMOOTH, not sharp)</span></h2>
+  <div class="stage pop-stage">
+    <div class="scene"></div>
+    <div class="rows" style="height:100%">
+      <div class="pop b-reg b4-container" id="popBefore" aria-hidden="true">
+        <div class="rim" id="popBeforeRim"></div>
+        <h3 style="color:#fff">Before register</h3>
+        <p style="color:#cfd9e6">ζ0.45 · 420ms · double bounce · fade = geometry · rim never cools.</p>
+      </div>
+      <div class="pop cure-container" id="popAfter" aria-hidden="true">
+        <div class="rim" id="popAfterRim" data-audit="cure arrival rim (beat — idle 0)"></div>
+        <h3>After — law 14c</h3>
+        <p>60ms latency · ~250ms flight · one ~9% velocity-bought overshoot · fade 150ms ≤ geometry/φ · sub-100ms rim beat, immediate cool.</p>
+      </div>
+      <button class="ctl pop-anchor" style="left:22px"  id="popBeforeBtn">open before</button>
+      <button class="ctl pop-anchor" style="left:150px" id="popAfterBtn">open after</button>
+    </div>
+  </div>
+  <div class="readouts">
+    <div class="ro">after: overshoot (target ~9%, band 6–12%)<b id="roOver">—</b></div>
+    <div class="ro">after: flight to ±2% (band 200–320ms incl. 60ms latency)<b id="roFlight">—</b></div>
+    <div class="ro">after: second excursion (must be invisible, &lt;1.5%)<b id="roSecond">—</b></div>
+    <div class="ro">after: fade / geometry (must be ≤ 1/φ = 0.618)<b id="roFade">—</b></div>
+    <div class="ro">after: rim beat rise (≤100ms) / cool<b id="roBeat">—</b></div>
+    <div class="ro">before: overshoot + bounces (the defect, for contrast)<b id="roBefore">—</b></div>
+  </div>
+</section>
+
+<!-- ==================== 5 · the specular audit ==================== -->
+<section class="panel">
+  <h2>The specular audit — every light overlay on this page, computed at idle</h2>
+  <p class="small">Read once at load via getComputedStyle (no per-frame reads). Law: engagement-only —
+  cured overlays must compute to exactly 0 at idle. The single licensed exception is the 8.4s sweep
+  (one per view, active capsule only), audited by period in <code>check.mjs</code>.</p>
+  <table class="delta" id="auditTable">
+    <tr><th>overlay</th><th>column</th><th>idle opacity</th><th>verdict</th></tr>
+  </table>
+</section>
+
+<!-- ==================== 6 · the register delta ==================== -->
+<section class="panel">
+  <h2>The register delta — what made F4/F5 shiny, and the cure</h2>
+  <table class="delta">
+    <tr><th>cause (exact CSS)</th><th>where</th><th>why it reads shiny/bright</th><th>the cure</th></tr>
+    <tr><td><code>blur(7px)</code> container tier</td><td>f5:69 (mirrors shipped resting 7px)</td>
+        <td>7px cannot mush the backdrop into color masses (MARKS §4 wants apparent σ of tens of px) — the bar reads as smoked plastic, its edges glossy against legible detail</td>
+        <td><code>blur(22px)</code> dark / <code>26px</code> light — F1's container budget (f1:110)</td></tr>
+    <tr><td><code>inset 0 1.5px 0 0 white/0.45</code></td><td>f5:72 (on every tier, at idle)</td>
+        <td>a 1.5px 45%-white lip is a wet-gloss highlight, not the licensed ~1px lit-from-above hairline</td>
+        <td>1px ring at 0.12 (container) / top rim 0.22 (control) — F1's 0.10 hairline class (f1:112)</td></tr>
+    <tr><td><code>brightness(1.1)</code> control filter</td><td>f5:71</td>
+        <td>brightening the backdrop through the control is literally "bright" — frost diffuses, it never amplifies</td>
+        <td>no brightness leg anywhere; the control is brighter via its warm fill alpha only (two-tier law)</td></tr>
+    <tr><td><code>animation: sweep 5.6s … infinite</code></td><td>f5:181-182</td>
+        <td>busier than the ~8s license; light motion at idle competes with engagement light</td>
+        <td>8.4s period, one per view, low-alpha warm gradient, PRM-dead</td></tr>
+    <tr><td><code>saturate(1.65)</code></td><td>f4:81</td>
+        <td>over-saturating the backdrop makes the surface advertise color instead of diffusing it</td>
+        <td>1.35 (F1's term, f1:111); the light arm may carry 1.5 under its heavy white tint</td></tr>
+    <tr><td><code>border white/.13</code> + <code>inset rim white/.20</code> stacked</td><td>f4:83-85</td>
+        <td>two concentric idle light lines = a double-lit edge; the tell of trite glassmorphism</td>
+        <td>ONE hairline (ring 0.12 or top rim), never stacked with a border</td></tr>
+    <tr><td>lens = <code>white/.15 + border .24 + rim .30</code></td><td>f4:88-92</td>
+        <td>the control reads as a white pill parked on the bar — bright at idle, engagement adds nothing</td>
+        <td>warm gradient .20→.12 + one 1px rim .22; engagement bloom carries the light</td></tr>
+    <tr><td>slider fill <code>white .95→.78</code></td><td>f4:218-219</td>
+        <td>near-opaque white is gloss: the backdrop dies under it, the fill outshines every neighbor</td>
+        <td>cream .66→.55 over the container's frost — a liquid volume the scene ghosts through</td></tr>
+    <tr><td>knob ring idle <code>0.12</code> + cast idle <code>0.25</code>, cyan</td><td>f4:224-234</td>
+        <td>idle glow violates the engagement-only law outright (MARKS §4 note 3)</td>
+        <td>opacity = pure functions of --energy/--engage-t with zero constant term; hue = house cream</td></tr>
+  </table>
+</section>
+</main>
+
+<footer>
+  verified-model: claude-fable-5 — PROTO-FROSTED-CURE, IOS27-MICRO novelty loop. Referents: the micro
+  demo's good register (paint-side, queued for the browser arm) and F1's glass (f1-scalar-spine). Node
+  battery: <code>node check.mjs</code>. Every paint claim on this page is QUEUED-PAINT — WebKit video
+  path only, both themes, per PROBE-NOTES.md.
+</footer>
+
+<script id="cure-tokens">
+/*CURE-TOKENS-BEGIN*/
+// PROTO-FROSTED-CURE tokens + pure physics — verified-model: claude-fable-5.
+// DOM-free: extracted and run under node by check.mjs. The page consumes it as window.CURE.
+"use strict";
+const CURE = (() => {
+  const PHI = (1 + Math.sqrt(5)) / 2;
+
+  // The register claims — literals mirrored in the <style> block above; check.mjs
+  // cross-checks the CSS text so the two homes cannot drift.
+  const REGISTERS = {
+    before: {
+      f5: { containerBlurPx: 7, containerSat: 1.4, specularPx: 1.5, specularAlpha: 0.45,
+            controlBrightness: 1.1, sweepPeriodS: 5.6,
+            pins: "f5-optical-medium/index.html:68-74,178-182" },
+      f4: { containerBlurPx: 26, containerSat: 1.65, borderAlpha: 0.13, rimAlpha: 0.20,
+            controlFillAlpha: 0.15, controlBorderAlpha: 0.24, controlRimAlpha: 0.30,
+            sliderFillAlphaTop: 0.95, sliderFillAlphaBot: 0.78,
+            knobRingIdle: 0.12, castIdle: 0.25,
+            pins: "f4-energy-field/index.html:78-93,215-234" },
+    },
+    cured: {
+      dark:  { containerBlurPx: 22, containerSat: 1.35, controlBlurPx: 12, controlSat: 1.35,
+               rimPx: 1, rimAlpha: 0.12, controlRimAlpha: 0.22, controlBrightness: null,
+               controlFillAlphaTop: 0.20, controlFillAlphaBot: 0.12,
+               sliderFillAlphaTop: 0.66, sliderFillAlphaBot: 0.55,
+               sweepPeriodS: 8.4, sweepAlphaMax: 0.12,
+               tintTop: [56, 50, 44, 0.55], tintBot: [36, 32, 28, 0.68],
+               text: [255, 253, 248] },
+      light: { containerBlurPx: 26, containerSat: 1.5, controlBlurPx: 12, controlSat: 1.35,
+               rimPx: 1, rimAlpha: 0.14, controlRimAlpha: 0.55, controlBrightness: null,
+               sliderFillAlphaTop: 0.68, sliderFillAlphaBot: 0.58,
+               tintTop: [250, 246, 236, 0.62], tintBot: [244, 238, 224, 0.72],
+               text: [44, 36, 28] },
+    },
+  };
+
+  // Idle-light law: each cured overlay's opacity expression, replicated as a pure
+  // function of (engage, energy). check.mjs asserts f(0,0) === 0 for every row.
+  const clamp01 = (x) => Math.max(0, Math.min(1, x));
+  const IDLE_AUDIT = [
+    { name: "cure wash",  f: (e, E) => e * 0.45 },
+    { name: "cure bloom", f: (e, E) => clamp01((E - 0.3) / 0.7) * 0.6 + e * 0.4 },
+    { name: "cure cast",  f: (e, E) => E * 0.55 },
+    { name: "cure ring",  f: (e, E) => E * 0.85 },
+    { name: "cure arrival rim (beat)", f: () => 0 },   // JS-driven pulse, base 0
+  ];
+  // The before column's DEFECT pins (kept honest — these must stay nonzero):
+  const BEFORE_IDLE = [
+    { name: "b4 knob ring", f: (e, E) => 0.12 + 0.88 * E, idle: 0.12 },
+    { name: "b4 cast",      f: (e, E) => 0.25 + 0.75 * E, idle: 0.25 },
+  ];
+
+  // R-EFFERVESCE — law 14c (IOS27-CODEX law 14c): ~60ms latency, ~250ms flight,
+  // single ~9% velocity-bought overshoot, no second bounce, ζ 0.75-0.85.
+  // Fade snappy and tight: fade ≤ geometry/φ. One sub-100ms arrival rim beat.
+  const EFFERVESCE = {
+    zeta: 0.80, response: 0.30, v0: 26,         // v0 buys the ~9% overshoot (law: never intrinsic — sim: 9.1%)
+    latencyMs: 60, geomMs: 250, fadeMs: 150,
+    beatRiseMs: 80, beatDecayMs: 240,
+    beforeReg: { zeta: 0.45, response: 0.42, v0: 0, fadeMs: 420 },
+  };
+
+  // Closed-form spring (F1's parametrization: ω = 2π/response).
+  function springSampler(response, zeta, x0, v0, target) {
+    const w = (Math.PI * 2) / response;
+    const A = x0 - target;
+    if (zeta < 0.999) {
+      const wd = w * Math.sqrt(1 - zeta * zeta);
+      const B = (v0 + zeta * w * A) / wd;
+      return (t) => {
+        const e = Math.exp(-zeta * w * t);
+        const c = Math.cos(wd * t), s = Math.sin(wd * t);
+        return [target + e * (A * c + B * s),
+                e * (-zeta * w * (A * c + B * s) + wd * (B * c - A * s))];
+      };
+    }
+    const B = v0 + w * A;
+    return (t) => {
+      const e = Math.exp(-w * t);
+      return [target + e * (A + B * t), e * (v0 - w * B * t)];
+    };
+  }
+
+  // Deterministic pop-over sim (1ms): overshoot, second excursion, flight to ±2% sustained.
+  function simPopover(reg) {
+    const fn = springSampler(reg.response, reg.zeta, 0, reg.v0, 1);
+    const DT = 0.001;
+    let peak = 0, crossed = false, secondPeak = 0, settle = null, phase = "rise";
+    for (let t = 0; t < 2; t += DT) {
+      const [x] = fn(t);
+      if (!crossed && x >= 1) crossed = true;
+      if (crossed) {
+        if (phase === "rise") { if (x - 1 > peak) peak = x - 1; if (x < 1) phase = "under"; }
+        else if (phase === "under") { if (1 - x > secondPeak) secondPeak = 1 - x; }
+      }
+      if (Math.abs(x - 1) >= 0.02) settle = null;
+      else if (settle === null) settle = t;
+    }
+    return { overshoot: peak, secondExcursion: secondPeak, settleMs: settle * 1000 };
+  }
+
+  // Analytic legibility model (declared constants, the F5 pattern — NOT a paint read):
+  // composite = tint over scene, text contrast per WCAG.
+  function wcagLum([r, g, b]) {
+    const f = (u) => { u /= 255; return u <= 0.03928 ? u / 12.92 : Math.pow((u + 0.055) / 1.055, 2.4); };
+    return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
+  }
+  function contrast(l1, l2) { const [a, b] = l1 > l2 ? [l1, l2] : [l2, l1]; return (a + 0.05) / (b + 0.05); }
+  const SCENE = { darkLum: 0.10, lightLum: 0.55 };   // label-band scene luminance, declared
+  function composite(tintRgba, sceneLum) {
+    const [r, g, b, a] = tintRgba;
+    const lt = wcagLum([r, g, b]);
+    return lt * a + sceneLum * (1 - a);              // luminance-space approximation, declared
+  }
+  function textContrast(theme) {
+    const reg = REGISTERS.cured[theme];
+    const scene = theme === "dark" ? SCENE.darkLum : SCENE.lightLum;
+    // worst arm: the lighter (top) tint for dark text, the thinner tint for white text
+    const lc = composite(theme === "dark" ? reg.tintTop : reg.tintTop, scene);
+    return contrast(wcagLum(reg.text), lc);
+  }
+
+  return { PHI, REGISTERS, IDLE_AUDIT, BEFORE_IDLE, EFFERVESCE, SCENE,
+           springSampler, simPopover, wcagLum, contrast, composite, textContrast, clamp01 };
+})();
+/*CURE-TOKENS-END*/
+</script>
+
+<script>
+"use strict";
+(() => {
+  const $ = (s) => document.querySelector(s);
+  const $$ = (s) => [...document.querySelectorAll(s)];
+
+  /* ---------- theme + PRM ---------- */
+  const themeBtn = $("#themeBtn");
+  themeBtn.addEventListener("click", () => {
+    const next = document.body.dataset.theme === "dark" ? "light" : "dark";
+    document.body.dataset.theme = next;
+    themeBtn.textContent = `theme: ${next}`;
+  });
+  const prmMedia = matchMedia("(prefers-reduced-motion: reduce)");
+  const prmBox = $("#prmSim");
+  const PRM = () => prmMedia.matches || prmBox.checked;
+  const prmSync = () => document.body.classList.toggle("prm", PRM());
+  prmBox.addEventListener("change", prmSync);
+  prmMedia.addEventListener?.("change", prmSync);
+  prmSync();
+
+  /* ---------- conductor: ONE event-scoped rAF, parks at idle ---------- */
+  const jobs = new Set();
+  let rafId = null, lastT = 0;
+  function wake() {
+    if (rafId !== null) return;
+    lastT = performance.now();
+    $("#rafState").textContent = "rAF active";
+    rafId = requestAnimationFrame(tick);
+  }
+  function tick(now) {
+    const dt = Math.min(0.05, (now - lastT) / 1000);
+    lastT = now;
+    for (const j of [...jobs]) { if (!j(dt, now)) jobs.delete(j); }
+    if (jobs.size) rafId = requestAnimationFrame(tick);
+    else { rafId = null; $("#rafState").textContent = "rAF parked"; }
+  }
+  const run = (job) => { jobs.add(job); wake(); };
+
+  /* ---------- engagement envelope: attack τ60ms / release τ180ms ---------- */
+  function attachEngage(root) {
+    let y = 0, target = 0;
+    const step = (dt) => {
+      const tau = target > y ? 0.06 : 0.18;
+      y = target + (y - target) * Math.exp(-dt / tau);
+      if (Math.abs(y - target) < 0.004 && target === 0) { y = 0; root.style.setProperty("--engage-t", "0"); return false; }
+      root.style.setProperty("--engage-t", y.toFixed(3));
+      return true;
+    };
+    const down = () => { target = 1; if (PRM()) { y = 1; root.style.setProperty("--engage-t", "1"); return; } run(step); };
+    const up = () => { target = 0; if (PRM()) { y = 0; root.style.setProperty("--engage-t", "0"); return; } run(step); };
+    root.addEventListener("pointerdown", down);
+    window.addEventListener("pointerup", up);
+    window.addEventListener("pointercancel", up);
+  }
+  $$("[data-engage-root]").forEach(attachEngage);
+
+  /* ---------- R-TABTOGGLE: capsule slide (CSS transition), engagement via envelope ---------- */
+  $$(".tt-bar").forEach((bar) => {
+    const capsule = bar.querySelector("[data-capsule]");
+    bar.querySelectorAll(".tt-tab").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const i = +tab.dataset.tab;
+        capsule.style.transform = `translateX(${i === 0 ? 0 : "calc(100% + 10px)"})`;
+        bar.querySelectorAll(".tt-tab").forEach((t) => t.setAttribute("aria-pressed", String(t === tab)));
+      });
+    });
+  });
+
+  /* ---------- R-TABS: lens travel on the dock register (0.30, ζ0.82), energy feeds light ---------- */
+  $$("[data-lens-bar]").forEach((bar) => {
+    const lens = bar.querySelector("[data-lens]");
+    let cur = 0, x = 0, v = 0, sampler = null, t0 = 0;
+    const pitch = () => (bar.clientWidth - 12) / 4;  // read on demand at tap, not per frame
+    bar.querySelectorAll(".tab").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const i = +tab.dataset.tab;
+        bar.querySelectorAll(".tab").forEach((t) => t.setAttribute("aria-selected", String(t === tab)));
+        if (i === cur && sampler === null) return;
+        const target = i * pitch();
+        cur = i;
+        if (PRM()) { x = target; v = 0; sampler = null; lens.style.transform = `translateX(${x}px)`; bar.style.setProperty("--energy", "0"); return; }
+        sampler = CURE.springSampler(0.30, 0.82, x, v, target);
+        t0 = performance.now() / 1000;
+        run((dt, nowMs) => {
+          if (!sampler) return false;
+          const [nx, nv] = sampler(nowMs / 1000 - t0);
+          x = nx; v = nv;
+          lens.style.transform = `translateX(${x.toFixed(2)}px)`;
+          // energy from lens velocity (px/s), the F4 law — light dies with motion
+          bar.style.setProperty("--energy", Math.tanh(Math.abs(v) / 1000).toFixed(3));
+          if (Math.abs(x - cur * pitch()) < 0.5 && Math.abs(v) < 2) {
+            sampler = null;
+            lens.style.transform = `translateX(${(cur * pitch()).toFixed(2)}px)`;
+            bar.style.setProperty("--energy", "0");
+            return false;
+          }
+          return true;
+        });
+      });
+    });
+  });
+
+  /* ---------- R-SLIDER: drag writes --val + --energy; energy decays τ120ms on release ---------- */
+  $$("[data-slider]").forEach((box) => {
+    let rect = null, lastX = 0, lastT = 0, E = 0, dragging = false;
+    const ring = box.querySelector("[data-ring]");
+    const setRing = (val) => { if (ring) ring.style.left = `${(val * 100).toFixed(2)}%`; };
+    setRing(0.55);
+    box.addEventListener("pointerdown", (ev) => {
+      rect = box.getBoundingClientRect();          // ONE layout read per gesture
+      dragging = true; lastX = ev.clientX; lastT = performance.now();
+      box.setPointerCapture(ev.pointerId);
+    });
+    box.addEventListener("pointermove", (ev) => {
+      if (!dragging) return;
+      const now = performance.now();
+      const dt = Math.max(1, now - lastT) / 1000;
+      const vel = (ev.clientX - lastX) / dt;
+      lastX = ev.clientX; lastT = now;
+      E = Math.max(E, Math.tanh(Math.abs(vel) / 1000));
+      const val = Math.max(0.02, Math.min(1, (ev.clientX - rect.left) / rect.width));
+      box.style.setProperty("--val", val.toFixed(3));
+      box.style.setProperty("--energy", E.toFixed(3));
+      setRing(val);
+    });
+    const release = () => {
+      if (!dragging) return;
+      dragging = false;
+      if (PRM()) { E = 0; box.style.setProperty("--energy", "0"); return; }
+      run((dt) => {
+        E *= Math.exp(-dt / 0.12);
+        if (E < 0.004) { E = 0; box.style.setProperty("--energy", "0"); return false; }
+        box.style.setProperty("--energy", E.toFixed(3));
+        return true;
+      });
+    };
+    box.addEventListener("pointerup", release);
+    box.addEventListener("pointercancel", release);
+    // idle decay of the max-held E while dragging slowly
+    box.addEventListener("pointermove", () => { if (dragging) run((dt) => { if (!dragging) return false; E *= Math.exp(-dt / 0.25); box.style.setProperty("--energy", E.toFixed(3)); return dragging; }); }, { once: true });
+  });
+
+  /* ---------- R-EFFERVESCE: the two pop-over registers, measured live ---------- */
+  const fmtPct = (x) => `${(x * 100).toFixed(1)}%`;
+  const chip = (id, text, ok) => { const el = $(id); el.textContent = text; el.className = ok === undefined ? "" : ok ? "pass" : "fail"; };
+
+  function openPop(el, rimEl, reg, isAfter) {
+    el.style.visibility = "visible";
+    el.setAttribute("aria-hidden", "false");
+    if (PRM()) { el.style.opacity = "1"; el.style.transform = "none"; if (!isAfter) rimEl.style.opacity = "0.9"; return; }
+    const fn = CURE.springSampler(reg.response, reg.zeta, 0, reg.v0, 1);
+    const t0 = performance.now() + (isAfter ? CURE.EFFERVESCE.latencyMs : 0);
+    let peak = 0, crossed = false, second = 0, phase = "rise", landed = false, settleAt = null;
+    run((dt, now) => {
+      const t = (now - t0) / 1000;
+      if (t < 0) { el.style.opacity = "0"; return true; }
+      const [x] = fn(t);
+      // geometry: translateY 14px + scale 0.94 -> 1, one scalar
+      el.style.transform = `translateY(${((1 - x) * 14).toFixed(2)}px) scale(${(0.94 + 0.06 * x).toFixed(4)})`;
+      // fade: tight — fadeMs, ease-out shape
+      const f = Math.min(1, (t * 1000) / (isAfter ? CURE.EFFERVESCE.fadeMs : reg.fadeMs));
+      el.style.opacity = String(1 - Math.pow(1 - f, 2));
+      if (!crossed && x >= 1) {
+        crossed = true;
+        if (isAfter && !landed) {   // the arrival beat: sub-100ms rise, immediate cool
+          landed = true;
+          rimEl.style.transition = `opacity ${CURE.EFFERVESCE.beatRiseMs}ms ease-out`;
+          rimEl.style.opacity = "0.85";
+          setTimeout(() => {
+            rimEl.style.transition = `opacity ${CURE.EFFERVESCE.beatDecayMs}ms ease-in`;
+            rimEl.style.opacity = "0";
+          }, CURE.EFFERVESCE.beatRiseMs);
+        }
+        if (!isAfter) rimEl.style.opacity = "0.9";   // the before defect: it lingers
+      }
+      if (crossed) {
+        if (phase === "rise") { peak = Math.max(peak, x - 1); if (x < 1) phase = "under"; }
+        else if (phase === "under") second = Math.max(second, 1 - x);
+      }
+      if (Math.abs(x - 1) >= 0.02) settleAt = null;
+      else if (settleAt === null) settleAt = t;
+      if (settleAt !== null && t - settleAt > 0.12) {
+        el.style.transform = "none"; el.style.opacity = "1";
+        const flight = settleAt * 1000 + (isAfter ? CURE.EFFERVESCE.latencyMs : 0);
+        if (isAfter) {
+          chip("#roOver", fmtPct(peak), peak >= 0.06 && peak <= 0.12);
+          chip("#roFlight", `${flight.toFixed(0)}ms`, flight >= 200 && flight <= 320);
+          chip("#roSecond", fmtPct(second), second < 0.015);
+          const fr = CURE.EFFERVESCE.fadeMs / CURE.EFFERVESCE.geomMs;
+          chip("#roFade", `${CURE.EFFERVESCE.fadeMs}/${CURE.EFFERVESCE.geomMs} = ${fr.toFixed(3)}`, fr <= 1 / CURE.PHI + 1e-9);
+          chip("#roBeat", `${CURE.EFFERVESCE.beatRiseMs}ms rise / ${CURE.EFFERVESCE.beatDecayMs}ms cool`, CURE.EFFERVESCE.beatRiseMs <= 100);
+        } else {
+          $("#roBefore").textContent = `${fmtPct(peak)} + ${fmtPct(second)} return (visible)`;
+        }
+        return false;
+      }
+      return true;
+    });
+  }
+  function closePop(el, rimEl) {
+    el.style.opacity = "0"; el.style.visibility = "hidden"; el.setAttribute("aria-hidden", "true");
+    el.style.transform = "translateY(14px) scale(0.94)"; rimEl.style.transition = "none"; rimEl.style.opacity = "0";
+  }
+  let beforeOpen = false, afterOpen = false;
+  $("#popBeforeBtn").addEventListener("click", () => {
+    beforeOpen = !beforeOpen;
+    beforeOpen ? openPop($("#popBefore"), $("#popBeforeRim"), CURE.EFFERVESCE.beforeReg, false)
+               : closePop($("#popBefore"), $("#popBeforeRim"));
+  });
+  $("#popAfterBtn").addEventListener("click", () => {
+    afterOpen = !afterOpen;
+    afterOpen ? openPop($("#popAfter"), $("#popAfterRim"), CURE.EFFERVESCE, true)
+              : closePop($("#popAfter"), $("#popAfterRim"));
+  });
+
+  /* ---------- the specular audit table: ONE read per element at load ---------- */
+  function buildAudit() {
+    const table = $("#auditTable");
+    $$("[data-audit]").forEach((el) => {
+      const idle = parseFloat(getComputedStyle(el).opacity);
+      const name = el.dataset.audit;
+      const isCure = name.startsWith("cure");
+      const tr = document.createElement("tr");
+      const verdict = isCure
+        ? (idle === 0 ? ["ok", "PASS — dark at idle"] : ["no", `FAIL — idle ${idle}`])
+        : (name.includes("defect")
+            ? ["lic", `pinned defect (idle ${idle})`]
+            : (idle === 0 ? ["ok", "idle 0 (θ-gated)"] : ["no", `idle ${idle}`]));
+      tr.innerHTML = `<td>${name}</td><td>${isCure ? "AFTER" : "BEFORE"}</td><td>${idle}</td><td class="${verdict[0]}">${verdict[1]}</td>`;
+      table.appendChild(tr);
+    });
+    const sweepRow = document.createElement("tr");
+    sweepRow.innerHTML = `<td>cure idle sweep (::after, active capsule)</td><td>AFTER</td><td>period 8.4s</td><td class="lic">LICENSED — the one idle light motion, one per view, PRM-dead</td>`;
+    table.appendChild(sweepRow);
+  }
+  buildAudit();
+
+  /* ---------- the capture run: a deterministic sequence for the video arm ---------- */
+  $("#captureRun").addEventListener("click", async () => {
+    const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+    const press = async (el, holdMs = 420) => {
+      el.dispatchEvent(new PointerEvent("pointerdown", { bubbles: true }));
+      await sleep(holdMs);
+      window.dispatchEvent(new PointerEvent("pointerup", { bubbles: true }));
+      el.click();
+    };
+    for (const bar of $$(".tt-bar")) {
+      await press(bar.querySelectorAll(".tt-tab")[1]); await sleep(500);
+      await press(bar.querySelectorAll(".tt-tab")[0]); await sleep(500);
+    }
+    for (const bar of $$("[data-lens-bar]")) {
+      for (const i of [2, 0]) { await press(bar.querySelectorAll(".tab")[i]); await sleep(700); }
+    }
+    for (const box of $$("[data-slider]")) {
+      const r = box.getBoundingClientRect();
+      box.dispatchEvent(new PointerEvent("pointerdown", { bubbles: true, clientX: r.left + r.width * 0.3, pointerId: 1 }));
+      for (let k = 0; k <= 12; k++) {
+        box.dispatchEvent(new PointerEvent("pointermove", { bubbles: true, clientX: r.left + r.width * (0.3 + 0.05 * k), pointerId: 1 }));
+        await sleep(28);
+      }
+      box.dispatchEvent(new PointerEvent("pointerup", { bubbles: true, pointerId: 1 }));
+      await sleep(400);
+    }
+    $("#popBeforeBtn").click(); await sleep(1200); $("#popBeforeBtn").click(); await sleep(250);
+    $("#popAfterBtn").click(); await sleep(1200); $("#popAfterBtn").click();
+  });
+})();
+</script>
+</body>
+</html>

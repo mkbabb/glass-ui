@@ -1,0 +1,1508 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PROTO-CONSTELLATION — V-CONST + V-BLACKDOCK + V-TIMELINE + R-MOMENTUM (IOS27-MICRO novelties)</title>
+<!-- verified-model: claude-fable-5 (system-context model ID, verbatim). Seat novelty:PROTO-1. -->
+<style>
+  :root {
+    color-scheme: light;
+    --ink: #2a251d;
+    --ink-dim: #7a705f;
+    --bench: #f2ece0;
+    --panel: rgba(42, 37, 29, 0.045);
+    --line: rgba(42, 37, 29, 0.14);
+    --good: #2c7a4b;
+    --bad: #b03d2e;
+    --mono: ui-monospace, "SF Mono", Menlo, monospace;
+
+    /* THE FROSTED REGISTER — derived from F1's good glass (f1-scalar-spine/index.html:109-112
+       container tier, :163-165 control tier, :214-218 medium): blur 22 / saturate 1.35, depth
+       carried by TINT (background gradient), 1px top rim the ONLY idle light. No brightness>1,
+       no glossy top-half white ramp, no idle specular — the shine class that broke F4/F5. */
+    --frost-bg: linear-gradient(180deg, rgba(255, 253, 248, 0.62), rgba(242, 234, 221, 0.55));
+    --frost-blur: blur(22px) saturate(1.35);
+    --frost-rim: inset 0 1px 0 rgba(255, 255, 255, 0.65),
+                 inset 0 0 0 1px rgba(255, 255, 255, 0.28),
+                 0 10px 26px rgba(60, 48, 30, 0.16);
+    --ctl-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 252, 244, 0.34));
+    --ctl-rim: inset 0 1px 0 rgba(255, 255, 255, 0.72), 0 3px 8px rgba(60, 48, 30, 0.10);
+
+    /* V-BLACKDOCK register — codex law 13 material at surface scale: ~70% black fill, LOW
+       backdrop ghosting (blur 10 < container 22 so content ghosts through), thin rim.
+       Near-black is a luminance floor, never opaque paint (alpha 0.70, backdrop-filter live). */
+    --black-bg: rgba(16, 14, 12, 0.70);
+    --black-blur: blur(10px) saturate(1.2);
+    --black-rim: inset 0 1px 0 rgba(255, 255, 255, 0.18),
+                 inset 0 0 0 1px rgba(255, 255, 255, 0.07),
+                 0 12px 30px rgba(20, 16, 10, 0.35);
+    --black-ink: #f4efe6;
+    --black-ink-dim: #b3aa9a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bench);
+    color: var(--ink);
+    font: 14px/1.45 -apple-system, system-ui, "Segoe UI", sans-serif;
+    padding: 20px 24px 40px;
+  }
+  header h1 { font-size: 19px; font-weight: 700; letter-spacing: 0.01em; }
+  header .meta { color: var(--ink-dim); font-size: 12px; margin-top: 4px; display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+  header .meta code { font-family: var(--mono); }
+  #fps { font-family: var(--mono); color: var(--ink); }
+  main { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 18px; }
+  section.demo { flex: 1 1 480px; max-width: 680px; }
+  section.demo h2 { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+  .demo-row { display: flex; gap: 16px; align-items: flex-start; }
+  .aside { flex: 1; min-width: 250px; }
+  .badge { font-family: var(--mono); font-size: 11px; color: var(--ink-dim); margin-top: 8px; white-space: nowrap; }
+  .badge b { color: var(--ink); font-weight: 600; }
+  .buttons { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  button {
+    font: 12px/1 inherit; color: var(--ink);
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 9px; padding: 7px 10px;
+    cursor: pointer;
+  }
+  button:hover { background: rgba(42, 37, 29, 0.09); }
+  button:disabled { opacity: 0.4; cursor: default; }
+  table { border-collapse: collapse; width: 100%; margin-top: 10px; font-family: var(--mono); font-size: 11px; }
+  th, td { text-align: left; padding: 4px 8px; border-bottom: 1px solid rgba(42, 37, 29, 0.08); }
+  th { color: var(--ink-dim); font-weight: 500; }
+  td.ok { color: var(--good); }
+  td.no { color: var(--bad); }
+  .hint { color: var(--ink-dim); font-size: 11px; margin-top: 8px; }
+  footer { margin-top: 26px; color: var(--ink-dim); font-size: 11.5px; max-width: 760px; }
+
+  /* ---------- phone frame ---------- */
+  .phone {
+    position: relative;
+    width: 300px; height: 620px;
+    border-radius: 42px;
+    border: 1px solid rgba(42, 37, 29, 0.22);
+    box-shadow: 0 24px 60px rgba(60, 48, 30, 0.30), inset 0 0 0 6px #171410;
+    overflow: hidden;
+    flex: 0 0 auto;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    background: #f7f2e8;
+  }
+  .wall { position: absolute; inset: 0; }
+
+  /* Phone A wall — the library page. Saturation lives in CONTENT (codex law 2 corollary);
+     the glass above it is never painted a theme color. */
+  .lib-scroll { position: absolute; left: 0; right: 0; top: 0; will-change: transform; }
+  .lib-h { font-size: 24px; font-weight: 800; letter-spacing: -0.01em; padding: 46px 20px 4px; }
+  .lib-sub { font-size: 11px; color: var(--ink-dim); padding: 0 20px 12px; }
+  .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 20px 240px; }
+  .tile { height: 118px; border-radius: 18px; position: relative; overflow: hidden;
+          box-shadow: 0 6px 16px rgba(60, 48, 30, 0.18); }
+  .tile span { position: absolute; left: 10px; bottom: 8px; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.92); text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+  .t1 { background: radial-gradient(90px 70px at 30% 25%, #e0885a, transparent 75%), linear-gradient(160deg, #b06b3f, #7c4426); }
+  .t2 { background: radial-gradient(90px 70px at 70% 30%, #8aa77c, transparent 75%), linear-gradient(160deg, #5c7a52, #395033); }
+  .t3 { background: radial-gradient(100px 80px at 35% 70%, #7d86c9, transparent 75%), linear-gradient(160deg, #55598f, #33355c); }
+  .t4 { background: radial-gradient(90px 70px at 60% 30%, #d9a94e, transparent 75%), linear-gradient(160deg, #b28430, #74551f); }
+  .t5 { background: radial-gradient(100px 90px at 40% 40%, #b57393, transparent 75%), linear-gradient(160deg, #8d4e6c, #5c3247); }
+  .t6 { background: radial-gradient(90px 80px at 65% 60%, #6fa3a8, transparent 75%), linear-gradient(160deg, #4a7c81, #2f5054); }
+
+  .wall-dim {
+    position: absolute; inset: 0;
+    background: rgba(30, 24, 16, 0.35);
+    opacity: calc(var(--md-a, 0) / 0.35 * 0.35);
+    pointer-events: none;
+  }
+
+  /* ---------- glass bodies (the constellation) ---------- */
+  .glass-body {
+    position: absolute;
+    background: var(--frost-bg);
+    box-shadow: var(--frost-rim);
+    will-change: transform, clip-path;
+  }
+  .glass-on {
+    -webkit-backdrop-filter: var(--frost-blur);
+    backdrop-filter: var(--frost-blur);
+  }
+
+  /* MAIN dock — base box is its STACKED rect; FISSION reveals its left 96px via clip. */
+  #mainDock { left: 12px; top: 544px; width: 276px; height: 64px; border-radius: 32px; clip-path: inset(0 round 32px); }
+  .dock-row { position: absolute; inset: 0; display: flex; align-items: center; gap: 8px; padding: 0 10px; opacity: var(--pc-lbl, 1); }
+  .search-pill {
+    flex: 1; height: 44px; border-radius: 22px;
+    background: var(--ctl-bg); box-shadow: var(--ctl-rim);
+    display: flex; align-items: center; padding: 0 14px; gap: 8px;
+    font-size: 13px; font-weight: 600;
+  }
+  .search-pill .glyph { opacity: 0.55; font-size: 12px; }
+  .chip {
+    width: 40px; height: 40px; border-radius: 50%; flex: 0 0 auto;
+    background: var(--ctl-bg); box-shadow: var(--ctl-rim);
+    display: grid; place-items: center; font-size: 11px; font-weight: 700;
+    position: relative;
+  }
+  .chip .bdg {
+    position: absolute; top: -3px; right: -3px;
+    min-width: 15px; height: 15px; border-radius: 8px; padding: 0 4px;
+    background: #b03d2e; color: #fff; font-size: 9px; font-weight: 700;
+    display: grid; place-items: center;
+  }
+  /* fission-left controls, pre-composed in the left 96px, revealed by the gird band (law 5) */
+  .gird-controls {
+    position: absolute; left: 0; top: 8px; width: 96px; height: 48px;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    opacity: var(--pc-gird, 0); pointer-events: none;
+  }
+  .gird-controls .gc { width: 26px; height: 26px; border-radius: 50%; background: var(--ctl-bg);
+    box-shadow: var(--ctl-rim); display: grid; place-items: center; font-size: 9px; font-weight: 700; }
+
+  /* SEARCH gird — fission-right circle */
+  #searchGird {
+    left: 240px; top: 552px; width: 48px; height: 48px; border-radius: 50%;
+    display: grid; place-items: center; font-size: 13px; font-weight: 700;
+    opacity: var(--pc-gird, 0);
+    transform: translateX(calc((1 - var(--pc-gird, 0)) * -56px));
+  }
+
+  /* NOW body — ONE persistent element: mini dock, fused chip, fission capsule, card, page.
+     Base box = the page rect {8,40,284,568}; every incarnation is a clip-path sub-rect.
+     Chrome for all incarnations pre-composed at final layout, revealed by bands, never reflowed. */
+  #npBody { left: 8px; top: 40px; width: 284px; height: 568px; border-radius: 30px; }
+  #npArt {
+    position: absolute; left: 58px; top: 32px; width: 168px; height: 168px;
+    border-radius: 20px; transform-origin: 0 0; will-change: transform;
+    background: radial-gradient(120px 100px at 35% 30%, #e0885a, transparent 75%),
+                radial-gradient(140px 120px at 70% 75%, #8d4e6c, transparent 75%),
+                linear-gradient(160deg, #b06b3f, #55598f);
+    box-shadow: 0 6px 18px rgba(60, 48, 30, 0.28);
+  }
+  #npMq {
+    position: absolute; left: 58px; top: 212px; width: 168px; height: 28px;
+    transform-origin: 0 0; will-change: transform; overflow: hidden;
+    font-size: 13px; font-weight: 700; line-height: 28px; white-space: nowrap;
+  }
+  #npMq .mq-in { display: inline-block; animation: mq 9s linear infinite; }
+  @keyframes mq { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .np-mini-extra { position: absolute; opacity: var(--np-mini, 1); pointer-events: none; }
+  #npPlayMini { left: 244px; top: 460px; width: 32px; height: 32px; border-radius: 50%;
+    background: var(--ctl-bg); box-shadow: var(--ctl-rim); display: grid; place-items: center; font-size: 10px; }
+  .np-card-extra { position: absolute; opacity: var(--np-card, 0); pointer-events: none; }
+  #npCardMeta { left: 172px; top: 290px; width: 100px; font-size: 11px; color: var(--ink-dim); }
+  #npCardMeta b { display: block; color: var(--ink); font-size: 13px; margin-bottom: 4px; }
+  #npCardCtl { left: 32px; top: 500px; width: 220px; display: flex; gap: 10px; justify-content: center; }
+  #npCardCtl .gc { width: 34px; height: 34px; border-radius: 50%; background: var(--ctl-bg);
+    box-shadow: var(--ctl-rim); display: grid; place-items: center; font-size: 10px; font-weight: 700; }
+  .np-page-extra { position: absolute; pointer-events: none; }
+  #npPageTitle { left: 58px; top: 246px; font-size: 11px; color: var(--ink-dim);
+    opacity: var(--np-r0, 0); transform: translateY(calc((1 - var(--np-r0, 0)) * 14px)); }
+  .np-rows { position: absolute; left: 24px; right: 24px; top: 300px; display: flex; flex-direction: column; gap: 8px; }
+  .mrow { will-change: transform; }
+  .mrow-in {
+    height: 42px; border-radius: 13px;
+    background: var(--ctl-bg); box-shadow: var(--ctl-rim);
+    display: flex; align-items: center; padding: 0 12px; gap: 8px;
+    font-size: 12px;
+    opacity: var(--r-p, 0);
+    transform: translateY(calc((1 - var(--r-p, 0)) * 18px));
+  }
+  .mrow-in .sub { margin-left: auto; color: var(--ink-dim); font-size: 11px; }
+  #npBody .np-rows .mrow-in { --r-p: var(--np-rN, 0); }
+
+  /* ---------- Phone B: V-BLACKDOCK ---------- */
+  .wall-b {
+    background:
+      radial-gradient(160px 130px at 24% 22%, rgba(176, 107, 63, 0.5), transparent 70%),
+      radial-gradient(200px 170px at 78% 40%, rgba(85, 89, 143, 0.45), transparent 70%),
+      radial-gradient(220px 200px at 45% 82%, rgba(92, 122, 82, 0.4), transparent 70%),
+      linear-gradient(180deg, #f7f0e2, #efe6d4);
+  }
+  .wall-b .wall-word {
+    position: absolute; left: 0; right: 0; top: 200px;
+    text-align: center; font-size: 54px; font-weight: 800; letter-spacing: 0.02em;
+    color: rgba(42, 37, 29, 0.82);
+  }
+  .wall-b .wall-sub { position: absolute; left: 0; right: 0; top: 268px; text-align: center;
+    font-size: 12px; letter-spacing: 0.3em; color: rgba(42, 37, 29, 0.5); }
+  #beneathChip {
+    position: absolute; left: 50%; top: 380px; transform: translateX(-50%);
+    border-radius: 18px; padding: 9px 16px;
+    background: var(--ctl-bg); box-shadow: var(--ctl-rim);
+    border: none; font-size: 12px; font-weight: 600; color: var(--ink);
+  }
+  .wall-dim-b {
+    position: absolute; inset: 0; background: rgba(30, 24, 16, 1);
+    opacity: calc(var(--bd-t, 0) * 0.15);   /* non-modal medium handshake, capped 0.15 */
+    pointer-events: none;                    /* codex law 18: taps beneath still navigate */
+  }
+
+  /* the assistant surface — top edge ANCHORED, bottom travels, sides breathe +4.5%.
+     One clip-path growth channel (the ruled mechanism, cures-F1 G4) with the anchor inverted. */
+  #blackDock {
+    position: absolute; left: 21px; top: 46px; width: 258px; height: 300px;
+    border-radius: 26px;
+    background: var(--black-bg);
+    -webkit-backdrop-filter: var(--black-blur);
+    backdrop-filter: var(--black-blur);
+    box-shadow: var(--black-rim);
+    color: var(--black-ink);
+    clip-path: inset(0 0 calc((1 - var(--bd-t, 0)) * 248px) 0 round 26px);
+    transform: scaleX(calc(0.955 + 0.045 * var(--bd-t, 0)));
+    transform-origin: 50% 0;
+    will-change: transform, clip-path;
+    touch-action: none;
+  }
+  .bd-pill { position: absolute; left: 0; right: 0; top: 0; height: 52px;
+    display: flex; align-items: center; gap: 10px; padding: 0 18px; }
+  .bd-dot { width: 10px; height: 10px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #e0885a, #8d4e6c); }
+  .bd-pill b { font-size: 13px; font-weight: 600; }
+  .bd-pill .sub { margin-left: auto; font-size: 11px; color: var(--black-ink-dim); }
+  .bd-handle {
+    position: absolute; left: 50%; top: 44px; width: 36px; height: 4px; margin-left: -18px;
+    border-radius: 2px; background: rgba(255, 255, 255, 0.35);
+    opacity: var(--bd-r-handle, 0);
+  }
+  .bd-title {
+    position: absolute; left: 18px; top: 58px; font-size: 15px; font-weight: 700;
+    opacity: calc(0.55 * var(--bd-r-ghost, 0) + 0.45 * var(--bd-r-solid, 0));
+    transform: translateY(calc((1 - var(--bd-r-ghost, 0)) * 18px));
+  }
+  .bd-rows { position: absolute; left: 14px; right: 14px; top: 92px; display: flex; flex-direction: column; gap: 8px; }
+  .bd-rows .mrow-in {
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10);
+    color: var(--black-ink); height: 40px;
+  }
+  .bd-rows .mrow-in .sub { color: var(--black-ink-dim); }
+
+  @media (prefers-reduced-motion: reduce) { #npMq .mq-in { animation: none; } }
+  .prm #npMq .mq-in { animation: none; }
+</style>
+</head>
+<body>
+<header>
+  <h1>PROTO-CONSTELLATION — the nav-chrome body</h1>
+  <div class="meta">
+    <span>verified-model: <code>claude-fable-5</code> · IOS27-MICRO novelties · V-CONST + V-BLACKDOCK + V-TIMELINE + R-MOMENTUM</span>
+    <span id="fps">rAF parked</span>
+    <label><input type="checkbox" id="prm"> simulate PRM</label>
+    <span id="prmNote"></span>
+  </div>
+</header>
+
+<main>
+  <section class="demo">
+    <h2>Phone A — the dock constellation (D-POSTURE at N bodies) + the continuous-timeline ferry</h2>
+    <div class="demo-row">
+      <div class="phone" id="phoneA">
+        <div class="wall">
+          <div class="lib-scroll" id="libScroll">
+            <div class="lib-h">Library</div>
+            <div class="lib-sub">drag the page — 120px of down-scroll collapses the constellation (displacement-gated, velocity-agnostic)</div>
+            <div class="tiles">
+              <div class="tile t1"><span>Terra</span></div>
+              <div class="tile t2"><span>Moss</span></div>
+              <div class="tile t3"><span>Indigo</span></div>
+              <div class="tile t4"><span>Ochre</span></div>
+              <div class="tile t5"><span>Plum</span></div>
+              <div class="tile t6"><span>Teal</span></div>
+              <div class="tile t1"><span>Terra II</span></div>
+              <div class="tile t3"><span>Indigo II</span></div>
+            </div>
+          </div>
+          <div class="wall-dim" id="wallDimA"></div>
+        </div>
+
+        <!-- the NOW body: ONE persistent glass element ferrying mini -> chip -> capsule -> card -> page -->
+        <div class="glass-body glass-on" id="npBody">
+          <div id="npArt"></div>
+          <div id="npMq"><span class="mq-in">Caught Mid-Flight — The Detents&nbsp;&nbsp;&nbsp;&nbsp;Caught Mid-Flight — The Detents&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
+          <div class="np-mini-extra" id="npPlayMini">II</div>
+          <div class="np-card-extra" id="npCardMeta"><b>Caught Mid-Flight</b>The Detents · 2026 · 11 tracks</div>
+          <div class="np-card-extra" id="npCardCtl"><span class="gc">PRV</span><span class="gc">II</span><span class="gc">NXT</span></div>
+          <div class="np-page-extra" id="npPageTitle">ALBUM · 41 MIN</div>
+          <div class="np-rows" id="npRows">
+            <div class="mrow" style="--rn:0"><div class="mrow-in" style="--r-p: var(--np-r1, 0)">Aurora Heather <span class="sub">4:02</span></div></div>
+            <div class="mrow" style="--rn:1"><div class="mrow-in" style="--r-p: var(--np-r2, 0)">Copper Field <span class="sub">3:41</span></div></div>
+            <div class="mrow" style="--rn:2"><div class="mrow-in" style="--r-p: var(--np-r3, 0)">Moss &amp; Cream <span class="sub">5:12</span></div></div>
+            <div class="mrow" style="--rn:3"><div class="mrow-in" style="--r-p: var(--np-r4, 0)">Meniscus <span class="sub">2:58</span></div></div>
+          </div>
+        </div>
+
+        <!-- MAIN dock -->
+        <div class="glass-body glass-on" id="mainDock">
+          <div class="dock-row">
+            <div class="search-pill"><span class="glyph">SRCH</span> Library</div>
+            <div class="chip">HM<span class="bdg" id="dockBadge">3</span></div>
+            <div class="chip">MIC</div>
+          </div>
+          <div class="gird-controls"><span class="gc">PRV</span><span class="gc">II</span><span class="gc">NXT</span></div>
+        </div>
+
+        <!-- SEARCH gird (fission right) -->
+        <div class="glass-body" id="searchGird">SRCH</div>
+      </div>
+
+      <div class="aside">
+        <div class="badge" id="aBadge">posture: <b>STACKED</b> · ferry parked</div>
+        <div class="buttons">
+          <button id="bScrollSlow">scroll slow (collapse)</button>
+          <button id="bScrollFling">scroll fling (collapse)</button>
+          <button id="bReexpand">sustained up-drag (re-expand)</button>
+          <button id="bRebound">momentum rebound (refused)</button>
+          <button id="bFission">fission</button>
+          <button id="bFuse">fuse</button>
+          <button id="bFerryCard">ferry to card</button>
+          <button id="bFerryPage">ferry to page</button>
+          <button id="bFerryHome">ferry home</button>
+          <button id="bCatch">catch mid-flight</button>
+          <button id="bRehome">re-home art (decider)</button>
+          <button id="bResetA">reset</button>
+        </div>
+        <table>
+          <tr><th>measure</th><th>sim</th><th>live</th><th>band (source)</th></tr>
+          <tr><td>collapse t90</td><td id="aColS">—</td><td id="aColL">—</td><td>300–360ms (law 16a ~330; REG-LOCK)</td></tr>
+          <tr><td>labels faded by</td><td id="aLblS">—</td><td id="aLblL">—</td><td>55–90ms (law 16a ~80 lead)</td></tr>
+          <tr><td>gird lag (fission)</td><td id="aGirdS">—</td><td id="aGirdL">—</td><td>85–115ms (F3 desync ~100)</td></tr>
+          <tr><td>displacement at fire</td><td id="aDispS">—</td><td id="aDispL">—</td><td>100–150px, velocity-agnostic (law 16a)</td></tr>
+          <tr><td>census max (backdrop surfaces)</td><td>3</td><td id="aCenL">—</td><td>&le;3 at any instant (performance card)</td></tr>
+          <tr><td>catch C1 jump (dx · dv)</td><td>0</td><td id="aCatchL">—</td><td>continuity at every seam</td></tr>
+          <tr><td>ferry detent landed</td><td>—</td><td id="aDetL">—</td><td>velocity-projected, tau 0.2 (law 7c)</td></tr>
+          <tr><td>re-home rect delta</td><td>0</td><td id="aRehomeL">—</td><td>&le;0.5px (the no-detach decider)</td></tr>
+        </table>
+        <p class="hint">Drag the page: 120px down collapses the two docks into ONE (goo overlap
+        mid-morph — the two backdrop bodies double-darken, then the chip shares the main surface).
+        Fission girds controls left, search right, now-playing center — center leads, girds lag
+        ~100ms, all on one scrubbed spine. Drag the mini now-playing dock upward: the album art
+        ferries dock &rarr; card &rarr; page as ONE body on ONE spine; release velocity projects
+        the detent; flicks skip the card. Pointer down mid-flight catches everything C1.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo">
+    <h2>Phone B — the assistant black-glass register: downward dock-growth + momentum entries</h2>
+    <div class="demo-row">
+      <div class="phone" id="phoneB">
+        <div class="wall wall-b">
+          <div class="wall-word">CREAM</div>
+          <div class="wall-sub">BENEATH</div>
+          <button id="beneathChip">tap beneath (0)</button>
+          <div class="wall-dim-b"></div>
+        </div>
+        <div id="blackDock">
+          <div class="bd-handle"></div>
+          <div class="bd-pill"><span class="bd-dot"></span><b>Ask</b><span class="sub">non-modal</span></div>
+          <div class="bd-title">Results</div>
+          <div class="bd-rows" id="bdRows">
+            <div class="mrow" style="--rn:0"><div class="mrow-in" style="--r-p: var(--bd-r-row0, 0)">Directions home <span class="sub">12 min</span></div></div>
+            <div class="mrow" style="--rn:1"><div class="mrow-in" style="--r-p: var(--bd-r-row1, 0)">Coffee nearby <span class="sub">3 spots</span></div></div>
+            <div class="mrow" style="--rn:2"><div class="mrow-in" style="--r-p: var(--bd-r-row2, 0)">Weather <span class="sub">74&deg; clear</span></div></div>
+            <div class="mrow" style="--rn:3"><div class="mrow-in" style="--r-p: var(--bd-r-row3, 0)">Timer <span class="sub">8:00 left</span></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="aside">
+        <div class="badge" id="bBadge">growth: <b>0.00</b> · parked</div>
+        <div class="buttons">
+          <button id="bFlickOpen">flick open (momentum entries)</button>
+          <button id="bPlaceOpen">place open (calm entries)</button>
+          <button id="bBdClose">close</button>
+          <button id="bBdCatch">catch mid-flight</button>
+          <button id="bResetB">reset</button>
+        </div>
+        <table>
+          <tr><th>measure</th><th>sim</th><th>live</th><th>band (source)</th></tr>
+          <tr><td>top edge travel</td><td>0px</td><td id="bTopL">—</td><td>0 — anchored (the growth grammar, inverted)</td></tr>
+          <tr><td>side breathe</td><td>4.5%</td><td>4.5%</td><td>4–5% (MARKS §1 / card 7)</td></tr>
+          <tr><td>row0 entry amp (flick v=3)</td><td id="bAmpS">—</td><td id="bAmpL">—</td><td>amp scales with |v|; cap &le; driver (N7)</td></tr>
+          <tr><td>row0 overshoot (flick)</td><td id="bOvS">—</td><td id="bOvL">—</td><td>2–9.5% of amp, once (C2: velocity-bought)</td></tr>
+          <tr><td>row0 overshoot (place)</td><td id="bOv0S">—</td><td id="bOv0L">—</td><td>0 — zero-seed lands dead (provision 8)</td></tr>
+          <tr><td>depth grading row2/row0</td><td>1.40</td><td>1.40</td><td>+20%/row exact (MARKS §5)</td></tr>
+          <tr><td>taps beneath while open</td><td>—</td><td id="bTapL">0</td><td>always lands (codex law 18 non-modal)</td></tr>
+        </table>
+        <p class="hint">Drag the black pill downward — the top edge never moves; the bottom
+        travels; the sides breathe +4.5%; the reveal ladder is a pure function of growth
+        (scrub it and hold anywhere). Release fast and the result rows arrive displaced-low and
+        settle up harder — release velocity, one hop, amplitude capped at the driver's. Place it
+        slowly and the same rows land calm. The chip beneath stays tappable throughout.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <table>
+    <tr><th>register</th><th>constants</th><th>role</th></tr>
+    <tr><td>posture</td><td>(0.53, &zeta;1.00)</td><td>collapse/fission spine — t90 &asymp; 330ms (law 16a lock); bands LBL [0,.20] · GIRD [.33,1] · WIDTH [.45,.88]</td></tr>
+    <tr><td>ferry edge</td><td>(0.44, &zeta;1.00) seed-clamped</td><td>detents 0/1 — critically damped, the clamp eats excess seed (law 7b/14c): overshoot exactly 0</td></tr>
+    <tr><td>ferry interior</td><td>(0.42, &zeta;0.78)</td><td>the card detent — ~2% step overshoot, recovered ~140ms (law 7b interior)</td></tr>
+    <tr><td>seat</td><td>critical, w=10.5/s</td><td>law-14a kin duration-stable snap: settle 648–707ms across seeds ±3.2/s (spread ~60ms)</td></tr>
+    <tr><td>chip / rows</td><td>critical, seed-capped</td><td>overshoot strictly velocity-bought (C2), fence &le;10% enforced AT THE SEED, the register never lies</td></tr>
+    <tr><td>momentum entries</td><td>&beta;0.7 · D 420ms · overlap 1/&phi; · +20%/row</td><td>R-MOMENTUM — amp = base·(0.55+0.45·tanh(|v|/2.2)), one-hop N7 license</td></tr>
+  </table>
+  <p style="margin-top:10px">verified-model: claude-fable-5 — PROTO-CONSTELLATION, IOS27-MICRO novelty pass.
+  Sim column: 1ms deterministic integration of the same physics block that drives paint
+  (extracted and asserted by <code>check.mjs</code>). Live column: rAF-sampled wall clock
+  (&plusmn;1 frame). Paint truth (goo double-darkening, black-glass ghosting, backdrop census,
+  the position:fixed re-home) belongs to the serialized browser arm — QUEUED-PAINT in PROBE-NOTES.</p>
+</footer>
+
+<script id="pc-physics">
+/*PC-PHYSICS-BEGIN*/
+// PROTO-CONSTELLATION physics — verified-model: claude-fable-5.
+// DOM-free: this block is extracted and run under node by check.mjs. The SAME code drives paint.
+"use strict";
+const PC = (() => {
+  const TAU = Math.PI * 2;
+  const PHI = (1 + Math.sqrt(5)) / 2;
+  const clamp01 = (x) => Math.max(0, Math.min(1, x));
+  const band = (t, a, b) => clamp01((t - a) / (b - a));
+
+  // Closed-form second-order spring (SpringProgress parametrization, omega = 2*pi/response).
+  function springSampler(response, zeta, x0, v0, target) {
+    const w = TAU / response;
+    const A = x0 - target;
+    if (zeta < 0.999) {
+      const wd = w * Math.sqrt(1 - zeta * zeta);
+      const B = (v0 + zeta * w * A) / wd;
+      return (t) => {
+        const e = Math.exp(-zeta * w * t);
+        const c = Math.cos(wd * t), s = Math.sin(wd * t);
+        return [
+          target + e * (A * c + B * s),
+          e * (-zeta * w * (A * c + B * s) + wd * (B * c - A * s)),
+        ];
+      };
+    }
+    const B = v0 + w * A;
+    return (t) => {
+      const e = Math.exp(-w * t);
+      return [target + e * (A + B * t), e * (v0 - w * B * t)];
+    };
+  }
+  // Critical spring with explicit w (1/s) — the seat/chip/row channel sampler.
+  function criticalSampler(w, x0, v0, target) {
+    const A = x0 - target;
+    const B = v0 + w * A;
+    return (t) => {
+      const e = Math.exp(-w * t);
+      return [target + e * (A + B * t), e * (v0 - w * B * t)];
+    };
+  }
+
+  const REG = {
+    posture:   { response: 0.53, zeta: 1.00 },                  // collapse t90 ~330ms [law 16a lock]
+    ferryEdge: { response: 0.44, zeta: 1.00, seedClamp: true }, // detents 0/1: NO overshoot [law 7b]
+    ferryCard: { response: 0.42, zeta: 0.78 },                  // interior detent ~2% [law 7b]
+    dock:      { response: 0.30, zeta: 0.82 },                  // corpus-true dock row
+  };
+  const SEAT_W = 10.5;          // law-14a kin duration-stable seat (critical, settle ~650-710ms)
+  const SETTLE_T = 2 / 316;     // 2px at the 316px page travel metric
+
+  function lsqSlope(samples) {
+    const n = samples.length;
+    if (n < 2) return 0;
+    let mt = 0, mx = 0;
+    for (const [t, x] of samples) { mt += t; mx += x; }
+    mt /= n; mx /= n;
+    let num = 0, den = 0;
+    for (const [t, x] of samples) { num += (t - mt) * (x - mx); den += (t - mt) * (t - mt); }
+    return den > 1e-9 ? num / den : 0;
+  }
+
+  class Spine {
+    constructor(register = "posture") {
+      this.value = 0; this.velocity = 0; this.target = 0;
+      this.regime = "parked"; this.register = register;
+      this._fn = null; this._t0 = 0; this._samples = [];
+      this._lastSample = 0;
+    }
+    setRegister(name) { this.register = name; return this; }
+    // C1 glide: analytic spring re-seated from the CURRENT (value, velocity) or a seeded velocity.
+    // seedClamp registers (critical) clamp the toward-target seed so the spring cannot cross:
+    // c = v0 + w*A must keep A's sign — the spring "eats" excess energy (law 14c / 7b edges).
+    glideTo(target, now, seedVelocity) {
+      const { response, zeta, seedClamp } = REG[this.register];
+      const w = TAU / response;
+      let v0 = seedVelocity === undefined ? this.velocity : seedVelocity;
+      const A = this.value - target;
+      if (seedClamp && zeta >= 0.999) {
+        if (A > 0) v0 = Math.max(v0, -w * A);
+        else if (A < 0) v0 = Math.min(v0, -w * A);
+      }
+      this._fn = springSampler(response, zeta, this.value, v0, target);
+      this._t0 = now; this.target = target; this.regime = "glide";
+      return this;
+    }
+    // law-14a kin duration-stable seat: fixed-w critical glide, any seed absorbed.
+    seatGlide(target, now, seedVelocity) {
+      const v0 = seedVelocity === undefined ? this.velocity : seedVelocity;
+      this._fn = criticalSampler(SEAT_W, this.value, v0, target);
+      this._t0 = now; this.target = target; this.regime = "glide";
+      return this;
+    }
+    seat(target) { // PRM / instant
+      this.value = target; this.velocity = 0; this.target = target;
+      this.regime = "parked"; this._fn = null;
+      return this;
+    }
+    beginScrub(now) {
+      this.regime = "scrub";
+      this._samples.length = 0;
+      this._samples.push([now, this.value]);
+      this._lastSample = now;
+    }
+    scrubTo(x, now) {
+      this.value = x;
+      const s = this._samples;
+      s.push([now, x]);
+      while (s.length > 2 && now - s[0][0] > 0.1) s.shift();
+      this.velocity = lsqSlope(s);
+      this._lastSample = now;
+    }
+    tick(now) {
+      if (this.regime !== "glide" || !this._fn) return;
+      const [x, v] = this._fn(now - this._t0);
+      this.value = x; this.velocity = v;
+      if (Math.abs(x - this.target) < 0.0015 && Math.abs(v) < 0.02) {
+        this.value = this.target; this.velocity = 0;
+        this.regime = "parked"; this._fn = null;
+      }
+    }
+  }
+
+  // ---------------- V-CONST — the posture machine ----------------
+  // Bands: banded transfers of the ONE posture spine (position-mapped => scrub-reversible
+  // by construction; the fired timeline recovers law 16a's clocks through the register).
+  const BANDS = {
+    LBL:    [0.00, 0.20],  // labels/inactive glyphs fade first (~80ms on the fired clock)
+    TRAVEL: [0.05, 0.90],  // body rect travel
+    GIRD:   [0.33, 1.00],  // girds lag the center body ~100ms (F3 desync as a t-band)
+    WIDTH:  [0.45, 0.88],  // width condensation window (~180ms fired)
+  };
+  const DISP = { fire: 120, lo: 100, hi: 150 };   // law 16a displacement gate, velocity-agnostic
+  const REXP = { holdS: 0.150 };                  // law 16a intent gate: sustained up-drag at top
+  // The compact-chip channel: critical, overshoot strictly velocity-bought (MARKS C2),
+  // the [0,10%] fence enforced AT THE SEED (cap c >= -capC), never by lying about the register.
+  const CHIP = { w: TAU / 0.28, capC: 18 };
+  const chipSeed = (v0) => Math.max(v0, -(CHIP.capC + CHIP.w)); // A=1 normalized
+
+  // Backdrop-surface census — the performance card's <=3 law. FUSED settles to ONE surface
+  // (the chip SHARES the main body's surface: its own backdrop turns off at settle).
+  const CENSUS = [
+    ["STACKED", 2], ["STACKED->FUSED", 2], ["FUSED", 1],
+    ["FUSED->FISSION", 3], ["FISSION", 3], ["FISSION->FUSED", 3],
+    ["FUSED->STACKED", 2], ["FERRY", 2],
+  ];
+
+  function displacementGate(vPxS, dt = 0.001) {
+    let cum = 0, t = 0;
+    while (cum < DISP.fire && t < 60) { cum += vPxS * dt; t += dt; }
+    return { fired: cum >= DISP.fire, disp: cum, tMs: t * 1000 };
+  }
+  // Intent gate: re-expand ONLY on a sustained upward drag arriving at top while still dragging.
+  // Momentum rebound (finger off) never re-expands.
+  function reexpandGate(c) {
+    return !!(c.dragging && c.upHoldS >= REXP.holdS && c.atTop);
+  }
+
+  // ---------------- V-TIMELINE — the continuous-timeline ferry ----------------
+  // Three homes, ONE body, ONE spine. rectAt is C0 by construction (both segments share R1);
+  // the ladder is a pure function of t (fraction-keyed truth, MARKS §6).
+  const TLR = {
+    body: [ { x: 50, y: 488, w: 200, h: 48, r: 24 },
+            { x: 24, y: 300, w: 252, h: 252, r: 28 },
+            { x: 8,  y: 40,  w: 284, h: 568, r: 30 } ],
+    art:  [ { x: 56, y: 494, w: 36, h: 36, r: 10 },
+            { x: 40, y: 316, w: 120, h: 120, r: 16 },
+            { x: 66, y: 72,  w: 168, h: 168, r: 20 } ],
+    mq:   [ { x: 100, y: 494, w: 92, h: 28, r: 0 },
+            { x: 40,  y: 448, w: 220, h: 28, r: 0 },
+            { x: 66,  y: 252, w: 168, h: 28, r: 0 } ],
+  };
+  const DET = [0, 0.5, 1];
+  const PROJ_TAU = 0.2;   // law 7c: target = detentNearest(t + v*tau)
+  function lerpRect(a, b, p) {
+    return { x: a.x + (b.x - a.x) * p, y: a.y + (b.y - a.y) * p,
+             w: a.w + (b.w - a.w) * p, h: a.h + (b.h - a.h) * p,
+             r: a.r + (b.r - a.r) * p };
+  }
+  function rectAt(key, t) {
+    const [r0, r1, r2] = TLR[key];
+    const tt = Math.max(0, Math.min(1, t));
+    return tt <= 0.5 ? lerpRect(r0, r1, tt / 0.5) : lerpRect(r1, r2, (tt - 0.5) / 0.5);
+  }
+  function projectDetent(t, v) {
+    const p = t + PROJ_TAU * v;
+    let best = DET[0], d = Infinity;
+    for (const q of DET) { const dd = Math.abs(q - p); if (dd < d) { d = dd; best = q; } }
+    return best;
+  }
+  // FLIP re-home: world rect preserved exactly across a parent change (the no-detach math).
+  function rehome(world, parentOff) {
+    return { x: world.x - parentOff.x, y: world.y - parentOff.y, w: world.w, h: world.h };
+  }
+  function pageLadder(t) {
+    const s = [band(t, 0.55, 0.66)];              // page title rung
+    for (let n = 0; n < 4; n++) s.push(band(t, 0.62 + 0.07 * n, 0.70 + 0.07 * n));
+    return s;
+  }
+
+  // ---------------- V-BLACKDOCK — the black register + inverted growth grammar ----------------
+  const BLACK = {
+    fillAlpha: 0.70, blurPx: 10, containerBlurPx: 22, rimAlpha: 0.18,
+    modal: false, dimCap: 0.15,
+    y0: 46, h0: 52, H: 300, breathe: 0.045, W: 258,
+  };
+  const bdTop = (_g) => BLACK.y0;                                    // anchored — NEVER travels
+  const bdBottom = (g) => BLACK.y0 + BLACK.h0 + g * (BLACK.H - BLACK.h0);
+  const bdScaleX = (g) => (1 - BLACK.breathe) + BLACK.breathe * g;
+  function bdLadder(g) {
+    const s = [band(g, 0, 0.05), band(g, 0.10, 0.30), band(g, 0.30, 0.50)];
+    for (let n = 0; n < 4; n++) s.push(band(g, 0.40 + 0.10 * n, 0.50 + 0.10 * n));
+    return s;
+  }
+
+  // ---------------- R-MOMENTUM — momentum-carried content entry ----------------
+  // Rows enter displaced-low; amplitude scales with release velocity; the seed (one hop,
+  // beta<1, N7) buys the single settle-up overshoot; zero-seed lands dead. Fence <=10%
+  // enforced at the seed cap. Depth grading +20%/row; stagger overlap 1/phi.
+  const MOM = {
+    beta: 0.7, D: 0.42, baseAmp: 26, w: TAU / 0.40, capC: 12.5,
+    ampFloor: 0.55, ampGain: 0.45, vRef: 2.2, depth: 0.2,
+    overlap: 1 / PHI, driverTravelPx: 316,
+  };
+  const momAmpFrac = (v) => MOM.ampFloor + MOM.ampGain * Math.tanh(Math.abs(v) / MOM.vRef);
+  const momAmpPx = (v, n) => MOM.baseAmp * (1 + MOM.depth * n) * momAmpFrac(v);
+  const momStartS = (n) => n * (1 - MOM.overlap) * MOM.D;
+  function momSeed(v, n) { // normalized v0 for row n (x0=1 -> target 0), fence-capped
+    const amp = momAmpPx(v, n);
+    const v0 = -(MOM.beta * Math.abs(v) * MOM.driverTravelPx) / amp;
+    return Math.max(v0, -(MOM.capC + MOM.w));
+  }
+  function momRow(v, n, dt = 0.0005) {
+    const f = criticalSampler(MOM.w, 1, momSeed(v, n), 0);
+    let peak = 0, crossings = 0, prevSign = 1, settle = null;
+    const th = 0.5 / momAmpPx(v, n); // 0.5px settle metric, row-normalized
+    for (let t = 0; t <= 2.5; t += dt) {
+      const [x] = f(t);
+      const s = x > 0 ? 1 : x < 0 ? -1 : prevSign;
+      if (s !== prevSign) { crossings++; prevSign = s; }
+      if (x < -peak) peak = -x > peak ? -x : peak;
+      if (Math.abs(x) >= th) settle = null;
+      else if (settle === null) settle = t;
+    }
+    return { overshootFrac: peak, crossings, settleMs: settle === null ? null : settle * 1000 };
+  }
+
+  // ---------------- law-17 continuity carrier ----------------
+  class Continuity {
+    constructor() { this.offset = 0; this.badge = 3; this.accent = "#b06b3f"; this.resets = 0; }
+    advance(dt, speed = 40) { this.offset += speed * dt; } // posture morphs never touch this
+  }
+
+  // ---------------- deterministic sims (asserted by check.mjs) ----------------
+  const DT = 0.001;
+
+  function simCollapse(vChipSeedNorm = 0) {
+    const s = new Spine("posture"); s.value = 0; s.glideTo(1, 0, 0);
+    let t20 = null, t33 = null, t45 = null, t88 = null, t90 = null;
+    for (let t = 0; t < 1.5; t += DT) {
+      s.tick(t);
+      if (t20 === null && s.value >= 0.20) t20 = t;
+      if (t33 === null && s.value >= 0.33) t33 = t;
+      if (t45 === null && s.value >= 0.45) t45 = t;
+      if (t88 === null && s.value >= 0.88) t88 = t;
+      if (t90 === null && s.value >= 0.90) t90 = t;
+    }
+    const cf = criticalSampler(CHIP.w, 1, chipSeed(vChipSeedNorm), 0);
+    let chipOver = 0;
+    for (let t = 0; t < 1.2; t += DT) { const [x] = cf(t); if (-x > chipOver) chipOver = -x; }
+    return {
+      t90Ms: t90 * 1000, lblDoneMs: t20 * 1000, girdLagMs: t33 * 1000,
+      widthWinMs: (t88 - t45) * 1000, chipOvershoot: chipOver,
+    };
+  }
+
+  function simSeatStability() {
+    const seeds = [-3.2, -1.6, 0, 1.6, 3.2];
+    const settles = seeds.map((v0) => {
+      const f = criticalSampler(SEAT_W, 1, v0, 0);
+      let settle = null;
+      for (let t = 0; t < 2; t += DT) {
+        const [x] = f(t);
+        if (Math.abs(x) >= SETTLE_T) settle = null;
+        else if (settle === null) settle = t;
+      }
+      return settle;
+    });
+    return {
+      minS: Math.min(...settles), maxS: Math.max(...settles),
+      spreadS: Math.max(...settles) - Math.min(...settles),
+    };
+  }
+
+  function simDispGate() {
+    const speeds = [60, 600, 3000];
+    const disps = speeds.map((v) => displacementGate(v).disp);
+    return { disps, spread: Math.max(...disps) - Math.min(...disps) };
+  }
+
+  function simReexpand() {
+    return {
+      sustained: reexpandGate({ dragging: true, upHoldS: 0.20, atTop: true }),
+      rebound:   reexpandGate({ dragging: false, upHoldS: 0.00, atTop: true }),
+      tooShort:  reexpandGate({ dragging: true, upHoldS: 0.09, atTop: true }),
+      notAtTop:  reexpandGate({ dragging: true, upHoldS: 0.30, atTop: false }),
+    };
+  }
+
+  function simFerry() {
+    // (a) slow release near mid -> interior detent 0.5
+    const slowTarget = projectDetent(0.45, 0.2);
+    // (b) flick up from low t -> skips the card, lands 1
+    const flickUpTarget = projectDetent(0.2, 4);
+    // (c) flick down from high t -> skips the card, lands 0
+    const flickDownTarget = projectDetent(0.9, -5);
+    // (d) edge-detent overshoot across a hot seed grid: exactly 0 (seed clamp eats it)
+    let edgeOver = 0;
+    for (const v of [1, 2, 3, 4, 6, 8]) {
+      const s = new Spine("ferryEdge"); s.value = 0.5; s.glideTo(1, 0, v);
+      for (let t = 0; t < 2; t += DT) { s.tick(t); if (s.value - 1 > edgeOver) edgeOver = s.value - 1; }
+    }
+    // (e) interior register step overshoot (~2%, law 7b) + recovery from peak
+    const f = springSampler(REG.ferryCard.response, REG.ferryCard.zeta, 0.35, 0, 0.5);
+    let peak = 0, tPeak = 0, rec = null;
+    for (let t = 0; t < 2; t += DT) {
+      const [x] = f(t);
+      const over = x - 0.5;
+      if (over > peak) { peak = over; tPeak = t; }
+      if (peak > 0 && t > tPeak && rec === null && Math.abs(x - 0.5) < 0.2 * peak) rec = t - tPeak;
+    }
+    return {
+      slowTarget, flickUpTarget, flickDownTarget, edgeOver,
+      interiorOvershootFrac: peak / 0.15, recoveryMs: rec * 1000,
+    };
+  }
+
+  function simSeam() {
+    const N = 2000;
+    let maxStep = 0;
+    let prev = null;
+    for (let i = 0; i <= N; i++) {
+      const t = i / N;
+      const r = rectAt("body", t);
+      if (prev) {
+        const step = Math.max(
+          Math.abs(r.x - prev.x), Math.abs(r.y - prev.y),
+          Math.abs(r.w - prev.w), Math.abs(r.h - prev.h));
+        if (step > maxStep) maxStep = step;
+      }
+      prev = r;
+    }
+    const a = rectAt("art", 0.5 - 1e-9), b = rectAt("art", 0.5 + 1e-9);
+    const boundaryJump = Math.max(Math.abs(a.x - b.x), Math.abs(a.y - b.y),
+      Math.abs(a.w - b.w), Math.abs(a.h - b.h));
+    return { maxStep, boundaryJump };
+  }
+
+  function simRehome() {
+    let maxErr = 0;
+    for (const t of [0.13, 0.5, 0.77]) {
+      const world = rectAt("art", t);
+      for (const off of [{ x: 0, y: 0 }, { x: 8, y: 40 }, { x: -12, y: 96 }]) {
+        const local = rehome(world, off);
+        const back = { x: local.x + off.x, y: local.y + off.y, w: local.w, h: local.h };
+        maxErr = Math.max(maxErr,
+          Math.abs(back.x - world.x), Math.abs(back.y - world.y),
+          Math.abs(back.w - world.w), Math.abs(back.h - world.h));
+      }
+    }
+    return { maxErr };
+  }
+
+  function simLadderPurity() {
+    const probe = (fn, arity) => {
+      const ts = [];
+      for (let i = 0; i <= 400; i++) ts.push(i / 400);
+      const fwd = ts.map(fn);
+      const bwd = ts.slice().reverse().map(fn).reverse();
+      const rnd = ts.map((t, i) => fn(ts[(i * 173) % ts.length])); // shuffled visits
+      const rndAligned = ts.map((_, i) => fn(ts[i]));               // re-visit in order
+      let maxD = 0;
+      for (let i = 0; i < ts.length; i++)
+        for (let k = 0; k < arity; k++) {
+          maxD = Math.max(maxD, Math.abs(fwd[i][k] - bwd[i][k]), Math.abs(fwd[i][k] - rndAligned[i][k]));
+        }
+      void rnd;
+      return maxD;
+    };
+    return { pageMaxD: probe(pageLadder, 5), bdMaxD: probe(bdLadder, 7) };
+  }
+
+  function simCensus() {
+    const counts = CENSUS.map(([, c]) => c);
+    const fused = CENSUS.find(([n]) => n === "FUSED")[1];
+    return { max: Math.max(...counts), fused };
+  }
+
+  function simContinuity() {
+    const c = new Continuity();
+    const dt = 0.008;
+    let prev = 0, maxStepErr = 0;
+    // scripted choreography: 4 posture transitions across 4s — none may touch the carrier
+    for (let t = 0; t < 4; t += dt) {
+      c.advance(dt);
+      const step = c.offset - prev;
+      maxStepErr = Math.max(maxStepErr, Math.abs(step - 40 * dt));
+      prev = c.offset;
+    }
+    return { resets: c.resets, badge: c.badge, maxStepErr };
+  }
+
+  function simMomentum() {
+    const grid = [0, 1, 2, 3, 4];
+    const rows = grid.map((v) => momRow(v, 0));
+    const overs = rows.map((r) => r.overshootFrac);
+    let monotone = true;
+    for (let i = 1; i < overs.length; i++) if (overs[i] < overs[i - 1] - 1e-9) monotone = false;
+    // N7: row overshoot px <= driver overshoot px at v=3 (driver = C2-register flung landing)
+    const df = springSampler(0.35, 0.80, 1, -3, 0);
+    let dPeak = 0;
+    for (let t = 0; t < 2; t += DT) { const [x] = df(t); if (-x > dPeak) dPeak = -x; }
+    const driverPx = dPeak * MOM.driverTravelPx;
+    const rowPx = overs[3] * momAmpPx(3, 0);
+    return {
+      ampFrac0: momAmpFrac(0), ampFrac3: momAmpFrac(3),
+      monotone, overs, over3: overs[3], overMax: Math.max(...overs),
+      crossings3: rows[3].crossings, settle3Ms: rows[3].settleMs,
+      zeroOver: overs[0],
+      depthRatio: momAmpPx(2, 2) / momAmpPx(2, 0),
+      overlap: MOM.overlap,
+      n7Ratio: rowPx / driverPx, rowPx, driverPx,
+    };
+  }
+
+  function simCatchC1() {
+    const s = new Spine("ferryCard"); s.value = 0; s.glideTo(0.5, 0, 0);
+    s.tick(0.15);
+    const [xB, vB] = [s.value, s.velocity];
+    s.setRegister("ferryEdge").glideTo(0, 0.15); // caught + retargeted, no jump allowed
+    s.tick(0.15);
+    return { dx: Math.abs(s.value - xB), dv: Math.abs(s.velocity - vB) };
+  }
+
+  function simBlackGeometry() {
+    let topDelta = 0, prevB = -Infinity, monotone = true;
+    for (let i = 0; i <= 200; i++) {
+      const g = i / 200;
+      topDelta = Math.max(topDelta, Math.abs(bdTop(g) - BLACK.y0));
+      const b = bdBottom(g);
+      if (b < prevB - 1e-9) monotone = false;
+      prevB = b;
+    }
+    return {
+      topDelta, monotone,
+      breathePct: (bdScaleX(1) - bdScaleX(0)) * 100,
+      travelPx: bdBottom(1) - bdBottom(0),
+    };
+  }
+
+  return {
+    TAU, PHI, clamp01, band,
+    springSampler, criticalSampler, Spine, Continuity,
+    REG, SEAT_W, SETTLE_T,
+    BANDS, DISP, REXP, CHIP, chipSeed, CENSUS, displacementGate, reexpandGate,
+    TLR, DET, PROJ_TAU, rectAt, lerpRect, projectDetent, rehome, pageLadder,
+    BLACK, bdTop, bdBottom, bdScaleX, bdLadder,
+    MOM, momAmpFrac, momAmpPx, momStartS, momSeed, momRow,
+    sims: {
+      collapse: simCollapse, seatStability: simSeatStability, dispGate: simDispGate,
+      reexpand: simReexpand, ferry: simFerry, seam: simSeam, rehomeExact: simRehome,
+      ladderPurity: simLadderPurity, census: simCensus, continuity: simContinuity,
+      momentum: simMomentum, catchC1: simCatchC1, blackGeometry: simBlackGeometry,
+    },
+  };
+})();
+/*PC-PHYSICS-END*/
+</script>
+
+<script>
+"use strict";
+(() => {
+  const $ = (s) => document.querySelector(s);
+
+  // ---------- PRM ----------
+  const prmMedia = matchMedia("(prefers-reduced-motion: reduce)");
+  const prmBox = $("#prm");
+  const PRM = () => prmMedia.matches || prmBox.checked;
+  const prmNote = () => {
+    document.documentElement.classList.toggle("prm", PRM());
+    $("#prmNote").textContent = PRM() ? "PRM active: postures swap single-step, entries land settled, marquee still" : "";
+  };
+  prmBox.addEventListener("change", prmNote);
+  prmMedia.addEventListener?.("change", prmNote);
+  prmNote();
+
+  // ---------- engine (parked = zero rAF) ----------
+  const engine = { surfaces: [], raf: null, last: 0, dts: [] };
+  function ensureLoop() {
+    if (engine.raf === null) {
+      engine.last = performance.now();
+      engine.raf = requestAnimationFrame(tick);
+    }
+  }
+  let fpsCounter = 0;
+  function tick(nowMs) {
+    const dtMs = nowMs - engine.last;
+    engine.last = nowMs;
+    engine.dts.push(dtMs);
+    if (engine.dts.length > 90) engine.dts.shift();
+    if (++fpsCounter % 10 === 0) {
+      const avg = engine.dts.reduce((a, b) => a + b, 0) / engine.dts.length;
+      const worst = Math.max(...engine.dts);
+      $("#fps").textContent = `${(1000 / avg).toFixed(1)} fps · worst ${worst.toFixed(1)}ms (last ${engine.dts.length}f) · rAF active`;
+    }
+    const now = nowMs / 1000;
+    const dt = Math.min(dtMs, 50) / 1000;
+    let active = false;
+    for (const s of engine.surfaces) if (s.update(now, dt)) active = true;
+    if (active) engine.raf = requestAnimationFrame(tick);
+    else {
+      engine.raf = null;
+      engine.dts.length = 0;
+      $("#fps").textContent = "rAF parked (zero-cost idle)";
+    }
+  }
+
+  const fmtMs = (v) => v === null || v === undefined ? "—" : `${Math.round(v)}ms`;
+  const setCell = (id, text, ok) => {
+    const el = $(id);
+    if (!el) return;
+    el.textContent = text;
+    el.className = ok === undefined ? "" : ok ? "ok" : "no";
+  };
+
+  // ---------- fill sim cells from the physics block ----------
+  {
+    const c = PC.sims.collapse(-35);
+    setCell("#aColS", fmtMs(c.t90Ms));
+    setCell("#aLblS", fmtMs(c.lblDoneMs));
+    const f = PC.sims.collapse(0); void f;
+    const fi = PC.sims.collapse(0);
+    setCell("#aGirdS", fmtMs(fi.girdLagMs));
+    setCell("#aDispS", "120px");
+    const m = PC.sims.momentum();
+    setCell("#bAmpS", `${PC.momAmpPx(3, 0).toFixed(1)}px`);
+    setCell("#bOvS", `${(m.over3 * 100).toFixed(1)}%`);
+    setCell("#bOv0S", `${(m.zeroOver * 100).toFixed(2)}%`);
+  }
+
+  // =====================================================================
+  // Phone A — the constellation + the ferry
+  // =====================================================================
+  const POSTURES = {
+    // per-body target rects (phone coordinates) + which bodies carry their own backdrop
+    STACKED: {
+      np: { x: 50, y: 488, w: 200, h: 48, r: 24 }, npGlass: true,
+      art: { x: 56, y: 494, w: 36, h: 36 }, mq: { x: 100, y: 494, w: 92, h: 28 },
+      mainClip: null, gird: 0,
+    },
+    FUSED: {
+      np: { x: 18, y: 552, w: 140, h: 48, r: 24 }, npGlass: false, // shares MAIN's surface at settle
+      art: { x: 24, y: 558, w: 36, h: 36 }, mq: { x: 66, y: 558, w: 84, h: 28 },
+      mainClip: null, gird: 0,
+    },
+    FISSION: {
+      np: { x: 114, y: 546, w: 110, h: 56, r: 28 }, npGlass: true,
+      art: { x: 120, y: 552, w: 44, h: 44 }, mq: { x: 170, y: 560, w: 48, h: 28 },
+      mainClip: { top: 8, right: 180, bottom: 8, left: 0, r: 24 }, gird: 1,
+    },
+  };
+
+  class PhoneA {
+    constructor() {
+      this.npBody = $("#npBody"); this.art = $("#npArt"); this.mq = $("#npMq");
+      this.mainDock = $("#mainDock"); this.searchGird = $("#searchGird");
+      this.phone = $("#phoneA"); this.libScroll = $("#libScroll");
+
+      this.posture = "STACKED"; this.postureFrom = "STACKED"; this.postureTo = "STACKED";
+      this.pcSpine = new PC.Spine("posture"); this.pcSpine.seat(1);
+      this.chipFn = null; this.chipT0 = 0; this.chipX = 0;
+
+      this.tlSpine = new PC.Spine("ferryEdge"); this.tlSpine.seat(0);
+      this.ferrying = false;
+
+      this.scrollY = 0; this.dispAccum = 0; this.upHold = 0;
+      this.drag = null; // {mode:'scroll'|'ferry', lastY, lastT}
+      this.momRows = null;
+
+      this.colWatch = null; this.girdWatch = null;
+
+      this.bindPointers(); this.bindButtons();
+      this.apply();
+      engine.surfaces.push(this);
+    }
+
+    // ---- posture machinery ----
+    startPosture(to, seedNorm = 0) {
+      if (to === this.posture || this.postureTo !== this.posture) return;
+      this.postureFrom = this.posture; this.postureTo = to;
+      if (PRM()) { this.pcSpine.seat(1); this.finishPosture(); this.apply(); return; }
+      this.pcSpine.seat(0);
+      this.pcSpine.glideTo(1, performance.now() / 1000, 0);
+      // compact-chip channel: seeded from the driver (scroll velocity), fence-capped at the seed
+      if (this.postureTo === "FUSED" && seedNorm < 0) {
+        this.chipFn = PC.criticalSampler(PC.CHIP.w, 1, PC.chipSeed(seedNorm), 0);
+        this.chipT0 = performance.now() / 1000;
+      }
+      this.colWatch = { t0: performance.now(), t90: null, lbl: null, gird: null };
+      ensureLoop();
+    }
+    finishPosture() {
+      this.posture = this.postureTo;
+      // census truth at settle: FUSED shares one surface
+      const p = POSTURES[this.posture];
+      this.npBody.classList.toggle("glass-on", !!p.npGlass || this.ferrying);
+      this.searchGird.classList.toggle("glass-on", p.gird > 0);
+      if (this.colWatch) {
+        if (this.colWatch.t90 !== null) setCell("#aColL", fmtMs(this.colWatch.t90), this.colWatch.t90 >= 280 && this.colWatch.t90 <= 380);
+        if (this.colWatch.lbl !== null) setCell("#aLblL", fmtMs(this.colWatch.lbl), this.colWatch.lbl >= 45 && this.colWatch.lbl <= 100);
+        if (this.colWatch.gird !== null && (this.postureFrom === "FUSED" && this.posture === "FISSION"))
+          setCell("#aGirdL", fmtMs(this.colWatch.gird), this.colWatch.gird >= 75 && this.colWatch.gird <= 125);
+        this.colWatch = null;
+      }
+    }
+
+    // ---- ferry machinery ----
+    ferryGlide(target, seedV) {
+      if (this.posture !== "STACKED") return;
+      this.ferrying = true;
+      this.npBody.classList.add("glass-on");
+      if (PRM()) { this.tlSpine.seat(target); this.ferryArrive(target, 0); this.apply(); return; }
+      this.tlSpine.setRegister(target === 0.5 ? "ferryCard" : "ferryEdge");
+      this.tlSpine.glideTo(target, performance.now() / 1000, seedV);
+      ensureLoop();
+    }
+    ferryRelease(v) {
+      const target = PC.projectDetent(this.tlSpine.value, v);
+      setCell("#aDetL", `t=${target}`, true);
+      this.ferryGlide(target, v);
+    }
+    ferryArrive(target, vCross) {
+      if (target === 1) this.spawnMomentum(this.npRowEls(), Math.abs(vCross));
+      if (target === 0) { this.ferrying = false; this.npBody.classList.toggle("glass-on", POSTURES[this.posture].npGlass); }
+    }
+    npRowEls() { return [...document.querySelectorAll("#npRows .mrow")]; }
+
+    // ---- R-MOMENTUM (shared with Phone B via the same physics) ----
+    spawnMomentum(els, v) {
+      const t0 = performance.now() / 1000;
+      this.momRows = els.map((el, n) => ({
+        el, n, t0: t0 + PC.momStartS(n),
+        fn: PC.criticalSampler(PC.MOM.w, 1, PC.momSeed(v, n), 0),
+        amp: PC.momAmpPx(v, n), done: false,
+      }));
+      if (PRM()) { for (const r of this.momRows) { r.el.style.transform = ""; r.done = true; } this.momRows = null; return; }
+      ensureLoop();
+    }
+
+    // ---- input ----
+    bindPointers() {
+      this.phone.addEventListener("pointerdown", (e) => {
+        this.phone.setPointerCapture(e.pointerId);
+        const now = performance.now() / 1000;
+        // catch anything mid-flight, C1
+        if (this.tlSpine.regime === "glide") {
+          const [xB, vB] = [this.tlSpine.value, this.tlSpine.velocity];
+          this.tlSpine.beginScrub(now);
+          setCell("#aCatchL", `${Math.abs(this.tlSpine.value - xB).toExponential(1)} · ${Math.abs(this.tlSpine.velocity - vB).toExponential(1)}`, true);
+          this.drag = { mode: "ferry", lastY: e.clientY, lastT: now };
+          return;
+        }
+        const npR = this.npBody.getBoundingClientRect(); // event-scoped read, not per-frame
+        const inNp = e.clientY >= npR.top && this.posture === "STACKED" && !this.ferrying;
+        if (inNp && this.tlSpine.value === 0) {
+          this.tlSpine.setRegister("ferryEdge");
+          this.tlSpine.beginScrub(now);
+          this.ferrying = true; this.npBody.classList.add("glass-on");
+          this.drag = { mode: "ferry", lastY: e.clientY, lastT: now };
+        } else {
+          this.drag = { mode: "scroll", lastY: e.clientY, lastT: now, downAccum: 0 };
+        }
+      });
+      this.phone.addEventListener("pointermove", (e) => {
+        if (!this.drag) return;
+        const now = performance.now() / 1000;
+        const dy = e.clientY - this.drag.lastY;
+        this.drag.lastY = e.clientY; this.drag.lastT = now;
+        if (this.drag.mode === "ferry") {
+          const t = PC.clamp01(this.tlSpine.value - dy / 380);
+          this.tlSpine.scrubTo(t, now);
+          this.apply(); ensureLoop();
+        } else {
+          this.scroll(-dy, now, true);
+        }
+      });
+      const up = (e) => {
+        if (!this.drag) return;
+        const now = performance.now() / 1000;
+        if (this.drag.mode === "ferry") {
+          this.ferryRelease(this.tlSpine.velocity);
+        } else {
+          this.upHold = 0;
+        }
+        this.drag = null;
+        void e;
+      };
+      this.phone.addEventListener("pointerup", up);
+      this.phone.addEventListener("pointercancel", up);
+    }
+
+    scroll(dyContent, now, dragging, vPxS = 0) {
+      // dyContent > 0 = scrolling down (content moves up)
+      this.scrollY = Math.max(0, Math.min(240, this.scrollY + dyContent));
+      this.libScroll.style.transform = `translateY(${(-this.scrollY).toFixed(1)}px)`;
+      if (dyContent > 0 && this.posture === "STACKED" && this.postureTo === this.posture) {
+        this.dispAccum += dyContent;
+        if (this.dispAccum >= PC.DISP.fire) {
+          setCell("#aDispL", `${this.dispAccum.toFixed(0)}px`, this.dispAccum >= PC.DISP.lo && this.dispAccum <= PC.DISP.hi);
+          const seedNorm = -(Math.abs(vPxS) || Math.abs(dyContent) * 60) / 120 * 4;
+          this.startPosture("FUSED", Math.max(seedNorm, -60));
+          this.dispAccum = 0;
+        }
+      } else if (dyContent < 0) {
+        this.dispAccum = 0;
+        if (dragging) {
+          this.upHold += 1 / 60;
+          const gate = PC.reexpandGate({ dragging: true, upHoldS: this.upHold, atTop: this.scrollY <= 2 });
+          if (gate && this.posture === "FUSED" && this.postureTo === this.posture) this.startPosture("STACKED");
+        }
+      }
+    }
+
+    bindButtons() {
+      const scripted = (vPxS) => {
+        // scripted scroll gesture routed through the SAME gate code
+        let remaining = 170;
+        const step = () => {
+          if (remaining <= 0 || this.posture !== "STACKED" || this.postureTo !== this.posture) return;
+          const d = Math.min(vPxS / 60, remaining);
+          remaining -= d;
+          this.scroll(d, performance.now() / 1000, false, vPxS);
+          if (remaining > 0) requestAnimationFrame(step);
+        };
+        step();
+      };
+      $("#bScrollSlow").onclick = () => scripted(240);
+      $("#bScrollFling").onclick = () => scripted(2400);
+      $("#bReexpand").onclick = () => {
+        if (this.posture !== "FUSED") return;
+        // scripted sustained up-drag arriving at top
+        this.upHold = 0.2; this.scrollY = 1;
+        if (PC.reexpandGate({ dragging: true, upHoldS: this.upHold, atTop: true })) this.startPosture("STACKED");
+        this.scrollY = 0; this.libScroll.style.transform = "translateY(0)";
+        this.upHold = 0;
+      };
+      $("#bRebound").onclick = () => {
+        // momentum rebound: not dragging — the gate must refuse
+        const fired = PC.reexpandGate({ dragging: false, upHoldS: 0, atTop: true });
+        $("#aBadge").innerHTML = `posture: <b>${this.posture}</b> · rebound re-expand: <b>${fired ? "FIRED (BUG)" : "refused"}</b>`;
+      };
+      $("#bFission").onclick = () => { if (this.posture === "FUSED") this.startPosture("FISSION"); };
+      $("#bFuse").onclick = () => { if (this.posture === "FISSION") this.startPosture("FUSED"); };
+      $("#bFerryCard").onclick = () => this.ferryGlide(0.5, 0);
+      $("#bFerryPage").onclick = () => this.ferryGlide(1, 0);
+      $("#bFerryHome").onclick = () => { if (this.ferrying || this.tlSpine.value > 0) this.ferryGlide(0, 0); };
+      $("#bCatch").onclick = () => {
+        const s = this.tlSpine.regime === "glide" ? this.tlSpine : (this.pcSpine.regime === "glide" ? this.pcSpine : null);
+        if (!s) return;
+        const now = performance.now() / 1000;
+        s.tick(now);
+        const [xB, vB] = [s.value, s.velocity];
+        s.beginScrub(now);
+        setCell("#aCatchL", `${Math.abs(s.value - xB).toExponential(1)} · ${Math.abs(s.velocity - vB).toExponential(1)}`, true);
+        // release it onward after a beat, seeded from the caught velocity (C1 both ways)
+        setTimeout(() => {
+          if (s === this.tlSpine) this.ferryRelease(vB);
+          else { s.glideTo(1, performance.now() / 1000, vB); ensureLoop(); }
+        }, 350);
+      };
+      $("#bRehome").onclick = () => {
+        // THE DECIDER (node math is exact; paint truth QUEUED): re-parent the art element at the
+        // current ferry t with FLIP compensation; the world rect must not move.
+        const before = this.art.getBoundingClientRect(); // event-scoped
+        const parent = this.art.parentElement;
+        const other = parent === this.npBody ? this.phone : this.npBody;
+        const pOff = other.getBoundingClientRect();
+        other.appendChild(this.art);
+        this.art.style.left = "0px"; this.art.style.top = "0px";
+        this.art.style.width = `${before.width}px`; this.art.style.height = `${before.height}px`;
+        this.art.style.transform = `translate(${before.left - pOff.left}px, ${before.top - pOff.top}px)`;
+        const after = this.art.getBoundingClientRect();
+        const delta = Math.max(Math.abs(after.left - before.left), Math.abs(after.top - before.top),
+          Math.abs(after.width - before.width), Math.abs(after.height - before.height));
+        setCell("#aRehomeL", `${delta.toFixed(2)}px`, delta <= 0.5);
+      };
+      $("#bResetA").onclick = () => {
+        this.posture = this.postureFrom = this.postureTo = "STACKED";
+        this.pcSpine.seat(1); this.tlSpine.seat(0); this.ferrying = false;
+        this.scrollY = 0; this.dispAccum = 0; this.momRows = null;
+        this.libScroll.style.transform = "translateY(0)";
+        this.art.remove();
+        this.art.style.cssText = "";
+        this.npBody.insertBefore(this.art, this.npBody.firstChild);
+        this.npBody.classList.add("glass-on");
+        this.apply();
+      };
+    }
+
+    // ---- paint ----
+    resolveNpRect() {
+      if (this.ferrying || this.tlSpine.value > 0 || this.tlSpine.regime !== "parked")
+        return { body: PC.rectAt("body", this.tlSpine.value), art: PC.rectAt("art", this.tlSpine.value), mq: PC.rectAt("mq", this.tlSpine.value) };
+      const t = this.pcSpine.value;
+      const A = POSTURES[this.postureFrom], B = POSTURES[this.postureTo];
+      const tv = PC.band(t, ...PC.BANDS.TRAVEL);
+      const body = PC.lerpRect({ ...A.np }, { ...B.np }, tv);
+      const art = PC.lerpRect({ ...A.art, r: 10 }, { ...B.art, r: 10 }, tv);
+      const mq = PC.lerpRect({ ...A.mq, r: 0 }, { ...B.mq, r: 0 }, tv);
+      return { body, art, mq };
+    }
+    apply() {
+      const t = this.pcSpine.value;
+      const lbl = 1 - PC.band(t, ...PC.BANDS.LBL);
+      const gird = PC.band(t, ...PC.BANDS.GIRD);
+      const width = PC.band(t, ...PC.BANDS.WIDTH);
+      const from = POSTURES[this.postureFrom], to = POSTURES[this.postureTo];
+
+      // MAIN: label band + clip morph (fission left gird) on the WIDTH band
+      const lblVal = this.postureTo === "FISSION" ? lbl : (this.postureFrom === "FISSION" ? 1 - lbl : 1);
+      this.mainDock.style.setProperty("--pc-lbl", lblVal.toFixed(3));
+      const girdVal = this.postureTo === "FISSION" ? gird : (this.postureFrom === "FISSION" ? 1 - gird : 0);
+      this.mainDock.style.setProperty("--pc-gird", girdVal.toFixed(3));
+      this.searchGird.style.setProperty("--pc-gird", girdVal.toFixed(3));
+      const clipFrom = from.mainClip, clipTo = to.mainClip;
+      const wv = clipTo ? width : (clipFrom ? 1 - width : 0);
+      const c = clipTo || clipFrom;
+      if (c && wv > 0) {
+        this.mainDock.style.clipPath =
+          `inset(${(c.top * wv).toFixed(1)}px ${(c.right * wv).toFixed(1)}px ${(c.bottom * wv).toFixed(1)}px ${(c.left * wv).toFixed(1)}px round ${(32 + (c.r - 32) * wv).toFixed(1)}px)`;
+      } else this.mainDock.style.clipPath = "inset(0 round 32px)";
+
+      // NOW body: clip to its resolved rect within the base box {8,40,284,568}
+      const { body, art, mq } = this.resolveNpRect();
+      const bx = 8, by = 40, bw = 284, bh = 568;
+      const chipScale = 1 + 0.08 * this.chipX;
+      this.npBody.style.clipPath =
+        `inset(${(body.y - by).toFixed(1)}px ${(bx + bw - body.x - body.w).toFixed(1)}px ${(by + bh - body.y - body.h).toFixed(1)}px ${(body.x - bx).toFixed(1)}px round ${body.r.toFixed(1)}px)`;
+      this.npBody.style.transform = chipScale === 1 ? "" : `scale(${chipScale.toFixed(4)})`;
+      this.npBody.style.transformOrigin = `${body.x - bx + body.w / 2}px ${body.y - by + body.h / 2}px`;
+
+      // ferried elements (transform-only against their page-home base rects)
+      if (this.art.parentElement === this.npBody) {
+        const sA = art.w / 168;
+        this.art.style.transform = `translate(${(art.x - bx - 58 * sA).toFixed(2)}px, ${(art.y - by - 32 * sA).toFixed(2)}px) scale(${sA.toFixed(4)})`;
+      }
+      const sMx = mq.w / 168, sMy = mq.h / 28;
+      this.mq.style.transform = `translate(${(mq.x - bx - 58 * sMx).toFixed(2)}px, ${(mq.y - by - 212 * sMy).toFixed(2)}px) scale(${sMx.toFixed(4)}, ${sMy.toFixed(4)})`;
+
+      // ferry ladder + medium handshake
+      const tl = this.tlSpine.value;
+      this.npBody.style.setProperty("--np-mini", (1 - PC.band(tl, 0.02, 0.22)).toFixed(3));
+      const cardV = Math.min(PC.band(tl, 0.28, 0.42), 1 - PC.band(tl, 0.55, 0.68));
+      this.npBody.style.setProperty("--np-card", cardV.toFixed(3));
+      const rungs = PC.pageLadder(tl);
+      this.npBody.style.setProperty("--np-r0", rungs[0].toFixed(3));
+      for (let n = 1; n <= 4; n++) this.npBody.style.setProperty(`--np-r${n}`, rungs[n].toFixed(3));
+      $("#wallDimA").parentElement.style.setProperty("--md-a", (0.35 * PC.band(tl, 0.5, 1)).toFixed(3));
+
+      const postureLabel = this.postureTo === this.posture ? this.posture : `${this.postureFrom}→${this.postureTo}`;
+      $("#aBadge").innerHTML = `posture: <b>${postureLabel}</b> · ferry t=<b>${tl.toFixed(2)}</b> (${this.tlSpine.regime})`;
+    }
+
+    update(now, dt) {
+      let active = false;
+      if (this.pcSpine.regime === "glide") {
+        this.pcSpine.tick(now); active = true;
+        if (this.colWatch) {
+          const el = performance.now() - this.colWatch.t0;
+          if (this.colWatch.lbl === null && this.pcSpine.value >= 0.20) this.colWatch.lbl = el;
+          if (this.colWatch.gird === null && this.pcSpine.value >= 0.33) this.colWatch.gird = el;
+          if (this.colWatch.t90 === null && this.pcSpine.value >= 0.90) this.colWatch.t90 = el;
+        }
+        if (this.pcSpine.regime === "parked") this.finishPosture();
+      }
+      if (this.chipFn) {
+        const [x] = this.chipFn(now - this.chipT0);
+        this.chipX = x; active = true;
+        if (now - this.chipT0 > 0.9) { this.chipFn = null; this.chipX = 0; }
+      }
+      if (this.tlSpine.regime === "glide") {
+        const prev = this.tlSpine.value;
+        this.tlSpine.tick(now); active = true;
+        if (this.tlSpine.regime === "parked") {
+          const vCross = (this.tlSpine.value - prev) / Math.max(dt, 1e-4);
+          this.ferryArrive(this.tlSpine.target, vCross);
+        }
+      }
+      if (this.tlSpine.regime === "scrub" || this.drag) active = true;
+      if (this.momRows) {
+        let all = true;
+        for (const r of this.momRows) {
+          if (r.done) continue;
+          const el = now - r.t0;
+          if (el < 0) { all = false; continue; }
+          const [x, v] = r.fn(el);
+          if (Math.abs(x) < 0.004 && Math.abs(v) < 0.05) { r.el.style.transform = ""; r.done = true; }
+          else { r.el.style.transform = `translateY(${(x * r.amp).toFixed(2)}px)`; all = false; }
+        }
+        if (all) this.momRows = null;
+        active = active || this.momRows !== null;
+      }
+      // live census (class reads only — no layout)
+      const censusNow = document.querySelectorAll("#phoneA .glass-on").length;
+      if (!this._cenMax || censusNow > this._cenMax) {
+        this._cenMax = censusNow;
+        setCell("#aCenL", String(this._cenMax), this._cenMax <= 3);
+      }
+      if (active) this.apply();
+      return active;
+    }
+  }
+
+  // =====================================================================
+  // Phone B — V-BLACKDOCK + R-MOMENTUM
+  // =====================================================================
+  class PhoneB {
+    constructor() {
+      this.el = $("#blackDock"); this.phone = $("#phoneB");
+      this.spine = new PC.Spine("dock"); this.spine.seat(0);
+      this.momRows = null;
+      this.taps = 0;
+      this.rowWatch = null;
+      $("#beneathChip").addEventListener("click", () => {
+        this.taps++;
+        $("#beneathChip").textContent = `tap beneath (${this.taps})`;
+        setCell("#bTapL", String(this.taps), true);
+      });
+      this.bindPointers(); this.bindButtons();
+      this.apply();
+      engine.surfaces.push(this);
+    }
+    rowEls() { return [...document.querySelectorAll("#bdRows .mrow")]; }
+    glide(target, seedV) {
+      if (PRM()) { this.spine.seat(target); if (target === 1) this.spawn(Math.abs(seedV || 0)); this.apply(); return; }
+      this.spine.glideTo(target, performance.now() / 1000, seedV);
+      this._pendingV = seedV || 0;
+      ensureLoop();
+    }
+    spawn(v) {
+      const t0 = performance.now() / 1000;
+      this.momRows = this.rowEls().map((el, n) => ({
+        el, n, t0: t0 + PC.momStartS(n),
+        fn: PC.criticalSampler(PC.MOM.w, 1, PC.momSeed(v, n), 0),
+        amp: PC.momAmpPx(v, n), done: false, peak: 0,
+      }));
+      setCell("#bAmpL", `${PC.momAmpPx(v, 0).toFixed(1)}px`, true);
+      this.rowWatch = { v };
+      if (PRM()) { for (const r of this.momRows) { r.el.style.transform = ""; r.done = true; } this.momRows = null; return; }
+      ensureLoop();
+    }
+    bindPointers() {
+      this.el.addEventListener("pointerdown", (e) => {
+        this.el.setPointerCapture(e.pointerId);
+        const now = performance.now() / 1000;
+        this.spine.beginScrub(now); // catches any glide C1
+        this.dragLast = e.clientY;
+        e.stopPropagation();
+      });
+      this.el.addEventListener("pointermove", (e) => {
+        if (this.spine.regime !== "scrub") return;
+        const now = performance.now() / 1000;
+        const dy = e.clientY - this.dragLast;
+        this.dragLast = e.clientY;
+        this.spine.scrubTo(PC.clamp01(this.spine.value + dy / 248), now);
+        this.apply(); ensureLoop();
+      });
+      const up = () => {
+        if (this.spine.regime !== "scrub") return;
+        const v = this.spine.velocity;
+        const target = this.spine.value + 0.2 * v >= 0.5 ? 1 : 0;
+        this.glide(target, v);
+      };
+      this.el.addEventListener("pointerup", up);
+      this.el.addEventListener("pointercancel", up);
+    }
+    bindButtons() {
+      $("#bFlickOpen").onclick = () => this.glide(1, 3);
+      $("#bPlaceOpen").onclick = () => this.glide(1, 0);
+      $("#bBdClose").onclick = () => this.glide(0, 0);
+      $("#bBdCatch").onclick = () => {
+        if (this.spine.regime !== "glide") return;
+        const now = performance.now() / 1000;
+        this.spine.tick(now);
+        const vB = this.spine.velocity;
+        this.spine.beginScrub(now);
+        setTimeout(() => this.glide(this.spine.value + 0.2 * vB >= 0.5 ? 1 : 0, vB), 300);
+      };
+      $("#bResetB").onclick = () => { this.spine.seat(0); this.momRows = null; this.apply(); };
+    }
+    apply() {
+      const g = this.spine.value;
+      this.el.style.setProperty("--bd-t", g.toFixed(4));
+      this.phone.querySelector(".wall-b").style.setProperty("--bd-t", g.toFixed(4));
+      const L = PC.bdLadder(g);
+      this.el.style.setProperty("--bd-r-handle", L[0].toFixed(3));
+      this.el.style.setProperty("--bd-r-ghost", L[1].toFixed(3));
+      this.el.style.setProperty("--bd-r-solid", L[2].toFixed(3));
+      for (let n = 0; n < 4; n++) this.el.style.setProperty(`--bd-r-row${n}`, L[3 + n].toFixed(3));
+      setCell("#bTopL", "0px", true); // top edge is anchored by construction (clip-path bottom inset)
+      $("#bBadge").innerHTML = `growth: <b>${g.toFixed(2)}</b> · ${this.spine.regime}`;
+    }
+    update(now, dt) {
+      void dt;
+      let active = false;
+      if (this.spine.regime === "glide") {
+        this.spine.tick(now); active = true;
+        if (this.spine.regime === "parked" && this.spine.target === 1 && this._pendingV !== undefined) {
+          this.spawn(Math.abs(this._pendingV));
+          this._pendingV = undefined;
+        }
+      }
+      if (this.spine.regime === "scrub") active = true;
+      if (this.momRows) {
+        let all = true;
+        for (const r of this.momRows) {
+          if (r.done) continue;
+          const el = now - r.t0;
+          if (el < 0) { all = false; continue; }
+          const [x, v] = r.fn(el);
+          if (x < 0 && -x > r.peak) r.peak = -x;
+          if (Math.abs(x) < 0.004 && Math.abs(v) < 0.05) {
+            r.el.style.transform = ""; r.done = true;
+            if (r.n === 0 && this.rowWatch) {
+              const cell = this.rowWatch.v > 0.5 ? "#bOvL" : "#bOv0L";
+              const okBand = this.rowWatch.v > 0.5 ? (r.peak >= 0.015 && r.peak <= 0.098) : r.peak <= 0.002;
+              setCell(cell, `${(r.peak * 100).toFixed(1)}%`, okBand);
+            }
+          } else { r.el.style.transform = `translateY(${(x * r.amp).toFixed(2)}px)`; all = false; }
+        }
+        if (all) this.momRows = null;
+        active = active || this.momRows !== null;
+      }
+      if (active) this.apply();
+      return active;
+    }
+  }
+
+  new PhoneA();
+  new PhoneB();
+})();
+</script>
+</body>
+</html>

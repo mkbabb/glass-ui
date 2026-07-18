@@ -1,4 +1,16 @@
 // F1 SCALAR-SPINE probe — verified model: claude-fable-5
+//
+// PASS-2 SUPERSESSION NOTE (cure seat F1, 2026-07-18, verified-model claude-fable-5) — this
+// file is pass-1 measured history, kept verbatim; do not gate on it. Pass 2 blessed ONE
+// occupancy rule — target-conditioned theta (0.02 while committed intent is OPEN / 0.10 while
+// CLOSED) with clocks re-fit to MARKS (medium attack/release 20/120ms) — superseding this
+// probe's per-scenario constants (tau 25/140ms) and the interrupt run's positional fade ramp
+// (clamp01(x/0.35)). MARKS PASS-2 C1/C2 voided section D's premise outright: the overpull
+// window contains NO free springback (every apparent one was finger-carried), and the
+// arbitrated register is (response 0.35, zeta 0.80), settle ~180ms, overshoot velocity-bought.
+// The living battery is prototypes/f1-scalar-spine/check.mjs (38 gates, bands MARKS-derived
+// with per-row source tags [MARKS]/[DESIGN]/[REG-LOCK]).
+//
 // Numeric check of the family's load-bearing unknowns against MARKS.md measured tables.
 // Analytic second-order spring (same closed form as keyframes.js SpringProgress):
 //   omega = 2*PI / response (the iOS response parametrization), zeta = dampingFraction.

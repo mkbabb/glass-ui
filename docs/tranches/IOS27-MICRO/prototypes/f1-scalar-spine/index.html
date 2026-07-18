@@ -994,7 +994,7 @@ const F1 = (() => {
       if (++this.badgeSkip % 5 === 0 || s.regime === "parked") {
         $("#mapsBadge").innerHTML =
           `regime: <b>${s.regime}</b>${s.regime === "glide" ? ` (${s.register})` : ""}` +
-          ` · t=<b>${s.value.toFixed(3)}</b> · v=<b>${s.velocity.toFixed(2)}</b>/s · vw=<b>${F1.velWeight(s.velocity).toFixed(2)}</b>`;
+          ` · t=<b>${s.value.toFixed(3)}</b> · v=<b>${s.velocity.toFixed(2)}</b>/s · vw=<b>${F1.velWeight(s.velocity).toFixed(2)}</b> · intent=<b>${s.intent}</b>`;
       }
     }
     update(now, dt) {
@@ -1226,7 +1226,7 @@ const F1 = (() => {
       if (++this.badgeSkip % 5 === 0 || s.regime === "parked") {
         $("#ccBadge").innerHTML =
           `regime: <b>${s.regime}</b>${s.regime === "glide" ? ` (${s.register})` : ""}` +
-          ` · t=<b>${s.value.toFixed(3)}</b> · medium=<b>${b.medium.y.toFixed(2)}</b> · fade=<b>${b.fade.y.toFixed(2)}</b>`;
+          ` · t=<b>${s.value.toFixed(3)}</b> · medium=<b>${b.medium.y.toFixed(2)}</b> · fade=<b>${b.fade.y.toFixed(2)}</b> · intent=<b>${s.intent}</b>`;
       }
     }
     update(now, dt) {

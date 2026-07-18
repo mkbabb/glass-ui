@@ -15,10 +15,31 @@
   Self-contained: no build, no network, no dev server. The travel integrator is a
   line-faithful port of src/composables/motion/morph/useLeadTrail.ts (response 0.68,
   zeta 0.64, trail tau 270ms, 8 Euler substeps, park-on-settle, PRM seats instantly).
-  The goo register mirrors the pager Arm A (in-document SVG filter) with the
-  @supports-not floor as Arm B. Tier budgets mirror src/styles/tokens/glass.css
-  (container=resting .65a/7px; control=quiet-kin .50a-class/7px + own rim + brighter
-  fill). Dark arm only—the corpus scene is dark satellite.
+  Tier budgets mirror src/styles/tokens/glass.css (container=resting .65a/7px;
+  control=quiet-kin .50a-class/7px + own rim + brighter fill). Dark arm only—the
+  corpus scene is dark satellite.
+
+  PASS-2 CURE SEAT (F5, 2026-07-18) — verified-model: claude-fable-5:
+  · goo hot path re-armed to the COMPOSITOR FENCE (suffusion forPass2, binding):
+    default anatomy = additive gradient metaballs (transform/opacity only, zero
+    filter); the SVG-filter merge survives as the "svg-arm" duel toggle pending
+    the queued pass-2 paint duel (reverify-queue §F5).
+  · capture toggles (CRIT-F5 G2): ferry-off + clock ×1/×4/×20 (the chosen freeze
+    mechanism—every clock scales coherently, transients become capturable).
+  · PRM one-flip seat (G5): transitions suppressed under PRM, the charge floor
+    skipped—commit seats in ONE synchronous style flip; the 220ms acknowledgment
+    clear is a second DISCRETE flip (a step, suffusion §3.5 Q3/Q8).
+  · harness defects patched (G6): flick-from-closed guarded; cliff cell disarmed
+    against relax reuse; abandoned press discharges (window pointerup + cancel),
+    cross-tab commits re-stamp the charge floor.
+  · chip D (G7): the verbatim-form shipped data-URI filter value, permanent.
+  · isolation: isolate added to the light layer (G8a, spec reconciled);
+    the medium one-writer contract enforced via claimMediumWriter (G8d);
+    window.f5LintLayerContract() is the in-page half of the named lint (G8c).
+  · N8 opacity-0 cost probe (suffusion §2-N8 standing obligation): mount toggle
+    + 3s cadence meter; priced by the re-verify seat on both engines.
+  · MARKS PASS-2 C5 adopted: cool-down readout gated 350–400ms (±25ms wall-clock
+    slack); mid-cool re-taps re-seat with no reset (the retarget path).
 -->
 <style>
 /* ============================== tokens ==============================
@@ -35,7 +56,11 @@
     --clock-periphery-lag: 100ms;
     --lens-charge: 250ms;                                /* press-charge floor before travel */
     --lens-hold: 200ms;                                  /* oversized-arrival hold */
-    --lens-cool: 380ms;                                  /* cool-down to rest */
+    --lens-cool: 380ms;                                  /* cool-down to rest (MARKS C5: 350-400ms) */
+    --lens-demat: 120ms;                                 /* capsule de-materialize fade */
+    --lens-reform: 140ms;                                /* capsule oversized re-form fade */
+    --goo-in: 90ms;                                      /* barbell light-up */
+    --goo-out: 160ms;                                    /* barbell hand-off fade */
     --lens-arrival-scale: 1.15;                          /* 1.10-1.20 band */
     --lens-magnify: 1.06;                                /* ~5-8% content magnification */
 
@@ -108,6 +133,11 @@ label.toggle { display: inline-flex; gap: 6px; align-items: center; font-size: 1
 }
 @keyframes ferry { to { transform: translateX(1020px); } }
 body.prm .ferry { animation: none; left: 40%; }
+/* G2 capture toggle—no future transient capture may be ferry-confounded */
+body.ferry-off .ferry { display: none; }
+/* G5 PRM one-flip: every lens-channel transition suppressed—state changes are
+   discrete style flips, zero interpolated frames (suffusion §3.5) */
+body.prm .capsule, body.prm .lens-wash, body.prm .lens-bloom, body.prm .goo { transition: none !important; }
 
 /* ============================== the tab-bar region ==============================
    Layer contract (SPEC-F5 §1): ONE effect-free positioning ancestor; BODY (bar
@@ -135,12 +165,12 @@ body.prm .ferry { animation: none; left: 40%; }
     -webkit-backdrop-filter: var(--tier-control-filter);
     backdrop-filter: var(--tier-control-filter);
     box-shadow: var(--glass-specular), inset 0 0 0 1px hsl(0 0% 100% / 0.08);
-    transition: opacity 120ms ease-out;
+    transition: opacity var(--lens-demat) ease-out;
     overflow: hidden;
 }
 .capsule.demat { opacity: 0; }
-.capsule.reform { transition: opacity 140ms ease-out; }
-.capsule.cooling { transition: opacity 140ms ease-out, transform var(--lens-cool) cubic-bezier(0.22, 0.9, 0.26, 1); }
+.capsule.reform { transition: opacity var(--lens-reform) ease-out; }
+.capsule.cooling { transition: opacity var(--lens-reform) ease-out, transform var(--lens-cool) cubic-bezier(0.22, 0.9, 0.26, 1); }
 /* Safari's good idea—the idle specular sweep, ACTIVE lens only, engagement-gated
    off during charge/travel, dead under PRM */
 .capsule::after {
@@ -158,6 +188,12 @@ body.prm .capsule.idle::after { animation: none; opacity: 0; }
 .lens-light {
     position: absolute; inset: -48px -24px; z-index: 3; pointer-events: none;
     contain: layout paint;
+    /* G8a—SPEC-F5 §1 reconciled: isolation declares the children-contained
+       compositing boundary EXPLICITLY (contain:paint already implies a stacking
+       context, but the lint checks the semantic property, and the boundary
+       survives any future containment retune). SAFE here—this layer never
+       backdrop-samples; NEVER on the region root (backdrop-root trigger). */
+    isolation: isolate;
     mix-blend-mode: plus-lighter;
 }
 .lens-wash {
@@ -169,22 +205,41 @@ body.prm .capsule.idle::after { animation: none; opacity: 0; }
         hsl(190 90% 75% / var(--lens-wash-text-clamp)) 68% 100%);
     opacity: 0; transition: opacity var(--lens-charge) ease-out;
 }
+/* THE COMPOSITOR FENCE (suffusion forPass2, BINDING): the travel hot path runs
+   transform/opacity ONLY—no SVG filter. Default anatomy = additive gradient
+   metaballs: soft-falloff sprites whose overlap SUMS under the layer's ONE
+   plus-lighter composite, so the bodies + neck read as one welling liquid mass
+   with zero per-frame filter work. The SVG-filter merge (pass-1 Arm A) survives
+   behind the "svg-arm" duel toggle only, pending the queued pass-2 paint duel
+   (reverify-queue §F5; the WebKit 4-slot 26ms long frame is the suspect it must
+   answer). If the fence arm reads as one body on both engines, the filter arm
+   retires from the spec. */
 .goo {
     position: absolute; inset: 0;
-    filter: url(#f5-goo);
-    opacity: 0; transition: opacity 90ms ease-out;
+    opacity: 0; transition: opacity var(--goo-in) ease-out;
 }
-.goo.out { transition: opacity 160ms ease-in; }
+.goo.out { transition: opacity var(--goo-out) ease-in; }
+.goo.svg-arm { filter: url(#f5-goo); }
 .lbody, .lneck {
-    position: absolute; left: 0; top: 50%; border-radius: 999px;
-    background: hsl(192 95% 74% / 0.9);
+    position: absolute; left: 0; top: 50%;
     will-change: transform;
 }
 .lbody { width: 96px; height: 44px; margin: -22px 0 0 -48px; }
 .lneck { width: 60px; height: 26px; margin: -13px 0 0 -30px; }
-/* Arm B—the @supports-not floor: drop the goo merge, keep the un-merged barbell */
+/* fence sprites: capsule cores with gaussian-kin alpha falloff—the additive
+   merge is optical, not filtered */
+.goo:not(.svg-arm) .lbody {
+    background: radial-gradient(closest-side, hsl(192 95% 74% / 0.92) 40%, hsl(192 95% 74% / 0.5) 66%, transparent 100%);
+}
+.goo:not(.svg-arm) .lneck {
+    background: radial-gradient(closest-side, hsl(192 95% 74% / 0.85) 28%, hsl(192 95% 74% / 0.38) 60%, transparent 100%);
+}
+/* duel arm keeps the pass-1 hard-edged bodies the filter graph expects */
+.goo.svg-arm .lbody, .goo.svg-arm .lneck { background: hsl(192 95% 74% / 0.9); border-radius: 999px; }
+/* the duel arm's own floor: an engine without filter:url() shows the un-merged
+   barbell—degraded, not broken (irrelevant to the fence default, which never filters) */
 @supports not (filter: url("#f5-goo")) {
-    .goo { filter: none; }
+    .goo.svg-arm { filter: none; }
 }
 .lens-bloom {
     position: absolute; left: 0; top: 50%; width: 280px; height: 170px; margin: -85px 0 0 -140px;
@@ -295,10 +350,23 @@ input[type="range"] { accent-color: hsl(195 80% 60%); }
 #u1a { -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
 #u1b { -webkit-backdrop-filter: url(#f5-u1probe); backdrop-filter: url(#f5-u1probe); }
 #u1c { -webkit-backdrop-filter: blur(8px) url(#f5-u1probe); backdrop-filter: blur(8px) url(#f5-u1probe); }
+/* chip D (G7, permanent)—the SHIPPED FORM under-covered by pass 1: one complete
+   self-contained data-URI SVG filter token after blur(), the exact glass-refract.css
+   construction. WebKit 26.5 verdict (safari-arm): @supports TRUE, paint drops the
+   WHOLE value—stone sharp. Fragment (chip C) and data-URI (chip D) do not diverge. */
+#u1panel { --u1-shipped-filter: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='f5u1d'%3E%3CfeGaussianBlur stdDeviation='3'/%3E%3C/filter%3E%3C/svg%3E%23f5u1d"); }
+#u1d { -webkit-backdrop-filter: blur(8px) var(--u1-shipped-filter); backdrop-filter: blur(8px) var(--u1-shipped-filter); }
 /* the shipped-defect gate under test: does this engine ENGAGE the url() block? */
 #u1panel { --u1-gate: dormant; }
 @supports (backdrop-filter: url("#f5-u1probe")) {
     #u1panel { --u1-gate: engaged; }
+}
+/* N8 cost twin (suffusion §2-N8): a full-region backdrop-filter layer parked at
+   opacity 0—does the engine keep paying for it? Priced by the cadence meter. */
+.n8-twin {
+    position: absolute; inset: 0; pointer-events: none; opacity: 0;
+    -webkit-backdrop-filter: blur(18px) saturate(1.3);
+    backdrop-filter: blur(18px) saturate(1.3);
 }
 ul.judge { margin: 8px 0 0; padding-left: 18px; font-size: 12px; color: hsl(220 10% 62%); }
 ul.judge li { margin: 3px 0; }
@@ -321,16 +389,19 @@ ul.judge li { margin: 3px 0; }
 <main>
 <header>
     <h1>F5 OPTICAL-MEDIUM—lens continuity prototype</h1>
-    <p class="small">verified-model: claude-fable-5 (system-context model ID, verbatim) · IOS27-MICRO pass 1 · prototype seat · Safari-2026 floor, dark arm</p>
+    <p class="small">verified-model: claude-fable-5 (system-context model ID, verbatim) · IOS27-MICRO pass 1 + pass-2 cures · prototype seat · Safari-2026 floor, dark arm</p>
     <p class="small" style="margin-top:6px">
         <label class="toggle"><input type="checkbox" id="prmSim" /> simulate prefers-reduced-motion (OS-level PRM also honored: <span id="prmState">…</span>)</label>
+        &nbsp; <label class="toggle"><input type="checkbox" id="ferryOff" /> ferry off (capture mode—G2)</label>
+        &nbsp; <label class="toggle">clock <select id="clockScale"><option value="1" selected>×1</option><option value="4">×4 (slow)</option><option value="20">×20 (capture freeze)</option></select></label>
+        &nbsp; <label class="toggle"><input type="checkbox" id="gooArm" /> goo: SVG-filter arm (off-fence, duel only)</label>
     </p>
 </header>
 
 <!-- ==================== HERO: the tab-bar lens ==================== -->
 <section class="panel">
     <h2>The riskiest claim—one continuous lens body (press a tab)</h2>
-    <p class="small">Rest capsule (control tier, own rim, ~6% content magnification, idle sweep)&nbsp;→ press-charge (bloom past bounds + whole-bar wash, before any travel)&nbsp;→ the capsule de-materializes UNDER the traveling light barbell (lead/trail 0.68/ζ0.64, τ270ms, goo Arm A)&nbsp;→ oversized re-form (1.15× in scale AND light, ~200ms hold)&nbsp;→ cool. No frame may show zero lens presence. Sibling labels sit ABOVE the light layer; the bloom carries a clamped alpha leg under the label band. A mid-travel press retargets—velocity carries.</p>
+    <p class="small">Rest capsule (control tier, own rim, ~6% content magnification, idle sweep)&nbsp;→ press-charge (bloom past bounds + whole-bar wash, before any travel)&nbsp;→ the capsule de-materializes UNDER the traveling light barbell (lead/trail 0.68/ζ0.64, τ270ms; default anatomy = the COMPOSITOR-FENCE additive-gradient metaballs, zero filter on the hot path; the pass-1 SVG-filter merge is the duel toggle)&nbsp;→ oversized re-form (1.15× in scale AND light, ~200ms hold)&nbsp;→ cool (MARKS C5: 350-400ms). No frame may show zero lens presence. Sibling labels sit ABOVE the light layer; the bloom carries a clamped alpha leg under the label band. A mid-travel press retargets—velocity carries; a mid-COOL re-tap re-seats with no reset (C5's rapid-hop law, the same retarget path).</p>
     <div class="stage">
         <i class="poi" style="left:12%;top:24%"></i>
         <i class="poi" style="left:71%;top:18%"></i>
@@ -339,8 +410,8 @@ ul.judge li { margin: 3px 0; }
         <div class="ferry"></div>
 
         <div class="tabbar-region" id="region">
-            <div class="bar-body"></div>
-            <div class="capsule idle" id="capsule"></div>
+            <div class="bar-body" data-tier="container"></div>
+            <div class="capsule idle" id="capsule" data-tier="control"></div>
             <div class="lens-light" aria-hidden="true">
                 <div class="lens-wash" id="wash"></div>
                 <div class="goo" id="goo">
@@ -357,16 +428,18 @@ ul.judge li { margin: 3px 0; }
         <div class="ro">re-form trigger after commit<b id="roReform">—</b></div>
         <div class="ro">arrival scale, computed (target 1.10-1.20)<b id="roScale">—</b></div>
         <div class="ro">oversize hold (target ~200ms)<b id="roHold">—</b></div>
+        <div class="ro">cool-down (MARKS C5 band 350-400ms, ±25ms wall-clock slack)<b id="roCool">—</b></div>
         <div class="ro">continuity—min lens presence (PASS ≥ 0.35)<b id="roCont">—</b></div>
         <div class="ro">frames sampled / worst frame<b id="roFrames">—</b></div>
         <div class="ro">fps (morph window)<b id="roFps">parked</b></div>
+        <div class="ro">clock scale (readouts are normalized to ×1)<b id="roClock">×1</b></div>
     </div>
     <div class="readouts">
         <div class="ro">sibling label contrast at bloom peak—analytic, clamped (floor 4.5:1)<b id="roClamped">—</b></div>
         <div class="ro">same, with the clamp leg removed (the iOS defect)<b id="roUnclamped">—</b></div>
         <div class="ro">clamp tokens<b><code>bloom .55→.14 · wash .28→.05</code></b></div>
     </div>
-    <p class="small">Continuity is max(capsule opacity, goo-layer opacity) sampled per rAF across the morph—computed style, not painted pixels; the browser seat's 12fps screenshot burst is the paint-true blink test. The contrast pair is an analytic composite model (scene L≈.10 under the label band; plus-lighter approximated additive), not a paint read.</p>
+    <p class="small">Continuity is max(capsule opacity, goo-layer opacity) sampled per rAF across the morph—computed style, not painted pixels; the browser seat's 12fps screenshot burst is the paint-true blink test. The contrast pair is an analytic composite model (scene L≈.10 under the label band; plus-lighter approximated additive), not a paint read—CALIBRATED pass 2 against the WebKit 26.5 paint sample: siblings 4.53/4.62/4.61/5.03:1 at bloom peak vs the model's 4.7:1 (safari-arm, `f5-wk-charge-held.png`); the Chrome pixel pair is queued (reverify §F5).</p>
 </section>
 
 <!-- ==================== U2: the medium state machine ==================== -->
@@ -390,6 +463,8 @@ ul.judge li { margin: 3px 0; }
         <button class="ctl" id="ccClose">close</button>
         <button class="ctl" id="ccFlick">flick + catch</button>
         <label class="toggle">scrub <input type="range" id="ccScrub" min="0" max="1000" value="0" /></label>
+        <label class="toggle"><input type="checkbox" id="n8Mount" /> N8 twin (opacity-0 medium)</label>
+        <button class="ctl" id="n8Measure">measure 3s cadence</button>
     </div>
     <div class="readouts">
         <div class="ro">medium state<b id="ccState">rest</b></div>
@@ -398,6 +473,8 @@ ul.judge li { margin: 3px 0; }
         <div class="ro">empty-medium beat (target 100-200ms)<b id="ccBeat">—</b></div>
         <div class="ro">interrupt floor—min opacity across the catch (never 0)<b id="ccFloor">—</b></div>
         <div class="ro">fade:stretch token ratio (target ~1:4)<b id="ccRatio">—</b></div>
+        <div class="ro">N8 cadence—avg / p95 / worst frame over 3s (compare twin on vs off)<b id="n8Out">—</b></div>
+        <div class="ro">medium writer (one-writer contract, G8d)<b id="ccWriterRo">—</b></div>
     </div>
 </section>
 
@@ -423,22 +500,26 @@ ul.judge li { margin: 3px 0; }
             <div class="u1-chip" id="u1a">A<br/>blur(8px)</div>
             <div class="u1-chip" id="u1b">B<br/>url(#probe)</div>
             <div class="u1-chip" id="u1c">C<br/>blur(8px) url(#probe)</div>
+            <div class="u1-chip" id="u1d">D<br/>blur(8px) data-URI (shipped form)</div>
         </div>
     </div>
     <div class="readouts">
         <div class="ro"><code>CSS.supports("backdrop-filter","url(#f5-u1probe)")</code><b id="u1s1">—</b></div>
         <div class="ro"><code>CSS.supports("backdrop-filter","blur(8px) url(#…)")</code><b id="u1s2">—</b></div>
+        <div class="ro"><code>CSS.supports</code> on chip D's verbatim-form data-URI value<b id="u1s3">—</b></div>
         <div class="ro">@supports-gated block on this engine<b id="u1gate">—</b></div>
     </div>
     <ul class="judge">
-        <li>A blurred, B+C sharp, supports=false—honest rejection (the gate is safe on this engine).</li>
-        <li>C blurred while supports=true—accept-and-drop of the url() leg only (benign).</li>
-        <li>C SHARP while supports=true—whole-value drop: the shipped <code>glass-refract.css</code> gate lies on this engine and the lens loses all blur (U1 red; repair per the <code>supportsCssTimeline</code> harden).</li>
+        <li>A blurred, B+C+D sharp, supports=false—honest rejection (the gate is safe on this engine).</li>
+        <li>C+D blurred while supports=true—accept-and-drop of the url() leg only (benign).</li>
+        <li>C or D SHARP while supports=true—whole-value drop: the shipped <code>glass-refract.css</code> gate lies on this engine and the lens loses all blur (U1 red; repair per the <code>supportsCssTimeline</code> harden).</li>
+        <li><b>PASS-2 VERDICT (safari-arm, WebKit 26.5): U1 RED—supports TRUE on all four forms, chips B/C/D stone sharp (0.0748-0.0749 vs baseline 0.0756; chip A 0.0018). Fragment and data-URI die identically. The shipped gate LIES on the Safari floor; repair routed to BJ (docs/tranches/BJ/coordination/, do-not-edit-src ruling honored). Chrome 150: full value paints—the gate tells the truth there.</b></li>
     </ul>
 </section>
 
 <footer class="small">
-    Judge in paint, per SPEC-F5 §5: (1) 12fps burst across one full morph—no frame with zero lens presence; (2) label legibility at bloom peak; (3) U2 pair—blur decays by opacity only, no radius pump, no re-raster spikes in the trace; (4) U3 double-frost; (5) U1 chip C. The serialized browser seat owns the captures; this page only instruments.
+    Judge in paint, per SPEC-F5 §5: (1) 12fps burst across one full morph—no frame with zero lens presence; (2) label legibility at bloom peak; (3) U2 pair—blur decays by opacity only, no radius pump, no re-raster spikes in the trace; (4) U3 double-frost; (5) U1 chips C+D. The serialized browser seat owns the captures; this page only instruments.
+    Pass-2 additions: capture with ferry OFF + clock ×20 (transients hold still); the fence-vs-filter goo duel (default is the fence—toggle the svg-arm for the comparison); N8 cadence twin-on vs twin-off; <code>f5LintLayerContract()</code> from the console must return pass:true. Exact steps + acceptance: <code>passes/PASS-2/reverify-queue.md</code> §F5.
 </footer>
 </main>
 
@@ -460,6 +541,32 @@ prmQuery.addEventListener("change", syncPrm);
 $("prmSim").addEventListener("change", syncPrm);
 syncPrm();
 
+/* ---------- pass-2 capture toggles (G2) ---------- */
+$("ferryOff").addEventListener("change", (e) =>
+    document.body.classList.toggle("ferry-off", e.target.checked));
+$("gooArm").addEventListener("change", (e) =>
+    $("goo").classList.toggle("svg-arm", e.target.checked));
+
+/* clock scale—the chosen freeze mechanism: EVERY clock (CSS tokens, JS timers,
+   spring physics time) scales by one factor, so a ×20 morph is a coherent
+   slow-motion of the ×1 choreography, capturable at any phase. All banded
+   readouts divide by SLOW—they stay ×1-normalized and remain honest gates. */
+let SLOW = 1;
+const SCALED_TOKENS = {
+    "--clock-stretch": 650, "--clock-medium-cliff": 90, "--clock-medium-relax": 420,
+    "--clock-empty-beat": 150, "--clock-periphery-lag": 100,
+    "--lens-charge": 250, "--lens-hold": 200, "--lens-cool": 380,
+    "--lens-demat": 120, "--lens-reform": 140, "--goo-in": 90, "--goo-out": 160,
+};
+function setClockScale(f) {
+    SLOW = f;
+    for (const [k, v] of Object.entries(SCALED_TOKENS)) {
+        document.documentElement.style.setProperty(k, v * f + "ms");
+    }
+    $("roClock").textContent = "×" + f;
+}
+$("clockScale").addEventListener("change", (e) => setClockScale(parseFloat(e.target.value)));
+
 /* ---------- leadTrail—line-faithful port of useLeadTrail.ts ----------
    (src/composables/motion/morph/useLeadTrail.ts: hand-rolled damped spring,
    semi-implicit Euler, 8 substeps, response 0.68 / zeta 0.64; exponential
@@ -473,7 +580,7 @@ function leadTrail({ response = 0.68, damping = 0.64, trailTau = 0.27, onFrame }
     function step(now) {
         const dtMs = lastNow ? Math.min(now - lastNow, MAX_DT_MS) : 1000 / 60;
         lastNow = now;
-        const dt = dtMs / 1000, h = dt / SUBSTEPS;
+        const dt = dtMs / 1000 / SLOW, h = dt / SUBSTEPS;   // physics time rides the clock scale
         for (let i = 0; i < SUBSTEPS; i++) {
             const a = -omega * omega * (x - target) - 2 * damping * omega * v;
             v += a * h; x += v * h;
@@ -565,22 +672,24 @@ const worm = leadTrail({ onFrame: paintBarbell });
    rest → charge (pointerdown) → travel (commit; capsule demat AFTER the barbell
    lights—the no-blink overlap) → arrival (re-form oversized at the emergent
    trigger) → cool → rest. A commit mid-travel retargets; timers carry a morph id. */
-const CHARGE_MS = 250, HOLD_MS = 200, COOL_MS = 380, ARRIVAL_SCALE = 1.15;
+const CHARGE_MS = 250, HOLD_MS = 200, COOL_MS = 380, REFORM_MS = 140, ARRIVAL_SCALE = 1.15;
 let morph = null;
-let chargeT0 = 0, charging = false;
+let chargeT0 = 0, charging = false, chargedTab = -1, pendingDischarge = 0;
 const setState = (s) => ($("roState").textContent = s);
 
-function startCharge() {
-    charging = true; chargeT0 = performance.now();
-    setState("charge");
+function startCharge(i) {
+    charging = true; chargeT0 = performance.now(); chargedTab = i;
+    setState(prm() ? "charge (PRM static flip)" : "charge");
     capsule.classList.remove("idle");
     wash.style.opacity = "1";
     bloom.classList.remove("snap", "cooling", "arrive");
     paintBloomX(centers[active]);                          // bloom at the SOURCE lens
     bloom.style.opacity = "1";
+    // under PRM the body.prm CSS suppresses every lens transition—these writes
+    // are ONE discrete style flip (charge as a non-motion state, G5)
 }
 function discharge() {
-    charging = false;
+    charging = false; chargedTab = -1;
     if (morph) return;
     wash.style.opacity = "0";
     bloom.style.opacity = "0";
@@ -588,7 +697,13 @@ function discharge() {
     setState("rest");
 }
 function commit(to) {
-    const wait = Math.max(0, CHARGE_MS - (performance.now() - chargeT0));
+    if (pendingDischarge) { clearTimeout(pendingDischarge); pendingDischarge = 0; }
+    // G6c: a commit on a different tab than the charged one is fresh intent—the
+    // stale chargeT0 of an abandoned press must not shortcut the charge floor
+    // or inflate press→settle
+    if (charging && chargedTab !== to && chargedTab !== -1) chargeT0 = performance.now();
+    if (prm()) { beginTravel(to); return; }                // G5: no charge-floor deferral—seat NOW
+    const wait = Math.max(0, CHARGE_MS * SLOW - (performance.now() - chargeT0));
     setTimeout(() => beginTravel(to), wait);               // the charge floor reads fully first
 }
 function beginTravel(to) {
@@ -604,7 +719,7 @@ function beginTravel(to) {
     goo.classList.remove("out");
     goo.style.opacity = "1";
     bloom.style.opacity = "0";                             // source bloom hands off to the barbell
-    morph.timers.push(setTimeout(() => capsule.classList.add("demat"), 60));
+    morph.timers.push(setTimeout(() => capsule.classList.add("demat"), 60 * SLOW));
     setCurrent(-1);                                        // source demagnifies under the blob
     active = to;
     worm.drive(centers[to] - LIGHT_INSET_X);
@@ -625,7 +740,7 @@ function retarget(to) {
 function reform() {
     const m = morph; m.reformed = true;
     m.reformT = performance.now();
-    $("roReform").textContent = Math.round(m.reformT - m.commitT) + "ms";
+    $("roReform").textContent = Math.round((m.reformT - m.commitT) / SLOW) + "ms";
     setState("arrival");
     // teleport the transform (instant—no transform transition outside .cooling),
     // then drop .demat so the capsule fades in OVERSIZED under the hot light
@@ -633,7 +748,7 @@ function reform() {
     capsule.classList.add("reform");
     capsule.style.transform = `translateX(${centers[m.to] - capW / 2}px) scale(${ARRIVAL_SCALE})`;
     void capsule.offsetWidth;
-    capsule.classList.remove("demat");                     // 140ms re-form fade
+    capsule.classList.remove("demat");                     // re-form fade (--lens-reform)
     bloom.classList.add("snap");
     paintBloomX(centers[m.to]);
     void bloom.offsetWidth;
@@ -641,16 +756,17 @@ function reform() {
     bloom.classList.add("arrive");
     bloom.style.opacity = "0.9";                           // arrival light, hot and fast
     setCurrent(m.to);                                      // magnify under the lens
-    m.timers.push(setTimeout(() => { goo.classList.add("out"); goo.style.opacity = "0"; }, 140));
+    m.timers.push(setTimeout(() => { goo.classList.add("out"); goo.style.opacity = "0"; }, REFORM_MS * SLOW));
     m.timers.push(setTimeout(() => {
         const mtx = new DOMMatrixReadOnly(getComputedStyle(capsule).transform);
         $("roScale").textContent = mtx.a.toFixed(3);
         $("roScale").className = mtx.a >= 1.1 && mtx.a <= 1.2 ? "pass" : "fail";
-    }, 80));
-    m.timers.push(setTimeout(() => cool(m), HOLD_MS + 140));
+    }, 80 * SLOW));
+    m.timers.push(setTimeout(() => cool(m), (HOLD_MS + REFORM_MS) * SLOW));
 }
 function cool(m) {
-    $("roHold").textContent = Math.round(performance.now() - m.reformT - 140) + "ms";
+    $("roHold").textContent = Math.round((performance.now() - m.reformT - REFORM_MS * SLOW) / SLOW) + "ms";
+    m.coolT = performance.now();
     setState("cool");
     capsule.classList.add("cooling");
     capsule.style.transform = `translateX(${centers[m.to] - capW / 2}px) scale(1)`;
@@ -658,10 +774,10 @@ function cool(m) {
     bloom.classList.add("cooling");
     bloom.style.opacity = "0";
     wash.style.opacity = "0";
-    m.timers.push(setTimeout(() => finish(m), COOL_MS + 20));
+    m.timers.push(setTimeout(() => finish(m), COOL_MS * SLOW + 20));
 }
 function finish(m) {
-    const total = performance.now() - m.t0;
+    const total = (performance.now() - m.t0) / SLOW;
     const slots = Math.abs(m.to - m.from);
     $("roTotal").textContent = `${Math.round(total)}ms (${slots}-slot${m.retargeted ? ", retargeted" : ""})`;
     // the MARKS band was measured on adjacent-tab morphs—band-check clean 1-slot
@@ -670,6 +786,10 @@ function finish(m) {
         !m.retargeted && slots === 1
             ? (total >= 1150 && total <= 1450 ? "pass" : "fail")
             : "";
+    // MARKS PASS-2 C5: cool-down after the final arrival 350-400ms (±25ms slack)
+    const coolMs = (performance.now() - m.coolT) / SLOW;
+    $("roCool").textContent = Math.round(coolMs) + "ms";
+    $("roCool").className = coolMs >= 325 && coolMs <= 425 ? "pass" : "fail";
     $("roCont").textContent = m.minPresence.toFixed(2) + (m.minPresence >= 0.35 ? " PASS" : " FAIL");
     $("roCont").className = m.minPresence >= 0.35 ? "pass" : "fail";
     $("roFrames").textContent = `${m.frames} / ${m.worstDt.toFixed(1)}ms`;
@@ -680,20 +800,27 @@ function finish(m) {
     $("roFps").textContent = "parked";
 }
 function prmSwap(to) {
-    // PRM: seat instantly; the charge survives as a non-motion state; no barbell
+    // G5 PRM one-flip seat: charge + commit land in ONE synchronous style write
+    // (body.prm suppresses every lens transition—zero interpolated frames, no
+    // barbell, no oversize, no charge-floor deferral). The acknowledgment bloom
+    // (0.35) rides the SAME flip at the destination; its clear 220ms later is a
+    // second DISCRETE flip—a step, per suffusion §3.5 Q3/Q8 (state relayed, no
+    // travel light). PRM ignores the clock scale: no motion exists to slow.
     active = to;
     setCurrent(to);
+    capsule.classList.remove("demat", "reform", "cooling");
     capsule.style.transform = `translateX(${centers[to] - capW / 2}px) scale(1)`;
     worm.seat(centers[to] - LIGHT_INSET_X);
     paintBloomX(centers[to]);
+    wash.style.opacity = "0";
     bloom.style.opacity = "0.35";
-    setState("arrival (PRM seat)");
+    setState("seated (PRM one-flip)");
     setTimeout(() => {
-        bloom.style.opacity = "0"; wash.style.opacity = "0";
+        bloom.style.opacity = "0";
         capsule.classList.add("idle"); setState("rest");
     }, 220);
     $("roTotal").textContent = "PRM path"; $("roTotal").className = "";
-    charging = false;
+    charging = false; chargedTab = -1;
 }
 
 /* continuity + fps monitor—computed-style presence, morph window only.
@@ -719,19 +846,34 @@ function monitor(id) {
 }
 
 /* pointer wiring—charge on down, commit on click, discharge on abandon;
-   keyboard activation charges + commits in one stroke (the charge floor holds) */
+   keyboard activation charges + commits in one stroke (the charge floor holds).
+   G6c: the abandoned-press class is closed on THREE paths—pointerleave (mouse
+   drag-off), pointercancel (touch scroll-steal), and a deferred window-pointerup
+   discharge (release with no click: the timeout(0) lands AFTER any same-gesture
+   click, which clears it in commit(), so a real commit is never pre-empted). */
 tabEls.forEach((el, i) => {
     el.addEventListener("pointerdown", () => {
-        if (i !== active && !charging && !morph) startCharge();
+        if (i !== active && !charging && !morph) startCharge(i);
     });
     el.addEventListener("click", () => {
         if (i === active && !morph) return;
-        if (!charging && !morph) startCharge();
+        if (!charging && !morph) startCharge(i);
         commit(i);
     });
     el.addEventListener("pointerleave", () => {
         if (charging && !morph) discharge();
     });
+    el.addEventListener("pointercancel", () => {
+        if (charging && !morph) discharge();
+    });
+});
+addEventListener("pointerup", () => {
+    if (charging && !morph && !pendingDischarge) {
+        pendingDischarge = setTimeout(() => {
+            pendingDischarge = 0;
+            if (charging && !morph) discharge();
+        }, 0);
+    }
 });
 
 /* ---------- analytic label-contrast readout (a model, not paint) ---------- */
@@ -783,60 +925,97 @@ const tok = (name) => parseFloat(rootStyles.getPropertyValue(name));
 let ccStateName = "rest", ccTimers = [], ccContentGoneAt = 0;
 const setCC = (s) => { ccStateName = s; $("ccState").textContent = s; };
 function ccClearTimers() { ccTimers.forEach(clearTimeout); ccTimers = []; }
+
+/* ---------- the medium ONE-WRITER contract (G8d) ----------
+   A region's medium has exactly one writer. The claim is durable and visible
+   (data-writer on the element—the lint checks it); a second claimant THROWS.
+   Every medium write on this page routes through the claimed writer—the scrub,
+   open, close, and flick are all the one controller. */
+function claimMediumWriter(el, id) {
+    const held = el.dataset.writer;
+    if (held && held !== id) {
+        throw new Error(`F5 medium one-writer violation: "${held}" holds this medium; "${id}" may not write`);
+    }
+    el.dataset.writer = id;
+    return {
+        id,
+        opacity(v) { el.style.opacity = String(v); },
+        mode(...cls) {
+            el.classList.remove("engage", "relax", "scrub");
+            if (cls.length) el.classList.add(...cls);
+        },
+    };
+}
+const ccWriter = claimMediumWriter(ccMedium, "cc-controller");
+$("ccWriterRo").textContent = ccMedium.dataset.writer;
+$("ccWriterRo").className = "pass";
+
 /* wall-clock transition measurement (run→end catches main-thread stalls);
-   transitioncancel cleans up an interrupted measure */
+   transitioncancel cleans up an interrupted measure. G6b: a disarm window
+   removes a listener that never saw its transitionrun—an armed-but-idle
+   measure must NOT survive to swallow a LATER transition of the same property
+   (the pre-cure cliff-cell-shows-relax defect). Readouts normalize by SLOW. */
 function measureTransition(el, prop, out) {
-    let t0 = 0;
+    let t0 = 0, disarm = 0;
     const onRun = (e) => { if (e.propertyName === prop) t0 = performance.now(); };
     const done = () => {
+        clearTimeout(disarm);
         el.removeEventListener("transitionrun", onRun);
         el.removeEventListener("transitionend", onEnd);
         el.removeEventListener("transitioncancel", onCancel);
     };
     const onEnd = (e) => {
         if (e.propertyName !== prop) return;
-        if (t0) out(Math.round(performance.now() - t0));
+        if (t0) out(Math.round((performance.now() - t0) / SLOW));
         done();
     };
     const onCancel = (e) => { if (e.propertyName === prop) done(); };
     el.addEventListener("transitionrun", onRun);
     el.addEventListener("transitionend", onEnd);
     el.addEventListener("transitioncancel", onCancel);
+    disarm = setTimeout(() => { if (!t0) done(); }, 300 * SLOW + 300);
 }
 function ccOpen() {
     ccClearTimers();
     setCC("engaged");
-    ccMedium.classList.remove("relax", "scrub");
-    ccMedium.classList.add("engage");
-    measureTransition(ccMedium, "opacity", (ms) => {
-        $("ccCliff").textContent = ms + "ms";
-        $("ccCliff").className = ms <= 110 ? "pass" : "fail";
-    });
-    ccMedium.style.opacity = "1";
+    ccWriter.mode("engage");
+    // G6b: measure only when a transition will actually run—an already-open
+    // medium re-opened must not leave an armed listener behind
+    if (parseFloat(getComputedStyle(ccMedium).opacity) < 0.999) {
+        measureTransition(ccMedium, "opacity", (ms) => {
+            $("ccCliff").textContent = ms + "ms";
+            $("ccCliff").className = ms <= 110 ? "pass" : "fail";
+        });
+    }
+    ccWriter.opacity(1);
     cc.classList.add("open");
 }
 function ccClose() {
     ccClearTimers();
     setCC("content-out");
     cc.classList.remove("open");                 // tiles fade+rise on their OWN opacity
-    const beat = tok("--clock-empty-beat");
+    const beat = tok("--clock-empty-beat");      // tokens are already clock-scaled
     ccTimers.push(setTimeout(() => {
         ccContentGoneAt = performance.now();
         setCC("held (the empty-medium beat)");
-    }, 175));
+    }, 175 * SLOW));
     ccTimers.push(setTimeout(() => {
-        $("ccBeat").textContent = Math.round(performance.now() - ccContentGoneAt) + "ms";
+        $("ccBeat").textContent = Math.round((performance.now() - ccContentGoneAt) / SLOW) + "ms";
         setCC("relaxing");
-        ccMedium.classList.remove("engage", "scrub");
-        ccMedium.classList.add("relax");
+        ccWriter.mode("relax");
         measureTransition(ccMedium, "opacity", (ms) => {
             $("ccRelax").textContent = ms + "ms";
             if (ccStateName === "relaxing") setCC("rest");
         });
-        ccMedium.style.opacity = "0";
-    }, 175 + beat));
+        ccWriter.opacity(0);
+    }, 175 * SLOW + beat));
 }
 function ccFlick() {
+    // G6a: a flick from a CLOSED medium has nothing to catch—guard, never a
+    // phantom 0.00 FAIL row
+    const live = cc.classList.contains("open") ||
+        parseFloat(getComputedStyle(ccMedium).opacity) > 0;
+    if (!live) { setCC("flick ignored—medium at rest (nothing to catch)"); return; }
     ccClose();
     // catch mid-relax—the medium is re-driven from its LIVE computed value
     const beat = tok("--clock-empty-beat");
@@ -847,7 +1026,7 @@ function ccFlick() {
         $("ccFloor").className = floor > 0 ? "pass" : "fail";
         setCC("caught (scrub re-entry)");
         ccOpen();
-    }, 175 + beat + relax * 0.55));
+    }, 175 * SLOW + beat + relax * 0.55));
 }
 $("ccOpen").addEventListener("click", ccOpen);
 $("ccClose").addEventListener("click", ccClose);
@@ -856,9 +1035,8 @@ $("ccScrub").addEventListener("input", (e) => {
     ccClearTimers();
     const p = e.target.value / 1000;
     setCC("scrub " + p.toFixed(2));
-    ccMedium.classList.remove("engage", "relax");
-    ccMedium.classList.add("scrub");
-    ccMedium.style.opacity = String(Math.min(1, p * 1.6));   // the medium leads the scrub
+    ccWriter.mode("scrub");
+    ccWriter.opacity(Math.min(1, p * 1.6));   // the medium leads the scrub
     cc.classList.remove("open");
     [...ccGrid.children].forEach((tile) => {
         tile.style.transition = "none";
@@ -883,9 +1061,113 @@ $("ccScrub").addEventListener("change", (e) => {
     const s2 = CSS.supports("backdrop-filter", "blur(8px) url(#f5-u1probe)");
     $("u1s1").textContent = String(s1);
     $("u1s2").textContent = String(s2);
+    // chip D (G7): probe the VERBATIM shipped construction—blur() + one complete
+    // self-contained data-URI SVG filter token, read from the live custom property
+    const dVal = getComputedStyle($("u1panel")).getPropertyValue("--u1-shipped-filter").trim();
+    $("u1s3").textContent = dVal ? String(CSS.supports("backdrop-filter", "blur(8px) " + dVal)) : "property unreadable";
     const gate = getComputedStyle($("u1panel")).getPropertyValue("--u1-gate").trim();
     $("u1gate").textContent = gate + (gate === "engaged" ? "—this engine ENTERS the shipped gated block" : "—gate dormant here");
 }
+
+/* ---------- N8 cost probe (suffusion §2-N8 standing obligation) ----------
+   Mount a full-region backdrop-filter twin PARKED at opacity 0 over the CC
+   scene, then price the frame cadence with it on vs off. If an engine keeps
+   paying for the filter at opacity 0, N8's layer must park via display:none;
+   if not, opacity-0 parking is certified. Both outcomes actionable. */
+let n8Twin = null;
+$("n8Mount").addEventListener("change", (e) => {
+    if (e.target.checked && !n8Twin) {
+        n8Twin = document.createElement("div");
+        n8Twin.className = "n8-twin";
+        ccMedium.after(n8Twin);
+    } else if (!e.target.checked && n8Twin) {
+        n8Twin.remove(); n8Twin = null;
+    }
+});
+$("n8Measure").addEventListener("click", () => {
+    const gaps = []; let last = 0; const t0 = performance.now();
+    $("n8Out").textContent = "measuring…";
+    const tick = (now) => {
+        if (last) gaps.push(now - last);
+        last = now;
+        if (now - t0 < 3000) { requestAnimationFrame(tick); return; }
+        gaps.sort((a, b) => a - b);
+        const avg = gaps.reduce((s, g) => s + g, 0) / gaps.length;
+        const p95 = gaps[Math.floor(gaps.length * 0.95)];
+        const worst = gaps[gaps.length - 1];
+        $("n8Out").textContent =
+            `${avg.toFixed(1)} / ${p95.toFixed(1)} / ${worst.toFixed(1)}ms (twin ${n8Twin ? "ON" : "off"}, ${gaps.length}f)`;
+    };
+    requestAnimationFrame(tick);
+});
+
+/* ---------- the in-page layer-contract lint (G8c)—the browser half of
+   lint-layer-contract.mjs. Run from the console: f5LintLayerContract().
+   Checks the FULL backdrop-root trigger enumeration on the region root
+   (filter-effects-2: filter, backdrop-filter, opacity<1, mask, clip-path,
+   blend, isolation:isolate, contain:paint, will-change of any), the plane
+   order + light-layer contract, the ONE-composite rule, tier distinctness,
+   and the medium writer claim (including that a rogue claim THROWS). ---------- */
+window.f5LintLayerContract = function f5LintLayerContract() {
+    const failures = [];
+    const no = (cond, msg) => { if (!cond) failures.push(msg); };
+    const region = $("region");
+    const cs = getComputedStyle(region);
+    no(cs.filter === "none", "region root carries filter");
+    no((cs.backdropFilter || cs.webkitBackdropFilter || "none") === "none", "region root carries backdrop-filter");
+    no(parseFloat(cs.opacity) === 1, "region root opacity < 1");
+    no((cs.maskImage || "none") === "none", "region root carries mask");
+    no(cs.clipPath === "none", "region root carries clip-path");
+    no(cs.mixBlendMode === "normal", "region root carries a blend mode");
+    no(cs.isolation !== "isolate", "region root carries isolation:isolate (backdrop-root trigger)");
+    no(!/paint/.test(cs.contain), "region root carries contain:paint (backdrop-root trigger)");
+    no(!/filter|opacity|mask|clip/.test(cs.willChange), "region root will-change names an effect");
+    // plane order: body planes precede light; light precedes content
+    const kids = [...region.children];
+    const lightIdx = kids.findIndex((k) => k.classList.contains("lens-light"));
+    const contentIdx = kids.findIndex((k) => k.classList.contains("tabs"));
+    no(lightIdx > -1 && contentIdx > lightIdx, "content does not follow the light layer in DOM order");
+    no(kids.slice(0, lightIdx).every((k) => !k.classList.contains("tabs")), "content precedes the light layer");
+    // light layer contract
+    const light = region.querySelector(".lens-light");
+    const ls = getComputedStyle(light);
+    no(light.getAttribute("aria-hidden") === "true", "light layer not aria-hidden");
+    no(ls.pointerEvents === "none", "light layer takes pointer events");
+    no(/layout/.test(ls.contain) && /paint/.test(ls.contain), "light layer lacks contain: layout paint");
+    no(ls.isolation === "isolate", "light layer lacks isolation:isolate (G8a)");
+    no(ls.mixBlendMode === "plus-lighter", "light layer lacks the plus-lighter composite");
+    no((ls.backdropFilter || ls.webkitBackdropFilter || "none") === "none", "light layer backdrop-samples");
+    // ONE composite: light children carry no blend of their own
+    [...light.querySelectorAll("*")].forEach((c) => {
+        no(getComputedStyle(c).mixBlendMode === "normal", `light child ${c.id || c.className} carries its own blend`);
+    });
+    // fence law: no filter inside the light layer unless the duel arm is armed
+    if (!$("goo").classList.contains("svg-arm")) {
+        [light, ...light.querySelectorAll("*")].forEach((c) => {
+            no(getComputedStyle(c).filter === "none", `compositor fence breached: filter on ${c.id || c.className}`);
+        });
+    }
+    // two-tier distinctness: a control never shares its container's surface
+    document.querySelectorAll('[data-tier="control"]').forEach((ctl) => {
+        const host = ctl.parentElement.querySelector('[data-tier="container"]') ||
+            ctl.closest('[data-tier="container"]');
+        if (!host) return;
+        const a = getComputedStyle(ctl), b = getComputedStyle(host);
+        no(a.backgroundColor !== b.backgroundColor ||
+            (a.backdropFilter ?? "") !== (b.backdropFilter ?? ""),
+            "control tier shares its container's surface");
+    });
+    // one-writer: every medium is claimed, and a rogue claim throws
+    document.querySelectorAll(".cc-medium").forEach((m) => {
+        no(!!m.dataset.writer, "medium has no claimed writer");
+        let threw = false;
+        try { claimMediumWriter(m, "rogue-" + Math.random()); } catch { threw = true; }
+        no(threw, "medium accepted a second writer (one-writer contract dead)");
+    });
+    const report = { pass: failures.length === 0, failures };
+    console.table(failures.map((f) => ({ failure: f })));
+    return report;
+};
 
 /* ---------- boot ---------- */
 addEventListener("resize", () => { if (!morph) measure(); });

@@ -160,3 +160,23 @@ recording), not merely "waiting on a burst" — the burst came and answered a di
 3. U11 (light-channel boundary) — the arbitration seat's, by design.
 4. U12/U13 — deferred/blocked as stated above, with owners.
 5. The F1×F3 merge question — round-2 arbitration, untouched here per the pass-1 disposition.
+
+---
+
+## RE-VERIFICATION STAMP (cure seat F3, 2026-07-18, verified-model claude-fable-5)
+
+Every claim above re-checked against the artifacts on disk this session, trusted from nothing:
+
+- Node battery re-run live: **19/19 gates PASS (+1 info)** — figures match the banked
+  PROBE-NOTES block (medium t90 73 ms, fade 165, geometry 642, beat 99, sub-sat 0.8333,
+  latch dev 0.0 peak 1.308, lens ratio 0.34).
+- G6 falsification INDEPENDENTLY REPRODUCED: per-frame direction inference restored in a
+  fresh scratchpad copy → the latch row FAILS at max dev 1.9e-1, peak 1.164 (18/19). The
+  gate bites; the claim was not taken from this ledger's own word.
+- `springPresets.ts` dock row re-read on disk: (0.30, ζ 0.82) at lines 95–99; the
+  per-primitive-default seam comment sits where §1 cites it.
+- SPEC-F3 §1/§2/§6/§7 amendments, the `/*F3-BANDS-BEGIN*/` block (index.html:487–511),
+  the paint-side sampling mode, PROBE-NOTES "PASS-2 SAFARI ARM" + "PASS-2 CURES", and
+  reverify-queue §F3 (4 rows, steps + acceptance numbers) — all present as stated.
+- MARKS PASS-2 CORRECTIONS C1–C7 and AGGLOMERATION §3-1/§3-4/§3-6/§4-4 — the citations
+  the spec leans on exist and say what the spec says they say.
