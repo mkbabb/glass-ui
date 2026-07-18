@@ -1,7 +1,9 @@
 # REFABLE RU-17b — round-1 residual lenses, second half (four opus artifacts)
 
 verified-model: claude-fable-5 (system-context model ID, returned verbatim)
-unit: RU-17b · date: 2026-07-18 · HEAD: 2df6a5a5
+unit: RU-17b · date: 2026-07-18 · HEAD: 2df6a5a5 · re-verified at 16e72a49 (delta = refable
+salvage docs only; spot-checks 1.2/2.2/2.3/2.6/4.1/4.5/4.7 + the crosswalk prose all re-confirm;
+roll-up tally corrected 22→23 — the enumerated rows were always 23)
 protocol: ANEW (opus unread, primary sources only) → SCRUTINY (assume-incorrect) → UNION
 (per-claim verdicts, ROUTING proposed only)
 
@@ -141,7 +143,7 @@ describes) drifted with the tree as counts do. No claim demoted.
 
 | tally | count | rows |
 |-------|-------|------|
-| RATIFIED | 22 | 1.1, 1.2, 1.3 · 2.0, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6 · 3.1, 3.2, 3.3, 3.4, 3.5 · 4.1-4.8 |
+| RATIFIED | 23 | 1.1, 1.2, 1.3 · 2.0, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6 · 3.1, 3.2, 3.3, 3.4, 3.5 · 4.1-4.8 |
 | OPUS-WRONG | 2 | 2.1b (FamilyTabs "7 routes" — 5, wrong at its own snapshot) · 3.2b (foundations "13 cards" — 12) |
 | FABLE-NEW | 5 | 1.2b (seed-omission mechanism inverted — the drop point is family→band drafting) · 2.4 rider (liquid-grid fix mooted by the REDUCTION W3 delete) · 3.x (aurora eager-chain composition: 277.7 KB / 36% of eager JS, dual GLSL+WGSL sets, zero dynamic seam) · 4.7 rider (radius comment rewritten yet still citing the absent gate as authority) · crosswalk "eight band specs" prose vs nine BAND files |
 
