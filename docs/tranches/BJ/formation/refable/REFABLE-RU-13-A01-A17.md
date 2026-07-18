@@ -45,7 +45,7 @@
 | A07 | all four COLO-1 move-targets live at HEAD; src root listing exact; backend N/A sound |
 | A08 | the spec-vs-implementation challenge gap correctly isolated (became the PLAN §3 law) |
 | A10 | BAND-MATERIAL W5 discharges A10 explicitly (line cites drifted by the applied amendments; content stands) |
-| A11 | atoms re-proven inert at HEAD (zero idle animation; every src "breath" hit is a padding metaphor); the MISSING verdict was TRUE at write and became J1 — the campaign headline |
+| A11 | atoms re-proven inert at HEAD (zero idle animation in the atom families — `button/` breath grep = 0; the src-wide `breath` vocabulary, 108 hits, lives in the procedural substrates the R3b check already credits, NOT in the atoms — corrected RU-14 R4); the MISSING verdict was TRUE at write and became J1 — the campaign headline |
 | A12 | dual engines at HEAD; `Blob.vue:~355` ambient+contact shadow pair; value.js `06929a4b` flat-HSV archaeology (PASS3 F1) |
 | A13 | 17 presets exact (`presets.ts:685-703`); per-mode GLSL bodies + the WGSL `applyMedium` alias (corroborated by the RU-13 F01-F10 re-proof) |
 | A14 | the paper-backdrop residue (became J9; disposition row live at `BAND-STORY.md:582-587`) |
@@ -123,3 +123,47 @@ listed both struck/renamed waves as owners. GF-AURORA widens W4 from the "PORT-o
 set `{}`" binary to the PORT/REAUTHOR-LEAN(default)/KILL fork (`GF-AURORA-PASS3.md:168-241`) and
 sets W5 at 17→11 elastic; the crayon-scope ASK is resolved-CUT, Q-AURORA-QUARTET the live ask.
 G-MODE-DISTINCT + the C-G binding survive unchanged—ownership verdicts stand.
+
+## RU-14 R3 addendum (2026-07-18, ring round 3 fix seat claude-fable-5)
+
+- **A09 ⟷ RF-5 cross-referenced in the dossier** (CRIT2-B MINOR-5 / pass-1 RU14-7):
+  `REFABLE-RF-5.md` OW-3/R-5 rules A09's terminal record is `CHRONIC-ADJUDICATION.md`
+  (formation-terminal) from the same evidence this sidecar's FLIP-1 uses to ask for a
+  charter-or-distribute ruling — two dispositions, one decision; the dossier's A09 row now
+  carries the rider and the lead rules them together. FLIP-1's re-judge scope is unchanged.
+- **A16 scoped with the OW-1 rider in the dossier**: the EXACT-AT-CROSSWALK-LAYER verdict
+  certifies row-membership only — RF-5 OW-1 proved the standing reconciled COUNTS line
+  arithmetically false (`ASSEMBLY-CROSSWALK.md:231-233`: 50+5+3+10 = 68 ≠ 67; honest partition
+  50/5/2/10). A16's zero-silent-drop / 67-row / 0-orphan substance survives; the COUNTS
+  re-tally is RF-5 R-1's pending lead-side edit.
+- **A05's count base stated** (CRIT2-B MINOR-4): 66 component dirs, 68 entries counting
+  `PROCEDURAL-SUITE.md` + `index.ts` — re-counted on disk this seat (`find -maxdepth 1`).
+
+## RU-14 R4 addendum (2026-07-18, ring round 4 fix seat claude-fable-5)
+
+- **A11's src-wide breath sentence corrected (CRIT3-B CRIT3B-1 cured — the one R4 MAJOR in
+  this scope).** "Every 'breath' grep hit in `src/` is a padding metaphor, not motion" was
+  FALSE at HEAD and at every prior pass: `grep -rin breath src/` = 108 hits, dozens of them
+  MOTION registers (aurora `still|breathing|drifting` + `breathDepth`/`breathPeriod`, the
+  blob's `fn breath()`, LiquidGrid, `useWatercolorBlob.ts:38`, `waveField.ts:352`) — exactly
+  the live substrate fields the row's own check line credits. Rewritten in the dossier
+  CORRELATION and this file's ratified-table row; the A11 SUBSTANCE stands unchanged
+  (`button/` breath grep = 0, the atoms ARE inert, J1/`BJ.W-IDLE-BREATH` unaffected — no
+  verdict movement).
+- **A13's presets cite full-pathed (CRIT3B-3 cured).** The "each authors its own body" comment
+  lives at `src/components/aurora/constants/presets.ts:73-78`, not in the demo roster file the
+  same row pins at `:685-703`; the dossier cite now carries the full path (the sibling F01-F10
+  sites cured in the same round under CRIT3-A R3A-3).
+- **FLIP-2's ownership gap narrowed in flight (CRIT3B-4 recorded, rider landed).** The
+  working-tree `BAND-DOC-TRUTH.md:133-134` (RU-03 union, UNCOMMITTED) routes the
+  PROCEDURAL-SUITE.md LiquidGrid truth-up to `BAND-REDUCTION` W3 scope, citing RU-13 FLIP-2
+  by name. Routed-but-not-yet-CHARTERED: W3's charter text still carries zero PROCEDURAL-SUITE
+  mention (grep re-run R4). The dossier A14 NEW-FINDING paragraph now carries the dated rider;
+  FLIP-2's residue = the W3 charter line + confirming the routing survives the RU-03 commit.
+- **The A09 rider's "grep-zero in PLAN and all nine bands" softened (CRIT3B-5 recorded, rider
+  landed).** The working-tree `BAND-DOC-TRUTH.md:121` row T40 (same RU-03 union, UNCOMMITTED)
+  now tracks the `CHRONIC-ADJUDICATION.md:5` phrase, deferring disposition to FLIP-1 — so the
+  bare grep-zero claim no longer holds on the tree a lead would read. The dossier rider now
+  reads "no band CHARTERS the wave" (which stays true: T40 is a phrase-correction row, not a
+  charter); this file's §FLIPS formulation ("all nine band files carry NO such wave") already
+  used the charter sense and stands.

@@ -313,8 +313,9 @@ no screenshot.
 mechanically one body on the PRIMARY engine — `applyMedium`
 (`src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:387-403`) routes mediums 3/5/6/7
 (oil, van-Gogh, oil-pastel, kuwahara) ALL to `mediumKuwahara` on WGSL; the distinct per-dab bodies
-live only on the WebGL2 fallback (the file's own comment says so). The `presets.ts:73-77`
-"first-class mediums, no shared dispatch" comment describes the fallback arm — no contradiction. The
+live only on the WebGL2 fallback (the file's own comment says so). The
+`src/components/aurora/constants/presets.ts:73-78` "first-class mediums, no shared dispatch"
+comment describes the fallback arm — no contradiction. The
 user's near-identity verdict is mechanically TRUE on the WebGPU primary. **LIVE-DEFER:** the
 perceptual near-identity of the smooth-preset clusters is a paint judgment; the WGSL aliasing is not
 (it is a literal zero descriptor distance).
@@ -431,7 +432,7 @@ cut with GATES W4 (RULING 2). **LIVE-DEFER:** the ≥3-rung after-read is W3's �
 | F05 | yes | `rail.vue:142-189` postures (page disambiguated vs overview's DockStage) | GF-DOCK W2/W6 + STORY W1 (J2 applied) | RATIFIED · PARTIAL→EXACT-AT-HEAD |
 | F06 | no (URL) | `routeTransition.ts` VT swap + `router.ts:121-130` + DockCrossfade floor | PERF W4 + GF-DOCK W6 | RATIFIED |
 | F07 | no (URL) | the same atomic keyed swap, story-wide | PERF W4 (outright owner) | RATIFIED |
-| F08 | no (URL) | 17 presets + the WGSL 3/5/6/7→Kuwahara alias (re-proven) | GF-AURORA W1-W5 under C-G/C-H—17→11 elastic, three-arm W4, Q-AURORA-QUARTET the live ask (RU-14 refresh) | RATIFIED |
+| F08 | no (URL) | 17 presets + the WGSL 3/5/6/7→Kuwahara alias (re-proven) | GF-AURORA W1-W5 under JUDGE C-G (`JUDGE.md:94`) / SUPERFLUITY C-H (`SUPERFLUITY.md:674-681`)—17→11 elastic, three-arm W4, Q-AURORA-QUARTET the live ask (RU-14 refresh) | RATIFIED |
 | F09 | yes | `AuroraColorSection.vue:163-238` + configurator chassis | STORY W3 (J10 applied) + MATERIAL W1 | RATIFIED · PARTIAL→EXACT-AT-HEAD |
 | F10 | yes | `StorySection.vue:31-32` + `sizing-config.css:35` (two sites) | STORY W3 + MATERIAL W6 | RATIFIED |
 
@@ -445,7 +446,7 @@ historical delta texts are superseded by the band text and are not reproduced he
 
 Six recorded FLIPs plus one routing item age un-judged across the three RU-13 dossiers, and the
 three later unions (RU-05/RU-07/RU-09) landed without consuming any—JUDGE.md's "zero floating
-notes remain" is falsified. This range carries two of the seven:
+notes remain" is falsified. This range carries two of the ten:
 
 - **D2-3 (this range, sidecar FLIP-1).** GF-DOCK-PASS3 at HEAD still lacks the `rail.vue:108-140`
   baseline-π anchor and the 3-value `shape`-axis ruling for W5's shape grammar (the file carries
@@ -454,8 +455,10 @@ notes remain" is falsified. This range carries two of the seven:
   default-paint probe "the F04 shape"—the F04 screenshot shows a dock, not a Card; the linkage is
   to the ORDER, not the image.
 
-The full seven-item docket lives in `DOSSIER-F11-F20.md` §JUDGE-2 docket. Asked of the lead: one
-consolidated JUDGE-2 pass (J12+) ruling all seven, then an APPLYLOG-mirrored application pass.
-JUDGE.md/APPLYLOG/band edits are the lead's—outside this fix seat's write fence.
+The full ten-item docket lives in `DOSSIER-F11-F20.md` §JUDGE-2 docket (seven at RU-14 pass 1;
+rows 8-10—D2-F23, the RU-09 F33 goo-clone migration, the crosswalk F34-F40 handmark rows—seated
+RU-14 R3). Asked of the lead: one consolidated JUDGE-2 pass (J12+) ruling all ten, then an
+APPLYLOG-mirrored application pass. JUDGE.md/APPLYLOG/band/crosswalk edits are the lead's—outside
+the fix seats' write fence.
 
 *End — REFABLE RU-13 union dossier, rows F01–F10. One file, no `src/`/`demo/` edits.*

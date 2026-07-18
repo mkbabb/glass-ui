@@ -181,9 +181,11 @@ eyebrow (`INFINITE SCROLL`) incidentally exhibits the typography half's target i
   control the library ships, against F14's own dogfood mandate.
 - Grand rounding: the role canon at `src/styles/theme/radius.css` + the raw-literal sites
   `SortableList.vue:144` (`999px`), `tabs/styles/segmented.css:169,:306` (raw rem) — all verified.
-- Grand typography: the unreset Tailwind ramp + the `text-sm`/`text-xs` sites (band count 251; the
-  true-run word-boundary re-count at HEAD is **234** post-demeta — naive greps inflate on
-  `text-small`; re-count at wave time) + the mono-caption idiom.
+- Grand typography: the unreset Tailwind ramp + the `text-sm`/`text-xs` sites (band count 251 =
+  218 demo + `src` ×19 + 9 arbitrary `text-[…]` per `BAND-MATERIAL.md:588-592`'s own decomposition
+  — a sum of 246, so the lead re-DERIVES the W6 figure at wave time rather than substituting a
+  slice count; the filtered HEAD re-count of the `text-sm`/`text-xs` slice ALONE is **234**
+  (218+16) — see FLIP F-3 in the sidecar) + the mono-caption idiom.
 
 **POST-MORTEM.** Unenforced token canon on two axes: a rich radius role vocabulary exists but
 nothing lints raw radius utilities; the `@theme` bridge adds √φ rungs without resetting Tailwind's
@@ -218,8 +220,10 @@ composes `ContinuousRail` + `ContinuousMarkers`. All five variant SFCs are LIVE 
 one exported surface; the demo (`timeline.vue:5` + both body SFCs, `GlassTimeline` imports only)
 exercises three registers THROUGH the facade. What does re-prove: `README.md` §Exports lists
 Continuous/Rail/Markers/Scrubber/Segmented as exports — false at HEAD, a real doc-truth violation
-(still unnamed in `BAND-DOC-TRUTH` — lead routing owed); the tests import `GlassTimeline` only
-(`continuous-structural-split.test.ts:4`; `ContinuousMarkers` appears in a comment at `:226`, not
+(routed: `BAND-DOC-TRUTH.md:94` row T33 carries the truth-up, seated by the concurrent REFABLE
+RU-03 union — working-tree, UNCOMMITTED at RU-14 R4; residue: confirm T33 survives the RU-03
+commit); the tests import `GlassTimeline` only
+(`tests/components/custom/timeline/continuous-structural-split.test.ts:4`; `ContinuousMarkers` appears in a comment at `:226`, not
 an import). The "buggy" verdicts at `/data/timeline` are paint/interaction claims: **LIVE-DEFER**
 (the design-loop's captured RED baseline owns them).
 
@@ -421,19 +425,26 @@ union records the closure.
 
 **Totals: EXACT 9 / PARTIAL 1 / MISSING 0.** Open items for the lead: the F17 FLIP (RULING 8's
 disk-premise false — posture reverts to fix), the F13 Δ-F13-1 judge-omission (unruled residue),
-and the F16 timeline-README doc-truth routing (README §Exports lists five never-shipped exports;
-unnamed in `BAND-DOC-TRUTH`). All detailed in `../refable/REFABLE-RU-13-F11-F20.md`.
+and the F16 timeline-README doc-truth routing — CONSUMED-BY-T33 (`BAND-DOC-TRUTH.md:94`, the
+RU-03 union, uncommitted at RU-14 R4; residue: confirm T33 survives the commit). All detailed in
+`../refable/REFABLE-RU-13-F11-F20.md`.
 
 ---
 
-## JUDGE-2 docket (appended RU-14, 2026-07-18 — the consolidated seven)
+## JUDGE-2 docket (appended RU-14, 2026-07-18 — the consolidated ten; rows 8-10 seated RU-14 R3)
 
-Six recorded FLIPs plus one routing item age un-judged, and three later unions
+Six recorded FLIPs plus one routing item age un-judged; three later unions
 (RU-05/RU-07/RU-09) landed without consuming any—JUDGE.md's "zero floating notes remain" is
-falsified. Every item below was re-verified live at HEAD (117b7f12) by this pass. Asked of the
-lead: ONE consolidated JUDGE-2 pass (J12+) ruling all seven, then an APPLYLOG-mirrored
-application pass. The JUDGE.md/APPLYLOG/band/greenfield edits are the lead's—outside this fix
-seat's write fence (DOSSIER-* + REFABLE-RU-13-* only).
+falsified—and a FOURTH (the REFABLE RU-03 doc-truth union, working-tree/uncommitted at RU-14
+R4) has since CONSUMED row 7 (see the row). Rows 1-7 were re-verified live at HEAD (117b7f12) by the RU-14 pass-1 fix seat; rows
+8-10 (seated R3) consolidate the three items the pass-2 critiques proved stranded outside this
+table (D2-F23; the RU-09 F33 goo-clone migration; the crosswalk F34-F40 handmark rows). Asked of
+the lead: ONE consolidated JUDGE-2 pass (J12+) ruling all ten, then an APPLYLOG-mirrored
+application pass. The JUDGE.md/APPLYLOG/band/greenfield/crosswalk edits are the lead's—outside
+the fix seats' write fence (DOSSIER-* + REFABLE-RU-13-* only). Label note (R3): post-RU-09 the
+JUDGE C-* labels and the on-disk `SUPERFLUITY.md` C-A..C-I labels collide on five of seven—any
+J12+ text citing a C-label must pin doc + line (the pattern already used below: "C-G at
+`SUPERFLUITY.md:668-672`").
 
 | # | item | source | state at HEAD |
 |---|------|--------|---------------|
@@ -443,4 +454,7 @@ seat's write fence (DOSSIER-* + REFABLE-RU-13-* only).
 | 4 | **BAND-REDUCTION mislabels the Card probe "the F04 shape"** | F01-F10, FLIP-2 | `BAND-REDUCTION.md:33-37`/`:240` unchanged; the linkage is to the F04 ORDER, not the screenshot |
 | 5 | **FM-W3 gate (b) letter-satisfiable**—Skeleton reads a defined token, the WRONG 5s brand-metal rung; Δ-F24-1's period-VALUE + rung-BINDING reshape unapplied | F21-F30, FLIP-1 | `BAND-FEEDBACK-MOTION.md` W3 gate (b) unchanged |
 | 6 | **GF-DOCK §4.1 RED rationale + the false `overflow.css:65-66` "clip" comment stand**—the real mechanism is the visible→auto computed coercion (Δ-F27-1) | F21-F30, FLIP-2 | §4.1 still cites the block-overflow measure; the source comment unchanged; unconsumed by RU-05 |
-| 7 | **Timeline README §Exports drift unnamed**—five documented exports absent from `index.ts` | this range, routing item | zero `timeline` hits in `BAND-DOC-TRUTH.md`; route there or to the W5 stub |
+| 7 | **Timeline README §Exports drift — CONSUMED-BY-T33** (was: unnamed; five documented exports absent from `index.ts`) | this range, routing item (consumed RU-14 R4) | `BAND-DOC-TRUTH.md:94` row T33 now carries the truth-up ("REDUCTION W5's stub supersedes on arrival"; provenance cell cites the RU-13-F11-F20 routing) — written by the concurrent REFABLE RU-03 union, working-tree UNCOMMITTED (the last commit touching the file, `4ab12128`, has zero `timeline` hits); residue: confirm T33 survives the RU-03 commit |
+| 8 | **D2-F23: the RU-09 C-G value-marks fold + the track-well path split un-chartered**—the value-mark checkpoint paint (~65 lines, Slider + Progress) is a second true fold `BJ.W-TRACK-DRY` W4 never scoped; charter it into W4 or rule it out, then reconcile the path (`src/styles/glass/track-well.css` vs `_shared/track.css`); F23's ONLY restoration path to EXACT | F21-F30, §JUDGE-2 docket D2-F23 (row seated R3—the seven-billed/eight-minted count defect cured) | C-G at `SUPERFLUITY.md:668-672`; `BAND-MATERIAL.md` value-mark grep = 0 file-wide; the charter paths stand split (`SUPERFLUITY.md:227` vs `BAND-MATERIAL.md:433/:476`) |
+| 9 | **The RU-09 F33 goo-clone migration OWNERLESS**—widen `BJ.W-PAGER-DOT-MORPH` (or BAND-REDUCTION) to carry the stage-goo clone deletion (`useDeckGoo.ts` + `gooBarbellGeometry.ts` + `DeckGooFilter.vue` + the goo CSS + `DeckGoo.private.test.ts`) explicitly, and refresh the ASK §C1/§C3 recommendation text to the RU-09 verdict | F31-F40, F33 REDRESS + sidecar (row seated R3—both texts pointed here while no row existed) | `PagerDots.vue:326` ≡ `DeckGooFilter.vue:26` (byte-identical path data); J3's W6 sequences only the `DeckPager.vue` cut (`BAND-FEEDBACK-MOTION.md:130-148`); no wave carries the clone deletion |
+| 10 | **ASSEMBLY-CROSSWALK rows :56-62 (F34-F40) still cite the retired pre-RU-06 GF-HANDMARK charter**—`G-CONTAIN`/`G-DRAW-CONNECTED`/`G-RING-LAYER` grep-zero in the RU-06 charter, "register 7→3 brushes" false (the register is ONE pen voice); stamp the rows with a dated read-through-RU-06 note (mirroring the dossier's range-header table) or append a §Judgment-corrections item | F31-F40 range header (RU14-1's crosswalk half—outside the pass-1 write fence, deferral previously unrecorded; owned here R3) | rows unchanged at HEAD; §Judgment corrections (`ASSEMBLY-CROSSWALK.md:237+`) carries no RU-06 item; the live wave map is `GF-HANDMARK-PASS3.md:208-211` (W1 THE-VOICE … W4 THE-STORY) |

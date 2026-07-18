@@ -125,7 +125,9 @@ substance RATIFIED; the delta was ruled no-further-owner, so the union verdict i
 
 ## A05 — component DAG + ruthless reduction to the core
 
-**CORRELATION.** All of `src/components/` (68 dirs at HEAD — the purge has NOT executed yet:
+**CORRELATION.** All of `src/components/` (66 component dirs at HEAD — 68 entries counting the 2
+files, `PROCEDURAL-SUITE.md` + `index.ts`; counting base stated per RF-1 — the purge has NOT
+executed yet:
 `instrument-chassis`, `metric`, `completion-seal`, `liquid-grid` all still present, consistent with
 tranche-dev-only posture). The DAG is drawn twice: `perfection/FABLE-DAG-REDUCTION.md` + the built
 `component-graph/{component-graph.json,duplication-candidates.md,role-census.md}`.
@@ -229,6 +231,16 @@ its rows explicitly into named bands) + adopt RF-4's amendment (rows 29/31/33/34
 discharge-verify; the regrowth roster gets an owner). **VERDICT vs OPUS ROW:** exemplar RATIFIED;
 the owner claim OPUS-WRONG (overclaim). Verdict: EXACT → **PARTIAL (owner-phantom; lead re-judges)**.
 
+**RU-14 R3 rider — reconcile with RF-5.** `REFABLE-RF-5.md` OW-3/R-5 reaches the same evidence
+from the crosswalk side (`REGISTRY.md:174` + `CHRONIC-ADJUDICATION.md:5`; no band CHARTERS the
+wave — RU-14 R4: the working-tree `BAND-DOC-TRUTH.md:121` row T40, RU-03 union/UNCOMMITTED, now
+tracks the `:5` phrase itself, deferring its disposition to FLIP-1, so a bare "grep-zero in all
+nine bands" no longer holds) but rules the OPPOSITE terminal record: A09's landing is `CHRONIC-ADJUDICATION.md`
+itself (formation-terminal — "the named landing vehicle was never drafted and will never
+execute"), where this dossier's FLIP-1 asks the lead to charter the DECIDED-rows wave or
+distribute its rows. Same facts, two dispositions — they are ONE lead decision; rule them
+together, not separately.
+
 ---
 
 ## A10 — aristotelian proportion audit (mark superfluous + converse)
@@ -250,8 +262,12 @@ drifted from the applied amendments; content stands). **VERDICT vs OPUS ROW:** R
 
 ## A11 — "what of our breath of life" (the engagement standing check)
 
-**CORRELATION.** The inert atoms at HEAD: `src/components/button/` (zero idle animation — re-proven;
-every "breath" grep hit in `src/` is a padding metaphor, not motion), the collapsed dock pill,
+**CORRELATION.** The inert atoms at HEAD: `src/components/button/` (zero idle animation —
+re-proven; `button/` breath grep = 0. The src-wide `breath` vocabulary — 108 hits at HEAD — is
+NOT padding metaphor: it lives overwhelmingly in the procedural substrates the R3b check already
+credits as satisfying the edict — aurora's `still|breathing|drifting` registers +
+`breathDepth`/`breathPeriod`, the blob's de-synced `fn breath()` pulse, LiquidGrid's breathing
+sheet, the waveField swell; the ATOM families carry none of it), the collapsed dock pill,
 `src/components/slider/` at rest. The check itself: `round-3-live/R3B-DIGEST.md` (the presence/
 absence table — only looping-progress + the live substrate fields satisfy the edict).
 
@@ -304,8 +320,8 @@ Verdict: **EXACT**.
 (`demo/stories/substrates/aurora/presets.ts:685-703`, SETTING_SUN…SPEEDTEST); per-mode GLSL bodies
 exist (`vangogh-medium.glsl.ts`, `oil-modes.glsl.ts`, `mediums.glsl.ts`) while the WGSL arm aliases
 four painterly mediums onto one Kuwahara body (`aurora-mediums.wgsl.ts:387-403` `applyMedium` —
-re-proven by the RU-13 F01-F10 pass; the `presets.ts:73-77` "each authors its own body" comment
-describes the WebGL2 arm only).
+re-proven by the RU-13 F01-F10 pass; the `src/components/aurora/constants/presets.ts:73-78`
+"each authors its own body" comment describes the WebGL2 arm only).
 
 **POST-MORTEM.** Modes were named before they were authored: on the primary (WGPU) arm the
 differentiation is palette-skin over a shared body — the user's "almost identical" is mechanically
@@ -339,10 +355,13 @@ routing paper-backdrop into REDUCTION's ≥2-consumer census.
 
 **NEW FINDING (this pass).** `PROCEDURAL-SUITE.md` lists **six retained** procedural surfaces
 INCLUDING LiquidGrid — but `BAND-REDUCTION` W3 deletes liquid-grid outright (zero consumers,
-`ADJUDICATION-1.md:9`, re-proven). No wave owns the suite doc's truth-up (zero hits in `waves/`;
-not among DOC-TRUTH W1's seven targets; FABLE-COLOCATION flags it only as a loose-doc placement,
-P5). When W3 lands, the codification surface goes stale unowned — flagged in the sidecar FLIPS for
-the lead (cheapest cure: name the edit in W3's scope).
+`ADJUDICATION-1.md:9`, re-proven). At write, no wave owned the suite doc's truth-up (zero hits in
+`waves/`; not among DOC-TRUTH W1's seven targets; FABLE-COLOCATION flags it only as a loose-doc
+placement, P5). RU-14 R4 rider: the working-tree `BAND-DOC-TRUTH.md:133-134` (RU-03 union,
+UNCOMMITTED) now records the edit as "routed to `BAND-REDUCTION` W3 scope (RU-13 FLIP-2, cheapest
+cure)" — routed-but-not-yet-CHARTERED: W3's own charter text still carries zero PROCEDURAL-SUITE
+mention (grep re-run R4). FLIP-2's residue narrows to the W3 charter line + confirming the routing
+survives the RU-03 commit — flagged in the sidecar FLIPS for the lead.
 
 **REDRESS + OWNERS.** Blob/aurora/handmark → their greenfields; dock → GF-DOCK;
 fourier/constellation/watercolor → ASK §B2/B3/B5 with the knob-retire floor; liquid-grid → REDUCTION
@@ -393,6 +412,13 @@ FLIPS) + the REFABLE campaign as the standing audit of the audit. **VERDICT vs O
 RATIFIED; the EXACT verdict narrows — the fam-I compile-layer breach is real. Verdict: EXACT →
 **EXACT-AT-CROSSWALK-LAYER (fam-I residue rides RF-4)**.
 
+**RU-14 R3 rider — the OW-1 scope limit.** This verdict certifies row-membership accounting only
+(67 rows, 0 ORPHAN, zero silent drops — all of which survive), NOT the crosswalk's reconciled
+COUNTS line: `REFABLE-RF-5.md` OW-1 proved that line arithmetically false at
+`ASSEMBLY-CROSSWALK.md:231-233` (50+5+3+10 = 68 ≠ 67; the honest partition is 50/5/2/10, and
+"V-A95-class rows" is a category error — V-A95 is a §Known-carry defect, not a ledger row). The
+re-tally is RF-5 R-1's pending lead-side edit; read this row no wider than its layer.
+
 ---
 
 ## A17 — story/preview slow-load-stutter (perf as a first-class lens)
@@ -427,7 +453,7 @@ post-fix deltas are trace-captured obligations. **VERDICT vs OPUS ROW:** RATIFIE
 | A02 | ios27 corpus → MARKS/CODEX | EXACT-VIA-RU-15 | delivered (RU-15 union stamped) | census RATIFIED; Fable claim OPUS-WRONG |
 | A03 | codex + MATERIAL W5 + GF loops | EXACT | IOS27-CODEX · BJ.W-ARISTOTLE-PROPORTION · GF CRIT loops | RATIFIED (model caveat) |
 | A04 | formation docs (distributed) | DISCHARGED-BY-RULING | none needed (J11) | RATIFIED; delta ruled closed |
-| A05 | 68-dir surface + the double DAG | EXACT | BAND-REDUCTION W1-W5 + ASK-REDUCTION | RATIFIED; fan-in numbers corrected (RF-1) |
+| A05 | 66-dir (68-entry) surface + the double DAG | EXACT | BAND-REDUCTION W1-W5 + ASK-REDUCTION | RATIFIED; fan-in numbers corrected (RF-1); count base stated (R3) |
 | A06 | stories/manifest (no pageType at HEAD) | OWNED (ASK-gated rider) | BAND-STORY W1-W6 + scroll-collapse wave (J11) | RATIFIED; residue owned |
 | A07 | 4 move-targets live at HEAD | EXACT | BJ.W-COLO-1/2/3 (W2 rides 8.0.0) | RATIFIED in full |
 | A08 | challenge machinery | OWNED | PLAN §3 law (J11) | RATIFIED; residue owned |

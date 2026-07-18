@@ -13,8 +13,9 @@
   `aurora-mediums.wgsl.ts`, the two preset rosters), PLAN.md + BAND-STORY/PERF/REDUCTION +
   GF-DOCK/GF-AURORA PASS3. The opus dossier was opened only after the per-row correlations were
   fixed. Under assumed-wrong scrutiny its file:line cites kept re-proving TRUE; the boundary moment
-  was the WGSL `applyMedium` re-proof (the claim most likely fabricated — `presets.ts:73-77` reads
-  contrary — re-proven EXACT at `aurora-mediums.wgsl.ts:387-403`), after which remaining cites were
+  was the WGSL `applyMedium` re-proof (the claim most likely fabricated —
+  `src/components/aurora/constants/presets.ts:73-78` reads contrary — re-proven EXACT at
+  `aurora-mediums.wgsl.ts:387-403`), after which remaining cites were
   spot-verified rather than presumed false. The one standing substantive error found: F04's
   section/silhouette anchor.
 - **Tree parity**: `55f5170d..HEAD(4757315a)` carries **zero `src/`/`demo/` commits** — both passes
@@ -40,7 +41,7 @@
 | F05 | postures grid `rail.vue:142-189`; exactly ONE `<Aurora>` on the page at `:69` behind a different section; the DISAGREE-vs-CLEARED-by-R3b stance (vindicated as J2) |
 | F06 | `router.ts:121-130` blocking beforeResolve; `AppShell.vue:201-203` bare keyed swap; `:59`/`:192` missing-affordance comments; R3a min-ch ≤9/255 + 186ms cold (`REGISTRY.md:295-297`); crosswalk CLEARED `:28` |
 | F07 | PERF W4 the outright F07 owner (PLAN §1 verbatim); the keyed-swap anti-pattern |
-| F08 | **the WGSL alias**: `applyMedium` routes mediums 3/5/6/7 → `mediumKuwahara` (`aurora-mediums.wgsl.ts:387-403`); 17 presets incl. `SPEEDTEST` (`presets.ts:685-703`); GF-AURORA W1-W5 + the C-G discharge binding. The `presets.ts:73-77` "each authors its own body" comment describes the WebGL2 fallback arm — no contradiction |
+| F08 | **the WGSL alias**: `applyMedium` routes mediums 3/5/6/7 → `mediumKuwahara` (`aurora-mediums.wgsl.ts:387-403`); 17 presets incl. `SPEEDTEST` (`presets.ts:685-703`); GF-AURORA W1-W5 + the C-G discharge binding. The `src/components/aurora/constants/presets.ts:73-78` "each authors its own body" comment describes the WebGL2 fallback arm — no contradiction |
 | F09 | `Configurator.vue:211` `--radius-ctx: var(--radius-panel)` (+`rounded-panel = --radius-xl` `:146`); the concentric relay `styles.css:109-113`; the inner-pill vs outer-card read; J5's regression-guard class membership |
 | F10 | `StorySection.vue:31-32` single-rung h2; `sizing-config.css:35` `--configurator-section-size = --type-subheading` 20.4px ~4px above field labels; the two-site diagnosis; routing STORY W3 + MATERIAL W6 |
 
@@ -152,3 +153,25 @@ opened only after the per-row correlations were fixed. Findings:
   `../redress/DOSSIER-F11-F20.md` §JUDGE-2 docket): GF-DOCK-PASS3 at HEAD still lacks the
   `rail.vue:108-140` baseline-π + `shape`-axis ruling; BAND-REDUCTION `:33-37`/`:240` still label
   the Card probe "the F04 shape".
+
+## RU-14 R3 addendum (2026-07-18, ring round 3 fix seat claude-fable-5)
+
+- **The consolidated JUDGE-2 docket is TEN items, not seven** (rows 8-10 seated R3: D2-F23
+  value-marks, the RU-09 F33 goo-clone migration, the ASSEMBLY-CROSSWALK F34-F40 handmark rows;
+  full table in `../redress/DOSSIER-F11-F20.md`). This dossier's §JUDGE-2 count language updated
+  to match — its two rows (D2-3/D2-4) are unchanged. Cures RU14-CRIT2-A MAJOR-1's silent-drop
+  class: a lead executing "rule all seven" would have dropped the F23 re-open.
+
+## RU-14 R4 addendum (2026-07-18, ring round 4 fix seat claude-fable-5)
+
+- **The F08 presets-comment cite full-pathed (CRIT3-A R3A-3 cured).** The "first-class
+  mediums… no shared dispatch" comment lives at
+  `src/components/aurora/constants/presets.ts:73-78` (re-verified on disk this seat), NOT in
+  the demo preset roster the surrounding rows pin (`demo/stories/substrates/aurora/presets.ts`,
+  whose `:73-77` are OKLCH color stops). All three corpus sites (dossier F08 body + this
+  file's boundary-moment line + the F08 ratified-table row) now carry the full path; the span
+  corrected :73-77 → :73-78 (the comment's six lines).
+- **The F08 summary-row C-labels pinned (CRIT3-A R3A-5 cured).** The dossier docket row now
+  reads "under JUDGE C-G (`JUDGE.md:94`) / SUPERFLUITY C-H (`SUPERFLUITY.md:674-681`)" —
+  disambiguating the colliding C-label vocabularies per the JUDGE-2 docket's label note
+  (JUDGE-C-G = the F08 binding; SUPERFLUITY-C-G = the F23 dispute; C-H SUPERFLUITY-only).

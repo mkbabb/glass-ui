@@ -25,17 +25,18 @@ were read during ANEW as reconciliation targets (they are plan, not the artifact
 | F12 | **RATIFIED + SHARPENED** | radius role-correct on disk at HEAD and in the v7.0.0 cut (re-run `git show`); `:61` = delete button, chip via `<Chip>` (`TagsInputItem.vue:23`); guard posture per the lead amendment holds. FABLE-NEW: v6.0.0 wore `rounded-input` (10px) — BOTH serve-range endpoints paint rounded, so square paint requires a var-resolution/paint-only failure, not mere staleness. Paint: LIVE-DEFER |
 | F13 | **RATIFIED** | anchors `:69,:109,:76,:117,:143` + `SortableList.vue:144` (999px) verified; the Δ-F13-1 judge-omission independently confirmed — zero F13 rows in J1-J11 and zero in APPLYLOG (see FLIP F-2) |
 | F14 | **RATIFIED** | `SectionLanding.vue:33`/`CatalogLanding.vue:32` fixed grids verified; W6 first-class owner; execution LIVE-DEFER by construction |
-| F15 | **RATIFIED + truth-up** | `rounded-md` at `infinite-scroll.vue:74` RED at HEAD; `segmented.css:169` (0.3125rem) `:306` (0.25rem) verified; dogfood-`<Button>` sharpening kept. FABLE-NEW: word-boundary `text-sm`/`text-xs` count at HEAD is **234** (the band's 251 drifted post-demeta; naive greps inflate on `text-small`) |
-| F16 | **OPUS-WRONG ×3 — prior layer OVERTURNED** | the prior pass's "four of five variants are in-repo dead code / unconsumed by any src/demo file / sole reference one test" claims are FALSE: `GlassTimeline.vue:2-4` is a mode facade importing + delegating to Scrubber/Segmented/Continuous; `ContinuousTimeline.vue:3-4` composes Rail+Markers; the test imports GlassTimeline (`continuous-structural-split.test.ts:4`), ContinuousMarkers appears only in a comment (`:226`). KEPT (re-proven): index exports only GlassTimeline+types; README §Exports lists five never-shipped exports (real doc-truth violation, unnamed in BAND-DOC-TRUTH); single-external consumer (speedtest `PhaseTimeline.vue:49`; `MeterColumn.vue` comments only); owner + A2 all-five scope. Post-mortem recut: facade-mode overfit, not dead-variant accretion |
+| F15 | **RATIFIED + truth-up** | `rounded-md` at `infinite-scroll.vue:74` RED at HEAD; `segmented.css:169` (0.3125rem) `:306` (0.25rem) verified; dogfood-`<Button>` sharpening kept. FLIP F-3 (refiled RU-14 R3): the type-site count at HEAD is **234**, contradicting the band's standing 251 — method + routing in §FLIPS |
+| F16 | **OPUS-WRONG ×3 — prior layer OVERTURNED** | the prior pass's "four of five variants are in-repo dead code / unconsumed by any src/demo file / sole reference one test" claims are FALSE: `GlassTimeline.vue:2-4` is a mode facade importing + delegating to Scrubber/Segmented/Continuous; `ContinuousTimeline.vue:3-4` composes Rail+Markers; the test imports GlassTimeline (`continuous-structural-split.test.ts:4`), ContinuousMarkers appears only in a comment (`:226`). KEPT (re-proven): index exports only GlassTimeline+types; README §Exports lists five never-shipped exports (real doc-truth violation; routed at RU-14 R4 — CONSUMED-BY-T33, `BAND-DOC-TRUTH.md:94`, RU-03 union/uncommitted); single-external consumer (speedtest `PhaseTimeline.vue:49`; `MeterColumn.vue` comments only); owner + A2 all-five scope. Post-mortem recut: facade-mode overfit, not dead-variant accretion |
 | F17 | **RATIFIED — FLIP CONFIRMED** | the born-RED mechanism was re-derived at ANEW before the boundary, independent of the prior text; the OVERTURN of RULING 8's premise stands (FLIP F-1) |
 | F18 | **RATIFIED** | census re-verified by fresh read-only sibling greps: speedtest instrument-chassis multi-site, muster ×5 files, fourier-analysis metric-badge ×7 files; ASK-REDUCTION §A1 present with the SHARED-KEEP recommendation; W4 ASK-gated relay posture holds |
 | F19 | **RATIFIED** | `rounded-lg` → `--radius-lg` → `--radius` = 10px (radius.css:16,:31); `--glass-blur-wash-radius: 1px` (tokens/glass.css:86); `6f77ab12` tone-fold real; owner W4 + crosswalk reconciliation :213-216 verified. Paint severity: LIVE-DEFER |
 | F20 | **RATIFIED** | `ef3ea646` (BI B7) in v7.0.0 by `merge-base`; toast rides transient `glass-reveal` (`Toast.vue` + `transitions.css:87-112`); dialog registers at `DialogContent.vue:235,:458`; J4 applied verbatim at `BAND-FEEDBACK-MOTION.md:41-47`. The parity judgment: LIVE-DEFER (OPEN-FM-1) |
 
-Counts: **OPUS-WRONG 3** (all F16: dead-code / unconsumed / sole-test-reference) · **FABLE-NEW 3**
-(the facade-dispatch composition graph; the F12 v6-endpoint provenance narrowing; the 251→234
-type-site truth-up) · **RATIFIED 9** rows (F11-F15, F17-F20; F16's owner/coverage layer also
-re-proven). Coverage retotal unchanged: EXACT 9 / PARTIAL 1 (F13) / MISSING 0.
+Counts: **OPUS-WRONG 3** (all F16: dead-code / unconsumed / sole-test-reference) · **FABLE-NEW 2**
+(the facade-dispatch composition graph; the F12 v6-endpoint provenance narrowing — the 251→234
+type-site truth-up refiled to FLIPS as F-3, RU-14 R3: it contradicts the band's standing figure,
+this sidecar's own FLIPS charter) · **RATIFIED 9** rows (F11-F15, F17-F20; F16's owner/coverage
+layer also re-proven). Coverage retotal unchanged: EXACT 9 / PARTIAL 1 (F13) / MISSING 0.
 
 ## FLIPS — findings contradicting a JUDGE ruling or a band-charter premise (the lead re-judges)
 
@@ -60,11 +61,32 @@ row. The "better design" half of F13 stays PARTIAL until the lead rules an owner
 the A01 engagement-audit scope, `BJ.W-IDLE-BREATH`'s interaction half, or an explicit
 W-RESPONSIVE-AUDIT fix-mandate clause).
 
+**FLIP F-3 — F15 vs the band's standing 251-site figure (refiled from FABLE-NEW, RU-14 R3;
+population split corrected RU-14 R4).** The 251 figure standing in `BAND-MATERIAL.md` W6
+(`BJ.W-TYPE-CODEMOD`, `:40`/`:588-592`) and `BAND-GATES.md` W4 (`:381-386`, the coupled born-RED
+gate) is NOT a pure `text-sm`/`text-xs` count: the band's OWN decomposition (`:588-592`) is
+218 demo + `src` ×19 + **the 9 arbitrary `text-[…]`** — a class INVISIBLE to any
+`\btext-(sm|xs)\b` grep (14 raw / 11 excl. `text-[length:var…]` sites at HEAD, so that slice
+needs its own re-count at re-pin time). The truth-up scopes to the `text-sm`/`text-xs` SLICE
+only, which moved 237 (218+19) → **234** at HEAD, by
+`grep -rEn '\btext-(sm|xs)\b' --include="*.vue" --include="*.ts" src demo`. The include filter
+is load-bearing — the bare word-boundary grep returns 257 lines / 260 occurrences, inflated by
+23 CSS token/comment hits (e.g. `--control-text-sm`); 234 decomposes exactly as 218 demo + 16
+src, squaring with the band's own 218-demo class-ban arm. Riding defect: the decomposition sums
+218+19+9 = **246 ≠ 251**, and `REGISTRY.md:236` frames 251 as "text-sm/text-xs (251 sites)" —
+the two band sites disagree with each other. Routing row: the lead re-DERIVES the W6 figure
+(slice re-counts, stated method, coherent decomposition) in `BAND-MATERIAL` W6 + the coupled
+`BAND-GATES` W4 gate at J12+/wave time — substituting 234 for 251 wholesale would silently
+contract the chartered codemod reach, and a wave-time re-count without the filter would
+mis-reconcile against 257.
+
 **NOT a flip — prior-layer overturn + one routing item.** The F16 facade truth contradicts no
 JUDGE ruling and no band charter (BAND-REDUCTION W5's stub, amendment A2's all-five scope, and
 C-C's sequencing all hold under it); it overturns only the prior artifact's own isolation layer.
 Riding with it: the timeline `README.md` §Exports drift (five documented exports absent from
-`index.ts`) is unnamed in `BAND-DOC-TRUTH` — the lead routes it there or to the W5 stub.
+`index.ts`) — CONSUMED-BY-T33 at RU-14 R4: `BAND-DOC-TRUTH.md:94` row T33 now carries the
+truth-up ("REDUCTION W5's stub supersedes on arrival"), seated by the concurrent REFABLE RU-03
+union (working-tree, uncommitted); residue: confirm T33 survives the RU-03 commit.
 
 ## LIVE-DEFER register (this seat owns no browser)
 
@@ -83,8 +105,40 @@ Riding with it: the timeline `README.md` §Exports drift (five documented export
 
 FLIP F-1 (RULING 8/F17), FLIP F-2 (F13 ownerless), and the timeline-README routing item all
 remain OPEN at HEAD (117b7f12)—the RU-05/RU-07/RU-09 unions consumed none of them. The dossier
-now carries the consolidated seven-item **JUDGE-2 docket** (`../redress/DOSSIER-F11-F20.md`
+now carries the consolidated ten-item **JUDGE-2 docket** (`../redress/DOSSIER-F11-F20.md`
 §JUDGE-2 docket): this range's three items plus F01-F10's two FLIPs (GF-DOCK rail.vue baseline-π
-+ shape axis; the BAND-REDUCTION "F04 shape" label) and F21-F30's two (FM-W3 gate (b); GF-DOCK
-§4.1 + the false `overflow.css:65-66` comment). Asked of the lead: one J12+ pass ruling all
-seven, then an APPLYLOG-mirrored application; F13 needs an owner mint or an explicit ASK row.
++ shape axis; the BAND-REDUCTION "F04 shape" label), F21-F30's two (FM-W3 gate (b); GF-DOCK
+§4.1 + the false `overflow.css:65-66` comment), and the three seated RU-14 R3 (D2-F23
+value-marks; the RU-09 F33 goo-clone migration; the crosswalk F34-F40 handmark rows). Asked of
+the lead: one J12+ pass ruling all ten, then an APPLYLOG-mirrored application; F13 needs an
+owner mint or an explicit ASK row.
+
+## RU-14 R3 addendum (2026-07-18, ring round 3 fix seat claude-fable-5)
+
+- **The docket widened seven → ten** (curing RU14-CRIT2-A MAJOR-1's seven-billed/eight-minted
+  count defect + RU14-CRIT2-B MAJOR-1/MAJOR-2): row 8 = D2-F23 (the F23 re-open's only
+  restoration path, previously stranded in `DOSSIER-F21-F30.md` with no consolidated row), row
+  9 = the RU-09 F33 goo-clone migration (both F31-F40 texts pointed at the docket while no row
+  existed), row 10 = the ASSEMBLY-CROSSWALK rows :56-62 read-through-RU-06 deferral (pass-1's
+  crosswalk half, previously fence-dropped unrecorded). A JUDGE/SUPERFLUITY C-label collision
+  note now sits in the docket preamble (CRIT2-A R-1's fold).
+- **The 251→234 truth-up refiled FABLE-NEW → FLIP F-3** with the reproducible method
+  (`--include` filter; bare grep = 257 lines at HEAD) and an explicit routing row (CRIT2-A
+  MINOR-3 / pass-1 MINOR-2 cured).
+- **F16's test cite pinned** to `tests/components/custom/timeline/` in the dossier (CRIT2-A
+  MINOR-4 half).
+
+## RU-14 R4 addendum (2026-07-18, ring round 4 fix seat claude-fable-5)
+
+- **Docket row 7 CONSUMED-BY-T33 (CRIT3-A R3A-1 cured).** The concurrent REFABLE RU-03
+  doc-truth union seated row T33 at `BAND-DOC-TRUTH.md:94` (working-tree, UNCOMMITTED — the
+  last commit touching the file, `4ab12128`, has zero `timeline` hits), carrying exactly this
+  range's routing ask with "REDUCTION W5's stub supersedes on arrival". Row 7, the F16 body
+  parenthetical, the open-items line, and this file's "Riding with it" text all now record the
+  consumption; the docket preamble's three-unions framing now names the fourth. Residue:
+  confirm T33 survives the RU-03 commit.
+- **FLIP F-3's population split corrected (CRIT3-A R3A-2 cured).** 251 is the band's own
+  218+19+9 decomposition (sum 246 ≠ 251; `REGISTRY.md:236` disagrees with
+  `BAND-MATERIAL.md:588-592`), the 9 arbitrary `text-[…]` are invisible to the stated grep,
+  and 234 is the `text-sm`/`text-xs` slice only (237→234). The routing row now directs the
+  lead to re-DERIVE the W6 figure, never substitute 234; the dossier F15 parenthetical mirrors.

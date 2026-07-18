@@ -275,9 +275,14 @@ construction. What remains open is only whether the STORY PAGE survives as a dis
   "muster×1, words×5, value.js×2 = 8" (`ASK-REDUCTION.md:175-181`); the fresh sibling census
   (this seat, `grep -rln "glass-ui/confirm-dialog"`) finds **6 LIVE import sites** — words×5
   (`frontend/src/components/custom/{sidebar×2,wordlist/views×2,search×1}`) + muster×1
-  (`frontend/src/App.vue`) — while the value.js pair are DOC references only
-  (`docs/tranches/V/CONSUMER-CUT.md`, `…/waves/W44.md`), not live imports. The family-B relay
-  carries the corrected 6-live + 2-doc figure.
+  (`frontend/src/App.vue`, a `defineAsyncComponent` dynamic import that pure import-statement
+  greps miss — SUPERFLUITY C-I's precision, `SUPERFLUITY.md:682-686`) — while value.js is **×0
+  live: already migrated** (its `AdminUsersPanel.vue` is the migration exemplar, per C-I; the
+  old pair are DOC references only, `docs/tranches/V/CONSUMER-CUT.md` + `…/waves/W44.md`). One
+  config reference rides the roster besides the imports (added RU-14 R3):
+  `words/frontend/vite.config.ts:218` carries the subpath literal in `optimizeDeps.include`
+  and dies with the same relay. The family-B relay carries the corrected 6-live + 1-config +
+  2-doc figure.
 
 **POST-MORTEM.** Not a defect — an already-executed reduction whose demo residue outlived it. The
 component fold landed; the demo page was rewritten to a preset illustration but kept its own route,
@@ -286,7 +291,8 @@ Demo-taxonomy lag behind a landed component fold, not code duplication.
 
 **REDRESS.** Owned by `ASK-REDUCTION §C2` (`../../ASK-REDUCTION.md:171-188`, roll-up `:266`): the
 fold is recorded as landed; the reserved user call is story-page survival + the family-B
-`/confirm-dialog → /dialog` relay for the 8 external consumers (files regardless). Per the **C-A
+`/confirm-dialog → /dialog` relay for the external consumers (the ASK row says 8; the corrected
+census is 6 live + 1 config + 2 doc, per TARGET — the relay files regardless). Per the **C-A
 ruling** (`JUDGE.md`): the fold-into-dialog.vue recommendation ships as the ASK row's DEFAULT, with
 the one-line discoverability counterpoint; the user ratifies. Coverage: **EXACT (as a user-gated
 decision)**.
@@ -355,7 +361,8 @@ computes to auto when the other axis is neither visible nor clip), so the port I
 scroll container, and any ≥1px block-axis scrollable overflow (overhanging hover plates/focus
 rings against the `--dock-scroll-safe-inset` padded box) yields real vertical scrolling —
 `overscroll-behavior` is only contained on x (`:83`). Two aggravators stand from the prior
-analysis, RATIFIED: the recentre passes `block:'nearest'` (`useSelectionGroup.ts:183-186` per
+analysis, RATIFIED: the recentre passes `block:'nearest'`
+(`src/composables/motion/morph/useSelectionGroup.ts:183-186` per
 GF-DOCK-PASS3), and `useDockOverflowFit.ts:38-41` measures block overflow only on its vertical
 branch (on the horizontal rail it measures inline — correctly cited as NOT the leak source). ALSO
 fresh this seat: the source comment at `overflow.css:65-66` claims "`overflow-x: auto` spec-forces
@@ -367,7 +374,8 @@ the computed-auto mechanism is spec-certain.
 **TARGET.**
 - Src fault (the CSS): `src/components/dock/styles/overflow.css:62-105` (the overflow branch whose
   computed cross axis is auto) + the false spec comment at `:65-66`.
-- Co-cause (recentre): `useSelectionGroup.ts:183-186` `block:'nearest'`.
+- Co-cause (recentre): `src/composables/motion/morph/useSelectionGroup.ts:183-186`
+  `block:'nearest'` (the composable lives under `motion/morph/`, NOT under `dock/`).
 - Measure (vertical-only, for the gate): `src/components/dock/composables/useDockOverflowFit.ts:38-41`.
 - The intentional contrast: vertical rails scroll their block axis BY DESIGN
   (`dock/styles/shell.css` cap-derived `.vertical` rule) — F27 is the HORIZONTAL dock only.
@@ -380,8 +388,8 @@ clip. It computes to auto; the ring-room padding plus overhanging content became
 overflow; nothing asserted "the horizontal dock has no block axis to scroll."
 
 **REDRESS.** Owned EXACTLY by the dock greenfield: `GF-DOCK-PASS3 §4.1` W2
-(`../greenfields/GF-DOCK-PASS3.md:104-111`, roster row `:304`), gate **`G-NO-BLOCK-SCROLL`**
-(`:336-337`):
+(`../greenfields/GF-DOCK-PASS3.md:104-111`, roster row `:319`), gate **`G-NO-BLOCK-SCROLL`**
+(`:357`):
 `scrollHeight === clientHeight` on the horizontal dock at every content/viewport combination; the
 cure is explicit `overflow-y: clip` on the port (killing the computed-auto coercion at the root,
 not a band-aid) + dropping `block:'nearest'` from the recentre. The corrected mechanism STRENGTHENS
@@ -543,7 +551,7 @@ resolution). LIVE-DEFER: 2 (F27 scrollable-delta source; F28 bloom-intentionalit
 **TRUE-RUN second pass (this seat, HEAD ced045d1): 9 rows RATIFIED clean / 1 row corrected at
 evidence grain (F25 — fold-commit c368ccbc not 490cc46e; live relay census 6 not 8, value.js pair
 docs-only) / 0 owners moved / 3 stale cites refreshed (codex law 12 → `:28`; GF-DOCK §4.1/W2/gate →
-`:104-111`/`:304`/`:336-337`).** The F28 all-7px statics — the one claim this seat's own ANEW
+`:104-111`/`:319`/`:357` — the W2/gate pins re-refreshed RU-14 R3 against the 117b7f12 rewrite).** The F28 all-7px statics — the one claim this seat's own ANEW
 initially contradicted (an 11px capsule-cascade theory) — re-proved TRUE at
 `button/styles.css:47-50` (`[data-emphasis="secondary"]` (0,2,0) pins `--glass-blur-resting` over
 the capsule rung); J6 stands doubly verified.
@@ -578,7 +586,8 @@ The live scrollable-delta census (which content overflows, by how much) runs as 
 
 Both of this range's charter flips age un-judged—the RU-05/RU-07/RU-09 unions landed without
 consuming either—and this range now adds the F23 re-open above. Docketed for the consolidated
-JUDGE-2 pass (full seven-item docket: `DOSSIER-F11-F20.md` §JUDGE-2 docket):
+JUDGE-2 pass (full ten-item docket: `DOSSIER-F11-F20.md` §JUDGE-2 docket; rows 8-10 seated
+RU-14 R3):
 
 - **D2-5 (Δ-F24-1 / sidecar FLIP-1).** BAND-FEEDBACK-MOTION W3 gate (b) is still letter-satisfiable
   while Skeleton rides the wrong 5s brand-metal rung—the period-VALUE + rung-BINDING gate reshape
@@ -586,5 +595,6 @@ JUDGE-2 pass (full seven-item docket: `DOSSIER-F11-F20.md` §JUDGE-2 docket):
 - **D2-6 (Δ-F27-1 / sidecar FLIP-2).** GF-DOCK-PASS3 §4.1's RED rationale still cites the
   block-overflow measure, not the visible→auto coercion, and the false `overflow.css:65-66` "clip"
   comment still stands in source—both re-verified at HEAD (117b7f12).
-- **D2-F23 (new this pass).** The RU-09 C-G value-marks fold + the track-well path split
-  (`src/styles/glass/track-well.css` vs `_shared/track.css`)—charter or rule out, then reconcile.
+- **D2-F23 (new this pass; consolidated as row 8 of the ten, RU-14 R3).** The RU-09 C-G
+  value-marks fold + the track-well path split (`src/styles/glass/track-well.css` vs
+  `_shared/track.css`)—charter or rule out, then reconcile.

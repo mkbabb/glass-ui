@@ -19,7 +19,7 @@ handmark greenfield (`GF-HANDMARK-PASS3.md`) owns their cures under the user rul
 keep. But greenfield and perfect from first principles. Fable."); this dossier verifies the
 correlation + coverage and records where fresh evidence corrects the greenfield's own premises
 (two flips, sidecar §FLIPS). All seven handmark born-RED anchors were re-verified on disk
-(`brush.ts`, `HandMark.vue`, `ink.ts`, `geometry.ts`, `useHandMark.ts`, `paper.css`,
+(`brush.ts`, `HandMark.vue`, `ink.ts`, `geometry.ts`, `composables/useHandMark.ts`, `paper.css`,
 `demo/stories/motion/handmark.vue`).
 
 **SUPERSEDED-BY-RU-06 (stamped RU-14, 2026-07-18)—the F34-F40 redress layer.** These rows were
@@ -240,8 +240,9 @@ owned—the deck-vs-carousel keep at ASK §C1 (whose premise text RU-09 C-C part
 wave carries: J3's W6 sequences only the vestigial `DeckPager.vue` cut, and the byte-identical
 stage-goo clone deletion (`useDeckGoo.ts`/`gooBarbellGeometry.ts`/`DeckGooFilter.vue` + goo CSS +
 test) is owned by NO wave at HEAD. Asked of the lead (rides the JUDGE-2 docket,
-`DOSSIER-F11-F20.md`): widen `BJ.W-PAGER-DOT-MORPH` (or BAND-REDUCTION) to carry the RU-09 F33
-migration explicitly, and refresh the ASK §C1 recommendation text to the RU-09 verdict. The
+`DOSSIER-F11-F20.md` — row 9, seated RU-14 R3): widen `BJ.W-PAGER-DOT-MORPH` (or BAND-REDUCTION)
+to carry the RU-09 F33 migration explicitly, and refresh the ASK §C1 recommendation text to the
+RU-09 verdict. The
 formerly-proposed Δ-F33-1 stays DISCHARGED (adopted as W6).
 
 **STATUS CHECK.** Crosswalk flag: **ASK** (`crosswalk:55`, §C1) + the J3/W6 annotation in the
@@ -266,7 +267,7 @@ value-noise centerline, far too heavy.
 - Src fault: `src/components/handmark/brush.ts:140,:144` (boil `weight: 7`, `ribbon: "hull"`),
   `:153-154` (`roughness: 0.9`/`wobble: 1.4`); the value-noise centerline in
   `src/components/handmark/noise.ts` + `constants.ts:57,61` (4-octave, 5% span), auto-engaged for
-  boil at `useHandMark.ts:113`. Confirmed on disk.
+  boil at `src/components/handmark/composables/useHandMark.ts:113`. Confirmed on disk.
 - Demo site: `demo/stories/motion/handmark.vue:36-46` (the boil-brush section).
 
 **POST-MORTEM.** Two mis-set axes compounding: an over-heavy fill (`ribbon:'hull'` weight 7) laid
@@ -393,12 +394,13 @@ The headline "A drawn line" underlines "drawn" but the mark is DISJOINTED — a 
 the fragments at REST (the drawn state).
 
 **TARGET.**
-- Src mechanism: `HandMark.vue:291` (`pathLength="1"`), `:350-353` (`stroke-dasharray: 1;
+- Src mechanism: `HandMark.vue:290` (`pathLength="1"`), `:350-353` (`stroke-dasharray: 1;
   stroke-dashoffset: 1` → `.drawn` offset 0), under `preserveAspectRatio="none"` (`:272`) +
-  `vector-effect="non-scaling-stroke"` (`:292`).
+  `vector-effect="non-scaling-stroke"` (`:291`).
 - **The attribution correction:** the demo's draw-on specimen is the DEFAULT PEN
   (`demo/stories/motion/handmark.vue:72-74` — no `brush` prop), and `natural` auto-engages only for
-  `brush === "boil"` (`useHandMark.ts:113`) — so the pen's centerline is `wobbleLinePoints`, NOT
+  `brush === "boil"` (`src/components/handmark/composables/useHandMark.ts:113`) — so the pen's
+  centerline is `wobbleLinePoints`, NOT
   the value-noise. The opus row's root ("a self-crossing value-noise Catmull-Rom centerline") —
   inherited from `GF-HM` §6 move 1 — cannot be F37's root: the value-noise is never in this
   specimen's path. The plausible static root is the dash mechanism itself: `pathLength`-normalized
@@ -580,7 +582,7 @@ fallback the screenshot proves.
 | F39 | ring layering/smoothing/encapsulation | `GF-HANDMARK` §4 layering law via W2 (circle over-glyph in DOM order, no z-index) — RU-14 re-point | **EXACT + amendment** | RATIFIED+AMENDED |
 | F40 | remove meta text "SE"; redesign | `GF-HANDMARK` W4 THE-STORY `G-NO-JARGON` (box/bracket GONE, Q-HM-2 `:250`) + `BJ.W-STORY-COPY-CANON` — RU-14 re-point | **EXACT** | RATIFIED |
 
-**Totals (as re-stated RU-14): EXACT 8 / PARTIAL 1 (F33—the RU-09 goo-clone residue) /
+**Totals (as re-stated RU-14; re-tallied R3): EXACT 9 / PARTIAL 1 (F33—the RU-09 goo-clone residue) /
 gate-grain citations F34-F40 read through the SUPERSEDED-BY-RU-06 table at the range header
 (ownership EXACT throughout).** Open flips: 0—both sidecar FLIPs closed CONSUMED-BY-RU-06
 (F36's invisibility is the charter's own sharpening; F37's root its own attribution; the FLIP-1

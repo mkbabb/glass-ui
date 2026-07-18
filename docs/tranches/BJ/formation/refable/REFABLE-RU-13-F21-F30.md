@@ -56,7 +56,7 @@ Key ANEW-independent derivations, later compared against the artifact:
 | F24 | RATIFIED | `BJ.W-FEEDBACK-MOTION-TUNE` (W3, Δ-F24-1) | 5s resolution + wrong-rung bind re-derived independently BEFORE the artifact was read — the strongest possible ratification of its OPUS-WRONG correction |
 | F25 | RATIFIED, **2 evidence corrections** | `ASK §C2` (C-A default) | (1) fold-commit is **c368ccbc** (BI B28 `BI.W-DIALOG-PLACEMENT`), not 490cc46e — `git log --diff-filter=D` is unambiguous; (2) live relay census is **6** (words×5 + muster×1); value.js's ×2 are doc references only — the ASK's 8-count overstates live blast radius |
 | F26 | RATIFIED | `BJ.W-REDUCE-CROSSREPO-GATED` + `ASK §A2` | census re-proven fresh: speedtest×0, sci-report×2 (`CategoryHomeView.vue:4`, `GalleryView.vue:19`), atlas×2 (`completion.ts:5`, `category.ts:2`) |
-| F27 | RATIFIED | GF-DOCK W2 `G-NO-BLOCK-SCROLL` | visible→auto coercion re-derived independently; `overflow.css:65-66` false-comment confirmed; GF-DOCK cites refreshed (§4.1 `:104-111`, W2 `:304`, gate `:336-337`); scrollable-delta census LIVE-DEFER |
+| F27 | RATIFIED | GF-DOCK W2 `G-NO-BLOCK-SCROLL` | visible→auto coercion re-derived independently; `overflow.css:65-66` false-comment confirmed; GF-DOCK cites refreshed (§4.1 `:104-111`, W2 `:319`, gate `:357` — W2/gate re-refreshed RU-14 R3 vs the 117b7f12 rewrite); scrollable-delta census LIVE-DEFER |
 | F28 | RATIFIED (against this seat's own initial theory) | `BJ.W-BLUR-LADDER` (MATERIAL W2, J6) | all-three-at-7px re-proven at `button/styles.css:47-50`; the springs-page correlation independently re-derived from the screenshot (Label `:231` + StoryPlayButton `:248` + Reset `:249`); no glass ancestor neutralizes the row (StorySection/StoryPage are plain); bloom-intentionality π LIVE-DEFER |
 | F29 | RATIFIED | `BJ.W-CONFIGURATOR-STD` G-CFG-1 (STORY W3, J10) | grep-0 born-RED re-verified by full read of `springs.vue` (hand-rolled Select/LabeledSlider/stage, no Configurator import) |
 | F30 | RATIFIED | `ASK §C4` (fold into springs; C-E scope) | `tempo.vue` single-axis demo + mount-scoped root-write (`:47-53`) re-verified |
@@ -131,3 +131,27 @@ should carry 6-live + 2-doc so the break table doesn't overstate blast radius.
 - **FLIP-1 (F24 gate shape) and FLIP-2 (F27 §4.1 rationale + the `overflow.css:65-66` comment)
   remain OPEN at HEAD (117b7f12)**—no union has consumed them; both docketed for the consolidated
   JUDGE-2 pass (`../redress/DOSSIER-F11-F20.md` §JUDGE-2 docket).
+
+## RU-14 R3 addendum (2026-07-18, ring round 3 fix seat claude-fable-5)
+
+- **D2-F23 now holds row 8 of the consolidated JUDGE-2 docket** (ten items at R3, was billed
+  seven) — the F23 re-open's restoration path is no longer stranded outside the consolidation
+  (RU14-CRIT2-A MAJOR-1 cured; count language updated in the dossier's §JUDGE-2 section).
+- **F27's GF-DOCK cites re-refreshed in the dossier**: W2 roster row `:304`→`:319`, gate
+  `:336-337`→`:357` (the pass-1 refresh was made against the 01:32 file; the 06:43 rewrite
+  grew it — §4.1 `:104-111` stayed exact). Mirrored in this sidecar's F27 row (CRIT2-A MINOR-1).
+- **F25's TARGET census aligned with SUPERFLUITY C-I** (`SUPERFLUITY.md:682-686`): value.js ×0
+  live (already migrated, `AdminUsersPanel.vue` the exemplar), muster's site a
+  `defineAsyncComponent` dynamic import; `words/frontend/vite.config.ts:218` (the
+  `optimizeDeps.include` subpath literal) added to the family-B roster — corrected figure
+  6-live + 1-config + 2-doc (CRIT2-A MINOR-2 / pass-1 carry).
+- **F27's `useSelectionGroup.ts` cites pinned** to `src/composables/motion/morph/` in the
+  dossier (CRIT2-A MINOR-4 half; the file is NOT under `dock/`).
+
+## RU-14 R4 addendum (2026-07-18, ring round 4 fix seat claude-fable-5)
+
+- **The C-I pin corrected `:683-687` → `:682-686` (CRIT3-A R3A-4 cured).** C-I's block spans
+  `SUPERFLUITY.md:682-686` on disk (opening line "**C-I. F25's relay census corrects the opus
+  count.**" at `:682`; `:687` is blank) — the R3-landed pin dropped the opening line and
+  annexed a blank. Corrected in the dossier F25 body and this sidecar's R3 row; the fixlogs
+  and ring files are logs and stand as written.

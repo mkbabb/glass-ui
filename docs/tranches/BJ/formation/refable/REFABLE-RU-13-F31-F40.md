@@ -99,6 +99,30 @@ DISCHARGED") is superseded: RU-09 overturns the KEEP-DISTINCT isolation — the 
 byte-identical clone of the pager worm (`PagerDots.vue:326` ≡ `DeckGooFilter.vue:26`) ruled
 COLLAPSE-FAMILY and slated for deletion, which NO wave owns at HEAD (J3's W6 sequences only the
 DeckPager cut) — the dossier's F33 coverage is downgraded to PARTIAL and the wave-widening ask
-rides the JUDGE-2 docket (`../redress/DOSSIER-F11-F20.md`). F32's C-D "9-keep/6-cut table" anchor
-is stale — the rewritten SUPERFLUITY carries the C-F fresh-census kill/keep verdict instead; the
-dossier's F32 rider is re-anchored.
+rides the JUDGE-2 docket (`../redress/DOSSIER-F11-F20.md` — row 9, seated RU-14 R3). F32's C-D
+"9-keep/6-cut table" anchor is stale — the rewritten SUPERFLUITY carries the C-F fresh-census
+kill/keep verdict instead; the dossier's F32 rider is re-anchored.
+
+## RU-14 R3 addendum (2026-07-18, ring round 3 fix seat claude-fable-5)
+
+- **The F33 docket pointer is now TRUE** — RU14-CRIT2-B MAJOR-2 proved both F33 texts claimed a
+  docket seat that did not exist (the docket enumerated exactly seven items, none F33); row 9
+  (the goo-clone migration + the ASK §C1/§C3 recommendation refresh) is seated in
+  `../redress/DOSSIER-F11-F20.md` §JUDGE-2 docket and both texts now pin it.
+- **The crosswalk half of pass-1's RU14-1 is now OWNED as docket row 10** (CRIT2-B MAJOR-1):
+  `ASSEMBLY-CROSSWALK.md:56-62` still cites the retired pre-RU-06 GF-HANDMARK charter
+  (`G-CONTAIN`/`G-DRAW-CONNECTED`/`G-RING-LAYER` grep-zero; "register 7→3 brushes" false — ONE
+  pen voice); the crosswalk edit itself stays lead-side (outside the fix seats' write fence),
+  but the deferral is no longer unrecorded.
+- **Coverage totals re-tallied** in the dossier: EXACT 9 / PARTIAL 1 (the table's ten rows; the
+  pass-1 restatement said 8+1=9 — CRIT2-B MINOR-3).
+- **`useHandMark.ts` cites pinned** to `src/components/handmark/composables/` in the dossier
+  header list and the F34/F37 targets (`:113` exact on disk — CRIT2-B MINOR-6 / pass-1 RU14-8).
+
+## RU-14 R4 addendum (2026-07-18, ring round 4 fix seat claude-fable-5)
+
+- **F37 TARGET re-pinned (CRIT3-B CRIT3B-2 cured).** `pathLength="1"` is `HandMark.vue:290`
+  and `vector-effect="non-scaling-stroke"` is `:291` (re-verified on disk; the file is
+  unchanged since `55f5170d`, so the dossier's `:291`/`:292` were off by one at write).
+  Corrected in the dossier TARGET; this sidecar's F37 row carries no line pins for the pair
+  and needed no edit.
