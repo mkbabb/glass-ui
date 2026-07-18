@@ -45,10 +45,10 @@ flush," so the authored breath shipped uncontested.
 
 **REDRESS.** Owned EXACTLY by `BJ.W-CONFIGURATOR-STD` gate **G-CFG-3** (BAND-STORY W3,
 `../../waves/BAND-STORY.md:242,267`): "sibling rows within a group read as one INSET grouped-list (no
-inter-row gap); the gap is BETWEEN groups only." The perfection fold pins the exact cure site:
-FABLE-STORY-FRAMEWORK "F11 = the one-grouped-list cure at styles.css:117"
-(`../../waves/BAND-STORY.md:552`) — i.e. neutralize/re-scope the `.configurator-layer +
-.configurator-layer` margin. F11 is additionally MARKED (not fixed) by `BJ.W-ARISTOTLE-PROPORTION`
+inter-row gap); the gap is BETWEEN groups only." The perfection fold pins the exact cure —
+neutralize/re-scope the `.configurator-layer + .configurator-layer` margin at `styles.css:117` — under
+the same G-CFG-3 owner (`../../waves/BAND-STORY.md:267`, "inter-ROW gap = 0 within a group; the gap is
+BETWEEN groups"). F11 is additionally MARKED (not fixed) by `BJ.W-ARISTOTLE-PROPORTION`
 (BAND-MATERIAL W5, `../../waves/BAND-MATERIAL.md:478-479`) as a proportion-roster entry that routes
 to this same story owner. Coverage: **EXACT** — the cure targets the precise token+rule, on the
 precise component, driving the precise screenshot.
@@ -103,7 +103,7 @@ is the gate that decides fix-vs-guard; disk says guard.
 
 ## F13 — /data/sortable-list better design + horizontal space
 
-**INVENTORY.** Ledger (`../../FEEDBACK-LEDGER.md:26`): *"`/data/sortable-list` — Needs better design
+**INVENTORY.** Ledger (`../../FEEDBACK-LEDGER.md:25`): *"`/data/sortable-list` — Needs better design
 and better horizontal use of space."* **URL-anchored, no screenshot.**
 
 **ISOLATION (from ledger + live code).** `demo/stories/data/sortable-list.vue` stacks its rows in
@@ -143,7 +143,7 @@ not a status disagreement, a scope sliver.
 
 ## F14 — audit ALL pages: horizontal-desktop + mobile-first
 
-**INVENTORY.** Ledger (`../../FEEDBACK-LEDGER.md:27`): *"Audit ALL pages for optimized horizontal
+**INVENTORY.** Ledger (`../../FEEDBACK-LEDGER.md:26`): *"Audit ALL pages for optimized horizontal
 usage on desktop + proper mobile-first affordances. Idiomatic gestalt approaches, no legacy, clean
 breaks. Dogfood our own components to afford this."* **URL-anchored (all pages), no screenshot.**
 
@@ -177,7 +177,7 @@ rather than being absorbed, which is the correct weight for an "audit ALL pages"
 
 ## F15 — /data/infinite-scroll reset button unrounded + grand rounding/typography audit
 
-**INVENTORY.** Ledger (`../../FEEDBACK-LEDGER.md:28`): *"`/data/infinite-scroll` reset button not
+**INVENTORY.** Ledger (`../../FEEDBACK-LEDGER.md:27`): *"`/data/infinite-scroll` reset button not
 rounded. **Grand rounding/border-radius audit + typography audit.**"* Screenshot:
 `../../feedback/F15-reset-button-unrounded.png`.
 
@@ -223,7 +223,7 @@ are not hand-waved; each is a real wave (RADIUS-ROLE + TYPE-CODEMOD) with enforc
 
 ## F16 — /data/timeline redesign from the ground up
 
-**INVENTORY.** Ledger (`../../FEEDBACK-LEDGER.md:29`): *"`/data/timeline` — Very poorly defined,
+**INVENTORY.** Ledger (`../../FEEDBACK-LEDGER.md:28`): *"`/data/timeline` — Very poorly defined,
 buggy, likely many facilities overfit. **Redesign from the ground up.**"* **URL-anchored, no
 screenshot.**
 
@@ -264,7 +264,7 @@ the born-RED lives in the loop's captured baseline, not a premature gate here.
 
 ## F17 — /data/search input boxes "not rounded"
 
-**INVENTORY.** Ledger (`../../FEEDBACK-LEDGER.md:30`): *"`/data/search` — input boxes are not
+**INVENTORY.** Ledger (`../../FEEDBACK-LEDGER.md:29`): *"`/data/search` — input boxes are not
 rounded."* Screenshot: `../../feedback/F17-search-inputs-unrounded.png`.
 
 **ISOLATION (first-hand read).** The image shows the `Live search` section: a large translucent panel
@@ -302,7 +302,7 @@ verify-then-pin guard, precisely matching the disk reality.
 
 ## F18 — instrument-chassis + metric TO BE REMOVED
 
-**INVENTORY.** Ledger (`../../FEEDBACK-LEDGER.md:31`): *"`/data/instrument-chassis`, `/data/metric` —
+**INVENTORY.** Ledger (`../../FEEDBACK-LEDGER.md:30`): *"`/data/instrument-chassis`, `/data/metric` —
 To be REMOVED — 'what of our grand pruning of overfit and superfluous components?'"* **URL-anchored,
 no screenshot.**
 
@@ -344,20 +344,20 @@ census contradicts is exactly an ASK row, not a LANDED fix; auto-deleting it wou
 
 ## F19 — /feedback/alert not glassy, rounded, or idiomatic
 
-**INVENTORY.** Ledger (`../../FEEDBACK-LEDGER.md:32`): *"`/feedback/alert` — Not properly glassy,
+**INVENTORY.** Ledger (`../../FEEDBACK-LEDGER.md:31`): *"`/feedback/alert` — Not properly glassy,
 rounded, or idiomatic/Apple-like."* **URL-anchored, no screenshot.**
 
 **ISOLATION (from ledger + live code).** The Alert is a flat card-ish box that is neither glassy nor
-card-rounded. Verified on disk: `src/components/alert/index.ts:7` `BASE` uses **`rounded-lg`** (8px) —
+card-rounded. Verified on disk: `src/components/alert/index.ts:8` `BASE` uses **`rounded-lg`** (8px) —
 under the card-role radius (`--radius-card` = 16px), so it reads under-rounded; and every tone in
-`TONE` (`:9-18`) sets **`[backdrop-filter:var(--glass-blur-wash)]`** — the `wash` rung is 1px
+`TONE` (`:11-18`) sets **`[backdrop-filter:var(--glass-blur-wash)]`** — the `wash` rung is 1px
 (sub-perceptual per the blur ladder), so the alert is effectively NOT glassy. The border is a single
 uniform `border` (no rim asymmetry). All three of the user's terms — not glassy (`blur-wash` 1px), not
 rounded (`rounded-lg` 8px), not idiomatic (flat uniform border, no iOS rim/type grammar) — are
 literally true on disk.
 
 **TARGET.**
-- Src fault: `src/components/alert/index.ts:7` (`BASE` `rounded-lg`) + `:9-18` (`TONE` all
+- Src fault: `src/components/alert/index.ts:8` (`BASE` `rounded-lg`) + `:11-18` (`TONE` all
   `[backdrop-filter:var(--glass-blur-wash)]`); consumed by `src/components/alert/Alert.vue:37`.
 - Demo site: `demo/stories/feedback/alert.vue` (the tone specimens at `:42,:49,…`).
 
@@ -386,7 +386,7 @@ file exists and owns it with a disk-true born-RED; the table flag is superseded 
 
 ## F20 — /feedback/toast animation "awful"; should equal the refined dialog
 
-**INVENTORY.** Ledger (`../../FEEDBACK-LEDGER.md:33`): *"`/feedback/toast` — Animation is awful;
+**INVENTORY.** Ledger (`../../FEEDBACK-LEDGER.md:32`): *"`/feedback/toast` — Animation is awful;
 should be exactly like our refined dialog."* **URL-anchored, no screenshot.**
 
 **ISOLATION (from ledger + live code).** The toast's motion was the complaint. On disk it has ALREADY

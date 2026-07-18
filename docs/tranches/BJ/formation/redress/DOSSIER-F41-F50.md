@@ -232,7 +232,8 @@ live-π ruling, not a born-RED "fix the wrong radius."
    recommendation deletes gate-pattern outright (after re-homing its confirm-preset test fixture), which
    moots the rounding entirely.
 2. **Rounding, IF it survives → `BJ.W-RADIUS-ROLE` §D(F45)** (BAND-MATERIAL W1,
-   `../../waves/BAND-MATERIAL.md:110-115`), OPEN-1a live-π gated (`:135-142,165`). Coverage: **PARTIAL**
+   `../../waves/BAND-MATERIAL.md:110-115`) — not yet in OPEN-1a's live-π set (OPEN-1a is scoped to
+   F09/F12/F17 at `:135,165`; F45 is a §D bullet at `:110-115` that Δ-F45-1 appends). Coverage: **PARTIAL**
    — the owner and the verify-before-fix live-π discipline are right, but W1's §D(F45) text frames the
    target as *"the input/button coherence is the sweep target"* and describes the on-disk hits only as
    *"`rounded-full` icon tiles (correct)"* — it does NOT cite `field-control.css:37-48`, the landed F7

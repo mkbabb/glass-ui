@@ -182,8 +182,8 @@ livelier pulse to read as "working," and `ease-in-out` on a continuous loop adds
 that reads as further sluggishness. The user's "too slow" is literally true on disk.
 
 **TARGET.**
-- Src fault: `src/components/skeleton/Skeleton.vue:54` (`--duration-shimmer` default 2.4s) + `:51-57`
-  (the `@keyframes skeleton-scan` sweep) + `:59-63`.
+- Src fault: `src/components/skeleton/Skeleton.vue:54` (`--duration-shimmer` default 2.4s) + `:59-63`
+  (the `@keyframes skeleton-scan` block).
 - Canon layer: `src/styles/` — where W3 sets the shimmer period as an assertion (not a component-local
   literal).
 - Demo site: `demo/stories/feedback/skeleton.vue`.
@@ -305,9 +305,11 @@ drag registers (and paints a pink artifact out the top) is the exact "why can I 
 defect.
 
 **TARGET.**
-- Src fault (the born-RED measure): `src/components/dock/composables/useDockOverflowFit.ts:38-40` —
-  measures `scrollHost.scrollHeight - scrollHost.clientHeight > 1` on the block axis (verified on disk),
-  i.e. the dock treats a block overflow as real.
+- Src fault (the born-RED measure): `src/components/dock/composables/useDockOverflowFit.ts:38-40` — a
+  `vertical`-guarded ternary (`vertical ? scrollHeight - clientHeight > 1 : scrollWidth - clientWidth > 1`,
+  verified on disk); its block-overflow measure is the VERTICAL branch only. F27's host is a HORIZONTAL
+  feedback rail, where this line measures INLINE overflow — so the block-axis leak on this rail is the
+  co-cited `overflow.css` `overflow-y: visible` (below) + the recentre `block:'nearest'`, not this measure.
 - Src fault (the CSS): `src/components/dock/styles/overflow.css:56-59,73` — both the FITS and OVERFLOW
   branches set `overflow-y: visible` (not `clip`); the block axis is left open so content/focus/drag can
   leak vertically. The vertical port is deferred to `shell.css`'s cap-derived rule (`overflow.css:112-
@@ -329,8 +331,9 @@ gate **`G-NO-BLOCK-SCROLL`** (`:284-286`): "the horizontal dock has `scrollHeigh
 measures a block overflow; F27 shows the pink drag leaking out the top." The cure: `overflow-y: clip`
 on the port, kill the block axis, and drop `block:'nearest'` from the recentre (inline-only programmatic
 `scrollTo`, `:140-141,272`). The born-RED cites the F27 screenshot first-hand and the exact measuring
-line. Coverage: **EXACT** — the born-RED matches disk (the RO measures block overflow; the CSS leaves
-`overflow-y: visible`), the artifact is named, and the fix is a precise `clip` + recentre-arg cut.
+line. Coverage: **EXACT** — the born-RED matches disk (on the horizontal rail the block-axis leak is the CSS
+`overflow-y: visible` + the recentre `block:'nearest'`; the RO's block-overflow measure is its vertical
+branch), the artifact is named, and the fix is a precise `clip` + recentre-arg cut.
 
 **STATUS CHECK.** Crosswalk flag: **LANDED** (`crosswalk:49`, `GF-DOCK §4.1 W2 G-NO-BLOCK-SCROLL`).
 **AGREE** — a provably-dead block axis with a disk-true RED and a named screenshot is a clean LANDED

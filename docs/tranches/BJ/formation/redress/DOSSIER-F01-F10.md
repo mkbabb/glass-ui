@@ -39,7 +39,7 @@ visible in a still — it is the reported partial-paint-then-jank on load.
 **TARGET.**
 - Layout/vacancy/masonry — `demo/chassis/landing/SectionPreviewCard.vue` (the tile is rendered inside a
   second bordered/inset well at `:35-54`; `content-visibility:auto; contain-intrinsic-size:auto 19rem`
-  at the `.section-preview-card` style block, confirmed on disk at the `<style scoped>` around `:37-45`),
+  at the `.section-preview-card` style block, confirmed on disk in the `<style scoped>` at `:63-65`),
   `demo/chassis/landing/{SectionLanding.vue,CatalogLanding.vue}` (the fixed `grid grid-cols-1 …
   lg:grid-cols-3` bento), and the tile ladder `demo/stories/**/storyTile.ts` / `resolveStoryTile` /
   `vizPreviewStill.ts` (authorship coverage = only 4 `.tile.vue` files exist across the whole demo).
@@ -169,9 +169,10 @@ arrow — each seated inside a thin outline-ring circle within the pill. The "sh
 the user is pointing at is this dock construction: decorative per-item outline rings nested inside a
 stadium pill.
 
-**TARGET.** `demo/stories/dock/rail.vue` — the "Vertical dock" section (confirmed: `:29-39` the
-`entries` list Home/Compass/Shapes/Boxes/Navigation, rendered as `DockControl`s; the icon set matches
-the screenshot exactly), consuming `src/components/dock/**` (GlassDock + DockControl). The verbal
+**TARGET.** `demo/stories/dock/rail.vue` — the "Vertical dock" section (confirmed: `:31-40` the
+`entries` list, rendered as `DockControl`s from its leading slice; the sliced icon set —
+Home/Compass/Shapes/Boxes/Navigation — matches the screenshot, though the full eight-entry array does
+not), consuming `src/components/dock/**` (GlassDock + DockControl). The verbal
 "opinionated defaults / KISS" also targets `src/components/card/Card.vue:33` (`grain: true`) + `:39`
 (`metal: "gold"`) — the gold-metal+grain default shape — and the L6 demo-devices on the public surface
 (`FABLE-DAG-REDUCTION.md:88-91`).
@@ -213,8 +214,8 @@ surrounding screen; (b) the docks morph height on hover; (c) the section sits on
 background with NO aurora field behind it.
 
 **TARGET.** `demo/stories/dock/rail.vue` — the "Collapsible vertical dock — it morphs its height"
-section (confirmed on disk: `:73` the heading, `:78` "`--dock-morph-t` spring. Hover to expand",
-`:84` the `v-for="posture in initialPostures"`, `:88` `text-mono-caption` posture labels — this is the
+section (confirmed on disk: `:142` the heading, `:147` "`--dock-morph-t` spring. Hover to expand",
+`:153` the `v-for="posture in initialPostures"`, `:157` `text-mono-caption` posture labels — this is the
 exact F05 view). Src: `src/components/dock/**` (the `--dock-morph-t` height-morph). **Critical
 first-hand finding:** rail.vue contains exactly ONE `<Aurora>` (`:69`), staged behind the *"Vertical
 dock"* section only; the *postures* section (F05's view) is a plain
@@ -236,7 +237,7 @@ Animation-definition half → GF-DOCK W6 (dock-motion) + `BJ.W-ROUTE-PENDING` li
 (`ASSEMBLY-CROSSWALK.md:222-224`) rules the aurora sub-ask `CLEARED-by-R3b` on the ground that "the
 dock section demonstrably carries a live chromatic background field" (R3b engagement-dock evidence).
 **On first-hand evidence I DISAGREE for this row's exact view:** the R3b field is the interactive
-hover-expand demo's DockStage/Aurora backdrop; the F05 postures section (`rail.vue:73-120`) has NO
+hover-expand demo's DockStage/Aurora backdrop; the F05 postures section (`rail.vue:142-189`) has NO
 aurora at HEAD (verified: one `<Aurora>` on the page, at `:69`, behind a different section). The
 premise "this section has no background aurora" HOLDS for the screenshotted section — the clearance
 conflates "the dock category has an aurora somewhere" with "this section shows one." **Verdict:
@@ -422,9 +423,10 @@ field label, and value.
 
 **TARGET.** `demo/chassis/section/StorySection.vue:32` (every heading hardcoded to `text-subheading` —
 the story-chassis flattening; `grep -rl '#heading' demo/stories` → 0, so no page overrides it,
-`FABLE-STORY-FRAMEWORK.md:380-383`), AND `src/components/configurator/**`
-(`sizing-config.css:35` `--configurator-section-size` = subheading 20.4px sitting only ~4px above the
-field labels — the register EXISTS but the steps are too close, `FABLE-STORY-FRAMEWORK.md:353-357`).
+`FABLE-STORY-FRAMEWORK.md:380-383`), AND `src/styles/tokens/sizing-config.css:35`
+(`--configurator-section-size` = subheading 20.4px sitting only ~4px above the
+field labels — the register EXISTS but the steps are too close; consumed by
+`configurator/styles.css:51`, `FABLE-STORY-FRAMEWORK.md:353-357`).
 
 **POST-MORTEM.** Unenforced type ladder plus a too-narrow register. The Tailwind default ramp is never
 reset (`--text-*: initial` absent), so text-sm/text-xs bypass the fluid scale and every section
@@ -475,10 +477,13 @@ sharpened F10 from a one-site to a two-site defect and the load-bearing `level` 
 > **D-F05 (new owner for the aurora-visibility sub-ask; supersedes the `CLEARED-by-R3b` reconciliation
 > for this row).** Assign an owner to make the dock-specimen aurora backdrop CONSISTENT across sections.
 > Evidence: `demo/stories/dock/rail.vue` carries exactly one `<Aurora>` (`:69`, behind the "Vertical
-> dock" section); the postures section that F05 screenshots (`:73-120`, "Starts compact/open") renders
+> dock" section); the postures section that F05 screenshots (`:142-189`, "Starts compact/open") renders
 > on the bare page background with no field. The R3b clearance drew on the interactive hover-expand
 > DockStage demo, not this postures grid — the premise "this section has no background aurora" HOLDS at
-> HEAD. Cure: stage the DockStage/Aurora field behind the postures section (or adopt `DockStage`
+> HEAD. Corroboration: `GF-DOCK-PASS3.md:27` (charge C5) already ACCEPTED this split — "the 'no
+> aurora' half leaves the dock → BAND-STORY/aurora surface. F05 is not dropped, it is split correctly"
+> — direct evidence the aurora sub-ask was routed to be OWNED, not cleared. Cure: stage the
+> DockStage/Aurora field behind the postures section (or adopt `DockStage`
 > uniformly for all dock specimen sections per `FABLE-STORY-FRAMEWORK.md` §2.5's `dock` variant). Fold
 > into the dock story-page redesign (BAND-STORY dock variant) or GF-DOCK's DockStage adoption.
 

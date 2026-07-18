@@ -544,16 +544,16 @@ liquid-grid,watercolor-dot,paper-backdrop,handmark}/**`, the L5 layer of `FABLE-
 Typewriter 11, FourierField 5, `REGISTRY.md:68-70`) with no unifying codification. The umbrella asks
 that the whole family be governed, not just the two named greenfields.
 
-**REDRESS.** Reqs 1-3 → **EXACT.** Every procedural component is OWNED: three run the greenfield
-triumvirate (blob/aurora/handmark), fourier/constellation/watercolor are ASK-routed with a
-knob-retire floor regardless, liquid-grid is DELETED — none unowned. The "codified" umbrella is the
-PROCEDURAL-SUITE index + the `role:"substrate"` node taxonomy in the generalized component graph.
-**Coverage: EXACT.** (One sliver note: `paper-backdrop` is an L5 procedural with no explicit BJ
-disposition — neither greenfield nor ASK nor delete; it is presumably a stable keep, but flag it for
-the reduction band's ≥2-consumer census so it is not silently un-audited.)
+**REDRESS.** Reqs 1-3 → **EXACT for the dispositioned roster.** Every named procedural component is
+OWNED: three run the greenfield triumvirate (blob/aurora/handmark), fourier/constellation/watercolor
+are ASK-routed with a knob-retire floor regardless, liquid-grid is DELETED. The "codified" umbrella is
+the PROCEDURAL-SUITE index + the `role:"substrate"` node taxonomy in the generalized component graph.
+**Coverage: PARTIAL** — residue: `paper-backdrop`, an L5 procedural in A14's explicit roster, has NO BJ
+disposition (neither greenfield nor ASK nor delete), so the umbrella's "none unowned" does not yet hold
+for the whole roster. Delta D-A14 routes it into the reduction band's ≥2-consumer census.
 
-**STATUS CHECK.** Crosswalk flag `LANDED` (`ASSEMBLY-CROSSWALK.md:86`). AGREE — with the paper-backdrop
-census note.
+**STATUS CHECK.** Crosswalk flag `LANDED` (`ASSEMBLY-CROSSWALK.md:86`). AGREE the dispositioned roster
+lands; the un-dispositioned `paper-backdrop` member is the one coverage residue (D-A14).
 
 ---
 
@@ -658,12 +658,12 @@ churn finding as the headline gate (rAF-budget / idle-frame-cost). **Coverage: E
 | A11 | breath of life (idle engagement) | **MISSING** | pending-R3b→LANDED | **DISAGREE** (remediation) | 1 |
 | A12 | blob greenfield (value.js ref) | EXACT | LANDED | AGREE | 0 |
 | A13 | aurora modes (vangogh/oilpastel/crayon) | EXACT | LANDED | AGREE | 0 |
-| A14 | procedural codification umbrella | EXACT | LANDED | AGREE (paper-backdrop note) | 0 |
+| A14 | procedural codification umbrella | **PARTIAL** | LANDED | AGREE (paper-backdrop residue) | 1 |
 | A15 | Fable-class models leveraged | EXACT | DECIDED | AGREE | 0 |
 | A16 | maximal parallelize + zero-drop | EXACT | DECIDED | AGREE | 0 |
 | A17 | perf first-class (slow/stutter) | EXACT | LANDED | AGREE | 0 |
 
-**Tally: EXACT 12 · PARTIAL 4 · MISSING 1.** Deltas: 5. Crosswalk DISAGREEs: 2 (A01, A11 — both the
+**Tally: EXACT 11 · PARTIAL 5 · MISSING 1.** Deltas: 6. Crosswalk DISAGREEs: 2 (A01, A11 — both the
 engagement/breath-of-life cluster).
 
 ---
@@ -715,6 +715,14 @@ engagement/breath-of-life cluster).
 > PRM-gated, so the breath-of-life edict ("every component ALWAYS displays engagement") has a real owner.
 > The crosswalk's `LANDED` reconciliation (`ASSEMBLY-CROSSWALK.md:217-220`) over-claims that R3b folded
 > this into ENGAGE-AFFORD; the wave text shows it did not.
+
+> **D-A14 (to `BAND-REDUCTION` — the un-dispositioned procedural member).** `paper-backdrop`
+> (`src/components/paper-backdrop/**`), an L5 procedural in A14's explicit roster, carries no BJ
+> disposition — neither a greenfield (unlike blob/aurora/handmark), nor an ASK (unlike
+> fourier/constellation/watercolor), nor a delete (unlike liquid-grid). Route it into the reduction
+> band's ≥2-consumer census (the A05 bar) so its keep/retire is ruled on evidence, not presumed; until
+> then the A14 procedural-codification umbrella's "none unowned" claim does not hold for the whole
+> roster.
 
 ---
 

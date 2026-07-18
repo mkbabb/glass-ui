@@ -486,11 +486,9 @@ noted). Delta count: **1**.
 it currently has NO owner. The target is concrete and singular: the shared pager-worm morph at
 `src/components/pager-dots/PagerDots.vue` + `src/components/pager-dots/composables/usePagerWorm.ts`
 (the active-dot elongation/goo-morph both `DeckPager` and `CarouselPager` ride) — the liquid-weight-
-universal edict wants a goo-morph "worm" between dot states. **Append an owner:** either (a) add a
+universal edict wants a goo-morph "worm" between dot states. **Append an owner:** add a
 fifth wave to `BAND-FEEDBACK-MOTION` — `BJ.W-PAGER-DOT-MORPH` — that refines `usePagerWorm` against the
-motion canon (the same born-RED-then-π discipline as W3's loop/skeleton retune), OR (b) fold the
-pager-dot refinement into `BI.W-ENGAGE-AFFORD`'s liquid-weight scope (pager/deck dots goo-morph is
-explicitly named in the liquid-weight-universal edict). Whichever is chosen, name `PagerDots`/
+motion canon (the same born-RED-then-π discipline as W3's loop/skeleton retune). Name `PagerDots`/
 `usePagerWorm` as the born-RED target and capture a paired-π of the dot morph across an index change on
 `/motion/deck` + `/motion/carousel`. Without this, F33's dot-refinement silently drops at execution —
 the exact gap the crosswalk warned about. (This is the crosswalk's own admitted residue, not a new
