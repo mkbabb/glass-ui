@@ -221,12 +221,22 @@ composed rest pose WITH satellites visible, then park—information kept, physic
   `88f8f09^:demo/@/lib/animation/cursor-repulsion.ts:6-8` (`CURSOR_REPEL_RADIUS 1.2`,
   `CURSOR_REPEL_STRENGTH 0.25`, `CURSOR_SMOOTH 0.08`—~5-frame settle). CPU-side, feeds the
   existing per-satellite state; no shader change.
-- **Grab-and-fling [FABLE-NEW, opt-in—Q-BLOB-GRAB]:** laws 14/15 applied to the mascot register
-  (`IOS27-CODEX.md:33-34`). While tracked the body is finger-locked 1:1 (never tweened) with
-  velocity-proportional squash-and-stretch (tanh-saturated, kept); release absorbs v0 as an
-  initial condition (duration-stable τ≈130ms class), at most one ~9% overshoot;
-  container-bound overpull is the asymmetric rubber band (compression 4-5x faster than release,
-  never crossing rest). Flicks go ballistic; settles are fire-and-forget.
+- **Grab-and-fling [FABLE-NEW, opt-in—Q-BLOB-GRAB; regime split cured per fresh-crit B-1]:**
+  laws 14/15 applied to the mascot register (`IOS27-CODEX.md:33-34`). While tracked the body is
+  finger-locked 1:1 (never tweened) with velocity-proportional squash-and-stretch
+  (tanh-saturated, kept). Release splits at law 15's seam—two named presets, constants never
+  blended across the (a)/(c) rows:
+  - slow place/short release rides **14(a)**, the duration-stable snap: ζ≥1, τ≈130ms, NO
+    overshoot; its single-channel clause binds verbatim, so the squash-and-stretch deformation
+    is released BEFORE flight—the deformation spring settles at the release frame and the body
+    flies as a rigid silhouette;
+  - flick release rides **14(c)**, the release spring: v0 inherited as the initial condition,
+    ζ≈0.75-0.85, ~250ms flight, at most one ~9% overshoot, no second bounce; deformation may
+    ride this flight—14(c) carries no single-channel clause.
+  W0's contract-lock names the seam (the release-speed threshold above which the flick path
+  fires) and binds each gesture path to its `springPreset` by name. Container-bound overpull is
+  the asymmetric rubber band, 14(b) (compression 4-5x faster than release, never crossing
+  rest). Settles are fire-and-forget.
 - **Click:** the impulse spring (kept) + excited arc + the shadow-detach hop (§2.3).
 
 ### 2.8 Proper meatballing—visible, liquid, fenced [FABLE-NEW D15 + RATIFIED W-SHOW]
@@ -276,14 +286,14 @@ identity). W-IDENT and W-REACT are added.
 
 | wave | title | scope | hard gate(s) | π |
 |------|-------|-------|--------------|---|
-| W0 | CENSUS + CONTRACT-LOCK | freeze §2; rule the settled seam (§2.6); confirm the pointerAttraction read-path (§2.4); pin the shadow mechanism (§2.3); adopt the pacing fix + scale-aware ceiling (§2.9); author born-RED gates | suite compiles + all RED | — |
+| W0 | CENSUS + CONTRACT-LOCK | freeze §2; rule the settled seam (§2.6); confirm the pointerAttraction read-path (§2.4); pin the shadow mechanism (§2.3); adopt the pacing fix + scale-aware ceiling (§2.9); pin the grab release seam + per-path 14(a)/14(c) presets (§2.7); author born-RED gates | suite compiles + all RED | — |
 | W-SHADOW | THE LIVE INK-STAMP | replace the gel-dome pair (`Blob.vue:354`) with ONE hard SE stamp; the sprung offset vector—mood-scaled, hover-grow 5→7px, follow-through lag, click hop; era-1 tint; off-plate attenuation; `uShadow` stays interior AO | G-CARTOON-STAMP, G-SHADOW-LIVE, G-USHADOW-INTERIOR | π-SHADOW |
 | W-STREAK | AURORA STREAK + VELOCITY CAUSTIC | the ~55%-height aurora streak (final-third arrival on formation); velocity-keyed rim caustic; rim anisotropy; mood-scaled energy/hue-cycle | G-STREAK, G-RIM-CAUSTIC | π-STREAK |
 | W-IDENT | TECHNICOLOR IDENTITY | technicolor default palette; per-satellite ink (`uSatColor[]` class); warm-cream → named calm preset; `BLOB_GLASS` + `BLOB_CHROME` exported presets (chrome keeps `uSpecSweep`) | G-IDENT-TECHNICOLOR, G-SAT-INK | π-IDENT |
 | W-SHOW | SHOW-VISIBLE DEFAULT | promote orbit>body (`presets.ts:53-58` → default); merge/absorb/emerge as liquid events; the meniscus-waist signal + pinch-off beat (§2.8) | G-SHOW-VISIBLE (waist clause added) | π-SHOW |
 | W-ALIVE | ALWAYS-ALIVE REST | implement the seam ruling; reduced-cadence idle tick (law 11); PRM composed rest with satellites visible | G-BREATHE-WHILE-SETTLED, G-PARK-OFFSCREEN | π-ALIVE, π-PERF |
 | W-MOOD | MOOD OUTPUT WIDENING | fix the sleepy pointer SIGN (RED); wire the §2.4 output table (posture/shadow/streak/satellites/nucleus); the excited `iridScale` ceiling taste call; `thinking` behind Q-BLOB-THINKING | G-POINTER-SIGN, G-MOOD-READ | π-MOOD |
-| W-REACT | TWO-LAYER REACTIVITY | era-1 satellite cursor repulsion (CPU); grab-and-fling behind Q-BLOB-GRAB (laws 14/15 presets) | G-SAT-REPEL | π-REACT |
+| W-REACT | TWO-LAYER REACTIVITY | era-1 satellite cursor repulsion (CPU); grab-and-fling behind Q-BLOB-GRAB (the W0-pinned 14(a)/14(c) split, §2.7) | G-SAT-REPEL | π-REACT |
 | W-HITTEST | EXACT SILHOUETTE | CPU SDF `hitTest(x,y)`; the precision win; expose on the public seam; ordered at/after W-SHOW | G-SDF-HITTEST-PRECISION | π-HITTEST |
 | W-TOPOLOGY | TWO-POLE MORPH | `deflate` on the shared spring; STAGED axes, no width overshoot, sparkle carries the energy, light leads shape (§2.5); sustained-signal gating; within-pill listening ring | G-DEFLATE-STAGED, G-SPARKLE-WITHIN | π-TOPOLOGY |
 | W-FINAL | CONSUMER + AUDIT + RELAY | demo hero adopts the technicolor default; overfitting audit; the value.js relay addendum (§2.9); FINAL.md | G-CONSUMER + overfit-audit | π-HERO |
@@ -340,7 +350,8 @@ clause stays deleted (born-GREEN, CRIT2 F1).
 
 π-SHADOW (stamp + live channel deltas), π-STREAK (streak arrival order on formation: light →
 shape → rim → streak), π-IDENT, π-SHOW (waist + pinch-off), π-ALIVE/π-PERF (the `<7%` budget with
-aurora co-present, DPR-3 tile GPU), π-MOOD (sleepy-repel sign + the mood-read capture), π-REACT,
+aurora co-present, DPR-3 tile GPU), π-MOOD (sleepy-repel sign + the mood-read capture), π-REACT
+(repulsion + both release regimes: rigid no-overshoot place vs single-~9%-overshoot flick),
 π-HITTEST (disc-gap + outboard-satellite clicks), π-TOPOLOGY (staged-axis order + no width
 overshoot + sparkle bloom), π-HERO. **π-PARITY** replaces π-SAFARI-SINGLE: both engines
 paint-equivalent per band (WebGPU primary + WebGL2 fallback), honoring the live-π lessons
@@ -384,8 +395,9 @@ Open questions routed to the user ASK (with recommendations):
 - **Q-BLOB-THINKING.** Adopt `thinking` as a sixth named mood (the sparkle nucleus's home)?
   Recommendation: yes—it completes the assistant arc on the shipped circumplex.
 - **Q-BLOB-GRAB.** Ship grab-and-fling on the mascot register (opt-in prop)? Recommendation:
-  yes, opt-in—the laws-14/15 physics presets already exist repo-wide; the mascot register is the
-  right home and the substrate register never gets it.
+  yes, opt-in—the laws-14/15 physics presets already exist repo-wide; the release rides the §2.7
+  regime split (14(a) place / 14(c) flick, never blended); the mascot register is the right home
+  and the substrate register never gets it.
 - **The substrate-band note (inverted from the opus ask).** The value.js WGPU-twin-delete order
   does not bind this producer (§2.9); the value.js relay addendum lands at W-FINAL per the
   consumer-updates ruling. No blob wave waits on it.

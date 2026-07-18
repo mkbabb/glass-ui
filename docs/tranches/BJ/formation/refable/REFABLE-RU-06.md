@@ -69,7 +69,9 @@
 | D20 | Props ~5 as brush·shape·color·animation·seed (PASS3 §8) | OPUS-WRONG | Five, but the RIGHT five: shape·color·weight·seed·draw; `brush`+`animation` die with the taxonomy; seed defaults to a text-hash (FABLE-NEW) |
 
 **FABLE-NEW (no opus counterpart):** (N1) the ballistic min-jerk physics model—velocity→width and
-velocity→draw-pace from one curve (P1/P4); (N2) the codex choreography binding—duration law
+velocity→draw-pace from one bell in two normalizations: unit-integral v̂(t)=30t²(1−t)² for
+pace/duration (v̂=s′, exact), peak-normalized ĝ(t)=16t²(1−t)²=v̂/1.875 for width (P1/P4; the H-1
+crit fix below); (N2) the codex choreography binding—duration law
 T=clamp(150,120+0.35L,450)ms honoring the suffusion 150ms checkbox mark, the detuned ink-settle
 channel (law 5), the fade-led exit (law 8's exit half, per RU-16 R10), fire-and-forget replay
 (law 15), resize continuity (law 17); (N3) the structural layering law (isolation-fenced wrapper,
@@ -89,6 +91,17 @@ of which D10/D12 RATIFIED-AMENDED) · FABLE-NEW **6** (N1-N6).
 - PASS3:132's law-1 phrase and PASS1:12's "law 11—the editorial hand voice" gloss both cite laws
   the codex never carried in those words; the union cites laws 5/8/10/11/14/15/17 by number
   against the rewritten codex anchors (`IOS27-CODEX.md:18-22, :26-27, :33-37`).
+
+## Crit fixes (post-union, RU-06 fix seat, 2026-07-18)
+
+- **H-1 MAJOR (`crit-dock-handmark.md`) APPLIED.** The union's P4 width law had applied the
+  unit-integral bell v̂ (peak 1.875 at t=½): 0.12·1.875 = 22.5% mid-stroke thinning, breaching
+  P4's own ≤~15% clause, G-RESTRAINT's ≤15% gate, and this table's D3 "±12% velocity width"—W1's
+  flagship gate born-RED against the spec's own generator. Fixed in the design doc (P1/P4 +
+  header stamp): width normalizes on ĝ(t)=16t²(1−t)² (peak 1, so peak thinning is exactly 12%);
+  v̂ keeps pace/duration, where the unit-integral form is the exact derivative of the quintic
+  (s′=30t²(1−t)²). D3, G-RESTRAINT, and the generator now agree by construction; no gate or
+  verdict flips. H-2..H-5 MINOR are not this unit's brief and remain open in the crit file.
 
 ## ROUTING (PROPOSE only—nothing outside the union PASS3 + this ledger touched)
 

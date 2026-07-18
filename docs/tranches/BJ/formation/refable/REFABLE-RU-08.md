@@ -51,7 +51,7 @@
 | D9 | Hit-test precision + W-SHOW coupling (§2.7, F5/F6) | decided | **RATIFIED** | The CPU SDF mirror as the only correct hit surface for orbit>body; corner fall-through already green; ordering kept |
 | D10 | Route dispositions γ/δ | γ BLOCKED, δ BANKED-AS-ANCHOR | **RATIFIED, γ re-worded** | With chrome demoted to a preset, γ's "2D reads as metal" pivot no longer gates the DEFAULT identity — γ reopens only if the user promotes chrome to the identity AND the 2D term fails in paint. δ now yields THREE harvested assets (shadow, hit-test, cursor repulsion) |
 | D11 | Satellite cursor repulsion | absent | **FABLE-NEW** | Era-1 revival (`88f8f09^:cursor-repulsion.ts` constants as reference); satellites dodge, body leans — two-layer reactivity; CPU-side, W-REACT |
-| D12 | Grab-and-fling | absent | **FABLE-NEW** | Laws 14/15 applied to the mascot register: 1:1 tracked (never tweened), duration-stable v0-seeded release (τ≈130ms class, ≤ one ~9% overshoot), asymmetric rubber band at bounds; opt-in, Q-BLOB-GRAB |
+| D12 | Grab-and-fling | absent | **FABLE-NEW (amended per fresh-crit B-1)** | Laws 14/15 applied to the mascot register: 1:1 tracked (never tweened); release split at law 15's seam—slow place rides 14(a) (ζ≥1, τ≈130ms, NO overshoot, deformation released before flight per its single-channel clause), flick rides 14(c) (v0-seeded, ζ≈0.75-0.85, ~250ms, ≤ one ~9% overshoot); constants never blend across the (a)/(c) rows; W0 pins the seam threshold + per-path presets; asymmetric rubber band (14(b)) at bounds; opt-in, Q-BLOB-GRAB |
 | D13 | Sparkle nucleus + `thinking` | dot-ring as within-PILL listening only | **FABLE-NEW (generalization)** | The within-SURFACE sparkle state per replaced law 13: persists through every morph, peaks when shape motion pauses (P8/b4_10); one mechanism serving listening-ring + thinking + the morph energy channel |
 | D14 | Identity color: technicolor default + per-satellite ink | not addressed (cream vs chrome framing) | **FABLE-NEW** | Cartoon-technicolor edict + the F9.R1 `uSatColor[]` seam folded in (W-IDENT); warm-cream demoted to a named calm preset; Q-BLOB-DEFAULT re-framed (chrome not a candidate) |
 | D15 | Meniscus-waist read + pinch-off beat | W-SHOW = geometry promotion only | **FABLE-NEW (canon-bound)** | The ~45-50% lobe-height waist as the state signal (law 6 canon, the 15.26.54 goo reference) added to G-SHOW-VISIBLE; within-blob only — the law-6 fence restated |
@@ -62,6 +62,12 @@ struck a wave) · **RATIFIED 7** (D4-D10) · **FABLE-NEW 6** (D11-D16). Cross-cu
 citation class (old codex `:58-60/:44/:69`, pre-RU-15 MARKS-B `:101-102/:215-218/:262-269/:273`)
 re-anchored throughout; PASS1/PASS3 "Fable seat" headers falsified by the census — the union header
 carries the true provenance.
+
+Fresh-crit application (2026-07-18, `crit-aurora-blob.md` B-1, MAJOR): the D12 release spec had
+conflated the law-14(a) and 14(c) regimes (τ≈130ms class WITH a ~9% overshoot—physically
+impossible on one spring, and deformation-in-flight violated 14(a)'s single-channel clause). Cured
+in `GF-BLOB-PASS3.md` §2.7 + W0 scope + W-REACT + π-REACT + Q-BLOB-GRAB, and mirrored in the D12
+row above: regimes split at law 15's seam, presets named at W0, constants never blended.
 
 ## ROUTING (PROPOSE only — nothing outside GF-BLOB-PASS3.md + this sidecar touched)
 

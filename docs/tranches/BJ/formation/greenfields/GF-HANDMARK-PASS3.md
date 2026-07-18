@@ -9,6 +9,10 @@
   This design is authoritative on every conflict; opus decisions survive only where RATIFIED.
   Verdict ledger: `../refable/REFABLE-RU-06.md`. Boundary artifact: `ru06-anew-handmark.md`
   (scratchpad, session-local).
+- crit fix applied (RU-06 fix seat, claude-fable-5, 2026-07-18): `../refable/crit-dock-handmark.md`
+  H-1 MAJOR—the P4 width law re-normalized to the peak-normalized bell ĝ(t)=16t²(1−t)² (peak 1);
+  the unit-integral v̂ stays the pace/duration form, where it is exact (v̂=s′). G-RESTRAINT is now
+  satisfied by the spec's own generator (12% peak thinning, ≤15% bound, D3's ±12% figure).
 - THE USER RULING (2026-07-17, standing, supersedes any census floor): "handmark is keep. But
   greenfield and perfect from first principles. Fable." Full surface authority; consumers adapt
   per the consumer-updates ruling. Q-HM-1/Q-HM-2 resolve inside this loop (below), not at ASK.
@@ -46,8 +50,11 @@ Two sharpenings the prior loop missed:
 A hand mark is a BALLISTIC GESTURE recorded in ink. Six principles, each load-bearing:
 
 - **P1 minimum-jerk sweep.** One confident stroke follows the bell velocity profile
-  v̂(t)=30t²(1−t)²; its position profile is the quintic s(t)=6t⁵−15t⁴+10t³. Draw pace, width
-  modulation, and duration all derive from this one curve.
+  v̂(t)=30t²(1−t)²—the unit-integral form (∫₀¹v̂=1, peak 1.875 at t=½), the exact derivative of
+  the quintic position profile s(t)=6t⁵−15t⁴+10t³. Draw pace and duration derive from v̂; width
+  modulation uses the peak-normalized bell ĝ(t)=16t²(1−t)²=v̂(t)/1.875 (peak 1), so P4's
+  coefficient reads directly as a fraction of W. One bell, two normalizations, each where its
+  form is exact.
 - **P2 parameter randomness, never sample noise.** A stroke has an inflection budget of 1-2.
   Seeded variety enters ONLY through the low-dimensional parameters of a smooth analytic family—
   tilt, bow, harmonic phase, endpoint offsets—sampled densely from the smooth curve. Zero
@@ -56,9 +63,12 @@ A hand mark is a BALLISTIC GESTURE recorded in ink. Six principles, each load-be
 - **P3 the bow.** A hand line bows (the wrist/elbow pivot): sagitta 0.6-1.5% of span, seeded
   sign (sag-biased), plus one second harmonic ≤0.4× amplitude so it reads arc, not sine; whole-
   line tilt ±~1°.
-- **P4 width restraint.** w(u)=W·(1−0.12·v̂(u))—thinnest where fastest—plus a short entry taper
-  (~5% of arc) and a longer lift-off run-out (~8%, to ~0.55W). Total modulation ≤~15% outside the
-  tips. The shipped slug was over-modulation; the pen is restraint.
+- **P4 width restraint.** w(u)=W·(1−0.12·ĝ(u))—the peak-normalized bell of P1, thinnest where
+  fastest, peak thinning exactly 12% at mid-stroke—plus a short entry taper (~5% of arc) and a
+  longer lift-off run-out (~8%, to ~0.55W). Total modulation ≤~15% outside the tips; the
+  generator sits at 12%, inside its own bound and G-RESTRAINT by construction. (The unit-integral
+  v̂ does not belong here—0.12·v̂ peaks at 22.5% and breaches the bound; crit H-1, fixed.) The
+  shipped slug was over-modulation; the pen is restraint.
 - **P5 endpoint truth.** Touchdown lands slightly off (±0.5px, ±1°); the circle overshoots
   closure (sweep ~390-400°, ~5% radial miss)—the canonical hand-circle signature.
 - **P6 ink is still.** A made mark does not wriggle. The boil retires entirely—codex law 11's

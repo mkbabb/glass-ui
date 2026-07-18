@@ -10,8 +10,9 @@
   01:23 EDT — then unioned. My design is authoritative on conflict; opus decisions kept only where
   RATIFIED. Verdict ledger: `../refable/REFABLE-RU-07.md`.
 - The opus loop's core thesis independently re-derives and RATIFIES. Its register half is corrected
-  (renames, DUSK re-found, DAWN hardened, the solar-family grammar the charter's "how can they be
-  better" half demanded and the opus loop never designed), its evidence layer is re-based on
+  (renames, DUSK re-found—user-ratification routed via Q-AURORA-QUARTET, §8—DAWN hardened, the
+  solar-family grammar the charter's "how can they be better" half demanded and the opus loop never
+  designed), its evidence layer is re-based on
   REFABLE-RF-3 (the byte-identity and only-strokeMode rhetoric are dead), its W4 fork gains the
   thesis-consistent third arm, the dead-axis register (RF-3 row 28) is added, and V-A95 is
   re-framed on the round-3-live evidence.
@@ -208,9 +209,9 @@ VALUE STRUCTURE at a glance:**
 | slot | identity | the design |
 |------|----------|------------|
 | SUNSET | the default; mid-key warm horizon | the elongated sun-BAND low (the one elongation exerciser), coral-rose core, cream apex — the extant SETTING_SUN carries this; keeps the slot |
-| DUSK | RE-FOUNDED, not tuned | the extant DUSK is SUNSET wearing a lilac whisper (L 0.50-0.91 vs 0.52-0.93 — same value structure, same drift-ladder family; RU-09: "today a lilac-note of SUNSET"). Twilight is DARK: low-L indigo/violet base (L≈0.35-0.45, h 280-300, C 0.10-0.12), the warm coral compressed to a narrow dying ember band at the horizon, lilac veil above. Tellable by construction. Round-2 death clause applies to THIS config, not the whisper |
+| DUSK | RE-FOUNDED, not tuned—user-ratified | the extant DUSK is SUNSET wearing a lilac whisper (L 0.50-0.91 vs 0.52-0.93 — same value structure, same drift-ladder family; RU-09: "today a lilac-note of SUNSET"). Twilight is DARK: low-L indigo/violet base (L≈0.35-0.45, h 280-300, C 0.10-0.12), the warm coral compressed to a narrow dying ember band at the horizon, lilac veil above. Tellable by construction. The user named dusk good (A13/F08), so the identity replacement rides the Q-AURORA-QUARTET ask (§8): ratified on before/after π-QUARTET captures, never self-ratified; the death clause on THIS config is USER-JUDGED—default if silent: harden-not-delete, slot retained |
 | SKY | the one cool field | midday cerulean volumetric, highest-L spread; candidate for `warpMode:"curl"` (cirrus wisps) — paint-judged, not bound |
-| DAWN | provisional, HARDENED before judged | pre-sunrise = high-L COOL undertone (lavender-grey base), pink blush high and diffuse, NO sun-band (that is SUNSET's signature). Dies in round two only if capture still confounds with SUNSET after the value-structure split |
+| DAWN | provisional, HARDENED before judged | pre-sunrise = high-L COOL undertone (lavender-grey base), pink blush high and diffuse, NO sun-band (that is SUNSET's signature). If π-QUARTET capture still confounds with SUNSET after the value-structure split, the confound routes to the user via Q-AURORA-QUARTET (§8)—USER-JUDGED, default if silent: harden-not-delete, slot retained; a capture judge never deletes a slot the user named good (A13) |
 
 Family mechanics: each member gets its OWN drift-phase ladder (the A/B/C trio literally shared one
 ladder — decorrelate by design) and a drift signature clearing the law-11 visible-migration floor
@@ -233,8 +234,12 @@ tranche).
 byte-identical sun-band nucleus + identical drift ladder), DAY9_YELLOW, OIL_GESTURAL,
 OILPASTEL_RAINBOW, OILPASTEL_OCEAN, SPEEDTEST (relocated).
 
-**Arithmetic:** 11 keep (4 solar + 7 heroes) + 6 removed = 17. ✓ Headline: **17 → 11**, with OIL
-contingent on W4's arm (REAUTHOR keeps it; KILL re-expresses it → 10).
+**Arithmetic:** 11 keep (4 solar + 7 heroes) + 6 removed = 17. ✓ Headline: **17 → 11**, elasticity
+stated in full: OIL is contingent on W4's arm (PORT/REAUTHOR keep it at 11; KILL re-expresses it
+→ 10), and the DUSK/DAWN death clauses are live but USER-JUDGED (Q-AURORA-QUARTET, §8; default if
+silent: harden-not-delete, slots retained)—each user-ruled kill is −1. Floor **9** under the
+death-clause pair; the compound corner (W4-KILL plus both clauses fired) is **8**. No slot dies on
+a capture judgment alone.
 
 **The round-2b override, owned (retained):** round-2b diagnosed the oil-pastel skin (true) and
 recommended merge-into-oil (γ); A13 overrides toward authoring the real body. Stated, not
@@ -368,7 +373,9 @@ smooth-quartet half may land early; it does not close F08.
 - **π-DISTINCT** — every shipped medium at the canonical config, both backends; pairwise D-matrix;
   prove `min D ≥ τ`. Baseline = the D=0 rows on WGSL.
 - **π-QUARTET [union addition]** — the four solar presets, paired captures; L-histogram
-  separation; DUSK/DAWN death clauses fire here, judged against the RE-FOUNDED configs.
+  separation; the DUSK/DAWN death-clause EVIDENCE is captured here (before/after pairs against the
+  RE-FOUNDED configs) and routes to the user via Q-AURORA-QUARTET (§8)—the capture informs, the
+  user judges.
 - **π-PARITY** — each real mode on both backends at fixed config/t; ΔE map < ε.
 - **π-VANGOGH-PRIMARY** — vangogh on WGSL: discrete separable dabs. Baseline = the Kuwahara smear.
 - **π-OILPASTEL** — the new body: blunt-capsule read + overlap blend + burnish. Baseline = the
@@ -410,13 +417,24 @@ AND make the named exemplars better) + the dead-axis census consumed. What caps 
    needs the W0 budgets + a measured paint.
 3. **τ and ε are described, not pinned** — W0 captures the baselines first. ε is perceptual by
    construction: byte-parity across backends is impossible (PCG2D hashing vs the WGSL fbm).
-4. **DUSK/DAWN death clauses live** — judged at π-QUARTET against the re-founded configs.
+4. **DUSK/DAWN death clauses live** — evidence at π-QUARTET against the re-founded configs; the
+   judgment is the user's (Q-AURORA-QUARTET), default if silent: harden-not-delete.
 
-**User ASKs: none open.** The opus crayon-vs-ink ASK is resolved-CUT on the singular A13 reading +
-F03 parsimony (flip: an explicit user ask for a distinct ink medium revives it as its own wave).
-The kuwahara-exemplar question is resolved studio-only (flip: the W4 KILL arm seats
-kuwahara+palette presets naturally). PASTEL/MEADOW stay as one-hero-per-body keeps; demotion to
-studio-only remains available if the user wants the register under 10.
+**User ASKs: ONE open—Q-AURORA-QUARTET** (crit A-1 cure; routed per F04, which relays reduction
+questions to the user—a π-QUARTET capture judge is not the user). A13 names the extant exemplars
+good ("sky, dawn, dusk"); F08 focuses the register on "sky, sunset, dusk". The union nonetheless
+replaces DUSK's whole identity and arms death clauses on both DUSK and DAWN—exactly F04's
+reduction-question class, so it routes: (a) ratify the DUSK re-found on before/after π-QUARTET
+captures (the extant lilac whisper vs the low-L twilight); (b) rule the DUSK/DAWN death
+clauses—USER-JUDGED, default if silent: harden-not-delete, slots retained. The duplication
+diagnosis stands on its own evidence (L-span 0.50-0.91 vs 0.52-0.93, one drift-ladder family)—what
+needs the user is the disposition, not the diagnosis. Proposed register site:
+`BJ/ASK-REDUCTION.md` (the F04 checklist; sidecar RT10). The opus crayon-vs-ink ASK stays
+resolved-CUT on the singular A13 reading + F03 parsimony (flip: an explicit user ask for a
+distinct ink medium revives it as its own wave). The kuwahara-exemplar question stays resolved
+studio-only (flip: the W4 KILL arm seats kuwahara+palette presets naturally). PASTEL/MEADOW stay
+as one-hero-per-body keeps; demotion to studio-only remains available if the user wants the
+register under 10.
 
 Per the charter this remains a tranche-development artifact: architecture converged and
 internally consistent; empirical verification structurally owed.
@@ -430,5 +448,15 @@ predecessor seat under the same charter produced a complete union draft and wall
 returning (`../refable/salvage/wf23583121-GF-AURORA-PASS3.md`). This file is that salvage draft,
 checked verdict-by-verdict against the ledger (8 OPUS-WRONG, 8 FABLE-NEW, 12 RATIFIED—conforming;
 one addition: the RATIFIED-6 perceptual-ε rationale folded into §8 item 3) and written to disk by
-a follow-up Fable seat—sidecar-driven, salvage-draft-based. Section positions match the RU-07
-ROUTING anchor map (§3.1 `:59-90` through π-REVERSE-DRAG `:379`).
+a follow-up Fable seat—sidecar-driven, salvage-draft-based. Section positions matched the RU-07
+ROUTING anchor map as materialized; the crit-fix below shifted them, and the sidecar map is
+re-anchored in step (§3.1 `:60-91` through π-REVERSE-DRAG `:386`).
+
+Crit-fix note—2026-07-18, model claude-fable-5 (read verbatim from this seat's system context),
+REFABLE fix seat, crit `../refable/crit-aurora-blob.md` A-1 (MAJOR). The DUSK re-found and the
+DUSK/DAWN death clauses now route through the ONE open user ask Q-AURORA-QUARTET (§8): the
+re-found is ratified by the user on before/after π-QUARTET captures (A13/F08 name dusk and dawn
+good—a capture judge is not the user, F04), the death clauses convert from capture-judged to
+USER-JUDGED (default if silent: harden-not-delete, slots retained), and the §3.6 headline states
+the full elasticity (17 → 11; floor 9 under the death-clause pair; compound corner 8 with
+W4-KILL). Sidecar rows W1/W2/N7 + RT1/RT5/RT7 amended and RT10 added in step.

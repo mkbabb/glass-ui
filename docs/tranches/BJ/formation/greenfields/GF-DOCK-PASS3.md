@@ -271,6 +271,21 @@ the strip beneath it at a penetration-keyed rate—the world scrolls under a qua
 release commits, then seats per §4.4. No iOS evidence (no overflowing iOS dock); derived from
 the adopted Safari model + drag-autoscroll idiom, taken deliberately.
 
+**The two remaining matrix ladder rungs (SUFFUSION §1.1), disposed:**
+
+- **Engage—the press-charge whole-bar wash: WITHHELD.** The matrix mandates "a glow wash crosses
+  the whole bar before any travel" and attributes it to Find My as measured; the ratified
+  timeline does not attest it—`sr-0710-1626 P1` records a single-frame (≤83ms) lens birth at
+  the touched item, and the only bar-adjacent light is the lens's own glow bleeding past the
+  rim (f12_078), no bar-crossing wash. The press acknowledgment this spec ships is the measured
+  one: birth ≤83ms, brighter than the tray, one-highlight transfer. The wash-attribution check
+  rides the R5 feed with the G-row correction (§9).
+- **Idle—the ~8s specular sweep: ADOPTED.** The matrix's one licensed idle light (a slow
+  specular sweep on a primary selection lens, at most one per view) lands on the dock lens at
+  rest—W4 scope, PRM removes it, the velocity glint (§4.3) stays a separate channel.
+  Safari-derived license taken deliberately, not an iOS copy claim (the 14.38.58 capsule shows
+  no idle bloom—law 3's evidence stands).
+
 ### 7.2 The posture choreography (law 16a — FABLE-NEW; absent from the opus round)
 
 The shipped collapsed/hover/pinned FSM survives; its MORPH gains the measured choreography:
@@ -328,6 +343,12 @@ the canon:
 | momentum tick on ≥2-slot lens jumps | N3 tick-vs-budget test | candidate named in §7.1; adopted only if the test passes |
 | choreography channel API (named channels, fixed lead order) | F3 CONDUCTOR | §4.4/§7 name their channels; the API home is F3's |
 | law-14 physics presets vs `springPreset("dock")` reconciliation | F4/F1 + BAND registers | the constants are law regardless of preset naming; `DOCK_SPRING` 0.30/ζ0.82 stays the posture-morph clock; the strip's SNAP/RUBBER/RELEASE registers land with the facility |
+| **the matrix G-row lens contract (travel/arrival)—RECONCILIATION, not a deferral** | SETTLED HERE—law 16b/c senior; correction routed out on R5 | the fork is named: SUFFUSION §1.4-G specs travel that "stretches to span source and target (~2.5 slots)" and an arrival that "lands oversized 110-120%, holds ~200ms"; the measured record is one-pitch travel ~170ms as a decaying ~1.6-1.8x bulge—never a width tween between endpoints—and a squash-settle ~150-250ms with no visible bounce (`sr-0710-1626:48`), full settle ~250ms (law 16b). The matrix row reads as the pre-RU-15 "sliding pill" model falsified at RU-15 W18; the law-16 constants are SENIOR, and the G-row travel/arrival correction routes to IOS27-MICRO via the R5 reciprocal feed (`REFABLE-RU-05.md` R5). The ladder's engage wash and idle sweep are disposed in §7.1—withheld and adopted respectively, one line each |
+
+The last row is the inverse of a deferral: where the matrix itself forked from the measured
+canon, this spec declares the law-16 constants senior and routes the correction out rather than
+holding two live contracts for the campaign's headline object—the divergence is now named on
+this end, and R5 names it on the other.
 
 ---
 

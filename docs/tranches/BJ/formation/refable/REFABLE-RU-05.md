@@ -46,7 +46,7 @@
 | D16 | (absent) the physics constants + motion regimes | **ADDED** | FABLE-NEW | law 14 presets named in-spec: τ≈130ms duration-stable snap with creep tail; rubber gain ≈0.023, 90/380ms compression/release asymmetry, never crossing rest; release ζ≈0.75-0.85 single ≤9% overshoot; per-detent damping; velocity projection. Law 15: tracked/ballistic/fire-and-forget split at the finger; never tween a tracked drag (union §4.2) |
 | D17 | (absent) cut-band detent grammar | **ADDED** | FABLE-NEW | end detents flush; interior detents bias-tuned so both edges land partials in a 25-60% cut band—the peek guaranteed by construction, replacing the "arbitrary but faded" concession (union §4.3) |
 | D18 | (absent) lens-at-edge strip advance | **ADDED** | FABLE-NEW | dragging the lens into the outer ~1-item zone advances the strip beneath it (world-scrolls-under-a-quasi-fixed-lens, the Safari-adopted model, SUFFUSION §1.4-G); declared divergence—no overflowing iOS dock exists (union §7.1) |
-| D19 | (absent) the IOS27-MICRO await ledger | **ADDED** | FABLE-NEW | eight named decisions explicitly deferred to the live sibling: F2 native-scroll expressibility (the mechanism decider), F4 scalar roster, F1 `--scrub-t` spine, F5 lens-body/medium, the dock-to-card mechanism duel, the taffy pre-commit zone, N3 momentum tick, the preset reconciliation vs `DOCK_SPRING` (union §9)—hooks named, nothing duplicated |
+| D19 | (absent) the IOS27-MICRO await ledger | **ADDED** | FABLE-NEW | eight named decisions explicitly deferred to the live sibling: F2 native-scroll expressibility (the mechanism decider), F4 scalar roster, F1 `--scrub-t` spine, F5 lens-body/medium, the dock-to-card mechanism duel, the taffy pre-commit zone, N3 momentum tick, the preset reconciliation vs `DOCK_SPRING` (union §9)—hooks named, nothing duplicated. AMENDED by crit D-1 (2026-07-18): the ledger gains a ninth row that is a RECONCILIATION, not a deferral—the matrix G-row lens contract is settled here (law 16b/c senior), its travel/arrival correction routed out via R5; §7.1 disposes the ladder's engage wash (WITHHELD, evidence) and idle sweep (ADOPTED, matrix license) |
 | D20 | stale line refs (`IOS27-CODEX.md:37/:34/:41/:22-28`) + spring register | MECHANICAL | — | re-anchored per RU-16's map (law 4→`:14`, 5→`:18`, 6→`:19`, 7→`:20`, 14-18→`:33-37`); `DOCK_SPRING` verified on disk 0.30/ζ0.82 (`springPresets.ts:95-97`)—the {0.68,0.64} auto-memory figure is STALE (truth-up proposed below) |
 
 **Counts: OPUS-WRONG struck and replaced 5 (D3, D4, D8, D9, D10) · FABLE-NEW 5 (D15-D19) ·
@@ -62,12 +62,36 @@ mechanism; the union's surface is larger and honestly sibling-dependent).
 | R2 | `BJ/PLAN.md:211` (`BJ.W-A11Y-RULINGS`) | NO CHANGE—the toolbar/roving ruling is ratified verbatim; the family-J comment truth-up stands |
 | R3 | `BJ/formation/ASSEMBLY-CROSSWALK.md:177` (GF-DOCK §12.2 ASK row) | the ASK is re-grounded: no longer "eyeglass pill vs `--stretch` reuse, intersects Q051 `filter:url()` risk"—the law-16c lens is design-mandated with measured physics and a no-url-filter recipe; the ASK narrows to rollout surface (strip-first vs strip+rail) + whether the full SVG-displacement refraction variant is wanted anywhere |
 | R4 | `ASSEMBLY-CROSSWALK.md:178` (§12.3 row) + `:26-28/:49/:69` | line hygiene only—"the filmstrip" → "the strip"; all §/W anchors (§4.1, §5, §6, W1/W2/W3/W6) still resolve by construction; F47's landing row now reads W1 (evidence stack) + W3 (tap-to-reach) unchanged in slot |
-| R5 | `IOS27-MICRO/CHARTER.md:67-68` (standing context) | "the BJ GF-DOCK-PASS3 design (the snap-detented filmstrip; this campaign's findings feed its pass-4)" → the union model name; the feed is now reciprocal and explicit—GF-DOCK §9 defers eight named decisions to this campaign's convergence (F2/F4/F5/F1, mechanism duel, taffy zone, N3, preset reconciliation) |
+| R5 | `IOS27-MICRO/CHARTER.md:67-68` (standing context) + `IOS27-MICRO/analysis/SUFFUSION-MATRIX.md` §1.4-G | "the BJ GF-DOCK-PASS3 design (the snap-detented filmstrip; this campaign's findings feed its pass-4)" → the union model name; the feed is now reciprocal and explicit—GF-DOCK §9 defers eight named decisions to this campaign's convergence (F2/F4/F5/F1, mechanism duel, taffy zone, N3, preset reconciliation). The feed also carries the crit-D-1 correction OUTBOUND: the matrix G-row travel/arrival ("stretches to span source and target (~2.5 slots)"; "lands oversized 110-120%, holds ~200ms") contradicts the measured law-16b/c constants (one-pitch decaying ~1.6-1.8x bulge, squash-settle no visible bounce, `sr-0710-1626:48`) and reads as the pre-RU-15 sliding-pill model falsified at RU-15 W18—union §9 declares law 16 senior; the matrix's "Find My whole-bar wash" attribution (§1.1) is flagged for the same check (`sr-0710-1626 P1` shows a single-frame lens-local birth, no bar-crossing wash) |
 | R6 | `BJ/formation/round-3-harden/gf-dock.md` + `round-4-crit2/crit2-dock.md` | opus-begat digests carrying the superseded design (52%/42% rounds, the scroll-snap mechanism, the fade grammar, the pill scoping)—propose SUPERSEDED stamps pointing at the union PASS3 + this ledger (the RU-16 R15 pattern); any doc citing them re-cites the union |
 | R7 | `GF-DOCK-PASS1.md` + `GF-DOCK-CRIT2.md` (historical record) | untouched by fence; RU-16 R7's stale-citation notes apply (law-6 "sliding pill" quotes, `IOS27-CODEX.md:37` anchors); readers route to the union PASS3. CRIT2's spring-register correction (0.30/ζ0.82) is CONFIRMED on disk this seat |
 | R8 | `BJ/waves/BAND-STORY.md:570` (GF-DOCK-PASS3 C5 routing) | the C5 anchor survives in substance—the F05 split (dock-shift half → G-NO-LAYOUT-SHIFT §6; aurora half → story surface) is ratified; the citation should name union §5/§6 rather than the superseded §1 adjudication table |
 | R9 | `BJ/waves/BAND-FEEDBACK-MOTION.md` + the spring-preset home (`springPresets.ts`) | when the F4/F1 facility lands, the law-14 SNAP/RUBBER/RELEASE registers join the preset table; `DOCK_SPRING` 0.30/ζ0.82 remains the posture-morph clock—two clocks, one owner, per union §9's reconciliation row |
 | R10 | auto-memory (`MEMORY.md` BG line "DOCK_SPRING={0.68,0.64} via springPreset(\"dock\")") | truth-up proposed: on-disk preset is response 0.30 / ζ 0.82 (`springPresets.ts:95-97`), confirmed independently by the opus CRIT2 and by this seat |
+
+## Crit application (fresh-critic pass, 2026-07-18)
+
+D-1 MAJOR (`refable/crit-dock-handmark.md`—the lens-contract canon fork) APPLIED in the union
+doc, this seat (`claude-fable-5`):
+
+- **§9 reconciliation row added**: the matrix G-row lens contract (SUFFUSION §1.4-G
+  travel/arrival) is no longer silently divergent—law 16b/c declared SENIOR with the measured
+  citations; the fork named in full (stretch-to-span ~2.5 slots + oversized 110-120% arrival +
+  ~200ms hold vs one-pitch decaying bulge + squash-settle no bounce); the matrix row identified
+  as the pre-RU-15 sliding-pill read.
+- **R5 extended**: the reciprocal feed now carries the G-row travel/arrival correction OUTBOUND
+  to IOS27-MICRO, plus the §1.1 wash-attribution check.
+- **§7.1 disposes the two unaddressed ladder rungs, one line each**: engage press-charge
+  whole-bar wash WITHHELD—the critic called it measured, but the ratified timeline does not
+  attest it (`sr-0710-1626 P1`: single-frame lens-local birth, the only glow is the lens's own
+  bleed at f12_078; the "measured" credit belongs to the matrix's claim, not the record)—the
+  measured press acknowledgment (birth ≤83ms, brighter, one-highlight) already ships; idle ~8s
+  specular sweep ADOPTED under the matrix's explicit license (at most one per view, PRM-off,
+  Safari-derived divergence, not a copy claim).
+- **D19 amended** above: the await ledger's ninth row is a reconciliation, not a deferral.
+
+Nothing declined; the finding's fix landed on all three arms (seniority row, R5 routing, §7
+adopt/withhold). Files touched by this pass: the union PASS3 + this ledger only.
 
 ## Files
 
