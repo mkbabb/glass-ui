@@ -143,8 +143,10 @@ fill, each re-spelling the same mechanic with divergent token vocabularies: Slid
 **TARGET.**
 - Src: `src/components/slider/Slider.vue:286-293,224`; `src/components/progress/Progress.vue:100-101,
   60-62,169-171`; `src/components/timeline/ContinuousRail.vue:31,84`.
-- The fold target: a new `src/components/_shared/track.css` `@utility glass-track` + `--track-*` token
-  family (mirroring the existing `glass-liquid-fill` class idiom).
+- The fold target: a new `src/components/_shared/track.css` recessed-well utility + `--track-*` token
+  family (mirroring the existing `glass-liquid-fill` class idiom). NOT named `glass-track`: that
+  class is LIVE on `ScrubberTimeline.vue:209` — the wave takes a non-colliding name (per
+  SUPERFLUITY F23's "rename off the colliding glass-track").
 
 **POST-MORTEM.** Parallel-authorship drift under a partial abstraction. The fill was already unified onto
 `glass-liquid-fill`, but the TRACK half was never lifted — each component minted its own track-bg token

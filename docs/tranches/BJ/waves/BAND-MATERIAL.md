@@ -390,7 +390,14 @@ re-spelling the same mechanic with divergent token names:
 |-----------|---------------|----------------|------------|------------|-----------------|
 | Slider | `.slider-track` (`Slider.vue:286-293`) | `--slider-track-bg` / `--muted-medium` | `.slider-range` | (range = the fill edge) | **`glass-liquid-fill`** (`Slider.vue:224`) |
 | Progress | `.progress-rail`/`.progress-track` (`Progress.vue:100-101`) | `--progress-track` / `--progress-track-on-glass` | `.progress-value-fill` (`:149-156`) | `--progress-fill` / `--primary` | **`glass-liquid-fill`** via `.progress-liquid-fill` (`:60-61,169`) |
-| Scrubber | `.continuous-track`/`.timeline-rail` (`ContinuousRail.vue:31`, `:84`) | (composes warm-glass `.timeline-rail`) | `.continuous-region-fill` | `--stitch-gradient` | — (region-stitched, own idiom) |
+| ContinuousRail (timeline) | `.continuous-track`/`.timeline-rail` (`ContinuousRail.vue:31`, `:84`) | (composes warm-glass `.timeline-rail`) | `.continuous-region-fill` | `--stitch-gradient` | — (region-stitched, own idiom) |
+
+**Census correction (CRIT2-A, 2026-07-17):** the row above was mislabeled "Scrubber" — it cites
+ContinuousRail; the actual `ScrubberTimeline.vue:209` carries a LIVE `class="glass-track"`, so W4's
+shared utility MUST take a non-colliding name (SUPERFLUITY F23: "rename off the colliding
+glass-track"). ScrubberTimeline's own track surface joins the W4 census at wave start —
+noting SUPERFLUITY F16 collapses it (a Slider in disguise), so W4 sequences after the timeline
+consolidation or scopes it out explicitly.
 
 **Shared, verified:** all three are pill-rounded (`--radius-pill`), all three window a value-fraction fill,
 and **`glass-liquid-fill` is ALREADY the shared fill register** (slider-range + progress both compose it,

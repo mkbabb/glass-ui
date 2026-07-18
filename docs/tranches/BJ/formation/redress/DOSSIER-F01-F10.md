@@ -147,7 +147,7 @@ class names in prose). The perfected `G-COPY-LINT` (§9) greps `demo/stories/**`
 → `BJ.W-ARISTOTLE-PROPORTION` (`BAND-MATERIAL.md:456-524`), which explicitly lists F03 as the
 "superfluous/distracting" class (`:481-485`) and marks the empty-panel/blob disproportion for its
 owner. **Verdict: PARTIAL.** Residue: BAND-STORY W2's *born-RED site enumeration* (`G-COPY-2`,
-`BAND-STORY.md:195`) names handmark/search/manifest but NOT `layers.vue` — the exact F03 page — and
+`BAND-STORY.md:195`) greps handmark/search only — NOT `layers.vue`, the exact F03 page — and
 neither gate yet carries an explicit clause banning the "Mechanics narration PATTERN" that
 `FABLE-STORY-FRAMEWORK.md:385-391` says the canon "MUST ALSO" ban. The general `G-COPY-LINT` regex
 would catch the tokens, but the pattern-level ban and the F03 site are not pinned.
@@ -468,7 +468,8 @@ sharpened F10 from a one-site to a two-site defect and the load-bearing `level` 
 
 > **D-F03 (to `BJ.W-STORY-COPY-CANON`, BAND-STORY W2).** Add `demo/stories/dock/layers.vue:279-335`
 > (the "Controlled — no rail" / "Mechanics" page — the exact F03 screenshot) to the born-RED
-> copy-canon site list alongside handmark/search/manifest (`G-COPY-2`, `BAND-STORY.md:195`), and add
+> copy-canon site list alongside handmark/search (`G-COPY-2`, `BAND-STORY.md:195` — the gate greps
+> those two only; manifest sits in no G-COPY gate either), and add
 > an explicit gate clause banning the "Mechanics narration PATTERN" — a section whose body is numbered
 > implementation mechanics with inline `<code>` internal tokens — per `FABLE-STORY-FRAMEWORK.md:385-391`
 > ("the copy canon MUST ALSO ban the pattern"). The general `G-COPY-LINT` regex reaches the tokens; this
