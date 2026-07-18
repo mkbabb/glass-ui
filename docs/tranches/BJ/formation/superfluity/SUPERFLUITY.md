@@ -1,4 +1,4 @@
-# BJ — SUPERFLUITY CONFRONTATION — synthesis
+# BJ — SUPERFLUITY CONFRONTATION — synthesis (REFABLE redo, RU-09)
 
 The user's F04 order was a grand audit of ALL components with questions in reduction relayed
 back. This file is the confrontation half: eleven adjudicators each took one flagged
@@ -6,6 +6,17 @@ near-duplicate or overfit pair, read the code and the consumer census on disk at
 returned a verdict. This synthesis collates them into one table, states each verdict against its
 standing ruling, surfaces every contradiction the lead judge must arbitrate, and hands each row
 to the user as a sharpened ASK with a real recommendation attached.
+
+**REFABLE provenance (RU-09).** The prior synthesis was opus-begat (the settings-level
+`CLAUDE_CODE_SUBAGENT_MODEL=opus` override; see `../refable/CENSUS-CLASSIFICATION.md`). Per the
+REFABLE protocol the eleven rows were re-adjudicated by fresh Fable seats, each reading code and
+census anew with the opus row presumed incorrect. The fresh verdicts are canonical and this file
+carries them; NO opus row survived verbatim — 3 OPUS-WRONG (verdict overturned: F33, F18,
+pulse/status-dot), 8 SHARPENED (direction carried, material new findings). Sidecar with the
+per-row fresh-vs-opus table: `../refable/REFABLE-RU-09.md`.
+
+**Verified model:** `claude-fable-5` (system-context line read verbatim: "The exact model ID is
+claude-fable-5"). Prior run: opus via the config override.
 
 Register note: every claim below is the adjudicator's, cited to their evidence. Where a verdict
 disputes a standing ruling or another verdict, it is said plainly in the CONTRADICTIONS section —
@@ -15,633 +26,812 @@ nothing is smoothed over.
 
 ## 1. Verdict table
 
-| Row | Verdict | Target | Confidence | One-line |
+| Row | Fresh verdict | vs opus | Target | One-line |
 |---|---|---|---|---|
-| F25-confirm-dialog | MERGE-INTO | dialog (component already merged; delete the duplicate story) | high | Never a distinct component — a Dialog preset, merged at 7.0.0; residue is a duplicate demo page to delete + an owed 8-consumer relay. |
-| F33-deck-carousel | KEEP-DISTINCT | — | high | Headless nav engine vs embla visual scroller — zero measured similarity; the only shared thing (dots) already folded onto pager-dots; cut the vestigial DeckPager.vue. |
-| F18-chassis-metric | KEEP-DISTINCT | — | high | Structurally-unique app-shell spine (muster ×5 + speedtest ×4) and four distinct-DOM-role readouts with logic already extracted; census-refusal is merit-based, not a compat shield. |
-| F23-track-family | COLLAPSE-FAMILY | one _shared/track.css well register (Slider + Progress) | high | Real MATERIAL DRY: two token vocabularies spell one recessed well; fill already shared. Keep components distinct; keep the timeline out of W4 (W5 owns it); rename off the colliding glass-track. |
-| F30-tempo | MERGE-INTO | springs.vue (F29) — PAGE half only | high | Two things: the load-bearing --motion-tempo one-clock token (KEEP verbatim) and a thin demo page (fold into the springs configurator as a global time knob). |
-| F32-F42-scroll-systems | COLLAPSE-FAMILY | 9-member survivor set on one reader core; one /motion/scroll page | high | Not many systems — one reader spine + two orthogonal keeps + a ToC that consumes the core; keep 9 real-consumer survivors, DEMOTE/DELETE 6 demo-only-or-dead exports, fold reveal into scroll. |
-| F16-timeline | COLLAPSE-FAMILY | continuous → the one Timeline; delete scrubber + segmented; flatten dispatcher | high | Scrubber is a Slider in disguise, segmented is a consumerless re-render; only continuous has a real consumer (speedtest, thin slice) — collapse 5→1 and shed retired #detail/popover weight. |
-| F26-completion-seal | KEEP-DISTINCT | — | high | Not a duplicate of anything (absent from all 310 graph pairs) and NOT speedtest-overfit — speedtest imports it zero times; real census sci-report ×2 + atlas ×2. F26's premise is a verified factual error. |
-| F08-aurora-presets | COLLAPSE-FAMILY | reduced 10-preset register BOUND to W1-W4 real-body authorship | high | Two complaints: the preset-skin cut (correct) and the medium-body collapse — on WGSL oil/vangogh/oil-pastel/kuwahara are one byte-identical body; cut presets without authoring bodies leaves the duplication the user named. |
-| GRAPH-pulse-statusdot | KEEP-DISTINCT | — | high | DRY already banked at _shared/FeedbackMark.vue; two ~15-line typed registers with disjoint state enums; merging regresses type safety and breaks 7 sites across 3 repos for zero dedup gain. |
-| GRAPH-dialog-drawer | KEEP-DISTINCT | — | high | Two genuinely different interaction models over a shared reka substrate; drawer's 492-line drag/detent engine is load-bearing. The ONE real dup is the ~40-60-line scene-staging substrate — bind it as a MATERIAL W3 deliverable, do not merge the components. |
+| F25-confirm-dialog | MERGE-INTO | SHARPENED | dialog (merge LANDED at BI B28; delete the duplicate story) | Never behaviorally distinct — pure composition over Dialog primitives; residue is the duplicate demo page + a relay owed to TWO repos (words ×5, muster ×1 dynamic) — value.js already migrated. |
+| F33-deck-carousel | COLLAPSE-FAMILY | OPUS-WRONG | PagerDots + useLeadTrail/usePagerWorm (the ONE metaball morph) | Primitives distinct, but the FAMILY duplicates: the deck story ships a SECOND barbell goo engine (byte-identical neck clipPath) violating the repo's own ONE-metaball doctrine; DeckPager is a zero-logic alias. |
+| F18-chassis-metric | DELETE | OPUS-WRONG | src/components/instrument-chassis + metric leave glass-ui | The external "consumers" are version phantoms (3.x/4.x pins on symbols that no longer exist at 7.0.0); three incompatible contracts in three majors = an app-shell re-carved per app, not a primitive; chassis duplicates Surface's material layer. |
+| F23-track-family | COLLAPSE-FAMILY | SHARPENED | src/styles/glass registers: track-well.css + value-marks.css | Two true folds, not one: the recessed pill well AND the value-mark checkpoint paint (~65 lines, missed before). Components stay distinct — a Slider/Progress merge is an ARIA category error. |
+| F30-tempo | MERGE-INTO | SHARPENED | springs.vue (F29) — PAGE half only | Facility (--motion-tempo + motionTempo()) is the one-clock CSS==JS TIME authority, KEEP verbatim; springs.vue already half-teaches tempo with no knob — the fold completes the configurator. |
+| F32-F42-scroll-systems | COLLAPSE-FAMILY | SHARPENED | one reader core + the morph spine; reveal family collapsed | Scroll spine not duplicated; the reveal wing is — FOUR stagger mechanisms, TWO near-identical morph adapters; plus the family's no-fourth-listener fence violated twice in its own house (useScrollProgress, useFadingScroll). |
+| F16-timeline | COLLAPSE-FAMILY | SHARPENED | continuous → the one Timeline; segmented deleted; scrubber's register folds into Slider | 5→1 stands; scrubber is NOT plain-deleted — its liquid-motion register (springs, tanh squish, accent-flood) survives as Slider's transport variant; de-overfit the baked speedtest popover envelope. |
+| F26-completion-seal | KEEP-DISTINCT | SHARPENED | — | F26's premise factually inverted: speedtest ×0; sci-report + atlas consume it including atlas's build-plugin (seal-compositor) — infrastructure-grade dependence. The one survivor of the KEEP roster. |
+| F08-aurora-presets | COLLAPSE-FAMILY | SHARPENED | ~11-preset register BOUND to W1-W4 body authorship | Four proven duplicate clusters (candidate A/B/C trio, palette-swap trio, strokeMode pair, yellow-watercolor pair); on WGSL six painterly presets render ONE mediumKuwahara body — the preset cut alone leaves that alive. |
+| PULSE-DOT | MERGE-INTO | OPUS-WRONG | StatusDot absorbs Pulse | Both are ~50-line wrappers over ONE _shared/FeedbackMark that owns 100% of the material; the delta is one motion boolean + a size — an AXIS, not a component identity; the "7-site break" is phantom (all sites already API-broken vs 7.0.0). |
+| DIALOG-DRAWER | COLLAPSE-FAMILY | SHARPENED | one overlay family on the shared reka substrate; Drawer narrowed to the detented gesture sheet | Cores stay distinct (useDrawerSnap load-bearing externally), but the family duplicates wider than admitted: twin stage anchors/scrim watchers/PRM computeds, byte-identical Title/Description, and gestureless drawer arms that are Dialog placement in disguise. |
 
-Tally: 5 KEEP-DISTINCT (F33, F18, F26, pulse/statusdot, dialog/drawer), 4 COLLAPSE-FAMILY (F23, F32-F42, F16, F08), 2 MERGE-INTO (F25, F30). Zero DELETE-outright, zero DEMOTE-TO-CONSUMER at the component grain. All eleven at high confidence.
+Tally: 6 COLLAPSE-FAMILY (F33, F23, F32-F42, F16, F08, dialog/drawer), 3 MERGE-INTO (F25, F30,
+pulse→status-dot), 1 DELETE (F18), 1 KEEP-DISTINCT (F26). The opus round's tally —
+5 KEEP-DISTINCT, zero DELETE — does not survive: three of its five keeps are overturned, a fourth
+(dialog/drawer) hardens to a family collapse, and only completion-seal stands as a clean keep.
 
 ---
 
 ## 2. Per-row verdicts
 
-### F25-confirm-dialog — MERGE-INTO → dialog
+### F25-confirm-dialog — MERGE-INTO → dialog (SHARPENED)
 
-**Verdict.** confirm-dialog was never a distinct component — it is a thin composition preset of
-the Dialog family, already merged into /dialog at 7.0.0. Surviving API is the Dialog family only
-(Dialog, DialogTrigger, DialogClose, DialogContent with surface/showClose + DismissableContentEmits,
-DialogHeader, DialogTitle, DialogDescription, DialogFooter). No ConfirmDialog symbol survives;
-the confirm flow is Dialog v-model:open + DialogContent :show-close=false with an
-escape/interact-outside guard + header/title/description + a DialogFooter action row + a local
-`confirming` ref for the loading dismiss-guard.
+**Verdict.** ConfirmDialog was never behaviorally distinct from Dialog. The deleted source
+(git c368ccbc^:src/components/custom/confirm-dialog/ConfirmDialog.vue) is pure composition over
+Dialog primitives: canned title/description/footer layout, a destructive→Button-tone boolean,
+emit('confirm')+close, and a 3-line loading dismiss-guard (preventDefault on
+@escape-key-down/@interact-outside). No distinct material — it explicitly rebased onto
+`<DialogContent surface="glass">` in BC W-DIALOG-GLASS; no distinct behavioral contract — reka
+owns focus trap/ARIA/dismiss in both; every prop/emit it used is first-class DialogContent API
+(src/components/dialog/DialogContent.vue:38-68). The component merge already LANDED at BI B28
+(commit c368ccbc): dirs/barrels/subpath deleted at 7.0.0.
 
-**Evidence.** src/components/confirm-dialog/ is absent on disk (ls: no such file), zero
-confirm-dialog/ConfirmDialog refs in src/. The demoted story's own header says the imperative
-promise-opener was thin — a preset over the Dialog root, not a distinct component — and the SFC
-composes only first-class Dialog primitives. DialogContent.vue:42,46,68 confirms every prop/emit
-the confirm story uses is first-class Dialog API. Critically, demo/stories/containers/dialog.vue:384-444
-ALREADY carries a StorySection heading=Confirm preset with the identical destructive + loading
-dismiss-guard flow and the prose "A consumer composition over Dialog, not a distinct component" —
-so the standalone feedback page is redundant, and manifest.ts:622 already advertises "a confirm-dialog"
-on /containers/dialog while manifest.ts:924 is the redundant standalone entry. Consumer truth:
-/confirm-dialog is imported by muster ×1 + words ×5 + value.js-demo ×2 = 8 external sites, all
-plain confirm flows.
+**Evidence.** Live residue confirmed on disk: demo/stories/containers/dialog.vue carries an
+identical "Confirm preset" StorySection (destructive + loading dismiss-guard, prose "a consumer
+composition over Dialog, not a distinct component"), making demo/stories/feedback/confirm-dialog.vue
++ manifest.ts:924 duplication; tests/components/dialog.confirm-preset.test.ts:5 imports the doomed
+story. Live consumer census (sibling repos, read-only): words ×5 static imports + muster ×1
+dynamic import (defineAsyncComponent, frontend/src/App.vue:68-69) of
+@mkbabb/glass-ui/confirm-dialog, pinned pre-7.0.0; value.js ×0 — already migrated (its comments
+mark the Glass 7 fold landed). The opus row's "8 external sites incl. value.js-demo ×2" was a
+census error.
 
-**Standing-ruling relation: UNDERMINES (partial).** ASK-REDUCTION C2 (:171-188) and
-ASSEMBLY-CROSSWALK.md:47,167 mark F25 as ASK with the component fold LANDED at 7.0.0 and two open
-calls — (a) the 8-consumer family-B relay, (b) keep-or-fold the demo story. The verdict SUPPORTS
-the factual finding and SUPPORTS the relay being owed, but UNDERMINES the deferral on (b): it
-does not leave keep-or-fold open, it rules FOLD/DELETE the standalone story, because
-dialog.vue:384-444 already carries the identical Confirm-preset section, so a second page is
-duplication that perpetuates the exact confusion F25 names.
+**Migration.** Survivor: the dialog family + the /containers/dialog story page. (1) DELETE
+demo/stories/feedback/confirm-dialog.vue and its manifest.ts entry (~line 924); if the
+benign-archive and custom-body variants earn keep, fold them as examples into dialog.vue's
+existing "Confirm preset" section. (2) Repoint tests/components/dialog.confirm-preset.test.ts to
+the dialog story. (3) Relay addenda per the consumer-updates ruling, owed to TWO repos only:
+words ×5 (SidebarWordListItem, SidebarWordListView, WordlistDashboard, WordListView, SearchBar) +
+muster ×1 (App.vue defineAsyncComponent — dynamic import, static greps miss it). Each swaps
+ConfirmDialog for v-model:open + `<DialogContent surface="glass" :show-close="false">` +
+escape/interact-outside loading guard + DialogFooter action row, copying value.js's
+already-landed migration (value.js/demo/palettes/browser/admin/AdminUsersPanel.vue) as the
+exemplar — including its caveat that ConfirmDialog's implicit auto-close on confirm must be made
+explicit at the call site.
 
-**Migration sketch.** Component merge already landed (confirm-dialog src dir deleted). Residue:
-(1) DELETE demo/stories/feedback/confirm-dialog.vue + its manifest entry; if the two extra
-variants (benign/archive, custom-body sign-out) are worth keeping, fold them as examples INTO the
-dialog page. (2) Re-home tests/components/dialog.confirm-preset.test.ts by repointing its
-ConfirmDialogStory import to the dialog story (already imported there as DialogStory). (3) File
-the family-B relay for the 8 external sites — swap the imperative opener for v-model:open +
-onConfirm composing Dialog + DialogContent + action-row per MIGRATION 7.0.0; each lands via a
-marked addendum in its own repo's tranche.
-
-**Flip condition.** Story-page disposition flips only if the user wants a standalone
-/feedback/confirm-dialog demo retained for discoverability — but never re-introduce a distinct src
-component. The merge itself would be non-lossless only if an external consumer relied on a bespoke
-ConfirmDialog prop not expressible via Dialog composition; none was found.
+**Flip.** Flips only if an external consumer relied on a ConfirmDialog capability inexpressible
+as Dialog composition — none exists; its whole API re-expresses in ~15 lines of first-class
+primitives, and value.js proved the migration in production. The story-page deletion (not the
+merge) flips to KEEP only if the user wants a standalone /feedback/confirm-dialog page for
+discoverability; even then no src component returns.
 
 ---
 
-### F33-deck-carousel — KEEP-DISTINCT
+### F33-deck-carousel — COLLAPSE-FAMILY (OPUS-WRONG)
 
-**Verdict.** deck is a headless navigation engine (useDeck/useDeckKeyboard/DeckCore, zero DOM,
-consumed by atlas at 2 sites) and carousel is an embla-backed visual scroller — orthogonal layers.
-No merge. The one genuine collapse the user's instinct points at ALREADY happened: CarouselDots
-was retired onto PagerDots and DeckPager is a 49-line PagerDots wrapper. The residual actionable
-is a micro-fold, not a family collapse.
+**Verdict.** The /deck and /carousel PRIMITIVES are not duplicates — distinct material (deck:
+175-line dependency-free headless core, zero embla/vueuse/DOM, src/components/deck/; carousel:
+embla-carousel-vue physics top-to-bottom, useCarousel.ts:19), distinct behavioral contracts
+(global focus-guarded keyboard paging + aria-live announcer + group/aria-current vs
+widget-focused drag/snap/momentum + region/tablist/aria-selected), distinct real consumers
+(atlas/src/stage/useDeckDetent.ts:1 + useStageDeck.ts:2 import useDeck/DeckCore; slides holds a
+pre-lift local copy annotated for /deck adoption; carousel serves in-page multi-item scrollers).
+But the FAMILY threaded through the pair — the liquid metaball-morph/dot-pager register — IS
+duplicated, and that is where the user's near-exact-duplication instinct is correct. The opus
+KEEP-DISTINCT stopped at the primitives and missed the family.
 
-**Evidence.** deck/index.ts exports a headless engine only; useDeck.ts is a pure reactive
-index+progress+liveMessage core with zero DOM (embla-free, vueuse-free). DeckPager.vue is a thin
-wrapper over `<PagerDots pattern="group" :ring="false">` with zero re-implementation. carousel is
-an embla visual component with drag physics. carousel/index.ts:3 records CarouselDots RETIRED onto
-PagerDots. The similarity matrix shows deck↔carousel EMPTY across api/style/animation/dom_topology
-(zero measured similarity), and deck appears in NO ranked duplication pair (nothing clears the
-composite ≥0.15 threshold). INFERENCE V10 independently cleared them as "not a template duplicate."
-Consumer truth: atlas imports useDeck/DeckCore (useStageDeck.ts:2, useDeckDetent.ts:1); every
-glass-ui /deck string in slides is inside a comment; NO DeckPager/useDeckKeyboard external import.
-DeckPager's sole consumer is the in-repo demo (deck.vue:127).
+**Evidence.** (1) DeckPager.vue is a 47-line zero-logic alias over PagerDots pattern="group" —
+the exact species (CarouselDots) already executed by clean break at carousel/index.ts:3.
+(2) The deck demo ships a SECOND barbell goo engine (demo/stories/motion/deck/useDeckGoo.ts +
+gooBarbellGeometry.ts + DeckGooFilter.vue + ~200 lines of goo CSS in deck.vue +
+DeckGoo.private.test.ts) cloning the PagerDots worm machinery — the neck clipPath is
+byte-identical (PagerDots.vue:326 ≡ DeckGooFilter.vue:26), the filter topology identical
+(feGaussianBlur→feColorMatrix→feComposite atop), a parallel spring-driven bodyA/neck/bodyB
+projection beside usePagerWorm/useLeadTrail. (3) It violates the repo's own doctrine —
+CarouselContent.vue:4-18 records the content-scale goo cast RETIRED as a category error ("the
+metaball-merge is the INDICATOR's job — the pager worm, PagerDots... the ONE metaball morph"),
+which the deck story then rebuilt at slide scale. The F33 note ("the dot animations need dramatic
+refinement") is operative: refinement can only land ONCE if there is ONE morph engine.
 
-**Standing-ruling relation: SUPPORTS + SHARPENS.** ASK-REDUCTION C1 (:148-169) recommends keep
-deck as the headless engine + carousel as the visual component; collapse only the overlapping
-shell, never the useDeck engine. The verdict SUPPORTS C1 and sharpens it: the overlapping shell
-(the position-dot indicator) is already collapsed into pager-dots, so the only remaining shell to
-fold is the now-vestigial DeckPager.vue. INFERENCE V10 concurs.
+**Migration.** Survivor: PagerDots + its useLeadTrail/usePagerWorm driver (the ONE dot register,
+the ONE metaball morph). (1) Retire DeckPager.vue onto direct
+`<PagerDots pattern="group" :ring="false" v-model:active :count :window-fit>` — clean break, no
+alias (the CarouselDots precedent); update demo/stories/motion/deck.vue:127 + deck/README.md
+recipe, drop the export from deck/index.ts. /deck becomes purely headless
+(useDeck/useDeckKeyboard/CONTROL_SELECTOR); atlas imports only the headless core — unaffected.
+(2) Delete demo/stories/motion/deck/{useDeckGoo.ts, gooBarbellGeometry.ts, DeckGooFilter.vue},
+the goo-layer markup + ~200-line goo CSS block + data-traveling wiring in deck.vue, and
+tests/components/custom/deck/DeckGoo.private.test.ts; the story keeps its crisp --spring-smooth
+slide transition (deck.vue:353) per the ONE-metaball doctrine. (3) Land the dramatic
+dot-animation refinement once in usePagerWorm/PagerDots (--pager-dot-elongated, lead/trail
+response, neck-girth curve, worm-layer opacity) — carousel, deck, and slides inherit together.
+(4) Any future viewport-scale goo bridge derives from useLeadTrail as a library composable,
+never a story-local spring engine. /carousel and /deck subpath exports both remain.
 
-**Migration sketch.** Replace the DeckPager tag in demo/stories/motion/deck.vue:127 with a direct
-`PagerDots pattern="group" :ring="false"` usage (PagerDots exposes every prop DeckPager sets),
-then drop the DeckPager export — leaving /deck a purely headless package
-(useDeck/useDeckKeyboard/DeckCore).
-
-**Flip condition.** Flips toward a real collapse only if atlas (or another external consumer) is
-shown to import a Carousel-shaped VISUAL surface from /deck — today it imports only the headless
-core. Conversely, if the external useDeck consumer vanished, deck-the-engine becomes a
-DEMOTE-TO-CONSUMER(atlas) candidate; the census confirms it does not.
-
----
-
-### F18-chassis-metric — KEEP-DISTINCT
-
-**Verdict.** Neither party is superfluous or a near-exact duplicate on the merits.
-instrument-chassis is the structurally-unique app-shell spine of two external apps; the four
-/metric symbols are distinct-DOM-role readouts whose shared logic and CSS are already extracted.
-Keep both. The only genuine residue is a ~15-line reading-block template repeated across the three
-readout SFCs — a shared-internal-partial cleanup, never a cut, and never a variant-prop
-God-component collapse.
-
-**Evidence.** instrument-chassis has NO cross-component similarity above 0.27 (structurally
-unique); the high metric↔metric-row 0.85 is API-only (shared MetricTextProps), dom/style only
-0.50-0.64; instrument-chassis↔metric/metric-row are 0.25/0.27 "Type-4 role-synonym," none flagged
-Type-1 clone. Consumer census on disk: chassis is muster's App.vue shell + 4 more files (×5) and
-speedtest App.vue hoisted above RouterView + 3 more (×4), both confirmed on disk. /metric-cell +
-/metric-stack subpaths were REMOVED and a single /metric ADDED at 7.0.0 — the subpath reduction
-already happened. Shared machinery is already DRY: coalesce-metric.ts + `:where(.metric,.metric-cell,.metric-row)`
-CSS. The internal story composes chassis (sleeve) WITH Metric/MetricStack/MetricRow/MetricCell
-(readouts inside) — complementary roles, refuting the Type-4 role-synonym false-positive.
-
-**Standing-ruling relation: SUPPORTS + SHARPENS.** CHRONIC-ADJUDICATION UF-K1 (:51-54) routes the
-third-asked removal to the BJ ASK with a census that refuses via a costed break; R16/R12 confirm
-the metric-badge deletion + compose-/metric successor and the ≥2-evidence keep test. The verdict
-SUPPORTS that refusal and SHARPENS it: the "no" is merit-based, not a backwards-compat shield
-(which the no-backwards-compat + consumer-updates rulings forbid). Chassis is the
-structurally-unique spine of two live apps; the /metric four are distinct-DOM-role readouts whose
-shared machinery is already extracted and whose subpaths were just consolidated.
-
-**Migration sketch.** None at the component grain. Optional internal cleanup: extract the ~15-line
-reading-block template shared across the three readout SFCs into a shared internal partial.
-
-**Flip condition.** Chassis flips to DEMOTE-TO-CONSUMER(speedtest) only if muster stops consuming
-it (today ×5). The /metric family flips to partial DELETE only if a full-repo census shows one
-readout variant has zero real consumers. Neither holds.
+**Flip.** Flips back to KEEP-DISTINCT (the opus row) if the deck story's content-scale goo cast
+is shown to be a user-chartered exhibit (a BD/BJ keystone spec mandating a viewport-scale
+metaball distinct from the pager worm) AND its engine is re-derived from useLeadTrail — one
+driver, two projections, no duplicate machinery left. Flips toward DEMOTE/DELETE of /deck itself
+only if atlas drops its useDeck imports and slides' planned adoption is cancelled. Flips toward
+MERGE-INTO(carousel) only if a consumer demonstrably needs embla's physical scroll as the
+authority for full-viewport keyboard-paged presentation — no such consumer exists (slides pages
+via per-slide state transitions, not a scroll track).
 
 ---
 
-### F23-track-family — COLLAPSE-FAMILY → one _shared/track.css well register
+### F18-chassis-metric — DELETE (OPUS-WRONG)
 
-**Verdict.** A real MATERIAL DRY, not a component merge. Slider + Progress re-spell one recessed
-pill-track well in two token vocabularies while already sharing the FILL via glass-liquid-fill —
-so collapse the track half onto one _shared/track.css register (a --track-bg/--track-height class,
-sibling to the existing glass-liquid-fill register). Components stay distinct. Confirmed parties:
-Slider .slider-track + Progress .progress-rail. Timeline .timeline-rail is a separate register
-owned by the W5 ground-up redesign; scroll-progress-rim + switch KEEP-DISTINCT.
+**Verdict.** Anew census, 7.0.0 on disk: instrument-chassis + metric are consumed ONLY by their
+own demo stories (demo/stories/data/instrument-chassis.vue, metric.vue) plus registry rows
+(manifest.ts, dock-layer-contexts.ts, search.vue); demo/stories/compositions/chassis.vue is the
+demo's StoryPage framework, not InstrumentChassis. The external "consumers" the opus keep leaned
+on are version phantoms: muster pins glass-ui ^3.1.0 and imports InstrumentChassisPhase,
+variant="spine"/:phase, ChassisDivider, /metric-stack, MetricBadge; speedtest pins ^4.0.1 and
+imports InstrumentChassisPhase, /metric-stack, /metric-cell, /metric-badge. NONE of those
+symbols or subpaths exist in 7.0.0 (index.ts exports only InstrumentChassis +
+State/Proportion/Boundary/Reserve; /metric is the sole subpath; MetricBadge deleted) — both apps
+face a full rewrite-on-upgrade whether or not the component stays, so consumer dependence cannot
+ratify the keep (the consumer-updates ruling says precisely this).
 
-**Evidence.** Slider.vue:286-293 (.slider-track --slider-track-bg) + Progress.vue:94-102
-(.progress-rail --progress-track), both already composing glass-liquid-fill for the fill.
-liquid-fill.css is a shared FILL register already. duplication-candidates.md:185 scores
-progress↔slider 0.18 "weak/coincidental" — the graph confirms a MATERIAL fold, not a component
-merge. Do NOT mint a global @utility glass-track: glass-track is a LIVE class on
-ScrubberTimeline.vue:209 and glass-fill is both a live class and an existing @utility
-(surfaces.css:32) — a global would leak the well recipe onto the scrubber; use a distinct name
-(glass-track-well).
+**Evidence.** Three incompatible chassis contracts across 3.x/4.x/7.0.0 prove it is an app-shell
+re-carved per app per tranche, not a stable primitive. Chassis hand-rolls its glass plate
+(border/bg/shadow/backdrop-filter over --glass-bg-chassis, glass.css:268) parallel to Surface,
+violating card/styles.css's own charter "Surface owns every plate material." Provenance is
+speedtest-vertical (ai-w5 commit "chassis chronics retire — jitter phase + upload canon
+fallback"; states = run lifecycle), and src/index.ts itself brands metric "vertical/themed
+substrate." Metric/MetricCell/MetricRow are one component thrice — identical prop contract,
+identical coalesceMetric leaf, verbatim value/unit/context template, differing only in wrapper;
+MetricStack is a 14-line div. A deliberately "static numeric-readout family" (its README) also
+sits against the breath-of-life/liquid-weight edicts while AnimatedDigit is the library's living
+readout and explicitly disclaims coalesceMetric. The repo's own scrolling-text precedent
+(src/index.ts) governs: ≥2-binary-consumer bar unmet on the current contract → the primitive +
+subpath leave glass-ui, the consumer brings its own; clean break, no alias.
 
-**Standing-ruling relation: SUPPORTS the direction, UNDERMINES the "EXACT" claim.**
-DOSSIER-F21-F30.md:127-160 rules W4 coverage EXACT / AGREE-LANDED; ASSEMBLY-CROSSWALK.md:45 marks
-F23 LANDED to BJ.W-TRACK-DRY. The verdict SUPPORTS the DRY direction but UNDERMINES the EXACT claim
-and the proposed API shape: W4 mislabels ContinuousRail as the scrubber, misses the timeline's own
-shared .timeline-rail register + the real ScrubberTimeline, its global @utility glass-track
-collides with ScrubberTimeline's live .glass-track class, and it couples a timeline SFC into the
-fold while W5 is concurrently ground-up-redesigning (and maybe relocating) the whole timeline.
+**Migration.** glass-ui: delete src/components/instrument-chassis/ and src/components/metric/
+wholesale; remove ./instrument-chassis and ./metric from package.json exports + typesVersions;
+delete the two demo stories and their manifest.ts/dock-layer-contexts.ts/search.vue registry
+rows; prune the now-dead --glass-bg-chassis + --glass-opacity-chassis tokens
+(src/styles/tokens/glass.css:268) and the "instrument-cluster chassis" comment block in
+src/index.ts; reword AnimatedDigit's doc comment that references coalesceMetric. Consumers (in
+THEIR tranches, at next glass-ui upgrade, per the consumer-updates ruling — their pinned 3.x/4.x
+npm artifacts keep working today): speedtest + muster each inline an app-local InstrumentChassis
+composed on glass-ui Surface (golden 61.8/38.2 stage/inspector grid + state tint + boundary
+insets ≈ 100 lines of the current styles.css) and app-local readouts — port the 26-line
+coalesceMetric and collapse Metric/MetricCell/MetricRow into one local component with a layout
+variant; MetricBadge and ChassisDivider are already dead upstream, so that migration burden
+exists independent of this deletion.
 
-**Migration sketch.** Slider + Progress repoint .slider-track/.progress-rail onto the well
-register; --slider-track-bg/--progress-track/--progress-track-on-glass collapse to --track-bg
-(clean break, no aliases). No external consumer break — those are internal defaults; consumer FILL
-knobs (--slider-range-*/--progress-fill) are untouched. Timeline SFCs untouched — W5's redesign
-owns whether they adopt the register or relocate to speedtest.
-
-**Flip condition.** If W5 rules timeline STAYS in-library AND adopts the shared register,
-ContinuousRail + ScrubberTimeline rejoin as ≥2 more consumers (widen the family + reconcile the
-glass-track/glass-fill names). Conversely, if only one of Slider/Progress keeps a track, the
-register drops below the ≥2 overfitting bar and the verdict softens to KEEP-DISTINCT (inline the
-material).
-
----
-
-### F30-tempo — MERGE-INTO → springs.vue (PAGE half only)
-
-**Verdict.** tempo is TWO things. The library half — @property --motion-tempo + the motionTempo()
-reader — is the load-bearing one-clock TIME authority under 7 CSS spring readers + 4 JS engines,
-NOT superfluous, KEEP verbatim. The demo half — a thin single-axis page — is what "what even is
-this page" actually targets; fold it into the F29 springs configurator as a global time knob and
-remove the standalone /motion/tempo route.
-
-**Evidence.** demo/stories/motion/tempo.vue is a thin single-axis demo page with zero consumers.
-The token co-scales all 7 CSS spring -duration readers (scheme-spring.css:146-152) plus draw-in.css
-+ btn.css, AND 4 JS engines (useSpring:119, useElementMorph:355, useDrawerSnap:224,
-useDockSpring:100) via response *= tempo. It is the public :root{--motion-tempo:x} "options for
-longer" knob with 11+ live library consumers.
-
-**Standing-ruling relation: SUPPORTS + SHARPENS.** ASK-REDUCTION C4 (:209-221) and DOSSIER-F21-F30
-(:445-489) both recommend "fold into springs (F29)"; BAND-STORY:459 + CONFIGURATOR-STD own the
-fold home. The verdict SUPPORTS this for the page half and SHARPENS it: the facility half was
-never reducible (verified load-bearing one-clock authority), so the unified ASK should present ONLY
-the page as in play, fold recommended over delete, NOT the token. The prior "routed to ASK" fence
-over-generalized by leaving the facility ambiguously in scope.
-
-**Migration sketch.** Trivial — tempo.vue has zero src/external consumers. Fold its slider +
-co-scale demo into the F29 springs configurator as a global time knob, drop the /motion/tempo route
-from the story roster. The token stays; no consumer migration for the facility at all.
-
-**Flip condition.** Page flips MERGE→DELETE if the F29 configurator offers no natural surface for a
-global time knob or the co-scale reads redundant beside the spring presets (token stays either
-way). Facility flips off KEEP-DISTINCT only if the entire one-clock CSS==JS co-scale architecture
-is abandoned — nothing suggests it.
+**Flip.** Flips to KEEP-DISTINCT only if a second binary consumer is found live on the CURRENT
+7.0.0 contract (state/tone/proportion/boundaries/reserve; /metric subpath) — an npm-frozen
+3.x/4.x pin does not count — AND chassis is rebased onto Surface so it stops duplicating the
+material layer. In-library adoption (the demo shell or another src/ component composing
+chassis/metric outside their own stories) would count as one such consumer. Metric alone flips
+to COLLAPSE-FAMILY (one Metric, layout variants) rather than DELETE if a cross-vertical consumer
+of the static readout emerges before the pruning lands.
 
 ---
 
-### F32-F42-scroll-systems — COLLAPSE-FAMILY → 9-member survivor set on one reader core
+### F23-track-family — COLLAPSE-FAMILY → shared glass registers (SHARPENED)
 
-**Verdict.** There are not many scroll systems — there is ONE reader spine (createScrollReader →
-useScrollTrigger → chrome/scene/pin) plus two orthogonal keeps (fading-scroll edge-feather,
-infinite-scroll sentinel) and the ToC tracker that already consumes the core; the apparent sprawl
-is surface plurality, not duplicate mechanisms. Keep the 9 real-consumer survivors, DEMOTE/DELETE
-the 6 demo-only-or-dead exports (useScrollPin, useScrollScene, useStagger, useStaggerReveal,
-useBloomUp, useLiquidReveal), and fold /motion/reveal into a single /motion/scroll page.
+**Verdict.** Material collapse onto shared registers; the components themselves stay distinct —
+a component merge is an ARIA category error. The prior row found one fold (the track well); the
+fresh adjudication finds TWO — the well AND the value-mark checkpoint paint, which is precisely
+the "same logic painted twice" the user perceived and the prior adjudication missed.
 
-**Evidence.** scrollReader.ts:80 is the one rAF-coalesced listener core, composed by
-useScrollTrigger/useScrollChrome/useScrollScene/useScrollTracker. Real consumers: CardHeader.vue:32
-(useScrollTrigger), useDockSearch.ts:276 (useScrollChrome), useAurora.ts:169 (useScrollProgress),
-fading-scroll confirmed multi-external (keyframes.js + atlas/speedtest/value.js),
-useScrollTracker.ts (ToC composes createScrollReader). Dead/demo-only: useScrollPin +
-useScrollScene are on NO public barrel (demo-only substrate); motion/core/index.ts:16-18 ASSERTS
-useStagger has external consumers but REGISTRY.md:79 flags that claim unverified and grep shows
-zero live callers; useBloomUp exported but zero live callers; useLiquidReveal is a FLIP morph (not
-scroll), only live caller is demo reveal.vue:41. duplication-candidates.md:26,283-316 — scroll/reveal
-pairs are all Type-2 isomorph or "weak/coincidental," no true code-duplication merge: the
-superfluity is SURFACE PLURALITY, not copy-paste twins.
+**Evidence.** (1) The "same logic" is already 2/3 DRY'd: value math shared via
+_shared/valueDomain.ts (Slider.vue:14 imports resolveValueMarks; Progress.vue:4 adds
+resolveValueFraction) and the fill material shared via the .glass-liquid-fill register
+(src/styles/glass/liquid-fill.css, composed at Slider.vue:224 and Progress.vue:60, imported once
+at glass.css:90). The "track" family member (.glass-specular-track) is already a zero-paint
+alias onto the unified .glass-material mixin (glass-specular-track.css header). (2) Components
+cannot merge: Slider is a form INPUT (reka SliderRoot/Track/Range/Thumb, role="slider",
+multi-thumb range, touch-gate arbitration, native dock-hold, drag-velocity weight train,
+spectrum+size axes, FormFieldProps) with 6+ live consumers (EasingPicker.vue:31 dogfooded,
+LabeledSlider.vue, demo PresetEditor/OklchStopRow/tempo/typewriter); Progress is a passive
+OUTPUT (reka ProgressRoot/Indicator, role="progressbar", indeterminate sweep, gradient lifecycle
+grammar, status=error) — a merged element either announces a meter as adjustable or strips input
+semantics. ScrollProgressRim shares only clamp math (conic edge rim, no capsule) — out of
+family. (3) Residual TRUE duplication, foldable: the recessed pill track shell (.slider-track
+Slider.vue:286-297 vs .progress-rail Progress.vue:94-102 — one well in two token vocabularies)
+AND the value-mark checkpoint paint (Progress.vue:114-147 vs Slider.vue:299-330 + vertical/RTL
+legs — identical --value-mark-position/-size/-color tokens, identical 0.375rem/foreground-34%
+defaults, both fed by the same shared resolveValueMarks). The marks are the bigger fold
+(~65 lines).
 
-**Standing-ruling relation: SUPPORTS the thrust, UNDERMINES the deferral.** ASK-REDUCTION §C3
-(:190-207) rules consolidate to the ≥2-consumer keeps, "likely collapse reveal+scroll into one
-page," exact merge shape reserved to the user as a design-call ASK. The verdict SUPPORTS the
-consolidation direction and the two-page collapse, but UNDERMINES the deferral: the corrected Q060
-census + grep resolve the full kill/keep table the ruling deemed unsettleable, so §C3's "design
-call" abstention should be replaced by this ratifiable position.
+**Migration.** Survivor = the src/styles/glass register layer (the proven liquid-fill.css
+pattern). (1) Mint src/styles/glass/track-well.css: .glass-track-well (knobs
+--track-bg/--track-height; pill radius + overflow hidden + recessed bg) — NOT named glass-track,
+which is a live scoped class on ScrubberTimeline.vue:209; Slider and Progress compose it via
+template class and their --slider-track-bg/--progress-track(-on-glass) internals collapse to
+--track-bg, clean break, no aliases; consumer FILL knobs (--slider-range-*, --progress-fill)
+untouched. (2) Mint src/styles/glass/value-marks.css: .value-marks/.value-mark carrying the
+horizontal/vertical/RTL dot legs ONCE, reading the existing --value-mark-* tokens; both
+components delete their scoped copies (~65 lines) and compose the classes. (3) Timeline stays
+out until the W5 ground-up redesign rules; if it stays in-library and adopts,
+ContinuousRail/ScrubberTimeline widen the register family to ≥4. (4) Route F23's unadjudicated
+second half — the enlarged-on-touch slider view + graduated blurring — as a Slider-owner feature
+wave (the data-touch-active/data-held hooks already exist at Slider.vue:207-209); it is additive
+design work, not superfluity.
 
-**Migration sketch.** useScrollPin + useScrollScene are on no barrel — relocate into demo/ or
-delete the spring-pin showcase (zero-consumer move). useStagger/useBloomUp have zero in-repo
-callers and unverified external claims — delete outright. useStaggerReveal's only demonstration
-already uses the CSS [data-scroll-reveal] recipe, so removing the composable is a no-op there;
-delete unless a sibling file:line surfaces at adopt (then relay via a marked addendum).
-useLiquidReveal moves to the morph family/demo. The reader-spine, fading-scroll, infinite-scroll
-and sidebar-ToC consumers are untouched. Demo: delete /motion/reveal.vue, absorb its v-reveal
-stagger as one StorySection in /motion/scroll.vue, relocate the useLiquidReveal bloom into the
-morph demo — net one /motion/scroll page, discharging both F32 and F42.
-
-**Flip condition.** A concrete sibling-repo file:line for useStaggerReveal, useStagger,
-useTextHighlight, or useLiquidReveal (asserted in ASK-REDUCTION:197 but with no corroborating
-file:line in the corrected Q060 census) moves that specific symbol from DELETE/DEMOTE to
-KEEP-as-consumer-relay. Nothing flips the grep-proven reader-spine / fading-scroll / infinite-scroll
-/ ToC keeps, nor the pin/scene demotion.
-
----
-
-### F16-timeline — COLLAPSE-FAMILY → continuous is the one Timeline
-
-**Verdict.** Collapse the five-variant timeline family to ONE continuous phased-progress rail. The
-scrubber is a Slider in disguise (role=slider, 0..1 modelValue, demo-only consumer) and the
-segmented is a consumerless second-render of the identical segment data — both overfit; only
-continuous has a real consumer. Even that consumer (speedtest) drives a thin slice, so the redesign
-also sheds the retired #detail/popover machinery and flattens the GlassTimeline dispatcher into a
-single default export. Surviving API: one Timeline with segments / current-segment-key /
-aria-label props + click event + the five cascade knobs speedtest drives; no variant prop.
-
-**Evidence.** ScrubberTimeline.vue:46-232 is a role=slider 0..1 modelValue scrubber (a Slider; the
-library already ships Slider.vue at 651 LOC); its only consumers are fourier-field.vue:363 +
-timeline.vue:91 (demo scrub-transport, zero external). SegmentedTimeline.vue:61-104 renders N flex
-gradient bands over the same TimelineSegment[]; only consumer is the demo. speedtest
-PhaseTimeline.vue:36-42 uses ONLY `<GlassTimeline variant=continuous>`, retired #detail, sets
---timeline-continuous-height:0, paints its own ::after bar. ContinuousTimeline.vue:122-152's
-hoveredKey/effectiveSegment/detailSource feed only the #detail slot the sole consumer retired =
-dead weight. ContinuousMarkers.vue re-declares a .segmented-dot recipe its own comment calls the
-same base as SegmentedTimeline — a drifted near-duplicate. component-graph treats timeline as a
-single isolated node (no cross-family pair ≥0.15): the superfluity is intra-family (5 variants
-under one dispatcher), not cross-component.
-
-**Standing-ruling relation: SUPPORTS + fills the deferred blank.** BAND-REDUCTION Wave 5
-(BJ.W-REDUCE-TIMELINE) rules F16 a ground-up redesign not a prop-diet, records the single-external-consumer
-fact, binds DAG amendment A2 (~1500 LOC scope), but explicitly DEFERS the shape and leaves
-keep-and-redesign vs relocate-to-speedtest OPEN. The verdict SUPPORTS every one of those facts and
-supplies the shape the stub deferred: the consolidation is 5-to-1 onto continuous. It does not
-re-open anything; it converges on the deferred blank.
-
-**Migration sketch.** The sole consumer is speedtest PhaseTimeline.vue, which uses
-variant=continuous only. Swap GlassTimeline variant=continuous to Timeline and drop the variant
-prop; every consumed prop, knob and event carries byte-identically with zero behavioral change
-(the consumer already retired #detail/popover/hover at AJ-W1-a-9). One import plus one tag edit,
-landed as a marked addendum in speedtest's own tranche.
-
-**Flip condition.** Flips to DEMOTE-TO-CONSUMER if the design-loop golden proves no second
-consumer emerges AND the user rules single-consumer-relocation over redesign-in-lib (F16 "redesign
-from the ground up" currently reads as keep-in-lib intent). Flips toward KEEP-DISTINCT for a
-variant only if a real ≥2-consumer need for the scrubber or segmented facility surfaces — none
-exists on disk (both are demo-only today).
+**Flip.** Softens to KEEP-DISTINCT (inline the material, drop the registers) if either fold
+loses the ≥2-consumer bar — e.g. BJ removes marks or the recessed track from one of
+Slider/Progress. Hardens to a true single ValueTrack base + two thin wrappers only if the shared
+registers come to cover >80% of both components' paint AND a real consumer needs role-switching
+on one element (an interactive scrubber degrading to a progressbar); no such consumer exists
+today.
 
 ---
 
-### F26-completion-seal — KEEP-DISTINCT
+### F30-tempo — MERGE-INTO → springs.vue (PAGE half only) (SHARPENED)
 
-**Verdict.** completion-seal is neither a duplicate nor speedtest-overfit. It appears in zero of
-the 310 graph duplication pairs (blank similarity row on every axis; HandMark is in a different
-cluster with no cross-pair), and F26's "belongs only in speedtest" premise is a verified factual
-error — speedtest imports it ZERO times while sci-report ×2 + atlas ×2 (two external repos, 4
-sites) clear the ≥2-consumer bar. Keep it public on ./completion-seal.
+**Verdict.** motion/tempo is two artefacts. FACILITY (keep verbatim): @property --motion-tempo
+(property-regs.css:378) + the unexported 41-line motionTempo() reader is the one TIME multiplier
+holding CSS==JS clock parity — 7 CSS spring-duration readers (scheme-spring.css:146-152) +
+sheet-animate (btn.css:85-86) + draw-in (draw-in.css:34) + 4 JS engines (useSpring.ts:119,
+useElementMorph.ts:355, useDrawerSnap.ts:224, useDockSpring.ts:100), each applying tempo exactly
+once at construction (verified: no compounding; useSpringPress inherits useSpring's one site).
+PAGE (merge): demo/stories/motion/tempo.vue is a thin zero-consumer single-axis story, and
+springs.vue ALREADY reads motionTempo() at both play sites (:102, :170) and displays the
+settle×tempo=duration arithmetic (:320-323, :409-410) — it half-teaches tempo with no knob. The
+fold completes the configurator rather than merely thinning the roster.
 
-**Evidence.** completion-seal absent from ALL 310 ranked S≥0.15 pairs; its similarity row is blank
-across api/style/anim/dom. component-graph.json nodes[15]: in_repo_consumers 0,
-external_sibling_consumers 2; subpath ./completion-seal, demo_only true; 5 props, 126 LOC.
-glass-outbound Q060: sci-report CategoryHomeView.vue:4 + GalleryView.vue:19, atlas completion.ts:5
-+ category.ts:2; speedtest lists it nowhere. The component is small, token-first
-(--seal-ink=var(--phase-complete-color)), compositor-only draw, PRM-safe one-shot — not bloated.
-It is NOT in the root barrel; exported subpath-only, the correct posture for a focal opt-in
-primitive.
+**Evidence.** Every duplication candidate dissolves: --motion-weight is MAGNITUDE (0.618
+initial, PRM-zeroed, per-frame velocity-folded) — folding couples "slower" to "squishier";
+aurora masterTempo()/blob config.tempo (types.ts:283) share only the word — per-frame simulation
+freeze seams deliberately carved OUT of global co-scale (scheme-motion.css:97-99); --duration-*
+are bases, not a rival multiplier. The reader is already off both public barrels — minimum
+surface, nothing to demote.
 
-**Standing-ruling relation: SUPPORTS + UNDERMINES the F26 verbatim.** CHRONIC-ADJUDICATION R14
-(:14-16) rules F26's inline premise FALSE (speedtest imports zero times; real census sci-report ×2
-+ atlas ×2), so the inline-into-single-consumer branch is dead and the fate rides ASK-REDUCTION A2
-(:53-70), which recommends a borderline KEEP. The verdict SUPPORTS R14/A2's borderline-keep and
-UNDERMINES the F26 verbatim "greatly overfit; likely belongs only in speedtest," whose premise is a
-verified factual error. It converts A2's "borderline" into a firm KEEP-DISTINCT for the user's ASK.
+**Migration.** Survivor: demo/stories/motion/springs.vue (F29 configurator). (1) Add a "global
+time knob" section: the 0.7-1.3 slider writing --motion-tempo on document.documentElement,
+carrying tempo.vue:47-53's identity-restore-on-unmount contract verbatim (never leave the app
+scaled). (2) Carry the cross-register co-scale proof as one StorySection — dialog
+(portaled-scrim inheritance proof) + GlassDock with :key re-mount on tempo (construction-time JS
+read); dropdown/popover may thin out. (3) Delete tempo.vue, drop the /motion/tempo route from
+the story roster. (4) Zero src changes, zero consumer migration: the token + reader keep
+verbatim; motionTempo stays unexported.
 
-**Migration sketch.** None. If the user overrules on taste, the only lawful removal path is
-retire-with-relay to sci-report + atlas (4 sites) — inline is impossible (speedtest doesn't consume
-it) and demote-to-consumer would break one repo or duplicate the code into both, manufacturing the
-very duplication being purged.
-
-**Flip condition.** Flips to DELETE-with-relay only if the 4 external sites are re-verified as
-dead/phantom (as the hover-card "atlas ×1" row was found to be) or both consumer repos drop the
-import, taking external consumption to ≤1 — at which point A2's inline branch reopens.
-
----
-
-### F08-aurora-presets — COLLAPSE-FAMILY → reduced 10-preset register BOUND to W1-W4 body authorship
-
-**Verdict.** F08 is TWO complaints, and the 17-to-10 preset cut answers only one. The palette-skin
-duplication (VIVID_SETTING_SUN, DAY9, OIL_GESTURAL, OILPASTEL_RAINBOW/OCEAN) is correctly cut; but
-"crayon, oil, etc. all almost identical" is a MEDIUM-body fact — on WGSL oil/vangogh/oil-pastel/kuwahara
-are byte-identical mediumKuwahara and on WebGL2 oil-pastel is a profileFor skin — so cutting
-presets while the bodies collapse leaves the exact duplication the user named. Adopt the reduced
-register BOUND to W1-W4 real-body authorship (one dedicated WGSL body per medium, G-MODE-DISTINCT
-green), remove the applyMedium 3/5/6/7→kuwahara alias, and harden DUSK, which is still a
-palette-note of SETTING_SUN.
-
-**Evidence.** aurora-mediums.wgsl.ts:399-400 — applyMedium routes medium==3||5||6||7
-(oil,vangogh,oil-pastel,kuwahara) ALL to mediumKuwahara: byte-identical renders on the WGSL primary
-(crayon(4) alone has its own body). mediums.glsl.ts:493-494 — mediumOilPastel = profileFor(MEDIUM_OILPASTEL,0),
-a constants-skin of mediumOil on WebGL2. presets.ts (demo):685-703 is the 17-preset register;
-SETTING_SUN vs DUSK differ only by one low-chroma lilac apex stop over identical smooth medium +
-near-identical nuclei/beta/warp — DUSK fails the greenfield's own G-PRESET-HONEST and the critic
-already called it "a palette note." Library exports only shape + DEFAULT_AURORA_CONFIG +
-PAPER_WASH_GROUND — the 17 themed presets are consumer/demo-side (presets-in-consumers), so the cut
-has no external-repo consumer break.
-
-**Standing-ruling relation: SUPPORTS + SHARPENS (no terminal ruling exists yet).** No terminal
-DECIDED ruling on F08 exists in CHRONIC-ADJUDICATION / ADJUDICATION-1 / ASK-REDUCTION (the latter
-carries no aurora row). The standing position is CHRONIC-ADJUDICATION:55-56 routing aurora into
-GF-AURORA + REGISTRY:242-249 recording the "17 to 9-10, kill the palette skins, port real bodies to
-WGSL" proposal; GF-AURORA is at pass-3/58%, not converged. The verdict SUPPORTS that direction and
-SHARPENS it twice: (1) the preset cut alone does NOT answer F08 — it must be bound to W1-W4 body
-authorship or the survivors still collapse; (2) DUSK is not yet tellably distinct from SETTING_SUN.
-
-**Migration sketch.** Presets are demo-side, so the cut needs no external migration (demo updated
-in-tranche). SPEEDTEST relocates to the speedtest repo as a marked addendum. Removing the WGSL
-4-way kuwahara alias is internal: consumers selecting vangogh/oil-pastel/oil silently get Kuwahara
-on WebGPU today; post-build they get the real body — a visual upgrade, not a breaking API change.
-
-**Flip condition.** Flips toward DELETE (cut deeper) if a live W5 paint shows the kept medium
-exemplars still fail G-MODE-DISTINCT after W1-W4 — i.e., if oil/oil-pastel/crayon/vangogh cannot be
-authored tellably-distinct within the perf/module budget, delete those mediums down to {smooth,
-pastel, watercolor, kuwahara, metal}+palettes rather than keep them as promises. Flips toward
-KEEP-DISTINCT only if disk evidence were wrong — but the byte-identical Kuwahara alias and
-profileFor skins are verified, so that arm is closed.
+**Flip.** Page half flips back to KEEP-DISTINCT if the fold buries the axis's actual contract —
+the CROSS-REGISTER co-scale (overlays + portal inheritance + JS dock), not a preview-duration
+slider; if the merged section reduces to "slider retimes two travel previews", the standalone
+page was the honest surface. Facility flips off KEEP only if the one-clock CSS==JS parity
+architecture is itself abandoned, collapsing the calc() readers to plain settle clocks and
+deleting motionTempo.ts; or if a second global time multiplier ever appears, forcing a true
+merge.
 
 ---
 
-### GRAPH-pulse-statusdot — KEEP-DISTINCT
+### F32-F42-scroll-systems — COLLAPSE-FAMILY → the reveal wing onto the scroll/morph spine (SHARPENED)
 
-**Verdict.** The DRY collapse already happened at _shared/FeedbackMark.vue — Pulse and StatusDot
-are two ~15-line typed registers over that one primitive, re-implementing zero CSS, so the graph's
-0.765 composite / dom-1.00 is the wrapper shell, not duplicated visuals. Their state enums are
-disjoint (liveness vs presence), and consumers confirm the split. Merging into one variant-axis
-component would regress type safety and break 7 sites across 3 repos for zero dedup gain.
+**Verdict.** The scroll side is NOT duplicated: one core (scrollReader.ts:80 createScrollReader)
+is composed by useScrollTrigger (live: CardHeader.vue:32), useScrollChrome (live:
+useDockSearch.ts:276), useScrollScene→useScrollPin, and sidebar/useScrollTracker.ts:237 — a
+layered spine, distinct contracts (events vs collapse machine vs physics writer vs section
+tracker). The other scrolling components are distinct materials: FadingScroll = edge-fade
+legibility mask writing --fade-start/--fade-end (live: GlassDock, Configurator, demo shell);
+InfiniteScroll = IO sentinel data contract (no scroll listener at all); ScrollProgressRim reads
+NO scroll (value prop, presentational ring — 'scroll' only in name); useScrollTo is a scroll
+WRITER. The real superfluity is in motion/reveal + two fence violations.
 
-**Evidence.** FeedbackMark.vue owns every silhouette + color-token binding + forced-colors +
-reduced-motion; neither wrapper re-implements one line. Pulse passes `motion`, default size
-0.875rem (liveness); StatusDot has no motion, size 0.5rem with sm/md axis (presence). feedback.ts:
-DISJOINT enums PulseState={active,idle,success,warning} vs StatusDotState={online,warning,error,unknown}
-— only `warning` overlaps, so a merged union carries ~half nonsensical states per use. Consumer
-truth: Pulse imported speedtest ×4, StatusDot imported slides ×1 + atlas ×2; NO consumer imports
-both, each resolves from a distinct subpath. duplication-candidates.md:7 — composite 0.765 with
-superset flag b⊇a, BELOW the ≥0.85 formal merge floor; INFERENCE §1a + V1 read the code and cleared
-it as a Type-4 register split, ruling b⊇a an api-NAME artifact.
+**Evidence.** (1) FOUR stagger-entrance mechanisms — vReveal (demo-used), useStagger (ZERO call
+sites; its own header calls itself useStaggerReveal's 'unconditional cousin'), useStaggerReveal
+(ZERO call sites; scroll-driven.css:11-14 declares [data-scroll-reveal] its replacement), and
+the native CSS recipe; (2) TWO near-identical ≤20-line adapters over useElementMorph with
+identical channels {opacity, blur:4} + snappy/bouncy — useLiquidReveal (demo reveal.vue only;
+useDockCtaReceive mention is comment-only) vs useBloomUp (ZERO call sites; adds only the
+bloomUpField tint channel + prime) — the near-exact duplication the user suspected;
+(3) useTextHighlight is not a reveal, root-barrel exported, zero callers; (4) useScrollProgress
+(live: useAurora.ts:169) and useFadingScroll both hand-roll their own scroll listeners despite
+scrollReader.ts's header claiming the plumbing was 'factored to ONE site' — the family's
+no-fourth-listener fence is violated twice inside its own house.
 
-**Standing-ruling relation: SUPPORTS + closes an open census.** INFERENCE §1a rules pulse↔status-dot
-CLEAR (register split; substructure already factored), and V1 sharpens CHRONIC-ADJUDICATION R12
-(relocate-vs-keep turns on consumer count, not redundancy). The verdict SUPPORTS both and
-additionally SETTLES the R12 census for pulse: 4 external speedtest sites (well past ≥2) →
-first-class KEEP, not relocate.
+**Migration.** (1) DELETE useStagger + useStaggerReveal — zero callers anywhere (src, demo,
+siblings: hassio-lab hits are research prose, not imports); [data-scroll-reveal] CSS recipe +
+vReveal cover the entrance-stagger surface; drop their core/index.ts:15,18 barrel lines.
+(2) MERGE useBloomUp INTO useLiquidReveal — survivor useLiquidReveal, relocated to morph/ (it is
+a FLIP morph, not scroll); absorb field/fieldHue/fieldStrength/prime/onBloomed as options with
+bloomUpField.ts as its private leaf, or drop the field channel with it if BJ's dock/dialog bloom
+doesn't adopt it; delete useBloomUp; update motion/index.ts:44,62. (3) useScrollPin +
+useScrollScene + the .scroll-pin/.scroll-pin-phase-* register in scroll-choreography.css move AS
+A PAIR to demo/ (their only consumer is ScrollChoreographyBody.vue) — never ship the CSS
+register writer-less, or it re-creates the exact parked-at-from-keyframe deadness useScrollPin's
+header documents (the 7.0.0 RED-BY-ROT class). (4) useTextHighlight: relocate out of reveal/
+(dom/) or DELETE on zero-consumer merit. (5) Re-seat useScrollProgress's and useFadingScroll's
+fallback listeners onto createScrollReader — one reader core, fence honored; useScrollProgress
+keeps its element-viewport mapping contract for the aurora JS consumer. (6) Demo: fold
+/motion/reveal.vue into /motion/scroll.vue (v-reveal section) + the morph story (bloom section)
+— one scroll page, discharging F32+F42. Survivors: scrollReader, useScrollTrigger,
+useScrollChrome, supportsCssTimeline, useScrollProgress (re-seated), vReveal, useLiquidReveal
+(in morph/), FadingScroll, InfiniteScroll, ScrollProgressRim, useScrollTracker, useScrollTo, and
+the three CSS recipes.
 
-**Migration sketch.** None.
-
-**Flip condition.** Flips to MERGE only if the disjoint semantic domains stop being load-bearing —
-a census showing pulse states used on status-dot or vice versa, or all consumers collapsing to one
-repo importing one register — OR if the user explicitly rules that closed per-register type safety
-is not worth two entry points and accepts the 7-site break for a single variant-axis component.
+**Flip.** A concrete sibling-repo import file:line of useStagger, useStaggerReveal, useBloomUp,
+or useTextHighlight flips that symbol from DELETE/MERGE to KEEP-as-relay (consumer updates via a
+marked addendum in ITS tranche, per the consumer-updates ruling). A src/ (non-demo) adopter of
+the .scroll-pin register flips the pin pair from demote-to-demo back to shipped-with-writer.
+Proof that aurora's scroll coupling can ride the native .scroll-progress CSS axis with no JS
+read flips useScrollProgress from re-seat to DELETE. Nothing flips the grep-proven spine or the
+distinct-contract keeps (FadingScroll/InfiniteScroll/ScrollProgressRim/tracker/scrollTo).
 
 ---
 
-### GRAPH-dialog-drawer — KEEP-DISTINCT (with a bound substructure deliverable)
+### F16-timeline — COLLAPSE-FAMILY → continuous is the one Timeline (SHARPENED)
 
-**Verdict.** dialog and drawer are two genuinely different interaction models over a shared reka
-DialogRoot substrate (a dependency, not glass-ui duplication) — the honest api score is 0.36, the
-1.0 dom/style are a forwarder-shell + shared-skin artifact, drawer's 492-line drag/detent/live-behind
-engine is load-bearing external surface (speedtest + keyframes.js), and the codebase already folded
-Sheet→Dialog and deliberately stopped at the documented N3 boundary. Do not merge the components.
-The ONE real duplication is the ~40-60-line scene-staging substrate — bind a shared
-useSceneStage/stageContext primitive as a MATERIAL W3 adopt-branch deliverable.
+**Verdict.** The family is 1 public export over 6 SFCs + a dispatcher, and the internals confirm
+the user's duplication instinct. Collapse 5→1: continuous is the one Timeline; segmented
+deleted; dispatcher deleted; scrubber exits the family — but NOT by plain deletion: its
+liquid-motion register survives as Slider's transport variant (the sharpening over the prior
+row's delete).
 
-**Evidence.** duplication-candidates.md:8 — composite 0.63 (api 0.36, dom 1.00, style 1.00, role
-0.50), disposition none, "Type-4 role-synonym (needs judge)." DialogContent.vue owns the
-non-draggable side-slide (the folded Sheet) as a PAINT axis with an explicit N3 boundary comment
-("the drag-dismiss gesture + detents stay Drawer's mechanism … never smuggled onto this paint
-axis"). useDrawerSnap.ts:821-1226 is the 492-line pointer-drag/fling/detent interruptible-spring
-engine dialog structurally lacks. The ONE real dup: dialogStageContext.ts:5-8 {wrapperEl,scrimEl}
-~ drawerSnapContext.ts:712-715; Dialog.vue closest('[data-stage-wrapper]') watch ~ Drawer.vue;
-DialogContent syncStage one-shot 0→1 ~ useDrawerSnap per-frame — ~40-60 duplicated lines across 2
-families. Consumer truth: speedtest DashboardMapControls.vue:175 imports /drawer; keyframes.js
-ControlsPaneWrapper.vue:166 + its usage census specifically want Drawer mode="live-behind" —
-both components have ≥2 external consumers; the detent engine is load-bearing.
+**Evidence.** (1) GlassTimeline.vue:32-126 is a pure v-if switch over a leaky union of three
+disjoint contracts: scrubber props (modelValue/label) silently no-op under segmented/continuous
+and vice versa; ariaLabel forwards only to continuous while SegmentedTimeline hardcodes
+"Timeline progress" and Scrubber hardcodes "Timeline" — the poorly-defined core. (2) Segmented
+is a consumerless subset of continuous: types.ts:8-9 admits "only the rendering geometry
+differs"; identical TimelineSegment[] + hover/hoverEnd/click contract; zero consumers outside
+demo, and the segmented demo body is a near-copy of the continuous one. (3) Acknowledged drifted
+fork: ContinuousMarkers.vue:209-233 re-declares .segmented-dot ("duplicates the segmented-dot
+base recipe") in gray --surface-tint-15 material while SegmentedTimeline.vue:190 went warm-glass
+— two dot materials in one family despite rail comments claiming the gray recipe RETIRED;
+scale-paper.css §16 still mints ~15 timeline knobs including the gray dot fill. (4) Scrubber
+shares nothing with its siblings but the .timeline-rail class (imports no types.ts/geometry.ts);
+it is a role=slider 0..1 transport control — wrong family. (5) README.md:12-17 documents five
+exports index.ts:1-6 never ships. (6) The one external consumer (speedtest PhaseTimeline.vue)
+uses only variant="continuous", collapses the rail height and paints its own bar;
+geometry.ts:237-252's {label,value,description,state} popover envelope is speedtest's
+PhaseDetail baked into the lib ("145.3 Mbps" in the JSDoc) — overfit confirmed.
 
-**Standing-ruling relation: SUPPORTS at component grain, UNDERMINES V8's adequacy.** INFERENCE V2
-rules dialog↔drawer CLEAR/KEEP ("drawer = dialog-substrate + a snap engine"), the dom-1.0 a
-reka-forwarder artifact; V8 routes the one real duplication (the scene-staging substrate) to a
-BAND-MATERIAL W3 "truth-up note … a shared stageContext is the principled home IF W3 adopts." The
-verdict SUPPORTS V2's KEEP-DISTINCT and SUPPORTS V8's factoring premise, but UNDERMINES V8's
-adequacy-as-routed: the staging factoring is operationalized in ZERO waves (grep of
---stage-t/stageContext/scene-stag across docs/tranches/BJ/waves + formation returns empty;
-BAND-MATERIAL W3 scopes ONLY the --glass-halo-* adopt/decline, never the shared-staging
-extraction). That floating note is exactly the "hiding behind a fence" the user re-raised, so it is
-upgraded to a bound deliverable.
+**Migration.** (1) Promote ContinuousTimeline → Timeline.vue, the sole export of ./timeline
+(segments, current-segment-key, aria-label, click + the cascade knobs speedtest drives);
+Rail/Markers stay private children; fold GlassTimeline's non-scoped .timeline-rail/.timeline-cel
+register into the survivor (it already owns the portal-CSS contract) and kill the drifted gray
+.segmented-dot base block in Markers — one dot recipe, warm-glass. (2) DELETE SegmentedTimeline
++ its demo body; if the gap-lane aesthetic is wanted it is a `gap` presentation knob on the
+survivor (--timeline-segment-gap already exists), not a component. (3) Scrubber: do NOT
+plain-delete — fold its liquid-motion register (HEAD/FILL/PRESS springs, useLiquidFlex tanh
+squish, accent-flood, always-visible bead, 44px halo) into Slider as the transport variant (or a
+standalone Scrubber atom if Slider's reka forwarding fights the spring head); re-express demo
+timeline.vue:91 + fourier-field.vue:363 on it. (4) De-overfit the popover default: slot-first,
+drop the PhaseDetail envelope defaulting from geometry.ts or genericize it. (5) Prune §16 tokens
+to surviving knobs; fix README to the real surface; retarget the three continuous tests at
+Timeline, delete segmented rows. (6) speedtest updates `<GlassTimeline variant="continuous">` →
+`<Timeline>` as a marked addendum in ITS tranche (consumer-updates ruling) — one import + one
+tag edit, props/events carry as-is.
 
-**Migration sketch.** Bind a shared useSceneStage/stageContext primitive as a MATERIAL W3
-adopt-branch deliverable (adopt → mint it, both consume; decline → the halo strip + stage-axis
-collapse shrinks the surface and the dup evaporates). No component merge.
+**Flip.** Segmented flips to KEEP only if a real ≥2-site consumer of the flex-gap lane emerges
+that weighted regions + a gap knob cannot express (none on disk). The collapse target flips to
+DEMOTE (relocate the one Timeline into speedtest) if the BJ greenfield golden proves no second
+consumer AND the user rules single-consumer relocation over keep-in-lib redesign. The
+scrubber-into-Slider fold flips to a standalone Scrubber component if the spring-head transport
+register cannot ride reka's SliderRoot without fighting its pointer model (the known
+dropped-$attrs forwarding class).
 
-**Flip condition.** Flip to MERGE-INTO (drawer→dialog, as Sheet already folded) only if drawer's
-distinguishing engine is retired or proven unconsumed. Currently FALSE (speedtest + keyframes.js
-consume /drawer, keyframes.js specifically wants the live-behind detent sheet). If a future
-greenfield deleted useDrawerSnap's engine so Drawer became a paint-only edge slide identical to
-DialogContent's placement path, it would then MERGE-INTO Dialog.
+---
+
+### F26-completion-seal — KEEP-DISTINCT (SHARPENED)
+
+**Verdict.** The F26 charge fails on both prongs. (1) Not speedtest-overfit — the premise is
+factually inverted: speedtest has ZERO references (grepped all of /Users/mkbabb/Programming/speedtest),
+while TWO other external repos consume the published ./completion-seal subpath: sci-report
+(CategoryHomeView.vue:4, GalleryView.vue:19, 3 render sites + :deep seal CSS at
+GalleryView.vue:378) and atlas (design/recipes/completion.ts re-export + resolveCompletionSeal,
+skin/category.ts type import, DashboardHero.vue render). Atlas goes further:
+src/vite/seal-compositor.ts is a dedicated build plugin rewriting completion-seal.css's
+@keyframes for compositor compliance, shipped in atlasCorePreset and consumed by sci-report's
+vite.config.ts — build-infrastructure-grade dependence. That clears the ≥2-sites-or-exported bar
+twice over. (2) Not a duplicate — distinct behavioral contract and material vs every in-library
+neighbor: HandMark is seeded freehand annotation (wobble geometry, brush media, texture grain,
+boil) over real text/datums; draw-in.css is the hairline/divider arrival register and itself
+records CompletionSeal and HandMark as MEMBERS keeping their own recipes (draw-in.css:27-30);
+timeline's dashoffset is a continuous marker line. CompletionSeal alone owns the one-shot
+completion contract: data-play seam + rAF restart lifecycle (useCompletionSeal.ts), PRM
+snap-to-drawn, role=status/aria-live announcement, earned-gold register
+(--seal-ink=var(--phase-complete-color)), disc→ring→check composition. 126 LOC, subpath-only
+(not in the root barrel) — the correct opt-in posture.
+
+**Migration.** None — it stays. If overruled on taste, the only lawful path is
+retire-with-relay: vendor CompletionSeal.vue + useCompletionSeal.ts + constants.ts + styles.css
+into atlas (its design/recipes/completion.ts wrapper is the natural relay home; sci-report
+already consumes atlas's vite preset), then in glass-ui drop the ./completion-seal subpath
+export (package.json:334), the §18 --seal-* registrations in tokens/property-regs-specular.css,
+the index.css:237 import, and the demo story — clean break, no alias. Separately (regardless of
+verdict): fold atlas's seal-compositor rewrite upstream — ship the direct stroke-dashoffset
+keyframe in completion-seal.css so consumers stop patching the emitted bundle.
+
+**Flip.** External census drops below 2: if BOTH sci-report and atlas retire their seal usage
+(imports → 0), the component becomes demo-only, falls under the ≥2-site bar, and flips to DEMOTE
+into the last consumer standing (or DELETE if none). Also revisit as COLLAPSE-FAMILY only if a
+BJ greenfield actually unifies the draw registers into one engine that absorbs both the seal's
+--seal-draw wipe and HandMark's draw-on — today no such engine exists and draw-in.css explicitly
+fences the members apart.
+
+---
+
+### F08-aurora-presets — COLLAPSE-FAMILY → ~11-preset register BOUND to W1-W4 body authorship (SHARPENED)
+
+**Verdict.** The 17-key demo register (demo/stories/substrates/aurora/presets.ts:685-703)
+carries four near-exact-duplicate clusters, proven by source identity, not vibes. The cut is
+BOUND to real per-medium WGSL body authorship (kill the ==3||5||6||7 alias) or the painterly
+wing collapses further to one Kuwahara exemplar.
+
+**Evidence.** (1) SETTING_SUN/DUSK/VIVID_SETTING_SUN are literally commented "candidate A/B/C"
+of one unresolved design iteration: VIVID vs SETTING_SUN share a byte-identical sun-band nucleus
+(0.50/0.82, r0.52, elongation 2.0) and the IDENTICAL driftPhase ladder 0.2/1.6/3.0/4.3/5.5 — it
+is SETTING_SUN with the saturation knob turned (+0.02-0.05 C, sat 1.02→1.08);
+tests-visual/aurora-vibrancy.spec.ts:33 still ships the A/B/C adjudication as a CANDIDATES
+array. (2) OILPASTEL_SUNSET/RAINBOW/OCEAN are one recipe, three palettes: identical
+medium/layers/orient/impasto/canvasGrain, dial deltas ≤0.07, same phase ladder — a pure
+palette-swap family the configurator's palette editor already covers. (3) OIL_IMPASTO vs
+OIL_GESTURAL differ by the strokeMode dial (knife vs chunky) exposed one click away in
+options.ts strokeModeOptions. (4) OPENAI_MEADOW vs DAY9_YELLOW are stop-for-stop the same
+structure (vivid yellow/pale yellow/cream/2 cool intrusions; hue deltas 5/5/0/20/25), both
+"yellow-dominant watercolor with blue/teal diagonal intrusion" per their own comments. Deeper:
+on the WGSL PRIMARY, applyMedium routes oil(3)/vangogh(5)/oil-pastel(6)/kuwahara(7) ALL to one
+mediumKuwahara body (aurora-mediums.wgsl.ts:399-400), and GL2 mediumOilPastel is a profileFor
+constants-skin of the oil stroke engine (mediums.glsl.ts:493-494) — so SIX painterly presets
+render one body wearing palettes on WebGPU, the literal "crayon, oil, etc. near-identical" the
+user named; a preset cut alone leaves that alive. Corroborating rot:
+substrate-paints-color.spec.ts:148 pins the roster at 13 while 17 exist — uncurated growth
+already broke the staleness witness. Library side is clean (presets-in-consumers holds: src
+exports only shape + DEFAULT_AURORA_CONFIG + PAPER_WASH_GROUND). Survivors (~11): SUNSET
+(ex-SETTING_SUN, the story default), DUSK (kept per the user's named set, HARDENED — today a
+lilac-note of SUNSET), SKY, DAWN (provisional), MEADOW (absorbs DAY9), PASTEL
+(ex-DELIBERATIVE), OIL (absorbs GESTURAL), VANGOGH, OIL_PASTEL (absorbs RAINBOW+OCEAN), CRAYON,
+METAL; SPEEDTEST relocates to the speedtest repo per presets-in-consumers.
+
+**Migration.** (1) demo/stories/substrates/aurora/presets.ts — delete VIVID_SETTING_SUN,
+DAY9_YELLOW, OIL_GESTURAL, OILPASTEL_RAINBOW, OILPASTEL_OCEAN (+ their PRESETS/PRESET_META
+rows); rename keys clean-break, no aliases: SETTING_SUN→SUNSET, OPENAI_SKY→SKY,
+OPENAI_DAWN→DAWN, OPENAI_MEADOW→MEADOW, OIL_IMPASTO→OIL, OILPASTEL_SUNSET→OIL_PASTEL,
+DELIBERATIVE→PASTEL. (2) demo/stories/substrates/aurora.vue:55 — default fallback
+"SETTING_SUN"→"SUNSET". (3) tests/demo/aurora-stage-affordance.test.ts — repoint
+OIL_IMPASTO→OIL, SETTING_SUN→SUNSET; replace PRESETS.OIL_GESTURAL with inline
+{...PRESETS.OIL, strokeMode:"chunky"} (the test wants a second oil config, not a roster slot).
+(4) tests-visual/aurora-vibrancy.spec.ts — CANDIDATES trio → ["SUNSET","DUSK"]; retire the
+candidate-adjudication framing (the candidates are adjudicated).
+(5) tests-visual/substrate-paints-color.spec.ts:148 — move the count pin (already stale: 13 vs
+actual 17) to the post-cut count; re-count the pi-manifest.ts:109/116 comments. (6) SPEEDTEST —
+relocate config to the speedtest repo as a marked addendum in ITS tranche (consumer-updates
+ruling); demo drops the mirror. (7) Harden DUSK: deepen the twilight leg (lower-L base stops,
+lilac from whisper C:0.075 to a real note) + a distinct phase ladder, or it dies in round two
+alongside DAWN if side-by-side capture reads as SUNSET. (8) BOUND body work (BJ GF-AURORA
+W1-W4): author dedicated WGSL bodies for oil/vangogh/oil-pastel, delete the medium==3||5||6||7
+alias arm in aurora-mediums.wgsl.ts, gate on tellable per-medium distinctness in live paint;
+picker/thumbnails (PresetPickerRow.vue, usePresetThumbnails.ts) derive from PRESET_KEYS — no
+change.
+
+**Flip.** Toward KEEP-DISTINCT: only if paired live captures showed the intra-family pairs as
+materially different fields — foreclosed for VIVID_SETTING_SUN and the oil-pastel trio by source
+identity; or if a user ruling designates the aurora picker a palette-theme CATALOG where palette
+variety is the product — no such ruling exists on disk. Toward deeper DELETE: if GF-AURORA W1-W4
+cannot author tellably-distinct oil/vangogh/oil-pastel WGSL bodies within the perf/module
+budget, the painterly wing collapses to ONE Kuwahara exemplar (roster ~8); DAWN and an
+un-hardened DUSK die in a second round if side-by-side capture vs SUNSET reads as the same warm
+field.
+
+---
+
+### PULSE-DOT — MERGE-INTO → StatusDot (OPUS-WRONG)
+
+**Verdict.** Survivor: StatusDot. Pulse.vue and StatusDot.vue are the same ~50-line wrapper over
+the ONE shared _shared/FeedbackMark.vue, which owns 100% of the material (all 7 silhouettes,
+tone tokens, pulse keyframes, PRM, forced-colors). The wrappers' template a11y contract is
+verbatim-identical (data-identity/role=img/aria-label/aria-hidden); the deltas are one `motion`
+boolean, a `size` prop, three CSS numbers, and a default state. The state vocabularies are soft
+registers, not behaviors: both live in _shared/feedback.ts, already union into
+FeedbackMarkState, overlap at `warning` (pixel-identical render from either component), and pair
+off by tone (success≈online, idle≈unknown). axes.ts declares motion an AXIS ("opt-DOWN, not
+opt-in — liquid-weight universal"), never a component identity, and the root-barrel fold ledger
+(HoverPopover→Popover trigger, Sheet→Dialog placement, MultiSelect→Combobox multiple) rules that
+same-mechanism/different-paint pairs fold onto one sealed union — Pulse is precisely StatusDot's
+motion arm.
+
+**Evidence against the opus keep.** The opus KEEP-DISTINCT rests on a phantom cost: its "breaks
+7 sites across 3 repos" all consume pre-7.0.0 APIs that no longer exist (speedtest
+`<Pulse variant=aura :count intensity once>`, atlas `<StatusDot variant=custom>`), so those
+sites owe a migration regardless, and the consumer-updates ruling forbids consumer surface from
+preserving an obsolete split. The gain opus called "zero" is the superfluity grain BJ audits: −1
+public package, −1 subpath/dist/typesVersions entry, −1 README, −1 exported union, −1 demo story
+that is a structural clone of the other (~150 lines, byte-identical CSS modulo class prefix).
+Per-register type narrowing survives as documented Extract<> sub-unions per the sub-range law;
+it never required a second component.
+
+**Migration.** (1) StatusDot.vue absorbs the Pulse contract: state widens to the full 7-state
+union (renamed StatusDotState ≡ old FeedbackMarkState), size widens to
+Extract<Size,"sm"|"md"|"lg"> (lg = 0.875rem, Pulse's box; sm 0.5 / md 0.625 unchanged), add
+motion?: Extract<Motion,"full"|"off"> default "full" (opt-down; FeedbackMark's existing guard
+animates only state==="active", PRM still wins). (2) feedback.ts: collapse PULSE_STATES +
+STATUS_DOT_STATES into ONE STATUS_DOT_STATES tuple [active, idle, online, success, warning,
+error, unknown]; delete PulseState — clean break, no alias. A follow-on design call may prune
+the tone-duplicate pairs (success/check vs online/ring; idle vs unknown), but the minimum merge
+keeps all seven silhouettes. (3) Delete src/components/pulse/ entirely; remove the ./pulse
+subpath, dist entry, and typesVersions row from package.json; fold the liveness/live-region
+guidance from pulse/README.md into status-dot/README.md. (4) Optionally inline FeedbackMark.vue
+into StatusDot.vue (one wrapper left — the fuller de-indirection). (5) Demo: fold pulse.vue
+story's unique sections (animated liveness row, PRM probe, announcer) into status-dot.vue;
+delete the clone story; re-point buttons.vue (`<Pulse state="active"/>` →
+`<StatusDot state="active" size="lg"/>`) and atoms.vue's label; update verify:package lists.
+(6) External consumers (speedtest ×4, keyframes.js demo ×2, atlas ×2) migrate via marked addenda
+in THEIR tranches — they are already API-broken against 7.0.0, so the rename rides the migration
+they owe.
+
+**Flip.** Flips back to KEEP-DISTINCT only if liveness becomes a genuine behavioral contract
+rather than a motion axis — i.e. a ratified design gives Pulse capabilities StatusDot must never
+have (own live-region ownership, indeterminate-progress semantics coupled to Progress, or a
+returning multi-dot/aura variant family) so the delta stops being one boolean over the same
+mark; or if the user ratifies the mechanical ≥0.85 composite floor as binding on adjudication
+(this pair sits at 0.765), in which case the merge lacks a mandate.
+
+---
+
+### DIALOG-DRAWER — COLLAPSE-FAMILY (SHARPENED)
+
+**Verdict.** The two content cores are distinct mechanisms and must not merge: useDrawerSnap.ts
+is a 492-line interruptible pointer-drag/fling/detent engine (velocity decision, keyboard slider
+a11y, per-frame --glass-drawer-t + --stage-t dual writer) that DialogContent's paint springs
+structurally lack, and it is load-bearing externally (speedtest DashboardMapControls.vue:28 and
+keyframes.js ControlsPaneWrapper.vue both use mode="live-behind" detented sheets). But the
+FAMILY around those cores is substantially duplicated, wider than the prior row admitted:
+(1) the scene-staging JS plumbing exists twice — identical stage-anchor blocks
+(Dialog.vue:21-35 ≡ Drawer.vue:161-175), twin scrim-registration watchers (ModalOverlay.vue ≡
+DrawerOverlay.vue), twin PRM-degrade computeds (Drawer.vue:114-122 ≡ DialogContent.vue:124-132),
+the stage enum typed twice — while the CSS substrate is already ONE file
+(drawer/styles.css:34-80 hosts Dialog's --stage-t flip transition inside Drawer's stylesheet);
+(2) DrawerTitle≡DialogTitle and DrawerDescription≡DialogDescription are byte-identical modulo
+name, and Drawer has no Trigger/Close — its own story imports DialogTrigger/DialogClose
+(drawer.vue:13), while speedtest imports a DrawerTrigger the current drawer/index.ts doesn't
+export; (3) the gestureless arms of Drawer duplicate Dialog placement outright: drag binds ONLY
+to the handle (useDrawerSnap onPointerDown bails without handleEl) and the handle renders only
+for >1 detents (DrawerContent.vue v-if hasSnapPoints), so a side-lens drawer (direction
+left/right, [] ladder) and a no-ladder modal drawer ([1] ladder) have zero gesture affordance —
+pure paint slides, the same artifact as `<DialogContent placement>` which carries the same stage
+enum (DialogContent.vue:48). In-repo Drawer has exactly one consumer (its own story). Verdict:
+collapse the two parallel families into ONE overlay family on the shared reka DialogRoot
+substrate — Dialog periphery survives whole; Drawer survives narrowed to its honest,
+externally-demanded identity: the detented gesture sheet (bottom/top, real ladder, modal +
+live-behind); every gestureless sheet is Dialog placement.
+
+**Migration.** (1) Shared staging seam in _shared: one Stage enum + one resolveStage(prm) helper
++ one provideStageRoots context ({wrapperEl, scrimEl}) + one useStageAnchor composable (hidden
+span → closest('[data-stage-wrapper]')); Dialog.vue and Drawer.vue both consume it;
+dialogStageContext.ts dies; drawerSnapContext.ts keeps only snap-specific fields and composes
+the shared seam; move the --stage-t @property + wrapper/scrim coupling rules out of
+drawer/styles.css into a shared overlay-stage css. (2) One scrim-registration composable shared
+by ModalOverlay + DrawerOverlay (two thin skins may remain for the distinct scrim recipes).
+(3) DELETE DrawerTitle + DrawerDescription; drawer consumers import DialogTitle/DialogDescription
+(the story already crosses families for Trigger/Close); keep DrawerHeader/DrawerFooter
+(genuinely distinct self-minted padding ladder on the non-Card .glass-drawer surface). (4) Cut
+Drawer's gestureless arms: DrawerDirection narrows to bottom|top; delete
+resolveDefaultSnapPoints' side branch, isSideAxis/[0,1] ladder, the translateX snapStyle arms,
+horizontal aria-orientation; the drawer story's fixed-edge panels re-express as
+`<DialogContent placement="left|right">`, and a no-ladder modal sheet as
+`<DialogContent placement="bottom" stage="scale">`; Drawer thereafter requires/derives a real
+detent ladder. (5) Externals are unaffected (both use live-behind detented bottom sheets); any
+residual side-lens/no-ladder use migrates via marked addenda in the consumers' own tranches per
+the consumer-updates ruling; speedtest's stale DrawerTrigger import gets caught in its addendum.
+
+**Flip.** Flips back to KEEP-DISTINCT if external consumers are shown to depend on the
+gestureless drawer arms for material semantics Dialog placement cannot express (deliberate
+.glass-drawer-recipe selection on side panels), or if a chartered gesture lands on the
+side-lens/no-ladder arms (drag-dismiss on edge panels via a handle or edge-grab), making them
+real gesture surfaces rather than paint duplicates. Flips further to MERGE-INTO dialog if a
+spike proves useDrawerSnap can bind to data-placement geometry as a placement-orthogonal
+composable with no mode-keyed prop disjunction in one content component — then DrawerContent
+itself dies into DialogContent.
 
 ---
 
 ## 3. CONTRADICTIONS — for the lead judge
 
-These are the points where a verdict disputes a standing ruling, or where two verdicts must be
-reconciled. Each needs the lead judge's arbitration before the ASK ships.
+These are the points where a fresh verdict disputes a standing ruling or band, or where two
+verdicts must be reconciled. Each needs the lead judge's arbitration before the ASK ships.
 
-**C-A. F25 overrules the ASK-REDUCTION C2 deferral on the demo story.** C2 left "keep-or-fold the
-standalone /feedback/confirm-dialog demo" open. F25 rules FOLD/DELETE it, on the ground that
-dialog.vue:384-444 already carries the identical Confirm-preset section — a second page perpetuates
-the exact confusion F25 names. The lead judge must decide whether the user still gets a keep/fold
-choice (discoverability argument) or whether the delete recommendation ships as the default.
+**C-A. F18 overturns the CHRONIC-ADJUDICATION UF-K1 costed-break refusal.** UF-K1 (+R16/R12)
+routed the third-asked chassis/metric removal to an ASK whose census refused via a costed break;
+the opus row ratified that refusal as merit-based. The fresh census proves the refusal's premise
+false: muster pins ^3.1.0 and speedtest ^4.0.1, and every symbol/subpath they import
+(InstrumentChassisPhase, variant="spine", ChassisDivider, /metric-stack, /metric-cell,
+/metric-badge, MetricBadge) is absent from 7.0.0 — both apps owe a full rewrite-on-upgrade
+regardless, so consumer dependence cannot ratify the keep (the consumer-updates ruling says
+precisely this). The lead judge must either ratify the DELETE or name a live 7.0.0-contract
+consumer; the standing keep cannot survive on the phantom census.
 
-**C-B. F23 disputes the "EXACT / AGREE-LANDED" coverage claim in DOSSIER-F21-F30 for W4.** F23
-finds W4 mislabels ContinuousRail as the scrubber, misses the timeline's own .timeline-rail
-register + the real ScrubberTimeline, and — most concretely — its planned global @utility
-glass-track COLLIDES with ScrubberTimeline.vue:209's LIVE .glass-track class. This is a build-time
-naming defect, not a taste call: the register must be renamed (glass-track-well). The "LANDED"
-status on BJ.W-TRACK-DRY is therefore premature.
+**C-B. PULSE-DOT overturns INFERENCE §1a/V1 and sits below the graph's ≥0.85 merge floor.**
+INFERENCE cleared pulse↔status-dot as a Type-4 register split; the pair's composite is 0.765,
+under the ≥0.85 formal merge floor. The fresh verdict merges anyway, on grounds the graph could
+not see: the wrappers are the same component modulo one boolean, the "disjoint enums" already
+union in _shared/feedback.ts, and the 7-site break is phantom (all sites pre-7.0.0-broken). The
+lead judge must rule whether the mechanical floor is a screening heuristic (merge stands) or
+binding on adjudication (merge lacks a mandate — the verdict's own flip condition).
 
-**C-C. F23 and F16 both touch the timeline register — coordinate W4 and W5.** F23 explicitly
-excludes the timeline from the track-DRY fold and hands it to W5 (BJ.W-REDUCE-TIMELINE). F16 IS the
-W5 redesign and collapses 5 variants to 1, deleting ScrubberTimeline (the very SFC whose live
-.glass-track class F23 collides with). These are consistent but sequenced: if F16 deletes
-ScrubberTimeline, the glass-track collision F23 flags may evaporate — but W4 cannot assume that
-ordering. The lead judge must sequence W4's register naming AFTER, or independent of, W5's
-scrubber deletion, and decide whether the surviving continuous Timeline adopts the shared
-track-well register (which would widen F23's family back to ≥3 consumers, per F23's own flip
-condition).
+**C-C. F33 partially overturns ASK-REDUCTION C1 + INFERENCE V10's adequacy.** C1's
+keep-the-primitives holding stands (headless deck vs embla carousel — ratified), but its "the
+only remaining shell is DeckPager" scoping was wrong: the deck story ships a full second goo
+engine (byte-identical neck clipPath, PagerDots.vue:326 ≡ DeckGooFilter.vue:26) that V10's
+primitive-level clearance never measured, and that violates the ONE-metaball doctrine
+CarouselContent.vue:4-18 records as already-adjudicated. The lead judge must bind the goo-engine
+deletion (and the land-refinement-once rule in usePagerWorm/PagerDots) into the band, not leave
+it at C1's micro-fold framing.
 
-**C-D. F32-F42 overrules the §C3 "design call" abstention.** §C3 reserved the exact scroll-family
-merge shape to the user as an unsettleable design call. F32-F42 argues the corrected Q060 census +
-grep fully resolve the kill/keep table (reader spine, fading-scroll, infinite-scroll, ToC all have
-concrete consumers = KEEP; pin/scene/stagger/stagger-reveal/bloom/liquid-reveal are demo-only-or-dead
-= DEMOTE/DELETE) and that the abstention should be replaced by this ratifiable position. The lead
-judge must decide whether to ship the full 9-keep/6-cut table as a recommendation or keep §C3's
-softer "here are the ≥2-keeps, you decide the merge" framing.
+**C-D. DIALOG-DRAWER overturns the adequacy of V2/V8's scoping and touches external surface.**
+V2's core CLEAR holds (useDrawerSnap is a distinct load-bearing mechanism), but the duplication
+is far wider than V8's ~40-60-line floating note: twin stage anchors, twin scrim watchers, twin
+PRM computeds, byte-identical Title/Description, and Drawer's gestureless arms (side-lens,
+no-ladder) which are Dialog placement in disguise. The fresh verdict binds a shared staging seam
+in _shared AND narrows DrawerDirection to bottom|top — the latter is a public-API narrowing the
+lead judge must ratify (externals verified unaffected: both live consumers use detented bottom
+sheets; speedtest's DrawerTrigger import is already stale against the current barrel).
 
-**C-E. F30 narrows the ASK scope the prior fence left open.** The prior "routed to ASK" on tempo
-left both the token facility and the demo page ambiguously in scope. F30 rules the facility was
-never reducible (verified one-clock authority) and only the page is in play. This is a scope
-correction the lead judge should accept before the ASK is written, so the user is not asked whether
-to delete a load-bearing token.
+**C-E. F16's scrubber disposition changes: fold, not delete.** The prior synthesis ruled
+ScrubberTimeline plain-deleted; the fresh verdict rules its liquid-motion register
+(HEAD/FILL/PRESS springs, tanh squish, accent-flood) folds into Slider as the transport variant.
+This also mostly dissolves the old W4/W5 sequencing knot: F23 renames its register to
+glass-track-well regardless of ScrubberTimeline's live .glass-track class, so W4's naming no
+longer waits on W5's deletion order. The lead judge sequences only the Slider-fold vs
+track-well adoption (the survivor Timeline adopting track-well would widen F23's family to ≥3,
+per F23's own flip condition).
 
-**C-F. GRAPH-dialog-drawer upgrades V8's floating note to a bound deliverable.** V8 routed the
-scene-staging duplication to "MATERIAL W3 IF W3 adopts," but the verdict verifies (grep) that NO
-wave operationalizes it — W3 scopes only --glass-halo-*. The lead judge must either bind the shared
-useSceneStage/stageContext extraction into a real wave deliverable or accept that the ~40-60-line
-duplication ships unaddressed. This is the one confirmed cross-family code duplication among the
-KEEP-DISTINCT rows, so leaving it as a floating note is the "hiding behind a fence" the user
-re-raised.
+**C-F. F32-F42 overrules the §C3 abstention and indicts the family's own fence.** §C3 reserved
+the scroll-family merge shape to the user as unsettleable; the fresh grep census settles it
+(useStagger/useStaggerReveal/useBloomUp/useTextHighlight all zero-caller; the sibling hits are
+prose, not imports). New and un-routed anywhere: scrollReader's "factored to ONE site" fence is
+violated twice in its own house (useScrollProgress, useFadingScroll hand-roll listeners) — the
+re-seat is a bound deliverable; and the .scroll-pin CSS register must move to demo/ WITH its
+writers or it re-creates the 7.0.0 RED-BY-ROT class. The lead judge ships the full kill/keep
+table as the recommendation, with the flip-on-file:line escape clause carried.
 
-**C-G. F08 has no terminal ruling and its two complaints are entangled.** Unlike the other rows,
-F08 rides an unconverged greenfield (GF-AURORA, 58%). The verdict warns the preset cut alone
-(17→10) does NOT discharge F08 — it must be BOUND to W1-W4 real-body authorship, or the surviving
-medium exemplars still render as one byte-identical Kuwahara body on WGSL. The lead judge must not
-let the "preset register reduced" checkbox close F08 while the shader bodies remain aliased.
+**C-G. F23 disputes the DOSSIER-F21-F30 "EXACT / AGREE-LANDED" coverage of W4 — twice now.**
+Carried from the prior round (the glass-track naming collision; renamed glass-track-well) and
+extended: the value-mark checkpoint paint (~65 lines across Slider + Progress, identical tokens
+and defaults) is a second true fold W4 never scoped. The LANDED status on BJ.W-TRACK-DRY is
+premature; the wave re-opens with both registers (track-well.css + value-marks.css).
 
-No two verdicts reach opposite dispositions on the same target — the only cross-verdict interaction
-is the F23/F16 timeline sequencing (C-C). All other contradictions are verdict-vs-standing-ruling.
+**C-H. F08 remains unclosed by the preset cut — the binding carries, the roster shifts.** No
+terminal ruling exists; GF-AURORA is unconverged. The fresh roster is ~11 survivors (not 10):
+DUSK is kept per the user's named set but HARDENED-or-dies, DAWN provisional, SPEEDTEST
+relocates per presets-in-consumers. The binding stands: the cut closes F08 only WITH W1-W4
+per-medium WGSL body authorship (kill the ==3||5||6||7 alias); the stale count pin
+(spec pins 13, disk has 17) shows the staleness witness already broke and must be re-pinned
+post-cut.
+
+**C-I. F25's relay census corrects the opus count.** The opus row owed the relay to 8 sites
+across 3 repos including value.js-demo ×2; the fresh census finds value.js ×0 — it already
+migrated (its AdminUsersPanel.vue is now the migration exemplar). The relay is owed to TWO repos
+only: words ×5 + muster ×1, and muster's is a dynamic import (defineAsyncComponent) that static
+greps miss — the addendum template must say so.
+
+No two fresh verdicts reach opposite dispositions on the same target. The cross-verdict
+interactions are C-E (F16/F23 sequencing, now mostly dissolved) and the shared consumer-addenda
+pattern (F18, F16, F25, PULSE-DOT, F08 all owe marked addenda to sibling tranches — one relay
+batch, not five ad-hoc mails).
 
 ---
 
 ## 4. ASK-DELTA — sharpened ASK-row texts (appendable verbatim)
 
-Each row below carries a real recommendation, so every flagged pair reaches the user as a decision,
-not an open question. Append verbatim to the BJ ASK checklist.
+Each row below carries a real recommendation, so every flagged pair reaches the user as a
+decision, not an open question. Append verbatim to the BJ ASK checklist. Rows marked
+(CHANGED vs prior ASK) reverse or materially alter what the earlier synthesis would have asked.
 
-**F25 — confirm-dialog.** The component is already merged (src/components/confirm-dialog deleted at
-7.0.0; every prop/emit is first-class Dialog API). Recommendation: DELETE the redundant standalone
-demo/stories/feedback/confirm-dialog.vue + its manifest entry (the /containers/dialog page already
-carries the identical Confirm-preset section at lines 384-444), re-home the confirm-preset test to
-the dialog story, and file the owed family-B relay for 8 external sites (muster ×1, words ×5,
-value.js-demo ×2). One residual choice for you: keep a standalone /feedback/confirm-dialog demo for
-discoverability, or fold its two extra variants into the dialog page? Recommendation: fold.
+**F25 — confirm-dialog.** The component was never behaviorally distinct and is already merged
+(BI B28; every prop/emit is first-class DialogContent API). Recommendation: DELETE the redundant
+standalone demo/stories/feedback/confirm-dialog.vue + its manifest entry (the /containers/dialog
+page already carries the identical Confirm-preset section), repoint the confirm-preset test to
+the dialog story, and relay addenda to TWO repos only — words ×5 + muster ×1 (dynamic import;
+static greps miss it) — copying value.js's already-landed migration as the exemplar, including
+its auto-close-made-explicit caveat. One residual choice: keep a standalone
+/feedback/confirm-dialog page for discoverability? Recommendation: fold.
 
-**F33 — deck vs carousel.** They are orthogonal (headless nav engine vs embla visual scroller;
-zero measured similarity; atlas consumes the headless useDeck at 2 sites). The dot overlap you
-sensed is ALREADY collapsed onto the shared pager-dots primitive. Recommendation: KEEP both
-distinct; the only cut is the vestigial DeckPager.vue (zero external consumers) — replace its one
-demo usage with a direct PagerDots call and drop the export, leaving /deck purely headless.
+**F33 — deck vs carousel. (CHANGED vs prior ASK)** The primitives stay distinct (headless nav
+engine vs embla scroller; atlas consumes the headless core), but your near-exact-duplication
+instinct was right about the FAMILY: the deck story ships a second barbell goo engine cloning
+the PagerDots worm (the neck clipPath is byte-identical), violating the repo's own ONE-metaball
+doctrine, and DeckPager is a 47-line zero-logic alias. Recommendation: COLLAPSE the family onto
+PagerDots + useLeadTrail/usePagerWorm — retire DeckPager (clean break, the CarouselDots
+precedent), delete the story-local goo engine + its ~200-line CSS + private test, and land your
+"dramatic dot refinement" ONCE in the survivor so carousel, deck, and slides inherit together.
+/deck and /carousel subpaths both remain.
 
-**F18 — instrument-chassis + metric.** Third-asked for removal, but the census refuses on the
-merits (not on backwards-compat): chassis is the structurally-unique app-shell spine of muster ×5 +
-speedtest ×4, and the four /metric symbols are distinct-DOM-role readouts whose shared logic + CSS
-are already extracted (coalesce-metric.ts), with the subpaths already consolidated to one /metric
-at 7.0.0. Recommendation: KEEP both. Optional internal cleanup: dedup the ~15-line reading-block
-template across the three readout SFCs. Overrule only if you want to accept the costed break
-(chassis removal devolves speedtest + muster to hand-rolled shells).
+**F18 — instrument-chassis + metric. (CHANGED vs prior ASK — your third ask is granted)** The
+prior refusal leaned on a phantom census: muster pins ^3.1.0, speedtest ^4.0.1, and every symbol
+they import is gone from 7.0.0 — both owe a full rewrite-on-upgrade regardless, so consumer
+dependence cannot ratify the keep. Three incompatible chassis contracts in three majors prove an
+app-shell re-carved per app; chassis hand-rolls a glass plate parallel to Surface; the metric
+trio is one component thrice. Recommendation: DELETE both families + subpaths + the two demo
+stories + the dead chassis tokens; speedtest and muster each inline an app-local chassis on
+Surface + one local Metric (≈100 lines + the 26-line coalesceMetric), via marked addenda in
+their tranches. Overrule only by naming a live 7.0.0-contract consumer.
 
-**F23 — slider/progress track dedup.** Real DRY confirmed: Slider + Progress spell one recessed
-well in two token vocabularies while already sharing the fill via glass-liquid-fill.
-Recommendation: collapse the track half onto one _shared/track.css register (components stay
-distinct; clean-break the --slider-track-bg/--progress-track tokens to --track-bg). Note: the
-planned global @utility glass-track collides with a LIVE .glass-track class on ScrubberTimeline —
-rename to glass-track-well. Keep the timeline OUT of this fold; W5 owns it.
+**F23 — slider/progress dedup.** Real DRY confirmed, and it is TWO folds, not one: the recessed
+pill well AND the value-mark checkpoint paint (~65 lines, identical tokens/defaults — the "same
+logic painted twice" you saw). Recommendation: mint two src/styles/glass registers —
+track-well.css (named glass-track-well; glass-track is a live class on ScrubberTimeline) +
+value-marks.css — both components compose them; components stay distinct (a merge is an ARIA
+category error: input vs output). Keep the timeline out until W5 rules. Your enlarged-on-touch +
+graduated-blur ask routes as a Slider feature wave — additive design, not superfluity.
 
-**F30 — tempo page.** The --motion-tempo token is the load-bearing one-clock TIME authority under 7
-CSS spring readers + 4 JS engines — NOT superfluous, KEEP verbatim. Only the thin demo page is what
-"what even is this page" targets. Recommendation: fold the tempo demo into the F29 springs
-configurator as a global time knob and remove the standalone /motion/tempo route. No token change,
-no consumer migration.
+**F30 — tempo page.** The --motion-tempo token + motionTempo() reader are the one-clock CSS==JS
+TIME authority (7 CSS readers + 4 JS engines, tempo applied exactly once each — verified, no
+compounding) — KEEP verbatim, not in play. Only the page folds: springs.vue already reads
+motionTempo() at both play sites and displays the settle×tempo arithmetic with no knob.
+Recommendation: fold tempo.vue into the springs configurator as a global time knob (carrying the
+identity-restore-on-unmount contract) + one cross-register co-scale proof section; delete the
+route. Zero src changes.
 
-**F32/F42 — scroll vs reveal.** Not many systems — one reader spine (createScrollReader →
-useScrollTrigger → chrome) + two orthogonal keeps (fading-scroll, infinite-scroll) + a ToC that
-consumes the core. Recommendation: keep the 9 real-consumer survivors; DEMOTE/DELETE the 6
-demo-only-or-dead exports (useScrollPin, useScrollScene, useStagger, useStaggerReveal, useBloomUp,
-useLiquidReveal); fold /motion/reveal into one /motion/scroll page. One check for you: if you know a
-sibling-repo consumer of useStaggerReveal/useStagger/useLiquidReveal, name it and that symbol
-becomes a keep-with-relay instead of a delete.
+**F32/F42 — scroll vs reveal.** The scroll spine is clean (one reader core, layered contracts);
+the REVEAL wing is where the duplication lives: four stagger mechanisms (two with zero callers
+anywhere), two near-identical morph adapters (useBloomUp ≡ useLiquidReveal modulo a tint
+channel), and the family's own no-fourth-listener fence violated twice in-house.
+Recommendation: DELETE useStagger + useStaggerReveal; MERGE useBloomUp into useLiquidReveal
+(relocated to morph/ — it is a FLIP morph, not scroll); move the scroll-pin pair to demo/ WITH
+its CSS register (never ship the register writer-less — the RED-BY-ROT class);
+relocate-or-delete useTextHighlight; re-seat useScrollProgress + useFadingScroll onto
+createScrollReader; fold /motion/reveal into /motion/scroll. Escape clause: name a sibling-repo
+import file:line for any deleted symbol and it flips to keep-with-relay.
 
-**F16 — timeline.** Five variants under one dispatcher; only continuous has a real consumer
-(speedtest, and it drives a thin slice). Recommendation: collapse 5→1 — continuous becomes the one
-Timeline (no variant prop), delete ScrubberTimeline (a Slider in disguise, demo-only) and
-SegmentedTimeline (consumerless), flatten the GlassTimeline dispatcher, and shed the retired
-#detail/popover machinery. One choice: redesign-in-library (keeps it available for a future second
-consumer) vs relocate to speedtest (single-consumer today). Recommendation: redesign-in-library,
-matching your "redesign from the ground up" phrasing.
+**F16 — timeline. (scrubber disposition CHANGED vs prior ASK)** Five variants under a leaky
+dispatcher; only continuous has a consumer (speedtest, thin slice, popover envelope overfit to
+its PhaseDetail). Recommendation: collapse 5→1 — continuous becomes the one Timeline (no
+variant prop), delete SegmentedTimeline (a gap knob, not a component), delete the dispatcher,
+de-overfit the popover default, prune the §16 tokens, fix the README. The scrubber is NOT
+plain-deleted: fold its liquid-motion register (springs, tanh squish, accent-flood, 44px halo)
+into Slider as the transport variant — the register is the valuable part, the component was the
+wrong home. speedtest's migration is one import + one tag edit via addendum. Choice retained:
+redesign-in-library (recommended, matches your phrasing) vs relocate-to-speedtest.
 
-**F26 — completion-seal.** Your note ("greatly overfit; likely belongs only in speedtest") rests on
-a factual error: speedtest imports it ZERO times. Real census is sci-report ×2 + atlas ×2 (two
-external repos, 4 sites), and it is a duplicate of nothing (absent from all 310 graph pairs).
-Recommendation: KEEP public on ./completion-seal. If you overrule on taste, the only lawful path is
-retire-with-relay to sci-report + atlas — inline is impossible and demote-to-consumer would break
-one repo or duplicate the code into both.
+**F26 — completion-seal.** Your note ("greatly overfit; likely belongs only in speedtest") rests
+on an inverted premise: speedtest imports it ZERO times; sci-report + atlas consume it at 4+
+sites, and atlas ships a dedicated vite build plugin (seal-compositor) for its keyframes —
+build-infrastructure-grade dependence. It duplicates nothing (draw-in.css itself fences the
+members apart). Recommendation: KEEP public on ./completion-seal — the one clean keep of the
+eleven. Regardless of verdict: fold atlas's compositor rewrite upstream (ship the direct
+stroke-dashoffset keyframe) so consumers stop patching the emitted bundle.
 
-**F08 — aurora presets + mediums.** Two complaints. The palette-skin presets (VIVID_SETTING_SUN,
-DAY9, OIL_GESTURAL, OILPASTEL_RAINBOW/OCEAN) are correctly cut (17→10). BUT "crayon, oil, etc. all
-almost identical" is a shader-BODY fact — on WGSL oil/vangogh/oil-pastel/kuwahara all route to one
-byte-identical mediumKuwahara. Recommendation: adopt the reduced register BOUND to W1-W4 real-body
-authorship (one dedicated WGSL body per medium, G-MODE-DISTINCT green) and remove the 4-way alias;
-also harden DUSK, still a palette-note of SETTING_SUN. Do NOT let "presets reduced" close F08 while
-the bodies remain aliased. This rides GF-AURORA (58%, unconverged) — the paint verification is
-owed.
+**F08 — aurora presets + mediums.** Four duplicate clusters proven by source identity: the
+candidate-A/B/C sunset trio (an unresolved design iteration still shipping, CANDIDATES array in
+the visual spec), the oil-pastel palette-swap trio, the strokeMode pair, the yellow-watercolor
+pair. Deeper: on WGSL, SIX painterly presets render ONE mediumKuwahara body (the ==3||5||6||7
+alias) — the literal "crayon, oil, etc. near-identical" you named. Recommendation: cut 17→~11
+(SUNSET, DUSK-hardened, SKY, DAWN-provisional, MEADOW, PASTEL, OIL, VANGOGH, OIL_PASTEL, CRAYON,
+METAL; SPEEDTEST relocates to its repo), clean-break renames, BOUND to GF-AURORA W1-W4 authoring
+real per-medium WGSL bodies and deleting the alias arm. Do NOT let "presets reduced" close F08
+while the bodies remain aliased; DAWN and an un-hardened DUSK die in round two if capture reads
+them as SUNSET.
 
-**GRAPH — pulse vs status-dot.** The DRY already happened at _shared/FeedbackMark.vue; these are two
-~15-line typed registers over it with disjoint state enums (liveness vs presence). Recommendation:
-KEEP both distinct — merging into one variant-axis component regresses per-register type safety and
-breaks 7 sites across 3 repos for zero dedup gain (the 0.765 similarity is the wrapper shell, not
-duplicated visuals).
+**PULSE vs STATUS-DOT. (CHANGED vs prior ASK)** The DRY at _shared/FeedbackMark.vue is exactly
+why these should merge, not stay split: the mark owns 100% of the material; the wrappers are the
+same component modulo one motion boolean + a size, their enums already union in _shared, and
+motion is a declared AXIS, never a component identity (the HoverPopover/Sheet/MultiSelect fold
+ledger governs). The "7-site break" is phantom — every site is already API-broken against
+7.0.0 and owes a migration regardless. Recommendation: MERGE-INTO StatusDot (7-state union,
+size sm|md|lg, motion opt-down; delete /pulse wholesale, clean break); consumers ride the
+migration they owe via addenda. One check for you: the pair sits at 0.765, under the mechanical
+≥0.85 floor — if you ratify that floor as binding, this merge lacks a mandate; say so and it
+reverts.
 
-**GRAPH — dialog vs drawer.** Two different interaction models over a shared reka substrate (a
-dependency, not our duplication); honest api score 0.36; drawer's 492-line drag/detent/live-behind
-engine is load-bearing (speedtest + keyframes.js). Recommendation: KEEP both distinct. The ONE real
-duplication is the ~40-60-line scene-staging substrate both hand-rolled — bind a shared
-useSceneStage/stageContext primitive as a MATERIAL W3 adopt-branch deliverable (it is currently a
-floating note no wave executes). Merging the components is wrong; extracting the substrate is right.
+**DIALOG vs DRAWER. (CHANGED vs prior ASK)** The cores stay distinct (useDrawerSnap's 492-line
+detent engine is load-bearing in speedtest + keyframes.js) — but the family around them
+duplicates wider than previously admitted: twin stage anchors, twin scrim watchers, twin PRM
+computeds, byte-identical Title/Description (Drawer's own story imports DialogTrigger/Close),
+and Drawer's gestureless arms (side-lens, no-ladder) are Dialog placement in disguise — zero
+gesture affordance, pure paint slides. Recommendation: COLLAPSE to one overlay family — shared
+staging seam in _shared (Stage enum + useStageAnchor + scrim registration), delete
+DrawerTitle/Description, narrow Drawer to its honest identity (detented gesture sheet,
+bottom|top, real ladder; every gestureless sheet is `<DialogContent placement>`). Externals
+verified unaffected. This replaces the prior "floating W3 note" with bound deliverables.
 
 ---
 
 ## 5. What of your noted near-exact duplication
 
-The confrontation found that most of what looked like near-exact duplication is NOT
-component-clone-level duplication — it is either already-collapsed, distinct-over-a-shared-substrate,
-or living one grain below the component name. Three of your flagged pairs were already dedup'd where
-it counts: confirm-dialog was merged into Dialog at 7.0.0 (the src dir is gone; it was only ever a
-composition preset), pulse and status-dot are both thin typed wrappers over the single
-_shared/FeedbackMark primitive with re-implemented CSS nowhere, and deck's dots were already folded
-onto the shared pager-dots — so the "0.76 / 1.0 similarity" numbers are wrapper shells, not
-duplicated visuals. Two more are genuinely distinct despite surface resemblance: dialog vs drawer
-are two different interaction models over a shared reka dependency (drawer's 492-line drag/detent
-engine is real, load-bearing surface), and instrument-chassis vs metric are a unique app-shell
-spine plus four distinct-DOM-role readouts whose shared logic was already extracted. Where the real
-near-exact duplication does live is exactly where your eye caught it but below the component name:
-(1) MATERIAL registers re-spelled in two token vocabularies — the recessed track well across Slider
-and Progress (F23), and the ~40-60-line scene-staging substrate hand-rolled in both dialog and
-drawer; (2) shader BODIES that are literally aliased — aurora's oil, vangogh, oil-pastel and
-kuwahara all dispatch to one byte-identical mediumKuwahara on WebGPU (F08); and (3) intra-family
-variant sprawl — the timeline's five variants under one dispatcher where only one has a consumer
-(F16), and the scroll/reveal surfaces where one reader spine wears many demo-only faces (F32/F42).
-So the honest answer is: the duplication is real, but it is overwhelmingly material-, shader-, and
-variant-level, not component-clone-level — collapse the registers, author the shader bodies, and
-diet the variant families, and keep the distinct components distinct. The one place a
-KEEP-DISTINCT verdict still leaves a confirmed duplicate on the floor is the dialog/drawer staging
-substrate, which prior rounds routed to a wave that never picked it up — this synthesis flags it for
-binding so it stops hiding behind a fence.
+The redo moves the needle against the first synthesis: your instinct was right more often than
+it credited. Three pairs it kept distinct do not survive a source-identity read: pulse and
+status-dot are one component wearing a motion boolean (the shared mark owns all the material —
+which is the argument FOR the merge, not against it); the deck story rebuilt the pager worm as a
+second goo engine with a byte-identical neck clipPath, against the repo's own ONE-metaball
+doctrine; and chassis/metric's defense rested on consumers that turn out to be version phantoms
+— pinned symbols that no longer exist, three incompatible contracts in three majors. Where the
+duplication lives below the component name, it is wider than first found: Slider/Progress
+duplicate BOTH the track well and the value-mark paint; dialog/drawer duplicate the whole
+staging periphery (anchors, scrims, PRM computeds, Title/Description) plus gestureless drawer
+arms that are Dialog placement in disguise; the reveal wing carries four stagger mechanisms and
+two near-identical morph adapters with the family's own listener fence violated twice in its own
+house; and on the WGSL primary, six painterly aurora presets render one Kuwahara body wearing
+palettes. What genuinely stays distinct is short: the deck/carousel primitives, the
+Slider/Progress components (as ARIA roles, over shared registers), the dialog/drawer CORES, the
+tempo facility — and exactly one whole component, completion-seal, whose "overfit to speedtest"
+premise was factually inverted (speedtest ×0; sci-report + atlas consume it down to build
+infrastructure). So the honest answer, sharpened: the duplication is real, it is
+register-, shader-, wrapper-, and family-level, and this round it also claims three components
+the first pass spared — delete the phantom-defended chassis/metric, fold pulse into status-dot,
+collapse the goo and staging families onto their one engine each, author the shader bodies, and
+keep distinct only what a source read proves distinct.
+
+---
+
+*End — SUPERFLUITY synthesis, REFABLE RU-09, `claude-fable-5`.*
