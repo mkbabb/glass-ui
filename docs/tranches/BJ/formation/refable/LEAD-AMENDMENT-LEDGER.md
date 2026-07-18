@@ -11,11 +11,11 @@ lead-owned remainder.
 
 | id | item | source | status |
 |----|------|--------|--------|
-| A1 | Family K (:206-213) stale: 2 waves / "4 live-defect fixes" → the A11Y union's 5 waves incl. the N6 status-tone major | RU-03-A11Y r1 | APPLIED 5f8ee2e3+1 |
-| A2 | Family H (:118-130): strike "handmark helpers flat" from W1; blast radius → ~24 TS + 3 @imports + 3 ledger + 6 style-src; W2 precondition → G-CONSUMER-ADDENDUM recast | RU-03-COLOCATION R2 | APPLIED 5f8ee2e3+1 |
-| A3 | §2/§1: FM band is SEVEN waves (W7 BJ.W-SHEET-MOTION-DEBT minted); roster count + DAG line | RU-03-FM R1 | APPLIED 5f8ee2e3+1 |
-| A4 | §2 family-J line ("7-target sweep") → "the band file's roster IS the spec", no pinned count | RU-03-DOC-TRUTH | APPLIED 5f8ee2e3+1 |
-| A5 | Any remaining §2 per-band wave counts vs the unioned files (REDUCTION 9, STORY 7, A11Y 5) — sweep the roster table once against all nine unions | RU-03 set + APOTHEOSIS | APPLIED 5f8ee2e3+1 |
+| A1 | Family K (:206-213) stale: 2 waves / "4 live-defect fixes" → the A11Y union's 5 waves incl. the N6 status-tone major | RU-03-A11Y r1 | APPLIED dda87dcc |
+| A2 | Family H (:118-130): strike "handmark helpers flat" from W1; blast radius → ~24 TS + 3 @imports + 3 ledger + 6 style-src; W2 precondition → G-CONSUMER-ADDENDUM recast | RU-03-COLOCATION R2 | APPLIED dda87dcc |
+| A3 | §2/§1: FM band is SEVEN waves (W7 BJ.W-SHEET-MOTION-DEBT minted); roster count + DAG line | RU-03-FM R1 | APPLIED dda87dcc |
+| A4 | §2 family-J line ("7-target sweep") → "the band file's roster IS the spec", no pinned count | RU-03-DOC-TRUTH | APPLIED dda87dcc |
+| A5 | Any remaining §2 per-band wave counts vs the unioned files (REDUCTION 9, STORY 7, A11Y 5) — sweep the roster table once against all nine unions | RU-03 set + APOTHEOSIS | APPLIED dda87dcc |
 
 ## B. REGISTRY.md re-stamps (formation canon)
 
