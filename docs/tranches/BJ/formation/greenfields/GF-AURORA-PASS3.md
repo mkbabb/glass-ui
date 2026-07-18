@@ -1,387 +1,434 @@
-# GF-AURORA — greenfield design, PASS 3 (Fable seat)
+# GF-AURORA — greenfield design, PASS 3 (REFABLE union)
 
-Pass-3 of the design-loop charter (`PROMPTS/design-loop-prompt.md`): fold CRIT2's charges into the
-leading β spec, closing the cost-model surgery the critic demanded and operationalising the user's
-actual complaint (F08: "all almost identical") as a measurable born-RED gate. TRANCHE-DEVELOPMENT:
-no source touched; this doc is the only artifact. No browser (a Playwright suite owns the seat) —
-every π obligation is OWED, and convergence is capped accordingly.
+- verified-model: claude-fable-5 — read verbatim from this seat's system context ("The exact model
+  ID is claude-fable-5").
+- union provenance: REFABLE RU-07, 2026-07-18. The prior PASS1/CRIT2/PASS3 loop executed on
+  claude-opus-4-8 under a Fable declaration. This seat re-derived the aurora-modes design ANEW from
+  the corrected canon (the 18-law IOS27-CODEX, MARKS-A/B + timelines, REFABLE-RF-3 §F08,
+  SUPERFLUITY RU-09 F08 + C-H, SUFFUSION-MATRIX row K, the sources at HEAD) with the opus trio
+  unread — boundary artifact `scratchpad/ru07-anew-aurora.md`, opus docs first opened 2026-07-18
+  01:23 EDT — then unioned. My design is authoritative on conflict; opus decisions kept only where
+  RATIFIED. Verdict ledger: `../refable/REFABLE-RU-07.md`.
+- The opus loop's core thesis independently re-derives and RATIFIES. Its register half is corrected
+  (renames, DUSK re-found, DAWN hardened, the solar-family grammar the charter's "how can they be
+  better" half demanded and the opus loop never designed), its evidence layer is re-based on
+  REFABLE-RF-3 (the byte-identity and only-strokeMode rhetoric are dead), its W4 fork gains the
+  thesis-consistent third arm, the dead-axis register (RF-3 row 28) is added, and V-A95 is
+  re-framed on the round-3-live evidence.
 
-Authorities read in full for this pass: `GF-AURORA-PASS1.md` (the 48%-self-scored leading spec),
-`GF-AURORA-CRIT2.md` (the fresh critic, re-scored 40%), `ADJUDICATION-1.md` (the lead's rulings),
-`ios27/IOS27-CODEX.md` (laws 1/2/11 the design authority), `FEEDBACK-LEDGER.md` rows F07/F08 + asks
-A13/A14 (F07/F08 are URL-anchored verdicts — there is no `feedback/F07*.png` / `F08*.png` on disk;
-the ledger notes F07/F08 carry no screenshot), and the shipped shader corpus at HEAD
-(`codex/bi-p-q-execution`). The CRIT2 derivative-chain charge (F1) was re-verified against the disk
-here, not taken on the critic's word — see §2.
-
----
-
-## 1. Critique adjudication table (every CRIT2 charge, zero silent drops)
-
-CRIT2 raises one umbrella verdict (§0) and seven findings (F1–F7). Each gets a row: ACCEPTED with
-the design change it forced, or REFUTED with evidence.
-
-| # | charge (CRIT2) | verdict | forced change / evidence |
-|---|----------------|---------|--------------------------|
-| §0 | **The route relocates the elegant-reduction trap from oil (confessed) to van-Gogh (denied) — honest for oil, self-deceived for van-Gogh; the cheap-pilot premise the wave ordering rests on is cracked.** | **ACCEPTED** | The premise IS cracked — see F1. W1 is re-costed (§3.2): "port the shared paint substrate (`paintOver`+`paintOverOklab`+`relightImpasto` — the FIRST WGSL derivative use) THEN the dab." The words "derivative-free / 1:1 / cheap pilot" are struck from the spec. The cost model survives as re-drawn (van-Gogh is *cheaper than oil*, not *free*), not deleted. |
-| F1 | **[load-bearing] `mediumVangogh` is NOT derivative-free: it calls `relightImpasto` (dFdx/dFdy) and three `paintOver`s; none are on disk in WGSL; W1 silently introduces the first WGSL screen-space derivative.** | **ACCEPTED** | Re-verified on disk (§2): `vangogh-medium.glsl.ts:226` calls `relightImpasto`; `brush.glsl.ts:273` is `dFdx(h)/dFdy(h)`; the three `paintOver`s at `vangogh:165/174/189`; zero `dpdx/dpdy/fwidth` in any `.wgsl.ts` today. W1 re-costed (§3.2); G-PARITY-BODY gains a uniformity-compiles clause (§5). The dab primitive stays derivative-free (`vangogh:83-87`) — that claim was true and is retained; only the MEDIUM-level claim was false. |
-| F2 | **[major] The W4 relabel arm "shrinks the collapse to at most {3,7}" — but `{3,7}` leaves enum 3 selectable while rendering Kuwahara, which is exactly the masking fallback β's cardinal law forbids.** | **ACCEPTED** | The `{3,7}` wording is deleted. W4 (§3.5) is re-specified to two law-compliant terminal outcomes only: (a) PORT — enum 3 renders its real cascade; or (b) KILL — enum 3 is removed from `MEDIUM_ID`/`mediumOptions`, oil presets re-expressed as `kuwahara`+palette. The terminal selectable-painterly-collapse set is `{}`, never `{3,7}`. G-OIL-HONEST rewritten (§5). |
-| F3 | **[major] β cites round-2b's skin-diagnosis as if it endorsed β's remedy (author a new body), when round-2b's *proposed* remedy is the opposite — merge oil-pastel into oil-as-a-mode (a γ move).** | **ACCEPTED** | Owned in one sentence (§3.6): round-2b finding 3 *diagnoses* the skin (true, cited for that) and *recommends merge-into-oil* (a γ disposition); A13 ("proper oil-pastel brush mode … real modes or nothing", `FEEDBACK-LEDGER.md` A13) OVERRIDES that toward authoring a real body. round-2b is no longer cited as β's endorsement. γ's stronger claim on oil-pastel specifically is recorded in §7. |
-| F4 | **[moderate] "1:1 transliteration, fwidth→fwidth" is naive about WGSL uniformity: derivatives must sit in uniform control flow; `curvedStroke`'s fwidth is inside a data-dependent branch and `bestOil` is a data-dependent best-of-9 — a verbatim port will not compile.** | **ACCEPTED** | Confirmed: `brush.glsl.ts:118` gates the `fwidth` at `:122/139-140` behind `if (along1>=0 && along1<=1 && halfWNow>1e-6)` (per-pixel, data-dependent). van-Gogh's `relightImpasto` is called in the UNIFORM medium branch → legal, so it is the safe first use; the oil cascade needs derivative hoisting. W4 (§3.5) budgets the hoist restructure; G-PARITY-BODY's uniformity clause (§5) makes "compiles under WGSL uniformity + a real WebKit paint" a gate condition, not an assumption. |
-| F5 | **[moderate] The single-source-dispatch ruling (`CHRONIC-ADJUDICATION.md:34-36`) forbids a lazy split, so W4's port arm appends the ~38KB oil cascade to the ALWAYS-compiled `@fragment` module — inflating compile size for the smooth default that needs none of it; the doc treats W4 as fps-only.** | **ACCEPTED** | W4 (§3.5) now budgets SHADER-MODULE SIZE, not just frame time; the module-size clause folds into G-OIL-HONEST (§5). The boot-diet tension tilts W4's default toward the KILL arm unless BOTH perf AND module-size clear — stated explicitly. |
-| F6 | **[minor] The KEEP roster is ≈11-12 against a "17→~10" headline; DELIBERATIVE and DUSK are promoted on a "now the bodies are real" rationale that does not apply to pastel/smooth (already real).** | **ACCEPTED** | The register (§3.6) is restructured into two tiers with an EXACT count: 10 firm + 1 contingent (oil, per W4) + up-to-1 optional (kuwahara exemplar) = 10–12, headline restated as "17 → 10 firm". DELIBERATIVE/DUSK keeps are re-justified on the honest grounds — DUSK is a user-NAMED atmospheric identity (F08 "dusk"), DELIBERATIVE is the one-exemplar-per-distinct-body pastel keeper (medium-coverage, round-2b finding 6) — NOT "now real". |
-| F7 | **[minor, in β's favour] The oil-pastel BURNISH body's "overlap-height-gated sheen" is a height-gradient relight (the `relightImpasto` dFdx/dFdy family); "ports cheap, no derivatives" is unearned by the body's own design.** | **ACCEPTED** | The oil-pastel sheen is re-specified DERIVATIVE-FREE by construction (§3.4): the specular is `pow(dot(N_analytic, H), s)` where `N_analytic` comes from the smear's ANALYTIC cross-section normal (known from the tensor orientation + the capsule half-width profile), gated by the accumulated coverage SCALAR — never `dFdx/dFdy` of a screen-space height field. G-OILPASTEL-BODY (§5) makes derivative-freeness a gate clause, so oil-pastel stays the cheapest WGSL port. |
-
-Nothing in CRIT2 is REFUTED — every charge is on-disk correct. CRIT2 §6 ("what holds") items
-(diagnosis correct, β is the right leader, the gate suite is well-formed, the stale-comment finding,
-V-A95 parked) are NOT re-litigated; they are retained as-is.
+TRANCHE-DEVELOPMENT: no source touched; this doc is the terminal design artifact. No browser this
+seat — every π obligation is OWED (LIVE-DEFER), and convergence is capped accordingly.
 
 ---
 
-## 2. On-disk re-verification of the load-bearing charge (F1)
+## 1. Critique adjudication (retained from the opus pass-3; verified against disk)
 
-CRIT2's score-moving claim was checked against HEAD directly, since it inverts a pass-1 keystone:
+CRIT2's seven findings + umbrella verdict were all ACCEPTED by the prior pass-3 and every
+acceptance re-verifies against HEAD this session. The record, condensed — nothing re-litigated:
 
-- `vangogh-medium.glsl.ts:226` — `mediumVangogh` calls `result = relightImpasto(result, height, canvasBase);` (unconditional, inside the uniform medium body).
-- `brush.glsl.ts:269-273` — `relightImpasto` computes `vec3 N = normalize(vec3(-dFdx(h)*40.0, -dFdy(h)*40.0, 1.0/heightScale));` — screen-space derivatives.
-- `vangogh-medium.glsl.ts:165,174,189` — three `paintOver(...)` calls building the dab layers.
-- `paintOver` (`brush.glsl.ts:~250-261`) uses `paintOverOklab` + height accumulation — derivative-free itself, but absent from every `.wgsl.ts`.
-- `grep dpdx|dpdy|fwidth **/*.wgsl.ts` → **zero hits.** The WGSL pipeline uses no screen-space derivative today.
+| # | charge | status in this union |
+|---|--------|----------------------|
+| §0/F1 | van-Gogh is NOT a derivative-free cheap pilot — `mediumVangogh` calls `relightImpasto` (`vangogh-medium.glsl.ts:226`; `dFdx/dFdy` at `brush.glsl.ts:273`); zero `dpdx/dpdy/fwidth` in any `.wgsl.ts` today | HELD. W1 stays re-costed: substrate first (`StrokeHit`+`paintOver`+`paintOverOklab`+`relightImpasto`, the first WGSL derivative use, uniform-flow), then the dab. My anew draft under-costed this the same way pass-1 did; the critic's correction binds both. |
+| F2 | the `{3,7}` relabel arm is a masking fallback | HELD; W4 re-specified — and widened with a third law-compliant arm (§3.5). |
+| F3 | round-2b's oil-pastel remedy is merge-into-oil (γ), not the new body; the override must be owned | HELD; the A13 override stays owned (§3.6). |
+| F4 | WGSL uniformity: `curvedStroke`'s `fwidth` sits in data-dependent flow (`brush.glsl.ts:118,122,139-140`); a verbatim port will not compile | HELD; budgeted in W1/W4. |
+| F5 | single-source dispatch (`CHRONIC-ADJUDICATION.md:34-36`) forbids a lazy split → module-size budget, not fps alone | HELD; G-OIL-HONEST carries the module-budget clause. |
+| F6 | KEEP roster vs headline reconciliation | SUPERSEDED — the register is rebuilt in §3.6 (11 slots, renamed, exact arithmetic). |
+| F7 | the oil-pastel sheen must be pinned derivative-free | HELD; the analytic-normal construction stays (§3.4). |
 
-Verdict: van-Gogh's WGSL port = `{StrokeHit, paintOver, paintOverOklab, relightImpasto (dFdx/dFdy),
-vangoghDab}`. It is the FIRST derivative use, but `relightImpasto` fires in the uniform medium branch
-(`aurora-mediums.wgsl.ts:388` reads `u.ints1.x`, a uniform), so it is WGSL-legal — unlike the oil
-cascade's `curvedStroke` fwidth at `brush.glsl.ts:122` inside the data-dependent branch at `:118`.
-The cost stratification is therefore REAL but RE-DRAWN: van-Gogh is cheaper than oil (uniform-flow
-single derivative use, no `curvedStroke`/`bestOil`, no `paintStrokeLayers` 4-layer machinery), not
-free. CRIT2 F1 stands; the pass-1 "derivative-free 1:1 cheap pilot" language is retracted.
+## 2. On-disk re-verification of the load-bearing cost fact (retained)
+
+- `vangogh-medium.glsl.ts:226` — `mediumVangogh` calls `relightImpasto` (unconditional, uniform medium branch).
+- `brush.glsl.ts:269-273` — `relightImpasto` computes the normal from `dFdx(h)/dFdy(h)`.
+- `vangogh-medium.glsl.ts:165,174,189` — three `paintOver` calls build the dab layers.
+- grep `dpdx|dpdy|fwidth` over `*.wgsl.ts` → zero hits. The WGSL pipeline uses no screen-space derivative today.
+- `aurora-mediums.wgsl.ts:398-401` — `medium == 3 || 5 || 6 || 7` → `mediumKuwahara`. The collapse is real; `useAurora.ts` prefers WebGPU.
+
+Van-Gogh's WGSL port = the shared paint substrate + the derivative-free dab SDF. Cheaper than oil
+(no `curvedStroke`/`bestOil`/4-layer machinery; `relightImpasto` fires in uniform flow so it is
+WGSL-legal), not free.
+
+One comment-rot addition the opus loop missed: `vangogh-medium.glsl.ts:8` claims "The dedicated
+body is shared by both renderer paths" — FALSE against the dispatch (5 → Kuwahara on the primary).
+Cured with the W1 port.
 
 ---
 
-## 3. The revised design — GF-AURORA-β, cost model repaired
+## 3. The design — dedicated bodies, an honest register, the solar family designed
 
-### 3.1 The decomposition (unchanged) + the design authority (IOS27-CODEX)
+### 3.1 The decomposition (ratified) + the corrected design authority
 
-The thesis holds: **mode identity ⊥ palette ⊥ backend.** A mode is a dual-ported dedicated body under
-a parity contract; a palette is a preset; the two are never conflated. This makes P1 (preset skins)
-and P2b (medium skins) the SAME principle at two levels, and P2a (the WGSL collapse) a plain invariant
-violation to repair.
+The thesis holds and is re-derived independently: **mode identity ⊥ palette ⊥ backend.** A mode is
+a dual-ported dedicated body under a parity contract; a palette is a preset; the two are never
+conflated. P1 (preset skins) and P2b (medium skins) are one principle at two levels; P2a (the WGSL
+collapse) is a plain invariant violation.
 
-The IOS27-CODEX makes the register decision (§3.6), not just the body decision:
-- **Law 11 (the restraint floor)** — "when nothing is focal, an ambient breathing background is the
-  engagement floor." The aurora IS that floor. So the smooth ATMOSPHERIC exemplars (sky/sunset/dusk/
-  dawn — the four the user named in F08) are the privileged DEFAULT class; the painterly modes
-  (van-Gogh/oil-pastel/crayon) are deliberate identity opt-ins that must EARN their slot by being
-  genuinely distinct. This is the design rationale for the two-tier register — dramatic reduction of
-  the painterly clutter, protection of the breathing atmospheric floor.
-- **Law 1 (progressive blur, never a slab)** — the aurora is the field a floating glass surface's
-  backdrop-blur grades over; a mode that reads as a flat slab breaks law 1. The field-descriptor gate
-  (G-MODE-DISTINCT, §5) measures spatial structure, so a mode cannot pass as a distinct-but-flat slab.
-- **Law 2 (adaptive tint)** — glass samples the aurora's positional hue/luminance; the painterly
-  modes' broken-color jitter must not destroy the sampleable hue field. Preserved by keeping the base
-  nuclei color field intact under every medium (each body modulates, none replaces, `sampleBase`).
+Codex citations, re-grounded on the REFABLE canon (laws re-anchored: 1-4 → `IOS27-CODEX.md:11-14`,
+10-13 → `:26-29`):
 
-### 3.2 W1 re-costed (closes §0 + F1)
+- **Law 11 (the restraint floor, AMENDED constants)** — when nothing is focal, ambient life is the
+  engagement floor. The iOS-attested mechanism is the editorial-card gradient field: ~7.6pt/s
+  positional drift with ±20% mass breathing, hue held (`sr-0620-1848 §6`); the dot-lattice
+  exemplar is Cowork-provenance (breath-of-life bank ONLY, never cited as iOS) — envelope wander
+  10-20 CSS px/s, rise ~0.7s / decay ~3s, ≤+16% peak; slowest visible change wins. The aurora IS
+  this floor, so the smooth atmospherics are the privileged default class and the painterly modes
+  are opt-ins that earn their slots. NEW and binding on the register (§3.6): the constants are a
+  MOTION DESIGN, not a citation — every survivor preset must visibly migrate over tens of seconds
+  (the SPEEDTEST B21 lesson: driftRadius 0.015-0.02 at breathPeriod 40+ reads near-static) while
+  staying under the churn ceiling.
+- **Law 1 (re-grounded per RU-16 R9)** — the aurora is the field a floated glass surface's
+  backdrop treatment reads over; the graded channel on iOS surfaces is position-mapped DARKENING
+  with blur CONSTANT — never blur-proportional. A mode that reads as a flat slab starves the glass
+  above it; the G-MODE-DISTINCT descriptor terms measure spatial structure so a distinct-but-flat
+  slab cannot pass.
+- **Law 2 (unchanged)** — glass samples the field's positional hue/luminance per element and per
+  region; every medium body MODULATES the nuclei color field, none replaces it (`sampleBase` stays
+  the substrate), so the sampleable hue field survives every medium.
+- **Suffusion row K (binding fences)** — the substrate relays the PAGE's state, never its own:
+  pointer-velocity perturbation is its one flagship quality (Q7); it must never read as clickable;
+  no second light system (metal's cursor-raked catch is the field's own relight — licensed);
+  PRM/battery = still frame, composition preserved.
 
-W1 is no longer "port a derivative-free dab." It is, in order:
-1. Port the SHARED PAINT SUBSTRATE to WGSL: `StrokeHit` struct, `paintOver`, `paintOverOklab`, and
-   `relightImpasto` — the LAST being the first WGSL screen-space derivative use (`dFdx/dFdy` →
-   `dpdx/dpdy`), placed in the uniform medium branch so it compiles under WGSL uniformity.
-2. Port `vangoghDab` (derivative-free analytic crescent SDF, `vangogh:43-114`) + `mediumVangogh`.
-3. Remove `5` from the `applyMedium` collapse (`aurora-mediums.wgsl.ts:399`).
-The substrate is shared with the oil arm (W4) — so relight is a SUBSTRATE cost W1 pays first, not an
-oil-only cost (correcting pass-1 §2 SURVIVES, which wrongly listed the foundation as "already ported").
+### 3.2 W1 re-costed (retained)
 
-### 3.3 The medium-table reform (kills the silent alias)
+1. Port the shared paint substrate to WGSL: `StrokeHit`, `paintOver`, `paintOverOklab`,
+   `relightImpasto` — the first WGSL screen-space derivative use, placed in the uniform medium
+   branch so it compiles under WGSL uniformity, proven with a real WebKit paint.
+2. Port `vangoghDab` (derivative-free analytic crescent SDF) + `mediumVangogh`.
+3. Remove `5` from the `applyMedium` collapse; cure the `vangogh-medium.glsl.ts:8` parity comment.
 
-The reform target is `applyMedium` (`aurora-mediums.wgsl.ts:387-403`), specifically the four-way
-collapse at `:399-400`:
+The substrate is shared with the oil arm — relight is a substrate cost W1 pays first.
 
-```
-if (medium == 3 || medium == 5 || medium == 6 || medium == 7) { return mediumKuwahara(col, p, t); }
-```
+### 3.3 The medium table (the alias killed)
 
-After the reform, EVERY selectable medium dispatches to exactly one dedicated body — no `||` alias:
+After the reform, every selectable medium dispatches to exactly one dedicated body — no `||` alias:
 
 | id | medium | reformed WGSL dispatch | wave |
 |----|--------|------------------------|------|
 | 0 | smooth | no-op | — |
 | 1 | pastel | `mediumPastel` (exists) | — |
 | 2 | watercolor | `mediumWatercolor` (exists) | — |
-| 3 | oil | own cascade (PORT arm) OR enum deleted (KILL arm) — never Kuwahara-while-selectable | W4 |
-| 4 | crayon | `mediumCrayon` reworked to drawn marks | W3 |
-| 5 | vangogh | `mediumVangogh` (new WGSL twin) | W1 |
-| 6 | oil-pastel | new burnish body (new dedicated) | W2 |
-| 7 | kuwahara | `mediumKuwahara` (exists, keeps its own id) | — |
+| 3 | oil | own body — PORT, REAUTHOR-LEAN, or enum deleted (§3.5); never Kuwahara-while-selectable | W4 |
+| 4 | crayon | `mediumCrayon` reworked to hand-drawn marks | W3 |
+| 5 | vangogh | `mediumVangogh` (WGSL twin) | W1 |
+| 6 | oil-pastel | new dedicated body | W2 |
+| 7 | kuwahara | `mediumKuwahara` (its own honest id) | — |
 | 8 | metal | `mediumMetal` (exists) | — |
 | 9 | metal-gradient | `mediumMetalGradient` (exists) | — |
 
-`mediumKuwahara` keeps id 7 as its OWN honest medium; the reform is that nothing ELSE routes to it.
+### 3.4 Per-mode express definitions (union-amended)
 
-### 3.4 Per-mode express definitions (the shader-level mechanism that makes each distinct)
+Each mode is defined by the mechanism that makes its rendered field measurably unlike the others.
 
-Each mode is defined by the shader mechanism that makes its RENDERED FIELD measurably unlike the
-others — grounded in what the pipeline can express (`sampleBase`, `structureTensorField`, `flowField`,
-`brokenColorJitter`, `vnoise`, the `StrokeHit`/`paintOver` substrate).
+**van-Gogh (5) — discrete loaded comma dabs over dark ground (ratified).**
+The `vangoghDab` analytic-crescent SDF, oriented on the swirl flow + per-cell angular fan
+(anti-marble), placed SPARSELY over a darkened underpainting, full-height impasto crown per dab.
+Signature: high tensor anisotropy, measurable inter-dab gap-fraction, high specular energy.
+Already real on WebGL2; W1 gives the primary its twin.
 
-**van-Gogh (id 5) — DISCRETE LOADED COMMA DABS over dark ground.**
-Mechanism: the `vangoghDab` analytic-crescent SDF field (derivative-free AA, `vangogh:83-87`),
-oriented on the `flowField` swirl + per-cell angular jitter, placed SPARSELY (density ≈0.30) so the
-darkened underpainting shows between marks, with a full-height impasto CROWN per dab relit by
-`relightImpasto` (the raked glint that reads as raised paint). Distinct signature (measurable):
-HIGH structure-tensor anisotropy A (long-thin flow-aligned dabs), MEASURABLE gap-fraction (dark
-inter-dab ground), HIGH specular energy (impasto glints). Already real on WebGL2; W1 gives it the
-WGSL twin. This is the CHEAPEST painterly port (no `curvedStroke`, no best-of-9), just not free.
+**oil-pastel (6) — the stubby waxy stick, a new dedicated body (opus direction ratified; the
+physical model completed).** The extant body is the awfulness: a `profileFor(MEDIUM_OILPASTEL)`
+constant-skin of the oil cascade (`mediums.glsl.ts:493-496`, `oil-modes.glsl.ts:54-91`) — it
+renders as smeared oil. RF-3 correction carried: the trio's nuclei were NOT byte-identical
+(mean displacement 0.045-0.058) and the pair-rhetoric was wrong — the kill is on the admission
+law, not on byte-identity. The new body, dual-ported, four analytic terms, derivative-free by
+construction:
+- **Blunt strokes** — even-width capsules with ROUNDED ends (a stubby stick, never a tapered
+  bristle); few, broad, tensor-oriented. [union addition — the shape identity]
+- **Buttery overlap BLEND** — where strokes overlap, the deposit drags the neighbor color along
+  the stroke direction (a bounded directional smear of the accumulated color, not a fresh
+  `sampleBase`) — wax blends where crayon stays broken. This is the term that separates oil-pastel
+  from BOTH crayon and oil at a glance. [union addition]
+- **Analytic burnish sheen** — the waxy gloss, `pow(dot(N_analytic, H), s)` with the normal
+  derived analytically from the tensor orientation + the capsule half-width profile, gated by the
+  accumulated coverage SCALAR; no `dFdx/dFdy` (CRIT2 F7 held).
+- **Additive tooth-skip** — the creamy deposit skips the tooth valleys and lays bright pigment on
+  the ridges (the inverse of crayon's multiply-dark-into-pits); plus the chroma punch.
+Signature: glossy specular film (vs oil's matte impasto, crayon's dry matte), additive-bright
+broken deposit, broad low-frequency blended smears.
 
-**oil-pastel (id 6) — BROAD CREAMY SMEARS + ANALYTIC BURNISH SHEEN + ADDITIVE TOOTH-SKIP (new body).**
-The extant is "awful" because it is a `profileFor(MEDIUM_OILPASTEL)` constant-skin of the oil cascade
-(`oil-modes.glsl.ts:54-91`, all constant assignments; `mediums.glsl.ts:493-496`). The new dedicated
-body, dual-ported, is three analytic terms — none using screen-space derivatives (closes F7):
-- **Broad smears** — few big tensor-oriented soft capsules (chunky pitch, low count), NOT the oil
-  best-of-9 bristle cascade. A creamy directional deposit, wide and soft.
-- **Analytic burnish sheen** — the waxy gloss oil-pastel is named for (the crayon comment calls it
-  oil-pastel's signature, `mediums.glsl.ts:148-150`). Computed as `pow(dot(N_analytic, H), shininess)`
-  where `N_analytic` is the smear's cross-section normal derived ANALYTICALLY from the tensor
-  orientation + the capsule half-width profile (perp gradient of a known profile), gated by the
-  accumulated smear-coverage SCALAR. No `dFdx/dFdy` — so it ports 1:1, cheap by construction.
-- **Additive tooth-skip broken deposit** — the INVERSE of crayon's tooth-multiply darken: oil-pastel
-  is a wet creamy deposit that SKIPS the paper-tooth valleys and lays pigment on the ridges,
-  ADDITIVELY (bright broken deposit), where crayon multiplies DARK into the pits.
-- **Chroma punch.** Distinct signature: BURNISH specular film (glossy, unlike oil's matte impasto or
-  crayon's dry matte), additive-bright broken deposit, broad low-frequency smear structure.
+**crayon (4) — hand-drawn, not just textured (opus direction ratified; the hand completed).**
+The extant `mediumCrayon` is a real dual-ported body but a uniform full-field tooth-multiply — a
+texture, not a hand. The rework keeps the dry substrate and adds the drawn read:
+- **Discrete scribble marks** with pressure-varying width and lift-off (broken ends) (ratified).
+- **Per-zone quantized stroke direction** — a hand shades a region in ONE direction, then switches
+  at the zone boundary; the orientation is seeded per color-zone (quantized off the nuclei field),
+  not a continuous tensor everywhere — continuous tensor-following is precisely what reads
+  machine-made. [union addition]
+- **Boundary overshoot/underfill** — the deposition mask crosses zone edges by a jittered margin
+  (color outside the lines; paper inside them). The child's-crayon read, cheap, and it also feeds
+  law 2 no harm (the base field is intact beneath). [union addition]
+- **DRY law** — no impasto crown, no sheen, ever; sheen is oil-pastel's signature.
+The optional graphite/ink contour-hatching mode is CUT (opus carried it as a user ASK): A13's
+phrasing is singular ("a proper crayon/hand-drawn mode") and the F03 parsimony edict rules the
+singular reading — one crayon mode carrying the hand-drawn qualities. Flip: revives only on an
+explicit user ask for a distinct ink medium.
 
-**crayon (id 4) — VISIBLE DRAWN SCRIBBLE MARKS, DRY (rework of the wash).**
-The extant `mediumCrayon` (`mediums.glsl.ts:152-199`) is a real body but a UNIFORM full-field
-tooth-multiply wash — it reads as a texture, not as hand-drawing. The rework keeps the dry
-tooth-multiply substrate (the paper the marks ride) but adds DISCRETE directional scribble marks:
-short strokes with pressure-varying width and LIFT-OFF (broken ends where the crayon leaves the
-paper), following the structure tensor, DRY (no impasto crown, no sheen — the tooth-multiply darkens
-in the pits, paper shows through the scumble gaps). Distinct signature vs van-Gogh: LOW specular
-(no glint), HIGH tooth-frequency texture, paper-through gap-fraction rather than dark underpainting;
-vs oil-pastel: thin scribbles not broad smears, matte not glossy, multiply not additive. Optional
-graphite/ink contour-hatching read (density tracks luma, strokes cross the gradient) — SCOPE OPEN
-(§8 user ASK): one crayon or crayon + a distinct ink mode.
+### 3.5 The oil resolution (W4 — the fork widened)
 
-### 3.5 The oil resolution (W4 — closes F2, F4, F5)
+The opus PORT-or-KILL binary contradicts β's own center: if the thesis is AUTHOR dedicated bodies
+(what W2/W3 do for oil-pastel/crayon), then "port the 38KB cascade verbatim or delete the medium"
+is not exhaustive. Three law-compliant terminal arms:
 
-Oil is the one perf/size-gated arm. W4 has exactly TWO law-compliant terminal outcomes; the
-`{3,7}`-relabel is deleted (it left enum 3 selectable-while-Kuwahara — a masking fallback):
+- **PORT** — transliterate `curvedStroke`/`bestOil`/`paintStrokeLayers`, hoisting the
+  data-dependent `fwidth` (`brush.glsl.ts:118-140`) into uniform flow; must clear BOTH the frame
+  budget AND the declared `@fragment` module-size budget (F5 — no lazy split available).
+- **REAUTHOR-LEAN [union addition — the default lean]** — author a LEANER dedicated oil body for
+  both backends: two stroke layers instead of four, analytic AA instead of `fwidth` (the
+  `vangoghDab` construction generalized to tapered/knife shapes), the knife/chunky `strokeMode`
+  dials preserved as profile constants over the lean cascade. Thesis-consistent (a dedicated body,
+  designed for the budget), and it retires the 38KB monolith on WebGL2 too rather than freezing it
+  as the permanent fallback register.
+- **KILL** — delete enum 3 from `MEDIUM_ID`/`mediumOptions`; the oil preset re-expresses as
+  `kuwahara`+palette. Fires only if even the lean body cannot clear the budgets.
 
-- **PORT arm** — port `curvedStroke`/`bestOil`/`paintStrokeLayers` to WGSL. Requires (F4) hoisting
-  the `curvedStroke` fwidth (`brush.glsl.ts:122,139-140`) OUT of the data-dependent branch (`:118`)
-  — precompute the AA width before the conditional — so it compiles under WGSL uniformity. Requires
-  (F5) staying within a declared `@fragment` MODULE-SIZE budget, since the single-source dispatch
-  ruling (`CHRONIC-ADJUDICATION.md:34-36`) forbids a lazy split and the ~38KB cascade is appended to
-  the always-compiled module. Outcome: enum 3 renders its real cascade on both backends.
-- **KILL arm** — DELETE enum 3 from `MEDIUM_ID` (`uniformBridge.ts:71`) and `mediumOptions`
-  (`options.ts`); re-express the surviving oil preset(s) as `kuwahara`+palette. Outcome: enum 3 is
-  not selectable; nothing renders Kuwahara under an "oil" label.
+Terminal selectable-collapse set is `{}` on every arm — never `{3,7}` (CRIT2 F2 held). Either way
+the stale `uniformBridge.ts:76-79` comment (which claims a smooth-core degrade for ids 1-7,
+contradicting the real dispatch) is rewritten to reality.
 
-Default lean: because BOTH perf AND module-size must clear for the PORT arm, and the boot-diet ruling
-gives no lazy escape, W4 defaults to KILL unless a measured paint clears both budgets. Either way,
-the stale `uniformBridge.ts:76-79` comment ("smooth core for every painterly id 1-7", which also
-wrongly says kuwahara(7) degrades to smooth core) is corrected to reality.
+### 3.6 The register — 11 slots, renamed, the solar family DESIGNED (union-corrected)
 
-### 3.6 The reduced preset register (closes F6; the round-2b override owned, closes F3)
+The opus keep/kill table survives in membership but failed the charter's other half: A13 says the
+extant exemplars are good AND asks "how can they be better" — the opus register never designed the
+improvement. And it kept the vendor-meta names. Corrections:
 
-Two tiers, exact count. Rule A — the atmospheric restraint-floor family (law 11): the four
-user-named smooth identities each keep a slot (palette-variation is legitimate HERE because the
-smooth atmospheric IS the named engagement floor). Rule B — the painterly/material bodies: exactly
-one showcase per genuinely-distinct SHIPPED body (medium-coverage, round-2b finding 6).
+**Admission law** (re-stated): a preset earns a slot iff it is (a) a distinct FIELD ARCHETYPE —
+composition + VALUE STRUCTURE identity, not palette nuance — or (b) the medium HERO of a real
+authored body, one hero per body. Duplication is judged over AUTHORED fields only —
+default-inherited fields excluded (RF-3: the raw full-vector metric inverts the ranking; smooth
+presets read most-duplicated merely because they override little).
 
-**FIRM KEEP (10):**
-| preset | body | rule / rationale |
-|--------|------|------------------|
-| `OPENAI_SKY` | smooth | A — user-named "sky" |
-| `SETTING_SUN` | smooth | A — user-named "sunset" (canonical warm sunset) |
-| `DUSK` | smooth | A — user-named "dusk" (cool dusk-lilac note, a distinct read) |
-| `OPENAI_DAWN` | smooth | A — user-named "dawn" |
-| `DELIBERATIVE` | pastel | B — the one pastel-body exemplar (already real; kept for coverage, NOT "now real") |
-| `OPENAI_MEADOW` | watercolor | B — the one watercolor exemplar + the ONLY hybrid-warp coverage (round-2b finding 4) |
-| `VANGOGH` | van-Gogh | B — real on both backends post-W1 |
-| `OILPASTEL_SUNSET` | oil-pastel | B — the burnish-body showcase post-W2 (warmest of the trio) |
-| `CRAYON` | crayon | B — the hand-drawn showcase post-W3 |
-| `METAL` | metal | B — the metal-body exemplar |
+**Renames — clean break, no aliases** (greenfield-no-meta kills vendor names; RU-09 canonical):
+`SETTING_SUN→SUNSET`, `OPENAI_SKY→SKY`, `OPENAI_DAWN→DAWN`, `OPENAI_MEADOW→MEADOW`,
+`DELIBERATIVE→PASTEL`, `OIL_IMPASTO→OIL`, `OILPASTEL_SUNSET→OIL_PASTEL`.
 
-**CONTINGENT (W4):** `OIL_IMPASTO` — an oil preset iff the PORT arm fires; if oil is KILLED it is
-dropped or re-expressed as `kuwahara`+palette. Register = 11 (oil ported) or 10 (oil killed).
+**The solar quartet (rule A — the law-11 atmospheric floor), designed as ONE family, tellable by
+VALUE STRUCTURE at a glance:**
 
-**OPTIONAL (W5):** a minimal `kuwahara` exemplar (kuwahara has zero preset today, round-2b finding 6)
-— author one (+1) or document studio-only (+0). Register upper bound = 12.
+| slot | identity | the design |
+|------|----------|------------|
+| SUNSET | the default; mid-key warm horizon | the elongated sun-BAND low (the one elongation exerciser), coral-rose core, cream apex — the extant SETTING_SUN carries this; keeps the slot |
+| DUSK | RE-FOUNDED, not tuned | the extant DUSK is SUNSET wearing a lilac whisper (L 0.50-0.91 vs 0.52-0.93 — same value structure, same drift-ladder family; RU-09: "today a lilac-note of SUNSET"). Twilight is DARK: low-L indigo/violet base (L≈0.35-0.45, h 280-300, C 0.10-0.12), the warm coral compressed to a narrow dying ember band at the horizon, lilac veil above. Tellable by construction. Round-2 death clause applies to THIS config, not the whisper |
+| SKY | the one cool field | midday cerulean volumetric, highest-L spread; candidate for `warpMode:"curl"` (cirrus wisps) — paint-judged, not bound |
+| DAWN | provisional, HARDENED before judged | pre-sunrise = high-L COOL undertone (lavender-grey base), pink blush high and diffuse, NO sun-band (that is SUNSET's signature). Dies in round two only if capture still confounds with SUNSET after the value-structure split |
 
-**KILL (6 removed):** `VIVID_SETTING_SUN` (SETTING_SUN + chroma, reachable via the saturation knob,
-round-2b finding 2), `DAY9_YELLOW` (watercolor near-dup of MEADOW, finding 4), `OIL_GESTURAL`
-(profileFor sub-skin of OIL_IMPASTO), `OILPASTEL_RAINBOW` + `OILPASTEL_OCEAN` (palette skins of
-OILPASTEL_SUNSET, finding 1), and `SPEEDTEST` RELOCATED to the consumer (presets-in-consumers).
+Family mechanics: each member gets its OWN drift-phase ladder (the A/B/C trio literally shared one
+ladder — decorrelate by design) and a drift signature clearing the law-11 visible-migration floor
+(§3.1). The A/B/C candidate framing is CLOSED — `tests-visual/aurora-vibrancy.spec.ts`'s
+CANDIDATES array retires to `["SUNSET","DUSK"]`.
 
-Headline: **17 → 10 firm** (+1 contingent oil, +up-to-1 optional kuwahara ⇒ 10–12). Verify:
-10 keep + 1 contingent + 6 removed = 17. ✓
+**Medium heroes (rule B):** MEADOW (watercolor; absorbs DAY9 — same yellow+cool-intrusion
+structure; keeps the only hybrid-warp), PASTEL, OIL (absorbs GESTURAL — `strokeMode` is one click
+away in the configurator; per RF-3 the pair differed on 16/36 fields, so the character delta folds
+into the hero's tuning — stated, not denied), VANGOGH, OIL_PASTEL (absorbs RAINBOW + OCEAN; see
+§3.8 — it becomes the huePath hue-arc exerciser), CRAYON, METAL.
 
-**The round-2b override, owned (F3):** round-2b finding 3 *diagnoses* oil-pastel as an oil skin (true
-— cited for that, §3.4) and *recommends merge into oil-as-a-mode* (a γ disposition). A13 ("a proper
-oil-pastel brush mode … real modes or nothing", `FEEDBACK-LEDGER.md` A13) OVERRIDES that toward
-authoring a real body (W2). round-2b is not cited as endorsing the new-body remedy; it endorses the
-merge, which A13 outranks.
+**No slot:** kuwahara + metal-gradient — finishes/variants one click away in the medium tab, not
+aesthetic identities; RESOLVED studio-only (the opus "+1 optional exemplar" closes as +0), except
+that a W4 KILL arm re-expresses the oil slot as kuwahara+palette, which would seat kuwahara
+naturally. SPEEDTEST relocates to the speedtest repo (presets-in-consumers; marked addendum in ITS
+tranche).
 
-### 3.7 The V-A95 relationship statement
+**KILL (6):** VIVID_SETTING_SUN (SETTING_SUN + the saturation/chroma knob — RF-3-verified:
+byte-identical sun-band nucleus + identical drift ladder), DAY9_YELLOW, OIL_GESTURAL,
+OILPASTEL_RAINBOW, OILPASTEL_OCEAN, SPEEDTEST (relocated).
 
-**ORTHOGONAL — the greenfield neither subsumes nor cures V-A95.** V-A95 is a CSS/compositing
-present-race on `.aurora-canvas-layer` (`Aurora.vue:283-294`): a reverse-drag on the armed canvas
-flashes a black backdrop snapshot; the shipped `isolation: isolate` cure is self-described unconfirmed
-("Proof owed on the real in-app Chrome arm"). The mode work lives entirely in the shader/medium layer
-and touches no compositing path, so it cannot fix the race. One interaction risk to sequence around:
-W1/W4 add derivative/relight cost to the WGSL fragment, which could shift the GPU present timing the
-race depends on — so W6 must re-confirm-or-replace AFTER the mode waves land, not before. Carried as
-the bounded W6 rider, consistent with `REGISTRY.md:146` / `CHRONIC-ADJUDICATION.md:55-56` ("GF-AURORA
-carries it; reported plainly as a shipping defect").
+**Arithmetic:** 11 keep (4 solar + 7 heroes) + 6 removed = 17. ✓ Headline: **17 → 11**, with OIL
+contingent on W4's arm (REAUTHOR keeps it; KILL re-expresses it → 10).
 
----
+**The round-2b override, owned (retained):** round-2b diagnosed the oil-pastel skin (true) and
+recommended merge-into-oil (γ); A13 overrides toward authoring the real body. Stated, not
+laundered.
 
-## 4. Wave shape (updated; bbnf-lang tranche format; hard gates; FINAL.md)
+### 3.7 V-A95 (re-framed on the round-3-live evidence)
 
-| wave | title | scope (pass-3 amendments in **bold**) | hard gate(s) | π obligation |
-|------|-------|---------------------------------------|--------------|--------------|
-| **W0** | CENSUS + CONTRACT-LOCK | freeze §3.3 body matrix; author all born-RED gate scaffolds (all RED at HEAD); **pin BOTH ε (parity) AND τ (distinctness) against a captured cross-backend + cross-medium baseline; declare the `@fragment` module-size budget** | gate suite compiles + all RED | — |
-| **W1** | PAINT SUBSTRATE + VAN-GOGH-ON-PRIMARY | **port the shared substrate `StrokeHit`+`paintOver`+`paintOverOklab`+`relightImpasto` (first WGSL derivative use, uniform-flow) THEN** `vangoghDab`/`mediumVangogh`; remove `5` from `applyMedium:399` | G-PARITY-BODY(vangogh) incl. **uniformity-compiles + WebKit paint**, G-VANGOGH-PRIMARY | π-VANGOGH-PRIMARY, π-PARITY |
-| **W2** | OIL-PASTEL REAL BODY | author the dedicated burnish body **(analytic derivative-free sheen)**; DELETE the `profileFor(MEDIUM_OILPASTEL)` skin (`oil-modes.glsl.ts:54-91`) + `mediumOilPastel` (`mediums.glsl.ts:493-496`); remove `6` from `applyMedium:400` | G-OILPASTEL-BODY (**derivative-free clause**), G-NO-SKIN-MODE | π-OILPASTEL |
-| **W3** | CRAYON HAND-DRAWN | rework `mediumCrayon` (both backends) from the tooth-multiply wash to discrete drawn scribble marks (pressure + lift-off), dry; **carry the crayon-vs-crayon+ink ASK** | G-CRAYON-DRAWN | π-CRAYON |
-| **W4** | OIL RESOLUTION | **PORT (hoist the `curvedStroke`/`bestOil` derivatives out of data-dependent flow + hold the module-size budget) OR KILL (delete enum 3, re-express oil presets as kuwahara+palette) — terminal set `{}`, never `{3,7}`**; fix the stale `uniformBridge.ts:76-79` comment | G-OIL-HONEST (**+module-budget clause**) | π-OIL |
-| **W5** | PRESET REDUCTION | adopt the §3.6 17→10 firm register; relocate SPEEDTEST; kuwahara-exemplar decision; **run the full pairwise G-MODE-DISTINCT sweep over the shipped set** | G-PRESET-HONEST, G-SPEEDTEST-RELOCATED, **G-MODE-DISTINCT** | π-GALLERY, **π-DISTINCT** |
-| **W6** | REVERSE-DRAG (V-A95) | confirm-or-replace the `isolation:isolate` cure on the real in-app Chrome arm **AFTER the mode waves land** (present-timing interaction, §3.7) | G-REVERSE-DRAG-NOSLAB | π-REVERSE-DRAG |
-| **W7** | CONSUMER RE-POINT + FINAL | demo gallery adopts the reduced set + the real modes; overfitting audit (≥2 sites/exported/private-helper); FINAL.md | G-CONSUMER, overfit-audit | π-BAKE |
+The opus pass carried V-A95 as an active RED whose `isolation:isolate` cure needed confirming. The
+round-3-live probe (`round-3-live/07-08-aurora-va95-notes.json` + `08a-08d` captures) supersedes
+that framing: on the LIVE WebGPU renderer, three reverse-drag variants produced NO black slab —
+the only black state observed was self-inflicted (the probe's `getContext()` call stole the WebGPU
+context and faked the fallback; the live-π context-steal trap). The black-slab claim is itself
+suspect as an instrumentation artifact.
 
----
+W6 therefore shrinks: one clean confirm on the real in-app Chrome arm with observation via
+screenshot/computed-style ONLY (never `getContext` on a live canvas), then RETIRE the defect
+record — and audit whether the unconfirmed `isolation:isolate` cure in `Aurora.vue` is cargo to
+remove. Still sequenced after the mode waves (the derivative/relight cost could shift present
+timing; confirm against the final shader). Orthogonal to the medium architecture (ratified).
 
-## 5. Born-RED gates (each names its RED-at-HEAD condition with file:line; lean per the gates-abrogation mandate)
+### 3.8 The dead-axis register (union addition — RF-3 row 28, absent from the opus loop)
 
-- **G-MODE-DISTINCT (the distinctness gate — the F08 complaint operationalised).** For every unordered
-  pair of shipped mediums `(m_i, m_j)`, rendered at ONE canonical config (fixed palette P0, fixed
-  nuclei layout N0, fixed flow F0, fixed t0 — identical except `medium`), the descriptor distance
-  `D(m_i, m_j) ≥ τ`, where D combines FOUR terms so tellability is measured by BOTH colour and
-  texture: **ΔĒ** (mean perceptual CIELAB colour distance over the frame), **ΔA** (structure-tensor
-  mean-anisotropy — the repo's §4.2 metric, the vangogh comments' own vocabulary), **Δβ** (radial
-  power-spectrum slope — §4.3), and **Δρ_hf** (high-frequency energy / gap-fraction ratio — the
-  atomicity metric). Texture-inclusive so two modes cannot PASS by sharing a palette while differing
-  only cosmetically, and cannot FAIL merely for sharing a palette while differing in texture. τ is
-  pinned in W0 as a fraction of a reference "obviously-different" pair (smooth ↔ crayon) captured on
-  both backends. *RED today:* on WGSL, `D(oil, vangogh) = D(vangogh, oil-pastel) = D(oil-pastel,
-  kuwahara) = 0` EXACTLY (byte-identical `mediumKuwahara`, `aurora-mediums.wgsl.ts:399-400`); on
-  WebGL2, `D(oil, oil-pastel) < τ` (shared `paintStrokeLayers` cascade, differ only by `profileFor`
-  constants, `mediums.glsl.ts:493-496` vs `:376-382`). The strongest possible RED — a literal zero.
-- **G-PARITY-BODY.** For every medium shipping as a mode, the WGSL render is its OWN dedicated body
-  (not a foreign `mediumKuwahara` call), parity-ΔE(mode) < ε vs its GLSL twin at fixed config/t, AND
-  the body compiles under WGSL uniformity (all `dpdx/dpdy/fwidth` in uniform control flow) with a real
-  WebKit paint. *RED today:* `aurora-mediums.wgsl.ts:399-400` routes 3/5/6/7 → `mediumKuwahara`; zero
-  WGSL derivative use exists to prove the uniformity clause.
-- **G-NO-SKIN-MODE.** No shipped medium is a pure `StrokeProfile`-constant skin of another (structural
-  check: the body is a distinct function, not a `profileFor(X)`-only delegate to a shared cascade).
-  *RED today:* `mediums.glsl.ts:493-496` `mediumOilPastel` = `profileFor(MEDIUM_OILPASTEL,0)` skin of
-  `mediumOil` (`:376-382`); the branch is 100% constant assignments (`oil-modes.glsl.ts:54-91`).
-- **G-VANGOGH-PRIMARY.** A `medium:"vangogh"` config on the WGSL primary renders the discrete
-  separable-dab body (visible dark inter-dab ground, gap-fraction ≥ floor, impasto crown glints), not
-  the Kuwahara smear. *RED today:* `applyMedium:399`.
-- **G-OILPASTEL-BODY.** Oil-pastel renders a dedicated burnish body (broad tensor-oriented smears +
-  ANALYTIC overlap-gated sheen + additive tooth-skip deposit), DERIVATIVE-FREE (no `dFdx/dFdy/fwidth`
-  — the sheen is analytic from the smear cross-section, per §3.4), distinct from oil's bristle cascade
-  AND crayon's tooth-multiply, on BOTH backends. *RED today:* no such body — oil-pastel is the oil
-  skin.
-- **G-CRAYON-DRAWN.** Crayon renders discrete directional hand-drawn scribble marks with pressure/
-  lift-off, DRY (tooth-multiply darkening, no impasto glint, no sheen), not a uniform full-field wash.
-  *RED today:* `mediumCrayon` (`mediums.glsl.ts:152-199` / `aurora-mediums.wgsl.ts:204-239`) is a
-  full-field multiply, no discrete drawn mark.
-- **G-OIL-HONEST.** Oil's primary render is EITHER its real ported cascade OR enum 3 is DELETED from
-  the selectable mediums (absent from `MEDIUM_ID`/`mediumOptions`) with oil presets re-expressed as
-  `kuwahara`+palette; the gate FAILS if enum 3 stays selectable while `applyMedium` routes it to a
-  non-oil body. Terminal selectable-collapse set `{}`, never `{3,7}`. The PORT arm additionally holds
-  the declared `@fragment` module-size budget. The `uniformBridge.ts:76-79` comment matches reality.
-  *RED today:* enum 3 is selectable AND routes to `mediumKuwahara` (`:399`); the comment claims a
-  false smooth-core degrade.
-- **G-PRESET-HONEST.** No two shipped presets differ only by palette+flowAngle over an identical
-  medium+nuclei+stroke-params. *RED today:* OILPASTEL_SUNSET/RAINBOW/OCEAN (`presets.ts:320/360/462`),
-  SETTING_SUN/VIVID (`:591/:656`), MEADOW/DAY9 (`:96/:163`).
-- **G-SPEEDTEST-RELOCATED.** SPEEDTEST absent from the demo aurora showcase. *RED today:* `PRESETS`
-  includes `SPEEDTEST` (`presets.ts:685-703`).
-- **G-REVERSE-DRAG-NOSLAB (rider).** A reverse-drag on the armed canvas paints no black backdrop-race
-  sample, confirmed on the real in-app Chrome arm. *RED today:* `Aurora.vue:283-294` — cure
-  self-described unconfirmed.
+Census truth: across all 17 presets, `vividness`, `huePath`, and `source` never vary, and the demo
+`cfg()` wrapper's interactivity default was never overridden by any preset — plus two studio
+REACHABILITY defects: `warpModeOptions` omits `"curl"` and `flowPatternOptions` omits `"tensor"`
+(the types carry them; the studio cannot select them). Dispositions, per axis:
+
+- **huePath — gains its register exerciser.** OIL_PASTEL absorbs RAINBOW *as the hue-arc
+  exerciser*: fewer stops + `huePath:"increasing"` produces the spectrum sweep by construction —
+  cleaner than seven hand stops, and the axis stops being dead.
+- **interactivity — gains its register exerciser.** METAL declares `{ light: true, swirl: true }`:
+  cursor-as-light IS the metal identity (the raked catch). The rest inherit the cfg default
+  deliberately (documented). The wrapper already merges; the axis was dead by omission, not by
+  construction.
+- **vividness — register-invariant BY DESIGN.** It is the §3 chroma-floor consumer contract
+  (`vividness:0` = the pale-hero opt-out with byte-identity), not a theme axis. Documented
+  studio-only; the identity contract is the library-side witness.
+- **source:"image" — studio-only.** A register preset carrying a photo is an asset dependency;
+  wrong for the register by design. Documented.
+- **warpMode "curl" / flow "tensor" — reachability cured.** Both added to their option lists in
+  `config/options.ts`. SKY's curl adoption is paint-judged (§3.6).
+- **alpha / noiseOctaves** — post-cut register-invariant (their only variance was SPEEDTEST, which
+  departs); field-quality knobs, documented.
+
+### 3.9 Rot cures (union addition — bound into W5; RU-09-aligned)
+
+- `src/components/aurora/constants/presets.ts:4-6` — the library header lists an 11-name register
+  that has not existed for tranches (RF-3 row 29). Kill the name list (a staleness engine); point
+  at the demo register by path only.
+- `uniformBridge.ts:76-79` — rewritten at W4 (retained).
+- `vangogh-medium.glsl.ts:8` — the false "shared by both renderer paths" claim; cured at W1.
+- `tests-visual/aurora-vibrancy.spec.ts` — CANDIDATES → `["SUNSET","DUSK"]`; candidate framing
+  retired.
+- `tests-visual/substrate-paints-color.spec.ts:148` — the roster pin is ALREADY stale (pins 13,
+  disk has 17 — the witness broke silently); re-pin deliberately at the post-cut count as a
+  literal (a witness, not a derived count).
+- `tests/demo/aurora-stage-affordance.test.ts` — `OIL_IMPASTO→OIL`, `SETTING_SUN→SUNSET`; the
+  second oil config inlines `{...PRESETS.OIL, strokeMode:"chunky"}`.
+- `demo/stories/substrates/aurora.vue` default fallback → `"SUNSET"`.
+- `pi-manifest.ts:109/116` count comments re-counted post-cut.
 
 ---
 
-## 6. π obligations (live paint-verified deltas — ALL OWED; run live-π per band; paint-arm parses oklab)
+## 4. Wave shape (bbnf-lang tranche format; hard gates; FINAL.md)
 
-- **π-DISTINCT** — capture every shipped medium at the canonical config on both backends; compute the
-  pairwise D-matrix; prove `min D ≥ τ`. Baseline = the D=0 rows (oil/vangogh/oil-pastel/kuwahara on WGSL).
-- **π-PARITY** — capture each real mode on BOTH backends at fixed config/t; ΔE map; prove < ε.
-- **π-VANGOGH-PRIMARY** — capture `vangogh` on WGSL; prove discrete separable dabs. Baseline = the Kuwahara smear.
-- **π-OILPASTEL** — capture the rebuilt oil-pastel; prove burnish sheen + additive tooth-skip. Baseline = the "awful" oil-skin extant.
-- **π-CRAYON** — capture the drawn crayon; prove visible scribble marks + lift-off. Baseline = the wash.
-- **π-OIL** — capture oil's resolved primary render (real cascade OR the KILL arm's honest absence).
-- **π-GALLERY / π-BAKE** — capture the reduced demo gallery + the thumbnail bakes on the real modes.
-- **π-REVERSE-DRAG** — capture a reverse-drag post-mode-waves; prove no slab (the V-A95 confirm-or-replace).
+| wave | title | scope (union amendments in **bold**) | hard gate(s) | π obligation |
+|------|-------|--------------------------------------|--------------|--------------|
+| **W0** | CENSUS + CONTRACT-LOCK | freeze the §3.3 body matrix; born-RED gate scaffolds (all RED at HEAD); pin ε (parity) + τ (distinctness) against captured cross-backend/cross-medium baselines; declare the `@fragment` module-size budget | gate suite compiles + all RED | — |
+| **W1** | PAINT SUBSTRATE + VAN-GOGH-ON-PRIMARY | port `StrokeHit`+`paintOver`+`paintOverOklab`+`relightImpasto` (first WGSL derivative use, uniform-flow) THEN `vangoghDab`/`mediumVangogh`; remove `5` from the collapse; **cure the `vangogh:8` parity comment** | G-PARITY-BODY(vangogh) incl. uniformity-compiles + WebKit paint, G-VANGOGH-PRIMARY | π-VANGOGH-PRIMARY, π-PARITY |
+| **W2** | OIL-PASTEL REAL BODY | author the dedicated body — **blunt capsules + buttery overlap-blend + analytic burnish + additive tooth-skip** (derivative-free); DELETE the `profileFor(MEDIUM_OILPASTEL)` skin + `mediumOilPastel` passthrough; remove `6` from the collapse | G-OILPASTEL-BODY (derivative-free clause), G-NO-SKIN-MODE | π-OILPASTEL |
+| **W3** | CRAYON HAND-DRAWN | rework `mediumCrayon` (both backends): discrete scribble marks + pressure/lift-off + **per-zone quantized direction + boundary overshoot/underfill**, dry; **the ink-mode ASK is resolved-CUT (singular reading, F03 parsimony)** | G-CRAYON-DRAWN | π-CRAYON |
+| **W4** | OIL RESOLUTION | **three arms: PORT (hoist derivatives + hold module budget) / REAUTHOR-LEAN (default lean — a two-layer dedicated body, analytic AA, strokeMode dials kept) / KILL (delete enum 3; oil→kuwahara+palette)** — terminal collapse set `{}`; fix `uniformBridge.ts:76-79` | G-OIL-HONEST (+module-budget clause) | π-OIL |
+| **W5** | REGISTER + AXES + ROT | **the 17→11 cut + the clean-break renames + the DUSK re-found / DAWN harden / per-member drift ladders (§3.6) + the dead-axis dispositions (§3.8) + the rot cures (§3.9)**; relocate SPEEDTEST; **the smooth-quartet half is parallel-safe any time after W0; the painterly half + the full pairwise G-MODE-DISTINCT sweep wait on W1-W4** | G-PRESET-HONEST, G-SPEEDTEST-RELOCATED, G-MODE-DISTINCT | π-GALLERY, π-DISTINCT, **π-QUARTET** |
+| **W6** | V-A95 RETIRE-OR-CONFIRM | **one clean confirm on the real in-app Chrome arm, screenshot/computed-style observation ONLY (the context-steal trap; the round-3-live probe already cleared 3/3 reverse-drags), then retire the defect record + audit the `isolation:isolate` cure for cargo**; after the mode waves | G-REVERSE-DRAG-NOSLAB | π-REVERSE-DRAG |
+| **W7** | CONSUMER RE-POINT + FINAL | demo gallery adopts the reduced register + real modes; overfitting audit; FINAL.md | G-CONSUMER, overfit-audit | π-BAKE |
 
-Per the browser-seat-singleton + live-π memory: serialize the browser seat; run live π per band. The
-parity + distinctness gates each need BOTH a WebGPU AND a WebGL2 paint of the same config.
-
----
-
-## 7. Banked-route dispositions
-
-- **α (backend-parity port): BANKED-ALIVE** — its port MECHANISM + parity-ΔE gate are consumed by β
-  (W1/W4). Its "1:1 transliteration" mechanism was under-costed (CRIT2 F4) — the WGSL uniformity
-  restructure is real work, now budgeted in W1/W4. The fallback if β's new-body authorship stalls;
-  a port strictly beats the collapse.
-- **γ (honest-to-primary reduction): BANKED-ALIVE, with a stronger claim on oil-pastel than pass-1
-  credited (CRIT2 F3).** Its preset cull is adopted unconditionally (W5). On oil-pastel specifically,
-  round-2b's actual remedy (merge into oil-as-a-mode) IS γ — so γ is the incumbent recommendation β
-  overrides on A13 grounds, now stated openly (§3.6). Its cost logic feeds W4 (oil may honestly be
-  killed toward kuwahara). Cannot lead (P2c: the user wants MORE real modes). Reopens as primary only
-  if β's new bodies prove aesthetically unachievable or perf/size-blocked across the board.
-- **V-A95 reverse-drag: RIDER (orthogonal)** — §3.7; W6 confirm-or-replace, sequenced after the mode
-  waves for the present-timing interaction.
+Lead rider held (JUDGE.md C-G + RU-09 C-H): **F08 is discharged only when W1-W4 real-body
+authorship lands with G-MODE-DISTINCT green — never at the preset-cut checkbox alone.** The W5
+smooth-quartet half may land early; it does not close F08.
 
 ---
 
-## 8. Convergence + open gaps + the user ASK
+## 5. Born-RED gates (lean per the gates-abrogation mandate; each names its RED-at-HEAD)
 
-**Convergence: 58%** (pass-1 self-scored 48%, CRIT2 re-scored 40%). Justification: the 40% architecture
-(the mode ⊥ palette ⊥ backend decomposition, the skins-vs-modes invariant, the honest oil quarantine)
-was never the problem and holds; pass-3 closes EVERY CRIT2 deduction — the cost model is re-drawn
-honestly (F1/§0), the cardinal-law `{3,7}` contradiction is deleted (F2), the round-2b override is
-owned (F3), WGSL uniformity + module-size are budgeted (F4/F5), the count is reconciled (F6),
-oil-pastel is pinned derivative-free (F7) — AND the user's actual F08 complaint now has a measurable
-born-RED distinctness gate (G-MODE-DISTINCT) that reds at a literal zero today. The number rises from
-40 to 58, not higher, because the remaining gaps are STRUCTURAL to a doc-only tranche-dev seat and
-cannot close here:
+- **G-MODE-DISTINCT** (the F08 complaint operationalised — ratified). For every unordered pair of
+  shipped mediums at ONE canonical config (identical except `medium`), descriptor distance
+  `D ≥ τ`, D combining ΔĒ (mean perceptual color distance), ΔA (structure-tensor mean anisotropy),
+  Δβ (radial power-spectrum slope), Δρ_hf (high-frequency energy / gap-fraction). τ pinned at W0
+  against the smooth↔crayon reference pair on both backends. *RED today:* on WGSL,
+  D(oil,vangogh)=D(vangogh,oil-pastel)=D(oil-pastel,kuwahara)=0 EXACTLY (`aurora-mediums.wgsl.ts:398-401`);
+  on WebGL2, D(oil,oil-pastel)<τ (the shared cascade, `mediums.glsl.ts:493-496` vs `:376-382`).
+- **G-QUARTET-TELLABLE [union addition, folded into G-PRESET-HONEST's family — one clause, not a
+  new suite].** The four solar presets are pairwise tellable in capture by value structure
+  (per-frame L-histogram separation), not palette nuance alone. *RED today:* DUSK vs SUNSET share
+  the value structure (L span 0.50-0.91 vs 0.52-0.93) and the drift-ladder family; the extant DUSK
+  is the RU-09 "lilac-note of SUNSET".
+- **G-PARITY-BODY.** Every shipped mode's WGSL render is its OWN dedicated body, parity-ΔE < ε vs
+  the GLSL twin at fixed config/t, and the body compiles under WGSL uniformity with a real WebKit
+  paint. *RED today:* the 3/5/6/7 collapse; zero WGSL derivative use exists.
+- **G-NO-SKIN-MODE.** No shipped medium is a `profileFor`-constant skin of another (structural
+  function-identity check). *RED today:* `mediumOilPastel` (`mediums.glsl.ts:493-496`).
+- **G-VANGOGH-PRIMARY.** `medium:"vangogh"` on the primary renders discrete separable dabs
+  (gap-fraction ≥ floor, crown glints), not the Kuwahara smear. *RED today:* `applyMedium:399`.
+- **G-OILPASTEL-BODY.** Oil-pastel renders the dedicated body — blunt capsules, overlap-blend,
+  ANALYTIC sheen (no `dFdx/dFdy/fwidth`), additive tooth-skip — distinct from oil AND crayon, on
+  BOTH backends. *RED today:* no such body.
+- **G-CRAYON-DRAWN.** Crayon renders discrete hand-drawn marks — pressure/lift-off, per-zone
+  direction switches, boundary overshoot — DRY (no glint, no sheen), not a uniform wash. *RED
+  today:* `mediumCrayon` is a full-field multiply.
+- **G-OIL-HONEST.** Oil's terminal state is one of: real ported cascade / real REAUTHORED lean
+  body / enum 3 deleted with presets re-expressed — the gate FAILS if enum 3 is selectable while
+  routing to a non-oil body. PORT/REAUTHOR arms hold the module-size budget. The
+  `uniformBridge.ts:76-79` comment matches reality. *RED today:* enum 3 selectable AND
+  Kuwahara-routed; the comment claims a false smooth-core degrade.
+- **G-PRESET-HONEST.** No two shipped presets are near-identical over AUTHORED (non-default-
+  inherited) fields with the same medium + nuclei archetype (the RF-3 metric); the register
+  carries the renamed keys only (no `OPENAI_*`/`DAY9`/candidate names). *RED today:* the sunset
+  A/B/C trio (`presets.ts:591/624/656`), the oil-pastel trio (`:320/360/462`), MEADOW/DAY9,
+  vendor-meta key names throughout.
+- **G-SPEEDTEST-RELOCATED.** SPEEDTEST absent from the demo register. *RED today:*
+  `presets.ts:685-703`.
+- **G-REVERSE-DRAG-NOSLAB (rider, re-framed).** One clean reverse-drag confirm on the real in-app
+  arm via screenshot/computed-style observation only; then the defect record retires. *Status:*
+  round-3-live already cleared 3/3 variants on live WebGPU; the residual RED is the un-run in-app
+  confirm + the cargo audit of the `isolation:isolate` cure.
 
-1. **Zero paint verification.** Every π is OWED; no RED baseline captured; the two NEW bodies
-   (oil-pastel burnish, crayon scribble) are spec-only and their "not-awful" aesthetic bar (the user's
-   own word) is unprovable without a paint. The primary cap.
-2. **Oil W4 branch unmeasured.** Both outcomes are now law-compliant (PORT or KILL), so the fork no
-   longer hides a masking arm — but which fires depends on an unmeasured perf + module-size paint.
-3. **τ and ε pinned only against a DESCRIBED baseline.** W0 must capture the cross-backend +
-   cross-medium reference before either threshold is a hard scalar.
-4. **The oil-pastel/crayon bodies are NPR spec, not audited renders.** Bounded techniques with in-repo
-   dedicated-body exemplars (`vangoghDab`, `mediumCrayon`), but the field-statistics targets (A, β,
-   gap-fraction) are asserted, not measured.
-5. **V-A95 root cause remains a hypothesis** (`Aurora.vue:288-292`); W6 may need a materially
-   different fix. Orthogonal, bounded, unresolved.
+---
 
-**The user ASK (one genuine question, per the charter):**
-- **Crayon scope** — the user's A13 phrasing "a proper crayon/hand-drawn mode" is singular. The
-  greenfield leads with ONE reworked crayon (dry hand-drawn scribble). Does the user want crayon ONLY,
-  or crayon PLUS a distinct graphite/ink contour-hatching mode? This sizes W3 (one body or two) and is
-  the only decision that cannot be settled from the codebase or the ledger.
+## 6. π obligations (ALL OWED — LIVE-DEFER this seat; run live-π per band; paint-arm parses oklab)
 
-Secondary, formation-internal (surfaces to ASK only if the user wants a tighter floor): pastel
-(DELIBERATIVE) and watercolor (OPENAI_MEADOW) are kept as one-exemplar-per-distinct-body; neither is
-user-named-good nor named-awful. The lean is KEEP (medium-coverage); demotion to studio-only is
-available if the user wants the register below 10.
+- **π-DISTINCT** — every shipped medium at the canonical config, both backends; pairwise D-matrix;
+  prove `min D ≥ τ`. Baseline = the D=0 rows on WGSL.
+- **π-QUARTET [union addition]** — the four solar presets, paired captures; L-histogram
+  separation; DUSK/DAWN death clauses fire here, judged against the RE-FOUNDED configs.
+- **π-PARITY** — each real mode on both backends at fixed config/t; ΔE map < ε.
+- **π-VANGOGH-PRIMARY** — vangogh on WGSL: discrete separable dabs. Baseline = the Kuwahara smear.
+- **π-OILPASTEL** — the new body: blunt-capsule read + overlap blend + burnish. Baseline = the
+  oil-skin extant.
+- **π-CRAYON** — drawn marks + zone direction switches + boundary overshoot. Baseline = the wash.
+- **π-OIL** — oil's resolved terminal render (whichever arm fired).
+- **π-GALLERY / π-BAKE** — the reduced renamed gallery + thumbnail bakes on real modes.
+- **π-REVERSE-DRAG** — the one clean in-app confirm (screenshot-only observation).
 
-Per the charter, this is pass 3 of ≥3; convergence still requires two consecutive clean passes + a
-fresh adversarial audit that this seat cannot self-supply. 58% honestly reflects "architecture
-converged and internally consistent; empirical verification structurally owed."
+Browser-seat singleton: serialize the seat; parity + distinctness need BOTH a WebGPU and a WebGL2
+paint of the same config.
 
-**Lead rider (JUDGE.md C-G, 2026-07-17):** F08 is discharged ONLY when W1-W4 real-body authorship
-lands with G-MODE-DISTINCT green — never at the preset-cut checkbox alone. The preset register
-reduction (17→10) without the shader bodies leaves the byte-identical-Kuwahara duplication the
-user named; the two halves are bound.
+---
+
+## 7. Banked-route dispositions (retained)
+
+- **α (backend-parity port): BANKED-ALIVE** — mechanism + parity gate consumed by W1/W4; the
+  uniformity restructure is budgeted; the fallback if new-body authorship stalls.
+- **γ (honest-to-primary reduction): BANKED-ALIVE** — its cull is adopted (W5); on oil-pastel it
+  was the incumbent (round-2b's merge) that A13 overrides, stated openly; its cost logic feeds
+  W4's KILL arm. Cannot lead (P2c). Reopens only if the new bodies prove unachievable or
+  perf/size-blocked across the board.
+- **V-A95: RIDER, downgraded** — no longer an active-RED cure hunt; a retire-or-confirm bounded by
+  the round-3-live clearance (§3.7).
+
+---
+
+## 8. Convergence + open items
+
+**Convergence: 58%** (held from the prior pass-3 — the additions are design-complete but equally
+paint-unverified, so the number neither rises nor falls). What holds it: the ratified thesis + the
+repaired cost model + a register that now serves BOTH halves of the charter (reduce dramatically
+AND make the named exemplars better) + the dead-axis census consumed. What caps it:
+
+1. **Zero paint verification** — every π OWED; the three body designs (oil-pastel, crayon-hand,
+   vangogh-on-primary) and the re-founded DUSK/DAWN are spec-only; "not-awful" is the user's
+   aesthetic bar and closes only in paint.
+2. **W4's arm is unmeasured** — three law-compliant outcomes, default REAUTHOR-LEAN; which fires
+   needs the W0 budgets + a measured paint.
+3. **τ and ε are described, not pinned** — W0 captures the baselines first. ε is perceptual by
+   construction: byte-parity across backends is impossible (PCG2D hashing vs the WGSL fbm).
+4. **DUSK/DAWN death clauses live** — judged at π-QUARTET against the re-founded configs.
+
+**User ASKs: none open.** The opus crayon-vs-ink ASK is resolved-CUT on the singular A13 reading +
+F03 parsimony (flip: an explicit user ask for a distinct ink medium revives it as its own wave).
+The kuwahara-exemplar question is resolved studio-only (flip: the W4 KILL arm seats
+kuwahara+palette presets naturally). PASTEL/MEADOW stay as one-hero-per-body keeps; demotion to
+studio-only remains available if the user wants the register under 10.
+
+Per the charter this remains a tranche-development artifact: architecture converged and
+internally consistent; empirical verification structurally owed.
+
+---
+
+Materialization note—2026-07-18, model claude-fable-5 (read verbatim from this seat's system
+context). The RU-07 union seat completed its adjudication (the verdict ledger at
+`../refable/REFABLE-RU-07.md` is canon) but its in-place rewrite never landed on disk; a
+predecessor seat under the same charter produced a complete union draft and walled before
+returning (`../refable/salvage/wf23583121-GF-AURORA-PASS3.md`). This file is that salvage draft,
+checked verdict-by-verdict against the ledger (8 OPUS-WRONG, 8 FABLE-NEW, 12 RATIFIED—conforming;
+one addition: the RATIFIED-6 perceptual-ε rationale folded into §8 item 3) and written to disk by
+a follow-up Fable seat—sidecar-driven, salvage-draft-based. Section positions match the RU-07
+ROUTING anchor map (§3.1 `:59-90` through π-REVERSE-DRAG `:379`).
