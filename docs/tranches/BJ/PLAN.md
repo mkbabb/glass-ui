@@ -36,12 +36,12 @@ FAMILY A — BAND-GATES (4) ── the gate reformation ─── the TRUTH SUBS
    │
    ├── FAMILY J — BAND-DOC-TRUTH (1)     prose/comment truth-up (W2 ceded to COLOCATION)
    ├── FAMILY H — BAND-COLOCATION (3)    library-internal moves + dead-barrel purge + §3/§7 rewrite + gate
-   ├── FAMILY C — BAND-REDUCTION (5)     dead-config diet · Card neutralize · clean deletes · ASK-gated relays · timeline stub
-   ├── FAMILY D — BAND-STORY (6)         taxonomy · copy-canon · configurator-std · width-truth · preview-card · responsive
+   ├── FAMILY C — BAND-REDUCTION (9)     rewritten on the redo canon (W4 SHARED-KEEP struck; merges/collapses per the corrected graph) — the band file is the roster
+   ├── FAMILY D — BAND-STORY (7)         seven waves on the RU-10 fold (six-type taxonomy, tile-authorship, frame-token contract) — the band file is the roster
    ├── FAMILY E — BAND-PERF (4)          boot-diet · shell-field-govern · deferred-paint · route-pending
    ├── FAMILY F — BAND-MATERIAL (7)      radius-role · blur-ladder · graded-backdrop-judge · track-dry · proportion · type-codemod · css-closure-restore
-   ├── FAMILY K — BAND-A11Y (2)          4 live-defect fixes · 2 rulings/handoffs
-   ├── FAMILY G — BAND-FEEDBACK-MOTION (6)  toast-parity · rim-replace · motion-tune · alert · idle-breath · pager-dot-morph
+   ├── FAMILY K — BAND-A11Y (5)          five waves at 2.5x scope incl. the N6 status-tone AA major — the band file is the roster
+   ├── FAMILY G — BAND-FEEDBACK-MOTION (7)  + W7 BJ.W-SHEET-MOTION-DEBT (minted from RU-28) — the band file is the roster
    │
    ├── FAMILY G — the 4 GREENFIELDS      GF-DOCK (9) · GF-HANDMARK (8) · GF-AURORA (8) · GF-BLOB (10)
    │   (each gated on its pass-4 design closure + the user ASK rulings it carries)
@@ -93,6 +93,12 @@ FAMILY A — BAND-GATES (4) ── the gate reformation ─── the TRUTH SUBS
 
 ## §2 — The band roster (id → born-RED status → key gate(s); pulled verbatim-faithful from the band specs)
 
+**SUPERSESSION LAW (2026-07-18, the RU-03/04 union at `1340a918`):** the nine `waves/BAND-*.md`
+files were thrice-redone, critiqued in totality, judge-amended, and bound by `waves/APOTHEOSIS.md`
+— the band file's roster IS the spec of record. The family sections below are formation history:
+where a count, wave name, or claim here conflicts with the band file, the band file wins. Specific
+corrections landed below where the stale text would actively misdirect.
+
 ### FAMILY A — `BAND-GATES` (4 waves; the 40-60 collapse)
 - **W1 `BJ.W-GATE-COLLAPSE`** — reduce the vitest battery to ~45-55 invariant keeps. NOT born-RED
   (deletion/collapse; evidence is the census delta 1055→45-55). Key: the keep-list + kill classes.
@@ -108,29 +114,31 @@ FAMILY A — BAND-GATES (4) ── the gate reformation ─── the TRUTH SUBS
   `type-hygiene`; the reset+codemod flip is owned by MATERIAL W6.
 
 ### FAMILY J — `BAND-DOC-TRUTH` (1 wave; W2 ceded to COLOCATION)
-- **W1 `BJ.W-DOC-TRUTHUP`** — the enumerated 7-target truth-up sweep (stale spring mirror, missing
-  transient row, post-scrub wave-id token, aurora medium-routing comment, tunable-anim default, dead
-  k-token rationale [conditional on MATERIAL W1], two BI-coordination roster rows). **Born-RED per
+- **W1 `BJ.W-DOC-TRUTHUP`** — the truth-up sweep; the band file's roster IS the spec (22 SWEEP-NOW
+  + 8 TRIGGERED at union, no pinned count here — the "enumerated 7-target" framing was false against
+  the corrected corpus). **Born-RED per
   target** (each stale string is live at HEAD). Comment/prose only — a `git diff` guard proves no
   selector/token/executable change. `BJ.W-IDIOMS-COLOCATION-REWRITE` is CEDED to COLOCATION W1 Precept F
   (design-idioms §3/§7 lands co-located with the `_shared/` moves — CHALLENGE-1-MECH FINDING-1).
 
 ### FAMILY H — `BAND-COLOCATION` (3 waves; A07 recursive)
 - **W1 `BJ.W-COLO-1`** — library-internal moves (glass/wave→liquid-grid DELETE, textureUpload→aurora,
-  accent-tone.css→chip keeping its @import rung, handmark helpers flat), the `_shared/` carve, the
+  accent-tone.css→chip keeping its @import rung; ~~handmark helpers flat~~ STRUCK — GF-HANDMARK
+  deletes, not moves), the `_shared/` carve, the
   design-idioms §3/§7 rewrite (Precept F), and the dead-barrel purge. **Born-RED = G-BARREL-REACH**
   (four zero-importer barrels — the band's one lawful RED→GREEN; per the FABLE-COLOCATION fold Purge D
-  = exactly four barrels, blast radius ~25 leaf rewrites stated honestly). Everything else is
+  = exactly four barrels; blast radius corrected at union: ~24 TS + 3 @imports + 3 ledger + 6 `<style src>`). Everything else is
   refactor-safety / byte-identity (null-DELTA).
 - **W2 `BJ.W-COLO-2`** — demote `composables/sidebar/` to `demo/` + drop `./sidebar`. NOT born-RED —
   an INTENTIONAL export-map break riding **8.0.0** (FABLE-COLOCATION); the diff is the record.
-  Precondition: the family-B sibling-import census clears `glass-ui/sidebar`. Key: G-SURFACE-DELTA,
-  G-SIBLING-CENSUS.
+  Precondition RECAST at union: the census can never clear (fourier-analysis live-imports
+  `useSidebarState` ×2) — W2 rides the G-CONSUMER-ADDENDUM under the consumer-updates ruling.
+  Key: G-SURFACE-DELTA, G-CONSUMER-ADDENDUM.
 - **W3 `BJ.W-COLO-3`** — the colocation-hygiene fence. NOT born-RED (a regression-fence, GREEN at
   introduction). Form A (fold into the overfitting audit) recommended; a mutation-bite proves it can
   fail. Key: G-HYGIENE-GREEN, G-NO-FALSE-FAIL.
 
-### FAMILY C — `BAND-REDUCTION` (5 waves; the ruthless purge) + `ASK-REDUCTION.md`
+### FAMILY C — `BAND-REDUCTION` (9 waves at union; the ruthless purge) + `ASK-REDUCTION.md`
 - **W1 `BJ.W-REDUCE-PROPDIET`** — the dead-config prop cut (Typewriter 20→~9, GlassDock 4-knob,
   Slider `keepDockOpen`→context, Labeled\* thin, Progress passthroughs, AnimatedDigit, WatercolorDot).
   **Born-RED = G-DEADPROP-SCAN** (surface-hygiene, not visual — all 0-setter on disk). Null-DELTA proof.
@@ -148,7 +156,7 @@ FAMILY A — BAND-GATES (4) ── the gate reformation ─── the TRUTH SUBS
   supplies the shape (5 variants→1 continuous). Born-RED discharged by the design-loop's own captured
   baseline. Scope = all five variants (A2, ~1500 LOC).
 
-### FAMILY D — `BAND-STORY` (6 waves; the story meta-framework, per the FABLE-STORY-FRAMEWORK fold)
+### FAMILY D — `BAND-STORY` (7 waves at union; the story meta-framework on the RU-10 fold)
 - **W1 `BJ.W-STORY-TAXONOMY`** — name the page types (6 per the fold: `spec|studio|dock|family|landing`
   + `scene` contingent on ASK D1; `doc` folds into `spec`) + the manifest variant registry.
   **Born-RED = G-TAX-1/2/4** (no `pageType` discriminant at HEAD). liquid-grid dropped from the fold
@@ -203,7 +211,7 @@ FAMILY A — BAND-GATES (4) ── the gate reformation ─── the TRUTH SUBS
   closure (the R3a live-confirmed defect); flips `BAND-GATES` W3 `orphan-CSS-partial` GREEN with the
   dist rule-count + live accent-flood re-verify. **Born-RED** (the shipped orphan is the RED).
 
-### FAMILY K — `BAND-A11Y` (2 waves; the round-2 a11y family)
+### FAMILY K — `BAND-A11Y` (5 waves at union — 2.5x the round-2 scope; the band file is the roster)
 - **W1 `BJ.W-A11Y-STATE`** — the 4 live-defect fixes: nav landmark (aside→nav), aria-pressed
   both-states (tri-state `active`), center-spring focus-return (guard-widen + anchor un-gate),
   placeholder contrast (one ≥4.5:1 token). **Born-RED** (3 vitest DOM asserts + 1 vitest-fs source
@@ -212,7 +220,7 @@ FAMILY A — BAND-GATES (4) ── the gate reformation ─── the TRUTH SUBS
   comment truth-up rides family J) + the hero heading dedup (→ Family D). NOT born-RED — a ruling + a
   cross-family reference.
 
-### FAMILY G — `BAND-FEEDBACK-MOTION` (6 waves; the orphan cure + J1/J3)
+### FAMILY G — `BAND-FEEDBACK-MOTION` (7 waves at union; the orphan cure + J1/J3 + W7 SHEET-MOTION-DEBT)
 - **W1 `BJ.W-TOAST-DIALOG-PARITY`** (F20) — re-home Toast onto the dialog spring/transition contract.
   **Born-RED** — a live-π REGISTER-PARITY guard (transient scale-from-0.5 vs the dialog overlay/center
   register; baseline = the current toast, J4).
