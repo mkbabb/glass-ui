@@ -280,3 +280,181 @@ DESIGN NOTES (ranked):
 4. The second CC cycle t≈15.0–17.0 at 12fps — a second sample of the interrupt-catch behavior.
 5. Safari lens handoff t≈40.4–40.8 at 24fps — settle whether any brief bridge exists at 60fps.
 6. App-close zooms t≈38.0 and t≈46.0 at 12fps — if the campaign wants the app-zoom morph family.
+
+ALL SIX ARBITRATED at pass 2 — see PASS-2 CORRECTIONS below.
+
+---
+
+## PASS-2 CORRECTIONS (24fps) — the re-burst arbitration
+
+Verified-model: claude-fable-5 (the system-context model ID, returned verbatim). Seat: re-burst
+arbitration, no browser. Corrections are ADDITIVE—the sections above are measured history, kept;
+every correction cites its section and quotes what it voids. The honesty law governs throughout:
+what could not be decided is marked so.
+
+### The burst inventory (frame N sits at t0+(N−1)/fps; all full 1206×2622)
+
+| set | t0 | fps | frames | window |
+|---|---|---|---|---|
+| burst24-pinrelease | 2.80 | 24 | 19 | the pin release + collapse onset |
+| burst24-landing | 3.80 | 24 | 17 | collapse #1 landing |
+| burst24-overpull | 4.80 | 24 | 74 | the whole overpull playground |
+| burst24-collapse2 | 10.90 | 24 | 31 | the flung collapse + landing |
+| burst24-cc2 | 15.00 | 24 | 53 | CC second cycle |
+| burst24-fmreverse | 29.40 | 24 | 41 | Find My reverse morphs ×3 |
+| burst24-zoom38 | 37.80 | 24 | 29 | Find My close-zoom, Safari open-zoom |
+| burst24-lens | 40.20 | 24 | 20 | Safari pill handoff |
+| burst24-zoom46 | 45.60 | 24 | 29 | Safari close-zoom |
+
+Provenance note: burst24-overpull frames 001–034 were accidentally clobbered by a same-window
+re-extraction during this pass and restored byte-identically from a verified re-extraction at the
+same t0 (035–074 cmp-verified against the originals first). Five other burst24 sets in the folder
+(cccycle2, mapsland, safarilens, appzoom-fm, appzoom-safari) predate this seat and carry NO
+documented t0—their owner should stamp them before use.
+
+Method: (a) geometry trackers—two-peak coherent-edge tracker (median vertical gradient across
+x 150–1050 reporting the top TWO edges per frame, defeating the handle/rim rank-flapping that
+aliased the 12fps reads), texture-drop slab-top tracker, gold-channel (min(R,G)−B) lens tracker;
+(b) 60fps supplementary extraction wherever 24fps could not decide—consecutive-frame max-pixel-diff
+stasis analysis (the finger detector: a bit-static screen at a displaced position is a hold, never
+a spring), and the lens-bridge question, which wishlist #5 itself defined as a 60fps question. The
+video is true 60fps CFR (packet intervals uniformly 16.7ms across 5.8–7.4). Rest calibration: four
+static frames (t=0.3, 0.5, 0.7, 11.5) agree to ±1px.
+
+### C1 — §2 overpull springback: VOID—it was fitted to finger motion (wishlist #1)
+
+The 24fps re-burst plus 60fps stasis analysis prove the overpull playground (4.8–7.6) contains NO
+free springback. Every motion segment either terminates in a bit-static hold at a position 20–33px
+DISPLACED from rest (max pixel diff 2–3 = codec noise, held 83–167ms, then motion RESUMES—a free
+spring can neither sit static off-equilibrium nor spontaneously re-launch) or merges into the next
+pull. The whole window is finger-scrubbed: down-pulls, up-stretches, hand-carried returns.
+
+- Measured rest (4-frame calibration): dock slab top = 2336–2337, width ≈ 1107. ~~§2/"§1 rest
+  top≈2243"~~ was misplaced by ~93px—no slab edge exists at 2243 in any rest frame.
+- At t=6.80 the dock is ~26px ABOVE rest, falling under the finger (~~"deep-down at t=6.80"~~ VOID).
+- At t=7.05 the dock is ~20px BELOW rest, held bit-static 7.10–7.20 (~~"above-rest overshoot at
+  t=7.05 (dock top ~2180 ... ~40–70px past rest)"~~ VOID—slab top never rises past 2264 in the
+  whole window; 2180 never occurs; the "40–70px overshoot" was a phantom of the misplaced rest
+  plus diff-method noise).
+- ~~"Return ≈150px in ~150–200ms with one visible overshoot — an underdamped spring in the
+  ζ≈0.5–0.65, ~2–2.5Hz region. Kin to springPreset("dock") {0.68,0.64}."~~ VOID.
+- ~~§2 DESIGN NOTE 2 "Springback must overshoot once (~30–50% of the overpull distance) and settle
+  inside ~250ms."~~ VOID—superseded by C2's measured law.
+- The MARKS-internal contradiction that chartered this seat (stated ζ 0.5–0.65 vs overshoot-fitted
+  0.28–0.38 vs a ~250ms settle unreachable at either) DISSOLVES: both brackets fitted hand motion.
+
+What SURVIVES of §2, now measured: the down-pull deformation vocabulary. Down-pull states (e.g.
+t=4.80–5.10): slab top down 74–94px from rest, width 1107→~1021 (−7.8%, matching the stated
+−7.5%), content deforming with the container. The pre-commit up-stretch zone is REAL and larger
+than stated: slab top reaches 72px above rest (2264 at t=5.925) with no card-growth commit—read
+~~"~40px"~~ as ≥70px. Height −21% and the bottom-edge claims: unverified this pass (no reliable
+slab-bottom track). The rubber-band ratio (F3-U13): UNMEASURABLE from this corpus—no touch
+overlay exists, so finger position cannot be inferred; needs a recording with touch indicators.
+
+### C2 — the arbitrated register: ζ≈0.80, f_d≈1.7Hz, settle≈180ms (the flung-collapse landing)
+
+The only free spring transient in the Maps corpus is the collapse #2 landing (wishlist #2's flung
+sibling). At 60fps: release between 10.933 and 10.950 from the held full-card state (tracked top
+edge ~1465; §6's detent read was 1546—different edge anatomy, the fit is start-agnostic), true
+fling—peak ~6,500px/s (~~§6 "~2600px/s"~~ was a 4fps mean; and note collapse #2 IS released, unlike
+collapse #1, see C3)—smooth single-regime deceleration, rest-crossing at t=11.200 with ~570px/s,
+ONE overshoot of +11px (2347 vs settled 2336.2, ≈1.2% of the ~870px travel), extremum dwell ~50ms,
+monotone return, dead at rest by 11.483. No second excursion ≥1px.
+
+Fit method: damped oscillator x(t)=e^(−ζω(t−t0))[B cos(ω_d(t−t0))+C sin(ω_d(t−t0))], grid over
+(ζ, f_d) with linear LSQ for (B, C), two windows, alternative model tested:
+
+| window | n | best ζ | best f_d | RMS | bracket (≤1.15×RMS) |
+|---|---|---|---|---|---|
+| full free segment 11.067–11.517 | 28 | 0.79 | 1.86Hz | 1.17px | ζ 0.78–0.81, f_d 1.72–2.00 |
+| tail from rest-crossing | 21 | 0.82 | 1.62Hz | 0.32px | ζ 0.77–0.88, f_d 1.38–1.80 |
+
+Critical-damping alternative REJECTED in both windows (RMS ×4.1 and ×2.0 worse). The linear
+second-order model holds across the entire 870px approach+overshoot+return at ~1px residual.
+
+**The corrected overpull/arrival register: ζ = 0.80 (bracket 0.77–0.88), f_d = 1.7Hz (bracket
+1.4–2.0; f_n = f_d/√(1−ζ²) ≈ 2.8Hz, response ≈ 0.35s), settle |x|<3px ≈ 180ms from rest-crossing
+(model 169–183ms; data 183ms). Overshoot is VELOCITY-BOUGHT, never intrinsic: ≈0.02px per px/s of
+crossing velocity at these constants (+11px at 570px/s); the hand-eased collapse #1 lands with
+ZERO bounce (C3). §6's "overshoot only when arriving fast" law now has its constants.**
+
+Feed lines:
+- F1-R3: closed. ~~Both carried brackets (stated 0.5–0.65 / fitted 0.28–0.38)~~ void; the register
+  is ζ 0.77–0.88, f_d 1.4–2.0Hz. SPEC-F1's provisional `overpull-springback` (0.40±0.05,
+  ζ 0.30–0.38) points the wrong way—re-derive from (0.35, 0.80).
+- F3-U13: the g-mapping stays open—rubber-band ratio unmeasurable here (C1); the RELEASE side of
+  U13's moment is now C2's register.
+- X2 dock-springback retune: `springPreset("dock")` (0.30, 0.82) ⇒ f_d 1.91Hz, ζ 0.82—INSIDE the
+  fitted bracket. The shipped table row is corpus-true as it stands; the drifted header-comment
+  {0.68, 0.64} and §2's kinship claim to it are refuted—resolve the drift TOWARD the table (a
+  response nudge 0.30→0.35 is within the bracket, optional).
+- SUFFUSION §6 q2 (the overshoot-fence exemption): DISSOLVES. No 30–50% intrinsic overshoot exists
+  anywhere in the corpus; the measured overshoot is seeded-velocity-earned and ~1–2% of travel.
+  The [0,10%] preset fence stands with room to spare; no chartered exemption needed.
+
+### C3 — §1/§6 collapse anatomy: no detent arrest, no mid-detent catch, no free fall in collapse #1
+
+- ~~§1 growth table "3.00 | 025 | 1573 | released — snapback of ~130px in ≤83ms" and "3.08 | 026 |
+  1592 | soft landing tail (~19px, decelerating)"~~: the displacement/time is right (130px in
+  ~90ms) but the ARREST is false. At 60fps with the two-edge tracker the card passes 1573–1592 at
+  2,000–3,000px/s without pausing—the 12fps "arrival at the detent" was handle/rim rank-flapping
+  aliasing. The release blends immediately into the user's collapse drag; no free snapback settle
+  exists. The pin-release register is INCONCLUSIVE: bounds only (~130px in ~90ms, ≥3,000px/s
+  through the detent—if free, hotter than C2's register; finger contamination cannot be excluded).
+  §1 DESIGN NOTE 3's snapback clause carries the same caveat.
+- ~~§6 "Release from height, collapse #1: free fall at ~1570px/s peak, a ~170ms CATCH at the mid
+  detent (top 1976–2017), then the final fall to rest"~~ VOID on all three counts: collapse #1
+  runs at CONSTANT ~840px/s for ~0.65s (a free fall accelerates; constant velocity is a finger),
+  crosses 1976–2017 at that same steady rate with zero catch, and is hand-eased into the dock
+  asymptotically (no bounce—wishlist #2's rest-landing question: DENIED for the eased collapse,
+  DETECTED as C2's +11px on the flung one). Collapse #2 also crosses the zone uncaught at
+  ~6,000px/s. The mid-detent catch has NO measured instance left; §6 DESIGN NOTE 2 and the ~170ms
+  catch constant are design hypotheses now, not corpus facts. (The scene-index row "3.0–4.2
+  collapse #1 with a mid-detent catch" inherits this correction; so does §2's "hard-arrest in ~2
+  frames" framing of the same event, which is finger-owned deceleration.)
+- §6's velocity-inheritance law SURVIVES strengthened: slow-placed arrivals land dead (collapse #1,
+  expansion #2), fast arrivals overshoot once, amplitude ∝ crossing velocity (C2).
+
+### C4 — §3 Safari lens handoff: OVERTURNED—the blink was 12fps aliasing (wishlist #5)
+
+At 60fps (t=40.75–40.95) the Safari lens is ONE CONTINUOUS TRAVELING BODY: it whitens in place,
+stretches to span source and target (~2 slots wide mid-travel), slides as a single bright capsule
+with chromatic fringes at BOTH edges, lands on the destination slightly oversized, cools to the
+gold rest lens. Travel ≈165±35ms—the whole event fits inside two 12fps frames, hence the misread.
+
+- ~~§3 "The morph is a HANDOFF, not a body ... At 83ms resolution no continuous goo bridge is
+  visible"~~ VOID. ~~"Beyond the hallmarks" seam (c) "Safari's lens handoff discontinuity (the
+  highlight blinks across rather than traveling)"~~ VOID—there are three iOS seams, not four.
+- The one-body law is therefore PLATFORM GRAMMAR, confirmed in both apps, not a Find My exclusive.
+  What still separates Find My: the press-charge + whole-bar wash (Safari shows none), the
+  luxurious nav register (~1.2–1.4s press→settle vs ~165ms travel), and the larger bloom/refraction
+  depth. §3's DESIGN NOTES stand, but note 4's "keep Safari's two good ideas" undersells it—Safari
+  also proves the one-body morph runs honestly at control-register speed.
+
+### C5 — wishlist #3: reverse morph direction-symmetric, CONFIRMED, plus the interrupt re-seat
+
+burst24-fmreverse catches THREE rapid hops (Items→Devices 29.44–29.69, Devices→Items 29.73–29.86,
+Items→Devices 30.11–30.23): stretch-bridge spanning ~2 slots, light leading, oversized bloomed
+arrival, cool-down—identical anatomy in BOTH directions. New finding: under rapid re-taps the lens
+re-seats mid-cool with no reset and no blink—velocity-continuous interruption holds on the lens
+body itself. Geometry travel per hop ≈150–250ms; §3's "deliberately luxurious" 1.2–1.4s is the
+full press→charge→travel→cool ritual of one deliberate morph, not the geometry's own speed.
+Cool-down after the final arrival ≈350–400ms.
+
+### C6 — wishlist #4: CC second cycle CONFIRMS §5's close; one refinement
+
+Second sample (burst24-cc2): content fades out 15.75→15.92 (~170ms ✓), the contentless-blur beat is
+present (≥83–125ms at the 24fps grid ✓), the medium relaxes 15.96→16.38 (~400ms decelerating ✓).
+This cycle is a FULL close + fresh open (the blur fully resolves before the re-pull at 16.42), so
+the interrupt-catch remains single-sampled at 13.3–14.6. Refinement to §5 note 1: the re-open's
+stretch ran ~330ms vs cycle 1's ~600–650ms—the open stretch is gesture-owned (scrub-speed-
+dependent), not a fixed clock; read "stretch ~600ms" as "stretch = the release tail of a scrubbed
+gesture, ~300–650ms observed."
+
+### C7 — wishlist #6: the app-zoom family, recorded
+
+zoom38: app-close = the live app rect shrinks as one body into its icon (~350–450ms) while the home
+grid arrives from heavy blur, the medium resolving AFTER the body lands; Safari app-open =
+icon→card→fullscreen in ~170–250ms with real content live from the first frames. One body + medium-
+after—the same grammar as the dock and CC, at fire-and-forget license. zoom46 extracted for the
+record (same family, Safari close).
