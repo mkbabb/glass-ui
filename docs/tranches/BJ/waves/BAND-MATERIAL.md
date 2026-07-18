@@ -38,6 +38,7 @@ Seven waves:
 | 4 | `BJ.W-TRACK-DRY` | DRY the slider/progress/scrubber shared track mechanics | Yes — three components re-spell the same track with divergent tokens |
 | 5 | `BJ.W-ARISTOTLE-PROPORTION` | The A10 aristotelian-proportion review over cards/dividers/spacing | π-capture obligation, not asserts (paint-taste review) |
 | 6 | `BJ.W-TYPE-CODEMOD` | The 251-site `text-sm`/`text-xs` codemod + the coupled default-ramp reset flip + paint π (owner: material band — RULING 2) | Coupled — flips `BAND-GATES` W4 `type-hygiene` GREEN (that gate is born-RED against these sites) |
+| 7 | `BJ.W-CSS-CLOSURE-RESTORE` | Restore glass-chip.css + glass-atom.css to the @import closure; live re-verify the chip accent paint (full wave section below the roll-up) | Yes — the R3a CONFIRMED-DEFECT is the shipped state; the orphan-CSS-partial gate is born-RED at HEAD |
 
 **Design authority (band-wide).** The iOS-27 codex (`formation/ios27/IOS27-CODEX.md`) is the material
 authority: **law 1** progressive backdrop blur (waves 2/3), **law 4** radius as concentrically-nested role
@@ -718,6 +719,4 @@ from an @import root — the born-RED already exists); (b) dist re-verify: `.gla
 `.glass-atom` rule counts > 0 in the built CSS; (c) live re-verify per R3a's disposition —
 selectable-ON accent flood paints, `--chip-flood-t` registers, remove-button geometry correct
 (screenshot + computed-style, no getContext); (d) byte-delta review of the cascade insertion
-(the light-dark/inset-shadow trap class watched).
-
-| 7 | `BJ.W-CSS-CLOSURE-RESTORE` | Restore glass-chip.css + glass-atom.css to the @import closure; live re-verify the chip accent paint | Yes — the R3a CONFIRMED-DEFECT is the shipped state; the orphan-CSS-partial gate is born-RED at HEAD |
+(the light-dark/inset-shadow trap class watched). (Roster row: the intro table, wave 7.)
