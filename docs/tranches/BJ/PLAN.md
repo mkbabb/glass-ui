@@ -19,8 +19,9 @@ chip/glass-atom @import orphan) as born-RED BJ rows.
 
 ## §0 — Decision-0 + the version posture (settled, not user-gated)
 
-The user resolved Decision-0 on 2026-07-17: "First, publish 7.0.0" (CUT-NOW), and 7.0.0 shipped with
-provenance (`REGISTRY.md:16-18`). So BJ does NOT re-open the cut question. Two consequences are fixed:
+The user resolved Decision-0 on 2026-07-17: "First, publish 7.0.0" (CUT-NOW; the dating authorized per
+`REGISTRY.md:16-18`), and 7.0.0 is live on npm with provenance (release.yml run 29617310925 green;
+tag = master = 4ab12128). So BJ does NOT re-open the cut question. Two consequences are fixed:
 the release-dating is authorized (no `plan:premature-version-finalization` re-litigation), and Q051
 rows 2/3/4/9/10 self-ratified at that tag while rows 1/11-16 are LIVE BJ inputs (family I). The one
 version decision inside BJ is the `./sidebar` export-map break (COLOCATION W2): per the perfection fold
@@ -38,7 +39,7 @@ FAMILY A — BAND-GATES (4) ── the gate reformation ─── the TRUTH SUBS
    ├── FAMILY C — BAND-REDUCTION (5)     dead-config diet · Card neutralize · clean deletes · ASK-gated relays · timeline stub
    ├── FAMILY D — BAND-STORY (6)         taxonomy · copy-canon · configurator-std · width-truth · preview-card · responsive
    ├── FAMILY E — BAND-PERF (4)          boot-diet · shell-field-govern · deferred-paint · route-pending
-   ├── FAMILY F — BAND-MATERIAL (6)      radius-role · blur-ladder · graded-backdrop-judge · track-dry · proportion · type-codemod
+   ├── FAMILY F — BAND-MATERIAL (7)      radius-role · blur-ladder · graded-backdrop-judge · track-dry · proportion · type-codemod · css-closure-restore
    ├── FAMILY K — BAND-A11Y (2)          4 live-defect fixes · 2 rulings/handoffs
    ├── FAMILY G — BAND-FEEDBACK-MOTION (6)  toast-parity · rim-replace · motion-tune · alert · idle-breath · pager-dot-morph
    │
@@ -81,7 +82,9 @@ FAMILY A — BAND-GATES (4) ── the gate reformation ─── the TRUTH SUBS
   `BAND-STORY` W5, which rewrites `SectionPreviewCard.vue` wholesale (one owning wave per file);
   PERF keeps the boot-diet cure + the live-trace deferred-paint gate. PERF W4 OWNS the F07
   story-transition choreography (Family D consulted, not co-owner).
-- **The greenfields inherit the reduction cuts** (dock 4 dead knobs, HandMark 19→~5 surface) and gate
+- **The greenfields inherit the reduction cuts** (dock 4 dead knobs; HandMark 19→~8 surface per
+  BAND-REDUCTION's binding floor — appear/box/drawMs land — with the greenfield's further cut
+  CONDITIONAL on ASK Q-HM-2) and gate
   on their pass-4 design closure + the user ASK rulings they carry (§Band roster).
 - **Cross-repo relays land BEFORE their breaking waves ship.** No REDUCTION delete or prop-cut executes
   until the family-B sibling-import census clears the subpath/prop (the header-ribbon lesson); the Q060
@@ -177,7 +180,7 @@ FAMILY A — BAND-GATES (4) ── the gate reformation ─── the TRUTH SUBS
   OWNS F07 choreography. **Born-RED (static)** — no Suspense/aria-busy/skeleton in the swap. R3b seeds:
   119ms warm freeze + CLS 0.04 + 186ms cold-nav stall.
 
-### FAMILY F — `BAND-MATERIAL` (6 waves; the radius/blur/track/type canon)
+### FAMILY F — `BAND-MATERIAL` (7 waves; the radius/blur/track/type canon + the css-closure restore)
 - **W1 `BJ.W-RADIUS-ROLE`** — the role-keyed radius table (codex law 4) + reconcile the `--radius-input`
   misnomer + delete the dead `--corner-k-soft/-sharp` + repoint raw radii. **Born-RED** (misnomer + dead
   tokens + raw literals). F12/F17 convert to REGRESSION-GUARDS (already role-correct on disk, RULING 8
@@ -229,7 +232,8 @@ FAMILY A — BAND-GATES (4) ── the gate reformation ─── the TRUTH SUBS
   `RouterLink`/`aria-current`. All π OWED. Carries 4 ASK rows.
 - **GF-HANDMARK (8 waves, 68%)** — the natural-stroke synthesis (7→3 brushes). W0 CONTRACT-LOCK · W1
   CALM-CENTERLINE+WEIGHT · W2 FILL-STRATEGY · W3 CONTAIN-HIGHLIGHT · W4 RING-LAYER+SHAPE-DEGRADE · W5
-  DRAW-ON · W6 SURFACE+DEMO-DE-JARGON (19→~5 props) · W7 CONSUMER+FINAL. The se-guard (the one masked
+  DRAW-ON · W6 SURFACE+DEMO-DE-JARGON (19→~8 props per BAND-REDUCTION's floor; the further cut rides
+  ASK Q-HM-2) · W7 CONSUMER+FINAL. The se-guard (the one masked
   fallback) RETIRED. All π OWED. Carries Q-HM-1/2.
 - **GF-AURORA (8 waves, 58%)** — mode ⊥ palette ⊥ backend. W0 CENSUS+CONTRACT-LOCK · W1 PAINT-SUBSTRATE
   +VANGOGH-ON-PRIMARY · W2 OIL-PASTEL-REAL-BODY · W3 CRAYON-HAND-DRAWN · W4 OIL-RESOLUTION (PORT or KILL,
@@ -258,6 +262,11 @@ A wave is DONE only when its born-RED gates flip GREEN **with captured evidence*
   self-test/mutation bite proving it can fail (`gate:vacuous-no-assertion` is theatre). Refactor-safety
   and null-DELTA gates are stated honestly as such — a refactor gate is never dressed as born-RED
   (COLOCATION, REDUCTION dead-config, TRACK-DRY refactor-parity).
+- **The liquid-weight law (standing user edict, PLAN-level).** ALL motion — transitions, scrolling,
+  pager/deck dots, entries and exits — carries inertia, weight, bounce, liquid-glass quality; no bare
+  fades, no mechanical ticks. The edict binds EVERY wave that touches motion, not only its named
+  owners (`BJ.W-PAGER-DOT-MORPH`, `BJ.W-ROUTE-PENDING`, the FEEDBACK-MOTION band, the dock goo-morph):
+  a wave shipping motion that reads weightless fails its challenge pass on this law alone.
 - **Live-π discipline (the paint arm).** A "live-verified" claim needs a captured DELTA artefact
   (screenshot + paired-π), never a commit-message claim. Observe via **screenshot + computed-style
   only — never `getContext` on a live canvas** (the context-steal trap); serve on **localhost, not
@@ -296,8 +305,9 @@ A wave is DONE only when its born-RED gates flip GREEN **with captured evidence*
 - **The chip + glass-atom @import orphan — a live-confirmed defect.** `glass-chip.css` +
   `glass-atom.css` are in no `index.css` @import closure (`grep glass-chip dist = 0` verified), so the
   Chip/Badge/glass-atom styling is DEAD in the published bundle. `BAND-GATES` W3 authors
-  `orphan-CSS-partial` born-RED against it; the CSS re-home (Family C/H coordination) flips it GREEN.
-  Shipped into 7.0.0 as a known defect, reported plainly.
+  `orphan-CSS-partial` born-RED against it; **`BJ.W-CSS-CLOSURE-RESTORE` (MATERIAL W7) owns the fix**
+  and flips it GREEN with the R3a live re-verify. Shipped into 7.0.0 as a known defect, reported
+  plainly.
 - **The Q060 outbound obligations (family B).** The corrected per-repo relay roster — metric-granular
   subpaths (fourier-analysis×7, speedtest/muster/sci-report), the confirm-dialog 8-consumer relay, the
   metric-badge SHARED-KEEP truth-up, the completion-seal corrected provenance, the speedtest §3
@@ -312,8 +322,9 @@ All 67 feedback-ledger rows are accounted for in `formation/ASSEMBLY-CROSSWALK.m
 reconciled counts **50 LANDED / 5 DECIDED / 3 CLEARED / 10 ASK / 0 ORPHAN / 0 pending**, zero silent
 drops) as sharpened by the judgment corrections carried from `redress/JUDGE.md` §D. The five former
 ORPHANS (F19/F20/F21/F22/F24) are cured by `BAND-FEEDBACK-MOTION`; the two former pending-R3b rows
-(A01/A11) land at `BJ.W-IDLE-BREATH` (LANDED-AT-W5). The 10 ASK rows are the only ones reserved for the
-user — assembled in `ASK.md`, the sole document the user must rule on. The redress application record
+(A01/A11) land at `BJ.W-IDLE-BREATH` (LANDED-AT-W5). The rows reserved for the user — 10 from the
+feedback-ledger crosswalk plus the greenfield and material/story sets — assemble into the 26-row
+`ASK.md`, the sole document the user must rule on. The redress application record
 (`formation/redress/APPLYLOG.md`) accounts for all 26 rulings (J1-J11, C-A..C-G, T1-T2, D1-D6); the
 chronic disease ledger (family I) and the superfluity verdicts (`formation/superfluity/SUPERFLUITY.md`,
 5 KEEP-DISTINCT / 4 COLLAPSE-FAMILY / 2 MERGE-INTO) are terminal. This section is a pointer, not a

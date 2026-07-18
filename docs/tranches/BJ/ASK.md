@@ -76,7 +76,7 @@ collapse shape?
   collapse to one continuous Timeline (no variant prop), delete ScrubberTimeline + SegmentedTimeline,
   flatten the dispatcher, shed the retired #detail/popover machinery. Redesign-in-library matches your
   "redesign from the ground up" phrasing and keeps it available for a second consumer.
-- Evidence: `ASK-REDUCTION.md` (Wave 5 stub); `SUPERFLUITY.md` §4 (F16); `BAND-REDUCTION.md` W5.
+- Evidence: `SUPERFLUITY.md` §4 (F16); `BAND-REDUCTION.md` W5.
 
 **ASK-8 · DataTable (B1).** Keep public, thin, or demo-privatize (458 LOC, one consumer, dead even in
 it)?

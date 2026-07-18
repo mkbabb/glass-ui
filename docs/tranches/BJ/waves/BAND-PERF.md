@@ -506,3 +506,15 @@ recipe above — the honest split the census's "live-trace confirmation owed" ve
 choreography outright — Family D is consulted, not co-owner; OPEN-P10's fork is decided inside
 this wave. R3b baselines seed the gates: 119ms warm transition freeze (one 83ms long-task) +
 CLS 0.04 at the swap (reserve space), 186ms cold-nav stall as the pending-affordance floor case.
+
+**W2 addendum — the blob forced-reflow fix (STAB1 MAJOR-2 cure) + the R3b baseline seed
+(MINOR-1).** R3b's trace fold (`REGISTRY.md` Round-3b): /substrates/blob nearly DOUBLES the idle
+main-thread churn (52,225 RunTasks / 3,115ms per 5.3s window vs ~40k/1.6-1.7s on light pages) AND
+trips a ForcedReflow insight on its mount path (~142ms window) plus CLS 0.04 at the route swap.
+W2 gains deliverable (b): locate and cure the blob-mount forced reflow (batch the layout reads,
+reserve the swap space) — gate: the ForcedReflow insight absent from a fresh mount trace + the
+route-swap CLS ≤ 0.01. And the PENDING-R3 markers on W1/W2 are now SEEDED: the R3b DEV baselines
+stand as the RED numbers (W1 LCP: root 391ms / foundations 405ms / blob 488ms, render-delay
+~99%; boot long-tasks 208-283ms TBT; W2 idle churn: the RunTask/task-time table above) — the
+live-trace obligations remain for the GREEN-side delta capture, re-measured on a build for any
+product gate.

@@ -696,3 +696,28 @@ under the BJ reduction confrontation (UF-K1/R16), so no new metric surface until
 **Lead amendment (2026-07-17, ASSEMBLY):** W1's RULING-8 conditional on F12/F17 converts to
 REGRESSION-GUARDS — disk shows both sites already role-correct; the wave's live-π confirms, then
 the role assertions pin them against re-drift.
+
+## Wave 7 — `BJ.W-CSS-CLOSURE-RESTORE` — the chip + glass-atom @import re-home (STAB1 MAJOR-1 cure)
+
+Minted at STAB1-COMPLETENESS: the one LIVE-CONFIRMED shipped defect of 7.0.0 had a gate
+(`orphan-CSS-partial`, BAND-GATES) but no owning wave — the gate could never flip GREEN. This wave
+owns the fix. R3a's live proof (`round-3-live/R3A-DIGEST.md` chip-css-orphan, CONFIRMED-DEFECT
+major): `glass-chip.css` + `glass-atom.css` sit outside EVERY `@import` closure — zero
+`.glass-chip` rules in dist; a selectable chip at `aria-pressed=true` paints zero accent feedback,
+`--chip-flood-t` unregistered, the remove button unstyled. Per the DAG amendment A6 both partials
+are in scope, not chip alone.
+
+**The fix (clean break, no alias):** `@import` both partials in `glass.css` at their correct
+cascade rungs — chip in `@layer components` directly after `glass-capsule.css`, glass-atom at its
+atom-band rung — or fold their rules into the live partials if the fold reads cleaner at
+execution; the wave decides which on the diff, not here. Coordinates with COLOCATION Move C's
+principle (file location ≠ cascade position).
+
+Gates: (a) the BAND-GATES `orphan-CSS-partial` gate flips GREEN (every shipped partial reachable
+from an @import root — the born-RED already exists); (b) dist re-verify: `.glass-chip` +
+`.glass-atom` rule counts > 0 in the built CSS; (c) live re-verify per R3a's disposition —
+selectable-ON accent flood paints, `--chip-flood-t` registers, remove-button geometry correct
+(screenshot + computed-style, no getContext); (d) byte-delta review of the cascade insertion
+(the light-dark/inset-shadow trap class watched).
+
+| 7 | `BJ.W-CSS-CLOSURE-RESTORE` | Restore glass-chip.css + glass-atom.css to the @import closure; live re-verify the chip accent paint | Yes — the R3a CONFIRMED-DEFECT is the shipped state; the orphan-CSS-partial gate is born-RED at HEAD |
