@@ -160,3 +160,67 @@ sinusoid, worth confirming intended for container (vs control's 0.7); (b) fling 
 806ms vs the node sim's ~658ms — quantization plus the carrier stand-in, per the stand-in
 disclaimer; (c) two long frames >20ms logged during instrumented probing (readout DOM churn +
 screenshot capture), none during clean scripted runs.
+
+## PASS-2 SAFARI ARM (Playwright-WebKit 26.5, 2026-07-18)
+
+verified-model: claude-fable-5 (system-context model ID, verbatim). Serialized browser seat,
+pass 2. Engine: repo-local Playwright 1.61.1 WebKit webkit-2311, version 26.5
+(`Version/26.5 Safari/605.1.15`), headed, macOS, DPR 2, ~68Hz VRR display. Harness laws (F1
+section carries the proof): screenshots are backdrop-filter-blind (material rows ride the
+25fps video path); `performance.now()` quantizes to 1ms, so the µs meters read 0 here —
+frame gaps and fps are the WebKit cost readout.
+
+**Verdict: PARTIAL — the same shape as Chrome, now cross-engine:** the modulation plane and
+the role verbs prove in WebKit paint; the scroll acceptance row cannot pass as shipped on
+EITHER engine, and the debounce-primary cure is hereby promoted from a Chrome ruling to
+cross-engine law.
+
+| readout | WebKit 26.5 | Chrome 150 | call |
+|---|---|---|---|
+| U-LAW E @ 280/1150/1200/1570/2600 | 0.273/0.818/0.834/0.917/0.989 | identical | PASS (regression lock per G4 — same-file tautology caveat carried) |
+| U-FOLD | MAX 0.7163 · 1.00x chosen | identical | PASS (lock) |
+| U-CONT handoff jump | 0.0288 ≤ 0.032 | identical | PASS (lock; the LIVE seed path G3 gap stands unmeasured on both engines) |
+| slow place 280 | peak 0.273 · carry 0.0px · rebound 1.8px | 0.273 / no carry | PROVES |
+| flick 1150 | peak 0.816 · carry +9.1px | 0.808–0.816 / ~9.1 | PROVES |
+| fling 2600 | peak 0.989 · carry **+28.0px** · rebound 3.7px · settle 786ms | 0.989 / +30.7 / 806ms | PROVES — carry inside MARKS 27–32px on both engines |
+| press→travel | charge fired 187ms before travel (= press hold) | 282ms | PROVES (lead = hold by construction, G4d noted) |
+| slider regression | max Δ 0.0000 (byte-identical) · peak 0.842 under cap | 0.0000 | LOCK only (G4a: same-pipeline tautology) |
+| periphery | rail 0.480 vs dock 0.937 @ +200ms; dock 0.003 vs rail 0.053 @ +900ms | same shape | the τ-follower tail reproduces — G8's "smoothed follower, not a delay" read is cross-engine |
+| write discipline | idle: PARKED, 0 violations, 0 writes; live: 22 writes/frame @ 67fps, longFrames 1 (whole session) | 22 @ 98fps | PROVES (µs meter unreadable here — 1ms clock) |
+| PRM sim | fling → identity transform throughout, E pinned 0, rAF PARKED | identical | PROVES |
+
+**U6a — abs()/max() in transform calc COMPUTES in WebKit (the no-masking-fallback risk row):**
+live computed matrices during the fling — drag phase `matrix(0.985, 0, 0, 1.219, 0, −29.9)`
+with content counter-scale 1.0448; held-down manual drag `matrix(0.956, 0, 0, 0.877, 0, 41.0)`
+at `--carrier-s` −0.586, and 1 − 0.21·0.586 = 0.8769 — **the calc computes exactly; nothing
+silently dies.** The smear + one-body coupling are live on WebKit.
+
+**U6b — energy-modulated transform over a backdrop-filter surface:** the video path shows the
+dock and list-card glass genuinely frosting their backdrop while transform-modulated
+(`f4-wk-dock-video-material.png`); fps held 67 with one long frame across the whole session.
+The re-sample cost TRACE (per-frame re-raster attribution) remains TOOL-DEFER — Playwright
+exposes no WebKit timeline; that number needs desktop Safari + Instruments/Web Inspector.
+
+**Invalidation asymmetry (`inherits: false`), priced in WebKit:** registered non-inheriting
+write + forced read = 35µs vs an inheriting registered var written on a 500-child consuming
+subtree = 960µs per write+read — a 27× asymmetry in the same direction as Chrome's benchmark;
+non-inheriting per-element writes stay micro-scale on WebKit. (First semantics probe was
+confounded by the 150ms bleed transition — which itself proves typed-property transitions on
+`--energy` animate in WebKit; the bleed mechanism is live.)
+
+**THE SCROLL FINDING — the Chrome defect is CROSS-ENGINE:** the scripted burst (stepped
+`scrollTop` per frame) produced **89 scroll events and 89 scrollend events** — WebKit 26.5
+fires `scrollend` after every discrete `scrollTop` assignment exactly as Chrome does. The
+channel died identically: list E stayed 0.000, no peak recorded, close-edge readout
+"scrollend". A continuous `scrollBy({behavior:'smooth'})` fired ONE scrollend and drove peak E
+to 0.999 with a clean close. `'onscrollend' in window` = true (the G10 citation question:
+scrollend exists in WebKit 26.5, measured, not asserted). **U8's ruling is now law on both
+engines: close on the 160ms debounce; never trust scrollend alone.** The cure remains
+unapplied in the prototype (G2 open).
+
+Screenshots (provenance stamped): `f4-wk-idle.png` (idle honesty; screenshot path),
+`f4-wk-dock-live-energy.png` (fling +230ms — deformation + warm specular streak; screenshot
+path, geometry/light truth), `f4-wk-dock-video-material.png` (**video path** — the glass
+actually frosting while modulated), `f4-wk-tab-arrival.png` (post-morph lens; charge/wash
+opacities measured mid-hold: wash 0.40, bloom 0.55 ramping — the G9 verb-coverage gap narrowed
+by the tab and periphery rows above). Zero page errors.

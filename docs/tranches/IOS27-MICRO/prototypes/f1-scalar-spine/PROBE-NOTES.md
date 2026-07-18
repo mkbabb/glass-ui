@@ -203,3 +203,83 @@ Notes for pass 2: overpull settle sits 1 frame over its band on this 98Hz machin
 ≤320) — either the band widens by one frame or ζ nudges up inside the R3 bracket; the live
 mid-detent landing (588ms) runs ~180ms past sim (406ms) — worth one look at where the well
 re-arms; the open-medium cliff needs a 120Hz display to clear ≤100ms without the tolerance frame.
+
+## PASS-2 SAFARI ARM (Playwright-WebKit 26.5, 2026-07-18)
+
+verified-model: claude-fable-5 (system-context model ID, verbatim). Serialized browser seat,
+pass 2 — the singleton browser owner this phase. Engine: repo-local Playwright 1.61.1 WebKit
+build webkit-2311, `browser.version()` = 26.5, UA `Version/26.5 Safari/605.1.15`, headed,
+macOS, DPR 2, display ~67Hz VRR (frame avg ~14.8–15.0ms). Playwright-WebKit is the honest
+desktop proxy for Safari 2026; where a claim needs real-device input or Web Inspector traces
+it is marked DEVICE-DEFER / TOOL-DEFER, never inferred.
+
+**Two harness laws discovered this pass, governing every row below:**
+1. **Playwright `page.screenshot()` is backdrop-filter-BLIND in WebKit** — all seven anatomies
+   of a blur(8px) probe paint sharp in screenshots while the video/screencast path shows them
+   fully frosted (`passes/PASS-2/harness-backdrop-blind-sanity.png` vs
+   `harness-backdrop-video-truth.png`). Every MATERIAL verdict below rides the video path
+   (25fps VP8 screencast at 1280×1000, 1:1 CSS px); screenshots serve geometry/light-layer
+   claims only.
+2. **WebKit quantizes `performance.now()` to 1ms** — the page's µs/sub-ms meters read 0/1ms;
+   frame-gap statistics are the honest cost readout on this engine.
+
+**Verdict: PROVES-IN-WEBKIT** — the full battery lands, with the same two carried defects as
+Chrome (G7 PRM one-liner still unapplied; overpull constants stale vs the MARKS PASS-2
+corrections).
+
+| claim | measured (WebKit 26.5) | band / Chrome 150 parity | call |
+|---|---|---|---|
+| CC open: medium 95% | 112ms | ≤100ms cliff +1 frame (14.8ms here) · Chrome 111–112 | PROVES |
+| CC open: fade 95% | 201ms | 150–250 · Chrome 202–204 | PROVES |
+| CC open: stretch 90% | 599ms | ~600–650 · Chrome 590–592 | PROVES |
+| CC open: fade:stretch | 1:3.0 | MARKS raw bands admit 1:2.4–1:4.3 (G2 caveat) | PROVES |
+| CC close: fade out | 172ms | ~170 · Chrome 168 | PROVES |
+| CC close: empty-medium beat | 163ms | 100–200 · Chrome 173 | PROVES |
+| CC close: medium gone | 686ms | page band ~620–700 (G2: MARKS said ~620) · Chrome 689 | PASS-on-page-band |
+| CC interrupt: medium min / fade min | 0.64 / 0.00 | ≥0.4 never clears / ~0 · Chrome 0.60 / 0.00 | PROVES |
+| pin covered @83ms / settle | 84% / 116ms | ~80–87% / 2px-metric 102–122ms · Chrome 87% / 123–124 | PROVES |
+| overpull overshoot / settle | 32% (10.1px) / 327ms | page band 30–50% / ≤330 · Chrome 32–33% / 323–332 | REGRESSION-LOCK only — see below |
+| mid-detent catch | 170ms well · landed 584ms | Chrome 588 | DATA only — the cell is hard-wired PASS (G3), and C3 voided the corpus instance |
+| R2 reversal storm | 10 retargets · max jump 0.227 | ≤0.30 · Chrome 0.149 (98Hz; step bound is rate-dependent) | GREEN — the CSS-follower arm's Safari precondition now holds |
+| R1 natural | write avg 0.039ms · frame gap avg 14.91ms · 0 dropped/180 | 40 consumers | PROVES (cost bound) |
+| R1 forced-read | write+recalc 0.656ms avg · max 2.0ms · 1 gap >24ms | proxy only | PARTIAL — a true style-recalc trace needs desktop Safari Web Inspector (TOOL-DEFER) |
+| R5 clip-path growth cost | flick-open: 35 frames, avg 14.03ms, max 19ms, 0 >24ms at 67Hz | cost bound, not residency | PARTIAL — compositor residency itself TOOL-DEFER |
+| idle honesty | "rAF parked (zero-cost idle)" after every settle; boot parked | — | PROVES |
+
+**The overpull row, judged honestly:** the live WebKit numbers replicate Chrome and the pass-1
+sim exactly (engine parity of the shipped constants) — but MARKS PASS-2 C2 voided the 30–50%
+band itself: the corrected register is ζ 0.80 (0.77–0.88), f_d 1.7Hz, overshoot
+velocity-bought ~1–2% of travel, settle ≈180ms. Against the corrected corpus the shipped
+`overpull` register (0.40, ζ0.34) FAILS by construction on any engine. Constants re-derivation
+is the F1 spec seat's work, not a paint question — the paint arm certifies parity only.
+
+Geometry under held synthetic-pointer scrubs (getBoundingClientRect, `.card-body`):
+
+- rest w 256.42px → settled-open 266.00px = **+3.74% side breathe** (Chrome identical to the hundredth).
+- pin held t=1.140: w 263.65 = **−0.88% squeeze** vs settled (Chrome −0.68% at t=1.108).
+- deep down held t=−0.083 (83% of floor): w **−6.2%**, h **−17.4%** = 0.83 × the −7.5%/−21%
+  full-depth targets — linear in depth, as specced.
+- bottom edge y=722.234px at rest, mid-growth, pin, AND deep compression — **immobile to the
+  sub-pixel** in WebKit.
+- held CC scrub t=0.500: medium 1.0000, fade 0.9990; held mid-dismissal t=0.121: medium 1.0000,
+  fade 0.0000 — the contentless blurred field held indefinitely.
+
+**H4 — the medium mechanism (dishonesty #4), answered in WebKit paint:** scrim = constant-radius
+`blur(18px) saturate(1.2) brightness(0.62)` with `opacity: var(--gl-m)`. Video-path ramp at
+--gl-m 0/0.35/0.7/1 over the wallpaper word: gradient-energy/luminance ratio falls
+0.113 → 0.096 → 0.055 → 0.024 — the visible blur attenuates smoothly and monotonically with
+element opacity, no binary pop. **PROVES — the fallback (pre-blurred overlay) is unnecessary.**
+Artifact: `f1-wk-h4-blur-ramp.png` (video frames, m=0/0.35/0.7/1 left to right). The
+screenshot-path version of the same experiment shows a constant ratio (dim only) — harness
+blindness, kept in the scratch record as the lesson.
+
+PRM: CC open seats t/m/f = 1.0000 in one poll with rAF parked (PROVES); **the G7 defect
+reproduces in WebKit** — under PRM from parked, the scripted Maps flick-open is a no-op
+(t stays 0.0000). Engine-independent; the one-line `scenario(target)` fix remains unapplied.
+
+Screenshots (this directory, provenance stamped): `f1-wk-scrub-mid-growth.png` (t=0.449 held —
+reveal ladder as a ladder, icons clipped behind the dock row; screenshot path, geometry),
+`f1-wk-pinned-held.png` (t=1.140 held), `f1-wk-overpull-down-held.png` (deep compression, one
+body), `f1-wk-cc-scrub-mid.png` (t=0.5 held desync), `f1-wk-cc-open-settled.png`,
+`f1-wk-cc-held-empty-medium.png` (**video path** — wallpaper as pure blurred color masses, zero
+content), `f1-wk-h4-blur-ramp.png` (video montage). Zero page errors across the session.

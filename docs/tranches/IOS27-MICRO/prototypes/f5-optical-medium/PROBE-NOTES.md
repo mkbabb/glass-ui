@@ -125,3 +125,104 @@ accounting and its readout write are both odd.
 Not verified here, per scope/tooling: Safari paint entirely (U1/U3 decisive engine, the 12fps
 burst, `-webkit-` belt-and-braces); the U2 re-raster trace; positional hue sampling (U4) and the
 blur-budget trace (U5/U6), pass-2 items per the spec.
+
+## PASS-2 SAFARI ARM (Playwright-WebKit 26.5, 2026-07-18)
+
+verified-model: claude-fable-5 (system-context model ID, verbatim). Serialized browser seat,
+pass 2 — Safari is this family's risk engine and this is its first WebKit drive. Engine:
+repo-local Playwright 1.61.1 WebKit webkit-2311, version 26.5 (`Version/26.5
+Safari/605.1.15`), headed, macOS, DPR 2, ~67Hz VRR. Harness laws proven this pass (full
+statement in the F1 section): Playwright WebKit screenshots are backdrop-filter-blind — every
+material verdict below rides the 25fps video/screencast path (1280×1000, 1:1 CSS px); the
+ferry was frozen+hidden for all lens captures (the G2 confound eliminated); observation is
+screenshot/video/computed-style only — no canvas context was ever taken.
+
+**Verdict: the lens core PROVES-IN-WEBKIT; U1 is RED — the shipped gate LIES on this engine.**
+
+### U1 — both forms, the lying-gate question ANSWERED (RED)
+
+| probe | result |
+|---|---|
+| `CSS.supports("backdrop-filter","url(#f5-u1probe)")` | **true** |
+| `CSS.supports("backdrop-filter","blur(8px) url(#…)")` | **true** |
+| `CSS.supports("backdrop-filter", url("#glass-refract"))` — the shipped gate form | **true → the gated block ENGAGES** |
+| `CSS.supports` on the shipped data-URI value, bare and after blur(8px) | **true / true** |
+| computed values (chips B/C/D incl. injected chip D carrying the verbatim shipped `--glass-refract-filter` value after blur(8px)) | full value retained in computed style |
+| **paint** (video path, stripe gradient energy; background baseline 0.0756) | chip A `blur(8px)`: **0.0018 — heavily frosted**. chip B `url(#)`: 0.0748. chip C `blur+url(#)`: **0.0749 — stone sharp**. chip D `blur+data-URI` (shipped form): **0.0748 — stone sharp** |
+
+**WebKit 26.5 accepts `backdrop-filter: url(…)` at parse (@supports true, computed retained)
+and drops the WHOLE VALUE at paint — including the blur leg.** Fragment and data-URI forms
+behave identically (the G7 divergence question: no divergence — both die). Consequence for
+the shipped `glass-refract.css`: on this engine the `@supports (backdrop-filter:
+url("#glass-refract"))` gate engages, the gated declaration overrides the un-gated blur base,
+and `.glass-lens` paints with **no backdrop filter at all** — exactly the page legend's worst
+case ("the gate lies… the lens loses all blur"). This is a shipped-CSS defect against glass-ui
+7.0.0 on the Safari floor, not a prototype nit: the gate must be hardened to a paint-probe
+(the `supportsCssTimeline`-class runtime harden) or the url() composite dropped for WebKit.
+Note the pass-1 Chrome read stands (full value paints there); the defect is WebKit-only.
+Artifact: `f5-wk-u1-chips.png` (video frame — A frosted, B/C/D sharp).
+
+### U3 — nested control-on-container sampling (GREEN)
+
+Video path, stripe gradient energy: sampling capsule (own `backdrop-filter: blur(7px)
+saturate(1.4) brightness(1.1)`) **0.00186** vs the fill-only twin **0.00233** over the same
+container glass — distinct paint, the nested sample reads ~20% smoother. Not identical ⇒ U3
+green on the engine the probe exists for. Artifact: `f5-wk-u3-board.png`.
+
+### The blink test — paint-true this time, and negative for blinks
+
+- The 25fps compositor burst (video) across two complete morphs (1→0, then 0→4): **132 painted
+  frames, min p99.5 strip luminance 0.824** (rest-capsule reference ~0.84–0.86; a lens-free
+  bar would collapse far below) — no frame without a lens body, at better than the demanded
+  12fps equivalence, in real paint. Artifact: `f5-wk-blink-sheet.png` (10-frame anatomy:
+  charge → stretch-bridge → converge → oversized arrival → cool → rest).
+- The independent per-rAF computed sampler, wash EXCLUDED (stricter than pass-1's):
+  min joint presence 0.938 (1-slot, 92 frames), 0.996 (4-slot, 232), 0.966 (mid-travel
+  retarget, 378 — lands "(1-slot, retargeted)").
+- Goo Arm A: `CSS.supports("filter","url(#f5-goo)")` true and the filter applies — the barbell
+  reads as one CONNECTED body mid-travel (two bodies + welling band, VP8-softened); never two
+  separated lights, never zero.
+
+### Choreography numbers (WebKit / Chrome)
+
+| readout | WebKit 26.5 | Chrome 150 |
+|---|---|---|
+| press→settle, clean 1-slot | 1334ms (band 1150–1450) | 1330ms |
+| re-form trigger | 340ms (1-slot) / 661ms (4-slot) | 335 / 582–663 |
+| arrival scale | 1.150 computed | 1.150 |
+| oversize hold | 201–203ms | 201–202 |
+| worst morph frame | 19.0ms (1-slot) · 26.0ms once (4-slot — one long frame, noted) | 11.2–11.3 |
+| page continuity monitor | 0.94 / 1.00 / 0.97 | 0.86–0.94 |
+
+### Sibling legibility at bloom peak — first paint-side read
+
+Charge held 240ms (wash 0.99, bloom 0.99, video frame, estimate from p97-vs-p30 luminance):
+siblings **4.53 / 4.62 / 4.61 / 5.03 : 1** — all ≥ the 4.5 floor; the SOURCE label under the
+lit lens itself reads ~1.9 (bright-on-bright, not a sibling — the gate is about siblings).
+Calibrates the on-page analytic 4.7:1 model well. Artifact: `f5-wk-charge-held.png`.
+
+### U2 medium
+
+cliff 104ms (≤100 + 1 frame at 14.9ms), empty beat 150ms, relax 422ms, fade:stretch 1:4.0,
+flick-caught floor 0.09 — never 0 (run from OPEN; the flick-from-closed harness nit was
+avoided, not re-triggered). Medium = constant-radius `blur(18px) saturate(1.3)`, opacity-only:
+video ramp 0→0.35→1 shows gradient energy falling faster than luminance (−38% vs −29%) — blur
+attenuation present; the region is low-texture so the DECISIVE mechanism proof is the F1/F3
+ramp artifacts, which are unequivocal on the same engine. The per-frame re-raster trace stays
+TOOL-DEFER (no WebKit timeline via Playwright). `f5-wk-u2-held-mid.png` (scrub 0.50 held) is
+screenshot-path — geometry/state only.
+
+### PRM
+
+Sweep off (capsule ::after animation-name none), goo stays 0, capsule TELEPORTS — transform
+sampled at +40/+150/+310ms shows x 470 → 470 → 6 with no intermediate — but the jump lands
+between +150 and +310ms: **the ~250ms charge-floor deferral (G5 nit 1) reproduces in WebKit**,
+and the PRM branch fix remains unapplied. Backdrop liveness: the ferry drifts (~55px/700ms)
+and reads frosted behind the bar in video frames — sampling never severed.
+
+### Artifact provenance
+
+Video-path (material-true): `f5-wk-u1-chips.png`, `f5-wk-u3-board.png`, `f5-wk-charge-held.png`,
+`f5-wk-travel-a/b.png`, `f5-wk-arrival-a/b.png`, `f5-wk-blink-sheet.png`. Screenshot-path
+(geometry only): `f5-wk-u2-held-mid.png`. All eight `-wk-` PNGs left by the crashed earlier
+capture run were overwritten by these provenanced captures. Zero page errors.

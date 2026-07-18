@@ -1,0 +1,26 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>
+body { margin: 0; }
+#spacer { height: 4200px; background: repeating-linear-gradient(45deg, #e33 0 40px, #33e 40px 80px, #ee3 80px 120px, #3e3 120px 160px); }
+#bar {
+  position: fixed; top: 140px; left: 0; width: 320px; height: 130px;
+  -webkit-backdrop-filter: blur(12px) saturate(1.4); backdrop-filter: blur(12px) saturate(1.4);
+  background: rgba(255, 255, 255, 0.12); border: 2px solid #fff;
+  animation: slide linear both;
+  animation-timeline: scroll(root);
+}
+@keyframes slide { from { transform: translateX(0); } to { transform: translateX(600px); } }
+</style></head><body>
+<div id="spacer"></div>
+<div id="bar"></div>
+<script>
+window.__blockMark = null;
+window.scheduleBlock = (ms) => {
+  setTimeout(() => {
+    const t0 = performance.now();
+    window.__blockMark = { start: t0, end: null };
+    while (performance.now() - t0 < ms) { /* jam the main thread */ }
+    window.__blockMark.end = performance.now();
+  }, 30);
+  return performance.now();
+};
+</script></body></html>

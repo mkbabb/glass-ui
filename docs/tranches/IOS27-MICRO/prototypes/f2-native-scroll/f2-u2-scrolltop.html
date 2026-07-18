@@ -1,0 +1,26 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>
+body { margin: 0; font: 13px monospace; }
+#scroller { width: 340px; height: 420px; overflow-y: auto; background: #dde; margin: 20px; }
+#inner { height: 1600px; background: repeating-linear-gradient(0deg, #c33 0 40px, #33c 40px 80px, #3c3 80px 120px); }
+#tall { height: 2800px; }
+#log { position: fixed; right: 10px; top: 10px; width: 420px; white-space: pre-wrap; background: #fff; }
+</style></head><body>
+<div id="scroller"><div id="inner"></div></div>
+<div id="tall"></div>
+<div id="log"></div>
+<script>
+window.__probe = {
+  sample(el, ms) {
+    return new Promise((res) => {
+      const vals = [];
+      const t0 = performance.now();
+      const step = () => {
+        vals.push(el === window ? window.scrollY : el.scrollTop);
+        if (performance.now() - t0 < ms) requestAnimationFrame(step);
+        else res({ n: vals.length, min: Math.min(...vals), max: Math.max(...vals) });
+      };
+      requestAnimationFrame(step);
+    });
+  },
+};
+</script></body></html>

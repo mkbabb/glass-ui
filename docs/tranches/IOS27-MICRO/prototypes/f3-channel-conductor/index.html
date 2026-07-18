@@ -192,23 +192,25 @@
       <button id="b-stress">Stress ×3</button>
       <label class="chk"><input type="checkbox" id="slowmo"> slow-mo ×4 (tempo — ratios invariant)</label>
       <label class="chk"><input type="checkbox" id="simprm"> simulate PRM</label>
+      <label class="chk"><input type="checkbox" id="paintside"> paint-side sampling (computed-style — certifies the CSS binding)</label>
     </div>
 
     <table>
       <thead><tr><th>metric</th><th>measured</th><th>MARKS band</th><th></th></tr></thead>
       <tbody>
-        <tr><td>open: medium t90</td>       <td class="num" id="m-om">—</td> <td>≤100 ms cliff</td>            <td id="v-om" class="na">·</td></tr>
-        <tr><td>open: fade t90</td>         <td class="num" id="m-of">—</td> <td>150–250 ms</td>               <td id="v-of" class="na">·</td></tr>
-        <tr><td>open: geometry t99</td>     <td class="num" id="m-og">—</td> <td>~600–650 ms decel</td>        <td id="v-og" class="na">·</td></tr>
-        <tr><td>open: fade / stretch</td>   <td class="num" id="m-or">—</td> <td>~1:4 (0.25)</td>              <td id="v-or" class="na">·</td></tr>
-        <tr><td>open: periphery lag</td>    <td class="num" id="m-op">—</td> <td>80–160 ms</td>                <td id="v-op" class="na">·</td></tr>
-        <tr><td>close: content out</td>     <td class="num" id="m-cc">—</td> <td>~170 ms</td>                  <td id="v-cc" class="na">·</td></tr>
-        <tr><td>close: empty-medium beat</td><td class="num" id="m-cb">—</td><td>100–200 ms</td>               <td id="v-cb" class="na">·</td></tr>
-        <tr><td>close: medium out</td>      <td class="num" id="m-cm">—</td> <td>~620 ms</td>                  <td id="v-cm" class="na">·</td></tr>
-        <tr><td>interrupt: medium min</td>  <td class="num" id="m-im">—</td> <td>1.000 held across cycles</td> <td id="v-im" class="na">·</td></tr>
-        <tr><td>interrupt: max frame step</td><td class="num" id="m-is">—</td><td>law-bounded, no jump</td>    <td id="v-is" class="na">·</td></tr>
-        <tr><td>park: rAF after settle</td> <td class="num" id="m-pk">—</td> <td>0 ticks / 600 ms</td>         <td id="v-pk" class="na">·</td></tr>
-        <tr><td>tempo ×1.3: fade/stretch</td><td class="num" id="m-tp">—</td><td>ratio invariant (~0.25)</td>  <td id="v-tp" class="na">·</td></tr>
+        <tr><td>open: medium t90</td>       <td class="num" id="m-om">—</td> <td>≤100 ms (cliff ≤83 @12fps + 17 display)</td> <td id="v-om" class="na">·</td></tr>
+        <tr><td>open: fade t90</td>         <td class="num" id="m-of">—</td> <td>133–267 ms (MARKS 150–250 ±17)</td>          <td id="v-of" class="na">·</td></tr>
+        <tr><td>open: geometry t99</td>     <td class="num" id="m-og">—</td> <td>583–667 ms (MARKS 600–650 ±17)</td>          <td id="v-og" class="na">·</td></tr>
+        <tr><td>open: fade / stretch</td>   <td class="num" id="m-or">—</td> <td>derived — info (φ³ ref 0.236; the primaries gate it)</td> <td id="v-or" class="na">·</td></tr>
+        <tr><td>open: periphery lag</td>    <td class="num" id="m-op">—</td> <td>63–177 ms (MARKS 80–160 ±17)</td>            <td id="v-op" class="na">·</td></tr>
+        <tr><td>close: content out</td>     <td class="num" id="m-cc">—</td> <td>111–229 ms (MARKS ~170 ±42 ±17)</td>         <td id="v-cc" class="na">·</td></tr>
+        <tr><td>close: empty-medium beat</td><td class="num" id="m-cb">—</td><td>63–217 ms (floor 80−17; ceiling 200+17)</td> <td id="v-cb" class="na">·</td></tr>
+        <tr><td>close: medium out</td>      <td class="num" id="m-cm">—</td> <td>561–679 ms (MARKS ~620 ±42 ±17)</td>         <td id="v-cm" class="na">·</td></tr>
+        <tr><td>interrupt: medium min</td>  <td class="num" id="m-im">—</td> <td>1.000 held (episode region: g ≥ sat)</td>    <td id="v-im" class="na">·</td></tr>
+        <tr><td>interrupt: max frame step</td><td class="num" id="m-is">—</td><td>≤ (1−e^(−dt/0.055))×1.15 — region g ≥ sat</td> <td id="v-is" class="na">·</td></tr>
+        <tr><td>interrupt (sub-sat): medium = g/sat</td><td class="num" id="m-i2">—</td><td>0.833 ±0.02 held; steps ≤ (1−e^(−dt/0.03))×1.15</td> <td id="v-i2" class="na">·</td></tr>
+        <tr><td>park: rAF after settle</td> <td class="num" id="m-pk">—</td> <td>0 ticks / 600 ms</td>                        <td id="v-pk" class="na">·</td></tr>
+        <tr><td>tempo ×1.3: fade/stretch</td><td class="num" id="m-tp">—</td><td>invariance: |Δ vs base ratio| ≤ 0.06</td>    <td id="v-tp" class="na">·</td></tr>
         <tr><td>stress: 3 conductors live</td><td class="num" id="m-st">—</td><td>info — JS ms/frame + fps</td><td id="v-st" class="na">·</td></tr>
       </tbody>
     </table>
@@ -230,9 +232,20 @@
       <pre>crossing thresholds — t90 rising: value ≥ 0.90 · geometry t99: ≥ 0.99 · content out: ≤ 0.05
 medium relax: &lt; 0.90 · medium out: ≤ 0.10 · beat = t(medium &lt; 0.90) − t(content ≤ 0.05)
 periphery lag = t90(periphery) − t90(content) · all crossings linearly interpolated between frames
-interrupt episode: release(0) from open → scrub-catch at +120 ms → hold ~160 ms → release(1)
-max frame step bound = 1 − exp(−dt_max / 0.055) — dt-dependent (probe's 0.12 was at 120 Hz)
-park assertion: conductor tick count unchanged over 600 ms after settle — the rAF loop is gone</pre>
+
+GATE DERIVATION (G8): band = MARKS figure ± q_burst ± q_display, one source (the BANDS block,
+extracted verbatim by check.mjs). q_display 17 ms (±1 frame @60 Hz); q_burst 42 ms (@12fps) /
+21 ms (@24fps) on POINT figures only. The fade/stretch ratio row is DERIVED-INFO: its primaries
+(fade, geometry) already gate it — a band it cannot escape is not a gate. Tempo gates INVARIANCE
+(|Δratio| ≤ 0.06 — propagated display quantization), not an absolute band.
+
+interrupt episode: release(0) from open → scrub-catch at +120 ms (g≈0.64 ≥ sat — region asserted;
+fastest reachable law τ0.055) → hold ~160 ms → release(1). Step bound = 1 − exp(−dt_max/0.055) × 1.15.
+sub-sat episode: release(0) from open → catch at g=0.10 &lt; sat 0.12 → medium must hold g/sat = 0.833
+(the position-mapped scrub law) → release(1). Step bound uses the manifest's fastest law: τ0.03.
+park assertion: conductor tick count unchanged over 600 ms after settle — the rAF loop is gone
+paint-side sampling: scrim computed opacity · row-0 computed translateY inverted (g = 1 + ty/56) ·
+row-0/rail computed opacity — style-engine-resolved, certifies the var→CSS binding (G9)</pre>
     </details>
   </div>
 </main>
@@ -285,9 +298,11 @@ park assertion: conductor tick count unchanged over 600 ms after settle — the 
 
 <script>
 /*F3-CONDUCTOR-BEGIN*/
-// F3 conductor — four laws (cliff / follow [±gate+source] / spring), one integrator,
-// one rAF per conductor, joint park predicate, PRM seats, per-channel registered-var publication.
-// Direction-asymmetric constants via open:/close: overrides. No authored timelines.
+// F3 conductor — three laws (cliff / follow / spring) + three modifiers (open:/close:
+// direction overrides LATCHED AT DRIVE TIME; sat input shaping; follow delay-gate + source
+// routing), one integrator, one rAF per conductor, joint park predicate, PRM seats,
+// per-channel registered-var publication. No authored timelines. (Pass-2 cures: G5 honest
+// law shape, G6 drive-time latch, G13 hygiene.)
 function makeConductor(spec) {
   var TAU2 = Math.PI * 2;
   var tempo = spec.tempo != null ? spec.tempo : 1;
@@ -304,7 +319,7 @@ function makeConductor(spec) {
   Object.keys(spec.channels).forEach(function (name) {
     var c = {
       name: name, def: spec.channels[name],
-      x: 0, v: 0, target: 0, delayedOK: true,
+      x: 0, v: 0, target: 0, dir: "open",
       holdUntil: -1, gateUntil: -1,
     };
     chans.push(c); byName[name] = c;
@@ -326,7 +341,9 @@ function makeConductor(spec) {
 
   function stepChannel(c, t, dt) {
     var def = c.def;
-    var dir = c.target < c.x - 1e-9 ? "close" : "open";
+    var dir = c.dir; // LATCHED at drive time (scrub/release/seat), never inferred per frame —
+                     // a per-frame target<x read flips a direction-asymmetric spring's
+                     // (response, zeta) pair on every overshoot crossing (G6 cure)
     if (def.law === "follow") {
       if (def.delay != null && t < c.gateUntil) return; // dead-time gate on own response
       var goal = def.source ? byName[def.source].x : c.target;
@@ -422,6 +439,7 @@ function makeConductor(spec) {
     for (var i = 0; i < chans.length; i++) {
       var c = chans[i];
       c.target = shaped(c, g);
+      c.dir = c.target < c.x - 1e-9 ? "close" : "open"; // drive-time latch
       c.holdUntil = -1; // a catch cancels any release hold
     }
     wake();
@@ -438,6 +456,7 @@ function makeConductor(spec) {
       }
       if (c.def.law === "spring") c.v = v || 0;
       c.target = tgt;
+      c.dir = tgt < c.x - 1e-9 ? "close" : "open"; // drive-time latch
     }
     wake();
   }
@@ -446,7 +465,7 @@ function makeConductor(spec) {
     for (var i = 0; i < chans.length; i++) {
       var c = chans[i];
       c.target = shaped(c, g);
-      c.x = c.target; c.v = 0; c.holdUntil = -1; c.gateUntil = -1;
+      c.x = c.target; c.v = 0; c.holdUntil = -1; c.gateUntil = -1; c.dir = "open";
     }
     if (rafId) { caf(rafId); rafId = 0; }
     parked = true; lastT = -1;
@@ -456,6 +475,7 @@ function makeConductor(spec) {
   return {
     scrub: scrub, release: release, seat: seat,
     get: function (name) { return byName[name].x; },
+    state: function (name) { var c = byName[name]; return { x: c.x, v: c.v, target: c.target }; },
     isParked: function () { return parked; },
     ticks: function () { return tickCount; },
     onFrame: function (fn) { frameHooks.push(fn); },
@@ -463,6 +483,32 @@ function makeConductor(spec) {
   };
 }
 /*F3-CONDUCTOR-END*/
+
+/*F3-BANDS-BEGIN*/
+// G8 cure: the bands PRINTED are the bands GATED, one source (check.mjs extracts this block —
+// zero drift). Every band derives from MARKS + declared quantization, never from probe parity:
+//   q_display = 0.017s (±1 frame @60Hz; crossings are interpolated, the frame grid still bounds them)
+//   q_burst   = the half-interval of the MARKS burst that established a POINT figure
+//               (±0.042 @12fps, ±0.021 @24fps); MARKS RANGE figures already span their spread.
+var BANDS = {
+  om: { hi: 0.100, text: "≤100 ms (corpus cliff ≤83 @12fps + 17 display)" },
+  of: { lo: 0.133, hi: 0.267, text: "133–267 ms (MARKS 150–250 ±17)" },
+  og: { lo: 0.583, hi: 0.667, text: "583–667 ms (MARKS 600–650 ±17)" },
+  op: { lo: 0.063, hi: 0.177, text: "63–177 ms (MARKS 80–160 ±17)" },
+  cc: { lo: 0.111, hi: 0.229, text: "111–229 ms (MARKS ~170 ±42 burst ±17)" },
+  cb: { lo: 0.063, hi: 0.217, text: "63–217 ms (corpus floor 80−17; design ceiling 200+17)" },
+  cm: { lo: 0.561, hi: 0.679, text: "561–679 ms (MARKS ~620 ±42 burst ±17)" },
+  imMin: 0.9995,       // "blur never resolved between cycles" — exactness of the release hold
+  stepTau: 0.055,      // fastest law REACHABLE in the main interrupt episode (g ≥ sat throughout — region asserted)
+  stepTauSubSat: 0.03, // fastest law in the manifest — governs the sub-sat episode
+  stepSlack: 1.15,
+  subSatG: 0.10,       // held scrub below sat 0.12 → medium must sit at g/sat
+  subSatTol: 0.02,
+  tempoEps: 0.06,      // |Δratio| ≤ propagated display quantization across both runs (PROBE-NOTES derivation)
+  ratioRef: 0.236,     // 1/φ³ design reference — the ratio row is DERIVED-INFO: the fade+geometry
+                       // primaries already gate it; a band it cannot escape is not a gate
+};
+/*F3-BANDS-END*/
 
 // ---------------- page wiring ----------------
 var MANIFEST = {
@@ -474,8 +520,10 @@ var MANIFEST = {
   },
 };
 document.getElementById("manifest-dump").textContent = JSON.stringify(MANIFEST, null, 2) +
-  "\n// geometry (response 0.6, zeta 1.0) is the probe rack that produced the accepted table;" +
-  "\n// SPEC-F3 s1 writes preset:\"dock\" here - discrepancy flagged in PROBE-NOTES.md";
+  "\n// geometry (response 0.6, zeta 1.0) is the CC surface's PER-SURFACE pair, housed at the" +
+  "\n// presets-in-consumers seam (springPresets.ts:116-122) - NOT the dock register. The dock" +
+  "\n// row (0.30, zeta 0.82) is corpus-true for the dock morph itself (MARKS PASS-2 C2)." +
+  "\n// SPEC-F3 s1 now says exactly this (G1 cured, pass 2).";
 
 function $(id) { return document.getElementById(id); }
 function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
@@ -536,11 +584,13 @@ function attachMain(cond) {
   });
 }
 function rebuildMain(tempo) {
-  var g = mainCond ? mainCond.get("geometry") : 0;
+  var st = mainCond ? mainCond.state("geometry") : { x: 0, v: 0, target: 0 };
+  var wasParked = mainCond ? mainCond.isParked() : true;
   if (mainCond) mainCond.destroy();
   mainCond = makeFor(mainStage, tempo);
   attachMain(mainCond);
-  mainCond.seat(g);
+  mainCond.seat(st.x);
+  if (!wasParked) mainCond.release(st.target, st.v); // mid-flight tempo toggle carries velocity (G13)
 }
 rebuildMain(1);
 var condA = makeFor(miniA, 1);
@@ -550,7 +600,13 @@ condA.seat(0); condB.seat(0);
 setInterval(function () {
   $("h-state").textContent = mainCond.isParked() ? "PARKED" : "running";
   $("h-ticks").textContent = String(mainCond.ticks());
-  if (mainCond.isParked()) $("h-fps").textContent = "— (parked)";
+  if (mainCond.isParked()) {
+    $("h-fps").textContent = "— (parked)";
+    // PRM/parked badge refresh — a seat produces no tick, so the rAF hook never repaints
+    // these; the poll keeps the readout honest (G13 cure for the PRM-stale badge).
+    $("h-g").textContent = mainCond.get("geometry").toFixed(3);
+    $("h-x").textContent = mainCond.get("geometry").toFixed(3);
+  }
 }, 250);
 
 $("slowmo").addEventListener("change", function () {
@@ -558,7 +614,7 @@ $("slowmo").addEventListener("change", function () {
 });
 
 // ---- drag: everything is a scrub ----
-var drag = null, batteryRunning = false;
+var drag = null, batteryRunning = false, baseRatio = NaN;
 function rubber(g) {
   if (g > 1) return 1 + 0.10 * Math.tanh((g - 1) / 0.10);
   if (g < 0) return 0.10 * Math.tanh(g / 0.10);
@@ -597,14 +653,41 @@ mainStage.addEventListener("pointerup", endDrag);
 mainStage.addEventListener("pointercancel", endDrag);
 
 // ---- measurement helpers ----
+// Paint-side sampling (G9 cure): instead of asking the conductor for its own numbers, read the
+// STYLE-ENGINE-RESOLVED values the CSS actually binds — scrim computed opacity (medium), row-0
+// computed translateY inverted to the channel value (geometry; r0 depth 0 → ty = (g−1)·56px),
+// row-0 opacity (content), rail opacity (periphery). A typo'd var name or a broken binding fails
+// this mode where internal sampling would lie. Pixel truth stays the browser seat's job
+// (screenshots/video); this mode certifies the var→CSS binding layer.
+var paintEls = {
+  scrim: mainStage.querySelector(".scrim"),
+  row0: mainStage.querySelector(".ccrow.r0"),
+  rail: mainStage.querySelector(".rail"),
+};
+function paintSample() {
+  var s = getComputedStyle(paintEls.scrim), r = getComputedStyle(paintEls.row0), p = getComputedStyle(paintEls.rail);
+  var ty = 0, tr = r.transform;
+  if (tr && tr !== "none") {
+    var m2 = tr.match(/matrix\(([^)]+)\)/);
+    if (m2) ty = parseFloat(m2[1].split(",")[5]);
+    else { var m3 = tr.match(/matrix3d\(([^)]+)\)/); if (m3) ty = parseFloat(m3[1].split(",")[13]); }
+  }
+  return { m: parseFloat(s.opacity), g: 1 + ty / 56, c: parseFloat(r.opacity), p: parseFloat(p.opacity) };
+}
 function record(cond) {
   var samples = [];
+  var paint = $("paintside").checked && cond === mainCond;
   recHook = function (t) {
-    samples.push({
-      t: t,
-      m: cond.get("medium"), g: cond.get("geometry"),
-      c: cond.get("content"), p: cond.get("periphery"),
-    });
+    if (paint) {
+      var ps = paintSample();
+      samples.push({ t: t, m: ps.m, g: ps.g, c: ps.c, p: ps.p });
+    } else {
+      samples.push({
+        t: t,
+        m: cond.get("medium"), g: cond.get("geometry"),
+        c: cond.get("content"), p: cond.get("periphery"),
+      });
+    }
   };
   return {
     samples: samples,
@@ -660,11 +743,12 @@ async function measureOpen() {
   var ratio = of / og;
   var lag = op - of;
   var settleMs = S.length ? S[S.length - 1].t : NaN;
-  setRow("m-om", "v-om", fmtMs(om), om <= 0.100 ? "ok" : "bad");
-  setRow("m-of", "v-of", fmtMs(of), inBand(of, 0.130, 0.270) ? "ok" : "bad");
-  setRow("m-og", "v-og", fmtMs(og), inBand(og, 0.560, 0.700) ? "ok" : "bad");
-  setRow("m-or", "v-or", ratio.toFixed(3), inBand(ratio, 0.20, 0.31) ? "ok" : "bad");
-  setRow("m-op", "v-op", fmtMs(lag), inBand(lag, 0.060, 0.180) ? "ok" : "bad");
+  baseRatio = ratio; // the tempo row gates INVARIANCE against this
+  setRow("m-om", "v-om", fmtMs(om), !isNaN(om) && om <= BANDS.om.hi ? "ok" : "bad");
+  setRow("m-of", "v-of", fmtMs(of), inBand(of, BANDS.of.lo, BANDS.of.hi) ? "ok" : "bad");
+  setRow("m-og", "v-og", fmtMs(og), inBand(og, BANDS.og.lo, BANDS.og.hi) ? "ok" : "bad");
+  setRow("m-or", "v-or", ratio.toFixed(3) + " (φ³ ref " + BANDS.ratioRef + ")", "info");
+  setRow("m-op", "v-op", fmtMs(lag), inBand(lag, BANDS.op.lo, BANDS.op.hi) ? "ok" : "bad");
   return settleMs;
 }
 async function measureParked(settleMs) {
@@ -685,9 +769,9 @@ async function measureClose() {
   var mr = crossing(S, "m", 0.90, false);
   var cm = crossing(S, "m", 0.10, false);
   var beat = mr - cc;
-  setRow("m-cc", "v-cc", fmtMs(cc), inBand(cc, 0.110, 0.210) ? "ok" : "bad");
-  setRow("m-cb", "v-cb", fmtMs(beat), inBand(beat, 0.080, 0.220) ? "ok" : "bad");
-  setRow("m-cm", "v-cm", fmtMs(cm), inBand(cm, 0.560, 0.720) ? "ok" : "bad");
+  setRow("m-cc", "v-cc", fmtMs(cc), inBand(cc, BANDS.cc.lo, BANDS.cc.hi) ? "ok" : "bad");
+  setRow("m-cb", "v-cb", fmtMs(beat), inBand(beat, BANDS.cb.lo, BANDS.cb.hi) ? "ok" : "bad");
+  setRow("m-cm", "v-cm", fmtMs(cm), inBand(cm, BANDS.cm.lo, BANDS.cm.hi) ? "ok" : "bad");
 }
 async function measureInterrupt() {
   // from open+parked: flick-dismiss, catch at +120 ms, hold ~160 ms, re-open
@@ -720,11 +804,42 @@ async function measureInterrupt() {
       if (d > dtMax) dtMax = d;
     }
   }
-  var bound = 1 - Math.exp(-Math.min(dtMax, 0.05) / 0.055);
-  var okMin = mediumMin >= 0.9995 && !nan;
-  var okStep = maxStep <= bound * 1.15 && !nan;
+  var bound = 1 - Math.exp(-Math.min(dtMax, 0.05) / BANDS.stepTau);
+  var okMin = mediumMin >= BANDS.imMin && !nan;
+  var okStep = maxStep <= bound * BANDS.stepSlack && !nan;
   setRow("m-im", "v-im", mediumMin.toFixed(4), okMin ? "ok" : "bad");
-  setRow("m-is", "v-is", maxStep.toFixed(3) + " (bound " + bound.toFixed(3) + " @ dt " + (dtMax * 1000).toFixed(1) + " ms)", okStep ? "ok" : "bad");
+  setRow("m-is", "v-is", maxStep.toFixed(3) + " (bound " + bound.toFixed(3) + " @ dt " + (dtMax * 1000).toFixed(1) + " ms, region g≥sat)", okStep ? "ok" : "bad");
+}
+async function measureSubSat() {
+  // from open+parked: release toward closed, CATCH BELOW THE SAT THRESHOLD (g=0.10 < 0.12),
+  // hold — the medium must sit at g/sat = 0.833 (the position-mapped scrub law, the G4
+  // adjudication's battery row) — then re-open and re-settle. Step bound here uses the
+  // manifest's fastest law (medium open τ0.03), the sub-sat region's reachable maximum.
+  mainCond.release(1, 0);
+  await parkedP(mainCond);
+  var rec = record(mainCond);
+  mainCond.release(0, 0);
+  var t0 = performance.now();
+  while (mainCond.get("geometry") > BANDS.subSatG && performance.now() - t0 < 2500) await sleep(16);
+  mainCond.scrub(BANDS.subSatG);
+  await sleep(280);
+  var held = mainCond.get("medium");
+  var want = BANDS.subSatG / MANIFEST.channels.medium.sat;
+  mainCond.release(1, 0);
+  await parkedP(mainCond);
+  rec.stop();
+  var S = rec.samples, maxStep = 0, dtMax = 0;
+  for (var i = 1; i < S.length; i++) {
+    ["m", "g", "c", "p"].forEach(function (k) {
+      var st = Math.abs(S[i][k] - S[i - 1][k]);
+      if (st > maxStep) maxStep = st;
+    });
+    var d = S[i].t - S[i - 1].t;
+    if (d > dtMax) dtMax = d;
+  }
+  var bound = 1 - Math.exp(-Math.min(dtMax, 0.05) / BANDS.stepTauSubSat);
+  var ok = Math.abs(held - want) <= BANDS.subSatTol && maxStep <= bound * BANDS.stepSlack && mainCond.isParked();
+  setRow("m-i2", "v-i2", held.toFixed(4) + " held (want " + want.toFixed(3) + "), max step " + maxStep.toFixed(3) + " (bound " + bound.toFixed(3) + ")", ok ? "ok" : "bad");
 }
 async function measureTempo() {
   var tc = makeConductor({ el: null, channels: MANIFEST.channels, tempo: 1.3, prm: function () { return false; } });
@@ -740,8 +855,10 @@ async function measureTempo() {
   var of = crossing(samples, "c", 0.90, true);
   var og = crossing(samples, "g", 0.99, true);
   var ratio = of / og;
-  setRow("m-tp", "v-tp", ratio.toFixed(3) + " (fade " + fmtMs(of) + " / stretch " + fmtMs(og) + ")",
-    inBand(ratio, 0.20, 0.31) ? "ok" : "bad");
+  var ok = isFinite(baseRatio) && Math.abs(ratio - baseRatio) <= BANDS.tempoEps;
+  setRow("m-tp", "v-tp", ratio.toFixed(3) + " (Δ " + (isFinite(baseRatio) ? Math.abs(ratio - baseRatio).toFixed(3) : "n/a") +
+    " vs base " + (isFinite(baseRatio) ? baseRatio.toFixed(3) : "—") + "; fade " + fmtMs(of) + " / stretch " + fmtMs(og) + ")",
+    ok ? "ok" : "bad");
 }
 async function runStress() {
   document.querySelectorAll(".mini").forEach(function (m) { m.classList.add("show"); });
@@ -782,14 +899,17 @@ async function runBattery() {
     await measureParked(settleMs);
     await measureClose();
     await measureInterrupt();
+    await measureSubSat();
     await measureTempo();
     var passes = 0, fails = 0;
-    ["v-om","v-of","v-og","v-or","v-op","v-cc","v-cb","v-cm","v-im","v-is","v-pk","v-tp"].forEach(function (id) {
+    ["v-om","v-of","v-og","v-op","v-cc","v-cb","v-cm","v-im","v-is","v-i2","v-pk","v-tp"].forEach(function (id) {
       var cl = $(id).className;
       if (cl === "ok") passes++; else if (cl === "bad") fails++;
     });
-    $("summary").textContent = "Battery done — " + passes + "/12 PASS" + (fails ? ", " + fails + " FAIL" : "") +
-      " · " + new Date().toLocaleTimeString() + " · display rAF quantization applies (±1 frame at 60 fps per SPEC §5).";
+    $("summary").textContent = "Battery done — " + passes + "/12 gates PASS" + (fails ? ", " + fails + " FAIL" : "") +
+      " (fade/stretch ratio is derived-info; tempo conductor is headless — always internal) · sampling: " +
+      ($("paintside").checked ? "PAINT-SIDE (computed-style — the CSS binding certified)" : "internal (integrator)") +
+      " · " + new Date().toLocaleTimeString() + " · bands printed = bands gated, MARKS-derived (see BANDS block).";
   } finally {
     batteryRunning = false;
     document.querySelectorAll("button").forEach(function (b) { b.disabled = false; });

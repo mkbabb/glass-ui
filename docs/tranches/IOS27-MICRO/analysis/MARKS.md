@@ -458,3 +458,24 @@ grid arrives from heavy blur, the medium resolving AFTER the body lands; Safari 
 icon→card→fullscreen in ~170–250ms with real content live from the first frames. One body + medium-
 after—the same grammar as the dock and CC, at fire-and-forget license. zoom46 extracted for the
 record (same family, Safari close).
+
+### VERIFICATION — the independent re-derivation (2026-07-18)
+
+Verified-model: claude-fable-5. A second seat run re-derived the load-bearing corrections from the
+raw video without reusing the first run's frames or numbers:
+
+- Burst inventory: all nine burst24 sets present at the exact claimed frame counts; the five
+  undocumented-t0 sets present as flagged.
+- C2 register: fresh 60fps extraction (42 frames, t=10.90–11.60) → the two-edge tracker series is
+  point-identical to the fitted series (2026.0 … 2347.0 peak … 2336.2 settled); the joint fit
+  reproduces both windows exactly (full: ζ 0.79, f_d 1.86Hz, RMS 1.17px; tail: ζ 0.82, f_d 1.62Hz,
+  RMS 0.32px; settle 169/183ms; critical damping rejected ×4.1/×2.0). **ζ=0.80, f_d=1.7Hz,
+  settle≈180ms stands.**
+- Rest calibration: slab top 2336.0 confirmed at t=0.5, t=11.8, and the settled tail 11.48–11.58;
+  no edge at 2243 anywhere—C1's rest correction stands. (The on-disk `rest-t4400/4600` frames are
+  NOT at rest—the dock is displaced there; they are not calibration frames.)
+- C1 stasis: the overpull geometry trace confirms 26px-above-rest at t=6.80, ~19px below at 7.05,
+  bit-static 7.09–7.18, motion resuming after—the finger-scrub verdict stands.
+- C4: 60fps frames t=40.72–40.95 re-read visually—one continuous whitening/stretching/traveling
+  capsule with chromatic edge fringes, landing on the destination; no blink in any frame. The
+  overturn stands.

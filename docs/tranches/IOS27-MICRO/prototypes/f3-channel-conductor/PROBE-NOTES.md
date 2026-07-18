@@ -60,8 +60,14 @@ same rack, same constants, integration-scheme deltas only.
    may overshoot (readout), slow places land dead.
 6. Slow-mo ×4: same choreography stretched — the three clocks are easiest to eyeball here; the
    battery forces it off before measuring.
-7. Run full battery: 12 rows must go PASS. Timings are rAF-sampled with linear interpolation at
-   crossings; SPEC §5 allows ±1 frame at 60 fps.
+7. Run full battery: 12 GATED rows must go PASS (the fade/stretch ratio row is derived-info —
+   its primaries gate it; the sub-sat row is the 12th gate). Timings are rAF-sampled with linear
+   interpolation at crossings; the ±1-frame display term is INSIDE every printed band (the BANDS
+   block — printed = gated, MARKS-derived).
+7b. Re-run the battery with "paint-side sampling" checked: every row re-measured from
+   style-engine-resolved values (computed scrim opacity, row-0 computed translateY inverted,
+   row/rail opacity) — certifies the var→CSS binding; expect each timing row within ±1 display
+   frame of its internal-mode twin.
 8. Stress ×3: three live conductors (three rAF loops by contract) cycling ~5 s; the readout gives
    avg/max conductor JS ms per frame and fps. Style-recalc ms per frame (U10 proper) needs the
    browser seat's devtools trace — JS cannot see recalc cost.
@@ -71,46 +77,63 @@ Measurement definitions (also printed on-page): t90 rising ≥0.90; geometry t99
 ≤0.05; medium relax <0.90; medium out ≤0.10; beat = t(medium<0.90) − t(content≤0.05); periphery
 lag = t90(periphery) − t90(content); interrupt max-step bound = 1 − exp(−dt_max/0.055).
 
-## Known dishonesties and deviations
+## Known dishonesties and deviations (pass-2 cure status inline)
 
 1. **`inherits: true` on the channel vars.** SPEC §1 says registered vars `inherits: false` written
    on the surface root only — but the depth-graded rows are descendants and must read the var, so
    the prototype registers `inherits: true`. Real cost consequence: the per-frame write invalidates
    the stage subtree, not one element. Pass-2 must pick: inherits:true, or per-row JS writes.
+   → **CURED (G2 RULED): inherits:true accepted with the WebKit price card (safari-arm U10
+   differential — ≤18 ms worst frame through ~1000 consumers); spec §1 rewritten; per-row JS
+   writes rejected; Chrome recalc attribution queued (reverify-queue §F3).**
 2. **Geometry is `(response 0.6, ζ 1.0)`, not `preset: "dock"`.** SPEC §1's manifest writes
    `preset: "dock"` but the accepted probe table was produced with (0.6, 1.0) — dock (0.68, 0.64)
    would not hit geometry t99 ~633 ms and would ring. The prototype follows the probe rack; the
    spec's manifest line needs correcting at the pass-2 API review.
+   → **CURED (G1): spec manifest corrected to (0.6, 1.0) with the per-surface register home
+   pinned (presets-in-consumers seam, springPresets.ts:116–122). Note the dock row cited here
+   as (0.68, 0.64) was itself the stale MARKS literal — on disk it is (0.30, ζ 0.82), verified,
+   and corpus-true for the dock morph (MARKS PASS-2 C2); the ring/undershoot conclusion stands
+   either way.**
 3. **Cliff input saturation (`sat: 0.12`) is this seat's addition.** Under scrub the medium maps
    g/0.12 clamped — needed so the medium reaches full while the gesture is barely started (MARKS:
    blur done at 12.42 while the grid slides to 13.05) and so a catch at g≈0.9 cannot drag the
    medium below 1.000. The spec text never states the input map; it must be pinned.
+   → **CURED (G4): `sat` promoted into the law vocabulary as a first-class modifier; the
+   scrub-regime medium law adjudicated and written (SPEC §1); §1 manifest carries sat 0.12;
+   the sub-sat battery row gates the map at g/sat ±0.02.**
 4. **The delay law is a dead-time gate on the channel's own response, then it chases the LIVE
    source** — not a transport-delayed input. The transport reading gives periphery lag ~211 ms
    (off-band); the gate reading gives ~132–142 ms (on-band, matches the probe's 142). The spec's
    "transport delay + source routing" wording should be corrected or the constant re-fit.
+   → **CURED (G5): the wake-armed dead-time-gate semantics are now the specced law, with re-arm
+   rules per drive transition (arms on wake-from-parked only; mid-flight retargets never re-arm —
+   adjudicated intended against MARKS; seat clears). The four-laws framing corrected to three
+   laws + three modifiers.**
 5. **Max-frame-step is dt-dependent.** The probe's 0.12 was at 120 Hz; the law bound at 60 Hz is
    0.261 and the prototype measures 0.242 there. The readout prints the measured dt and its bound —
-   do not compare raw step numbers across refresh rates.
+   do not compare raw step numbers across refresh rates. *(Stands — documented behavior.)*
 6. **The interrupt catch is scripted** (setTimeout at +120 ms), not a human gesture — deterministic
    for measurement. A real manual catch is available via drag and behaves identically by
-   construction.
+   construction. *(Stands.)*
 7. **The beat sits at the band's low edge** (99 ms against MARKS ~100–200) under these crossing
    definitions; the pass-1 probe reported 117 ms with its own thresholds. Definitional sensitivity,
    not a mechanism gap — the acceptance band used here is 80–220 ms.
-8. **Scrim blur rides element opacity over a constant-radius `backdrop-filter`.** Both engines fade
-   the filtered backdrop with element opacity in practice, but this is exactly the kind of paint
-   claim this seat cannot verify — the browser seat should eyeball the blur actually fading, not
-   just the dim.
-9. **Nested backdrop-filters** (tiles blur over the scrim's blur) are a known cost cliff on some
-   engines — if the stress fps craters in Safari, suspect the tile blur first; the choreography
-   claim survives with tile blur removed.
+   → **CURED (G8): the shown-vs-gated split is gone — bands live in ONE extracted BANDS block,
+   printed = gated, each derived from MARKS ± declared quantization (beat: floor 80−17, ceiling
+   200+17 → 63–217 ms). 99 ms now sits INSIDE the printed band instead of beside a prettier one.**
+8. **Scrim blur rides element opacity over a constant-radius `backdrop-filter`.** → **ANSWERED in
+   paint on both engines: Chrome mid-relax computed sample (pass-1 VERIFIED) + the WebKit video-
+   path ramp 0.0150→0.0037 (`f3-wk-blur-ramp.png`, PASS-2 SAFARI ARM).**
+9. **Nested backdrop-filters cost cliff.** → **NOT OBSERVED at ×3 conductors on WebKit 26.5
+   (~67 fps, gaps ≤24 ms, tile blur intact) — bounded at this scale, not universally.**
 10. **Battery timings quantize to the display's refresh** — on 120 Hz displays the numbers will sit
     closer to the probe's; on 60 Hz expect ±1-frame wobble. Crossings are interpolated between
-    frames to keep sub-frame precision.
-11. **No browser was run by this seat** — node logic check only, per the seat contract. Paint
-    verification (both engines, screenshots, the trace for U10) belongs to the serialized browser
-    seat.
+    frames to keep sub-frame precision. *(Stands — and the gate bands now carry the ±17 ms display
+    term explicitly.)*
+11. **No browser was run by this seat** — node logic check only, per the seat contract.
+    → **The Safari arm landed (below); the Chrome arm landed pass 1. The paint-side battery mode
+    (G9) ships in the page; its browser run is queued (reverify-queue §F3).**
 
 ## What this prototype does NOT cover
 
@@ -180,3 +203,136 @@ the MCP screenshot round-trip (~2s); the held states + computed samples above ca
 
 Not verified here, per scope: Safari paint + the U10 style-recalc devtools trace (the stress
 readout is JS-side only), and the U12/U9 items the prototype declares out of scope.
+
+## PASS-2 SAFARI ARM (Playwright-WebKit 26.5, 2026-07-18)
+
+verified-model: claude-fable-5 (system-context model ID, verbatim). Serialized browser seat,
+pass 2. Engine: repo-local Playwright 1.61.1 WebKit webkit-2311, version 26.5
+(`Version/26.5 Safari/605.1.15`), headed, macOS, DPR 2, ~67Hz VRR display. Harness laws
+(proven this pass, full statement in the F1 section): Playwright WebKit screenshots are
+backdrop-filter-blind — material verdicts ride the 25fps video path; `performance.now()`
+quantizes to 1ms — frame gaps are the honest cost stat.
+
+**Verdict: PROVES-IN-WEBKIT — 12/12 battery in live paint, second engine.**
+
+| metric | WebKit 26.5 | Chrome 150 | band (page gate; G8's wider gate noted) |
+|---|---|---|---|
+| open: medium t90 | 67ms | 58ms | ≤100ms |
+| open: fade t90 | 158ms | 150ms | shown 150–250, gated 130–270 |
+| open: geometry t99 | 638ms | 627ms | shown ~600–650, gated 560–700 |
+| open: fade/stretch | 0.248 | 0.239 | 0.20–0.31 |
+| open: periphery lag | 130ms | 137ms | 80–160 |
+| close: content out | 162ms | 160ms | shown ~170, gated 110–210 |
+| close: empty-medium beat | 94ms | 102ms | shown 100–200, gated 80–220 — the low-edge sits OUTSIDE the shown MARKS band (G8 live in WebKit too) |
+| close: medium out | 630ms | 636ms | ~620 |
+| interrupt: medium min | 1.0000 | 1.0000 | held across cycles |
+| interrupt: max frame step | 0.208 (bound 0.279 @ dt 18.0ms) | 0.172 (bound 0.186 @ 11.3) | law-bounded, dt-dependent as documented |
+| park after settle | 0 ticks (settle @964ms) | 0 ticks (@953ms) | 0 ticks / 600ms |
+| tempo ×1.3 | 0.256 (fade 213 / stretch 835) | 0.245 | ratio invariant |
+
+Stress ×3: conductor JS avg 0.14ms · max 1.0ms (1ms clock floor) per frame, ~67fps over 6.0s,
+sampled frame gaps ≤24ms with zero over-24 — no nested-backdrop-filter cost cliff at this
+scale (dishonesty #9: not observed; the tile blur survives on WebKit at three live conductors).
+
+Depth-graded travel at held g=0.500 (remaining travel to settle, rows r0→r3):
+29.76 / 31.75 / 33.73 / 35.72px — **deep/shallow ratio 1.20, exactly the MARKS +20% grading,
+on the second engine.**
+
+**U10 — the inherits:true subtree cost, priced (differential, not a trace):** open+close cycle
+frame gaps — baseline avg 7.32ms (the VRR display ramps to ~136Hz when cheap); +240 injected
+descendant consumers reading the channel vars: avg 14.74ms; +960: avg 14.72ms, max 18ms, zero
+frames >24ms. Reading: the per-frame inherited-var write is not free — it halves the achievable
+VRR cadence on this display — but it holds a 60Hz budget through ~1000 consumers. Forced-recalc
+proxy (write `--ch-content` on the stage + forced `getComputedStyle` on a deep child, 240
+consumers): avg 0.72ms, max 1ms (clock floor). Style-recalc ATTRIBUTION proper remains
+TOOL-DEFER (Safari Web Inspector; Playwright exposes no WebKit timeline). The VRR ramp is a
+confound on the halving read; the ≤18ms worst frame is the load-bearing number.
+
+**Blur-rides-element-opacity (dishonesty #8), answered in WebKit paint:** scrim = constant
+`blur(26px) saturate(1.4)` with `opacity: var(--ch-medium)`. Video-path ramp at 0/0.35/0.7/1:
+gradient/luminance ratio 0.0150 → 0.0133 → 0.0068 → 0.0037 — the blur visibly and smoothly
+attenuates with opacity; no radius pump, no pop. **PROVES.** Artifact: `f3-wk-blur-ramp.png`.
+
+**A scrub-regime medium finding (feeds G4):** held scrub at g≈0.100 (below sat 0.12) leaves the
+medium at 0.8333 = g/sat — in paint the blur visibly thins while a finger hesitates near
+closed. The release-regime hold is intact (battery interrupt row 1.0000), but the sub-sat
+scrub map is now a SEEN behavior on both engines — the pass-2 medium-law adjudication (G4) has
+its paint exhibit.
+
+PRM: simulate-PRM open seats all four channels to 1.0000 within 120ms with the tick counter
+frozen (1399 → 1399) — zero frames, second engine.
+
+Boot idle honesty: state PARKED, ticks 0 on load. Zero page errors.
+
+Screenshots (provenance stamped): `f3-wk-scrub-mid-open.png` (held g=0.5 — three clocks
+desynced in one frame; screenshot path, geometry), `f3-wk-held-near-closed.png` (held g≈0.10 —
+the sub-sat medium state; screenshot path), `f3-wk-blur-ramp.png` (**video path**, the
+material truth). The unprovenanced `f3-wk-held-half-medium.png` left by a crashed earlier
+capture run was removed — no notes row ever referenced it.
+
+## PASS-2 CURES (cure seat F3, 2026-07-18)
+
+verified-model: claude-fable-5 (system-context model ID, verbatim). Cure seat, no browser owned.
+Ledger: `../../passes/PASS-2/cures-F3.md`. Queued paint checks: `../../passes/PASS-2/reverify-queue.md` §F3.
+
+Code changes (conductor + harness, `check.mjs` re-extracts both blocks — zero drift preserved):
+
+- **G6 — direction latched at drive time.** `stepChannel` no longer infers direction per frame;
+  each drive (`scrub`/`release`/`seat`) latches `c.dir`. New gate row: an underdamped
+  direction-asymmetric spring {0.5/ζ0.35, close 0.35/ζ0.8} released at v=0 must match a
+  latched-reference integration through its 31% overshoot — measured deviation 0.0 (bitwise),
+  peak 1.308. FALSIFICATION RUN: the pre-cure per-frame code, restored in a scratchpad copy,
+  FAILS the row at max dev 1.9e-1 (peak flapped to 1.164) — the gate bites.
+- **G8 — one BANDS block, printed = gated.** All gate bands now live in `/*F3-BANDS-BEGIN*/…END*/`
+  in index.html, extracted verbatim by check.mjs and rendered verbatim in the page table. Every
+  band derives from MARKS ± declared quantization (±17 ms display; ±42/±21 ms burst on point
+  figures). The fade/stretch ratio row is demoted to derived-info (its primaries gate it — a band
+  it cannot escape is not a gate); tempo now gates INVARIANCE (|Δratio| ≤ 0.06 vs the same-run
+  base) instead of an absolute band; the interrupt step bound prints its τ and asserts its
+  parameter region (g ≥ sat).
+- **G4 — the sub-sat episode is a gate.** New row on page and in check: release-close caught at
+  g = 0.10 < sat 0.12 → medium must hold g/sat = 0.8333 ±0.02 with steps bounded by the
+  manifest's fastest law (τ0.03). Measured: 0.8333, max step 0.130 vs bound 0.243.
+- **G9 — paint-side sampling mode.** Page checkbox re-points the battery recorder at
+  style-engine-resolved values (computed scrim opacity; row-0 computed translateY inverted to the
+  channel value, g = 1 + ty/56; row-0/rail computed opacity). A typo'd var name or dead binding
+  fails this mode where internal sampling would lie. Browser run queued (this seat owns none).
+- **G13 — hygiene.** Dead `delayedOK` channel field removed; the PRM-stale g/geometry badge now
+  refreshes from the 250 ms poll while parked; a mid-flight tempo rebuild now carries live
+  velocity (`state()` exposed; seat + re-release instead of a dead seat).
+- **New probe rows** (F3-owned evidence): H3 lens clock — {light cliff τ0.02, geo spring("dock")}
+  gives light t90 50 ms vs geometry t90 150 ms (ratio 0.34): light leads emergently, DESIGN-
+  labeled; useLeadTrail-as-two-channel-manifest expressibility — trail never leads through the
+  rise (source routing is load-bearing: a target-chasing first-order would outrun the spring's
+  slow start), joint park holds (the generalization-not-rival demand).
+
+Node battery after the cures — 19/19 gates PASS (+1 info):
+
+```
+open: medium t90                        73ms    ≤100 ms (corpus cliff ≤83 @12fps + 17 display)  PASS
+open: fade t90                          165ms   133–267 ms (MARKS 150–250 ±17)                  PASS
+open: geometry t99                      642ms   583–667 ms (MARKS 600–650 ±17)                  PASS
+open: fade/stretch (derived)            0.258   info — φ³ ref 0.236; primaries gate it          info
+open: periphery lag                     132ms   63–177 ms (MARKS 80–160 ±17)                    PASS
+park after open                         967ms, pending rAF=0                                    PASS
+close: content out                      169ms   111–229 ms (MARKS ~170 ±42 burst ±17)           PASS
+close: empty-medium beat                99ms    63–217 ms (floor 80−17; ceiling 200+17)         PASS
+close: medium out                       641ms   561–679 ms (MARKS ~620 ±42 burst ±17)           PASS
+interrupt: medium min                   1.0000  held (region g≥sat)                             PASS
+interrupt: max step                     0.130 (bound 0.141, τ0.055)                             PASS
+interrupt: re-settled + parked          yes                                                     PASS
+sub-sat catch: medium = g/sat           0.8333 (want 0.8333), step 0.130 (bound 0.243, τ0.03)   PASS
+tempo x1.3: fade/stretch invariance     0.257 (Δ 0.001 vs base 0.258)                           PASS
+60Hz interrupt: medium min              1.0000                                                  PASS
+60Hz interrupt: max step                0.242 (bound 0.261, τ0.055)                             PASS
+PRM: release seats                      x=1, frames=0, pending rAF=0                            PASS
+G6 latch: continuity through overshoot  max dev 0.0e+0 vs latched ref, peak 1.308               PASS
+H3 lens clock: light leads (DESIGN)     light t90 50ms, geometry t90 150ms, ratio 0.34          PASS
+useLeadTrail as a 2-channel manifest    trail ≤ lead through rise; jointly parked               PASS
+```
+
+Every pass-1/pass-2 paint measurement re-checked against the new derived bands: Chrome 150 and
+WebKit 26.5 rows all sit INSIDE the printed gates (the WebKit beat 94 ms — formerly "outside the
+shown band, inside the wider gate" — now sits inside the one honest band 63–217). The bands
+tightened where derivation demanded (geometry hi 700→667, medium-out 560–720→561–679) and no
+measurement was lost — falsifiability increased, evidence held.
