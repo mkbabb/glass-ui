@@ -1,14 +1,16 @@
-# BJ redress dossier — F11 through F20 (Fable seat)
+# BJ redress dossier — F11 through F20 (unioned canon)
 
-Per-row inventory / isolation / target / post-mortem / redress / status-check for feedback-ledger
-rows **F11-F20**, the user's 2026-07-17 corpus. Every screenshot in range was read first-hand
-(F11/F12/F15/F17 have PNGs; F13/F14/F16/F18/F19/F20 are URL-anchored, no screenshot). Correlations
-are verified against live `src/` + `demo/` at HEAD (`package.json` 7.0.0, `git describe`
-v6.0.0-62-g65c28be1), and reconciled against the formation corpus
-(`ASSEMBLY-CROSSWALK.md`, `REGISTRY.md`, the band specs, the perfection docs, `CHRONIC-ADJUDICATION.md`,
-`ADJUDICATION-1.md`). No `src/`/`demo/` byte is touched by this dossier.
+verified-model: claude-fable-5 (REFABLE RU-13, 2026-07-18)
+union-provenance: the prior artifact ran on claude-opus-4-8 via config override; this file is the REFABLE union — a fresh Fable ANEW pass (primary sources at HEAD v7.0.0-51-g4757315a) scrutinized the opus text claim-by-claim, kept only what re-proved, and overwrote the rest. Verdict sidecar: `../refable/REFABLE-RU-13-F11-F20.md`.
 
-Convention: file paths absolute-from-repo-root; `crosswalk` = `../ASSEMBLY-CROSSWALK.md`.
+Per-row inventory / isolation / target / post-mortem / redress / status for feedback-ledger rows
+**F11-F20**, the user's 2026-07-17 corpus. Screenshots F11/F12/F15/F17 read first-hand from
+`../../feedback/`; F13/F14/F16/F18/F19/F20 are URL-anchored. Correlations verified against `src/` +
+`demo/` at HEAD and reconciled against the bands as amended by `JUDGE.md` (J1-J11 applied per
+`APPLYLOG.md`). Claims only live paint can settle are marked **LIVE-DEFER** — the demo server is not
+assumed up. No `src/`/`demo/` byte is touched by this dossier.
+
+Convention: paths repo-root-relative; `crosswalk` = `../ASSEMBLY-CROSSWALK.md`.
 
 ---
 
@@ -17,45 +19,39 @@ Convention: file paths absolute-from-repo-root; `crosswalk` = `../ASSEMBLY-CROSS
 **INVENTORY.** Ledger (`../../FEEDBACK-LEDGER.md:23`): *"There should be no gap between items like
 this."* Screenshot: `../../feedback/F11-item-gap.png`.
 
-**ISOLATION (first-hand read).** The image shows three stacked full-bordered glass cards —
-`Color · seed · harmony · palette`, `Composition · medium · zones`, `Motion · …` — each a
-rounded rectangle with its own border and a right-edge chevron, separated by a visible ~8px vertical
-gutter. They read as three DETACHED cards, not one continuous inset grouped list. The user's mark is
-on that inter-card gutter: sibling sections inside one configurator should read as one grouped body
-(iOS grouped-list grammar), with the gap reserved to BETWEEN groups.
+**ISOLATION (first-hand read).** Three stacked full-bordered glass cards — `Color · seed · harmony ·
+palette`, `Composition · medium · zones`, `Motion · …` — each a rounded rectangle with its own border
+and right-edge chevron, separated by a visible ~8px gutter. They read as detached cards, not one
+continuous inset grouped list. The sub-labels match `AuroraConfigDock.vue:267/:274/:278` verbatim —
+the correlation is definitive.
 
 **TARGET.**
-- Demo site: `demo/stories/substrates/aurora/AuroraConfigDock.vue:267-296` — the eight
-  `<ConfiguratorLayer label="Color|Composition|Motion|…">` sections (this is the exact "Aurora
-  studio" stack the screenshot frames; the subtitles `seed · harmony · palette` / `medium · zones` /
-  `drift · breath` match `:267/:274/:278` verbatim).
+- Demo site: `demo/stories/substrates/aurora/AuroraConfigDock.vue:267-296` — the seven
+  `<ConfiguratorLayer>` sections of the Aurora studio column.
 - Src fault (canon-level): `src/components/configurator/styles.css:25`
-  (`--configurator-section-gap: 0.5rem`) applied at `:114-118`
-  (`.configurator-layer + .configurator-layer { margin-block-start: var(--configurator-section-gap); }`).
-  The section card itself is rendered by `src/components/configurator/ConfiguratorLayer.vue:132`
-  (`.configurator-section-label`) with a concentric all-side card border (`styles.css:104-118`).
+  (`--configurator-section-gap: 0.5rem`) applied at `:117-119`
+  (`.configurator-layer + .configurator-layer { margin-block-start: … }`); the per-section CARD
+  border + concentric radius at `:92-112`, rendered by
+  `src/components/configurator/ConfiguratorLayer.vue:88-107`.
 
-**POST-MORTEM.** Unenforced-proportion / deliberate-idiom-mismatch. The gap is not a bug in the
-mechanical sense — it was authored on purpose (`styles.css:114` comment: "the inter-section card
-breath … replacing the retired flush `border-b last:border-b-0` divider"). The team deliberately
-moved FROM a flush hairline-divided list TO detached bordered cards with breath between them, and
-that redesign chose the wrong iOS idiom: iOS groups sibling rows into ONE inset card and puts the
-gap between GROUPS, not between rows. There is no proportion canon that says "rows inside a group are
-flush," so the authored breath shipped uncontested.
+**POST-MORTEM.** Deliberate-idiom-mismatch, and dated: the card+gap treatment landed 2026-07-13 at
+BI B1 (`ff69acd9`, "configurator sections read as concentric CARDS … inter-section gap") — the
+styles.css comment confirms it replaced "the retired flush `border-b last:border-b-0` divider." The
+user's screenshot was captured against exactly this treatment four days later: the Law-2 card grammar
+was minted from internal reasoning and shipped user-unvalidated; the user saw the result and rejected
+the gap. iOS groups sibling sections into ONE inset card with hairline seams and reserves the gap for
+BETWEEN groups.
 
 **REDRESS.** Owned EXACTLY by `BJ.W-CONFIGURATOR-STD` gate **G-CFG-3** (BAND-STORY W3,
-`../../waves/BAND-STORY.md:242,267`): "sibling rows within a group read as one INSET grouped-list (no
-inter-row gap); the gap is BETWEEN groups only." The perfection fold pins the exact cure —
-neutralize/re-scope the `.configurator-layer + .configurator-layer` margin at `styles.css:117` — under
-the same G-CFG-3 owner (`../../waves/BAND-STORY.md:267`, "inter-ROW gap = 0 within a group; the gap is
-BETWEEN groups"). F11 is additionally MARKED (not fixed) by `BJ.W-ARISTOTLE-PROPORTION`
-(BAND-MATERIAL W5, `../../waves/BAND-MATERIAL.md:478-479`) as a proportion-roster entry that routes
-to this same story owner. Coverage: **EXACT** — the cure targets the precise token+rule, on the
-precise component, driving the precise screenshot.
+`../../waves/BAND-STORY.md:242,267`): inter-row gap = 0 within a group; the gap is BETWEEN groups
+only; DELTA shows one inset grouped list. The cure targets the precise rule (`styles.css:117`).
+Additionally MARKED by `BJ.W-ARISTOTLE-PROPORTION` (BAND-MATERIAL W5, `:507`) as a proportion-roster
+entry routing to the same story owner. Note the tension is with BI B1's Law-2 premise itself, not
+with any BJ band — the BJ formation already sides with the user. Coverage: **EXACT**.
 
-**STATUS CHECK.** Crosswalk flag: **LANDED** (`crosswalk:33`). **AGREE** — the fix is a single
-role-scoped margin rule on the component the screenshot proves, with a dual owner (story fix + A10
-mark) already reconciled.
+**STATUS.** Crosswalk **LANDED** (`crosswalk:33`). Verdict vs opus: **RATIFIED** — correlation,
+fault, owner all re-proven; the BI-B1 provenance (user rejected the seen design, not a stale paint)
+is the union's addition.
 
 ---
 
@@ -64,201 +60,180 @@ mark) already reconciled.
 **INVENTORY.** Ledger (`../../FEEDBACK-LEDGER.md:24`): *"`/data/tags-input` — these containers
 aren't rounded."* Screenshot: `../../feedback/F12-tags-input-unrounded.png`.
 
-**ISOLATION (first-hand read).** The image shows a `Skills` field: an outer full-width container
-holding four pill chips (`Vue`, `TypeScript`, `Tailwind`, `reka-ui`, each with an ✕) plus an
-`Add skill…` placeholder, over the caption `4 SKILLS · ENTER TO ADD, BACKSPACE TO REMOVE LAST`. The
-CHIPS are correctly stadium-rounded; the user's complaint is the OUTER container, whose corners read
-tight/near-square against the wide box — the "pill chips inside a near-rectangle container"
-incoherence (`../VISUAL-GESTALT.md:11`).
+**ISOLATION (first-hand read).** A `Skills` field: an outer full-width container holding four
+stadium chips (`Vue`, `TypeScript`, `Tailwind`, `reka-ui`, each with ✕) plus `Add skill…`, over the
+`4 SKILLS · ENTER TO ADD…` caption. The chips are correctly pill-rounded; the outer container's
+corners read square — the "pill chips inside a near-rectangle container" incoherence
+(`../VISUAL-GESTALT.md:10-11`).
 
 **TARGET.**
-- Demo site: `demo/stories/data/tags-input.vue:52` (`<Label for="skills-input">Skills</Label>` +
-  the reka `TagsInputRoot`, prefilled at `:16`).
-- Src: `src/components/tags-input/styles.css:8` — container `border-radius: var(--radius-field)`;
-  `:61` — chips `border-radius: var(--radius-control)`. Token resolution (`src/styles/theme/radius.css`):
-  `--radius-field` → `--radius-2xl` = `1rem`/16px (`:46,:21`); `--radius-control` → `--radius-pill`
-  (`:66`).
+- Demo site: `demo/stories/data/tags-input.vue:51-59` (bare `<TagsInput>` in a veil Surface — no
+  demo-side radius override).
+- Src: `src/components/tags-input/styles.css:8` — container `border-radius: var(--radius-field)` →
+  `--radius-2xl` = 1rem (`theme/radius.css:46,:21`). The chip stadium comes from the `Chip`
+  component (`TagsInputItem.vue:23` renders `<Chip>`; `styles.css:61` is the DELETE button's
+  `--radius-control`, not the chip — the prior dossier misattributed that line).
 
-**POST-MORTEM.** Screenshot-vs-disk DRIFT (an already-partly-cured defect), not a live fault. On
-disk today the container is role-correct: `--radius-field` (16px) container + `--radius-control`
-(pill) chips — exactly the role grammar the canon wants. The screenshot reads tighter than 16px,
-which means either the PNG predates the `--radius-field` repoint, or 16px reads subtle on a very wide
-short box. The underlying enforceability gap is real (there was no gate pinning the container to a
-role token, so it COULD drift), but the current bytes are correct — the honest posture is verify,
-then pin, not re-fix.
+**POST-MORTEM.** Screenshot-vs-disk drift, now pinned tighter: `git show 490cc46e` proves
+`border-radius: var(--radius-field)` was in the v7.0.0 cut ITSELF (the file is untouched since). The
+feedback is post-7.0.0-order, so the square corners in the PNG cannot come from the cut's source —
+the running demo at capture time was a stale pre-BI process, or a cascade defect existed only in
+paint. Either way the enforceability gap is real: no gate pinned the container to a role token.
 
 **REDRESS.** Owned by `BJ.W-RADIUS-ROLE` (BAND-MATERIAL W1) under **RULING 8**
-(`ADJUDICATION-1.md:33` + `../../waves/BAND-MATERIAL.md:124-142`), converted by the lead amendment
-(`../../waves/BAND-MATERIAL.md:667-669`) and crosswalk reconciliation item 5 (`crosswalk:227-229`)
-from a born-RED fix to a **REGRESSION-GUARD**: `OPEN-1a` runs a live-π on `/data/tags-input`,
-confirms role-correct, then the role assertions pin the container to `--radius-field` + chips to
-`--radius-control` against re-drift. Coverage: **EXACT** — the plan-as-formed already anticipates the
-drift and cures it precisely (guard, not spurious re-fix); no residue.
+(`ADJUDICATION-1.md` item 8) as converted by the lead amendment (`../../waves/BAND-MATERIAL.md:698-700`)
+to a **REGRESSION-GUARD**: `OPEN-1a` runs a live-π on `/data/tags-input`, then the role assertions
+pin container `--radius-field` + chip stadium against re-drift. Whether current paint agrees with
+source is **LIVE-DEFER** — the guard's live-π is exactly the right instrument. Coverage: **EXACT**.
 
-**STATUS CHECK.** Crosswalk flag: **LANDED** (`crosswalk:34`, "MATERIAL W1 owns if live-π
-reproduces"). **AGREE** — with the standing caveat, already recorded in the crosswalk, that the live-π
-is the gate that decides fix-vs-guard; disk says guard.
+**STATUS.** Crosswalk **LANDED** (`crosswalk:34`). Verdict vs opus: **RATIFIED with corrections** —
+guard posture re-proven; corrected the `:61` chip misattribution and replaced "either the PNG
+predates the repoint or 16px reads subtle" with the cut-level git proof (the repoint predates the
+feedback; only a stale-served demo or a paint-only defect explains the PNG).
 
 ---
 
 ## F13 — /data/sortable-list better design + horizontal space
 
-**INVENTORY.** Ledger (`../../FEEDBACK-LEDGER.md:25`): *"`/data/sortable-list` — Needs better design
-and better horizontal use of space."* **URL-anchored, no screenshot.**
+**INVENTORY.** Ledger (`../../FEEDBACK-LEDGER.md:25`): *"Needs better design and better horizontal
+use of space."* URL-anchored, no screenshot.
 
-**ISOLATION (from ledger + live code).** `demo/stories/data/sortable-list.vue` stacks its rows in
-`flex flex-col gap-2` vertical columns (`:69,:109`) with `rounded-md` bordered item rows
-(`:76,:117`), and its comparison block uses `grid grid-cols-1 gap-4 md:grid-cols-3` (`:143`). On a
-wide desktop the single vertical stack leaves the right two-thirds of the column empty — the
-"horizontal-waste" class. "Better design" additionally implicates the item-row treatment (a plain
-`rounded-md` bordered strip with a `⋮⋮`/`GripVertical` handle) and the reorder affordance itself.
+**ISOLATION.** `demo/stories/data/sortable-list.vue` stacks rows in `flex flex-col gap-2` single
+columns (`:69,:109`) with `rounded-md` bordered item rows (`:76,:117`); only the cross-list section
+uses `md:grid-cols-3` (`:143`). On wide desktop the single-list sections leave most of the column
+empty. "Better design" additionally implicates the item-row treatment (plain `rounded-md` strips —
+below the radius role canon — with `⋮⋮`/`GripVertical` handles) and the reorder affordance itself.
 
 **TARGET.**
-- Demo site: `demo/stories/data/sortable-list.vue:69,:109` (vertical `flex-col` stacks), `:143`
-  (`grid-cols-1 md:grid-cols-3`), `:76,:117` (item-row `rounded-md` cards + drag handle).
-- Src: `src/components/sortable-list/` (the reorder engine; not the fault — the fault is the demo
-  composition + the drag-affordance expressiveness).
+- Demo site: `demo/stories/data/sortable-list.vue:69,:109` (vertical stacks), `:76,:117` (row
+  treatment), `:143` (the one grid).
+- Src: `src/components/sortable-list/` — the engine is not the fault; note `SortableList.vue:144`
+  carries a raw `999px` literal (a BAND-MATERIAL W1 repoint site).
 
-**POST-MORTEM.** Story-authorship gap: the page was hand-rolled with ad-hoc Tailwind
-flex/grid rather than dogfooding a responsive shipped layout, so the wide-desktop column was never
-laid out for horizontal use. Compounded by the absence of a responsive-audit discipline — no wave
-existed to catch a page that crushes/wastes at a given viewport, so the flat vertical stack shipped
-uncontested.
+**POST-MORTEM.** Story-authorship gap: hand-rolled ad-hoc Tailwind layout, no responsive-audit
+discipline existed to catch wide-desktop waste, so the flat stack shipped uncontested.
 
-**REDRESS.** Horizontal-space + dogfooding owned EXACTLY by `BJ.W-RESPONSIVE-AUDIT` (BAND-STORY W6),
-which names sortable-list as a born-RED anchor: **G-RSP-1** (`../../waves/BAND-STORY.md:466`,
-`grep flex-col … → :69,:109`) and **G-RSP-3** (`:468`, the @1440px horizontal-waste class), with the
-"dogfood a shipped component" fix mandate (`:451`). Residue: the ledger's "better DESIGN" is broader
-than "better horizontal use" — the item-row visual treatment is caught by the A10 proportion roster
-(`BJ.W-ARISTOTLE-PROPORTION`), but the **reorder/drag affordance expressiveness** (a sortable list
-should visibly express grab/lift/drop under the breath-of-life edict) has NO named owner in the
-sortable-list context. Coverage: **PARTIAL** — horizontal + dogfood EXACT; the drag-affordance half
-of "better design" is the uncovered residue.
+**REDRESS.** Horizontal + dogfooding owned by `BJ.W-RESPONSIVE-AUDIT` (BAND-STORY W6), with
+sortable-list as a named born-RED anchor (**G-RSP-1** `:466`, **G-RSP-3** `:468`, dogfood mandate
+`:450-451`); item-row treatment caught by the A10 proportion roster. **OPEN RESIDUE: the
+drag-affordance half of "better design" (grab/lift/drop expressiveness under the breath-of-life
+edict) is UNOWNED at HEAD** — the prior dossier proposed Δ-F13-1, CRIT1/CRIT2 confirmed it
+disk-true, but JUDGE.md rules on neither it nor any equivalent (absent from J1-J11) and APPLYLOG
+carries no application. JUDGE.md's "zero floating notes remain" is falsified by this omission; the
+lead must rule (natural homes: the A01 engagement-audit scope or `BJ.W-IDLE-BREATH`'s interaction
+half, or an explicit clause in the W6 fix mandate). Coverage: **PARTIAL** until ruled.
 
-**STATUS CHECK.** Crosswalk flag: **LANDED** (`crosswalk:35`, RESPONSIVE-AUDIT). **AGREE** on the
-horizontal landing; the "better design" residue (drag affordance) is the appendable delta below —
-not a status disagreement, a scope sliver.
+**STATUS.** Crosswalk **LANDED** (`crosswalk:35`) for the horizontal half. Verdict vs opus:
+**RATIFIED, gap escalated** — the opus delta was right and then fell through the judge pass; the
+union converts it from "appendable proposal" to a named JUDGE omission.
 
 ---
 
 ## F14 — audit ALL pages: horizontal-desktop + mobile-first
 
-**INVENTORY.** Ledger (`../../FEEDBACK-LEDGER.md:26`): *"Audit ALL pages for optimized horizontal
-usage on desktop + proper mobile-first affordances. Idiomatic gestalt approaches, no legacy, clean
-breaks. Dogfood our own components to afford this."* **URL-anchored (all pages), no screenshot.**
+**INVENTORY.** Ledger (`../../FEEDBACK-LEDGER.md:26`): audit ALL pages for horizontal usage +
+mobile-first affordances; idiomatic gestalt, no legacy, clean breaks; dogfood our own components.
+URL-anchored (all pages).
 
-**ISOLATION (from ledger + live code).** This is a cross-cutting standing audit, not a single defect.
-The live evidence that it is warranted: the F13 sortable-list stack, the fixed non-fluid landing grid
-(`SectionLanding.vue:33` / `CatalogLanding.vue:32` `grid-cols-1/2/3`, no masonry/fluid), and the ~23
-bespoke-`<style>` route SFCs with fixed widths that do not reflow at 390px (census). No prior wave
-governed per-page responsiveness, so breakages were only ever caught by eye.
+**ISOLATION.** Cross-cutting standing audit, not a single defect. Warrant verified at HEAD: the F13
+stack; the fixed landing grids (`demo/chassis/landing/SectionLanding.vue:33`,
+`CatalogLanding.vue:32` — `grid-cols-1/2/3`, no fluid/masonry); the bespoke-`<style>` route SFCs
+with fixed widths. No prior wave governed per-page responsiveness.
 
-**TARGET.** All 100 navigable routes (1 catalog home + 11 section landings + 88 story routes) — the
-audit surface, not one file. Named born-RED anchors carried into the wave:
-`demo/stories/data/sortable-list.vue` (F13), the landing grid (Wave-5 target), and the bespoke-CSS
-SFCs enumerated at the two governing viewports (390px, ≥1440px).
+**TARGET.** All 100 navigable routes (AMEND scope 128→100, `ADJUDICATION-1.md` item 9;
+`BAND-STORY.md:436-438`), audited at 390px + ≥1440px.
 
-**POST-MORTEM.** Absent discipline: the repo shipped 100 story routes with per-page ad-hoc layout and
-no responsive-audit gate, so mobile-first + horizontal-desktop were never systematically enforced —
-exactly the "no wave owns the cross-cutting concern" class the registry seed lens caught (F14 was one
-of the 10 rows the gestalt seed omitted, `REGISTRY.md:7`).
+**POST-MORTEM.** Absent discipline — 100 routes shipped with per-page ad-hoc layout and no
+responsive gate; F14 was one of the 10 rows the gestalt seed omitted (`REGISTRY.md:7`).
 
-**REDRESS.** Owned EXACTLY by `BJ.W-RESPONSIVE-AUDIT` as a FIRST-CLASS wave (BAND-STORY W6,
-`../../waves/BAND-STORY.md:420-489`): a per-page audit table (`page → breakage@viewport → fix →
-DELTA`), gates G-RSP-1/2/3, dogfood-over-bespoke fix mandate, Playwright @390px + @1440px captures
-serialized against other browser seats. AMEND-2 corrects the scope to the **100 routes**, not the 128
-file count (`:436-438`). Coverage: **EXACT** — the ask is a first-class wave with the same
-evidence-first table discipline as the reduction ASK.
+**REDRESS.** Owned EXACTLY by `BJ.W-RESPONSIVE-AUDIT` as a first-class wave (BAND-STORY W6,
+`:420-489`): per-page audit table (page → breakage@viewport → fix → DELTA), gates G-RSP-1/2/3,
+dogfood-over-bespoke mandate, Playwright captures at both viewports serialized against other browser
+seats (the browser-seat singleton rule). The audit table does not exist at HEAD — G-RSP-1 born-RED
+stands. Execution is inherently live-browser work: **LIVE-DEFER** by construction. Coverage:
+**EXACT**.
 
-**STATUS CHECK.** Crosswalk flag: **LANDED** (`crosswalk:36`). **AGREE** — the ask became its own wave
-rather than being absorbed, which is the correct weight for an "audit ALL pages" order.
+**STATUS.** Crosswalk **LANDED** (`crosswalk:36`). Verdict vs opus: **RATIFIED** — all anchors
+re-verified.
 
 ---
 
 ## F15 — /data/infinite-scroll reset button unrounded + grand rounding/typography audit
 
-**INVENTORY.** Ledger (`../../FEEDBACK-LEDGER.md:27`): *"`/data/infinite-scroll` reset button not
-rounded. **Grand rounding/border-radius audit + typography audit.**"* Screenshot:
+**INVENTORY.** Ledger (`../../FEEDBACK-LEDGER.md:27`): reset button not rounded; **grand
+rounding/border-radius audit + typography audit.** Screenshot:
 `../../feedback/F15-reset-button-unrounded.png`.
 
-**ISOLATION (first-hand read).** The image shows the Infinite Scroll page header (`Infinite Scroll`
-title + descriptor + `INFINITE SCROLL / Event feed` eyebrow) with a `Reset` button at the right. The
-button is a near-rectangular pill with only a slight corner radius (reads ~6px) — under-rounded for a
-control that the role grammar wants as a stadium/control-radius button. The screenshot also
-incidentally exhibits the mono ALL-CAPS eyebrow idiom (`INFINITE SCROLL`) that the typography half of
-the ask targets.
+**ISOLATION (first-hand read).** The page header with a `Reset` button at right — a
+near-rectangular control with ~6px corners, under-rounded for the control role. The mono ALL-CAPS
+eyebrow (`INFINITE SCROLL`) incidentally exhibits the typography half's target idiom.
 
 **TARGET.**
-- Demo site: `demo/stories/data/infinite-scroll.vue:74` — `<button … class="interactive-item
-  rounded-md border … px-3 py-1.5 text-small …">Reset</button>` (`rounded-md` = 6px, verified; the
-  panel below at `:89` correctly uses `rounded-card`).
-- Grand rounding: the canon at `src/styles/theme/radius.css` (role table) + the raw-literal sites
-  `src/components/sortable-list/SortableList.vue:144` (`999px`) and
-  `src/components/tabs/styles/segmented.css:169,:306` (raw rem).
-- Grand typography: the unreset Tailwind ramp (`src/styles/theme/bridges.css`, `--text-*: initial`
-  absent) + the 251 `text-sm`/`text-xs` sites + the mono-caption idiom (65/128 pages).
+- Demo site: `demo/stories/data/infinite-scroll.vue:72-78` — a RAW `<button>` with
+  `rounded-md border … text-small` (verified at HEAD; the panel at `:89` correctly uses
+  `rounded-card`). Double fault: wrong radius AND not the library `<Button>` — the page hand-rolls a
+  control the library ships, against F14's own dogfood mandate.
+- Grand rounding: the role canon at `src/styles/theme/radius.css` + the raw-literal sites
+  `SortableList.vue:144` (`999px`), `tabs/styles/segmented.css:169,:306` (raw rem) — all verified.
+- Grand typography: the unreset Tailwind ramp + the 251 `text-sm`/`text-xs` sites + the mono-caption
+  idiom.
 
-**POST-MORTEM.** Unenforced token canon on two axes. Radius: a rich role vocabulary exists
-(`radius.css:31-95`) but nothing lints raw Tailwind radius utilities, so a demo author reached for
-`rounded-md` instead of a control role class and it read near-square. Typography: the `@theme` bridge
-only ADDS √φ rungs and never RESETS Tailwind's built-in ramp, so `text-sm`/`text-xs` silently bypass
-the fluid scale — no lint could work until the ramp is cleared (`REGISTRY.md:235-240`). Both are the
-"systems exist, are not enforceable" verdict of family F.
+**POST-MORTEM.** Unenforced token canon on two axes: a rich radius role vocabulary exists but
+nothing lints raw radius utilities; the `@theme` bridge adds √φ rungs without resetting Tailwind's
+built-in ramp, so `text-sm`/`text-xs` silently bypass the fluid scale.
 
-**REDRESS.** Three owners, all present:
-- Reset button (born-RED, verified): `BJ.W-RADIUS-ROLE` §D F15 (`../../waves/BAND-MATERIAL.md:134`:
-  "F15 reset RED at HEAD: infinite-scroll.vue:74 `rounded-md` … GREEN on the control role class").
-- Grand rounding audit: the whole `BJ.W-RADIUS-ROLE` (role-table canon + raw-literal repoints) +
-  `BAND-GATES` W3 `token-hygiene` lint born-RED against the raw sites.
-- Grand typography audit: `BJ.W-TYPE-CODEMOD` (BAND-MATERIAL W6, the 251-site codemod + coupled
-  default-ramp reset) + `BAND-GATES` W4 `type-hygiene` (born-RED) + the round-2 typography lens
-  census. Crosswalk (`crosswalk:37`) routes typography to `BJ.W-TYPE-CODEMOD`/`BJ.W-RAMP-RESET`.
-Coverage: **EXACT** — the point defect, the grand rounding audit, and the grand typography audit each
-have a named owner with a born-RED anchor.
+**REDRESS.** Three owners, all verified present:
+- Reset button: `BJ.W-RADIUS-ROLE` §D F15 (`BAND-MATERIAL.md:109-110,:138` — "RED at HEAD …
+  verified; GREEN on the control role class"). The union sharpens the fix: swap to the library
+  `<Button>` (size sm), not merely a role class on the raw element — the dogfood defect dies with
+  the radius defect.
+- Grand rounding: the whole `BJ.W-RADIUS-ROLE` + `BAND-GATES` W3 `token-hygiene` born-RED.
+- Grand typography: `BJ.W-TYPE-CODEMOD` (BAND-MATERIAL W6, RULING 2/OPEN-B) + `BAND-GATES` W4
+  `type-hygiene`.
+Coverage: **EXACT**.
 
-**STATUS CHECK.** Crosswalk flag: **LANDED** (`crosswalk:37`). **AGREE** — the two "grand audit" halves
-are not hand-waved; each is a real wave (RADIUS-ROLE + TYPE-CODEMOD) with enforcement in BAND-GATES.
+**STATUS.** Crosswalk **LANDED** (`crosswalk:37`). Verdict vs opus: **RATIFIED** — union adds the
+dogfood-Button sharpening.
 
 ---
 
 ## F16 — /data/timeline redesign from the ground up
 
-**INVENTORY.** Ledger (`../../FEEDBACK-LEDGER.md:28`): *"`/data/timeline` — Very poorly defined,
-buggy, likely many facilities overfit. **Redesign from the ground up.**"* **URL-anchored, no
-screenshot.**
+**INVENTORY.** Ledger (`../../FEEDBACK-LEDGER.md:28`): *"Very poorly defined, buggy, likely many
+facilities overfit. Redesign from the ground up."* URL-anchored, no screenshot.
 
-**ISOLATION (from ledger + live code).** The timeline is a sprawling multi-variant family with no
-single coherent identity: `src/components/timeline/` ships six SFCs — `GlassTimeline.vue`,
-`ContinuousTimeline.vue`, `ScrubberTimeline.vue`, `SegmentedTimeline.vue`, plus the
-`ContinuousRail.vue` + `ContinuousMarkers.vue` sub-parts (~1500 LOC). The demo
-(`demo/stories/data/timeline.vue`) renders three of them (`GlassTimeline` scrubber `:5,:91`,
-`TimelineSegmentedBody` `:14,:184`, `TimelineContinuousBody` `:15,:188`) with a bespoke event model.
-The user's read — poorly defined, buggy, overfit — targets the whole family, not one line.
+**ISOLATION (corrected).** `src/components/timeline/` ships six SFCs + geometry (~2,244 lines):
+`GlassTimeline.vue`, `ContinuousTimeline.vue` + `ContinuousRail.vue` + `ContinuousMarkers.vue`,
+`ScrubberTimeline.vue`, `SegmentedTimeline.vue`. The decisive fact the prior dossier missed:
+**`index.ts` exports ONLY `GlassTimeline` + types** — Continuous/Rail/Markers/Scrubber/Segmented
+are unexported AND unconsumed by any `src/`/`demo/` file (all three demo bodies —
+`timeline.vue:5`, `TimelineSegmentedBody.vue:7`, `TimelineContinuousBody.vue:7` — import
+`GlassTimeline` only; sole reference elsewhere is one test,
+`tests/components/custom/timeline/continuous-structural-split.test.ts`). Four of five variants are
+in-repo dead code. `README.md` claims all variants are exported — a doc-truth violation
+(`BAND-DOC-TRUTH` interest, unnamed anywhere at HEAD). The "buggy" verdicts at `/data/timeline` are
+paint/interaction claims: **LIVE-DEFER** (the design-loop's captured RED baseline owns them).
 
 **TARGET.**
-- Demo site: `demo/stories/data/timeline.vue:5,:14,:15` (the three rendered variants).
-- Src: the `src/components/timeline/` family (all five variants + shared rail/markers). Consumer
-  fact: single-EXTERNAL consumer (speedtest `PhaseTimeline.vue:49`) — fails the ≥2-consumer bar AND
-  is a named ground-up target.
+- Demo site: `demo/stories/data/timeline.vue` + the two body SFCs (all GlassTimeline modes).
+- Src: the whole `src/components/timeline/` family. External consumer: speedtest
+  `PhaseTimeline.vue` only (single-external — below the ≥2 bar), and it can only be consuming
+  `GlassTimeline` (the sole export of `./timeline`).
 
-**POST-MORTEM.** Overfit accretion + single-consumer bloat: five timeline variants grew to serve one
-external app's phase-progress needs, never converged to an opinionated default, and accumulated
-overfit facilities (the "many facilities overfit" verdict). Patching it would preserve the disease;
-the user ordered ground-up, so a prop-diet is the wrong instrument.
+**POST-MORTEM (corrected).** Not "five variants grew to serve one external app" — four of the five
+serve NOBODY: variant accretion without consumers, dead on the export surface, misdocumented as
+public. The one live variant (GlassTimeline) carries the demo + speedtest. Patching would preserve
+the disease; the user ordered ground-up.
 
 **REDRESS.** Owned by `BJ.W-REDUCE-TIMELINE` (BAND-REDUCTION W5) as a **STUB → design-loop**
-(`../../waves/BAND-REDUCTION.md:432-476`): it records the F16 disposition (ground-up, not prop-diet)
-and the single-external-consumer fact, then hands the actual redesign to the design-loop charter
-(brainstorm-3 → golden → challenge-3 → delta → wave-amendment, Fable + DesignSync). The scope is
-bound by **amendment A2** (perfection FABLE-DAG-REDUCTION §4, `../../waves/BAND-REDUCTION.md:524`):
-"W5 timeline scope = ALL FIVE variants named (~1500 LOC family)" — so the redesign spans the whole
-family, not just the demoed three. Coverage: **EXACT** — a ground-up order is correctly discharged as
-a chartered design-loop stub (the honest disposition; a wave cannot pre-draw the golden), with the
-five-variant scope explicitly bound.
+(`:435-478`): disposition recorded (ground-up, not prop-diet), scope bound by amendment A2 to ALL
+FIVE variants (`:527`). The union's dead-export fact strengthens the stub's premise and should seed
+the design-loop brief: the redesign starts from ONE consumer-proven register, not five peers. C-C
+(JUDGE.md) already sequences the track-well register adoption. Coverage: **EXACT**.
 
-**STATUS CHECK.** Crosswalk flag: **LANDED** (`crosswalk:38`). **AGREE** — a "redesign from the ground
-up" that landed as a design-loop stub with an explicit A2 five-variant scope is the correct weight;
-the born-RED lives in the loop's captured baseline, not a premature gate here.
+**STATUS.** Crosswalk **LANDED** (`crosswalk:38`). Verdict vs opus: **owner/coverage RATIFIED;
+isolation + post-mortem CORRECTED** (the "demo renders three of them [variants]" and
+"five variants grew to serve one external app" claims are false at HEAD).
 
 ---
 
@@ -267,208 +242,166 @@ the born-RED lives in the loop's captured baseline, not a premature gate here.
 **INVENTORY.** Ledger (`../../FEEDBACK-LEDGER.md:29`): *"`/data/search` — input boxes are not
 rounded."* Screenshot: `../../feedback/F17-search-inputs-unrounded.png`.
 
-**ISOLATION (first-hand read).** The image shows the `Live search` section: a large translucent panel
-with two stacked search inputs — `Search components, composables,` (with a magnifier glyph) and
-`Jump to a component…` — above an empty dashed-border results well (`Start typing above to rank the
-catalogue by fuzzy score.`). Both inputs read with modest, roughly-equal corner radius; the enclosing
-panel is fairly sharp-cornered. The user's mark ("input boxes are not rounded") points at the two
-inputs (the VISUAL-GESTALT seed read them as "two adjacent search inputs with different radii, one
-sharp", `../VISUAL-GESTALT.md:12`).
+**ISOLATION (first-hand read, corrected).** The `Live search` section: two stacked inputs —
+`Search components, composables,` (magnifier, VISIBLY ROUNDED ~1rem) and `Jump to a component…`
+(VISIBLY SQUARE) — over a dashed results well. The two inputs do NOT read "roughly equal" (the
+prior dossier's read); they differ exactly as the seed recorded: "two adjacent search inputs with
+different radii, one sharp" (`../VISUAL-GESTALT.md:12`).
 
-**TARGET.**
-- Demo site: `demo/stories/data/search.vue:499` (`placeholder="Search components, composables,
-  tokens…"`), `:506` (`placeholder="Jump to a component…"`).
-- Src: `src/components/_shared/field-control.css:34` (base `border-radius: var(--radius-pill)`),
-  `:47,:52` (`--radius-field` for single-line/modal inputs) — the search inputs carry no own
-  `border-radius`; they ride `field-control`.
+**TARGET (corrected — the prior dossier's mechanism is false).** The search components do NOT ride
+`field-control`; they ride `.input-bar`:
+- `src/components/search/SearchBar.vue:4` — `cn('input-bar', …, searchFieldVariants({variant}))`;
+  `.input-bar` carries `border-radius: var(--radius-2xl)` (`styles/utilities/components.css:12-16`)
+  → the ROUNDED first input.
+- `src/components/search/FuzzySearch.vue:126-127` — same `input-bar` + variant classes; the demo
+  (`demo/stories/data/search.vue:502-508`) passes `variant="floating"`.
+- `src/components/search/searchVariants.ts:8-11` — `floating` (and `bare`) =
+  `"border-none bg-transparent p-0 rounded-none"`. No `.fuzzy-search--floating` rule exists
+  anywhere in `src/` to re-provide chrome. `rounded-none` is a Tailwind utility (@layer utilities)
+  and beats `.input-bar`'s @layer components radius unconditionally → the SQUARE second input IS
+  the disk state at HEAD, statically derivable, no screenshot drift required.
 
-**POST-MORTEM.** Same class as F12 — screenshot-vs-disk DRIFT under an unenforced radius canon. The
-inputs inherit `field-control`'s role radius (pill base, `--radius-field` for the modal single-line
-arm), so on disk they are role-coherent, not "sharp." The seed's "different radii, one sharp" read
-was the pre-repoint state; the divergence was a demo composition riding the shared control before the
-`field-control` role rules unified single-line inputs. No gate pinned it, so the divergence could
-exist — but the current bytes are role-correct.
+**POST-MORTEM (corrected).** Not screenshot-vs-disk drift — a variant-authorship fault: the
+`floating` variant strips the field chrome (presumably expecting a wrapper to re-provide it) and no
+wrapper chrome was ever authored. The defect shipped because the variant's visual contract was
+never stated, let alone gated.
 
-**REDRESS.** Owned by `BJ.W-RADIUS-ROLE` (BAND-MATERIAL W1) under **RULING 8**, converted to a
-**REGRESSION-GUARD** by the same lead amendment as F12 (`../../waves/BAND-MATERIAL.md:113-115,667-669`;
-`crosswalk:227-229`): `OPEN-1a` live-π confirms the two inputs read the `field-control` role radius,
-then the assertion pins them against re-drift. Coverage: **EXACT** — the plan already treats F17 as a
-verify-then-pin guard, precisely matching the disk reality.
+**REDRESS (posture corrected).** Owner unchanged — `BJ.W-RADIUS-ROLE` (BAND-MATERIAL W1) via
+RULING 8's own conditional ("owns the remediation if the live-π reproduces") — but the posture
+flips from REGRESSION-GUARD back to **BORN-RED FIX**: the live-π WILL reproduce (final paint
+confirmation **LIVE-DEFER**, the CSS is unconditional). The fix: either the `floating` variant
+gains its own rounded chrome (a `.fuzzy-search--floating .input-bar` rule or a variant class that
+keeps `--radius-field`/`--radius-2xl`), or the collapsed floating field stops stripping
+`border-radius` (drop `rounded-none` from the variant), or the demo drops `variant="floating"` —
+decided against the variant's intended design, then pinned by the role assertion. **FLIP recorded**:
+the "F12/F17 already role-correct on disk" premise (RULING 8 as amended, `BAND-MATERIAL.md:117-119`
+"the search component has no own border-radius (rides field-control pill)", `:698-700` lead
+amendment, `crosswalk:227-229` item 5, `PLAN.md:187`) is FALSE for F17 on every clause — see the
+sidecar; the lead re-judges. Coverage: **EXACT once re-postured** (the owner and the live-π
+instrument are already right; only the expected outcome and the fix-shape were wrong).
 
-**STATUS CHECK.** Crosswalk flag: **LANDED** (`crosswalk:39`, "MATERIAL W1 owns if live-π reproduces").
-**AGREE** — the conditional is honest and the disk resolves it to a guard.
+**STATUS.** Crosswalk **LANDED** (`crosswalk:39`) — ownership stands. Verdict vs opus:
+**OVERTURNED** (mechanism, disk-state, screenshot read, and guard posture all corrected by fresh
+evidence).
 
 ---
 
 ## F18 — instrument-chassis + metric TO BE REMOVED
 
-**INVENTORY.** Ledger (`../../FEEDBACK-LEDGER.md:30`): *"`/data/instrument-chassis`, `/data/metric` —
-To be REMOVED — 'what of our grand pruning of overfit and superfluous components?'"* **URL-anchored,
-no screenshot.**
+**INVENTORY.** Ledger (`../../FEEDBACK-LEDGER.md:30`): *"To be REMOVED — 'what of our grand pruning
+of overfit and superfluous components?'"* URL-anchored, no screenshot.
 
-**ISOLATION (from ledger + live code).** The user names two components for removal on an
-overfit/pruning premise. Live: `src/components/instrument-chassis/` and `src/components/metric/` both
-PRESENT (`demo/stories/data/instrument-chassis.vue`, `demo/stories/data/metric.vue`). The premise
-(overfit / superfluous) is FALSE on the consumer census: instrument-chassis is imported by
-speedtest×4 (`App.vue:257`, `useRouteTransition.ts:34`, `ChartsView.vue:132`, `MapView.vue:53`) +
-muster×5; `metric-badge` (folded to `/metric` at 490cc46e) is imported across the whole
-fourier-analysis repo (7 files) + speedtest×2 + muster×2 + sci-report×2 — the MOST-shared component
-in the census (`ASK-REDUCTION.md:33-38`). So this is not a defect to fix but a removal instinct that
-the evidence contradicts.
+**ISOLATION.** Both PRESENT at HEAD: `src/components/instrument-chassis/`, `src/components/metric/`
+(Metric/MetricCell/MetricRow/MetricStack; the granular `./metric-badge`/`./metric-cell`/
+`./metric-stack` subpaths and the `MetricBadge` symbol were removed at `490cc46e`), package exports
+`./instrument-chassis` + `./metric` live. In-repo consumers: their own demo stories only. The
+removal premise fails on the external census: instrument-chassis = speedtest×4 + muster×5;
+metric-badge consumers span fourier-analysis (7 files) + speedtest + muster + sci-report — the
+most-shared component in the census (`ASK-REDUCTION.md:25-51`, verified).
 
-**TARGET.**
-- Demo sites: `demo/stories/data/instrument-chassis.vue`, `demo/stories/data/metric.vue`.
-- Src: `src/components/instrument-chassis/`, `src/components/metric/` (metric-pill already deleted at
-  490cc46e; metric-badge/cell/stack are the shared surface).
+**POST-MORTEM.** The `recap:recap-carry-unexecuted` disease (UF-K1): thrice-ordered removal (F18,
+Q051 R12/R16, BJ F18) vs a census that keeps ruling SHARED. The fault is tranche machinery
+re-booking a refused decision, not a code defect.
 
-**POST-MORTEM.** The `recap:recap-carry-unexecuted` DISEASE (family C / UF-K1). The user has ordered
-this removal THREE times (F18, Q051 R12/R16, now BJ F18) and every consumer census has ruled the
-components SHARED library surface across 3-4 apps. The mechanism is not a code fault — it is the
-tranche machinery re-booking a decision the evidence keeps refusing. The honest cure is a terminal
-DECISION with the costed break stated, not a fourth silent re-book or a blind delete that breaks ~4
-apps on the bump.
+**REDRESS.** Owned by `BJ.W-REDUCE-CROSSREPO-GATED` (BAND-REDUCTION W4, `:363-431`) as an
+**ASK-gated relay** surfaced as `ASK-REDUCTION §A1`: ratify SHARED-KEEP or overrule with the costed
+multi-repo break table; either ruling is recorded terminally so a fourth ask cannot re-open it.
+Consistent with the consumer-updates ruling (consumers never preserve an obsolete surface — if the
+user overrules, the by-name asks relay to each consumer's own tranche). Coverage: **EXACT (as a
+user-gated decision)**.
 
-**REDRESS.** Owned by `BJ.W-REDUCE-CROSSREPO-GATED` (BAND-REDUCTION W4,
-`../../waves/BAND-REDUCTION.md:360-429`) as an **ASK-gated relay**, surfaced to the user as
-`ASK-REDUCTION §A1` (`docs/tranches/BJ/ASK-REDUCTION.md:25-51`): ratify SHARED-KEEP (recommended — DP-A
-census stands, the removal instinct is the disease) OR overrule and accept the costed multi-repo
-break. `CHRONIC-ADJUDICATION.md:50-54` (UF-K1 third-ask) makes it a terminal confrontation with both
-outcomes presented honestly; whatever the user rules is recorded so a fourth ask cannot re-open it.
-Coverage: **EXACT (as a user-gated decision)** — the plan correctly refuses to auto-fix and hands the
-removal-vs-keep to the user with the corrected consumer truth; no code residue.
-
-**STATUS CHECK.** Crosswalk flag: **ASK** (`crosswalk:40`). **AGREE** — a thrice-asked removal that the
-census contradicts is exactly an ASK row, not a LANDED fix; auto-deleting it would BE the disease.
+**STATUS.** Crosswalk **ASK** (`crosswalk:40`). Verdict vs opus: **RATIFIED** — with the
+metric-surface naming made precise (the prior text's "metric-pill deleted" / "metric-badge folded"
+wobble replaced by the verified subpath+symbol facts).
 
 ---
 
 ## F19 — /feedback/alert not glassy, rounded, or idiomatic
 
-**INVENTORY.** Ledger (`../../FEEDBACK-LEDGER.md:31`): *"`/feedback/alert` — Not properly glassy,
-rounded, or idiomatic/Apple-like."* **URL-anchored, no screenshot.**
+**INVENTORY.** Ledger (`../../FEEDBACK-LEDGER.md:31`): *"Not properly glassy, rounded, or
+idiomatic/Apple-like."* URL-anchored, no screenshot.
 
-**ISOLATION (from ledger + live code).** The Alert is a flat card-ish box that is neither glassy nor
-card-rounded. Verified on disk: `src/components/alert/index.ts:8` `BASE` uses **`rounded-lg`** (8px) —
-under the card-role radius (`--radius-card` = 16px), so it reads under-rounded; and every tone in
-`TONE` (`:11-18`) sets **`[backdrop-filter:var(--glass-blur-wash)]`** — the `wash` rung is 1px
-(sub-perceptual per the blur ladder), so the alert is effectively NOT glassy. The border is a single
-uniform `border` (no rim asymmetry). All three of the user's terms — not glassy (`blur-wash` 1px), not
-rounded (`rounded-lg` 8px), not idiomatic (flat uniform border, no iOS rim/type grammar) — are
-literally true on disk.
+**ISOLATION.** Verified on disk at HEAD: `src/components/alert/index.ts:8` `BASE` wears
+`rounded-lg` — which resolves to `--radius-lg: var(--radius)` = **10px** (not Tailwind's stock 8px;
+the prior dossier's number corrected) — under the 16px card role; every `TONE` arm (`:11-18`) rides
+`[backdrop-filter:var(--glass-blur-wash)]` where `--glass-blur-wash-radius` = **1px**
+(`tokens/glass.css:86`, verified) — glass in name only; the border is uniform, no law-3 rim
+asymmetry. All three complaint axes are disk-true. How severe 10px + 1px READ on the page is
+**LIVE-DEFER**; the token facts are not.
 
 **TARGET.**
-- Src fault: `src/components/alert/index.ts:8` (`BASE` `rounded-lg`) + `:11-18` (`TONE` all
-  `[backdrop-filter:var(--glass-blur-wash)]`); consumed by `src/components/alert/Alert.vue:37`.
-- Demo site: `demo/stories/feedback/alert.vue` (the tone specimens at `:42,:49,…`).
+- Src fault: `src/components/alert/index.ts:8` (`rounded-lg`) + `:11-18` (wash-rung backdrop);
+  consumed at `Alert.vue:37`.
+- Demo site: `demo/stories/feedback/alert.vue`.
 
-**POST-MORTEM.** Authorship gap under an unenforced material canon — the Alert was never wired to the
-role tokens the rest of the glass family uses. `rounded-lg` is a raw Tailwind literal (not
-`--radius-card`), and `--glass-blur-wash` (1px) is the wrong rung for a first-class surface (a card or
-overlay wants `quiet`/`resting` 7px). Because no gate asserts an alert-specific paint (radius = card,
-backdrop = role rung), it shipped as a plain bordered box while calling itself glass. It was also the
-lone family-F "alert straggler" the crosswalk's first pass left un-waved (`crosswalk:41-42`).
+**POST-MORTEM.** Authorship gap under an unenforced material canon — Alert was wired to a raw
+Tailwind radius literal and the weakest blur rung while the BA feedback-tone fold (6f77ab12)
+modernized only its TONE color path; no alert-specific paint gate existed.
 
-**REDRESS.** Owned by `BJ.W-ALERT-IDIOM` (BAND-FEEDBACK-MOTION W4,
-`../../waves/BAND-FEEDBACK-MOTION.md:72-82`), drafted at the ASSEMBLY orphan-cure: Alert consumes the
-card-role radius from `BJ.W-RADIUS-ROLE` + the role blur rung from `BJ.W-BLUR-LADDER`, the codex law-3
-rim treatment (bright top rim, quiet sides — not a uniform border), and the law-10 type ladder inside;
-it runs AFTER Material W1/W2. Born-RED gate (a) — "radius equals the card-role token, backdrop carries
-the role's blur rung — RED at HEAD where alert is neither" — matches the disk exactly (`rounded-lg` +
-`blur-wash`). Coverage: **EXACT** — the wave's born-RED is verifiably true at HEAD and its cure
-addresses all three complaint axes. `OPEN-FM-2` (status-tinted material vs neutral glass) is routed to
-the BJ ASK as the one identity call.
+**REDRESS.** Owned by `BJ.W-ALERT-IDIOM` (BAND-FEEDBACK-MOTION W4, `:86-96`): card-role radius from
+`BJ.W-RADIUS-ROLE`, role blur rung from `BJ.W-BLUR-LADDER`, law-3 rim treatment, law-10 type
+ladder; sequenced AFTER Material W1/W2. One wording note against the wave's born-RED (a) "alert is
+neither": the radius half is cleanly RED; the backdrop half should be phrased as "wrong rung (wash,
+1px)" rather than absent — Alert HAS a backdrop-filter; the gate should assert the ROLE rung, which
+it does. Coverage: **EXACT**.
 
-**STATUS CHECK.** Crosswalk flag: **ORPHAN** in the primary table (`crosswalk:41`) → **LANDED** by the
-lead reconciliation (`crosswalk:213-216`, `F19 → BJ.W-ALERT-IDIOM`). **AGREE with LANDED** — the band
-file exists and owns it with a disk-true born-RED; the table flag is superseded by the reconciliation.
+**STATUS.** Crosswalk ORPHAN → **LANDED** by reconciliation (`crosswalk:213-216`). Verdict vs opus:
+**RATIFIED with corrections** (radius value 10px; "neither" phrasing sharpened).
 
 ---
 
 ## F20 — /feedback/toast animation "awful"; should equal the refined dialog
 
-**INVENTORY.** Ledger (`../../FEEDBACK-LEDGER.md:32`): *"`/feedback/toast` — Animation is awful;
-should be exactly like our refined dialog."* **URL-anchored, no screenshot.**
+**INVENTORY.** Ledger (`../../FEEDBACK-LEDGER.md:32`): *"Animation is awful; should be exactly like
+our refined dialog."* URL-anchored, no screenshot.
 
-**ISOLATION (from ledger + live code).** The toast's motion was the complaint. On disk it has ALREADY
-been re-homed onto the shared `.glass-reveal` liquid-enter engine:
-`src/components/toast/Toast.vue:82-103` composes `glass-reveal` with the **transient** register
-(center-seed bloom, scale-from ~0.5, decongest-blur, gentle transient spring, MOTION-LADDER M5), and
-`src/styles/transitions.css:89-110` documents that the old reka `slide-in-from-*-full`/`fade-out-80`
-chain + the toast's own `transition-[opacity,transform]` are RETIRED. The dialog center content rides
-the SAME engine but a DIFFERENT register: `src/components/dialog/DialogContent.vue:235`
-(`glass-reveal`), `:458` (`data-reveal="overlay"`, scale-from 0.94, `src/styles/glass/reveal.css:57`),
-or the JS `centerSpringActive` spring (`DialogContent.vue:100-117`). So the "awful slide" the user saw
-is almost certainly already gone; what remains is a REGISTER divergence — toast `transient`
-(scale-from-0.5) vs dialog `overlay`/center-spring (scale-from-0.94) — not a bespoke toast curve.
+**ISOLATION.** On disk at HEAD the toast ALREADY rides the shared engine:
+`src/components/toast/Toast.vue:80` sets `data-reveal="transient"` on `glass-reveal` (`:91-103`);
+the reka `slide-in-from-*-full`/`fade-out-80` chain is RETIRED (`styles/transitions.css:87-112`,
+landed at BI B7 `ef3ea646`, inside v7.0.0). The dialog rides the SAME engine on a different
+register: `DialogContent.vue:235` (`glass-reveal`), `:458` (`data-reveal="overlay"`, scale-from
+0.94 per `glass/reveal.css`), or the JS center spring. The "awful" the user saw was most plausibly
+the retired slide-in (a stale-served demo, the F12 provenance class) — the residue at HEAD is a
+REGISTER divergence (transient scale-from-0.5, 100ms exit vs overlay scale-from-0.94), not a
+bespoke toast curve. Whether the current transient bloom satisfies "exactly like our refined
+dialog" is a paint judgment: **LIVE-DEFER**.
 
 **TARGET.**
-- Src fault (residual divergence): `src/components/toast/Toast.vue:82-103` (transient register) +
-  `src/styles/transitions.css:89-110` (the toast contract) vs `src/components/dialog/DialogContent.vue:235,458,100-117`
-  (the dialog register/spring).
+- Src (residual divergence): `Toast.vue:80-103` + `transitions.css:87-112` vs
+  `DialogContent.vue:235,:458` + the center spring.
 - Demo site: `demo/stories/feedback/toast.vue`.
 
-**POST-MORTEM.** Experiment-in-flight vs stale-baseline. The toast was mid-refinement: the team
-already retired the reka slide-in and moved the toast onto the shared reveal engine, but chose the
-`transient` register — deliberately gentler/smaller than the dialog's `overlay`. The user's "should be
-exactly like our refined dialog" targets that remaining register gap, but the ledger verdict ("awful")
-was written against the RETIRED slide-in state, so a wave that takes the verdict literally would author
-a born-RED against a curve that no longer exists.
+**POST-MORTEM.** Experiment-in-flight vs stale baseline: the retirement of the slide-in landed in
+the same cut the feedback straddled; the verdict was written against motion that no longer ships.
 
-**REDRESS.** Owned by `BJ.W-TOAST-DIALOG-PARITY` (BAND-FEEDBACK-MOTION W1,
-`../../waves/BAND-FEEDBACK-MOTION.md:30-41`): re-home Toast onto the dialog spring/transition contract
-(shared `springPreset`, origin-anchored entry, staggered inner content, matched exit); born-RED gate
-(a) asserts toast enter/exit resolve to the SAME spring tokens the dialog resolves. The charter is
-right and the register divergence IS a real, testable born-RED. Residue: the gate's framing ("toast
-carries its own curve") is stale against the disk — the toast already shares the reveal engine, so the
-wave's real work is register PARITY, not a from-scratch re-home, and its π baseline must capture the
-CURRENT transient toast, not the retired slide. Coverage: **PARTIAL** — the owner and cure are right;
-the uncovered residue is baseline currency (the same screenshot-vs-disk drift MATERIAL W1 handled for
-F12/F17 via OPEN-1a), plus `OPEN-FM-1` (does the register unify to the dialog's, or does the toast keep
-a distinct-but-parity-tokened transient?) needs deciding against this disk reality.
+**REDRESS — CLOSED TO EXACT.** Owned by `BJ.W-TOAST-DIALOG-PARITY` (BAND-FEEDBACK-MOTION W1). The
+prior dossier's Δ-F20-1 (stale born-RED framing) was ADOPTED as **J4** and APPLIED: W1 gate (a) at
+HEAD is the live-π REGISTER-PARITY guard with π baseline = the CURRENT transient toast
+(`BAND-FEEDBACK-MOTION.md:41-47`, verified). The remaining design call — unify the toast onto the
+dialog register vs keep a parity-tokened transient (`OPEN-FM-1`) — is the wave's to decide against
+live paint. Coverage: **EXACT** (the PARTIAL verdict is superseded by the applied ruling).
 
-**STATUS CHECK.** Crosswalk flag: **ORPHAN** in the primary table (`crosswalk:42`) → **LANDED** by the
-lead reconciliation (`crosswalk:213-216`, `F20 → BJ.W-TOAST-DIALOG-PARITY`). **AGREE with LANDED**;
-disagree only with the wave's born-RED FRAMING (not its ownership) — the toast no longer carries its
-own curve, so W1 should convert gate (a) to a live-π-confirmed register-parity guard, per the delta
-below.
+**STATUS.** Crosswalk ORPHAN → **LANDED** (`crosswalk:213-216`). Verdict vs opus: **RATIFIED,
+status advanced** — the opus analysis was correct and its own delta has since landed (J4); the
+union records the closure.
 
 ---
 
 ## Coverage summary
 
-| Row | ask (compressed) | terminal owner | coverage | delta count |
-|-----|------------------|----------------|----------|-------------|
-| F11 | configurator inter-item gap | `BJ.W-CONFIGURATOR-STD` G-CFG-3 (+ A10 mark) | **EXACT** | 0 |
-| F12 | tags-input container radius | `BJ.W-RADIUS-ROLE` (RULING 8 → guard) | **EXACT** | 0 |
-| F13 | sortable-list design + horizontal | `BJ.W-RESPONSIVE-AUDIT` G-RSP-1/3 | **PARTIAL** | 1 |
-| F14 | audit ALL pages responsive | `BJ.W-RESPONSIVE-AUDIT` (first-class) | **EXACT** | 0 |
-| F15 | reset unrounded + grand rounding/type | `BJ.W-RADIUS-ROLE` + `BJ.W-TYPE-CODEMOD` | **EXACT** | 0 |
-| F16 | timeline ground-up redesign | `BJ.W-REDUCE-TIMELINE` (stub → design-loop, A2) | **EXACT** | 0 |
-| F17 | search inputs radius | `BJ.W-RADIUS-ROLE` (RULING 8 → guard) | **EXACT** | 0 |
-| F18 | instrument-chassis + metric REMOVE | `BJ.W-REDUCE-CROSSREPO-GATED` + ASK §A1 | **EXACT (decision)** | 0 |
-| F19 | alert not glassy/rounded/idiomatic | `BJ.W-ALERT-IDIOM` (BAND-FEEDBACK-MOTION W4) | **EXACT** | 0 |
-| F20 | toast animation ≡ refined dialog | `BJ.W-TOAST-DIALOG-PARITY` (BAND-FEEDBACK-MOTION W1) | **PARTIAL** | 1 |
+| Row | ask (compressed) | terminal owner | coverage | verdict vs opus |
+|-----|------------------|----------------|----------|-----------------|
+| F11 | configurator inter-item gap | `BJ.W-CONFIGURATOR-STD` G-CFG-3 (+ A10 mark) | **EXACT** | RATIFIED (+BI-B1 provenance) |
+| F12 | tags-input container radius | `BJ.W-RADIUS-ROLE` (RULING 8 → guard) | **EXACT** · LIVE-DEFER paint | RATIFIED (2 corrections) |
+| F13 | sortable-list design + horizontal | `BJ.W-RESPONSIVE-AUDIT` G-RSP-1/3 | **PARTIAL** — drag-affordance residue UNRULED | RATIFIED, gap escalated |
+| F14 | audit ALL pages responsive | `BJ.W-RESPONSIVE-AUDIT` (first-class) | **EXACT** · LIVE-DEFER execution | RATIFIED |
+| F15 | reset unrounded + grand rounding/type | `BJ.W-RADIUS-ROLE` + `BJ.W-TYPE-CODEMOD` | **EXACT** | RATIFIED (+dogfood Button) |
+| F16 | timeline ground-up redesign | `BJ.W-REDUCE-TIMELINE` (stub → design-loop, A2) | **EXACT** | owner RATIFIED; isolation/post-mortem CORRECTED |
+| F17 | search inputs radius | `BJ.W-RADIUS-ROLE` — **born-RED FIX, not guard** | **EXACT once re-postured** · FLIP v RULING 8 | **OVERTURNED** |
+| F18 | instrument-chassis + metric REMOVE | `BJ.W-REDUCE-CROSSREPO-GATED` + ASK §A1 | **EXACT (decision)** | RATIFIED |
+| F19 | alert not glassy/rounded/idiomatic | `BJ.W-ALERT-IDIOM` (FEEDBACK-MOTION W4) | **EXACT** | RATIFIED (2 corrections) |
+| F20 | toast animation ≡ refined dialog | `BJ.W-TOAST-DIALOG-PARITY` (J4 applied) | **EXACT** | RATIFIED, status advanced |
 
-**Totals: EXACT 8 / PARTIAL 2 / MISSING 0** (F18 counted as EXACT-decision). Delta count: **2**.
-
-## Proposed deltas (appendable form)
-
-**Δ-F13-1 (residue — sortable-list "better design").** In `BJ.W-RESPONSIVE-AUDIT` (BAND-STORY W6),
-the sortable-list anchor (`../../waves/BAND-STORY.md:442-445`) covers horizontal-space + dogfooding
-only; the ledger's "better DESIGN" also implicates the reorder/drag affordance (grab/lift/drop
-expressiveness), which no wave owns in the sortable-list context. Append one cross-ref: route the
-sortable-list drag affordance to `BI.W-ENGAGE-AFFORD`'s per-component scope (breath-of-life engagement
-edict), OR name "dogfood a shipped sortable/reorder affordance" explicitly in the responsive-audit fix
-mandate — so "better design" is not silently reduced to "better horizontal use." (Low-stakes scope
-sliver, not a status disagreement.)
-
-**Δ-F20-1 (residue — stale born-RED baseline).** In `BJ.W-TOAST-DIALOG-PARITY` (BAND-FEEDBACK-MOTION
-W1) gate (a), the born-RED "toast carries its own curve" is stale: `Toast.vue:82-103` +
-`transitions.css:89-110` already re-homed the toast onto the shared `.glass-reveal` engine (the reka
-slide-in is RETIRED). Append a live-π/disk-drift precondition mirroring `BAND-MATERIAL` W1 `OPEN-1a`:
-(1) capture the CURRENT transient-register toast as the baseline, not the retired slide; (2) reframe
-the wave's work as register PARITY — transient (`scale-from ~0.5`) vs the dialog `overlay`
-(scale-from 0.94, `reveal.css:57`) / `centerSpringActive` spring (`DialogContent.vue:100-117`); (3)
-decide `OPEN-FM-1` against this disk reality (unify the toast onto the dialog register, or keep a
-distinct-but-same-spring-token transient). Convert gate (a) from a from-scratch born-RED to a
-verify-then-pin parity guard.
+**Totals: EXACT 9 / PARTIAL 1 / MISSING 0.** Open items for the lead: the F17 FLIP (RULING 8's
+disk-premise false — posture reverts to fix) and the F13 Δ-F13-1 judge-omission (unruled residue).
+Both detailed in `../refable/REFABLE-RU-13-F11-F20.md`.

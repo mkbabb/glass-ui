@@ -1,729 +1,442 @@
-# BJ redress dossier — rows A01–A17 (Fable seat)
+# BJ redress dossier — rows A01–A17 (unioned canon)
 
-**Mode:** TRANCHE DEVELOPMENT. This file is the only artifact — no `src/`/`demo/` touch, no commit.
-**Charge:** every standing exhortation in the A-ASK rows A01–A17 inventoried, isolated into its
-atomic requirements, targeted to its exact surface (src/demo `file:line` or formation-process level),
-post-mortem'd, and planned for redress against the formation corpus as it stands — NOTHING in an ask
-left unowned. Where a row names reference material (A02 iOS-27 corpus, A12 value.js), the referenced
-material is inventoried exactly and its ingestion traced.
-**Sources read first-hand:** `FEEDBACK-LEDGER.md:68-84` (A01-A17 verbatim); `ASSEMBLY-CROSSWALK.md`
-(each A-row landing + the lead reconciliation + ASK-CONSOLIDATED); `REGISTRY.md` (families A-K +
-the R3a/R3b folds); `perfection/{FABLE-DAG-REDUCTION,FABLE-STORY-FRAMEWORK,FABLE-COLOCATION}.md`;
-`component-graph/PROCESS.md`; `greenfields/GF-BLOB-PASS3.md` + `GF-AURORA-PASS3.md`;
-`ios27/IOS27-CODEX.md` + the `MARKS-A/B` headers; `CHRONIC-ADJUDICATION.md`; `ADJUDICATION-1.md`;
-`round-3-live/R3B-DIGEST.md`; the BI engagement waves `docs/tranches/BI/waves/BI.W-ENGAGE-AFFORD.md`
-+ `BI.W-SLIDER-ENGAGE.md`; `waves/BAND-{PERF,MATERIAL,REDUCTION,COLOCATION,STORY}.md`; and the A02
-reference corpus on disk at `/Users/mkbabb/Downloads/New Folder With Items 4`.
-**HEAD:** `codex/bi-p-q-execution` (`55f5170d`).
+- verified-model: claude-fable-5
+- union provenance: REFABLE RU-13-A01-A17, 2026-07-18 — the prior run executed on `claude-opus-4-8`
+  via the settings-level subagent override (its header self-described "(Fable seat)": false); this
+  rewrite is the ANEW-then-scrutiny union, fresh evidence authoritative on conflict, opus content
+  kept only where re-proven. Verdict ledger: `../refable/REFABLE-RU-13-A01-A17.md`.
 
-Register: plain, evidence-cited. Most A-rows are prose edicts (no artifact); where a row references
-material, the material path is inventoried. Where the crosswalk's reconciliation over-claims, the
-redress engages the evidence and DISAGREEs on record.
+**Mode:** TRANCHE DEVELOPMENT. This file is the only artifact — no `src/`/`demo/` touch beyond docs.
+**Charge:** every A-ASK row A01–A17 inventoried, isolated, targeted to its exact surface, post-mortem'd,
+and planned for redress against the plan of record at HEAD — nothing left unowned.
+**Tree parity:** `55f5170d..HEAD (4cac55a2)` carries **zero `src/`/`demo/` commits** (re-proven this
+pass) — both runs judged the same paint tree. The docs drift (the JUDGE.md application pass + the
+REFABLE stamps) is material: it discharges the prior artifact's six deltas.
+**Post-JUDGE posture:** the prior artifact predates `JUDGE.md`; its deltas D-A01/D-A04/D-A06/D-A08/
+D-A11/D-A14 were adopted-or-ruled as **J1, J9, J11** and APPLIED. Verdicts below are re-stated
+against HEAD so no reader re-litigates a settled ruling.
 
 ---
 
 ## A01 — engagement affordance edict + slider grow-on-engage / modal-expansion
 
-**INVENTORY.** Ledger (`FEEDBACK-LEDGER.md:68`): *"Engagement affordance edict re-stated: when an
-interactive element is engaged, it affords/expresses that state meaningfully (EVERY component audited
-for this). Sliders: modal-expansion variant on mobile + grow-on-engage variant (slightly larger, pops
-out of its shell, graceful eased curve) — stacked, both possible. Other elements may have modal
-variants too. Novel facilities — BEST iOS 27; breath-of-life; aristotelian proportion in the
-abstract."* Referenced material: the OpenAI Control-Center popup frames
-(`bi-addenda/reports/glass-subtlety/refs/openai-popup-1.png` + `openai-popup-2.png`, cited in
-`BI.W-ENGAGE-AFFORD.md:24`) — the pill IS an engaged slider enlarged into a popup.
+**COMPONENT CORRELATION.** Every interactive atom; named exemplars at HEAD: `src/components/slider/`
+(`Slider.vue:~422` — the deliberate box-INVIOLATE law, "the track does NOT move"; root carries no
+engaged read; focus mounts on reka's thumb child, `reka-ui .../SliderThumbImpl.vue:59-60` — a
+library-internal cite, per `BI.W-ENGAGE-AFFORD.md:31`), `src/components/button/styles.css` (press
+register only — `--scale-press-btn`; live hover measured 1.0→1.015, R3B-DIGEST), the collapsed dock
+pill. Reference: the OpenAI Control-Center popup frames
+(`~/.claude/.../bi-addenda/reports/glass-subtlety/refs/openai-popup-1.png` + `-2.png`, on disk,
+re-verified) — the pill IS an engaged slider enlarged into a popup.
 
-**ISOLATION (atomic requirements).**
-1. Every interactive element AUDITED for the engaged-state affordance.
-2. Slider GROW-on-engage — grows slightly, pops out of its shell, graceful eased curve.
-3. Slider MODAL-expansion on a coarse pointer (mobile) — the OpenAI Control-Center register.
-4. The two STACKED — both authorable, pointer arbitrates.
-5. "Other elements may have modal variants too" — an extensible facility, not a slider one-off.
-6. Novel facilities that BEST iOS 27 + breath-of-life + aristotelian proportion in the abstract.
-
-**TARGET.**
-- Req 1 audit → `BI.W-ENGAGE-AFFORD.md` §Audit (the 10-component sustained-engagement census) + the
-  live `round-3-live/R3B-DIGEST.md` presence/absence table.
-- Req 2 GROW → `src/styles/tokens/scale-paper.css` (`--scale-engage:1.06`, `--lift-engage`,
-  `--spring-engage`), `src/styles/utilities/base.css` (the `.engage-grow` rule), `src/components/slider/{types.ts,Slider.vue}` (the root grow, keyboard arm `:has(:focus-visible)` on the reka thumb-child topology `SliderThumbImpl.vue:59-60`).
-- Req 3 MODAL → `src/composables/motion/reveal/useEngageModal.ts` (NEW), the `--engage-modal-*` token
-  cohort, the enlarged `<SliderRoot>` on the shared `v-model`.
-- Req 4 stacked → `engage?: "grow"|"modal"|"grow modal"|false` on the slider, arbitrated by fence (d)
-  (coarse-withhold + `:not([data-engage-modal])`).
-- Req 5 extensibility → the §Follow-on roster (spectrum-slider/scrubber/switch/select — named-not-booked).
-- Req 6 novel/BEST-iOS-27 → the design-loop charter (`PROMPTS/design-loop-prompt.md`) + `IOS27-CODEX.md`
-  "To BEST iOS 27" vectors + `BAND-MATERIAL.md` W5 (aristotelian proportion) + the breath-of-life edict.
+**ON-DISK STATUS (corrected).** The GROW/MODAL surface is PLANNED, not extant: `--scale-engage`,
+`.engage-grow`, and `useEngageModal.ts` appear NOWHERE in `src/` at HEAD (grep zero — re-verified).
+They are `BI.W-ENGAGE-AFFORD`'s specified deliverables. The prior artifact's TARGET block read as if
+they existed; they do not. All A01 redress is future-tense against this tree.
 
 **POST-MORTEM.** The affordance map shipped five arrival/departure primitives (hover/gleam/press/
-drag/focus) with NO register for the SUSTAINED state a control holds while manipulated (the
-finger-occluded fine value) — the gap A01 names. The slider's own weight-train deliberately held the
-box static ("box-INVIOLATE", `Slider.vue:424`), so no ROOT-scope engaged read existed; the shell
-never grew. This is a deliberate-restraint gap, not a bug — the redress is an opt-in reversal at the
-root scope.
+drag/focus) with no register for the SUSTAINED state a control holds while manipulated. The slider's
+weight-train deliberately held the box static (box-INVIOLATE), so no root-scope engaged read existed.
+The wave's §Audit (minted 2026-07-16) then demoted Button/Checkbox/Radio/Toggle "ADEQUATE (proportion
+fence)" (`BI.W-ENGAGE-AFFORD.md:~293`, re-proven verbatim) — while R3b (2026-07-17, live) measured
+buttons the edict's weakest link. The crosswalk over-credited the wave ("buttons ranked first",
+`ASSEMBLY-CROSSWALK.md:217-220`, re-proven verbatim) — the wave text does the opposite. That tension
+was this dossier's D-A01; **J1 adopted it**.
 
-**REDRESS.**
-- Reqs 1-5: `docs/tranches/BI/waves/BI.W-ENGAGE-AFFORD.md` (the folded ENGAGE-EXPRESS facility;
-  `BI.W-SLIDER-ENGAGE.md` is the SUPERSEDED redirect stub). Tier-1 GROW rides the Glass-7 tag; Tier-2
-  MODAL is SEQ→7.x gated on Q023-static-green + Q003-native-green. The §Audit discharges Req 1; the
-  slider exemplar discharges Reqs 2-4; the follow-on roster discharges Req 5. **Coverage: EXACT** for
-  Reqs 1-5 — the engaged-state affordance is precisely owned, with the OpenAI reference read
-  frame-by-frame and the fences hardened two-consecutive-clean.
-- Req 6: **PARTIAL.** The BEST-iOS-27 / aristotelian halves are owned (design-loop + codex + W5), but
-  the **breath-of-life half collides with a newer live finding the wave predates.** `BI.W-ENGAGE-AFFORD`
-  was minted 2026-07-16; its §Audit (`~:293`) rules **Button/Checkbox/Radio/Toggle "ADEQUATE (proportion
-  fence)"** and scopes the facility to finger-occluded FINE-VALUE controls only (slider/spectrum/
-  scrubber). R3b (2026-07-17, live) then measured buttons as **"the weak engagement link… a
-  barely-visible 1.5% scale… MAJOR, the edict's weakest link"** (`R3B-DIGEST.md`
-  engagement-button-breath-of-life). The two are in tension and the reconciliation is unowned: the wave
-  demotes buttons; R3b (newer, live-measured) ranks them the top priority. **Coverage: PARTIAL** —
-  residue D-A01 (button hover/press affordance strengthening, and the §Audit-vs-R3b reconciliation).
+**REDRESS + OWNING WAVES.**
+- GROW (root shell-pop, opt-in reversal of box-inviolate) + the §Audit census + the follow-on roster
+  → `BI.W-ENGAGE-AFFORD` Tier-1 (the BI carry-over, PLAN §2; default OFF).
+- MODAL (coarse-pointer expansion, the OpenAI register) → Tier-2, a named backlog row with the
+  fired-trigger **V-A95-green + Q023-green** (CHRONIC-ADJUDICATION's re-frame supersedes the older
+  "SEQ→7.x" wording the prior artifact carried).
+- Hover/press strengthening past 1.5% (the interaction half) → `BJ.W-IDLE-BREATH`
+  (BAND-FEEDBACK-MOTION **W5**, per J1), born-RED on the R3b table.
+- Novel/BEST-iOS-27 + aristotelian proportion → the design-loop charter + `IOS27-CODEX.md` +
+  `BJ.W-ARISTOTLE-PROPORTION` (MATERIAL W5). LIVE-DEFER: whether the landed affordances READ as
+  grow/glow/lift is a paint judgment — π owed at the waves.
 
-**STATUS CHECK.** Crosswalk flag: `pending-R3b` (`ASSEMBLY-CROSSWALK.md:73`) then reconciled to
-`LANDED` (`:217-220`, "buttons ranked first (the 1.5%-hover weak link)"). **DISAGREE (mild).** The
-reconciliation asserts the R3b table folded into ENGAGE-AFFORD "with buttons ranked first," but the
-ACTUAL wave doc does the opposite — it demotes buttons and never adopts the R3b button/idle-breath
-scope. The slider halves land EXACT; the button-strengthening is an unowned residue (D-A01).
+**VERDICT vs OPUS ROW.** Core correlation + the §Audit-vs-R3b tension RATIFIED (both cites re-proven
+verbatim); the DISAGREE was vindicated as J1. Corrections: the planned surface was presented as
+extant (it is not on disk); the Tier-2 gating text was stale. Verdict: PARTIAL → **OWNED** (J1
+applied; crosswalk D1 = LANDED-AT-W5).
 
 ---
 
 ## A02 — iOS-27 videos frame-by-frame with Fable
 
-**INVENTORY.** Ledger (`FEEDBACK-LEDGER.md:69`): *"`/Users/mkbabb/Downloads/New Folder With Items 4` —
-iOS 27 videos + screenshots: detailed frame-by-frame analysis with Fable; mark and note items. (8
-recordings + ~17 stills, June 20–Jul 15.)"* Referenced material (inventoried on disk, path CONFIRMED
-present): **8 recordings** — `ScreenRecording_06-20 18-47-21` / `06-20 18-48-52` / `06-21 01-28-54` /
-`06-22 23-59-33` / `06-24 21-44-31` / `06-24 22-07-29` / `07-10 16-26-07` (7 MP4) + `Screen Recording
-06-22 14.38.42.mov` — and **~22 stills** (`IMG_1874/1880.HEIC/1881/1882/2287/2288`, ~14 Screenshots,
-`images-2.jpeg`, the liquid-metal texture jpg), dated June 20–Jul 15. Matches the codex manifest ("8
-recordings, 148 frames @1fps, ~22 stills").
+**CORRELATION.** Not a component — a design-authority deliverable. Corpus at
+`/Users/mkbabb/Downloads/New Folder With Items 4`: EXTANT on disk (re-censused this pass): 8 unique
+recordings (7 MP4 + 1 .mov; the "copy.mov" is a duplicate) + 22 stills (6 IMG + 14 screenshots +
+`images-2.jpeg` + the liquid-metal texture). The LEDGER's "~17 stills" undercounts; the codex
+manifest ("8 recordings, 148 frames @1fps, ~22 stills") is the corrected census. Deliverables:
+`ios27/MARKS-A.md` + `MARKS-B.md` → `ios27/IOS27-CODEX.md` (13 laws + 5 BEST-vectors) + the
+`ios27/refable-timelines/` per-video ledgers.
 
-**ISOLATION (atomic requirements).** (1) detailed frame-by-frame analysis; (2) with Fable; (3) mark
-and note items.
+**POST-MORTEM (corrected).** The ingestion happened and the marks are real — but the "with Fable"
+clause was NOT met by the original seats: the settings-level `CLAUDE_CODE_SUBAGENT_MODEL=opus`
+override forced them to `claude-opus-4-8` (the census correction, `refable/DEMARCATION.md`;
+`refable/model-census.json`). The prior artifact's "both marks are Fable design-analysis seats" was
+false. CURED: **REFABLE RU-15** (2026-07-18) re-derived 10 Fable timelines and re-unioned MARKS-A/B
+claim-by-claim (25 OPUS-WRONG / 22 FABLE-NEW / 21 RATIFIED; both files now stamped
+verified-model: claude-fable-5).
 
-**TARGET (process-level — the ask is method + reference ingestion).** The corpus →
-`ios27/MARKS-A.md` (V1-V4 group-A, June 20-22 + 17 stills) + `ios27/MARKS-B.md` (V1-V4 group-B, June
-22-24 + July 10 + late stills) → unified `ios27/IOS27-CODEX.md` (13 laws in 3 groups + 5 BEST-vectors).
-
-**POST-MORTEM.** No failure — a pure directive. The capability (a Fable design-analysis seat reading
-frames) did not previously exist as a BJ artifact; the two round-2 Fable seats (`codex:ios27-A/B`,
-`REGISTRY.md:203-204`) supplied it.
-
-**REDRESS.** Req 1 frame-by-frame → MARKS-A/B are literal frame logs (`video/f-00NN`, 1fps JPEG
-extractions at 1206×2622); Req 2 Fable → both marks are Fable design-analysis seats; Req 3 mark/note
-→ the MARKS files ARE the marks, distilled to the codex. **Coverage: EXACT** — the exact named corpus
-is present on disk, ingested frame-by-frame by two Fable seats, and the marks + codex are the
-deliverable.
-
-**STATUS CHECK.** Crosswalk flag `LANDED` (`ASSEMBLY-CROSSWALK.md:74`). AGREE — corpus present at the
-exact path, fully ingested, two Fable passes, marks + codex on disk.
+**REDRESS + OWNER.** Complete: corpus present, frame-by-frame ledgers on disk, the Fable requirement
+now genuinely met via RU-15. The codex remains the design authority the greenfield/material waves
+cite. **VERDICT vs OPUS ROW:** corpus census RATIFIED (my count matches file-for-file); the
+model-provenance claim OPUS-WRONG, cured. Verdict: EXACT → **EXACT-VIA-RU-15**.
 
 ---
 
 ## A03 — iOS-27 aristotelian-proportion research triumvirate, twice critiqued
 
-**INVENTORY.** Ledger (`FEEDBACK-LEDGER.md:70`): *"iOS 27 aristotelian-proportion research: proper
-research → harden → tranche-write triumvirate, twice critiqued; critics default-assume the current
-state is wrong."* Prose edict; no artifact (builds on the A02 corpus + IOS27-CODEX).
+**CORRELATION.** Process-level. The triumvirate = research (PASS1 / the codex) → harden (CRIT2,
+dispatched "fresh seats, assume-wrong" — `ADJUDICATION-1.md:49`, re-proven verbatim) → tranche-write
+(PASS3), realized four times over (`greenfields/GF-*-{PASS1,CRIT2,PASS3}.md`); the proportion content
+is codex laws 3/4 + `BJ.W-ARISTOTLE-PROPORTION` (MATERIAL W5, which names the A03 posture: critics
+default-assume the current state wrong). Continuing output at HEAD: the IOS27-MICRO suffusion matrix
+(commit `2a4c38d4` — 12 archetypes × 10 qualities in aristotelian proportion).
 
-**ISOLATION (atomic requirements).** (1) proper RESEARCH; (2) HARDEN; (3) TRANCHE-WRITE (the
-triumvirate); (4) twice critiqued; (5) critics default-assume the current state is wrong.
+**POST-MORTEM.** A method directive; the loop was supplied by the design-loop charter. Model caveat
+as A02: the original critic/pass seats ran opus under the override; the REFABLE campaign re-runs the
+opus-begat layers (the GF redo units precede this one in the registry), and from the formation close
+all seats run Fable (PLAN §4, user order 2026-07-17).
 
-**TARGET (process-level).** The four named greenfields each realize the triumvirate: PASS1 (research)
-→ CRIT2 (harden/critique) → PASS3 (tranche-write), e.g. `greenfields/GF-{AURORA,BLOB,DOCK,HANDMARK}-{PASS1,CRIT2,PASS3}.md`;
-the iOS-27 research substrate is `IOS27-CODEX.md` (laws 3/4 = the concentric radius-role proportion
-grammar) + `round-2/ios27-codex-A/B.md`; the aristotelian-proportion audit surface is
-`BAND-MATERIAL.md:456-524` (W5 `BJ.W-ARISTOTLE-PROPORTION`).
-
-**POST-MORTEM.** A directive on METHOD. The absent capability was a disciplined research→harden→write
-loop with adversarial critics; the formation supplies it via the design-loop charter
-(`PROMPTS/design-loop-prompt.md`) run per greenfield.
-
-**REDRESS.** Reqs 1-3 triumvirate → the PASS1→CRIT2→PASS3 loop (research=PASS1, harden=CRIT2 fold,
-write=PASS3). Reqs 4-5 twice-critiqued + assume-wrong → the CRIT2 seats are dispatched "fresh seats,
-assume-wrong" (`ADJUDICATION-1.md:49`) and each PASS3 adjudicates every CRIT2 charge on disk
-(`GF-AURORA-PASS3.md` §1, `GF-BLOB-PASS3.md` §1); the mechanical challenge is CHALLENGE-1-MECH +
-CHALLENGE-2-DESIGN → ADJUDICATION-1. The aristotelian-proportion CONTENT is the codex law-4 grammar +
-W5's paint-taste review. **Coverage: EXACT** — the triumvirate + twice-critiqued-assume-wrong
-discipline is realized four times over; the aristotelian-proportion research is the codex the loop
-builds on. (Nuance: the "in the abstract" proportion DERIVATION is design authority consumed by W5,
-not a standalone derivation doc — a stylistic note, not an unowned residue.)
-
-**STATUS CHECK.** Crosswalk flag `LANDED` (`ASSEMBLY-CROSSWALK.md:75`). AGREE.
+**REDRESS + OWNER.** IOS27-CODEX + MATERIAL W5 + the greenfield loops. **VERDICT vs OPUS ROW:**
+structure RATIFIED; the implicit Fable-staffing claim carries the A15 correction. Verdict: **EXACT**
+(discipline realized; model layer cured by the campaign).
 
 ---
 
 ## A04 — tranche archaeology (BI lessons) + maximal parallelization
 
-**INVENTORY.** Ledger (`FEEDBACK-LEDGER.md:71`): *"Tranche archaeology: PROPER analysis of ALL
-tranches hitherto, special emphasis on BI's lessons; maximize the coming tranche's development for
-maximal parallelization + maximal workflow execution (design the multidimensional graph and wave
-specs optimally, for development AND execution)."* Prose edict; no artifact.
+**CORRELATION.** Process-level. Archaeology → REGISTRY family I + `CHRONIC-ADJUDICATION.md` (44 rows
+ruled) + the carried BI waves; parallelization → the 9-band DAG (PLAN §1) with the ordering laws +
+the §4 cadence (≤3 seats — the honest bound on "maximal").
 
-**ISOLATION (atomic requirements).** (1) proper analysis of ALL tranches hitherto; (2) special
-emphasis on BI's lessons; (3) maximize parallelization; (4) maximize workflow execution; (5) design
-the multidimensional graph + wave specs optimally for BOTH development AND execution.
+**POST-MORTEM.** The prior artifact marked this PARTIAL with D-A04 (a consolidated archaeology doc).
+**J11 RULED the residue closed:** "archaeology already distributed across the formation docs; no
+further owner needed — confirmed." The distributed form is the accepted form.
 
-**TARGET (process-level).** Reqs 1-2 archaeology → `REGISTRY.md` family I (chronic-discipline, "the
-disease ledger") + `CHRONIC-ADJUDICATION.md` (the 44-row DECIDED compile over AX/BI chronic
-decisions) + the BI-addenda carry (the engagement triumvirate + Q051 rows). Reqs 3-5 parallelization/
-graph → the 9-band parallel architecture (`waves/BAND-*.md`) + the component/wave DAG
-(`FABLE-DAG-REDUCTION.md`, `component-graph/PROCESS.md`).
-
-**POST-MORTEM.** A directive; the capability absent was a cross-tranche lessons synthesis feeding the
-wave design. The parallelization half is fully supplied; the archaeology half is DISTRIBUTED across
-family I + CHRONIC-ADJUDICATION + the glass-ui MEMORY history rather than a single consolidated doc.
-
-**REDRESS.** Reqs 3-5 → **EXACT.** The 9-band DAG with per-wave SEQ ordering, born-RED gates, and the
-DEV-vs-EXECUTION split (each band names static-now vs live-trace-at-R3 obligations) is a
-multidimensional graph optimized for both. Reqs 1-2 → **PARTIAL.** Family I folds the chronic/deferred
-ledger and CHRONIC-ADJUDICATION rules 44 rows, and BJ literally CARRIES BI's engagement + Q051 waves
-forward (the strongest possible "nothing dropped" evidence) — but a consolidated "archaeology of ALL
-tranches with BI emphasis" is not a standalone formation artifact; the BI-lessons are inlined per-row,
-not synthesized. **Coverage: PARTIAL** — residue D-A04 (low-priority: a consolidated BI-lessons
-archaeology, largely discharged by family I + CHRONIC-ADJUDICATION).
-
-**STATUS CHECK.** Crosswalk flag `DECIDED` (`ASSEMBLY-CROSSWALK.md:76`). AGREE the parallelization is
-decided; note the archaeology half is distributed-but-present (D-A04).
+**REDRESS + OWNER.** None outstanding — DECIDED (formation methodology). **VERDICT vs OPUS ROW:**
+substance RATIFIED; the delta was ruled no-further-owner, so the union verdict is PARTIAL →
+**DISCHARGED-BY-RULING (J11)**.
 
 ---
 
 ## A05 — component DAG + ruthless reduction to the core
 
-**INVENTORY.** Ledger (`FEEDBACK-LEDGER.md:72`): *"Component DAG + ruthless reduction: detailed DAG of
-all components, then reduce to those truly hardened/refined/worthy. One consumer is NOT enough. Purge
-to the core: glass, animation, procedural animation, into a perfected union."* Prose edict; no
-artifact.
+**CORRELATION.** All of `src/components/` (68 dirs at HEAD — the purge has NOT executed yet:
+`instrument-chassis`, `metric`, `completion-seal`, `liquid-grid` all still present, consistent with
+tranche-dev-only posture). The DAG is drawn twice: `perfection/FABLE-DAG-REDUCTION.md` + the built
+`component-graph/{component-graph.json,duplication-candidates.md,role-census.md}`.
 
-**ISOLATION (atomic requirements).** (1) detailed DAG of ALL components; (2) reduce to
-hardened/refined/worthy; (3) "one consumer is NOT enough" (≥2-consumer bar); (4) purge to the core
-(glass + animation + procedural animation) into a perfected union.
+**NUMBER CORRECTION (RF-1).** The hub fan-ins the prior artifact repeated (axes 27 / selection 20 /
+cn 133) are the FABLE-DAG-REDUCTION undercounts; RF-1 re-measured: `_shared/axes` 32 importing src
+files (27 = the component-dir subset), `_shared/selection` 16 files / 21 import statements, `cn` 134,
+`primitive` 50. Any registry row must state its counting base (`refable/REFABLE-RF-1.md:74`).
 
-**TARGET.**
-- Req 1 DAG → `FABLE-DAG-REDUCTION.md` §1 (the six-layer L0-L6 stack, the `dock⇄dropdown-menu`
-  2-cycle, the `dockContext` 4-family fan-in, hub fanouts `cn`133/`primitive`50/`axes`27/`selection`20)
-  + `component-graph/PROCESS.md` (the generalized six-edge-type graph subsuming the DAG) + the built
-  `component-graph/{component-graph.json,duplication-candidates.md,role-census.md}`.
-- Req 2 reduce → `BAND-REDUCTION.md` (whole band: W1 prop-diet, W2 card-collapse, W3 deletes/
-  demo-privatize, W4 cross-repo-gated, W5 timeline) + `FABLE-DAG-REDUCTION.md` §2 (KEEP 10/DELETE
-  3/MERGE 2/ASK 12 verdict table).
-- Req 3 ≥2 bar → `FABLE-DAG-REDUCTION.md` §3.1 Principle 1 ("a shared substrate is real iff ≥2
-  distinct-family consumers"); `FABLE-COLOCATION.md` §1 Principle 1 (≥2 genuine imports).
-- Req 4 purge-to-core → the L6 demo-device privatizations (configurator/easing/data-table),
-  liquid-grid DELETE (`ADJUDICATION-1.md:9`), the glass/animation/procedural authorities kept central
-  (`FABLE-DAG-REDUCTION.md` §3.2).
+**POST-MORTEM.** Surface accreted demo-first: 73% of bespoke props (298/408) have ≤1 setter
+(`REGISTRY.md:66-67`, re-proven) — showcase values frozen as defaults, single-consumer surfaces
+shipped public. The ≥2-consumer bar existed only as a close-time audit; the census layer ran opus.
 
-**POST-MORTEM.** A directive; the census counted props/consumers but never drew the dependency graph
-(`FABLE-DAG-REDUCTION.md:16-17`). The over-surface it exposes (73% of bespoke props ≤1 setter,
-`REGISTRY.md:66-67`) is unpaid reduction debt — showcase values frozen as defaults, single-consumer
-surfaces shipped public.
-
-**REDRESS.** Every sub-req has a precise owner: the DAG is drawn twice (import-DAG + generalized
-graph) with a validated built artifact; the reduction is a whole band; the ≥2 bar is a stated
-principle enforced per-component; the purge-to-core is the KEEP/DELETE/MERGE table under a
-standing-ruling fence. **Coverage: EXACT.**
-
-**STATUS CHECK.** Crosswalk flag `LANDED` (`ASSEMBLY-CROSSWALK.md:77`). AGREE.
+**REDRESS + OWNING WAVES.** `BAND-REDUCTION` W1 (prop diet) / W2 (Card collapse) / W3 (clean deletes)
+/ W4 (ASK-gated cross-repo) / W5 (timeline stub) + `ASK-REDUCTION.md`; the ≥2 bar is a stated
+principle; the purge-to-core (glass + animation + procedural) is the KEEP/DELETE/MERGE table.
+Cross-repo relays land BEFORE breaking waves (family B). **VERDICT vs OPUS ROW:** RATIFIED with the
+RF-1 number correction. Verdict: **EXACT** (numbers corrected).
 
 ---
 
 ## A06 — story meta-framework codify + page-type variants
 
-**INVENTORY.** Ledger (`FEEDBACK-LEDGER.md:73`): *"Story meta-framework: codify + standardize every
-story page — content, margins, padding, intro, scrolling animations, heros, headers, code-context
-views. Page variants per story type (category vs component vs configurator etc. — brainstorm the
-types). A series of workflows deployed for this refinement."* Prose edict; no artifact.
+**CORRELATION.** `demo/stories/**` (13 categories, ~100 routes through `StoryPage`), the manifest
+(`demo/stories/manifest.ts` — NO `pageType` discriminant at HEAD, re-proven grep-zero → STORY W1's
+born-RED holds), `StoryHero`/`StoryHeader`, the width token, the copy surface.
 
-**ISOLATION (atomic requirements).** (1) codify/standardize every story page across content, margins,
-padding, intro, scrolling-animations, heros, headers, code-context-views; (2) page variants PER story
-type; (3) brainstorm the types; (4) a series of workflows.
+**POST-MORTEM.** The chassis was standardized but the type axis never named — 6 parallel unnamed
+wrappers + 23 bespoke-CSS pages; copy leaked internals; the width token computed to `none`; hero
+hierarchy inverted. Every page improvised.
 
-**TARGET.**
-- Reqs 1-3 taxonomy/anatomy → `FABLE-STORY-FRAMEWORK.md` §1 (six-type taxonomy: `landing·spec·studio·
-  family·dock·scene`, derived on disk) + §2 (per-type regions/hierarchy/radius-roles/copy-slots) + §5
-  (copy canon) + §5.1/AMEND-D-9 (the code-context region — the "code-context views" sub-ask) + §8
-  (`--story-article-w` width truth) → `BAND-STORY.md` W1-W6.
-- Heros/headers → `StoryHero`/`StoryHeader`, `story-hero.css` (the framework §2 anatomy per type).
-- Req 4 workflows → `BAND-STORY.md`'s W1-W6 + `PROMPTS/design-loop-prompt.md`.
+**REDRESS + OWNING WAVES.** `BAND-STORY` W1 (taxonomy: `landing·spec·studio·family·dock` + `scene`
+contingent on ASK D1) / W2 (copy canon) / W3 (configurator standard + J10 roominess) / W4 (width
+truth) / W5 (preview card) / W6 (responsive audit). The prior artifact's D-A06 residue (the
+INTRA-page scroll-animation standard) was **ruled by J11**: it codifies INSIDE the scroll-collapse
+wave (the reveal/scroll consolidation, ASK §C3 / BAND-REDUCTION — `BAND-STORY.md:590`), not as a
+separate STORY item. RIDER: that owner is ASK-gated — if the user declines the §C3 scroll
+consolidation, the scroll-standard needs a fallback owner (flagged in the REFABLE sidecar).
 
-**POST-MORTEM.** The root chassis IS standardized (100 routes through `StoryPage`) but per-type
-variants were 6 parallel unnamed wrappers + 23 bespoke-CSS pages, copy leaked internals, the width
-token was an undefined no-op, hero hierarchy inverted (`REGISTRY.md:89-90`). The framework never
-NAMED the axis (`pageType`), so every page improvised.
-
-**REDRESS.** Reqs 1-3 → **EXACT** for content/margins/padding/intro/heros/headers/code-context: the
-six-type taxonomy is derived from the real anatomies, each type's regions + copy slots + radius roles
-+ code-context region are named, and the `hero:boolean` axis is deleted in favor of `pageType`
-(`G-PT-CONFORM`, framework §9). Req 4 → EXACT (the W1-W6 workflow series). **Residue:** the ask
-enumerates "scrolling animations" as an element to codify; the framework codifies taxonomy/anatomy/
-copy/tile/configurator/hierarchy/code-context but does NOT explicitly codify a per-page INTRA-page
-scroll-animation/reveal standard (route-TRANSITION animation is F07's `BJ.W-ROUTE-PENDING`; the
-intra-page scroll-reveal register is not pinned in the framework). **Coverage: PARTIAL** — residue
-D-A06 (the story-page scroll-animation standard; converts to EXACT if a BAND-STORY wave already
-codifies it — not evidenced in the perfection doc).
-
-**STATUS CHECK.** Crosswalk flag `LANDED` (`ASSEMBLY-CROSSWALK.md:78`). AGREE the framework lands; the
-scroll-animation sub-element is the one enumerated residue (D-A06).
+**VERDICT vs OPUS ROW:** RATIFIED; residue OWNED-conditional via J11. Verdict: PARTIAL → **OWNED
+(J11, ASK-gated rider)**.
 
 ---
 
 ## A07 — colocation grand edict (recursive)
 
-**INVENTORY.** Ledger (`FEEDBACK-LEDGER.md:74`): *"Colocation grand edict (ALL file directories):
-components colocated with sub-components, composables, skeletons, constants — recursively. Only truly
-module/global-level composables in `composables/`; same for styles. Long-running dirs broken into
-common modules. Backend equivalents befitting those languages."* Prose edict; no artifact.
+**CORRELATION + AT-HEAD VERIFICATION.** All four COLO-1 move-targets re-proven live at HEAD:
+`src/composables/sidebar/` (W2's demote target), `src/composables/glass/textureUpload.ts` (→aurora),
+`src/styles/glass/accent-tone.css` (→chip), `src/composables/glass/wave/` (→liquid-grid DELETE).
+The band's premises hold on disk. `src/` root = `components composables fonts forms.ts
+html-attributes.d.ts index.ts styles` (re-proven — no backend surface).
 
-**ISOLATION (atomic requirements).** (1) components colocated with sub-components/composables/
-skeletons/constants, recursively; (2) only module/global composables in `composables/`; (3) same for
-styles; (4) long-running dirs broken into common modules; (5) backend equivalents befitting those
-languages.
+**POST-MORTEM.** The canon described a dead layout (design-idioms §3/§7 point at nonexistent files);
+the edict is ~70% realized (dock/aurora/blob gold-standard); the residue is the named moves + the
+enforcement fence.
 
-**TARGET.**
-- Req 1 recursion → `FABLE-COLOCATION.md` §1 Principle 2 + §2a (the generative component shape:
-  `<Name>.vue, index.ts, README.md, constants[.ts|/], composables/, shaders/, styles[.css|/]`) + the
-  handmark/aurora/chip colocation targets (§2d, Move B/D).
-- Req 2 module-only composables → Principle 1 + Principle 8 + the `composables/sidebar/`→`demo/`
-  demote (§2f, Wave 2) + the dead root-barrel + `glass/wave` deletes.
-- Req 3 styles → Principle 3/4 (`@import` position = cascade order; every partial inside an `@import`
-  closure) + the `accent-tone.css`→`chip/` move (Amendment 3) + the chip/atom orphan-CSS closure fix.
-- Req 4 long-dir carve → Principle 7 + the `_shared/` carve to `field/feedback/menu/disclosure/`
-  (Amendment 5, tightened from the census over-carve).
-- Req 5 backend → **no glass-ui surface** (frontend-only library; `src/` root is `components
-  composables fonts forms.ts html-attributes.d.ts index.ts styles`, verified `FABLE-COLOCATION.md:369-370`).
-
-**POST-MORTEM.** The colocation canon described a DEAD layout (design-idioms §3/§7 point at 6
-nonexistent files; §7 mandated the INVERSE of reality, `REGISTRY.md:157-159`). The edict is ~70%
-realized (dock/aurora/blob gold-standard); the residue is the census + enforcement gate.
-
-**REDRESS.** Reqs 1-4 → **EXACT** — `BAND-COLOCATION.md` (`BJ.W-COLO-1/2/3`) + the perfected
-FABLE-COLOCATION target tree/migration-delta/amendments own the recursion, the module-only
-composables, the styles-closure discipline, and the long-dir carve; the ≤8 principles GENERATE the
-tree. Req 5 backend → **N/A for glass-ui** (a frontend library has no backend surface; the clause
-belongs to consumer tranches with backends). **Coverage: EXACT** (backend clause vacuously satisfied /
-out-of-repo-scope; noted). Minor note: the §2a generative shape does not name an explicit `skeleton`
-subtree slot — skeletons are standalone components or composed inline, so "colocated with skeletons"
-is satisfied structurally, but the shape could name it for completeness (non-blocking).
-
-**STATUS CHECK.** Crosswalk flag `LANDED` (`ASSEMBLY-CROSSWALK.md:79`). AGREE — with the backend
-clause explicitly ruled N/A for a frontend library.
+**REDRESS + OWNING WAVES.** `BJ.W-COLO-1` (moves + `_shared/` carve + §3/§7 rewrite + dead-barrel
+purge; born-RED = G-BARREL-REACH) / `BJ.W-COLO-2` (sidebar demote — an INTENTIONAL export-map break
+riding **8.0.0**, preconditioned on the family-B census) / `BJ.W-COLO-3` (the hygiene fence). Backend
+clause: N/A for a frontend library (vacuously satisfied, stated). **VERDICT vs OPUS ROW:** RATIFIED
+in full. Verdict: **EXACT**.
 
 ---
 
 ## A08 — implementation acceleration + ≥2 challenging+gestalt passes per wave
 
-**INVENTORY.** Ledger (`FEEDBACK-LEDGER.md:75`): *"Implementation acceleration: what
-expedites/parallelizes further; every implemented wave aggressively challenged by ≥2 challenging+
-gestalt passes (total-tranche analysis: was the wave optimal, was spec adhered to, frictions), wave
-analysis, feature analysis."* Prose edict; no artifact.
+**CORRELATION.** Process-level: the parallel band architecture (acceleration) + the challenge
+machinery (`CHALLENGE-1-MECH` / `CHALLENGE-2-DESIGN` → `ADJUDICATION-1`, spec grain; the greenfield
+CRIT2 seats).
 
-**ISOLATION (atomic requirements).** (1) what expedites/parallelizes further; (2) every IMPLEMENTED
-wave challenged by ≥2 challenging+gestalt passes; (3) the challenge asks: was the wave optimal, was
-the spec adhered to, what frictions; (4) wave analysis + feature analysis.
+**POST-MORTEM.** The prior artifact correctly isolated the gap: the formation challenged SPECS; A08
+demands the IMPLEMENTED wave be challenged. That was D-A08; **J11 adopted it as the PLAN §3
+structural law** — "every wave closes with a challenge pass run by two fresh critics… a wave whose
+gates are green but whose challenge pass has not run is NOT done" (re-proven present in PLAN §3).
 
-**TARGET (process-level).** Req 1 → the band/wave parallel architecture + `BAND-PERF` boot-diet (perf
-IS an acceleration lever). Reqs 2-4 → `CHALLENGE-1-MECH.md` + `CHALLENGE-2-DESIGN.md` +
-`ADJUDICATION-1.md` (the formation two-challenge pass) + the greenfield CRIT2 seats + the
-overfitting-audit at tranche close (`docs/audits/overfitting-audit.md`, MEMORY).
-
-**POST-MORTEM.** A directive on METHOD. The formation's two-challenge machinery challenges the SPEC
-(pre-implementation); A08 additionally demands a POST-implementation per-wave challenge (was the
-LANDED wave optimal, spec-adhered, friction-free). That post-hoc protocol is not named as a distinct
-execution obligation — it is the one gap.
-
-**REDRESS.** Req 1 → EXACT (parallel bands + perf acceleration). Reqs 2-4 SPEC-level → EXACT (every
-band DRAFT ran ≥2 challenges → ADJUDICATION-1; every greenfield ran CRIT2 + PASS3 adjudication). Reqs
-2-4 IMPLEMENTATION-level → **PARTIAL:** the formation challenges specs, but A08 explicitly says "every
-IMPLEMENTED wave" with "total-tranche analysis: was the wave optimal, was spec adhered to, frictions"
-— a post-landing review protocol distinct from the spec-challenge and from the close-time overfit
-audit. No execution-time per-wave ≥2-challenge+gestalt protocol is named. **Coverage: PARTIAL** —
-residue D-A08 (a post-implementation per-wave ≥2-challenge+gestalt review protocol: optimal? spec
-adhered? frictions?, run at each EXECUTION wave's close, distinct from the formation spec-challenge).
-
-**STATUS CHECK.** Crosswalk flag `DECIDED` (`ASSEMBLY-CROSSWALK.md:80`). AGREE the spec-challenge is
-decided; the post-implementation per-wave challenge is the unowned half (D-A08).
+**REDRESS + OWNER.** The PLAN-level law binds every BJ wave at execution. **VERDICT vs OPUS ROW:**
+RATIFIED; residue OWNED. Verdict: PARTIAL → **OWNED (J11 → PLAN §3)**.
 
 ---
 
 ## A09 — in-progress features get proper addenda (triumvirate + twice challenged + gestalt)
 
-**INVENTORY.** Ledger (`FEEDBACK-LEDGER.md:76`): *"In-progress features get proper tranche/wave
-addenda, not ad-hoc patches: triumvirate (research, harden, addenda-write) + twice challenged (assume
-faulty, prove otherwise) + gestalt analysis."* Prose edict; no artifact.
+**CORRELATION.** Process-level. The living exemplar is real and complete on disk (re-proven):
+`~/.claude/.../bi-addenda/reports/engagement-affordance/{research.md,harden.md,tranche-write.md}` +
+four critique passes + `formation-repair-r1.md` — the full research→harden→addenda-write chain,
+twice challenged. The greenfield PASS1→CRIT2→PASS3 loops repeat the pattern.
 
-**ISOLATION (atomic requirements).** (1) in-progress features get proper tranche/wave ADDENDA, not
-ad-hoc patches; (2) triumvirate (research/harden/addenda-write); (3) twice challenged (assume faulty,
-prove otherwise); (4) gestalt analysis.
+**OWNER CORRECTION.** The prior artifact's EXACT rested on "the fam-I DECIDED-rows wave" as owner.
+That wave is a **phantom name at HEAD**: it exists only in `REGISTRY.md:174` +
+`CHRONIC-ADJUDICATION.md:5` — PLAN.md and the nine band files never mention it, and the promised
+"disease rows as standalone waves" (STYLE-REDRAIN/ENCAP-REDRAIN carves, DOCK-SPINE) appear in no
+charter. RF-4 additionally proved the compile layer stale: DOCK-SPINE LANDED 07-13 (`ae71daa0`),
+STYLE-REDRAIN/ENCAP-REDRAIN LANDED 07-12 (`db861d71`/`910dfffd`), while the LIVE >500 regrowth
+roster is a DIFFERENT 7 files (Slider.vue 651, PagerDots.vue 580, metaball.frag.ts 530,
+metaball.wgsl.ts 528, useWebGPUCanvas.ts 520, EasingPicker.vue 518, shell.css 511) that go un-owned
+(`refable/REFABLE-RF-4.md:43,46,84`).
 
-**TARGET (process-level).** `REGISTRY.md` family I (the DECIDED-rows wave — every chronic/deferred/
-invented-window item gets build/fold/retire with rationale, disease rows as standalone waves) +
-`CHRONIC-ADJUDICATION.md` + the BI-addenda living exemplar: `BI.W-ENGAGE-AFFORD.md` was produced via
-RESEARCH (`research.md`) → HARDEN (`harden.md`, NORMATIVE, five defects struck) → TRANCHE-WRITE →
-FORMATION-REPAIR (two-consecutive-clean), which IS an in-progress feature getting a proper triumvirate
-addendum rather than an ad-hoc patch.
-
-**POST-MORTEM.** A directive born from the anti-pattern of ad-hoc patching in-progress features
-(`REGISTRY.md:163-176` — "the anti-re-booking machinery was itself circumvented"). The formation cures
-it by routing every in-progress item through the triumvirate + adjudication.
-
-**REDRESS.** Req 1 → EXACT (family I converts ad-hoc carries into waves with rationale; the ENGAGE-
-AFFORD/greenfield addenda are the pattern). Reqs 2-4 → EXACT (research→harden→write is realized in the
-greenfields PASS1/CRIT2/PASS3 and the BI-addenda reports; "twice challenged, assume faulty" = the CRIT2
-+ HARDEN refute-default posture; gestalt = the design passes). **Coverage: EXACT** — the ENGAGE-AFFORD
-wave itself is the exemplar deliverable proving the protocol runs.
-
-**STATUS CHECK.** Crosswalk flag `DECIDED` (`ASSEMBLY-CROSSWALK.md:81`). AGREE.
+**REDRESS.** The protocol itself is DECIDED and proven-by-exemplar; the fam-I execution vehicle
+needs the lead's re-judgment (see the sidecar FLIPS): charter the DECIDED-rows wave (or distribute
+its rows explicitly into named bands) + adopt RF-4's amendment (rows 29/31/33/34/38/39 →
+discharge-verify; the regrowth roster gets an owner). **VERDICT vs OPUS ROW:** exemplar RATIFIED;
+the owner claim OPUS-WRONG (overclaim). Verdict: EXACT → **PARTIAL (owner-phantom; lead re-judges)**.
 
 ---
 
 ## A10 — aristotelian proportion audit (mark superfluous + converse)
 
-**INVENTORY.** Ledger (`FEEDBACK-LEDGER.md:77`): *"Aristotelian proportion audit of
-cards/components/affordances/hierarchy/margins/paddings/dividers/small UI; mark superfluous/
-duplicative/distracting elements for removal; mark the converse (more affordance needed)."* Prose
-edict; no artifact.
+**CORRELATION.** App-wide paint surfaces: cards (the gold-metal+grain default, REDUCTION W2's one
+real-visual differential), dividers, hierarchy ladders, margins/paddings, small UI.
 
-**ISOLATION (atomic requirements).** (1) audit cards/components/affordances/hierarchy/margins/
-paddings/dividers/small-UI; (2) mark superfluous/duplicative/distracting for REMOVAL; (3) mark the
-CONVERSE (more affordance needed).
+**POST-MORTEM.** Proportion neglect accreted as the demo grew; no static assert is possible — the
+audit is a taste review producing a marked roster (site → disproportion → verdict → owning follow-on
+wave), both directions: superfluous-for-removal AND converse-needs-more.
 
-**TARGET.** `BAND-MATERIAL.md:456-524` — Wave 5 `BJ.W-ARISTOTLE-PROPORTION`, verified to discharge
-A10 explicitly (`:460-461`) with the design authority = IOS27-CODEX laws 4/10 + the A03 triumvirate
-posture. Verified sites in scope: F03 (superfluous, `:481-485`), F10 (hierarchy ladder), F11
-(configurator gap), F31 (curve void), the divider inventory (`:488`), and the converse-needs-more
-direction (`:480`, `:504-506`).
-
-**POST-MORTEM.** A directive; proportion neglect (empty panels with one tiny mark; flat hierarchy;
-superfluous decoration) accreted as the demo grew. The audit is a taste review — there is no static
-assert (`:500`), so it produces a marked roster at execution via the DESIGN-ITERATION loop.
-
-**REDRESS.** Req 1 audit → EXACT (W5 scope names cards/dividers/hierarchy/spacing/small-UI). Req 2
-mark-for-removal → EXACT (the marked roster: site→disproportion→remove-verdict→owning follow-on wave).
-Req 3 converse → EXACT (the "converse — proportion demanding content or collapse" direction, `:480`,
-`:504-506`). **Coverage: EXACT** — both directions owned; the roster is a specced execution artifact
-(paint-taste, Fable + DesignSync), which is the correct posture for a proportion judgment.
-
-**STATUS CHECK.** Crosswalk flag `LANDED` (`ASSEMBLY-CROSSWALK.md:82`). AGREE.
+**REDRESS + OWNING WAVE.** `BJ.W-ARISTOTLE-PROPORTION` (MATERIAL W5; π-capture obligation; Fable +
+DesignSync per the hallmark lane; design authority = codex laws 4/10 + the A03 posture). Discharges
+A10 explicitly with F03/F10/F11/F31 in scope (re-proven at `BAND-MATERIAL.md:486-545` — line cites
+drifted from the applied amendments; content stands). **VERDICT vs OPUS ROW:** RATIFIED. Verdict:
+**EXACT**.
 
 ---
 
 ## A11 — "what of our breath of life" (the engagement standing check)
 
-**INVENTORY.** Ledger (`FEEDBACK-LEDGER.md:78`): *"'What of our breath of life?' — the engagement
-edict's standing check."* Prose edict; no artifact. The breath-of-life edict (MEMORY): *every
-component ALWAYS displays engagement* — the IDLE/always-on read, distinct from the engaged-state read
-of A01.
+**CORRELATION.** The inert atoms at HEAD: `src/components/button/` (zero idle animation — re-proven;
+every "breath" grep hit in `src/` is a padding metaphor, not motion), the collapsed dock pill,
+`src/components/slider/` at rest. The check itself: `round-3-live/R3B-DIGEST.md` (the presence/
+absence table — only looping-progress + the live substrate fields satisfy the edict).
 
-**ISOLATION (atomic requirements).** (1) perform the standing check (does every component display
-engagement, idle and interacted?); (2) close the gap it finds (make the inert atoms breathe).
+**POST-MORTEM.** The check ran (R3b) and found the gap; the remediation was UNOWNED because
+`BI.W-ENGAGE-AFFORD` is sustained-engage only and BAND-PERF W2 governs the field DOWN. The prior
+artifact's MISSING verdict + D-A11 was the campaign's headline delta — **J1 adopted it**, minting
+`BJ.W-IDLE-BREATH`.
 
-**TARGET.** Req 1 check → `round-3-live/R3B-DIGEST.md` (the live A01/A11 engagement audit — the
-presence/absence table). Req 2 remediation → `src/components/{button,slider}/**`, the collapsed dock
-pill, and an idle-breath token/utility cohort — which has **no owning wave**.
-
-**POST-MORTEM.** The standing check WAS run (R3b) and found the gap precisely: *"ONLY looping-progress
-and the live substrate/section background fields satisfy the always-on breath edict; the atoms (button
-at rest, collapsed dock pill, slider at rest) are inert until interacted with"* (`R3B-DIGEST.md`
-engagement-idle-breath-scope, MAJOR). The root cause of the UNOWNED remediation: `BI.W-ENGAGE-AFFORD`
-is a SUSTAINED-ENGAGE facility (grow/modal on manipulation) — it adds NO idle/always-on breath, and its
-§Audit demotes the very atoms R3b flags. R3b's own proposed disposition names two remediations —
-*"(a) add idle/always-on breath (shimmer/pulse/specular drift) to atoms, and (b) strengthen the
-hover/press affordance well beyond 1.5%"* — both marked "Proposed," neither folded into any wave.
-
-**REDRESS.** Req 1 check → **EXACT** (R3B-DIGEST is the standing check, live-measured with
-getAnimations evidence + a presence/absence table). Req 2 remediation → **MISSING.** No wave makes an
-inert atom breathe at idle: ENGAGE-AFFORD is sustained-engage only; BAND-PERF W2 GOVERNS the
-always-on field DOWN (the opposite direction); no idle-breath token/utility/facility exists in any
-band or greenfield. **Coverage: MISSING** — the substantive half of "breath of life" (every component
-ALWAYS displays engagement) is unowned. Delta D-A11 (the headline): a new idle-breath facility/wave
-for atoms.
-
-**STATUS CHECK.** Crosswalk flag: `pending-R3b` (`ASSEMBLY-CROSSWALK.md:83`) then reconciled to
-`LANDED` (`:217-220`). **DISAGREE.** The reconciliation claims A11 "lands in BI.W-ENGAGE-AFFORD… with
-the R3b presence/absence table as the wave scope" — but the ENGAGE-AFFORD wave has NO idle-breath
-scope (it is sustained-engage), so the breath-of-life remediation is not landed anywhere. The CHECK
-landed; the FIX did not.
+**REDRESS + OWNING WAVE.** `BJ.W-IDLE-BREATH` (BAND-FEEDBACK-MOTION W5, on disk, re-proven): idle/
+always-on breath for the inert atoms — buttons FIRST, collapsed-dock pill, slider-at-rest —
+shimmer/pulse/specular-drift registers, PRM-gated, compositor-only (rAF-delta 0, the J1 constraint),
+born-RED on the R3b table verbatim; plus the A01 hover-strengthening as its interaction half. The
+breath-of-life law now also binds EVERY wave at the PLAN level (§3). LIVE-DEFER: the breath's
+perceptual quality — π owed at the wave. **VERDICT vs OPUS ROW:** MISSING-at-write RATIFIED and
+vindicated (it became J1). Verdict: MISSING → **OWNED-AT-W5**.
 
 ---
 
 ## A12 — blob greenfield (value.js reference; cartoon shadow, metaballing, moods)
 
-**INVENTORY.** Ledger (`FEEDBACK-LEDGER.md:79`): *"Blob greenfield: look to the OLD value.js
-implementation (several months back) — cartoon-like shadow, better lighting, more expressive, proper
-metaballing, better emotional states, high + dynamic interactivity."* Referenced material (inventoried):
-the OLD value.js blob at commit `06929a4b` (the affective FSM) + the design-vision archaeology
-`docs/tranches/S/audit/lanes/design-blob-atmosphere-vision.md:150-159` — both re-verified on disk in
-`GF-BLOB-PASS3.md:13-16` (READ-ONLY).
+**CORRELATION.** `src/components/blob/**` at HEAD (re-proven): BOTH engines live (GLSL
+`metaball.frag.ts`/`metaball.vert.ts` + WGSL `metaball.wgsl.ts`, `wgpuSetup.ts`,
+`uniformBridgeWGPU.ts`) — the twin W-DELETE-TWIN retires; `useBlobMood.ts` (the {valence,arousal}
+circumplex); the ambient+contact drop-shadow pair at `Blob.vue:~355` (the gel-dome W-SHADOW
+replaces). Reference material re-verified: the OLD value.js blob at commit `06929a4b` (flat HSV goo,
+NO lit surface — so lighting/chrome/iridescence are AUTHOR-NEW, not restores; `GF-BLOB-PASS3.md` §1
+F1) + the design-vision archaeology `docs/tranches/S/audit/lanes/design-blob-atmosphere-vision.md`.
 
-**ISOLATION (atomic requirements).** (1) reference the OLD value.js implementation; (2) cartoon-like
-shadow; (3) better lighting; (4) more expressive; (5) proper metaballing; (6) better emotional states;
-(7) high + dynamic interactivity.
+**POST-MORTEM.** The default shipped a calm warm-cream whisper — the loud creature never authored;
+the WGSL twin, the gel-dome shadow, and the born-GREEN mood-amplitude gate were the debt (excited
+ALREADY paints 2.2/2.0/0.05 — the real mood residual is the pointer SIGN).
 
-**TARGET.** `src/components/blob/{constants.ts,types.ts,Blob.vue,composables/{useBlobMood,
-useMetaballRenderer}.ts,shaders/metaball.frag.ts}` → owned by `GF-BLOB-PASS3.md`:
-- Req 1 value.js → §1 (the archaeology re-verified byte-exact).
-- Req 2 cartoon shadow → §2.3 / W-SHADOW (the cartoon offset ink-stamp, replacing the gel-dome pair
-  at `Blob.vue:354`; `uShadow` kept as interior AO).
-- Req 3 lighting + Req 4 expressive → §2.1 / W-CHROME (liquid-metal chrome + mobile specular sweep +
-  lower-rim iridescent caustic, law 13).
-- Req 5 metaballing → the smin SDF field (kept; W-SHOW promotes orbit>body so satellites read).
-- Req 6 emotional states → §2.4 / W-MOOD (the {valence,arousal} circumplex + the sleepy pointer-SIGN
-  fix, the one genuine RED).
-- Req 7 interactivity → W-HITTEST (CPU SDF exact-silhouette hit-test) + W-TOPOLOGY (orb↔pill deflate)
-  + the signed pointer channels.
-
-**POST-MORTEM.** The default `<Blob>` shipped a calm warm-cream whisper (the loud creature never
-authored); the WGSL twin, the two-cast-shadow gel-dome, and the born-GREEN mood "amplitude" were the
-debt. The value.js reference is a real, precise archaeology (not a vague memory).
-
-**REDRESS.** Every A12 sub-clause maps to a named wave grounded in the value.js + MARKS-B reference,
-adversarially hardened (CRIT2 F1-F7 all ACCEPTED + adjudicated on disk). **Coverage: EXACT.** The
-60%-convergence cap is a VERIFICATION cap (zero paint this seat — every π owed), NOT a coverage gap;
-the design axis is internally coherent and every requirement owned. Q-BLOB-DEFAULT (default-register
-break) is the one honest ASK, not a residue.
-
-**STATUS CHECK.** Crosswalk flag `LANDED` (`ASSEMBLY-CROSSWALK.md:84`). AGREE.
+**REDRESS + OWNING WAVES.** GF-BLOB W0 CENSUS+CONTRACT-LOCK · W-DELETE-TWIN (WebGL2-only) · W-SHADOW
+(cartoon ink-stamp; `uShadow` stays interior AO) · W-CHROME · W-SHOW · W-ALIVE · W-MOOD (sleepy
+pointer-sign) · W-HITTEST (CPU SDF) · W-TOPOLOGY (orb↔pill) · W-FINAL. Q-BLOB-DEFAULT is the one
+honest ASK. All π OWED (both engines) — LIVE-DEFER on every paint-quality claim. **VERDICT vs OPUS
+ROW:** RATIFIED in full (the archaeology cites re-proven). Verdict: **EXACT**.
 
 ---
 
 ## A13 — aurora modes expressly defined (real van-Gogh/oil-pastel/crayon)
 
-**INVENTORY.** Ledger (`FEEDBACK-LEDGER.md:80`): *"Aurora modes expressly defined — likely greenfield.
-Extant exemplars (sky, dawn, dusk) good — how can they be better; a PROPER van-Gogh mode, a proper
-oil-pastel brush mode (extant is awful), a proper crayon/hand-drawn mode."* Referenced material: the
-shipped shader corpus (`aurora-mediums.wgsl.ts`, `mediums.glsl.ts`, `vangogh-medium.glsl.ts`,
-`oil-modes.glsl.ts`, `presets.ts`), re-verified in `GF-AURORA-PASS3.md` §2.
+**CORRELATION.** `src/components/aurora/**` at HEAD (re-proven): 17 presets exactly
+(`demo/stories/substrates/aurora/presets.ts:685-703`, SETTING_SUN…SPEEDTEST); per-mode GLSL bodies
+exist (`vangogh-medium.glsl.ts`, `oil-modes.glsl.ts`, `mediums.glsl.ts`) while the WGSL arm aliases
+four painterly mediums onto one Kuwahara body (`aurora-mediums.wgsl.ts:387-403` `applyMedium` —
+re-proven by the RU-13 F01-F10 pass; the `presets.ts:73-77` "each authors its own body" comment
+describes the WebGL2 arm only).
 
-**ISOLATION (atomic requirements).** (1) aurora modes EXPRESSLY defined (distinct, not aliased); (2)
-the good extant exemplars (sky/dawn/dusk) made better; (3) a PROPER van-Gogh mode; (4) a proper
-oil-pastel brush mode (extant awful); (5) a proper crayon/hand-drawn mode.
+**POST-MORTEM.** Modes were named before they were authored: on the primary (WGPU) arm the
+differentiation is palette-skin over a shared body — the user's "almost identical" is mechanically
+TRUE. van-Gogh was mis-declared derivative-free.
 
-**TARGET.** `src/components/aurora/**` → `GF-AURORA-PASS3.md`:
-- Req 1 expressly-defined → §3.3 (the de-aliased medium table: every selectable medium dispatches to
-  its OWN body, killing the `applyMedium:399-400` four-way Kuwahara collapse) + the born-RED
-  `G-MODE-DISTINCT` gate (§5), which reds at a LITERAL ZERO today for the aliased pairs.
-- Req 2 better exemplars → §3.6 FIRM-KEEP register (sky/sunset/dusk/dawn kept as the atmospheric
-  restraint-floor, law 11) + the 17→10-firm reduction.
-- Req 3 van-Gogh → W1 (real WGSL body: `paintOver`+`relightImpasto`+`vangoghDab`, the first WGSL
-  screen-space derivative use, uniform-flow).
-- Req 4 oil-pastel → W2 (a dedicated burnish body with ANALYTIC derivative-free sheen, DELETING the
-  `profileFor(MEDIUM_OILPASTEL)` oil-skin).
-- Req 5 crayon → W3 (reworked to discrete drawn scribble marks with pressure + lift-off, dry).
-
-**POST-MORTEM.** A silent WGSL aliasing (four painterly mediums → one Kuwahara body) frozen into the
-shipped identity, plus preset proliferation by palette skin. The user's "almost identical" is
-mechanically TRUE (`GF-AURORA-PASS3.md` §2, re-verified on disk). van-Gogh was mis-declared
-derivative-free.
-
-**REDRESS.** Each named mode has an owning wave; "expressly defined" becomes a measurable born-RED
-distinctness gate; the good atmospherics are protected as the restraint floor; the oil resolution is
-PORT-or-KILL with terminal collapse set `{}` (never a masking `{3,7}`). **Coverage: EXACT.** The
-crayon-scope (crayon-only vs crayon+ink) is the one honest user ASK (§8), not a gap. (58% convergence
-= verification cap, zero paint.)
-
-**STATUS CHECK.** Crosswalk flag `LANDED` (`ASSEMBLY-CROSSWALK.md:85`). AGREE.
+**REDRESS + OWNING WAVES.** GF-AURORA W1 (paint-substrate + van-Gogh on primary) · W2 (oil-pastel
+real body) · W3 (crayon hand-drawn) · W4 (oil PORT-or-KILL, terminal set `{}`) · W5 (presets 17→10
+firm) · W6 (V-A95 re-repro-or-close, after the mode waves) · W7 CONSUMER+FINAL. **C-G binds F08's
+discharge to G-MODE-DISTINCT green at W1-W4 — never the preset-cut checkbox.** The good exemplars
+(sky/sunset/dusk/dawn) are the protected restraint floor; crayon-scope is the one user ASK.
+LIVE-DEFER: all mode-quality claims — π owed per band. **VERDICT vs OPUS ROW:** RATIFIED in full.
+Verdict: **EXACT**.
 
 ---
 
 ## A14 — procedural components codified and better formed (umbrella over A12/A13)
 
-**INVENTORY.** Ledger (`FEEDBACK-LEDGER.md:81`): *"Procedural components codified and better formed
-(umbrella over A12/A13)."* Prose edict; no artifact.
+**CORRELATION.** The procedural roster at HEAD: aurora, blob, fourier-field, constellation,
+liquid-grid, watercolor-dot, paper-backdrop, handmark. Codification surface:
+`src/components/PROCEDURAL-SUITE.md` + the component-graph `role:"substrate"` taxonomy.
 
-**ISOLATION (atomic requirements).** (1) procedural components CODIFIED; (2) BETTER FORMED; (3) as an
-umbrella over A12 (blob) + A13 (aurora) — i.e. covering the whole procedural roster (aurora, blob,
-fourier-field, constellation, liquid-grid, watercolor-dot, paper-backdrop, handmark).
+**POST-MORTEM.** Dead algorithm knobs accreted (HandMark 11, Typewriter 11, FourierField 5) with no
+unifying codification; the umbrella's "none unowned" was FALSE until the paper-backdrop residue
+(this dossier's D-A14) was **adopted as J9** — the disposition row now lives in `BAND-STORY.md:582-587`,
+routing paper-backdrop into REDUCTION's ≥2-consumer census.
 
-**TARGET.** The procedural roster (`src/components/{aurora,blob,fourier-field,constellation,
-liquid-grid,watercolor-dot,paper-backdrop,handmark}/**`, the L5 layer of `FABLE-DAG-REDUCTION.md`
-§1.1) → owned across: GF-BLOB (A12), GF-AURORA (A13), GF-HANDMARK, GF-DOCK; FourierField/Constellation
-→ ASK §B2/B3 (retire dead knobs regardless); WatercolorDot → ASK §B5; liquid-grid → DELETE
-(`ADJUDICATION-1.md:9`); the codification surface is `src/components/PROCEDURAL-SUITE.md`
-(`FABLE-COLOCATION.md:360-361`) + the `component-graph/PROCESS.md` `role:"substrate"` taxonomy.
+**NEW FINDING (this pass).** `PROCEDURAL-SUITE.md` lists **six retained** procedural surfaces
+INCLUDING LiquidGrid — but `BAND-REDUCTION` W3 deletes liquid-grid outright (zero consumers,
+`ADJUDICATION-1.md:9`, re-proven). No wave owns the suite doc's truth-up (zero hits in `waves/`;
+not among DOC-TRUTH W1's seven targets; FABLE-COLOCATION flags it only as a loose-doc placement,
+P5). When W3 lands, the codification surface goes stale unowned — flagged in the sidecar FLIPS for
+the lead (cheapest cure: name the edit in W3's scope).
 
-**POST-MORTEM.** A directive; the procedural components accreted dead algorithm knobs (HandMark 11,
-Typewriter 11, FourierField 5, `REGISTRY.md:68-70`) with no unifying codification. The umbrella asks
-that the whole family be governed, not just the two named greenfields.
-
-**REDRESS.** Reqs 1-3 → **EXACT for the dispositioned roster.** Every named procedural component is
-OWNED: three run the greenfield triumvirate (blob/aurora/handmark), fourier/constellation/watercolor
-are ASK-routed with a knob-retire floor regardless, liquid-grid is DELETED. The "codified" umbrella is
-the PROCEDURAL-SUITE index + the `role:"substrate"` node taxonomy in the generalized component graph.
-**Coverage: PARTIAL** — residue: `paper-backdrop`, an L5 procedural in A14's explicit roster, has NO BJ
-disposition (neither greenfield nor ASK nor delete), so the umbrella's "none unowned" does not yet hold
-for the whole roster. Delta D-A14 routes it into the reduction band's ≥2-consumer census.
-
-**STATUS CHECK.** Crosswalk flag `LANDED` (`ASSEMBLY-CROSSWALK.md:86`). AGREE the dispositioned roster
-lands; the un-dispositioned `paper-backdrop` member is the one coverage residue (D-A14).
+**REDRESS + OWNERS.** Blob/aurora/handmark → their greenfields; dock → GF-DOCK;
+fourier/constellation/watercolor → ASK §B2/B3/B5 with the knob-retire floor; liquid-grid → REDUCTION
+W3 DELETE; paper-backdrop → the J9 census route. **VERDICT vs OPUS ROW:** RATIFIED + residue OWNED
+(J9); one NEW unowned edit found. Verdict: PARTIAL → **OWNED (J9) + the suite-doc truth-up flagged**.
 
 ---
 
 ## A15 — Fable-class models leveraged for the grand audit (never trivialities)
 
-**INVENTORY.** Ledger (`FEEDBACK-LEDGER.md:82`): *"Fable-class models leveraged more often for this
-grand audit — never for trivialities."* Prose edict; no artifact.
+**CORRELATION.** Process-level: the formation staffing model.
 
-**ISOLATION (atomic requirements).** (1) Fable leveraged MORE for the grand audit; (2) never for
-trivialities.
+**VERDICT INVERSION (the union's headline correction).** The prior artifact certified "the deep
+audit/design/critique work is uniformly Fable-seated… Coverage: EXACT." **FALSE.** The transcript
+census (`refable/model-census.json`; `refable/DEMARCATION.md` census correction;
+`refable/CENSUS-CLASSIFICATION.md`) proved a settings-level `CLAUDE_CODE_SUBAGENT_MODEL=opus`
+override silently forced **332 of 349 seats to `claude-opus-4-8`** — only 15 fork seats + lead
+main-loop work were Fable. The greenfield passes, the codex marks, the perfection docs, and this
+dossier's own prior run were opus-begat. The row asking for Fable was violated by the formation that
+carried it — and the artifact certifying compliance was itself part of the violation.
 
-**TARGET (process-level).** The formation staffing model: every greenfield (PASS1/CRIT2/PASS3), every
-perfection doc (FABLE-DAG-REDUCTION/STORY-FRAMEWORK/COLOCATION), the registry lead, the challenges +
-adjudications, and the iOS-27 codex are Fable seats; the mechanical fanout (amendment-applier,
-CONSTRUCT extraction) is Opus. Grounded in MEMORY `feedback_opus_for_subagents` /
-`feedback_frontend_design_mcp_fable`.
+**POST-MORTEM.** The override was invisible to the seats themselves (each believed its charter's
+model claim); no census ran until post-formation. The lesson is structural: model claims are
+VERIFIED-ON-DISK claims (the `verified-model` stamp), never charter assertions.
 
-**POST-MORTEM.** A directive; the model-selection discipline (Fable for deep audit/design/critique,
-Opus for workflow implementation + fanout) is the standing split the formation honors throughout.
-
-**REDRESS.** Req 1 → EXACT (the deep audit/design/critique work is uniformly Fable-seated). Req 2 →
-EXACT (mechanical fanout is Opus; Fable is reserved for judgment). **Coverage: EXACT.**
-
-**STATUS CHECK.** Crosswalk flag `DECIDED` (`ASSEMBLY-CROSSWALK.md:87`). AGREE.
+**REDRESS + OWNER.** The REFABLE campaign (42 REDO units, this one among them; RU-15 already
+re-unioned the codex marks) + the PLAN §4 PHASED rule (user order 2026-07-17: ALL seats Fable from
+formation close until execution; then the standing split returns, model declared) + the hallmark
+design lane (DesignSync + Fable). **VERDICT vs OPUS ROW:** OPUS-WRONG — verdict flips EXACT →
+**VIOLATED-AT-FORMATION, CURE-IN-FLIGHT (REFABLE + PLAN §4)**.
 
 ---
 
 ## A16 — MAXIMAL parallelization; nothing dropped from BI/prior
 
-**INVENTORY.** Ledger (`FEEDBACK-LEDGER.md:83`): *"MAXIMAL parallelization; NOTHING from the
-misfiring of BI or previous dropped."* Prose edict; no artifact.
+**CORRELATION.** Process-level: the 9-band parallel architecture + `ASSEMBLY-CROSSWALK.md` (all 67
+rows dispositioned, 0 ORPHAN — re-proven) + CHRONIC-ADJUDICATION ("re-booking: ZERO") + the carried
+BI waves. The ≤3-concurrent rate-wall (PLAN §4) is the honest bound on "maximal".
 
-**ISOLATION (atomic requirements).** (1) MAXIMAL parallelization; (2) nothing from BI's misfiring or
-prior tranches dropped.
+**POST-MORTEM + RESIDUE.** The crosswalk layer holds zero-silent-drop. But "nothing dropped" was
+breached at the fam-I COMPILE layer and caught post-dossier by RF-4: the adjudication ruled on stale
+rows (already-landed waves named as future cures) while the live >500 regrowth roster goes un-owned
+(see A09). The drop-prevention machinery worked one layer down — this dossier's own D-A11 catch, and
+RF-4's catch, ARE the mechanism functioning.
 
-**TARGET (process-level).** Req 1 → the 9-band parallel wave architecture + the DAG-optimized SEQ
-ordering (`waves/BAND-*.md`, `FABLE-DAG-REDUCTION.md`). Req 2 → `ASSEMBLY-CROSSWALK.md` (the
-zero-silent-drops accounting: all 67 ledger rows dispositioned) + `CHRONIC-ADJUDICATION.md` ("Re-booking
-count in BJ: ZERO", `:75-77`) + the carried BI waves (ENGAGE-AFFORD/SLIDER-ENGAGE + Q051 rows).
-
-**POST-MORTEM.** A directive born from BI's misfiring (the headless-green/visually-broken gap,
-silent-drop history). The crosswalk IS the drop-prevention mechanism; this very dossier fleet is part
-of that machinery.
-
-**REDRESS.** Req 1 → EXACT (parallel bands, DAG-ordered). Req 2 → EXACT (the crosswalk + chronic
-adjudication enforce zero drops; every carried item is a build/fold/retire-with-rationale/ASK).
-**Coverage: EXACT.** (Note: this dossier's own DISAGREEs on A01/A11 are the drop-prevention working —
-the idle-breath remediation D-A11 is exactly a "nothing dropped" catch: R3b found it, the wave doesn't
-own it, and it must not silently vanish.)
-
-**STATUS CHECK.** Crosswalk flag `DECIDED` (`ASSEMBLY-CROSSWALK.md:88`). AGREE.
+**REDRESS + OWNER.** The crosswalk + the RF-4 amendment (pending the lead's re-judgment, sidecar
+FLIPS) + the REFABLE campaign as the standing audit of the audit. **VERDICT vs OPUS ROW:** substance
+RATIFIED; the EXACT verdict narrows — the fam-I compile-layer breach is real. Verdict: EXACT →
+**EXACT-AT-CROSSWALK-LAYER (fam-I residue rides RF-4)**.
 
 ---
 
 ## A17 — story/preview slow-load-stutter (perf as a first-class lens)
 
-**INVENTORY.** Ledger (`FEEDBACK-LEDGER.md:84`): *"Story pages + preview cards slow-load/stutter class
-(perf): partial load then stutter (F01); slow to load (F46). Performance is a first-class lens."*
-Prose edict cross-referencing F01/F46; no standalone artifact.
+**CORRELATION (re-proven on disk).** `demo/shell/AppShell.vue:11` eager `import { Aurora }`, `:26`
+eager `import { PresetEditor }`, `:21-23` `shellAuroraConfig` from `demo/chassis/hero/aurora-hero.ts`
+— which imports `DEFAULT_AURORA_CONFIG` + `cssToOklch` THROUGH the aurora barrel
+(`aurora-hero.ts:15-16`), dragging the 277KB `aurora-hero` chunk eager (`BAND-PERF.md:92-96`,
+premise re-proven against disk). Plus the `fixed inset-0` always-on shell field, the blocking
+`beforeResolve` route swap, `SectionPreviewCard.vue` (F01), 13 per-instance feTurbulence hosts.
 
-**ISOLATION (atomic requirements).** (1) fix the story/preview partial-load-then-stutter (F01); (2)
-fix the slow-to-load (F46); (3) performance is a FIRST-CLASS lens (a whole band, not a spot fix).
+**POST-MORTEM.** Boot saturation + idle churn, not network: R3b DEV baselines — healthy LCP
+(root 391ms / foundations 405ms / blob 488ms, CLS 0.00 at load), but 2 boot long-tasks (~208-210ms),
+continuous idle rAF (~1.56-1.71s task-time per ~5.3s window, ~3.11s on blob), 119ms warm route
+freeze + CLS 0.04, 186ms cold-nav stall. Headless gates couldn't see any of it — perf had no live
+lens until BJ.
 
-**TARGET.** `BAND-PERF.md` (Family E, whole band):
-- Req 1 stutter → W1 `BJ.W-BOOT-DIET` (the ~770KB/73-modulepreload eager graph → async PresetEditor/
-  Aurora + barrel split) + W2 `BJ.W-SHELL-FIELD-GOVERN` (the always-on `fixed inset-0` shell field
-  running continuous idle rAF — R3b measured ~40k RunTasks / ~1.6s task-time at idle, doubling to
-  ~52k/~3.1s on blob) + W3 `BJ.W-DEFERRED-PAINT`.
-- Req 2 slow-to-load → W1 boot-diet + W3 above-fold content-visibility exemption (ceded to BAND-STORY
-  W5) + intrinsic-size truth.
-- Req 3 first-class → the whole band with born-RED static detectors NOW + PENDING-R3 live-trace
-  baselines (now supplied by `R3B-DIGEST.md`: cold LCP root 391/foundations 405/blob 488ms, the
-  two-boot-long-task signature, the idle-rAF churn as the DOMINANT cost).
-
-**POST-MORTEM.** A perf architecture that saturates the boot thread (AppShell drags Aurora + the full
-configurator into the eager graph and gates `app.mount()` behind ~1.1MB) then runs a continuous idle
-rAF field behind every route. R3b confirmed LCP is healthy (~99% render-delay) — the real lever is
-BOOT JS + idle main-thread churn, not network.
-
-**REDRESS.** Every sub-req has a named wave with a verified born-RED probe + a captured R3b DEV
-baseline seeding the live-trace gate. Perf is a first-class band (4 waves) with the R3b main-thread-
-churn finding as the headline gate (rAF-budget / idle-frame-cost). **Coverage: EXACT.**
-
-**STATUS CHECK.** Crosswalk flag `LANDED` (`ASSEMBLY-CROSSWALK.md:89`). AGREE.
+**REDRESS + OWNING WAVES.** `BAND-PERF` W1 `BJ.W-BOOT-DIET` (async PresetEditor/Aurora + the barrel
+split) · W2 `BJ.W-SHELL-FIELD-GOVERN` (idle/occlusion governance) · W3 `BJ.W-DEFERRED-PAINT`
+(intrinsic-size truth → STORY W5 owns the above-fold edit; shared filter def; live-trace gate) · W4
+`BJ.W-ROUTE-PENDING` (liquid-weight pending affordance; OWNS F07 choreography). LIVE-DEFER: all
+post-fix deltas are trace-captured obligations. **VERDICT vs OPUS ROW:** RATIFIED in full. Verdict:
+**EXACT**.
 
 ---
 
-## Coverage summary
+## Coverage summary (unioned, post-JUDGE)
 
-| row | artifact / prose | verdict | crosswalk flag | agree? | delta count |
-|-----|------------------|---------|----------------|--------|-------------|
-| A01 | engagement edict + slider grow/modal | PARTIAL | pending-R3b→LANDED | **DISAGREE** (button reconcile) | 1 |
-| A02 | iOS-27 corpus (ref present) | EXACT | LANDED | AGREE | 0 |
-| A03 | proportion research triumvirate | EXACT | LANDED | AGREE | 0 |
-| A04 | tranche archaeology + parallelize | PARTIAL | DECIDED | AGREE (distributed) | 1 |
-| A05 | component DAG + reduction | EXACT | LANDED | AGREE | 0 |
-| A06 | story meta-framework | PARTIAL | LANDED | AGREE (residue) | 1 |
-| A07 | colocation grand edict | EXACT | LANDED | AGREE | 0 |
-| A08 | impl acceleration + ≥2 challenges | PARTIAL | DECIDED | AGREE (impl-level half) | 1 |
-| A09 | in-progress addenda triumvirate | EXACT | DECIDED | AGREE | 0 |
-| A10 | aristotelian proportion audit | EXACT | LANDED | AGREE | 0 |
-| A11 | breath of life (idle engagement) | **MISSING** | pending-R3b→LANDED | **DISAGREE** (remediation) | 1 |
-| A12 | blob greenfield (value.js ref) | EXACT | LANDED | AGREE | 0 |
-| A13 | aurora modes (vangogh/oilpastel/crayon) | EXACT | LANDED | AGREE | 0 |
-| A14 | procedural codification umbrella | **PARTIAL** | LANDED | AGREE (paper-backdrop residue) | 1 |
-| A15 | Fable-class models leveraged | EXACT | DECIDED | AGREE | 0 |
-| A16 | maximal parallelize + zero-drop | EXACT | DECIDED | AGREE | 0 |
-| A17 | perf first-class (slow/stutter) | EXACT | LANDED | AGREE | 0 |
+| row | correlation | union verdict | owning wave(s) | vs opus row |
+|-----|-------------|---------------|----------------|-------------|
+| A01 | slider/button/dock-pill + planned engage surface | OWNED | BI.W-ENGAGE-AFFORD (T1 GROW; T2 MODAL trigger V-A95+Q023) + BJ.W-IDLE-BREATH | RATIFIED; 2 corrections (planned-not-extant; T2 gating) |
+| A02 | ios27 corpus → MARKS/CODEX | EXACT-VIA-RU-15 | delivered (RU-15 union stamped) | census RATIFIED; Fable claim OPUS-WRONG |
+| A03 | codex + MATERIAL W5 + GF loops | EXACT | IOS27-CODEX · BJ.W-ARISTOTLE-PROPORTION · GF CRIT loops | RATIFIED (model caveat) |
+| A04 | formation docs (distributed) | DISCHARGED-BY-RULING | none needed (J11) | RATIFIED; delta ruled closed |
+| A05 | 68-dir surface + the double DAG | EXACT | BAND-REDUCTION W1-W5 + ASK-REDUCTION | RATIFIED; fan-in numbers corrected (RF-1) |
+| A06 | stories/manifest (no pageType at HEAD) | OWNED (ASK-gated rider) | BAND-STORY W1-W6 + scroll-collapse wave (J11) | RATIFIED; residue owned |
+| A07 | 4 move-targets live at HEAD | EXACT | BJ.W-COLO-1/2/3 (W2 rides 8.0.0) | RATIFIED in full |
+| A08 | challenge machinery | OWNED | PLAN §3 law (J11) | RATIFIED; residue owned |
+| A09 | triumvirate exemplar (on disk) | PARTIAL (owner-phantom) | lead re-judges (sidecar FLIP-1) | exemplar RATIFIED; owner OPUS-WRONG |
+| A10 | cards/dividers/hierarchy/spacing | EXACT | BJ.W-ARISTOTLE-PROPORTION (MATERIAL W5) | RATIFIED |
+| A11 | inert atoms (re-proven inert) | OWNED-AT-W5 | BJ.W-IDLE-BREATH (J1) | RATIFIED + vindicated (→J1) |
+| A12 | blob dual-engine + value.js 06929a4b | EXACT | GF-BLOB (10 waves); π OWED | RATIFIED in full |
+| A13 | 17 presets + WGSL alias | EXACT | GF-AURORA W1-W7; C-G binding; π OWED | RATIFIED in full |
+| A14 | procedural roster + suite doc | OWNED (J9) + new flag | GF-* + ASK + REDUCTION census; suite-doc truth-up UNOWNED (FLIP-2) | RATIFIED; 1 new finding |
+| A15 | formation staffing | VIOLATED→CURE-IN-FLIGHT | REFABLE campaign + PLAN §4 phased rule | **OPUS-WRONG (flipped)** |
+| A16 | crosswalk + chronic ledger | EXACT-AT-CROSSWALK-LAYER | crosswalk + RF-4 amendment (pending) | RATIFIED; narrowed |
+| A17 | AppShell/barrel/field/route (re-proven) | EXACT | BAND-PERF W1-W4 (+STORY W5 cede) | RATIFIED in full |
 
-**Tally: EXACT 11 · PARTIAL 5 · MISSING 1.** Deltas: 6. Crosswalk DISAGREEs: 2 (A01, A11 — both the
-engagement/breath-of-life cluster).
-
----
-
-## Appendable deltas (in full)
-
-> **D-A01 (to `docs/tranches/BI/waves/BI.W-ENGAGE-AFFORD.md` §Audit + a new/expanded owner).**
-> Reconcile the wave's §Audit ruling — Button/Checkbox/Radio/Toggle "ADEQUATE (proportion fence)"
-> (`~:293`) — with the newer live R3b finding that buttons are the engagement edict's WEAKEST link:
-> hover is a barely-visible 1.5% scale (1.0→1.015) with no lift/translate/filter delta
-> (`R3B-DIGEST.md` engagement-button-breath-of-life, MAJOR). The wave predates R3b (minted 2026-07-16;
-> R3b ran 2026-07-17) and never adopted the R3b scope. Assign an owner to STRENGTHEN button hover/press
-> affordance well past 1.5% so it reads as grow/glow/lift (R3b disposition (b)) — either as an amendment
-> to ENGAGE-AFFORD's §Audit (un-demote buttons) or a sibling wave. This is the interaction-strength half;
-> the idle-breath half is D-A11.
-
-> **D-A04 (to the formation record — low-priority).** A consolidated cross-tranche BI-lessons
-> archaeology, distinct from the per-row chronic folding. `REGISTRY.md` family I + `CHRONIC-ADJUDICATION.md`
-> (44 rows) + the carried BI waves discharge the SUBSTANCE (nothing dropped; the parallelization/graph
-> half is EXACT), but a single synthesis of "what misfired in BI/prior → how BJ's architecture prevents
-> it" is not a standalone artifact. Low priority — arguably satisfied by family I; note it so the
-> "PROPER analysis of ALL tranches" clause is explicitly owned rather than implied.
-
-> **D-A06 (to `BAND-STORY` / `FABLE-STORY-FRAMEWORK.md` §2).** Codify the story-page INTRA-page
-> scroll-animation/reveal standard. A06 enumerates "scrolling animations" as an element to standardize;
-> the framework codifies taxonomy/anatomy/copy/tile/configurator/hierarchy/code-context but pins no
-> per-page scroll-reveal register (route-TRANSITION animation is owned separately by `BJ.W-ROUTE-PENDING`,
-> BAND-PERF W4). Add a scroll-animation slot to the per-type anatomy (§2) with the liquid-weight
-> character the edict demands. Converts to EXACT if a BAND-STORY wave already carries it (not evidenced
-> in the perfection doc).
-
-> **D-A08 (a new execution-time protocol row).** A post-IMPLEMENTATION per-wave ≥2-challenge+gestalt
-> review protocol, distinct from the formation's pre-implementation spec-challenge (CHALLENGE-1/2 →
-> ADJUDICATION-1) and from the close-time overfitting audit. A08 explicitly asks that "every IMPLEMENTED
-> wave [be] aggressively challenged by ≥2 challenging+gestalt passes (total-tranche analysis: was the
-> wave optimal, was spec adhered to, frictions)". Name this as a standing EXECUTION obligation — each BJ
-> wave, on landing, gets ≥2 Fable challenge passes (assume-suboptimal) answering optimal? / spec-adhered?
-> / frictions?, feeding wave + feature analysis. The formation challenges specs; A08 additionally
-> requires challenging the LANDED result.
-
-> **D-A11 (the headline — a new idle-breath facility/wave; no owner exists).** Make every inert atom
-> BREATHE at idle. R3b's standing check (`R3B-DIGEST.md` engagement-idle-breath-scope, MAJOR) found that
-> ONLY looping-progress and the live substrate/section fields satisfy the always-on breath edict; button
-> at rest, collapsed dock pill, and slider at rest are inert until touched. `BI.W-ENGAGE-AFFORD` is a
-> SUSTAINED-ENGAGE facility (grow/modal on manipulation) and adds NO idle breath; BAND-PERF W2 governs
-> the always-on field DOWN (opposite direction); no idle-breath token/utility/composable exists anywhere
-> in the bands or greenfields. Mint an idle-breath register — R3b disposition (a): "add idle/always-on
-> breath (shimmer/pulse/specular drift) to atoms" — as its own wave (buttons first per R3b priority),
-> PRM-gated, so the breath-of-life edict ("every component ALWAYS displays engagement") has a real owner.
-> The crosswalk's `LANDED` reconciliation (`ASSEMBLY-CROSSWALK.md:217-220`) over-claims that R3b folded
-> this into ENGAGE-AFFORD; the wave text shows it did not.
-
-> **D-A14 (to `BAND-REDUCTION` — the un-dispositioned procedural member).** `paper-backdrop`
-> (`src/components/paper-backdrop/**`), an L5 procedural in A14's explicit roster, carries no BJ
-> disposition — neither a greenfield (unlike blob/aurora/handmark), nor an ASK (unlike
-> fourier/constellation/watercolor), nor a delete (unlike liquid-grid). Route it into the reduction
-> band's ≥2-consumer census (the A05 bar) so its keep/retire is ruled on evidence, not presumed; until
-> then the A14 procedural-codification umbrella's "none unowned" claim does not hold for the whole
-> roster.
+**Delta disposition record (all six prior deltas terminal — do not re-litigate):**
+D-A01 → J1 (hover-strengthening joins `BJ.W-IDLE-BREATH`) · D-A04 → J11 (ruled closed, no owner
+needed) · D-A06 → J11 (scroll-standard inside the scroll-collapse wave, ASK-gated) · D-A08 → J11
+(the PLAN §3 challenge law) · D-A11 → J1 (the campaign headline: `BJ.W-IDLE-BREATH` minted) ·
+D-A14 → J9 (paper-backdrop → REDUCTION census, row in BAND-STORY).
 
 ---
 
-*End — Fable redress dossier, rows A01–A17. One file, no `src/`/`demo/` edits, no commit.*
+*End — unioned redress dossier, rows A01–A17. Docs-only; verdict sidecar at
+`../refable/REFABLE-RU-13-A01-A17.md`.*
