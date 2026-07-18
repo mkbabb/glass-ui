@@ -248,7 +248,7 @@ Born-RED violations shipped at HEAD (verified — this is the round-2b **critica
   emit `.glass-chip`/`.glass-atom` whose entire styling (selectable flood, `--chip-flood-t` interactive punch,
   removable `::after`, glass-atom register) is DEAD in the published bundle.
 
-The fix flip (re-home the two `@import`s into `glass.css`) is a **Family C/H coordination obligation** — this
+The fix flip (re-home the two `@import`s into `glass.css`) is **`BJ.W-CSS-CLOSURE-RESTORE` (MATERIAL W7)** — this
 wave authors the GATE born-RED; the CSS re-home flips it GREEN. `OPEN-7`: does the gate fold into the
 retired-`canon-doc.mjs` green-over-stub role (wave 1 `OPEN-3`)? If orphan-CSS-partial ships, `canon-doc`'s
 retire is safe.
@@ -407,7 +407,7 @@ source — the parsimony payoff: after it, `text-sm` is a build-visible unknown,
 ## §Band-level obligations & OPEN roll-up
 
 **Coordination handoffs (authored born-RED here → GREEN by siblings):**
-- orphan-CSS-partial (W3) → the CSS re-home of glass-chip/glass-atom (Family C/H).
+- orphan-CSS-partial (W3) → the CSS re-home of glass-chip/glass-atom (`BJ.W-CSS-CLOSURE-RESTORE`, MATERIAL W7).
 - token-hygiene radius/blur (W3) → the ladder repoint (drawer blur, SortableList 999px) (Family F).
 - prop-granularity Card gold+grain → FOLDED to Family C's overfitting audit (not a W3 gate; OPEN-8 RULED, FINDING-5).
 - type-hygiene + ramp-reset (W4) → the 251-site codemod + coupled reset flip + paint π (`BAND-MATERIAL` W6, `BJ.W-TYPE-CODEMOD`).
@@ -431,3 +431,9 @@ source — the parsimony payoff: after it, `text-sm` is a build-visible unknown,
 **In-scope count:** ~45-55 keeps after W1; +2 CI-wired pixel floors (W2); +3 static gates (W3); +1
 type-hygiene gate (W4) = the band lands the enforced surface in the mandated 40-60 band with, for the first
 time, gates that CAN fail on a real regression rather than on a legitimate retune.
+
+**Lead rider (STAB2, 2026-07-17) — the slider interaction-test discipline.** R3b's
+interaction-robustness finding: the slider's `role=slider` node is NOT the hittable pointer target
+(zero-width thumb span; synthetic pointers no-op; only trusted CDP keyboard moved it). The suite
+reformation (W1/W2) adopts the discipline as a standing rule: slider interaction tests target the
+track element or use keyboard — never the role node. Binding on every future slider spec.

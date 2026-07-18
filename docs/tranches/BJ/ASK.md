@@ -155,18 +155,16 @@ correction of the misleading "SegmentedTabs wearing chrome" comment.
   re-litigation; it fires only because the decision ratifies nav-links over a false tablist.
 - Evidence: `GF-DOCK-PASS3.md` §3/§12 (Q1); `BAND-A11Y.md` W2 (E).
 
-**ASK-18 · handmark brush floor (Q-HM-1).** Is a 3-brush register (pen · pencil · highlighter +
-`Partial<Brush>` override) the right floor, or keep a named "marker" as a 4th row?
-- **Recommendation: 3 + override.** The four disaster stills (boil/crayon/marker/highlighter hulls) ARE
-  the demonstration; marker = highlighter + `source-over` + a fill color, a Brush override not a
-  taxonomy row. This is your literal "each one generally awful → greenfielded" ask: 7→3.
-- Evidence: `GF-HANDMARK-PASS3.md` §4/§14 (Q-HM-1).
+**ASK-18 · handmark brush floor (Q-HM-1) — RESOLVED BY YOUR RULING 2026-07-17, no answer owed.**
+"handmark is keep. But greenfield and perfect from first principles. Fable." — the greenfield holds
+full first-principles design authority; the brush register (the 3+override recommendation stands as
+its working target) resolves inside the design loop. Informational only.
+- Evidence: `GF-HANDMARK-PASS3.md` §4/§14 (Q-HM-1) + the USER RULING rider at its foot.
 
-**ASK-19 · handmark box/bracket shapes (Q-HM-2).** Retire box/bracket entirely, or keep as ≥2ch-only
-shapes?
-- **Recommendation: RETIRE.** A box over 1ch is a sliver by geometry; sub-2ch datums degrade to an
-  underline-tick or a small circle (a shape rule, not the retired se-guard ink fallback).
-- Evidence: `GF-HANDMARK-PASS3.md` §7.2/§14 (Q-HM-2).
+**ASK-19 · handmark box/bracket shapes (Q-HM-2) — RESOLVED BY YOUR RULING 2026-07-17, no answer
+owed.** Same authority grant; the RETIRE recommendation stands as the design loop's working target.
+Informational only.
+- Evidence: `GF-HANDMARK-PASS3.md` §7.2/§14 (Q-HM-2) + the USER RULING rider at its foot.
 
 **ASK-20 · aurora crayon scope (GF-AURORA §8).** Crayon ONLY, or crayon + a distinct graphite/ink
 contour-hatching mode?
@@ -242,7 +240,8 @@ Reply once, marking each row terminal. The marking routes each row as follows:
 - **An OVERRULE mark** on a §1 row converts a KEEP into a costed multi-repo family-B migration relay
   (every breaking consumer gets a by-name ask before the tag); a PRUNE/relocate into the corresponding
   delete + relay.
-- **A greenfield ruling (§2)** unblocks the gated wave: ASK-14 unblocks GF-DOCK W7; ASK-18/19 fix the
+- **A greenfield ruling (§2)** unblocks the gated wave: ASK-14 unblocks GF-DOCK W7; ASK-18/19 are
+  RESOLVED by your 2026-07-17 ruling (first-principles authority granted — no answer owed) and fix the
   GF-HANDMARK register + shape surface; ASK-20 sizes GF-AURORA W3; ASK-21 sets the GF-BLOB default;
   ASK-22 sequences the WGPU-twin delete. Un-ruled greenfield rows leave their wave PARKED (they do not
   block the rest of the tranche).
@@ -278,8 +277,8 @@ identity calls + the two material/story judgments — the entire user-reserved s
 | ASK-15 | dock eyeglass/liquid-metal pill | flagged enhancement (lean: ratify reuse) | GF-DOCK W4 |
 | ASK-16 | dock "+N" tray | not required (lean: no tray) | GF-DOCK collapsed state |
 | ASK-17 | dock keyboard truth-up | confirm the comment truth-up (family J) | GF-DOCK W3 + A11Y W2 |
-| ASK-18 | handmark brush floor | 3 + override | GF-HANDMARK register |
-| ASK-19 | handmark box/bracket | RETIRE | GF-HANDMARK shape surface |
+| ASK-18 | handmark brush floor | RESOLVED-BY-RULING (design loop; 3+override working target) | GF-HANDMARK register |
+| ASK-19 | handmark box/bracket | RESOLVED-BY-RULING (design loop; RETIRE working target) | GF-HANDMARK shape surface |
 | ASK-20 | aurora crayon scope | ONE crayon (+ keep pastel/watercolor floor) | GF-AURORA W3 |
 | ASK-21 | blob default register | liquid-metal chrome (whisper as a register) | GF-BLOB default |
 | ASK-22 | blob WGPU-twin delete | surface the sequencing (lean: W-DELETE-TWIN) | GF-BLOB W-DELETE-TWIN |

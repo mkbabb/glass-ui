@@ -591,3 +591,8 @@ table above.)
   scroll-collapse wave (the reveal/scroll consolidation, ASK §C3 / BAND-REDUCTION): the 9-survivor
   reader spine IS the substrate, so the standard's text is a deliverable of THAT wave, not a separate
   BAND-STORY item.
+
+**Lead rider (STAB2, 2026-07-17) — the detached hero goo-blob (R3b visual-landing).** W5 (the tile
+authorship wave, which owns the root bento previews) ALSO owns the R3b rider's second half: the
+yellow goo-blob floating detached right of the landing hero — confirm intended-vs-regression at
+wave start and either anchor it into the hero composition or retire it. One capture either way.

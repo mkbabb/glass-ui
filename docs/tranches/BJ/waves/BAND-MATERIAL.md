@@ -28,7 +28,7 @@ follow from it. Where a feedback screenshot and the disk have **drifted** (a def
 partly cured), the wave says so and owes a **live-π re-check before it claims a born-RED defect** — never
 a spec written against a stale screenshot.
 
-Six waves:
+Seven waves:
 
 | Wave | Name | Motion | Born-RED? |
 |------|------|--------|-----------|

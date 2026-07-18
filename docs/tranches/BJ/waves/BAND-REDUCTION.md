@@ -68,8 +68,8 @@ seal — as ASK-gated relays, NOT blind deletes); and the F16 timeline ground-up
   adopt-or-retire freeze, family G/I). Reducing their props in isolation is wasted work the
   greenfield/freeze redoes. This band **defines the target surface** and hands DELIVERY to the
   owning band (§ Wave 1 handoffs); it does not cut them here.
-- **The chip/glass-atom orphan** (`css-partial-orphaned-by-component-fold`) — a family-G born-RED
-  fix wave, not a reduction. Out.
+- **The chip/glass-atom orphan** (`css-partial-orphaned-by-component-fold`) — owned by
+  `BJ.W-CSS-CLOSURE-RESTORE` (MATERIAL W7), not a reduction. Out.
 - **The 7 genuinely-ambiguous kill/keep/merge calls** — DataTable, FourierField-keep, Constellation-
   keep, deck-vs-carousel, confirm-dialog-vs-dialog, reveal/scroll/tempo, compositions-category.
   These go to **`../ASK-REDUCTION.md`** (the user-gated document), not a wave. The waves here
@@ -153,11 +153,14 @@ relocated, this cut is moot. Coordinate with `../ASK-REDUCTION.md` §B-adjacent.
 These are the charter-named cuts whose delivery belongs to a greenfield/freeze wave; this band
 records the TARGET so the greenfield lands the reduction, not a fresh bloat:
 
-- **HandMark (`./handmark`) — 19 → ~8.** `handmark/types.ts:35-89` declares 19 props (verified);
-  the 11 geometry/boil knobs (`overrides, drawMs, drawDelayMs, boilFps, boilFrames, roughness,
-  segments, jagged, amplitude, natural, path, points`) have 0 consumer setters. **Target surface:**
-  `brush, shape, color, seed, animation, appear, box, drawMs` (≈8). **Delivery:** the family-G
-  HandMark greenfield (F34-F40) rebuilds the internals wholesale — it MUST land at this surface.
+- **HandMark (`./handmark`) — 19 → the first-principles surface (USER-RULED).** `handmark/types.ts:35-89`
+  declares 19 props (verified); the 11 geometry/boil knobs (`overrides, drawMs, drawDelayMs, boilFps,
+  boilFrames, roughness, segments, jagged, amplitude, natural, path, points`) have 0 consumer setters.
+  **USER RULING 2026-07-17 supersedes the ≈8 floor this row previously fixed:** "handmark is keep. But
+  greenfield and perfect from first principles. Fable." **Delivery:** the family-G HandMark greenfield
+  (F34-F40) rebuilds wholesale with FULL surface authority (its first-principles target ≈5); this row
+  records only that the landed surface must be ≤ the census truth (no dead prop survives), not a fixed
+  prop list. Consumers migrate per the consumer-updates ruling.
   This band does not cut HandMark's props in isolation.
 - **FourierField `./fourier-field` (5 dead: `color, colorResolver, freeze, intensity, seed`) +
   Constellation `./constellation` (3 dead: `freeze, parallax, speed`)** — the dead knobs retire to

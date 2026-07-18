@@ -82,9 +82,10 @@ FAMILY A — BAND-GATES (4) ── the gate reformation ─── the TRUTH SUBS
   `BAND-STORY` W5, which rewrites `SectionPreviewCard.vue` wholesale (one owning wave per file);
   PERF keeps the boot-diet cure + the live-trace deferred-paint gate. PERF W4 OWNS the F07
   story-transition choreography (Family D consulted, not co-owner).
-- **The greenfields inherit the reduction cuts** (dock 4 dead knobs; HandMark 19→~8 surface per
-  BAND-REDUCTION's binding floor — appear/box/drawMs land — with the greenfield's further cut
-  CONDITIONAL on ASK Q-HM-2) and gate
+- **The greenfields inherit the reduction cuts** (dock 4 dead knobs; HandMark per the USER RULING
+  2026-07-17 — "handmark is keep. But greenfield and perfect from first principles. Fable." — the
+  greenfield carries FULL first-principles surface authority, the census floor superseded;
+  consumers migrate per the consumer-updates ruling) and gate
   on their pass-4 design closure + the user ASK rulings they carry (§Band roster).
 - **Cross-repo relays land BEFORE their breaking waves ship.** No REDUCTION delete or prop-cut executes
   until the family-B sibling-import census clears the subpath/prop (the header-ribbon lesson); the Q060
@@ -198,6 +199,9 @@ FAMILY A — BAND-GATES (4) ── the gate reformation ─── the TRUTH SUBS
   follow-on fixes. Not a code-probe born-RED — a π-capture obligation (annotated before-shots).
 - **W6 `BJ.W-TYPE-CODEMOD`** — the 251-site `text-sm`/`text-xs` codemod + the coupled default-ramp
   reset flip + the paint π (RULING 2). Coupled — flips `BAND-GATES` W4 GREEN; the two land in one cut.
+- **W7 `BJ.W-CSS-CLOSURE-RESTORE`** — restore `glass-chip.css` + `glass-atom.css` to the `@import`
+  closure (the R3a live-confirmed defect); flips `BAND-GATES` W3 `orphan-CSS-partial` GREEN with the
+  dist rule-count + live accent-flood re-verify. **Born-RED** (the shipped orphan is the RED).
 
 ### FAMILY K — `BAND-A11Y` (2 waves; the round-2 a11y family)
 - **W1 `BJ.W-A11Y-STATE`** — the 4 live-defect fixes: nav landmark (aside→nav), aria-pressed
@@ -232,9 +236,10 @@ FAMILY A — BAND-GATES (4) ── the gate reformation ─── the TRUTH SUBS
   `RouterLink`/`aria-current`. All π OWED. Carries 4 ASK rows.
 - **GF-HANDMARK (8 waves, 68%)** — the natural-stroke synthesis (7→3 brushes). W0 CONTRACT-LOCK · W1
   CALM-CENTERLINE+WEIGHT · W2 FILL-STRATEGY · W3 CONTAIN-HIGHLIGHT · W4 RING-LAYER+SHAPE-DEGRADE · W5
-  DRAW-ON · W6 SURFACE+DEMO-DE-JARGON (19→~8 props per BAND-REDUCTION's floor; the further cut rides
-  ASK Q-HM-2) · W7 CONSUMER+FINAL. The se-guard (the one masked
-  fallback) RETIRED. All π OWED. Carries Q-HM-1/2.
+  DRAW-ON · W6 SURFACE+DEMO-DE-JARGON (the first-principles surface — the USER RULING grants the
+  greenfield full authority; ~5-prop target, census floor superseded) · W7 CONSUMER+FINAL. The
+  se-guard (the one masked fallback) RETIRED. All π OWED. Q-HM-1/2 resolve INSIDE the design loop
+  per the ruling (ASK-18/19 are informational). All handmark design waves run Fable.
 - **GF-AURORA (8 waves, 58%)** — mode ⊥ palette ⊥ backend. W0 CENSUS+CONTRACT-LOCK · W1 PAINT-SUBSTRATE
   +VANGOGH-ON-PRIMARY · W2 OIL-PASTEL-REAL-BODY · W3 CRAYON-HAND-DRAWN · W4 OIL-RESOLUTION (PORT or KILL,
   terminal set `{}`) · W5 PRESET-REDUCTION (17→10 firm) · W6 REVERSE-DRAG (V-A95, after the mode waves) ·
@@ -267,6 +272,11 @@ A wave is DONE only when its born-RED gates flip GREEN **with captured evidence*
   fades, no mechanical ticks. The edict binds EVERY wave that touches motion, not only its named
   owners (`BJ.W-PAGER-DOT-MORPH`, `BJ.W-ROUTE-PENDING`, the FEEDBACK-MOTION band, the dock goo-morph):
   a wave shipping motion that reads weightless fails its challenge pass on this law alone.
+- **The breath-of-life law (standing user edict, PLAN-level, the liquid-weight sibling).** Every
+  component always displays engagement — at rest (idle breath: `BJ.W-IDLE-BREATH` and the substrate
+  fields) and on interaction (affordances that read grow/glow/lift). A wave shipping an inert-at-rest
+  atom or a dead affordance fails its challenge pass on this law alone; the PRM arm and the
+  compositor-only constraint are the law's own guardrails, not exceptions to it.
 - **Live-π discipline (the paint arm).** A "live-verified" claim needs a captured DELTA artefact
   (screenshot + paired-π), never a commit-message claim. Observe via **screenshot + computed-style
   only — never `getContext` on a live canvas** (the context-steal trap); serve on **localhost, not

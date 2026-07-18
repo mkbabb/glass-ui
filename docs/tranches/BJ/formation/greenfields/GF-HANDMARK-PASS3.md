@@ -248,7 +248,7 @@ grain-for-pencil). `G-PROPS` (§10).
 | **W3** | CONTAIN-HIGHLIGHT | line-box-relative band height + the asymmetric clip; keep the page multiply | G-CONTAIN | π-CONTAIN |
 | **W4** | RING-LAYER + SHAPE-DEGRADE | ring: grain→0, z→front, keep overshoot; box/bracket retire → sub-2ch degrade | G-RING-LAYER, G-NO-SLIVER | π-RING, π-DATUM |
 | **W5** | DRAW-ON | adopt `createStrokeDrawIn`; retire the hand-rolled `pathLength=1` + boil animations | G-DRAW-CONNECTED | π-DRAW |
-| **W6** | SURFACE + DEMO-DE-JARGON | 19→~5 props; shrink the Brush model; rewrite `handmark.vue` copy to the editorial voice (codex law 10) | G-PROPS, G-NO-JARGON | π-GALLERY |
+| **W6** | SURFACE + DEMO-DE-JARGON | 19→~8 props (the BAND-REDUCTION adopted floor); the box prop rides Q-HM-2, appear/drawMs ride ASK-27; shrink the Brush model; rewrite `handmark.vue` copy to the editorial voice (codex law 10) | G-PROPS, G-NO-JARGON | π-GALLERY |
 | **W7** | CONSUMER + FINAL | re-point `handmark.vue`; overfit audit (≥2 sites/exported/private-helper); FINAL.md | G-CONSUMER, overfit-audit | π-GALLERY |
 
 ---
@@ -275,8 +275,10 @@ grain-for-pencil). `G-PROPS` (§10).
 - **G-DRAW-CONNECTED** — a draw-on underline reveals as ONE connected growing segment (monotonic coverage
   from one end), no detached fragments mid-draw, and settles solid (no dash-gap at rest). *RED today:*
   `pathLength="1"` + `dasharray:1` over a self-crossing value-noise path (`HandMark.vue:349-356`, F37).
-- **G-PROPS** — HandMarkProps ≤5, ZERO with 0 repo consumers. *RED today:* 19 props, 11 census-dead
-  (`round-1/component-surface---overfit-census.md`).
+- **G-PROPS** — HandMarkProps ≤8 (the BAND-REDUCTION adopted floor: appear/box/drawMs LAND), ZERO
+  with 0 repo consumers among the surviving set; the floor tightens to ≤7 if the user rules Q-HM-2
+  box/bracket-retire (the box prop goes with its shapes) and further only per ASK-27 (appear/drawMs).
+  *RED today:* 19 props, 11 census-dead (`round-1/component-surface---overfit-census.md`).
 - **G-NO-JARGON** — the demo copy contains no internal spec terms (SE-guard, hull, excursion, byte-
   identical, wobble÷stroke) and no mono ALL-CAPS caption (codex law 10). *RED today:*
   `handmark.vue:37,50,66,119,150`.
@@ -371,3 +373,14 @@ substrate verified on disk. The design underbelly is closed. What holds it below
 Per the charter, 3+ passes before contemplating convergence — this IS pass 3, and with π wholly OWED it is
 NOT converged. A live-seat pass 4 (prototype + capture the seven π against the RED baselines) is the next
 required step; it is the only thing that can move this past ~70%.
+
+**USER RULING (2026-07-17, supersedes the STAB2 floor reconcile): "handmark is keep. But
+greenfield and perfect from first principles. Fable."** HandMark is KEEP — its existence is not in
+question — and this greenfield carries FULL first-principles design authority over the perfected
+component, surface included. The BAND-REDUCTION 19→~8 floor is SUPERSEDED by the user's word: the
+first-principles surface (the ~5-prop target above, or whatever the perfected design derives) is
+the greenfield's to decide, Q-HM-1/Q-HM-2 included — they resolve inside the design loop, not the
+ASK. Consumers adapt per the standing consumer-updates ruling (no obsolete-API preservation; each
+consumer migrates via a marked addendum in ITS tranche). All handmark design waves run Fable
+seats. W6 + G-PROPS read with this ruling governing: the ≤8 conditional ladder collapses back to
+the first-principles target.
