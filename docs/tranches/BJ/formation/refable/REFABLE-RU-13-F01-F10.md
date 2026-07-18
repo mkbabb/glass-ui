@@ -98,3 +98,44 @@ redo. Two band/greenfield charter premises flip:
 | RT1 | `greenfields/GF-DOCK-PASS3.md` §5 (`:204-206`) + §Gates (`:225-226`, the F04/F47 baseline) | FLIP-1: correct "stadium pill"→`shape="rounded"`; pin the W5 baseline π to `rail.vue:108-140`; add the `shape`-axis ruling to W5's shape-grammar scope |
 | RT2 | `waves/BAND-REDUCTION.md` §Band framing item 2 + W2 `G-CARD-DEFAULT-PAINT` (`:33-37`, `:240`) | FLIP-2: relabel "the F04 shape" → "the F04 order's opinionated-defaults surface"; the gate itself stands |
 | RT3 | `redress/DOSSIER-F01-F10.md` | DONE this unit — union rewritten in place |
+
+## RE-VERIFICATION — second independent Fable pass (2026-07-18)
+
+A second RU-13-F01-F10 seat (`claude-fable-5`) ran the full protocol against the committed union
+(`ced045d1` at its HEAD). ANEW ran first and complete — the six screenshots re-read, the ledger rows,
+PLAN + BAND-STORY/PERF/REDUCTION + GF-DOCK/GF-AURORA + JUDGE + crosswalk, and the named sources at
+HEAD (`rail.vue`, `overview.vue`, `layers.vue`, `SectionPreviewCard.vue`, `storyTile.ts`,
+`CatalogLanding.vue`, `AuroraColorSection.vue`, `AuroraConfigDock.vue`, `Configurator.vue` + its
+styles, `toggle-group/styles.css`, `routeTransition.ts`, `TransitionRouteLink.vue`, `router.ts`,
+`AppShell.vue`, dock `controls/`+`shape.css`, `useDockShellProps.ts`, `Card.vue`, both preset
+rosters, `aurora-mediums.wgsl.ts`, `StorySection.vue`, `sizing-config.css`, R3A-DIGEST) — the union
+opened only after the per-row correlations were fixed. Findings:
+
+- **Independent convergence on the F04 correction.** The `entries.slice(0,4)` icon census
+  (Compass/Shapes/Boxes/Navigation + home) and the "Rounded shape" `rail.vue:108-140` anchor were
+  reached in ANEW before the union was read — the unit's one OPUS-WRONG verdict is corroborated
+  from scratch, not inherited.
+- **Every load-bearing cite re-proven at the same tree** (no `src/`/`demo/` commits since
+  `4757315a`): the WGSL `applyMedium` 3/5/6/7→`mediumKuwahara` alias (`aurora-mediums.wgsl.ts`,
+  fn body verbatim); `PRESETS` = 17 keys incl. `SPEEDTEST` (`presets.ts:685-703` exact);
+  `shape?: "pill" | "rounded" | "card"` (`useDockShellProps.ts:53`); the blocking `beforeResolve`
+  chunk-await (`router.ts:121-130`); the bare keyed swap + no `::view-transition` CSS anywhere in
+  `demo/`; `CatalogLanding.vue:7→:40` identityTile ladder-bypass; 4 `.tile.vue` repo-wide;
+  `content-visibility:auto` + `contain-intrinsic-size:auto 19rem` (`SectionPreviewCard.vue:63-65`);
+  `grain: true`/`metal: "gold"` live Card defaults; `--radius-ctx: var(--radius-panel)`
+  (`Configurator.vue:211`) + the concentric relay; the 280px/360px aside band; the pill radius on
+  the harmony chips (`toggle-group/styles.css:42` + `basis-[calc(50%-0.25rem)]`);
+  `StorySection.vue:32` single-rung h2; `--configurator-section-size: var(--type-subheading)`
+  (`sizing-config.css:35`); `label="Color" sub="seed · harmony · palette"`
+  (`AuroraConfigDock.vue:267`); `manifest.ts:932`; the deliberate `dock: "grid"` category
+  background with the one-GL-per-route rationale (`manifest.ts:207-231` — the F05 aurora-half's
+  design context); **73** modulepreloads counted in the committed `dist-demo/index.html`.
+- **Zero corrections to the union.** Two nits, immaterial: GF-DOCK-PASS3 §5 at HEAD carries the
+  "stadium pill" phrase as the forward grammar line (`:211`), not a literal F04-screenshot
+  description — FLIP-1's operative re-judge scope ((a) baseline-π anchor, (b) the `shape`-axis
+  ruling) is unaffected and both remain unapplied; Card's `metal: "gold"` default sits at
+  `Card.vue:39` where BAND-REDUCTION says `:38`.
+- **RT1/RT2 confirmed STILL-LIVE at HEAD** (`GF-DOCK-PASS3.md:204-217` unchanged;
+  `BAND-REDUCTION.md:36`/`:240` still label the Card probe "the F04 shape"). The lead's re-judge
+  remains owed.
+- **Dossier left byte-stable** — the union is RATIFIED as canon by two independent Fable passes.

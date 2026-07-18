@@ -1,85 +1,80 @@
-# REFABLE RU-13 — scrutiny sidecar for DOSSIER-F11-F20
+# REFABLE RU-13 — F11-F20 verdict sidecar (true-Fable run, 2026-07-18)
 
-verified-model: claude-fable-5 (the true run; the prior artifact ran on claude-opus-4-8 via config
-override). Date: 2026-07-18. HEAD at scrutiny: v7.0.0-51-g4757315a.
+verified-model: claude-fable-5 (the seat's own system-context line, read verbatim)
+unit: RU-13-F11-F20 · artifact: `../redress/DOSSIER-F11-F20.md` (rewritten in place) · HEAD: ced045d1
+provenance: the prior run of this unit — the on-disk "union" AND its sidecar, both carrying
+fable-5 self-stamps — executed on claude-opus-4-8 via the settings-level subagent override (the
+census incident, `DEMARCATION.md` correction; the self-stamp is exactly the incident's signature:
+a seat that believed it was Fable while the override routed it). This run is the true-Fable redo:
+ANEW from the original edict against primary sources only, the prior artifact unread until the
+boundary; then claim-by-claim scrutiny, every claim guilty until re-proven; then the union
+rewritten in place.
 
-Protocol followed: (1) ANEW from the original edict against primary sources only (ledger rows,
-preserved PNGs, `src/` + `demo/` at HEAD, git history, bands + PLAN.md) with the opus artifact
-unread; (2) SCRUTINY of the opus artifact claim-by-claim, guilty until re-proven; (3) UNION
-rewritten in place at `../redress/DOSSIER-F11-F20.md`.
+**Boundary moment.** ANEW closed with all ten rows correlated and verified at HEAD — including
+the independent derivations of the F17 born-RED mechanism (`search.vue:503` `variant="floating"` →
+`searchVariants.ts:10` `rounded-none`, zero re-chroming rules), the F11 gap provenance
+(`ff69acd9`), the F12 v6-vs-v7 radius endpoints, and the F18 sibling census re-greps — BEFORE
+`DOSSIER-F11-F20.md`, the prior sidecar, or the CRIT files were opened. JUDGE.md and the bands
+were read during ANEW as reconciliation targets (they are plan, not the artifact under scrutiny).
 
-Boundary moment: ANEW closed after the ten-row source pass (F17's `searchVariants.ts` rounded-none
-root cause, F16's dead-export census, F11's BI-B1 provenance, and F12's cut-level git proof all in
-hand) — only then were DOSSIER-F11-F20.md, JUDGE.md, APPLYLOG.md, the CRIT files, and the crosswalk
-opened.
-
-## Per-row verdicts
+## Per-row verdicts (vs the prior on-disk artifact)
 
 | Row | verdict | basis |
 |-----|---------|-------|
-| F11 | **RATIFIED** (+enrichment) | correlation (AuroraConfigDock sub-labels verbatim), fault (`configurator/styles.css:25,:117`), owner (G-CFG-3), and the "deliberate idiom mismatch" post-mortem all re-proven; union adds the git fact that the card+gap treatment landed at BI B1 `ff69acd9` 2026-07-13 — the user rejected the SEEN design, four days after it shipped |
-| F12 | **RATIFIED** (2 corrections) | guard posture re-proven; corrected: (a) `styles.css:61` is the delete button, not the chip (chip stadium comes from `Chip` via `TagsInputItem.vue:23`); (b) "PNG predates the repoint" tightened by `git show 490cc46e` — the radius was in the v7.0.0 cut itself, so only a stale-served demo or a paint-only defect explains the PNG. Paint: LIVE-DEFER |
-| F13 | **RATIFIED, gap escalated** | anchors verified (`:69,:109,:76,:117,:143`); the opus Δ-F13-1 (drag-affordance residue) was CRIT-confirmed disk-true yet is ABSENT from JUDGE.md J1-J11 and APPLYLOG — unruled, unapplied, unowned at HEAD (see FLIPS) |
-| F14 | **RATIFIED** | landing-grid anchors (`SectionLanding.vue:33`, `CatalogLanding.vue:32`), 100-route AMEND, G-RSP gates all verified; execution LIVE-DEFER by construction |
-| F15 | **RATIFIED** (+enrichment) | `rounded-md` at `infinite-scroll.vue:74` verified RED at HEAD; raw-literal sites (`SortableList.vue:144` 999px, `segmented.css:169,:306`) verified; union adds: the element is a raw `<button>`, so the fix should dogfood `<Button>`, killing the F14-class defect with the radius defect |
-| F16 | **owner RATIFIED; isolation + post-mortem CORRECTED** | opus "the demo renders three of them [variants]" is false — all three demo bodies import GlassTimeline only; `timeline/index.ts` exports ONLY GlassTimeline+types; Continuous/Rail/Markers/Scrubber/Segmented are unexported AND unconsumed (one test aside) = in-repo dead code; README claims they are exported (doc-truth violation, unnamed at HEAD); post-mortem corrects from "five variants grew to serve one external app" to "four of five serve nobody" |
-| F17 | **OVERTURNED** | opus's mechanism ("no own border-radius, rides field-control pill"), disk-state ("role-correct on disk"), and screenshot read ("roughly-equal radius") are all false — see FLIPS F-1 |
-| F18 | **RATIFIED** (precision note) | ASK §A1 + census verified verbatim; the "metric-pill deleted"/"metric-badge folded" wobble replaced with the verified facts (granular subpaths + MetricBadge symbol removed at 490cc46e; ./metric + ./instrument-chassis exports live) |
-| F19 | **RATIFIED** (2 corrections) | all three complaint axes disk-true (`rounded-lg` + wash 1px + uniform border); corrected: rounded-lg resolves to 10px here (`--radius-lg: var(--radius)` = 0.625rem), not 8px; the W4 born-RED "alert is neither" should read "wrong rung", since a wash backdrop exists. Severity in paint: LIVE-DEFER |
-| F20 | **RATIFIED, status advanced** | opus's analysis (toast already on glass-reveal transient; born-RED framing stale) re-proven at `Toast.vue:80` + `transitions.css:87-112` + BI B7 `ef3ea646`; its Δ-F20-1 has since been ADOPTED (J4) and APPLIED to BAND-FEEDBACK-MOTION W1 — coverage advances PARTIAL→EXACT; the transient-vs-overlay "exactly like dialog" judgment is LIVE-DEFER (OPEN-FM-1) |
+| F11 | **RATIFIED** | screenshot first-hand; 7 `<ConfiguratorLayer>` sections at `AuroraConfigDock.vue:267-296` verbatim; gap = `styles.css:25` token at `:117-119`; `ff69acd9` (2026-07-13, in v7.0.0) message matches; owner G-CFG-3 + A10 mark + crosswalk:33 all re-proven |
+| F12 | **RATIFIED + SHARPENED** | radius role-correct on disk at HEAD and in the v7.0.0 cut (re-run `git show`); `:61` = delete button, chip via `<Chip>` (`TagsInputItem.vue:23`); guard posture per the lead amendment holds. FABLE-NEW: v6.0.0 wore `rounded-input` (10px) — BOTH serve-range endpoints paint rounded, so square paint requires a var-resolution/paint-only failure, not mere staleness. Paint: LIVE-DEFER |
+| F13 | **RATIFIED** | anchors `:69,:109,:76,:117,:143` + `SortableList.vue:144` (999px) verified; the Δ-F13-1 judge-omission independently confirmed — zero F13 rows in J1-J11 and zero in APPLYLOG (see FLIP F-2) |
+| F14 | **RATIFIED** | `SectionLanding.vue:33`/`CatalogLanding.vue:32` fixed grids verified; W6 first-class owner; execution LIVE-DEFER by construction |
+| F15 | **RATIFIED + truth-up** | `rounded-md` at `infinite-scroll.vue:74` RED at HEAD; `segmented.css:169` (0.3125rem) `:306` (0.25rem) verified; dogfood-`<Button>` sharpening kept. FABLE-NEW: word-boundary `text-sm`/`text-xs` count at HEAD is **234** (the band's 251 drifted post-demeta; naive greps inflate on `text-small`) |
+| F16 | **OPUS-WRONG ×3 — prior layer OVERTURNED** | the prior pass's "four of five variants are in-repo dead code / unconsumed by any src/demo file / sole reference one test" claims are FALSE: `GlassTimeline.vue:2-4` is a mode facade importing + delegating to Scrubber/Segmented/Continuous; `ContinuousTimeline.vue:3-4` composes Rail+Markers; the test imports GlassTimeline (`continuous-structural-split.test.ts:4`), ContinuousMarkers appears only in a comment (`:226`). KEPT (re-proven): index exports only GlassTimeline+types; README §Exports lists five never-shipped exports (real doc-truth violation, unnamed in BAND-DOC-TRUTH); single-external consumer (speedtest `PhaseTimeline.vue:49`; `MeterColumn.vue` comments only); owner + A2 all-five scope. Post-mortem recut: facade-mode overfit, not dead-variant accretion |
+| F17 | **RATIFIED — FLIP CONFIRMED** | the born-RED mechanism was re-derived at ANEW before the boundary, independent of the prior text; the OVERTURN of RULING 8's premise stands (FLIP F-1) |
+| F18 | **RATIFIED** | census re-verified by fresh read-only sibling greps: speedtest instrument-chassis multi-site, muster ×5 files, fourier-analysis metric-badge ×7 files; ASK-REDUCTION §A1 present with the SHARED-KEEP recommendation; W4 ASK-gated relay posture holds |
+| F19 | **RATIFIED** | `rounded-lg` → `--radius-lg` → `--radius` = 10px (radius.css:16,:31); `--glass-blur-wash-radius: 1px` (tokens/glass.css:86); `6f77ab12` tone-fold real; owner W4 + crosswalk reconciliation :213-216 verified. Paint severity: LIVE-DEFER |
+| F20 | **RATIFIED** | `ef3ea646` (BI B7) in v7.0.0 by `merge-base`; toast rides transient `glass-reveal` (`Toast.vue` + `transitions.css:87-112`); dialog registers at `DialogContent.vue:235,:458`; J4 applied verbatim at `BAND-FEEDBACK-MOTION.md:41-47`. The parity judgment: LIVE-DEFER (OPEN-FM-1) |
 
-Tally: 8 ratified (5 with corrections/enrichments), 1 materially corrected (F16), 1 overturned
-(F17). Coverage retotal: EXACT 9 / PARTIAL 1 (F13) / MISSING 0.
+Counts: **OPUS-WRONG 3** (all F16: dead-code / unconsumed / sole-test-reference) · **FABLE-NEW 3**
+(the facade-dispatch composition graph; the F12 v6-endpoint provenance narrowing; the 251→234
+type-site truth-up) · **RATIFIED 9** rows (F11-F15, F17-F20; F16's owner/coverage layer also
+re-proven). Coverage retotal unchanged: EXACT 9 / PARTIAL 1 (F13) / MISSING 0.
 
-## FLIPS — findings that contradict a JUDGE.md ruling or band premise (lead re-judges)
+## FLIPS — findings contradicting a JUDGE ruling or a band-charter premise (the lead re-judges)
 
-**FLIP F-1 — F17 vs RULING 8 (+ its derivatives).** RULING 8 (`ADJUDICATION-1.md` item 8), the
-BAND-MATERIAL lead amendment (`BAND-MATERIAL.md:698-700` "disk shows both sites already
-role-correct"), crosswalk reconciliation item 5 (`crosswalk:227-229`), `PLAN.md:187`
-("F12/F17 convert to REGRESSION-GUARDS — already role-correct on disk"), and the W1 §D text
-(`BAND-MATERIAL.md:117-119` "the search component has no own border-radius (rides field-control
-pill)") all rest on a false disk claim for F17. Verified at HEAD:
-- `SearchBar.vue:4` / `FuzzySearch.vue:126-127` ride `.input-bar`
-  (`styles/utilities/components.css:12-16`, radius `--radius-2xl`) — NOT `field-control`.
-- `searchVariants.ts:8-11`: `floating`/`bare` = `"border-none bg-transparent p-0 rounded-none"`;
-  the demo (`search.vue:504`) uses `variant="floating"`; no `.fuzzy-search--floating` chrome rule
-  exists anywhere in `src/`.
-- `rounded-none` (@layer utilities) beats `.input-bar`'s radius (@layer components)
-  unconditionally — the square second input is statically derivable from HEAD source; the PNG and
-  `VISUAL-GESTALT.md:12` ("one sharp") agree.
-Consequence: F17's posture reverts REGRESSION-GUARD → born-RED FIX (owner unchanged — W1's own
-"if the live-π reproduces" conditional resolves TRUE; final paint confirmation LIVE-DEFER). J5 is
-untouched for F45/F09/F12 but its "F09/F12/F17 conversion class" naming should drop F17. F12's
-half of RULING 8 stands.
+**FLIP F-1 — F17 vs RULING 8 + its derivatives (CONFIRMED on independent re-derivation).**
+RULING 8 (`ADJUDICATION-1.md` item 8), the ASSEMBLY lead amendment (`BAND-MATERIAL.md:698-700`
+"disk shows both sites already role-correct"), the W1 §D charter text (`BAND-MATERIAL.md:117-119`
+"the search component has no own `border-radius` (rides `field-control` pill)"), `PLAN.md:187`,
+and crosswalk item 5 (`:227-229`) are FALSE for F17 on every clause: search rides `.input-bar`
+(own `--radius-2xl`, `utilities/components.css:12-16`), not `field-control`; and the `floating`
+variant (`searchVariants.ts:10`) strips it with `rounded-none` — a utilities-layer class that
+beats the components-layer radius unconditionally, with zero `.fuzzy-search--floating` chrome
+rules in `src/`. The square second input at `/data/search` is the DISK state at HEAD, statically
+derivable. Posture reverts REGRESSION-GUARD → **BORN-RED FIX** inside `BJ.W-RADIUS-ROLE`
+(RULING 8's own "owns the remediation if the live-π reproduces" conditional licenses this; the
+live-π will reproduce — final paint confirmation LIVE-DEFER). F12 is unaffected — it re-proves
+role-correct; only the F17 half of the paired premise falls.
 
-**FLIP F-2 — Δ-F13-1 absent from the judgment (JUDGE.md completeness).** JUDGE.md rules J1-J11 on
-"every surviving delta" and closes "zero floating notes remain" — but the dossier proposed TWO
-deltas and only Δ-F20-1 was ruled (J4). Δ-F13-1 (the sortable-list drag-affordance residue —
-grab/lift/drop expressiveness under the breath-of-life edict), confirmed disk-true by CRIT1-A:130
-and CRIT2-A:92, appears nowhere in J1-J11, APPLYLOG, or BAND-STORY. The residue is unowned at
-HEAD; the ledger's silent-drop prohibition applies. Recommended homes for the ruling:
-`BJ.W-IDLE-BREATH`'s interaction half (A01 engagement contract) or an explicit clause in
-`BJ.W-RESPONSIVE-AUDIT`'s fix mandate.
+**FLIP F-2 — F13 vs JUDGE.md's closure claim (CONFIRMED).** "Zero floating notes remain"
+(JUDGE.md) is falsified: the Δ-F13-1 drag-affordance residue (grab/lift/drop expressiveness under
+the breath-of-life edict, CRIT-confirmed disk-true) appears in no J1-J11 ruling and no APPLYLOG
+row. The "better design" half of F13 stays PARTIAL until the lead rules an owner (natural homes:
+the A01 engagement-audit scope, `BJ.W-IDLE-BREATH`'s interaction half, or an explicit
+W-RESPONSIVE-AUDIT fix-mandate clause).
 
-No finding contradicts J1-J4, J6-J11, C-A..C-G, T1-T2, or any band charter premise beyond the two
-above. The F11 tension is with BI B1's Law-2 card+gap treatment (pre-BJ), which the BJ formation
-already overrules in the user's favor (G-CFG-3) — recorded as provenance, not a flip.
+**NOT a flip — prior-layer overturn + one routing item.** The F16 facade truth contradicts no
+JUDGE ruling and no band charter (BAND-REDUCTION W5's stub, amendment A2's all-five scope, and
+C-C's sequencing all hold under it); it overturns only the prior artifact's own isolation layer.
+Riding with it: the timeline `README.md` §Exports drift (five documented exports absent from
+`index.ts`) is unnamed in `BAND-DOC-TRUTH` — the lead routes it there or to the W5 stub.
 
-## Corrections applied in the union (non-flip class)
+## LIVE-DEFER register (this seat owns no browser)
 
-1. F12 — chip-radius line misattribution (`:61` is the delete button); cut-level provenance added.
-2. F16 — isolation + post-mortem rewritten on the dead-export census; README doc-truth violation
-   named (BAND-DOC-TRUTH interest).
-3. F19 — `rounded-lg` = 10px (theme-resolved), not 8px; "neither" phrasing sharpened.
-4. F20 — coverage advanced to EXACT (J4 applied); dossier text was stale against the amended band.
-5. F15 — dogfood-`<Button>` sharpening added to the fix shape.
-6. Header — stale `git describe` (v6.0.0-62) replaced with the union-time HEAD.
-
-## LIVE-DEFER register (claims only live paint can settle — no browser owned by this seat)
-
-- F12: whether `/data/tags-input` paints the 1rem container radius (OPEN-1a live-π).
-- F17: final paint confirmation of the statically-derived square floating field.
-- F19: how severe 10px radius + 1px wash blur read on the page.
-- F20: whether the transient bloom satisfies "exactly like our refined dialog" (OPEN-FM-1).
-- F16: the "buggy" interaction verdicts at `/data/timeline` (design-loop RED baseline).
-- F14: the whole responsive-audit execution (Playwright, browser-seat serialized).
+- F12 `/data/tags-input` paint vs the 16px disk state (the guard's live-π; assert the computed
+  `border-radius` var chain, per the paint-only-failure hypothesis).
+- F17 `/data/search` final paint confirmation of the statically-derived square (the born-RED
+  fix's before capture).
+- F14 execution — inherently live (100 routes × 2 viewports, Playwright, browser seat serialized).
+- F16 the "buggy" interaction verdicts at `/data/timeline` (the design-loop's captured RED
+  baseline owns them).
+- F19 how 10px + 1px-wash READ on the page (the token facts are disk-true regardless).
+- F20 whether the current transient bloom satisfies "exactly like our refined dialog" (the W1
+  REGISTER-PARITY live-π, J4).

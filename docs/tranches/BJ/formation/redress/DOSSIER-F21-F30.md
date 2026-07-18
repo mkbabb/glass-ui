@@ -1,10 +1,13 @@
 # BJ redress dossier — F21 through F30 (REFABLE unioned canon)
 
-verified-model: **claude-fable-5** (REFABLE RU-13, 2026-07-18). Union provenance: the prior artifact
-ran on claude-opus-4-8 via a config override; this file is the union of a fresh ANEW analysis
-(primary sources at HEAD 4757315a, opus artifact unread) with the opus dossier read under
-guilty-until-re-proven — opus content survives only where RATIFIED; fresh evidence is authoritative
-on conflict. Verdict sidecar: `../refable/REFABLE-RU-13-F21-F30.md`.
+verified-model: **claude-fable-5** (REFABLE RU-13 true run, 2026-07-18, HEAD ced045d1 at
+verification). Union provenance: the original dossier ran on claude-opus-4-8 via a config override;
+a first union pass rewrote it (self-stamped fable-5, HEAD 4757315a); this TRUE-RUN pass re-executed
+the full protocol against it — fresh ANEW from primary sources with the artifact unread, then
+SCRUTINY with every claim guilty until re-proven. All ten rows re-proved in substance (the F28
+7px statics re-proven at file grain, `button/styles.css:47-50`); two F25 evidence errors corrected
+(fold-commit attribution; live relay census) and three stale cites refreshed. Fresh evidence
+authoritative on conflict. Verdict sidecar: `../refable/REFABLE-RU-13-F21-F30.md`.
 
 Per-row inventory / isolation / target / post-mortem / redress / verdict for feedback-ledger rows
 **F21-F30**, the user's 2026-07-17 corpus. Screenshots F21/F22/F27/F28 read first-hand from
@@ -64,7 +67,8 @@ shipped uncontested. It is the lead-named phantom: a rim-only branch banked at
 
 **REDRESS.** Owned EXACTLY by `BJ.W-PROGRESS-RIM-REPLACE` (BAND-FEEDBACK-MOTION W2,
 `../../waves/BAND-FEEDBACK-MOTION.md:49-63`) — a REPLACEMENT, not a retune, under iOS-27 codex law
-12 (`../ios27/IOS27-CODEX.md:55-57`): discrete progress reads as a filled pill that grows and
+12 (`../ios27/IOS27-CODEX.md:28` — "→ the scroll-progress-rim replacement model"): discrete
+progress reads as a filled pill that grows and
 swallows the next dot; scroll-progress takes the same fill-pill grammar with a continuous fraction;
 the broken-arc rim retires. The fresh geometry evidence RATIFIES replacement over retune: fixing
 the arc model on wide rectangles would need arc-length reparameterization — needless machinery for
@@ -240,8 +244,11 @@ ORPHAN → LANDED; AGREE with LANDED on ownership.
 any different from a normal dialog."* URL-anchored, no screenshot.
 
 **ISOLATION (re-proven this seat).** The user's premise is CORRECT and already actioned at the code
-level: there is no `src/components/confirm-dialog` (verified absent at HEAD; the component was cut
-in the BI Glass 7 cut, 490cc46e) — the `./confirm-dialog` subpath folded into `./dialog` at 7.0.0.
+level: there is no `src/components/confirm-dialog` (verified absent at HEAD; the demotion landed at
+**c368ccbc** — BI B28 `BI.W-DIALOG-PLACEMENT`, "ConfirmDialog DEMOTED to a consumer Dialog preset,
+dirs/barrels/subpaths DELETED" — PREDATING the Glass 7 cut 490cc46e the prior dossier credited;
+`git log --diff-filter=D -- 'src/components/confirm-dialog*'` names exactly c368ccbc) — the
+`./confirm-dialog` subpath folded into `./dialog` at 7.0.0.
 The demo page `demo/stories/feedback/confirm-dialog.vue` is now, explicitly, a CONSUMER PRESET of
 Dialog shown inline (its header comment: "ConfirmDialog DEMOTED to a Dialog PRESET… presets live in
 consumers", `:5-9`): three `<Dialog>` + `<DialogContent surface="glass" :show-close="false">`
@@ -252,8 +259,13 @@ construction. What remains open is only whether the STORY PAGE survives as a dis
 **TARGET.**
 - Demo site: `demo/stories/feedback/confirm-dialog.vue` (whole page; the inline preset).
 - Src: `src/components/dialog/` (the fold target; subpath removed at 7.0.0).
-- External consumers still on the removed subpath (the family-B relay): muster×1, words×5,
-  value.js×2 = 8 (`ASK-REDUCTION.md:175-181`).
+- External consumers still on the removed subpath (the family-B relay): the ASK's figure is
+  "muster×1, words×5, value.js×2 = 8" (`ASK-REDUCTION.md:175-181`); the fresh sibling census
+  (this seat, `grep -rln "glass-ui/confirm-dialog"`) finds **6 LIVE import sites** — words×5
+  (`frontend/src/components/custom/{sidebar×2,wordlist/views×2,search×1}`) + muster×1
+  (`frontend/src/App.vue`) — while the value.js pair are DOC references only
+  (`docs/tranches/V/CONSUMER-CUT.md`, `…/waves/W44.md`), not live imports. The family-B relay
+  carries the corrected 6-live + 2-doc figure.
 
 **POST-MORTEM.** Not a defect — an already-executed reduction whose demo residue outlived it. The
 component fold landed; the demo page was rewritten to a preset illustration but kept its own route,
@@ -356,7 +368,8 @@ clip. It computes to auto; the ring-room padding plus overhanging content became
 overflow; nothing asserted "the horizontal dock has no block axis to scroll."
 
 **REDRESS.** Owned EXACTLY by the dock greenfield: `GF-DOCK-PASS3 §4.1` W2
-(`../greenfields/GF-DOCK-PASS3.md:139-144,272`), gate **`G-NO-BLOCK-SCROLL`** (`:284-286`):
+(`../greenfields/GF-DOCK-PASS3.md:104-111`, roster row `:304`), gate **`G-NO-BLOCK-SCROLL`**
+(`:336-337`):
 `scrollHeight === clientHeight` on the horizontal dock at every content/viewport combination; the
 cure is explicit `overflow-y: clip` on the port (killing the computed-auto coercion at the root,
 not a band-aid) + dropping `block:'nearest'` from the recentre. The corrected mechanism STRENGTHENS
@@ -503,17 +516,25 @@ observation ADDED as fold rationale. Crosswalk: ASK; AGREE.
 | F22 | animated loop jittery/mis-eased | `BJ.W-FEEDBACK-MOTION-TUNE` (FEEDBACK-MOTION W3, J7 applied) | **EXACT (as amended)** | RATIFIED + wrap-rewind evidence |
 | F23 | slider/progress track DRY | `BJ.W-TRACK-DRY` (MATERIAL W4, C-C) | **EXACT** | RATIFIED; 2 corrections (valueDomain credit, J1 re-route) |
 | F24 | skeleton animation too slow | `BJ.W-FEEDBACK-MOTION-TUNE` (FEEDBACK-MOTION W3) | **EXACT on owner; gate shape corrected** | **OPUS-WRONG** (5s via token, wrong-rung bind — not a 2.4s local literal) |
-| F25 | confirm-dialog vs normal dialog | `ASK §C2` (fold landed; C-A default: fold the story) | **EXACT (decision)** | RATIFIED + C-A |
+| F25 | confirm-dialog vs normal dialog | `ASK §C2` (fold landed; C-A default: fold the story) | **EXACT (decision)** | RATIFIED + C-A; 2 evidence corrections (fold-commit = c368ccbc; live relay census = 6, value.js docs-only) |
 | F26 | completion-seal overfit/"speedtest" | `BJ.W-REDUCE-CROSSREPO-GATED` + `ASK §A2` (D-3) | **EXACT (decision)** | RATIFIED (census re-proven first-hand) |
 | F27 | why vertical scroll in dock | `GF-DOCK §4.1 W2 G-NO-BLOCK-SCROLL` | **EXACT** | RATIFIED owner/gate; **mechanism corrected** (visible→auto coercion; false spec comment) |
 | F28 | blurs inconsistent | `BJ.W-BLUR-LADDER` (MATERIAL W2, OPEN-2d re-aimed per J6) | **EXACT (as amended)** | RATIFIED + fork statically decided |
 | F29 | springs configurator support | `BJ.W-CONFIGURATOR-STD` G-CFG-1 (+ AMEND-D-2, J10) | **EXACT** | RATIFIED + J10 |
 | F30 | tempo "what even is" | `ASK §C4` (fold into springs; C-E scope) | **EXACT (decision)** | RATIFIED + C-E |
 
-**Totals: RATIFIED 8 / OPUS-WRONG 2 (F24 wholesale; F27 mechanism) / owner moved 0.** Fresh
-findings this seat: 6 (F21 segment arm · F22 wrap-rewind · F23 valueDomain+marks census · F24
-5s/wrong-rung · F27 computed-auto + false comment · F28 static fork resolution). LIVE-DEFER: 2
-(F27 scrollable-delta source; F28 bloom-intentionality π).
+**Totals vs the ORIGINAL opus dossier: RATIFIED 8 / OPUS-WRONG 2 (F24 wholesale; F27 mechanism) /
+owner moved 0.** First-union fresh findings: 6 (F21 segment arm · F22 wrap-rewind · F23
+valueDomain+marks census · F24 5s/wrong-rung · F27 computed-auto + false comment · F28 static fork
+resolution). LIVE-DEFER: 2 (F27 scrollable-delta source; F28 bloom-intentionality π).
+
+**TRUE-RUN second pass (this seat, HEAD ced045d1): 9 rows RATIFIED clean / 1 row corrected at
+evidence grain (F25 — fold-commit c368ccbc not 490cc46e; live relay census 6 not 8, value.js pair
+docs-only) / 0 owners moved / 3 stale cites refreshed (codex law 12 → `:28`; GF-DOCK §4.1/W2/gate →
+`:104-111`/`:304`/`:336-337`).** The F28 all-7px statics — the one claim this seat's own ANEW
+initially contradicted (an 11px capsule-cascade theory) — re-proved TRUE at
+`button/styles.css:47-50` (`[data-emphasis="secondary"]` (0,2,0) pins `--glass-blur-resting` over
+the capsule rung); J6 stands doubly verified.
 
 ## Appendable deltas
 

@@ -1,7 +1,7 @@
 # BJ redress dossier — F11 through F20 (unioned canon)
 
-verified-model: claude-fable-5 (REFABLE RU-13, 2026-07-18)
-union-provenance: the prior artifact ran on claude-opus-4-8 via config override; this file is the REFABLE union — a fresh Fable ANEW pass (primary sources at HEAD v7.0.0-51-g4757315a) scrutinized the opus text claim-by-claim, kept only what re-proved, and overwrote the rest. Verdict sidecar: `../refable/REFABLE-RU-13-F11-F20.md`.
+verified-model: claude-fable-5 (REFABLE RU-13 true run, 2026-07-18)
+union-provenance: twice-unioned — the prior pass (and its fable-5 self-stamp) was begat under the claude-opus-4-8 settings override the census incident exposed; this is the true-Fable run: a fresh ANEW pass at HEAD (ced045d1) re-proved every claim against primary sources, overturned the prior F16 isolation layer (the facade truth), sharpened F12/F15, and ratified the rest. Verdict sidecar: `../refable/REFABLE-RU-13-F11-F20.md`.
 
 Per-row inventory / isolation / target / post-mortem / redress / status for feedback-ledger rows
 **F11-F20**, the user's 2026-07-17 corpus. Screenshots F11/F12/F15/F17 read first-hand from
@@ -78,7 +78,11 @@ corners read square — the "pill chips inside a near-rectangle container" incoh
 `border-radius: var(--radius-field)` was in the v7.0.0 cut ITSELF (the file is untouched since). The
 feedback is post-7.0.0-order, so the square corners in the PNG cannot come from the cut's source —
 the running demo at capture time was a stale pre-BI process, or a cascade defect existed only in
-paint. Either way the enforceability gap is real: no gate pinned the container to a role token.
+paint. The true-run pass narrows this further: at v6.0.0 the root wore `rounded-input` (10px) via a
+raw utility string (`TagsInput.vue` at the tag), so BOTH endpoints of the plausible serve range
+paint rounded (10px → 16px) — a stale serve alone cannot produce 0px; square paint requires a
+var-resolution or paint-only failure (the oklab/paint-arm defect class). Either way the
+enforceability gap is real: no gate pinned the container to a role token.
 
 **REDRESS.** Owned by `BJ.W-RADIUS-ROLE` (BAND-MATERIAL W1) under **RULING 8**
 (`ADJUDICATION-1.md` item 8) as converted by the lead amendment (`../../waves/BAND-MATERIAL.md:698-700`)
@@ -125,7 +129,9 @@ half, or an explicit clause in the W6 fix mandate). Coverage: **PARTIAL** until 
 
 **STATUS.** Crosswalk **LANDED** (`crosswalk:35`) for the horizontal half. Verdict vs opus:
 **RATIFIED, gap escalated** — the opus delta was right and then fell through the judge pass; the
-union converts it from "appendable proposal" to a named JUDGE omission.
+union converts it from "appendable proposal" to a named JUDGE omission. REFABLE-2: the omission
+independently re-verified — J1-J11 carry no F13 ruling and APPLYLOG carries no F13 row; the
+escalation stands.
 
 ---
 
@@ -175,8 +181,9 @@ eyebrow (`INFINITE SCROLL`) incidentally exhibits the typography half's target i
   control the library ships, against F14's own dogfood mandate.
 - Grand rounding: the role canon at `src/styles/theme/radius.css` + the raw-literal sites
   `SortableList.vue:144` (`999px`), `tabs/styles/segmented.css:169,:306` (raw rem) — all verified.
-- Grand typography: the unreset Tailwind ramp + the 251 `text-sm`/`text-xs` sites + the mono-caption
-  idiom.
+- Grand typography: the unreset Tailwind ramp + the `text-sm`/`text-xs` sites (band count 251; the
+  true-run word-boundary re-count at HEAD is **234** post-demeta — naive greps inflate on
+  `text-small`; re-count at wave time) + the mono-caption idiom.
 
 **POST-MORTEM.** Unenforced token canon on two axes: a rich radius role vocabulary exists but
 nothing lints raw radius utilities; the `@theme` bridge adds √φ rungs without resetting Tailwind's
@@ -202,38 +209,44 @@ dogfood-Button sharpening.
 **INVENTORY.** Ledger (`../../FEEDBACK-LEDGER.md:28`): *"Very poorly defined, buggy, likely many
 facilities overfit. Redesign from the ground up."* URL-anchored, no screenshot.
 
-**ISOLATION (corrected).** `src/components/timeline/` ships six SFCs + geometry (~2,244 lines):
-`GlassTimeline.vue`, `ContinuousTimeline.vue` + `ContinuousRail.vue` + `ContinuousMarkers.vue`,
-`ScrubberTimeline.vue`, `SegmentedTimeline.vue`. The decisive fact the prior dossier missed:
-**`index.ts` exports ONLY `GlassTimeline` + types** — Continuous/Rail/Markers/Scrubber/Segmented
-are unexported AND unconsumed by any `src/`/`demo/` file (all three demo bodies —
-`timeline.vue:5`, `TimelineSegmentedBody.vue:7`, `TimelineContinuousBody.vue:7` — import
-`GlassTimeline` only; sole reference elsewhere is one test,
-`tests/components/custom/timeline/continuous-structural-split.test.ts`). Four of five variants are
-in-repo dead code. `README.md` claims all variants are exported — a doc-truth violation
-(`BAND-DOC-TRUTH` interest, unnamed anywhere at HEAD). The "buggy" verdicts at `/data/timeline` are
-paint/interaction claims: **LIVE-DEFER** (the design-loop's captured RED baseline owns them).
+**ISOLATION (re-corrected — the facade truth).** `src/components/timeline/` ships six SFCs +
+geometry (~2,250 lines). `index.ts` exports ONLY `GlassTimeline` + types — TRUE — but the prior
+pass's "four of five variants are in-repo dead code / unconsumed by any `src/`/`demo/` file" claim
+is FALSE and struck: `GlassTimeline.vue:2-4` is a mode FACADE that imports and delegates to
+`ScrubberTimeline` / `SegmentedTimeline` / `ContinuousTimeline`, and `ContinuousTimeline.vue:3-4`
+composes `ContinuousRail` + `ContinuousMarkers`. All five variant SFCs are LIVE internals of the
+one exported surface; the demo (`timeline.vue:5` + both body SFCs, `GlassTimeline` imports only)
+exercises three registers THROUGH the facade. What does re-prove: `README.md` §Exports lists
+Continuous/Rail/Markers/Scrubber/Segmented as exports — false at HEAD, a real doc-truth violation
+(still unnamed in `BAND-DOC-TRUTH` — lead routing owed); the tests import `GlassTimeline` only
+(`continuous-structural-split.test.ts:4`; `ContinuousMarkers` appears in a comment at `:226`, not
+an import). The "buggy" verdicts at `/data/timeline` are paint/interaction claims: **LIVE-DEFER**
+(the design-loop's captured RED baseline owns them).
 
 **TARGET.**
 - Demo site: `demo/stories/data/timeline.vue` + the two body SFCs (all GlassTimeline modes).
 - Src: the whole `src/components/timeline/` family. External consumer: speedtest
-  `PhaseTimeline.vue` only (single-external — below the ≥2 bar), and it can only be consuming
-  `GlassTimeline` (the sole export of `./timeline`).
+  `PhaseTimeline.vue:49` imports `GlassTimeline` (continuous register) — ONE external consumer,
+  single-external, below the ≥2 bar (`MeterColumn.vue` references it in comments only).
 
-**POST-MORTEM (corrected).** Not "five variants grew to serve one external app" — four of the five
-serve NOBODY: variant accretion without consumers, dead on the export surface, misdocumented as
-public. The one live variant (GlassTimeline) carries the demo + speedtest. Patching would preserve
-the disease; the user ordered ground-up.
+**POST-MORTEM (re-corrected).** Not dead-variant accretion — FACADE-MODE OVERFIT: one exported
+component whose variant axis fans into four internal SFCs plus a geometry module (~2,250 lines) to
+serve one demo page and one external consumer register. The five-peer internal surface was
+authored ahead of any consumer demand, and the README documents an export surface that never
+shipped. Patching the mode axis preserves the disease; the user ordered ground-up.
 
 **REDRESS.** Owned by `BJ.W-REDUCE-TIMELINE` (BAND-REDUCTION W5) as a **STUB → design-loop**
 (`:435-478`): disposition recorded (ground-up, not prop-diet), scope bound by amendment A2 to ALL
-FIVE variants (`:527`). The union's dead-export fact strengthens the stub's premise and should seed
-the design-loop brief: the redesign starts from ONE consumer-proven register, not five peers. C-C
-(JUDGE.md) already sequences the track-well register adoption. Coverage: **EXACT**.
+FIVE variants (`:527`) — the A2 all-five binding holds under the facade truth too (the internals
+die or survive WITH the facade). Design-loop seed corrected: start from the facade's
+consumer-proven contract (the continuous register speedtest renders + the demo's three registers),
+NOT from the prior pass's false one-live-four-dead partition. C-C (JUDGE.md) already sequences the
+track-well register adoption. Coverage: **EXACT**.
 
-**STATUS.** Crosswalk **LANDED** (`crosswalk:38`). Verdict vs opus: **owner/coverage RATIFIED;
-isolation + post-mortem CORRECTED** (the "demo renders three of them [variants]" and
-"five variants grew to serve one external app" claims are false at HEAD).
+**STATUS.** Crosswalk **LANDED** (`crosswalk:38`). REFABLE-2 verdict: owner/coverage/A2-scope
+RATIFIED; the prior pass's isolation + post-mortem "correction" **OVERTURNED** (its
+dead-code/unconsumed/sole-test-reference claims are false at HEAD — `GlassTimeline.vue:2-4`
+delegates); the README doc-truth fact and the single-external fact RATIFIED.
 
 ---
 
@@ -282,7 +295,11 @@ instrument are already right; only the expected outcome and the fix-shape were w
 
 **STATUS.** Crosswalk **LANDED** (`crosswalk:39`) — ownership stands. Verdict vs opus:
 **OVERTURNED** (mechanism, disk-state, screenshot read, and guard posture all corrected by fresh
-evidence).
+evidence). REFABLE-2: the flip independently re-derived from source with no reference to the prior
+text — `search.vue:503` `variant="floating"`; `searchVariants.ts:10` `rounded-none` (a utilities-
+layer class that beats `.input-bar`'s components-layer `--radius-2xl` unconditionally); zero
+`.fuzzy-search--floating` chrome rules in `src/` — the OVERTURN stands; the lead re-judge remains
+owed.
 
 ---
 
@@ -396,12 +413,13 @@ union records the closure.
 | F13 | sortable-list design + horizontal | `BJ.W-RESPONSIVE-AUDIT` G-RSP-1/3 | **PARTIAL** — drag-affordance residue UNRULED | RATIFIED, gap escalated |
 | F14 | audit ALL pages responsive | `BJ.W-RESPONSIVE-AUDIT` (first-class) | **EXACT** · LIVE-DEFER execution | RATIFIED |
 | F15 | reset unrounded + grand rounding/type | `BJ.W-RADIUS-ROLE` + `BJ.W-TYPE-CODEMOD` | **EXACT** | RATIFIED (+dogfood Button) |
-| F16 | timeline ground-up redesign | `BJ.W-REDUCE-TIMELINE` (stub → design-loop, A2) | **EXACT** | owner RATIFIED; isolation/post-mortem CORRECTED |
+| F16 | timeline ground-up redesign | `BJ.W-REDUCE-TIMELINE` (stub → design-loop, A2) | **EXACT** | owner RATIFIED; prior "correction" OVERTURNED (facade truth) |
 | F17 | search inputs radius | `BJ.W-RADIUS-ROLE` — **born-RED FIX, not guard** | **EXACT once re-postured** · FLIP v RULING 8 | **OVERTURNED** |
 | F18 | instrument-chassis + metric REMOVE | `BJ.W-REDUCE-CROSSREPO-GATED` + ASK §A1 | **EXACT (decision)** | RATIFIED |
 | F19 | alert not glassy/rounded/idiomatic | `BJ.W-ALERT-IDIOM` (FEEDBACK-MOTION W4) | **EXACT** | RATIFIED (2 corrections) |
 | F20 | toast animation ≡ refined dialog | `BJ.W-TOAST-DIALOG-PARITY` (J4 applied) | **EXACT** | RATIFIED, status advanced |
 
 **Totals: EXACT 9 / PARTIAL 1 / MISSING 0.** Open items for the lead: the F17 FLIP (RULING 8's
-disk-premise false — posture reverts to fix) and the F13 Δ-F13-1 judge-omission (unruled residue).
-Both detailed in `../refable/REFABLE-RU-13-F11-F20.md`.
+disk-premise false — posture reverts to fix), the F13 Δ-F13-1 judge-omission (unruled residue),
+and the F16 timeline-README doc-truth routing (README §Exports lists five never-shipped exports;
+unnamed in `BAND-DOC-TRUTH`). All detailed in `../refable/REFABLE-RU-13-F11-F20.md`.
