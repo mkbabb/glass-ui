@@ -1,5 +1,8 @@
 # BJ perfection — FABLE-COLOCATION (family H · edict A07)
 
+**Verified-model:** claude-fable-5 (REFABLE RU-11, 2026-07-17).
+**Union provenance:** the prior claude-opus-4-8 draft was re-proven claim-by-claim against HEAD from primary sources; ratified content kept verbatim, corrections marked CHANGED, additions marked NEW — verdict sidecar at `docs/tranches/BJ/formation/refable/REFABLE-RU-11.md`.
+
 **Seat:** Fable perfection — *where everything lives* (the reduction seat owns *which components
 survive*; the seam between us is stated in §6). **Mode:** TRANCHE-DEVELOPMENT — this file is the
 only artefact; nothing in `src/` moves.
@@ -119,7 +122,12 @@ src/composables/
     canvas2d/            KEEP  (→ /canvas public)
     procedural/          KEEP  (7 consumers — genuine shared)
     webgl/  webgpu/      KEEP  (multi-consumer substrate)   webgpu/index.ts ✗ DELETED (dead barrel)
-    specular*, vSpecular, ambientHueHistogram   KEEP (multi-consumer)
+    useSpecularTracking, vSpecular, ambientHueHistogram   KEEP (multi-consumer — vSpecular ×5
+      components; ambientHueHistogram internal to backdropLuminanceSample)
+    useSpecularPointer.ts  KEEP ⟂ CHANGED — ZERO in-repo importers (public-surface.spec.ts row
+      only); the keep is justified by the /glass export surface, NOT multi-consumer use. The
+      glass/index.ts "hover/button waves consume this leaf" comment is STALE. Family-C A05
+      candidate alongside useDockCtaReceive (Amendment 14).
     backdropLuminanceSample.ts, backdropSampleMath.ts,
       useGlassBackdropLuminance.ts             ⟂ CONDITIONAL — dock-only cluster, family-C (§6)
     textureUpload.ts     ✗ MOVES → components/aurora/composables/  (aurora-only)
@@ -149,15 +157,19 @@ src/components/_shared/
 ```
 
 *(Fan-in counts are LEAF-PATH imports, not barrel imports — the only valid basis, since
-`_shared/index.ts` re-exports one symbol. Counts here are src+demo+tests grep; the DAG seat's
-src-only counts — class-names 133, primitive 50, axes 27, selection 20 — agree directionally. Both
+`_shared/index.ts` re-exports one symbol. CHANGED — file-count grep over src+demo+tests at HEAD:
+class-names 169, primitive 51, axes 28, selection 18; the DAG seat's src-only counts —
+class-names 133, primitive 50, axes 27, selection 20 — agree directionally. Both
 seats concur: `primitive` and `selection` must NOT relocate.)*
 
-Root drops 21 → 13 entries (under the ~15 threshold), all genuine cross-cutting vocabulary; only
+Root drops 21 → 14 entries (10 flat files + 4 carve dirs, under the ~15 threshold; CHANGED — was
+mis-summed as 13), all genuine cross-cutting vocabulary; only
 four LOW-fan-in cohesive feature clusters carve. The census's `surface/` and `motion/` submodules
-are DROPPED (§4 Amendment 5): they bundled the 52-fan-in `primitive.ts`, the public `axes.ts`, and
-23-fan-in `selection.ts` into weak groupings — 121 rewrites and a broken `/axes` source path for no
-cohesion. This carve is ~25 TS rewrites + 5 css `@import` path edits.
+are DROPPED (§4 Amendment 5): they bundled the 51-fan-in `primitive.ts`, the public `axes.ts`, and
+18-fan-in `selection.ts` into weak groupings — 100+ rewrites and a broken `/axes` source path for no
+cohesion. This carve is ~23 direct-leaf TS rewrites (incl. `tests/menuRowClass.spec.ts` +
+`tests/components/_shared/valueDomain.test.ts`) + 3 `index.css` `@import` edits + 3 ledger-comment
+lines + **6 SFC `<style src>` edits** (CHANGED — see Amendment 13; the css side was understated).
 
 ### 2d. `chip/`, `aurora/`, `handmark/` — the colocation targets
 
@@ -214,9 +226,9 @@ ruling-gated surface break.
 | # | from | to | rewrites | export-map edit |
 |---|------|----|----------|-----------------|
 | **1a** | `composables/glass/textureUpload.ts` | `components/aurora/composables/textureUpload.ts` | 3 aurora imports (`../../../composables/glass/textureUpload` → `./`/`../`) | none (off-public) |
-| **1b** | `components/handmark/{brush,freehand,geometry,ink,noise,texture}.ts` | `components/handmark/composables/` | HandMark.vue + useHandMark.ts imports (intra-dir) | none |
+| **1b** | `components/handmark/{brush,freehand,geometry,ink,noise,texture}.ts` | `components/handmark/composables/` | CHANGED — helper↔helper relatives survive (the six move as a unit) but the full rewrite set is: `HandMark.vue`, `useHandMark.ts` (`../x` → `./x`), `index.ts` (5 re-export blocks), `types.ts` (brush import), **+ ~5 handmark test files** importing `@glass/components/handmark/{freehand,ink,texture,…}` (Amendment 13) | none |
 | **1c** | `styles/glass/accent-tone.css` | `components/chip/accent-tone.css` | move `@import` from `glass.css:63` → `index.css` at the glass-band rung (Amendment 3) | none (CSS, not a JS subpath) |
-| **1d** | `_shared/{fieldControl,valueDomain}.ts`+`field-*.css`; `{FeedbackMark.vue,feedback.ts,feedback-tone.css}`; `{menuRowClass.ts,menu.css}`; `{disclosure-context.ts,disclosure.css}` | `_shared/{field,feedback,menu,disclosure}/` | ~25 direct-leaf TS imports + 5 `index.css` `@import` path segments (`:186,:203,:218` + ledger `:98,:142,:153`) | none (`axes.ts`/`primitive.ts` stay root → `/axes` intact) |
+| **1d** | `_shared/{fieldControl,valueDomain}.ts`+`field-*.css`; `{FeedbackMark.vue,feedback.ts,feedback-tone.css}`; `{menuRowClass.ts,menu.css}`; `{disclosure-context.ts,disclosure.css}` | `_shared/{field,feedback,menu,disclosure}/` | CHANGED — ~23 direct-leaf TS imports (incl. 2 test files) + 3 `index.css` `@import`s (`:186,:203,:218`) + 3 ledger comments (`:98,:142,:153`) + **6 SFC `<style src>` edits**: `field-control.css` ×4 (`Input.vue:57`, `TagsInput.vue:64`, `NumberFieldInput.vue:37`, `Textarea.vue:56`) and `disclosure.css` ×2 (`Accordion.vue:109`, `Collapsible.vue:64`) — Amendment 13 | none (`axes.ts`/`primitive.ts` stay root → `/axes` intact) |
 | **1e** | delete `composables/index.ts`, `glass/webgpu/index.ts`, `sortable-list/composables/index.ts`, `typewriter/composables/index.ts` (4 dead barrels) | — | 0 (already bypassed by direct-leaf imports) | none |
 | **1f** | `composables/glass/wave/` (4 files incl. `index.ts` — the 5th dead barrel) | **DELETE** (with/after `BAND-REDUCTION W3` deletes liquid-grid; ruling 1) | 0 after liquid-grid is gone (its 3 importers deleted first) | none (wave never exported; `/liquid-grid` drop is BAND-REDUCTION's) |
 | **2** | `composables/sidebar/*` (9 files; `useSidebarState.ts` DELETED as dead) | `demo/composables/sidebar/` | 3 demo import sites; 4 `tests/composables/sidebar/*` → `tests/demo/sidebar/` (rewrite `@glass/composables/sidebar` → demo path); `public-surface.spec.ts:34,:250-255` rows removed | **DROP `./sidebar`:** `package.json` exports `:262-264` + typesVersions `:40-41`; `subpath-policy.mjs` `COMPOSABLE_CLASS.sidebar` + `CURATED.sidebar`. Rides 8.0.0. |
@@ -260,7 +272,8 @@ removed, else typecheck reds mid-flight. Wave 2 runs last, after the family-B si
 
 > **Amendment 4 (Move D — `handmark/ink/` OPEN CLOSED to flat).** The six helpers
 > (`brush,freehand,geometry,ink,noise,texture`) go flat into `handmark/composables/` matching
-> aurora (17)/blob (13). No `ink/` render sub-family — the six do not form a closed pipeline that
+> aurora (15)/blob (12) (CHANGED — counts trued to HEAD; were quoted 17/13). No `ink/` render
+> sub-family — the six do not form a closed pipeline that
 > earns a named dir; KISS + the house pattern favor flat.
 
 > **Amendment 5 (Carve E — the census OVER-CARVED; tighten to 4 submodules).** Round-2's
@@ -272,15 +285,18 @@ removed, else typecheck reds mid-flight. Wave 2 runs last, after the family-B si
 > `field/` `feedback/` `menu/` `disclosure/`** (the four genuine, low-fan-in feature clusters);
 > everything else — `index.ts class-names.ts primitive.ts axes.ts selection.ts floating.ts
 > interaction.ts control-size.ts useMotionAxis.ts resolveSurfaceClass.ts` — stays flat at
-> `_shared/` root (13 entries, under threshold, all vocabulary/primitive).
+> `_shared/` root (14 entries — 10 files + 4 carve dirs, under threshold, all
+> vocabulary/primitive; CHANGED — was mis-summed as 13).
 
 > **Amendment 6 (Carve E — the "barrel stays stable" premise is FALSE; state the true blast
 > radius).** BAND-COLOCATION claims keeping `_shared/index.ts` re-exporting the moved symbols means
 > "NO consumer import path outside `_shared/` changes … blast radius is intra-dir + 3 `@import`
 > lines." `_shared/index.ts` re-exports ONLY `controlSizeClass` (verified) — every real consumer
-> imports leaves DIRECTLY (`_shared/class-names` ×168, `_shared/primitive` ×52, `_shared/selection`
-> ×23, `_shared/fieldControl` ×5, …). The true blast radius of the carve is **~25 direct-leaf TS
-> import rewrites + 5 `.css` `@import` path edits**, not 3 lines. Do NOT expand the barrel to
+> imports leaves DIRECTLY (`_shared/class-names` ×169, `_shared/primitive` ×51, `_shared/selection`
+> ×18, `_shared/fieldControl` ×5, … — CHANGED, counts trued to HEAD). The true blast radius of the
+> carve is **~23 direct-leaf TS import rewrites (incl. 2 test files) + 3 `index.css` `@import`
+> edits + 3 ledger-comment lines + 6 SFC `<style src>` edits** (CHANGED — was "~25 + 5 css"; the
+> SFC delivery channel was invisible to the draft, Amendment 13), not 3 lines. Do NOT expand the barrel to
 > re-export everything to fake stability — that manufactures exactly the dead-aggregation barrel the
 > band is deleting (Principle 6). Rewrite the leaf paths; state the count honestly in the wave.
 
@@ -325,12 +341,33 @@ removed, else typecheck reds mid-flight. Wave 2 runs last, after the family-B si
 > leaf under `_shared/` or `composables/context/`) as CONDITIONAL on the reduction band's cycle
 > resolution, and colocate it only after the cycle is broken. §6 states the seam.
 
+> **Amendment 13 (NEW — a move's rewrite set is the FULL reference closure, not the TS import
+> graph).** Two Wave-1 rows understated their blast radius because two reference channels were
+> not walked: (a) **SFC `<style src>` attributes** — `field-control.css` is loaded by
+> `<style src="../_shared/field-control.css">` in `Input.vue:57`, `TagsInput.vue:64`,
+> `NumberFieldInput.vue:37`, `Textarea.vue:56`, and `disclosure.css` by `Accordion.vue:109` +
+> `Collapsible.vue:64` — six path edits the 1d carve MUST include; (b) **the test mirror's
+> leaf-path imports** — ~5 `tests/components/custom/handmark/*` files import
+> `@glass/components/handmark/{freehand,ink,texture,…}` and follow move 1b, and
+> `tests/menuRowClass.spec.ts` + `tests/components/_shared/valueDomain.test.ts` follow the 1d
+> carve. Canonical rule for every wave: a move's rewrite set = TS/vue imports + SFC `<style src>`
+> paths + test-tree imports + `index.css` `@import`s + ledger-comment lines. (The same closure
+> class Amendment 9 caught for sidebar, generalized.)
+
+> **Amendment 14 (NEW — `useSpecularPointer` joins the family-C conditional roster; stale barrel
+> prose truthed).** `glass/useSpecularPointer.ts` has ZERO in-repo importers — its only reference
+> is the `public-surface.spec.ts:228` row; the `glass/index.ts` claim that "the hover/button
+> waves consume this leaf" matches no import at HEAD. Its keep is justified by the `/glass`
+> export surface alone. File it with the family-C A05 conditional roster (beside
+> `useDockCtaReceive` + the backdrop-luminance cluster, §6): prune vs earn-a-consumer is family
+> C's call; either way the stale barrel comment is truthed by the doc-truth sweep.
+
 ---
 
 ## 5. Perfection check — what the census missed (walking the real tree, not listings)
 
 The round-1/2/2b census read directory listings and `src`/`demo` only. Walking import closures and
-the `tests/` tree surfaces five classes it could not see.
+the `tests/` tree surfaces seven classes it could not see (P6–P7 NEW — the REFABLE re-walk).
 
 - **P1 — orphaned styles partials outside their closure (the chip-CSS failure, CONFIRMED live).**
   `src/styles/glass/glass-chip.css` + `glass-atom.css` are `@import`ed by NOTHING —
@@ -344,7 +381,8 @@ the `tests/` tree surfaces five classes it could not see.
   (`REGISTRY:44`) is the enforcement. Seam stated in §6.
 
 - **P2 — the `_shared/index.ts` barrel is near-dead (1 symbol) and the carve's blast radius is
-  ~8× the drafted estimate.** Detailed in Amendments 5/6. A listing shows a barrel; only grepping
+  ~10× the drafted estimate (CHANGED — with the P6 SFC channel counted).** Detailed in
+  Amendments 5/6/13. A listing shows a barrel; only grepping
   its exports vs its importers shows it re-exports `controlSizeClass` alone while 300+ imports reach
   the leaves directly. This falsifies the census's "barrel keeps consumers stable" assumption
   wholesale.
@@ -363,6 +401,17 @@ the `tests/` tree surfaces five classes it could not see.
   Not a colocation break — colocated docs are correct; flagged only for the doc-truth sweep's
   awareness.
 
+- **P6 (NEW) — the SFC `<style src>` reference channel is a second, invisible CSS closure.** The
+  draft (and the census before it) walked only `@import` graphs; six `_shared` CSS references
+  ride SFC `<style src>` attributes instead (Amendment 13's list). Any future CSS move-check —
+  including family A's `orphan-CSS-partial` gate — must grep BOTH channels (`@import` AND
+  `<style src=`) or a colocated stylesheet can silently detach from its consumers.
+
+- **P7 (NEW, minor) — `demo/stories/manifest/` is a single-file dir beside `manifest.ts`.**
+  `manifest/lazy.ts` has exactly one importer (`manifest.ts`). A one-file dir shadowing its
+  sibling's name is a shape wart, not a break; fold `lazy.ts` beside `manifest.ts` (or the pair
+  into one dir) in the Wave-3 hygiene fence. Non-blocking.
+
 **What the census got RIGHT (confirmed, not re-litigated):** the ~70% realization, dock/aurora/blob
 as gold standard, `color/` + `glass/procedural/` as genuine shared leaves, the demo tree conforming,
 `design-idioms` §3/§7 describing a dead layout, and no global `src/types`/`src/constants`/`src/utils`
@@ -376,11 +425,17 @@ styles`). Those stand.
 - **`glass/wave/` fate is downstream of `liquid-grid`'s deletion** (reduction owns; ruling 1). We
   DELETE the leaf, sequenced after their W3. Marked conditional only in the KISS sense — the ruling
   is decided, so it is a hard sequence, not a live fork.
-- **`useDockCtaReceive.ts` (`/motion` public) + the backdrop-luminance 3-file cluster (dock-only)**
+- **`useDockCtaReceive.ts` (`/motion` public) + the backdrop-luminance 3-file cluster (dock-only)
+  + `useSpecularPointer.ts` (zero in-repo consumers, Amendment 14)**
   are single-consumer-in-global TODAY but are **family-C A05 pruning questions**, not our moves
   (`BAND-COLOCATION` Scope-out; round-2b `[minor]`). Their placement (colocate into `dock/` vs earn
   a 2nd consumer vs stay public) is CONDITIONAL on the family-C ruling. If family C declines both,
-  re-file as a Wave-1 colocation tail here. The hygiene gate (Wave 3) must allowlist-with-date them
+  re-file as a Wave-1 colocation tail here. CHANGED — the perfected home is pre-stated so the
+  tail is mechanical: `useDockCtaReceive` → `dock/composables/` (the dock door already exists —
+  `dock/index.ts:72-76` re-exports it today; if family C keeps it public, the `/motion`-barrel
+  drop rides the 8.0.0 cut with `/sidebar`), and the backdrop cluster →
+  `dock/composables/` beside its sole component consumer (`GlassDock.vue`). The hygiene gate
+  (Wave 3) must allowlist-with-date them
   until family C rules (BAND-COLOCATION OPEN-9) so it does not red on un-migrated A05 debt.
 - **`glass-chip.css`/`glass-atom.css` closure fix (P1) is family G/A's born-RED wave**, not ours —
   but our Principle 4 is its canon and family A's `orphan-CSS-partial` gate is its fence. We place
