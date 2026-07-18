@@ -343,3 +343,12 @@ slider tests must target the track or use keyboard — joins the binding-verific
 class. (2) visual-landing — root bento preview areas render empty dark panels + a detached
 yellow goo-blob floats right of the hero: routed to family C (preview/tile work) for
 intended-vs-regression confirmation.
+
+---
+
+## Truth-up (JUDGE.md, 2026-07-17)
+
+**T1 — overlay role-split (INFER truth-up).** `role:overlay` splits PRINCIPLED into **floating**
+(the tooltip/popover/menu family on `_shared/floating.ts`, 8 consumers) vs **modal** (the DialogRoot
+family); the `*Content` divergence between them is JUSTIFIED variation, not drift. No factoring is
+owed — the split is a real role boundary, not a duplication defect.

@@ -231,3 +231,18 @@ row 1 = CHRONIC R1; UF-K1 metric confrontation = §A1).
 **COUNTS (reconciled): 50 LANDED / 5 DECIDED / 3 CLEARED / 10 ASK / 0 ORPHAN / 0 pending (= 67, F05's
 row stays LANDED for its two landed sub-asks; the CLEARED tally counts F02/F06/V-A95-class rows
 per the R3a fold).** Zero silent drops stands.
+
+---
+
+## Judgment corrections (JUDGE.md, 2026-07-17)
+
+Carried verbatim from `redress/JUDGE.md` §D (crosswalk corrections — the accounting stays honest):
+
+1. A01/A11: LANDED → LANDED-AT-W5 (BJ.W-IDLE-BREATH); the PENDING-R3B vs reconciliation
+   self-contradiction is resolved by this ruling.
+2. F05 aurora sub-ask: CLEARED-by-R3b → LANDED (BAND-STORY, per J2).
+3. F26: the ASK row's premise corrects to the verified census (speedtest ×0; sci-report ×2 +
+   atlas ×2) with the KEEP-DISTINCT recommendation attached.
+4. F08: disposition annotated per C-G.
+5. F33: the DeckPager.vue cut + W6 mint annotated per J3.
+6. COUNTS: unchanged in total (67); A14 retally already applied by the fix pass.

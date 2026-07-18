@@ -109,7 +109,10 @@ for **raw Tailwind radius utilities** instead of role classes:
   button); role = control → a `rounded-control`/`--radius-button` class.
 - **F45** `gate-pattern.vue` — role-incoherent mix (a near-rect input above a full-pill Unlock, per
   `VISUAL-GESTALT.md:15`); the two on-disk hits are `rounded-full` icon tiles (correct); the input/button
-  coherence is the sweep target.
+  coherence is the sweep target. **Re-aimed born-RED-sweep → REGRESSION-GUARD (J5):** F45 joins the
+  F09/F12/F17 conversion class — the concentric-field grammar at `_shared/field-control.css:37-48` already
+  cures it, so the wave verifies live then PINS the coherent state against re-drift rather than authoring
+  a born-RED fix.
 - **F17** `/data/search` — "two adjacent search inputs with different radii" (`VISUAL-GESTALT.md:12`); the
   search component has no own `border-radius` (rides `field-control` pill) — the divergence is a demo
   composition, owed a **live-π re-check** (§Acceptance).
@@ -251,8 +254,11 @@ any change — the exact "verify born-RED on disk" discipline.
   states). GREEN when killed or documented as intentional in the precept.
 - **Raw-blur RED at HEAD (verified):** `drawer/styles.css:379` `blur(14px)`. GREEN when repointed (the
   `BAND-GATES` W3 coordination flip).
-- **`OPEN-2d` F28 live re-check:** the wave MUST run a live π on `/foundations` (or the F28 story) to confirm
-  the select-vs-button divergence is deep-primary (intentional) or ordinary (bug) before touching it.
+- **`OPEN-2d` F28 live re-check (re-aimed, J6):** the wave MUST run a live π to confirm the
+  select-vs-button divergence is deep-primary (intentional) or ordinary (bug) before touching it. **The
+  probe re-aims: route `/motion/springs`, NOT `/foundations`, and the axis is the button glass-atom's
+  glow / shadow-bloom vs the flat Select — NOT blur radius** (the two blur radii are equal at 7px, so a
+  blur-only probe measures nothing; the perceived divergence is the atom's bloom, not its backdrop blur).
 
 ### §π/DELTA
 
@@ -324,12 +330,20 @@ The two outcomes the judgment gate must choose between:
 
 ### §Work
 
+**Deliverable (a) — the halo adopt/decline ruling:**
+
 - The A/B capture + the recorded ruling (DesignSync + Fable paint-taste, per MEMORY
   `frontend_design_mcp_fable`).
 - **If ADOPT:** the token-freeze ratification + coordinate the `graded-backdrop.test.ts` literal-collapse
   with `BAND-GATES` W1; document the cohort in the material precept.
 - **If DECLINE:** strip `--glass-halo-*` (`glass.css:171-173`) + FORM 2 (`placement.css:141-209`) + the
   `isGraded` axis (`ModalOverlay.vue`) + the test; open `BI.W-IMMERSIVE-SCRIM` for the residual scrim.
+
+**Deliverable (b) — scene-staging extraction (C-F/T2, UNCONDITIONAL on the halo adopt/decline).** The one
+real cross-family duplication: extract the shared scene-staging substrate (~40-60 lines:
+`useSceneStage`/`stageContext`) consumed by BOTH dialog + drawer, so the staging is authored once. This is
+BOUND regardless of Deliverable (a)'s verdict — the earlier "IF W3 adopts" conditioning is void; the
+duplication does not ship unaddressed whether the halo is kept or stripped.
 
 ### §Acceptance — the judgment gate (not a defect-probe)
 
@@ -398,6 +412,14 @@ shared utility MUST take a non-colliding name (SUPERFLUITY F23: "rename off the 
 glass-track"). ScrubberTimeline's own track surface joins the W4 census at wave start —
 noting SUPERFLUITY F16 collapses it (a Slider in disguise), so W4 sequences after the timeline
 consolidation or scopes it out explicitly.
+
+**Sequencing ruling (C-C, 2026-07-17).** W4's register NAMING is INDEPENDENT of the timeline
+reduction/redesign wave (`BJ.W-REDUCE-TIMELINE`, BAND-REDUCTION W5): the shared utility is named
+`glass-track-well` REGARDLESS of the scrubber's fate — the earlier "W4 sequences after the timeline
+consolidation" hedge is resolved in favor of independence. `BJ.W-REDUCE-TIMELINE`'s surviving continuous
+Timeline then ADOPTS the `glass-track-well` register at ITS redesign, widening the family to ≥3 real
+consumers (F23's own flip condition, satisfied in the right direction). W4 MAY run before the timeline
+wave; the timeline survivor adopts on arrival.
 
 **Shared, verified:** all three are pill-rounded (`--radius-pill`), all three window a value-fraction fill,
 and **`glass-liquid-fill` is ALREADY the shared fill register** (slider-range + progress both compose it,

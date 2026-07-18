@@ -380,3 +380,8 @@ available if the user wants the register below 10.
 Per the charter, this is pass 3 of ≥3; convergence still requires two consecutive clean passes + a
 fresh adversarial audit that this seat cannot self-supply. 58% honestly reflects "architecture
 converged and internally consistent; empirical verification structurally owed."
+
+**Lead rider (JUDGE.md C-G, 2026-07-17):** F08 is discharged ONLY when W1-W4 real-body authorship
+lands with G-MODE-DISTINCT green — never at the preset-cut checkbox alone. The preset register
+reduction (17→10) without the shader bodies leaves the byte-identical-Kuwahara duplication the
+user named; the two halves are bound.

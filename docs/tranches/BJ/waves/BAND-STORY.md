@@ -192,7 +192,7 @@ ALL-CAPS jargon anywhere in iOS" (IOS27-CODEX.md:48-51). Establish the copy cano
 | gate | born-RED probe (fails at HEAD) | GREEN condition |
 | --- | --- | --- |
 | G-COPY-1 | `grep -rlE 'text-mono-caption\|section-label\|text-admin-label' demo/stories/ \| wc -l` → **65** (of 128) | ad-hoc eyebrow decorations gone; the idiom survives ONLY via the one reserved `StorySection.label` breadcrumb |
-| G-COPY-2 | `grep -nE 'aria-hidden SVG overlay\|stroke-dashoffset sweep\|se-guard\|reactive query' demo/stories/motion/handmark.vue demo/stories/data/search.vue` → matches at handmark:26/67/119-120, search:492 | 0 implementation-mechanics phrases in user-facing blurbs (the copy-canon allow-list check) |
+| G-COPY-2 | `grep -nE 'aria-hidden SVG overlay\|stroke-dashoffset sweep\|se-guard\|reactive query' demo/stories/motion/handmark.vue demo/stories/data/search.vue demo/stories/dock/layers.vue` → matches at handmark:26/67/119-120, search:492, **layers:279-335** (J8 — the dock-crossfade "Mechanics" body: `<DockCrossfade :active>`/`opacity: var(--dock-t)`/`useDockSpring`/`.dock-face-content`, missed by the handmark/search-only sweep) | 0 implementation-mechanics phrases in user-facing blurbs AND **0 "Mechanics"-narration sections** — the copy canon bans the numbered-implementation-mechanics PATTERN (not just the discrete blurbs) and rules that inline `<code>` is for user-facing USAGE, not internal-token exposition (per `../formation/perfection/FABLE-STORY-FRAMEWORK.md:385-391`) |
 | G-COPY-3 | `grep -nE 'SOC 2\|End-to-end encrypted\|12k teams' demo/stories/compositions/auth-shell.vue` → **:39-41** | 0 fabricated-credential strings anywhere in `demo/stories/` |
 | G-COPY-4 | `grep -n 'se-guard\|box-mode hull' demo/stories/motion/handmark.vue` → :117/119/120 (F40 "what is SE") | 0 internal jargon acronyms in labels/blurbs |
 
@@ -554,3 +554,40 @@ resolveStoryTile; the live-miniature line STRUCK per the 0-GL contract + R3b idl
 site is typewriter.vue:103 (neutral string); F46 double-card cure is structural
 (SectionPreviewCard's inner well loses its second border); StoryBody KEPT as the spec renderer;
 the code-context region joins spec/studio anatomy under the copy canon.
+
+---
+
+## Judgment corrections (JUDGE.md, 2026-07-17)
+
+The redress judgment (`../formation/redress/JUDGE.md`) routes four items to this band. Each appends
+here rather than re-opening a wave body; the owning wave/target is named on each. (Item J8 — the
+G-COPY-2 layers.vue site + Mechanics-narration PATTERN ban — is applied in-place in the Wave 2 gate
+table above.)
+
+- **Dock-postures backdrop (J2 / D-F05 → `BJ.W-STORY-TAXONOMY`, the `dock` variant).** The postures
+  grid (`demo/stories/dock/rail.vue:142-189`) renders on bare black; R3b's field evidence was a
+  DIFFERENT dock, so the lead's "CLEARED-by-R3b over-clear" is REVERSED. BAND-STORY owns the
+  dock-story backdrop consistency per GF-DOCK-PASS3 C5's original routing: the postures section takes
+  the STAGED field (the `dock` variant's DockStage, or the section's live backdrop idiom) — never bare
+  black. Born-RED: `rail.vue:142-189` postures section paints on a bare-black background; GREEN when it
+  inherits the staged field. (Crosswalk reconciliation item 3 corrects CLEARED-by-R3b → LANDED here.)
+
+- **Configurator roominess gate (J10 / F09 → `BJ.W-CONFIGURATOR-STD`, widening AMEND-D-2).** The
+  "too cramped / must be larger" half of F09 joins AMEND-D-2's widen scope: the configurator standard's
+  ADOPT wave carries a ROOMINESS/SCALE gate — container min-width + section breathing-room asserted —
+  not ONLY the section↔field ladder widen. So AMEND-D-2's widen is now two-pronged: the TYPE ladder
+  (section title → `text-heading`, field label → `text-small`, value → `text-caption`) AND the SPATIAL
+  roominess.
+
+- **Paper-backdrop disposition (J9 / D-A14 → routed to BAND-REDUCTION).** Closes A14's umbrella
+  honestly (PARTIAL → complete): `paper-backdrop` (`src/components/paper-backdrop/**`), an L5 procedural
+  in A14's explicit roster, carries no BJ disposition — neither a greenfield (unlike blob/aurora/
+  handmark), nor an ASK (unlike fourier/constellation/watercolor), nor a delete (unlike liquid-grid).
+  Route it into the reduction band's ≥2-consumer census (the A05 bar) so its keep/retire is ruled on
+  evidence, not presumed; until then the A14 procedural-codification umbrella's "none unowned" claim
+  does not hold for the whole roster.
+
+- **A06 scroll-animation standard (J11).** A06's scroll-animation standard codifies INSIDE the
+  scroll-collapse wave (the reveal/scroll consolidation, ASK §C3 / BAND-REDUCTION): the 9-survivor
+  reader spine IS the substrate, so the standard's text is a deliverable of THAT wave, not a separate
+  BAND-STORY item.
