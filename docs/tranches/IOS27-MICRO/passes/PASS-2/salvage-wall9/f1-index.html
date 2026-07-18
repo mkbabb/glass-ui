@@ -1,0 +1,1506 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>F1 SCALAR-SPINE — prototype (IOS27-MICRO pass 1)</title>
+<!-- verified-model: claude-fable-5 (system-context model ID, verbatim). Prototype seat, pass 1. -->
+<style>
+  :root {
+    color-scheme: dark;
+    --ink: #e8ecf2;
+    --ink-dim: #93a0b4;
+    --panel: rgba(255, 255, 255, 0.045);
+    --line: rgba(255, 255, 255, 0.10);
+    --good: #57d98e;
+    --bad: #ff7b72;
+    --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0b0e14;
+    color: var(--ink);
+    font: 14px/1.45 -apple-system, system-ui, "Segoe UI", sans-serif;
+    padding: 20px 24px 40px;
+  }
+  header h1 { font-size: 19px; font-weight: 700; letter-spacing: 0.01em; }
+  header .meta { color: var(--ink-dim); font-size: 12px; margin-top: 4px; display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+  header .meta code { font-family: var(--mono); }
+  #fps { font-family: var(--mono); color: var(--ink); }
+  main { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 18px; }
+  section.demo { flex: 1 1 460px; max-width: 640px; }
+  section.demo h2 { font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--ink); }
+  .demo-row { display: flex; gap: 16px; align-items: flex-start; }
+  .aside { flex: 1; min-width: 240px; }
+
+  /* ---------- phone frame ---------- */
+  .phone {
+    position: relative;
+    width: 300px; height: 620px;
+    border-radius: 42px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), inset 0 0 0 6px #05070b;
+    overflow: hidden;
+    flex: 0 0 auto;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .wall { position: absolute; inset: 0; }
+  .wall-maps {
+    background:
+      radial-gradient(90px 70px at 18% 22%, rgba(90, 130, 96, 0.55), transparent 70%),
+      radial-gradient(140px 110px at 78% 34%, rgba(52, 84, 110, 0.6), transparent 70%),
+      radial-gradient(120px 160px at 40% 68%, rgba(72, 92, 66, 0.5), transparent 70%),
+      repeating-linear-gradient(64deg, rgba(255,255,255,0.045) 0 1px, transparent 1px 26px),
+      repeating-linear-gradient(-30deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 34px),
+      linear-gradient(180deg, #17211f, #0e1414 55%, #131a17);
+  }
+  .wall-maps::after {
+    content: "SATELLITE";
+    position: absolute; top: 24px; left: 0; right: 0;
+    text-align: center; letter-spacing: 0.5em; font-size: 10px; color: rgba(255,255,255,0.35);
+  }
+  .wall-cc {
+    background:
+      radial-gradient(160px 130px at 24% 18%, rgba(255, 158, 94, 0.85), transparent 70%),
+      radial-gradient(200px 170px at 82% 30%, rgba(120, 108, 255, 0.8), transparent 70%),
+      radial-gradient(230px 210px at 50% 86%, rgba(66, 190, 224, 0.75), transparent 70%),
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.10) 0 1px, transparent 1px 14px),
+      linear-gradient(180deg, #232746, #182031);
+  }
+  .wall-cc .wall-word {
+    position: absolute; left: 0; right: 0; top: 210px;
+    text-align: center; font-size: 64px; font-weight: 800; letter-spacing: 0.04em;
+    color: rgba(255, 255, 255, 0.85);
+    text-shadow: 0 2px 0 rgba(0,0,0,0.25);
+  }
+  .wall-cc .wall-sub {
+    position: absolute; left: 0; right: 0; top: 296px;
+    text-align: center; font-size: 12px; letter-spacing: 0.32em; color: rgba(255,255,255,0.75);
+  }
+
+  /* ---------- Maps surface: the spine's CSS publication + transfer bands ---------- */
+  .maps-surface {
+    /* the spine channel — written per frame by JS (the --dock-morph-t contract, generalized) */
+    --gl-t: 0;
+    --gl-vw: 0;
+    /* derived channels: authored ONCE here, consumed by descendants as calc transfers.
+       t domain: [-0.10, 1.19]; commit (taffy) boundary at 0.08 — MARKS C1: the pre-commit
+       stretch zone is >=70px (~0.08 of travel), not the pass-1 ~40px read. */
+    --gl-grow: clamp(0, (var(--gl-t) - 0.08) / 0.92, 1);
+    --gl-down: clamp(0, var(--gl-t) / -0.10, 1);
+    --gl-up: clamp(0, (var(--gl-t) - 1) / 0.19, 1);
+    --gl-taffy: min(clamp(0, var(--gl-t) / 0.08, 1), clamp(0, (0.22 - var(--gl-t)) / 0.14, 1));
+    position: absolute;
+    left: 16px; right: 16px; bottom: 12px;
+    height: 380px;
+    transform-origin: 50% 100%;
+    /* H1 side breathe (+~4.5% dock->card) x H2 compression (down: -7.5% w, -21% h; up pin: ~-1.2% w) */
+    transform:
+      scaleX(calc((0.964 + 0.036 * var(--gl-grow)) * (1 - 0.075 * var(--gl-down)) * (1 - 0.012 * var(--gl-up))))
+      scaleY(calc((1 - 0.21 * var(--gl-down)) * (1 + 0.14 * var(--gl-taffy))));
+    will-change: transform;
+  }
+  .card-body {
+    position: absolute; inset: 0;
+    /* H1: bottom pinned by construction — the clip's top edge does the travel */
+    clip-path: inset(calc((1 - var(--gl-grow)) * 316px) 0 0 round calc(30px - 8px * var(--gl-grow)));
+    background: linear-gradient(180deg, rgba(44, 56, 60, 0.52), rgba(24, 32, 36, 0.66));
+    -webkit-backdrop-filter: blur(22px) saturate(1.35);
+    backdrop-filter: blur(22px) saturate(1.35);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.10);
+    will-change: clip-path;
+  }
+  .vel-glow {
+    position: absolute; inset: 0;
+    background: radial-gradient(130% 70% at 50% 100%, rgba(120, 200, 255, 0.22), transparent 70%);
+    opacity: var(--gl-vw);   /* H6: tanh(|dt/dt|*k) velocity-weight channel */
+    pointer-events: none;
+  }
+  /* content rides the traveling top edge */
+  .card-content {
+    position: absolute; left: 14px; right: 14px; top: 0; height: 316px;
+    transform: translateY(calc((1 - var(--gl-grow)) * 316px));
+    pointer-events: none;
+  }
+  .edge-rim {
+    position: absolute; top: 0; left: 2px; right: 2px; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  }
+  /* the reveal ladder — per-rung fade + rise bands of --gl-t (MARKS §6 note 4) */
+  .rung-n {
+    --p: clamp(0, (var(--gl-t) - (0.4 + 0.1 * var(--gl-rung))) / 0.1, 1);
+    opacity: var(--p);
+    transform: translateY(calc((1 - var(--p)) * 26px));
+  }
+  .m-handle {
+    --p: clamp(0, var(--gl-t) / 0.05, 1);
+    opacity: var(--p);
+    position: absolute; top: 8px; left: 50%; width: 40px; height: 5px;
+    margin-left: -20px; border-radius: 3px;
+    background: rgba(255, 255, 255, 0.55);
+  }
+  .m-title {
+    --pg: clamp(0, (var(--gl-t) - 0.10) / 0.20, 1);
+    --ps: clamp(0, (var(--gl-t) - 0.30) / 0.20, 1);
+    opacity: calc(0.55 * var(--pg) + 0.45 * var(--ps));   /* ghost 10–30%, solid 30–50% */
+    transform: translateY(calc((1 - var(--pg)) * 26px));
+    position: absolute; top: 22px; left: 4px;
+    font-size: 17px; font-weight: 700;
+  }
+  .tray { position: absolute; top: 54px; left: 0; right: 0; height: 78px; overflow: hidden; }
+  .tray-icons {
+    --p: clamp(0, (var(--gl-t) - 0.40) / 0.15, 1);
+    transform: translateY(calc((1 - var(--p)) * 105%));   /* icons EMERGE from the clipped bottom margin */
+    display: flex; justify-content: space-between; padding: 8px 6px 0;
+  }
+  .disc {
+    width: 50px; height: 50px; border-radius: 50%;
+    display: grid; place-items: center;
+    font-weight: 700; font-size: 16px;
+    /* control-tier glass: brighter, more opaque, its own rim (H4) */
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.30), rgba(255, 255, 255, 0.14));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 4px 10px rgba(0, 0, 0, 0.25);
+  }
+  .icon-labels {
+    position: absolute; top: 132px; left: 0; right: 0;
+    display: flex; justify-content: space-between; padding: 0 14px;
+    font-size: 10px; color: var(--ink-dim);
+  }
+  .recents-h { position: absolute; top: 158px; left: 4px; font-size: 13px; font-weight: 600; }
+  .recent-row {
+    position: absolute; left: 0; right: 0; height: 40px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.07);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10);
+    display: flex; align-items: center; padding: 0 12px;
+    font-size: 12px; color: var(--ink);
+    gap: 8px;
+  }
+  .recent-row .sub { color: var(--ink-dim); margin-left: auto; font-size: 11px; }
+  .row-a { top: 184px; }
+  .row-b { top: 230px; }
+  .dock-row {
+    position: absolute; left: 10px; right: 10px; bottom: 0; height: 64px;
+    display: flex; align-items: center; gap: 8px; padding: 0 4px;
+  }
+  .search-pill {
+    flex: 1; height: 44px; border-radius: 22px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.20), rgba(255, 255, 255, 0.10));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.40);
+    display: flex; align-items: center; padding: 0 16px;
+    font-size: 13px; font-weight: 600; color: var(--ink);
+  }
+  .chip {
+    width: 40px; height: 40px; border-radius: 50%; flex: 0 0 auto;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.12));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.42);
+    display: grid; place-items: center; font-size: 11px; font-weight: 700;
+  }
+
+  /* ---------- CC surface: spine + follower-bank channels ---------- */
+  .cc-surface {
+    --gl-t: 0;   /* stretch spine */
+    --gl-m: 0;   /* medium follower (position-keyed, 25/140ms) */
+    --gl-f: 0;   /* content-fade follower (target-keyed, 65/55ms) */
+    --gl-vw: 0;
+    position: absolute; inset: 0;
+    touch-action: none;
+  }
+  .cc-scrim {
+    position: absolute; inset: 0;
+    /* H4/H5: the medium is OPACITY over a CONSTANT blur radius — never an animated radius */
+    -webkit-backdrop-filter: blur(18px) saturate(1.2) brightness(0.62);
+    backdrop-filter: blur(18px) saturate(1.2) brightness(0.62);
+    background: rgba(8, 10, 16, 0.35);
+    opacity: var(--gl-m);
+    will-change: opacity;
+  }
+  .cc-grid {
+    position: absolute; left: 16px; right: 34px; top: 54px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    pointer-events: none;
+  }
+  .cc-tile {
+    /* depth-graded travel: base 58px + 12px per row (~+20%/row); fade rides the fade follower */
+    opacity: var(--gl-f);
+    transform: translateY(calc((var(--gl-t) - 1) * (58px + var(--gl-row) * 12px)));
+    border-radius: 18px;
+    background: linear-gradient(180deg, rgba(46, 52, 70, 0.62), rgba(28, 32, 46, 0.72));
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+    padding: 12px;
+    will-change: transform, opacity;
+  }
+  .cc-tile.big { height: 116px; }
+  .cc-tile.wide { grid-column: 1 / -1; height: 60px; display: flex; align-items: center; gap: 10px; }
+  .cc-tile h4 { font-size: 10px; font-weight: 600; color: var(--ink-dim); letter-spacing: 0.06em; margin-bottom: 8px; }
+  .cc-dots { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .cc-dot {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: grid; place-items: center; font-size: 11px; font-weight: 700;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.30), rgba(255, 255, 255, 0.12));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  }
+  .cc-dot.lit { background: linear-gradient(180deg, #4da3ff, #2f7fe0); color: #fff; }
+  .cc-bar {
+    width: 100%; height: 74px; border-radius: 12px;
+    background: rgba(255, 255, 255, 0.10);
+    position: relative; overflow: hidden;
+  }
+  .cc-bar i {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 55%;
+    background: rgba(255, 255, 255, 0.85);
+  }
+  .cc-rail {
+    position: absolute; right: 8px; top: 130px;
+    display: flex; flex-direction: column; gap: 8px;
+    /* periphery lag as a band-offset transfer of the fade follower (~100ms behind) */
+    opacity: clamp(0, (var(--gl-f) - 0.35) / 0.6, 1);
+    transform: translateY(calc((var(--gl-t) - 1) * 70px));
+    pointer-events: none;
+  }
+  .cc-rail .chip { width: 30px; height: 30px; font-size: 9px; }
+
+  /* ---------- UI chrome ---------- */
+  .badge {
+    font-family: var(--mono); font-size: 11px; color: var(--ink-dim);
+    margin-top: 8px; white-space: nowrap;
+  }
+  .badge b { color: var(--ink); font-weight: 600; }
+  .buttons { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  button {
+    font: 12px/1 inherit; color: var(--ink);
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 9px; padding: 7px 10px;
+    cursor: pointer;
+  }
+  button:hover { background: rgba(255, 255, 255, 0.09); }
+  table {
+    border-collapse: collapse; width: 100%; margin-top: 10px;
+    font-family: var(--mono); font-size: 11px;
+  }
+  th, td { text-align: left; padding: 4px 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
+  th { color: var(--ink-dim); font-weight: 500; }
+  td.ok { color: var(--good); }
+  td.no { color: var(--bad); }
+  .hint { color: var(--ink-dim); font-size: 11px; margin-top: 8px; }
+  .probes { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 26px; }
+  .probe-panel {
+    flex: 1 1 380px; max-width: 640px;
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: 14px; padding: 14px;
+  }
+  .probe-panel h3 { font-size: 13px; margin-bottom: 6px; }
+  .probe-panel p { font-size: 11.5px; color: var(--ink-dim); margin-bottom: 8px; }
+  .probe-out { font-family: var(--mono); font-size: 11px; white-space: pre-wrap; margin-top: 8px; color: var(--ink); }
+  #r1Stage { display: flex; flex-direction: column; gap: 2px; margin-top: 8px; --gl-t: 0; }
+  .r1e {
+    height: 3px; border-radius: 2px; background: #4da3ff;
+    opacity: calc(0.25 + 0.75 * clamp(0, var(--gl-t), 1));
+    transform: translateX(calc(var(--gl-t) * var(--i) * 4px));
+    width: 40%;
+  }
+  .r2-bar {
+    height: 18px; border-radius: 9px; background: #4da3ff;
+    transform-origin: 0 50%;
+    margin-top: 6px;
+  }
+  /* R2: CSS-transition followers — registered <number> props, per-state durations
+     (attack fast on .on, release slow off; the free asymmetry) */
+  #r2m { --r2m: 0; transition: --r2m 360ms linear; transform: scaleX(calc(0.02 + 0.98 * var(--r2m))); }
+  #r2m.on { --r2m: 1; transition: --r2m 60ms linear; }
+  #r2f { --r2f: 0; transition: --r2f 165ms linear; transform: scaleX(calc(0.02 + 0.98 * var(--r2f))); background: #57d98e; }
+  #r2f.on { --r2f: 1; transition: --r2f 195ms linear; }
+  @media (prefers-reduced-motion: reduce) {
+    .r2-bar { transition: none !important; }
+  }
+  .prm .r2-bar { transition: none !important; }
+  footer { margin-top: 26px; color: var(--ink-dim); font-size: 11.5px; }
+  footer table { max-width: 640px; }
+</style>
+<!-- R2: typed channel registration (Safari 16.4+) — inherits:false per the house rule for
+     per-element channels; the SPINE channel --gl-t stays unregistered/inheriting (the
+     --dock-morph-t contract) -->
+<style>
+  @property --r2m { syntax: "<number>"; inherits: false; initial-value: 0; }
+  @property --r2f { syntax: "<number>"; inherits: false; initial-value: 0; }
+</style>
+</head>
+<body>
+<header>
+  <h1>F1 SCALAR-SPINE — one spine, a bank of followers</h1>
+  <div class="meta">
+    <span>verified-model: <code>claude-fable-5</code> · IOS27-MICRO pass-1 prototype</span>
+    <span id="fps">rAF parked</span>
+    <label><input type="checkbox" id="prm"> simulate PRM</label>
+    <span id="prmNote"></span>
+  </div>
+</header>
+
+<main>
+  <section class="demo">
+    <h2>Maps dock-to-card — one spine on the extended domain [−0.10, 1.19]</h2>
+    <div class="demo-row">
+      <div class="phone" id="mapsPhone">
+        <div class="wall wall-maps"></div>
+        <div class="maps-surface" id="mapsSurface">
+          <div class="card-body">
+            <div class="vel-glow"></div>
+            <div class="card-content">
+              <div class="edge-rim"></div>
+              <div class="m-handle"></div>
+              <div class="m-title">Places</div>
+              <div class="tray">
+                <div class="tray-icons">
+                  <div class="disc">H</div><div class="disc">W</div><div class="disc">S</div><div class="disc">P</div>
+                </div>
+              </div>
+              <div class="icon-labels rung-n" style="--gl-rung:1">
+                <span>Home</span><span>Work</span><span>Saved</span><span>Pins</span>
+              </div>
+              <div class="recents-h rung-n" style="--gl-rung:2">Recents</div>
+              <div class="recent-row row-a rung-n" style="--gl-rung:3">Coffee Bar <span class="sub">9:12 AM</span></div>
+              <div class="recent-row row-b rung-n" style="--gl-rung:4">Home <span class="sub">22 min</span></div>
+            </div>
+            <div class="dock-row">
+              <div class="search-pill">Maps</div>
+              <div class="chip">MIC</div>
+              <div class="chip">ME</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="aside">
+        <div class="badge" id="mapsBadge">regime: parked</div>
+        <div class="buttons">
+          <button id="bFlickOpen">flick open</button>
+          <button id="bFlickClose">flick close</button>
+          <button id="bOverpull">overpull + release</button>
+          <button id="bPin">pin + release</button>
+          <button id="bCatch">fast collapse (mid-catch)</button>
+          <button id="bMapsReset">reset</button>
+        </div>
+        <table id="mapsTable">
+          <tr><th>measure</th><th>sim</th><th>live</th><th>band (source)</th></tr>
+          <tr><td>pin covered @83ms</td><td id="mPinCovS">—</td><td id="mPinCovL">—</td><td>75–92% (C3 bounds-only: 130px ~90ms, INCONCLUSIVE)</td></tr>
+          <tr><td>pin settle (&lt;2px)</td><td id="mPinSetS">—</td><td id="mPinSetL">—</td><td>100–200ms (register lock; C3 voided the corpus tail)</td></tr>
+          <tr><td>overpull zero-seed overshoot</td><td id="mOpOvS">—</td><td id="mOpOvL">—</td><td>≤3% of depth (C1/C2: no free springback; overshoot is velocity-bought)</td></tr>
+          <tr><td>overpull settle (&lt;2px)</td><td id="mOpSetS">—</td><td id="mOpSetL">—</td><td>180–280ms (register lock, C2 register)</td></tr>
+          <tr><td>flung landing: overshoot/v</td><td id="mFlOvS">—</td><td id="mFlOvL">—</td><td>0.015–0.030s (C2: 11px @ 570px/s = 0.019)</td></tr>
+          <tr><td>flung landing: settle from crossing</td><td id="mFlSetS">—</td><td id="mFlSetL">—</td><td>140–220ms (C2: model 169–183, data 183)</td></tr>
+          <tr><td>mid-detent catch (dwell · land)</td><td id="mCatchS">—</td><td id="mCatchL">—</td><td>dwell 120–220ms · land = sim±40ms (DESIGN well; C3: corpus instance VOID)</td></tr>
+          <tr><td>release velocity</td><td>—</td><td id="mRelV">—</td><td>seeded, C1 continuity</td></tr>
+        </table>
+        <p class="hint">Drag the dock up. Pull past both ends — down compresses hard (−7.5%/−21%),
+        past-detent pins with a ~1% squeeze. First ~25px is the taffy dead-band (C1: ≥70px video
+        scale). Release at speed; a fast downward release whose projected path crosses the declared
+        mid well at speed catches ~170ms there — a DESIGN detent (C3 voided the corpus instance);
+        "flick close" runs the well-free corpus-parity landing (C2).</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo">
+    <h2>Control Centre — the follower bank (three channels, three clocks)</h2>
+    <div class="demo-row">
+      <div class="phone" id="ccPhone">
+        <div class="wall wall-cc">
+          <div class="wall-word">IOS27</div>
+          <div class="wall-sub">MICRO</div>
+        </div>
+        <div class="cc-surface" id="ccSurface">
+          <div class="cc-scrim"></div>
+          <div class="cc-grid">
+            <div class="cc-tile big" style="--gl-row:0">
+              <h4>CONNECTIVITY</h4>
+              <div class="cc-dots">
+                <div class="cc-dot lit">W</div><div class="cc-dot lit">B</div>
+                <div class="cc-dot">A</div><div class="cc-dot">C</div>
+              </div>
+            </div>
+            <div class="cc-tile big" style="--gl-row:0">
+              <h4>NOW PLAYING</h4>
+              <div class="cc-dot lit" style="width:44px;height:44px">&#9654;</div>
+            </div>
+            <div class="cc-tile big" style="--gl-row:1"><h4>BRIGHTNESS</h4><div class="cc-bar"><i style="height:62%"></i></div></div>
+            <div class="cc-tile big" style="--gl-row:1"><h4>VOLUME</h4><div class="cc-bar"><i style="height:40%"></i></div></div>
+            <div class="cc-tile wide" style="--gl-row:2">
+              <div class="cc-dot">S</div><div class="cc-dot">F</div><div class="cc-dot">T</div><div class="cc-dot lit">L</div>
+            </div>
+            <div class="cc-tile wide" style="--gl-row:3">
+              <div class="cc-dot">R</div><div class="cc-dot">M</div><span style="font-size:11px;color:var(--ink-dim)">deeper rows travel ~20% farther</span>
+            </div>
+          </div>
+          <div class="cc-rail">
+            <div class="chip">HR</div><div class="chip">NT</div><div class="chip">AN</div>
+          </div>
+        </div>
+      </div>
+      <div class="aside">
+        <div class="badge" id="ccBadge">regime: parked</div>
+        <div class="buttons">
+          <button id="bCCOpen">run open</button>
+          <button id="bCCClose">run close (flick)</button>
+          <button id="bCCInt">run interrupt</button>
+          <button id="bCCReset">reset</button>
+        </div>
+        <table id="ccTable">
+          <tr><th>channel milestone</th><th>sim</th><th>live</th><th>band (source)</th></tr>
+          <tr><td>open: medium 95%</td><td id="cOmS">—</td><td id="cOmL">—</td><td>≤100ms (MARKS §5 cliff; live +1 frame)</td></tr>
+          <tr><td>open: fade 95%</td><td id="cOfS">—</td><td id="cOfL">—</td><td>150–250ms (MARKS §5)</td></tr>
+          <tr><td>open: stretch 90%</td><td id="cOsS">—</td><td id="cOsL">—</td><td>560–620ms register lock (MARKS ~300–650, gesture-owned — C6)</td></tr>
+          <tr><td>open: fade:stretch</td><td id="cOrS">—</td><td id="cOrL">—</td><td>1:2.4–1:4.3 (MARKS §5 raw component bands)</td></tr>
+          <tr><td>close: fade out</td><td id="cCfS">—</td><td id="cCfL">—</td><td>130–210ms (MARKS ~170, two samples ±24fps grid)</td></tr>
+          <tr><td>close: empty-medium beat</td><td id="cCbS">—</td><td id="cCbL">—</td><td>100–200ms (MARKS §5, C6-confirmed)</td></tr>
+          <tr><td>close: medium gone</td><td id="cCmS">—</td><td id="cCmL">—</td><td>600–650ms (MARKS §5 ~620 + C6 ~630)</td></tr>
+          <tr><td>interrupt: medium min</td><td id="cImS">—</td><td id="cImL">—</td><td>0.40–0.85, never clears (MARKS §5)</td></tr>
+          <tr><td>interrupt: fade min</td><td id="cIfS">—</td><td id="cIfL">—</td><td>~0 (content leaves)</td></tr>
+        </table>
+        <p class="hint">Drag down to open — the blur/dim cliff lands first, controls fade next, the
+        grid keeps stretching down after both. Flick up to dismiss — content leaves first, then the
+        empty-blur beat, then the medium relaxes. Touch mid-dismissal to catch it: the blur never
+        resolves between cycles. All three channels are followers off ONE spine.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<section class="probes">
+  <div class="probe-panel">
+    <h3>R1 — per-frame spine-var cost over a 40-consumer subtree</h3>
+    <p>40 elements each consume <code>--gl-t</code> through calc transfers (opacity + transform).
+    The spine writes per frame for 180 frames. "natural" reports rAF frame gaps (dropped &gt; 24ms);
+    "forced" adds a synchronous getComputedStyle read per frame — a style-recalc cost proxy, not the
+    real pipeline number. The browser seat owns the DevTools trace.</p>
+    <div class="buttons">
+      <button id="bR1n">run natural (180f)</button>
+      <button id="bR1f">run forced-read (180f)</button>
+    </div>
+    <div id="r1Stage"></div>
+    <div class="probe-out" id="r1Out">—</div>
+  </div>
+  <div class="probe-panel">
+    <h3>R2 — CSS-transition followers under scrub reversal</h3>
+    <p>Two registered <code>&lt;number&gt;</code> props with per-state transition durations
+    (medium-like 60/360ms, fade-like 195/165ms — 3&tau; linear stand-ins for the exponential
+    followers). The storm toggles targets at irregular 80–180ms intervals while sampling computed
+    values every frame; a retarget must continue from the current computed value — any jump &gt; 0.30
+    is a snap and fails the probe. Continuity only: fixed-duration retargets are NOT rate-faithful
+    to the exponential clocks, so the CSS arm is restricted to non-choreography channels (SPEC §1).</p>
+    <div class="buttons"><button id="bR2">run reversal storm</button></div>
+    <div class="r2-bar" id="r2m"></div>
+    <div class="r2-bar" id="r2f"></div>
+    <div class="probe-out" id="r2Out">—</div>
+  </div>
+</section>
+
+<footer>
+  <table>
+    <tr><th>register</th><th>(response s, &zeta;)</th><th>role</th></tr>
+    <tr><td>dock</td><td>(0.30, 0.82)</td><td>in-domain morphs, terminal detents — inside the C2 bracket (&zeta; 0.77–0.88, f_d 1.4–2.0Hz)</td></tr>
+    <tr><td>pin-release</td><td>(0.22, 0.75)</td><td>top-pin snapback — DESIGN register (C3: corpus evidence bounds-only, INCONCLUSIVE)</td></tr>
+    <tr><td>overpull / arrival</td><td>(0.35, 0.80)</td><td>bound return + fast landings — the C2 arbitrated register (R3 CLOSED); overshoot velocity-bought ~0.02s·v, never intrinsic</td></tr>
+    <tr><td>cc-open / cc-close / cc-catch</td><td>(0.95, 1.0) / (0.50, 1.0) / (0.62, 0.95)</td><td>CC stretch spine</td></tr>
+    <tr><td>follower clocks</td><td>medium 20/120ms · fade 65/55ms</td><td>attack/release &tau; (re-fit to MARKS §5/C6); occupancy &theta; target-conditioned 0.02 open-intent / 0.10 close-intent — the ONE blessed rule</td></tr>
+    <tr><td>intent law</td><td>p = t + 0.15·v&#772;</td><td>v&#772; = LSQ velocity through &tau;=120ms filter, idle-decay &tau;=100ms after 80ms still; latch flips at 0.5±0.10; latched at drive time</td></tr>
+  </table>
+  <p style="margin-top:10px">verified-model: claude-fable-5 — F1 SCALAR-SPINE prototype, IOS27-MICRO pass 1.
+  Sim column: 1ms deterministic integration of the same classes that drive paint. Live column:
+  rAF-sampled wall clock (&plusmn;1 frame). Paint truth belongs to the serialized browser seat.</p>
+</footer>
+
+<script id="f1-physics">
+/*F1-PHYSICS-BEGIN*/
+// F1 SCALAR-SPINE physics — verified-model: claude-fable-5.
+// DOM-free: this block is extracted and run under node by check.mjs.
+"use strict";
+const F1 = (() => {
+  const TAU = Math.PI * 2;
+  const clamp01 = (x) => Math.max(0, Math.min(1, x));
+
+  // Closed-form second-order spring, SpringProgress parametrization: omega = 2*pi/response.
+  function springSampler(response, zeta, x0, v0, target) {
+    const w = TAU / response;
+    const A = x0 - target;
+    if (zeta < 0.999) {
+      const wd = w * Math.sqrt(1 - zeta * zeta);
+      const B = (v0 + zeta * w * A) / wd;
+      return (t) => {
+        const e = Math.exp(-zeta * w * t);
+        const c = Math.cos(wd * t), s = Math.sin(wd * t);
+        return [
+          target + e * (A * c + B * s),
+          e * (-zeta * w * (A * c + B * s) + wd * (B * c - A * s)),
+        ];
+      };
+    }
+    const B = v0 + w * A; // critical
+    return (t) => {
+      const e = Math.exp(-w * t);
+      return [target + e * (A + B * t), e * (v0 - w * B * t)];
+    };
+  }
+
+  const REG = {
+    dock:       { response: 0.30, zeta: 0.82 },
+    pinRelease: { response: 0.22, zeta: 0.75 }, // DESIGN register — C3: corpus evidence bounds-only
+    // R3 CLOSED (MARKS PASS-2 C2): the arbitrated register zeta 0.80 (0.77-0.88),
+    // f_d 1.7Hz (1.4-2.0) -> response ~0.35s. Overshoot is VELOCITY-BOUGHT (~0.02s per unit
+    // crossing velocity), never intrinsic (zero-seed intrinsic ~1.5% of displacement).
+    overpull:   { response: 0.35, zeta: 0.80 },
+    ccOpen:     { response: 0.95, zeta: 1.00 },
+    ccClose:    { response: 0.50, zeta: 1.00 },
+    ccCatch:    { response: 0.62, zeta: 0.95 },
+  };
+  const CLOCKS = {
+    // Re-fit to MARKS, not to the pass-1 probe (CRIT-F1 G2):
+    // attack 20ms -> open medium 95% lands ~92ms inside the <=100ms cliff (was 25ms -> 107ms);
+    // release 120ms -> close medium gone lands ~623ms inside MARKS 600-650 (was 140ms -> 683ms).
+    medium: { attack: 0.020, release: 0.120 }, // position-keyed occupancy
+    fade:   { attack: 0.065, release: 0.055 }, // target-keyed commit intent
+  };
+  // THE ONE BLESSED PARAMETERIZATION (G5): occupancy threshold is target-conditioned —
+  // 0.02 while the committed intent is OPEN, 0.10 while it is CLOSED. One stateless rule of
+  // (value, intent); the probe's per-scenario constants are superseded.
+  const OCC = { opening: 0.02, closing: 0.10 };
+  // THE INTENT LAW (G6, shared with F3): committed intent LATCHES at drive time (glide/seat
+  // set it from the target). During scrub: p = value + PROJ * vbar, where vbar is the LSQ
+  // velocity through a first-order tau=VEL_TAU filter (and idle-decayed after IDLE_AFTER of
+  // pointer stillness, tau=IDLE_TAU — no stale-velocity accident). The latch flips up only at
+  // p >= 0.5+HYST, down only at p <= 0.5-HYST. A ±0.04 @ 6Hz dither never strobes it.
+  const INTENT = { proj: 0.15, hyst: 0.10, velTau: 0.120, idleAfter: 0.080, idleTau: 0.100 };
+  // The transient weak well is a DECLARED per-surface detent (C3 voided the corpus instance;
+  // this is design vocabulary). Catch policy (G3): on release, project the RELEASE MOMENTUM as
+  // a decayRest-style path — v decays at DECAY_K, so |v| falls linearly with DISTANCE — and if
+  // that path reaches a declared weak well still carrying |v| >= V_CATCH, retarget the well;
+  // exit at arrival-or-CATCH_MS, retarget onward. Every retarget C1. The trigger must consult
+  // the momentum path, NOT the closed-form glide: a stiff terminal spring manufactures velocity
+  // and would cross the well fast from ANY release, making the gate unfailable (honesty law).
+  const WELL = 0.55, V_CATCH = 2.2, CATCH_MS = 0.170, DECAY_K = 3.0;
+
+  function lsqSlope(samples) {
+    const n = samples.length;
+    if (n < 2) return 0;
+    let mt = 0, mx = 0;
+    for (const [t, x] of samples) { mt += t; mx += x; }
+    mt /= n; mx /= n;
+    let num = 0, den = 0;
+    for (const [t, x] of samples) { num += (t - mt) * (x - mx); den += (t - mt) * (t - mt); }
+    return den > 1e-9 ? num / den : 0;
+  }
+
+  class Spine {
+    constructor() {
+      this.value = 0; this.velocity = 0; this.target = 0;
+      this.regime = "parked"; this.register = "dock";
+      this._fn = null; this._t0 = 0; this._samples = [];
+      this._intent = 0;      // the committed-intent LATCH (the one follower-facing bit of state)
+      this.intentVel = 0;    // vbar: tau-filtered velocity feeding the intent projection
+      this._lastSample = 0;
+    }
+    setRegister(name) { this.register = name; return this; }
+    // C1 glide: analytic spring re-seated from the CURRENT (value, velocity), or a seeded velocity.
+    glideTo(target, now, seedVelocity) {
+      const { response, zeta } = REG[this.register];
+      const v0 = seedVelocity === undefined ? this.velocity : seedVelocity;
+      this._fn = springSampler(response, zeta, this.value, v0, target);
+      this._t0 = now; this.target = target; this.regime = "glide";
+      this._intent = target >= 0.5 ? 1 : 0; // latch at drive time
+      return this;
+    }
+    seat(target) { // PRM / instant
+      this.value = target; this.velocity = 0; this.target = target;
+      this.regime = "parked"; this._fn = null;
+      this._intent = target >= 0.5 ? 1 : 0;
+      return this;
+    }
+    beginScrub(now) {
+      this.regime = "scrub";
+      this._samples.length = 0;
+      this._samples.push([now, this.value]);
+      this.intentVel = this.velocity; // C1 carry into the intent filter
+      this._lastSample = now;
+    }
+    _latch() {
+      const p = this.value + INTENT.proj * this.intentVel;
+      if (p >= 0.5 + INTENT.hyst) this._intent = 1;
+      else if (p <= 0.5 - INTENT.hyst) this._intent = 0;
+    }
+    scrubTo(x, now) {
+      const dt = Math.max(now - this._lastSample, 1e-4);
+      this.value = x;
+      const s = this._samples;
+      s.push([now, x]);
+      while (s.length > 2 && now - s[0][0] > 0.1) s.shift(); // 100ms velocity window
+      this.velocity = lsqSlope(s);
+      this.intentVel += (this.velocity - this.intentVel) * (1 - Math.exp(-dt / INTENT.velTau));
+      this._lastSample = now;
+      this._latch();
+    }
+    // pointer-idle velocity decay: call per frame while scrubbing — a held-still finger
+    // re-zeroes velocity by DESIGN, not by stale-sample accident (CRIT-F1 G6).
+    scrubIdle(now, dt) {
+      if (this.regime !== "scrub" || now - this._lastSample <= INTENT.idleAfter) return;
+      const k = Math.exp(-dt / INTENT.idleTau);
+      this.velocity *= k;
+      this.intentVel *= k;
+      this._latch();
+    }
+    // committed intent: the latch while scrubbing, the drive-time latch otherwise
+    get intent() {
+      if (this.regime === "scrub") return this._intent;
+      return this.target >= 0.5 ? 1 : 0;
+    }
+    tick(now) {
+      if (this.regime !== "glide" || !this._fn) return;
+      const [x, v] = this._fn(now - this._t0);
+      this.value = x; this.velocity = v;
+      if (Math.abs(x - this.target) < 0.0015 && Math.abs(v) < 0.02) {
+        this.value = this.target; this.velocity = 0;
+        this.regime = "parked"; this._fn = null;
+      }
+    }
+  }
+
+  // G3: the projected-momentum well test (decayRest-style). Under exponential velocity decay
+  // v' = -k·v, speed falls LINEARLY with distance (d|v|/dx = -k) and the momentum rests at
+  // x0 + v0/k. The release from (x0, v0) reaches `well` iff the rest point lies past it in the
+  // direction of motion; the speed carried there is |v0| - k·distance. The trigger is this
+  // momentum path, not the release state (a fast fall released at 0.70 now catches — the old
+  // value>0.72 gate is dead) and not the closed-form glide (whose terminal spring manufactures
+  // velocity at the crossing, which would make the trigger unfailable).
+  function wellCrossing(x0, v0, well, k = DECAY_K) {
+    const d = well - x0;
+    if (d === 0) return { v: v0 };
+    if (Math.sign(d) !== Math.sign(v0)) return null;      // moving away from the well
+    if (Math.abs(v0) / k <= Math.abs(d)) return null;     // momentum rests before the well
+    const vAt = (Math.abs(v0) - k * Math.abs(d)) * Math.sign(v0);
+    return { v: vAt };
+  }
+
+  // First-order follower with asymmetric attack/release clocks — exact exponential step
+  // (unconditionally stable at any dt, unlike the Euler form).
+  class Follower {
+    constructor(clock) { this.attack = clock.attack; this.release = clock.release; this.y = 0; }
+    step(target, dt) {
+      const tau = target > this.y ? this.attack : this.release;
+      this.y = target + (this.y - target) * Math.exp(-dt / tau);
+      return this.y;
+    }
+    snap(target) { this.y = target; return this.y; }
+  }
+
+  class Bank {
+    constructor() {
+      this.medium = new Follower(CLOCKS.medium);
+      this.fade = new Follower(CLOCKS.fade);
+    }
+    targets(spine) {
+      const opening = spine.intent >= 0.5;
+      return {
+        medium: spine.value > (opening ? OCC.opening : OCC.closing) ? 1 : 0,
+        fade: opening ? 1 : 0,
+      };
+    }
+    step(spine, dt) {
+      const t = this.targets(spine);
+      this.medium.step(t.medium, dt);
+      this.fade.step(t.fade, dt);
+    }
+    snap(spine) {
+      const t = this.targets(spine);
+      this.medium.snap(t.medium);
+      this.fade.snap(t.fade);
+    }
+    settled(spine) {
+      const t = this.targets(spine);
+      return Math.abs(this.medium.y - t.medium) < 0.004 && Math.abs(this.fade.y - t.fade) < 0.004;
+    }
+  }
+
+  // iOS hyperbolic rubber band: displaced = e*D*c/(D + c*e) — saturates at D as e -> inf.
+  function rubber(excess, D, c = 0.55) { return (excess * D * c) / (D + c * excess); }
+
+  // H6 momentum facility: velocity weight for the --gl-vw channel.
+  function velWeight(v, k = 0.5) { return Math.tanh(Math.abs(v) * k); }
+
+  // ---------- deterministic simulations (1ms) — fill the "sim" column, assert in check.mjs ----------
+  const DT = 0.001;
+  const SETTLE_T = 0.00633; // 2px at TRAVEL = 316px (page metric)
+  const CROSS_T = 0.00345;  // C2's settle metric: 3px of the ~870px video travel, scale-free
+
+  function simCCOpen() {
+    const s = new Spine().setRegister("ccOpen");
+    s.value = 0; s.glideTo(1, 0, 0);
+    const b = new Bank(); b.medium.y = 0; b.fade.y = 0;
+    let m95 = null, f95 = null, s90 = null;
+    for (let t = 0; t < 2.5; t += DT) {
+      s.tick(t); b.step(s, DT);
+      if (m95 === null && b.medium.y > 0.95) m95 = t;
+      if (f95 === null && b.fade.y > 0.95) f95 = t;
+      if (s90 === null && s.value > 0.9) s90 = t;
+    }
+    return { m95: m95 * 1000, f95: f95 * 1000, s90: s90 * 1000, ratio: s90 / f95 };
+  }
+
+  function simCCClose() {
+    const s = new Spine().setRegister("ccClose");
+    s.value = 1; s.glideTo(0, 0, -6);
+    const b = new Bank(); b.medium.y = 1; b.fade.y = 1;
+    let f05 = null, m05 = null, beatStart = null, beatEnd = null;
+    for (let t = 0; t < 2.5; t += DT) {
+      s.tick(t); b.step(s, DT);
+      if (f05 === null && b.fade.y < 0.05) f05 = t;
+      if (m05 === null && b.medium.y < 0.05) m05 = t;
+      if (beatStart === null && b.fade.y < 0.05 && b.medium.y > 0.6) beatStart = t;
+      if (beatStart !== null && beatEnd === null && b.medium.y < 0.6) beatEnd = t;
+    }
+    return { f05: f05 * 1000, m05: m05 * 1000, beat: (beatEnd - beatStart) * 1000 };
+  }
+
+  function simCCInterrupt(catchAt = 0.33) {
+    const s = new Spine().setRegister("ccClose");
+    s.value = 1; s.glideTo(0, 0, -6);
+    const b = new Bank(); b.medium.y = 1; b.fade.y = 1;
+    let mMin = 1, fMin = 1, caught = false, resettle = null;
+    for (let t = 0; t < 3; t += DT) {
+      if (!caught && t >= catchAt) {
+        s.tick(catchAt);
+        s.setRegister("ccCatch").glideTo(1, catchAt); // C1 re-seat from live (value, velocity)
+        caught = true;
+      }
+      s.tick(t); b.step(s, DT);
+      mMin = Math.min(mMin, b.medium.y);
+      fMin = Math.min(fMin, b.fade.y);
+      if (caught && resettle === null && s.regime === "parked" && b.settled(s)) resettle = t;
+    }
+    return { mMin, fMin, resettleMs: resettle === null ? null : resettle * 1000 };
+  }
+
+  // Zero-seed release from overpull depth: on the C2 register the return lands essentially
+  // DEAD (intrinsic overshoot ~1.5% of depth — sub-pixel at this scale). C1: the corpus has
+  // no free springback instance; these bands are register locks, not MARKS gates.
+  function simOverpull(depth = 0.10) {
+    const s = new Spine().setRegister("overpull");
+    s.value = -depth; s.glideTo(0, 0, 0);
+    let peak = 0, settle = null;
+    for (let t = 0; t < 1.5; t += DT) {
+      s.tick(t);
+      if (s.value > peak) peak = s.value;
+      if (settle === null && Math.abs(s.value) < SETTLE_T) settle = t;
+    }
+    return { overshootPct: peak / depth, settleMs: settle * 1000 };
+  }
+
+  // The C2 corpus-parity scenario: the flung, well-free collapse landing. Measures the
+  // rest-crossing velocity, the velocity-bought overshoot (overshoot / |v_cross|, in seconds —
+  // C2: 11px at 570px/s = 0.019s), and settle |x| < 3px-equivalent from the crossing
+  // (C2: model 169-183ms, data 183ms).
+  function simFlungLanding(v0 = -3.2) {
+    const s = new Spine().setRegister("dock");
+    s.value = 1; s.glideTo(0, 0, v0);
+    let tCross = null, vCross = null, peak = 0, settle = null;
+    for (let t = 0; t < 2; t += DT) {
+      s.tick(t);
+      if (tCross === null && s.value <= 0) { tCross = t; vCross = s.velocity; }
+      if (tCross !== null) {
+        peak = Math.max(peak, -s.value);
+        // settle = the LAST entry into the ±CROSS_T band (re-arms if the excursion exits it)
+        if (Math.abs(s.value) >= CROSS_T) settle = null;
+        else if (settle === null) settle = t;
+      }
+      if (s.regime === "parked") break;
+    }
+    return {
+      vCross, overshootFrac: peak,
+      overshootPerVel: vCross ? peak / Math.abs(vCross) : null,
+      settleFromCrossMs: settle === null || tCross === null ? null : (settle - tCross) * 1000,
+    };
+  }
+
+  function simPin(depth = 0.19) {
+    const s = new Spine().setRegister("pinRelease");
+    s.value = 1 + depth; s.glideTo(1, 0, 0);
+    let x83 = null, settle = null;
+    for (let t = 0; t < 1; t += DT) {
+      s.tick(t);
+      if (x83 === null && t >= 0.083) x83 = s.value;
+      if (settle === null && Math.abs(s.value - 1) < SETTLE_T) settle = t;
+    }
+    return { coverage83: (depth - (x83 - 1)) / depth, settleMs: settle * 1000 };
+  }
+
+  // G3: the mid-detent catch, projected-path policy end to end. Trigger = the projected glide
+  // path crosses the declared well at |v| >= V_CATCH; exit = arrival-or-170ms; landing metric =
+  // the spine's own PARK epsilon (|x-target| < 0.0015 AND |v| < 0.02) — the SAME metric the
+  // live page uses. (The pass-1 588-vs-406ms "mystery" was exactly this metric mismatch: the
+  // old sim landed at |x|<0.006, |v|<0.1, a ~90-180ms looser cut at the dock register's decay
+  // rate zeta*omega ~ 17/s. One metric now.)
+  function simMidCatch(v0 = -4) {
+    const s = new Spine().setRegister("dock");
+    s.value = 1;
+    const pc = wellCrossing(1, v0, WELL);
+    const caught = pc !== null && Math.abs(pc.v) >= V_CATCH;
+    s.glideTo(caught ? WELL : 0, 0, v0);
+    let armed = caught, dwellEnd = null, minWellDist = 1, land = null;
+    for (let t = 0; t < 2.5; t += DT) {
+      s.tick(t);
+      if (armed) {
+        minWellDist = Math.min(minWellDist, Math.abs(s.value - WELL));
+        if (t >= CATCH_MS || s.regime === "parked") { // arrival-or-170ms
+          dwellEnd = t;
+          s.setRegister("dock").glideTo(0, t); // onward, C1
+          armed = false;
+        }
+      } else if (land === null && s.regime === "parked") { land = t; break; }
+    }
+    return {
+      caught, vAtWell: pc ? pc.v : null,
+      dwellMs: dwellEnd === null ? null : dwellEnd * 1000,
+      minWellDist, landMs: land === null ? null : land * 1000,
+    };
+  }
+
+  // G6 gates: the intent latch under adversarial inputs.
+  // (a) held jitter: ±0.04 @ 6Hz dither around 0.5 for 1.2s must produce ZERO latch flips
+  //     from either starting state (the flicker class the raw projection strobes on);
+  // (b) slow deliberate cross 0.3 -> 0.7 at 0.5/s must flip EXACTLY once;
+  // (c) a short fast flick from low t must commit OPEN before value reaches 0.5 (projection lead).
+  function simJitter(latch0) {
+    const s = new Spine();
+    s.value = 0.5; s._intent = latch0;
+    s.beginScrub(0); s.intentVel = 0;
+    let flips = 0, prev = latch0;
+    for (let t = 0.008; t <= 1.2; t += 0.008) {
+      s.scrubTo(0.5 + 0.04 * Math.sin(TAU * 6 * t), t);
+      if (s.intent !== prev) { flips++; prev = s.intent; }
+    }
+    return { flips };
+  }
+  function simSlowCross() {
+    const s = new Spine();
+    s.value = 0.3; s._intent = 0;
+    s.beginScrub(0); s.intentVel = 0;
+    let flips = 0, prev = 0;
+    for (let t = 0.008; t <= 0.8; t += 0.008) {
+      s.scrubTo(0.3 + 0.5 * t, t);
+      if (s.intent !== prev) { flips++; prev = s.intent; }
+    }
+    return { flips, finalIntent: s.intent };
+  }
+  function simFlickIntent() {
+    const s = new Spine();
+    s.value = 0.2; s._intent = 0;
+    s.beginScrub(0); s.intentVel = 0;
+    let committedAt = null;
+    for (let t = 0.008; t <= 0.08; t += 0.008) {
+      s.scrubTo(0.2 + 3.0 * t, t);
+      if (committedAt === null && s.intent === 1) committedAt = s.value;
+    }
+    return { intent: s.intent, valueAtCommit: committedAt, finalValue: s.value };
+  }
+
+  return {
+    Spine, Follower, Bank, REG, CLOCKS, OCC, INTENT, WELL, V_CATCH, CATCH_MS, DECAY_K, CROSS_T,
+    rubber, velWeight, clamp01, springSampler, wellCrossing,
+    sims: { ccOpen: simCCOpen, ccClose: simCCClose, ccInterrupt: simCCInterrupt,
+            overpull: simOverpull, pin: simPin, midCatch: simMidCatch,
+            flungLanding: simFlungLanding, jitter: simJitter,
+            slowCross: simSlowCross, flickIntent: simFlickIntent },
+  };
+})();
+/*F1-PHYSICS-END*/
+</script>
+
+<script>
+"use strict";
+(() => {
+  const $ = (s) => document.querySelector(s);
+  const nowS = () => performance.now() / 1000;
+
+  // ---------- PRM ----------
+  const prmMedia = matchMedia("(prefers-reduced-motion: reduce)");
+  const prmBox = $("#prm");
+  const PRM = () => prmMedia.matches || prmBox.checked;
+  const prmNote = () => {
+    document.documentElement.classList.toggle("prm", PRM());
+    $("#prmNote").textContent = PRM() ? "PRM active: spine seats instantly, every follower snaps" : "";
+  };
+  prmBox.addEventListener("change", prmNote);
+  prmMedia.addEventListener?.("change", prmNote);
+  prmNote();
+
+  // ---------- engine loop (parked = zero rAF) ----------
+  const engine = { surfaces: [], raf: null, last: 0, dts: [] };
+  function ensureLoop() {
+    if (engine.raf === null) {
+      engine.last = performance.now();
+      engine.raf = requestAnimationFrame(tick);
+    }
+  }
+  let fpsCounter = 0;
+  function tick(nowMs) {
+    const dtMs = nowMs - engine.last;
+    engine.last = nowMs;
+    engine.dts.push(dtMs);
+    if (engine.dts.length > 90) engine.dts.shift();
+    if (++fpsCounter % 10 === 0) {
+      const avg = engine.dts.reduce((a, b) => a + b, 0) / engine.dts.length;
+      const worst = Math.max(...engine.dts);
+      $("#fps").textContent = `${(1000 / avg).toFixed(1)} fps · worst ${worst.toFixed(1)}ms (last ${engine.dts.length}f) · rAF active`;
+    }
+    const now = nowMs / 1000;
+    const dt = Math.min(dtMs, 50) / 1000;
+    let active = false;
+    for (const s of engine.surfaces) if (s.update(now, dt)) active = true;
+    if (active) engine.raf = requestAnimationFrame(tick);
+    else {
+      engine.raf = null;
+      engine.dts.length = 0;
+      $("#fps").textContent = "rAF parked (zero-cost idle)";
+    }
+  }
+
+  const fmtMs = (v) => v === null || v === undefined ? "—" : `${Math.round(v)}ms`;
+  const setCell = (id, text, ok) => {
+    const el = $(id);
+    el.textContent = text;
+    el.className = ok === undefined ? "" : ok ? "ok" : "no";
+  };
+
+  // =====================================================================
+  // Maps surface — spine on the extended domain, registers, scheduler
+  // =====================================================================
+  const TRAVEL = 316, D_UP = 60, D_DOWN = 32;
+  class MapsDemo {
+    constructor(el) {
+      this.el = el;
+      this.spine = new F1.Spine().setRegister("dock");
+      this.catchUntil = null;
+      this.watch = null;
+      this.badgeSkip = 0;
+      this.bindPointers();
+      this.write();
+      engine.surfaces.push(this);
+    }
+    write() {
+      const s = this.spine;
+      this.el.style.setProperty("--gl-t", s.value.toFixed(4));
+      this.el.style.setProperty("--gl-vw", F1.velWeight(s.velocity).toFixed(3));
+      if (++this.badgeSkip % 5 === 0 || s.regime === "parked") {
+        $("#mapsBadge").innerHTML =
+          `regime: <b>${s.regime}</b>${s.regime === "glide" ? ` (${s.register})` : ""}` +
+          ` · t=<b>${s.value.toFixed(3)}</b> · v=<b>${s.velocity.toFixed(2)}</b>/s · vw=<b>${F1.velWeight(s.velocity).toFixed(2)}</b>`;
+      }
+    }
+    update(now, dt) {
+      const s = this.spine;
+      if (s.regime === "glide") s.tick(now);
+      s.scrubIdle(now, dt); // pointer-idle velocity decay (the intent law)
+      if (this.catchUntil !== null) {
+        // exit at arrival-or-170ms (the well arrival parks the spine before the timer)
+        if (now >= this.catchUntil || s.regime === "parked") {
+          if (this.watch?.kind === "catch") this.watch.dwellMs = (now - this.watch.armAt) * 1000;
+          this.catchUntil = null;
+          s.setRegister("dock").glideTo(0, now); // onward from the weak well, C1
+        } else if (this.watch?.kind === "catch") {
+          this.watch.minWellDist = Math.min(this.watch.minWellDist, Math.abs(s.value - F1.WELL));
+        }
+      }
+      this.measure(now);
+      this.write();
+      return s.regime !== "parked" || this.catchUntil !== null || this.watch !== null;
+    }
+    measure(now) {
+      const w = this.watch, s = this.spine;
+      if (!w) return;
+      if (now - w.t0 > 4) { this.watch = null; return; } // timeout guard
+      if (w.kind === "overpull") {
+        if (s.value > w.peak) w.peak = s.value;
+        if (w.settle === undefined && Math.abs(s.value) < 0.00633) w.settle = now;
+        if (s.regime === "parked") {
+          setCell("#mOpOvL", `${(w.peak / w.depth * 100).toFixed(1)}% (${(w.peak * TRAVEL).toFixed(1)}px)`, w.peak / w.depth <= 0.03);
+          setCell("#mOpSetL", fmtMs(w.settle === undefined ? null : (w.settle - w.t0) * 1000), w.settle !== undefined && (w.settle - w.t0) * 1000 >= 170 && (w.settle - w.t0) * 1000 <= 290);
+          this.watch = null;
+        }
+      } else if (w.kind === "land") {
+        if (w.vCross === undefined && s.value <= 0) { w.vCross = s.velocity; w.tCross = now; }
+        if (w.vCross !== undefined) {
+          w.peak = Math.max(w.peak ?? 0, -s.value);
+          if (Math.abs(s.value) >= F1.CROSS_T) w.settle = undefined;
+          else if (w.settle === undefined) w.settle = now;
+        }
+        if (s.regime === "parked" && w.vCross !== undefined) {
+          const opv = w.peak / Math.abs(w.vCross);
+          const sc = (w.settle - w.tCross) * 1000;
+          setCell("#mFlOvL", `${opv.toFixed(3)}s (${(w.peak * TRAVEL).toFixed(1)}px @ ${(Math.abs(w.vCross) * TRAVEL).toFixed(0)}px/s)`, opv >= 0.015 && opv <= 0.030);
+          setCell("#mFlSetL", fmtMs(sc), sc >= 130 && sc <= 230);
+          this.watch = null;
+        }
+      } else if (w.kind === "pin") {
+        if (w.v83 === undefined && now - w.t0 >= 0.083) w.v83 = s.value;
+        if (w.settle === undefined && Math.abs(s.value - 1) < 0.00633) w.settle = now;
+        if (s.regime === "parked") {
+          const cov = w.v83 === undefined ? null : (w.depth - (w.v83 - 1)) / w.depth;
+          setCell("#mPinCovL", cov === null ? "—" : `${(cov * 100).toFixed(0)}%`, cov !== null && cov >= 0.75);
+          setCell("#mPinSetL", fmtMs(w.settle === undefined ? null : (w.settle - w.t0) * 1000), w.settle !== undefined && (w.settle - w.t0) * 1000 <= 220);
+          this.watch = null;
+        }
+      } else if (w.kind === "catch") {
+        // landing metric = the spine's PARK epsilon — the SAME metric the sim uses (G3)
+        if (s.regime === "parked" && s.target === 0 && this.catchUntil === null && w.dwellMs !== undefined) {
+          const landMs = (now - w.t0) * 1000;
+          const dwellOk = w.dwellMs >= 120 && w.dwellMs <= 220;
+          const nearOk = w.minWellDist <= 0.12;
+          const landOk = w.simLand !== null && Math.abs(landMs - w.simLand) <= 40;
+          setCell("#mCatchL",
+            `dwell ${fmtMs(w.dwellMs)} · near ${w.minWellDist.toFixed(3)} · landed ${fmtMs(landMs)}`,
+            dwellOk && nearOk && landOk);
+          this.watch = null;
+        }
+      }
+    }
+    // ------ pointer scrub ------
+    bindPointers() {
+      const el = this.el;
+      el.addEventListener("pointerdown", (e) => {
+        e.preventDefault();
+        el.setPointerCapture(e.pointerId);
+        const s = this.spine;
+        this.baseT = s.value;
+        this.baseY = e.clientY;
+        this.dragging = true;
+        this.catchUntil = null;
+        s.beginScrub(nowS());
+        ensureLoop();
+      });
+      el.addEventListener("pointermove", (e) => {
+        if (!this.dragging) return;
+        const raw = this.baseT + (this.baseY - e.clientY) / TRAVEL;
+        let t;
+        if (raw > 1) t = 1 + F1.rubber((raw - 1) * TRAVEL, D_UP) / TRAVEL;
+        else if (raw < 0) t = -F1.rubber(-raw * TRAVEL, D_DOWN) / TRAVEL;
+        else t = raw;
+        this.spine.scrubTo(t, nowS());
+        this.write();
+      });
+      const up = (e) => {
+        if (!this.dragging) return;
+        this.dragging = false;
+        this.release(nowS());
+      };
+      el.addEventListener("pointerup", up);
+      el.addEventListener("pointercancel", up);
+    }
+    release(now) {
+      const s = this.spine;
+      $("#mRelV").textContent = `${s.velocity.toFixed(2)}/s (${(s.velocity * TRAVEL).toFixed(0)}px/s)`;
+      if (PRM()) {
+        const target = s.value > 1 ? 1 : s.value < 0 ? 0 : s.intent; // the latch, not a raw projection
+        s.seat(target);
+        this.write();
+        return;
+      }
+      if (s.value > 1) {
+        s.setRegister("pinRelease").glideTo(1, now);
+        this.watch = { kind: "pin", t0: now, depth: s.value - 1 };
+      } else if (s.value < 0) {
+        s.setRegister("overpull").glideTo(0, now); // C2 register (0.35, 0.80)
+        this.watch = { kind: "overpull", t0: now, depth: -s.value, peak: 0 };
+      } else {
+        const target = s.intent; // the committed-intent latch (G6)
+        // G3: projected-momentum trigger — the decayRest-style path decides, not release state
+        const pc = target === 0 ? F1.wellCrossing(s.value, s.velocity, F1.WELL) : null;
+        if (pc && Math.abs(pc.v) >= F1.V_CATCH) {
+          s.setRegister("dock").glideTo(F1.WELL, now); // the declared weak well
+          this.catchUntil = now + F1.CATCH_MS;
+          this.watch = { kind: "catch", t0: now, armAt: now, minWellDist: 1, simLand: simMC.landMs };
+        } else {
+          s.setRegister("dock").glideTo(target, now);
+        }
+      }
+      ensureLoop();
+    }
+    // ------ scripted scenarios ------
+    // G7 fix: the TARGET rides the call — under PRM the spine seats to it directly; the old
+    // form seated to the STALE pre-scenario intent, making the Maps buttons PRM no-ops.
+    scenario(target, fn) {
+      if (PRM()) { this.spine.seat(target); this.write(); return; }
+      fn();
+      ensureLoop();
+    }
+  }
+
+  // Maps sim column (simMC also anchors the live landing band)
+  const simMC = F1.sims.midCatch(-4);
+  const maps = new MapsDemo($("#mapsSurface"));
+  $("#bFlickOpen").onclick = () => maps.scenario(1, () => {
+    maps.spine.setRegister("dock").glideTo(1, nowS(), 3.2);
+  });
+  $("#bFlickClose").onclick = () => maps.scenario(0, () => {
+    // the well-free corpus-parity landing (C2): flung collapse, velocity-bought overshoot
+    const n = nowS();
+    maps.spine.setRegister("dock").glideTo(0, n, -3.2);
+    maps.watch = { kind: "land", t0: n, peak: 0 };
+  });
+  $("#bOverpull").onclick = () => maps.scenario(0, () => {
+    maps.spine.setRegister("dock").glideTo(-0.10, nowS());
+    setTimeout(() => {
+      if (PRM()) { maps.spine.seat(0); maps.write(); return; }
+      const n = nowS();
+      maps.spine.tick(n);
+      maps.spine.setRegister("overpull").glideTo(0, n);
+      maps.watch = { kind: "overpull", t0: n, depth: Math.max(0.02, -maps.spine.value), peak: 0 };
+      ensureLoop();
+    }, 550);
+  });
+  $("#bPin").onclick = () => maps.scenario(1, () => {
+    maps.spine.setRegister("dock").glideTo(1.19, nowS());
+    setTimeout(() => {
+      if (PRM()) { maps.spine.seat(1); maps.write(); return; }
+      const n = nowS();
+      maps.spine.tick(n);
+      maps.spine.setRegister("pinRelease").glideTo(1, n);
+      maps.watch = { kind: "pin", t0: n, depth: Math.max(0.02, maps.spine.value - 1) };
+      ensureLoop();
+    }, 550);
+  });
+  $("#bCatch").onclick = () => maps.scenario(0, () => {
+    // release-from-full at -4/s through the release policy: the projected path crosses the
+    // declared well fast, so the catch fires (same entry as the sim)
+    const n = nowS();
+    maps.spine.seat(1);
+    const pc = F1.wellCrossing(1, -4, F1.WELL);
+    if (pc && Math.abs(pc.v) >= F1.V_CATCH) {
+      maps.spine.setRegister("dock").glideTo(F1.WELL, n, -4);
+      maps.catchUntil = n + F1.CATCH_MS;
+      maps.watch = { kind: "catch", t0: n, armAt: n, minWellDist: 1, simLand: simMC.landMs };
+    } else {
+      maps.spine.setRegister("dock").glideTo(0, n, -4);
+    }
+  });
+  $("#bMapsReset").onclick = () => { maps.watch = null; maps.catchUntil = null; maps.spine.seat(0); maps.write(); };
+
+  // Maps sim column
+  {
+    const p = F1.sims.pin(0.19);
+    setCell("#mPinCovS", `${(p.coverage83 * 100).toFixed(0)}%`, p.coverage83 >= 0.75 && p.coverage83 <= 0.92);
+    setCell("#mPinSetS", fmtMs(p.settleMs), p.settleMs >= 100 && p.settleMs <= 200);
+    const o = F1.sims.overpull(0.10);
+    setCell("#mOpOvS", `${(o.overshootPct * 100).toFixed(1)}%`, o.overshootPct <= 0.03);
+    setCell("#mOpSetS", fmtMs(o.settleMs), o.settleMs >= 180 && o.settleMs <= 280);
+    const fl = F1.sims.flungLanding(-3.2);
+    setCell("#mFlOvS", `${fl.overshootPerVel.toFixed(3)}s`, fl.overshootPerVel >= 0.015 && fl.overshootPerVel <= 0.030);
+    setCell("#mFlSetS", fmtMs(fl.settleFromCrossMs), fl.settleFromCrossMs >= 140 && fl.settleFromCrossMs <= 220);
+    setCell("#mCatchS", `dwell ${fmtMs(simMC.dwellMs)} · landed ${fmtMs(simMC.landMs)}`,
+      simMC.caught && simMC.dwellMs >= 120 && simMC.dwellMs <= 220 && simMC.minWellDist <= 0.12);
+  }
+
+  // =====================================================================
+  // CC surface — spine + follower bank, live channel measurement
+  // =====================================================================
+  const CC_TRAVEL = 340, CC_D = 24;
+  class CCDemo {
+    constructor(el) {
+      this.el = el;
+      this.spine = new F1.Spine().setRegister("ccOpen");
+      this.bank = new F1.Bank();
+      this.pendingCatch = null;
+      this.watch = null;
+      this.badgeSkip = 0;
+      this.bindPointers();
+      this.write();
+      engine.surfaces.push(this);
+    }
+    write() {
+      const s = this.spine, b = this.bank;
+      const st = this.el.style;
+      st.setProperty("--gl-t", s.value.toFixed(4));
+      st.setProperty("--gl-m", b.medium.y.toFixed(4));
+      st.setProperty("--gl-f", b.fade.y.toFixed(4));
+      st.setProperty("--gl-vw", F1.velWeight(s.velocity).toFixed(3));
+      if (++this.badgeSkip % 5 === 0 || s.regime === "parked") {
+        $("#ccBadge").innerHTML =
+          `regime: <b>${s.regime}</b>${s.regime === "glide" ? ` (${s.register})` : ""}` +
+          ` · t=<b>${s.value.toFixed(3)}</b> · medium=<b>${b.medium.y.toFixed(2)}</b> · fade=<b>${b.fade.y.toFixed(2)}</b>`;
+      }
+    }
+    update(now, dt) {
+      const s = this.spine;
+      if (s.regime === "glide") s.tick(now);
+      s.scrubIdle(now, dt); // pointer-idle velocity decay (the intent law)
+      if (this.pendingCatch !== null && now >= this.pendingCatch) {
+        this.pendingCatch = null;
+        s.setRegister("ccCatch").glideTo(1, now); // C1 catch from live (value, velocity)
+      }
+      this.bank.step(s, dt);
+      this.measure(now);
+      this.write();
+      return s.regime !== "parked" || !this.bank.settled(s) || this.pendingCatch !== null || this.watch !== null;
+    }
+    measure(now) {
+      const w = this.watch, s = this.spine, b = this.bank;
+      if (!w) return;
+      const ms = (now - w.t0) * 1000;
+      if (ms > 5000) { this.watch = null; return; }
+      if (w.kind === "open") {
+        if (w.m95 === undefined && b.medium.y > 0.95) w.m95 = ms;
+        if (w.f95 === undefined && b.fade.y > 0.95) w.f95 = ms;
+        if (w.s90 === undefined && s.value > 0.9) w.s90 = ms;
+        if (w.m95 !== undefined && w.f95 !== undefined && w.s90 !== undefined) {
+          setCell("#cOmL", fmtMs(w.m95), w.m95 <= 115); // MARKS <=100 + 1 frame
+          setCell("#cOfL", fmtMs(w.f95), w.f95 >= 150 && w.f95 <= 250);
+          setCell("#cOsL", fmtMs(w.s90), w.s90 >= 550 && w.s90 <= 630); // register lock ±1 frame
+          setCell("#cOrL", `1:${(w.s90 / w.f95).toFixed(1)}`, w.s90 / w.f95 >= 2.4 && w.s90 / w.f95 <= 4.3);
+          this.watch = null;
+        }
+      } else if (w.kind === "close") {
+        if (w.f05 === undefined && b.fade.y < 0.05) w.f05 = ms;
+        if (w.beatStart === undefined && b.fade.y < 0.05 && b.medium.y > 0.6) w.beatStart = ms;
+        if (w.beatStart !== undefined && w.beatEnd === undefined && b.medium.y < 0.6) w.beatEnd = ms;
+        if (w.m05 === undefined && b.medium.y < 0.05) w.m05 = ms;
+        if (w.m05 !== undefined) {
+          const beat = w.beatEnd - w.beatStart;
+          setCell("#cCfL", fmtMs(w.f05), w.f05 >= 130 && w.f05 <= 210);
+          setCell("#cCbL", fmtMs(beat), beat >= 95 && beat <= 210);
+          setCell("#cCmL", fmtMs(w.m05), w.m05 >= 590 && w.m05 <= 665); // MARKS 600-650 ± 1 frame
+          this.watch = null;
+        }
+      } else if (w.kind === "interrupt") {
+        w.mMin = Math.min(w.mMin, b.medium.y);
+        w.fMin = Math.min(w.fMin, b.fade.y);
+        if (s.regime === "parked" && s.target === 1 && b.fade.y > 0.95) {
+          setCell("#cImL", w.mMin.toFixed(2), w.mMin >= 0.4 && w.mMin <= 0.85);
+          setCell("#cIfL", w.fMin.toFixed(2), w.fMin <= 0.1);
+          this.watch = null;
+        }
+      }
+    }
+    bindPointers() {
+      const el = this.el;
+      el.addEventListener("pointerdown", (e) => {
+        e.preventDefault();
+        el.setPointerCapture(e.pointerId);
+        const s = this.spine;
+        this.pendingCatch = null;
+        this.baseT = s.value;   // catching a glide mid-flight: scrub takes over from live value
+        this.baseY = e.clientY;
+        this.dragging = true;
+        s.beginScrub(nowS());
+        ensureLoop();
+      });
+      el.addEventListener("pointermove", (e) => {
+        if (!this.dragging) return;
+        const raw = this.baseT + (e.clientY - this.baseY) / CC_TRAVEL; // down = open
+        let t;
+        if (raw > 1) t = 1 + F1.rubber((raw - 1) * CC_TRAVEL, CC_D) / CC_TRAVEL;
+        else if (raw < 0) t = -F1.rubber(-raw * CC_TRAVEL, CC_D) / CC_TRAVEL;
+        else t = raw;
+        this.spine.scrubTo(t, nowS());
+      });
+      const up = () => {
+        if (!this.dragging) return;
+        this.dragging = false;
+        const s = this.spine, now = nowS();
+        if (PRM()) {
+          s.seat(s.intent);
+          this.bank.snap(s);
+          this.write();
+          return;
+        }
+        const target = s.intent; // ONE commit law: the latch (projection + hysteresis + idle decay)
+        s.setRegister(target === 1 ? "ccOpen" : "ccClose").glideTo(target, now);
+        ensureLoop();
+      };
+      el.addEventListener("pointerup", up);
+      el.addEventListener("pointercancel", up);
+    }
+    resetTo(v) {
+      this.pendingCatch = null;
+      this.watch = null;
+      this.spine.seat(v);
+      this.bank.medium.snap(v);
+      this.bank.fade.snap(v);
+      this.write();
+    }
+  }
+
+  const cc = new CCDemo($("#ccSurface"));
+  $("#bCCOpen").onclick = () => {
+    cc.resetTo(0);
+    if (PRM()) { cc.spine.seat(1); cc.bank.snap(cc.spine); cc.write(); return; }
+    const n = nowS();
+    cc.spine.setRegister("ccOpen").glideTo(1, n, 0);
+    cc.watch = { kind: "open", t0: n };
+    ensureLoop();
+  };
+  $("#bCCClose").onclick = () => {
+    cc.resetTo(1);
+    if (PRM()) { cc.spine.seat(0); cc.bank.snap(cc.spine); cc.write(); return; }
+    const n = nowS();
+    cc.spine.setRegister("ccClose").glideTo(0, n, -6); // the measured flick seed
+    cc.watch = { kind: "close", t0: n };
+    ensureLoop();
+  };
+  $("#bCCInt").onclick = () => {
+    cc.resetTo(1);
+    if (PRM()) return;
+    const n = nowS();
+    cc.spine.setRegister("ccClose").glideTo(0, n, -6);
+    cc.pendingCatch = n + 0.330; // the finger re-engages mid-dismissal
+    cc.watch = { kind: "interrupt", t0: n, mMin: 1, fMin: 1 };
+    ensureLoop();
+  };
+  $("#bCCReset").onclick = () => cc.resetTo(0);
+
+  // CC sim column — MARKS-derived bands (register locks live in check.mjs beside them)
+  {
+    const o = F1.sims.ccOpen();
+    setCell("#cOmS", fmtMs(o.m95), o.m95 <= 100);
+    setCell("#cOfS", fmtMs(o.f95), o.f95 >= 150 && o.f95 <= 250);
+    setCell("#cOsS", fmtMs(o.s90), o.s90 >= 560 && o.s90 <= 620);
+    setCell("#cOrS", `1:${o.ratio.toFixed(1)}`, o.ratio >= 2.4 && o.ratio <= 4.3);
+    const c = F1.sims.ccClose();
+    setCell("#cCfS", fmtMs(c.f05), c.f05 >= 130 && c.f05 <= 210);
+    setCell("#cCbS", fmtMs(c.beat), c.beat >= 100 && c.beat <= 200);
+    setCell("#cCmS", fmtMs(c.m05), c.m05 >= 600 && c.m05 <= 650);
+    const i = F1.sims.ccInterrupt(0.33);
+    setCell("#cImS", i.mMin.toFixed(2), i.mMin >= 0.4 && i.mMin <= 0.85);
+    setCell("#cIfS", i.fMin.toFixed(2), i.fMin <= 0.1);
+  }
+
+  // =====================================================================
+  // R1 — spine-var invalidation cost over a 40-consumer subtree
+  // =====================================================================
+  const r1Stage = $("#r1Stage");
+  for (let i = 0; i < 40; i++) {
+    const d = document.createElement("div");
+    d.className = "r1e";
+    d.style.setProperty("--i", i);
+    r1Stage.appendChild(d);
+  }
+  let r1Busy = false;
+  function runR1(forced) {
+    if (r1Busy) return;
+    r1Busy = true;
+    const last = r1Stage.lastElementChild;
+    const costs = [], gaps = [];
+    let i = 0, prev = null;
+    const FRAMES = 180;
+    function step() {
+      const t0 = performance.now();
+      r1Stage.style.setProperty("--gl-t", (0.5 + 0.5 * Math.sin(i * 0.09)).toFixed(4));
+      if (forced) void getComputedStyle(last).opacity; // forced-recalc proxy
+      costs.push(performance.now() - t0);
+      if (prev !== null) gaps.push(t0 - prev);
+      prev = t0;
+      if (++i < FRAMES) requestAnimationFrame(step);
+      else {
+        const avg = (a) => a.reduce((x, y) => x + y, 0) / a.length;
+        const mx = (a) => Math.max(...a);
+        const dropped = gaps.filter((g) => g > 24).length;
+        $("#r1Out").textContent =
+          `${forced ? "forced-read" : "natural"} · ${FRAMES} frames · 40 consumers\n` +
+          `write${forced ? "+recalc read" : ""}: avg ${avg(costs).toFixed(3)}ms · max ${mx(costs).toFixed(2)}ms\n` +
+          `frame gap: avg ${avg(gaps).toFixed(2)}ms · max ${mx(gaps).toFixed(1)}ms · dropped(>24ms): ${dropped}\n` +
+          `UA: ${navigator.userAgent.slice(0, 84)}`;
+        r1Stage.style.setProperty("--gl-t", "0");
+        r1Busy = false;
+      }
+    }
+    requestAnimationFrame(step);
+  }
+  $("#bR1n").onclick = () => runR1(false);
+  $("#bR1f").onclick = () => runR1(true);
+
+  // =====================================================================
+  // R2 — CSS-transition followers under scrub reversal
+  // =====================================================================
+  const r2m = $("#r2m"), r2f = $("#r2f");
+  let r2Busy = false;
+  $("#bR2").onclick = async () => {
+    if (r2Busy) return;
+    r2Busy = true;
+    const out = $("#r2Out");
+    const reg = getComputedStyle(r2m).getPropertyValue("--r2m");
+    if (reg.trim() === "") {
+      out.textContent = "no @property support — registered custom props unreadable; probe void";
+      r2Busy = false;
+      return;
+    }
+    if (PRM()) {
+      out.textContent = "PRM active — transitions are none, followers snap (expected). Rerun without PRM for the verdict.";
+      r2Busy = false;
+      return;
+    }
+    const sample = () => [
+      parseFloat(getComputedStyle(r2m).getPropertyValue("--r2m")),
+      parseFloat(getComputedStyle(r2f).getPropertyValue("--r2f")),
+    ];
+    const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+    // phase 1: clean asymmetry check
+    r2m.classList.remove("on"); r2f.classList.remove("on");
+    await wait(650);
+    const t0 = performance.now();
+    r2m.classList.add("on"); r2f.classList.add("on");
+    let up95 = [null, null];
+    await new Promise((res) => {
+      const poll = () => {
+        const [a, b] = sample();
+        const ms = performance.now() - t0;
+        if (up95[0] === null && a > 0.95) up95[0] = ms;
+        if (up95[1] === null && b > 0.95) up95[1] = ms;
+        if (up95[0] !== null && up95[1] !== null) return res();
+        if (ms > 1500) return res();
+        requestAnimationFrame(poll);
+      };
+      requestAnimationFrame(poll);
+    });
+    const t1 = performance.now();
+    r2m.classList.remove("on"); r2f.classList.remove("on");
+    let dn05 = [null, null];
+    await new Promise((res) => {
+      const poll = () => {
+        const [a, b] = sample();
+        const ms = performance.now() - t1;
+        if (dn05[0] === null && a < 0.05) dn05[0] = ms;
+        if (dn05[1] === null && b < 0.05) dn05[1] = ms;
+        if (dn05[0] !== null && dn05[1] !== null) return res();
+        if (ms > 1500) return res();
+        requestAnimationFrame(poll);
+      };
+      requestAnimationFrame(poll);
+    });
+    // phase 2: reversal storm — irregular toggles, per-frame continuity
+    const toggles = [0, 110, 190, 300, 380, 520, 640, 820, 940, 1150];
+    const tStart = performance.now();
+    for (const at of toggles) setTimeout(() => { r2m.classList.toggle("on"); r2f.classList.toggle("on"); }, at);
+    let prevS = sample(), maxJump = 0, n = 0;
+    await new Promise((res) => {
+      const poll = () => {
+        const s = sample();
+        maxJump = Math.max(maxJump, Math.abs(s[0] - prevS[0]), Math.abs(s[1] - prevS[1]));
+        prevS = s;
+        n++;
+        if (performance.now() - tStart > 1900) return res();
+        requestAnimationFrame(poll);
+      };
+      requestAnimationFrame(poll);
+    });
+    r2m.classList.remove("on"); r2f.classList.remove("on");
+    const green = maxJump < 0.30;
+    out.textContent =
+      `asymmetry: medium up95 ${up95[0] === null ? ">1500" : Math.round(up95[0])}ms / down05 ${dn05[0] === null ? ">1500" : Math.round(dn05[0])}ms (expect ~57/~342)\n` +
+      `           fade   up95 ${up95[1] === null ? ">1500" : Math.round(up95[1])}ms / down05 ${dn05[1] === null ? ">1500" : Math.round(dn05[1])}ms (expect ~185/~157)\n` +
+      `reversal storm: ${toggles.length} retargets · ${n} samples · max inter-frame jump ${maxJump.toFixed(3)}\n` +
+      `verdict: ${green ? "GREEN — retargets continue from the current computed value" : "RED — snap detected; followers stay JS-side"}`;
+    r2Busy = false;
+  };
+})();
+</script>
+</body>
+</html>

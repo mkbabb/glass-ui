@@ -11,7 +11,7 @@ This directory is the pre-resume snapshot should the re-derivation need diffing.
 
 - SPEC-F1-SCALAR-SPINE.md   (cure:F1, partial @ 08:27:06)
 - SPEC-F4-ENERGY-FIELD.md   (cure:F4, partial @ 08:26:57)
-- f1 index.html             (MIXED: safari-arm journaled + cure:F1 partial @ 08:21)
-- f1 check.mjs              (cure:F1, partial @ 08:21)
-- f4 index.html             (cure:F4, partial @ 08:26)
-- f4 check.mjs              (cure:F4, new file @ 08:16)
+- f1-index.html             (MIXED: safari-arm journaled + cure:F1 partial @ 08:21)
+- f1-check.mjs              (cure:F1, partial @ 08:21)
+- f4-index.html             (cure:F4, partial @ 08:26)
+- f4-check.mjs              (cure:F4, new file @ 08:16)
