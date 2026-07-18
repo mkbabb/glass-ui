@@ -1,0 +1,282 @@
+# MARKS — the frame-by-frame corpus read (IOS27-MICRO)
+
+Seat: claude-fable-5. Corpus: `ScreenRecording_07-17-2026 22-46-16_1.MP4`, 47.425s, 1206x2622 @60fps.
+Base frames: `/Users/mkbabb/Downloads/ios27-micro-frames-2026-07-17/f-0001..f-0190` at 4fps — f-N sits at
+t=(N-1)/4 s. NOTE: the f-*.png set is 780x1696 (scale 1.546x to video px); all `burst-*` sets are full
+1206x2622. Eight 12fps bursts (83ms resolution) were extracted into the same folder:
+`burst-mapsgrow` (t0=1.0), `burst-mapscollapse` (3.0), `burst-overpull` (4.8), `burst-ccopen` (12.0),
+`burst-ccflick` (13.3), `burst-ccclose` (16.9), `burst-fmtab` (27.3), `burst-safaripill` (39.5); burst
+frame N sits at t0+(N-1)/12 s.
+
+Method: visual reads plus two measurements (script: scratchpad `marks-measure.py`) — (a) Gaussian-blurred
+absolute diff vs a rest reference, yielding the card's top edge (first row of sustained change) and width
+at fixed offsets below the top; (b) band luminance + horizontal-gradient energy (a blur proxy) for the
+Control Centre channel timing. All quoted px are original video px (1206x2622) unless marked "display".
+
+## Scene index
+
+| t (s) | frames | scene |
+|---|---|---|
+| 0.0–1.2 | f-0001–f-0005 | Maps, satellite, rest dock (search pill) |
+| 1.2–3.0 | f-0006–f-0013 | expansion #1: drag-up dock→card, pinned overpull at top, release |
+| 3.0–4.2 | f-0013–f-0017 | collapse #1 with a mid-detent catch |
+| 4.2–7.6 | f-0018–f-0031 | the overpull playground: down-pulls, deep down-pulls, springbacks |
+| 7.6–10.9 | f-0031–f-0044 | expansion #2: slow drag to the full detent (Recents visible) |
+| 10.9–12.0 | f-0044–f-0049 | collapse #2, fast, to rest |
+| 12.0–13.1 | f-0049–f-0053 | Control Centre pull-down (the open choreography) |
+| 13.3–14.7 | f-0054–f-0059 | CC flick-dismiss, blur held mid-state, re-pull (interrupt catch) |
+| 14.7–16.9 | f-0060–f-0068 | CC second dismiss + re-open cycle (unburst) |
+| 16.9–18.3 | f-0069–f-0074 | CC final dismissal (the close choreography) |
+| 18.3–19.8 | f-0074–f-0080 | swipe home, Home Screen |
+| 19.8–24.0 | f-0080–f-0097 | Find My opens (Items) — eyeglass-tab morphs begin |
+| 24.0–31.0 | f-0097–f-0125 | tab play: People→Devices→Items→Devices, full cards per tab |
+| 31.0–38.0 | f-0125–f-0153 | Devices card jockeyed by drag: continuous scrub, overpull, rest |
+| 38.0–39.0 | f-0153–f-0157 | Find My app-close zoom; Safari opens to tab grid ("478 Tabs") |
+| 39.0–42.0 | f-0157–f-0169 | tab-group pill: 478 Tabs→Tmp→478 Tabs (grid slides, lens handoff) |
+| 42.0–46.0 | f-0169–f-0185 | further pill play, settle; Safari app-close zoom |
+| 46.0–47.4 | f-0185–f-0190 | Home Screen, end |
+
+## 1. Dock-to-card growth (Maps)
+
+Rest dock geometry: top≈2243, span x≈52..1153 (width≈1101 = 91% of screen), bottom edge ≈2600 — a
+floating pill with a fixed bottom inset. The card's expanded detent: top≈1546–1592, width≈1150±10.
+
+Growth curve, expansion #1 (burst-mapsgrow, card-top y by diff):
+
+| t (s) | frame | top | note |
+|---|---|---|---|
+| 1.33 | 005 | ~2120 | pull begins — the dock stretches taller in place |
+| 2.00 | 013 | 2017 | Places ghost text emerged; icon discs surfacing from the bottom edge |
+| 2.17 | 015 | 1920 | |
+| 2.25 | 016 | 1853 | |
+| 2.33 | 017 | 1760 | peak velocity zone ~1100–1300 px/s |
+| 2.42 | 018 | 1673 | |
+| 2.50 | 019 | 1564 | passes the detent (~1573) without stopping |
+| 2.58 | 020 | 1469 | hard deceleration (1145→325 px/s in one frame) |
+| 2.67–2.92 | 021–024 | 1442 | PINNED — the magnetic ceiling, finger-held past the detent, 250ms |
+| 3.00 | 025 | 1573 | released — snapback of ~130px in ≤83ms |
+| 3.08 | 026 | 1592 | soft landing tail (~19px, decelerating) |
+
+Horizontal squish/stretch (width at top+50): rest 1101 → mid-rise 1121–1131 → pinned 1131 → settled
+detent 1142. The card grows ~+4.5% horizontally (about +20–25px per side); when pinned past the bound it
+is ~11px NARROWER than its settled width — pulling past a bound compresses the glass slightly, in either
+direction. Left and right edges breathe outward during the rise; the bottom edge stays pinned at its
+inset for the whole gesture (diff activity at rows 2560–2615 is content arriving, not edge motion). The
+"bottom squish" reads through the corner radii and the icon row surfacing from under the bottom margin,
+not through edge translation.
+
+Inner-element stagger (time-keyed here because the drag is live; in Find My the same reveal is
+height-keyed): grab handle → "Places" ghost text (011, t=1.83, fade+rise) → icon discs scale in from the
+bottom edge (013–015) → icon labels (017) → "Recents" header (019) → Recents row content (021). Each
+element fades AND translates up ~30–60px as it lands; nothing pops.
+
+DESIGN NOTES (ranked):
+1. The reveal ladder — handle→title-ghost→icons→labels→next-section — with per-element fade+rise is the
+   single strongest tell of life; the card must never present as one prerendered bitmap sliding up.
+2. Bottom edge pinned, top does the travel, sides breathe +4–5% — reproduce exactly this asymmetry.
+3. Pass-the-detent-then-pin: while the finger holds past the detent the card compresses ~1% in width;
+   release snaps back ~130px in under 100ms with a ~170ms decelerating tail.
+4. Icon discs enter by emerging from under the bottom margin (clipped), not by opacity alone.
+
+## 2. Magnetic overpull
+
+Window t=4.8–7.6 (burst-overpull) plus the top-side pin in hallmark 1.
+
+Down-pull (the dock pulled PAST its maximal down position): the whole dock translates down ~60–70px AND
+compresses — width 1101→~1018 (−7.5%), height ~282→~223 (−21%), anchored bottom-center, the bottom edge
+never leaving its inset (burst-overpull-025, -031, -034; deep pulls at t=6.8 and 7.3–7.55). The pill's
+content ("Apple Maps" text, mic, avatar) scales with the compression — glass and content deform as one
+body. The finger clearly travels much farther than 60–70px: displacement is resistively damped
+(rubber-band ratio, felt not measured — a later burst could fit the ratio from finger inference).
+
+Release/springback: deep-down at t=6.80 (025) → above-rest overshoot at t=7.05 (028, dock top ~2180 vs
+rest 2243, i.e. ~40–70px past rest) → settle. Return ≈150px in ~150–200ms with one visible overshoot —
+an underdamped spring in the ζ≈0.5–0.65, ~2–2.5Hz region. Kin to glass-ui's springPreset("dock")
+{0.68,0.64}. The up-side bound behaves identically in reverse (hallmark 1's pin at 1442: hard-arrest in
+~2 frames, hold, 130px snapback).
+
+Up-stretch from rest: a small pull up from rest stretches the dock taller ~40px before the card growth
+commits (burst-overpull-013, t=5.8) — a pre-expansion taffy zone.
+
+DESIGN NOTES (ranked):
+1. Overpull = translate + volume compression, bottom-anchored, content deforming with the container. A
+   translate-only rubber band reads dead by comparison.
+2. Springback must overshoot once (~30–50% of the overpull distance) and settle inside ~250ms.
+3. The bound is asymmetric in feel: down-pull compresses hard (−21% height); up-pull past detent
+   compresses barely (−1%) — magnitude scales with how "forbidden" the region is.
+4. A pre-commit stretch zone (~40px) before the expansion gesture engages gives the dock its taffy feel.
+
+## 3. Eyeglass tabs — Find My vs Safari
+
+Find My (burst-fmtab, one full Devices→Items morph; reverse morph f-0119–f-0125):
+- Rest (002, t=27.38): the active tab sits under a bright capsule lens; the icon under the lens renders
+  ~5–8% larger than siblings — true magnification, not just tint.
+- Press-charge (005, t=27.63): the lens BRIGHTENS in place — a cyan liquid glow blooms past the capsule
+  bounds and washes across the whole tab bar (engagement displayed by the entire component).
+- Goo travel (008–012, t=27.88–28.22): the glow-blob stretches to span ~2.5 tab slots, covering source
+  and target at once; light leads, geometry follows; the source tab de-materializes under the blob and
+  re-materializes behind it; chromatic fringes at the blob edge.
+- Oversized arrival (014–017, t=28.38–28.63): the lens lands on Items LARGER than rest — taller than the
+  bar, bloom still hot — a scale overshoot held ~200ms.
+- Cool-down settle (021+, t≈28.97–29.4): bloom cools, capsule shrinks to the rest lens. Press→settle
+  ≈1.2–1.4s — deliberately luxurious.
+- Chromatic specular: f-0101 shows a rainbow rim on the People lens bottom-left; f-0093/f-0113 show
+  refraction-like warping under the blob edge.
+
+Safari (burst-safaripill; grid slide 478 Tabs↔Tmp):
+- The pill is itself a scrolling carousel — the active group snaps to center beneath a quasi-fixed lens
+  (015→018: "Tmp" centered, "Private" scrolled off-left).
+- The lens is a gold/amber shimmer capsule with an animated sheen (the hotspot sits at different x in
+  003 vs 026 — a specular sweep), and it slightly magnifies the label.
+- The morph is a HANDOFF, not a body: the grid slides (~350–500ms, decelerating, no bounce), and near
+  the end the highlight re-forms at the destination while the pill recenters (009–015). At 83ms
+  resolution no continuous goo bridge is visible.
+
+What is BETTER in Find My, precisely: (a) morph continuity — one liquid body traveling vs a
+disappear/reappear handoff; (b) press feedback — the charge state and the whole-bar glow wash before any
+travel; (c) arrival physics — oversized landing + cool-down vs an instant re-form; (d) material depth —
+bloom + chromatic fringe + refraction vs flat shimmer. Safari wins only the specular sweep on the idle
+capsule and the self-centering carousel behavior.
+
+DESIGN NOTES (ranked):
+1. The lens must be ONE continuous body across the whole morph — stretch, bridge, land, never blink.
+2. Press-charge before travel: brighten + bloom at the source on pointerdown, glow wash across the bar.
+3. Land oversized (~110–120% scale), hold ~200ms, cool to rest — the overshoot is in scale AND light.
+4. Keep Safari's two good ideas: the idle specular sweep, and pill self-centering when tabs overflow.
+5. Fix iOS's one defect here: sibling labels vanish entirely under the bloom (~300ms of unreadability) —
+   ours should keep siblings legible beneath the traveling lens.
+
+## 4. Material
+
+- Two glass tiers everywhere: the CONTAINER (card/dock/CC tile — heavy blur, strong tint) and the
+  CONTROL riding it (toggle circle, slider, lens — brighter, more opaque, its own rim). Controls never
+  share the container's surface; they sit on it.
+- Cards (Maps, Find My): translucent, tinted by the page beneath — teal cards over the teal Find My map,
+  neutral grey-green over dark satellite in Maps. Underlying map reads through with a large-radius blur
+  (apparent σ several tens of px — map blobs stay recognizable as color masses, never as detail). Text
+  on cards is full-opacity white regardless of tint — legibility is never traded.
+- Dock/tab bar: brighter and more opaque than cards; a ~1px specular light line along the top edge
+  (visible on the Maps dock and the Find My bar); the grab handle is the highest-contrast element.
+- The Find My card carries a soft light band at its top edge when raised (f-0142) — an inner top glow,
+  not a shadow.
+- Control Centre: the deepest stack — wallpaper/app → heavy blur + dim (gradient energy −80%, luminance
+  −46% in the upper band) → dark translucent tiles → circular glass toggles → near-opaque white sliders.
+  Red/colored states (record, silence) sit on white circles — the one place iOS uses opaque white chips.
+- Specular events: the Safari gold capsule sheen sweep; the Find My lens chromatic rim (f-0101); bloom
+  during lens travel (fmtab-008–014). No specular event ever appears on a static card — light motion is
+  reserved for engagement.
+- Overpull compression (hallmark 2) deforms glass AND content together — the material is a body, not a
+  window.
+
+DESIGN NOTES (ranked):
+1. Enforce the two-tier rule: container glass vs control glass, distinct blur/opacity budgets.
+2. Tint from beneath, but clamp text to full contrast — sample the page hue into the card tint only.
+3. Reserve specular/light motion for engagement moments (press, travel, landing) — never idle on cards.
+4. The 1px top rim light on bars/docks is cheap and load-bearing for the "lit from above" read.
+
+## 5. Control Centre choreography — the desync, measured
+
+Open (burst-ccopen; pull from top-right):
+
+| channel | start | end | duration |
+|---|---|---|---|
+| background blur + dim | 12.33 | ≤12.42 | ≤83ms — a cliff |
+| content opacity/saturation (controls fade in) | 12.42 | ~12.58 | ~150–250ms |
+| stretch/position (grid slides down into place) | 12.42 | ~13.05 | ~600–650ms, decelerating |
+| right-edge rail (heart/note/antenna) pop-in | ~12.50 | ~12.58 | delayed ~80–160ms after main controls |
+
+At 12.42 (006) the ENTIRE grid is already present but dim and sitting high — compressed toward the top:
+the Maps chip then travels down ~227px, the connectivity card ~216px, the bottom row ~278px. Rows deeper
+in the stack travel ~20% farther than top rows — a translate-down with a mild stretch component, not a
+uniform slide. The fade completes at roughly ¼ of the stretch's duration — "the fading happens FASTER
+than the stretching", confirmed and quantified at ~1:4.
+
+Close (burst-ccclose): the mirror desync, content leads harder —
+
+| channel | start | end | duration |
+|---|---|---|---|
+| content fade+slide-up | 17.48 | ~17.65 | ~170ms |
+| blur/dim relaxation | ~17.65 | ~18.10 | ~400–450ms, decelerating tail |
+
+Between 17.65 and 17.73 the screen is a pure blurred-dimmed field with NO content (the coarse frames
+f-0057, f-0065 caught the same state in earlier cycles) — the blur is a persistent medium the content
+leaves first.
+
+Interrupt catch (burst-ccflick): flick-dismiss at 13.30 → content out by 13.63 → blur HELD featureless
+13.72–13.97 (the finger re-engaged mid-dismissal) → re-pull dims the scrim at 14.05–14.13 → content
+re-enters compressed-top at 14.22 → settled by ~14.6. The dismissal is a scrub that can be caught and
+reversed at any point; the blur medium never resolved between the two cycles.
+
+DESIGN NOTES (ranked):
+1. Three channels, three clocks: blur/dim as a near-instant medium change (≤100ms), fade ~4x faster than
+   stretch, stretch ~600ms decelerating. Batching any two together kills the breath.
+2. On close, invert the order: content leaves first, the medium relaxes after — the empty-blur beat
+   (~100–200ms of contentless blur) is a signature moment, keep it.
+3. Depth-graded travel: deeper rows travel ~20% farther — one scalar (row index) suffices.
+4. Every phase must be scrub-interruptible with state carried over — the medium (blur) persists across
+   interrupted cycles rather than resetting.
+5. Stagger the periphery (side rails) ~100ms behind the main grid.
+
+## 6. Card-expansion choreography + physics
+
+Velocity inheritance — three gestures, three outcomes (all Maps, measured):
+- Fast drag, expansion #1: release velocity ~1150–1300px/s upward → momentum carries the card 27px into
+  the magnetic ceiling in one frame, hard-arrests in ~2 frames (1145→325→0 px/s), pins.
+- Slow drag, expansion #2 (f-0032–f-0044): the card tracks the finger for ~2.5s through every
+  intermediate height, arrives at the detent (top≈1546) with no overshoot at all, holds 1.0s dead still.
+- Release from height, collapse #1 (burst-mapscollapse): free fall at ~1570px/s peak, a ~170ms CATCH at
+  the mid detent (top 1976–2017 — the "search+Places" height), then the final fall to rest. Collapse #2
+  (f-0044→f-0046) covers ~660px in 250ms (~2600px/s) when flung.
+
+So the system demonstrably integrates gesture velocity: same component, overshoot-and-pin under a flick,
+zero overshoot under a slow place — the curves are not canned.
+
+The Find My Devices card (f-0129–f-0152) proves the choreography is HEIGHT-mapped, not time-mapped: at
+any held height the reveal state is a pure function of height — title ghost at low height (f-0132),
+title solid + first rows mid (f-0142–f-0143), dimmer again when jockeyed back down (f-0135 vs f-0134).
+The tab bar stays pinned at the bottom throughout; list content slides UNDER it. Full-card detent top
+≈1340 (~51% of screen height).
+
+Find My tab-triggered card swaps (People→Devices→Items, f-0097–f-0117): the outgoing card drops+fades as
+the incoming card rises+fades in, overlapped, while the map re-frames beneath — three concurrent
+channels, none waiting for another.
+
+DESIGN NOTES (ranked):
+1. Position under gesture = scrub (height-mapped reveal ladder); position after release = spring seeded
+   with release velocity. Both regimes on every expandable component.
+2. Detents are magnetic in BOTH directions — passing detents on the way down produces a brief catch
+   (~170ms) rather than a stop; implement as a weak spring well crossed at speed.
+3. Overshoot only when arriving fast; a slow arrival lands dead — never inject synthetic bounce.
+4. Reveal ladder as a function of expansion fraction, per element: handle 0–5%, title ghost 10–30%,
+   title solid 30–50%, row N at 40%+10%·N, section headers before their rows.
+5. Pinned chrome: the tab bar/dock never travels with the card — content slides beneath it.
+
+## Beyond the hallmarks
+
+- The mid-detent catch (Maps) — a third stop between rest and full, engaged only transiently during
+  fast collapses; both directions cross it at 1976–2021.
+- The pre-commit taffy zone — ~40px of dock stretch before the expansion gesture engages.
+- Everything is a scrub — CC dismissal caught mid-flight and reversed (13.63–14.22) with the blur medium
+  persisting across cycles; Find My card jockeyed indefinitely; no animation in the video is
+  fire-and-forget except the app-zoom transitions.
+- Whole-component engagement glow — the Find My tab bar catches a luminous wash on press, before any
+  navigation happens (f-0085, fmtab-005): the component acknowledges touch as a body.
+- Lens magnification — the active-tab capsule magnifies its content ~5–8% in both apps: the "eyeglass"
+  is literal.
+- The pill carousel (Safari) — group names scroll so the active one centers beneath the lens; the lens
+  is positionally quasi-fixed while the WORLD moves.
+- Content deforms with glass — the overpulled dock scales its text/icons with the container; no
+  independent layers.
+- iOS's own seams, worth besting: (a) sibling tab labels fully unreadable under the lens bloom for
+  ~300ms; (b) the CC blur onset is a ≤83ms cliff — perceptibly abrupt; (c) Safari's lens handoff
+  discontinuity (the highlight blinks across rather than traveling); (d) f-0097's map tiles arrive dark
+  and pop in late during the People swap.
+
+## Moments deserving denser bursts (unburst or under-resolved)
+
+1. Overpull release t≈6.8–7.1 at 24fps — fit the springback (ζ, f) exactly.
+2. Maps collapse landing t≈3.9–4.3 at 24fps — detect/deny a landing micro-bounce at rest.
+3. Find My reverse tab morph t≈29.5–31.0 at 12fps — confirm the goo anatomy is direction-symmetric.
+4. The second CC cycle t≈15.0–17.0 at 12fps — a second sample of the interrupt-catch behavior.
+5. Safari lens handoff t≈40.4–40.8 at 24fps — settle whether any brief bridge exists at 60fps.
+6. App-close zooms t≈38.0 and t≈46.0 at 12fps — if the campaign wants the app-zoom morph family.
