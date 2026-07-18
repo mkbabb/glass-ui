@@ -678,7 +678,8 @@ laddered result. The two waves land in the same tranche cut so the gate is never
 **In-scope summary:** one canonized radius role-table + 2 canon-defect reconciles + 4 raw-radius repoints
 (W1); the blur-ladder ruling + the DPI-arm decision + 1 raw-blur repoint (W2); the forced graded-backdrop
 adopt/decline with the F49/F50 π (W3); the track-family fold to one shared material (W4); the A10 proportion
-roster feeding follow-on fixes (W5); the 251-site type codemod + coupled default-ramp reset + paint π (W6).
+roster feeding follow-on fixes (W5); the 251-site type codemod + coupled default-ramp reset + paint π (W6);
+the chip + glass-atom @import closure restore with the live accent-paint re-verify (W7).
 The band makes the material ladders **auditable and role-coherent** — the
 enforcement rides `BAND-GATES` W3/W4; this band supplies the canon those gates measure against.
 
@@ -698,7 +699,7 @@ under the BJ reduction confrontation (UF-K1/R16), so no new metric surface until
 REGRESSION-GUARDS — disk shows both sites already role-correct; the wave's live-π confirms, then
 the role assertions pin them against re-drift.
 
-## Wave 7 — `BJ.W-CSS-CLOSURE-RESTORE` — the chip + glass-atom @import re-home (STAB1 MAJOR-1 cure)
+## Wave 7 — `BJ.W-CSS-CLOSURE-RESTORE` — the chip + glass-atom @import re-home (minted at the STAB1-COMPLETENESS orphan-cure: the gate existed with no owning wave)
 
 Minted at STAB1-COMPLETENESS: the one LIVE-CONFIRMED shipped defect of 7.0.0 had a gate
 (`orphan-CSS-partial`, BAND-GATES) but no owning wave — the gate could never flip GREEN. This wave

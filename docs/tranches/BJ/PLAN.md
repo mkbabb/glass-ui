@@ -296,10 +296,17 @@ A wave is DONE only when its born-RED gates flip GREEN **with captured evidence*
 
 - **≤3 concurrent seats** (the pipeline()-to-4 rate-wall lesson). Serialize every browser-owning seat
   against the others (the seat-singleton trap).
-- **Model split, always declared.** Fable (often, fastidiously) for design/judgment/audit/critique and
-  the paint-taste rulings (the greenfield closures, the graded-backdrop verdict, the proportion roster,
-  every §Known-carry judgment); Opus for mechanical fanout + workflow implementation. Frontend DESIGN
-  work runs the DESIGN-ITERATION loop via the frontend-design MCP (DesignSync + Fable).
+- **Model split, always declared — PHASED (user order 2026-07-17).** From the formation close until
+  EXECUTION begins: ALL workflows/seats run FABLE, mechanical included. At execution the standing
+  split returns: Fable (often, fastidiously) for design/judgment/audit/critique and the paint-taste
+  rulings (the greenfield closures, the graded-backdrop verdict, the proportion roster, every
+  §Known-carry judgment); Opus for mechanical fanout + workflow implementation.
+- **The hallmark design lane (user order 2026-07-17).** The core/hallmark features and pages — the
+  FOUR greenfields (dock, handmark, aurora, blob), the landing/catalog hallmark pages (STORY W4/W5),
+  and the material identity waves (MATERIAL W2/W3, the subtlety re-tune + graded-backdrop) — run
+  their design work through the frontend-design plugin (DesignSync + /design-sync) with FABLE
+  instances, on the precepts DESIGN-ITERATION convergent loop. Mechanical fanout never substitutes
+  for this lane on a hallmark surface.
 - **The guardian / EXEC-STATE durability pattern.** One self-renewing non-spammy guardian cron
   (inbox sweep + lane census + wall recovery) is a standing duty; the EXEC-STATE DURABLE PROCESS
   section is the crash bootstrap. Foreign-tree fence is LITERAL (siblings read-only; never park sibling
