@@ -327,12 +327,21 @@ perceptual near-identity of the smooth-preset clusters is a paint judgment; the 
 skin. The WGSL port collapsed four painterly mediums onto one Kuwahara body and it was never unwound;
 presets multiplied as palette variations of few bodies.
 
-**REDRESS.** **GF-AURORA** — `G-MODE-DISTINCT` born-RED (reds at literal zero for the aliased pairs);
-real per-mode bodies W1 (van-Gogh) / W2 (oil-pastel) / W3 (crayon); the oil PORT-or-KILL (W4,
-terminal collapse set `{}`); the **17→10-firm** preset reduction (W5) keeping the user-named
-atmospherics + one exemplar per distinct body, `SPEEDTEST` relocated to its consumer. **The C-G
-binding governs:** F08 is discharged ONLY at W1-W4 real-body authorship with `G-MODE-DISTINCT` green
-— never at the preset-cut checkbox. The crayon-scope question is the one honest user ASK.
+**REDRESS (refreshed RU-14, 2026-07-18, to the re-unioned GF-AURORA-PASS3 at HEAD—117b7f12).**
+**GF-AURORA**—`G-MODE-DISTINCT` born-RED (reds at literal zero for the aliased pairs); real
+per-mode bodies W1 (van-Gogh on the primary) / W2 (oil-pastel) / W3 (crayon); the oil resolution
+W4 widened to THREE arms—PORT / REAUTHOR-LEAN (the default lean) / KILL—terminal collapse set `{}`
+on every arm; the preset reduction (W5) is **17→11** with the death-clause elasticity stated in
+full (W4-KILL re-expresses oil → 10; floor 9 under the DUSK/DAWN death-clause pair, compound
+corner 8—each user-ruled, never a capture judgment; `GF-AURORA-PASS3.md:237,315,461`, corroborated
+by SUPERFLUITY C-H's ~11-not-10), keeping the user-named atmospherics + one hero per authored
+body, `SPEEDTEST` relocated to its consumer. **The C-G binding governs (re-affirmed by RU-09
+C-H):** F08 is discharged ONLY at W1-W4 real-body authorship with `G-MODE-DISTINCT` green—never
+at the preset-cut checkbox. The crayon ink-mode ASK is resolved-CUT (singular reading, F03
+parsimony; `GF-AURORA-PASS3.md:163`); the live user ask is **Q-AURORA-QUARTET** (§8—the DUSK
+re-found / DAWN harden ratification). The mechanism layer above (the WGSL 3/5/6/7→`mediumKuwahara`
+alias, 17 presets incl. `SPEEDTEST`, the real-body discharge binding) stands re-proven exact and
+is untouched by this refresh.
 
 **VERDICT vs opus row: RATIFIED in full** — the WGSL-aliasing claim, the most fabrication-prone in
 the artifact, re-proved exact on disk. Crosswalk `LANDED` with the C-G annotation — AGREE.
@@ -422,7 +431,7 @@ cut with GATES W4 (RULING 2). **LIVE-DEFER:** the ≥3-rung after-read is W3's �
 | F05 | yes | `rail.vue:142-189` postures (page disambiguated vs overview's DockStage) | GF-DOCK W2/W6 + STORY W1 (J2 applied) | RATIFIED · PARTIAL→EXACT-AT-HEAD |
 | F06 | no (URL) | `routeTransition.ts` VT swap + `router.ts:121-130` + DockCrossfade floor | PERF W4 + GF-DOCK W6 | RATIFIED |
 | F07 | no (URL) | the same atomic keyed swap, story-wide | PERF W4 (outright owner) | RATIFIED |
-| F08 | no (URL) | 17 presets + the WGSL 3/5/6/7→Kuwahara alias (re-proven) | GF-AURORA W1-W5 under C-G | RATIFIED |
+| F08 | no (URL) | 17 presets + the WGSL 3/5/6/7→Kuwahara alias (re-proven) | GF-AURORA W1-W5 under C-G/C-H—17→11 elastic, three-arm W4, Q-AURORA-QUARTET the live ask (RU-14 refresh) | RATIFIED |
 | F09 | yes | `AuroraColorSection.vue:163-238` + configurator chassis | STORY W3 (J10 applied) + MATERIAL W1 | RATIFIED · PARTIAL→EXACT-AT-HEAD |
 | F10 | yes | `StorySection.vue:31-32` + `sizing-config.css:35` (two sites) | STORY W3 + MATERIAL W6 | RATIFIED |
 
@@ -431,5 +440,22 @@ cut with GATES W4 (RULING 2). **LIVE-DEFER:** the ≥3-rung after-read is W3's �
 historical delta texts are superseded by the band text and are not reproduced here.
 
 ---
+
+## JUDGE-2 docket (appended RU-14, 2026-07-18)
+
+Six recorded FLIPs plus one routing item age un-judged across the three RU-13 dossiers, and the
+three later unions (RU-05/RU-07/RU-09) landed without consuming any—JUDGE.md's "zero floating
+notes remain" is falsified. This range carries two of the seven:
+
+- **D2-3 (this range, sidecar FLIP-1).** GF-DOCK-PASS3 at HEAD still lacks the `rail.vue:108-140`
+  baseline-π anchor and the 3-value `shape`-axis ruling for W5's shape grammar (the file carries
+  zero `rail.vue` mentions; re-verified at 117b7f12).
+- **D2-4 (this range, sidecar FLIP-2).** BAND-REDUCTION `:33-37`/`:240` still label the Card
+  default-paint probe "the F04 shape"—the F04 screenshot shows a dock, not a Card; the linkage is
+  to the ORDER, not the image.
+
+The full seven-item docket lives in `DOSSIER-F11-F20.md` §JUDGE-2 docket. Asked of the lead: one
+consolidated JUDGE-2 pass (J12+) ruling all seven, then an APPLYLOG-mirrored application pass.
+JUDGE.md/APPLYLOG/band edits are the lead's—outside this fix seat's write fence.
 
 *End — REFABLE RU-13 union dossier, rows F01–F10. One file, no `src/`/`demo/` edits.*

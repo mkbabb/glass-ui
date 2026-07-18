@@ -112,3 +112,14 @@ charter-level gaps flip a premise of completeness:
 Basis: row-cores for RATIFIED (15 of 17 — A09 and A15 flipped); claim-level for OPUS-WRONG (6) and
 FABLE-NEW (6); the 6 stale-superseded deltas are a separate terminal class (adopted, applied, not
 re-litigated).
+
+## RU-14 addendum (2026-07-18, fix seat claude-fable-5)
+
+**A12/A13 owning-wave rosters re-pointed in the dossier to the 117b7f12 greenfields—no verdict
+change (both remain EXACT-at-ownership).** GF-BLOB at HEAD strikes W-DELETE-TWIN (§2.9—the
+WebGL2-only order reversed, WebGPU-first stands) and renames W-CHROME→W-STREAK
+(`GF-BLOB-PASS3.md:284`), adding W-IDENT/W-REACT (eleven waves); the dossier's A12 roster had
+listed both struck/renamed waves as owners. GF-AURORA widens W4 from the "PORT-or-KILL, terminal
+set `{}`" binary to the PORT/REAUTHOR-LEAN(default)/KILL fork (`GF-AURORA-PASS3.md:168-241`) and
+sets W5 at 17→11 elastic; the crayon-scope ASK is resolved-CUT, Q-AURORA-QUARTET the live ask.
+G-MODE-DISTINCT + the C-G binding survive unchanged—ownership verdicts stand.

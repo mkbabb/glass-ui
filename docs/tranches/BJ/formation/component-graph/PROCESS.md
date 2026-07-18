@@ -423,3 +423,46 @@ under a standing-ruling fence. That five-part invariant is the reusable "compone
 - **INFER** implements §3d: reads the artifact, answers Q1-Q5 with cited evidence and clone-type labels, routes
   every verdict to a BAND-REDUCTION amendment / ASK-REDUCTION sharpening / new ASK row under the §-top
   standing-ruling fence, and emits its own findings doc. It does not re-decide any DECIDED row.
+
+---
+
+## 5. RU-19 AMENDMENTS — where the method itself was wrong (2026-07-18, `claude-fable-5`)
+
+Amendments to the spec, not the implementation (implementation defects are RF-7's ledger). Each was proven
+against the corpus in the corrected `INFERENCE.md`; a v1.1 run applies them before re-scoring.
+
+1. **§3b composite — three channel defects.** (a) `dom` at component grain = "best over root SFCs" saturates on
+   trivial forwarder shells (dialog↔drawer ranked #2 on two 3-node `DialogRoot(span,slot)` roots) — compute dom
+   over FAMILY-UNION shape sets with a **minimum tree size of 4 nodes**, null when neither family qualifies;
+   (b) `role_syn` does not belong in the composite — the seed labels are judge inputs, not measurements, and a
+   label error propagates arithmetically (three labels were extended undisclosed; RF-7 W3). Role is a LENS;
+   (c) the composite lacks the single most informative kinship signal in this corpus: shared `_shared/*`
+   substrate consumption. Corrected weights, null-renormalized:
+   `S = .35api + .20style + .15dom + .15substrate + .10afford + .05anim`, all set-channels at family-union grain.
+2. **§3d-Q1 — the ≥0.85 gate is RETIRED, not re-tuned.** Its reachable ceiling under the §3b weights sits at
+   ~0.90 only when every non-anim channel saturates; for any realistic pair the gate is unreachable
+   (dead-by-construction — RF-7 N3), so an empty Q1 set is an arithmetic artifact, never evidence of health.
+   Replacement: NO accept gate — rank + judge, with a two-band annotation (merge band ≥ ~0.55, kinship band
+   0.30–0.55 under the corrected channels) and a small-set caveat (any pair whose dominant channels rest on
+   |union| < 4 is adjudicated, never gated).
+3. **§3d-Q1/Q5 clearing rule — composition edges must be VALUE-grain.** "A imports B → wrapper, not duplicate"
+   holds only for rendered/value imports. Type-only imports are contract kinship — evidence FOR a shared-shape
+   factoring, not a clearing (the combobox/command misclear: all eight `command/*.vue` → `../combobox/types`
+   imports are `import type`; Command renders reka primitives directly). Schema: split
+   `composition.imports_components` into `value` and `type` arrays; only `value` clears.
+4. **§3d-Q4 — the ≥3-site rule is a presumption, not an exclusion.** A substantive 2-family twin register (the
+   dialog/drawer staging substrate + byte-identical Title/Description) is a factoring finding; ≥3 sites raises
+   confidence, it does not define eligibility. Weigh 2-family candidates by absolute shared mass (see 5).
+5. **§3b/§3d — add the FACTOR lens.** Jaccard similarity answers only the merge question. Factoring candidates
+   have the opposite signature — high ABSOLUTE shared token mass at low Jaccard — and need a second ranking:
+   IDF-weighted shared style-token mass (token weight `log(N/df)`). On this corpus it independently surfaced
+   dialog×drawer (50.7), combobox×select, slider×timeline, progress×slider — none rankable by the composite.
+6. **§3a extraction hardening.** (a) `utility_classes` must be sourced from template class attributes/bindings
+   ONLY — comment/JSDoc prose leaked into five nodes' sets (`a/in/is/its/keeps/the/floor` on
+   configurator/toast/select), polluting every style measure that touches them; (b) `style_kinship` needs a
+   singleton floor (|union| ≥ 4) — five of its 1.0 edges are near-empty root-set saturation; (c) `data-slot`
+   is universal and excluded from all style sets.
+7. **§3d output contract addition.** INFER must state the UNIVERSE LIMIT on every CLEAR that external evidence
+   could overturn: `demo/` skins and external consumers are outside the node universe (the deck/carousel and
+   chassis/metric classes), so a graph CLEAR is a within-universe statement only. And INFER must discharge the
+   `role:null` assignment duty explicitly (the prior run left configurator unassigned).

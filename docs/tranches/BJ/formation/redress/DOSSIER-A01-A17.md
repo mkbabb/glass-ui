@@ -284,11 +284,17 @@ F1) + the design-vision archaeology `docs/tranches/S/audit/lanes/design-blob-atm
 the WGSL twin, the gel-dome shadow, and the born-GREEN mood-amplitude gate were the debt (excited
 ALREADY paints 2.2/2.0/0.05 — the real mood residual is the pointer SIGN).
 
-**REDRESS + OWNING WAVES.** GF-BLOB W0 CENSUS+CONTRACT-LOCK · W-DELETE-TWIN (WebGL2-only) · W-SHADOW
-(cartoon ink-stamp; `uShadow` stays interior AO) · W-CHROME · W-SHOW · W-ALIVE · W-MOOD (sleepy
-pointer-sign) · W-HITTEST (CPU SDF) · W-TOPOLOGY (orb↔pill) · W-FINAL. Q-BLOB-DEFAULT is the one
-honest ASK. All π OWED (both engines) — LIVE-DEFER on every paint-quality claim. **VERDICT vs OPUS
-ROW:** RATIFIED in full (the archaeology cites re-proven). Verdict: **EXACT**.
+**REDRESS + OWNING WAVES (roster re-pointed RU-14, 2026-07-18, to GF-BLOB-PASS3 at
+HEAD—117b7f12).** GF-BLOB W0 CENSUS+CONTRACT-LOCK · W-SHADOW (cartoon ink-stamp; `uShadow` stays
+interior AO) · W-STREAK (renamed from W-CHROME—the light grammar, not the chrome identity,
+`GF-BLOB-PASS3.md:284`) · W-IDENT + W-REACT (added by the rewrite) · W-SHOW · W-ALIVE · W-MOOD
+(sleepy pointer-sign) · W-HITTEST (CPU SDF) · W-TOPOLOGY (orb↔pill) · W-FINAL. **W-DELETE-TWIN is
+STRUCK** (§2.9—WebGPU-first stands at HEAD; the imported value.js WebGL2-only order is dead; the
+correlation sentence above reading "the twin W-DELETE-TWIN retires" is the pre-rewrite roster).
+Q-BLOB-DEFAULT stays the one honest ASK (re-framed—chrome is not a candidate, §7). All π OWED
+(both engines) — LIVE-DEFER on every paint-quality claim. **VERDICT vs OPUS ROW:** RATIFIED in
+full (the archaeology cites re-proven); ownership verdict UNCHANGED by the roster re-point.
+Verdict: **EXACT**.
 
 ---
 
@@ -305,13 +311,18 @@ describes the WebGL2 arm only).
 differentiation is palette-skin over a shared body — the user's "almost identical" is mechanically
 TRUE. van-Gogh was mis-declared derivative-free.
 
-**REDRESS + OWNING WAVES.** GF-AURORA W1 (paint-substrate + van-Gogh on primary) · W2 (oil-pastel
-real body) · W3 (crayon hand-drawn) · W4 (oil PORT-or-KILL, terminal set `{}`) · W5 (presets 17→10
-firm) · W6 (V-A95 re-repro-or-close, after the mode waves) · W7 CONSUMER+FINAL. **C-G binds F08's
-discharge to G-MODE-DISTINCT green at W1-W4 — never the preset-cut checkbox.** The good exemplars
-(sky/sunset/dusk/dawn) are the protected restraint floor; crayon-scope is the one user ASK.
-LIVE-DEFER: all mode-quality claims — π owed per band. **VERDICT vs OPUS ROW:** RATIFIED in full.
-Verdict: **EXACT**.
+**REDRESS + OWNING WAVES (roster re-pointed RU-14, 2026-07-18, to GF-AURORA-PASS3 at
+HEAD—117b7f12).** GF-AURORA W1 (paint-substrate + van-Gogh on primary) · W2 (oil-pastel real
+body) · W3 (crayon hand-drawn; the ink-mode ASK resolved-CUT) · W4 (oil resolution, widened from
+the PORT-or-KILL binary to THREE arms—PORT / REAUTHOR-LEAN(default) / KILL—terminal set `{}` on
+every arm, `GF-AURORA-PASS3.md:168-241`) · W5 (presets **17→11** with the death-clause
+elasticity—W4-KILL → 10, floor 9, compound corner 8) · W6 (V-A95 retire-or-confirm, after the
+mode waves) · W7 CONSUMER+FINAL. **C-G binds F08's discharge to G-MODE-DISTINCT green at W1-W4 —
+never the preset-cut checkbox** (re-affirmed by RU-09 C-H). The good exemplars
+(sky/sunset/dusk/dawn) are the protected restraint floor; the live user ask is Q-AURORA-QUARTET
+(§8—the crayon-scope ASK the prior roster named is resolved-CUT). LIVE-DEFER: all mode-quality
+claims — π owed per band. **VERDICT vs OPUS ROW:** RATIFIED in full; ownership verdict UNCHANGED
+by the roster re-point. Verdict: **EXACT**.
 
 ---
 
@@ -423,8 +434,8 @@ post-fix deltas are trace-captured obligations. **VERDICT vs OPUS ROW:** RATIFIE
 | A09 | triumvirate exemplar (on disk) | PARTIAL (owner-phantom) | lead re-judges (sidecar FLIP-1) | exemplar RATIFIED; owner OPUS-WRONG |
 | A10 | cards/dividers/hierarchy/spacing | EXACT | BJ.W-ARISTOTLE-PROPORTION (MATERIAL W5) | RATIFIED |
 | A11 | inert atoms (re-proven inert) | OWNED-AT-W5 | BJ.W-IDLE-BREATH (J1) | RATIFIED + vindicated (→J1) |
-| A12 | blob dual-engine + value.js 06929a4b | EXACT | GF-BLOB (10 waves); π OWED | RATIFIED in full |
-| A13 | 17 presets + WGSL alias | EXACT | GF-AURORA W1-W7; C-G binding; π OWED | RATIFIED in full |
+| A12 | blob dual-engine + value.js 06929a4b | EXACT | GF-BLOB (11 waves at HEAD—W-DELETE-TWIN struck, W-CHROME→W-STREAK, +W-IDENT/W-REACT; RU-14 re-point) | RATIFIED in full |
+| A13 | 17 presets + WGSL alias | EXACT | GF-AURORA W0-W7 (three-arm W4, 17→11 W5; RU-14 re-point); C-G binding; π OWED | RATIFIED in full |
 | A14 | procedural roster + suite doc | OWNED (J9) + new flag | GF-* + ASK + REDUCTION census; suite-doc truth-up UNOWNED (FLIP-2) | RATIFIED; 1 new finding |
 | A15 | formation staffing | VIOLATED→CURE-IN-FLIGHT | REFABLE campaign + PLAN §4 phased rule | **OPUS-WRONG (flipped)** |
 | A16 | crosswalk + chronic ledger | EXACT-AT-CROSSWALK-LAYER | crosswalk + RF-4 amendment (pending) | RATIFIED; narrowed |

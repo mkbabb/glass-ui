@@ -14,8 +14,10 @@ HEAD (`motion/{text-motion,typewriter,scroll,reveal}.vue` + `scroll/` bodies,
 `dock/styles/overflow.css`, `useSelectionGroup.ts`, `_shared/field-control.css`,
 `theme/radius.css`, `tokens/{glass.css,glass-deep.css,light-dark.css}`,
 `dialog/{ModalOverlay.vue,DialogContent.vue,placement.css}`); the `.tile.vue` census (exactly 4 on
-disk); the cure-commit dating (`923c5254`/`58fba6e6`/`2764f60b` post-tag; `24b63d01`/`189ae15c`/
-`71892b9e` pre-tag; auth-shell last touched 2026-07-16); the band charters
+disk); the cure-commit dating (`923c5254`/`58fba6e6`/`2764f60b` post-tag **[FALSE—corrected
+RU-14, 2026-07-18: all three are v7.0.0 ANCESTORS by `merge-base`, i.e. PRE-tag; see the
+addendum]**; `24b63d01`/`189ae15c`/`71892b9e` pre-tag; auth-shell last touched 2026-07-16); the
+band charters
 (STORY/REDUCTION/MATERIAL/PERF/FEEDBACK-MOTION), ASK-REDUCTION §C3/§D1, GF-DOCK-PASS1/PASS3,
 PLAN.md. Only then were JUDGE.md and the opus dossier opened. Key ANEW-independent derivations
 that later matched or refuted opus claims: the F41 typewriter.vue:103 site (matched), the F44 dead
@@ -73,3 +75,22 @@ line-anchor corrections (content real, lines wrong).
 - F48 → `BJ.W-RADIUS-ROLE` (guard) + `BJ.W-BLUR-LADDER` (OPEN-2a/2b/2c) + `BJ.W-GRADED-BACKDROP-JUDGE`
 - F49 → `BJ.W-BLUR-LADDER` (π target) + `BJ.W-GRADED-BACKDROP-JUDGE` (π reference); law-12 crossover to `BJ.W-PROGRESS-RIM-REPLACE`
 - F50 → `BJ.W-GRADED-BACKDROP-JUDGE` (BAND-MATERIAL W3, OPEN-3a forced adopt/decline)
+
+## RU-14 addendum (2026-07-18, fix seat claude-fable-5)
+
+- **F45/F48 cure-commit dating corrected in the dossier + above.** `923c5254`/`2764f60b`/
+  `58fba6e6` are ANCESTORS of the v7.0.0 tag commit (`4ab12128`, 07-17 18:11)—NOT "post-7.0.0-tag
+  fix-pass commits". The claim was internally impossible beside F50's correct pre-tag dating of
+  the LATER 11:14 trio (`24b63d01`/`189ae15c`/`71892b9e`). 7.0.0 SHIPS the rounding cures; it did
+  not ship the F45 defect and get patched after. F45's "the screenshot predates that fix-pass
+  commit" is hedged (same-day, statically unprovable). The "cure/experiment commit dating"
+  fable-new credit in the counts above is half-wrong accordingly (the pre-tag trio half stands).
+  The J5 regression-guard substance is unaffected.
+- **F47 re-mapped in the dossier to GF-DOCK-PASS3 at HEAD (117b7f12).** The charter strikes the
+  CSS-snap mechanism (law 14—JS spring integrators; `:52-54,115`) while the detent CONTRACT
+  survives; `G-OCCLUSION-PEEK`/`G-SNAP-DETENT`/`G-REVEAL` are grep-zero. New seats: W1
+  `G-EVIDENCE`/`G-MORE-SIGNAL` (census + evidence stack), W2 `G-DETENT-PHYSICS` (+
+  `G-NO-BLOCK-SCROLL`), W3 `G-REACH` tap-to-reach (§4.4, the F47b seat), W5 `G-RADIUS-GRAMMAR`.
+  This sidecar's F47 note ("exactly as GF-DOCK's G-REVEAL RED states") reads through that re-map.
+- **F42's C-D anchor re-pointed.** The RU-09 SUPERFLUITY rewrite (5c847780) no longer carries the
+  9-keep/6-cut table; the §C3 recommendation reads from the RU-09 C-F fresh-census verdicts.

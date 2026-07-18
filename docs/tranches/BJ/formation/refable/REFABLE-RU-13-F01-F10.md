@@ -139,3 +139,16 @@ opened only after the per-row correlations were fixed. Findings:
   `BAND-REDUCTION.md:36`/`:240` still label the Card probe "the F04 shape"). The lead's re-judge
   remains owed.
 - **Dossier left byte-stable** — the union is RATIFIED as canon by two independent Fable passes.
+
+## RU-14 addendum (2026-07-18, fix seat claude-fable-5)
+
+- **F08 REDRESS refreshed in the dossier**—the row's redress figures had gone stale against the
+  re-unioned GF-AURORA-PASS3 at HEAD (117b7f12): 17→10-firm is now **17→11** with death-clause
+  elasticity (`:237/:315/:461`; SUPERFLUITY C-H corroborates ~11-not-10), W4 is the three-arm
+  PORT/REAUTHOR-LEAN(default)/KILL fork, and the crayon ink-mode ASK is resolved-CUT with
+  **Q-AURORA-QUARTET** the live ask. The mechanism layer (WGSL 3/5/6/7→`mediumKuwahara`, 17
+  presets incl. SPEEDTEST, the C-G discharge binding) is untouched—it re-proved exact.
+- **FLIP-1/FLIP-2 remain OPEN**—docketed for the consolidated JUDGE-2 pass (see
+  `../redress/DOSSIER-F11-F20.md` §JUDGE-2 docket): GF-DOCK-PASS3 at HEAD still lacks the
+  `rail.vue:108-140` baseline-π + `shape`-axis ruling; BAND-REDUCTION `:33-37`/`:240` still label
+  the Card probe "the F04 shape".

@@ -73,3 +73,32 @@ specimen (LIVE-DEFER the exact reproduction), keeping the gate's GREEN condition
   FLIP-2 re-anchor. F38 → GF-HANDMARK W1/W2 (+register §4). F39 → GF-HANDMARK W4 (+W4/W6
   self-measuring-datum amendment). F40 → GF-HANDMARK W2/W4/W6 + BAND-STORY W2.
 - FLIP-1 + FLIP-2 → the lead, for re-judgment against GF-HANDMARK-PASS3 before W3/W5 execute.
+  **[CLOSED — see the RU-14 closure below; the wave/gate names in the two lines above are the
+  pre-RU-06 map and read through the dossier's SUPERSEDED-BY-RU-06 table.]**
+
+## RU-14 closure (2026-07-18, fix seat claude-fable-5)
+
+**FLIP-1 and FLIP-2 are CLOSED — CONSUMED-BY-RU-06.** Both were filed against the pre-redo
+GF-HANDMARK-PASS3; the RU-06 rewrite (7746d586, 01:32) + the cross-critique fix pass (117b7f12,
+06:43) consumed their substance and changed the ground they stood on:
+
+- **FLIP-1 (F36 invisibility) — CONSUMED.** The charter at HEAD carries the invisibility as its
+  OWN sharpening 1 ("the F36 band is invisible INSIDE the card, not merely escaped") and π-BAND
+  asserts band visibility ("the invisibility half is the new probe the prior loop lacked",
+  `GF-HM:240`). The flip's proposed CURE is STRUCK, not just moot: scheme-aware
+  `multiply`/`screen` ink now CONTRADICTS the charter's explicit law — "NO blend modes… Plain
+  alpha ink is deterministic on both themes" (`GF-HM:126-129`). Executing the flip as written
+  would reintroduce the banned mechanism. The multiply/screen amendment ask is withdrawn.
+- **FLIP-2 (F37 RED-cause) — CONSUMED.** The charter re-attributes F37 to the dual draw
+  mechanisms (`GF-HM:31`, `HandMark.vue:349-365`) and replaces them with ONE mask-draw whose dash
+  clears at rest (`GF-HM:114-116`, W3 `G-DRAW`). `G-DRAW-CONNECTED` no longer exists to
+  re-anchor — grep-zero at HEAD. Nothing remains to re-judge.
+
+**F32/F33 consequence mirror (RU-09, 5c847780).** This sidecar's F33 row ("coverage EXACT, delta
+DISCHARGED") is superseded: RU-09 overturns the KEEP-DISTINCT isolation — the deck stage goo is a
+byte-identical clone of the pager worm (`PagerDots.vue:326` ≡ `DeckGooFilter.vue:26`) ruled
+COLLAPSE-FAMILY and slated for deletion, which NO wave owns at HEAD (J3's W6 sequences only the
+DeckPager cut) — the dossier's F33 coverage is downgraded to PARTIAL and the wave-widening ask
+rides the JUDGE-2 docket (`../redress/DOSSIER-F11-F20.md`). F32's C-D "9-keep/6-cut table" anchor
+is stale — the rewritten SUPERFLUITY carries the C-F fresh-census kill/keep verdict instead; the
+dossier's F32 rider is re-anchored.

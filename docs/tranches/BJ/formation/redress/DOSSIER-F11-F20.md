@@ -423,3 +423,24 @@ union records the closure.
 disk-premise false — posture reverts to fix), the F13 Δ-F13-1 judge-omission (unruled residue),
 and the F16 timeline-README doc-truth routing (README §Exports lists five never-shipped exports;
 unnamed in `BAND-DOC-TRUTH`). All detailed in `../refable/REFABLE-RU-13-F11-F20.md`.
+
+---
+
+## JUDGE-2 docket (appended RU-14, 2026-07-18 — the consolidated seven)
+
+Six recorded FLIPs plus one routing item age un-judged, and three later unions
+(RU-05/RU-07/RU-09) landed without consuming any—JUDGE.md's "zero floating notes remain" is
+falsified. Every item below was re-verified live at HEAD (117b7f12) by this pass. Asked of the
+lead: ONE consolidated JUDGE-2 pass (J12+) ruling all seven, then an APPLYLOG-mirrored
+application pass. The JUDGE.md/APPLYLOG/band/greenfield edits are the lead's—outside this fix
+seat's write fence (DOSSIER-* + REFABLE-RU-13-* only).
+
+| # | item | source | state at HEAD |
+|---|------|--------|---------------|
+| 1 | **F13 better-design half OWNERLESS**—the Δ-F13-1 drag-affordance residue (grab/lift/drop under the breath-of-life edict) | this range, FLIP F-2 | zero F13 in J1-J11 and APPLYLOG; needs an owner MINT or an explicit ASK row—natural homes: `BJ.W-IDLE-BREATH`'s interaction half or the W6 fix mandate |
+| 2 | **RULING 8's false F17 premise still governs**—re-derived independently: `searchVariants.ts:10` `rounded-none` beats `.input-bar`'s `--radius-2xl`; zero `.fuzzy-search--floating` rules; the PNG shows one-rounded-one-square | this range, FLIP F-1 | `BAND-MATERIAL.md:117-119`/`:698-700` + `PLAN.md:185-189` still say "already role-correct on disk"; posture reverts guard → born-RED FIX |
+| 3 | **GF-DOCK W5 baseline-π + shape-axis ruling missing**—the F04 referent is `rail.vue:108-140` (`shape="rounded"`), and the 3-value `shape` axis needs its grammar ruling | F01-F10, FLIP-1 | GF-DOCK-PASS3 carries zero `rail.vue` mentions; unconsumed by the RU-05 rewrite |
+| 4 | **BAND-REDUCTION mislabels the Card probe "the F04 shape"** | F01-F10, FLIP-2 | `BAND-REDUCTION.md:33-37`/`:240` unchanged; the linkage is to the F04 ORDER, not the screenshot |
+| 5 | **FM-W3 gate (b) letter-satisfiable**—Skeleton reads a defined token, the WRONG 5s brand-metal rung; Δ-F24-1's period-VALUE + rung-BINDING reshape unapplied | F21-F30, FLIP-1 | `BAND-FEEDBACK-MOTION.md` W3 gate (b) unchanged |
+| 6 | **GF-DOCK §4.1 RED rationale + the false `overflow.css:65-66` "clip" comment stand**—the real mechanism is the visible→auto computed coercion (Δ-F27-1) | F21-F30, FLIP-2 | §4.1 still cites the block-overflow measure; the source comment unchanged; unconsumed by RU-05 |
+| 7 | **Timeline README §Exports drift unnamed**—five documented exports absent from `index.ts` | this range, routing item | zero `timeline` hits in `BAND-DOC-TRUTH.md`; route there or to the W5 stub |

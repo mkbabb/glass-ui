@@ -108,7 +108,7 @@ should carry 6-live + 2-doc so the break table doesn't overstate blast radius.
 
 - F21 → `BJ.W-PROGRESS-RIM-REPLACE` (BAND-FEEDBACK-MOTION W2)
 - F22 → `BJ.W-FEEDBACK-MOTION-TUNE` (BAND-FEEDBACK-MOTION W3, J7 applied)
-- F23 → `BJ.W-TRACK-DRY` (BAND-MATERIAL W4; engage-half → `BJ.W-IDLE-BREATH` W5 per J1; blur-half → `BJ.W-GRADED-BACKDROP-JUDGE` W3)
+- F23 → `BJ.W-TRACK-DRY` (BAND-MATERIAL W4; engage-half → `BJ.W-IDLE-BREATH` W5 per J1; blur-half → `BJ.W-GRADED-BACKDROP-JUDGE` W3) — coverage PARTIAL per the RU-14 addendum below
 - F24 → `BJ.W-FEEDBACK-MOTION-TUNE` (BAND-FEEDBACK-MOTION W3, gate reshaped per Δ-F24-1 / FLIP-1)
 - F25 → `ASK-REDUCTION §C2` (C-A default: fold the story) + family-B relay (corrected 6-live census)
 - F26 → `BJ.W-REDUCE-CROSSREPO-GATED` (BAND-REDUCTION W4) + `ASK-REDUCTION §A2`
@@ -116,3 +116,18 @@ should carry 6-live + 2-doc so the break table doesn't overstate blast radius.
 - F28 → `BJ.W-BLUR-LADDER` (BAND-MATERIAL W2, OPEN-2d per J6)
 - F29 → `BJ.W-CONFIGURATOR-STD` (BAND-STORY W3, G-CFG-1 + J10)
 - F30 → `ASK-REDUCTION §C4` (fold into springs; C-E scope)
+
+## RU-14 addendum (2026-07-18, fix seat claude-fable-5)
+
+- **F23 coverage EXACT → PARTIAL in the dossier.** The RU-09 SUPERFLUITY rewrite (5c847780; C-G at
+  `SUPERFLUITY.md:668-672`) rules the value-mark checkpoint paint (~65 lines, Slider + Progress) a
+  second true fold `BJ.W-TRACK-DRY` never scoped—BAND-MATERIAL carries zero value-mark text
+  file-wide—so W4's LANDED is premature and the wave re-opens with both registers. A path split
+  rides it: SUPERFLUITY charters `src/styles/glass/track-well.css`; BAND-MATERIAL `:433`/`:476`
+  charter `_shared/track.css`. This sidecar's F23 row recorded the marks-rendering duplication as
+  fresh census evidence but did not convert it to a coverage objection—corrected now. EXACT
+  restores on a JUDGE-2 ruling (charter the value-marks register into W4 or rule it out; reconcile
+  the path).
+- **FLIP-1 (F24 gate shape) and FLIP-2 (F27 §4.1 rationale + the `overflow.css:65-66` comment)
+  remain OPEN at HEAD (117b7f12)**—no union has consumed them; both docketed for the consolidated
+  JUDGE-2 pass (`../redress/DOSSIER-F11-F20.md` §JUDGE-2 docket).

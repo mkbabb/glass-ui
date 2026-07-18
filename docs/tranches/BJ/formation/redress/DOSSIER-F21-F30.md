@@ -177,6 +177,18 @@ slider view" is the A01 slider-engage ask, owned at HEAD by `BJ.W-IDLE-BREATH`
 "gradiated blurring" is the F50 experiment, owned by `BJ.W-GRADED-BACKDROP-JUDGE` (BAND-MATERIAL
 W3). Adjacent, not F23's DRY core.
 
+**COVERAGE DOWNGRADE (RU-14, 2026-07-18): EXACT → PARTIAL.** The rewritten SUPERFLUITY at HEAD
+(RU-09, 5c847780; C-G at `SUPERFLUITY.md:668-672`) contradicts the EXACT claim: the value-mark
+checkpoint paint (~65 lines across Slider + Progress, identical tokens and defaults) is a SECOND
+true fold `BJ.W-TRACK-DRY` never scoped—verified this seat: BAND-MATERIAL contains zero
+value-mark text file-wide—so LANDED is premature and the wave re-opens with both registers
+(track-well + value-marks). This dossier's own ISOLATION records the marks duplication
+(`.slider-mark` vs `.progress-value-mark`, one `--value-mark-position` idiom) yet kept EXACT and
+filed no FLIP; the contradiction is owned here. A path split rides it: SUPERFLUITY charters
+`src/styles/glass/track-well.css` (`SUPERFLUITY.md:227`) while BAND-MATERIAL `:433`/`:476`
+charter `_shared/track.css`. Coverage returns to EXACT only on a JUDGE-2 ruling that charters the
+value-marks register into W4 (or rules it out) and reconciles the track-well file path.
+
 **VERDICT (vs opus row).** RATIFIED with two corrections — (1) the opus row understated the shared
 surface (it credited only the fill; `_shared/valueDomain.ts` is a second already-shared register,
 and the mark RENDERING is a further residual duplication for W4's census); (2) the adjacent-clause
@@ -514,7 +526,7 @@ observation ADDED as fold rationale. Crosswalk: ASK; AGREE.
 |-----|------------------|----------------|----------|-----------------|
 | F21 | scroll-progress rim broken | `BJ.W-PROGRESS-RIM-REPLACE` (FEEDBACK-MOTION W2, codex law 12) | **EXACT** | RATIFIED + segment-arm evidence |
 | F22 | animated loop jittery/mis-eased | `BJ.W-FEEDBACK-MOTION-TUNE` (FEEDBACK-MOTION W3, J7 applied) | **EXACT (as amended)** | RATIFIED + wrap-rewind evidence |
-| F23 | slider/progress track DRY | `BJ.W-TRACK-DRY` (MATERIAL W4, C-C) | **EXACT** | RATIFIED; 2 corrections (valueDomain credit, J1 re-route) |
+| F23 | slider/progress track DRY | `BJ.W-TRACK-DRY` (MATERIAL W4, C-C) | **PARTIAL (RU-14—the RU-09 C-G value-marks fold unscoped; JUDGE-2 owed)** | RATIFIED; 2 corrections (valueDomain credit, J1 re-route) |
 | F24 | skeleton animation too slow | `BJ.W-FEEDBACK-MOTION-TUNE` (FEEDBACK-MOTION W3) | **EXACT on owner; gate shape corrected** | **OPUS-WRONG** (5s via token, wrong-rung bind — not a 2.4s local literal) |
 | F25 | confirm-dialog vs normal dialog | `ASK §C2` (fold landed; C-A default: fold the story) | **EXACT (decision)** | RATIFIED + C-A; 2 evidence corrections (fold-commit = c368ccbc; live relay census = 6, value.js docs-only) |
 | F26 | completion-seal overfit/"speedtest" | `BJ.W-REDUCE-CROSSREPO-GATED` + `ASK §A2` (D-3) | **EXACT (decision)** | RATIFIED (census re-proven first-hand) |
@@ -561,3 +573,18 @@ factually wrong (it computes to auto) and is the misreading that shipped the def
 `overflow-y: clip` cure stands and gains its rationale; the comment is corrected in the same cut.
 The live scrollable-delta census (which content overflows, by how much) runs as part of the wave's
 π (LIVE-DEFER here).
+
+## JUDGE-2 docket (appended RU-14, 2026-07-18)
+
+Both of this range's charter flips age un-judged—the RU-05/RU-07/RU-09 unions landed without
+consuming either—and this range now adds the F23 re-open above. Docketed for the consolidated
+JUDGE-2 pass (full seven-item docket: `DOSSIER-F11-F20.md` §JUDGE-2 docket):
+
+- **D2-5 (Δ-F24-1 / sidecar FLIP-1).** BAND-FEEDBACK-MOTION W3 gate (b) is still letter-satisfiable
+  while Skeleton rides the wrong 5s brand-metal rung—the period-VALUE + rung-BINDING gate reshape
+  is unapplied at HEAD.
+- **D2-6 (Δ-F27-1 / sidecar FLIP-2).** GF-DOCK-PASS3 §4.1's RED rationale still cites the
+  block-overflow measure, not the visible→auto coercion, and the false `overflow.css:65-66` "clip"
+  comment still stands in source—both re-verified at HEAD (117b7f12).
+- **D2-F23 (new this pass).** The RU-09 C-G value-marks fold + the track-well path split
+  (`src/styles/glass/track-well.css` vs `_shared/track.css`)—charter or rule out, then reconcile.

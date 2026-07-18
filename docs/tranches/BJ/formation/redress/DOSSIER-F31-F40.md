@@ -22,6 +22,31 @@ correlation + coverage and records where fresh evidence corrects the greenfield'
 (`brush.ts`, `HandMark.vue`, `ink.ts`, `geometry.ts`, `useHandMark.ts`, `paper.css`,
 `demo/stories/motion/handmark.vue`).
 
+**SUPERSEDED-BY-RU-06 (stamped RU-14, 2026-07-18)—the F34-F40 redress layer.** These rows were
+written 01:01 against the pre-redo GF-HANDMARK-PASS3; RU-06 rewrote that charter (7746d586,
+01:32) and the cross-critique fix pass finalized it (117b7f12, 06:43). At HEAD the gates this
+range cites—`G-CONTAIN`, `G-RING-LAYER`, `G-DRAW-CONNECTED`, `G-NO-SLIVER`—are grep-zero; the
+wave map is **W0-W5** (W1 THE-VOICE · W2 THE-SURFACE · W3 THE-CHOREOGRAPHY · W4 THE-STORY · W5
+CONSUMER+FINAL); the F38 register cut changed from "7→3 (pen·pencil·highlighter) +
+`Partial<Brush>`" to **ONE pen voice**—no `brush` prop, no `Partial<Brush>` hatch
+(`GF-HM:158-159`; Q-HM-1 resolved at `:248`—the highlighter is a SHAPE, not a medium). OWNERSHIP
+SURVIVES (GF-HANDMARK owns every F34-F40 cure); every gate-grain "Coverage: EXACT" citation in
+the row bodies below is dead—read them through this table:
+
+| rows | old anchor (row bodies below) | GF-HM at HEAD (117b7f12) |
+|------|-------------------------------|---------------------------|
+| F34/F35 | W1 calm+weight, `G-CALM`/`G-WEIGHT` | W1 THE-VOICE (`G-CALM`/`G-RESTRAINT`, the P1-P5 generators) + W2 THE-SURFACE (`G-WEIGHT`) |
+| F36 | W3 CONTAIN-HIGHLIGHT, `G-CONTAIN` (+ sidecar FLIP-1 scheme-aware ink) | the §4 layering law via W2: wrapper `isolation:isolate`, highlight `z-index:-1` INSIDE the isolated context, **NO blend modes—plain alpha ink** (`GF-HM:126-129`); π-BAND asserts VISIBILITY (the invisibility half is the charter's own sharpening 1) |
+| F37 | W5 DRAW-ON, `G-DRAW-CONNECTED` (+ sidecar FLIP-2 re-anchor) | W3 THE-CHOREOGRAPHY, `G-DRAW`: ONE mask-draw, dash cleared at rest; root re-attributed to the dual draw mechanisms (`GF-HM:31`, `HandMark.vue:349-365`); `G-DRAW-CONNECTED` no longer exists |
+| F38 | §4 register 7→3 + `Partial<Brush>` | ONE pen voice; `brush`/`overrides` and the 17-field Brush model cut with the taxonomy (`GF-HM:158-165`) |
+| F39 | W4 RING-LAYER, `G-RING-LAYER` | the §4 layering law via W2: circle paints over the glyphs in DOM order, no z-index at all |
+| F40 | W6 `G-NO-JARGON` + W2/W4 sliver/se-guard | W4 THE-STORY, `G-NO-JARGON` (gesture-named story rewrite); box/bracket GONE entirely (Q-HM-2 resolved, `GF-HM:250`) + `BJ.W-STORY-COPY-CANON` unchanged |
+
+The two sidecar FLIPs are **CONSUMED-BY-RU-06** (closure recorded in the sidecar): F36's
+invisibility became the charter's own probe, F37's root its own attribution—and FLIP-1's
+multiply/screen cure now CONTRADICTS the charter's NO-blend-modes law and must not execute as
+written.
+
 Convention: file paths repo-relative; `crosswalk` = `../ASSEMBLY-CROSSWALK.md`;
 `GF-HM` = `../greenfields/GF-HANDMARK-PASS3.md`; `FSF` = `../perfection/FABLE-STORY-FRAMEWORK.md`.
 
@@ -130,10 +155,16 @@ primitives survive as distinct public surfaces … And do the `/motion/reveal` +
 demo pages **collapse into one** scroll-family page?" — recommendation: consolidate to the
 ≥2-consumer keeps (`fading-scroll` confirmed), likely collapse reveal+scroll into one page.
 `BAND-REDUCTION` explicitly routes `reveal/scroll/tempo` to the ASK, not a wave
-(`../../waves/BAND-REDUCTION.md:73-76`). Post-JUDGE riders: ruling **C-D** (`JUDGE.md`) ships the
-full 9-keep/6-cut scroll table as the recommendation with the abstention resolved; ruling **J11**
-codifies A06's scroll-animation standard INSIDE the collapse wave (the survivor spine IS the
-substrate). Whichever way the user rules, the "what IS this" identity is discharged: collapse
+(`../../waves/BAND-REDUCTION.md:73-76`). Post-JUDGE riders (anchor refreshed RU-14, 2026-07-18):
+ruling **C-D** (`JUDGE.md`) ships the scroll census table as the recommendation with the
+abstention resolved—but its "9-keep/6-cut table" anchor is STALE: the RU-09 SUPERFLUITY rewrite
+(5c847780) no longer carries that table; its C-F verdict settles the census fresh
+(`useStagger`/`useStaggerReveal`/`useBloomUp`/`useTextHighlight` all zero-caller; scrollReader's
+one-site fence violated twice in its own house; the `.scroll-pin` CSS register moves to `demo/`
+WITH its writers) and ships the full kill/keep table with the flip-on-file:line escape clause.
+The §C3 recommendation text re-anchors to the RU-09 verdicts. Ruling **J11** codifies A06's
+scroll-animation standard INSIDE the collapse wave (the survivor spine IS the substrate)—
+unchanged. Whichever way the user rules, the "what IS this" identity is discharged: collapse
 merges the pages, or keep-distinct triggers the `BAND-STORY` W2 copy canon (a page states "what it
 IS and when to reach for it", `../../waves/BAND-STORY.md:155`) on the surviving page.
 Coverage: **EXACT (as a user-gated decision)** — the merge call is reserved to the user with a
@@ -162,9 +193,16 @@ external consumer of `useDeck` is **atlas ×2**, so collapsing deck INTO carouse
 headless integration. (2) **dot animations** — the deck's windowed pager dots (`DeckPager.vue` →
 `PagerDots.vue`, with the `usePagerWorm` goo-morph + active-dot elongation) are the "dot
 animations"; the user wants them DRAMATICALLY refined (the liquid-weight edict: pager/deck dots
-goo-morph between states). Note the demo's slide-stage goo (`DeckGooFilter`/`useDeckGoo`,
-`deck.vue:19-20,90`) is a DIFFERENT mechanism from the pager dots — the refinement targets the
-dots, not the stage barbell.
+goo-morph between states). **[CORRECTED RU-14, 2026-07-18]** The prior claim here—that the demo's
+slide-stage goo (`DeckGooFilter`/`useDeckGoo`, `deck.vue:19-20,90`) is "a DIFFERENT mechanism"
+from the pager dots—is OVERTURNED by the RU-09 SUPERFLUITY rewrite (5c847780): the stage goo is a
+byte-identical CLONE of the pager worm machinery (the neck clipPath at `PagerDots.vue:326` ≡
+`DeckGooFilter.vue:26`, re-verified on disk this pass), an in-house rebuild of the register
+`CarouselContent.vue:4-18` records as RETIRED ("the metaball-merge is the INDICATOR's job… the
+ONE metaball morph"). RU-09 rules F33 COLLAPSE-FAMILY and slates the clone for deletion
+(`useDeckGoo.ts` + `gooBarbellGeometry.ts` + `DeckGooFilter.vue` + the ~200-line goo CSS block +
+`DeckGoo.private.test.ts`); the refinement still targets the dots—but the stage goo is not a
+separate mechanism to leave standing.
 
 **TARGET.**
 - Demo site: `demo/stories/motion/deck.vue:127` (`<DeckPager v-model:index … :window-fit="6" />`).
@@ -196,9 +234,15 @@ via BAND-FEEDBACK-MOTION and stopped there — the gap the crosswalk itself flag
   `/motion/deck` + `/motion/carousel`. The crosswalk carries the J3 annotation (`JUDGE.md` §D item
   5, appended in the crosswalk's judgment-corrections section).
 
-Coverage: **EXACT** — both halves owned: the deck-vs-carousel keep is a user-gated ASK on
-dispositive evidence; the dot-refinement half has its minted wave with born-RED gates and the
-vestige-cut sequencing. The formerly-proposed Δ-F33-1 is DISCHARGED (adopted as W6).
+Coverage: **PARTIAL at HEAD (downgraded RU-14, 2026-07-18; was EXACT).** Both prior halves stand
+owned—the deck-vs-carousel keep at ASK §C1 (whose premise text RU-09 C-C partially overturns,
+`SUPERFLUITY.md:632`), the dot refinement at W6—but the RU-09 F33 migration is a THIRD half no
+wave carries: J3's W6 sequences only the vestigial `DeckPager.vue` cut, and the byte-identical
+stage-goo clone deletion (`useDeckGoo.ts`/`gooBarbellGeometry.ts`/`DeckGooFilter.vue` + goo CSS +
+test) is owned by NO wave at HEAD. Asked of the lead (rides the JUDGE-2 docket,
+`DOSSIER-F11-F20.md`): widen `BJ.W-PAGER-DOT-MORPH` (or BAND-REDUCTION) to carry the RU-09 F33
+migration explicitly, and refresh the ASK §C1 recommendation text to the RU-09 verdict. The
+formerly-proposed Δ-F33-1 stays DISCHARGED (adopted as W6).
 
 **STATUS CHECK.** Crosswalk flag: **ASK** (`crosswalk:55`, §C1) + the J3/W6 annotation in the
 judgment-corrections section. **AGREE** at HEAD.
@@ -526,19 +570,23 @@ fallback the screenshot proves.
 | Row | ask (compressed) | terminal owner | coverage | verdict vs opus |
 |-----|------------------|----------------|----------|-----------------|
 | F31 | curve-gallery void + modularize easing | `BJ.W-CONFIGURATOR-STD` G-CFG-5 (AMEND-D-8) + ASK §B4 + MATERIAL W5 review | **EXACT** | RATIFIED |
-| F32 | reveal vs other scrolling | `ASK-REDUCTION §C3` (+ C-D table, J11 standard) | **EXACT (decision)** | RATIFIED |
-| F33 | deck vs carousel + dot refinement | `ASK-REDUCTION §C1` + `BJ.W-PAGER-DOT-MORPH` (FM W6, J3) | **EXACT** | SUPERSEDED |
-| F34 | handmark boil worm "awful" | `GF-HANDMARK` W1 (G-CALM/G-WEIGHT, boil retire) | **EXACT** | RATIFIED |
-| F35 | pen "more pen-like/natural" | `GF-HANDMARK` W1 (calm+thin, vbH-retract) | **EXACT** | RATIFIED |
-| F36 | highlighter "doesn't work" | `GF-HANDMARK` W3 (G-CONTAIN) + FLIP-1 dark-blend arm | **EXACT escape / GAP dark-visibility** | PARTIAL |
-| F37 | draw-on "broken/disjointed" | `GF-HANDMARK` W5 (G-DRAW-CONNECTED, FLIP-2 RED-cause) | **EXACT (mechanism swap)** | PARTIAL |
-| F38 | brushes awful — greenfield | `GF-HANDMARK` §4 register 7→3 | **EXACT** | RATIFIED |
-| F39 | ring layering/smoothing/encapsulation | `GF-HANDMARK` W4 (G-RING-LAYER) + self-measuring datum (W4/W6) | **EXACT + amendment** | RATIFIED+AMENDED |
-| F40 | remove meta text "SE"; redesign | `GF-HANDMARK` W6 `G-NO-JARGON` + `BJ.W-STORY-COPY-CANON` | **EXACT** | RATIFIED |
+| F32 | reveal vs other scrolling | `ASK-REDUCTION §C3` (+ C-D re-anchored to the RU-09 census, J11 standard) | **EXACT (decision)** | RATIFIED |
+| F33 | deck vs carousel + dot refinement | `ASK-REDUCTION §C1` + `BJ.W-PAGER-DOT-MORPH` (FM W6, J3) | **PARTIAL (RU-14—the RU-09 goo-clone deletion unowned)** | SUPERSEDED |
+| F34 | handmark boil worm "awful" | `GF-HANDMARK` W1 THE-VOICE (`G-CALM`/`G-RESTRAINT`; boil dies with the register) — RU-14 re-point | **EXACT** | RATIFIED |
+| F35 | pen "more pen-like/natural" | `GF-HANDMARK` W1 THE-VOICE + W2 `G-WEIGHT` — RU-14 re-point | **EXACT** | RATIFIED |
+| F36 | highlighter "doesn't work" | `GF-HANDMARK` §4 layering law via W2 (NO blend modes, plain alpha ink; π-BAND asserts visibility) — RU-14 re-point | **EXACT (the dark-visibility gap CONSUMED-BY-RU-06)** | PARTIAL |
+| F37 | draw-on "broken/disjointed" | `GF-HANDMARK` W3 THE-CHOREOGRAPHY `G-DRAW` (dual-mechanism root; dash cleared at rest) — RU-14 re-point | **EXACT (mechanism swap)** | PARTIAL |
+| F38 | brushes awful — greenfield | `GF-HANDMARK` register → ONE pen voice, no brush prop (Q-HM-1, `GF-HM:248`) — RU-14 re-point | **EXACT** | RATIFIED |
+| F39 | ring layering/smoothing/encapsulation | `GF-HANDMARK` §4 layering law via W2 (circle over-glyph in DOM order, no z-index) — RU-14 re-point | **EXACT + amendment** | RATIFIED+AMENDED |
+| F40 | remove meta text "SE"; redesign | `GF-HANDMARK` W4 THE-STORY `G-NO-JARGON` (box/bracket GONE, Q-HM-2 `:250`) + `BJ.W-STORY-COPY-CANON` — RU-14 re-point | **EXACT** | RATIFIED |
 
-**Totals: EXACT 9 / EXACT-with-flip-gap 1 (F36) / MISSING 0.** Open flips: 2 (sidecar §FLIPS —
-lead re-judges). Δ-F33-1 (the opus artifact's one proposed delta): **DISCHARGED** — adopted by
-JUDGE J3 and minted as BAND-FEEDBACK-MOTION W6 at HEAD.
+**Totals (as re-stated RU-14): EXACT 8 / PARTIAL 1 (F33—the RU-09 goo-clone residue) /
+gate-grain citations F34-F40 read through the SUPERSEDED-BY-RU-06 table at the range header
+(ownership EXACT throughout).** Open flips: 0—both sidecar FLIPs closed CONSUMED-BY-RU-06
+(F36's invisibility is the charter's own sharpening; F37's root its own attribution; the FLIP-1
+multiply/screen cure is BANNED by the charter's NO-blend-modes law). Δ-F33-1 (the opus
+artifact's one proposed delta): **DISCHARGED** — adopted by JUDGE J3 and minted as
+BAND-FEEDBACK-MOTION W6 at HEAD.
 
 ## LIVE-DEFER register (claims only live paint can settle; no browser this seat)
 

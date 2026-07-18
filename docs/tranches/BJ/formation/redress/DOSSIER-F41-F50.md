@@ -114,9 +114,15 @@ single scroll-family owner. A demo-taxonomy + surface-reduction call, not a pain
 **REDRESS.** Owned by `ASK-REDUCTION §C3` (`../../ASK-REDUCTION.md:190-207`): consolidate the
 scroll-reveal primitives to the ones that clear ≥2 (`fading-scroll` is a confirmed multi-consumer
 keep); the `reveal`/`scroll` demo pages likely collapse into one scroll-family page (the exact
-merge shape is a design call). Ruling C-D (`JUDGE.md`) ships the full 9-keep/6-cut census table as
-the recommendation — §C3 remains a user-ratification row, now with teeth. Family C carries the
-surface-reduction half. Coverage: **EXACT (as a decision)** — no code residue this seat owns.
+merge shape is a design call). Ruling C-D (`JUDGE.md`) ships the scroll census table as the
+recommendation — its "9-keep/6-cut table" anchor is STALE at HEAD (re-anchored RU-14,
+2026-07-18): the RU-09 SUPERFLUITY rewrite (5c847780) no longer carries that table; its C-F
+verdict settles the census fresh (`useStagger`/`useStaggerReveal`/`useBloomUp`/`useTextHighlight`
+zero-caller; scrollReader's one-site fence violated twice in-house; `.scroll-pin` moves to
+`demo/` WITH its writers) and ships the full kill/keep table with the flip-on-file:line escape
+clause — the §C3 recommendation text reads from the RU-09 verdicts. §C3 remains a
+user-ratification row, now with teeth. Family C carries the surface-reduction half. Coverage:
+**EXACT (as a decision)** — no code residue this seat owns.
 
 **STATUS CHECK.** Crosswalk flag: **ASK** (`crosswalk:64`, `ASK §C3 reveal/scroll consolidation`).
 **AGREE.**
@@ -246,10 +252,14 @@ question.
   (16px soft-rect) via the concentric-field rule at
   `src/components/_shared/field-control.css:37-48` (`[data-slot="dialog-content"]
   .field-control[data-kind="input"] { border-radius: var(--radius-field) }`), NOT the base
-  `--radius-pill` at `:34`. **Cure dated (refable):** that rule landed at `923c5254` ("the dialog
-  input field rung — adopt over the pill"), with the sibling cures `2764f60b` (dialog corner bound
-  to card) and `58fba6e6` (A' round corner) — all post-7.0.0-tag fix-pass commits, after the
-  screenshot.
+  `--radius-pill` at `:34`. **Cure dated (corrected RU-14, 2026-07-18):** that rule landed at
+  `923c5254` ("the dialog input field rung — adopt over the pill", 07-17 10:02), with the sibling
+  cures `2764f60b` (dialog corner bound to card, 03:07) and `58fba6e6` (A' round corner, 10:02) —
+  all three ANCESTORS of v7.0.0 (tag commit `4ab12128`, 07-17 18:11; verified by `merge-base`),
+  i.e. PRE-tag: 7.0.0 SHIPS the rounding cures. The prior "post-7.0.0-tag fix-pass commits, after
+  the screenshot" dating was false — and internally impossible beside F50's correct pre-tag
+  dating of the LATER 11:14 trio. Whether the screenshot pre- or post-dates the same-day cure
+  commits is statically unprovable.
 - The Unlock button: `gate-pattern.vue:156-158` — a default `<Button>`, `--radius-control` (stadium
   pill), intentionally kept (the iOS capsule CTA idiom).
 - The dialog shell: `--radius-dialog` = `--radius-card` = `--radius-2xl` (16px),
@@ -260,8 +270,10 @@ question.
 landed grammar: `field-control.css:37-48` was written expressly for the dialog-nested single-line
 input (its comment names "the 'Rename workspace' Slug pill vs the round dialog shell" — the F48
 case) — inside a modal the scale-invariant stadium pill disagrees with the soft-rect surface, so
-the 16px field rung nests concentrically while the modal CTAs keep the pill. The screenshot
-predates that fix-pass commit. The residual question is only paint-taste (does
+the 16px field rung nests concentrically while the modal CTAs keep the pill. The cure commits
+are pre-tag, same-day as the feedback capture — whether the screenshot predates them is
+statically unprovable (hedged RU-14; the prior flat "predates" claim over-reached). The residual
+question is only paint-taste (does
 soft-rect-input-beside-pill-button read coherent live) — a live-π ruling, **LIVE-DEFER** from this
 seat.
 
@@ -371,8 +383,9 @@ interaction model wants a re-greenfield.
   `useSelectionGroup.ts:183` fires `scrollIntoView({inline:'nearest'})` on every select, guttered
   by `scroll-padding-inline` (`overflow.css:76-78`). F47b's gap is real but narrower than "nothing
   auto-scrolls": the demo strip routes through `goTo()` navigation and never touches the engine,
-  and no path recenters on FOCUS of an occluded cell. GF-DOCK's G-REVEAL RED states exactly this
-  ("only `useSelectionGroup` rails recentre; the `BottomDock` strip routes through `goTo()`").
+  and no path recenters on FOCUS of an occluded cell. GF-DOCK's tap-to-reach RED states exactly
+  this (§4.4/W3 `G-REACH` at HEAD; the pre-rewrite gate name `G-REVEAL` is gone—"only
+  `useSelectionGroup` rails recentre; the `BottomDock` strip routes through `goTo()`").
 - Src fault (no census): the overflow measurer `useDockOverflowFit` toggles one boolean attr off
   scroll extent — there is no per-item occlusion census.
 
@@ -383,24 +396,30 @@ knowledge of cell boundaries, so it fades mid-word; the one shipped recenter (se
 chevron/jump controls were bolted on to compensate. The whole thing is the "shape to be abrogated"
 (F04) plus the missing occlusion grammar — the "greenfield again" the user asks for.
 
-**REDRESS.** Owned EXACTLY by `GF-DOCK-PASS3`, the corrected single-model "snap-detented filmstrip"
-(`../greenfields/GF-DOCK-PASS3.md:45-66`):
-- **(a) occlusion signal → W1** `G-OCCLUSION-PEEK` + `G-MORE-SIGNAL` (`GF-DOCK-PASS3.md:271,
-  292-299`): a `useDockItemCensus` primitive + a **boundary-anchored** fade whose stop coincides
-  with a cell boundary + a `--dock-peek` sliver + the `--dock-more-*` cohort, REPLACING the
-  `overflow.css` pixel mask; plus **W2** `G-SNAP-DETENT` (`:289-291`): `scroll-snap-type` so cells
-  detent instead of resting mid-glyph.
-- **(b) auto-scroll on tap/focus → W3** `G-REVEAL` (`:273,300-302`): tap OR focus of an occluded
-  cell fires a `useDockSpring` glide that recentres and snap-aligns it; focus⟂occlusion couples
-  keyboard focus to the same reveal. This generalizes the existing select-path recenter to the
-  strip + focus paths.
-- **(c) redundant chevron/jump chrome → W5** `G-RADIUS-GRAMMAR` (`:199-226,274`): delete the
-  chevron chrome once tap-reveal + census occlusion + Home/End keyboard land — RED-at-HEAD
-  `BottomDock.vue:159-263` renders it.
-- **(d) "greenfield again" → the whole GF-DOCK model** (snap-detented filmstrip, `role="toolbar"` +
-  roving keyboard, one selection pill).
+**REDRESS (re-mapped RU-14, 2026-07-18, to the re-unioned GF-DOCK-PASS3 at HEAD—117b7f12).**
+Owned EXACTLY by `GF-DOCK-PASS3`, now the detented filmstrip under a quasi-fixed lens: the detent
+CONTRACT survives but its CSS-snap MECHANISM is STRUCK by the charter itself (law 14—"CSS
+scroll-snap cannot express duration-stable snapping. Web: JS spring integrators";
+`GF-DOCK-PASS3.md:52-54`, §4.2 `:115-122`). The prior gate names
+`G-OCCLUSION-PEEK`/`G-SNAP-DETENT`/`G-REVEAL` are grep-zero at HEAD; the mapping is:
+- **(a) occlusion signal → W1** CENSUS PRIMITIVE + EVIDENCE STACK, gates `G-EVIDENCE` +
+  `G-MORE-SIGNAL` (`:318,363-367`): `useDockItemCensus` (cell rects → detent table) + the
+  cut-band detent grammar + peek + lip shadow + condensation—the pixel fade mask dies. The
+  rest-position half seats at **W2** DETENT ENGINE (`G-DETENT-PHYSICS`): duration-stable
+  JS-spring seats, velocity-projected detents, asymmetric rubber band—no cell rests mid-glyph,
+  and NOT via `scroll-snap-type`.
+- **(b) auto-scroll on tap/focus → W3** TAP-TO-REACH + TOOLBAR KEYBOARD, gates `G-REACH` +
+  `G-KEYBOARD-TOOLBAR` + `G-FOCUS-VISIBLE` (§4.4 "Tap-to-reach (F47b) — instant commit,
+  concurrent seat", `:180`): tap OR focus of an occluded cell seats it via the spring engine;
+  focus⟂occlusion couples keyboard focus to the same reveal-on-intent.
+- **(c) redundant chevron/jump chrome → W5** `G-RADIUS-GRAMMAR` (`:322,388-389`): delete the
+  chevron chrome once tap-to-reach + census evidence + Home/End keyboard land — RED-at-HEAD
+  `BottomDock.vue:161-252` renders it.
+- **(d) "greenfield again" → the whole GF-DOCK model** (detented filmstrip + the JS-spring detent
+  engine + the W4 selection lens, `role="toolbar"` + roving keyboard).
 Coverage: **EXACT** — every clause maps to a named gate with a disk-true RED. (F27's
-vertical-scroll half is the sibling row's `G-NO-BLOCK-SCROLL`, not F47's.)
+vertical-scroll half is the sibling row's `G-NO-BLOCK-SCROLL`, now seated at W2 beside the detent
+engine, not F47's.)
 
 **STATUS CHECK.** Crosswalk flag: **LANDED** (`crosswalk:69`, `GF-DOCK W1 (occlusion/peek) + W3
 (reveal-on-intent)`). **AGREE.**
@@ -437,9 +456,10 @@ the screenshot.
 - Design hierarchy: the type ladder (StorySection level axis / the flattened `text-subheading`).
 
 **POST-MORTEM.** A four-part material ask against systems partly already remediated and partly
-genuinely open. The rounding half LANDED on disk in the post-tag fix-pass (the three dated commits
-above), so "dialog consistent with cards" is a token relationship that already holds — a
-disk-drifted-ahead case like F09/F12/F17. The blur half is genuinely open: 6 names collapse to 4
+genuinely open. The rounding half LANDED on disk PRE-tag (the three dated commits above are
+v7.0.0 ancestors — corrected RU-14, 2026-07-18: 7.0.0 ships the rounding cures; there was no
+post-tag fix-pass), so "dialog consistent with cards" is a token relationship that already
+holds — a disk-drifted-ahead case like F09/F12/F17. The blur half is genuinely open: 6 names collapse to 4
 radii with a device-dependent 2dppx jump (the F28/F48 "inconsistent" mechanism), and whether a
 FURTHER subtler pull is warranted at HEAD is paint-taste owed a live-π against F49/F50
 (**LIVE-DEFER**). The background-blur half is the graded-backdrop experiment, frozen into the major
@@ -556,12 +576,12 @@ F50-specific. Coverage: **EXACT (as a reference + experiment)**.
 | Row | ask (compressed) | terminal owner | coverage | delta count |
 |-----|------------------|----------------|----------|-------------|
 | F41 | text-motion npm-install string | `BJ.W-STORY-COPY-CANON` (G-COPY-LINT; AMEND-D-6 pins `typewriter.vue:103`) + no-wrap rider | **EXACT** | 0 |
-| F42 | scroll vs other scrolling items | `ASK §C3` (reveal/scroll consolidation; C-D census table) | **EXACT (decision)** | 0 |
+| F42 | scroll vs other scrolling items | `ASK §C3` (reveal/scroll consolidation; C-D re-anchored to the RU-09 census) | **EXACT (decision)** | 0 |
 | F43 | auth-shell putrid + own category | `G-COPY-3` (credentials, LANDED) + `ASK §D1` (prune; palette judged at CURRENT state) | **EXACT** | 0 |
 | F44 | settings overfit nonsense | `ASK §D1` + `BAND-REDUCTION W3` (prune; dead-knob fix mandatory if kept) | **EXACT (decision)** | 0 |
 | F45 | gate-pattern rounding + prune | `ASK §D1` (prune) + `BJ.W-RADIUS-ROLE` regression-guard (J5 applied) | **EXACT (as amended)** | 0 (1 consumed) |
 | F46 | intro double-card; blank; slow | `BJ.W-PREVIEW-CARD` (G-PRV-4/AMEND-D-5 + G-PRV-2/AMEND-D-4; perf→fam E) | **EXACT** | 0 |
-| F47 | dock occlusion + auto-scroll; greenfield | `GF-DOCK` W1 (occlusion/peek/more) + W2 (snap) + W3 (reveal) + W5 (chrome delete) | **EXACT** | 0 |
+| F47 | dock occlusion + auto-scroll; greenfield | `GF-DOCK` W1 (census/evidence) + W2 (JS-spring detent, no CSS snap) + W3 (tap-to-reach) + W5 (chrome delete) — RU-14 re-map | **EXACT** | 0 |
 | F48 | hierarchy/blur/rounding app-wide | `BJ.W-RADIUS-ROLE` (guard) + `BJ.W-BLUR-LADDER` + `BJ.W-GRADED-BACKDROP-JUDGE` | **EXACT** | 0 |
 | F49 | OpenAI subtle-blur reference | `BJ.W-BLUR-LADDER` (OPEN-2c π target) + `BJ.W-GRADED-BACKDROP-JUDGE` (π reference) | **EXACT (reference)** | 0 |
 | F50 | gradient-blur-behind; experiment+judge | `BJ.W-GRADED-BACKDROP-JUDGE` (adopt/decline, OPEN-3a) | **EXACT (reference)** | 0 |

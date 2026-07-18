@@ -78,3 +78,13 @@ Riding with it: the timeline `README.md` §Exports drift (five documented export
 - F19 how 10px + 1px-wash READ on the page (the token facts are disk-true regardless).
 - F20 whether the current transient bloom satisfies "exactly like our refined dialog" (the W1
   REGISTER-PARITY live-π, J4).
+
+## RU-14 addendum (2026-07-18, fix seat claude-fable-5)
+
+FLIP F-1 (RULING 8/F17), FLIP F-2 (F13 ownerless), and the timeline-README routing item all
+remain OPEN at HEAD (117b7f12)—the RU-05/RU-07/RU-09 unions consumed none of them. The dossier
+now carries the consolidated seven-item **JUDGE-2 docket** (`../redress/DOSSIER-F11-F20.md`
+§JUDGE-2 docket): this range's three items plus F01-F10's two FLIPs (GF-DOCK rail.vue baseline-π
++ shape axis; the BAND-REDUCTION "F04 shape" label) and F21-F30's two (FM-W3 gate (b); GF-DOCK
+§4.1 + the false `overflow.css:65-66` comment). Asked of the lead: one J12+ pass ruling all
+seven, then an APPLYLOG-mirrored application; F13 needs an owner mint or an explicit ASK row.
