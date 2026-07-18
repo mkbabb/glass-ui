@@ -16,6 +16,25 @@
   verdicts fixed before the first wave-doc Read. (3) SCRUTINY assume-incorrect—both
   wave docs read and every load-bearing claim re-verified on disk and in history.
   Paint-only severity claims are LIVE-DEFER throughout (no browser this seat).
+- **Resumed-seat re-execution (wall #8 recovery)**: the seat that wrote the above was
+  killed at wall #8 and its sidecar journaled at `64207ede`. This resumed seat
+  (verified model: `claude-fable-5`, read verbatim from its own system context) re-ran
+  the full protocol anew at HEAD `454f6d64` WITHOUT reading this sidecar first—ANEW
+  from src/ + git history + the RU-15 stills only, its own scrutiny boundary recorded
+  before opening `BI.W-GLASS-SUBTLETY.md`, this journal opened LAST as a third
+  boundary. The two independent Fable passes CONVERGED on every deterministic fact:
+  the 10-row census at the S≈0.85 primary column, the bind + A' + C2-INNER shipped
+  forms, both graded forms' single-fixed-kernel structure, the two missing DELTAs, and
+  the APPROXIMATED verdict on the exemplar ramp. The re-run additionally re-proved W3
+  from history (`3c2f6e79` built `--glass-blur-btn-radius`; `490cc46e` deleted the
+  cohort; `W-BLUR-MUTE-DELTA.md` still on disk) and W5 from MIGRATION.md §7.0.0 (arms
+  A+B present at :161/:171, no `backdrop`-axis/`--glass-halo-*` row), and spot-verified
+  R6 (components.css:8 "≈ 11px"; deep interpolants ~13/~14/16). One honesty note: the
+  focused vitest pair could not be executed in this seat's environment (vite server
+  refuses to start in the sandbox); the assertions were verified statically against
+  the HEAD primitives (7/7/11/11 both arms, 17px hi-DPI, the bind)—the born-RED→GREEN
+  differential stands on `2224f4c4`'s record, not on a fresh run. The re-run found ONE
+  new item (N6 below); counts move 5/5/12 → 5/6/12.
 
 ## ANEW baseline (the independent picture at HEAD, pre-scrutiny)
 
@@ -156,7 +175,7 @@ Boundary: the wave docs were read only after the ANEW verdicts above were fixed.
   the arm-A and arm-B rows but NO graded-backdrop row—a shipped public surface
   undocumented in the migration contract.
 
-### FABLE-NEW (5)
+### FABLE-NEW (6)
 
 - **N1—the interior of the ramp is the missing half of the exemplar model (the unit's
   central adjudication).** Endpoint (20px ≈ ~20pt, exact), travel (112px vs ~70pt),
@@ -186,6 +205,23 @@ Boundary: the wave docs were read only after the ANEW verdicts above were fixed.
   spot; 11 reads too close … 34 is unnecessarily heavy")—landing on the exemplar's
   measured ~20pt terminal that the doc never named. The VALUE is ratified; the doc's
   option framing was wrong.
+- **N6—the saturate register contradicts its own co-located prose at HEAD, and the
+  falsifier that would have caught it was never run (resumed-seat find).** Disk:
+  `--glass-saturate-wash/quiet/resting: 1.4`, `-floating/-overlay: 1.6`
+  (`tokens/glass.css:123-127`), set at the BD gate-reconcile `b8aa7033`
+  ("reconcile ~95 red proof gates"), up from 1.05/1.05/1.05/1.18/1.2. The SAME file's
+  prose still declares the OLD bake twice—":116 the values here ARE the bake
+  (wash/quiet/resting 1.05, floating 1.18, overlay 1.2)" and ":148-151 sits at a
+  gentle ~1.18/1.2 … a 1.4–1.5× over-juices the bleed-through into a garish smear"—so
+  the shipped values sit squarely inside the band their own rationale forbids. The
+  subtlety wave is not the author (radius-only, saturate deliberately held—R1 stands;
+  its C1-SATURATE even quotes the true 1.6), and its C1-CENSUS-GREP second axis was
+  scoped to the six BLUR token names, so no wave rule reached this prose. But the wave
+  made the smear its F3 first-class falsifier, F3 was never captured (W4), and a
+  subtler blur ladder makes the backdrop SHARPER through the plate—the exact condition
+  C1-SATURATE names as raising smear exposure. A values-vs-prose contradiction living
+  in the census's home file since BD, unresolved through two recalibrations.
+  Smear severity is LIVE-DEFER; the contradiction is disk-fact.
 
 ## ROUTING (PROPOSE only—no src/, band, or shipped-wave edits from this seat)
 
@@ -215,6 +251,14 @@ Boundary: the wave docs were read only after the ANEW verdicts above were fixed.
    law 1 + the RU-15 measurement**: the reference ramp is attested progressive
    (form (a)); the in-surface gradient stays a declared BEST-iOS divergence, not a
    uniform-radius equivalence claim.
+8. **DOC-TRUTH + DESIGN-DEBT (from N6)—resolve the saturate values-vs-prose
+   contradiction in `tokens/glass.css`**: either the 1.4/1.6 register is the intended
+   identity (then reword the ":116 bake" and ":148-151 gentle ~1.18/1.2 / over-juice"
+   prose to the shipped truth, naming `b8aa7033` as the move), or the prose rationale
+   is the intended identity (then the value question re-opens as a design row). Fold
+   the F3 garish-smear read into routing row 1's retro battery over a saturated
+   aurora—the judgment that decides which side is true; the bounded co-move the wave
+   pre-authorized (floating/overlay 1.6→1.5) is the recorded fallback.
 
 ## Verdict
 
@@ -225,5 +269,7 @@ implementation is BETTER than its spec (W1) and its one judgment-chosen value la
 the measured exemplar (N5), but it froze into the immutable major with its own decline
 gate unrun (W4), its MIGRATION row missing (W5), and the exemplar's defining property—
 the progressive-radius interior—approximated by a crossfade the standing canon now
-prescribes replacing with stacked bands (N1). Counts: 5 OPUS-WRONG / 5 FABLE-NEW /
-12 RATIFIED.
+prescribes replacing with stacked bands (N1). The resumed-seat re-run converged with
+the walled seat on all of the above independently and added one find: the saturate
+register's values-vs-prose contradiction, live since BD, that only the unrun F3 could
+adjudicate (N6). Counts: 5 OPUS-WRONG / 6 FABLE-NEW / 12 RATIFIED.
