@@ -144,7 +144,8 @@ Members: visual family 4 (handmark-total-failure → GREENFIELD w/ pencil-boil) 
 interior scroll, F04/F05 shape grammar, F06 transitions) · visual family 8 + F08/A13 (aurora
 preset reduction + REAL van-Gogh/oil-pastel/crayon modes or nothing) · A12 (blob greenfield —
 reference the OLD value.js implementation) · V-A95 aurora reverse-drag slab (ACTIVE RED,
-carried) · deadcode:css-partial-orphaned (chip/glass-atom dead in dist — born-RED fix wave) ·
+carried) · deadcode:css-partial-orphaned (chip/glass-atom dead in dist — born-RED fix; OWNER RE-STAMPED
+2026-07-18: the repair wave is MATERIAL W7, family F, not this family — RU-04 judge MECH-08/D-07) ·
 visual family 9 (feedback-motion-brokenness: F20 toast≡dialog, F21 rim, F22 loop easing, F24
 skeleton) · A01/A11 engagement (ENGAGE-AFFORD/SLIDER-ENGAGE waves registered;
 `chronic:phantom-bank-landing-vehicle` demands the bank be NAMED: the rim-only branch =
@@ -233,7 +234,8 @@ prospective on the bump. The corrected break table in round-2/adversarial-verifi
 the Q060 mail source.
 
 **Family F additions (typography lens):** CRITICAL enforceability fact — the Tailwind default
-ramp is never reset (`--text-*: initial` absent), so text-sm/text-xs (251 sites) silently bypass
+ramp is never reset (`--text-*: initial` absent), so text-sm/text-xs (234 sites: 218 demo + 16 src, filtered method — re-pinned 2026-07-18 per
+RU-04 MECH-02; the 251 was the unfiltered figure) silently bypass
 the √φ fluid scale; no lint can work until the default ramp is cleared. Mono-caption idiom
 saturates 65/128 story pages (126× text-mono-caption + 57× text-admin-label + structural
 injection via StorySection.vue:29). Story hierarchy is typographically flat: ~335 flat carriers

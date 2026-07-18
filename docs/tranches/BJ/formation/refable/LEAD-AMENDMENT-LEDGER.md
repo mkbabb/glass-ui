@@ -21,8 +21,8 @@ lead-owned remainder.
 
 | id | item | source | status |
 |----|------|--------|--------|
-| B1 | :147 family-G attribution of deadcode:css-partial-orphaned stale → repair wave is MATERIAL W7 (family F) | RU-04-JUDGE §5.1 | PENDING |
-| B2 | :236 stale 251 figure → 234 = 218 + 16, filtered method | RU-04-JUDGE §5.2 | PENDING |
+| B1 | :147 family-G attribution of deadcode:css-partial-orphaned stale → repair wave is MATERIAL W7 (family F) | RU-04-JUDGE §5.1 | APPLIED (this commit) |
+| B2 | :236 stale 251 figure → 234 = 218 + 16, filtered method | RU-04-JUDGE §5.2 | APPLIED (this commit) |
 
 ## C. Perfection/formation-doc truth-ups
 
