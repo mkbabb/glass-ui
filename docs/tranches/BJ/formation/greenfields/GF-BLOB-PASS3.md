@@ -1,397 +1,414 @@
-# GF-BLOB — greenfield design, PASS 3 (Fable seat, over CRIT2)
+# GF-BLOB—greenfield design, PASS 3 (REFABLE union)
 
-One-seat compression of the design-loop charter (`PROMPTS/design-loop-prompt.md`): adjudicate every
-CRIT2 charge on disk → decide the deferred designs (material identity, the goo-engine relationship,
-the shadow mechanism, the topology reconciliation, the always-alive seam) → re-cost the mis-scoped
-wave → honest convergence. TRANCHE-DEVELOPMENT: no source touched; this doc is the only artifact. No
-browser (a Playwright suite owns the seat) — every π obligation stays OWED, and convergence is capped
-accordingly.
-
-Authorities re-read in full at HEAD (`codex/bi-p-q-execution`): `GF-BLOB-PASS1.md`, `GF-BLOB-CRIT2.md`,
-`ADJUDICATION-1.md` (blob touch = line 48 only), `ios27/IOS27-CODEX.md` (laws 5/6/9/13),
-`ios27/MARKS-B.md` (§V2 `f-0017/0018/0019`, the METAL FLOW stills `:215-218`, the rim caustic `:262-269`),
-`FEEDBACK-LEDGER.md:79` (the A12 ask), `GF-DOCK-PASS3.md` (the sibling goo engine). On-disk re-verified:
-`src/components/blob/{constants.ts,types.ts,Blob.vue,composables/useBlobMood.ts,composables/useMetaballRenderer.ts,shaders/metaball.frag.ts}`
-and the value.js archaeology `docs/tranches/S/audit/lanes/design-blob-atmosphere-vision.md:150-159` (READ-ONLY).
-
-Every CRIT2 charge below was re-checked against the disk by THIS seat, not taken on CRIT2's word — the
-two seats agree on all seven findings' facts. Adjudication is on the DESIGN CONSEQUENCE, not the fact.
-
----
-
-## 0. What pass-3 inherits
-
-CRIT2 re-scored pass-1 from 50% → 45%. Its verdict on the two central tests holds and I do not
-re-litigate it: **(a) the archaeology is real, precise, byte-exact** (the `06929a4b` FSM values, the
-old shader primitives, every genesis/design-vision citation resolve on disk — CRIT2 §0/§1, independently
-re-confirmed here); **(b) the contract is mechanics not adjectives, with one load-bearing exception** —
-the "restore the bold envelope" mood claim, which is largely a NON-deficit (F1). The −5 is F1 (−3),
-F2 (−1.5), F3 (−1), with the zero-paint cap dominating throughout. Pass-3 resolves F1–F7 on disk and
-decides the four designs pass-1 deferred; it adds NO paint, so the cap persists.
+- verified-model: claude-fable-5—read verbatim from this seat's system context ("The exact model
+  ID is claude-fable-5").
+- union provenance: REFABLE RU-08, 2026-07-18. The prior trio (PASS1/CRIT2/PASS3 + the
+  round-3-harden and round-4-crit2 counterparts) was opus-begat (claude-opus-4-8 via the
+  settings-level subagent override) under Fable declarations; this seat re-derived the design anew
+  from the corrected canon with no GF doc open (boundary artifact:
+  `scratchpad/ru08-anew-blob.md`), then adjudicated every opus decision assume-wrong and unioned.
+  Verdict ledger: `../refable/REFABLE-RU-08.md` (D1-D16). This seat's design is authoritative on
+  every conflict; opus decisions survive only where RATIFIED and are stamped so inline.
+- canon basis: the 18-law IOS27-CODEX (law 13 REPLACED—`ios27/IOS27-CODEX.md:29`; laws 14/15
+  NEW—`:33-34`; the law-6 fence—`:19`), MARKS-A/B + the measured timelines
+  (`ios27/refable-timelines/sr-0624-2144.md` is the blob's primary record), REFABLE-RU-16 R8 (the
+  W-CHROME warrant inversion), the redone SUPERFLUITY (ONE-metaball doctrine, F33),
+  SUFFUSION-MATRIX row K, FEEDBACK-LEDGER A12/A11/A14, the HEAD sources under
+  `src/components/blob/`, and the value.js era-1 archaeology at `88f8f09^`=`06929a4b` (READ-ONLY).
+- LIVE-DEFER: no browser this seat; every π obligation stays OWED against un-captured RED
+  baselines. The round-3 traces (`round-3-live/perf-trace-blob-{cold,routetransition}.json`) are
+  undigested captures, not π credit.
 
 ---
 
-## 1. Critique adjudication — every CRIT2 charge, one row, zero silent drops
+## 0. The charter and the corrected canon
 
-CRIT2 carries seven ranked findings (F1–F7) plus a 16-row on-disk verification ledger (§1). The
-ledger rows that move the design are folded into the finding they feed (noted); the rest are
-fact-confirmations of pass-1 that need no design action and are marked CONFIRMED-NO-ACTION at the end.
+The A12 charter (`FEEDBACK-LEDGER.md:79`): look to the OLD value.js implementation—cartoon-like
+shadow, better lighting, more expressive, proper meatballing, better emotional states, high and
+dynamic interactivity. A11 (breath of life) and A14 (procedural codification) ride the same
+umbrella.
 
-| # | CRIT2 charge | verdict | design consequence / evidence |
-|---|--------------|---------|-------------------------------|
-| **F1** | The "restore the `06929a4b` bold envelope (orbit 2.2 / wobble 2.0 / pulse 0.05)" mood claim is largely a NON-deficit; G-MOOD-AMPLITUDE is born-GREEN for orbit/wobble/pulse | **ACCEPTED** | Re-verified: `MOOD_AVA.excited={valence 0.7, arousal 1.0}` (`constants.ts:53`); `paramsFor` (`:66-69`) is `orbitSpeedScale=lerp(0.4,2.2,arousal)`, `wobbleScale=lerp(0.5,2.0,arousal)`, `pulseAmp=lerp(0.008,0.05,arousal)` → excited ALREADY paints 2.2/2.0/0.05. The clause cannot fail at HEAD. Also confirmed: the OLD `06929a4b` shader is flat HSV goo with NO lit surface, so `iridScale`/spec/SSS have NO value.js referent to "restore" — they are law-13-forward AUTHOR-NEW. **Consequence:** W-MOOD re-costed (§2.4) to its real residual — the mood-owned pointer SIGN (sleepy repel) + an author-new taste call on the excited `iridScale` ceiling + the β topology target. G-MOOD-AMPLITUDE's orbit/wobble/pulse clause is DELETED; the gate is split into G-POINTER-SIGN (RED) and dropped for the amplitude (§4). |
-| **F2** | Law 13 and the raw MARKS-B observation DIVERGE on topology; β builds its emotion→topology map on the codex over-reading without reconciling them | **ACCEPTED** | Re-verified: law 13 (`IOS27-CODEX.md:58`) = "pill↔orb↔dot-ring", three peers; MARKS-B (`:101-102` f-0019, `:273`) = "pill → orb → pill morph" with "the Siri listening dot-ring (ring of white dots) INSIDE the pill". The dot-ring is a WITHIN-PILL decoration, not a third macro-topology. **Consequence:** the topology grammar is re-decided (§2.5) as a two-pole `orb↔pill` deflate on ONE spring scalar, with `dot-ring` demoted to a within-pill satellite-arrangement sub-mode — reconciling both authorities and collapsing pass-1's split of curious/sleepy into the SAME deflated macro (differentiated by the listening sub-mode + material), exactly the split CRIT2 flags. Warrant stated in §2.5. |
-| **F3** | W-ALIVE's "never-park while `satelliteCount>0`" collides with the `settled` public seam + the U3 single-signal discipline it is built on | **ACCEPTED** | Re-verified: `settled` (`useMetaballRenderer.ts:74-86`) is "Derived from the SAME predicate the demand gate (`shouldContinue`) reads to decide whether to park — NO parallel busy-flag (U3)"; `isSettled` (`useBlobMood.ts:171-179`) is the physics-quiescence predicate. **Consequence:** the reconciliation is DECIDED in §2.6 (decouple "physics-quiescent" from "may-park": `settled` keeps its meaning; the demand gate stops using it as a park trigger and parks on VISIBILITY only). Moved to W0 contract-lock; a new joint gate G-BREATHE-WHILE-SETTLED proves the breath continues while `settled===true` AND an armed consumer still parks its idle logic. |
-| **F4** | The cartoon-shadow mechanism contradicts the design-vision it cites, and leaves the in-shader `uShadow` unaddressed (two shadow systems) | **ACCEPTED (with a correction to CRIT2's own framing)** | Re-verified: design-vision (`design-blob-atmosphere-vision.md:157-159`) says "tune the `uShadow` procedural shadow to the cartoon-offset geometry: ~4px SE, near-black ink." BUT at HEAD `uShadow` (`metaball.frag.ts:424-435`) darkens the body's OWN `oklch.x` at merge necks — a rim-weighted interior self-AO gated `morphT>0`; it CANNOT paint an offset stamp OUTSIDE the silhouette onto the plate. The *cast* offset stamp is the CSS `drop-shadow` (`Blob.vue:354`). So design-vision's citation is itself imprecise about what `uShadow` does. **Consequence:** the mechanism is PINNED in §2.3 — the cartoon offset ink-stamp is a CAST shadow, owned by the CSS `--blob-shadow-*` layer (single hard SE offset, gel-dome pair deleted); `uShadow` KEEPS its distinct job (interior merge-neck AO) and is NOT the stamp. One cast shadow + one interior AO — stated, not a silent pair. |
-| **F5** | B-INTERACT's "single lean channel / no avoidance" understates the existing signed mechanism; the genuine hit-test deficit is precision, not corner fall-through | **ACCEPTED** | Re-verified: `interaction` carries `pointerAttraction 0.35` AND `pointerStrength 0.1` (`types.ts:423-424`) with the comment "the negative half genuinely shies away (the body shifts away AND the pseudopod retracts, reachFactor 0)" (`:421-422`) — the signed channel EXISTS. Sleepy's arithmetic (`valence -0.1`) → `paramsFor` → `+0.114` (a weak lean-IN), so G-CURSOR-AVOID is legitimately RED but the fix is a VALENCE-MAP / sign re-tune, not a one-channel→two-channel rebuild. And corner fall-through already works (`Blob.vue:379-381`, "a click on the corners / empty margin falls THROUGH"). **Consequence:** B-INTERACT re-scoped (§2.4/§2.7); G-SDF-HITTEST re-worded to the precision win. |
-| **F6** | The SDF hit-test becomes NECESSARY (not just nicer) once W-SHOW promotes orbit 0.30 > body 0.22 — no single circle can hit-test an orbit>body silhouette | **ACCEPTED** | Confirmed by construction: default `orbitRadius 0.17 < bodyRadius 0.22` (`types.ts:298-300`) absorbs the satellites, but HERO `orbitRadius 0.30 > 0.22` (`presets.ts:57-58`) puts them outboard; a `clip-path:circle(body)` disc (`Blob.vue:393`) cannot cover an outboard satellite, and a disc sized to reach it eats the corners. **Consequence:** W-HITTEST is COUPLED to and ORDERED at/after W-SHOW (§3); its warrant is the precision win, not corner fall-through. |
-| **F7** | The `settled`-consuming ecosystem is the always-alive blast radius; "consumer #1 = demo hero" understates it until F3's seam ruling lands | **ACCEPTED** | Follows F3. **Consequence:** the always-alive consumer is EVERY reader of the quiescence seam; folded into W0 with the F3 ruling (§2.6). The demo hero is consumer #1 of the material/shadow/show primitives, which stands. |
+The REPLACED law 13 (`IOS27-CODEX.md:29`) resets this greenfield's two central decisions IN LAW:
 
-### Ledger rows re-confirmed, no independent design action (already folded above or CONFIRMED for pass-1)
-CONFIRMED-NO-ACTION (these hold pass-1 as written; re-checked on disk): OLD value.js blob exists at
-`06929a4b` with the affective FSM; B-SHADOW gel-dome + `<Card cartoon>`-only rationale (`Blob.vue:344-350`);
-B-LIGHT whisper defaults (`types.ts:398,402,405,407`); B-EXPRESS orbit<body / HERO orbit 0.30
-(`types.ts:298-300`, `presets.ts:57-58`); `morphT` is a flat↔dressed SURFACE axis, not a shape machine
-(`types.ts:270-274`); G-RIM-CAUSTIC iridescence is uniform fres-weighted not lower-rim
-(`metaball.frag.ts:376-396`); G-NO-WGPU WebGPU-first selection (`useMetaballRenderer.ts:92-95`). None
-of these was contested by CRIT2; they remain the spine and are NOT softened (CRIT2 §6 "do not re-verify").
+1. **Material.** iOS's shipped orb is smoky near-black refractive glass with one dominant aurora
+   specular streak (~55% height, warm orange-pink→cyan) and thin white rim highlights
+   (`MARKS-B.md:44-46`; `sr-0624-2144.md` P1/P7). Liquid-metal chrome (the METAL FLOW texture
+   stills, `MARKS-B.md:115`) is glass-ui's DECLARED divergence—a material choice made by us,
+   never a copy claim. The prior PASS3 warranted chrome as "law 13's material half"; that warrant
+   is dead (RU-16 R8's exact inversion).
+2. **Topology.** Two poles—orb ↔ pill. The dot-ring is a within-surface SPARKLE state, not a
+   third macro shape (`sr-0624-2144.md` P8: the thinking sparkle survives hood → morph → pill and
+   peaks when shape motion pauses, b4_10). The prior PASS3 §2.5 reconciliation is now canonical
+   rather than a workaround.
 
-**Net:** zero REFUTED — CRIT2 is correct on all seven findings' facts. Every charge is ACCEPTED and each
-forces a concrete change below. F4 carries a correction to CRIT2's own framing (the in-shader `uShadow`
-cannot BE the cast stamp), which sharpens the ruling rather than reversing it.
+The governing edicts: cartoon-technicolor + breath-of-life own expressiveness; law 6's fence
+(`IOS27-CODEX.md:19`; `sr-0624-2144.md` P9) holds meatballing WITHIN the blob—iOS hard-overlaps
+independent passing bodies, and the blob never meniscus-merges with a passing surface.
 
 ---
 
-## 2. The decided design (revised by the accepted charges)
+## 1. Verdict ledger over the opus trio (assume-wrong scrutiny, unioned)
 
-The §4.1 load-bearing decomposition SURVIVES intact and disk-verified (CRIT2 §6): **material register ⊥
-shadow register ⊥ show-visible default ⊥ mood amplitude ⊥ always-alive rest ⊥ topology.** Pass-3 does not
-touch it; it decides the five designs pass-1 deferred and re-costs the one mis-scoped wave.
+Full table in `../refable/REFABLE-RU-08.md`. The classes, compressed:
 
-### 2.1 Material identity — DECIDED single identity (not a material-mode toggle)
+- **OPUS-WRONG, corrected (3):** D1 material identity (chrome-as-law was never iOS—§2.1); D2
+  deflate physics ("volume-preserving squash overshoot" contradicts the measured critically-damped
+  staged-axis morph—§2.5); D3 W-DELETE-TWIN/G-NO-WGPU (the imported value.js WebGL2-only order is
+  superseded by the producer's WebGPU-first doctrine at HEAD—§2.9).
+- **RATIFIED (7):** D4 two-pole topology (now IN LAW); D5 engine boundary (shared spring, separate
+  field); D6 shadow mechanism pin (widened); D7 mood re-cost (widened); D8 settled/park decouple
+  (amended); D9 hit-test precision + W-SHOW coupling; D10 route dispositions (γ re-worded).
+- **FABLE-NEW (6):** D11 satellite cursor repulsion; D12 grab-and-fling; D13 the sparkle nucleus +
+  `thinking`; D14 technicolor identity + per-satellite ink; D15 meniscus-waist + pinch-off; D16
+  formation choreography.
 
-The task: reconcile law 13's liquid-metal/pearlescent register with the A12 cartoon-shadow register
-(`FEEDBACK-LEDGER.md:79` — "cartoon-like shadow, better lighting, more expressive, proper metaballing,
-better emotional states"). **Decision: ONE blob, one identity — a liquid-metal chrome creature that
-casts a cartoon offset ink-stamp shadow.** No material modes.
-
-The reconciliation is that "cartoon" and "liquid-metal" name TWO DIFFERENT LAYERS, not two competing
-surface fills:
-- The **surface** is liquid-metal chrome — warm/neutral chrome with a MOBILE pearlescent specular
-  sweep + a lower-rim iridescent caustic (law 13; `MARKS-B.md:215-218` METAL FLOW "warm/neutral chrome
-  with a mobile specular highlight"; `:262-269` the caustic concentrates lower-rim + cycles hue). This
-  is the "better lighting / more expressive" half of A12.
-- The **cast shadow** is the cartoon offset ink-stamp — a hard SE near-black graphic stamp on the plate
-  (design-vision `:157-159`). This is the "cartoon-like shadow" half of A12.
-
-A glossy chrome bead grounded by a graphic offset stamp is a single coherent register (a cel-shaded 3D
-object), not a contradiction — the same way iOS-27 glass carries both a dimensional specular caustic AND
-a flat cast shadow. There is NO `register="cartoon"` vs `register="chrome"` split; the cartoon quality
-lives ENTIRELY in the shadow layer, the dimensional quality entirely in the surface layer, and they
-compose. This kills pass-1 open-gap-1's implicit "material modes" ambiguity: there are none.
-
-The one taste call this does NOT decide unilaterally is the **default-register break** — whether the
-DEFAULT `<Blob>` ships as the loud liquid-metal creature or stays the calm warm-cream whisper with
-liquid-metal opt-in. That is a library-identity call bearing on the presets-in-consumers fence → routed
-to the ASK with a recommendation (§7, Q-BLOB-DEFAULT).
-
-### 2.2 The goo/metaball engine and its relationship to the dock's goo-morph engine — DECIDED: shared SPRING, separate FIELD
-
-The task: decide, with evidence, whether the blob's metaball engine and the dock greenfield's goo-morph
-engine are one shared engine or two. **Decision: they are TWO renderers that SHARE ONE spring-scalar
-primitive and NOTHING else.** Evidence:
-
-1. **Different substrates, non-fungible.** The blob is a WebGL2 per-pixel analytic-SDF field — a fragment
-   shader evaluating an IQ-normalized smin over a canvas quad (`shaders/sdf-body.glsl.ts`,
-   `metaball.frag.ts`). The dock goo-morph is DOM elements moved by a JS spring — `useDockSpring` +
-   `DockCrossfade` + `useSelectionIndicator` with a `--stretch` neck (`GF-DOCK-PASS3.md:69,254-256`). A
-   dock holds real interactive `RouterLink`s, focus, and `aria-current`; it cannot become a WebGL canvas.
-   A blob is a single continuous field; it has no discrete cells to neck between. Neither substrate can
-   host the other.
-2. **The dock explicitly REJECTS the shader/filter goo the blob IS.** `GF-DOCK-PASS3.md:184`: the dock
-   pill is "explicitly NOT the Q051 fission goo (no `filter:url()`, no metaball neck) — it is a plain
-   detent"; `:254-256`: "the `--stretch` squish IS a lightweight neck… without any `filter:url()`." The
-   true metaball-neck pill is a flagged ASK enhancement there, Safari-risk-gated. So the two "goo"s are
-   different mechanisms by the dock's own ruling — sharing the renderer would drag the dock into the
-   `filter:url()` Safari class it was designed to avoid.
-3. **What they DO share is the spring.** Codex "To BEST iOS 27" names "the single-scalar spring engine we
-   already ship" (`IOS27-CODEX.md:69`), and law 9 (`:44`) orders "extend useLiquidMorph to named x/y/z
-   scalars." The blob's β topology morph (§2.5) rides the SAME `springPreset`/`SpringProgress` engine the
-   dock uses (memory: `DOCK_SPRING={0.68,0.64}` via `springPreset("dock")`), giving cross-component
-   liquid-weight consistency (the liquid-weight-universal edict) without merging renderers.
-
-So: the blob's smin FIELD stays the blob's; the topology squash SCALAR is the shared spring. The blob's
-own click-impulse pulse-spring (`PULSE_OMEGA/ZETA`, `constants.ts:132-135`) stays a bespoke one-shot
-oscillator for the click bounce (a different job) — it is NOT replaced. This is the elegant-reduction-safe
-answer: no new engine, one shared primitive, evidence for the boundary.
-
-### 2.3 The shadow mechanism — PINNED (closes F4)
-
-- **The cartoon offset ink-stamp is a CAST shadow → owned by the CSS layer.** Replace the gel-dome pair
-  `filter: drop-shadow(--blob-shadow-ambient) drop-shadow(--blob-shadow-contact)` (`Blob.vue:354`, plus
-  the `:hover` pair `:358-359`) with ONE hard SE-offset near-black `drop-shadow` on the canvas alpha
-  (silhouette-following, ~4px SE, near-black ink per design-vision `:157-159`). Clean break, no alias.
-- **The in-shader `uShadow` KEEPS its distinct job.** `uShadow` (`metaball.frag.ts:424-435`) darkens the
-  body's own `oklch.x` at merge necks (a rim-weighted interior self-AO) — it is NOT and CANNOT be the
-  cast stamp (it never writes fragments outside the silhouette). It reads the necking satellites in 3D,
-  which the liquid-metal register (§2.1) WANTS. It stays ON at the default (`morphT` default `1`,
-  `types.ts:430`, so the `morphT>0` gate passes). Its fate is stated, not silent: KEEP as interior AO.
-- **Result: one cast shadow (CSS stamp) + one interior AO (`uShadow`), orthogonal.** This is not the
-  "silent pair" no-backwards-compat forbids — the pair being deleted are two CAST shadows (ambient +
-  contact); the survivor is one cast + one interior, doing different things.
-- **Context-awareness (pass-1 open-gap-7) carried as a design note, not an ASK:** on a bare/dark
-  background a hard SE near-black stamp risks reading as a detached Memphis sticker. The stamp attenuates
-  (softens + shortens the offset) when the blob is NOT over a card plate — driven off the same token base
-  (`--shadow-color`/`--foreground`, `Blob.vue:351-352`) the gel-dome already re-resolves under `.dark`.
-  This is a tuning within W-SHADOW, not a new primitive.
-
-### 2.4 Emotional-states model — RE-COST (closes F1, F5)
-
-The `{valence, arousal}` circumplex (`constants.ts:40-104`) SURVIVES as the interpolation surface — it
-is principled, one-surface, and disk-sound (design-vision "Mood FSM — VERDICT: KEEP"). The re-cost strips
-the born-GREEN "amplitude restoration" and states the REAL residual per mood.
-
-| mood | valence / arousal (`MOOD_AVA`) | topology (§2.5) | amplitude at HEAD | residual work (what is actually RED / author-new) | pointer sign |
-|------|-------------------------------|-----------------|-------------------|---------------------------------------------------|--------------|
-| **idle** | 0.0 / 0.35 | orb, calm breath | fine | never-freeze rest pose (§2.6) | neutral |
-| **curious** | 0.3 / 0.5 | orb; → within-pill dot-ring ONLY on sustained listening | orbit/wobble already scale with arousal | topology target + (taste) attract magnitude — the flatten (`constants.ts:84-92`) is DELIBERATE, do NOT blindly restore 0.6 | attract (already `+0.248`) |
-| **happy** | 0.8 / 0.6 | orb, brighter sweep | fine | brighter chrome sweep (author-new, §2.1) | mild lean-in |
-| **excited** | 0.7 / 1.0 | orb, satellites fling wide + fission | orbit **2.2** / wobble **2.0** / pulse **0.05** ALREADY (F1) | pearlescent sweep peak (author-new); `iridScale` ceiling `1.35` is a taste call with NO `06929a4b` referent (F1) — keep or raise, NOT "restore" | one-shot click bounce |
-| **sleepy** | -0.1 / 0.1 | → pill (deflate), satellites gather in, matte | leans IN at `+0.114` — WRONG | **RED — the genuine mood deficit:** sleepy must shy AWAY (negative lean) | **repel** (fix, §below) |
-
-The ONE genuinely RED motion deficit is the **sleepy pointer SIGN**: at HEAD sleepy computes
-`pointerAttraction = lerp(-0.2, 0.6, valence·0.5+0.5) · (0.7+0.15·arousal)` = `+0.114` (`constants.ts:93`),
-a weak lean-IN, when the creature should shy away. Fix = a valence-map re-tune (push sleepy's effective
-valence below the map's zero-crossing, or restore a mood-owned sign that survives the arousal multiplier).
-**W0 must first confirm which pointerAttraction the shader lean actually reads** — the mood-derived one
-(`paramsFor`) or the config constant `interaction.pointerAttraction 0.35` (`types.ts:423`) — because that
-determines the fix locus (the signed shy-away CHANNEL already exists, `types.ts:421-422`; only the SIGN
-that reaches it is wrong). Triggers (`useBlobMood.update`, `:130-153`) and the manual/auto latch
-(`:102-114,171-179`) are RETAINED verbatim — they are correct primitives.
-
-### 2.5 The morph grammar — RECONCILED (closes F2)
-
-**Warrant for choosing the frame reading over the codex letter:** the prompt names BOTH authorities;
-where they diverge, the raw frame observation (`MARKS-B.md:101-102,273`, "pill → orb → pill", dot-ring
-"INSIDE the pill") is the PRIMARY record of the actual Siri behavior, and law 13's "pill↔orb↔dot-ring"
-(`IOS27-CODEX.md:58`) is the codifier's compression of it. I follow the frame geometry and honor the
-law's INTENT (all three visual registers exist), rather than treating dot-ring as a third macro-topology
-the law's phrasing implies. Stated openly (F2's requirement: name the divergence as the thing resolved).
-
-The topology machine, decided:
-- **ONE macro scalar `deflate ∈ [0,1]` on the shared spring (§2.2).** `0` = **orb** (expanded, satellites
-  orbiting outside the body at the show geometry); `1` = **pill** (body squashed toward the Dynamic-Island
-  axis, satellites gathered in). This is the observed `orb↔pill`. Law 5 (origin-anchored) → the pill
-  deflates TOWARD its anchor on one spring; law 9 (axis-parametrized) → the squash is an axis morph (body
-  stretches along the island axis); the satellites gather via the shader smin necks (law 6 — the field
-  already does this).
-- **ONE within-pill sub-mode `listening: bool`.** `dot-ring` is NOT a peer shape — it is the satellite
-  ARRANGEMENT rendered inside the deflated pill during listening: the satellites snap onto an interior
-  ring at low `smoothK` so they read as DISTINCT dots (the Siri listening ring), with the body dimmed.
-  This is exactly "the dot-ring lives inside the deflating pill" (MARKS-B `:101-102`).
-
-This collapses pass-1's error (CRIT2 F2): **curious-listening and sleepy now share the SAME deflated-pill
-macro-state**, differentiated only by the sub-mode + material — curious = deflated pill + `listening`
-dot-ring + bright chrome; sleepy = deflated pill + gathered (no dot-ring) + matte. They are no longer two
-different macro-topologies for one source register.
-
-**The morph is RARE and meaningful (pass-1 gap-3):** the `orb→pill` deflate fires ONLY on a sustained
-signal — sustained sleepy (`idleMs > IDLE_SLEEP_MS`, the existing arc `useBlobMood.ts:148`) OR an explicit
-sustained-attention / "listening" activation — NEVER a transient hover. A transient hover stays `orb` +
-`curious` (wobble + attract only, no shape change). A mascot that reshapes every hover is the gimmick
-CRIT2 and pass-1 both name; gating deflate behind a sustained signal is the cure.
-
-### 2.6 Always-alive vs the `settled` seam — DECIDED (closes F3, F7)
-
-The clean reconciliation is NOT "park invisible, breathe visible" (pass-1's under-specified assertion) but
-**decouple two questions that HEAD conflates**: *is the physics quiescent?* (a physics predicate) vs *may
-the rAF park?* (a lifecycle predicate). Pre-breath-of-life, quiescent physics was a SUFFICIENT reason to
-park, so `settled` and `shouldContinue` shared one predicate (the U3 discipline, `useMetaballRenderer.ts:78-80`).
-Post-breath-of-life it is no longer sufficient. The decision:
-
-- **`settled` (the public seam) KEEPS its exact current meaning** — physics-quiescent: no mood transition,
-  no satellite mid-transition, pointer at rest (`isSettled`, `useBlobMood.ts:171-179`). Consumers' arming
-  logic ("park my idle logic only while `settled`", `useMetaballRenderer.ts:81-83`) is UNCHANGED — an
-  armed-but-idle hero still parks correctly. The low-energy breathing rest pose is STILL `settled` (it is
-  an idle animation, not an in-flight transition) — so `settled` stays TRUE during the breath.
-- **The demand gate `shouldContinue` STOPS using `settled` as a park trigger.** It parks ONLY on the
-  lifecycle predicates that already exist in the substrate — offscreen (`composeIntersectionPark`,
-  `useMetaballRenderer.ts:162`), `document.hidden`, PRM. While the blob is visible and `satelliteCount>0`,
-  the loop keeps running and renders the breath, even while `settled===true`.
-- **This preserves U3.** U3 forbids a parallel BUSY-FLAG that drifts from the physics. Splitting a
-  physics-quiescence predicate (`settled`, unchanged) from a visibility/lifecycle predicate (already
-  distinct in the substrate) is NOT a busy-flag — they answer genuinely different questions. There is one
-  physics predicate and one lifecycle predicate, no second physics.
-
-This is a W0 contract-lock ruling (not a W-ALIVE implementation detail), and its blast radius is EVERY
-reader of the quiescence seam (F7), not just the demo hero. The joint gate G-BREATHE-WHILE-SETTLED (§4)
-proves both halves at once: with the blob on-screen the breath continues while `settled===true`, AND an
-armed consumer reading `settled` still parks its idle logic. The offscreen/hidden/PRM park stays GREEN
-(G-PARK-OFFSCREEN, non-regression). The `<7%`-of-page GPU budget (`blob-genesis.md:330`) is π-PERF's owed
-obligation, unchanged.
-
-### 2.7 Interactivity + hit-test — RE-WORDED (closes F5, F6)
-
-- **Pointer lean/avoid** — the signed channel EXISTS (`types.ts:421-422`); the only fix is the sleepy SIGN
-  (§2.4). Not a rebuild.
-- **Exact-silhouette hit-test** — the deficit is PRECISION, not corner fall-through (already green,
-  `Blob.vue:379-381`). Once W-SHOW promotes `orbit 0.30 > body 0.22`, no single `clip-path:circle()` can
-  cover an outboard satellite while sparing the corners (F6). The CPU SDF field-mirror `hitTest(x,y)`
-  (evaluate the same smin at the pointer coord — the sources upload every frame anyway) becomes the ONLY
-  correct hit surface for the promoted geometry, not a nicety. W-HITTEST is ordered at/after W-SHOW.
-- **Click bounce / always-alive / topology squash / `v-model:paused`** — as pass-1 §4.4, with the topology
-  squash riding the shared spring (§2.2) and always-alive resolved per §2.6.
+The opus CRIT2's seven findings (F1-F7) were re-verified on disk by this seat and all hold as
+FACTS; their design consequences are re-derived below on the corrected canon. Key HEAD facts
+re-confirmed: gel-dome pair `Blob.vue:354`; signed shy-away channel `types.ts:421-424`;
+settled/U3 seam `useMetaballRenderer.ts:74-88`; `uShadow` interior AO `metaball.frag.ts:423-427`;
+corner fall-through `Blob.vue:376-395`; circumplex + flatten `constants.ts:48-70,93`; sleepy
+`+0.114`; `BLOB_HERO` orbit 0.30 `presets.ts:53-58`; WebGPU-first `useMetaballRenderer.ts:93-95` +
+`blob/README.md:3`.
 
 ---
 
-## 3. Revised wave shape (bbnf-lang tranche format; hard gates; FINAL.md)
+## 2. The decided design
 
-Changes from pass-1 §4.5 in **bold**.
+The load-bearing decomposition survives: material ⊥ shadow ⊥ show-visible ⊥ mood ⊥ always-alive ⊥
+topology—each independently provable. What changes is the identity at the top and the canon
+underneath.
 
-| wave | title | scope | hard gate(s) | π obligation |
-|------|-------|-------|--------------|--------------|
-| **W0** | CENSUS + CONTRACT-LOCK | freeze §2 survives/replaces; author born-RED gate scaffolds; **rule the `settled` seam (§2.6); confirm which pointerAttraction the shader lean reads (§2.4); pin the shadow mechanism (§2.3)**; decide the WGPU-twin delete coordination | gate suite compiles + all RED | — |
-| **W-DELETE-TWIN** | WEBGL2-ONLY | delete `metaball.wgsl.ts` + `wgpuSetup.ts` + `uniformBridgeWGPU.ts`; WebGL2-only (genesis §3.1) | G-NO-WGPU | π-SAFARI-SINGLE |
-| **W-SHADOW** | CARTOON INK-STAMP | **replace the gel-dome CSS pair (`Blob.vue:354,358-359`) with ONE hard SE offset near-black stamp; `uShadow` STAYS as interior AO (§2.3); context-attenuate off-plate** | **G-CARTOON-STAMP, G-USHADOW-INTERIOR** | π-SHADOW |
-| **W-CHROME** | LIQUID-METAL MATERIAL | the `uSpecSweep` traveling-sweep term + re-anchored chrome defaults + the iridescent lower-rim caustic (law 13, `MARKS-B.md:262-269`); whisper stays as the calm register | G-CHROME, G-RIM-CAUSTIC | π-CHROME-SWEEP |
-| **W-SHOW** | SHOW-VISIBLE DEFAULT | promote the `BLOB_HERO` orbit>body posture (`presets.ts:57-58`) toward the default; merge/absorb/emerge READS | G-SHOW-VISIBLE | π-SHOW |
-| **W-ALIVE** | ALWAYS-ALIVE REST | **implement the W0 seam ruling (§2.6): demand gate parks on VISIBILITY only; breath continues while `settled`** | **G-BREATHE-WHILE-SETTLED, G-PARK-OFFSCREEN** | π-ALIVE, π-PERF |
-| **W-MOOD** | POINTER-SIGN + IRID CEILING | **re-cost (F1): fix the sleepy pointer SIGN (RED); (taste) the excited `iridScale` ceiling — author-new, NO `06929a4b` referent; the β topology target per mood; keep the latch. NO orbit/wobble/pulse "restoration" (born-GREEN)** | **G-POINTER-SIGN** | π-MOOD |
-| **W-HITTEST** | EXACT SILHOUETTE HIT | **CPU SDF `hitTest(x,y)`; the PRECISION win (disc-gap + outboard-satellite), NOT corner fall-through; ORDERED at/after W-SHOW (F6)** | **G-SDF-HITTEST-PRECISION** | π-HITTEST |
-| **W-TOPOLOGY** | ORB↔PILL + WITHIN-PILL DOT-RING (β) | **`useBlobTopology` two-pole `deflate` scalar on the shared spring (§2.2) + within-pill `listening` dot-ring sub-mode (§2.5); the emotion→topology map; deflate gated behind a SUSTAINED signal (rare, not per-hover)** | **G-DEFLATE-MORPH, G-DOTRING-WITHIN-PILL** | π-TOPOLOGY |
-| **W-FINAL** | CONSUMER + AUDIT | demo hero adopts the liquid-metal default; overfitting audit (≥2 sites / exported / private helper); FINAL.md | G-CONSUMER, overfit-audit | π-HERO |
+### 2.1 Identity—the technicolor creature wearing the iOS light grammar [OPUS-WRONG→REPLACED]
+
+The blob is glass-ui's LIVING MARK: a seeded, warm, cartoon-technicolor watercolor creature—the
+era-1 soul—wearing the iOS-27 LIGHT GRAMMAR over its own body. Not a Siri clone, not a chrome
+bead.
+
+- **The default surface** is opaque-translucent technicolor watercolor (the cartoon-technicolor
+  edict), lit by the law-13 grammar: one dominant horizontal aurora specular streak at ~55% body
+  height (warm orange-pink shading to cyan), thin rim highlights with IMG_1881-class anisotropy
+  (bright top/bottom arcs, quiet sides), and a velocity-keyed rim caustic (law 3,
+  `IOS27-CODEX.md:13`)—the rim brightens under deformation and decays at rest, the CC-toggle
+  grammar. Light leads shape ~80ms on every formation (D16; `sr-0624-2144.md` P1).
+- **Two exported surface presets carry the other registers—no new config axis:**
+  - `BLOB_GLASS`—the iOS-faithful register: ~70% black smoky fill, low backdrop ghosting against
+    a PROVIDED texture (never DOM sampling), strong rim refraction, the same streak
+    (`MARKS-B.md:44-46`).
+  - `BLOB_CHROME`—the DECLARED divergence: flow-aligned anisotropic specular ridges, luminance
+    not hue, micro-sparkle over one broad gradient (`MARKS-B.md:115`). Keeps the opus trio's
+    `uSpecSweep` traveling-sweep mechanism—the mechanism was sound; only its warrant inverts.
+- **Warm-cream** is demoted to a named calm preset. Chrome is no longer a candidate for the
+  default identity (Q-BLOB-DEFAULT re-framed, §7).
+
+"Cartoon" and "dimensional" still name two composable layers (the one opus reconciliation kept):
+the cartoon quality lives in the shadow + posture channels, the dimensional quality in the lit
+surface; they compose on the watercolor body exactly as they did on the chrome one.
+
+### 2.2 Engine boundary—shared spring, separate field [RATIFIED]
+
+Two renderers, ONE spring-scalar primitive shared, nothing else. The blob is a per-pixel
+analytic-SDF field (IQ-normalized smin, `shaders/sdf-body.glsl.ts` + the WGSL primary); the dock
+is DOM glass bodies on springs whose lens/collapse work is layered overlap, NOT `filter:url()`
+necking (`GF-DOCK-PASS3.md:280`). Neither substrate can host the other; the repo's ONE-metaball
+doctrine (SUPERFLUITY F33) forbids a second goo engine anywhere. The topology `deflate` scalar
+(§2.5) rides the same `springPreset`/`SpringProgress` engine the dock uses; law 9's morph engine
+ships named x/y/z scalars (`IOS27-CODEX.md:22`—the old "extend useLiquidMorph" name-order is
+retired per RU-16 R12). The click-impulse pulse-spring (`PULSE_OMEGA/ZETA`,
+`constants.ts:132-135`) stays a bespoke one-shot oscillator. The BEST-iOS goo bullet
+(`IOS27-CODEX.md:44`) names the dock's nav surface, not the blob—no scope creep across the fence.
+
+### 2.3 The shadow—one cast stamp, LIVE [RATIFIED mechanism + FABLE-NEW widening]
+
+The mechanism pin holds: the cartoon offset ink-stamp is a CAST shadow owned by the CSS layer
+(replace the gel-dome pair at `Blob.vue:354` with ONE hard SE-offset stamp on the canvas alpha);
+`uShadow` (`metaball.frag.ts:423-427`) keeps its distinct interior merge-neck AO job—it darkens
+the body's own `oklch.x` and cannot paint outside the silhouette. One cast + one interior AO,
+stated, orthogonal.
+
+The union widens the stamp from a static tuning into a LIVE EXPRESSIVE CHANNEL—the era-1 soul
+(`88f8f09^:demo/@/components/custom/color-picker/visual/HeroBlob.vue:70,77`—rest
+`drop-shadow(5px 5px 2.5px color-mix(in srgb, var(--blob-color) 20%, var(--foreground)))`, hover
+`7px 7px 3px` at 25%):
+
+- the offset is a SPRUNG VECTOR, not a constant: mood-scaled (excited casts long, sleepy hugs
+  close), hover-grow (the 5→7px reference), and LAGGING the body under motion on a slower
+  spring—cartoon follow-through, the shadow as weight witness;
+- click fires a shadow-detach hop (the cartoon jump beat);
+- the ink is tinted blob-color→foreground per era-1, re-resolving under `.dark` off the same
+  token base the gel-dome already uses;
+- off-plate attenuation kept (softens/shortens when not over a card plate)—a tuning, not a
+  primitive.
+
+### 2.4 Emotional states that READ [RATIFIED re-cost + AMENDED output vocabulary]
+
+The `{valence, arousal}` circumplex + `paramsFor` derivation surface survives
+(`constants.ts:48-70`)—principled, one surface, five named moods as samples. The opus re-cost
+holds: excited already paints orbit 2.2 / wobble 2.0 / pulse 0.05 (born-GREEN—no "restoration"
+clause anywhere); the ONE genuinely RED motion deficit is the sleepy pointer SIGN
+(`constants.ts:93` yields `+0.114`, a weak lean-IN, where sleepy must shy away—the signed channel
+already exists at `types.ts:421-424`, only the sign reaching it is wrong). W0 confirms which
+pointerAttraction the shader lean reads before fixing the locus.
+
+The union widens the OUTPUT vocabulary—mood must be VISIBLE, not a scalar multiplier bank. One
+derivation surface drives:
+
+| channel | sleepy | curious | excited |
+|---|---|---|---|
+| posture | settles, flattened base, droop | LEANS with pseudopod reach | taut, bouncy |
+| cast shadow (§2.3) | hugs close, soft | mid | long offset, hard ink |
+| streak + caustic (§2.1) | dim, slow hue-cycle | bright, tracking | peak energy, fast cycle |
+| satellites | dock in + breathe | one scout satellite | racing orbits, fission burst |
+| nucleus (§2.5) | off | listening ring on sustained signal | blooms on impulse |
+| pointer | REPEL (the fix) | attract (`+0.248`, kept) | click bounce |
+
+`thinking` is PROPOSED as a sixth named mood—the natural home of the demoted dot-ring sparkle
+state (Q-BLOB-THINKING, §7). The assistant arc idle → listening → thinking → responding becomes
+expressible as named points on the shipped surface. Triggers + the manual/auto latch are retained
+verbatim.
+
+### 2.5 Topology—two poles, staged axes, the sparkle nucleus [RATIFIED—now IN LAW; deflate physics OPUS-WRONG→corrected]
+
+The two-pole machine is now law, not a frame-reading workaround (law 13 REPLACED,
+`IOS27-CODEX.md:29`): ONE macro scalar `deflate ∈ [0,1]` on the shared spring—`0`=orb,
+`1`=pill—and ONE within-surface sub-state, the SPARKLE NUCLEUS. The opus divergence-warrant
+paragraph is retired. Any three-peer topology FSM is non-conformant.
+
+**The deflate physics are corrected against the measured record** (`sr-0624-2144.md` P5;
+`MARKS-B.md:60-61`). The opus gate demanded "volume-preserving squash overshoot"; the measurement
+says otherwise:
+
+- STAGED AXES, ordered tracks of one morph (law 9, `IOS27-CODEX.md:22`): the vertical squash
+  completes early (~150ms before width), THEN the widen, then content opacity → content
+  sharpness → aurora rim (~500ms shape + ~200ms content);
+- NO width overshoot—critically damped; the bounce energy is expressed by the sparkle nucleus
+  blooming mid-morph (b4_10: the widening pauses while the sparkle peaks);
+- light leads shape ~80ms on pole morphs and formation (D16).
+
+**The sparkle nucleus generalizes the demoted dot-ring (D13):** one mechanism—an interior
+dot-ring/nucleus that persists through every surface transition and peaks when shape motion
+pauses (`sr-0624-2144.md` P8)—serves three jobs: the listening ring inside the deflated pill
+(satellites snap to an interior ring at low `smoothK`, body dimmed), the proposed `thinking`
+mood's engine, and the morph-energy channel above. Not three features; one.
+
+**Rarity gating kept (RATIFIED):** deflate fires only on a SUSTAINED signal (sustained sleepy via
+the existing `idleMs` arc, or an explicit listening activation)—never a transient hover. The pill
+pole hosts slot content (an answer/message register), per the two-pole law.
+
+### 2.6 Always-alive vs the `settled` seam [RATIFIED + AMENDED]
+
+The opus decouple is kept verbatim: `settled` keeps its exact physics-quiescence meaning
+(`useMetaballRenderer.ts:74-88`, the U3 single-signal discipline—the breath is an idle animation,
+so `settled` stays TRUE during it); the demand gate parks on LIFECYCLE predicates only
+(offscreen, `document.hidden`, PRM); an armed-but-idle consumer still parks its own logic. W0
+contract-lock, blast radius = every `settled` reader.
+
+The union adds the idle ECONOMICS the breath-of-life edict owes law 11 (`IOS27-CODEX.md:27`—
+slowest visible change wins): an onscreen idle blob drops to a reduced-cadence breath tick
+(wake-scheduled, half-rate class), never a parked corpse and never a full-rate burn. The de-synced
+3-sine breath + visibly detached satellites + slow streak drift ARE the restraint floor. PRM: one
+composed rest pose WITH satellites visible, then park—information kept, physics removed. The
+`<7%`-of-page GPU budget is pinned to π-PERF.
+
+### 2.7 Interactivity—two-layer reactivity, tracked and ballistic [RATIFIED + FABLE-NEW D11/D12]
+
+- **Hit-testing [RATIFIED]:** the CPU SDF field-mirror `hitTest(x,y)` is the only correct hit
+  surface once W-SHOW promotes orbit 0.30 > body 0.22 (no disc can cover an outboard satellite
+  while sparing the corners—corner fall-through is already green, `Blob.vue:376-395`). W-HITTEST
+  stays ordered at/after W-SHOW. `hitTest` is exposed on the public seam (the value.js relay
+  wants it, §2.9).
+- **Satellite cursor repulsion [FABLE-NEW, era-1 revival]:** satellites dodge the cursor while
+  the body leans—two-layer reactivity. Reference constants from
+  `88f8f09^:demo/@/lib/animation/cursor-repulsion.ts:6-8` (`CURSOR_REPEL_RADIUS 1.2`,
+  `CURSOR_REPEL_STRENGTH 0.25`, `CURSOR_SMOOTH 0.08`—~5-frame settle). CPU-side, feeds the
+  existing per-satellite state; no shader change.
+- **Grab-and-fling [FABLE-NEW, opt-in—Q-BLOB-GRAB]:** laws 14/15 applied to the mascot register
+  (`IOS27-CODEX.md:33-34`). While tracked the body is finger-locked 1:1 (never tweened) with
+  velocity-proportional squash-and-stretch (tanh-saturated, kept); release absorbs v0 as an
+  initial condition (duration-stable τ≈130ms class), at most one ~9% overshoot;
+  container-bound overpull is the asymmetric rubber band (compression 4-5x faster than release,
+  never crossing rest). Flicks go ballistic; settles are fire-and-forget.
+- **Click:** the impulse spring (kept) + excited arc + the shadow-detach hop (§2.3).
+
+### 2.8 Proper meatballing—visible, liquid, fenced [FABLE-NEW D15 + RATIFIED W-SHOW]
+
+The default identity SHOWS the metaball: rest pose keeps ≥2 satellites visibly detached (the
+orbit>body promotion, W-SHOW). Merge/emerge read as LIQUID EVENTS, not radius crossfades:
+
+- the meniscus waist at ~45-50% of lobe height is the state signal—content never crosses the
+  waist (`MARKS-A.md:104`, the 15.26.54 canonical goo reference);
+- emerge carries a pinch-off snap with a residue-droplet beat;
+- `uShadow`'s merge-neck AO (§2.3) darkens the waist—the interior AO finally has its star scene.
+
+THE FENCE restated: within-blob only. Independent passing bodies hard-overlap (law 6,
+`IOS27-CODEX.md:19`; `sr-0624-2144.md` P9)—the blob never goos a neighbor.
+
+### 2.9 Substrate doctrine—WebGPU-first stands; the twin-delete order is dead at HEAD [OPUS-WRONG→struck]
+
+The opus W-DELETE-TWIN adopted the value.js genesis's WebGL2-only order (`BG.W-VIZ-SUBSTRATE-
+DELETE2`) as a wave, with G-NO-WGPU born-RED against the WebGPU-first selection. Producer doctrine
+supersedes the imported consumer order: the blob at HEAD is deliberately WebGPU-first
+dual-substrate (`blob/README.md:3`—"the SECOND procedural-suite viz migrated to the WebGPU-first
+dual-substrate (after aurora)"; `useMetaballRenderer.ts:93-95`), on the user-chartered
+WebGPU-first procedural suite, beside GF-AURORA authoring WGSL bodies on the same primary. The
+Safari premise is stale on the Safari-2026 floor. **Wave and gate struck.** π-SAFARI-SINGLE
+becomes π-PARITY (both engines paint-equivalent). The twin-delete question is demoted to a user
+substrate-band ASK note; the value.js relay addendum (consumer-updates ruling) is owed at W-FINAL:
+genesis OQ7 (WebGL2-only?) is answered NO, and the OQ1/OQ2/OQ3/OQ5/OQ8 answers ride the same
+addendum (HERO headroom via the W-SHOW default; satellites-visible rest + visibility-only park;
+`hitTest(x,y)` exposed; the frame-pacing fix; the scale-aware ceiling). The pacing fix (replace
+the 50ms hard dt clamp with accumulator/smoothed pacing) and the scale-aware deformation ceiling
+(amplitudes normalized by rendered footprint) are adopted as W0 contract items.
+
+### 2.10 Registers—substrate vs mascot [FABLE-NEW reconciliation]
+
+SUFFUSION row K (`SUFFUSION-MATRIX.md:79`) rules a substrate must never read as clickable; the A12
+charter demands high and dynamic interactivity. Both hold by register: the SUBSTRATE register
+(ambient background) keeps row K unchanged—no press surface, pointer-velocity field perturbation
+only (Q7); the MASCOT register (the existing pressLabel/interaction opt-in seam) carries the
+hit-tested silhouette, repulsion, grab physics, and click arcs. Consumer-chosen, no new component.
 
 ---
 
-## 4. Born-RED gate sketches (each states its RED-at-HEAD condition; kept small per the gates-abrogation mandate)
+## 3. Wave shape (eleven waves; bbnf-lang format; hard gates; FINAL.md)
 
-- **G-NO-WGPU** — no `metaball.wgsl` / `navigator.gpu` selection path in the blob renderer. *RED:*
-  `useMetaballRenderer.ts:92-95` selects WebGPU-first.
-- **G-CARTOON-STAMP** — the blob casts ONE hard SE-offset near-black ink-stamp following the silhouette;
-  NO soft gel-dome pair. *RED:* `Blob.vue:354` is the two-drop-shadow gel-dome; `:358-359` the hover pair.
-- **G-USHADOW-INTERIOR** — `uShadow` remains the interior merge-neck AO (darkens body `oklch.x`), NOT the
-  cast stamp, and is NOT double-cast with the CSS stamp. *RED-by-construction guard* — must stay coherent
-  across W-SHADOW (proves the two systems do different jobs, closing F4's "silent pair").
-- **G-CHROME** — the default `<Blob>` surface reads as a lit chrome bead with a MOBILE specular sweep (a
-  highlight whose POSITION changes frame-to-frame), not a static whisper glint. *RED:* `specStrength 0.16 /
-  iridescence 0.09` static, no `uSpecSweep` (`types.ts:398,402`).
-- **G-RIM-CAUSTIC** — the lower rim + corners carry a brighter iridescent caustic (law 13). *RED:*
-  iridescence is uniform fres-weighted (`metaball.frag.ts:376-396`), no lower-rim bias.
-- **G-SHOW-VISIBLE** — at the shipped default geometry, ≥2 satellites read as DISTINCT orbiting beads at
-  rest. *RED:* `orbitRadius 0.17 < bodyRadius 0.22` (`types.ts:298-300`) → absorbed bulges.
-- **G-BREATHE-WHILE-SETTLED** *(new, closes F3)* — with the blob on-screen, the rAF renders the breath
-  while `settled===true`, AND an armed consumer reading `settled` still parks its idle logic (both proven
-  jointly). *RED:* the demand gate parks the moment `isSettled` is true — `settled` and `shouldContinue`
-  share one predicate (`useMetaballRenderer.ts:78-80`), so a visible at-rest blob freezes.
-- **G-PARK-OFFSCREEN** — an offscreen / `document.hidden` / PRM blob STILL parks. *RED-by-construction
-  guard* — must stay GREEN across W-ALIVE (GAP-4 non-regression).
-- **G-POINTER-SIGN** *(re-scoped from G-MOOD-AMPLITUDE, closes F1/F5)* — in `sleepy`, the body/pseudopod
-  shy AWAY from a near cursor (negative lean). *RED:* sleepy computes `+0.114` (a weak lean-IN) —
-  `lerp(-0.2,0.6,0.45)·0.715` at `constants.ts:93`. *(The pass-1 orbit/wobble/pulse "amplitude" clause is
-  DELETED — born-GREEN at `constants.ts:53,66-69`.)*
-- **G-SDF-HITTEST-PRECISION** *(re-worded, closes F5/F6)* — a click in the disc-but-not-body gap falls
-  through, AND a click ON an outboard satellite (orbit>body) activates. *RED:* `clip-path:circle()` is a
-  disc (`Blob.vue:393`); it cannot hit an outboard satellite once W-SHOW promotes `orbit 0.30 > body 0.22`.
-  *(Corner fall-through is NOT the gate — already green, `Blob.vue:379-381`.)*
-- **G-DEFLATE-MORPH** *(re-worded, closes F2)* — the blob morphs `orb↔pill` on ONE shared spring scalar
-  with a volume-preserving squash overshoot; deflate fires only on a SUSTAINED signal, never a transient
-  hover. *RED:* no topology FSM; `morphT` is a surface axis (`types.ts:270-274`).
-- **G-DOTRING-WITHIN-PILL** *(new, closes F2)* — the `dot-ring` renders as a distinct-dot satellite ring
-  INSIDE the deflated pill during listening (not a standalone third macro-shape). *RED:* no listening
-  sub-mode; satellites only orbit or absorb.
-- **G-CONSUMER** — every greenfield primitive has ≥2 sites OR is exported OR is a named private demo
-  helper; the liquid-metal default's consumer #1 = the demo hero.
+W-DELETE-TWIN is STRUCK (§2.9). W-CHROME becomes W-STREAK (the light grammar, not the chrome
+identity). W-IDENT and W-REACT are added.
+
+| wave | title | scope | hard gate(s) | π |
+|------|-------|-------|--------------|---|
+| W0 | CENSUS + CONTRACT-LOCK | freeze §2; rule the settled seam (§2.6); confirm the pointerAttraction read-path (§2.4); pin the shadow mechanism (§2.3); adopt the pacing fix + scale-aware ceiling (§2.9); author born-RED gates | suite compiles + all RED | — |
+| W-SHADOW | THE LIVE INK-STAMP | replace the gel-dome pair (`Blob.vue:354`) with ONE hard SE stamp; the sprung offset vector—mood-scaled, hover-grow 5→7px, follow-through lag, click hop; era-1 tint; off-plate attenuation; `uShadow` stays interior AO | G-CARTOON-STAMP, G-SHADOW-LIVE, G-USHADOW-INTERIOR | π-SHADOW |
+| W-STREAK | AURORA STREAK + VELOCITY CAUSTIC | the ~55%-height aurora streak (final-third arrival on formation); velocity-keyed rim caustic; rim anisotropy; mood-scaled energy/hue-cycle | G-STREAK, G-RIM-CAUSTIC | π-STREAK |
+| W-IDENT | TECHNICOLOR IDENTITY | technicolor default palette; per-satellite ink (`uSatColor[]` class); warm-cream → named calm preset; `BLOB_GLASS` + `BLOB_CHROME` exported presets (chrome keeps `uSpecSweep`) | G-IDENT-TECHNICOLOR, G-SAT-INK | π-IDENT |
+| W-SHOW | SHOW-VISIBLE DEFAULT | promote orbit>body (`presets.ts:53-58` → default); merge/absorb/emerge as liquid events; the meniscus-waist signal + pinch-off beat (§2.8) | G-SHOW-VISIBLE (waist clause added) | π-SHOW |
+| W-ALIVE | ALWAYS-ALIVE REST | implement the seam ruling; reduced-cadence idle tick (law 11); PRM composed rest with satellites visible | G-BREATHE-WHILE-SETTLED, G-PARK-OFFSCREEN | π-ALIVE, π-PERF |
+| W-MOOD | MOOD OUTPUT WIDENING | fix the sleepy pointer SIGN (RED); wire the §2.4 output table (posture/shadow/streak/satellites/nucleus); the excited `iridScale` ceiling taste call; `thinking` behind Q-BLOB-THINKING | G-POINTER-SIGN, G-MOOD-READ | π-MOOD |
+| W-REACT | TWO-LAYER REACTIVITY | era-1 satellite cursor repulsion (CPU); grab-and-fling behind Q-BLOB-GRAB (laws 14/15 presets) | G-SAT-REPEL | π-REACT |
+| W-HITTEST | EXACT SILHOUETTE | CPU SDF `hitTest(x,y)`; the precision win; expose on the public seam; ordered at/after W-SHOW | G-SDF-HITTEST-PRECISION | π-HITTEST |
+| W-TOPOLOGY | TWO-POLE MORPH | `deflate` on the shared spring; STAGED axes, no width overshoot, sparkle carries the energy, light leads shape (§2.5); sustained-signal gating; within-pill listening ring | G-DEFLATE-STAGED, G-SPARKLE-WITHIN | π-TOPOLOGY |
+| W-FINAL | CONSUMER + AUDIT + RELAY | demo hero adopts the technicolor default; overfitting audit; the value.js relay addendum (§2.9); FINAL.md | G-CONSUMER + overfit-audit | π-HERO |
 
 ---
 
-## 5. π obligations (live paint-verified deltas — ALL OWED; run live-π per band, both Chrome + Safari; paint-arm parses oklab)
+## 4. Born-RED gate sketches (each names its RED-at-HEAD condition)
 
-Unchanged from pass-1 §4.7 except the re-scoped gates' baselines: **π-MOOD** now proves ONLY the
-sleepy-repel sign delta + the (author-new) chrome-sweep/irid peak, NOT an orbit/wobble/pulse "restoration"
-(F1); **π-HITTEST** proves a disc-gap click + an outboard-satellite click, NOT corner fall-through (F5);
-**π-TOPOLOGY** proves `orb→pill` deflate + the within-pill dot-ring, NOT a standalone dot-ring macro (F2).
-π-CHROME-SWEEP, π-SHADOW, π-SHOW, π-ALIVE/π-PERF, π-SAFARI-SINGLE stand. Every one is OWED against an
-un-captured RED baseline — this seat has no browser. Serialize the browser seat (browser-seat-singleton);
-run live π in BOTH engines (the no-masking-fallback + WGPU-delete hinge on Safari paint).
+- **G-CARTOON-STAMP**—ONE hard SE-offset ink stamp following the silhouette; no gel-dome pair.
+  *RED:* `Blob.vue:354` is the two-drop-shadow gel-dome.
+- **G-SHADOW-LIVE** *(new)*—the stamp offset is a live channel: measurably longer on
+  hover/excited, lagging under motion, hopping on click. *RED:* the offset is a static token pair.
+- **G-USHADOW-INTERIOR**—`uShadow` remains interior merge-neck AO, never the cast stamp;
+  RED-by-construction guard across W-SHADOW.
+- **G-STREAK** *(replaces G-CHROME as the default-surface gate)*—one dominant horizontal aurora
+  streak at ~55% body height, arriving in the final third of formation, mood-scaled. *RED:* no
+  streak term exists; `specStrength 0.16 / iridescence 0.09` static whisper.
+- **G-RIM-CAUSTIC**—rim intensity keyed to EDGE VELOCITY (brightens under deformation, decays at
+  rest) with lower-rim/anisotropic bias (law 3). *RED:* iridescence is uniform fres-weighted.
+- **G-IDENT-TECHNICOLOR** *(new)*—the shipped default palette is technicolor (multi-hue), not
+  muted cream. *RED:* warm-cream default.
+- **G-SAT-INK** *(new)*—satellites carry distinct inks (`uSatColor[]` class). *RED:* one body
+  color for all bodies.
+- **G-SHOW-VISIBLE**—≥2 satellites read as distinct orbiting beads at rest AND merge events show
+  the ~45-50% meniscus waist. *RED:* `orbitRadius 0.17 < bodyRadius 0.22` (`types.ts:298-300`).
+- **G-BREATHE-WHILE-SETTLED**—onscreen breath continues while `settled===true`; an armed consumer
+  still parks its idle logic. *RED:* the demand gate parks on `isSettled`.
+- **G-PARK-OFFSCREEN**—offscreen/hidden/PRM still parks; RED-by-construction guard.
+- **G-POINTER-SIGN**—sleepy shies AWAY (negative lean). *RED:* sleepy computes `+0.114`
+  (`constants.ts:93`).
+- **G-MOOD-READ** *(new)*—each named mood is identifiable from a 3s silent capture by its §2.4
+  channel signature (posture + shadow + streak + satellites), not from knob values. *RED:* moods
+  differ only by scalar multipliers.
+- **G-SAT-REPEL** *(new)*—satellites displace away from a near cursor with ~5-frame smoothing
+  while the body leans per its mood sign. *RED:* no repulsion path exists at HEAD.
+- **G-SDF-HITTEST-PRECISION**—a click in the disc-but-not-body gap falls through AND a click on
+  an outboard satellite activates. *RED:* `clip-path:circle()` disc.
+- **G-DEFLATE-STAGED** *(replaces G-DEFLATE-MORPH)*—orb↔pill runs staged axes: squash completes
+  before width; NO width overshoot; the sparkle nucleus blooms mid-morph; light leads shape
+  ~80ms; deflate only on a sustained signal. *RED:* no topology scalar; `morphT` is a surface
+  axis (`types.ts:274,430`).
+- **G-SPARKLE-WITHIN** *(replaces G-DOTRING-WITHIN-PILL)*—the sparkle nucleus is a within-surface
+  state (listening ring inside the pill; persists through morphs; peaks at motion pause), never a
+  macro shape. *RED:* no nucleus mechanism.
+- **G-CONSUMER**—every primitive ≥2 sites OR exported OR named private demo helper; consumer #1 =
+  the demo hero on the technicolor default.
 
----
-
-## 6. Banked-route dispositions (unchanged in RANK; β's map now reconciled)
-
-- **α (material + shadow + show + mood + alive redress): LEADING** — the destination CRIT2 confirms;
-  every re-registration grounded in a landed root re-verified on disk. The three wave surgeries (W-MOOD
-  re-cost, W-SHADOW mechanism pin, W-HITTEST re-word/re-order) are applied above; none re-orders α.
-- **β (topology FSM): ALIVE, map now RECONCILED** — `orb↔pill` on the shared spring + within-pill dot-ring
-  (§2.5), the law-13-vs-MARKS-B divergence resolved with a stated warrant (F2). Delivers law 13's topology
-  half via a provable spring-scalar arrangement-selector; the new `useBlobTopology` is an arrangement
-  selector over the shipped field, not a new renderer (passes the elegant-reduction test).
-- **γ (WebGPU 3D-raymarch): BLOCKED** — three independent disk-verified blocks (permanent-floor
-  ratification `blob-genesis.md:111`; mobile fill-rate wall; active WGPU-twin delete order `:122`). Reopens
-  ONLY if α+β provably cannot make 2D read as liquid-metal (§7 gap-1, the α↔γ pivot) after a real 2D
-  matcap/env term is π-captured. Do not resolve independently of the WGPU-twin delete.
-- **δ (SVG-goo resurrection): BANKED-AS-ANCHOR** — assets harvested into α (cartoon shadow → W-SHADOW; free
-  hit-test → the CPU SDF mirror); substrate not resurrected (no analytic edge, PRM-degrades-to-nothing,
-  Safari `filter:url()` risk).
-
----
-
-## 7. Convergence + open questions for the ASK
-
-**Convergence: 60%** (pass-1 50 → CRIT2 45 → pass-3 60). Justification: every CRIT2 finding (F1–F7) is
-resolved on disk, and the four designs pass-1 deferred are now DECIDED with evidence — the single material
-identity (§2.1), the shared-spring/separate-field engine boundary (§2.2), the pinned shadow mechanism
-(§2.3), the reconciled topology grammar (§2.5), and the `settled`-seam decoupling (§2.6). The mis-costed
-wave is re-costed (F1) and the born-GREEN gate clause is cut. The DESIGN axis is now internally coherent
-and adversarially hardened. The number does not go higher because the VERIFICATION axis is still 0%: this
-is a paint-less seat, every π obligation is OWED against an un-captured RED baseline, and the sharpest gap
-— does a 2D analytic field read as liquid-METAL chrome (the α↔γ pivot) — is unverified. The charter caps a
-paint-less seat below convergence regardless (convergence needs a captured DELTA + a fresh adversarial
-audit + two consecutive clean passes).
-
-Open gaps (carried; the first is the dominant limiter):
-1. **Zero paint / does 2D read as liquid-METAL chrome (the α↔γ pivot).** Next pass must prototype a 2D
-   matcap/env-reflection term (still analytic, still WebGL2) and π-capture it against the METAL FLOW stills
-   (`MARKS-B.md:215-218`) BEFORE conceding γ's substrate. Every gate born-RED here awaits paint.
-2. **The always-alive `<7%` budget with aurora co-present** on a DPR-3 tile GPU is unmeasured (π-PERF owes).
-3. **The sleepy-sign fix locus** depends on which pointerAttraction the shader lean reads (§2.4) — a W0
-   disk check, not a design gap, but named so it is not assumed.
-
-Open QUESTIONS routed to the user ASK (with recommendations):
-- **Q-BLOB-DEFAULT (the default-register break).** Does the DEFAULT `<Blob>` ship as the loud liquid-metal
-  creature, or stay the calm warm-cream whisper with liquid-metal opt-in (`register="liquid-metal"`)? This
-  is a library-identity call on the presets-in-consumers fence. *Recommendation:* the library's OWN default
-  evolves to the liquid-metal chrome identity (per the "lib's own default tokens evolve as its identity
-  changes" memory), with the calm whisper preserved as a named register — but this is a taste call the user
-  owns, and it inherits to every existing consumer (a clean break).
-- **WGPU-twin delete coordination (cross-tranche).** W-DELETE-TWIN implements the value.js-genesis order
-  (`BG.W-VIZ-SUBSTRATE-DELETE2`) that also touches dot-matrix/goo-dot. Whether it lands in THIS greenfield
-  or a shared substrate-delete coordination wave is a sequencing call → surface in the BJ ASK, not resolved
-  unilaterally.
+Struck: **G-NO-WGPU** (§2.9—the premise inverted at HEAD); the G-MOOD-AMPLITUDE orbit/wobble/pulse
+clause stays deleted (born-GREEN, CRIT2 F1).
 
 ---
 
-## 8. Self-critique (failure-mode checklist)
+## 5. π obligations (ALL OWED—LIVE-DEFER; run per band, Chrome + Safari; paint-arm parses oklab)
 
-- **Vacuous convergence:** avoided — 60%, capped honestly on zero paint; not a convergence claim.
-- **Spec-cites-itself circularity:** the material target cites law 13 + `MARKS-B.md:215-218,262-269` + the
-  METAL FLOW stills; the mood re-cost cites `constants.ts:53,66-69,93` disk facts; the topology
-  reconciliation cites `MARKS-B.md:101-102,273` vs `IOS27-CODEX.md:58`; the shadow ruling cites
-  `metaball.frag.ts:424-435`, `Blob.vue:354`, and design-vision `:157-159`. Not self-citing.
-- **Gates that cannot fail:** the born-GREEN clause CRIT2 caught (G-MOOD-AMPLITUDE orbit/wobble/pulse) is
-  DELETED; every remaining gate names a RED-at-HEAD file:line. G-CHROME's "reads as chrome" stays the
-  softest, operationalized as frame-to-frame highlight motion but still partly taste (gap-1). G-POINTER-SIGN
-  now asserts only the disk-RED sleepy sign (`+0.114`).
-- **Elegant-reduction trap:** α's steps are re-tunes of landed roots; β's `useBlobTopology` is an
-  arrangement-selector over the shipped field on the SHARED spring (no new engine, §2.2); γ FAILS honestly
-  (→ BLOCKED); δ FAILS on material (→ BANKED). No "and then the hard part."
-- **Legacy aliases / masked fallbacks:** clean break — gel-dome pair, whisper defaults, freeze-quiescence,
-  WGPU twin DELETED, not aliased. The shadow ruling keeps ONE cast + ONE interior AO (stated, not silent).
-- **Unverified gestalt:** REAL and dominant — no browser this seat; every π owed; the liquid-metal-2D
-  question is the α↔γ pivot and remains unverified. This is the primary cap and is kept front-and-center.
-- **Consumer-less substrate:** α's primitives have consumer #1 (demo hero + default `<Blob>`); the
-  always-alive change's real consumer is EVERY `settled` reader (F7), addressed by the W0 seam ruling;
-  β's topology consumer #1 is the autonomic mood arc + the demo mood pills. Overfit audit at W-FINAL.
+π-SHADOW (stamp + live channel deltas), π-STREAK (streak arrival order on formation: light →
+shape → rim → streak), π-IDENT, π-SHOW (waist + pinch-off), π-ALIVE/π-PERF (the `<7%` budget with
+aurora co-present, DPR-3 tile GPU), π-MOOD (sleepy-repel sign + the mood-read capture), π-REACT,
+π-HITTEST (disc-gap + outboard-satellite clicks), π-TOPOLOGY (staged-axis order + no width
+overshoot + sparkle bloom), π-HERO. **π-PARITY** replaces π-SAFARI-SINGLE: both engines
+paint-equivalent per band (WebGPU primary + WebGL2 fallback), honoring the live-π lessons
+(context-steal: observe via screenshot/computed-style only; browser-seat singleton: serialize).
+Every π is owed against an un-captured RED baseline—this seat has no browser.
 
-Per the charter this is pass 3; convergence is not contemplated while paint is 0% and gap-1 (the α↔γ
-pivot) is unverified. Next pass: prototype + π-capture the 2D matcap/env chrome term vs METAL FLOW; measure
-the always-alive budget with aurora co-present; carry the two ASK questions.
+---
+
+## 6. Route dispositions [RATIFIED, γ re-worded]
+
+- **α (redress on landed roots): LEADING**—now carrying the technicolor identity (§2.1) instead
+  of chrome; still zero new renderers.
+- **β (two-pole topology): ALIVE, map IN LAW**—`useBlobTopology` stays an arrangement-selector
+  over the shipped field on the shared spring.
+- **γ (WebGPU 3D-raymarch): BLOCKED, re-worded**—with chrome demoted to a preset, the "can 2D
+  read as metal" pivot no longer gates the DEFAULT identity. γ reopens only if the user promotes
+  chrome to the identity AND the 2D `uSpecSweep`/matcap term fails in paint. (The genesis
+  permanent-floor citation is consumed by §2.9's doctrine ruling—the floor argument is now about
+  raymarching, not about deleting the WGSL primary.)
+- **δ (era-1 resurrection): BANKED-AS-ANCHOR**—now yielding THREE harvested assets: the cartoon
+  shadow (§2.3), the free hit-test (§2.7), and the cursor repulsion (§2.7). The substrate itself
+  stays dead for cause.
+
+---
+
+## 7. Convergence + asks
+
+**Convergence: 60%**—the design axis is now canon-conformant (the identity inversion cured, the
+deflate physics measured, the topology in law) and adversarially hardened twice (the opus CRIT2
+facts + this union's assume-wrong pass). The number does not rise because the verification axis
+is 0%: paint-less seat, every π OWED, and the new channels (live shadow, streak, mood-read,
+repulsion) are unverified in paint. Convergence requires captured DELTAs + a fresh adversarial
+audit + two consecutive clean passes.
+
+Open questions routed to the user ASK (with recommendations):
+
+- **Q-BLOB-DEFAULT (re-framed—chrome is not a candidate).** Does the DEFAULT `<Blob>` ship as
+  the technicolor creature (recommendation: yes—the library's own identity evolves per the A12
+  charter + cartoon-technicolor edict, a clean break inherited by consumers) or stay warm-cream
+  with technicolor opt-in?
+- **Q-BLOB-THINKING.** Adopt `thinking` as a sixth named mood (the sparkle nucleus's home)?
+  Recommendation: yes—it completes the assistant arc on the shipped circumplex.
+- **Q-BLOB-GRAB.** Ship grab-and-fling on the mascot register (opt-in prop)? Recommendation:
+  yes, opt-in—the laws-14/15 physics presets already exist repo-wide; the mascot register is the
+  right home and the substrate register never gets it.
+- **The substrate-band note (inverted from the opus ask).** The value.js WGPU-twin-delete order
+  does not bind this producer (§2.9); the value.js relay addendum lands at W-FINAL per the
+  consumer-updates ruling. No blob wave waits on it.
+
+---
+
+## 8. Self-critique
+
+- **Vacuous convergence:** 60% capped honestly on zero paint; the union added channels but also
+  added their born-RED gates.
+- **Spec-cites-itself:** every material/motion claim cites the measured timelines or MARKS
+  (`sr-0624-2144.md` P1/P5/P7/P8/P9; `MARKS-A.md:104`; `MARKS-B.md:44-46,58,60-61,115,125`), the
+  rewritten codex by law number + line, or a HEAD/era-1 file:line verified this session.
+- **Gates that cannot fail:** each names a RED-at-HEAD condition; the two RED-by-construction
+  guards are labeled as guards. G-MOOD-READ is the softest (a capture-legibility test) and is
+  deliberately operationalized as a silent-capture identification, not taste.
+- **Elegant-reduction trap:** no new engine, no new component; the eleven waves are re-tunes +
+  five named primitives (stamp channel, streak term, sat ink, repulsion, deflate scalar) on
+  landed roots.
+- **Legacy aliases:** clean breaks throughout—gel-dome deleted, cream demoted to a named preset
+  (a preset is not an alias), freeze-quiescence replaced, W-DELETE-TWIN struck rather than
+  half-kept.
+- **Unverified gestalt:** REAL and dominant—no browser this seat; LIVE-DEFER stands; the two
+  round-3 perf traces remain undigested.
+- **Consumer-less substrate:** consumer #1 = demo hero; the mascot/substrate split (§2.10) keeps
+  row K's fence; overfit audit at W-FINAL.
