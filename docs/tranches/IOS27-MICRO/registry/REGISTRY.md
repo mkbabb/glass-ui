@@ -59,6 +59,18 @@ two concurrent gestures (jockey + tab swap) may need two spines and a compositio
 
 **Status.** ACTIVE.
 
+**PASS 1 (2026-07-18) — ADVANCE, convergence 62%.** The core proved in Chrome 150 paint (browser
+seat: PROVES): one spine + asymmetric-clock follower bank reproduces the CC choreography and the
+Maps bound physics, scrubbed and caught mid-flight, rAF parked after every settle; the
+target-keyed fade is a real structural discovery. Heavy gaps (CRIT-F1): zero Safari evidence;
+gate bands re-fit to the sim, not the corpus; the mid-detent catch unfalsifiable and off-policy;
+the H1 mechanism fork (clip-path shipped vs translateY+scaleY specced, R5 open); two follower
+parameterizations under a one-parameterization banner. Pass-2 charter sharpened: Safari battery
+first; MARKS-derived gate bands; projected-path catch with a landing band; one blessed
+parameterization + the scrub-intent law written jointly with F3; H3 demoted to clocks-and-seam
+or probed on a slot axis; H6 ownership ceded to F4; the PRM scenario() seed fixed before any
+re-run.
+
 ---
 
 ## Family F2 — NATIVE-SCROLL SUBSTRATE
@@ -98,6 +110,18 @@ timing is UA-controlled — the measured springback (ζ≈0.5–0.65, one oversh
 tunable.
 
 **Status.** ACTIVE.
+
+**PASS 1 (2026-07-18) — BANK, convergence 50%.** No prototype exists (`prototypes/
+f2-native-scroll/` is empty — a charter violation; nothing seen in paint), and the family's own
+losses ledger cedes the mid-detent catch, Safari springback tuning, Chrome rubber-band, and —
+structurally — the post-release close durations (UA-fling-bound; CRIT-F2 G5). The research layer
+is strong and version-cited; the two-regime insight and the zero-JS scroll-driven reveal ladder
+survive as mechanisms. Banked with the two decisive probes reassigned to the pass-2 shared probe
+seat: U2 (unclamped scrollTop under a held iOS-touch pin, with the event stream recorded) and
+U-R1 (SDA threading with backdrop-filter on the animated surface). Re-trigger: both probes green
+AND the merged spine-conductor architecture naming a scroll-shaped consumer (the drawer is the
+candidate) whose inner-list handoff wants a native arm. Probes red → the bank converts to RETIRE
+with the native-fling loss documented.
 
 ---
 
@@ -139,6 +163,20 @@ adoption across ~100 components; cross-channel invariants under interruption are
 failure mode.
 
 **Status.** ACTIVE.
+
+**PASS 1 (2026-07-18) — ADVANCE, convergence 60%.** The center proved three independent ways —
+offline probe, node check on the extracted shipped code (16/16), full 12/12 battery in Chrome
+paint with depth grading measured at exactly 1.20× vs MARKS ~1.20 (browser seat: PROVES); the
+conductor parks mid-scrub and seats in one poll under PRM with a frozen tick counter. Gaps
+(CRIT-F3): the flagship §1 manifest cites a preset pair that fails the family's own acceptance
+and the correct pair (0.6, 1.0) lives in no register; the inherits:true/false contradiction with
+the U10 recalc trace unmeasured; Safari absent; the sat input map load-bearing but unspecced;
+the delay law wrong as written; per-frame direction inference breaks the H2 bound register.
+Pass-2: Safari battery; manifest + depth-formula + direction-latch text cures before anything
+else (all three are transcribable defects); the latch is F1's committed-target discovery — the
+one intent/direction law is written jointly with F1; the inherits decision with a captured
+recalc trace in both engines; per-hallmark evidence or explicit demotion for H1/H2/H3; gate
+bands re-derived from MARKS with the GATE band printed beside the display band.
 
 ---
 
@@ -182,6 +220,21 @@ surface that could sprawl; a shared inheriting var would be a subtree-storm — 
 model must stay per-element.
 
 **Status.** ACTIVE.
+
+**PASS 1 (2026-07-18) — ADVANCE, convergence 62%.** Browser seat: PARTIAL, with the one defect
+root-caused — Chrome fires scrollend after every discrete scrollTop step (10/10 measured), so
+the scroll channel closes per step and reopens at v=0; the debounce-primary cure is named and
+re-grades the Chrome arm PROVES once landed. The modulation-plane core (scalar triple, MAX fold,
+kind-exclusive channels, regime gating, no-idle discipline, PRM pinning, unclamped publication)
+is designed off real kin and Chrome-paint-verified at 22 writes/frame @2–7µs, 98fps. Gaps
+(CRIT-F4): Safari absent; the cure unapplied and the spec unamended; the live release seed
+violates the family's own continuity bound ~14× (0.436 vs ≤0.032); four tautological gates; the
+threshold grammar contradicts its own arithmetic; the verb-delivery surface unspecified. Pass-2:
+land the debounce cure and measure the 32-consumer fan-out in paint; Safari trace; decouple the
+field seed from the carrier seed and gate the live release-frame jump; the honest
+useDragVelocity regression (identical synthetic streams through the shipped pipeline); role
+schema reconciled + the verb-delivery mechanism designed; F4 becomes the named H6 owner — an
+acceleration consumer named or the word struck from the facility claim.
 
 ---
 
@@ -228,6 +281,21 @@ the family must not quietly absorb the physics question — it states which fami
 the body layer or supplies its own minimal one.
 
 **Status.** ACTIVE.
+
+**PASS 1 (2026-07-18) — ADVANCE, convergence 55%.** The layer contract verified computed in
+Chrome; no-blink proven via an independent per-rAF joint-presence sampler (opacity × visibility
+× rect-area) across 1-slot, multi-slot, and mid-travel retarget; U1/U3 honest on Chrome (browser
+seat: PROVES — Chrome only). Gaps (CRIT-F5): Safari — the risk engine for every family-specific
+unknown — never driven; zero paint evidence of any transient lens state on any engine, with two
+captures mislabeled (the ferry confound); the U2 perceptual pair uncaptured; the moving-backdrop
+cost priced only for H3 while H1/H2 re-pay it (~600ms of animated backdrop-sampling body per
+gesture — a shared unknown; one Safari probe prices it for every family); PRM violated in the
+observed artifact (charge ramps 0.23→1.0, seat deferred ~250ms). Pass-2: Safari first across the
+full judging list; freeze/clock-scale + ferry-off harness toggles, then capture the transient
+states and pixel-sample sibling legibility at bloom peak; the PRM one-flip seat; chip D in the
+shipped data-URI form; one spec revision carrying isolation, the z/DOM contract, the lint
+artifact, and the medium writer contract; the layers-vs-clocks boundary with F1/F3 sealed at the
+pass-2 merge (F5 owns layers and material; the spine-conductor owns clocks).
 
 ---
 
@@ -285,3 +353,29 @@ place the corpus itself is fire-and-forget.
   never a silent second authority.
 - Evidence discipline: prototype claims carry captured paint evidence (screenshot + paired
   before/after), per the live-π law; a green-headless/broken-paint gap is not a pass.
+
+---
+
+## PASS-1 dispositions (2026-07-18)
+
+Seat: the pass-1 agglomeration seat. Verified model: `claude-fable-5` (system context: "The
+exact model ID is claude-fable-5"). Full narrative, cross-pollination table, and the pass-2
+attack order: `../passes/PASS-1/AGGLOMERATION.md`.
+
+| family | action | convergence | one line |
+|---|---|---|---|
+| F1 SCALAR-SPINE | ADVANCE | 62% | core proven in Chrome paint; Safari + gate integrity + the catch policy are the pass-2 burden |
+| F2 NATIVE-SCROLL | BANK | 50% | no prototype, structural losses on 4 hallmark behaviors; two probes reassigned to the shared seat; named re-trigger |
+| F3 CHANNEL-CONDUCTOR | ADVANCE | 60% | 12/12 battery in Chrome paint, depth grading exact; three transcribable spec defects cure first |
+| F4 ENERGY-FIELD | ADVANCE | 62% | modulation plane proven partial, defect root-caused with the cure named; the H6 owner-designate |
+| F5 OPTICAL-MEDIUM | ADVANCE | 55% | layer contract + no-blink proven on Chrome; zero transient paint evidence anywhere; Safari is the risk engine |
+
+Systemic findings, binding on every pass-2 seat: (1) no verdict re-grades until the Safari arm
+runs — every pass-1 PROVES is Chrome-only against a Safari-2026-floor task; (2) gate bands
+derive from MARKS, never from the family's own sim — sim-parity bands are regression locks,
+labeled as such; (3) MARKS itself carries defects (the stale springPreset citation, the R3
+ζ/settle internal contradiction, margin-depth vs compression-gain conflation, the depth-grade
+wording) — the MARKS correction pass + the three 24fps re-bursts precede any constant re-fit;
+(4) DesignSync is reachable from pass-1+ seats (re-probed at agglomeration) — round-zero's
+unavailability note no longer holds; frontend design work routes through it per the standing
+mandate.

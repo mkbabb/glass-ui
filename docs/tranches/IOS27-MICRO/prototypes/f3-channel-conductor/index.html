@@ -1,0 +1,817 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- verified-model: claude-fable-5 (system-context model ID, verbatim). F3 prototype seat, IOS27-MICRO pass 1. -->
+<title>F3 CHANNEL-CONDUCTOR — CC choreography prototype</title>
+<style>
+  @property --ch-medium    { syntax: "<number>"; inherits: true; initial-value: 0; }
+  @property --ch-geometry  { syntax: "<number>"; inherits: true; initial-value: 0; }
+  @property --ch-content   { syntax: "<number>"; inherits: true; initial-value: 0; }
+  @property --ch-periphery { syntax: "<number>"; inherits: true; initial-value: 0; }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0b0e15; color: #d7dce8;
+    font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif;
+    padding: 24px; min-height: 100vh;
+  }
+  .mono { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12.5px; }
+  header h1 { font-size: 17px; font-weight: 650; letter-spacing: 0.01em; }
+  header p { color: #8a93a8; font-size: 13px; margin-top: 3px; max-width: 980px; }
+  main { display: flex; gap: 28px; margin-top: 20px; flex-wrap: wrap; align-items: flex-start; }
+
+  /* ---------- the phone stage ---------- */
+  .stage {
+    position: relative; width: 320px; height: 640px; flex: none;
+    border-radius: 42px; overflow: hidden;
+    border: 1px solid #2a3146; background: #000;
+    box-shadow: 0 24px 60px rgba(0,0,0,.55);
+    touch-action: none; user-select: none; -webkit-user-select: none; cursor: grab;
+    --ch-medium: 0; --ch-geometry: 0; --ch-content: 0; --ch-periphery: 0;
+  }
+  .wall {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(120% 90% at 15% 8%,  #ff9a62 0%, transparent 55%),
+      radial-gradient(110% 80% at 85% 18%, #ff5d9e 0%, transparent 60%),
+      radial-gradient(130% 100% at 50% 96%, #4f7dff 0%, transparent 65%),
+      radial-gradient(100% 100% at 92% 78%, #24d3a7 0%, transparent 60%),
+      #141a2e;
+  }
+  .statusbar {
+    position: absolute; top: 14px; left: 0; right: 0;
+    display: flex; justify-content: space-between; padding: 0 28px;
+    color: #fff; font-size: 13px; font-weight: 600;
+  }
+  .apps {
+    position: absolute; inset: 54px 22px auto 22px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;
+  }
+  .app { aspect-ratio: 1; border-radius: 24%; box-shadow: 0 4px 10px rgba(0,0,0,.3); }
+  .app:nth-child(8n+1) { background: linear-gradient(150deg, #ffd166, #ef476f); }
+  .app:nth-child(8n+2) { background: linear-gradient(150deg, #06d6a0, #118ab2); }
+  .app:nth-child(8n+3) { background: linear-gradient(150deg, #8ecae6, #3a86ff); }
+  .app:nth-child(8n+4) { background: linear-gradient(150deg, #f72585, #7209b7); }
+  .app:nth-child(8n+5) { background: linear-gradient(150deg, #fca311, #e5383b); }
+  .app:nth-child(8n+6) { background: linear-gradient(150deg, #80ed99, #22577a); }
+  .app:nth-child(8n+7) { background: linear-gradient(150deg, #bdb2ff, #5a189a); }
+  .app:nth-child(8n+8) { background: linear-gradient(150deg, #ffffff, #adb5bd); }
+
+  /* medium channel: overlay opacity at CONSTANT blur radius */
+  .scrim {
+    position: absolute; inset: 0;
+    -webkit-backdrop-filter: blur(26px) saturate(140%);
+    backdrop-filter: blur(26px) saturate(140%);
+    background: rgba(8, 10, 18, 0.45);
+    opacity: var(--ch-medium);
+    will-change: opacity;
+  }
+
+  /* geometry channel: depth-graded translate; content channel: opacity */
+  .cc {
+    position: absolute; inset: 0; padding: 54px 16px 0;
+    display: flex; flex-direction: column; gap: 12px;
+    pointer-events: none;
+  }
+  .ccrow {
+    display: grid; gap: 12px;
+    transform: translate3d(0, calc((var(--ch-geometry) - 1) * (56px * (1 + 0.2 * var(--depth) / 3))), 0);
+    opacity: var(--ch-content);
+    will-change: transform, opacity;
+  }
+  .ccrow.r0 { grid-template-columns: 1fr 1fr; }
+  .ccrow.r1 { grid-template-columns: 1fr 1fr; }
+  .ccrow.r2 { grid-template-columns: repeat(4, 1fr); }
+  .ccrow.r3 { grid-template-columns: 1fr 1fr; }
+
+  /* container tier */
+  .tile {
+    border-radius: 20px; min-height: 96px;
+    background: rgba(28, 32, 46, 0.55);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.09);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 8px 24px rgba(0,0,0,.25);
+    display: grid; place-items: center; color: #e8ecf6;
+  }
+  .tile.conn { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; padding: 10px; }
+  .tile.small { min-height: 64px; }
+  /* control tier — brighter, more opaque, its own rim */
+  .ctl {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: rgba(255,255,255,0.14);
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
+    display: grid; place-items: center; font-size: 14px; color: #dfe6f5;
+  }
+  .ctl.on { background: rgba(255,255,255,0.94); color: #2563eb; border-color: transparent; }
+  .tile.slider { position: relative; overflow: hidden; }
+  .tile.slider .fill {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 55%;
+    background: rgba(255,255,255,0.92); border-radius: 0 0 20px 20px;
+  }
+  .tile.slider .glyph { position: absolute; bottom: 10px; left: 0; right: 0; text-align: center; color: #333; }
+
+  /* periphery channel: the right-edge rail */
+  .rail {
+    position: absolute; right: 10px; top: 40%;
+    display: flex; flex-direction: column; gap: 10px;
+    opacity: var(--ch-periphery);
+    transform: translate3d(0, calc((var(--ch-periphery) - 1) * 36px), 0);
+    will-change: transform, opacity;
+    pointer-events: none;
+  }
+  .rail .ctl { background: rgba(28,32,46,0.7); }
+
+  .minis { display: flex; gap: 14px; margin-top: 16px; }
+  .mini { width: 152px; height: 302px; overflow: hidden; border-radius: 22px; display: none; }
+  .mini.show { display: block; }
+  .mini .stage { transform: scale(0.47); transform-origin: top left; cursor: default; }
+
+  /* ---------- panel ---------- */
+  .panel {
+    flex: 1 1 540px; max-width: 700px;
+    background: #11141d; border: 1px solid #232a3d; border-radius: 16px; padding: 20px;
+  }
+  .panel h2 { font-size: 14px; font-weight: 650; margin-bottom: 10px; }
+  .btnrow { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 14px; }
+  button {
+    background: #1c2436; color: #dbe3f5;
+    border: 1px solid #2e3a56; border-radius: 9px; padding: 7px 12px;
+    font: 600 12.5px system-ui; cursor: pointer;
+  }
+  button:hover { background: #243050; }
+  button:disabled { opacity: 0.45; cursor: default; }
+  button.primary { background: #2b3d6b; border-color: #3d5494; }
+  label.chk { font-size: 12.5px; color: #aab3c8; display: inline-flex; gap: 5px; align-items: center; }
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  th { text-align: left; color: #8a93a8; font-weight: 600; padding: 5px 8px; border-bottom: 1px solid #232a3d; }
+  td { padding: 5px 8px; border-bottom: 1px solid #1a2030; }
+  td.num { font-family: ui-monospace, Menlo, monospace; font-size: 12px; }
+  .ok  { color: #4ade80; font-weight: 700; }
+  .bad { color: #f87171; font-weight: 700; }
+  .na  { color: #77809a; }
+  .live {
+    margin-top: 12px; padding: 10px 12px; background: #0d1019; border-radius: 10px;
+    font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: #9fb0d0;
+    display: flex; flex-wrap: wrap; gap: 14px;
+  }
+  .live b { color: #e8ecf6; font-weight: 600; }
+  .note { color: #8a93a8; font-size: 12px; margin-top: 10px; }
+  details { margin-top: 12px; }
+  summary { cursor: pointer; color: #aab3c8; font-size: 12.5px; }
+  pre { background: #0d1019; border-radius: 10px; padding: 12px; overflow-x: auto; margin-top: 8px;
+        font-size: 11.5px; line-height: 1.5; color: #9fb0d0; }
+  footer { margin-top: 22px; color: #626b82; font-size: 12px; }
+  .prmbadge { display: none; color: #fbbf24; font-weight: 700; font-size: 12px; }
+  .prmbadge.show { display: inline; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>F3 CHANNEL-CONDUCTOR — coupled clocks off one gesture scalar</h1>
+  <p>One conductor drives the Control-Centre surface: scrim (medium, cliff), grid (geometry, spring — depth-graded rows), tiles (content, follow), rail (periphery, gated follow). Zero authored timelines — the MARKS §5/§6 bands must emerge from the coupling constants, in paint. Drag vertically on the phone: down opens, up closes, catch mid-flight any time. <span class="prmbadge" id="prmbadge">PRM active — every drive seats instantly, no animation</span></p>
+</header>
+
+<main>
+  <div>
+    <div id="main-wrap"></div>
+    <div class="minis" id="minis"></div>
+  </div>
+
+  <div class="panel">
+    <h2>MARKS acceptance readouts — measured live from this page's rAF</h2>
+    <div class="btnrow">
+      <button class="primary" id="b-battery">Run full battery</button>
+      <button id="b-open">Open</button>
+      <button id="b-close">Close</button>
+      <button id="b-int">Flick + catch (interrupt)</button>
+      <button id="b-stress">Stress ×3</button>
+      <label class="chk"><input type="checkbox" id="slowmo"> slow-mo ×4 (tempo — ratios invariant)</label>
+      <label class="chk"><input type="checkbox" id="simprm"> simulate PRM</label>
+    </div>
+
+    <table>
+      <thead><tr><th>metric</th><th>measured</th><th>MARKS band</th><th></th></tr></thead>
+      <tbody>
+        <tr><td>open: medium t90</td>       <td class="num" id="m-om">—</td> <td>≤100 ms cliff</td>            <td id="v-om" class="na">·</td></tr>
+        <tr><td>open: fade t90</td>         <td class="num" id="m-of">—</td> <td>150–250 ms</td>               <td id="v-of" class="na">·</td></tr>
+        <tr><td>open: geometry t99</td>     <td class="num" id="m-og">—</td> <td>~600–650 ms decel</td>        <td id="v-og" class="na">·</td></tr>
+        <tr><td>open: fade / stretch</td>   <td class="num" id="m-or">—</td> <td>~1:4 (0.25)</td>              <td id="v-or" class="na">·</td></tr>
+        <tr><td>open: periphery lag</td>    <td class="num" id="m-op">—</td> <td>80–160 ms</td>                <td id="v-op" class="na">·</td></tr>
+        <tr><td>close: content out</td>     <td class="num" id="m-cc">—</td> <td>~170 ms</td>                  <td id="v-cc" class="na">·</td></tr>
+        <tr><td>close: empty-medium beat</td><td class="num" id="m-cb">—</td><td>100–200 ms</td>               <td id="v-cb" class="na">·</td></tr>
+        <tr><td>close: medium out</td>      <td class="num" id="m-cm">—</td> <td>~620 ms</td>                  <td id="v-cm" class="na">·</td></tr>
+        <tr><td>interrupt: medium min</td>  <td class="num" id="m-im">—</td> <td>1.000 held across cycles</td> <td id="v-im" class="na">·</td></tr>
+        <tr><td>interrupt: max frame step</td><td class="num" id="m-is">—</td><td>law-bounded, no jump</td>    <td id="v-is" class="na">·</td></tr>
+        <tr><td>park: rAF after settle</td> <td class="num" id="m-pk">—</td> <td>0 ticks / 600 ms</td>         <td id="v-pk" class="na">·</td></tr>
+        <tr><td>tempo ×1.3: fade/stretch</td><td class="num" id="m-tp">—</td><td>ratio invariant (~0.25)</td>  <td id="v-tp" class="na">·</td></tr>
+        <tr><td>stress: 3 conductors live</td><td class="num" id="m-st">—</td><td>info — JS ms/frame + fps</td><td id="v-st" class="na">·</td></tr>
+      </tbody>
+    </table>
+    <div class="note" id="summary">Battery not yet run. Timings are rAF-sampled with linear interpolation at threshold crossings; ±1 frame at 60 fps applies per SPEC §5.</div>
+
+    <div class="live">
+      <span>g <b id="h-g">0.000</b></span>
+      <span>geometry <b id="h-x">0.000</b></span>
+      <span>release v <b id="h-v">—</b></span>
+      <span>overshoot <b id="h-os">—</b></span>
+      <span>fps <b id="h-fps">—</b></span>
+      <span>conductor <b id="h-state">PARKED</b></span>
+      <span>ticks <b id="h-ticks">0</b></span>
+    </div>
+
+    <details>
+      <summary>manifest (verbatim — the constants are the whole choreography) + measurement definitions</summary>
+      <pre id="manifest-dump"></pre>
+      <pre>crossing thresholds — t90 rising: value ≥ 0.90 · geometry t99: ≥ 0.99 · content out: ≤ 0.05
+medium relax: &lt; 0.90 · medium out: ≤ 0.10 · beat = t(medium &lt; 0.90) − t(content ≤ 0.05)
+periphery lag = t90(periphery) − t90(content) · all crossings linearly interpolated between frames
+interrupt episode: release(0) from open → scrub-catch at +120 ms → hold ~160 ms → release(1)
+max frame step bound = 1 − exp(−dt_max / 0.055) — dt-dependent (probe's 0.12 was at 120 Hz)
+park assertion: conductor tick count unchanged over 600 ms after settle — the rAF loop is gone</pre>
+    </details>
+  </div>
+</main>
+
+<template id="stage-tpl">
+  <div class="stage">
+    <div class="wall">
+      <div class="statusbar"><span>9:41</span><span>●●●</span></div>
+      <div class="apps">
+        <div class="app"></div><div class="app"></div><div class="app"></div><div class="app"></div>
+        <div class="app"></div><div class="app"></div><div class="app"></div><div class="app"></div>
+        <div class="app"></div><div class="app"></div><div class="app"></div><div class="app"></div>
+        <div class="app"></div><div class="app"></div><div class="app"></div><div class="app"></div>
+      </div>
+    </div>
+    <div class="scrim"></div>
+    <div class="cc">
+      <div class="ccrow r0" style="--depth:0">
+        <div class="tile conn">
+          <div class="ctl">✈</div><div class="ctl on">◌</div>
+          <div class="ctl on">≋</div><div class="ctl">◍</div>
+        </div>
+        <div class="tile"><div class="ctl on">♪</div></div>
+      </div>
+      <div class="ccrow r1" style="--depth:1">
+        <div class="tile slider"><div class="fill"></div><div class="glyph">☀</div></div>
+        <div class="tile slider"><div class="fill" style="height:40%"></div><div class="glyph">♪</div></div>
+      </div>
+      <div class="ccrow r2" style="--depth:2">
+        <div class="tile small"><div class="ctl">◐</div></div>
+        <div class="tile small"><div class="ctl">⌁</div></div>
+        <div class="tile small"><div class="ctl on">◉</div></div>
+        <div class="tile small"><div class="ctl">▣</div></div>
+      </div>
+      <div class="ccrow r3" style="--depth:3">
+        <div class="tile small"><div class="ctl">✎</div></div>
+        <div class="tile small"><div class="ctl">⚲</div></div>
+      </div>
+    </div>
+    <div class="rail">
+      <div class="ctl">♥</div><div class="ctl">♪</div><div class="ctl">⌁</div>
+    </div>
+  </div>
+</template>
+
+<footer>
+  docs/tranches/IOS27-MICRO/prototypes/f3-channel-conductor/index.html — F3 prototype seat, pass 1 ·
+  verified-model: claude-fable-5 (system-context model ID, verbatim) · judge notes in PROBE-NOTES.md
+</footer>
+
+<script>
+/*F3-CONDUCTOR-BEGIN*/
+// F3 conductor — four laws (cliff / follow [±gate+source] / spring), one integrator,
+// one rAF per conductor, joint park predicate, PRM seats, per-channel registered-var publication.
+// Direction-asymmetric constants via open:/close: overrides. No authored timelines.
+function makeConductor(spec) {
+  var TAU2 = Math.PI * 2;
+  var tempo = spec.tempo != null ? spec.tempo : 1;
+  var el = spec.el || null;
+  var prefix = spec.prefix || "--ch-";
+  var prm = spec.prm || function () { return false; };
+  var now = spec.now || function () { return performance.now(); };
+  var raf = spec.raf || function (fn) { return requestAnimationFrame(fn); };
+  var caf = spec.caf || function (id) { cancelAnimationFrame(id); };
+  var perf = spec.perf || null;
+
+  var EPS = 1e-3, VEPS = 5e-3;
+  var chans = [], byName = {};
+  Object.keys(spec.channels).forEach(function (name) {
+    var c = {
+      name: name, def: spec.channels[name],
+      x: 0, v: 0, target: 0, delayedOK: true,
+      holdUntil: -1, gateUntil: -1,
+    };
+    chans.push(c); byName[name] = c;
+  });
+
+  var rafId = 0, parked = true, lastT = -1, mode = "seat", tickCount = 0;
+  var frameHooks = [];
+
+  function T(def, dir, key, dflt) {
+    var ov = dir === "close" ? def.close : def.open;
+    var v = ov && ov[key] != null ? ov[key] : def[key] != null ? def[key] : dflt;
+    return v * tempo;
+  }
+  function shaped(c, g) {
+    var sat = c.def.sat;
+    if (sat != null) return Math.min(1, Math.max(0, g / sat));
+    return g;
+  }
+
+  function stepChannel(c, t, dt) {
+    var def = c.def;
+    var dir = c.target < c.x - 1e-9 ? "close" : "open";
+    if (def.law === "follow") {
+      if (def.delay != null && t < c.gateUntil) return; // dead-time gate on own response
+      var goal = def.source ? byName[def.source].x : c.target;
+      var tau = T(def, dir, "tau", 0.07);
+      c.x += (goal - c.x) * (1 - Math.exp(-dt / tau));
+    } else if (def.law === "cliff") {
+      if (mode === "release" && dir === "close" && c.holdUntil > 0) {
+        if (t < c.holdUntil) return; // release hold — the medium persists
+        var tc = T(def, "close", "tau", 0.17);
+        c.x += (c.target - c.x) * (1 - Math.exp(-dt / tc));
+      } else {
+        var to = T(def, "open", "tau", def.tau != null ? def.tau : 0.03);
+        c.x += (c.target - c.x) * (1 - Math.exp(-dt / to));
+      }
+    } else if (def.law === "spring") {
+      var resp = T(def, dir, "response", 0.6);
+      var zeta = dir === "close" && def.close && def.close.zeta != null ? def.close.zeta
+               : def.zeta != null ? def.zeta : 1.0;
+      var wn = TAU2 / resp;
+      var h = dt / 8;
+      for (var i = 0; i < 8; i++) { // semi-implicit Euler, sub-stepped x8
+        c.v += (wn * wn * (c.target - c.x) - 2 * zeta * wn * c.v) * h;
+        c.x += c.v * h;
+      }
+    }
+  }
+
+  function settled(t) {
+    for (var i = 0; i < chans.length; i++) {
+      var c = chans[i], def = c.def;
+      if (Math.abs(c.x - c.target) > EPS) return false;
+      if (def.law === "spring" && Math.abs(c.v) > VEPS) return false;
+      if (def.law === "follow" && def.source) {
+        if (Math.abs(byName[def.source].x - c.target) > EPS) return false;
+        if (t < c.gateUntil) return false;
+      }
+    }
+    return true;
+  }
+
+  function publish() {
+    if (!el) return;
+    for (var i = 0; i < chans.length; i++) {
+      el.style.setProperty(prefix + chans[i].name, chans[i].x.toFixed(4));
+    }
+  }
+
+  function tick(ts) {
+    var p0 = perf ? now() : 0;
+    rafId = 0;
+    var t = ts / 1000;
+    if (lastT < 0) lastT = t - 1 / 240;
+    var dt = t - lastT;
+    lastT = t;
+    if (dt <= 0) dt = 1e-4;
+    if (dt > 0.05) dt = 0.05; // clamp tab-switch gaps
+    for (var i = 0; i < chans.length; i++) stepChannel(chans[i], t, dt);
+    tickCount++;
+    publish();
+    for (var j = 0; j < frameHooks.length; j++) frameHooks[j](t, dt);
+    if (settled(t)) {
+      for (var k = 0; k < chans.length; k++) {
+        var c = chans[k];
+        c.x = c.target; c.v = 0; c.holdUntil = -1;
+      }
+      publish();
+      parked = true; // the rAF loop is gone — the park assertion watches tickCount
+    } else {
+      rafId = raf(tick);
+    }
+    if (perf) perf(ts, now() - p0);
+  }
+
+  function wake() {
+    var wasParked = parked;
+    parked = false;
+    if (wasParked) {
+      var tNow = now() / 1000;
+      for (var i = 0; i < chans.length; i++) {
+        var c = chans[i];
+        if (c.def.law === "follow" && c.def.delay != null) {
+          c.gateUntil = tNow + c.def.delay * tempo; // gate set on wake-from-parked
+        }
+      }
+      lastT = -1;
+    }
+    if (!rafId) rafId = raf(tick);
+  }
+
+  function scrub(g) {
+    if (prm()) return seat(g);
+    mode = "scrub";
+    for (var i = 0; i < chans.length; i++) {
+      var c = chans[i];
+      c.target = shaped(c, g);
+      c.holdUntil = -1; // a catch cancels any release hold
+    }
+    wake();
+  }
+  function release(g, v) {
+    if (prm()) return seat(g);
+    mode = "release";
+    var t = now() / 1000;
+    for (var i = 0; i < chans.length; i++) {
+      var c = chans[i];
+      var tgt = shaped(c, g);
+      if (c.def.law === "cliff") {
+        c.holdUntil = tgt < c.x - 1e-6 ? t + T(c.def, "close", "hold", 0.25) : -1;
+      }
+      if (c.def.law === "spring") c.v = v || 0;
+      c.target = tgt;
+    }
+    wake();
+  }
+  function seat(g) {
+    mode = "seat";
+    for (var i = 0; i < chans.length; i++) {
+      var c = chans[i];
+      c.target = shaped(c, g);
+      c.x = c.target; c.v = 0; c.holdUntil = -1; c.gateUntil = -1;
+    }
+    if (rafId) { caf(rafId); rafId = 0; }
+    parked = true; lastT = -1;
+    publish();
+  }
+
+  return {
+    scrub: scrub, release: release, seat: seat,
+    get: function (name) { return byName[name].x; },
+    isParked: function () { return parked; },
+    ticks: function () { return tickCount; },
+    onFrame: function (fn) { frameHooks.push(fn); },
+    destroy: function () { if (rafId) caf(rafId); rafId = 0; frameHooks.length = 0; parked = true; },
+  };
+}
+/*F3-CONDUCTOR-END*/
+
+// ---------------- page wiring ----------------
+var MANIFEST = {
+  channels: {
+    medium:    { law: "cliff",  tau: 0.03, sat: 0.12, close: { hold: 0.25, tau: 0.17 } },
+    geometry:  { law: "spring", response: 0.6, zeta: 1.0 },
+    content:   { law: "follow", tau: 0.07, close: { tau: 0.055 } },
+    periphery: { law: "follow", tau: 0.07, delay: 0.10, source: "content" },
+  },
+};
+document.getElementById("manifest-dump").textContent = JSON.stringify(MANIFEST, null, 2) +
+  "\n// geometry (response 0.6, zeta 1.0) is the probe rack that produced the accepted table;" +
+  "\n// SPEC-F3 s1 writes preset:\"dock\" here - discrepancy flagged in PROBE-NOTES.md";
+
+function $(id) { return document.getElementById(id); }
+function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+function fmtMs(s) { return isNaN(s) ? "NaN" : (s * 1000).toFixed(0) + " ms"; }
+
+var prmMedia = matchMedia("(prefers-reduced-motion: reduce)");
+function prmActive() { return prmMedia.matches || $("simprm").checked; }
+function prmBadge() { $("prmbadge").classList.toggle("show", prmActive()); }
+prmMedia.addEventListener("change", prmBadge);
+$("simprm").addEventListener("change", prmBadge);
+prmBadge();
+
+var PERF = { on: false, frames: new Map() };
+function perfHook(ts, ms) {
+  if (!PERF.on) return;
+  PERF.frames.set(ts, (PERF.frames.get(ts) || 0) + ms);
+}
+
+var tpl = $("stage-tpl");
+function stamp(host, mini) {
+  var node = tpl.content.firstElementChild.cloneNode(true);
+  if (mini) {
+    var wrap = document.createElement("div");
+    wrap.className = "mini";
+    wrap.appendChild(node);
+    host.appendChild(wrap);
+    node.wrapEl = wrap;
+  } else {
+    host.appendChild(node);
+  }
+  return node;
+}
+var mainStage = stamp($("main-wrap"), false);
+var miniA = stamp($("minis"), true);
+var miniB = stamp($("minis"), true);
+
+function makeFor(stage, tempo) {
+  return makeConductor({
+    el: stage, channels: MANIFEST.channels, tempo: tempo || 1,
+    prm: prmActive, perf: perfHook,
+  });
+}
+
+var mainCond, recHook = null, osTrack = null, fpsEMA = 0;
+function attachMain(cond) {
+  cond.onFrame(function (t, dt) {
+    fpsEMA = fpsEMA ? fpsEMA * 0.9 + dt * 0.1 : dt;
+    $("h-g").textContent = cond.get("geometry").toFixed(3);
+    $("h-x").textContent = cond.get("geometry").toFixed(3);
+    $("h-fps").textContent = fpsEMA > 0 ? (1 / fpsEMA).toFixed(0) : "—";
+    if (osTrack) {
+      var x = cond.get("geometry");
+      var o = osTrack.target === 1 ? x - 1 : -x;
+      if (o > osTrack.max) osTrack.max = o;
+      $("h-os").textContent = (osTrack.max * 100).toFixed(1) + "%";
+    }
+    if (recHook) recHook(t, dt);
+  });
+}
+function rebuildMain(tempo) {
+  var g = mainCond ? mainCond.get("geometry") : 0;
+  if (mainCond) mainCond.destroy();
+  mainCond = makeFor(mainStage, tempo);
+  attachMain(mainCond);
+  mainCond.seat(g);
+}
+rebuildMain(1);
+var condA = makeFor(miniA, 1);
+var condB = makeFor(miniB, 1);
+condA.seat(0); condB.seat(0);
+
+setInterval(function () {
+  $("h-state").textContent = mainCond.isParked() ? "PARKED" : "running";
+  $("h-ticks").textContent = String(mainCond.ticks());
+  if (mainCond.isParked()) $("h-fps").textContent = "— (parked)";
+}, 250);
+
+$("slowmo").addEventListener("change", function () {
+  rebuildMain($("slowmo").checked ? 4 : 1);
+});
+
+// ---- drag: everything is a scrub ----
+var drag = null, batteryRunning = false;
+function rubber(g) {
+  if (g > 1) return 1 + 0.10 * Math.tanh((g - 1) / 0.10);
+  if (g < 0) return 0.10 * Math.tanh(g / 0.10);
+  return g;
+}
+mainStage.addEventListener("pointerdown", function (e) {
+  if (batteryRunning) return;
+  mainStage.setPointerCapture(e.pointerId);
+  drag = { y0: e.clientY, g0: mainCond.get("geometry"), hist: [[performance.now(), mainCond.get("geometry")]] };
+  mainCond.scrub(drag.g0); // arrest any release in flight — continuity by construction
+});
+mainStage.addEventListener("pointermove", function (e) {
+  if (!drag) return;
+  var g = rubber(drag.g0 + (e.clientY - drag.y0) / 260);
+  var tn = performance.now();
+  drag.hist.push([tn, g]);
+  while (drag.hist.length > 2 && drag.hist[0][0] < tn - 120) drag.hist.shift();
+  mainCond.scrub(g);
+});
+function endDrag() {
+  if (!drag) return;
+  var h = drag.hist, v = 0;
+  if (h.length >= 2) {
+    var a = h[0], b = h[h.length - 1];
+    var dtm = b[0] - a[0];
+    if (dtm > 20) v = ((b[1] - a[1]) / dtm) * 1000; // units/s
+  }
+  var gNow = h[h.length - 1][1];
+  var target = gNow + v * 0.15 > 0.5 ? 1 : 0;
+  osTrack = { target: target, max: 0 };
+  $("h-v").textContent = v.toFixed(2) + "/s";
+  mainCond.release(target, v);
+  drag = null;
+}
+mainStage.addEventListener("pointerup", endDrag);
+mainStage.addEventListener("pointercancel", endDrag);
+
+// ---- measurement helpers ----
+function record(cond) {
+  var samples = [];
+  recHook = function (t) {
+    samples.push({
+      t: t,
+      m: cond.get("medium"), g: cond.get("geometry"),
+      c: cond.get("content"), p: cond.get("periphery"),
+    });
+  };
+  return {
+    samples: samples,
+    stop: function () { recHook = null; },
+    rel: function (t0) {
+      return samples.map(function (s) {
+        return { t: s.t - t0, m: s.m, g: s.g, c: s.c, p: s.p };
+      });
+    },
+  };
+}
+function crossing(S, key, thr, rising) {
+  for (var i = 1; i < S.length; i++) {
+    var a = S[i - 1][key], b = S[i][key];
+    if (rising ? a < thr && b >= thr : a > thr && b <= thr) {
+      var f = (thr - a) / (b - a || 1e-9);
+      return S[i - 1].t + f * (S[i].t - S[i - 1].t);
+    }
+  }
+  return NaN;
+}
+function parkedP(cond) {
+  return new Promise(function (res) {
+    var t0 = performance.now();
+    (function poll() {
+      if (cond.isParked() || performance.now() - t0 > 6000) return res();
+      setTimeout(poll, 25);
+    })();
+  });
+}
+function setRow(mid, vid, text, verdict) {
+  $(mid).textContent = text;
+  var v = $(vid);
+  v.textContent = verdict === "ok" ? "PASS" : verdict === "bad" ? "FAIL" : verdict === "info" ? "info" : "·";
+  v.className = verdict === "ok" ? "ok" : verdict === "bad" ? "bad" : "na";
+}
+function inBand(x, lo, hi) { return !isNaN(x) && x >= lo && x <= hi; }
+
+// ---- measured drives ----
+async function measureOpen() {
+  mainCond.seat(0);
+  await sleep(80);
+  var rec = record(mainCond);
+  var t0 = performance.now() / 1000;
+  mainCond.release(1, 0);
+  await parkedP(mainCond);
+  rec.stop();
+  var S = rec.rel(t0);
+  var om = crossing(S, "m", 0.90, true);
+  var of = crossing(S, "c", 0.90, true);
+  var og = crossing(S, "g", 0.99, true);
+  var op = crossing(S, "p", 0.90, true);
+  var ratio = of / og;
+  var lag = op - of;
+  var settleMs = S.length ? S[S.length - 1].t : NaN;
+  setRow("m-om", "v-om", fmtMs(om), om <= 0.100 ? "ok" : "bad");
+  setRow("m-of", "v-of", fmtMs(of), inBand(of, 0.130, 0.270) ? "ok" : "bad");
+  setRow("m-og", "v-og", fmtMs(og), inBand(og, 0.560, 0.700) ? "ok" : "bad");
+  setRow("m-or", "v-or", ratio.toFixed(3), inBand(ratio, 0.20, 0.31) ? "ok" : "bad");
+  setRow("m-op", "v-op", fmtMs(lag), inBand(lag, 0.060, 0.180) ? "ok" : "bad");
+  return settleMs;
+}
+async function measureParked(settleMs) {
+  var t0 = mainCond.ticks();
+  await sleep(600);
+  var extra = mainCond.ticks() - t0;
+  setRow("m-pk", "v-pk", extra + " ticks (settle @ " + fmtMs(settleMs) + ")", extra === 0 ? "ok" : "bad");
+}
+async function measureClose() {
+  // assumes open + parked
+  var rec = record(mainCond);
+  var t0 = performance.now() / 1000;
+  mainCond.release(0, 0);
+  await parkedP(mainCond);
+  rec.stop();
+  var S = rec.rel(t0);
+  var cc = crossing(S, "c", 0.05, false);
+  var mr = crossing(S, "m", 0.90, false);
+  var cm = crossing(S, "m", 0.10, false);
+  var beat = mr - cc;
+  setRow("m-cc", "v-cc", fmtMs(cc), inBand(cc, 0.110, 0.210) ? "ok" : "bad");
+  setRow("m-cb", "v-cb", fmtMs(beat), inBand(beat, 0.080, 0.220) ? "ok" : "bad");
+  setRow("m-cm", "v-cm", fmtMs(cm), inBand(cm, 0.560, 0.720) ? "ok" : "bad");
+}
+async function measureInterrupt() {
+  // from open+parked: flick-dismiss, catch at +120 ms, hold ~160 ms, re-open
+  mainCond.release(1, 0);
+  await parkedP(mainCond);
+  var rec = record(mainCond);
+  mainCond.release(0, 0);
+  await sleep(120);
+  var gCatch = mainCond.get("geometry");
+  mainCond.scrub(gCatch);
+  await sleep(55); mainCond.scrub(gCatch + 0.01);
+  await sleep(55); mainCond.scrub(gCatch - 0.005);
+  await sleep(55);
+  mainCond.release(1, 0.8);
+  await parkedP(mainCond);
+  rec.stop();
+  var S = rec.samples;
+  var mediumMin = Infinity, maxStep = 0, dtMax = 0, nan = false;
+  for (var i = 0; i < S.length; i++) {
+    if (S[i].m < mediumMin) mediumMin = S[i].m;
+    ["m", "g", "c", "p"].forEach(function (k) {
+      if (isNaN(S[i][k])) nan = true;
+      if (i > 0) {
+        var st = Math.abs(S[i][k] - S[i - 1][k]);
+        if (st > maxStep) maxStep = st;
+      }
+    });
+    if (i > 0) {
+      var d = S[i].t - S[i - 1].t;
+      if (d > dtMax) dtMax = d;
+    }
+  }
+  var bound = 1 - Math.exp(-Math.min(dtMax, 0.05) / 0.055);
+  var okMin = mediumMin >= 0.9995 && !nan;
+  var okStep = maxStep <= bound * 1.15 && !nan;
+  setRow("m-im", "v-im", mediumMin.toFixed(4), okMin ? "ok" : "bad");
+  setRow("m-is", "v-is", maxStep.toFixed(3) + " (bound " + bound.toFixed(3) + " @ dt " + (dtMax * 1000).toFixed(1) + " ms)", okStep ? "ok" : "bad");
+}
+async function measureTempo() {
+  var tc = makeConductor({ el: null, channels: MANIFEST.channels, tempo: 1.3, prm: function () { return false; } });
+  var samples = [];
+  var t0 = performance.now() / 1000;
+  tc.onFrame(function (t) {
+    samples.push({ t: t - t0, c: tc.get("content"), g: tc.get("geometry") });
+  });
+  tc.seat(0);
+  tc.release(1, 0);
+  await parkedP(tc);
+  tc.destroy();
+  var of = crossing(samples, "c", 0.90, true);
+  var og = crossing(samples, "g", 0.99, true);
+  var ratio = of / og;
+  setRow("m-tp", "v-tp", ratio.toFixed(3) + " (fade " + fmtMs(of) + " / stretch " + fmtMs(og) + ")",
+    inBand(ratio, 0.20, 0.31) ? "ok" : "bad");
+}
+async function runStress() {
+  document.querySelectorAll(".mini").forEach(function (m) { m.classList.add("show"); });
+  PERF.frames.clear(); PERF.on = true;
+  var conds = [mainCond, condA, condB];
+  var t0 = performance.now();
+  for (var cyc = 0; cyc < 8; cyc++) {
+    var open = cyc % 2 === 0;
+    conds.forEach(function (c, i) { c.release(open ? 1 : 0, 0); });
+    await sleep(650);
+  }
+  await parkedP(mainCond); await parkedP(condA); await parkedP(condB);
+  PERF.on = false;
+  var dur = (performance.now() - t0) / 1000;
+  var vals = Array.from(PERF.frames.values());
+  var total = vals.reduce(function (a, b) { return a + b; }, 0);
+  var avg = vals.length ? total / vals.length : 0;
+  var mx = vals.length ? Math.max.apply(null, vals) : 0;
+  var fps = vals.length / dur;
+  setRow("m-st", "v-st",
+    "avg " + avg.toFixed(2) + " ms · max " + mx.toFixed(2) + " ms · ~" + fps.toFixed(0) + " fps over " + dur.toFixed(1) + " s",
+    "info");
+}
+
+// ---- battery ----
+async function runBattery() {
+  if (batteryRunning) return;
+  if (prmActive()) {
+    $("summary").textContent = "PRM active — drives seat instantly; the timing battery is not applicable. Uncheck simulate-PRM (and the OS setting) to measure.";
+    return;
+  }
+  batteryRunning = true;
+  document.querySelectorAll("button").forEach(function (b) { b.disabled = true; });
+  if ($("slowmo").checked) { $("slowmo").checked = false; rebuildMain(1); }
+  $("summary").textContent = "Battery running…";
+  try {
+    var settleMs = await measureOpen();
+    await measureParked(settleMs);
+    await measureClose();
+    await measureInterrupt();
+    await measureTempo();
+    var passes = 0, fails = 0;
+    ["v-om","v-of","v-og","v-or","v-op","v-cc","v-cb","v-cm","v-im","v-is","v-pk","v-tp"].forEach(function (id) {
+      var cl = $(id).className;
+      if (cl === "ok") passes++; else if (cl === "bad") fails++;
+    });
+    $("summary").textContent = "Battery done — " + passes + "/12 PASS" + (fails ? ", " + fails + " FAIL" : "") +
+      " · " + new Date().toLocaleTimeString() + " · display rAF quantization applies (±1 frame at 60 fps per SPEC §5).";
+  } finally {
+    batteryRunning = false;
+    document.querySelectorAll("button").forEach(function (b) { b.disabled = false; });
+  }
+}
+
+$("b-battery").addEventListener("click", runBattery);
+$("b-open").addEventListener("click", function () { osTrack = { target: 1, max: 0 }; mainCond.release(1, 0); });
+$("b-close").addEventListener("click", function () { osTrack = { target: 0, max: 0 }; mainCond.release(0, 0); });
+$("b-int").addEventListener("click", async function () {
+  if (batteryRunning) return;
+  batteryRunning = true;
+  try { await measureInterrupt(); } finally { batteryRunning = false; }
+});
+$("b-stress").addEventListener("click", async function () {
+  if (batteryRunning) return;
+  batteryRunning = true;
+  try { await runStress(); } finally { batteryRunning = false; }
+});
+
+// initial state: seated closed, parked, zero rAF
+mainCond.seat(0);
+</script>
+</body>
+</html>

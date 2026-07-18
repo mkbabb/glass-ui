@@ -1,0 +1,984 @@
+<!doctype html>
+<!--
+  F4 ENERGY-FIELD prototype — IOS27-MICRO pass 1.
+  verified-model: claude-fable-5
+
+  Proves the family's riskiest claim (SPEC-F4 §5): per-frame per-element energy writes
+  stay cheap at realistic fan-out (~50 consumers, dirty-checked, non-inheriting registered
+  properties), and the five role verbs read as life off ONE scalar. Self-contained: no
+  build, no network, open in Safari 26 / Chrome.
+
+  The contract on display:
+    --energy / --energy-x / --energy-y   <number>, inherits:false, initial 0 — the triple
+    E = tanh(|v|/1000), v in px/s        — continuous with the shipped tanh(0.06*px/frame)@60
+    channels: pointer | scroll | spring  — kind-exclusive, regime-gated, MAX residual fold
+    roles: container/control/content/lens/periphery — closed five, gains+caps writer-side
+    write discipline: event-window rAF only; bleed via typed-property transition; PRM pins 0
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>F4 ENERGY-FIELD — momentum as a style contract</title>
+<style>
+/* ============ the contract: registered, typed, non-inheriting ============ */
+@property --energy   { syntax: "<number>"; inherits: false; initial-value: 0; }
+@property --energy-x { syntax: "<number>"; inherits: false; initial-value: 0; }
+@property --energy-y { syntax: "<number>"; inherits: false; initial-value: 0; }
+/* engagement envelope (event-written, velocity-independent) */
+@property --charge   { syntax: "<number>"; inherits: false; initial-value: 0; }
+/* carrier STAND-INS — not part of the F4 contract; position is carrier-plane */
+@property --carrier-y { syntax: "<number>"; inherits: false; initial-value: 0; }
+@property --carrier-s { syntax: "<number>"; inherits: false; initial-value: 0; }
+
+/* ============ chrome ============ */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  font: 13px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: #07090e; color: #d7dde6;
+  display: flex; align-items: stretch; justify-content: center; gap: 22px;
+  padding: 18px; min-height: 100vh;
+}
+button { font: inherit; cursor: pointer; }
+
+/* ============ the phone ============ */
+.phone {
+  position: relative; width: 402px; min-width: 402px; height: 812px;
+  border-radius: 54px; overflow: hidden; align-self: center;
+  border: 1px solid rgba(255,255,255,.09);
+  box-shadow: 0 30px 80px rgba(0,0,0,.6);
+  display: flex; flex-direction: column; padding: 22px 14px 16px;
+  isolation: isolate; user-select: none; -webkit-user-select: none;
+}
+/* static background art — the backdrop-filter substrate. no idle animation anywhere. */
+.bg-art { position: absolute; inset: 0; z-index: -1; background:
+  radial-gradient(420px 340px at 18% 12%, #14b8a6cc, transparent 65%),
+  radial-gradient(500px 420px at 88% 30%, #6366f1b8, transparent 62%),
+  radial-gradient(430px 380px at 30% 78%, #f59e0b7a, transparent 60%),
+  radial-gradient(360px 320px at 78% 92%, #ec48997a, transparent 64%),
+  linear-gradient(175deg, #0b1220, #101826 55%, #0b1120);
+}
+.bg-art::after { content: ""; position: absolute; inset: 0; background:
+  repeating-linear-gradient(115deg, rgba(255,255,255,.045) 0 2px, transparent 2px 46px),
+  repeating-linear-gradient(25deg, rgba(0,0,0,.10) 0 3px, transparent 3px 60px);
+}
+
+/* ============ two-tier glass (MARKS §4) ============ */
+.glass-container {
+  background: rgba(18, 26, 38, .42);
+  -webkit-backdrop-filter: blur(26px) saturate(1.65);
+  backdrop-filter: blur(26px) saturate(1.65);
+  border: 1px solid rgba(255,255,255,.13);
+  /* the 1px top rim light — load-bearing for the lit-from-above read */
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.20), 0 14px 34px rgba(0,0,0,.35);
+}
+.glass-control {
+  background: rgba(255,255,255,.15);
+  -webkit-backdrop-filter: blur(10px) saturate(1.4);
+  backdrop-filter: blur(10px) saturate(1.4);
+  border: 1px solid rgba(255,255,255,.24);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.30);
+}
+
+/* ============ role verbs — five verbs off one scalar ============ */
+/* CONTAINER — anisotropic smear along the travel axis, volume-preserving first order.
+   Composes with the carrier stand-in (translate + overpull compression + energy-modulated
+   taffy stretch: the pre-commit tell, stretch scales WITH pull energy). */
+.role-container {
+  transform-origin: 50% 100%;
+  transform:
+    translateY(calc(var(--carrier-y) * 1px))
+    scaleX(calc((1 - 0.075 * max(0 - var(--carrier-s), 0) + 0.045 * max(var(--carrier-s), 0))
+                * (1 - 0.05 * abs(var(--energy-y)) + 0.06 * abs(var(--energy-x)))))
+    scaleY(calc((1 - 0.21 * max(0 - var(--carrier-s), 0)
+                   + 0.16 * max(var(--carrier-s), 0) * (0.35 + 0.65 * var(--energy)))
+                * (1 + 0.10 * abs(var(--energy-y)) - 0.04 * abs(var(--energy-x)))));
+}
+/* CONTENT — counter-lag; deforms WITH the glass (one-body: same --carrier-s, explicit coupling) */
+.role-content {
+  transform:
+    translateY(calc(var(--energy-y) * -8px))
+    scale(calc(1 - 0.16 * max(0 - var(--carrier-s), 0) + 0.06 * max(var(--carrier-s), 0)));
+}
+/* LENS — bloom: light, not geometry (scale is the light body, labels stay above it) */
+.role-lens { transform: scale(calc(1 + 0.16 * var(--energy) + 0.05 * var(--charge))); }
+/* PERIPHERY — the ~100ms delayed echo via a typed-property transition (no JS delay) */
+.role-periphery { transition: --energy 100ms linear; }
+
+/* ============ threshold grammar (glow theta 0.25 / specular theta 0.6) ============ */
+.glow-overlay, .spec-overlay, .wash-overlay, .bloom-overlay {
+  position: absolute; pointer-events: none; border-radius: inherit;
+}
+.glow-overlay { inset: -2px;
+  background: radial-gradient(120% 90% at 50% 100%, rgba(125, 226, 255, .32), transparent 70%);
+  opacity: clamp(0, (var(--energy) - 0.25) / 0.75, 1);
+}
+/* specular NEVER idle: gated at 0.6 OR lit by the engagement envelope (MARKS §4) */
+.spec-overlay { inset: 0; overflow: hidden;
+  background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,.38) 46%,
+    rgba(255,255,255,.10) 52%, transparent 68%);
+  opacity: calc(clamp(0, (var(--energy) - 0.6) / 0.4, 1) * 0.9 + var(--charge) * 0.5);
+}
+.wash-overlay { inset: 0;
+  background: linear-gradient(180deg, rgba(140, 230, 255, .30), rgba(140, 230, 255, .06));
+  opacity: calc(var(--energy) * 0.55 + var(--charge) * 0.40);
+}
+.bloom-overlay { inset: -14px -18px;
+  background: radial-gradient(60% 80% at 50% 50%, rgba(160, 235, 255, .85), rgba(120, 200, 255, .25) 55%, transparent 75%);
+  filter: blur(2px);
+  opacity: calc(var(--energy) * 0.85 + var(--charge) * 0.55);
+}
+
+/* ============ components ============ */
+.list-card { position: relative; flex: 1; min-height: 0; border-radius: 26px;
+  display: flex; flex-direction: column; margin-bottom: 12px; }
+.list-card > header { padding: 14px 18px 8px; font-weight: 650; font-size: 17px; color: #fff; }
+.list-card ul { list-style: none; overflow-y: auto; flex: 1; min-height: 0;
+  padding: 2px 10px 12px; overscroll-behavior: contain; }
+.list-card li { display: flex; align-items: center; gap: 12px; padding: 10px 10px;
+  border-radius: 14px; }
+.list-card li + li { margin-top: 2px; }
+.list-card li .dot { width: 30px; height: 30px; border-radius: 50%; flex: none;
+  background: radial-gradient(circle at 32% 30%, rgba(255,255,255,.85), rgba(255,255,255,.12) 55%),
+    var(--dot-hue, #2dd4bf); opacity: .92; }
+.list-card li .lines { flex: 1; }
+.list-card li .lines b { display: block; font-size: 13px; color: #fff; font-weight: 560; }
+.list-card li .lines span { display: block; font-size: 11px; color: #9fb0c3; }
+
+.tabbar { position: relative; height: 62px; border-radius: 31px; flex: none;
+  display: grid; grid-template-columns: repeat(4, 1fr); align-items: center;
+  margin-bottom: 12px; }
+.tabbar .tab { position: relative; z-index: 2; background: none; border: 0;
+  color: #cfd9e6; font-size: 12px; font-weight: 560; height: 100%; border-radius: 26px;
+  touch-action: manipulation; }
+.tabbar .tab .ico { display: block; font-size: 17px; line-height: 1.1; }
+.tabbar .tab[aria-selected="true"] { color: #fff; }
+.lens { position: absolute; z-index: 1; top: 6px; left: 6px; width: calc(25% - 8px);
+  height: 50px; border-radius: 25px; }
+.lens .bloom-overlay { z-index: -1; }
+
+.dock-row { display: flex; gap: 10px; align-items: stretch; flex: none; margin-bottom: 12px; }
+.dock { position: relative; flex: 1; height: 64px; border-radius: 32px;
+  display: flex; align-items: center; gap: 10px; padding: 0 18px;
+  touch-action: none; cursor: grab; }
+.dock:active { cursor: grabbing; }
+.dock .d-glyph { font-size: 17px; opacity: .85; }
+.dock .d-title { flex: 1; color: #e8eef6; font-size: 15px; font-weight: 520; }
+.dock .d-avatar { width: 34px; height: 34px; border-radius: 50%; flex: none;
+  background: radial-gradient(circle at 35% 30%, #fca5a5, #b45309 70%); }
+.rail { width: 40px; flex: none; display: flex; flex-direction: column; gap: 8px;
+  justify-content: center; align-items: center; }
+.rail .r-dot { width: 26px; height: 26px; border-radius: 50%;
+  display: grid; place-items: center; font-size: 12px;
+  opacity: calc(0.45 + 0.5 * var(--energy));
+  transform: scale(calc(1 + 0.14 * var(--energy))); }
+
+.slider-strip { flex: none; padding: 0 6px; }
+.slider { position: relative; height: 40px; border-radius: 20px; touch-action: none; }
+.slider .fill { position: absolute; inset: 0; border-radius: inherit; overflow: hidden; }
+.slider .fill::before { content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.78)); }
+/* CONTROL — glows before it deforms: the cast ring ramps from e=0, the geometry only past 0.5 */
+.slider .fill { transform-origin: left center;
+  transform: scaleX(calc(var(--val, 0.55) * (1 + 0.08 * var(--energy)))); }
+.slider .cast { position: absolute; inset: 0; border-radius: inherit;
+  background: linear-gradient(180deg, rgba(160,225,255,.35), rgba(160,225,255,.10));
+  transform-origin: left center;
+  transform: translateX(calc(var(--energy-x) * -10px)) scaleX(var(--val, 0.55));
+  opacity: calc(0.25 + 0.75 * var(--energy)); }
+/* pre-painted glow, opacity-driven — the ring never animates a paint property */
+.knob-ring { position: absolute; top: 50%; width: 54px; height: 54px; border-radius: 50%;
+  pointer-events: none;
+  border: 2px solid rgba(170, 230, 255, .6);
+  box-shadow: 0 0 18px rgba(140, 220, 255, .55), inset 0 0 10px rgba(140, 220, 255, .3);
+  opacity: calc(0.12 + 0.88 * var(--energy));
+  transform: translate(-50%, -50%) scale(calc(1 + 0.05 * clamp(0, (var(--energy) - 0.5) / 0.5, 1))); }
+
+/* ============ readout panel ============ */
+.panel { width: 430px; min-width: 380px; overflow-y: auto; border-radius: 18px;
+  background: #0d1119; border: 1px solid #1d2534; padding: 16px 18px;
+  font: 11.5px/1.5 ui-monospace, "SF Mono", Menlo, monospace; color: #aab7c9; }
+.panel h1 { font-size: 13px; color: #e8eef6; letter-spacing: .4px; margin-bottom: 2px; }
+.panel .sub { color: #5d6b80; margin-bottom: 12px; }
+.panel h2 { font-size: 11px; color: #7ee2ff; text-transform: uppercase;
+  letter-spacing: .12em; margin: 16px 0 6px; }
+.panel table { width: 100%; border-collapse: collapse; }
+.panel td, .panel th { text-align: left; padding: 1.5px 6px 1.5px 0; white-space: nowrap; }
+.panel th { color: #5d6b80; font-weight: 500; }
+.panel .num { text-align: right; }
+.pass { color: #4ade80; } .fail { color: #f87171; } .dim { color: #5d6b80; }
+.gest { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 4px; }
+.gest button { background: #16202f; color: #cfe3f5; border: 1px solid #24334a;
+  border-radius: 9px; padding: 6px 10px; font-size: 11px; }
+.gest button:hover { background: #1c2a3d; }
+.gest button.on { background: #274257; border-color: #7ee2ff; color: #fff; }
+.ebar { display: inline-block; width: 90px; height: 7px; border-radius: 4px;
+  background: #1a2434; vertical-align: middle; margin-left: 6px; overflow: hidden; }
+.ebar i { display: block; height: 100%; width: 100%; border-radius: 4px;
+  background: linear-gradient(90deg, #22d3ee, #7ee2ff);
+  transform-origin: left center; transform: scaleX(0); }
+.foot { margin-top: 14px; color: #46536a; font-size: 10.5px; }
+
+/* PRM — real OS setting or the sim toggle; the field pins 0 in JS, transitions collapse here */
+@media (prefers-reduced-motion: reduce) {
+  .role-periphery, .glow-overlay, .spec-overlay, .wash-overlay, .bloom-overlay, .lens, .dock, .list-card
+    { transition-duration: 1ms !important; }
+}
+html.prm-sim .role-periphery { transition-duration: 1ms !important; }
+
+@media (max-width: 900px) { body { flex-direction: column; align-items: center; } }
+</style>
+</head>
+<body>
+
+<section class="phone" id="phone">
+  <div class="bg-art"></div>
+
+  <div class="list-card glass-container role-container" id="listCard">
+    <div class="glow-overlay" id="cardGlow"></div>
+    <header>Devices</header>
+    <ul id="list"></ul>
+  </div>
+
+  <nav class="tabbar glass-container" id="tabbar" aria-label="Find My tabs">
+    <div class="wash-overlay" id="tabWash"></div>
+    <div class="lens glass-control role-lens" id="lens"><div class="bloom-overlay" id="lensBloom"></div></div>
+    <button class="tab" aria-selected="true"><span class="ico">&#128101;</span>People</button>
+    <button class="tab" aria-selected="false"><span class="ico">&#128241;</span>Devices</button>
+    <button class="tab" aria-selected="false"><span class="ico">&#127760;</span>Items</button>
+    <button class="tab" aria-selected="false"><span class="ico">&#128100;</span>Me</button>
+  </nav>
+
+  <div class="dock-row">
+    <div class="dock glass-container role-container" id="dock">
+      <div class="glow-overlay" id="dockGlow"></div>
+      <div class="spec-overlay" id="dockSpec"></div>
+      <span class="d-glyph role-content">&#128269;</span>
+      <span class="d-title role-content">Search Maps</span>
+      <span class="d-glyph role-content">&#127908;</span>
+      <span class="d-avatar role-content"></span>
+    </div>
+    <aside class="rail" id="rail" aria-hidden="true">
+      <div class="r-dot glass-control role-periphery">&#9825;</div>
+      <div class="r-dot glass-control role-periphery">&#9834;</div>
+      <div class="r-dot glass-control role-periphery">&#9737;</div>
+      <div class="r-dot glass-control role-periphery">&#8599;</div>
+    </aside>
+  </div>
+
+  <div class="slider-strip">
+    <div class="slider glass-container" id="slider">
+      <div class="fill" id="sliderFill"></div>
+      <div class="cast" id="sliderCast"></div>
+      <div class="knob-ring" id="knobRing"></div>
+    </div>
+  </div>
+</section>
+
+<aside class="panel">
+  <h1>F4 ENERGY-FIELD &mdash; momentum as a style contract</h1>
+  <div class="sub">verified-model: claude-fable-5 &middot; IOS27-MICRO pass 1 &middot; E = tanh(|v|/1000)</div>
+
+  <div class="gest">
+    <button id="gSlow">slow place 280</button>
+    <button id="gFlick">flick 1150</button>
+    <button id="gFling">fling 2600</button>
+    <button id="gScroll">scroll burst</button>
+    <button id="gPrm">PRM sim: off</button>
+  </div>
+
+  <h2>units &mdash; deterministic, run at load</h2>
+  <div id="units"></div>
+
+  <h2>live field</h2>
+  <table>
+    <tr><th>scope</th><th class="num">E</th><th></th><th class="num">peak</th></tr>
+    <tr><td>dock (pointer+spring)</td><td class="num" id="eDock">0.000</td>
+        <td><span class="ebar"><i id="bDock"></i></span></td><td class="num" id="pDock">&mdash;</td></tr>
+    <tr><td>list (scroll)</td><td class="num" id="eList">0.000</td>
+        <td><span class="ebar"><i id="bList"></i></span></td><td class="num" id="pList">&mdash;</td></tr>
+    <tr><td>slider (pointer, cap .7)</td><td class="num" id="eSlider">0.000</td>
+        <td><span class="ebar"><i id="bSlider"></i></span></td><td class="num" id="pSlider">&mdash;</td></tr>
+    <tr><td>tabs (spring, lens)</td><td class="num" id="eTabs">0.000</td>
+        <td><span class="ebar"><i id="bTabs"></i></span></td><td class="num" id="pTabs">&mdash;</td></tr>
+  </table>
+
+  <h2>write discipline &mdash; the riskiest-claim meters</h2>
+  <table>
+    <tr><th>rAF</th><td id="rafState" class="pass">PARKED</td>
+        <th>idle violations</th><td id="idleViol" class="num">0</td></tr>
+    <tr><th>consumers</th><td id="nCons" class="num">&mdash;</td>
+        <th>writes/frame</th><td id="nWrites" class="num">&mdash;</td></tr>
+    <tr><th>fan-out cost</th><td id="wCost" class="num">&mdash;</td>
+        <th>fps (window)</th><td id="fps" class="num">&mdash;</td></tr>
+    <tr><th>long frames &gt;20ms</th><td id="longF" class="num">0</td>
+        <th>PRM</th><td id="prmState">inactive</td></tr>
+    <tr><th>scroll close edge</th><td id="scrollEdge" colspan="3">&mdash; (U8: scrollend vs 160ms debounce)</td></tr>
+  </table>
+
+  <h2>last gesture</h2>
+  <table>
+    <tr><th>gesture</th><td id="gName" colspan="3">&mdash;</td></tr>
+    <tr><th>peak E</th><td id="gPeak" class="num">&mdash;</td><th>expected</th><td id="gExp" class="num">&mdash;</td></tr>
+    <tr><th>seeded v</th><td id="gSeed" class="num">&mdash;</td><th>overshoot</th><td id="gOver" class="num">&mdash;</td></tr>
+    <tr><th>settle</th><td id="gSettle" class="num">&mdash;</td><th>teardown</th><td id="gTear">&mdash;</td></tr>
+    <tr><th>press&rarr;travel</th><td id="gCharge" colspan="3">&mdash; (charge must lead travel)</td></tr>
+    <tr><th>slider regression</th><td id="gReg" colspan="3">&mdash; (role cap .7 vs shipped law, max |&Delta;|)</td></tr>
+  </table>
+
+  <div class="foot">
+    Judge: drag the dock (overpull down = compress + springback; a fast pull smears and
+    carries deeper than a slow one — same element, same CSS). Press a tab: the bloom + whole-bar
+    wash fire BEFORE the lens travels. Flick the list: rows counter-lag with depth-graded
+    gain; the card smears. Specular streaks appear only above E 0.6 or under press. Idle page
+    = zero rAF, zero motion.<br>verified-model: claude-fable-5
+  </div>
+</aside>
+
+<script>
+"use strict";
+/* =====================================================================================
+   F4 ENERGY-FIELD — the facility, prototype-grade.
+   verified-model: claude-fable-5
+   ===================================================================================== */
+
+/* ---------- 1. the law (pure core — mirrored in the node check) ---------- */
+const ENERGY = (v) => Math.tanh(Math.abs(v) / 1000);      // v in px/s; = tanh(0.06*px/frame) @60fps
+const SIGNED = (v) => Math.tanh(v / 1000);
+const round3 = (x) => Math.round(x * 1000) / 1000;
+
+/* the closed role table — components pick a role, never a number */
+const ROLE_TABLE = {
+  container: { gain: 1.00, cap: 1.0 },   // anisotropic smear, volume-preserving
+  control:   { gain: 1.00, cap: 0.7 },   // glow-then-deform; the shipped slider cap RELOCATED here
+  content:   { gain: 0.55, cap: 1.0 },   // counter-lag; one-body with the container
+  lens:      { gain: 2.20, cap: 1.0 },   // bloom — light, not geometry
+  periphery: { gain: 0.80, cap: 1.0 },   // ~100ms delayed echo (typed-property transition)
+};
+
+/* ---------- 2. PRM ---------- */
+const prmMedia = matchMedia("(prefers-reduced-motion: reduce)");
+let prmSim = false;
+const prmActive = () => prmMedia.matches || prmSim;
+
+/* ---------- 3. the conductor — ONE rAF, event-window gated, no idle loops ---------- */
+const conductor = {
+  scopes: [], drivers: new Set(), running: false, lastT: 0,
+  frames: 0, longFrames: 0, writeCostUs: 0, writesPerFrame: 0, fps: 0,
+  idleViolations: 0, _fpsWin: [],
+  wake() {
+    if (this.running || prmActive()) return;
+    this.running = true; this.lastT = performance.now();
+    requestAnimationFrame(this.tick);
+  },
+  tick: (now) => {
+    const c = conductor;
+    if (!c.running) { c.idleViolations++; readout(true); return; }   // a stray rAF = a violation
+    const dt = Math.min(0.05, Math.max(0.001, (now - c.lastT) / 1000));
+    c.lastT = now;
+
+    for (const d of [...c.drivers]) d(dt, now);
+
+    let anyLive = c.drivers.size > 0;
+    for (const s of c.scopes) anyLive = s.step(dt, now) || anyLive;
+
+    /* the fan-out — timed. THE riskiest-claim meter. */
+    const t0 = performance.now();
+    let writes = 0;
+    for (const s of c.scopes) writes += s.publish();
+    const cost = (performance.now() - t0) * 1000;
+    c.writeCostUs = c.writeCostUs * 0.9 + cost * 0.1;
+    c.writesPerFrame = writes;
+
+    /* instrumentation (runs only inside the window — the parked page is truly silent) */
+    c.frames++;
+    const ft = dt * 1000;
+    if (ft > 20 && c.frames > 2) c.longFrames++;
+    c._fpsWin.push(ft); if (c._fpsWin.length > 30) c._fpsWin.shift();
+    c.fps = 1000 / (c._fpsWin.reduce((a, b) => a + b, 0) / c._fpsWin.length);
+
+    if (!anyLive) {
+      c.running = false; c._fpsWin.length = 0;
+      readout(true);
+      return;                      // the rAF parks. nothing survives the window.
+    }
+    if (c.frames % 8 === 0) readout(false);
+    requestAnimationFrame(c.tick);
+  },
+};
+
+/* ---------- 4. per-element inline-transition composer (bleed vs charge never clobber) ---------- */
+const transMap = new WeakMap();
+function setTrans(el, key, val) {
+  let m = transMap.get(el); if (!m) { m = {}; transMap.set(el, m); }
+  if (val) m[key] = val; else delete m[key];
+  el.style.transition = Object.values(m).join(", ");
+}
+
+/* ---------- 5. the scope — channels (kind-exclusive) + MAX fold + publication ---------- */
+function createScope(name, opts = {}) {
+  const scope = {
+    name, consumers: [], E: 0, ex: 0, ey: 0, peak: 0,
+    pointer: null, scroll: null, spring: null,   // one of each KIND, never two
+    onQuiet: opts.onQuiet || null, _wasLive: false, teardownMode: "—",
+
+    addConsumer(el, role, cfg = {}) {
+      const row = ROLE_TABLE[role];
+      this.consumers.push({ el, role, row, k: cfg.depthGain ?? 1, last: NaN, lastX: NaN, lastY: NaN });
+    },
+
+    step(dt, now) {
+      const kinds = [];
+      if (this.pointer && this.pointer.open) { this.pointer.integrate(dt, now); kinds.push(this.pointer.read()); }
+      if (this.scroll && this.scroll.open)   { this.scroll.integrate(dt, now);  kinds.push(this.scroll.read()); }
+      if (this.spring && this.spring.live) {
+        this.spring.integrate(dt);
+        /* regime gate: a live gesture MUTES the spring kind — the two-regime law */
+        if (!(this.pointer && this.pointer.open)) kinds.push(this.spring.read());
+      }
+      /* residual fold: MAX across kinds (the only inflation-proof fold);
+         hypot across axes happens INSIDE each kind's read() */
+      let E = 0, ex = 0, ey = 0;
+      for (const k of kinds) if (k.e >= E) { E = k.e; ex = k.ex; ey = k.ey; }
+      this.E = E; this.ex = ex; this.ey = ey;
+      if (E > this.peak) this.peak = E;
+
+      const live = kinds.length > 0;
+      if (this._wasLive && !live) this._quiet(now);
+      this._wasLive = live;
+      return live;
+    },
+
+    publish() {
+      let writes = 0;
+      const { E, ex, ey } = this;
+      for (const c of this.consumers) {
+        let e = Math.min(c.row.cap, E * c.row.gain * c.k);
+        const r = E > 1e-6 ? e / E : 0;
+        const vx = round3(ex * r), vy = round3(ey * r); e = round3(e);
+        if (e !== c.last)  { c.el.style.setProperty("--energy", e);    c.last = e;  writes++; }
+        if (vx !== c.lastX) { c.el.style.setProperty("--energy-x", vx); c.lastX = vx; writes++; }
+        if (vy !== c.lastY) { c.el.style.setProperty("--energy-y", vy); c.lastY = vy; writes++; }
+      }
+      return writes;
+    },
+
+    /* teardown — snap when a seeded successor exists; typed-transition bleed otherwise */
+    _quiet(now) {
+      const seeded = this.spring && this.spring.live;
+      if (seeded) { this.teardownMode = "snap (seeded successor)"; return; }
+      if (this.E > 0.05) this.teardownMode = "bleed 150ms (typed transition)";
+      for (const c of this.consumers) {
+        if (c.row === ROLE_TABLE.periphery) continue;     // its own 100ms lag suffices
+        setTrans(c.el, "energy", "--energy .15s ease-out, --energy-x .15s ease-out, --energy-y .15s ease-out");
+        c.el.style.setProperty("--energy", 0); c.el.style.setProperty("--energy-x", 0);
+        c.el.style.setProperty("--energy-y", 0);
+        c.last = 0; c.lastX = 0; c.lastY = 0;
+      }
+      this.E = this.ex = this.ey = 0;
+      if (this.onQuiet) this.onQuiet(now);
+    },
+    clearBleed() {
+      for (const c of this.consumers) setTrans(c.el, "energy", null);
+    },
+  };
+  conductor.scopes.push(scope);
+  return scope;
+}
+
+/* ---------- 6. channels ---------- */
+/* pointer — drag-window rAF, coalesced samples, dt-normalized EMA (shipped 0.35/0.65 @60fps) */
+function pointerChannel(scope) {
+  const ch = {
+    open: false, vx: 0, vy: 0, _sx: 0, _sy: 0, _st: 0, _px: 0, _py: 0, _pt: 0,
+    begin(x, y, t) {
+      if (prmActive()) return;
+      this.open = true; this.vx = this.vy = 0;
+      this._sx = this._px = x; this._sy = this._py = y; this._st = this._pt = t;
+      scope.peak = 0; scope.clearBleed();
+      if (scope.spring) scope.spring.kill();          // scrub catch: a gesture owns the body
+      conductor.wake();
+    },
+    sample(ev) {
+      if (!this.open) return;
+      const evs = ev.getCoalescedEvents ? ev.getCoalescedEvents() : [ev];
+      const last = evs[evs.length - 1] || ev;
+      this._sx = last.clientX; this._sy = last.clientY; this._st = last.timeStamp || performance.now();
+    },
+    synthetic(x, y, t) { this._sx = x; this._sy = y; this._st = t; },
+    integrate(dt) {
+      const keep = Math.pow(0.65, dt / (1 / 60));     // the shipped one-pole, dt-normalized
+      if (this._st <= this._pt) {                     // no fresh sample: decay, do not inject 0
+        this.vx *= keep; this.vy *= keep; return;
+      }
+      const el = Math.max(1, this._st - this._pt);
+      const rx = (this._sx - this._px) / el * 1000, ry = (this._sy - this._py) / el * 1000;
+      this.vx = this.vx * keep + rx * (1 - keep);
+      this.vy = this.vy * keep + ry * (1 - keep);
+      this._px = this._sx; this._py = this._sy; this._pt = this._st;
+    },
+    read() {
+      return { kind: "pointer", e: ENERGY(Math.hypot(this.vx, this.vy)),
+               ex: SIGNED(this.vx), ey: SIGNED(this.vy) };
+    },
+    end() { this.open = false; return { vx: this.vx, vy: this.vy }; },
+  };
+  scope.pointer = ch;
+  return ch;
+}
+
+/* scroll — event-window, closed by scrollend OR the 160ms debounce (U8 raced live) */
+function scrollChannel(scope, el, edgeReport) {
+  const ch = {
+    open: false, v: 0, _pos: 0, _t: 0, _quietMs: 0, _sawEvent: false,
+    integrate(dt) {
+      if (this._sawEvent) { this._sawEvent = false; this._quietMs = 0; }
+      else {
+        this._quietMs += dt * 1000;
+        this.v *= Math.pow(0.02, dt);                 // hard decay when events stop
+        if (this._quietMs > 160) { this.open = false; edgeReport("debounce 160ms"); }
+      }
+    },
+    read() { return { kind: "scroll", e: ENERGY(this.v), ex: 0, ey: SIGNED(this.v) }; },
+  };
+  el.addEventListener("scroll", () => {
+    if (prmActive()) return;
+    const t = performance.now(), pos = el.scrollTop;
+    if (!ch.open) { ch.open = true; ch._pos = pos; ch._t = t; ch.v = 0; scope.peak = 0; scope.clearBleed(); conductor.wake(); }
+    const dtms = Math.max(1, t - ch._t);
+    const raw = (pos - ch._pos) / dtms * 1000;
+    const keep = Math.pow(0.65, dtms / 16.67);
+    ch.v = ch.v * keep + raw * (1 - keep);
+    ch._pos = pos; ch._t = t; ch._sawEvent = true;
+  }, { passive: true });
+  el.addEventListener("scrollend", () => { if (ch.open) { ch.open = false; edgeReport("scrollend"); } });
+  scope.scroll = ch;
+  return ch;
+}
+
+/* spring — response/dampingFraction (probe constants 0.68/0.64), born SEEDED at release */
+function springChannel(scope, opts = {}) {
+  const omega = 2 * Math.PI / (opts.response ?? 0.68), zeta = opts.zeta ?? 0.64;
+  const ch = {
+    live: false, x: 0, v: 0, axis: opts.axis ?? "y",
+    sx0: 1, x0abs: 1, seedV: 0, seedT: 0, overshoot: 0, carry: 0, settleMs: null,
+    onFrame: opts.onFrame || null, onSettle: opts.onSettle || null,
+    seed(x0, v0, now) {
+      if (prmActive()) { if (this.onFrame) this.onFrame(0); return; }
+      this.x = x0; this.v = v0;
+      this.sx0 = x0 !== 0 ? x0 : (v0 < 0 ? -1e-6 : 1e-6);   // the side the body starts on
+      this.x0abs = Math.max(1e-6, Math.abs(x0));
+      this.seedV = v0; this.seedT = now; this.overshoot = 0; this.carry = 0;
+      this.settleMs = null; this.live = true;
+      conductor.wake();
+    },
+    kill() { this.live = false; },
+    integrate(dt) {
+      if (!this.live) return;
+      const a = -omega * omega * this.x - 2 * zeta * omega * this.v;
+      this.v += a * dt; this.x += this.v * dt;
+      const side = Math.sign(this.sx0);
+      if (this.x * side > 0)                              // deeper: the momentum CARRY (MARKS §6)
+        this.carry = Math.max(this.carry, Math.abs(this.x) - this.x0abs);
+      else                                                // past rest: the rebound
+        this.overshoot = Math.max(this.overshoot, Math.abs(this.x));
+      if (this.onFrame) this.onFrame(this.x);
+      if (Math.abs(this.x) < 0.5 && Math.abs(this.v) < 8) {
+        this.live = false;
+        this.settleMs = performance.now() - this.seedT;
+        if (this.onFrame) this.onFrame(0);
+        if (this.onSettle) this.onSettle(this);
+      }
+    },
+    read() {
+      const e = ENERGY(this.v);
+      return { kind: "spring", e, ex: this.axis === "x" ? SIGNED(this.v) : 0,
+               ey: this.axis === "y" ? SIGNED(this.v) : 0 };
+    },
+  };
+  scope.spring = ch;
+  return ch;
+}
+
+/* ---------- 7. delivery — the v-momentum ObjectDirective shape + the composable path ---------- */
+const vMomentum = {
+  mounted(el, binding) {
+    const { arg = "content", value = {} } = binding;
+    value.scope.addConsumer(el, arg, value);       // scope.addConsumer IS the composable path
+  },
+};
+const applyDirective = (el, dir, binding) => dir.mounted(el, binding);
+
+/* ---------- 8. scopes + wiring ---------- */
+const $ = (id) => document.getElementById(id);
+
+const gLog = { name: "—", peak: null, exp: null, seed: null, over: null,
+               overPct: null, settle: null, chargeLead: null, regMax: null };
+
+/* — dock scope: pointer + spring, container/content/periphery, carrier stand-in — */
+const dock = $("dock");
+const dockScope = createScope("dock");
+const dockPtr = pointerChannel(dockScope);
+let dockDisp = 0, dockRawDy = 0, dockS0 = 0;
+const RB_UP = 40, RB_DOWN = 70;                     // MARKS §2: taffy zone / overpull budget
+const rubber = (d, c) => c * (1 - 1 / (1 + (d * 0.55) / c));
+const rubberInv = (d, c) => (c / 0.55) * (d / Math.max(1, c - d));
+
+function writeCarrier(y, s) {
+  const els = [dock, ...dock.querySelectorAll(".role-content")];
+  for (const el of els) {
+    el.style.setProperty("--carrier-y", round3(y));
+    el.style.setProperty("--carrier-s", round3(s));
+  }
+}
+const dockSpring = springChannel(dockScope, {
+  axis: "y",
+  onFrame(x) {
+    dockDisp = x;
+    /* the deformation rides the spring proportionally; past rest it flips sign —
+       the overshoot stretch falls out of the same one-body coupling */
+    const f = Math.max(-1, Math.min(1, x / (dockSpring.sx0 || 1)));
+    writeCarrier(x, dockS0 * f);
+  },
+  onSettle(sp) {
+    gLog.seed = `${Math.round(Math.abs(sp.seedV))} px/s`;
+    gLog.over = `carry +${Math.max(0, sp.carry).toFixed(1)}px · rebound ${sp.overshoot.toFixed(1)}px`;
+    gLog.overPct = sp.x0abs > 1 ? ` (from ${sp.x0abs.toFixed(0)}px)` : "";
+    gLog.settle = `${Math.round(sp.settleMs)} ms`;
+    writeCarrier(0, 0);
+    readout(true);
+  },
+});
+
+applyDirective(dock, vMomentum, { arg: "container", value: { scope: dockScope } });
+applyDirective($("dockGlow"), vMomentum, { arg: "container", value: { scope: dockScope } });
+applyDirective($("dockSpec"), vMomentum, { arg: "container", value: { scope: dockScope } });
+for (const el of dock.querySelectorAll(".role-content"))
+  applyDirective(el, vMomentum, { arg: "content", value: { scope: dockScope } });
+/* periphery rail couples to the DOCK scope by explicit arg — cross-coupling is opt-in */
+for (const el of $("rail").querySelectorAll(".r-dot"))
+  applyDirective(el, vMomentum, { arg: "periphery", value: { scope: dockScope } });
+
+function dockRelease(now) {
+  const { vy } = dockPtr.end();
+  const seedWorthy = Math.abs(dockDisp) > 2 || Math.abs(vy) > 80;
+  gLog.peak = dockScope.peak;
+  if (seedWorthy) {
+    dockScope.teardownMode = "snap (seeded successor)";
+    /* the handoff is carried by SEEDING: the spring is born at the release velocity
+       (rubber-scaled), in its actual direction — a flick carries deeper first */
+    dockSpring.seed(dockDisp, Math.abs(vy) > 80 ? vy * 0.35 : 0, now);
+  } else writeCarrier(0, 0);
+}
+dock.addEventListener("pointerdown", (ev) => {
+  ev.preventDefault(); dock.setPointerCapture(ev.pointerId);
+  setCharge([$("dockSpec")], true, ev.timeStamp);   // engagement rung: specular lights on press
+  /* scrub catch: a mid-springback grab resumes from the CURRENT displacement (MARKS: everything is a scrub) */
+  const caughtRaw = dockDisp >= 0 ? rubberInv(dockDisp, RB_DOWN) : -rubberInv(-dockDisp, RB_UP);
+  dockPtr.begin(ev.clientX, ev.clientY, ev.timeStamp);   // kills the spring — the gesture owns the body
+  dockPtr._grabY = ev.clientY - caughtRaw;
+  dockRawDy = caughtRaw;
+});
+dock.addEventListener("pointermove", (ev) => {
+  if (!dockPtr.open) return;
+  dockPtr.sample(ev);
+  dockRawDy = ev.clientY - dockPtr._grabY;
+  if (dockRawDy >= 0) { dockDisp = rubber(dockRawDy, RB_DOWN); dockS0 = -Math.min(1, dockDisp / RB_DOWN); }
+  else { dockDisp = -rubber(-dockRawDy, RB_UP); dockS0 = Math.min(1, -dockDisp / RB_UP); }
+  writeCarrier(dockDisp, dockS0);
+});
+const dockUp = (ev) => {
+  setCharge([$("dockSpec")], false, 0);
+  if (dockPtr.open) { gLog.name = "manual dock drag"; gLog.exp = "—"; dockRelease(ev.timeStamp); }
+};
+dock.addEventListener("pointerup", dockUp);
+dock.addEventListener("pointercancel", dockUp);
+
+/* — list scope: scroll channel; card container + 30 depth-graded content rows — */
+const list = $("list"), listCard = $("listCard");
+const NAMES = ["MacBook Pro","iPhone","iPad","AirPods Max","Watch Ultra","Keys","Wallet","Backpack",
+  "Kindle","Camera","Drone","Bike Tag","Luggage","Headphones","Charger","Scooter"];
+const HUES = ["#2dd4bf","#818cf8","#fbbf24","#f472b6","#34d399","#60a5fa"];
+for (let i = 0; i < 30; i++) {
+  const li = document.createElement("li");
+  li.innerHTML = `<span class="dot" style="--dot-hue:${HUES[i % 6]}"></span>
+    <span class="lines"><b>${NAMES[i % 16]} ${String(Math.floor(i / 16) + 1).padStart(2, "0")}</b>
+    <span>With you &middot; ${(i * 7) % 59 + 1}m ago</span></span>`;
+  list.appendChild(li);
+}
+const listScope = createScope("list");
+scrollChannel(listScope, list, (edge) => { $("scrollEdge").textContent = edge; });
+applyDirective(listCard, vMomentum, { arg: "container", value: { scope: listScope } });
+applyDirective($("cardGlow"), vMomentum, { arg: "container", value: { scope: listScope } });
+/* depth-graded gain — deeper VISIBLE rows carry ~+20% (MARKS §5 note 3), writer-side per element */
+const rows = [...list.children];
+rows.forEach((li, i) =>
+  applyDirective(li, vMomentum, { arg: "content", value: { scope: listScope, depthGain: 1 + 0.2 * (i % 8) / 7 } }));
+
+/* rows consume via CSS on the element itself */
+const rowStyle = document.createElement("style");
+rowStyle.textContent = `.list-card li { transform: translateY(calc(var(--energy-y) * 9px)); }`;
+document.head.appendChild(rowStyle);
+
+/* — slider scope: control role, the relocated 0.7 cap + byte-identical regression — */
+const slider = $("slider"), fill = $("sliderFill"), cast = $("sliderCast"), ring = $("knobRing");
+const sliderScope = createScope("slider");
+const sliderPtr = pointerChannel(sliderScope);
+applyDirective(fill, vMomentum, { arg: "control", value: { scope: sliderScope } });
+applyDirective(cast, vMomentum, { arg: "control", value: { scope: sliderScope } });
+applyDirective(ring, vMomentum, { arg: "control", value: { scope: sliderScope } });
+let sliderVal = 0.55, sliderDragging = false;
+function paintSlider() {
+  fill.style.setProperty("--val", sliderVal);
+  cast.style.setProperty("--val", sliderVal);
+  ring.style.left = `${8 + sliderVal * (slider.clientWidth - 16)}px`;
+}
+slider.addEventListener("pointerdown", (ev) => {
+  ev.preventDefault(); slider.setPointerCapture(ev.pointerId);
+  sliderDragging = true; gLog.regMax = 0;
+  sliderPtr.begin(ev.clientX, ev.clientY, ev.timeStamp);   // under PRM: never opens
+});
+slider.addEventListener("pointermove", (ev) => {
+  if (!sliderDragging) return;
+  const r = slider.getBoundingClientRect();
+  sliderVal = Math.max(0, Math.min(1, (ev.clientX - r.left) / r.width));
+  paintSlider();                                    // the VALUE tracks even under PRM
+  if (!sliderPtr.open) return;                      // the smear does not
+  sliderPtr.sample(ev);
+  /* regression: shipped law = clamp(tanh(0.06*px/frame@60), .7) == min(.7, tanh(|v|/1000)) */
+  const shipped = Math.min(0.7, ENERGY(Math.hypot(sliderPtr.vx, sliderPtr.vy)));
+  const consumed = Math.min(ROLE_TABLE.control.cap,
+    ENERGY(Math.hypot(sliderPtr.vx, sliderPtr.vy)) * ROLE_TABLE.control.gain);
+  gLog.regMax = Math.max(gLog.regMax, Math.abs(shipped - consumed));
+});
+const sliderUp = () => {
+  sliderDragging = false;
+  if (!sliderPtr.open) return;
+  sliderPtr.end();
+  gLog.name = "slider drag"; gLog.exp = "cap 0.70"; gLog.peak = sliderScope.peak;
+  gLog.seed = "— (tap/drag: bleed)"; gLog.over = "—"; gLog.overPct = ""; gLog.settle = "—";
+  readout(true);
+};
+slider.addEventListener("pointerup", sliderUp);
+slider.addEventListener("pointercancel", sliderUp);
+
+/* — tab scope: engagement envelope (press-charge) + spring-seeded lens arrival — */
+const tabbar = $("tabbar"), lens = $("lens");
+const tabScope = createScope("tabs");
+const tabSpring = springChannel(tabScope, {
+  axis: "x", response: 0.55, zeta: 0.6,
+  onSettle(sp) {
+    gLog.peak = tabScope.peak; gLog.settle = `${Math.round(sp.settleMs)} ms`;
+    readout(true);
+  },
+});
+applyDirective(lens, vMomentum, { arg: "lens", value: { scope: tabScope } });
+applyDirective($("lensBloom"), vMomentum, { arg: "lens", value: { scope: tabScope } });
+applyDirective($("tabWash"), vMomentum, { arg: "lens", value: { scope: tabScope, depthGain: 0.45 } });
+const tabs = [...tabbar.querySelectorAll(".tab")];
+const tabChargeEls = [lens, $("lensBloom"), $("tabWash")];
+let chargeT = 0, activeTab = 0;
+
+/* the engagement envelope — event-written, velocity-independent, PRM-degraded to a snap */
+function setCharge(els, on, t) {
+  const dur = prmActive() ? "0.001ms" : on ? "90ms" : "450ms";
+  const ease = on ? "ease-out" : "cubic-bezier(.3,.7,.4,1)";
+  for (const el of els) {
+    setTrans(el, "charge", `--charge ${dur} ${ease}`);
+    el.style.setProperty("--charge", on ? 1 : 0);
+  }
+  if (on) chargeT = t;
+}
+tabs.forEach((tab, i) => {
+  tab.addEventListener("pointerdown", (ev) => setCharge(tabChargeEls, true, ev.timeStamp)); // BEFORE travel
+  tab.addEventListener("pointerup", (ev) => {
+    setCharge(tabChargeEls, false, 0);
+    if (i === activeTab) return;
+    gLog.chargeLead = `charge fired ${Math.round(ev.timeStamp - chargeT)} ms before travel`;
+    const from = activeTab; activeTab = i;
+    tabs.forEach((t2, j) => t2.setAttribute("aria-selected", String(j === i)));
+    const w = tabbar.clientWidth / 4;
+    setTrans(lens, "travel", `translate ${prmActive() ? "0.001ms" : ".32s"} cubic-bezier(.3,1.25,.45,1)`); // carrier stand-in
+    lens.style.translate = `${i * w}px 0`;
+    const dist = Math.abs(i - from) * w;
+    tabScope.peak = 0; tabScope.clearBleed();
+    tabSpring.seed(dist, -dist / 0.32 * 1.35, ev.timeStamp);                   // arrival heat = seeded v
+    gLog.name = `tab morph (${dist.toFixed(0)}px)`; gLog.exp = "hot arrival, cool settle";
+    gLog.peak = null; gLog.seed = `${Math.round(dist / 0.32 * 1.35)} px/s`;
+    gLog.over = "—"; gLog.overPct = ""; gLog.settle = "—";
+  });
+});
+
+/* ---------- 9. scripted gestures — deterministic drivers on the conductor ---------- */
+function scriptedDockGesture(name, profile, expect) {
+  if (prmActive() || dockPtr.open) return;
+  gLog.name = name; gLog.exp = expect;
+  let t = 0, y = 300;
+  dockRawDy = 0; dockDisp = 0;
+  dockPtr.begin(160, y, performance.now());
+  dockPtr._grabY = y;
+  const driver = (dt, now) => {
+    t += dt;
+    const v = profile(t);
+    if (v === null) {
+      conductor.drivers.delete(driver);
+      dockRelease(now);
+      return;
+    }
+    y -= v * dt;                                     // pull UP at v px/s
+    dockPtr.synthetic(160, y, now);
+    dockRawDy = y - dockPtr._grabY;
+    if (dockRawDy >= 0) { dockDisp = rubber(dockRawDy, RB_DOWN); dockS0 = -Math.min(1, dockDisp / RB_DOWN); }
+    else { dockDisp = -rubber(-dockRawDy, RB_UP); dockS0 = Math.min(1, -dockDisp / RB_UP); }
+    writeCarrier(dockDisp, dockS0);
+  };
+  conductor.drivers.add(driver);
+  conductor.wake();
+}
+$("gSlow").onclick = () => scriptedDockGesture("slow place 280 px/s",
+  (t) => t < 0.3 ? (t / 0.3) * 280 : t < 0.9 ? 280 : t < 1.15 ? 280 * (1 - (t - 0.9) / 0.25) : t < 1.3 ? 0 : null,
+  "E 0.27 · no carry");
+$("gFlick").onclick = () => scriptedDockGesture("flick 1150 px/s",
+  (t) => t < 0.3 ? (t / 0.3) * 1150 : t < 0.42 ? 1150 : null, "E ~0.82 · carries deeper");
+$("gFling").onclick = () => scriptedDockGesture("fling 2600 px/s",
+  (t) => t < 0.25 ? (t / 0.25) * 2600 : t < 0.37 ? 2600 : null, "E ~0.99 · carries deepest");
+
+$("gScroll").onclick = () => {
+  if (prmActive() || conductor.drivers.size) return;
+  gLog.name = "scroll burst 1500 px/s"; gLog.exp = "E ~0.87";
+  gLog.seed = "— (native carrier)"; gLog.over = "—"; gLog.overPct = ""; gLog.settle = "—";
+  let t = 0, dir = 1;
+  const driver = (dt) => {
+    t += dt;
+    const v = t < 0.25 ? (t / 0.25) * 1500 : 1500 * Math.exp(-(t - 0.25) / 0.35);
+    if (v < 25) { conductor.drivers.delete(driver); return; }
+    list.scrollTop += dir * v * dt;
+    if (list.scrollTop <= 0 || list.scrollTop >= list.scrollHeight - list.clientHeight - 1) dir = -dir;
+  };
+  conductor.drivers.add(driver);
+  conductor.wake();
+};
+
+$("gPrm").onclick = (ev) => {
+  prmSim = !prmSim;
+  document.documentElement.classList.toggle("prm-sim", prmSim);
+  ev.target.textContent = `PRM sim: ${prmSim ? "on" : "off"}`;
+  ev.target.classList.toggle("on", prmSim);
+  if (prmSim) {           // pin the field to 0 — affordances survive as non-motion state
+    conductor.drivers.clear();
+    for (const s of conductor.scopes) {
+      if (s.pointer) s.pointer.open = false;
+      if (s.scroll) s.scroll.open = false;
+      if (s.spring) s.spring.kill();
+      s.E = s.ex = s.ey = 0; s.publish();
+    }
+    writeCarrier(0, 0);
+  }
+  readout(true);
+};
+
+/* ---------- 10. units — deterministic, the probe replayed at load ---------- */
+function runUnits() {
+  const out = [];
+  /* U-LAW: velocity discrimination (MARKS §6) — and what the 0.7 clamp destroys */
+  const table = [[280, 0.27], [1150, 0.82], [1200, 0.83], [1570, 0.92], [2600, 0.99]];
+  let lawPass = true;
+  let rowsHtml = table.map(([v, exp]) => {
+    const e = ENERGY(v); const ok = Math.abs(e - exp) < 0.01; lawPass = lawPass && ok;
+    return `<tr><td>${v} px/s</td><td class="num">${e.toFixed(3)}</td><td class="num dim">${exp.toFixed(2)}</td>
+      <td class="num dim">${Math.min(0.7, e).toFixed(2)}</td><td class="${ok ? "pass" : "fail"}">${ok ? "PASS" : "FAIL"}</td></tr>`;
+  }).join("");
+  out.push(`<table><tr><th>U-LAW</th><th class="num">E</th><th class="num">expect</th><th class="num">clamped</th><th></th></tr>
+    ${rowsHtml}<tr><td colspan="5" class="dim">clamp column: 1150&hellip;2600 all flatten to 0.70 &mdash; the distinction the clamp erases</td></tr></table>`);
+
+  /* U-FOLD: double-count immunity — twin 900 px/s channels */
+  const e9 = ENERGY(900);
+  const folds = [["MAX", e9], ["PROB_OR", 1 - (1 - e9) ** 2], ["RAW_SAT", Math.tanh(1.8)], ["SUM_CLMP", Math.min(1, 2 * e9)]];
+  out.push(`<table><tr><th>U-FOLD</th><th class="num">value</th><th class="num">inflation</th><th></th></tr>` +
+    folds.map(([n, v]) => {
+      const inf = v / e9; const isMax = n === "MAX"; const ok = !isMax || Math.abs(inf - 1) < 1e-9;
+      return `<tr><td>${n}</td><td class="num">${v.toFixed(4)}</td><td class="num">${inf.toFixed(2)}x</td>
+        <td class="${isMax ? (ok ? "pass" : "fail") : "dim"}">${isMax ? (ok ? "PASS (chosen)" : "FAIL") : ""}</td></tr>`;
+    }).join("") + `</table>`);
+
+  /* U-CONT: fold-continuity replay — probe scenario A at 120Hz */
+  const dt = 1 / 120, keep = Math.pow(0.65, dt / (1 / 60));
+  let vE = 0; const series = [];
+  for (let t = 0; t <= 0.4 + 1e-9; t += dt) { vE = vE * keep + 1150 * Math.min(1, t / 0.4) * (1 - keep); series.push(ENERGY(vE)); }
+  const ePre = series[series.length - 1];
+  const om = 2 * Math.PI / 0.68, ze = 0.64;
+  let x = 130, v = -1150, os = 0, crossed = false, settle = null;
+  for (let t = 0; t < 3; t += dt) {
+    v += (-om * om * x - 2 * ze * om * v) * dt; x += v * dt; series.push(ENERGY(v));
+    if (x < 0) crossed = true; if (crossed) os = Math.max(os, -x);
+    if (settle === null && Math.abs(x) < 1 && Math.abs(v) < 10) settle = t;
+  }
+  const nRamp = Math.round(0.4 / dt) + 1, ePost = series[nRamp];
+  const jump = Math.abs(ePost - ePre), contOk = jump <= 0.032;
+  out.push(`<table><tr><th>U-CONT</th><th class="num">value</th><th class="num">bound</th><th></th></tr>
+    <tr><td>E(release) pointer side</td><td class="num">${ePre.toFixed(3)}</td><td class="num dim">~0.78</td><td></td></tr>
+    <tr><td>E(release) spring side</td><td class="num">${ePost.toFixed(3)}</td><td class="num dim">0.811</td><td></td></tr>
+    <tr><td>handoff jump</td><td class="num">${jump.toFixed(4)}</td><td class="num dim">&le;0.032</td>
+      <td class="${contOk ? "pass" : "fail"}">${contOk ? "PASS" : "FAIL"}</td></tr></table>`);
+
+  /* U-SPRING: overshoot only on fast arrival */
+  let x2 = 30, v2 = 0, os2 = 0, c2 = false;
+  for (let t = 0; t < 3; t += dt) { v2 += (-om * om * x2 - 2 * ze * om * v2) * dt; x2 += v2 * dt; if (x2 < 0) c2 = true; if (c2) os2 = Math.max(os2, -x2); }
+  const sprOk = os > 10 && os2 < 4;
+  out.push(`<table><tr><th>U-SPRING</th><th class="num">overshoot</th><th></th></tr>
+    <tr><td>fast (x&#8320;130, v&#8320;1150)</td><td class="num">${os.toFixed(1)} px (${Math.round(os / 130 * 100)}%) &middot; settle ${Math.round(settle * 1000)} ms</td><td></td></tr>
+    <tr><td>slow place (x&#8320;30, v&#8320;0)</td><td class="num">${os2.toFixed(1)} px</td>
+      <td class="${sprOk ? "pass" : "fail"}">${sprOk ? "PASS" : "FAIL"}</td></tr>
+    <tr><td colspan="3" class="dim">spring {0.68, 0.64} = the probe constants; MARKS asks 30&ndash;50% overshoot &mdash; carrier tuning, pass 2</td></tr></table>`);
+
+  $("units").innerHTML = out.join("");
+}
+
+/* ---------- 11. readout ---------- */
+let totalConsumers = 0;
+function readout(force) {
+  const c = conductor;
+  const set = (id, txt) => { const el = $(id); if (el.textContent !== String(txt)) el.textContent = txt; };
+  const scopeRow = (s, eId, bId, pId) => {
+    set(eId, s.E.toFixed(3));
+    $(bId).style.transform = `scaleX(${Math.min(1, s.E)})`;
+    set(pId, s.peak > 0 ? s.peak.toFixed(3) : "—");
+  };
+  scopeRow(dockScope, "eDock", "bDock", "pDock");
+  scopeRow(listScope, "eList", "bList", "pList");
+  scopeRow(sliderScope, "eSlider", "bSlider", "pSlider");
+  scopeRow(tabScope, "eTabs", "bTabs", "pTabs");
+
+  const rafEl = $("rafState");
+  rafEl.textContent = c.running ? "LIVE" : "PARKED";
+  rafEl.className = c.running ? "fail" : "pass";     // parked-green: idle silence is the win
+  set("idleViol", c.idleViolations);
+  set("nCons", totalConsumers);
+  set("nWrites", c.running ? c.writesPerFrame : "0");
+  set("wCost", c.writeCostUs > 0 ? `${c.writeCostUs.toFixed(0)} µs/frame` : "—");
+  set("fps", c.running ? c.fps.toFixed(0) : "— (parked)");
+  set("longF", c.longFrames);
+  set("prmState", prmActive() ? (prmSim ? "SIM ACTIVE — field pinned 0" : "OS ACTIVE — field pinned 0") : "inactive");
+
+  set("gName", gLog.name);
+  set("gPeak", gLog.peak != null ? gLog.peak.toFixed(3) : "—");
+  set("gExp", gLog.exp ?? "—");
+  set("gSeed", gLog.seed ?? "—");
+  set("gOver", (gLog.over ?? "—") + (gLog.overPct ?? ""));
+  set("gSettle", gLog.settle ?? "—");
+  set("gTear", dockScope.teardownMode);
+  if (gLog.chargeLead) set("gCharge", gLog.chargeLead);
+  set("gReg", gLog.regMax != null ? `max |Δ| = ${gLog.regMax.toFixed(4)}${gLog.regMax < 1e-9 ? " (byte-identical)" : ""}` : "—");
+}
+
+/* ---------- 12. boot ---------- */
+for (const s of conductor.scopes) totalConsumers += s.consumers.length;
+paintSlider();
+runUnits();
+readout(true);
+prmMedia.addEventListener?.("change", () => readout(true));
+/* prove the parked state honestly: after boot, zero rAF is scheduled until an event window opens */
+</script>
+</body>
+</html>

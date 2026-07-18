@@ -1,0 +1,896 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>F5 OPTICAL-MEDIUM—lens continuity prototype</title>
+<!--
+  verified-model: claude-fable-5 (system-context model ID, verbatim)
+  IOS27-MICRO pass 1 · family F5 OPTICAL-MEDIUM · prototype seat · 2026-07-18
+
+  Riskiest claim under proof (SPEC-F5 §5): the lens reads as ONE continuous body—
+  capsule de-materialize, light-barbell travel, oversized re-form—with no visible
+  blink at either handoff and sibling labels legible throughout.
+
+  Self-contained: no build, no network, no dev server. The travel integrator is a
+  line-faithful port of src/composables/motion/morph/useLeadTrail.ts (response 0.68,
+  zeta 0.64, trail tau 270ms, 8 Euler substeps, park-on-settle, PRM seats instantly).
+  The goo register mirrors the pager Arm A (in-document SVG filter) with the
+  @supports-not floor as Arm B. Tier budgets mirror src/styles/tokens/glass.css
+  (container=resting .65a/7px; control=quiet-kin .50a-class/7px + own rim + brighter
+  fill). Dark arm only—the corpus scene is dark satellite.
+-->
+<style>
+/* ============================== tokens ==============================
+   Clock desync as TOKEN RATIOS over consumed clocks (SPEC-F5 §1):
+   medium <=100ms cliff · fade = stretch/4 · stretch ~650ms · close inverted
+   with a >=150ms empty-medium beat · periphery +100ms. The travel clock is NOT
+   a token—it is the consumed lead/trail physics (release is emergent). */
+:root {
+    --clock-stretch: 650ms;
+    --clock-fade: calc(var(--clock-stretch) / 4);       /* 162.5ms—the 1:4 desync */
+    --clock-medium-cliff: 90ms;                          /* <=100ms target */
+    --clock-medium-relax: 420ms;                         /* ~400-450ms target */
+    --clock-empty-beat: 150ms;                           /* the held-state minimum dwell */
+    --clock-periphery-lag: 100ms;
+    --lens-charge: 250ms;                                /* press-charge floor before travel */
+    --lens-hold: 200ms;                                  /* oversized-arrival hold */
+    --lens-cool: 380ms;                                  /* cool-down to rest */
+    --lens-arrival-scale: 1.15;                          /* 1.10-1.20 band */
+    --lens-magnify: 1.06;                                /* ~5-8% content magnification */
+
+    /* two-tier budgets—the shipped rung ladder */
+    --tier-container-bg: hsl(222 14% 11% / 0.65);        /* resting .65a */
+    --tier-container-filter: blur(7px) saturate(1.4);    /* resting 7px */
+    --tier-control-bg: hsl(0 0% 100% / 0.14);            /* control: brighter fill */
+    --tier-control-filter: blur(7px) saturate(1.4) brightness(1.1);
+    --glass-specular: inset 0 1.5px 0 0 hsl(0 0% 100% / 0.45);  /* the 1px-class top rim */
+    --glass-rim-top: inset 0 1px 0 0 hsl(0 0% 100% / 0.30);
+    --glass-rim-bottom: inset 0 -1px 0 0 hsl(28 30% 8% / 0.45);
+
+    /* light tokens */
+    --lens-bloom-hot: 0.55;                              /* bloom core alpha (icon band) */
+    --lens-bloom-text-clamp: 0.14;                       /* bloom alpha factor at the label band */
+    --lens-wash-hot: 0.28;                               /* whole-bar wash, icon band */
+    --lens-wash-text-clamp: 0.05;                        /* wash alpha at the label band */
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+    background: hsl(228 16% 7%);
+    color: hsl(220 16% 88%);
+    font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    padding: 20px 16px 64px;
+}
+main { max-width: 900px; margin: 0 auto; display: grid; gap: 20px; }
+h1 { font-size: 19px; margin: 0; letter-spacing: 0.01em; }
+h2 { font-size: 14px; margin: 0 0 8px; color: hsl(210 30% 78%); }
+p.small, .small { font-size: 12px; color: hsl(220 10% 62%); margin: 4px 0 0; }
+code { font: 11.5px/1.4 ui-monospace, "SF Mono", Menlo, monospace; color: hsl(190 60% 72%); }
+section.panel {
+    background: hsl(226 14% 10%);
+    border: 1px solid hsl(224 12% 18%);
+    border-radius: 14px;
+    padding: 16px;
+}
+label.toggle { display: inline-flex; gap: 6px; align-items: center; font-size: 12px; color: hsl(220 10% 70%); cursor: pointer; }
+
+/* ============================== readout strips ============================== */
+.readouts { display: grid; grid-template-columns: repeat(auto-fill, minmax(196px, 1fr)); gap: 8px; margin-top: 12px; }
+.ro {
+    background: hsl(228 14% 8%); border: 1px solid hsl(224 12% 16%);
+    border-radius: 8px; padding: 7px 10px; font-size: 11px; color: hsl(220 10% 60%);
+}
+.ro b { display: block; font: 600 13px/1.3 ui-monospace, "SF Mono", Menlo, monospace; color: hsl(210 30% 88%); }
+.ro b.pass { color: hsl(140 60% 62%); }
+.ro b.fail { color: hsl(4 80% 66%); }
+
+/* ============================== hero scene ============================== */
+.stage {
+    position: relative; height: 400px; border-radius: 12px; overflow: hidden;
+    background:
+        radial-gradient(120% 90% at 18% 12%, hsl(200 45% 16%), transparent 55%),
+        radial-gradient(90% 80% at 82% 30%, hsl(168 38% 13%), transparent 60%),
+        radial-gradient(120% 100% at 55% 95%, hsl(215 42% 14%), transparent 65%),
+        repeating-linear-gradient(63deg, transparent 0 34px, hsl(200 30% 22% / 0.35) 34px 35.5px),
+        repeating-linear-gradient(-21deg, transparent 0 52px, hsl(180 25% 24% / 0.28) 52px 53.5px),
+        hsl(222 30% 8%);
+}
+.poi { position: absolute; width: 8px; height: 8px; border-radius: 50%; background: hsl(48 90% 62%); box-shadow: 0 0 10px 2px hsl(48 90% 55% / 0.5); }
+/* a bright body drifting UNDER the bar—proves the glass keeps live backdrop sampling */
+.ferry {
+    position: absolute; bottom: 34px; left: -60px; width: 40px; height: 40px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, hsl(28 95% 72%), hsl(12 85% 52%));
+    box-shadow: 0 0 26px 8px hsl(20 90% 55% / 0.55);
+    animation: ferry 13s linear infinite;
+}
+@keyframes ferry { to { transform: translateX(1020px); } }
+body.prm .ferry { animation: none; left: 40%; }
+
+/* ============================== the tab-bar region ==============================
+   Layer contract (SPEC-F5 §1): ONE effect-free positioning ancestor; BODY (bar
+   glass + rest capsule, backdrop-sampling); LIGHT (sibling above body, aria-hidden,
+   zero sampling, ONE plus-lighter composite, goo Arm A + @supports-not floor Arm B);
+   CONTENT above light—sibling labels live OUTSIDE the light layer by construction. */
+.tabbar-region {
+    /* effect-free: no filter, no opacity<1, no mask/clip, no blend */
+    position: absolute; left: 50%; bottom: 18px; translate: -50% 0;
+    width: min(580px, calc(100% - 28px)); height: 64px;
+}
+.bar-body {
+    position: absolute; inset: 0; border-radius: 999px; z-index: 1;
+    background: var(--tier-container-bg);
+    -webkit-backdrop-filter: var(--tier-container-filter);
+    backdrop-filter: var(--tier-container-filter);
+    box-shadow: var(--glass-specular), var(--glass-rim-bottom),
+        0 12px 32px -8px hsl(230 40% 4% / 0.7);
+}
+/* rest capsule: control tier, OWN rim, brighter fill. Base transition covers
+   opacity ONLY—transform teleports are instant unless .cooling arms them. */
+.capsule {
+    position: absolute; top: 6px; left: 0; height: 52px; border-radius: 999px; z-index: 2;
+    background: var(--tier-control-bg);
+    -webkit-backdrop-filter: var(--tier-control-filter);
+    backdrop-filter: var(--tier-control-filter);
+    box-shadow: var(--glass-specular), inset 0 0 0 1px hsl(0 0% 100% / 0.08);
+    transition: opacity 120ms ease-out;
+    overflow: hidden;
+}
+.capsule.demat { opacity: 0; }
+.capsule.reform { transition: opacity 140ms ease-out; }
+.capsule.cooling { transition: opacity 140ms ease-out, transform var(--lens-cool) cubic-bezier(0.22, 0.9, 0.26, 1); }
+/* Safari's good idea—the idle specular sweep, ACTIVE lens only, engagement-gated
+   off during charge/travel, dead under PRM */
+.capsule::after {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; opacity: 0;
+    background: linear-gradient(115deg, transparent 30%, hsl(0 0% 100% / 0.22) 46%, hsl(45 90% 80% / 0.14) 52%, transparent 66%);
+    background-size: 250% 100%;
+}
+.capsule.idle::after { opacity: 1; animation: sweep 5.6s ease-in-out infinite; }
+@keyframes sweep { 0%, 55% { background-position: 130% 0; } 82%, 100% { background-position: -40% 0; } }
+body.prm .capsule.idle::after { animation: none; opacity: 0; }
+
+/* LIGHT layer—bigger box than the bar so bloom/arrival can poke past the edges;
+   contain boxes the filter work; the layer carries the ONE plus-lighter composite
+   (children paint plain alpha into the group). */
+.lens-light {
+    position: absolute; inset: -48px -24px; z-index: 3; pointer-events: none;
+    contain: layout paint;
+    mix-blend-mode: plus-lighter;
+}
+.lens-wash {
+    position: absolute; left: 24px; right: 24px; top: 48px; height: 64px; border-radius: 999px;
+    /* the label-band clamp leg is IN the gradient: hot over the icon band,
+       --lens-wash-text-clamp under the label run */
+    background: linear-gradient(to bottom,
+        hsl(190 90% 75% / var(--lens-wash-hot)) 0 52%,
+        hsl(190 90% 75% / var(--lens-wash-text-clamp)) 68% 100%);
+    opacity: 0; transition: opacity var(--lens-charge) ease-out;
+}
+.goo {
+    position: absolute; inset: 0;
+    filter: url(#f5-goo);
+    opacity: 0; transition: opacity 90ms ease-out;
+}
+.goo.out { transition: opacity 160ms ease-in; }
+.lbody, .lneck {
+    position: absolute; left: 0; top: 50%; border-radius: 999px;
+    background: hsl(192 95% 74% / 0.9);
+    will-change: transform;
+}
+.lbody { width: 96px; height: 44px; margin: -22px 0 0 -48px; }
+.lneck { width: 60px; height: 26px; margin: -13px 0 0 -30px; }
+/* Arm B—the @supports-not floor: drop the goo merge, keep the un-merged barbell */
+@supports not (filter: url("#f5-goo")) {
+    .goo { filter: none; }
+}
+.lens-bloom {
+    position: absolute; left: 0; top: 50%; width: 280px; height: 170px; margin: -85px 0 0 -140px;
+    background: radial-gradient(closest-side,
+        hsl(190 100% 80% / var(--lens-bloom-hot)),
+        hsl(195 100% 70% / 0.28) 46%, transparent 72%);
+    /* --lens-bloom-text-clamp as a vertical alpha mask: full over the icon band,
+       clamped to 14% across the label band (label run sits ~54-62% of this box) */
+    -webkit-mask-image: linear-gradient(to bottom, white 0 51%, hsl(0 0% 100% / 0.45) 57%, hsl(0 0% 100% / 0.14) 62% 100%);
+    mask-image: linear-gradient(to bottom, white 0 51%, hsl(0 0% 100% / 0.45) 57%, hsl(0 0% 100% / 0.14) 62% 100%);
+    opacity: 0; transition: opacity var(--lens-charge) ease-out;
+    will-change: transform;
+}
+.lens-bloom.arrive { transition: opacity 120ms ease-out; }
+.lens-bloom.cooling { transition: opacity var(--lens-cool) ease-out; }
+.lens-bloom.snap { transition: none; }
+
+/* CONTENT plane—above light; labels are body content, never bloom content */
+.tabs { position: absolute; inset: 0; z-index: 4; display: flex; }
+.tab {
+    flex: 1 1 0; display: grid; place-items: center; background: none; border: 0;
+    color: hsl(210 20% 86%); cursor: pointer; padding: 0; border-radius: 999px;
+    -webkit-tap-highlight-color: transparent;
+}
+.tab:focus-visible { outline: 2px solid hsl(195 90% 65%); outline-offset: -4px; }
+.tab-content {
+    display: grid; place-items: center; gap: 2px;
+    transition: transform 260ms cubic-bezier(0.3, 0.7, 0.3, 1);
+}
+.tab[aria-current="true"] .tab-content { transform: scale(var(--lens-magnify)); }
+body.prm .tab-content { transition: none; }
+.tab svg { width: 21px; height: 21px; display: block; }
+.tab .lbl { font-size: 10.5px; font-weight: 600; letter-spacing: 0.02em; color: hsl(0 0% 100%); }
+
+/* ============================== U2 medium panel ============================== */
+.cc { position: relative; height: 320px; border-radius: 12px; overflow: hidden; }
+.cc-scene {
+    position: absolute; inset: 0;
+    background:
+        radial-gradient(70% 60% at 25% 25%, hsl(280 60% 38%), transparent 60%),
+        radial-gradient(60% 70% at 80% 45%, hsl(18 80% 42%), transparent 55%),
+        radial-gradient(80% 60% at 50% 90%, hsl(150 55% 30%), transparent 60%),
+        hsl(232 40% 14%);
+}
+.cc-scene i { position: absolute; border-radius: 50%; }
+/* MEDIUM—pre-mounted, CONSTANT radius, opacity-only, never unmounted */
+.cc-medium {
+    position: absolute; inset: 0;
+    -webkit-backdrop-filter: blur(18px) saturate(1.3);
+    backdrop-filter: blur(18px) saturate(1.3);
+    background: hsl(230 30% 6% / 0.38);
+    opacity: 0;
+}
+.cc-medium.engage { transition: opacity var(--clock-medium-cliff) linear; }
+.cc-medium.relax { transition: opacity var(--clock-medium-relax) cubic-bezier(0.2, 0.6, 0.3, 1); }
+.cc-medium.scrub { transition: none; }
+/* the content wrapper NEVER animates opacity (an ancestor fade would sever the
+   tiles' backdrop sampling); every tile animates its OWN opacity/transform */
+.cc-content { position: absolute; inset: 0; padding: 22px 58px 22px 22px; }
+.cc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; height: 100%; }
+.cc-tile {
+    border-radius: 14px; background: hsl(228 16% 14% / 0.72);
+    -webkit-backdrop-filter: blur(11px) saturate(1.4);
+    backdrop-filter: blur(11px) saturate(1.4);
+    box-shadow: var(--glass-rim-top), var(--glass-rim-bottom);
+    opacity: 0;
+    display: grid; place-items: center; font-size: 11px; color: hsl(220 12% 72%);
+}
+.cc-rail { position: absolute; right: 16px; top: 50%; translate: 0 -50%; display: grid; gap: 10px; }
+.cc-pip {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: hsl(0 0% 100% / 0.16);
+    -webkit-backdrop-filter: blur(7px);
+    backdrop-filter: blur(7px);
+    box-shadow: var(--glass-specular);
+    opacity: 0;
+}
+.cc.open .cc-tile, .cc.open .cc-pip { opacity: 1 !important; transform: translateY(0) !important; }
+.cc-controls { display: flex; gap: 8px; align-items: center; margin-top: 10px; flex-wrap: wrap; }
+button.ctl {
+    background: hsl(222 14% 16%); color: hsl(210 20% 86%); border: 1px solid hsl(222 12% 24%);
+    border-radius: 8px; padding: 6px 14px; font: 600 12px/1.4 inherit; cursor: pointer;
+}
+button.ctl:hover { background: hsl(222 14% 20%); }
+input[type="range"] { accent-color: hsl(195 80% 60%); }
+
+/* ============================== U3 / U1 probes ============================== */
+.stripes {
+    position: relative; height: 170px; border-radius: 10px; overflow: hidden;
+    background: repeating-linear-gradient(90deg, hsl(174 80% 45%) 0 7px, hsl(232 45% 10%) 7px 14px);
+}
+.probe-row { position: absolute; inset: 18px; display: flex; gap: 14px; align-items: stretch; }
+.u3-container {
+    flex: 1; border-radius: 14px; background: var(--tier-container-bg);
+    -webkit-backdrop-filter: var(--tier-container-filter);
+    backdrop-filter: var(--tier-container-filter);
+    box-shadow: var(--glass-specular);
+    display: flex; gap: 12px; align-items: center; justify-content: center; padding: 12px;
+}
+.chip {
+    width: 128px; height: 74px; border-radius: 999px; display: grid; place-items: center;
+    font-size: 10.5px; font-weight: 600; color: white; text-align: center;
+    background: var(--tier-control-bg);
+    box-shadow: var(--glass-specular), inset 0 0 0 1px hsl(0 0% 100% / 0.08);
+}
+.chip.sampling { -webkit-backdrop-filter: var(--tier-control-filter); backdrop-filter: var(--tier-control-filter); }
+.u1-chip { width: 31%; height: 74px; border-radius: 14px; display: grid; place-items: center; font-size: 11px; font-weight: 600; color: white; background: hsl(0 0% 100% / 0.10); text-align: center; padding: 8px; }
+#u1a { -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+#u1b { -webkit-backdrop-filter: url(#f5-u1probe); backdrop-filter: url(#f5-u1probe); }
+#u1c { -webkit-backdrop-filter: blur(8px) url(#f5-u1probe); backdrop-filter: blur(8px) url(#f5-u1probe); }
+/* the shipped-defect gate under test: does this engine ENGAGE the url() block? */
+#u1panel { --u1-gate: dormant; }
+@supports (backdrop-filter: url("#f5-u1probe")) {
+    #u1panel { --u1-gate: engaged; }
+}
+ul.judge { margin: 8px 0 0; padding-left: 18px; font-size: 12px; color: hsl(220 10% 62%); }
+ul.judge li { margin: 3px 0; }
+</style>
+</head>
+<body>
+<!-- in-document SVG filters—Arm A goo (pager register) + the U1 probe kernel -->
+<svg aria-hidden="true" style="position:absolute;width:0;height:0">
+    <defs>
+        <filter id="f5-goo" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="b" />
+            <feColorMatrix in="b" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -8" />
+        </filter>
+        <filter id="f5-u1probe" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="3" />
+        </filter>
+    </defs>
+</svg>
+
+<main>
+<header>
+    <h1>F5 OPTICAL-MEDIUM—lens continuity prototype</h1>
+    <p class="small">verified-model: claude-fable-5 (system-context model ID, verbatim) · IOS27-MICRO pass 1 · prototype seat · Safari-2026 floor, dark arm</p>
+    <p class="small" style="margin-top:6px">
+        <label class="toggle"><input type="checkbox" id="prmSim" /> simulate prefers-reduced-motion (OS-level PRM also honored: <span id="prmState">…</span>)</label>
+    </p>
+</header>
+
+<!-- ==================== HERO: the tab-bar lens ==================== -->
+<section class="panel">
+    <h2>The riskiest claim—one continuous lens body (press a tab)</h2>
+    <p class="small">Rest capsule (control tier, own rim, ~6% content magnification, idle sweep)&nbsp;→ press-charge (bloom past bounds + whole-bar wash, before any travel)&nbsp;→ the capsule de-materializes UNDER the traveling light barbell (lead/trail 0.68/ζ0.64, τ270ms, goo Arm A)&nbsp;→ oversized re-form (1.15× in scale AND light, ~200ms hold)&nbsp;→ cool. No frame may show zero lens presence. Sibling labels sit ABOVE the light layer; the bloom carries a clamped alpha leg under the label band. A mid-travel press retargets—velocity carries.</p>
+    <div class="stage">
+        <i class="poi" style="left:12%;top:24%"></i>
+        <i class="poi" style="left:71%;top:18%"></i>
+        <i class="poi" style="left:44%;top:56%;background:hsl(160 80% 55%);box-shadow:0 0 10px 2px hsl(160 80% 45%/.5)"></i>
+        <i class="poi" style="left:83%;top:64%"></i>
+        <div class="ferry"></div>
+
+        <div class="tabbar-region" id="region">
+            <div class="bar-body"></div>
+            <div class="capsule idle" id="capsule"></div>
+            <div class="lens-light" aria-hidden="true">
+                <div class="lens-wash" id="wash"></div>
+                <div class="goo" id="goo">
+                    <i class="lbody" id="bodyA"></i><i class="lneck" id="neck"></i><i class="lbody" id="bodyB"></i>
+                </div>
+                <div class="lens-bloom" id="bloom"></div>
+            </div>
+            <nav class="tabs" id="tabs" aria-label="demo tabs"></nav>
+        </div>
+    </div>
+    <div class="readouts">
+        <div class="ro">lens state<b id="roState">rest</b></div>
+        <div class="ro">press→settle (MARKS band 1200-1400ms at 1 slot; longer hops run longer)<b id="roTotal">—</b></div>
+        <div class="ro">re-form trigger after commit<b id="roReform">—</b></div>
+        <div class="ro">arrival scale, computed (target 1.10-1.20)<b id="roScale">—</b></div>
+        <div class="ro">oversize hold (target ~200ms)<b id="roHold">—</b></div>
+        <div class="ro">continuity—min lens presence (PASS ≥ 0.35)<b id="roCont">—</b></div>
+        <div class="ro">frames sampled / worst frame<b id="roFrames">—</b></div>
+        <div class="ro">fps (morph window)<b id="roFps">parked</b></div>
+    </div>
+    <div class="readouts">
+        <div class="ro">sibling label contrast at bloom peak—analytic, clamped (floor 4.5:1)<b id="roClamped">—</b></div>
+        <div class="ro">same, with the clamp leg removed (the iOS defect)<b id="roUnclamped">—</b></div>
+        <div class="ro">clamp tokens<b><code>bloom .55→.14 · wash .28→.05</code></b></div>
+    </div>
+    <p class="small">Continuity is max(capsule opacity, goo-layer opacity) sampled per rAF across the morph—computed style, not painted pixels; the browser seat's 12fps screenshot burst is the paint-true blink test. The contrast pair is an analytic composite model (scene L≈.10 under the label band; plus-lighter approximated additive), not a paint read.</p>
+</section>
+
+<!-- ==================== U2: the medium state machine ==================== -->
+<section class="panel">
+    <h2>U2—the medium: opacity cliff on a CONSTANT blur radius, persistence across interrupts</h2>
+    <p class="small">The medium is pre-mounted and never unmounts; the radius never animates. Open: ≤100ms opacity cliff, tiles fade in at stretch/4 while sliding ~650ms decelerating, deeper rows travel +20%/row, periphery lags 100ms. Close inverts: content leaves first (~170ms), a ≥150ms empty-medium beat (HELD is a named state), then the ~420ms relax. Flick+catch re-enters mid-relax—the medium's floor never reaches 0. Scrub drives it by hand at any state.</p>
+    <div class="cc" id="cc">
+        <div class="cc-scene">
+            <i style="left:14%;top:20%;width:52px;height:52px;background:hsl(48 95% 60%)"></i>
+            <i style="left:64%;top:58%;width:38px;height:38px;background:hsl(195 90% 62%)"></i>
+            <i style="left:38%;top:70%;width:26px;height:26px;background:hsl(330 80% 64%)"></i>
+        </div>
+        <div class="cc-medium" id="ccMedium"></div>
+        <div class="cc-content">
+            <div class="cc-grid" id="ccGrid"></div>
+        </div>
+        <div class="cc-rail" id="ccRail"></div>
+    </div>
+    <div class="cc-controls">
+        <button class="ctl" id="ccOpen">open</button>
+        <button class="ctl" id="ccClose">close</button>
+        <button class="ctl" id="ccFlick">flick + catch</button>
+        <label class="toggle">scrub <input type="range" id="ccScrub" min="0" max="1000" value="0" /></label>
+    </div>
+    <div class="readouts">
+        <div class="ro">medium state<b id="ccState">rest</b></div>
+        <div class="ro">cliff measured (target ≤100ms)<b id="ccCliff">—</b></div>
+        <div class="ro">relax measured (target ~400-450ms)<b id="ccRelax">—</b></div>
+        <div class="ro">empty-medium beat (target 100-200ms)<b id="ccBeat">—</b></div>
+        <div class="ro">interrupt floor—min opacity across the catch (never 0)<b id="ccFloor">—</b></div>
+        <div class="ro">fade:stretch token ratio (target ~1:4)<b id="ccRatio">—</b></div>
+    </div>
+</section>
+
+<!-- ==================== U3: nested two-tier sampling ==================== -->
+<section class="panel">
+    <h2>U3—control-on-container nested sampling</h2>
+    <p class="small">Both capsules carry the control fill and rim; only the left one carries its own <code>backdrop-filter</code>. Per spec it samples the container's backdrop-root image—frosted-on-frosted. Judge: the left capsule's stripes read smoother/brighter than the right's; if the two paint identically, WebKit is dropping the nested sample (U3 red).</p>
+    <div class="stripes">
+        <div class="probe-row">
+            <div class="u3-container">
+                <div class="chip sampling">control<br/>+ own sample</div>
+                <div class="chip">control<br/>fill only</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== U1: the lying gate ==================== -->
+<section class="panel" id="u1panel">
+    <h2>U1—the <code>backdrop-filter: url()</code> gate under test (the shipped glass-refract defect class)</h2>
+    <div class="stripes">
+        <div class="probe-row" style="align-items:center">
+            <div class="u1-chip" id="u1a">A<br/>blur(8px)</div>
+            <div class="u1-chip" id="u1b">B<br/>url(#probe)</div>
+            <div class="u1-chip" id="u1c">C<br/>blur(8px) url(#probe)</div>
+        </div>
+    </div>
+    <div class="readouts">
+        <div class="ro"><code>CSS.supports("backdrop-filter","url(#f5-u1probe)")</code><b id="u1s1">—</b></div>
+        <div class="ro"><code>CSS.supports("backdrop-filter","blur(8px) url(#…)")</code><b id="u1s2">—</b></div>
+        <div class="ro">@supports-gated block on this engine<b id="u1gate">—</b></div>
+    </div>
+    <ul class="judge">
+        <li>A blurred, B+C sharp, supports=false—honest rejection (the gate is safe on this engine).</li>
+        <li>C blurred while supports=true—accept-and-drop of the url() leg only (benign).</li>
+        <li>C SHARP while supports=true—whole-value drop: the shipped <code>glass-refract.css</code> gate lies on this engine and the lens loses all blur (U1 red; repair per the <code>supportsCssTimeline</code> harden).</li>
+    </ul>
+</section>
+
+<footer class="small">
+    Judge in paint, per SPEC-F5 §5: (1) 12fps burst across one full morph—no frame with zero lens presence; (2) label legibility at bloom peak; (3) U2 pair—blur decays by opacity only, no radius pump, no re-raster spikes in the trace; (4) U3 double-frost; (5) U1 chip C. The serialized browser seat owns the captures; this page only instruments.
+</footer>
+</main>
+
+<script>
+"use strict";
+/* ================================================================
+   verified-model: claude-fable-5 (system-context model ID, verbatim)
+   ================================================================ */
+const $ = (id) => document.getElementById(id);
+
+/* ---------- PRM—OS media query OR the sim toggle ---------- */
+const prmQuery = matchMedia("(prefers-reduced-motion: reduce)");
+const prm = () => prmQuery.matches || $("prmSim").checked;
+function syncPrm() {
+    document.body.classList.toggle("prm", prm());
+    $("prmState").textContent = prmQuery.matches ? "reduce" : "no-preference";
+}
+prmQuery.addEventListener("change", syncPrm);
+$("prmSim").addEventListener("change", syncPrm);
+syncPrm();
+
+/* ---------- leadTrail—line-faithful port of useLeadTrail.ts ----------
+   (src/composables/motion/morph/useLeadTrail.ts: hand-rolled damped spring,
+   semi-implicit Euler, 8 substeps, response 0.68 / zeta 0.64; exponential
+   trail tau 270ms; parks when settled; PRM seats instantly.) */
+function leadTrail({ response = 0.68, damping = 0.64, trailTau = 0.27, onFrame }) {
+    const SUBSTEPS = 8, POS_EPS = 0.3, VEL_EPS = 2, MAX_DT_MS = 40;
+    const omega = (2 * Math.PI) / response;
+    let x = 0, v = 0, t = 0, target = 0, rafId = 0, lastNow = 0;
+    const edges = () => ({ lead: x, trail: t, lo: Math.min(x, t), hi: Math.max(x, t), settled: !rafId });
+    const publish = () => onFrame && onFrame(edges());
+    function step(now) {
+        const dtMs = lastNow ? Math.min(now - lastNow, MAX_DT_MS) : 1000 / 60;
+        lastNow = now;
+        const dt = dtMs / 1000, h = dt / SUBSTEPS;
+        for (let i = 0; i < SUBSTEPS; i++) {
+            const a = -omega * omega * (x - target) - 2 * damping * omega * v;
+            v += a * h; x += v * h;
+        }
+        t += (x - t) * (1 - Math.exp(-dt / trailTau));
+        if (Math.abs(x - target) < POS_EPS && Math.abs(v) < VEL_EPS && Math.abs(x - t) < POS_EPS) {
+            x = target; v = 0; t = target; rafId = 0; publish(); return;   // the emergent park
+        }
+        publish();
+        rafId = requestAnimationFrame(step);
+    }
+    return {
+        drive(next) {
+            if (!Number.isFinite(next)) return;
+            target = next;
+            if (prm()) { this.seat(next); return; }        // P6—seat, zero in-between frames
+            if (!rafId) { lastNow = 0; rafId = requestAnimationFrame(step); }
+        },
+        seat(value) {
+            if (!Number.isFinite(value)) return;
+            if (rafId) cancelAnimationFrame(rafId);
+            rafId = 0; target = value; x = value; v = 0; t = value; publish();
+        },
+        edges,
+    };
+}
+
+/* ---------- the tab bar ---------- */
+const TABS = [
+    ["People", "M10.5 5.8a2.7 2.7 0 1 1 0 5.4 2.7 2.7 0 0 1 0-5.4ZM5.5 16.2c0-2.6 2.6-3.8 5-3.8s5 1.2 5 3.8Z"],
+    ["Devices", "M4.5 6h12v7.6h-12ZM3 15h15v1.4H3Z"],
+    ["Items", "M4.8 5.2h5.2l6.2 6.2-5.4 5.4-6-6.2Z"],
+    ["Places", "M10.5 4.6a4.5 4.5 0 0 1 4.5 4.5c0 3.3-4.5 7.7-4.5 7.7S6 12.4 6 9.1a4.5 4.5 0 0 1 4.5-4.5Z"],
+    ["Me", "M10.5 5a5.6 5.6 0 1 1 0 11.2A5.6 5.6 0 0 1 10.5 5Z"],
+];
+const tabsEl = $("tabs");
+TABS.forEach(([name, d], i) => {
+    const b = document.createElement("button");
+    b.className = "tab"; b.dataset.i = i;
+    b.innerHTML = `<span class="tab-content"><svg viewBox="0 0 21 21" fill="currentColor" aria-hidden="true"><path d="${d}"/></svg><span class="lbl">${name}</span></span>`;
+    tabsEl.appendChild(b);
+});
+const tabEls = [...tabsEl.children];
+
+const capsule = $("capsule"), goo = $("goo"), bloom = $("bloom"), wash = $("wash");
+const bodyA = $("bodyA"), bodyB = $("bodyB"), neck = $("neck");
+const LIGHT_INSET_X = -24;   /* light-layer box: inset -48px -24px on the 64px bar */
+const NECK_W = 60, BODY_W = 96;
+
+let active = 1, centers = [], slotW = 0, capW = 0;
+function setCurrent(i) {
+    tabEls.forEach((el, k) =>
+        k === i ? el.setAttribute("aria-current", "true") : el.removeAttribute("aria-current"));
+}
+function measure() {
+    const r = $("region").getBoundingClientRect();
+    slotW = r.width / TABS.length;
+    capW = slotW - 12;
+    capsule.style.width = capW + "px";
+    centers = tabEls.map((el) => {
+        const b = el.getBoundingClientRect();
+        return b.left + b.width / 2 - r.left;              // region-space x
+    });
+    capsule.style.transform = `translateX(${centers[active] - capW / 2}px) scale(1)`;
+    worm.seat(centers[active] - LIGHT_INSET_X);            // light-layer space
+    paintBloomX(centers[active]);
+}
+function paintBloomX(regionX) {
+    bloom.style.transform = `translateX(${regionX - LIGHT_INSET_X}px)`;
+}
+
+/* barbell projection—compositor-only: translate + scale, never an animated width */
+function paintBarbell({ lead, lo, hi }) {
+    bodyA.style.transform = `translate(${lo}px, 0)`;
+    bodyB.style.transform = `translate(${hi}px, 0)`;
+    const gap = hi - lo;
+    const mid = (lo + hi) / 2;
+    /* welling neck: thick when the bodies are near, a thin liquid band at full stretch */
+    const girth = Math.max(0.32, 1.05 - gap / (3.2 * BODY_W));
+    neck.style.transform = `translate(${mid}px, 0) scale(${Math.max(gap / NECK_W, 0.01)}, ${girth})`;
+    if (morph && !morph.reformed) {
+        const target = centers[morph.to] - LIGHT_INSET_X;
+        if (Math.abs(lead - target) < 8 && gap < capW * 0.6) reform();
+    }
+}
+const worm = leadTrail({ onFrame: paintBarbell });
+
+/* ---------- lens choreography state machine ----------
+   rest → charge (pointerdown) → travel (commit; capsule demat AFTER the barbell
+   lights—the no-blink overlap) → arrival (re-form oversized at the emergent
+   trigger) → cool → rest. A commit mid-travel retargets; timers carry a morph id. */
+const CHARGE_MS = 250, HOLD_MS = 200, COOL_MS = 380, ARRIVAL_SCALE = 1.15;
+let morph = null;
+let chargeT0 = 0, charging = false;
+const setState = (s) => ($("roState").textContent = s);
+
+function startCharge() {
+    charging = true; chargeT0 = performance.now();
+    setState("charge");
+    capsule.classList.remove("idle");
+    wash.style.opacity = "1";
+    bloom.classList.remove("snap", "cooling", "arrive");
+    paintBloomX(centers[active]);                          // bloom at the SOURCE lens
+    bloom.style.opacity = "1";
+}
+function discharge() {
+    charging = false;
+    if (morph) return;
+    wash.style.opacity = "0";
+    bloom.style.opacity = "0";
+    capsule.classList.add("idle");
+    setState("rest");
+}
+function commit(to) {
+    const wait = Math.max(0, CHARGE_MS - (performance.now() - chargeT0));
+    setTimeout(() => beginTravel(to), wait);               // the charge floor reads fully first
+}
+function beginTravel(to) {
+    if (morph) { retarget(to); return; }                   // interruption—velocity carries
+    if (prm()) { prmSwap(to); return; }
+    const from = active;
+    const id = Symbol();
+    morph = { id, from, to, t0: chargeT0, commitT: performance.now(), reformed: false,
+              minPresence: 1, frames: 0, worstDt: 0, lastT: 0, timers: [] };
+    setState("travel");
+    // light up BEFORE the capsule de-materializes—the no-blink overlap
+    worm.seat(centers[from] - LIGHT_INSET_X);
+    goo.classList.remove("out");
+    goo.style.opacity = "1";
+    bloom.style.opacity = "0";                             // source bloom hands off to the barbell
+    morph.timers.push(setTimeout(() => capsule.classList.add("demat"), 60));
+    setCurrent(-1);                                        // source demagnifies under the blob
+    active = to;
+    worm.drive(centers[to] - LIGHT_INSET_X);
+    monitor(id);
+}
+function retarget(to) {
+    active = to;
+    morph.to = to; morph.reformed = false; morph.retargeted = true;
+    morph.timers.forEach(clearTimeout); morph.timers = [];
+    setCurrent(-1);
+    capsule.classList.remove("reform", "cooling");
+    capsule.classList.add("demat");
+    goo.classList.remove("out");
+    goo.style.opacity = "1";
+    setState("travel");
+    worm.drive(centers[to] - LIGHT_INSET_X);
+}
+function reform() {
+    const m = morph; m.reformed = true;
+    m.reformT = performance.now();
+    $("roReform").textContent = Math.round(m.reformT - m.commitT) + "ms";
+    setState("arrival");
+    // teleport the transform (instant—no transform transition outside .cooling),
+    // then drop .demat so the capsule fades in OVERSIZED under the hot light
+    capsule.classList.remove("cooling");
+    capsule.classList.add("reform");
+    capsule.style.transform = `translateX(${centers[m.to] - capW / 2}px) scale(${ARRIVAL_SCALE})`;
+    void capsule.offsetWidth;
+    capsule.classList.remove("demat");                     // 140ms re-form fade
+    bloom.classList.add("snap");
+    paintBloomX(centers[m.to]);
+    void bloom.offsetWidth;
+    bloom.classList.remove("snap");
+    bloom.classList.add("arrive");
+    bloom.style.opacity = "0.9";                           // arrival light, hot and fast
+    setCurrent(m.to);                                      // magnify under the lens
+    m.timers.push(setTimeout(() => { goo.classList.add("out"); goo.style.opacity = "0"; }, 140));
+    m.timers.push(setTimeout(() => {
+        const mtx = new DOMMatrixReadOnly(getComputedStyle(capsule).transform);
+        $("roScale").textContent = mtx.a.toFixed(3);
+        $("roScale").className = mtx.a >= 1.1 && mtx.a <= 1.2 ? "pass" : "fail";
+    }, 80));
+    m.timers.push(setTimeout(() => cool(m), HOLD_MS + 140));
+}
+function cool(m) {
+    $("roHold").textContent = Math.round(performance.now() - m.reformT - 140) + "ms";
+    setState("cool");
+    capsule.classList.add("cooling");
+    capsule.style.transform = `translateX(${centers[m.to] - capW / 2}px) scale(1)`;
+    bloom.classList.remove("arrive");
+    bloom.classList.add("cooling");
+    bloom.style.opacity = "0";
+    wash.style.opacity = "0";
+    m.timers.push(setTimeout(() => finish(m), COOL_MS + 20));
+}
+function finish(m) {
+    const total = performance.now() - m.t0;
+    const slots = Math.abs(m.to - m.from);
+    $("roTotal").textContent = `${Math.round(total)}ms (${slots}-slot${m.retargeted ? ", retargeted" : ""})`;
+    // the MARKS band was measured on adjacent-tab morphs—band-check clean 1-slot
+    // hops only; longer or interrupted journeys report neutral (physics-modulated)
+    $("roTotal").className =
+        !m.retargeted && slots === 1
+            ? (total >= 1150 && total <= 1450 ? "pass" : "fail")
+            : "";
+    $("roCont").textContent = m.minPresence.toFixed(2) + (m.minPresence >= 0.35 ? " PASS" : " FAIL");
+    $("roCont").className = m.minPresence >= 0.35 ? "pass" : "fail";
+    $("roFrames").textContent = `${m.frames} / ${m.worstDt.toFixed(1)}ms`;
+    capsule.classList.remove("cooling", "reform");
+    capsule.classList.add("idle");
+    setState("rest"); charging = false;
+    morph = null;
+    $("roFps").textContent = "parked";
+}
+function prmSwap(to) {
+    // PRM: seat instantly; the charge survives as a non-motion state; no barbell
+    active = to;
+    setCurrent(to);
+    capsule.style.transform = `translateX(${centers[to] - capW / 2}px) scale(1)`;
+    worm.seat(centers[to] - LIGHT_INSET_X);
+    paintBloomX(centers[to]);
+    bloom.style.opacity = "0.35";
+    setState("arrival (PRM seat)");
+    setTimeout(() => {
+        bloom.style.opacity = "0"; wash.style.opacity = "0";
+        capsule.classList.add("idle"); setState("rest");
+    }, 220);
+    $("roTotal").textContent = "PRM path"; $("roTotal").className = "";
+    charging = false;
+}
+
+/* continuity + fps monitor—computed-style presence, morph window only.
+   (Per-frame getComputedStyle is probe-only instrumentation, not a shipped idiom.) */
+function monitor(id) {
+    const tick = (now) => {
+        const m = morph;
+        if (!m || m.id !== id) return;
+        if (m.lastT) {
+            const dt = now - m.lastT;
+            m.worstDt = Math.max(m.worstDt, dt);
+            $("roFps").textContent = Math.round(1000 / dt) + " fps";
+        }
+        m.lastT = now; m.frames++;
+        const presence = Math.max(
+            parseFloat(getComputedStyle(capsule).opacity),
+            parseFloat(getComputedStyle(goo).opacity)
+        );
+        m.minPresence = Math.min(m.minPresence, presence);
+        requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+}
+
+/* pointer wiring—charge on down, commit on click, discharge on abandon;
+   keyboard activation charges + commits in one stroke (the charge floor holds) */
+tabEls.forEach((el, i) => {
+    el.addEventListener("pointerdown", () => {
+        if (i !== active && !charging && !morph) startCharge();
+    });
+    el.addEventListener("click", () => {
+        if (i === active && !morph) return;
+        if (!charging && !morph) startCharge();
+        commit(i);
+    });
+    el.addEventListener("pointerleave", () => {
+        if (charging && !morph) discharge();
+    });
+});
+
+/* ---------- analytic label-contrast readout (a model, not paint) ---------- */
+(function contrastModel() {
+    const contrast = (bgLum) => 1.05 / (bgLum + 0.05);
+    const sceneL = 0.10;                       // dark-map band under the labels
+    const barA = 0.65, barL = 0.05;            // container tier
+    const base = sceneL * (1 - barA) + barL * barA;
+    const bloomL = 0.80, washL = 0.90;
+    const hot = 0.55, clampF = 0.14, washHot = 0.28, washClamp = 0.05;
+    // plus-lighter approximated additive at the label band
+    const clamped = Math.min(1, base + hot * clampF * bloomL + washClamp * washL);
+    const unclamped = Math.min(1, base + hot * bloomL + washHot * washL);
+    const cC = contrast(clamped), cU = contrast(unclamped);
+    $("roClamped").textContent = cC.toFixed(1) + ":1" + (cC >= 4.5 ? " PASS" : " FAIL");
+    $("roClamped").className = cC >= 4.5 ? "pass" : "fail";
+    $("roUnclamped").textContent = cU.toFixed(1) + ":1 FAIL (reproduces the iOS bloom defect)";
+    $("roUnclamped").className = "fail";
+})();
+
+/* ---------- U2 medium controller ---------- */
+const cc = $("cc"), ccMedium = $("ccMedium"), ccGrid = $("ccGrid"), ccRail = $("ccRail");
+const ROWS = 2, COLS = 3, BASE_TRAVEL = 40, ROW_GRADE = 0.2;   // +20% travel per row
+const TILE_TRANSITION = "opacity var(--clock-fade) ease-out, transform var(--clock-stretch) cubic-bezier(.16,.84,.28,1)";
+for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
+    const d = document.createElement("div");
+    d.className = "cc-tile"; d.textContent = `tile r${r}`;
+    const travel = BASE_TRAVEL * (1 + ROW_GRADE * r);
+    d.style.transform = `translateY(${-travel}px)`;
+    d.dataset.travel = travel;
+    d.style.transition = TILE_TRANSITION;
+    ccGrid.appendChild(d);
+}
+for (let i = 0; i < 3; i++) {
+    const p = document.createElement("div");
+    p.className = "cc-pip";
+    p.style.transform = "translateY(-24px)";
+    p.style.transition = "opacity var(--clock-fade) ease-out var(--clock-periphery-lag), transform var(--clock-stretch) cubic-bezier(.16,.84,.28,1) var(--clock-periphery-lag)";
+    ccRail.appendChild(p);
+}
+const rootStyles = getComputedStyle(document.documentElement);
+const tok = (name) => parseFloat(rootStyles.getPropertyValue(name));
+{
+    const stretch = tok("--clock-stretch");
+    const fade = stretch / 4;
+    $("ccRatio").textContent = `${fade.toFixed(1)}ms : ${stretch}ms = 1:${(stretch / fade).toFixed(1)}`;
+    $("ccRatio").className = "pass";
+}
+let ccStateName = "rest", ccTimers = [], ccContentGoneAt = 0;
+const setCC = (s) => { ccStateName = s; $("ccState").textContent = s; };
+function ccClearTimers() { ccTimers.forEach(clearTimeout); ccTimers = []; }
+/* wall-clock transition measurement (run→end catches main-thread stalls);
+   transitioncancel cleans up an interrupted measure */
+function measureTransition(el, prop, out) {
+    let t0 = 0;
+    const onRun = (e) => { if (e.propertyName === prop) t0 = performance.now(); };
+    const done = () => {
+        el.removeEventListener("transitionrun", onRun);
+        el.removeEventListener("transitionend", onEnd);
+        el.removeEventListener("transitioncancel", onCancel);
+    };
+    const onEnd = (e) => {
+        if (e.propertyName !== prop) return;
+        if (t0) out(Math.round(performance.now() - t0));
+        done();
+    };
+    const onCancel = (e) => { if (e.propertyName === prop) done(); };
+    el.addEventListener("transitionrun", onRun);
+    el.addEventListener("transitionend", onEnd);
+    el.addEventListener("transitioncancel", onCancel);
+}
+function ccOpen() {
+    ccClearTimers();
+    setCC("engaged");
+    ccMedium.classList.remove("relax", "scrub");
+    ccMedium.classList.add("engage");
+    measureTransition(ccMedium, "opacity", (ms) => {
+        $("ccCliff").textContent = ms + "ms";
+        $("ccCliff").className = ms <= 110 ? "pass" : "fail";
+    });
+    ccMedium.style.opacity = "1";
+    cc.classList.add("open");
+}
+function ccClose() {
+    ccClearTimers();
+    setCC("content-out");
+    cc.classList.remove("open");                 // tiles fade+rise on their OWN opacity
+    const beat = tok("--clock-empty-beat");
+    ccTimers.push(setTimeout(() => {
+        ccContentGoneAt = performance.now();
+        setCC("held (the empty-medium beat)");
+    }, 175));
+    ccTimers.push(setTimeout(() => {
+        $("ccBeat").textContent = Math.round(performance.now() - ccContentGoneAt) + "ms";
+        setCC("relaxing");
+        ccMedium.classList.remove("engage", "scrub");
+        ccMedium.classList.add("relax");
+        measureTransition(ccMedium, "opacity", (ms) => {
+            $("ccRelax").textContent = ms + "ms";
+            if (ccStateName === "relaxing") setCC("rest");
+        });
+        ccMedium.style.opacity = "0";
+    }, 175 + beat));
+}
+function ccFlick() {
+    ccClose();
+    // catch mid-relax—the medium is re-driven from its LIVE computed value
+    const beat = tok("--clock-empty-beat");
+    const relax = tok("--clock-medium-relax");
+    ccTimers.push(setTimeout(() => {
+        const floor = parseFloat(getComputedStyle(ccMedium).opacity);
+        $("ccFloor").textContent = floor.toFixed(2) + (floor > 0 ? "—never 0, PASS" : " FAIL");
+        $("ccFloor").className = floor > 0 ? "pass" : "fail";
+        setCC("caught (scrub re-entry)");
+        ccOpen();
+    }, 175 + beat + relax * 0.55));
+}
+$("ccOpen").addEventListener("click", ccOpen);
+$("ccClose").addEventListener("click", ccClose);
+$("ccFlick").addEventListener("click", ccFlick);
+$("ccScrub").addEventListener("input", (e) => {
+    ccClearTimers();
+    const p = e.target.value / 1000;
+    setCC("scrub " + p.toFixed(2));
+    ccMedium.classList.remove("engage", "relax");
+    ccMedium.classList.add("scrub");
+    ccMedium.style.opacity = String(Math.min(1, p * 1.6));   // the medium leads the scrub
+    cc.classList.remove("open");
+    [...ccGrid.children].forEach((tile) => {
+        tile.style.transition = "none";
+        tile.style.opacity = String(Math.max(0, Math.min(1, (p - 0.15) / 0.5)));
+        tile.style.transform = `translateY(${-tile.dataset.travel * (1 - Math.min(1, p * 1.2))}px)`;
+    });
+});
+$("ccScrub").addEventListener("change", (e) => {
+    // release: snap to the nearest pole on the consumed clocks
+    [...ccGrid.children].forEach((tile) => {
+        tile.style.transition = TILE_TRANSITION;
+        tile.style.opacity = "";
+        tile.style.transform = `translateY(${-tile.dataset.travel}px)`;
+    });
+    void ccGrid.offsetWidth;
+    (e.target.value / 1000 >= 0.5 ? ccOpen : ccClose)();
+});
+
+/* ---------- U1 readouts ---------- */
+{
+    const s1 = CSS.supports("backdrop-filter", "url(#f5-u1probe)");
+    const s2 = CSS.supports("backdrop-filter", "blur(8px) url(#f5-u1probe)");
+    $("u1s1").textContent = String(s1);
+    $("u1s2").textContent = String(s2);
+    const gate = getComputedStyle($("u1panel")).getPropertyValue("--u1-gate").trim();
+    $("u1gate").textContent = gate + (gate === "engaged" ? "—this engine ENTERS the shipped gated block" : "—gate dormant here");
+}
+
+/* ---------- boot ---------- */
+addEventListener("resize", () => { if (!morph) measure(); });
+measure();
+setCurrent(active);
+</script>
+</body>
+</html>
