@@ -1,0 +1,38 @@
+[
+ {
+  "seed": 1,
+  "name": "dock⇄dropdown-menu cycle",
+  "pass": true,
+  "measured": "DockTrigger→DropdownMenuTrigger=true; DDMContent→dockContext=true"
+ },
+ {
+  "seed": 2,
+  "name": "dockContext 4-family fan-in",
+  "pass": true,
+  "measured": "4 families: dropdown-menu,popover,select,slider"
+ },
+ {
+  "seed": 3,
+  "name": "hub weights (cn/primitive exact + rank)",
+  "pass": true,
+  "measured": "cn=133(DAG 133✓), primitive=50(DAG 50✓), axes=31(DAG 27; +intra-_shared ./axes), selection=16(DAG 20 @55f5170d; disk @HEAD); rank cn>prim>axes>sel=true"
+ },
+ {
+  "seed": 4,
+  "name": "timeline-5 sfc / metric-4 units",
+  "pass": true,
+  "measured": "timeline sfc members=5/5; metric export-units=4/4"
+ },
+ {
+  "seed": 5,
+  "name": "glass-atom+glass-chip orphan flags",
+  "pass": true,
+  "measured": "glass-atom.imported_by_root=false; glass-chip=false"
+ },
+ {
+  "seed": 6,
+  "name": "Card/Button defaults",
+  "pass": true,
+  "measured": "Card.metal=\"gold\", Card.grain=true, Button.emphasis=\"secondary\""
+ }
+]

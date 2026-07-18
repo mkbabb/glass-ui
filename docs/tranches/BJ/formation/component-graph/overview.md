@@ -1,0 +1,212 @@
+# overview — whole component graph by layer
+
+Composition edges (solid = component→component, dashed = component→hub). The `dock ⇄ dropdown-menu` cycle + the un-@imported orphan partials reproduce the DAG doc. Commit `c12beecb50d491c77e77cd8db393bdeb001ee2cb`.
+
+```mermaid
+%% component-graph overview — composition (solid) subsumes the DAG doc.
+%% similarity edges (dashed) omitted from the whole-graph view for legibility;
+%% see similarity-matrix.md + duplication-candidates.md. Commit c12beecb50d491c77e77cd8db393bdeb001ee2cb.
+graph TD
+  subgraph L3
+    component_accordion["accordion"]
+    component_alert["alert"]
+    component_animated_digit["animated-digit"]
+    component_avatar["avatar"]
+    component_badge["badge"]
+    component_button["button"]
+    component_carousel["carousel"]
+    component_checkbox["checkbox"]
+    component_chip["chip"]
+    component_collapsible["collapsible"]
+    component_combobox["combobox"]
+    component_completion_seal["completion-seal"]
+    component_dark_mode_toggle["dark-mode-toggle"]
+    component_dialog["dialog"]
+    component_dock["dock"]
+    component_drawer["drawer"]
+    component_dropdown_menu["dropdown-menu"]
+    component_expandable_container["expandable-container"]
+    component_fading_scroll["fading-scroll"]
+    component_infinite_scroll["infinite-scroll"]
+    component_input["input"]
+    component_instrument_chassis["instrument-chassis"]
+    component_label["label"]
+    component_metric["metric"]
+    component_metric_cell["metric-cell"]
+    component_metric_row["metric-row"]
+    component_metric_stack["metric-stack"]
+    component_number_field["number-field"]
+    component_pager_dots["pager-dots"]
+    component_popover["popover"]
+    component_progress["progress"]
+    component_radio_group["radio-group"]
+    component_scroll_progress_rim["scroll-progress-rim"]
+    component_select["select"]
+    component_separator["separator"]
+    component_skeleton["skeleton"]
+    component_slider["slider"]
+    component_sortable_list["sortable-list"]
+    component_surface["surface"]
+    component_switch["switch"]
+    component_table["table"]
+    component_tags_input["tags-input"]
+    component_textarea["textarea"]
+    component_timeline["timeline"]
+    component_toast["toast"]
+    component_toggle_group["toggle-group"]
+    component_tooltip["tooltip"]
+    component_typewriter["typewriter"]
+  end
+  subgraph L4
+    component_card["card"]
+    component_command["command"]
+    component_configurator["configurator"]
+    component_data_table["data-table"]
+    component_deck["deck"]
+    component_easing_configurator["easing-configurator"]
+    component_easing_picker["easing-picker"]
+    component_header_ribbon["header-ribbon"]
+    component_labeled_field["labeled-field"]
+    component_pulse["pulse"]
+    component_search["search"]
+    component_status_dot["status-dot"]
+    component_tabs["tabs"]
+  end
+  subgraph L5
+    component_aurora["aurora"]
+    component_blob["blob"]
+    component_constellation["constellation"]
+    component_fourier_field["fourier-field"]
+    component_handmark["handmark"]
+    component_liquid_grid["liquid-grid"]
+    component_paper_backdrop["paper-backdrop"]
+    component_watercolor_dot["watercolor-dot"]
+  end
+  %% hub authorities
+  composable__shared_axes(["_shared/axes"])
+  composable__shared_class_names(["_shared/class-names"])
+  composable__shared_primitive(["_shared/primitive"])
+  composable__shared_selection(["_shared/selection"])
+  composable_dock_dockContext(["dock/dockContext"])
+  component_alert -.-> composable__shared_class_names
+  component_badge -.-> composable__shared_class_names
+  component_chip -.-> composable__shared_axes
+  component_chip -.-> composable__shared_class_names
+  component_combobox -.-> composable__shared_primitive
+  component_combobox -.-> composable__shared_selection
+  component_command -.-> composable__shared_axes
+  component_command --> component_dialog
+  component_dialog -.-> composable__shared_axes
+  component_dock -.-> composable_dock_dockContext
+  component_labeled_field --> component_input
+  component_labeled_field --> component_label
+  component_labeled_field --> component_slider
+  component_labeled_field --> component_switch
+  component_progress -.-> composable__shared_axes
+  component_progress -.-> composable__shared_primitive
+  component_search -.-> composable__shared_class_names
+  component_slider -.-> composable__shared_axes
+  component_slider -.-> composable__shared_primitive
+  component_surface -.-> composable__shared_axes
+  component_toast -.-> composable__shared_axes
+  component_accordion -.-> composable__shared_class_names
+  component_accordion -.-> composable__shared_selection
+  component_animated_digit -.-> composable__shared_class_names
+  component_avatar -.-> composable__shared_class_names
+  component_button -.-> composable__shared_axes
+  component_button -.-> composable__shared_class_names
+  component_button -.-> composable__shared_primitive
+  component_card -.-> composable__shared_axes
+  component_card -.-> composable__shared_class_names
+  component_card --> component_surface
+  component_carousel -.-> composable__shared_class_names
+  component_carousel --> component_button
+  component_checkbox -.-> composable__shared_primitive
+  component_checkbox -.-> composable__shared_selection
+  component_collapsible -.-> composable__shared_class_names
+  component_collapsible -.-> composable__shared_primitive
+  component_combobox -.-> composable__shared_class_names
+  component_command -.-> composable__shared_class_names
+  component_command -.-> composable__shared_selection
+  component_command -.-> composable__shared_primitive
+  component_completion_seal -.-> composable__shared_class_names
+  component_configurator --> component_fading_scroll
+  component_configurator -.-> composable__shared_class_names
+  component_configurator --> component_label
+  component_constellation -.-> composable__shared_class_names
+  component_dark_mode_toggle -.-> composable__shared_class_names
+  component_data_table --> component_skeleton
+  component_data_table --> component_table
+  component_data_table -.-> composable__shared_class_names
+  component_deck --> component_pager_dots
+  component_dialog -.-> composable__shared_primitive
+  component_dialog -.-> composable__shared_class_names
+  component_dock -.-> composable__shared_class_names
+  component_dock -.-> composable__shared_axes
+  component_dock --> component_dropdown_menu
+  component_drawer -.-> composable__shared_axes
+  component_drawer -.-> composable__shared_class_names
+  component_dropdown_menu -.-> composable__shared_primitive
+  component_dropdown_menu -.-> composable__shared_class_names
+  component_dropdown_menu -.-> composable__shared_selection
+  component_dropdown_menu -.-> composable__shared_axes
+  component_dropdown_menu -.-> composable_dock_dockContext
+  component_expandable_container -.-> composable__shared_axes
+  component_header_ribbon --> component_surface
+  component_header_ribbon -.-> composable__shared_class_names
+  component_header_ribbon -.-> composable__shared_primitive
+  component_input -.-> composable__shared_class_names
+  component_instrument_chassis -.-> composable__shared_class_names
+  component_label -.-> composable__shared_class_names
+  component_labeled_field --> component_select
+  component_metric -.-> composable__shared_class_names
+  component_number_field -.-> composable__shared_class_names
+  component_number_field -.-> composable__shared_primitive
+  component_number_field --> component_button
+  component_pager_dots -.-> composable__shared_class_names
+  component_popover -.-> composable__shared_axes
+  component_popover -.-> composable_dock_dockContext
+  component_popover -.-> composable__shared_class_names
+  component_popover -.-> composable__shared_primitive
+  component_radio_group -.-> composable__shared_axes
+  component_radio_group -.-> composable__shared_class_names
+  component_radio_group -.-> composable__shared_primitive
+  component_radio_group -.-> composable__shared_selection
+  component_search --> component_badge
+  component_search --> component_button
+  component_search --> component_dialog
+  component_search --> component_popover
+  component_search -.-> composable__shared_axes
+  component_select -.-> composable__shared_primitive
+  component_select -.-> composable__shared_selection
+  component_select -.-> composable__shared_axes
+  component_select -.-> composable__shared_class_names
+  component_select -.-> composable_dock_dockContext
+  component_separator -.-> composable__shared_axes
+  component_separator -.-> composable__shared_class_names
+  component_skeleton -.-> composable__shared_class_names
+  component_slider -.-> composable_dock_dockContext
+  component_surface -.-> composable__shared_class_names
+  component_surface -.-> composable__shared_primitive
+  component_switch -.-> composable__shared_class_names
+  component_switch -.-> composable__shared_primitive
+  component_table -.-> composable__shared_class_names
+  component_tabs --> component_select
+  component_tabs --> component_tooltip
+  component_tabs -.-> composable__shared_axes
+  component_tabs -.-> composable__shared_class_names
+  component_tags_input -.-> composable__shared_class_names
+  component_tags_input -.-> composable__shared_primitive
+  component_tags_input --> component_chip
+  component_textarea -.-> composable__shared_class_names
+  component_timeline --> component_popover
+  component_toast -.-> composable__shared_class_names
+  component_toggle_group -.-> composable__shared_axes
+  component_toggle_group -.-> composable__shared_class_names
+  component_toggle_group -.-> composable__shared_primitive
+  component_toggle_group -.-> composable__shared_selection
+  component_tooltip -.-> composable__shared_axes
+  component_tooltip -.-> composable__shared_class_names
+  component_tooltip -.-> composable__shared_primitive
+  %% dock ⇄ dropdown-menu 2-cycle (seed 1)
+```
