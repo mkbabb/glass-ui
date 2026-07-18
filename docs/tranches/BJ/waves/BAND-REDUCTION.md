@@ -1,534 +1,784 @@
-# BJ Band — REDUCTION (registry family C · the ruthless purge · F04/F18/F25/F26/F30/F32/F33/F42/F44/F45/A05/A14)
+# BJ Band — REDUCTION (registry family C · the ruthless purge · F04/F16/F18/F25/F26/F30/F32/F33/F42/F44/F45/A05/A14)
 
-**Status:** DRAFT — for the Fable two-challenge pass. Every unsettled judgment is an
-`OPEN:` marker below; resolve before execution.
-**Mode:** TRANCHE-DEVELOPMENT. This band writes ONLY this doc plus the sibling
-`../ASK-REDUCTION.md`; no source changes until execution.
-**Family:** C — surface-reduction. Verdict (round-1): *73% of bespoke props (298/408) have ≤1
-setter; 140 are never set anywhere; 20 components carry ≥6; the only "standing" overfit gate does
-not run in the current tree.* The user's F04 order: "This shape is to be abrogated — simplify
+**Verified model:** `claude-fable-5` (system-context line read verbatim: "The exact model ID is
+claude-fable-5"). **Union provenance:** REWRITTEN IN PLACE 2026-07-18 by the RU-03 band-redo seat
+(REFABLE campaign). The prior version was the opus-begat draft, formed BEFORE the RU-09
+(SUPERFLUITY), RU-12 (PERF-DAG), and RU-19 (component-graph INFERENCE) redos; it carried the
+stale five-variant timeline scope, the Configurator demo-privatize, the useStagger retire lean,
+and the W4 SHARED-KEEP recommendation on the census RU-09 proved phantom. This union keeps opus
+rows only where re-proven at HEAD (`485891a2`), corrects or strikes the wrong ones, and adds the
+wave rows the redo canon binds. Verdict sidecar:
+`../formation/refable/REFABLE-RU-03-REDUCTION.md`.
+
+**Status:** UNION — supersedes the draft; every remaining unsettled judgment is an `OPEN:` or an
+ASK pointer below.
+**Mode:** TRANCHE-DEVELOPMENT. This band writes ONLY this doc; no source changes until execution.
+**Family:** C — surface-reduction. The user's F04 order: "This shape is to be abrogated — simplify
 components to better, more opinionated defaults; KISS. A grand audit of ALL components with
-**questions in reduction relayed to the user**."
-**Census truth sources:**
-- `../formation/round-1/component-surface---overfit-census.md` (15 findings — the overfit table, every prop count)
-- `../formation/round-1/consumer-truth---component-DAG.md` (the reduction inventory + the mis-provenanced deletes)
-- `../formation/round-2/adversarial-verification-of-round-1-consumer-truth-component.md` (the CORRECTED per-repo break table — the Q060 roster truth)
-- `../formation/round-1/dead-code-and-dual-paths.md` (fourier presets.ts, the dead barrels, useStagger)
-- `../formation/round-2c/chronic-decided-draft.md` (the UF-K1 third-ask disease row + Q051 R12/R14/R16)
+**questions in reduction relayed to the user**." A05: full DAG, then reduce to the truly
+hardened/refined/worthy — one consumer is NOT enough.
+
+**Census truth sources (precedence order — the redo canon supersedes the rounds where they
+conflict):**
+- `../formation/superfluity/SUPERFLUITY.md` — the RU-09 canon (11 fresh adjudications; 6
+  COLLAPSE-FAMILY / 3 MERGE-INTO / 1 DELETE / 1 KEEP-DISTINCT; R1-R12 bound deliverables)
+- `../formation/perfection/FABLE-DAG-REDUCTION.md` — the RU-12 union (A1-A16; the corrected
+  external-consumer census; live-code imports only, research prose is never a consumer)
+- `../formation/component-graph/INFERENCE.md` — the RU-19 corrected canon (V1-V15; the
+  discriminator rule; the merge/kinship bands; the retired 0.85 gate)
+- `../formation/round-2/adversarial-verification-of-round-1-consumer-truth-component.md` (the
+  round-2 break table — still valid for the STALE-SUBPATH phantom roster)
+- `../formation/round-1/component-surface---overfit-census.md` (prop counts) +
+  `dead-code-and-dual-paths.md` + `../formation/round-2c/chronic-decided-draft.md` (UF-K1)
 - `../FEEDBACK-LEDGER.md` rows F04/F16/F18/F25/F26/F30/F32/F33/F42/F44/F45, A05/A14
 
 ## Band framing — READ FIRST (honest gate posture)
 
-Reduction splits cleanly into **three DELTA classes**, and the gate posture is honest to each —
-do NOT dress one as another (this is the same discipline BAND-COLOCATION carries):
+Reduction splits into **three DELTA classes**; the gate posture is honest to each:
 
-1. **Dead-config cuts are null-DELTA.** A prop with ZERO consumer setters, when removed, changes
-   NOT ONE rendered pixel — the value was never set, so it always resolved to its default. The
-   affirmative proof is a **paint null-DELTA** (a component's stories render byte-identically
-   across the cut) plus a **public-surface diff** (the removed props/exports leave the type
-   surface). The single born-RED differential for this class is a **static dead-config scan**
-   (family A's proposed prop-granularity check): it reds on the enumerated 0-setter props at HEAD
-   and greens when they are gone. That is a *surface-hygiene* RED→GREEN, not a visual-defect one —
-   say so plainly.
-2. **Card's default-neutralization is a REAL visual DELTA.** `Card` defaults to `metal: "gold"` +
-   `grain: true` at HEAD (`Card.vue:38,33`); every one of the ~28 `<Card>` instances that relies
-   on defaults renders gold-metal + grain TODAY. Neutralizing the default paints differently — a
-   genuine π/DELTA is owed, and the born-RED gate is a real paint probe on the F04 shape. This is
-   the ONE wave in the band that owes a before/after screenshot pair.
-3. **Deletes/relocations are intentional-surface DELTA.** Dropping a public export or demoting a
-   component to `demo/` is an *intended, ruling-gated* break, not a born-RED defect. The record is
-   the `public-surface.spec.ts` diff. The ONE genuine born-RED inside this class is the *dead code*
-   (`fourier-field/presets.ts`, 0 importers) — a reach probe reds on it TODAY.
+1. **Dead-config cuts are null-DELTA.** A prop with ZERO consumer setters, removed, changes not
+   one rendered pixel. Proof = paint null-DELTA (paired π, byte-identical stories) + the
+   public-surface diff. The born-RED differential is a static dead-config scan — a
+   *surface-hygiene* RED, not a visual one.
+2. **Card's default-neutralization is a REAL visual DELTA.** `Card.vue:33` `grain: true`,
+   `Card.vue:39` `metal: "gold"` — every default-relying `<Card>` renders gold-metal + grain
+   today. This is the F04 order's **opinionated-defaults surface** (label per RU-13 FLIP-2: the
+   F04-DIRECT shape — the `shape="rounded"` dock silhouette + the DockControl rings — is
+   GF-DOCK's; this band's Card probe is the defaults half of the same order). π/DELTA owed.
+3. **Deletes/relocations are intentional-surface DELTA.** Ruling-gated breaks recorded by the
+   `public-surface.spec.ts` diff. The genuine born-REDs inside this class are the dead-code reach
+   probes (`fourier-field/presets.ts`, 0 importers).
 
-**The consumer-truth discipline (the header-ribbon lesson).** In-repo probes are structurally
-blind to undeclared sibling consumers. Round-1 called `header-ribbon` a "prime delete"; round-2
-REFUTED it — keyframes.js `EditorShell.vue:116` imports it and `MIGRATION.md:115` marks it KEPT.
-So **no deletion or prop-cut in this band executes until the family-B constellation sibling-import
-census clears the subpath.** Every cross-repo obligation cited below is the round-2 corrected
-truth, not round-1's.
+**The consumer-truth discipline (the header-ribbon lesson, sharpened by the redo round).** In-repo
+probes are blind to sibling consumers; sibling greps are blind in BOTH directions — round-1 called
+header-ribbon a "prime delete" (keyframes.js consumes it), RU-09's F32 seat called useStagger
+zero-caller (speedtest consumes it ×2), and RU-12's carousel census ran a 9-repo fence that
+excluded words (which consumes it). THREE rules bind every cut here: (a) no deletion or prop-cut
+executes until the family-B census clears the subpath/prop across the FULL constellation — atlas,
+slides, speedtest, bbnf-buddy, keyframes.js, sci-report, value.js, fourier-analysis, oscilloscope,
+**muster, words** (the two the 9-repo fence dropped); (b) live `.vue`/`.ts` imports only — research
+docs, comments, and strings are never consumers; (c) census at TWO grains — symbol existence AND
+prop/slot contract — a consumer pinned pre-7.0.0 whose imported symbols or props are gone at HEAD
+is a STALE-PIN phantom and preserves nothing (the consumer-updates ruling), while a
+current-contract usage is a live consumer whatever the pin says.
 
 ## Scope of the band (in / out)
 
-**In:** the dead-config prop cuts (Typewriter, GlassDock, Slider, Labeled\*, Progress,
-AnimatedDigit, WatercolorDot); Card's axis-collapse + neutral defaults; the clean deletes
-(`fourier-field/presets.ts`, `liquid-grid`, `Configurator`→demo, `easing`→demo, the `compositions`
-demo section, `useStagger`); the cross-repo-gated removals (instrument-chassis, metric, completion-
-seal — as ASK-gated relays, NOT blind deletes); and the F16 timeline ground-up stub.
+**In:** the dead-config prop cuts (W1); Card axis-collapse + neutral defaults (W2); the clean
+deletes + demo-privatizations on the CORRECTED census (W3); the cross-repo ASK-gated dispositions
+— instrument-chassis, metric, completion-seal, carousel (W4); the F16 timeline collapse stub (W5);
+the pulse→StatusDot merge (W6); the dialog/drawer SURFACE cuts (W7); the F33 goo-engine collapse
+(W8); the scroll/reveal-wing collapse (W9).
 
 **Out (cross-band — do NOT own here):**
-- **The 5 dead aggregation barrels** (`composables/index.ts`, `glass/wave/index.ts`,
-  `glass/webgpu/index.ts`, `sortable-list/composables/index.ts`, `typewriter/composables/index.ts`).
-  `dead-code-and-dual-paths.md` lists them, but **BAND-COLOCATION Wave 1 (Purge D / G-BARREL-REACH)
-  already owns them** as its one born-RED differential. `OPEN:` single-owner arbitration — the
-  charter named "dead barrels" for this band, but COLOCATION drafted the gate first; recommend
-  COLOCATION keeps them (the wave-move for `glass/wave/index.ts` and the barrel-delete are the same
-  action there) and this band cites it. Do NOT double-delete.
-- **The four family-G greenfields** — `HandMark` (F34-F40), `FourierField`/`Constellation` physics
-  (A14 procedural umbrella), and `DialogContent`'s `stage` axis (coupled to the GRADED-BACKDROP
-  adopt-or-retire freeze, family G/I). Reducing their props in isolation is wasted work the
-  greenfield/freeze redoes. This band **defines the target surface** and hands DELIVERY to the
-  owning band (§ Wave 1 handoffs); it does not cut them here.
-- **The chip/glass-atom orphan** (`css-partial-orphaned-by-component-fold`) — owned by
-  `BJ.W-CSS-CLOSURE-RESTORE` (MATERIAL W7), not a reduction. Out.
-- **The 7 genuinely-ambiguous kill/keep/merge calls** — DataTable, FourierField-keep, Constellation-
-  keep, deck-vs-carousel, confirm-dialog-vs-dialog, reveal/scroll/tempo, compositions-category.
-  These go to **`../ASK-REDUCTION.md`** (the user-gated document), not a wave. The waves here
-  execute only the DECIDED reductions; the ASK carries what the drafter cannot settle.
+- **The 5 dead aggregation barrels** — BAND-COLOCATION W1 (Purge D / G-BARREL-REACH) owns them;
+  this band cites, never double-deletes. RESOLVED (was OPEN 1): COLOCATION keeps them.
+- **The greenfield internals** — HandMark (GF-HANDMARK; W1 records the target surface only),
+  dock shape grammar (GF-DOCK W5 — including the `shape` prop keep/kill, see W1), aurora preset
+  cut + mediums (GF-AURORA W5/W1-W4 — RU-09 R10 executes THERE, roster 17→~11, not here),
+  blob (GF-BLOB).
+- **The chip/glass-atom @import orphan** — `BJ.W-CSS-CLOSURE-RESTORE` (MATERIAL W7).
+- **The dialog/drawer staging-substrate EXTRACTION** — `BJ.W-GRADED-BACKDROP-JUDGE` (MATERIAL
+  W3) owns the C-F unconditional extraction (`useSceneStage`/stage context/scrim composable);
+  W7 here owns only the SURFACE cuts and sequences with it.
+- **The track-well/value-marks registers** — `BJ.W-TRACK-DRY` (MATERIAL W4), re-opened to TWO
+  registers per RU-09 R4; W5's surviving Timeline adopts on arrival.
+- **The pager-dot goo-morph refinement** — `BJ.W-PAGER-DOT-MORPH` (FEEDBACK-MOTION W6); W8 here
+  is its precondition and lands the CUTS only.
+- **DialogContent `stage` axis** — coupled to the graded-backdrop freeze (MATERIAL W3).
+- **The ambiguous kill/keep/merge calls** — `../ASK-REDUCTION.md` + the RU-09 ASK rows (A1-A9).
+  NOTE: ASK-REDUCTION.md predates the redo canon; its §A1 (SHARED-KEEP recommendation), §C1
+  (symmetric deck/carousel), and §C3 (useStagger "unbacked") texts are STALE — the lead
+  amendment pass re-issues them with the corrected censuses before the user rules (RU-12
+  RT12/RT13 + this union's W4 evidence).
 
 ---
 
 ## Wave 1 — BJ.W-REDUCE-PROPDIET · the dead-config prop cut (null-DELTA)
 
-**Status:** DRAFT
+**Status:** UNION-READY
 **Terminal owner:** glass-ui orchestrator
-**Depends on:** the family-B sibling-import census clearing each affected component's props (a
-prop is not a subpath, but a public-component prop removal IS a type-surface break on the bump).
+**Depends on:** the family-B sibling-import census clearing each affected component's props
+(full-constellation fence, both grains — band framing).
 
 ### Mission
 
-Delete the bespoke props that NO consumer sets — the pure F04 "shape to be abrogated" surface —
-across the non-greenfielded public components, in one wave, changing ZERO rendered output. Fewest
-lines, opinionated defaults, no aliases.
+Delete the bespoke props that NO consumer sets — the F04 opinionated-defaults surface — across
+the non-greenfielded public components, in one wave, changing ZERO rendered output. Fewest lines,
+opinionated defaults, no aliases.
 
-### Exact scope (each cut cites its census count + on-disk verification)
+### Exact scope (each cut cites its census + on-disk verification)
 
-**Typewriter (`./typewriter`) — 20 → ~9.** `TypewriterText.vue:50-89` declares 20 props; 11 are
-internal typing-simulation knobs with 0 consumer setters (verified: the only Typewriter consumer
-is `demo/stories/motion/typewriter.vue`, and it sets none of them). **Retire:** `ngramSize`,
-`variance`, `errorRate`, `firstAnimationSpeedFactor`, `maxCharsBeforeNotice`,
-`continueAfterTypoProbability`, `sequentialTypoDecay`, `correctionSpeedMultiplier`, `deletingSpeed`,
-`startDelay`, `cursorChar`, `respectReducedMotion` → bury the typo-model behind ONE opinionated
-`humanize` default. **Keep:** `text, words, baseSpeed, loop, cursorVisible, cursorBlink,
-pauseAfterType, pauseAfterDelete` (the exercised surface). (`OPEN:` `respectReducedMotion` — a11y
-band may want it kept as a live escape; recommend keep-if-a11y-claims-it, else fold into the
-always-on reduced-motion guard. Coordinate with BAND-A11Y.)
+**Typewriter (`./typewriter`) — 20 → ~9, WITH the external-consumer guard.** `TypewriterText.vue`
+declares 20 props; 11 typing-simulation knobs have 0 setters. **Retire:** `ngramSize, variance,
+errorRate, firstAnimationSpeedFactor, maxCharsBeforeNotice, continueAfterTypoProbability,
+sequentialTypoDecay, correctionSpeedMultiplier, deletingSpeed, startDelay, cursorChar,
+respectReducedMotion` → ONE opinionated `humanize` default. **Keep:** `text, words, baseSpeed,
+loop, cursorVisible, cursorBlink, pauseAfterType, pauseAfterDelete`. **GUARD (RU-12 W2/RT2):**
+atlas live-consumes `/typewriter` — the thin is null-DELTA only if the atlas call sites survive
+unchanged or ride a marked addendum; census at execution. `respectReducedMotion` folds into the
+always-on reduced-motion guard unless BAND-A11Y claims it (coordinate; the reduced-motion
+substrate is a11y's CONFIRMED KEEP).
 
-**GlassDock (`./dock`) — retire the dead `position` axis + 3 knobs.** `DockProps` at
-`useDockShellProps.ts:9-11` declares `position?: "fixed" | "inline" | "sticky"` (verified line 11);
-the census tag-scan over 40 dock instances shows `position`, `autoLuminance`, `containerName`,
-`viewTransitionName` = 0 setters. **Retire** all four. The dock is ALSO a family-G greenfield (F47)
-— `OPEN:` confirm the greenfield inherits this cut rather than re-deriving it; the 4 dead knobs
-should die regardless of the greenfield's shape.
+**GlassDock (`./dock`) — retire the dead `position` axis + 3 knobs; the `shape` axis is NOT
+this wave's.** `useDockShellProps.ts` declares `position?: "fixed" | "inline" | "sticky"`;
+census over 40 dock instances: `position, autoLuminance, containerName, viewTransitionName` = 0
+setters. **Retire all four** — they die regardless of the greenfield's shape (GF-DOCK inherits
+the cut). **CARVE-OUT (RU-13 F01-F10 N1):** the `shape` prop (`useDockShellProps.ts:36-53`) is
+the F04-direct silhouette axis; its keep/kill is a GF-DOCK W5 shape-grammar RULING — named there,
+not cut here. The dock cuts owe a null-DELTA on the four dockContext-consuming families'
+stories (RU-12 A4: slider/select/popover/dropdown-menu).
 
-**Slider (`./slider`) — remove `keepDockOpen`.** `slider/types.ts:25` declares `keepDockOpen?:
-boolean` (default `true`, `Slider.vue:27`), wired to `useDockHold` at `Slider.vue:97`. Verified:
-ZERO `<Slider :keep-dock-open>` setters anywhere (the 20 `keepDockOpen` grep hits are Popover's
-OWN live `keepDockOpen` prop + Slider-internal wiring + one contract test — NOT Slider setters).
-The prop encodes dock knowledge in a form primitive (leaky-cross-component-coupling). **Retire the
-prop**; the dock-hold-on-drag behavior is desirable and always-on, so move it into the dock
-context/provide (a `<Slider>` inside a `<GlassDock>` holds via context, no prop). **Blast radius:**
-`tests/components/ui/slider/dock-hold-contract.test.ts` asserts the `keepDockOpen` contract —
-rewrite it to the context-driven form (the behavior survives, the prop does not).
+**Slider (`./slider`) — remove `keepDockOpen`.** `slider/types.ts:25` declares it (default
+`true`, `Slider.vue:27`); ZERO `<Slider :keep-dock-open>` setters anywhere (the grep hits are
+Popover's OWN live prop + internal wiring + one contract test). The reroute is adoption of an
+existing authority (RU-12 A3): `Slider.vue:12-13` already imports
+`useOptionalDockContext`/`useDockHold` — the hold becomes context-driven, always-on inside a
+dock. **Blast radius:** rewrite `tests/components/ui/slider/dock-hold-contract.test.ts` to the
+context-driven form (behavior survives, prop does not). **Hotspot order (APOTHEOSIS D-17):**
+this cut lands FIRST on `Slider.vue`, before MATERIAL W4's track/marks repoint and A11Y
+W2-E/W2-F.
 
-**Labeled\* (`./labeled-field`) — thin the duplicated field surface.** `labeled-field/types.ts`
-declares `requirement`, `layout`, `errorLive`, `invalid` (`:12-18`) that restate the wrapped
-control's own axes; the census tag-scan over 14 `LabeledSelect` instances shows 7/12 dead
-(`errorLive, invalid, layout, requirement, placeholder, required, disabled` = 0 setters).
-**Retire** the duplicated validation/layout props from the wrappers; thin `Labeled*` to
-slot-forwarding + label binding. (`OPEN:` `invalid`/`errorLive` may be a11y-load-bearing — the
-LabeledField auto `for`/`id` a11y binding is a Q051/CHRONIC FOLD row; coordinate with BAND-A11Y
-before cutting the validation surface. Recommend: cut `layout`+`requirement`+`placeholder` cleanly;
-gate `invalid`/`errorLive` on the a11y ruling.)
+**Labeled\* (`./labeled-field`) — thin the duplicated field surface UNDER the a11y ruling
+(RESOLVED — was OPEN 3).** Census over 14 `LabeledSelect` instances: 7/12 props dead. **Cut
+cleanly:** `layout`, `requirement`, `placeholder` (+ the duplicated `required`/`disabled`
+restatements where the wrapped control owns them). **KEEP `invalid`/`errorLive`:** the W4-B
+ruling landed (RU-03-A11Y N11) — load-bearing a11y contract, wiring verified at
+`LabeledField.vue:10,25,28,38,59-60,68`; this band may RE-HOME the pair, never drop it.
 
-**Progress (`./progress`) — drop the reka passthroughs.** `progress/types.ts` declares
-`getValueLabel` + `getValueText` (`:12,:16`) — reka-ui passthroughs with 0 consumer setters.
-**Retire both.** **CORRECTION to the census:** round-1 also named `as`/`asChild` as dead Progress
-passthroughs — they are NOT present in `progress/types.ts` at HEAD (stale claim; do not chase
-them). Only the two `getValue*` callbacks are the live dead surface. (Progress DRY-with-Slider is
-F23, a family-F track-family dedup wave — out of scope here; this is only the passthrough cut.)
+**Progress (`./progress`) — drop the reka passthroughs.** `progress/types.ts:12,:16` declare
+`getValueLabel` + `getValueText` — 0 setters (verified at HEAD). **Retire both.** The round-1
+`as`/`asChild` claim stays retired — NOT present at HEAD (RU-12 R13). Track/value-marks DRY is
+MATERIAL W4's (two registers per RU-09 R4).
 
-**AnimatedDigit (`./animated-digit`) — retire the dead physics knobs.** `AnimatedDigit.vue:50-54`
-declares `digitCount`, `mode`, `damping` — 0 consumer setters (census). **Retire** to opinionated
-defaults.
+**AnimatedDigit (`./animated-digit`) — retire `digitCount`, `mode`, `damping`** to opinionated
+defaults (0 setters; speedtest-live component, the thin is null-DELTA).
 
-**WatercolorDot (`./watercolor-dot`) — collapse the variant if single-consumer.** `WatercolorDot.vue:36-40`
-carries a `solid | ghost` variant + 5 further bespoke props, mostly single-consumer over 7
-instances (census note). **Scope:** retire the dead knobs; keep `solid`/`ghost` ONLY if both are
-demoed (verify at execution). `OPEN:` watercolor-dot is a single-EXTERNAL-repo component
-(value.js only, round-2 affirmed) — its keep/relocate is an A05 question; if the ASK rules it
-relocated, this cut is moot. Coordinate with `../ASK-REDUCTION.md` §B-adjacent.
+**WatercolorDot (`./watercolor-dot`) — retire the dead knobs regardless of the ASK.**
+Single-external (value.js ×3 files — RU-12 R14); keep/relocate is ASK §B5. Keep `solid`/`ghost`
+only if both are demoed (verify at execution).
+
+**FourierField (5 dead: `color, colorResolver, freeze, intensity, seed`) + Constellation (3
+dead: `freeze, parallax, speed`) — dead knobs retire to defaults NOW; the component fates are
+ASK §B2/§B3 WITH THE CORRECTED CENSUS:** the "0 external consumers" premise is FALSE —
+fourier-field → slides; constellation → atlas + slides (RU-12 W5). The relocate legs of both
+asks die with the corrected census; retire-knobs-and-keep is the standing recommendation.
+
+**paper-backdrop — the ≥2-consumer census row (NEW — the J9/D-A14 landing, RF-6 routing 1).**
+Census run this seat: atlas (`Atmosphere.vue` + tokens) + speedtest (`SpeedtestResults.vue`,
+`ThankYou.vue`) live → clears the bar, expected KEEP; the row exists so the executor RUNS the
+census and records the disposition rather than skipping it (the prior draft omitted it — an
+executor would never have censused paper-backdrop). Its INFERENCE rank-6 composite (0.426 vs
+skeleton) is small-set saturation, not kinship (RU-19 Q5) — no merge question.
 
 ### Greenfield target-surface handoffs (DEFINED here, DELIVERED by the owning band)
 
-These are the charter-named cuts whose delivery belongs to a greenfield/freeze wave; this band
-records the TARGET so the greenfield lands the reduction, not a fresh bloat:
-
-- **HandMark (`./handmark`) — 19 → the first-principles surface (USER-RULED).** `handmark/types.ts:35-89`
-  declares 19 props (verified); the 11 geometry/boil knobs (`overrides, drawMs, drawDelayMs, boilFps,
-  boilFrames, roughness, segments, jagged, amplitude, natural, path, points`) have 0 consumer setters.
-  **USER RULING 2026-07-17 supersedes the ≈8 floor this row previously fixed:** "handmark is keep. But
-  greenfield and perfect from first principles. Fable." **Delivery:** the family-G HandMark greenfield
-  (F34-F40) rebuilds wholesale with FULL surface authority (its first-principles target ≈5); this row
-  records only that the landed surface must be ≤ the census truth (no dead prop survives), not a fixed
-  prop list. Consumers migrate per the consumer-updates ruling.
-  This band does not cut HandMark's props in isolation.
-- **FourierField `./fourier-field` (5 dead: `color, colorResolver, freeze, intensity, seed`) +
-  Constellation `./constellation` (3 dead: `freeze, parallax, speed`)** — the dead knobs retire to
-  defaults, but the KEEP-or-CUT of each whole procedural component is an ASK (`../ASK-REDUCTION.md`
-  §B). Delivery rides the A14 procedural-codification umbrella.
-- **DialogContent `stage` axis (`none|dim|scale|immersive`, `DialogContent.vue:48`)** — collapse
-  the visually-duplicative stages is coupled to the GRADED-BACKDROP `--glass-halo-*` freeze
-  (family G/I: the experimental cohort landed pre-tag and its adopt/retire is unresolved). **Do not
-  cut `stage` here** — it lands with the graded-backdrop adopt/decline ruling.
+- **HandMark (`./handmark`) — the first-principles surface lands at EXACTLY 5:
+  `shape · color · weight · seed · draw` (RU-06 RT2).** `brush` and `animation` JOIN the cut
+  list; the ≤8 conditional ladder stays superseded. USER RULING 2026-07-17: greenfield with FULL
+  surface authority, census floor superseded; consumers migrate per the consumer-updates ruling.
+  Delivery: GF-HANDMARK W4 (surface wave, union §9). This band does not cut HandMark in
+  isolation.
+- **DialogContent `stage` axis** — lands with the graded-backdrop adopt/decline (MATERIAL W3).
 
 ### Acceptance gates
 
 | gate | posture | probe |
 | --- | --- | --- |
-| **G-DEADPROP-SCAN** | **BORN RED** (surface-hygiene) | a static dead-config scan over the enumerated 0-setter props reds at HEAD (verified: Typewriter 11, GlassDock 4, Slider `keepDockOpen`, Labeled\* 7/12, Progress 2, AnimatedDigit 3, FourierField 5, Constellation 3 — all 0 consumer setters on disk); GREEN after the cut. The band's one lawful RED→GREEN for this class. `OPEN:` build as the family-A prop-granularity gate, or run as a one-time execution differential (gate-ruling substitute). |
-| G-PAINT-NULL-DELTA | inert-cut proof | each affected component's story renders byte-identically (paired π) across the cut — the props were never set, so no pixel moves. |
-| G-SURFACE-DELTA | intentional type-surface change | `public-surface.spec.ts` / `.test-d.ts` reflect the removed props; the diff IS the record (no alias, clean break). |
-| G-TYPECHECK + G-VITEST | refactor-safety | typecheck + full suite green; the rewritten Slider dock-hold-contract test passes in its context-driven form. |
-| G-SIBLING-CENSUS | precondition | the family-B census clears each cut component's props against every sibling repo before removal (the header-ribbon lesson). |
+| **G-DEADPROP-SCAN** | **BORN RED** (surface-hygiene) | static dead-config scan reds on the enumerated 0-setter props at HEAD (Typewriter 11, GlassDock 4, Slider `keepDockOpen`, Labeled\* the cut set, Progress 2, AnimatedDigit 3, FourierField 5, Constellation 3); GREEN after the cut. |
+| G-PAINT-NULL-DELTA | inert-cut proof | each affected component's story renders byte-identically (paired π) across the cut. |
+| G-SURFACE-DELTA | intentional | `public-surface.spec.ts` / `.test-d.ts` reflect the removed props; clean break, no alias. |
+| G-TYPECHECK + G-VITEST | refactor-safety | typecheck + suite green; the rewritten dock-hold contract test passes context-driven. |
+| G-SIBLING-CENSUS | precondition | family-B clears each component's props against the FULL constellation (incl. muster + words), both grains. |
+| G-PAPER-BACKDROP-CENSUS | census row | the paper-backdrop ≥2-consumer census runs and its disposition is recorded (expected KEEP on atlas+speedtest). |
 
-### π / DELTA obligation (INVERTED — null-DELTA)
+### π / DELTA obligation (null-DELTA)
 
-No visual change is claimed. The affirmative proof is a paired-π **null-DELTA** on each affected
-component's story (Chrome-current + Safari-current), equal within 0px = PASS. The ONLY component
-that could shift is none — every removed prop is a confirmed 0-setter. If any story moves a pixel,
-a setter was missed → STOP and re-census.
-
-### KISS / parsimony notes
-
-- Fewest lines: bury magic-number cohorts behind ONE opinionated default (`humanize`), do not
-  re-expose them as a nested config object (that is the same surface with extra indirection).
-- No aliases, no deprecation shims (no-backwards-compat). A removed prop is removed.
-- Gestalt not patchwork: the whole dead-config class dies in ONE wave, not prop-by-prop across
-  the tranche.
+Paired-π null-DELTA per affected story (Chrome + Safari current). If any story moves a pixel, a
+setter was missed → STOP and re-census.
 
 ### Non-goals
 
-- No Card work (Wave 2). No greenfield internals (family G). No `stage`-axis cut (graded-backdrop).
-- No new "config object" successor for the buried knobs (that re-inflates the surface).
-- No behavior change beyond relocating Slider's dock-hold to context (the hold is preserved).
+No Card work (W2). No greenfield internals. No `stage`-axis cut. No config-object successor for
+buried knobs. No behavior change beyond the Slider dock-hold context move.
 
 ---
 
 ## Wave 2 — BJ.W-REDUCE-CARD · Card axis-collapse + neutral defaults (the ONE real-DELTA)
 
-**Status:** DRAFT
+**Status:** UNION-READY
 **Terminal owner:** glass-ui orchestrator
-**Depends on:** Wave 1 (clean prop-surface) + the family-B census on `./card`.
+**Depends on:** W1 + the family-B census on `./card`.
 
 ### Mission
 
-Collapse Card's four overlapping style axes to one and make its defaults NEUTRAL — the direct F04
-target ("a general Card defaulting to gold metal + grain-on is the abrogation shape"). This is the
-band's one wave that repaints real instances, so it owns a real π/DELTA.
+Collapse Card's overlapping style axes and make its defaults NEUTRAL — the F04 order's
+opinionated-defaults surface. The band's one wave that repaints real instances; owns a real
+π/DELTA.
 
 ### Exact scope
 
-**The defaults (real DELTA).** `Card.vue:28-41` `withDefaults` ships `grain: true` (`:33`),
-`metal: "gold"` (`:38`) — verified on disk. The census tag-scan over 28 `<Card>` instances shows
-`metal, grain, grid, deep, specular, dataHueStrength` = 0 setters (DEAD); `variant, selected,
-dataHue` set only by `demo/stories/.../card.vue`. **Neutralize:** `metal` default → `"none"` (or
-drop the axis, see below); `grain` default → `false`. Every default-relying Card repaints from
-gold-grain to neutral glass — the intended F04 correction.
+**The defaults (real DELTA).** `Card.vue` `withDefaults` ships `grain: true` (`:33`),
+`metal: "gold"` (`:39` — the draft's `:38` pin was off by one; verified this seat). Census over
+28 `<Card>` instances: `metal, grain, grid, deep, specular, dataHueStrength` = 0 setters;
+`variant, selected, dataHue` set only by the card story. **Neutralize:** `metal` → `"none"` (or
+the axis drops with the collapse); `grain` → `false`.
 
-**The axis collapse (null-DELTA where the axes were dead).** Card extends `SurfaceProps` and layers
-`variant + material + surface + tier` plus decorative flags. **Collapse to one axis** and **retire**
-the dead decorative flags `metal, grid, deep, specular, dataHueStrength` (0 setters → their removal
-is null-DELTA; only the DEFAULT change repaints). `OPEN:` the one-axis shape — `variant` alone, or
-`variant + surface`? Recommend a single `variant` role-axis (glass | solid | outline | …) resolved
-from the census's actual demoed set; the Fable pass fixes the enum. Gate the decorative preset (if
-any survives) behind ONE opt-in flag, never an on-by-default.
+**The axis collapse (RESOLVED — was OPEN 6).** Per the adopted A5 (RU-12, kept): collapse to
+the **`variant` + `surface` two-axis floor** — `surface` is a real L2 authority
+(`_shared/axes`, 28 consumers) and must be retained; `material` + `tier` + the dead decorative
+flags (`metal, grid, deep, specular, dataHueStrength`) collapse/retire. Any surviving decorative
+preset is ONE opt-in flag, never a default.
 
 ### Acceptance gates
 
 | gate | posture | probe |
 | --- | --- | --- |
-| **G-CARD-DEFAULT-PAINT** | **BORN RED** (visual) | a paint probe on a default `<Card>` at HEAD shows `metal:gold` + `grain:true` rendered (the F04 shape is LIVE today — verified: `Card.vue:33,38`); GREEN = the default renders neutral glass. This is the band's one real born-RED VISUAL differential. |
-| G-AXIS-NULL-DELTA | inert-cut proof | removing the 5 dead decorative flags moves zero pixels (0 setters). |
-| G-SURFACE-DELTA | intentional | `public-surface.spec.ts` reflects the collapsed axis + removed flags. |
-| G-SIBLING-CENSUS | precondition | family-B census on `./card` — any sibling that sets `metal`/`grain`/the removed flags is relayed a migration ask before the cut. |
+| **G-CARD-DEFAULT-PAINT** | **BORN RED** (visual) | a default `<Card>` at HEAD renders `metal:gold` + `grain:true` (`Card.vue:33,:39`); GREEN = neutral glass. The band's one real visual born-RED. |
+| G-AXIS-NULL-DELTA | inert-cut proof | removing the 5 dead decorative flags moves zero pixels. |
+| G-SURFACE-DELTA | intentional | `public-surface.spec.ts` reflects the two-axis floor. |
+| G-SIBLING-CENSUS | precondition | family-B on `./card`; any sibling setting the removed flags gets a migration ask before the cut. |
 
 ### π / DELTA obligation (REAL — owed)
 
-A before/after screenshot pair on `/…/card` and on ≥2 in-the-wild default-Card sites (Chrome +
-Safari current), showing the gold-grain→neutral repaint is the INTENDED F04 correction, plus a
-paired-π on the still-configured `variant`/`selected` cards proving they are unaffected. This is the
-one DELTA the band affirmatively owes.
-
-### KISS / parsimony notes
-
-Opinionated default = neutral, not decorative. The decorative register is opt-in, single-flag, or
-gone. One axis, not four overlapping ones.
+Before/after pair on the card story + ≥2 in-the-wild default-Card sites (Chrome + Safari),
+showing gold-grain→neutral as the INTENDED correction; paired-π on configured cards proving
+no collateral.
 
 ### Non-goals
 
-- No radius/blur retune (family F owns Card rounding + the F48 blur ladder).
-- No Card-vs-glass-panel merge (a separate structural call, not this axis collapse).
+No radius/blur retune (MATERIAL). No Card-vs-Surface merge (card→surface is a ratified
+value-grain wrapper, RU-19 Q5).
 
 ---
 
-## Wave 3 — BJ.W-REDUCE-DELETE · the clean deletes + demo-privatizations
+## Wave 3 — BJ.W-REDUCE-DELETE · the clean deletes + demo-privatizations (the CORRECTED roster)
 
-**Status:** DRAFT
+**Status:** UNION-READY (three members ASK-gated as marked)
 **Terminal owner:** glass-ui orchestrator
-**Depends on:** the family-B sibling-import census clearing each public subpath.
+**Depends on:** the family-B census clearing each subpath (full constellation, both grains).
 
 ### Mission
 
-Delete the dead code and drop the zero-external-consumer public surface, relocating the two
-demo-devices to `demo/` — the reductions that carry no genuine ambiguity (the ambiguous ones are
-`../ASK-REDUCTION.md`).
+Delete the dead code and the zero-consumer public surface on the REDO-CORRECTED census. Two of
+the draft's members flip to KEEP on live consumers (Configurator, useStagger); nine members join
+from RU-09 R6/R8/R9 + RU-12 A9-A14.
 
 ### Exact scope
 
-**Delete `fourier-field/presets.ts` (dead code + presets-in-consumers violation).** Verified: the
-file exists (`4548 B`) and has ZERO importers (`grep 'from "./presets"' = 0`; `git log -S` empty).
-Its `PRESETS` shape diverges from the live `FourierFieldConfig`/`DEFAULT_FOURIER_CONFIG` in
-`constants.ts`, and `demo/stories/substrates/fourier-field.vue` already owns the live variant
-bundles (proper presets-in-consumers). **Delete outright** (no-legacy). Born-RED: a reach probe
-reds on it at HEAD.
+**Delete `fourier-field/presets.ts`** — 0 importers (RU-12 R11; `index.ts` exports
+math/constants/composable only); presets-in-consumers violation. Born-RED reach probe.
 
-**Drop `./liquid-grid` + retire the component (zero external, zero library consumers).** Verified:
-`grep = 0` across all sibling repos (round-2 affirmed) AND zero `src/` library importers.
-**CORRECTION to round-1** (which said "only its own story"): `LiquidGrid` is ALSO consumed by the
-DEMO chassis — `demo/chassis/hero/StoryHero.vue:6,131` renders it as a full-bleed **suffuse hero
-background** (the `kind === 'liquid-grid'` register), with presets at `demo/chassis/hero/suffuse-
-preset.ts` + `demo/stories/substrates/presets.ts`. So the delete is clean on the PUBLIC surface but
-carries a **demo re-home obligation**: `StoryHero`'s suffuse register + `aurora-hero.ts`'s
-`"liquid-grid"` register value must be re-homed onto aurora (which already offers a suffuse mode) or
-dropped. **Scope:** drop the `./liquid-grid` export + delete `src/components/liquid-grid/` + **delete the
-`demo/stories/substrates/liquid-grid.vue` story page** (it imports `LiquidGrid` at :18 and cannot
-compile once the component is gone); re-home the StoryHero suffuse register. **RULED (adjudication
-RULING 1):** DELETE wins over fold — this band owns the component + export + STORY-PAGE deletion, and
-`BAND-STORY` W1 drops liquid-grid from its fold roster (no `studio`-variant normalize). The StoryHero
-suffuse re-home lands HERE too (the delete must not orphan StoryHero); the story band is notified.
-(`OPEN:` residual — whether the suffuse register re-homes onto aurora's suffuse mode or drops is a
-§Work execution detail, not an ownership question.)
+**Delete liquid-grid — component + `./liquid-grid` export + story page + the wave leaf seam
+(RULED: ADJUDICATION-1 R1, re-verified RU-12 R12).** Zero consumers anywhere. Scope: delete
+`src/components/liquid-grid/` + the export + `demo/stories/substrates/liquid-grid.vue`; re-home
+the StoryHero suffuse register onto aurora's suffuse mode (G-STORYHERO-INTACT); BAND-STORY W1
+drops it from the fold roster. **Sequencing (FABLE-COLOCATION):** this delete removes
+`glass/wave`'s only three importers — it lands BEFORE COLOCATION W1 deletes the wave leaf +
+barrel. **+ NEW (RU-03-DOC-TRUTH routing 1 / RU-13 FLIP-2):** the
+`src/components/PROCEDURAL-SUITE.md` LiquidGrid rows (`:11`, `:57-59`) truth-up joins THIS
+wave's delete scope — the retained-suite doc must not list a deleted member.
 
-**Demo-privatize `Configurator` (`./configurator`, 382 LOC).** Verified: 382 lines; `activeLayer,
-asideWidth, layers` = 0 setters; consumers are the demo shell only (`VizStudio.vue`,
-`configurator.vue`). It is a demo-configuration DEVICE on the public surface. **Scope:** move under
-`demo/` private helpers (mirroring `demo/composables/virtual/`); drop the `./configurator` export.
-`OPEN:` sibling-census must clear `glass-ui/configurator` first (undeclared-consumer risk). If a
-named external consumer surfaces, it becomes a family-B relay, not a demo-privatize.
+**Configurator — KEEP (OVERTURNED; was demo-privatize).** The draft's own escape hatch fires
+(RU-12 W3/RT3): live externals value.js (`/configurator`) + fourier-analysis (web/src) + 10 demo
+files. No move, no export drop; the A8 root-barrel mechanics are moot unless the user still
+rules privatize.
 
-**Demo-privatize `easing` (`./easing`: EasingPicker + EasingConfigurator).** Single-consumer demo
-devices (`EasingPicker` `label/playback/readout` = 0 setters; `EasingConfigurator` `preset/steps/
-term` = 0 setters). **Coupled to F31** ("properly modularize the easing-curve component") and to the
-ASK ("does easing tooling belong on the public surface at all"). **Scope:** if the ASK rules
-demo-only, move under `demo/`; drop `./easing`. `OPEN:` this is BOTH a reduction AND F31's
-modularization — recommend the F31 curve-gallery redesign (family D/G) owns the component's SHAPE
-and this wave owns only the public-surface DROP, gated on the ASK ruling.
+**easing — ASK-gated (§B4) WITH THE CORRECTED CENSUS.** Not "single-consumer demo devices":
+keyframes.js (`/easing`) + value.js (`EasingPicker`/`EasingPickerValue` ×4 files) — meets the
+≥2-binary bar (RU-12 W6/RT4). The ASK stands as the user's public-surface taste call, relayed
+with this census; F31 (family D/G) owns the curve-component redesign either way.
 
-**Delete the `compositions` demo section (F43/F44/F45).** The 6 pages
-(`demo/stories/compositions/{auth-shell, chassis, empty-states, form-validation, gate-pattern,
-settings}.vue`) are demo-only, no src/external consumer. User: "the entire compositions section is
-likely to be pruned." **Blast radius (verified):** `tests/components/dialog.confirm-preset.test.ts`
-imports `GatePatternStory` from `compositions/gate-pattern.vue` (`:7`) plus `ConfirmDialogStory` +
-`DialogStory` — deleting the pages breaks this test. **Scope:** delete the 6 pages; **re-home** the
-confirm-preset test fixtures onto a surviving dialog story (the test asserts dialog behavior, not
-composition-page behavior — repoint it). `OPEN:` the auth-shell "why its own category" question
-(F43) is a taxonomy call for `../ASK-REDUCTION.md` §D — confirm the WHOLE section prunes vs keeping
-any page as a legit story type before deleting.
+**Delete the `compositions` demo section (F43/F44/F45) — ASK §D1-gated.** 6 pages, demo-only.
+Blast radius: `tests/components/dialog.confirm-preset.test.ts` imports `GatePatternStory` —
+re-home the fixtures onto the surviving dialog story. Taxonomy stake: pruning empties the
+`scene` type (ADJUDICATION-1 R6). **F44 rider (RU-13 F41-F50):** if the settings page SURVIVES
+D1, its dead knobs are a mandatory fix — `baseSize`/`radius` refs (`:29-30`) bound to sliders
+(`:200-215`) that `surfaceStyle` (`:52-75`) never consumes.
 
-**Resolve `useStagger` (`./motion-core`, unbacked external-consumer claim).** `core/index.ts:16`
-comments "has external consumers" with NO `docs/consumer-evidence/*stagger*` doc; in-repo usage is a
-unit test only. **Scope:** either add `docs/consumer-evidence/useStagger.md` with a live sibling
-grep (family-B census) OR retire the export (no certification on an unbacked comment). Recommend:
-run the census; retire if the claim does not back.
+**useStagger — RESOLVED KEEP (the draft's own protocol, census run).** The claim is BACKED:
+`speedtest/src/features/speedtest/ui/ResultStack.vue:171` +
+`composables/useResultReveal.ts:36` live-import `useStagger` from `@mkbabb/glass-ui/motion-core`
+(re-verified this seat). Write `docs/consumer-evidence/useStagger.md` with the grep (RU-12 RT5).
+NOTE: RU-09 R6's DELETE-useStagger leg is OVERTURNED by this evidence — its own A9 escape
+clause fires; the rest of R6 is unaffected (W9).
+
+**NEW — the combobox → command fold (RU-12 A9 + RU-19 V9).** DELETE the 9-SFC `combobox/`
+wrapper family: command and combobox independently wrap the SAME reka Combobox substrate;
+command imports only `combobox/types` (type-only ×6 files — contract kinship, not composition);
+combobox has zero consumers in src, demo (1 story), and the constellation. The fold: shared
+types move into `command/`; any anchored-input (field-mode) need surfaces on the ONE command
+family; V9's judge clause — formalize the shared selection-list contract in `_shared`
+(`menuRowClass`/`selection.ts` already own fragments) so the fold is a factoring, not a paste.
+`/combobox` subpath + story retire. Clean break. (A11Y W2-B's `ComboboxInput.vue:33` icon fix
+dies with this fold — its contingency note landed per APOTHEOSIS D-14.)
+
+**NEW — the number band 4→1 (RU-12 A10).** Keeper: `useAnimatedNumber` (animated-digit +
+speedtest live). DELETE `useNumericTransition` (0 anywhere), `useAnimatedNumberMap`
+(barrel-only), `useCountup` (1 demo story — re-express the countup story on
+`useAnimatedNumber`).
+
+**NEW — the reveal dead pair (RU-12 A11 ∩ RU-09 R6).** DELETE `useBloomUp` + `bloomUpField`
+(mutual + barrel + one unit test; the `useDockCtaReceive` mention is comment-only). DELETE
+`useStaggerReveal` (zero consumers anywhere incl. the public `/motion-core` symbol;
+`scroll-driven.css` declares `[data-scroll-reveal]` its replacement); OPTIONAL per A11: absorb
+its IO gating into `useStagger` as an option (compose `useIntersectionPause`) — the keeper is
+`useStagger`, never the reverse.
+
+**NEW — scroll/spring demo-locals AS A PAIR (RU-12 A12 + RU-09 R6 guard).** `useScrollPin`
+(sole consumer: ScrollChoreographyBody) + `springProjection` (2 demo stories) move demo-local;
+the `.scroll-pin`/`.scroll-pin-phase-*` register in `scroll-choreography.css` moves WITH its
+writers — never ship the CSS register writer-less (the 7.0.0 RED-BY-ROT class).
+`useScrollScene` (sole consumer: useScrollPin) is CONDITIONAL-KEEP as the one scroll-physics
+spine iff a BJ wave binds it to a real library surface; otherwise it follows pin out.
+
+**NEW — useTextHighlight (RU-12 A13; ASK row).** Zero consumers anywhere while on the ROOT
+barrel (`src/index.ts:191-194`, verified). Cut-or-bind is the user's (dock-search match marks
+are the natural bind site); default on no-answer: DELETE.
+
+**NEW — the search family split (RU-12 A14).** `SearchBar.vue` KEEPS (value.js ×3 live); the
+fuzzy engine (`search/composables`) KEEPS (dock's `useDockSearch` consumes it);
+`FuzzySearch.vue` (demo story only) DELETES, its recipe folds into the SearchBar story.
+`dock/index.ts:84`'s stale "SearchBar retires" claim → BAND-DOC-TRUTH (RU-12 RT14).
+
+**NEW — the confirm-dialog demo residue (RU-09 R8; ASK §C2/A6-gated on the story fold).** The
+component merge LANDED at BI B28. Residue: DELETE `demo/stories/feedback/confirm-dialog.vue` +
+its `manifest.ts` row (`:924`); repoint `tests/components/dialog.confirm-preset.test.ts` to the
+dialog story (which already carries the identical Confirm-preset section). Relay owed to TWO
+repos only: words ×5 + muster ×1 (dynamic `defineAsyncComponent` import — static greps miss it);
+value.js ×0, already migrated (its `AdminUsersPanel.vue` is the exemplar, incl. the
+auto-close-made-explicit caveat).
+
+**NEW — the tempo page fold (RU-09 R9; ASK §C4-gated).** FACILITY keeps verbatim (the
+`--motion-tempo` token + unexported `motionTempo()` reader — the one-clock CSS==JS TIME
+authority, applied exactly once per engine, verified no compounding). PAGE folds:
+`demo/stories/motion/tempo.vue` → a global-time-knob section in `springs.vue` (which already
+reads `motionTempo()` at both play sites), carrying the identity-restore-on-unmount contract
+verbatim + one cross-register co-scale StorySection; drop the `/motion/tempo` route. ZERO src
+changes.
+
+**NEW — draw-in.css disposition census (RU-03-COLOCATION R4/N1) — roster id A05-DRAW-IN.**
+`draw-in.css` is live in the `@import` closure (`index.css:247`) and its members keep their own
+recipes (completion-seal, HandMark — fenced apart by the file's own charter). The census row
+records its consumer set and KEEP-as-register disposition; the old "colocate into
+completion-seal" premise is false at HEAD.
+
+**NEW — the family-C A05 conditional-disposition roster (APOTHEOSIS MECH-03/D-03 — the rows two
+sibling triggers depend on: COLOCATION W3's dated allowlist cites these ids, DOC-TRUTH T34 fires
+on A05-SPECULAR; the FINDING-3 dangling-handoff class is cured by rostering them HERE, mirroring
+the draw-in.css row above).** Each row runs the full-constellation census (both grains) and
+records its disposition; the pre-stated homes are COLOCATION's scope-out fallbacks:
+
+- **A05-SPECULAR — `glass/useSpecularPointer.ts`.** ZERO in-repo importers (barrel +
+  `public-surface.spec.ts` row only); the live gleam mechanism is
+  `createSpecularWriter`/`useSpecularTracking` via `v-specular`. DELETE-lean on a clean census;
+  KEEP → colocate per COLOCATION's pre-stated home and DOC-TRUTH T34 trues the two stale
+  comments (delete moots T34).
+- **A05-CTA — `motion/morph/useDockCtaReceive.ts`.** Dual-exported on `/motion` + `/dock`
+  (RF-2 F15); the W3 reveal-pair mention is comment-only, never a consumer. Census both grains;
+  KEEP → re-home to `dock/composables/` (the `/motion`-barrel drop rides 8.0.0 with `/sidebar`);
+  DELETE on a clean census.
+- **A05-BACKDROP-TRIO — `glass/{backdropLuminanceSample,backdropSampleMath,
+  useGlassBackdropLuminance}.ts`.** Dock-only trio; `GlassDock.vue:20` names the live
+  `docs/consumer-evidence/use-glass-backdrop-luminance.md` (on disk). KEEP-lean (documented
+  booked trigger) → re-home to `dock/composables/` per COLOCATION's pre-stated home; the census
+  confirms.
+- **A05-DRAW-IN** — the census row directly above; id minted so the COLOCATION fence entry can
+  cite it.
+
+Each disposition lands before the COLOCATION W3 fence's dated allowlist entries expire — this
+roster IS the "family-C ruling" those fence entries and T34 await.
 
 ### Acceptance gates
 
 | gate | posture | probe |
 | --- | --- | --- |
-| **G-PRESETS-DEAD-REACH** | **BORN RED** (dead code) | a reach probe reds on `fourier-field/presets.ts` (0 importers, verified) at HEAD; GREEN when deleted. |
-| G-SURFACE-DELTA | intentional | `public-surface.spec.ts` reflects `./liquid-grid`, `./configurator`, `./easing` (if ruled) removed; the diff is the record. |
-| G-STORYHERO-INTACT | re-home proof | `/…` story heros using the `liquid-grid` suffuse register render intact on the re-homed (aurora) register — paired-π, no orphaned `<LiquidGrid>`. |
-| G-CONFIRM-TEST-REHOMED | regression | `dialog.confirm-preset.test.ts` passes against the surviving dialog story (fixtures repointed). |
-| G-SIBLING-CENSUS | precondition | family-B clears `glass-ui/{liquid-grid, configurator, easing}` across all siblings (the header-ribbon lesson) before each drop. |
+| **G-PRESETS-DEAD-REACH** | **BORN RED** (dead code) | reach probe reds on `fourier-field/presets.ts` at HEAD; GREEN when deleted. |
+| G-SURFACE-DELTA | intentional | `public-surface.spec.ts` reflects every dropped subpath/symbol (`./liquid-grid`, `/combobox`, the motion leaves, `./easing` if ruled); the diff is the record. |
+| G-STORYHERO-INTACT | re-home proof | story heroes on the re-homed aurora suffuse register render intact — paired-π, no orphaned `<LiquidGrid>`. |
+| G-CONFIRM-TEST-REHOMED | regression | `dialog.confirm-preset.test.ts` passes against the dialog story. |
+| G-STAGGER-EVIDENCE | resolution record | `docs/consumer-evidence/useStagger.md` exists with the live speedtest grep. |
+| G-SIBLING-CENSUS | precondition | family-B clears every dropped subpath/symbol across the FULL constellation, both grains. |
 
 ### π / DELTA obligation
 
-Mostly null-DELTA (dead code + zero-consumer surface). The ONE paired-π owed: the StoryHero suffuse
-re-home (`liquid-grid`→aurora register) renders equivalently — the hero background must not
-regress. No DELTA for `presets.ts` / `configurator` / `easing` (headless / demo-only).
-
-### KISS / parsimony notes
-
-Delete, don't stub. Re-home StoryHero onto an EXISTING aurora suffuse register rather than minting a
-new one. Move demo-devices to the demo tree that already has the pattern (`demo/composables/virtual/`).
+Mostly null-DELTA. Owed pairs: the StoryHero suffuse re-home; the countup-story re-expression;
+the tempo→springs fold section (the co-scale proof survives the move).
 
 ### Non-goals
 
-- No metric/instrument-chassis/completion-seal delete here (Wave 4 — ASK-gated).
-- No barrel deletes (COLOCATION owns them).
-- No easing-component redesign (F31, family D/G) — only the public-surface drop.
+No metric/chassis/completion-seal/carousel disposition here (W4). No barrel deletes
+(COLOCATION). No easing redesign (F31). No scroll-listener re-seat (W9). No aurora preset cut
+(GF-AURORA W5).
 
 ---
 
-## Wave 4 — BJ.W-REDUCE-CROSSREPO-GATED · instrument-chassis + metric + completion-seal (ASK-gated relays)
+## Wave 4 — BJ.W-REDUCE-CROSSREPO-GATED · chassis + metric + completion-seal + carousel (ASK-gated relays)
 
-**Status:** DRAFT — BLOCKED on `../ASK-REDUCTION.md` §A rulings + the family-B Q060 outbound.
+**Status:** UNION — BLOCKED on the ASK rulings + the family-B Q060 outbound. The draft's
+SHARED-KEEP recommendation is STRUCK: it rested on the round-2 census RU-09 F18 proved phantom.
 **Terminal owner:** glass-ui orchestrator
-**Depends on:** the user's ASK-REDUCTION §A answers; the family-B corrected consumer relay.
+**Depends on:** the user's ASK answers (re-issued with the evidence below); the family-B relay.
 
-### Mission — the UF-K1 third-ask disease, handled as a decision, not a delete
+### Mission — the UF-K1 third-ask, decided on the corrected evidence
 
-The user has named metric-family + instrument-chassis + completion-seal as speedtest-overfit to
-REMOVE **three times** (F18, Q051 R12/R14/R16, and now BJ F18/F26) — but every consumer census
-rules them **SHARED library surface**. This is the `recap:recap-carry-unexecuted` DISEASE row
-(REGISTRY family C: "deciding it is a wave of its own"). This wave does NOT blind-delete; it carries
-the corrected cross-repo truth and executes ONLY the disposition the user rules in ASK-REDUCTION §A.
+The user has named chassis/metric for REMOVAL three times. The prior refusal (UF-K1 + the
+draft's SHARED-KEEP) leaned on a consumer census this union re-ran at BOTH grains. The corrected
+recommendation is RU-09 F18's DELETE — with one flip clause FIRED and disclosed. Whatever the
+user rules is TERMINAL; record the rationale so a fourth ask cannot re-open it.
 
-### The corrected consumer truth (round-2 adversarial, verified on disk)
+### The two-grain consumer truth (verified on disk this seat)
 
-- **instrument-chassis (`./instrument-chassis`, PRESENT — no break).** speedtest×4 (`App.vue:257`,
-  `useRouteTransition.ts:34`, `ChartsView.vue:132`, `MapView.vue:53` + a test mock) + muster×5
-  (`App.vue:31`, `InstrumentAside.vue:17`, `VerdictStage.vue:11`, `WinnerHero.vue:46-47`,
-  `useMusterApp.ts:33`). Round-1 undercounted speedtest (×2→×4). **Census verdict: SHARED-KEEP**
-  (STRUCTURE-ADDENDA §3 DP-A).
-- **metric (`./metric` PRESENT; `./metric-badge`, `./metric-cell`, `./metric-stack` ABSENT — already
-  removed at 490cc46e; MetricBadge symbol deleted, `grep MetricBadge src = 0`).** Consumers still on
-  the REMOVED granular subpaths — a **prospective break on the bump**: `/metric-badge` → speedtest×2,
-  muster×2, sci-report×2(+1 proto), **fourier-analysis×7** (the WHOLE repo — round-1 missed it);
-  `/metric-cell` → speedtest×2(+1 test), muster×1; `/metric-stack` → speedtest×1, muster×2.
-  **Census verdict: the fold LANDED; this is a family-B relay, not a delete** — file the
-  re-point/recompose asks (row 10 activate). metric-badge is the MOST-shared component (Q051 R16
-  inverts the user's own named example).
-- **completion-seal (`./completion-seal`, PRESENT — no break).** F26 said "belongs only in
-  speedtest" — but **speedtest imports it ZERO times** (wrong provenance). Real consumers:
-  sci-report×2 (`CategoryHomeView.vue:4`, `GalleryView.vue:19`) + atlas×2 (`completion.ts:5`,
-  `category.ts:2`). **Census verdict: 2 external repos — a borderline keep** (inline if it drops to
-  ≤1). See ASK-REDUCTION §A.
+- **instrument-chassis — DELETE recommendation STANDS; the phantom is at the PROP/SLOT grain.**
+  The SYMBOL is live-imported (speedtest `App.vue:257`, muster `App.vue:31` — both exist at
+  7.0.0), but the USAGE is contract-phantom: speedtest renders
+  `<InstrumentChassis :variant :phase>` + a `#dial` slot (`App.vue:98-104`) and muster
+  `variant="spine"` (`App.vue:215`) against a 7.0.0 contract of exactly
+  `state/tone/proportion/boundaries/reserve/class` (`instrument-chassis/types.ts:8-15`) — no
+  `variant`, no `phase`, no `dial` slot. Both apps owe a full rewrite-on-upgrade regardless
+  (pins ^4.0.1 / ^3.1.0), so consumer dependence cannot ratify the keep (the consumer-updates
+  ruling). Three incompatible contracts in three majors; chassis hand-rolls a glass plate
+  parallel to Surface. The F18 flip clause (a consumer live on the CURRENT contract) does NOT
+  fire.
+- **metric — the F18 flip clause HAS FIRED; the ASK presents both dispositions.** keyframes.js
+  live-renders `<Metric size="xl" label="progress" :value unit="%">` from `/metric`
+  (`demo/scenes/sequence/SequenceTarget.vue:18-24,:138`) — FULLY current-contract
+  (`metric/types.ts:21-24`, size xl ∈ MetricSize). RU-09 F18's "NONE of those symbols exist at
+  7.0.0" is overstated at the symbol grain — its own clause rules: a cross-vertical
+  current-contract consumer flips metric from DELETE to **COLLAPSE-FAMILY (one Metric, layout
+  variants — the RU-19 V3 fallback)**. Standing recommendation: DELETE-with-relay still, per
+  A05's bar (ONE consumer is not enough; the addendum is one import swap) — but the user rules
+  with the fired clause and the file:line on the table, per F04. The stale-subpath phantoms
+  (`/metric-badge` ×fourier-analysis 7/speedtest/muster/sci-report, `/metric-cell`,
+  `/metric-stack`) remain relay rows either way.
+- **completion-seal — KEEP-DISTINCT (the one clean keep; RU-09 F26).** speedtest ×0 (the F26
+  premise inverted); sci-report ×2 (`CategoryHomeView.vue:4`, `GalleryView.vue:19`) + atlas ×2
+  + atlas's `seal-compositor` vite build plugin (consumed by sci-report's vite.config.ts) —
+  build-infrastructure-grade. **Rider (RU-09 R11, verdict-independent):** ship the direct
+  stroke-dashoffset keyframe in `completion-seal.css` so consumers stop patching the emitted
+  bundle.
+- **carousel — DELETE-with-relay recommendation; the census is CORRECTED AGAIN (this seat).**
+  RU-12 A16's "zero live consumers in all 11 repos" ran a fence that excluded words: words
+  live-imports SIX carousel symbols from `@mkbabb/glass-ui/carousel`
+  (`frontend/src/components/custom/definition/components/media/ImageCarousel.vue:83-89`, pin
+  ^3.0.0) — of which `CarouselPrevious`/`CarouselNext` no longer exist at 7.0.0 (the index
+  exports Carousel/Content/Item/Pager/useCarousel only). One partially-stale external consumer
+  — below the ≥2 current-contract bar; the DELETE + embla-peer removal recommendation carries
+  (deck+PagerDots the one paging register, RU-09 F33 primitives-distinct ratified), and the
+  relay NAMES words. ASK §C1 re-issues with this asymmetric evidence, not the draft's symmetric
+  framing.
 
-### Exact scope (contingent on the ASK ruling)
+### Exact scope (contingent on the ASK rulings)
 
-- **If the user RATIFIES SHARED-KEEP (recommended):** NO deletion. This wave collapses to (a) the
-  family-B metric-granular-subpath relay outbound (already-landed fold; file the re-point asks for
-  speedtest/muster/sci-report/fourier-analysis) and (b) a `../ASK-REDUCTION.md` disposition record.
-  The removal instinct is retired-with-rationale (the 3-repo census stands).
-- **If the user OVERRULES DP-A** (accepts the costed break — speedtest becomes a UI lib, ~4 apps
-  break): the deletes execute as a full family-B multi-repo migration relay, NOT a quiet prune. Each
-  removed subpath files a by-name migration ask before the tag.
-- **completion-seal:** keep-public (2 consumers) OR retire-with-relay to sci-report+atlas OR inline
-  — per the ASK §A answer. Corrected provenance (NOT speedtest) rides the outbound regardless.
+- **Chassis DELETE (if ratified):** delete `src/components/instrument-chassis/` + subpath +
+  typesVersions + demo story + registry rows + the dead `--glass-bg-chassis`/
+  `--glass-opacity-chassis` tokens + the src/index.ts comment block. Addenda: speedtest + muster
+  inline an app-local chassis-on-Surface (~100 lines).
+- **Metric (per the ruling):** DELETE → same treatment + the 26-line `coalesceMetric` ports to
+  consumers + AnimatedDigit doc reword; COLLAPSE-FAMILY → one `Metric` with a
+  `variant: inline|cell|row` axis + `MetricStack` container (RU-19 V3), keyframes.js unaffected.
+- **completion-seal:** KEEP + the R11 upstream keyframe fold.
+- **Carousel DELETE (if ratified):** delete the family + `/carousel` subpath + both embla peers
+  (`package.json:545-546,:556-559,:587-588`); the demo story folds onto deck/pager-dots; words
+  addendum names the 6-symbol migration.
+- **The consumer-addenda BATCH (RU-09 R12 + this union):** F18 (speedtest, muster) + F16
+  (speedtest) + F25 (words, muster) + PULSE-DOT (speedtest, keyframes.js, atlas) + F08
+  (speedtest) + carousel (words) ship as ONE coordinated Q060 relay, not six ad-hoc mails.
 
 ### Acceptance gates
 
 | gate | posture | probe |
 | --- | --- | --- |
-| G-ASK-RESOLVED | precondition | `../ASK-REDUCTION.md` §A rows answered before any byte moves. This wave has NO born-RED — its disposition is a user call, not a defect. |
-| G-RELAY-FILED | consumer-truth | the family-B Q060 outbound carries the CORRECTED per-repo break table (fourier×7 for metric-badge; sci-report+atlas for completion-seal; speedtest×4/muster×5 for chassis) — every consumer that breaks on the ruling gets a by-name ask. |
-| G-SURFACE-CONSISTENCY | refactor-safety | if any delete executes, `subpath-policy.mjs`'s three derived views + `public-surface.spec.ts` agree post-cut; MIGRATION.md reconciled (row 15 "badge SHARED-KEEP" vs the MetricBadge deletion). |
+| G-ASK-RESOLVED | precondition | the re-issued ASK rows answered before any byte moves. NO born-RED — dispositions are user calls. |
+| G-RELAY-FILED | consumer-truth | the Q060 outbound carries the TWO-GRAIN break table (symbol + prop/slot per repo, incl. words carousel + keyframes.js metric); every breaking consumer gets a by-name ask. |
+| G-SURFACE-CONSISTENCY | refactor-safety | any executed delete: `subpath-policy.mjs` views + `public-surface.spec.ts` agree; MIGRATION.md reconciled. |
 
 ### π / DELTA obligation
 
-None (headless data-readout components; the disposition is structural). The obligation is
-consumer-truth accuracy, not paint.
-
-### KISS / parsimony notes
-
-The disease is cured by a DECISION, not a re-book. Whatever the user rules, it is TERMINAL —
-record the rationale so a fourth ask cannot re-open it.
+None (headless/structural) except the completion-seal keyframe fold: a paired-π on the seal
+draw-on proving the direct keyframe is paint-identical to the compositor-rewritten form.
 
 ### Non-goals
 
-- No unilateral delete of a SHARED-KEEP surface (that is the disease, not the cure).
-- No metric-family dir-merge (Q051 R12 four-dir→one is a separate consolidation).
+No unilateral delete of any surface before its ruling + relay. No metric dir-merge beyond the
+ruled disposition.
 
 ---
 
-## Wave 5 — BJ.W-REDUCE-TIMELINE · F16 timeline ground-up redesign (STUB → design-loop)
+## Wave 5 — BJ.W-REDUCE-TIMELINE · F16 ground-up collapse (STUB → design-loop, shape FILLED)
 
-**Status:** DRAFT — STUB. Delivery runs the design-loop charter, not this band.
-**Terminal owner:** the family-G / design-loop fleet
-**Depends on:** the registry stabilizing (design-loop passes form after the registry is STABLE, per
-REGISTRY round-3 plan).
+**Status:** UNION — the stub stands; the redo canon fills its target shape.
+**Terminal owner:** the design-loop fleet (family G idiom)
+**Depends on:** ASK-7/A5 (the collapse-shape + scrubber-disposition ruling); MATERIAL W4's
+`glass-track-well` register (adopt on arrival).
 
 ### Mission
 
-`/data/timeline` (F16) is "very poorly defined, buggy, likely many facilities overfit — redesign
-from the ground up." Timeline (`./timeline`) is a single-EXTERNAL-repo component (speedtest only,
-`PhaseTimeline.vue:49`, round-2 affirmed) — so it fails the ≥2-consumer bar AND is a named greenfield
-target. This stub records the disposition so F16 does not silently drop; the actual redesign runs
-the **design-loop** (`PROMPTS/design-loop-prompt.md`): brainstorm-3 → golden → challenge-3 → delta →
-wave-amendment, with Fable portfolio/critique + DesignSync.
+F16: "very poorly defined, buggy, likely many facilities overfit — redesign from the ground up."
+Scope = **ALL SIX variants** (RU-12 A2 CHANGED — the draft's "five variants ~1500 LOC" undercount
+is struck): `GlassTimeline.vue` (232) + `ContinuousTimeline.vue` (349) + `ContinuousRail.vue`
+(214) + **`ContinuousMarkers.vue` (436 — named so it cannot silently survive)** +
+`ScrubberTimeline.vue` (413) + `SegmentedTimeline.vue` (292) ≈ 1936 SFC / 2254 family LOC;
+`index.ts` exports only `GlassTimeline`.
 
-### What this stub fixes vs defers
+### The target shape (RU-09 R5/F16 — the design-loop's input, not its cage)
 
-- **Records the F16 disposition:** ground-up redesign, NOT a prop-diet (the overfit surface dies
-  with the redesign). The born-RED lives at `/data/timeline` (the buggy/ill-defined defects are
-  live TODAY) but is discharged by the design-loop's own captured baseline, not a gate here.
-- **Records the consumer fact:** single-external (speedtest). `OPEN:` keep-and-redesign vs
-  relocate-to-speedtest — a design-loop input; the redesign may prove a general timeline worth ≥2,
-  or confirm it as a speedtest primitive. The loop decides on the golden/challenge evidence.
-- **Defers the shape** to the design-loop (no prop enumeration here — the greenfield redraws it).
+- **Continuous → the one `Timeline`**, sole `./timeline` export; Rail/Markers stay private;
+  the dispatcher (`GlassTimeline.vue` — a leaky v-if switch over three disjoint contracts)
+  DELETES; kill the drifted gray `.segmented-dot` fork in Markers (one dot recipe, warm-glass).
+- **SegmentedTimeline DELETES** — a consumerless subset ("only the rendering geometry differs",
+  its own types.ts); the gap-lane aesthetic is a `gap` knob, not a component.
+- **Scrubber is NOT plain-deleted (CHANGED vs the prior synthesis):** its liquid-motion register
+  (HEAD/FILL/PRESS springs, tanh squish, accent-flood, 44px halo) folds into **Slider as the
+  transport variant** (or a standalone atom if reka's pointer model fights the spring head —
+  the named flip). ASK A5 retains redesign-in-library (recommended) vs relocate-to-speedtest.
+- **De-overfit the popover default** (the baked speedtest PhaseDetail envelope in geometry.ts);
+  prune the §16 scale-paper tokens to surviving knobs; fix the README ghost exports; retarget
+  the three continuous tests; delete segmented rows.
+- **speedtest addendum:** `<GlassTimeline variant="continuous">` → `<Timeline>` — one import +
+  one tag edit (`PhaseTimeline.vue`); atlas's GlassTimeline hits are its own vendored copy.
+- The surviving Timeline ADOPTS `glass-track-well` at redesign, widening MATERIAL W4's register
+  family to ≥3 (the C-E sequencing note: W4 names the register regardless; W5 adopts on
+  arrival).
 
 ### Acceptance gates
 
 | gate | posture | probe |
 | --- | --- | --- |
-| G-DESIGN-LOOP-CHARTERED | stub | the design-loop pass for timeline is registered with its captured RED baseline (the live F16 defects at `/data/timeline`). This band owns only the STUB + the consumer fact; the loop owns the redesign + its born-RED capture. |
-
-### π / DELTA obligation
-
-Deferred to the design-loop (which owns the before/after capture on the redesigned timeline).
-
-### KISS / parsimony notes
-
-A stub is not a redesign. This wave records the disposition and hands off; it does not pre-constrain
-the golden the design-loop derives.
+| G-DESIGN-LOOP-CHARTERED | stub | the timeline design-loop is registered with its captured RED baseline (the live F16 defects) + the six-variant scope + the R5 shape as input. |
+| G-SIX-NAMED | scope integrity | all six SFCs appear in the loop's delete/survive ledger — none silently survives. |
 
 ### Non-goals
 
-- No incremental timeline patch (the user ordered ground-up).
-- No prop enumeration (the greenfield redraws the surface).
+No incremental patch. No pre-constraining the loop's golden beyond the R5 shape + the ASK
+ruling. The track-well register itself is MATERIAL W4's.
 
 ---
 
-## Band roll-up — born-RED ledger + open questions
+## Wave 6 — BJ.W-REDUCE-FEEDBACK-MARK · pulse → StatusDot merge (NEW — RU-09 R3 / RU-19 V1)
 
-**Born-RED gates (the lawful RED→GREEN differentials in this band):**
-- **G-DEADPROP-SCAN** (Wave 1) — a static dead-config scan reds on the enumerated 0-setter props at
-  HEAD (Typewriter 11, GlassDock 4, Slider `keepDockOpen`, Labeled\* 7/12, Progress 2, AnimatedDigit
-  3, FourierField 5, Constellation 3 — all verified 0 setters on disk); GREEN after the cut. A
-  *surface-hygiene* RED, not visual.
-- **G-CARD-DEFAULT-PAINT** (Wave 2) — the ONLY real-VISUAL born-RED: a default `<Card>` renders
-  `metal:gold` + `grain:true` at HEAD (`Card.vue:33,38`); GREEN = neutral glass. π/DELTA owed.
-- **G-PRESETS-DEAD-REACH** (Wave 3) — a reach probe reds on `fourier-field/presets.ts` (0 importers,
-  verified) at HEAD; GREEN when deleted.
+**Status:** UNION — ASK A3-gated.
+**Terminal owner:** glass-ui orchestrator
+**Depends on:** ASK A3; the family-B addenda (speedtest ×4, keyframes.js ×2, atlas ×2 — all
+already API-broken vs 7.0.0, the rename rides the migration they owe).
 
-**Everything else is intentional-surface DELTA or null-DELTA** (public-surface diffs, paint
-null-DELTA proofs, the consumer-truth relay) — honest per the band framing; no intentional cut is
-dressed as a born-RED defect. Wave 4 has NO born-RED (its disposition is a user ruling); Wave 5's
-born-RED belongs to the design-loop.
+### Mission
 
-**OPEN markers for the Fable two-challenge pass + the user (via ASK-REDUCTION):**
-1. Dead-barrel ownership — COLOCATION Wave 1 already owns the 5 barrels (rec: keep it there; this
-   band cites, does not double-delete).
-2. HandMark / FourierField / Constellation / DialogContent-stage — target-surface DEFINED here,
-   DELIVERED by the greenfield/freeze band (rec: hand off, do not cut in isolation).
-3. Typewriter `respectReducedMotion` + Labeled\* `invalid`/`errorLive` — coordinate with BAND-A11Y
-   before cutting (a11y may claim them).
-4. GlassDock 4 dead knobs — confirm the family-G dock greenfield inherits the cut (rec: die regardless).
-5. WatercolorDot — single-external (value.js); keep/relocate is an ASK §B question.
-6. Card one-axis shape — `variant` alone vs `variant + surface` (rec: single `variant` role-axis).
-7. liquid-grid — RULED (adjudication R1): DELETE wins; this band owns the component + export +
-   STORY-PAGE (`demo/stories/substrates/liquid-grid.vue`) deletion + the StoryHero suffuse re-home;
-   `BAND-STORY` W1 drops it from the fold roster (no studio-variant normalize).
-8. easing public-surface drop — gated on ASK §B; F31 (family D/G) owns the component redesign.
-9. compositions section — the whole-section prune vs keeping any page as a legit story type is an
-   ASK §D taxonomy call; re-home the confirm-preset test fixtures on delete.
-10. Wave 4 — the ENTIRE disposition (SHARED-KEEP vs overrule DP-A) is the user's ASK §A call; the
-    drafter's recommendation is RATIFY SHARED-KEEP (the 3-repo census stands, the removal instinct
-    is the UF-K1 disease).
-11. useStagger — census-then-retire vs evidence-doc-and-keep (rec: retire if the census does not back
-    the "external consumers" comment).
-12. Every cut is gated on the family-B sibling-import census clearing the subpath/prop — the
-    header-ribbon undeclared-consumer lesson is a HARD precondition, not a nicety.
+Both components are ~50-line wrappers over the ONE `_shared/FeedbackMark.vue`, which owns 100%
+of the material; the delta is one `motion` boolean + a size + a default state — an AXIS, not a
+component identity (the HoverPopover/Sheet/MultiSelect fold ledger governs). The corrected graph
+ranks the pair #1 (0.828, merge band); the residue is unionable-as-axes — the discriminator
+rule's merge side. The old ≥0.85-floor objection is dead: the gate is retired (RU-19/PROCESS
+§5.2), so "sits at 0.765 under the floor" is no longer a live objection shape.
 
-**Lead adjudication (2026-07-17, perfection pass): the Fable DAG+reduction amendments A1-A8
-(`../formation/perfection/FABLE-DAG-REDUCTION.md` §4) are ADOPTED-BINDING on this band.** In one
-line each: A1 modularization boundary (primitive/selection stay at _shared root — leaf-path
-fan-in truth); A2 W5 timeline scope = ALL FIVE variants named (~1500 LOC family); A3 W1 slider
-keepDockOpen = adoption of the existing dockContext authority; A4 the dock⇄dropdown-menu 2-cycle
-+ dockContext 4-family fan-in recorded as structural fact feeding GF-DOCK (the position-axis cut
-owes a null-DELTA on the four consuming families); A5 Card axis OPEN resolved to the
-variant+surface two-axis floor; A6 the orphan-partial fix wave covers BOTH glass-chip.css AND
-glass-atom.css; A7 /metric census = the 4-symbol family incl. MetricRow; A8 Configurator +
-DataTable demo-privatization must also delete the ROOT-barrel export lines (src/index.ts:141,:91).
-The perfection doc's §5 findings are execution-time evidence for their waves.
+### Exact scope
+
+(1) StatusDot absorbs: 7-state union (`STATUS_DOT_STATES` = active/idle/online/success/warning/
+error/unknown; delete `PulseState`, clean break), `size` widens to sm|md|lg (lg = 0.875rem),
+`motion?: "full"|"off"` default full (opt-down — liquid-weight universal; PRM still wins).
+(2) DELETE `src/components/pulse/` + `./pulse` subpath + dist + typesVersions; fold the
+liveness/live-region guidance into status-dot/README.md. (3) OPTIONAL de-indirection: inline
+FeedbackMark.vue into StatusDot.vue (one wrapper left). (4) Demo: fold the pulse story's unique
+sections (liveness row, PRM probe, announcer) into status-dot.vue; delete the clone story;
+re-point buttons.vue + atoms.vue; update verify:package lists. (5) Addenda per W4's batch.
+
+### Acceptance gates
+
+| gate | posture | probe |
+| --- | --- | --- |
+| G-ASK-RESOLVED (A3) | precondition | the user's merge ratification. |
+| G-SURFACE-DELTA | intentional | `./pulse` gone; the 7-state union + motion axis on the public surface. |
+| G-MARK-PARITY | visual | paired-π: every former Pulse state renders pixel-identically via `<StatusDot motion>` (the mark owns the material — zero paint delta expected). |
+
+---
+
+## Wave 7 — BJ.W-REDUCE-OVERLAY-SURFACE · dialog/drawer surface cuts (NEW — RU-09 R7 / RU-19 V8)
+
+**Status:** UNION — ASK A4-gated (the public `DrawerDirection` narrowing).
+**Terminal owner:** glass-ui orchestrator
+**Depends on:** ASK A4; sequenced WITH MATERIAL W3 (which OWNS the C-F staging-substrate
+extraction — one Stage enum + resolveStage + provideStageRoots + useStageAnchor + one
+scrim-registration composable + the overlay-stage css out of drawer/styles.css). This wave owns
+only the SURFACE cuts that ride it.
+
+### Mission
+
+Cores stay distinct — `useDrawerSnap` (492-line detent engine) is load-bearing externally
+(speedtest `DashboardMapControls.vue:28`, keyframes.js `ControlsPaneWrapper.vue`) — but the
+family duplicates wider than the old note: twin stage anchors, twin scrim watchers, twin PRM
+computeds, byte-identical Title/Description, and gestureless drawer arms that are Dialog
+placement in disguise (drag binds only to the handle; the handle renders only for >1 detents —
+side-lens and no-ladder drawers have ZERO gesture affordance).
+
+### Exact scope
+
+(1) DELETE `DrawerTitle.vue` + `DrawerDescription.vue` (byte-identical twins; the drawer story
+already imports DialogTrigger/DialogClose across families); drawer consumers import
+DialogTitle/DialogDescription. Keep DrawerHeader/DrawerFooter (genuinely distinct padding ladder).
+(2) NARROW `DrawerDirection` to `bottom|top` (ASK A4 — a public-API narrowing): delete the side
+branch of resolveDefaultSnapPoints, isSideAxis, the translateX snapStyle arms, horizontal
+aria-orientation; the story's fixed-edge panels re-express as `<DialogContent
+placement="left|right">`, no-ladder sheets as `<DialogContent placement="bottom">`. Drawer
+thereafter requires a real detent ladder. (3) Externals verified unaffected (both live consumers
+use detented bottom sheets); speedtest's stale `DrawerTrigger` import is caught in its addendum.
+(4) The staging JS/CSS dedup itself lands in MATERIAL W3 — this wave asserts the seam exists
+before its cuts ship (no twin left behind).
+
+### Acceptance gates
+
+| gate | posture | probe |
+| --- | --- | --- |
+| G-ASK-RESOLVED (A4) | precondition | the narrowing ratified. |
+| G-SURFACE-DELTA | intentional | DrawerTitle/Description + the side/no-ladder arms off the surface. |
+| G-SHEET-PARITY | visual | paired-π: the re-expressed side-lens + no-ladder demos render equivalently on DialogContent placement. |
+| G-SEAM-SEQUENCE | cross-band | MATERIAL W3's shared staging seam exists (or lands in the same cut) — the twin stage/scrim/PRM code is not deleted into a void. |
+
+---
+
+## Wave 8 — BJ.W-REDUCE-GOO-ENGINE · the F33 family collapse (NEW — RU-09 R2)
+
+**Status:** UNION — ASK A2-gated; PRECONDITION of `BJ.W-PAGER-DOT-MORPH` (FEEDBACK-MOTION W6,
+the PLAN ordering law).
+**Terminal owner:** glass-ui orchestrator
+
+### Mission
+
+The deck/carousel PRIMITIVES stay distinct (headless engine vs embla physics — ratified;
+carousel's own fate is W4's). The FAMILY duplicates: the deck story ships a SECOND barbell goo
+engine cloning the PagerDots worm — the neck clipPath is byte-identical (`PagerDots.vue:326` ≡
+`DeckGooFilter.vue:26`) — violating the recorded ONE-metaball doctrine
+(`CarouselContent.vue:4-18`); `DeckPager.vue` is a 47-line zero-logic alias. (SOLE cut owner —
+FEEDBACK-MOTION W6's prior "owned here" sentence is struck per APOTHEOSIS MECH-04/D-05; W6
+refines the survivor only.)
+
+### Exact scope
+
+(1) Retire `deck/DeckPager.vue` onto direct `<PagerDots pattern="group" :ring="false"
+v-model:active :count :window-fit>` (the CarouselDots precedent; clean break); update the deck
+story + README recipe; drop the export from deck/index.ts. `/deck` becomes purely headless —
+atlas (useDeck/DeckCore) unaffected. (2) DELETE `demo/stories/motion/deck/{useDeckGoo.ts,
+gooBarbellGeometry.ts, DeckGooFilter.vue}` + the goo-layer markup + ~200-line goo CSS in
+deck.vue + `DeckGoo.private.test.ts`; the story keeps its crisp `--spring-smooth` slide
+transition. (3) The "dramatic dot refinement" (F33's second half) lands ONCE in
+usePagerWorm/PagerDots — FEEDBACK-MOTION W6's, which must carry the RU-09 F33 migration
+explicitly (RU14-CRIT2-B). (4) Any future viewport-scale goo derives from `useLeadTrail` as a
+library composable, never a story-local engine (the A2 flip clause).
+
+### Acceptance gates
+
+| gate | posture | probe |
+| --- | --- | --- |
+| G-ASK-RESOLVED (A2) | precondition | the family collapse ratified. |
+| G-ONE-METABALL | doctrine | grep: exactly ONE goo/metaball engine (usePagerWorm/useLeadTrail) in the tree post-cut. |
+| G-DECK-HEADLESS | consumer | atlas's useDeck/DeckCore imports typecheck unchanged. |
+
+---
+
+## Wave 9 — BJ.W-REDUCE-SCROLL-REVEAL · the reveal-wing collapse + the fence cure (NEW — RU-09 R6 as corrected by RU-12)
+
+**Status:** UNION — ASK §C3-gated on the demo-page fold; the deletes ride W3; this wave owns the
+re-seats, relocations, and the page fold.
+**Terminal owner:** glass-ui orchestrator
+
+### Mission
+
+The scroll spine is clean (one reader core, layered contracts — `scrollReader` →
+useScrollTrigger/useScrollChrome/useScrollScene/useScrollTracker); the REVEAL wing is where the
+duplication lived (W3 deletes it). What remains here: the family's no-fourth-listener fence is
+violated twice in its own house, one adapter relocates, and the two demo pages fold to one.
+
+### Exact scope
+
+(1) **RE-SEAT** `useScrollProgress` (live: `useAurora.ts:169`; hand-rolls
+`window.addEventListener("scroll", …)` at `useScrollProgress.ts:94`, verified) and
+`useFadingScroll`'s fallback listener onto `createScrollReader` — one reader core, fence
+honored; useScrollProgress keeps its element-viewport mapping contract for the aurora consumer.
+(2) **RELOCATE** `useLiquidReveal` to `morph/` (it is a FLIP morph, not scroll); it survives as
+the one reveal adapter (useBloomUp died into it conceptually — the field/tint channel folds in
+as options ONLY if a BJ wave adopts it, else stays deleted with W3). (3) **FOLD**
+`/motion/reveal.vue` into `/motion/scroll.vue` (v-reveal section) + the morph story (bloom
+section) — one scroll page, discharging F32+F42. (4) **THE A06 STANDARD CLAUSE (J11 / RU-13
+A01-A17 N6):** if the user ratifies the §C3 consolidation, this wave CARRIES the
+scroll-animation standard as a named deliverable (the codified scroll-reveal idiom:
+`[data-scroll-reveal]` CSS recipe + vReveal + useLiquidReveal, one documented register); if §C3
+is declined, the standard needs a fallback owner — flag to the lead, do not drop.
+(5) **Escape clause (RU-09 A9):** a sibling file:line for any cut symbol flips it to
+keep-with-relay — already exercised once (useStagger, W3).
+
+### Acceptance gates
+
+| gate | posture | probe |
+| --- | --- | --- |
+| **G-ONE-READER** | **BORN RED** (fence) | grep reds at HEAD on the two hand-rolled scroll listeners outside scrollReader (`useScrollProgress.ts:94`, useFadingScroll's fallback); GREEN when both ride `createScrollReader`. |
+| G-AURORA-INTACT | consumer | the aurora scroll coupling (useAurora.ts:169) behaves identically on the re-seated reader — live-π on the aurora story. |
+| G-PAGE-FOLD | ASK-gated | `/motion/reveal` route retired into `/motion/scroll` + morph story per §C3. |
+
+---
+
+## Band roll-up — born-RED ledger + resolved questions
+
+**Born-RED gates:**
+- **G-DEADPROP-SCAN** (W1) — surface-hygiene RED on the enumerated 0-setter props.
+- **G-CARD-DEFAULT-PAINT** (W2) — the one real VISUAL born-RED (`Card.vue:33,:39`); π owed.
+- **G-PRESETS-DEAD-REACH** (W3) — dead-code reach probe.
+- **G-ONE-READER** (W9) — the fence-violation RED (two hand-rolled listeners at HEAD).
+
+Waves 4/6/7/8 carry NO born-RED — their dispositions are user rulings (honest posture); W5's
+born-RED belongs to the design-loop's captured baseline.
+
+**Standing-gate posture (APOTHEOSIS MECH-06):** ZERO standing invariant gates — every G-* above
+is a one-time RED→GREEN differential or an execution-time census/probe; nothing lands in
+`tests/gates/`; `BAND-GATES` W1's 40-60 arithmetic counts nothing from this band.
+
+**Resolved (formerly OPEN — the redo canon closed them):**
+1. Dead barrels → COLOCATION keeps them (cite, don't double-delete).
+2. Labeled\* `invalid`/`errorLive` → KEEP, the W4-B a11y ruling landed; re-home allowed, drop
+   forbidden.
+3. Card one-axis shape → the variant+surface two-axis floor (A5 adopted).
+4. liquid-grid → RULED delete (ADJUDICATION-1 R1), + the PROCEDURAL-SUITE truth-up + the
+   COLOCATION sequencing note.
+5. useStagger → RESOLVED KEEP (census BACKED: speedtest ×2); evidence doc owed.
+6. Configurator → KEEP (escape hatch fired: value.js + fourier-analysis live).
+7. GlassDock dead knobs → die regardless; the `shape` axis is GF-DOCK W5's ruling BY NAME.
+8. W4 disposition → the SHARED-KEEP recommendation is struck; DELETE recommended on the
+   two-grain census, with the metric flip clause fired and disclosed (the user's call, terminal).
+
+**Still OPEN / ASK-gated:** easing (§B4, corrected census), compositions + F44 dead-knob rider
+(§D1), WatercolorDot (§B5), DataTable (§B1 — census corrected: atlas + speedtest live),
+FourierField/Constellation component fates (§B2/§B3, corrected census), useTextHighlight (A13),
+tempo page fold (§C4), confirm-dialog story fold (§C2/A6), scroll page fold + A06 standard
+(§C3), pulse merge (A3), drawer narrowing (A4), goo collapse (A2), chassis/metric (A1, re-issued
+with the fired flip clause), carousel (§C1, re-issued with the words census), timeline shape +
+scrubber fold (ASK-7/A5), **the A05 conditional-disposition roster (A05-SPECULAR / A05-CTA /
+A05-BACKDROP-TRIO / A05-DRAW-IN — W3 rows, APOTHEOSIS MECH-03/D-03)**.
+
+**Lead adoption (updated this union): the FABLE-DAG-REDUCTION amendments A1-A16
+(`../formation/perfection/FABLE-DAG-REDUCTION.md` §4) are ADOPTED-BINDING on this band** — A1
+(_shared root fence), **A2 CHANGED (SIX timeline variants, ~1936 SFC / 2254 family LOC — the
+draft's five/~1500 line is struck)**, A3 (slider context adoption), A4 (dock 2-cycle +
+dockContext fan-in; null-DELTA on the four families), A5 (Card two-axis floor), A6 (both orphan
+partials — MATERIAL W7's), A7 (the 4-symbol /metric census, widened: keyframes.js + sci-report
++ speedtest at relay, atlas import-vs-vendored verified at relay time), A8 (root-barrel
+mechanics, now moot-unless-ruled for Configurator/DataTable), A9 (combobox fold — W3), A10
+(number band — W3), A11 (reveal dead pair + stagger fold direction — W3), A12 (scroll/spring
+demo-locals + the scene conditional — W3), A13 (useTextHighlight ASK), A14 (search split — W3),
+A15 (pulse/status-dot — W6, hardened from OPEN to ASK-gated wave by RU-09 R3/RU-19 V1), A16
+(carousel evidence — W4, corrected by the words census this seat). The RU-09 bound deliverables
+R1-R12 map: R1→W4, R2→W8, R3→W6, R4→MATERIAL W4 (routing), R5→W5, R6→W3+W9, R7→W7 (+MATERIAL
+W3 seam), R8→W3, R9→W3, R10→GF-AURORA W5 (routing), R11→W4 rider, R12→W4 batch.
+
+---
+
+## APOTHEOSIS amendments (RU-04 third judge, 2026-07-18)
+
+Applied per `../formation/refable/REFABLE-RU-04-JUDGE.md`; the capstone is `APOTHEOSIS.md`.
+
+- **MECH-03/D-03:** W3 gains the family-C A05 conditional-disposition roster (A05-SPECULAR /
+  A05-CTA / A05-BACKDROP-TRIO / A05-DRAW-IN) — the rows COLOCATION W3's dated allowlist and
+  DOC-TRUTH T34 depend on existed in NO band; the FINDING-3 dangling-handoff class recurred and
+  is cured here. The roster joined the Still-OPEN register.
+- **MECH-04/D-05:** W8 stamped SOLE cut owner (FM W6's competing ownership sentence struck
+  there).
+- **D-14:** the combobox-fold row notes A11Y W2-B's contingency.
+- **D-17:** W1's Slider cut stamped FIRST in the `Slider.vue` hotspot order.
+- **MECH-06:** the standing-gate posture line added (zero standing gates).
