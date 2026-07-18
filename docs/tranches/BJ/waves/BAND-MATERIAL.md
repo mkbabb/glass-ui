@@ -407,7 +407,7 @@ and **`glass-liquid-fill` is ALREADY the shared fill register** (slider-range + 
 region-stitch). So the DRY target is the **track pill + track-bg + fill register** — NOT the fraction drivers,
 which are legitimately per-component (interactive drag ≠ value-bound ≠ region-stitched).
 
-**The fold:** one shared track partial (a `_shared/track.css` `@utility glass-track` / `--track-*` token
+**The fold:** one shared track partial (a `_shared/track.css` `@utility glass-track-well` / `--track-*` token
 family, mirroring the existing `glass-liquid-fill` CSS-class idiom) carrying the pill radius + the track-bg +
 the recessed-well tone; the three components read it and keep only their own fraction driver. This is the
 `glass-liquid-fill` pattern extended one step — a proven, KISS, no-new-machinery fold.
@@ -450,7 +450,7 @@ minting new machinery. Gestalt-not-patchwork: one track material, three consumer
 
 ### §OPEN
 
-- `OPEN-4a` — **the API shape (charter-mandated OPEN):** a CSS `@utility glass-track` / `_shared/track.css`
+- `OPEN-4a` — **the API shape (charter-mandated OPEN):** a CSS `@utility glass-track-well` / `_shared/track.css`
   partial (draft-leaning — matches the `glass-liquid-fill` idiom, KISS, no JS) vs a `useTrackGeometry`
   composable vs a `<GlassTrack>` component. The fraction/orientation/RTL logic differs enough per component
   that a full **component** merge over-couples (drag ≠ value ≠ stitch); the draft folds the MATERIAL (CSS) and
