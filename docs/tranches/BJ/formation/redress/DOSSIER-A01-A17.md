@@ -50,7 +50,11 @@ was this dossier's D-A01; **J1 adopted it**.
   fired-trigger **V-A95-green + Q023-green** (CHRONIC-ADJUDICATION's re-frame supersedes the older
   "SEQ→7.x" wording the prior artifact carried).
 - Hover/press strengthening past 1.5% (the interaction half) → `BJ.W-IDLE-BREATH`
-  (BAND-FEEDBACK-MOTION **W5**, per J1), born-RED on the R3b table.
+  (BAND-FEEDBACK-MOTION **W5**, per J1), born-RED on the R3b table. RU-14 R5: the committed band
+  GATES the wave on a user ruling — "W5 is BLOCKED on the OPEN-FM-3 user ruling (the
+  breath-of-life vs suffusion-idle-law collision)" (`BAND-FEEDBACK-MOTION.md:40`; roster `:53`,
+  heading `:189`; ledger E1 routes OPEN-FM-3 to the user, PENDING). Owner unconditional,
+  execution gated.
 - Novel/BEST-iOS-27 + aristotelian proportion → the design-loop charter + `IOS27-CODEX.md` +
   `BJ.W-ARISTOTLE-PROPORTION` (MATERIAL W5). LIVE-DEFER: whether the landed affordances READ as
   grow/glow/lift is a paint judgment — π owed at the waves.
@@ -186,9 +190,16 @@ enforcement fence.
 
 **REDRESS + OWNING WAVES.** `BJ.W-COLO-1` (moves + `_shared/` carve + §3/§7 rewrite + dead-barrel
 purge; born-RED = G-BARREL-REACH) / `BJ.W-COLO-2` (sidebar demote — an INTENTIONAL export-map break
-riding **8.0.0**, preconditioned on the family-B census) / `BJ.W-COLO-3` (the hygiene fence). Backend
+riding **8.0.0**; RU-14 R5: the census precondition is RECAST by the committed union `1340a918` —
+fourier-analysis live-imports `useSidebarState` in two SFCs, so "the old precondition was
+unsatisfiable (RU-12 RT11)" (`BAND-COLOCATION.md:284-288`); the bar is now `G-CONSUMER-ADDENDUM`
+recast: the marked addendum in fourier-analysis's tranche docs + the committed BI-coordination
+outbound, with the family-B census output the CONTRACT RECORD, "no longer a clearance bar"
+(`:326`; ledger A2 APPLIED `dda87dcc`) — a lead sequencing W2 on census clearance would wait on a
+bar the band has proven can never clear) / `BJ.W-COLO-3` (the hygiene fence). Backend
 clause: N/A for a frontend library (vacuously satisfied, stated). **VERDICT vs OPUS ROW:** RATIFIED
-in full. Verdict: **EXACT**.
+in full. Verdict: **EXACT** (it rests on the move-targets, all re-proven live at
+`BAND-COLOCATION.md:38-39/:91/:102`).
 
 ---
 
@@ -216,7 +227,7 @@ four critique passes + `formation-repair-r1.md` — the full research→harden�
 twice challenged. The greenfield PASS1→CRIT2→PASS3 loops repeat the pattern.
 
 **OWNER CORRECTION.** The prior artifact's EXACT rested on "the fam-I DECIDED-rows wave" as owner.
-That wave is a **phantom name at HEAD**: it exists only in `REGISTRY.md:174` +
+That wave is a **phantom name at HEAD**: it exists only in `REGISTRY.md:175` +
 `CHRONIC-ADJUDICATION.md:5` — PLAN.md and the nine band files never mention it, and the promised
 "disease rows as standalone waves" (STYLE-REDRAIN/ENCAP-REDRAIN carves, DOCK-SPINE) appear in no
 charter. RF-4 additionally proved the compile layer stale: DOCK-SPINE LANDED 07-13 (`ae71daa0`),
@@ -232,10 +243,12 @@ discharge-verify; the regrowth roster gets an owner). **VERDICT vs OPUS ROW:** e
 the owner claim OPUS-WRONG (overclaim). Verdict: EXACT → **PARTIAL (owner-phantom; lead re-judges)**.
 
 **RU-14 R3 rider — reconcile with RF-5.** `REFABLE-RF-5.md` OW-3/R-5 reaches the same evidence
-from the crosswalk side (`REGISTRY.md:174` + `CHRONIC-ADJUDICATION.md:5`; no band CHARTERS the
-wave — RU-14 R4: the working-tree `BAND-DOC-TRUTH.md:121` row T40, RU-03 union/UNCOMMITTED, now
-tracks the `:5` phrase itself, deferring its disposition to FLIP-1, so a bare "grep-zero in all
-nine bands" no longer holds) but rules the OPPOSITE terminal record: A09's landing is `CHRONIC-ADJUDICATION.md`
+from the crosswalk side (`REGISTRY.md:175` — the family-I charter line, shifted `:174`→`:175` by
+the B1 re-stamp `5f8ee2e3` — + `CHRONIC-ADJUDICATION.md:5`; no band CHARTERS the
+wave — RU-14 R5: `BAND-DOC-TRUTH.md:121` row T40 is COMMITTED at `1340a918`, surviving verbatim;
+it tracks the `:5` phrase itself, deferring its disposition to FLIP-1, so a bare "grep-zero in
+all nine bands" still does not hold: `DECIDED-rows` across all nine committed bands = the one
+T40 hit) but rules the OPPOSITE terminal record: A09's landing is `CHRONIC-ADJUDICATION.md`
 itself (formation-terminal — "the named landing vehicle was never drafted and will never
 execute"), where this dossier's FLIP-1 asks the lead to charter the DECIDED-rows wave or
 distribute its rows. Same facts, two dispositions — they are ONE lead decision; rule them
@@ -280,9 +293,12 @@ artifact's MISSING verdict + D-A11 was the campaign's headline delta — **J1 ad
 always-on breath for the inert atoms — buttons FIRST, collapsed-dock pill, slider-at-rest —
 shimmer/pulse/specular-drift registers, PRM-gated, compositor-only (rAF-delta 0, the J1 constraint),
 born-RED on the R3b table verbatim; plus the A01 hover-strengthening as its interaction half. The
-breath-of-life law now also binds EVERY wave at the PLAN level (§3). LIVE-DEFER: the breath's
-perceptual quality — π owed at the wave. **VERDICT vs OPUS ROW:** MISSING-at-write RATIFIED and
-vindicated (it became J1). Verdict: MISSING → **OWNED-AT-W5**.
+breath-of-life law now also binds EVERY wave at the PLAN level (§3). RU-14 R5: the committed band
+gates the wave — "W5 is BLOCKED on the OPEN-FM-3 user ruling" (`BAND-FEEDBACK-MOTION.md:40`;
+roster `:53` "GATED on OPEN-FM-3", heading `:189`; ledger E1 PENDING) — ownership, J1, and the
+charter content all survive; the executor hits the gate in the band itself. LIVE-DEFER: the
+breath's perceptual quality — π owed at the wave. **VERDICT vs OPUS ROW:** MISSING-at-write
+RATIFIED and vindicated (it became J1). Verdict: MISSING → **OWNED-AT-W5-GATED (OPEN-FM-3)**.
 
 ---
 
@@ -353,15 +369,18 @@ unifying codification; the umbrella's "none unowned" was FALSE until the paper-b
 (this dossier's D-A14) was **adopted as J9** — the disposition row now lives in `BAND-STORY.md:582-587`,
 routing paper-backdrop into REDUCTION's ≥2-consumer census.
 
-**NEW FINDING (this pass).** `PROCEDURAL-SUITE.md` lists **six retained** procedural surfaces
-INCLUDING LiquidGrid — but `BAND-REDUCTION` W3 deletes liquid-grid outright (zero consumers,
-`ADJUDICATION-1.md:9`, re-proven). At write, no wave owned the suite doc's truth-up (zero hits in
-`waves/`; not among DOC-TRUTH W1's seven targets; FABLE-COLOCATION flags it only as a loose-doc
-placement, P5). RU-14 R4 rider: the working-tree `BAND-DOC-TRUTH.md:133-134` (RU-03 union,
-UNCOMMITTED) now records the edit as "routed to `BAND-REDUCTION` W3 scope (RU-13 FLIP-2, cheapest
-cure)" — routed-but-not-yet-CHARTERED: W3's own charter text still carries zero PROCEDURAL-SUITE
-mention (grep re-run R4). FLIP-2's residue narrows to the W3 charter line + confirming the routing
-survives the RU-03 commit — flagged in the sidecar FLIPS for the lead.
+**NEW FINDING (this pass) — RESOLVED-BY-UNION (RU-14 R5).** `PROCEDURAL-SUITE.md` lists **six
+retained** procedural surfaces INCLUDING LiquidGrid — but `BAND-REDUCTION` W3 deletes liquid-grid
+outright (zero consumers, `ADJUDICATION-1.md:9`, re-proven). At write, no wave owned the suite
+doc's truth-up. The committed union (`1340a918`) closed every leg: the routing is COMMITTED
+(`BAND-DOC-TRUTH.md:133-134` — "routed to `BAND-REDUCTION` W3 scope (RU-13 FLIP-2, cheapest
+cure)"), AND W3's charter now CARRIES the edit — `BAND-REDUCTION.md:279` "`src/components/
+PROCEDURAL-SUITE.md` LiquidGrid rows (`:11`, `:57-59`) truth-up joins THIS wave's mechanical
+bundle" (+ the close roster `:738`); the cited rows re-proven live on disk. The old "not among
+DOC-TRUTH W1's seven targets" frame is retired with the union's roster restructure (an enumerated
+SWEEP-NOW roster + a TRIGGERED roster, `BAND-DOC-TRUTH.md:48`/`:112`). FLIP-2's stated residue
+(the W3 charter line + surviving the RU-03 commit) is FULLY DISCHARGED — stamped
+CONSUMED-BY-RU-03 in the sidecar §FLIPS.
 
 **REDRESS + OWNERS.** Blob/aurora/handmark → their greenfields; dock → GF-DOCK;
 fourier/constellation/watercolor → ASK §B2/B3/B5 with the knob-retire floor; liquid-grid → REDUCTION
@@ -449,20 +468,20 @@ post-fix deltas are trace-captured obligations. **VERDICT vs OPUS ROW:** RATIFIE
 
 | row | correlation | union verdict | owning wave(s) | vs opus row |
 |-----|-------------|---------------|----------------|-------------|
-| A01 | slider/button/dock-pill + planned engage surface | OWNED | BI.W-ENGAGE-AFFORD (T1 GROW; T2 MODAL trigger V-A95+Q023) + BJ.W-IDLE-BREATH | RATIFIED; 2 corrections (planned-not-extant; T2 gating) |
+| A01 | slider/button/dock-pill + planned engage surface | OWNED | BI.W-ENGAGE-AFFORD (T1 GROW; T2 MODAL trigger V-A95+Q023) + BJ.W-IDLE-BREATH (W5 GATED on OPEN-FM-3 — RU-14 R5) | RATIFIED; 2 corrections (planned-not-extant; T2 gating) |
 | A02 | ios27 corpus → MARKS/CODEX | EXACT-VIA-RU-15 | delivered (RU-15 union stamped) | census RATIFIED; Fable claim OPUS-WRONG |
 | A03 | codex + MATERIAL W5 + GF loops | EXACT | IOS27-CODEX · BJ.W-ARISTOTLE-PROPORTION · GF CRIT loops | RATIFIED (model caveat) |
 | A04 | formation docs (distributed) | DISCHARGED-BY-RULING | none needed (J11) | RATIFIED; delta ruled closed |
 | A05 | 66-dir (68-entry) surface + the double DAG | EXACT | BAND-REDUCTION W1-W5 + ASK-REDUCTION | RATIFIED; fan-in numbers corrected (RF-1); count base stated (R3) |
 | A06 | stories/manifest (no pageType at HEAD) | OWNED (ASK-gated rider) | BAND-STORY W1-W6 + scroll-collapse wave (J11) | RATIFIED; residue owned |
-| A07 | 4 move-targets live at HEAD | EXACT | BJ.W-COLO-1/2/3 (W2 rides 8.0.0) | RATIFIED in full |
+| A07 | 4 move-targets live at HEAD | EXACT | BJ.W-COLO-1/2/3 (W2 rides 8.0.0; precondition RECAST → G-CONSUMER-ADDENDUM, census = contract record not clearance — RU-14 R5) | RATIFIED in full |
 | A08 | challenge machinery | OWNED | PLAN §3 law (J11) | RATIFIED; residue owned |
 | A09 | triumvirate exemplar (on disk) | PARTIAL (owner-phantom) | lead re-judges (sidecar FLIP-1) | exemplar RATIFIED; owner OPUS-WRONG |
 | A10 | cards/dividers/hierarchy/spacing | EXACT | BJ.W-ARISTOTLE-PROPORTION (MATERIAL W5) | RATIFIED |
-| A11 | inert atoms (re-proven inert) | OWNED-AT-W5 | BJ.W-IDLE-BREATH (J1) | RATIFIED + vindicated (→J1) |
+| A11 | inert atoms (re-proven inert) | OWNED-AT-W5-GATED (OPEN-FM-3) | BJ.W-IDLE-BREATH (J1; W5 blocked on the OPEN-FM-3 user ruling, ledger E1 — RU-14 R5) | RATIFIED + vindicated (→J1) |
 | A12 | blob dual-engine + value.js 06929a4b | EXACT | GF-BLOB (11 waves at HEAD—W-DELETE-TWIN struck, W-CHROME→W-STREAK, +W-IDENT/W-REACT; RU-14 re-point) | RATIFIED in full |
 | A13 | 17 presets + WGSL alias | EXACT | GF-AURORA W0-W7 (three-arm W4, 17→11 W5; RU-14 re-point); C-G binding; π OWED | RATIFIED in full |
-| A14 | procedural roster + suite doc | OWNED (J9) + new flag | GF-* + ASK + REDUCTION census; suite-doc truth-up UNOWNED (FLIP-2) | RATIFIED; 1 new finding |
+| A14 | procedural roster + suite doc | OWNED (J9) + flag RESOLVED | GF-* + ASK + REDUCTION census; suite-doc truth-up OWNED at REDUCTION W3 (`BAND-REDUCTION.md:279`; FLIP-2 CONSUMED-BY-RU-03, RU-14 R5) | RATIFIED; 1 new finding |
 | A15 | formation staffing | VIOLATED→CURE-IN-FLIGHT | REFABLE campaign + PLAN §4 phased rule | **OPUS-WRONG (flipped)** |
 | A16 | crosswalk + chronic ledger | EXACT-AT-CROSSWALK-LAYER | crosswalk + RF-4 amendment (pending) | RATIFIED; narrowed |
 | A17 | AppShell/barrel/field/route (re-proven) | EXACT | BAND-PERF W1-W4 (+STORY W5 cede) | RATIFIED in full |

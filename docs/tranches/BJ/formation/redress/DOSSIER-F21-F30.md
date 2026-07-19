@@ -177,17 +177,19 @@ slider view" is the A01 slider-engage ask, owned at HEAD by `BJ.W-IDLE-BREATH`
 "gradiated blurring" is the F50 experiment, owned by `BJ.W-GRADED-BACKDROP-JUDGE` (BAND-MATERIAL
 W3). Adjacent, not F23's DRY core.
 
-**COVERAGE DOWNGRADE (RU-14, 2026-07-18): EXACT → PARTIAL.** The rewritten SUPERFLUITY at HEAD
-(RU-09, 5c847780; C-G at `SUPERFLUITY.md:668-672`) contradicts the EXACT claim: the value-mark
-checkpoint paint (~65 lines across Slider + Progress, identical tokens and defaults) is a SECOND
-true fold `BJ.W-TRACK-DRY` never scoped—verified this seat: BAND-MATERIAL contains zero
-value-mark text file-wide—so LANDED is premature and the wave re-opens with both registers
-(track-well + value-marks). This dossier's own ISOLATION records the marks duplication
-(`.slider-mark` vs `.progress-value-mark`, one `--value-mark-position` idiom) yet kept EXACT and
-filed no FLIP; the contradiction is owned here. A path split rides it: SUPERFLUITY charters
-`src/styles/glass/track-well.css` (`SUPERFLUITY.md:227`) while BAND-MATERIAL `:433`/`:476`
-charter `_shared/track.css`. Coverage returns to EXACT only on a JUDGE-2 ruling that charters the
-value-marks register into W4 (or rules it out) and reconciles the track-well file path.
+**COVERAGE (RU-14 R5, 2026-07-18): CONSUMED-BY-UNION — EXACT pending J12 ratification.** The
+RU-14 downgrade (EXACT → PARTIAL, on the RU-09 C-G value-marks fold `BJ.W-TRACK-DRY` never
+scoped + the track-well path split) was EXECUTED by the committed nine-band union (`1340a918`):
+W4 now charters "BOTH registers: the track well AND the value-marks paint"
+(`BAND-MATERIAL.md:55`; value-mark text now 9 hits file-wide — the twin ~65-line marks census at
+`:488-490`, the history line `:474`), mints `src/styles/glass/track-well.css` +
+`src/styles/glass/value-marks.css` at the SUPERFLUITY path and names "the prior
+`_shared/track.css`" charter SUPERSEDED (`:503-510`) — the path split RECONCILED to
+`SUPERFLUITY.md:227`; `OPEN-4a` is RULED toward the CSS register pair (`:793`). Both terminal
+conditions of the downgrade are met on disk; the old `:433`/`:476` pins are dead. What remains
+is the formal J12 ratify-and-close (docket row 8, stamped CONSUMED-BY-UNION; the ledger C5
+vehicle — ratify, never re-apply). This dossier's own ISOLATION had recorded the marks
+duplication yet kept EXACT and filed no FLIP; that contradiction stays owned here as history.
 
 **VERDICT (vs opus row).** RATIFIED with two corrections — (1) the opus row understated the shared
 surface (it credited only the fill; `_shared/valueDomain.ts` is a second already-shared register,
@@ -443,10 +445,11 @@ the quiet select — Play?") assumed a primary button the springs triad does not
 residue was ADOPTED as **J6** and is APPLIED at HEAD: `OPEN-2d` is re-aimed (`:258-262,291`) to
 route `/motion/springs` (not `/foundations`) with the axis = the button glass-atom glow/shadow-
 bloom vs the flat Select, "the two blur radii are equal at 7px — a blur-only probe measures
-nothing." One residual inconsistency stands for the wave to tidy: the §Design(D) prose (`:233-236`)
-still carries the superseded "plausibly deep-tier primary" sentence beside the J6 re-aim — the
-re-aim governs; the stale sentence should fall when W2 runs. Coverage: **EXACT (as amended by
-J6)**.
+nothing." The residual inconsistency is DISCHARGED-BY-UNION (RU-14 R5, `1340a918`): the union
+struck the superseded sentence itself — `BAND-MATERIAL.md:270` "the earlier 'plausibly the
+deep-tier primary vs the quiet select' hypothesis is STRUCK (it assumed a primary button the
+frame does not contain)", the fork-closed note re-stated at `:788` — so the residue fell at the
+union, not at W2 execution. Coverage: **EXACT (as amended by J6)**.
 
 **VERDICT (vs opus row).** RATIFIED — the emphasis/radius statics were independently re-verified
 (including the Reset default-emphasis leg the opus row asserted without a cite; `Button.vue:35`
@@ -534,7 +537,7 @@ observation ADDED as fold rationale. Crosswalk: ASK; AGREE.
 |-----|------------------|----------------|----------|-----------------|
 | F21 | scroll-progress rim broken | `BJ.W-PROGRESS-RIM-REPLACE` (FEEDBACK-MOTION W2, codex law 12) | **EXACT** | RATIFIED + segment-arm evidence |
 | F22 | animated loop jittery/mis-eased | `BJ.W-FEEDBACK-MOTION-TUNE` (FEEDBACK-MOTION W3, J7 applied) | **EXACT (as amended)** | RATIFIED + wrap-rewind evidence |
-| F23 | slider/progress track DRY | `BJ.W-TRACK-DRY` (MATERIAL W4, C-C) | **PARTIAL (RU-14—the RU-09 C-G value-marks fold unscoped; JUDGE-2 owed)** | RATIFIED; 2 corrections (valueDomain credit, J1 re-route) |
+| F23 | slider/progress track DRY | `BJ.W-TRACK-DRY` (MATERIAL W4, C-C) | **EXACT-pending-ratification (RU-14 R5—both registers chartered by the union `1340a918`; J12 ratify-and-close owed, ledger C5)** | RATIFIED; 2 corrections (valueDomain credit, J1 re-route) |
 | F24 | skeleton animation too slow | `BJ.W-FEEDBACK-MOTION-TUNE` (FEEDBACK-MOTION W3) | **EXACT on owner; gate shape corrected** | **OPUS-WRONG** (5s via token, wrong-rung bind — not a 2.4s local literal) |
 | F25 | confirm-dialog vs normal dialog | `ASK §C2` (fold landed; C-A default: fold the story) | **EXACT (decision)** | RATIFIED + C-A; 2 evidence corrections (fold-commit = c368ccbc; live relay census = 6, value.js docs-only) |
 | F26 | completion-seal overfit/"speedtest" | `BJ.W-REDUCE-CROSSREPO-GATED` + `ASK §A2` (D-3) | **EXACT (decision)** | RATIFIED (census re-proven first-hand) |
@@ -560,12 +563,16 @@ the capsule rung); J6 stands doubly verified.
 
 **Δ-F22-1 — ADOPTED as J7, applied at HEAD** (`BAND-FEEDBACK-MOTION.md:79-84`). Closed.
 
-**Δ-F28-1 — ADOPTED as J6, applied at HEAD** (`BAND-MATERIAL.md:258-262`). Closed; one residue for
-W2 execution: strike the superseded "plausibly deep-tier primary" sentence from §Design(D)
-(`BAND-MATERIAL.md:233-236`) — the J6 re-aim governs.
+**Δ-F28-1 — ADOPTED as J6, applied at HEAD** (re-anchored: the re-aimed OPEN-2d now at
+`BAND-MATERIAL.md:301`/`:336`). Closed; the former W2-execution residue (strike the superseded
+"plausibly deep-tier primary" sentence) is DISCHARGED-BY-UNION (RU-14 R5, `1340a918`) — the
+union struck it at `:270`, re-stated fork-closed at `:788`.
 
 **Δ-F24-1 (NEW — the skeleton period is 5s via a wrong-rung token bind, not a 2.4s local
-literal).** In `BJ.W-FEEDBACK-MOTION-TUNE` (W3): `Skeleton.vue:51-57` resolves
+literal). [RU-14 R5: APPLIED-BY-UNION at `1340a918` — W3 carries "Δ-F24-1 — the corrected read,
+replacing the prior gate" (`BAND-FEEDBACK-MOTION.md:134`) + the period-VALUE/RUNG-BINDING/
+driver-shape gates (`:158-162`), near-verbatim to this delta; J12 ratifies-and-closes per ledger
+C5, never re-applies.]** In `BJ.W-FEEDBACK-MOTION-TUNE` (W3): `Skeleton.vue:51-57` resolves
 `var(--duration-shimmer, 2.4s)` to **5s** (`scheme-motion.css:107`); the ladder doc
 (`literals.css:24-34`) already assigns skeleton the FAST 3s rung. Gate (b) ("values live in the
 token layer") is letter-satisfied at HEAD while the defect persists — replace it for F24 with (i) a
@@ -584,17 +591,34 @@ The live scrollable-delta census (which content overflows, by how much) runs as 
 
 ## JUDGE-2 docket (appended RU-14, 2026-07-18)
 
-Both of this range's charter flips age un-judged—the RU-05/RU-07/RU-09 unions landed without
-consuming either—and this range now adds the F23 re-open above. Docketed for the consolidated
-JUDGE-2 pass (full ten-item docket: `DOSSIER-F11-F20.md` §JUDGE-2 docket; rows 8-10 seated
-RU-14 R3):
+Both of this range's charter flips aged un-judged through the RU-05/RU-07/RU-09 unions; the
+COMMITTED RU-03/04 nine-band union (`1340a918`) has since consumed one of them plus the F23
+re-open (stamped RU-14 R5). Docketed for the consolidated JUDGE-2 pass (full ten-item docket:
+`DOSSIER-F11-F20.md` §JUDGE-2 docket; rows 8-10 seated RU-14 R3):
 
-- **D2-5 (Δ-F24-1 / sidecar FLIP-1).** BAND-FEEDBACK-MOTION W3 gate (b) is still letter-satisfiable
-  while Skeleton rides the wrong 5s brand-metal rung—the period-VALUE + rung-BINDING gate reshape
-  is unapplied at HEAD.
-- **D2-6 (Δ-F27-1 / sidecar FLIP-2).** GF-DOCK-PASS3 §4.1's RED rationale still cites the
+- **D2-5 (Δ-F24-1 / sidecar FLIP-1) — CONSUMED-BY-UNION (RU-14 R5, `1340a918`).** W3 now carries
+  "Δ-F24-1 — the corrected read, replacing the prior gate" (`BAND-FEEDBACK-MOTION.md:134`) + the
+  period-VALUE/RUNG-BINDING/driver-shape gates (`:158-162`). Ledger C5 stamps the row
+  DISCHARGED-BY-UNION — J12 ratifies-and-closes, never re-applies.
+- **D2-6 (Δ-F27-1 / sidecar FLIP-2) — LIVE.** GF-DOCK-PASS3 §4.1's RED rationale still cites the
   block-overflow measure, not the visible→auto coercion, and the false `overflow.css:65-66` "clip"
-  comment still stands in source—both re-verified at HEAD (117b7f12).
-- **D2-F23 (new this pass; consolidated as row 8 of the ten, RU-14 R3).** The RU-09 C-G
-  value-marks fold + the track-well path split (`src/styles/glass/track-well.css` vs
-  `_shared/track.css`)—charter or rule out, then reconcile.
+  comment still stands in source—both re-verified at HEAD (117b7f12) and unchanged since.
+- **D2-F23 (consolidated as row 8 of the ten, RU-14 R3) — CONSUMED-BY-UNION (RU-14 R5,
+  `1340a918`).** The union charters both registers into W4 and reconciles the path split (see the
+  F23 COVERAGE paragraph); the disposition folds into the consolidated row-8 stamp — J12
+  ratify-and-close only.
+
+## RU-14 R5 re-anchor sweep (2026-07-18, vs the committed union `1340a918`)
+
+The nine-band rewrite moved this dossier's `waves/BAND-*` line pins; substance survives at the
+new anchors (each re-verified on disk this round). Band cites are hereafter read by wave/gate
+name + section anchor (the G-COPY-2 rule); current re-anchors, kept where load-bearing:
+
+- F21: `BAND-FEEDBACK-MOTION:49-63/:60-61/:56-58` → W2 `:91+`/the partial-arc gate `:119`/the
+  phantom-bank note `:102`.
+- F22: `BAND-FEEDBACK-MOTION:65-84` → W3 `:126+`; the J7 driver re-home `:79-84` → `:141`.
+- F23: `BAND-MATERIAL:389-443` → W4 `:460+` (see the R5 COVERAGE paragraph).
+- F26: `BAND-REDUCTION:392-396/:363-418` → `:452-456`/`:416+` (census upgraded by the union:
+  + the atlas `seal-compositor` vite plugin).
+- F28: `BAND-MATERIAL:170-300` → W2 `:212+`; OPEN-2d `:258-262,:291` → `:301`/`:336`.
+- F29: `BAND-STORY:244,265` → the G-CFG-1 gate row `:321`.

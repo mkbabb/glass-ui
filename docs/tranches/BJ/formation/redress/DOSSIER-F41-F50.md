@@ -282,10 +282,16 @@ seat.
    gate-pattern outright (after re-homing its confirm-preset test fixture), mooting the rounding.
 2. **Rounding, IF it survives → `BJ.W-RADIUS-ROLE` §D(F45)** (BAND-MATERIAL W1). The prior
    artifact's Δ-F45-1 (re-aim from born-RED sweep to REGRESSION-GUARD over the landed rule) was
-   **ADOPTED as `JUDGE.md` J5 and is APPLIED at HEAD**: `../../waves/BAND-MATERIAL.md:111-115` now
-   reads "F45 joins the F09/F12/F17 conversion class — the concentric-field grammar at
-   `_shared/field-control.css:37-48` already cures it, so the wave verifies live then PINS the
-   coherent state." Nothing further to append.
+   **ADOPTED as `JUDGE.md` J5 and is APPLIED at HEAD** — re-expressed by the committed union
+   (`1340a918`; re-pinned RU-14 R5, the old `:111-115` quote is dead — that span is now the
+   `--radius-input` misnomer block): `../../waves/BAND-MATERIAL.md:146-149` carries "**F12 + F45
+   + F48-rounding — REGRESSION-GUARDS (J5 class, re-proven)** … F45: the concentric-field grammar
+   at `_shared/field-control.css:47-49` already cures the dialog-input case (landed pre-tag,
+   `923c5254`)." NOTE the class membership moved with the union: **F17 is FLIPPED OUT** of J5's
+   original "F09/F12/F17" wording to a BORN-RED FIX (`:135` "the prior REGRESSION-GUARD premise
+   is FALSE"; `:52`, `:160`) — J5's ruling text in `JUDGE.md:38` still reads the original class,
+   but the BAND's applied state governs the executor. F45's own guard posture is unaffected.
+   Nothing further to append.
 Coverage: **EXACT (as amended — J5 applied)**. The prior PARTIAL verdict and its proposed delta are
 superseded/consumed; see §Consumed deltas.
 
@@ -467,10 +473,11 @@ undecided. No single wave owned "material app-wide," so it fans to three materia
 
 **REDRESS.** Owned across BAND-MATERIAL W1/W2/W3 (`crosswalk:70`):
 - **Rounding (dialog = card) → `BJ.W-RADIUS-ROLE`** (W1): the role table canonizes `dialog →
-  --radius-dialog = --radius-card` (`../../waves/BAND-MATERIAL.md:75`). The binding + the
-  modal-input rule already hold on disk, so this is a **regression-guard** — the J5-applied
-  conversion (BAND-MATERIAL:111-115) covers the modal-input case explicitly.
-- **Subtler blur for ALL → `BJ.W-BLUR-LADDER`** (W2, `:196-227`): rule the 6→4 collision (OPEN-2a
+  --radius-dialog = --radius-card` (`../../waves/BAND-MATERIAL.md:94`, re-pinned RU-14 R5). The
+  binding + the modal-input rule already hold on disk, so this is a **regression-guard** — the
+  J5-applied conversion (now the F12+F45+F48-rounding class at `BAND-MATERIAL.md:146-149`; F17
+  flipped out to born-RED) covers the modal-input case explicitly.
+- **Subtler blur for ALL → `BJ.W-BLUR-LADDER`** (W2, `:212+`, re-pinned): rule the 6→4 collision (OPEN-2a
   names vs rungs), kill-or-document the 2dppx arm (OPEN-2b), and judge the F48 further-pull against
   the F49/F50 stills (OPEN-2c) — a live-π, not a blind integer pull.
 - **Background blur better → `BJ.W-GRADED-BACKDROP-JUDGE`** (W3): the box-following graded bloom is
@@ -555,7 +562,8 @@ frozen into an immutable major half-baked. So the library ships a graded backdro
 the default flat scrim remains the heavy F48 slab; the graded pool is opt-in and unratified.
 
 **REDRESS.** Owned EXACTLY by `BJ.W-GRADED-BACKDROP-JUDGE` (BAND-MATERIAL W3,
-`../../waves/BAND-MATERIAL.md:295-390`) — a judgment wave with a forced verdict. The RED is the
+`../../waves/BAND-MATERIAL.md:340+` — re-pinned RU-14 R5; OPEN-2a/2b/2c survive at `:333-335`,
+OPEN-3a at `:458`) — a judgment wave with a forced verdict. The RED is the
 unresolved-freeze state itself; GREEN is a recorded **ADOPT** (keep the cohort; collapse the
 `graded-backdrop.test.ts` literals to relationships with BAND-GATES W1) or **DECLINE** (strip
 `--glass-halo-*` + FORM-2 + `isGraded` + the test; route the residual flat scrim to
@@ -598,8 +606,11 @@ behavior at scroll extremes.
 
 **Δ-F45-1 — CONSUMED (adopted as `JUDGE.md` J5, applied to `BAND-MATERIAL` W1).** The prior
 artifact proposed re-aiming W1's F45 probe from born-RED sweep to a regression-guard over the
-landed concentric-field rule (`field-control.css:37-48`). The judge adopted it (J5: "F45 joins the
-F09/F12/F17 conversion class") and the application pass amended the band
-(`../../waves/BAND-MATERIAL.md:111-115` now cites the rule and the verify-live-then-pin
-discipline). Nothing remains to append; the residual paint-taste ruling (soft-rect input beside
-pill CTA — match or keep-distinct) rides the wave's OPEN-1a live-π.
+landed concentric-field rule (`field-control.css:37-48` — the comment+selector span; the band
+pins the selector alone at `:47-49`, the same rule at two grains). The judge adopted it (J5:
+"F45 joins the F09/F12/F17 conversion class", `JUDGE.md:38`) and the committed union carries the
+application re-expressed (`../../waves/BAND-MATERIAL.md:146-149`, re-pinned RU-14 R5 — the J5
+class is now "F12 + F45 + F48-rounding — REGRESSION-GUARDS (J5 class, re-proven)", with F17
+flipped out to born-RED at `:135`/`:52`/`:160`; do not re-import the stale F09/F12/F17 class
+from the ruling text). Nothing remains to append; the residual paint-taste ruling (soft-rect
+input beside pill CTA — match or keep-distinct) rides the wave's OPEN-1a live-π.

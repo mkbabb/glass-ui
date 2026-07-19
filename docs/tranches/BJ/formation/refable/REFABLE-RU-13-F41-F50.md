@@ -33,7 +33,7 @@ library-recenter-exists precision (sharpened opus).
 | F42 | RATIFIED | `ASK §C3` | isolation + ≥2-consumer frame re-proven; C-D (ship the 9-keep/6-cut census table) noted in union |
 | F43 | RATIFIED owner/split; **OPUS-WRONG dating** | `G-COPY-3` + `ASK §D1` | opus claimed "the screenshot predates the purple-tomato rework" — backwards on git evidence (rework 2026-07-16 at 490cc46e/2d804ce6; feedback 2026-07-17): the user judged the CURRENT palette putrid; ADDED the theme-coupled mechanism note (both-themes aurora over theme-dependent ground, light-pinned ink) + per-theme render LIVE-DEFER |
 | F44 | RATIFIED | `ASK §D1` + `BAND-REDUCTION W3` | ADDED the dead knobs: baseSize/radius refs (:29-30) bound to sliders (:200-215) that surfaceStyle (:52-75) never consumes — claimed-live controls that no-op; strengthens the overfit verdict; mandatory fix if the page survives the ASK |
-| F45 | RATIFIED | `ASK §D1` + `BJ.W-RADIUS-ROLE` | opus's F7-rule discovery + Δ-F45-1 re-aim CONFIRMED and found ADOPTED as J5, APPLIED at HEAD (BAND-MATERIAL:111-115) → coverage EXACT-as-amended (opus "PARTIAL" superseded, delta CONSUMED); cure commit dated 923c5254; paint coherence LIVE-DEFER |
+| F45 | RATIFIED | `ASK §D1` + `BJ.W-RADIUS-ROLE` | opus's F7-rule discovery + Δ-F45-1 re-aim CONFIRMED and found ADOPTED as J5, APPLIED at HEAD (BAND-MATERIAL:111-115; R5: re-pinned `:146-149` — the union re-expressed the class as F12+F45+F48-rounding with F17 flipped out to born-RED, see the R5 addendum) → coverage EXACT-as-amended (opus "PARTIAL" superseded, delta CONSUMED); cure commit dated 923c5254; paint coherence LIVE-DEFER |
 | F46 | RATIFIED; citations re-anchored | `BJ.W-PREVIEW-CARD` + fam E | double-card structural mechanism re-proven at SectionPreviewCard.vue:89-92; 4-tile census re-proven by find; AMEND-D-4/D-5 cites corrected (:413/:421, not :288-300); perf baseline tied to PERF W1's measured 1.09 MB |
 | F47 | RATIFIED, 1 precision | `GF-DOCK` W1/W2/W3/W5 | all four sub-defect REDs re-proven (no scroll-snap; item-blind px mask; goTo-not-engine; chevron chrome); PRECISION: the library select-path recenter EXISTS (useSelectionGroup.ts:183) — opus's "nothing scrolls the occluded item into port" was overbroad; the gap is the demo strip + focus path, exactly as GF-DOCK's G-REVEAL RED states |
 | F48 | RATIFIED | `BJ.W-RADIUS-ROLE` + `BJ.W-BLUR-LADDER` + `BJ.W-GRADED-BACKDROP-JUDGE` | rounding-already-landed re-proven + commits dated; the 6-names→4-radii (1/7/11/16) ladder model VERIFIED incl. the deep 16px rung (this seat's initial 5-name count was wrong — deep found at tokens/glass-deep.css) + the 17px 2dppx arm (light-dark.css:36); OPEN-2c judgment LIVE-DEFER |
@@ -94,3 +94,34 @@ line-anchor corrections (content real, lines wrong).
   This sidecar's F47 note ("exactly as GF-DOCK's G-REVEAL RED states") reads through that re-map.
 - **F42's C-D anchor re-pointed.** The RU-09 SUPERFLUITY rewrite (5c847780) no longer carries the
   9-keep/6-cut table; the §C3 recommendation reads from the RU-09 C-F fresh-census verdicts.
+
+## RU-14 R5 addendum (2026-07-18, ring round 5 fix seat claude-fable-5) — re-pinned to the committed union `1340a918`
+
+**CRIT4-B CRIT4B2-2 cured — the five BAND-MATERIAL cites re-anchored; the F45 quote re-taken in
+its unioned form.** The committed nine-band union moved every BAND-MATERIAL pin this range
+carries; substance survives at the new anchors (each re-verified on disk this round):
+
+- **J5 application (F45/F48):** the old `:111-115` verbatim ("F45 joins the F09/F12/F17
+  conversion class…") is DEAD — that span is now the `--radius-input` misnomer block, and "F45
+  joins" greps zero file-wide. The applied state lives at **`BAND-MATERIAL.md:146-149`**: "**F12
+  + F45 + F48-rounding — REGRESSION-GUARDS (J5 class, re-proven)** … F45: the concentric-field
+  grammar at `_shared/field-control.css:47-49` already cures the dialog-input case (landed
+  pre-tag, `923c5254`)." **Carry explicitly: F17 is FLIPPED OUT of the class to a BORN-RED FIX**
+  (`:135` "the prior REGRESSION-GUARD premise is FALSE"; `:52`, `:160`). `JUDGE.md:38` still
+  reads the original "F09/F12/F17" — the ruling quote stays valid AS a ruling quote; the band's
+  applied state governs the W1 executor. Do not re-import the stale class. F45/F48 ownership and
+  the regression-guard posture survive intact — no verdict movement.
+- **Role table (F48):** dialog row `:75` → `:94`. **W2 (`BJ.W-BLUR-LADDER`):** `:196-227` →
+  `:212+` (OPEN-2a/2b/2c survive at `:333-335`). **W3 (`BJ.W-GRADED-BACKDROP-JUDGE`):**
+  `:295-390` → `:340+` (OPEN-3a survives at `:458`). The field-control grain note: the dossier's
+  `:37-48` (comment+selector) and the band's `:47-49` (selector alone) are the same rule at two
+  grains — no contradiction.
+- **CRIT4B2-7 shares (pins moved, content survives):** F41 STORY `:506-509` → `:633` (the
+  sidecar's no-wrap rider is now band canon: "neutral no-wrap string"); F46 STORY `:355-417` →
+  `:410-465` (G-PRV-2 `:459`, G-PRV-4 `:461` — now pinning the well at
+  `SectionPreviewCard.vue:35-54`, a compatible grain with this range's `:87-92` ring);
+  F48/F49/F50 MATERIAL pins per the block above.
+
+Dossier-side mirrors landed in `../redress/DOSSIER-F41-F50.md` (F45 REDRESS, F48 REDRESS, the
+Δ-F45-1 consumed-delta record). The F41-F50 two-consecutive-clean standing is re-based against
+the committed tree by this addendum.

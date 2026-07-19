@@ -138,7 +138,9 @@ opened only after the per-row correlations were fixed. Findings:
   `Card.vue:39` where BAND-REDUCTION says `:38`.
 - **RT1/RT2 confirmed STILL-LIVE at HEAD** (`GF-DOCK-PASS3.md:204-217` unchanged;
   `BAND-REDUCTION.md:36`/`:240` still label the Card probe "the F04 shape"). The lead's re-judge
-  remains owed.
+  remains owed. [RU-14 R5: RT2's half has since been CONSUMED — the committed union `1340a918`
+  relabeled the probe (`grep "F04 shape"` = 0; G-CARD-DEFAULT-PAINT at `BAND-REDUCTION.md:237`);
+  RT1 (GF-DOCK) stays live. See the R5 addendum.]
 - **Dossier left byte-stable** — the union is RATIFIED as canon by two independent Fable passes.
 
 ## RU-14 addendum (2026-07-18, fix seat claude-fable-5)
@@ -152,7 +154,8 @@ opened only after the per-row correlations were fixed. Findings:
 - **FLIP-1/FLIP-2 remain OPEN**—docketed for the consolidated JUDGE-2 pass (see
   `../redress/DOSSIER-F11-F20.md` §JUDGE-2 docket): GF-DOCK-PASS3 at HEAD still lacks the
   `rail.vue:108-140` baseline-π + `shape`-axis ruling; BAND-REDUCTION `:33-37`/`:240` still label
-  the Card probe "the F04 shape".
+  the Card probe "the F04 shape". [RU-14 R5: FLIP-2 no longer — CONSUMED-BY-UNION at `1340a918`;
+  FLIP-1 verified still live. See the R5 addendum.]
 
 ## RU-14 R3 addendum (2026-07-18, ring round 3 fix seat claude-fable-5)
 
@@ -175,3 +178,17 @@ opened only after the per-row correlations were fixed. Findings:
   reads "under JUDGE C-G (`JUDGE.md:94`) / SUPERFLUITY C-H (`SUPERFLUITY.md:674-681`)" —
   disambiguating the colliding C-label vocabularies per the JUDGE-2 docket's label note
   (JUDGE-C-G = the F08 binding; SUPERFLUITY-C-G = the F23 dispute; C-H SUPERFLUITY-only).
+
+## RU-14 R5 addendum (2026-07-18, ring round 5 fix seat claude-fable-5)
+
+- **FLIP-2 (D2-4) CONSUMED-BY-UNION (CRIT4-A R4A-1 share).** The committed RU-03/04 nine-band
+  union (`1340a918`) relabeled the Card default-paint probe: `grep "F04 shape"
+  BAND-REDUCTION.md` = 0 at HEAD; the probe is G-CARD-DEFAULT-PAINT (`BAND-REDUCTION.md:237` —
+  "a default `<Card>` at HEAD renders `metal:gold` + `grain:true` (`Card.vue:33,:39`)"). The
+  dossier's §JUDGE-2 section now splits its two rows LIVE (D2-3) vs CONSUMED (D2-4); J12+
+  ratifies-and-closes D2-4 per ledger C5, never re-applies. FLIP-1 (D2-3) re-verified still
+  live this round (GF-DOCK-PASS3 `rail.vue` grep = 0, file unchanged at `117b7f12`).
+- **Pin sweep (R4A-6 share):** the dossier's F03 FSF cite re-anchored to §8 finding 10
+  (`FABLE-STORY-FRAMEWORK.md:550-554`; `:385-391` is now the §7 amendments header — G-COPY-2
+  orders "anchor by section, never line"), and F01's G-PRV roster corrected to G-PRV-1..5 (the
+  union adds the G-PRV-5 0-GL regression-guard, `BAND-STORY.md:462`).

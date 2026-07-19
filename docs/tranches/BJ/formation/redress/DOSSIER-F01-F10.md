@@ -59,7 +59,8 @@ continuous idle rAF field behind every route. Unpaid design/perf debt, not a mys
 **REDRESS.** Layout half → **`BJ.W-PREVIEW-CARD` (BAND-STORY W5)** as adjudicated: tile-ladder
 AUTHORSHIP (4/88 → full headline coverage; the "live miniature" line STRUCK per the 0-GL contract +
 R3b idle-rAF), `CatalogLanding` routed through `resolveStoryTile`, native-CSS masonry with ≥2 card
-sizes (G-PRV-1..4), the above-fold `content-visibility` exemption (the edit ceded from PERF W3), and
+sizes (G-PRV-1..5 — the union adds the G-PRV-5 0-GL regression-guard, `BAND-STORY.md:462`; RU-14
+R5), the above-fold `content-visibility` exemption (the edit ceded from PERF W3), and
 the STAB2 rider (the detached hero goo-blob confirm-or-retire). Perf half → **`BJ.W-BOOT-DIET` +
 `BJ.W-SHELL-FIELD-GOVERN` + `BJ.W-DEFERRED-PAINT` (BAND-PERF W1/W2/W3)** with the R3b baselines
 seeding the gates. **LIVE-DEFER:** the stutter repro + the masonry/tile after-π ride W5/PERF's
@@ -125,7 +126,9 @@ completion-seal stroke-dashoffset/@property blurb).
 **POST-MORTEM.** Authorship-voice gap plus proportion neglect. Demo pages were written as living
 design notes to the tranche, so internal token/composable/class names leaked into user-facing prose,
 and whole "Mechanics" sections narrate springs the demo already shows — a *systemic* narration
-PATTERN, not discrete blurbs (`FABLE-STORY-FRAMEWORK.md:385-391`).
+PATTERN, not discrete blurbs (`FABLE-STORY-FRAMEWORK.md` §8 finding 10, `:550-554` — re-anchored
+RU-14 R5; `:385-391` is now the §7 amendments header, and G-COPY-2 itself orders "anchor by
+section, never line", `BAND-STORY.md:254`).
 
 **REDRESS.** Copy half → **`BJ.W-STORY-COPY-CANON` (BAND-STORY W2)**. The prior artifact's residue
 ("G-COPY-2 greps handmark/search only; layers.vue unpinned; no pattern-level ban") was ADOPTED as
@@ -444,16 +447,20 @@ historical delta texts are superseded by the band text and are not reproduced he
 
 ## JUDGE-2 docket (appended RU-14, 2026-07-18)
 
-Six recorded FLIPs plus one routing item age un-judged across the three RU-13 dossiers, and the
-three later unions (RU-05/RU-07/RU-09) landed without consuming any—JUDGE.md's "zero floating
-notes remain" is falsified. This range carries two of the ten:
+Six recorded FLIPs plus one routing item aged un-judged across the three RU-13 dossiers, and the
+three unions (RU-05/RU-07/RU-09) landed without consuming any—JUDGE.md's "zero floating
+notes remain" is falsified. The COMMITTED RU-03/04 nine-band union (`1340a918`) has since
+consumed rows 4/5/7/8 outright, the band half of row 2, and the wave half of row 9 (stamped
+RU-14 R5 in the consolidated table). This range carries two of the ten—one live, one consumed:
 
-- **D2-3 (this range, sidecar FLIP-1).** GF-DOCK-PASS3 at HEAD still lacks the `rail.vue:108-140`
-  baseline-π anchor and the 3-value `shape`-axis ruling for W5's shape grammar (the file carries
-  zero `rail.vue` mentions; re-verified at 117b7f12).
-- **D2-4 (this range, sidecar FLIP-2).** BAND-REDUCTION `:33-37`/`:240` still label the Card
-  default-paint probe "the F04 shape"—the F04 screenshot shows a dock, not a Card; the linkage is
-  to the ORDER, not the image.
+- **D2-3 (this range, sidecar FLIP-1) — LIVE.** GF-DOCK-PASS3 at HEAD still lacks the
+  `rail.vue:108-140` baseline-π anchor and the 3-value `shape`-axis ruling for W5's shape grammar
+  (the file carries zero `rail.vue` mentions; re-verified at 117b7f12 and unchanged since).
+- **D2-4 (this range, sidecar FLIP-2) — CONSUMED-BY-UNION (RU-14 R5, `1340a918`).**
+  `grep "F04 shape" BAND-REDUCTION.md` = 0 at HEAD; the Card default-paint probe is relabeled
+  G-CARD-DEFAULT-PAINT (`BAND-REDUCTION.md:237` — "a default `<Card>` at HEAD renders
+  `metal:gold` + `grain:true` (`Card.vue:33,:39`)"). The J12+ pass RATIFIES-AND-CLOSES per
+  ledger C5's posture; nothing remains to re-apply.
 
 The full ten-item docket lives in `DOSSIER-F11-F20.md` §JUDGE-2 docket (seven at RU-14 pass 1;
 rows 8-10—D2-F23, the RU-09 F33 goo-clone migration, the crosswalk F34-F40 handmark rows—seated

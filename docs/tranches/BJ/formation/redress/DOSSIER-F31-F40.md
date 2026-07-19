@@ -225,24 +225,30 @@ via BAND-FEEDBACK-MOTION and stopped there — the gap the crosswalk itself flag
   (`../../ASK-REDUCTION.md:148-168`): keep deck as the headless `useDeck` engine (atlas ×2) +
   carousel as the visual component; collapse only any overlapping visual shell, never the engine.
   A user-ratification row on dispositive consumer evidence; not relitigated here.
-- **dot animations (owned at HEAD).** `BJ.W-PAGER-DOT-MORPH` — BAND-FEEDBACK-MOTION **W6**
-  (`../../waves/BAND-FEEDBACK-MOTION.md:130-148`, minted by JUDGE **J3**): the pager-dot
-  goo-morph/worm refinement over `PagerDots`/`usePagerWorm`, **sequenced WITH the vestigial
-  `DeckPager.vue` cut** (the cut lands first or in the same wave; the refinement targets the
-  surviving pager path only). Gates: the worm behavioral assertion (born-RED — none exists at
-  HEAD), the DeckPager-cut grep precondition, paired-π of the dot morph across an index change on
-  `/motion/deck` + `/motion/carousel`. The crosswalk carries the J3 annotation (`JUDGE.md` §D item
-  5, appended in the crosswalk's judgment-corrections section).
+- **dot animations (owned at HEAD).** `BJ.W-PAGER-DOT-MORPH` — BAND-FEEDBACK-MOTION **W6**,
+  reauthored by the committed union as "F33 dot-refinement + the goo-clone collapse"
+  (`../../waves/BAND-FEEDBACK-MOTION.md:241`, re-pinned RU-14 R5 from the dead `:130-148`;
+  minted by JUDGE **J3**): the pager-dot goo-morph/worm refinement over `PagerDots`/`usePagerWorm`,
+  **sequenced WITH the DeckPager cut AND the stage-goo clone deletion** (`:250-251` — the charter
+  cites this docket ask by name, "widened per the JUDGE-2 docket row 9"; the refinement targets
+  the surviving pager path only). Gates: the worm behavioral assertion (born-RED — none exists at
+  HEAD), the cut grep precondition, paired-π of the dot morph across an index change on
+  `/motion/deck` + `/navigation/carousel` (the route moved with the union, `:278`). The crosswalk
+  carries the J3 annotation (`JUDGE.md` §D item 5, appended in the crosswalk's
+  judgment-corrections section).
 
-Coverage: **PARTIAL at HEAD (downgraded RU-14, 2026-07-18; was EXACT).** Both prior halves stand
-owned—the deck-vs-carousel keep at ASK §C1 (whose premise text RU-09 C-C partially overturns,
-`SUPERFLUITY.md:632`), the dot refinement at W6—but the RU-09 F33 migration is a THIRD half no
-wave carries: J3's W6 sequences only the vestigial `DeckPager.vue` cut, and the byte-identical
-stage-goo clone deletion (`useDeckGoo.ts`/`gooBarbellGeometry.ts`/`DeckGooFilter.vue` + goo CSS +
-test) is owned by NO wave at HEAD. Asked of the lead (rides the JUDGE-2 docket,
-`DOSSIER-F11-F20.md` — row 9, seated RU-14 R3): widen `BJ.W-PAGER-DOT-MORPH` (or BAND-REDUCTION)
-to carry the RU-09 F33 migration explicitly, and refresh the ASK §C1 recommendation text to the
-RU-09 verdict. The
+Coverage: **EXACT-at-ownership (RU-14 R5, 2026-07-18 — the band layer CLOSED by the committed
+union `1340a918`; was PARTIAL).** The docket-row-9 ask this dossier filed is EXECUTED: W6's
+charter now names the full clone set and cites the docket itself ("widened per the JUDGE-2
+docket row 9", `BAND-FEEDBACK-MOTION.md:250-251`), with cut ownership seated at **BAND-REDUCTION
+W8 `BJ.W-REDUCE-GOO-ENGINE`** (`BAND-REDUCTION.md:638-648`; FM `:260-261` "W8 is the SOLE owner
+of the cuts"; APOTHEOSIS MECH-04/D-05) — the stage-goo clone deletion is owned, not ownerless.
+Both prior halves stand owned too: the deck-vs-carousel keep at ASK §C1 (whose premise text
+RU-09 C-C partially overturns, `SUPERFLUITY.md:632`), the dot refinement at W6. Residue
+(genuinely open, lead-side): the ASK §C1/§C3 recommendation-text refresh to the RU-09 verdict
+(`ASK-REDUCTION.md` untouched since `4ab12128`; ledger E2 PENDING). The ledger already stamps
+docket row 9 "DISCHARGED-BY-UNION — ratify-and-close, do not re-apply" (C5) and owns this rot
+class at H2 — annotated here, never re-opened. The
 formerly-proposed Δ-F33-1 stays DISCHARGED (adopted as W6).
 
 **STATUS CHECK.** Crosswalk flag: **ASK** (`crosswalk:55`, §C1) + the J3/W6 annotation in the
@@ -573,7 +579,7 @@ fallback the screenshot proves.
 |-----|------------------|----------------|----------|-----------------|
 | F31 | curve-gallery void + modularize easing | `BJ.W-CONFIGURATOR-STD` G-CFG-5 (AMEND-D-8) + ASK §B4 + MATERIAL W5 review | **EXACT** | RATIFIED |
 | F32 | reveal vs other scrolling | `ASK-REDUCTION §C3` (+ C-D re-anchored to the RU-09 census, J11 standard) | **EXACT (decision)** | RATIFIED |
-| F33 | deck vs carousel + dot refinement | `ASK-REDUCTION §C1` + `BJ.W-PAGER-DOT-MORPH` (FM W6, J3) | **PARTIAL (RU-14—the RU-09 goo-clone deletion unowned)** | SUPERSEDED |
+| F33 | deck vs carousel + dot refinement | `ASK-REDUCTION §C1` + `BJ.W-PAGER-DOT-MORPH` (FM W6, J3) + `BJ.W-REDUCE-GOO-ENGINE` (REDUCTION W8, the cuts) | **EXACT-at-ownership (RU-14 R5—band layer closed by the union; residue = the E2 ASK-text refresh, lead-side)** | SUPERSEDED |
 | F34 | handmark boil worm "awful" | `GF-HANDMARK` W1 THE-VOICE (`G-CALM`/`G-RESTRAINT`; boil dies with the register) — RU-14 re-point | **EXACT** | RATIFIED |
 | F35 | pen "more pen-like/natural" | `GF-HANDMARK` W1 THE-VOICE + W2 `G-WEIGHT` — RU-14 re-point | **EXACT** | RATIFIED |
 | F36 | highlighter "doesn't work" | `GF-HANDMARK` §4 layering law via W2 (NO blend modes, plain alpha ink; π-BAND asserts visibility) — RU-14 re-point | **EXACT (the dark-visibility gap CONSUMED-BY-RU-06)** | PARTIAL |
@@ -582,7 +588,8 @@ fallback the screenshot proves.
 | F39 | ring layering/smoothing/encapsulation | `GF-HANDMARK` §4 layering law via W2 (circle over-glyph in DOM order, no z-index) — RU-14 re-point | **EXACT + amendment** | RATIFIED+AMENDED |
 | F40 | remove meta text "SE"; redesign | `GF-HANDMARK` W4 THE-STORY `G-NO-JARGON` (box/bracket GONE, Q-HM-2 `:250`) + `BJ.W-STORY-COPY-CANON` — RU-14 re-point | **EXACT** | RATIFIED |
 
-**Totals (as re-stated RU-14; re-tallied R3): EXACT 9 / PARTIAL 1 (F33—the RU-09 goo-clone residue) /
+**Totals (as re-stated RU-14; re-tallied R3; F33 restored R5): EXACT 10 at ownership grain
+(F33's residue is the lead-side E2 ASK-text refresh, not a band gap) / PARTIAL 0 /
 gate-grain citations F34-F40 read through the SUPERSEDED-BY-RU-06 table at the range header
 (ownership EXACT throughout).** Open flips: 0—both sidecar FLIPs closed CONSUMED-BY-RU-06
 (F36's invisibility is the charter's own sharpening; F37's root its own attribution; the FLIP-1

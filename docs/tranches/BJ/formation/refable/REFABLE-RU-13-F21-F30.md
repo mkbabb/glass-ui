@@ -97,7 +97,9 @@ same cut (Δ-F27-1 carries the text).
 **Near-flip, no action (SUSTAINED) — F28 → BAND-MATERIAL W2 §Design(D).** The stale "plausibly
 the deep-tier primary" sentence (`BAND-MATERIAL.md:230-236`) survives beside the governing J6
 re-aim (`:258-262`); no primary button exists in the F28 frame (both are default-secondary,
-`Button.vue:35`, `StoryPlayButton.vue:34`). Falls at W2 execution.
+`Button.vue:35`, `StoryPlayButton.vue:34`). Falls at W2 execution. [RU-14 R5: it FELL AT THE
+UNION, not W2 — `1340a918` struck the sentence itself (`BAND-MATERIAL.md:270` "…hypothesis is
+STRUCK"; fork-closed re-stated `:788`). DISCHARGED-BY-UNION; this note sweeps with it.]
 
 **New, evidence-grain (not a charter flip) — F25 → ASK-REDUCTION §C2 evidence row + the family-B
 relay.** The "8 external consumers" figure double-counts value.js: the live census at HEAD is 6
@@ -127,10 +129,17 @@ should carry 6-live + 2-doc so the break table doesn't overstate blast radius.
   charter `_shared/track.css`. This sidecar's F23 row recorded the marks-rendering duplication as
   fresh census evidence but did not convert it to a coverage objection—corrected now. EXACT
   restores on a JUDGE-2 ruling (charter the value-marks register into W4 or rule it out; reconcile
-  the path).
+  the path). [RU-14 R5: both terminal conditions MET by the committed union `1340a918` — W4
+  charters BOTH registers (`BAND-MATERIAL.md:55`; value-mark text now 9 hits file-wide,
+  `:488-490`), mints `track-well.css` + `value-marks.css` at the SUPERFLUITY path and supersedes
+  `_shared/track.css` (`:503-510`); `OPEN-4a` ruled toward the pair (`:793`). Coverage →
+  EXACT-pending-J12-ratification; see the R5 addendum.]
 - **FLIP-1 (F24 gate shape) and FLIP-2 (F27 §4.1 rationale + the `overflow.css:65-66` comment)
   remain OPEN at HEAD (117b7f12)**—no union has consumed them; both docketed for the consolidated
-  JUDGE-2 pass (`../redress/DOSSIER-F11-F20.md` §JUDGE-2 docket).
+  JUDGE-2 pass (`../redress/DOSSIER-F11-F20.md` §JUDGE-2 docket). [RU-14 R5: FLIP-1 has since
+  been CONSUMED-BY-UNION at `1340a918` — W3 carries the Δ-F24-1 gate reshape near-verbatim
+  (`BAND-FEEDBACK-MOTION.md:134`, `:158-162`); docket row 5 ratifies-and-closes per ledger C5.
+  FLIP-2 re-verified still live this round (§4.1 + the false source comment both stand).]
 
 ## RU-14 R3 addendum (2026-07-18, ring round 3 fix seat claude-fable-5)
 
@@ -155,3 +164,25 @@ should carry 6-live + 2-doc so the break table doesn't overstate blast radius.
   count.**" at `:682`; `:687` is blank) — the R3-landed pin dropped the opening line and
   annexed a blank. Corrected in the dossier F25 body and this sidecar's R3 row; the fixlogs
   and ring files are logs and stand as written.
+
+## RU-14 R5 addendum (2026-07-18, ring round 5 fix seat claude-fable-5)
+
+The committed RU-03/04 nine-band union (`1340a918`) executed two of this range's three open
+items; the stamps land this round (CRIT4-A R4A-1 share, R4A-3, R4A-7):
+
+- **F23 restored (R4A-3): PARTIAL → EXACT-pending-J12-ratification.** Both terminal conditions
+  of the RU-14 downgrade are MET on disk: W4 charters both registers (`BAND-MATERIAL.md:55`,
+  the twin ~65-line marks census `:488-490`, history `:474`), mints `src/styles/glass/
+  track-well.css` + `value-marks.css` and supersedes `_shared/track.css` (`:503-510` — the path
+  split reconciled to `SUPERFLUITY.md:227`), and `OPEN-4a` is ruled toward the pair (`:793`).
+  Dossier COVERAGE paragraph converted, summary-row cell updated; docket row 8 stamped
+  CONSUMED-BY-UNION (ratify-and-close per ledger C5). The old `:433`/`:476` pins are dead.
+- **FLIP-1/D2-5 consumed (R4A-1 share):** the Δ-F24-1 gate reshape is applied at
+  `BAND-FEEDBACK-MOTION.md:134`/`:158-162`; the dossier's Δ-F24-1 text and docket entry carry
+  the stamp. D2-6 (F27) re-verified live — GF-DOCK §4.1 + the false `overflow.css:65-66`
+  comment stand unchanged.
+- **F28 residue discharged (R4A-7):** the superseded "plausibly deep-tier primary" sentence was
+  struck BY THE UNION (`BAND-MATERIAL.md:270`; fork-closed `:788`), not left for W2; dossier
+  REDRESS + Δ-F28-1 residue line + this file's near-flip note all carry the discharge.
+- **Pin sweep (R4A-6 share):** the dossier now carries an "RU-14 R5 re-anchor sweep" section
+  (F21/F22/F23/F26/F28/F29 band pins re-anchored to the union).

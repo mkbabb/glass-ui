@@ -99,7 +99,11 @@ DISCHARGED") is superseded: RU-09 overturns the KEEP-DISTINCT isolation — the 
 byte-identical clone of the pager worm (`PagerDots.vue:326` ≡ `DeckGooFilter.vue:26`) ruled
 COLLAPSE-FAMILY and slated for deletion, which NO wave owns at HEAD (J3's W6 sequences only the
 DeckPager cut) — the dossier's F33 coverage is downgraded to PARTIAL and the wave-widening ask
-rides the JUDGE-2 docket (`../redress/DOSSIER-F11-F20.md` — row 9, seated RU-14 R3). F32's C-D
+rides the JUDGE-2 docket (`../redress/DOSSIER-F11-F20.md` — row 9, seated RU-14 R3). [RU-14 R5:
+the row-9 ask is EXECUTED by the committed union `1340a918` — W6 reauthored as "F33
+dot-refinement + the goo-clone collapse" (`BAND-FEEDBACK-MOTION.md:241`, citing the docket at
+`:250-251`), cuts owned at REDUCTION W8 `BJ.W-REDUCE-GOO-ENGINE` (`BAND-REDUCTION.md:638-648`);
+coverage restored EXACT-at-ownership. See the R5 addendum.] F32's C-D
 "9-keep/6-cut table" anchor is stale — the rewritten SUPERFLUITY carries the C-F fresh-census
 kill/keep verdict instead; the dossier's F32 rider is re-anchored.
 
@@ -126,3 +130,27 @@ kill/keep verdict instead; the dossier's F32 rider is re-anchored.
   unchanged since `55f5170d`, so the dossier's `:291`/`:292` were off by one at write).
   Corrected in the dossier TARGET; this sidecar's F37 row carries no line pins for the pair
   and needed no edit.
+
+## RU-14 R5 addendum (2026-07-18, ring round 5 fix seat claude-fable-5)
+
+- **F33 coverage restored: PARTIAL → EXACT-at-ownership (CRIT4-B CRIT4B2-1 cured).** The
+  committed RU-03/04 union (`1340a918`) executed the docket-row-9 ask this range filed: FM W6 is
+  reauthored "F33 dot-refinement + the goo-clone collapse" (`BAND-FEEDBACK-MOTION.md:241`),
+  self-described "widened per the JUDGE-2 docket row 9" (`:250-251`), with cut ownership seated
+  at **BAND-REDUCTION W8 `BJ.W-REDUCE-GOO-ENGINE`** (`BAND-REDUCTION.md:638-648`; FM `:260-261`
+  "W8 is the SOLE owner of the cuts"; APOTHEOSIS MECH-04/D-05). "Owned by NO wave" is struck
+  from the dossier; the old `:130-148` W6 pin re-anchored to `:241`; the gate route corrected
+  `/motion/carousel` → `/navigation/carousel` (`FM:278`). Residue (lead-side, genuinely open):
+  the ASK §C1/§C3 recommendation-text refresh (ledger E2, PENDING). Ledger C5 stamps row 9
+  ratify-and-close; H2 owns the rot class — annotated, never re-opened.
+- **Re-pinned to the `1340a918` union (CRIT4B2-7 share — content survives at every site, pins
+  moved):** F31 STORY G-CFG-5 `:245/:269` → `:325` (gate reworded: "the stage void closes
+  (min-height cap)"; AMEND-D-8 substance absorbed at `:307`), the lead-adoption block
+  `:545-556` → absorbed inline (that span is now W7 STORY-TRANSITIONS), MATERIAL `:509` →
+  `:592-594` (the review-mark cites the RU-13 union), REDUCTION easing §B4 `:306-314` →
+  `:287-290` (`:306-314` is now the combobox fold), `:359` → `:290/:411`; F32 STORY `:155` →
+  `:212`, REDUCTION `:73-76` → the OUT-list — and "routes reveal/scroll to the ASK, not a wave"
+  is SUPERSEDED: W9 `BJ.W-REDUCE-SCROLL-REVEAL` now exists (`:677`, §C3-gated) and conditionally
+  seats the A06 scroll standard (`:701-702`); F38 REDUCTION `:66-70/:161` → `:76-77`; F40/F43
+  STORY `:195-197/:174-177/:196` → `:254-256`. A17's `BAND-PERF.md:92-96` pin SURVIVES
+  (aurora-hero 277KB at `:94`). Handmark rows (F34-F40) byte-stable — no movement.
