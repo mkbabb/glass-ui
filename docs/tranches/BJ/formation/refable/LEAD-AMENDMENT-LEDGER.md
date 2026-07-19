@@ -76,6 +76,12 @@ lead-owned remainder.
 | H3 | IOS27-MICRO X2 §8.1/8.2 register rulings + pass-3 charters | pass-2 agglomeration | WAITING |
 | H4 | RU-26 DesignSync paint-taste re-judge (rim-radiance) — Fable + DesignSync, browser-serialized | RU-26 | WAITING (browser seat free) |
 
+## I. Inbound dispositions (added 2026-07-19)
+
+| id | item | source | status |
+|----|------|--------|--------|
+| I1 | The atlas Q G-BATCH: G-1→BAND-A11Y tap-target clause · G-2→BAND-MATERIAL radius-role clause · G-3→BAND-MATERIAL attenuation primitive (design basis = the halo/V-ALENS kin) · G-4→BAND-PERF (their W-PERF edge-gated on us — sequencing note for G1) · G-5→named tabs-grammar defect row · G-CLOSE→VETO-GATED wave candidate (V-PERCH the built basis) | coordination/ATLAS-Q-G-BATCH-DISPOSITION.md | DISPOSITIONED — band folds ride the next amendment batch; relay-back rides G1 |
+
 ## Terminal order (unchanged)
 
 Ledger applied → RU-02 fresh STAB chain (two-consecutive-clean over the amended corpus) →
