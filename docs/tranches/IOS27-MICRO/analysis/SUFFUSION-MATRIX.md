@@ -54,7 +54,13 @@ only for keyboard-triggered overlay enter/exit and the app-zoom class.
 Q1 bounded magnetism/overpull · Q2 weight/inertia · Q3 specular light-at-engagement ·
 Q4 two-tier true glass · Q5 readable dynamic transparency · Q6 multi-clock choreography ·
 Q7 velocity/momentum inheritance · Q8 taffy pre-commit + grow-on-engage · Q9 detent catches ·
-Q10 everything-is-a-scrub.
+Q10 everything-is-a-scrub · Q11 medium recruitment (§1.3's eleventh column, H-6).
+
+Engagement scalars amended at the H-6 sync `[P3-AGG 2026-07-19, CHARTER R-9 C-MUSIC 1]`:
+the **transmission scalar** enters the vocabulary — glass visibly carries passing content
+(scroll transmission 20–60% class, MARKS-C-MUSIC mark 1); and the **light-first press-ack
+ordering** is law at engage: luminance acknowledges ~50ms BEFORE geometry moves. The law-11
+idle floor stays OUR declared divergence: iOS parks at idle; we never fully do.
 
 ### 1.3 The dose ledger (one matrix—critique contradiction 13 resolved)
 
@@ -64,20 +70,28 @@ kept; this satisfies the critique's roles-as-rows recommendation with A's splits
 grammar). Marks: ●●● flagship · ●● present · ● trace · ◐ narrow (named subset only, in the row
 text) · — WITHHELD by law (reason in the row text). A dash is law; a dot is dose.
 
-| archetype (roles) | Q1 | Q2 | Q3 | Q4 | Q5 | Q6 | Q7 | Q8 | Q9 | Q10 |
-|---|---|---|---|---|---|---|---|---|---|---|
-| A momentary—button, chip(action), dark-mode-toggle (control) | — | ●●● | ●● | ●● | ● | ● | ●● | ◐ | — | — |
-| B bistable—switch, checkbox, radio-group, toggle-group, chip(filter) (control) | ●●● | ●● | ●● | ●● | ● | ● | ●● | ◐ | ◐ | — |
-| C continuous—slider, number-field (control) | ●●● | ●●● | ●● | ●● | ●● | ●● | ●●● | ●● | ●● | ◐ |
-| D text fields—input, textarea, tags-input, search, labeled-field (field) | — | ● | ◐ | ●●● | ●●● | ● | — | — | — | ◐ |
-| E list-selection—select, combobox, command (field) | — | ●● | ●● | ●● | ●● | ●●● | ◐ | — | — | ◐ |
-| F overlays—dialog, drawer, popover, dropdown-menu, tooltip (overlay) | ●● | ● | ● | ●●● | ●●● | ●●● | ●● | ◐ | ●● | ●●● |
-| G nav lenses—tabs, dock, pager-dots, carousel, deck, header-ribbon, scroll-progress-rim (container+nav+chrome) | ●● | ●● | ●●● | ●● | ●● | ●● | ●●● | ◐ | ●● | ●●● |
-| H disclosure—accordion, collapsible, expandable-container, card, surface, separator (container) | ● | ●● | — | ●●● | ●● | ●●● | ●● | ◐ | ◐ | ●●● |
-| I feedback—progress, skeleton, alert, badge, toast, pulse, status-dot, completion-seal (feedback) | — | ● | ◐ | ●● | ●● | ●● | ◐ | — | — | ◐ |
-| J data display—table, data-table, metric×4, timeline, avatar, instrument-chassis (data-display) | — | ● | — | ◐ | — | ◐ | ◐ | — | ◐ | — |
-| K substrates—blob, aurora, handmark, constellation, fourier-field, liquid-grid, paper-backdrop, watercolor-dot (substrate) | — | ● | — | — | — | ◐ | ●●● | — | — | — |
-| L motion primitives—animated-digit, typewriter, sortable-list, infinite-scroll, fading-scroll, easing tools (motion-primitive) | ◐ | ●● | ● | ◐ | — | ◐ | ●●● | ◐ | ●● | ●● |
+| archetype (roles) | Q1 | Q2 | Q3 | Q4 | Q5 | Q6 | Q7 | Q8 | Q9 | Q10 | Q11 medium |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| A momentary—button, chip(action), dark-mode-toggle (control) | — | ●●● | ●● | ●● | ● | ● | ●● | ◐ | — | — | — |
+| B bistable—switch, checkbox, radio-group, toggle-group, chip(filter) (control) | ●●● | ●● | ●● | ●● | ● | ● | ●● | ◐ | ◐ | — | — |
+| C continuous—slider, number-field (control) | ●●● | ●●● | ●● | ●● | ●● | ●● | ●●● | ●● | ●● | ◐ | ● |
+| D text fields—input, textarea, tags-input, search, labeled-field (field) | — | ● | ◐ | ●●● | ●●● | ● | — | — | — | ◐ | ◐ |
+| E list-selection—select, combobox, command (field) | — | ●● | ●● | ●● | ●● | ●●● | ◐ | — | — | ◐ | — |
+| F overlays—dialog, drawer, popover, dropdown-menu, tooltip (overlay) | ●● | ● | ● | ●●● | ●●● | ●●● | ●● | ◐ | ●● | ●●● | — |
+| G nav lenses—tabs, dock, pager-dots, carousel, deck, header-ribbon, scroll-progress-rim (container+nav+chrome) | ●● | ●● | ●●● | ●● | ●● | ●● | ●●● | ◐ | ●● | ●●● | ◐ |
+| H disclosure—accordion, collapsible, expandable-container, card, surface, separator (container) | ● | ●● | — | ●●● | ●● | ●●● | ●● | ◐ | ◐ | ●●● | — |
+| I feedback—progress, skeleton, alert, badge, toast, pulse, status-dot, completion-seal (feedback) | — | ● | ◐ | ●● | ●● | ●● | ◐ | — | — | ◐ | — |
+| J data display—table, data-table, metric×4, timeline, avatar, instrument-chassis (data-display) | — | ● | — | ◐ | — | ◐ | ◐ | — | ◐ | — | — BY LAW |
+| K substrates—blob, aurora, handmark, constellation, fourier-field, liquid-grid, paper-backdrop, watercolor-dot (substrate) | — | ● | — | — | — | ◐ | ●●● | — | — | — | — BY LAW |
+| L motion primitives—animated-digit, typewriter, sortable-list, infinite-scroll, fading-scroll, easing tools (motion-primitive) | ◐ | ●● | ● | ◐ | — | ◐ | ●●● | ◐ | ●● | ●● | — |
+
+**Q11 (medium recruitment—who may soften the world)** is the eleventh column, adopted
+verbatim from NOVELTY-ROSTER §3.5-D at the H-6 sync `[P3-AGG 2026-07-19]`. Its marks are the
+roster's own: ● full halo (C—the flagship, the named exemplar) · ◐ whisper/narrow (D—text
+fields UNDER FOCUS only, half-extent half-opacity ladder; G—the lens IS medium, no second
+recruitment on top) · — withheld (A/B/E/F/H/I—engagement suffusion stays surface-local;
+J/K—BY LAW: data reads on stable ground, substrates are never furniture). Dashes are
+load-bearing. The V-ALENS opt-in gate cites THIS column.
 
 typography (label): rides its field's states—entrance weight trace only, nothing else, ever.
 Row annotations that ARE the proportion: the dock's near-full row is unique (the reference body);
@@ -352,6 +366,12 @@ law, the three-clock desync—these are ADOPTED from the measured corpus, not in
 below lists only what iOS does not do. Adopted-not-novel, for the record: the lens anatomy, tabs
 overflow self-centering, the idle sweep, volumetric edge compression on gesture-owned chrome, the
 label float, the success mark-draw, the header-ribbon ladder, typewriter cadence.
+
+**The self-binding clause (B1), added at the H-6 sync `[P3-AGG 2026-07-19]`:** this matrix
+RE-BASES on every measured organ that lands after it—a union that skips an organ repeats the
+B1 defect. Any MARKS-grade organ landing post-sync (new corpus fits, new mark sweeps) triggers
+a mark-by-mark disposition against this register before the next convergence claim; silence
+against a landed organ voids the claim.
 
 | # | affordance | status |
 |---|---|---|

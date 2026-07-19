@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PROTO-ASSEMBLY — the composed organs (IOS27-MICRO pass 3)</title>
+<!--
+  PROTO-ASSEMBLY — the composed organs. Standalone prototype, no build step.
+  verified-model: claude-fable-5. Seat: p3:ASSEMBLY (MECH m9's named owner,
+  NOVELTY-ROSTER §4 item 4; CHARTER §O-2). Until this page runs on the WebKit
+  VIDEO path, no adoption language may say "proven together" — the m9 ban stands.
+
+  THE DRAFTING LAW: generalized facilities only — registers, contracts, state
+  machines. Nothing here recreates a screen; the organs are compositions of OUR
+  facilities under OUR warm canon (NOVELTY-ROSTER §3.5-A).
+
+  ORGAN A — the session field in the dark surface (V-WAVE sea in V-BLACKDOCK).
+    The standing aurora sea (card 5: phase pinned, lull filament, flare-pin-cut)
+    lives inside the black dock's warm-charcoal glass; the sea's upper half is
+    sunk under the surface's OWN dark mass (MARKS-D-SIRI mark 3: focus by dark
+    mass + rim, NEVER a scrim; background dim +/-2% max; non-modal - taps beneath
+    still land). FIRED deploys ride springPreset("panel") {0.40, z0.71} (CHARTER
+    R-2); gesture-scrubbed growth rides the dock register {0.35, z0.82} (R-1)
+    with velocity-BOUGHT overshoot (the k*v law, k~=0.023s inside the corpus
+    bracket [0.016,0.030]). The channel ladder is the measured one: geometry ->
+    text born blurred ~190ms at the geometry peak -> data upgrade in place ->
+    rim flare +0.5s/+0.85s. The bottom meniscus breathes +/-18% at rest,
+    AUTONOMOUS (the mark-2 negative control: at-rest light is never signal-fed).
+  ORGAN B — the V-PERCH -> V-VAPOR handoff (MARKS-E §4 verbatim, per R-9).
+    Apex-seated chip (seat = R*(1 - 2^(-1/n)) off the corner exponent - derived,
+    no magic numbers), press-charge on the engage envelope (press-drain row),
+    commit -> text <=50ms -> body erosion 170-250ms -> POSITIVE 80-140ms
+    empty-medium beat (sign-verified: the M2 cure) -> medium 300-400ms
+    decelerating; drift-by-transform toward the perch corner, chip vaporizes
+    first; scrub-mapped and catchable pre-commit; the ONE medium writer claimed
+    once (claimMediumWriter, the F5 contract) and exercised across the seam.
+  ORGAN C — the fission drawer (R-CONDENSE grammar, V-CONST N-body class).
+    The session's commit cut hands the dock to the drawer posture: condense
+    BELL (~120ms, accelerate-then-decelerate, zeta 0.97 no-wobble arrival;
+    MARKS-C-APPS 7.4) then GROW-WITH-CONTENT (~80ms staggered section arrivals,
+    ~450ms total; sheets are rigid - drawers grow). The results islands FISSION
+    from the sea: every body has a parent (the dock) and a carrier (its crest -
+    hue conserved by token identity; the C-MUSIC mark-5 conservation discipline).
+
+  Masks are build-time artifacts (scratchpad gen-asm-masks.mjs, mulberry32 seeds
+  1001/2002/3003 - the v-vapor recipe family), stamped inline; mask geometry
+  never animates. Every knob is a token; every clock is stamped FROM the physics
+  at init (no hand mirrors). Paint truth is QUEUED-PAINT (PROBE-NOTES.md).
+-->
+<style>
+  /* ============ THE WARM CANON (NOVELTY-ROSTER §3.5-A; DESIGN m2 stage arm) ============ */
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body {
+    background: #efe6d6; /* the warm-cream stage arm — never the cool slate judging bias */
+    color: rgba(46, 38, 30, 0.92);
+    font: 14px/1.45 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+    display: grid; place-items: center; padding: 24px;
+  }
+  .phone {
+    position: relative; width: 420px; height: 760px; border-radius: 36px;
+    border: 1px solid rgba(66, 52, 38, 0.28);
+    box-shadow: 0 24px 60px rgba(60, 44, 24, 0.30), inset 0 0 0 6px #171310;
+    overflow: hidden;
+    /* the crest hue tokens — ONE declaration; the sea layers AND the fission
+       islands both read these (conservation by token identity, C-MUSIC mark 5) */
+    --crest-h-1: 46; --crest-h-2: 14; --crest-h-3: 286;
+  }
+  .world {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(190px 150px at 22% 16%, rgba(255, 196, 124, 0.75), transparent 70%),
+      radial-gradient(220px 180px at 84% 34%, rgba(214, 138, 110, 0.55), transparent 70%),
+      radial-gradient(260px 230px at 46% 88%, rgba(150, 122, 196, 0.45), transparent 70%),
+      repeating-linear-gradient(90deg, rgba(255, 244, 224, 0.07) 0 1px, transparent 1px 14px),
+      #241d16; /* warm dusk world — R>G>B, never blue-black */
+  }
+  /* NON-MODAL TRUTH: the world stays alive and tappable through every organ.
+     No scrim exists in organ A — focus is dark mass + rim only (MARKS-D mark 3). */
+  .world-tap {
+    position: absolute; left: 16px; bottom: 14px; z-index: 1;
+    padding: 8px 14px; border: 0; border-radius: 14px; cursor: pointer; font: inherit;
+    font-size: 12px; color: rgba(255, 244, 224, 0.85);
+    background: rgba(255, 244, 224, 0.10);
+    box-shadow: inset 0 0 0 1px rgba(255, 244, 224, 0.16);
+  }
+
+  /* ============ ORGAN B — the perch card zone (its OWN region + medium) ============ */
+  .card-zone { position: absolute; left: 28px; right: 28px; top: 56px; height: 210px; z-index: 2; }
+  /* the card's medium — claimed ONCE by the conductor (claimMediumWriter); every
+     write routes through the writer. Scoped to the card zone, never the world. */
+  .card-medium {
+    position: absolute; inset: 0; border-radius: 30px;
+    -webkit-backdrop-filter: blur(16px) saturate(1.25);
+    backdrop-filter: blur(16px) saturate(1.25);
+    background: rgba(30, 24, 18, 0.30);
+  }
+  .card-medium.relax {
+    opacity: 0;
+    transition: opacity calc(var(--vap-medium-ms) * 1ms) cubic-bezier(0.2, 0.6, 0.3, 1)
+      calc(var(--vap-medium-delay-ms) * 1ms); /* delay = text + body + BEAT (sign-positive) */
+  }
+  .card-zone.closed .card-medium, .card-zone.closed .card-root { display: none; }
+  .card-root { position: absolute; left: 14px; right: 14px; top: 18px; } /* NO clip — the plane root */
+  /* the vapor stack: body + 2 ghosts, static masks, fixed blur radii */
+  .vcard { border-radius: 28px; corner-shape: squircle; padding: 18px 20px; } /* A3 cure [P3-AGG 2026-07-19]: the seat's n derives from the AUTHORED shape (MARKS-E §3) — squircle authored here; engines without corner-shape drop it and the JS probe honestly seats n=2 against the round paint */
+  .card-root[data-parked="1"] .v-ghost { visibility: hidden; } /* ghosts PARK at rest */
+  .v-body {
+    position: relative;
+    background: linear-gradient(180deg, rgba(56, 48, 40, 0.55), rgba(34, 28, 22, 0.68));
+    -webkit-backdrop-filter: blur(22px) saturate(1.35);
+    backdrop-filter: blur(22px) saturate(1.35);
+    box-shadow: inset 0 0 0 1px rgba(255, 244, 224, 0.12), inset 0 1px 0 rgba(255, 244, 224, 0.18);
+    -webkit-mask-image: url("data:image/png;base64,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");
+    mask-image: url("data:image/png;base64,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");
+    -webkit-mask-size: 48px 48px; mask-size: 48px 48px;
+    /* the body's content leaves FIRST — gone by scrub 0.55 */
+    opacity: calc(1 - clamp(0, var(--vap-t) / 0.55, 1));
+  }
+  /* text is its OWN faster channel — killed <=50ms on commit (MARKS-D precedent) */
+  .card-zone.committing .v-body .v-text { opacity: 0; transition: opacity calc(var(--vap-text-ms) * 1ms) ease-out; }
+  .v-ghost {
+    position: absolute; inset: 0; pointer-events: none;
+    color: rgba(245, 236, 220, 0.92); /* warm cream vapor — never white noise */
+    background: linear-gradient(180deg, rgba(168, 148, 118, 0.30), rgba(112, 96, 74, 0.34));
+    box-shadow: none;
+  }
+  /* drift-by-transform TOWARD the perch corner (top-left) — direction is layer
+     transforms only, mask geometry never moves (MARKS-E §4 item 4). */
+  .v-ghost-c {
+    filter: blur(2px); /* FIXED radius; only this LAYER's opacity ramps */
+    -webkit-mask-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAARElEQVR42u3YwQkAAAgCQPdfuqYICU4XuKeYKScAAAAAAAAAfUC5AAAAAAAAAA8A9UECAAAAAAAA4B8AAAAAAAAAOO4CZhPqS4YBAWcAAAAASUVORK5CYII=");
+    mask-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAARElEQVR42u3YwQkAAAgCQPdfuqYICU4XuKeYKScAAAAAAAAAfUC5AAAAAAAAAA8A9UECAAAAAAAA4B8AAAAAAAAAOO4CZhPqS4YBAWcAAAAASUVORK5CYII=");
+    -webkit-mask-size: 64px 64px; mask-size: 64px 64px;
+    opacity: calc(0.85 * min(clamp(0, (var(--vap-t) - 0.08) / 0.30, 1),
+                             clamp(0, (0.80 - var(--vap-t)) / 0.42, 1)));
+    transform: translate(calc(clamp(0, (var(--vap-t) - 0.08) / 0.92, 1) * -11px),
+                         calc(clamp(0, (var(--vap-t) - 0.08) / 0.92, 1) * -11px));
+  }
+  .v-ghost-m {
+    filter: blur(4px);
+    -webkit-mask-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAAuElEQVR42u3ZOw7AIAwDUO5/6XZqByRkO0TFlQwbJfCGiF/H9ZQx1a72Vb+3ewDHAewAq0hUQHwABgAUUJ2IjAvAELCbjChuag/AAMBOwCajnIQBHAcUDxJ00oL4AIwA3QXB4UoYwGcAtGmoC5KYtAEYAboOIuJmFoARQB2wmqz0oTSA3wCql9UAfADVCdTD6OJ7AMaA6qVUHCcAAwCbPOyPChESgAGg+cFB3cQCMAJsPjpXawDHATfRuHjZYo5HeAAAAABJRU5ErkJggg==");
+    mask-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAAuElEQVR42u3ZOw7AIAwDUO5/6XZqByRkO0TFlQwbJfCGiF/H9ZQx1a72Vb+3ewDHAewAq0hUQHwABgAUUJ2IjAvAELCbjChuag/AAMBOwCajnIQBHAcUDxJ00oL4AIwA3QXB4UoYwGcAtGmoC5KYtAEYAboOIuJmFoARQB2wmqz0oTSA3wCql9UAfADVCdTD6OJ7AMaA6qVUHCcAAwCbPOyPChESgAGg+cFB3cQCMAJsPjpXawDHATfRuHjZYo5HeAAAAABJRU5ErkJggg==");
+    -webkit-mask-size: 64px 64px; mask-size: 64px 64px;
+    opacity: calc(0.70 * min(clamp(0, (var(--vap-t) - 0.30) / 0.32, 1),
+                             clamp(0, (0.98 - var(--vap-t)) / 0.36, 1)));
+    transform: translate(calc(clamp(0, (var(--vap-t) - 0.30) / 0.70, 1) * -16px),
+                         calc(clamp(0, (var(--vap-t) - 0.30) / 0.70, 1) * -16px));
+  }
+  .vcard h2 { font-size: 16px; font-weight: 600; margin-bottom: 3px; }
+  .vcard .sub { font-size: 12.5px; opacity: 0.62; }
+  .vcard .rowline {
+    margin-top: 10px; padding: 8px 12px; border-radius: 13px; font-size: 12.5px;
+    background: rgba(255, 244, 224, 0.08);
+    box-shadow: inset 0 1px 0 rgba(255, 244, 224, 0.10);
+  }
+  /* the perch chip — the E-NOTIF material register: control-tier fill (+12-15 lum
+     over container), UNBROKEN hairline ring, ZERO cast shadow, 20px optic over a
+     44px invisible hit pad, seated on the corner-curve APEX (stamped from
+     ASM.handoff.seat at init — derived geometry, no magic numbers). */
+  .perch {
+    position: absolute; top: var(--perch-seat); left: var(--perch-seat);
+    width: 44px; height: 44px; padding: 0; border: 0; background: none; cursor: pointer;
+    transform: translate(-50%, -50%);
+    display: grid; place-items: center; z-index: 2;
+  }
+  .perch .pchip {
+    width: 20px; height: 20px; border-radius: 50%;
+    background: rgba(80, 70, 58, 0.82); /* control tier: +13 lum over the card container */
+    box-shadow: inset 0 0 0 1px rgba(255, 244, 224, calc(0.16 + 0.55 * var(--vap-charge)));
+    transform: scale(calc(1 + 0.10 * var(--vap-charge))); /* under the phi^(1/4) cap */
+    display: grid; place-items: center;
+    color: rgba(255, 244, 224, calc(0.70 + 0.30 * var(--vap-charge)));
+  }
+  .perch .pchip svg { width: 8px; height: 8px; display: block; }
+  .perch:focus-visible .pchip { outline: 2px solid rgba(255, 226, 178, 0.95); outline-offset: 2px; }
+  .card-zone.committing .perch { opacity: 0; transition: opacity calc(var(--vap-chip-ms) * 1ms) ease-out; } /* the chip dies FIRST */
+
+  /* ============ ORGAN A + C — the black dock (ONE body, three postures) ============ */
+  /* §3.5-C ghost-through floor: warm charcoal rgb(16 14 12) at 0.70; LOW blur
+     (content ghosts through, law 13); night rim <=0.18; bevel <=0.18. Both axes
+     ride the ONE scalar --asm-g; the drawer grows on --asm-grow. NO SCRIM. */
+  .blackdock {
+    position: absolute; left: 50%; top: 300px; transform: translateX(-50%);
+    width: calc(200px + var(--asm-g) * 130px);
+    height: calc(46px + var(--asm-g) * 274px + var(--asm-grow) * 150px);
+    border-radius: 30px; z-index: 2; overflow: hidden; touch-action: none;
+    background: rgba(16, 14, 12, 0.7);
+    -webkit-backdrop-filter: blur(8px) saturate(1.15);
+    backdrop-filter: blur(8px) saturate(1.15);
+    box-shadow: inset 0 0 0 1px rgba(255, 244, 224, 0.14), inset 0 1px 0 rgba(255, 244, 224, 0.16);
+  }
+  .dock-inner { position: absolute; inset: 0; }
+  .pill-face {
+    position: absolute; top: 0; left: 0; right: 0; height: 46px;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+  }
+  .summon {
+    padding: 6px 16px; border: 0; border-radius: 12px; cursor: pointer; font: inherit;
+    font-size: 12.5px; font-weight: 600; color: rgba(255, 244, 224, 0.92);
+    background: rgba(255, 244, 224, 0.10);
+    box-shadow: inset 0 1px 0 rgba(255, 244, 224, 0.14);
+    transform: scale(calc(1 - 0.04 * var(--asm-press)));
+  }
+  .pill-hint { font-size: 11px; color: rgba(255, 244, 224, 0.45); }
+  /* THE SEA — the standing aurora field in the dock's lower belly. 3 crest
+     layers (card 5: <=3 canvas-free gradient layers), phase PINNED (background
+     geometry never moves; only scaleY + opacity + the field's slow lean).
+     Hues are OUR crest tokens — the same tokens the islands inherit. */
+  .sea {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 150px;
+    transform: translateX(calc(var(--asm-lean) * 1px));
+    opacity: calc(var(--asm-g) * var(--asm-session));
+    pointer-events: none;
+  }
+  .crest { position: absolute; left: -30px; right: -30px; bottom: 0; transform-origin: 50% 100%; }
+  .crest-1 {
+    height: 120px; transform: scaleY(var(--crest-s-1));
+    background:
+      radial-gradient(150px 110px at 32% 100%, hsl(var(--crest-h-1) 85% 72% / 0.55), transparent 72%),
+      radial-gradient(120px 90px at 68% 100%, hsl(var(--crest-h-1) 90% 78% / 0.40), transparent 70%);
+  }
+  .crest-2 {
+    height: 104px; transform: scaleY(var(--crest-s-2));
+    background:
+      radial-gradient(170px 96px at 56% 100%, hsl(var(--crest-h-2) 74% 66% / 0.42), transparent 74%),
+      radial-gradient(110px 80px at 20% 100%, hsl(var(--crest-h-2) 80% 70% / 0.30), transparent 70%);
+  }
+  .crest-3 {
+    height: 88px; transform: scaleY(var(--crest-s-3));
+    background:
+      radial-gradient(190px 84px at 44% 100%, hsl(var(--crest-h-3) 44% 66% / 0.34), transparent 76%),
+      radial-gradient(120px 70px at 82% 100%, hsl(var(--crest-h-3) 50% 70% / 0.24), transparent 72%);
+  }
+  /* THE DARK MASS — the surface's OWN mass sinks the sea's upper half. This is
+     the occlusion grammar: focus by dark mass + rim, never a scrim on the world
+     (MARKS-D mark 3: background dim +/-2% max — nothing here touches the world). */
+  .darkmass {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 150px; pointer-events: none;
+    background: linear-gradient(180deg,
+      rgb(16 14 12 / 0.85) 0%,
+      rgb(16 14 12 / 0.55) 30%,
+      transparent 55%);
+    opacity: calc(var(--asm-g) * var(--asm-session));
+  }
+  /* THE MENISCUS — the breathing floor. Autonomous +/-18% about its mean on the
+     law-11 7s asymmetric envelope; NEVER driven by the level (the mark-2
+     negative control). The flare channel is a separate one-shot class. */
+  .meniscus {
+    position: absolute; left: 10px; right: 10px; bottom: 4px; height: 2px; border-radius: 1px;
+    background: linear-gradient(90deg, transparent,
+      hsl(42 85% 88% / 0.42) 18%, hsl(42 85% 88% / 0.42) 82%, transparent);
+    opacity: calc(0.6 + 0.4 * var(--asm-g));
+    animation: meniscus-breath 7s cubic-bezier(0.3, 0, 0.2, 1) infinite;
+  }
+  @keyframes meniscus-breath {
+    0% { filter: brightness(0.82); }
+    10% { filter: brightness(1.18); } /* fast rise, slow decay — +/-18% about 1.0 */
+    55% { filter: brightness(0.90); }
+    100% { filter: brightness(0.82); }
+  }
+  .blackdock.rim-plateau .meniscus { animation: none; opacity: 0.55; transition: opacity calc(var(--lad-plateau-ms) * 1ms) ease-out; }
+  .blackdock.rim-flare .meniscus {
+    animation: none; opacity: 1; /* 2.1x the plateau read — light celebrates the data */
+    transition: opacity calc(var(--lad-flare-ms) * 1ms) ease-out;
+  }
+  @media (prefers-reduced-motion: reduce) { .meniscus { animation: none; } }
+  /* the deploy channel ladder — text born BLURRED at the geometry peak,
+     condensing ~190ms (the ONE filter keyframe on this page; declared, cost
+     rides QUEUED-PAINT). Data upgrades IN PLACE (stacked spans, zero reflow). */
+  .dock-text {
+    position: absolute; top: 58px; left: 22px; right: 22px;
+    color: rgba(255, 244, 224, 0.90); opacity: 0;
+  }
+  .dock-text h3 { font-size: 15px; font-weight: 600; }
+  .dock-text .ans { font-size: 12.5px; color: rgba(255, 244, 224, 0.60); margin-top: 3px; }
+  .blackdock.text-in .dock-text {
+    opacity: 1;
+    animation: text-condense calc(var(--lad-text-ms) * 1ms) cubic-bezier(0.2, 0.6, 0.3, 1) both;
+  }
+  @keyframes text-condense {
+    from { filter: blur(7px); opacity: 0.25; }
+    to { filter: blur(0px); opacity: 1; }
+  }
+  .datum { position: relative; display: inline-block; margin-top: 6px; font-size: 12px; }
+  .datum .skel, .datum .real {
+    display: block; padding: 4px 10px; border-radius: 10px;
+    background: rgba(255, 244, 224, 0.08);
+  }
+  .datum .real { position: absolute; inset: 0; opacity: 0; color: hsl(42 85% 88%); }
+  .blackdock.data-in .datum .real { opacity: 1; transition: opacity calc(var(--lad-data-ms) * 1ms) ease-out; }
+  .blackdock.data-in .datum .skel { opacity: 0; transition: opacity calc(var(--lad-data-ms) * 1ms) ease-out; }
+  /* PRM: the sea parks; the honest stepped chip relays the level */
+  .level-chip { display: none; position: absolute; top: 100px; left: 22px; right: 22px; height: 8px; border-radius: 4px; background: rgba(255,244,224,0.10); overflow: hidden; }
+  .level-chip .fill { height: 100%; width: 0%; background: hsl(42 85% 88% / 0.85); border-radius: 4px; }
+  @media (prefers-reduced-motion: reduce) {
+    .sea, .darkmass { display: none; }
+    .level-chip { display: block; }
+  }
+  .dock-actions { position: absolute; top: 240px; left: 22px; right: 22px; display: none; gap: 8px; }
+  .blackdock[data-posture="session"] .dock-actions { display: flex; }
+  .dock-btn {
+    flex: 1; padding: 8px 0; border: 0; border-radius: 13px; cursor: pointer; font: inherit;
+    font-size: 12px; font-weight: 600; color: rgba(255, 244, 224, 0.88);
+    background: rgba(255, 244, 224, 0.09);
+    box-shadow: inset 0 1px 0 rgba(255, 244, 224, 0.12);
+  }
+  /* ORGAN C — the drawer posture. The SAME body (data-posture flips; no second
+     surface is born — the drawer's parent is the dock, law of the fission).
+     Islands are the sea's crests condensed: hue conserved by token identity. */
+  .drawer-head { position: absolute; top: 12px; left: 22px; right: 22px; opacity: 0; color: rgba(255,244,224,0.9); font-size: 13px; font-weight: 600; }
+  .blackdock[data-posture="drawer"] .drawer-head { opacity: calc(var(--sec-p-1)); }
+  .island {
+    position: absolute; left: 22px; right: 22px; height: 52px; border-radius: 16px;
+    padding: 9px 12px; font-size: 12px; color: rgba(255, 244, 224, 0.88);
+    background: rgba(255, 244, 224, 0.07);
+    box-shadow: inset 0 0 0 1px rgba(255, 244, 224, 0.10);
+    opacity: 0; transform: translateY(10px) scale(0.98); transform-origin: 50% 0;
+  }
+  .island .glow {
+    display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px;
+    vertical-align: -1px;
+  }
+  .island-1 { top: 44px; } .island-2 { top: 104px; } .island-3 { top: 164px; }
+  .island-1 .glow { background: hsl(var(--crest-h-1) 85% 72%); }
+  .island-2 .glow { background: hsl(var(--crest-h-2) 74% 66%); }
+  .island-3 .glow { background: hsl(var(--crest-h-3) 44% 66%); }
+  .blackdock[data-posture="drawer"] .island-1 { opacity: var(--sec-p-2); transform: translateY(calc(10px - 10px * var(--sec-p-2))) scale(calc(0.98 + 0.02 * var(--sec-p-2))); }
+  .blackdock[data-posture="drawer"] .island-2 { opacity: var(--sec-p-3); transform: translateY(calc(10px - 10px * var(--sec-p-3))) scale(calc(0.98 + 0.02 * var(--sec-p-3))); }
+  .blackdock[data-posture="drawer"] .island-3 { opacity: var(--sec-p-4); transform: translateY(calc(10px - 10px * var(--sec-p-4))) scale(calc(0.98 + 0.02 * var(--sec-p-4))); }
+  .drawer-foot { position: absolute; left: 22px; right: 22px; top: 224px; font-size: 11px; color: rgba(255,244,224,0.45); opacity: 0; }
+  .blackdock[data-posture="drawer"] .drawer-foot { opacity: var(--sec-p-5); }
+
+  .hud {
+    position: absolute; left: 12px; bottom: 44px; z-index: 4; font-size: 10.5px;
+    color: rgba(255, 244, 224, 0.5); font-family: ui-monospace, monospace;
+  }
+  .reset-btn {
+    position: absolute; right: 16px; bottom: 14px; z-index: 3;
+    padding: 8px 14px; border: 0; border-radius: 14px; cursor: pointer; font: inherit;
+    font-size: 12px; color: rgba(255, 244, 224, 0.85);
+    background: rgba(255, 244, 224, 0.10);
+    box-shadow: inset 0 0 0 1px rgba(255, 244, 224, 0.16);
+  }
+  .note { max-width: 440px; margin-top: 14px; font-size: 12px; color: rgba(66, 52, 38, 0.6); }
+</style>
+</head>
+<body>
+<main>
+  <div class="phone" id="phone">
+    <div class="world" id="world"></div>
+    <button class="world-tap" id="worldTap">world tap · <span id="tapCount">0</span></button>
+
+    <!-- ORGAN B: perch -> vapor across the vapor-handoff seam -->
+    <div class="card-zone" id="cardZone">
+      <div class="card-medium" id="cardMedium"></div>
+      <div class="card-root" id="cardRoot" data-parked="1">
+        <div class="vcard v-body" id="vbody">
+          <div class="v-text">
+            <h2>Shared album invite</h2>
+            <div class="sub">Drag toward the corner to vaporize — catch it mid-dissolve.</div>
+            <div class="rowline">Coast trip — 44 photos</div>
+          </div>
+        </div>
+        <div class="vcard v-ghost v-ghost-c" aria-hidden="true">
+          <h2>Shared album invite</h2>
+          <div class="sub">Drag toward the corner to vaporize — catch it mid-dissolve.</div>
+          <div class="rowline">Coast trip — 44 photos</div>
+        </div>
+        <div class="vcard v-ghost v-ghost-m" aria-hidden="true">
+          <h2>Shared album invite</h2>
+          <div class="sub">Drag toward the corner to vaporize — catch it mid-dissolve.</div>
+          <div class="rowline">Coast trip — 44 photos</div>
+        </div>
+        <button class="perch" id="perch" aria-label="Dismiss the shared album invite">
+          <span class="pchip" aria-hidden="true">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M2 2 L10 10 M10 2 L2 10" /></svg>
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ORGANS A + C: one body — pill, session field, fission drawer -->
+    <div class="blackdock" id="blackdock" data-posture="pill">
+      <div class="dock-inner">
+        <div class="pill-face" id="pillFace">
+          <button class="summon" id="summonBtn">Summon</button>
+          <span class="pill-hint">or drag me down</span>
+        </div>
+        <div class="dock-text" id="dockText">
+          <h3>Here's what I found</h3>
+          <div class="ans">Synthetic prosody drives the sea — a demo signal, never a fake mic.</div>
+          <span class="datum"><span class="skel">fetching…</span><span class="real">3 results · 42 ms</span></span>
+        </div>
+        <div class="level-chip" aria-hidden="true"><div class="fill" id="levelChipFill"></div></div>
+        <div class="sea" id="sea" aria-hidden="true">
+          <div class="crest crest-3"></div>
+          <div class="crest crest-2"></div>
+          <div class="crest crest-1"></div>
+        </div>
+        <div class="darkmass" aria-hidden="true"></div>
+        <div class="dock-actions">
+          <button class="dock-btn" id="commitBtn">Commit (flare · pin · cut)</button>
+        </div>
+        <div class="drawer-head">Results</div>
+        <div class="island island-1"><span class="glow" aria-hidden="true"></span>Coast trip — shared album</div>
+        <div class="island island-2"><span class="glow" aria-hidden="true"></span>Golden hour — 12 photos</div>
+        <div class="island island-3"><span class="glow" aria-hidden="true"></span>Dusk timelapse — 0:42</div>
+        <div class="drawer-foot">islands carry their crest — hue conserved from the sea</div>
+        <div class="meniscus" aria-hidden="true"></div>
+      </div>
+    </div>
+    <!-- /blackdock -->
+
+    <button class="reset-btn" id="resetBtn">Reset</button>
+    <div class="hud" id="hud" role="status">rest · rAF parked</div>
+  </div>
+  <p class="note">PROTO-ASSEMBLY: three organs composed. The perch commit fires the
+  <code>vapor-handoff</code> seam into the 3-layer dissolve (one medium, one writer); the black
+  dock deploys fired (panel register) or scrubbed (dock register), the aurora sea lives under
+  its own dark mass — no scrim, the world stays tappable; commit condenses the session into the
+  fission drawer, islands carrying their crest hues.</p>
+</main>
+
+<script>
+/*ASM-PHYSICS-BEGIN*/
+// The PROTO-ASSEMBLY physics — the SAME object drives paint and the node battery.
+// Pure math, no DOM globals. verified-model: claude-fable-5.
+const ASM = {
+  // ---- the minted spring registers (CHARTER §1: R-1 dock 0.35/z0.82 held;
+  // R-2 panel minted {0.40, 0.71}; press stands). f_d = (1/response)*sqrt(1-z^2).
+  presets: {
+    dock:  { response: 0.35, zeta: 0.82 }, // gesture arrivals — overshoot velocity-BOUGHT
+    panel: { response: 0.40, zeta: 0.71 }, // fired presentations — intrinsic 4-5% overshoot
+    press: { response: 0.20, zeta: 0.80 }, // the sub-200ms tap answer
+  },
+  omega(p) { return (2 * Math.PI) / p.response; },
+  fd(p) { return (1 / p.response) * Math.sqrt(1 - p.zeta * p.zeta); },
+  makeSpring(p, x0 = 0, v0 = 0, zetaOverride = null) {
+    const w = this.omega(p), z = zetaOverride === null ? p.zeta : zetaOverride;
+    let x = x0, v = v0;
+    return {
+      step(target, dt) { const a = -2 * z * w * v - w * w * (x - target); v += a * dt; x += v * dt; return x; },
+      get x() { return x; }, get v() { return v; },
+      settled(target) { return Math.abs(x - target) < 0.002 && Math.abs(v) < 0.02; },
+    };
+  },
+  // ---- the engage-envelope register rows used on this page (§3.5-B — no
+  // envelope constant exists outside the table; a new role earns a ROW).
+  envelope: {
+    pressDrain:  { tauUp: 0.055, tauDown: 0.120 }, // the perch charge
+    signalDecay: { tauUp: 0.040, tauDown: 0.220 }, // the sea level
+  },
+  envStep(role, e, target, dt) {
+    const r = this.envelope[role];
+    const tau = target > e ? r.tauUp : r.tauDown;
+    const next = e + (target - e) * (1 - Math.exp(-dt / tau));
+    return Math.abs(next - target) < 1e-3 ? target : next;
+  },
+
+  // ---- ORGAN A: the black dock + the standing aurora sea -------------------
+  dock: {
+    fill: { r: 16, g: 14, b: 12, a: 0.70 }, // §3.5-C ghost-through floor; warm R>G>B
+    blurPx: 8,                              // law 13 LOW band [6,10]
+    rimAlpha: 0.14, bevelAlpha: 0.16,       // night arm <=0.18 both
+    breath: { amp: 0.18, periodS: 7 },      // MARKS-D ±18% at rest; law-11 arm
+    pill: { w: 200, h: 46 }, grown: { w: 330, h: 320 },
+  },
+  sea: {
+    // three crest layers, OUR palettes; hue tokens shared with the islands.
+    // omegas detuned lead->lag (codex law 5 — the lead crest answers first,
+    // the tail lags ~100ms class); zeta 0.88 — no crest wobbles.
+    LAYERS: [
+      { hue: 46,  gain: 1.00, omega: 30,  zeta: 0.88 }, // cream-gold — the lead crest
+      { hue: 14,  gain: 0.80, omega: 16,  zeta: 0.88 }, // ember-rose
+      { hue: 286, gain: 0.62, omega: 9.5, zeta: 0.88 }, // violet-dusk — the lagging tail
+    ],
+    FILAMENT: 0.22,  // the lull floor while a session lives — NEVER zero (MARKS-D lull ~0.29 of peak)
+    PEAK: 0.85,      // session ceiling; only the commit flare reaches 1.0
+    lean: { ampFrac: 0.075, hz: 1.45 }, // centroid sway — the sea leans, it never darts
+    prosodyFreqs: [0.62, 1.31],          // synthetic prosody arcs, inside the 0.5-1.5Hz band
+    prosody(t) { return 0.5 + 0.28 * Math.sin(2 * Math.PI * 0.62 * t) + 0.16 * Math.sin(2 * Math.PI * 1.31 * t + 1.1); },
+    levelAt(t) { return Math.max(this.FILAMENT, this.PEAK * this.prosody(t)); },
+    leanAt(t, fieldW) { return this.lean.ampFrac * fieldW * Math.sin(2 * Math.PI * this.lean.hz * t); },
+    commit: { surgeMs: 60, pinMs: 150, cutMs: 25, flare: 1.0 }, // flare -> pin -> HARD CUT
+  },
+  // the dark-mass occlusion profile: u = 0 at the sea's top, 1 at the bottom
+  // edge. The sea's upper half sinks under the surface's OWN mass; the world
+  // is never dimmed (scrimless by construction — the paint claim is queued).
+  occlusion: {
+    MASS_TOP: 0.85, WATERLINE: 0.55, POW: 1.2,
+    at(u) { const c = Math.max(0, 1 - u / this.WATERLINE); return this.MASS_TOP * Math.pow(c, this.POW); },
+  },
+  // the fired-deploy channel ladder (MARKS-D mark 3, onsets from launch).
+  // Text is born blurred AT the geometry peak; the rim flare rides the data.
+  ladder: {
+    text: { onsetMs: 284, durMs: 190 },
+    data: { onsetMs: 820, durMs: 200 },
+    rimPlateau: { onsetMs: 300, durMs: 220 },
+    rimFlare: { onsetMs: 830, peakMs: 1000, gain: 2.1 },
+    geomPeakMs(preset, om) { const wd = om(preset) * Math.sqrt(1 - preset.zeta * preset.zeta); return (Math.PI / wd) * 1000; },
+  },
+
+  // ---- ORGAN B: the perch -> vapor handoff (MARKS-E §4 verbatim) -----------
+  handoff: {
+    R: 28,               // the card's corner radius (card/sheet band)
+    N_SQUIRCLE: 4, N_ROUND: 2, // corner exponents: --corner-k-squircle(n=4) / honest round(n=2)
+    CHIP: { visual: 20, hit: 44, lumDelta: 13, ringAlpha: 0.16 }, // E-NOTIF register
+    // the seat law (R-9): the corner-curve APEX, offset R*(1 - 2^(-1/n)) from
+    // the box corner along each axis — derived, shape-aware, no magic numbers.
+    seat(R, n) { return R * (1 - Math.pow(2, -1 / n)); },
+    apexOnCurveResidual(R, n) { const a = R * Math.pow(2, -1 / n); return Math.abs(2 * Math.pow(a / R, n) - 1); },
+    // fraction of the chip disc OUTSIDE the card, chip centered on the apex —
+    // deterministic grid integration against the superellipse corner.
+    fractionOutside(R, n, r) {
+      const s = this.seat(R, n);
+      const G = 220; let out = 0, tot = 0;
+      for (let iy = 0; iy < G; iy++) for (let ix = 0; ix < G; ix++) {
+        const x = s + ((ix + 0.5) / G - 0.5) * 2 * r, y = s + ((iy + 0.5) / G - 0.5) * 2 * r;
+        const dx = x - s, dy = y - s;
+        if (dx * dx + dy * dy > r * r) continue;
+        tot++;
+        const inside = x >= 0 && y >= 0 &&
+          (x >= R || y >= R || Math.pow((R - x) / R, n) + Math.pow((R - y) / R, n) <= 1);
+        if (!inside) out++;
+      }
+      return out / tot;
+    },
+    // the close clocks (E-NOTIF §4, the m1+M2 cures made canonical):
+    // text <=50ms FIRST -> body erosion 170-250ms -> POSITIVE 80-140ms
+    // empty-medium beat -> medium 300-400ms decelerating.
+    close: { textMs: 45, bodyMs: 210, beatMs: 110, mediumMs: 350 },
+    bodyStartMs() { return this.close.textMs; },
+    bodyEndMs() { return this.close.textMs + this.close.bodyMs; },
+    mediumDelayMs() { return this.bodyEndMs() + this.close.beatMs; },
+    beatSignedMs() { return this.mediumDelayMs() - this.bodyEndMs(); }, // sign-verified
+    // the seeded variants: a hot seed shortens the BODY window; the beat is
+    // INVARIANT — the medium delay is re-stamped per commit from these, so the
+    // held beat never collapses into an overlap (the M2 defect class).
+    bodyEndForMs(v) { return this.close.textMs + this.firedT(v); },
+    mediumDelayForMs(v) { return this.bodyEndForMs(v) + this.close.beatMs; },
+    // commit inherits gesture velocity as an erosion-RATE seed, clamped; there
+    // is no landing, so nothing overshoots (overshoot is velocity-bought only
+    // where an arrival exists — C2).
+    firedT(v) { const t = this.close.bodyMs / (1 + 0.2 * Math.min(1, Math.max(0, v))); return Math.min(250, Math.max(175, t)); },
+    // drift-by-transform toward the perch corner (top-left): unit direction.
+    drift: { magPx: 16, ux: -Math.SQRT1_2, uy: -Math.SQRT1_2, chipOutMs: 40 },
+    // scrub mapping (catchable pre-commit): projection of the drag onto the
+    // perch direction over TRAVEL px.
+    TRAVEL: 240,
+    scrubD(d0, dx, dy) { return Math.min(1, Math.max(0, d0 + (-dx - dy) / this.TRAVEL)); },
+    // the erosion bands — the v-vapor ladder grammar, ONE recipe (coarse leads,
+    // mid follows, fine granulates the final thinning).
+    bands: {
+      body: { a: 0.0, b: 0.55 },
+      ghostC: { a: 0.08, p: 0.38, b: 0.80, peak: 0.85 },
+      ghostM: { a: 0.30, p: 0.62, b: 0.98, peak: 0.70 },
+    },
+    ramp(t, a, b) { return Math.min(1, Math.max(0, (t - a) / (b - a))); },
+    bodyO(d) { return 1 - this.ramp(d, this.bands.body.a, this.bands.body.b); },
+    triO(d, g) { return g.peak * Math.min(this.ramp(d, g.a, g.p), 1 - this.ramp(d, g.p, g.b)); },
+    ghostCO(d) { return this.triO(d, this.bands.ghostC); },
+    ghostMO(d) { return this.triO(d, this.bands.ghostM); },
+    // fired erosion clock: d0 -> 1 over firedT(v), decelerating (ease-out cubic)
+    firedD(d0, v, tMs) { const T = this.firedT(v); const u = Math.min(1, Math.max(0, tMs / T)); const e = 1 - Math.pow(1 - u, 3); return d0 + (1 - d0) * e; },
+  },
+  // ---- the medium ONE-WRITER contract (the F5 grammar, ratified ARBITRATION
+  // R3). A region's medium has exactly one writer; the claim is durable and
+  // visible (data-writer); a second claimant THROWS. Every medium write on
+  // this page routes through the one returned writer.
+  claimMediumWriter(el, id) {
+    const held = el.dataset.writer;
+    if (held && held !== id) {
+      throw new Error(`medium one-writer violation: "${held}" holds this medium; "${id}" may not write`);
+    }
+    el.dataset.writer = id;
+    return {
+      id,
+      relax(on) { if (on) el.classList.add("relax"); else el.classList.remove("relax"); },
+    };
+  },
+
+  // ---- ORGAN C: the fission drawer (R-CONDENSE + the conservation law) -----
+  drawer: {
+    // THE CONDENSE BELL: zero-seed near-critical at the press-row response.
+    // [P3-AGG 2026-07-19, A2] a ZERO-SEED spring's velocity D*w^2*t*e^(-wt) IS
+    // a bell, and w from the press row gives the measured ~120ms window; note
+    // a MODESTLY seeded spring also bells (dv/dt(0) = w^2*D - 2*w*v0 > 0 for
+    // v0 < wD/2) — this build is A valid model, not the only one; the
+    // seeded-family fit is pass-4 work. zeta 0.97 — no-wobble arrival (>=0.95).
+    CONDENSE: { responseFrom: "press", zeta: 0.97 },
+    HEAD_G: 0.42, // the drawer head's share of the session growth scalar
+    GROW: { stepMs: 80, sections: 5, zeta: 0.97, travelPx: 150, // ~80ms staggered arrivals; ~450ms total
+      weights: [0.18, 0.24, 0.22, 0.22, 0.14] }, // head + 3 islands + foot — one list, sim AND paint
+    // every fission body has a parent and a carrier (C-MUSIC mark 5). Islands
+    // are BUILT from the sea layers — carrier hue is the crest hue, verbatim.
+    islands(seaLayers) {
+      return seaLayers.map((L, i) => ({ id: `island-${i + 1}`, parent: "blackdock", carrier: `crest-${i + 1}`, carrierHue: L.hue }));
+    },
+  },
+
+  // ---- the session FSM (one conductor; every legal path, nothing else) -----
+  SESSION_EDGES: {
+    rest: ["deploying-fired", "deploying-scrub"],
+    "deploying-fired": ["live", "rest"],
+    "deploying-scrub": ["live", "rest"],
+    live: ["flare", "rest"],
+    flare: ["pinned"],
+    pinned: ["cut"],
+    cut: ["condensing"],
+    condensing: ["growing"],
+    growing: ["drawer"],
+    drawer: ["rest"],
+  },
+  makeSession() {
+    let state = "rest";
+    return {
+      get state() { return state; },
+      to(next) {
+        const legal = (ASM.SESSION_EDGES[state] || []).includes(next);
+        if (!legal) return null;
+        state = next; return state;
+      },
+    };
+  },
+
+  // ---- deterministic sims (the battery's food; no randomness anywhere) -----
+  sims: {
+    springStats(name, v0 = 0, zetaOverride = null) {
+      const p = ASM.presets[name];
+      const s = ASM.makeSpring(p, 0, v0, zetaOverride);
+      const dt = 1 / 2400; let t = 0, peak = -1, tPeak = 0, settleT = null;
+      const hist = [];
+      while (t < 3) {
+        s.step(1, dt); t += dt;
+        hist.push({ t, x: s.x, v: s.v });
+        if (s.x > peak) { peak = s.x; tPeak = t; }
+        if (settleT === null && Math.abs(s.x - 1) < 0.02 && Math.abs(s.v) < 0.1) settleT = t;
+      }
+      return { overshoot: Math.max(0, peak - 1), tPeakMs: tPeak * 1000, settleMs: settleT * 1000, hist };
+    },
+    // the k*v law: seed a crossing velocity AT the target; overshoot = k*v.
+    kvLaw(name, vc) {
+      const p = ASM.presets[name];
+      const s = ASM.makeSpring(p, 1, vc);
+      const dt = 1 / 2400; let t = 0, peak = 1;
+      while (t < 2) { s.step(1, dt); t += dt; if (s.x > peak) peak = s.x; }
+      return (peak - 1) / vc; // seconds — the k constant
+    },
+    seaLag() { // lead crest vs lagging tail: half-rise lag on a level step
+      const L = ASM.sea.LAYERS;
+      const lead = ASM.makeSpring({ response: 2 * Math.PI / L[0].omega, zeta: L[0].zeta });
+      const tail = ASM.makeSpring({ response: 2 * Math.PI / L[2].omega, zeta: L[2].zeta });
+      const dt = 1 / 2400; let t = 0, tLead = null, tTail = null;
+      while (t < 2 && (tLead === null || tTail === null)) {
+        lead.step(1, dt); tail.step(1, dt); t += dt;
+        if (tLead === null && lead.x >= 0.5) tLead = t;
+        if (tTail === null && tail.x >= 0.5) tTail = t;
+      }
+      return { lagMs: (tTail - tLead) * 1000 };
+    },
+    prosodyStats() {
+      let mn = 2, mx = -2, lvMin = 2;
+      for (let t = 0; t < 20; t += 0.004) {
+        const p = ASM.sea.prosody(t); mn = Math.min(mn, p); mx = Math.max(mx, p);
+        lvMin = Math.min(lvMin, ASM.sea.levelAt(t));
+      }
+      return { mn, mx, lvMin };
+    },
+    occlusionShape() {
+      const o = ASM.occlusion; let mono = 1, prev = o.at(0);
+      for (let u = 0.02; u <= 1.0001; u += 0.02) { const v = o.at(u); if (v > prev + 1e-12) mono = 0; prev = v; }
+      return { top: o.at(0), waterline: o.at(o.WATERLINE), mono };
+    },
+    leanStats() {
+      const W = 330; let mx = 0;
+      for (let t = 0; t < 4; t += 0.002) mx = Math.max(mx, Math.abs(ASM.sea.leanAt(t, W)));
+      return { ampFrac: mx / W, hz: ASM.sea.lean.hz };
+    },
+    envelopeStats(role) {
+      const dt = 1 / 2400; let e = 0, t = 0, t90 = null;
+      while (t < 1 && t90 === null) { e = ASM.envStep(role, e, 1, dt); t += dt; if (e >= 0.9) t90 = t; }
+      let t10 = null, td = 0;
+      while (td < 2 && t10 === null) { e = ASM.envStep(role, e, 0, dt); td += dt; if (e <= 0.1) t10 = td; }
+      return { t90Ms: t90 * 1000, t10Ms: t10 * 1000 };
+    },
+    condenseBell() {
+      const p = ASM.presets[ASM.drawer.CONDENSE.responseFrom];
+      const s = ASM.makeSpring(p, 0, 0, ASM.drawer.CONDENSE.zeta);
+      const dt = 1 / 4800; let t = 0, t90 = null, peakV = 0, tPeakV = 0, over = 0, vSum = 0, n = 0;
+      let vPrev = 0, accelPhase = 0;
+      while (t < 1) {
+        s.step(1, dt); t += dt;
+        const v = s.v;
+        if (v > peakV) { peakV = v; tPeakV = t; }
+        if (t90 === null && s.x >= 0.9) t90 = t;
+        if (t90 === null) { vSum += v; n++; if (v > vPrev) accelPhase = t; vPrev = v; }
+        over = Math.max(over, s.x - 1);
+      }
+      return {
+        t90Ms: t90 * 1000, overshoot: over,
+        peakOverMean: peakV / (vSum / n),
+        tPeakFrac: tPeakV / t90,
+        accelFirst: accelPhase > 0.005 ? 1 : 0, // velocity RISES before it falls
+      };
+    },
+    growSchedule() {
+      const g = ASM.drawer.GROW;
+      const p = ASM.presets.press;
+      // each section: onset i*stepMs, arrival spring zero-seed near-critical
+      const dt = 1 / 2400; const T = 1.2; const steps = Math.floor(T / dt);
+      let lastT90 = 0, monotone = 1, prevH = 0;
+      const springs = Array.from({ length: g.sections }, () => ASM.makeSpring(p, 0, 0, g.zeta));
+      const t90s = new Array(g.sections).fill(null);
+      for (let k = 0; k < steps; k++) {
+        const t = k * dt; let h = 0;
+        for (let i = 0; i < g.sections; i++) {
+          const on = t >= (i * g.stepMs) / 1000;
+          if (on) springs[i].step(1, dt);
+          if (on && t90s[i] === null && springs[i].x >= 0.9) t90s[i] = t - (i * g.stepMs) / 1000;
+          h += g.weights[i] * Math.max(0, springs[i].x); // the SAME weights paint uses
+        }
+        if (h < prevH - 0.05) monotone = 0; // drawers GROW — never shrink mid-population
+        prevH = h;
+      }
+      lastT90 = (g.sections - 1) * g.stepMs + t90s[g.sections - 1] * 1000;
+      return { sectionT90Ms: t90s[0] * 1000, totalMs: lastT90, monotone, stepMs: g.stepMs };
+    },
+    handoffOrder() {
+      const h = ASM.handoff;
+      return {
+        textMs: h.close.textMs,
+        bodyStartMs: h.bodyStartMs(),
+        bodyEndMs: h.bodyEndMs(),
+        beatSignedMs: h.beatSignedMs(),
+        mediumDelayMs: h.mediumDelayMs(),
+        mediumDoneMs: h.mediumDelayMs() + h.close.mediumMs,
+        textFirst: h.close.textMs <= 50 && h.bodyStartMs() >= h.close.textMs ? 1 : 0,
+      };
+    },
+    erosionShape() {
+      const h = ASM.handoff; let maxStep = 0, prev = null;
+      for (let d = 0; d <= 1.0001; d += 0.002) {
+        const v = [h.bodyO(d), h.ghostCO(d), h.ghostMO(d)];
+        if (prev) maxStep = Math.max(maxStep, ...v.map((x, i) => Math.abs(x - prev[i])));
+        prev = v;
+      }
+      return {
+        maxStep,
+        orderOK: (h.bands.body.a + h.bands.body.b) / 2 < h.bands.ghostC.p && h.bands.ghostC.p < h.bands.ghostM.p ? 1 : 0,
+        endsClean: h.bodyO(1) === 0 && h.ghostCO(1) === 0 && h.ghostMO(1) <= 0.001 ? 1 : 0,
+        restClean: h.bodyO(0) === 1 && h.ghostCO(0) === 0 && h.ghostMO(0) === 0 ? 1 : 0,
+      };
+    },
+    firedMonotone() {
+      const h = ASM.handoff; let mono = 1, prev = -1;
+      for (let t = 0; t <= 260; t += 1) { const d = h.firedD(0.2, 0.8, t); if (d < prev - 1e-12) mono = 0; prev = d; }
+      return { mono, final: h.firedD(0.2, 0.8, 500) };
+    },
+    catchSeedLaw() { // pointerdown seeds d0 = d; first zero-travel scrub reproduces it
+      const h = ASM.handoff;
+      const dCaught = 0.37;
+      const firstScrub = h.scrubD(dCaught, 0, 0);
+      return { seedErr: Math.abs(firstScrub - dCaught) };
+    },
+    mediumContract() {
+      const stub = () => ({ dataset: {}, classes: new Set(), get classList() { const s = this.classes; return { add: (c) => s.add(c), remove: (c) => s.delete(c) }; } });
+      const el = stub();
+      const w = ASM.claimMediumWriter(el, "asm-conductor");
+      let threw = 0;
+      try { ASM.claimMediumWriter(el, "rogue"); } catch { threw = 1; }
+      let sameOk = 0;
+      try { ASM.claimMediumWriter(el, "asm-conductor"); sameOk = 1; } catch { sameOk = 0; }
+      w.relax(true);
+      const routed = el.classes.has("relax") ? 1 : 0;
+      w.relax(false);
+      const unrouted = el.classes.has("relax") ? 0 : 1;
+      return { rogueThrows: threw, sameIdOk: sameOk, routed, unrouted, holder: el.dataset.writer === "asm-conductor" ? 1 : 0 };
+    },
+    fsmTruth() {
+      const path = ["deploying-fired", "live", "flare", "pinned", "cut", "condensing", "growing", "drawer", "rest"];
+      const s = ASM.makeSession();
+      let legalAll = 1;
+      for (const st of path) if (s.to(st) === null) legalAll = 0;
+      const s2 = ASM.makeSession();
+      const illegal = [
+        s2.to("flare"),                 // rest -> flare: no session to flare
+        (() => { const q = ASM.makeSession(); q.to("deploying-fired"); q.to("live"); return q.to("cut"); })(), // live -> cut: the pin is mandatory
+        (() => { const q = ASM.makeSession(); q.to("deploying-fired"); q.to("live"); q.to("flare"); return q.to("rest"); })(), // flare is committed — no abort
+      ];
+      return { legalAll, illegalAllNull: illegal.every((r) => r === null) ? 1 : 0 };
+    },
+    islandConservation() {
+      const isl = ASM.drawer.islands(ASM.sea.LAYERS);
+      return {
+        count: isl.length,
+        allParented: isl.every((i) => i.parent === "blackdock" && i.carrier) ? 1 : 0,
+        huesConserved: isl.every((i, k) => i.carrierHue === ASM.sea.LAYERS[k].hue) ? 1 : 0,
+      };
+    },
+  },
+};
+/*ASM-PHYSICS-END*/
+
+// ---------- page wiring (one conductor; event-scoped rAF; scalars on component roots) ----------
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const phone = $("phone"), dock = $("blackdock"), cardZone = $("cardZone");
+  const cardRoot = $("cardRoot"), cardMediumEl = $("cardMedium"), perch = $("perch");
+  const hud = $("hud");
+  const HUD = !/[?&]hud=0/.test(location.search); // instrumentation-off for the browser arm
+  const prm = matchMedia("(prefers-reduced-motion: reduce)");
+  const session = ASM.makeSession();
+  let gen = 0; // generation guard — interrupt-safe timers (the m8 lesson)
+
+  // THE ONE MEDIUM WRITER — claimed once by the conductor; the perch commit and
+  // the vapor exit both route through it. No second claimant exists on this page.
+  const mediumWriter = ASM.claimMediumWriter(cardMediumEl, "asm-conductor");
+
+  // every clock is stamped FROM the physics — no hand-mirrored literals in CSS
+  function stampClocks() {
+    const h = ASM.handoff;
+    cardZone.style.setProperty("--vap-text-ms", String(h.close.textMs));
+    cardZone.style.setProperty("--vap-medium-ms", String(h.close.mediumMs));
+    cardZone.style.setProperty("--vap-medium-delay-ms", String(h.mediumDelayForMs(0)));
+    cardZone.style.setProperty("--perch-seat", `${(CSS && CSS.supports && CSS.supports("corner-shape", "squircle")
+      ? h.seat(h.R, h.N_SQUIRCLE) : h.seat(h.R, h.N_ROUND)).toFixed(2)}px`);
+    cardZone.style.setProperty("--vap-chip-ms", String(h.drift.chipOutMs));
+    dock.style.setProperty("--lad-text-ms", String(ASM.ladder.text.durMs));
+    dock.style.setProperty("--lad-data-ms", String(ASM.ladder.data.durMs));
+    dock.style.setProperty("--lad-plateau-ms", String(ASM.ladder.rimPlateau.durMs));
+    dock.style.setProperty("--lad-flare-ms", String(ASM.ladder.rimFlare.peakMs - ASM.ladder.rimFlare.onsetMs));
+  }
+  stampClocks();
+
+  // ---------- ORGAN A/C conductor state ----------
+  const levelChipFill = $("levelChipFill");
+  const G_TRAVEL = ASM.dock.grown.h - ASM.dock.pill.h; // 274 — the scrub's px mapping
+  let raf = 0, last = 0, tSession = 0;
+  let g = 0, gSpring = null, gTarget = 1;
+  let level = 0, flareHold = 0, cutAt = 0, phase = "rest";
+  let pressSpring = null;
+  const crests = ASM.sea.LAYERS.map((L) => ASM.makeSpring({ response: 2 * Math.PI / L.omega, zeta: L.zeta }));
+  let condense = null, growSprings = null, growT = 0;
+  let dragging = false, dragY0 = 0, dragG0 = 0, samples = [];
+
+  function setVar(el, k, v) { el.style.setProperty(k, v); }
+  function writeG(v) { g = Math.max(0, Math.min(1.12, v)); setVar(dock, "--asm-g", g.toFixed(4)); }
+  function writeGrow(v) { setVar(dock, "--asm-grow", v.toFixed(4)); }
+  function hudSay(s) { if (HUD) hud.textContent = s; }
+
+  function initVars() {
+    writeG(0); writeGrow(0);
+    setVar(dock, "--asm-level", "0"); setVar(dock, "--asm-lean", "0");
+    setVar(dock, "--asm-session", "0"); setVar(dock, "--asm-press", "0");
+    for (let i = 1; i <= 5; i++) setVar(dock, `--sec-p-${i}`, "0");
+    for (let i = 1; i <= 3; i++) setVar(dock, `--crest-s-${i}`, "0.02");
+    setVar(cardZone, "--vap-t", "0"); setVar(cardZone, "--vap-charge", "0");
+  }
+  initVars();
+
+  function tick(now) {
+    const dt = Math.min(0.05, (now - last) / 1000); last = now;
+    let busy = false;
+
+    // press-ack spring (press register — the sub-200ms answer)
+    if (pressSpring) {
+      pressSpring.step(0, dt);
+      setVar(dock, "--asm-press", Math.max(0, pressSpring.x).toFixed(4));
+      if (pressSpring.settled(0)) { pressSpring = null; setVar(dock, "--asm-press", "0"); } else busy = true;
+    }
+    // deploy geometry (gTarget 1 = deploy; 0 = the under-thrown return)
+    if (gSpring) {
+      gSpring.step(gTarget, dt); writeG(gSpring.x);
+      if (gSpring.settled(gTarget)) {
+        gSpring = null; writeG(gTarget);
+        if (gTarget === 1) onDeployed();
+        else { dock.dataset.posture = "pill"; session.to("rest"); phase = "rest"; }
+      } else busy = true;
+    }
+    // condense geometry (the bell) — the session mass condenses to the drawer head
+    if (condense) {
+      condense.step(1, dt);
+      writeG(1 - (1 - ASM.drawer.HEAD_G) * Math.max(0, Math.min(1, condense.x)));
+      if (condense.settled(1)) { condense = null; startGrow(); } else busy = true;
+    }
+    // grow-with-content
+    if (growSprings) {
+      growT += dt; let done = true, growSum = 0;
+      for (let i = 0; i < growSprings.length; i++) {
+        const on = growT >= (i * ASM.drawer.GROW.stepMs) / 1000;
+        if (on) growSprings[i].step(1, dt);
+        const x = Math.max(0, Math.min(1, growSprings[i].x));
+        setVar(dock, `--sec-p-${i + 1}`, x.toFixed(4));
+        growSum += ASM.drawer.GROW.weights[i] * x; // the ONE weight list (sim-shared)
+        if (!on || !growSprings[i].settled(1)) done = false;
+      }
+      writeGrow(growSum);
+      if (done) { growSprings = null; session.to("drawer"); phase = "drawer"; hudSay("drawer · islands carry their crests · rAF parks"); }
+      else busy = true;
+    }
+    // the live session field
+    if (phase === "live" || phase === "flare" || phase === "pinned" || phase === "cut") {
+      tSession += dt; busy = true;
+      let target;
+      if (phase === "live") target = ASM.sea.levelAt(tSession);
+      else if (phase === "flare") {
+        flareHold += dt * 1000;
+        target = ASM.sea.commit.flare;
+        if (level >= 0.97) { session.to("pinned"); phase = "pinned"; flareHold = 0; }
+      } else if (phase === "pinned") {
+        flareHold += dt * 1000; target = ASM.sea.commit.flare;
+        if (flareHold >= ASM.sea.commit.pinMs) { session.to("cut"); phase = "cut"; cutAt = 0; }
+      } else { // cut — the hard drop, <=2 frames
+        cutAt += dt * 1000; target = 0.06;
+        level = 0.06; // the cut IS the discontinuity — the one licensed sharpness
+        if (cutAt >= ASM.sea.commit.cutMs) beginCondense();
+      }
+      if (phase === "flare") level = Math.min(1, level + dt * 1000 / ASM.sea.commit.surgeMs); // the ~60ms surge
+      else if (phase !== "cut") level = ASM.envStep("signalDecay", level, target, dt);
+      setVar(dock, "--asm-level", level.toFixed(4));
+      setVar(dock, "--asm-lean", ASM.sea.leanAt(tSession, 330).toFixed(2));
+      for (let i = 0; i < crests.length; i++) {
+        const ct = Math.min(1, level * ASM.sea.LAYERS[i].gain);
+        crests[i].step(ct, dt);
+        setVar(dock, `--crest-s-${i + 1}`, Math.max(0.02, crests[i].x).toFixed(4));
+      }
+      levelChipFill.style.width = `${(Math.round(level * 4) / 4 * 100).toFixed(0)}%`;
+      hudSay(`${phase} · level ${level.toFixed(3)} · rAF live`);
+    }
+
+    if (busy) { raf = requestAnimationFrame(tick); }
+    else { raf = 0; if (phase === "rest" || phase === "drawer") hudSay(`${phase} · rAF parked`); }
+  }
+  function wake() { if (!raf) { last = performance.now(); raf = requestAnimationFrame(tick); } }
+
+  // ---------- fired deploy (panel register + the channel ladder) ----------
+  function deployFired() {
+    if (session.to("deploying-fired") === null) return;
+    const myGen = ++gen;
+    phase = "deploying";
+    dock.dataset.posture = "session";
+    if (prm.matches) { // PRM: state, not ritual
+      writeG(1); dock.classList.add("text-in", "data-in", "rim-plateau");
+      onDeployed(); return;
+    }
+    pressSpring = ASM.makeSpring(ASM.presets.press, 1, 0); // tap-ack, zero seed
+    gTarget = 1;
+    gSpring = ASM.makeSpring(ASM.presets.panel, g, 0); // FIRED — intrinsic overshoot is paid for
+    // the ladder rides real clocks stamped from ASM (one setTimeout chain, off the hot path)
+    const L = ASM.ladder;
+    setTimeout(() => { if (gen === myGen) dock.classList.add("text-in"); }, L.text.onsetMs);
+    setTimeout(() => { if (gen === myGen) dock.classList.add("rim-plateau"); }, L.rimPlateau.onsetMs);
+    setTimeout(() => { if (gen === myGen) dock.classList.add("data-in", "rim-flare"); }, L.data.onsetMs);
+    setTimeout(() => { if (gen === myGen) dock.classList.remove("rim-flare"); }, L.rimFlare.peakMs + 350);
+    wake();
+    hudSay("deploying (fired · panel register)");
+  }
+  function onDeployed() {
+    if (session.state.startsWith("deploying")) session.to("live");
+    phase = "live"; tSession = 0;
+    setVar(dock, "--asm-session", "1");
+    if (prm.matches) { // PRM: the stepped chip is the whole organ
+      level = 0.5; $("levelChipFill").style.width = "50%";
+      hudSay("live (PRM) · stepped chip relays the level");
+      return;
+    }
+    wake();
+  }
+  // ---------- gesture-scrubbed growth (dock register on release) ----------
+  dock.addEventListener("pointerdown", (ev) => {
+    if (dock.dataset.posture !== "pill" || ev.target.id === "summonBtn") return;
+    dragging = true; dock.setPointerCapture(ev.pointerId);
+    dragY0 = ev.clientY; dragG0 = g; samples = [{ t: performance.now(), y: ev.clientY }];
+    if (session.state === "rest") session.to("deploying-scrub");
+    phase = "deploying";
+    hudSay("scrubbing growth (finger owns the clock)");
+  });
+  dock.addEventListener("pointermove", (ev) => {
+    if (!dragging) return;
+    const now = performance.now();
+    samples.push({ t: now, y: ev.clientY });
+    while (samples.length > 2 && now - samples[0].t > 120) samples.shift(); // <=120ms boxcar
+    writeG(Math.max(0, Math.min(1, dragG0 + (ev.clientY - dragY0) / G_TRAVEL)));
+    dock.dataset.posture = g > 0.02 ? "session" : "pill";
+  });
+  ["pointerup", "pointercancel"].forEach((n) => dock.addEventListener(n, () => {
+    if (!dragging) return; dragging = false;
+    const a = samples[0], b = samples[samples.length - 1];
+    let v = 0;
+    if (b && a && b.t > a.t) v = ((b.y - a.y) / G_TRAVEL) / ((b.t - a.t) / 1000); // growth-fraction/s
+    if (g < 0.35 && v < 0.5) { // under-thrown: return to pill on the same register
+      gTarget = 0;
+      gSpring = ASM.makeSpring(ASM.presets.dock, g, Math.min(0, v));
+      wake(); hudSay("returning (under-thrown)");
+      return;
+    }
+    dock.dataset.posture = "session";
+    if (prm.matches) { writeG(1); onDeployed(); return; }
+    gTarget = 1;
+    gSpring = ASM.makeSpring(ASM.presets.dock, g, Math.max(0, v)); // overshoot is BOUGHT here
+    wake(); hudSay("arriving (dock register · velocity-seeded)");
+  }));
+  $("summonBtn").addEventListener("click", deployFired);
+  $("summonBtn").addEventListener("keydown", (ev) => {
+    if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); deployFired(); } // keyboard law
+  });
+
+  // ---------- commit: flare -> pin -> cut -> condense -> grow ----------
+  function commitSession() {
+    if (session.state !== "live") return;
+    if (prm.matches) { // PRM: single step to the grown drawer, state relayed
+      session.to("flare"); session.to("pinned"); session.to("cut");
+      session.to("condensing"); session.to("growing"); session.to("drawer");
+      phase = "drawer";
+      dock.dataset.posture = "drawer"; dock.classList.remove("text-in", "data-in");
+      writeG(ASM.drawer.HEAD_G); writeGrow(1);
+      for (let i = 1; i <= 5; i++) setVar(dock, `--sec-p-${i}`, "1");
+      setVar(dock, "--asm-session", "0");
+      hudSay("drawer (PRM step) · islands carry their crests");
+      return;
+    }
+    session.to("flare"); phase = "flare"; flareHold = 0; wake();
+  }
+  function beginCondense() {
+    session.to("condensing"); phase = "condensing";
+    setVar(dock, "--asm-session", "0");
+    dock.dataset.posture = "drawer";
+    dock.classList.remove("text-in", "data-in", "rim-plateau");
+    condense = ASM.makeSpring(ASM.presets[ASM.drawer.CONDENSE.responseFrom], 0, 0, ASM.drawer.CONDENSE.zeta);
+    hudSay("condensing (the bell — mass without wobble)");
+  }
+  function startGrow() {
+    session.to("growing"); phase = "growing"; growT = 0;
+    growSprings = Array.from({ length: ASM.drawer.GROW.sections }, () =>
+      ASM.makeSpring(ASM.presets.press, 0, 0, ASM.drawer.GROW.zeta));
+    hudSay("growing with content (staggered arrivals)");
+  }
+  $("commitBtn").addEventListener("click", commitSession);
+
+  // ---------- ORGAN B wiring: perch charge -> vapor-handoff -> the dissolve ----------
+  const perchPress = (() => { let st = "idle"; return {
+    down() { if (st === "idle" || st === "draining") st = "charging"; },
+    off() { if (st === "charging") st = "draining"; },
+    back() { if (st === "draining") st = "charging"; },
+    up(inside) { const commit = st === "charging" && inside; st = commit ? "committed" : "draining"; return commit; },
+    get state() { return st; },
+  }; })();
+  let charge = 0, chargeTarget = 0, chargeRaf = 0, chargeLast = 0;
+  function chargeTick(now) {
+    const dt = Math.min(0.05, (now - chargeLast) / 1000); chargeLast = now;
+    charge = ASM.envStep("pressDrain", charge, chargeTarget, dt);
+    setVar(cardZone, "--vap-charge", charge.toFixed(4));
+    if (charge === chargeTarget) { chargeRaf = 0; return; }
+    chargeRaf = requestAnimationFrame(chargeTick);
+  }
+  function driveCharge(t) {
+    chargeTarget = t;
+    if (prm.matches) { charge = t; setVar(cardZone, "--vap-charge", String(t)); return; }
+    if (!chargeRaf) { chargeLast = performance.now(); chargeRaf = requestAnimationFrame(chargeTick); }
+  }
+  perch.addEventListener("pointerdown", (ev) => { perch.setPointerCapture(ev.pointerId); perchPress.down(); driveCharge(1); });
+  perch.addEventListener("pointermove", (ev) => {
+    if (perchPress.state !== "charging" && perchPress.state !== "draining") return;
+    const r = perch.getBoundingClientRect();
+    const inside = ev.clientX >= r.left && ev.clientX <= r.right && ev.clientY >= r.top && ev.clientY <= r.bottom;
+    if (!inside && perchPress.state === "charging") { perchPress.off(); driveCharge(0); }
+    if (inside && perchPress.state === "draining") { perchPress.back(); driveCharge(1); }
+  });
+  perch.addEventListener("pointerup", (ev) => {
+    const r = perch.getBoundingClientRect();
+    const inside = ev.clientX >= r.left && ev.clientX <= r.right && ev.clientY >= r.top && ev.clientY <= r.bottom;
+    if (perchPress.up(inside)) {
+      // THE SEAM: the perch names the handoff; the conductor owns the medium.
+      cardRoot.dispatchEvent(new CustomEvent("vapor-handoff", { bubbles: true, detail: { v: 0 } }));
+    } else driveCharge(0);
+  });
+  perch.addEventListener("pointercancel", () => { perchPress.up(false); driveCharge(0); });
+  perch.addEventListener("keydown", (ev) => {
+    if (ev.key === "Enter" || ev.key === " ") {
+      ev.preventDefault();
+      cardRoot.dispatchEvent(new CustomEvent("vapor-handoff", { bubbles: true, detail: { v: 0 } }));
+    }
+  });
+
+  // scrub-the-dissolve (catchable pre-commit); commit = the handoff event
+  let vd = 0, vRaf = 0, vLast = 0, vDragging = false, vx0 = 0, vy0 = 0, vd0 = 0, vSamples = [];
+  function writeVapT(v) {
+    vd = Math.max(0, Math.min(1, v));
+    setVar(cardZone, "--vap-t", vd.toFixed(4));
+    cardRoot.dataset.parked = vd > 0 ? "0" : "1";
+  }
+  $("vbody").addEventListener("pointerdown", (ev) => {
+    if (cardZone.classList.contains("committing") || cardZone.classList.contains("closed")) return;
+    vDragging = true; ev.currentTarget.setPointerCapture(ev.pointerId);
+    if (vRaf) { cancelAnimationFrame(vRaf); vRaf = 0; } // the CATCH — the finger seizes the value
+    vx0 = ev.clientX; vy0 = ev.clientY; vd0 = vd;
+    vSamples = [{ t: performance.now(), x: ev.clientX, y: ev.clientY }];
+  });
+  $("vbody").addEventListener("pointermove", (ev) => {
+    if (!vDragging) return;
+    const now = performance.now();
+    vSamples.push({ t: now, x: ev.clientX, y: ev.clientY });
+    while (vSamples.length > 2 && now - vSamples[0].t > 120) vSamples.shift();
+    writeVapT(ASM.handoff.scrubD(vd0, ev.clientX - vx0, ev.clientY - vy0));
+  });
+  ["pointerup", "pointercancel"].forEach((n) => $("vbody").addEventListener(n, () => {
+    if (!vDragging) return; vDragging = false;
+    const a = vSamples[0], b = vSamples[vSamples.length - 1];
+    let v = 0;
+    if (b && a && b.t > a.t) v = ((-(b.x - a.x) - (b.y - a.y)) / ASM.handoff.TRAVEL) / ((b.t - a.t) / 1000);
+    if (vd >= 0.5 || v > 1.2) {
+      cardRoot.dispatchEvent(new CustomEvent("vapor-handoff", { bubbles: true, detail: { v: Math.max(0, v) } }));
+    } else { // return: drain the dissolve on the release clock (no landing drama)
+      const t0 = performance.now(), d0 = vd, T = 180;
+      const back = (now) => {
+        const u = Math.min(1, (now - t0) / T);
+        writeVapT(d0 * (1 - (1 - Math.pow(1 - u, 3))));
+        if (u < 1) vRaf = requestAnimationFrame(back); else vRaf = 0;
+      };
+      vRaf = requestAnimationFrame(back);
+    }
+  }));
+
+  // THE HANDOFF LISTENER — one writer, the full 3-layer dissolve, the sign-true beat
+  cardZone.addEventListener("vapor-handoff", (ev) => {
+    if (cardZone.classList.contains("committing")) return;
+    const myGen = ++gen;
+    const v = (ev.detail && ev.detail.v) || 0;
+    cardZone.classList.add("committing"); // text <=50ms + the chip dies first (CSS clocks)
+    driveCharge(0);
+    if (prm.matches) { // PRM: single-step removal, state relayed
+      writeVapT(1); mediumWriter.relax(true); cardZone.classList.add("closed");
+      hud.textContent = "card dismissed (PRM step)";
+      return;
+    }
+    const h = ASM.handoff;
+    const T = h.firedT(v), d0 = vd, t0 = performance.now();
+    // the ONE writer relaxes AT COMMIT; its stamped delay carries the whole
+    // order — text -> body(T, seeded) -> the HELD beat — so the beat stays
+    // sign-positive and seed-invariant (the M2 defect class, cured by stamp).
+    cardZone.style.setProperty("--vap-medium-delay-ms", String(h.mediumDelayForMs(v)));
+    mediumWriter.relax(true);
+    setTimeout(() => { if (gen === myGen) cardZone.classList.add("closed"); },
+      h.mediumDelayForMs(v) + h.close.mediumMs + 80);
+    const run = (now) => {
+      if (gen !== myGen) return;
+      // the body erosion begins AFTER the text kill (firedD clamps t<0 to rest)
+      writeVapT(h.firedD(d0, v, now - t0 - h.close.textMs));
+      if (now - t0 < T + h.close.textMs) vRaf = requestAnimationFrame(run);
+      else { vRaf = 0; hudSay("handoff: body out · the held beat · medium relaxes"); }
+    };
+    vRaf = requestAnimationFrame(run);
+  });
+
+  // ---------- non-modal truth + reset ----------
+  let taps = 0;
+  $("worldTap").addEventListener("click", () => { $("tapCount").textContent = String(++taps); });
+  $("resetBtn").addEventListener("click", () => {
+    gen++;
+    if (raf) { cancelAnimationFrame(raf); raf = 0; }
+    if (vRaf) { cancelAnimationFrame(vRaf); vRaf = 0; }
+    gSpring = null; condense = null; growSprings = null; pressSpring = null;
+    level = 0; tSession = 0; phase = "rest";
+    while (session.state !== "rest" && session.to("rest") === null) {
+      // walk the FSM home along legal edges only
+      const nexts = ASM.SESSION_EDGES[session.state] || [];
+      if (!nexts.length) break;
+      session.to(nexts[0]);
+    }
+    dock.dataset.posture = "pill";
+    dock.classList.remove("text-in", "data-in", "rim-plateau", "rim-flare");
+    cardZone.classList.remove("committing", "closed");
+    mediumWriter.relax(false); // the ONE writer un-relaxes its own medium
+    writeVapT(0); initVars();
+    hud.textContent = "rest · rAF parked";
+  });
+})();
+</script>
+</body>
+</html>
