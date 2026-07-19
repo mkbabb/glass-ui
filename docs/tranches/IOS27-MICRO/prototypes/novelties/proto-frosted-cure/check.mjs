@@ -133,8 +133,16 @@ check("light theme: text contrast on cured container", CURE.textContrast("light"
 
 console.log("\n=== Performance fences (static analysis of the page source) ===");
 checkTrue("no getBoundingClientRect inside a rAF job", !/run\(\(dt[\s\S]{0,400}getBoundingClientRect/.test(html), "[PERF] layout reads happen per-gesture, never per-frame");
+checkTrue("no client/offset geometry reads inside a rAF job", !/run\(\(dt[\s\S]{0,500}(clientWidth|clientHeight|offsetWidth|offsetHeight)/.test(html), "[PERF] the whole layout-read class fenced, not just gBCR");
 checkTrue("conductor parks (returns false paths exist)", /jobs\.delete\(j\)/.test(html) && /rAF parked/.test(html), "[PERF] zero idle rAF");
 checkTrue("backdrop-filter never transitioned/animated", !/transition:[^;]*backdrop-filter/.test(html) && !/animation:[^;]*backdrop/.test(html), "[PERF] blur radii never animate (blur-rides-opacity law)");
+
+console.log("\n=== Honesty gates (the page's own claims, verified here) ===");
+{
+  const scriptBlocks = [...html.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/g)].map((mm) => mm[1]);
+  const allParse = scriptBlocks.every((src) => { try { new vm.Script(src); return true; } catch { return false; } });
+  checkTrue("both inline script blocks parse under node vm", scriptBlocks.length === 2 && allParse, `[HONESTY] ${scriptBlocks.length} blocks, vm.Script syntax-checked`);
+}
 
 console.log(failures === 0 ? "\nALL CHECKS PASS" : `\n${failures} CHECK(S) FAILED`);
 process.exit(failures === 0 ? 0 : 1);

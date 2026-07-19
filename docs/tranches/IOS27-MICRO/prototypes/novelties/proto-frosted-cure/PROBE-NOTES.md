@@ -4,9 +4,10 @@ verified-model: claude-fable-5 (system-context model ID, verbatim). Seat novelty
 IOS27-MICRO novelty loop, 2026-07-18.
 
 Artifact: `index.html` (this directory)—one self-contained standalone file, no build, no
-network. Battery: `node check.mjs` — **ALL CHECKS PASS** (60 gates: register bands, defect
+network. Battery: `node check.mjs` — **ALL CHECKS PASS** (68 gates: register bands, defect
 pins, the idle-light law, CSS single-source cross-checks, the law-14c sim, the analytic
-legibility floor, the discipline fences). Both inline script blocks parse under node vm.
+legibility floor, the discipline + performance fences, and an honesty gate that parses BOTH
+inline script blocks under node vm).
 
 ## What the prototype claims
 
@@ -60,10 +61,11 @@ both defect classes.
    as-built dark-only registers in BOTH themes—F4/F5 shipped no light arm; that asymmetry
    is itself evidence, stated on-page.
 3. **Engagement plumbing**: `--engage-t` (attack τ60ms / release τ180ms exponential, per
-   press) and `--energy` (`tanh(|v|/1000)`, τ120ms decay after release) written by one
-   conductor rAF that parks at idle (`rAF parked` readout). Lens travel on the dock register
-   (0.30, ζ0.82) via the F1 closed-form sampler; identical physics both rows—only the
-   MATERIAL differs.
+   press) and `--energy` (`tanh(|v|/1000)`, τ120ms decay after release, τ250ms in-gesture
+   decay so a motionless hold goes dark—light belongs to MOTION) written by one conductor
+   rAF that parks at idle (`rAF parked` readout). Lens travel on the dock register
+   (0.30, ζ0.82) via the F1 closed-form sampler; the lens tab pitch is read ONCE per tap,
+   never inside the rAF job. Identical physics both rows—only the MATERIAL differs.
 4. **R-EFFERVESCE**: after = law 14c—60ms latency, spring (0.30, ζ0.80) with v0 26 seeding a
    velocity-BOUGHT 9.1% single overshoot (intrinsic at v0=0: 1.5%—the sim proves the law's
    "never intrinsic" clause), second excursion 0.14% (invisible), flight 299ms incl.
@@ -87,8 +89,10 @@ both defect classes.
 - CSS single-source cross-checks: the style block literally contains the token values and
   the zero-constant `calc()` forms; exactly ONE `cure-sweep` binding, PRM-dead.
 - Discipline fences: no `@supports … backdrop-filter` (the lying gate), no `filter: url(`,
-  no `light-dark(`, no cyan hue inside any cure rule, no `getBoundingClientRect` inside a
-  rAF job, backdrop-filter never transitioned/animated.
+  no `light-dark(`, no cyan hue inside any cure rule, no `getBoundingClientRect` AND no
+  `clientWidth`/`offsetWidth`-class geometry read inside a rAF job (the whole layout-read
+  class fenced), backdrop-filter never transitioned/animated, both inline script blocks
+  parse under node vm.
 - The law-14c sim (1ms deterministic) + the analytic legibility floor: white-on-cured-dark
   9.13:1, dark-on-cured-light 12.08:1 (declared-constant composite model, the F5 pattern).
 

@@ -250,3 +250,63 @@ floats non-modally over live content; the world beneath keeps breathing.
   robust, the terminal coordinate is BOUNDED (glass belly bottom ~420–500 by visual).
 - No claim in this doc rests on a 12fps read; every register quoted was fitted or bounded at
   60fps. The mic absence is stated wherever it bites.
+
+---
+
+## VERIFICATION — the independent re-derivation (seat resumed, 2026-07-18)
+
+Verified-model: claude-fable-5. The seat resumed with the doc complete on disk; per the MARKS.md
+precedent the load-bearing claims were re-derived from the raw CSVs and frames with fresh code
+(not `fit.py`), and the frame ladders re-inventoried. Corrections are ADDITIVE—the sections
+above stand as measured history; what is voided is quoted.
+
+**Inventory + provenance.** All six ladder sets present at the contracted counts with t0+fps
+READMEs (survey8 114, b60-invoke 96, b60-wave 120, b60-expand 84, b60-dismiss 60, crop-rim/orb
+854 each). PTS census correction to the header line: 846 intervals = 838×16.7ms + 4×33.3ms
+(one at t=2.967, three at 4.267–4.367) + 2×25ms (1.267, 1.292) + 1×66.7ms (0.65, at rest,
+harmless) + 1×18.3ms. ~~"4 isolated 33ms gaps, 1 at 25ms"~~ read as above. Audio re-checked:
+digitally silent until 7.25–7.27s. Background probes re-run: bg swing 0.18% across the whole
+expansion, flat 97.6 through the dismissal—the no-scrim claims stand with numbers re-derived.
+
+**Mark 3 register: STANDS.** Independent grid-fit against `expand-track.csv` with eq=982.9
+re-measured from `expand-tail.csv` (the main tracker demonstrably re-latches to an interior
+content edge at 5.95—616 is not a panel edge; the two trackers agree frame-for-frame through
+the descent): full flight ζ=0.71, f_d=1.75Hz, RMS 4.49px (bracket 0.70–0.72 / 1.65–1.80);
+tail ζ=0.74, f_d=1.70, RMS 0.78px (bracket 0.70–0.79 / 1.6–1.8); width ζ=0.71, f_d=1.70,
+RMS 2.03px (bracket identical to vertical). Critical damping rejected ×2.5 on the tail.
+Overshoot +34.1px vertical (4.5%), +16px width (4.7%), same peak frames; settle 233ms from
+the 5.70 crossing. All inside the published brackets. The ghost is EXACTLY one frame:
+f-017 vs f-019 mean |Δlum| 0.82 (1% of px >20) while f-018 differs from both at mean ~12.9
+(21% of px >20); visual re-read confirms the anatomy (opaque-smoke top, translucent lower
+half with the calendar legible through it, lit meniscus, no content, thinking pill absent).
+
+**CORRECTION D1 — the flight's peak velocity.** ~~"peak velocity ~4,650px/s (vertical) at
+~5.62"~~ is not reproducible from the cited series: raw single-frame max is 7,229px/s across
+5.5167→5.5333 (120px in one frame), and the fitted spring's model peak is 5,734px/s at
+t≈5.54. The flight is front-loaded—peak velocity sits in the first ~2 frames after launch,
+not mid-flight. No register or law verdict changes.
+
+**Mark 1: STANDS, two refinements.** Re-derived: first geometry motion 1.200, squeeze −17.3%
+at 1.3667, relax to ~433–435, extent pinned at 432 from 1.4167 with zero overshoot, chroma
+3.8→21.7 across 1.5→2.35. (a) Two 25ms source gaps sit inside the flight window (1.267,
+1.292)—one duplicated grid frame—so the 215ms flight carries ±33ms honesty, not ±17ms.
+(b) The invoke-track discontinuity at 1.5667 (extent 432→641, width 435→775 in one frame,
+then frozen) is NOT orb motion: spatial diff shows a 1px whole-field nudge of the Home Screen
+(no dim—mean Δlum ≈0; no scale—icon edge x-positions identical) that pushed the diff/dark-run
+thresholds far along the halo's shallow gradients. Tracker artifact; the dead landing stands
+(bit-static 432 through 1.55 on real frames).
+
+**Mark 2: STANDS, flare anatomy refined.** Lull floor re-read at chroma 15.4 / height 39,
+never zero. The terminal flare decomposes: surge 26→64 in ~50–67ms (4.200→4.267), flat-top
+HOLD at 64.0 for ~117ms (4.267–4.383), cut 63.4→4.5 across ONE frame boundary at 4.400
+(≤17ms—tighter than the stated ≤33ms). ~~"pins flat-topped for ~150ms"~~ reads as
+surge+hold ≈167ms, hold alone ≈117ms. The three 33ms source drops sit exactly inside the
+hold—screen recorders drop frames when content is static, which corroborates (not proves) a
+genuinely held frame. TTS negative control re-derived: detrended max|r|=0.126 over ±400ms
+lags (vs 0.106 stated—different detrend window, same verdict: the at-rest rim is not
+audio-reactive).
+
+**Mark 3 dismissal: STANDS.** text_mass →0 across one frame boundary BEFORE any body motion;
+retraction 980→257 in ~133ms with per-frame velocities 1.1k→8.0k px/s, accelerating into the
+island (a tracker mislatch triple at 13.183–13.217 excluded—it re-reports an interior edge,
+same pathology as the 5.95 re-latch, recognized and discarded).

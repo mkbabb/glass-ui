@@ -384,6 +384,27 @@ suffusion scalars.
   two-texture grammar + hue-as-progress adopted; the idle freeze REFUSED per the
   breath-of-life edict (law 11 keeps our floor breathing).
 
+## VERIFICATION — the independent re-derivation (2026-07-18, second pass)
+
+Verified-model: claude-fable-5. A second pass re-derived the load-bearing measurements from
+the on-disk stamped frames without reusing the first pass's numbers:
+
+- **6.3 gradient blur**: fresh σ grid-fit (engaged f-055 vs sharp f-085, b24-sliderdrag) →
+  QWERTY σ=10 (RMS 3.04 vs 15.22 unblurred), A-row σ=2, Z-row/prose σ=0, luminance ratios
+  1.000–1.013 everywhere. The annulus, the σ_max≈10px peak, and the zero-dimming law stand.
+- **7.4 condense bell**: independent dark-run bottom-edge tracker on b60-gemsearch → veil at
+  1675 (t=53.417) retracting to 1013 (t=53.533, ~117ms); per-frame velocities 2.6k→5.7k→
+  10.3k→6.5k→5.7k→4.9k→4.0k px/s — the bell reproduces point-identical within tracker
+  tolerance. No oscillation in any frame.
+- **8.2 the freeze**: survey diffs 0.000–0.008 across 57.9–59.4 (codec noise floor), plus NEW
+  independent corroboration — the source's packet cadence itself drops to 183–317ms intervals
+  at t=57.9–59.5 (the VFR recorder emitting no frames on a static screen). The freeze is a
+  recording-level fact, not a tracker artifact. (The same scan places 100ms packet gaps at
+  t=47.8–48.5, inside the sheet-dismissal window — §7.2's 24fps reads there carry that floor.)
+- **8.3 hue sweep**: fresh circular-median samples (mid-screen band) → 231°(61.2)→221(62.4)→
+  180(63.0)→160(63.9)→99(64.5)→45(65.4)→21(65.7) — monotone, one direction, ~50°/s; matches
+  the fitted sweep within region-choice differences.
+
 ## Moments deserving denser bursts (not cut this pass)
 
 1. The slider fill during detent CROSSINGS at 60fps — does the fill snap-assist near detents

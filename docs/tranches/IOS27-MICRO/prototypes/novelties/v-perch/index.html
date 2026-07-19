@@ -27,6 +27,7 @@
   :root {
     --engage-t: 0;      /* the perch's charge envelope (FAC --engage-t shape) */
     --perch-seat: 8.2px; /* stamped from PERCH.seatOffset(28) at load — checked equal */
+    --content-ms: 170;   /* the content-first exit (MARKS §5 ~170ms class) */
     --beat-ms: 140;
     --medium-relax-ms: 420;
   }
@@ -59,9 +60,13 @@
     background: rgba(8, 10, 16, 0.35);
   }
   .medium.relax {
+    /* JUDGE AMENDMENT (MECH M2): the relax DELAY is content + beat — the old delay was the
+       beat alone, so the medium was 30ms into relax when content died and the empty-medium
+       beat (MARKS §5's signature moment) was -30ms. Now: content out at 170ms, THEN 140ms
+       of held contentless blur, THEN the relax. */
     opacity: 0;
     transition: opacity calc(var(--medium-relax-ms) * 1ms) cubic-bezier(0.2, 0.6, 0.3, 1)
-      calc(var(--beat-ms) * 1ms);
+      calc((var(--content-ms) + var(--beat-ms)) * 1ms);
   }
   .phone.closed .medium, .phone.closed .surface-root { display: none; }
   /* ============ THE PLANE VOCABULARY ============
@@ -104,7 +109,8 @@
     color: rgba(255, 255, 255, calc(0.72 + 0.28 * var(--engage-t)));
   }
   .perch .dot svg { width: 12px; height: 12px; display: block; }
-  .perch:focus-visible .dot { outline: 2px solid rgba(140, 190, 255, 0.9); outline-offset: 2px; }
+  /* a11y ring in the house light — warm cream, never the cyan class the cure bans (DESIGN m2) */
+  .perch:focus-visible .dot { outline: 2px solid rgba(255, 226, 178, 0.95); outline-offset: 2px; }
   .hud {
     position: absolute; left: 12px; bottom: 10px; z-index: 4; font-size: 10.5px;
     color: rgba(255, 255, 255, 0.5); font-family: ui-monospace, monospace;
@@ -171,7 +177,10 @@ const PERCH = {
   },
   scaleAt(e) { return 1 + 0.11 * e; },        // cap: phi^(1/4) = 1.1279
   rimAlphaAt(e) { return 0.18 + 0.50 * e; },  // engagement-only light; 0.18 hairline at rest
-  close: { contentMs: 170, beatMs: 140, mediumTau: 0.12 }, // MARKS §5 close order
+  // MARKS §5 close order. mediumTau 0.14 (JUDGE, MECH M7): relax = tau*ln20 = 419ms — inside
+  // the MARKS ~400-450ms class AND equal to the painted 420ms (3*tau); 0.12 gave 360ms,
+  // outside the cited class, passing only because the beat was summed in.
+  close: { contentMs: 170, beatMs: 140, mediumTau: 0.14 },
   // the press state machine: charge -> commit (release inside) | cancel (slide off)
   makePress() {
     let state = "idle"; // idle -> charging -> committed | draining
@@ -215,13 +224,19 @@ const PERCH = {
       };
     },
     closeOrder() {
+      // JUDGE AMENDMENT (MECH M2): the old orderOK was positivity, not order. The honest
+      // fields: mediumDelayMs is when relax BEGINS (content + beat — mirrored by the CSS
+      // delay, cross-checked structurally in check.mjs); the beat exists only if the delay
+      // clears the content channel by the full beat.
       const c = PERCH.close;
       const relax = c.mediumTau * Math.log(1 / 0.05) * 1000;
+      const mediumDelayMs = c.contentMs + c.beatMs;
       return {
         contentMs: c.contentMs,
         beatMs: c.beatMs,
+        mediumDelayMs,
         mediumTailMs: c.beatMs + relax,
-        orderOK: c.contentMs > 0 && c.beatMs > 0 ? 1 : 0, // content strictly before medium
+        orderOK: mediumDelayMs - c.contentMs >= 100 ? 1 : 0, // a real held beat, >=100ms after content is OUT
       };
     },
   },

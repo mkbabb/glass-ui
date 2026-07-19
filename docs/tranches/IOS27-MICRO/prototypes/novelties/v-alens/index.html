@@ -7,15 +7,17 @@
 <!--
   V-ALENS — the gradient-blur attention lens. Standalone prototype, no build step.
   verified-model: claude-fable-5. Seat: novelty:PROTO-2 (PROTO-ATTENTION-EXIT).
-  Roster card 2 (NOVELTY-ROSTER.md:171-189). Mechanism, verbatim from the card:
-    3 stacked backdrop-filter layers under STATIC radial-gradient masks (codex law 1
-    recipe; radius ~doubling per band: 4/8/16px); only each layer's OPACITY animates,
-    driven by --engage-t (blur-rides-opacity is paint-proven on WebKit,
-    safari-arm.md:148-150). The center seats ONCE per engagement (a seat, not
-    per-frame tracking); the stack is bounded to the control's container region.
+  Roster card 2 (NOVELTY-ROSTER.md, REFINED at the pass-2.5 adjudication). Mechanism:
+    3 stacked backdrop-filter layers under STATIC nested-annulus masks (the --glass-halo-*
+    profile, MARKS-C-APPS.md:188-190): sharp hole at the seat, compound peak sigma ~5px in
+    the near band, decay to ZERO by ~330px — the world stays crisp, luminance LOCKED
+    (dim capped at a 0.05 whisper). Only each layer's OPACITY animates, driven by
+    --engage-t (blur-rides-opacity is paint-proven on WebKit, safari-arm.md:148-150).
+    The center seats ONCE per engagement (a seat, not per-frame tracking).
     Fixed 3-layer count; zero animated blur radii; no overflow:hidden wrapper on the
     stack (the Chromium stacked-mask weakness); layers exist only while --engage-t>0.
-    PRM: a single-step dim, no ramp. Sibling-legibility (N3): >=AA under the ramp.
+    PRM: a single-step dim, no ramp. Sibling-legibility (N3): >=AA with the label's
+    own alpha HONORED in the model (MECH M1 cure — label ships at alpha 1.0).
   Glass register derived from F1's good glass (f1-scalar-spine/index.html:109-112):
     container = linear-gradient(rgba(44,56,60,.52), rgba(24,32,36,.66))
               + blur(22px) saturate(1.35) + 1px inset rim rgba(255,255,255,.10).
@@ -62,39 +64,46 @@
   .lens-stack { position: absolute; inset: 0; pointer-events: none; }
   .lens-stack[data-parked="1"] { visibility: hidden; } /* layers exist only while engaged */
   .lens-layer { position: absolute; inset: 0; }
+  /* JUDGE AMENDMENT (DESIGN M1, MARKS-C-APPS.md:117-131,:188-190): the measured law is a
+     LOCAL ANNULUS — peak sigma ~3-4pt just outside the control, Gaussian-class falloff to
+     ZERO by ~1.5-2 control-heights, most of the world CRISP, luminance LOCKED (0.99-1.01).
+     The old build inverted this (crisp near, saturated 4+8+16 far — a modal spotlight).
+     Now: nested annular masks, sharp hole 0-36px at the seat, stacked 4/3/2px radii whose
+     compound peak ~5px sits in the near band and decays outward; zero blur past ~330px. */
   .lens-b1 {
     -webkit-backdrop-filter: blur(4px);
     backdrop-filter: blur(4px);
     -webkit-mask-image: radial-gradient(circle at var(--lens-cx) var(--lens-cy),
-      transparent 0 70px, black 150px);
+      transparent 0 36px, black 64px 150px, transparent 210px);
     mask-image: radial-gradient(circle at var(--lens-cx) var(--lens-cy),
-      transparent 0 70px, black 150px);
+      transparent 0 36px, black 64px 150px, transparent 210px);
     opacity: calc(clamp(0, (var(--engage-t) - 0.00) / 0.45, 1));
   }
   .lens-b2 {
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
     -webkit-mask-image: radial-gradient(circle at var(--lens-cx) var(--lens-cy),
-      transparent 0 130px, black 230px);
+      transparent 0 36px, black 78px 210px, transparent 270px);
     mask-image: radial-gradient(circle at var(--lens-cx) var(--lens-cy),
-      transparent 0 130px, black 230px);
+      transparent 0 36px, black 78px 210px, transparent 270px);
     opacity: calc(clamp(0, (var(--engage-t) - 0.20) / 0.50, 1));
   }
   .lens-b3 {
-    -webkit-backdrop-filter: blur(16px);
-    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
     -webkit-mask-image: radial-gradient(circle at var(--lens-cx) var(--lens-cy),
-      transparent 0 200px, black 330px);
+      transparent 0 36px, black 92px 260px, transparent 330px);
     mask-image: radial-gradient(circle at var(--lens-cx) var(--lens-cy),
-      transparent 0 200px, black 330px);
+      transparent 0 36px, black 92px 260px, transparent 330px);
     opacity: calc(clamp(0, (var(--engage-t) - 0.45) / 0.55, 1));
   }
-  /* the dim ramp: DARKENS only (white sibling text gains contrast under it — the
-     analytic N3 gate in check.mjs proves the worst case is the undimmed page) */
+  /* the dim: capped to a sub-perceptual whisper (JUDGE AMENDMENT, DESIGN M1 — the measured
+     exemplar is luminance LOCKED: engaged/sharp 0.99-1.01, MARKS-C-APPS.md:120-122; the old
+     0.26 ramp was a scrim). DARKENS only; the N3 gate still sweeps the full range. */
   .lens-dim {
     background: radial-gradient(circle at var(--lens-cx) var(--lens-cy),
       transparent 0 90px, rgba(8, 10, 14, 0.85) 340px);
-    opacity: calc(var(--engage-t) * 0.26);
+    opacity: calc(var(--engage-t) * 0.05);
   }
   /* ============ the card and its controls (two-tier glass, F1 register) ============ */
   .card {
@@ -140,7 +149,7 @@
     border-radius: 18px; padding: 12px 14px; margin-bottom: 10px;
     background: var(--panel); box-shadow: inset 0 0 0 1px var(--line);
   }
-  .feed .item b { font-size: 14px; }
+  .feed .item b { font-size: 14px; color: rgb(255, 255, 255); } /* full-alpha label — the N3 floor is earned at alpha 1.0 (MECH M1) */
   .feed .item span { display: block; font-size: 12.5px; color: rgba(255, 255, 255, 0.60); }
   .hud {
     position: absolute; left: 12px; bottom: 10px; z-index: 3; font-size: 10.5px;
@@ -202,13 +211,14 @@ const ALENS = {
     const next = e + (target - e) * (1 - Math.exp(-dt / tau));
     return Math.abs(next - target) < this.env.eps ? target : next;
   },
-  // --- the opacity ladder: calc bands of --engage-t (mirrors the CSS exactly) ---
+  // --- the opacity ladder: calc bands of --engage-t (HAND-MIRRORED to the CSS above;
+  //     not stamped — the CSS<->JS band cross-check is a pass-3 gate owed, MECH M7) ---
   bands: [
     { blur: 4, a: 0.00, w: 0.45 },
-    { blur: 8, a: 0.20, w: 0.50 },
-    { blur: 16, a: 0.45, w: 0.55 },
+    { blur: 3, a: 0.20, w: 0.50 },
+    { blur: 2, a: 0.45, w: 0.55 },
   ],
-  dim: { max: 0.26, color: [8, 10, 14], rampAlphaFar: 0.85 },
+  dim: { max: 0.05, color: [8, 10, 14], rampAlphaFar: 0.85 }, // whisper cap (DESIGN M1: measured luminance LOCKED)
   layerOpacity(i, t) {
     const b = this.bands[i];
     return Math.min(1, Math.max(0, (t - b.a) / b.w));
@@ -223,12 +233,13 @@ const ALENS = {
       get() { return seated; },
     };
   },
-  // --- page tokens (single-sourced: CSS stamps FROM here; check.mjs reads here) ---
+  // --- page tokens (hand-mirrored to the CSS; check.mjs reads here — the stamp is owed,
+  //     MECH M7: nothing stamps these into the stylesheet yet) ---
   tokens: {
     baseBg: [16, 20, 28],          // .world base #10141c
     panelWhiteAlpha: 0.045,        // --panel over base
     worldAccentPeak: [120, 108, 255, 0.8], // the brightest radial under sibling rows
-    labelColor: [255, 255, 255, 0.92],
+    labelColor: [255, 255, 255, 1.0], // .feed .item b — full alpha (MECH M1 cure: at 0.92 the honored-alpha worst case was 4.41 < AA)
     thumbScaleGain: 0.10,          // scale = 1 + gain*t; cap phi^(1/4) = 1.1279
   },
   // WCAG relative luminance of an sRGB triple
@@ -245,6 +256,10 @@ const ALENS = {
   // N3 sibling-legibility: contrast of the label over the worst-case backdrop, at a
   // given dim level d in [0, dim.max]. The dim only DARKENS, so d=0 is the worst case
   // for white text; the gate sweeps d anyway (falsifiable, not assumed).
+  // JUDGE AMENDMENT (MECH M1): the text's own ALPHA is now honored — the label is
+  // composited over the backdrop before its luminance is taken. The old model read the
+  // RGB triple as opaque and certified 4.88:1 while the painted 0.92-alpha label sat at
+  // 4.41:1 < AA. The floor is re-earned by painting the label at alpha 1.0.
   siblingContrast(d) {
     const t = this.tokens;
     let bg = [...t.baseBg];
@@ -252,7 +267,8 @@ const ALENS = {
     bg = this.over([255, 255, 255], t.panelWhiteAlpha, bg);
     bg = this.over(this.dim.color, d * this.dim.rampAlphaFar, bg);
     const Lbg = this.lum(bg);
-    const Ltx = this.lum([t.labelColor[0], t.labelColor[1], t.labelColor[2]]);
+    const tx = this.over([t.labelColor[0], t.labelColor[1], t.labelColor[2]], t.labelColor[3], bg);
+    const Ltx = this.lum(tx);
     const [hi, lo] = Ltx > Lbg ? [Ltx, Lbg] : [Lbg, Ltx];
     return (hi + 0.05) / (lo + 0.05);
   },
@@ -307,7 +323,9 @@ const ALENS = {
 
 // ---------- page wiring (event-scoped rAF; parks at rest AND at settled hold) ----------
 (function () {
-  const root = document.documentElement;
+  // JUDGE AMENDMENT (MECH M5): the FAC scalar publishes on the COMPONENT ROOT (#stage),
+  // never on documentElement — an inheriting :root var written per frame recalcs the
+  // whole document on WebKit (NOVELTY-ROSTER survey; 35us vs 960us over 500 children).
   const stage = document.getElementById("stage");
   const stack = document.getElementById("lensStack");
   const hud = document.getElementById("hud");
@@ -316,7 +334,7 @@ const ALENS = {
   let e = 0, target = 0, raf = 0, last = 0;
 
   function write(v) {
-    root.style.setProperty("--engage-t", v.toFixed(4));
+    stage.style.setProperty("--engage-t", v.toFixed(4));
     stack.dataset.parked = v > 0 ? "0" : "1"; // layers exist only while engage-t > 0
   }
   function tick(now) {
@@ -339,8 +357,8 @@ const ALENS = {
   function seatAt(clientX, clientY) {
     const r = stage.getBoundingClientRect();
     const s = seat.engage(clientX - r.left, clientY - r.top);
-    root.style.setProperty("--lens-cx", `${s.x.toFixed(1)}px`);
-    root.style.setProperty("--lens-cy", `${s.y.toFixed(1)}px`);
+    stage.style.setProperty("--lens-cx", `${s.x.toFixed(1)}px`);
+    stage.style.setProperty("--lens-cy", `${s.y.toFixed(1)}px`);
   }
   function engageFrom(el, ev) {
     if (ev && ev.clientX !== undefined) seatAt(ev.clientX, ev.clientY);

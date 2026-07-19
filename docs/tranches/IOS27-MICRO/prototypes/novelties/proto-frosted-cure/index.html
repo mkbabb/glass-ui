@@ -641,8 +641,8 @@ const CURE = (() => {
   function textContrast(theme) {
     const reg = REGISTERS.cured[theme];
     const scene = theme === "dark" ? SCENE.darkLum : SCENE.lightLum;
-    // worst arm: the lighter (top) tint for dark text, the thinner tint for white text
-    const lc = composite(theme === "dark" ? reg.tintTop : reg.tintTop, scene);
+    // worst arm both themes: the lighter (top) tint composites the brighter label band
+    const lc = composite(reg.tintTop, scene);
     return contrast(wcagLum(reg.text), lc);
   }
 
@@ -724,17 +724,17 @@ const CURE = (() => {
   /* ---------- R-TABS: lens travel on the dock register (0.30, ζ0.82), energy feeds light ---------- */
   $$("[data-lens-bar]").forEach((bar) => {
     const lens = bar.querySelector("[data-lens]");
-    let cur = 0, x = 0, v = 0, sampler = null, t0 = 0;
-    const pitch = () => (bar.clientWidth - 12) / 4;  // read on demand at tap, not per frame
+    let cur = 0, x = 0, v = 0, sampler = null, t0 = 0, targetPx = 0;
+    const pitch = () => (bar.clientWidth - 12) / 4;  // read ONCE per tap — never inside the rAF job
     bar.querySelectorAll(".tab").forEach((tab) => {
       tab.addEventListener("click", () => {
         const i = +tab.dataset.tab;
         bar.querySelectorAll(".tab").forEach((t) => t.setAttribute("aria-selected", String(t === tab)));
         if (i === cur && sampler === null) return;
-        const target = i * pitch();
+        targetPx = i * pitch();                      // shared: a mid-flight retarget updates it
         cur = i;
-        if (PRM()) { x = target; v = 0; sampler = null; lens.style.transform = `translateX(${x}px)`; bar.style.setProperty("--energy", "0"); return; }
-        sampler = CURE.springSampler(0.30, 0.82, x, v, target);
+        if (PRM()) { x = targetPx; v = 0; sampler = null; lens.style.transform = `translateX(${x}px)`; bar.style.setProperty("--energy", "0"); return; }
+        sampler = CURE.springSampler(0.30, 0.82, x, v, targetPx);
         t0 = performance.now() / 1000;
         run((dt, nowMs) => {
           if (!sampler) return false;
@@ -743,9 +743,9 @@ const CURE = (() => {
           lens.style.transform = `translateX(${x.toFixed(2)}px)`;
           // energy from lens velocity (px/s), the F4 law — light dies with motion
           bar.style.setProperty("--energy", Math.tanh(Math.abs(v) / 1000).toFixed(3));
-          if (Math.abs(x - cur * pitch()) < 0.5 && Math.abs(v) < 2) {
+          if (Math.abs(x - targetPx) < 0.5 && Math.abs(v) < 2) {
             sampler = null;
-            lens.style.transform = `translateX(${(cur * pitch()).toFixed(2)}px)`;
+            lens.style.transform = `translateX(${targetPx.toFixed(2)}px)`;
             bar.style.setProperty("--energy", "0");
             return false;
           }
@@ -765,6 +765,14 @@ const CURE = (() => {
       rect = box.getBoundingClientRect();          // ONE layout read per gesture
       dragging = true; lastX = ev.clientX; lastT = performance.now();
       box.setPointerCapture(ev.pointerId);
+      // hold decay: a motionless drag goes dark (τ250ms) — light belongs to MOTION,
+      // the move handler re-ratchets E while velocity is real
+      if (!PRM()) run((dt) => {
+        if (!dragging) return false;
+        E *= Math.exp(-dt / 0.25);
+        box.style.setProperty("--energy", E.toFixed(3));
+        return true;
+      });
     });
     box.addEventListener("pointermove", (ev) => {
       if (!dragging) return;
@@ -791,8 +799,6 @@ const CURE = (() => {
     };
     box.addEventListener("pointerup", release);
     box.addEventListener("pointercancel", release);
-    // idle decay of the max-held E while dragging slowly
-    box.addEventListener("pointermove", () => { if (dragging) run((dt) => { if (!dragging) return false; E *= Math.exp(-dt / 0.25); box.style.setProperty("--energy", E.toFixed(3)); return dragging; }); }, { once: true });
   });
 
   /* ---------- R-EFFERVESCE: the two pop-over registers, measured live ---------- */

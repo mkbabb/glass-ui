@@ -29,9 +29,9 @@ function check(name, value, lo, hi, note = "") {
 console.log("=== the engage envelope (FAC --engage-t; asymmetric attack/release) ===");
 const r = ALENS.sims.rise();
 check("rise t90 (ms)", r.t90, 100, 200, "[DESIGN] press-acknowledge register, sub-200ms");
-check("band 1 (blur 4) opacity-0.5 arrival (ms)", r.bandArrivalMs[0], 0, 80, "[DESIGN] nearest band arrives first");
-check("band 2 (blur 8) after band 1 (ms)", r.bandArrivalMs[1] - r.bandArrivalMs[0], 5, 200, "[DESIGN] the ladder deepens outward");
-check("band 3 (blur 16) after band 2 (ms)", r.bandArrivalMs[2] - r.bandArrivalMs[1], 5, 400, "[DESIGN] strict deepening order");
+check("band 1 (blur 4, near) opacity-0.5 arrival (ms)", r.bandArrivalMs[0], 0, 80, "[DESIGN] nearest band arrives first");
+check("band 2 (blur 3, mid) after band 1 (ms)", r.bandArrivalMs[1] - r.bandArrivalMs[0], 5, 200, "[DESIGN] the halo widens outward");
+check("band 3 (blur 2, far) after band 2 (ms)", r.bandArrivalMs[2] - r.bandArrivalMs[1], 5, 400, "[DESIGN] strict widening order");
 const f = ALENS.sims.fall();
 check("release t10 (ms)", f.t10, 280, 450, "[DESIGN] law-14c exit class; slower than attack");
 check("release parks (ms)", f.parkMs, 300, 1200, "[DESIGN] envelope snaps to 0 and the rAF dies");
@@ -62,8 +62,12 @@ check("thumb scale at engage-t=1", 1 + ALENS.tokens.thumbScaleGain, 1.0, Math.po
 console.log("\n=== structural asserts (mechanism discipline read from the file) ===");
 {
   const cssBlurs = [...html.matchAll(/(?<!-)backdrop-filter:\s*blur\((\d+)px\)/g)].map((x) => +x[1]);
-  const lensBlurs = cssBlurs.filter((b) => [4, 8, 16].includes(b));
-  check("lens stack radii present {4,8,16}", new Set(lensBlurs).size, 3, 3, "[STRUCT] radius ~doubling per band (codex law 1)");
+  const lensBlurs = cssBlurs.filter((b) => [4, 3, 2].includes(b));
+  check("lens stack radii present {4,3,2}", new Set(lensBlurs).size, 3, 3, "[STRUCT] sigma DECAYS outward — the measured annulus (MARKS-C-APPS 6.3; DESIGN M1 cure)");
+  const annulus = /transparent 0 36px, black 64px 150px, transparent 210px/.test(html) ? 1 : 0;
+  check("near mask is an annulus with a sharp hole", annulus, 1, 1, "[STRUCT] the control stays crisp; the halo dies by ~330px — never a full-field mush");
+  const dimCap = /calc\(var\(--engage-t\) \* 0\.05\)/.test(html) ? 1 : 0;
+  check("dim capped at the 0.05 whisper", dimCap, 1, 1, "[MARKS-C 6.3] luminance LOCKED 0.99-1.01 — zero-scrim law (DESIGN M1)");
   const animatedBlur = /transition[^;]*backdrop-filter|animation[^;]*backdrop-filter/.test(html) ? 1 : 0;
   check("zero animated blur radii", animatedBlur, 0, 0, "[STRUCT] only OPACITY animates (safari-arm.md:148-150)");
   const stackHasOverflow = /\.lens-stack\s*{[^}]*overflow\s*:\s*hidden/.test(html) ? 1 : 0;

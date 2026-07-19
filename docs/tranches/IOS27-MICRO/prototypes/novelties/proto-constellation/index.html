@@ -186,7 +186,7 @@
   #npMq .mq-in { display: inline-block; animation: mq 9s linear infinite; }
   @keyframes mq { from { transform: translateX(0); } to { transform: translateX(-50%); } }
   .np-mini-extra { position: absolute; opacity: var(--np-mini, 1); pointer-events: none; }
-  #npPlayMini { left: 244px; top: 460px; width: 32px; height: 32px; border-radius: 50%;
+  #npPlayMini { left: 204px; top: 456px; width: 32px; height: 32px; border-radius: 50%;
     background: var(--ctl-bg); box-shadow: var(--ctl-rim); display: grid; place-items: center; font-size: 10px; }
   .np-card-extra { position: absolute; opacity: var(--np-card, 0); pointer-events: none; }
   #npCardMeta { left: 172px; top: 290px; width: 100px; font-size: 11px; color: var(--ink-dim); }
@@ -1083,7 +1083,14 @@ const PC = (() => {
       if (this.posture !== "STACKED") return;
       this.ferrying = true;
       this.npBody.classList.add("glass-on");
-      if (PRM()) { this.tlSpine.seat(target); this.ferryArrive(target, 0); this.apply(); return; }
+      // R-MOMENTUM one-hop seed: the RELEASE velocity at the spring seam, never the
+      // terminal creep (the park epsilon caps |v| < 0.02 — arrival velocity is a lie).
+      if (target === 1) this._ferryV = Math.abs(seedV || 0);
+      if (PRM()) { this.tlSpine.seat(target); this.ferryArrive(target); this.apply(); return; }
+      // entry pending iff rows are still invisible (t < first rung 0.55) or already preseeded;
+      // a release from beyond the reveal band carries no entry choreography (rows are home).
+      if (target === 1 && !this.momRows && (this.tlSpine.value < 0.55 || this._preseeded))
+        this.preseedRows(this._ferryV);
       this.tlSpine.setRegister(target === 0.5 ? "ferryCard" : "ferryEdge");
       this.tlSpine.glideTo(target, performance.now() / 1000, seedV);
       ensureLoop();
@@ -1093,15 +1100,34 @@ const PC = (() => {
       setCell("#aDetL", `t=${target}`, true);
       this.ferryGlide(target, v);
     }
-    ferryArrive(target, vCross) {
-      if (target === 1) this.spawnMomentum(this.npRowEls(), Math.abs(vCross));
-      if (target === 0) { this.ferrying = false; this.npBody.classList.toggle("glass-on", POSTURES[this.posture].npGlass); }
+    ferryArrive(target) {
+      if (target === 1 && (this._preseeded || PRM())) this.spawnMomentum(this.npRowEls(), this._ferryV || 0);
+      if (target === 0) {
+        this.ferrying = false;
+        this.npBody.classList.toggle("glass-on", POSTURES[this.posture].npGlass);
+        this.clearRowPreseed();
+      }
     }
     npRowEls() { return [...document.querySelectorAll("#npRows .mrow")]; }
 
     // ---- R-MOMENTUM (shared with Phone B via the same physics) ----
+    // Preseed: rows REVEAL already displaced-low (the ladder fades them in over the
+    // preseeded offset), so spawn continues from x0=1 with zero C0 seam at arrival.
+    preseedRows(v) {
+      this._preV = Math.abs(v || 0);
+      this.npRowEls().forEach((el, n) => {
+        el.style.transform = `translateY(${PC.momAmpPx(this._preV, n).toFixed(2)}px)`;
+      });
+      this._preseeded = true;
+    }
+    clearRowPreseed() {
+      if (!this._preseeded) return;
+      for (const el of this.npRowEls()) el.style.transform = "";
+      this._preseeded = false;
+    }
     spawnMomentum(els, v) {
       const t0 = performance.now() / 1000;
+      this._preseeded = false; // rows now owned by the momentum channel
       this.momRows = els.map((el, n) => ({
         el, n, t0: t0 + PC.momStartS(n),
         fn: PC.criticalSampler(PC.MOM.w, 1, PC.momSeed(v, n), 0),
@@ -1124,12 +1150,21 @@ const PC = (() => {
           this.drag = { mode: "ferry", lastY: e.clientY, lastT: now };
           return;
         }
-        const npR = this.npBody.getBoundingClientRect(); // event-scoped read, not per-frame
-        const inNp = e.clientY >= npR.top && this.posture === "STACKED" && !this.ferrying;
+        // event-scoped read, not per-frame. NB: the npBody border-box is the full base box
+        // (clip-path never shrinks getBoundingClientRect) — hit-test the RESOLVED body rect.
+        const phoneR = this.phone.getBoundingClientRect();
+        const bodyNow = PC.rectAt("body", this.tlSpine.value);
+        const inNp = (e.clientY - phoneR.top) >= bodyNow.y && this.posture === "STACKED" && !this.ferrying;
         if (inNp && this.tlSpine.value === 0) {
           this.tlSpine.setRegister("ferryEdge");
           this.tlSpine.beginScrub(now);
           this.ferrying = true; this.npBody.classList.add("glass-on");
+          if (!PRM()) this.preseedRows(0);
+          this.drag = { mode: "ferry", lastY: e.clientY, lastT: now };
+        } else if (this.ferrying && this.tlSpine.regime === "parked") {
+          // the open page/card is a scrub surface too — resume the SAME spine from its detent
+          this.tlSpine.setRegister("ferryEdge");
+          this.tlSpine.beginScrub(now);
           this.drag = { mode: "ferry", lastY: e.clientY, lastT: now };
         } else {
           this.drag = { mode: "scroll", lastY: e.clientY, lastT: now, downAccum: 0 };
@@ -1143,6 +1178,8 @@ const PC = (() => {
         if (this.drag.mode === "ferry") {
           const t = PC.clamp01(this.tlSpine.value - dy / 380);
           this.tlSpine.scrubTo(t, now);
+          // re-arm the entry choreography once the rows have laddered fully out
+          if (t < 0.55 && !this._preseeded && !this.momRows && !PRM()) this.preseedRows(0);
           this.apply(); ensureLoop();
         } else {
           this.scroll(-dy, now, true);
@@ -1252,6 +1289,7 @@ const PC = (() => {
         this.posture = this.postureFrom = this.postureTo = "STACKED";
         this.pcSpine.seat(1); this.tlSpine.seat(0); this.ferrying = false;
         this.scrollY = 0; this.dispAccum = 0; this.momRows = null;
+        this._preseeded = true; this.clearRowPreseed(); this._ferryV = 0;
         this.libScroll.style.transform = "translateY(0)";
         this.art.remove();
         this.art.style.cssText = "";
@@ -1303,13 +1341,15 @@ const PC = (() => {
       this.npBody.style.transform = chipScale === 1 ? "" : `scale(${chipScale.toFixed(4)})`;
       this.npBody.style.transformOrigin = `${body.x - bx + body.w / 2}px ${body.y - by + body.h / 2}px`;
 
-      // ferried elements (transform-only against their page-home base rects)
+      // ferried elements (transform-only against their page-home base rects).
+      // transform-origin is 0 0: translate(T) scale(s) puts the element CORNER at static+T —
+      // scale never moves the corner — so the base offsets subtract UNscaled.
       if (this.art.parentElement === this.npBody) {
         const sA = art.w / 168;
-        this.art.style.transform = `translate(${(art.x - bx - 58 * sA).toFixed(2)}px, ${(art.y - by - 32 * sA).toFixed(2)}px) scale(${sA.toFixed(4)})`;
+        this.art.style.transform = `translate(${(art.x - bx - 58).toFixed(2)}px, ${(art.y - by - 32).toFixed(2)}px) scale(${sA.toFixed(4)})`;
       }
       const sMx = mq.w / 168, sMy = mq.h / 28;
-      this.mq.style.transform = `translate(${(mq.x - bx - 58 * sMx).toFixed(2)}px, ${(mq.y - by - 212 * sMy).toFixed(2)}px) scale(${sMx.toFixed(4)}, ${sMy.toFixed(4)})`;
+      this.mq.style.transform = `translate(${(mq.x - bx - 58).toFixed(2)}px, ${(mq.y - by - 212).toFixed(2)}px) scale(${sMx.toFixed(4)}, ${sMy.toFixed(4)})`;
 
       // ferry ladder + medium handshake
       const tl = this.tlSpine.value;
@@ -1343,12 +1383,8 @@ const PC = (() => {
         if (now - this.chipT0 > 0.9) { this.chipFn = null; this.chipX = 0; }
       }
       if (this.tlSpine.regime === "glide") {
-        const prev = this.tlSpine.value;
         this.tlSpine.tick(now); active = true;
-        if (this.tlSpine.regime === "parked") {
-          const vCross = (this.tlSpine.value - prev) / Math.max(dt, 1e-4);
-          this.ferryArrive(this.tlSpine.target, vCross);
-        }
+        if (this.tlSpine.regime === "parked") this.ferryArrive(this.tlSpine.target);
       }
       if (this.tlSpine.regime === "scrub" || this.drag) active = true;
       if (this.momRows) {
@@ -1395,14 +1431,29 @@ const PC = (() => {
       engine.surfaces.push(this);
     }
     rowEls() { return [...document.querySelectorAll("#bdRows .mrow")]; }
+    preseed(v) { // rows reveal displaced-low; spawn continues from x0=1 with no arrival seam
+      this._preV = Math.abs(v || 0);
+      this.rowEls().forEach((el, n) => {
+        el.style.transform = `translateY(${PC.momAmpPx(this._preV, n).toFixed(2)}px)`;
+      });
+      this._preseeded = true;
+    }
+    clearPreseed() {
+      if (!this._preseeded) return;
+      for (const el of this.rowEls()) el.style.transform = "";
+      this._preseeded = false;
+    }
     glide(target, seedV) {
       if (PRM()) { this.spine.seat(target); if (target === 1) this.spawn(Math.abs(seedV || 0)); this.apply(); return; }
+      // entry pending iff rows still invisible (g < first rung 0.40) or already preseeded
+      if (target === 1 && !this.momRows && (this.spine.value < 0.4 || this._preseeded)) this.preseed(seedV);
       this.spine.glideTo(target, performance.now() / 1000, seedV);
       this._pendingV = seedV || 0;
       ensureLoop();
     }
     spawn(v) {
       const t0 = performance.now() / 1000;
+      this._preseeded = false; // rows now owned by the momentum channel
       this.momRows = this.rowEls().map((el, n) => ({
         el, n, t0: t0 + PC.momStartS(n),
         fn: PC.criticalSampler(PC.MOM.w, 1, PC.momSeed(v, n), 0),
@@ -1417,6 +1468,7 @@ const PC = (() => {
       this.el.addEventListener("pointerdown", (e) => {
         this.el.setPointerCapture(e.pointerId);
         const now = performance.now() / 1000;
+        if (this.spine.value === 0 && !this.momRows && !PRM()) this.preseed(0);
         this.spine.beginScrub(now); // catches any glide C1
         this.dragLast = e.clientY;
         e.stopPropagation();
@@ -1427,6 +1479,8 @@ const PC = (() => {
         const dy = e.clientY - this.dragLast;
         this.dragLast = e.clientY;
         this.spine.scrubTo(PC.clamp01(this.spine.value + dy / 248), now);
+        // re-arm the entry choreography once the rows have laddered fully out
+        if (this.spine.value < 0.4 && !this._preseeded && !this.momRows && !PRM()) this.preseed(0);
         this.apply(); ensureLoop();
       });
       const up = () => {
@@ -1450,7 +1504,11 @@ const PC = (() => {
         this.spine.beginScrub(now);
         setTimeout(() => this.glide(this.spine.value + 0.2 * vB >= 0.5 ? 1 : 0, vB), 300);
       };
-      $("#bResetB").onclick = () => { this.spine.seat(0); this.momRows = null; this.apply(); };
+      $("#bResetB").onclick = () => {
+        this.spine.seat(0); this.momRows = null;
+        this._preseeded = true; this.clearPreseed();
+        this.apply();
+      };
     }
     apply() {
       const g = this.spine.value;
@@ -1470,9 +1528,10 @@ const PC = (() => {
       if (this.spine.regime === "glide") {
         this.spine.tick(now); active = true;
         if (this.spine.regime === "parked" && this.spine.target === 1 && this._pendingV !== undefined) {
-          this.spawn(Math.abs(this._pendingV));
+          if (this._preseeded) this.spawn(Math.abs(this._pendingV));
           this._pendingV = undefined;
         }
+        if (this.spine.regime === "parked" && this.spine.target === 0) this.clearPreseed();
       }
       if (this.spine.regime === "scrub") active = true;
       if (this.momRows) {

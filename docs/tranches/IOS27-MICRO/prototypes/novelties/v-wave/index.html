@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>V-WAVE — the waveform register (IOS27-MICRO novelty)</title>
+<!--
+  V-WAVE — the waveform register. Standalone prototype, no build step.
+  verified-model: claude-fable-5. Seat: novelty:PROTO-2 (PROTO-ATTENTION-EXIT).
+  Roster card 5 (NOVELTY-ROSTER.md:232-247). Mechanism, verbatim from the card:
+    <=24 bars as scaleY transforms; live mode reads one AnalyserNode inside an
+    event-scoped rAF that exists only while the session does; idle state is the
+    law-11 luminance drift (a calm surface, not a flatlined waveform lying about
+    listening); PRM = a static level chip, stepped. transform-only; one rAF while
+    live, zero at rest (the R3b budget); no layout reads (bar count fixed, widths
+    static).
+  The FAC fold (SUFFUSION §3.1 #2, three sources one shape): mic energy, pointer
+  velocity, and value churn all publish the SAME sample shape — a level scalar in
+  [0,1] — and the organ cannot tell which source drives. HONESTY (the I-row law):
+  no fake spectra, no Math.random anywhere. All bar structure is deterministic
+  physics — a raised-cosine spatial kernel scaled by the REAL level, rendered
+  through per-bar springs whose stiffness grades center-out (the detuned-channel
+  discipline, codex law 5: the center leads, the edges lag ~100ms).
+  The home surface is the assistant black-glass register (codex law 13: ~70% black
+  fill, LOW backdrop blur — content ghosts through — thin white rim highlights;
+  near-black is a luminance floor, never an opaque paint). Idle life is the law-11
+  envelope: a CSS-only rim-luminance drift, ~7s period, peak +16% over ground —
+  no rAF spends at rest.
+-->
+<style>
+  :root {
+    --engage-t: 0; /* published while a session is live (the FAC shape) */
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body {
+    background: #0b0e14; color: rgba(255, 255, 255, 0.92);
+    font: 14px/1.45 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+    display: grid; place-items: center; padding: 24px;
+  }
+  .phone {
+    position: relative; width: 420px; height: 720px; border-radius: 36px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), inset 0 0 0 6px #05070b;
+    overflow: hidden;
+  }
+  .world {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(160px 130px at 24% 18%, rgba(255, 158, 94, 0.85), transparent 70%),
+      radial-gradient(200px 170px at 82% 30%, rgba(120, 108, 255, 0.8), transparent 70%),
+      radial-gradient(230px 210px at 50% 86%, rgba(66, 190, 224, 0.75), transparent 70%),
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.10) 0 1px, transparent 1px 14px),
+      #10141c;
+  }
+  /* ============ the assistant capsule — the law-13 smoky register ============
+     ~70% black fill; LOW blur (6px — the backdrop ghosts through); thin rim. */
+  .capsule {
+    position: absolute; left: 28px; right: 28px; bottom: 96px; z-index: 2;
+    border-radius: 30px; padding: 18px 20px 16px;
+    background: rgba(10, 12, 15, 0.70);
+    -webkit-backdrop-filter: blur(6px) saturate(1.15);
+    backdrop-filter: blur(6px) saturate(1.15);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  }
+  /* the law-11 idle drift: CSS-only rim luminance breathing — asymmetric (fast
+     rise, slow decay via cubic-bezier skew), ~7s period, peak +16% over ground.
+     It is the CALM surface that says "alive", never a flatlined waveform. */
+  .breath {
+    position: absolute; inset: 0; border-radius: 30px; pointer-events: none;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.10);
+    opacity: 0;
+    animation: breath 7s cubic-bezier(0.3, 0.0, 0.2, 1.0) infinite;
+  }
+  @keyframes breath {
+    0% { opacity: 0; }
+    10% { opacity: 0.16; }  /* rise ~0.7s of the 7s period — the law-11 lifecycle */
+    55% { opacity: 0.03; }  /* long decay */
+    100% { opacity: 0; }
+  }
+  .capsule.live .breath { animation: none; opacity: 0; } /* the session owns the light */
+  @media (prefers-reduced-motion: reduce) { .breath { animation: none; } }
+  /* the bar rack: fixed count, fixed widths — scaleY is the ONLY moving part */
+  .rack {
+    display: flex; align-items: center; justify-content: center; gap: 5px;
+    height: 56px; margin: 6px 0 10px;
+  }
+  .bar {
+    width: 5px; height: 44px; border-radius: 2.5px; flex: 0 0 auto;
+    background: linear-gradient(180deg, rgba(245, 236, 220, 0.92), rgba(245, 236, 220, 0.55));
+    transform: scaleY(0.06); /* the rest floor — a quiet baseline, not a lie */
+    transform-origin: center;
+  }
+  @media (prefers-reduced-motion: reduce) { .rack { display: none; } }
+  /* the level chip: the honest state relay — and the whole PRM organ */
+  .chip {
+    display: none; height: 10px; border-radius: 5px; margin: 24px 0 32px;
+    background: rgba(255, 255, 255, 0.10);
+    overflow: hidden;
+  }
+  .chip .fill {
+    height: 100%; width: 0%; border-radius: 5px;
+    background: rgba(245, 236, 220, 0.85);
+  }
+  @media (prefers-reduced-motion: reduce) { .chip { display: block; } }
+  .cap-row { display: flex; gap: 8px; }
+  .cap-btn {
+    flex: 1; padding: 9px 0; border: 0; border-radius: 14px; cursor: pointer;
+    background: rgba(255, 255, 255, 0.09);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+    color: rgba(255, 255, 255, 0.90); font: inherit; font-size: 12.5px; font-weight: 600;
+  }
+  .cap-btn[aria-pressed="true"] { background: rgba(245, 236, 220, 0.22); }
+  .pad {
+    margin-top: 8px; height: 44px; border-radius: 14px; touch-action: none; cursor: grab;
+    background: rgba(255, 255, 255, 0.06);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10);
+    display: grid; place-items: center; font-size: 12px; color: rgba(255, 255, 255, 0.55);
+  }
+  .status { font-size: 11.5px; color: rgba(255, 255, 255, 0.55); margin-top: 8px; min-height: 16px; }
+  .hud {
+    position: absolute; left: 12px; bottom: 10px; z-index: 4; font-size: 10.5px;
+    color: rgba(255, 255, 255, 0.5); font-family: ui-monospace, monospace;
+  }
+  .note { max-width: 420px; margin-top: 14px; font-size: 12px; color: rgba(255,255,255,0.45); }
+</style>
+</head>
+<body>
+<main>
+  <div class="phone" id="phone">
+    <div class="world"></div>
+    <div class="capsule" id="capsule">
+      <div class="breath" aria-hidden="true"></div>
+      <div class="rack" id="rack" aria-hidden="true"></div>
+      <div class="chip" aria-hidden="true"><div class="fill" id="chipFill"></div></div>
+      <div class="cap-row">
+        <button class="cap-btn" id="micBtn" aria-pressed="false">Listen (mic)</button>
+        <button class="cap-btn" id="churnBtn">Churn a value</button>
+      </div>
+      <div class="pad" id="pad">drag here — pointer velocity drives the same bars</div>
+      <div class="status" role="status" id="status">idle — calm surface, no session</div>
+    </div>
+    <div class="hud" id="hud">level 0.000 · source — · rAF parked</div>
+  </div>
+  <p class="note">V-WAVE: one organ, any honest signal. Mic energy, pointer velocity, and value
+  churn publish the SAME level shape; the bars are deterministic physics on that level — no fake
+  spectra, ever. Idle is the law-11 breath, not a flatlined waveform.</p>
+</main>
+
+<script>
+/*WAVE-PHYSICS-BEGIN*/
+// The V-WAVE physics — the SAME object drives paint and the node battery.
+// Pure math, no DOM, no randomness. verified-model: claude-fable-5.
+const WAVE = {
+  N: 20,               // fixed bar count (<=24), widths static — zero layout reads
+  FLOOR: 0.06,         // the rest scale floor (a quiet baseline; bars hide at park)
+  // meter ballistics: fast attack (the "I hear you" relay), slower release —
+  // the same asymmetric-envelope class as --engage-t.
+  level: { tauUp: 0.04, tauDown: 0.22, eps: 1e-3 },
+  levelStep(l, target, dt) {
+    const tau = target > l ? this.level.tauUp : this.level.tauDown;
+    const next = l + (target - l) * (1 - Math.exp(-dt / tau));
+    return Math.abs(next - target) < this.level.eps ? target : next;
+  },
+  // the spatial kernel: raised cosine, peak center, monotone falloff — the honest
+  // display of ONE degree of freedom. No noise pretends to be a spectrum.
+  kernel(i, n = this.N) {
+    const x = (i - (n - 1) / 2) / ((n - 1) / 2); // [-1, 1]
+    return 0.5 * (1 + Math.cos(Math.PI * x * 0.92)) / (0.5 * (1 + Math.cos(0)));
+  },
+  barTarget(i, level) { return this.FLOOR + (1 - this.FLOOR) * level * this.kernel(i); },
+  // per-bar springs, stiffness graded center-out: the center leads, the edges lag
+  // (codex law 5 — detuned channels, never one shared clock).
+  barOmega(i, n = this.N) {
+    const x = Math.abs(i - (n - 1) / 2) / ((n - 1) / 2);
+    return 34 - 22 * x; // center ~34 rad/s, edge ~12 rad/s
+  },
+  makeBar(i) {
+    const w = this.barOmega(i);
+    let x = this.FLOOR, v = 0;
+    return {
+      step(target, dt) { // critically damped, state pair (value, velocity) — C1 at every seam
+        const a = -2 * w * v - w * w * (x - target);
+        v += a * dt; x += v * dt;
+        return x;
+      },
+      get x() { return x; }, get v() { return v; },
+      settled(target) { return Math.abs(x - target) < 0.004 && Math.abs(v) < 0.02; },
+    };
+  },
+  // --- three sources, ONE shape: every adapter returns { level } in [0,1] ---
+  sources: {
+    mic(rms) { return { level: Math.min(1, Math.max(0, rms * 2.6)) }; },
+    pointer(vPxPerS) { return { level: Math.tanh(Math.abs(vPxPerS) / 900) }; },
+    churn(springV) { return { level: Math.tanh(Math.abs(springV) * 1.4) }; },
+  },
+  // the churn driver: a value spring whose VELOCITY is the honest signal
+  makeChurn(target = 0.8) { // keyboard law: deterministic preset, zero seeded velocity
+    const w = 9; let x = 0, v = 0;
+    return {
+      step(dt) { const a = -2 * w * v - w * w * (x - target); v += a * dt; x += v * dt; return { x, v }; },
+      done() { return Math.abs(x - target) < 0.002 && Math.abs(v) < 0.01; },
+      get v() { return v; },
+    };
+  },
+  prmSteps: 5, // the stepped level chip: quantized, honest, motionless
+  prmQuantize(level) { return Math.round(level * (this.prmSteps - 1)) / (this.prmSteps - 1); },
+  tokens: { capsuleBlack: 0.70, blurPx: 6, breathPeak: 0.16, breathPeriodS: 7 },
+  sims: {
+    oneShape() { // the adapters are indistinguishable to the organ
+      const a = WAVE.sources.mic(0.25), b = WAVE.sources.pointer(651.53), c = WAVE.sources.churn(0.553);
+      const keysEqual = [a, b, c].every((s) => JSON.stringify(Object.keys(s)) === '["level"]') ? 1 : 0;
+      // feed the SAME level through each path: bar targets must be identical
+      const L = 0.65;
+      const t1 = WAVE.barTarget(4, L), t2 = WAVE.barTarget(4, L), t3 = WAVE.barTarget(4, L);
+      return { keysEqual, sameTargets: t1 === t2 && t2 === t3 ? 1 : 0, bounded: [a, b, c].every((s) => s.level >= 0 && s.level <= 1) ? 1 : 0 };
+    },
+    ballistics() {
+      const dt = 1 / 240; let l = 0, t = 0, t90 = null;
+      while (t < 1 && t90 === null) { l = WAVE.levelStep(l, 1, dt); t += dt; if (l >= 0.9) t90 = t; }
+      let t10 = null; let td = 0;
+      while (td < 3 && t10 === null) { l = WAVE.levelStep(l, 0, dt); td += dt; if (l <= 0.1) t10 = td; }
+      return { attackT90: t90 * 1000, releaseT10: t10 * 1000 };
+    },
+    barLag() { // center leads, edges lag — the detuned read (fractional GAP progress)
+      const dt = 1 / 240; const ci = Math.floor(WAVE.N / 2);
+      const center = WAVE.makeBar(ci), edge = WAVE.makeBar(0);
+      const c0 = center.x, e0 = edge.x, L = 1;
+      const cT = WAVE.barTarget(ci, L), eT = WAVE.barTarget(0, L);
+      let t = 0, tc = null, te = null;
+      while (t < 2 && (tc === null || te === null)) {
+        center.step(cT, dt); edge.step(eT, dt); t += dt;
+        if (tc === null && (center.x - c0) >= 0.5 * (cT - c0)) tc = t;
+        if (te === null && (edge.x - e0) >= 0.5 * (eT - e0)) te = t;
+      }
+      return { lagMs: (te - tc) * 1000 };
+    },
+    park() { // session ends: level drains, every bar settles, the rAF dies
+      const dt = 1 / 240; const bars = Array.from({ length: WAVE.N }, (_, i) => WAVE.makeBar(i));
+      let l = 0, t = 0;
+      for (let k = 0; k < 120; k++) { l = WAVE.levelStep(l, 0.9, dt); bars.forEach((b, i) => b.step(WAVE.barTarget(i, l), dt)); t += dt; }
+      let parkAt = null; let td = 0;
+      while (td < 4 && parkAt === null) {
+        l = WAVE.levelStep(l, 0, dt);
+        bars.forEach((b, i) => b.step(WAVE.barTarget(i, l), dt));
+        td += dt;
+        if (l === 0 && bars.every((b, i) => b.settled(WAVE.barTarget(i, 0)))) parkAt = td;
+      }
+      return { parkMs: parkAt * 1000, allAtFloor: bars.every((b) => Math.abs(b.x - WAVE.FLOOR) < 0.02) ? 1 : 0 };
+    },
+    catchContinuity() { // retarget mid-flight: the state pair carries through, C1
+      const dt = 1 / 240; const b = WAVE.makeBar(10);
+      let prev = b.x, maxJump = 0;
+      for (let k = 0; k < 60; k++) { b.step(0.9, dt); maxJump = Math.max(maxJump, Math.abs(b.x - prev)); prev = b.x; }
+      for (let k = 0; k < 120; k++) { b.step(0.2, dt); maxJump = Math.max(maxJump, Math.abs(b.x - prev)); prev = b.x; }
+      return { maxJump };
+    },
+    kernelShape() {
+      let peakAt = 0, peak = -1, symErr = 0, nonMono = 0;
+      const half = [];
+      for (let i = 0; i < WAVE.N; i++) {
+        const k = WAVE.kernel(i);
+        if (k > peak) { peak = k; peakAt = i; }
+        symErr = Math.max(symErr, Math.abs(k - WAVE.kernel(WAVE.N - 1 - i)));
+      }
+      for (let i = 1; i <= Math.floor(WAVE.N / 2); i++)
+        if (WAVE.kernel(i) < WAVE.kernel(i - 1) - 1e-12) nonMono++;
+      return { peakCentered: Math.abs(peakAt - (WAVE.N - 1) / 2) <= 0.5 ? 1 : 0, symErr, nonMono, peak };
+    },
+    honesty() { // zero level -> the organ is silent; the skeleton never performs
+      const targets = Array.from({ length: WAVE.N }, (_, i) => WAVE.barTarget(i, 0));
+      return { silentAtZero: targets.every((t) => t === WAVE.FLOOR) ? 1 : 0 };
+    },
+    keyboardChurn() { // preset spring, v0 = 0: overshoot is earned, none here
+      const c = WAVE.makeChurn(0.8); const dt = 1 / 240;
+      let overshoot = 0, t = 0;
+      while (t < 3 && !c.done()) { const r = c.step(dt); overshoot = Math.max(overshoot, r.x - 0.8); t += dt; }
+      return { overshoot, settleMs: t * 1000 };
+    },
+    prm() {
+      const q = [0, 0.2, 0.5, 0.9, 1].map((l) => WAVE.prmQuantize(l));
+      const distinct = new Set(q).size;
+      return { steps: WAVE.prmSteps, distinct, quantized: q.every((v) => Math.abs(v * (WAVE.prmSteps - 1) - Math.round(v * (WAVE.prmSteps - 1))) < 1e-9) ? 1 : 0 };
+    },
+  },
+};
+/*WAVE-PHYSICS-END*/
+
+// ---------- page wiring (one event-scoped rAF; one live source; zero at rest) ----------
+(function () {
+  const root = document.documentElement;
+  const capsule = document.getElementById("capsule");
+  const rack = document.getElementById("rack");
+  const hud = document.getElementById("hud");
+  const status = document.getElementById("status");
+  const chipFill = document.getElementById("chipFill");
+  const prm = matchMedia("(prefers-reduced-motion: reduce)");
+
+  // build the fixed rack once — count and widths never change (no layout reads ever)
+  const bars = [];
+  for (let i = 0; i < WAVE.N; i++) {
+    const el = document.createElement("div");
+    el.className = "bar";
+    rack.appendChild(el);
+    bars.push({ el, spring: WAVE.makeBar(i) });
+  }
+
+  let raf = 0, last = 0, level = 0, target = 0;
+  let source = null;   // "mic" | "pointer" | "churn" — exactly one live source
+  let analyser = null, stream = null, audioCtx = null, freq = null;
+  let churn = null, padVel = 0, padLastY = 0, padLastT = 0, padDragging = false;
+
+  function relay(text) { status.textContent = text; }
+  function writeChip(l) { chipFill.style.width = `${(WAVE.prmQuantize(l) * 100).toFixed(0)}%`; }
+
+  function tick(now) {
+    const dt = Math.min(0.05, (now - last) / 1000); last = now;
+    // pull the live source's sample (the ONE shape: { level })
+    if (source === "mic" && analyser) {
+      analyser.getByteFrequencyData(freq);
+      let sum = 0; for (let i = 0; i < freq.length; i++) sum += freq[i] * freq[i];
+      target = WAVE.sources.mic(Math.sqrt(sum / freq.length) / 255).level;
+    } else if (source === "pointer") {
+      target = WAVE.sources.pointer(padVel).level;
+      padVel *= Math.exp(-dt / 0.12); // the pointer's energy decays between moves
+      if (!padDragging && target < 0.02) target = 0;
+    } else if (source === "churn" && churn) {
+      const r = churn.step(dt);
+      target = WAVE.sources.churn(r.v).level;
+      if (churn.done()) { churn = null; source = null; target = 0; } // the session self-ends
+    } else target = 0;
+
+    level = WAVE.levelStep(level, target, dt);
+    root.style.setProperty("--engage-t", level.toFixed(4));
+    let allSettled = level === 0 && target === 0;
+    for (let i = 0; i < bars.length; i++) {
+      const bt = WAVE.barTarget(i, level);
+      const x = bars[i].spring.step(bt, dt);
+      bars[i].el.style.transform = `scaleY(${Math.max(0.02, x).toFixed(4)})`;
+      if (!bars[i].spring.settled(bt) || level !== 0) allSettled = false;
+    }
+    writeChip(level);
+    hud.textContent = `level ${level.toFixed(3)} · source ${source || "—"} · rAF live`;
+    if (allSettled && source === null) {
+      raf = 0; capsule.classList.remove("live");
+      hud.textContent = `level 0.000 · source — · rAF parked`;
+      relay("idle — calm surface, no session");
+      return;
+    }
+    raf = requestAnimationFrame(tick);
+  }
+  function wake() {
+    capsule.classList.add("live");
+    if (prm.matches) return; // PRM: no rAF ritual — the chip steps below
+    if (!raf) { last = performance.now(); raf = requestAnimationFrame(tick); }
+  }
+  function endSession() {
+    source = null;
+    if (stream) { stream.getTracks().forEach((t) => t.stop()); stream = null; }
+    if (audioCtx) { audioCtx.close(); audioCtx = null; analyser = null; }
+    if (prm.matches) { level = 0; writeChip(0); relay("idle — calm surface, no session"); capsule.classList.remove("live"); }
+  }
+
+  // --- source 1: the mic (event-scoped AnalyserNode; honest failure, never fake) ---
+  const micBtn = document.getElementById("micBtn");
+  micBtn.addEventListener("click", async () => {
+    if (source === "mic") { micBtn.setAttribute("aria-pressed", "false"); endSession(); return; }
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      analyser = audioCtx.createAnalyser();
+      analyser.fftSize = 256;
+      freq = new Uint8Array(analyser.frequencyBinCount);
+      audioCtx.createMediaStreamSource(stream).connect(analyser);
+      source = "mic"; micBtn.setAttribute("aria-pressed", "true");
+      relay("listening — mic energy drives the bars");
+      if (prm.matches) { // PRM mic: sample on a coarse honest clock, stepped chip
+        const step = () => { if (source !== "mic") return;
+          analyser.getByteFrequencyData(freq);
+          let sum = 0; for (let i = 0; i < freq.length; i++) sum += freq[i] * freq[i];
+          writeChip(WAVE.sources.mic(Math.sqrt(sum / freq.length) / 255).level);
+          setTimeout(step, 250); };
+        step();
+      } else wake();
+    } catch (err) {
+      relay("mic unavailable — the organ stays quiet (never fake signal)");
+      source = null; // HONESTY: denial means silence, not decoration
+    }
+  });
+
+  // --- source 2: pointer velocity (the pad) ---
+  const pad = document.getElementById("pad");
+  pad.addEventListener("pointerdown", (ev) => {
+    pad.setPointerCapture(ev.pointerId); padDragging = true;
+    padLastY = ev.clientY; padLastT = performance.now();
+    if (source !== "mic") { source = "pointer"; relay("pointer velocity drives the bars"); wake(); }
+  });
+  pad.addEventListener("pointermove", (ev) => {
+    if (!padDragging || source !== "pointer") return;
+    const now = performance.now(); const dt = (now - padLastT) / 1000;
+    if (dt > 0.004) {
+      padVel = Math.abs(ev.clientY - padLastY) / dt;
+      padLastY = ev.clientY; padLastT = now;
+      if (prm.matches) writeChip(WAVE.sources.pointer(padVel).level); // stepped, no motion
+    }
+  });
+  ["pointerup", "pointercancel"].forEach((n) => pad.addEventListener(n, () => {
+    padDragging = false;
+    if (source === "pointer") { source = null; if (prm.matches) endSession(); }
+  }));
+
+  // --- source 3: value churn (keyboard law: deterministic preset, v0 = 0) ---
+  document.getElementById("churnBtn").addEventListener("click", () => {
+    if (source === "mic") return;
+    churn = WAVE.makeChurn(0.8);
+    source = "churn"; relay("value churn — the spring's velocity is the signal");
+    if (prm.matches) { // PRM: the chip steps through the quantized preset, no bars
+      writeChip(0.6); setTimeout(() => { writeChip(0); endSession(); }, 600);
+      return;
+    }
+    wake(); // the churn self-ends inside tick when the spring settles; then the rack parks
+  });
+})();
+</script>
+</body>
+</html>

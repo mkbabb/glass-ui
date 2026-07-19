@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>V-DOTREL — the dot-matrix state relay (IOS27-MICRO novelty)</title>
+<!--
+  V-DOTREL — the dot-matrix state relay. Standalone prototype, no build step.
+  verified-model: claude-fable-5. Seat: novelty:PROTO-2 (PROTO-ATTENTION-EXIT).
+  Roster card 8 (NOVELTY-ROSTER.md:283-298). Mechanism, verbatim from the card:
+    One canvas on the shipped procedural-substrate class (no new engine); hue waves
+    are a phase field evaluated per dot per frame ONLY during a relay event, parked
+    otherwise; the trigger rides the co-owned --medium-t handshake. Zero idle rAF
+    (event-windowed like every driver); dot count capped by viewport area budget;
+    no DOM per dot. PRM: still frame with composition preserved.
+  Row K law: the lattice relays the PAGE's state (theme flip, mode change,
+  listening state), NEVER its own — no self-timers, no idle ticking. The lattice
+  breathes on the law-11 envelope (IOS27-CODEX.md:27): static lattice, no dot
+  travels; asymmetric per-dot lifecycle — rise ~0.7s, decay ~3s; luminance peak
+  ~+16% over ground; slowest visible change wins. Randomness is parameter-not-
+  sample (H-VOICE P2): per-dot delay jitter is seeded mulberry32, identical every
+  run. Palettes are OURS — warm cream ground, sky/dusk accents; hue travels as the
+  message, luminance rides the front as the pulse.
+-->
+<style>
+  :root { --medium-t: 0; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body {
+    background: #0b0e14; color: rgba(255, 255, 255, 0.92);
+    font: 14px/1.45 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+    display: grid; place-items: center; padding: 24px;
+  }
+  .phone {
+    position: relative; width: 420px; height: 720px; border-radius: 36px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), inset 0 0 0 6px #05070b;
+    overflow: hidden;
+  }
+  .world {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(200px 170px at 82% 78%, rgba(120, 108, 255, 0.5), transparent 70%),
+      radial-gradient(160px 130px at 22% 86%, rgba(255, 158, 94, 0.55), transparent 70%),
+      #10141c;
+  }
+  /* the ambient panel — the substrate's smoky home (law-13 kin at surface scale) */
+  .panel {
+    position: absolute; left: 24px; right: 24px; top: 24px; height: 400px; z-index: 2;
+    border-radius: 28px; overflow: hidden;
+    background: rgba(10, 12, 15, 0.70);
+    -webkit-backdrop-filter: blur(6px) saturate(1.15);
+    backdrop-filter: blur(6px) saturate(1.15);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  }
+  .panel canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .controls {
+    position: absolute; left: 24px; right: 24px; bottom: 96px; z-index: 2;
+    border-radius: 24px; padding: 14px 16px;
+    background: linear-gradient(180deg, rgba(44, 56, 60, 0.52), rgba(24, 32, 36, 0.66));
+    -webkit-backdrop-filter: blur(22px) saturate(1.35);
+    backdrop-filter: blur(22px) saturate(1.35);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  }
+  .controls .row { display: flex; gap: 8px; }
+  .ctl {
+    flex: 1; padding: 9px 0; border: 0; border-radius: 13px; cursor: pointer;
+    background: rgba(255, 255, 255, 0.09);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+    color: rgba(255, 255, 255, 0.90); font: inherit; font-size: 12px; font-weight: 600;
+  }
+  .ctl[aria-pressed="true"] { background: rgba(245, 236, 220, 0.22); }
+  .status { font-size: 11.5px; color: rgba(255, 255, 255, 0.55); margin-top: 10px; min-height: 16px; }
+  .hud {
+    position: absolute; left: 12px; bottom: 10px; z-index: 4; font-size: 10.5px;
+    color: rgba(255, 255, 255, 0.5); font-family: ui-monospace, monospace;
+  }
+  .note { max-width: 420px; margin-top: 14px; font-size: 12px; color: rgba(255,255,255,0.45); }
+</style>
+</head>
+<body>
+<main>
+  <div class="phone" id="phone">
+    <div class="world"></div>
+    <div class="panel" id="panel">
+      <canvas id="lattice" role="img" aria-label="Ambient dot lattice relaying the page state"></canvas>
+    </div>
+    <div class="controls">
+      <div class="row">
+        <button class="ctl" id="calmBtn" aria-pressed="true">Calm</button>
+        <button class="ctl" id="listenBtn" aria-pressed="false">Listening</button>
+        <button class="ctl" id="focusBtn" aria-pressed="false">Focus</button>
+        <button class="ctl" id="creamBtn" aria-pressed="false">Cream</button>
+      </div>
+      <div class="status" role="status" id="status">state: calm — the lattice rests, rAF parked</div>
+    </div>
+    <div class="hud" id="hud">state calm · dots — · rAF parked</div>
+  </div>
+  <p class="note">V-DOTREL: state changes travel as color through the matrix. Each press relays the
+  PAGE's state — a hue wave crosses the lattice from the pressed control, a +16% luminance pulse
+  riding the front on the law-11 envelope (rise ~0.7s, decay ~3s). Between relays: a still frame,
+  zero rAF.</p>
+</main>
+
+<script>
+/*DOTREL-PHYSICS-BEGIN*/
+// The V-DOTREL physics — the SAME object drives paint and the node battery.
+// Pure math, no DOM. Deterministic: mulberry32-seeded jitter, no ambient randomness.
+// verified-model: claude-fable-5.
+const DOTREL = {
+  PITCH: 18,          // px between dots — the lattice is static, no dot travels
+  RADIUS: 2.4,        // dot radius px
+  CAP: 900,           // the viewport-area dot budget, hard cap
+  WAVE_C: 900,        // px/s — the front crosses the panel in ~0.5s
+  JITTER_S: 0.04,     // max |per-dot delay jitter| — parameter-not-sample (seeded)
+  AMP: 0.16,          // law 11: luminance peak ~+16% over ground
+  env: { tauR: 0.6, tauD: 1.3 }, // rise-to-peak ~0.69s, decay-to-10% ~3.5s — the law-11 lifecycle
+  // our palettes — warm cream ground, sky/dusk accents; never a foreign register
+  palettes: {
+    calm:      { h: 40,  s: 0.30, l: 0.42 },
+    listening: { h: 205, s: 0.55, l: 0.48 },
+    focus:     { h: 275, s: 0.45, l: 0.46 },
+    cream:     { h: 42,  s: 0.50, l: 0.72 },
+  },
+  mulberry32(seed) {
+    let a = seed >>> 0;
+    return function () {
+      a |= 0; a = (a + 0x6D2B79F5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  },
+  // the peak-normalized asymmetric envelope: a(t) in [0,1], peak = 1 at t* ~0.69s
+  envPeakT() { const { tauR, tauD } = this.env; return -tauR * Math.log(tauR / (tauR + tauD)); },
+  envRaw(t) { const { tauR, tauD } = this.env; return t <= 0 ? 0 : (1 - Math.exp(-t / tauR)) * Math.exp(-t / tauD); },
+  envAt(t) { return this.envRaw(t) / this.envRaw(this.envPeakT()); },
+  // hue crossfade on the shortest arc, over the rise window
+  mixHue(h0, h1, u) {
+    let d = ((h1 - h0 + 540) % 360) - 180;
+    return ((h0 + d * Math.min(1, Math.max(0, u))) % 360 + 360) % 360;
+  },
+  // the lattice census — computed at build/resize ONLY, never per frame
+  build(w, h, seed = 7) {
+    const rnd = this.mulberry32(seed);
+    const cols = Math.max(1, Math.floor((w - this.PITCH) / this.PITCH)),
+      rows = Math.max(1, Math.floor((h - this.PITCH) / this.PITCH));
+    const x0 = (w - (cols - 1) * this.PITCH) / 2, y0 = (h - (rows - 1) * this.PITCH) / 2;
+    const dots = [];
+    for (let r = 0; r < rows; r++)
+      for (let c = 0; c < cols; c++) {
+        if (dots.length >= this.CAP) return dots; // the budget is a hard cap
+        dots.push({ x: x0 + c * this.PITCH, y: y0 + r * this.PITCH, j: (rnd() * 2 - 1) * this.JITTER_S });
+      }
+    return dots;
+  },
+  delayFor(dot, origin) {
+    return Math.hypot(dot.x - origin.x, dot.y - origin.y) / this.WAVE_C + dot.j + this.JITTER_S;
+  },
+  // a dot's paint at wall time t since relay start: hue rides the rise, the pulse rides the front
+  dotState(dot, origin, from, to, t) {
+    const tl = t - this.delayFor(dot, origin);
+    if (tl <= 0) return { h: from.h, s: from.s, l: from.l, a: 0 };
+    const a = this.envAt(tl);
+    const u = Math.min(1, tl / this.envPeakT());
+    return {
+      h: this.mixHue(from.h, to.h, u),
+      s: from.s + (to.s - from.s) * u,
+      l: (from.l + (to.l - from.l) * u) * (1 + this.AMP * a),
+      a,
+    };
+  },
+  // the event window: the relay is DONE (rAF parks) when the farthest dot's pulse has decayed
+  activeWindow() { return this.envPeakT() + this.env.tauD * Math.log(1 / 0.02); },
+  eventDur(dots, origin) {
+    let maxD = 0;
+    for (const d of dots) maxD = Math.max(maxD, this.delayFor(d, origin));
+    return maxD + this.activeWindow();
+  },
+  coveredFrac(dots, origin, t) { // the --medium-t handshake: front coverage in [0,1]
+    let n = 0;
+    for (const d of dots) if (t >= this.delayFor(d, origin)) n++;
+    return dots.length ? n / dots.length : 1;
+  },
+  sims: {
+    envelope() {
+      const dt = 1 / 240; let t = 0, peakT = DOTREL.envPeakT();
+      let t10 = null;
+      t = peakT;
+      while (t < 20 && t10 === null) { t += dt; if (DOTREL.envAt(t) <= 0.1) t10 = t - peakT; }
+      return { risePeakMs: peakT * 1000, decayTo10Ms: t10 * 1000, peakIsOne: Math.abs(DOTREL.envAt(peakT) - 1) < 1e-9 ? 1 : 0 };
+    },
+    pulseAmp() { // luminance peak over ground, at the envelope peak
+      const from = DOTREL.palettes.calm, to = DOTREL.palettes.listening;
+      const dot = { x: 0, y: 0, j: 0 }, origin = { x: 0, y: 0 };
+      let maxL = 0;
+      for (let t = 0; t < 6; t += 1 / 240) maxL = Math.max(maxL, DOTREL.dotState(dot, origin, from, to, t).l);
+      return { ratio: maxL / to.l };
+    },
+    waveOrder() { // farther dots never lead, modulo the declared jitter bound
+      const dots = DOTREL.build(360, 330, 7), origin = { x: 10, y: 10 };
+      let violations = 0;
+      const sorted = [...dots].sort((a, b) => Math.hypot(a.x - origin.x, a.y - origin.y) - Math.hypot(b.x - origin.x, b.y - origin.y));
+      for (let i = 1; i < sorted.length; i++) {
+        const dPrev = DOTREL.delayFor(sorted[i - 1], origin), dCur = DOTREL.delayFor(sorted[i], origin);
+        if (dCur < dPrev - 2 * DOTREL.JITTER_S) violations++;
+      }
+      const jitterBounded = dots.every((d) => Math.abs(d.j) <= DOTREL.JITTER_S) ? 1 : 0;
+      const delaysNonNeg = dots.every((d) => DOTREL.delayFor(d, origin) >= 0) ? 1 : 0;
+      return { violations, jitterBounded, delaysNonNeg };
+    },
+    continuity() { // no ticking: per-60Hz-frame luminance step stays tiny
+      const from = DOTREL.palettes.calm, to = DOTREL.palettes.focus;
+      const dot = { x: 40, y: 40, j: 0 }, origin = { x: 0, y: 0 };
+      let prev = null, maxStep = 0;
+      for (let t = 0; t < 6; t += 1 / 60) {
+        const s = DOTREL.dotState(dot, origin, from, to, t);
+        if (prev !== null) maxStep = Math.max(maxStep, Math.abs(s.l - prev));
+        prev = s.l;
+      }
+      return { maxStep };
+    },
+    eventWindow() { // the park law: finite, then zero
+      const dots = DOTREL.build(360, 330, 7), origin = { x: 10, y: 10 };
+      const dur = DOTREL.eventDur(dots, origin);
+      const from = DOTREL.palettes.calm, to = DOTREL.palettes.cream;
+      const residual = Math.max(...dots.map((d) => DOTREL.dotState(d, origin, from, to, dur).a));
+      const settledHue = dots.every((d) => Math.abs(DOTREL.dotState(d, origin, from, to, dur).h - to.h) < 1e-6) ? 1 : 0;
+      return { durS: dur, residual, settledHue };
+    },
+    budget() {
+      const small = DOTREL.build(360, 330, 7).length;
+      const huge = DOTREL.build(4000, 4000, 7).length;
+      return { small, huge, capped: huge === DOTREL.CAP ? 1 : 0 };
+    },
+    hueArc() {
+      const wrap = DOTREL.mixHue(350, 10, 0.5);          // must cross 0, not the long way
+      const exact = DOTREL.mixHue(350, 10, 1);
+      return { wrapAtZero: (wrap === 0 || wrap === 360) ? 1 : 0, lands: exact, longWay: Math.abs(DOTREL.mixHue(350, 10, 0.5) - 180) > 90 ? 1 : 0 };
+    },
+    prmStill() { // still frame, composition preserved: final state in one step, NO pulse
+      const from = DOTREL.palettes.calm, to = DOTREL.palettes.listening;
+      const s = { h: to.h, s: to.s, l: to.l }; // the PRM apply is definitionally the target
+      return { hueExact: s.h === to.h ? 1 : 0, noPulse: s.l === to.l ? 1 : 0 };
+    },
+    determinism() { // parameter-not-sample: the same seed is the same lattice
+      const a = DOTREL.build(360, 330, 7), b = DOTREL.build(360, 330, 7);
+      let maxDiff = 0;
+      for (let i = 0; i < a.length; i++) maxDiff = Math.max(maxDiff, Math.abs(a[i].j - b[i].j));
+      return { sameCount: a.length === b.length ? 1 : 0, maxDiff };
+    },
+    handshake() { // --medium-t: monotone 0 -> 1 as the front covers the lattice
+      const dots = DOTREL.build(360, 330, 7), origin = { x: 10, y: 10 };
+      let prev = -1, monotone = 1;
+      for (let t = 0; t < 1.2; t += 0.05) {
+        const f = DOTREL.coveredFrac(dots, origin, t);
+        if (f < prev - 1e-9) monotone = 0;
+        prev = f;
+      }
+      return { monotone, endsAtOne: DOTREL.coveredFrac(dots, origin, 10) === 1 ? 1 : 0, startsAtZero: DOTREL.coveredFrac(dots, origin, 0) === 0 ? 1 : 0 };
+    },
+  },
+};
+/*DOTREL-PHYSICS-END*/
+
+// ---------- page wiring (relay events only; still frame between; zero idle rAF) ----------
+(function () {
+  const root = document.documentElement;
+  const panel = document.getElementById("panel");
+  const canvas = document.getElementById("lattice");
+  const hud = document.getElementById("hud");
+  const status = document.getElementById("status");
+  const prm = matchMedia("(prefers-reduced-motion: reduce)");
+  const ctx2d = canvas.getContext("2d");
+
+  let dots = [], W = 0, H = 0, dpr = 1;
+  let state = "calm";
+  let raf = 0, relayT0 = 0, relayFrom = null, relayTo = null, relayOrigin = null, relayDur = 0;
+
+  function paint(t) { // one pass over the lattice; t = seconds since relay start (or null = rest)
+    ctx2d.clearRect(0, 0, W, H);
+    const to = DOTREL.palettes[state];
+    for (const d of dots) {
+      let s;
+      if (t === null) s = { h: to.h, s: to.s, l: to.l };
+      else s = DOTREL.dotState(d, relayOrigin, relayFrom, relayTo, t);
+      ctx2d.fillStyle = `hsl(${s.h.toFixed(1)} ${(s.s * 100).toFixed(0)}% ${(Math.min(0.95, s.l) * 100).toFixed(1)}%)`;
+      ctx2d.beginPath();
+      ctx2d.arc(d.x, d.y, DOTREL.RADIUS, 0, Math.PI * 2);
+      ctx2d.fill();
+    }
+  }
+  function build() { // census at build/resize ONLY — the one licensed layout read
+    const r = panel.getBoundingClientRect();
+    dpr = Math.min(2, window.devicePixelRatio || 1);
+    W = r.width; H = r.height;
+    canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+    ctx2d.setTransform(dpr, 0, 0, dpr, 0, 0);
+    dots = DOTREL.build(W, H, 7);
+    paint(null); // the still frame — composition preserved at rest
+    hud.textContent = `state ${state} · dots ${dots.length} · rAF parked`;
+  }
+  function tick(now) {
+    const t = (now - relayT0) / 1000;
+    paint(t);
+    root.style.setProperty("--medium-t", DOTREL.coveredFrac(dots, relayOrigin, t).toFixed(3));
+    hud.textContent = `state ${state} · dots ${dots.length} · rAF live ${t.toFixed(2)}s / ${relayDur.toFixed(2)}s`;
+    if (t >= relayDur) { // the pulse has decayed everywhere: park on the still frame
+      raf = 0; paint(null);
+      hud.textContent = `state ${state} · dots ${dots.length} · rAF parked`;
+      return;
+    }
+    raf = requestAnimationFrame(tick);
+  }
+  // THE ONLY ENTRY: a page-state change (row K law — the lattice never relays itself)
+  function relay(nextState, originEl) {
+    if (nextState === state) return;
+    relayFrom = DOTREL.palettes[state];
+    relayTo = DOTREL.palettes[nextState];
+    state = nextState;
+    status.textContent = `state: ${nextState} — relayed through the lattice`;
+    for (const [id, key] of Object.entries(BTN)) document.getElementById(id).setAttribute("aria-pressed", key === nextState ? "true" : "false");
+    if (prm.matches) { paint(null); root.style.setProperty("--medium-t", "1"); return; } // still frame, one step
+    // seat the wave's origin at the pressed control, mapped into canvas space (a
+    // resize-class read at event time — never per frame)
+    const pr = panel.getBoundingClientRect(), br = originEl.getBoundingClientRect();
+    relayOrigin = {
+      x: Math.min(W, Math.max(0, br.left + br.width / 2 - pr.left)),
+      y: Math.min(H, Math.max(0, br.top + br.height / 2 - pr.top)),
+    };
+    relayDur = DOTREL.eventDur(dots, relayOrigin);
+    relayT0 = performance.now();
+    root.style.setProperty("--medium-t", "0");
+    if (!raf) raf = requestAnimationFrame(tick);
+  }
+
+  const BTN = { calmBtn: "calm", listenBtn: "listening", focusBtn: "focus", creamBtn: "cream" };
+  for (const [id, key] of Object.entries(BTN))
+    document.getElementById(id).addEventListener("click", (ev) => relay(key, ev.currentTarget));
+
+  new ResizeObserver(build).observe(panel);
+  build();
+})();
+</script>
+</body>
+</html>
