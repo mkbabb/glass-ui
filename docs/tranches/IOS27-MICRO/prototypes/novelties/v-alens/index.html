@@ -212,7 +212,7 @@ const ALENS = {
     return Math.abs(next - target) < this.env.eps ? target : next;
   },
   // --- the opacity ladder: calc bands of --engage-t (HAND-MIRRORED to the CSS above;
-  //     not stamped — the CSS<->JS band cross-check is a pass-3 gate owed, MECH M7) ---
+  //     check.mjs cross-checks the equality — the owed MECH M7 gate, landed at the union) ---
   bands: [
     { blur: 4, a: 0.00, w: 0.45 },
     { blur: 3, a: 0.20, w: 0.50 },
@@ -233,8 +233,8 @@ const ALENS = {
       get() { return seated; },
     };
   },
-  // --- page tokens (hand-mirrored to the CSS; check.mjs reads here — the stamp is owed,
-  //     MECH M7: nothing stamps these into the stylesheet yet) ---
+  // --- page tokens (hand-mirrored to the CSS; check.mjs cross-checks panel alpha, accent,
+  //     label color, and base against the painted stylesheet — the M7 mirror is verified) ---
   tokens: {
     baseBg: [16, 20, 28],          // .world base #10141c
     panelWhiteAlpha: 0.045,        // --panel over base
@@ -337,12 +337,13 @@ const ALENS = {
     stage.style.setProperty("--engage-t", v.toFixed(4));
     stack.dataset.parked = v > 0 ? "0" : "1"; // layers exist only while engage-t > 0
   }
+  const HUD = !/[?&]hud=0/.test(location.search); // MECH minor 2: instrumentation-off for the browser arm
   function tick(now) {
     const dt = Math.min(0.05, (now - last) / 1000); last = now;
     e = ALENS.envStep(e, target, dt);
     write(e);
-    hud.textContent = `engage-t ${e.toFixed(3)} · seat ${fmtSeat()} · rAF live`;
-    if (e === target) { raf = 0; hud.textContent = `engage-t ${e.toFixed(3)} · seat ${fmtSeat()} · rAF parked`; return; }
+    if (HUD) hud.textContent = `engage-t ${e.toFixed(3)} · seat ${fmtSeat()} · rAF live`;
+    if (e === target) { raf = 0; if (HUD) hud.textContent = `engage-t ${e.toFixed(3)} · seat ${fmtSeat()} · rAF parked`; return; }
     raf = requestAnimationFrame(tick);
   }
   function drive(t) {

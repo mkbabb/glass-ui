@@ -31,8 +31,10 @@ the label's OWN ALPHA honored in the composite (worst case 4.88:1 ≥ AA at labe
   the gradient color's alpha — the painted dim ceiling was 0.26×0.85 ≈ 0.22, still a scrim.
 - **MECH M5 SUSTAINED and CURED.** `--engage-t`/`--lens-cx/cy` now publish on `#stage`, not
   `documentElement` (the inheriting-:root-per-frame subtree storm).
-- **MECH M7 SUSTAINED, comments cured.** The "single-sourced / CSS stamps FROM here" comments
-  were false — bands are hand-mirrored; the stamp/cross-check is a pass-3 gate owed.
+- **MECH M7 SUSTAINED, fully cured at the union.** The "single-sourced / CSS stamps FROM
+  here" comments were false — bands are hand-mirrored; the owed cross-check gates LANDED
+  2026-07-19: check.mjs now verifies the CSS calc bands equal `ALENS.bands` and the painted
+  panel alpha/accent/label/base equal the model tokens. Battery 24 → 32.
 - **QUEUED-PAINT (new):** the re-banded annulus must be VIDEO-judged on WebKit (halo local,
   world crisp, no banding between the 4/3/2 rings) before any adoption language.
 

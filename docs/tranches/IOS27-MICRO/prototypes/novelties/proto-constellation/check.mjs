@@ -68,12 +68,13 @@ console.log("\n=== Displacement + intent gates (law 16a: 100-150px velocity-agno
 console.log("\n=== Backdrop census + law-17 continuity ===");
 {
   const cen = PC.sims.census();
-  check("census max (backdrop surfaces)", cen.max, 0, 3, "[DESIGN] performance card: <=3 at any instant");
-  check("FUSED settles to ONE surface", cen.fused, 1, 1, "[DESIGN] the chip SHARES the main body's surface");
+  check("census max (backdrop surfaces)", cen.max, 0, 3, "[DECLARED] the design table's regression lock — architectural, proven live at QP-9, not machinery (M3 relabel)");
+  check("FUSED settles to ONE surface", cen.fused, 1, 1, "[DECLARED] the chip SHARES the main body's surface — ditto");
   const k = PC.sims.continuity();
+  check("posture transitions actually ran", k.flips, 4, 4, "[STRUCT] the M3 cure: the scripted choreography is no longer an empty loop");
   check("continuity carrier resets", k.resets, 0, 0, "[LAW 17] marquee offset survives every fission");
   check("badge survives", k.badge, 3, 3, "[LAW 17] identity continuity");
-  check("carrier step error", k.maxStepErr, 0, 1e-9, "[LAW 17] posture morphs never touch the carrier");
+  check("carrier step error", k.maxStepErr, 0, 1e-9, "[LAW 17] posture morphs never touch the carrier — asserted WHILE four glides run");
 }
 
 console.log("\n=== V-TIMELINE — one body, one spine (C0 geometry; detents law 7b/7c; seat law 14a-kin) ===");

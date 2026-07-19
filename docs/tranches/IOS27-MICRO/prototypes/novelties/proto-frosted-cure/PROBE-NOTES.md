@@ -1,4 +1,23 @@
-# PROBE-NOTES — PROTO-FROSTED-CURE (R-TABTOGGLE · R-TABS · R-SLIDER · R-EFFERVESCE)
+# PROBE-NOTES — PROTO-FROSTED-CURE
+
+## JUDGE CORRECTIONS (the union adjudication, 2026-07-19)
+
+- **MECH minor 8 SUSTAINED and CURED.** The pop-overs were not interrupt-safe: a rapid
+  re-toggle left the prior `openPop` rAF job alive writing transform/opacity against
+  `closePop`'s state. Every open/close now bumps a per-element generation; stale jobs
+  self-retire — the everything-catchable creed holds on the cure page itself.
+- **DESIGN m5 SUSTAINED and CURED — the per-arm rim band is WRITTEN.** Full-perimeter
+  hairline rims: 0.10-0.22, BOTH arms. The 1px top BEVEL is a distinct channel: dark arm
+  ≤0.24 (gated), light arm band [0.28, 0.45] (gated) — the old light bevel at 0.55 breached
+  the campaign's own band past even the F5 defect's 0.45; now 0.40. Video judges the read.
+- **DESIGN m6 SUSTAINED — the bloom license is NAMED.** `.cure-bloom`'s −12/−16px overreach
+  rides the SUFFUSION G-row engagement-lens license (energy/engage-gated, zero idle term by
+  construction), not the A-row 2-4px control bloom. Whether control-tier surfaces may borrow
+  the lens tier is the pass-3 video question; if it reads as fireworks the cure is insetting
+  toward the A-row band.
+- This page's warm derivation is the CANONICAL frosted register (DESIGN M3 ruling) — the
+  roster carries the token canon; the other prototypes repaint to it at pass-3.
+- Battery now 69. (R-TABTOGGLE · R-TABS · R-SLIDER · R-EFFERVESCE)
 
 verified-model: claude-fable-5 (system-context model ID, verbatim). Seat novelty:PROTO-3,
 IOS27-MICRO novelty loop, 2026-07-18.

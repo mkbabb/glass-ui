@@ -64,10 +64,18 @@ check("350->10 crosses zero at midpoint", ha.wrapAtZero, 1, 1, "[DESIGN] shortes
 check("350->10 lands exactly", ha.lands, 10, 10, "[DESIGN] endpoints are exact");
 check("midpoint far from the long-way arc", ha.longWay, 1, 1, "[DESIGN] never through the back of the wheel");
 
-console.log("\n=== PRM (still frame with composition preserved) ===");
-const pr = DOTREL.sims.prmStill();
-check("PRM hue is the target, one step", pr.hueExact, 1, 1, "[DESIGN] state still arrives");
-check("PRM has no pulse", pr.noPulse, 1, 1, "[DESIGN] PRM removes physics, never information");
+console.log("\n=== PRM parity (M3 cure: the still-step equals the relay's own limit) ===");
+const pr = DOTREL.sims.prmParity();
+check("PRM hue parity with t->inf", pr.hueErr, 0, 1e-6, "[DESIGN] state still arrives — exactly where the wave lands (the old self-satisfying gate is gone)");
+check("PRM saturation parity", pr.satErr, 0, 1e-6, "[DESIGN]");
+check("PRM luminance parity (pulse fully dead)", pr.lumErr, 0, 1e-6, "[DESIGN] PRM removes physics, never information");
+check("envelope residual at infinity", pr.pulseDead, 1, 1, "[DESIGN]");
+
+console.log("\n=== mid-relay re-press (M8 cure: paint-continuous at the seam) ===");
+const ir = DOTREL.sims.interruptRelay();
+check("seam discontinuity with per-dot seeding", ir.maxJump, 0, 1e-9, "[REG-LOCK] the new relay's from is the painted state — zero one-frame pop");
+check("the OLD flat-palette path WOULD have popped", ir.flatJump, 0.02, 1, "[REG-LOCK] proves the scenario bites: mid-transition dots existed and the defect was real");
+check("mid-transition dots exercised", ir.midDots, 10, 100000, "[STRUCT] the interrupt lands mid-wave, not before/after it");
 
 console.log("\n=== our palettes (warm cream ground; sky/dusk accents) ===");
 check("calm hue is warm cream", DOTREL.palettes.calm.h, 30, 50, "[DESIGN] our register, not a foreign one");

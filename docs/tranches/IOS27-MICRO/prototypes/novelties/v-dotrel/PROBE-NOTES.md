@@ -24,6 +24,27 @@ front coverage, monotone 0→1 (node-proven). Budget: dot census computed at bui
 listening, dusk-violet focus. PRM: still frame with composition preserved — the target state
 in one step, no pulse.
 
+## JUDGE CORRECTIONS (the union adjudication, 2026-07-19)
+
+- **DESIGN B2 SUSTAINED and CURED — the idle freeze was the refused Gemini defect rebuilt
+  under our flag.** MARKS-C-APPS.md:344-347 measured Gemini's idle field at diff 0.00 and
+  refused it by edict; this build parked to a literally still frame while its roster card
+  promised the law-11 breath. Cure (the v-wave pattern, zero cost against R3b): a CSS-only
+  compositor luminance breath rides OVER the parked canvas (7s asymmetric envelope, cream
+  wash, PRM-dead, paused while a relay owns the light). The rAF stays parked; the lattice
+  stops lying still. The card text and these notes are now true.
+- **MECH M8 SUSTAINED and CURED.** A mid-relay re-press snapped every mid-transition dot to
+  the prior state's FLAT palette in one frame. The new relay's per-dot `from` is now seeded
+  from the CURRENTLY PAINTED state (pulse folded in); the battery locks the seam at zero and
+  proves the old path WOULD have popped (measured 0.078 luminance jump across 126
+  mid-transition dots — the regression lock bites).
+- **MECH M3 SUSTAINED and CURED.** `prmStill` was self-satisfying by construction; replaced
+  by `prmParity` — the PRM still-step must equal the relay's own t→∞ limit (hue, saturation,
+  luminance, residual pulse — each can fail).
+- **MECH M5 SUSTAINED and CURED.** `--medium-t` publishes on `#phone`, never `documentElement`.
+- **DESIGN M3 SUSTAINED and CURED (night-dock arm).** Panel warm charcoal `rgba(16,14,12,.70)`.
+- `?hud=0` silences the HUD for the browser arm's traces (MECH minor 2). Battery now 48.
+
 ## QUEUED-PAINT (the serialized browser arm's ledger — video path only)
 
 1. **QUEUED-PAINT / the wave reads as a message.** Video each state press: a hue front must

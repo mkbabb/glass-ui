@@ -88,5 +88,22 @@ console.log("\n=== structural asserts (mechanism discipline read from the file) 
   check("no light-dark() inset shadow fragments", lightDarkInset, 0, 0, "[STRUCT] the known WebKit-killing trap");
 }
 
+console.log("\n=== CSS<->JS cross-checks (the owed MECH M7 gate — the hand-mirror cannot drift) ===");
+{
+  const cssBands = [...html.matchAll(/clamp\(0, \(var\(--engage-t\) - ([\d.]+)\) \/ ([\d.]+), 1\)/g)].map((x) => [+x[1], +x[2]]);
+  check("CSS opacity-ladder band count", cssBands.length, 3, 3, "[STRUCT] three calc bands, one per layer");
+  const bandErr = cssBands.length === 3
+    ? Math.max(...ALENS.bands.map((b, i) => Math.max(Math.abs(b.a - cssBands[i][0]), Math.abs(b.w - cssBands[i][1]))))
+    : 9;
+  check("CSS bands equal ALENS.bands", bandErr, 0, 1e-9, "[STRUCT] the ladder lives once — mirror verified, not asserted");
+  const panelAlpha = +(html.match(/--panel:\s*rgba\(255,\s*255,\s*255,\s*([\d.]+)\)/) || [])[1];
+  check("--panel alpha equals token", Math.abs(panelAlpha - ALENS.tokens.panelWhiteAlpha), 0, 1e-9, "[STRUCT] the N3 composite reads the painted panel");
+  const accent = new RegExp(`rgba\\(${ALENS.tokens.worldAccentPeak.slice(0, 3).join(",\\s*")},\\s*${ALENS.tokens.worldAccentPeak[3]}\\)`).test(html) ? 1 : 0;
+  check("world accent peak painted as modeled", accent, 1, 1, "[STRUCT] worst-case backdrop is the real backdrop");
+  const label = /\.feed \.item b\s*{[^}]*color:\s*rgb\(255,\s*255,\s*255\)/.test(html) ? 1 : 0;
+  check("label paints full-alpha white (M1 cure)", label, 1, 1, "[STRUCT] the alpha the model honors is the alpha that paints");
+  check("world base painted as modeled", /#10141c/.test(html) ? 1 : 0, 1, 1, "[STRUCT]");
+}
+
 console.log(failures === 0 ? "\nALL CHECKS PASS" : `\n${failures} CHECK(S) FAILED`);
 process.exit(failures === 0 ? 0 : 1);

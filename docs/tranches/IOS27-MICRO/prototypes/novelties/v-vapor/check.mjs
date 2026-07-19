@@ -40,16 +40,24 @@ check("duration stability (max/min)", Math.max(s0.settleMs, s15.settleMs, s3.set
 check("overshoot at v0=0 (frac)", s0.overshoot, 0, 0.001, "[MARKS C2] zero-seed lands dead — overshoot is velocity-bought");
 check("overshoot at v0=3 (frac)", s3.overshoot, 0, 0.10, "[DESIGN] the [0,10%] preset fence");
 
-console.log("\n=== the catch (scrub seizes a live snap — continuity at the seam) ===");
+console.log("\n=== the catch (scrub seizes a live snap — the honest seam claims, M3 cure) ===");
 const cc = VAPOR.sims.catchContinuity();
-check("value jump at catch", cc.jump, 0, 1e-9, "[DESIGN] C1 continuity — catchable mid-vaporize");
+check("catch seed reproduces the caught value", cc.seedErr, 0, 1e-9, "[STRUCT] the d0=d seed law through the pointermove clamp (the old self-compare gate could never fail)");
+check("snap max per-frame step (240Hz)", cc.maxFrameStep, 0, 0.03, "[DESIGN] no teleport frame for a scrub to seize mid-jump; the seam itself is C0 BY DESIGN — the finger owns v");
 check("catch happens mid-flight", cc.xAtCatch, 0.45, 0.99, "[REG-LOCK] ~80ms into a hot snap");
 
 console.log("\n=== the close order (F5/N8 inversion: content out -> beat -> medium) ===");
 const co = VAPOR.sims.closeOrder();
-check("content fully out (ms from commit)", co.contentOutMs, 150, 700, "[DESIGN] the ladder completes inside the snap");
+check("content fully out (ms from commit)", co.contentOutMs, 150, 700, "[DESIGN] the ladder completes inside the snap; fired-path re-band toward the ~170-250ms exit class is a pass-3 video decision (DESIGN m1)");
 check("empty-medium beat (ms)", co.beatMs, 100, 200, "[MARKS §5, C6-confirmed] the signature moment");
-check("medium tail after content (ms)", co.mediumTailMs, 400, 560, "[MARKS §5] relax ~400-450ms decelerating class");
+check("medium relax NAKED (ms)", co.mediumTailMs - co.beatMs, 390, 460, "[MARKS §5] relax ~400-450ms class — judged alone, never beat-summed (M7 cure)");
+check("medium tail after content (ms)", co.mediumTailMs, 500, 620, "[DESIGN] beat + relax");
+{
+  const cssBeat = +(html.match(/--beat-ms:\s*([\d.]+)/) || [])[1];
+  const cssRelax = +(html.match(/--medium-relax-ms:\s*([\d.]+)/) || [])[1];
+  check("CSS beat equals physics (ms)", Math.abs(cssBeat - VAPOR.close.beatMs), 0, 0.5, "[STRUCT] the hand-mirror cannot drift (M7 cure)");
+  check("CSS relax equals 3*tau (ms)", Math.abs(cssRelax - 3 * VAPOR.close.mediumTau * 1000), 0, 0.5, "[STRUCT]");
+}
 
 console.log("\n=== the ladder (coarse -> mid -> fine; continuous; clean at both ends) ===");
 const ls = VAPOR.sims.ladderShape();
@@ -104,8 +112,12 @@ console.log("\n=== the build-time masks (decoded from the CSS data URIs) ===");
   check("coarse mean alpha (full depth)", coarse.mean, 0.3, 0.7, "[STRUCT] a real erosion field, not a veil");
   check("mid mean alpha (full depth)", mid.mean, 0.3, 0.7, "[STRUCT]");
   check("bodygrain mean alpha (shallow)", fine.mean, 0.88, 1.0, "[STRUCT] the body reads clean at rest");
-  const warm = decoded.every((d) => d.rgb[0] > d.rgb[2] && d.rgb[0] >= 240);
-  check("vapor is warm cream, not white noise", warm ? 1 : 0, 1, 1, "[STRUCT] R>B on every mask texel base");
+  // MECH minor 5 (JUDGE cure): mask-image consumes the ALPHA channel — the mask PNGs' RGB
+  // never paints. The painted cream lives in the ghost CSS; the warmth gate reads THAT.
+  const ghostColor = html.match(/\.v-ghost\s*{[^}]*color:\s*rgba\((\d+),\s*(\d+),\s*(\d+)/);
+  const ghostBg = html.match(/\.v-ghost\s*{[^}]*background:[^;]*rgba\((\d+),\s*(\d+),\s*(\d+)/);
+  const warmPaint = ghostColor && ghostBg && +ghostColor[1] > +ghostColor[3] && +ghostColor[1] >= 240 && +ghostBg[1] > +ghostBg[3];
+  check("vapor PAINT is warm cream (ghost CSS)", warmPaint ? 1 : 0, 1, 1, "[STRUCT] R>B where it actually paints — mask RGB is invisible");
 }
 
 console.log("\n=== structural asserts (mechanism discipline; comments stripped first) ===");
@@ -120,6 +132,8 @@ console.log("\n=== structural asserts (mechanism discipline; comments stripped f
   check("scrub scalar named --scrub-t", /--scrub-t/.test(html) ? 1 : 0, 1, 1, "[STRUCT] the FAC shape");
   check("PRM single-step branch present", /prefers-reduced-motion/.test(html) ? 1 : 0, 1, 1, "[STRUCT] single-step removal, state relayed");
   check("ghosts are aria-hidden", (html.match(/v-ghost[^"]*"\s+aria-hidden="true"/g) || []).length, 2, 2, "[STRUCT] duplicates never reach AT");
+  const parked = /\.vapor-root\[data-parked="1"\] \.v-ghost\s*{\s*visibility:\s*hidden/.test(html) && /id="vroot" data-parked="1"/.test(html) ? 1 : 0;
+  check("ghosts parked at rest", parked, 1, 1, "[STRUCT] layers exist only during dismissal (minor-4 cure)");
   check("no light-dark() inset fragments", /light-dark\([^)]*inset/.test(html) ? 1 : 0, 0, 0, "[STRUCT] the WebKit shadow trap");
 }
 

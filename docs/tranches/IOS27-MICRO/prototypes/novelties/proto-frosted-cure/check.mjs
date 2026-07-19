@@ -47,6 +47,10 @@ check("dark rim width (px)", cd.rimPx, 0, 1, "[MARKS §4:175] the ~1px hairline;
 check("dark rim alpha", cd.rimAlpha, 0, 0.18, "[F1-REF] f1:112 white/0.10 class; 0.45 is the F5 defect");
 check("light rim alpha", cl.rimAlpha, 0, 0.18, "[F1-REF] same hairline law, warm-dark arm");
 check("control rim alpha (dark)", cd.controlRimAlpha, 0, 0.24, "[DESIGN] between F1's disc and the hairline; never 0.45");
+{
+  const lb = +(html.match(/body\[data-theme="light"\][\s\S]*?--cure-control-rim:\s*inset 0 1px 0 rgb\(255 255 250 \/ ([\d.]+)\)/) || [])[1];
+  check("light control top-bevel alpha (per-arm band)", lb, 0.28, 0.45, "[DESIGN m5 cure] full rims 0.10-0.22 both arms; the light 1px bevel band is WRITTEN — never past the F5 0.45 defect");
+}
 checkTrue("no brightness() leg in either cured arm", cd.controlBrightness === null && cl.controlBrightness === null, "[ROSTER:308-310] frost diffuses, never amplifies (F5 brightness(1.1) killed)");
 check("slider fill alpha top (dark)", cd.sliderFillAlphaTop, 0, 0.68, "[ROSTER] luminance floor dropped — frost not gloss (0.95 is the defect)");
 check("slider fill alpha top (light)", cl.sliderFillAlphaTop, 0, 0.70, "[ROSTER] same law, light arm");

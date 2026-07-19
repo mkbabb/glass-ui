@@ -1,26 +1,89 @@
-# NOVELTY-ROSTER — extant ∪ new (IOS27-MICRO, the EXEMPLARS-2 novelty loop)
+# NOVELTY-ROSTER — the post-critique canon (IOS27-MICRO, EXEMPLARS-2 novelty loop)
 
 Verified-model: claude-fable-5 (the system-context model ID, returned verbatim).
-Seat: novelty:BRAINSTORM, 2026-07-18. Inputs consumed whole: `SUFFUSION-MATRIX.md`,
-`MARKS.md` (incl. PASS-2 CORRECTIONS C1–C7), `EXEMPLARS-2-CHARTER.md`, `../registry/REGISTRY.md`,
-SPEC-F1..F5 + the pass-2 cure ledgers + `../passes/PASS-2/safari-arm.md`, the four greenfield
-unions `../../BJ/formation/greenfields/GF-*-PASS3.md`, and the 18-law
-`../../BJ/formation/ios27/IOS27-CODEX.md`.
+Seat: novelty:JUDGE (the third of the thrice — adjudicate and union), 2026-07-19. This file
+supersedes the BRAINSTORM seat's union of 2026-07-18: every critic finding is adjudicated in
+§0, every amendment is APPLIED (prototypes, batteries, PROBE-NOTES — all seven batteries
+green after amendment: 32+48+39+44+45+64+69 = 341 gates), and the roster below is the canon
+the pass-3 seats build from.
+
+Inputs consumed whole: `NOVELTY-CRIT-MECH.md`, `NOVELTY-CRIT-DESIGN.md`, the prior
+`NOVELTY-ROSTER.md`, all seven `prototypes/novelties/*` (index.html + check.mjs +
+PROBE-NOTES, at source), `SUFFUSION-MATRIX.md`, `MARKS.md` (C1–C7), `EXEMPLARS-2-CHARTER.md`,
+`../registry/REGISTRY.md`, the pass-2 verdict organs, the four GF unions, `IOS27-CODEX.md` —
+**plus the measured EXEMPLARS-2 organs the old union omitted (the B1 cure): `MARKS-C-APPS.md`
+and `MARKS-D-SIRI.md`, consumed at their load-bearing fits and cited per row below.**
+`MARKS-C-MUSIC.md` / `MARKS-E-NOTIFICATION.md` landed after the brainstorm; their dispositions
+ride pass-3's re-base check (HANDOFF item H-7).
 
 The laws standing over every row: THE BREATH OF LIFE (every component always displays
-engagement; novel affordances that BEST iOS 27, in our aristotelian proportion) and THE GOAL OF
-GLASS (glass reads BLURRED and FROSTED—never trite, shiny, or bright; the micro demo's register
-and F1's glass are the referents; F5's tabs-toggle and F4's tabs/slider are the named cure
-targets, enrolled below as REFINES rows). Safari-honest only: runtime paint-probe gates, never
-`@supports` (the lying-gate law—`safari-arm.md:91-102`); video is the honest WebKit capture organ
-(`safari-arm.md:22-31`); no Chrome-special behavior for any glass item. Performance penchant:
-no per-frame JS layout reads, event-scoped rAF, cheap filters.
+engagement; novel affordances that BEST iOS 27, in our aristotelian proportion) and THE GOAL
+OF GLASS (glass reads BLURRED and FROSTED — never trite, shiny, or bright; the micro demo's
+register and F1's glass are the referents; F5's tabs-toggle and F4's tabs/slider are the named
+cure targets). Safari-honest only: runtime paint-probe gates, never `@supports` (the
+lying-gate law); video is the honest WebKit capture organ; no Chrome-special behavior for any
+glass item. Performance penchant: no per-frame JS layout reads, event-scoped rAF, cheap
+filters.
 
-**The honesty fence (SUFFUSION §2 preamble, `SUFFUSION-MATRIX.md:350-354`):** adopted-not-novel
-mechanisms (the lens anatomy, tabs overflow self-centering, the idle sweep, volumetric edge
-compression, the label float, the mark-draw, the ribbon ladder, typewriter cadence, the reveal
-ladder, the overpull law, the three-clock desync) are MEASURED CORPUS, not roster rows. This
-roster lists what iOS does not do—ours by invention or declared divergence.
+---
+
+## 0. THE ADJUDICATION LEDGER (every critic finding, disposed)
+
+**Verdict: 33 findings heard (MECH 8 major + 9 minor; DESIGN 2 blocker + 6 major + 8 minor).
+33 SUSTAINED (2 sustained-in-part), 0 OVERRULED.** Both critics' pins were re-verified against
+disk by this seat before any amendment; every pin held. A prior partial adjudication run had
+already cured v-alens (MECH M1/M5, DESIGN M1) and v-perch (MECH M2/M7) — those cures were
+verified on disk and are counted below with the rest.
+
+### MECH (mechanism honesty)
+
+| # | finding | verdict | disposition |
+|---|---|---|---|
+| M1 | v-alens N3 gate ignored its own label alpha; honored, worst case 4.41 < AA | SUSTAINED | CURED on disk: model composites label at its alpha; label ships at alpha 1.0; floor re-earned at 4.88 |
+| M2 | v-perch medium relax began BEFORE content out — the beat was −30ms | SUSTAINED | CURED on disk: relax delay = content + beat; `orderOK` demands a real ≥100ms held beat |
+| M3 | four tautological gates (vapor catch, wave oneShape, dotrel prmStill, constellation census/continuity) — green that cannot fail | SUSTAINED | ALL CURED this union: vapor catch → seed-law + frame-step gates; wave → adapter-inverse meet; dotrel → prmParity (t→∞ limit); constellation → continuity runs 4 real glides (flips gated), census relabeled [DECLARED] |
+| M4 | constellation event-count-as-clock (upHold += 1/60; dy×60 seed) — 2× hot at 120Hz | SUSTAINED | CURED: wall-clocked hold; boxcar-windowed drag velocity; unknown velocity seeds 0 (overshoot is velocity-BOUGHT, MARKS C2) |
+| M5 | all five v-* published FAC scalars on :root per frame (the WebKit subtree storm) | SUSTAINED | CURED in all five: publication on the component root (#stage/#phone/capsule); constellation was already right; frosted-cure verified per-element (not a violator) |
+| M6 | four hand-minted engage-envelope constant pairs, no shared register | SUSTAINED | RULED: the ENGAGE-ENVELOPE REGISTER minted at §3.5-B — one attack class, per-role release table; no envelope constant may be minted outside it |
+| M7 | false "single-sourced" comments (alens, vapor); vapor tau 0.12 outside the cited MARKS class, passing by beat-summing | SUSTAINED | CURED: vapor tau → 0.14 (relax 419ms, in-class, judged NAKED by its own gate); CSS↔JS cross-check gates landed in alens AND vapor — the mirrors cannot drift |
+| M8 | dotrel mid-relay re-press snapped mid-transition dots to the flat prior palette | SUSTAINED | CURED: per-dot from-state seeding; regression lock proves the old path popped (0.078 lum jump / 126 mid dots) and the new seam is 0 |
+| m1 | constellation notes claimed 60/60; battery prints 63 | SUSTAINED | corrected (64 after the M3 gate landed) |
+| m2 | per-frame HUD writes contaminate the frame-trace gates | SUSTAINED | `?hud=0` instrumentation switch landed in all six pages that write per frame |
+| m3 | "mic RMS" misnomer for spectral byte energy | SUSTAINED | renamed `specLevel`; honest-proxy note kept |
+| m4 | vapor ghosts always mounted at opacity 0 (the F5 r3 cost question) | SUSTAINED | ghosts PARK (visibility:hidden at rest), gated; cost probe stays QUEUED-PAINT |
+| m5 | vapor warm gate tested mask RGB that never paints | SUSTAINED | gate re-pointed at the ghost CSS (where cream paints); notes claim retracted. **Critic conflict resolved:** DESIGN §4's praise of "R>B on every mask texel" rested on the same unpainted channel — the praise transfers to the ghost CSS, MECH wins the mechanism point |
+| m6 | release-seam estimator drift (single-sample vel; hand-inlined projections) | SUSTAINED | vapor: ≤120ms boxcar window; constellation: PC.PROJ_TAU replaces both literals |
+| m7 | re-home decider proves the instant; the art freezes for the rest of the ferry | SUSTAINED | declared in PROBE-NOTES; frozen-continuation arm joins pass-3; no "ferry re-home-proven" adoption language |
+| m8 | frosted-cure pop-overs not interrupt-safe (no generation guard) | SUSTAINED | generation guard landed in openPop/closePop |
+| m9 | the composed organ (perch→vapor; wave-in-blackdock) exists nowhere; name the owner | SUSTAINED | PROTO-ASSEMBLY seat chartered at §4/HANDOFF; "proven together" language banned until it runs |
+
+### DESIGN (the design lens)
+
+| # | finding | verdict | disposition |
+|---|---|---|---|
+| B1 | the union never consumed the measured EXEMPLARS-2 organs (MARKS-C/D) | SUSTAINED | THIS FILE is the re-base: inputs amended, contradicted cards amended in place, the four missing grammars disposed (rows/park below) |
+| B2 | v-dotrel idle freeze — the refused Gemini defect rebuilt under our flag | SUSTAINED | CURED: CSS-only law-11 breath over the parked canvas (v-wave pattern; zero cost against R3b); card text now true |
+| M1 | v-alens inverted its measured exemplar (dim where iOS locks luminance; 4× blur dose; annulus inverted) | SUSTAINED | CURED on disk (prior run, verified): nested-annulus masks, σ-peak ~5px near band, zero by ~330px, dim capped 0.05 whisper; `--glass-halo-*` binding written (m3) |
+| M2 | v-wave ships the trite bar rack; the measurement adopted the standing aurora sea | SUSTAINED | RULED: the ORGAN re-skins to the sea (recipe at card 5); the FAC contract/physics/park/PRM survive verbatim (**resolves with MECH's sound-mechanism verdict — no conflict**); bar rack demoted to at-most a compact/PRM-adjacent variant; B-NUCLEUS relation written |
+| M3 | the register schism — three "frosted derivations of F1", cool slate + cyan imported | SUSTAINED | RULED: ONE canonical warm register (§3.5-A, the cure seat's derivation); night-dock arm warm-shifted NOW in v-wave/v-dotrel (R>B gated); F1's cyan legs marked HISTORICAL; full repaint of the ATTENTION-EXIT stages + warm stage arm = pass-3 |
+| M4 | four measured grammars with no roster disposition | SUSTAINED | disposed: V-MORPHDOCK row (N1 duel arm 3), CHAT grammar PARK-written, V-THINKFIELD row, R-CONDENSE row |
+| M5 | springPreset("panel") measured, named, carried nowhere | SUSTAINED | X-CHOREO preset roster += panel (ζ0.71, f_d 1.75); V-BLACKDOCK fired-deploy register amended (card 7) |
+| M6 | the medium channel has no dose law | SUSTAINED | the medium-recruitment dose column minted at §3.5-D; SUFFUSION §1.3 sync ordered (HANDOFF) |
+| m1 | v-vapor fired-commit content channel ~2.5× the exit register | SUSTAINED IN PART | the GESTURE-release tail is law-14a momentum (its own register — declared); the FIRED path re-band toward ~170-250ms is ordered, video-arbitrated |
+| m2 | cool-chrome judging bias; cyan focus ring | SUSTAINED | ring cured (house cream, prior run); warm-cream stage arm = pass-3 |
+| m3 | `--glass-halo-*` named in MARKS-C, absent from both rows | SUSTAINED | V-ALENS + X-GRADBLUR both bound to the one token pair + one stacked-mask recipe |
+| m4 | black-dock luminance floor needs a class split | SUSTAINED | split written (§3.5-C): ghost-through ~0.70 / menu-island 0.85-0.88 |
+| m5 | rim-alpha drift (light bevel 0.55; frost rim 0.65) | SUSTAINED | per-arm bands WRITTEN + gated; cure light bevel 0.55 → 0.40 (band [0.28,0.45] — never past the F5 0.45 defect); constellation's 0.65 light-frost rim folds at the pass-3 repaint |
+| m6 | cure bloom overreach cites no license | SUSTAINED IN PART | license NAMED (G-row engagement-lens, zero idle term); whether control-tier may borrow lens tier = pass-3 video; geometry unchanged pending that verdict |
+| m7 | dock-goo triple ownership unreconciled | SUSTAINED | relation sentences written into D-POSTURE / X-GOO / V-CONST rows |
+| m8 | V-TIMELINE's ritual figure needs the C5 split | SUSTAINED | card 3 carries both numbers (150-250ms per hop; 1.2-1.4s full ritual) |
+
+**Critic conflicts resolved explicitly:** (1) MECH m5 vs DESIGN §4 mask-cream praise — MECH
+wins; warmth evidence transfers to the ghost CSS. (2) DESIGN M2 re-skin vs MECH's
+sound-mechanism verdict on v-wave — compose, don't collide: contract survives, organ
+re-skins. (3) DESIGN B2's always-breathing edict vs MECH's zero-idle-rAF budget — reconciled
+by the CSS-only compositor breath (the v-wave pattern); both laws hold whole. (4) MECH M6's
+one-register demand vs four seat tunings — resolved as a per-role table, not one number.
 
 ---
 
@@ -44,7 +107,8 @@ On-disk paint truth (WebKit 26.5, `safari-arm.md`):
   need no per-engine arms.
 - **`inherits:false` invalidation stays micro-scale on WebKit** (35µs vs 960µs inheriting over
   500 children, `safari-arm.md:80-82`); inheriting channel vars hold a 60Hz budget through
-  ~1000 consumers (`cures-F3.md` G2). @property scalars are the sanctioned wiring.
+  ~1000 consumers (`cures-F3.md` G2). @property scalars are the sanctioned wiring — and per
+  MECH M5, prototype scalars publish on COMPONENT ROOTS, never `:root`.
 - **`scrollend` fires per discrete step on BOTH engines** (89/89)—debounce-primary is law for
   every scroll channel (`safari-arm.md:83-86,143-145`).
 - **WebKit quantizes `performance.now()` to 1ms**—frame-gap statistics are the honest cost
@@ -72,289 +136,264 @@ Performance penchant, restated as the candidate filter: any candidate needing pe
 layout reads, animated blur radii, runtime SVG turbulence, or unbounded backdrop surfaces was
 rejected before it reached §3.
 
----
-
-## 2. THE UNION ROSTER
-
-Marks: **EXTANT** (lives in the corpus) · **NEW** (begat this pass, §3 cards) ·
-**REFINES-\<id\>** (names the extant row it cures/extends). Status vocabulary: SPEC (design
-only) · PROTO (runnable prototype) · PROVES-IN-WEBKIT / PARTIAL / BANKED / PARKED / RED
-(per the pass-2 verdicts).
-
-| id | class | essence | lives at | status | measured basis |
-|---|---|---|---|---|---|
-| N1 | EXTANT | shell-pop slider + modal scrub surface (√φ re-home, finger never detaches) | `SUFFUSION-MATRIX.md:370` | SPEC; mechanism duel open (§4 :566-570) | φ^¼ cap (critique C7); MARKS §6 two-regime law |
-| N2 | EXTANT | read-beat dialogs—content-keyed three-clock beat order | `SUFFUSION-MATRIX.md:377` | SPEC | fade=stretch/φ³; MARKS §5 ~1:4 confirmation |
-| N3 | EXTANT | sibling-legibility gate (≥AA under bloom) + momentum tick on ≥2-slot jumps | `SUFFUSION-MATRIX.md:383` | gate PAINT-VERIFIED WebKit 4.53–5.03:1 (`safari-arm.md:113-114`); tick test owed | MARKS §3 note 5 (the iOS seam we best) |
-| N4 | EXTANT | strain shimmer at the magnetic bound (hold-only rim luminance) | `SUFFUSION-MATRIX.md:388` | SPEC | MARKS §2 deformation vocabulary (C1-corrected) |
-| N5 | EXTANT | traveling focus lens (keyboard focus stops teleporting; lens is paint, focus is truth) | `SUFFUSION-MATRIX.md:392` | SPEC—best in campaign | Tab cadence as velocity; no OS does this |
-| N6 | EXTANT | anticipation dip on destructive commits (−4%, `--ease-cartoon-punch`) | `SUFFUSION-MATRIX.md:397` | SPEC, bounded (C4/C5) | replaces first ~80ms of commit travel |
-| N7 | EXTANT | one-hop driver→display energy inheritance (declared link only) | `SUFFUSION-MATRIX.md:402` | SPEC, narrow | amplitude ≤ driver's; observers weight-0 |
-| N8 | EXTANT | scrubbed medium onset (opacity-ramped backdrop layer over gesture's first 1/φ) | `SUFFUSION-MATRIX.md:405` | mechanism PAINT-SAFE (blur-rides-opacity); opacity-0 profile queued (reverify §F5 r3) | beats the ≤83ms iOS blur cliff |
-| N9 | EXTANT | caught-landing toast + stack ripple (×1/φⁿ, depth ≤2) | `SUFFUSION-MATRIX.md:409` | CHALLENGER—peripheral-distraction test decides | critique ruling 3 |
-| N10 | EXTANT | charge glow under held pressure | `SUFFUSION-MATRIX.md:414` | PARKED—awaits a real hold consumer (§6 q1) | never built before the gesture |
-| N11 | EXTANT | theme flip as a page-level medium change (`useViewTransition`'s consumer) | `SUFFUSION-MATRIX.md:419` | SPEC; license extended in place | the one daily whole-world choreography |
-| FAC | EXTANT | the six-scalar engagement contract + momentum facility (`--flex-vel --motion-weight --engage-t --overpull --impulse --scrub-t`; state pair; three sources one shape; per-role gains) | `SUFFUSION-MATRIX.md:443-473`; F4 charter | PARTIAL both engines; debounce cure named unapplied | `safari-arm.md:72-88`; carry 28.0px in MARKS 27–32 band |
-| MODAL | EXTANT | the modal/enlarge variant register + dock-to-card growth grammar (derivation rule: continuable gesture or extant detail form) | `SUFFUSION-MATRIX.md:532-570` | SPEC; N1 duel is its one open mechanism | MARKS §1/§6 growth asymmetry |
-| F1 | EXTANT | SCALAR-SPINE—one scalar on `[−μ,1+μ]`, follower bank, the F1×F3 intent latch, momentum-projected weak-well catch, clip-path growth channel, calc-band ladder authoring | `REGISTRY.md:20-73`; SPEC-F1 + `cures-F1.md` | PROVES-IN-WEBKIT (`safari-arm.md:39-56`) | geometry parity to the hundredth; C2 register (0.35, ζ0.80) adopted |
-| F2 | EXTANT | NATIVE-SCROLL substrate—SDA reveal ladders, snap detents, native fling | `REGISTRY.md:76-124` | BANKED; U2 DEVICE-DEFER, U-R1 binds+resamples exact | `safari-arm.md:120-133` |
-| F3 | EXTANT | CHANNEL-CONDUCTOR—three laws + three modifiers, depth grading ×1.20 normalized, direction latch, wake-armed delay gate | `REGISTRY.md:128-180`; `cures-F3.md` | PROVES-IN-WEBKIT 12/12 (`safari-arm.md:57-70`) | 1.20 exact both engines; 19/19 node battery |
-| F4 | EXTANT | ENERGY-FIELD—modulation plane, MAX fold, kind-exclusive channels, per-role gain table, `--impulse` release burst | `REGISTRY.md:183-237` | PARTIAL (same shape both engines); H6 owner-designate | U6a transform calc computes in WebKit |
-| F5 | EXTANT | OPTICAL-MEDIUM—medium/body/light layers, persistence state machine, `claimMediumWriter` one-writer contract, additive-gradient metaball lens (SVG merge demoted to duel), layer-contract lint | `REGISTRY.md:241-298`; `cures-F5.md` | lens core PROVES-IN-WEBKIT; U1 RED routed to BJ | blink test 132 frames min presence 0.824; cliff 104ms/beat 150ms/relax 422ms/1:4.0 |
-| D-EVIDENCE | EXTANT | dock evidence stack—cut-band peek detents + lip-shadow overhang + velocity-keyed edge glint | `GF-DOCK-PASS3.md:146-176` | SPEC (π owed) | law 3 velocity clause; 21pt inset grammar |
-| D-CONDENSE | EXTANT | edge-item condensation (whole glyph scaled under the lip, never bisected/erased), view-timeline position-mapped | `GF-DOCK-PASS3.md:170-176` | SPEC—declared BEST-iOS divergence | zero-JS scrub-reversible by construction |
-| D-REACH | EXTANT | tap-to-reach—instant commit (≤1 frame) + concurrent duration-stable seat | `GF-DOCK-PASS3.md:180-188` | SPEC | law 16b swap ≤83ms; law 14a snap |
-| D-LENS | EXTANT | the tap/drag dock lens—birth ≤83ms at the TOUCHED item, protrudes 6-10px past the tray rim (outside the plate clip), velocity elongation ~1.9 slots, endcap squash 8-12%, commit-on-release | `GF-DOCK-PASS3.md:246-267` | SPEC; no-url-filter recipe named | law 16b/c measured constants (`sr-0710-1626`) |
-| D-EDGE | EXTANT | lens-at-edge—world scrolls under a quasi-fixed lens at penetration-keyed rate | `GF-DOCK-PASS3.md:269-272` | SPEC—declared divergence | Safari overflow model adopted (SUFFUSION §1.4-G) |
-| D-POSTURE | EXTANT | posture choreography—collapse ~330ms with three-body layered-overlap goo (double-darkening, no filter:url), displacement-gated, intent-gated re-expand + law-17 continuity | `GF-DOCK-PASS3.md:289-308` | SPEC | law 16a constants (`sr-0620-1847 §2/§6`) |
-| H-VOICE | EXTANT | the min-jerk pen voice—P1 bell profile, P2 parameter-not-sample randomness, P3 bow, P4 12% width restraint, P5 endpoint truth, P6 still ink; ribbon + mask-draw single mechanism | `GF-HANDMARK-PASS3.md:50-116` | SPEC; G-CALM/G-RESTRAINT provable analytically | v̂(t)=30t²(1−t)²; ĝ peak-normalized (crit H-1 fixed) |
-| H-INK | EXTANT | wet-ink settle—the detuned second channel (opacity 0.85→1.0 ~200ms AFTER geometry) + draw-at-first-visibility | `GF-HANDMARK-PASS3.md:133-147` | SPEC | law 5 channel discipline |
-| A-QUARTET | EXTANT | the solar family register—value-structure-tellable SUNSET/DUSK/SKY/DAWN + per-member drift ladders clearing the law-11 visible-migration floor | `GF-AURORA-PASS3.md:190-246` | SPEC; DUSK/DAWN user-judged (Q-AURORA-QUARTET) | L-histogram separation; ~7.6pt/s drift law |
-| A-BODIES | EXTANT | dedicated medium bodies—vangogh crescent dab, oil-pastel (blunt capsules + buttery overlap-blend + analytic burnish + tooth-skip), crayon hand-drawn (per-zone direction, boundary overshoot) | `GF-AURORA-PASS3.md:120-166` | SPEC; derivative-free by construction | G-MODE-DISTINCT descriptor distance |
-| B-STAMP | EXTANT | the live ink-stamp shadow—sprung offset vector, mood-scaled, follow-through lag, click-detach hop | `GF-BLOB-PASS3.md:120-142` | SPEC | era-1 5→7px reference constants |
-| B-MOOD | EXTANT | mood-read output table over the circumplex (posture/shadow/streak/satellites/nucleus/pointer per mood) | `GF-BLOB-PASS3.md:143-167` | SPEC; G-MOOD-READ silent-capture gate | sleepy sign defect RED at `constants.ts:93` |
-| B-NUCLEUS | EXTANT | the sparkle nucleus—one within-surface state serving listening ring, thinking, and morph-energy | `GF-BLOB-PASS3.md:169-195` | SPEC; `thinking` behind Q-BLOB-THINKING | `sr-0624-2144` P8 (peaks at motion pause) |
-| B-DEFLATE | EXTANT | two-pole staged-axis deflate (squash completes before widen; no width overshoot; light leads ~80ms) | `GF-BLOB-PASS3.md:169-195` | SPEC—law 13/9 conformant | measured staged axes (`MARKS-B` 60-61) |
-| B-REACT | EXTANT | satellite cursor repulsion + grab-and-fling on the 14(a)/14(c) regime split | `GF-BLOB-PASS3.md:212-241` | SPEC; grab behind Q-BLOB-GRAB | era-1 repulsion constants; law 14/15 presets |
-| B-MENISCUS | EXTANT | meniscus waist ~45-50% + pinch-off residue droplet as merge/emerge liquid events | `GF-BLOB-PASS3.md:242-253` | SPEC | `MARKS-A:104` canonical goo reference |
-| B-STREAK | EXTANT | the aurora streak (~55% height, final-third arrival) + velocity-keyed rim caustic on a living body | `GF-BLOB-PASS3.md:81-106` | SPEC | law 13 REPLACED; law 3 velocity clause |
-| X-RADIUS | EXTANT | provable radius grammar—role-keyed table + lint where iOS is convention-only | `IOS27-CODEX.md:14,41` | SPEC | CC as the Rosetta Stone; gaps ≈ pill radius |
-| X-GRADBLUR | EXTANT | in-surface gradient blur (sharp near-edge → soft far-edge)—declared divergence, stacked masked layers | `IOS27-CODEX.md:11,42` | SPEC | judged vs IMG_2287/2288 + per-layer depths |
-| X-TINT | EXTANT | backdrop-sampled adaptive tint + velocity-keyed edge caustic as first-class tokens | `IOS27-CODEX.md:12-13,43` | SPEC (adaptive tint unshipped dependency) | per-region tint proof (`sr-0620-1848 §4`) |
-| X-GOO | EXTANT | one goo-morph nav surface (dock ∪ pager ∪ sheet) incl. inter-body goo past the iOS fence | `IOS27-CODEX.md:19,44` | SPEC; inter-body arm Q051-gated | law 6 fence; meniscus grammar |
-| X-CHOREO | EXTANT | the detuned-channel choreography API + physics presets (τ≈130ms duration-stable snap, asymmetric rubber band, ~9% release spring, DOCK_SPRING) | `IOS27-CODEX.md:33-34,45` | SPEC; constants law-grounded | law 14 measured constants; dock row (0.30, ζ0.82) corpus-true |
-| X-FLOOR | EXTANT | the breathing restraint floor + editorial serif/mono identity as shipped modes | `IOS27-CODEX.md:27,46` | SPEC | law 11 drift constants |
-| **V-CONST** | **NEW** | the dock constellation—double-dock stack/collapse/fission-fusion as one scrub-reversible choreography | §3 card 1 | begat this pass | EXEMPLARS-2 V1 mark 5 |
-| **V-ALENS** | **NEW** | the gradient-blur attention lens—engagement-scrubbed focus field around an engaged control | §3 card 2 | begat this pass | EXEMPLARS-2 V1 mark 6; kin X-GRADBLUR |
-| **V-TIMELINE** | **NEW** | the continuous-timeline expand—artwork ferries dock→card→page as ONE body on ONE scrub spine; pages window from the album | §3 card 3 | begat this pass | EXEMPLARS-2 V1 marks 3-4; resolves the §4 duel for the nav class |
-| **V-VAPOR** | **NEW** | the vaporize dissolve—dismissal erodes through a static noise-mask ladder, scrub-mapped, medium relaxes last | §3 card 4 | begat this pass | EXEMPLARS-2 S1 |
-| **V-WAVE** | **NEW** | the waveform register—the listening organ fed through the F4 three-sources-one-shape contract | §3 card 5 | begat this pass | EXEMPLARS-2 V2 |
-| **V-PERCH** | **NEW** | the corner-perched close—dismissal chrome astride the corner border, half outside, press-charged | §3 card 6 | begat this pass | EXEMPLARS-2 S1; D-LENS protrusion precedent |
-| **V-BLACKDOCK** | **NEW** | the assistant black-glass register + downward dock-growth results (orientation-free growth testament) | §3 card 7 | begat this pass | EXEMPLARS-2 V1 mark 7 / V2 |
-| **V-DOTREL** | **NEW** | the dot-matrix state relay—hue waves crossing a lattice as page-state relay | §3 card 8 | begat this pass | EXEMPLARS-2 V1 mark 8; law 11 lattice bank |
-| **R-TABTOGGLE** | **REFINES-F5** | the F5 tabs-toggle glass cure—POOR → BLURRED and FROSTED (named cure target) | §3 card 9 | user-named defect | EXEMPLARS-2 order 2 |
-| **R-TABS** | **REFINES-F4** | the F4 tabs glass cure—too trite/shiny/bright → frosted; specular reserved for engagement | §3 card 9 | user-named defect | EXEMPLARS-2 order 2; MARKS §4 law |
-| **R-SLIDER** | **REFINES-F4** | the slider glass cure—too shiny → frosted; N1 physics kept, shine killed | §3 card 9 | user-named defect | EXEMPLARS-2 order 2 |
-| **R-MOMENTUM** | **REFINES-X-CHOREO** | drawer/results MOVEMENT OF MOMENTUM—release-velocity-seeded, depth-graded content entry | §3 card 10 | begat this pass | EXEMPLARS-2 V1 mark 7; law 8 entries; N7 narrow license |
-| **R-EFFERVESCE** | **REFINES-X-CHOREO** | pop-over effervescence—snappy tight fade + one earned spring + a one-beat arrival rim light; SMOOTH not sharp | §3 card 10 | begat this pass | EXEMPLARS-2 V3; law 14c register |
-
-**Counts: 41 EXTANT · 8 NEW · 5 REFINES.**
+**The honesty fence (SUFFUSION §2 preamble):** adopted-not-novel mechanisms are MEASURED
+CORPUS, not roster rows. This roster lists what iOS does not do — ours by invention or
+declared divergence. Per B1, the fence now also binds the roster itself: what a measured mark
+names must be disposed — row, REFINES, or PARK-with-reason; silence is forbidden.
 
 ---
 
-## 3. THE NEW CANDIDATE CARDS (essence · bests · mechanism · performance · rung)
+## 2. THE UNION ROSTER (post-critique)
 
-### Card 1 — V-CONST, the dock constellation (double-dock stack/collapse/fission-fusion)
+Marks: **EXTANT** · **NEW** (begat the brainstorm) · **NEW-U** (begat THIS union, the B1/M4
+re-base) · **REFINES-\<id\>**. Union stamps: **SURVIVES** (unchallenged or challenged and
+held) · **REFINED** (amendment applied — trail in the stamp) · **KILLED** (dead). EXTANT rows
+not stamped below are **SURVIVES-UNCHALLENGED** — no critic finding touched them; their
+pass-2 statuses stand verbatim from the prior roster (quoted there, `REGISTRY.md` +
+`safari-arm.md` + the GF unions own the pins).
 
-- **Essence.** The dock generalized to a small constellation of glass bodies: a second dock
-  (now-playing) stacks upon the main; scrolling collapses the two into ONE; fission girds
-  controls left (icons), search right (icons), now-playing center—one choreographed timeline,
-  every phase scrub-reversible. The testament: a dock is not a monolith, not limited in
-  orientation, width, or height (EXEMPLARS-2 V1 mark 5).
-- **Bests iOS.** iOS's fission/fusion is fire-and-forget; ours is displacement-gated AND
-  catchable mid-flight (everything-is-a-scrub, MARKS Beyond-the-hallmarks), with law-17
-  continuity (marquee offsets, badges, accent identity survive every fission) and detent-caught
-  rest states between postures.
-- **Safari-honest mechanism.** Extends D-POSTURE from one FSM to N bodies: each body its own
-  backdrop-filter layer; fission/fusion is transform-only travel with plain layered-overlap goo
-  (double-darkening mid-morph—the attested mechanism, no `filter:url()`); one F1 spine per
-  transition publishing `--gl-t`; F3 channel manifests desync bodies (center body leads, girds
-  lag ~100ms); seats land on law-14a duration-stable snaps; the medium handshake rides
-  `--medium-t` where a posture change recruits the page.
-- **Performance card.** ≤3 concurrent backdrop surfaces at any instant (bodies past 3 share a
-  surface); transform/opacity only on the hot path; cell census cached at resize (no per-frame
-  layout reads); rAF parks at settle; PRM = single-step posture swap, information kept.
-- **Breath rung.** engage→travel→release on nav chrome—the reference body's row (SUFFUSION
-  §1.3 G) at its full dose.
+| id | class | essence | union stamp | measured basis |
+|---|---|---|---|---|
+| N1 | EXTANT | shell-pop slider + modal scrub surface | **REFINED** — the §4 duel gains a THIRD arm: the in-place whole-body morph (V-MORPHDOCK, DESIGN M4-1); duel now FLIP-re-home vs growth-choreo vs in-place morph | φ^¼ cap (C7); MARKS §6; MARKS-C-APPS 6.5 |
+| N2–N11, FAC, MODAL, F1–F5, D-EVIDENCE, D-CONDENSE, D-REACH, D-LENS, D-EDGE, H-VOICE, H-INK, A-QUARTET, A-BODIES, B-STAMP, B-MOOD, B-NUCLEUS, B-DEFLATE, B-REACT, B-MENISCUS, B-STREAK, X-RADIUS, X-TINT, X-FLOOR | EXTANT | (as the prior roster, unchanged) | **SURVIVES-UNCHALLENGED** — FAC additionally gains the envelope register pointer (§3.5-B); B-NUCLEUS gains the V-WAVE relation sentence (below) | prior roster pins stand |
+| D-POSTURE | EXTANT | posture choreography, layered-overlap goo | **REFINED** (m7 relation): D-POSTURE is the ONE-dock FSM; V-CONST is D-POSTURE generalized to N bodies; neither carries the Q051-fenced inter-body meniscus — that arm is X-GOO's alone | law 16a constants |
+| X-GRADBLUR | EXTANT | in-surface gradient blur | **REFINED** (m3): bound to the `--glass-halo-*` token pair + the ONE stacked-mask annulus recipe shared with V-ALENS (MARKS-C-APPS:188-190) — two seats may not mint two mechanisms for one facility | IMG_2287/2288; MARKS-C 6.3 |
+| X-GOO | EXTANT | one goo-morph nav surface | **REFINED** (m7 relation): X-GOO alone owns the Q051-gated inter-body meniscus arm; V-CONST's double-dock collapse is the ATTESTED layered-overlap class (law 6's dock citation), never the fenced arm | law 6 fence |
+| X-CHOREO | EXTANT | choreography API + physics presets | **REFINED** (DESIGN M5 + MECH M6): preset roster gains **panel (0.30-0.35, ζ0.71, f_d 1.75Hz)** — the fired-presentation register, intrinsic 4-5% overshoot, the ONE class where overshoot is NOT velocity-bought (MARKS-D:169-176) — beside DOCK_SPRING; and the engage-envelope table (§3.5-B) ships as its light-channel kin | MARKS-D-SIRI:161-176,227-231 |
+| **V-CONST** | NEW | the dock constellation | **SURVIVES** — proto 64/64; M4 clock cure + m6 dedup landed; census gates relabeled honest ([DECLARED]) | EXEMPLARS-2 V1 mark 5; MARKS-C 6.5 stacked mini-dock kin |
+| **V-ALENS** | NEW | the gradient-blur attention lens | **REFINED** (MECH M1 + DESIGN M1, cured on disk): measured annulus (σ-peak ~3-4pt class, zero by ~1.5-2 control-heights), luminance LOCKED (dim ≤0.05 whisper), label AA re-earned at alpha 1.0; bound to `--glass-halo-*`; dose column §3.5-D governs opt-in | MARKS-C-APPS:117-131,188-190 |
+| **V-TIMELINE** | NEW | the continuous-timeline expand | **REFINED** (m8 + MECH m7): carries BOTH C5 numbers — geometry 150-250ms PER HOP, 1.2-1.4s only as the full press→charge→travel→cool ritual; the re-home decider proves the re-home FRAME, the frozen-continuation arm is pass-3 | MARKS §6, C5 (`MARKS.md:434-443`) |
+| **V-VAPOR** | NEW | the vaporize dissolve | **REFINED** (M7/M3/M5 + minors 4/5/6 cured; battery 44): tau 0.14 in-class judged naked; ghosts park; warmth gated where it paints; windowed release velocity; fired-path re-band (m1) rides the pass-3 video | EXEMPLARS-2 S1; MARKS §5 |
+| **V-WAVE** | NEW | the listening organ | **REFINED** (DESIGN M2 — the ruling of the pass): **the bar-rack ORGAN is KILLED**; the organ re-skins as the STANDING AURORA SEA (recipe at card 5, MARKS-D:139-146); the FAC contract, honesty fences, park law, PRM chip, keyboard law survive verbatim (45/45); bar rack at most a compact/PRM-adjacent VARIANT. Relation written: B-NUCLEUS owns the ORB-scale listening ring; V-WAVE is the SURFACE-scale session field inside V-BLACKDOCK — one cites the other, no second listening body | MARKS-D-SIRI:103-146 |
+| **V-PERCH** | NEW | the corner-perched close | **SURVIVES** (M2 close-order cured; cream a11y ring; 39/39) | EXEMPLARS-2 S1; D-LENS precedent |
+| **V-BLACKDOCK** | NEW | assistant black-glass + downward dock-growth | **REFINED** (DESIGN M5 + m4): gesture-SCRUBBED growth stays on the dock register (ζ0.82, velocity-bought); **FIRED deploys run springPreset("panel")** (ζ0.71, f_d 1.75, intrinsic 4-5% overshoot — the measured fired-presentation liveliness); luminance floor split per §3.5-C | MARKS-D-SIRI:147-234 |
+| **V-DOTREL** | NEW | the dot-matrix state relay | **REFINED** (DESIGN B2 + MECH M8/M3/M5 cured; battery 48): idle is the CSS-only law-11 breath (never a dead frame — the refused Gemini freeze); mid-relay re-press paint-continuous (per-dot seeding, regression-locked); night-warm charcoal | EXEMPLARS-2 V1 mark 8; MARKS-C 8.2 (the freeze REFUSED at :344-347) |
+| **V-MORPHDOCK** | NEW-U | the composer→slider whole-body morph — a dock that BECOMES its own control: one glass body, two roles, label carried continuously, blur riding the same clock; nucleate-and-sweep ~250ms, +0.7% overshoot, evaporation dismissal (≤33ms fill, ~85ms label flight) | **NEW at the union** (DESIGN M4-1): enters the N1/§4 duel as arm 3; prototype owed pass-3 | MARKS-C-APPS:73-99,150-153,172-174,185-192 |
+| **V-THINKFIELD** | NEW-U | the two-texture thinking grammar: intimate size-graded halftone (OUR aurora particles, ~10pt pitch) around the input at idle; full-bleed slow wave field while thinking; HUE-SWEEP-AS-PROGRESS ~50-60°/s monotone on the oklch wheel, over warm-cream/charcoal ground | **NEW at the union** (DESIGN M4-3): substrate/I-row citizen; kin V-DOTREL (the lattice is the idle texture's lattice-scale sibling); prototype owed pass-3 | MARKS-C-APPS:315-353 |
+| CHAT-GRAMMAR | PARK | the chat/conversation grammar (composer descent τ≈58ms exponential; bubble-after-furniture ~300ms S-curve, +150-200ms delay; mini-chip fade-in-place upgrades) | **PARKED, written** (DESIGN M4-2, the A6 precedent): no chat consumer exists on disk; the constants are BANKED here so the park is a disposition, not silence — the row activates the day a conversation surface enters the library | MARKS-C-APPS:133-146,316-320 |
+| **R-TABTOGGLE** | REFINES-F5 | F5 tabs-toggle cure | **SURVIVES with the FINAL recipe** (§3.5-A canon; 69/69; interrupt-safe pop-overs) | EXEMPLARS-2 order 2 |
+| **R-TABS** | REFINES-F4 | F4 tabs cure | **SURVIVES with the FINAL recipe** (§3.5-A) | EXEMPLARS-2 order 2; MARKS §4 |
+| **R-SLIDER** | REFINES-F4 | slider cure | **SURVIVES with the FINAL recipe** (§3.5-A; N1 physics kept, shine killed) | EXEMPLARS-2 order 2 |
+| **R-MOMENTUM** | REFINES-X-CHOREO | momentum-carried content ENTRY | **SURVIVES** (proto-proven, N7 one-hop honored); the mark-7 grammar it did NOT cover is now R-CONDENSE's | MARKS-C-APPS 7.4; MARKS:215 |
+| **R-CONDENSE** | NEW-U, REFINES-X-CHOREO | the drawer condense-bell + grow-with-content: veil → condense bell (~120ms, peak ~10k px/s class, accelerate-then-decelerate, ζ≥0.95 no-wobble arrival) → grow-with-content (~450ms staggered section arrivals, ~80ms steps). THE LAW, written: **sheets are rigid; drawers GROW — two grammars, never mixed** | **NEW at the union** (DESIGN M4-4): the actual MOVEMENT-OF-MOMENTUM morph mark 7 measured; prototype owed pass-3 (may ride the constellation harness) | MARKS-C-APPS:244-289 |
+| **R-EFFERVESCE** | REFINES-X-CHOREO | pop-over effervescence | **SURVIVES** (measured live in the cure page; generation-guarded at the union) | EXEMPLARS-2 V3; law 14c |
 
-### Card 2 — V-ALENS, the gradient-blur attention lens
-
-- **Essence.** Engaging a control softens the world around it: a radial progressive-blur + dim
-  ramp centered on the engaged control, deepening with `--engage-t`, dying on release—attention
-  focused by the medium, not by a spotlight border (EXEMPLARS-2 V1 mark 6, the ChatGPT slider).
-- **Bests iOS.** iOS applies it as a fixed effect around one control; ours is
-  engagement-SCRUBBED (reversible, envelope-mapped, interrupt-safe), sibling-legibility-gated
-  (the N3 ≥AA floor applies to everything under the ramp), and ONE utility any control opts
-  into via the F4 role-gain table.
-- **Safari-honest mechanism.** 3 stacked backdrop-filter layers under STATIC radial-gradient
-  masks (codex law 1 recipe; radius ~doubling per band: 4/8/16px); only each layer's OPACITY
-  animates, driven by `--engage-t`—blur-rides-opacity is paint-proven on WebKit
-  (`safari-arm.md:148-150`). The center seats once per engagement (a seat, not per-frame
-  tracking); the stack is bounded to the control's container region.
-- **Performance card.** Fixed 3-layer count; zero animated blur radii; no per-frame JS (the
-  envelope already exists on the engage rAF); no `overflow:hidden` wrapper on the stack (the
-  Chromium stacked-mask weakness—one mechanism that holds on both engines); layers exist only
-  while `--engage-t > 0`. PRM: a single-step dim, no ramp.
-- **Breath rung.** engage—the most under-suffused rung in the library (SUFFUSION §1.1), served
-  at the MEDIUM level for the first time.
-
-### Card 3 — V-TIMELINE, the continuous-timeline expand (album-from-dock)
-
-- **Essence.** A dock item's artwork ferries through the dock-to-card growth into the page
-  header as ONE body on ONE scrub timeline—no handoff seam anywhere; the destination's reveal
-  ladder is fraction-keyed off the SAME spine; subsequent pages window outward from the album
-  cover (EXEMPLARS-2 V1 marks 3-4).
-- **Bests iOS.** iOS's album expand is continuous but fire-and-forget; ours is catchable and
-  reversible at any fraction, detent-caught at the card height, and the ladder is
-  position-mapped truth (the Find My held-height proof, MARKS §6).
-- **Safari-honest mechanism.** Resolves the SUFFUSION §4 mechanism duel FOR THE NAV CLASS: the
-  artwork is a FLIP re-home (`useElementMorph`) riding the F1 spine; the card runs the ruled
-  clip-path growth channel (cures-F1 G4); chrome pre-composed at final layout and revealed,
-  never reflowed (law 5); the C's-hardest-claim test (no-detach scrub across a
-  `position:fixed` re-home) is this card's named prototype decider. View transitions stay
-  licensed only for the fire-and-forget app-zoom class (registry rejection stands)—this is
-  explicitly NOT that class.
-- **Performance card.** transform + clip-path + opacity only; the artwork is one promoted
-  layer for the gesture's duration; no snapshot bitmaps (the anti-goal); ladder rungs are
-  static calc bands of the spine var—zero JS per rung.
-- **Breath rung.** travel→arrival at the luxurious nav register (1.2–1.4s ritual class).
-
-### Card 4 — V-VAPOR, the vaporize dissolve
-
-- **Essence.** A dismissed surface de-materializes into frost: content erodes through a
-  coarse→mid→fine noise ladder while ghost layers drift up and thin; the glass tier drops as
-  the body leaves; the whole dissolve is scrub-mapped to the dismissal travel (EXEMPLARS-2 S1:
-  "quite good—re-deploy in our own facilities").
-- **Bests iOS.** iOS's vaporize is fire-and-forget; ours maps dissolve fraction to gesture
-  travel (catchable mid-vaporize, reversible before commit), and the close order stays honest—
-  content leaves first, the medium relaxes after (the F5/N8 inversion law). Our grain is warm
-  (cream-tinted vapor, not white noise).
-- **Safari-honest mechanism.** Exactly 3 layers (body + 2 ghosts) under STATIC pre-baked noise
-  alpha masks at three densities (build-time data-URI PNGs—no runtime `feTurbulence`, no SVG
-  filter anywhere near the hot path, per the lying-gate law); animate only per-layer opacity +
-  translate + a small fixed-radius blur whose LAYER opacity ramps, on staggered F3 channels;
-  dissolve fraction = the drag scalar under gesture, a release-seeded spring after.
-- **Performance card.** Masks never animate (mask geometry changes repaint—banned); 3 layers
-  exist only during dismissal; compositor-only channels; PRM = single-step removal with the
-  state relayed.
-- **Breath rung.** release/exit—the exit half of law 8, finally given a body.
-
-### Card 5 — V-WAVE, the waveform register
-
-- **Essence.** The listening organ: a live level/waveform capsule for voice input and active
-  streams—bars that carry our spring weight, the honest "I hear you / I am receiving" relay
-  (EXEMPLARS-2 V2).
-- **Bests iOS.** Siri's waveform is display-only; ours folds into FAC—mic energy, pointer
-  velocity, or value churn drive the SAME bars through the three-sources-one-shape contract.
-  One organ, any honest signal; never decorative fake signal (I-row honesty: skeleton never
-  performs).
-- **Safari-honest mechanism.** ≤24 bars as scaleY transforms; live mode reads one
-  `AnalyserNode` inside an event-scoped rAF that exists only while the session does; idle
-  state is the law-11 luminance drift (a calm surface, not a flatlined waveform lying about
-  listening); PRM = a static level chip, stepped.
-- **Performance card.** transform-only; one rAF while live, zero at rest (the R3b budget);
-  no layout reads (bar count fixed, widths static).
-- **Breath rung.** loading/active—the state-relay rung, served with real signal.
-
-### Card 6 — V-PERCH, the corner-perched close
-
-- **Essence.** The dismissal affordance perched astride the top-left corner border, half
-  OUTSIDE the surface (EXEMPLARS-2 S1)—found without hunting, honest about which body it kills.
-- **Bests iOS.** iOS parks a flat X there; ours rides the lens-outside-clip architecture
-  (D-LENS protrusion is the shipped precedent: chrome that must escape the plate clip is an
-  architectural layer, not an overflow hack), seats squircle-aware on the corner point, carries
-  the press-charge acknowledgment iOS's X lacks, and hands off to V-VAPOR on commit.
-- **Safari-honest mechanism.** A chrome layer outside the plate clip (the F5 z/DOM contract's
-  plane vocabulary); static position at the corner point (`translate(-50%,-50%)` on the border
-  intersection); engage envelope only; no new clip machinery.
-- **Performance card.** Static at rest; a press envelope on engagement; effectively free.
-- **Breath rung.** idle→hover→engage on dismissal chrome.
-
-### Card 7 — V-BLACKDOCK, the assistant black-glass register + downward dock-growth
-
-- **Essence.** A near-black translucent register (the law-13 smoky material at surface scale)
-  for assistant/contextual surfaces: partial-width, floating, NON-modal—and its results expand
-  DOWNWARD with the full dock-growth grammar: anchored top edge, bottom travels, sides breathe
-  +4-5%, reveal ladder fraction-keyed (EXEMPLARS-2 V1 mark 7 + V2: "siri results expanding
-  LIKE A DOCK, downwards").
-- **Bests iOS.** Proves the growth grammar is orientation- and size-free by construction (the
-  anchor edge is a domain CONFIGURATION on the F1 spine, not new physics); stays non-modal
-  (codex law 18—taps beneath still navigate) AND fully scrubbed where iOS's sheet is
-  fire-and-forget; the black register still samples its backdrop (law 2)—near-black is a
-  luminance floor, never an opaque paint.
-- **Safari-honest mechanism.** Dock-to-card growth with the anchor inverted; BLOB_GLASS-kin
-  material tokens (~70% black fill, low backdrop ghosting, thin rim highlights); the medium
-  handshake via `--medium-t`; the drawer's fraction-keyed ladder for results rows.
-- **Performance card.** Identical budget to the dock growth (one clip-path channel, one
-  backdrop surface, spine + followers); nothing new to price.
-- **Breath rung.** engage→travel on assistant chrome; the register also feeds V-WAVE (the
-  waveform lives inside this surface when listening).
-
-### Card 8 — V-DOTREL, the dot-matrix state relay
-
-- **Essence.** A hue wave crossing a dot lattice as the page-state relay for assistant/ambient
-  surfaces—state changes travel as color through the matrix, in our palettes (EXEMPLARS-2 V1
-  mark 8: "the dot-matrix color usage and its transitions").
-- **Bests iOS.** Gemini's dot-matrix is an app veneer; ours is a SUBSTRATE-family citizen
-  bound by row K law—it relays the PAGE's state (theme flip, mode change, listening state),
-  never its own; PRM still frame with composition preserved; and the lattice breathes on the
-  law-11 envelope (asymmetric rise ~0.7s / decay ~3s) instead of ticking.
-- **Safari-honest mechanism.** One canvas on the shipped procedural-substrate class
-  (constellation/liquid-grid kin—no new engine, the ONE-metaball-doctrine spirit); hue waves
-  are a phase field evaluated per dot per frame ONLY during a relay event, parked otherwise;
-  the trigger rides the co-owned `--medium-t` handshake.
-- **Performance card.** Zero idle rAF (event-windowed like every driver); dot count capped by
-  viewport area budget; no DOM per dot.
-- **Breath rung.** the room's rung—ambient state relay without becoming furniture.
-
-### Card 9 — R-TABTOGGLE / R-TABS / R-SLIDER, the frosted cure (the named glass targets)
-
-- **Essence.** Re-register the three named POOR/shiny surfaces to the GOAL OF GLASS: F5's
-  tabs-toggle, F4's tabs, and the slider read BLURRED and FROSTED—never shiny or bright. The
-  referents are the micro demo's good register and F1's glass (user order,
-  `EXEMPLARS-2-CHARTER.md:55-59`).
-- **The cure direction (mechanism, not taste):** raise backdrop blur toward the container-tier
-  budget and let TINT do the depth work (MARKS §4 two-tier law); kill idle brightness—specular
-  and light motion are engagement-only (MARKS §4 note 3; the one licensed idle light is the
-  ~8s lens sweep, at most one per view); drop surface luminance floors so the backdrop reads
-  through as frost, not gloss; plain per-mode shadow arms (the light-dark() inset trap);
-  verify on the WebKit VIDEO path only (screenshots are backdrop-blind—`safari-arm.md:22-31`).
-- **Performance card.** Token/register changes only—no new layers, no new machinery; if
-  anything the shine kill REMOVES gradient paint.
-- **Breath rung.** idle—material honesty is the floor every other rung stands on.
-
-### Card 10 — R-MOMENTUM / R-EFFERVESCE, the register refinements
-
-- **R-MOMENTUM (drawer MOVEMENT OF MOMENTUM).** Results/rows enter carrying the gesture's
-  release velocity: entry stagger amplitude scales with the seeded velocity (a flung drawer's
-  rows arrive displaced-low and settle up harder; a placed drawer's rows land calm)—law 8's
-  entry grammar + the N7 one-hop license, depth-graded through F3. Mechanism: the release
-  velocity already exists at the spring seam; it becomes the entry channels' amplitude gain.
-  No new rAF; PRM unaffected (entries step). Rung: travel→arrival honesty—the drawer's energy
-  is the content's energy.
-- **R-EFFERVESCE (the pop-over register).** V3's verdict operationalized: anchored-open
-  retuned to the law-14c release-spring class (~250ms, at most one ~9% overshoot, no second
-  bounce), fade snappy and tight (fade ≤ geometry/φ), plus ONE arrival beat—a sub-100ms rim
-  light that cools immediately (the effervescence; light, not motion). SMOOTH not sharp: the
-  softened-onset `sat` dial (cures-F3 G4) applies. Mechanism: constants + one light channel on
-  the existing conductor manifest. Rung: arrival.
+**Counts: 41 EXTANT · 8 NEW · 3 NEW-U · 6 REFINES · 1 PARK (written). KILLED: 0 rows; 1 organ
+(the V-WAVE bar rack, dead as an organ, demoted to variant-at-most). F1's cool-slate tint and
+cyan velocity glow are marked HISTORICAL — the F1 verdict licensed its blur/tint/rim
+discipline, never its hues; nothing copies them forward (DESIGN M3).**
 
 ---
 
-## 4. PROTOTYPE BRIEFS (charter the prototype seats; each row above lands in exactly one)
+## 3. THE CANDIDATE CARDS (amended in place; unchanged text inherited from the prior roster)
 
-1. **PROTO-CONSTELLATION** — V-CONST + V-BLACKDOCK + V-TIMELINE + R-MOMENTUM: the nav-chrome
-   body—double-dock stack/collapse/fission over the D-POSTURE machine, the black assistant
-   register growing downward, the album ferrying dock→card→page on one spine (the §4 duel's
-   nav-class decider), and momentum-carried content entry; WebKit video-path evidence, all
-   phases scrub-caught mid-flight.
-2. **PROTO-ATTENTION-EXIT** — V-ALENS + V-VAPOR + V-PERCH + V-WAVE + V-DOTREL: the engagement
-   medium and exit organs—the 3-layer static-mask attention lens on `--engage-t`, the
-   3-layer static-noise vaporize scrubbed to dismissal travel with the corner-perched close,
-   the event-scoped waveform register, and the dot-matrix relay parked at zero idle rAF;
-   every blur claim read on the video path, opacity-only blur modulation throughout.
-3. **PROTO-FROSTED-CURE** — R-TABTOGGLE + R-TABS + R-SLIDER + R-EFFERVESCE: the glass
-   re-register—F5 tabs-toggle, F4 tabs, and the slider cured to BLURRED-FROSTED against the
-   micro-demo/F1 referents on one before/after page (same backdrop, paired video captures,
-   both themes), plus the pop-over effervescence retune; specular budget audited to
-   engagement-only across all three.
+Cards 1, 2, 4, 6, 9, 10 stand as amended by their union stamps above (the prototypes and
+PROBE-NOTES carry the applied text — pins there). The cards that changed materially:
+
+### Card 3 — V-TIMELINE (amendment: the C5 split, m8)
+
+The nav register carries BOTH numbers: **geometry per hop is 150-250ms** (dock→card,
+card→page — each hop its own spring flight); **1.2-1.4s is the FULL ritual**
+(press→charge→travel→cool, MARKS C5). A builder who tunes a 1.2s ferry has misread the card;
+the album never swims. Everything else stands (FLIP re-home on the F1 spine, clip-path growth
+channel, pre-composed chrome, the no-detach scrub decider — proto-proven 64/64).
+
+### Card 5 — V-WAVE, re-chartered: THE STANDING AURORA SEA (DESIGN M2 ruling)
+
+- **Essence.** The listening organ is a standing interference field in the capsule's glass
+  belly: 2-3 hue layers from OUR palettes (aurora tokens — A-QUARTET/B-STREAK kin), crests
+  inflating IN PLACE (phase pinned, no scrolling bars), centroid leaning ±40px-class at
+  ~1.5Hz, amplitude = the SAME `{level}` scalar through the proven FAC contract.
+- **The lull filament**: while a session lives the field falls to a becalmed line, NEVER to
+  zero — the breath-of-life edict's literal reading (MARKS-D:120-121,142-143).
+- **The commit gesture, kept whole**: flare to maximum → pin ~120-170ms → HARD CUT into the
+  next surface. The cut is the one licensed sharpness — it means "heard you"
+  (MARKS-D:122-124,143-145).
+- **What transfers verbatim** (MECH-verified sound): the three-sources-one-shape adapters +
+  inverse-meet gate, zero-Math.random honesty, park discipline (rAF dies at settle), the
+  law-11 CSS idle breath, PRM stepped chip, keyboard-law churn preset, warm night-dock
+  register. The bar rack may ship ONLY as a compact/PRM-adjacent variant, never the organ.
+- **Performance card.** The sea is ≤3 layered gradients/canvas-free transforms or ONE small
+  canvas (implementation duel for the pass-3 seat — priced against the R3b budget either
+  way); event-scoped rAF unchanged; zero at rest unchanged.
+
+### Card 7 — V-BLACKDOCK (amendment: the two-register law, DESIGN M5)
+
+The growth grammar splits by INTENT, per the measured two-registers-two-intents law
+(MARKS-D:196-212): **gesture-scrubbed** growth rides the dock register (ζ0.82 — overshoot
+velocity-bought); **FIRED** deploys (assistant answers, programmatic opens) ride
+`springPreset("panel")` — ζ0.71, f_d 1.75Hz, both axes ONE spring, 4-5% INTRINSIC overshoot,
+text born blurred condensing ~190ms, rim flare celebrating the data upgrade (+0.5s/+0.85s
+channel ladder). A fired black dock on the gesture register lands dead; the measured constant
+is already paid for. Luminance floor per §3.5-C.
+
+### Card 8 — V-DOTREL (amendment: idle truth, B2)
+
+Idle is a still CANVAS under a CSS-only law-11 luminance breath (7s asymmetric envelope,
+cream wash, PRM-dead, paused while a relay owns the light) — zero idle rAF SURVIVES, the
+dead frame does not. The relay is seam-continuous under re-press (per-dot seeding, M8). The
+lattice doubles as V-THINKFIELD's idle-texture kin — one substrate family, two textures.
+
+---
+
+## 3.5 THE REGISTERS MINTED AT THE UNION (the rulings, as tokens)
+
+### A. THE CANONICAL FROSTED REGISTER (DESIGN M3 — one material, three arms)
+
+The canon is the cure seat's warm derivation: **F1's STRUCTURE (blur/tint/rim discipline),
+house-warm hues, engagement light at 42° cream, hairline rims.** Every glass surface in the
+campaign quotes these tokens; the F1 referent's cool-slate tint and cyan glow are historical.
+
+| token | dark arm | light arm (law 10) | night-dock arm (law 13) |
+|---|---|---|---|
+| tint | rgb(56 50 44/.55) → rgb(36 32 28/.68) | rgb(250 246 236/.62) → rgb(244 238 224/.72) | warm charcoal rgb(16 14 12)/floor per §C |
+| container blur/sat | 22px / 1.35 | 26px / 1.5 (diffusion arm) | 6-10px LOW (content ghosts through) |
+| control blur | 12px | 12px | — |
+| full-perimeter rim | 1px, alpha 0.10-0.22 | 1px, alpha 0.10-0.22 (warm-dark hue) | 1px, alpha 0.10-0.18 |
+| 1px top bevel | ≤0.24 | **[0.28, 0.45]** — written per-arm band, gated; never past the F5 0.45 defect | ≤0.18 |
+| engagement light | hsl(42 85% 88%) — ZERO idle term | same | same |
+| idle specular | NONE (the ~8s lens sweep is the one licensed idle light, ≤1 per view) | same | same |
+
+Cure directions for the three named targets (R-TABTOGGLE/R-TABS/R-SLIDER) stand as the
+proto-frosted-cure page proves them: blur raised to container tier, tint does the depth work,
+brightness never amplifies, specular is engagement-only, plain per-mode shadow arms
+(light-dark() inset trap), WebKit VIDEO path only.
+
+### B. THE ENGAGE-ENVELOPE REGISTER (MECH M6 — one attack class, per-role release)
+
+First-order envelopes are the LIGHT/MEDIUM channels' vocabulary (opacity/luminance — channels
+without mass); springs own GEOMETRY. That relation is the register's charter — an envelope
+never moves a rect, a spring never dims a lens.
+
+| role | τ_up | τ_down | who rides it |
+|---|---|---|---|
+| press-acknowledge attack (shared class) | 40-60ms (t90 ≈ 90-135ms — inside law-16b's ≤150ms acknowledge window) | — | every row below |
+| press-drain (a felt cancel) | 55ms | 120ms | V-PERCH charge |
+| medium-exit (world softening dies) | 55ms | 160ms | V-ALENS lens |
+| control-engage cool | 60ms | 180ms | frosted-cure wash/bloom |
+| signal-decay (level meters drain, not vanish) | 40ms | 220ms | V-WAVE level |
+
+No envelope constant may be minted outside this table; a new role earns a new ROW, not a new
+literal. Ships beside springPreset as `engageEnvelope(role)`.
+
+### C. THE NIGHT-DOCK LUMINANCE FLOOR SPLIT (DESIGN m4)
+
+Two floors, both real, never one number serving both: **ghost-through surfaces** (assistant
+results, V-BLACKDOCK, V-WAVE capsule, V-DOTREL panel) at **~0.70** fill (law-13 orb kin,
+backdrop alive through it); **menu islands** (contextual heavy sheets) at **0.85-0.88** with
+the law-2 tint whisper kept (MARKS-C 7.3/7.4-DN4). Both warm charcoal (R>B), never pure #000,
+never cool blue-black.
+
+### D. THE MEDIUM-RECRUITMENT DOSE COLUMN (DESIGN M6 — who may soften the world)
+
+The V-ALENS opt-in gate cites THIS column, not an unwritten table. Dashes are load-bearing.
+
+| archetype | dose | note |
+|---|---|---|
+| C — sliders/steppers | ● full halo | the named exemplar (the ChatGPT slider) — flagship |
+| text fields under focus | ◐ whisper | half-extent, half-opacity ladder |
+| G — nav chrome/lens surfaces | ◐ | the lens IS medium; no second recruitment on top |
+| A buttons, B toggles, D-I controls | — | engagement suffusion stays surface-local |
+| J — data reads | — BY LAW | data reads on stable ground |
+| K — substrates | — BY LAW | substrates are never furniture |
+
+SUFFUSION §1.3 gains this as its eleventh column at the pass-3 paperwork sync (HANDOFF H-6).
+
+### E. THE `--glass-halo-*` BINDING (DESIGN m3)
+
+ONE token pair (`--glass-halo-radius` ≈ 10px source → 3.3pt σ-peak class; `--glass-halo-extent`
+≈ 1.5-2 control-heights, Gaussian-class falloff to ZERO), ONE mechanism (3 stacked
+backdrop-filter layers, σ DECAYS outward, static nested-annulus masks, opacity-only
+animation, luminance LOCKED). V-ALENS is its engagement-scrubbed consumer; X-GRADBLUR its
+static in-surface consumer. Two seats, one recipe — v-alens/index.html is the reference
+implementation.
+
+---
+
+## 4. PROTOTYPE BRIEFS (post-union)
+
+1. **PROTO-CONSTELLATION** (V-CONST + V-BLACKDOCK + V-TIMELINE + R-MOMENTUM) — BUILT, 64/64;
+   M4/m6/M3 cures landed. Pass-3 residue: the panel-preset fired-deploy arm (card 7), the
+   frozen-ferry continuation + fixed-container re-home arm (MECH m7), canon-register repaint.
+2. **PROTO-ATTENTION-EXIT** (V-ALENS + V-VAPOR + V-PERCH + V-WAVE + V-DOTREL) — BUILT as five
+   pages, all batteries green post-amendment (32/44/39/45/48). Pass-3 residue: the V-WAVE sea
+   re-skin (card 5), the warm-cream stage arm + canon repaint (M3/m2), the vapor fired-path
+   re-band (m1).
+3. **PROTO-FROSTED-CURE** (R-TABTOGGLE + R-TABS + R-SLIDER + R-EFFERVESCE) — BUILT, 69/69;
+   the register canon's reference derivation.
+4. **PROTO-ASSEMBLY** (NEW seat — MECH m9's owner): the composed organs. V-PERCH commit →
+   V-VAPOR full 3-layer dissolve across the `vapor-handoff` seam; V-WAVE (as the sea) living
+   inside V-BLACKDOCK's surface with the panel-preset fired deploy. Until this page runs on
+   the video path, no adoption language may say "proven together."
+5. **PROTO-MORPH-THINK** (NEW seat): V-MORPHDOCK (the N1 duel arm 3 decider — in-place morph
+   vs the constellation's FLIP ferry, judged on WebKit video) + V-THINKFIELD (the two-texture
+   grammar + oklch hue-sweep) + R-CONDENSE (condense-bell + grow-with-content on the drawer
+   harness).
 
 ---
 
 ## 5. Honesty line
 
-This seat drove no browser and touched no source. Every EXTANT status is quoted from its
-pass-2 verdict organ (`safari-arm.md`, the cure ledgers, the GF unions); every NEW card is a
-design with a named mechanism, a performance card, and a falsifiable prototype decider—paint
-truth is the prototype seats' to earn. The thrice-critical pass (EXEMPLARS-2 order 3) runs
-AFTER these prototypes, on this union.
+This seat read both critiques whole, re-verified every load-bearing pin against disk before
+ruling (all held; two prototypes already carried a prior partial adjudication's cures, which
+were verified rather than respent), applied every code amendment above by hand, and re-ran
+all seven batteries to green (341 gates). No browser was driven; every paint claim stays
+QUEUED-PAINT for the serialized browser arm. Where a cure is a design re-derivation rather
+than a code fact (the sea organ, the fired-tail re-band, the bloom-license read), the ruling
+names its video arbiter instead of pretending node green settles it.
+
+---
+
+## 6. PASS-3 HANDOFF
+
+### H-1. Rows entering pass-3 prototyping / verification
+
+| work | rows | seat | decider |
+|---|---|---|---|
+| the aurora-sea re-skin over the proven contract | V-WAVE | ATTENTION-EXIT continuation | WebKit video: standing field, phase pinned, lull filament, flare-pin-cut |
+| canon-register repaint (warm arms; F1 slate/cyan retired) + warm-cream stage arm | all 7 prototypes | each page's owner | paired-video both themes vs the cure referent |
+| fired-path exit re-band (~170-250ms class) | V-VAPOR | ATTENTION-EXIT continuation | video: erosion drama survives the shorter tail |
+| panel-preset fired deploy + floor split | V-BLACKDOCK | constellation continuation | video: intrinsic 4-5% overshoot reads livelier than the gesture register |
+| the composed organs | V-PERCH→V-VAPOR; V-WAVE-in-V-BLACKDOCK | **PROTO-ASSEMBLY (m9's named owner)** | the handoff beat + one-writer medium contract on video |
+| the N1 duel, three-armed | V-MORPHDOCK vs V-TIMELINE arms | PROTO-MORPH-THINK | no-detach scrub across both mechanisms, WebKit video |
+| two-texture thinking + hue-sweep | V-THINKFIELD | PROTO-MORPH-THINK | 50-60°/s monotone sweep; texture-tells-state at a glance |
+| condense-bell + grow-with-content | R-CONDENSE | PROTO-MORPH-THINK | bell profile (no wobble) + staggered growth vs the sheet's rigid law |
+| frozen-ferry continuation + fixed-container re-home | V-TIMELINE | constellation continuation | live world-rect delta through the WHOLE ferry, not the re-home frame |
+
+### H-2. Paint checks riding the SERIALIZED browser arm (the seat singleton law — one
+browser-owning seat at a time, never concurrent)
+
+All seven QUEUED-PAINT ledgers stand as written in the PROBE-NOTES; run every trace with
+**`?hud=0`** (the minor-2 switch — the instrumentation no longer contaminates zero-layout /
+transform-only gates). Union-added checks: (a) v-alens re-banded annulus video (halo local,
+world crisp, no ring banding); (b) v-dotrel breath-under-park trace — the CSS breath runs
+while the rAF counter stays at zero; (c) v-vapor ghost-park cost delta (the F5 r3 question,
+now measurable: parked vs mounted); (d) the night-dock warm read on BOTH engines; (e) live-π
+per band with the oklab paint-arm parse; (f) N3 sibling contrast as paired-π on real pixels.
+Standing laws: Playwright-WebKit screenshots are backdrop-blind — VIDEO is the honest organ;
+no `@supports` gates exist in any of the seven pages (verified by battery); frame-gap
+statistics, never raw performance.now deltas.
+
+### H-3. Wave candidates for the FINAL wave set
+
+- **Tier 1 — proto-proven, measured, ready to draft:** V-CONST, V-TIMELINE (with the C5
+  split), V-BLACKDOCK (+`springPreset("panel")`), V-PERCH, V-VAPOR, V-ALENS (post-video),
+  R-MOMENTUM, R-TABTOGGLE/R-TABS/R-SLIDER (the canon recipes), R-EFFERVESCE.
+- **Tier 2 — re-skin/new prototype first, then draft:** V-WAVE (the sea), V-DOTREL (breath
+  live-verified), V-MORPHDOCK, V-THINKFIELD, R-CONDENSE, the composed organs.
+- **Registers that ship as tokens regardless of tier:** the canonical frosted register
+  (§3.5-A), `engageEnvelope(role)` (§3.5-B), `springPreset("panel")`, the `--glass-halo-*`
+  pair (§3.5-E), the night-dock floor split (§3.5-C), the medium dose column (§3.5-D).
+- **PARKED:** CHAT-GRAMMAR (constants banked, no consumer); X-GOO's inter-body meniscus arm
+  (the Q051 fence, unchanged).
+
+### H-4 — H-7. Paperwork riders
+
+- **H-4**: REGISTRY.md gains the §3.5 registers at the next registry sync (one writer).
+- **H-5**: the two-registers-two-intents law (orb critically damped / panel underdamped) is
+  a codex amendment candidate — route to the IOS27-CODEX owner, per MARKS-D's own note.
+- **H-6**: SUFFUSION-MATRIX §1.3 gains the medium-recruitment column verbatim from §3.5-D;
+  §2's honesty fence gains the roster-self-binding clause (B1).
+- **H-7**: `MARKS-C-MUSIC.md` + `MARKS-E-NOTIFICATION.md` (landed after the brainstorm) get
+  the same mark-by-mark disposition sweep at pass-3 formation — the B1 lesson is standing
+  law: a union is re-based on every measured organ before it converges.

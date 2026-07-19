@@ -3,7 +3,30 @@
 verified-model: claude-fable-5 (system-context model ID, verbatim). Seat novelty:PROTO-1,
 IOS27-MICRO novelty pass, 2026-07-18. Status: RUNS. Files: `index.html` (self-contained, no
 build step — open directly), `check.mjs` (node logic check of the exact physics block shipped
-in the page; `node check.mjs` — **60/60 PASS** at write time).
+in the page; `node check.mjs` — **64/64 PASS** as of the union adjudication; the old "60/60"
+was a stale count from before four gates landed — MECH minor 1, corrected).
+
+## JUDGE CORRECTIONS (the union adjudication, 2026-07-19)
+
+- **MECH M4 SUSTAINED and CURED — event-count-as-clock.** The law-16a sustain gate accrued
+  `upHold += 1/60` per pointermove EVENT (fires at ~75ms real time on a 120Hz ProMotion
+  stream; never accrues on coalesced streams) and the chip seed fell back to
+  `|dyContent|·60` (a fake 60Hz velocity, 2× hot at 120Hz). Cures: the hold is WALL-CLOCKED
+  (`now − holdStart`); the chip seed takes a boxcar-windowed velocity (≤120ms of drag
+  samples, the useDragVelocity discipline) and seeds 0 when unknown — overshoot is
+  velocity-BOUGHT (MARKS C2), so a missing measurement buys none.
+- **MECH M3 SUSTAINED and CURED.** `simContinuity`'s comment claimed "4 posture transitions"
+  while the loop ran none (a gate that could never fail) — the choreography now actually
+  runs four Spine glides alongside the carrier, gated `flips = 4`. `simCensus` is relabeled
+  [DECLARED]: a regression lock on the design table, not machinery proof — the live surface
+  count is QP-9's frame trace to earn.
+- **MECH minor 6 SUSTAINED and CURED.** PhoneB's hand-inlined `value + 0.2·v >= 0.5`
+  projections now use `PC.PROJ_TAU` — no re-minted literals.
+- **MECH minor 7 SUSTAINED, declared.** The re-home decider proves the RE-HOME FRAME only
+  (≤0.5px); after re-parent, `apply()` freezes the art for the remainder of the ferry
+  (`parentElement === npBody` guard). The frozen continuation joins the fixed-container arm
+  as pass-3 work; adoption language may not call the full ferry re-home-proven.
+- `?hud=0` silences per-frame badge/cell instrumentation for QP-9's traces (MECH minor 2).
 
 ## What the prototype claims to prove
 

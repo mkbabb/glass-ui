@@ -78,7 +78,9 @@ console.log("\n=== the close-clock stamps (CSS vs physics — one clock, two org
   const beat = +(html.match(/--beat-ms:\s*([\d.]+)/) || [])[1];
   check("CSS beat equals physics (ms)", Math.abs(beat - PERCH.close.beatMs), 0, 0.5, "[STRUCT] the beat is the transition DELAY");
   const relax = +(html.match(/--medium-relax-ms:\s*([\d.]+)/) || [])[1];
-  check("CSS relax duration in [3tau, 4tau] (ms)", relax, PERCH.close.mediumTau * 3000, PERCH.close.mediumTau * 4000, "[STRUCT] the exponential's visible life");
+  // JUDGE: -0.5ms tolerance on the low edge — 3*0.14*1000 is 420.0000000000001 in floats
+  // and the stamped CSS integer 420 is the intended equality, not a breach.
+  check("CSS relax duration in [3tau, 4tau] (ms)", relax, PERCH.close.mediumTau * 3000 - 0.5, PERCH.close.mediumTau * 4000, "[STRUCT] the exponential's visible life");
 }
 
 console.log("\n=== structural asserts (the plane vocabulary + mechanism discipline) ===");

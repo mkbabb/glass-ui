@@ -58,7 +58,9 @@
   .capsule {
     position: absolute; left: 28px; right: 28px; bottom: 96px; z-index: 2;
     border-radius: 30px; padding: 18px 20px 16px;
-    background: rgba(10, 12, 15, 0.70);
+    /* JUDGE AMENDMENT (DESIGN M3): the night dock is WARM charcoal — our cream inverted,
+       never a cool blue-black (MARKS-C-APPS.md:283-285; proto-constellation is the kin). */
+    background: rgba(16, 14, 12, 0.70);
     -webkit-backdrop-filter: blur(6px) saturate(1.15);
     backdrop-filter: blur(6px) saturate(1.15);
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.14);
@@ -189,10 +191,19 @@ const WAVE = {
     };
   },
   // --- three sources, ONE shape: every adapter returns { level } in [0,1] ---
+  // JUDGE (MECH minor 3): the mic adapter's input is SPECTRAL BYTE ENERGY (the mean-square
+  // of getByteFrequencyData bins) — an honest level proxy, but NOT time-domain RMS; the
+  // old "rms" name overclaimed. Gain x2.6 is seat-tuned (declared, PROBE-NOTES 1).
   sources: {
-    mic(rms) { return { level: Math.min(1, Math.max(0, rms * 2.6)) }; },
+    mic(specLevel) { return { level: Math.min(1, Math.max(0, specLevel * 2.6)) }; },
     pointer(vPxPerS) { return { level: Math.tanh(Math.abs(vPxPerS) / 900) }; },
     churn(springV) { return { level: Math.tanh(Math.abs(springV) * 1.4) }; },
+  },
+  // adapter inverses — battery-only, used to prove the adapters meet at ONE level (M3 cure)
+  invert: {
+    mic(level) { return level / 2.6; },
+    pointer(level) { return 900 * Math.atanh(level); },
+    churn(level) { return Math.atanh(level) / 1.4; },
   },
   // the churn driver: a value spring whose VELOCITY is the honest signal
   makeChurn(target = 0.8) { // keyboard law: deterministic preset, zero seeded velocity
@@ -207,13 +218,22 @@ const WAVE = {
   prmQuantize(level) { return Math.round(level * (this.prmSteps - 1)) / (this.prmSteps - 1); },
   tokens: { capsuleBlack: 0.70, blurPx: 6, breathPeak: 0.16, breathPeriodS: 7 },
   sims: {
-    oneShape() { // the adapters are indistinguishable to the organ
-      const a = WAVE.sources.mic(0.25), b = WAVE.sources.pointer(651.53), c = WAVE.sources.churn(0.553);
-      const keysEqual = [a, b, c].every((s) => JSON.stringify(Object.keys(s)) === '["level"]') ? 1 : 0;
-      // feed the SAME level through each path: bar targets must be identical
+    oneShape() {
+      // JUDGE AMENDMENT (MECH M3): the old sameTargets computed barTarget(4, L) three times
+      // with the same L and compared it to itself — a gate that could never fail. The honest
+      // claim, now actually tested: invert each adapter to the SAME target level, run the
+      // three inverses back through their adapters, and demand the three RESULTING levels
+      // (and their bar targets) agree — the adapters genuinely meet at one shape.
       const L = 0.65;
-      const t1 = WAVE.barTarget(4, L), t2 = WAVE.barTarget(4, L), t3 = WAVE.barTarget(4, L);
-      return { keysEqual, sameTargets: t1 === t2 && t2 === t3 ? 1 : 0, bounded: [a, b, c].every((s) => s.level >= 0 && s.level <= 1) ? 1 : 0 };
+      const a = WAVE.sources.mic(WAVE.invert.mic(L)),
+        b = WAVE.sources.pointer(WAVE.invert.pointer(L)),
+        c = WAVE.sources.churn(WAVE.invert.churn(L));
+      const keysEqual = [a, b, c].every((s) => JSON.stringify(Object.keys(s)) === '["level"]') ? 1 : 0;
+      const levelErr = Math.max(Math.abs(a.level - L), Math.abs(b.level - L), Math.abs(c.level - L));
+      const targetErr = Math.max(
+        Math.abs(WAVE.barTarget(4, a.level) - WAVE.barTarget(4, b.level)),
+        Math.abs(WAVE.barTarget(4, b.level) - WAVE.barTarget(4, c.level)));
+      return { keysEqual, levelErr, targetErr, bounded: [a, b, c].every((s) => s.level >= 0 && s.level <= 1) ? 1 : 0 };
     },
     ballistics() {
       const dt = 1 / 240; let l = 0, t = 0, t90 = null;
@@ -288,8 +308,13 @@ const WAVE = {
 
 // ---------- page wiring (one event-scoped rAF; one live source; zero at rest) ----------
 (function () {
-  const root = document.documentElement;
   const capsule = document.getElementById("capsule");
+  // JUDGE AMENDMENT (MECH M5): the FAC scalar publishes on the COMPONENT ROOT (the
+  // capsule), never documentElement — an inheriting :root var written per frame recalcs
+  // the whole document on WebKit. Nothing on this page consumes it (the publication is
+  // the contract under test); the capsule is its honest scope.
+  const root = capsule;
+  const HUD = !/[?&]hud=0/.test(location.search); // MECH minor 2: instrumentation-off for the browser arm
   const rack = document.getElementById("rack");
   const hud = document.getElementById("hud");
   const status = document.getElementById("status");
@@ -340,10 +365,10 @@ const WAVE = {
       if (!bars[i].spring.settled(bt) || level !== 0) allSettled = false;
     }
     writeChip(level);
-    hud.textContent = `level ${level.toFixed(3)} · source ${source || "—"} · rAF live`;
+    if (HUD) hud.textContent = `level ${level.toFixed(3)} · source ${source || "—"} · rAF live`;
     if (allSettled && source === null) {
       raf = 0; capsule.classList.remove("live");
-      hud.textContent = `level 0.000 · source — · rAF parked`;
+      if (HUD) hud.textContent = `level 0.000 · source — · rAF parked`;
       relay("idle — calm surface, no session");
       return;
     }

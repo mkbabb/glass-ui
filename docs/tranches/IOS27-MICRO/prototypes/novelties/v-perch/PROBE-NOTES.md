@@ -21,6 +21,22 @@ stray up never commits). Rim light is engagement-only (0.18 hairline → 0.68 ch
 §4 note 3); dot pop 1.11 under the φ^¼ cap. Commit dispatches the `vapor-handoff` event and
 runs the honest close-order stub (content 170ms → beat 140ms → medium tail ~500ms).
 
+## JUDGE CORRECTIONS (the union adjudication, 2026-07-19)
+
+- **MECH M2 SUSTAINED and CURED.** The original build started the medium relax on the beat
+  delay ALONE — the medium was 30ms into relax when content died; the empty-medium beat was
+  −30ms. The relax delay is now `content + beat` (CSS and physics mirrored, cross-checked),
+  and `closeOrder().orderOK` demands a real ≥100ms held beat after content is out — the old
+  gate was positivity, not order.
+- **MECH M7 SUSTAINED and CURED.** mediumTau 0.12 → 0.14: relax = τ·ln20 = 419ms, inside the
+  MARKS §5 ~400-450ms class and equal to the painted 420ms (3τ). The old sim passed the tail
+  band only because the beat was summed in.
+- **MECH M5 SUSTAINED and CURED.** `--engage-t`/`--perch-seat` publish on `#phone`, never
+  `documentElement`.
+- **DESIGN m2 PARTIALLY CURED.** The a11y ring is house cream (`rgba(255,226,178,.95)`),
+  never the banned cyan class; the warm-cream stage arm for paint judging is pass-3 work.
+- `?hud=0` silences the HUD for the browser arm's traces (MECH minor 2).
+
 ## QUEUED-PAINT (the serialized browser arm's ledger — video path only)
 
 1. **QUEUED-PAINT / the protrusion reads.** Screenshot both themes: the dot must visibly

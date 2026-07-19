@@ -245,8 +245,12 @@ const PERCH = {
 
 // ---------- page wiring (static at rest; press envelope only; event-scoped rAF) ----------
 (function () {
-  const root = document.documentElement;
   const phone = document.getElementById("phone");
+  // JUDGE AMENDMENT (MECH M5): --engage-t and --perch-seat publish on the COMPONENT ROOT
+  // (#phone), never documentElement — an inheriting :root var written per frame recalcs
+  // the whole document on WebKit.
+  const root = phone;
+  const HUD = !/[?&]hud=0/.test(location.search); // MECH minor 2: instrumentation-off for the browser arm
   const plate = document.getElementById("plate");
   const medium = document.getElementById("medium");
   const perch = document.getElementById("perch");
@@ -263,8 +267,8 @@ const PERCH = {
     const dt = Math.min(0.05, (now - last) / 1000); last = now;
     e = PERCH.envStep(e, target, dt);
     root.style.setProperty("--engage-t", e.toFixed(4));
-    hud.textContent = `engage-t ${e.toFixed(3)} · ${press.state} · rAF live`;
-    if (e === target) { raf = 0; hud.textContent = `engage-t ${e.toFixed(3)} · ${press.state} · rAF parked`; return; }
+    if (HUD) hud.textContent = `engage-t ${e.toFixed(3)} · ${press.state} · rAF live`;
+    if (e === target) { raf = 0; if (HUD) hud.textContent = `engage-t ${e.toFixed(3)} · ${press.state} · rAF parked`; return; }
     raf = requestAnimationFrame(tick);
   }
   function drive(t) {

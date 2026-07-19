@@ -28,7 +28,10 @@
 <style>
   :root {
     --scrub-t: 0;           /* the ONE dissolve scalar (FAC --scrub-t shape) */
-    --beat-ms: 140;          /* stamped from VAPOR.close — single-sourced */
+    /* JUDGE AMENDMENT (MECH M7): these are HAND-MIRRORED from VAPOR.close, not stamped —
+       the old "single-sourced" comment was false. check.mjs now cross-checks the equality
+       (beat, and relax = 3*tau) so the mirror cannot drift silently. */
+    --beat-ms: 140;
     --medium-relax-ms: 420;
     --panel: rgba(255, 255, 255, 0.045);
     --line: rgba(255, 255, 255, 0.10);
@@ -78,6 +81,10 @@
   }
   .phone.closed .vapor-root { display: none; }
   .vlayer { border-radius: 28px; padding: 22px; }
+  /* JUDGE AMENDMENT (MECH minor 4): the ghosts PARK at rest — the old build kept both
+     mounted at opacity 0 with filter+mask live (the F5 r3 opacity-0 cost question).
+     Parked = visibility hidden; the body alone is the resting surface. */
+  .vapor-root[data-parked="1"] .v-ghost { visibility: hidden; }
   /* layer 1 — THE BODY: F1 container glass + shallow FINE grain mask (clean at rest) */
   .v-body {
     position: relative;
@@ -153,7 +160,7 @@
   <div class="phone" id="phone">
     <div class="world"></div>
     <div class="medium" id="medium"></div>
-    <div class="vapor-root" id="vroot">
+    <div class="vapor-root" id="vroot" data-parked="1">
       <!-- layer 1: the body -->
       <div class="vlayer v-body" id="vbody">
         <div class="grip" aria-hidden="true"></div>
@@ -195,7 +202,11 @@ const VAPOR = {
   // the release snap: duration-stable critically-damped (law 14a class) — the spring
   // absorbs v0 as an initial condition; settle time stays flat across seeds.
   snap: { omega: 11, eps: 0.005 },
-  close: { beatMs: 140, mediumTau: 0.12, mediumEps: 0.05 }, // MARKS §5: beat 100-200; relax decelerating
+  // MARKS §5: beat 100-200; relax decelerating. mediumTau 0.14 (JUDGE, MECH M7): relax =
+  // tau*ln20 = 419ms — inside the MARKS ~400-450ms class AND equal to the painted 420ms
+  // (3*tau); the old 0.12 gave 360ms, outside the cited class, passing only because the
+  // beat was summed into the gate.
+  close: { beatMs: 140, mediumTau: 0.14, mediumEps: 0.05 },
   bands: {
     body: { a: 0.0, b: 0.55 },                                  // content leaves FIRST
     ghostC: { a: 0.08, p: 0.38, b: 0.80, peak: 0.85, drift: -16, blur: 2 },
@@ -240,13 +251,21 @@ const VAPOR = {
       while (t2 < 3) { const r = s2.step(dt); overshoot = Math.max(overshoot, r.x - 1); t2 += dt; }
       return { settleMs: t * 1000, overshoot };
     },
-    catchContinuity() { // pointer re-catches mid-snap: value continuity at the seam
+    catchContinuity() {
+      // JUDGE AMENDMENT (MECH M3): the old gate compared xAtCatch to itself — identically 0,
+      // could never fail, and its "node-proves C1" label was wrong twice over (the seam is
+      // C0 BY DESIGN: the finger owns velocity after a catch). The honest claims, gated:
+      // (a) the snap integrator itself is position-continuous per frame (no teleport a scrub
+      //     could seize mid-jump), and (b) the page's catch seed law — pointerdown stores
+      //     d0 = d, so the first scrub sample with zero pointer travel reproduces the caught
+      //     value through the SAME clamp math pointermove runs.
       const s = VAPOR.makeSnap(0.4, 2.0, 1);
-      const dt = 1 / 240; let t = 0;
-      while (t < 0.08) { s.step(dt); t += dt; } // ~80ms into the snap
+      const dt = 1 / 240; let t = 0, prev = s.x, maxFrameStep = 0;
+      while (t < 0.08) { s.step(dt); maxFrameStep = Math.max(maxFrameStep, Math.abs(s.x - prev)); prev = s.x; t += dt; }
       const xAtCatch = s.x;
-      const dAfter = xAtCatch; // the scrub takes the value verbatim — the finger owns v
-      return { jump: Math.abs(dAfter - xAtCatch), xAtCatch };
+      const d0 = xAtCatch, y0 = 300;                       // pointerdown: d0 = d (the seed law)
+      const firstScrub = Math.min(1, Math.max(0, d0 + (y0 - y0) / VAPOR.TRAVEL)); // pointermove at zero travel
+      return { seedErr: Math.abs(firstScrub - xAtCatch), maxFrameStep, xAtCatch };
     },
     closeOrder() { // from commit: content out, the beat, medium gone — three clocks
       const s = VAPOR.makeSnap(0.5, 1.5, 1);
@@ -286,16 +305,26 @@ const VAPOR = {
 
 // ---------- page wiring (drag scrub -> --scrub-t; release snap; event-scoped rAF) ----------
 (function () {
-  const root = document.documentElement;
   const phone = document.getElementById("phone");
+  // JUDGE AMENDMENT (MECH M5): the FAC scalar publishes on the COMPONENT ROOT (#phone),
+  // never documentElement — an inheriting :root var written per frame recalcs the whole
+  // document on WebKit (35us vs 960us over 500 children; the sanctioned wiring).
+  const root = phone;
   const vroot = document.getElementById("vroot");
   const medium = document.getElementById("medium");
   const hud = document.getElementById("hud");
+  const HUD = !/[?&]hud=0/.test(location.search); // MECH minor 2: instrumentation-off for the browser arm
   const prm = matchMedia("(prefers-reduced-motion: reduce)");
   let d = 0, raf = 0, snap = null, snapTarget = 0, last = 0, dragging = false, y0 = 0, d0 = 0;
-  let vel = 0, lastY = 0, lastT = 0;
+  // MECH minor 6: release velocity is WINDOWED (boxcar over the last <=120ms of samples,
+  // the useDragVelocity discipline), never a single sample pair.
+  let vel = 0, samples = [];
 
-  function write(v) { d = v; root.style.setProperty("--scrub-t", d.toFixed(4)); }
+  function write(v) {
+    d = v;
+    root.style.setProperty("--scrub-t", d.toFixed(4));
+    vroot.dataset.parked = d > 0 ? "0" : "1"; // ghosts exist only during dismissal (minor 4)
+  }
   function commitClose() {
     write(1);
     medium.classList.add("relax"); // beat = transition delay, then the relax tail
@@ -307,7 +336,7 @@ const VAPOR = {
     const dt = Math.min(0.05, (now - last) / 1000); last = now;
     snap.step(dt);
     write(Math.min(1, Math.max(0, snap.x)));
-    hud.textContent = `scrub-t ${d.toFixed(3)} · snap live`;
+    if (HUD) hud.textContent = `scrub-t ${d.toFixed(3)} · snap live`;
     if (snap.settled()) {
       raf = 0;
       if (snapTarget === 1) commitClose();
@@ -332,18 +361,21 @@ const VAPOR = {
   vroot.addEventListener("pointerdown", (ev) => {
     if (phone.classList.contains("closed")) return;
     dragging = true; vroot.setPointerCapture(ev.pointerId);
-    if (raf) { cancelAnimationFrame(raf); raf = 0; } // the CATCH: scrub seizes the value, C1-continuous
-    y0 = ev.clientY; d0 = d; lastY = ev.clientY; lastT = performance.now(); vel = 0;
-    hud.textContent = `scrub-t ${d.toFixed(3)} · scrubbing`;
+    if (raf) { cancelAnimationFrame(raf); raf = 0; } // the CATCH: scrub seizes the value (C0 seam — the finger owns v)
+    y0 = ev.clientY; d0 = d; vel = 0;
+    samples = [{ t: performance.now(), y: ev.clientY }];
+    if (HUD) hud.textContent = `scrub-t ${d.toFixed(3)} · scrubbing`;
   });
   vroot.addEventListener("pointermove", (ev) => {
     if (!dragging) return;
     const now = performance.now();
     const nd = Math.min(1, Math.max(0, d0 + (y0 - ev.clientY) / VAPOR.TRAVEL));
-    const dt = (now - lastT) / 1000;
-    if (dt > 0.004) { vel = ((lastY - ev.clientY) / VAPOR.TRAVEL) / dt; lastY = ev.clientY; lastT = now; }
+    samples.push({ t: now, y: ev.clientY });
+    while (samples.length > 2 && now - samples[0].t > 120) samples.shift(); // the <=120ms window
+    const a = samples[0], b = samples[samples.length - 1];
+    if (b.t > a.t) vel = ((a.y - b.y) / VAPOR.TRAVEL) / ((b.t - a.t) / 1000);
     write(nd);
-    hud.textContent = `scrub-t ${d.toFixed(3)} · scrubbing v=${vel.toFixed(2)}/s`;
+    if (HUD) hud.textContent = `scrub-t ${d.toFixed(3)} · scrubbing v=${vel.toFixed(2)}/s`;
   });
   ["pointerup", "pointercancel"].forEach((n) => vroot.addEventListener(n, () => {
     if (!dragging) return; dragging = false; release(vel);

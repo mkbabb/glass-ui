@@ -26,6 +26,32 @@ entirely; a static stepped chip (5 quantized levels) carries the state — physi
 information kept. The home surface is the law-13 register: 0.70 black fill, blur(6px) low
 ghosting, thin rims — near-black as a luminance floor over a live backdrop.
 
+## JUDGE CORRECTIONS (the union adjudication, 2026-07-19)
+
+- **DESIGN M2 SUSTAINED — the ORGAN re-skins; the contract survives verbatim.** The bar rack
+  is the trite register the measured corpus refused ("emphatically not a bar-graph",
+  MARKS-D-SIRI.md:107-108); the recorded adoption is the STANDING AURORA SEA
+  (MARKS-D-SIRI.md:139-146): 2-3 hue layers from OUR palettes, amplitude = the same `{level}`
+  scalar, phase pinned (crests breathe in place, ±40px lean at ~1.5Hz), a lull FILAMENT floor
+  while a session lives, and flare→pin(~150ms)→hard-cut as the end-of-listening commit. The
+  FAC three-sources-one-shape contract, adapters, honesty fences, park law, PRM chip, and
+  keyboard law all transfer unchanged — MECH's sound-mechanism verdict and DESIGN's organ
+  verdict compose, they do not conflict. The re-skin is the pass-3 prototype's charge; the
+  bar rack survives at most as a compact/PRM-adjacent VARIANT, never the organ. B-NUCLEUS
+  relation written at the roster: the blob's ring is the ORB-scale listening body; this organ
+  is the SURFACE-scale session field inside V-BLACKDOCK.
+- **MECH M3 SUSTAINED and CURED.** The old `oneShape.sameTargets` computed barTarget(4, L)
+  thrice with the same L — could never fail. The gate now inverts each adapter to one target
+  level and demands the round-trips MEET (adapter math genuinely tested).
+- **MECH minor 3 SUSTAINED and CURED.** "mic RMS" was a misnomer — the input is spectral
+  byte energy (getByteFrequencyData mean-square), an honest level proxy with the wrong name;
+  renamed `specLevel` in the adapter, gain ×2.6 stays declared seat-tuned.
+- **MECH M5 SUSTAINED and CURED.** `--engage-t` publishes on the capsule (component root),
+  never `documentElement`.
+- **DESIGN M3 SUSTAINED and CURED (night-dock arm).** Capsule warm charcoal
+  `rgba(16,14,12,.70)` — R>B gated; cool blue-black is the refused register.
+- `?hud=0` silences the HUD for the browser arm's traces (MECH minor 2). Battery now 45.
+
 ## QUEUED-PAINT (the serialized browser arm's ledger — video path only)
 
 1. **QUEUED-PAINT / the mic session end-to-end.** Needs a real device + permission grant:

@@ -224,7 +224,11 @@ body[data-theme="dark"] {
 }
 body[data-theme="light"] {
   /* the light arm — codex law 10 (IMG_1874): a warm diffusing layer ~65-75%,
-     hue survives, geometry does not; blur raised, tint carries the frost */
+     hue survives, geometry does not; blur raised, tint carries the frost.
+     JUDGE AMENDMENT (DESIGN m5): the rim bands are now PER-ARM and WRITTEN —
+     full-perimeter hairline rims 0.10-0.22 on BOTH arms; the 1px top BEVEL may run
+     hotter on the light arm (band [0.28, 0.45], gated in check.mjs) but never past
+     the F5 defect's 0.45. The old 0.55 breached the campaign's own band unwritten. */
   --cure-blur-container: 26px;
   --cure-sat-container: 1.5;
   --cure-tint-top: rgb(250 246 236 / 0.62);
@@ -232,7 +236,7 @@ body[data-theme="light"] {
   --cure-rim: inset 0 0 0 1px rgb(120 100 76 / 0.14);
   --cure-control-top: rgb(255 253 246 / 0.62);
   --cure-control-bot: rgb(250 245 234 / 0.48);
-  --cure-control-rim: inset 0 1px 0 rgb(255 255 250 / 0.55);
+  --cure-control-rim: inset 0 1px 0 rgb(255 255 250 / 0.40);
   --cure-fill-top: rgb(255 252 244 / 0.68);
   --cure-fill-bot: rgb(250 244 230 / 0.58);
   --cure-text: rgb(44 36 28);
@@ -257,6 +261,11 @@ body[data-theme="light"] {
   background: linear-gradient(to bottom, hsl(var(--cure-light) / 0.30), hsl(var(--cure-light) / 0.04));
   opacity: calc(var(--engage-t, 0) * 0.45);
 }
+/* JUDGE (DESIGN m6): the bloom's license is NAMED — this is the SUFFUSION G-row
+   ENGAGEMENT-LENS bloom (energy/engage-gated, ZERO idle term by construction), not the
+   A-row 2-4px control bloom; the -12/-16px overreach rides that license. Whether a
+   control-tier surface may borrow the lens tier at all is the pass-3 video question —
+   if it reads as fireworks, the cure is inset toward the A-row band, not more gating. */
 .cure-bloom {
   position: absolute; inset: -12px -16px; border-radius: inherit; pointer-events: none;
   background: radial-gradient(60% 80% at 50% 50%, hsl(var(--cure-light) / 0.55), hsl(38 80% 80% / 0.18) 55%, transparent 75%);
@@ -806,6 +815,10 @@ const CURE = (() => {
   const chip = (id, text, ok) => { const el = $(id); el.textContent = text; el.className = ok === undefined ? "" : ok ? "pass" : "fail"; };
 
   function openPop(el, rimEl, reg, isAfter) {
+    // JUDGE AMENDMENT (MECH minor 8): the GENERATION GUARD — a rapid re-toggle used to
+    // leave the prior open's rAF job alive, writing transform/opacity against closePop's
+    // state. Every open/close bumps the element's generation; a stale job self-retires.
+    const gen = (el._gen = (el._gen || 0) + 1);
     el.style.visibility = "visible";
     el.setAttribute("aria-hidden", "false");
     if (PRM()) { el.style.opacity = "1"; el.style.transform = "none"; if (!isAfter) rimEl.style.opacity = "0.9"; return; }
@@ -813,6 +826,7 @@ const CURE = (() => {
     const t0 = performance.now() + (isAfter ? CURE.EFFERVESCE.latencyMs : 0);
     let peak = 0, crossed = false, second = 0, phase = "rise", landed = false, settleAt = null;
     run((dt, now) => {
+      if (el._gen !== gen) return false; // interrupted by a newer open/close — the everything-catchable creed
       const t = (now - t0) / 1000;
       if (t < 0) { el.style.opacity = "0"; return true; }
       const [x] = fn(t);
@@ -859,6 +873,7 @@ const CURE = (() => {
     });
   }
   function closePop(el, rimEl) {
+    el._gen = (el._gen || 0) + 1; // retire any live open job (MECH minor 8)
     el.style.opacity = "0"; el.style.visibility = "hidden"; el.setAttribute("aria-hidden", "true");
     el.style.transform = "translateY(14px) scale(0.94)"; rimEl.style.transition = "none"; rimEl.style.opacity = "0";
   }

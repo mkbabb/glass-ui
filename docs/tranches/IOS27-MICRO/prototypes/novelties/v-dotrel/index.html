@@ -12,7 +12,9 @@
     are a phase field evaluated per dot per frame ONLY during a relay event, parked
     otherwise; the trigger rides the co-owned --medium-t handshake. Zero idle rAF
     (event-windowed like every driver); dot count capped by viewport area budget;
-    no DOM per dot. PRM: still frame with composition preserved.
+    no DOM per dot. PRM: still frame with composition preserved. Idle is NEVER a
+    dead frame: a CSS-only law-11 luminance breath rides over the parked canvas
+    (DESIGN B2 cure — the Gemini idle freeze is the refused defect, MARKS-C 8.2).
   Row K law: the lattice relays the PAGE's state (theme flip, mode change,
   listening state), NEVER its own — no self-timers, no idle ticking. The lattice
   breathes on the law-11 envelope (IOS27-CODEX.md:27): static lattice, no dot
@@ -48,12 +50,34 @@
   .panel {
     position: absolute; left: 24px; right: 24px; top: 24px; height: 400px; z-index: 2;
     border-radius: 28px; overflow: hidden;
-    background: rgba(10, 12, 15, 0.70);
+    /* JUDGE AMENDMENT (DESIGN M3): warm charcoal, never cool blue-black (MARKS-C 7.3) */
+    background: rgba(16, 14, 12, 0.70);
     -webkit-backdrop-filter: blur(6px) saturate(1.15);
     backdrop-filter: blur(6px) saturate(1.15);
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.14);
   }
   .panel canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  /* JUDGE AMENDMENT (DESIGN B2): idle is the law-11 CSS-only breath, NEVER a dead frame.
+     MARKS-C-APPS.md:344-347 measured Gemini's idle field at diff 0.00 and REFUSED it by
+     edict ("a glass-ui field NEVER parks"); the old build parked to a literally still
+     frame and rebuilt the refused defect under our flag. The cure is the v-wave pattern:
+     a compositor-only luminance envelope OVER the canvas — asymmetric rise/decay at the
+     law-11 register, PRM-dead, paused while a relay owns the light. The rAF stays parked;
+     the lattice stops lying still. Zero JS at idle survives intact. */
+  .lattice-breath {
+    position: absolute; inset: 0; border-radius: 28px; pointer-events: none;
+    background: radial-gradient(70% 60% at 50% 42%, rgba(245, 236, 220, 0.16), transparent 75%);
+    opacity: 0;
+    animation: lattice-breath 7s cubic-bezier(0.3, 0.0, 0.2, 1.0) infinite;
+  }
+  @keyframes lattice-breath {
+    0% { opacity: 0; }
+    10% { opacity: 1; }   /* rise ~0.7s of the 7s period — the law-11 lifecycle */
+    55% { opacity: 0.18; } /* long decay */
+    100% { opacity: 0; }
+  }
+  .panel.relaying .lattice-breath { animation-play-state: paused; } /* the relay owns the light */
+  @media (prefers-reduced-motion: reduce) { .lattice-breath { animation: none; } }
   .controls {
     position: absolute; left: 24px; right: 24px; bottom: 96px; z-index: 2;
     border-radius: 24px; padding: 14px 16px;
@@ -84,6 +108,7 @@
     <div class="world"></div>
     <div class="panel" id="panel">
       <canvas id="lattice" role="img" aria-label="Ambient dot lattice relaying the page state"></canvas>
+      <div class="lattice-breath" aria-hidden="true"></div>
     </div>
     <div class="controls">
       <div class="row">
@@ -98,8 +123,8 @@
   </div>
   <p class="note">V-DOTREL: state changes travel as color through the matrix. Each press relays the
   PAGE's state — a hue wave crosses the lattice from the pressed control, a +16% luminance pulse
-  riding the front on the law-11 envelope (rise ~0.7s, decay ~3s). Between relays: a still frame,
-  zero rAF.</p>
+  riding the front on the law-11 envelope (rise ~0.7s, decay ~3s). Between relays: a still canvas
+  under a CSS-only law-11 breath — zero rAF, never a dead frame (the breath-of-life edict).</p>
 </main>
 
 <script>
@@ -238,10 +263,39 @@ const DOTREL = {
       const exact = DOTREL.mixHue(350, 10, 1);
       return { wrapAtZero: (wrap === 0 || wrap === 360) ? 1 : 0, lands: exact, longWay: Math.abs(DOTREL.mixHue(350, 10, 0.5) - 180) > 90 ? 1 : 0 };
     },
-    prmStill() { // still frame, composition preserved: final state in one step, NO pulse
+    prmParity() {
+      // JUDGE AMENDMENT (MECH M3): the old prmStill constructed {h: to.h, ...} and asserted
+      // s.h === to.h — self-satisfying by construction. The REAL claim, now tested: the PRM
+      // still-step (paint the target palette flat) equals the relay's own t->infinity limit —
+      // PRM removes physics, never information. This can fail: if the envelope leaked a
+      // residual pulse or the hue arc failed to settle, the parity breaks.
       const from = DOTREL.palettes.calm, to = DOTREL.palettes.listening;
-      const s = { h: to.h, s: to.s, l: to.l }; // the PRM apply is definitionally the target
-      return { hueExact: s.h === to.h ? 1 : 0, noPulse: s.l === to.l ? 1 : 0 };
+      const dot = { x: 40, y: 40, j: 0 }, origin = { x: 0, y: 0 };
+      const end = DOTREL.dotState(dot, origin, from, to, 1e6);
+      return {
+        hueErr: Math.abs(end.h - to.h), satErr: Math.abs(end.s - to.s),
+        lumErr: Math.abs(end.l - to.l), pulseDead: end.a <= 1e-6 ? 1 : 0,
+      };
+    },
+    interruptRelay() {
+      // JUDGE AMENDMENT (MECH M8) regression lock: a mid-relay re-press must be
+      // paint-continuous at the seam. The cure: the new relay's per-dot `from` is seeded
+      // from the CURRENTLY PAINTED per-dot state (pulse folded in), never the prior
+      // state's flat palette — the old path snapped every mid-transition dot in one frame.
+      const dots = DOTREL.build(360, 330, 7), o1 = { x: 10, y: 10 }, o2 = { x: 350, y: 320 };
+      const calm = DOTREL.palettes.calm, listen = DOTREL.palettes.listening, focus = DOTREL.palettes.focus;
+      const tCatch = 0.3;
+      let maxJump = 0, flatJump = 0, mid = 0;
+      for (const d of dots) {
+        const before = DOTREL.dotState(d, o1, calm, listen, tCatch);
+        const seeded = { h: before.h, s: before.s, l: before.l };   // the per-dot re-seed law
+        const after = DOTREL.dotState(d, o2, seeded, focus, 0);     // first frame of relay 2
+        maxJump = Math.max(maxJump, Math.abs(after.l - before.l), Math.abs(after.h - before.h));
+        const flat = DOTREL.dotState(d, o2, calm, focus, 0);        // the OLD defective path
+        flatJump = Math.max(flatJump, Math.abs(flat.l - before.l));
+        if (before.a > 0.02 && before.a < 0.98) mid++;
+      }
+      return { maxJump, flatJump, midDots: mid };
     },
     determinism() { // parameter-not-sample: the same seed is the same lattice
       const a = DOTREL.build(360, 330, 7), b = DOTREL.build(360, 330, 7);
@@ -265,8 +319,13 @@ const DOTREL = {
 
 // ---------- page wiring (relay events only; still frame between; zero idle rAF) ----------
 (function () {
-  const root = document.documentElement;
   const panel = document.getElementById("panel");
+  const phone = document.getElementById("phone");
+  // JUDGE AMENDMENT (MECH M5): the --medium-t handshake publishes on the COMPONENT ROOT
+  // (#phone), never documentElement — an inheriting :root var written per frame recalcs
+  // the whole document on WebKit.
+  const root = phone;
+  const HUD = !/[?&]hud=0/.test(location.search); // MECH minor 2: instrumentation-off for the browser arm
   const canvas = document.getElementById("lattice");
   const hud = document.getElementById("hud");
   const status = document.getElementById("status");
@@ -275,15 +334,20 @@ const DOTREL = {
 
   let dots = [], W = 0, H = 0, dpr = 1;
   let state = "calm";
-  let raf = 0, relayT0 = 0, relayFrom = null, relayTo = null, relayOrigin = null, relayDur = 0;
+  // JUDGE AMENDMENT (MECH M8): relayFrom is PER-DOT — seeded from the currently painted
+  // state at relay time, never the prior state's flat palette. The old flat `relayFrom`
+  // snapped every mid-transition dot to the previous palette in one frame on a re-press.
+  let raf = 0, relayT0 = 0, fromArr = [], relayTo = null, relayOrigin = null, relayDur = 0;
 
+  function dotAt(i, t) { // the one evaluator: per-dot from, shared origin/to/clock
+    return DOTREL.dotState(dots[i], relayOrigin, fromArr[i], relayTo, t);
+  }
   function paint(t) { // one pass over the lattice; t = seconds since relay start (or null = rest)
     ctx2d.clearRect(0, 0, W, H);
     const to = DOTREL.palettes[state];
-    for (const d of dots) {
-      let s;
-      if (t === null) s = { h: to.h, s: to.s, l: to.l };
-      else s = DOTREL.dotState(d, relayOrigin, relayFrom, relayTo, t);
+    for (let i = 0; i < dots.length; i++) {
+      const d = dots[i];
+      const s = t === null ? { h: to.h, s: to.s, l: to.l } : dotAt(i, t);
       ctx2d.fillStyle = `hsl(${s.h.toFixed(1)} ${(s.s * 100).toFixed(0)}% ${(Math.min(0.95, s.l) * 100).toFixed(1)}%)`;
       ctx2d.beginPath();
       ctx2d.arc(d.x, d.y, DOTREL.RADIUS, 0, Math.PI * 2);
@@ -297,17 +361,19 @@ const DOTREL = {
     canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
     ctx2d.setTransform(dpr, 0, 0, dpr, 0, 0);
     dots = DOTREL.build(W, H, 7);
-    paint(null); // the still frame — composition preserved at rest
-    hud.textContent = `state ${state} · dots ${dots.length} · rAF parked`;
+    fromArr = dots.map(() => DOTREL.palettes[state]);
+    paint(null); // the still canvas — composition preserved at rest (the CSS breath lives above it)
+    if (HUD) hud.textContent = `state ${state} · dots ${dots.length} · rAF parked`;
   }
   function tick(now) {
     const t = (now - relayT0) / 1000;
     paint(t);
     root.style.setProperty("--medium-t", DOTREL.coveredFrac(dots, relayOrigin, t).toFixed(3));
-    hud.textContent = `state ${state} · dots ${dots.length} · rAF live ${t.toFixed(2)}s / ${relayDur.toFixed(2)}s`;
-    if (t >= relayDur) { // the pulse has decayed everywhere: park on the still frame
+    if (HUD) hud.textContent = `state ${state} · dots ${dots.length} · rAF live ${t.toFixed(2)}s / ${relayDur.toFixed(2)}s`;
+    if (t >= relayDur) { // the pulse has decayed everywhere: park on the still canvas
       raf = 0; paint(null);
-      hud.textContent = `state ${state} · dots ${dots.length} · rAF parked`;
+      panel.classList.remove("relaying"); // the law-11 breath resumes (DESIGN B2)
+      if (HUD) hud.textContent = `state ${state} · dots ${dots.length} · rAF parked`;
       return;
     }
     raf = requestAnimationFrame(tick);
@@ -315,7 +381,14 @@ const DOTREL = {
   // THE ONLY ENTRY: a page-state change (row K law — the lattice never relays itself)
   function relay(nextState, originEl) {
     if (nextState === state) return;
-    relayFrom = DOTREL.palettes[state];
+    // M8 cure: seed the new relay's per-dot FROM from the CURRENTLY PAINTED state —
+    // mid-flight dots carry their exact paint (pulse folded in) across the seam.
+    const tNow = raf ? (performance.now() - relayT0) / 1000 : null;
+    fromArr = dots.map((d, i) => {
+      if (tNow === null || !relayTo) return DOTREL.palettes[state];
+      const s = dotAt(i, tNow);
+      return { h: s.h, s: s.s, l: s.l };
+    });
     relayTo = DOTREL.palettes[nextState];
     state = nextState;
     status.textContent = `state: ${nextState} — relayed through the lattice`;
@@ -331,6 +404,7 @@ const DOTREL = {
     relayDur = DOTREL.eventDur(dots, relayOrigin);
     relayT0 = performance.now();
     root.style.setProperty("--medium-t", "0");
+    panel.classList.add("relaying"); // the relay owns the light; the breath pauses (DESIGN B2)
     if (!raf) raf = requestAnimationFrame(tick);
   }
 

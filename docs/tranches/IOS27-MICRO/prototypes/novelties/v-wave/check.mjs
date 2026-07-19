@@ -27,7 +27,8 @@ function check(name, value, lo, hi, note = "") {
 console.log("=== three sources, ONE shape (SUFFUSION §3.1 #2 — the FAC fold) ===");
 const os = WAVE.sims.oneShape();
 check("adapters publish the same keys", os.keysEqual, 1, 1, "[DESIGN] { level } and nothing else — the organ cannot tell");
-check("same level -> same bar targets", os.sameTargets, 1, 1, "[DESIGN] the source is invisible past the adapter");
+check("three adapters MEET at one level (inverse err)", os.levelErr, 0, 1e-9, "[DESIGN] round-tripped through each adapter's own math (M3 cure — the old gate compared a constant to itself)");
+check("bar-target divergence across sources", os.targetErr, 0, 1e-9, "[DESIGN] the source is invisible past the adapter");
 check("all adapter outputs bounded [0,1]", os.bounded, 1, 1, "[DESIGN] one shape, one domain");
 
 console.log("\n=== meter ballistics (the honest 'I hear you' relay) ===");
@@ -69,7 +70,10 @@ check("capsule blur (px) — LOW, content ghosts", WAVE.tokens.blurPx, 4, 10, "[
 check("idle breath peak", WAVE.tokens.breathPeak, 0.1, 0.2, "[DESIGN] law 11 — peak ~+16% over ground");
 check("idle breath period (s)", WAVE.tokens.breathPeriodS, 4, 12, "[DESIGN] law 11 — slowest visible change wins");
 {
-  const cssBlack = +(html.match(/\.capsule\s*{[^}]*background:\s*rgba\(10,\s*12,\s*15,\s*([\d.]+)\)/) || [])[1];
+  // DESIGN M3 (JUDGE): the night dock is warm charcoal rgb(16,14,12) — R>B enforced below
+  const capsuleBg = html.match(/\.capsule\s*{[^}]*background:\s*rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)/);
+  const cssBlack = capsuleBg ? +capsuleBg[4] : NaN;
+  check("night dock is WARM charcoal (R>B)", capsuleBg && +capsuleBg[1] > +capsuleBg[3] ? 1 : 0, 1, 1, "[MARKS-C 7.3] our cream inverted, never pure/cool black (DESIGN M3 cure)");
   check("CSS capsule fill equals the token", Math.abs(cssBlack - WAVE.tokens.capsuleBlack), 0, 1e-9, "[STRUCT] single source");
   const cssBlur = +(html.match(/\.capsule\s*{[^}]*backdrop-filter:\s*blur\((\d+)px\)/s) || [])[1];
   check("CSS capsule blur equals the token", Math.abs(cssBlur - WAVE.tokens.blurPx), 0, 0, "[STRUCT]");
