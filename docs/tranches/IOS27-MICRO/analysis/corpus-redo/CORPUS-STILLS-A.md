@@ -100,7 +100,8 @@ velocity-parameterized snap); the popup's own dismissal is fire-and-forget (law 
     declared divergence, judged against this pair — the judge material is now measured (floor
     blur(~9pt), band-not-ellipse backplate, ramp 60–85pt).
 - **pager-dots** — adjacent idiom, correctly SEPARATE: the worm (position among peers,
-  `src/components/pager-dots/PagerDots.vue:6-33`, `usePagerWorm.ts:5,19` via `useLeadTrail`) vs
+  `src/components/pager-dots/PagerDots.vue:6-33`,
+  `src/components/pager-dots/composables/usePagerWorm.ts:19` via `useLeadTrail`) vs
   the absorb-pill (cumulative magnitude — slider's). The library keeps the two idioms apart; keep
   it that way. HAS.
 - **scroll-progress-rim** — law 12 names the fill-pill+dots as its replacement model; on disk it
@@ -430,3 +431,20 @@ Every roster component this corpus bears on; state verified on disk with pins ab
 Design-language note governing every recommendation above: the corpus's warm registers converge on
 ours (Assets 9, 12) — the moves proposed are register completions (warm ink, absorption variant,
 engagement-keyed lower caustic), never clones; our glass, our palettes, our rounding hold.
+
+## Verification (2026-07-19)
+
+Verified-model: claude-fable-5. An independent re-derivation pass (scratchpad
+`corpus-redo/stills-a/verify.py`/`verify2.py`/`verify3.py`) re-measured the load-bearing claims
+from the raw stills without reusing the measure-pass outputs:
+
+- 2287/2288 thumbs 466px/626px (growth +160), dot centers 683/844/1005 (pitch 161px), the 3→2
+  dot absorption visible in 2288 — the law-12 growth=pitch exactness stands.
+- 14.38.58 capsule bbox 464×126px, surface (248,244,237), luminance FLAT (Δ<0.1) at 5/20/40px
+  below the capsule — the zero-shadow claim stands.
+- 04.08.42 ecru (243,242,240) exact; Maps sheet top edge y=1465 exact (max vertical-gradient row);
+  IMG_1874 confirm circle re-found as a 129×129px connected component (claimed d=130px) and the
+  raw-bubble reference (95,44,92) reproduced at (900,600).
+- All file:line pins re-opened on disk and confirmed, including `springPreset("dock")`
+  {0.30, 0.82} read fresh. One pin corrected: the pager-worm composable lives at
+  `src/components/pager-dots/composables/usePagerWorm.ts`, not at the package root.

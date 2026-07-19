@@ -1,5 +1,7 @@
 # CORPUS-VIDEOS-A — the seat redo (IOS27-MICRO corpus redo, 2026-07-18)
 
+> RE-RUN 2026-07-19: the seat re-executed with an independent extraction + independent trackers; the arbitration layer is §6 (additive, MARKS PASS-2 convention — sections above are measured history, kept). Net: C-A2's constants widen to a two-run bracket; the a1 lens INCONCLUSIVE verdict is packet-PROVEN; two prior-canon durations gain refinements; one NEW correction (C-A5, the a5 capture transfer) lands.
+
 - verified-model: claude-fable-5 (the system-context model ID, returned verbatim). Seat: corpus:VIDEOS-A.
 - assets (5): `ScreenRecording_06-20-2026 18-47-21_1.MP4` (a1), `ScreenRecording_06-20-2026 18-48-52_1.MP4` (a2), `ScreenRecording_06-21-2026 01-28-54_1.MP4` (a3), `ScreenRecording_06-22-2026 23-59-33_1.MP4` (a4), `Screen Recording 2026-06-22 at 14.38.42.mov` (a5).
 - frames: `scratchpad/corpus-redo/VIDEOS-A/` — survey 8-12fps per asset + seven 60fps physics re-bursts; every set's t0+fps contract is in that folder's `README.md` (frame N sits at t0+(N-1)/fps; 603w = 0.5x native, 1 img px = 2 native px). Trackers: `measure.py` (profile-shift SSD with subpixel refinement; red-dominant-extent lens tracker). Damped-oscillator fits: grid over (ζ, f_d) with linear LSQ, critical-damping alternative tested per window.
@@ -158,3 +160,60 @@ Shipped state verified on disk this session (all paths under `src/`). HAS = the 
 4. **C-A4** — the `.mov` "copy": NOT byte-identical (distinct md5, tail-byte difference); decoded streams MD5-identical. Content duplicate; the campaign's "cmp to confirm" assumption corrected to stream-level identity.
 5. **Minor** — a4 population: the sheet body is still empty at t=7.25 (s12-0088); the empty-body beat runs a beat longer than the prior ledger's phrasing (within declared VFR tolerance).
 6. **Confirmations banked** (cited, not re-derived): a2 snap τ≈130ms/zero-overshoot/creep tail + rubber-band penetration to the exact frame; a3 medium-arrival overshoot; a4 hold displacement within 1.3%; the a1 three-body collapse overlap at 60fps; the CC displacement rim-light event (extended: in-control color bloom + Sleep-pill aura); status-readout migration mid-flight; a3 grabber absent cold; a5 fully static.
+7. **(RE-RUN) C-A5** — the a5 capture transfer contaminates the absolute-luminance claims: stored code values are dark (ground 26-27/255, both runs agree numerically) inside a bt709/tv-range stream, but the rendered appearance is Cowork's warm-cream LIGHT theme — the sampled headline-text pixels (17/255) are DARKER than the ground, which no dark theme produces. The "dark theme #1B1B1B ground" label and the absolute "+16% peak" amplitude (codex law 11's dot-lattice paragraph) are transfer artifacts: INCONCLUSIVE pending a color-managed decode. The structural/timing claims survive untouched (static lattice, wandering envelope ~10-20 CSS px/s, rise ~0.7s / decay ~3s, clouds not twinkle). One irony worth keeping: the restraint-floor exemplar is in truth a warm-cream field — nearer glass-ui's own identity than the canon knew. §6 R8.
+8. **(RE-RUN) two duration refinements** — the a1 collapse MORPH proper runs ~200-250ms (the "≈330ms" includes the pre-morph displacement gate; packets continuous through the window); the a1 expansion geometry FLIGHT is BOUNDED [90,210]ms rest→full-bleed (canon's "geometry ~300ms" is press-anchored; the onset itself is lost in a recorder packet hole 3.867→3.950). §6 R3/R4.
+9. **(RE-RUN) C-A2 widened to the two-run bracket** — CC release: ζ 0.61-0.72, f_d 1.60-1.90Hz, overshoot 19-28 native px (5.0-7.4%). Both independent fits reject critical damping (×2.6/×2.9) and both refute law 14(c)'s ζ≈0.75-0.85 / ~9% pair. §6 R2.
+
+---
+
+## 6. RE-RUN 2026-07-19 — the independent second pass (arbitration)
+
+Same seat, re-executed blind-then-arbitrated: fresh extraction to `scratchpad/corpus-redo/corpus-videos-a/` (surveys 8-12fps; twelve 24/60fps re-bursts, every burst dir carrying its own t0+fps README; frame N at t0+(N−1)/fps; 603w = 0.5× native), independent trackers (`track.py`: whole-profile row x-correlation, dark-run gap detection, row-gradient edge tracking, strip-luminance oscillation probes), independent grid-LSQ oscillator fits — the prior sections unread until this pass's own numbers were on disk. Arbitration follows the honesty law: where the two runs disagree, the packet record and the tighter tracker win, whichever run they favor.
+
+### R1 — the a1 lens transit: the prior INCONCLUSIVE verdict is packet-PROVEN, and this run walked into the trap first
+
+This run's b60-lens set initially read as a slow spanning contraction across t=0.933-1.000 — five distinct-looking frames. The packet record kills that read: source packets run 60fps to 0.833, then ONE packet at 0.933, then resume at 1.017 (verified this pass: `ffprobe` packet ladder 0.833→0.933→1.017). The 0.950/0.967/0.983/1.000 outputs are fps-filter DUPLICATES of the single 0.933 transit frame. The initial timeline (and a "content swap ≤33ms" sharpening built on it) is RETRACTED — the recorder hitches under the morph, exactly the failure class §1 named. What the second pass legitimately adds: the single transit frame shows the lens as one wide capsule bridging BOTH slots with both glyphs tinted beneath it, and the first post-gap frame (1.017) shows the arrival capsule with the source glyph already reverted — bridge-consistent, blink-inconsistent, at every instant the recorder actually kept. Verdict unchanged: one-body CONSISTENT here, geometry curve INCONCLUSIVE in this asset, travel BOUNDED [84,183]ms; the platform one-body claim rides MARKS C4's clean Safari 60fps proof.
+
+### R2 — the CC release spring: two independent fits, one union bracket
+
+| run | tracker | overshoot (native) | ζ | f_d | critical alt |
+|---|---|---|---|---|---|
+| 07-18 | subpixel profile-SSD | 18.9 (5.0%) | 0.71 | 1.60Hz | ×2.9 worse |
+| 07-19 | integer whole-profile xcorr (y 60-1440 native), v0=0 model | 24±4 (6.3%) | 0.65 (0.61-0.69) | 1.75Hz (1.65-1.90) | ×2.6 worse |
+
+The trackers weight the two parallax layers differently (the deep grid runs ~1.04× the header — law 15's differential), and the fits anchor differently (rest-crossing-seeded vs v0=0-from-hold). Both reject critical damping; both land far from canon. **The banked register: ζ 0.61-0.72, f_d 1.60-1.90Hz, single overshoot 5.0-7.4%, ~270ms to extremum, ~420ms to dead, monotone return, no second excursion.** Law 14(c)'s ζ≈0.75-0.85 is refuted twice over — that bracket cannot produce ANY visible overshoot from a position-locked hold released at v0≈0 (ζ=0.75 → 2.8%). One epistemics note on §1's k·v law: for THIS event (a static-hold release) the rest-crossing velocity is generated by ζ itself, so the row is not independent evidence for k — the k·v law's honest support is the flick-arrival rows (a3 med60, a4 exp60, MARKS C2), where crossing velocity is gesture-seeded. The law stands on those three; this row merely fails to contradict it.
+
+### R3 — the a1 collapse morph proper: ~200-250ms (packet-clean)
+
+Packets are continuous 60fps through 8.90-9.30. The 24fps re-burst (b24-collapse): dock intact through col_006 (8.908); split onset col_007 (8.950); the triple-overlap money frame col_008 (8.992) — unselected glyphs gone, slab pouring into the wide Library-glyph pill, search circle already separate, mini-player narrowing and descending OVER the forming pill, double-tint in the crossings; near-final 9.033-9.117; settled ~9.12-9.16. The MORPH runs ~200-250ms; the prior "≈330ms" spans from first content movement at ~8.83, i.e. it includes the displacement gate opening. Both figures true, different anchors — recreations should budget the morph at ~250ms and the gate as a separate threshold. MEASURED (24fps grid ±42ms).
+
+### R4 — the a1 expansion geometry flight: BOUNDED [90,210]ms, onset lost to a recorder hole
+
+b24-expand1: pill at rest through 3.908; packets then hole 3.867→3.950 (the hitch-under-morph class again); at 3.950 the card already covers most of the screen with the backdrop strongly blurred; full-bleed ~4.03-4.07; artwork trailing to ~4.16-4.20, sharpness tail past ~4.4. So the rest→full-bleed FLIGHT is [90,210]ms — materially faster than a naive reading of law 5's "geometry ~300ms", which is press-anchored (press latency ~120-160ms + flight + settle drift ≈ the canon's 290-300ms to cover screen, agreeing in absolute time). The channel ORDER is re-confirmed intact: blur within one frame of geometry, chrome PRE-COMPOSED at final layout inside the growing card (legible from 3.992), art last with the soft-bitmap tail. Law 5 keeps its order; its geometry figure gains the anchor note. BOUNDED.
+
+### R5 — the a4 app zooms, re-burst at 24fps (the prior run cited these; now marked)
+
+Launch (b24-launch): first canvas at 6.517 in the icon slot with giant icon artwork inside and home ALREADY blurring (blur leads ✓); artwork→canvas crossfade complete by 6.558 (~25-35% of scale — canon's "~40%" bracket holds); full-bleed ~6.72-6.81 (flight ~250-300ms); the canvas flies BLANK-dark and content populates only after landing — sheet enters at MID detent 6.93-7.02, ~200ms post-landing (law 17's stagger, never gating on data ✓). Close (b24-close): chrome-drop and morph onset inside one 42ms frame (the prior 60fps one-frame split stands, cited); the map→icon-artwork crossfade lands between 11.500-11.542 with the canvas at **~2-2.5× ICON scale (~25-30% of flight)** — REFINEMENT: "crossfaded at LARGE scale" means large relative to the icon, not near-fullscreen, in the close direction; landing icon ~1.3-1.4× at 11.583, relaxed to 1× by ~11.67-11.71, home de-blur trailing to ~11.83 (asymmetric blur ✓, law 5). BOUNDED (24fps grid).
+
+### R6 — the position-mapped material verified THROUGH the oscillation (a4)
+
+Strip-luminance probes across the b60-sheetflick arrival: the residual-map-strip luminance bottoms at 9.900-9.917 and relaxes in lockstep with the sheet's landing oscillation — the scrim faithfully reports the overshoot excursion frame by frame. Law 7(d)'s position-mapping holds even mid-transient: the material is f(position) at 60fps resolution, not just at detent rests. New corroboration channel for §1's exp60 fit; MEASURED direction.
+
+### R7 — the a3 grabber, upgraded visual→MEASURED
+
+Grabber-region contrast vs surround: flat at −2.1 luminance for eight consecutive cold-idle frames (t=0-0.667), flipping positive at 0.750-0.833 as the first drag begins, +18.4 at the between-gesture rest (4.583). Absent cold, born at first touch, persists — law 7(a) now carries numbers.
+
+### R8 — the a5 capture transfer (NEW correction C-A5, ledger item 7)
+
+Stated in the ledger; the mechanism in brief: the .mov is bt709/tv-range; the stored ground sits at 26-27/255 with the display-rendered appearance warm-cream light; headline ink samples DARKER than ground (17 vs 26) — structurally impossible on a dark theme, diagnostic of light-ink-on-cream squashed by the capture transfer. Every absolute-luminance/theme claim from this asset is INCONCLUSIVE; every structural/timing claim stands. Duplicate verdict unchanged (stream-identical, container-distinct).
+
+### R9 — replications banked (two runs, two trackers, same numbers)
+
+The a2 swipe-1 deceleration ladder point-identical to canon AND to the 07-18 pass (first-motion −61 at 1.600; ratio 0.85-0.88 → τ≈130ms; zero overshoot; creep tracked to 15 img at 2.117); the a2 rubber band exact (rest-cross ~8.417, max penetration at 8.483-8.500, ~+16 img ≈ 10.7pt, release ~380ms monotone, never crossing rest); the a4 hold displacement +380 native vs the 07-18 run's +378.9 (Δ 0.3%); the a1 three-body collapse overlap confirmed at a second cadence. The physics constants of law 14(a)/(b) are now triple-attested (canon + two independent re-runs) — ship them as presets with confidence.
+
+### R10 — supplementary component pins (extending §4)
+
+- **slider** — the a4 CC register is ALREADY OURS on the anatomy side too: the standard slider paints NO visible thumb — the filled track's leading edge IS the handle, thumb inscribed and clamped (`components/slider/Slider.vue:52-58`), vertical orientation shipped (`Slider.vue:111`). The knob-less fill-pill verdict upgrades to HAS (anatomy) + LACKS (displacement bloom, end-overpull), sharpening §4's row.
+- **dock** — the shipped stance on scroll is a DECLARED divergence, in writing: "the dock NEVER auto-collapses on a passive scroll (the iOS-27 lesson — that costs a tap)" (`components/dock/composables/useDockSearch.ts:6-9`). §4's LACKS rows on goo-overlap and rebound-immunity stand; the collapse-gating row should cite this ruling rather than read as an accidental gap.
+- **springs** — the overshoot fence [0,10%] (`composables/motion/spring/springPresets.ts:55-58`) survives everything both runs measured: 5.0-7.4% intrinsic (CC), 1-2% velocity-bought (detents), zero (carousel). SUFFUSION §6 q2's dissolution re-confirmed from fresh data a second time.
+- **register geography note** — the corpus now holds three measured arrival voices: the carousel snap (ζ≥1, τ≈130ms), the sheet/CC arrivals (ζ 0.61-0.82, f_d 1.6-2.1Hz), the dock landing (MARKS C2: ζ 0.80, f_d 1.7Hz). One damped-frequency family, three damping voices — our preset table (`springPresets.ts:65-113`: dock 0.30/0.82, bouncy 0.6/0.6, gentle 0.82/1.0) brackets all three. What the library lacks is not rows but SELECTION: per-velocity (k·v overshoot arrives via spring seeding, not preset swaps) and per-regime (tracked/ballistic/fire-and-forget) choice between the voices, in our own warm register — never a clone.
