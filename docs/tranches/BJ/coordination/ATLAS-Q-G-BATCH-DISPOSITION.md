@@ -61,3 +61,12 @@ amendment workflow (wf_3826281d-ef7) lands — one writer per file. The G1 relay
 acknowledges the lift instead of reporting a failure; atlas-side note: their B1 dispatch is
 separately RESCINDED per owner order (execution HELD pending compaction — their register,
 no action of ours).
+
+## Owner ruling (2026-07-19, in-session): Q EXECUTION DEFERRED
+
+The owner: "We are not executing Q for a bit. Mark these mailbox items." ALL SIX rows are
+hereby MARKED-HELD: the dispositions and band-clause routings above stand as queued work
+(they ride the band files as annotations when the amendment batches land), but NO execution
+of any G-row begins until the owner re-opens Q work. G-CLOSE remains veto-gated (doubly:
+the failed-verification ruling above + this deferral). The G1 relay-back will state the
+deferral alongside the verification failure.

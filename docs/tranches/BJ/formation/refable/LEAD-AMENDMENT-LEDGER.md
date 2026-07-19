@@ -80,7 +80,7 @@ lead-owned remainder.
 
 | id | item | source | status |
 |----|------|--------|--------|
-| I1 | The atlas Q G-BATCH: G-1→BAND-A11Y tap-target clause · G-2→BAND-MATERIAL radius-role clause · G-3→BAND-MATERIAL attenuation primitive (design basis = the halo/V-ALENS kin) · G-4→BAND-PERF (their W-PERF edge-gated on us — sequencing note for G1) · G-5→named tabs-grammar defect row · G-CLOSE→VETO-GATED wave candidate (V-PERCH the built basis) | coordination/ATLAS-Q-G-BATCH-DISPOSITION.md | DISPOSITIONED — band folds ride the next amendment batch; relay-back rides G1 |
+| I1 | The atlas Q G-BATCH: G-1→BAND-A11Y tap-target clause · G-2→BAND-MATERIAL radius-role clause · G-3→BAND-MATERIAL attenuation primitive (design basis = the halo/V-ALENS kin) · G-4→BAND-PERF (their W-PERF edge-gated on us — sequencing note for G1) · G-5→named tabs-grammar defect row · G-CLOSE→VETO-GATED wave candidate (V-PERCH the built basis) | coordination/ATLAS-Q-G-BATCH-DISPOSITION.md | MARKED-HELD (owner 2026-07-19: 'not executing Q for a bit') — routings stand as queued annotations, NO G-row execution until the owner re-opens; G-CLOSE doubly gated (failed-verification ruling + deferral) |
 
 ## C-additions from the ring's convergence (2026-07-19)
 
