@@ -71,8 +71,8 @@ lead-owned remainder.
 
 | id | item | source | status |
 |----|------|--------|--------|
-| H1 | Dossier FLIPS re-judgments (the RU-13/14 terminal state feeds the FLIP ratifications) | ring-2 convergence | WAITING |
-| H2 | The crit4-B cross-lane major (BAND-FEEDBACK-MOTION moved the F33 anchor a dossier cites) — adjudicate here, not inside the ring | 050d4a5b | WAITING (ring close) |
+| H1 | Dossier FLIPS re-judgments (the RU-13/14 terminal state feeds the FLIP ratifications) | ring CONVERGED 92001511 | UNBLOCKED — runs in the lead pass with C/D/E/F |
+| H2 | The crit4-B cross-lane major (F33 anchor moved by the band union) | 050d4a5b | RESOLVED-IN-RING — the R5 dated post-union addenda + CONSUMED stamps; crit8 re-proved the dispositions hold |
 | H3 | IOS27-MICRO X2 §8.1/8.2 register rulings + pass-3 charters | pass-2 agglomeration | WAITING |
 | H4 | RU-26 DesignSync paint-taste re-judge (rim-radiance) — Fable + DesignSync, browser-serialized | RU-26 | WAITING (browser seat free) |
 
@@ -81,6 +81,12 @@ lead-owned remainder.
 | id | item | source | status |
 |----|------|--------|--------|
 | I1 | The atlas Q G-BATCH: G-1→BAND-A11Y tap-target clause · G-2→BAND-MATERIAL radius-role clause · G-3→BAND-MATERIAL attenuation primitive (design basis = the halo/V-ALENS kin) · G-4→BAND-PERF (their W-PERF edge-gated on us — sequencing note for G1) · G-5→named tabs-grammar defect row · G-CLOSE→VETO-GATED wave candidate (V-PERCH the built basis) | coordination/ATLAS-Q-G-BATCH-DISPOSITION.md | DISPOSITIONED — band folds ride the next amendment batch; relay-back rides G1 |
+
+## C-additions from the ring's convergence (2026-07-19)
+
+| id | item | source | status |
+|----|------|--------|--------|
+| C6 | The codex recording-manifest integer: '6 iOS recordings' is the codex's own miscount — disk census 8-unique/7-MP4, sr-0710 cited in four laws; correct 6→7 AFTER pass-3's in-flight codex amendments commit (avoid a second in-flight collision); also sweep the crit8-A ledger-glyph drift sites (F03/F04/F16/F18/F30) + the F07 paren pin + A17 R3b→R3a | RU14-CRIT8-A/B | PENDING (behind pass-3 codex commit) |
 
 ## Terminal order (unchanged)
 
