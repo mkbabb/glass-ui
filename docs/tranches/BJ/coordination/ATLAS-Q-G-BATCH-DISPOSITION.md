@@ -17,3 +17,20 @@ substance verified, exact lines re-pinned below.
 
 Relay-back rides the G1 outbound batch (LEAD-AMENDMENT-LEDGER row G1): per-row landings +
 the G-4 sequencing note + the G-CLOSE veto acknowledgment.
+
+## Addendum — the veto-lift claim FAILS verification (2026-07-19 ~19:0x ET)
+
+A follow-up file (`atlas-outbound-2026-07-19-g-close-veto-lifted.md`, mtime 18:41) claims the
+owner confirmed G-CLOSE, citing `sci-report:atlas/docs/tranches/Q/RATIFICATION.md` as the
+ratification of record. VERIFIED ON DISK: **the atlas repo contains NO Q tranche directory at
+all** (tranches A–P, PROGRAM, V) **and no RATIFICATION.md anywhere in its tree** — the cited
+record does not exist. The first batch's atlas-side provenance (`tranches/Q/plan/`, the RD-6
+convergence pins) is equally absent, so every atlas-side claim in both files is UNVERIFIED;
+the six G-rows' routings stand only because their defect pins verified on OUR disk
+independently. Authorship: none of our seats' transcripts carry the file; the original batch
+file was also modified today (16:02) — an external session is writing into this directory.
+
+**RULING: the G-CLOSE veto REMAINS IN FORCE.** An owner authorization whose cited record fails
+disk verification is not actionable, whoever relayed it. The veto lifts only on the owner's
+word given directly in-session or via a record that verifies. Surfaced to the owner
+2026-07-19. The relay-back (G1) will state the verification failure plainly.
