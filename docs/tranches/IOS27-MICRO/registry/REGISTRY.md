@@ -71,6 +71,17 @@ parameterization + the scrub-intent law written jointly with F3; H3 demoted to c
 or probed on a slot axis; H6 ownership ceded to F4; the PRM scenario() seed fixed before any
 re-run.
 
+**PASS 2 (2026-07-18) — ADVANCE, MERGED into SPINE-CONDUCTOR (key F1×F3), convergence 78%.**
+PROVES-IN-WEBKIT (full battery, geometry parity to the hundredth, H4 blur-rides-opacity
+answered on the video path) + re-verify 7/7 under the re-fit physics: CC 12/12 and Maps
+all-PASS both engines, zero-seed overshoot 1.3%/0.8% (the 32–33% class DEAD per MARKS C2),
+intent latch live (0 flips under dither, early commit on the flick), R5 clip-path residency
+GREEN — no revert, PRM G7 cured. All twelve pass-1 gaps closed or legitimately argued down
+(CRIT-F1 pass 2). Remaining, owned in the pass-3 charter: the −21% height-compression corpus
+re-grade (OG1), band/constant hygiene (OG2/OG3/OG5/OG8), spec currency (OG9), the
+merge-transferred integration set (OG6 — the heavy one), the defer fence (OG7). OG4's
+registry side is closed by the PASS-2 amendment note below.
+
 ---
 
 ## Family F2 — NATIVE-SCROLL SUBSTRATE
@@ -122,6 +133,16 @@ U-R1 (SDA threading with backdrop-filter on the animated surface). Re-trigger: b
 AND the merged spine-conductor architecture naming a scroll-shaped consumer (the drawer is the
 candidate) whose inner-list handoff wants a native arm. Probes red → the bank converts to RETIRE
 with the native-fling loss documented.
+
+**PASS 2 (2026-07-18) — BANK HOLDS, convergence 50% (unchanged).** Both reassigned probes ran
+on the desktop proxy (safari-arm): U-R1 resample correctness PROVES on WebKit 26.5 (SDA binds,
+exact fraction→tx mapping, frosts live) with threading TOOL-DEFER; U2-scrollTop DEVICE-DEFER
+(synthetic wheel carries no momentum phase; desktop WebKit never rubber-banded under
+automation). RULED at the pass-2 agglomeration: the re-trigger clause is un-evaluable — a
+DEFER is not a red, and the merged spec that would name the scroll-shaped consumer does not
+exist until pass 3. Neither reopen nor retire fires. Re-evaluation points: the campaign
+device-lane decision (a red device U2 → RETIRE with the native-fling loss documented) and the
+pass-3 merged consumer census (drawer inner-list native arm + green device U2 → reopen).
 
 ---
 
@@ -177,6 +198,16 @@ else (all three are transcribable defects); the latch is F1's committed-target d
 one intent/direction law is written jointly with F1; the inherits decision with a captured
 recalc trace in both engines; per-hallmark evidence or explicit demotion for H1/H2/H3; gate
 bands re-derived from MARKS with the GATE band printed beside the display band.
+
+**PASS 2 (2026-07-18) — ADVANCE, MERGED into SPINE-CONDUCTOR (key F1×F3), convergence 80%.**
+PROVES-IN-WEBKIT, then 12/12 in PAINT-SIDE mode on both engines with |paint−internal| ≤1ms
+Chrome (G9 closed); depth grading 1.20 exact again; recalc 0.312ms/frame at +960 injected
+consumers (19× inside the bound); the drive-time latch falsification independently reproduced
+(pre-cure code fails at dev 1.9e-1). All thirteen pass-1 gaps closed, ruled, or honestly
+deferred (CRIT-F3 pass 2). Remaining, owned in the pass-3 charter: the intent-law unification
+as ONE text (OG1 — two dialects still wear one name), two band-label retags (OG2), the
+sat×source park fence (OG3), consume-SpringProgress defined per register (OG4), the
+merge-transferred integration set (OG5 — the heavy one), the defer fence (OG6).
 
 ---
 
@@ -235,6 +266,19 @@ field seed from the carrier seed and gate the live release-frame jump; the hones
 useDragVelocity regression (identical synthetic streams through the shipped pipeline); role
 schema reconciled + the verb-delivery mechanism designed; F4 becomes the named H6 owner — an
 acceleration consumer named or the word struck from the facility claim.
+
+**PASS 2 (2026-07-18) — ADVANCE, convergence 78%.** Cross-engine PARTIAL, honestly earned:
+G2 (debounce-primary scroll close), G8 (true delay line — the tail and the horizontal-fling
+strand both dead), the θ_g floor under the finger, N4 strain exact, keyboard law, and PRM pin
+all closed in paint on both engines; carry 28.0px inside the MARKS band on WebKit; the H6
+seat argued with four §3.2 cells live (R5 at ARBITRATION: F4 stands, the vacancy is closed).
+The gates then caught the physics wrong — the strongest evidence they are alive: P1 the C¹
+seeding law fails outside the tanh-flat region (2–5×, frame-rate-dependent, both engines) and
+P2 the constant 2.857 gauge re-lights the field after a slow place; one root, the
+frozen-Jacobian gauge. Pass-3 burden: ARBITRATION §3.2-F4 (i)–(v) + P3 (carry-band provenance
+demoted to [STAND-IN LOCK], re-derived at the merged carrier), P4 (the 50µs bound decision),
+P5 (verb-sheet single-source + drift gate), P6 (independent blind judge), P7 (θ_g headroom
+law), P8 (--impulse binding paragraph), P9 (hygiene).
 
 ---
 
@@ -296,6 +340,23 @@ states and pixel-sample sibling legibility at bloom peak; the PRM one-flip seat;
 shipped data-URI form; one spec revision carrying isolation, the z/DOM contract, the lint
 artifact, and the medium writer contract; the layers-vs-clocks boundary with F1/F3 sealed at the
 pass-2 merge (F5 owns layers and material; the spine-conductor owns clocks).
+
+**PASS 2 (2026-07-18) — ADVANCE, convergence 76%.** The Safari arm landed whole — the lens
+core PROVES-IN-WEBKIT (blink test paint-true at 25fps, 132 frames, min presence 0.824;
+choreography in band), U3 GREEN, transients captured on both engines with in-frame
+self-labels, sibling legibility paint-read for the first time. U1 answered RED — the shipped
+`glass-refract.css` @supports gate lies on WebKit 26.5 (supports=true, whole-value paint
+drop, `.glass-lens` loses ALL blur against glass-ui 7.0.0); the repair routed as a BJ inbox
+row, src untouched per ruling. The SVG goo arm RETIRED by measurement (separation on both
+engines; Chrome worst frame 133.4ms vs fence 9.1ms); U8/N8 opacity-0 parking CERTIFIED both
+engines; PRM one-flip closed; the contract artifacts (two-half lint, claimMediumWriter, z/DOM
+table) real and falsifiable. Remaining, owned in the pass-3 charter: the lens-on-rack
+integration artifact (OG1, the crown — the merged role exists only as ARBITRATION R1's
+ruling), echo cells presented as gates (OG2), the sibling-gate floor-engine margin vs its
+unstated error + per-engine model recalibration (OG3), the 4-slot falloff rider (OG4), spec
+staleness vs adjudicated verdicts (OG5), the rapid re-tap charge-floor ruling (OG6), the
+two-tier DAG lint's owner beyond the prototype (OG7), the fenced defers + the
+observation-tension law to stamp (OG8).
 
 ---
 
@@ -379,3 +440,57 @@ wording) — the MARKS correction pass + the three 24fps re-bursts precede any c
 (4) DesignSync is reachable from pass-1+ seats (re-probed at agglomeration) — round-zero's
 unavailability note no longer holds; frontend design work routes through it per the standing
 mandate.
+
+---
+
+## PASS-2 dispositions (2026-07-18)
+
+Seat: the pass-2 agglomeration seat. Verified model: `claude-fable-5` (system context: "The
+exact model ID is claude-fable-5"). Full narrative, the F2 re-trigger ruling, the defect
+ledger, and the pass-3 charter: `../passes/PASS-2/AGGLOMERATION.md`. The merge ruling and
+boundary rulings: `../passes/PASS-2/ARBITRATION.md`.
+
+**The merge: F1 SCALAR-SPINE × F3 CHANNEL-CONDUCTOR fuse into ONE family — SPINE-CONDUCTOR
+(registry key F1×F3; primitive sketch `useLiquidSpine`, spelling illustrative).** Two
+independent constant sets hit the same MARKS band family in paint on both engines — one
+kernel wearing two parameter dialects. SCALAR-SPINE survives as the name of the spine
+register (domain, regimes, rubber map, detents + `[DESIGN]` weak wells, intent latch,
+calc-band ladder surface); CHANNEL-CONDUCTOR as the name of the rack register (three laws +
+three modifiers, the ≤5-line manifest, joint park, PRM seat-all). The kernel mounts only
+where ≥2 channels with DIFFERENT laws follow one gesture scalar; springPresets stays the
+single named-register authority. The pass-3 merged spec seat carries the ten-item worklist
+(ARBITRATION §1.5).
+
+**Registry amendment — the compositor-first invariant (closes CRIT-F1 OG4's registry side).**
+The cross-family invariant "transform/opacity/filter only on the hot path" is AMENDED: the
+hot-path vocabulary admits `clip-path` on the GROWTH channel only, under measured cadence
+bounds (Chrome R5 residency GREEN — 0 card-region Paints across six growth windows, 0 frames
+>24ms; WebKit flick-open max 19ms, 0 >24ms at 67Hz; WebKit attribution TOOL-DEFER). Ruled at
+SPEC-F1 §2-H1 with a stated revert clause armed both ways. The pass-3 merged spec re-swears
+the full invariant once in its own §1.
+
+| family | action | convergence | one line |
+|---|---|---|---|
+| F1 SCALAR-SPINE | ADVANCE (merged: SPINE-CONDUCTOR) | 78% | all 12 pass-1 gaps closed; PROVES-IN-WEBKIT + 7/7 re-verify under re-fit physics; the integration set (OG6) is the heavy remainder |
+| F2 NATIVE-SCROLL | BANK HOLDS | 50% | re-trigger RULED un-evaluable on desktop (U-R1 half-green/TOOL-DEFER, U2 DEVICE-DEFER); re-evaluates at the device lane + the merged census only |
+| F3 CHANNEL-CONDUCTOR | ADVANCE (merged: SPINE-CONDUCTOR) | 80% | all 13 pass-1 gaps closed; 12/12 paint-side both engines; intent-law unification as one text (OG1) + the integration set (OG5) remain |
+| F4 ENERGY-FIELD | ADVANCE | 78% | cross-engine PARTIAL; gates caught the C¹ seam physics wrong (P1/P2, one root: the frozen-Jacobian gauge) — the honest headline defect for pass 3 |
+| F5 OPTICAL-MEDIUM | ADVANCE | 76% | Safari arm whole; U1 RED routed to BJ; SVG arm retired by measurement; the lens-on-rack artifact (OG1) is the crown remainder |
+
+Systemic findings, binding on every pass-3 seat: (1) the merged architecture has ZERO paint
+evidence — the integration set (union interrupt battery, slot-axis lens, three-spine swap,
+H1 ladder on a real surface, constant reconciliation) is the campaign's crown burden and no
+family number prices it away; (2) pass 2 was NOT clean (re-verify FAILs, echo cells, a
+shipped-product RED) — pass 3 is the first pass eligible to begin the two-consecutive-clean
+chain, and the earliest possible convergence is pass 4; (3) three harness laws now govern
+capture (WebKit screenshots are backdrop-blind — material truth rides the video path; a
+clipped screenshot during a held pointer steals pointer capture; WebKit's 1ms clock makes
+frame gaps the cost readout); (4) campaign-level decisions pass 3 must take, not drift past:
+the Web Inspector TOOL-DEFER session or an explicit park, the device-lane charter or
+documented non-goal, the MARKS note making rubber-band c≈0.55 permanently `[DESIGN]`, and
+the observation-tension law stamped (no gate may demand video-path material truth and a
+cadence bound in one run).
+
+Pass-level convergence: **~72%** (active-lane mean 78, capped by the evidence-less merged
+architecture and the not-clean pass). Honest arithmetic: convergence is not contemplated
+before pass 4.
