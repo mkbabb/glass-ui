@@ -34,3 +34,30 @@ file was also modified today (16:02) — an external session is writing into thi
 disk verification is not actionable, whoever relayed it. The veto lifts only on the owner's
 word given directly in-session or via a record that verifies. Surfaced to the owner
 2026-07-19. The relay-back (G1) will state the verification failure plainly.
+
+## Addendum 2 — checkout corrected: the veto lift VERIFIES; G-CLOSE is LIFTED (2026-07-19 ~20:0x ET)
+
+The owner identified the sender's true working tree: the constellation's totality checkout at
+`/Users/mkbabb/Programming/.p-totality/sci` (branch `p/totality`) — NOT the sci-report checkout
+this disposition's addendum 1 searched. Re-verified there READ-ONLY: the Q tranche exists whole
+(RATIFICATION.md, REGISTRY.md, plan/, rd6/, the apotheosis pair), and
+`atlas/docs/tranches/Q/RATIFICATION.md:40-41` (committed 109f5573, "THE SEAL — owner
+ratification of record") rules verbatim: "**G-CLOSE: CONFIRMED — the owner veto is LIFTED.**
+Glass may build the corner-chip close primitive; notified via
+coordination/atlas-outbound-2026-07-19-g-close-veto-lifted.md."
+
+**RE-RULING: the G-CLOSE veto is LIFTED** — owner-confirmed in-session (2026-07-19, the
+checkout relay) AND by a ratification record that now verifies. Addendum 1's ruling was correct
+discipline on the evidence it had (the cited record was unfindable in the known checkout; an
+unverifiable owner authorization is never actionable) — the failure was the checkout map, now
+corrected: **constellation verification must sweep `/Users/mkbabb/Programming/.p-totality/*`
+alongside the primary checkouts.** The "external writer" of addendum 1 is identified as the
+legitimate atlas Q agent working from the totality tree.
+
+Consequence: the ONE-primitive corner-chip close wave (drawers/dialogs/popovers/hover-cards/
+sheets; V-PERCH + the MARKS-E apex-seat formula the built basis) enters the BJ wave set
+UN-GATED. The wave-row mint + the ledger I1 cell update ride the lead pass AFTER the live
+amendment workflow (wf_3826281d-ef7) lands — one writer per file. The G1 relay-back now
+acknowledges the lift instead of reporting a failure; atlas-side note: their B1 dispatch is
+separately RESCINDED per owner order (execution HELD pending compaction — their register,
+no action of ours).
