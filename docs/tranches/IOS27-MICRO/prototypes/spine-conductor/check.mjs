@@ -462,6 +462,161 @@ console.log("\n=== The sat×source fence (F3 OG3) ===");
 }
 
 // =====================================================================
+// 3b. M-1/D2 — park-mid-scrub stale velocity (CRIT-SPINE M-1 + minor 5, pass-4 cure).
+//     MARKS C1: overshoot is velocity-BOUGHT only — a still finger's velocity is zero.
+//     The critic's node repro is now a STANDING gate: fast drag 0.60→0.90 at 3.0/s,
+//     DEAD-STILL hold 800ms (the kernel parks mid-scrub — by design, zero-cost held
+//     idle), then release. Pre-cure this section FAILS (velocity frozen at ~3.0/s,
+//     4% unearned overshoot — output banked in PROBE-NOTES §4.11).
+// =====================================================================
+console.log("\n=== M-1/D2 — park-mid-scrub stale velocity (MARKS C1: a still finger's velocity is zero) ===");
+{
+  const MAPS_LIKE = () => ({
+    geometry: { law: "identity" },
+    light:    { law: "light", attack: SC.CLOCKS.light.attack, hold: SC.CLOCKS.light.hold, cool: SC.CLOCKS.light.cool },
+  });
+  const mk = () => {
+    const clk = clock(120);
+    const kern = SC.useLiquidSpine({ el: null, channels: MAPS_LIKE(), tempo: 1,
+      registers: { open: "dock", close: "dock" }, prm: () => false,
+      now: clk.now, raf: clk.raf, caf: clk.caf });
+    return { clk, kern };
+  };
+  const drag = (clk, kern) => { // 0.60 → 0.90 at 3.0/s, 120Hz pointer cadence
+    kern.seat(0.60);
+    for (let i = 1; i < 12; i++) { kern.scrub(0.60 + 0.025 * i); clk.step(); }
+    kern.scrub(0.90);
+    const tLast = clk.t(), v = kern.spine.velocity;
+    clk.step();
+    return { v, tLast };
+  };
+  // (a) the still-hold path — the defect scenario, gated
+  {
+    const { clk, kern } = mk();
+    const d = drag(clk, kern);
+    let parkedDuringHold = false;
+    for (let i = 0; i < Math.round(0.800 * 120); i++) { clk.step(); if (kern.isParked()) parkedDuringHold = true; }
+    check("still hold: kernel parks mid-scrub", parkedDuringHold ? 1 : 0, 1, 1,
+      "the defect path is REAL (Maps-class manifest, no core channels); zero-cost held idle stands");
+    const tRel = clk.t();
+    const peaks = [];
+    kern.onFrame(() => peaks.push(kern.get("geometry")));
+    kern.release(1, undefined, "dock");
+    const vUsed = Math.abs(kern.spine.velocity);
+    const expected = Math.abs(d.v) * Math.exp(-Math.max(0, tRel - d.tLast - SC.INTENT.idleAfter) / SC.INTENT.idleTau);
+    check("still hold: release velocity (/s)", vUsed, 0, B.shVel.hi, `${B.shVel.label} — drag velocity was ${Math.abs(d.v).toFixed(2)}/s`);
+    check("still hold: wall-clock decay parity", Math.abs(vUsed - expected), 0, 1e-9,
+      "drive-time aging ≡ the closed-form idle law — park cannot freeze the estimator");
+    for (let i = 0; i < 720 && !kern.isParked(); i++) clk.step();
+    const peak = Math.max(...peaks);
+    check("still hold: geometry peak", peak, B.shPeak.lo, B.shPeak.hi, `${B.shPeak.label} — pre-cure 1.0401`);
+  }
+  // (b) the falsifiability guard — NO hold: bought velocity must still buy overshoot
+  {
+    const { clk, kern } = mk();
+    drag(clk, kern);
+    const peaks = [];
+    kern.onFrame(() => peaks.push(kern.get("geometry")));
+    kern.release(1, undefined, "dock");
+    for (let i = 0; i < 720 && !kern.isParked(); i++) clk.step();
+    check("no hold: velocity still buys overshoot (guard)", Math.max(...peaks), B.shGuard.lo, B.shGuard.hi,
+      `${B.shGuard.label}`);
+  }
+  // (c) minor 5 — a mid-gesture park must never re-arm the periphery dead-time gate
+  {
+    const { clk, kern } = build(120); // the full CC manifest (periphery delay 100ms)
+    kern.seat(0);
+    kern.scrub(0.2); clk.step();
+    for (let i = 1; i <= 8; i++) { kern.scrub(0.2 + 0.075 * i); clk.step(); } // → 0.8, intent latches OPEN
+    let parkedMid = false;
+    for (let i = 0; i < Math.round(2.0 * 120); i++) { clk.step(); if (kern.isParked()) { parkedMid = true; break; } }
+    check("m5: parks mid-scrub after convergence", parkedMid ? 1 : 0, 1, 1, "precondition — the pause parks the rack under a live gesture");
+    const p0 = kern.get("periphery");
+    const tR = clk.t();
+    let firstMove = NaN;
+    for (let i = 1; i <= 60; i++) { // resume the SAME gesture: fast pull down, intent flips CLOSED
+      kern.scrub(Math.max(0.15, 0.8 - 0.05 * i)); clk.step();
+      if (Number.isNaN(firstMove) && Math.abs(kern.get("periphery") - p0) > 0.02) firstMove = clk.t() - tR;
+    }
+    check("m5: periphery live after resume (ms)", ms(firstMove), 0, B.resume.hi * 1000,
+      `${B.resume.label} — park never masquerades as gesture end; pre-cure froze ≥100ms`);
+  }
+}
+
+// =====================================================================
+// 3c. M-2 — domain.wells: the G3 catch scheduler is KERNEL-OWNED (CRIT-SPINE M-2 cure).
+//     The physics rows stay with the truth table + simMidCatch (which now RUNS this
+//     path); these gates hold the SEAM — catch consulted inside release(), dwell exposed
+//     via catching(), finger recapture cancels, and the rack face reads GESTURE intent
+//     through the dwell (the well glide's own latch never flips a channel).
+// =====================================================================
+console.log("\n=== M-2 — domain.wells: the catch scheduler is kernel-owned (G3 in the factory) ===");
+{
+  const mk = (channels, domain) => {
+    const clk = clock(120);
+    const kern = SC.useLiquidSpine({ el: null, channels, domain, tempo: 1,
+      registers: { open: "dock", close: "dock" }, prm: () => false,
+      now: clk.now, raf: clk.raf, caf: clk.caf });
+    return { clk, kern };
+  };
+  const W = { wells: [{ t: SC.WELL, kind: "weak" }] };
+  // (a) catch → dwell → onward, all inside the kernel
+  {
+    const { clk, kern } = mk({ geometry: { law: "identity" } }, W);
+    kern.seat(1);
+    kern.release(0, -4, "dock");
+    const caught = kern.catching() !== null;
+    let dwellMs = NaN;
+    const t0 = clk.t();
+    for (let i = 0; i < 720 && !kern.isParked(); i++) {
+      clk.step();
+      if (Number.isNaN(dwellMs) && kern.catching() === null) dwellMs = (clk.t() - t0) * 1000;
+    }
+    check("wells: kernel scheduler catches", caught ? 1 : 0, 1, 1, "release(0,-4) consults wellCrossing INSIDE the kernel");
+    check("wells: kernel dwell (ms)", dwellMs, B.dwell.lo * 1000, B.dwell.hi * 1000, `${B.dwell.label} — kernel-owned, arrival-or-170ms`);
+    check("wells: onward lands at the TARGET", Math.abs(kern.spine.value) < 1e-3 && kern.isParked() ? 1 : 0, 1, 1, "the onward C1 glide reaches the gesture target and parks");
+  }
+  // (b) finger recapture cancels the dwell — C1, no snap
+  {
+    const { clk, kern } = mk({ geometry: { law: "identity" } }, W);
+    kern.seat(1);
+    kern.release(0, -4, "dock");
+    for (let i = 0; i < Math.round(0.080 * 120); i++) clk.step();
+    const xBefore = kern.spine.value;
+    kern.scrub(xBefore); // recapture AT the current value
+    check("wells: scrub mid-dwell cancels the catch", kern.catching() === null ? 1 : 0, 1, 1, "the dwell machine dies with the finger back down");
+    check("wells: recapture is C1 (no snap)", Math.abs(kern.spine.value - xBefore), 0, 1e-9);
+  }
+  // (c) the dwell preserves GESTURE intent on the rack face
+  {
+    const { clk, kern } = mk({ geometry: { law: "identity" },
+      content: { law: "follow", key: "intent", tau: SC.CLOCKS.content.attack, close: { tau: SC.CLOCKS.content.release } } }, W);
+    kern.seat(1);
+    kern.release(0, -4, "dock"); // close gesture; the well glide itself targets 0.55 (≥0.5)
+    let rise = 0, prev = kern.get("content"), atDwellEnd = prev;
+    for (let i = 0; i < Math.round(0.170 * 120) && kern.catching() !== null; i++) {
+      clk.step();
+      const c = kern.get("content");
+      rise = Math.max(rise, c - prev);
+      prev = c; atDwellEnd = c;
+    }
+    check("wells: dwell preserves gesture intent", atDwellEnd, 0, 0.2,
+      "content keeps CLOSING through the dwell (τ55 ⇒ ~0.05 at 170ms) — the rack reads the ONWARD intent; a well-latch leak holds it at 1.0");
+    check("wells: dwell content monotone (guard)", rise, 0, 1e-9, "no re-rise mid-dwell");
+  }
+  // (d) no wells declared: the scheduler is inert
+  {
+    const { clk, kern } = mk({ geometry: { law: "identity" } }, undefined);
+    kern.seat(1);
+    kern.release(0, -4, "dock");
+    const inert = kern.catching() === null;
+    for (let i = 0; i < 720 && !kern.isParked(); i++) clk.step();
+    check("no wells: passthrough (no phantom catch)", inert && kern.isParked() ? 1 : 0, 1, 1,
+      "an undeclared domain costs nothing — the fence's letter holds");
+  }
+}
+
+// =====================================================================
 // 4. WORKLIST-8 DIALECT ADJUDICATION — the attack arms, decided by the battery
 //    (release arms already corpus-RATIFIED: content 55ms thrice-attested, R-7)
 // =====================================================================

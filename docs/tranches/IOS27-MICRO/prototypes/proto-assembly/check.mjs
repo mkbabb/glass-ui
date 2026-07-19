@@ -138,31 +138,44 @@ console.log("\n=== ORGAN B — the apex seat law (MARKS-E §2/§3; R-9 order) ==
   check("mostly-outside robust across n 3..5", frMin, 0.55, 1, "[MARKS-E §2] robust across every admissible corner model");
   check("chip optic (px)", h.CHIP.visual, 18, 22, "[MARKS-E §5] the 20pt optic kept");
   check("chip hit pad (px)", h.CHIP.hit, 44, 64, "[DESIGN] >=44 invisible pad — the accessibility floor");
-  check("chip lum delta over container", h.CHIP.lumDelta, 12, 15, "[MARKS-E §5] control tier +12-15");
+  check("no claim-tokens on the chip (lumDelta gone)", bool(/lumDelta/.test(code)), 0, 0, "[n4 cure] the +12-15 lum claim is MARKS-E §5's, PAINT-verified (QP) — a token nothing derives from is deleted");
   check("chip ring alpha (hairline)", h.CHIP.ringAlpha, 0.10, 0.22, "[§3.5-A] the hairline band; zero cast shadow is structural below");
+  check("the card AUTHORS its corner shape", bool(/\.vcard \{[^}]*corner-shape: squircle/.test(css)), 1, 1, "[R-9 / A3 lock] n derives from the AUTHORED shape — the support-gated seat must match an authored paint, or the probe lies");
 }
 
-console.log("\n=== ORGAN B — the close order (MARKS-E §4 verbatim; the m1+M2 cures) ===");
+console.log("\n=== ORGAN B — the close order (MARKS-E §4; the m1+M2 cures + the A7 PAINTED-beat anchor) ===");
 {
   const o = ASM.sims.handoffOrder();
   check("text kill (ms)", o.textMs, 30, 50, "[MARKS-D dismissal] text dies FIRST, <=50ms BOUNDED");
-  check("text strictly first", o.textFirst, 1, 1, "[MARKS §5] the close order is law");
-  check("body erosion (ms)", o.bodyEndMs - o.bodyStartMs, 170, 250, "[MARKS-E §4] the corpus exit register — never 433ms (the m1 cure)");
-  check("the empty-medium beat, SIGNED (ms)", o.beatSignedMs, 80, 140, "[MARKS-E §4] sign-verified: the M2 cure — a real held beat");
-  check("beat sign is positive", bool(o.beatSignedMs > 0), 1, 1, "[MARKS §5] the signature moment exists, not an overlap");
+  check("body WAITS for the text kill (clamp)", o.catchClamped, 1, 1, "[STRUCT] firedD clamps t<0 to the caught value — failable, not definitional (A7 cure)");
+  check("body erosion (ms)", ASM.handoff.firedT(0), 170, 250, "[MARKS-E §4] the corpus exit register — never 433ms (the m1 cure)");
+  check("content-out crossing inside the clock (ms)", o.contentOutMs, 90, 175, "[STRUCT] the painted-empty crossing PRECEDES the erosion clock's end — its ease-out tail is empty paint");
+  // THE PAINTED BEAT (A7 cure, ledger D6): forward-scan of the opacity model vs
+  // the closed-form stamped anchor — two independent computations; the old
+  // clock-end anchor reads ~188-271ms here and FAILS these gates.
+  const pb0 = ASM.sims.paintedBeat(0, 0), pb3 = ASM.sims.paintedBeat(3, 0), pbC = ASM.sims.paintedBeat(0, 0.4);
+  check("PAINTED beat, zero seed (ms)", pb0.paintedBeatMs, 80, 140, "[MARKS-E §4] the beat the PIXELS hold: content-out -> medium relax");
+  check("PAINTED beat, hot seed (ms)", pb3.paintedBeatMs, 80, 140, "[MARKS-E §4] a hot seed shortens the body, never the held beat");
+  check("PAINTED beat, caught at d0=0.4 (ms)", pbC.paintedBeatMs, 80, 140, "[MARKS-E §4] d0-aware — a caught commit holds the same beat");
+  check("PAINTED beat positive (min across the grid)", Math.min(pb0.paintedBeatMs, pb3.paintedBeatMs, pbC.paintedBeatMs), 1, 1e9, "[MARKS §5] the medium never relaxes over visible vapor");
+  check("PAINTED beat seed-invariant (|delta| ms)", Math.abs(pb3.paintedBeatMs - pb0.paintedBeatMs), 0, 3, "[MARKS-E §4] the M2 class, gated on the DERIVED painted quantity");
   check("medium relax duration (ms)", ASM.handoff.close.mediumMs, 300, 400, "[MARKS-E §4] decelerating 300-400ms");
   check("fired T at zero seed (ms)", ASM.handoff.firedT(0), 175, 250, "[MARKS-E §4] inside the erosion band");
   check("fired T at hot seed (ms)", ASM.handoff.firedT(3), 170, 215, "[MARKS-E §4] velocity seeds RATE, clamped — still in band");
   check("fired T monotone in velocity", bool(ASM.handoff.firedT(0) >= ASM.handoff.firedT(3)), 1, 1, "[DESIGN] commit inherits gesture velocity");
-  const beatInv = [0, 0.5, 1, 3].every((v) => Math.abs((ASM.handoff.mediumDelayForMs(v) - ASM.handoff.bodyEndForMs(v)) - ASM.handoff.close.beatMs) < 1e-9);
-  check("beat INVARIANT under the velocity seed", bool(beatInv), 1, 1, "[MARKS-E §4] a hot seed shortens the body, never the held beat (the M2 class)");
-  check("zero-seed medium delay (ms)", ASM.handoff.mediumDelayForMs(0), 355, 405, "[STRUCT] text 45 + body 210 + beat 110 = 365 — the stamped clock");
+  check("zero-seed medium delay (ms)", ASM.handoff.mediumDelayForMs(0), 265, 310, "[STRUCT] text 45 + content-out ~132 + beat 110 ~= 287 — stamped from the PAINTED anchor, never the clock end");
+  check("return drain clock (ms)", ASM.handoff.close.returnMs, 150, 220, "[DESIGN] the pre-commit release drain — a NAMED token (n4 cure)");
+  check("commit threshold d", ASM.handoff.commitAt.d, 0.45, 0.55, "[DESIGN] past half-dissolved, the release commits (n4 token)");
+  check("commit threshold v (/s)", ASM.handoff.commitAt.v, 1.0, 1.5, "[DESIGN] a hot fling commits below the d threshold (n4 token)");
   const fm = ASM.sims.firedMonotone();
   check("fired erosion monotone (no landing)", fm.mono, 1, 1, "[MARKS C2] nothing overshoots where nothing lands");
   check("fired erosion completes", fm.final, 1, 1, "[STRUCT]");
   const d = ASM.handoff.drift;
   check("ghost drift magnitude (px)", d.magPx, 12, 20, "[MARKS-E §4] ~12-20pt toward the perch corner");
   check("drift aims at the perch (unit, top-left)", bool(d.ux < 0 && d.uy < 0 && Math.abs(d.ux * d.ux + d.uy * d.uy - 1) < 1e-9), 1, 1, "[MARKS-E §4] direction by TRANSFORM only");
+  check("drift STAMPED from the token (both axes)", bool(/setProperty\("--vap-drift-x"/.test(wiring) && /setProperty\("--vap-drift-y"/.test(wiring)), 1, 1, "[A9 cure] magPx·u per axis, one origin");
+  check("both ghosts consume the stamped drift", (css.match(/var\(--vap-drift-x\)/g) || []).length === 2 && (css.match(/var\(--vap-drift-y\)/g) || []).length === 2 ? 1 : 0, 1, 1, "[A9 cure] ghost-c AND ghost-m — one diagonal magnitude, in band");
+  check("no hand drift literals in ghost transforms", bool(/transform: translate\(calc\([^;]*\* -?\d+px\)/.test(css)), 0, 0, "[A9 cure] the 22.6px diagonal breach class is locked out");
   check("the chip vaporizes first (ms)", d.chipOutMs, 0, 75, "[MARKS-E §4] the control that caused the death goes first");
   const e = ASM.sims.erosionShape();
   check("erosion band continuity (max step)", e.maxStep, 0, 0.01, "[STRUCT] no pop a scrub could reveal");
@@ -221,6 +234,23 @@ console.log("\n=== CSS <-> physics cross-checks (the M7 mirror locks — no drif
   const o = ASM.occlusion;
   check("CSS dark mass top == MASS_TOP", bool(css.includes(`rgb(16 14 12 / ${o.MASS_TOP})`)), 1, 1, "[STRUCT]");
   check("CSS waterline stop == WATERLINE", bool(css.includes(`transparent ${+(o.WATERLINE * 100).toFixed(2)}%`)), 1, 1, "[STRUCT] the sunk band ends where the model says");
+  {
+    // [A9 cure] the darkmass INTERIOR is the model's curve — every painted stop
+    // parsed and compared against occlusion.at(u); POW=1 (or any hand stop, like
+    // the convicted 0.55@30%) fails here. Multi-stop means the POW knob PAINTS.
+    const dm = css.slice(css.indexOf(".darkmass"), css.indexOf(".meniscus"));
+    const stops = [...dm.matchAll(/rgb\(16 14 12 \/ ([\d.]+)\) ([\d.]+)%/g)].map((s) => [+s[1], +s[2]]);
+    check("darkmass stop count (multi-stop — POW paints)", stops.length, 4, 8, "[A9 cure] an interior curve, not one hand stop");
+    const worst = stops.length ? Math.max(...stops.map(([a, p]) => Math.abs(a - o.at(p / 100)))) : 9;
+    check("darkmass stops == occlusion.at(u) (max |err|)", worst, 0, 0.005, "[A9 cure] every painted stop sits ON the gated profile — the 0.55@30% breach (0.33 modeled) fails here");
+  }
+  {
+    // [A9 cure] the rim-flare GAIN paints: flare/plateau opacity ratio == token
+    const plat = css.match(/\.blackdock\.rim-plateau \.meniscus \{ animation: none; opacity: ([\d.]+)/);
+    const flare = css.match(/\.blackdock\.rim-flare \.meniscus \{\s*animation: none; opacity: ([\d.]+)/);
+    check("flare/plateau painted ratio == gain", plat && flare ? +flare[1] / +plat[1] : 0, ASM.ladder.rimFlare.gain - 0.02, ASM.ladder.rimFlare.gain + 0.02, "[MARKS-D mark 3] 2.1x in PAINT, not just in the token table");
+    check("flare release clock named (ms)", ASM.ladder.rimFlare.releaseMs, 200, 400, "[n4 cure] light cools on a NAMED clock (law 19 class)");
+  }
   const geo = css.match(/height: calc\((\d+)px \+ var\(--asm-g\) \* (\d+)px \+ var\(--asm-grow\) \* (\d+)px\)/);
   check("CSS height calc == pill/grown/travel tokens", geo && +geo[1] === d.pill.h && +geo[2] === d.grown.h - d.pill.h && +geo[3] === ASM.drawer.GROW.travelPx ? 1 : 0, 1, 1, "[STRUCT] 46 + g*274 + grow*150, all from ASM");
   const wgeo = css.match(/width: calc\((\d+)px \+ var\(--asm-g\) \* (\d+)px\)/);
@@ -282,6 +312,36 @@ console.log("\n=== structural asserts (the contract in the file) ===");
   check("meniscus breath is autonomous", bool(/meniscus-breath[^}]*var\(--asm-level/.test(css)), 0, 0, "[MARKS-D mark 2] at-rest light is never signal-fed");
   check("dock geometry rides ONE scalar", bool(/height: calc\(46px \+ var\(--asm-g\) \* 274px/.test(css) && /width: calc\(200px \+ var\(--asm-g\) \* 130px/.test(css)), 1, 1, "[MARKS-D mark 3] both axes, one spring — the axes never decouple");
   check("release velocity is windowed (<=120ms boxcar)", (wiring.match(/now - (samples|vSamples)\[0\]\.t > 120/g) || []).length, 2, 2, "[MECH m6 cure class] never a single sample pair");
+}
+
+console.log("\n=== the pass-4 cures (A4/A5 grammar · n3 law-20 · n4 hygiene · D7 fence) ===");
+{
+  // A5 — the two-writer window on --vap-t is closed, per-organ generations
+  check("the return drain is generation-guarded", bool(/const back = \(now\) => \{\s*if \(vapGen !== myGen\) return;/.test(wiring)), 1, 1, "[A5 cure] a commit mid-drain kills the second writer BEFORE it writes");
+  check("the handoff seam cancels the drain rAF", bool(/vapor-handoff", \(ev\) => \{[\s\S]{0,220}cancelAnimationFrame\(vRaf\)/.test(wiring)), 1, 1, "[A5 cure] no two-writer window on --vap-t at commit — the D6 re-run precondition");
+  check("per-organ generation guards (no shared gen)", bool(/dockGen/.test(wiring) && /vapGen/.test(wiring) && !/\bgen\b\s*=\s*0/.test(wiring)), 1, 1, "[A5 cure] one organ's gesture never cancels the other's finalization (the m8 lesson, scoped)");
+  // A4 — the glide is catchable; no dead zones, no orphan channels
+  check("the dock glide is catchable (Organ-B pattern)", bool(/if \(gSpring\) \{ gSpring = null; dockGen\+\+; \}/.test(wiring)), 1, 1, "[A4 cure] pointerdown seizes the spring's x as dragG0 at ANY deploying posture");
+  check("under-thrown return clears the ladder channels", bool(/dockGen\+\+; dock\.classList\.remove\("text-in"/.test(wiring)), 1, 1, "[A4 cure] a caught fired deploy scrubbed home leaves no orphan text");
+  check("live down-scrub scope DECLARED", bool(/DECLARED SCOPE:/.test(wiring)), 1, 1, "[A4 cure] in writing at the listener, not implied");
+  // n3 — law 20: engagement light is state
+  check("hold-light rows on the in-organ controls", (wiring.match(/makeHoldLight\(\$\("(summonBtn|commitBtn)"\)\)/g) || []).length, 2, 2, "[LAW 20] Summon + Commit ride the pressDrain row for the hold's life");
+  check("controls consume the sustained hold light", (css.match(/var\(--ctl-press, 0\)/g) || []).length, 4, 8, "[LAW 20] scale + ring light, both controls — state, not a click pulse");
+  check("no event-pulse press var remains", bool(/--asm-press/.test(code)), 0, 0, "[n3 cure] the pulse ack is replaced by the sustained envelope");
+  // n4 — token hygiene: no dead scalars, no hand literals
+  check("no dead published scalar (--asm-level)", bool(/--asm-level/.test(code)), 0, 0, "[n4 cure] written-never-consumed is deleted; the HUD relays the level for QP-3");
+  check("g clamp is a token", ASM.dock.gClamp, 1.05, 1.20, "[n4 cure] ~k·v headroom at a hot (~5/s) release");
+  check("writeG clamps BY the token", bool(/Math\.min\(ASM\.dock\.gClamp, v\)/.test(wiring)), 1, 1, "[n4 cure] no naked 1.12 in the writer");
+  check("under-throw g threshold (token)", ASM.dock.release.underG, 0.30, 0.40, "[DESIGN] below ~a third grown, a slow release returns");
+  check("under-throw v threshold (token, /s)", ASM.dock.release.underV, 0.40, 0.60, "[DESIGN] a warm fling still deploys");
+  check("release consumes the tokens", bool(/ASM\.dock\.release\.underG/.test(wiring) && /ASM\.handoff\.commitAt\.d/.test(wiring)), 1, 1, "[n4 cure] both release ladders read the table");
+  check("return drain consumes the named clock", bool(/T = ASM\.handoff\.close\.returnMs/.test(wiring)), 1, 1, "[n4 cure] the last hand clock is dead");
+  // D7 — the world-dim probe fence, computed here and PRINTED for the lossless re-run
+  const ext = ASM.dock.clampedExtent();
+  check("D7 fence: clamped half-width (px)", ext.halfW, 172.79, 172.81, "[D7] (pill.w + gClamp·130)/2 — probes sit STRICTLY OUTSIDE center±this");
+  check("D7 fence: clamped session height (px)", ext.height, 352.87, 352.89, "[D7] 46 + gClamp·274 at grow=0 — the session-phase extent");
+  check("CSS dock top fixed (300px)", bool(/\.blackdock \{[^}]*top: 300px/.test(css)), 1, 1, "[STRUCT] the fence arithmetic anchors here");
+  console.log(`      D7 probe fence @ gClamp=${ASM.dock.gClamp}: x strictly outside [center−${ext.halfW.toFixed(1)}, center+${ext.halfW.toFixed(1)}]px · y strictly outside [300, ${(300 + ext.height).toFixed(1)}]px (phone frame; drawer adds grow·${ASM.drawer.GROW.travelPx}px)`);
 }
 
 console.log(failures === 0 ? "\nALL CHECKS PASS" : `\n${failures} CHECK(S) FAILED`);

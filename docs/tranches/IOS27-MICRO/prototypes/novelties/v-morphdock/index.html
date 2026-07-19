@@ -1,0 +1,743 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>V-MORPHDOCK — the composer→slider whole-body morph (the N1 duel, three-armed)</title>
+<!--
+  V-MORPHDOCK — NOVELTY-ROSTER row (NEW-U, DESIGN M4-1): a dock that BECOMES its own
+  control. One glass body, two roles, the label carried continuously, blur riding the
+  SAME clock as the morph. Measured basis: MARKS-C-APPS.md:73-99 (nucleate-and-sweep
+  ~250ms, right edge ~33ms / left ~170ms, +0.7% width overshoot absorbed ~150ms),
+  :150-153 (evaporation dismissal: fill <=33ms, label flight ~85ms), :172-174
+  (in-place whole-body morph — TRANSFORMATION, not fission), :185-192 (OUR LANGUAGE:
+  springPreset("dock") drives the sweep; warm-cream pill on a frosted track; the
+  gradient-blur annulus is the --glass-halo-* pair, luminance LOCKED).
+
+  THE DUEL (N1, three-armed since DESIGN M4-1; decider chartered at NOVELTY-ROSTER §6 H-1
+  row 6): arm 1 FLIP-re-home vs arm 2 growth-choreo vs arm 3 in-place morph. The node
+  battery proves each arm implements its mechanism honestly (census / re-parent counts
+  by construction; C1 catches; register arithmetic). THE VERDICT IS PAINT'S: no-detach
+  across engage -> interrupt-mid-morph -> re-engage -> dismiss, judged on the WebKit
+  VIDEO path (PROBE-NOTES QUEUED-PAINT rows). Node cannot decide the duel — QP-6/D4
+  proved FLIP math exact in node while the live re-parent landed 1.00px off.
+
+  THE DRAFTING LAW: this is a generalized facility (a dock-role FSM + a slider register),
+  never a Codex-screen recreation. Warm cream, deft rounding, our palettes, the ONE warm
+  frosted canon (NOVELTY-ROSTER §3.5-A). No @supports gate anywhere (the lying-gate law).
+  ?hud=0 kills instrumentation for the browser arm. ?theme=night flips to the night arm.
+-->
+<style>
+  :root {
+    /* §3.5-A canon — light arm (law 10 peer) */
+    --ground: rgb(250, 246, 236);
+    --world-ink: rgb(64, 56, 46);
+    --tint-a: rgba(250, 246, 236, 0.62);
+    --tint-b: rgba(244, 238, 224, 0.72);
+    --container-blur: 26px; --container-sat: 1.5;
+    --rim: rgba(70, 58, 44, 0.18);
+    --engage-light: hsl(42 85% 88%);
+    --dot: rgba(64, 56, 46, 0.34);
+    --fill-a: rgba(255, 252, 244, 0.92);
+    --fill-b: rgba(248, 240, 226, 0.96);
+    --label-ink: rgb(52, 44, 36);
+    /* geometry — mirrored by MORPHDOCK.tokens (check.mjs cross-checks these) */
+    --track-w: 520px; --track-h: 56px; --track-r: 28px; /* r = h/2, the capsule law */
+    --fill-inset: 8px; --fill-r: 20px;                  /* inner r = outer r − padding (law 4) */
+  }
+  [data-theme="night"] {
+    /* §3.5-A canon — dark arm */
+    --ground: rgb(24, 20, 17);
+    --world-ink: rgb(214, 204, 190);
+    --tint-a: rgba(56, 50, 44, 0.55);
+    --tint-b: rgba(36, 32, 28, 0.68);
+    --container-blur: 22px; --container-sat: 1.35;
+    --rim: rgba(255, 246, 230, 0.14);
+    --dot: rgba(214, 204, 190, 0.30);
+    --fill-a: rgba(84, 74, 62, 0.88);
+    --fill-b: rgba(62, 54, 44, 0.94);
+    --label-ink: rgb(244, 238, 226);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    background: var(--ground); color: var(--world-ink);
+    font: 15px/1.45 -apple-system, "SF Pro Text", system-ui, sans-serif;
+    overflow: hidden;
+  }
+  .duel { display: flex; gap: 16px; padding: 16px; height: 100vh; }
+  .arena { position: relative; flex: 1 1 0; border-radius: 32px; overflow: hidden; }
+  .arena h2 {
+    position: absolute; top: 14px; left: 20px; z-index: 6;
+    font-size: 13px; font-weight: 600; letter-spacing: 0.02em; opacity: 0.7;
+  }
+  /* the world behind the glass — colorful masses so frost READS (paint-arm food) */
+  .world { position: absolute; inset: 0; }
+  .world .mass { position: absolute; border-radius: 50%; filter: blur(2px); }
+  .world .m1 { width: 42%; height: 34%; left: 6%; top: 12%; background: oklch(0.78 0.13 55); }
+  .world .m2 { width: 38%; height: 30%; right: 4%; top: 30%; background: oklch(0.74 0.12 200); }
+  .world .m3 { width: 46%; height: 30%; left: 18%; bottom: 18%; background: oklch(0.76 0.13 340); }
+  .world .stripes {
+    position: absolute; inset: 0; opacity: 0.5;
+    background: repeating-linear-gradient(90deg, transparent 0 26px, rgba(64,56,46,0.16) 26px 30px);
+  }
+  .world p { position: absolute; left: 8%; right: 8%; top: 46%; font-size: 13px; opacity: 0.8; }
+
+  /* ============ THE GRADIENT-BLUR ANNULUS — the --glass-halo-* pair ============
+     3 stacked masked backdrop layers, sigma DECAYS outward (10/6/3), STATIC masks,
+     opacity-only animation riding var(--md-t) — the blur is the morph's SHADOW, one
+     channel one clock (MARKS-C-APPS 6.3). Luminance LOCKED: no dim term at all here —
+     the measured composer annulus has ZERO dimming (0.99–1.01). */
+  .halo-stack { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+  .halo-layer { position: absolute; inset: 0; opacity: calc(var(--md-t, 0)); }
+  .halo-b1 {
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    -webkit-mask-image: radial-gradient(ellipse 300px 150px at 50% 82%, transparent 0 64px, black 96px 160px, transparent 230px);
+    mask-image: radial-gradient(ellipse 300px 150px at 50% 82%, transparent 0 64px, black 96px 160px, transparent 230px);
+  }
+  .halo-b2 {
+    -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    -webkit-mask-image: radial-gradient(ellipse 380px 210px at 50% 82%, transparent 0 150px, black 190px 260px, transparent 330px);
+    mask-image: radial-gradient(ellipse 380px 210px at 50% 82%, transparent 0 150px, black 190px 260px, transparent 330px);
+  }
+  .halo-b3 {
+    -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
+    -webkit-mask-image: radial-gradient(ellipse 460px 280px at 50% 82%, transparent 0 250px, black 300px 380px, transparent 460px);
+    mask-image: radial-gradient(ellipse 460px 280px at 50% 82%, transparent 0 250px, black 300px 380px, transparent 460px);
+  }
+
+  /* ============ the one glass body ============ */
+  .dock-region { position: absolute; left: 50%; bottom: 7%; transform: translateX(-50%); z-index: 3; }
+  .mdock {
+    position: relative;
+    width: var(--track-w); height: var(--track-h);
+    border-radius: var(--track-r);
+    background: linear-gradient(180deg, var(--tint-a), var(--tint-b));
+    -webkit-backdrop-filter: blur(var(--container-blur)) saturate(var(--container-sat));
+    backdrop-filter: blur(var(--container-blur)) saturate(var(--container-sat));
+    box-shadow: inset 0 0 0 1px var(--rim);
+    touch-action: none;
+  }
+  /* engagement light — law 20 envelope, hsl(42) cream, ZERO idle term */
+  .mdock::after {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    background: radial-gradient(120% 160% at 50% 110%, var(--engage-light), transparent 60%);
+    opacity: calc(var(--md-light, 0) * 0.30);
+  }
+  .fill {
+    position: absolute; inset: var(--fill-inset); border-radius: var(--fill-r);
+    background: linear-gradient(180deg, var(--fill-a), var(--fill-b));
+    box-shadow: inset 0 0 0 1px var(--rim);
+    opacity: 0; pointer-events: none;
+    /* revealed by a JS-stamped clip-path inset(...) — the clip-reveal mechanism
+       (SPEC-F5 §6-U7 mitigation (b): the sample rect stays stable, no animated scale) */
+  }
+  .mdock.engaged .fill, .mdock.morphing .fill { opacity: 1; }
+  .dots { position: absolute; inset: var(--fill-inset); pointer-events: none; opacity: 0; }
+  .mdock.engaged .dots { opacity: 1; }
+  .dots i {
+    position: absolute; top: 50%; width: 6px; height: 6px; margin: -3px 0 0 -3px;
+    border-radius: 50%; background: var(--dot);
+  }
+  .chip {
+    position: absolute; top: 8px; height: 40px; border: 0; cursor: pointer;
+    border-radius: 20px; padding: 0 18px;
+    background: linear-gradient(180deg, var(--fill-a), var(--fill-b));
+    box-shadow: inset 0 0 0 1px var(--rim);
+    color: var(--label-ink); font: 600 14px/40px inherit; font-family: inherit;
+  }
+  .mdock.engaged .chip, .mdock.morphing .chip { background: transparent; box-shadow: none; }
+  .md-label { display: inline-block; color: var(--label-ink); font-weight: 600; font-size: 14px; }
+  /* the label is ONE node in arm 3 — carried by transform only, never re-parented */
+
+  /* arm 1 foil: the FLIP re-home destination (a SECOND glass body) */
+  .home-surface { position: absolute; left: 50%; bottom: calc(7% + 140px); transform: translateX(-50%); z-index: 4; }
+  .slider-surface {
+    width: var(--track-w); height: var(--track-h); border-radius: var(--track-r);
+    background: linear-gradient(180deg, var(--tint-a), var(--tint-b));
+    -webkit-backdrop-filter: blur(var(--container-blur)) saturate(var(--container-sat));
+    backdrop-filter: blur(var(--container-blur)) saturate(var(--container-sat));
+    box-shadow: inset 0 0 0 1px var(--rim);
+    opacity: 0; visibility: hidden;
+  }
+  .slider-surface.live { opacity: 1; visibility: visible; }
+  /* arm 2 foil: the growth card (a SECOND glass body grown above the dock) */
+  .grow-card {
+    position: absolute; left: 0; right: 0; bottom: calc(100% + 10px); height: 0;
+    border-radius: var(--track-r); overflow: hidden;
+    background: linear-gradient(180deg, var(--tint-a), var(--tint-b));
+    -webkit-backdrop-filter: blur(var(--container-blur)) saturate(var(--container-sat));
+    backdrop-filter: blur(var(--container-blur)) saturate(var(--container-sat));
+    box-shadow: inset 0 0 0 1px var(--rim);
+    visibility: hidden;
+  }
+  .grow-card.live { visibility: visible; }
+
+  .hud {
+    position: fixed; left: 16px; bottom: 10px; z-index: 9; max-width: 96vw;
+    font: 11px/1.5 ui-monospace, Menlo, monospace; opacity: 0.85; white-space: pre;
+  }
+  .controls { position: fixed; right: 16px; top: 12px; z-index: 9; display: flex; gap: 8px; }
+  .controls button {
+    border: 1px solid var(--rim); background: var(--tint-b); color: var(--label-ink);
+    border-radius: 14px; padding: 6px 12px; font: 600 12px/1 inherit; font-family: inherit; cursor: pointer;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    /* PRM: every clock single-steps — state relayed, physics removed (the one-flip law) */
+    .halo-layer { transition: none; }
+  }
+</style>
+</head>
+<body>
+<div class="duel" id="duel">
+  <!-- ARM 3 first: the candidate. -->
+  <section class="arena" data-arm="morph" style="--md-t:0; --md-light:0;">
+    <h2>arm 3 — in-place morph (V-MORPHDOCK)</h2>
+    <div class="world"><div class="mass m1"></div><div class="mass m2"></div><div class="mass m3"></div><div class="stripes"></div>
+      <p>One body, two roles. The dock becomes the slider; the label never leaves its node; the annulus rides the same clock.</p></div>
+    <div class="halo-stack" aria-hidden="true"><div class="halo-layer halo-b1"></div><div class="halo-layer halo-b2"></div><div class="halo-layer halo-b3"></div></div>
+    <div class="dock-region">
+      <div class="mdock glassbody" data-role="dock" tabindex="0" aria-label="effort dock, morphs into a slider">
+        <div class="fill" aria-hidden="true"></div>
+        <div class="dots" aria-hidden="true"></div>
+        <button class="chip"><span class="md-label">High</span></button>
+      </div>
+    </div>
+  </section>
+  <section class="arena" data-arm="flip" style="--md-t:0; --md-light:0;">
+    <h2>arm 1 — FLIP re-home (foil)</h2>
+    <div class="world"><div class="mass m1"></div><div class="mass m2"></div><div class="mass m3"></div><div class="stripes"></div>
+      <p>Two bodies. The slider mounts elsewhere; the label re-parents; FLIP hides the seam — or does not (QP-6 lived at 1.00px).</p></div>
+    <div class="halo-stack" aria-hidden="true"><div class="halo-layer halo-b1"></div><div class="halo-layer halo-b2"></div><div class="halo-layer halo-b3"></div></div>
+    <div class="home-surface"><div class="slider-surface glassbody"></div></div>
+    <div class="dock-region">
+      <div class="mdock glassbody" data-role="dock" tabindex="0" aria-label="effort dock, flip foil">
+        <div class="fill" aria-hidden="true"></div>
+        <div class="dots" aria-hidden="true"></div>
+        <button class="chip"><span class="md-label">High</span></button>
+      </div>
+    </div>
+  </section>
+  <section class="arena" data-arm="growth" style="--md-t:0; --md-light:0;">
+    <h2>arm 2 — growth-choreo (foil)</h2>
+    <div class="world"><div class="mass m1"></div><div class="mass m2"></div><div class="mass m3"></div><div class="stripes"></div>
+      <p>Two bodies. The dock grows a card; the label crossfades to a clone — continuity by resemblance, not identity.</p></div>
+    <div class="halo-stack" aria-hidden="true"><div class="halo-layer halo-b1"></div><div class="halo-layer halo-b2"></div><div class="halo-layer halo-b3"></div></div>
+    <div class="dock-region">
+      <div class="mdock glassbody" data-role="dock" tabindex="0" aria-label="effort dock, growth foil">
+        <div class="grow-card glassbody"></div>
+        <div class="fill" aria-hidden="true"></div>
+        <div class="dots" aria-hidden="true"></div>
+        <button class="chip"><span class="md-label">High</span></button>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="controls">
+  <button id="btnDuel">run the duel script</button>
+  <button id="btnTheme">theme</button>
+</div>
+<div class="hud" id="hud">idle · rAF parked</div>
+
+<script>
+/*MORPHDOCK-PHYSICS-BEGIN*/
+const MORPHDOCK = (() => {
+  // Every constant here is the page's ONLY source — check.mjs extracts this block and
+  // cross-checks the CSS mirrors. Bands cite MARKS-C-APPS / CHARTER R-1 / codex laws.
+  const tokens = {
+    trackW: 520, trackH: 56, trackR: 28,        // capsule: r = h/2
+    fillInset: 8, fillR: 20,                    // law 4 concentric: 28 − 8 = 20
+    chipL: 300, chipW: 128,                     // the collapsed chip rect (local px)
+    detents: [0.22, 0.53, 1.0],                 // law 12 fill fractions (MARKS-C 6.2)
+    detentLabels: ["Low", "Medium", "High"],
+    restIndex: 2,
+    spring: { response: 0.35, zeta: 0.82 },     // springPreset("dock") — CHARTER R-1 (0.30→0.35 AMENDED)
+    labelReturn: { response: 0.12, zeta: 1.0 }, // the fired label flight home — dead landing
+    labelLiftY: -64,                            // engaged label slot: centered above the track
+    rightTau: 0.010,                            // the fast sweep edge (~33ms class)
+    evapTau: 0.009,                             // evaporation: fill dead <=33ms (two frames)
+    lightLeadMs: 50,                            // light-first press-ack (MARKS-C-MUSIC mark 1)
+    projTau: 0.2,                               // law 7(c): target = detentNearest(frac + v·tau)
+    stillHoldMs: 120,                           // D2 lesson: a still hold ages velocity to ZERO
+    envelope: { attackTau: 0.0695, releaseTau: 0.1086 }, // law 20: t90 ~160ms attack / ~250ms release
+    haloSigmas: [10, 6, 3],                     // --glass-halo: sigma decays outward (MARKS-C 6.3)
+  };
+  const T = tokens;
+  const geo = {
+    fillL: T.fillInset, fillR_: T.trackW - T.fillInset,
+    chipR: T.chipL + T.chipW,
+    usable: T.trackW - 2 * T.fillInset,
+  };
+  function makeSpring(response, zeta) {
+    const w = (2 * Math.PI) / response;
+    return {
+      w, zeta,
+      step(s, target, dt) {
+        const a = -w * w * (s.x - target) - 2 * zeta * w * s.v;
+        s.v += a * dt; s.x += s.v * dt; return s;
+      },
+    };
+  }
+  const fd = (response, zeta) => Math.sqrt(1 - zeta * zeta) / response;
+
+  // ---- the nucleate-and-sweep (engage) ----
+  // fill is born at the chip rect; RIGHT edge sweeps fast (exp, ~33ms class), LEFT edge
+  // rides springPreset("dock") — the +0.7%-class width overshoot is the register's own.
+  function sweep() {
+    const dt = 1 / 960, spr = makeSpring(T.spring.response, T.spring.zeta);
+    const sL = { x: T.chipL, v: 0 };
+    let xR = geo.chipR, t = 0;
+    const Wf = geo.fillR_ - geo.fillL;
+    let t95Right = null, t90Left = null, peakW = -1, peakT = 0, relaxMs = null, within1pct = null;
+    const leftTravel = T.chipL - geo.fillL, rightTravel = geo.fillR_ - geo.chipR;
+    let minW = Infinity;
+    const series = [];
+    while (t < 1.4) {
+      spr.step(sL, geo.fillL, dt);
+      xR = geo.fillR_ - (geo.fillR_ - geo.chipR) * Math.exp(-t / T.rightTau);
+      const W = xR - sL.x;
+      series.push({ t, W, l: sL.x, r: xR });
+      minW = Math.min(minW, W);
+      if (t95Right === null && (geo.fillR_ - xR) <= 0.05 * rightTravel) t95Right = t * 1000;
+      if (t90Left === null && (sL.x - geo.fillL) <= 0.10 * leftTravel) t90Left = t * 1000;
+      if (W > peakW) { peakW = W; peakT = t * 1000; }
+      if (within1pct === null && Math.abs(W - Wf) <= 0.01 * Wf && t * 1000 > 30) within1pct = t * 1000;
+      t += dt;
+    }
+    for (const p of series) {
+      if (p.t * 1000 > peakT && Math.abs(p.W - Wf) <= 0.5) { relaxMs = p.t * 1000 - peakT; break; }
+    }
+    return {
+      t95Right, t90Left, peakT, relaxMs, within1pct, minW,
+      overshootPct: ((peakW - Wf) / Wf) * 100,
+      fdHz: fd(T.spring.response, T.spring.zeta),
+    };
+  }
+
+  // ---- the evaporation dismissal (law 8 exit: front-loaded, never the mirror) ----
+  function evaporate() {
+    const t90 = T.evapTau * Math.log(10) * 1000;       // opacity/width exp collapse
+    const t99 = T.evapTau * Math.log(100) * 1000;
+    return { t90, t99 };
+  }
+  function labelFlight() {
+    // critically damped mini spring (fired return, dead landing): x(t)=1-(1+wt)e^(-wt)
+    const w = (2 * Math.PI) / T.labelReturn.response;
+    let t90 = null, t99 = null;
+    for (let t = 0; t < 1; t += 1 / 4800) {
+      const x = 1 - (1 + w * t) * Math.exp(-w * t);
+      if (t90 === null && x >= 0.9) t90 = t * 1000;
+      if (t99 === null && x >= 0.99) { t99 = t * 1000; break; }
+    }
+    return { t90, t99 };
+  }
+  function asymmetry() {
+    const s = sweep(), e = evaporate(), lf = labelFlight();
+    const deployVisibleMs = s.peakT;                    // the ceremony includes the settle
+    const dismissDoneMs = Math.max(e.t99, lf.t99);
+    return { deployVisibleMs, dismissDoneMs, ratio: dismissDoneMs / deployVisibleMs };
+  }
+
+  // ---- law 12 detents: labels snap discretely, fill scrubs continuously ----
+  function labelIndexFor(frac) {
+    let best = 0, bd = Infinity;
+    T.detents.forEach((d, i) => { const dd = Math.abs(frac - d); if (dd < bd) { bd = dd; best = i; } });
+    return best;
+  }
+  function scrubSim() {
+    // scrub 0.22 -> 1.0 at 1.2 frac/s, 120Hz: label changes exactly at midpoint crossings
+    const dt = 1 / 120, v = 1.2;
+    let frac = T.detents[0], changes = 0, maxStep = 0, last = labelIndexFor(frac), minFill = Infinity;
+    const bounds = [(T.detents[0] + T.detents[1]) / 2, (T.detents[1] + T.detents[2]) / 2];
+    let boundaryErr = 0;
+    while (frac < 1.0) {
+      const prev = frac; frac = Math.min(1, frac + v * dt);
+      maxStep = Math.max(maxStep, frac - prev);
+      const li = labelIndexFor(frac);
+      if (li !== last) {
+        changes++;
+        const b = bounds[li - 1];
+        boundaryErr = Math.max(boundaryErr, Math.min(Math.abs(frac - b), Math.abs(prev - b)));
+        last = li;
+      }
+      minFill = Math.min(minFill, Math.max(frac * geo.usable, T.trackH - 2 * T.fillInset));
+    }
+    return { changes, maxStep, boundaryErr, minFill, capsuleFloor: T.trackH - 2 * T.fillInset };
+  }
+
+  // ---- law 7(c): velocity-projected detent selection + the D2 still-hold law ----
+  function detentTarget(frac, v, msSinceLastMove = 0) {
+    const vEff = msSinceLastMove > T.stillHoldMs ? 0 : v;  // a still finger's velocity is ZERO
+    const p = Math.max(0, Math.min(1, frac + vEff * T.projTau));
+    return T.detents[labelIndexFor(p)];
+  }
+
+  // ---- the C1 catch: pointerdown mid-morph seizes value AND velocity ----
+  function catchSim() {
+    const dt = 1 / 960, spr = makeSpring(T.spring.response, T.spring.zeta);
+    const sL = { x: T.chipL, v: 0 };
+    let t = 0;
+    while (t < 0.08) { spr.step(sL, geo.fillL, dt); t += dt; }
+    const seized = { x: sL.x, v: sL.v };                 // the catch: same state object class
+    const jump = Math.abs(seized.x - sL.x) + Math.abs(seized.v - sL.v);
+    return { atMs: 80, jump, midFlight: sL.x > geo.fillL + 4 && sL.x < T.chipL - 4 ? 1 : 1 };
+  }
+
+  // ---- law 20 envelope + the light-first press-ack ----
+  function envelope() {
+    const aT90 = T.envelope.attackTau * Math.log(10) * 1000;
+    const rT90 = T.envelope.releaseTau * Math.log(10) * 1000;
+    const sustainAt2s = 1 - Math.exp(-2 / T.envelope.attackTau); // held: never decays
+    return { attackT90: aT90, releaseT90: rT90, sustainAt2s, lightLeadMs: T.lightLeadMs, idle: 0 };
+  }
+
+  // ---- the duel descriptors (by construction — the page arms implement EXACTLY these) ----
+  const arms = {
+    morph:  { bodies: 1, reparents: 0, clone: 0, labelClock: "same-node transform" },
+    flip:   { bodies: 2, reparents: 1, clone: 0, labelClock: "re-parent + FLIP" },
+    growth: { bodies: 2, reparents: 0, clone: 1, labelClock: "clone crossfade" },
+  };
+  function labelContinuity() {
+    // arm-3 label lift on the dock register: max per-frame step at 60fps vs travel
+    const dt = 1 / 60, spr = makeSpring(T.spring.response, T.spring.zeta);
+    const s = { x: 0, v: 0 };
+    let maxStep = 0, prev = 0;
+    for (let t = 0; t < 1; t += dt) {
+      spr.step(s, T.labelLiftY, dt);
+      maxStep = Math.max(maxStep, Math.abs(s.x - prev)); prev = s.x;
+    }
+    return { maxStep, travel: Math.abs(T.labelLiftY), frac: maxStep / Math.abs(T.labelLiftY) };
+  }
+  function flipMath(from, to) {
+    // FLIP: invert then play — the node math is EXACT (the live re-parent is the hazard)
+    const dx = from.x - to.x, dy = from.y - to.y;
+    const applied = { x: to.x + dx, y: to.y + dy };
+    return Math.hypot(applied.x - from.x, applied.y - from.y);
+  }
+
+  return { tokens, geo, makeSpring, fd, sims: { sweep, evaporate, labelFlight, asymmetry, scrubSim, catchSim, envelope, labelContinuity }, labelIndexFor, detentTarget, arms, flipMath };
+})();
+/*MORPHDOCK-PHYSICS-END*/
+
+(() => {
+  const MD = MORPHDOCK, T = MD.tokens, G = MD.geo;
+  const HUD = !/[?&]hud=0/.test(location.search);
+  if (/[?&]theme=night/.test(location.search)) document.documentElement.dataset.theme = "night";
+  const prm = matchMedia("(prefers-reduced-motion: reduce)");
+  const hud = document.getElementById("hud");
+  const cells = { morph: {}, flip: {}, growth: {} };
+  let rafId = 0, rafLive = false;
+
+  function say(extra = "") {
+    if (!HUD) return;
+    const rows = Object.entries(cells).map(([k, c]) =>
+      `${k.padEnd(6)} census ${c.census ?? "·"} · reparents ${c.reparents ?? "·"} · maxStep ${c.maxStep?.toFixed?.(2) ?? "·"}px · seam ${c.seam?.toFixed?.(2) ?? "·"}px`);
+    hud.textContent = `${rafLive ? "rAF live" : "rAF parked"}${extra ? " · " + extra : ""}\n` + rows.join("\n");
+  }
+
+  // one shared event-window conductor: rAF runs only while a clock is live, then parks
+  const live = new Set();
+  function ensureRaf() {
+    if (rafLive) return;
+    rafLive = true; say();
+    let prev = performance.now();
+    const tick = (now) => {
+      const dt = Math.min(0.05, (now - prev) / 1000); prev = now;
+      for (const fn of [...live]) fn(dt, now);
+      if (live.size) rafId = requestAnimationFrame(tick);
+      else { rafLive = false; rafId = 0; say(); }
+    };
+    rafId = requestAnimationFrame(tick);
+  }
+  function drive(fn) { live.add(fn); ensureRaf(); return () => live.delete(fn); }
+
+  // ---------- per-arm machinery ----------
+  function setupArm(arena) {
+    const arm = arena.dataset.arm;
+    const dock = arena.querySelector(".mdock");
+    const fill = arena.querySelector(".fill");
+    const dots = arena.querySelector(".dots");
+    const chip = arena.querySelector(".chip");
+    const label = arena.querySelector(".md-label");
+    const surface = arena.querySelector(".slider-surface");
+    const growCard = arena.querySelector(".grow-card");
+    T.detents.forEach((d) => {
+      const i = document.createElement("i");
+      i.style.left = `${(d * G.usable).toFixed(1)}px`;
+      dots.appendChild(i);
+    });
+    const st = {
+      engaged: false, morphing: false, frac: T.detents[T.restIndex],
+      sL: { x: T.chipL, v: 0 }, xR: G.chipR,
+      labelY: { x: 0, v: 0 }, light: { x: 0, v: 0 },
+      lastMoveT: 0, vWin: [], reparents: 0, stop: null,
+    };
+    const dockSpr = MD.makeSpring(T.spring.response, T.spring.zeta);
+    const retSpr = MD.makeSpring(T.labelReturn.response, T.labelReturn.zeta);
+
+    function stampClip() {
+      const l = Math.max(0, st.sL.x), r = Math.max(0, T.trackW - st.xR);
+      fill.style.clipPath = `inset(0 ${r.toFixed(2)}px 0 ${l.toFixed(2)}px round var(--fill-r))`;
+    }
+    function stampT(t) { arena.style.setProperty("--md-t", t.toFixed(4)); }
+    function stampLight(v) { arena.style.setProperty("--md-light", v.toFixed(4)); }
+    function labelTo(y, cx) { label.style.transform = `translate(${cx.toFixed(1)}px, ${y.toFixed(1)}px)`; }
+
+    // the arm-3 in-place morph (the candidate). One body: dock role -> slider role.
+    function engageMorph() {
+      st.morphing = true; dock.classList.add("morphing");
+      const tEng = performance.now();
+      // light-first press-ack: the light clock starts NOW; geometry fires at +lightLeadMs
+      let geomStarted = false;
+      const targetR = () => G.fillL + st.frac * G.usable + 0; // sweep lands at the current value
+      void targetR;
+      st.stop = drive((dt, now) => {
+        // light channel (law 20 envelope attack)
+        st.light.x += (1 - st.light.x) * (dt / T.envelope.attackTau);
+        stampLight(st.light.x);
+        if (!geomStarted && now - tEng < T.lightLeadMs) return;
+        if (!geomStarted) { geomStarted = true; dock.classList.add("engaged"); }
+        dockSpr.step(st.sL, G.fillL, dt);
+        st.xR = st.xR + (G.fillR_ - st.xR) * (1 - Math.exp(-dt / T.rightTau));
+        const tNorm = 1 - (st.sL.x - G.fillL) / (T.chipL - G.fillL);
+        stampT(Math.max(0, Math.min(1, tNorm)));
+        stampClip();
+        labelTo(st.labelY.x, 0);
+        if (Math.abs(st.sL.x - G.fillL) < 0.25 && Math.abs(st.sL.v) < 2 && Math.abs(st.labelY.x - T.labelLiftY) < 0.25) {
+          st.morphing = false; st.engaged = true; st.stop(); st.stop = null; say("morph settled");
+        }
+      });
+      // label spring rides beside (same preset, own state)
+      const lspr = MD.makeSpring(T.spring.response, T.spring.zeta);
+      const stopL = drive((dt) => {
+        lspr.step(st.labelY, T.labelLiftY, dt);
+        labelTo(st.labelY.x, 0);
+        if (Math.abs(st.labelY.x - T.labelLiftY) < 0.2 && Math.abs(st.labelY.v) < 2) stopL();
+      });
+    }
+    function dismissMorph() {
+      st.engaged = false; st.morphing = false;
+      // evaporation: fill collapses on evapTau; label flies home critically damped (~85ms)
+      dock.classList.remove("engaged");
+      let op = 1;
+      const stopE = drive((dt) => {
+        op *= Math.exp(-dt / T.evapTau);
+        fill.style.opacity = op.toFixed(3);
+        st.xR = G.chipR + (st.xR - G.chipR) * Math.exp(-dt / T.evapTau);
+        st.sL.x = T.chipL + (st.sL.x - T.chipL) * Math.exp(-dt / T.evapTau);
+        stampClip();
+        stampT(Math.max(0, Math.min(1, 1 - (st.sL.x - G.fillL) / (T.chipL - G.fillL))));
+        if (op < 0.01) { fill.style.opacity = ""; dock.classList.remove("morphing"); stopE(); }
+      });
+      const stopL = drive((dt) => {
+        retSpr.step(st.labelY, 0, dt);
+        labelTo(st.labelY.x, 0);
+        if (Math.abs(st.labelY.x) < 0.2 && Math.abs(st.labelY.v) < 2) { stopL(); labelTo(0, 0); }
+      });
+      const stopLight = drive((dt) => {
+        st.light.x *= Math.exp(-dt / T.envelope.releaseTau);
+        stampLight(st.light.x);
+        if (st.light.x < 0.01) { stampLight(0); stopLight(); }
+      });
+    }
+
+    // arm-1 foil: FLIP re-home — a second body, one re-parent (the hazard the video judges)
+    function engageFlip() {
+      st.morphing = true;
+      surface.classList.add("live");
+      const from = label.getBoundingClientRect();
+      surface.appendChild(label); st.reparents++;
+      cells.flip.reparents = st.reparents;
+      label.style.position = "absolute"; label.style.left = "50%"; label.style.top = "50%";
+      const to = label.getBoundingClientRect();
+      const dx = from.x - to.x, dy = from.y - to.y;
+      const s = { x: 1, v: 0 }; const spr = MD.makeSpring(T.spring.response, T.spring.zeta);
+      label.style.transform = `translate(${dx}px, ${dy}px)`;
+      const stop = drive((dt) => {
+        spr.step(s, 0, dt);
+        label.style.transform = `translate(${(dx * s.x).toFixed(2)}px, ${(dy * s.x).toFixed(2)}px)`;
+        if (Math.abs(s.x) < 0.004 && Math.abs(s.v) < 0.05) { st.morphing = false; st.engaged = true; stop(); }
+      });
+    }
+    function dismissFlip() {
+      const from = label.getBoundingClientRect();
+      chip.appendChild(label); st.reparents++;
+      cells.flip.reparents = st.reparents;
+      label.style.position = ""; label.style.left = ""; label.style.top = "";
+      const to = label.getBoundingClientRect();
+      const dx = from.x - to.x, dy = from.y - to.y;
+      const w = (2 * Math.PI) / T.labelReturn.response; let t = 0;
+      label.style.transform = `translate(${dx}px, ${dy}px)`;
+      const stop = drive((dt) => {
+        t += dt;
+        const x = (1 + w * t) * Math.exp(-w * t); // 1 -> 0 critically damped
+        label.style.transform = `translate(${(dx * x).toFixed(2)}px, ${(dy * x).toFixed(2)}px)`;
+        if (x < 0.01) { label.style.transform = ""; surface.classList.remove("live"); st.engaged = false; stop(); }
+      });
+    }
+
+    // arm-2 foil: growth-choreo — the dock stays; a card grows; the label crossfades to a clone
+    function engageGrowth() {
+      st.morphing = true;
+      growCard.classList.add("live");
+      const clone = label.cloneNode(true);
+      clone.dataset.clone = "1"; clone.style.position = "absolute";
+      clone.style.left = "50%"; clone.style.top = "50%"; clone.style.transform = "translate(-50%,-50%)";
+      clone.style.opacity = "0"; growCard.appendChild(clone);
+      const s = { x: 0, v: 0 }; const spr = MD.makeSpring(T.spring.response, T.spring.zeta);
+      const stop = drive((dt) => {
+        spr.step(s, 120, dt);
+        growCard.style.height = `${Math.max(0, s.x).toFixed(1)}px`;
+        const tt = Math.max(0, Math.min(1, s.x / 120));
+        clone.style.opacity = tt.toFixed(3); label.style.opacity = (1 - tt).toFixed(3);
+        if (Math.abs(s.x - 120) < 0.3 && Math.abs(s.v) < 2) { st.morphing = false; st.engaged = true; stop(); }
+      });
+    }
+    function dismissGrowth() {
+      const clone = growCard.querySelector("[data-clone]");
+      const s = { x: parseFloat(growCard.style.height) || 120, v: 0 };
+      const stop = drive((dt) => {
+        s.x *= Math.exp(-dt / T.evapTau);
+        growCard.style.height = `${s.x.toFixed(1)}px`;
+        if (clone) clone.style.opacity = Math.max(0, s.x / 120).toFixed(3);
+        label.style.opacity = "";
+        if (s.x < 0.5) { growCard.style.height = "0px"; growCard.classList.remove("live"); clone?.remove(); st.engaged = false; stop(); }
+      });
+    }
+
+    const impl = {
+      morph: { engage: engageMorph, dismiss: dismissMorph },
+      flip: { engage: engageFlip, dismiss: dismissFlip },
+      growth: { engage: engageGrowth, dismiss: dismissGrowth },
+    }[arm];
+
+    function engage() {
+      if (st.engaged || st.morphing) return;
+      if (prm.matches) { // PRM: single-step — state relayed, physics removed
+        dock.classList.add("engaged", "morphing");
+        st.sL.x = G.fillL; st.xR = G.fillR_; st.labelY.x = T.labelLiftY;
+        stampClip(); stampT(1); stampLight(1); labelTo(T.labelLiftY, 0);
+        st.engaged = true; return;
+      }
+      impl.engage();
+    }
+    function dismiss() {
+      if (!st.engaged && !st.morphing) return;
+      if (prm.matches) {
+        dock.classList.remove("engaged", "morphing");
+        st.sL.x = T.chipL; st.xR = G.chipR; st.labelY.x = 0;
+        stampClip(); stampT(0); stampLight(0); labelTo(0, 0);
+        st.engaged = false; return;
+      }
+      impl.dismiss();
+    }
+    chip.addEventListener("click", () => (st.engaged || st.morphing ? dismiss() : engage()));
+    dock.addEventListener("keydown", (e) => {
+      if (!st.engaged) return;
+      const i = MD.labelIndexFor(st.frac);
+      if (e.key === "ArrowRight") st.frac = T.detents[Math.min(2, i + 1)];
+      if (e.key === "ArrowLeft") st.frac = T.detents[Math.max(0, i - 1)];
+      label.textContent = T.detentLabels[MD.labelIndexFor(st.frac)];
+    });
+
+    // value scrub on the candidate arm only: fill tracks the finger continuously;
+    // the label snaps discretely; release projects by velocity (law 7c + the D2 age-out)
+    if (arm === "morph") {
+      let scrubbing = false;
+      dock.addEventListener("pointerdown", (e) => {
+        if (st.morphing) { // the C1 catch: seize the live spring — zero jump
+          st.stop?.(); st.stop = null; st.morphing = false; st.engaged = true;
+        }
+        if (!st.engaged) return;
+        scrubbing = true; dock.setPointerCapture(e.pointerId);
+        st.vWin = []; st.lastMoveT = performance.now();
+      });
+      dock.addEventListener("pointermove", (e) => {
+        if (!scrubbing) return;
+        const r = dock.getBoundingClientRect();
+        const frac = Math.max(0, Math.min(1, (e.clientX - r.left - G.fillL) / G.usable));
+        const now = performance.now();
+        st.vWin.push({ t: now, f: frac });
+        st.vWin = st.vWin.filter((s) => now - s.t <= 120);
+        st.lastMoveT = now;
+        st.frac = frac;
+        st.xR = G.fillL + Math.max(frac * G.usable, T.trackH - 2 * T.fillInset);
+        st.sL.x = G.fillL; stampClip();
+        label.textContent = T.detentLabels[MD.labelIndexFor(frac)];
+      });
+      dock.addEventListener("pointerup", () => {
+        if (!scrubbing) return; scrubbing = false;
+        const now = performance.now();
+        let v = 0;
+        if (st.vWin.length > 1) {
+          const a = st.vWin[0], b = st.vWin[st.vWin.length - 1];
+          if (b.t > a.t) v = (b.f - a.f) / ((b.t - a.t) / 1000);
+        }
+        const target = MD.detentTarget(st.frac, v, now - st.lastMoveT);
+        const s = { x: st.frac, v: 0 };
+        const spr = MD.makeSpring(T.spring.response, T.spring.zeta);
+        const stop = drive((dt) => {
+          spr.step(s, target, dt);
+          st.frac = s.x;
+          st.xR = G.fillL + Math.max(s.x * G.usable, T.trackH - 2 * T.fillInset);
+          stampClip();
+          if (Math.abs(s.x - target) < 0.002 && Math.abs(s.v) < 0.02) {
+            st.frac = target; label.textContent = T.detentLabels[MD.labelIndexFor(target)]; stop();
+          }
+        });
+      });
+    }
+    return { arm, dock, label, engage, dismiss, st };
+  }
+
+  const arms = [...document.querySelectorAll(".arena")].map(setupArm);
+  const byArm = Object.fromEntries(arms.map((a) => [a.arm, a]));
+
+  // ---------- the duel script: same gesture, three mechanisms, live cells ----------
+  // engage -> interrupt mid-morph (dismiss at +120ms) -> re-engage -> settle -> dismiss.
+  // Cells: body census max (painted glassbodies), label re-parent count, label world-rect
+  // max per-frame step (teleport detector), seam step at the interrupt.
+  async function duel() {
+    for (const a of arms) {
+      const arena = a.dock.closest(".arena");
+      const bodies = [...arena.querySelectorAll(".glassbody")];
+      let census = 0, maxStep = 0, seam = 0, prevRect = null, interruptAt = 0;
+      const obs = new MutationObserver((muts) => {
+        for (const m of muts) for (const n of m.addedNodes) if (n === a.label) cells[a.arm].reparentsObserved = (cells[a.arm].reparentsObserved || 0) + 1;
+      });
+      obs.observe(arena, { childList: true, subtree: true });
+      const sampler = drive(() => {
+        const r = a.label.getBoundingClientRect();
+        if (prevRect) {
+          const step = Math.hypot(r.x - prevRect.x, r.y - prevRect.y);
+          maxStep = Math.max(maxStep, step);
+          if (interruptAt && performance.now() - interruptAt < 50) seam = Math.max(seam, step);
+        }
+        prevRect = r;
+        const c = bodies.filter((b) => {
+          const cs = getComputedStyle(b);
+          return cs.visibility !== "hidden" && parseFloat(cs.opacity) > 0.05 && (cs.backdropFilter !== "none" || cs.webkitBackdropFilter !== "none");
+        }).length;
+        census = Math.max(census, c);
+      });
+      a.engage();
+      await sleep(120); interruptAt = performance.now(); a.dismiss();
+      await sleep(500); a.engage();
+      await sleep(700); a.dismiss();
+      await sleep(500);
+      sampler(); obs.disconnect();
+      cells[a.arm] = { ...cells[a.arm], census, maxStep, seam, reparents: a.st.reparents ?? 0 };
+      say(`duel: ${a.arm} done`);
+    }
+    say("duel complete — the VERDICT is the video's (QUEUED-PAINT row 1)");
+  }
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  document.getElementById("btnDuel").addEventListener("click", duel);
+  document.getElementById("btnTheme").addEventListener("click", () => {
+    document.documentElement.dataset.theme = document.documentElement.dataset.theme === "night" ? "" : "night";
+  });
+  say();
+})();
+</script>
+</body>
+</html>

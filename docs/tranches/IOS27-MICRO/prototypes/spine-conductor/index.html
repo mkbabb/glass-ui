@@ -670,9 +670,13 @@ const SC = (() => {
       this._intent = 0;
       this.intentVel = 0;
       this._lastSample = 0;
+      this._agedTo = 0; // idle-decay bookkeeping (M-1 cure): the timestamp aging has reached
     }
     setRegister(name) { this.register = name; return this; }
     glideTo(target, now, seedVelocity) {
+      // M-1 cure [P4-KERNEL 2026-07-19]: wall-clock aging AT DRIVE TIME — a park cannot
+      // freeze the estimator; a still finger releases with a still finger's velocity.
+      this.scrubIdle(now);
       const { response, zeta } = REG[this.register];
       const v0 = seedVelocity === undefined ? this.velocity : seedVelocity;
       this._fn = springSampler(response * this.tempo, zeta, this.value, v0, target);
@@ -692,6 +696,7 @@ const SC = (() => {
       this._samples.push([now, this.value]);
       this.intentVel = this.velocity; // C1 carry into the intent filter
       this._lastSample = now;
+      this._agedTo = now;
     }
     _latch() {
       const p = this.value + INTENT.proj * this.intentVel;
@@ -707,13 +712,20 @@ const SC = (() => {
       this.velocity = lsqSlope(s);
       this.intentVel += (this.velocity - this.intentVel) * (1 - Math.exp(-dt / INTENT.velTau));
       this._lastSample = now;
+      this._agedTo = now;
       this._latch();
     }
-    scrubIdle(now, dt) {
-      if (this.regime !== "scrub" || now - this._lastSample <= INTENT.idleAfter) return;
-      const k = Math.exp(-dt / INTENT.idleTau);
+    scrubIdle(now) {
+      // M-1 cure [P4-KERNEL 2026-07-19]: CLOSED-FORM wall-clock idle decay. Tick-cadence-
+      // independent — a parked kernel and a ticking kernel age identically, and the drive
+      // verbs apply any decay the park withheld. `_agedTo` makes repeated calls idempotent.
+      if (this.regime !== "scrub") return;
+      const from = Math.max(this._agedTo, this._lastSample + INTENT.idleAfter);
+      if (now <= from) return;
+      const k = Math.exp(-(now - from) / INTENT.idleTau);
       this.velocity *= k;
       this.intentVel *= k;
+      this._agedTo = now;
       this._latch();
     }
     get intent() {
@@ -753,7 +765,9 @@ const SC = (() => {
   // channels: { name: def }; laws: "identity" (the spine itself — geometry), "cliff"
   // (medium: sat scrub-arm + occupancy release-arm), "follow" (tau, close.tau, key:"intent",
   // delay+source), "spring" (kernel integrator, drive-time latched pair), "light"
-  // (lead/hold/cool). Drive verbs: scrub(g) · release(target, v, register) · seat(t).
+  // (lead/hold/cool). domain: { wells } — the G3 momentum-projected well-catch scheduler
+  // is KERNEL-OWNED (M-2 cure [P4-KERNEL 2026-07-19]; the four call-site copies collapsed
+  // here). Drive verbs: scrub(g) · release(target, v, register) · seat(t).
   // Joint park; PRM seats all in one poll; sat×source composition is FENCED (F3 OG3).
   // ======================================================================
   function useLiquidSpine(spec) {
@@ -765,6 +779,7 @@ const SC = (() => {
     const raf = spec.raf || ((fn) => requestAnimationFrame(fn));
     const caf = spec.caf || ((id) => cancelAnimationFrame(id));
     const regs = spec.registers || { open: "ccOpen", close: "ccClose" };
+    const wells = (spec.domain && spec.domain.wells) || []; // M-2: the domain register's proven field
     const EPS = 1e-3, VEPS = 5e-3;
 
     const spine = new Spine();
@@ -784,6 +799,8 @@ const SC = (() => {
 
     let rafId = 0, parked = true, lastT = -1, tickCount = 0, driveTarget = 0;
     let coreSettled = true;
+    let parkedMidScrub = false; // minor-5 cure: a park under a live gesture is NOT a gesture end
+    let catchState = null;      // M-2: { well, until, onward, register } — the kernel-owned dwell
     const hooks = [];
 
     function T(def, dir, key, dflt) {
@@ -791,6 +808,10 @@ const SC = (() => {
       const v = ov && ov[key] != null ? ov[key] : def[key] != null ? def[key] : dflt;
       return v * tempo;
     }
+
+    // The rack face of intent: during a well dwell the GESTURE intent (the onward target)
+    // governs — the well glide's own latch must never flip the rack (M-2 cure).
+    const intentOf = () => (catchState ? (catchState.onward >= 0.5 ? 1 : 0) : spine.intent);
 
     function chTarget(c) {
       const def = c.def;
@@ -800,18 +821,31 @@ const SC = (() => {
           return clamp01(spine.value / def.sat); // scrub arm: the sat position map (F3 G4)
         }
         if (def.occ) { // release arm: the emergent occupancy rule (adjudicated, worklist 1)
-          const th = spine.intent >= 0.5 ? def.occ.opening : def.occ.closing;
+          const th = intentOf() >= 0.5 ? def.occ.opening : def.occ.closing;
           return spine.value > th ? 1 : 0;
         }
         return def.sat != null ? clamp01(driveTarget / def.sat) : driveTarget;
       }
       if (def.law === "light") return c.phase === "cool" ? 0 : 1;
       if (def.law === "follow") {
-        if (def.key === "intent") return spine.intent >= 0.5 ? 1 : 0;
+        if (def.key === "intent") return intentOf() >= 0.5 ? 1 : 0;
         if (def.source) return byName[def.source].x;
         return driveTarget;
       }
       return driveTarget; // spring
+    }
+
+    // M-2: the G3 momentum-projected well catch, consulted at EVERY release drive — a well
+    // strictly between here and the target catches when the decayRest projection still
+    // carries ≥ V_CATCH at the crossing (wellCrossing is the single trigger authority).
+    function wellCatch(target, v0) {
+      const x0 = spine.value;
+      for (const w of wells) {
+        if ((w.t - x0) * (w.t - target) >= 0) continue; // only wells strictly on the path
+        const pc = wellCrossing(x0, v0, w.t);
+        if (pc && Math.abs(pc.v) >= V_CATCH) return w;
+      }
+      return null;
     }
 
     function stepChannel(c, t, dt) {
@@ -883,7 +917,17 @@ const SC = (() => {
       if (dt <= 0) dt = 1e-4;
       if (dt > 0.05) dt = 0.05;
       if (spine.regime === "glide") spine.tick(t);
-      spine.scrubIdle(t, dt);
+      spine.scrubIdle(t);
+      // M-2: the kernel-owned dwell machine — arrival-or-CATCH_MS at the well, then the
+      // onward C1 glide to the gesture target (the page's hand-wired copies are dead).
+      if (catchState && spine.regime !== "scrub") {
+        if (t >= catchState.until || spine.regime === "parked") {
+          driveTarget = catchState.onward;
+          spine.setRegister(catchState.register).glideTo(catchState.onward, t); // onward, C1
+          catchState = null;
+          latchDirs();
+        }
+      }
       for (const c of chans) stepChannel(c, t, dt);
       coreSettled = settledCore(t) && spine.regime !== "glide";
       // light phase machine: lead through travel; HOLD armed at release-arrival (spine
@@ -907,6 +951,7 @@ const SC = (() => {
         }
         publish();
         parked = true; // rAF gone — the park assertion watches tickCount
+        parkedMidScrub = spine.regime === "scrub"; // minor-5 cure: remember WHY we parked
       } else {
         rafId = raf(tick);
       }
@@ -916,12 +961,18 @@ const SC = (() => {
       const was = parked;
       parked = false;
       if (was) {
-        const tNow = now() / 1000;
-        for (const c of chans) {
-          if (c.def.law === "follow" && c.def.delay != null) {
-            c.gateUntil = tNow + c.def.delay * tempo; // arms on wake-from-parked only (G5)
+        // minor-5 cure [P4-KERNEL 2026-07-19]: G5's arming is GESTURE-scoped. A park under
+        // a live scrub (zero-cost held idle) never counts as gesture end — waking out of it
+        // must not re-impose the periphery dead-time mid-gesture.
+        if (!parkedMidScrub) {
+          const tNow = now() / 1000;
+          for (const c of chans) {
+            if (c.def.law === "follow" && c.def.delay != null) {
+              c.gateUntil = tNow + c.def.delay * tempo; // arms on wake-from-parked only (G5)
+            }
           }
         }
+        parkedMidScrub = false;
         lastT = -1;
       }
       if (!rafId) rafId = raf(tick);
@@ -938,6 +989,7 @@ const SC = (() => {
     function scrub(g) {
       if (prm()) return seat(g);
       const t = now() / 1000;
+      catchState = null; // finger recapture cancels any well dwell (C1 — the scrub owns the value)
       if (spine.regime !== "scrub") spine.beginScrub(t);
       spine.scrubTo(g, t);
       driveTarget = g;
@@ -945,16 +997,26 @@ const SC = (() => {
       wake();
     }
     function release(target, v, register) {
-      if (prm()) return seat(target);
+      if (prm()) return seat(target); // PRM seats to the TARGET — the well is motion (G7)
       const t = now() / 1000;
+      spine.scrubIdle(t); // M-1: age by wall clock BEFORE the velocity is read
+      const v0 = v === undefined ? spine.velocity : v;
       const reg = register || (target >= spine.value ? regs.open : regs.close);
       driveTarget = target;
-      spine.setRegister(reg).glideTo(target, t, v);
+      const w = wellCatch(target, v0); // M-2: the kernel consults the G3 trigger itself
+      if (w) {
+        catchState = { well: w, until: t + CATCH_MS * tempo, onward: target, register: reg };
+        spine.setRegister(reg).glideTo(w.t, t, v0);
+      } else {
+        catchState = null;
+        spine.setRegister(reg).glideTo(target, t, v0);
+      }
       latchDirs();
       wake();
     }
     function seat(g) {
       driveTarget = g;
+      catchState = null;
       spine.seat(g);
       for (const c of chans) {
         if (c.def.law === "light") { c.x = 0; c.v = 0; c.phase = "idle"; c.holdUntil = -1; c.target = 0; continue; }
@@ -963,7 +1025,7 @@ const SC = (() => {
         c.v = 0; c.gateUntil = -1; c.dir = "open";
       }
       if (rafId) { caf(rafId); rafId = 0; }
-      parked = true; lastT = -1; coreSettled = true;
+      parked = true; lastT = -1; coreSettled = true; parkedMidScrub = false;
       publish();
     }
 
@@ -971,6 +1033,7 @@ const SC = (() => {
       spine, scrub, release, seat,
       get: (name) => (name === "t" ? spine.value : byName[name].x),
       state: (name) => { const c = byName[name]; return { x: c.x, v: c.v, target: c.target }; },
+      catching: () => (catchState ? { well: catchState.well.t, until: catchState.until, onward: catchState.onward } : null),
       isParked: () => parked,
       coreSettled: () => coreSettled,
       ticks: () => tickCount,
@@ -1032,25 +1095,34 @@ const SC = (() => {
     return { coverage83: (depth - (x83 - 1)) / depth, settleMs: settle * 1000 };
   }
 
-  // G3 mid-detent catch end to end; landing metric = the spine's own park epsilon (both sides).
+  // G3 mid-detent catch end to end — REBUILT on the kernel's domain.wells scheduler (M-2
+  // cure [P4-KERNEL 2026-07-19]): the sim consumes the SAME catch path the surfaces run;
+  // the hand-rolled dwell copy is dead. Landing metric = the spine's own park epsilon.
   function simMidCatch(v0 = -4) {
-    const s = new Spine().setRegister("dock");
-    s.value = 1;
+    let t = 0, qid = 0;
+    const q = new Map();
+    const kern = useLiquidSpine({
+      el: null, channels: { geometry: { law: "identity" } },
+      domain: { wells: [{ t: WELL, kind: "weak" }] },
+      registers: { open: "dock", close: "dock" }, prm: () => false,
+      now: () => t * 1000, raf: (fn) => { q.set(++qid, fn); return qid; }, caf: (id) => q.delete(id),
+    });
+    kern.seat(1);
     const pc = wellCrossing(1, v0, WELL);
-    const caught = pc !== null && Math.abs(pc.v) >= V_CATCH;
-    s.glideTo(caught ? WELL : 0, 0, v0);
-    let armed = caught, dwellEnd = null, minWellDist = 1, land = null;
-    for (let t = 0; t < 2.5; t += DT) {
-      s.tick(t);
-      if (armed) {
-        minWellDist = Math.min(minWellDist, Math.abs(s.value - WELL));
-        if (t >= CATCH_MS || s.regime === "parked") {
-          dwellEnd = t;
-          s.setRegister("dock").glideTo(0, t); // onward, C1
-          armed = false;
-        }
-      } else if (land === null && s.regime === "parked") { land = t; break; }
+    kern.release(0, v0, "dock");
+    const caught = kern.catching() !== null;
+    let dwellEnd = null, minWellDist = 1, land = null;
+    for (let i = 0; i < 2500; i++) {
+      t += DT;
+      const fns = [...q.values()]; q.clear();
+      for (const f of fns) f(t * 1000);
+      if (caught && dwellEnd === null) {
+        minWellDist = Math.min(minWellDist, Math.abs(kern.spine.value - WELL));
+        if (kern.catching() === null) dwellEnd = t;
+      }
+      if (land === null && kern.isParked()) { land = t; break; }
     }
+    kern.destroy();
     return {
       caught, vAtWell: pc ? pc.v : null,
       dwellMs: dwellEnd === null ? null : dwellEnd * 1000,
@@ -1156,6 +1228,12 @@ var SC_BANDS = {
   pinSettle:{ lo: 0.100, hi: 0.200, text: "100–200ms", label: "[REG-LOCK — C3 voided the corpus tail]" },
   dwell:    { lo: 0.120, hi: 0.220, text: "120–220ms", label: "[DESIGN arrival-or-170ms]" },
   wellNear: 0.12,
+  // --- M-1/D2 + domain rows (pass 4 — CRIT-SPINE M-1/M-2 + minor 5 cures) ---
+  shVel:   { hi: 0.010, text: "≤0.01/s after 800ms still", label: "[MARKS C1 — a still finger's velocity is zero; the D2 class]" },
+  shPeak:  { lo: 0.995, hi: 1.004, text: "0.995–1.004 (zero-seed class)", label: "[MARKS C1/C2 — overshoot velocity-bought only]" },
+  shGuard: { lo: 1.01, hi: 1.20, text: "≥1% bought overshoot, no hold", label: "[DESIGN falsifiability guard — aging must not kill bought velocity; the 3/s seed decelerates over the 0.1 approach gap]" },
+  resume:  { hi: 0.060, text: "periphery live ≤60ms after resume", label: "[DESIGN — G5 gesture-scoped arming (minor 5)]" },
+  shLive:  { hi: 0.002, text: "peak−1 ≤ 0.002 after 700ms still", label: "[MARKS C1 — still-finger release on ζ1.0 (zero-seed = dead)]" },
   land:     { lo: 0.400, hi: 0.800, text: "400–800ms", label: "[REG-LOCK — park-metric landing on {0.35, 0.82}]" },
   breathe:  { lo: 0.034, hi: 0.041, text: "3.4–4.1%", label: "[REG-LOCK — the ONE side-breathe constant, OG3; measured +3.74% both engines]" },
 };
@@ -1300,8 +1378,9 @@ var SC_BANDS = {
       if (!drag) return;
       drag = null;
       const s = cc.spine;
+      s.scrubIdle(nowS()); // M-1: age by wall clock BEFORE the latch/velocity are read
       const target = s.intent; // ONE commit law: the latch
-      cc.release(target, s.velocity, target === 1 ? "ccOpen" : "ccClose");
+      cc.release(target, undefined, target === 1 ? "ccOpen" : "ccClose"); // the kernel reads the AGED live velocity
     };
     el.addEventListener("pointerup", up);
     el.addEventListener("pointercancel", up);
@@ -1560,20 +1639,21 @@ var SC_BANDS = {
   };
   const maps = SC.useLiquidSpine({
     el: $("#mapsSurface"), channels: MAPS_MANIFEST, tempo: 1,
+    domain: { wells: [{ t: SC.WELL, kind: "weak" }] }, // M-2: the declared weak well is a KERNEL input now
     registers: { open: "dock", close: "dock" },
     prm: PRM,
   });
   const simMC = SC.sims.midCatch(-4);
-  let mWatch = null, mCatchUntil = null, mBadgeSkip = 0;
+  let mWatch = null, mBadgeSkip = 0;
   maps.onFrame((t) => {
     const s = maps.spine;
-    if (mCatchUntil !== null) {
-      if (t >= mCatchUntil || s.regime === "parked") {
-        if (mWatch?.kind === "catch") mWatch.dwellMs = (t - mWatch.armAt) * 1000;
-        mCatchUntil = null;
-        maps.release(0, undefined, "dock"); // onward from the weak well, C1
-      } else if (mWatch?.kind === "catch") {
+    // M-2 [P4-KERNEL 2026-07-19]: the dwell machine lives in the KERNEL now (domain.wells);
+    // this hook only OBSERVES it through catching() for the measurement cell.
+    if (mWatch?.kind === "catch" && mWatch.dwellMs === undefined) {
+      if (maps.catching() !== null) {
         mWatch.minWellDist = Math.min(mWatch.minWellDist, Math.abs(s.value - SC.WELL));
+      } else {
+        mWatch.dwellMs = (t - mWatch.armAt) * 1000;
       }
     }
     measureMaps(t);
@@ -1597,7 +1677,17 @@ var SC_BANDS = {
         mWatch = null;
       }
     } else if (w.kind === "land") {
-      if (w.vCross === undefined && s.value <= 0) { w.vCross = s.velocity; w.tCross = now; }
+      if (w.vCross === undefined && s.value <= 0) {
+        // m6 cure [P4-KERNEL 2026-07-19]: interpolate v AND t AT the crossing. Frame-grid
+        // sampling reads |v| past the crossing (already decelerating) — a denominator bias
+        // that inflated peak/|v| toward the band ceiling and breached under contention.
+        if (w.px !== undefined && w.px > 0) {
+          const f = w.px / (w.px - s.value);
+          w.vCross = w.pv + f * (s.velocity - w.pv);
+          w.tCross = w.pt + f * (now - w.pt);
+        } else { w.vCross = s.velocity; w.tCross = now; }
+      }
+      if (w.vCross === undefined) { w.px = s.value; w.pv = s.velocity; w.pt = now; }
       if (w.vCross !== undefined) {
         w.peak = Math.max(w.peak ?? 0, -s.value);
         if (Math.abs(s.value) >= SC.CROSS_T) w.settle = undefined;
@@ -1621,7 +1711,7 @@ var SC_BANDS = {
         mWatch = null;
       }
     } else if (w.kind === "catch") {
-      if (s.regime === "parked" && s.target === 0 && mCatchUntil === null && w.dwellMs !== undefined) {
+      if (s.regime === "parked" && s.target === 0 && maps.catching() === null && w.dwellMs !== undefined) {
         const landMs = (now - w.t0) * 1000;
         const dwellOk = w.dwellMs >= B.dwell.lo * 1000 && w.dwellMs <= B.dwell.hi * 1000;
         const nearOk = w.minWellDist <= B.wellNear;

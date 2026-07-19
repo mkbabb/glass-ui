@@ -30,10 +30,12 @@
     Apex-seated chip (seat = R*(1 - 2^(-1/n)) off the corner exponent - derived,
     no magic numbers), press-charge on the engage envelope (press-drain row),
     commit -> text <=50ms -> body erosion 170-250ms -> POSITIVE 80-140ms
-    empty-medium beat (sign-verified: the M2 cure) -> medium 300-400ms
-    decelerating; drift-by-transform toward the perch corner, chip vaporizes
-    first; scrub-mapped and catchable pre-commit; the ONE medium writer claimed
-    once (claimMediumWriter, the F5 contract) and exercised across the seam.
+    empty-medium beat ANCHORED AT PAINTED CONTENT-OUT (the A7/D6 cure: the
+    beat the pixels hold, not the erosion clock's empty tail) -> medium
+    300-400ms decelerating; drift-by-transform toward the perch corner, chip
+    vaporizes first; scrub-mapped and catchable pre-commit; the ONE medium
+    writer claimed once (claimMediumWriter, the F5 contract), exercised across
+    the seam, generation-guarded per organ (A5).
   ORGAN C — the fission drawer (R-CONDENSE grammar, V-CONST N-body class).
     The session's commit cut hands the dock to the drawer posture: condense
     BELL (~120ms, accelerate-then-decelerate, zeta 0.97 no-wobble arrival;
@@ -98,7 +100,7 @@
   .card-medium.relax {
     opacity: 0;
     transition: opacity calc(var(--vap-medium-ms) * 1ms) cubic-bezier(0.2, 0.6, 0.3, 1)
-      calc(var(--vap-medium-delay-ms) * 1ms); /* delay = text + body + BEAT (sign-positive) */
+      calc(var(--vap-medium-delay-ms) * 1ms); /* delay = text + PAINTED content-out + BEAT (A7: the beat the pixels hold) */
   }
   .card-zone.closed .card-medium, .card-zone.closed .card-root { display: none; }
   .card-root { position: absolute; left: 14px; right: 14px; top: 18px; } /* NO clip — the plane root */
@@ -126,7 +128,9 @@
     box-shadow: none;
   }
   /* drift-by-transform TOWARD the perch corner (top-left) — direction is layer
-     transforms only, mask geometry never moves (MARKS-E §4 item 4). */
+     transforms only, mask geometry never moves (MARKS-E §4 item 4). Both axes
+     are STAMPED from ASM.handoff.drift (magPx on the unit ray) — the A9 mirror
+     lock; the diagonal magnitude is the token, never a per-axis hand literal. */
   .v-ghost-c {
     filter: blur(2px); /* FIXED radius; only this LAYER's opacity ramps */
     -webkit-mask-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAARElEQVR42u3YwQkAAAgCQPdfuqYICU4XuKeYKScAAAAAAAAAfUC5AAAAAAAAAA8A9UECAAAAAAAA4B8AAAAAAAAAOO4CZhPqS4YBAWcAAAAASUVORK5CYII=");
@@ -134,8 +138,8 @@
     -webkit-mask-size: 64px 64px; mask-size: 64px 64px;
     opacity: calc(0.85 * min(clamp(0, (var(--vap-t) - 0.08) / 0.30, 1),
                              clamp(0, (0.80 - var(--vap-t)) / 0.42, 1)));
-    transform: translate(calc(clamp(0, (var(--vap-t) - 0.08) / 0.92, 1) * -11px),
-                         calc(clamp(0, (var(--vap-t) - 0.08) / 0.92, 1) * -11px));
+    transform: translate(calc(clamp(0, (var(--vap-t) - 0.08) / 0.92, 1) * var(--vap-drift-x)),
+                         calc(clamp(0, (var(--vap-t) - 0.08) / 0.92, 1) * var(--vap-drift-y)));
   }
   .v-ghost-m {
     filter: blur(4px);
@@ -144,8 +148,8 @@
     -webkit-mask-size: 64px 64px; mask-size: 64px 64px;
     opacity: calc(0.70 * min(clamp(0, (var(--vap-t) - 0.30) / 0.32, 1),
                              clamp(0, (0.98 - var(--vap-t)) / 0.36, 1)));
-    transform: translate(calc(clamp(0, (var(--vap-t) - 0.30) / 0.70, 1) * -16px),
-                         calc(clamp(0, (var(--vap-t) - 0.30) / 0.70, 1) * -16px));
+    transform: translate(calc(clamp(0, (var(--vap-t) - 0.30) / 0.70, 1) * var(--vap-drift-x)),
+                         calc(clamp(0, (var(--vap-t) - 0.30) / 0.70, 1) * var(--vap-drift-y)));
   }
   .vcard h2 { font-size: 16px; font-weight: 600; margin-bottom: 3px; }
   .vcard .sub { font-size: 12.5px; opacity: 0.62; }
@@ -195,12 +199,14 @@
     position: absolute; top: 0; left: 0; right: 0; height: 46px;
     display: flex; align-items: center; justify-content: center; gap: 10px;
   }
+  /* [n3 cure — LAW 20] in-organ controls carry a SUSTAINED hold light (scale +
+     ring) on the pressDrain envelope (--ctl-press), for the hold's whole life */
   .summon {
     padding: 6px 16px; border: 0; border-radius: 12px; cursor: pointer; font: inherit;
     font-size: 12.5px; font-weight: 600; color: rgba(255, 244, 224, 0.92);
     background: rgba(255, 244, 224, 0.10);
-    box-shadow: inset 0 1px 0 rgba(255, 244, 224, 0.14);
-    transform: scale(calc(1 - 0.04 * var(--asm-press)));
+    box-shadow: inset 0 1px 0 rgba(255, 244, 224, calc(0.14 + 0.30 * var(--ctl-press, 0)));
+    transform: scale(calc(1 - 0.05 * var(--ctl-press, 0)));
   }
   .pill-hint { font-size: 11px; color: rgba(255, 244, 224, 0.45); }
   /* THE SEA — the standing aurora field in the dock's lower belly. 3 crest
@@ -237,9 +243,14 @@
      (MARKS-D mark 3: background dim +/-2% max — nothing here touches the world). */
   .darkmass {
     position: absolute; left: 0; right: 0; bottom: 0; height: 150px; pointer-events: none;
+    /* [A9 cure] every stop sits ON the gated occlusion profile
+       0.85·(1−u/0.55)^1.2 — the POW knob PAINTS (POW=1 fails the mirror gate);
+       the battery parses these literals against occlusion.at(u). */
     background: linear-gradient(180deg,
       rgb(16 14 12 / 0.85) 0%,
-      rgb(16 14 12 / 0.55) 30%,
+      rgb(16 14 12 / 0.58) 15%,
+      rgb(16 14 12 / 0.33) 30%,
+      rgb(16 14 12 / 0.11) 45%,
       transparent 55%);
     opacity: calc(var(--asm-g) * var(--asm-session));
   }
@@ -259,9 +270,9 @@
     55% { filter: brightness(0.90); }
     100% { filter: brightness(0.82); }
   }
-  .blackdock.rim-plateau .meniscus { animation: none; opacity: 0.55; transition: opacity calc(var(--lad-plateau-ms) * 1ms) ease-out; }
+  .blackdock.rim-plateau .meniscus { animation: none; opacity: 0.476; transition: opacity calc(var(--lad-plateau-ms) * 1ms) ease-out; } /* 1/gain — the plateau the flare is measured against (A9: the gain token now PAINTS) */
   .blackdock.rim-flare .meniscus {
-    animation: none; opacity: 1; /* 2.1x the plateau read — light celebrates the data */
+    animation: none; opacity: 1; /* gain (2.1x) over the plateau — light celebrates the data */
     transition: opacity calc(var(--lad-flare-ms) * 1ms) ease-out;
   }
   @media (prefers-reduced-motion: reduce) { .meniscus { animation: none; } }
@@ -303,7 +314,8 @@
     flex: 1; padding: 8px 0; border: 0; border-radius: 13px; cursor: pointer; font: inherit;
     font-size: 12px; font-weight: 600; color: rgba(255, 244, 224, 0.88);
     background: rgba(255, 244, 224, 0.09);
-    box-shadow: inset 0 1px 0 rgba(255, 244, 224, 0.12);
+    box-shadow: inset 0 1px 0 rgba(255, 244, 224, calc(0.12 + 0.30 * var(--ctl-press, 0)));
+    transform: scale(calc(1 - 0.05 * var(--ctl-press, 0)));
   }
   /* ORGAN C — the drawer posture. The SAME body (data-posture flips; no second
      surface is born — the drawer's parent is the dock, law of the fission).
@@ -441,7 +453,16 @@ const ASM = {
     const w = this.omega(p), z = zetaOverride === null ? p.zeta : zetaOverride;
     let x = x0, v = v0;
     return {
-      step(target, dt) { const a = -2 * z * w * v - w * w * (x - target); v += a * dt; x += v * dt; return x; },
+      // [P4-ASSEMBLY, D8 cure] fixed substeps (<=1/240s): a 16.7ms Euler step
+      // under-integrates the panel overshoot (the sim/paint gap's dominant
+      // modelable term — measured, see PASS-4/cures-assembly.md); the paint
+      // integrator now converges on the battery's (dt<=1/240 is unchanged).
+      step(target, dt) {
+        let n = Math.max(1, Math.ceil(dt * 240));
+        const h = dt / n;
+        while (n--) { const a = -2 * z * w * v - w * w * (x - target); v += a * h; x += v * h; }
+        return x;
+      },
       get x() { return x; }, get v() { return v; },
       settled(target) { return Math.abs(x - target) < 0.002 && Math.abs(v) < 0.02; },
     };
@@ -466,6 +487,18 @@ const ASM = {
     rimAlpha: 0.14, bevelAlpha: 0.16,       // night arm <=0.18 both
     breath: { amp: 0.18, periodS: 7 },      // MARKS-D ±18% at rest; law-11 arm
     pill: { w: 200, h: 46 }, grown: { w: 330, h: 320 },
+    // [P4-ASSEMBLY, n4 cure] the hand literals become tokens:
+    gClamp: 1.12,                            // scrub/overshoot headroom ~ k*v at a hot (~5/s) release
+    release: { underG: 0.35, underV: 0.5 },  // under-thrown: below both, return to pill
+    // [P4-ASSEMBLY, D7] the dock's maximal painted extent at the clamp — the
+    // world-dim probe rects must sit STRICTLY OUTSIDE this fence (the lossless
+    // re-run's printed arithmetic originates here, not in a hand estimate).
+    clampedExtent(g = this.gClamp, grow = 0) {
+      return {
+        halfW: (this.pill.w + g * (this.grown.w - this.pill.w)) / 2,
+        height: this.pill.h + g * (this.grown.h - this.pill.h) + grow * ASM.drawer.GROW.travelPx,
+      };
+    },
   },
   sea: {
     // three crest layers, OUR palettes; hue tokens shared with the islands.
@@ -498,7 +531,7 @@ const ASM = {
     text: { onsetMs: 284, durMs: 190 },
     data: { onsetMs: 820, durMs: 200 },
     rimPlateau: { onsetMs: 300, durMs: 220 },
-    rimFlare: { onsetMs: 830, peakMs: 1000, gain: 2.1 },
+    rimFlare: { onsetMs: 830, peakMs: 1000, gain: 2.1, releaseMs: 350 }, // release named (n4) — light cools on its own clock (law 19 class)
     geomPeakMs(preset, om) { const wd = om(preset) * Math.sqrt(1 - preset.zeta * preset.zeta); return (Math.PI / wd) * 1000; },
   },
 
@@ -506,7 +539,7 @@ const ASM = {
   handoff: {
     R: 28,               // the card's corner radius (card/sheet band)
     N_SQUIRCLE: 4, N_ROUND: 2, // corner exponents: --corner-k-squircle(n=4) / honest round(n=2)
-    CHIP: { visual: 20, hit: 44, lumDelta: 13, ringAlpha: 0.16 }, // E-NOTIF register
+    CHIP: { visual: 20, hit: 44, ringAlpha: 0.16 }, // E-NOTIF register; the +12-15 lum-delta claim lives in MARKS-E §5 and is PAINT-verified (QP row), never a claim-token here (n4 cure)
     // the seat law (R-9): the corner-curve APEX, offset R*(1 - 2^(-1/n)) from
     // the box corner along each axis — derived, shape-aware, no magic numbers.
     seat(R, n) { return R * (1 - Math.pow(2, -1 / n)); },
@@ -529,17 +562,40 @@ const ASM = {
     },
     // the close clocks (E-NOTIF §4, the m1+M2 cures made canonical):
     // text <=50ms FIRST -> body erosion 170-250ms -> POSITIVE 80-140ms
-    // empty-medium beat -> medium 300-400ms decelerating.
-    close: { textMs: 45, bodyMs: 210, beatMs: 110, mediumMs: 350 },
+    // empty-medium beat -> medium 300-400ms decelerating. returnMs is the
+    // pre-commit release drain — a NAMED clock, never a hand literal (n4 cure).
+    close: { textMs: 45, bodyMs: 210, beatMs: 110, mediumMs: 350, returnMs: 180 },
     bodyStartMs() { return this.close.textMs; },
     bodyEndMs() { return this.close.textMs + this.close.bodyMs; },
-    mediumDelayMs() { return this.bodyEndMs() + this.close.beatMs; },
-    beatSignedMs() { return this.mediumDelayMs() - this.bodyEndMs(); }, // sign-verified
-    // the seeded variants: a hot seed shortens the BODY window; the beat is
-    // INVARIANT — the medium delay is re-stamped per commit from these, so the
-    // held beat never collapses into an overlap (the M2 defect class).
-    bodyEndForMs(v) { return this.close.textMs + this.firedT(v); },
-    mediumDelayForMs(v) { return this.bodyEndForMs(v) + this.close.beatMs; },
+    // [P4-ASSEMBLY 2026-07-19, A7 cure — ledger D6] THE BEAT ANCHORS AT PAINTED
+    // CONTENT-OUT, never at the erosion clock's end: the ease-out clock spends
+    // its final ~37% of wall time traversing an already-empty tail (every layer
+    // under VIS_EPS), so a clock-end anchor painted a ~190-270ms pseudo-beat
+    // against the 80-140 class (the sigma-8 stamp-vs-paint split; the ledger
+    // measured 256/285ms). The medium delay is stamped per commit from the
+    // content-out crossing — seed- AND d0-aware via the firedD inverse.
+    VIS_EPS: 0.06, // the visibility floor: a layer under this alpha does not read on the field
+    contentOutD(eps = this.VIS_EPS) {
+      // the last erosion-d at which ANY content layer (body or ghost vapor)
+      // still paints >= eps — scanned on the SAME opacity model the CSS mirrors
+      let dOut = 0;
+      for (let d = 0; d <= 1.0001; d += 0.0005) {
+        if (Math.max(this.bodyO(d), this.ghostCO(d), this.ghostMO(d)) >= eps) dOut = d;
+      }
+      return dOut;
+    },
+    contentOutMs(v, d0 = 0) {
+      // invert firedD: the ms (on the body clock) of the painted content-out crossing
+      const D = this.contentOutD();
+      if (d0 >= D) return 0; // caught past the crossing — the medium is already contentless
+      const e = (D - d0) / (1 - d0);
+      const u = 1 - Math.cbrt(Math.max(0, 1 - e));
+      return this.firedT(v) * u;
+    },
+    bodyEndForMs(v) { return this.close.textMs + this.firedT(v); }, // the EROSION CLOCK's end — not the beat's anchor
+    mediumDelayForMs(v, d0 = 0) { return this.close.textMs + this.contentOutMs(v, d0) + this.close.beatMs; },
+    // the commit thresholds — the release either commits or drains (n4 cure: tokens, not literals)
+    commitAt: { d: 0.5, v: 1.2 },
     // commit inherits gesture velocity as an erosion-RATE seed, clamped; there
     // is no landing, so nothing overshoots (overshoot is velocity-bought only
     // where an arrival exists — C2).
@@ -732,12 +788,28 @@ const ASM = {
       return {
         textMs: h.close.textMs,
         bodyStartMs: h.bodyStartMs(),
-        bodyEndMs: h.bodyEndMs(),
-        beatSignedMs: h.beatSignedMs(),
-        mediumDelayMs: h.mediumDelayMs(),
-        mediumDoneMs: h.mediumDelayMs() + h.close.mediumMs,
-        textFirst: h.close.textMs <= 50 && h.bodyStartMs() >= h.close.textMs ? 1 : 0,
+        contentOutMs: h.contentOutMs(0),
+        mediumDelayMs: h.mediumDelayForMs(0),
+        mediumDoneMs: h.mediumDelayForMs(0) + h.close.mediumMs,
+        catchClamped: h.firedD(0.3, 1, -20) === 0.3 ? 1 : 0, // the body WAITS for the text kill — a real clamp, not a definition
       };
+    },
+    paintedBeat(v = 0, d0 = 0) {
+      // [P4-ASSEMBLY, A7 cure] THE FAILABLE BEAT: forward-scan the erosion
+      // clock through the painted opacity model to the last ms any content
+      // layer reads (>= VIS_EPS); painted beat = stamped medium start - that
+      // crossing. Two INDEPENDENT computations meet here (forward scan vs the
+      // closed-form firedD inverse) — an anchor defect fails the gates (the
+      // old clock-end anchor reads 188-271ms against the [80,140] class).
+      const h = ASM.handoff;
+      const T = h.firedT(v);
+      let lastVis = 0;
+      for (let t = 0; t <= T + 1e-9; t += 0.25) {
+        const d = h.firedD(d0, v, t);
+        if (Math.max(h.bodyO(d), h.ghostCO(d), h.ghostMO(d)) >= h.VIS_EPS) lastVis = t;
+      }
+      const mediumStartMs = h.mediumDelayForMs(v, d0) - h.close.textMs; // on the same body clock
+      return { paintedBeatMs: mediumStartMs - lastVis, lastVisMs: lastVis };
     },
     erosionShape() {
       const h = ASM.handoff; let maxStep = 0, prev = null;
@@ -812,7 +884,10 @@ const ASM = {
   const HUD = !/[?&]hud=0/.test(location.search); // instrumentation-off for the browser arm
   const prm = matchMedia("(prefers-reduced-motion: reduce)");
   const session = ASM.makeSession();
-  let gen = 0; // generation guard — interrupt-safe timers (the m8 lesson)
+  // [P4-ASSEMBLY, A5 cure] PER-ORGAN generation guards (the m8 lesson, scoped):
+  // one organ's new gesture must never cancel the OTHER organ's pending
+  // finalization — a shared counter makes every guard lie across the seam.
+  let dockGen = 0, vapGen = 0;
 
   // THE ONE MEDIUM WRITER — claimed once by the conductor; the perch commit and
   // the vapor exit both route through it. No second claimant exists on this page.
@@ -827,6 +902,10 @@ const ASM = {
     cardZone.style.setProperty("--perch-seat", `${(CSS && CSS.supports && CSS.supports("corner-shape", "squircle")
       ? h.seat(h.R, h.N_SQUIRCLE) : h.seat(h.R, h.N_ROUND)).toFixed(2)}px`);
     cardZone.style.setProperty("--vap-chip-ms", String(h.drift.chipOutMs));
+    // [P4-ASSEMBLY, A9 cure] the ghost drift is STAMPED from the one token
+    // (magPx on the unit corner ray) — both ghosts, both axes; no hand mirrors
+    cardZone.style.setProperty("--vap-drift-x", `${(h.drift.magPx * h.drift.ux).toFixed(2)}px`);
+    cardZone.style.setProperty("--vap-drift-y", `${(h.drift.magPx * h.drift.uy).toFixed(2)}px`);
     dock.style.setProperty("--lad-text-ms", String(ASM.ladder.text.durMs));
     dock.style.setProperty("--lad-data-ms", String(ASM.ladder.data.durMs));
     dock.style.setProperty("--lad-plateau-ms", String(ASM.ladder.rimPlateau.durMs));
@@ -840,20 +919,19 @@ const ASM = {
   let raf = 0, last = 0, tSession = 0;
   let g = 0, gSpring = null, gTarget = 1;
   let level = 0, flareHold = 0, cutAt = 0, phase = "rest";
-  let pressSpring = null;
   const crests = ASM.sea.LAYERS.map((L) => ASM.makeSpring({ response: 2 * Math.PI / L.omega, zeta: L.zeta }));
   let condense = null, growSprings = null, growT = 0;
   let dragging = false, dragY0 = 0, dragG0 = 0, samples = [];
 
   function setVar(el, k, v) { el.style.setProperty(k, v); }
-  function writeG(v) { g = Math.max(0, Math.min(1.12, v)); setVar(dock, "--asm-g", g.toFixed(4)); }
+  function writeG(v) { g = Math.max(0, Math.min(ASM.dock.gClamp, v)); setVar(dock, "--asm-g", g.toFixed(4)); }
   function writeGrow(v) { setVar(dock, "--asm-grow", v.toFixed(4)); }
   function hudSay(s) { if (HUD) hud.textContent = s; }
 
   function initVars() {
     writeG(0); writeGrow(0);
-    setVar(dock, "--asm-level", "0"); setVar(dock, "--asm-lean", "0");
-    setVar(dock, "--asm-session", "0"); setVar(dock, "--asm-press", "0");
+    setVar(dock, "--asm-lean", "0"); // (--asm-level deleted, n4 cure: written-never-consumed; the HUD prints the level for the QP-3 correlate)
+    setVar(dock, "--asm-session", "0");
     for (let i = 1; i <= 5; i++) setVar(dock, `--sec-p-${i}`, "0");
     for (let i = 1; i <= 3; i++) setVar(dock, `--crest-s-${i}`, "0.02");
     setVar(cardZone, "--vap-t", "0"); setVar(cardZone, "--vap-charge", "0");
@@ -864,19 +942,16 @@ const ASM = {
     const dt = Math.min(0.05, (now - last) / 1000); last = now;
     let busy = false;
 
-    // press-ack spring (press register — the sub-200ms answer)
-    if (pressSpring) {
-      pressSpring.step(0, dt);
-      setVar(dock, "--asm-press", Math.max(0, pressSpring.x).toFixed(4));
-      if (pressSpring.settled(0)) { pressSpring = null; setVar(dock, "--asm-press", "0"); } else busy = true;
-    }
     // deploy geometry (gTarget 1 = deploy; 0 = the under-thrown return)
     if (gSpring) {
       gSpring.step(gTarget, dt); writeG(gSpring.x);
       if (gSpring.settled(gTarget)) {
         gSpring = null; writeG(gTarget);
         if (gTarget === 1) onDeployed();
-        else { dock.dataset.posture = "pill"; session.to("rest"); phase = "rest"; }
+        else {
+          dockGen++; dock.classList.remove("text-in", "data-in", "rim-plateau", "rim-flare"); // a caught fired deploy scrubbed home leaves no orphan channels (A4)
+          dock.dataset.posture = "pill"; session.to("rest"); phase = "rest";
+        }
       } else busy = true;
     }
     // condense geometry (the bell) — the session mass condenses to the drawer head
@@ -919,7 +994,6 @@ const ASM = {
       }
       if (phase === "flare") level = Math.min(1, level + dt * 1000 / ASM.sea.commit.surgeMs); // the ~60ms surge
       else if (phase !== "cut") level = ASM.envStep("signalDecay", level, target, dt);
-      setVar(dock, "--asm-level", level.toFixed(4));
       setVar(dock, "--asm-lean", ASM.sea.leanAt(tSession, 330).toFixed(2));
       for (let i = 0; i < crests.length; i++) {
         const ct = Math.min(1, level * ASM.sea.LAYERS[i].gain);
@@ -938,22 +1012,21 @@ const ASM = {
   // ---------- fired deploy (panel register + the channel ladder) ----------
   function deployFired() {
     if (session.to("deploying-fired") === null) return;
-    const myGen = ++gen;
+    const myGen = ++dockGen;
     phase = "deploying";
     dock.dataset.posture = "session";
     if (prm.matches) { // PRM: state, not ritual
       writeG(1); dock.classList.add("text-in", "data-in", "rim-plateau");
       onDeployed(); return;
     }
-    pressSpring = ASM.makeSpring(ASM.presets.press, 1, 0); // tap-ack, zero seed
     gTarget = 1;
     gSpring = ASM.makeSpring(ASM.presets.panel, g, 0); // FIRED — intrinsic overshoot is paid for
     // the ladder rides real clocks stamped from ASM (one setTimeout chain, off the hot path)
     const L = ASM.ladder;
-    setTimeout(() => { if (gen === myGen) dock.classList.add("text-in"); }, L.text.onsetMs);
-    setTimeout(() => { if (gen === myGen) dock.classList.add("rim-plateau"); }, L.rimPlateau.onsetMs);
-    setTimeout(() => { if (gen === myGen) dock.classList.add("data-in", "rim-flare"); }, L.data.onsetMs);
-    setTimeout(() => { if (gen === myGen) dock.classList.remove("rim-flare"); }, L.rimFlare.peakMs + 350);
+    setTimeout(() => { if (dockGen === myGen) dock.classList.add("text-in"); }, L.text.onsetMs);
+    setTimeout(() => { if (dockGen === myGen) dock.classList.add("rim-plateau"); }, L.rimPlateau.onsetMs);
+    setTimeout(() => { if (dockGen === myGen) dock.classList.add("data-in", "rim-flare"); }, L.data.onsetMs);
+    setTimeout(() => { if (dockGen === myGen) dock.classList.remove("rim-flare"); }, L.rimFlare.peakMs + L.rimFlare.releaseMs);
     wake();
     hudSay("deploying (fired · panel register)");
   }
@@ -969,8 +1042,18 @@ const ASM = {
     wake();
   }
   // ---------- gesture-scrubbed growth (dock register on release) ----------
+  // [P4-ASSEMBLY, A4 cure] THE CATCH: any g-flight (fired deploy, velocity
+  // arrival, under-thrown return) is seizable at ANY posture while the session
+  // is still deploying — the Organ-B pattern (seize the spring's x as dragG0,
+  // null the spring; the finger owns the clock, MARKS C1). DECLARED SCOPE:
+  // down-scrub of a LIVE session (live/flare/pinned/cut/condense/grow/drawer)
+  // is OUT of this page's scope — the live exit is the commit ladder or Reset
+  // (PROBE-NOTES limit 8); the kernel's s.scrub(g)-at-any-regime is the union's.
   dock.addEventListener("pointerdown", (ev) => {
-    if (dock.dataset.posture !== "pill" || ev.target.id === "summonBtn") return;
+    if (ev.target.id === "summonBtn" || ev.target.id === "commitBtn") return;
+    const inFlight = gSpring !== null && phase === "deploying";
+    if (dock.dataset.posture !== "pill" && !inFlight) return;
+    if (gSpring) { gSpring = null; dockGen++; } // seize the flight; pending fired-ladder legs die with the old gen — no two-writer band on --asm-g
     dragging = true; dock.setPointerCapture(ev.pointerId);
     dragY0 = ev.clientY; dragG0 = g; samples = [{ t: performance.now(), y: ev.clientY }];
     if (session.state === "rest") session.to("deploying-scrub");
@@ -990,7 +1073,7 @@ const ASM = {
     const a = samples[0], b = samples[samples.length - 1];
     let v = 0;
     if (b && a && b.t > a.t) v = ((b.y - a.y) / G_TRAVEL) / ((b.t - a.t) / 1000); // growth-fraction/s
-    if (g < 0.35 && v < 0.5) { // under-thrown: return to pill on the same register
+    if (g < ASM.dock.release.underG && v < ASM.dock.release.underV) { // under-thrown: return to pill on the same register
       gTarget = 0;
       gSpring = ASM.makeSpring(ASM.presets.dock, g, Math.min(0, v));
       wake(); hudSay("returning (under-thrown)");
@@ -1038,6 +1121,30 @@ const ASM = {
     hudSay("growing with content (staggered arrivals)");
   }
   $("commitBtn").addEventListener("click", commitSession);
+
+  // [P4-ASSEMBLY, n3 cure — LAW 20] engagement light is STATE, not event: the
+  // in-organ controls (Summon, Commit) ride the pressDrain envelope row for the
+  // hold's whole life; release runs on the envelope's OWN clock, never the
+  // geometry's. The harness controls (world-tap, Reset) are instrumentation —
+  // DECLARED outside the organ grammar (PROBE-NOTES limit 9).
+  function makeHoldLight(el) {
+    let e = 0, target = 0, hRaf = 0, hLast = 0;
+    const step = (now) => {
+      const dt = Math.min(0.05, (now - hLast) / 1000); hLast = now;
+      e = ASM.envStep("pressDrain", e, target, dt);
+      el.style.setProperty("--ctl-press", e.toFixed(4));
+      hRaf = e === target ? 0 : requestAnimationFrame(step);
+    };
+    const drive = (t) => {
+      target = t;
+      if (prm.matches) { e = t; el.style.setProperty("--ctl-press", String(t)); return; }
+      if (!hRaf) { hLast = performance.now(); hRaf = requestAnimationFrame(step); }
+    };
+    el.addEventListener("pointerdown", () => drive(1));
+    ["pointerup", "pointercancel", "pointerleave"].forEach((n) => el.addEventListener(n, () => drive(0)));
+  }
+  makeHoldLight($("summonBtn"));
+  makeHoldLight($("commitBtn"));
 
   // ---------- ORGAN B wiring: perch charge -> vapor-handoff -> the dissolve ----------
   const perchPress = (() => { let st = "idle"; return {
@@ -1110,13 +1217,14 @@ const ASM = {
     const a = vSamples[0], b = vSamples[vSamples.length - 1];
     let v = 0;
     if (b && a && b.t > a.t) v = ((-(b.x - a.x) - (b.y - a.y)) / ASM.handoff.TRAVEL) / ((b.t - a.t) / 1000);
-    if (vd >= 0.5 || v > 1.2) {
+    if (vd >= ASM.handoff.commitAt.d || v > ASM.handoff.commitAt.v) {
       cardRoot.dispatchEvent(new CustomEvent("vapor-handoff", { bubbles: true, detail: { v: Math.max(0, v) } }));
     } else { // return: drain the dissolve on the release clock (no landing drama)
-      const t0 = performance.now(), d0 = vd, T = 180;
+      const t0 = performance.now(), d0 = vd, T = ASM.handoff.close.returnMs, myGen = vapGen;
       const back = (now) => {
+        if (vapGen !== myGen) return; // [A5 cure] generation-guarded — a commit mid-drain kills this writer before it writes
         const u = Math.min(1, (now - t0) / T);
-        writeVapT(d0 * (1 - (1 - Math.pow(1 - u, 3))));
+        writeVapT(d0 * Math.pow(1 - u, 3));
         if (u < 1) vRaf = requestAnimationFrame(back); else vRaf = 0;
       };
       vRaf = requestAnimationFrame(back);
@@ -1126,7 +1234,8 @@ const ASM = {
   // THE HANDOFF LISTENER — one writer, the full 3-layer dissolve, the sign-true beat
   cardZone.addEventListener("vapor-handoff", (ev) => {
     if (cardZone.classList.contains("committing")) return;
-    const myGen = ++gen;
+    const myGen = ++vapGen;
+    if (vRaf) { cancelAnimationFrame(vRaf); vRaf = 0; } // [A5 cure] the return drain dies AT the seam — no two-writer window on --vap-t
     const v = (ev.detail && ev.detail.v) || 0;
     cardZone.classList.add("committing"); // text <=50ms + the chip dies first (CSS clocks)
     driveCharge(0);
@@ -1137,19 +1246,20 @@ const ASM = {
     }
     const h = ASM.handoff;
     const T = h.firedT(v), d0 = vd, t0 = performance.now();
-    // the ONE writer relaxes AT COMMIT; its stamped delay carries the whole
-    // order — text -> body(T, seeded) -> the HELD beat — so the beat stays
-    // sign-positive and seed-invariant (the M2 defect class, cured by stamp).
-    cardZone.style.setProperty("--vap-medium-delay-ms", String(h.mediumDelayForMs(v)));
+    // the ONE writer relaxes AT COMMIT; its stamped delay anchors the beat at
+    // the PAINTED content-out crossing (seed- AND d0-aware, A7 cure) — text ->
+    // content out -> the HELD beat — so the beat the PIXELS hold, not just the
+    // stamped one, stays sign-positive, in-band, and seed-invariant (ledger D6).
+    cardZone.style.setProperty("--vap-medium-delay-ms", String(h.mediumDelayForMs(v, d0)));
     mediumWriter.relax(true);
-    setTimeout(() => { if (gen === myGen) cardZone.classList.add("closed"); },
-      h.mediumDelayForMs(v) + h.close.mediumMs + 80);
+    setTimeout(() => { if (vapGen === myGen) cardZone.classList.add("closed"); },
+      h.mediumDelayForMs(v, d0) + h.close.mediumMs + 80);
     const run = (now) => {
-      if (gen !== myGen) return;
+      if (vapGen !== myGen) return;
       // the body erosion begins AFTER the text kill (firedD clamps t<0 to rest)
       writeVapT(h.firedD(d0, v, now - t0 - h.close.textMs));
       if (now - t0 < T + h.close.textMs) vRaf = requestAnimationFrame(run);
-      else { vRaf = 0; hudSay("handoff: body out · the held beat · medium relaxes"); }
+      else { vRaf = 0; hudSay("handoff: content out · the held beat · medium relaxes"); }
     };
     vRaf = requestAnimationFrame(run);
   });
@@ -1158,10 +1268,10 @@ const ASM = {
   let taps = 0;
   $("worldTap").addEventListener("click", () => { $("tapCount").textContent = String(++taps); });
   $("resetBtn").addEventListener("click", () => {
-    gen++;
+    dockGen++; vapGen++;
     if (raf) { cancelAnimationFrame(raf); raf = 0; }
     if (vRaf) { cancelAnimationFrame(vRaf); vRaf = 0; }
-    gSpring = null; condense = null; growSprings = null; pressSpring = null;
+    gSpring = null; condense = null; growSprings = null;
     level = 0; tSession = 0; phase = "rest";
     while (session.state !== "rest" && session.to("rest") === null) {
       // walk the FSM home along legal edges only
