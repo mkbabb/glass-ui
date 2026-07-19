@@ -35,11 +35,11 @@
 
 | Row | Core claims re-proven |
 |-----|------------------------|
-| F01 | `SectionPreviewCard.vue:35-54/:63-65` (cv:auto + 19rem), landings' fixed `grid-cols-3` (`:33`/`:32`), 4 `.tile.vue` total, `CatalogLanding.vue:7→:40` identityTile ladder-bypass, `AppShell.vue:11,26-28` eager imports, `:147-156` fixed-inset shell Aurora, R3b idle-rAF (`REGISTRY.md:322-326`); routing STORY W5 + PERF W1/W2/W3 |
-| F02 | mechanism identical to F01 on `/foundations`; R3a CLEARED-as-paint-defect engaged with the authorship-cure nuance (`REGISTRY.md:291-294`; crosswalk `:24`) |
+| F01 | `SectionPreviewCard.vue:35-54/:63-65` (cv:auto + 19rem), landings' fixed `grid-cols-3` (`:33`/`:32`), 4 `.tile.vue` total, `CatalogLanding.vue:7→:40` identityTile ladder-bypass, `AppShell.vue:11,26-28` eager imports, `:147-156` fixed-inset shell Aurora, R3b idle-rAF (`REGISTRY.md:327-329`; re-pinned RU-14 R6 after the B1/B2 re-stamps); routing STORY W5 + PERF W1/W2/W3 |
+| F02 | mechanism identical to F01 on `/foundations`; R3a CLEARED-as-paint-defect engaged with the authorship-cure nuance (`REGISTRY.md:293-296`; re-pinned RU-14 R6; crosswalk `:24`) |
 | F03 | `layers.vue:279` "Controlled — no rail" / `:329` "Mechanics" / `:330-337` the ol (screenshot verbatim); `manifest.ts:932`; routing STORY W2 + MATERIAL W5 |
 | F05 | postures grid `rail.vue:142-189`; exactly ONE `<Aurora>` on the page at `:69` behind a different section; the DISAGREE-vs-CLEARED-by-R3b stance (vindicated as J2) |
-| F06 | `router.ts:121-130` blocking beforeResolve; `AppShell.vue:201-203` bare keyed swap; `:59`/`:192` missing-affordance comments; R3a min-ch ≤9/255 + 186ms cold (`REGISTRY.md:295-297`); crosswalk CLEARED `:28` |
+| F06 | `router.ts:121-130` blocking beforeResolve; `AppShell.vue:201-203` bare keyed swap; `:59`/`:192` missing-affordance comments; R3a min-ch ≤9/255 + 186ms cold (`REGISTRY.md:297-299`; re-pinned RU-14 R6); crosswalk CLEARED `:28` |
 | F07 | PERF W4 the outright F07 owner (PLAN §1 verbatim); the keyed-swap anti-pattern |
 | F08 | **the WGSL alias**: `applyMedium` routes mediums 3/5/6/7 → `mediumKuwahara` (`aurora-mediums.wgsl.ts:387-403`); 17 presets incl. `SPEEDTEST` (`presets.ts:685-703`); GF-AURORA W1-W5 + the C-G discharge binding. The `src/components/aurora/constants/presets.ts:73-78` "each authors its own body" comment describes the WebGL2 fallback arm — no contradiction |
 | F09 | `Configurator.vue:211` `--radius-ctx: var(--radius-panel)` (+`rounded-panel = --radius-xl` `:146`); the concentric relay `styles.css:109-113`; the inner-pill vs outer-card read; J5's regression-guard class membership |
@@ -77,7 +77,9 @@ redo. Two band/greenfield charter premises flip:
   the 3-value `shape` axis itself (`useDockShellProps.ts:53`) as F04-direct surface — keep, collapse,
   or re-grammar — not only the rings.
 - **FLIP-2 — BAND-REDUCTION framing §2 / `G-CARD-DEFAULT-PAINT` ("the F04 shape is LIVE today —
-  verified: Card.vue:33,38").** The Card gold+grain default IS live (re-proven) and the
+  verified: Card.vue:33,38").** **[RU-14 R6: CONSUMED — the relabel EXECUTED by the union
+  `1340a918`; "F04 shape" greps 0 in `BAND-REDUCTION.md`; the probe is `G-CARD-DEFAULT-PAINT`
+  (`:237`); docket row 4 / D2-4 CONSUMED-BY-UNION. Historical text below.]** The Card gold+grain default IS live (re-proven) and the
   neutralization wave STANDS — but it is not "the F04 shape": the F04 screenshot shows a dock, not a
   Card. The gate's label mis-claims the screenshot as its baseline referent. Re-judge scope: relabel
   the wave's F04 linkage to the ORDER ("opinionated defaults; KISS"), not the screenshot, so the
@@ -96,7 +98,7 @@ redo. Two band/greenfield charter premises flip:
 
 | # | Anchor | Re-touch |
 |---|--------|----------|
-| RT1 | `greenfields/GF-DOCK-PASS3.md` §5 (`:204-206`) + §Gates (`:225-226`, the F04/F47 baseline) | FLIP-1: correct "stadium pill"→`shape="rounded"`; pin the W5 baseline π to `rail.vue:108-140`; add the `shape`-axis ruling to W5's shape-grammar scope |
+| RT1 | `greenfields/GF-DOCK-PASS3.md` §5 (`:204-206`) + the F04/F47 baseline: RED-at-HEAD `:217`, W5 roster `:322`, `G-RADIUS-GRAMMAR` `:388` [re-anchored RU-14 R7 post-`117b7f12` — the old §Gates `:225-226` pin now lands in §6 W6 crossfade prose] | FLIP-1: correct "stadium pill"→`shape="rounded"`; pin the W5 baseline π to `rail.vue:108-140`; add the `shape`-axis ruling to W5's shape-grammar scope |
 | RT2 | `waves/BAND-REDUCTION.md` §Band framing item 2 + W2 `G-CARD-DEFAULT-PAINT` (`:33-37`, `:240`) | FLIP-2: relabel "the F04 shape" → "the F04 order's opinionated-defaults surface"; the gate itself stands |
 | RT3 | `redress/DOSSIER-F01-F10.md` | DONE this unit — union rewritten in place |
 
@@ -136,7 +138,9 @@ opened only after the per-row correlations were fixed. Findings:
   description — FLIP-1's operative re-judge scope ((a) baseline-π anchor, (b) the `shape`-axis
   ruling) is unaffected and both remain unapplied; Card's `metal: "gold"` default sits at
   `Card.vue:39` where BAND-REDUCTION says `:38`.
-- **RT1/RT2 confirmed STILL-LIVE at HEAD** (`GF-DOCK-PASS3.md:204-217` unchanged;
+- **RT1/RT2 confirmed STILL-LIVE at HEAD** (`GF-DOCK-PASS3.md:204-217` unchanged [RU-14 R7: a
+  pre-`117b7f12` read — the §5 ring-delete content does still sit at `:204-206`/`:217`, but the
+  §Gates half moved; RT1's pins re-anchored in the ROUTING table above];
   `BAND-REDUCTION.md:36`/`:240` still label the Card probe "the F04 shape"). The lead's re-judge
   remains owed. [RU-14 R5: RT2's half has since been CONSUMED — the committed union `1340a918`
   relabeled the probe (`grep "F04 shape"` = 0; G-CARD-DEFAULT-PAINT at `BAND-REDUCTION.md:237`);
@@ -192,3 +196,37 @@ opened only after the per-row correlations were fixed. Findings:
   (`FABLE-STORY-FRAMEWORK.md:550-554`; `:385-391` is now the §7 amendments header — G-COPY-2
   orders "anchor by section, never line"), and F01's G-PRV roster corrected to G-PRV-1..5 (the
   union adds the G-PRV-5 0-GL regression-guard, `BAND-STORY.md:462`).
+
+## RU-14 R6 addendum (2026-07-19, ring round 6 fix seat claude-fable-5)
+
+- **CRIT5-A R5A-2 (MAJOR) CURED — the stale 251 codemod figure corrected.** The F10 REDRESS
+  asserted a "251-site codemod"; the band's standing figure is **234 = 218 demo + 16 src** (+ the
+  9 arbitrary `text-[…]` sites as a separate named arm) per FLIP F-3's consumption —
+  `BAND-GATES.md:376-379` (the filtered-grep method) + `BAND-MATERIAL.md:665-666` ("the 251
+  figure is STALE"). The F10 clause now carries the executed 234 (+9) figure with both pins.
+  This range previously contained zero mention of 234 — a reader of F01-F10 alone carried a
+  codemod scope the band had declared stale for five ring rounds.
+- **CRIT5-A R5A-4 (MINOR) CURED — the F04 mislabel tense closed.** The dossier's
+  opinionated-defaults bullet and this file's §FLIPS FLIP-2 paragraph now read past-tense /
+  bracketed: the union relabeled the probe (`grep "F04 shape"` = 0; `G-CARD-DEFAULT-PAINT` at
+  `BAND-REDUCTION.md:237`; D2-4 CONSUMED). No site in either file asserts the mislabel as
+  current.
+- **CRIT5-A R5A-5 (MINOR) CURED — three REGISTRY spans re-pinned** after the B1/B2 re-stamps
+  (`5f8ee2e3`): idle-rAF `:322-326` → `:327-329` (F01), F02-CLEARED `:291-294` → `:293-296`,
+  F06 white-flash `:295-297` → `:297-299`. Dossier + this file's mirror rows both corrected;
+  substance survives verbatim at the shifted anchors.
+- **CRIT5-A R5A-6 share (MINOR) CURED** — the D2-4 close cite now reads "per the ledger-C5
+  posture (C5 itself enumerates rows 5+9; D2-4's stamp is lead-owed)".
+- **CRIT5-A R5A-7a (MINOR) CURED** — the F09 J5-class clause no longer imports the stale F17
+  posture: F17 is flagged FLIPPED OUT to BORN-RED FIX by the union (`BAND-MATERIAL.md:135`),
+  with `JUDGE.md:38` kept valid as a ruling quote.
+
+## RU-14 R7 addendum (2026-07-19, ring round 7 fix seat claude-fable-5)
+
+- **CRIT6-A R6A-4 (MINOR) CURED — RT1's pins re-anchored past the `117b7f12` rewrite.** The
+  ROUTING RT1 row pinned the lead's re-touch at "§5 (`:204-206`) + §Gates (`:225-226`, the
+  F04/F47 baseline)"; after the rewrite, `:225-226` is W6 crossfade STRUCK prose (the §5 half
+  still lands on ring-delete content — coincidental geography). RT1 now pins the baseline where
+  it lives at HEAD: RED-at-HEAD `:217`, W5 roster `:322`, `G-RADIUS-GRAMMAR` `:388`. The
+  RE-VERIFICATION bullet's ":204-217 unchanged" endorsement is bracketed as a pre-rewrite read.
+  FLIP-1's substance (D2-3) needs no movement; the R5 rail.vue grep-0 stands.

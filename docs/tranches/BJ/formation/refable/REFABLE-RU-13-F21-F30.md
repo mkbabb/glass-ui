@@ -54,7 +54,7 @@ Key ANEW-independent derivations, later compared against the artifact:
 | F22 | RATIFIED | `BJ.W-FEEDBACK-MOTION-TUNE` (W3, J7 applied) | `progress.vue:22-45` + 0.3s token + R3B 300ms all re-verified |
 | F23 | RATIFIED | `BJ.W-TRACK-DRY` (MATERIAL W4) | shared registers (`_shared/valueDomain`, `glass-liquid-fill`) + residual track/marks duplication re-confirmed on disk; C-C/J1 routing stands |
 | F24 | RATIFIED | `BJ.W-FEEDBACK-MOTION-TUNE` (W3, Δ-F24-1) | 5s resolution + wrong-rung bind re-derived independently BEFORE the artifact was read — the strongest possible ratification of its OPUS-WRONG correction |
-| F25 | RATIFIED, **2 evidence corrections** | `ASK §C2` (C-A default) | (1) fold-commit is **c368ccbc** (BI B28 `BI.W-DIALOG-PLACEMENT`), not 490cc46e — `git log --diff-filter=D` is unambiguous; (2) live relay census is **6** (words×5 + muster×1); value.js's ×2 are doc references only — the ASK's 8-count overstates live blast radius |
+| F25 | RATIFIED, **2 evidence corrections** | `ASK §C2` (C-A default) | (1) fold-commit is **c368ccbc** (BI B28 `BI.W-DIALOG-PLACEMENT`), not 490cc46e — proven by `git show c368ccbc --diff-filter=D --name-only` (the four confirm-dialog paths under `custom/` + `subpaths/`); pathspec form `git log --diff-filter=D -- '*confirm-dialog*'` [R7: the earlier `src/components/confirm-dialog*` literal returns EMPTY — the deleted dirs live under `custom/`]; (2) live relay census is **6** (words×5 + muster×1); value.js's ×2 are doc references only — the ASK's 8-count overstates live blast radius |
 | F26 | RATIFIED | `BJ.W-REDUCE-CROSSREPO-GATED` + `ASK §A2` | census re-proven fresh: speedtest×0, sci-report×2 (`CategoryHomeView.vue:4`, `GalleryView.vue:19`), atlas×2 (`completion.ts:5`, `category.ts:2`) |
 | F27 | RATIFIED | GF-DOCK W2 `G-NO-BLOCK-SCROLL` | visible→auto coercion re-derived independently; `overflow.css:65-66` false-comment confirmed; GF-DOCK cites refreshed (§4.1 `:104-111`, W2 `:319`, gate `:357` — W2/gate re-refreshed RU-14 R3 vs the 117b7f12 rewrite); scrollable-delta census LIVE-DEFER |
 | F28 | RATIFIED (against this seat's own initial theory) | `BJ.W-BLUR-LADDER` (MATERIAL W2, J6) | all-three-at-7px re-proven at `button/styles.css:47-50`; the springs-page correlation independently re-derived from the screenshot (Label `:231` + StoryPlayButton `:248` + Reset `:249`); no glass ancestor neutralizes the row (StorySection/StoryPage are plain); bloom-intentionality π LIVE-DEFER |
@@ -186,3 +186,35 @@ items; the stamps land this round (CRIT4-A R4A-1 share, R4A-3, R4A-7):
   REDRESS + Δ-F28-1 residue line + this file's near-flip note all carry the discharge.
 - **Pin sweep (R4A-6 share):** the dossier now carries an "RU-14 R5 re-anchor sweep" section
   (F21/F22/F23/F26/F28/F29 band pins re-anchored to the union).
+
+## RU-14 R6 addendum (2026-07-19, ring round 6 fix seat claude-fable-5)
+
+- **CRIT5-A R5A-1 (MAJOR) CURED — the F29 AMEND-D-2 pin re-anchored.** The dossier's F29 REDRESS
+  cited `FABLE-STORY-FRAMEWORK.md:274-280` for AMEND-D-2 (ADOPT-not-BUILD); at HEAD that span is
+  the AMEND-D-9 code-context prose and AMEND-D-2 lives at `:398`. Both the F29 body and the R5
+  sweep's F29 row now carry `:398`. This was the one CRIT4-A-itemized re-anchor the R5 sweep
+  missed; the R4A-6 completion is logged in `RU14-FIXLOG-R6.md` (the R5 fixlog is outside this
+  seat's write fence).
+- **CRIT5-A R5A-6 share (MINOR) CURED — the ledger-C5 cite made precise.** C5 on disk enumerates
+  docket rows 5+9 only; the dossier's row-8 sites (the F23 COVERAGE paragraph + the F23 summary
+  cell) now say "the ledger-C5 vehicle — C5 itself enumerates rows 5+9; row 8's stamp is
+  lead-owed" instead of implying an existing C5 stamp.
+
+## RU-14 R7 addendum (2026-07-19, ring round 7 fix seat claude-fable-5)
+
+- **CRIT6-A R6A-1 (MAJOR) CURED — the F25 archaeology command made reproducible + the commit
+  message re-taken verbatim.** The dossier's ISOLATION block cited
+  `git log --diff-filter=D -- 'src/components/confirm-dialog*'` as naming c368ccbc; that pathspec
+  returns EMPTY at every HEAD — the paths deleted at c368ccbc are
+  `src/components/custom/confirm-dialog/{ConfirmDialog.vue,index.ts,README.md}` +
+  `src/subpaths/confirm-dialog.ts` (the literal prefix diverges at `custom/`). The block now
+  cites `git show c368ccbc --diff-filter=D --name-only` (the four paths outright) plus the
+  matching pathspec `git log --diff-filter=D -- '*confirm-dialog*'` → c368ccbc + cbbaeb05 (the
+  AV-era `src/confirm-dialog.ts` layout delete, disambiguated). Same sentence: the message quote
+  swapped the commit's paren for a comma inside quotation marks (the CRIT5B-3 class); re-taken
+  verbatim — "ConfirmDialog DEMOTED to a consumer Dialog preset (dirs/barrels/subpaths DELETED,
+  Drawer SURVIVES per N3 — the gesture-bearing sheet)". The c368ccbc attribution itself was
+  always true; only the offered proof was dead. This file's F25 row carries the corrected proof.
+- **CRIT6-A R6A-3 (MINOR) CURED — the §C2 roll-up pin corrected** `ASK-REDUCTION.md:266` →
+  `:265` (the C2 confirm-dialog row; `:266` is the C3 reveal/scroll row — born off-by-one, the
+  file commit-stable since `4ab12128`).

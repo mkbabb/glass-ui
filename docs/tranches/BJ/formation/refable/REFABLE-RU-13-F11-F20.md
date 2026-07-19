@@ -30,7 +30,7 @@ were read during ANEW as reconciliation targets (they are plan, not the artifact
 | F17 | **RATIFIED — FLIP CONFIRMED** | the born-RED mechanism was re-derived at ANEW before the boundary, independent of the prior text; the OVERTURN of RULING 8's premise stands (FLIP F-1) |
 | F18 | **RATIFIED** | census re-verified by fresh read-only sibling greps: speedtest instrument-chassis multi-site, muster ×5 files, fourier-analysis metric-badge ×7 files; ASK-REDUCTION §A1 present with the SHARED-KEEP recommendation; W4 ASK-gated relay posture holds |
 | F19 | **RATIFIED** | `rounded-lg` → `--radius-lg` → `--radius` = 10px (radius.css:16,:31); `--glass-blur-wash-radius: 1px` (tokens/glass.css:86); `6f77ab12` tone-fold real; owner W4 + crosswalk reconciliation :213-216 verified. Paint severity: LIVE-DEFER |
-| F20 | **RATIFIED** | `ef3ea646` (BI B7) in v7.0.0 by `merge-base`; toast rides transient `glass-reveal` (`Toast.vue` + `transitions.css:87-112`); dialog registers at `DialogContent.vue:235,:458`; J4 applied verbatim at `BAND-FEEDBACK-MOTION.md:41-47`. The parity judgment: LIVE-DEFER (OPEN-FM-1) |
+| F20 | **RATIFIED** | `ef3ea646` (BI B7) in v7.0.0 by `merge-base`; toast rides transient `glass-reveal` (`Toast.vue` + `transitions.css:87-112`); dialog registers at `DialogContent.vue:235,:458`; J4 applied — W1 `BJ.W-TOAST-DIALOG-PARITY` heading at `BAND-FEEDBACK-MOTION.md:57` + gate (a) REGISTER-PARITY at `:82` [re-anchored RU-14 R7; the stale `:41-47` pin lands on band-sequencing prose at HEAD]. The parity judgment: LIVE-DEFER (OPEN-FM-1) |
 
 Counts: **OPUS-WRONG 3** (all F16: dead-code / unconsumed / sole-test-reference) · **FABLE-NEW 2**
 (the facade-dispatch composition graph; the F12 v6-endpoint provenance narrowing — the 251→234
@@ -41,6 +41,11 @@ layer also re-proven). Coverage retotal unchanged: EXACT 9 / PARTIAL 1 (F13) / M
 ## FLIPS — findings contradicting a JUDGE ruling or a band-charter premise (the lead re-judges)
 
 **FLIP F-1 — F17 vs RULING 8 + its derivatives (CONFIRMED on independent re-derivation).**
+**[RU-14 R6: read through docket row 2's SPLIT-CONSUMED stamp — the band half EXECUTED by the
+union (`BAND-MATERIAL.md:135` F17 BORN-RED FIX; `:822-824` the CORRECTED lead amendment; ledger
+D1); the pins below are historical (`:117-119` now the SQUIRCLE-GATE item, `:698-700` now W6
+codemod prose, `PLAN.md:187` → `:195`); "the lead re-judges" is half-executed — residue
+`PLAN.md:195` + `crosswalk:227-229`.]**
 RULING 8 (`ADJUDICATION-1.md` item 8), the ASSEMBLY lead amendment (`BAND-MATERIAL.md:698-700`
 "disk shows both sites already role-correct"), the W1 §D charter text (`BAND-MATERIAL.md:117-119`
 "the search component has no own `border-radius` (rides `field-control` pill)"), `PLAN.md:187`,
@@ -183,3 +188,27 @@ this round lands the consumption stamps the union's arrival made owed (CRIT4-A R
 - **Pin sweep (R4A-6):** the dossier now carries an "RU-14 R5 re-anchor sweep" section
   re-pinning every moved `waves/BAND-*` cite for F11-F20 (F11/F12/F13/F14/F15/F16/F19/F20);
   band cites are hereafter wave/gate-name + section anchored per G-COPY-2.
+
+## RU-14 R6 addendum (2026-07-19, ring round 6 fix seat claude-fable-5)
+
+- **CRIT5-A R5A-3 (MINOR) CURED — the F17 premise pins re-anchored.** An F17 row is added to the
+  dossier's R5 sweep: `BAND-MATERIAL:117-119` (now the SQUIRCLE-GATE item) + `:698-700` (now W6
+  codemod prose) → `:822-824` + `:135`; `PLAN.md:187` → `:195`. The dossier's FLIP-recorded
+  sentence and this file's FLIP F-1 pin list are bracketed with the docket-row-2 SPLIT-CONSUMED
+  read-through, so the corpus no longer cites `:187` and `:195` live for the same premise. No
+  verdict movement.
+- **CRIT5-A R5A-6 share (MINOR) CURED — the ledger-C5 cites made precise.** The docket preamble
+  and the row-4/row-8 state cells now say "per the C5 posture — C5 itself enumerates rows 5+9;
+  the remaining consumed rows' stamps are lead-owed", matching the ledger's on-disk enumeration.
+- **CRIT5-A R5A-7b (MINOR) CURED — the F15 sweep entry completed.** "moved" now has its
+  destinations: `BAND-MATERIAL:109-110/:138` → `:131` (the §D F15 row) + `:170` (the born-RED
+  "F15 reset RED at HEAD… GREEN on the library `<Button>` swap").
+
+## RU-14 R7 addendum (2026-07-19, ring round 7 fix seat claude-fable-5)
+
+- **CRIT6-A R6A-2 (MINOR) CURED — the F20 row's J4 pin re-anchored.** The verdict row cited "J4
+  applied verbatim at `BAND-FEEDBACK-MOTION.md:41-47`"; at HEAD that span is band-sequencing
+  prose + the wave-table header. The row now points at the applied state the dossier's own R5
+  sweep uses: the W1 `BJ.W-TOAST-DIALOG-PARITY` heading (`:57`) + gate (a) REGISTER-PARITY
+  (`:82`). This was the one sidecar mirror the R4/R5 sweeps' enumerations missed (the R5
+  addendum re-read only the row's OPEN-FM-1 label). No verdict movement.

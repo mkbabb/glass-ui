@@ -29,7 +29,7 @@ library-recenter-exists precision (sharpened opus).
 
 | Row | verdict | owner (unchanged unless noted) | notes |
 |-----|---------|-------------------------------|-------|
-| F41 | RATIFIED; citations re-anchored | `BJ.W-STORY-COPY-CANON` | site typewriter.vue:103 independently re-derived; opus's FABLE-STORY-FRAMEWORK cites mis-anchored (~110-180 lines high; actual AMEND-D-6 :427-429, G-COPY-LINT :588-592, canon text :257-258 — file unmodified since before the dossier, so wrong at write time); ADDED the wraps-at-narrow-width defect + no-wrap rider |
+| F41 | RATIFIED; citations re-anchored | `BJ.W-STORY-COPY-CANON` | site typewriter.vue:103 independently re-derived; opus's FABLE-STORY-FRAMEWORK cites mis-anchored (~110-180 lines high; actual AMEND-D-6 :427-429, G-COPY-LINT :588-592, canon text :256-259 (re-pinned RU-14 R6) — file unmodified since before the dossier, so wrong at write time); ADDED the wraps-at-narrow-width defect + no-wrap rider |
 | F42 | RATIFIED | `ASK §C3` | isolation + ≥2-consumer frame re-proven; C-D (ship the 9-keep/6-cut census table) noted in union |
 | F43 | RATIFIED owner/split; **OPUS-WRONG dating** | `G-COPY-3` + `ASK §D1` | opus claimed "the screenshot predates the purple-tomato rework" — backwards on git evidence (rework 2026-07-16 at 490cc46e/2d804ce6; feedback 2026-07-17): the user judged the CURRENT palette putrid; ADDED the theme-coupled mechanism note (both-themes aurora over theme-dependent ground, light-pinned ink) + per-theme render LIVE-DEFER |
 | F44 | RATIFIED | `ASK §D1` + `BAND-REDUCTION W3` | ADDED the dead knobs: baseSize/radius refs (:29-30) bound to sliders (:200-215) that surfaceStyle (:52-75) never consumes — claimed-live controls that no-op; strengthens the overfit verdict; mandatory fix if the page survives the ASK |
@@ -94,6 +94,10 @@ line-anchor corrections (content real, lines wrong).
   This sidecar's F47 note ("exactly as GF-DOCK's G-REVEAL RED states") reads through that re-map.
 - **F42's C-D anchor re-pointed.** The RU-09 SUPERFLUITY rewrite (5c847780) no longer carries the
   9-keep/6-cut table; the §C3 recommendation reads from the RU-09 C-F fresh-census verdicts.
+  [RU-14 R6: as corrected by the union — the C-F `useStagger` zero-caller leg is OVERTURNED
+  (RESOLVED KEEP, speedtest live-imports ×2, `BAND-REDUCTION.md:299-304`; error named `:52-54`);
+  the zero-caller roster shrinks to `useStaggerReveal`/`useBloomUp`/`useTextHighlight`; the §C3
+  re-issue reads from the union-corrected census (`:88-93`, ledger E2 PENDING).]
 
 ## RU-14 R5 addendum (2026-07-18, ring round 5 fix seat claude-fable-5) — re-pinned to the committed union `1340a918`
 
@@ -113,9 +117,11 @@ carries; substance survives at the new anchors (each re-verified on disk this ro
   the regression-guard posture survive intact — no verdict movement.
 - **Role table (F48):** dialog row `:75` → `:94`. **W2 (`BJ.W-BLUR-LADDER`):** `:196-227` →
   `:212+` (OPEN-2a/2b/2c survive at `:333-335`). **W3 (`BJ.W-GRADED-BACKDROP-JUDGE`):**
-  `:295-390` → `:340+` (OPEN-3a survives at `:458`). The field-control grain note: the dossier's
-  `:37-48` (comment+selector) and the band's `:47-49` (selector alone) are the same rule at two
-  grains — no contradiction.
+  `:295-390` → `:340+` (OPEN-3a survives at `:458`). The field-control grain note [reworded
+  RU-14 R7]: the dossier's `:37-48` (comment+rule) is exact; the band's `:47-49` sits one high
+  of the `:46-48` selector block (`:46` selector, `:47` declaration, `:48` brace, `:49` blank)
+  — a rule-body-grain, lead-side pin, left to the lead per the waves fence. Same rule, no
+  contradiction in substance.
 - **CRIT4B2-7 shares (pins moved, content survives):** F41 STORY `:506-509` → `:633` (the
   sidecar's no-wrap rider is now band canon: "neutral no-wrap string"); F46 STORY `:355-417` →
   `:410-465` (G-PRV-2 `:459`, G-PRV-4 `:461` — now pinning the well at
@@ -125,3 +131,33 @@ carries; substance survives at the new anchors (each re-verified on disk this ro
 Dossier-side mirrors landed in `../redress/DOSSIER-F41-F50.md` (F45 REDRESS, F48 REDRESS, the
 Δ-F45-1 consumed-delta record). The F41-F50 two-consecutive-clean standing is re-based against
 the committed tree by this addendum.
+
+## RU-14 R6 addendum (2026-07-19, ring round 6 fix seat claude-fable-5)
+
+- **CRIT5-B CRIT5B-2 share (MAJOR) CURED — the useStagger census rider landed.** The dossier's
+  F42 REDRESS and this file's "F42's C-D anchor re-pointed" note now carry the union's OVERTURN:
+  `useStagger` is RESOLVED KEEP (speedtest live-imports ×2 — `ResultStack.vue:171` +
+  `useResultReveal.ts:36`; `BAND-REDUCTION.md:299-304`; the A9 escape clause fired); the
+  zero-caller roster is `useStaggerReveal`/`useBloomUp`/`useTextHighlight`; the §C3 refresh
+  re-issues from the union-corrected census (`:88-93`, ledger E2). A lead executing the E2
+  refresh from this layer can no longer ship a kill-useStagger recommendation the committed band
+  has disproven. No ownership or coverage movement.
+- **CRIT5-B CRIT5B-3 (MINOR) CURED — the F47 GF-DOCK quote re-taken verbatim.** The dossier's
+  refable-precision bullet now quotes the on-disk G-REACH RED exactly ("`BottomDock` routes
+  through `goTo()` with no recenter (F47b); recenter-on-select only exists in
+  `useSelectionGroup` rails", `GF-DOCK-PASS3.md:369-372`) instead of a paraphrase in quotation
+  marks ("recentre" appears nowhere in the file).
+- **CRIT5-B CRIT5B-4 (MINOR) CURED — the F41 copy-canon pin corrected** `FABLE:257-258` →
+  `:256-259` (the quoted head words sit at `:256`, the close at `:259`).
+
+## RU-14 R7 addendum (2026-07-19, ring round 7 fix seat claude-fable-5)
+
+- **CRIT6-B CRIT6B-3 (MINOR) CURED — the field-control grain gloss corrected at both sites.**
+  The dossier's Consumed-deltas paragraph and this file's R5 addendum note glossed the band's
+  `field-control.css:47-49` pin as "the selector alone / the same rule at two grains"; on disk
+  the selector block is `:46-48` (`:46` selector, `:47` declaration, `:48` brace; `:49` blank) —
+  the band pin is off by one and the gloss endorsed it as exact. Both sites now name the drift:
+  the dossier's own `:37-48` (comment+rule) pin is exact; the band's `:47-49` is a
+  rule-body-grain, lead-side pin (waves fence — no band edit from the ring; the two dossier/
+  sidecar occurrences of `:47-49` inside BAND-MATERIAL:146-149 quotation marks are verbatim
+  quotes of the band and correctly left untouched). The rule is unambiguous; no wave misdirects.

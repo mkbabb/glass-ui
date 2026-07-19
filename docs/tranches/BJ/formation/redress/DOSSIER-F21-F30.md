@@ -187,8 +187,9 @@ W4 now charters "BOTH registers: the track well AND the value-marks paint"
 `_shared/track.css`" charter SUPERSEDED (`:503-510`) — the path split RECONCILED to
 `SUPERFLUITY.md:227`; `OPEN-4a` is RULED toward the CSS register pair (`:793`). Both terminal
 conditions of the downgrade are met on disk; the old `:433`/`:476` pins are dead. What remains
-is the formal J12 ratify-and-close (docket row 8, stamped CONSUMED-BY-UNION; the ledger C5
-vehicle — ratify, never re-apply). This dossier's own ISOLATION had recorded the marks
+is the formal J12 ratify-and-close (docket row 8, stamped CONSUMED-BY-UNION; the ledger-C5
+vehicle — ratify, never re-apply; C5 itself enumerates docket rows 5+9 only, so row 8's own
+ledger stamp is lead-owed at J12+ — precision RU-14 R6). This dossier's own ISOLATION had recorded the marks
 duplication yet kept EXACT and filed no FLIP; that contradiction stays owned here as history.
 
 **VERDICT (vs opus row).** RATIFIED with two corrections — (1) the opus row understated the shared
@@ -259,9 +260,16 @@ any different from a normal dialog."* URL-anchored, no screenshot.
 
 **ISOLATION (re-proven this seat).** The user's premise is CORRECT and already actioned at the code
 level: there is no `src/components/confirm-dialog` (verified absent at HEAD; the demotion landed at
-**c368ccbc** — BI B28 `BI.W-DIALOG-PLACEMENT`, "ConfirmDialog DEMOTED to a consumer Dialog preset,
-dirs/barrels/subpaths DELETED" — PREDATING the Glass 7 cut 490cc46e the prior dossier credited;
-`git log --diff-filter=D -- 'src/components/confirm-dialog*'` names exactly c368ccbc) — the
+**c368ccbc** — BI B28 `BI.W-DIALOG-PLACEMENT`, "ConfirmDialog DEMOTED to a consumer Dialog preset
+(dirs/barrels/subpaths DELETED, Drawer SURVIVES per N3 — the gesture-bearing sheet)" — PREDATING
+the Glass 7 cut 490cc46e the prior dossier credited. The reproducible proof [corrected RU-14 R7]:
+`git show c368ccbc --diff-filter=D --name-only` lists the four confirm-dialog deletions —
+`src/components/custom/confirm-dialog/{ConfirmDialog.vue,index.ts,README.md}` +
+`src/subpaths/confirm-dialog.ts`; in pathspec form, `git log --diff-filter=D --
+'*confirm-dialog*'` names c368ccbc + cbbaeb05 (cbbaeb05 is the AV-era `src/confirm-dialog.ts`
+layout delete, not the demotion). The R6-era command's literal `src/components/confirm-dialog*`
+pathspec returns EMPTY at every HEAD — the deleted dirs live under `custom/` — and the message
+quote above previously swapped the paren for a comma) — the
 `./confirm-dialog` subpath folded into `./dialog` at 7.0.0.
 The demo page `demo/stories/feedback/confirm-dialog.vue` is now, explicitly, a CONSUMER PRESET of
 Dialog shown inline (its header comment: "ConfirmDialog DEMOTED to a Dialog PRESET… presets live in
@@ -291,7 +299,7 @@ component fold landed; the demo page was rewritten to a preset illustration but 
 so the user, browsing routes, still sees a "confirm-dialog" page and reasonably asks why it exists.
 Demo-taxonomy lag behind a landed component fold, not code duplication.
 
-**REDRESS.** Owned by `ASK-REDUCTION §C2` (`../../ASK-REDUCTION.md:171-188`, roll-up `:266`): the
+**REDRESS.** Owned by `ASK-REDUCTION §C2` (`../../ASK-REDUCTION.md:171-188`, roll-up `:265`): the
 fold is recorded as landed; the reserved user call is story-page survival + the family-B
 `/confirm-dialog → /dialog` relay for the external consumers (the ASK row says 8; the corrected
 census is 6 live + 1 config + 2 doc, per TARGET — the relay files regardless). Per the **C-A
@@ -488,7 +496,8 @@ asserted "configurator pages consume the standard."
 **REDRESS.** Owned EXACTLY by `BJ.W-CONFIGURATOR-STD` gate **G-CFG-1** (BAND-STORY W3,
 `../../waves/BAND-STORY.md:244,265`): born-RED grep-0 at HEAD; GREEN when springs renders the
 configurator standard (studio variant) with a paired-π DELTA. AMEND-D-2
-(`../perfection/FABLE-STORY-FRAMEWORK.md:274-280`) rules ADOPT-not-BUILD, and per **J10** the adopt
+(`../perfection/FABLE-STORY-FRAMEWORK.md:398` — re-anchored RU-14 R6; `:274-280` is now the
+AMEND-D-9 code-context prose) rules ADOPT-not-BUILD, and per **J10** the adopt
 wave also carries the roominess/scale gate (container min-width + breathing room), which serves
 F29's "redesign" half. The tempo page folds INTO this redesign per `ASK-REDUCTION §C4`. The broader
 redesign scope (preview stage, proportion) is A10/story-framework standing scope — referenced, not
@@ -537,7 +546,7 @@ observation ADDED as fold rationale. Crosswalk: ASK; AGREE.
 |-----|------------------|----------------|----------|-----------------|
 | F21 | scroll-progress rim broken | `BJ.W-PROGRESS-RIM-REPLACE` (FEEDBACK-MOTION W2, codex law 12) | **EXACT** | RATIFIED + segment-arm evidence |
 | F22 | animated loop jittery/mis-eased | `BJ.W-FEEDBACK-MOTION-TUNE` (FEEDBACK-MOTION W3, J7 applied) | **EXACT (as amended)** | RATIFIED + wrap-rewind evidence |
-| F23 | slider/progress track DRY | `BJ.W-TRACK-DRY` (MATERIAL W4, C-C) | **EXACT-pending-ratification (RU-14 R5—both registers chartered by the union `1340a918`; J12 ratify-and-close owed, ledger C5)** | RATIFIED; 2 corrections (valueDomain credit, J1 re-route) |
+| F23 | slider/progress track DRY | `BJ.W-TRACK-DRY` (MATERIAL W4, C-C) | **EXACT-pending-ratification (RU-14 R5—both registers chartered by the union `1340a918`; J12 ratify-and-close owed via the ledger-C5 vehicle — C5 itself enumerates docket rows 5+9; row 8's stamp is lead-owed)** | RATIFIED; 2 corrections (valueDomain credit, J1 re-route) |
 | F24 | skeleton animation too slow | `BJ.W-FEEDBACK-MOTION-TUNE` (FEEDBACK-MOTION W3) | **EXACT on owner; gate shape corrected** | **OPUS-WRONG** (5s via token, wrong-rung bind — not a 2.4s local literal) |
 | F25 | confirm-dialog vs normal dialog | `ASK §C2` (fold landed; C-A default: fold the story) | **EXACT (decision)** | RATIFIED + C-A; 2 evidence corrections (fold-commit = c368ccbc; live relay census = 6, value.js docs-only) |
 | F26 | completion-seal overfit/"speedtest" | `BJ.W-REDUCE-CROSSREPO-GATED` + `ASK §A2` (D-3) | **EXACT (decision)** | RATIFIED (census re-proven first-hand) |
@@ -621,4 +630,6 @@ name + section anchor (the G-COPY-2 rule); current re-anchors, kept where load-b
 - F26: `BAND-REDUCTION:392-396/:363-418` → `:452-456`/`:416+` (census upgraded by the union:
   + the atlas `seal-compositor` vite plugin).
 - F28: `BAND-MATERIAL:170-300` → W2 `:212+`; OPEN-2d `:258-262,:291` → `:301`/`:336`.
-- F29: `BAND-STORY:244,265` → the G-CFG-1 gate row `:321`.
+- F29: `BAND-STORY:244,265` → the G-CFG-1 gate row `:321`; (added R6) the AMEND-D-2 cite
+  `FABLE-STORY-FRAMEWORK.md:274-280` → `:398` (`:274-280` is now the AMEND-D-9 code-context
+  prose — the one CRIT4-A-itemized re-anchor the R5 sweep missed).

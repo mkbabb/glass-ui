@@ -48,7 +48,8 @@ visible in a still.
   both docks → ~770KB eager JS / 73 modulepreloads per the committed `dist-demo/`), `aurora-hero.ts:15`
   (config re-drags the aurora barrel), the always-on `fixed inset-0` shell Aurora
   (`AppShell.vue:147-156`), R3b idle-rAF ~40k RunTasks / ~1.6s task time at idle
-  (`REGISTRY.md:322-326`).
+  (`REGISTRY.md:327-329`; re-pinned RU-14 R6 after the B1/B2 re-stamps — `:322-326` is now the
+  cold-LCP paragraph).
 
 **POST-MORTEM.** Authorship gap plus a perf architecture that saturates the boot thread. The tile
 ladder is sound and mounts 0 GL contexts by construction; the vacancy is that only 4/88 stories were
@@ -89,7 +90,7 @@ mechanism is pinned.
 `CatalogLanding.vue:40` (ladder bypass), authorship coverage 4/88, and the family-E boot saturation.
 
 **POST-MORTEM.** Instrumentation-read plus authorship gap. R3a drove this live and CLEARED it *as a
-paint defect* (`REGISTRY.md:291-294`): the cards are the DELIBERATE identity-fallback rung — `/display`
+paint defect* (`REGISTRY.md:293-296`; re-pinned RU-14 R6): the cards are the DELIBERATE identity-fallback rung — `/display`
 proves richer tiles render where authored. "Blank" is honest fallback made visible by 4/88 coverage,
 compounded by the `CatalogLanding` ladder bypass.
 
@@ -191,8 +192,10 @@ not silently decided.
   disposition is GF-DOCK W5's shape grammar.)
 - Opinionated defaults → **`BJ.W-REDUCE-CARD` (BAND-REDUCTION W2, `G-CARD-DEFAULT-PAINT`)**: `metal`
   → none, `grain` → false, axis collapse. RATIFIED as the F04 *order's* surface — with the correction
-  that BAND-REDUCTION's framing ("the born-RED gate is a real paint probe on the F04 shape") mislabels
-  the Card default as "the F04 shape"; the gate is sound, the label is wrong (FLIP-2, sidecar).
+  that BAND-REDUCTION's pre-union framing ("the born-RED gate is a real paint probe on the F04 shape")
+  mislabeled the Card default as "the F04 shape"; the gate is sound, the label WAS wrong (FLIP-2,
+  sidecar) [RU-14 R6: relabel EXECUTED by the union — "F04 shape" greps 0 in `BAND-REDUCTION.md`;
+  the probe is `G-CARD-DEFAULT-PAINT` (`:237`); docket row 4 / D2-4 CONSUMED].
 - Grand-audit-with-questions → **`ASK-REDUCTION.md`** (on disk, written to the F04 order) + the
   per-component verdict table (`FABLE-DAG-REDUCTION.md` §2, as corrected by REFABLE RU-12).
 
@@ -254,7 +257,7 @@ over a bare keyed swap (`AppShell.vue:201-203` `<component :is="Component" :key=
 no Suspense/skeleton/aria-busy (AppShell's own comments `:59`/`:192` document the absence), plus a
 blocking `router.beforeResolve` chunk-await (`demo/router.ts:121-130`). R3a's live probe refuted the
 WHITE-flash reading (root bg min-channel ≤9/255 across every dock transition) and measured the real
-cost: ~186ms one-time cold-nav stall, 32-52ms warm (`REGISTRY.md:295-297`). **LIVE-DEFER:** fresh
+cost: ~186ms one-time cold-nav stall, 32-52ms warm (`REGISTRY.md:297-299`; re-pinned RU-14 R6). **LIVE-DEFER:** fresh
 flash repro under the current tree rides the owning waves' π; the R3a artefact stands as the captured
 evidence.
 
@@ -381,7 +384,10 @@ family F) and the fused-group read; the cramping had no born-RED sizing probe un
 **REDRESS.** Radius half → **`BJ.W-CONFIGURATOR-STD` (BAND-STORY W3) `G-CFG-4` as a
 REGRESSION-GUARD** (container stays card, never reverts to ovoid — AMEND-D-7 + the lead
 adjudication), with the inner toggle radius routed to **`BJ.W-RADIUS-ROLE` (BAND-MATERIAL W1)** after
-the OPEN-1a live-π (F09 sits in J5's regression-guard conversion class alongside F12/F17/F45).
+the OPEN-1a live-π (F09 sits in J5's regression-guard conversion class alongside F12/F45 — the
+ruling's original list also named F17, but the union flipped F17 OUT to a BORN-RED FIX
+(`BAND-MATERIAL.md:135`; F11-F20 docket row 2); `JUDGE.md:38` stays valid as a ruling quote —
+noted RU-14 R6).
 Cramped/larger half → the prior artifact's residue (D-F09, "roominess has no owner") was **ADOPTED as
 JUDGE J10 and APPLIED at HEAD**: W3 carries the two-pronged widen — the TYPE ladder AND a
 ROOMINESS/SCALE gate (container min-width + section breathing-room asserted). "All configurators
@@ -417,8 +423,10 @@ section↔field steps were set too close — both surfaces read two-level flat. 
 **REDRESS.** **`BJ.W-CONFIGURATOR-STD` (BAND-STORY W3) `G-CFG-2`** — the StorySection LEVEL axis +
 the AMEND-D-2 ladder widen (section `text-heading` ≫ field `text-small` ≫ value `text-caption`),
 J10's two-pronged form (ladder + roominess), a page must show ≥3 distinct rungs — backed by
-**`BJ.W-TYPE-CODEMOD` (BAND-MATERIAL W6)**, the default-ramp reset + 251-site codemod landing in one
-cut with GATES W4 (RULING 2). **LIVE-DEFER:** the ≥3-rung after-read is W3's π obligation.
+**`BJ.W-TYPE-CODEMOD` (BAND-MATERIAL W6)**, the default-ramp reset + the 234-site (+9 arbitrary)
+codemod landing in one cut with GATES W4 (RULING 2) — the count per FLIP F-3's consumption
+(`BAND-GATES.md:376-379`: 234 = 218 demo + 16 src by the filtered grep; the prior 251 figure is
+STALE, `BAND-MATERIAL.md:665-666`; corrected RU-14 R6). **LIVE-DEFER:** the ≥3-rung after-read is W3's π obligation.
 
 **VERDICT vs opus row: RATIFIED.** Crosswalk `LANDED` — AGREE.
 
@@ -459,8 +467,9 @@ RU-14 R5 in the consolidated table). This range carries two of the ten—one liv
 - **D2-4 (this range, sidecar FLIP-2) — CONSUMED-BY-UNION (RU-14 R5, `1340a918`).**
   `grep "F04 shape" BAND-REDUCTION.md` = 0 at HEAD; the Card default-paint probe is relabeled
   G-CARD-DEFAULT-PAINT (`BAND-REDUCTION.md:237` — "a default `<Card>` at HEAD renders
-  `metal:gold` + `grain:true` (`Card.vue:33,:39`)"). The J12+ pass RATIFIES-AND-CLOSES per
-  ledger C5's posture; nothing remains to re-apply.
+  `metal:gold` + `grain:true` (`Card.vue:33,:39`)"). The J12+ pass RATIFIES-AND-CLOSES per the
+  ledger-C5 posture (C5 itself enumerates docket rows 5+9 only; D2-4's own ledger stamp is
+  lead-owed — precision RU-14 R6); nothing remains to re-apply.
 
 The full ten-item docket lives in `DOSSIER-F11-F20.md` §JUDGE-2 docket (seven at RU-14 pass 1;
 rows 8-10—D2-F23, the RU-09 F33 goo-clone migration, the crosswalk F34-F40 handmark rows—seated

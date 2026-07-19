@@ -159,10 +159,17 @@ demo pages **collapse into one** scroll-family page?" — recommendation: consol
 ruling **C-D** (`JUDGE.md`) ships the scroll census table as the recommendation with the
 abstention resolved—but its "9-keep/6-cut table" anchor is STALE: the RU-09 SUPERFLUITY rewrite
 (5c847780) no longer carries that table; its C-F verdict settles the census fresh
-(`useStagger`/`useStaggerReveal`/`useBloomUp`/`useTextHighlight` all zero-caller; scrollReader's
+(`useStaggerReveal`/`useBloomUp`/`useTextHighlight` zero-caller; scrollReader's
 one-site fence violated twice in its own house; the `.scroll-pin` CSS register moves to `demo/`
-WITH its writers) and ships the full kill/keep table with the flip-on-file:line escape clause.
-The §C3 recommendation text re-anchors to the RU-09 verdicts. Ruling **J11** codifies A06's
+WITH its writers) and ships the full kill/keep table with the flip-on-file:line escape clause
+[RU-14 R6 rider: the RU-09 census's fourth leg — `useStagger` zero-caller — is **OVERTURNED by
+the committed union**: speedtest live-imports it ×2 (`ResultStack.vue:171` +
+`useResultReveal.ts:36`), so `useStagger` is RESOLVED KEEP with the A9 escape clause fired
+(`BAND-REDUCTION.md:299-304`; the census error named as the band's consumer-truth lesson at
+`:52-54`; close roster item 5); the zero-caller roster shrinks to the three named here].
+The §C3 recommendation text re-anchors to the RU-09 verdicts AS CORRECTED by the union's
+censuses (`BAND-REDUCTION.md:88-93` — the E2 refresh re-issues §C3 with the corrected census,
+not the RU-09 verdicts raw; ledger E2 PENDING). Ruling **J11** codifies A06's
 scroll-animation standard INSIDE the collapse wave (the survivor spine IS the substrate)—
 unchanged. Whichever way the user rules, the "what IS this" identity is discharged: collapse
 merges the pages, or keep-distinct triggers the `BAND-STORY` W2 copy canon (a page states "what it
@@ -198,7 +205,7 @@ slide-stage goo (`DeckGooFilter`/`useDeckGoo`, `deck.vue:19-20,90`) is "a DIFFER
 from the pager dots—is OVERTURNED by the RU-09 SUPERFLUITY rewrite (5c847780): the stage goo is a
 byte-identical CLONE of the pager worm machinery (the neck clipPath at `PagerDots.vue:326` ≡
 `DeckGooFilter.vue:26`, re-verified on disk this pass), an in-house rebuild of the register
-`CarouselContent.vue:4-18` records as RETIRED ("the metaball-merge is the INDICATOR's job… the
+`CarouselContent.vue:4-18` records as RETIRED ("A metaball-merge is the INDICATOR's job… the
 ONE metaball morph"). RU-09 rules F33 COLLAPSE-FAMILY and slates the clone for deletion
 (`useDeckGoo.ts` + `gooBarbellGeometry.ts` + `DeckGooFilter.vue` + the ~200-line goo CSS block +
 `DeckGoo.private.test.ts`); the refinement still targets the dots—but the stage goo is not a
@@ -468,7 +475,8 @@ user's literal order is to greenfield it — reduce, not patch.
 **pen · pencil · highlighter** + a `Partial<Brush>` override, each retiree carrying a NAMED
 disposition. Delivery spans W1 (calm+weight) + W2 (FILL-STRATEGY: stroke default);
 `G-WEIGHT`/`G-NO-SLIVER` gate the survivors, π-GALLERY proves each distinct AND natural vs this
-still. The USER RULING (`GF-HM:377-386`) grants the greenfield full first-principles surface
+still. The USER RULING (`GF-HM:16-17` — re-pinned RU-14 R6; `:377-386` is beyond the 265-line
+RU-06 rewrite) grants the greenfield full first-principles surface
 authority; Q-HM-1/2 resolve inside the design loop. `BAND-REDUCTION` records the target surface
 and hands delivery to the greenfield (`../../waves/BAND-REDUCTION.md:66-70,161`).
 Coverage: **EXACT.**
@@ -578,7 +586,7 @@ fallback the screenshot proves.
 | Row | ask (compressed) | terminal owner | coverage | verdict vs opus |
 |-----|------------------|----------------|----------|-----------------|
 | F31 | curve-gallery void + modularize easing | `BJ.W-CONFIGURATOR-STD` G-CFG-5 (AMEND-D-8) + ASK §B4 + MATERIAL W5 review | **EXACT** | RATIFIED |
-| F32 | reveal vs other scrolling | `ASK-REDUCTION §C3` (+ C-D re-anchored to the RU-09 census, J11 standard) | **EXACT (decision)** | RATIFIED |
+| F32 | reveal vs other scrolling | `ASK-REDUCTION §C3` (+ C-D re-anchored to the RU-09 census as corrected by the union — useStagger OVERTURNED to KEEP, `BAND-REDUCTION.md:299-304`, R6; J11 standard) | **EXACT (decision)** | RATIFIED |
 | F33 | deck vs carousel + dot refinement | `ASK-REDUCTION §C1` + `BJ.W-PAGER-DOT-MORPH` (FM W6, J3) + `BJ.W-REDUCE-GOO-ENGINE` (REDUCTION W8, the cuts) | **EXACT-at-ownership (RU-14 R5—band layer closed by the union; residue = the E2 ASK-text refresh, lead-side)** | SUPERSEDED |
 | F34 | handmark boil worm "awful" | `GF-HANDMARK` W1 THE-VOICE (`G-CALM`/`G-RESTRAINT`; boil dies with the register) — RU-14 re-point | **EXACT** | RATIFIED |
 | F35 | pen "more pen-like/natural" | `GF-HANDMARK` W1 THE-VOICE + W2 `G-WEIGHT` — RU-14 re-point | **EXACT** | RATIFIED |

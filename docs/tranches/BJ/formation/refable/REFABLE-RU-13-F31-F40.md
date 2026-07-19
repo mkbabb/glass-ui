@@ -17,6 +17,14 @@ range was re-verified on disk (all held except one minor cite, F40 `geometry.ts:
 
 ## Per-row verdicts
 
+*[RU-14 R6 bracket: pre-RU-06 basis — the F34-F40 cells' GF-HM wave/gate names and line pins
+read through the dossier's SUPERSEDED-BY-RU-06 table. The rewritten `GF-HANDMARK-PASS3.md` is
+265 lines: `:377-386` is beyond EOF (the user ruling now lives at `:16-17`), and the wave map at
+HEAD is W0 CONTRACT-LOCK / W1 THE-VOICE / W2 THE-SURFACE / W3 THE-CHOREOGRAPHY / W4 THE-STORY /
+W5 CONSUMER+FINAL (`:207-212`) — the old "W3 cure"/"W5 createStrokeDrawIn" names denote
+different waves at HEAD. The R5 addendum's "Handmark rows (F34-F40) byte-stable — no movement"
+speaks to byte-stability of the cells, not to the currency of their basis.]*
+
 | Row | verdict | basis |
 |-----|---------|-------|
 | F31 | **RATIFIED** | Void mechanism independently re-derived (stretch grid cell + fixed-clamp square SVG, `EasingPicker.vue:327/336/345`) before reading opus — identical. AMEND-D-8 verified real (`FSF:436-439`, adoption block `BAND-STORY.md:545-556`); ASK §B4 verified. Added: BAND-MATERIAL W5 review-marking; the `38cqi`-no-container note; the 518-line-SFC residual stated as inside-W3, not a separate mandate. |
@@ -105,7 +113,11 @@ dot-refinement + the goo-clone collapse" (`BAND-FEEDBACK-MOTION.md:241`, citing 
 `:250-251`), cuts owned at REDUCTION W8 `BJ.W-REDUCE-GOO-ENGINE` (`BAND-REDUCTION.md:638-648`);
 coverage restored EXACT-at-ownership. See the R5 addendum.] F32's C-D
 "9-keep/6-cut table" anchor is stale — the rewritten SUPERFLUITY carries the C-F fresh-census
-kill/keep verdict instead; the dossier's F32 rider is re-anchored.
+kill/keep verdict instead; the dossier's F32 rider is re-anchored. [RU-14 R6: the C-F census
+itself carries one overturned leg — `useStagger` is RESOLVED KEEP (speedtest live-imports ×2,
+`BAND-REDUCTION.md:299-304`; the A9 escape clause fired); the zero-caller roster shrinks to
+`useStaggerReveal`/`useBloomUp`/`useTextHighlight`, and the §C3 re-issue reads from the
+union-corrected census (`:88-93`, ledger E2 PENDING), not the RU-09 verdicts raw.]
 
 ## RU-14 R3 addendum (2026-07-18, ring round 3 fix seat claude-fable-5)
 
@@ -154,3 +166,27 @@ kill/keep verdict instead; the dossier's F32 rider is re-anchored.
   seats the A06 scroll standard (`:701-702`); F38 REDUCTION `:66-70/:161` → `:76-77`; F40/F43
   STORY `:195-197/:174-177/:196` → `:254-256`. A17's `BAND-PERF.md:92-96` pin SURVIVES
   (aurora-hero 277KB at `:94`). Handmark rows (F34-F40) byte-stable — no movement.
+
+## RU-14 R6 addendum (2026-07-19, ring round 6 fix seat claude-fable-5)
+
+- **CRIT5-B CRIT5B-2 share (MAJOR) CURED — the useStagger census rider landed.** The dossier's
+  F32 post-JUDGE rider and summary row, and this file's consequence mirror, no longer state the
+  RU-09 C-F census raw: the `useStagger` zero-caller leg is OVERTURNED by the committed union —
+  speedtest live-imports it ×2 (`ResultStack.vue:171` + `useResultReveal.ts:36`), RESOLVED KEEP
+  with the A9 escape clause fired (`BAND-REDUCTION.md:299-304`; the error named at `:52-54`;
+  close roster item 5). The §C3-refresh directive re-points to the union-corrected census per
+  `:88-93` (ledger E2 vehicle). No ownership or coverage movement — §C3 remains the owner, W9
+  remains §C3-gated.
+- **CRIT5-B CRIT5B-5 (MINOR) CURED — the pre-RU-06 basis bracketed.** The Per-row verdicts table
+  now carries a read-through bracket: the F36/F37/F38 basis cells' GF-HM wave names and the
+  `:377-386` pin are pre-RU-06 (the rewrite is 265 lines; user ruling at `:16-17`; wave map at
+  `:207-212`). The dossier's F38 body pin re-anchored `GF-HM:377-386` → `:16-17`.
+
+## RU-14 R7 addendum (2026-07-19, ring round 7 fix seat claude-fable-5)
+
+- **CRIT6-B CRIT6B-2 (MINOR) CURED — the F33 register quote re-taken verbatim.** The dossier's
+  RU-14 corrected block quoted `CarouselContent.vue` as "the metaball-merge is the INDICATOR's
+  job…"; the on-disk comment (`CarouselContent.vue:8`) reads "A metaball-merge is the
+  INDICATOR's job (the pager worm," — article drift inside quotation marks (the CRIT5B-3
+  species; the second fragment "the ONE metaball morph" at `:17` was already verbatim). The
+  first fragment is re-taken verbatim; pin (`:4-18`), content, and substance unchanged.

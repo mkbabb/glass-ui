@@ -300,7 +300,10 @@ decided against the variant's intended design, then pinned by the role assertion
 the "F12/F17 already role-correct on disk" premise (RULING 8 as amended, `BAND-MATERIAL.md:117-119`
 "the search component has no own border-radius (rides field-control pill)", `:698-700` lead
 amendment, `crosswalk:227-229` item 5, `PLAN.md:187`) is FALSE for F17 on every clause — see the
-sidecar; the lead re-judges. Coverage: **EXACT once re-postured** (the owner and the live-π
+sidecar; the lead re-judges [RU-14 R6: the premise pins in this sentence are historical — read
+through the R5/R6 sweep's F17 row + docket row 2's SPLIT-CONSUMED stamp (band half EXECUTED,
+`BAND-MATERIAL.md:135`/`:822-824`, ledger D1; residue `PLAN.md:195` + `crosswalk:227-229`)].
+Coverage: **EXACT once re-postured** (the owner and the live-π
 instrument are already right; only the expected outcome and the fix-shape were wrong).
 
 **STATUS.** Crosswalk **LANDED** (`crosswalk:39`) — ownership stands. Verdict vs opus:
@@ -453,8 +456,10 @@ table (D2-F23; the RU-09 F33 goo-clone migration; the crosswalk F34-F40 handmark
 the lead (recounted RU-14 R5): the J12+ pass RULES the live remainder—rows 1/3/6/10 plus the
 row-2 residue (`PLAN.md:195` + `crosswalk:227-229` still carry the false "already role-correct"
 premise) and the row-9 residue (the ASK §C1/§C3 refresh, ledger E2 PENDING)—and
-RATIFIES-AND-CLOSES the consumed rows per ledger C5 ("DISCHARGED-BY-UNION—ratify-and-close, do
-not re-apply"); then an APPLYLOG-mirrored application pass over the live remainder only. The
+RATIFIES-AND-CLOSES the consumed rows per the ledger-C5 posture ("DISCHARGED-BY-UNION—
+ratify-and-close, do not re-apply" — C5 itself enumerates rows 5+9 only; the stamps for the
+remaining consumed rows (2-band-half/4/7/8) are lead-owed at J12+, precision RU-14 R6); then an
+APPLYLOG-mirrored application pass over the live remainder only. The
 JUDGE.md/APPLYLOG/band/greenfield/crosswalk edits are the lead's—outside
 the fix seats' write fence (DOSSIER-* + REFABLE-RU-13-* only). Label note (R3): post-RU-09 the
 JUDGE C-* labels and the on-disk `SUPERFLUITY.md` C-A..C-I labels collide on five of seven—any
@@ -466,11 +471,11 @@ J12+ text citing a C-label must pin doc + line (the pattern already used below: 
 | 1 | **F13 better-design half OWNERLESS**—the Δ-F13-1 drag-affordance residue (grab/lift/drop under the breath-of-life edict) | this range, FLIP F-2 | zero F13 in J1-J11 and APPLYLOG; needs an owner MINT or an explicit ASK row—natural homes: `BJ.W-IDLE-BREATH`'s interaction half or the W6 fix mandate |
 | 2 | **RULING 8's false F17 premise still governs**—re-derived independently: `searchVariants.ts:10` `rounded-none` beats `.input-bar`'s `--radius-2xl`; zero `.fuzzy-search--floating` rules; the PNG shows one-rounded-one-square | this range, FLIP F-1 | **SPLIT-CONSUMED (RU-14 R5, `1340a918`)**: the band half is EXECUTED — `BAND-MATERIAL.md:29` ("role-correct on disk — with ONE proven exception (F17, below)"), `:135` (F17 BORN-RED FIX, "the prior REGRESSION-GUARD premise is FALSE"), `:822-824`; the RU-04 judge affirmed the R8 re-open with the posture split (ledger D1). Residue for J12+: `PLAN.md:195` (moved from `:185-189`) + `crosswalk:227-229` still carry the false "already role-correct" premise |
 | 3 | **GF-DOCK W5 baseline-π + shape-axis ruling missing**—the F04 referent is `rail.vue:108-140` (`shape="rounded"`), and the 3-value `shape` axis needs its grammar ruling | F01-F10, FLIP-1 | GF-DOCK-PASS3 carries zero `rail.vue` mentions; unconsumed by the RU-05 rewrite |
-| 4 | **BAND-REDUCTION mislabels the Card probe "the F04 shape"** | F01-F10, FLIP-2 | **CONSUMED-BY-UNION (RU-14 R5, `1340a918`)**: `grep "F04 shape" BAND-REDUCTION.md` = 0; the probe relabeled G-CARD-DEFAULT-PAINT — `:237` "a default `<Card>` at HEAD renders `metal:gold` + `grain:true` (`Card.vue:33,:39`)". Ratify-and-close per C5 |
+| 4 | **BAND-REDUCTION mislabels the Card probe "the F04 shape"** | F01-F10, FLIP-2 | **CONSUMED-BY-UNION (RU-14 R5, `1340a918`)**: `grep "F04 shape" BAND-REDUCTION.md` = 0; the probe relabeled G-CARD-DEFAULT-PAINT — `:237` "a default `<Card>` at HEAD renders `metal:gold` + `grain:true` (`Card.vue:33,:39`)". Ratify-and-close per the C5 posture (C5 enumerates rows 5+9; row 4's stamp is lead-owed — R6) |
 | 5 | **FM-W3 gate (b) letter-satisfiable**—Skeleton reads a defined token, the WRONG 5s brand-metal rung; Δ-F24-1's period-VALUE + rung-BINDING reshape unapplied | F21-F30, FLIP-1 | **CONSUMED-BY-UNION (RU-14 R5, `1340a918`)**: W3 carries "Δ-F24-1 — the corrected read, replacing the prior gate" (`BAND-FEEDBACK-MOTION.md:134`) + the period-VALUE/RUNG-BINDING/driver-shape gates (`:158-162`). Ledger C5 orders ratify-and-close, never re-apply |
 | 6 | **GF-DOCK §4.1 RED rationale + the false `overflow.css:65-66` "clip" comment stand**—the real mechanism is the visible→auto computed coercion (Δ-F27-1) | F21-F30, FLIP-2 | §4.1 still cites the block-overflow measure; the source comment unchanged; unconsumed by RU-05 |
 | 7 | **Timeline README §Exports drift — CONSUMED-BY-T33** (was: unnamed; five documented exports absent from `index.ts`) | this range, routing item (consumed RU-14 R4) | `BAND-DOC-TRUTH.md:94` row T33 now carries the truth-up ("REDUCTION W5's stub supersedes on arrival"; provenance cell cites the RU-13-F11-F20 routing) — committed at `1340a918` (RU-14 R5: T33 SURVIVED, re-proven at `:94` with the same truth-up + provenance cell; residue discharged) |
-| 8 | **D2-F23: the RU-09 C-G value-marks fold + the track-well path split un-chartered**—the value-mark checkpoint paint (~65 lines, Slider + Progress) is a second true fold `BJ.W-TRACK-DRY` W4 never scoped; charter it into W4 or rule it out, then reconcile the path (`src/styles/glass/track-well.css` vs `_shared/track.css`); F23's ONLY restoration path to EXACT | F21-F30, §JUDGE-2 docket D2-F23 (row seated R3—the seven-billed/eight-minted count defect cured) | **CONSUMED-BY-UNION (RU-14 R5, `1340a918`)**: W4 charters BOTH registers ("the track well AND the value-marks paint", `BAND-MATERIAL.md:55`; value-mark grep now 9 file-wide, the twin ~65-line marks census at `:488-490`), mints `src/styles/glass/track-well.css` + `value-marks.css` at the SUPERFLUITY path and names the prior `_shared/track.css` charter SUPERSEDED (`:503-510`); `OPEN-4a` ruled toward the CSS register pair (`:793`). The old `:433`/`:476` pins are dead. Ratify-and-close per C5 |
+| 8 | **D2-F23: the RU-09 C-G value-marks fold + the track-well path split un-chartered**—the value-mark checkpoint paint (~65 lines, Slider + Progress) is a second true fold `BJ.W-TRACK-DRY` W4 never scoped; charter it into W4 or rule it out, then reconcile the path (`src/styles/glass/track-well.css` vs `_shared/track.css`); F23's ONLY restoration path to EXACT | F21-F30, §JUDGE-2 docket D2-F23 (row seated R3—the seven-billed/eight-minted count defect cured) | **CONSUMED-BY-UNION (RU-14 R5, `1340a918`)**: W4 charters BOTH registers ("the track well AND the value-marks paint", `BAND-MATERIAL.md:55`; value-mark grep now 9 file-wide, the twin ~65-line marks census at `:488-490`), mints `src/styles/glass/track-well.css` + `value-marks.css` at the SUPERFLUITY path and names the prior `_shared/track.css` charter SUPERSEDED (`:503-510`); `OPEN-4a` ruled toward the CSS register pair (`:793`). The old `:433`/`:476` pins are dead. Ratify-and-close per the C5 posture (C5 enumerates rows 5+9; row 8's stamp is lead-owed — R6) |
 | 9 | **The RU-09 F33 goo-clone migration OWNERLESS**—widen `BJ.W-PAGER-DOT-MORPH` (or BAND-REDUCTION) to carry the stage-goo clone deletion (`useDeckGoo.ts` + `gooBarbellGeometry.ts` + `DeckGooFilter.vue` + the goo CSS + `DeckGoo.private.test.ts`) explicitly, and refresh the ASK §C1/§C3 recommendation text to the RU-09 verdict | F31-F40, F33 REDRESS + sidecar (row seated R3—both texts pointed here while no row existed) | **HALF-CONSUMED (RU-14 R5, `1340a918`)**: W6 is now "F33 dot-refinement + the goo-clone collapse" (`BAND-FEEDBACK-MOTION.md:241`, self-described "widened per the JUDGE-2 docket row 9", `:250-251`), with REDUCTION W8 `BJ.W-REDUCE-GOO-ENGINE` the SOLE owner of the cuts (`BAND-REDUCTION.md:638-648`; FM `:260-261`; APOTHEOSIS MECH-04/D-05). The clone-identity evidence stands (`PagerDots.vue:326` ≡ `DeckGooFilter.vue:26`). Residue: the ASK §C1/§C3 recommendation refresh (`ASK-REDUCTION.md` untouched since `4ab12128`; ledger E2 PENDING) |
 | 10 | **ASSEMBLY-CROSSWALK rows :56-62 (F34-F40) still cite the retired pre-RU-06 GF-HANDMARK charter**—`G-CONTAIN`/`G-DRAW-CONNECTED`/`G-RING-LAYER` grep-zero in the RU-06 charter, "register 7→3 brushes" false (the register is ONE pen voice); stamp the rows with a dated read-through-RU-06 note (mirroring the dossier's range-header table) or append a §Judgment-corrections item | F31-F40 range header (RU14-1's crosswalk half—outside the pass-1 write fence, deferral previously unrecorded; owned here R3) | rows unchanged at HEAD; §Judgment corrections (`ASSEMBLY-CROSSWALK.md:237+`) carries no RU-06 item; the live wave map is `GF-HANDMARK-PASS3.md:208-211` (W1 THE-VOICE … W4 THE-STORY) |
 
@@ -487,8 +492,17 @@ pins below are the current re-anchors, kept only where load-bearing:
   to F09/F12 — `:175`/`:203`).
 - F13: `BAND-STORY:466/:468/:450-451` → the G-RSP gate rows `:527`/`:529`.
 - F14: `BAND-STORY:420-489/:436-438` → W6 `:506+` (the 100-route audit census).
-- F15: `BAND-MATERIAL:109-110/:138` → moved (`:138` is now the F17 input-bar line);
+- F15: `BAND-MATERIAL:109-110/:138` → `:131` (the §D F15 row) + `:170` (the born-RED: "F15
+  reset RED at HEAD… GREEN on the library `<Button>` swap") — destination completed R6
+  (`:138` is now the F17 input-bar line);
   `BAND-GATES:381-386` → `:376-427` (the FLIP F-3 executed figure + arms).
 - F16: `BAND-REDUCTION:435-478` → W5 `:508+` (see the re-scoped REDRESS above).
+- F17 (added R6): the FLIP-recorded premise pins are dead — `BAND-MATERIAL:117-119` is now the
+  SQUIRCLE-GATE item and `:698-700` is now W6 codemod prose; the premise's applied state lives
+  at `:822-824` (the CORRECTED lead amendment — the F17 half FALSE, F12-only regression-guard)
+  + `:135` (F17 BORN-RED FIX); `PLAN.md:187` → `:195` (`:187` is now the ceded above-fold
+  edit). The F17 body's FLIP-recorded sentence and the sidecar FLIP F-1 pin list read through
+  docket row 2's SPLIT-CONSUMED stamp (band half EXECUTED, ledger D1; "the lead re-judges" is
+  half-executed — residue `PLAN.md:195` + `crosswalk:227-229`). No verdict movement.
 - F19: `BAND-FEEDBACK-MOTION:86-96` → W4 `:165+`.
 - F20: `BAND-FEEDBACK-MOTION:41-47` → `:82` (gate (a), J4).

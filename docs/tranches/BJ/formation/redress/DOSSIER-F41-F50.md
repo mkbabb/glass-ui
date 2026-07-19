@@ -65,7 +65,7 @@ over in the member SFC), so it shipped unnamed.
 born-RED lives in the copy-canon ban-list: **G-COPY-LINT** — `npm install @mkbabb/glass-ui` at
 `typewriter.vue:103`, "all present, all re-verified" (`FABLE:588-592`); the canon names it
 explicitly ("out-of-place install strings as demo CONTENT (F41)… Fix: a neutral demo string",
-`FABLE:257-258`). Refable rider for the wave: the replacement string must also NOT WRAP — pair the
+`FABLE:256-259` — re-pinned RU-14 R6). Refable rider for the wave: the replacement string must also NOT WRAP — pair the
 string swap with `white-space: nowrap` + inline overflow handling (or a string short enough at the
 mobile floor), else the SINGLE-LINE specimen stays visibly false. Coverage: **EXACT** — the site is
 resolved on evidence to `typewriter.vue:103`, the born-RED is disk-true at HEAD, the cure is named,
@@ -117,10 +117,15 @@ keep); the `reveal`/`scroll` demo pages likely collapse into one scroll-family p
 merge shape is a design call). Ruling C-D (`JUDGE.md`) ships the scroll census table as the
 recommendation — its "9-keep/6-cut table" anchor is STALE at HEAD (re-anchored RU-14,
 2026-07-18): the RU-09 SUPERFLUITY rewrite (5c847780) no longer carries that table; its C-F
-verdict settles the census fresh (`useStagger`/`useStaggerReveal`/`useBloomUp`/`useTextHighlight`
+verdict settles the census fresh (`useStaggerReveal`/`useBloomUp`/`useTextHighlight`
 zero-caller; scrollReader's one-site fence violated twice in-house; `.scroll-pin` moves to
 `demo/` WITH its writers) and ships the full kill/keep table with the flip-on-file:line escape
-clause — the §C3 recommendation text reads from the RU-09 verdicts. §C3 remains a
+clause [RU-14 R6 rider: the RU-09 census's `useStagger` zero-caller leg is **OVERTURNED by the
+committed union** — speedtest live-imports it ×2 (`ResultStack.vue:171` +
+`useResultReveal.ts:36`), RESOLVED KEEP with the A9 escape clause fired
+(`BAND-REDUCTION.md:299-304`; the census error named at `:52-54`)] — the §C3 recommendation
+text reads from the RU-09 verdicts AS CORRECTED by the union's censuses (`BAND-REDUCTION.md:88-93`;
+the E2 refresh re-issues §C3 with the corrected census, ledger E2 PENDING). §C3 remains a
 user-ratification row, now with teeth. Family C carries the surface-reduction half. Coverage:
 **EXACT (as a decision)** — no code residue this seat owns.
 
@@ -390,8 +395,10 @@ interaction model wants a re-greenfield.
   by `scroll-padding-inline` (`overflow.css:76-78`). F47b's gap is real but narrower than "nothing
   auto-scrolls": the demo strip routes through `goTo()` navigation and never touches the engine,
   and no path recenters on FOCUS of an occluded cell. GF-DOCK's tap-to-reach RED states exactly
-  this (§4.4/W3 `G-REACH` at HEAD; the pre-rewrite gate name `G-REVEAL` is gone—"only
-  `useSelectionGroup` rails recentre; the `BottomDock` strip routes through `goTo()`").
+  this (§4.4/W3 `G-REACH` at HEAD; the pre-rewrite gate name `G-REVEAL` is gone—the G-REACH RED
+  reads verbatim: "`BottomDock` routes through `goTo()` with no recenter (F47b);
+  recenter-on-select only exists in `useSelectionGroup` rails", `GF-DOCK-PASS3.md:369-372` —
+  quote re-taken RU-14 R6).
 - Src fault (no census): the overflow measurer `useDockOverflowFit` toggles one boolean attr off
   scroll extent — there is no per-item occlusion census.
 
@@ -606,8 +613,9 @@ behavior at scroll extremes.
 
 **Δ-F45-1 — CONSUMED (adopted as `JUDGE.md` J5, applied to `BAND-MATERIAL` W1).** The prior
 artifact proposed re-aiming W1's F45 probe from born-RED sweep to a regression-guard over the
-landed concentric-field rule (`field-control.css:37-48` — the comment+selector span; the band
-pins the selector alone at `:47-49`, the same rule at two grains). The judge adopted it (J5:
+landed concentric-field rule (`field-control.css:37-48` — the comment+selector span; the band's
+`:47-49` is the rule-body grain, one high of the `:46-48` selector block — a lead-side pin,
+noted not endorsed [reworded RU-14 R7]). The judge adopted it (J5:
 "F45 joins the F09/F12/F17 conversion class", `JUDGE.md:38`) and the committed union carries the
 application re-expressed (`../../waves/BAND-MATERIAL.md:146-149`, re-pinned RU-14 R5 — the J5
 class is now "F12 + F45 + F48-rounding — REGRESSION-GUARDS (J5 class, re-proven)", with F17

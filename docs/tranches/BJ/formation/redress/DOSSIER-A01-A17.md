@@ -76,6 +76,20 @@ manifest ("8 recordings, 148 frames @1fps, ~22 stills") is the corrected census.
 `ios27/MARKS-A.md` + `MARKS-B.md` → `ios27/IOS27-CODEX.md` (13 laws + 5 BEST-vectors) + the
 `ios27/refable-timelines/` per-video ledgers.
 
+**[RIDER RU-14 R7, 2026-07-19 — the codex layer re-pointed to the RU-16 union.]** The two codex
+descriptors above are pre-RU-16 history: at HEAD `ios27/IOS27-CODEX.md` is the RU-16 REFABLE
+union (`63239549`, 2026-07-18 — "13 opus laws to 18 Fable laws"): **18 laws** (`:11-37` — laws
+1-13 keep their numbers, each marked RATIFIED/AMENDED/REPLACED in place; 14-18 NEW) + **6
+BEST-vectors** (`:41-46`), and the quoted "8 recordings, 148 frames @1fps, ~22 stills" manifest
+text no longer exists in the file. The census reads in two layers: ON DISK the corpus is 8
+unique recordings + 22 stills (the file-for-file count above stands); as iOS EVIDENCE the codex
+admits **6 recordings** — the two `Screen Recording 06-22 14.38.42` .movs are NOT iOS (Anthropic
+Cowork desktop, static), "excluded from every dock/card/tab/glass claim", their dot-lattice
+feeding the law-11 breath-of-life bank only (`IOS27-CODEX.md:5`). A design wave must not count
+all 8 recordings as iOS evidence. A02's Fable cure accordingly spans **RU-15** (the marks) +
+**RU-16** (the codex; ledger `refable/REFABLE-RU-16.md`). No verdict movement — EXACT-VIA-RU-15
+stands at the deliverable layer.
+
 **POST-MORTEM (corrected).** The ingestion happened and the marks are real — but the "with Fable"
 clause was NOT met by the original seats: the settings-level `CLAUDE_CODE_SUBAGENT_MODEL=opus`
 override forced them to `claude-opus-4-8` (the census correction, `refable/DEMARCATION.md`;
@@ -96,7 +110,9 @@ model-provenance claim OPUS-WRONG, cured. Verdict: EXACT → **EXACT-VIA-RU-15**
 **CORRELATION.** Process-level. The triumvirate = research (PASS1 / the codex) → harden (CRIT2,
 dispatched "fresh seats, assume-wrong" — `ADJUDICATION-1.md:49`, re-proven verbatim) → tranche-write
 (PASS3), realized four times over (`greenfields/GF-*-{PASS1,CRIT2,PASS3}.md`); the proportion content
-is codex laws 3/4 + `BJ.W-ARISTOTLE-PROPORTION` (MATERIAL W5, which names the A03 posture: critics
+is codex laws 4/10 [corrected RU-14 R7 from "3/4" — law 3 is the specular caustic; the proportion
+clause lives in law 4 (`IOS27-CODEX.md:14`) with the hierarchy ladder at law 10 (`:26`), matching
+A10's cite] + `BJ.W-ARISTOTLE-PROPORTION` (MATERIAL W5, which names the A03 posture: critics
 default-assume the current state wrong). Continuing output at HEAD: the IOS27-MICRO suffusion matrix
 (commit `2a4c38d4` — 12 archetypes × 10 qualities in aristotelian proportion).
 
@@ -374,9 +390,11 @@ retained** procedural surfaces INCLUDING LiquidGrid — but `BAND-REDUCTION` W3 
 outright (zero consumers, `ADJUDICATION-1.md:9`, re-proven). At write, no wave owned the suite
 doc's truth-up. The committed union (`1340a918`) closed every leg: the routing is COMMITTED
 (`BAND-DOC-TRUTH.md:133-134` — "routed to `BAND-REDUCTION` W3 scope (RU-13 FLIP-2, cheapest
-cure)"), AND W3's charter now CARRIES the edit — `BAND-REDUCTION.md:279` "`src/components/
-PROCEDURAL-SUITE.md` LiquidGrid rows (`:11`, `:57-59`) truth-up joins THIS wave's mechanical
-bundle" (+ the close roster `:738`); the cited rows re-proven live on disk. The old "not among
+cure)"), AND W3's charter now CARRIES the edit — `BAND-REDUCTION.md:279-280` "`src/components/
+PROCEDURAL-SUITE.md` LiquidGrid rows (`:11`, `:57-59`) truth-up joins THIS wave's delete scope —
+the retained-suite doc must not list a deleted member" (+ the close roster `:738`; quote
+re-taken verbatim RU-14 R6 — the prior "mechanical bundle" tail was the CRIT4-B paraphrase, not
+band text); the cited rows re-proven live on disk. The old "not among
 DOC-TRUTH W1's seven targets" frame is retired with the union's roster restructure (an enumerated
 SWEEP-NOW roster + a TRIGGERED roster, `BAND-DOC-TRUTH.md:48`/`:112`). FLIP-2's stated residue
 (the W3 charter line + surviving the RU-03 commit) is FULLY DISCHARGED — stamped

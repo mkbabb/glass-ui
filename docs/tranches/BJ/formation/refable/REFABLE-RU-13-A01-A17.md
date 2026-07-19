@@ -37,7 +37,7 @@
 | Row | Core claims re-proven |
 |-----|------------------------|
 | A01 | `Slider.vue:~422` box-INVIOLATE; reka `SliderThumbImpl.vue:59-60` (library-internal, per the BI wave); BI §Audit `:~293` button demote VERBATIM; crosswalk `:217-220` over-credit VERBATIM; openai-popup refs on disk — the DISAGREE vindicated as J1. R5: the W5 owner is GATED on the OPEN-FM-3 user ruling (`BAND-FEEDBACK-MOTION.md:40/:53/:189`; ledger E1 PENDING) |
-| A02 | corpus census file-for-file (8 unique recordings + 22 stills, folder EXTANT) |
+| A02 | corpus census file-for-file (8 unique recordings + 22 stills, folder EXTANT). [RU-14 R7: the codex layer re-pointed — at HEAD `IOS27-CODEX.md` is the RU-16 union (`63239549`): 18 laws + 6 BEST-vectors; iOS EVIDENCE = 6 recordings, the two 06-22 14.38.42 .movs excluded as non-iOS desktop captures (`IOS27-CODEX.md:5`); the cure spans RU-15 (marks) + RU-16 (codex)] |
 | A03 | `ADJUDICATION-1.md:49` "fresh seats, assume-wrong" verbatim; the PASS1→CRIT2→PASS3 chain on disk ×4 |
 | A04 | archaeology distributed across family I + CHRONIC-ADJUDICATION; parallelization = the 9-band DAG |
 | A05 | `REGISTRY.md:66-67` 73% (298/408) verbatim; both DAG artifacts built; the purge un-executed at HEAD (all census targets still present) |
@@ -100,8 +100,10 @@ charter-level gaps flip a premise of completeness:
   the regrowth roster an owner. A09/A16's union verdicts hold PARTIAL/narrowed until ruled.
 - **FLIP-2 — BAND-REDUCTION W3's clean-delete completeness vs the retained-suite codification.
   [RU-14 R5: CONSUMED-BY-RU-03 at `1340a918` — the routing committed (`BAND-DOC-TRUTH.md:133-134`)
-  AND W3's charter carries the edit (`BAND-REDUCTION.md:279` "…truth-up joins THIS wave's
-  mechanical bundle"; close roster `:738`); the stated residue (the W3 charter line + surviving
+  AND W3's charter carries the edit (`BAND-REDUCTION.md:279-280` "…truth-up joins THIS wave's
+  delete scope — the retained-suite doc must not list a deleted member"; close roster `:738`;
+  quote re-taken verbatim RU-14 R6 — the prior "mechanical bundle" tail was the CRIT4-B
+  paraphrase, not band text); the stated residue (the W3 charter line + surviving
   the commit) is FULLY DISCHARGED. Nothing remains to re-judge.]**
   W3's charter deletes liquid-grid on a zero-consumer premise (re-proven, sound) — but
   `src/components/PROCEDURAL-SUITE.md` (the A14 codification surface, named by FABLE-COLOCATION and
@@ -206,3 +208,40 @@ G-MODE-DISTINCT + the C-G binding survive unchanged—ownership verdicts stand.
   `BJ.W-REDUCE-SCROLL-REVEAL` (`BAND-REDUCTION.md:677`, §C3-gated) now conditionally seats the
   A06 scroll standard (`:701-702`). A17's `BAND-PERF.md:92-96` pin SURVIVES (aurora-hero 277KB
   at `:94`).
+
+## RU-14 R6 addendum (2026-07-19, ring round 6 fix seat claude-fable-5)
+
+- **CRIT5-B CRIT5B-1 (MAJOR) CURED — the fabricated A14 quote re-taken verbatim at both sites.**
+  The dossier's A14 NEW-FINDING and this file's FLIP-2 R5 bracket quoted `BAND-REDUCTION.md:279`
+  as "…truth-up joins THIS wave's mechanical bundle" — "mechanical bundle" greps ZERO in the
+  entire `waves/` layer; it was the CRIT4-B finding's own paraphrase (`RU14-CRIT4-B.md:71`),
+  which the R5 fix seat copied into the corpus while certifying it "re-proven verbatim". Both
+  sites now carry the on-disk text: "truth-up joins THIS wave's delete scope — the
+  retained-suite doc must not list a deleted member" (the quote spans
+  `BAND-REDUCTION.md:279-280`; pin widened accordingly). The substantive CONSUMED-BY-RU-03
+  stamp was never in doubt (the W3 charter DOES carry the truth-up; routing at
+  `BAND-DOC-TRUTH.md:133-134` verbatim) — the defect was quote fidelity only. The false R5
+  "re-proven verbatim" certification is recorded in `RU14-FIXLOG-R6.md` (the R5 fixlog is
+  outside this seat's write fence).
+
+## RU-14 R7 addendum (2026-07-19, ring round 7 fix seat claude-fable-5)
+
+- **CRIT6-B CRIT6B-1 (MAJOR) CURED — the A02 codex descriptors re-pointed to the RU-16 union.**
+  The dossier's A02 CORRELATION described the codex as "(13 laws + 5 BEST-vectors)" and endorsed
+  the "8 recordings, 148 frames @1fps, ~22 stills" manifest as the corrected census; both are
+  rotted by the RU-16 rewrite (`63239549`, 2026-07-18 — "13 opus laws to 18 Fable laws"). A dated
+  rider now states the HEAD shape: 18 laws (`:11-37`, 1-13 renumber-stable with
+  RATIFIED/AMENDED/REPLACED marks; 14-18 NEW) + 6 BEST-vectors (`:41-46`); the manifest text is
+  gone from the file; the census is two-layer — 8 unique recordings + 22 stills ON DISK, of
+  which 6 recordings are iOS EVIDENCE (the two `Screen Recording 06-22 14.38.42` .movs excluded
+  as Anthropic Cowork desktop captures, `IOS27-CODEX.md:5`); the Fable cure spans RU-15 (marks)
+  + RU-16 (codex). This file's A02 basis row carries the same re-point. The same
+  greenfield-re-point discipline the ring applied to GF-HM/GF-DOCK was never applied to the
+  codex — five rounds uncaught. No verdict movement: EXACT-VIA-RU-15 stands at the deliverable
+  layer; the F49/F50 law cites (laws 1/12) survive the renumber unchanged.
+- **CRIT6-B CRIT6B-4 (MINOR) CURED — the A03 proportion-authority cite aligned with A10.** A03
+  read "the proportion content is codex laws 3/4"; law 3 (renumber-stable through RU-16) is the
+  specular caustic and carries no proportion content — the proportion clause lives in law 4
+  (`IOS27-CODEX.md:14`) with the hierarchy ladder at law 10 (`:26`). A03 now cites laws 4/10,
+  matching A10's "design authority = codex laws 4/10". The band's own authority line
+  (`BAND-MATERIAL.md:60/:78-79`) was already correct — no wave misdirected.
