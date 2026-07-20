@@ -19,13 +19,17 @@ C-A/C-D/C-E), the four `formation/greenfields/GF-*-PASS3.md`, `formation/CHRONIC
 
 ## §1 — Reduction / superfluity (the F04 grand audit; family C)
 
-**ASK-1 · metric-family + instrument-chassis (F18, third-asked).** Do you ratify SHARED-KEEP, or
-overrule DP-A and accept the costed multi-repo break (and if overrule, chassis too or only metric)?
-- **Recommendation: RATIFY SHARED-KEEP.** The census refuses on the merits, not on backwards-compat:
-  instrument-chassis is the structurally-unique app-shell spine of speedtest×4 + muster×5, and the
-  /metric symbols are distinct-DOM-role readouts whose shared logic (`coalesce-metric.ts`) + subpaths
-  are already consolidated; the removal instinct is the UF-K1 disease, not the cure. Terminal either way.
-- Evidence: `ASK-REDUCTION.md` §A1; `SUPERFLUITY.md` §F18; `formation/round-2/adversarial-verification…`.
+**ASK-1 · metric-family + instrument-chassis (F18, third-asked).** Do you ratify the corrected
+DELETE side, or overrule and keep (and if keep, chassis too or only metric)?
+- ~~**Recommendation: RATIFY SHARED-KEEP.**~~ **[RE-ISSUED 2026-07-19, lead amendment E2 —
+  SUPERSEDES]:** the SHARED-KEEP rec rested on a census RU-09 F18 proved phantom at the prop/slot
+  grain. Corrected recommendation: **chassis DELETE** (usage is contract-phantom — speedtest/muster
+  render props/slots the 7.0.0 contract does not carry; rewrite owed on upgrade regardless) and
+  **metric DELETE-with-relay**, with COLLAPSE-FAMILY as the fired-flip-clause alternative
+  (keyframes.js is the one current-contract `/metric` consumer, `SequenceTarget.vue:138`). The
+  `/metric-badge` phantom relays (4 repos / 13 files) file either way. Full re-issue:
+  `ASK-REDUCTION.md` §A1.
+- Evidence: `ASK-REDUCTION.md` §A1 (RE-ISSUED block); `waves/BAND-REDUCTION.md` W4; `SUPERFLUITY.md` §F18.
 
 **ASK-2 · completion-seal (F26, corrected census premise).** Keep it public, retire-with-relay, or
 inline — given the F26 "only speedtest" premise is a verified factual error?
@@ -45,13 +49,15 @@ keep the standalone `/feedback/confirm-dialog` demo story, or fold it too?
 
 **ASK-4 · reveal / scroll family (F32 + F42; C-D).** Which scroll primitives survive as distinct public
 surfaces, and do the `/motion/reveal` + `/motion/scroll` pages collapse into one?
-- **Recommendation: SHIP the full 9-keep / 6-cut table.** Keep the 9 real-consumer survivors (the
-  reader spine, fading-scroll, infinite-scroll, the ToC); DEMOTE/DELETE the 6 demo-only-or-dead exports
-  (`useScrollPin`, `useScrollScene`, `useStagger`, `useStaggerReveal`, `useBloomUp`, `useLiquidReveal`);
-  fold `/motion/reveal` into one `/motion/scroll` page. The corrected Q060 census + grep resolve what
-  §C3 deferred — this is a ratification with teeth, not an abstention. One check: name any sibling
-  consumer of the cut symbols and it becomes a keep-with-relay.
-- Evidence: `ASK-REDUCTION.md` §C3; `SUPERFLUITY.md` §4 (F32/F42) + §C-D; `JUDGE.md` C-D.
+- ~~**Recommendation: SHIP the full 9-keep / 6-cut table.** … DEMOTE/DELETE the 6 demo-only-or-dead
+  exports (`useScrollPin`, `useScrollScene`, `useStagger`, `useStaggerReveal`, `useBloomUp`,
+  `useLiquidReveal`)~~ **[RE-ISSUED 2026-07-19, lead amendment E2 — SUPERSEDES]:** the 6-cut list is
+  stale in four places — the sibling-consumer check it invited has ALREADY fired for `useStagger`
+  (speedtest ×2 → RESOLVED KEEP); `useLiquidReveal` RELOCATES to `morph/` as the one reveal adapter;
+  `useScrollPin` goes demo-local (with `springProjection`); `useScrollScene` is conditional-keep.
+  The true deletes: `useBloomUp`+`bloomUpField`, `useStaggerReveal`. The page fold stands. Full
+  per-symbol table: `ASK-REDUCTION.md` §C3 (RE-ISSUED block).
+- Evidence: `ASK-REDUCTION.md` §C3 (RE-ISSUED); `waves/BAND-REDUCTION.md` W3/W9; `JUDGE.md` C-D.
 
 **ASK-5 · tempo page (F30; C-E).** Keep `/motion/tempo` as its own page, fold it into the springs
 configurator, or delete it?
@@ -60,14 +66,15 @@ configurator, or delete it?
   **out of scope — you are not asked to rule on it**; only the thin single-axis demo page is in play.
 - Evidence: `ASK-REDUCTION.md` §C4; `SUPERFLUITY.md` §4 (F30) + §C-E; `JUDGE.md` C-E.
 
-**ASK-6 · deck vs carousel (F33).** Keep both, collapse, or keep deck-as-headless-engine and retire
-only the Carousel visual overlap?
-- **Recommendation: KEEP-DISTINCT + cut the vestigial DeckPager.** deck is the headless `useDeck`
-  engine (atlas consumes it at 2 sites); carousel is the embla visual scroller — zero measured
-  similarity; the dot overlap you sensed is already folded onto the shared pager-dots. The only cut is
-  `deck/DeckPager.vue` (replace its one demo usage with a direct `PagerDots` call), sequenced with the
-  F33 dot-refinement (FEEDBACK-MOTION W6). Collapsing would break atlas's `useDeck` integration.
-- Evidence: `ASK-REDUCTION.md` §C1; `SUPERFLUITY.md` §4 (F33).
+**ASK-6 · deck vs carousel (F33).** Keep deck-as-headless-engine — and does Carousel survive at all?
+- ~~**Recommendation: KEEP-DISTINCT + cut the vestigial DeckPager.**~~ **[RE-ISSUED 2026-07-19, lead
+  amendment E2 — SUPERSEDES]:** the deck half stands (headless `useDeck` engine, atlas ×2; DeckPager
+  cut rides REDUCTION W8). The carousel half flips on the corrected census: its only external
+  consumer is words, partially stale (6 symbols at `ImageCarousel.vue:83-89`, pin ^3.0.0, two of them
+  gone at 7.0.0) — below the ≥2 current-contract bar. Corrected recommendation: **carousel
+  DELETE-with-relay** (+ embla peer removal; deck + PagerDots the one paging register; the relay
+  NAMES words). Full re-issue: `ASK-REDUCTION.md` §C1 (RE-ISSUED block).
+- Evidence: `ASK-REDUCTION.md` §C1 (RE-ISSUED); `waves/BAND-REDUCTION.md` W4; `SUPERFLUITY.md` §4 (F33).
 
 **ASK-7 · timeline shape (F16).** Redesign-in-library or relocate-to-speedtest — and confirm the 5→1
 collapse shape?
@@ -210,12 +217,20 @@ captured artefact?
 
 ## §3 — Material / story rows (the identity + judgment calls the bands route to you)
 
-**ASK-25 · alert status-tint (OPEN-FM-2).** Does Alert admit a status-tinted material
-(success/warn/error hue on the glass), or stay neutral glass + status ink only?
+**ASK-25 · alert status-tint (OPEN-FM-2) — a USER ruling (carried per RU-04 judge §5.3; not
+wave-decided).** Does the REDESIGNED Alert keep a status-tinted material (success/warn/error hue on
+the glass), or go neutral glass + status ink only?
 - **Recommendation: an identity call routed to you.** Lean: neutral glass + status ink (consistent with
   the subtler-blur canon and the codex neutral-material grammar); a status-tinted glass is available if
-  you want stronger semantic color. Decided at `BJ.W-ALERT-IDIOM` wave start.
-- Evidence: `BAND-FEEDBACK-MOTION.md` OPEN-FM-2.
+  you want stronger semantic color. Premise sharpened (the band's corrected read): Alert at HEAD
+  already ships tone-tinted wash arms (`alert/index.ts:9-19` — `feedback-tone-*` on
+  `--feedback-tone-rung`, all on `--glass-blur-wash`), so the question is what the new idiom KEEPS,
+  not whether tinting is admissible de novo. Consumption: FM W4 lands the redesign on your answer,
+  and the A11Y W3-C standing contrast-gate TABLE is data-driven on it (APOTHEOSIS D-09,
+  `BAND-A11Y.md:237-238`) — those gate rows cannot pin until you rule. [Re-issued 2026-07-19, lead
+  amendment E1 — SUPERSEDES the prior ~~"Decided at `BJ.W-ALERT-IDIOM` wave start"~~ line: the wave
+  CONSUMES the ruling, it does not make it.]
+- Evidence: `BAND-FEEDBACK-MOTION.md` OPEN-FM-2 (:331-335); `BAND-A11Y.md` W3-A/W3-C.
 
 **ASK-26 · graded-backdrop adopt / decline (OPEN-3a; the band's most load-bearing judgment — FLAG).**
 The landed `--glass-halo-*` box-following backdrop halo cohort is frozen unresolved; ADOPT it as public
@@ -228,6 +243,22 @@ surface or DECLINE and strip it?
   wave. The shared scene-staging extraction is BOUND either way (C-F). Byte-identity floor: a "leave it
   and decide later" is explicitly disallowed (the invented-window the chronic ledger forbids).
 - Evidence: `BAND-MATERIAL.md` W3 §OPEN-3a; `JUDGE.md` C-F.
+
+**ASK-27 · idle-engagement precedence (OPEN-FM-3) — a USER ruling; the corpus-wide governing referent
+(RU-04 judge §5.3; APOTHEOSIS D-06). [Added 2026-07-19, lead amendment E1.]** Rank the two canons:
+does the breath-of-life edict (PLAN §3, your standing order — "every component always displays
+engagement — at rest") license always-on idle breath on the inert atoms (buttons · collapsed-dock
+pill · slider-at-rest), or does the suffusion-matrix idle law (`SUFFUSION-MATRIX.md` §1.1/§2 —
+"idle — material only… no light event on a static surface"; ONE idle-light license, the
+selection-lens sweep) re-scope those targets?
+- **Recommendation: none pre-decided — both are canon; only you rank them (RU-25 R4/row 11).** THREE
+  bands consume the outcome and none may pre-decide the axis while it pends: FM W5 `BJ.W-IDLE-BREATH`
+  is HARD-BLOCKED on it (its born-RED assertion set re-scopes on your answer); PERF OPEN-P5's
+  static-wash downgrade arm (b) consumes it; STORY W5's tile idle posture consumes it. G-PRV-5's
+  rAF-delta-0 bound is satisfied either way (a CSS-only compositor breath passes under BOTH
+  outcomes) — this is an identity ranking, not a perf call.
+- Evidence: `BAND-FEEDBACK-MOTION.md` OPEN-FM-3 + W5 (:336-344, :189-250); `BAND-PERF.md` OPEN-P5(b)
+  (:598, :637); `BAND-STORY.md` W5 tile posture (:442, :696); `REFABLE-RU-25.md` R4/row 11.
 
 ---
 
@@ -245,14 +276,17 @@ Reply once, marking each row terminal. The marking routes each row as follows:
   GF-HANDMARK register + shape surface; ASK-20 sizes GF-AURORA W3; ASK-21 sets the GF-BLOB default;
   ASK-22 sequences the WGPU-twin delete. Un-ruled greenfield rows leave their wave PARKED (they do not
   block the rest of the tranche).
-- **§3** ASK-25 is decided at `BJ.W-ALERT-IDIOM` wave start; ASK-26 is the Fable/DesignSync paint-lane
-  ruling — a mark here is your veto/greenlight on it, otherwise it resolves at the paint lane pre-freeze.
+- **§3** ASK-25 and ASK-27 are USER rulings carried here (RU-04 judge §5.3): ASK-25's answer feeds FM
+  W4 + the A11Y W3-C gate table; ASK-27's answer unblocks FM W5 and is consumed by PERF OPEN-P5(b) +
+  STORY W5 — un-ruled, W5 stays parked and no band pre-decides the idle axis. ASK-26 is the
+  Fable/DesignSync paint-lane ruling — a mark here is your veto/greenlight on it, otherwise it
+  resolves at the paint lane pre-freeze.
 - The corrected consumer-truth (Q060) rides the family-B outbound **regardless** of the rulings (the
   provenance corrections are facts, not options).
 
 Every row is terminal on your mark; no row here re-appears in a future tranche (the crosswalk's
 zero-silent-drop spine holds). This checklist closes the family-C surface purge + the four greenfield
-identity calls + the two material/story judgments — the entire user-reserved surface of BJ.
+identity calls + the three material/story/motion judgments — the entire user-reserved surface of BJ.
 
 ---
 
@@ -260,12 +294,12 @@ identity calls + the two material/story judgments — the entire user-reserved s
 
 | # | ask | recommendation | unblocks |
 |---|-----|----------------|----------|
-| ASK-1 | metric + instrument-chassis | RATIFY SHARED-KEEP | REDUCTION W4 |
+| ASK-1 | metric + instrument-chassis | RE-ISSUED: chassis DELETE; metric DELETE-vs-COLLAPSE (flip fired) | REDUCTION W4 |
 | ASK-2 | completion-seal | KEEP (2 external repos) | REDUCTION W4 |
 | ASK-3 | confirm-dialog story | DELETE (fold) | demo page count + relay |
-| ASK-4 | reveal/scroll | ship the 9-keep/6-cut table | scroll-family reduction |
+| ASK-4 | reveal/scroll | RE-ISSUED: per-symbol table (useStagger KEEP; 2 deletes; relocations) + page fold | scroll-family reduction |
 | ASK-5 | tempo page | fold PAGE into springs (token out of scope) | motion taxonomy |
-| ASK-6 | deck vs carousel | KEEP-DISTINCT + DeckPager cut | deck fate + FM W6 |
+| ASK-6 | deck vs carousel | RE-ISSUED: deck-keep + carousel DELETE-with-relay (words named) | deck/carousel shape + FM W6 |
 | ASK-7 | timeline | collapse 5→1, redesign-in-library | REDUCTION W5 |
 | ASK-8 | DataTable | thin or demo-privatize | REDUCTION W3 + A11Y |
 | ASK-9 | FourierField | retire dead knobs; keep-or-cut | REDUCTION W1 + A14 |
@@ -284,8 +318,9 @@ identity calls + the two material/story judgments — the entire user-reserved s
 | ASK-22 | blob WGPU-twin delete | surface the sequencing (lean: W-DELETE-TWIN) | GF-BLOB W-DELETE-TWIN |
 | ASK-23 | dot-flow halftone revive | STAY-RETIRED (offer only) | — |
 | ASK-24 | pixel-floor GPU fallback | conditional — only if the probe fails | BAND-GATES W2 |
-| ASK-25 | alert status-tint | identity call (lean: neutral + status ink) | FM W4 |
+| ASK-25 | alert status-tint | identity call (lean: neutral + status ink) | FM W4 + the A11Y W3-C gate table |
 | ASK-26 | graded-backdrop adopt/decline | wave-decided (lean: ADOPT); the flag | MATERIAL W3 |
+| ASK-27 | idle-engagement precedence (OPEN-FM-3) | none pre-decided — you rank the canons | FM W5 + PERF OPEN-P5(b) + STORY W5 |
 
 **Nothing here is a silent drop.** Every user-reserved row is above; the DECIDED reductions are in
 `waves/BAND-REDUCTION.md` and the band specs; the full disposition of all 67 feedback rows is in

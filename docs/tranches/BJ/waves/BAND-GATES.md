@@ -514,6 +514,13 @@ Applied per `../formation/refable/REFABLE-RU-04-JUDGE.md`; the capstone is `APOT
   + A11Y W3-C + own W3/W4 + COLOCATION-if-Form-B); keeps pinned ≤52 so the ≤60 guard holds by
   arithmetic; the count-guard's base defined as the invariant-gate census (keep-list files +
   `tests/gates/**`), sibling ordinary regression tests out-of-base by stated method.
+  **[LEAD 2026-07-19, ledger E4 — the judge's design cure is ADOPTED; the veto lane (RU-04-JUDGE
+  §5.6) is CLOSED un-exercised.** Basis: the base-as-invariant-census reading is the mandate's own
+  language ("~40-60 invariant gates"), and the alternative (count every `it()` in `tests/`) makes
+  any lawful sibling regression test a false-RED — the latent defect MECH-06 named. The veto path,
+  recorded for the record: had it been exercised, the keep-list would pin far lower or the ceiling
+  rise against declared sibling regression tests; any FUTURE widening of the counting base is a new
+  lead ruling, never a drift.]
 - **MECH-09/D-11:** the inbound contrast gate re-cited A11Y W1 → **W3-C** (both locations).
 - **MECH-10:** OPEN-9 CLOSED — residual-canon tokenization stays in W4 (MATERIAL W6's disclaim
   ratifies the lean).

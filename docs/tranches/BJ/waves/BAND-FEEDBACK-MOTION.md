@@ -238,6 +238,16 @@ loops are absent; (c) the compositor-only gate — the breath registers add ZERO
 button hover/press reads grow/glow/lift well past the 1.5% scale, with the token-route decision
 recorded (paired before/after, filed under the band's π dir).
 
+**Lead amendment (J12, 2026-07-19 — JUDGE-2 docket row 1 / RU-13 FLIP F-2; ledger H1): the
+Δ-F13-1 drag-affordance residue is MINTED HERE, on the interaction half.** F13's better-design
+half (the SortableList grab/lift/drop affordance under the breath-of-life edict — cursor
+grammar, lift shadow/scale on grip, drop settle) was ownerless (zero F13 rows in J1-J11 and
+APPLYLOG; grep-0 in this band at ring close). It joins THIS wave's interaction half beside the
+A01 hover-strengthening — same contract, same restraint floor. It is **NOT gated on OPEN-FM-3**
+(interaction feedback, not idle light — the user ruling gates only the idle-breath registers).
+Gate rider on (d): the drag capture — grab/lift/drop reads as a three-beat affordance on
+SortableList, paired before/after filed with the hover capture.
+
 ## Wave 6 — `BJ.W-PAGER-DOT-MORPH` (F33 dot-refinement + the goo-clone collapse)
 
 F33's "dot animations need dramatic refinement" half was orphaned (J3 / Δ-F33-1). This wave owns

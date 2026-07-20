@@ -88,3 +88,18 @@ The error signature is one class repeated: the compiler transcribed formation-er
 6. **PLAN:26 accounting truth-up**: the ratified-at-tag roster reads 2/3/4/6/8/9/10 (rows 6/8 ratified under their own silence terms); R17 recorded closed — so all 17 Q051 rows are accounted.
 7. **V-A95 re-scope**: replace the DECIDED row's "confirmed user-visible shipping defect + cure triumvirate" with the R3A-informed re-repro-or-close row (one clean reproduction attempt on an untouched canvas; close as instrumentation artifact if clean, retaining the isolation cure); keep the publish-record honesty line.
 8. **Family J citation batch**: the F8 line-drift set + the BI.W-LADDER-DERIVE.md "Awaiting challenge seat 2" tail reconcile (already a family J target) + strike the §7 row's dead recorder path in favor of the BG record.
+
+## Lead amendment addendum (2026-07-19, ledger F4 — the phantom-bank row corrected)
+
+**Row 26 corrected by RU-22 F2, re-verified live this pass.** The row's verdict was honest at
+its probe grain ("`git branch -a` shows no rim/engage bank" — true under those NAMES; GROW
+genuinely un-landed), but the bank is UNLABELED, not absent: `worktree-agent-ad45af8a27c9ce531`
+(9 commits over base `f8d205d3`: `8e15fba7` the `--glass-engage` scalar → `ad736a1e` rim-ink
+lift → `0a94204b` silhouette ramp → `0a8bd8d1` demo stage → `661d7d39` JND retune → `820828d4`
+slider rim → `6e32f2ad`/`f9214d0a` Phase-B body channel → `224024c3` body-channel retire)
+carries the only sustained-engage implementation in existence, unmerged; `ae29b00f`'s "banked
+rim-only branch" refers to it. The row's build-or-name fork resolves **NAMED**: the branch is
+BI.W-ENGAGE-AFFORD's implementation base at `PLAN.md` §2 (harvest-as-reference under the RU-25
+R3 conditions — re-base off HEAD, `--glass-engage`→`--engage-t` unification, ACTIVE-rung
+re-seed). RU-25 rows 4/10 stand: the branch does NOT implement the registered GROW/MODAL
+contract; "base" means reference substrate, never a landing vehicle.

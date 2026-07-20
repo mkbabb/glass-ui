@@ -122,3 +122,35 @@ Q-HM-1/2 + the aurora crayon-scope + the blob register/WGPU rows + the dock 4.
 — Every delta, disagreement, contradiction, and truth-up above is now RULED. Zero floating notes
 remain. The application pass appends J1-J11/C-A..C-G/T1-T2/D1-D6 to their destination files; PLAN.md
 synthesizes after.
+
+## F. J12 — the dossier-FLIP re-judgments (lead amendment pass H1, 2026-07-19)
+
+Input: the RU-13/14 terminal corpus (ring CONVERGED at `92001511`, two consecutive clean; the
+CRIT8 seats re-proved the JUDGE-2 docket's ten states at close — rows 1/3/6/10 + the row-2/-9
+residues LIVE, the rest consumed). Every stamp below was re-verified on disk THIS pass at
+current HEAD before ruling; applications are mirrored in `APPLYLOG.md` §J12. The FLIP universe
+is the six RU-13 sidecars (F41-F50 filed none) plus the two consumed docket routing items whose
+close stamps the ring left lead-owed (rows 7/8, RU-14 R6).
+
+| flip | source sidecar | docket | stamp | basis (pins re-verified this pass) |
+|---|---|---|---|---|
+| FLIP-1 fam-I DECIDED-rows wave charter-less | RU-13-A01-A17 | — | **RATIFIED — RULED: no standalone wave; distribute** | The phantom was real (`REGISTRY.md:175` promise vs zero charter hits). Ruling applied as the REGISTRY re-stamp: family I formation-terminal via CHRONIC-ADJUDICATION; discharge probes distribute to owning bands + the RU-02 STAB discharge-verify checklist; RF-4 routing 2 adopted (rows 29/31/33/34/38/39 → MET/LANDED-discharge-verify); the >500 regrowth roster (RF-4 F2, 7 files) owned by distribution with names; DOC-TRUTH T40 executes its else-branch |
+| FLIP-2 PROCEDURAL-SUITE/LiquidGrid truth-up ownerless | RU-13-A01-A17 | — | **RATIFIED-AS-CONSUMED (RU-03)** | Chartered at `BAND-REDUCTION.md:279` + routed `BAND-DOC-TRUTH.md:133-134`, committed `1340a918`; sidecar stamped CONSUMED-BY-RU-03 — closed, never re-applied |
+| FLIP-1 GF-DOCK F04 baseline + shape-axis | RU-13-F01-F10 | row 3 | **RATIFIED — APPLIED** | `rail.vue:108-140` = the `shape="rounded"` section (re-verified: `shape="rounded"` + `entries.slice(0, 4)` live); GF-DOCK-PASS3 carried zero `rail.vue` mentions at ring close; cure applied as GF-DOCK-PASS3 §Lead amendments A (W5 baseline-π re-anchored; the 3-value `shape` axis ruling seated in W5 scope) |
+| FLIP-2 BAND-REDUCTION "the F04 shape" label | RU-13-F01-F10 | row 4 | **RATIFIED-AS-CONSUMED — CLOSED** | `grep "F04 shape" BAND-REDUCTION.md` = 0 at this pass; probe relabeled `G-CARD-DEFAULT-PAINT` (`:237`). The row-4 close stamp (lead-owed per RU-14 R6) is HEREBY entered: DISCHARGED-BY-UNION, ratify-and-close, no re-apply |
+| FLIP F-1 F17 vs RULING 8 | RU-13-F11-F20 | row 2 | **RATIFIED — residue APPLIED; row CLOSED** | Band half was executed (`BAND-MATERIAL.md:29/:135/:822-824`; judge R8 re-open AFFIRMED, ledger D1). The false-premise residue cured this pass: `PLAN.md:195` + `crosswalk:227-229` now carry the posture split (F17 born-RED FIX — `search/searchVariants.ts:9-10` `rounded-none`, re-verified). The band-half close stamp (lead-owed, RU-14 R6): DISCHARGED-BY-UNION |
+| FLIP F-2 F13 Δ-F13-1 drag-affordance ownerless | RU-13-F11-F20 | row 1 | **RATIFIED — OWNER MINTED** | Grep-0 in FM at ring close (re-verified); minted into FM W5's interaction half beside the A01 hover-strengthening (not OPEN-FM-3-gated — interaction, not idle), gate rider on W5(d) |
+| FLIP F-3 type-census 251→234 | RU-13-F11-F20 | — | **RATIFIED-AS-CONSUMED (union + B2)** | `BAND-GATES:376-427` carries the executed figure; REGISTRY:252 re-pinned 234 = 218 + 16 (ledger B2, applied; re-anchored :236→:252 by this pass's own §I re-stamp insert—lead:verify); sidecar stamped CONSUMED-BY-UNION R4A-2 — closed |
+| FLIP-1 Δ-F24-1 FM-W3 gate reshape | RU-13-F21-F30 | row 5 | **RATIFIED-AS-CONSUMED** | `BAND-FEEDBACK-MOTION.md:134` "the corrected read, replacing the prior gate" + the VALUE/BINDING/driver gates `:158-162`; the DISCHARGED-BY-UNION close stamp rides ledger C5 (that row's seat) — this stamp concurs, no re-apply |
+| FLIP-2 Δ-F27-1 GF-DOCK §4.1 + the overflow.css comment | RU-13-F21-F30 | row 6 | **RATIFIED — APPLIED (doc half); src half carried to W2** | §4.1 still cited the block-overflow measure and the comment still states the coercion backwards at `dock/styles/overflow.css:65-67` (both re-verified this pass). Doc cure applied as GF-DOCK-PASS3 §Lead amendments B; the comment fix is W2 `G-NO-BLOCK-SCROLL`'s cut (src — never this pass) |
+| FLIP-1 F36 dark-scheme invisibility | RU-13-F31-F40 | — | **RATIFIED-AS-CONSUMED (RU-06)** | The live charter carries the invisibility as its own sharpening (plain alpha ink, no blend modes; π-BAND asserts VISIBILITY); sidecar closed CONSUMED-BY-RU-06 |
+| FLIP-2 F37 draw-on RED-cause | RU-13-F31-F40 | — | **RATIFIED-AS-CONSUMED (RU-06)** | The live charter re-attributes the root to the dual draw mechanisms (`G-DRAW-CONNECTED` no longer exists); sidecar closed CONSUMED-BY-RU-06. Crosswalk read-through stamped this pass (item 7, docket row 10) |
+| (routing) Timeline README §Exports | RU-13-F11-F20 | row 7 | **CLOSED — CONSUMED-BY-T33** | `BAND-DOC-TRUTH.md:94` carries the truth-up with provenance; the close stamp (lead-owed, RU-14 R6) is hereby entered |
+| (docket) D2-F23 track-well/value-marks charter | dossier F21-F30 | row 8 | **CLOSED — CONSUMED-BY-UNION** | `BAND-MATERIAL.md:55/:488-490/:503-510/:793` charter both registers; the close stamp (lead-owed, RU-14 R6) is hereby entered |
+| (docket) F33 goo-clone migration | dossier F31-F40 | row 9 | **half-consumed close rides ledger C5; residue APPLIED (E2)** | FM W6 widened + REDUCTION W8 sole cut owner (union); the ASK §C1/§C3 refresh — the row's residue — landed this pass as the E2 re-issues |
+| (docket) crosswalk F34-F40 stale gate tokens | dossier F31-F40 range header | row 10 | **RATIFIED — APPLIED** | `ASSEMBLY-CROSSWALK.md` §Judgment corrections item 7 added (read-through-RU-06; substance/LANDED unchanged) |
+
+**Zero REVERSED.** Every flip's substance survived hostile re-verification at the ring's terminal
+state; the ring's own consumption stamps were all confirmed against the live tree. The JUDGE-2
+docket is fully disposed: consumed rows closed (4/7/8 here, 5+9 per ledger C5's seat), live rows
+1/2-residue/3/6/10 ruled AND applied this pass.

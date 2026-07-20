@@ -68,3 +68,28 @@ Editable file set for this pass: `waves/BAND-FEEDBACK-MOTION.md`, `waves/BAND-MA
 
 - **`BJ.W-IDLE-BREATH`** — BAND-FEEDBACK-MOTION Wave 5 (idle breath for inert atoms + A01 hover-strengthening).
 - **`BJ.W-PAGER-DOT-MORPH`** — BAND-FEEDBACK-MOTION Wave 6 (pager-dot goo-morph, sequenced with the DeckPager.vue cut).
+
+## J12 — the FLIP re-judgment applications (lead amendment pass H1, 2026-07-19)
+
+Mirror of `JUDGE.md` §F. Editable set this pass: PLAN.md, ASSEMBLY-CROSSWALK.md, REGISTRY.md,
+GF-DOCK-PASS3.md, BAND-FEEDBACK-MOTION.md, JUDGE.md, this file. No src/, no dossier-cell
+rewrites (one dated pointer line under the docket).
+
+- **Docket row 1** — APPLIED: `waves/BAND-FEEDBACK-MOTION.md` W5, the Δ-F13-1 mint (interaction
+  half, not OPEN-FM-3-gated; gate rider on (d)).
+- **Docket row 2 residue** — APPLIED: `PLAN.md:195-198` + `formation/ASSEMBLY-CROSSWALK.md`
+  §Judgment-corrections item 5 (the false "already role-correct" premise replaced with the
+  R8 posture split).
+- **Docket row 3** — APPLIED: `formation/greenfields/GF-DOCK-PASS3.md` §Lead amendments A
+  (W5 baseline-π → `rail.vue:108-140`; the `shape`-axis ruling seated in W5).
+- **Docket row 6** — APPLIED (doc half): GF-DOCK-PASS3 §Lead amendments B (§4.1 rationale
+  corrected to the visible→auto coercion); src comment cure carried to W2 `G-NO-BLOCK-SCROLL`.
+- **Docket row 10** — APPLIED: `ASSEMBLY-CROSSWALK.md` §Judgment-corrections item 7
+  (F34-F40 read-through-RU-06).
+- **A01-A17 FLIP-1** — APPLIED: `formation/REGISTRY.md:175` lead re-stamp (no standalone
+  DECIDED-rows wave; distribution ruling; regrowth roster owned by distribution; T40
+  else-branch operative).
+- **Rows 4/7/8 + the F17 band-half** — NO-EDIT-NEEDED beyond the close stamps entered in
+  JUDGE.md §F (consumed by the committed union, re-verified).
+- **Rows 5 + 9 closes** — DEFERRED-TO-LEDGER-C5 (that seat's stamps); row-9's residue landed
+  as the E2 ASK re-issues this pass.

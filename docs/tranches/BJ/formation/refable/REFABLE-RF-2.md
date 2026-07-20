@@ -84,3 +84,21 @@
 5. **Doc truth-up wave (in-repo)**: `docs/design/tunable-anim.md` dock rows → (0.3, 0.82)/0.19s-chain; `motion-canon.md` DRAWER_SNAP → (0.32, 0.8) + drop the two dead proof-script references; remaining stale `design-idioms.md` §3 rows + §7 rewrite (per the ratified census truth); `affordance-map.md` path refresh; `glass-system.md` useSurfaceAxis → resolveSurfaceClass + drop GlassPanel/Sheet from the carrier list; `dependencies.md` + `deps-currency.md` add the `embla-carousel ^8.0` row + drop the Sheet mention; CONTRIBUTING.md release-flow rewrite to the real tag-push flow (no changesets, no proof:all); README.md:72 + canon-doc.mjs comment drop the "GENERATED" claim or restore a generator; `subpath-policy.mjs` count comments 21/31/13/1; `composables/index.ts` header (or delete with the barrel).
 6. **Outbound correction draft (docs/precepts submodule)**: the three diverged docs need a single-home decision — either the submodule syncs from `docs/design/` or the in-repo copies become the sole home and the submodule drops them. PROPOSE the mark; never edit the submodule from this repo.
 7. **Numeric hygiene for any REGISTRY rows derived from round-2/2b**: `<component>/styles.css` count is 20 (not ~40); aurora composables 15 (not 17/16); useStagger's external-consumer comment is TRUE (speedtest via `/motion-core`) — the missing artifact is the consumer-evidence doc, not the consumer.
+
+## Lead record notes (2026-07-19, ledger C2 — annotations per RU-03-COLOCATION R7; the rows and routings above are history, unmodified)
+
+1. **Routing 4's `draw-in.css` half is CORRECTED downstream — its premise fails at HEAD.**
+   F12's "completion-seal-single-consumer" read does not survive: `.draw-rule`/`[data-draw-in]`
+   have ZERO element consumers in src+demo (re-grepped this pass — no `.vue`/`.ts` hit);
+   completion-seal's "draw-in" mentions are prose and its live mechanism is its own
+   `--seal-draw` recipe; `draw-in.css:27-30` fences the members apart. The disposition is
+   family-C A05 (`A05-DRAW-IN` on REDUCTION W3's roster), allowlisted in COLOCATION W3 — NOT a
+   colocation move (RU-03-COLOCATION N1).
+2. **C2's refutation is RIGHT but INCOMPLETE at the demo layer.** The `Combobox.vue:16`
+   comment-not-consumer ruling stands; "the sole class consumers are the chip family" misses
+   `demo/stories/forms/combobox.vue:132` — a live `class="glass-chip glass-capsule …"` element
+   binding (re-verified this pass). glass-chip's KEEP-CENTRAL basis is the corrected 2-surface
+   census (RU-03-COLOCATION N2).
+
+RF-2's C5/C7/C8/B2 cores all re-verified sound by the same union — these two notes are the
+record's only corrections.

@@ -47,7 +47,7 @@ FAMILY A — BAND-GATES (4) ── the gate reformation ─── the TRUTH SUBS
    │   (each gated on its pass-4 design closure + the user ASK rulings it carries)
    │
    └── FAMILY B — the Q060 consumer relay (no band file; the outbound obligation, §Known carries)
-        + the BI carry-over: BI.W-ENGAGE-AFFORD (GROW tag / MODAL 7.x) · BJ.W-IDLE-BREATH the complement
+        + the BI carry-over: BI.W-ENGAGE-AFFORD (GROW spec-only, base = the ad45af8a bank / MODAL fired-trigger backlog) · BJ.W-IDLE-BREATH the complement
 ```
 
 **Ordering laws (only where real — the rest is parallel):**
@@ -192,8 +192,10 @@ corrections landed below where the stale text would actively misdirect.
 ### FAMILY F — `BAND-MATERIAL` (7 waves; the radius/blur/track/type canon + the css-closure restore)
 - **W1 `BJ.W-RADIUS-ROLE`** — the role-keyed radius table (codex law 4) + reconcile the `--radius-input`
   misnomer + delete the dead `--corner-k-soft/-sharp` + repoint raw radii. **Born-RED** (misnomer + dead
-  tokens + raw literals). F12/F17 convert to REGRESSION-GUARDS (already role-correct on disk, RULING 8
-  + the ASSEMBLY amendment).
+  tokens + raw literals). F12 converts to a REGRESSION-GUARD; **F17 is a BORN-RED FIX, not a guard** —
+  the prior "already role-correct on disk" premise is FALSE for F17 (`search/searchVariants.ts:9-10`
+  `rounded-none` on the bare/floating variants; RU-13 FLIP F-1, RU-04 judge R8 re-open — posture
+  split, `BAND-MATERIAL.md:135`; corrected here 2026-07-19, J12).
 - **W2 `BJ.W-BLUR-LADDER`** — rule the collided rungs (6 names → 4 radii), kill-or-document the 2dppx
   overlay arm, one material per role. **Partly born-RED** (collision + DPI facts live; F28 owes a
   live-π re-check re-aimed to `/motion/springs` glow/shadow-bloom, J6).
@@ -261,10 +263,20 @@ corrections landed below where the stale text would actively misdirect.
 
 ### BI carry-over (the engagement waves; W5 idle-breath is their minted complement)
 - **`BI.W-ENGAGE-AFFORD`** (BI band B8-PRUNES) — the sustained-engagement facility: Tier-1 GROW (tokens
-  + `.engage-grow` + the slider grow exemplar) rides its tag; Tier-2 MODAL (`useEngageModal` + the
-  slider modal) is SEQ POST → 7.x, gated on the graded-static-surface + native paint. Default OFF
-  (opt-in); atlas unaffected until it opts in. Its SUSTAINED-ENGAGE half is complemented by BJ's
-  idle/inert half (`BJ.W-IDLE-BREATH`, FEEDBACK-MOTION W5).
+  + `.engage-grow` + the slider grow exemplar) — **SPEC-ONLY at the 7.0.0 tag** (zero implementation on
+  any mainline; the prior "rides its tag" phrasing was untrue — RU-25 claims 1/3/4). **Implementation
+  base = `worktree-agent-ad45af8a27c9ce531`** (9 commits over base `f8d205d3`, re-verified live this
+  pass: the `--glass-engage` scalar seed `8e15fba7` → rim-ink lift `ad736a1e` → silhouette ramp
+  `0a94204b` → demo stage `0a8bd8d1` → JND retune `661d7d39` → slider rim surface `820828d4` → the
+  Phase-B body channel `6e32f2ad`/`f9214d0a` retired at `224024c3` — "the rim carries the read
+  alone"; RU-22 F2/routing 6, ledger F4), harvested as REFERENCE under the RU-25 R3 conditions:
+  re-base off HEAD (the stale-worktree trap), unify `--glass-engage` with the matrix's `--engage-t`
+  under the six-scalar fence, and re-seed to the rung the branch actually expresses (ACTIVE, not
+  ENGAGE). Tier-2 MODAL (`useEngageModal` + the slider modal) is a named backlog row with the
+  fired-trigger (V-A95-green + Q023-green), not a "7.x" promise (the CHRONIC ENGAGE-AFFORD ruling).
+  Default OFF (opt-in); atlas unaffected until it opts in. Its SUSTAINED-ENGAGE half is complemented
+  by BJ's idle/inert half (`BJ.W-IDLE-BREATH`, FEEDBACK-MOTION W5) — a pairing of two formed halves,
+  not a shipped-shape claim (RU-25 row 3).
 - **`BI.W-SLIDER-ENGAGE`** — SUPERSEDED (folded into `BI.W-ENGAGE-AFFORD`; redirect stub only, do not
   execute).
 

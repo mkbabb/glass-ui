@@ -47,3 +47,26 @@ seat executes them verbatim against the band files. The rulings below resolve th
   paint-taste rows (Q051 5/7) stay in the Q003 lane.
 - Greenfields at pass-1 (dock 52%, handmark 55%, aurora 48%, blob 50%) → pass-2 critics
   dispatched (fresh seats, assume-wrong).
+
+## Re-opening stamps (lead amendment pass, 2026-07-19 — ledger D1/D2; pointer annotations only, the rulings body above is untouched)
+
+- **Ruling 3 — RE-OPENED, outcome AFFIRMED (RU-04-JUDGE §4).** The "after the family-B sibling
+  census clears" input was written on the vacated zero-consumer premise and is unsatisfiable:
+  fourier-analysis live-imports `useSidebarState` ×2 (`web/src/components/paper/
+  MobileFloatingToc.vue:4` + `PaperSidebar.vue:8`, re-verified on the sibling's disk this
+  pass). The OUTCOME (the drop rides 8.0.0) stands; the precondition is REPLACED by
+  G-CONSUMER-ADDENDUM under the consumer-updates ruling, exactly as BAND-COLOCATION W2 recast
+  it. Do not read the census clause above as the wave's controlling text.
+- **Ruling 6 — RE-OPENED, substance AFFIRMED, arithmetic corrected (RU-04-JUDGE §4).** The
+  contingency (ASK-13/D1 prunes → `scene` not minted) stands; "taxonomy is 6" rode the
+  superseded seven-type census — under the adopted six-type fold, pruning yields FIVE
+  (BAND-STORY OPEN-D9 carries the correction).
+- **Ruling 8 — RE-OPENED, ownership AFFIRMED, posture split (RU-04-JUDGE §4).** RU-13 FLIP F-1
+  proved F17 statically born-RED at HEAD — its live-π conditional is DISCHARGED (the capture is
+  the π, not the trigger); F12 remains the regression-guard arm. BAND-MATERIAL W1 carries both
+  postures; the ownership conditional above licenses both.
+- **Standing note, A11Y (ledger D2 — RU-03-A11Y r2).** The "Bands SOUND as amended: … A11Y"
+  line is OVERTAKEN as to its input: the six-finding round-2 audit this adjudication blessed
+  was replaced by the RU-18-grounded union (`waves/BAND-A11Y.md`, 5 waves incl. the N6
+  status-tone major). Ruling 4 itself STANDS — decided at GF-DOCK-PASS3 §3 (toolbar + roving),
+  ratified RU-05 D7, carried as the band's W5-A record.

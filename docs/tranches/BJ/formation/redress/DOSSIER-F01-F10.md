@@ -107,7 +107,7 @@ authorship-coverage cure is real, specced, and gated.
 
 ## F03 — "most of this is worthless" (+ the parsimony edict)
 
-**INVENTORY.** Ledger (`FEEDBACK-LEDGER.md:15`): *"'Most of this is worthless.'"* plus the re-stated
+**INVENTORY.** Ledger (`FEEDBACK-LEDGER.md:15`): *""Most of this is worthless.""* plus the re-stated
 parsimony edict (extreme parsimony, KISS-forward, fewer lines, little time on contrived gates, majority
 on direct implementation + visual verification). Screenshot: `feedback/F03-worthless-section.png`.
 
@@ -147,9 +147,9 @@ delta succeeded; the PARTIAL no longer describes HEAD. Crosswalk `LANDED` — AG
 
 ## F04 — "this shape is to be abrogated" (+ grand audit with questions relayed)
 
-**INVENTORY.** Ledger (`FEEDBACK-LEDGER.md:16`): *"'This shape is to be abrogated' — simplify
-components to better, more opinionated defaults; KISS. A grand audit of ALL components with questions
-in reduction relayed to the user."* Screenshot: `feedback/F04-shape-abrogate.png`.
+**INVENTORY.** Ledger (`FEEDBACK-LEDGER.md:16`): *""This shape is to be abrogated" — simplify
+components to better, more opinionated defaults; KISS. A grand audit of ALL components with **questions
+in reduction relayed to the user**."* Screenshot: `feedback/F04-shape-abrogate.png`.
 
 **ISOLATION (screenshot re-read — CORRECTED against the prior artifact AND the greenfield's
 descriptor).** A single vertical dock on pure black: home icon, a divider, then compass, shapes,
@@ -296,8 +296,8 @@ transition-choreography seam. Design authority: the liquid-weight law (PLAN §3)
 design and neither claimed it until the seam ruling.
 
 **REDRESS.** **`BJ.W-ROUTE-PENDING` (BAND-PERF W4) — the OUTRIGHT owner of F07's story-transition
-choreography** (PLAN §1: "PERF W4 OWNS the F07 story-transition choreography; Family D consulted, not
-co-owner"). The concrete choreography (progress floor + origin-anchored goo-morph) is an in-wave
+choreography** (PLAN §1: "PERF W4 OWNS the F07 story-transition choreography (Family D consulted, not
+co-owner)"). The concrete choreography (progress floor + origin-anchored goo-morph) is an in-wave
 DESIGN-ITERATION obligation. **LIVE-DEFER:** the expressive after-state is a π/DELTA deliverable of
 that wave.
 

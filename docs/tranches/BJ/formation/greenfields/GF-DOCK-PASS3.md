@@ -457,3 +457,32 @@ convergence (§9)—an honest dependency, not a gap this spec may close alone.
 Remaining OWED (non-ASK): all §11 π; the census double-observe cost (may fold into
 `useDockOverflowFit`); PRM instant-seat paint; the `keepOpen()`-through-glide integrity detail;
 the F2/F4/F5/N3 sibling convergence (§9).
+
+## Lead amendments (J12, 2026-07-19 — the two live RU-13 flips this charter owed; ledger H1)
+
+**A. FLIP-1 (F01-F10) — the F04 baseline anchor + the `shape`-axis ruling (JUDGE-2 docket row 3;
+RATIFIED, applied here).** The F04 referent is the **`shape="rounded"` register** — the "Rounded
+shape" section at `demo/stories/dock/rail.vue:108-140` (finite rounded-rect, clear flat top-edge
+run; icon census home, `entries.slice(0, 4)` exact) — never a stadium-pill silhouette. Two binding
+amendments:
+1. **W5's baseline π targets `rail.vue:108-140`** (with `BottomDock.vue:161-252` as the
+   chevron/ring RED it already carries) — not the aurora-staged "Vertical dock" section.
+   `G-RADIUS-GRAMMAR`'s before/after pair is judged against THAT section's paint.
+2. **W5's shape grammar RULES the 3-value `shape` axis itself** (`pill | rounded | card`,
+   `useDockShellProps.ts:53`) as F04-direct surface — keep, collapse, or re-grammar, decided in-wave
+   with rationale recorded; the rings are not the whole F04 surface. Law 4's "tray = stadium pill
+   (card when wrap/grid)" line above reads as the CODEX grammar (IOS27-CODEX law 4), not as a
+   description of the F04 screenshot.
+
+**B. FLIP-2 (F21-F30) — the §4.1 RED-rationale precision (JUDGE-2 docket row 6; Δ-F27-1;
+RATIFIED, applied here).** §4.1's "RED today: `useDockOverflowFit.ts:38-40` measures block
+overflow" is imprecise and reads corrected as follows: on the horizontal rail the composable's
+block branch is vertical-only (`useDockOverflowFit.ts:38-41` — the ternary measures INLINE
+overflow for horizontal docks), and the scroll axis exists because `overflow-x: auto` computes the
+paired `overflow-y: visible` to **auto** (CSS Overflow 3) — the visible→auto computed coercion,
+not a block-overflow measurement. The gate (`scrollHeight === clientHeight`) and the cure
+(`overflow-y: clip` + drop `block:'nearest'`) stand unchanged. **W2 cure obligation (carried):**
+the shipped comment at `src/components/dock/styles/overflow.css:65-67` states the coercion
+BACKWARDS ("spec-forces the computed cross axis to a clip" — the computed value is `auto`);
+`G-NO-BLOCK-SCROLL`'s cut corrects that comment in the same commit (Δ-F27-1 carries the text) —
+a src edit, owned by W2 execution, never by this doc pass.

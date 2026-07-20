@@ -39,16 +39,38 @@ its own." It is now decided ONLY by you.
   `formation/round-2/adversarial-verification-of-round-1-consumer-truth-component.md`. Adjudicated
   SHARED-KEEP at `BI/STRUCTURE-ADDENDA.md` §3 (DP-A, RULED); the third-ask is `formation/round-2c/
   chronic-decided-draft.md` (UF-K1 row).
-- **Recommendation on record:** **RATIFY SHARED-KEEP** — DP-A stands; the removal instinct is the
+- ~~**Recommendation on record:** **RATIFY SHARED-KEEP** — DP-A stands; the removal instinct is the
   disease, not the cure. metric-**pill** (0 consumers) was the clean delete and already landed;
   metric-**badge/cell/stack** + instrument-chassis are shared keeps. Overruling means speedtest
-  becomes a UI library and ~4 apps break on the bump (a costed, filable break, but a real one).
-- **The question:** Do you **ratify SHARED-KEEP** (the census stands, this closes the third-ask
-  terminally), or **overrule DP-A** and accept the costed multi-repo break — and if overrule, do you
-  want the removal to include instrument-chassis (speedtest×4/muster×5) or only the metric family?
-- **Unblocks:** Wave 4 of the REDUCTION band (SHARED-KEEP → a family-B relay-only wave; overrule → a
-  full multi-repo migration relay). Terminal either way — record the rationale so a fourth ask
-  cannot re-open it.
+  becomes a UI library and ~4 apps break on the bump (a costed, filable break, but a real one).~~
+
+**RE-ISSUED 2026-07-19 (lead amendment E2, RU-04 judge §5.5 — SUPERSEDES the struck recommendation;
+the union's two-grain census at `waves/BAND-REDUCTION.md` W4 governs, re-verified on disk this
+pass).** The SHARED-KEEP recommendation rested on the round-2 census RU-09 F18 proved phantom at the
+prop/slot grain; it is STRUCK.
+- **instrument-chassis — DELETE recommendation.** The SYMBOL is live-imported (speedtest `App.vue`
+  renders `<InstrumentChassis :variant :phase>` + a `#dial` slot at `:98-104`; muster `App.vue:31`
+  imports, `variant="spine"` at `:210`) but the USAGE is contract-phantom against the 7.0.0 contract
+  of exactly `state/tone/proportion/boundaries/reserve/class` (`instrument-chassis/types.ts:8-15`) —
+  no `variant`, no `phase`, no `dial` slot. Both apps owe a full rewrite-on-upgrade regardless (pins
+  ^4.0.1/^3.1.0), so consumer dependence cannot ratify the keep (the consumer-updates ruling). The
+  F18 flip clause (a consumer live on the CURRENT contract) does NOT fire for chassis.
+- **metric — the F18 flip clause HAS FIRED; both dispositions on the table.** keyframes.js
+  live-renders `<Metric size="xl" …>` from `/metric`
+  (`demo/scenes/sequence/SequenceTarget.vue:138`) — the ONE current-contract consumer
+  constellation-wide. Standing recommendation stays **DELETE-with-relay** (one consumer is not ≥2;
+  the addendum is one import swap), with **COLLAPSE-FAMILY** (one Metric, layout variants — the
+  RU-19 V3 fallback) as the fired-clause alternative. You rule with the clause and the file:line on
+  the table, per F04.
+- The stale-subpath phantom relays ride either way: `/metric-badge` is still imported by **4 repos /
+  13 files** (fourier-analysis ×7 — the largest — + speedtest ×2 + muster ×2 + sci-report ×2;
+  re-censused this pass).
+- **The question (re-posed):** ratify the corrected DELETE side (chassis DELETE; metric
+  DELETE-with-relay, or COLLAPSE-FAMILY under the fired clause), or overrule and KEEP — and if keep,
+  chassis too or only metric? The census now refuses the KEEP rather than the removal; your thrice-
+  stated removal instinct and the corrected evidence now point the same way.
+- **Unblocks:** Wave 4 of the REDUCTION band. Terminal either way — record the rationale so a fourth
+  ask cannot re-open it.
 
 ### A2. completion-seal: keep on the public surface (2 external repos), retire-with-relay, or inline?
 
@@ -157,16 +179,28 @@ F33: *"what is deck vs carousel — likely collapse."*
   Adjudicated: `formation/round-1/consumer-truth…` finding "consumer-provenance-misattribution" +
   round-2 affirmation. F33 also asks: "the dot animations need dramatic refinement" (pager-dots,
   liquid-weight — a separate motion ask).
-- **Recommendation on record:** deck is **NOT a carousel duplicate at the API atlas consumes** — it
+- ~~**Recommendation on record:** deck is **NOT a carousel duplicate at the API atlas consumes** — it
   is a headless deck-navigation engine (`useDeck`/`DeckCore`), while Carousel is a visual component.
   Collapsing deck INTO carousel breaks atlas's headless integration (2 sites). **Recommend keep deck
   as the headless engine + carousel as the visual component**; if any surface genuinely overlaps,
-  collapse only the overlapping shell, never the `useDeck` engine.
-- **The question:** Do you **keep both** (deck = headless `useDeck` engine consumed by atlas;
-  carousel = visual component), **collapse** (breaking atlas's `useDeck` — a filable 2-site relay), or
-  **keep deck-as-engine and retire only the Carousel visual overlap**?
-- **Unblocks:** the deck/carousel terminal shape; the atlas `useDeck` relay if collapse; the
-  pager-dot refinement (F33) routes to the motion band regardless.
+  collapse only the overlapping shell, never the `useDeck` engine.~~
+
+**RE-ISSUED 2026-07-19 (lead amendment E2, RU-04 judge §5.5 + JUDGE-2 docket row-9 residue —
+SUPERSEDES the struck symmetric-keep recommendation; census corrected AGAIN at
+`waves/BAND-REDUCTION.md` W4, re-verified on disk this pass).** The deck half STANDS: keep the
+headless `useDeck` engine (atlas ×2 — `useStageDeck.ts:2`, `useDeckDetent.ts:1`); the vestigial
+`DeckPager.vue` cut rides REDUCTION W8 regardless. The CAROUSEL half flips: RU-12 A16's "zero live
+consumers in all 11 repos" ran a fence that excluded words — words live-imports SIX carousel symbols
+(`frontend/src/components/custom/definition/components/media/ImageCarousel.vue:83-89`, pin ^3.0.0),
+of which `CarouselPrevious`/`CarouselNext` no longer exist at 7.0.0. ONE partially-stale external
+consumer sits below the ≥2 current-contract bar: the corrected recommendation is **carousel
+DELETE-with-relay** (+ embla peer removal; deck + PagerDots become the one paging register — RU-09
+F33 primitives-distinct ratified; the relay NAMES words).
+- **The question (re-posed):** ratify **deck-keep (headless) + carousel DELETE-with-relay**, or
+  overrule to keep Carousel (then it needs a second current-contract consumer or a recorded
+  exception)? Collapse-deck-into-carousel remains off the table (it breaks atlas's engine).
+- **Unblocks:** the deck/carousel terminal shape; the words relay (named, filable); the pager-dot
+  refinement (F33) routes to the motion band regardless.
 
 ### C2. confirm-dialog vs dialog: keep the confirm STORY/preset as a distinct page, or fold the demo too? (the subpath already folded)
 
@@ -193,16 +227,33 @@ F32 (`/motion/reveal`): *"what is this vs our other scrolling components."* F42 
 *"what is this vs our other scrolling items."* The user is asking the same question twice about
 overlapping scroll primitives.
 
-- **Evidence (verified):** demo pages `demo/stories/motion/reveal.vue`, `scroll.vue`, plus a `scroll/`
+- ~~**Evidence (verified):** demo pages `demo/stories/motion/reveal.vue`, `scroll.vue`, plus a `scroll/`
   and `deck/` subdir. Multi-consumer scroll keeps (round-2): `fading-scroll` (atlas+speedtest+value.js
   +keyframes.js), and the `useStaggerReveal` family. `useStagger` itself has an unbacked external
-  claim (Wave 3). Family D flags scroll-choreography overlap.
-- **Recommendation on record:** consolidate the scroll-reveal primitives to the ones that clear ≥2
+  claim (Wave 3). Family D flags scroll-choreography overlap.~~
+- ~~**Recommendation on record:** consolidate the scroll-reveal primitives to the ones that clear ≥2
   (`fading-scroll` is a confirmed multi-consumer keep); the `reveal`/`scroll` demo pages likely
-  collapse into one scroll-family page. The exact merge shape is a design call.
-- **The question:** Which scrolling primitives survive as distinct public surfaces —
-  `fading-scroll` + one reveal, or a single unified scroll-reveal? And do the `/motion/reveal` +
-  `/motion/scroll` demo pages **collapse into one** scroll-family page?
+  collapse into one scroll-family page. The exact merge shape is a design call.~~
+
+**RE-ISSUED 2026-07-19 (lead amendment E2, RU-04 judge §5.5 + JUDGE-2 docket row-9 residue —
+SUPERSEDES the struck census; the union-corrected roster at `waves/BAND-REDUCTION.md` W3/W9 governs,
+re-verified on disk this pass).** The corrected table, per symbol:
+- **KEEP `useStagger`** — RESOLVED: speedtest live-imports ×2 (`ResultStack.vue:171`,
+  `useResultReveal.ts:36`); the prior "unbacked" claim and RU-09 R6's DELETE-useStagger leg are
+  OVERTURNED by the census's own escape clause (consumer-evidence doc rides the wave).
+- **KEEP `fading-scroll`** (4 repos) + the scroll spine (`scrollReader` →
+  useScrollTrigger/useScrollChrome/useScrollTracker) — the spine is clean, one reader core.
+- **DELETE `useBloomUp`+`bloomUpField`** and **`useStaggerReveal`** (zero consumers anywhere;
+  `scroll-driven.css` declares `[data-scroll-reveal]` the replacement).
+- **DEMO-LOCAL `useScrollPin`** (+ `springProjection` as a pair; the `.scroll-pin*` CSS register
+  moves WITH its writers). **CONDITIONAL-KEEP `useScrollScene`** (iff a BJ wave binds it to a real
+  library surface, else it follows pin out).
+- **RELOCATE `useLiquidReveal` to `morph/`** (it is a FLIP morph, not scroll — survives as the ONE
+  reveal adapter). `useTextHighlight` is its own cut-or-bind ask (A13; default DELETE).
+- **The question (re-posed):** ratify this per-symbol table + the page fold (`/motion/reveal` folds
+  into one `/motion/scroll` page, with the bloom section on the morph story) — discharging F32+F42?
+  On ratification, REDUCTION W9 also carries the A06 scroll-animation standard (the codified
+  `[data-scroll-reveal]` + vReveal + useLiquidReveal register) as a named deliverable.
 - **Unblocks:** the scroll-family reduction (which exports survive) + the demo-page collapse; feeds
   the family-D story taxonomy.
 
@@ -254,16 +305,16 @@ rounding — the entire compositions section is likely to be pruned."*
 
 | # | Ask | Recommendation | Blocks |
 |---|-----|----------------|--------|
-| A1 | metric-family + instrument-chassis | RATIFY SHARED-KEEP (3-repo census) | REDUCTION Wave 4 |
+| A1 | metric-family + instrument-chassis | RE-ISSUED: chassis DELETE (contract-phantom); metric DELETE-with-relay vs COLLAPSE (flip clause fired) | REDUCTION Wave 4 |
 | A2 | completion-seal | keep (2 external repos) or relay | REDUCTION Wave 4 |
 | B1 | DataTable | thin or demo-privatize (fails ≥2) | REDUCTION Wave 3 + BAND-A11Y |
 | B2 | FourierField | retire dead knobs; keep-or-cut | Wave 1 + A14 umbrella |
 | B3 | Constellation | retire dead knobs; keep-or-relocate | Wave 1 |
 | B4 | easing tooling | demo-privatize | Wave 3 + F31 |
 | B5 | WatercolorDot | relocate (value.js only) | Wave 1 |
-| C1 | deck vs carousel | keep deck-as-headless-engine (atlas useDeck) | deck fate + atlas relay |
+| C1 | deck vs carousel | RE-ISSUED: deck-keep (headless, atlas) + carousel DELETE-with-relay (words named) | deck/carousel terminal shape + words relay |
 | C2 | confirm-dialog | fold already landed; keep-or-fold the story | demo page count + relay |
-| C3 | reveal/scroll | consolidate to ≥2-keeps | scroll-family reduction |
+| C3 | reveal/scroll | RE-ISSUED: per-symbol table (useStagger KEEP; 3 deletes; pin demo-local; liquid-reveal→morph) + page fold | scroll-family reduction |
 | C4 | tempo | fold into springs (F29) | motion taxonomy |
 | D1 | compositions | prune whole section | Wave 3 + family-D taxonomy (+ `BAND-STORY` `scene` type: 6-vs-7) |
 

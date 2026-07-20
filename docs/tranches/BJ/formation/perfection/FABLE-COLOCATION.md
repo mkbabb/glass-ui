@@ -190,11 +190,17 @@ src/components/handmark/
     brush.ts freehand.ts geometry.ts ink.ts noise.ts texture.ts   ← MOVED from handmark/ root
 ```
 
+> **[LEAD AMENDMENT 2026-07-19]** The handmark tree above is SUPERSEDED by the GF-HANDMARK
+> union (RU-06 RT3; `GF-HANDMARK-PASS3.md:180-182`, §7): the six helpers DELETE with the
+> redesign; terminal layout is `HandMark.vue · stroke.ts · index.ts`. No `composables/` move
+> occurs. Source: RU-03-COLOCATION R1.
+
 ### 2e. `src/styles/**` — unchanged except the accent-tone rung (Principle 4 seam noted)
 
 `styles/glass/accent-tone.css` leaves for `chip/accent-tone.css`; its `@import` re-homes from
-`glass.css:63` to `index.css` at a rung that reproduces `.glass-accent-tone`'s glass-band cascade
-position (§4 Amendment 3). `glass-chip.css` + `glass-atom.css` remain in `styles/glass/` as shared
+`glass.css:63` to `index.css` at a rung that reproduces `.accent-tone`'s glass-band cascade
+position (§4 Amendment 3; class name corrected 2026-07-19—the register is `.accent-tone`,
+`accent-tone.css:28`; no `.glass-accent-tone` exists in src). `glass-chip.css` + `glass-atom.css` remain in `styles/glass/` as shared
 registers — their closure fix is family G/A's born-RED wave, not this band (§6). The
 `glass-refract.css`/`glass-specular-track.css` root-vs-`glass/` and `scroll-*.css` grouping niceties
 stay OUT (round-2b `[note]`; agree with the draft — module-level cascade files, no per-component
@@ -206,7 +212,10 @@ ownership at stake).
 demo/composables/
   virtual/               (existing — the conforming demo-local model)
   sidebar/               ← MOVED from src/composables/sidebar/ (8 files; useSidebarState.ts DELETED
-                            as dead — zero consumers anywhere, verified)
+                            — zero IN-REPO consumers [corrected 2026-07-19: fourier-analysis
+                            live-imports it ×2, MobileFloatingToc.vue:4 + PaperSidebar.vue:8,
+                            re-verified on the sibling's disk; the external contract governs —
+                            DELETE pairs with the G-CONSUMER-ADDENDUM, RF-2 C5])
 tests/
   demo/
     sidebar/             ← MOVED from tests/composables/sidebar/ (4 files follow their subject; §5 P4)
@@ -226,7 +235,7 @@ ruling-gated surface break.
 | # | from | to | rewrites | export-map edit |
 |---|------|----|----------|-----------------|
 | **1a** | `composables/glass/textureUpload.ts` | `components/aurora/composables/textureUpload.ts` | 3 aurora imports (`../../../composables/glass/textureUpload` → `./`/`../`) | none (off-public) |
-| **1b** | `components/handmark/{brush,freehand,geometry,ink,noise,texture}.ts` | `components/handmark/composables/` | CHANGED — helper↔helper relatives survive (the six move as a unit) but the full rewrite set is: `HandMark.vue`, `useHandMark.ts` (`../x` → `./x`), `index.ts` (5 re-export blocks), `types.ts` (brush import), **+ ~5 handmark test files** importing `@glass/components/handmark/{freehand,ink,texture,…}` (Amendment 13) | none |
+| **1b** | `components/handmark/{brush,freehand,geometry,ink,noise,texture}.ts` | `components/handmark/composables/` | CHANGED — helper↔helper relatives survive (the six move as a unit) but the full rewrite set is: `HandMark.vue`, `useHandMark.ts` (`../x` → `./x`), `index.ts` (5 re-export blocks), `types.ts` (brush import), **+ ~5 handmark test files** importing `@glass/components/handmark/{freehand,ink,texture,…}` (Amendment 13) **[row SUPERSEDED 2026-07-19—the GF-HANDMARK union deletes the six helpers (terminal layout `HandMark.vue · stroke.ts · index.ts`); the move is void]** | none |
 | **1c** | `styles/glass/accent-tone.css` | `components/chip/accent-tone.css` | move `@import` from `glass.css:63` → `index.css` at the glass-band rung (Amendment 3) | none (CSS, not a JS subpath) |
 | **1d** | `_shared/{fieldControl,valueDomain}.ts`+`field-*.css`; `{FeedbackMark.vue,feedback.ts,feedback-tone.css}`; `{menuRowClass.ts,menu.css}`; `{disclosure-context.ts,disclosure.css}` | `_shared/{field,feedback,menu,disclosure}/` | CHANGED — ~23 direct-leaf TS imports (incl. 2 test files) + 3 `index.css` `@import`s (`:186,:203,:218`) + 3 ledger comments (`:98,:142,:153`) + **6 SFC `<style src>` edits**: `field-control.css` ×4 (`Input.vue:57`, `TagsInput.vue:64`, `NumberFieldInput.vue:37`, `Textarea.vue:56`) and `disclosure.css` ×2 (`Accordion.vue:109`, `Collapsible.vue:64`) — Amendment 13 | none (`axes.ts`/`primitive.ts` stay root → `/axes` intact) |
 | **1e** | delete `composables/index.ts`, `glass/webgpu/index.ts`, `sortable-list/composables/index.ts`, `typewriter/composables/index.ts` (4 dead barrels) | — | 0 (already bypassed by direct-leaf imports) | none |
@@ -263,7 +272,8 @@ removed, else typecheck reds mid-flight. Wave 2 runs last, after the family-B si
 
 > **Amendment 3 (Move C — cascade rung corrected).** `accent-tone.css` currently `@import`s at
 > `glass.css:63`, INSIDE the glass material band (between `grain-overlay.css:58` and `rim.css:64`).
-> Its `.glass-accent-tone` register decorates the glass surface and must keep that early rung. So
+> Its `.accent-tone` register (class name corrected 2026-07-19—`accent-tone.css:28`; the
+> `.glass-accent-tone` name matched nothing in src) decorates the glass surface and must keep that early rung. So
 > the re-home is `chip/accent-tone.css` `@import`ed from `index.css` DIRECTLY AFTER the glass band
 > (near `:180`), NOT at chip's late component rung (`:181+`) — placing it late shifts its cascade
 > position and fails byte-identity / the computed-style invariant. File location = chip; `@import`
@@ -275,6 +285,9 @@ removed, else typecheck reds mid-flight. Wave 2 runs last, after the family-B si
 > aurora (15)/blob (12) (CHANGED — counts trued to HEAD; were quoted 17/13). No `ink/` render
 > sub-family — the six do not form a closed pipeline that
 > earns a named dir; KISS + the house pattern favor flat.
+> **[SUPERSEDED 2026-07-19—the GF-HANDMARK union (RU-06 RT3; `GF-HANDMARK-PASS3.md:180-182`,
+> §7) DELETEs the six helpers; terminal layout `HandMark.vue · stroke.ts · index.ts`. No flat
+> move happens; the `ink/` OPEN is moot. Source: RU-03-COLOCATION R1/C9.]**
 
 > **Amendment 5 (Carve E — the census OVER-CARVED; tighten to 4 submodules).** Round-2's
 > `_shared/surface/` and `_shared/motion/` submodules are REJECTED. They bundle high-fan-in
@@ -347,7 +360,9 @@ removed, else typecheck reds mid-flight. Wave 2 runs last, after the family-B si
 > `<style src="../_shared/field-control.css">` in `Input.vue:57`, `TagsInput.vue:64`,
 > `NumberFieldInput.vue:37`, `Textarea.vue:56`, and `disclosure.css` by `Accordion.vue:109` +
 > `Collapsible.vue:64` — six path edits the 1d carve MUST include; (b) **the test mirror's
-> leaf-path imports** — ~5 `tests/components/custom/handmark/*` files import
+> leaf-path imports** — SEVEN `tests/components/custom/handmark/*` files (count trued
+> 2026-07-19: HandMark, brush, geometry, highlight, hull-guard, morphology, texture — was
+> "~5"; moot via the Amendment-4 supersession, the tests ride GF-HANDMARK) import
 > `@glass/components/handmark/{freehand,ink,texture,…}` and follow move 1b, and
 > `tests/menuRowClass.spec.ts` + `tests/components/_shared/valueDomain.test.ts` follow the 1d
 > carve. Canonical rule for every wave: a move's rewrite set = TS/vue imports + SFC `<style src>`

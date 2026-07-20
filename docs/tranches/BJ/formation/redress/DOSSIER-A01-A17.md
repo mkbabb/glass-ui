@@ -470,7 +470,8 @@ premise re-proven against disk). Plus the `fixed inset-0` always-on shell field,
 **POST-MORTEM.** Boot saturation + idle churn, not network: R3b DEV baselines — healthy LCP
 (root 391ms / foundations 405ms / blob 488ms, CLS 0.00 at load), but 2 boot long-tasks (~208-210ms),
 continuous idle rAF (~1.56-1.71s task-time per ~5.3s window, ~3.11s on blob), 119ms warm route
-freeze + CLS 0.04, 186ms cold-nav stall. Headless gates couldn't see any of it — perf had no live
+freeze + CLS 0.04, 186ms cold-nav stall (R3a — `BAND-PERF.md:43`; sub-round trued lead C6
+2026-07-19, `186` greps zero in R3B-DIGEST). Headless gates couldn't see any of it — perf had no live
 lens until BJ.
 
 **REDRESS + OWNING WAVES.** `BAND-PERF` W1 `BJ.W-BOOT-DIET` (async PresetEditor/Aurora + the barrel

@@ -224,9 +224,11 @@ row 1 = CHRONIC R1; UF-K1 metric confrontation = §A1).
 4. **F07 seam ruling**: `BJ.W-ROUTE-PENDING` (BAND-PERF W4) OWNS the story-transition
    choreography; Family D is consulted, not co-owner. OPEN-P10's fork is decided inside that
    wave; no separate Family-D choreography wave exists or is needed.
-5. **F12/F17 conversion**: disk shows both already role-correct — `BJ.W-RADIUS-ROLE`'s RULING-8
-   conditional converts to REGRESSION-GUARDS (the live-π at wave start confirms, then the
-   assertions pin the corrected state).
+5. **F12/F17 conversion**: F12 converts to a REGRESSION-GUARD; **F17 does NOT** — the "both
+   already role-correct" premise is FALSE for F17 (`search/searchVariants.ts:9-10` `rounded-none`
+   beats `.input-bar`'s `--radius-2xl`; RU-13 FLIP F-1, judge R8 re-open AFFIRMED with posture
+   split — F17 statically born-RED FIX, `BAND-MATERIAL.md:135`). [Corrected 2026-07-19, J12 — the
+   prior sentence read "disk shows both already role-correct".]
 
 **COUNTS (reconciled): 50 LANDED / 5 DECIDED / 3 CLEARED / 10 ASK / 0 ORPHAN / 0 pending (= 67, F05's
 row stays LANDED for its two landed sub-asks; the CLEARED tally counts F02/F06/V-A95-class rows
@@ -246,3 +248,10 @@ Carried verbatim from `redress/JUDGE.md` §D (crosswalk corrections — the acco
 4. F08: disposition annotated per C-G.
 5. F33: the DeckPager.vue cut + W6 mint annotated per J3.
 6. COUNTS: unchanged in total (67); A14 retally already applied by the fix pass.
+7. **F34-F40 read-through-RU-06 (added 2026-07-19, J12 — JUDGE-2 docket row 10):** the rows at
+   :56-62 cite the retired pre-RU-06 GF-HANDMARK charter — `G-CONTAIN`/`G-DRAW-CONNECTED`/
+   `G-RING-LAYER` grep zero in the live charter, and "register 7→3 brushes" is false (the RU-06
+   register is ONE pen voice). The rows are read through the live wave map at
+   `GF-HANDMARK-PASS3.md:208-211` (W1 THE-VOICE … W4 THE-STORY); LANDED status and F-row
+   substance are unchanged — only the gate/wave tokens are historical. The two RU-13 F31-F40
+   sidecar FLIPs those rows fed are CONSUMED-BY-RU-06 (ratified J12).

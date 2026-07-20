@@ -175,6 +175,21 @@ third-ask → family C's disease row).
 BJ band: the DECIDED-rows wave — every chronic/deferred/invented-window item gets build / fold /
 retire with rationale, disease rows as standalone waves; liveness invariants re-expressed as
 executable one-time RED→GREEN differentials (the gate ruling's lawful substitute).
+[LEAD RE-STAMP 2026-07-19, J12 — RU-13-A01 FLIP-1 RULED: **no standalone DECIDED-rows wave is
+chartered.** Family I is formation-terminal via `CHRONIC-ADJUDICATION.md`; the promised
+standalone disease builds either LANDED in BI (STYLE/ENCAP-REDRAIN 07-12, DOCK-SPINE 07-13) or
+live as chartered BJ waves (the dock band); the remaining EXECUTION duty — the §5/§7 discharge
+probes — DISTRIBUTES: each rides its owning band's gates or the RU-02 STAB chain's
+discharge-verify checklist as a one-time RED→GREEN differential (RF-4 routing 2 ADOPTED — rows
+29/31/33/34/38/39 are MET/LANDED-discharge-verify, never re-executes). The live >500 regrowth
+roster (RF-4 F2: Slider.vue 651 · PagerDots.vue 580 · metaball.frag.ts 530 · metaball.wgsl.ts
+528 · useWebGPUCanvas.ts 520 · EasingPicker.vue 518 · dock/styles/shell.css 511) is OWNED BY
+DISTRIBUTION — no 500-line gate survives the abrogation (grep-0 in the BJ gate set), so no
+redrain wave is minted; each member's size rides the wave already redrawing it (REDUCTION W1
+Slider · REDUCTION W8/FM W6 PagerDots · GF-BLOB W-DELETE-TWIN the wgsl twin · REDUCTION §B4/F31
+EasingPicker · GF-DOCK shell.css · the metaball.frag/useWebGPUCanvas pair rides the procedural
+umbrella) — recorded here so the roster is never ownerless again. DOC-TRUTH T40 executes its
+else-branch ("formation-terminal via CHRONIC-ADJUDICATION").]
 
 ## Family J — doc-truth sweep
 **Verdict: prose drifted from landed reality in named places; one truth-up wave clears it.**

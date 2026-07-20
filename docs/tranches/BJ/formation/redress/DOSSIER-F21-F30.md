@@ -510,7 +510,7 @@ REDUCTION-demote cross-band consistency note ADDED. Crosswalk: LANDED; AGREE.
 
 ## F30 — /motion/tempo "what even is" this page
 
-**INVENTORY.** Ledger (`../../FEEDBACK-LEDGER.md:42`): *"`/motion/tempo` — 'What even is' this
+**INVENTORY.** Ledger (`../../FEEDBACK-LEDGER.md:42`): *"`/motion/tempo` — "What even is" this
 page."* URL-anchored, no screenshot.
 
 **ISOLATION (re-proven this seat).** `demo/stories/motion/tempo.vue` is a single-axis token demo:
