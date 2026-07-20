@@ -1,0 +1,84 @@
+BJ.W-DOC-TRUTHUP — acceptance battery verdicts
+==============================================
+captured 2026-07-20, this seat (opus, mechanical closer)
+pre-sweep tree: HEAD 5b34bb12 (clean)
+post-sweep tree: HEAD 5b34bb12 + the wave's working-tree diff
+
+The band file (BAND-DOC-TRUTH.md §Acceptance) mandates ONE one-time RED->GREEN
+differential -- NOT a standing gate. Family J contributes ZERO standing gates (the
+~40-60 invariant collapse is user-mandated). Nothing here is wired into CI.
+
+
+1. THE DIFFERENTIAL (doc-truth-differential.mjs, 38 probes 1:1 with the SWEEP-NOW roster)
+-----------------------------------------------------------------------------------------
+  pre-sweep  (RED.txt)  : 36 RED / 38
+  post-sweep (GREEN.txt):  0 RED / 38
+
+  Born-RED honestly, per PLAN §3: 36 of 38 probes captured the false statement live at
+  HEAD with its file:line before any edit landed.
+
+  The 2 probes GREEN at BOTH ends are stated as such, NOT dressed as born-RED:
+    T1  scheme-spring.css dock mirror row == SPRING_PRESETS
+    T2  scheme-spring.css mirror covers every SPRING_PRESETS row (transient included)
+  Both were RETIRED-BY-IOS27-MICRO-W-1, exactly as the band file's Class A seam clause
+  predicted ("T1/T9 either RETIRE (if the regen emits the prose mirror) or hand-true to
+  W-1's shipped values"). W-1 landed first and regenerated the mirror, so the CSS-side
+  rows were already true at HEAD; the HAND mirror in docs/design/tunable-anim.md (T9)
+  was NOT regenerated and was born-RED as specified.
+
+  SUPERSESSION NOTE. The spring probes assert EQUALITY against SPRING_PRESETS and
+  therefore self-correct across the W-1 seam. They deliberately do NOT assert the
+  band file's day-one literals -- "row-count == 7" and a 0.19s settle are both
+  SUPERSEDED on disk (the table now carries 9 rows; dock is 0.35s/z0.82, settle 0.22s).
+  A remembered literal would have false-RED'd a truthful tree.
+
+  G-booked census (the band's stated allowlist, re-measured, not assumed):
+    4 'booked' hits in src/ -- 4 allowlisted, 0 UN-OWNED
+      GlassDock.vue:20      OWNED (names the live consumer-evidence doc, on disk)
+      radius.css:88         OWNED (standards-gated Baseline deferral; disclaims masking-fallback)
+      GlassTimeline.vue:139 W5-expiry pair -- rides BAND-REDUCTION W5's six-variant redesign
+      GlassTimeline.vue:173 W5-expiry pair -- ditto
+    The probe does not false-RED on the Timeline pair before W5 lands, as the band requires.
+
+
+2. THE NO-OP GUARD (the band's three arms)
+-------------------------------------------
+  (a) prose-only  -- prose-only-guard.mjs, output at prose-only-fence.txt
+      VERDICT: CLEAN. All 14 changed src/ CODE files differ in COMMENTS ONLY; the 1
+      changed .md under src/ (timeline/README.md, target T33) carries no code.
+      Method: strip all comments from the pre- and post-sweep versions of each changed
+      file and compare the remainder -- stronger than diff-text pattern matching, which
+      a cleverly-shaped declaration slips past.
+
+      MUTATION BITE (PLAN §3: a gate that cannot fail is theatre):
+        mutated a real declaration in placement.css -> guard BITES (delta detected)
+        inserted a pure comment                     -> correctly IGNORED
+      The guard is proven capable of failing in both directions.
+
+  (b) dist byte-identity -- dist-pre.sha256 / dist-post.sha256
+      `npm run build` run at BOTH trees; 280 dist CSS/JS/MJS artifacts hashed each time.
+      diff of the two manifests: EMPTY (0 lines). Byte-identical, as the comment-only
+      fence requires (the minifier strips comments -- any dist delta would be a breach).
+      Re-built a third time at the restored tree: hashes reproduce exactly.
+
+  (c) vue-tsc + vitest unchanged
+      npm run typecheck : PASS (vue-tsc --noEmit + tsconfig.test.json)
+      npm run test      : 189/189 files, 1231 passed, 2 expected-fail
+
+      Two transient reds were resolved to their true causes, not waived:
+        · gate:boot-graph freshness arm RED once -- the sweep's mtimes post-dated
+          dist-demo. Remedy is the gate's OWN prescription (`npm run demo:dist:build`);
+          re-run GREEN. The gate was working as W-BOOT-DIET built it.
+        · tests/demo/router-field-ownership.test.ts RED once on a 5000ms TIMEOUT (not an
+          assertion). Passes in isolation and on the full re-run -- a timing flake, and
+          structurally cannot be this diff's doing (comment-only, dist byte-identical).
+
+
+3. WHAT THIS BATTERY DOES NOT CLAIM
+------------------------------------
+  · No live-pi / DELTA is owed: no visual or runtime surface is touched (band file,
+    "The no-op guard (pi/DELTA: none owed)").
+  · The TRIGGERED roster (T6/T17/T31/T32/T34/T40/T42/T43) is NOT covered here -- those
+    land with their triggering waves, never before.
+  · These scripts are one-time instruments banked as evidence. They are NOT standing
+    gates and are NOT wired into CI.

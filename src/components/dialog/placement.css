@@ -90,7 +90,8 @@
  * `data-backdrop="graded"` opt-in that swaps the immersive Dialog's flat scrim.
  *
  * The slot name is generalised from the shipped `dialog-graded-edge` to
- * `glass-graded-halo` (name-locked jointly with BI.W-ENGAGE-AFFORD); the per-edge
+ * `glass-graded-halo` (the name is shared with the engage-affordance surface, so both
+ * sides are name-locked); the per-edge
  * base rule is scoped to a placed side sheet so FORM 2 does not inherit it. */
 :where([data-slot="dialog-content"][data-placement][data-surface="glass"]) {
     isolation: isolate;

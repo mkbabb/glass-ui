@@ -1,0 +1,140 @@
+BJ.W-DOC-TRUTHUP doc-truth differential
+tree: HEAD 5b34bb12 + uncommitted changes
+date: 2026-07-20T13:17:16.946Z
+
+[GREEN] T1 (class A) — scheme-spring.css dock mirror row equals SPRING_PRESETS (no 0.68s/ζ=0.64)
+         OK mirror dock == springPresets (0.35s, ζ=0.82)
+[GREEN] T2 (class A) — scheme-spring.css mirror covers EVERY SPRING_PRESETS row (transient included)
+         springPresets rows=9; mirror rows=9
+[RED ] T9 (class A) — tunable-anim.md kind-1 table equals SPRING_PRESETS in every row
+         doc rows cross-checked=6
+         DRIFT 'smooth' doc (0.50, 0.86) != springPresets (0.58, 0.80)
+         DRIFT 'snappy' doc (0.42, 0.78) != springPresets (0.48, 0.74)
+         DRIFT 'bouncy' doc (0.50, 0.55) != springPresets (0.60, 0.60)
+         DRIFT 'gentle' doc (0.70, 1.00) != springPresets (0.82, 1.00)
+         DRIFT 'dock' doc (0.68, 0.64) != springPresets (0.35, 0.82)
+         DRIFT 'press' doc (0.15, 0.86) != springPresets (0.20, 0.80)
+         STALE docs/design/tunable-anim.md:64: | dock | `--spring-dock` | 0.68, 0.64 (BD.W-ANIM-IOS27-TUNE weighty-gooey) | ≤0.08 (+7.3% liquid overshoot) | table (`springPreset("dock")` — ONE row, no fence) | snap | preview |
+[RED ] T5 (class A) — tunable-anim.md reveal-blur states the per-register model, not a single 4px default
+         STALE single-4px-default docs/design/tunable-anim.md:121: | reveal blur | `--glass-reveal-blur` | 4px | [0,8px] | per-instance |
+[RED ] T10 (class A) — motion-system.md names ζ=0.80 for --spring-smooth (0.86 is useSpring's own default)
+         STALE docs/canon/motion-system.md:16: props → `--ease-standard`; transform hover/press/active → `--spring-smooth` (ζ=0.86); enter →
+[RED ] T11 (class A) — motion-canon.md DRAWER_SNAP equals drawer/constants.ts; dead proof scripts uncited
+         DRIFT doc DRAWER_SNAP row != constants (0.32, 0.8): - **`DRAWER_SNAP`** `(0.5, 0.74)` — the drawer detent-snap register
+         DEAD-GATE-CITED docs/design/motion-canon.md:262: - `scripts/proof-no-layout-animation.mjs` — the compositor-only enforcement (P5) across the
+         DEAD-GATE-CITED docs/design/motion-canon.md:264: - `scripts/proof-animation-coherence.mjs` — the REGISTER-tier gate (the curve assignment,
+[RED ] T11b (class A) — motion-canon.md DOCK_SPRING equals springPresets dock; wave-id token dropped
+         DRIFT doc DOCK_SPRING row != springPresets (0.35, 0.82): - **`DOCK_SPRING`** `(0.30, 0.82)` — the dock expand/collapse morph register
+         STALE docs/design/motion-canon.md:200: (`dock/constants.ts`); the WEIGHTY iOS-27 gooey-morph re-tune (BD.W-ANIM-IOS27-TUNE),
+[RED ] T12 (class B) — shell.css carries ONE truthful containment block (no palimpsest)
+         MANGLED sentence live: "When retires `--dock-morph-t`," (subject lost)
+         PALIMPSEST: the comment argues the `paint` axis is RETAINED while the declaration is `contain: layout style` (NO paint)
+[RED ] T13 (class B) — useDockSearch armSearch JSDoc names expand()+keepOpen()
+         STALE positive onClickCollapsed attribution src/components/dock/composables/useDockSearch.ts:61: ride its `onClickCollapsed`/`keepOpen`/`release`. */
+         STALE positive onClickCollapsed attribution src/components/dock/composables/useDockSearch.ts:115: /** Tap/focus → expand + hold (composes `onClickCollapsed` + `keepOpen`). */
+         OK armSearch body composes expand() + keepOpen()
+[RED ] T14 (class B) — useDockShellProps collapseDelay JSDoc equals the shipped default
+         DRIFT doc says "* Idle-collapse delay in ms (default 2000). Inert on an always-expanded dock." — impl default is 3600
+[RED ] T15 (class B) — the useLiquidFlex/motion consumer rosters name only real importers
+         STALE definition-absent consumer src/composables/motion/core/index.ts:49: // root barrel. ≥2 consumers: useDockOrientationMorph + the tabs-indicator squish.
+         STALE definition-absent consumer src/composables/motion/core/index.ts:99: // `--stretch` write-sites (useDockOrientationMorph/useTabIndicator/useTabDragMorph/
+         STALE definition-absent consumer src/styles/tokens/scheme-motion.css:133: getters in useDockOrientationMorph / useTabIndicator / useTabDragMorph /
+         PHANTOM consumers named but never importing: useDockOrientationMorph
+         UNNAMED real importers: usePagerWorm, ScrubberTimeline, useDragMorph, useSelectionIndicator, useLiquidPress
+[RED ] T16 (class B) — dock/styles/index.css @property comment states shipped truth only
+         STALE src/components/dock/styles/index.css:114: driver + deletes the scalar zoo. */
+[RED ] T18 (class B) — overflow.css states the visible->auto coercion, not a clip
+         STALE src/components/dock/styles/overflow.css:66: spec-forces the computed cross axis to a clip, so the RING-ROOM is reserved
+[RED ] T19 (class B) — dock/index.ts states the SearchBar keeps / FuzzySearch dies split
+         STALE src/components/dock/index.ts:84: // `SearchBar` + its 7 search composables retire onto this register; the network
+[RED ] T4 (class C) — uniformBridge states the real applyMedium routing, not a smooth degrade
+         STALE src/components/aurora/composables/uniformBridge.ts:76: // The WGSL primary renders the smooth core for every painterly id (1-7) — a
+[RED ] T20 (class C) — glass.css carries no owner-less booked BE follow
+         STALE src/styles/tokens/glass.css:287: wiring the resting sheet plate onto this 0.74 register is a booked BE follow —
+[RED ] T21 (class C) — the flow shader headers cite live consumers only (paper-grid is deleted)
+         STALE src/composables/glass/webgl/shaders/flow.wgsl.ts:4: // chunk (research/viz/paper-grid.md §3.3, §10). paper-grid is the FIRST WGSL curl
+         STALE src/composables/glass/webgl/shaders/flow.wgsl.ts:22: // paper-grid-breathe (the WGSL primary), and the dot-flow-field.
+         STALE src/composables/glass/webgl/shaders/flow.glsl.ts:32: // #2/#3 are B5 paper-grid-breathe (`<Card grid animated>` — the ¼-res curl-driven
+[RED ] G-booked (class C) — 0 UN-OWNED booking markers in src/ (stated allowlist + the W5-expiry pair)
+         census: 8 'booked' hit(s) in src/ — 4 allowlisted, 4 un-owned
+         ALLOWED src/components/dock/GlassDock.vue:20:// (docs/consumer-evidence/use-glass-backdrop-luminance.md names the booked trigger).
+         ALLOWED src/components/timeline/GlassTimeline.vue:139:     This block COMPOSES the booked Band-0 register READ-ONLY — it re-mints
+         ALLOWED src/components/timeline/GlassTimeline.vue:173:   COMPOSES the booked Band-0 register: the warm `--card`-derived floor +
+         ALLOWED src/styles/theme/radius.css:88:       is Chrome-only / non-Baseline — BOOKED, never a masking fallback. These are
+         UN-OWNED src/components/aurora/composables/uniformBridge.ts:78:    // booked  successor ports the painterly bodies); the WebGL2
+         UN-OWNED src/composables/glass/webgl/shaders/flow.glsl.ts:31:// (the `.frag` arm, this cut — aurora's `warpMode: "curl"` domain warp); the booked
+         UN-OWNED src/composables/glass/webgl/shaders/flow.wgsl.ts:3:// The WGSL twin of `flow.glsl.ts`'s `CURL_FBM_GLSL` — the booked procedural-tail
+         UN-OWNED src/styles/tokens/glass.css:287:       wiring the resting sheet plate onto this 0.74 register is a booked BE follow —
+[RED ] T22 (class D) — glass-system.md names resolveSurfaceClass; GlassPanel/Sheet dropped
+         STALE docs/canon/glass-system.md:81: (`src/styles/glass/surface-axis.css` + `_shared/useSurfaceAxis.ts`) that every
+[RED ] T23 (class D) — the peer tables carry the bare embla-carousel row (11 peers)
+         package.json peers=11
+         docs/canon/dependencies.md: MISSING peer row(s) embla-carousel
+         docs/canon/deps-currency.md: MISSING peer row(s) embla-carousel
+[RED ] T24 (class D) — CONTRIBUTING.md describes the real flow (no changesets, no proof:all, no false CI claim)
+         STALE CONTRIBUTING.md:29: npm run proof:all              # package + consumers + runtime + theme + resolution + phantom-classes
+         STALE CONTRIBUTING.md:91: 4. Ensure `npm run build` + `npm run typecheck` + `npm test` + `npm run proof:all` all exit 0.
+         STALE CONTRIBUTING.md:44: npx changeset            # pick major/minor/patch + write the summary
+         STALE CONTRIBUTING.md:90: 3. Author a changeset (`npx changeset`).
+         STALE CONTRIBUTING.md:48: accepted changesets into a `Version Packages` PR; merging that PR bumps the version,
+         STALE CONTRIBUTING.md:39: Version bumps run through **changesets** (`.changeset/config.json`). For any change
+         OK bundle-budget CI claim consistent (workflows invoke it: false)
+[RED ] T25 (class D) — structure.md is not called GENERATED (no generator exists in scripts/)
+         scripts/ structure-generators found: 0
+         STALE README.md:72: - [`docs/canon/structure.md`](./docs/canon/structure.md) — the generated `src/` tree (the machine-truth source; never hand-maintained)
+         STALE scripts/lib/canon-doc.mjs:40: // ── docs/canon cross-cutting set (the structure.md home is GENERATED) ──
+[RED ] T26 (class D) — subpath-policy.mjs class-count comments equal the programmatic recount
+         DRIFT subpath-policy.mjs:49 PUBLISH claims 23, counted 21
+         DRIFT subpath-policy.mjs:62 INTERNAL claims 17, counted 13
+         DRIFT subpath-policy.mjs:68 INTERNAL claims 2, counted 1
+         DRIFT subpath-policy.mjs:70 PUBLISH claims 33, counted 31
+         OK subpath-policy.mjs:99 PUBLISH claims 3, counted 3
+         OK subpath-policy.mjs:104 INTERNAL claims 2, counted 2
+[RED ] T27 (class D) — DESIGN.md makes no present-tense claim about deleted demo files
+         STALE DESIGN.md:1144: The cross-substrate proof story lives at `demo/stories/compositions/dock-with-slider.vue` (K W7)—three cells exercising the contract: standard slider (Volume), `glass-pill` variant (Brightness), and a multi-slider mixer demonstrating multi-token reference-counting. (path ABSENT)
+[RED ] T28 (class D) — affordance-map.md style-home cells cite live paths only
+         STALE docs/design/affordance-map.md:79: | **DockIconButton** | custom/dock | ✓ `--scale-hover-dock` | ✓ `v-specular` | ✓ `tap-squish`/`:active` | — | ✓ `.focus-ring` | `DockIconButton.vue`·`dock-controls/icon-button.css` |
+         STALE docs/design/affordance-map.md:80: | **DockTabButton / DockSelectTrigger / DockDropdownTrigger** | custom/dock | ✓ `--scale-hover-dock` | ✓ `v-specular` | ✓ `:active` press | — | ✓ `.focus-ring` (`dock.css`) | `dock-controls/triggers.css`·`tab-button.css` |
+         STALE docs/design/affordance-map.md:81: | **DarkModeToggle** | custom/dock | ✓ `--scale-hover-dock` | ✓ `v-specular` | ✓ `:active` press | — | ✓ `.focus-ring` (`dark-mode-toggle.css`) | `dock-controls/dark-mode-toggle.css` |
+         STALE docs/design/affordance-map.md:89: | **Toggle** | ui/toggle | ✓ quiet glass hover fill | — (a small chip) | ✓ `.tap-squish` `active:scale-95` | — | ✓ `.focus-ring` | `toggle/index.ts` (`transition-control` + `.tap-squish`) |
+         NOTE cited names not resolvable as src paths (bare filenames ok): DockIconButton.vue, dock-controls/icon-button.css, dock-controls/triggers.css, dock-controls/dark-mode-toggle.css, useTabIndicator.ts, cards.css, Notification.vue
+[RED ] T29 (class D) — useScrollScene cites the installed keyframes.js version
+         STALE useScrollScene.ts:11: // `createScrollScene` resolve to `undefined` at the installed `@mkbabb/keyframes.js@4.3.0` (installed ^6.0.0)
+[RED ] T30 (class D) — MIGRATION.md states value.js as an OPTIONAL peer (matching peerDependenciesMeta)
+         STALE MIGRATION.md:148: The 7.0 package line requires `@mkbabb/value.js@^4.0.0` and optional (peerDependenciesMeta optional=true)
+[RED ] T33 (class D) — timeline/README §Exports matches timeline/index.ts
+         PHANTOM exports documented: ContinuousTimeline, ContinuousRail, ContinuousMarkers, ScrubberTimeline, SegmentedTimeline (index.ts exports: GlassTimeline)
+[RED ] T3 (class E) — src/ carries zero BI.W- wave-id tokens (greenfield-no-meta)
+         STALE src/components/dialog/placement.css:93: * `glass-graded-halo` (name-locked jointly with BI.W-ENGAGE-AFFORD); the per-edge
+[RED ] T7 (class E) — asks-and-consumes row 15 reads capability-keep, not 'badge SHARED-KEEP'
+         STALE docs/tranches/BI/coordination/asks-and-consumes.md:50: | 15 | **speedtest** | 0 import sites at HEAD — `MetricPill` was built as speedtest's "stacked-pill default" (`MetricPill.vue:8`) but speedtest composes `<MetricBadge>` directly and never imported it; root-barrel-ONLY, NOT a subpath; muster invariant-9 BANS it | `speedtest-metric-pill-mechanism-offer` — `MetricPill` is DELETED from glass-ui (0 consumers anywhere; the sole clean in-repo overfit-delete, DP-A option A). The mechanism is OFFERED to speedtest: reproduce it as a ~6-line local wrapper over the published `<MetricBadge>` (`@mkbabb/glass-ui/metric-badge`) with `label-position="stacked"` + `size="lg"` + spacious-density defaults, or set those props inline. NO glass-ui surface to re-point (root-barrel-only, not a subpath — EXACT_REPRODUCTION / cut-window UNAFFECTED) | **OFFER-ONLY** — no consumer break (0 import sites); LANDED by **`BI.W-S-METRIC-PILL-DELETE`** (component + 2 root re-exports + demo story + manifest rows DEFINITION-ABSENT on disk). Foreign-tree fence — speedtest owns any local re-creation | none owed (no import to re-point; a fresh `<MetricBadge>` adopt rides the metric-family bump, row 10) | owning wave `BI.W-S-METRIC-PILL-DELETE` + `proof:consumer-evidence-true` M1 (metric-pill OUT of the keep-set; cell/stack/badge SHARED-KEEP) |
+[RED ] T8 (class E) — no 'Tooltip preset' survives (TooltipProps carries no preset prop)
+         STALE docs/tranches/BI/coordination/asks-and-consumes.md:49: | 14 | **speedtest** | `src/components/Dock.vue:17` + `src/components/AddressAutocomplete.vue:103` `import { IconTooltip } from "@mkbabb/glass-ui/icon-tooltip"` (2 sites; icon-tooltip's only binary consumer) | `speedtest-icon-tooltip-to-tooltip-preset` — migrate the two `<IconTooltip>` sites onto the Tooltip preset. IconTooltip is a **Tooltip PRESET** (mechanism folded at BI.W-OVERLAY-UNION — it composes `ui/tooltip` verbatim, no distinct overlay root); the `/icon-tooltip` subpath end-state is W-OVERLAY-UNION's clean break | mechanism LANDED by **`BI.W-OVERLAY-UNION`** (IconTooltip re-expressed as a Tooltip preset on disk); consumer-truth + ask owned by **`BI.W-SPEEDTEST-ONLY-PAIR`**; the consumer edit issues at the 7.0.0 cut | kf `^6.0.0` + value `^4.0.0` (paired) | owning waves `BI.W-SPEEDTEST-ONLY-PAIR` + `BI.W-OVERLAY-UNION` + `proof:consumer-evidence-true` SP2 | (TooltipProps has preset prop: false)
+         STALE docs/tranches/BI/coordination/asks-and-consumes.md:94: - **speedtest** — glass-ui `^4.0.1`, kf `^4.3.0`, value `^0.13.0`; `/api` (row 1, `TimelineSegment`), metric-family (row 10), `/scrolling-text` ×2 (row 13, RETIRE-RELOCATE — the sole binary consumer), `/icon-tooltip` ×2 (row 14, migrate onto the Tooltip preset). The paired peer bump (rows 1/10/13/14) lifts kf → `^6.0.0` + value → `^4.0.0`. (TooltipProps has preset prop: false)
+         STALE docs/tranches/BI/waves/BI.W-SPEEDTEST-ONLY-PAIR.md:22: demotes to a Tooltip preset, not a root" — Tooltip owns the distinct mechanism (aria-describedby naming, (TooltipProps has preset prop: false)
+         STALE docs/tranches/BI/waves/BI.W-SPEEDTEST-ONLY-PAIR.md:25: re-expressed as a Tooltip preset). This wave OWNS the consumer-truth consequence: speedtest is the sole (TooltipProps has preset prop: false)
+         STALE docs/tranches/BI/waves/BI.W-SPEEDTEST-ONLY-PAIR.md:27: preset="icon">` or equivalent) on the same cut. (TooltipProps has preset prop: false)
+         STALE docs/tranches/BI/waves/BI.W-SPEEDTEST-ONLY-PAIR.md:39: (`Dock.vue:17` + `AddressAutocomplete.vue:103` → the Tooltip preset). No `src/` edit here beyond confirming (TooltipProps has preset prop: false)
+         STALE docs/tranches/BI/waves/BI.W-SPEEDTEST-ONLY-PAIR.md:69: - `icon-tooltip` — speedtest migrates `Dock.vue:17` + `AddressAutocomplete.vue:103` to the Tooltip preset. (TooltipProps has preset prop: false)
+[RED ] T8b (class E) — BI.W-SPEEDTEST-ONLY-PAIR states the compose-the-family migration
+         STALE docs/tranches/BI/waves/BI.W-SPEEDTEST-ONLY-PAIR.md:27: preset="icon">` or equivalent) on the same cut.
+         STALE docs/tranches/BI/waves/BI.W-SPEEDTEST-ONLY-PAIR.md:39: (`Dock.vue:17` + `AddressAutocomplete.vue:103` → the Tooltip preset). No `src/` edit here beyond confirming
+         STALE docs/tranches/BI/waves/BI.W-SPEEDTEST-ONLY-PAIR.md:69: - `icon-tooltip` — speedtest migrates `Dock.vue:17` + `AddressAutocomplete.vue:103` to the Tooltip preset.
+[RED ] T35 (class E) — the pin-guard section + row 6 are stamped SUPERSEDED-BY-Q060
+         MISSING SUPERSEDED-BY-Q060 stamp
+[RED ] T36 (class E) — BI.W-LADDER-DERIVE tail reconciled (not 'Awaiting challenge seat 2')
+         UNCORRECTED "Awaiting challenge seat 2" is live with no dated [CORRECTION] addressing it
+[RED ] T37 (class E) — BI.W-GLASS-SUBTLETY records BLUR-MUTE as executed-then-removed
+         UNCORRECTED "nothing to retire" is live with no dated [CORRECTION] addressing it
+[RED ] T38 (class E) — BI.W-GRADED-BACKDROP reconciles with the attested progressive ramp
+         UNCORRECTED "uniform-radius, never progressive falloff" is live with no dated [CORRECTION] addressing it
+[RED ] T39 (class E) — ASSEMBLY-CROSSWALK band count equals the disk count
+         disk BAND files=9; crosswalk claims "eight"
+[RED ] T41 (class E) — chronic-decided-draft line-drift set re-anchored; dead recorder path struck
+         STALE-ANCHOR chronic-decided-draft.md:93: **Evidence:** Q051-ASK.md:162-167 + CHRONIC-DISPOSITIONS.md:159/:233-237 (§6.3 open_q; aurora.frag.ts:448 single-src dispatch; CLAUDE.md §perf-producer book); recommendation = No default (a bundle-shape trade, load-cost vs first-paint), audit lean = RETIRE the lazy-split book (the spliced dispatch is the decided shape; deep-glass-16px IDENTITY-not-debt precedent).
+         STALE-ANCHOR chronic-decided-draft.md:333: **Evidence:** CHRONIC-DISPOSITIONS.md:152-153 (§4b) + :160-161 (§4c); FOLD-LEDGER:70/97; useDockSearch.ts:184; flow.wgsl.ts (shared chunk MET, aurora arm degrades); recorded disposition = RETIRE (0 consumers / no-contrivance fence / WebGPU-degrades-to-fbm is the decided posture); a real ≥2 re-enters via a fresh trigger.
+         STALE-ANCHOR chronic-decided-draft.md:349: **Evidence:** CHRONIC-DISPOSITIONS.md:186-212 (§5, each row cites on-disk truth: useDragMorph.ts:325, glass-deep.css:3/57-60, grep-absent asserts, resolvedBy BC/BB/BH waves); recorded disposition = RESOLVED/RETIRED/ARCHIVED-TERMINAL with a discharge probe each.
+         STALE-ANCHOR chronic-decided-draft.md:357: **Evidence:** CHRONIC-DISPOSITIONS.md:262-271 (§7) + :164-166/:163 (§4c MET); scripts/lib/gesture-frame-recorder.mjs on disk, DockIconButton.vue:12/135, useDragMorph.ts:325, glass-deep.css:57-60; recorded disposition = terminal-DONE; the regressions captured as dis:ratchet-regrowth / dis:dock-chronic / dis:detector-blind-spot.
+
+── 36 RED / 38 probes ──
+RED: T9, T5, T10, T11, T11b, T12, T13, T14, T15, T16, T18, T19, T4, T20, T21, G-booked, T22, T23, T24, T25, T26, T27, T28, T29, T30, T33, T3, T7, T8, T8b, T35, T36, T37, T38, T39, T41

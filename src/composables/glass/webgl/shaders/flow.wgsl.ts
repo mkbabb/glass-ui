@@ -1,10 +1,8 @@
 // The shared curl-noise flow chunk, WGSL twin (`curlFBM`).
 //
-// The WGSL twin of `flow.glsl.ts`'s `CURL_FBM_GLSL` — the booked procedural-tail
-// chunk (research/viz/paper-grid.md §3.3, §10). paper-grid is the FIRST WGSL curl
-// consumer, so it mints this chunk; the GLSL chunk + this WGSL chunk are ONE curl
-// operator per backend (the divergence-free 2D curl of an fbm potential — Bridson's
-// "Curl-Noise for Procedural Fluid Flow", SIGGRAPH 2007).
+// The WGSL twin of `flow.glsl.ts`'s `CURL_FBM_GLSL`. The GLSL chunk + this WGSL chunk
+// are ONE curl operator per backend (the divergence-free 2D curl of an fbm potential —
+// Bridson's "Curl-Noise for Procedural Fluid Flow", SIGGRAPH 2007).
 //
 // Mechanism (mirrors flow.glsl.ts / procedural-color.wgsl.ts): the `export const`
 // is a `/* wgsl */` template-literal STRING the `.wgsl.ts` modules interpolate
@@ -18,8 +16,9 @@
 // the curl operator, which is basis-agnostic). The chunk imports NO value.js +
 // declares no uniforms — it is a pure WGSL string.
 //
-// Shared by three consumers: aurora-curl-warp (the `.frag` arm),
-// paper-grid-breathe (the WGSL primary), and the dot-flow-field.
+// Live WGSL consumers: aurora's `warpMode: "curl"` domain warp (aurora.wgsl.ts) and
+// the liquid-grid warp (liquid-grid.wgsl.ts). Recorded in
+// docs/consumer-evidence/curl-fbm.md.
 
 // ── Curl-noise flow (WGSL) ──────────────────────────────────────────────────────
 // The 2D curl of a scalar fbm potential. `potentialFBM(vec2f) -> f32` MUST be defined

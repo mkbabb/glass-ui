@@ -145,7 +145,8 @@ Motion ownership is now explicit. Replace keyframes primitives imported from
 `squish: false` option supplies the same uniform press register while retaining the complete
 pointer, keyboard, disabled, and re-entry lifecycle.
 
-The 7.0 package line requires `@mkbabb/value.js@^4.0.0` and optional
+The 7.0 package line declares `@mkbabb/value.js@^4.0.0` as an OPTIONAL peer — required
+for the `/color` and `/css` consumers, absent otherwise — alongside optional
 `@mkbabb/pencil-boil@^0.9.2`; its Keyframes range is finalized from the immutable
 packed compatibility check. Glass imports only Value's `/color`, `/css`, and
 `/easing` capabilities; the removed Value root has no compatibility external.

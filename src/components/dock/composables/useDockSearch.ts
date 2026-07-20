@@ -58,7 +58,7 @@ import {
 
 export interface UseDockSearchOptions<T extends SearchableItem = SearchableItem> {
     /** Composes the existing dock state machine (no fork) — `armSearch`/`disarmSearch`
-        ride its `onClickCollapsed`/`keepOpen`/`release`. */
+        ride its `expand`/`keepOpen`/`release`. */
     dockState: UseDockStateReturn;
     /**
      * The search items (sync) — a static array or a getter. Drives the composed
@@ -112,7 +112,7 @@ export interface UseDockSearchReturn<T extends SearchableItem = SearchableItem> 
     autocompleteText: Ref<string>;
     /** The optional collapse-on-scroll machine (null when `collapseOnScroll` is false). */
     scrollChrome: UseScrollChromeReturn | null;
-    /** Tap/focus → expand + hold (composes `onClickCollapsed` + `keepOpen`). */
+    /** Tap/focus → expand + hold (composes `expand()` + `keepOpen()`). */
     armSearch: () => void;
     /** Close → release the hold (composes `release`) + close the fuzzy surface. */
     disarmSearch: () => void;

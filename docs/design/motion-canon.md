@@ -196,12 +196,11 @@ table — every other `(response, ζ)` read derives via `springPreset(name)`:
   SETTLE register's response/ζ), the floor every `useSpring` caller may override.
 - **`useSpringPress`** `(0.25, 0.7)` — the press-squish primitive default (a crisp
   short-response press settle, W-PRESS-UNIFY).
-- **`DOCK_SPRING`** `(0.30, 0.82)` — the dock expand/collapse morph register
-  (`dock/constants.ts`); the WEIGHTY iOS-27 gooey-morph re-tune (BD.W-ANIM-IOS27-TUNE),
-  DERIVED from the `dock` `SPRING_PRESETS` row via `springPreset("dock")` (the
-  no-second-authority fence — ONE table row feeds the CSS token, the JS-driven morph,
-  and the const; not a frozen hand-value).
-- **`DRAWER_SNAP`** `(0.5, 0.74)` — the drawer detent-snap register
+- **`DOCK_SPRING`** `(0.35, 0.82)` — the dock expand/collapse morph register
+  (`dock/constants.ts`), DERIVED from the `dock` `SPRING_PRESETS` row via
+  `springPreset("dock")` (the no-second-authority fence — ONE table row feeds the CSS
+  token, the JS-driven morph, and the const; not a frozen hand-value).
+- **`DRAWER_SNAP`** `(0.32, 0.8)` — the drawer detent-snap register
   (`drawer/constants.ts`), the drawer's OWN settle clock.
 - **`TIMELINE_HEAD`** `(0.34, 0.74)` — the `ScrubberTimeline` warm-glass lozenge
   head-travel default (`ScrubberTimeline.vue` `HEAD_SPRING`) — a per-surface JS-only
@@ -259,10 +258,5 @@ Two facts the canon RECORDS so a future agent does not "fix" a correct thing:
 - `src/styles/utilities/a11y-overrides.css` — the universal PRM carve (P6).
 - `src/composables/motion/spring/useLiquidFlex.ts` — the `sizeStyle` settled-footprint contract
   (P5, the SIZESTYLE-LATENT note).
-- `scripts/proof-no-layout-animation.mjs` — the compositor-only enforcement (P5) across the
-  `@keyframes` + transition + `<Transition>` surface, plus the PRM-carve assertion (P6).
-- `scripts/proof-animation-coherence.mjs` — the REGISTER-tier gate (the curve assignment,
-  P1/P4); `proof:no-layout-animation` is the PROPERTY-tier complement (layout-vs-compositor,
-  P5), not a duplicate.
 - `design-idioms.md` §6 (the easing register) + §10 (the house snap engine on
   `SpringProgress`, the §6 per-spring clock made structural).

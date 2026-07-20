@@ -2,7 +2,7 @@
 
 Every ledger row from `../FEEDBACK-LEDGER.md` (F01-F50, then A01-A17) mapped to its terminal
 landing in the BJ formation — the accounting the tranche charter demands. Compiled mechanically from
-`REGISTRY.md` (families A-K + the Round-3a fold), the eight band specs + `../ASK-REDUCTION.md`,
+`REGISTRY.md` (families A-K + the Round-3a fold), the nine band specs + `../ASK-REDUCTION.md`,
 `CHRONIC-ADJUDICATION.md`, `ADJUDICATION-1.md`, the four `greenfields/GF-*-PASS3.md`, and
 `ios27/IOS27-CODEX.md`.
 

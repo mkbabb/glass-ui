@@ -90,7 +90,7 @@ Complete DECIDED-row draft for the BJ chronic-discipline wave, compiled (not rul
 
 **Claim:** Q051 Row 11 — split the aurora-medium bundle for lazy loading (cmd:aurora-medium-lazy, blocked by the GL fence: mediums spliced into ONE FRAGMENT_SRC with if(uMedium==N)); ridden 4+ closes (first-booked BB). LIVE BJ input.
 
-**Evidence:** Q051-ASK.md:162-167 + CHRONIC-DISPOSITIONS.md:159/:233-237 (§6.3 open_q; aurora.frag.ts:448 single-src dispatch; CLAUDE.md §perf-producer book); recommendation = No default (a bundle-shape trade, load-cost vs first-paint), audit lean = RETIRE the lazy-split book (the spliced dispatch is the decided shape; deep-glass-16px IDENTITY-not-debt precedent).
+**Evidence:** Q051-ASK.md:162-167 + CHRONIC-DISPOSITIONS.md:159/:233-237 (§6.3 open_q; aurora.frag.ts §uWarpMode dispatch (single-src); CLAUDE.md §perf-producer book); recommendation = No default (a bundle-shape trade, load-cost vs first-paint), audit lean = RETIRE the lazy-split book (the spliced dispatch is the decided shape; deep-glass-16px IDENTITY-not-debt precedent).
 
 **Draft:** retire-with-rationale (draft: RETIRE the lazy-split standing book) unless the user's perf mandate (FAM-5) elects the split — a perf-vs-fence architectural call; a real ≥2 re-enters via a fresh wave, never a standing book.
 
@@ -330,7 +330,7 @@ Complete DECIDED-row draft for the BJ chronic-discipline wave, compiled (not rul
 
 **Claim:** CHRONIC-DISPOSITIONS §4b/§4c RETIRE chronics, 2-4+ closes ⚠: D26 (album-derived per-piece shade as a LIBRARY primitive, 0 consumers, GL color-seam un-widened), BE.W-DOCK-NOWPLAYING-PILL (never built), cmd:useAsyncSearch (race-guard, BC BOOK not-minted), cmd:wgsl-flow-tail aurora-WGSL-curl arm (degrade-to-fbm).
 
-**Evidence:** CHRONIC-DISPOSITIONS.md:152-153 (§4b) + :160-161 (§4c); FOLD-LEDGER:70/97; useDockSearch.ts:184; flow.wgsl.ts (shared chunk MET, aurora arm degrades); recorded disposition = RETIRE (0 consumers / no-contrivance fence / WebGPU-degrades-to-fbm is the decided posture); a real ≥2 re-enters via a fresh trigger.
+**Evidence:** CHRONIC-DISPOSITIONS.md:152-153 (§4b) + :160-161 (§4c); FOLD-LEDGER:70/97; useDockSearch.ts §armSearch/scrollChrome seam; flow.wgsl.ts (shared chunk MET, aurora arm degrades); recorded disposition = RETIRE (0 consumers / no-contrivance fence / WebGPU-degrades-to-fbm is the decided posture); a real ≥2 re-enters via a fresh trigger.
 
 **Draft:** retire-with-rationale (draft: RETIRE album-shade + now-playing-pill + useAsyncSearch book + the aurora-WGSL-curl arm; <Drawer live-behind>/dock greenfield cover any surviving need). wgsl-flow-tail's shared CURL_FBM chunk is MET-landed and stays.
 
@@ -346,7 +346,7 @@ Complete DECIDED-row draft for the BJ chronic-discipline wave, compiled (not rul
 
 **Claim:** CHRONIC-DISPOSITIONS §5 — ~20 MET/LANDED flip-with-evidence rows (D27 kf-snap, deep-glass-16px pair, the 7 wants-it-someday RETIRE-verified, the AX resolved set /deck /completion-seal /css-relative-color /styles-critical /drawer-spring /native-first-receive, native-drawer-asChild, css-at-function, panel-host, interruptible-reorder). Terminal-DECIDED, carried so none silently drops.
 
-**Evidence:** CHRONIC-DISPOSITIONS.md:186-212 (§5, each row cites on-disk truth: useDragMorph.ts:325, glass-deep.css:3/57-60, grep-absent asserts, resolvedBy BC/BB/BH waves); recorded disposition = RESOLVED/RETIRED/ARCHIVED-TERMINAL with a discharge probe each.
+**Evidence:** CHRONIC-DISPOSITIONS.md:186-212 (§5, each row cites on-disk truth: useDragMorph.ts §native-kf-snap hand-off, styles/glass/deep.css + styles/tokens/glass-deep.css, grep-absent asserts, resolvedBy BC/BB/BH waves); recorded disposition = RESOLVED/RETIRED/ARCHIVED-TERMINAL with a discharge probe each.
 
 **Draft:** carry-terminal (draft: no BJ build owed — these are DECIDED-terminal; the BJ wave only carries each row's discharge probe as a one-time RED→GREEN differential so a landed adopt cannot ride green as still-DEFER, and flips any stale FOLD-LEDGER/AX-register marker).
 
@@ -354,7 +354,7 @@ Complete DECIDED-row draft for the BJ chronic-discipline wave, compiled (not rul
 
 **Claim:** CHRONIC-DISPOSITIONS §7 — the ~90 FOLD-LEDGER COORDINATED-to-BG rows that a named BG wave BUILT (terminal-DONE, off the deferred watch), plus §4c MET successors (gesture-frame-recorder, dock-third-press, kf-snap-adopt, deep-glass-20px). Caveat: 3 BG waves REGRESSED at HEAD → re-homed as the disease rows above.
 
-**Evidence:** CHRONIC-DISPOSITIONS.md:262-271 (§7) + :164-166/:163 (§4c MET); scripts/lib/gesture-frame-recorder.mjs on disk, DockIconButton.vue:12/135, useDragMorph.ts:325, glass-deep.css:57-60; recorded disposition = terminal-DONE; the regressions captured as dis:ratchet-regrowth / dis:dock-chronic / dis:detector-blind-spot.
+**Evidence:** CHRONIC-DISPOSITIONS.md:262-271 (§7) + :164-166/:163 (§4c MET); the gesture-frame-recorder BG record (the `scripts/lib/gesture-frame-recorder.mjs` path DIED 2026-07-14 — cite the BG record, not the path), DockIconButton.vue, useDragMorph.ts §native-kf-snap hand-off, styles/tokens/glass-deep.css; recorded disposition = terminal-DONE; the regressions captured as dis:ratchet-regrowth / dis:dock-chronic / dis:detector-blind-spot.
 
 **Draft:** carry-terminal (draft: no BJ build owed for the ~90 built rows; the dock/fission/rail/silhouette COORDINATED cluster (D3/D4/D12-D22/D28-D30) is subsumed by the dock greenfield above, so no separate re-book; the 3 regressions are already re-homed as standalone BJ disease waves).
 

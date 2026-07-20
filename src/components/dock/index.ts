@@ -80,9 +80,9 @@ export {
 // VSCode subsequence scorer — NO re-fork) + the dock's OWN `--dock-morph-t` metaball
 // morph (the byte-untouched `morph-bridge.css` — box-inviolate, no second engine) + the
 // optional `useScrollChrome` shrink + the ToC `ensureTargetWindow`/`scrollTo` subsume.
-// A consuming seam BESIDE the morph engine; `<GlassDock search>` opts into it. The words
-// `SearchBar` + its 7 search composables retire onto this register; the network
-// source plugs via `onSearch`.
+// A consuming seam BESIDE the morph engine; `<GlassDock search>` opts into it. `SearchBar`
+// KEEPS (a live standalone surface); only `FuzzySearch.vue` retires onto this register.
+// The network source plugs via `onSearch`.
 export { useDockSearch } from "./composables";
 export type { UseDockSearchOptions, UseDockSearchReturn } from "./composables";
 

@@ -69,7 +69,7 @@ files can address the same built assets through `@mkbabb/glass-ui/fonts/*`.
 The authoritative canon lives under [`docs/canon/`](./docs/canon/), with the
 consumer-facing migration path in [`MIGRATION.md`](./MIGRATION.md):
 
-- [`docs/canon/structure.md`](./docs/canon/structure.md) — the generated `src/` tree (the machine-truth source; never hand-maintained)
+- [`docs/canon/structure.md`](./docs/canon/structure.md) — the `src/` tree map
 - [`docs/canon/glass-system.md`](./docs/canon/glass-system.md) — the glass tier ladder + adaptive-legibility axes
 - [`docs/canon/exports-and-subpaths.md`](./docs/canon/exports-and-subpaths.md) — the public-surface layering + the `manualChunks` recipe
 - [`docs/canon/dependencies.md`](./docs/canon/dependencies.md) — the peer set + the keyframes/value.js spine

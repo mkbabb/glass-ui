@@ -62,8 +62,9 @@
     .glass-dock.dock-scroll-x[data-dock-overflow]:not(.dock-overflow-wrap)
         .dock-layer--full {
         overflow-x: auto;
-        /* The cross (block) axis is honestly `visible` in SOURCE. `overflow-x: auto`
-           spec-forces the computed cross axis to a clip, so the RING-ROOM is reserved
+        /* The cross (block) axis is honestly `visible` in SOURCE. Per CSS Overflow's
+           computed-value coercion a `visible` cross axis beside a non-`visible` inline
+           axis computes to `auto` — a scroll container either way, so the RING-ROOM is reserved
            the canonical no-clip scroll-strip way (T-52 b): a `--dock-scroll-safe-inset`
            PADDING on all sides (the flush item's focus ring paints INSIDE the padded
            clip box — all four arcs whole) pulled back by an EQUAL negative MARGIN so

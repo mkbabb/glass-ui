@@ -18,13 +18,14 @@ Discharges:
 Decided (XR-3, mechanism-distinctness law FAM-10, D-FACTOR PASS-1 overlay-cluster ruling). Two components, two
 distinct dispositions:
 
-- **icon-tooltip → FOLD onto Tooltip (a preset), speedtest migrates.** Per D-FACTOR PASS-1: "IconTooltip
-  demotes to a Tooltip preset, not a root" — Tooltip owns the distinct mechanism (aria-describedby naming,
-  role=tooltip, SR mirror, non-focusable content); icon-tooltip is a Tooltip variant, not a distinct
+- **icon-tooltip → FOLD onto Tooltip, speedtest migrates.** Per D-FACTOR PASS-1: "IconTooltip
+  demotes onto Tooltip, not a root" — Tooltip owns the distinct mechanism (aria-describedby naming,
+  role=tooltip, SR mirror, non-focusable content); icon-tooltip is a Tooltip composition, not a distinct
   component. The MECHANISM fold is executed by **W-OVERLAY-UNION** (`src/components/custom/icon-tooltip/` →
-  re-expressed as a Tooltip preset). This wave OWNS the consumer-truth consequence: speedtest is the sole
-  binary consumer (2 sites), so the fold PAIRS a speedtest ADOPT ask (its `<IconTooltip>` → `<Tooltip
-  preset="icon">` or equivalent) on the same cut.
+  re-expressed over `ui/tooltip`). This wave OWNS the consumer-truth consequence: speedtest is the sole
+  binary consumer (2 sites), so the fold PAIRS a speedtest ADOPT ask (its `<IconTooltip>` → the canonical
+  `TooltipProvider`/`TooltipTrigger`/`TooltipContent` composition — there is NO `preset` prop on
+  `TooltipProps`) on the same cut.
 - **scrolling-text → RELOCATE to speedtest.** scrolling-text owns a distinct overflow-marquee mechanism no
   survivor expresses, so the law does not fold it — BUT its only binary consumer is speedtest (2 sites), the
   ≥2-bar is UNMET, and UF-K1's overfit instinct + the speedtest-only truth land it in speedtest's own repo
@@ -36,7 +37,7 @@ distinct dispositions:
 ## §Work
 
 - **icon-tooltip (disposition only — mechanism is W-OVERLAY-UNION's):** record the speedtest ADOPT ask
-  (`Dock.vue:17` + `AddressAutocomplete.vue:103` → the Tooltip preset). No `src/` edit here beyond confirming
+  (`Dock.vue:17` + `AddressAutocomplete.vue:103` → the canonical Tooltip family). No `src/` edit here beyond confirming
   the fold lands in W-OVERLAY-UNION; the `/icon-tooltip` subpath disposition (retire vs alias-to-tooltip-preset)
   is W-OVERLAY-UNION's clean break.
 - **scrolling-text (RELOCATE):** inv-11 registry-consumer probe (`npm view` + READ-ONLY sibling grep — confirm
@@ -66,7 +67,8 @@ registry probe artefact are the evidence.
 - **Cross-repo ASKs (foreign-tree fence — speedtest edits its OWN repo):**
   - `scrolling-text` — speedtest brings its own marquee (or a local copy) on its `^5.x` consume; the
     `/scrolling-text` import is dropped.
-  - `icon-tooltip` — speedtest migrates `Dock.vue:17` + `AddressAutocomplete.vue:103` to the Tooltip preset.
+  - `icon-tooltip` — speedtest migrates `Dock.vue:17` + `AddressAutocomplete.vue:103` to the canonical
+    Tooltip family (Provider/Trigger/Content) — `TooltipProps` carries NO `preset`.
   - Both PAIR the kf `^5.2.0` / value `^3.1.0` peer bump (XR-9). Filed on the `crossrepo-asks:bi` roster;
     glass-ui edits ZERO sibling tree.
 

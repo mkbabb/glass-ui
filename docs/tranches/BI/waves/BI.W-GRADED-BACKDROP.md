@@ -73,9 +73,10 @@ the web SOTA skipped." The codex refutes both halves, so state it honestly:
 - The reference is an **app-level surface, not OS canon.** The OpenAI "5.6 Sol High / Extra High" popup is a
   **ChatGPT APP** treatment — the codex catalogs it as IMG_2287/2288 with a **dark radial focus-pool**
   backdrop, an application's own composited effect, not an OS affordance.
-- **iOS-27's OS does not ship progressive-falloff backdrop blur** either (CODEX §1.2, HL2, Open Q6): the OS
-  blur is **uniform-radius**. The OS achieves its localized-focus READ via an **edge-anchored scrim + graded
-  DIM at uniform radius**, not a graded blur kernel.
+- **iOS-27's OS reference ramp is attested PROGRESSIVE** (form (a)) per the AMENDED codex law 1 + the RU-15
+  measurement. This supersedes the earlier "uniform-radius, never progressive falloff" reading of CODEX §1.2
+  / HL2 / Open Q6 — that reading is withdrawn **[CORRECTION 2026-07-20]**. The OS still carries the
+  edge-anchored scrim + graded DIM; the blur ramp is not the flat kernel this section asserted.
 - **This does not weaken the wave — it corrects only the authority claim; the mechanism is codex-correct.**
   D1 already specifies a **fixed-radius** blur under a four-edge `mask-image` — a uniform blur whose READ is
   graded by the mask + the co-equal graded dim, the bloom band (~80-120px) sitting inside the corpus's
@@ -412,6 +413,12 @@ band ~80-120px inside the corpus's measured ~50-180px; Open Q6 reinforcing adopt
 graded DIM co-equal billing in ADOPT-1. The r3 confirm verified the reword faithful in BOTH directions (no
 residual borrowed authority; no reverse-overclaim of codex endorsement) — the mechanism was codex-correct
 throughout; only the authority claim was borrowed.
+
+**[CORRECTION 2026-07-20]** The r3 repair's own premise — "iOS-27 OS blur is uniform-radius, never
+progressive falloff" — is itself superseded by the AMENDED codex law 1 + the RU-15 measurement: the OS
+reference ramp is attested PROGRESSIVE (form (a)). What survives is the narrower and still-correct half: the
+OpenAI popup is an APP surface, not OS canon, so the borrowed-authority strike stands. Our in-surface
+gradient is a DECLARED BEST-iOS divergence, NOT a uniform-radius equivalence claim.
 
 The **FORMATION-REPAIR pass (design seat, round 4)** then closed the carried SHOULD-FIX in the reference-media
 descriptor: the §Intent descriptor **led with graded blur** ("blurred to illegibility… eases smoothly to

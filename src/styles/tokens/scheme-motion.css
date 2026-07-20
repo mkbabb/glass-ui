@@ -130,8 +130,8 @@
        together so they read as ONE proportioned deformation.
 
        The SQUISH CAP is derived SITE-LOCALLY at the consuming element (the JS
-       getters in useDockOrientationMorph / useTabIndicator / useTabDragMorph /
-       useLiquidPress read `--motion-weight` off their OWN element and return
+       getters in useSelectionIndicator / useTabDragMorph / useLiquidPress read
+       `--motion-weight` off their OWN element and return
        `1 + (cap_token − 1)·(weight + (1−weight)·flexVel)/0.618`), NEVER a `:root`
        calc token — an unregistered `:root` cap calc over var(--motion-weight) is
        substituted at :root (0.618) and inherits the FROZEN text, so a child's

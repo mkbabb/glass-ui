@@ -27,10 +27,8 @@
 // own); this chunk owns ONLY the curl operator, which is basis-agnostic. The chunk
 // imports NO value.js + declares no uniforms — it is a pure GLSL string.
 //
-// The ≥3-consumer booking (the shared-chunk bar): consumer #1 is B1 aurora-curl-warp
-// (the `.frag` arm, this cut — aurora's `warpMode: "curl"` domain warp); the booked
-// #2/#3 are B5 paper-grid-breathe (`<Card grid animated>` — the ¼-res curl-driven
-// grid breathe) + the flow-field viz. Recorded in
+// The shared-chunk ≥2-consumer bar, live: aurora's `warpMode: "curl"` domain warp
+// (aurora.frag.ts) + the liquid-grid warp (liquid-grid.glsl.ts). Recorded in
 // docs/consumer-evidence/curl-fbm.md.
 
 // ── Curl-noise flow ──────────────────────────────────────────────────────────

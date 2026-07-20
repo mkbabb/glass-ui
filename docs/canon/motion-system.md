@@ -13,7 +13,8 @@ The scattered motion doctrine is codified in `docs/precepts/motion-canon.md` (P1
 - **P6** PRM-keeps-fade / drops-transform.
 
 The §6 easing table (`scheme-motion.css`) is the SOURCE the canon re-states. Rows: surface
-props → `--ease-standard`; transform hover/press/active → `--spring-smooth` (ζ=0.86); enter →
+props → `--ease-standard`; transform hover/press/active → `--spring-smooth` (ζ=0.80 — 0.86 is
+`useSpring`'s own bare default, a different primitive, not this register); enter →
 `--spring-bouncy`/`--spring-snappy`; exit → `--ease-out`/`--ease-standard`; position-tracked
 → `--ease-standard`.
 

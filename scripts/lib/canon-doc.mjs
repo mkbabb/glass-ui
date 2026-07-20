@@ -37,7 +37,7 @@ export const CONTENT_MIN_CHARS = 200;
 // cross-cutting → docs/canon/<topic>.md ; per-component → the colocated README ;
 // public-facing → README.md. Adding a topic = one line here.
 export const CANON_HOMES = Object.freeze({
-    // ── docs/canon cross-cutting set (the structure.md home is GENERATED) ──
+    // ── docs/canon cross-cutting set ──
     structure: "docs/canon/structure.md",
     dependencies: "docs/canon/dependencies.md",
     "build-and-gates": "docs/canon/build-and-gates.md",

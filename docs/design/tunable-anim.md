@@ -55,27 +55,38 @@ The single authority is the `SPRING_PRESETS` table; the registry INDEXES it. CSS
 `--spring-*` curves are generated from it, and JavaScript passes the same rows to
 keyframes.js directly. There is no reverse token-to-callable table.
 
+Keep this table in sync with `SPRING_PRESETS` in
+`src/composables/motion/spring/springPresets.ts` — the figures below are a HAND mirror of
+that root; the `--spring-*` curves + `-settle` clocks are the generated mirror.
+
 | spring | token | default (response, ζ) | bound (overshoot) | re-tune | PRM | live control |
 |---|---|---|---|---|---|---|
-| smooth | `--spring-smooth` | 0.5, 0.86 | ≤0.02 (kept sub-perceptual alive-peak) | table (identity) or `--spring-smooth` override | snap or intensity-scaled | the spring editor preview |
-| snappy | `--spring-snappy` | 0.42, 0.78 | ≤0.08; 90%-travel ∈ [0.55,0.70] of clock | table or override | snap | preview |
-| bouncy | `--spring-bouncy` | 0.5, 0.55 | ∈ [0.12,0.18] (the Apple band) | table or override | snap | preview |
-| gentle | `--spring-gentle` | 0.7, 1.0 | 0 (critically-damped, no overshoot) | table or override | snap | preview |
-| dock | `--spring-dock` | 0.68, 0.64 (BD.W-ANIM-IOS27-TUNE weighty-gooey) | ≤0.08 (+7.3% liquid overshoot) | table (`springPreset("dock")` — ONE row, no fence) | snap | preview |
-| press | `--spring-press` | 0.15, 0.86 (iOS interactiveSpring) | ≤0.08 | table or override | snap (zero transform frames) | preview |
+| smooth | `--spring-smooth` | 0.58, 0.80 | ≤0.02 (kept sub-perceptual alive-peak) | table (identity) or `--spring-smooth` override | snap or intensity-scaled | the spring editor preview |
+| snappy | `--spring-snappy` | 0.48, 0.74 | ≤0.08; 90%-travel ∈ [0.55,0.70] of clock | table or override | snap | preview |
+| bouncy | `--spring-bouncy` | 0.60, 0.60 | ∈ [0.12,0.18] (the Apple band) | table or override | snap | preview |
+| gentle | `--spring-gentle` | 0.82, 1.00 | 0 (critically-damped, no overshoot) | table or override | snap | preview |
+| dock | `--spring-dock` | 0.35, 0.82 | ≤0.08 | table (`springPreset("dock")` — ONE row, no fence) | snap | preview |
+| press | `--spring-press` | 0.20, 0.80 (iOS interactiveSpring) | ≤0.08 | table or override | snap (zero transform frames) | preview |
 
 ## Kind 2 — CLOCK (DERIVED-not-tunable)
 
 Generated from the spring; the registry records READ-ONLY. NO live control.
 
-| clock | token | default | re-tune | note |
+Each `--spring-<name>-duration` is a READER over the emitted 2%-band settle:
+`calc(var(--spring-<name>-settle) * var(--motion-tempo))`. The settle column below is the
+generated `--spring-<name>-settle` value; the duration equals it at the identity tempo.
+
+| clock | token | settle (× `--motion-tempo`) | re-tune | note |
 |---|---|---|---|---|
-| smooth | `--spring-smooth-duration` | 0.36s | DERIVED (regen-spring-tokens.mjs) | `t_s = −ln(0.02)/(ζ·ωₙ)` |
-| snappy | `--spring-snappy-duration` | 0.34s | DERIVED | truncating re-introduces tail-jank (W-GLASS-CAL fence) |
+| smooth | `--spring-smooth-duration` | 0.35s | DERIVED (regen-spring-tokens.mjs) | `t_s = −ln(0.02)/(ζ·ωₙ)` |
+| snappy | `--spring-snappy-duration` | 0.44s | DERIVED | truncating re-introduces tail-jank (W-GLASS-CAL fence) |
 | bouncy | `--spring-bouncy-duration` | 0.57s | DERIVED | re-derives on the SPRING-EASE ζ change |
-| gentle | `--spring-gentle-duration` | 0.44s | DERIVED | — |
-| dock | `--spring-dock-duration` | 0.66s | DERIVED | re-derives with the dock row |
-| press | `--spring-press-duration` | 0.11s | DERIVED | minted with the press row |
+| gentle | `--spring-gentle-duration` | 0.76s | DERIVED | — |
+| dock | `--spring-dock-duration` | 0.22s | DERIVED | re-derives with the dock row |
+| press | `--spring-press-duration` | 0.12s | DERIVED | minted with the press row |
+| transient | `--spring-transient-duration` | 0.46s | DERIVED | the Toast materialize bloom |
+| panel | `--spring-panel-duration` | 0.38s | DERIVED | the presentation deploy |
+| orb-drop | `--spring-orb-drop-duration` | 0.20s | DERIVED | the invocation drop |
 
 ## Kind 3 — EASING curve
 
@@ -118,11 +129,15 @@ them is kind 1.
 | border-progress | `--border-progress-fill` | 0% | [0%,100%] | the value-axis + `useBorderSpectrum` |
 | progress crescendo | `--progress-crescendo` | 0 | [0,1] | the progress value |
 | phase tint | `--phase-tint-amount` | 0% | [0%,100%] | the instrument-chassis phase |
-| reveal blur | `--glass-reveal-blur` | 4px | [0,8px] | per-instance |
+| reveal blur | `--glass-reveal-blur` | per-register: overlay 6px / menu 2px / tooltip 0px / transient 8px | [0,8px] | per-instance |
 | cascade rise | `--scroll-cascade-rise` | 1.25rem | per-instance | override |
 | cascade window | `--scroll-cascade-range-end` | 45% | [0%,100%] | override |
 | scroll-pin lift | `--scroll-pin-lift` | 2.5rem | per-instance | override |
 | scroll-pin stage | `--scroll-pin-stage-height` | 320vh | per-instance | override |
+
+`--glass-reveal-blur` has NO single default: `reveal.css` binds it per enter-register from
+`--enter-{overlay,menu,tooltip,transient}-blur` (`motion-registers.css`). The literal `4px`
+in `animations.css` is the `var()` fallback arm, not a default.
 
 ## The named-FUTURE axis (recorded, not built — the proportion fence)
 

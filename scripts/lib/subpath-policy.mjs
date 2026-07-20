@@ -46,8 +46,7 @@ export const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../..
 
 // --- src/components/<dir> ---
 export const COMPONENT_CLASS = {
-    // PUBLISH (23) — BI.W-MENU-TRIGGER retired context-menu (folded onto dropdown-menu);
-    // BI.W-OVERLAY-UNION retired hover-card (folded onto <Popover trigger="hover">).
+    // PUBLISH (21) — the shadcn-shaped set.
     badge: "PUBLISH", button: "PUBLISH", card: "PUBLISH", collapsible: "PUBLISH",
     command: "PUBLISH", "data-table": "PUBLISH",
     dialog: "PUBLISH", drawer: "PUBLISH", "dropdown-menu": "PUBLISH",
@@ -59,17 +58,15 @@ export const COMPONENT_CLASS = {
     surface: "PUBLISH",
     slider: "PUBLISH", switch: "PUBLISH", toast: "PUBLISH", "toggle-group": "PUBLISH",
     tooltip: "PUBLISH",
-    // INTERNAL (17) — reached via the root barrel / a curated subpath / substrate.
+    // INTERNAL (13) — reached via the root barrel / a curated subpath / substrate.
     _shared: "INTERNAL", accordion: "INTERNAL", alert: "INTERNAL", avatar: "INTERNAL",
     carousel: "INTERNAL", checkbox: "INTERNAL", combobox: "INTERNAL", input: "INTERNAL",
     "radio-group": "INTERNAL",
     skeleton: "INTERNAL", table: "INTERNAL",
     "tags-input": "INTERNAL", textarea: "INTERNAL",
-    // INTERNAL (2)
+    // INTERNAL (1)
     "infinite-scroll": "INTERNAL",
-    // PUBLISH (33) — goo-dot-matrix RETIRED at BG.W-GOODOT-PRUNE (0 external consumers);
-    // dot-flow-field / concentric / dot-matrix DELETED at BI.W-VIZ-DELETIONS (the user-ordered
-    // clean-break prune — the 30+-attempt viz family retired, breaking → the 5.0.0 MAJOR cut).
+    // PUBLISH (31) — the custom/glass-native set.
     "animated-digit": "PUBLISH", aurora: "PUBLISH",
     "completion-seal": "PUBLISH",
     // BI.W-CHIP-FOLD: the one explicit-mode <Chip> family.

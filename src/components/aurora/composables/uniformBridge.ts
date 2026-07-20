@@ -73,10 +73,12 @@ export const MEDIUM_ID = {
     vangogh: 5,
     "oil-pastel": 6,
     // the anisotropic-Kuwahara painterly finish (uMedium==7).
-    // The WGSL primary renders the smooth core for every painterly id (1-7) — a
-    // kuwahara config on WebGPU degrades to the smooth core, never an error (the
-    // booked  successor ports the painterly bodies); the WebGL2
-    // path carries the live `mediumKuwahara()` body.
+    // The WGSL primary carries real painterly bodies: pastel(1)/watercolor(2)/
+    // crayon(4)/metal(8,9) have their own, and oil(3)/vangogh(5)/oil-pastel(6)/
+    // kuwahara(7) route to `mediumKuwahara` (`applyMedium`, aurora-mediums.wgsl.ts) —
+    // a real painterly read on both backends, never a silent smooth degrade. The WebGL2
+    // path additionally carries the per-dab stroke cascade for oil/vangogh/oil-pastel.
+    // Re-true this comment as GF-AURORA W1/W2/W4 land their own bodies.
     kuwahara: 7,
     // the two mutually-exclusive metal mediums. Both DUAL-PORT
     // (the WebGL2 `mediumMetal`/`mediumMetalGradient` bodies + the WGSL primary twins);

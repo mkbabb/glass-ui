@@ -8,7 +8,7 @@
 // engine — no native `scroll()`/`view()` timeline, no `currentTime: null` deadness.
 //
 // WHY the synchronous primitives, not `createScrollScene`: `ScrollScene`/
-// `createScrollScene` resolve to `undefined` at the installed `@mkbabb/keyframes.js@4.3.0`
+// `createScrollScene` resolve to `undefined` at the installed `@mkbabb/keyframes.js@^6.0.0`
 // (they live only in a lazily `import()`-ed heavy-engine chunk). `ScrollScene` is itself a
 // thin composition of `SmoothProgress` + `SpringProgress` + a parsed range; those three ARE
 // synchronously exported, so this composable builds that exact factoring directly — zero

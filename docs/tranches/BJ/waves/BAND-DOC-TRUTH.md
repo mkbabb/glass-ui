@@ -204,6 +204,40 @@ forward note at each landing · family B consumes T7/T35's census extensions for
 outbound · **`IOS27-MICRO` W-1 (T1/T9/T5 spring-mirror rows — this band is sequenced AFTER W-1 and
 takes its shipped dock values, per the Class A seam clause and `IOS27-MICRO/FINAL/FINAL.md:32`).**
 
+### Close note — the SWEEP-NOW roster is landed and banked
+
+**Evidence: `../evidence/W-DOC-TRUTHUP/`** (§Acceptance's one-time battery, machine outputs
+verbatim). `VERDICTS.txt` is the summary; `doc-truth-differential.mjs` + `prose-only-guard.mjs`
+are the instruments, banked beside their captures.
+
+- **The differential** — 38 probes enumerated 1:1 with the SWEEP-NOW roster: **36 RED at the
+  pre-sweep tree** (`RED.txt`) → **0 RED at the post-sweep tree** (`GREEN.txt`).
+- **T1/T2 are stated GREEN-at-both-ends, never dressed as born-RED.** They were RETIRED BY
+  `IOS27-MICRO` W-1, precisely as the Class A seam clause anticipated: W-1 landed first and
+  regenerated the `scheme-spring.css` mirror, so the CSS rows were already true at HEAD. The
+  HAND mirror in `docs/design/tunable-anim.md` (T9) is not generated and WAS born-RED.
+- **The spring probes assert equality against `SPRING_PRESETS`, never a literal.** The band's
+  day-one figures are superseded on disk (the mirror carries nine rows, not seven; dock is
+  0.35s/ζ0.82 with a 0.22s settle, not 0.19s). Equality self-corrects across the W-1 seam; a
+  remembered literal would false-RED a truthful tree.
+- **G-booked reproduces MECH-07's arithmetic:** 8 `booked` hits at HEAD (the 4 roster targets
+  UN-OWNED + the 4 adjudicated) → 4 after, **0 un-owned**. The Timeline `:139`/`:173` pair is
+  allowlisted and does NOT false-RED before `BAND-REDUCTION` W5 expires it.
+- **The no-op guard, all three arms:** (a) prose-only **CLEAN** — the 14 changed src/ CODE files
+  differ in comments only (proved by comment-stripped body comparison, not diff-text matching),
+  and the guard ships a **mutation bite** proving it can fail; (b) `npm run build` at both trees →
+  **280 dist CSS/JS artifacts byte-identical** (`dist-pre.sha256` / `dist-post.sha256`, empty
+  diff); (c) `vue-tsc` PASS + vitest **189/189 files, 1231 passed, 2 expected-fail**.
+- **Two in-class extensions beyond the closed roster,** each pinned to disk evidence per the
+  roster-extension rule: the `useDockSearch` options JSDoc carried the SAME false
+  `onClickCollapsed` attribution T13 exists to kill (the reroute landed in the same file), and the
+  `useLiquidFlex` consumer roster in `motion/core/index.ts` named two comment-mention-only
+  "consumers" while omitting the real importers — the very defect class T15 owns.
+
+The TRIGGERED roster (T6/T17/T31/T32/T34/T40/T42/T43) is untouched: those land with their
+triggering waves, never before. Family J contributes **zero standing gates** — the banked scripts
+are one-time instruments, not CI fences.
+
 ---
 
 ## BJ.W-IDIOMS-COLOCATION-REWRITE — CEDED to BAND-COLOCATION Wave 1 Precept F

@@ -1,0 +1,27 @@
+BJ.W-DOC-TRUTHUP prose-only guard (no-op fence arm (a))
+base: HEAD (5b34bb12)
+date: 2026-07-20T13:22:43.883Z
+changed files under src/: 15
+  · src/components/aurora/composables/uniformBridge.ts
+  · src/components/dialog/placement.css
+  · src/components/dock/composables/useDockSearch.ts
+  · src/components/dock/composables/useDockShellProps.ts
+  · src/components/dock/index.ts
+  · src/components/dock/styles/index.css
+  · src/components/dock/styles/overflow.css
+  · src/components/dock/styles/shell.css
+  · src/components/timeline/README.md   [prose file — no code to compare]
+  · src/composables/glass/webgl/shaders/flow.glsl.ts
+  · src/composables/glass/webgl/shaders/flow.wgsl.ts
+  · src/composables/motion/core/index.ts
+  · src/composables/motion/scroll/useScrollScene.ts
+  · src/styles/tokens/glass.css
+  · src/styles/tokens/scheme-motion.css
+
+VERDICT: CLEAN — all 14 changed src/ CODE file(s) differ in comments ONLY; 1 prose file(s) carry no code.
+
+── self-test (mutation bite): can this guard actually fail? ──
+sample file      : src/components/dialog/placement.css
+mutated statement: :where([data-slot="dialog-content"][data-placement]) {
+guard bites      : YES — a non-comment delta is DETECTED
+comment insert   : correctly IGNORED

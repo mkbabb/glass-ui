@@ -1141,7 +1141,7 @@ colocated CSS owns their paint and geometry. All recipes share
 3. **Visual binding**—the Slider subscribes to the dock's reactive `dockHeld` flag (the OR-reduction of all currently-held tokens) and reflects it via `data-held` on its root, intensifying the thumb-halo via a denser `--surface-tint` rung in scoped CSS.
 4. **Substrate response**—`.glass-dock[data-held]` in `src/components/dock/styles/morph.css` tier-shades the dock background up while any descendant holds a token.
 
-The cross-substrate proof story lives at `demo/stories/compositions/dock-with-slider.vue` (K W7)—three cells exercising the contract: standard slider (Volume), `glass-pill` variant (Brightness), and a multi-slider mixer demonstrating multi-token reference-counting.
+The cross-substrate proof story WAS `demo/stories/compositions/dock-with-slider.vue` (K W7)—three cells exercising the contract: standard slider (Volume), `glass-pill` variant (Brightness), and a multi-slider mixer demonstrating multi-token reference-counting. That story has since been deleted; the contract below is the record.
 
 **Slider-only contract—Option B per K W7 decision**: `<NumberField>` is NOT a consumer of `keepDockOpen`. NumberField interactions are keyboard- and discrete-button (chevron tap)—they have no continuous-interaction window for which keep-open matters. The K plan originally floated an Option A where NumberField also acquired the token; W7 picked Option B (Slider-only) on the rationale that the contract's load-bearing semantics are pointer-drag + thumb-halo intensification—neither of which applies to NumberField. The contract is documented as Slider-only; future consumers must demonstrate a pointer-anchored continuous-interaction model before joining.
 
@@ -1320,8 +1320,8 @@ The configurator family is the canonical chrome for live token / preset editing 
 
 The family reaches the ≥ 2-consumer bar via:
 
-1. `demo/stories/primitives/configurator.vue` (V-tranche fb38034—primitive-side story consuming `<ConfiguratorRow>` + `useConfiguratorState`).
-2. `demo/stories/aurora.vue` (L.W7 Lane B—`cloneMode: "per-preset"` consumer; absorbed the retired `useAuroraStudio` parallel chrome).
+1. `demo/stories/primitives/configurator.vue` (V-tranche fb38034—primitive-side story consuming `<ConfiguratorRow>` + `useConfiguratorState`). RETIRED; the surviving primitive-side story is `demo/stories/containers/configurator.vue`.
+2. `demo/stories/aurora.vue` (L.W7 Lane B—`cloneMode: "per-preset"` consumer; absorbed the retired `useAuroraStudio` parallel chrome). RETIRED at that path.
 
 (A third consumer, `demo/stories/motion/metaballs.vue`, retired at AL.W4 alongside the MetaballCanvas publisher per G-W3-3 §6.)
 
@@ -1334,7 +1334,7 @@ The family reaches the ≥ 2-consumer bar via:
 
 **Configurator P0 absorb (K W7)**: `useConfiguratorState.ts:85-87` previously declared `let activeKey: string | undefined`—non-reactive—so `studio.activePreset` returned a stale computed value and templates binding it never updated when `selectPreset` mutated the local. K W7 replaced the plain `let` with `const activeKey = ref<string | undefined>(...)`; `selectPreset` / `resetCurrent` / `cyclePreset` mutate `activeKey.value`. The "Maximum recursive updates exceeded" runtime error on `/motion/metaballs` (Lighthouse P0-1) is gone. A bidirectional `colorDraft ↔ cfg.colors` watch-write loop in `metaballs.vue` was eliminated by Strategy 1 (KISS—drop `colorDraft` entirely; iterate `cfg.colors` directly via `studio.config`).
 
-**Aurora chrome Option-A unification (L W7 Lane B—Rε §A.8)**: the prior `useAuroraStudio` + per-preset clone map collapsed into a `cloneMode: "per-preset"` consumer of the canonical `useConfiguratorState<AuroraConfig>`. Closes K cross-tranche-debt item; retires the Option-B-with-rationale note. Aurora is now the second consumer of the canonical state primitive (third overall counting `primitives/configurator.vue`). F-ε-3 (`/motion/metaballs` recursion warning surfaced under L W6 Lighthouse) probed clean post-unification under the 2-preset-swap + 4-color-mutation reproduction pattern—see `docs/tranches/L/audit/W7-B-aurora-option-a-unification-proof.md`.
+**Aurora chrome Option-A unification (L W7 Lane B—Rε §A.8)**: the prior `useAuroraStudio` + per-preset clone map collapsed into a `cloneMode: "per-preset"` consumer of the canonical `useConfiguratorState<AuroraConfig>`. Closes K cross-tranche-debt item; retires the Option-B-with-rationale note. Aurora was then the second consumer of the canonical state primitive (third overall counting the since-deleted `primitives/configurator.vue`). F-ε-3 (`/motion/metaballs` recursion warning surfaced under L W6 Lighthouse) probed clean post-unification under the 2-preset-swap + 4-color-mutation reproduction pattern—see `docs/tranches/L/audit/W7-B-aurora-option-a-unification-proof.md`.
 
 ---
 

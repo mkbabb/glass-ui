@@ -114,7 +114,7 @@ export interface DockProps {
      */
     viewTransitionName?: string;
     /**
-     * Idle-collapse delay in ms (default 2000). Inert on an always-expanded dock.
+     * Idle-collapse delay in ms (default 3600). Inert on an always-expanded dock.
      */
     collapseDelay?: number;
     /**

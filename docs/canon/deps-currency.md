@@ -9,6 +9,7 @@ aliases, bundled duplicates, or hidden fallbacks.
 | `reka-ui` | headless primitives | `^2.0` |
 | `@vueuse/core` | optional dark and event utilities | `^14.0` |
 | `tailwindcss` | utility CSS | `^4.0` |
+| `embla-carousel` | optional carousel engine | `^8.0` |
 | `embla-carousel-vue` | optional carousel substrate | `^8.0` |
 | `@lucide/vue` | icons | `^1.16.0` |
 | `tw-animate-css` | optional overlay animation utilities | `^1.2.5` |

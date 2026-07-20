@@ -78,8 +78,8 @@ is a byte-identical no-op.
 ## The shared surface-decoration axis (BA.W-SURFACE-AXIS)
 
 `surface="glass" | "veil" | "opaque"` is a single SHARED axis minted once
-(`src/styles/glass/surface-axis.css` + `_shared/useSurfaceAxis.ts`) that every
-content/floating/feedback surface exposes uniformly (Card, GlassPanel, Dialog, Sheet,
+(`src/styles/glass/surface-axis.css` + `_shared/resolveSurfaceClass.ts`) that every
+content/floating/feedback surface exposes uniformly (Card, Surface, Dialog,
 Drawer, Popover, Command, ExpandableContainer, Skeleton, Toast, Button). `veil` is the
 borderless legibility plate; `opaque` is `--glass-level:0`. Feedback and menu families
 consume this axis; they do not re-author it.

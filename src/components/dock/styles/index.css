@@ -101,17 +101,14 @@
     initial-value: 0;
 }
 
-/* The ONE plate scalar. `useDockSpring` writes it
-   per-frame onto the L0 `.dock-plate` element; the plate's `clip-path` visible-extent
-   morph reads it, and NO control-family selector does — so a per-frame write recomputes
-   the plate clip ONLY, not the 10-selector control `:where()` subtree (the ~13fps
-   restyle-storm cure). `inherits: false` is LOAD-BEARING here (the opposite of
-   `--dock-morph-t`, which MUST inherit to its descendant readers): the plate scalar has
-   NO descendant reader, so keeping it un-inherited is what scopes the per-frame restyle to
-   the single plate element. `initial-value: 0` = the collapsed-progress floor (the safe
-   resting clip on a non-supporting engine). During the transitional window the plate
-   ALIASES it to the live `--dock-morph-t` (dock/dock.css); SPRING-UNIFY makes it the sole
-   driver + deletes the scalar zoo. */
+/* The plate scalar the `clip-path` visible-extent morph reads. `inherits: false` is
+   LOAD-BEARING (the opposite of `--dock-morph-t`, which MUST inherit to its descendant
+   readers): the plate scalar has NO descendant reader, so un-inherited is correct.
+   `initial-value: 0` = the collapsed-progress floor (the safe resting clip on a
+   non-supporting engine).
+
+   The per-frame writes land on the ROOT `--dock-morph-t`; the plate ALIASES this scalar
+   to it (`--dock-t: var(--dock-morph-t)`, styles/dock.css). */
 @property --dock-t {
     syntax: "<number>";
     inherits: false;

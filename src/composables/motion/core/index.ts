@@ -46,7 +46,8 @@ export * from "../reveal/useTextHighlight";
 // volume-preserving squish (the reconcile of the tabs-indicator reciprocal-stretch +
 // the metaball `sa`/`1/sa` squash). Owns no spring/rAF/element — imports `vue` only,
 // so it is engine-FREE + vueuse-FREE and ships on the `/motion-core` surface AND the
-// root barrel. ≥2 consumers: useDockOrientationMorph + the tabs-indicator squish.
+// root barrel. ≥2 consumers: useSelectionIndicator (the tabs-indicator squish),
+// useLiquidPress, useDragMorph, usePagerWorm (the pager-dots worm), and ScrubberTimeline.
 export * from "../spring/useLiquidFlex";
 // Two-edge lead/trail integrator behind the liquid dot morph
 // worm. A spring LEAD edge + a damped TRAIL follower share ONE rAF; their gap is the
@@ -96,8 +97,8 @@ export * from "../scroll/useScrollChrome";
 // cap AT the consuming element off the live `--motion-weight`, NEVER a :root calc
 // token). Engine-FREE + vueuse-FREE (no `vue`, no `@mkbabb/keyframes.js`) — ships
 // on the `/motion-core` surface alongside the squish primitives it serves. The
-// `--stretch` write-sites (useDockOrientationMorph/useTabIndicator/useTabDragMorph/
-// useLiquidPress) read the cap through `effectiveCap` + fold the velocity boost via
+// `--stretch` write-sites (useSelectionIndicator/useTabDragMorph/useLiquidPress)
+// read the cap through `effectiveCap` + fold the velocity boost via
 // `writeVelocityWeight`.
 export * from "./writeVelocityWeight";
 // Single traveling-indicator writer + headless

@@ -503,6 +503,15 @@ its dock legibility. Censused, not silent.
 
 ## §Cross-wave coordination (two in-tranche collisions, named)
 
+> **[CORRECTION 2026-07-20] BLUR-MUTE WAS built, then removed.** Every "not built /
+> nothing to retire" claim about `BI.W-BLUR-MUTE` in this document — here, in §Arm A's
+> subsumption note, and in the wave-ledger row — is superseded. `3c2f6e79` (2026-07-13)
+> BUILT the `--glass-blur-btn-radius` primitive and muted the `.btn-glass` cohort 8→6px,
+> with its own paint DELTA filed at `docs/tranches/BI/audit/visual/W-BLUR-MUTE-DELTA.md`.
+> `490cc46e` (2026-07-16) DELETED the cohort (`grep --glass-blur-btn-radius src/` = 0 at
+> HEAD). The end state — no `.btn-glass` override on disk — is the same, but the wave was
+> executed and paint-judged; "never built" erases that record.
+
 - **`BI.W-BLUR-MUTE` (B2) — SUBSUMED by Arm A (it is NOT built; nothing to retire).** BLUR-MUTE is a
   *proposed* wave that would ADD a `--glass-blur-*-radius` override on a `.btn-glass` cohort (e.g. resting
   8→~7px), the button "hair too much" dial-back (UF-B3/B4, judgment-d). No such `.btn-glass` blur override

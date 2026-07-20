@@ -13,6 +13,7 @@ second copy (the duplicate-Vue-instance class the peer regime forecloses).
 | `reka-ui` ^2.0 | Headless UI primitives |
 | `@vueuse/core` ^14.0 | Dark mode and event utilities (optional) |
 | `tailwindcss` ^4.0 | Utility CSS |
+| `embla-carousel` ^8.0 | Carousel engine (optional) |
 | `embla-carousel-vue` ^8.0 | Carousel substrate (optional) |
 | `@lucide/vue` ^1.16.0 | Icon set |
 | `tw-animate-css` ^1.2.5 | Overlay data-state utilities (optional) |
@@ -25,7 +26,7 @@ second copy (the duplicate-Vue-instance class the peer regime forecloses).
 - **All deps are peer.** There is no bundled runtime dependency; the consumer owns the
   install and the single-instance resolution.
 - **`tw-animate-css` is an OPTIONAL peer** (`peerDependenciesMeta[...].optional = true`).
-  It is required only for the animated overlay surfaces (Dialog / Sheet / Popover /
+  It is required only for the animated overlay surfaces (Dialog / Popover /
   DropdownMenu emit `animate-in`/`animate-out` data-state utilities); a Button-only
   consumer never needs it. See `consumer-wiring.md`.
 - **The keyframes/value.js spine.** Glass 7 consumes Keyframes 6 and the exact

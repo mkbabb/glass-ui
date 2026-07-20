@@ -22,33 +22,29 @@ npm run typecheck    # vue-tsc --noEmit
 npm test             # unit + public-surface suite
 ```
 
-Before opening a PR, the proof gates must pass — these are the structural invariants
-codified as scripts:
+Before opening a PR, the structural gates must pass:
 
 ```bash
-npm run proof:all              # package + consumers + runtime + theme + resolution + phantom-classes
-npm run profile:budget         # bundle-budget gate (--enforce in CI)
-npm run verify-export-types    # subpath dts publication probe
+npm run verify:package         # subpath dts publication probe
+npm run profile:bundle         # bundle-budget gate (hard mode: `-- --enforce`; run locally — CI does not run it)
 ```
 
-CI runs `build` + `typecheck` + `test` + the proof gates on every PR + push to
-`master` (`.github/workflows/ci.yml`).
+CI runs `typecheck` + `demo:dist:build` + `test` + `build` on every PR + push to
+`master`, plus the visual pixel-floor gate in its own job
+(`.github/workflows/ci.yml`).
 
 ## Version bumps + releasing
 
-Version bumps run through **changesets** (`.changeset/config.json`). For any change
-that touches `src/`, `package.json`, build config, or the public surface, author a
-changeset:
+There is no changesets flow. Bump the version in `package.json` directly (SemVer:
+patch for compatible fixes, minor for compatible features, major only for an actual
+public break), land it on `master`, then push the matching tag:
 
 ```bash
-npx changeset            # pick major/minor/patch + write the summary
+git tag v1.2.3 && git push origin v1.2.3
 ```
 
-The changeset lands in your PR. On merge to `master`, the changesets workflow batches
-accepted changesets into a `Version Packages` PR; merging that PR bumps the version,
-updates `CHANGELOG.md`, and cuts the `v*.*.*` tag. The tag triggers
-`.github/workflows/release.yml`, which builds + verifies the proof gates + publishes to
-npm via `NPM_TOKEN`.
+The tag triggers `.github/workflows/release.yml`, which builds + verifies + publishes
+to npm with provenance.
 
 **Never `npm publish` from a dev machine** — the publish operation belongs to CI on
 tag. See [`docs/precepts/cross-repo-dev-iteration.md`](./docs/precepts/cross-repo-dev-iteration.md).
@@ -64,7 +60,7 @@ reinstalls the registry version.
 
 ## Conventions
 
-See `CLAUDE.md` for the full set. In brief: TypeScript `strict` + `verbatimModuleSyntax`
+TypeScript `strict` + `verbatimModuleSyntax`
 (`import type` for all type-only imports); named exports only (no defaults); the
 shadcn-vue component pattern (reka-ui `Primitive` / `useForwardPropsEmits`, CVA for
 variants, `cn()` for class composition); token-first styling (every visual behaviour is
@@ -80,13 +76,13 @@ is enumerated in `docs/precepts/design-idioms.md`. A new `@theme` alias,
 **Feature-dir colocation.** A complex component (a god-module candidate) is
 structured into a sub-component dir — components at the package root, composables
 under `composables/`, constants in `constants.ts`, shaders in `shaders/`,
-skeletons in `skeleton/` (each "if needed"), and a `README.md`. Enforced by
-`proof:colocation`; the convention's CSS half is `design-idioms.md` §7.
+skeletons in `skeleton/` (each "if needed"), and a `README.md`. The convention's CSS
+half is `design-idioms.md` §7.
 
 ## PR flow
 
 1. Branch off `master`.
 2. Make the change + add/update tests.
-3. Author a changeset (`npx changeset`).
-4. Ensure `npm run build` + `npm run typecheck` + `npm test` + `npm run proof:all` all exit 0.
-5. Open the PR — CI runs the same gates.
+3. Ensure `npm run build` + `npm run typecheck` + `npm test` + `npm run verify:package`
+   all exit 0.
+4. Open the PR — CI runs the same gates.

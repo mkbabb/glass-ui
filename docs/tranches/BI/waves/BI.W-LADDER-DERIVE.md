@@ -302,4 +302,8 @@ sequencing with `BI.W-GRADED-BACKDROP` written as settled (it landed first; Cont
 `glass-graded-halo` home; "Coordinate NOTHING" corrected). (5) tag placement ruled POST-TAG structural window.
 c1 confirmed CLEAN as-derived: the row-6 arithmetic refutation, the self-reference blocker, the phantom-token
 claim, the minted naming, the saturate rider, the test-break claim, the `::backdrop` mechanical var-resolution,
-and the fallback-drop safety. Awaiting challenge seat 2.
+and the fallback-drop safety.
+
+**[CORRECTION 2026-07-20]** "Awaiting challenge seat 2" is stale: seat 2 ran and the
+proposal was recorded two-consecutive-clean at `2a6d1d41` (2026-07-17, "formed
+two-challenge-clean, ruled post-tag"). Nothing is awaited.
