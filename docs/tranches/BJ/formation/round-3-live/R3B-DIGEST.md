@@ -1,4 +1,19 @@
-# Round-3b — perf DEV-baselines + A01/A11 engagement audit (fable browser seat)
+# Round-3b — perf DEV-baselines + A01/A11 engagement audit (browser seat) — REFABLE union
+
+**Verified model:** `claude-fable-5` (this union). The seat that authored this digest ran
+`claude-opus-4-8` via the settings-level override while self-describing "fable browser seat" —
+corrected here.
+**Union provenance:** REFABLE RU-20, 2026-07-20 — perf + engagement re-run ANEW on the CURRENT
+tree (this digest unread until after), then per-claim scrutiny on a second instrument. **Verdict:
+all 11 findings RATIFIED, zero corrections** — many figures replicated byte-identically (28
+progressbars, 2×4000ms indeterminate sweeps, hover scale 1.015, ~40k/~52k RunTasks, the exact
+2-boot-long-task signature, blob ForcedReflow, the role=slider not-hittable trio). Second
+instrument point (2026-07-20): LCP 417/426/542ms, boot long-tasks 219ms root / 310ms blob,
+warm-route freeze 64ms — the DEV baseline is now bracketed by two runs. The transition-CLS 0.04
+figure rests on this digest's own NO_NAVIGATION trace (unreplicated, unrefuted — PLAUSIBLE).
+The slider fill's damped-spring `linear()` (overshoot 1.22) strengthens the interaction-engagement
+register beyond what is recorded below; the atoms' REST inertness stands as written.
+Sidecar: `../refable/REFABLE-RU-20.md`. Second-instrument captures: session scratchpad `ru20/`.
 
 Lens: perf RED baselines (DEV-server) + A01/A11 breath-of-life engagement audit
 

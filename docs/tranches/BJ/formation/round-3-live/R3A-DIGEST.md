@@ -1,4 +1,17 @@
-# Round-3a — live paint verification (fable browser seat, Chrome DevTools MCP, live WebGPU)
+# Round-3a — live paint verification (browser seat, Chrome DevTools MCP, live WebGPU) — REFABLE union
+
+**Verified model:** `claude-fable-5` (this union). The seat that authored this digest ran
+`claude-opus-4-8` via the settings-level override while self-describing "fable browser seat" —
+corrected here.
+**Union provenance:** REFABLE RU-20, 2026-07-20 — the live verification re-run ANEW from the
+original edict against the CURRENT tree (this digest unread until after), then every claim
+scrutinized assume-incorrect on a second instrument. **Verdict: all 5 findings RATIFIED, zero
+corrections** — the chip-CSS orphan re-confirmed on disk (file exists, zero importers) and in
+paint (selectable-ON zero delta), F02/V-A95/dock-material dispositions re-affirmed, F06 verdict
+upheld with one method caveat (the body-bg luminance sampler is blind to compositor white frames;
+the verdict survives on the full-frame captures). New facts the fix waves need (data-mode attrs
+already in DOM → import alone revives; tags-input remove-affordance gap) live in the sidecar.
+Sidecar: `../refable/REFABLE-RU-20.md`. Second-instrument captures: session scratchpad `ru20/`.
 
 Lens: Live paint verification (Chrome DevTools MCP, live WebGPU) of the 5 carried BJ defect claims — screenshots + computed-style readbacks, every capture saved under docs/tranches/BJ/formation/round-3-live/
 

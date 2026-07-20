@@ -88,6 +88,20 @@ lead-owned remainder.
 |----|------|--------|--------|
 | C6 | The codex recording-manifest integer: '6 iOS recordings' is the codex's own miscount — disk census 8-unique/7-MP4, sr-0710 cited in four laws; correct 6→7 AFTER pass-3's in-flight codex amendments commit (avoid a second in-flight collision); also sweep the crit8-A ledger-glyph drift sites (F03/F04/F16/F18/F30) + the F07 paren pin + A17 R3b→R3a | RU14-CRIT8-A/B | APPLIED verified (lead:vf 2026-07-19—codex :5 bracket exact; all five glyph sites diffed against `FEEDBACK-LEDGER` :15/:16/:28/:30/:42 and match doubles+bold; F07 quote = `PLAN.md:83-84` verbatim; A17 `BAND-PERF.md:43` live + `186` grep-0 in R3B/×3 in R3A; timelines ls = 7 sr + 2 mov + stills; CRIT8-B's old "6" untouched; the noted CRIT8B-1 RESIDUE stands un-owned; applied lead:cd — dependency cleared: pass-3 codex amendments committed 4053ac10, ios27 tree clean at cdc322b9. Codex :5 corrected 6→7 with a dated bracket (refable-timelines ls = 7 sr-* + 2 mov + stills, re-censused; the laws cite all seven sr-* assets); five glyph sites re-taken to the ledger's doubles+bold (F03/F04 DOSSIER-F01-F10, F16/F18 DOSSIER-F11-F20, F30 DOSSIER-F21-F30 — each diffed against FEEDBACK-LEDGER :15/:16/:28/:30/:42 this pass); F07 quote re-takes PLAN.md:83-84's paren construction (sidecar's "verbatim" now true, left standing); A17 186ms bracketed R3a (BAND-PERF.md:43; `186` grep-0 in R3B-DIGEST). Ring-history records of the old "6" (CRIT7-B/CRIT8-B/FIXLOG-R7/RU-13-A01-A17 rider) untouched — read-point records. RESIDUE noted: CRIT8B-1's dated bracket in the A02 rider + sidecar basis row (reconciling the two-layer census against the corrected codex) is NOT enumerated by this row — needs an owner or a disposition |
 
+## J. RU-29 VSWEEP routings (added 2026-07-20)
+
+Full basis: `REFABLE-RU-29.md` (all nine sweeps RATIFIED, 1 minor OPUS-WRONG on a method
+generalization, zero verdicts overturned; the sheet FAIL-1 cure + dock flip-watch now
+twice-instrumented at HEAD).
+
+| id | item | source | status |
+|----|------|--------|--------|
+| J1 | Dock controls story posture-readout staleness: "Posture is:" tracks only the consumer reducer — an auto-mode idle collapse paints collapsed while the text says expanded; subscribe the readout to the FSM state or relabel as reducer intent | RU-29 N1 | PROPOSED (story band) |
+| J2 | G2 latent unification persists at HEAD: no story/consumer arms `springPreset` on a center DialogContent — the R2 center spring-exit + closingInert observable NOWHERE (grep re-verified 2026-07-20); arm one center dialog or strike the latent branch per no-masking-fallback | RU-29 N5 (V8b G2) | PROPOSED (story/demo-coverage band) |
+| J3 | ScrollProgressRim scroll-binding still has no exemplar — component pure value-driven at HEAD, V3's PENDING is a standing coverage gap | RU-29 N6 (V3) | PROPOSED (story band) |
+| J4 | Surface-truth note: springs→Spring Orchestrator, drawer story→3 triggers, data-table selection/virtual arms relocated — V6/V7 era enumerations no longer describe HEAD (verdicts era-valid, no re-open) | RU-29 N4 | RECORDED (no action owed) |
+| J5 | Gate-method notes: (a) indicator stretch cap binds the spring target not per-frame paint (1.128 transient vs 1.11 cap observed); (b) tier/shadow ladders drifted 1/8/8/13/20→1/7/7/11/17 with order preserved — gates must pin ORDER never constants; (c) the navigator.gpu-delete initScript is the canonical honest WebGL2 acceptance arm (re-proven at HEAD) | RU-29 N2/N3/N7 | PROPOSED (BAND-GATES notes) |
+
 ## Terminal order (unchanged)
 
 Ledger applied → RU-02 fresh STAB chain (two-consecutive-clean over the amended corpus) →
