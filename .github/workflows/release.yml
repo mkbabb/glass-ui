@@ -31,6 +31,10 @@ jobs:
               run: npm run build
             - name: verify packed package
               run: npm run verify:package
+            # gate:boot-graph's BUILD arm measures a freshly built dist-demo/; the build
+            # is a test-job step so `npm test` stays the library's own suite.
+            - name: build the demo dist the boot-graph gate measures
+              run: npm run demo:dist:build
             - name: test
               run: npm test
             - name: publish

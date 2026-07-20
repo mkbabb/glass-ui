@@ -165,6 +165,24 @@ budget GF-AURORA declares at its W0 is the shared referent — do not double-bud
 - Each arm ships a self-test bite (a planted top-level `import { Aurora }` reds the source arm; a planted
   oversized manifest reds the build arm) so the gate proves it can fail.
 
+### §Evidence — banked, not carried in prose
+
+`docs/tranches/BJ/evidence/W-BOOT-DIET/` holds the verbatim record: `boot-graph-BORN-RED.txt` (the shipped
+gate run against HEAD source over a HEAD build — 6 of 14 blocks RED with file:line),
+`eager-graph-PRE.txt` / `eager-graph-POST.txt` (both `index.html` manifests plus the per-file eager sets, so
+the sums recompute from the artifact), `freshness-BITE.txt` (the stale-`dist-demo` mutation proof),
+`boot-graph-POST-GREEN.txt`, `shell-field-STEADY-post-cure.png`, and `VERDICTS.txt`.
+
+Close-time re-measure, on disk: **PRE 74 modulepreloads + 1 entry / 791,615 B → POST 56 + 1 / 483,862 B**
+(−18 / −307,753 B). The §Acceptance baseline above (73 / 789,398 B) was measured at an earlier HEAD; the
+band figure is left pinned as authored and the drift is recorded here rather than silently rewritten.
+
+`VERDICTS.txt` §7 carries the one finding this wave does **not** cure: `main.ts` mounts on
+`router.isReady()`, `router.ts`'s `beforeResolve` awaits every lazy route chunk, and `StoryHero.vue:3`
+statically imports `Aurora` from the barrel — so the route chunk re-requests the same Aurora chunk and mount
+waits on it (measured: `#app` has zero children at t=1.5s with the chunk held). The eager-graph diet is real
+and gated regardless; the async boundary alone does not move Aurora off the first-paint critical path.
+
 ### §π/DELTA + live baseline (R3b-SEEDED)
 
 The boot diet has **no** intended pixel change — the shell renders identically, only sooner. The RED

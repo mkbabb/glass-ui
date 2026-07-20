@@ -1,0 +1,208 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui
+
+ × tests/gates/boot-graph.test.ts > gate:boot-graph — source arm > AppShell reaches Aurora and PresetEditor through defineAsyncComponent 7ms
+   → [
+  {
+    "file": "demo/shell/AppShell.vue",
+    "line": 11,
+    "detail": "top-level static import of Aurora from \"@glass/components/aurora\" — must be defineAsyncComponent"
+  },
+  {
+    "file": "demo/shell/AppShell.vue",
+    "line": 26,
+    "detail": "top-level static import of PresetEditor from \"./configurator\" — must be defineAsyncComponent"
+  }
+]: expected [ { …(3) }, { …(3) } ] to deeply equal []
+ × tests/gates/boot-graph.test.ts > gate:boot-graph — source arm > AppShell actually declares the async boundaries 1ms
+   → Aurora must be bound by defineAsyncComponent in AppShell.vue: expected false to be true // Object.is equality
+ × tests/gates/boot-graph.test.ts > gate:boot-graph — source arm > the shell field's frame-0 ground is EAGER, not inside the async chunk 0ms
+   → AppShell must statically import auroraFallbackGround — the async Aurora chunk must not own first paint: expected false to be true // Object.is equality
+ × tests/gates/boot-graph.test.ts > gate:boot-graph — source arm > the shell-field config reads its defaults off the barrel-free leaf 1ms
+   → [
+  {
+    "file": "demo/chassis/hero/aurora-hero.ts",
+    "line": 15,
+    "detail": "value import from the aurora barrel \"@glass/components/aurora\" — the barrel re-exports Aurora.vue; import from the defining leaf"
+  }
+]: expected [ { …(3) } ] to deeply equal []
+ × tests/gates/boot-graph.test.ts > gate:boot-graph — source arm > no EAGER shell module imports the configurator barrel 1ms
+   → [
+  {
+    "file": "demo/shell/AppShell.vue",
+    "line": 26,
+    "detail": "value import from the configurator barrel \"./configurator\" — it re-exports PresetEditor.vue; import the leaf module"
+  }
+]: expected [ { …(3) } ] to deeply equal []
+ ✓ tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the built demo has a dist-demo to measure 0ms
+ ✓ tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the dist-demo it measures is NEWER than every source it is built from 9ms
+ × tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the eager graph stays under the modulepreload and byte ceilings 1ms
+   → eager graph: 74 modulepreloads + 1 entry = 75 files / 791615 B: expected 74 to be less than or equal to 60
+ ✓ tests/gates/boot-graph.test.ts > gate:boot-graph — self-test > the static-import detector reds on a planted top-level Aurora import 0ms
+ ✓ tests/gates/boot-graph.test.ts > gate:boot-graph — self-test > the static-import detector ignores comments and type-only imports 0ms
+ ✓ tests/gates/boot-graph.test.ts > gate:boot-graph — self-test > the barrel detector reds on a planted barrel value import 0ms
+ ✓ tests/gates/boot-graph.test.ts > gate:boot-graph — self-test > the configurator-barrel detector reds on a planted barrel import 0ms
+ ✓ tests/gates/boot-graph.test.ts > gate:boot-graph — self-test > the build-arm parser reds rather than greens on an unparsed manifest 0ms
+ ✓ tests/gates/boot-graph.test.ts > gate:boot-graph — self-test > the build-arm parser reds on a planted oversized manifest 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — source arm > AppShell reaches Aurora and PresetEditor through defineAsyncComponent
+AssertionError: [
+  {
+    "file": "demo/shell/AppShell.vue",
+    "line": 11,
+    "detail": "top-level static import of Aurora from \"@glass/components/aurora\" — must be defineAsyncComponent"
+  },
+  {
+    "file": "demo/shell/AppShell.vue",
+    "line": 26,
+    "detail": "top-level static import of PresetEditor from \"./configurator\" — must be defineAsyncComponent"
+  }
+]: expected [ { …(3) }, { …(3) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "detail": "top-level static import of Aurora from \"@glass/components/aurora\" — must be defineAsyncComponent",
++     "file": "demo/shell/AppShell.vue",
++     "line": 11,
++   },
++   {
++     "detail": "top-level static import of PresetEditor from \"./configurator\" — must be defineAsyncComponent",
++     "file": "demo/shell/AppShell.vue",
++     "line": 26,
++   },
++ ]
+
+ ❯ tests/gates/boot-graph.test.ts:220:65
+    218|         const source = readFileSync(APP_SHELL, "utf8");
+    219|         const violations = scanStaticShellImports(source);
+    220|         expect(violations, JSON.stringify(violations, null, 2)).toEqua…
+       |                                                                 ^
+    221|     });
+    222|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — source arm > AppShell actually declares the async boundaries
+AssertionError: Aurora must be bound by defineAsyncComponent in AppShell.vue: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/gates/boot-graph.test.ts:229:15
+    227|                 new RegExp(`const\\s+${name}\\s*=\\s*defineAsyncCompon…
+    228|                 `${name} must be bound by defineAsyncComponent in AppS…
+    229|             ).toBe(true);
+       |               ^
+    230|         }
+    231|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — source arm > the shell field's frame-0 ground is EAGER, not inside the async chunk
+AssertionError: AppShell must statically import auroraFallbackGround — the async Aurora chunk must not own first paint: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/gates/boot-graph.test.ts:238:11
+    236|             /^\s*import\s+\{[^}]*auroraFallbackGround[^}]*\}\s+from/m.…
+    237|             "AppShell must statically import auroraFallbackGround — th…
+    238|         ).toBe(true);
+       |           ^
+    239|         expect(
+    240|             /loadingComponent/.test(source),
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — source arm > the shell-field config reads its defaults off the barrel-free leaf
+AssertionError: [
+  {
+    "file": "demo/chassis/hero/aurora-hero.ts",
+    "line": 15,
+    "detail": "value import from the aurora barrel \"@glass/components/aurora\" — the barrel re-exports Aurora.vue; import from the defining leaf"
+  }
+]: expected [ { …(3) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "detail": "value import from the aurora barrel \"@glass/components/aurora\" — the barrel re-exports Aurora.vue; import from the defining leaf",
++     "file": "demo/chassis/hero/aurora-hero.ts",
++     "line": 15,
++   },
++ ]
+
+ ❯ tests/gates/boot-graph.test.ts:248:65
+    246|         const source = readFileSync(AURORA_HERO, "utf8");
+    247|         const violations = scanAuroraBarrelImports(source);
+    248|         expect(violations, JSON.stringify(violations, null, 2)).toEqua…
+       |                                                                 ^
+    249|     });
+    250|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — source arm > no EAGER shell module imports the configurator barrel
+AssertionError: [
+  {
+    "file": "demo/shell/AppShell.vue",
+    "line": 26,
+    "detail": "value import from the configurator barrel \"./configurator\" — it re-exports PresetEditor.vue; import the leaf module"
+  }
+]: expected [ { …(3) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "detail": "value import from the configurator barrel \"./configurator\" — it re-exports PresetEditor.vue; import the leaf module",
++     "file": "demo/shell/AppShell.vue",
++     "line": 26,
++   },
++ ]
+
+ ❯ tests/gates/boot-graph.test.ts:258:51
+    256|             ),
+    257|         );
+    258|         expect(all, JSON.stringify(all, null, 2)).toEqual([]);
+       |                                                   ^
+    259|     });
+    260| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the eager graph stays under the modulepreload and byte ceilings
+AssertionError: eager graph: 74 modulepreloads + 1 entry = 75 files / 791615 B: expected 74 to be less than or equal to 60
+ ❯ tests/gates/boot-graph.test.ts:318:46
+    316|         expect(graph.modulepreloads, report).toBeGreaterThan(0);
+    317|
+    318|         expect(graph.modulepreloads, report).toBeLessThanOrEqual(MAX_M…
+       |                                              ^
+    319|         expect(graph.eagerJsBytes, report).toBeLessThanOrEqual(MAX_EAG…
+    320|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/6]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  6 failed | 8 passed (14)
+   Start at  08:26:46
+   Duration  400ms (transform 22ms, setup 47ms, import 11ms, tests 21ms, environment 198ms)
+

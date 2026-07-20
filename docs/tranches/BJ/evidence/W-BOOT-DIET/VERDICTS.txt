@@ -1,0 +1,127 @@
+BJ.W-BOOT-DIET — the boot-graph diet + gate:boot-graph verdicts
+
+THE RECORD THIS DIRECTORY EXISTS TO CARRY
+The wave's RED figures previously lived only in a source comment, which is the one place
+a reviewer cannot check. Everything below was re-derived on disk at close time; nothing is
+carried from memory or from the diff's prose.
+
+
+1 · BORN-RED — boot-graph-BORN-RED.txt
+Captured by stashing the wave's tracked edits (reaching HEAD source), building dist-demo/
+from HEAD, and running the SHIPPED gate file verbatim. 6 of 14 blocks RED:
+
+  source arm
+    demo/shell/AppShell.vue:11  top-level static import of Aurora from
+                                "@glass/components/aurora"
+    demo/shell/AppShell.vue:26  top-level static import of PresetEditor from
+                                "./configurator"
+    AppShell.vue                Aurora not bound by defineAsyncComponent
+    AppShell.vue                auroraFallbackGround not statically imported
+                                (the frame-0 ground rode the async chunk)
+    demo/chassis/hero/aurora-hero.ts:15
+                                value import from the aurora barrel
+    demo/shell/AppShell.vue:26  value import from the configurator barrel
+
+  build arm
+    eager graph: 74 modulepreloads + 1 entry = 75 files / 791615 B
+                                — expected 74 to be <= 60
+
+The configurator-barrel arm is born-RED on AppShell.vue:26 and thereafter is refactor
+safety for SidebarDock.vue / BottomDock.vue, which reach the LEAF today and are green by
+construction. Stated as such rather than dressed as a live catch.
+
+The two build-arm hardenings are NOT born-RED and are not claimed as such:
+  · the entry/modulepreload FLOOR guards an attribute-order drift Vite has not yet made;
+  · the freshness assert guards a stale dist-demo/ that did not exist at capture time.
+Both ship with a bite that proves they CAN fail — see §4.
+
+
+2 · THE MEASUREMENT — eager-graph-PRE.txt / eager-graph-POST.txt
+Both files carry the full index.html manifest plus the per-file eager set, so the sums are
+recomputable from the artifact rather than trusted.
+
+    PRE  (HEAD)     74 modulepreloads + 1 entry = 75 files / 791,615 B
+    POST (shipped)  56 modulepreloads + 1 entry = 57 files / 483,862 B
+    delta           -18 modulepreloads / -307,753 B  (-38.9%)
+
+    ceilings        60 modulepreloads / 512,000 B   → headroom 4 / 28,138 B
+
+The 208,253 B Aurora chunk is absent from the POST eager set. auroraFallbackGround-*.js
+(5,856 B) is PRESENT in it — that is the wash cure paying for itself, and it is the whole
+of the +3,548 B the POST sum carries over the figure the wave first reported (480,314 B).
+The gate's OPEN-P4 comment was corrected to the re-measured 483,862 B.
+
+
+3 · THE FIRST-PAINT CURE (OPEN-P1, discharged)
+`defineAsyncComponent` was given no loading component, so the `fixed inset-0 -z-10` shell
+plane had nothing to paint until the chunk resolved. The boundary now ships an EAGER wash
+rendering the SAME `auroraFallbackGround` surface Aurora.vue itself renders (Aurora.vue's
+`faithfulGround`), from the already-eager `shellAuroraConfig`, under the same 0.5 envelope,
+with `delay: 0` — Vue's 200ms default would have blanked exactly the window being cured.
+
+Two reviewer cures named this site with different placeholders (`paletteToCssGradient`
+vs `auroraFallbackGround`). They are applied as ONE mechanism, not two stacked planes:
+`auroraFallbackGround` is what Aurora.vue paints, so the resolved component replaces the
+wash with the identical ground and the swap is a same-palette dissolve. A second eager
+`<div>` beneath the component would have double-composited the ground at 0.5.
+
+
+4 · MUTATION PROOF — freshness-BITE.txt
+`touch demo/shell/AppShell.vue` against the just-built dist-demo/:
+
+    × the dist-demo it measures is NEWER than every source it is built from
+      → dist-demo/index.html is STALE (built 2026-07-20T12:27:01.137Z,
+        newest source 2026-07-20T12:27:36.764Z) — run `npm run demo:dist:build`
+
+The unparsed-manifest bite is in the gate itself: an `href`-before-`rel` link parses to
+zero modulepreloads, and zero satisfies BOTH ceilings — which is why the FLOOR, not the
+ceilings, is the assertion that catches a Vite attribute-order drift.
+
+
+5 · THE pretest RETRACTION
+`"pretest": "npm run demo:dist:build"` gated `prepublishOnly` and release.yml's `npm test`
+on the DEMO building, i.e. coupled the LIBRARY publish to a demo-only regression, and made
+every sibling wave's test loop pay a 285-chunk build. It is deleted. The demo build is now
+a step in the test JOB (ci.yml before `npm test`; release.yml before its test step), which
+is what OPEN-P0 actually authorized. Local runners are kept honest by the freshness assert
+above rather than by a hook, so `iter-test` / `iter-test-watch` stay fast and still cannot
+green over a stale artifact.
+
+
+6 · POST-CURE — boot-graph-POST-GREEN.txt
+    gate:boot-graph                    14/14 pass
+    full vitest suite                  189 files, 1231 pass | 2 expected fail
+    vue-tsc --noEmit                   clean
+    vue-tsc --noEmit -p tsconfig.test  clean
+All read off the runner's own summary, never a piped exit status.
+
+
+7 · LIVE-π / DELTA — shell-field-STEADY-post-cure.png
+Served from the built dist-demo/ on localhost:4319, /forms, 1280x800, observed by
+screenshot + getComputedStyle only (no getContext on a live canvas). Steady state:
+
+    .shell-aurora        present, opacity 0.5
+    .aurora-placeholder  present, background-image = the auroraFallbackGround data: URI,
+                         background-color rgb(243, 205, 192) — the warm ground
+    canvas               present (armed)
+
+The band's null-DELTA premise holds: the resolved component paints what it painted before.
+
+FINDING, ROUTED ONWARD — the wash's window is currently ZERO-WIDTH in the built demo, and
+the diet's first-paint win is bounded by a coupling this wave does not own. `demo/main.ts`
+mounts on `router.isReady()`; `demo/router.ts`'s `beforeResolve` awaits every lazy route
+chunk; `demo/chassis/hero/StoryHero.vue:3` statically imports `Aurora` from the barrel. So
+the route chunk re-requests the SAME Aurora chunk and `app.mount("#app")` waits on it —
+measured: with the Aurora chunk held 5s, `#app` has ZERO children at t=1.5s, on every story
+route. The eager-graph diet (§2) is real and gated regardless; the wash is the structural
+cure OPEN-P1 asked for and becomes load-bearing the moment StoryHero's barrel import or the
+beforeResolve pre-resolve is cut. Naming it here rather than letting a later wave discover
+that the boundary alone did not move Aurora off the critical path.
+
+
+8 · CENSUS COST, DECLARED NOT MOVED
+gate:boot-graph is ONE reserved newcomer in BAND-GATES §Wave 1 §Design but FOURTEEN
+line-anchored `it(` blocks (5 source · 3 build · 6 self-test). Measured `tests/gates/**`
+total at close: 21. BAND-GATES W1 re-bases the <=60 arithmetic against the MEASURED total,
+not the per-file roster count. This seat has no standing to move the pin
+(formation/stability/TERMINAL-ROUTINGS.md §R-6) and does not.

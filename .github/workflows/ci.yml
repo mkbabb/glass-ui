@@ -19,6 +19,11 @@ jobs:
                   node-version: 24
             - run: npm ci
             - run: npm run typecheck
+            # gate:boot-graph's BUILD arm measures the demo's eager import graph off a
+            # freshly built dist-demo/ and fails loud on a stale or absent one. The build
+            # belongs in the test job, not in an `npm test` hook: a `pretest` would gate
+            # the LIBRARY publish on the DEMO building.
+            - run: npm run demo:dist:build
             - run: npm test
             - run: npm run build
 

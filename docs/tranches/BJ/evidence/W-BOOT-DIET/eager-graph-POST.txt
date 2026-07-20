@@ -1,0 +1,158 @@
+modulepreloads: 56
+entryScripts:   1
+eager files:    57
+eager JS bytes: 483862
+---- eager set ----
+    78691  /assets/index-Cq9_mZ3E.js
+    84829  /assets/runtime-core.esm-bundler-BKdLzFmX.js
+    23756  /assets/runtime-dom.esm-bundler-C7vCU_EZ.js
+      694  /assets/rolldown-runtime-QTnfLwEv.js
+    13904  /assets/dist-aq9Di5xm.js
+     2710  /assets/TooltipProvider-CMlHhEVL.js
+       89  /assets/ConfigProvider-CehzrjQd.js
+     5151  /assets/useId-BmTB-8sO.js
+    25648  /assets/routeTransition-C_xEo4sp.js
+      815  /assets/useReducedMotion-Cim4QggP.js
+     2173  /assets/vSpecular-B0Jv1dip.js
+      655  /assets/defu-DIStycge.js
+      713  /assets/useForwardPropsEmits-BbIH1iPU.js
+     2535  /assets/useGraceArea-DefxH4t9.js
+     3380  /assets/Presence-CCmx-00S.js
+      186  /assets/getActiveElement-DWEoD8ZB.js
+     3781  /assets/useHideOthers-Cux-kqu_.js
+      175  /assets/handleAndDispatchCustomEvent-Bng2rRDf.js
+       44  /assets/nullish-DHihWhf5.js
+     4787  /assets/Teleport-bOO303RN.js
+     1070  /assets/utils-CS7FIVWB.js
+     3056  /assets/FocusScope-DlkkmjvT.js
+      841  /assets/utils-DTWskMUQ.js
+     8582  /assets/DialogTitle-2vn58fHs.js
+      893  /assets/VisuallyHidden-CeCTTpdb.js
+      213  /assets/useDirection-BJcns-TN.js
+      648  /assets/useSize-DqXRFKgy.js
+    26505  /assets/floating-CrnPociF.js
+      636  /assets/PopperAnchor-BOFHamwS.js
+     1016  /assets/useArrowNavigation-LczgkNfS.js
+      646  /assets/useFocusGuards-7ot0XqOI.js
+      756  /assets/useTypeahead-B9Rfo6Bu.js
+      283  /assets/usePrimitiveElement-CDVp8Tr1.js
+     1350  /assets/Collection-TSBLVCAs.js
+      691  /assets/utils-wU4Gd1dW.js
+     2204  /assets/RovingFocusGroup-D_iUlE5i.js
+     3241  /assets/class-names-Dq3r48Jn.js
+      137  /assets/primitive-CgkkP1K3.js
+    41315  /assets/DropdownMenuTrigger-mdu7O8OQ.js
+      305  /assets/createContext-EuCC_P1f.js
+     1347  /assets/createLucideIcon-DD5RgTL8.js
+      290  /assets/bell-DRtQCyrr.js
+    25261  /assets/value-xkSG0J1b.js
+     5856  /assets/auroraFallbackGround-BkBQ8gzt.js
+    72978  /assets/aurora-hero-CvIa4vKo.js
+    11828  /assets/motionTempo-CKrN8XQ8.js
+     1361  /assets/springPresets-BZPe_tPk.js
+     1359  /assets/writeVelocityWeight-NYB0jNr2.js
+     2813  /assets/useLiquidPress-B0IL2V0t.js
+       84  /assets/resolveSurfaceClass-CzmkB0e0.js
+      278  /assets/supportsCssTimeline-uCVFtD_U.js
+      863  /assets/useResizeObserver-LJYBSV4t.js
+     1241  /assets/useIntersectionPause-BFn61EG6.js
+     1906  /assets/useRAFLoop-CkM461Bq.js
+      354  /assets/useResolveTokenColor-CbeaPdov.js
+     6467  /assets/useGlassBackdropLuminance-Bz8Ipo_r.js
+      472  /assets/dockContext-D_xo6ybc.js
+---- index.html ----
+<!doctype html>
+<!-- The demo dogfoods the library DEFAULT register with zero override. The
+     library default IS the brand register (Plus Jakarta Sans text + display,
+     Fira Code mono) — no typography preset, no sans-indirection token. What the
+     demo renders is exactly what a consumer of the default tokens receives. -->
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            name="description"
+            content="Glassmorphic design system — Vue 3.5 components, glass tokens, motion primitives."
+        />
+        <link rel="icon" href="data:," />
+        <title>glass-ui Feature Demo</title>
+
+        <!-- Brand faces (Plus Jakarta Sans + Fira Code) are the PUBLISHED
+             corpus — self-hosted woff2 loaded by demo.css's @font-face rules
+             from `src/fonts/` (the same binaries the `./styles/fonts` export
+             ships). No external font-host preconnect/stylesheet wiring is
+             needed; the demo dogfoods exactly what a consumer of
+             `@mkbabb/glass-ui/styles/fonts` receives. -->
+
+        <!-- The /styles cascade is the one byte-complete union entry
+             `@mkbabb/glass-ui/styles` (the minified cascade). The earlier
+             critical/deferred split loader recipe retired here:
+             after the publish-time minify the ~13KB saving was not worth the
+             split's coordination and extra exports, so a consumer imports
+             the single `@mkbabb/glass-ui/styles` entry. The demo's DEV server
+             bundles the library SOURCE cascade through demo.css
+             (`@import "../src/styles/index.css"`, the union for HMR simplicity). -->
+      <script type="module" crossorigin src="/assets/index-Cq9_mZ3E.js"></script>
+      <link rel="modulepreload" crossorigin href="/assets/runtime-core.esm-bundler-BKdLzFmX.js">
+      <link rel="modulepreload" crossorigin href="/assets/runtime-dom.esm-bundler-C7vCU_EZ.js">
+      <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-QTnfLwEv.js">
+      <link rel="modulepreload" crossorigin href="/assets/dist-aq9Di5xm.js">
+      <link rel="modulepreload" crossorigin href="/assets/TooltipProvider-CMlHhEVL.js">
+      <link rel="modulepreload" crossorigin href="/assets/ConfigProvider-CehzrjQd.js">
+      <link rel="modulepreload" crossorigin href="/assets/useId-BmTB-8sO.js">
+      <link rel="modulepreload" crossorigin href="/assets/routeTransition-C_xEo4sp.js">
+      <link rel="modulepreload" crossorigin href="/assets/useReducedMotion-Cim4QggP.js">
+      <link rel="modulepreload" crossorigin href="/assets/vSpecular-B0Jv1dip.js">
+      <link rel="modulepreload" crossorigin href="/assets/defu-DIStycge.js">
+      <link rel="modulepreload" crossorigin href="/assets/useForwardPropsEmits-BbIH1iPU.js">
+      <link rel="modulepreload" crossorigin href="/assets/useGraceArea-DefxH4t9.js">
+      <link rel="modulepreload" crossorigin href="/assets/Presence-CCmx-00S.js">
+      <link rel="modulepreload" crossorigin href="/assets/getActiveElement-DWEoD8ZB.js">
+      <link rel="modulepreload" crossorigin href="/assets/useHideOthers-Cux-kqu_.js">
+      <link rel="modulepreload" crossorigin href="/assets/handleAndDispatchCustomEvent-Bng2rRDf.js">
+      <link rel="modulepreload" crossorigin href="/assets/nullish-DHihWhf5.js">
+      <link rel="modulepreload" crossorigin href="/assets/Teleport-bOO303RN.js">
+      <link rel="modulepreload" crossorigin href="/assets/utils-CS7FIVWB.js">
+      <link rel="modulepreload" crossorigin href="/assets/FocusScope-DlkkmjvT.js">
+      <link rel="modulepreload" crossorigin href="/assets/utils-DTWskMUQ.js">
+      <link rel="modulepreload" crossorigin href="/assets/DialogTitle-2vn58fHs.js">
+      <link rel="modulepreload" crossorigin href="/assets/VisuallyHidden-CeCTTpdb.js">
+      <link rel="modulepreload" crossorigin href="/assets/useDirection-BJcns-TN.js">
+      <link rel="modulepreload" crossorigin href="/assets/useSize-DqXRFKgy.js">
+      <link rel="modulepreload" crossorigin href="/assets/floating-CrnPociF.js">
+      <link rel="modulepreload" crossorigin href="/assets/PopperAnchor-BOFHamwS.js">
+      <link rel="modulepreload" crossorigin href="/assets/useArrowNavigation-LczgkNfS.js">
+      <link rel="modulepreload" crossorigin href="/assets/useFocusGuards-7ot0XqOI.js">
+      <link rel="modulepreload" crossorigin href="/assets/useTypeahead-B9Rfo6Bu.js">
+      <link rel="modulepreload" crossorigin href="/assets/usePrimitiveElement-CDVp8Tr1.js">
+      <link rel="modulepreload" crossorigin href="/assets/Collection-TSBLVCAs.js">
+      <link rel="modulepreload" crossorigin href="/assets/utils-wU4Gd1dW.js">
+      <link rel="modulepreload" crossorigin href="/assets/RovingFocusGroup-D_iUlE5i.js">
+      <link rel="modulepreload" crossorigin href="/assets/class-names-Dq3r48Jn.js">
+      <link rel="modulepreload" crossorigin href="/assets/primitive-CgkkP1K3.js">
+      <link rel="modulepreload" crossorigin href="/assets/DropdownMenuTrigger-mdu7O8OQ.js">
+      <link rel="modulepreload" crossorigin href="/assets/createContext-EuCC_P1f.js">
+      <link rel="modulepreload" crossorigin href="/assets/createLucideIcon-DD5RgTL8.js">
+      <link rel="modulepreload" crossorigin href="/assets/bell-DRtQCyrr.js">
+      <link rel="modulepreload" crossorigin href="/assets/value-xkSG0J1b.js">
+      <link rel="modulepreload" crossorigin href="/assets/auroraFallbackGround-BkBQ8gzt.js">
+      <link rel="modulepreload" crossorigin href="/assets/aurora-hero-CvIa4vKo.js">
+      <link rel="modulepreload" crossorigin href="/assets/motionTempo-CKrN8XQ8.js">
+      <link rel="modulepreload" crossorigin href="/assets/springPresets-BZPe_tPk.js">
+      <link rel="modulepreload" crossorigin href="/assets/writeVelocityWeight-NYB0jNr2.js">
+      <link rel="modulepreload" crossorigin href="/assets/useLiquidPress-B0IL2V0t.js">
+      <link rel="modulepreload" crossorigin href="/assets/resolveSurfaceClass-CzmkB0e0.js">
+      <link rel="modulepreload" crossorigin href="/assets/supportsCssTimeline-uCVFtD_U.js">
+      <link rel="modulepreload" crossorigin href="/assets/useResizeObserver-LJYBSV4t.js">
+      <link rel="modulepreload" crossorigin href="/assets/useIntersectionPause-BFn61EG6.js">
+      <link rel="modulepreload" crossorigin href="/assets/useRAFLoop-CkM461Bq.js">
+      <link rel="modulepreload" crossorigin href="/assets/useResolveTokenColor-CbeaPdov.js">
+      <link rel="modulepreload" crossorigin href="/assets/useGlassBackdropLuminance-Bz8Ipo_r.js">
+      <link rel="modulepreload" crossorigin href="/assets/dockContext-D_xo6ybc.js">
+      <link rel="stylesheet" crossorigin href="/assets/index-BYcDgVM2.css">
+    </head>
+    <body>
+        <div id="app"></div>
+    </body>
+</html>
+

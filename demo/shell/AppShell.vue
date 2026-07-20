@@ -1,5 +1,13 @@
 <script setup lang="ts">
-import { computed, nextTick, onMounted, ref, watch } from "vue";
+import {
+    computed,
+    defineAsyncComponent,
+    h,
+    nextTick,
+    onMounted,
+    ref,
+    watch,
+} from "vue";
 import { useRoute } from "vue-router";
 import {
     Dialog,
@@ -8,7 +16,6 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@glass/components/dialog";
-import { Aurora } from "@glass/components/aurora";
 import {
     formatCombo,
     formatComboParts,
@@ -22,11 +29,61 @@ import {
     shellAuroraConfigDark as buildShellAuroraConfigDark,
 } from "../chassis/hero/aurora-hero";
 import { useGlobalDark } from "@glass/composables/dark/useGlobalDark";
+// The palette-derived ground is the shell field's FRAME-0 surface and, on the
+// `renderMode:"auto"` -> "css" substrate (low-power / reduced-motion / save-data), its
+// PERMANENT one. It must not ride the async chunk: an empty `-z-10` plane until that
+// chunk resolves is a first-paint regression, not a diet. Its deps
+// (`composables/color`, the type-only `aurora/constants/presets`) are already eager.
+import { auroraFallbackGround } from "@glass/components/aurora/composables/auroraFallbackGround";
 import { shellFieldActive } from "../router";
-import { PresetEditor } from "./configurator";
+// The docks stay EAGER: they are the always-visible nav chrome, and their bytes are
+// small next to the two deferred surfaces below (deferring them trades KB for a
+// flash of missing navigation on the first frame).
 import SidebarDock from "./SidebarDock.vue";
 import BottomDock from "./BottomDock.vue";
 import "./dock-nav.css";
+
+// The two async boundaries that keep the eager boot graph to what first paint needs.
+//
+// The configurator is a right-side Sheet opened ONLY by the dock gear or the `,`
+// shortcut, so it is never visible at first paint; its reka
+// dropdown/select/tooltip/floating stack has no business in the boot graph.
+const PresetEditor = defineAsyncComponent(
+    () => import("./configurator/PresetEditor.vue"),
+);
+
+// The shell field already defers ARMING its GL path past first paint
+// (`useAurora` scheduleAfterFirstPaint), but the chunk carrying the runtime and both
+// shader sets was still eager. The direct component path is imported rather than the
+// aurora barrel so the async chunk carries the component, not the whole export surface.
+//
+// The boundary ships an EAGER wash, and that wash is the PRIMARY first paint — not a
+// fallback hiding a dead Aurora. It renders the SAME `auroraFallbackGround` surface
+// `Aurora.vue` itself renders, from the already-eager `shellAuroraConfig`, under the same
+// `opacityCeiling` envelope, so the resolved component replaces it with the identical
+// ground and the cross-fade is a same-palette dissolve. `delay: 0` because the default
+// 200ms would leave the field blank for exactly the window this wave exists to fill.
+const Aurora = defineAsyncComponent({
+    loader: () => import("@glass/components/aurora/Aurora.vue"),
+    delay: 0,
+    loadingComponent: {
+        setup: () => () => {
+            const ground = auroraFallbackGround(shellAuroraConfig.value);
+            return h("div", {
+                class: "shell-aurora fixed inset-0 -z-10",
+                "aria-hidden": "true",
+                style: {
+                    backgroundImage: ground.backgroundImage,
+                    backgroundColor: ground.backgroundColor,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                    opacity: 0.5,
+                },
+            });
+        },
+    },
+});
 
 const { next, prev, nextCategory, prevCategory } = useStoryNavigation();
 

@@ -11,8 +11,12 @@
 // itself a radial/linear wash. One live GL context is mounted per route
 // (the demo router mounts ONE story page at a time — within the WebGL budget).
 
-import type { AuroraConfig } from "@glass/components/aurora";
-import { DEFAULT_AURORA_CONFIG } from "@glass/components/aurora";
+// The config factory reads the plain-object default from the leaf that DEFINES it, not
+// from the aurora barrel: the barrel's first line re-exports `Aurora.vue`, so a barrel
+// import here would statically re-drag the component into the eager graph and undo the
+// shell's async boundary.
+import type { AuroraConfig } from "@glass/components/aurora/constants/presets";
+import { DEFAULT_AURORA_CONFIG } from "@glass/components/aurora/constants/presets";
 import { cssToOklch } from "@glass/composables/color";
 
 /** A painterly hero stop mirroring a `--section-color-*` brand hue, lifted to

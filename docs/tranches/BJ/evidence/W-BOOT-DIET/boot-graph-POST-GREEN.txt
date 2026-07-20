@@ -1,0 +1,23 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui
+
+ ✓ tests/gates/boot-graph.test.ts > gate:boot-graph — source arm > AppShell reaches Aurora and PresetEditor through defineAsyncComponent 2ms
+ ✓ tests/gates/boot-graph.test.ts > gate:boot-graph — source arm > AppShell actually declares the async boundaries 0ms
+ ✓ tests/gates/boot-graph.test.ts > gate:boot-graph — source arm > the shell field's frame-0 ground is EAGER, not inside the async chunk 0ms
+ ✓ tests/gates/boot-graph.test.ts > gate:boot-graph — source arm > the shell-field config reads its defaults off the barrel-free leaf 0ms
+ ✓ tests/gates/boot-graph.test.ts > gate:boot-graph — source arm > no EAGER shell module imports the configurator barrel 0ms
+ ✓ tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the built demo has a dist-demo to measure 0ms
+ ✓ tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the dist-demo it measures is NEWER than every source it is built from 9ms
+ ✓ tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the eager graph stays under the modulepreload and byte ceilings 1ms
+ ✓ tests/gates/boot-graph.test.ts > gate:boot-graph — self-test > the static-import detector reds on a planted top-level Aurora import 0ms
+ ✓ tests/gates/boot-graph.test.ts > gate:boot-graph — self-test > the static-import detector ignores comments and type-only imports 0ms
+ ✓ tests/gates/boot-graph.test.ts > gate:boot-graph — self-test > the barrel detector reds on a planted barrel value import 0ms
+ ✓ tests/gates/boot-graph.test.ts > gate:boot-graph — self-test > the configurator-barrel detector reds on a planted barrel import 0ms
+ ✓ tests/gates/boot-graph.test.ts > gate:boot-graph — self-test > the build-arm parser reds rather than greens on an unparsed manifest 0ms
+ ✓ tests/gates/boot-graph.test.ts > gate:boot-graph — self-test > the build-arm parser reds on a planted oversized manifest 0ms
+
+ Test Files  1 passed (1)
+      Tests  14 passed (14)
+   Start at  08:33:26
+   Duration  359ms (transform 21ms, setup 42ms, import 12ms, tests 15ms, environment 186ms)
+
