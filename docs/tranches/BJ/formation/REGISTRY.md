@@ -143,8 +143,19 @@ Members: visual family 4 (handmark-total-failure → GREENFIELD w/ pencil-boil) 
 (dock-overflow-affordance → dock GREENFIELD: F47 occlusion signaling + auto-advance, F27
 interior scroll, F04/F05 shape grammar, F06 transitions) · visual family 8 + F08/A13 (aurora
 preset reduction + REAL van-Gogh/oil-pastel/crayon modes or nothing) · A12 (blob greenfield —
-reference the OLD value.js implementation) · V-A95 aurora reverse-drag slab (ACTIVE RED,
-carried) · deadcode:css-partial-orphaned (chip/glass-atom dead in dist — born-RED fix; OWNER RE-STAMPED
+reference the OLD value.js implementation) · V-A95 aurora reverse-drag slab (~~ACTIVE RED, carried~~ →
+**RETIRE-OR-CONFIRM — NOT an active RED. Re-stamped 2026-07-20, STAB10**, against the landed browser
+trio: FOUR independent non-reproductions on live WebGPU under the no-`getContext` discipline
+(round-3-live 3/3 reverse-drag variants · `refable/REFABLE-RU-20.md` R3A-4 "CLEARED on live WebGPU;
+original claim likely a context-steal artifact" · `refable/REFABLE-RU-29.md` A2 "5 forward/reverse stroke
+pairs + 2 rapid reverse pairs recompose the field — no black slab ever"), consistent with this file's own
+Round-3a fold item 4 at `:315-322` and with `PLAN.md:17` + `:358-369`. Standing disposition:
+retire-as-instrumentation-artifact, twice-instrumented; **GF-AURORA W6 owns ONE clean confirm** on the
+real in-app Chrome arm AFTER the mode waves land, then retires the defect record and audits the
+`isolation: isolate` cure for cargo — **never a cure hunt**. BJ therefore carries exactly ONE known
+7.0.0 defect (the chip/glass-atom orphan below), not two. This bracket IS the "next registry re-stamp"
+that `PLAN.md:369` deferred the wording to; the deferral is hereby DISCHARGED and names no further
+firing event) · deadcode:css-partial-orphaned (chip/glass-atom dead in dist — born-RED fix; OWNER RE-STAMPED
 2026-07-18: the repair wave is MATERIAL W7, family F, not this family — RU-04 judge MECH-08/D-07) ·
 visual family 9 (feedback-motion-brokenness: F20 toast≡dialog, F21 rim, F22 loop easing, F24
 skeleton) · A01/A11 engagement (ENGAGE-AFFORD/SLIDER-ENGAGE waves registered;

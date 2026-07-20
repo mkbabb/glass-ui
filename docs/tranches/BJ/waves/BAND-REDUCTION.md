@@ -526,7 +526,7 @@ ruled disposition.
 
 **Status:** UNION — the stub stands; the redo canon fills its target shape.
 **Terminal owner:** the design-loop fleet (family G idiom)
-**Depends on:** ASK-7/A5 (the collapse-shape + scrubber-disposition ruling); MATERIAL W4's
+**Depends on:** **ASK-7** (the collapse-shape + scrubber-disposition ruling — `ASK.md` ASK-7, whose evidence is `SUPERFLUITY.md` §4 (F16) + this wave; `ASK-REDUCTION.md` carries NO timeline section, so there is no §-cite to pair with it). [Cite corrected 2026-07-20, STAB11: the prior "ASK-7/A5" carried RU-09's internal numbering, which names nothing in `ASK-REDUCTION.md` (§A1/§A2/§B1-B5/§C1-C4/§D1) and collides with `ASK.md` **ASK-5 — the tempo page**, a live row recommending a fold into the springs configurator. This wave's own body (`:551`) already carried that correction; the `Depends on:` line was the un-swept half — the same shape STAB10 cured at `:688`.] Also: MATERIAL W4's
 `glass-track-well` register (adopt on arrival).
 
 ### Mission
@@ -548,7 +548,7 @@ is struck): `GlassTimeline.vue` (232) + `ContinuousTimeline.vue` (349) + `Contin
 - **Scrubber is NOT plain-deleted (CHANGED vs the prior synthesis):** its liquid-motion register
   (HEAD/FILL/PRESS springs, tanh squish, accent-flood, 44px halo) folds into **Slider as the
   transport variant** (or a standalone atom if reka's pointer model fights the spring head —
-  the named flip). ASK A5 retains redesign-in-library (recommended) vs relocate-to-speedtest.
+  the named flip). ASK-7 (the timeline row) retains redesign-in-library (recommended) vs relocate-to-speedtest. [Cite corrected 2026-07-20, STAB9: the prior "ASK A5" was RU-09's internal numbering and collided with `ASK.md` ASK-5, the tempo page.]
 - **De-overfit the popover default** (the baked speedtest PhaseDetail envelope in geometry.ts);
   prune the §16 scale-paper tokens to surviving knobs; fix the README ghost exports; retarget
   the three continuous tests; delete segmented rows.
@@ -574,7 +574,7 @@ ruling. The track-well register itself is MATERIAL W4's.
 
 ## Wave 6 — BJ.W-REDUCE-FEEDBACK-MARK · pulse → StatusDot merge (NEW — RU-09 R3 / RU-19 V1)
 
-**Status:** UNION — ASK A3-gated.
+**Status:** UNION — ASK-GATED ON AN UNMINTED ROW. **[ESCALATION 2026-07-20, STAB9 — lead/owner action owed before this wave can park or run.]** "ASK A3" is RU-09's internal ask numbering (`REFABLE-RU-03-REDUCTION.md:61`), NOT an `ASK.md` row ID and NOT an `ASK-REDUCTION.md` section: the pulse→StatusDot merge appears in neither document (grep = 0). Because scope item (2) is a public-surface DELETE (`./pulse` subpath + dist + typesVersions), this wave cannot execute on a formation-side call. The lead must either MINT the ratification row into `ASK.md` (a new row, never a re-scope of an existing one) or record a lead-decided disposition here with its rationale. Until then this wave is PARKED-UNROUTABLE, not merely ASK-gated.
 **Terminal owner:** glass-ui orchestrator
 **Depends on:** ASK A3; the family-B addenda (speedtest ×4, keyframes.js ×2, atlas ×2 — all
 already API-broken vs 7.0.0, the rename rides the migration they owe).
@@ -611,7 +611,7 @@ re-point buttons.vue + atoms.vue; update verify:package lists. (5) Addenda per W
 
 ## Wave 7 — BJ.W-REDUCE-OVERLAY-SURFACE · dialog/drawer surface cuts (NEW — RU-09 R7 / RU-19 V8)
 
-**Status:** UNION — ASK A4-gated (the public `DrawerDirection` narrowing).
+**Status:** UNION — ASK-GATED ON AN UNMINTED ROW. **[ESCALATION 2026-07-20, STAB9 — lead/owner action owed before this wave can park or run.]** "ASK A4" is RU-09's internal ask numbering (`REFABLE-RU-03-REDUCTION.md:62`), NOT an `ASK.md` row ID and NOT an `ASK-REDUCTION.md` section: the public `DrawerDirection` narrowing appears in neither document (grep = 0). Scope item (2) is a public-API type narrowing, so it cannot execute on a formation-side call. The lead must either MINT the ratification row into `ASK.md` or record a lead-decided disposition here with its rationale. Until then this wave is PARKED-UNROUTABLE, not merely ASK-gated.
 **Terminal owner:** glass-ui orchestrator
 **Depends on:** ASK A4; sequenced WITH MATERIAL W3 (which OWNS the C-F staging-substrate
 extraction — one Stage enum + resolveStage + provideStageRoots + useStageAnchor + one
@@ -654,7 +654,7 @@ before its cuts ship (no twin left behind).
 
 ## Wave 8 — BJ.W-REDUCE-GOO-ENGINE · the F33 family collapse (NEW — RU-09 R2)
 
-**Status:** UNION — ASK A2-gated; PRECONDITION of `BJ.W-PAGER-DOT-MORPH` (FEEDBACK-MOTION W6,
+**Status:** UNION — ASK-6-gated (`ASK-REDUCTION.md` §C1, whose re-issued recommendation names this wave: "DeckPager cut rides REDUCTION W8"); [cite corrected 2026-07-20, STAB9 — the prior "ASK A2" was RU-09's internal numbering and collided with `ASK-REDUCTION.md` §A2, completion-seal]; PRECONDITION of `BJ.W-PAGER-DOT-MORPH` (FEEDBACK-MOTION W6,
 the PLAN ordering law).
 **Terminal owner:** glass-ui orchestrator
 
@@ -685,7 +685,7 @@ library composable, never a story-local engine (the A2 flip clause).
 
 | gate | posture | probe |
 | --- | --- | --- |
-| G-ASK-RESOLVED (A2) | precondition | the family collapse ratified. |
+| G-ASK-RESOLVED (**ASK-6**) | precondition | the family collapse ratified — the ratification row is `ASK.md` **ASK-6** / `ASK-REDUCTION.md` **§C1** (deck-keep as the headless `useDeck` engine + carousel DELETE-with-relay), whose re-issued recommendation names this wave by name ("the DeckPager cut rides REDUCTION W8"). [Cite corrected 2026-07-20, STAB10: the prior "(A2)" was RU-09's internal numbering and collided with `ASK-REDUCTION.md` §A2 / `ASK.md` ASK-2 — completion-seal, a live row recommending KEEP. This wave's Status line (`:657`) already carried that correction; the gate row was the un-swept half.] |
 | G-ONE-METABALL | doctrine | grep: exactly ONE goo/metaball engine (usePagerWorm/useLeadTrail) in the tree post-cut. |
 | G-DECK-HEADLESS | consumer | atlas's useDeck/DeckCore imports typecheck unchanged. |
 
@@ -764,9 +764,9 @@ is a one-time RED→GREEN differential or an execution-time census/probe; nothin
 (§D1), WatercolorDot (§B5), DataTable (§B1 — census corrected: atlas + speedtest live),
 FourierField/Constellation component fates (§B2/§B3, corrected census),
 tempo page fold (§C4), confirm-dialog story fold (§C2/A6), scroll page fold + A06 standard
-(§C3), pulse merge (A3), drawer narrowing (A4), goo collapse (A2), chassis/metric (A1, re-issued
+(§C3), pulse merge (**PARKED-UNROUTABLE**, not merely ASK-gated — W6's "ASK A3" is RU-09 internal numbering with no `ASK.md` row; lead/owner action owed per `:577`), drawer narrowing (**PARKED-UNROUTABLE**, same class — W7's "ASK A4", per `:614`), goo collapse (**ASK-6** / `ASK-REDUCTION.md` **§C1**) [three cites corrected 2026-07-20, STAB11: the prior "(A2)" was RU-09 internal numbering and collided with `ASK.md` ASK-2 / §A2, completion-seal — a live row recommending KEEP; W8's Status `:657` and gate `:688` already carried this correction and this register was the third, un-swept site], chassis/metric (A1, re-issued
 with the fired flip clause), carousel (§C1, re-issued with the words census), timeline shape +
-scrubber fold (ASK-7/A5), **the A05 conditional-disposition roster (A05-SPECULAR / A05-CTA /
+scrubber fold (**ASK-7**) [cite corrected 2026-07-20, STAB11: the prior "/A5" was RU-09 internal numbering and collided with `ASK.md` ASK-5, the tempo page; W5's Depends line `:551` already carried this correction], **the A05 conditional-disposition roster (A05-SPECULAR / A05-CTA /
 A05-BACKDROP-TRIO / A05-DRAW-IN — W3 rows, APOTHEOSIS MECH-03/D-03)**.
 
 **Lead adoption (updated this union): the FABLE-DAG-REDUCTION amendments A1-A16

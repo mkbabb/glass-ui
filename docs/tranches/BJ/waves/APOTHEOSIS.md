@@ -22,7 +22,7 @@
 
 ## §1 The unified wave-set statement
 
-**47 waves across nine bands reform glass-ui from the evidence outward:** the gate surface
+**48 waves across nine bands reform glass-ui from the evidence outward:** the gate surface
 collapses to the user-mandated 40-60 invariant set while the first gates that can actually fail
 on a real regression are born RED against shipped defects (GATES); prose and comments are trued
 to disk (DOC-TRUTH); the tree colocates on the A07 edict with byte-identity proofs (COLOCATION);
@@ -47,15 +47,18 @@ name, never duplicated.
 | BAND-DOC-TRUTH | 1 | Wave 2 CEDED to COLOCATION Precept F |
 | BAND-FEEDBACK-MOTION | 7 | W5 HARD-BLOCKED on the OPEN-FM-3 user ruling |
 | BAND-GATES | 4 | W1 collapse + count-guard land LAST (census reconciles) |
-| BAND-MATERIAL | 7 | W6 same-cut with GATES W4 |
+| BAND-MATERIAL | 8 | W6 same-cut with GATES W4; W8 `BJ.W-REFRACT-LATCH` minted 2026-07-20 (STAB11) for the second shipped 7.0.0 defect |
 | BAND-PERF | 4 | four standing `tests/gates/` gates, enumerated in GATES W1 |
 | BAND-REDUCTION | 9 | W4/W6/W7/W8 + several W3 members ASK-gated |
 | BAND-STORY | 7 | landing SFCs run the stamped W1 → W4 → W5 sub-sequence |
-| **Total** | **47** | + the external GF-DOCK/GF-HANDMARK/GF-AURORA/GF-BLOB campaigns |
+| **Total** | **48** | + the external GF-DOCK/GF-HANDMARK/GF-AURORA/GF-BLOB campaigns |
 
-Standing-gate arithmetic (binding): keeps ≤ 52 (≤ 51 if COLOCATION Form B) + GATES W3 (2) +
-GATES W4 (1) + A11Y W3-C (1) + PERF (4) [+ COLOCATION fence (1)] ≤ 60. All other bands: ZERO
-standing gates, declared in each band.
+Standing-gate arithmetic (binding; re-based 2026-07-20, STAB12): keeps ≤ 51 (≤ 50 if COLOCATION
+Form B) + GATES W3 (3 — token-hygiene · orphan-CSS-partial · refract-lens-never-sharper) + GATES
+W4 (1) + A11Y W3-C (1) + PERF (4) [+ COLOCATION fence (1)] ≤ 60. The prior line pinned keeps ≤ 52
+with GATES W3 at 2 and was saturated at exactly 60 in BOTH branches, so MATERIAL W8's standing
+refract lock broke the ceiling until the keep pin absorbed it. All other bands: ZERO standing
+gates, declared in each band.
 
 ## §3 Cross-band dependency order — the landable sequence
 
@@ -64,11 +67,23 @@ an edge below names them. External inputs: the GF-* campaigns, the BJ ASK ruling
 constellation census, the Q060 relay.
 
 **Phase 0 — free-standing openers (no inbound edges):**
-GATES W2 (pixel-floor CI, after its `:148` cure) · PERF W1 (boot diet + detectors) ·
+GATES W2 (pixel-floor CI, after its `:148` cure) · **GATES W3** (`BJ.W-STATIC-HYGIENE` — the two
+born-RED static gates `token-hygiene` + `orphan-CSS-partial`; it writes no source and has no inbound
+edge, and it must PRECEDE every sibling repoint that flips it: MATERIAL W1/W2's raw radius/blur
+repoints in phase 2 and MATERIAL W7's closure restore, which phase 2 already describes as "flips
+GATES W3's orphan gate") · PERF W1 (boot diet + detectors) ·
 DOC-TRUTH SWEEP-NOW (sole owner of subpath-policy per MECH-01) · A11Y W1 (incl. W1-C — it
-PRECEDES MATERIAL W3(b)) · A11Y W3-B · FM W1/W2/W3 (W2 composes MATERIAL W4's registers where
+PRECEDES MATERIAL W3(b)) · A11Y W3-B · **A11Y W4** (`BJ.W-A11Y-LIVE-REGIONS` — free-standing per
+`BAND-A11Y.md`'s sequencing bullet; its W4-B `invalid`/`errorLive` KEEP ruling is the record
+`BAND-REDUCTION` W1's Labeled\* dedup consumes) · FM W1/W2/W3 (W2 composes MATERIAL W4's registers where
 geometry admits — D-16; landable in either order with a rebase) · REDUCTION W1/W2 (census-gated;
 REDUCTION W1's Slider cut is FIRST in the Slider hotspot order) · STORY W2/W3/W6.
+[Phase roster completed 2026-07-20, STAB11 — **GATES W3 and A11Y W4 appeared in NO phase of this
+section.** GATES W3 appeared only as the object of MATERIAL W7's flip in phase 2, so the map
+sequenced a GREEN-flip against a gate it never scheduled, while §2's standing-gate arithmetic counts
+it for 2; A11Y W4 appeared nowhere at all, while §2 counts BAND-A11Y at 5 and §5's charter names its
+deliverables. The capstone's "band file wins on conflict" clause does not reach an omission — a map
+that omits a road conflicts with nothing.]
 
 **Phase 1 — the reduction spine:**
 REDUCTION W3 (deletes; A05 roster rows run their censuses; combobox fold moots A11Y W2-B) →
@@ -82,7 +97,11 @@ MATERIAL W1/W2 (W2 includes the saturate-identity RULING — D-04) → FM W4 →
 MATERIAL W3 (after A11Y W1-C/W3-B on DialogContent — MECH-05/D-02) → FM W7 · REDUCTION W7 ·
 MATERIAL W4 (after REDUCTION W1 on Slider.vue; then A11Y W2-E/W2-F; DOC-TRUTH T31/T32 ride) ·
 MATERIAL W5 · MATERIAL W7 (closure restore; flips GATES W3's orphan gate; consumes CL-3
-KEEP-CENTRAL) · DOC-TRUTH triggered rows fire as their triggers land (T6←MATERIAL W1,
+KEEP-CENTRAL) · **MATERIAL W8** (`BJ.W-REFRACT-LATCH` — the WebKit `@supports` gate-lie repair;
+flips GATES W3's `refract-lens-never-sharper` GREEN on the video-path WebKit capture; shares no
+file with any other wave, so it runs any time after GATES W3 authors the gate) [phase seat added
+2026-07-20, STAB12 — W8 was minted at STAB11 and appeared in NO phase of this section] ·
+DOC-TRUTH triggered rows fire as their triggers land (T6←MATERIAL W1,
 T42←MATERIAL W2's ruling, T34←REDUCTION W3's A05-SPECULAR row, T31/T32←A11Y W2-F).
 
 **Phase 3 — the type flip (one cut):**

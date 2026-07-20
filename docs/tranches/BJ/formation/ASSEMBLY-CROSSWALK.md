@@ -154,6 +154,25 @@ row 1 = CHRONIC R1; UF-K1 metric confrontation = §A1).
 
 ### From `../ASK-REDUCTION.md`
 
+**[SUPERSESSION 2026-07-20, STAB10 — the recommendation column below is the PRE-E2 text; read the live
+documents, never this table, for any recommendation.** Lead amendment ledger **E2**
+(`refable/LEAD-AMENDMENT-LEDGER.md:53`, RU-04 judge §5.5) RE-ISSUED four of these rows with corrected
+censuses *before the owner rules*; the live ruling surfaces are `../ASK.md` + `../ASK-REDUCTION.md` and
+this crosswalk is neither. The four: **A1** ~~"RATIFY SHARED-KEEP"~~ → **chassis DELETE**
+(usage is contract-phantom against the 7.0.0 contract) + **metric DELETE-with-relay**, with
+COLLAPSE-FAMILY as the fired-clause alternative (keyframes.js the one current-contract `/metric`
+consumer) — `ASK.md` ASK-1 / `ASK-REDUCTION.md` §A1. **C1** ~~"carousel as the visual component"~~ →
+deck-keep (headless `useDeck`, atlas ×2) + **carousel DELETE-with-relay**, embla peer removed, the relay
+NAMES words — ASK-6 / §C1. **C3** ~~"consolidate to the ≥2-consumer keeps"~~ → the per-symbol table:
+`useStagger` **KEEP** (speedtest ×2 — the escape clause already fired), `useBloomUp`+`bloomUpField` and
+`useStaggerReveal` DELETE, `useLiquidReveal` RELOCATES to `morph/`, `useScrollPin` goes demo-local with
+`springProjection` **FENCED OUT** and staying in `src/`, `useScrollScene` conditional-keep — ASK-4 / §C3.
+**D1** ~~"taxonomy is 6"~~ → under the adopted SIX-type fold (`../waves/BAND-STORY.md:104-110`,
+`../PLAN.md:168-169`) pruning makes the taxonomy **FIVE** and keeping a composition page makes it
+**SIX**; the stake is unchanged (an empty `scene` is not minted). The QUESTION column and every
+greenfield row below are unchanged and remain accurate. This table stays as the deduplication record; it
+is not a ruling surface.**]**
+
 | # | question | recommendation on record |
 |---|----------|--------------------------|
 | A1 | ratify metric-family + instrument-chassis SHARED-KEEP, or overrule and accept the ~4-app costed break? (third-asked; = the UF-K1 confrontation) | RATIFY SHARED-KEEP (3-4-repo census stands; the removal instinct is the disease) |
@@ -199,9 +218,17 @@ row 1 = CHRONIC R1; UF-K1 metric confrontation = §A1).
 - **F07 vs F05/F06 transition choreography** — the weighted/goo-morph story-page transition is owned by
   `BJ.W-ROUTE-PENDING` (perf) "coordinated with Family D", but Family D never drafted its own
   choreography wave; the seam is real and should land once (BAND-PERF W4 OPEN-P10).
-- **F12/F17 landing is conditional** — RULING 8 hands them to `BJ.W-RADIUS-ROLE`, but only "if the live-π
-  reproduces them"; disk shows tags-input/search already role-correct (OPEN-1a), so these may convert to
-  regression-guards rather than born-RED fixes.
+- **F12/F17 landing — RESOLVED, no longer conditional (corrected 2026-07-20, STAB11; the prior text
+  read "disk shows tags-input/search already role-correct (OPEN-1a), so these may convert to
+  regression-guards rather than born-RED fixes" — the premise J12 struck for F17).** RULING 8's
+  ownership conditional licenses BOTH postures and the union split them: **F12 converts to a
+  REGRESSION-GUARD** (tags-input IS role-correct on disk — `tags-input/styles.css:8` `--radius-field`,
+  the chip stadium coming from `<Chip>`), while **F17 is a BORN-RED FIX, statically derived — NOT a
+  guard and NOT live-π-conditional**: `search/searchVariants.ts:9-10` strips the radius with
+  `rounded-none` on the bare/floating variants, beating `.input-bar`'s `--radius-2xl` unconditionally,
+  with zero re-chroming rules in `src/` (RU-13 FLIP F-1; judge R8 re-open AFFIRMED, ledger D1;
+  `BAND-MATERIAL.md:135-145`/`:819-824`; `PLAN.md:203-206`). This file's own reconciliation item 5
+  already carried the correction; this bullet was the un-swept half.
 - **F33 dot-refinement** and the R3B-DIGEST's `visual-landing` note (orphaned hero goo-blob + blank bento)
   both point at motion/visual defects with no explicit wave — watch that the dot-animation half of F33 and
   the digest's stray-blob finding get an owner when R3b folds.
@@ -214,10 +241,20 @@ row 1 = CHRONIC R1; UF-K1 metric confrontation = §A1).
    F20 → `BJ.W-TOAST-DIALOG-PARITY`, F21 → `BJ.W-PROGRESS-RIM-REPLACE` (phantom bank NAMED and
    retired per chronic:phantom-bank-landing-vehicle), F22 + F24 → `BJ.W-FEEDBACK-MOTION-TUNE`,
    F19 → `BJ.W-ALERT-IDIOM` (ordered after Material W1/W2). All five convert to LANDED.
-2. **PENDING-R3B 2 → 0.** R3b has folded into REGISTRY ("Round-3b fold"): A01/A11 land in
-   `BI.W-ENGAGE-AFFORD`/`BI.W-SLIDER-ENGAGE` with the R3b presence/absence table as the wave
-   scope and buttons ranked first (the 1.5%-hover weak link); perf gate baselines seed
-   BAND-PERF from the R3b DEV numbers. Both convert to LANDED.
+2. **PENDING-R3B 2 → 0.** R3b has folded into REGISTRY ("Round-3b fold"): A01/A11 land at
+   **`BJ.W-IDLE-BREATH` (BAND-FEEDBACK-MOTION W5) — LANDED-AT-W5** with the R3b presence/absence
+   table as the wave scope and buttons ranked first (the 1.5%-hover weak link); perf gate baselines
+   seed BAND-PERF from the R3b DEV numbers. Both convert to LANDED.
+   [Corrected 2026-07-20, STAB11 — the prior text landed A01/A11 in
+   "`BI.W-ENGAGE-AFFORD`/`BI.W-SLIDER-ENGAGE`". Both halves are superseded: **(a)** JUDGE **J1**
+   MINTED `BJ.W-IDLE-BREATH` precisely because the crosswalk had over-credited `BI.W-ENGAGE-AFFORD`
+   (sustained-engage only; buttons demoted "adequate") and ruled these two rows to LANDED-AT-W5 —
+   this file's own §Judgment corrections item 1 carries it, and `PLAN.md:388-390` concurs; **(b)**
+   `BI.W-SLIDER-ENGAGE` is a **SUPERSEDED redirect stub, "do not execute"** (`PLAN.md:301-302`), so
+   naming it as a landing revives a dead booking under a closed prefix — the exact class
+   `APOTHEOSIS.md` §4 invariant 8 forbids. `BI.W-ENGAGE-AFFORD` remains a real carry-over (SPEC-ONLY
+   at the 7.0.0 tag, RU-25 R3 re-base conditions) whose SUSTAINED-ENGAGE half is complemented by W5's
+   idle half — a pairing, not a landing for A01/A11.]
 3. **F05 sliver (why-no-background-aurora) → CLEARED-by-R3b**: the dock section demonstrably
    carries a live chromatic background field (R3B-DIGEST engagement-dock evidence: the orange
    glow shifts between hover frames). The sub-ask's premise no longer holds at HEAD.

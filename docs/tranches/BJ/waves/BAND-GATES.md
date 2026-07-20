@@ -44,7 +44,7 @@ Two motions, four waves:
 |------|------|--------|-----------|
 | 1 | `BJ.W-GATE-COLLAPSE` | Reduce the vitest battery to ~45-55 invariant keeps + cure the enrollment-layer rot | No — deletions; acceptance is the census delta (bases pinned) |
 | 2 | `BJ.W-PIXEL-FLOOR-CI` | Wire the sound pixel floor (substrate-paints-color) into CI, after curing its stale false-RED pin | Yes — CI-wiring-absent probe + planted black-render self-test |
-| 3 | `BJ.W-STATIC-HYGIENE` | Two NEW static gates: token-hygiene · orphan-CSS-partial (both-channel walk; prop-granularity FOLDED to Family C per OPEN-8) | Yes — shipped violations red each at HEAD |
+| 3 | `BJ.W-STATIC-HYGIENE` | THREE NEW static gates: token-hygiene · orphan-CSS-partial (both-channel walk) · refract-lens-never-sharper (the WebKit `@supports` gate-lie, Playwright arm; prop-granularity FOLDED to Family C per OPEN-8) | Yes — shipped violations red each at HEAD |
 | 4 | `BJ.W-RAMP-RESET` | The Tailwind default-ramp reset as the typography-lint precondition | Yes — 234 ramp-bypass sites (218 demo + 16 src) red the class-ban probe |
 
 **Gate substrate (band-wide, `OPEN-1` — RULED: vitest-fs).** The current tree has **no** `scripts/gates.mjs`
@@ -98,10 +98,12 @@ Discharges `gate:gate-count-overshoot` + `gate:pin-implementation-literal` +
   its W1-D source scan; RU-03-A11Y routing 7), `BAND-COLOCATION` W3's hygiene fence (Form B only —
   Form A folds into the audit doc and costs zero), **`BAND-PERF`'s FOUR standing `tests/gates/`
   vitest gates (boot-graph · shell-field-governance · deferred-paint · route-pending — permanent per
-  its OPEN-P0 ruling)**, and this band's own W3 (2) + W4 (1) gates. W2's two pixel floors are
+  its OPEN-P0 ruling)**, and this band's own W3 (**3** — token-hygiene · orphan-CSS-partial ·
+  refract-lens-never-sharper) + W4 (1) gates. W2's two pixel floors are
   Playwright in `tests-visual/`, outside the vitest base but inside the enforced surface. The
-  keep-list is pinned so keeps + the enumerated newcomers ≤ 60 by arithmetic (**keeps ≤ 52**, ≤ 51
-  under Form B), stated IN the count-guard test. STORY/FM/REDUCTION declare ZERO standing gates
+  keep-list is pinned so keeps + the enumerated newcomers ≤ 60 by arithmetic (**keeps ≤ 51**, ≤ 50
+  under Form B — re-based 2026-07-20, STAB12 to absorb W3's refract lock), stated IN the
+  count-guard test. STORY/FM/REDUCTION declare ZERO standing gates
   (posture lines landed by APOTHEOSIS); the count-guard's pinned base is the INVARIANT-GATE census
   (the keep-list files + `tests/gates/**`) — sibling ordinary per-component regression tests are
   out-of-base by the guard's stated counting method, per the mandate's own language ("~40-60
@@ -258,18 +260,18 @@ probe fails.
 
 ---
 
-## Wave 3 — `BJ.W-STATIC-HYGIENE` — two NEW born-RED static gates (prop-granularity folded to Family C)
+## Wave 3 — `BJ.W-STATIC-HYGIENE` — three NEW born-RED static gates (prop-granularity folded to Family C)
 
 ### §Mandate
 
 Discharges `canon:unenforced-token-system` + the orphan-CSS gate gap (round-2b **critical**
 `orphaned-css-import-closure`, live-confirmed R3a). These are the Family A wave-candidate-3 gates
-(`REGISTRY.md:44`): **token-hygiene · orphan-CSS-partial** are authored born-RED here against shipped
+(`REGISTRY.md:44`): **token-hygiene · orphan-CSS-partial** are authored born-RED here against shipped violations, joined by **refract-lens-never-sharper** [added 2026-07-20, STAB12 — `PLAN.md:17` and `BAND-MATERIAL.md:812-822` both already declared this wave the author of that gate; it was authored in neither this wave's §Design/§Work/§Acceptance nor its count arithmetic, leaving `BJ.W-REFRACT-LATCH` (MATERIAL W8) with no born-RED half to flip] against shipped
 violations; **prop-granularity dead-config is FOLDED into Family C's overfitting audit** (a one-shot
 audit line, not a standing Family-A gate — adjudicated, FINDING-5 / OPEN-8), because its defect-status is
 a Family-C design ruling, not an unambiguous hygiene violation.
 
-### §Design — two gates, one wave (vitest-fs per the RULED OPEN-1)
+### §Design — three gates, one wave (vitest-fs per the RULED OPEN-1; the refract arm is the one Playwright exception)
 
 **(A) `gate:token-hygiene` — raw radius/blur literals off the ladder.** Grep `src/` for raw
 `border-radius`/`backdrop-filter`/`blur()` literals outside the theme/tokens files; every non-exempt
@@ -325,6 +327,34 @@ sibling truth in 12 of 15 findings (RF-1 §B); (2) `docs/audits/overfitting-audi
 `proof:*` scripts exist); the claim is rewritten by the audit's own rerun or DOC-TRUTH — this band does
 NOT mint a third gate to make the doc true (the collapse mandate cuts the other way).
 
+**(D) `gate:refract-lens-never-sharper` — the WebKit `@supports` gate-lie (added 2026-07-20,
+STAB12; `PLAN.md:17` and `BAND-MATERIAL` W8 both assign the authorship here, and it was missing).**
+On WebKit, `.glass-lens` over a striped scene must paint gradient energy within tolerance of its
+blur-only twin; **the lens may NEVER paint sharper than its own blur base, on any engine.** Unlike
+(A)/(B) this arm is NOT vitest-fs — it is a Playwright/WebKit paint probe on the **video/screencast
+path** (`page.screenshot()` is backdrop-filter-BLIND on WebKit and false-FAILS the GREEN side —
+`safari-arm.md` §0, harness law 1). It is the second Playwright exception in this band, alongside
+wave 2's pixel floor.
+
+Born-RED violation shipped at HEAD (WebKit 26.5, Playwright webkit-2311):
+`src/styles/glass-refract.css:98` gates the refraction composite on
+`@supports (backdrop-filter: url("#glass-refract"))`. WebKit returns **true** for every form —
+fragment, gate, and the shipped data-URI — and computed style retains the composite, but **paint
+drops the WHOLE value including the blur leg**. Probe chips over a striped scene (background
+baseline 0.0756): blur-only **0.0018** (frosted) vs `blur+url(#)` **0.0749** and the verbatim
+shipped value **0.0748** — every `url()`-bearing chip stone sharp. The gated declaration overrides
+the un-gated blur base, so `.glass-lens` ships with NO backdrop filter on the Safari floor — worse
+than the intended blur-only degrade. Chrome 150 unaffected. Evidence:
+`../../IOS27-MICRO/passes/PASS-2/safari-arm.md` §F5 (U1 RED) +
+`../../IOS27-MICRO/prototypes/f5-optical-medium/PROBE-NOTES.md` "PASS-2 SAFARI ARM"; WebKit bug 245510.
+
+The fix flip (the runtime latch that replaces the lying `@supports`) is **`BJ.W-REFRACT-LATCH`
+(MATERIAL W8)** — this wave authors the GATE born-RED; the latch flips it GREEN on the video-path
+WebKit capture. It is a **STANDING regression lock** (it also catches the day WebKit ships `url()`
+for real — the functional arm goes true, the gate stays green), so it enters W1's census as ONE
+additional standing gate and the keep pin drops to **≤51** (≤50 under COLOCATION Form B) to absorb
+it inside the ≤60 ceiling.
+
 ### §Work
 
 - `tests/gates/token-hygiene.test.ts` — fs-read `src/**/*.{css,vue}`, regex the raw radius/blur literals,
@@ -332,6 +362,10 @@ NOT mint a third gate to make the doc true (the collapse mandate cuts the other 
 - `tests/gates/orphan-css-partial.test.ts` — build the reachability set from BOTH channels (the
   `index.css` @import graph ∪ `<style src=`/import references), assert every `src/**/*.css` partial is
   reachable. Self-test bite: a planted orphan partial reds.
+- `tests-visual/refract-lens-never-sharper.spec.ts` — Playwright, Chromium + WebKit, **video-path**
+  capture over the striped scene; assert the `.glass-lens` chip's gradient energy is within
+  tolerance of its blur-only twin and never sharper, on either engine. Self-test bite: a planted
+  `backdrop-filter: none` on the lens reds. (Playwright, not vitest — the same exception wave 2 carries.)
 - (No `tests/gates/prop-granularity.test.ts` — folded per OPEN-8.)
 
 ### §Acceptance — born-RED
@@ -340,6 +374,9 @@ NOT mint a third gate to make the doc true (the collapse mandate cuts the other 
   `segmented.css:169/:306` raw radii. GREEN when the fix waves repoint them (MATERIAL W1/W2).
 - orphan-CSS-partial RED at HEAD: glass-chip.css + glass-atom.css reachable by NEITHER channel. GREEN
   when the CSS re-home lands (MATERIAL W7).
+- refract-lens-never-sharper RED at HEAD on WebKit 26.5: `glass-refract.css:98`'s `@supports`
+  engages and `.glass-lens` paints **0.0748-sharp** against its **0.0018-frosted** blur-only twin.
+  GREEN when MATERIAL W8's runtime latch lands (video-path WebKit capture + the latch-OFF degrade proof).
 - Each gate ships a self-test bite proving it reds on a planted violation (not hollow).
 
 ### §π/DELTA
@@ -459,6 +496,7 @@ source — after it, `text-sm` is a build-visible unknown, not a silent bypass.
 ## §Band-level obligations & OPEN roll-up
 
 **Coordination handoffs (authored born-RED here → GREEN by siblings):**
+- refract-lens-never-sharper (W3) → the runtime refract latch (`BJ.W-REFRACT-LATCH`, MATERIAL W8), flipped GREEN on the video-path WebKit capture + the latch-OFF degrade proof [added 2026-07-20, STAB12].
 - orphan-CSS-partial (W3) → the CSS re-home of glass-chip/glass-atom (`BJ.W-CSS-CLOSURE-RESTORE`,
   MATERIAL W7), with the dist rule-count + live accent-flood re-verify.
 - token-hygiene radius/blur (W3) → the ladder repoints (MATERIAL W1 radii incl. the corner-k dead-pair
@@ -489,7 +527,7 @@ source — after it, `text-sm` is a build-visible unknown, not a silent bypass.
     `BAND-MATERIAL` W6; same cut, never RED-at-tag. [W4]
 
 **In-scope count (APOTHEOSIS-corrected arithmetic, MECH-06/D-08):** the invariant-gate census after W1
-= keeps (**pinned ≤52**; ≤51 under COLOCATION Form B) + 2 static gates (W3) + 1 type-hygiene gate (W4)
+= keeps (**pinned ≤51**; ≤50 under COLOCATION Form B) + 3 static gates (W3) + 1 type-hygiene gate (W4)
 + the inbound A11Y W3-C contrast gate + `BAND-PERF`'s 4 standing `tests/gates/` gates (+ the COLOCATION
 fence if Form B) ≤ 60 by construction; the 2 CI-wired pixel floors (W2) are Playwright, outside the
 vitest base but inside the enforced surface. The enforced surface lands in the mandated 40-60 band
@@ -511,7 +549,7 @@ Applied per `../formation/refable/REFABLE-RU-04-JUDGE.md`; the capstone is `APOT
   `BAND-DOC-TRUTH` T26 — one owner on one file; the row keeps `pi-runner-manifest.mjs:31` +
   `regen-spring-tokens.mjs:200`.
 - **MECH-06/D-08:** the W1 inbound-newcomer roster now enumerates the COMPLETE standing set (PERF ×4
-  + A11Y W3-C + own W3/W4 + COLOCATION-if-Form-B); keeps pinned ≤52 so the ≤60 guard holds by
+  + A11Y W3-C + own W3/W4 + COLOCATION-if-Form-B); keeps pinned ≤51 so the ≤60 guard holds by
   arithmetic; the count-guard's base defined as the invariant-gate census (keep-list files +
   `tests/gates/**`), sibling ordinary regression tests out-of-base by stated method.
   **[LEAD 2026-07-19, ledger E4 — the judge's design cure is ADOPTED; the veto lane (RU-04-JUDGE

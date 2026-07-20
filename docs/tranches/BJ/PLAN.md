@@ -14,7 +14,7 @@ idle-breath complement to the BI engagement waves, and the consumer-truth/cross-
 (PASS1→CRIT2→PASS3) → the superfluity confrontation → the perfection fold → the twice-critique redress
 (CRIT1→CRIT2→CRIT3) → the terminal `redress/JUDGE.md`. Every one of the 67 feedback-ledger rows is
 owner-mapped in `formation/ASSEMBLY-CROSSWALK.md`; zero silent drops. 7.0.0 was CUT-NOW by the user's
-2026-07-17 order — BJ builds on the shipped major and carries exactly ONE known 7.0.0 defect as a born-RED BJ row: the chip/glass-atom `@import` orphan (`BAND-GATES` W3 authors `orphan-CSS-partial` born-RED; `BJ.W-CSS-CLOSURE-RESTORE`, MATERIAL W7, owns the fix). **V-A95 is NOT a born-RED row** — four independent non-reproductions on live WebGPU (round-3-live 3/3 · RU-20 R3A-4 · RU-29 A2) put it at retire-as-instrumentation-artifact; it rides GF-AURORA W6 as a RETIRE-OR-CONFIRM rider (§5), never a cure hunt.
+2026-07-17 order — BJ builds on the shipped major and carries TWO known 7.0.0 defects as born-RED BJ rows. [Corrected 2026-07-20, STAB11 — the prior text read "exactly ONE"; the second defect was routed into BJ 2026-07-18 and had no owning row until `BJ.W-REFRACT-LATCH` was minted, so the count sentence understated the shipped surface.] **(1)** the chip/glass-atom `@import` orphan (`BAND-GATES` W3 authors `orphan-CSS-partial` born-RED; `BJ.W-CSS-CLOSURE-RESTORE`, MATERIAL W7, owns the fix); **(2)** the WebKit `@supports` gate-lie — `glass-refract.css:98`'s `@supports (backdrop-filter: url("#glass-refract"))` returns true on WebKit 26.5 while paint drops the whole value, so `.glass-lens` ships with ZERO backdrop filter on the Safari floor (worse than the intended blur-only degrade; probe 0.0748-sharp vs the 0.0018-frosted twin, `coordination/ios27micro-inbox-2026-07-18-glass-refract-webkit-gate-lie.md`). `BAND-GATES` W3 authors `refract-lens-never-sharper` born-RED; **`BJ.W-REFRACT-LATCH` (MATERIAL W8) owns the fix** and flips it GREEN on the video-path WebKit capture. **V-A95 is NOT a born-RED row** — four independent non-reproductions on live WebGPU (round-3-live 3/3 · RU-20 R3A-4 · RU-29 A2) put it at retire-as-instrumentation-artifact; it rides GF-AURORA W6 as a RETIRE-OR-CONFIRM rider (§5), never a cure hunt.
 
 ## §0 — Decision-0 + the version posture (settled, not user-gated)
 
@@ -149,9 +149,20 @@ corrections landed below where the stale text would actively misdirect.
   defaults. **Born-RED = G-CARD-DEFAULT-PAINT** (the band's ONE real-visual differential: gold-metal +
   grain renders at HEAD). π/DELTA owed.
 - **W3 `BJ.W-REDUCE-DELETE`** — the clean deletes (fourier `presets.ts`, liquid-grid + its story page +
-  StoryHero suffuse re-home, Configurator→demo, easing→demo [ASK-gated], the compositions section
-  [ASK-gated] with the confirm-preset test re-homed, useStagger). **Born-RED = G-PRESETS-DEAD-REACH**.
+  StoryHero suffuse re-home, ~~Configurator→demo~~, easing→demo [ASK-gated], the compositions section
+  [ASK-gated] with the confirm-preset test re-homed, ~~useStagger~~, + the union's added members:
+  combobox→command fold, the number band 4→1, the reveal dead pair, `useScrollPin` demo-local,
+  `useTextHighlight`, the search-family split, the confirm-dialog demo residue, the tempo page fold,
+  the A05 conditional-disposition roster). **Born-RED = G-PRESETS-DEAD-REACH**.
   Root-barrel export lines deleted for the demo-privatizations (A8).
+  [Corrected 2026-07-20, STAB11 — **two members are OVERTURNED to KEEP by the band union and must not
+  execute as deletes.** `Configurator` = **KEEP** (`BAND-REDUCTION.md:282-285`, roll-up item 6): the
+  escape hatch fired on live externals value.js `/configurator` + fourier-analysis `web/src` + 10 demo
+  files — no move, no export drop. `useStagger` = **RESOLVED KEEP** (`:299-304`, roll-up item 5;
+  `ASK.md` ASK-4's RE-ISSUED block; `ASK-REDUCTION.md` §C3): speedtest live-imports it ×2
+  (`ResultStack.vue:171`, `useResultReveal.ts:36`) and RU-09 R6's DELETE leg is overturned. Both were
+  the header-ribbon class this band's own framing (`BAND-REDUCTION.md:53-56`) names — a PLAN-side
+  delete against live sibling consumers.]
 - **W4 `BJ.W-REDUCE-CROSSREPO-GATED`** — instrument-chassis + metric + completion-seal, handled as a
   DECISION not a delete. NO born-RED (its disposition is the user's ASK §A call). Key: G-ASK-RESOLVED,
   G-RELAY-FILED (the corrected Q060 per-repo break table).
@@ -182,6 +193,16 @@ corrections landed below where the stale text would actively misdirect.
   the above-fold content-visibility exemption edit ceded from PERF W3.
 - **W6 `BJ.W-RESPONSIVE-AUDIT`** — F14 as a first-class mobile-first audit over the 100 routes (390px +
   1440px). **Born-RED = G-RSP-1..3** (per-page `breakage@viewport→fix→DELTA`).
+- **W7 `BJ.W-STORY-TRANSITIONS`** — the typed transition GRAMMAR: four semantic VT types
+  (`route-lateral` (+`-back`) · `route-descend`/`route-ascend` shared-element tile→hero ·
+  `route-jump`) over `demo/chassis/routeTransition.ts` + the route section of
+  `src/styles/view-transition.css`, plus the compositor-only entrance register. **Born-RED =
+  G-TRANS-1..4** (ONE type at `routeTransition.ts:12`, ONE recipe at `view-transition.css:47-55`;
+  no `view-transition-name` on any tile). Choreography FEEL stays `BAND-PERF` W4's (senior on
+  F07); PERF's `OPEN-P10` CONSUMES this four-type set — one mechanism per nav class (APOTHEOSIS
+  D-18). GF-DOCK W6 owns the dock band.
+  [Added 2026-07-20, STAB12 — this family's header and §1 DAG both counted SEVEN waves while the
+  roster enumerated six; `BJ.W-STORY-TRANSITIONS` was named nowhere in this file.]
 
 ### FAMILY E — `BAND-PERF` (4 waves; A17)
 - **W1 `BJ.W-BOOT-DIET`** — async PresetEditor/Aurora + split `shellAuroraConfig` off the barrel.
@@ -190,9 +211,19 @@ corrections landed below where the stale text would actively misdirect.
 - **W2 `BJ.W-SHELL-FIELD-GOVERN`** — idle/occlusion pause (or static wash) for the always-on shell
   field. **Born-RED (static)** — the `fixed inset-0` field has no governance beyond `tab-hidden`.
   continuous-rAF trace PENDING-R3.
-- **W3 `BJ.W-DEFERRED-PAINT`** — intrinsic-size truth (handed to STORY W5) + the shared feTurbulence
-  filter def + the live-trace deferred-paint gate. **Born-RED (static)** — 13 per-instance filter hosts.
+- **W3 `BJ.W-DEFERRED-PAINT`** — intrinsic-size truth (measured here, handed to STORY W5) + the
+  turbulence-cost RULING + the live-trace deferred-paint gate. **Born-RED (static)** — 13
+  per-instance filter hosts, cost arm re-scoped (the seeds are designed).
   The above-fold EDIT + its static gate are CEDED to STORY W5.
+  [Corrected 2026-07-20, STAB11 — the prior text listed "**the shared feTurbulence filter def**" as a
+  W3 deliverable. That arm is **STRUCK/REFUTED** by the band union (`BAND-PERF.md:358-382`,
+  §Non-goals `:438-439`; `APOTHEOSIS.md:190` "the turbulence design accepted (shared-def REFUTED)"):
+  the `seed` is per-instance (`WatercolorDot.vue:86`, `colors.vue:98`) and one hoisted `<filter>`
+  cannot carry 13 distinct seeds — building it collapses every dot onto one displacement map and
+  ships the exact clone regression the component was designed against. What survives in its place is
+  the **once-and-cache REGRESSION-FENCE** (the `animate` path drives a compositor transform only; the
+  filter graph carries no per-frame binding), stated honestly as a fence and not as born-RED, plus the
+  measurement-contingent octave/cap residue at `OPEN-P9`.]
 - **W4 `BJ.W-ROUTE-PENDING`** — a liquid-weight pending affordance instead of the frozen atomic swap;
   OWNS F07 choreography. **Born-RED (static)** — no Suspense/aria-busy/skeleton in the swap. R3b seeds:
   119ms warm freeze + CLS 0.04 + 186ms cold-nav stall.
@@ -253,9 +284,17 @@ corrections landed below where the stale text would actively misdirect.
   that become assertions + the demo loop-driver re-homed off `setInterval` (J7). **Born-RED**.
 - **W4 `BJ.W-ALERT-IDIOM`** (F19) — Alert consumes the radius role table + the blur ladder + the codex
   identity laws. **Born-RED** (no alert-specific paint assertion). Runs AFTER Material W1/W2.
-- **W5 `BJ.W-IDLE-BREATH`** (A01/A11) — idle/always-on breath for the inert atoms (buttons FIRST,
-  collapsed-dock pill, slider-at-rest) + the A01 hover-strengthening. **Born-RED** (the R3b
-  presence/absence table; the three atoms return zero idle animation). Compositor-only (rAF-delta 0).
+- **W5 `BJ.W-IDLE-BREATH`** (A01/A11) — **HARD-BLOCKED on the OPEN-FM-3 user ruling (`ASK.md`
+  ASK-27) — this wave does not build, and no band pre-decides the idle-engagement axis, until the
+  owner ranks the two canons** (APOTHEOSIS §4 invariant 5 / D-06; `BAND-FEEDBACK-MOTION.md:189`,
+  `:201-209`). Scope when unblocked: idle/always-on breath for the inert atoms (buttons FIRST,
+  collapsed-dock pill, slider-at-rest) + the A01 hover-strengthening + the J12/Δ-F13-1 drag-affordance
+  residue (the interaction half is NOT OPEN-FM-3-gated). **Born-RED** (the R3b
+  presence/absence table; the three atoms return zero idle animation) — **the assertion set itself
+  re-scopes on the ruling, so it is authored after it, never before.** Compositor-only (rAF-delta 0).
+  [Added 2026-07-20, STAB11: `OPEN-FM-3`/`ASK-27` appeared NOWHERE in `PLAN.md` — the corpus-wide
+  governing referent that HARD-BLOCKS this wave and that `BAND-PERF` OPEN-P5(b) and `BAND-STORY` W5's
+  tile posture both consume was absent from the plan of record, which showed the axis as settled.]
 - **W6 `BJ.W-PAGER-DOT-MORPH`** (F33) — the pager-dot goo-morph over `PagerDots`/`usePagerWorm`,
   sequenced with the vestigial `DeckPager.vue` cut. **Born-RED** (no worm/goo-morph assertion).
 
@@ -388,7 +427,7 @@ reconciled counts **50 LANDED / 5 DECIDED / 3 CLEARED / 10 ASK / 0 ORPHAN / 0 pe
 drops) as sharpened by the judgment corrections carried from `redress/JUDGE.md` §D. The five former
 ORPHANS (F19/F20/F21/F22/F24) are cured by `BAND-FEEDBACK-MOTION`; the two former pending-R3b rows
 (A01/A11) land at `BJ.W-IDLE-BREATH` (LANDED-AT-W5). The rows reserved for the user — 10 from the
-feedback-ledger crosswalk plus the greenfield and material/story sets — assemble into the 26-row
+feedback-ledger crosswalk plus the greenfield and material/story sets — assemble into the 27-row
 `ASK.md`, the sole document the user must rule on. The redress application record
 (`formation/redress/APPLYLOG.md`) accounts for all 26 rulings (J1-J11, C-A..C-G, T1-T2, D1-D6); the
 chronic disease ledger (family I) and the superfluity verdicts (`formation/superfluity/SUPERFLUITY.md`,

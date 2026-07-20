@@ -97,7 +97,7 @@ predated; they are named here so the row-7 DEFER closes against owners, not agai
 The BJ bands consume this set by reference: BAND-MATERIAL (the frosted canon, the attenuation
 primitive G-3 basis, the lying-gate repair) · BAND-DOC-TRUTH (T1/T9/T5 spring-mirror rows — sequenced AFTER W-1 and taking its shipped values, per the W-1 seam clause) · BAND-FEEDBACK-MOTION (registers, W7
 SHEET-MOTION-DEBT) · GF-DOCK (W-2's first consumer) · BAND-A11Y/GATES/PERF as routed in the
-sidecars. The atlas Q mailbox stays MARKED-HELD; nothing here executes a G-row.
+sidecars. **[Truth-up 2026-07-20, STAB9 — the prior sentence read "the atlas Q mailbox stays MARKED-HELD; nothing here executes a G-row", which this file's own W-5 bracket (`:66-74`) had already superseded.** Terminal state per `coordination/ATLAS-Q-G-BATCH-DISPOSITION.md` **Addendum 3** (2026-07-20, verified on disk at `.p-totality/sci` `6c4bbc06` + `109f5573`): the Q mailbox hold has ENDED and **G-CLOSE is UN-GATED** — the six G-rows resume as scheduled band annotations at OUR batch points, and `V-PERCH-PRIMITIVE` (W-5) is UN-PARKED on its merits. Nothing here executes a G-row *ahead of* its owning band's batch point; that sequencing note is what survives. Owner-reversible: if G-CLOSE re-gates, W-5 re-parks unchanged.**]**
 
 **This closes IOS27-MICRO tranche development.** Execution of W-0..W-7 belongs to the
 execution phase under the parsimony ruling (Fable only for design/planning/deep complexity;

@@ -6,8 +6,8 @@ The prior draft was opus-begat; this seat re-derived the band ANEW from the corr
 corpus + the repo (draft unread until the boundary), then unioned: fresh evidence authoritative,
 opus rows kept only where re-proven, wrong rows corrected in place. Verdict sidecar:
 `../formation/refable/REFABLE-RU-03-MATERIAL.md`. Codex citations re-anchor to the REFABLE
-RU-16 union (`IOS27-CODEX.md` laws 1-4 at `:11-14`, 10-13 at `:26-29`). Wave 7 now precedes the
-roll-up (structural tidy only).
+RU-16 union (`IOS27-CODEX.md` laws 1-4 at `:11-14`, 10-13 at `:26-29`). Waves 7-8 precede the
+roll-up (structural tidy only); Wave 8 (`BJ.W-REFRACT-LATCH`) was minted 2026-07-20, STAB11.
 
 Registry **Family F** — material/token canon (`docs/tranches/BJ/formation/REGISTRY.md:122-138`). The
 census verdict: *the radius/blur/√φ token systems exist and are NOT enforceable; ladder defects explain
@@ -45,7 +45,7 @@ target engines or fails loud; a green-Chromium/unverified-WebKit claim is not a 
 screenshot + computed-style only (never `getContext`), serve on localhost, read the machine report (never
 a piped exit code), serialize the browser seat.
 
-Seven waves:
+EIGHT waves (W8 minted 2026-07-20, STAB11 — the second shipped 7.0.0 defect):
 
 | Wave | Name | Motion | Born-RED? |
 |------|------|--------|-----------|
@@ -56,6 +56,7 @@ Seven waves:
 | 5 | `BJ.W-ARISTOTLE-PROPORTION` | The A10 aristotelian-proportion review over cards/dividers/spacing (F03/F10/F11 + F31 review-marks) | π-capture obligation, not asserts (paint-taste review) |
 | 6 | `BJ.W-TYPE-CODEMOD` | The **234-site** `text-sm`/`text-xs` codemod (+9 raw-size arbitraries) + the coupled default-ramp reset flip + paint π (owner: material band — RULING 2) | Coupled — flips `BAND-GATES` W4 `type-hygiene` GREEN (that gate is born-RED against the filtered **234** utility sites (218 demo + 16 src) + 9 arbitraries + the four CSS-declaration sites — one figure, both bands; APOTHEOSIS MECH-02/D-12) |
 | 7 | `BJ.W-CSS-CLOSURE-RESTORE` | Restore glass-chip.css + glass-atom.css to the @import closure; live re-verify the chip accent paint | Yes — the R3a CONFIRMED-DEFECT is the shipped state (dist grep = 0 re-verified at `485891a2`); the orphan-CSS-partial gate is born-RED at HEAD |
+| 8 | `BJ.W-REFRACT-LATCH` | Replace the lying `@supports (backdrop-filter: url(…))` gate with a runtime latch; restore the intended blur degrade on the WebKit floor | Yes — WebKit 26.5 accepts the gate at parse and drops the paint: `.glass-lens` reads 0.0748-sharp vs its 0.0018-frosted blur-only twin, shipped in 7.0.0 |
 
 **Design authority (band-wide).** The iOS-27 codex (`formation/ios27/IOS27-CODEX.md`, the RU-16 REFABLE
 union) is the material authority: **law 1** progressive backdrop blur AS AMENDED — blur+darken co-applied;
@@ -759,6 +760,85 @@ trap class watched).
 
 ---
 
+## Wave 8 — `BJ.W-REFRACT-LATCH` — the WebKit `@supports` gate-lie repair (the second shipped 7.0.0 defect)
+
+Minted at STAB11-COMPLETENESS 2026-07-20: `IOS27-MICRO/FINAL/FINAL.md:97-98` names "the
+lying-gate repair" as a BAND-MATERIAL consumption, and the routed defect row
+(`../coordination/ios27micro-inbox-2026-07-18-glass-refract-webkit-gate-lie.md`, IOS27-MICRO
+pass-2 cure seat F5, 2026-07-18) had NO owning wave in any band — a silent drop of a
+live-confirmed shipped defect. This wave owns it. The IOS27-MICRO charter forbids `src/` edits
+from that tranche, so the repair was always BJ's; no API changes, so the consumer-updates ruling
+is not triggered.
+
+**The defect (CONFIRMED in paint, WebKit 26.5 — Playwright webkit-2311).**
+`src/styles/glass-refract.css:98` gates the refraction composite on
+`@supports (backdrop-filter: url("#glass-refract"))`. WebKit returns **true** for the fragment
+form, the shipped gate form, and the shipped data-URI value (bare and after `blur(8px)`), and
+computed style retains the full composite — but **paint drops the WHOLE value, including the blur
+leg**. Probe chips over a striped scene (video path; background baseline 0.0756): blur-only
+**0.0018** (frosted); `url(#)` 0.0748; `blur+url(#)` 0.0749; `blur+<verbatim shipped data-URI>`
+0.0748 — every `url()`-bearing chip stone sharp. Consequence on the Safari floor: the gate
+ENGAGES, the gated declaration overrides the un-gated blur base, and **`.glass-lens` paints with
+no backdrop filter at all** — worse than the intended blur-only degrade. Shipped in 7.0.0.
+Chrome 150 is unaffected. The file header's own premise ("a non-supporting engine never reaches
+this block", `glass-refract.css:57-60`) is FALSE on WebKit. Evidence:
+`../../IOS27-MICRO/passes/PASS-2/safari-arm.md` §F5 (U1 RED) +
+`../../IOS27-MICRO/prototypes/f5-optical-medium/PROBE-NOTES.md` "PASS-2 SAFARI ARM" +
+`f5-wk-u1-chips.png`; WebKit bug 245510.
+
+**The fix (clean break, no masking fallback).** CSS `@supports` cannot discriminate this engine —
+it lies by accepting at parse — so the gate moves to a runtime latch (the
+`supportsCssTimeline.ts` pattern kin: never trust a detector that cannot reject):
+
+1. `src/styles/glass-refract.css` — DELETE the `@supports (backdrop-filter: url("#glass-refract"))`
+   wrapper (it is the lying organ; keeping it inside a latch is belt on a proven-false detector).
+   The composite moves behind a root latch:
+   `:root[data-glass-refract="on"] .glass-material.glass-lens, :root[data-glass-refract="on"] .glass-lens { backdrop-filter: var(--glass-cell-backdrop-filter, var(--glass-blur-resting) var(--glass-refract-filter)); }`
+   The un-gated blur base stays exactly as shipped — with the latch off every engine paints blur
+   (the intended degrade, restored). The base NEVER rides inside the latched block.
+2. A new `supportsBackdropRefract` latch (home per the A07 colocation rules; suggested
+   `src/composables/glass/`) sets `data-glass-refract="on"` once per session, honesty-ordered:
+   `CSS.supports("backdrop-filter","url(#x)")` false → OFF (Firefox-class honest rejection); the
+   negative probe (`CSS.supports("backdrop-filter","gl-not-a-filter")` must be false) → else OFF
+   (the happy-dom/jsdom always-true shim class). **The accept-and-drop class (WebKit) is NOT
+   discriminable by any supports/computed read — proven: all four forms return true while paint
+   drops the value** — so the latch needs a FUNCTIONAL arm. Candidate: an SVG-filter displacement
+   readback through `ctx.filter = "url(#probe)"` on an offscreen 2D canvas. This is a PROXY (2D
+   raster ≠ the backdrop pipeline) and one-directional: it is validated per engine by this wave's
+   live-π before it is trusted, and if validation fails the latch ships capability-scoped to the
+   engines where the composite is paint-proven at cut time, with the born-RED gate keeping that
+   scoping honest forever.
+3. Zero API change: `.glass-lens` consumers untouched, no MIGRATION.md row, no demo edits (the
+   latch is root-level).
+
+**Gate half — authored born-RED in `BAND-GATES` W3 (the standing "authored born-RED there, GREEN
+by the MATERIAL sibling" idiom this band already uses for `token-hygiene` / `orphan-CSS-partial`):**
+`gate:refract-lens-never-sharper` — on WebKit, `.glass-lens` over a striped scene must paint
+gradient energy within tolerance of its blur-only twin; **the lens may NEVER paint sharper than
+its own blur base, on any engine**. RED at HEAD on WebKit 26.5 (0.0748-sharp vs the 0.0018-frosted
+twin); the latch flips it GREEN. It is a STANDING regression lock (it also catches the day WebKit
+ships `url()` for real — the functional arm goes true, the gate stays green, the garnish lights
+up), so `BAND-GATES` W1's ≤60 count-guard arithmetic absorbs it as ONE additional standing gate
+inside W3's set: keeps ≤51 + W3 3 (token-hygiene · orphan-CSS-partial · THIS) + W4 1 + A11Y W3-C 1
++ PERF 4 [+ COLOCATION fence 1] ≤ 60 — the keep pin drops 52→51 (51→50 under Form B) to make room,
+per invariant 3; reconcile at the W1 collapse. [Arithmetic corrected 2026-07-20, STAB12: the prior
+line wrote "W3's 2+1 … + THIS 1", double-counting this gate and summing to 62-63 under a "≤ 60"
+claim, against a capstone base already saturated at exactly 60.]
+
+**§π/DELTA — the capture-path law (the 7.0.0 lesson, binding).** The WebKit paint verification
+MUST ride the video/screencast path: Playwright WebKit `page.screenshot()` is
+backdrop-filter-BLIND and will false-FAIL the GREEN side of the gate (`safari-arm.md` §0, harness
+law 1; paired sanity PNGs beside it). Dual-engine (Chrome + Safari) before/after DELTA on
+`.glass-lens` over the striped scene, plus the latch-OFF degrade proof (blur paints on both
+engines). Observe by screenshot/computed-style only, never `getContext`; serialize the browser
+seat; read the machine report, never a piped exit code.
+
+**Sequencing.** Independent of W1-W7; no shared file with any other wave (`glass-refract.css` has
+no other owner in this corpus — `BAND-COLOCATION.md:71` explicitly declares the styles-root
+grouping nicety NOT a wave). Runs any time after `BAND-GATES` W3 authors the gate.
+
+---
+
 ## §Band-level obligations & OPEN roll-up
 
 **Coordination handoffs (values authored here → gate GREEN / fix owned by siblings):**
@@ -770,6 +850,7 @@ trap class watched).
   `glass-subtlety.test.ts` literal-pin coordination rides the same GATES W1 roster.
 - The role-table + blur-ladder precepts (W1/W2) → coordinate the `design-idioms.md` §3/§7 +
   `tunable-anim.md` rewrites with `BAND-COLOCATION` W1 Precept F / `BAND-DOC-TRUTH` (do not duplicate).
+- The runtime refract latch (W8) → flips `BAND-GATES` W3(D) `refract-lens-never-sharper` GREEN on the video-path WebKit capture, plus the latch-OFF degrade proof (blur paints on both engines) [added 2026-07-20, STAB12].
 - W1's corner-k delete MOOTS `BAND-DOC-TRUTH` W1 T6 (the conditional fires only on decline).
 - W5 proportion roster → `BAND-STORY` (F10/F11/preview-card) + `BJ.W-REDUCE-CARD` (Card default) + the
   follow-on fixes.
@@ -800,7 +881,7 @@ trap class watched).
 forced graded-backdrop adopt/decline with the F49/F50 π + the unconditional scene-staging extraction +
 the consumer-comment truth-up (W3); the track-family fold to TWO shared registers (W4); the A10
 proportion roster feeding follow-on fixes (W5); the 234-site type codemod + coupled default-ramp reset +
-paint π (W6); the chip + glass-atom @import closure restore with the live accent-paint re-verify (W7).
+paint π (W6); the chip + glass-atom @import closure restore with the live accent-paint re-verify (W7); the WebKit `@supports` gate-lie replaced by a runtime latch, with the born-RED `refract-lens-never-sharper` lock flipped GREEN on the video-path capture (W8).
 The band makes the material ladders **auditable and role-coherent** — the enforcement rides `BAND-GATES`
 W3/W4; this band supplies the canon those gates measure against.
 

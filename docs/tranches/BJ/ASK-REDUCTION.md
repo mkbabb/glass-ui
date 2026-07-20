@@ -253,7 +253,15 @@ re-verified on disk this pass).** The corrected table, per symbol:
   `waves/BAND-REDUCTION.md` W3 carries the same fence.**]** **CONDITIONAL-KEEP `useScrollScene`** (iff a BJ wave binds it to a real
   library surface, else it follows pin out).
 - **RELOCATE `useLiquidReveal` to `morph/`** (it is a FLIP morph, not scroll — survives as the ONE
-  reveal adapter). `useTextHighlight` is its own cut-or-bind ask (A13; default DELETE).
+  reveal adapter). **`useTextHighlight` (A13) is NOT an ask — [STAB8/STAB9 truth-up 2026-07-20]:**
+  the "its own cut-or-bind ask" label routed to a row that was **never minted** (A13 has no row in
+  `ASK.md` — 27 rows, none carries it — and none in this file's §A1/§A2/§B1-B5/§C1-C4/§D1), so the
+  symbol never reached a user surface. Under the owner's standing no-deferrals order
+  `BAND-REDUCTION` W3 **EXECUTES the stated default: DELETE `useTextHighlight` + its root-barrel
+  export line** (`src/index.ts:191-194`), recording the dock-search match-mark bind site as the
+  named alternative the owner may call at any time before the cut. Proof is W3's existing
+  zero-importer scan; no new gate is minted. Ratifying §C3 neither gates nor unblocks this symbol —
+  the band file carries the same truth-up at `waves/BAND-REDUCTION.md:346-354` and `:781`.
 - **The question (re-posed):** ratify this per-symbol table + the page fold (`/motion/reveal` folds
   into one `/motion/scroll` page, with the bloom section on the morph story) — discharging F32+F42?
   On ratification, REDUCTION W9 also carries the A06 scroll-animation standard (the codified
@@ -302,6 +310,7 @@ rounding — the entire compositions section is likely to be pruned."*
   this answer determines whether the `scene` page type has ANY members — `scene`'s only candidates are
   the `compositions/` pages, so pruning the whole section makes the taxonomy **6 types (no `scene`)**,
   while keeping any composition page as a legit `scene` makes it **7**. Do not mint an empty `scene` type.
+  [Arithmetic trued up 2026-07-20, STAB9 — the recommendation and the stake are UNCHANGED; only the two integers re-anchor. Under the adopted SIX-type fold (`BAND-STORY.md:104-110`, `PLAN.md:168-169`), pruning the section makes the taxonomy **FIVE** and keeping a composition page makes it **SIX**. The "6 / 7" pair above rode the superseded seven-type census list, as `BAND-STORY.md` OPEN-D9 (`:645-649`) already records ("substance stands, numbers re-anchor"). The stake is identical either way: your answer decides whether `scene` has any members, and an empty `scene` is not minted.]
 
 ---
 
