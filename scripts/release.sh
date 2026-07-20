@@ -34,6 +34,17 @@ fi
 npm run prepublishOnly
 npm run verify:package
 
+# The AURORA pixel floor runs HERE, on real hardware, not in CI. On the software
+# rasterizer the aurora never arms (measured: 180s timeout on SwiftShader vs 22.8s
+# green on Metal), so a CI job would gate on the runner's GPU rather than on our
+# paint; CI carries the blob floor, which does run there. Both arms are required:
+# the real render must be GREEN and the planted defect must be RED, or the floor is
+# not biting. The paired machine reports are the captured DELTA — bank them with the
+# candidate.
+echo "== aurora pixel floor (real GPU) =="
+npm -w tests-visual run gate:pixel-floor
+npm -w tests-visual run gate:pixel-floor:planted
+
 if [[ ! -f dist/index.d.ts ]]; then
     echo "ERROR: build did not leave dist/index.d.ts" >&2
     exit 1

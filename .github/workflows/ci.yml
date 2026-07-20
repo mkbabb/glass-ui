@@ -49,10 +49,14 @@ jobs:
                   cache: npm
             - run: npm ci
             - run: npx playwright install --with-deps chromium
+            # BLOB floor only. The aurora floor is GPU-gated, not CI-gated: on the
+            # software rasterizer it never arms (180s timeout vs 22.8s green on Metal),
+            # so running it here would gate on the runner's GPU instead of our paint.
+            # It runs pre-tag on real hardware — see release.yml `pixel-floor-gpu`.
             - name: pixel floor (real render must be GREEN)
-              run: npm -w tests-visual run gate:pixel-floor
+              run: npm -w tests-visual run gate:pixel-floor:ci
             - name: pixel floor self-test (planted defect must be RED)
-              run: npm -w tests-visual run gate:pixel-floor:planted
+              run: npm -w tests-visual run gate:pixel-floor:ci:planted
             - name: bank the machine reports (the captured DELTA is the PAIR)
               if: always()
               uses: actions/upload-artifact@v4

@@ -275,3 +275,65 @@ bracket). Both now read **`BAND-STORY.md` §W1 `BJ.W-STORY-TAXONOMY`** — a sec
 per the anchor law the capstone minted (PLAN §2 N-2). This is an evidence-pointer repair inside a
 dated bracket: no row ID, question, or recommendation moved, and the arithmetic the bracket carries
 is untouched. The freeze holds.
+
+---
+
+# ASK-24 — FIRED AND RULED (2026-07-20, lead; owner-reversible)
+
+**The conditional fired, with evidence.** `BJ.W-PIXEL-FLOOR-CI` forced the WebGL2 floor path on
+the software rasterizer and measured: the **aurora never ARMS** on SwiftShader — the badge never
+reaches `data-state=ready`, 180s timeout, a 6.9-minute wedge — while the same arm is **GREEN in
+22.8s on Metal**. So the aurora floor in CI would gate on the runner's GPU, not on our paint.
+
+**The third option the ask did not contain.** ASK-24 offered a binary: buy a self-hosted GPU runner
+(infra cost) or defer the whole floor to a pre-tag gate. The wave's own probing produced a better
+answer: **the BLOB floor DOES run on SwiftShader (25.7s), and it bites** (planted defect → RED:
+"blob coverage 0.048 is below the non-blank floor 0.1"). A real non-black paint floor can therefore
+live in CI at zero infra cost with nothing deferred.
+
+**RULED — split by instrument, the same principle as R-6:**
+- **CI (`ci.yml`) carries the BLOB floor**, both arms — real render GREEN, planted defect RED — via
+  new `gate:pixel-floor:ci` / `:ci:planted` legs. `pi-gate-verify.mjs` gains a `--floors=` selector
+  with an unknown-floor guard; an unnamed floor missing from the report is still RED, so a dropped
+  floor stays loud. Verified all three paths: subset green, subset planted-red, default still
+  demands both.
+- **The AURORA floor runs pre-tag on real hardware** in `scripts/release.sh`, both arms, with the
+  paired machine reports banked as the captured DELTA. `release.yml` is also `ubuntu-latest`, so
+  there is no GitHub-hosted lane where this arm could be honest.
+- **No GPU runner is purchased. Nothing is silently skipped.** Each site states in-file WHY its arm
+  lives there.
+
+Owner-reversible: buying a self-hosted GPU runner would let the aurora arm rejoin CI unchanged.
+
+# PERF W1 — the two spec parameters ADJUDICATED (2026-07-20, lead)
+
+- **OPEN-P1 resolves NEGATIVE — RATIFIED as resolved, and the residue is a DESIGN row, not a perf
+  row.** The placeholder ground is a div inside `Aurora.vue` fed by `paletteToCssGradient`, so it
+  rides the async chunk: content now paints *before* the shell wash arrives instead of with it. The
+  seat correctly refused to improvise a shell-side wash — duplicating the primary at a stacked
+  opacity, or coupling to arm-state, is the masking-fallback class our own law forbids. **Routed:
+  first-paint wash-in choreography joins `BJ.W-ROUTE-PENDING` (PERF W4), which already owns the
+  pending-affordance choreography and is the one wave whose subject is "what the user sees before
+  the real thing arrives."** It is a liquid-weight judgment with a π obligation, not a budget tweak.
+- **OPEN-P4 ceilings — the MEASURED ceilings are RATIFIED (60 preloads / 500KB), the draft's
+  45/450KB struck.** The draft was unreachable because it rested on a false attribution: the ~95KB
+  reka floating stack was charged to the configurator, but `DockFacetMenu.vue` mounts `DropdownMenu`
+  inside BOTH docks, which stay eager by OPEN-P3's own draft lean. A ceiling that can only be met by
+  violating a sibling ruling is not a ceiling. Achieved this wave: 74→56 modulepreloads,
+  791,615→483,862 B (−38.9%), leaving 28,138 B and 4 preloads of headroom.
+- **The residual cut is NAMED, not silently banked:** `aurora-hero` remains 72,929 B eager because
+  the leaf import pulls all of `constants/presets.ts`. It belongs to OPEN-P2's Family-H named-leaf
+  option, not to this wave.
+
+# The floor's honest limit, and a live defect in the hooks
+
+- **The floor bites 17 of 18 presets, and says so.** SPEEDTEST is the one preset whose canvas carries
+  `opacity: 0.26` at read time, so the page ground reads through a dead canvas and a genuinely black
+  substrate composites identically. The wave declined to strengthen the plant to force opacity 1 —
+  that would make the self-test more aggressive than the defect it simulates and let the floor claim
+  reach it does not have. **The right posture: the limit is declared in the band file, not papered
+  over.** Any cure belongs with the preset's alpha semantics, not with the gate.
+- **`git config --local core.hooksPath` points at `/Users/mkbabb/Programming/glass-ui/.githooks`,
+  which does not exist — this repo's git hooks are silently inert.** Local machine config, not repo
+  state, so it is left untouched here and surfaced to the owner instead: any pre-commit protection
+  anyone believes is running has not been running.

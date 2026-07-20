@@ -29,10 +29,28 @@ const REPORT = new URL(REPORT_ARG ?? "./.cache/pi-report.json", import.meta.url)
 
 // The sound floors this gate wires (BAND-GATES W2: the two non-black/coverage
 // floors only — the per-preset hue/chroma parity is Family G's).
-const REQUIRED = [
-    "aurora paints a non-black interior on DEFAULT + every preset at t=1",
-    "blob paints a contained non-flood droplet on BLOB_CONFIG_DEFAULTS",
-];
+const FLOORS = {
+    aurora: "aurora paints a non-black interior on DEFAULT + every preset at t=1",
+    blob: "blob paints a contained non-flood droplet on BLOB_CONFIG_DEFAULTS",
+};
+
+// --floors=a,b selects a subset. The CI lane runs `--floors=blob`: on the software
+// rasterizer the aurora never ARMS (badge never reaches data-state=ready; measured
+// 180s timeout vs 22.8s green on Metal), so wiring it there gates on the runner's
+// GPU rather than on our paint. Naming the subset explicitly keeps a dropped floor
+// loud — an unnamed floor missing from the report is still RED below.
+const REQUIRED = ((process.argv.find((a) => a.startsWith("--floors=")) ?? "")
+    .split("=")[1] ?? "")
+    .split(",")
+    .filter(Boolean)
+    .map((k) => {
+        if (!FLOORS[k]) {
+            console.error(`pi-gate-verify: unknown floor '${k}' (have: ${Object.keys(FLOORS).join(", ")})`);
+            process.exit(2);
+        }
+        return FLOORS[k];
+    });
+if (REQUIRED.length === 0) REQUIRED.push(...Object.values(FLOORS));
 
 const mode = (process.argv.find((a) => a.startsWith("--expect=")) ?? "").split("=")[1];
 if (mode !== "green" && mode !== "planted-red") {
