@@ -21,3 +21,38 @@ jobs:
             - run: npm run typecheck
             - run: npm test
             - run: npm run build
+
+    # The pixel floor. The device-free vitest oracles pass a BLACK aurora and a
+    # FLOODED blob; this job mounts the real components on a real device, reads back
+    # the composited pixels, and reads its verdict from the MACHINE REPORT (a piped
+    # runner's exit status is tail's). BOTH legs run: the green leg alone would re-
+    # create the hollow-gate class this job exists to cure, so the planted-defect leg
+    # must prove the floors CAN fail — and fail on their own assertion.
+    pixel-floor:
+        needs: [verify]
+        runs-on: ubuntu-latest
+        env:
+            CI: "true"
+            # The runner has no GPU; pin the deterministic software rasterizer rather
+            # than letting the backend resolve.
+            PI_ANGLE: swiftshader
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 24
+                  cache: npm
+            - run: npm ci
+            - run: npx playwright install --with-deps chromium
+            - name: pixel floor (real render must be GREEN)
+              run: npm -w tests-visual run gate:pixel-floor
+            - name: pixel floor self-test (planted defect must be RED)
+              run: npm -w tests-visual run gate:pixel-floor:planted
+            - name: bank the machine reports (the captured DELTA is the PAIR)
+              if: always()
+              uses: actions/upload-artifact@v4
+              with:
+                  name: pixel-floor-pi-reports
+                  path: |
+                      tests-visual/.cache/pi-report-*.json
+                      tests-visual/.cache/aurora-*.png

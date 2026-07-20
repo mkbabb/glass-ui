@@ -8,7 +8,7 @@
 
 import { test, expect } from "@playwright/test";
 
-const URL = process.env.GLASS_UI_DEMO_URL ?? "http://127.0.0.1:5174";
+const URL = process.env.GLASS_UI_DEMO_URL ?? "http://localhost:5174";
 
 test.setTimeout(120_000);
 

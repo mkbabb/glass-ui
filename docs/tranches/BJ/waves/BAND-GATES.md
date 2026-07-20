@@ -197,13 +197,42 @@ Discharges `gate:unwired-gate-non-execution` (π suite) + `surface:absent-gate-o
 ### §Design
 
 `tests-visual/substrate-paints-color.spec.ts:135-228` is a REAL non-black + coverage-band pixel gate
-(aurora interior `maxChannel > 0`; blob coverage ~0.10-0.70) that mounts the actual component and reads
+(aurora interior MEAN max(R,G,B) > 8; blob coverage ~0.10-0.70) that mounts the actual component and reads
 back the **composited element screenshot** (`:9-28` — the no-`getContext` discipline is already the
 spec's own readback doctrine). It catches the exact blindspot the device-free vitest oracles pass (a
 BLACK aurora / FLOODED blob). It executes in NO CI step; the visual workspace is invoked only by
 `release.sh` as a manual human pre-tag review. Wire the **sound subset only** — the two
 non-black/coverage FLOORS, not the per-preset hue/chroma parity (that is Family G's W10/W11). The wiring
 target is the existing `test:substrate` script (`tests-visual/package.json:9`).
+
+**METRIC CURE (wire time, §Non-goals deviation DECLARED).** The authored `maxChannel > 0` floor was
+measured VACUOUS: the readback region is the canvas BOUNDING BOX and the demo stage draws DOM chrome
+(nuclei markers, renderer badge, hint caption) over it, so a single lit marker pixel satisfied the max
+floor — a planted all-black aurora read maxChannel 88 and PASSED. The floor is re-expressed as the
+interior MEAN (measured at wire time: real 236.0 vs planted 0.4 on DEFAULT, three orders of separation).
+This REPLACES the existing floor's oracle, it does not add an assertion; the coverage floor is untouched,
+and the floor set is unchanged at two. `GF-AURORA` W5 and `BAND-MATERIAL` W08 re-pin against the MEAN
+form, not the retired max form.
+
+**WALK CURE (wire time, same declaration).** The authored preset walk located the picker by three
+selectors that match NOTHING in the repo, so it resolved zero tiles and fell back to an `ArrowRight`
+press against `document.body` while the only keydown handler is per-button — all 17 labelled reads
+re-measured DEFAULT, and the floor's own GREEN asserted 17-preset coverage it never obtained (the
+`gate:vacuous-no-assertion` class this band collapses). The walk now drives the demo's real
+`button[data-preset-tile]` tiles, asserts the tile count equals the sourced key count, and latches
+`aria-pressed` per click; the masking fallback is deleted. Witness: the 18 reads are now DISTINCT
+(VANGOGH 101.0, OILPASTEL_OCEAN 149.7, CRAYON 168.3 against DEFAULT 236.0 — the banked run), where a
+re-measured DEFAULT would repeat one value.
+
+**SENSITIVITY LIMIT — the floor bites 17 of its 18 reads (measured, declared, routed).** `SPEEDTEST` does
+NOT go black under the plant: it is the only preset whose canvas carries `opacity: 0.26` at read time
+(`runtime.ts` syncPresentationAlpha writes the config `alpha` to `canvas.style.opacity`), so the page
+ground reads THROUGH a dead canvas and the composite mean lands at 140.5 against every other preset's
+~0.4. This is a real limit of a composite-mean oracle, not a plant artefact — a genuinely black substrate
+on a low-alpha preset composites identically. The plant was deliberately NOT strengthened to force
+opacity 1, which would make the self-test more aggressive than the defect it simulates and let the floor
+claim reach it does not have. ROUTED to Family G W10/W11: chroma collapse, not a composite mean, is the
+oracle that covers this case. Evidence + probe in `docs/tranches/BJ/evidence/W-PIXEL-FLOOR-CI/`.
 
 **PRECONDITION — cure the shipped false-RED (FABLE-NEW, via GF-AURORA PASS3 §3.9 / RU-07 N6).**
 `substrate-paints-color.spec.ts:148` pins `expect(presetKeys.length).toBe(13)` while
@@ -266,6 +295,9 @@ probe fails.
 
 - NOT the per-preset hue/chroma/parity gates (Family G).
 - NOT adding new pixel assertions to the spec — wire the EXISTING sound floors only (after the `:148` cure).
+  DEVIATION DECLARED (§Design METRIC CURE + WALK CURE): the max→mean swap and the preset-walk repair are
+  CURES of floors measured hollow at wire time, not new assertions — the floor set is unchanged at two.
+  Wiring a floor that cannot fail would discharge nothing.
 
 ---
 

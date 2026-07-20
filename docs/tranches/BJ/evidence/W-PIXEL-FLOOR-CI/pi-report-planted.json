@@ -1,0 +1,332 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/node_modules/.bin/playwright",
+      "test",
+      "substrate-paints-color.spec.ts",
+      "--project=chromium-headless-new"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "refract-lens-never-sharper.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": ".cache/pi-report-planted.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5199",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/",
+      "url": "http://localhost:5199",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "substrate-paints-color.spec.ts",
+      "file": "substrate-paints-color.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "substrate-paints-color (π lane — fail-CLOSED)",
+          "file": "substrate-paints-color.spec.ts",
+          "line": 319,
+          "column": 6,
+          "specs": [
+            {
+              "title": "aurora paints a non-black interior on DEFAULT + every preset at t=1",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 20768,
+                      "error": {
+                        "message": "Error: aurora painted a BLACK interior (mean channel <= 8) for: DEFAULT=0.4, SETTING_SUN=0.4, DUSK=0.4, VIVID_SETTING_SUN=0.4, OPENAI_SKY=0.2, OPENAI_DAWN=0.3, OPENAI_MEADOW=0.4, DELIBERATIVE=0.4, DAY9_YELLOW=0.4, OIL_IMPASTO=0.5, OIL_GESTURAL=0.5, VANGOGH=0.5, OILPASTEL_SUNSET=0.5, OILPASTEL_RAINBOW=0.6, OILPASTEL_OCEAN=0.6, CRAYON=0.5, METAL=0.5 — the black-canvas class the CPU oracles miss\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 70\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"DEFAULT\",\u001b[39m\n\u001b[31m+     0.3695187042746054,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"SETTING_SUN\",\u001b[39m\n\u001b[31m+     0.3695187042746054,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"DUSK\",\u001b[39m\n\u001b[31m+     0.36852942529793403,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"VIVID_SETTING_SUN\",\u001b[39m\n\u001b[31m+     0.37474117701191734,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"OPENAI_SKY\",\u001b[39m\n\u001b[31m+     0.23006487829567937,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"OPENAI_DAWN\",\u001b[39m\n\u001b[31m+     0.3289927759628215,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"OPENAI_MEADOW\",\u001b[39m\n\u001b[31m+     0.40569640638660104,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"DELIBERATIVE\",\u001b[39m\n\u001b[31m+     0.44900611972576265,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"DAY9_YELLOW\",\u001b[39m\n\u001b[31m+     0.40532830258132796,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"OIL_IMPASTO\",\u001b[39m\n\u001b[31m+     0.48388395527538763,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"OIL_GESTURAL\",\u001b[39m\n\u001b[31m+     0.5262043896378779,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"VANGOGH\",\u001b[39m\n\u001b[31m+     0.4926724336262826,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"OILPASTEL_SUNSET\",\u001b[39m\n\u001b[31m+     0.5152072884553444,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"OILPASTEL_RAINBOW\",\u001b[39m\n\u001b[31m+     0.6207840611052317,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"OILPASTEL_OCEAN\",\u001b[39m\n\u001b[31m+     0.5788662402797589,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"CRAYON\",\u001b[39m\n\u001b[31m+     0.5256867436617126,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"METAL\",\u001b[39m\n\u001b[31m+     0.5206023098513781,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                        "stack": "Error: aurora painted a BLACK interior (mean channel <= 8) for: DEFAULT=0.4, SETTING_SUN=0.4, DUSK=0.4, VIVID_SETTING_SUN=0.4, OPENAI_SKY=0.2, OPENAI_DAWN=0.3, OPENAI_MEADOW=0.4, DELIBERATIVE=0.4, DAY9_YELLOW=0.4, OIL_IMPASTO=0.5, OIL_GESTURAL=0.5, VANGOGH=0.5, OILPASTEL_SUNSET=0.5, OILPASTEL_RAINBOW=0.6, OILPASTEL_OCEAN=0.6, CRAYON=0.5, METAL=0.5 — the black-canvas class the CPU oracles miss\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 70\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"DEFAULT\",\u001b[39m\n\u001b[31m+     0.3695187042746054,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"SETTING_SUN\",\u001b[39m\n\u001b[31m+     0.3695187042746054,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"DUSK\",\u001b[39m\n\u001b[31m+     0.36852942529793403,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"VIVID_SETTING_SUN\",\u001b[39m\n\u001b[31m+     0.37474117701191734,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"OPENAI_SKY\",\u001b[39m\n\u001b[31m+     0.23006487829567937,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"OPENAI_DAWN\",\u001b[39m\n\u001b[31m+     0.3289927759628215,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"OPENAI_MEADOW\",\u001b[39m\n\u001b[31m+     0.40569640638660104,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"DELIBERATIVE\",\u001b[39m\n\u001b[31m+     0.44900611972576265,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"DAY9_YELLOW\",\u001b[39m\n\u001b[31m+     0.40532830258132796,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"OIL_IMPASTO\",\u001b[39m\n\u001b[31m+     0.48388395527538763,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"OIL_GESTURAL\",\u001b[39m\n\u001b[31m+     0.5262043896378779,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"VANGOGH\",\u001b[39m\n\u001b[31m+     0.4926724336262826,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"OILPASTEL_SUNSET\",\u001b[39m\n\u001b[31m+     0.5152072884553444,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"OILPASTEL_RAINBOW\",\u001b[39m\n\u001b[31m+     0.6207840611052317,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"OILPASTEL_OCEAN\",\u001b[39m\n\u001b[31m+     0.5788662402797589,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"CRAYON\",\u001b[39m\n\u001b[31m+     0.5256867436617126,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"METAL\",\u001b[39m\n\u001b[31m+     0.5206023098513781,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/tests-visual/substrate-paints-color.spec.ts:407:11",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/tests-visual/substrate-paints-color.spec.ts",
+                          "column": 11,
+                          "line": 407
+                        },
+                        "snippet": "  405 |                 .map(([k, v]) => `${k}=${v.toFixed(1)}`)\n  406 |                 .join(\", \")} — the black-canvas class the CPU oracles miss`,\n> 407 |         ).toEqual([]);\n      |           ^\n  408 |     });\n  409 |\n  410 |     test(\"blob paints a contained non-flood droplet on BLOB_CONFIG_DEFAULTS\", async ({"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/tests-visual/substrate-paints-color.spec.ts",
+                            "column": 11,
+                            "line": 407
+                          },
+                          "message": "Error: aurora painted a BLACK interior (mean channel <= 8) for: DEFAULT=0.4, SETTING_SUN=0.4, DUSK=0.4, VIVID_SETTING_SUN=0.4, OPENAI_SKY=0.2, OPENAI_DAWN=0.3, OPENAI_MEADOW=0.4, DELIBERATIVE=0.4, DAY9_YELLOW=0.4, OIL_IMPASTO=0.5, OIL_GESTURAL=0.5, VANGOGH=0.5, OILPASTEL_SUNSET=0.5, OILPASTEL_RAINBOW=0.6, OILPASTEL_OCEAN=0.6, CRAYON=0.5, METAL=0.5 — the black-canvas class the CPU oracles miss\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 70\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"DEFAULT\",\u001b[39m\n\u001b[31m+     0.3695187042746054,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"SETTING_SUN\",\u001b[39m\n\u001b[31m+     0.3695187042746054,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"DUSK\",\u001b[39m\n\u001b[31m+     0.36852942529793403,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"VIVID_SETTING_SUN\",\u001b[39m\n\u001b[31m+     0.37474117701191734,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"OPENAI_SKY\",\u001b[39m\n\u001b[31m+     0.23006487829567937,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"OPENAI_DAWN\",\u001b[39m\n\u001b[31m+     0.3289927759628215,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"OPENAI_MEADOW\",\u001b[39m\n\u001b[31m+     0.40569640638660104,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"DELIBERATIVE\",\u001b[39m\n\u001b[31m+     0.44900611972576265,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"DAY9_YELLOW\",\u001b[39m\n\u001b[31m+     0.40532830258132796,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"OIL_IMPASTO\",\u001b[39m\n\u001b[31m+     0.48388395527538763,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"OIL_GESTURAL\",\u001b[39m\n\u001b[31m+     0.5262043896378779,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"VANGOGH\",\u001b[39m\n\u001b[31m+     0.4926724336262826,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"OILPASTEL_SUNSET\",\u001b[39m\n\u001b[31m+     0.5152072884553444,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"OILPASTEL_RAINBOW\",\u001b[39m\n\u001b[31m+     0.6207840611052317,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"OILPASTEL_OCEAN\",\u001b[39m\n\u001b[31m+     0.5788662402797589,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"CRAYON\",\u001b[39m\n\u001b[31m+     0.5256867436617126,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"METAL\",\u001b[39m\n\u001b[31m+     0.5206023098513781,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  405 |                 .map(([k, v]) => `${k}=${v.toFixed(1)}`)\n  406 |                 .join(\", \")} — the black-canvas class the CPU oracles miss`,\n> 407 |         ).toEqual([]);\n      |           ^\n  408 |     });\n  409 |\n  410 |     test(\"blob paints a contained non-flood droplet on BLOB_CONFIG_DEFAULTS\", async ({\n    at /Users/mkbabb/Programming/glass-ui/tests-visual/substrate-paints-color.spec.ts:407:11"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "PLANT black-aurora: fragment shaders forced to opaque black\n"
+                        },
+                        {
+                          "text": "PI aurora DEFAULT meanChannel=0.4 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora SETTING_SUN meanChannel=0.4 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora DUSK meanChannel=0.4 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora VIVID_SETTING_SUN meanChannel=0.4 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora OPENAI_SKY meanChannel=0.2 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora OPENAI_DAWN meanChannel=0.3 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora OPENAI_MEADOW meanChannel=0.4 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora DELIBERATIVE meanChannel=0.4 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora DAY9_YELLOW meanChannel=0.4 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora OIL_IMPASTO meanChannel=0.5 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora OIL_GESTURAL meanChannel=0.5 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora VANGOGH meanChannel=0.5 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora OILPASTEL_SUNSET meanChannel=0.5 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora OILPASTEL_RAINBOW meanChannel=0.6 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora OILPASTEL_OCEAN meanChannel=0.6 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora CRAYON meanChannel=0.5 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora METAL meanChannel=0.5 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora SPEEDTEST meanChannel=140.5 floor=8\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T11:33:18.391Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/tests-visual/test-results/substrate-paints-color-sub-c617b-DEFAULT-every-preset-at-t-1-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/tests-visual/substrate-paints-color.spec.ts",
+                        "column": 11,
+                        "line": 407
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "c5333572f9452f84ffb5-5d0f96967b05e13ad1c2",
+              "file": "substrate-paints-color.spec.ts",
+              "line": 320,
+              "column": 5
+            },
+            {
+              "title": "blob paints a contained non-flood droplet on BLOB_CONFIG_DEFAULTS",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 4549,
+                      "error": {
+                        "message": "Error: blob coverage 0.047 is below the non-blank floor 0.1 — the blob did not paint (blank/black canvas)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.1\u001b[39m\nReceived:    \u001b[31m0.04709928579791593\u001b[39m",
+                        "stack": "Error: blob coverage 0.047 is below the non-blank floor 0.1 — the blob did not paint (blank/black canvas)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.1\u001b[39m\nReceived:    \u001b[31m0.04709928579791593\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/tests-visual/substrate-paints-color.spec.ts:461:11",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/tests-visual/substrate-paints-color.spec.ts",
+                          "column": 11,
+                          "line": 461
+                        },
+                        "snippet": "  459 |             verdict,\n  460 |             `blob coverage ${verdict.toFixed(3)} is below the non-blank floor ${BLOB_COVERAGE_MIN} — the blob did not paint (blank/black canvas)`,\n> 461 |         ).toBeGreaterThanOrEqual(BLOB_COVERAGE_MIN);\n      |           ^\n  462 |         expect(\n  463 |             verdict,\n  464 |             `blob coverage ${verdict.toFixed(3)} exceeds the non-flood ceil ${BLOB_COVERAGE_MAX} — the blob FLOODED the canvas (no transparent margin)`,"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/tests-visual/substrate-paints-color.spec.ts",
+                            "column": 11,
+                            "line": 461
+                          },
+                          "message": "Error: blob coverage 0.047 is below the non-blank floor 0.1 — the blob did not paint (blank/black canvas)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.1\u001b[39m\nReceived:    \u001b[31m0.04709928579791593\u001b[39m\n\n  459 |             verdict,\n  460 |             `blob coverage ${verdict.toFixed(3)} is below the non-blank floor ${BLOB_COVERAGE_MIN} — the blob did not paint (blank/black canvas)`,\n> 461 |         ).toBeGreaterThanOrEqual(BLOB_COVERAGE_MIN);\n      |           ^\n  462 |         expect(\n  463 |             verdict,\n  464 |             `blob coverage ${verdict.toFixed(3)} exceeds the non-flood ceil ${BLOB_COVERAGE_MAX} — the blob FLOODED the canvas (no transparent margin)`,\n    at /Users/mkbabb/Programming/glass-ui/tests-visual/substrate-paints-color.spec.ts:461:11"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "PLANT blob-blank: canvas dropped from the composite\n"
+                        },
+                        {
+                          "text": "PI blob coverage=0.047 band=[0.1,0.7]\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T11:33:39.535Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/tests-visual/test-results/substrate-paints-color-sub-d4c83-let-on-BLOB-CONFIG-DEFAULTS-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/tests-visual/substrate-paints-color.spec.ts",
+                        "column": 11,
+                        "line": 461
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "c5333572f9452f84ffb5-346dfa16a341e4233bf9",
+              "file": "substrate-paints-color.spec.ts",
+              "line": 410,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-07-20T11:33:17.382Z",
+    "duration": 26848.096,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

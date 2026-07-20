@@ -19,8 +19,11 @@
 import { defineConfig, devices } from "@playwright/test";
 
 // The demo origin the whole lane drives. `npm run dev` (bare `vite`) serves it.
+// The origin is `localhost`, never the `127.0.0.1` literal: the two are distinct
+// origins to the engine's secure-context and storage partitioning, and the live-π
+// discipline observes the same origin a user does.
 const DEMO_PORT = Number(process.env.GLASS_UI_DEMO_PORT ?? 5199);
-const DEMO_URL = process.env.GLASS_UI_DEMO_URL ?? `http://127.0.0.1:${DEMO_PORT}`;
+const DEMO_URL = process.env.GLASS_UI_DEMO_URL ?? `http://localhost:${DEMO_PORT}`;
 
 // The library workspace root (one dir up — the `npm run dev` cwd).
 const LIBRARY_ROOT = new URL("..", import.meta.url).pathname;
@@ -51,7 +54,13 @@ export default defineConfig({
     fullyParallel: false,
     workers: 1,
     timeout: 60_000,
-    reporter: [["list"], ["json", { outputFile: ".cache/pi-report.json" }]],
+    // The machine report the gate's verdict is read from (never a piped exit code).
+    // PI_REPORT names it per-ARM so the green and planted runs coexist — the banked
+    // DELTA is the PAIR, and a shared path meant the second arm erased the first.
+    reporter: [
+        ["list"],
+        ["json", { outputFile: process.env.PI_REPORT ?? ".cache/pi-report.json" }],
+    ],
     use: {
         baseURL: DEMO_URL,
         // Keep the WebGL rAF live (the substrate freezes one static frame under
@@ -133,7 +142,7 @@ export default defineConfig({
     // Drive the demo vite dev server. `reuseExistingServer` lets the orchestrator
     // pre-start `npm run dev` (the recon's canonical spawn) and have the lane attach.
     webServer: {
-        command: "npm run dev -- --host 127.0.0.1 --port " + DEMO_PORT,
+        command: "npm run dev -- --host localhost --port " + DEMO_PORT,
         cwd: LIBRARY_ROOT,
         url: DEMO_URL,
         reuseExistingServer: !process.env.CI,

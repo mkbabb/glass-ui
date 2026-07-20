@@ -29,7 +29,7 @@ import { test, expect } from "@playwright/test";
 
 const ROOT = fileURLToPath(new URL("..", import.meta.url));
 const OUT = `${ROOT}docs/tranches/BA/audit/visual/dock-sections`;
-const BASE = process.env.GLASS_UI_DEMO_URL ?? "http://127.0.0.1:5199";
+const BASE = process.env.GLASS_UI_DEMO_URL ?? "http://localhost:5199";
 
 type Page = import("@playwright/test").Page;
 

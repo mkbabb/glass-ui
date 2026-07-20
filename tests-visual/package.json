@@ -7,6 +7,8 @@
     "scripts": {
         "test": "playwright test",
         "test:substrate": "playwright test substrate-paints-color.spec.ts",
+        "gate:pixel-floor": "rm -f .cache/pi-report-green.json; PI_REPORT=.cache/pi-report-green.json playwright test substrate-paints-color.spec.ts --project=chromium-headless-new; node pi-gate-verify.mjs --expect=green --report=./.cache/pi-report-green.json",
+        "gate:pixel-floor:planted": "rm -f .cache/pi-report-planted.json; PI_PLANT=all PI_REPORT=.cache/pi-report-planted.json playwright test substrate-paints-color.spec.ts --project=chromium-headless-new; node pi-gate-verify.mjs --expect=planted-red --report=./.cache/pi-report-planted.json",
         "test:dock": "playwright test dock-animation-live.spec.ts",
         "test:touch": "playwright test touch-target.spec.ts --project=coarse-touch"
     },

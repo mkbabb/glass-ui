@@ -1,0 +1,108 @@
+BJ.W-PIXEL-FLOOR-CI — the pixel floor wired into CI
+captured 2026-07-20, darwin/Metal dev box, chromium-headless-new
+
+THE DELTA IS THE PAIR, NOT EITHER HALF.
+Both arms bank their own machine report; a shared report path meant the second arm
+erased the first and the differential could never be captured.
+
+  pi-report-green.json      real render      → both floors PASSED
+  pi-report-planted.json    PI_PLANT=all     → both floors FAILED, each on its own assertion
+  aurora-green.png          real render      → the painted sunset field
+  aurora-planted-black.png  planted          → an all-black canvas, DOM chrome floating above it
+
+BORN-RED PROBE (§Acceptance, wiring-absent)
+  grep -rn 'tests-visual\|playwright' .github/workflows/
+    at HEAD 26868000 ...... 0 hits   RED
+    at this cut ........... 5 hits   GREEN  (job `pixel-floor`, needs: [verify])
+
+PAIRED FIGURES — aurora interior MEAN max(R,G,B), floor 8
+(generated from the two banked JSONs' stdout, not transcribed — both arms from the same
+ final run; the render is procedural, so figures move ~±0.5 between runs)
+
+  preset               real    planted    bites
+  DEFAULT              236.0        0.4      yes
+  SETTING_SUN          236.5        0.4      yes
+  DUSK                 235.6        0.4      yes
+  VIVID_SETTING_SUN    238.4        0.4      yes
+  OPENAI_SKY           234.9        0.2      yes
+  OPENAI_DAWN          234.2        0.3      yes
+  OPENAI_MEADOW        207.7        0.4      yes
+  DELIBERATIVE         237.2        0.4      yes
+  DAY9_YELLOW          231.1        0.4      yes
+  OIL_IMPASTO          196.3        0.5      yes
+  OIL_GESTURAL         220.0        0.5      yes
+  VANGOGH              101.0        0.5      yes
+  OILPASTEL_SUNSET     203.3        0.5      yes
+  OILPASTEL_RAINBOW    219.8        0.6      yes
+  OILPASTEL_OCEAN      149.7        0.6      yes
+  CRAYON               168.3        0.5      yes
+  METAL                207.8        0.5      yes
+  SPEEDTEST            182.7      140.5      NO   <- see SENSITIVITY LIMIT
+
+  blob coverage        0.209      0.047      yes  band [0.10, 0.70]
+
+SENSITIVITY LIMIT — 17 of 18 reads bite (measured, and NOT papered over)
+SPEEDTEST does not go black under the plant. Probed directly: it is the ONLY preset
+whose canvas carries `opacity: 0.26` at read time (every other preset reads opacity 1)
+because `runtime.ts` syncPresentationAlpha writes the config `alpha` to
+`canvas.style.opacity`. The light page ground reads THROUGH the dead canvas and the
+composite mean lands at 140.5.
+
+This is a REAL limitation of the floor, not an artefact of the plant: a genuinely black
+substrate on a low-alpha preset would composite the same way. The plant was deliberately
+NOT strengthened (forcing opacity to 1 would make the self-test more aggressive than the
+defect it simulates, overstating the floor's reach — the floor would then claim coverage
+it does not have, which is the exact sin this wave cures).
+
+ROUTED: a black substrate on a low-alpha preset belongs to the per-preset hue/chroma
+parity gates (Family G W10/W11), which read chroma collapse rather than a composite
+mean. Recorded at the floor assertion in the spec so the next reader cannot mistake
+18 labelled reads for 18 bitable ones.
+
+WHY THE READS ARE DISTINCT — the vacuity cure
+The authored walk located the picker by three selectors matching NOTHING in the repo
+(`data-preset-key`, `.aurora-preset-picker`, `[role="tab"][data-preset]` — 0 hits repo-
+wide), so it resolved 0 tiles and pressed ArrowRight against document.body while the
+only keydown handler is per-button. All 17 labelled reads re-measured DEFAULT and the
+floor's GREEN asserted 17-preset coverage it never obtained. The walk now drives the
+demo's real `button[data-preset-tile]` tiles and latches aria-pressed per click. The 18
+DISTINCT values above are the witness: a re-measured DEFAULT would repeat one number.
+
+WHY THE METRIC CHANGED — max was measured hollow
+The readback region is the canvas BOUNDING BOX and the demo stage draws DOM chrome over
+it (nuclei markers, renderer badge, hint caption). Against a MAX floor one lit chrome
+pixel carried the whole assertion: a planted all-black aurora read maxChannel 88 and
+PASSED. aurora-planted-black.png shows exactly that chrome surviving over a dead canvas.
+The MEAN separates real 236.0 from planted 0.4.
+
+THE SELF-TEST'S OWN SELF-TEST — the bite is ATTRIBUTED, not assumed
+Crediting ANY failure to the plant cannot distinguish a biting floor from a dead
+harness. Each floor now pins the TEXT of its own failure. Proven live: the planted
+report was mutated to keep both failures but replace the error text with a harness
+death ("aurora canvas never armed"), and the verifier RED-ed —
+
+  PLANTED DEFECT FAILED THE WRONG ASSERTION: "aurora paints a non-black interior ..."
+  failed, but not on its floor (/painted a BLACK interior/) — the harness broke, the
+  floor did not bite.
+
+The pre-cure verifier printed "the floors bite" on that same report.
+
+ORIGIN UNIFICATION (measured, not assumed)
+  npx vite --host localhost --port 5399
+    lsof ................ TCP [::1]:5399 (LISTEN)   IPv6 loopback ONLY
+    curl localhost ...... 200
+    curl 127.0.0.1 ...... 000  connection refused
+Three sibling specs defaulted to the 127.0.0.1 literal and would have ECONNREFUSED
+against the reconfigured webServer. All four sites now carry ONE origin.
+
+GATE VERDICTS AT THIS CUT
+  gate:pixel-floor .............. GREEN  (2 floors ran on the live paint path, passed)
+  gate:pixel-floor:planted ...... GREEN  (2 floors RED-ed, each on its own floor)
+  both re-run a second time ..... reproduced
+  npm run typecheck ............. exit 0
+
+CI-ENFORCEMENT STATUS — HONEST
+Per §OPEN-5 the empirical acceptance is the ubuntu runner showing the planted bite go
+RED. These captures are the DARWIN/Metal arm. The job is wired and both legs run; the
+ubuntu confirmation arrives with the first CI run on this branch. No CI-enforcement
+claim is made ahead of it.
