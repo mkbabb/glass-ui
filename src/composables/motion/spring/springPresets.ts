@@ -18,7 +18,9 @@ export type SpringPresetName =
     | "gentle"
     | "dock"
     | "press"
-    | "transient";
+    | "transient"
+    | "panel"
+    | "orb-drop";
 
 /** One named-spring row: the analytic (response, dampingFraction) pair + its register doc. */
 export interface SpringPresetRow {
@@ -50,6 +52,15 @@ export interface SpringPresetRow {
  *                       rebound.
  *   TRANSIENT → transient — the center-seed materialize bloom (Toast):
  *                       a deep scale-from with a near-critically-damped settle (no flick).
+ *   PANEL   → panel   — the fired presentation deploy: both axes ONE spring, an
+ *                       intrinsic overshoot that is NOT velocity-bought.
+ *   ORB-DROP → orb-drop — the invocation drop: a dead critically-damped landing whose
+ *                       energy is the light build that follows, never a bounce.
+ *
+ * PANEL and ORB-DROP are the two-registers-two-intents split: a deployed panel is
+ * underdamped because a fired surface that lands dead reads inert, while an invoked orb
+ * IS critical because its liveliness belongs to the light channel. One is never the
+ * other's tuning.
  *
  * The whole table sits at the iOS weighty-inertial pole: longer `response` (weight) +
  * through-body damping toward critically-damped-with-a-touch-of-overshoot, while keeping
@@ -92,8 +103,14 @@ export const SPRING_PRESETS: readonly SpringPresetRow[] = [
             "A calm, patient arrival with no overshoot.",
     },
     {
+        // The row is named for DOCK landings, so it centers on dock events rather than
+        // on the cross-surface mean: response 0.35 at ζ 0.82 sits inside every measured
+        // dock-arrival bracket. ζ=0.82 is the corpus union center: the measured damping
+        // ratios cluster tightly across surfaces while the damped frequency does not.
+        // A popover enter that reads dead under this row takes a per-consumer response
+        // override at the presets-in-consumers seam; the table never forks.
         name: "dock",
-        response: 0.3,
+        response: 0.35,
         dampingFraction: 0.82,
         comment:
             "A brisk liquid morph for the dock and its coordinated contents.",
@@ -111,6 +128,24 @@ export const SPRING_PRESETS: readonly SpringPresetRow[] = [
         dampingFraction: 0.9,
         comment:
             "A centered materialize bloom for brief surfaces such as Toast.",
+    },
+    {
+        // response 0.40 is the only value reproducing the measured (ζ=0.71, f_d≈1.76Hz)
+        // fit. Panel is the ONE class whose overshoot is intrinsic, not velocity-bought.
+        name: "panel",
+        response: 0.4,
+        dampingFraction: 0.71,
+        comment:
+            "A fired presentation deploy — both axes one spring, intrinsic 4-5% overshoot, text born blurred condensing ~190ms, the rim flare celebrating the data (+0.5s/+0.85s).",
+    },
+    {
+        // ζ=1.0 is measured critical — the extent pins dead at the arrival frame. The
+        // response is [DESIGN] inside the measured flight bracket.
+        name: "orb-drop",
+        response: 0.22,
+        dampingFraction: 1.0,
+        comment:
+            "The invocation drop — a dead critically-damped landing; the energy is the light build.",
     },
 ] as const;
 //

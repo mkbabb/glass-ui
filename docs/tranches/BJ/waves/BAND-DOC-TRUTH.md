@@ -53,7 +53,8 @@ Class A — spring/motion constant mirrors:
 `IOS27-MICRO/FINAL/FINAL.md` W-1 (`:26-32`) ships `springPreset` dock **0.30→0.35** (ζ0.82 held)
 and regenerates the `scheme-spring.css` mirror — the SAME rows this class owns as **T1**
 (`scheme-spring.css:31`) and **T9** (`docs/design/tunable-anim.md:60-65`), adjacent to **T5**
-(`tunable-anim.md:121`). **W-1 lands FIRST and is the value source.** T1/T9's corrected statements
+(`tunable-anim.md:121`) and **T11b** (`docs/design/motion-canon.md:199` — the CHALLENGE-PASS extension
+this seam's own fallout minted; see the row below). **W-1 lands FIRST and is the value source.** T1/T9's corrected statements
 below pin **0.30/ζ0.82**, which is true ONLY against HEAD `springPresets.ts:95-99` and is
 SUPERSEDED on W-1's landing: after W-1, T1/T9 either RETIRE (if the regen emits the prose mirror)
 or hand-true to **W-1's shipped values — never the pre-W-1 0.30**. The G-T1/G-T9 probes assert
@@ -68,6 +69,7 @@ cells does not. Neither wave edits `scheme-spring.css:31` in the other's cut.
 | T5 | `docs/design/tunable-anim.md:121` | `reveal blur ǀ --glass-reveal-blur ǀ 4px ǀ [0,8px]` — a single 4px default | the per-register model: overlay 6px / menu 2px / tooltip 0px / transient 8px (`--enter-*-blur`), range [0,8px]; the 4px in `animations.css:167` is a defensive fallback, not a default | `src/styles/tokens/motion-registers.css:57/64/71/80` via `src/styles/glass/reveal.css:62-126` | RATIFIED substance; **OPUS-WRONG target path corrected** — the draft aimed at `docs/precepts/tunable-anim.md` (a submodule; unwritable from this repo). The precepts copy carries the same stale row; it rides the RF-2 route-6 outbound |
 | T10 | `docs/canon/motion-system.md:16` | `--spring-smooth` "(ζ=0.86)" | ζ=0.80 (0.86 is `useSpring`'s bare default — a different primitive; name the distinction) | `springPresets.ts:67-69`; scheme-spring.css:27 | FABLE-NEW (RU-33 r6) |
 | T11 | `docs/design/motion-canon.md:204, 262, 264` | `DRAWER_SNAP (0.5, 0.74)`; cites `proof-no-layout-animation.mjs` + `proof-animation-coherence.mjs` as live gates | `(0.32, 0.8)`; drop the two dead proof-script references (neither exists under `scripts/`; the battery was abrogated) | `drawer/constants.ts:11`; `ls scripts/` | FABLE-NEW (RF-2 F3/F4) |
+| T11b | `docs/design/motion-canon.md:199` | `DOCK_SPRING (0.30, 0.82)` | `(0.35, 0.82)`; drop the `BD.W-ANIM-IOS27-TUNE` wave-id token, keep the DERIVED-via-`springPreset("dock")` no-second-authority sentence | `springPresets.ts` dock row post-W-1; `dock/constants.ts:11-14` | CHALLENGE-PASS (A08/J11, FINAL W-1 fallout — TRUE at HEAD, staled by W-1's landing) |
 
 Class B — the dock comment web (RU-27 R3 + RU-12 RT14, all re-proven this seat):
 

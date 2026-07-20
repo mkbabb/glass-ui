@@ -22,19 +22,29 @@
 
        iOS-style (response, dampingFraction) values are calibrated toward the
        weighty, gooey, inertial pole: every overshoot is in [0%,10%] and gentle ζ is
-       exactly 1.0. The `SPRING_PRESETS` table in springPresets.ts is the single source
-       mirrored by these numbers:
-         smooth: (0.58s, ζ=0.80)  — inertial settle, a whisper of life, overshoot ~+1.5%
-         snappy: (0.48s, ζ=0.74)  — quick-but-weighty position morph, overshoot ~+3.2%
-         bouncy: (0.60s, ζ=0.60)  — emphatic FLOWING one-shot, overshoot ~+9.5% (≤10% band)
-         gentle: (0.82s, ζ=1.00)  — patient critically-damped (NO overshoot by definition)
-         dock:   (0.68s, ζ=0.64)  — the WEIGHTY iOS-27 gooey morph (collapse/expand + V↔H + fission), slow inertial mass; the emitted curve is a monotone weighty settle into rest — NO overshoot past 1.0 (it rises to exactly 1.0 over its own settle window and never exceeds it)
-         press:  (0.20s, ζ=0.80)  — the iOS interactive tap-press, sub-200ms answer, ~+1.5%
+       exactly 1.0 — both fences asserted by the mirror gate, never by this prose.
+       The rows below are GENERATED from the `SPRING_PRESETS` table in springPresets.ts
+       (the no-second-authority root): response and ζ are the row's own, `settle` is the
+       numeric 2%-band clock, `overshoot` is the PEAK the emitted `linear()` curve
+       actually reaches across its own settle horizon (so a spring whose analytic peak
+       falls beyond that horizon documents +0.0% — the curve it ships is monotone), and
+       the register text is the row's `comment`. Do not hand-edit a figure here:
+         smooth:    (0.58s, ζ=0.80, settle 0.35s, overshoot +0.0%) — Patient entrances, fades, and scale-ins with a quiet sense of weight.
+         snappy:    (0.48s, ζ=0.74, settle 0.44s, overshoot +3.2%) — Quick, weighty control movement for indicators, progress, and reveals.
+         bouncy:    (0.60s, ζ=0.60, settle 0.57s, overshoot +9.5%) — Playful emphasis for dialogs, success moments, and the completion seal.
+         gentle:    (0.82s, ζ=1.00, settle 0.76s, overshoot +0.0%) — A calm, patient arrival with no overshoot.
+         dock:      (0.35s, ζ=0.82, settle 0.22s, overshoot +0.0%) — A brisk liquid morph for the dock and its coordinated contents.
+         press:     (0.20s, ζ=0.80, settle 0.12s, overshoot +0.0%) — A responsive press with a subtle rebound and continuous interruption.
+         transient: (0.62s, ζ=0.90, settle 0.46s, overshoot +0.0%) — A centered materialize bloom for brief surfaces such as Toast.
+         panel:     (0.40s, ζ=0.71, settle 0.38s, overshoot +4.2%) — A fired presentation deploy — both axes one spring, intrinsic 4-5% overshoot, text born blurred condensing ~190ms, the rim flare celebrating the data (+0.5s/+0.85s).
+         orb-drop:  (0.22s, ζ=1.00, settle 0.20s, overshoot +0.0%) — The invocation drop — a dead critically-damped landing; the energy is the light build.
 
-       Note on `smooth`: at ζ=0.80 the analytic solver produces a small peak
-       (~+1.5%) — a whisper of life, never a dead stop. It stays a hair BELOW
-       true critical damping (`gentle`'s ζ=1.0 register) so `smooth` reads a
-       little more alive on entrances/fades than `gentle`'s patient settle.
+       Note on the +0.0% rows: `smooth`/`press`/`transient`/`dock`/`orb-drop` ship a
+       MONOTONE curve. Their analytic peak (~+1.5% at ζ=0.80) falls past the 2%-band
+       settle horizon the token is normalized over, so it is not in the emitted
+       `linear()` at all. A row whose register text promises a rebound and whose
+       generated overshoot reads +0.0% is a row to RE-TUNE, not to re-word here — the
+       mirror gate is the only thing entitled to state the figure.
 
        ── Which easing fits which job ──
        This rule keeps animation easing from forking. It formalizes the
@@ -96,9 +106,11 @@
     --spring-snappy: linear(0, 0.00652 2.041%, 0.02458 4.082%, 0.05211 6.122%, 0.08725 8.163%, 0.12834 10.204%, 0.17392 12.245%, 0.22268 14.286%, 0.27350 16.327%, 0.32540 18.367%, 0.37757 20.408%, 0.42929 22.449%, 0.47998 24.490%, 0.52916 26.531%, 0.57646 28.571%, 0.62156 30.612%, 0.66426 32.653%, 0.70440 34.694%, 0.74187 36.735%, 0.77662 38.776%, 0.80866 40.816%, 0.83800 42.857%, 0.86471 44.898%, 0.88887 46.939%, 0.91058 48.980%, 0.92996 51.020%, 0.94713 53.061%, 0.96223 55.102%, 0.97539 57.143%, 0.98677 59.184%, 0.99649 61.224%, 1.00471 63.265%, 1.01156 65.306%, 1.01716 67.347%, 1.02166 69.388%, 1.02516 71.429%, 1.02778 73.469%, 1.02964 75.510%, 1.03082 77.551%, 1.03142 79.592%, 1.03153 81.633%, 1.03122 83.673%, 1.03057 85.714%, 1.02963 87.755%, 1.02847 89.796%, 1.02713 91.837%, 1.02566 93.878%, 1.02410 95.918%, 1.02249 97.959%, 1);
     --spring-bouncy: linear(0, 0.00706 2.041%, 0.02686 4.082%, 0.05738 6.122%, 0.09674 8.163%, 0.14321 10.204%, 0.19517 12.245%, 0.25116 14.286%, 0.30987 16.327%, 0.37010 18.367%, 0.43083 20.408%, 0.49115 22.449%, 0.55028 24.490%, 0.60757 26.531%, 0.66248 28.571%, 0.71458 30.612%, 0.76353 32.653%, 0.80908 34.694%, 0.85107 36.735%, 0.88940 38.776%, 0.92404 40.816%, 0.95502 42.857%, 0.98241 44.898%, 1.00631 46.939%, 1.02688 48.980%, 1.04428 51.020%, 1.05870 53.061%, 1.07035 55.102%, 1.07945 57.143%, 1.08621 59.184%, 1.09087 61.224%, 1.09364 63.265%, 1.09474 65.306%, 1.09439 67.347%, 1.09278 69.388%, 1.09011 71.429%, 1.08656 73.469%, 1.08230 75.510%, 1.07749 77.551%, 1.07226 79.592%, 1.06675 81.633%, 1.06106 83.673%, 1.05531 85.714%, 1.04958 87.755%, 1.04394 89.796%, 1.03846 91.837%, 1.03320 93.878%, 1.02820 95.918%, 1.02348 97.959%, 1);
     --spring-gentle: linear(0, 0.00653 2.041%, 0.02415 4.082%, 0.05029 6.122%, 0.08283 8.163%, 0.12000 10.204%, 0.16036 12.245%, 0.20272 14.286%, 0.24614 16.327%, 0.28983 18.367%, 0.33320 20.408%, 0.37576 22.449%, 0.41716 24.490%, 0.45712 26.531%, 0.49544 28.571%, 0.53199 30.612%, 0.56669 32.653%, 0.59948 34.694%, 0.63037 36.735%, 0.65936 38.776%, 0.68650 40.816%, 0.71183 42.857%, 0.73542 44.898%, 0.75735 46.939%, 0.77768 48.980%, 0.79650 51.020%, 0.81390 53.061%, 0.82995 55.102%, 0.84474 57.143%, 0.85835 59.184%, 0.87086 61.224%, 0.88235 63.265%, 0.89288 65.306%, 0.90253 67.347%, 0.91136 69.388%, 0.91944 71.429%, 0.92682 73.469%, 0.93356 75.510%, 0.93970 77.551%, 0.94531 79.592%, 0.95041 81.633%, 0.95506 83.673%, 0.95929 85.714%, 0.96313 87.755%, 0.96663 89.796%, 0.96980 91.837%, 0.97268 93.878%, 0.97530 95.918%, 0.97767 97.959%, 1);
-    --spring-dock: linear(0, 0.00315 2.041%, 0.01207 4.082%, 0.02597 6.122%, 0.04414 8.163%, 0.06595 10.204%, 0.09081 12.245%, 0.11817 14.286%, 0.14757 16.327%, 0.17856 18.367%, 0.21076 20.408%, 0.24381 22.449%, 0.27740 24.490%, 0.31127 26.531%, 0.34517 28.571%, 0.37888 30.612%, 0.41222 32.653%, 0.44503 34.694%, 0.47717 36.735%, 0.50853 38.776%, 0.53901 40.816%, 0.56854 42.857%, 0.59705 44.898%, 0.62449 46.939%, 0.65083 48.980%, 0.67603 51.020%, 0.70010 53.061%, 0.72301 55.102%, 0.74478 57.143%, 0.76540 59.184%, 0.78490 61.224%, 0.80330 63.265%, 0.82062 65.306%, 0.83688 67.347%, 0.85213 69.388%, 0.86638 71.429%, 0.87969 73.469%, 0.89207 75.510%, 0.90358 77.551%, 0.91425 79.592%, 0.92411 81.633%, 0.93322 83.673%, 0.94160 85.714%, 0.94930 87.755%, 0.95635 89.796%, 0.96279 91.837%, 0.96865 93.878%, 0.97398 95.918%, 0.97881 97.959%, 1);
+    --spring-dock: linear(0, 0.00311 2.041%, 0.01189 4.082%, 0.02560 6.122%, 0.04354 8.163%, 0.06507 10.204%, 0.08963 12.245%, 0.11668 14.286%, 0.14575 16.327%, 0.17642 18.367%, 0.20830 20.408%, 0.24105 22.449%, 0.27436 24.490%, 0.30796 26.531%, 0.34160 28.571%, 0.37509 30.612%, 0.40823 32.653%, 0.44087 34.694%, 0.47286 36.735%, 0.50410 38.776%, 0.53449 40.816%, 0.56395 42.857%, 0.59241 44.898%, 0.61982 46.939%, 0.64616 48.980%, 0.67138 51.020%, 0.69548 53.061%, 0.71845 55.102%, 0.74029 57.143%, 0.76100 59.184%, 0.78060 61.224%, 0.79911 63.265%, 0.81655 65.306%, 0.83295 67.347%, 0.84833 69.388%, 0.86273 71.429%, 0.87618 73.469%, 0.88872 75.510%, 0.90038 77.551%, 0.91120 79.592%, 0.92123 81.633%, 0.93049 83.673%, 0.93903 85.714%, 0.94688 87.755%, 0.95408 89.796%, 0.96067 91.837%, 0.96669 93.878%, 0.97216 95.918%, 0.97712 97.959%, 1);
     --spring-press: linear(0, 0.00284 2.041%, 0.01090 4.082%, 0.02354 6.122%, 0.04014 8.163%, 0.06017 10.204%, 0.08311 12.245%, 0.10850 14.286%, 0.13590 16.327%, 0.16495 18.367%, 0.19528 20.408%, 0.22657 22.449%, 0.25855 24.490%, 0.29095 26.531%, 0.32354 28.571%, 0.35613 30.612%, 0.38852 32.653%, 0.42057 34.694%, 0.45213 36.735%, 0.48309 38.776%, 0.51333 40.816%, 0.54279 42.857%, 0.57137 44.898%, 0.59903 46.939%, 0.62572 48.980%, 0.65141 51.020%, 0.67605 53.061%, 0.69965 55.102%, 0.72219 57.143%, 0.74366 59.184%, 0.76407 61.224%, 0.78343 63.265%, 0.80175 65.306%, 0.81906 67.347%, 0.83537 69.388%, 0.85070 71.429%, 0.86509 73.469%, 0.87857 75.510%, 0.89116 77.551%, 0.90290 79.592%, 0.91382 81.633%, 0.92395 83.673%, 0.93333 85.714%, 0.94200 87.755%, 0.94999 89.796%, 0.95733 91.837%, 0.96406 93.878%, 0.97020 95.918%, 0.97581 97.959%, 1);
     --spring-transient: linear(0, 0.00427 2.041%, 0.01615 4.082%, 0.03434 6.122%, 0.05769 8.163%, 0.08520 10.204%, 0.11598 12.245%, 0.14927 14.286%, 0.18439 16.327%, 0.22076 18.367%, 0.25789 20.408%, 0.29534 22.449%, 0.33275 24.490%, 0.36982 26.531%, 0.40630 28.571%, 0.44196 30.612%, 0.47666 32.653%, 0.51024 34.694%, 0.54261 36.735%, 0.57369 38.776%, 0.60342 40.816%, 0.63176 42.857%, 0.65871 44.898%, 0.68425 46.939%, 0.70840 48.980%, 0.73117 51.020%, 0.75259 53.061%, 0.77270 55.102%, 0.79153 57.143%, 0.80913 59.184%, 0.82554 61.224%, 0.84083 63.265%, 0.85503 65.306%, 0.86820 67.347%, 0.88039 69.388%, 0.89166 71.429%, 0.90206 73.469%, 0.91163 75.510%, 0.92043 77.551%, 0.92851 79.592%, 0.93591 81.633%, 0.94268 83.673%, 0.94886 85.714%, 0.95449 87.755%, 0.95961 89.796%, 0.96427 91.837%, 0.96849 93.878%, 0.97230 95.918%, 0.97575 97.959%, 1);
+    --spring-panel: linear(0, 0.00700 2.041%, 0.02640 4.082%, 0.05598 6.122%, 0.09370 8.163%, 0.13777 10.204%, 0.18657 12.245%, 0.23869 14.286%, 0.29289 16.327%, 0.34810 18.367%, 0.40342 20.408%, 0.45807 22.449%, 0.51142 24.490%, 0.56294 26.531%, 0.61222 28.571%, 0.65896 30.612%, 0.70291 32.653%, 0.74392 34.694%, 0.78191 36.735%, 0.81683 38.776%, 0.84869 40.816%, 0.87756 42.857%, 0.90350 44.898%, 0.92664 46.939%, 0.94710 48.980%, 0.96503 51.020%, 0.98058 53.061%, 0.99394 55.102%, 1.00525 57.143%, 1.01469 59.184%, 1.02244 61.224%, 1.02865 63.265%, 1.03348 65.306%, 1.03709 67.347%, 1.03962 69.388%, 1.04121 71.429%, 1.04199 73.469%, 1.04207 75.510%, 1.04156 77.551%, 1.04057 79.592%, 1.03919 81.633%, 1.03749 83.673%, 1.03555 85.714%, 1.03344 87.755%, 1.03120 89.796%, 1.02890 91.837%, 1.02657 93.878%, 1.02425 95.918%, 1.02196 97.959%, 1);
+    --spring-orb-drop: linear(0, 0.00629 2.041%, 0.02330 4.082%, 0.04860 6.122%, 0.08016 8.163%, 0.11629 10.204%, 0.15561 12.245%, 0.19697 14.286%, 0.23945 16.327%, 0.28231 18.367%, 0.32495 20.408%, 0.36689 22.449%, 0.40777 24.490%, 0.44732 26.531%, 0.48534 28.571%, 0.52169 30.612%, 0.55626 32.653%, 0.58902 34.694%, 0.61994 36.735%, 0.64904 38.776%, 0.67633 40.816%, 0.70186 42.857%, 0.72570 44.898%, 0.74790 46.939%, 0.76853 48.980%, 0.78768 51.020%, 0.80541 53.061%, 0.82182 55.102%, 0.83696 57.143%, 0.85094 59.184%, 0.86381 61.224%, 0.87565 63.265%, 0.88654 65.306%, 0.89653 67.347%, 0.90570 69.388%, 0.91411 71.429%, 0.92181 73.469%, 0.92885 75.510%, 0.93529 77.551%, 0.94117 79.592%, 0.94655 81.633%, 0.95145 83.673%, 0.95592 85.714%, 0.95999 87.755%, 0.96371 89.796%, 0.96708 91.837%, 0.97016 93.878%, 0.97296 95.918%, 0.97550 97.959%, 1);
 
     /* ── Per-spring duration clock ───────────────────────────────────────────────
        Generated from `scripts/regen-spring-tokens.mjs` — DO NOT hand-edit.
@@ -140,9 +152,11 @@
     --spring-snappy-settle: 0.44s;
     --spring-bouncy-settle: 0.57s;
     --spring-gentle-settle: 0.76s;
-    --spring-dock-settle: 0.19s;
+    --spring-dock-settle: 0.22s;
     --spring-press-settle: 0.12s;
     --spring-transient-settle: 0.46s;
+    --spring-panel-settle: 0.38s;
+    --spring-orb-drop-settle: 0.2s;
     --spring-smooth-duration: calc(var(--spring-smooth-settle) * var(--motion-tempo));
     --spring-snappy-duration: calc(var(--spring-snappy-settle) * var(--motion-tempo));
     --spring-bouncy-duration: calc(var(--spring-bouncy-settle) * var(--motion-tempo));
@@ -150,6 +164,8 @@
     --spring-dock-duration: calc(var(--spring-dock-settle) * var(--motion-tempo));
     --spring-press-duration: calc(var(--spring-press-settle) * var(--motion-tempo));
     --spring-transient-duration: calc(var(--spring-transient-settle) * var(--motion-tempo));
+    --spring-panel-duration: calc(var(--spring-panel-settle) * var(--motion-tempo));
+    --spring-orb-drop-duration: calc(var(--spring-orb-drop-settle) * var(--motion-tempo));
 
     /* ── Interactive-spatial transition default ─────────────────────────────────
        Generated from `scripts/regen-spring-tokens.mjs` — DO NOT hand-edit.

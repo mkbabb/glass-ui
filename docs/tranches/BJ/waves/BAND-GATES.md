@@ -102,8 +102,16 @@ drifted through six stability rounds.*
   its W1-D source scan; RU-03-A11Y routing 7), `BAND-COLOCATION` W3's hygiene fence (Form B only —
   Form A folds into the audit doc and costs zero), **`BAND-PERF`'s FOUR standing `tests/gates/`
   vitest gates (boot-graph · shell-field-governance · deferred-paint · route-pending — permanent per
-  its OPEN-P0 ruling)**, and this band's own W3 (**2** in-base — token-hygiene ·
-  orphan-CSS-partial) + W4 (1) gates. **The base is defined by INSTRUMENT [R-6 RULED 2026-07-20,
+  its OPEN-P0 ruling)**, **IOS27-MICRO FINAL W-1 lands ONE in-base newcomer:
+  `tests/composables/motion/springTokenMirror.test.ts` (the scheme-spring fixed-point + header-mirror
+  lock, vitest-fs → IN base per R-6).** Its sibling `tests/composables/motion/engageEnvelopes.test.ts`
+  is an ordinary table unit test and is OUT of base by the guard's stated counting method (not a
+  keep-list file, not `tests/gates/**`). W-1 is a keep-list ADDITION: `springTokenMirror.test.ts` joins
+  the keep-list beside `springProjection.test.ts` — it locks the WHOLE generator pipeline (marker guard
+  + all four anchors + the emitted header mirror) as a fixed point, which `springProjection.test.ts`
+  (stops + settle only) does not reach — and the count-guard arithmetic absorbs +1 against the ≤52 pin,
+  so keeps + newcomers still close ≤ 60. Closing the enumeration: this band's own W3 (**2** in-base —
+  token-hygiene · orphan-CSS-partial) + W4 (1) gates. **The base is defined by INSTRUMENT [R-6 RULED 2026-07-20,
   lead — Option B]:** a gate is IN the vitest census base iff it runs under vitest-fs. So W2's two
   pixel floors AND W3's `refract-lens-never-sharper` — all three Playwright/paint-path locks in
   `tests-visual/` — are enumerated together, **outside the vitest base, inside the enforced
@@ -149,6 +157,16 @@ drifted through six stability rounds.*
   the curve generator emits again, OR — if the repair proves disproportionate on the diff — retire the
   generator explicitly and record `springProjection.test.ts` as the sole spring-sync mechanism. Never a
   silently-broken ship; `BAND-DOC-TRUTH` lands the hand-truth + sync pins either way.
+  **[DISCHARGED-BY-W-1 2026-07-20]** `IOS27-MICRO` FINAL W-1 landed the REPAIR arm as an unavoidable
+  precondition of its own §9 row-2 regen (a stale-mirror regen cannot run through a throwing generator).
+  The marker is re-anchored to the header as it stands (no `§2` ordinal, which does not return) and the
+  generator emits; this wave ASSERTS the repair verify-on-disk rather than performing it, and does not
+  re-edit the marker. The retire arm was not taken, so its "sole spring-sync mechanism" clause never
+  triggered. **W1 still owns the `regen-spring-tokens.mjs:275` phantom-importer comment cure** (the
+  comment moved `:200`→`:275` with the file but its claim is still FALSE — `grep generateBlock` shows no
+  importer anywhere in the repo; the real sync gates import `regenerate`/`generateMirrorBlock`), so the
+  MECH-01 `regen-spring-tokens.mjs` kill-row member stays OPEN here while the D-10 repair obligation is
+  CLOSED.
 - Convert-or-excise the 4 enrolled can't-fail capture tests; audit the 10 vanish-guards (fail-on-absent
   where the route/component is load-bearing, delete where the target is retired).
 - Move the 6 zero-assert `tests-visual/*.spec.ts` OUT of the `*.spec.ts` glob (rename to `*.capture.mjs`

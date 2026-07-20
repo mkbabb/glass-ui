@@ -79,3 +79,18 @@ export {
     type SpringPresetRow,
     type SpringPresetName,
 } from "./spring/springPresets";
+
+// The engagement-envelope register is the spring table's companion authority: springs
+// own geometry, envelopes own the light and medium channels. It ships HERE, beside
+// `springPreset`, because the two are read together — a surface picks a spring for its
+// rect and an envelope for its light in the same breath, and splitting them across
+// entries invites a call site to invent the constant it cannot find.
+export {
+    ENGAGE_ENVELOPES,
+    ENGAGE_ATTACK_CLASS,
+    ACKNOWLEDGE_WINDOW_MS,
+    engageEnvelope,
+    engageAttackT90Ms,
+    type EngageEnvelopeRow,
+    type EngageRole,
+} from "./engage/engageEnvelopes";
