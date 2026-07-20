@@ -89,6 +89,8 @@ content pins OUR commit hashes and states their in-flight status.
 - **WALL #14** — 2026-07-20 ~01:52 ET, session limit at STAB round 7 (both Fable critics);
   resets 03:00 ET. Salvage: NONE OWED (critics died pre-write; tree clean). Resume armed:
   one-shot cron `49b50150` at 03:04 + guardian `c0d4ab90` (v6, 11/37 past each hour).
+  **RECOVERED 03:04 ET** — the one-shot fired, `wf_ade2264c-488` resumed (task `wpqtbi929`),
+  both round-7 critic seats confirmed alive at 03:05. P-CLOSE is LIVE again.
 
 ## Bootstrap (fresh context)
 
