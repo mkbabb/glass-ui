@@ -1,0 +1,37 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui
+
+ × tests/gates/token-hygiene.test.ts > gate:token-hygiene — radius/backdrop-blur literals off the ladder > EXPECTED-RED — src/ carries no off-ladder radius or backdrop blur 4ms
+   → expected 'src/components/drawer/styles.css:379 …' to be '' // Object.is equality
+ ✓ tests/gates/token-hygiene.test.ts > gate:token-hygiene — radius/backdrop-blur literals off the ladder > self-test bite — a planted literal reds on both channels 0ms
+ ✓ tests/gates/token-hygiene.test.ts > gate:token-hygiene — radius/backdrop-blur literals off the ladder > self-test bite — the allowlisted forms do not red 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/gates/token-hygiene.test.ts > gate:token-hygiene — radius/backdrop-blur literals off the ladder > EXPECTED-RED — src/ carries no off-ladder radius or backdrop blur
+AssertionError: expected 'src/components/drawer/styles.css:379 …' to be '' // Object.is equality
+
+- Expected
++ Received
+
++ src/components/drawer/styles.css:379 [backdrop-blur] blur(14px)
++ src/components/sortable-list/SortableList.vue:144 [radius] 999px
++ src/components/tabs/styles/segmented.css:169 [radius] 0.3125rem
++ src/components/tabs/styles/segmented.css:306 [radius] 0.25rem
+
+ ❯ tests/gates/token-hygiene.test.ts:118:33
+    116|     // at that moment `it.fails` inverts and the flip wave drops the m…
+    117|     it("EXPECTED-RED — src/ carries no off-ladder radius or backdrop b…
+    118|         expect(format(scanned)).toBe("");
+       |                                 ^
+    119|     });
+    120|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  05:51:25
+   Duration  291ms (transform 16ms, setup 41ms, import 32ms, tests 5ms, environment 111ms)
+

@@ -118,6 +118,11 @@ export default defineConfig({
             testMatch: [
                 "safari-webgl.spec.ts",
                 "aurora-swraster.spec.ts",
+                // BJ.W-STATIC-HYGIENE — the `@supports` gate-lie lock. WebKit is the
+                // engine the lie lives on, so the lock is meaningless without this row;
+                // it drives its own recorded context (the video path — WebKit screenshots
+                // are backdrop-filter-blind) and needs no demo server.
+                "refract-lens-never-sharper.spec.ts",
             ],
             use: {
                 ...devices["Desktop Safari"],

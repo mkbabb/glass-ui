@@ -1,0 +1,36 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui
+
+ ✓ tests/gates/orphan-css-partial.test.ts > gate:orphan-CSS-partial — every src/ partial is reachable by a channel > the closure is anchored — the declared roots resolve and the walk is non-trivial 2ms
+ × tests/gates/orphan-css-partial.test.ts > gate:orphan-CSS-partial — every src/ partial is reachable by a channel > EXPECTED-RED — no src/ CSS partial is orphaned 2ms
+   → expected 'src/styles/glass/glass-atom.css\nsrc/…' to be '' // Object.is equality
+ ✓ tests/gates/orphan-css-partial.test.ts > gate:orphan-CSS-partial — every src/ partial is reachable by a channel > self-test bite — a planted orphan partial reds 0ms
+ ✓ tests/gates/orphan-css-partial.test.ts > gate:orphan-CSS-partial — every src/ partial is reachable by a channel > self-test bite — both channels count as reachable 14ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/gates/orphan-css-partial.test.ts > gate:orphan-CSS-partial — every src/ partial is reachable by a channel > EXPECTED-RED — no src/ CSS partial is orphaned
+AssertionError: expected 'src/styles/glass/glass-atom.css\nsrc/…' to be '' // Object.is equality
+
+- Expected
++ Received
+
++ src/styles/glass/glass-atom.css
++ src/styles/glass/glass-chip.css
+
+ ❯ tests/gates/orphan-css-partial.test.ts:113:36
+    111|     // glass-chip/glass-atom `@import`s; `it.fails` then inverts and W…
+    112|     it("EXPECTED-RED — no src/ CSS partial is orphaned", () => {
+    113|         expect(orphans.join("\n")).toBe("");
+       |                                    ^
+    114|     });
+    115|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 passed (4)
+   Start at  05:52:07
+   Duration  291ms (transform 17ms, setup 40ms, import 34ms, tests 19ms, environment 100ms)
+

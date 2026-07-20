@@ -1,0 +1,100 @@
+BJ.W-STATIC-HYGIENE — gate:refract-lens-never-sharper BORN-RED proof at HEAD
+Engine: Playwright 1.61.1 / webkit-2311 (WebKit 26.5) + chromium-headless-new.
+Capture: video/screencast path (WebKit screenshots are backdrop-filter-blind).
+The EXPECTED-RED marker is temporarily neutralized here so the RED prints verbatim;
+it is restored in the shipped file (verified below).
+
+--- WEBKIT x3 — the shipped defect ---
+
+Running 3 tests using 1 worker
+
+  ✘  1 [webkit] › refract-lens-never-sharper.spec.ts:296:5 › gate:refract-lens-never-sharper — the WebKit @supports gate-lie lock › the lens never paints sharper than its own blur base (4.3s)
+  ✘  2 [webkit] › refract-lens-never-sharper.spec.ts:296:5 › gate:refract-lens-never-sharper — the WebKit @supports gate-lie lock › the lens never paints sharper than its own blur base (4.4s)
+  ✘  3 [webkit] › refract-lens-never-sharper.spec.ts:296:5 › gate:refract-lens-never-sharper — the WebKit @supports gate-lie lock › the lens never paints sharper than its own blur base (4.5s)
+
+
+  1) [webkit] › refract-lens-never-sharper.spec.ts:296:5 › gate:refract-lens-never-sharper — the WebKit @supports gate-lie lock › the lens never paints sharper than its own blur base 
+
+    Error: webkit: @supports=true · 3 samples, worst 92.3% (all: 92.3%, 91.5%, 91.1%) · witness scene 0.0864 · blur-only twin 0.0016 · lens 0.0798. The lens must never paint sharper than its own blur base.
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.12
+    Received:    0.922587026960996
+
+      344 |                 `${witness.energy.twin.toFixed(4)} · lens ${witness.energy.lens.toFixed(4)}. ` +
+      345 |                 `The lens must never paint sharper than its own blur base.`,
+    > 346 |         ).toBeLessThanOrEqual(SHARPNESS_TOLERANCE);
+          |           ^
+      347 |     });
+      348 | });
+      349 |
+        at /Users/mkbabb/Programming/glass-ui/tests-visual/refract-lens-never-sharper.spec.ts:346:11
+
+    Error Context: test-results/refract-lens-never-sharper-ed8c9-rper-than-its-own-blur-base-webkit/error-context.md
+
+  2) [webkit] › refract-lens-never-sharper.spec.ts:296:5 › gate:refract-lens-never-sharper — the WebKit @supports gate-lie lock › the lens never paints sharper than its own blur base 
+
+    Error: webkit: @supports=true · 3 samples, worst 91.9% (all: 91.9%, 90.9%, 90.9%) · witness scene 0.0865 · blur-only twin 0.0016 · lens 0.0797. The lens must never paint sharper than its own blur base.
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.12
+    Received:    0.9188539683968987
+
+      344 |                 `${witness.energy.twin.toFixed(4)} · lens ${witness.energy.lens.toFixed(4)}. ` +
+      345 |                 `The lens must never paint sharper than its own blur base.`,
+    > 346 |         ).toBeLessThanOrEqual(SHARPNESS_TOLERANCE);
+          |           ^
+      347 |     });
+      348 | });
+      349 |
+        at /Users/mkbabb/Programming/glass-ui/tests-visual/refract-lens-never-sharper.spec.ts:346:11
+
+    Error Context: test-results/refract-lens-never-sharper-ed8c9-rper-than-its-own-blur-base-webkit-repeat1/error-context.md
+
+  3) [webkit] › refract-lens-never-sharper.spec.ts:296:5 › gate:refract-lens-never-sharper — the WebKit @supports gate-lie lock › the lens never paints sharper than its own blur base 
+
+    Error: webkit: @supports=true · 3 samples, worst 93.5% (all: 93.5%, 90.9%, 91.1%) · witness scene 0.0859 · blur-only twin 0.0016 · lens 0.0804. The lens must never paint sharper than its own blur base.
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.12
+    Received:    0.9354395959369026
+
+      344 |                 `${witness.energy.twin.toFixed(4)} · lens ${witness.energy.lens.toFixed(4)}. ` +
+      345 |                 `The lens must never paint sharper than its own blur base.`,
+    > 346 |         ).toBeLessThanOrEqual(SHARPNESS_TOLERANCE);
+          |           ^
+      347 |     });
+      348 | });
+      349 |
+        at /Users/mkbabb/Programming/glass-ui/tests-visual/refract-lens-never-sharper.spec.ts:346:11
+
+    Error Context: test-results/refract-lens-never-sharper-ed8c9-rper-than-its-own-blur-base-webkit-repeat2/error-context.md
+
+  3 failed
+    [webkit] › refract-lens-never-sharper.spec.ts:296:5 › gate:refract-lens-never-sharper — the WebKit @supports gate-lie lock › the lens never paints sharper than its own blur base 
+    [webkit] › refract-lens-never-sharper.spec.ts:296:5 › gate:refract-lens-never-sharper — the WebKit @supports gate-lie lock › the lens never paints sharper than its own blur base 
+    [webkit] › refract-lens-never-sharper.spec.ts:296:5 › gate:refract-lens-never-sharper — the WebKit @supports gate-lie lock › the lens never paints sharper than its own blur base 
+
+--- CHROMIUM x3 — unaffected; reaching the invariant proves the planted bite red there ---
+
+Running 3 tests using 1 worker
+
+  ✓  1 [chromium-headless-new] › refract-lens-never-sharper.spec.ts:296:5 › gate:refract-lens-never-sharper — the WebKit @supports gate-lie lock › the lens never paints sharper than its own blur base (3.6s)
+  ✓  2 [chromium-headless-new] › refract-lens-never-sharper.spec.ts:296:5 › gate:refract-lens-never-sharper — the WebKit @supports gate-lie lock › the lens never paints sharper than its own blur base (3.6s)
+  ✓  3 [chromium-headless-new] › refract-lens-never-sharper.spec.ts:296:5 › gate:refract-lens-never-sharper — the WebKit @supports gate-lie lock › the lens never paints sharper than its own blur base (3.6s)
+
+  3 passed (11.8s)
+
+--- the shipped file, marker RESTORED: WebKit born-RED reads as 'passed' (expected failure) ---
+
+Running 4 tests using 1 worker
+
+  ✓  1 [chromium-headless-new] › refract-lens-never-sharper.spec.ts:296:5 › gate:refract-lens-never-sharper — the WebKit @supports gate-lie lock › the lens never paints sharper than its own blur base (3.6s)
+  ✓  2 [chromium-headless-new] › refract-lens-never-sharper.spec.ts:296:5 › gate:refract-lens-never-sharper — the WebKit @supports gate-lie lock › the lens never paints sharper than its own blur base (4.1s)
+  ✘  3 [webkit] › refract-lens-never-sharper.spec.ts:296:5 › gate:refract-lens-never-sharper — the WebKit @supports gate-lie lock › the lens never paints sharper than its own blur base (4.3s)
+  ✘  4 [webkit] › refract-lens-never-sharper.spec.ts:296:5 › gate:refract-lens-never-sharper — the WebKit @supports gate-lie lock › the lens never paints sharper than its own blur base (4.3s)
+
+  4 passed (18.0s)
