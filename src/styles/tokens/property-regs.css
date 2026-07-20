@@ -102,19 +102,6 @@
     initial-value: 0;
 }
 
-/* The per-surface EDGE-glint angle channel. `--specular-angle` is
-   the pointer angle-from-center the edge-glint conic sweep reads (material.css);
-   `useSpecularPointer` writes it (the angle feed). `inherits: false` — the
-   per-element ownership discipline of the specular cohort above (each pseudo owns
-   its typed value; a parent's angle must never bleed into a child glass surface).
-   `initial-value: 0deg` is the static rest position (the rim glint sits top when
-   unwired — no ambient drift, no blowout). */
-@property --specular-angle {
-    syntax: "<angle>";
-    inherits: false;
-    initial-value: 0deg;
-}
-
 /* The LIVE velocity channel. `useLiquidFlex` writes this
    per-frame off the SAME saturating velocity term it already computes
    (`tanh(|ṫ|·k) ∈ [0,1]`); the consumer's `writeVelocityWeight` helper folds it

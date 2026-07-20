@@ -502,21 +502,6 @@ export const CATEGORIES: Category[] = [
                     background: "grid",
                 },
             ),
-            // the NEW WebGPU-first liquid AA-grid viz. It self-stages
-            // its OWN GL/fragment context (the field IS the surface), so the route declares
-            // the FREE static `grid` wash behind the card and mounts exactly ONE live context
-            // its own (the one-GL-per-route budget held, the glass-panel precedent above).
-            s(
-                "substrates",
-                "liquid-grid",
-                "Liquid Grid",
-                "A WebGPU-first liquid AA-grid — evenly-spaced LARGER cells on a sheet that bows + shears as a traveling wave passes OVER and THROUGH it. A smooth low-order curl-flow field (Bridson divergence-free) warps the grid COORDINATE before evaluation, locally affine at the cell scale, so MAJOR gridlines bend as ONE coherent continuous curve and cells deform as near-parallelogram patches — never a per-pixel jitter, never a per-cell kink. A Ben Golus derivative-AA two-tier grid (one device-pixel crisp at any DPR — the blurry-mess fix; the AA reads the FINAL warped coordinate). It reads the SAME waveFlow warp as Concentric (one shared field). Drag the cursor for a local swirl — a finger twisting the cells around it. The warm-cream identity over transparent is the library default (the page reads through the cells); the suffusion preset rides the same field at a near-invisible fieldAlpha behind page content. No Canvas2D anywhere. Shipped /liquid-grid.",
-                {
-                    background: "grid",
-                    hero: true,
-                    heroScale: "hero",
-                },
-            ),
         ],
     },
     {
@@ -606,7 +591,7 @@ export const CATEGORIES: Category[] = [
                 "display",
                 "atoms",
                 "Atoms",
-                "The designed atoms wall — separator, status-dot, pulse, avatar, and the dark-mode toggle on ONE page, sectioned by the family switcher.",
+                "The designed atoms wall — separator, status-dot, avatar, and the dark-mode toggle on ONE page, sectioned by the family switcher.",
             ),
         ],
     },

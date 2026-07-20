@@ -12,9 +12,8 @@
 // transitive, identical symbols. Bearing leaves import DAMPING/SNAP_THRESHOLD
 // directly from this domain, so both surfaces ship it.
 export * from "./constants";
-export * from "../reveal/useStaggerReveal";
-// useStagger is distinct from useStaggerReveal and has external consumers. It is
-// Vue-only, engine-free, and vueuse-free, so it ships on /motion-core.
+// useStagger has external consumers (speedtest ×2). It is Vue-only, engine-free,
+// and vueuse-free, so it ships on /motion-core.
 export * from "../reveal/useStagger";
 export * from "../scroll/useScrollProgress";
 export * from "./useRAFLoop";
@@ -34,13 +33,6 @@ export * from "./useViewTransition";
 // no `@mkbabb/keyframes.js`, no `@vueuse/core`), so it ships on the engine-free
 // `/motion-core` surface AND is re-exported from the root barrel below.
 export * from "../reveal/vReveal";
-// Named CSS Custom Highlight composable (CSS.highlights registry +
-// ::highlight(<name>) Range paint, no <mark> DOM mutation). Text highlight is a
-// motion/decoration concern, and its named consumers (Fourier equation vars, word
-// search marks, and FuzzySearch) use the keyframes-free + vueuse-free surface. It
-// imports `vue` `getCurrentScope`/`onScopeDispose` only — engine-free +
-// vueuse-free, so it ships here.
-export * from "../reveal/useTextHighlight";
 // Shared amorphous flex+squish primitive.
 // PURE projection of a caller-driven normalized scalar onto a size span + a
 // volume-preserving squish (the reconcile of the tabs-indicator reciprocal-stretch +

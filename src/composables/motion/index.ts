@@ -1,7 +1,7 @@
 // Sub-tree barrel for the keyframes.js-BEARING motion composables.
 //
 // This entry exposes only the keyframes-bearing set. The keyframes-free leaves
-// (useStaggerReveal, useScrollProgress, useRAFLoop, useIntersectionPause,
+// (useScrollProgress, useRAFLoop, useIntersectionPause,
 // constants) live on the flat `@mkbabb/glass-ui/motion-core`
 // sibling subpath (`composables/motion/core/index.ts`); the keyframes-free but
 // vueuse-bearing `installDarkModeSync` lives on `composables/dark/`. This
@@ -50,26 +50,11 @@ export * from "./reveal/useLiquidReveal";
 // Keyframes-bearing → `/motion` ONLY, never the root barrel (the SCC-trap
 // discipline). Compositor-only + PRM-seats.
 export * from "./morph/useDockCtaReceive";
-// Shared-element FLIP where source≠destination (the search-pill→Places-
-// sheet, the album-card→fullscreen bloom). Composes the SAME kf `ElementMorph` +
-// `springTimingFunction` substrate useLiquidReveal activates (driven 1→0 — the dest
-// blooms FROM a SEPARATE source's rect onto its OWN full settled rect, NEVER a box-
-// scale that crushes content) PLUS a 4TH COLOR channel on the destination FIELD (the
-// field warms to the source's album hue via the registered @property --glass-ambient-
-// hue/-strength on the spring curve). Keyframes-
-// bearing → `/motion` ONLY, never the root barrel (the SCC-trap discipline).
-// Compositor-only on the surface + Safari-safe + PRM-snap.
-export * from "./reveal/useBloomUp";
-export * from "./number/useNumericTransition";
 export * from "./number/useAnimatedNumber";
 // `useAnimatedNumberMap` is distinct from the scalar helper and has external
-// consumers in downstream apps. It is keyframes-bearing because it composes
-// `useAnimatedNumber`.
+// consumers in downstream apps (speedtest `useMetricResult`, muster
+// `RankedVerdict`). It is keyframes-bearing because it composes `useAnimatedNumber`.
 export * from "./number/useAnimatedNumberMap";
-// Editorial count-up animator. Rides the keyframes LIGHT
-// `NumericAnimation` engine (value.js-free callable easing) → keyframes-BEARING,
-// so it ships ONLY here (`/motion`), NOT on `/motion-core` and NOT on the root.
-export * from "./number/useCountup";
 
 // The semantic spring register is Glass-owned pure data. Engine primitives stay
 // at their authority: consumers import them directly from @mkbabb/keyframes.js.

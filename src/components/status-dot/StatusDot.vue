@@ -15,6 +15,12 @@ const props = withDefaults(
     defineProps<{
         state?: StatusDotState;
         size?: FeedbackSize;
+        /**
+         * Liveness axis. `"full"` runs the breathing pulse ring on the live
+         * `active` state (liquid-weight universal — the default); `"off"` opts
+         * down to a static mark. Reduced-motion always wins regardless.
+         */
+        motion?: "full" | "off";
         /** Accessible identity. Omit when adjacent text already names the state. */
         label?: string;
         class?: HTMLAttributes["class"];
@@ -22,6 +28,7 @@ const props = withDefaults(
     {
         state: "online",
         size: "sm",
+        motion: "full",
     },
 );
 </script>
@@ -37,7 +44,7 @@ const props = withDefaults(
         :aria-label="label"
         :aria-hidden="label ? undefined : 'true'"
     >
-        <FeedbackMark :state="state" />
+        <FeedbackMark :state="state" :motion="motion === 'full'" />
     </span>
 </template>
 
@@ -54,5 +61,9 @@ const props = withDefaults(
 
 .status-dot[data-size="md"] {
     --feedback-mark-size: 0.625rem;
+}
+
+.status-dot[data-size="lg"] {
+    --feedback-mark-size: 0.875rem;
 }
 </style>

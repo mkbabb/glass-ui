@@ -41,7 +41,7 @@ export const minWidthInputSm = 80;
  *   - `tight` (40ms)    — dense row cascades (StatsCards row strip,
  *                         results-table `:nth-child` delays)
  *   - `default` (80ms)  — canonical row stagger (ResultStack, bar
- *                         entrance, useStaggerReveal default)
+ *                         entrance, the default row cascade)
  *   - `relaxed` (120ms) — wider series cascades (TimeSeriesChart)
  *
  */

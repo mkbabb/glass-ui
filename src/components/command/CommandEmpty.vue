@@ -3,7 +3,7 @@ import { computed, useAttrs } from "vue";
 import { ComboboxEmpty as RekaComboboxEmpty } from "reka-ui";
 import { cn } from "../_shared/class-names";
 import { fixedHostAttrs } from "../_shared/primitive";
-import type { ComboboxEmptyProps } from "../combobox/types";
+import type { ComboboxEmptyProps } from "../_shared/selection";
 
 defineOptions({ name: "CommandEmpty", inheritAttrs: false });
 

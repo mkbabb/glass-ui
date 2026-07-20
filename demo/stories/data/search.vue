@@ -2,7 +2,7 @@
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import { computed, ref } from "vue";
-import { FuzzySearch, SearchBar, useFuzzySearch } from "@glass/components/search";
+import { SearchBar, useFuzzySearch } from "@glass/components/search";
 import type { SearchResult, SearchableItem } from "@glass/components/search";
 import { Badge } from "@glass/components/badge";
 import {
@@ -465,10 +465,6 @@ const visibleResults = computed<SearchResult<StorySearchItem>[]>(() =>
 const resultCount = computed(() => visibleResults.value.length);
 const hasQuery = computed(() => query.value.trim().length > 0);
 
-function typeLabel(item: SearchableItem): string {
-    return item.type ?? "row";
-}
-
 function formatScore(score: number): string {
     return score.toFixed(1);
 }
@@ -498,14 +494,6 @@ function formatScore(score: number): string {
                     surface="glass"
                     placeholder="Search components, composables, tokens…"
                     aria-label="Search the catalogue"
-                />
-                <FuzzySearch
-                    :state="searchState"
-                    variant="floating"
-                    surface="glass"
-                    placeholder="Jump to a component…"
-                    aria-label="Search component catalogue"
-                    :type-label="typeLabel"
                 />
             </Surface>
 

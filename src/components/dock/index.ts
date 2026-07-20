@@ -81,7 +81,8 @@ export {
 // morph (the byte-untouched `morph-bridge.css` — box-inviolate, no second engine) + the
 // optional `useScrollChrome` shrink + the ToC `ensureTargetWindow`/`scrollTo` subsume.
 // A consuming seam BESIDE the morph engine; `<GlassDock search>` opts into it. `SearchBar`
-// KEEPS (a live standalone surface); only `FuzzySearch.vue` retires onto this register.
+// KEEPS (a live standalone surface); the `FuzzySearch.vue` demo component retired onto
+// this register at REDUCTION W3.
 // The network source plugs via `onSearch`.
 export { useDockSearch } from "./composables";
 export type { UseDockSearchOptions, UseDockSearchReturn } from "./composables";

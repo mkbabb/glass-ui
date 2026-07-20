@@ -1,7 +1,7 @@
 import type { HTMLAttributes } from "vue";
 import type { Surface } from "../_shared/axes";
 import type { DialogProps } from "../dialog/Dialog.vue";
-import type { ComboboxValue } from "../combobox/types";
+import type { ComboboxValue } from "../_shared/selection";
 
 export interface CommandProps {
     modelValue?: ComboboxValue;

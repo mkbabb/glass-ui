@@ -6,7 +6,7 @@ import { fixedHostAttrs } from "../_shared/primitive";
 import type {
     ComboboxItemEmits,
     ComboboxItemProps,
-} from "../combobox/types";
+} from "../_shared/selection";
 
 defineOptions({ name: "CommandItem", inheritAttrs: false });
 

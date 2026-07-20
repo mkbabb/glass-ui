@@ -19,14 +19,13 @@
 //       `--glass-btn-press-t` drive lifts off 0 → the coupled `--glass-refract` swells
 //       (the lens deepens) + the gleam brightens, arriving within the
 //       `--spring-snappy-duration` envelope (≤120ms perceived).
-//   (c) EDGE-GLINT ANGLE — a hover-sweep over a glass surface: `--specular-angle` tracks
-//       the pointer angle off the 0deg rest (the rim brightens where the pointer grazes,
-//       not a centered disc).
+//   (c)+(e) EDGE-GLINT ANGLE arms DELETED at REDUCTION A05-SPECULAR — the
+//       `--specular-angle` channel had no live writer (useSpecularPointer retired,
+//       zero consumers) and was struck (registration + conic read + PRM pin); the rim
+//       glint now seats static `from 0deg`, the moving catch-light rides --specular-x/y.
 //   (d) OFF-CHROMIUM DEGRADE — with `@supports` emulated false (the lens stripped), the
 //       surface paints the clean blur+tint base alone — no broken `url()`, no missing-
 //       filter artifact (the no-workaround floor).
-//   (e) PRM SNAP — under emulated reduced-motion the press swell + the glint reach their
-//       endpoint with the angle pinned to its 0deg rest (the gesture functions, physics off).
 //
 // Runner-truth: it LOADS :5199 (the harness auto-spawns + reuses the dev server), so it
 // is LIVE_VERIFIED_LOCAL_ONLY; on a clean CI runner with no Playwright it grace-SKIPs.
@@ -138,41 +137,12 @@ test.describe("BB.W-LENSING — the squircle edge-lens + the motion-reactive rim
         expect(pressed.pressT).toBeGreaterThanOrEqual(0);
     });
 
-    test("(c) EDGE-GLINT angle — a hover-sweep moves --specular-angle off the 0deg rest", async ({
-        page,
-    }) => {
-        await page.goto(BUTTONS_ROUTE);
-        await page.waitForLoadState("networkidle");
-        await setScheme(page, "light");
-
-        const btn = page
-            .locator('[data-slot="button"][data-variant="glass"], [data-slot="button"][data-variant="default"]')
-            .first();
-        if ((await btn.count()) === 0) test.skip(true, "no glass button on the route");
-        const box = await btn.boundingBox();
-        if (!box) test.skip(true, "button not laid out");
-
-        // Sweep the pointer to a non-center position — the leaf (if wired) writes
-        // --mouse-x/y; the angle derives off center. We read the host write.
-        await page.mouse.move(box!.x + box!.width * 0.85, box!.y + box!.height * 0.2);
-        await page.waitForTimeout(80);
-
-        const swept = await btn.evaluate((el) => {
-            const cs = getComputedStyle(el);
-            return {
-                mx: cs.getPropertyValue("--mouse-x").trim(),
-                angle: cs.getPropertyValue("--specular-angle").trim(),
-            };
-        });
-        await page.screenshot({
-            path: resolve(VISUAL_DIR, "W-LENSING-edge-glint.png"),
-            fullPage: false,
-        });
-        // The host carries the write seam; the angle channel exists (0deg rest if the
-        // surface is not pointer-wired). The binding angle-tracking is the W-REFLECT3
-        // capture; here we assert the channel is reachable.
-        expect(typeof swept.angle).toBe("string");
-    });
+    // (c) EDGE-GLINT angle-sweep DELETED at REDUCTION A05-SPECULAR — the
+    // `--specular-angle` channel had no live writer (useSpecularPointer retired,
+    // zero consumers) and was struck (registration + conic read + PRM pin). The
+    // rim glint now seats static at `from 0deg`; the moving catch-light rides
+    // --specular-x/y (still live via createSpecularWriter). No un-greenable
+    // hover-sweep assertion survives.
 
     test("(d) OFF-CHROMIUM DEGRADE — the surface paints the blur base alone (no broken url())", async ({
         page,
@@ -204,33 +174,7 @@ test.describe("BB.W-LENSING — the squircle edge-lens + the motion-reactive rim
         }
     });
 
-    test("(e) PRM SNAP — under reduced-motion the glint angle pins to its 0deg rest", async ({
-        page,
-    }) => {
-        await page.emulateMedia({ reducedMotion: "reduce" });
-        await page.goto(BUTTONS_ROUTE);
-        await page.waitForLoadState("networkidle");
-        await setScheme(page, "light");
-
-        const btn = page
-            .locator('[data-slot="button"][data-variant="glass"], [data-slot="button"][data-variant="default"]')
-            .first();
-        if ((await btn.count()) === 0) test.skip(true, "no glass button on the route");
-        const box = await btn.boundingBox();
-        if (!box) test.skip(true, "button not laid out");
-
-        // Under reduced-motion the leaf skips the position/angle write; the ::before
-        // angle is pinned to 0deg by the a11y bracket (glass-specular-track.css).
-        await page.mouse.move(box!.x + box!.width * 0.9, box!.y + box!.height * 0.1);
-        await page.waitForTimeout(80);
-
-        const angle = await btn.evaluate((el) => {
-            // Read the ::before resolved angle (the rim glint's reduced-motion pin).
-            const cs = getComputedStyle(el, "::before");
-            return cs.getPropertyValue("--specular-angle").trim();
-        });
-        await page.emulateMedia({ reducedMotion: null });
-        // The pinned rest is 0deg (the physics off; the gesture still functions).
-        expect(["0deg", "0", ""]).toContain(angle);
-    });
+    // (e) PRM SNAP angle-pin DELETED at REDUCTION A05-SPECULAR (with arm (c)) — the
+    // `--specular-angle` channel was struck; the rim glint seats static `from 0deg`
+    // on every engine, so there is no live angle write for reduced-motion to pin.
 });

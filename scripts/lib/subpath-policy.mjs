@@ -58,15 +58,15 @@ export const COMPONENT_CLASS = {
     surface: "PUBLISH",
     slider: "PUBLISH", switch: "PUBLISH", toast: "PUBLISH", "toggle-group": "PUBLISH",
     tooltip: "PUBLISH",
-    // INTERNAL (13) — reached via the root barrel / a curated subpath / substrate.
+    // INTERNAL (12) — reached via the root barrel / a curated subpath / substrate.
     _shared: "INTERNAL", accordion: "INTERNAL", alert: "INTERNAL", avatar: "INTERNAL",
-    carousel: "INTERNAL", checkbox: "INTERNAL", combobox: "INTERNAL", input: "INTERNAL",
+    carousel: "INTERNAL", checkbox: "INTERNAL", input: "INTERNAL",
     "radio-group": "INTERNAL",
     skeleton: "INTERNAL", table: "INTERNAL",
     "tags-input": "INTERNAL", textarea: "INTERNAL",
     // INTERNAL (1)
     "infinite-scroll": "INTERNAL",
-    // PUBLISH (31) — the custom/glass-native set.
+    // PUBLISH (29) — the custom/glass-native set.
     "animated-digit": "PUBLISH", aurora: "PUBLISH",
     "completion-seal": "PUBLISH",
     // BI.W-CHIP-FOLD: the one explicit-mode <Chip> family.
@@ -82,8 +82,8 @@ export const COMPONENT_CLASS = {
     "header-ribbon": "PUBLISH",
     "instrument-chassis": "PUBLISH", "labeled-field": "PUBLISH",
     metric: "PUBLISH",
-    "pager-dots": "PUBLISH", "paper-backdrop": "PUBLISH", "liquid-grid": "PUBLISH",
-    pulse: "PUBLISH", search: "PUBLISH", "scroll-progress-rim": "PUBLISH",
+    "pager-dots": "PUBLISH", "paper-backdrop": "PUBLISH",
+    search: "PUBLISH", "scroll-progress-rim": "PUBLISH",
     // BI.W-SPEEDTEST-ONLY-PAIR: scrolling-text RETIRED (speedtest-only; the ask-row offers the mechanism).
     "sortable-list": "PUBLISH",
     "status-dot": "PUBLISH", tabs: "PUBLISH",

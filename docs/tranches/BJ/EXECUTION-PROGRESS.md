@@ -86,16 +86,16 @@ version — carried by G1, blocking nothing. Owner-reversible.
   battery, the MARKS-E apex formula) is untouched either way.
 - **PARKED-UNROUTABLE — lead/owner action owed before the wave can even park (added 2026-07-20, STAB10;
   the state existed only in the band file and in `formation/stability/FIXLOG-STAB9.md:143-147`, never in
-  this cursor):** `BAND-REDUCTION` **W6** (`BJ.W-REDUCE-FEEDBACK-MARK`, pulse→StatusDot —
-  `waves/BAND-REDUCTION.md:577`) and **W7** (`BJ.W-REDUCE-OVERLAY-SURFACE`, the `DrawerDirection`
-  narrowing — `:614`). Both were gated on "ASK A3"/"ASK A4", which are RU-09's INTERNAL ask numbering
-  (`formation/refable/REFABLE-RU-03-REDUCTION.md:61-62`) and exist in NEITHER `ASK.md` NOR
-  `ASK-REDUCTION.md` (grep = 0 in both). Each wave's scope item (2) is a public-surface break — the
-  `./pulse` subpath + dist + typesVersions delete (W6) and a public-API type narrowing (W7) — so neither
-  may execute on a formation-side call. **The lead must either MINT the ratification row into `ASK.md`
-  (a NEW row — never a renumber, reword, merge, or re-scope of an existing row, per the standing ASK
-  freeze) or record a lead-decided disposition, with rationale, in the band file.** Until one of those
-  lands, these two waves belong to no phase and launch under no seat.
+  this cursor):** `BAND-REDUCTION` **W7** (`BJ.W-REDUCE-OVERLAY-SURFACE`, the `DrawerDirection`
+  narrowing — `:614`). [**W6 (`BJ.W-REDUCE-FEEDBACK-MARK`, pulse→StatusDot) DISCHARGED 2026-07-20 by
+  the P-CLOSE lead ruling — merge-on-merit, no ASK minted; EXECUTED with REDUCTION W3 (task 27). Struck
+  from this bullet; `BAND-REDUCTION.md` W6 §Status is the disposition of record.**] W7 was gated on
+  "ASK A4", RU-09's INTERNAL ask numbering (`formation/refable/REFABLE-RU-03-REDUCTION.md:62`) that
+  exists in NEITHER `ASK.md` NOR `ASK-REDUCTION.md` (grep = 0 in both). Its scope item (2) is a
+  public-API type narrowing, so it may not execute on a formation-side call. **The lead must either
+  MINT the ratification row into `ASK.md` (a NEW row — never a renumber, reword, merge, or re-scope of
+  an existing row, per the standing ASK freeze) or record a lead-decided disposition, with rationale,
+  in the band file.** Until one of those lands, W7 belongs to no phase and launches under no seat.
   **[FOLD 2026-07-20, escalation-discharge — the two facts the consumed STAB10 duplicate cure 9 carried
   that its ratified counterpart cure 4 did not.** (i) **No other bullet covers these two waves.** The
   ASK-gated PARKED bullet above does NOT reach them (their gate is not an `ASK.md` row at all), and

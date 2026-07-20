@@ -19,11 +19,6 @@ const familyMembers: FamilyMember[] = [
         component: defineAsyncComponent(() => import("./select.vue")),
     },
     {
-        id: "combobox",
-        label: "Combobox",
-        component: defineAsyncComponent(() => import("./combobox.vue")),
-    },
-    {
         id: "label",
         label: "Label",
         component: defineAsyncComponent(() => import("./label.vue")),

@@ -16,8 +16,7 @@ export type VizPattern =
     | "graph"
     | "epicycle"
     | "glass-plate"
-    | "glass-ladder"
-    | "warp-grid";
+    | "glass-ladder";
 
 /** The frozen recipe a story's still rasters from — a DISTINCT (pattern,hue,seed) triple. */
 export interface VizStillSpec {
@@ -31,8 +30,8 @@ export interface VizStillSpec {
 
 /**
  * The per-ROUTE registry — keyed on the full `/substrates/<id>` route so the
- * dispatch is per-STORY, never the per-category smear. Seven entries (the surviving
- * substrate set post-B5 deletion), each a DISTINCT (pattern,hue,seed) triple, so
+ * dispatch is per-STORY, never the per-category smear. Six entries (the surviving
+ * substrate set), each a DISTINCT (pattern,hue,seed) triple, so
  * each card resolves a distinct still without relying on device rendering.
  */
 export const VIZ_PREVIEW_STILLS: Readonly<Record<string, VizStillSpec>> = {
@@ -42,7 +41,6 @@ export const VIZ_PREVIEW_STILLS: Readonly<Record<string, VizStillSpec>> = {
     "/substrates/fourier-field": { pattern: "epicycle", hue: 40, seed: 404 },
     "/substrates/glass-material": { pattern: "glass-plate", hue: 62, seed: 505 },
     "/substrates/glass-panel": { pattern: "glass-ladder", hue: 68, seed: 606 },
-    "/substrates/liquid-grid": { pattern: "warp-grid", hue: 72, seed: 909 },
 };
 
 // ── the raster canvas (φ ratio ≈ 1.61 — the card preview aspect) ──
@@ -235,47 +233,6 @@ function drawGlassLadder(ctx: CanvasRenderingContext2D, hue: number, rng: () => 
     }
 }
 
-/** liquid-grid — a curl-warped grid (the sheet bows toward the crest). */
-function drawWarpGrid(ctx: CanvasRenderingContext2D, hue: number, _rng: () => number): void {
-    warmFloor(ctx, hue);
-    ctx.strokeStyle = warm(hue, 45, 0.5);
-    ctx.lineWidth = 0.8;
-    const step = 11;
-    const cx = W * 0.55;
-    const cy = H * 0.5;
-    const warp = (x: number, y: number): [number, number] => {
-        const dx = x - cx;
-        const dy = y - cy;
-        const d = Math.hypot(dx, dy);
-        const w = Math.exp((-d * d) / 900) * 9;
-        return [x + (dy / (d + 1)) * w, y - (dx / (d + 1)) * w];
-    };
-    for (let x = 0; x <= W; x += step) {
-        ctx.beginPath();
-        let first = true;
-        for (let y = 0; y <= H; y += 2) {
-            const [wx, wy] = warp(x, y);
-            if (first) {
-                ctx.moveTo(wx, wy);
-                first = false;
-            } else ctx.lineTo(wx, wy);
-        }
-        ctx.stroke();
-    }
-    for (let y = 0; y <= H; y += step) {
-        ctx.beginPath();
-        let first = true;
-        for (let x = 0; x <= W; x += 2) {
-            const [wx, wy] = warp(x, y);
-            if (first) {
-                ctx.moveTo(wx, wy);
-                first = false;
-            } else ctx.lineTo(wx, wy);
-        }
-        ctx.stroke();
-    }
-}
-
 const GENERATORS: Record<
     VizPattern,
     (ctx: CanvasRenderingContext2D, hue: number, rng: () => number) => void
@@ -286,7 +243,6 @@ const GENERATORS: Record<
     epicycle: drawEpicycle,
     "glass-plate": drawGlassPlate,
     "glass-ladder": drawGlassLadder,
-    "warp-grid": drawWarpGrid,
 };
 
 // Module-level memo — each route rasters its data-URI ONCE globally.

@@ -3,7 +3,7 @@ import { computed, useAttrs } from "vue";
 import { ComboboxSeparator as RekaComboboxSeparator } from "reka-ui";
 import { cn } from "../_shared/class-names";
 import { fixedHostAttrs } from "../_shared/primitive";
-import type { ComboboxSeparatorProps } from "../combobox/types";
+import type { ComboboxSeparatorProps } from "../_shared/selection";
 
 defineOptions({ name: "CommandSeparator", inheritAttrs: false });
 

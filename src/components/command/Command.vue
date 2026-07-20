@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ComboboxRoot as RekaComboboxRoot } from "reka-ui";
 import { cn } from "../_shared/class-names";
-import type { ComboboxValue } from "../combobox/types";
+import type { ComboboxValue } from "../_shared/selection";
 import { isSelectionValue } from "../_shared/selection";
 import type { CommandEmits, CommandProps } from "./types";
 

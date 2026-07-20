@@ -157,7 +157,6 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             accent: "var(--section-color-3)",
             entries: [
                 { storyId: "select", label: "Select" },
-                { storyId: "combobox", label: "Combobox" },
             ],
         },
         {

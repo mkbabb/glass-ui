@@ -1,8 +1,7 @@
 // @mkbabb/glass-ui/forms — curated form primitives
 //
 // Input and Textarea remain isolated from the root because they import
-// `@vueuse/core`. Combobox is co-located as the collection-backed form family,
-// but owns its public contracts directly and no longer imports VueUse.
+// `@vueuse/core`.
 //
 // Root-barrel re-exports of these symbols remain in place alongside the
 // additive subpath split.
@@ -13,7 +12,6 @@
 // vocabulary (Input/Textarea + the `aria-invalid` bridge) from one subpath.
 export * from "./components/input";
 export * from "./components/textarea";
-export * from "./components/combobox";
 export {
     useUserInvalidAria,
     type UseUserInvalidAriaOptions,

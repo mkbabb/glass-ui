@@ -7,7 +7,6 @@ export * from "./card";
 export * from "./carousel";
 export * from "./checkbox";
 export * from "./collapsible";
-export * from "./combobox";
 export * from "./command";
 export * from "./data-table";
 export * from "./dialog";

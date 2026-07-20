@@ -313,10 +313,13 @@ family; V9's judge clause — formalize the shared selection-list contract in `_
 `/combobox` subpath + story retire. Clean break. (A11Y W2-B's `ComboboxInput.vue:33` icon fix
 dies with this fold — its contingency note landed per APOTHEOSIS D-14.)
 
-**NEW — the number band 4→1 (RU-12 A10).** Keeper: `useAnimatedNumber` (animated-digit +
-speedtest live). DELETE `useNumericTransition` (0 anywhere), `useAnimatedNumberMap`
-(barrel-only), `useCountup` (1 demo story — re-express the countup story on
-`useAnimatedNumber`).
+**NEW — the number band 4→2 (RU-12 A10 — CORRECTED at the fresh census 2026-07-20).**
+Keepers: `useAnimatedNumber` (animated-digit + speedtest live) AND `useAnimatedNumberMap` —
+the A10 "barrel-only" premise did NOT reproduce: the full-constellation census found TWO live
+current-contract consumers (speedtest `useMetricResult.ts:33` + muster `RankedVerdict.vue:42`,
+both `@mkbabb/glass-ui/motion`), so the escape clause (RU-09 A9) FIRES → KEEP-with-relay,
+exactly as it did for useStagger. DELETE `useNumericTransition` (0 anywhere) + `useCountup`
+(1 demo story — re-expressed on `useAnimatedNumber`, executed W3).
 
 **NEW — the reveal dead pair (RU-12 A11 ∩ RU-09 R6).** DELETE `useBloomUp` + `bloomUpField`
 (mutual + barrel + one unit test; the `useDockCtaReceive` mention is comment-only). DELETE
@@ -405,6 +408,31 @@ records its disposition; the pre-stated homes are COLOCATION's scope-out fallbac
 
 Each disposition lands before the COLOCATION W3 fence's dated allowlist entries expire — this
 roster IS the "family-C ruling" those fence entries and T34 await.
+
+**A05 CONDITIONAL-DISPOSITION RECORD — dated 2026-07-20 (censused/executed at the REDUCTION W3
+close; fresh full-constellation greps, both grains):**
+
+- **A05-SPECULAR — DELETED 2026-07-20.** `glass/useSpecularPointer.ts` removed; fresh census =
+  0 real consumers (barrel-only at `glass/index.ts` + the `public-surface.spec.ts` row); the
+  live gleam is `createSpecularWriter`/`useSpecularTracking` via `v-specular`. The orphan read
+  plumbing was clean-broken in the SAME cut: the `@property --specular-angle` registration
+  (`property-regs.css`), the PRM pin (`glass-specular-track.css`), and the `material.css` conic
+  (`from var(--specular-angle,0deg)` → `from 0deg`, pixel-identical since the channel had no
+  writer + a `0deg` registered initial); the two lensing angle-arms (c)+(e) retired. DOC-TRUTH
+  T34 is MOOT (the delete moots the two stale comments).
+- **A05-CTA — KEEP → re-home is COLOCATION's.** `motion/morph/useDockCtaReceive.ts` is
+  dual-exported (`/motion` `motion/index.ts:52` + `/dock` `dock/index.ts:72`) with one live demo
+  (`demo/stories/dock/cta-receive.vue`); constellation = 0. KEEP (the W3 reveal-pair mention is
+  comment-only, confirmed). Re-home to `dock/composables/` (the `/motion`-barrel drop rides
+  8.0.0 with `/sidebar`) is COLOCATION's pre-stated home — NOT this cut.
+- **A05-BACKDROP-TRIO — KEEP → re-home is COLOCATION's.** `useGlassBackdropLuminance` is
+  LIVE-consumed by `GlassDock.vue:112` (+ 2 demo stories); `backdropLuminanceSample`/
+  `backdropSampleMath` are its internal composition. The booked trigger is documented
+  (`docs/consumer-evidence/use-glass-backdrop-luminance.md`). KEEP; re-home to `dock/composables/`
+  is COLOCATION's.
+- **A05-DRAW-IN — KEEP-as-register.** `draw-in.css` is live in the `@import` closure
+  (`index.css`); its members keep their own recipes (completion-seal, HandMark — fenced by the
+  file's charter). No colocation into completion-seal (that premise is false at HEAD).
 
 ### Acceptance gates
 
@@ -499,8 +527,11 @@ user rules is TERMINAL; record the rationale so a fourth ask cannot re-open it.
   (`package.json:545-546,:556-559,:587-588`); the demo story folds onto deck/pager-dots; words
   addendum names the 6-symbol migration.
 - **The consumer-addenda BATCH (RU-09 R12 + this union):** F18 (speedtest, muster) + F16
-  (speedtest) + F25 (words, muster) + PULSE-DOT (speedtest, keyframes.js, atlas) + F08
-  (speedtest) + carousel (words) ship as ONE coordinated Q060 relay, not six ad-hoc mails.
+  (speedtest) + F25 (words, muster) + PULSE-DOT (**speedtest ×4** — `CompleteBadge.vue:64`/
+  `ResultStack.vue:174`/`SpeedtestResults.vue:649`/`AdminLoginView.vue:117`; **muster ×1** —
+  `CommandDock.vue:43`; **keyframes.js/atlas ×0** at the 2026-07-20 fresh census — the formation
+  ×2 figures do not reproduce) + F08 (speedtest) + carousel (words) ship as ONE coordinated Q060
+  relay, not six ad-hoc mails.
 
 ### Acceptance gates
 
@@ -574,10 +605,22 @@ ruling. The track-well register itself is MATERIAL W4's.
 
 ## Wave 6 — BJ.W-REDUCE-FEEDBACK-MARK · pulse → StatusDot merge (NEW — RU-09 R3 / RU-19 V1)
 
-**Status:** UNION — ASK-GATED ON AN UNMINTED ROW. **[ESCALATION 2026-07-20, STAB9 — lead/owner action owed before this wave can park or run.]** "ASK A3" is RU-09's internal ask numbering (`REFABLE-RU-03-REDUCTION.md:61`), NOT an `ASK.md` row ID and NOT an `ASK-REDUCTION.md` section: the pulse→StatusDot merge appears in neither document (grep = 0). Because scope item (2) is a public-surface DELETE (`./pulse` subpath + dist + typesVersions), this wave cannot execute on a formation-side call. The lead must either MINT the ratification row into `ASK.md` (a new row, never a re-scope of an existing one) or record a lead-decided disposition here with its rationale. Until then this wave is PARKED-UNROUTABLE, not merely ASK-gated.
+**Status:** UNION — LEAD-RULED 2026-07-20 (P-CLOSE lead ruling, `EXECUTION-PROGRESS.md`
+§Phase-ledger P-CLOSE row): the pulse→StatusDot merge EXECUTES ON MERIT, no ASK minted.
+Rationale: both components are ~50-line shells over the ONE `_shared/FeedbackMark.vue` (which
+owns 100% of the material) — the delta is a `motion` axis + a size + a default state, an AXIS
+not a component identity; and the public `./pulse` break rides the consumer migration the two
+live consumers already owe (muster ^3.1.0, speedtest ^4.0.1 — both stale-prop vs 7.0.0, the
+consumer-updates ruling). "ASK A3" was RU-09's INTERNAL ask numbering
+(`REFABLE-RU-03-REDUCTION.md:61`), never an `ASK.md`/`ASK-REDUCTION.md` row (grep = 0) — the
+P-CLOSE ruling discharges it. **EXECUTED WITH REDUCTION W3 (task 27), 2026-07-20.**
 **Terminal owner:** glass-ui orchestrator
-**Depends on:** ASK A3; the family-B addenda (speedtest ×4, keyframes.js ×2, atlas ×2 — all
-already API-broken vs 7.0.0, the rename rides the migration they owe).
+**Depends on:** the family-B addenda — **speedtest ×4** (`CompleteBadge.vue:64`,
+`ResultStack.vue:174`, `SpeedtestResults.vue:649`, `AdminLoginView.vue:117`; + `vite.config.mjs:1047`
+chunk list + 2 test mocks), **muster ×1** (`CommandDock.vue:43` — stale-prop; the addendum carries
+the full `CommandDock` StatusDot rewrite incl. `:152`), **atlas ×0**, **keyframes.js ×0** (fresh
+census 2026-07-20 — the formation `keyframes.js ×2, atlas ×2` figures do NOT reproduce). Both live
+pins are already API-broken vs 7.0.0, so the rename rides the migration they owe.
 
 ### Mission
 
@@ -764,10 +807,9 @@ is a one-time RED→GREEN differential or an execution-time census/probe; nothin
 (§D1), WatercolorDot (§B5), DataTable (§B1 — census corrected: atlas + speedtest live),
 FourierField/Constellation component fates (§B2/§B3, corrected census),
 tempo page fold (§C4), confirm-dialog story fold (§C2/A6), scroll page fold + A06 standard
-(§C3), pulse merge (**PARKED-UNROUTABLE**, not merely ASK-gated — W6's "ASK A3" is RU-09 internal numbering with no `ASK.md` row; lead/owner action owed per `:577`), drawer narrowing (**PARKED-UNROUTABLE**, same class — W7's "ASK A4", per `:614`), goo collapse (**ASK-6** / `ASK-REDUCTION.md` **§C1**) [three cites corrected 2026-07-20, STAB11: the prior "(A2)" was RU-09 internal numbering and collided with `ASK.md` ASK-2 / §A2, completion-seal — a live row recommending KEEP; W8's Status `:657` and gate `:688` already carried this correction and this register was the third, un-swept site], chassis/metric (A1, re-issued
+(§C3), pulse merge (**LEAD-RULED 2026-07-20, EXECUTED with W3** — P-CLOSE merge-on-merit, no ASK minted; W6 §Status is the disposition of record — no longer open), drawer narrowing (**PARKED-UNROUTABLE** — W7's "ASK A4", per `:614`), goo collapse (**ASK-6** / `ASK-REDUCTION.md` **§C1**) [three cites corrected 2026-07-20, STAB11: the prior "(A2)" was RU-09 internal numbering and collided with `ASK.md` ASK-2 / §A2, completion-seal — a live row recommending KEEP; W8's Status `:657` and gate `:688` already carried this correction and this register was the third, un-swept site], chassis/metric (A1, re-issued
 with the fired flip clause), carousel (§C1, re-issued with the words census), timeline shape +
-scrubber fold (**ASK-7**) [cite corrected 2026-07-20, STAB11: the prior "/A5" was RU-09 internal numbering and collided with `ASK.md` ASK-5, the tempo page; W5's Depends line `:551` already carried this correction], **the A05 conditional-disposition roster (A05-SPECULAR / A05-CTA /
-A05-BACKDROP-TRIO / A05-DRAW-IN — W3 rows, APOTHEOSIS MECH-03/D-03)**.
+scrubber fold (**ASK-7**) [cite corrected 2026-07-20, STAB11: the prior "/A5" was RU-09 internal numbering and collided with `ASK.md` ASK-5, the tempo page; W5's Depends line `:551` already carried this correction], **the A05 conditional-disposition roster — RECORDED 2026-07-20** (the dated disposition block in W3's A05 section: A05-SPECULAR DELETED, A05-CTA/A05-BACKDROP-TRIO KEEP→COLOCATION re-home, A05-DRAW-IN KEEP-as-register — no longer open).
 
 **Lead adoption (updated this union): the FABLE-DAG-REDUCTION amendments A1-A16
 (`../formation/perfection/FABLE-DAG-REDUCTION.md` §4) are ADOPTED-BINDING on this band** — A1

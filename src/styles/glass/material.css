@@ -193,18 +193,17 @@
            registered-`@property` var() nested in an hsl() alpha computes to 0 in
            Chromium — the cross-engine-safe path); the per-stop alphas are literals so
            even the lifted hover/active states read as a lens, not a flash. */
-        /* The motion-reactive EDGE glint UNIFIED with the
-           centered catch-light disc on ONE `::before`. TWO background layers compose:
-           (TOP) the angle-keyed EDGE-anchored conic sweep — a warm-cream arc that
-           brightens the RIM where the pointer's `--specular-angle` grazes (the
-           glass-THICKNESS read iOS-27 fuses with the catch-light); (BOTTOM) the
-           existing pointer-position centered disc. BOTH ride the SAME `--specular-
-           intensity` cohort (the `opacity` below) + `plus-lighter` blend + warm-cream
-           core `hsl(40 35% 92%)` — NEVER a second color/blend fork. The conic is masked
-           to the rim band only (the `--glass-edge-glint-band` radial mask, scope 3),
-           so the glint is a bounded RIM ring, NOT a whole-plate wash (the D19
-           bounded-gleam discipline). The `--specular-angle` floor `0deg` sits the glint
-           at the top edge when unwired (static rest — no ambient drift, no blowout). */
+        /* The static rim glint UNIFIED with the pointer catch-light disc on ONE
+           `::before`. TWO background layers compose: (TOP) the EDGE-anchored conic
+           sweep — a warm-cream arc seated static `from 0deg` at the top rim (the
+           `--specular-angle` channel that once tracked the pointer angle was retired at
+           REDUCTION A05-SPECULAR — no live writer remained); (BOTTOM) the live
+           pointer-position centered disc (`--specular-x/y`, still driven by
+           createSpecularWriter). BOTH ride the SAME `--specular-intensity` cohort (the
+           `opacity` below) + `plus-lighter` blend + warm-cream core `hsl(40 35% 92%)`
+           — NEVER a second color/blend fork. The conic is masked to the rim band only
+           (the `--glass-edge-glint-band` radial mask, scope 3), so the glint is a
+           bounded RIM ring, NOT a whole-plate wash (the D19 bounded-gleam discipline). */
         /* The catch-light CORE COLOR composes the per-instance
            chromatic accent. The warm-cream `hsl(40 35% 92%)` core resolves through
            the ONE `--glass-specular-core` var, OKLab-mixed toward `var(--glass-
@@ -245,8 +244,10 @@
             var(--glass-ambient-hue) var(--glass-ambient-strength)
         );
         background:
+            /* static top-seated rim glint (the --specular-angle channel retired
+               at REDUCTION A05-SPECULAR — no live writer remained) */
             conic-gradient(
-                from var(--specular-angle, 0deg) at 50% 50%,
+                from 0deg at 50% 50%,
                 transparent 0deg,
                 color-mix(in srgb, var(--glass-specular-core) 55%, transparent) 18deg,
                 transparent 60deg,

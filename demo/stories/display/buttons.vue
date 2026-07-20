@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import { MoreHorizontal, Save, Trash2 } from "@lucide/vue";
 import { Button } from "@glass/components/button";
-import { Pulse } from "@glass/components/pulse";
+import { StatusDot } from "@glass/components/status-dot";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
@@ -39,7 +39,7 @@ const activations = ref(0);
             <div class="flex flex-wrap items-center gap-3">
                 <Button data-scenario="button-disabled" disabled>Disabled</Button>
                 <Button data-scenario="button-loading" loading>
-                    <Pulse state="active" />
+                    <StatusDot state="active" size="lg" />
                     Saving
                 </Button>
                 <Button

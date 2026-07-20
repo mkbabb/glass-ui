@@ -205,11 +205,10 @@ export type HeroPaletteKey = keyof typeof HERO_PALETTES;
  *
  *   "paper"         — a quiet warm-cream grain wash.
  *   "grid"          — a token-driven blueprint ruled grid (static CSS, the zero-GL default).
- *   "liquid-grid"   — the SUFFUSION register: a near-invisible liquid-grid
- *                     (a low-fieldAlpha, large-pitch, slow-warp <LiquidGrid>) full-bleed
- *                     behind page content; the opt-in
- *                     one-GL-per-route hero upgrade of the static `grid` kind).
- *   "aurora"        — a live painterly drift on the brand hues.
+ *   "aurora"        — a live painterly drift on the brand hues. The recessive
+ *                     shell field (`shellAuroraConfig`, AppShell) is the SUFFUSION
+ *                     register — a near-invisible full-bleed ambient wash behind
+ *                     page content; a hero opts into a fuller drift via this kind.
  *   "constellation" — a drifting proximity-graph lattice.
  *
  * A GooBlob is a CONTAINED creature (fixed aspect-ratio), NOT a full-bleed
@@ -224,7 +223,6 @@ export type HeroPaletteKey = keyof typeof HERO_PALETTES;
 export type StoryBackgroundKind =
     | "paper"
     | "grid"
-    | "liquid-grid"
     | "aurora"
     | "constellation";
 

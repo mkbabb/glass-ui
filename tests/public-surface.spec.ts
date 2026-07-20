@@ -28,7 +28,6 @@ import * as MotionCore from "@glass/composables/motion/core";
 import * as PaperBackdropSurface from "@glass/components/paper-backdrop";
 import * as PopoverSurface from "@glass/components/popover";
 import * as ProgressSurface from "@glass/components/progress";
-import * as PulseSurface from "@glass/components/pulse";
 import * as Search from "@glass/components/search";
 import * as SelectSurface from "@glass/components/select";
 import * as Sidebar from "@glass/composables/sidebar";
@@ -56,7 +55,9 @@ const uiRuntimeExports = [
     "DropdownMenu",
     // HoverCard folded onto <Popover trigger="hover"> (clean break).
     "Label",
-    // MultiSelect folded onto <Combobox multiple> (clean break).
+    // MultiSelect + the Combobox wrapper family retired: the reka Combobox
+    // substrate is wrapped by the ONE Command family (clean break); any
+    // anchored-input (field-mode) selection-list surfaces there.
     "NumberField",
     "Popover",
     "Progress",
@@ -83,8 +84,7 @@ const uiRuntimeExports = [
 // + keyboard composables moved to `/dark` + `/keyboard`. Root barrel no
 // longer re-exports any vueuse-bearing symbol (SCC trap closure).
 //
-// keyframes.js-bearing motion composables (`useNumericTransition`,
-// `useStaggerReveal`, `useScrollProgress`,
+// keyframes.js-bearing motion composables (`useScrollProgress`,
 // `useAnimatedNumber`, `useRAFLoop`,
 // `useIntersectionPause`, `installDarkModeSync`, `DAMPING`, `SNAP_THRESHOLD`)
 // moved to `/motion`. Root barrel no longer reaches `@mkbabb/keyframes.js`
@@ -225,9 +225,7 @@ const rootRuntimeExports = [
     "usePointerVelocityField",
     "useResizeObserver",
     "useRoutePointer",
-    "useSpecularPointer",
     "useSpecularTracking",
-    "useTextHighlight",
     "useToast",
     "useTokenColor",
     "useUserInvalidAria",
@@ -245,7 +243,6 @@ const subpathRuntimeExports = [
     { subpath: "drawer", surface: DrawerSurface, name: "DrawerFooter" },
     { subpath: "drawer", surface: DrawerSurface, name: "DrawerTitle" },
     { subpath: "drawer", surface: DrawerSurface, name: "DrawerDescription" },
-    { subpath: "search", surface: Search, name: "FuzzySearch" },
     { subpath: "search", surface: Search, name: "useFuzzySearch" },
     // The `ProgressiveSidebar` SFC is gone; the `./sidebar` subpath now
     // surfaces composables only.
@@ -274,7 +271,6 @@ const subpathRuntimeExports = [
     { subpath: "aurora", surface: Aurora, name: "Aurora" },
     { subpath: "aurora", surface: Aurora, name: "useAurora" },
     { subpath: "status-dot", surface: StatusDotSurface, name: "StatusDot" },
-    { subpath: "pulse", surface: PulseSurface, name: "Pulse" },
     { subpath: "paper-backdrop", surface: PaperBackdropSurface, name: "PaperBackdrop" },
     { subpath: "handmark", surface: HandMarkSurface, name: "HandMark" },
     // ToggleChip + SelectableChip FOLDED onto the ONE <Chip>
@@ -297,8 +293,6 @@ const subpathRuntimeExports = [
     // Vueuse-bearing subpaths
     { subpath: "forms", surface: Forms, name: "Input" },
     { subpath: "forms", surface: Forms, name: "Textarea" },
-    { subpath: "forms", surface: Forms, name: "Combobox" },
-    { subpath: "forms", surface: Forms, name: "ComboboxInput" },
     { subpath: "carousel", surface: CarouselSurface, name: "useCarousel" },
     { subpath: "dark", surface: Dark, name: "useGlobalDark" },
     // installDarkModeSync (keyframes-free, vueuse-bearing) lives on the /dark
@@ -309,12 +303,10 @@ const subpathRuntimeExports = [
     { subpath: "keyboard", surface: Keyboard, name: "formatCombo" },
     { subpath: "keyboard", surface: Keyboard, name: "isMac" },
     // keyframes.js-BEARING motion composables on the `/motion` subpath.
-    { subpath: "motion", surface: Motion, name: "useNumericTransition" },
     { subpath: "motion", surface: Motion, name: "useAnimatedNumber" },
     // the keyframes-free leaves live on the flat `/motion-core` subpath (a
     // cheap-leaf import no longer statically reaches the keyframes engine).
     // `constants` (DAMPING/SNAP_THRESHOLD) is duplicate-exported on both.
-    { subpath: "motion-core", surface: MotionCore, name: "useStaggerReveal" },
     { subpath: "motion-core", surface: MotionCore, name: "useScrollProgress" },
     { subpath: "motion-core", surface: MotionCore, name: "useRAFLoop" },
     { subpath: "motion-core", surface: MotionCore, name: "useReducedMotion" },
@@ -347,9 +339,6 @@ const retiredSubpathRuntimeMembers = [
     { subpath: "card", surface: CardSurface, name: "ScrollCardHeader" },
     { subpath: "carousel", surface: CarouselSurface, name: "GlassCarouselPager" },
     { subpath: "dialog", surface: DialogSurface, name: "DialogScrollContent" },
-    { subpath: "forms", surface: Forms, name: "ComboboxCancel" },
-    { subpath: "forms", surface: Forms, name: "ComboboxSeparator" },
-    { subpath: "forms", surface: Forms, name: "ComboboxViewport" },
     { subpath: "data-table", surface: DataTableSurface, name: "DataTablePagination" },
     { subpath: "drawer", surface: DrawerSurface, name: "DrawerOverlay" },
     { subpath: "drawer", surface: DrawerSurface, name: "DrawerPortal" },

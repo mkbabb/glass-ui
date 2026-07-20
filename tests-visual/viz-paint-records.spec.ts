@@ -47,15 +47,9 @@ const VIZ = [
     },
     // DOTFLOW DELETED at BI.W-VIZ-DELETIONS (the user-ordered clean-break prune of the
     // dot-flow-field viz) — off the paint-record set.
-    {
-        key: "PAPERGRID",
-        route: "/substrates/liquid-grid",
-        canvas: ".liquid-grid-canvas",
-        record: "W-VIZ-PAPERGRID-paint.json",
-        wave: "BC.W-VIZ-PAPERGRID",
-        meanLumFloor: 4,
-        chromaFloor: 0, // the warm ink grid is near-mono; chroma floor is 0 (≥0)
-    },
+    // PAPERGRID (liquid-grid) DELETED at BJ.W-REDUCE-DELETE (REDUCTION W3 — the ruled
+    // clean delete: component + /liquid-grid subpath + /substrates/liquid-grid route) —
+    // off the paint-record set (mirrors the DOTFLOW-DELETED precedent above).
 ] as const;
 
 const lum = (r: number, g: number, b: number) => 0.2126 * r + 0.7152 * g + 0.0722 * b;

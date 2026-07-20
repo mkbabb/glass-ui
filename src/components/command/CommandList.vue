@@ -3,7 +3,7 @@ import { computed, useAttrs } from "vue";
 import { ComboboxContent as RekaComboboxContent } from "reka-ui";
 import { cn } from "../_shared/class-names";
 import { floatingContentAttrs } from "../_shared/floating";
-import type { ComboboxListEmits } from "../combobox/types";
+import type { ComboboxListEmits } from "../_shared/selection";
 import { useOptionalCommandDialogContext } from "./dialogContext";
 import type { CommandListProps } from "./types";
 

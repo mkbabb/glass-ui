@@ -26,7 +26,6 @@ import type { StoryBackground } from "./aurora-hero";
 export const GL_BG_KINDS: ReadonlySet<string> = new Set([
     "aurora",
     "constellation",
-    "liquid-grid",
 ]);
 
 /** The GL field kinds that carry the WARM-CREAM identity themselves — a CHROMATIC
@@ -40,7 +39,6 @@ export const GL_BG_KINDS: ReadonlySet<string> = new Set([
  *  underpaint). */
 export const CHROMATIC_FIELD_KINDS: ReadonlySet<string> = new Set([
     "aurora",
-    "liquid-grid",
 ]);
 
 /** Routes that mount a route-DOMINANT GL canvas OUTSIDE the `background` channel,
@@ -92,7 +90,7 @@ export function isFocalRoute(
  * Does this route SUPPRESS the shell `<Aurora>` warm field? DISTINCT from
  * `isFocalRoute` (owns-a-GL-field, one-GL enumeration): the shell stands down IFF
  * the mounted field ITSELF carries the warm-cream identity and so REPLACES it —
- * i.e. a CHROMATIC field (aurora, liquid-grid) on a page that actually MOUNTS it,
+ * i.e. a CHROMATIC field (aurora) on a page that actually MOUNTS it,
  * OR a self-staging route. Two gates on the GL-background arm:
  *
  * the suppression is of the LIVE field ONLY, never of the

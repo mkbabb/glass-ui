@@ -6,7 +6,7 @@ import {
 } from "reka-ui";
 import { cn } from "../_shared/class-names";
 import { fixedHostAttrs } from "../_shared/primitive";
-import type { ComboboxGroupProps } from "../combobox/types";
+import type { ComboboxGroupProps } from "../_shared/selection";
 
 defineOptions({ name: "CommandGroup", inheritAttrs: false });
 

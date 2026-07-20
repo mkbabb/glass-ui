@@ -43,13 +43,6 @@
     .glass-specular-track::before {
         --specular-x: 50%;
         --specular-y: 50%;
-        /* Pin the EDGE-glint angle static too (the conic seats at its
-           `0deg` top-edge rest). The `useSpecularPointer` leaf already skips the angle
-           write under PRM; this is the CSS belt-and-braces pin so the rim glint never
-           drifts under reduce. The lens-swell drive also snaps (Button.vue / .tap-squish
-           PRM carve), so the whole motion-reactive lens reaches rest with no in-between
-           frames — the gesture functions, the physics off. */
-        --specular-angle: 0deg;
         transition: none;
     }
 }

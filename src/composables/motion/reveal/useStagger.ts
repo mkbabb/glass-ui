@@ -2,12 +2,10 @@
 // cascades in consumers (the climax row-tint sweep at
 // the consumer results view is the source pattern).
 //
-// `useStaggerReveal` already exists in glass-ui's motion/ folder, but it
-// gates on IntersectionObserver — it animates entrance as elements cross
-// the viewport threshold. The `useStagger` shape here is the *unconditional*
-// cousin: a fixed count of slots flip true on a timer, irrespective of
-// scroll position. The two compose: a state-machine flips the climax cue,
-// and `useStagger` cascades the per-row tint.
+// `useStagger` is the *unconditional* reveal primitive: a fixed count of
+// slots flip true on a timer, irrespective of scroll position. It composes
+// with a state-machine that flips the climax cue while `useStagger` cascades
+// the per-row tint.
 //
 // Each timeout handle is tracked so unmount + reset both clear cleanly;
 // no orphan callbacks fire after dispose.

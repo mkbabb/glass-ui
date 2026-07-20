@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // the Display ATOMS wall. The trivial single-primitive
-// atoms (separator · pulse · status-dot · dark-mode-toggle · avatar)
+// atoms (separator · status-dot · dark-mode-toggle · avatar)
 // no longer each earn a standalone route; they render as sections of ONE designed
 // atoms page via the family switcher. Zero content re-authored — each member is its
 // own SFC, composed bare (STORY_NESTED_KEY) inside <FamilyTabs>.
@@ -18,11 +18,6 @@ const members: FamilyMember[] = [
         id: "status-dot",
         label: "Status dot",
         component: defineAsyncComponent(() => import("./status-dot.vue")),
-    },
-    {
-        id: "pulse",
-        label: "Pulse",
-        component: defineAsyncComponent(() => import("./pulse.vue")),
     },
     {
         id: "avatar",

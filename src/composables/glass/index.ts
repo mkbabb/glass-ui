@@ -24,13 +24,6 @@ export type {
     SpecularWriter,
 } from "./useSpecularTracking";
 export { vSpecular } from "./vSpecular";
-// The angle-adding specular delivery. Wraps the SAME
-// `createSpecularWriter` core (single position-write source); adds the
-// `--specular-angle` channel the EDGE-glint conic sweep reads (material.css). The
-// hover/button waves consume this leaf for the motion-reactive rim glint.
-export { useSpecularPointer } from "./useSpecularPointer";
-export type { UseSpecularPointer } from "./useSpecularPointer";
-
 // The Canvas2D lifecycle substrate (park/freeze/dispose parallel to
 // the WebGL substrate). published it on `/canvas` under the contract
 // name `useCanvas2D` (+ the `useCanvasLifecycle` alias) and added

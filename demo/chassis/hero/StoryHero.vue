@@ -3,7 +3,6 @@ import { computed, ref, watch } from "vue";
 import { Aurora } from "@glass/components/aurora";
 import { Card, CardContent } from "@glass/components/card";
 import { Constellation } from "@glass/components/constellation";
-import { LiquidGrid } from "@glass/components/liquid-grid";
 import { cn } from "@glass/components/_shared/class-names";
 import { useTokenColor } from "@glass/composables/dom/useTokenColor";
 import { useRoutePointer } from "@glass/composables/motion/pointer/useRoutePointer";
@@ -13,7 +12,6 @@ import {
     type HeroPaletteKey,
     type StoryBackground,
 } from "./aurora-hero";
-import { LIQUID_GRID_PRESET_SUFFUSE } from "./suffuse-preset";
 
 interface StoryHeroProps {
     background?: StoryBackground;
@@ -39,10 +37,7 @@ const descriptor = computed(() => {
 });
 const kind = computed(() => descriptor.value?.kind ?? null);
 const liveBackdrop = computed(
-    () =>
-        kind.value === "aurora" ||
-        kind.value === "constellation" ||
-        kind.value === "liquid-grid",
+    () => kind.value === "aurora" || kind.value === "constellation",
 );
 const hasBackdrop = computed(() => Boolean(kind.value));
 const heroDisplayTitle = computed(() => props.displayTitle ?? props.title);
@@ -126,11 +121,6 @@ function drawFocal(
                 :opacity-ceiling="opacityCeiling"
                 :draw-overlay="drawFocal"
                 background-interactive
-                class="story-hero-bg story-hero-bg--bleed"
-            />
-            <LiquidGrid
-                v-else-if="kind === 'liquid-grid'"
-                :config="LIQUID_GRID_PRESET_SUFFUSE"
                 class="story-hero-bg story-hero-bg--bleed"
             />
             <div

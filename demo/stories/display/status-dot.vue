@@ -10,8 +10,16 @@ import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 
-const states: StatusDotState[] = ["online", "warning", "error", "unknown"];
-const sizes: StatusDotSize[] = ["sm", "md"];
+const states: StatusDotState[] = [
+    "active",
+    "idle",
+    "online",
+    "success",
+    "warning",
+    "error",
+    "unknown",
+];
+const sizes: StatusDotSize[] = ["sm", "md", "lg"];
 const announced = ref<StatusDotState>("online");
 </script>
 
@@ -39,12 +47,38 @@ const announced = ref<StatusDotState>("online");
             </ShowcaseFrame>
         </StorySection>
 
-        <StorySection heading="Two earned sizes">
+        <StorySection heading="Three earned sizes">
             <ShowcaseFrame class="status-sizes">
                 <div v-for="size in sizes" :key="size" class="status-cell">
                     <StatusDot state="warning" :size="size" />
                     <span>{{ size }}</span>
                 </div>
+            </ShowcaseFrame>
+        </StorySection>
+
+        <StorySection
+            heading="Liveness — the motion axis"
+            blurb="Only the active state breathes (motion full — the liquid-weight default); every settled state is still. Opt down with motion=off; reduced motion always wins."
+        >
+            <ShowcaseFrame class="status-liveness">
+                <div class="status-cell">
+                    <StatusDot state="active" size="lg" />
+                    <span>active · full</span>
+                </div>
+                <div class="status-cell">
+                    <StatusDot state="active" size="lg" motion="off" />
+                    <span>active · off</span>
+                </div>
+                <div class="status-cell">
+                    <StatusDot state="success" size="lg" />
+                    <span>success</span>
+                </div>
+            </ShowcaseFrame>
+            <ShowcaseFrame class="status-mode status-mode--dark" data-probe="prm">
+                <StatusDot state="active" />
+                <StatusDot state="success" />
+                <StatusDot state="warning" />
+                <span>Dark · reduced motion (active keeps a quiet static orbit)</span>
             </ShowcaseFrame>
         </StorySection>
 
@@ -90,6 +124,7 @@ const announced = ref<StatusDotState>("online");
 .status-matrix,
 .status-identities,
 .status-sizes,
+.status-liveness,
 .status-announcer,
 .status-mode {
     display: flex;
@@ -98,6 +133,8 @@ const announced = ref<StatusDotState>("online");
 }
 
 .status-matrix,
+.status-sizes,
+.status-liveness,
 .status-actions,
 .status-modes {
     flex-wrap: wrap;

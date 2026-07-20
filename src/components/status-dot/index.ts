@@ -1,4 +1,5 @@
 export { default as StatusDot } from "./StatusDot.vue";
+export { STATUS_DOT_STATES } from "../_shared/feedback";
 export type {
     FeedbackSize as StatusDotSize,
     StatusDotState,

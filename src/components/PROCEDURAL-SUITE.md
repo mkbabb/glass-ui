@@ -1,6 +1,6 @@
 # Procedural surfaces
 
-glass-ui has six retained procedural surfaces. They share lifecycle, color, and
+glass-ui has five retained procedural surfaces. They share lifecycle, color, and
 motion facilities where those semantics are genuinely common; they do not share
 a synthetic renderer or configuration schema.
 
@@ -8,7 +8,6 @@ a synthetic renderer or configuration schema.
 |---|---|---|
 | Aurora | `/aurora` | WebGPU preferred, supported WebGL2 path, explicit CSS-static mode |
 | Blob | `/blob` | WebGPU preferred, supported WebGL2 path |
-| LiquidGrid | `/liquid-grid` | WebGPU preferred, supported WebGL2 path |
 | FourierField | `/fourier-field` | WebGPU compute/render, supported WebGL2 path |
 | Constellation | `/constellation` | Canvas2D |
 | WatercolorDot | `/watercolor-dot` | CSS/SVG only |
@@ -53,14 +52,6 @@ an explicit static mode, not an arbitrary error fallback.
 
 Blob owns the bounded metaball/SDF body, satellites, palette, and opt-in named
 press surface. One clamped `morphT` value owns its flat-to-dressed surface axis.
-
-### LiquidGrid
-
-LiquidGrid owns the liquid grid hierarchy, traveling crest, pointer bulge, and
-optional warm face. `faceAlpha` is public and defaults to `0`; the ordinary
-identity remains the transparent line grid. The GLSL and WGSL modules are thin
-translations of one `LiquidGridConfig`. The package makes no claim of exact
-pixel equality across browser and driver stacks.
 
 ### FourierField
 

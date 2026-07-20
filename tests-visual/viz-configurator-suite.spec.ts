@@ -46,7 +46,9 @@ const STUDIOS = [
     { route: "/substrates/aurora", id: "aurora", presetThumbs: true },
     { route: "/substrates/blob", id: "blob", presetThumbs: false },
     { route: "/substrates/fourier-field", id: "fourier-field", presetThumbs: false },
-    { route: "/substrates/liquid-grid", id: "liquid-grid", presetThumbs: false },
+    // liquid-grid DELETED at BJ.W-REDUCE-DELETE (REDUCTION W3 — the ruled clean
+    // delete: component + /liquid-grid subpath + /substrates/liquid-grid route) —
+    // off the studio set.
 ] as const;
 
 const DESKTOP = { width: 1280, height: 900 } as const;

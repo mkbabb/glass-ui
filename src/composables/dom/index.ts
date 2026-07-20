@@ -22,12 +22,6 @@
 //                        the screen-reader validity state in step with the
 //                        native visual state, with a fallback class-toggle for
 //                        engines without `:user-invalid`.
-//   - useTextHighlight — re-homed to `/motion-core`. The named CSS
-//                        Custom Highlight composable is a motion/decoration
-//                        concern, not a DOM-observer one; it now lives at
-//                        `composables/motion/reveal/useTextHighlight.ts` on the
-//                        keyframes-FREE+vueuse-FREE `/motion-core` surface its
-//                        named consumers pin. No `/dom` re-export survives.
 //   - useBreakpoint / useIdleReady / useViewportReady — reinstated after the
 //                        prior a consumer-
 //                        ownership" removed these 3 /dom leaves as

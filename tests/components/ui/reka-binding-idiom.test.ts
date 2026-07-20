@@ -3,11 +3,12 @@
 // The standing `feedback_glass_ui_binding_verification` memory note: stale reka
 // prop/emit bindings (`:pressed`, `v-model:search-term`, `tag=`) silently no-op
 // — vue-tsc + units MISS them; only a render-effect probe catches them. This
-// spec mounts the at-risk model bindings (Combobox / TagsInput /
+// spec mounts the at-risk model bindings (Command / TagsInput /
 // Switch / Checkbox) and asserts the RENDERED EFFECT each binding drives (the
 // `data-state` / `aria-pressed` / rendered value), NOT the type. A future reka
-// bump that moves a binding (e.g. Combobox `searchTerm` → `ComboboxInput`
-// v-model) turns the relevant assertion RED — the canary the note demands.
+// bump that moves a binding (e.g. the reka Combobox `searchTerm` → input
+// v-model that `CommandInput` wraps) turns the relevant assertion RED — the
+// canary the note demands.
 
 import { mount } from "@vue/test-utils";
 import { describe, expect, it } from "vitest";
@@ -20,11 +21,7 @@ import {
     TagsInputItem,
     TagsInputItemText,
 } from "@glass/components/tags-input/index";
-import {
-    Combobox,
-    ComboboxAnchor,
-    ComboboxInput,
-} from "@glass/components/combobox/index";
+import { Command, CommandInput } from "@glass/components/command/index";
 import { Toaster, useToast } from "@glass/components/toast";
 
 describe("reka binding-idiom render-effect canary", () => {
@@ -105,26 +102,24 @@ describe("reka binding-idiom render-effect canary", () => {
         wrapper.unmount();
     });
 
-    it("Combobox: the filter term rides `ComboboxInput` v-model (NOT `ComboboxRoot v-model:search-term`)", async () => {
+    it("Command: the filter term rides `CommandInput` v-model (NOT `ComboboxRoot v-model:search-term`)", async () => {
         const wrapper = mount(
             {
-                components: { Combobox, ComboboxAnchor, ComboboxInput },
+                components: { Command, CommandInput },
                 data: () => ({ q: "" }),
                 template: `
-                    <Combobox :open="true">
-                        <ComboboxAnchor>
-                            <ComboboxInput v-model="q" placeholder="search" />
-                        </ComboboxAnchor>
-                    </Combobox>
+                    <Command :open="true">
+                        <CommandInput v-model="q" placeholder="search" />
+                    </Command>
                 `,
             },
             {},
         );
         await nextTick();
         const input = wrapper.get("input");
-        // Type into the input — the v-model on ComboboxInput must reflect the
-        // value (the 2.x idiom). A stale `v-model:search-term` on the ROOT would
-        // leave this input's value empty.
+        // Type into the input — the v-model on CommandInput (wrapping the reka
+        // Combobox input) must reflect the value (the 2.x idiom). A stale
+        // `v-model:search-term` on the ROOT would leave this input's value empty.
         await input.setValue("hello");
         await nextTick();
         expect((input.element as HTMLInputElement).value).toBe("hello");
