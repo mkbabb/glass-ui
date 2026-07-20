@@ -245,8 +245,12 @@ re-verified on disk this pass).** The corrected table, per symbol:
   useScrollTrigger/useScrollChrome/useScrollTracker) — the spine is clean, one reader core.
 - **DELETE `useBloomUp`+`bloomUpField`** and **`useStaggerReveal`** (zero consumers anywhere;
   `scroll-driven.css` declares `[data-scroll-reveal]` the replacement).
-- **DEMO-LOCAL `useScrollPin`** (+ `springProjection` as a pair; the `.scroll-pin*` CSS register
-  moves WITH its writers). **CONDITIONAL-KEEP `useScrollScene`** (iff a BJ wave binds it to a real
+- **DEMO-LOCAL `useScrollPin`** (the `.scroll-pin*` CSS register moves WITH its writers).
+  **[STAB8 truth-up 2026-07-20 — `springProjection` is FENCED OUT of this pairing and STAYS in
+  `src/`:** the "as a pair" census missed `scripts/regen-spring-tokens.mjs:23-27` (the token
+  generator imports it) and `tests/composables/motion/springProjection.test.ts:5`, a named KEEP in
+  `BAND-GATES` W1's invariant keep-list. Ratifying this row does NOT demote `springProjection`;
+  `waves/BAND-REDUCTION.md` W3 carries the same fence.**]** **CONDITIONAL-KEEP `useScrollScene`** (iff a BJ wave binds it to a real
   library surface, else it follows pin out).
 - **RELOCATE `useLiquidReveal` to `morph/`** (it is a FLIP morph, not scroll — survives as the ONE
   reveal adapter). `useTextHighlight` is its own cut-or-bind ask (A13; default DELETE).

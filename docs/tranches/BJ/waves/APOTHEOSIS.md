@@ -228,3 +228,5 @@ figure); the OPEN-FM-3 and OPEN-FM-2 rows onto the unified BJ ASK; the FM "OPEN-
 collision with the F11-F20 dossier's F20 section; the ASK-REDUCTION §A1/§C1/§C3 re-issues with
 corrected censuses; the count-guard base definition (invariant-gate census, a judge design cure
 the lead may veto).
+
+**[DISCHARGED 2026-07-20 — the lead amendment pass closed every item in this residue list.** `REGISTRY.md:147` re-stamped (ledger B1, APPLIED; live at `REGISTRY.md:146-148`) · the 251 figure re-pinned to **234 = 218 demo + 16 src**, filtered method (ledger B2, APPLIED; the line now reads at `REGISTRY.md:251-253`) · OPEN-FM-3 and OPEN-FM-2 minted as `ASK.md` **ASK-27** and **ASK-25** (ledger E1, APPLIED) · the FM "OPEN-FM-1" label collision **REFUTED as pre-satisfied in-ring** (ledger C3; renamed `OPEN-FM-3a` at `DOSSIER-F11-F20.md:412-414`, commit `dcb2832a`) · the ASK-REDUCTION §A1/§C1/§C3 re-issues landed with corrected censuses (ledger E2, APPLIED) · the count-guard base ADOPTED, veto lane closed un-exercised (ledger E4, APPLIED; stamped at `BAND-GATES.md` §APOTHEOSIS MECH-06). This paragraph is now a historical record — **no open lead action remains in it.**]

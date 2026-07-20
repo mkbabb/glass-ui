@@ -339,9 +339,11 @@ is DOC-hygiene and routes to BAND-DOC-TRUTH, not here.
   (b) and `BAND-STORY` W5's tile idle posture BOTH consume its outcome — no band pre-decides the
   axis while it pends.** Sub-question `OPEN-FM-3a` (W1): unify the
   toast onto the dialog register vs keep the parity-tokened transient — the wave decides against
-  live paint (not user-gated). [The F11-F20 dossier's F20 section labels the register question
-  "OPEN-FM-1" — a label collision with this file's W2 question; flagged in the sidecar for the
-  lead's doc-truth pass.]
+  live paint (not user-gated). [Label-collision note CLOSED 2026-07-20: the F11-F20 dossier's F20
+  section was renamed to `OPEN-FM-3a` in-ring (RU-14 R5, committed `dcb2832a`; live at
+  `DOSSIER-F11-F20.md:412-414`), so lead ledger C3 is REFUTED-as-pre-satisfied and NO lead
+  doc-truth edit is owed. This file's `OPEN-FM-1` is the W2 loop/indeterminate scope question
+  alone; no collision remains.]
 - `OPEN-FM-4` — W2 subpath fate: default is in-place replacement under `./scroll-progress-rim`;
   any rename/delete is an 8.0.0 export-map event (lead + family-B census).
 

@@ -62,11 +62,11 @@ acknowledges the lift instead of reporting a failure; atlas-side note: their B1 
 separately RESCINDED per owner order (execution HELD pending compaction — their register,
 no action of ours).
 
+**[SUPERSEDED SAME DAY by the owner ruling below — read that section as terminal.** The Q mailbox is MARKED-HELD and the **G-CLOSE veto STANDS**: the corner-chip close wave enters the BJ wave set **VETO-GATED**, not UN-GATED. Its ONE operative ground is the owner's execution deferral (plus the standing hold) — **addendum 1's failed-verification ruling is NOT a live leg**; this addendum re-ruled it and it must not be cited as grounds by any downstream record. The G1 relay-back states the deferral and the corrected checkout map, not a verification failure.]
+
 ## Owner ruling (2026-07-19, in-session): Q EXECUTION DEFERRED
 
 The owner: "We are not executing Q for a bit. Mark these mailbox items." ALL SIX rows are
 hereby MARKED-HELD: the dispositions and band-clause routings above stand as queued work
 (they ride the band files as annotations when the amendment batches land), but NO execution
-of any G-row begins until the owner re-opens Q work. G-CLOSE remains veto-gated (doubly:
-the failed-verification ruling above + this deferral). The G1 relay-back will state the
-deferral alongside the verification failure.
+of any G-row begins until the owner re-opens Q work. G-CLOSE remains veto-gated on THIS deferral (single ground — addendum 1's failed-verification leg was re-ruled by addendum 2 on the corrected checkout and is NOT a live basis; downstream records citing it must be re-grounded on the deferral). The G1 relay-back will state the deferral and the corrected checkout map (constellation verification sweeps `/Users/mkbabb/Programming/.p-totality/*` alongside the primary checkouts).

@@ -325,16 +325,33 @@ speedtest live). DELETE `useNumericTransition` (0 anywhere), `useAnimatedNumberM
 its IO gating into `useStagger` as an option (compose `useIntersectionPause`) — the keeper is
 `useStagger`, never the reverse.
 
-**NEW — scroll/spring demo-locals AS A PAIR (RU-12 A12 + RU-09 R6 guard).** `useScrollPin`
-(sole consumer: ScrollChoreographyBody) + `springProjection` (2 demo stories) move demo-local;
+**NEW — the scroll demo-local (RU-12 A12 + RU-09 R6 guard) — `springProjection` FENCED OUT
+2026-07-20, STAB8.** `useScrollPin` (sole consumer: ScrollChoreographyBody) moves demo-local;
 the `.scroll-pin`/`.scroll-pin-phase-*` register in `scroll-choreography.css` moves WITH its
 writers — never ship the CSS register writer-less (the 7.0.0 RED-BY-ROT class).
 `useScrollScene` (sole consumer: useScrollPin) is CONDITIONAL-KEEP as the one scroll-physics
 spine iff a BJ wave binds it to a real library surface; otherwise it follows pin out.
 
-**NEW — useTextHighlight (RU-12 A13; ASK row).** Zero consumers anywhere while on the ROOT
-barrel (`src/index.ts:191-194`, verified). Cut-or-bind is the user's (dock-search match marks
-are the natural bind site); default on no-answer: DELETE.
+**`springProjection` does NOT move (STAB8 2026-07-20, verified on disk).** RU-12 A12's
+"2 demo stories" census missed two `src`-side consumers: `scripts/regen-spring-tokens.mjs:23-27`
+imports it to emit the `scheme-spring.css` block (`:51`), and
+`tests/composables/motion/springProjection.test.ts:5` imports it via
+`@glass/composables/motion/spring/springProjection` — a **named KEEP in `BAND-GATES` W1's
+invariant keep-list** (`BAND-GATES.md:88-94`, "the repo's ONLY spring regen-drift protection";
+the RF-1 A3 overturn) and the subject of GATES W1's D-10 repair-or-retire rider. It is a
+`motion/spring/` leaf, not a scroll-pin sibling. `springProjection` STAYS in `src/`; only
+`useScrollPin` and its `.scroll-pin*` register move. If a later wave still wants it demoted, that
+is a new row that must first discharge the generator + the GATES W1 keep, never this pair-move.
+
+**NEW — useTextHighlight (RU-12 A13).** Zero consumers anywhere while on the ROOT barrel
+(`src/index.ts:191-194`, verified). **[Ownership trued up 2026-07-20, STAB8: A13 has NO row in
+`ASK.md` (27 rows, none carries it) and none in `ASK-REDUCTION.md` (§A1/§A2/§B1-B5/§C1-C4/§D1) — the
+"ASK row" label routed to a row that was never minted, so the symbol reached no user surface. This
+wave therefore EXECUTES the stated default under the owner's standing no-deferrals order: **DELETE
+`useTextHighlight` + its root-barrel export line**, recording the dock-search match-mark bind site as
+the named alternative the owner may call at any time before the cut. Proof is W3's existing
+zero-importer scan — no new gate is minted, and `ASK.md`'s "every user-reserved row is above" claim
+holds because this row is no longer user-reserved.]**
 
 **NEW — the search family split (RU-12 A14).** `SearchBar.vue` KEEPS (value.js ×3 live); the
 fuzzy engine (`search/composables`) KEEPS (dock's `useDockSearch` consumes it);
@@ -745,7 +762,7 @@ is a one-time RED→GREEN differential or an execution-time census/probe; nothin
 
 **Still OPEN / ASK-gated:** easing (§B4, corrected census), compositions + F44 dead-knob rider
 (§D1), WatercolorDot (§B5), DataTable (§B1 — census corrected: atlas + speedtest live),
-FourierField/Constellation component fates (§B2/§B3, corrected census), useTextHighlight (A13),
+FourierField/Constellation component fates (§B2/§B3, corrected census),
 tempo page fold (§C4), confirm-dialog story fold (§C2/A6), scroll page fold + A06 standard
 (§C3), pulse merge (A3), drawer narrowing (A4), goo collapse (A2), chassis/metric (A1, re-issued
 with the fired flip clause), carousel (§C1, re-issued with the words census), timeline shape +
@@ -761,7 +778,7 @@ partials — MATERIAL W7's), A7 (the 4-symbol /metric census, widened: keyframes
 + speedtest at relay, atlas import-vs-vendored verified at relay time), A8 (root-barrel
 mechanics, now moot-unless-ruled for Configurator/DataTable), A9 (combobox fold — W3), A10
 (number band — W3), A11 (reveal dead pair + stagger fold direction — W3), A12 (scroll/spring
-demo-locals + the scene conditional — W3), A13 (useTextHighlight ASK), A14 (search split — W3),
+demo-locals + the scene conditional — W3), A13 (useTextHighlight — W3 DELETE by default; no ASK row was ever minted, STAB8), A14 (search split — W3),
 A15 (pulse/status-dot — W6, hardened from OPEN to ASK-gated wave by RU-09 R3/RU-19 V1), A16
 (carousel evidence — W4, corrected by the words census this seat). The RU-09 bound deliverables
 R1-R12 map: R1→W4, R2→W8, R3→W6, R4→MATERIAL W4 (routing), R5→W5, R6→W3+W9, R7→W7 (+MATERIAL

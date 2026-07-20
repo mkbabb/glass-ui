@@ -160,7 +160,10 @@ detent tray, or does it expand-then-detent?
 correction of the misleading "SegmentedTabs wearing chrome" comment.
 - **Recommendation: confirm the comment truth-up (family J).** A comment/label correction, not a
   re-litigation; it fires only because the decision ratifies nav-links over a false tablist.
-- Evidence: `GF-DOCK-PASS3.md` §3/§12 (Q1); `BAND-A11Y.md` W2 (E).
+- Evidence: `GF-DOCK-PASS3.md` §3/§12 (Q1); `BAND-A11Y.md` W5 (A) — the DECIDED dock keyboard record
+  and the SidebarDock comment truth-up. [Pointer trued up 2026-07-20, STAB7: the prior cite
+  "`BAND-A11Y.md` W2 (E)" predated the A11Y union — W2 is now `BJ.W-A11Y-LINKAGE` and its (E) is the
+  Slider focus-ribbon register. Question and recommendation unchanged.]
 
 **ASK-18 · handmark brush floor (Q-HM-1) — RESOLVED BY YOUR RULING 2026-07-17, no answer owed.**
 "handmark is keep. But greenfield and perfect from first principles. Fable." — the greenfield holds

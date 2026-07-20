@@ -41,7 +41,7 @@ sci-report and atlas are executing their own tranches NOW: their trees are movin
 every consumer census is FRESH-AT-SHIP (re-run immediately before the breaking wave lands,
 never trusted from formation time) · siblings READ-ONLY, never parked · `coordination/` drops
 may arrive any tick and are verify-before-accept · the Q mailbox is MARKED-HELD (no G-row
-execution) · the G-CLOSE veto STANDS (the relayed lift failed verification) · Q060/G1 relay
+execution) · the G-CLOSE veto STANDS (single ground: the owner's Q-execution deferral — the relayed lift VERIFIES against the totality checkout per the disposition's addendum 2; the failed-verification leg is retracted) · Q060/G1 relay
 content pins OUR commit hashes and states their in-flight status.
 
 ## Phase ledger

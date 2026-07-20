@@ -14,8 +14,7 @@ idle-breath complement to the BI engagement waves, and the consumer-truth/cross-
 (PASS1→CRIT2→PASS3) → the superfluity confrontation → the perfection fold → the twice-critique redress
 (CRIT1→CRIT2→CRIT3) → the terminal `redress/JUDGE.md`. Every one of the 67 feedback-ledger rows is
 owner-mapped in `formation/ASSEMBLY-CROSSWALK.md`; zero silent drops. 7.0.0 was CUT-NOW by the user's
-2026-07-17 order — BJ builds on the shipped major and carries two known 7.0.0 defects (V-A95, the
-chip/glass-atom @import orphan) as born-RED BJ rows.
+2026-07-17 order — BJ builds on the shipped major and carries exactly ONE known 7.0.0 defect as a born-RED BJ row: the chip/glass-atom `@import` orphan (`BAND-GATES` W3 authors `orphan-CSS-partial` born-RED; `BJ.W-CSS-CLOSURE-RESTORE`, MATERIAL W7, owns the fix). **V-A95 is NOT a born-RED row** — four independent non-reproductions on live WebGPU (round-3-live 3/3 · RU-20 R3A-4 · RU-29 A2) put it at retire-as-instrumentation-artifact; it rides GF-AURORA W6 as a RETIRE-OR-CONFIRM rider (§5), never a cure hunt.
 
 ## §0 — Decision-0 + the version posture (settled, not user-gated)
 
@@ -55,9 +54,13 @@ FAMILY A — BAND-GATES (4) ── the gate reformation ─── the TRUTH SUBS
   only honest against a sound gate surface; W1 collapses the ~1055-block battery to ~45-55 keeps and
   W2 wires the sound pixel floor into CI so a black/broken live render can no longer pass every gate.
 - **The type-codemod is `BAND-MATERIAL` W6 flipping `BAND-GATES` W4.** W4 authors `type-hygiene`
-  born-RED against the 218 demo `text-sm`/`text-xs` sites; W6 lands the full 251-site codemod + the
-  coupled default-ramp reset + the paint π. The two MUST land in the same cut so the gate is never
-  RED-at-tag (adjudication ruling 2 / CHALLENGE FINDING-3).
+  born-RED against the filtered **234** `text-sm`/`text-xs` sites (218 demo + 16 src) + the 9 raw-size
+  `text-[…]` arbitraries on its utility arm AND the four CSS-declaration sites on its declaration arm;
+  W6 lands the full 234-site codemod + those four declaration repoints + the coupled default-ramp reset
+  + the paint π. **ONE figure governs both bands** (RU-13 FLIP F-3 / APOTHEOSIS MECH-02/D-12; the
+  previously standing 251 was the unfiltered grep — the `--include="*.vue" --include="*.ts"` filter is
+  load-bearing). The two MUST land in the same cut so the gate is never RED-at-tag (adjudication
+  ruling 2 / CHALLENGE FINDING-3).
 - **The raw-literal repoints flip `BAND-GATES` W3.** MATERIAL W1 (SortableList 999px, segmented raw
   radii) and W2 (drawer `blur(14px)`) repoint the exact sites W3's `token-hygiene` reds; the CSS
   re-home of glass-chip/glass-atom flips W3's `orphan-CSS-partial`. Authored born-RED in GATES, GREEN
@@ -153,8 +156,13 @@ corrections landed below where the stale text would actively misdirect.
   DECISION not a delete. NO born-RED (its disposition is the user's ASK §A call). Key: G-ASK-RESOLVED,
   G-RELAY-FILED (the corrected Q060 per-repo break table).
 - **W5 `BJ.W-REDUCE-TIMELINE`** — F16 timeline ground-up STUB → the design-loop; SUPERFLUITY F16
-  supplies the shape (5 variants→1 continuous). Born-RED discharged by the design-loop's own captured
-  baseline. Scope = all five variants (A2, ~1500 LOC).
+  supplies the shape (collapse to ONE continuous Timeline). Born-RED discharged by the design-loop's
+  own captured baseline. **Scope = ALL SIX SFCs** — `GlassTimeline.vue` (232) + `ContinuousTimeline.vue`
+  (349) + `ContinuousRail.vue` (214) + `ContinuousMarkers.vue` (436) + `ScrubberTimeline.vue` (413) +
+  `SegmentedTimeline.vue` (292) ≈ **1936 SFC / 2254 family LOC** (RU-12 amendment **A2 CHANGED**;
+  `BAND-REDUCTION.md:518-522`, whose `G-SIX-NAMED` gate exists so none silently survives).
+  [Corrected 2026-07-20, STAB8: the prior "all five variants (A2, ~1500 LOC)" cited A2 for the exact
+  count A2 struck.]
 
 ### FAMILY D — `BAND-STORY` (7 waves at union; the story meta-framework on the RU-10 fold)
 - **W1 `BJ.W-STORY-TAXONOMY`** — name the page types (6 per the fold: `spec|studio|dock|family|landing`
@@ -207,7 +215,7 @@ corrections landed below where the stale text would actively misdirect.
   independent of the timeline wave, C-C). **Born-RED** (three divergent track vocabularies).
 - **W5 `BJ.W-ARISTOTLE-PROPORTION`** — the A10 proportion review; output is a marked roster feeding
   follow-on fixes. Not a code-probe born-RED — a π-capture obligation (annotated before-shots).
-- **W6 `BJ.W-TYPE-CODEMOD`** — the 251-site `text-sm`/`text-xs` codemod + the coupled default-ramp
+- **W6 `BJ.W-TYPE-CODEMOD`** — the **234**-site `text-sm`/`text-xs` codemod (218 demo + 16 src, filtered method) + the coupled default-ramp
   reset flip + the paint π (RULING 2). Coupled — flips `BAND-GATES` W4 GREEN; the two land in one cut.
 - **W7 `BJ.W-CSS-CLOSURE-RESTORE`** — restore `glass-chip.css` + `glass-atom.css` to the `@import`
   closure (the R3a live-confirmed defect); flips `BAND-GATES` W3 `orphan-CSS-partial` GREEN with the
@@ -218,9 +226,22 @@ corrections landed below where the stale text would actively misdirect.
   both-states (tri-state `active`), center-spring focus-return (guard-widen + anchor un-gate),
   placeholder contrast (one ≥4.5:1 token). **Born-RED** (3 vitest DOM asserts + 1 vitest-fs source
   assert, each verified RED at HEAD). The reduced-motion substrate is a CONFIRMED KEEP (band non-goal).
-- **W2 `BJ.W-A11Y-RULINGS`** — the dock roving-tabindex/toolbar ruling (decided by GF-DOCK §3; the
-  comment truth-up rides family J) + the hero heading dedup (→ Family D). NOT born-RED — a ruling + a
-  cross-family reference.
+- **W2 `BJ.W-A11Y-LINKAGE`** — aria linkage + name/target hygiene: tab↔panel linkage (dock layers,
+  pager dots), decorative-icon hiding, kbd label de-dup, Carousel conditional tab stop, Slider
+  focus-ribbon register, and the Slider 44px coarse-floor restore (WCAG 2.5.5, RU-33 routing 1).
+  **Born-RED** (rendered-attr/DOM asserts, each RED at HEAD).
+- **W3 `BJ.W-A11Y-CONTRAST`** — the computed contrast floors: the N6 status-tone re-ink (MAJOR), the
+  dialog close-X open-state seat, the muted/secondary caution, and the ONE table-driven contrast
+  invariant gate (the band's only standing gate; its table is data-driven on ASK-25). **Born-RED**
+  (the computed-pair gate reds at HEAD by arithmetic).
+- **W4 `BJ.W-A11Y-LIVE-REGIONS`** — InfiniteScroll loading/exhausted announce + the
+  `invalid`/`errorLive` KEEP ruling (discharges the DAG-reduction gate). Fix half born-RED; ruling
+  half not.
+- **W5 `BJ.W-A11Y-ROVING-RULINGS`** — the DECIDED dock toolbar/roving record (implementation + the
+  π-KEYBOARD are OWNED by GF-DOCK W3; this band does not fork a second dock keyboard model) +
+  HeaderRibbon adoption + the DockControl boundary-disabled model + the hero-dedup cross-family
+  reference (→ Family D); the SidebarDock comment truth-up rides family J. HeaderRibbon half
+  born-RED (post-dependency); the rulings are not.
 
 ### FAMILY G — `BAND-FEEDBACK-MOTION` (7 waves at union; the orphan cure + J1/J3 + W7 SHEET-MOTION-DEBT)
 - **W1 `BJ.W-TOAST-DIALOG-PARITY`** (F20) — re-home Toast onto the dialog spring/transition contract.
@@ -334,11 +355,18 @@ A wave is DONE only when its born-RED gates flip GREEN **with captured evidence*
 
 ## §5 — Known carries (named, not dropped)
 
-- **V-A95 — re-repro-or-close under the no-getContext discipline.** The reverse-drag black-backdrop
-  present-race on `.aurora-canvas-layer` shipped into 7.0.0 as a known defect; the `isolation: isolate`
-  cure is self-described unconfirmed. GF-AURORA W6 confirms-or-replaces it on the real in-app Chrome
-  arm AFTER the mode waves land (the derivative/relight cost shifts the present timing). Verify by
-  screenshot + computed-style, never `getContext`.
+- **V-A95 — RETIRE-OR-CONFIRM (downgraded; NOT an active RED).** The reverse-drag black-backdrop
+  present-race on `.aurora-canvas-layer` rode into 7.0.0 as a suspected defect and its
+  `isolation: isolate` cure is self-described unconfirmed — but it has now FAILED TO REPRODUCE **four
+  independent times** on live WebGPU under the no-`getContext` discipline (round-3-live 3/3 reverse-drag
+  variants; RU-20 R3A-4 "CLEARED on live WebGPU; original claim likely a context-steal artifact"; RU-29
+  A2 "5 forward/reverse stroke pairs + 2 rapid reverse pairs recompose the field — no black slab ever").
+  Standing disposition: **retire-as-instrumentation-artifact**, twice-instrumented. GF-AURORA W6
+  (`GF-AURORA-PASS3.md:316`, `:401`) owns ONE clean confirm on the real in-app Chrome arm AFTER the mode
+  waves land (the derivative/relight cost shifts the present timing), then retires the defect record and
+  audits the `isolation: isolate` cure for cargo. Observe by screenshot + computed-style, never
+  `getContext`. [Truth-up 2026-07-20 against the landed browser trio; `REGISTRY.md:146`'s "ACTIVE RED,
+  carried" wording rides the next registry re-stamp.]
 - **The chip + glass-atom @import orphan — a live-confirmed defect.** `glass-chip.css` +
   `glass-atom.css` are in no `index.css` @import closure (`grep glass-chip dist = 0` verified), so the
   Chip/Badge/glass-atom styling is DEAD in the published bundle. `BAND-GATES` W3 authors

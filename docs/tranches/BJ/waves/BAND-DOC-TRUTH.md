@@ -49,6 +49,17 @@ pinned evidence, never silently.
 
 Class A — spring/motion constant mirrors:
 
+**SEAM — sequenced AFTER `IOS27-MICRO` W-1 (added 2026-07-20, STAB8; APOTHEOSIS §4 invariant 1).**
+`IOS27-MICRO/FINAL/FINAL.md` W-1 (`:26-32`) ships `springPreset` dock **0.30→0.35** (ζ0.82 held)
+and regenerates the `scheme-spring.css` mirror — the SAME rows this class owns as **T1**
+(`scheme-spring.css:31`) and **T9** (`docs/design/tunable-anim.md:60-65`), adjacent to **T5**
+(`tunable-anim.md:121`). **W-1 lands FIRST and is the value source.** T1/T9's corrected statements
+below pin **0.30/ζ0.82**, which is true ONLY against HEAD `springPresets.ts:95-99` and is
+SUPERSEDED on W-1's landing: after W-1, T1/T9 either RETIRE (if the regen emits the prose mirror)
+or hand-true to **W-1's shipped values — never the pre-W-1 0.30**. The G-T1/G-T9 probes assert
+"equals `springPresets`", so they self-correct; the literal `0.30` in the corrected-statement
+cells does not. Neither wave edits `scheme-spring.css:31` in the other's cut.
+
 | # | file:line | the false statement (live at HEAD) | the corrected statement | source of truth | provenance |
 | --- | --- | --- | --- | --- | --- |
 | T1 | `src/styles/tokens/scheme-spring.css:31` | dock mirror row `(0.68s, ζ=0.64) — the WEIGHTY iOS-27 gooey morph (collapse/expand + V↔H + fission), slow inertial mass` | `dock: (0.30s, ζ=0.82) — a brisk liquid morph for the dock and its coordinated contents`; drop the retired "V↔H + fission" facilities from the row | `springPresets.ts:95-99` (0.3 / 0.82 / "brisk liquid morph"); settle clock `--spring-dock-settle: 0.19s` (:143) | RATIFIED (draft T1); RU-17a r1 · RU-27 K4 · RU-33 FN4 concur |
@@ -188,7 +199,8 @@ MATERIAL W1 (T6) · GF-DOCK ∪ REDUCTION knob ruling (T17) · BAND-A11Y Slider 
 REDUCTION A05 roster (T34) · the lead FLIP-1 ruling (T40) · the RU-24 r8 saturate judgment via
 MATERIAL W2/W3 (T42) · GF-DOCK keyboard closure (T43) · GF-AURORA W1/W2/W4 re-truth T4's
 forward note at each landing · family B consumes T7/T35's census extensions for the Q060
-outbound.
+outbound · **`IOS27-MICRO` W-1 (T1/T9/T5 spring-mirror rows — this band is sequenced AFTER W-1 and
+takes its shipped dock values, per the Class A seam clause and `IOS27-MICRO/FINAL/FINAL.md:32`).**
 
 ---
 

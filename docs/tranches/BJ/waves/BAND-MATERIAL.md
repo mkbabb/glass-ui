@@ -764,9 +764,7 @@ trap class watched).
 **Coordination handoffs (values authored here → gate GREEN / fix owned by siblings):**
 - Raw-radius repoint (W1) + raw-blur repoint (W2 drawer `blur(14px)`) + the chip/atom closure (W7) →
   flip `BAND-GATES` W3 `token-hygiene` / `orphan-CSS-partial` GREEN (born-RED against these exact sites).
-- Type codemod + ramp reset (W6) → flips `BAND-GATES` W4 `type-hygiene` GREEN; same cut (RULING 2). The
-  stale 251 figure also stands in `BAND-GATES.md` W3 §Obligations + `REGISTRY.md:236` — routed for the
-  lead's figure re-pin (234 = 16 src + 218 demo, the `--include` method stated).
+- Type codemod + ramp reset (W6) → flips `BAND-GATES` W4 `type-hygiene` GREEN; same cut (RULING 2). [Figure re-pin CLOSED 2026-07-20 — no lead action owed. `BAND-GATES.md` carries **234** throughout at HEAD (union header `:10-11`, W4 `:376-381`, W4 §Obligations `:434-441` — the figure lives in **W4**, not W3), and the registry figure was re-pinned per lead ledger B2 (now `REGISTRY.md:251-253`: "234 sites: 218 demo + 16 src, filtered method"). **234 = 16 src + 218 demo** by the `--include`-filtered grep is the one figure governing both bands (APOTHEOSIS MECH-02/D-12).]
 - Graded-halo verdict (W3 ADOPT) → collapse `graded-backdrop.test.ts` literals per `BAND-GATES` W1 KILL
   roster (contingent per ruling 7); (W3 DECLINE) → open `BJ.W-IMMERSIVE-SCRIM` residual. W2's
   `glass-subtlety.test.ts` literal-pin coordination rides the same GATES W1 roster.

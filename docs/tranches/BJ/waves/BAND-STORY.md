@@ -671,10 +671,11 @@ every amendment in place.
 
 - **Paper-backdrop disposition (J9 / D-A14 → BAND-REDUCTION).** `paper-backdrop`
   (`src/components/paper-backdrop/**`), an L5 procedural in A14's roster, carries no BJ
-  disposition; route it into the reduction band's ≥2-consumer census (the A05 bar). **REFABLE
-  residue (RF-6):** this row is a POINTER only — `BAND-REDUCTION` W1's enumerated census scope
-  never received it; until the lead lands it there (sidecar ROUTING), A14's "none unowned" claim
-  holds only via this pointer.
+  disposition; route it into the reduction band's ≥2-consumer census (the A05 bar). **RESIDUE CLOSED 2026-07-20 (STAB8):** the RF-6 routing LANDED — `BAND-REDUCTION` W1 carries the
+  row verbatim at `BAND-REDUCTION.md:167-172` ("paper-backdrop — the ≥2-consumer census row (NEW —
+  the J9/D-A14 landing, RF-6 routing 1)"), with its own acceptance gate `G-PAPER-BACKDROP-CENSUS`
+  (`BAND-REDUCTION.md:193`). A14's "none unowned" claim now rests on an owned execution row, not on
+  this pointer; no lead action is owed.
 
 - **A06 scroll-animation standard (J11).** Codifies INSIDE the scroll-collapse wave (ASK-4/§C3,
   BAND-REDUCTION): the 9-survivor reader spine is the substrate; the standard's text is that

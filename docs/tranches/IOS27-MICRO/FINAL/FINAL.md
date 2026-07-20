@@ -29,6 +29,8 @@ scheme-spring.css stale-mirror regen (the refuted {0.68,0.64} header) · engageE
 as law-20's shipped vocabulary · codex laws 19/20 already canon (committed). Acceptance: the
 table-driven regen gate, no hand literals.
 
+**Seam — one owner per file per cut (added 2026-07-20; APOTHEOSIS §4 invariant 1).** W-1 moves the dock preset to {0.35, ζ0.82} and regenerates the `scheme-spring.css` mirror — the SAME rows `BAND-DOC-TRUTH` W1 owns as **T1** (`scheme-spring.css:31`) and **T9** (`docs/design/tunable-anim.md:60-65`), and adjacent to **T5** (`tunable-anim.md:121`). **W-1 lands FIRST and is the value source.** DOC-TRUTH's T1/T9 then either RETIRE (if the regen emits the prose mirror) or hand-true to **W-1's shipped values — never the pre-W-1 0.30**: T1/T9's corrected statement "dock (0.30s, ζ=0.82)" is true only against HEAD `springPresets.ts:95-99` and is SUPERSEDED on W-1's landing. Neither wave edits `scheme-spring.css:31` in the other's cut.
+
 ## W-2 — SPINE-CONDUCTOR ADOPTION (the kernel wave)
 
 useLiquidSpine lands as ONE primitive over Draggable/SpringProgress/useLeadTrail/springPresets
@@ -74,14 +76,20 @@ glass-reveal-out vs law 8 — exact cure text in CORPUS-SYNTHESIS) · the hold e
 
 ## W-7 — REMAINDERS WITH OWNERS
 
-AE-R1..R3 (ATTENTION-EXIT) · C-R1..R4 (constellation; §O-3 order) · W-1..W-4 paperwork rows
+AE-R1..R3 (ATTENTION-EXIT) · C-R1..R4 (constellation; §O-3 order — C-R4 carries the canon
+repaint ×7 AND, only then, the RERUN-OWED register re-runs) · W-1..W-4 paperwork rows
 (LEAD-ADJUDICATION §6.6) · feed #20 residuals at band sweeps · QP-6 at demo integration ·
-the 4 PAGE-DEFER rows at their re-entries.
+the 4 PAGE-DEFER rows at their re-entries · **the row-9 drift sub-read + the condense/sea/bell
+interiors at any 60fps-class capture** (the 25fps video path cannot resolve them; instrument
+bound unchanged from passes 3/4) · **the cross-page (e) oklab arm when a library-token page
+enters the queue** (armed-idle). The last two are the W-0 row-7 sub-parts the FINAL cut
+predated; they are named here so the row-7 DEFER closes against owners, not against silence
+(`FINAL/W0-PAINT-LEDGER.md:200-207`, `passes/PASS-4/AGGLOMERATION.md:176-179`).
 
 ## The seam to BJ
 
 The BJ bands consume this set by reference: BAND-MATERIAL (the frosted canon, the attenuation
-primitive G-3 basis, the lying-gate repair) · BAND-FEEDBACK-MOTION (registers, W7
+primitive G-3 basis, the lying-gate repair) · BAND-DOC-TRUTH (T1/T9/T5 spring-mirror rows — sequenced AFTER W-1 and taking its shipped values, per the W-1 seam clause) · BAND-FEEDBACK-MOTION (registers, W7
 SHEET-MOTION-DEBT) · GF-DOCK (W-2's first consumer) · BAND-A11Y/GATES/PERF as routed in the
 sidecars. The atlas Q mailbox stays MARKED-HELD; nothing here executes a G-row.
 
