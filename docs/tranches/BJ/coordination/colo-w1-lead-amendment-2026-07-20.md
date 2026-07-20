@@ -53,3 +53,16 @@ the component-band `@import`s.
 Both are doc-truth / gate-wording only — no verdict moves, no source behavior changes. They do
 not block the W-COLO-1 close (the wave's substance is landed and evidenced); they land when the
 lead amendment batch next runs against `BAND-COLOCATION.md`.
+
+---
+
+## LEAD DISPOSITION (2026-07-20 ~12:5x): BOTH ADOPTED
+
+Amendment 1 adopted verbatim-faithful at the W-COLO-1 gate row — the measured proof is exactly the
+honest-null-DELTA posture the completion model demands; literal byte-identity on an SFC-touching
+diff was an unsatisfiable charter that would have forced a false evidence figure. The masked-compare
+basis (all 141 spans hash-shaped, count pinned, sha256 matched) is preserved in the row so the mask
+can never quietly widen. Amendment 2 adopted — the band now matches the design-idioms doc of
+record's stable-anchor form (the anchor law). Applied by the lead, one owner per file (the W-COLO-1
+cut is closed; no seat held the band file). Routing channel honored — this is how band truth-ups
+travel; never a silent re-edit.

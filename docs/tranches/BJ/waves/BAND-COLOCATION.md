@@ -184,7 +184,8 @@ RED count at HEAD is five; this purge greens four; 1a greens the last.
   shipped truth: per-component styles colocate as `<component>/styles.css` (or `styles/`),
   `@import`ed from `index.css` at the correct rung — **the `@import` POSITION is the cascade
   order**, so colocation and cascade-safety are never in tension (~15 feature-dir styles already
-  do this at `index.css:181-247`). Shared registers that ≥2 component families compose stay
+  do this in `index.css`'s component band (ledger rungs 7-17, `card/styles.css` →
+  `dialog/placement.css`)). Shared registers that ≥2 component families compose stay
   central (`surfaces-pager.css`, `glass-capsule.css`) or in `_shared/` (`feedback-tone.css`,
   `menu.css`).
 - Ownership: this wave owns the §3/§7 edit; family J's sweep cites it (ADJUDICATION-1 ruling 9
@@ -231,7 +232,7 @@ The placement ruling when they are re-wired:
 | G-TYPECHECK | refactor-safety | `npm run typecheck` — every rewritten path resolves. |
 | G-SURFACE-LOCK | refactor-safety | `tests/public-surface.spec.ts` root+subpath surface UNCHANGED (nothing in this wave is exported; `axes.ts` stays put so `/axes` is untouched). |
 | G-VITEST | refactor-safety | full `npm test` green — incl. the 2 relocated-path `_shared` test imports. |
-| G-CSS-BYTE-IDENTITY | inert-move proof | `dist/glass-ui.css` byte-identical for 1d/1e; for 1c, byte-identical under the fallback placement OR the `.accent-tone` computed-style probe passes under the primary. |
+| G-CSS-BYTE-IDENTITY | inert-move proof | hash-normalized identity (`data-v-*` + scoped keyframe hashes masked); literal byte-identity only for rows touching no SFC. [Lead amendment 2026-07-20, from the W-COLO-1 closer's measured proof: 1c/1d re-hash exactly 4 SFCs' scope-ids — all 141 differing spans are hash-shaped, and the masked compare is IDENTICAL (68,091 B both sides, sha256-matched); 1c's accent-tone register moved under the exact-rung fallback with a byte-unchanged `@import` position, cascade-inert, no live probe owed. Artifacts: `../evidence/W-COLO-1/`. Literal byte-identity as originally worded was unsatisfiable on any SFC-touching diff and would have forced a false evidence figure.] |
 | G-CLOSURE-CLEAN | acceptance (CL-1) | post-move grep proves all five reference channels clean (no stale `_shared/{fieldControl,…}` flat paths, no stale `<style src>` targets, no stale `@import`s). |
 
 ### π / DELTA obligation (INVERTED — null-DELTA)
