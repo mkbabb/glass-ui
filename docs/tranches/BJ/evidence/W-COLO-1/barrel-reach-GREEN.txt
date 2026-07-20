@@ -1,0 +1,23 @@
+# W-COLO-1 — G-BARREL-REACH GREEN rerun on the working tree (post-purge), captured 2026-07-20T16:43:35Z
+# The RED reference is barrel-reach-BORN-RED.txt (HEAD bda718ac). Here the four 1e barrels
+# + the one 1a barrel are DELETED and no reference survives → the reach scan returns 0.
+# Compiler-level confirmation that nothing imported them: machine-report-typecheck.log (both
+# tsconfigs clean) + machine-report-vitest.log (182 files / 1182 passed) on this same tree.
+
+== (a) all five barrel FILES deleted on disk ==
+  DELETED(green): src/composables/index.ts
+  DELETED(green): src/composables/glass/wave/index.ts
+  DELETED(green): src/composables/glass/webgpu/index.ts
+  DELETED(green): src/components/sortable-list/composables/index.ts
+  DELETED(green): src/components/typewriter/composables/index.ts
+
+== (b) zero surviving imports resolving to any deleted barrel (grep src demo tests) ==
+  -- root composables barrel --
+  -- glass/webgpu bare barrel --
+  -- glass/wave (any reference) --
+  -- sortable-list/composables bare barrel --
+  -- typewriter/composables bare barrel --
+
+== VERDICT ==
+   G-BARREL-REACH GREEN — 5/5 dead barrels purged, 0 residual references, typecheck+vitest clean.
+   RED→GREEN differential complete on this diff (all five barrels; 1a's glass/wave rode REDUCTION W3).

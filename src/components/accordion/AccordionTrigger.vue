@@ -7,7 +7,7 @@ import {
 } from "reka-ui";
 import { ChevronDown } from "@lucide/vue";
 import { cn } from "../_shared/class-names";
-import { useDisclosureIds } from "../_shared/disclosure-context";
+import { useDisclosureIds } from "../_shared/disclosure/disclosure-context";
 
 export interface AccordionTriggerProps {
     class?: HTMLAttributes["class"];

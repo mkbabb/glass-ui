@@ -38,7 +38,7 @@ import {
     placeholderImageSource,
     uploadImageTextureWebGPU,
     type UploadableImageSource,
-} from "../../../composables/glass/textureUpload";
+} from "./textureUpload";
 import type { AuroraConfig } from "../constants/presets";
 import type { UsePointerVelocityField } from "../../../composables/motion/pointer/usePointerVelocityField";
 

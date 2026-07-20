@@ -95,7 +95,7 @@
  *                              cascades into these control rules.
  *   7. components/card/styles.css — card and shared card-surface recipes.
  *                              Component utility layer.
- *  7a. components/_shared/feedback-tone.css — the shared tinted-glass tone register:
+ *  7a. components/_shared/feedback/feedback-tone.css — the shared tinted-glass tone register:
  *                              `.feedback-tone` +
  *                              `.feedback-tone-{success,warning,info,destructive}`
  *                              tint a glass rung a bounded % toward a house tone
@@ -139,7 +139,7 @@
  *                              shared focus/press recipes, rainbow-vivid +
  *                              rainbow-pastel. Consumes earlier animations +
  *                              tokens.
- *  11a. components/_shared/menu.css — the glass MENU-ROW + MENU-SECTION
+ *  11a. components/_shared/menu/menu.css — the glass MENU-ROW + MENU-SECTION
  *                              register. AFTER utilities.css so `.glass-menu-row`'s
  *                              `@layer components` hover/highlight rules source-
  *                              order-win over `.interactive-item:hover` (same layer
@@ -150,7 +150,7 @@
  *  13. components/drawer/styles.css — detented bottom-sheet grammar (glass
  *                             sheet surface + peek handle + snap-stop rules).
  *  15. components/tabs/styles/* — SegmentedTabs overflow/indicator grammar.
- *  16. components/_shared/field-surfaces.css — precompiled field/list surfaces
+ *  16. components/_shared/field/field-surfaces.css — precompiled field/list surfaces
  *                             collision-bound (the `[data-slot="select-content"]`
  *                             max-height rule) — moved off the dead arbitrary-
  *                             bracket CVA class so the bound SHIPS in dist/glass-ui.css
@@ -183,7 +183,7 @@
 @import "../components/dock/styles/index.css";
 @import "../components/dock/styles/controls.css";
 @import "../components/card/styles.css";
-@import "../components/_shared/feedback-tone.css";
+@import "../components/_shared/feedback/feedback-tone.css";
 @import "./transitions.css";
 @import "./animations.css";
 @import "./viz-reveal.css";
@@ -200,7 +200,7 @@
    over `.interactive-item:hover` (utilities/base.css, same layer + specificity) —
    the cascade-trap-safe placement, mirroring glass/surface-axis.css's "import
    AFTER ladder.css" discipline. */
-@import "../components/_shared/menu.css";
+@import "../components/_shared/menu/menu.css";
 @import "../components/button/styles.css";
 @import "../components/configurator/styles.css";
 @import "../components/instrument-chassis/styles.css";
@@ -215,7 +215,7 @@
    the 500-line bound; imported immediately after it
    (unlayered, unique selectors, source-order-after — byte-isomorphic). */
 @import "../components/tabs/styles/drag.css";
-@import "../components/_shared/field-surfaces.css";
+@import "../components/_shared/field/field-surfaces.css";
 /* Overlay-band Dialog side-slide structural positioning,
    precompiled (the emission INVERSE, terminalized onto Dialog `placement` — the Sheet
    fold): a [data-slot="dialog-content"][data-placement] rule so the side sheet's

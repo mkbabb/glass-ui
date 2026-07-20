@@ -1,0 +1,59 @@
+# W-COLO-1 (BJ.W-COLO-1) — G-BARREL-REACH born-RED census, captured verbatim
+# HEAD = bda718ac14906152e550c9ed8f05310ab98a861f  (the RED reference; captured 2026-07-20T16:43:20Z)
+#
+# THE RED: G-BARREL-REACH reds on FIVE zero-importer aggregation index.ts barrels.
+# A barrel is a dead-aggregation RED at HEAD when the FILE EXISTS but NO file imports
+# the barrel path (every real consumer imports a leaf directly, bypassing the barrel).
+# A barrel RE-EXPORT / self-reach is NOT a consumer. This wave's 1e purge greens FOUR
+# barrels; the fifth (glass/wave/index.ts) greens at 1a, whose three liquid-grid importers
+# were already deleted by BAND-REDUCTION W3 AT THIS HEAD — so all five are zero-importer here.
+# Scan = git-grep against the immutable archive at bda718ac. GREEN rerun = barrel-reach-GREEN.txt.
+
+== all five barrel FILES exist at HEAD (git cat-file -e) ==
+  EXISTS@bda718ac: src/composables/index.ts
+  EXISTS@bda718ac: src/composables/glass/wave/index.ts
+  EXISTS@bda718ac: src/composables/glass/webgpu/index.ts
+  EXISTS@bda718ac: src/components/sortable-list/composables/index.ts
+  EXISTS@bda718ac: src/components/typewriter/composables/index.ts
+
+== Barrel 1/5 — src/composables/index.ts (root barrel) ==
+   scan: git grep -nE "from ['\"](\.\./)+composables['\"]|from ['\"]@glass/composables['\"]|from ['\"]@mkbabb/glass-ui/composables['\"]" bda718ac -- src demo tests
+   → the root-resolving scan returns ZERO hits (no HIT line below). NB: a looser './composables'
+     grep matches dock/index.ts + infinite-scroll/* — but each './composables' resolves to that
+     component's OWN barrel (src/components/{dock,infinite-scroll}/composables/index.ts), NOT the
+     root; they are excluded by the (\.\./)+ / @glass / @mkbabb anchors above.
+     src/index.ts imports the three LEAVES directly, bypassing the root barrel:
+   [LEAF] bda718ac:src/index.ts:161:export * from "./composables/reactive";
+   [LEAF] bda718ac:src/index.ts:162:export * from "./composables/dom";
+   [LEAF] bda718ac:src/index.ts:163:export * from "./composables/glass";
+   [SELF] the dead barrel's own body reaches across the tree (RF-2 X3 addendum):
+   [SELF] bda718ac:src/composables/index.ts:4:// dark/, keyboard/, glass/, sortable/, sidebar/). The barrel re-exports every
+   [SELF] bda718ac:src/composables/index.ts:28:export * from "../components/infinite-scroll/composables";
+   → real CONSUMERS of the root barrel path: 0  (BORN-RED)
+
+== Barrel 2/5 — src/composables/glass/webgpu/index.ts ==
+   scan: git grep -nE "from ['\"][^'\"]*glass/webgpu['\"]" bda718ac -- src demo tests
+   → every consumer imports a LEAF (rendererStatus/useWebGPUCanvas/useGpuSubstrate); sample:
+   [LEAF] bda718ac:demo/stories/substrates/_frame/RendererStatus.vue:3:import type { RendererStatus } from "@glass/composables/glass/webgpu/rendererStatus";
+   [LEAF] bda718ac:demo/stories/substrates/aurora/AuroraStage.vue:11:} from "@glass/composables/glass/webgpu/rendererStatus";
+   [LEAF] bda718ac:demo/stories/substrates/blob.vue:12:import { pendingRenderer, type RendererStatus } from "@glass/composables/glass/webgpu/rendererStatus";
+   [LEAF] bda718ac:demo/stories/substrates/constellation.vue:15:import { pendingRenderer, type RendererStatus } from "@glass/composables/glass/webgpu/rendererStatus";
+   → real CONSUMERS of the barrel path: 0  (BORN-RED)
+
+== Barrel 3/5 — src/components/sortable-list/composables/index.ts ==
+   scan: git grep -nE "from ['\"][^'\"]*sortable-list/composables['\"]" bda718ac -- src demo tests
+   [LEAF] bda718ac:src/components/sortable-list/SortableList.vue:3:import { useSortable, type SortableId } from "./composables/useSortable";
+   → real CONSUMERS of the barrel path: 0  (BORN-RED)
+
+== Barrel 4/5 — src/components/typewriter/composables/index.ts ==
+   scan: git grep -nE "from ['\"][^'\"]*typewriter/composables['\"]" bda718ac -- src demo tests
+   [LEAF] bda718ac:src/components/typewriter/TypewriterText.vue:47:import { useTypewriter } from "./composables/useTypewriter";
+   → real CONSUMERS of the barrel path: 0  (BORN-RED)
+
+== Barrel 5/5 — src/composables/glass/wave/index.ts (greens at 1a) ==
+   scan: git grep -nE "glass/wave" bda718ac -- src demo tests
+   → real CONSUMERS of the barrel path: 0  (BORN-RED)
+
+== VERDICT ==
+   5/5 barrels are zero-importer dead-aggregation surfaces at HEAD bda718ac = G-BARREL-REACH BORN-RED.
+   Flip captured in barrel-reach-GREEN.txt (this wave purges 4 in 1e + 1 in 1a; all 5 gone on the working tree).

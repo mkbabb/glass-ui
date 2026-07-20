@@ -21,7 +21,7 @@ import {
     resolveImageSource,
     uploadImageTextureWebGL2,
     type UploadableImageSource,
-} from "../../../composables/glass/textureUpload";
+} from "./textureUpload";
 import type { AuroraConfig } from "../constants/presets";
 
 export interface AuroraImageCoordinator {

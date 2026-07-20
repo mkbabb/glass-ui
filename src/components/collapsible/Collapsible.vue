@@ -2,7 +2,7 @@
 import { computed, useAttrs, type HTMLAttributes } from "vue";
 import { CollapsibleRoot as RekaCollapsibleRoot } from "reka-ui";
 import { cn } from "../_shared/class-names";
-import { provideDisclosureIds } from "../_shared/disclosure-context";
+import { provideDisclosureIds } from "../_shared/disclosure/disclosure-context";
 
 export interface CollapsibleProps {
     /** Controlled disclosure state. */
@@ -61,4 +61,4 @@ const forwardedAttrs = computed(() => {
     </RekaCollapsibleRoot>
 </template>
 
-<style src="../_shared/disclosure.css"></style>
+<style src="../_shared/disclosure/disclosure.css"></style>

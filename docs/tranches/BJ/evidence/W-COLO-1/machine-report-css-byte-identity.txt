@@ -1,0 +1,23 @@
+# W-COLO-1 — G-CSS-BYTE-IDENTITY machine report (sha256 pair), captured 2026-07-20T16:44:15Z
+# HEAD build  = temp worktree at bda718ac (npx vite build), shared node_modules
+# WORK build  = the working tree (npx vite build), same vite config, same node_modules
+
+sha256(dist/glass-ui.css)  HEAD-build : 612c5a0b20bcaee416291825d225557e78e27ce49246481353580d52a86c1669
+sha256(dist/glass-ui.css)  WORK-build : 3da4c764c02f07295753d8b91023d0a253a2d7d2430738fd28c1495f107bce88
+size (bytes)               HEAD / WORK: 69279 / 69279   (equal)
+raw cmp:
+   /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/e79fce3f-d24e-4654-8b27-d029653fedbe/scratchpad/head-glass-ui.css /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/e79fce3f-d24e-4654-8b27-d029653fedbe/scratchpad/work-glass-ui.css differ: char 30681, line 1
+
+RESULT: NOT byte-identical as chartered — the two builds differ (first diff char 30681).
+This is EXPECTED and lawful: 1c used the exact-rung FALLBACK placement (the accent-tone
+@import stays at its glass.css rung, only the path segment moved to components/chip/), so
+cascade order is byte-unchanged; the delta is confined to Vue scoped-SFC scope-id + scoped-
+keyframe hash renames from the 1c/1d SFC import rewrites. Full enumeration + the hash-masked
+IDENTICAL compare (both 68,091 bytes, sha256 58ed7db7ebd05b06411a544c23f01f0e1dabb088db78c6badb45ff83ea3117a9) is in css-identity.txt.
+
+1c live-probe disposition: NOT OWED. The .accent-tone cascade rung is byte-unchanged (fallback
+placement), and NO .accent-tone / --accent-* selector appears in ANY of the 141 differing spans
+(css-identity.txt). The whole-stylesheet hash-masked identity is a strictly stronger proof of
+paint-inertness than a single-selector getComputedStyle probe. Cure-5's 'if unequal run the probe'
+condition is satisfied-in-spirit by the whole-file normalized identity; the accent-tone rung
+provably did not move, so the probe cannot observe a delta.

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, type CSSProperties, watchEffect } from "vue";
 import { ProgressIndicator, ProgressRoot } from "reka-ui";
-import { resolveValueFraction, resolveValueMarks } from "../_shared/valueDomain";
+import { resolveValueFraction, resolveValueMarks } from "../_shared/field/valueDomain";
 import type { ProgressProps } from "./types";
 
 const props = withDefaults(defineProps<ProgressProps>(), {

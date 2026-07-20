@@ -1,4 +1,4 @@
-import type { Size } from "./axes";
+import type { Size } from "../axes";
 
 // The 7-state feedback union the ONE StatusDot mark renders. It absorbs the
 // former Pulse states (active/idle/success + the shared warning) onto the same

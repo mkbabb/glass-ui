@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
     resolveValueFraction,
     resolveValueMarks,
-} from "@glass/components/_shared/valueDomain";
+} from "@glass/components/_shared/field/valueDomain";
 
 describe("valueDomain", () => {
     it("normalizes and clamps arbitrary finite domains", () => {

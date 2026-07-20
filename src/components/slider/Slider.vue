@@ -11,7 +11,7 @@ import { useTouchGate } from "../../composables/dom/useTouchGate";
 import { useDragVelocity } from "../../composables/dom/useDragVelocity";
 import { useOptionalDockContext } from "../dock/composables/dockContext";
 import { useDockHold } from "../dock/composables/useDockHold";
-import { resolveValueMarks } from "../_shared/valueDomain";
+import { resolveValueMarks } from "../_shared/field/valueDomain";
 import { useMotionAxis } from "../_shared/useMotionAxis";
 import type { SliderProps, SliderSize, SliderVariant } from "./types";
 

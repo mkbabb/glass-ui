@@ -32,7 +32,7 @@ export type AuroraSource = "palette" | "image";
 // concrete type lives in the shared texture-upload primitive — re-exported here so the
 // aurora config surface is self-contained. The macro-flower ARRAY + cross-fade cadence are
 // DEMO/consumer assets (presets-in-consumers); the library ships the axis only.
-import type { ImageInputSource } from "../../../composables/glass/textureUpload";
+import type { ImageInputSource } from "../composables/textureUpload";
 export type AuroraImageSource = ImageInputSource;
 export type { ImageInputSource };
 

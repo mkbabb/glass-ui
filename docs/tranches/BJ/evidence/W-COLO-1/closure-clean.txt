@@ -1,0 +1,44 @@
+# W-COLO-1 — G-CLOSURE-CLEAN: the five reference channels (CL-1) grepped clean, 2026-07-20T16:44:38Z
+# CL-1 rewrite set = TS/vue imports + SFC <style src> paths + test-tree imports + index.css
+# @imports + ledger comments. A row is DONE only when all five channels carry zero stale path.
+# OLD flat locations (pre-move) -> NEW colocated locations:
+#   _shared/{fieldControl,valueDomain,field-control.css,field-surfaces.css}   -> _shared/field/
+#   _shared/{FeedbackMark.vue,feedback.ts,feedback-tone.css}                  -> _shared/feedback/
+#   _shared/{menuRowClass,menu.css}                                           -> _shared/menu/
+#   _shared/{disclosure-context,disclosure.css}                               -> _shared/disclosure/
+#   composables/glass/textureUpload.ts (1b)                                   -> aurora/composables/
+#   styles/glass/accent-tone.css (1c)                                         -> components/chip/
+
+== CHANNEL 1 — TS/vue imports (stale flat _shared leaf + moved leaf, expect 0) ==
+
+== CHANNEL 2 — SFC <style src> css paths (stale flat, expect 0) ==
+
+== CHANNEL 3 — test-tree imports (stale flat, expect 0) ==
+
+== CHANNEL 4 — index.css/glass.css @import (stale flat, expect 0) ==
+   -- the 4 rewritten @import rungs (POSITION preserved, path segment only) --
+   [NEW] src/styles/glass.css:64:@import "../components/chip/accent-tone.css";
+   [NEW] src/styles/index.css:186:@import "../components/_shared/feedback/feedback-tone.css";
+   [NEW] src/styles/index.css:203:@import "../components/_shared/menu/menu.css";
+   [NEW] src/styles/index.css:218:@import "../components/_shared/field/field-surfaces.css";
+
+== CHANNEL 5 — ledger comments (stale flat path prose, expect 0) ==
+
+== NEW locations resolve on disk (14/14) ==
+   OK src/components/_shared/field/fieldControl.ts
+   OK src/components/_shared/field/valueDomain.ts
+   OK src/components/_shared/field/field-control.css
+   OK src/components/_shared/field/field-surfaces.css
+   OK src/components/_shared/feedback/FeedbackMark.vue
+   OK src/components/_shared/feedback/feedback.ts
+   OK src/components/_shared/feedback/feedback-tone.css
+   OK src/components/_shared/menu/menuRowClass.ts
+   OK src/components/_shared/menu/menu.css
+   OK src/components/_shared/disclosure/disclosure-context.ts
+   OK src/components/_shared/disclosure/disclosure.css
+   OK src/components/aurora/composables/textureUpload.ts
+   OK src/components/chip/accent-tone.css
+
+== VERDICT ==
+   G-CLOSURE-CLEAN — all five reference channels carry zero stale flat path; 14/14 moved
+   files resolve; typecheck + vitest confirm the closure at the compiler level.

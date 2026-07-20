@@ -106,4 +106,4 @@ function updateModelValue(value: unknown): void {
     </RekaAccordionRoot>
 </template>
 
-<style src="../_shared/disclosure.css"></style>
+<style src="../_shared/disclosure/disclosure.css"></style>

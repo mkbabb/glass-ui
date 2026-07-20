@@ -2,7 +2,7 @@
 import { computed, useAttrs } from "vue";
 import { useVModel } from "@vueuse/core";
 import { cn } from "../_shared/class-names";
-import { useFieldControlState } from "../_shared/fieldControl";
+import { useFieldControlState } from "../_shared/field/fieldControl";
 import type { InputProps } from "./types";
 
 defineOptions({ inheritAttrs: false });
@@ -54,4 +54,4 @@ const nativeProps = computed(() => ({
     />
 </template>
 
-<style src="../_shared/field-control.css"></style>
+<style src="../_shared/field/field-control.css"></style>

@@ -59,8 +59,9 @@
 /* The contrast-floored 3-channel tonal-accent register
    (.accent-tone: one --tone → idle/active/edge/ink). AFTER ladder.css (reads the
    warm-cream --card surface the ladder mints); the SOLE writer of the --accent-*
-   channels, so the placement is cascade-order-invariant. */
-@import "./glass/accent-tone.css";
+   channels, so the placement is cascade-order-invariant. The register colocates
+   with its sole class-consumer at components/chip/; the @import rung is unchanged. */
+@import "../components/chip/accent-tone.css";
 @import "./glass/rim.css";
 @import "./glass/surfaces.css";
 /* The .glass-pager-ring pager-pill chassis + the .glass-chromatic

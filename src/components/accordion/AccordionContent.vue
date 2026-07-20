@@ -5,7 +5,7 @@ import {
     injectCollapsibleRootContext,
 } from "reka-ui";
 import { cn } from "../_shared/class-names";
-import { useDisclosureIds } from "../_shared/disclosure-context";
+import { useDisclosureIds } from "../_shared/disclosure/disclosure-context";
 
 export interface AccordionContentProps {
     /** Keep the region mounted while closed, for measurement or external animation. */

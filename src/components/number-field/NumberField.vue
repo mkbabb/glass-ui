@@ -2,7 +2,7 @@
 import { NumberFieldRoot, useForwardPropsEmits } from "reka-ui";
 import { computed, type HTMLAttributes, provide, useAttrs } from "vue";
 import { cn } from "../_shared/class-names";
-import { useFieldControlState } from "../_shared/fieldControl";
+import { useFieldControlState } from "../_shared/field/fieldControl";
 import type { FormFieldProps, PrimitiveProps } from "../_shared/primitive";
 import { numberFieldContextKey } from "./context";
 

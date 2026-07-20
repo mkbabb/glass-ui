@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { menuRowClass } from "@glass/components/_shared/menuRowClass";
+import { menuRowClass } from "@glass/components/_shared/menu/menuRowClass";
 
 describe("menuRowClass", () => {
     it("owns the canonical glass row and disabled treatment", () => {

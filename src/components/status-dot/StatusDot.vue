@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from "vue";
-import FeedbackMark from "../_shared/FeedbackMark.vue";
+import FeedbackMark from "../_shared/feedback/FeedbackMark.vue";
 import type {
     FeedbackSize,
     StatusDotState,
-} from "../_shared/feedback";
+} from "../_shared/feedback/feedback";
 
 defineOptions({
     name: "StatusDot",

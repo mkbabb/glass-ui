@@ -3,7 +3,7 @@ import { computed, useAttrs, type HTMLAttributes } from "vue";
 import { CollapsibleTrigger as RekaCollapsibleTrigger } from "reka-ui";
 import type { PrimitiveProps } from "../_shared/primitive";
 import { cn } from "../_shared/class-names";
-import { useDisclosureIds } from "../_shared/disclosure-context";
+import { useDisclosureIds } from "../_shared/disclosure/disclosure-context";
 
 export interface CollapsibleTriggerProps {
     /** Merge disclosure behavior into one interactive child. */

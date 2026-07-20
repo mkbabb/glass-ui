@@ -6,7 +6,7 @@ export default { inheritAttrs: false };
 import { injectNumberFieldRootContext, NumberFieldInput } from "reka-ui";
 import { computed, inject } from "vue";
 import { cn } from "../_shared/class-names";
-import { isAriaInvalid } from "../_shared/fieldControl";
+import { isAriaInvalid } from "../_shared/field/fieldControl";
 import { numberFieldContextKey } from "./context";
 
 const context = inject(numberFieldContextKey);
@@ -34,4 +34,4 @@ const state = computed(() =>
     />
 </template>
 
-<style src="../_shared/field-control.css"></style>
+<style src="../_shared/field/field-control.css"></style>

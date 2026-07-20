@@ -143,7 +143,7 @@ describe("gate:orphan-CSS-partial — every src/ partial is reachable by a chann
         // Channel 2 must carry REAL weight. Asserting that every componentReferences member
         // sits in `reachable` is true by construction and would still pass with the
         // `<style src=` arm broken — at which point the gate reports the 18-SFC false-RED set.
-        const exemplar = join(SRC, "components", "_shared", "field-control.css");
+        const exemplar = join(SRC, "components", "_shared", "field", "field-control.css");
         expect(closure.has(exemplar), "the exemplar is genuinely channel-1-unreachable").toBe(false);
         expect(reachable.has(exemplar), "channel 2 rescues it").toBe(true);
         const rescued = [...componentReferences(files)].filter((ref) => !closure.has(ref));

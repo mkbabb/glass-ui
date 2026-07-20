@@ -1,0 +1,43 @@
+# W-COLO-1 — G-CSS-BYTE-IDENTITY posture + hash-normalized identity proof, captured 2026-07-20T16:44:15Z
+
+G-CSS-BYTE-IDENTITY: NOT byte-identical as chartered — delta is exclusively Vue scope-id
+(data-v-*) + scoped-keyframe hash renames from the 1d SFC import rewrites; hash-masked compare
+= IDENTICAL (69,279 bytes both sides); artifacts: head-dist/work-dist builds + h2.norm/w2.norm cmp.
+
+----- raw builds -----
+  head-dist-glass-ui.css  sha256 612c5a0b20bcaee416291825d225557e78e27ce49246481353580d52a86c1669  size 69279
+  work-dist-glass-ui.css  sha256 3da4c764c02f07295753d8b91023d0a253a2d7d2430738fd28c1495f107bce88  size 69279
+  raw cmp: differ at char 30681, line 1
+
+----- hash-normalized (mask data-v-[0-9a-f]{8} + the 5 named scoped-keyframe hashes, BY PATTERN) -----
+  head-dist.norm.css      sha256 58ed7db7ebd05b06411a544c23f01f0e1dabb088db78c6badb45ff83ea3117a9  size 68091
+  work-dist.norm.css      sha256 58ed7db7ebd05b06411a544c23f01f0e1dabb088db78c6badb45ff83ea3117a9  size 68091
+  normalized cmp: BYTE-IDENTICAL
+
+----- the complete delta: 141 differing spans, all in exactly 4 re-hashed SFCs -----
+  Slider.vue       data-v-4f4cab01 -> data-v-fc0ee601   (rewrote _shared/field{Control} + valueDomain imports, 1d)
+  Progress.vue     data-v-36bf5146 -> data-v-dffd5266   (rewrote _shared/field/valueDomain import, 1d)
+                   + scoped keyframes progress-intake-pulse / -discharge-glow /
+                     -indeterminate-sweep / -indeterminate-rise: -36bf5146 -> -dffd5266
+  FeedbackMark.vue data-v-d7e1d5a7 -> data-v-0d70844b   (file moved into _shared/feedback/, 1d)
+                   + scoped keyframe feedback-mark-pulse: -d7e1d5a7 -> -0d70844b
+  StatusDot.vue    data-v-b49e7ec4 -> data-v-8056942f   (rewrote _shared/feedback FeedbackMark+feedback imports, 1d)
+  The other 23 scope-ids are byte-identical in both builds. No selector, property, value, at-rule,
+  or @import ORDER differs. Vue derives the scoped keyframe hash from the same scope id, which is
+  why each SFC's keyframe suffix tracks its data-v-* rename 1:1.
+
+----- 1c accent-tone: cascade-inert by construction -----
+  The accent-tone register moved styles/glass/accent-tone.css -> components/chip/accent-tone.css
+  under the EXACT-RUNG FALLBACK (glass.css @import position byte-unchanged, only the path segment
+  changed). ZERO .accent-tone / --accent-* selectors appear in the 141 differing spans, so the
+  register's cascade order is provably identical. The 1c live getComputedStyle probe is therefore
+  NOT owed (the fallback 'cannot fail it' per BAND-COLOCATION 1c; the whole-file normalized identity
+  supersedes a single-selector probe).
+
+----- routed (NOT edited silently here) -----
+  G-CSS-BYTE-IDENTITY is RED as literally chartered ('dist/glass-ui.css byte-identical for 1d')
+  and can never be GREEN on a diff that rewrites imports inside scoped SFCs. A gate-posture
+  amendment for the BAND-COLOCATION W1 gate row (:234) -> 'hash-normalized identity (data-v-* +
+  scoped keyframe hashes masked); literal byte-identity only for rows touching no SFC' is ROUTED
+  to the lead amendment channel at coordination/colo-w1-lead-amendment-2026-07-20.md — never a
+  silent band-file re-edit (SUPERSESSION LAW: the band file's roster is the spec).

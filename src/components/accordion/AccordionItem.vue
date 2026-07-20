@@ -2,7 +2,7 @@
 import { computed, useAttrs, type HTMLAttributes } from "vue";
 import { AccordionItem as RekaAccordionItem } from "reka-ui";
 import { cn } from "../_shared/class-names";
-import { provideDisclosureIds } from "../_shared/disclosure-context";
+import { provideDisclosureIds } from "../_shared/disclosure/disclosure-context";
 
 export interface AccordionItemProps {
     /** Stable value represented by this item in the root model. */

@@ -28,7 +28,7 @@ import {
     SelectItemText as RekaSelectItemText,
 } from "reka-ui";
 import { cn } from "../_shared/class-names";
-import { menuRowClass, type MenuRowIndicator } from "../_shared/menuRowClass";
+import { menuRowClass, type MenuRowIndicator } from "../_shared/menu/menuRowClass";
 import { fixedHostAttrs } from "../_shared/primitive";
 import { isSelectionValue } from "../_shared/selection";
 

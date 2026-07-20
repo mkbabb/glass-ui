@@ -90,8 +90,8 @@ declarations) lives in the file that owns its COHESION DOMAIN. The home map:
 | interactive / button | `src/styles/utilities/btn.css` | `scale-on-hover`, `twin-line-divider`, `transition-control/collapse`, `sheet-animate`, `rainbow-vivid/pastel`, `btn-interactive`, `table-cell/head` |
 | a11y / capability override | `src/styles/utilities/a11y-overrides.css` | `touch-hit-area` + the `@media` overrides |
 | glass surface | `src/styles/glass/*.css` | `glass-progress-rail` (the deck-position rail @utility); the `[data-surface="glass\|veil\|opaque"]` shared surface-decoration axis + the `.paper-ink-mark` MARK register (`glass/surface-axis.css` — see below); the `--control-surface-{bg,border,blur,bg-hover}` form-family REST tier (`glass/surfaces.css`) |
-| feedback tone | `src/styles/feedback-tone.css` | `.feedback-tone` + `.feedback-tone-{success,warning,info,destructive}` (the ONE shared tinted-glass tone register; cascade rung 7a after cards.css) |
-| menu glass | `src/components/_shared/menu.css` | `.glass-menu-row` (the shared interactive menu-row register) |
+| feedback tone | `src/components/_shared/feedback/feedback-tone.css` | `.feedback-tone` + `.feedback-tone-{success,warning,info,destructive}` (the ONE shared tinted-glass tone register; a `_shared/feedback/` cohesion-domain register, `@import`ed at cascade rung 7a after `card/styles.css`) |
+| menu glass | `src/components/_shared/menu/menu.css` | `.glass-menu-row` (the shared interactive menu-row register, a `_shared/menu/` cohesion-domain register) |
 | paper texture | `src/styles/paper.css` | the paper underpaint + grain utilities |
 | card / cartoon surface | `src/styles/cards.css` | `cartoon-surface` |
 | dock control | `src/styles/dock-controls.css` | the dock-control surface utilities |
@@ -110,9 +110,12 @@ files mint a SHARED recipe register ≥2 component families compose — they are
   glass), NOT a `[data-surface]` plate rung; it has ≥2 consumers (the math-paper
   section rail + the SegmentedTabs underline indicator, `segmented-tabs.css`), so
   it is a CENTRAL register, not a per-component scoped style (§7).
-- **`feedback-tone.css`** — `@import`s at `index.css` cascade rung 7a (after
-  `cards.css`), so the tone tint composes ON the resolved glass surface.
-- **`menu.css`** — `@import`s at `index.css` cascade rung 11a (after
+- **`_shared/feedback/feedback-tone.css`** — `@import`s at `index.css` cascade
+  rung 7a (after `card/styles.css`), so the tone tint composes ON the resolved
+  glass surface. It colocates in `_shared/feedback/` (component-family shared
+  vocabulary) rather than a top-level `src/styles/*` partial; the `@import` rung
+  is the cascade order, so the home and the position are independent.
+- **`_shared/menu/menu.css`** — `@import`s at `index.css` cascade rung 11a (after
   `utilities.css`), so `.glass-menu-row`'s `@layer components` rules source-order-
   win over the flat-accent base (the cascade-trap pre-empt the file's header
   records).
@@ -127,9 +130,12 @@ cohesively extends, NOT to whichever file is shortest. A `@utility` that belongs
 to a single component's family lives in that component's central partial (the
 dock/chassis/instrument files), never scattered into `utilities/`. A NEW SHARED
 register that ≥2 component families compose (the feedback-tone / menu / surface-
-axis precedent) is its OWN top-level cohesion-domain partial with a §3 home-map
-row, `@import`-positioned for its cascade win — NOT folded into a per-component
-file (that would couple the shared register to one component's load order).
+axis precedent) is its OWN cohesion-domain partial with a §3 home-map row —
+either a top-level `src/styles/*` file (`surfaces-pager.css`, `glass-capsule.css`)
+or a `_shared/<domain>/` register when it is component-family shared vocabulary
+(`_shared/feedback/feedback-tone.css`, `_shared/menu/menu.css`) — `@import`-
+positioned for its cascade win, NOT folded into a per-component file (that would
+couple the shared register to one component's load order).
 
 ---
 
@@ -217,20 +223,36 @@ A complex component (a god-module candidate — a WebGL/Canvas surface, a
 multi-composable family) is structured into a feature-dir: components at the
 package root, composables under `<dir>/composables/`, constants in
 `<dir>/constants.ts`, shaders in `<dir>/shaders/`, skeletons in
-`<dir>/skeleton/` (each "if needed"), and a `README.md`. See `CLAUDE.md`
-§Structure for the convention; `proof:colocation` enforces it.
+`<dir>/skeleton/` (each "if needed"), a colocated `<dir>/styles.css` (or a
+`<dir>/styles/` dir when the recipe carves into partials), and a `README.md`.
+The colocation-hygiene fence (BAND-COLOCATION Wave 3; its form — reach-audit fold
+vs standalone gate — is family A's pending budget call) will keep the convention
+honest once it lands.
 
-**Where a per-component style lives.** A component's visual recipe lives in a
-CENTRAL partial (a `src/styles/*.css` file in the cascade), NOT in the
-component's feature-dir — the cascade order is load-bearing, so a per-component
-stylesheet that imported out-of-order would break the override chain. The SFC
-`<style scoped>` block is reserved for the rules that are STRUCTURALLY local to
-one component (layout/grid the component owns, a runtime custom-property binding)
-and that no other surface composes. The rule for choosing: a recipe ≥2 surfaces
-compose, or one that must sit at a specific cascade position, is a CENTRAL
-partial (token-first, consumer-overridable); a rule that is one component's
-private structure is `<style scoped>`. Never duplicate a central recipe into a
-scoped block (the cascade override would diverge).
+**Where a per-component style lives — it COLOCATES.** A component's own visual
+recipe lives in its feature-dir as `<dir>/styles.css` (or `<dir>/styles/*.css`),
+`@import`ed from `index.css` at the correct rung. **The `@import` POSITION is the
+cascade order** — a partial's file LOCATION and its cascade RUNG are independent
+axes, so colocation and cascade-safety are never in tension: a colocated
+`<dir>/styles.css` `@import`ed at the right position wins (or yields) exactly as a
+central partial would. ~15 feature-dir styles already ship this way in `index.css`'s component band
+(ledger rungs 7-17, `card/styles.css` → `dialog/placement.css`) (`header-ribbon`,
+`dock`, `card`, `button`, `configurator`,
+`instrument-chassis`, `drawer`, `tabs`, `dialog`, `metric`, `scroll-progress-rim`,
+`completion-seal`, …). A SHARED register that ≥2 component families compose does
+NOT colocate onto one component — it stays central (`surfaces-pager.css`,
+`glass-capsule.css` under `src/styles/glass/`) or lives in `_shared/<domain>/`
+(`_shared/feedback/feedback-tone.css`, `_shared/menu/menu.css`), so no single
+component owns the shared load order.
+
+The SFC `<style scoped>` block is reserved for rules STRUCTURALLY local to one
+component (layout/grid the component owns, a runtime custom-property binding) that
+no other surface composes and that carry no cross-component cascade concern. The
+rule for choosing: a recipe ≥2 surfaces compose → a central / `_shared/` shared
+register; a component's own visual recipe → its colocated `<dir>/styles.css`,
+`@import`ed at the right rung; a component's private structure with no cascade
+stake → `<style scoped>`. Never duplicate a central recipe into a scoped block
+(the cascade override would diverge).
 
 ## §8 — The scoped dark-arm idiom (NEVER `:global()` for a `.dark` ancestor)
 
