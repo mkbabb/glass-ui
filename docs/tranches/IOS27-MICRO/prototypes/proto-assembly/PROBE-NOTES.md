@@ -1,10 +1,12 @@
 # PROBE-NOTES — PROTO-ASSEMBLY, the composed organs
 
 verified-model: claude-fable-5 (system-context model ID, verbatim). Seat p3:ASSEMBLY (MECH
-m9's named owner — NOVELTY-ROSTER §4 item 4, CHARTER §O-2), 2026-07-19. Status: RUNS;
-`node check.mjs` **155/155 PASS** at write time. Files: `index.html` (self-contained, warm
-canon, no build step), `check.mjs` (extracts the ASM physics block — the SAME code that
-drives paint — and asserts the sims + the structural contract + the M7 mirror locks).
+m9's named owner — NOVELTY-ROSTER §4 item 4, CHARTER §O-2), 2026-07-19; pass-4 cure batch
+landed by seat p4:ASSEMBLY the same day (`PASS-4/cures-assembly.md`). Status: RUNS;
+`node check.mjs` **189/189 PASS** at the pass-4 cure batch (155/155 at the pass-3 write).
+Files: `index.html` (self-contained, warm canon, no build step), `check.mjs` (extracts the
+ASM physics block — the SAME code that drives paint — and asserts the sims + the structural
+contract + the M7 mirror locks + the pass-4 cure gates).
 **The m9 ban stands: until this page runs on the WebKit VIDEO path, no adoption language may
 say "proven together."** This file is the page's honest ledger, not that claim.
 
@@ -34,9 +36,14 @@ point satisfying the corner equation to 1e-12. E-NOTIF material register: 20px o
 the press-drain envelope row (t90 127ms / drain t10 264ms — §3.5-B, no constant outside the
 table). Commit crosses the `vapor-handoff` seam into the 3-layer dissolve: text 45ms FIRST →
 body erosion 210ms (fired T ∈ [175,210] under the clamped velocity seed — the m1 cure class)
-→ the empty-medium beat 110ms **sign-verified and SEED-INVARIANT** (the medium delay is
-re-stamped per commit as text + firedT(v) + beat, so a hot seed shortens the body, never the
-held beat — the M2 defect class cured by construction) → medium 350ms decelerating. Ghosts
+→ the empty-medium beat 110ms **sign-verified and SEED-INVARIANT on the PAINTED anchor**
+(the A7/D6 cure `[P4-ASSEMBLY 2026-07-19]`: the medium delay is re-stamped per commit as
+text + contentOut(v, d0) + beat — anchored at the painted CONTENT-OUT crossing, inverted
+from `firedD`, seed- AND d0-aware; the erosion clock's empty ease-out tail no longer
+inflates the beat, and the battery now gates the DERIVED painted-beat quantity across
+seeds/catches — failable: the old clock-end anchor reads 188–202ms on the same opacity
+model and FAILS those gates; zero-seed stamped delay 287ms, was 365) → medium 350ms
+decelerating. Ghosts
 drift 16px BY TRANSFORM toward the perch corner; the chip vaporizes first (40ms). Scrub is
 catchable pre-commit (seed law error 0). The medium has ONE writer: `claimMediumWriter`
 (the F5 contract) claimed once by the conductor; a second claimant throws; every relax routes
@@ -67,11 +74,33 @@ glows read `var(--crest-h-N)`, the same declarations the crests paint.
    census and H-4 registry sync is HALTED until a pass-4 re-derivation fits BOTH models
    (seeded family admitted) against the 7 measured velocity samples; only what survives
    routes. Owner: ASSEMBLY seat, pass 4.
+   **[P4-ASSEMBLY 2026-07-19 — the fit RAN; `PASS-4/cures-assembly.md` §A2]** Both models
+   fit against the 7 frame-averaged velocity samples (both tracker passes, alignment free,
+   v0 gridded 0–6k px/s, ζ0.97 per the measured no-bounce): (i) **NO admitted member
+   reproduces the bell point-wise** — best RMS 1223 px/s ≈ 12× the 100 px/s inter-tracker
+   point-RMS; the measured mid-bell 10.2k frame-average exceeds the press-row family's
+   ~7.8k instantaneous peak at D=663px (BOUNDED: sample 1 may carry veil-frame
+   contamination, MARKS-C-APPS 7.4 item 1). (ii) What IS decided — the RESPONSE class:
+   press-row {0.20} t90 119ms sits in the measured ~117ms window; the dock row {0.35,
+   ζ0.97} gives t90 174–208ms at EVERY seed 0–6k (best-fit RMS 2114–2593, 21–26× tracker) —
+   no seed buys back the window. (iii) The SEED is UNDECIDABLE from these samples: the
+   free-seed press-row fit collapses to v0=50 px/s ≈ 0 at RMS identical to zero-seed.
+   **ROUTED (the only survivor): ONE census/H-4 row — the condense-bell register is the
+   press-row response class (~0.20), NOT `springPreset("dock")` as MARKS-C-APPS OUR-LANGUAGE
+   names it; seed left free, both readings admissible.** The original seeded-vs-zero-seed
+   conviction routes NOWHERE; "cannot be built as written" stays struck.
 2. **Apex-exact seating yields 56-59% outside, not 62-69%.** The corpus fraction included the
    +1.6-2.5pt outward bias E-NOTIF measured (BOUNDED). We seat exactly ON the derived apex
    (no magic numbers, per the R-9 formula) and accept the mostly-outside class at 58.6%
    (n=4; robust ≥56% across n 3–5). If video reads the perch as insufficiently "outside," the
    licensed dial is a derived outward nudge along the corner ray — a token, not a literal.
+   `[P3-AGG 2026-07-19]` The charter re-ruled R-9 to exactly this (CHARTER.md:180: formula-
+   EXACT, geometric primary gate ≤0.5px, telltale re-banded **[0.55, 0.63]**, 62–69% demoted
+   to corpus observation) — the tension this finding once resolved unilaterally now has ONE
+   charter text, and the `check.mjs` gate rides the ruled band. The A3 kin cure landed with
+   it: `.vcard` AUTHORS `corner-shape: squircle`, so the shape-aware seat matches the paint
+   per engine (Chromium squircle n=4, honest round n=2 elsewhere); QP-12's Chromium straddle
+   re-run is the paint arm's.
 3. **Two medium grammars on one page, both measured, scoped apart.** Organ A is scrimless by
    law (MARKS-D mark 3: focus by dark mass + rim; world dim ±2% max). Organ B's
    empty-medium beat REQUIRES a medium (MARKS §5) — it exists as the card zone's own scoped
@@ -82,7 +111,13 @@ every trace with `?hud=0`; WebKit material verdicts on the VIDEO path only)
 
 1. **Occlusion read.** The sea's upper half visibly sinks under the dock's own dark mass;
    paired probe regions on the WORLD before/during/after a session read |Δlum| ≤ 2% (the
-   no-scrim number, MARKS-D mark 3).
+   no-scrim number, MARKS-D mark 3). `[P4-ASSEMBLY, ledger D7]` The re-run is Chromium
+   LOSSLESS with the rect arithmetic PRINTED, probe regions STRICTLY OUTSIDE the clamped
+   dock extent the battery computes and prints (`ASM.dock.clampedExtent`: x outside
+   center±172.8px, y outside [300, 652.9]px + grow·150px) — the pass-3 −13/−30% reading
+   stands un-exonerated until this run; if the dim survives lossless + correct geometry,
+   the hunt starts at the compositor (no painter on this page CAN paint the world: the
+   darkmass is clipped inside the dock's overflow, and no filter/scrim touches the world).
 2. **Non-modal truth, live.** The world-tap counter increments during a live session on
    video — the world beneath stays interactive at every phase.
 3. **Meniscus autonomy.** At rest the meniscus breathes ±18% on the 7s envelope,
@@ -91,14 +126,24 @@ every trace with `?hud=0`; WebKit material verdicts on the VIDEO path only)
 4. **The fired-deploy ladder.** Video: intrinsic ~4% overshoot visible on the dock's bottom
    edge; text born blurred and condensing ~190ms from the geometry peak; plateau then flare
    (~2.1×) riding the data upgrade. Cost note: `text-condense` and `meniscus-breath` are the
-   page's two declared filter keyframes — their repaint cost is judged here.
+   page's two declared filter keyframes — their repaint cost is judged here. `[P4-ASSEMBLY,
+   ledger D8]` Re-measure the overshoot POST-cure with the measurement base PRINTED in the
+   log (274px g-travel vs 320px full height — the surviving hypothesis): the substepped
+   integrator now paints the certified 4.15% class where the old single-step painted 1.74%;
+   predicted post-cure read ≈3.4–4.1% (travel base) or ≈2.9–3.5% (height base) under 25fps
+   worst-phase sampling.
 5. **The gesture arrival.** Frame-tracked overshoot vs release velocity ≈ 0.023s class
    (k·v on real pixels); zero-seed release lands near-dead.
 6. **The standing sea.** Column-profile cross-correlation ≈ 0 px/frame drift (phase pinned);
    the lull filament never reaches zero; flare→pin→cut with the cut ≤ 2 frames at 60fps.
 7. **The handoff beat, BY SIGN.** Count contentless-medium frames between body-out and the
    medium's first relax frame: a POSITIVE 80–140ms class, at zero seed AND at a hot seed
-   (the invariance is the claim).
+   (the invariance is the claim). `[P4-ASSEMBLY, ledger D6]` Anchors INSTRUMENTED: body-out
+   = the PAINTED content-out crossing (every vapor layer under VIS_EPS 0.06), never the
+   erosion clock's end; the stamped zero-seed medium delay is 287ms. Preconditions landed:
+   the A5 two-writer window is closed (gen-guarded return drain + the seam cancels `vRaf`),
+   so the pass-3 256–397ms reads cannot recur from the interleave — a re-read out of band
+   now indicts the anchor or the model, not a ghost writer.
 8. **The one-writer witness.** `data-writer="asm-conductor"` constant across every frame of
    the handoff; no second writer at any frame — the m9 acceptance clause, on video.
 9. **Drift direction.** The ghosts pull toward the perch corner; the chip vanishes first.
@@ -134,3 +179,12 @@ every trace with `?hud=0`; WebKit material verdicts on the VIDEO path only)
    press-bounded, not idle cost; the library form should cache at pointerdown (the v-perch
    limit, inherited).
 7. The corner is top-left per the exemplar; RTL/top-right are a parameter, unproven here.
+8. **Live down-scrub is OUT of this page's scope** (the A4 scope declaration, in writing at
+   the listener): during live/flare/pinned/cut/condensing/growing/drawer the exit is the
+   commit ladder or Reset. Any g-FLIGHT (fired deploy, velocity arrival, under-thrown
+   return) IS catchable at pointerdown — the Organ-B seize pattern, no dead zones, no
+   two-writer band on `--asm-g`. The kernel's `s.scrub(g)`-at-any-regime is the UNION's
+   obligation, not discharged here.
+9. The harness controls (world-tap, Reset) are instrumentation, DECLARED outside the organ
+   grammar; the law-20 sustained hold-light rows (pressDrain envelope on `--ctl-press`)
+   cover the in-organ controls — Summon and Commit — for the hold's whole life.

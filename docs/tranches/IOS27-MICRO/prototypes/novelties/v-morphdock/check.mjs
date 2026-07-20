@@ -66,8 +66,21 @@ check("flick from 0.90 at −3.0/s lands", MD.detentTarget(0.90, -3.0, 0), T.det
 check("still hold 240ms then release", MD.detentTarget(0.40, 2.5, 240), T.detents[1], T.detents[1], "[D2 lesson] a still finger's velocity is ZERO — no false fling");
 
 console.log("\n=== the C1 catch (pointerdown mid-morph seizes value AND velocity) ===");
+// [P4-AGG A3] the tautology gate (copy-vs-itself, always 0) is DEAD; these can fail.
 const c = MD.sims.catchSim();
-check("catch jump at 80ms", c.jump, 0, 1e-9, "[DESIGN] the spine catch pattern — zero discontinuity");
+check("catch is mid-flight (the sim can distinguish)", c.midFlight, 1, 1, "[STRUCT] the dead ternary cured — a settled catch fails here");
+check("first post-catch frame step (px)", c.firstFrameStep, 0.5, 80, "[DESIGN] flight-speed class — the seized flight CONTINUES");
+check("catch step / teleport-foil ratio", c.ratio, 0, 0.35, "[A3] the pre-cure hard-set is the foil (ratio ≈ 1) — a revert fails");
+
+console.log("\n=== the interrupt law (B-1 cure: dismissal kills the engage writers) ===");
+const gI = MD.sims.interruptSim(true), bI = MD.sims.interruptSim(false);
+check("guarded interrupt: label settles (ms)", gI.settledMs, 20, 600, "[B-1 cure] single writer — the return lands dead");
+check("orphan foil deadlocks (the convicted class)", Number.isFinite(bI.settledMs) ? 0 : 1, 1, 1, "[B-1] two writers alternate on labelY at 100Hz and NEVER settle — the negative control");
+
+console.log("\n=== law 12 value truth on re-engage + every xR writer (A4) ===");
+check("re-engage at Low sweeps to the VALUE (px)", MD.engageTargetR(0.22), 118, 120, "[LAW 12] fill length == value — the void-targetR dead knob is deleted");
+check("re-engage at High sweeps to full (px)", MD.engageTargetR(1.0), 512, 512, "[LAW 12]");
+check("engage target honors the capsule floor (px)", MD.engageTargetR(0), 48, 48, "[MARKS-C 6.2] fillL + max(0, trackH − 2·inset)");
 
 console.log("\n=== law 20 envelope + the light-first press-ack ===");
 const env = MD.sims.envelope();
@@ -110,6 +123,18 @@ console.log("\n=== structural asserts (mechanism discipline read from the file) 
   check("fill revealed by clip-path inset", /clipPath = `inset\(/.test(html) ? 1 : 0, 1, 1, "[STRUCT] clip-reveal, not animated scale (U7 mitigation b)");
   check("engagement light is 42-degree cream", /hsl\(42 85% 88%\)/.test(html) ? 1 : 0, 1, 1, "[DESIGN M3] the canon engagement hue");
   check("no idle specular anywhere", /specular/i.test(html) ? 1 : 0, 0, 0, "[DESIGN M3] idle specular NONE");
+  // [P4-AGG 2026-07-19] the B-1/A3/A4/A6 wiring locks — the cures cannot silently revert
+  check("void targetR dead knob deleted", /void targetR/.test(html) ? 1 : 0, 0, 0, "[A4]");
+  const pm = html.split('addEventListener("pointermove"')[1]?.split("addEventListener(")[0] || "";
+  check("scrub never hard-sets the left edge", /st\.sL\.x\s*=/.test(pm) ? 1 : 0, 0, 0, "[A3] the ~140px teleport class is wiring-locked out");
+  check("generation guards on every drive", (html.match(/g !== st\.gen/g) || []).length, 11, 11, "[B-1] the assembly A5 pattern — one guard per writer callback");
+  check("both intent wrappers bump the generation", (html.match(/st\.gen\+\+/g) || []).length, 2, 2, "[B-1] engage() + dismiss(), before any branch");
+  check("keyboard path stamps the geometry", /st\.xR = MD\.engageTargetR\(st\.frac\); stampClip/.test(html) ? 1 : 0, 1, 1, "[A4] value-truth on the a11y path");
+  const pu = html.split('addEventListener("pointerup"')[1] || "";
+  check("PRM detent release lands single-step", /if \(prm\.matches\)/.test(pu) ? 1 : 0, 1, 1, "[A6] no glide drive under PRM");
+  const arenas = html.split("<section").slice(1);
+  check("empty detents read as dots (dots under the fill)", arenas.length === 3 && arenas.every((a) => a.indexOf('class="dots"') < a.indexOf('class="fill"')) ? 1 : 0, 1, 1, "[MARKS-C 6.2 note 3] the fill occludes covered dots");
+  check("one clamp source for every xR writer", (html.match(/MD\.engageTargetR\(/g) || []).length >= 5 ? 1 : 0, 1, 1, "[LAW 12] the self-gating minFill mirror is retired as the wiring's proof");
 }
 
 console.log("\n=== CSS<->JS cross-checks (the hand-mirror cannot drift — MECH M7 kin) ===");

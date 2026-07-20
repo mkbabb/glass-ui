@@ -342,6 +342,23 @@ console.log("\n=== the pass-4 cures (A4/A5 grammar · n3 law-20 · n4 hygiene ·
   check("D7 fence: clamped session height (px)", ext.height, 352.87, 352.89, "[D7] 46 + gClamp·274 at grow=0 — the session-phase extent");
   check("CSS dock top fixed (300px)", bool(/\.blackdock \{[^}]*top: 300px/.test(css)), 1, 1, "[STRUCT] the fence arithmetic anchors here");
   console.log(`      D7 probe fence @ gClamp=${ASM.dock.gClamp}: x strictly outside [center−${ext.halfW.toFixed(1)}, center+${ext.halfW.toFixed(1)}]px · y strictly outside [300, ${(300 + ext.height).toFixed(1)}]px (phone frame; drawer adds grow·${ASM.drawer.GROW.travelPx}px)`);
+  // D8 — the paint-path integrator (16.7ms rAF ticks) must land the CERTIFIED
+  // intrinsic overshoot: the old single-step Euler painted 1.74% against the
+  // 4.15% certification (the sim/paint gap's dominant modelable term).
+  {
+    const s = ASM.makeSpring(ASM.presets.panel, 0, 0);
+    let t = 0, peak = 0;
+    while (t < 2) { s.step(1, 1 / 60); t += 1 / 60; peak = Math.max(peak, s.x); }
+    check("D8: paint-dt overshoot == certified (|delta|)", Math.abs(peak - 1 - ASM.sims.springStats("panel").overshoot), 0, 0.002, "[D8 cure] 60fps ticks substep to the certification rate — a single-step revert reads 2.4pp low and FAILS");
+  }
+
+  // [P4-AGG A2 cure 2026-07-19] the D2 age-out on BOTH release estimators — the
+  // prune-in-move-only boxcar replays pre-hold velocity unless release ages it.
+  console.log("\n--- the D2 still-hold age-out (A2 cure) ---");
+  check("stillHoldMs token in the D2 band", ASM.dock.stillHoldMs, 80, 300, "[D2 law] a still finger's velocity is ZERO; morphdock ships 120");
+  const ageOuts = (code.match(/performance\.now\(\) - b\.t > ASM\.dock\.stillHoldMs\) v = 0/g) || []).length;
+  check("BOTH organ releases age the boxcar", ageOuts, 2, 2, "[A2] Organ A purchase + Organ B commit — the false-commit class is wiring-locked out");
+  check("no direct hud writes outside hudSay", (code.match(/hud\.textContent/g) || []).length, 1, 1, "[minor-5] only hudSay touches the DOM — the ?hud=0 vow holds on every path");
 }
 
 console.log(failures === 0 ? "\nALL CHECKS PASS" : `\n${failures} CHECK(S) FAILED`);

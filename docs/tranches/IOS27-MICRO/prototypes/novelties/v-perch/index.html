@@ -26,7 +26,7 @@
 <style>
   :root {
     --engage-t: 0;      /* the perch's charge envelope (FAC --engage-t shape) */
-    --perch-seat: 8.2px; /* stamped from PERCH.seatOffset(28) at load — checked equal */
+    --perch-seat: 8.2px; /* load default = the round-paint apex; JS restamps from PERCH.seatOffset(R, n) at the AUTHORED shape (R-9) */
     --content-ms: 170;   /* the content-first exit (MARKS §5 ~170ms class) */
     --beat-ms: 140;
     --medium-relax-ms: 420;
@@ -75,7 +75,8 @@
      .perch: the chrome plane, a SIBLING of the plate — never inside the clip. */
   .surface-root { position: absolute; left: 40px; right: 40px; top: 190px; z-index: 2; }
   .plate {
-    border-radius: 28px; padding: 22px; overflow: hidden; /* the plate clip */
+    border-radius: 28px; corner-shape: squircle; /* AUTHORED (R-9): n = 4 where it paints; round where dropped */
+    padding: 22px; overflow: hidden; /* the plate clip */
     background: linear-gradient(180deg, rgba(44, 56, 60, 0.52), rgba(24, 32, 36, 0.66));
     -webkit-backdrop-filter: blur(22px) saturate(1.35);
     backdrop-filter: blur(22px) saturate(1.35);
@@ -163,11 +164,17 @@ const PERCH = {
   R: 28,            // the plate's corner radius (role: card/sheet, codex law 4 band R28-40)
   VISUAL: 30,       // the perch dot diameter
   HIT: 44,          // the hit target — never below 44 (the accessibility floor)
-  SQUIRCLE_K: 1,    // superellipse correction; 1 = circular arc (true squircle QUEUED-PAINT)
-  // the corner point: r(1 - 1/sqrt(2)) from each edge, ON the border arc at 45deg
-  seatOffset(r = this.R, k = this.SQUIRCLE_K) { return k * r * (1 - 1 / Math.SQRT2); },
-  // how far the visual dot extends OUTSIDE the plate's box along each axis
-  protrusion() { return this.VISUAL / 2 - this.seatOffset(); },
+  N_SQUIRCLE: 4,    // the authored corner exponent (corner-shape: squircle)
+  N_ROUND: 2,       // the circular-arc read where the declaration drops
+  // [P4-AGG D1 cure 2026-07-19 — CHARTER R-9 as re-ruled [P3-AGG]] seat = the corner-curve
+  // APEX via R·(1 − 2^(−1/n)), EXACT — derived geometry, no magic numbers; n derives from
+  // the AUTHORED corner shape per engine (the plate authors corner-shape: squircle —
+  // engines that paint it seat n=4 at 4.46px; engines that drop the declaration paint
+  // round and honestly seat n=2 at 8.20px). The old squircle-correction knob
+  // (k·r·(1−1/√2)) is DELETED — a band fork wearing a constant's clothes.
+  seatOffset(r = this.R, n = this.N_ROUND) { return r * (1 - Math.pow(2, -1 / n)); },
+  // how far the visual dot extends OUTSIDE the plate's box along each axis (derived)
+  protrusion(n = this.N_ROUND) { return this.VISUAL / 2 - this.seatOffset(this.R, n); },
   // charge envelope: attack 55ms (t90 ~127ms), drain 120ms (t10 ~276ms — a felt cancel)
   env: { tauUp: 0.055, tauDown: 0.12, eps: 1e-3 },
   envStep(e, target, dt) {
@@ -260,8 +267,14 @@ const PERCH = {
   const press = PERCH.makePress();
   let e = 0, target = 0, raf = 0, last = 0;
 
-  // stamp the seat from the physics (single source; check.mjs verifies the equality)
-  root.style.setProperty("--perch-seat", `${PERCH.seatOffset().toFixed(1)}px`);
+  // stamp the seat from the physics at the AUTHORED shape (single source; R-9: n per
+  // engine — squircle where it paints, round where the declaration drops)
+  {
+    const plateEl = document.querySelector(".plate");
+    const painted = plateEl ? String(getComputedStyle(plateEl).cornerShape || "") : "";
+    const seatN = painted.includes("squircle") ? PERCH.N_SQUIRCLE : PERCH.N_ROUND;
+    root.style.setProperty("--perch-seat", `${PERCH.seatOffset(PERCH.R, seatN).toFixed(2)}px`);
+  }
 
   function tick(now) {
     const dt = Math.min(0.05, (now - last) / 1000); last = now;

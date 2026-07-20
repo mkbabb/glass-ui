@@ -509,7 +509,8 @@ console.log("\n=== M-1/D2 — park-mid-scrub stale velocity (MARKS C1: a still f
       "drive-time aging ≡ the closed-form idle law — park cannot freeze the estimator");
     for (let i = 0; i < 720 && !kern.isParked(); i++) clk.step();
     const peak = Math.max(...peaks);
-    check("still hold: geometry peak", peak, B.shPeak.lo, B.shPeak.hi, `${B.shPeak.label} — pre-cure 1.0401`);
+    check("still hold: geometry peak", peak, B.shPeak.lo, B.shPeak.hi,
+      `${B.shPeak.label} — pre-cure 1.0401; NOTE the park epsilon (|x−t|<0.0015, |v|<0.02) snaps ~0.0004 off the 1.00111 analytic peak — this figure is trajectory+park, not pure trajectory (P4-AGG minor-4 disclosure)`);
   }
   // (b) the falsifiability guard — NO hold: bought velocity must still buy overshoot
   {
@@ -613,6 +614,13 @@ console.log("\n=== M-2 — domain.wells: the catch scheduler is kernel-owned (G3
     for (let i = 0; i < 720 && !kern.isParked(); i++) clk.step();
     check("no wells: passthrough (no phantom catch)", inert && kern.isParked() ? 1 : 0, 1, 1,
       "an undeclared domain costs nothing — the fence's letter holds");
+  }
+  // (e) [P4-AGG minor-3 cure 2026-07-19] unimplemented domain keys are FENCED, never silent
+  {
+    let threw = 0;
+    try { mk({ geometry: { law: "identity" } }, { wells: [], rubber: {} }); } catch (e) { threw = 1; }
+    check("domain fence: unimplemented keys THROW", threw, 1, 1,
+      "rubber/mu/tCommit/detents are CONTRACT-ONLY until adoption — fence-consistent with the sat×source throw; this repo's silent-no-op history says the seam carries the fence, not the docs");
   }
 }
 

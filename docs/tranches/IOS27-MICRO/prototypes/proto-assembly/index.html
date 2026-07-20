@@ -453,12 +453,14 @@ const ASM = {
     const w = this.omega(p), z = zetaOverride === null ? p.zeta : zetaOverride;
     let x = x0, v = v0;
     return {
-      // [P4-ASSEMBLY, D8 cure] fixed substeps (<=1/240s): a 16.7ms Euler step
-      // under-integrates the panel overshoot (the sim/paint gap's dominant
-      // modelable term — measured, see PASS-4/cures-assembly.md); the paint
-      // integrator now converges on the battery's (dt<=1/240 is unchanged).
+      // [P4-ASSEMBLY, D8 cure] fixed substeps (h <= 1/2400s): the old single
+      // Euler step per 16.7ms rAF tick painted 1.74% panel overshoot against
+      // the certified 4.15% — ledger D8's dominant modelable term (MEASURED:
+      // 240Hz substeps read 3.59%, 960 -> 4.06%, 2400 -> 4.15% at 60fps ticks;
+      // PASS-4/cures-assembly.md). The paint path integrates at the battery's
+      // own certification rate; the check.mjs convergence gate fails a revert.
       step(target, dt) {
-        let n = Math.max(1, Math.ceil(dt * 240));
+        let n = Math.max(1, Math.ceil(dt * 2400));
         const h = dt / n;
         while (n--) { const a = -2 * z * w * v - w * w * (x - target); v += a * h; x += v * h; }
         return x;
@@ -490,6 +492,11 @@ const ASM = {
     // [P4-ASSEMBLY, n4 cure] the hand literals become tokens:
     gClamp: 1.12,                            // scrub/overshoot headroom ~ k*v at a hot (~5/s) release
     release: { underG: 0.35, underV: 0.5 },  // under-thrown: below both, return to pill
+    // [P4-AGG A2 cure 2026-07-19] the D2 law: a still finger's velocity is ZERO.
+    // Both organs prune their boxcars only in pointermove; the RELEASE must age the
+    // window by wall clock or a flick-then-freeze replays the pre-hold velocity
+    // (Organ B's consequence is a destructive false commit — the convicted class).
+    stillHoldMs: 120,
     // [P4-ASSEMBLY, D7] the dock's maximal painted extent at the clamp — the
     // world-dim probe rects must sit STRICTLY OUTSIDE this fence (the lossless
     // re-run's printed arithmetic originates here, not in a hand estimate).
@@ -930,7 +937,7 @@ const ASM = {
 
   function initVars() {
     writeG(0); writeGrow(0);
-    setVar(dock, "--asm-lean", "0"); // (--asm-level deleted, n4 cure: written-never-consumed; the HUD prints the level for the QP-3 correlate)
+    setVar(dock, "--asm-lean", "0"); // (the dead level scalar is deleted — n4 cure: written-never-consumed; the HUD prints the level for the QP-3 correlate)
     setVar(dock, "--asm-session", "0");
     for (let i = 1; i <= 5; i++) setVar(dock, `--sec-p-${i}`, "0");
     for (let i = 1; i <= 3; i++) setVar(dock, `--crest-s-${i}`, "0.02");
@@ -1073,6 +1080,7 @@ const ASM = {
     const a = samples[0], b = samples[samples.length - 1];
     let v = 0;
     if (b && a && b.t > a.t) v = ((b.y - a.y) / G_TRAVEL) / ((b.t - a.t) / 1000); // growth-fraction/s
+    if (b && performance.now() - b.t > ASM.dock.stillHoldMs) v = 0; // [P4-AGG A2] a still finger's velocity is ZERO (the D2 age-out)
     if (g < ASM.dock.release.underG && v < ASM.dock.release.underV) { // under-thrown: return to pill on the same register
       gTarget = 0;
       gSpring = ASM.makeSpring(ASM.presets.dock, g, Math.min(0, v));
@@ -1217,6 +1225,7 @@ const ASM = {
     const a = vSamples[0], b = vSamples[vSamples.length - 1];
     let v = 0;
     if (b && a && b.t > a.t) v = ((-(b.x - a.x) - (b.y - a.y)) / ASM.handoff.TRAVEL) / ((b.t - a.t) / 1000);
+    if (b && performance.now() - b.t > ASM.dock.stillHoldMs) v = 0; // [P4-AGG A2] no false COMMIT from a dead-still hold (the D2 age-out)
     if (vd >= ASM.handoff.commitAt.d || v > ASM.handoff.commitAt.v) {
       cardRoot.dispatchEvent(new CustomEvent("vapor-handoff", { bubbles: true, detail: { v: Math.max(0, v) } }));
     } else { // return: drain the dissolve on the release clock (no landing drama)
@@ -1241,7 +1250,7 @@ const ASM = {
     driveCharge(0);
     if (prm.matches) { // PRM: single-step removal, state relayed
       writeVapT(1); mediumWriter.relax(true); cardZone.classList.add("closed");
-      hud.textContent = "card dismissed (PRM step)";
+      hudSay("card dismissed (PRM step)"); // [P4-AGG minor-5] the ?hud=0 vow holds on every path
       return;
     }
     const h = ASM.handoff;
@@ -1284,7 +1293,7 @@ const ASM = {
     cardZone.classList.remove("committing", "closed");
     mediumWriter.relax(false); // the ONE writer un-relaxes its own medium
     writeVapT(0); initVars();
-    hud.textContent = "rest · rAF parked";
+    hudSay("rest · rAF parked"); // [P4-AGG minor-5] Reset honors ?hud=0 too
   });
 })();
 </script>

@@ -50,7 +50,11 @@ relax 419ms (τ0.14 · ln20 — judged naked, never beat-summed).
   gesture commit) runs the full ~600ms ladder where the measured exit class is ~170-250ms —
   the re-band is a pass-3 decision on the WebKit video (erosion texture, not duration,
   carries the drama).
-- `?hud=0` silences the HUD for the browser arm's traces (MECH minor 2). Battery now 44.
+- `?hud=0` silences the HUD for the browser arm's traces (MECH minor 2). Battery now 44
+  (**46 as of `[P4-AGG 2026-07-19]` — the D2 still-hold age-out landed: the release ages
+  the boxcar by wall clock (`STILL_HOLD_MS` 120, token + wiring gates); the pass-4
+  reproduced false COMMIT (0.3462 → 1.0000 from a 500ms dead-still hold, both engines)
+  is wiring-locked out; the live re-verify is the lead's named re-run**).
 
 ## QUEUED-PAINT (the serialized browser arm's ledger — video path only)
 

@@ -1,7 +1,8 @@
 # PROBE-NOTES — V-PERCH, the corner-perched close
 
 verified-model: claude-fable-5 (system-context model ID, verbatim). Seat novelty:PROTO-2
-(PROTO-ATTENTION-EXIT), 2026-07-18. Status: RUNS; `node check.mjs` 39/39 PASS at write time.
+(PROTO-ATTENTION-EXIT), 2026-07-18. Status: RUNS; `node check.mjs` 39/39 PASS at write time
+(**43/43 as of `[P4-AGG 2026-07-19]` — the D1 apex-formula cure, §3 finding 3**).
 Files: `index.html` (self-contained), `check.mjs` (extracts the physics block and
 cross-checks every CSS stamp against the physics constants — seat offset, rim ramp, scale
 gain, the three close clocks — single-source discipline, no drifting literals).
@@ -9,9 +10,14 @@ gain, the three close clocks — single-source discipline, no drifting literals)
 ## What the prototype claims to prove
 
 Roster card 6 whole: the dismissal affordance perched ASTRIDE the top-left corner border,
-half outside the surface by construction — the seat is the 45° border point r(1−1/√2) from
-each edge (8.2px at R=28, stamped into CSS from the physics), giving 6.8px of visual
-protrusion past the plate box (inside the D-LENS 6-10px precedent band). The architecture is
+half outside the surface by construction. **`[P4-AGG 2026-07-19 — the D1 cure landed, per
+CHARTER R-9 as re-ruled]`: the seat is the corner-curve APEX, `R·(1−2^(−1/n))` with n from
+the AUTHORED shape per engine — the plate now authors `corner-shape: squircle`, so
+squircle-painting engines seat n=4 at 4.46px (protrusion 10.5px, a derived telltale) and
+engines that drop the declaration seat n=2 at 8.20px (protrusion 6.8px, inside the D-LENS
+6–10px precedent). The old r(1−1/√2)·k parametrization and its correction dial are
+DELETED; battery 39 → 43 (both apex derivations + the authorship lock + the n=4 drift
+lock). The geometric ≤0.5px paint gate is the lead's named re-run.** The architecture is
 the F5 plane vocabulary, node-proven structurally: the plate owns its clip
 (`overflow:hidden`), the surface-root never clips, and the perch is a SIBLING of the plate
 (div nesting depth returns to zero before the button — chrome escapes by construction, not by
@@ -46,11 +52,12 @@ runs the honest close-order stub (content 170ms → beat 140ms → medium tail ~
 2. **QUEUED-PAINT / the charge register.** Video a press-hold-release and a press-slide-off:
    the rim brightens and the dot swells under the finger (sub-200ms), drains visibly slower on
    cancel. iOS's X does none of this — the charge is the bested claim.
-3. **QUEUED-PAINT / squircle seat (k).** The seat law assumes a circular corner arc (k=1).
-   Against a true squircle plate (continuous-corner), the 45° border point sits slightly
-   differently; `SQUIRCLE_K` is the correction dial. Judge on the video whether k=1 reads
-   seated ON the border of the CSS `border-radius` arc; tune k only when the library's
-   squircle corners land.
+3. **QUEUED-PAINT / squircle seat — `[P4-AGG 2026-07-19]` REWRITTEN by the D1 cure.** The
+   correction-dial framing is dead (the dial was a band fork). The seat is formula-EXACT
+   at the AUTHORED shape per engine (R-9); the paint row judges the GEOMETRIC gate: the
+   dot's center sits on the corner-curve apex within ≤0.5px on each engine's painted
+   shape (squircle where it paints, round where dropped), with the fraction-outside
+   telltale [0.55, 0.63] read beside it.
 4. **QUEUED-PAINT / handoff composition.** This page runs the close-order STUB. The composed
    organ — perch commit driving ../v-vapor's full 3-layer dissolve — is integration work for
    the campaign's assembly pass; the `vapor-handoff` event is the declared seam.

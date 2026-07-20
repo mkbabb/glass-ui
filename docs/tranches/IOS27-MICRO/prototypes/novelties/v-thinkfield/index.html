@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>V-THINKFIELD — the two-texture thinking grammar + hue-sweep-as-progress</title>
+<!--
+  V-THINKFIELD — NOVELTY-ROSTER row (NEW-U, DESIGN M4-3): the two-texture thinking
+  grammar. STATE is told by TEXTURE, PROGRESS by HUE. Measured basis: MARKS-C-APPS.md
+  :296-302 (intimate size-graded halftone around the input at idle — large/bright
+  adjacent, dissolving to nothing ~400px out, scalloped upper boundary, ~10pt pitch),
+  :315-331 (send bloom sat 0.44->0.69; the hue sweep ~197 deg in 3.6s = ~55 deg/s,
+  MONOTONE, one direction, no dithering; the full-bleed laminar wave-contour field —
+  two textures, two roles; affordances riding IN the field), :344-353 (OUR LANGUAGE).
+
+  THE ONE REFUSAL, kept refused: Gemini FREEZES its idle field (survey diff 0.00 —
+  MARKS-C 8.2). Codex law 11 is our restraint floor: ~7.6pt/s positional drift +
+  +/-20 percent mass breathing over 2-3s at idle, CSS-only, compositor-only — the
+  field NEVER parks while the rAF counter stays at ZERO (the v-dotrel/DESIGN B2
+  pattern; the D3 lesson binds: breath must be PAINT-visible, so it rides the whole
+  halftone layer's opacity, never a hairline).
+
+  OUR LANGUAGE, not Gemini's: the halftone is seeded with OUR aurora particles (the
+  four-point star is Gemini's mark — ours are soft round aurora motes on the house
+  anchors gold/ember/rose/plum); the sweep runs on the oklch wheel over warm-cream /
+  warm-charcoal ground, never dead black; the chroma bloom on send is the measured
+  ~1.5x class. The lattice is V-DOTREL's kin — one substrate family, two textures.
+
+  THE DRAFTING LAW: a generalized thinking-field facility (state-texture register +
+  a progress-hue scalar published on the component root), never a Gemini recreation.
+  Warm cream, deft rounding, our palettes, the ONE warm frosted canon (NOVELTY-ROSTER
+  §3.5-A). No supports-query gate anywhere (the lying-gate law). Zero ambient
+  randomness (mulberry32-seeded — parameter, not sample). ?hud=0 kills the
+  instrumentation; ?theme=night flips the arm.
+-->
+<style>
+  :root {
+    /* §3.5-A canon — light arm */
+    --ground: rgb(250, 246, 236);
+    --world-ink: rgb(64, 56, 46);
+    --tint-a: rgba(250, 246, 236, 0.62);
+    --tint-b: rgba(244, 238, 224, 0.72);
+    --container-blur: 26px; --container-sat: 1.5;
+    --rim: rgba(70, 58, 44, 0.18);
+    --engage-light: hsl(42 85% 88%);
+    --label-ink: rgb(52, 44, 36);
+    /* law-11 idle floor — mirrored by THINKFIELD.tokens (check.mjs cross-checks) */
+    --tf-drift-dist: 48px;   /* one-way drift travel */
+    --tf-drift-dur: 6.3s;    /* 48/6.3 = 7.62 px/s — the law-11 drift register */
+    --tf-breath-dur: 2.6s;   /* +/-20 percent mass over 2-3s */
+    --tf-breath-lo: 0.68;    /* (1-0.68)/(1+0.68) = 0.19 mass amplitude */
+  }
+  [data-theme="night"] {
+    /* §3.5-A canon — dark arm; warm charcoal, R>B, never dead black */
+    --ground: rgb(24, 20, 17);
+    --world-ink: rgb(214, 204, 190);
+    --tint-a: rgba(56, 50, 44, 0.55);
+    --tint-b: rgba(36, 32, 28, 0.68);
+    --container-blur: 22px; --container-sat: 1.35;
+    --rim: rgba(255, 246, 230, 0.14);
+    --label-ink: rgb(244, 238, 226);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    background: var(--ground); color: var(--world-ink);
+    font: 15px/1.45 -apple-system, "SF Pro Text", system-ui, sans-serif;
+    overflow: hidden;
+  }
+  /* the component root — every scalar publishes HERE, never :root (MECH M5) */
+  .stage { position: absolute; inset: 0; --tf-hue: 85; --tf-light: 0; }
+
+  /* a whisper of world so the composer's frost reads (paint-arm food) */
+  .world { position: absolute; inset: 0; }
+  .world .mass { position: absolute; border-radius: 50%; filter: blur(2px); opacity: 0.5; }
+  .world .m1 { width: 40%; height: 30%; left: 4%; top: 8%; background: oklch(0.82 0.07 85); }
+  .world .m2 { width: 34%; height: 26%; right: 6%; top: 16%; background: oklch(0.8 0.07 330); }
+
+  /* ============ texture 1: the idle halftone (intimate, local, breathing) ============
+     Static bitmap — drawn ONCE; no dot ever travels (the law-11 dot-lattice register).
+     Life is CSS-only and compositor-only: the wrap DRIFTS at ~7.6px/s, the canvas
+     BREATHES +/-19 percent mass on an asymmetric 2.6s envelope. rAF stays PARKED. */
+  .halftone-wrap {
+    position: absolute; left: 50%; bottom: 96px; width: 960px; height: 470px;
+    margin-left: -480px; pointer-events: none;
+    animation: tf-drift var(--tf-drift-dur) linear infinite alternate;
+    /* [P4-AGG D9 cure] the think-yield lives HERE: the wrap animates TRANSFORM only,
+       so an opacity declaration (and its transition) actually paints — a child whose
+       opacity is animation-driven can never yield (the paused animation freezes its
+       override; CSS animations beat normal declarations) */
+    transition: opacity 420ms ease-out;
+  }
+  #fieldIdle {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    animation: tf-breath var(--tf-breath-dur) cubic-bezier(0.3, 0, 0.2, 1) infinite;
+    /* no opacity fade lives here — dead under the running breath (D9); the wrap owns the yield */
+  }
+  @keyframes tf-drift {
+    from { transform: translate(0, 0); }
+    to   { transform: translate(var(--tf-drift-dist), calc(var(--tf-drift-dist) * -0.35)); }
+  }
+  @keyframes tf-breath {
+    /* fast rise, slow decay — peak at 38 percent of the cycle; floor NEVER zero */
+    0%   { opacity: var(--tf-breath-lo); }
+    38%  { opacity: 1; }
+    100% { opacity: var(--tf-breath-lo); }
+  }
+  .stage.thinking .halftone-wrap { animation-play-state: paused; opacity: 0; } /* the yield — on the UN-opacity-animated wrap (D9) */
+  .stage.thinking #fieldIdle { animation-play-state: paused; }
+
+  /* ============ texture 2: the thinking wave field (full-bleed, hue = progress) ==== */
+  #fieldThink {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    opacity: 0; transition: opacity 600ms ease-out; pointer-events: none;
+  }
+  .stage.thinking #fieldThink { opacity: 1; }
+
+  /* ============ the composer — the one glass body (§3.5-A) ============ */
+  .composer {
+    position: absolute; left: 50%; bottom: 40px; transform: translateX(-50%);
+    width: 560px; height: 56px; border-radius: 28px;      /* capsule: r = h/2 */
+    background: linear-gradient(180deg, var(--tint-a), var(--tint-b));
+    -webkit-backdrop-filter: blur(var(--container-blur)) saturate(var(--container-sat));
+    backdrop-filter: blur(var(--container-blur)) saturate(var(--container-sat));
+    box-shadow: inset 0 0 0 1px var(--rim);
+    display: flex; align-items: center; gap: 12px; padding: 0 8px 0 22px;
+  }
+  /* engagement light — law 20 envelope, hsl(42) cream, ZERO idle term */
+  .composer::after {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    background: radial-gradient(130% 170% at 50% 115%, var(--engage-light), transparent 60%);
+    opacity: calc(var(--tf-light, 0) * 0.30);
+  }
+  .composer .ghost { flex: 1; opacity: 0.55; color: var(--label-ink); font-size: 15px; }
+  .composer button.send {
+    position: relative;
+    width: 40px; height: 40px; border-radius: 50%; border: 0; cursor: pointer; /* circle = tap target */
+    background: linear-gradient(180deg, var(--tint-b), var(--tint-a));
+    box-shadow: inset 0 0 0 1px var(--rim); color: var(--label-ink);
+    /* longhands — a CSS-wide keyword is invalid inside the font shorthand and drops
+       the whole declaration in both engines ([P4-AGG] CRIT-ASSEMBLY minor 1) */
+    font-family: inherit; font-size: 16px; font-weight: 700; line-height: 40px;
+  }
+  /* [P4-AGG minor-2 cure — C-MUSIC mark 1] the pressed control's OWN light leads its
+     own change: --tf-light is element-scoped (stamped on the control by makeHoldLight);
+     send's press blooms send + its composer (one control family, one subtree) */
+  .composer button.send::after {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    background: radial-gradient(120% 140% at 50% 110%, var(--engage-light), transparent 62%);
+    opacity: calc(var(--tf-light, 0) * 0.35);
+  }
+
+  /* the interrupt affordance RIDES the field — floating IN the color, tinted by the
+     progress hue itself (one scalar, consumed by DOM furniture and canvas alike) */
+  .chip {
+    position: absolute; left: 50%; bottom: 130px; transform: translateX(-50%) translateY(8px);
+    border: 0; cursor: pointer; border-radius: 19px; height: 38px; padding: 0 18px;
+    background: linear-gradient(180deg, var(--tint-a), var(--tint-b));
+    -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+    box-shadow: inset 0 0 0 1px oklch(0.62 0.13 var(--tf-hue) / 0.55);
+    color: var(--label-ink);
+    font-family: inherit; font-size: 13px; font-weight: 600; line-height: 38px;
+    opacity: 0; visibility: hidden; transition: opacity 300ms ease-out, transform 300ms ease-out;
+  }
+  .chip::before {
+    /* the chip's OWN press light ([P4-AGG minor-2] — never the composer 90px away) */
+    content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    background: radial-gradient(120% 160% at 50% 115%, var(--engage-light), transparent 60%);
+    opacity: calc(var(--tf-light, 0) * 0.35);
+  }
+  .stage.thinking .chip.armed { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+
+  .hud {
+    position: fixed; left: 16px; bottom: 10px; z-index: 9;
+    font: 11px/1.5 ui-monospace, Menlo, monospace; opacity: 0.85; white-space: pre;
+  }
+  .controls { position: fixed; right: 16px; top: 12px; z-index: 9; display: flex; gap: 8px; }
+  .controls button {
+    border: 1px solid var(--rim); background: var(--tint-b); color: var(--label-ink);
+    border-radius: 14px; padding: 6px 12px; cursor: pointer;
+    font-family: inherit; font-size: 12px; font-weight: 600; line-height: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    /* PRM: single-step state relay — texture still tells the state; motion removed */
+    .halftone-wrap, #fieldIdle { animation: none; }
+    .halftone-wrap, #fieldThink, .chip { transition: none; }
+  }
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+  <div class="world" aria-hidden="true"><div class="mass m1"></div><div class="mass m2"></div></div>
+  <canvas id="fieldThink" aria-hidden="true"></canvas>
+  <div class="halftone-wrap" aria-hidden="true"><canvas id="fieldIdle"></canvas></div>
+  <button class="chip" id="chip">answer now</button>
+  <div class="composer" id="composer">
+    <span class="ghost">Ask the field…</span>
+    <button class="send" id="send" aria-label="send — the field starts thinking">↑</button>
+  </div>
+</div>
+<div class="controls">
+  <button id="btnTheme">theme</button>
+</div>
+<div class="hud" id="hud">idle · rAF parked</div>
+
+<script>
+/*THINKFIELD-PHYSICS-BEGIN*/
+const THINKFIELD = (() => {
+  // Every constant here is the page's ONLY source — check.mjs extracts this block and
+  // cross-checks the CSS mirrors. Bands cite MARKS-C-APPS / IOS27-CODEX laws.
+  const tokens = {
+    // hue-sweep-as-progress (MARKS-C 8.3: ~197 deg in 3.6s = ~55 deg/s, MONOTONE)
+    sweepDegPerS: 55,
+    sweepRef: { ms: 3600 },
+    hue0: 85,                                   // departure at our warm gold anchor
+    // the oklch wheel, per arm — over warm ground, never dead black (declared divergence)
+    ink: { light: { L: 0.60, C: 0.115 }, night: { L: 0.74, C: 0.125 } },
+    chroma: { idle: 0.055, think: 0.085 },      // send bloom ~1.55x (sat 0.44->0.69 class)
+    // law 11 — the idle floor (the refused Gemini freeze)
+    drift: { distPx: 48, durS: 6.3 },           // 48/6.3 = 7.62 px/s positional drift
+    breath: { lo: 0.68, hi: 1.0, periodS: 2.6, peakAt: 0.38 }, // ~+/-19 percent mass, 2-3s, fast-rise
+    // the idle halftone (MARKS-C 8.1, re-derived with OUR aurora motes)
+    halftone: { pitch: 10, extent: 400, rMax: 3.4, scallopAmp: 26, scallopN: 5 },
+    auroraHues: [85, 55, 20, 330],              // gold / ember / rose / plum — house anchors
+    idleMoteL: { light: 0.58, night: 0.78 },    // mote lightness per arm ([P4-AGG minor-4] tokened, not hand-inlined)
+    seed: 7,
+    // the interrupt chip (law 20 + the light-first press-ack, MARKS-C-MUSIC mark 1)
+    lightLeadMs: 50,
+    envelope: { attackTau: 0.0695, releaseTau: 0.1086 },
+    chipInMs: 400,
+    // wave-field anatomy (the thinking texture)
+    ridges: 3, linesPerRidge: 7,
+    prmHueStepDeg: 30,                          // PRM: progress relays in quanta, no sweep
+  };
+  const T = tokens;
+
+  // deterministic PRNG — parameter, not sample (the H-VOICE P2 law)
+  function mulberry32(seed) {
+    let a = seed >>> 0;
+    return () => {
+      a |= 0; a = (a + 0x6d2b79f5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  // ---- the sweep: monotone, one direction, ~55 deg/s ----
+  function sweepSim(ms = T.sweepRef.ms, fps = 60) {
+    const dt = 1 / fps, n = Math.round((ms / 1000) * fps);
+    let h = T.hue0, prev = h, maxBackStep = 0;
+    for (let i = 0; i < n; i++) {
+      h += T.sweepDegPerS * dt;
+      if (h < prev) maxBackStep = Math.max(maxBackStep, prev - h);
+      prev = h;
+    }
+    return { travel: h - T.hue0, maxBackStep, degPerS: (h - T.hue0) / (ms / 1000) };
+  }
+
+  // ---- law-11 idle floor arithmetic ----
+  function idleFloor() {
+    const driftPxPerS = T.drift.distPx / T.drift.durS;
+    const massAmp = (T.breath.hi - T.breath.lo) / (T.breath.hi + T.breath.lo);
+    return { driftPxPerS, massAmp, floor: T.breath.lo, periodS: T.breath.periodS, peakAt: T.breath.peakAt };
+  }
+
+  // ---- the halftone gradient laws (size by distance; scalloped boundary) ----
+  function effExtent(x, w = 960) {
+    // the upper boundary is a scalloped WAVE, never a straight fade (MARKS-C 8.1)
+    return T.halftone.extent - T.halftone.scallopAmp * (0.5 + 0.5 * Math.sin((x / w) * 2 * Math.PI * T.halftone.scallopN));
+  }
+  function sizeGain(d, eff = T.halftone.extent) {
+    if (d >= eff) return 0;
+    const u = 1 - d / eff;
+    return Math.pow(u, 1.6);                    // large/bright adjacent -> nothing at the extent
+  }
+  function scallopSpan(w = 960) {
+    let lo = Infinity, hi = -Infinity;
+    for (let x = 0; x <= w; x += 4) { const e = effExtent(x, w); lo = Math.min(lo, e); hi = Math.max(hi, e); }
+    return hi - lo;                              // == scallopAmp by construction, measured anyway
+  }
+  function lattice(w = 960, h = 470, ax = 480, ay = 470, seed = T.seed) {
+    // hex lattice at ~10px pitch, anchored on the input; deterministic hue/jitter picks
+    const rnd = mulberry32(seed), pts = [];
+    const dy = T.halftone.pitch * 0.866;
+    for (let row = 0, y = h - 6; y > 0; y -= dy, row++) {
+      const off = row % 2 ? T.halftone.pitch / 2 : 0;
+      for (let x = off; x <= w; x += T.halftone.pitch) {
+        const d = Math.hypot(x - ax, y - ay);
+        const g = sizeGain(d, effExtent(x, w));
+        if (g <= 0) continue;
+        pts.push({ x, y, r: T.halftone.rMax * g, hue: T.auroraHues[Math.floor(rnd() * 4) % 4], a: 0.25 + 0.65 * g, j: rnd() });
+      }
+    }
+    return pts;
+  }
+
+  // ---- the send bloom ----
+  function bloomRatio() { return T.chroma.think / T.chroma.idle; }
+
+  // ---- law 20 envelope + the light-first press-ack (the shared house class) ----
+  function envelope() {
+    const attackT90 = T.envelope.attackTau * Math.log(10) * 1000;
+    const releaseT90 = T.envelope.releaseTau * Math.log(10) * 1000;
+    const sustainAt2s = 1 - Math.exp(-2 / T.envelope.attackTau);
+    return { attackT90, releaseT90, sustainAt2s, lightLeadMs: T.lightLeadMs, idle: 0 };
+  }
+
+  // ---- PRM: progress relays in coarse quanta, single-step, no sweep ----
+  function prmQuant(hueUnwrapped) { return Math.round(hueUnwrapped / T.prmHueStepDeg) * T.prmHueStepDeg; }
+
+  // ---- the two textures, by construction (the descriptors the page implements) ----
+  const textures = {
+    idle:  { fullBleed: 0, extentPx: T.halftone.extent, travelingParticles: 0 }, // static lattice, envelope life only
+    think: { fullBleed: 1, ridges: T.ridges },
+  };
+
+  return { tokens, mulberry32, sweepSim, idleFloor, effExtent, sizeGain, scallopSpan, lattice, bloomRatio, envelope, prmQuant, textures };
+})();
+/*THINKFIELD-PHYSICS-END*/
+
+(() => {
+  const TF = THINKFIELD, T = TF.tokens;
+  const HUD = !/[?&]hud=0/.test(location.search);
+  if (/[?&]theme=night/.test(location.search)) document.documentElement.dataset.theme = "night";
+  const prm = matchMedia("(prefers-reduced-motion: reduce)");
+  const stage = document.getElementById("stage");
+  const hud = document.getElementById("hud");
+  const chip = document.getElementById("chip");
+  const idleCv = document.getElementById("fieldIdle");
+  const thinkCv = document.getElementById("fieldThink");
+  const dpr = Math.min(2, window.devicePixelRatio || 1);
+  let rafCount = 0, rafLive = false, rafId = 0;
+  let hueU = T.hue0, thinking = false, thinkT0 = 0;
+
+  const arm = () => (document.documentElement.dataset.theme === "night" ? "night" : "light");
+
+  function say(extra = "") {
+    if (!HUD) return;
+    hud.textContent =
+      `${rafLive ? "rAF live" : "rAF parked"} · rafCount ${rafCount} · texture ${thinking ? "WAVE (thinking)" : "HALFTONE (idle)"}` +
+      `\n--tf-hue ${(((hueU % 360) + 360) % 360).toFixed(1)} · sweep token ${T.sweepDegPerS} deg/s (the PAINTED rate is the paint arm's row, never this echo)` +
+      (extra ? `\n${extra}` : "");
+  }
+
+  // one shared event-window conductor — rAF runs only while a clock is live, then parks
+  const live = new Set();
+  function ensureRaf() {
+    if (rafLive) return;
+    rafLive = true; say();
+    let prev = performance.now();
+    const tick = (now) => {
+      rafCount++;
+      const dt = Math.min(0.05, (now - prev) / 1000); prev = now;
+      for (const fn of [...live]) fn(dt, now);
+      if (live.size) rafId = requestAnimationFrame(tick);
+      else { rafLive = false; rafId = 0; say(); }
+    };
+    rafId = requestAnimationFrame(tick);
+  }
+  function drive(fn) { live.add(fn); ensureRaf(); return () => live.delete(fn); }
+
+  function sizeCanvas(cv) {
+    const r = cv.getBoundingClientRect();
+    const W = Math.round(r.width * dpr), H = Math.round(r.height * dpr);
+    if (cv.width !== W || cv.height !== H) { cv.width = W; cv.height = H; } // [P4-AGG minor-4] realloc only on resize, never per frame
+    const ctx = cv.getContext("2d"); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return { ctx, w: r.width, h: r.height };
+  }
+
+  // ---------- texture 1: the idle halftone — drawn ONCE, then CSS carries the life ----------
+  function paintIdle() {
+    const { ctx, w, h } = sizeCanvas(idleCv);
+    ctx.clearRect(0, 0, w, h);
+    const a = arm();
+    const L = T.idleMoteL[a]; // [P4-AGG minor-4] the one paint constant the mirror locks can see now
+    const pts = TF.lattice(w, h, w / 2, h, T.seed);
+    for (const p of pts) {
+      ctx.fillStyle = `oklch(${L} ${(T.chroma.idle * (0.7 + 0.6 * p.j)).toFixed(3)} ${p.hue} / ${p.a.toFixed(3)})`;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
+    }
+    say(`halftone: ${pts.length} motes · pitch ${T.halftone.pitch}px · extent ${T.halftone.extent}px (scalloped)`);
+  }
+
+  // ---------- texture 2: the thinking wave field — hue IS the progress ----------
+  function paintThink(elapsedS, bloomT) {
+    const { ctx, w, h } = sizeCanvas(thinkCv);
+    ctx.clearRect(0, 0, w, h);
+    const a = arm(), ink = T.ink[a];
+    const C = T.chroma.idle + (T.chroma.think - T.chroma.idle) * bloomT;
+    const hue = ((hueU % 360) + 360) % 360;
+    for (let rdg = 0; rdg < T.ridges; rdg++) {
+      const baseY = h * (0.22 + 0.24 * rdg);
+      const hueOff = [0, 18, -14][rdg];
+      const amp1 = 26 + 14 * rdg, amp2 = 12 + 6 * rdg;
+      for (let ln = 0; ln < T.linesPerRidge; ln++) {
+        const yOff = ln * 13;
+        const alpha = (0.30 - 0.032 * ln) * (rdg === 0 ? 1 : 0.8);
+        ctx.strokeStyle = `oklch(${ink.L} ${C.toFixed(3)} ${(hue + hueOff + 360) % 360} / ${Math.max(0.04, alpha).toFixed(3)})`;
+        ctx.lineWidth = 1.4;
+        ctx.beginPath();
+        for (let x = -10; x <= w + 10; x += 7) {
+          const ph = elapsedS * 0.12 * (1 + rdg * 0.4);
+          const y = baseY + yOff
+            + amp1 * Math.sin(x * 0.006 + ph + rdg * 2.1 + ln * 0.13)
+            + amp2 * Math.sin(x * 0.013 - ph * 1.7 + ln * 0.31);
+          x < 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+      }
+    }
+  }
+
+  function publishHue() { stage.style.setProperty("--tf-hue", (((hueU % 360) + 360) % 360).toFixed(2)); }
+
+  // ---------- the session ----------
+  let stopThink = null, chipTimer = 0;
+
+  // [P4-AGG A5/A6 cure — law 20 verbatim, the assembly makeHoldLight pattern]
+  // Engagement light is STATE: attack on down, SUSTAIN while held, release on
+  // up/cancel on the envelope's OWN clock. The scalar is ELEMENT-scoped (stamped on
+  // the control itself), so the pressed control's own surface leads its own change
+  // (C-MUSIC mark 1 — never a body 90px away). PRM: instant set/unset, NO rAF drive.
+  function makeHoldLight(el, scalarHost = el) {
+    let x = 0, held = false, stop = null;
+    const stamp = () => scalarHost.style.setProperty("--tf-light", x.toFixed(4));
+    return {
+      down() {
+        held = true;
+        if (prm.matches) { x = 1; stamp(); return; }
+        stop?.();
+        const s = drive((dt) => {
+          if (held) x += (1 - x) * (dt / T.envelope.attackTau);
+          else {
+            x *= Math.exp(-dt / T.envelope.releaseTau);
+            if (x < 0.01) { x = 0; stamp(); return s(); }
+          }
+          stamp();
+        });
+        stop = s;
+      },
+      up() {
+        held = false;
+        if (prm.matches) { x = 0; stamp(); }
+      },
+    };
+  }
+
+  function think() {
+    if (thinking) return;
+    thinking = true; thinkT0 = performance.now();
+    stage.classList.add("thinking");
+    chipTimer = setTimeout(() => chip.classList.add("armed"), T.chipInMs);
+    if (prm.matches) {
+      // PRM single-step: the texture relays the state in ONE still frame; the hue
+      // holds at a coarse quantum — motion removed, state told (the one-flip law)
+      hueU = TF.prmQuant(hueU); publishHue(); paintThink(0, 1); say("PRM still-step: thinking");
+      return;
+    }
+    stopThink = drive((dt, now) => {
+      hueU += T.sweepDegPerS * dt;                     // MONOTONE — one direction, no dithering
+      publishHue();
+      const el = (now - thinkT0) / 1000;
+      const bloomT = Math.min(1, el / 0.6);            // the send bloom: chroma idle->think over ~600ms
+      paintThink(el, bloomT);
+      if (rafCount % 12 === 0) say();
+    });
+  }
+  function answer() {
+    if (!thinking) return;
+    thinking = false;
+    clearTimeout(chipTimer); chip.classList.remove("armed");
+    stage.classList.remove("thinking");
+    stopThink?.(); stopThink = null;
+    say("answered — the field returns to the idle halftone; rAF parks");
+  }
+
+  // the interrupt affordance rides the field. [P4-AGG A5 cure] the press is a HELD
+  // state: attack from DOWN (the chip's own light), sustain while held, release on
+  // up/cancel on the envelope's own clock; the COMMIT lands on UP INSIDE the target —
+  // never on down, never on a lost pointer — and never before the ~50ms light lead.
+  const chipLight = makeHoldLight(chip);
+  let chipT0 = 0;
+  chip.addEventListener("pointerdown", (e) => {
+    chip.setPointerCapture(e.pointerId);
+    chipT0 = performance.now();
+    chipLight.down();
+  });
+  chip.addEventListener("pointerup", (e) => {
+    chipLight.up();
+    const r = chip.getBoundingClientRect();
+    const inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+    if (!inside) return; // slid off — the press drains, never commits
+    const lead = Math.max(0, T.lightLeadMs - (performance.now() - chipT0));
+    setTimeout(() => answer(), lead); // the light has led by >= lightLeadMs (mark-1 grammar)
+  });
+  chip.addEventListener("pointercancel", () => chipLight.up()); // a lost pointer NEVER commits
+
+  const sendEl = document.getElementById("send");
+  const sendLight = makeHoldLight(sendEl, document.getElementById("composer"));
+  sendEl.addEventListener("pointerdown", () => sendLight.down());
+  ["pointerup", "pointercancel"].forEach((n) => sendEl.addEventListener(n, () => sendLight.up()));
+  sendEl.addEventListener("click", think);
+  document.getElementById("btnTheme").addEventListener("click", () => {
+    document.documentElement.dataset.theme = document.documentElement.dataset.theme === "night" ? "" : "night";
+    paintIdle(); if (thinking && prm.matches) paintThink(0, 1);
+  });
+  window.addEventListener("resize", () => { paintIdle(); });
+
+  publishHue();
+  paintIdle(); // the still lattice — the CSS breath + drift live ABOVE it, rAF parked
+  say();
+})();
+</script>
+</body>
+</html>

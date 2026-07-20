@@ -255,7 +255,7 @@ trace stays TOOL-DEFER (§4).
 |---|---|---|
 | U6 | Safari invalidation symmetry + backdrop re-sample cost | NARROWED: asymmetry measured (27×), abs()/max() computes (U6a CLOSED), material frosts under modulation (U6b video evidence); residue = the re-raster TRACE, TOOL-DEFER (desktop Safari Instruments) |
 | U7 | universal gain k feel + [P2] the G11 perceptual discrimination pair (flick vs fling readable from field channels alone) | OPEN — queued paint pair (reverify §F4) + the DesignSync feel lane |
-| U8 | scroll close edge | CLOSED — debounce-primary is cross-engine law (Chrome 10/10, WebKit 89/89), cure landed in the prototype, gated (U-SCROLL); paint re-run queued |
+| U8 | scroll close edge | CLOSED — debounce-primary is cross-engine law (Chrome 10/10, WebKit 89/89), cure landed in the prototype, gated (U-SCROLL); paint re-run LANDED AND CLOSED both engines: peak E 0.88–0.96, the channel closes by the debounce edge, never scrollend mid-gesture (`../../PASS-2/reverify.md:49-51`). **PROMOTED TO CONSTELLATION LAW `[P4-COVERAGE 2026-07-19]`: every scroll channel in every family closes debounce-primary, with `scrollend` honored only quiet-confirmed (`../../PASS-2/safari-arm.md:143-145`; NOVELTY-ROSTER §1 carries it as standing law). The decision is DONE — no seat re-litigates the close edge; the F4 lane's remaining rows (§3.2-F4 (i)–(v) + P3/P5/P7/P8/P9) stay CARRIED-WITH-OWNER per PASS-3 AGGLOMERATION §5, untouched by this fold** |
 | U9 | glow grammar | RESOLVED — energy multiplies the existing rungs, engagement lights them, no fourth rung (§1 two-leg law) |
 | — | role-table initial values | AUTHORED (§1, five rows); the DesignSync lane owns final visual tuning |
 | — | composition with the winning carrier | OPEN, sharpened: the carrier registers as the scope's spring source AND passes finger-space velocity (the gauge seam, §1) — both are round-2 merge requirements |
@@ -299,7 +299,7 @@ F1/F3/F5 territory, composed, never absorbed.
 | gap | disposition |
 |---|---|
 | G1 Safari absent | CURED by the safari-arm pack (WebKit 26.5, video-path material law honored): same-shape PARTIAL→cures landed; residues named — re-raster trace TOOL-DEFER, real-device iOS DEFER |
-| G2 scroll defect uncured | CURED: debounce-primary in the channel (§1), spec amended, U-SCROLL gate green; paint re-run queued |
+| G2 scroll defect uncured | CURED: debounce-primary in the channel (§1), spec amended, U-SCROLL gate green; paint re-run LANDED — CLOSED in paint both engines `[P4-COVERAGE 2026-07-19, reverify §F4]` |
 | G3 live continuity 14× | CURED: the gauge (§1 seeding law); U-CONT-LIVE gate + on-page live-jump row ≤0.032 |
 | G4 tautological gates | CURED: U-REG replays the verbatim shipped pipeline (GATE, can fail — and its honest finding RETRACTED "byte-identical": the shipped law is tanh(v/400) at steady state); U-LAW/U-FOLD/U-CONT demoted to LOCK labels; the press→travel readout demoted to demonstration with the real paint gate stated (charge>0 strictly before travel) |
 | G5 threshold contradiction | CURED: θ_g 0.30 (slow place 0.273 below floor); the two-leg light law; wash ruled inside the grammar; U9 resolved by the same law |

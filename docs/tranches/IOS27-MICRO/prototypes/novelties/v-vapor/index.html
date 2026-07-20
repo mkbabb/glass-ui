@@ -199,6 +199,11 @@ const VAPOR = {
   TRAVEL: 260,      // px of drag mapped onto d in [0,1]
   TAU_PROJ: 0.2,    // s — law-7c velocity projection window
   COMMIT_AT: 0.5,   // projected threshold
+  // [P4-AGG D2 cure 2026-07-19] a still finger's velocity is ZERO: the boxcar prunes
+  // only in pointermove, so the RELEASE ages it by wall clock — a flick-then-freeze
+  // must never replay the pre-hold velocity into a false COMMIT (the convicted class,
+  // reproduced live 0.3462 → 1.0000 on both engines this pass).
+  STILL_HOLD_MS: 120,
   // the release snap: duration-stable critically-damped (law 14a class) — the spring
   // absorbs v0 as an initial condition; settle time stays flat across seeds.
   snap: { omega: 11, eps: 0.005 },
@@ -378,7 +383,10 @@ const VAPOR = {
     if (HUD) hud.textContent = `scrub-t ${d.toFixed(3)} · scrubbing v=${vel.toFixed(2)}/s`;
   });
   ["pointerup", "pointercancel"].forEach((n) => vroot.addEventListener(n, () => {
-    if (!dragging) return; dragging = false; release(vel);
+    if (!dragging) return; dragging = false;
+    const lastMove = samples[samples.length - 1];
+    if (lastMove && performance.now() - lastMove.t > VAPOR.STILL_HOLD_MS) vel = 0; // [P4-AGG D2] the age-out — a still hold releases at ZERO
+    release(vel);
   }));
   document.getElementById("dismissBtn").addEventListener("click", () => {
     // keyboard/AT path: deterministic preset, zero seeded velocity (the keyboard law)

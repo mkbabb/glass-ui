@@ -26,10 +26,16 @@ function check(name, value, lo, hi, note = "") {
 }
 
 console.log("=== the seat geometry (astride the corner border, half outside) ===");
+// [P4-AGG D1 cure 2026-07-19 — CHARTER R-9 as re-ruled]: apex-EXACT via R·(1−2^(−1/n)),
+// n from the AUTHORED shape per engine; the SQUIRCLE_K magic knob is deleted.
 const seat = PERCH.seatOffset();
-check("seat offset r(1-1/sqrt2) at R=28 (px)", seat, 8.1, 8.3, "[DESIGN] the 45-degree border point");
+check("apex seat at round paint, n=2 (px)", seat, 8.1, 8.3, "[R-9] R·(1−2^(−1/2)) = 8.20 — engines that drop the authored squircle");
+check("apex seat at squircle paint, n=4 (px)", PERCH.seatOffset(PERCH.R, PERCH.N_SQUIRCLE), 4.4, 4.5, "[R-9] R·(1−2^(−1/4)) = 4.46 — geometric-exact by formula; the ≤0.5px primary gate is paint's row");
+check("SQUIRCLE_K magic knob deleted", /SQUIRCLE_K/.test(html) ? 1 : 0, 0, 0, "[D1 cure] no band fork wearing a constant's clothes");
+check("plate AUTHORS the squircle", /corner-shape:\s*squircle/.test(html) ? 1 : 0, 1, 1, "[R-9] n derives from the AUTHORED shape, never engine capability");
 check("plate radius in the card role band", PERCH.R, 28, 40, "[DESIGN] codex law 4 — card/sheet R28-40");
-check("visual protrusion past the plate box (px)", PERCH.protrusion(), 6, 10, "[DESIGN] the D-LENS 6-10px protrusion precedent");
+check("visual protrusion past the plate box, n=2 (px)", PERCH.protrusion(), 6, 10, "[DESIGN] the D-LENS 6-10px precedent holds on round paint");
+check("protrusion at n=4 (px, drift lock on the derived value)", PERCH.protrusion(PERCH.N_SQUIRCLE), 10.4, 10.7, "[R-9] a derived TELLTALE — any protrusion want is a MINTED nudge token, never a band fork");
 check("hit target floor (px)", PERCH.HIT, 44, 64, "[DESIGN] never below 44 — the accessibility floor");
 check("hit encloses the visual dot", PERCH.HIT >= PERCH.VISUAL ? 1 : 0, 1, 1, "[DESIGN] the finger's target is never smaller than the eye's");
 {

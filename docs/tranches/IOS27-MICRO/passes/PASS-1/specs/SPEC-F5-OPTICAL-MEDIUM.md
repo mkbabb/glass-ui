@@ -129,7 +129,16 @@ paints (the source capsule de-materializes under the blob and re-materializes be
   Arm B clip floor~~ re-graded: the pass-1 SVG-filter merge (`filter: url(#goo)` on the layer,
   pager precedent) is DEMOTED to a duel arm — a static-cost challenger that must beat the fence
   anatomy in the queued pass-2 paint duel (reverify §F5; the WebKit 4-slot morph's one 26ms long
-  frame is the suspect it must answer) or retire. The old Arm B (@supports-not floor) is moot for
+  frame is the suspect it must answer) or retire. **IT RETIRED `[P4-COVERAGE 2026-07-19]`: the
+  duel RAN and the SVG goo arm is RETIRED BY MEASUREMENT — separation frames on BOTH engines +
+  14× worse Chrome cadence (133.4 vs 9.1ms), `../../PASS-2/reverify.md:101-103`, ratified
+  ARBITRATION R1. The fence anatomy is the ONLY goo anatomy this family ships; the prototype's
+  `svg-arm` toggle is RETIRED-EVIDENCE-ONLY (a comparison harness, never a shipping arm — the
+  CRIT-F5 OG5 marking, executed at the toggle's own label). The rider stays real and carried:
+  the fence recipe owes the 4-slot falloff-stop re-tune on Chrome (OG4 — F5 seat, pass 4). The
+  rest of the OG5 spec refresh (the §5/§6 closure rows, the Chrome ~15:1 sibling-model
+  recalibration flag) remains the F5 seat's per PASS-3 AGGLOMERATION §5 — this fold cures the
+  retired-goo residue only.** The old Arm B (@supports-not floor) is moot for
   the fence anatomy, which never filters. Chromatic fringe stays a Chromium-only garnish, never
   the primary.
 - Arrival: capsule re-forms OVERSIZED (~110–120%, in scale AND light), held ~200ms, cools to rest;
@@ -199,7 +208,8 @@ tracking.
 ## 4. Safari-2026 feasibility
 
 Every primary sits at the floor: unprefixed `backdrop-filter` (Safari 18+), `plus-lighter` (9.1+),
-in-document `filter: url()` on HTML (shipped, pager precedent — now duel-arm-only per §2-H3),
+in-document `filter: url()` on HTML (shipped, pager precedent — RETIRED-EVIDENCE-ONLY per §2-H3's
+`[P4-COVERAGE 2026-07-19]` fold; the duel ran, the fence anatomy won on both engines),
 anchor positioning (26.0) if the lens geometry wants it. Refraction (`backdrop-filter: url()`) is
 Chromium-only and stays a garnish — not available at the floor, full stop; no masking fallback
 pretends otherwise. Blur-radius animation is fenced everywhere.

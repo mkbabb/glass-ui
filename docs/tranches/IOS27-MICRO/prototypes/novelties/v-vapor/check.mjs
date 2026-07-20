@@ -135,6 +135,9 @@ console.log("\n=== structural asserts (mechanism discipline; comments stripped f
   const parked = /\.vapor-root\[data-parked="1"\] \.v-ghost\s*{\s*visibility:\s*hidden/.test(html) && /id="vroot" data-parked="1"/.test(html) ? 1 : 0;
   check("ghosts parked at rest", parked, 1, 1, "[STRUCT] layers exist only during dismissal (minor-4 cure)");
   check("no light-dark() inset fragments", /light-dark\([^)]*inset/.test(html) ? 1 : 0, 0, 0, "[STRUCT] the WebKit shadow trap");
+  // [P4-AGG D2 cure 2026-07-19] the still-hold age-out — the false-commit class is locked out
+  check("STILL_HOLD_MS token in the D2 band", VAPOR.STILL_HOLD_MS, 80, 300, "[D2 law] a still finger's velocity is ZERO; the house ships 120");
+  check("release ages the boxcar by wall clock", /performance\.now\(\) - lastMove\.t > VAPOR\.STILL_HOLD_MS\) vel = 0/.test(html) ? 1 : 0, 1, 1, "[D2 cure] prune-in-move-only + un-aged release was the convicted false-commit path");
 }
 
 console.log(failures === 0 ? "\nALL CHECKS PASS" : `\n${failures} CHECK(S) FAILED`);

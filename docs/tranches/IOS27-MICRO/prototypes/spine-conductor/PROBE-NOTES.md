@@ -1,8 +1,12 @@
 # PROBE-NOTES — SPINE-CONDUCTOR merged prototype (IOS27-MICRO pass 3)
 
 verified-model: claude-fable-5 (system-context model ID, verbatim). Seat: p3:SPINE-CONDUCTOR
-(the merge seat), 2026-07-19. Status: RUNS; **node battery 71/71 gates PASS (+1 info)** at
-write time. No browser owned by this seat — every paint claim is QUEUED-PAINT (§5).
+(the merge seat), 2026-07-19. Status: RUNS; **node battery 87/87 gates PASS (+1 info)** as of
+the pass-4 agglomeration (`[P4-KERNEL 2026-07-19]` — the M-1/D2 and M-2 domain.wells cures
+added 15 gates to the pass-3 71; `[P4-AGG 2026-07-19]` — the M-2 domain-fence gate joined,
+86 → 87, and the LIVE pin cells now gate two-sided against the printed bands, CRIT-KERNEL
+M-A/minor-3 cures). Chrome-side live evidence banked this pass (§5 stamps);
+WebKit + video-path material reads stay the serialized paint arm's.
 
 Files: `index.html` (self-contained, no build step — the merged kernel `useLiquidSpine`
 lives in the `/*SC-KERNEL-BEGIN*/…END*/` block; every gate band lives in
@@ -37,7 +41,10 @@ Paint canon: the warm frosted register (NOVELTY-ROSTER §3.5-A) — warm charcoa
 (R>B), warm tints, cream 42° engagement light. The F1 parent's cool-slate/cyan legs are
 HISTORICAL (DESIGN M3); the velocity glow and light rim here are cream.
 
-## 2. Node battery at write time (`node check.mjs` — the exact banked output)
+## 2. Node battery at write time (`node check.mjs` — the banked output; values and verdicts
+verbatim, four band-bound prints hand-rounded for line width `[P4-AGG 2026-07-19 — labeled
+per CRIT-KERNEL minor 2; "exact" retired]`; the battery now prints 87/87 — the `[P4-AGG]`
+domain-fence gate rides after this bank)
 
 ```
 === The registers — CHARTER R-1/R-2/R-3 + the [0,10%] fence (R-4) ===
@@ -150,12 +157,34 @@ PASS  lead-trail: trail ≤ lead through the rise           1  band [1, 1] sourc
 === The sat×source fence (F3 OG3) ===
 PASS  sat×source composition throws                       1  band [1, 1] [DESIGN fence] — settled() can never spin on a shaped source
 
+=== M-1/D2 — park-mid-scrub stale velocity (MARKS C1: a still finger's velocity is zero) ===
+PASS  still hold: kernel parks mid-scrub                  1  band [1, 1] the defect path is REAL (Maps-class manifest, no core channels); zero-cost held idle stands
+PASS  still hold: release velocity (/s)              0.0021  band [0, 0.01] [MARKS C1 — a still finger's velocity is zero; the D2 class] — drag velocity was 3.09/s
+PASS  still hold: wall-clock decay parity                 0  band [0, 1e-9] drive-time aging ≡ the closed-form idle law — park cannot freeze the estimator
+PASS  still hold: geometry peak                      1.0007  band [0.995, 1.004] [MARKS C1/C2 — overshoot velocity-bought only] — pre-cure 1.0401
+PASS  no hold: velocity still buys overshoot (guard)     1.0198  band [1.01, 1.2] [DESIGN falsifiability guard — aging must not kill bought velocity; the 3/s seed decelerates over the 0.1 approach gap]
+PASS  m5: parks mid-scrub after convergence               1  band [1, 1] precondition — the pause parks the rack under a live gesture
+PASS  m5: periphery live after resume (ms)               50  band [0, 60] [DESIGN — G5 gesture-scoped arming (minor 5)] — park never masquerades as gesture end; pre-cure froze ≥100ms
+
+=== M-2 — domain.wells: the catch scheduler is kernel-owned (G3 in the factory) ===
+PASS  wells: kernel scheduler catches                     1  band [1, 1] release(0,-4) consults wellCrossing INSIDE the kernel
+PASS  wells: kernel dwell (ms)                          175  band [120, 220] [DESIGN arrival-or-170ms] — kernel-owned, arrival-or-170ms
+PASS  wells: onward lands at the TARGET                   1  band [1, 1] the onward C1 glide reaches the gesture target and parks
+PASS  wells: scrub mid-dwell cancels the catch            1  band [1, 1] the dwell machine dies with the finger back down
+PASS  wells: recapture is C1 (no snap)                    0  band [0, 1e-9]
+PASS  wells: dwell preserves gesture intent          0.0521  band [0, 0.2] content keeps CLOSING through the dwell (τ55 ⇒ ~0.05 at 170ms) — the rack reads the ONWARD intent; a well-latch leak holds it at 1.0
+PASS  wells: dwell content monotone (guard)               0  band [0, 1e-9] no re-rise mid-dwell
+PASS  no wells: passthrough (no phantom catch)            1  band [1, 1] an undeclared domain costs nothing — the fence's letter holds
+
 === Dialect adjudication (worklist 8) — F1 {20, 65} vs F3 {30, 70} attack arms ===
 PASS  superseded medium attack 30ms FAILS the cliff          1  band [1, 1] measured 106.7ms > 100ms — the adjudication is real, not taste
 PASS  content 65ms centers ≤ 70ms (declared metric)          1  band [1, 1] |198.9−200| vs |214−200| ms — both in-band; 65 adopted, 70 history
 
-71/71 gates PASS (+1 info)
+86/86 gates PASS (+1 info)
 ```
+
+(The pass-3 bank read 71/71; the M-1/D2 and M-2 sections above are the pass-4 additions
+`[P4-KERNEL 2026-07-19]` — output re-banked whole from this session's run, exit 0.)
 
 ## 3. The dedup ledger (worklist item 2) — every parent row mapped
 
@@ -190,6 +219,14 @@ CRIT-SPINE minor 2]`; the enumeration below was always 8+2+3+1+1+2):** the R-1/R
 fence sweep + depth-grade identity (2), the light channel rows (lead/hold/cool, 3 — corpus
 feed #5 landed as clocks), the sat×source fence row, the side-breathe constant row (OG3),
 and the 2 adjudication rows.
+
+**Added at pass 4 (`[P4-KERNEL 2026-07-19]`, 15 rows — 71 → 86; `[P4-AGG]` +1 domain-fence
+gate — 86 → 87):** the M-1/D2 park-mid-scrub
+section (7: park-is-real precondition, aged release velocity, closed-form decay parity,
+geometry peak, the no-hold falsifiability guard, and the two minor-5 gesture-scoped-arming
+rows) and the M-2 domain.wells seam section (8: kernel-owned catch/dwell/onward, scrub-cancel
++ C1 recapture, dwell-preserves-gesture-intent + monotone guard, no-wells passthrough). The
+still-hold row also gates LIVE on the page (`#mStillL`, bands shVel/shLive).
 
 Page-probe dedup: F3's stress-×3 mini-stages are DEDUPED into F1's R1 cost panel (one cost
 probe; the inheriting-var price card is already banked both engines). F1's R2
@@ -228,23 +265,39 @@ CSS-transition continuity probe carries (the CSS-arm entry ticket, G10).
    seat's artifact, not this page).
 9. **The R1 forced-read panel is a proxy** (F1 #6, carried) — only a DevTools trace gives
    honest recalc attribution; WebKit's stays TOOL-DEFER.
-10. **`[P3-AGG 2026-07-19, CRIT-SPINE M-2 — the omission this list owed]` The spec's
-   `domain:` block is NOT a kernel input on this page.** `useLiquidSpine(spec)` reads only
-   tempo/el/prefix/prm/now/raf/caf/registers/channels; rubber is applied caller-side in both
-   drag handlers, μ/tCommit are page CSS calc bands, and the G3 well-catch scheduler is
-   hand-wired at four call sites (Maps pointer-up, the onFrame dwell machine, the scripted
-   button, `simMidCatch`). The physics are battery-proven; the SIGNATURE seam is
-   CONTRACT-ONLY (spec §1's stamp). The kernel grows `domain.wells` + the catch scheduler in
-   pass 4 — the slot-axis lens obligation depends on it.
-11. **`[P3-AGG 2026-07-19, CRIT-SPINE M-1 — FILED, kernel-side]` Stale release velocity via
-   park-mid-scrub.** The kernel parks whenever `settledCore && lightsSettled`, INCLUDING
-   during a held scrub (Maps parks ~140ms into any pause — its manifest has no core
-   channels); `scrubIdle` runs only inside `tick()`, so parking freezes the velocity
-   estimator and a drag→hold-still→release replays the last move's velocity (node repro:
-   4.0% unearned overshoot from a still finger — MARKS C1 violated; the v-vapor D2 class in
-   the reference kernel). No battery row covers release-after-still-hold — a union-battery
-   gap. Pass-4 cure: wall-clock aging at drive time (or park never erases scrub-regime
-   liveness) + the drag→hold(≥240ms)→release gate, node AND live.
+10. **CURED `[P4-KERNEL 2026-07-19]` (filed `[P3-AGG]`, CRIT-SPINE M-2): `domain.wells` is a
+   KERNEL input now.** `useLiquidSpine` reads `spec.domain.wells` (`index.html:784`); the G3
+   momentum-projected trigger is consulted INSIDE `release()` (`wellCatch`,
+   `index.html:843-851, 1008-1015`), the dwell machine is kernel-owned (`catchState` in
+   `tick()`, `index.html:923-932`), `catching()` is the observation surface
+   (`index.html:1038`), and a scrub cancels the dwell C1 (`index.html:994`). The four
+   hand-wired call-site copies are
+   COLLAPSED: `simMidCatch` runs the kernel path (`index.html:1103-1115`), the Maps
+   pointer-up and the scripted button release to the GESTURE target and only observe, the
+   onFrame dwell machine is deleted. Seam gates: the 8-row M-2 battery section. What remains
+   CONTRACT-ONLY of the domain block, still disclosed: `rubber` (caller-side map — the
+   `DragOptions.transform` seam lands at adoption), `muDown/muUp`/`tCommit` (page CSS calc
+   bands), `detents` (Draggable.snap at adoption). The §7.1 slot-axis lens obligation now
+   has its kernel mechanism.
+11. **CURED `[P4-KERNEL 2026-07-19]` (filed `[P3-AGG]`, CRIT-SPINE M-1 + minor 5): stale
+   release velocity via park-mid-scrub.** The cure is CLOSED-FORM wall-clock aging applied
+   at drive time: `Spine.scrubIdle(now)` decays velocity/intentVel by the idle law from
+   `max(_agedTo, _lastSample + idleAfter)` idempotently (`index.html:720-732`), and
+   `glideTo()` calls it BEFORE reading the seed (`index.html:681`) — a parked kernel and a
+   ticking kernel age identically, so the park may keep its zero-cost held idle. Minor 5
+   rides the same root: `parkedMidScrub` (`index.html:804, 956, 969-977`) keeps a
+   park-under-live-gesture from re-arming the periphery dead-time gate (G5 stays
+   gesture-scoped). Gates: the 7-row M-1/D2 battery section (pre-cure: velocity frozen at
+   3.0/s, geometry peak 1.0401; post: 0.0021/s, 1.0007) + the LIVE still-hold cell
+   (measured this pass on Chrome: |v| 0.0054/s, peak−1 0.0008).
+12. **The live battery has a cold-start measurement seam (first run after load).** Crossing
+   t0 anchors at drive time, but exponential channels integrate only from the first rAF —
+   a cold first run (fresh tab, automation overhead) shifted the early-open crossings +73–100ms
+   (medium 176ms, content 286ms, light lead 123ms, tempo base 0.452) while the closed-form
+   geometry rows sat exactly on the node values; the warm re-run in the same tab read 18/18
+   with medium 77ms. The R2 clean-run precondition (SPEC §1) applies to the LIVE battery
+   whole: warm-run before gating. Kernel behavior is correct (motion starts at the first
+   frame with no jump; the wake gap is ≤1 frame outside cold automation).
 
 ## 5. QUEUED-PAINT — the merged page's ledger for the serialized browser arm
 
@@ -253,27 +306,40 @@ backdrop-filter-blind there); every trace with `?hud=0`; frame-gap statistics, n
 performance.now deltas; captures stamped and paired with computed samples. This ledger
 joins the §O-3 queue at order 9's class (after the seven novelty pages).
 
-1. **Full CC battery in paint, internal mode** — 18 page rows PASS on Chrome + WebKit
-   (bands are SC-BANDS verbatim; expect ±1 display frame on crossings).
-2. **Paint-side sampling mode (G9)** — re-run the battery with the checkbox on; per-row
-   |paint − internal| ≤ 1 display frame; certifies the var→CSS binding incl. the light rim.
-3. **The union interrupt arms live** — held: medium min prints 1.0000 with no blur flicker
-   across cycles (video); dip: the partial-relax read (min ~0.54) visibly never clears.
-4. **Sub-sat held scrub** — hold near closed: the veil visibly thins (medium = g/sat);
-   exhibits paired with computed opacity (the F3 G4 exhibit class, on the merged page).
-5. **Light channel read** — cream rim leads the travel, holds ~200ms at arrival, cools
-   ~370ms, ZERO idle light after park; under a held scrub the rim SUSTAINS (law 20). Video
-   frames paired with `--sc-light` computed samples.
-6. **Maps battery live** — pin/overpull/flung/catch cells vs the sim column (land ±40ms);
-   the breathe button's rect read inside [3.4, 4.1]%; bottom edge immobile to the sub-pixel
-   at rest/growth/pin/compression (the parents' geometry protocol).
-7. **PRM regression** — every button seats in one poll from parked, zero intermediate
-   frames, fps cell parked throughout; the G7 scenario-target fix holds on the merged page.
-8. **R1 natural/forced + R2 storm** — gross-outlier catch on both engines (the banked
-   price cards are the reference: Chrome recalc 0.289–0.312ms/frame class, WebKit ≤18ms
-   worst at +960).
-9. **Park honesty** — "rAF parked (zero-cost idle)" after every settle including the light
-   tail; boot parked; zero page errors.
+**Chrome-side stamps `[P4-KERNEL 2026-07-19]`** — the kernel seat ran the D5-unblocked rows
+on Chromium (isolated tab, `?hud=0`, warm-run per §4.12); WebKit halves + video material
+reads CARRY to the serialized paint arm:
+
+1. **Full CC battery in paint, internal mode** — **Chrome GREEN: 18/18** (warm run; medium
+   77ms, content 187ms, geometry 634/371ms, periphery 142ms, light 39/211/368ms, close
+   154/118/619ms, dip 0.55/0.00, held 1.0000/0.169, sub-sat 0.8412, tempo Δ0.016). Cold
+   first run 14/18 — the §4.12 seam, warm-run precondition now written. **WebKit CARRIES.**
+2. **Paint-side sampling mode (G9)** — **Chrome GREEN: 18/18** (medium 81ms, content 181ms,
+   light lead 33ms — every row within 1 display frame of internal; var→CSS binding incl.
+   the light rim certified on Chromium). **WebKit CARRIES.**
+3. **The union interrupt arms live** — cells GREEN on Chrome inside row 1 (held min prints
+   1.0000, dip min 0.55 never clears). **The video no-blur-flicker read CARRIES (both
+   engines, video path).**
+4. **Sub-sat held scrub** — battery cell GREEN on Chrome (0.8408–0.8412 held). **The paired
+   visual-thinning exhibit CARRIES.**
+5. **Light channel read** — clock rows GREEN on Chrome (39/211/368ms; rAF parked after the
+   light tail). **Video frames paired with `--sc-light` computed samples CARRY.**
+6. **Maps battery live** — **Chrome GREEN, all cells**: pin 82%/125ms · overpull 0.8%/188ms
+   · flung 0.023s/182ms (the m6 interpolated read — pre-cure this cell rode 0.028–0.032) ·
+   catch dwell 175ms/near 0.018/landed 634ms (sim 628 ±40) · breathe 3.73% · **still-hold
+   |v| 0.0054/s, peak−1 0.0008** (the D2 live gate) · a real pointer drag ran the full
+   down/move/up path with zero errors and an aged release-velocity display. **The
+   bottom-edge sub-pixel geometry protocol + WebKit CARRY.**
+7. **PRM regression** — **CARRIES** (not run this session).
+8. **R1 natural/forced + R2 storm** — **CARRIES** (recording-contention class; the paint
+   arm owns capture pairing).
+9. **Park honesty** — **Chrome GREEN**: "rAF parked" after every settle incl. the light
+   tail; boot parked; **zero console messages** across boot + 3 battery runs + every Maps
+   cell + a real drag (pre-cure the pointer path threw ReferenceError — §Honesty, the
+   strict-mode residue). **WebKit CARRIES.**
+10. **Maps release-velocity ladder** (the M-1 live obligation beyond the still-hold point) —
+   **CARRIES to the paint arm**: the ledger row-5 DEFER session, now with the still-hold
+   cell as its zero rung banked.
 
 DEVICE-DEFER (fenced, never gates): iOS touch rubber-band feel, real-device Safari.
 TOOL-DEFER (fenced): WebKit recalc/residency attribution (Web Inspector — the campaign

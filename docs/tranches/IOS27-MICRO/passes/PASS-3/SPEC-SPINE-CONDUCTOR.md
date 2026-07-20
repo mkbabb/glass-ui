@@ -22,9 +22,11 @@ Src stays untouched this tranche. Every on-disk change ruled here is EXACT TEXT 
 the FINAL wave set (§9), per the pass-2 U1 precedent; BJ owns src.
 
 Evidence base: the merged prototype `../../prototypes/spine-conductor/` (index.html +
-check.mjs + PROBE-NOTES.md) — **node battery 71/71 gates PASS (+1 info), 2026-07-19**, the
-union of F1's 38 and F3's 19 with duplicates folded and the charter's register gates added.
-The parent prototypes stand untouched as pass-2 evidence.
+check.mjs + PROBE-NOTES.md) — **node battery 87/87 gates PASS (+1 info), 2026-07-19**
+(`[P4-KERNEL]`: the pass-3 71 plus the 15 M-1/M-2 cure gates; `[P4-AGG]`: +1 domain-fence
+gate, CRIT-KERNEL minor 3), the union of F1's 38 and
+F3's 19 with duplicates folded, the charter's register gates, and the pass-4 kernel-cure
+sections. The parent prototypes stand untouched as pass-2 evidence.
 
 ---
 
@@ -53,7 +55,7 @@ const s = useLiquidSpine({
     rubber: { c: 0.55 },           // hyperbolic map via DragOptions.transform — zero engine edits; c is [DESIGN] (BLOCKED-BY-CORPUS, C1)
     tCommit: 0.08,                 // taffy dead-band (≥70px video scale, C1)
     detents: [0, 1],               // terminal — Draggable.snap
-    wells: [{ t: 0.55, kind: "weak" }],  // DECLARED, [DESIGN] — the momentum-projected catch scheduler (G3)
+    wells: [{ t: 0.55, kind: "weak" }],  // KERNEL-OWNED [P4-KERNEL] — the momentum-projected catch scheduler (G3) lives in release()/tick()
   },
   channels: {                      // ── the CHANNEL-CONDUCTOR register ──
     medium:    cliff({ attack: 0.020, release: 0.120, sat: 0.12, occ: { opening: 0.02, closing: 0.10 } }),
@@ -66,17 +68,17 @@ const s = useLiquidSpine({
 s.scrub(g);  s.release(target, vFinger, register?);  s.seat(t);   // the three drive verbs; intent latches at drive
 ```
 
-> **`domain:` is CONTRACT-ONLY at pass 3 `[P3-AGG 2026-07-19, CRIT-SPINE M-2 SUSTAINED]`.**
-> The merged prototype does NOT implement the domain block as a kernel input: rubber is
-> applied caller-side in both drag handlers (the map is proven, the `DragOptions.transform`
-> seam is not), μ/tCommit live as page CSS calc bands, and the G3 momentum-projected
-> well-catch scheduler is hand-wired at the call sites (four copies), not kernel-owned. The
-> physics behind every domain field ARE battery-proven (the 10-row well truth table, the
-> rubber/breathe rows); the SIGNATURE is sworn as contract, proven-by-prototype only for
-> `channels`/registers/verbs. The kernel GROWS the domain block (at minimum `wells` + the
-> catch scheduler, collapsing the call-site copies) in pass 4 — a precondition for the §7.1
-> slot-axis lens obligation, which otherwise has no kernel mechanism to mount on.
-> PROBE-NOTES §4 now discloses this limit.
+> **`domain.wells` is KERNEL-IMPLEMENTED as of pass 4 `[P4-KERNEL 2026-07-19]`** (the M-2
+> cure): `useLiquidSpine` consumes `domain.wells`, `release()` consults the G3
+> momentum-projected trigger itself, the arrival-or-170ms dwell machine is kernel-owned
+> with `catching()` as its observation surface, and a scrub cancels the dwell C1. The four
+> pass-3 call-site copies are COLLAPSED (`simMidCatch` + Maps pointer-up + the scripted
+> button run the kernel path; the page dwell machine is deleted). Seam gates: the 8-row
+> M-2 battery section (9 rows as of `[P4-AGG]` — the domain fence gate joined it; battery 87/87). The §7.1 slot-axis lens obligation has its kernel mechanism.
+> **The REST of the domain block stays CONTRACT-ONLY, disclosed** (PROBE-NOTES §4.10):
+> rubber is applied caller-side (the map is proven, the `DragOptions.transform` seam lands
+> at adoption), μ/tCommit live as page CSS calc bands, detents ride Draggable.snap at
+> adoption — proven-by-prototype remains `channels`/registers/verbs/`domain.wells`.
 
 - Publishes `--scrub-t` (`inherits: true`, surface root, never body) — the suffusion roster
   name is ADOPTED; F1's `--gl-t` dies into it, clean break, no alias. Per-channel vars ride
@@ -111,11 +113,15 @@ s.scrub(g);  s.release(target, vFinger, register?);  s.seat(t);   // the three d
 Modifiers: `sat` (input shaping, scrub arm), direction overrides (`close:{…}`), `delay` +
 `source` (wake-armed dead-time gate, then chase the LIVE source — G5 semantics; arms on
 wake-from-parked only, mid-flight retargets never re-arm, `seat()` clears). G5's
-"wake-from-parked" means GESTURE-SCOPED arming `[P3-AGG 2026-07-19, CRIT-SPINE minors 5/M-1]`:
-park must never masquerade as gesture end — the shipped prototype parks during held scrubs,
-which both re-arms the delay gate MID-gesture and freezes the velocity estimator (the M-1
-stale-release defect, D2's class); the pass-4 kernel cure fixes both at the one root
-(wall-clock aging at drive time; parked-during-scrub never counts as wake).
+"wake-from-parked" means GESTURE-SCOPED arming, **CURED IN THE KERNEL
+`[P4-KERNEL 2026-07-19]`** (filed `[P3-AGG]`, CRIT-SPINE minors 5/M-1): park never
+masquerades as gesture end. Both defects fixed at the one root — `Spine.scrubIdle` is a
+closed-form wall-clock idle decay applied idempotently AT DRIVE TIME (a parked kernel and a
+ticking kernel age identically; a still finger releases with a still finger's velocity —
+pre-cure 3.0/s frozen and +4.0% unearned peak, post-cure 0.0021/s and 1.0007), and
+`parkedMidScrub` keeps a park-under-live-gesture from re-arming the periphery dead-time
+gate (periphery live ≤60ms after resume; pre-cure froze ≥100ms). Gates: the 7-row M-1/D2
+battery section + the live still-hold cell (Chrome measured |v| 0.0054/s, peak−1 0.0008).
 **`sat`×`source` composition is FENCED** (F3 OG3 — closed): the kernel throws at
 construction; `settled()` judges source-routed channels against their live source, so no
 predicate can permit a permanent rAF spin. Gate: check.mjs "sat×source composition throws".
@@ -320,8 +326,10 @@ animated radius (H4/#8, answered in WebKit paint on both parents' video paths).
 ## 5. The union battery (worklist item 2 — ONE battery)
 
 `check.mjs` extracts SC-KERNEL and SC-BANDS from `index.html` (the exact shipped code and
-bands — zero drift on either; printed = gated, the F3 G8 discipline family-wide). **71
-gates + 1 info, all PASS** at write time. Composition:
+bands — zero drift on either; printed = gated, the F3 G8 discipline family-wide; the LIVE
+pin cells gate two-sided against these same printed bands as of `[P4-AGG 2026-07-19]`,
+CRIT-KERNEL M-A). **87 gates + 1 info, all PASS** as of the pass-4 agglomeration
+(`[P4-KERNEL 2026-07-19]` 71 → 86; `[P4-AGG]` +1 domain-fence gate = 87). Composition:
 
 - **Register arithmetic (10):** the R-1/R-2/R-3 rulings as falsifiable gates (pair
   identity, f_d brackets, zero-seed overshoots, k·v gain, orb flight, the [0,10%] fence
@@ -330,7 +338,9 @@ gates + 1 info, all PASS** at write time. Composition:
   + pin (C3 bounds) + the G3 catch with its 10-row truth table + the intent law (6) + C1
   retarget continuity (2) + rubber/breathe (3 — the ONE side-breathe constant, OG3 closed:
   0.036/0.964 = +3.73% inside [3.4, 4.1]%, with the page's rect-read live cell beside it).
-- **The rack (31; 10+28+31+2 = the 71 headline — count corrected `[P3-AGG 2026-07-19, CRIT-SPINE minor 1]`, the G6 latch pair / H3 / lead-trail / fence rows were listed in prose but dropped from the old count):** open (medium cliff, content, geometry t99 + s90, periphery lag, light
+- **The rack (31; 10+28+31+2+7+9 = the 87 headline — the pass-3 count 10+28+31+2 = 71 was
+  corrected `[P3-AGG 2026-07-19, CRIT-SPINE minor 1]`, grew the two pass-4 cure sections
+  below, then +1 M-2 domain-fence gate `[P4-AGG]`):** open (medium cliff, content, geometry t99 + s90, periphery lag, light
   lead/hold/cool, joint park) + close (content out, emergent beat, medium gone) + the UNION
   interrupt scenarios — held arm (medium min 1.0000, region-asserted, steps law-bounded)
   AND dip arm (medium min 0.5353 in [0.40, 0.85], re-settle) — + sub-sat scrub arm + tempo
@@ -339,6 +349,13 @@ gates + 1 info, all PASS** at write time. Composition:
   sat×source fence.
 - **The dialect adjudication (2):** §2.2's decisions, run live — the superseded arms fail
   or lose on the declared metric IN the battery, so the choice is falsifiable, not taste.
+- **M-1/D2 park-mid-scrub (7) `[P4-KERNEL]`:** the park-is-real precondition + aged release
+  velocity + closed-form decay parity + geometry peak (pre-cure 1.0401, post 1.0007) + the
+  no-hold falsifiability guard (bought velocity must still buy overshoot) + the two minor-5
+  gesture-scoped-arming rows. The still-hold row also gates LIVE on the page.
+- **M-2 domain.wells seam (8) `[P4-KERNEL]`:** kernel-owned catch/dwell/onward + scrub-cancel
+  with C1 recapture + dwell-preserves-gesture-intent with its monotone guard + the no-wells
+  passthrough (an undeclared domain costs nothing).
 
 Dedup ledger and retired rows: PROBE-NOTES §3 (the parent batteries' every row is mapped —
 kept, merged, re-derived, or retired-with-register).
@@ -448,7 +465,9 @@ check row; OG4 — "consume SpringProgress" defined per register (§3).
 ## Honesty line
 
 This seat drove no browser. Evidence produced this session: the merged prototype and its
-node battery (71/71 + 1 info, output banked in PROBE-NOTES), run against the exact shipped
+node battery (71/71 + 1 info at the pass-3 write `[P4-AGG 2026-07-19: historical figure —
+the battery now stands at 87/87; CRIT-KERNEL minor 1]`, output banked in PROBE-NOTES), run
+against the exact shipped
 blocks. Every corpus figure cites its organ; every derived spring figure was recomputed by
 the battery's own arithmetic helpers, not quoted. The adjudications (§2.1, §2.2) were
 decided by battery rows that could have gone the other way — the superseded medium arm

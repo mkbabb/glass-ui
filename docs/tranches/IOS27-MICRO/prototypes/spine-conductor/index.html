@@ -469,18 +469,20 @@
           <button id="bOverpull">overpull + release</button>
           <button id="bPin">pin + release</button>
           <button id="bCatch">fast collapse (mid-catch)</button>
+          <button id="bStillHold">still-hold release (D2 gate)</button>
           <button id="bBreathe">measure breathe</button>
           <button id="bMapsReset">reset</button>
         </div>
         <table id="mapsTable">
           <tr><th>measure</th><th>sim</th><th>live</th><th>band (source)</th></tr>
           <tr><td>pin covered @83ms</td><td id="mPinCovS">—</td><td id="mPinCovL">—</td><td>75–92% (C3 bounds-only, INCONCLUSIVE)</td></tr>
-          <tr><td>pin settle (&lt;2px)</td><td id="mPinSetS">—</td><td id="mPinSetL">—</td><td>100–200ms [REG-LOCK]</td></tr>
+          <tr><td>pin settle (&lt;2px)</td><td id="mPinSetS">—</td><td id="mPinSetL">—</td><td>100–200ms [REG-LOCK] (live +20ms sampler allowance)</td></tr>
           <tr><td>overpull zero-seed overshoot</td><td id="mOpOvS">—</td><td id="mOpOvL">—</td><td>≤3% of depth (C1/C2 — velocity-bought only; 1.1% analytic at ζ0.82)</td></tr>
           <tr><td>overpull settle (&lt;2px)</td><td id="mOpSetS">—</td><td id="mOpSetL">—</td><td>150–260ms [REG-LOCK on the R-1 dock row {0.35, 0.82}]</td></tr>
           <tr><td>flung landing: overshoot/v</td><td id="mFlOvS">—</td><td id="mFlOvL">—</td><td>0.015–0.030s (C2; k·v analytic 0.0233)</td></tr>
           <tr><td>flung landing: settle from crossing</td><td id="mFlSetS">—</td><td id="mFlSetL">—</td><td>140–220ms (C2 model 169–183, data 183)</td></tr>
           <tr><td>mid-detent catch (dwell · land)</td><td id="mCatchS">—</td><td id="mCatchL">—</td><td>dwell 120–220ms · land = sim±40ms (DESIGN well; C3 corpus VOID)</td></tr>
+          <tr><td>still-hold release: |v| · peak−1</td><td id="mStillS">—</td><td id="mStillL">—</td><td>|v| ≤0.01/s · peak−1 ≤0.002 (C1 — the D2 class; pre-cure +4.0% unearned)</td></tr>
           <tr><td>side breathe (rect)</td><td>3.73%</td><td id="mBreatheL">—</td><td>3.4–4.1% [REG-LOCK — ONE constant, OG3]</td></tr>
           <tr><td>release velocity</td><td>—</td><td id="mRelV">—</td><td>seeded, C1 continuity</td></tr>
         </table>
@@ -780,6 +782,12 @@ const SC = (() => {
     const caf = spec.caf || ((id) => cancelAnimationFrame(id));
     const regs = spec.registers || { open: "ccOpen", close: "ccClose" };
     const wells = (spec.domain && spec.domain.wells) || []; // M-2: the domain register's proven field
+    // [P4-AGG minor-3 cure 2026-07-19] fence-consistent with the sat×source throw:
+    // the CONTRACT-ONLY domain keys (rubber / muDown / muUp / tCommit / detents land
+    // at adoption) must never become silent no-ops at this seam.
+    if (spec.domain) for (const k of Object.keys(spec.domain)) {
+      if (k !== "wells") throw new Error("domain." + k + " is CONTRACT-ONLY (lands at adoption) — declaring it here would be a silent no-op (fenced)");
+    }
     const EPS = 1e-3, VEPS = 5e-3;
 
     const spine = new Spine();
@@ -1233,7 +1241,7 @@ var SC_BANDS = {
   shPeak:  { lo: 0.995, hi: 1.004, text: "0.995–1.004 (zero-seed class)", label: "[MARKS C1/C2 — overshoot velocity-bought only]" },
   shGuard: { lo: 1.01, hi: 1.20, text: "≥1% bought overshoot, no hold", label: "[DESIGN falsifiability guard — aging must not kill bought velocity; the 3/s seed decelerates over the 0.1 approach gap]" },
   resume:  { hi: 0.060, text: "periphery live ≤60ms after resume", label: "[DESIGN — G5 gesture-scoped arming (minor 5)]" },
-  shLive:  { hi: 0.002, text: "peak−1 ≤ 0.002 after 700ms still", label: "[MARKS C1 — still-finger release on ζ1.0 (zero-seed = dead)]" },
+  shLive:  { hi: 0.002, text: "peak−1 ≤ 0.002 after 700ms still", label: "[MARKS C1 — still-finger release; 0.10-step zero-seed on dock {0.35, 0.82} = 0.0011 analytic]" },
   land:     { lo: 0.400, hi: 0.800, text: "400–800ms", label: "[REG-LOCK — park-metric landing on {0.35, 0.82}]" },
   breathe:  { lo: 0.034, hi: 0.041, text: "3.4–4.1%", label: "[REG-LOCK — the ONE side-breathe constant, OG3; measured +3.74% both engines]" },
 };
@@ -1700,14 +1708,28 @@ var SC_BANDS = {
         setCell("#mFlSetL", fmtMs(sc * 1000), inBand(sc, B.flSettle));
         mWatch = null;
       }
+    } else if (w.kind === "still") {
+      // M-1/D2 live gate: a still finger's velocity is zero — the release must not replay
+      // the pre-hold drag velocity (pre-cure: parked estimator frozen at ~3/s, +4.0% peak).
+      if (s.value > w.peak) w.peak = s.value;
+      if (s.regime === "parked") {
+        const over = Math.max(0, w.peak - 1);
+        setCell("#mStillL", `|v| ${w.vRel.toFixed(4)}/s · peak−1 ${over.toFixed(4)}`,
+          w.vRel <= B.shVel.hi && over <= B.shLive.hi);
+        mWatch = null;
+      }
     } else if (w.kind === "pin") {
       if (w.v83 === undefined && now - w.t0 >= 0.083) w.v83 = s.value;
       if (w.settle === undefined && Math.abs(s.value - 1) < SC.SETTLE_T) w.settle = now;
       if (s.regime === "parked") {
         const cov = w.v83 === undefined ? null : (w.depth - (w.v83 - 1)) / w.depth;
-        setCell("#mPinCovL", cov === null ? "—" : `${(cov * 100).toFixed(0)}%`, cov !== null && cov >= B.pinCov.lo);
+        // [P4-AGG M-A cure 2026-07-19] printed = gated, BOTH bounds. The lo-only gate
+        // let a sampling-late 94% ride under [ok] (the A1 unfailable-gate class, on the
+        // family's gate-honesty reference page). The settle allowance (+20ms sampler
+        // quantization over the printed hi) is PRINTED in the band cell, not hidden.
+        setCell("#mPinCovL", cov === null ? "—" : `${(cov * 100).toFixed(0)}%`, cov !== null && inBand(cov, B.pinCov));
         const set = w.settle === undefined ? null : (w.settle - w.t0);
-        setCell("#mPinSetL", fmtMs(set === null ? null : set * 1000), set !== null && set <= 0.220);
+        setCell("#mPinSetL", fmtMs(set === null ? null : set * 1000), set !== null && set >= B.pinSettle.lo && set <= B.pinSettle.hi + 0.020);
         mWatch = null;
       }
     } else if (w.kind === "catch") {
@@ -1730,8 +1752,7 @@ var SC_BANDS = {
       e.preventDefault();
       el.setPointerCapture(e.pointerId);
       base = { t: maps.spine.value, y: e.clientY };
-      mCatchUntil = null;
-      maps.scrub(base.t);
+      maps.scrub(base.t); // recapture cancels any kernel dwell (M-2 — the kernel owns it)
     });
     el.addEventListener("pointermove", (e) => {
       if (!base) return;
@@ -1746,6 +1767,7 @@ var SC_BANDS = {
       if (!base) return;
       base = null;
       const s = maps.spine, now = nowS();
+      s.scrubIdle(now); // M-1: age by wall clock BEFORE the velocity is displayed or read
       $("#mRelV").textContent = `${s.velocity.toFixed(2)}/s (${(s.velocity * TRAVEL).toFixed(0)}px/s)`;
       if (PRM()) {
         maps.seat(s.value > 1 ? 1 : s.value < 0 ? 0 : s.intent);
@@ -1758,14 +1780,11 @@ var SC_BANDS = {
         maps.release(0, undefined, "dock"); // the CONVERGED arrival register (R-1)
         mWatch = { kind: "overpull", t0: now, depth: -s.value, peak: 0 };
       } else {
-        const target = s.intent;
-        const pc = target === 0 ? SC.wellCrossing(s.value, s.velocity, SC.WELL) : null;
-        if (pc && Math.abs(pc.v) >= SC.V_CATCH) {
-          maps.release(SC.WELL, undefined, "dock");
-          mCatchUntil = now + SC.CATCH_MS;
+        // M-2 [P4-KERNEL 2026-07-19]: release to the GESTURE target — the kernel consults
+        // the G3 trigger inside release() itself; the call site only OBSERVES the catch.
+        maps.release(s.intent, undefined, "dock");
+        if (maps.catching() !== null) {
           mWatch = { kind: "catch", t0: now, armAt: now, minWellDist: 1, simLand: simMC.landMs };
-        } else {
-          maps.release(target, undefined, "dock");
         }
       }
     };
@@ -1803,14 +1822,21 @@ var SC_BANDS = {
   $("#bCatch").onclick = () => scenario(0, () => {
     const n = nowS();
     maps.seat(1);
-    const pc = SC.wellCrossing(1, -4, SC.WELL);
-    if (pc && Math.abs(pc.v) >= SC.V_CATCH) {
-      maps.release(SC.WELL, -4, "dock");
-      mCatchUntil = n + SC.CATCH_MS;
+    maps.release(0, -4, "dock"); // M-2: the kernel's own scheduler catches the declared well
+    if (maps.catching() !== null) {
       mWatch = { kind: "catch", t0: n, armAt: n, minWellDist: 1, simLand: simMC.landMs };
-    } else {
-      maps.release(0, -4, "dock");
     }
+  });
+  $("#bStillHold").onclick = () => scenario(1, async () => {
+    // M-1/D2 [P4-KERNEL 2026-07-19]: fast drag 0.60→0.90 (~3/s), DEAD-STILL hold 700ms —
+    // the kernel PARKS mid-scrub (zero-cost held idle, by design) — then release. The
+    // wall-clock aging at drive time must hand release a still finger's velocity.
+    maps.seat(0.60);
+    await sleep(30);
+    for (let i = 1; i <= 6; i++) { maps.scrub(0.60 + 0.05 * i); await sleep(16); }
+    await sleep(700); // dead-still: no scrubs, no ticks — the park cannot freeze the estimator
+    maps.release(1, undefined, "dock"); // ages by wall clock INSIDE release, then reads
+    mWatch = { kind: "still", t0: nowS(), peak: 0, vRel: Math.abs(maps.spine.velocity) };
   });
   $("#bBreathe").onclick = async () => {
     // rect-read side breathe: rest width vs settled-open width (OG3's live geometry cell)
@@ -1825,7 +1851,7 @@ var SC_BANDS = {
     const breathe = w1 / w0 - 1;
     setCell("#mBreatheL", `${(breathe * 100).toFixed(2)}%`, inBand(breathe, B.breathe));
   };
-  $("#bMapsReset").onclick = () => { mWatch = null; mCatchUntil = null; maps.seat(0); };
+  $("#bMapsReset").onclick = () => { mWatch = null; maps.seat(0); };
 
   // Maps sim column (same physics block check.mjs asserts)
   {
@@ -1840,6 +1866,11 @@ var SC_BANDS = {
     setCell("#mFlSetS", fmtMs(fl.settleFromCrossMs), inBand(fl.settleFromCrossMs / 1000, B.flSettle));
     setCell("#mCatchS", `dwell ${fmtMs(simMC.dwellMs)} · landed ${fmtMs(simMC.landMs)}`,
       simMC.caught && simMC.dwellMs >= 120 && simMC.dwellMs <= 220 && simMC.minWellDist <= B.wellNear);
+    // still-hold sim (M-1/D2): closed-form idle decay + the 0.10-step zero-seed + k·v residue
+    const vAged = 3.0 * Math.exp(-(0.700 - SC.INTENT.idleAfter) / SC.INTENT.idleTau);
+    const overStill = 0.10 * SC.zeroSeedOvershoot(SC.REG.dock) + SC.arrivalGain(SC.REG.dock) * vAged;
+    setCell("#mStillS", `|v| ${vAged.toFixed(4)}/s · peak−1 ${overStill.toFixed(4)}`,
+      vAged <= B.shVel.hi && overStill <= B.shLive.hi);
   }
 
   // =====================================================================

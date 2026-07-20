@@ -24,7 +24,7 @@
 
   THE DRAFTING LAW: this is a generalized facility (a dock-role FSM + a slider register),
   never a Codex-screen recreation. Warm cream, deft rounding, our palettes, the ONE warm
-  frosted canon (NOVELTY-ROSTER §3.5-A). No @supports gate anywhere (the lying-gate law).
+  frosted canon (NOVELTY-ROSTER §3.5-A). No supports-query gate anywhere (the lying-gate law).
   ?hud=0 kills instrumentation for the browser arm. ?theme=night flips to the night arm.
 -->
 <style>
@@ -144,7 +144,10 @@
     border-radius: 20px; padding: 0 18px;
     background: linear-gradient(180deg, var(--fill-a), var(--fill-b));
     box-shadow: inset 0 0 0 1px var(--rim);
-    color: var(--label-ink); font: 600 14px/40px inherit; font-family: inherit;
+    color: var(--label-ink);
+    /* longhands — a CSS-wide keyword is invalid inside the font shorthand and drops
+       the whole declaration in both engines ([P4-AGG] CRIT-ASSEMBLY minor 1) */
+    font-family: inherit; font-size: 14px; font-weight: 600; line-height: 40px;
   }
   .mdock.engaged .chip, .mdock.morphing .chip { background: transparent; box-shadow: none; }
   .md-label { display: inline-block; color: var(--label-ink); font-weight: 600; font-size: 14px; }
@@ -180,12 +183,12 @@
   .controls { position: fixed; right: 16px; top: 12px; z-index: 9; display: flex; gap: 8px; }
   .controls button {
     border: 1px solid var(--rim); background: var(--tint-b); color: var(--label-ink);
-    border-radius: 14px; padding: 6px 12px; font: 600 12px/1 inherit; font-family: inherit; cursor: pointer;
+    border-radius: 14px; padding: 6px 12px; cursor: pointer;
+    font-family: inherit; font-size: 12px; font-weight: 600; line-height: 1;
   }
-  @media (prefers-reduced-motion: reduce) {
-    /* PRM: every clock single-steps — state relayed, physics removed (the one-flip law) */
-    .halo-layer { transition: none; }
-  }
+  /* PRM lives in the JS (matchMedia "prefers-reduced-motion") — every clock single-steps
+     there; no CSS transitions exist on this page, so no CSS PRM rule is needed
+     ([P4-AGG] the dead .halo-layer transition:none rule removed, CRIT-ASSEMBLY minor 6) */
 </style>
 </head>
 <body>
@@ -198,8 +201,8 @@
     <div class="halo-stack" aria-hidden="true"><div class="halo-layer halo-b1"></div><div class="halo-layer halo-b2"></div><div class="halo-layer halo-b3"></div></div>
     <div class="dock-region">
       <div class="mdock glassbody" data-role="dock" tabindex="0" aria-label="effort dock, morphs into a slider">
-        <div class="fill" aria-hidden="true"></div>
         <div class="dots" aria-hidden="true"></div>
+        <div class="fill" aria-hidden="true"></div>
         <button class="chip"><span class="md-label">High</span></button>
       </div>
     </div>
@@ -212,8 +215,8 @@
     <div class="home-surface"><div class="slider-surface glassbody"></div></div>
     <div class="dock-region">
       <div class="mdock glassbody" data-role="dock" tabindex="0" aria-label="effort dock, flip foil">
-        <div class="fill" aria-hidden="true"></div>
         <div class="dots" aria-hidden="true"></div>
+        <div class="fill" aria-hidden="true"></div>
         <button class="chip"><span class="md-label">High</span></button>
       </div>
     </div>
@@ -226,8 +229,8 @@
     <div class="dock-region">
       <div class="mdock glassbody" data-role="dock" tabindex="0" aria-label="effort dock, growth foil">
         <div class="grow-card glassbody"></div>
-        <div class="fill" aria-hidden="true"></div>
         <div class="dots" aria-hidden="true"></div>
+        <div class="fill" aria-hidden="true"></div>
         <button class="chip"><span class="md-label">High</span></button>
       </div>
     </div>
@@ -373,14 +376,52 @@ const MORPHDOCK = (() => {
   }
 
   // ---- the C1 catch: pointerdown mid-morph seizes value AND velocity ----
+  // [P4-AGG A3 cure 2026-07-19] the sim steps the SEIZED state through the actual
+  // post-catch path (the left edge CONTINUES its flight on the same spring/state —
+  // the page's seize drive) and prints the teleport foil (the convicted pre-cure
+  // first-scrub hard-set), so the gates can fail and can tell the two apart.
   function catchSim() {
     const dt = 1 / 960, spr = makeSpring(T.spring.response, T.spring.zeta);
     const sL = { x: T.chipL, v: 0 };
     let t = 0;
     while (t < 0.08) { spr.step(sL, geo.fillL, dt); t += dt; }
-    const seized = { x: sL.x, v: sL.v };                 // the catch: same state object class
-    const jump = Math.abs(seized.x - sL.x) + Math.abs(seized.v - sL.v);
-    return { atMs: 80, jump, midFlight: sL.x > geo.fillL + 4 && sL.x < T.chipL - 4 ? 1 : 1 };
+    const seized = { x: sL.x, v: sL.v };                 // the catch: same state, same spring
+    const post = { x: seized.x, v: seized.v };
+    spr.step(post, geo.fillL, 1 / 60);                   // the first painted frame after the catch
+    const firstFrameStep = Math.abs(post.x - seized.x);  // flight-speed class — continuous
+    const teleportStep = Math.abs(geo.fillL - seized.x); // the convicted hard-set (A3)
+    return {
+      atMs: 80, firstFrameStep, teleportStep, ratio: firstFrameStep / teleportStep,
+      midFlight: seized.x > geo.fillL + 4 && seized.x < T.chipL - 4 ? 1 : 0,
+    };
+  }
+
+  // ---- [P4-AGG B-1 cure 2026-07-19] the interrupt law: dismissal KILLS the engage writers ----
+  // guarded=true models the generation-guarded page (dismiss bumps st.gen; every engage
+  // drive dies on its next frame); guarded=false is the convicted two-writer foil
+  // (CRIT-ASSEMBLY B-1: the engage label spring and the dismiss return spring alternate
+  // on the same state at fixed dt and deadlock — labelY locked near −3px, |v| ≈ 115/s,
+  // rAF immortal, --md-t pinned at 1.0 on a dismissed dock).
+  function interruptSim(guarded = true) {
+    const dt = 1 / 100; // the critic's fixed clock — the harshest case
+    const eng = makeSpring(T.spring.response, T.spring.zeta);
+    const ret = makeSpring(T.labelReturn.response, T.labelReturn.zeta);
+    const lab = { x: 0, v: 0 };
+    let t = 0;
+    while (t < 0.12) { eng.step(lab, T.labelLiftY, dt); t += dt; } // engage, interrupted at +120ms
+    let settledMs = null;
+    for (let td = 0; td < 5; td += dt) {
+      if (!guarded) eng.step(lab, T.labelLiftY, dt); // the orphan writer (pre-cure)
+      ret.step(lab, 0, dt);
+      if (Math.abs(lab.x) < 0.2 && Math.abs(lab.v) < 2) { settledMs = td * 1000; break; }
+    }
+    return { settledMs: settledMs === null ? Infinity : settledMs };
+  }
+
+  // ---- [P4-AGG A4 cure 2026-07-19] law-12 value truth: the sweep lands at the VALUE ----
+  // (fill length == value, capsule floor honored — the ONE clamp source for every xR writer)
+  function engageTargetR(frac) {
+    return geo.fillL + Math.max(frac * geo.usable, T.trackH - 2 * T.fillInset);
   }
 
   // ---- law 20 envelope + the light-first press-ack ----
@@ -415,7 +456,7 @@ const MORPHDOCK = (() => {
     return Math.hypot(applied.x - from.x, applied.y - from.y);
   }
 
-  return { tokens, geo, makeSpring, fd, sims: { sweep, evaporate, labelFlight, asymmetry, scrubSim, catchSim, envelope, labelContinuity }, labelIndexFor, detentTarget, arms, flipMath };
+  return { tokens, geo, makeSpring, fd, sims: { sweep, evaporate, labelFlight, asymmetry, scrubSim, catchSim, envelope, labelContinuity, interruptSim }, labelIndexFor, detentTarget, engageTargetR, arms, flipMath };
 })();
 /*MORPHDOCK-PHYSICS-END*/
 
@@ -471,6 +512,7 @@ const MORPHDOCK = (() => {
       sL: { x: T.chipL, v: 0 }, xR: G.chipR,
       labelY: { x: 0, v: 0 }, light: { x: 0, v: 0 },
       lastMoveT: 0, vWin: [], reparents: 0, stop: null,
+      gen: 0, // [P4-AGG B-1] the per-arm generation — every drive checks it, every intent bumps it
     };
     const dockSpr = MD.makeSpring(T.spring.response, T.spring.zeta);
     const retSpr = MD.makeSpring(T.labelReturn.response, T.labelReturn.zeta);
@@ -484,32 +526,41 @@ const MORPHDOCK = (() => {
     function labelTo(y, cx) { label.style.transform = `translate(${cx.toFixed(1)}px, ${y.toFixed(1)}px)`; }
 
     // the arm-3 in-place morph (the candidate). One body: dock role -> slider role.
+    // [P4-AGG B-1 cure] every drive below carries the generation guard (the assembly
+    // A5 pattern): the intent wrappers bump st.gen; an orphaned drive removes ITSELF
+    // on its next frame before it can write — no two-writer band, no orphan settle,
+    // no st.stop()-on-null TypeError in the shared conductor.
     function engageMorph() {
       st.morphing = true; dock.classList.add("morphing");
+      const g = st.gen;
       const tEng = performance.now();
       // light-first press-ack: the light clock starts NOW; geometry fires at +lightLeadMs
       let geomStarted = false;
-      const targetR = () => G.fillL + st.frac * G.usable + 0; // sweep lands at the current value
-      void targetR;
-      st.stop = drive((dt, now) => {
+      const tR = MD.engageTargetR(st.frac); // [P4-AGG A4] the sweep lands at the CURRENT VALUE (law 12) — the void-targetR dead knob deleted
+      const stopGeo = drive((dt, now) => {
+        if (g !== st.gen) return stopGeo();
         // light channel (law 20 envelope attack)
         st.light.x += (1 - st.light.x) * (dt / T.envelope.attackTau);
         stampLight(st.light.x);
         if (!geomStarted && now - tEng < T.lightLeadMs) return;
         if (!geomStarted) { geomStarted = true; dock.classList.add("engaged"); }
         dockSpr.step(st.sL, G.fillL, dt);
-        st.xR = st.xR + (G.fillR_ - st.xR) * (1 - Math.exp(-dt / T.rightTau));
+        st.xR = st.xR + (tR - st.xR) * (1 - Math.exp(-dt / T.rightTau));
         const tNorm = 1 - (st.sL.x - G.fillL) / (T.chipL - G.fillL);
         stampT(Math.max(0, Math.min(1, tNorm)));
         stampClip();
         labelTo(st.labelY.x, 0);
         if (Math.abs(st.sL.x - G.fillL) < 0.25 && Math.abs(st.sL.v) < 2 && Math.abs(st.labelY.x - T.labelLiftY) < 0.25) {
-          st.morphing = false; st.engaged = true; st.stop(); st.stop = null; say("morph settled");
+          st.morphing = false; st.engaged = true; stopGeo();
+          if (st.stop === stopGeo) st.stop = null;
+          say("morph settled");
         }
       });
+      st.stop = stopGeo;
       // label spring rides beside (same preset, own state)
       const lspr = MD.makeSpring(T.spring.response, T.spring.zeta);
       const stopL = drive((dt) => {
+        if (g !== st.gen) return stopL(); // [B-1] dies on dismissal — no orphan writer on labelY
         lspr.step(st.labelY, T.labelLiftY, dt);
         labelTo(st.labelY.x, 0);
         if (Math.abs(st.labelY.x - T.labelLiftY) < 0.2 && Math.abs(st.labelY.v) < 2) stopL();
@@ -517,10 +568,12 @@ const MORPHDOCK = (() => {
     }
     function dismissMorph() {
       st.engaged = false; st.morphing = false;
+      const g = st.gen;
       // evaporation: fill collapses on evapTau; label flies home critically damped (~85ms)
       dock.classList.remove("engaged");
       let op = 1;
       const stopE = drive((dt) => {
+        if (g !== st.gen) return stopE();
         op *= Math.exp(-dt / T.evapTau);
         fill.style.opacity = op.toFixed(3);
         st.xR = G.chipR + (st.xR - G.chipR) * Math.exp(-dt / T.evapTau);
@@ -530,11 +583,13 @@ const MORPHDOCK = (() => {
         if (op < 0.01) { fill.style.opacity = ""; dock.classList.remove("morphing"); stopE(); }
       });
       const stopL = drive((dt) => {
+        if (g !== st.gen) return stopL();
         retSpr.step(st.labelY, 0, dt);
         labelTo(st.labelY.x, 0);
         if (Math.abs(st.labelY.x) < 0.2 && Math.abs(st.labelY.v) < 2) { stopL(); labelTo(0, 0); }
       });
       const stopLight = drive((dt) => {
+        if (g !== st.gen) return stopLight();
         st.light.x *= Math.exp(-dt / T.envelope.releaseTau);
         stampLight(st.light.x);
         if (st.light.x < 0.01) { stampLight(0); stopLight(); }
@@ -544,6 +599,7 @@ const MORPHDOCK = (() => {
     // arm-1 foil: FLIP re-home — a second body, one re-parent (the hazard the video judges)
     function engageFlip() {
       st.morphing = true;
+      const g = st.gen;
       surface.classList.add("live");
       const from = label.getBoundingClientRect();
       surface.appendChild(label); st.reparents++;
@@ -554,12 +610,15 @@ const MORPHDOCK = (() => {
       const s = { x: 1, v: 0 }; const spr = MD.makeSpring(T.spring.response, T.spring.zeta);
       label.style.transform = `translate(${dx}px, ${dy}px)`;
       const stop = drive((dt) => {
+        if (g !== st.gen) return stop(); // [B-1] an interrupted engage never resurrects engaged
         spr.step(s, 0, dt);
         label.style.transform = `translate(${(dx * s.x).toFixed(2)}px, ${(dy * s.x).toFixed(2)}px)`;
         if (Math.abs(s.x) < 0.004 && Math.abs(s.v) < 0.05) { st.morphing = false; st.engaged = true; stop(); }
       });
     }
     function dismissFlip() {
+      st.morphing = false; // [B-1] the interrupt clears the flight state — engaged never resurrects
+      const g = st.gen;
       const from = label.getBoundingClientRect();
       chip.appendChild(label); st.reparents++;
       cells.flip.reparents = st.reparents;
@@ -569,6 +628,7 @@ const MORPHDOCK = (() => {
       const w = (2 * Math.PI) / T.labelReturn.response; let t = 0;
       label.style.transform = `translate(${dx}px, ${dy}px)`;
       const stop = drive((dt) => {
+        if (g !== st.gen) return stop();
         t += dt;
         const x = (1 + w * t) * Math.exp(-w * t); // 1 -> 0 critically damped
         label.style.transform = `translate(${(dx * x).toFixed(2)}px, ${(dy * x).toFixed(2)}px)`;
@@ -579,6 +639,7 @@ const MORPHDOCK = (() => {
     // arm-2 foil: growth-choreo — the dock stays; a card grows; the label crossfades to a clone
     function engageGrowth() {
       st.morphing = true;
+      const g = st.gen;
       growCard.classList.add("live");
       const clone = label.cloneNode(true);
       clone.dataset.clone = "1"; clone.style.position = "absolute";
@@ -586,6 +647,7 @@ const MORPHDOCK = (() => {
       clone.style.opacity = "0"; growCard.appendChild(clone);
       const s = { x: 0, v: 0 }; const spr = MD.makeSpring(T.spring.response, T.spring.zeta);
       const stop = drive((dt) => {
+        if (g !== st.gen) return stop(); // [B-1] an interrupted engage never resurrects engaged
         spr.step(s, 120, dt);
         growCard.style.height = `${Math.max(0, s.x).toFixed(1)}px`;
         const tt = Math.max(0, Math.min(1, s.x / 120));
@@ -594,9 +656,12 @@ const MORPHDOCK = (() => {
       });
     }
     function dismissGrowth() {
+      st.morphing = false; // [B-1] the interrupt clears the flight state
+      const g = st.gen;
       const clone = growCard.querySelector("[data-clone]");
       const s = { x: parseFloat(growCard.style.height) || 120, v: 0 };
       const stop = drive((dt) => {
+        if (g !== st.gen) return stop();
         s.x *= Math.exp(-dt / T.evapTau);
         growCard.style.height = `${s.x.toFixed(1)}px`;
         if (clone) clone.style.opacity = Math.max(0, s.x / 120).toFixed(3);
@@ -613,9 +678,10 @@ const MORPHDOCK = (() => {
 
     function engage() {
       if (st.engaged || st.morphing) return;
+      st.gen++; // [P4-AGG B-1] a new intent kills every prior writer (next frame)
       if (prm.matches) { // PRM: single-step — state relayed, physics removed
         dock.classList.add("engaged", "morphing");
-        st.sL.x = G.fillL; st.xR = G.fillR_; st.labelY.x = T.labelLiftY;
+        st.sL.x = G.fillL; st.xR = MD.engageTargetR(st.frac); st.labelY.x = T.labelLiftY;
         stampClip(); stampT(1); stampLight(1); labelTo(T.labelLiftY, 0);
         st.engaged = true; return;
       }
@@ -623,6 +689,7 @@ const MORPHDOCK = (() => {
     }
     function dismiss() {
       if (!st.engaged && !st.morphing) return;
+      st.gen++; // [P4-AGG B-1] dismissal kills the engage writers — the blocker's root
       if (prm.matches) {
         dock.classList.remove("engaged", "morphing");
         st.sL.x = T.chipL; st.xR = G.chipR; st.labelY.x = 0;
@@ -638,6 +705,7 @@ const MORPHDOCK = (() => {
       if (e.key === "ArrowRight") st.frac = T.detents[Math.min(2, i + 1)];
       if (e.key === "ArrowLeft") st.frac = T.detents[Math.max(0, i - 1)];
       label.textContent = T.detentLabels[MD.labelIndexFor(st.frac)];
+      st.xR = MD.engageTargetR(st.frac); stampClip(); // [P4-AGG A4] value-truth on the a11y path (law 12)
     });
 
     // value scrub on the candidate arm only: fill tracks the finger continuously;
@@ -645,8 +713,20 @@ const MORPHDOCK = (() => {
     if (arm === "morph") {
       let scrubbing = false;
       dock.addEventListener("pointerdown", (e) => {
-        if (st.morphing) { // the C1 catch: seize the live spring — zero jump
+        if (st.morphing) { // the C1 catch: seize the live spring — the flight CONTINUES
           st.stop?.(); st.stop = null; st.morphing = false; st.engaged = true;
+          dock.classList.add("engaged");
+          // [P4-AGG A3 cure] the left edge finishes its seized flight — same spring,
+          // same state, no teleport frame (the pre-cure first-scrub hard-set is dead)
+          const g = st.gen; // the catch INHERITS the engage generation — the label lift lives on
+          const stopSeize = drive((dt) => {
+            if (g !== st.gen) return stopSeize();
+            dockSpr.step(st.sL, G.fillL, dt);
+            stampClip();
+            if (Math.abs(st.sL.x - G.fillL) < 0.25 && Math.abs(st.sL.v) < 2) {
+              st.sL.x = G.fillL; st.sL.v = 0; stampClip(); stopSeize();
+            }
+          });
         }
         if (!st.engaged) return;
         scrubbing = true; dock.setPointerCapture(e.pointerId);
@@ -661,8 +741,8 @@ const MORPHDOCK = (() => {
         st.vWin = st.vWin.filter((s) => now - s.t <= 120);
         st.lastMoveT = now;
         st.frac = frac;
-        st.xR = G.fillL + Math.max(frac * G.usable, T.trackH - 2 * T.fillInset);
-        st.sL.x = G.fillL; stampClip();
+        st.xR = MD.engageTargetR(frac);
+        stampClip(); // [A3] the left edge is the seize drive's alone — never hard-set here
         label.textContent = T.detentLabels[MD.labelIndexFor(frac)];
       });
       dock.addEventListener("pointerup", () => {
@@ -674,12 +754,19 @@ const MORPHDOCK = (() => {
           if (b.t > a.t) v = (b.f - a.f) / ((b.t - a.t) / 1000);
         }
         const target = MD.detentTarget(st.frac, v, now - st.lastMoveT);
+        if (prm.matches) { // [P4-AGG A6] PRM: the detent lands in ONE step — no glide drive
+          st.frac = target; st.xR = MD.engageTargetR(target); stampClip();
+          label.textContent = T.detentLabels[MD.labelIndexFor(target)];
+          return;
+        }
+        const g = st.gen;
         const s = { x: st.frac, v: 0 };
         const spr = MD.makeSpring(T.spring.response, T.spring.zeta);
         const stop = drive((dt) => {
+          if (g !== st.gen) return stop();
           spr.step(s, target, dt);
           st.frac = s.x;
-          st.xR = G.fillL + Math.max(s.x * G.usable, T.trackH - 2 * T.fillInset);
+          st.xR = MD.engageTargetR(s.x);
           stampClip();
           if (Math.abs(s.x - target) < 0.002 && Math.abs(s.v) < 0.02) {
             st.frac = target; label.textContent = T.detentLabels[MD.labelIndexFor(target)]; stop();
