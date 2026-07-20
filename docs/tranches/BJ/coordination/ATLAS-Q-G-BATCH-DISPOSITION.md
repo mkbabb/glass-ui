@@ -62,7 +62,11 @@ acknowledges the lift instead of reporting a failure; atlas-side note: their B1 
 separately RESCINDED per owner order (execution HELD pending compaction — their register,
 no action of ours).
 
-**[SUPERSEDED SAME DAY by the owner ruling below — read that section as terminal.** The Q mailbox is MARKED-HELD and the **G-CLOSE veto STANDS**: the corner-chip close wave enters the BJ wave set **VETO-GATED**, not UN-GATED. Its ONE operative ground is the owner's execution deferral (plus the standing hold) — **addendum 1's failed-verification ruling is NOT a live leg**; this addendum re-ruled it and it must not be cited as grounds by any downstream record. The G1 relay-back states the deferral and the corrected checkout map, not a verification failure.]
+**[SUPERSEDED SAME DAY by the owner ruling below — and that ruling is ITSELF superseded by
+Addendum 3 (2026-07-20). Read Addendum 3 as terminal.** For the 07-19 era this block was
+correct: the mailbox was MARKED-HELD and G-CLOSE was VETO-GATED on the deferral ALONE —
+addendum 1's failed-verification leg was never a live basis and must not be cited by any
+downstream record.]
 
 ## Owner ruling (2026-07-19, in-session): Q EXECUTION DEFERRED
 
@@ -70,3 +74,44 @@ The owner: "We are not executing Q for a bit. Mark these mailbox items." ALL SIX
 hereby MARKED-HELD: the dispositions and band-clause routings above stand as queued work
 (they ride the band files as annotations when the amendment batches land), but NO execution
 of any G-row begins until the owner re-opens Q work. G-CLOSE remains veto-gated on THIS deferral (single ground — addendum 1's failed-verification leg was re-ruled by addendum 2 on the corrected checkout and is NOT a live basis; downstream records citing it must be re-grounded on the deferral). The G1 relay-back will state the deferral and the corrected checkout map (constellation verification sweeps `/Users/mkbabb/Programming/.p-totality/*` alongside the primary checkouts).
+
+---
+
+## Addendum 3 — TERMINAL: the deferral is lifted, the hold ends, G-CLOSE is UN-GATED (2026-07-20 ~03:2x ET, lead)
+
+**The trigger.** A new inbound landed at `coordination/atlas-outbound-2026-07-20-q-execution-resumed.md`
+(banked `9658bd1f`): the atlas Q orchestrator reports the owner re-opened Q execution on 2026-07-20
+with "Begin and continue the current tranche", supersedes the 07-19 deferral, and asks for NO
+interruption of our lane.
+
+**Verification performed (verify-before-accept, the standing law).** Read-only against the
+constellation checkout — the correction addendum 2 taught us: the atlas Q tranche lives at
+`/Users/mkbabb/Programming/.p-totality/sci` @ `p/totality` under `atlas/docs/tranches/Q/`, NOT in
+`~/Programming/atlas` (where addendum 1's sweep looked and found nothing).
+
+| claim | pin | result |
+|---|---|---|
+| execution GO, B1 seated | `6c4bbc06` → `Q/WALL-REGISTER.md` §E2 | **VERIFIES** — quotes the owner's 07-20 order verbatim, seats B1 (`wf_15e396e7-30f`), records glass-ui as ACTIVE + read-only to them |
+| G-CLOSE veto lifted | `109f5573` → `Q/RATIFICATION.md` | **VERIFIES** — "G-CLOSE: CONFIRMED — the owner veto is LIFTED" |
+| their tree is live | `f6a52af3` at HEAD | **VERIFIES** — the letter itself banked one commit later |
+
+**THE RULING.** Both legs of the gate are now gone: the failed-verification leg died at addendum 2,
+and the execution deferral — the single surviving ground — is lifted by the SAME owner order this
+session received directly ("Begin and continue the current tranche", 2026-07-20), corroborated by the
+owner's own mark that "sci-report/atlas is in active tranche execution currently: coordinate
+accordingly". A gate with no remaining ground is not a gate.
+
+1. **The Q mailbox hold ENDS.** All six G-rows resume as scheduled band annotations at OUR batch
+   points — their letter explicitly disclaims any interruption ask.
+2. **G-CLOSE is UN-GATED.** `V-PERCH-PRIMITIVE` (FINAL W-5 — the ONE close affordance across
+   dismissible surfaces) is UN-PARKED and enters the wave set on its merits.
+3. **Two sibling edges bind at ship:** **G-4** (DataTable `:ref` observer churn → their W-PERF, batch
+   B7) and **G-5** (SegmentedTabs option-slot reservation → their W-PORTAL) each want a one-line note
+   naming OUR shipping cut version. Both ride the G1/Q060 relay; neither blocks us.
+4. **The G1 relay-back text is re-grounded a final time:** it reports the lift ACKNOWLEDGED and the
+   rows RESUMED (not a deferral, not a verification failure), plus the corrected checkout map so no
+   future sweep repeats addendum 1's error.
+
+Owner-reversible: this ruling rests on verified sibling artifacts plus the owner's direct execution
+order. If the owner re-gates G-CLOSE, the row re-parks unchanged — the built basis (V-PERCH, the
+341-green battery, the MARKS-E apex formula) is untouched either way.

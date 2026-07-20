@@ -40,9 +40,17 @@ is the crash bootstrap.
 sci-report and atlas are executing their own tranches NOW: their trees are moving snapshots —
 every consumer census is FRESH-AT-SHIP (re-run immediately before the breaking wave lands,
 never trusted from formation time) · siblings READ-ONLY, never parked · `coordination/` drops
-may arrive any tick and are verify-before-accept · the Q mailbox is MARKED-HELD (no G-row
-execution) · the G-CLOSE veto STANDS (single ground: the owner's Q-execution deferral — the relayed lift VERIFIES against the totality checkout per the disposition's addendum 2; the failed-verification leg is retracted) · Q060/G1 relay
-content pins OUR commit hashes and states their in-flight status.
+may arrive any tick and are verify-before-accept · Q060/G1 relay content pins OUR commit hashes
+and states their in-flight status.
+
+**Q MAILBOX RESUMED · G-CLOSE UN-GATED (2026-07-20, lead — disposition Addendum 3).** The
+07-20 inbound verified on disk against the constellation checkout (`.p-totality/sci` @
+`p/totality`: `6c4bbc06` THE GO, `109f5573` the ratification), and the owner's own 07-20
+execution order lifted the deferral that was the gate's last ground. The six G-rows resume as
+scheduled band annotations at our batch points; `V-PERCH-PRIMITIVE` (FINAL W-5) is UN-PARKED.
+Two ship-time edges bind: **G-4** (DataTable `:ref` churn → their W-PERF/B7) and **G-5**
+(SegmentedTabs option-slot → their W-PORTAL) each want a one-line note naming our shipping cut
+version — carried by G1, blocking nothing. Owner-reversible.
 
 ## Phase ledger
 

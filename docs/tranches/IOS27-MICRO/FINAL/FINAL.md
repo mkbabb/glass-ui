@@ -63,9 +63,15 @@ Pass-4-born: V-MORPHDOCK (arm 3 DECIDED — census 1/reparents 0/seam ~17px) · 
 (hue-as-progress through our oklch wheel; D9 cure verified at W-0).
 Composition: PROTO-ASSEMBLY's three organs (sea-in-blackdock dark-mass occlusion ·
 perch→vapor handoff · R-CONDENSE fission drawer) — the m9 ban lifted by its own clause.
-**V-PERCH-PRIMITIVE (the ONE close affordance across dismissible surfaces) stays VETO-GATED**
-per the standing G-CLOSE ruling (d1b7ce6c + the Q hold b9aad5a0) — the row exists, execution
-waits on the owner.
+**V-PERCH-PRIMITIVE (the ONE close affordance across dismissible surfaces) is UN-GATED**
+[2026-07-20, lead — the G-CLOSE gate FELL: both grounds are gone (the failed-verification leg
+died at disposition addendum 2 on the corrected constellation checkout; the execution deferral
+was lifted by the owner's 07-20 execution order, verified on disk at `6c4bbc06`/`109f5573` and
+given to this session directly). Ruling of record: `coordination/ATLAS-Q-G-BATCH-DISPOSITION.md`
+Addendum 3. SUPERSEDES the prior ~~"stays VETO-GATED per d1b7ce6c + the Q hold b9aad5a0"~~
+line.] The wave is scheduled on its merits: ONE primitive across drawers/dialogs/popovers/
+hover-cards/sheets, V-PERCH + the MARKS-E apex-seat formula the built basis. Owner-reversible;
+the basis is untouched if it re-parks.
 
 ## W-6 — ENGAGEMENT/BREATH SHIPPING
 

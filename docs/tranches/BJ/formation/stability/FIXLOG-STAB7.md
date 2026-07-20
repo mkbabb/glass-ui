@@ -56,3 +56,26 @@ docs/tranches/IOS27-MICRO/FINAL/FINAL.md                         | 14 ++++--
 
 Zero source files touched. Zero ASK row IDs/questions/recommendations altered. The ledger's
 `## Terminal order (unchanged)` section is byte-identical to its pre-pass state.
+
+---
+
+## LEAD ADJUDICATION of the escalations (2026-07-20, lead — the fixer was right to escalate both)
+
+Both STAB7 escalations and both STAB8 escalations are ONE class: a later cure targeting a byte
+string an earlier cure in the same set already consumed. The fixer applied first-listed verbatim
+and skipped the duplicate whole rather than improvising a merge — correct under its mandate. The
+lead now rules each:
+
+- **STAB7 #12 (ledger H4).** Cure 4's landed text is **RATIFIED**; the three facts unique to cure
+  12 are **FOLDED IN** at the H4 cell rather than lost: the engage-bank pin `224024c3`, the
+  "may merge without a further paint gate" clause, and the explicit "the WebKit arm is ledger K7's
+  named non-goal" cross-reference. No merge of the two prose texts — the landed text plus a marked
+  fold.
+- **STAB7 #17 + STAB8 E-1/E-2 (the G-CLOSE / I1 texts).** **MOOTED by a superseding event**, not
+  adjudicated on their own terms: the 07-20 inbound verified on disk and the owner's execution
+  order lifted the deferral, so the gate has no remaining ground. Both candidate texts argued over
+  how to phrase a gate that no longer exists. Terminal ruling:
+  `coordination/ATLAS-Q-G-BATCH-DISPOSITION.md` **Addendum 3** — mailbox RESUMED, G-CLOSE UN-GATED,
+  FINAL W-5 un-parked, the G1 relay-back re-grounded to acknowledge the lift.
+
+Escalation ledger CLEAR: 0 open. No cure text was improvised at any stage.
