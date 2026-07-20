@@ -289,6 +289,30 @@ because no such behavioral assertion exists; (b) the cut precondition —
 [route corrected — the carousel story lives at `demo/stories/navigation/carousel.vue`, not
 `/motion/carousel`].
 
+**Status (challenge-adjudicated, 2026-07-20 — the FM-W6 close):** the shipped two-edge worm was
+measured against the F33 bar at execution and ruled ALREADY-AT-BAR / RETUNED-BY-VALUES
+{`--pager-dot-elongated` 36px clamp reached, neck-bridge held 43 frames across the transition,
+`--stretch` velocity-swell >1, reunion on target} — the signature gate pins it; the gate (c)
+paired-π is the paint evidence (`../evidence/W-PAGER-DOT-MORPH/` — `VERDICTS.txt` + the
+before/mid/after frames + `paired-pi.json`, both routes). The BD-era worm already meets the
+minted signature; **the F33 dramatic-refinement half is discharged by RATIFICATION**, and the
+**RU-09 F33 migration is carried here** (RU14-CRIT2-B — the "dramatic dot refinement" lands ONCE
+on the surviving `usePagerWorm`/`PagerDots` path, which carousel + deck + the slides consumer
+inherit together). Gate (a) is GREEN-ON-ARRIVAL: a CHARACTERIZATION pin, NOT dressed as born-RED
+(PLAN §3 / APOTHEOSIS §4.2); its non-vacuity is proven by the in-file cross-fade/slide self-test
+AND a planted bridge-kill watched RED against the real component (recorded in `VERDICTS.txt`).
+This wave's source delta is the four DeckPager phantom-prose truth-ups on `PagerDots.vue`
+(the sites the REDUCTION W8 cut routed here as sole owner — APOTHEOSIS §4 invariant 1) plus this
+recorded ruling; the refinement half is discharged by ratification, never a silent close.
+
+**Unblock disposition (mirrors the REDUCTION W8 deck-half severance):** FM W6's unblock is
+SEVERED from the ASK-6 owner mark and executes pre-mark — the refinement targets the SURVIVING
+`PagerDots` path, invariant across both posed ASK-6 options (deck-keep-headless is settled;
+whether the carousel is kept or DELETE-with-relay, `PagerDots` survives and both consumers ride
+it). This mirrors the deck-half precedent (`BAND-REDUCTION` W8 §Status, LEAD-RULED 2026-07-20)
+and the `APOTHEOSIS.md` §3 phase-1 unconditional `REDUCTION W8 → FM W6` seat (FM W6 is NOT in the
+"as their ASK rulings land" set). The ASK-6 owner mark still gates the CAROUSEL half (W4) only.
+
 ## Wave 7 — `BJ.W-SHEET-MOTION-DEBT` (RU-28 N1-N4) — minted this union
 
 The RU-28 redo adjudicated the shipped sheet machine RATIFIED at the mechanism level and routed

@@ -7,7 +7,8 @@ import { usePagerWorm } from "./composables/usePagerWorm";
 
 /* PagerDots — the ONE position-dot rail register.
    The shared oracle the carousel ships and the slides deck adopts. ≥2 consumers by
-   construction: the carousel + the slides DeckPager (a THIN PagerDots wrapper).
+   construction: the carousel + the deck story composing `<PagerDots pattern="group"
+   :ring="false">` directly.
 
    THE LIQUID DOT-MORPH WORM. The selected indicator STRETCHES,
    TRAVELS, and RE-FORMS on the next dot with liquid weight (the Google-worm edict) —
@@ -53,7 +54,7 @@ export interface PagerDotsProps {
     orientation?: "horizontal" | "vertical";
     /**
      * When set, window the rail to `fit` dots centered on the active dot
-     * (the DeckPager dock-gutter overflow generalized). Off (undefined) →
+     * (the deck dock-gutter overflow generalized). Off (undefined) →
      * show every dot.
      */
     windowFit?: number;
@@ -63,7 +64,7 @@ export interface PagerDotsProps {
      * The ARIA register. `"tabs"` (default, byte-identical) is the carousel
      * panel-nav register (`role="tablist"`/`role="tab"` + `aria-selected`);
      * `"group"` is the full-viewport deck PRESENTATION register
-     * (`role="group"`/`aria-current`) the `<DeckPager>` selects. ONE windowing
+     * (`role="group"`/`aria-current`) the deck group composition selects. ONE windowing
      * oracle, two aria registers — the `pagerWindow` math is NEVER re-forked.
      */
     pattern?: "tabs" | "group";
@@ -388,7 +389,7 @@ function onKeydown(e: KeyboardEvent): void {
 <style scoped>
 /* ── PagerDots — the ONE position-dot register + the liquid dot-MORPH worm
    ─────────────────────────────────────────────────────────────
-   The shared oracle (carousel dots ≡ slides DeckPager). The active indicator is a
+   The shared oracle (carousel dots ≡ the deck group pager). The active indicator is a
    LIQUID worm (a two-edge lead/trail barbell) that STRETCHES → TRAVELS → RE-FORMS
    between dots. Three layers: a crisp bed (no filter), the worm masses (filter once),
    the transparent hit-targets. Every paint reads a `--pager-*` token. */

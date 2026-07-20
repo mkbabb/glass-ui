@@ -1,0 +1,63 @@
+BJ.W-PAGER-DOT-MORPH (FEEDBACK-MOTION Wave 6) — gate verdicts
+Captured at execution 2026-07-20, HEAD 85089b3b (the REDUCTION W8 deck-cut commit).
+Machine reports read, not piped exit codes (PLAN §3 pipe-trap rule).
+
+────────────────────────────────────────────────────────────────────────
+GATE (a) — the worm/goo-morph signature assertion
+────────────────────────────────────────────────────────────────────────
+Gate (a) RED = assertion-absence only (no behavioral assertion existed at HEAD); the
+authored signature is a CHARACTERIZATION gate, GREEN-at-HEAD against the shipped worm; its
+discriminating power is proven by the planted cross-fade + mechanical-slide self-test, not by
+a RED run.
+
+  · Machine report (vitest-morph-report.txt): Test Files 1 passed (1), Tests 4 passed (4).
+    The shipped two-edge worm satisfies the signature at HEAD with ZERO source delta — this is
+    GREEN-ON-ARRIVAL, a characterization PIN, honestly NOT dressed as born-RED
+    (PLAN §3 born-RED discipline / APOTHEOSIS §4.2 born-RED honesty).
+
+  · NON-VACUITY, proven two ways (the gate CAN fail):
+    (1) the in-file self-test ("BITES: ... throws on a planted cross-fade AND a mechanical
+        slide") drives synthetic anti-pattern traces through the SAME assertion — GREEN means
+        it threw on each.
+    (2) a planted defect in the REAL component — usePagerWorm.ts:159
+        `neck.style.opacity = "0"` (bridge killed → cross-fade) — was watched RED:
+          FAIL > elongates + the neighbor worms ... > REUNITES on the target
+          Error: no connective: neck held for 0 frames < 6 — a cross-fade, not a worm
+        Tests 1 failed | 3 passed. Reverted byte-clean (git diff empty). Not theatre.
+
+────────────────────────────────────────────────────────────────────────
+GATE (b) — the cut precondition (deck-goo family collapse; owned by REDUCTION W8)
+────────────────────────────────────────────────────────────────────────
+  grep -rn 'deck/DeckPager' src/ demo/            → 0 matches (exit 1)
+  grep -rn 'useDeckGoo|gooBarbellGeometry|DeckGooFilter' src/ demo/ → 0 matches (exit 1)
+  The clone set + the DeckPager alias are gone (landed 85089b3b). Precondition GREEN.
+
+────────────────────────────────────────────────────────────────────────
+GATE (c) — paired-π of the dot morph across an index change (live paint)
+────────────────────────────────────────────────────────────────────────
+Served on localhost:5174 (never 127.0.0.1). Observed via SCREENSHOT + computed-style /
+inline-style ONLY — never getContext (the worm is DOM/SVG/CSS; the context-steal trap does
+not apply and was not invoked). Single isolated Playwright browser context (the shared
+chrome-devtools MCP seat was held by a concurrent non-headless Chrome — the seat-singleton
+law forbids hijacking it, so an own-profile headless seat was used for capture only).
+
+Paired before/mid/after frames + the full computed-style trace: paired-pi.json.
+
+  /motion/deck   (index 0 → 3): rest-before gap 0, neck opacity 0 (ONE reunited body);
+    peak elongation maxGap 36px (= --pager-dot-elongated clamp), neck bridge held 43 frames
+    (a sustained connective, NOT a cross-fade); rest-after reunited on dot 3.
+      deck-1-rest-before.png / deck-2-mid-morph.png / deck-3-rest-after.png
+  /navigation/carousel (index 0 → 2): rest-before gap 0, neck opacity 0; peak elongation
+    maxGap 34.42px, neck bridge held 43 frames; rest-after reunited on dot 2.
+      carousel-1-rest-before.png / carousel-2-mid-morph.png / carousel-3-rest-after.png
+
+  The mid-morph frames paint the liquid goo barbell — a lead + trail mass merged by a welling
+  neck bridge (--stretch swells above 1 during travel: the velocity-bought liquid weight).
+  This is the F33 "dramatic dot refinement" AT BAR: liquid-weight + breath-of-life satisfied
+  (elongation, overshoot, reunion) — no bare fade, no mechanical tick, nothing inert.
+
+VERDICT: RATIFY-AS-SHIPPED. The BD-era two-edge worm meets the minted signature and the F33
+bar at execution; the F33 dramatic-refinement half is discharged by RATIFICATION (RU-09 F33
+migration carried into FEEDBACK-MOTION W6). The signature gate PINS it; this capture is the
+paint evidence. Recorded as a ruling in BAND-FEEDBACK-MOTION.md Wave 6 §Status, never a silent
+close.
