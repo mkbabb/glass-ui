@@ -18,19 +18,20 @@ dot pager — the headless core a presentation consumer composes.
   are FOCUS-GUARDED (`CONTROL_SELECTOR` test) so a focused control gets its native
   activation, never hijacked. `handleDeckKey` is the pure one-key handler (happy-dom
   testable).
-- **`<DeckPager>` — the windowed dot register.** A THIN wrapper over `<PagerDots>`'s
-  already-factored `pagerWindow` oracle, carrying ONLY the deck's PRESENTATION aria
-  register (`role="group"`/`aria-current` via the `pattern="group"` axis). ZERO
-  re-implementation of `pagerWindow` — the math is sourced from ONE place
-  (`pager-dots/pagerWindow.ts`). The 24px WCAG-2.5.8 hit target, the active-dot
-  elongation, the window cues, and the focus-survival across a recompute all ride the
-  composed PagerDots machinery.
+- **The windowed dot register — `<PagerDots pattern="group" :ring="false">`, composed
+  DIRECTLY.** `/deck` owns NO dot wrapper. The deck is consumer #2 of the ONE
+  `<PagerDots>` position-dot rail (`@mkbabb/glass-ui/pager-dots`): `pattern="group"`
+  selects the PRESENTATION aria register (`role="group"`/`aria-current`), `:ring="false"`
+  sits the dots flush on the deck's own ambient glass host. The `pagerWindow` oracle, the
+  24px WCAG-2.5.8 hit target, the active-dot morph-worm, the window cues, and the
+  focus-survival across a recompute all ride PagerDots unchanged.
 
 ## Usage
 
 ```vue
 <script setup lang="ts">
-import { useDeck, useDeckKeyboard, DeckPager } from "@mkbabb/glass-ui/deck";
+import { useDeck, useDeckKeyboard } from "@mkbabb/glass-ui/deck";
+import { PagerDots } from "@mkbabb/glass-ui/pager-dots";
 
 const deck = useDeck(slides.length, {
     label: (i) => slides[i].title,
@@ -47,7 +48,14 @@ useDeckKeyboard(deck);
             :data-state="i === deck.index.value ? 'active' : 'inactive'"
         >…</section>
 
-        <DeckPager v-model:index="deck.index.value" :total="deck.total" :window-fit="9" />
+        <PagerDots
+            v-model:active="deck.index.value"
+            pattern="group"
+            :ring="false"
+            :count="deck.total"
+            :window-fit="9"
+            aria-label="Slides"
+        />
 
         <p class="sr-only" aria-live="polite" aria-atomic="true">{{ deck.liveMessage.value }}</p>
     </main>

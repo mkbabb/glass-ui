@@ -1,10 +1,10 @@
 /* pagerWindow — the ONE windowing oracle the position-dot rail renders.
    The shared, pure, DOM-free window math: every index while they all fit, else `fit`
    indices centered on the active and clamped to the ends, with edge flags cueing
-   more beyond. Sourced from ONE place — PagerDots composes it AND `<DeckPager>`
-   composes it through PagerDots; there is NO third copy (the deck wave's binding
-   fence — the boundary verdict rides the pure math with the dots, never the deck
-   engine). */
+   more beyond. Sourced from ONE place — PagerDots composes it for BOTH aria registers
+   (tabs + group); the deck consumes it THROUGH PagerDots directly (`<PagerDots
+   pattern="group">`, no wrapper), so there is NO second copy. The deck-wave binding
+   fence: the boundary verdict rides the pure math with the dots, never a deck engine. */
 
 export interface PagerWindow {
     /** The 0-based slide indices to render as dots. */

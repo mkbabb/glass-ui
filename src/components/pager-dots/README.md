@@ -12,7 +12,8 @@ an instance-local filter + translucency ONCE), and the transparent hit-target bu
 so the whole-layer-filter empty-pill annihilation is structurally impossible. Inactive
 52% / hover 72% / active-under-worm dims ~35% / the worm masses paint full
 `--pager-dot-active`. This is the SHARED oracle — the carousel ships it (`CarouselDots`
-retired onto it) and the slides deck `DeckPager` adopts it.
+retired onto it) and the deck composes it DIRECTLY (`<PagerDots pattern="group">`, no
+wrapper — `/deck` is purely headless).
 
 Keyboard: the rail is a roving-tabindex tablist/toolbar — EXACTLY ONE
 tab stop (the active dot); a root `@keydown` handles the axis-derived arrows
@@ -23,11 +24,11 @@ UNMOVED.
 
 ## Anatomy
 
-The dots are the shared register the carousel and the slides deck were ALREADY
-running (CarouselDots was "re-authored from first principles against the slides
-DeckPager oracle"). This primitive harvests that convergence; it is not a new
-substrate. ≥2 consumers by construction: the carousel (consumer #1) + the slides
-DeckPager (consumer #2).
+The dots are the shared register the carousel and the deck were ALREADY running
+(CarouselDots was "re-authored from first principles against the deck's group-pattern
+oracle"). This primitive harvests that convergence; it is not a new substrate. ≥2
+consumers by construction: the carousel (consumer #1) + the deck (consumer #2, composed
+directly — `<PagerDots pattern="group" :ring="false">`, no wrapper).
 
 ```vue
 <script setup lang="ts">
@@ -52,7 +53,7 @@ const active = ref(0);
 | `count`       | `number`                      | —              | total dot count (the slide/snap count) |
 | `active`      | `number` (`v-model:active`)   | `0`            | the active 0-based index |
 | `orientation` | `"horizontal" \| "vertical"`  | `"horizontal"` | rail layout axis |
-| `windowFit`   | `number`                      | `undefined`    | window the rail to `fit` dots centered on the active (the DeckPager dock-gutter overflow generalized); off → show every dot |
+| `windowFit`   | `number`                      | `undefined`    | window the rail to `fit` dots centered on the active (the deck dock-gutter overflow generalized); off → show every dot |
 | `ring`        | `boolean`                     | `true`         | encapsulate the rail in the `.glass-pager-ring` glass pill chassis |
 | `ariaLabel`   | `string`                      | `"Pager"`      | accessible name for the rail group |
 
@@ -73,6 +74,6 @@ The fill reads `--foreground`-over-transparent, so it re-tints under `.dark` BY
 CONSTRUCTION. The glass ring chassis (`.glass-pager-ring`, glass/surfaces.css) is
 the DockRail-chip glass-floating recipe — NEVER an opaque `bg-card` slab.
 
-The `--pager-dot-active` retint is the convergence with the slides DeckPager: the
-deck sets `--pager-dot-active: var(--ncsu-red)` (the Wolfpack brand stays a
-deck-local preset — it NEVER enters library tokens).
+The `--pager-dot-active` retint is the convergence with the deck consumer: the deck
+sets `--pager-dot-active: var(--ncsu-red)` (the Wolfpack brand stays a deck-local
+preset — it NEVER enters library tokens).

@@ -13,6 +13,8 @@ export type {
     UseDeckKeyboardOptions,
 } from "./composables/useDeckKeyboard";
 
-export { default as DeckPager } from "./DeckPager.vue";
-
+// `/deck` is PURELY HEADLESS: the windowed dot register is `<PagerDots pattern="group"
+// :ring="false">` (from `@mkbabb/glass-ui/pager-dots`) composed DIRECTLY — the deck owns
+// no dot wrapper. The former `DeckPager` alias was a 47-line zero-logic pass-through and
+// is retired (clean break); the deck is consumer #2 of the ONE pagerWindow oracle direct.
 export { CONTROL_SELECTOR } from "./constants";

@@ -1,0 +1,61 @@
+# W-REDUCE-GOO-ENGINE (REDUCTION W8) — FRESH sibling census (G-SIBLING-CENSUS / CROSS-REPO LAW)
+# Captured 2026-07-20, re-run IMMEDIATELY BEFORE the deck-half cut lands (fresh-at-ship law).
+# READ-ONLY greps against each sibling's working tree; no sibling file opened for write.
+# Rationale for a fresh census: the only census on disk (../W-REDUCE-DELETE/sibling-census-2026-07-20.txt,
+# REDUCTION W3's) covers NONE of the W8 delete symbols — grep for
+# DeckPager|useDeckGoo|gooBarbellGeometry|DeckGooFilter in it returns 0 — so a symbol-matched
+# re-run is owed before THIS cut.
+#
+# W8 delete set (the cut): src/components/deck/DeckPager.vue (the 47-line zero-logic alias),
+# demo/stories/motion/deck/{useDeckGoo.ts, gooBarbellGeometry.ts, DeckGooFilter.vue},
+# tests/components/custom/deck/DeckGoo.private.test.ts, + the deck-story goo markup/CSS.
+# Grain: live .vue/.ts/.tsx/.mjs/.js imports only (research prose/comments/strings are NOT consumers).
+# Grep pattern per repo: -e DeckPager -e useDeckGoo -e gooBarbellGeometry -e DeckGooFilter over $repo/src.
+
+================================================================
+9-REPO TABLE — live imports of the W8 delete symbols
+================================================================
+| repo             | live imports | note |
+|------------------|--------------|------|
+| sci-report       | 0            | clean |
+| atlas            | 0            | clean (atlas consumes /deck HEADLESS — useDeck/DeckCore only; DeckPager never imported) |
+| speedtest        | 0            | 0 imports; 2 forward-intent COMMENT hits (below) |
+| keyframes.js     | 0            | clean |
+| value.js         | 0            | clean |
+| bbnf-lang        | 0            | clean |
+| fourier-analysis | 0            | clean |
+| muster           | 0            | clean |
+| words            | 0            | clean |
+
+VERDICT: 0 live imports of DeckPager / useDeckGoo / gooBarbellGeometry / DeckGooFilter
+         anywhere in the 9-repo constellation. The census CLEARS the delete under the
+         consumer-updates ruling — no sibling preserves an obsolete API for us.
+
+================================================================
+speedtest — the TWO comment hits, verbatim (comments-not-imports)
+================================================================
+-- src/components/survey/SurveyResultDock.vue:135 (inside an HTML <!-- --> block):
+     "ONE voice, superseded by the DeckPager dots when WV2 adopts
+      ASK-GU-DECK — the deletion trigger named at birth"
+-- src/components/survey/SurveyResultDock.vue:336 (inside a CSS /* */ block):
+     "NOTE the deck seam: when WV2 adopts
+      ASK-GU-DECK, the DeckPager dots become the counter's voice and this 13px
+      "2 / 4" eyebrow retires"
+
+DISPOSITION: comments-not-imports -> census CLEARS for the delete. BUT the two hits record
+a PLANNED forward adoption (speedtest tranche WV2 / ASK-GU-DECK) of the very component W8
+retires. A named cut with 0 live imports but a recorded future-consumer intent strands that
+plan unless RELAYED. The relay is filed (G-RELAY-FILED) as G1-OUTBOUND-DRAFT §(a) a10:
+  "speedtest WV2/ASK-GU-DECK: DeckPager retired at BJ REDUCTION W8 (glass-ui >=8.0.0) — the
+   adopt target is <PagerDots pattern=\"group\" :ring=\"false\" v-model:active :count :window-fit>
+   from @mkbabb/glass-ui/pager-dots; /deck stays headless (useDeck/useDeckKeyboard/CONTROL_SELECTOR).
+   (SurveyResultDock.vue:135, :336)"
+
+================================================================
+FM W6 gate (b) precondition — re-verified on THIS repo's disk, post-cut
+================================================================
+grep -rn 'deck/DeckPager' src/ demo/ tests/   -> 0 (exit 1, no match)
+grep -rn 'useDeckGoo|gooBarbellGeometry|DeckGooFilter' src/ demo/ (source) -> 0
+  (the only surviving hits are Deck.contract.test.ts NEGATIVE assertions that the goo-morph
+   symbols are ABSENT — useGooMorph/MORPH_SIGNATURES not-toHaveProperty — which is the point).
+=> the precondition FM W6 gate (b) asserts is satisfied by this cut.

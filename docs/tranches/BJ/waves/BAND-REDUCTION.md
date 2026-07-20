@@ -697,7 +697,7 @@ before its cuts ship (no twin left behind).
 
 ## Wave 8 — BJ.W-REDUCE-GOO-ENGINE · the F33 family collapse (NEW — RU-09 R2)
 
-**Status:** UNION — ASK-6-gated (`ASK-REDUCTION.md` §C1, whose re-issued recommendation names this wave: "DeckPager cut rides REDUCTION W8"); [cite corrected 2026-07-20, STAB9 — the prior "ASK A2" was RU-09's internal numbering and collided with `ASK-REDUCTION.md` §A2, completion-seal]; PRECONDITION of `BJ.W-PAGER-DOT-MORPH` (FEEDBACK-MOTION W6,
+**Status:** DECK-HALF EXECUTING — LEAD-RULED 2026-07-20 (execution disposition): the deck-half cut (the `DeckPager.vue` retire + the goo-clone deletion) is formation-decided and executes PRE-MARK — invariant across both posed ASK-6 options — per `ASK-REDUCTION.md` §C1 RE-ISSUED ("the vestigial `DeckPager.vue` cut rides REDUCTION W8 regardless") and the `APOTHEOSIS.md` §3 phase-1 seat (which lists REDUCTION W8 unconditionally, W4/W6/W9 only "as their ASK rulings land"). `G-ASK-RESOLVED` below is discharged for THIS wave by that SEVERANCE, NOT by an owner mark; it NARROWS to the CAROUSEL half (W4's, parked — `ASK.md` ASK-6 / §C1 carousel-DELETE-with-relay, words named) + FM W6's unblock, both still owner-gated. [Prior status: ASK-6-gated; cite corrected 2026-07-20, STAB9 — the pre-STAB9 "ASK A2" was RU-09's internal numbering and collided with `ASK-REDUCTION.md` §A2, completion-seal.] PRECONDITION of `BJ.W-PAGER-DOT-MORPH` (FEEDBACK-MOTION W6,
 the PLAN ordering law).
 **Terminal owner:** glass-ui orchestrator
 
@@ -728,7 +728,7 @@ library composable, never a story-local engine (the A2 flip clause).
 
 | gate | posture | probe |
 | --- | --- | --- |
-| G-ASK-RESOLVED (**ASK-6**) | precondition | the family collapse ratified — the ratification row is `ASK.md` **ASK-6** / `ASK-REDUCTION.md` **§C1** (deck-keep as the headless `useDeck` engine + carousel DELETE-with-relay), whose re-issued recommendation names this wave by name ("the DeckPager cut rides REDUCTION W8"). [Cite corrected 2026-07-20, STAB10: the prior "(A2)" was RU-09's internal numbering and collided with `ASK-REDUCTION.md` §A2 / `ASK.md` ASK-2 — completion-seal, a live row recommending KEEP. This wave's Status line (`:657`) already carried that correction; the gate row was the un-swept half.] |
+| G-ASK-RESOLVED (**ASK-6**) | precondition | the family collapse ratified — the ratification row is `ASK.md` **ASK-6** / `ASK-REDUCTION.md` **§C1** (deck-keep as the headless `useDeck` engine + carousel DELETE-with-relay), whose re-issued recommendation names this wave by name ("the DeckPager cut rides REDUCTION W8"). [Cite corrected 2026-07-20, STAB10: the prior "(A2)" was RU-09's internal numbering and collided with `ASK-REDUCTION.md` §A2 / `ASK.md` ASK-2 — completion-seal, a live row recommending KEEP. This wave's Status line already carried that correction; the gate row was the un-swept half.] **DISCHARGE (this wave — LEAD-RULED 2026-07-20): the DECK half is SEVERED and executes pre-mark, invariant across both ASK-6 options (§C1 RE-ISSUED: "the vestigial `DeckPager.vue` cut rides REDUCTION W8 regardless") + the `APOTHEOSIS.md` §3 phase-1 unconditional seat; this gate narrows to the CAROUSEL half (W4) + FM W6's unblock, still owner-gated — see the W8 §Status above.** |
 | G-ONE-METABALL | doctrine | grep: exactly ONE goo/metaball engine (usePagerWorm/useLeadTrail) in the tree post-cut. |
 | G-DECK-HEADLESS | consumer | atlas's useDeck/DeckCore imports typecheck unchanged. |
 

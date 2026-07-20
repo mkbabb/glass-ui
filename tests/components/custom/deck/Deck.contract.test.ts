@@ -1,4 +1,3 @@
-import { mount } from "@vue/test-utils";
 import { describe, expect, it, vi } from "vitest";
 import * as Deck from "@glass/components/deck";
 import * as Glass from "@glass/index";
@@ -10,6 +9,9 @@ describe("Deck public contract", () => {
         expect(Deck).not.toHaveProperty("deckEase");
         expect(Deck).not.toHaveProperty("DECK_SPRING");
         expect(Deck).not.toHaveProperty("PagerWindow");
+        // `/deck` is purely headless: the DeckPager wrapper alias is retired; the deck
+        // composes `<PagerDots pattern="group">` directly (clean break, BJ.W-REDUCE-GOO-ENGINE — REDUCTION W8).
+        expect(Deck).not.toHaveProperty("DeckPager");
         expect(Glass).not.toHaveProperty("useGooMorph");
         expect(Glass).not.toHaveProperty("MORPH_SIGNATURES");
         expect(MotionCore).not.toHaveProperty("useGooMorph");
@@ -47,13 +49,7 @@ describe("Deck public contract", () => {
         expect(moves.next).toHaveBeenCalledOnce();
     });
 
-    it("keeps the windowed pager's presentation register", () => {
-        const wrapper = mount(Deck.DeckPager, {
-            props: { total: 8, index: 3, windowFit: 5 },
-        });
-        expect(wrapper.get('[role="group"]').attributes("aria-label")).toBe("Slides");
-        expect(wrapper.get('[aria-current="true"]').attributes("aria-label")).toContain(
-            "4",
-        );
-    });
+    // The windowed-pager presentation register (role="group"/aria-current) is no longer
+    // a deck-owned component: the deck composes `<PagerDots pattern="group">` directly, so
+    // that contract lives in `pager-dots.contract.test.ts` (the survivor's own home).
 });

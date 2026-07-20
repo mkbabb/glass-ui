@@ -165,6 +165,28 @@ Re-verified 2026-07-20:
   `perfect-freehand` are no longer peers; `embla-carousel ^8.0` is a new optional peer. Material to
   words (`/carousel`).
 
+### a10 · speedtest — the `DeckPager` forward-adopt retarget (REDUCTION W8)
+
+This row sits in (a), NOT (b): the DECK half of the deck/carousel split is SEVERED from ASK-6 —
+`DeckPager.vue` retires at REDUCTION W8 *regardless* of the carousel ruling (`ASK-REDUCTION.md` §C1
+RE-ISSUED, "the vestigial `DeckPager.vue` cut rides REDUCTION W8 regardless"; the `APOTHEOSIS.md`
+§3 phase-1 unconditional seat). So the notice holds now and does not wait on the (b) batch.
+
+Fresh census (2026-07-20, read-only, `evidence/W-REDUCE-GOO-ENGINE/sibling-census-2026-07-20.txt`):
+**0 live imports** of `DeckPager`/`useDeckGoo`/`gooBarbellGeometry`/`DeckGooFilter` across the
+9-repo constellation. speedtest carries **two forward-intent COMMENT hits** (not imports) that name
+`DeckPager` as a *planned* adoption — `src/components/survey/SurveyResultDock.vue:135` ("superseded
+by the DeckPager dots when WV2 adopts ASK-GU-DECK") and `:336` ("when WV2 adopts ASK-GU-DECK, the
+DeckPager dots become the counter's voice"). The census clears the delete, but the recorded plan
+would ship misled unless the successor is named.
+
+**The notice (one row):** *`DeckPager` is retired at BJ **REDUCTION W8** (glass-ui **≥8.0.0**).
+speedtest's `WV2` / `ASK-GU-DECK` adopt target is `<PagerDots pattern="group" :ring="false"
+v-model:active :count :window-fit>` from `@mkbabb/glass-ui/pager-dots`, NOT a `DeckPager` wrapper.
+`/deck` stays purely headless — `useDeck` / `useDeckKeyboard` / `CONTROL_SELECTOR` are unchanged;
+atlas's headless integration is untouched.* This is a notice under the consumer-updates ruling
+(speedtest's tranche owns the WV2 edit), never a request to preserve an obsolete export here.
+
 ---
 
 ## (b) PENDING-RULING migration asks — firm only on the owner's ASK mark

@@ -93,3 +93,26 @@ describe("PagerDots boundaries", () => {
         expect(wrapper.get('[aria-selected="true"]').attributes("aria-label")).toContain("4");
     });
 });
+
+// The full-viewport PRESENTATION register the deck composes DIRECTLY (`pattern="group"`
+// + `:ring="false"`) — no DeckPager wrapper. role="group"/aria-current replace the tabs
+// register's tablist/aria-selected. Relocated here from the retired DeckPager contract
+// test (behavior survives on the survivor; the wrapper does not).
+describe("PagerDots group register (the deck presentation pattern)", () => {
+    it("renders role=group with aria-current on the active dot", () => {
+        const wrapper = mount(PagerDots, {
+            props: {
+                count: 8,
+                active: 3,
+                windowFit: 5,
+                pattern: "group",
+                ring: false,
+                ariaLabel: "Slides",
+            },
+        });
+        expect(wrapper.get('[role="group"]').attributes("aria-label")).toBe("Slides");
+        expect(wrapper.get('[aria-current="true"]').attributes("aria-label")).toContain(
+            "4",
+        );
+    });
+});
