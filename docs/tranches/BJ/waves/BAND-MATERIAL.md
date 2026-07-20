@@ -818,12 +818,14 @@ gradient energy within tolerance of its blur-only twin; **the lens may NEVER pai
 its own blur base, on any engine**. RED at HEAD on WebKit 26.5 (0.0748-sharp vs the 0.0018-frosted
 twin); the latch flips it GREEN. It is a STANDING regression lock (it also catches the day WebKit
 ships `url()` for real — the functional arm goes true, the gate stays green, the garnish lights
-up), so `BAND-GATES` W1's ≤60 count-guard arithmetic absorbs it as ONE additional standing gate
-inside W3's set: keeps ≤51 + W3 3 (token-hygiene · orphan-CSS-partial · THIS) + W4 1 + A11Y W3-C 1
-+ PERF 4 [+ COLOCATION fence 1] ≤ 60 — the keep pin drops 52→51 (51→50 under Form B) to make room,
-per invariant 3; reconcile at the W1 collapse. [Arithmetic corrected 2026-07-20, STAB12: the prior
-line wrote "W3's 2+1 … + THIS 1", double-counting this gate and summing to 62-63 under a "≤ 60"
-claim, against a capstone base already saturated at exactly 60.]
+up), so it is **absorbed as ONE additional standing gate INSIDE `BAND-GATES` W3's set** — never as a
+separate addend beside it. The arithmetic that absorbs it is not restated here: `BAND-GATES` W1
+§Design's KEEP bullet is the authoritative site, it already counts W3's set at its post-absorption
+size, and the keep pin already dropped to make room per APOTHEOSIS invariant 3. Reconcile at the W1
+collapse. [Collapsed to a pointer 2026-07-20, the de-duplication pass. The copy that stood here was
+corrected twice — STAB12 fixed a "W3's 2+1 … + THIS 1" double-count that summed to 62-63 under a
+"≤ 60" claim — which is the whole argument for holding no copy: this wave's job is to name where its
+gate lands in the census, not to re-derive the census.]
 
 **§π/DELTA — the capture-path law (the 7.0.0 lesson, binding).** The WebKit paint verification
 MUST ride the video/screencast path: Playwright WebKit `page.screenshot()` is

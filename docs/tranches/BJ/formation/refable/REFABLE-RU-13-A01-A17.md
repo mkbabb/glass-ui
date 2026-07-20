@@ -37,7 +37,7 @@
 | Row | Core claims re-proven |
 |-----|------------------------|
 | A01 | `Slider.vue:~422` box-INVIOLATE; reka `SliderThumbImpl.vue:59-60` (library-internal, per the BI wave); BI §Audit `:~293` button demote VERBATIM; crosswalk `:217-220` over-credit VERBATIM; openai-popup refs on disk — the DISAGREE vindicated as J1. R5: the W5 owner is GATED on the OPEN-FM-3 user ruling (`BAND-FEEDBACK-MOTION.md:40/:53/:189`; ledger E1 PENDING) |
-| A02 | corpus census file-for-file (8 unique recordings + 22 stills, folder EXTANT). [RU-14 R7: the codex layer re-pointed — at HEAD `IOS27-CODEX.md` is the RU-16 union (`63239549`): 18 laws + 6 BEST-vectors; iOS EVIDENCE = 6 recordings, the two 06-22 14.38.42 .movs excluded as non-iOS desktop captures (`IOS27-CODEX.md:5`); the cure spans RU-15 (marks) + RU-16 (codex)] |
+| A02 | corpus census file-for-file (8 unique recordings + 22 stills, folder EXTANT). [RU-14 R7: the codex layer re-pointed — at HEAD `IOS27-CODEX.md` is the RU-16 union (`63239549`): 18 laws + 6 BEST-vectors; iOS EVIDENCE = 6 recordings, the two 06-22 14.38.42 .movs excluded as non-iOS desktop captures (`IOS27-CODEX.md:5`); the cure spans RU-15 (marks) + RU-16 (codex)] [C7 2026-07-20, RU-01 capstone — the iOS-evidence integer is **7, not 6**: `refable-timelines/` holds `mov-0622-1438.md` AND `mov-0622-1438-copy.md`, one recording in two files, so 8 unique on disk − 1 non-iOS `.mov` = **7**, matching the C6-corrected `IOS27-CODEX.md:5` and the MARKS-A/B rosters' 7 timelined iOS MP4s. Doc-truth only; the exclusion warning and every verdict stand] |
 | A03 | `ADJUDICATION-1.md:49` "fresh seats, assume-wrong" verbatim; the PASS1→CRIT2→PASS3 chain on disk ×4 |
 | A04 | archaeology distributed across family I + CHRONIC-ADJUDICATION; parallelization = the 9-band DAG |
 | A05 | `REGISTRY.md:66-67` 73% (298/408) verbatim; both DAG artifacts built; the purge un-executed at HEAD (all census targets still present) |
@@ -239,6 +239,16 @@ G-MODE-DISTINCT + the C-G binding survive unchanged—ownership verdicts stand.
   greenfield-re-point discipline the ring applied to GF-HM/GF-DOCK was never applied to the
   codex — five rounds uncaught. No verdict movement: EXACT-VIA-RU-15 stands at the deliverable
   layer; the F49/F50 law cites (laws 1/12) survive the renumber unchanged.
+  **[C7 RECONCILIATION 2026-07-20, applied at the RU-01 capstone seat — doc-truth bracket only, no
+  verdict movement.]** The "6 recordings are iOS EVIDENCE" integer in this cure is itself off by one,
+  and this is the CRIT8B-1 residue C6 left un-owned. The exclusion arithmetic subtracted two FILES
+  for one RECORDING: `refable-timelines/` carries `mov-0622-1438.md` and `mov-0622-1438-copy.md` —
+  the duplicate the cure's own phrase "the two … .movs" names. **8 unique recordings on disk − 1
+  non-iOS `.mov` = 7 iOS recordings**, agreeing with `IOS27-CODEX.md:5` as corrected by C6 and with
+  the MARKS-A/MARKS-B rosters (7 timelined iOS MP4s). The cure's substance is unaffected — the
+  re-point to the RU-16 union, the two-layer reading, and the "don't count the desktop capture as
+  iOS evidence" warning all stand — and RU14-CRIT8-B's own verdict that the miscount "cannot
+  misdirect materially" is ratified by this reconciliation rather than disturbed by it.
 - **CRIT6-B CRIT6B-4 (MINOR) CURED — the A03 proportion-authority cite aligned with A10.** A03
   read "the proportion content is codex laws 3/4"; law 3 (renumber-stable through RU-16) is the
   specular caustic and carries no proportion content — the proportion clause lives in law 4

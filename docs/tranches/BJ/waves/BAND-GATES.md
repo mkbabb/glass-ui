@@ -69,7 +69,11 @@ Discharges `gate:gate-count-overshoot` + `gate:pin-implementation-literal` +
 
 ### §Design — the keep-list and the kill classes
 
-**KEEP (~45-55 invariant gates, all verified present at HEAD):**
+**KEEP (~45-55 invariant gates, all verified present at HEAD).** *This bullet and the keep/newcomer
+arithmetic that closes it are **THE AUTHORITATIVE STATEMENT** of the keep-band figure, the pinned
+census bases and the ≤60 count-guard decomposition for the whole corpus. `PLAN.md`, `APOTHEOSIS.md`,
+`EXECUTION-PROGRESS.md` and every sibling band point here and hold no copy — a second copy is what
+drifted through six stability rounds.*
 
 - `tests/styles/token-graph.test.ts` — token-graph cycle/resolution invariants.
 - `verify:package` = `scripts/verify-export-types.mjs` (`package.json:534`) — packed export resolution.
@@ -98,11 +102,16 @@ Discharges `gate:gate-count-overshoot` + `gate:pin-implementation-literal` +
   its W1-D source scan; RU-03-A11Y routing 7), `BAND-COLOCATION` W3's hygiene fence (Form B only —
   Form A folds into the audit doc and costs zero), **`BAND-PERF`'s FOUR standing `tests/gates/`
   vitest gates (boot-graph · shell-field-governance · deferred-paint · route-pending — permanent per
-  its OPEN-P0 ruling)**, and this band's own W3 (**3** — token-hygiene · orphan-CSS-partial ·
-  refract-lens-never-sharper) + W4 (1) gates. W2's two pixel floors are
-  Playwright in `tests-visual/`, outside the vitest base but inside the enforced surface. The
-  keep-list is pinned so keeps + the enumerated newcomers ≤ 60 by arithmetic (**keeps ≤ 51**, ≤ 50
-  under Form B — re-based 2026-07-20, STAB12 to absorb W3's refract lock), stated IN the
+  its OPEN-P0 ruling)**, and this band's own W3 (**2** in-base — token-hygiene ·
+  orphan-CSS-partial) + W4 (1) gates. **The base is defined by INSTRUMENT [R-6 RULED 2026-07-20,
+  lead — Option B]:** a gate is IN the vitest census base iff it runs under vitest-fs. So W2's two
+  pixel floors AND W3's `refract-lens-never-sharper` — all three Playwright/paint-path locks in
+  `tests-visual/` — are enumerated together, **outside the vitest base, inside the enforced
+  surface**. (The 2026-07-20 STAB12 text counted the refract lock as W3's third IN-BASE gate and
+  re-based the pin 52→51, which put a Playwright gate inside a base this same block defines as
+  vitest while its two kin sat outside; ruling of record + rationale at
+  `formation/stability/TERMINAL-ROUTINGS.md` §R-6.) The keep-list is pinned so keeps + the
+  enumerated newcomers ≤ 60 by arithmetic (**keeps ≤ 52**, ≤ 51 under Form B), stated IN the
   count-guard test. STORY/FM/REDUCTION declare ZERO standing gates
   (posture lines landed by APOTHEOSIS); the count-guard's pinned base is the INVARIANT-GATE census
   (the keep-list files + `tests/gates/**`) — sibling ordinary per-component regression tests are
@@ -352,7 +361,9 @@ The fix flip (the runtime latch that replaces the lying `@supports`) is **`BJ.W-
 (MATERIAL W8)** — this wave authors the GATE born-RED; the latch flips it GREEN on the video-path
 WebKit capture. It is a **STANDING regression lock** (it also catches the day WebKit ships `url()`
 for real — the functional arm goes true, the gate stays green), so it enters W1's census as ONE
-additional standing gate and the keep pin drops to **≤51** (≤50 under COLOCATION Form B) to absorb
+additional standing gate; the keep pin stands at **≤52** (≤51 under COLOCATION Form B) because the
+lock is a Playwright/paint-path gate enumerated OUTSIDE the vitest base [R-6 RULED 2026-07-20, lead —
+Option B, `formation/stability/TERMINAL-ROUTINGS.md` §R-6; supersedes the STAB12 ≤51 re-base] to absorb
 it inside the ≤60 ceiling.
 
 ### §Work
@@ -526,12 +537,13 @@ source — after it, `text-sm` is a build-visible unknown, not a silent bypass.
 10. Ramp-reset landing — **RULED (ruling 2)**: gate + residual tokenization here; reset+codemod in
     `BAND-MATERIAL` W6; same cut, never RED-at-tag. [W4]
 
-**In-scope count (APOTHEOSIS-corrected arithmetic, MECH-06/D-08):** the invariant-gate census after W1
-= keeps (**pinned ≤51**; ≤50 under COLOCATION Form B) + 3 static gates (W3) + 1 type-hygiene gate (W4)
-+ the inbound A11Y W3-C contrast gate + `BAND-PERF`'s 4 standing `tests/gates/` gates (+ the COLOCATION
-fence if Form B) ≤ 60 by construction; the 2 CI-wired pixel floors (W2) are Playwright, outside the
-vitest base but inside the enforced surface. The enforced surface lands in the mandated 40-60 band
-with, for the first time, gates that CAN fail on a real regression rather than on a legitimate retune.
+**In-scope count.** Not restated here — the arithmetic lives ONCE, in **Wave 1 §Design's KEEP
+bullet** above (the authoritative site, APOTHEOSIS-corrected per MECH-06/D-08). What this roll-up
+adds is the consequence: the enforced surface lands in the mandated 40-60 band with, for the first
+time, gates that CAN fail on a real regression rather than on a legitimate retune; and W2's CI-wired
+pixel floors are Playwright, outside the vitest base but inside that enforced surface. [Collapsed
+2026-07-20, the de-duplication pass — this paragraph carried a second full copy of the decomposition,
+which is how the ≤52-vs-≤51 and 2-vs-3 drifts propagated.]
 
 **Lead rider (STAB2, 2026-07-17) — the slider interaction-test discipline.** R3b's
 interaction-robustness finding: the slider's `role=slider` node is NOT the hittable pointer target
@@ -549,7 +561,7 @@ Applied per `../formation/refable/REFABLE-RU-04-JUDGE.md`; the capstone is `APOT
   `BAND-DOC-TRUTH` T26 — one owner on one file; the row keeps `pi-runner-manifest.mjs:31` +
   `regen-spring-tokens.mjs:200`.
 - **MECH-06/D-08:** the W1 inbound-newcomer roster now enumerates the COMPLETE standing set (PERF ×4
-  + A11Y W3-C + own W3/W4 + COLOCATION-if-Form-B); keeps pinned ≤51 so the ≤60 guard holds by
+  + A11Y W3-C + own W3/W4 + COLOCATION-if-Form-B); keeps pinned ≤52 (≤51 Form B) so the ≤60 guard holds by
   arithmetic; the count-guard's base defined as the invariant-gate census (keep-list files +
   `tests/gates/**`), sibling ordinary regression tests out-of-base by stated method.
   **[LEAD 2026-07-19, ledger E4 — the judge's design cure is ADOPTED; the veto lane (RU-04-JUDGE

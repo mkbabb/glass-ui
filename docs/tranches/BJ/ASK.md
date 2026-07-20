@@ -127,7 +127,7 @@ as a legit story type — and is "compositions" retired as a category?
   answer sets whether the `scene` page type has any members — pruning the whole section makes the
   taxonomy **6 types (no `scene`)**; keeping any composition page as a legit `scene` makes it **7**. Do
   not mint an empty `scene` type.
-  [Arithmetic trued up 2026-07-20, STAB9 — the recommendation and the stake are UNCHANGED; only the two integers re-anchor. Under the adopted SIX-type fold (`BAND-STORY.md:104-110`, `PLAN.md:168-169`), pruning the section makes the taxonomy **FIVE** and keeping a composition page makes it **SIX**. The "6 / 7" pair above rode the superseded seven-type census list, as `BAND-STORY.md` OPEN-D9 (`:645-649`) already records ("substance stands, numbers re-anchor"). The stake is identical either way: your answer decides whether `scene` has any members, and an empty `scene` is not minted.]
+  [Arithmetic trued up 2026-07-20, STAB9 — the recommendation and the stake are UNCHANGED; only the two integers re-anchor. Under the adopted SIX-type fold (`BAND-STORY.md` §W1 `BJ.W-STORY-TAXONOMY`; the fold is that wave's, per the SUPERSESSION LAW), pruning the section makes the taxonomy **FIVE** and keeping a composition page makes it **SIX**. The "6 / 7" pair above rode the superseded seven-type census list, as `BAND-STORY.md` OPEN-D9 (`:645-649`) already records ("substance stands, numbers re-anchor"). The stake is identical either way: your answer decides whether `scene` has any members, and an empty `scene` is not minted.]
 - Evidence: `ASK-REDUCTION.md` §D1; `BAND-STORY.md` OPEN-D9.
 
 ---

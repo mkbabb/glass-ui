@@ -12,8 +12,8 @@ idle-breath complement to the BI engagement waves, and the consumer-truth/cross-
 (family B). Formation ran eleven round-1 lenses → round-2 verification + new lenses → round-2b confirm
 → round-3a live paint-verify → round-3b perf/engagement → the four greenfield design loops
 (PASS1→CRIT2→PASS3) → the superfluity confrontation → the perfection fold → the twice-critique redress
-(CRIT1→CRIT2→CRIT3) → the terminal `redress/JUDGE.md`. Every one of the 67 feedback-ledger rows is
-owner-mapped in `formation/ASSEMBLY-CROSSWALK.md`; zero silent drops. 7.0.0 was CUT-NOW by the user's
+(CRIT1→CRIT2→CRIT3) → the terminal `redress/JUDGE.md`. Every feedback-ledger row is
+owner-mapped in `formation/ASSEMBLY-CROSSWALK.md` (the authoritative accounting, §6); zero silent drops. 7.0.0 was CUT-NOW by the user's
 2026-07-17 order — BJ builds on the shipped major and carries TWO known 7.0.0 defects as born-RED BJ rows. [Corrected 2026-07-20, STAB11 — the prior text read "exactly ONE"; the second defect was routed into BJ 2026-07-18 and had no owning row until `BJ.W-REFRACT-LATCH` was minted, so the count sentence understated the shipped surface.] **(1)** the chip/glass-atom `@import` orphan (`BAND-GATES` W3 authors `orphan-CSS-partial` born-RED; `BJ.W-CSS-CLOSURE-RESTORE`, MATERIAL W7, owns the fix); **(2)** the WebKit `@supports` gate-lie — `glass-refract.css:98`'s `@supports (backdrop-filter: url("#glass-refract"))` returns true on WebKit 26.5 while paint drops the whole value, so `.glass-lens` ships with ZERO backdrop filter on the Safari floor (worse than the intended blur-only degrade; probe 0.0748-sharp vs the 0.0018-frosted twin, `coordination/ios27micro-inbox-2026-07-18-glass-refract-webkit-gate-lie.md`). `BAND-GATES` W3 authors `refract-lens-never-sharper` born-RED; **`BJ.W-REFRACT-LATCH` (MATERIAL W8) owns the fix** and flips it GREEN on the video-path WebKit capture. **V-A95 is NOT a born-RED row** — four independent non-reproductions on live WebGPU (round-3-live 3/3 · RU-20 R3A-4 · RU-29 A2) put it at retire-as-instrumentation-artifact; it rides GF-AURORA W6 as a RETIRE-OR-CONFIRM rider (§5), never a cure hunt.
 
 ## §0 — Decision-0 + the version posture (settled, not user-gated)
@@ -24,25 +24,49 @@ tag = master = 4ab12128). So BJ does NOT re-open the cut question. Two consequen
 the release-dating is authorized (no `plan:premature-version-finalization` re-litigation), and Q051
 rows 2/3/4/9/10 self-ratified at that tag while rows 1/11-16 are LIVE BJ inputs (family I). The one
 version decision inside BJ is the `./sidebar` export-map break (COLOCATION W2): per the perfection fold
-it rides **8.0.0**, not a slip into a frozen 7.0.0 surface (§Band roster, COLOCATION). Everything else
+it rides **8.0.0**, not a slip into a frozen 7.0.0 surface (§2, family H). Everything else
 in this tranche is additive-or-internal against the shipped 7.0.0.
 
-## §1 — The band DAG (9 bands + 4 greenfields + the BI engage carry-over)
+## §1 — The band DAG (the nine bands + the four greenfields + the BI engage carry-over)
+
+**No roster, no counts here — edges only.** Every band's wave roster is its `waves/BAND-*.md`
+file and every greenfield's is its `formation/greenfields/GF-*-PASS3.md` wave-shape section;
+the SUPERSESSION LAW (§2) makes those the spec of record. This DAG states the ORDER, which is
+the one thing no band file can state about its siblings.
+
+**Order is stated at two grains, and they are not rivals.** THIS section states the ordering
+LAWS — why an edge exists, and what breaks if it is crossed. `waves/APOTHEOSIS.md` §3 states the
+PHASE MAP — the lawful topological seating of every chartered wave, and it is **the corpus's ONE
+scheduling map**: a chartered wave that belongs to no phase there is a silent drop, checked
+against the band file's roster and never against a count. A law here without a seat there is
+unscheduled work; a seat there that contradicts a law here is a defect in the seat. Neither file
+restates the other, and neither states a roster.
+
+**The seam register.** `formation/stability/TERMINAL-ROUTINGS.md` (R-1 … R-6) holds the named
+seams the formation close refused to improvise — each one an input the execution phase inherits,
+never a ruling. One of them is an ORDERING precondition and therefore binds here: **R-6 (the
+count-base fork — a Playwright-instrumented gate counted inside a base its own text defines as
+vitest) must be ruled by the lead, in ONE stroke with the instrument's path, BEFORE `BAND-GATES`
+W1's collapse authors the count-guard test.** The ≤60 ceiling is a user-mandated invariant, so no
+fixer, band or capstone seat may move the pin; R-6 states both options and leaves it where the
+tie-break left it. The remaining routings fire at their named lanes (R-1 at the P-EX4 greenfield
+lane, R-2/R-3 as standing readings, R-4/R-5 as read-throughs against historical records).
 
 ```
-FAMILY A — BAND-GATES (4) ── the gate reformation ─── the TRUTH SUBSTRATE, first
-   │   (born-RED honesty depends on a sound, ~45-55-keep gate surface; the pixel floor wired to CI)
+FAMILY A — BAND-GATES ── the gate reformation ─── the TRUTH SUBSTRATE, first
+   │   (born-RED honesty depends on a sound gate surface; the pixel floor wired to CI.
+   │    Keep-band + count-guard arithmetic: BAND-GATES W1 §Design, the authoritative site)
    │
-   ├── FAMILY J — BAND-DOC-TRUTH (1)     prose/comment truth-up (W2 ceded to COLOCATION)
-   ├── FAMILY H — BAND-COLOCATION (3)    library-internal moves + dead-barrel purge + §3/§7 rewrite + gate
-   ├── FAMILY C — BAND-REDUCTION (9)     rewritten on the redo canon (W4 SHARED-KEEP struck; merges/collapses per the corrected graph) — the band file is the roster
-   ├── FAMILY D — BAND-STORY (7)         seven waves on the RU-10 fold (six-type taxonomy, tile-authorship, frame-token contract) — the band file is the roster
-   ├── FAMILY E — BAND-PERF (4)          boot-diet · shell-field-govern · deferred-paint · route-pending
-   ├── FAMILY F — BAND-MATERIAL (7)      radius-role · blur-ladder · graded-backdrop-judge · track-dry · proportion · type-codemod · css-closure-restore
-   ├── FAMILY K — BAND-A11Y (5)          five waves at 2.5x scope incl. the N6 status-tone AA major — the band file is the roster
-   ├── FAMILY G — BAND-FEEDBACK-MOTION (7)  + W7 BJ.W-SHEET-MOTION-DEBT (minted from RU-28) — the band file is the roster
+   ├── FAMILY J — BAND-DOC-TRUTH        prose/comment truth-up (W2 ceded to COLOCATION)
+   ├── FAMILY H — BAND-COLOCATION       library-internal moves + dead-barrel purge + §3/§7 rewrite + gate
+   ├── FAMILY C — BAND-REDUCTION        the ruthless purge on the redo canon (W4 SHARED-KEEP struck)
+   ├── FAMILY D — BAND-STORY            the story meta-framework on the RU-10 fold
+   ├── FAMILY E — BAND-PERF             the demo/story performance band
+   ├── FAMILY F — BAND-MATERIAL         the radius/blur/track/type canon + the two closure restores
+   ├── FAMILY K — BAND-A11Y             the component-a11y repair
+   ├── FAMILY G — BAND-FEEDBACK-MOTION  the orphan cure + J1/J3 + the RU-28 sheet-motion debt
    │
-   ├── FAMILY G — the 4 GREENFIELDS      GF-DOCK (9) · GF-HANDMARK (8) · GF-AURORA (8) · GF-BLOB (10)
+   ├── FAMILY G — the 4 GREENFIELDS      GF-DOCK · GF-HANDMARK · GF-AURORA · GF-BLOB
    │   (each gated on its pass-4 design closure + the user ASK rulings it carries)
    │
    └── FAMILY B — the Q060 consumer relay (no band file; the outbound obligation, §Known carries)
@@ -51,8 +75,10 @@ FAMILY A — BAND-GATES (4) ── the gate reformation ─── the TRUTH SUBS
 
 **Ordering laws (only where real — the rest is parallel):**
 - **Family A first, as the truth substrate.** The born-RED discipline every other band relies on is
-  only honest against a sound gate surface; W1 collapses the ~1055-block battery to ~45-55 keeps and
-  W2 wires the sound pixel floor into CI so a black/broken live render can no longer pass every gate.
+  only honest against a sound gate surface; W1 collapses the battery to the keep-band and W2 wires
+  the sound pixel floor into CI so a black/broken live render can no longer pass every gate. The
+  census bases, the keep-band figure and the ≤60 count-guard arithmetic are `BAND-GATES` W1 §Design's
+  — the authoritative site; no other file restates them.
 - **The type-codemod is `BAND-MATERIAL` W6 flipping `BAND-GATES` W4.** W4 authors `type-hygiene`
   born-RED against the filtered **234** `text-sm`/`text-xs` sites (218 demo + 16 src) + the 9 raw-size
   `text-[…]` arbitraries on its utility arm AND the four CSS-declaration sites on its declaration arm;
@@ -89,237 +115,60 @@ FAMILY A — BAND-GATES (4) ── the gate reformation ─── the TRUTH SUBS
   2026-07-17 — "handmark is keep. But greenfield and perfect from first principles. Fable." — the
   greenfield carries FULL first-principles surface authority, the census floor superseded;
   consumers migrate per the consumer-updates ruling) and gate
-  on their pass-4 design closure + the user ASK rulings they carry (§Band roster).
+  on their pass-4 design closure + the user ASK rulings they carry (§2).
 - **Cross-repo relays land BEFORE their breaking waves ship.** No REDUCTION delete or prop-cut executes
   until the family-B sibling-import census clears the subpath/prop (the header-ribbon lesson); the Q060
   outbound carries the corrected per-repo break table.
 
-## §2 — The band roster (id → born-RED status → key gate(s); pulled verbatim-faithful from the band specs)
+## §2 — The family index (who owns what; the roster lives in the band file)
 
 **SUPERSESSION LAW (2026-07-18, the RU-03/04 union at `1340a918`):** the nine `waves/BAND-*.md`
 files were thrice-redone, critiqued in totality, judge-amended, and bound by `waves/APOTHEOSIS.md`
-— the band file's roster IS the spec of record. The family sections below are formation history:
-where a count, wave name, or claim here conflicts with the band file, the band file wins. Specific
-corrections landed below where the stale text would actively misdirect.
+— **the band file's roster IS the spec of record.** This section is an INDEX, not a copy: it names
+each family, its band file, and the one or two PLAN-level fences that no band file can state about
+itself. It carries no wave counts, no per-wave rosters, and no restated gate arithmetic.
 
-### FAMILY A — `BAND-GATES` (4 waves; the 40-60 collapse)
-- **W1 `BJ.W-GATE-COLLAPSE`** — reduce the vitest battery to ~45-55 invariant keeps. NOT born-RED
-  (deletion/collapse; evidence is the census delta 1055→45-55). Key: the keep-list + kill classes.
-- **W2 `BJ.W-PIXEL-FLOOR-CI`** — wire `substrate-paints-color` into CI, fail-on-SKIP, force the WebGL
-  floor path. **Born-RED** (`grep tests-visual .github/workflows` = 0 at HEAD + a planted black-aurora
-  self-test). Key: the CI-wired non-black + coverage floors.
-- **W3 `BJ.W-STATIC-HYGIENE`** — two new gates: `token-hygiene` (raw radius/blur literals) +
-  `orphan-CSS-partial` (@import closure); prop-granularity FOLDED to Family C's overfitting audit.
-  **Born-RED** (shipped violations: drawer blur(14px), SortableList 999px, glass-chip/glass-atom absent
-  from the closure). Key: the two standing gates, each with a self-test bite.
-- **W4 `BJ.W-RAMP-RESET`** — the Tailwind default-ramp reset + the type-literal/utility-class ban lint
-  (the typography-lint precondition). **Born-RED** (218 `text-sm`/`text-xs` demo sites). Key:
-  `type-hygiene`; the reset+codemod flip is owned by MATERIAL W6.
+**[Restructured 2026-07-20, the de-duplication pass — the finding class this cures.** Six stability
+rounds (7–12) plateaued without converging because this section duplicated derived data the band
+files own: wave counts, per-band rosters, phase enumerations, and the standing-gate arithmetic. Every
+round that chartered a wave left three or four copies stale, and the next round's critics correctly
+reported them — the cures manufactured the next round's findings. The SUPERSESSION LAW already made
+every one of those copies non-authoritative, so they are struck rather than re-synchronised. The dated
+correction brackets that used to sit here corrected the COPIES; their corrected facts live in the band
+files they cited, and the correction record itself survives in `formation/stability/FIXLOG-STAB*.md`
+and in `formation/stability/DEDUP-LEDGER.md`.]**
 
-### FAMILY J — `BAND-DOC-TRUTH` (1 wave; W2 ceded to COLOCATION)
-- **W1 `BJ.W-DOC-TRUTHUP`** — the truth-up sweep; the band file's roster IS the spec (22 SWEEP-NOW
-  + 8 TRIGGERED at union, no pinned count here — the "enumerated 7-target" framing was false against
-  the corrected corpus). **Born-RED per
-  target** (each stale string is live at HEAD). Comment/prose only — a `git diff` guard proves no
-  selector/token/executable change. `BJ.W-IDIOMS-COLOCATION-REWRITE` is CEDED to COLOCATION W1 Precept F
-  (design-idioms §3/§7 lands co-located with the `_shared/` moves — CHALLENGE-1-MECH FINDING-1).
+| Family | Band file (the roster) | What the family is | PLAN-level fences (stated here because they are cross-band) |
+|---|---|---|---|
+| **A** | `waves/BAND-GATES.md` | the gate reformation — the truth substrate | opens the tranche (§1 law 1) — though its COLLAPSE wave closes it, reconciling the census against every landed newcomer (APOTHEOSIS §3 phase 5). **Its W1 §Design is the AUTHORITATIVE site for the keep-band figure, the pinned census bases and the ≤60 count-guard arithmetic** — every other file points here. |
+| **J** | `waves/BAND-DOC-TRUTH.md` | the prose/comment truth-up sweep | comment/prose only, `git diff`-guarded; the design-idioms §3/§7 rewrite is CEDED to COLOCATION W1 Precept F. |
+| **H** | `waves/BAND-COLOCATION.md` | the A07 recursive colocation + dead-barrel purge | the `./sidebar` export-map break rides **8.0.0** (§0), behind G-CONSUMER-ADDENDUM. |
+| **C** | `waves/BAND-REDUCTION.md` + `ASK-REDUCTION.md` | the ruthless component-surface reduction | no delete or prop-cut ships before its family-B sibling census clears (§1, last law); the ASK-gated dispositions wait on their rulings. |
+| **D** | `waves/BAND-STORY.md` | the story meta-framework on the RU-10 fold | owns the above-fold `SectionPreviewCard.vue` rewrite ceded from PERF (§1); its transition grammar feeds PERF's F07 choreography, one mechanism per nav class. **The adopted SIX-type taxonomy fold is the band file's own (its taxonomy section + OPEN-D9), and it is what `ASK.md` / `ASK-REDUCTION.md` §D1's dated arithmetic brackets rest on** — those frozen rows cite this plan by line for it, so read the band file, never a line number here (§2, anchor law). |
+| **E** | `waves/BAND-PERF.md` | demo/story performance made first-class | OWNS the F07 story-transition choreography (Family D consulted, not co-owner); hands the measured intrinsic-size number to STORY. |
+| **F** | `waves/BAND-MATERIAL.md` | the material/token canon made role-coherent | the type codemod and `BAND-GATES` W4 land in ONE cut (§1); the raw-literal repoints and both closure restores flip GATES W3's born-RED gates. |
+| **K** | `waves/BAND-A11Y.md` | the component-a11y repair | its ONE standing contrast gate is enumerated in GATES W1's inbound roster; the dock keyboard implementation is GF-DOCK's, never forked here. |
+| **G** | `waves/BAND-FEEDBACK-MOTION.md` | the feedback-motion orphan cure + the idle-breath complement | **idle-breath is HARD-BLOCKED on the OPEN-FM-3 / `ASK.md` ASK-27 owner ruling** — the corpus-wide fence that also governs `BAND-PERF` OPEN-P5(b) and `BAND-STORY`'s tile posture (APOTHEOSIS §4 invariant 5). No band pre-decides the idle-engagement axis. Alert runs after MATERIAL W1/W2. |
+| **G** | `formation/greenfields/GF-{DOCK,HANDMARK,AURORA,BLOB}-PASS3.md` — each file's §Wave-shape table | the four named greenfields | each gates on its pass-4 design closure + the ASK rows it carries; all π OWED; the hallmark design lane (§4) is mandatory. HandMark carries FULL first-principles surface authority per the 2026-07-17 USER RULING (§1). |
+| **B** | — (no band file) | the Q060 consumer relay | the outbound obligation; see §5 Known carries. |
 
-### FAMILY H — `BAND-COLOCATION` (3 waves; A07 recursive)
-- **W1 `BJ.W-COLO-1`** — library-internal moves (glass/wave→liquid-grid DELETE, textureUpload→aurora,
-  accent-tone.css→chip keeping its @import rung; ~~handmark helpers flat~~ STRUCK — GF-HANDMARK
-  deletes, not moves), the `_shared/` carve, the
-  design-idioms §3/§7 rewrite (Precept F), and the dead-barrel purge. **Born-RED = G-BARREL-REACH**
-  (four zero-importer barrels — the band's one lawful RED→GREEN; per the FABLE-COLOCATION fold Purge D
-  = exactly four barrels; blast radius corrected at union: ~24 TS + 3 @imports + 3 ledger + 6 `<style src>`). Everything else is
-  refactor-safety / byte-identity (null-DELTA).
-- **W2 `BJ.W-COLO-2`** — demote `composables/sidebar/` to `demo/` + drop `./sidebar`. NOT born-RED —
-  an INTENTIONAL export-map break riding **8.0.0** (FABLE-COLOCATION); the diff is the record.
-  Precondition RECAST at union: the census can never clear (fourier-analysis live-imports
-  `useSidebarState` ×2) — W2 rides the G-CONSUMER-ADDENDUM under the consumer-updates ruling.
-  Key: G-SURFACE-DELTA, G-CONSUMER-ADDENDUM.
-- **W3 `BJ.W-COLO-3`** — the colocation-hygiene fence. NOT born-RED (a regression-fence, GREEN at
-  introduction). Form A (fold into the overfitting audit) recommended; a mutation-bite proves it can
-  fail. Key: G-HYGIENE-GREEN, G-NO-FALSE-FAIL.
+**Why no counts.** A wave count is derived from a roster. Chartering a wave changes the roster,
+and any count copied outside the owning file is stale the moment it does — which is precisely how
+this corpus manufactured its own findings. **The corpus therefore keeps NO band totals and no
+tranche total** — `waves/APOTHEOSIS.md` §2 is a band INDEX, not a count ledger. The only acceptance
+figures kept anywhere are `BAND-GATES` W1 §Design's gate arithmetic, named authoritative in its own
+text.
 
-### FAMILY C — `BAND-REDUCTION` (9 waves at union; the ruthless purge) + `ASK-REDUCTION.md`
-- **W1 `BJ.W-REDUCE-PROPDIET`** — the dead-config prop cut (Typewriter 20→~9, GlassDock 4-knob,
-  Slider `keepDockOpen`→context, Labeled\* thin, Progress passthroughs, AnimatedDigit, WatercolorDot).
-  **Born-RED = G-DEADPROP-SCAN** (surface-hygiene, not visual — all 0-setter on disk). Null-DELTA proof.
-- **W2 `BJ.W-REDUCE-CARD`** — Card axis-collapse (to the variant+surface two-axis floor, A5) + neutral
-  defaults. **Born-RED = G-CARD-DEFAULT-PAINT** (the band's ONE real-visual differential: gold-metal +
-  grain renders at HEAD). π/DELTA owed.
-- **W3 `BJ.W-REDUCE-DELETE`** — the clean deletes (fourier `presets.ts`, liquid-grid + its story page +
-  StoryHero suffuse re-home, ~~Configurator→demo~~, easing→demo [ASK-gated], the compositions section
-  [ASK-gated] with the confirm-preset test re-homed, ~~useStagger~~, + the union's added members:
-  combobox→command fold, the number band 4→1, the reveal dead pair, `useScrollPin` demo-local,
-  `useTextHighlight`, the search-family split, the confirm-dialog demo residue, the tempo page fold,
-  the A05 conditional-disposition roster). **Born-RED = G-PRESETS-DEAD-REACH**.
-  Root-barrel export lines deleted for the demo-privatizations (A8).
-  [Corrected 2026-07-20, STAB11 — **two members are OVERTURNED to KEEP by the band union and must not
-  execute as deletes.** `Configurator` = **KEEP** (`BAND-REDUCTION.md:282-285`, roll-up item 6): the
-  escape hatch fired on live externals value.js `/configurator` + fourier-analysis `web/src` + 10 demo
-  files — no move, no export drop. `useStagger` = **RESOLVED KEEP** (`:299-304`, roll-up item 5;
-  `ASK.md` ASK-4's RE-ISSUED block; `ASK-REDUCTION.md` §C3): speedtest live-imports it ×2
-  (`ResultStack.vue:171`, `useResultReveal.ts:36`) and RU-09 R6's DELETE leg is overturned. Both were
-  the header-ribbon class this band's own framing (`BAND-REDUCTION.md:53-56`) names — a PLAN-side
-  delete against live sibling consumers.]
-- **W4 `BJ.W-REDUCE-CROSSREPO-GATED`** — instrument-chassis + metric + completion-seal, handled as a
-  DECISION not a delete. NO born-RED (its disposition is the user's ASK §A call). Key: G-ASK-RESOLVED,
-  G-RELAY-FILED (the corrected Q060 per-repo break table).
-- **W5 `BJ.W-REDUCE-TIMELINE`** — F16 timeline ground-up STUB → the design-loop; SUPERFLUITY F16
-  supplies the shape (collapse to ONE continuous Timeline). Born-RED discharged by the design-loop's
-  own captured baseline. **Scope = ALL SIX SFCs** — `GlassTimeline.vue` (232) + `ContinuousTimeline.vue`
-  (349) + `ContinuousRail.vue` (214) + `ContinuousMarkers.vue` (436) + `ScrubberTimeline.vue` (413) +
-  `SegmentedTimeline.vue` (292) ≈ **1936 SFC / 2254 family LOC** (RU-12 amendment **A2 CHANGED**;
-  `BAND-REDUCTION.md:518-522`, whose `G-SIX-NAMED` gate exists so none silently survives).
-  [Corrected 2026-07-20, STAB8: the prior "all five variants (A2, ~1500 LOC)" cited A2 for the exact
-  count A2 struck.]
-
-### FAMILY D — `BAND-STORY` (7 waves at union; the story meta-framework on the RU-10 fold)
-- **W1 `BJ.W-STORY-TAXONOMY`** — name the page types (6 per the fold: `spec|studio|dock|family|landing`
-  + `scene` contingent on ASK D1; `doc` folds into `spec`) + the manifest variant registry.
-  **Born-RED = G-TAX-1/2/4** (no `pageType` discriminant at HEAD). liquid-grid dropped from the fold
-  roster (deleted by REDUCTION W3). Carries the J2 dock-postures-backdrop fix.
-- **W2 `BJ.W-STORY-COPY-CANON`** — kill the meta-caption/jargon class, ban fake credentials, reserve the
-  mono eyebrow to one role. **Born-RED = G-COPY-1..4** (65/128 pages carry the eyebrow idiom; the
-  layers.vue Mechanics-narration pattern per J8; the auth-shell fake credentials).
-- **W3 `BJ.W-CONFIGURATOR-STD`** — one configurator anatomy (larger/card-radius/inset grouped list/type
-  ladder + the J10 roominess+scale gate). **Born-RED = G-CFG-1..5** (F09 live-state via OPEN-D5).
-- **W4 `BJ.W-WIDTH-HIERARCHY-TRUTH`** — define `--story-article-w`, bind hero-scale to the manifest,
-  dedup the StoryHero↔VizStudio heading. **Born-RED = G-WID-1..4** (the token computes to `none`; the
-  hardcoded `hero-scale="4"`; the double h1/h2). The `heroScale` field-retire branch is STRUCK (AMEND-1).
-- **W5 `BJ.W-PREVIEW-CARD`** — masonry + the tile-ladder authorship (the live-miniature line STRUCK per
-  the 0-GL contract + R3b idle-rAF; F46 double-card cured structurally). **Born-RED = G-PRV-1..4**. Owns
-  the above-fold content-visibility exemption edit ceded from PERF W3.
-- **W6 `BJ.W-RESPONSIVE-AUDIT`** — F14 as a first-class mobile-first audit over the 100 routes (390px +
-  1440px). **Born-RED = G-RSP-1..3** (per-page `breakage@viewport→fix→DELTA`).
-- **W7 `BJ.W-STORY-TRANSITIONS`** — the typed transition GRAMMAR: four semantic VT types
-  (`route-lateral` (+`-back`) · `route-descend`/`route-ascend` shared-element tile→hero ·
-  `route-jump`) over `demo/chassis/routeTransition.ts` + the route section of
-  `src/styles/view-transition.css`, plus the compositor-only entrance register. **Born-RED =
-  G-TRANS-1..4** (ONE type at `routeTransition.ts:12`, ONE recipe at `view-transition.css:47-55`;
-  no `view-transition-name` on any tile). Choreography FEEL stays `BAND-PERF` W4's (senior on
-  F07); PERF's `OPEN-P10` CONSUMES this four-type set — one mechanism per nav class (APOTHEOSIS
-  D-18). GF-DOCK W6 owns the dock band.
-  [Added 2026-07-20, STAB12 — this family's header and §1 DAG both counted SEVEN waves while the
-  roster enumerated six; `BJ.W-STORY-TRANSITIONS` was named nowhere in this file.]
-
-### FAMILY E — `BAND-PERF` (4 waves; A17)
-- **W1 `BJ.W-BOOT-DIET`** — async PresetEditor/Aurora + split `shellAuroraConfig` off the barrel.
-  **Born-RED (static)** — 4 top-level imports; 73 modulepreloads / ~770KB eager JS. Key: G-boot-graph
-  (source + build ceiling arms). LCP/long-task delta PENDING-R3.
-- **W2 `BJ.W-SHELL-FIELD-GOVERN`** — idle/occlusion pause (or static wash) for the always-on shell
-  field. **Born-RED (static)** — the `fixed inset-0` field has no governance beyond `tab-hidden`.
-  continuous-rAF trace PENDING-R3.
-- **W3 `BJ.W-DEFERRED-PAINT`** — intrinsic-size truth (measured here, handed to STORY W5) + the
-  turbulence-cost RULING + the live-trace deferred-paint gate. **Born-RED (static)** — 13
-  per-instance filter hosts, cost arm re-scoped (the seeds are designed).
-  The above-fold EDIT + its static gate are CEDED to STORY W5.
-  [Corrected 2026-07-20, STAB11 — the prior text listed "**the shared feTurbulence filter def**" as a
-  W3 deliverable. That arm is **STRUCK/REFUTED** by the band union (`BAND-PERF.md:358-382`,
-  §Non-goals `:438-439`; `APOTHEOSIS.md:190` "the turbulence design accepted (shared-def REFUTED)"):
-  the `seed` is per-instance (`WatercolorDot.vue:86`, `colors.vue:98`) and one hoisted `<filter>`
-  cannot carry 13 distinct seeds — building it collapses every dot onto one displacement map and
-  ships the exact clone regression the component was designed against. What survives in its place is
-  the **once-and-cache REGRESSION-FENCE** (the `animate` path drives a compositor transform only; the
-  filter graph carries no per-frame binding), stated honestly as a fence and not as born-RED, plus the
-  measurement-contingent octave/cap residue at `OPEN-P9`.]
-- **W4 `BJ.W-ROUTE-PENDING`** — a liquid-weight pending affordance instead of the frozen atomic swap;
-  OWNS F07 choreography. **Born-RED (static)** — no Suspense/aria-busy/skeleton in the swap. R3b seeds:
-  119ms warm freeze + CLS 0.04 + 186ms cold-nav stall.
-
-### FAMILY F — `BAND-MATERIAL` (7 waves; the radius/blur/track/type canon + the css-closure restore)
-- **W1 `BJ.W-RADIUS-ROLE`** — the role-keyed radius table (codex law 4) + reconcile the `--radius-input`
-  misnomer + delete the dead `--corner-k-soft/-sharp` + repoint raw radii. **Born-RED** (misnomer + dead
-  tokens + raw literals). F12 converts to a REGRESSION-GUARD; **F17 is a BORN-RED FIX, not a guard** —
-  the prior "already role-correct on disk" premise is FALSE for F17 (`search/searchVariants.ts:9-10`
-  `rounded-none` on the bare/floating variants; RU-13 FLIP F-1, RU-04 judge R8 re-open — posture
-  split, `BAND-MATERIAL.md:135`; corrected here 2026-07-19, J12).
-- **W2 `BJ.W-BLUR-LADDER`** — rule the collided rungs (6 names → 4 radii), kill-or-document the 2dppx
-  overlay arm, one material per role. **Partly born-RED** (collision + DPI facts live; F28 owes a
-  live-π re-check re-aimed to `/motion/springs` glow/shadow-bloom, J6).
-- **W3 `BJ.W-GRADED-BACKDROP-JUDGE`** — adopt-or-retire the landed `--glass-halo-*` cohort against the
-  codex law-1 / F49-F50 reference + (unconditional, C-F) extract the shared scene-staging substrate
-  (`useSceneStage`/`stageContext`, dialog+drawer). **Judgment gate** (the unresolved-freeze state is the
-  RED). OPEN-3a is the band's most load-bearing judgment.
-- **W4 `BJ.W-TRACK-DRY`** — DRY the slider/progress track onto one `glass-track-well` register (naming
-  independent of the timeline wave, C-C). **Born-RED** (three divergent track vocabularies).
-- **W5 `BJ.W-ARISTOTLE-PROPORTION`** — the A10 proportion review; output is a marked roster feeding
-  follow-on fixes. Not a code-probe born-RED — a π-capture obligation (annotated before-shots).
-- **W6 `BJ.W-TYPE-CODEMOD`** — the **234**-site `text-sm`/`text-xs` codemod (218 demo + 16 src, filtered method) + the coupled default-ramp
-  reset flip + the paint π (RULING 2). Coupled — flips `BAND-GATES` W4 GREEN; the two land in one cut.
-- **W7 `BJ.W-CSS-CLOSURE-RESTORE`** — restore `glass-chip.css` + `glass-atom.css` to the `@import`
-  closure (the R3a live-confirmed defect); flips `BAND-GATES` W3 `orphan-CSS-partial` GREEN with the
-  dist rule-count + live accent-flood re-verify. **Born-RED** (the shipped orphan is the RED).
-
-### FAMILY K — `BAND-A11Y` (5 waves at union — 2.5x the round-2 scope; the band file is the roster)
-- **W1 `BJ.W-A11Y-STATE`** — the 4 live-defect fixes: nav landmark (aside→nav), aria-pressed
-  both-states (tri-state `active`), center-spring focus-return (guard-widen + anchor un-gate),
-  placeholder contrast (one ≥4.5:1 token). **Born-RED** (3 vitest DOM asserts + 1 vitest-fs source
-  assert, each verified RED at HEAD). The reduced-motion substrate is a CONFIRMED KEEP (band non-goal).
-- **W2 `BJ.W-A11Y-LINKAGE`** — aria linkage + name/target hygiene: tab↔panel linkage (dock layers,
-  pager dots), decorative-icon hiding, kbd label de-dup, Carousel conditional tab stop, Slider
-  focus-ribbon register, and the Slider 44px coarse-floor restore (WCAG 2.5.5, RU-33 routing 1).
-  **Born-RED** (rendered-attr/DOM asserts, each RED at HEAD).
-- **W3 `BJ.W-A11Y-CONTRAST`** — the computed contrast floors: the N6 status-tone re-ink (MAJOR), the
-  dialog close-X open-state seat, the muted/secondary caution, and the ONE table-driven contrast
-  invariant gate (the band's only standing gate; its table is data-driven on ASK-25). **Born-RED**
-  (the computed-pair gate reds at HEAD by arithmetic).
-- **W4 `BJ.W-A11Y-LIVE-REGIONS`** — InfiniteScroll loading/exhausted announce + the
-  `invalid`/`errorLive` KEEP ruling (discharges the DAG-reduction gate). Fix half born-RED; ruling
-  half not.
-- **W5 `BJ.W-A11Y-ROVING-RULINGS`** — the DECIDED dock toolbar/roving record (implementation + the
-  π-KEYBOARD are OWNED by GF-DOCK W3; this band does not fork a second dock keyboard model) +
-  HeaderRibbon adoption + the DockControl boundary-disabled model + the hero-dedup cross-family
-  reference (→ Family D); the SidebarDock comment truth-up rides family J. HeaderRibbon half
-  born-RED (post-dependency); the rulings are not.
-
-### FAMILY G — `BAND-FEEDBACK-MOTION` (7 waves at union; the orphan cure + J1/J3 + W7 SHEET-MOTION-DEBT)
-- **W1 `BJ.W-TOAST-DIALOG-PARITY`** (F20) — re-home Toast onto the dialog spring/transition contract.
-  **Born-RED** — a live-π REGISTER-PARITY guard (transient scale-from-0.5 vs the dialog overlay/center
-  register; baseline = the current toast, J4).
-- **W2 `BJ.W-PROGRESS-RIM-REPLACE`** (F21) — replace the broken-arc rim with the law-12 fill-pill + dots
-  model (the phantom bank NAMED and retired). **Born-RED** (partial-arc geometry ships).
-- **W3 `BJ.W-FEEDBACK-MOTION-TUNE`** (F22+F24) — loop-easing + skeleton shimmer retuned to canon values
-  that become assertions + the demo loop-driver re-homed off `setInterval` (J7). **Born-RED**.
-- **W4 `BJ.W-ALERT-IDIOM`** (F19) — Alert consumes the radius role table + the blur ladder + the codex
-  identity laws. **Born-RED** (no alert-specific paint assertion). Runs AFTER Material W1/W2.
-- **W5 `BJ.W-IDLE-BREATH`** (A01/A11) — **HARD-BLOCKED on the OPEN-FM-3 user ruling (`ASK.md`
-  ASK-27) — this wave does not build, and no band pre-decides the idle-engagement axis, until the
-  owner ranks the two canons** (APOTHEOSIS §4 invariant 5 / D-06; `BAND-FEEDBACK-MOTION.md:189`,
-  `:201-209`). Scope when unblocked: idle/always-on breath for the inert atoms (buttons FIRST,
-  collapsed-dock pill, slider-at-rest) + the A01 hover-strengthening + the J12/Δ-F13-1 drag-affordance
-  residue (the interaction half is NOT OPEN-FM-3-gated). **Born-RED** (the R3b
-  presence/absence table; the three atoms return zero idle animation) — **the assertion set itself
-  re-scopes on the ruling, so it is authored after it, never before.** Compositor-only (rAF-delta 0).
-  [Added 2026-07-20, STAB11: `OPEN-FM-3`/`ASK-27` appeared NOWHERE in `PLAN.md` — the corpus-wide
-  governing referent that HARD-BLOCKS this wave and that `BAND-PERF` OPEN-P5(b) and `BAND-STORY` W5's
-  tile posture both consume was absent from the plan of record, which showed the axis as settled.]
-- **W6 `BJ.W-PAGER-DOT-MORPH`** (F33) — the pager-dot goo-morph over `PagerDots`/`usePagerWorm`,
-  sequenced with the vestigial `DeckPager.vue` cut. **Born-RED** (no worm/goo-morph assertion).
-
-### FAMILY G — the four greenfields (design-loop; each doc-only at PASS3, pass-4 paint OWED)
-- **GF-DOCK (9 waves, 62%)** — the snap-detented filmstrip. W0 CENSUS+CONTRACT-LOCK · W1
-  CENSUS-PRIMITIVE+OCCLUSION · W2 SNAP-DETENT+NO-BLOCK-SCROLL · W3 REVEAL+TOOLBAR-KEYBOARD · W4
-  SELECTION-PILL (reuse) · W5 SHAPE/RADIUS-GRAMMAR · W6 PAGE-TRANSITION+NO-SHIFT (F06/F05) · W7
-  FISSION-FORK (USER-GATED, Q051 r1) · W8 CONSUMER+FINAL. Keyboard DECIDED: `role="toolbar"` + roving +
-  `RouterLink`/`aria-current`. All π OWED. Carries 4 ASK rows.
-- **GF-HANDMARK (8 waves, 68%)** — the natural-stroke synthesis (7→3 brushes). W0 CONTRACT-LOCK · W1
-  CALM-CENTERLINE+WEIGHT · W2 FILL-STRATEGY · W3 CONTAIN-HIGHLIGHT · W4 RING-LAYER+SHAPE-DEGRADE · W5
-  DRAW-ON · W6 SURFACE+DEMO-DE-JARGON (the first-principles surface — the USER RULING grants the
-  greenfield full authority; ~5-prop target, census floor superseded) · W7 CONSUMER+FINAL. The
-  se-guard (the one masked fallback) RETIRED. All π OWED. Q-HM-1/2 resolve INSIDE the design loop
-  per the ruling (ASK-18/19 are informational). All handmark design waves run Fable.
-- **GF-AURORA (8 waves, 58%)** — mode ⊥ palette ⊥ backend. W0 CENSUS+CONTRACT-LOCK · W1 PAINT-SUBSTRATE
-  +VANGOGH-ON-PRIMARY · W2 OIL-PASTEL-REAL-BODY · W3 CRAYON-HAND-DRAWN · W4 OIL-RESOLUTION (PORT or KILL,
-  terminal set `{}`) · W5 PRESET-REDUCTION (17→10 firm) · W6 REVERSE-DRAG (V-A95, after the mode waves) ·
-  W7 CONSUMER+FINAL. **F08 discharged ONLY at W1-W4 real-body authorship with G-MODE-DISTINCT green,
-  never at the preset-cut checkbox (C-G).** All π OWED. Carries the crayon-scope ASK.
-- **GF-BLOB (10 waves, 60%)** — a liquid-metal chrome creature casting a cartoon ink-stamp. W0
-  CENSUS+CONTRACT-LOCK · W-DELETE-TWIN (WebGL2-only) · W-SHADOW (cartoon stamp; `uShadow` stays interior
-  AO) · W-CHROME · W-SHOW · W-ALIVE (breathe-while-settled) · W-MOOD (sleepy pointer-sign) · W-HITTEST
-  (CPU SDF, after W-SHOW) · W-TOPOLOGY (orb↔pill + within-pill dot-ring) · W-FINAL. All π OWED (both
-  engines). Carries Q-BLOB-DEFAULT + the WGPU-twin delete coordination.
+**The anchor law (the same disease, one level down).** A **line number in another file is derived
+data too** — it is a count of newlines, and it goes stale on any edit above it, silently and
+without contradicting anything. The de-duplication pass demonstrated the failure mode on this very
+file: striking the duplicated rosters shortened `PLAN.md` by ~100 lines and thereby invalidated
+every external `PLAN.md:NNN` cite below the cut, including two in the FROZEN owner ruling surface
+that can no longer be repaired at their end. **Cross-file references therefore anchor to a SECTION
+plus a stable ID** — a wave id, a gate id, an ASK row number, a named subhead — never to a line
+number. `waves/BAND-STORY.md`'s header already binds this discipline for its own inbound cites;
+it is hereby the corpus's law. Line cites INSIDE a file, and dated audit records that quote a line
+as it stood, are unaffected — a record of what was read at a time is not a pointer.
 
 ### BI carry-over (the engagement waves; W5 idle-breath is their minted complement)
 - **`BI.W-ENGAGE-AFFORD`** (BI band B8-PRUNES) — the sustained-engagement facility: Tier-1 GROW (tokens
@@ -366,6 +215,11 @@ A wave is DONE only when its born-RED gates flip GREEN **with captured evidence*
   not a pass.
 - **The pipe-trap rule.** Read the machine report (the pi-report / gate JSON), never a piped exit code
   — a piped runner's exit status is `tail`'s, not the suite's.
+- **No wave closes by copying derived data (the convergence law, §2).** A wave that lands a roster,
+  a count, an acceptance figure or a line-anchored cross-reference that some other file already owns
+  is not done — it has planted the next round's finding. It cites the owner instead. This binds
+  execution-era authoring exactly as it binds formation: the failure mode is not a stale fact, it is
+  a corpus that manufactures findings faster than it cures them.
 - **THE A08/J11 STRUCTURAL LAW — every wave closes with a challenge pass.** Before a wave's gates
   count, it closes with a challenge pass run by **two fresh critics** (the two-critic pattern that
   formed this corpus, applied at the wave grain, not only the spec grain). This is A08 ("≥2 challenging
@@ -376,11 +230,18 @@ A wave is DONE only when its born-RED gates flip GREEN **with captured evidence*
 
 - **≤3 concurrent seats** (the pipeline()-to-4 rate-wall lesson). Serialize every browser-owning seat
   against the others (the seat-singleton trap).
-- **Model split, always declared — PHASED (user order 2026-07-17).** From the formation close until
-  EXECUTION begins: ALL workflows/seats run FABLE, mechanical included. At execution the standing
-  split returns: Fable (often, fastidiously) for design/judgment/audit/critique and the paint-taste
-  rulings (the greenfield closures, the graded-backdrop verdict, the proportion roster, every
-  §Known-carry judgment); Opus for mechanical fanout + workflow implementation.
+- **Model split, always declared — the formation phase is DISCHARGED (owner order 2026-07-20).** The
+  2026-07-17 phasing ("ALL seats FABLE, mechanical included, until EXECUTION begins") governed the
+  formation window and that window is closed: the owner opened execution on 2026-07-20. The standing
+  split is now live — Fable (often, fastidiously) for design, judgment, audit, critique, orchestration
+  and every paint-taste ruling (the greenfield closures, the graded-backdrop verdict, the proportion
+  roster, every §5 known-carry judgment); Opus for mechanical fanout — codemods, moves, gate authoring
+  to a written spec, fix application, test/π running; Sonnet only for bulk trivial fanout.
+  **The enforcement mechanics are the owner's 2026-07-20 model-enforcement law, stated once at
+  `EXECUTION-PROGRESS.md` §The model-enforcement law and not restated here** — its load-bearing
+  clause is that an `agent()` call with no `model:` inherits the orchestrator's model (Fable), so an
+  omitted `model:` in a fanout stage is a DEFECT and never a default; every seat declares its model,
+  every schema requires `modelId`, and the assertion is a PREFIX match (the `[1m]` suffix lesson).
 - **The hallmark design lane (user order 2026-07-17).** The core/hallmark features and pages — the
   FOUR greenfields (dock, handmark, aurora, blob), the landing/catalog hallmark pages (STORY W4/W5),
   and the material identity waves (MATERIAL W2/W3, the subtlety re-tune + graded-backdrop) — run
@@ -404,8 +265,17 @@ A wave is DONE only when its born-RED gates flip GREEN **with captured evidence*
   (`GF-AURORA-PASS3.md:316`, `:401`) owns ONE clean confirm on the real in-app Chrome arm AFTER the mode
   waves land (the derivative/relight cost shifts the present timing), then retires the defect record and
   audits the `isolation: isolate` cure for cargo. Observe by screenshot + computed-style, never
-  `getContext`. [Truth-up 2026-07-20 against the landed browser trio; `REGISTRY.md:146`'s "ACTIVE RED,
-  carried" wording rides the next registry re-stamp.]
+  `getContext`. [Truth-up 2026-07-20 against the landed browser trio. **[RE-TRUED 2026-07-20 at the
+  RU-01 capstone — the deferral this bracket carried is DISCHARGED, and was already discharged when
+  the bracket was written.** The prior text routed the stale `REGISTRY.md` "ACTIVE RED, carried"
+  wording to "the next registry re-stamp", which named no owner on disk — the condition
+  `FIXLOG-TERMINAL.md` advisory A4 flagged for this seat. On re-reading the source rather than the
+  routing: the re-stamp **already landed at STAB10**. `formation/REGISTRY.md` Family G now reads
+  `~~ACTIVE RED, carried~~ → RETIRE-OR-CONFIRM — NOT an active RED`, carries all four
+  non-reproductions, and its own following line states that the wording deferral "is hereby
+  DISCHARGED and names no further" owner. So there is nothing stale to own: no `BAND-DOC-TRUTH` row
+  is owed, and no reclassification of `REGISTRY.md` under routing R-4 is needed. A4 is closed on the
+  merits, not by a lead call.]]
 - **The chip + glass-atom @import orphan — a live-confirmed defect.** `glass-chip.css` +
   `glass-atom.css` are in no `index.css` @import closure (`grep glass-chip dist = 0` verified), so the
   Chip/Badge/glass-atom styling is DEAD in the published bundle. `BAND-GATES` W3 authors
@@ -422,26 +292,51 @@ A wave is DONE only when its born-RED gates flip GREEN **with captured evidence*
 
 ## §6 — Dispositions (the no-silent-drop spine)
 
-All 67 feedback-ledger rows are accounted for in `formation/ASSEMBLY-CROSSWALK.md` (F01-F50, A01-A17;
-reconciled counts **50 LANDED / 5 DECIDED / 3 CLEARED / 10 ASK / 0 ORPHAN / 0 pending**, zero silent
-drops) as sharpened by the judgment corrections carried from `redress/JUDGE.md` §D. The five former
-ORPHANS (F19/F20/F21/F22/F24) are cured by `BAND-FEEDBACK-MOTION`; the two former pending-R3b rows
-(A01/A11) land at `BJ.W-IDLE-BREATH` (LANDED-AT-W5). The rows reserved for the user — 10 from the
-feedback-ledger crosswalk plus the greenfield and material/story sets — assemble into the 27-row
-`ASK.md`, the sole document the user must rule on. The redress application record
-(`formation/redress/APPLYLOG.md`) accounts for all 26 rulings (J1-J11, C-A..C-G, T1-T2, D1-D6); the
-chronic disease ledger (family I) and the superfluity verdicts (`formation/superfluity/SUPERFLUITY.md`,
-5 KEEP-DISTINCT / 4 COLLAPSE-FAMILY / 2 MERGE-INTO) are terminal. This section is a pointer, not a
-repetition — the crosswalk is the authoritative accounting.
+Every `FEEDBACK-LEDGER.md` row (F01-F50, A01-A17) is accounted for in
+`formation/ASSEMBLY-CROSSWALK.md` — **the authoritative disposition accounting; its own reconciled
+tally line is the one that counts, and no tally is restated here** — as sharpened by the judgment
+corrections carried from `redress/JUDGE.md` §D. The former ORPHANS (F19/F20/F21/F22/F24) are cured by
+`BAND-FEEDBACK-MOTION`; the former pending-R3b rows (A01/A11) land at `BJ.W-IDLE-BREATH`
+(LANDED-AT-W5). The rows reserved for the user assemble into `ASK.md` — the sole document the user
+must rule on, and the sole authority on its own row set.
+
+**THE ASK FREEZE (standing, binds every seat).** `ASK.md` and `ASK-REDUCTION.md` are the owner's
+LIVE ruling surface, not corpus prose. No seat renumbers, rewords, merges, re-scopes or re-homes a
+row — corrections enter as DATED BRACKETS only, and where a row needs new substance the lead MINTS
+A NEW ROW rather than mutating an existing one. **A pending ruling is pending BY DESIGN and is
+never a finding**; a critic reporting one has found the surface working. Where a frozen row leans
+on something the corpus has since moved — a struck wave, a re-anchored figure, a cite into a file
+that shifted — the repair is a lead routing or a new row, never an edit at the frozen end
+(`formation/stability/TERMINAL-ROUTINGS.md` R-1 and R-7 are the live instances). The redress application record
+(`formation/redress/APPLYLOG.md`) accounts for the J/C/T/D rulings; the chronic disease ledger
+(family I) and the superfluity verdicts (`formation/superfluity/SUPERFLUITY.md`) are terminal and own
+their own verdict tallies. This section is a pointer, not a repetition.
 
 ## §7 — The close definition
 
-All bands DONE → the collapsed ~45-55-keep gate battery GREEN (incl. the new born-RED set flipped: the
+All bands DONE → the collapsed gate battery GREEN inside `BAND-GATES` W1 §Design's keep-band and its
+≤60 count-guard (the authoritative arithmetic; incl. the new born-RED set flipped: the
 pixel floor CI-wired, the static-hygiene gates, the type-hygiene lint) → the greenfields converged
 (two-consecutive-clean + a fresh adversarial audit + the pass-4 paint each PASS3 owes) → the π/DELTA
 obligations captured (dual-engine where claimed; live π per band; V-A95 re-repro-or-close) → every
 wave's two-critic challenge pass run (the A08/J11 law) → the disposition ledgers verified terminal →
 the user ASK (`ASK.md`) RESOLVED → the family-B Q060 outbound relays sent → the overfitting audit run
 at close (every `src/` artefact ≥2 sites OR exported OR a named private demo helper). The `./sidebar`
-break rides 8.0.0. `docs/precepts/` is read-only; no legacy code (no aliases/shims/dual paths/masking
+break rides 8.0.0.
+
+**Two close conditions the ledgers impose, easy to close against silence:**
+
+- **Every routed annotation carried.** `formation/refable/LEAD-AMENDMENT-LEDGER.md` §Terminal-order
+  binds four classes of un-landed row to named firing events — PROPOSED-ROUTED (at the destination
+  band's FIRST execution touch, and BEFORE that wave's gates are authored, because several widen an
+  acceptance shape), RESUMED (the atlas G-rows, same law), WAITING (G1, at the P-EX5 outbound
+  batch), and PENDING (C7, at this capstone seat — applied 2026-07-20, see its row). The ledger is
+  the roster; it is not restated here. **A destination that closes without carrying its annotation
+  is a silent drop**, and that is a close-blocking defect, not a tidy-up.
+- **Every terminal routing discharged or explicitly carried.**
+  `formation/stability/TERMINAL-ROUTINGS.md` R-1 … R-7 are seams, not defects: each closes by a lead
+  ruling recorded in the OWNING file, or is carried forward by name with its reason. R-6 additionally
+  gates `BAND-GATES` W1's collapse (§1) and must be ruled in one stroke with the instrument path.
+  The close states which routings were ruled and which were carried; it never closes against an
+  unnamed routing. `docs/precepts/` is read-only; no legacy code (no aliases/shims/dual paths/masking
 fallbacks); the greenfields land only paint-verified, never on a green-headless/broken-paint gap.

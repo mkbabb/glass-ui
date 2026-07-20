@@ -90,6 +90,21 @@ all 8 recordings as iOS evidence. A02's Fable cure accordingly spans **RU-15** (
 **RU-16** (the codex; ledger `refable/REFABLE-RU-16.md`). No verdict movement — EXACT-VIA-RU-15
 stands at the deliverable layer.
 
+**[TWO-LAYER CENSUS RECONCILED 2026-07-20 — lead ledger row C7 (the C6 residue), applied at the
+RU-01 capstone seat. Doc-truth bracket only: no verdict moves and the rider above is untouched.]**
+The iOS-evidence integer in the rider is **7, not 6**, and the ".mov exclusion" never bridged 8→6 —
+it subtracted TWO files for ONE recording. On disk `formation/ios27/refable-timelines/` carries
+nine timeline files: seven `sr-*` (the iOS MP4s) plus `mov-0622-1438.md` **and
+`mov-0622-1438-copy.md`** — the second is the duplicate this rider itself names when it says "the
+two … .movs", and it is the same capture. So the corpus is **8 UNIQUE recordings on disk − 1
+non-iOS `.mov` = 7 iOS recordings**, which is exactly what `IOS27-CODEX.md:5` states after its own
+C6 correction ("evidence basis: 7 iOS recordings [corrected 6→7 … the laws cite seven `sr-*`
+assets]") and exactly what the MARKS-A / MARKS-B rosters timeline. The rider's substantive
+warning is UNCHANGED and still correct: a design wave must not count the non-iOS desktop capture as
+iOS evidence, and its dot-lattice feeds the law-11 breath-of-life bank only. Only the integer
+re-anchors. EXACT-VIA-RU-15 stands; ring-history records of the old "6" are read-point records and
+are deliberately left as they were.
+
 **POST-MORTEM (corrected).** The ingestion happened and the marks are real — but the "with Fable"
 clause was NOT met by the original seats: the settings-level `CLAUDE_CODE_SUBAGENT_MODEL=opus`
 override forced them to `claude-opus-4-8` (the census correction, `refable/DEMARCATION.md`;

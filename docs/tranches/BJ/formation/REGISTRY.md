@@ -31,7 +31,10 @@ Status after Round 1: NOT STABLE (first sweep; verification + new lenses pending
 
 ## Family A — gate-reformation (the 40-60 collapse)
 **Verdict: the census supports ~45-55 keeps vs ~1032 enforced assertions; the only sound pixel
-gate is wired to nothing.**
+gate is wired to nothing.** *(This is the AUDIT's finding — the input that produced the mandate,
+kept as the historical record. The OPERATIVE keep-band, the pinned bases and the count-guard
+arithmetic are `waves/BAND-GATES.md` W1 §Design's, the authoritative site; read that, not this,
+before authoring anything.)*
 Members: gate:pin-implementation-literal · gate:unwired-gate-non-execution (π suite + canon-doc) ·
 gate:mirror-implementation-self-fixture · gate:vacuous-no-assertion (6 zero-assert specs) ·
 gate:testing-the-tooling-fixture-mirror · gate:redundant-surface-snapshot ·

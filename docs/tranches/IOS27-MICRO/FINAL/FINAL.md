@@ -38,16 +38,17 @@ per SPEC-SPINE-CONDUCTOR.md (86-gate battery + the 71/71 union battery are the a
 floor; the dock-invariance rule is a spec invariant; the wells register is kernel-owned).
 The dock consumes it first (GF-DOCK's liquid-weight restore, RU-27 R1, rides this kernel).
 
-## W-3 — THE F4 FAMILY (12 born-RED rows)
+## W-3 — THE F4 FAMILY (born-RED per row)
 
-F4-R1..R12 per AGGLOMERATION §6.2 (the C¹ law, the zero-seed gauge, the 50µs bound, U7
+The F4 row set per AGGLOMERATION §6.2 — that section is the roster and its row count is not
+restated here (the C¹ law, the zero-seed gauge, the 50µs bound, U7
 independent-judge, the @utility verb sheet + drift gate, the STAND-IN LOCK re-derivations,
 P7/P8/P9, the --overpull/--impulse scalars — zero files on disk, born-RED by definition —
 switch displacement light, the component landing half).
 
-## W-4 — THE F5 FAMILY (11 rows)
+## W-4 — THE F5 FAMILY
 
-F5-R1..R11 per §6.2 (the shared lens artifact on the merged rack — its kernel co-precondition
+The F5 row set per §6.2 — again the roster, not restated here (the shared lens artifact on the merged rack — its kernel co-precondition
 is BUILT; the per-engine contrast recalibration; falloff/duel/cadence/echo; the OG5 remainder;
 the two-tier DAG lint; the velocity-keyed edge caustic; the light channel's painted truth;
 the slot-axis sibling gate).
@@ -97,7 +98,7 @@ predated; they are named here so the row-7 DEFER closes against owners, not agai
 The BJ bands consume this set by reference: BAND-MATERIAL (the frosted canon, the attenuation
 primitive G-3 basis, the lying-gate repair) · BAND-DOC-TRUTH (T1/T9/T5 spring-mirror rows — sequenced AFTER W-1 and taking its shipped values, per the W-1 seam clause) · BAND-FEEDBACK-MOTION (registers, W7
 SHEET-MOTION-DEBT) · GF-DOCK (W-2's first consumer) · BAND-A11Y/GATES/PERF as routed in the
-sidecars. **[Truth-up 2026-07-20, STAB9 — the prior sentence read "the atlas Q mailbox stays MARKED-HELD; nothing here executes a G-row", which this file's own W-5 bracket (`:66-74`) had already superseded.** Terminal state per `coordination/ATLAS-Q-G-BATCH-DISPOSITION.md` **Addendum 3** (2026-07-20, verified on disk at `.p-totality/sci` `6c4bbc06` + `109f5573`): the Q mailbox hold has ENDED and **G-CLOSE is UN-GATED** — the six G-rows resume as scheduled band annotations at OUR batch points, and `V-PERCH-PRIMITIVE` (W-5) is UN-PARKED on its merits. Nothing here executes a G-row *ahead of* its owning band's batch point; that sequencing note is what survives. Owner-reversible: if G-CLOSE re-gates, W-5 re-parks unchanged.**]**
+sidecars. **[Truth-up 2026-07-20, STAB9 — the prior sentence read "the atlas Q mailbox stays MARKED-HELD; nothing here executes a G-row", which this file's own W-5 bracket (`:66-74`) had already superseded.** Terminal state per `coordination/ATLAS-Q-G-BATCH-DISPOSITION.md` **Addendum 3** (2026-07-20, verified on disk at `.p-totality/sci` `6c4bbc06` + `109f5573`): the Q mailbox hold has ENDED and **G-CLOSE is UN-GATED** — the six G-rows resume as scheduled band annotations at OUR batch points, and `V-PERCH-PRIMITIVE` (W-5) is UN-PARKED on its merits. Nothing here executes a G-row *ahead of* its owning band's batch point; that sequencing note is what survives. Owner-reversible: if G-CLOSE re-gates, W-5 re-parks unchanged.**]** **[FOLD 2026-07-20, escalation-discharge — the one fact the consumed STAB9 duplicate cure #11 carried that its ratified counterpart #1 did not: the reversal, if the owner takes it, must be TOTAL. A re-gate of G-CLOSE re-grounds ALL FOUR seams in one stroke — this bracket, `../../BJ/formation/refable/LEAD-AMENDMENT-LEDGER.md` row I1, `../../BJ/EXECUTION-PROGRESS.md`'s Veto/held row, and `../../BJ/coordination/ATLAS-Q-G-BATCH-DISPOSITION.md` Addendum 3 — **never partially**, since a half-reverted corpus is the exact split-truth state the STAB rounds spent six passes curing.]**
 
 **This closes IOS27-MICRO tranche development.** Execution of W-0..W-7 belongs to the
 execution phase under the parsimony ruling (Fable only for design/planning/deep complexity;

@@ -27,7 +27,7 @@ ambiguous between two waves it is marked with `?` and the reason is stated.
 | F05 | animations ill-defined, shifts screen; why no section aurora | GF-DOCK §6 `G-NO-LAYOUT-SHIFT` (dock-shift half); transitions→`BJ.W-ROUTE-PENDING`/fam D | GF-DOCK-PASS3 §6/W6; BAND-PERF W4; REGISTRY:99 | LANDED |
 | F06 | dock-page transitions broken/slow/flash | R3a CLEARED (white-flash refuted, min-ch ≤9/255) → cold-nav `BJ.W-ROUTE-PENDING` + GF-DOCK `G-PAGE-NOFLASH` | REGISTRY R3a fold #3; BAND-PERF W4; GF-DOCK-PASS3 §6 | CLEARED |
 | F07 | story-page transitions more expressive/animated | `BJ.W-ROUTE-PENDING` (weighted transition/goo-morph, coordinated w/ fam D choreography) | BAND-PERF W4 (OPEN-P10); REGISTRY:99; BAND-STORY boundaries | LANDED |
-| F08 | aurora presets duplicative; crayon/oil near-identical | GF-AURORA §3.6 (17→10 firm) + `G-MODE-DISTINCT` gate; per-mode bodies | GF-AURORA-PASS3 §3.6/§5; REGISTRY fam G aurora-lens | LANDED |
+| F08 | aurora presets duplicative; crayon/oil near-identical | GF-AURORA §3.6 (the register cut — size per the charter, which re-based it; not restated here) + `G-MODE-DISTINCT` gate; per-mode bodies | GF-AURORA-PASS3 §3.6/§5; REGISTRY fam G aurora-lens | LANDED |
 | F09 | container over-rounded (ovoid); configurator cramped; audit all | `BJ.W-CONFIGURATOR-STD` (`G-CFG-4`); radius role token from `BJ.W-RADIUS-ROLE` | BAND-STORY W3; BAND-MATERIAL W1 (OPEN-1a live-π) | LANDED |
 | F10 | section design hierarchy clearer | `BJ.W-CONFIGURATOR-STD` (`G-CFG-2` level axis) + type rungs from `BJ.W-TYPE-CODEMOD` | BAND-STORY W3; BAND-MATERIAL W5/W6 | LANDED |
 | F11 | no gap between items (inset grouped list) | `BJ.W-CONFIGURATOR-STD` (`G-CFG-3`, configurator-section-gap) | BAND-STORY W3; BAND-MATERIAL W5 | LANDED |
@@ -57,7 +57,7 @@ ambiguous between two waves it is marked with `?` and the reason is stated.
 | F35 | handmark should be pen-like/natural | GF-HANDMARK W1 `G-WEIGHT`/π-PEN | GF-HANDMARK-PASS3 §3.2/§4 | LANDED |
 | F36 | handmark doesn't even work (escape) | GF-HANDMARK W3 `G-CONTAIN` | GF-HANDMARK-PASS3 §5/W3 | LANDED |
 | F37 | handmark broken/disjointed (draw-on fragments) | GF-HANDMARK W5 `G-DRAW-CONNECTED` | GF-HANDMARK-PASS3 §6/W5 | LANDED |
-| F38 | each brush awful — greenfield | GF-HANDMARK §4 (register 7→3 brushes) | GF-HANDMARK-PASS3 §4/§9 | LANDED |
+| F38 | each brush awful — greenfield | GF-HANDMARK (the register per the live charter — read it there; the "7→3 brushes" token this cell carried is the retired pre-RU-06 charter's, per the J12 read-through below) | GF-HANDMARK-PASS3 §4/§9 | LANDED |
 | F39 | wrong layering/smoothing/encapsulation (ring) | GF-HANDMARK W4 `G-RING-LAYER` | GF-HANDMARK-PASS3 §7.1/W4 | LANDED |
 | F40 | remove meta text ("what is SE"); grand redesign | GF-HANDMARK W6 `G-NO-JARGON` + `BJ.W-STORY-COPY-CANON` | GF-HANDMARK-PASS3 §10/W6; BAND-STORY W2 | LANDED |
 | F41 | /motion/text-motion "wtf is this npm install bit" | `BJ.W-STORY-COPY-CANON` (OPEN-D3 — locate exact site at execution) | BAND-STORY W2 §scope/OPEN-D3 | LANDED |
