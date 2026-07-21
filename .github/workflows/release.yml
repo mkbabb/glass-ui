@@ -1,5 +1,14 @@
 name: release
 
+# LAWFUL TAG PATH: a `v*.*.*` tag MUST be minted by `scripts/release.sh` and by nothing
+# else. That script is the ONLY place the AURORA pixel floor runs (on real hardware — the
+# floor never arms on the ubuntu SwiftShader rasterizer this workflow runs on, per ASK-24),
+# banking the paired green+planted pi-reports as the captured DELTA. This publish job runs
+# on the tag push and does NOT (and cannot honestly) re-assert the aurora floor; a tag pushed
+# WITHOUT release.sh ships an un-floored aurora silently. The robust in-CI receipt check
+# (banked pi-report pair exists AND is content-stamped fresh vs the tagged aurora sources) is
+# routed to the GATES band at P-CLOSE-BATTERY — see
+# docs/tranches/BJ/formation/stability/TERMINAL-ROUTINGS.md §GESTALT-1 INC-2.
 on:
     push:
         tags:

@@ -354,3 +354,99 @@ Owner-reversible: buying a self-hosted GPU runner would let the aurora arm rejoi
   (AdminLoginView/SpeedtestResults/CompleteBadge/ResultStack) + muster ×1 (CommandDock.vue) —
   keyframes.js and atlas CLEAR. The merge stands unchanged; the R12/Q060 relay names
   speedtest + muster. The G1 send-time checklist re-runs all censuses regardless.]
+
+---
+
+# §GESTALT-1 — the gestalt DISPATCHER's routings (2026-07-21, Opus, mechanical)
+
+*Seat: the GESTALT-1 dispatch, discharging the A-tranche + V-tranche gestalt-audit incongruities.
+Mechanical cures were applied and committed; the rows below are the routed / owner-attributed
+items that need a NAMED owner's touch, recorded here rather than improvised. Model:
+`claude-opus-4-8[1m]`, read verbatim from this seat's system context. No minting.*
+
+**Applied-and-committed this pass (recorded for traceability, not routed):**
+- **INC-1 / V-INC-1** — FeedbackMark.vue INLINED into StatusDot.vue; `feedback.ts` moved
+  `_shared/feedback/` -> `status-dot/`; `feedback-tone.css` STAYS in `_shared/` (alert/toast/
+  ladder/dark-arm consume it). Proven with the W-COLO-1-precedented hash-normalized dist
+  identity: 345 top-level CSS blocks, MULTISET byte-identical (block-sorted-normalized sha256
+  `0fa41df3...99d7b21e` both sides), sole residue a cascade-inert `.status-dot`<->`.feedback-mark`
+  adjacency swap. Evidence: `evidence/GESTALT-1-INC-1/css-identity.txt` (+ banked head/work
+  dists). Not declined -> no BAND-REDUCTION W6 §Status decline record owed.
+- **INC-2 (KISS arm)** — `release.yml` now cites `scripts/release.sh` as the SOLE lawful tag
+  path (the aurora floor's only honest home).
+- **INC-4** — one sentence appended to `BAND-GATES` W3 §Acceptance (the companion-pin edit).
+
+**Routed rows (named owner, no improvisation):**
+
+- **INC-2 (robust arm) -> GATES band at P-CLOSE-BATTERY.** The stronger in-CI receipt: a
+  `release.yml` step that FAILS unless the banked aurora pi-report pair exists AND is
+  content-stamped fresh vs the tagged tree's aurora sources. Why not applied here: the pair is
+  banked at `docs/tranches/BJ/evidence/W-PIXEL-FLOOR-CI/pi-report-{green,planted}.json` (a
+  BJ-tranche path — hard-coding it into `release.yml` is overfit), and an *mtime* "postdates"
+  check is a false posture on a fresh `actions/checkout` (git stamps every file's mtime at
+  checkout). A real freshness gate needs a content-stamp (the pi-report carrying the git blob
+  hash of the aurora sources it measured, re-checked in CI) — gate DESIGN, owned by GATES, that
+  must be watched going RED on a planted stale-report before it is trusted. Interim posture: the
+  release.yml sole-lawful-tag-path citation above. Cited at: `.github/workflows/release.yml`
+  (trigger comment) · `scripts/release.sh` · ASK-24 RULED (this file).
+
+- **INC-3 -> orchestrator, at P-CLOSE-BATTERY.** The pixel-floor CI empirical-acceptance row:
+  "first push — read the uploaded pi-reports (BOTH arms) from the Actions artifact, never the
+  job badge; on wedge/skip, ASK-24's fallback fork re-fires." The measurements banked to date
+  are darwin/ANGLE; the ruled posture wants the first real ubuntu run to show green + planted
+  bite. No PARKED row currently carries this and P-EX1 reads '5/5 GREEN' as closed. Cited at:
+  `EXECUTION-PROGRESS.md` P-EX1 / P-CLOSE-BATTERY · ASK-24 RULED.
+
+- **INC-6 -> next owner review batch (cheap, owner-reversible, NO code change).** Attach the six
+  banked before/mid/after frames (`evidence/W-PAGER-DOT-MORPH/{carousel,deck}-{1-rest-before,
+  2-mid-morph,3-rest-after}.png`) to the next owner review as a 30-second glance. F33 is a
+  USER-felt row that FM W6 ruled ALREADY-AT-BAR against a signature the wave itself minted —
+  the one ratification class that can silently diverge from its filer, so it gets owner eyes.
+
+- **INC-7 -> orchestrator's per-band live-π index, next serialized browser-π pass.** The W-1
+  dock-register DELTA (dock 0.30->0.35, settle 0.19->0.22s) owes a captured artefact
+  (`FINAL/evidence/W-1/dock-register-delta.md`, verified absent) — recorded only in FINAL.md
+  prose + the commit message. Add it beside REDUCTION W3's owed set and W8's deck warm-field
+  pair. Cited at: PLAN §4 (orchestrator owns the live-π index).
+
+- **INC-8a -> IOS27-MICRO W-6's cut.** `src/composables/motion/engage/engageEnvelopes.ts` header
+  claims "the token generators and gates read it" while its only reader is its own unit test.
+  W-6 either rewords the header to a CAPABILITY ("...so generators and gates CAN read it") or
+  lands the real reader. Owner-editable in the same file W-6 touches (one owner per file per cut
+  — not pre-empted here).
+
+- **INC-8b -> PERF's next AppShell touch (W2/W4).** `AppShell.vue` duplicates the shell-field
+  ceiling (eager wash hardcodes opacity `0.5`; the mounted Aurora passes `:opacity-ceiling=0.5`
+  ~140 lines below). Hoist ONE `SHELL_FIELD_CEILING` const.
+
+- **INC-8c -> A11Y's next dock touch (a W2-A tail).** `dockRailContext` `idSafe()` strips
+  characters so face ids `'a b'` and `'ab'` mint identical DOM ids (duplicate-id + crossed
+  `aria-controls`). Append the face's registry index or a per-face `useId()`.
+
+- **INC-8d -> commit-hygiene PRECEDENT for the remaining bands (no retroactive action).** Commit
+  `8c05f925` commingled the GATES-W2 instrument split with PERF-W1's OPEN-P1/OPEN-P4
+  adjudications under a title declaring only the split — lawful (shared TERMINAL-ROUTINGS
+  register, one seat) but under-declaring its cargo. Not re-litigated; future multi-cargo cuts
+  declare all cargo in the commit subject/body.
+
+**NEEDS-LEAD (mirrored from the dispatch return; the return is the live surface):**
+- **INC-5 -> GATES W1 (lead question).** `boot-graph` freshness arm asserts dist-demo newer than
+  EVERY file under `demo/` AND `src/`, so any one-line src edit reds the whole `npm test` until a
+  285-chunk rebuild (REDUCTION W3 + DOC-TRUTH both paid it). Keep the whole-tree walk, or scope
+  the freshness FAILURE to the three BUILD-arm blocks it protects (source arm always runs, still
+  fail-loud, ~90% smaller tax)? GATES W1 already owns re-basing this file's 14-block census.
+- **V-INC-2 -> dock spring owner (GF-DOCK / FINAL W-1 consumer).** The collapsed-dock hover-scale
+  (56->61.6px) RESETS to 1.0 in one frame at expand-start as `--dock-morph-t` takes over width — a
+  ~1-2 frame contraction seam vs the "one continuous spring" claim. Intended hint->commit handoff,
+  or should the hover-scale carry continuously into the first width-morph frames?
+- **V-INC-3 -> demo chassis (SectionPreviewCard), OUT of BJ ten-wave scope.** Front-door
+  section-preview panels render as flat dark-tinted DIVs (intentional, PERF W1's "paints whole"
+  HOLDS) but read like half-loaded placeholders vs the rich hero. Should they carry a light
+  idiom-true frozen-still per the manifest tile ladder?
+- **V-INC-4 -> ANSWERED BY ON-DISK CENSUS (census wins).** The label/tier mismatch (this
+  Fable-labelled GESTALT seat ran as `claude-opus-4-8`) is resolved by the FABLE OUTAGE amendment
+  in `EXECUTION-PROGRESS.md` (owner, 2026-07-21 ~13:5x: "The Fable model is unavailable, you must
+  use Opus for now") — every Fable-declared seat spawns as Opus for the outage's duration, with a
+  Fable re-challenge OFFERED to the owner once Fable returns. The paint-taste GESTALT sweep at the
+  Opus tier IS intended; findings stand on captured evidence (every verdict rode a screenshot or
+  computed-style DELTA). No live escalation.

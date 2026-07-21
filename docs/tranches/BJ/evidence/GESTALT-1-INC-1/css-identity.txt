@@ -1,0 +1,44 @@
+# GESTALT-1 INC-1 — hash-normalized dist identity for the FeedbackMark inline, captured 2026-07-21
+
+The cure: FeedbackMark.vue is INLINED into StatusDot.vue (its only consumer) and
+`feedback.ts` moves _shared/feedback/ -> status-dot/; `feedback-tone.css` STAYS in
+_shared/ (alert/toast/ladder/dark-arm consume it — untouched). Proven with the
+W-COLO-1-precedented hash-normalized dist identity.
+
+VERDICT: raw dist NOT byte-identical (StatusDot's scope-id re-hashes + FeedbackMark's
+scope folds into it). Hash-normalized, the CSS RULE MULTISET is BYTE-IDENTICAL — 345
+top-level blocks, ZERO unique to either side. The SOLE residue is a CASCADE-INERT
+adjacency swap: inlining folds FeedbackMark's `.feedback-mark` rules into StatusDot's
+source order, so `.status-dot` (3 blocks) now precedes `.feedback-mark` (19 blocks)
+where HEAD emitted them reversed. In HEAD those two groups lived in SEPARATE SFCs, so
+their relative order was already a bundler artifact; the swap changes no cascade
+outcome (the two selector groups are mutually non-overlapping and overlap no third rule).
+
+----- raw builds (npx vite build, both 69,279 bytes) -----
+  head-dist-glass-ui.css  sha256 05a60744074260f98fae843b2ceef219495d1e8824d0a7df90fab31ef0fd08b6  size 69279
+  work-dist-glass-ui.css  sha256 a1c59b094d530f117e733f118d2fd9a58b1952471a4e168d5fd090bd3b630f0b  size 69279
+  raw cmp: differ at char 49074
+
+----- hash-normalized (mask data-v-[0-9a-f]{8} + scoped-keyframe -[0-9a-f]{8} suffixes, BY PATTERN) -----
+  head-dist.norm  sha256 fdcb3ea9a5ab42b959b14602715ca6f9b844530137f74877c343f98b7635ff9e  size 69243
+  work-dist.norm  sha256 a8eb2919e5bf0b1c64a476ec1647a84f220a2eb5c27b10e7c7e1f815f454ccf0  size 69243
+  normalized cmp: differ at char 49054 — the reorder ONLY (norm shas differ BECAUSE of the
+  cascade-inert swap; this is NOT the W-COLO-1 pure-rehash case, and is stated so honestly).
+
+----- block-multiset identity (the operative proof) -----
+  balanced top-level blocks: head 345, work 345
+  Counter(head) == Counter(work): TRUE — unique-to-head 0, unique-to-work 0
+  BLOCK-SORTED-NORMALIZED sha256 (both sides): 0fa41df3a6de1607940c24030f86b9dcacc0ae54d1c4d80049e6b71a99d7b21e
+  Every one of the 345 rule blocks is byte-identical after hash masking; only the
+  `.status-dot`(3) <-> `.feedback-mark`(19) group order differs.
+
+----- the complete delta -----
+  StatusDot.vue    data-v scope-id re-hashes (absorbed the inlined mark span + its scoped CSS)
+  FeedbackMark.vue DELETED — its scope-id + `feedback-mark-pulse` keyframe re-home onto StatusDot's scope
+  feedback.ts      _shared/feedback/feedback.ts -> status-dot/feedback.ts (FeedbackMarkState type dropped; StatusDot union kept)
+  index.ts         re-exports STATUS_DOT_STATES + types from ./feedback
+  feedback-tone.css UNTOUCHED in _shared/feedback/ (alert/toast/ladder.css/dark-arm.css consume it)
+
+----- suites (machine reports) -----
+  npm run typecheck (vue-tsc --noEmit ×2): rc=0
+  vitest status-dot.contract + avatar.contract + public-surface.spec: 3 files, 104 tests, rc=0
