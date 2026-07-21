@@ -1,0 +1,46 @@
+{
+  "wave": "BJ.W-FEEDBACK-MOTION-TUNE",
+  "band": "BAND-FEEDBACK-MOTION W3 (F22 + F24 + J7 + Δ-F24-1 + RU-21 N4)",
+  "model": "claude-opus-4-8",
+  "head": "19ea4ce1",
+  "method": "computed-style + rendered-transform sampling on localhost:5199; screenshot only; NO getContext",
+  "skeleton_F24": {
+    "route": "/feedback/skeleton",
+    "probe": "getComputedStyle('.skeleton','::after').animationDuration",
+    "before": "5s",
+    "after": "3s",
+    "canon_rung": "--duration-shimmer-fast = 3s (scheme-motion.css:106)",
+    "retired_rung": "--duration-shimmer = 5s (brand-metal one-pass sweep)",
+    "timing": "ease-in-out (unchanged; the defect was the rung, not the easing)",
+    "screens": ["BORN-RED-skeleton-section.png", "AFTER-skeleton-section.png"]
+  },
+  "loop_F22_J7": {
+    "route": "/feedback/progress",
+    "probe": "40ms sampling of --progress-value-percent + .progress-value-fill translateX over one+ full cycle",
+    "before": {
+      "distinctPositiveStepSizes": [3],
+      "maxConsecutiveHoldFrames": 3,
+      "instantaneousWrapCount": 1,
+      "wrapDeltas": [-100],
+      "maxRenderedSingleFrameBackwardPx": -430.8,
+      "note": "setInterval(120ms)+3% staircase against a 300ms fill transition; a full-width 100->0 rewind glide each cycle"
+    },
+    "after": {
+      "drivenRange": [0, 100],
+      "distinctPositiveStepSizes_rounded": [0.1, 0.3, 0.4, 0.5, 0.6, 0.8, 0.9, 1, 1.1, 1.2, 1.3],
+      "maxConsecutiveHoldFrames": 1,
+      "instantaneousWrapCount": 0,
+      "maxRenderedSingleFrameBackwardPx": -5.7,
+      "note": "requestAnimationFrame eased triangle over 4s (canon --motion-duration-progress-indeterminate); continuous fill+drain, no snap, the drain IS the owned return leg (max -5.7px/frame vs -430.8px)"
+    },
+    "canon_period": "--motion-duration-progress-indeterminate = 4s (scheme-motion.css:198); the R3b 4000ms engagement exemplar",
+    "screens": ["BORN-RED-loop-section.png", "AFTER-loop-section.png"]
+  },
+  "carousel_RU21_N4": {
+    "surface": "src/components/carousel/CarouselContent.vue applyArrival() -> src/components/carousel/arrival.ts",
+    "probe": "unit — arrivalDistance(snap=1.0, progress=0.02, N=5, loop)",
+    "before": "inline |snap-progress| -> seam slide t=1 (wrongly far-faded under loop:true)",
+    "after": "arrivalDistance loop=true -> t=0.08 (adjacent/lit); loop=false unchanged -> t=1",
+    "note": "opt-in (arrival default off) + only active under embla loop:true; non-loop byte-unchanged"
+  }
+}

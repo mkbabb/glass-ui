@@ -3,6 +3,7 @@ import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import { onMounted, onUnmounted, ref } from "vue";
 import { Progress } from "@glass/components/progress";
+import { loopProgressValue } from "./loop-driver";
 import { Button } from "@glass/components/button";
 import { ScrollProgressRim } from "@glass/components/scroll-progress-rim";
 import { GlassDock } from "@glass/components/dock";
@@ -20,24 +21,34 @@ const rimAxes = [
 ] as const;
 
 const animated = ref(0);
-let timer: number | undefined;
+let raf: number | undefined;
+
+// The loop breathes on the canon indeterminate-sweep tempo
+// (--motion-duration-progress-indeterminate = 4s, the R3b 4000ms engagement
+// exemplar) — read from the token layer, never a component-local literal.
+function loopPeriodMs(): number {
+    const raw = getComputedStyle(document.documentElement).getPropertyValue(
+        "--motion-duration-progress-indeterminate",
+    );
+    const seconds = Number.parseFloat(raw);
+    return Number.isFinite(seconds) && seconds > 0 ? seconds * 1000 : 4000;
+}
 
 function startAnimated(): void {
     stopAnimated();
-    animated.value = 0;
-    timer = window.setInterval(() => {
-        if (animated.value >= 100) {
-            animated.value = 0;
-            return;
-        }
-        animated.value = Math.min(100, animated.value + 3);
-    }, 120);
+    const period = loopPeriodMs();
+    const start = performance.now();
+    const frame = (now: number): void => {
+        animated.value = loopProgressValue((now - start) / period);
+        raf = requestAnimationFrame(frame);
+    };
+    raf = requestAnimationFrame(frame);
 }
 
 function stopAnimated(): void {
-    if (timer !== undefined) {
-        window.clearInterval(timer);
-        timer = undefined;
+    if (raf !== undefined) {
+        cancelAnimationFrame(raf);
+        raf = undefined;
     }
 }
 

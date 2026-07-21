@@ -20,6 +20,7 @@ import type { WithClassAsProps } from "./interface";
 import { onBeforeUnmount, ref, watch } from "vue";
 import { cn } from "../_shared/class-names";
 import { useReducedMotion } from "../../composables/motion/core/useReducedMotion";
+import { arrivalDistance } from "./arrival";
 import { useCarousel } from "./useCarousel";
 import type { UnwrapRefCarouselApi } from "./interface";
 
@@ -67,9 +68,11 @@ function applyArrival(): void {
     }
     const progress = api.scrollProgress();
     const snaps = api.scrollSnapList();
+    // Shortest-path across the wrap seam only when embla is actually looping (RU-21 N4).
+    const loop = api.internalEngine().options.loop;
     nodes.forEach((node, i) => {
         const snap = snaps[i] ?? progress;
-        const t = Math.min(Math.abs(snap - progress) * (snaps.length - 1 || 1), 1);
+        const t = arrivalDistance(snap, progress, snaps.length, loop);
         node.style.transform = `scale(${(1 - ARRIVAL_SCALE_DROP * t).toFixed(4)})`;
         node.style.opacity = (1 - ARRIVAL_FADE_DROP * t).toFixed(4);
     });

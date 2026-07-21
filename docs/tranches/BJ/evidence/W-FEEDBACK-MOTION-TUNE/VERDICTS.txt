@@ -1,0 +1,104 @@
+BJ.W-FEEDBACK-MOTION-TUNE — VERDICTS
+band: BAND-FEEDBACK-MOTION W3 (F22 + F24 + J7 + Δ-F24-1 + RU-21 N4)
+model: claude-opus-4-8
+head:  19ea4ce1
+posture: born-RED proven at HEAD (source verbatim + LIVE π), captured, then retuned to the
+         ON-DISK canon values; paired DELTA captured; non-vacuity watched. Left uncommitted.
+
+════════════════════════════════════════════════════════════════════════════
+F24 / Δ-F24-1 — SKELETON RUNG RE-BIND  [RED -> GREEN]
+  Defect: Skeleton.vue:54 bound `skeleton-scan var(--duration-shimmer, 2.4s)` — resolving to the
+          5s brand-metal ONE-PASS sweep clock (scheme-motion.css:107), not the documented FAST
+          band-pass rung; the 2.4s literal was a dead, misleading fallback.
+  Fix:    `animation: skeleton-scan var(--duration-shimmer-fast) ease-in-out infinite;` — the
+          canon 3s skeleton rung (scheme-motion.css:106, the ladder's own intent per
+          literals.css:24-35). Dead 2.4s fallback removed (clean break; the token always resolves).
+  Gate (b) [Skeleton.test.ts, new describe]:
+    (ii) RUNG-BINDING — RED@HEAD (bound --duration-shimmer + 2.4s) -> GREEN (binds
+         --duration-shimmer-fast, forbids the 5s clock + the 2.4s literal). A real born-RED gate.
+    (i)  PERIOD-VALUE — the bound rung resolves to 3s (fast=3, ≤3, strictly < the 5s sweep). The
+         token-fact anchor (green both sides — the canon, not the defect).
+  LIVE π: getComputedStyle('.skeleton','::after').animationDuration  5s -> 3s (12 skeletons).
+          BORN-RED-skeleton-section.png / AFTER-skeleton-section.png.
+
+════════════════════════════════════════════════════════════════════════════
+F22 / J7 — DEMO LOOP DRIVER RE-HOMED OFF setInterval  [RED -> GREEN]
+  Defect: progress.vue drove the loop with `window.setInterval(…, 120)` +3%/tick — a stepped
+          staircase interrupting the Progress fill's 300ms transition — and at the wrap snapped
+          `animated = 0`, which the same 300ms transition then glided BACKWARDS across the FULL
+          track (a ~431px rewind every ~4.1s).
+  Fix:    a requestAnimationFrame continuous eased loop that OWNS its return leg. The value is a
+          smoothstep-eased triangle (fill 0->100, drain 100->0) over the canon period
+          --motion-duration-progress-indeterminate (4s, the R3b 4000ms engagement exemplar),
+          read from the token layer at start (never a component-local literal). The shape lives
+          in a private demo helper (loop-driver.ts) so it is unit-testable, not eyeballed.
+  Gate (a) CANON — RED@HEAD: progress.vue referenced no canon period token -> GREEN (references
+           --motion-duration-progress-indeterminate; token = 4s). Easing = the loopProgressValue
+           smoothstep triangle (helper tests).
+  Gate (c) DRIVER-SHAPE — RED@HEAD: setInterval present + `animated.value = 0` snap present ->
+           GREEN: no setInterval, no snap-to-0; uses requestAnimationFrame/cancelAnimationFrame;
+           loopProgressValue is CONTINUOUS at the wrap (value(1⁻)==value(0)==0, no adjacent jump
+           > 1), so there is no backward wrap frame.
+  Non-vacuity (green-on-arrival characterization pins): a PLANTED sawtooth (monotonic fill + snap)
+           was watched RED on both the continuity and triangle gates, then reverted.
+  LIVE π (40ms sampling of --progress-value-percent + fill translateX over a full cycle):
+           distinctPositiveStepSizes [3] -> continuous eased ramp (0.1..1.3, velocity from the ease)
+           maxConsecutiveHoldFrames    3 -> 1        (staircase gone; every frame moves)
+           instantaneousWrapCount      1 -> 0        (the 100->0 snap gone)
+           maxRenderedBackwardPx  -430.8 -> -5.7     (the full-track rewind -> a gentle eased drain =
+                                                      the OWNED return leg; liquid-weight preserved)
+           BORN-RED-loop-section.png / AFTER-loop-section.png; paired-pi.json.
+
+════════════════════════════════════════════════════════════════════════════
+RU-21 N4 — CAROUSEL ARRIVAL WRAP-SEAM  [correctness fix, opt-in surface — stated HONESTLY]
+  Defect: CarouselContent.vue:72 computed arrival distance as |snap − progress|·(N−1). Under embla
+          loop:true the scroll progress wraps 0<->1, so the visually-ADJACENT seam slide read a
+          near-full distance and wrongly dropped to the FAR scale/opacity.
+  Fix:    extract arrivalDistance() (src/components/carousel/arrival.ts); take the shortest path
+          min(|d|, 1−|d|) ONLY when embla loops (api.internalEngine().options.loop). A non-looping
+          carousel is byte-unchanged; arrival itself stays opt-in (default off). RU-21 N4 note-grade
+          but owned here so it cannot drop.
+  Gate [carousel.arrival.test.ts]: seam (snap 1.0, progress 0.02, N=5): loop=true -> t=0.08 (lit),
+          loop=false -> t=1 (far-faded); interior distances unchanged; single-snap guard holds.
+  Non-vacuity: a PLANTED `if (false && loop)` disable was watched RED on the seam gate, then reverted.
+  Perf: internalEngine() is read once per scroll event (not per slide) — no per-frame style read
+        (BAND-PERF RU-21 N8 respected). Embla in jsdom cannot compute real snaps, so the wrap math
+        is proven on the extracted PURE helper rather than a degenerate mount.
+
+════════════════════════════════════════════════════════════════════════════
+OPEN-FM-1 (W2 loop/indeterminate scope) — untouched here; the indeterminate sweep keeps its 4s
+  breath (the R3b exemplar) and the determinate loop now BORROWS that same canon tempo. No change to
+  Progress component semantics; the retune is the DEMO driver + the skeleton rung only.
+
+ONE-OWNER-PER-FILE — progress.vue: W2 (rim) explicitly left the loop driver (:22-45) to W3; this
+  wave edited ONLY the <script> driver block + its import — the W2 rim section is untouched.
+  CarouselContent.vue: no other in-flight wave claims it (W6 owns PagerDots/usePagerWorm).
+
+OVERFIT — arrival.ts: 1 consumer (CarouselContent) + module-exported + unit-tested (extraction is
+  the only way to test the wrap math off a jsdom-degenerate embla). loop-driver.ts: a private demo
+  helper (allowed). No new PUBLIC package export.
+
+LIQUID-WEIGHT / BREATH-OF-LIFE — the loop is now a continuous eased breath (fill+drain, the fill
+  retains its 300ms transition inertia = liquid weight); the skeleton scan keeps its ease-in-out
+  band-pass. Idle-at-rest breath NOT added here: OPEN-FM-3 (the idle-light axis) is HARD-BLOCKED
+  pending the USER ruling and no band pre-decides it (APOTHEOSIS D-06).
+
+STANDING-GATE POSTURE (MECH-06) — ZERO standing gates: the new tests live in
+  tests/components/ui/skeleton, tests/components/carousel.arrival, tests/demo — none in tests/gates/.
+
+REGRESSION — vue-tsc --noEmit (src + demo) clean; tests/components + tests/demo = 845 passed (135
+  files); tests/gates + tests/styles = 37 passed + 2 expected-fail (pre-existing MATERIAL W7/W8
+  born-RED markers). The ONE gate red — boot-graph "dist-demo is NEWER than source" — is a pure
+  mtime staleness arm that any uncommitted source edit trips until `npm run demo:dist:build` runs at
+  close (W2 left it identically); NOT a code defect.
+
+FILES TOUCHED (uncommitted):
+  src/components/skeleton/Skeleton.vue                        --duration-shimmer(5s) -> --duration-shimmer-fast(3s); dead 2.4s fallback removed
+  demo/stories/feedback/progress.vue                         setInterval(120ms)+3% staircase -> rAF eased-triangle loop on the canon 4s period (script driver only)
+  demo/stories/feedback/loop-driver.ts   [new]               the eased loop value function (easeInOut + loopProgressValue); private demo helper
+  src/components/carousel/CarouselContent.vue                applyArrival: inline distance -> arrivalDistance(); loop-gated shortest path
+  src/components/carousel/arrival.ts     [new]               the pure arrival-distance helper (RU-21 N4 wrap-seam)
+  tests/components/ui/skeleton/Skeleton.test.ts              gate (b): rung-binding + period-value
+  tests/demo/feedback-motion-tune.test.ts [new]              gate (a)+(c): driver-shape source + loopProgressValue shape/continuity
+  tests/components/carousel.arrival.test.ts [new]            RU-21 N4 wrap-seam unit
+  docs/tranches/BJ/evidence/W-FEEDBACK-MOTION-TUNE/          BORN-RED.txt, BORN-RED-gates.txt, paired-pi.json, 4 PNGs, this file

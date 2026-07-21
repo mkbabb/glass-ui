@@ -1,0 +1,15 @@
+ ❯ tests/demo/feedback-motion-tune.test.ts (3 tests | 3 failed) 8ms
+     × carries no setInterval progress driver — the stepped timer is retired 3ms
+     × drives the loop on requestAnimationFrame — a continuous eased loop 1ms
+     × sources the loop period from the canon --motion-duration-progress-indeterminate token 4ms
+ ❯ tests/components/ui/skeleton/Skeleton.test.ts (5 tests | 1 failed) 16ms
+     × binds --duration-shimmer-fast, never the brand-metal --duration-shimmer sweep clock 2ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  tests/demo/feedback-motion-tune.test.ts > Progress demo loop driver — re-homed off setInterval (F22 / J7) > carries no setInterval progress driver — the stepped timer is retired
+                        aria-label=\"Upload failed at 63 percent\"
+ FAIL  tests/demo/feedback-motion-tune.test.ts > Progress demo loop driver — re-homed off setInterval (F22 / J7) > drives the loop on requestAnimationFrame — a continuous eased loop
+                        aria-label=\"Upload failed at 63 percent\"
+ FAIL  tests/demo/feedback-motion-tune.test.ts > Progress demo loop driver — re-homed off setInterval (F22 / J7) > sources the loop period from the canon --motion-duration-progress-indeterminate token
+ FAIL  tests/components/ui/skeleton/Skeleton.test.ts > Skeleton shimmer rides the canon skeleton rung (F24 / Δ-F24-1) > binds --duration-shimmer-fast, never the brand-metal --duration-shimmer sweep clock
+ Test Files  2 failed (2)
+      Tests  4 failed | 4 passed (8)

@@ -1,0 +1,52 @@
+BJ.W-FEEDBACK-MOTION-TUNE — BORN-RED at HEAD 19ea4ce1 (captured verbatim, before any fix)
+band: BAND-FEEDBACK-MOTION W3 (F22 + F24 + J7 + Δ-F24-1 + RU-21 N4)
+model: claude-opus-4-8
+method: source verbatim + LIVE π (computed-style + rendered-transform sampling on
+        localhost:5199, screenshot only, NO getContext).
+
+────────────────────────────────────────────────────────────────────────────
+F24 / Δ-F24-1 — SKELETON RIDES THE WRONG (5s brand-metal) RUNG
+  Source (src/components/skeleton/Skeleton.vue:54, verbatim):
+    animation: skeleton-scan var(--duration-shimmer, 2.4s) ease-in-out infinite;
+  Token canon (src/styles/tokens/scheme-motion.css):
+    --duration-shimmer-fast: 3s;   <- the documented skeleton/band-pass rung (literals.css:24-35)
+    --duration-shimmer:      5s;   <- the brand-metal ONE-PASS sweep clock (what skeleton wrongly binds)
+  LIVE (/feedback/skeleton, getComputedStyle('.skeleton','::after')):
+    animation-duration = "5s"   <- RED: rides the 5s brand-metal rung, not the 3s fast rung
+    animation-name     = "skeleton-scan-*"
+    animation-timing   = "ease-in-out"
+  The 2.4s literal fallback is DEAD (the token always resolves) and misleads static reads.
+
+────────────────────────────────────────────────────────────────────────────
+F22 / J7 — THE DEMO LOOP IS A 120ms STEPPED setInterval FIGHTING A 300ms TRANSITION
+  Source (demo/stories/feedback/progress.vue:25-35, verbatim):
+    timer = window.setInterval(() => {
+        if (animated.value >= 100) { animated.value = 0; return; }
+        animated.value = Math.min(100, animated.value + 3);
+    }, 120);
+  Fill transition (Progress.vue:158): transform var(--duration-normal=0.3s) var(--ease-standard)
+  LIVE (/feedback/progress, sampled 40ms over 4.6s, the animated-loop rail):
+    transitionOnFill            = "transform / 0.3s / cubic-bezier(0.4, 0, 0.2, 1)"
+    distinctPositiveStepSizes   = [3]  (the 3% setInterval step — a plateau-then-jump STAIRCASE:
+                                        drivenPct holds 15% across 3 frames, jumps to 18%, holds, jumps…)
+    wrapCount                   = 1
+    wrapDeltas                  = [-100]   <- the value SNAPS 100 -> 0 at the wrap
+    maxRenderedBackwardGlidePx  = -430.8   <- RED: the fill glides BACKWARD ~431px across the
+                                              FULL track (the 300ms rewind glide), every loop cycle
+
+────────────────────────────────────────────────────────────────────────────
+RU-21 N4 — CAROUSEL ARRIVAL DISTANCE IS NOT SHORTEST-PATH AT THE loop:true SEAM
+  (design-debt, opt-in surface — stated HONESTLY, not dressed born-RED)
+  Source (src/components/carousel/CarouselContent.vue:72, verbatim):
+    const t = Math.min(Math.abs(snap - progress) * (snaps.length - 1 || 1), 1);
+  Under embla loop:true the scroll progress wraps 0<->1, so the visually-adjacent seam slide
+  (snap≈0.95 vs progress≈0.02) measures |d|≈0.93 -> t=1 and wrongly drops to the FAR
+  scale/opacity, instead of the shortest-path min(|d|,1-|d|)≈0.07 -> t≈0.28. Opt-in (arrival
+  default off); note-grade; owned here so it cannot drop.
+
+────────────────────────────────────────────────────────────────────────────
+CANON ANCHOR (the values that BECOME the assertions — read from src/styles on disk):
+  skeleton period rung  = --duration-shimmer-fast = 3s  (scheme-motion.css:106)
+  loop period           = --motion-duration-progress-indeterminate = 4s  (scheme-motion.css:198)
+                          — the R3b engagement exemplar (the "4000ms sweep" true idle breath);
+                          the loop breathes on the same canon tempo as the indeterminate sweep.

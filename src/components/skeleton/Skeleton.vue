@@ -51,7 +51,10 @@ const hostAttrs = computed(() =>
 @media (prefers-reduced-motion: no-preference) {
     .skeleton::after {
         transform: translate3d(-110%, 0, 0);
-        animation: skeleton-scan var(--duration-shimmer, 2.4s) ease-in-out infinite;
+        /* The looping band-pass scan rides the FAST skeleton rung
+           (--duration-shimmer-fast, 3s), NOT the 5s brand-metal one-pass sweep
+           clock (--duration-shimmer) — Δ-F24-1. */
+        animation: skeleton-scan var(--duration-shimmer-fast) ease-in-out infinite;
         will-change: transform;
     }
 }
