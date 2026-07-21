@@ -337,3 +337,20 @@ Owner-reversible: buying a self-hosted GPU runner would let the aurora arm rejoi
   which does not exist — this repo's git hooks are silently inert.** Local machine config, not repo
   state, so it is left untouched here and surfaced to the owner instead: any pre-commit protection
   anyone believes is running has not been running.
+
+---
+
+# Phase-1 escalations RULED (2026-07-20 ~21:0x, lead)
+
+- **Configurator KEEP — RATIFIED.** The orchestrator's prompt said "Configurator→demo" (lifted from
+  PLAN §2's since-superseded history text); the seat correctly obeyed the band file's own roll-up
+  escape hatch and the FRESH census, which does not clear (value.js ×1, fourier-analysis ×4,
+  muster ×4 — all live). The cross-repo law held: the row does not ship. STANDING NOTE for every
+  future seat: the band file + the fresh census OUTRANK the orchestrator's prompt when they
+  conflict — exactly what happened here, and exactly right.
+- **The PULSE-DOT relay consumer list — CORRECTED.** [Dated bracket on the merge ruling above:
+  the ruling's addenda line named "speedtest ×4, keyframes.js ×2, atlas ×2" from the RU-09
+  formation-time census; the ship-time census finds `<Pulse>` live ONLY in speedtest ×4
+  (AdminLoginView/SpeedtestResults/CompleteBadge/ResultStack) + muster ×1 (CommandDock.vue) —
+  keyframes.js and atlas CLEAR. The merge stands unchanged; the R12/Q060 relay names
+  speedtest + muster. The G1 send-time checklist re-runs all censuses regardless.]
