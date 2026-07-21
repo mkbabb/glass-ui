@@ -2,7 +2,6 @@
 import { computed, useTemplateRef, watch } from "vue";
 import { type ConstellationProps } from "./constellationField";
 import { useConstellation } from "./composables/useConstellation";
-import { DEFAULT_PARALLAX } from "./constants";
 import { useRoutePointer } from "../../composables/motion/pointer/useRoutePointer";
 import { cn } from "../_shared/class-names";
 import type { RendererStatus } from "../../composables/glass/webgpu/rendererStatus";
@@ -44,8 +43,6 @@ const emit = defineEmits<{ rendererStatus: [status: RendererStatus] }>();
 const props = withDefaults(defineProps<ConstellationProps>(), {
     count: 64,
     link: 132,
-    speed: 0.16,
-    parallax: DEFAULT_PARALLAX,
     pointerReactive: true,
     warpOnClick: false,
     wander: false,

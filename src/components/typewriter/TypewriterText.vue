@@ -26,7 +26,7 @@
                             cursorBlink && !typewriter.isTyping.value,
                     }"
                 >
-                    {{ cursorChar }}
+                    |
                 </span>
             </span>
             <span
@@ -36,7 +36,7 @@
                     'tw-cursor--blink': cursorBlink && !typewriter.isTyping.value,
                 }"
             >
-                {{ cursorChar }}
+                |
             </span>
         </span>
     </span>
@@ -53,50 +53,36 @@ interface Props {
     text?: string;
     /** Array of words to cycle through in rotation mode. Use this OR `text`, not both. */
     words?: TypewriterWord[];
-    ngramSize?: number | { min: number; max: number };
+    /** Base typing speed in ms per keystroke. */
     baseSpeed?: number;
-    variance?: number;
-    errorRate?: number;
-    firstAnimationSpeedFactor?: number;
-    maxCharsBeforeNotice?: number;
-    continueAfterTypoProbability?: number;
-    sequentialTypoDecay?: number;
-    correctionSpeedMultiplier?: number;
     cursorVisible?: boolean;
     cursorBlink?: boolean;
-    cursorChar?: string;
-    startDelay?: number;
     loop?: boolean;
     /** Pause after typing a word before deleting (ms). Word-rotation mode only. */
     pauseAfterType?: number;
     /** Pause after deleting a word before typing the next (ms). Word-rotation mode only. */
     pauseAfterDelete?: number;
-    /** Backspace speed in word-rotation mode (ms per char). */
-    deletingSpeed?: number;
-    respectReducedMotion?: boolean;
+    /**
+     * Typing character. `true` (default) types like a person — variable cadence,
+     * n-gram bursts, and the occasional self-corrected typo (the humanized default
+     * the engine ships). `false` types mechanically at a steady `baseSpeed` with no
+     * variance and no typos. The one intent-level knob that replaces the retired
+     * per-parameter simulation surface (variance/errorRate/ngramSize/typo-FSM &c.);
+     * reduced-motion respect is always-on (it settles to the final phrase in one paint).
+     */
+    humanize?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
     text: undefined,
     words: undefined,
-    ngramSize: () => ({ min: 1, max: 3 }),
     baseSpeed: 150,
-    variance: 0.4,
-    errorRate: 0.015,
-    firstAnimationSpeedFactor: 0.6,
-    maxCharsBeforeNotice: 4,
-    continueAfterTypoProbability: 0.6,
-    sequentialTypoDecay: 0.3,
-    correctionSpeedMultiplier: 0.5,
     cursorVisible: true,
     cursorBlink: true,
-    cursorChar: "|",
-    startDelay: 0,
     loop: false,
     pauseAfterType: 3000,
     pauseAfterDelete: 800,
-    deletingSpeed: 70,
-    respectReducedMotion: true,
+    humanize: true,
 });
 
 const emit = defineEmits<{
@@ -109,23 +95,14 @@ const emit = defineEmits<{
 const typewriter = useTypewriter({
     text: props.text,
     words: props.words,
-    ngramSize: props.ngramSize,
     baseSpeed: props.baseSpeed,
-    variance: props.variance,
-    errorRate: props.errorRate,
-    firstAnimationSpeedFactor: props.firstAnimationSpeedFactor,
-    maxCharsBeforeNotice: props.maxCharsBeforeNotice,
-    continueAfterTypoProbability: props.continueAfterTypoProbability,
-    sequentialTypoDecay: props.sequentialTypoDecay,
-    correctionSpeedMultiplier: props.correctionSpeedMultiplier,
-    cursorVisible: props.cursorVisible,
-    cursorBlink: props.cursorBlink,
-    cursorChar: props.cursorChar,
     loop: props.loop,
     pauseAfterType: props.pauseAfterType,
     pauseAfterDelete: props.pauseAfterDelete,
-    deletingSpeed: props.deletingSpeed,
-    respectReducedMotion: props.respectReducedMotion,
+    // The opinionated humanize axis: the default rides the engine's shipped
+    // human-cadence DEFAULTS (variance/errorRate/ngram bursts/typo-FSM); the
+    // mechanical mode flattens variance + typos to a steady per-key cadence.
+    ...(props.humanize ? {} : { variance: 0, errorRate: 0, ngramSize: 1 }),
     onComplete: () => emit("complete"),
     onWordComplete: (index: number) => emit("wordComplete", index),
 });
@@ -180,7 +157,7 @@ function scheduleStart() {
     scheduleTimer(() => {
         emit("start");
         void startTyping();
-    }, props.startDelay);
+    }, 0);
 }
 
 watch(

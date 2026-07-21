@@ -118,14 +118,15 @@ function mountDockWithCollapsedControl() {
         setup() {
             return () =>
                 h(
-                    // `autoLuminance` OFF: the keep-open / no-regression specs settle the
-                    // morph spring via the unbounded `vi.runAllTimers()`, which spins the
-                    // dock's default-TRUE perpetual backdrop-luminance rAF monitor past the
-                    // 10000-timer abort. Luminance is orthogonal to the touch-gate contract
-                    // under test — the product default stays TRUE (test-env scoping, not a
-                    // product change; the happy-dom `elementsFromPoint` stub precedent).
+                    // `backdropMode: "static"` (no observer): the keep-open / no-regression
+                    // specs settle the morph spring via the unbounded `vi.runAllTimers()`,
+                    // which spins the dock's default-"live" perpetual backdrop-luminance rAF
+                    // monitor past the 10000-timer abort. Luminance is orthogonal to the
+                    // touch-gate contract under test — the product default stays "live"
+                    // (test-env scoping, not a product change; the happy-dom
+                    // `elementsFromPoint` stub precedent).
                     GlassDock,
-                    { startCollapsed: true, autoLuminance: false },
+                    { startCollapsed: true, backdropMode: "static" },
                     {
                         // Expanded layer — full controls.
                         default: () => [
@@ -334,7 +335,7 @@ describe("GlassDock touch-gate behavioural contract", () => {
                 return () =>
                     h(
                         GlassDock,
-                        { startCollapsed: true, autoLuminance: false, interaction: "manual" },
+                        { startCollapsed: true, backdropMode: "static", interaction: "manual" },
                         {
                             default: () => h("div", "full"),
                             collapsed: () =>

@@ -11,11 +11,7 @@ import { FourierField } from "@mkbabb/glass-ui/fourier-field";
 </script>
 
 <template>
-    <FourierField
-        color="var(--primary)"
-        seed="article-42"
-        :intensity="0.7"
-    />
+    <FourierField :config="fieldConfig" :get-palette="getPalette" />
 </template>
 ```
 
@@ -26,15 +22,11 @@ import { FourierField } from "@mkbabb/glass-ui/fourier-field";
 | `config` | `FourierFieldConfig` | `DEFAULT_FOURIER_CONFIG` | Complete renderer configuration. |
 | `spectrum` | `readonly BasisComponent[]` | generated | Explicit CPU-minted phasor spectrum. |
 | `getPalette` | `() => OklchStop[]` | — | Live palette provider for studio consumers. |
-| `color` | `string` | — | Literal or CSS token used to derive a warm two-stop palette. |
-| `colorResolver` | `ColorResolver` | — | Resolver used when a consumer supplies tokenized color. |
-| `seed` | `string` | `""` | Identity for the generated spectrum. |
-| `freeze` | `boolean` | `false` | Paint a deterministic static state. |
-| `intensity` | `number` | config value | Outer loudness override, clamped to `[0,2]`. |
 
-The retired `variant` and injected `clock` props are not part of the public
-surface. Author visual bundles through `FourierFieldConfig`; its `speed`,
-`harmonics`, `showEpicycles`, and related fields own runtime behavior.
+The `variant`/`clock` props and the retired ambient-seam knobs
+(`color`/`colorResolver`/`seed`/`freeze`/`intensity` — 0-setter dead config, REDUCTION W1)
+are not part of the public surface. Author visual bundles through `FourierFieldConfig`; its
+`speed`, `harmonics`, `showEpicycles`, `intensity`, and related fields own runtime behavior.
 
 ## Math surface
 
@@ -54,8 +46,8 @@ WebGL2 uses the equivalent scene configuration and CPU-owned spectrum. Both
 compose `createGpuSubstrate`, so resize, DPR, visibility parking, reduced motion,
 pause, disposal, and actual-engine status have one owner.
 
-Pointer motion feeds the shared velocity field. `freeze` and reduced motion
-produce a stable frame; they do not replace the renderer with a hidden alternate
+Pointer motion feeds the shared velocity field. Reduced motion produces a stable
+deterministic frame; it does not replace the renderer with a hidden alternate
 surface. Renderer initialization and setup failures are emitted through the
 component's `rendererStatus` event.
 

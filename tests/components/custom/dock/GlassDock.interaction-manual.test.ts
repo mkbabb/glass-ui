@@ -278,7 +278,7 @@ function mountDock(
     slots: Record<string, () => unknown> = {},
 ) {
     const wrapper = mount(GlassDock, {
-        props: { autoLuminance: false, ...props },
+        props: { ...props },
         slots,
         attachTo: document.body,
     });

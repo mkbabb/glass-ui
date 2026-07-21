@@ -28,24 +28,6 @@ describe("GlassDock intrinsic cap-scroll", () => {
         );
     });
 
-    it("adds container-query ownership without changing overflow", () => {
-        const named = mount(GlassDock, {
-            props: { containerName: "pill-cluster", alwaysExpanded: true },
-        }).get(".glass-dock");
-        const plain = mount(GlassDock, { props: { alwaysExpanded: true } }).get(
-            ".glass-dock",
-        );
-
-        expect(named.attributes("data-container-name")).toBe("pill-cluster");
-        expect(named.attributes("style")).toContain("container-type: inline-size");
-        expect(named.attributes("style")).toContain(
-            "container-name: pill-cluster",
-        );
-        expect(named.attributes("style")).not.toContain("overflow");
-        expect(plain.attributes("data-container-name")).toBeUndefined();
-        expect(plain.attributes("style") ?? "").not.toContain("container-type");
-    });
-
     it("a horizontal dock wears `dock-scroll-x` INTRINSICALLY (no opt-in prop)", () => {
         const wrapper = mount(GlassDock);
         const root = wrapper.get(".glass-dock");

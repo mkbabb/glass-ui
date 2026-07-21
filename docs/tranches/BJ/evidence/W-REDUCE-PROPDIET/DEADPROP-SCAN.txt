@@ -1,0 +1,59 @@
+G-DEADPROP-SCAN — born-RED -> GREEN dead-config differential (REDUCTION W1 / BJ.W-REDUCE-PROPDIET)
+posture: one-time RED->GREEN surface-hygiene differential (APOTHEOSIS MECH-06: ZERO standing gates; nothing in tests/gates/).
+method:  each 0-setter prop is PRESENT in its prop declaration at HEAD (1844bf2c) [RED] and ABSENT in the working tree after the cut [GREEN].
+         RED@HEAD>=1 because a prop is declared in the interface + (withDefaults) + (composable-forward); all arms drop to 0 GREEN.
+census:  full-constellation fresh census (atlas/slides/speedtest/muster/keyframes.js/sci-report/value.js/fourier-analysis/words/bbnf-buddy/oscilloscope + glass-ui demo), both grains (symbol + prop/slot).
+
+== Typewriter (src/components/typewriter/TypewriterText.vue) — 11 sim knobs + respectReducedMotion, folded to one humanize axis ==
+  ngramSize                    RED@HEAD=3  GREEN@work=0  RED->GREEN OK
+  variance                     RED@HEAD=3  GREEN@work=0  RED->GREEN OK
+  errorRate                    RED@HEAD=3  GREEN@work=0  RED->GREEN OK
+  firstAnimationSpeedFactor    RED@HEAD=3  GREEN@work=0  RED->GREEN OK
+  maxCharsBeforeNotice         RED@HEAD=3  GREEN@work=0  RED->GREEN OK
+  continueAfterTypoProbability RED@HEAD=3  GREEN@work=0  RED->GREEN OK
+  sequentialTypoDecay          RED@HEAD=3  GREEN@work=0  RED->GREEN OK
+  correctionSpeedMultiplier    RED@HEAD=3  GREEN@work=0  RED->GREEN OK
+  deletingSpeed                RED@HEAD=3  GREEN@work=0  RED->GREEN OK
+  startDelay                   RED@HEAD=2  GREEN@work=0  RED->GREEN OK
+  cursorChar                   RED@HEAD=3  GREEN@work=0  RED->GREEN OK
+  respectReducedMotion         RED@HEAD=3  GREEN@work=0  RED->GREEN OK
+
+== GlassDock (src/components/dock/composables/useDockShellProps.ts) — 3 cut; position KEPT ==
+  autoLuminance                RED@HEAD=1  GREEN@work=0  RED->GREEN OK
+  containerName                RED@HEAD=1  GREEN@work=0  RED->GREEN OK
+  viewTransitionName           RED@HEAD=1  GREEN@work=0  RED->GREEN OK
+  position                     RED@HEAD=1  GREEN@work=1  KEPT (present RED@HEAD=1, present GREEN@work=1 — live consumer)
+    position: atlas Dock.vue:230 + muster CommandDock.vue:120 live-set position="fixed" (current-contract, rule c).
+    containerName: muster container-name -> <MetricStack> (metric family, W4), NOT <GlassDock> — GlassDock.containerName = 0 setters.
+
+== Slider (src/components/slider/types.ts) — keepDockOpen -> context-driven useDockHold ==
+  keepDockOpen                 RED@HEAD=1  GREEN@work=0  RED->GREEN OK
+
+== Progress (src/components/progress/types.ts) — reka passthroughs ==
+  getValueLabel                RED@HEAD=1  GREEN@work=0  RED->GREEN OK
+  getValueText                 RED@HEAD=1  GREEN@work=0  RED->GREEN OK
+
+== AnimatedDigit (src/components/animated-digit/AnimatedDigit.vue) — 2 cut; digitCount KEPT ==
+  mode                         RED@HEAD=3  GREEN@work=0  RED->GREEN OK
+  damping                      RED@HEAD=2  GREEN@work=0  RED->GREEN OK
+  digitCount                   RED@HEAD=1  GREEN@work=1  KEPT (present RED@HEAD=1, present GREEN@work=1 — live consumer)
+    digitCount: speedtest ResultStack.vue:71,149 live-set :digit-count on <AnimatedDigit> (current-contract, rule c).
+
+== FourierField (src/components/fourier-field/index.ts) — 5 cut (closed by this seat) ==
+  color                        RED@HEAD=1  GREEN@work=0  RED->GREEN OK
+  colorResolver                RED@HEAD=1  GREEN@work=0  RED->GREEN OK
+  seed                         RED@HEAD=1  GREEN@work=0  RED->GREEN OK
+  freeze                       RED@HEAD=1  GREEN@work=0  RED->GREEN OK
+  intensity                    RED@HEAD=1  GREEN@work=0  RED->GREEN OK
+    only glass-ui demo consumes <FourierField> and sets config/spectrum/getPalette only; slides dropped it; 0 constellation setters.
+
+== Constellation (src/components/constellation/constellationTypes.ts) — 2 cut; freeze KEPT ==
+  speed                        RED@HEAD=1  GREEN@work=0  RED->GREEN OK
+  parallax                     RED@HEAD=1  GREEN@work=0  RED->GREEN OK
+  freeze                       RED@HEAD=1  GREEN@work=1  KEPT (present RED@HEAD=1, present GREEN@work=1 — live consumer)
+    freeze: atlas Constellation.host.vue:487 live-sets :freeze (current-contract, rule c).
+
+== Labeled* (src/components/labeled-field/types.ts) — CUT REFUTED (all KEEP) ==
+    layout/requirement/placeholder/required: labeled-field.contract.test.ts 'converges native and annotated requirement
+    state' (:73-118) + data-layout=horizontal (:42-47) prove a TESTED, load-bearing a11y/visual contract. The band's
+    '7/12 dead' premise does NOT reproduce at HEAD -> fresh census/evidence wins (the Configurator KEEP precedent).

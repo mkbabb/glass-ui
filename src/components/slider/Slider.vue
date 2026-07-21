@@ -19,12 +19,6 @@ const props = withDefaults(defineProps<SliderProps>(), {
     variant: "standard",
     size: "md",
     invalid: false,
-    // Vue casts an ABSENT boolean prop to `false`, not `undefined` — so a
-    // `props.keepDockOpen ?? true` fallback would never reach `true` for the common
-    // no-prop call site (a documented `Default: true` would silently disarm the
-    // hold). `withDefaults` resolves an absent prop to `true`; an explicit
-    // `:keep-dock-open="false"` still disarms.
-    keepDockOpen: true,
 });
 const emits = defineEmits<{
     "update:modelValue": [value: number[] | undefined];
@@ -33,7 +27,6 @@ const emits = defineEmits<{
 
 const v = computed<SliderVariant>(() => props.variant);
 const s = computed<SliderSize>(() => props.size);
-const keepDockOpen = computed(() => props.keepDockOpen);
 const marks = computed(() =>
     resolveValueMarks(props.marks, props.min ?? 0, props.max ?? 100),
 );
@@ -45,8 +38,7 @@ const delegatedProps = computed(() => {
         size: ___,
         marks: ____,
         invalid: _____,
-        keepDockOpen: ______,
-        motion: _______,
+        motion: ______,
         ...delegated
     } = props;
     // BOTH recipes inscribe the thumb within the capsule so it never overshoots the
@@ -94,7 +86,10 @@ function getRootEl(): HTMLElement | null {
 // The native hold resolves the reka forwardRef host at its own `onMounted`
 // (template refs are live by then). A resolver getter — not a ref Slider
 // populates in a sibling `onMounted` — sidesteps the onMounted-ordering trap.
-useDockHold(getRootEl, { enabled: () => keepDockOpen.value });
+// The hold is CONTEXT-DRIVEN and always-on inside a dock: `useDockHold`
+// consumes `useOptionalDockContext()`, so it is a no-op outside a `<GlassDock>`
+// and holds unconditionally inside one — no consumer-facing opt-out knob.
+useDockHold(getRootEl);
 
 /* The weight-train velocity bridge. Writes the BOUNDED
    `--atom-drag-v` (0..1, saturating `tanh`) on the resolved host during the drag

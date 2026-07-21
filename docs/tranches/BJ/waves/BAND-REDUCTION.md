@@ -120,11 +120,19 @@ unchanged or ride a marked addendum; census at execution. `respectReducedMotion`
 always-on reduced-motion guard unless BAND-A11Y claims it (coordinate; the reduced-motion
 substrate is a11y's CONFIRMED KEEP).
 
-**GlassDock (`./dock`) — retire the dead `position` axis + 3 knobs; the `shape` axis is NOT
-this wave's.** `useDockShellProps.ts` declares `position?: "fixed" | "inline" | "sticky"`;
-census over 40 dock instances: `position, autoLuminance, containerName, viewTransitionName` = 0
-setters. **Retire all four** — they die regardless of the greenfield's shape (GF-DOCK inherits
-the cut). **CARVE-OUT (RU-13 F01-F10 N1):** the `shape` prop (`useDockShellProps.ts:36-53`) is
+**GlassDock (`./dock`) — retire 3 dead knobs; `position` KEPT (census-corrected); the `shape`
+axis is NOT this wave's.** `useDockShellProps.ts` declares
+`position?: "fixed" | "inline" | "sticky"`. **[CENSUS-CORRECTED 2026-07-21 — the prior "retire
+all four" is STRUCK: the fresh full-constellation census REFUTES the `position` = 0-setters
+premise. `position` is live current-contract on TWO consumers — atlas `Dock.vue:230`
+(`position="fixed"`, ^6.0.0) + muster `CommandDock.vue:120` (`position="fixed"`, ^3.1.0) — so
+rule (c) FIRES and `position` KEEPS (mirrors the freeze/digitCount keeps; the Configurator
+lesson). GF-DOCK does NOT inherit a `position` cut. `containerName` census-clarified: muster's
+`container-name` binds `<MetricStack>` (metric family, W4), NOT `<GlassDock>` — the critic's
+Material-1 "muster live-sets GlassDock.containerName" is refuted, GlassDock.containerName = 0
+setters, cut STANDS.]** **Retire three** — `autoLuminance, containerName, viewTransitionName` =
+0 setters (they die regardless of the greenfield's shape; GF-DOCK inherits the 3-knob cut).
+**CARVE-OUT (RU-13 F01-F10 N1):** the `shape` prop (`useDockShellProps.ts:36-53`) is
 the F04-direct silhouette axis; its keep/kill is a GF-DOCK W5 shape-grammar RULING — named there,
 not cut here. The dock cuts owe a null-DELTA on the four dockContext-consuming families'
 stories (RU-12 A4: slider/select/popover/dropdown-menu).
@@ -139,11 +147,21 @@ context-driven form (behavior survives, prop does not). **Hotspot order (APOTHEO
 this cut lands FIRST on `Slider.vue`, before MATERIAL W4's track/marks repoint and A11Y
 W2-E/W2-F.
 
-**Labeled\* (`./labeled-field`) — thin the duplicated field surface UNDER the a11y ruling
-(RESOLVED — was OPEN 3).** Census over 14 `LabeledSelect` instances: 7/12 props dead. **Cut
-cleanly:** `layout`, `requirement`, `placeholder` (+ the duplicated `required`/`disabled`
-restatements where the wrapped control owns them). **KEEP `invalid`/`errorLive`:** the W4-B
-ruling landed (RU-03-A11Y N11) — load-bearing a11y contract, wiring verified at
+**Labeled\* (`./labeled-field`) — CUT REFUTED 2026-07-21; KEEP the surface.** **[CENSUS-CORRECTED
+— the prior "7/12 dead · cut layout/requirement/placeholder + the duplicated required/disabled"
+is STRUCK. A FRESH census refutes the "dead" premise on the fresh evidence of record,
+`tests/components/labeled-field.contract.test.ts`: the "converges native and annotated
+requirement state" test (:73-118) proves `requirement` AND the native `required` prop are a
+TESTED, load-bearing a11y convergence contract (a required field is announced required whether
+the consumer uses the `requirement` string or the native boolean — `label[data-requirement]` +
+`input[required]`); the "owns stable label…" test (:42-47) proves `layout="horizontal"` is a
+tested visual axis. glass-ui's own demo live-sets `requirement`/`layout`/`placeholder`
+(`demo/stories/forms/labeled-field.vue:38,44,117`). ZERO external constellation consumers, but
+the in-repo contract-test + demo are live current-contract consumers → the cut is NOT the clean
+null-DELTA the band claimed; it is an a11y/visual real-DELTA landing one commit after the
+a11y-linkage wave (`e369be7b`). Fresh census/evidence wins (the Configurator KEEP precedent).
+The whole surface KEEPS; no labeled-field bytes move this wave.]** **KEEP `invalid`/`errorLive`:**
+the W4-B ruling landed (RU-03-A11Y N11) — load-bearing a11y contract, wiring verified at
 `LabeledField.vue:10,25,28,38,59-60,68`; this band may RE-HOME the pair, never drop it.
 
 **Progress (`./progress`) — drop the reka passthroughs.** `progress/types.ts:12,:16` declare
@@ -151,18 +169,30 @@ ruling landed (RU-03-A11Y N11) — load-bearing a11y contract, wiring verified a
 `as`/`asChild` claim stays retired — NOT present at HEAD (RU-12 R13). Track/value-marks DRY is
 MATERIAL W4's (two registers per RU-09 R4).
 
-**AnimatedDigit (`./animated-digit`) — retire `digitCount`, `mode`, `damping`** to opinionated
-defaults (0 setters; speedtest-live component, the thin is null-DELTA).
+**AnimatedDigit (`./animated-digit`) — retire `mode`, `damping`** to opinionated defaults
+(0 setters). **[CENSUS-CORRECTED 2026-07-21 — `digitCount` KEEPS: the prior "retire digitCount"
++ "null-DELTA" is STRUCK. Fresh census: speedtest `ResultStack.vue:71,149` live-set
+`:digit-count` on `<AnimatedDigit>` (per-metric reel slot sizing, current-contract, ^4.0.1) —
+rule (c) FIRES exactly as for position/freeze. `digitCount` is load-bearing layout, not dead
+config; the story's own zero-setter masked the cross-repo delta. No relay owed (KEPT, no break).]**
 
 **WatercolorDot (`./watercolor-dot`) — retire the dead knobs regardless of the ASK.**
 Single-external (value.js ×3 files — RU-12 R14); keep/relocate is ASK §B5. Keep `solid`/`ghost`
 only if both are demoed (verify at execution).
 
-**FourierField (5 dead: `color, colorResolver, freeze, intensity, seed`) + Constellation (3
-dead: `freeze, parallax, speed`) — dead knobs retire to defaults NOW; the component fates are
-ASK §B2/§B3 WITH THE CORRECTED CENSUS:** the "0 external consumers" premise is FALSE —
-fourier-field → slides; constellation → atlas + slides (RU-12 W5). The relocate legs of both
-asks die with the corrected census; retire-knobs-and-keep is the standing recommendation.
+**FourierField (5 dead: `color, colorResolver, freeze, intensity, seed`) — RETIRED 2026-07-21.**
+Fresh full-constellation census: only glass-ui's OWN demo consumes `<FourierField>` and it sets
+`config`/`spectrum`/`getPalette` ONLY; slides DROPPED fourier-field since formation (moving
+snapshot) — 0 constellation setters for all 5 ambient-seam knobs. Cut executed: the props leave
+`FourierFieldProps` + the SFC; the opinionated defaults resolve inside the component (seed →
+`"fourier-field"`, freeze → the composable's own PRM path, intensity → `config.intensity`,
+palette → `getPalette`/`config.palette`). Null-DELTA (the demo's config+getPalette path is
+unchanged). **Constellation (2 dead: `parallax, speed`) — `freeze` KEPT. [CENSUS-CORRECTED
+2026-07-21 — the prior "3 dead: freeze, parallax, speed" is STRUCK: atlas
+`Constellation.host.vue:487` live-sets `:freeze` (the deterministic capture frame,
+current-contract, ^6.0.0) — rule (c) FIRES, `freeze` KEEPS.]** Component fates were ASK §B2/§B3;
+the relocate legs die with the corrected census (fourier-field/constellation KEEP as
+retire-knobs primitives).
 
 **paper-backdrop — the ≥2-consumer census row (NEW — the J9/D-A14 landing, RF-6 routing 1).**
 Census run this seat: atlas (`Atmosphere.vue` + tokens) + speedtest (`SpeedtestResults.vue`,
@@ -170,6 +200,40 @@ Census run this seat: atlas (`Atmosphere.vue` + tokens) + speedtest (`SpeedtestR
 census and records the disposition rather than skipping it (the prior draft omitted it — an
 executor would never have censused paper-backdrop). Its INFERENCE rank-6 composite (0.426 vs
 skeleton) is small-set saturation, not kinship (RU-19 Q5) — no merge question.
+
+### W1 KEEP-DISPOSITION RECORD — dated 2026-07-21 (censused/executed at the REDUCTION W1 close; fresh full-constellation greps, both grains)
+
+The band's "0 setters / retire" premise was refuted for four props by a fresh census; each KEEPS
+by rule (c) (a current-contract usage is a live consumer whatever the pin), mirroring the
+Configurator KEEP precedent. No relay is owed for any KEEP (nothing breaks); the one cut whose
+critic-census was refuted (`containerName`) has 0 real consumers, so it too needs no relay.
+
+- **GlassDock `position` — KEPT.** atlas `Dock.vue:230` (`position="fixed"`, ^6.0.0) + muster
+  `CommandDock.vue:120` (`position="fixed"`, ^3.1.0) live-set it, current-contract. The band row
+  above is corrected; GF-DOCK does NOT inherit a `position` cut. The 3 real dead knobs
+  (`autoLuminance, containerName, viewTransitionName`) were cut.
+- **GlassDock `containerName` — CUT (critic-census refuted).** The Material-1 claim "muster
+  live-sets GlassDock.containerName" is FALSE at HEAD: muster's `container-name`
+  (`RankedVerdict.vue:201`, `WhyThisWonSheet.vue:282`) binds `<MetricStack>` (metric family,
+  W4), NOT `<GlassDock>`; the claimed `container-name="topbar"` GlassDock does not exist
+  (grep = 0). GlassDock.containerName = 0 setters → the cut STANDS; no W4 relay owed.
+- **Constellation `freeze` — KEPT.** atlas `Constellation.host.vue:487` live-sets `:freeze`
+  (deterministic capture frame, ^6.0.0), current-contract. `speed`/`parallax` cut.
+- **AnimatedDigit `digitCount` — KEPT.** speedtest `ResultStack.vue:71,149` live-set
+  `:digit-count` on `<AnimatedDigit>` (per-metric reel slot sizing, ^4.0.1). The "null-DELTA"
+  claim is dropped (the delta was masked by glass-ui's own story setting no digit-count).
+  `mode`/`damping` cut. (muster `RankedVerdict.vue:207` `:digit-count` binds `<MetricRow>`, W4 —
+  not an AnimatedDigit consumer.)
+- **FourierField 5 ambient-seam knobs — CUT (executed this seat).** `color, colorResolver, seed,
+  freeze, intensity` = 0 constellation setters (only glass-ui's demo consumes `<FourierField>`,
+  config/spectrum/getPalette only; slides dropped it). Opinionated defaults resolved inside the
+  SFC; null-DELTA on the demo path. The `FourierField.smoke.test.ts` mount arms migrated to the
+  surviving surface (bare + config/getPalette).
+- **Labeled\* `layout`/`requirement`/`placeholder`/`required` — CUT REFUTED → KEPT.**
+  `tests/components/labeled-field.contract.test.ts` proves `requirement`+native `required`
+  convergence and `layout="horizontal"` are a tested, load-bearing a11y/visual contract; the
+  "7/12 dead" premise does not reproduce. No labeled-field bytes moved (the band row above is
+  corrected).
 
 ### Greenfield target-surface handoffs (DEFINED here, DELIVERED by the owning band)
 
@@ -185,7 +249,7 @@ skeleton) is small-set saturation, not kinship (RU-19 Q5) — no merge question.
 
 | gate | posture | probe |
 | --- | --- | --- |
-| **G-DEADPROP-SCAN** | **BORN RED** (surface-hygiene) | static dead-config scan reds on the enumerated 0-setter props at HEAD (Typewriter 11, GlassDock 4, Slider `keepDockOpen`, Labeled\* the cut set, Progress 2, AnimatedDigit 3, FourierField 5, Constellation 3); GREEN after the cut. |
+| **G-DEADPROP-SCAN** | **BORN RED** (surface-hygiene) | static dead-config scan reds on the enumerated 0-setter props at HEAD, GREEN after the cut. **[COUNTS CENSUS-CORRECTED 2026-07-21 — the artifact is `../evidence/W-REDUCE-PROPDIET/DEADPROP-SCAN.txt` (RED@HEAD present → GREEN@work absent, per prop).]** Typewriter 11 (+`respectReducedMotion` folded to `humanize`), GlassDock **3** (`position` KEPT — atlas+muster live), Slider `keepDockOpen`, Progress 2, AnimatedDigit **2** (`digitCount` KEPT — speedtest live), FourierField 5, Constellation **2** (`freeze` KEPT — atlas live), Labeled\* **0** (KEEP — contract-test refutes the cut). |
 | G-PAINT-NULL-DELTA | inert-cut proof | each affected component's story renders byte-identically (paired π) across the cut. |
 | G-SURFACE-DELTA | intentional | `public-surface.spec.ts` / `.test-d.ts` reflect the removed props; clean break, no alias. |
 | G-TYPECHECK + G-VITEST | refactor-safety | typecheck + suite green; the rewritten dock-hold contract test passes context-driven. |
@@ -800,13 +864,16 @@ is a one-time RED→GREEN differential or an execution-time census/probe; nothin
 **Resolved (formerly OPEN — the redo canon closed them):**
 1. Dead barrels → COLOCATION keeps them (cite, don't double-delete).
 2. Labeled\* `invalid`/`errorLive` → KEEP, the W4-B a11y ruling landed; re-home allowed, drop
-   forbidden.
+   forbidden. **`layout`/`requirement`/`placeholder`/`required` also KEEP (cut REFUTED
+   2026-07-21 by `labeled-field.contract.test.ts` — see the W1 KEEP-DISPOSITION RECORD).**
 3. Card one-axis shape → the variant+surface two-axis floor (A5 adopted).
 4. liquid-grid → RULED delete (ADJUDICATION-1 R1), + the PROCEDURAL-SUITE truth-up + the
    COLOCATION sequencing note.
 5. useStagger → RESOLVED KEEP (census BACKED: speedtest ×2); evidence doc owed.
 6. Configurator → KEEP (escape hatch fired: value.js + fourier-analysis live).
-7. GlassDock dead knobs → die regardless; the `shape` axis is GF-DOCK W5's ruling BY NAME.
+7. GlassDock dead knobs (`autoLuminance`/`containerName`/`viewTransitionName`) → die regardless;
+   **`position` KEPT (census-corrected 2026-07-21 — atlas+muster live);** the `shape` axis is
+   GF-DOCK W5's ruling BY NAME.
 8. W4 disposition → the SHARED-KEEP recommendation is struck; DELETE recommended on the
    two-grain census, with the metric flip clause fired and disclosed (the user's call, terminal).
 

@@ -25,6 +25,20 @@ wave challenge passes (A08/J11), orchestration/synthesis (the lead). **Opus** = 
 fanout: codemods, moves, gate authoring to a written spec, fix application, test/π running.
 **Sonnet** permitted only for bulk trivial fanout, same assertion discipline.
 
+### FABLE OUTAGE amendment (owner 2026-07-21 ~13:5x: "The Fable model is unavailable,
+### you must use Opus for now")
+TEMPORARY, owner-authorized, supersedes the tier map above FOR THE DURATION OF THE OUTAGE.
+While Fable is unavailable, every seat the plan declares **Fable** — the gestalt B-visual
+auditor, all wave-lane challenge critics (A08/J11), any greenfield design-loop seat — spawns
+as **Opus** instead; its `expect` flips to `OPUS` so the prefix-assert still bites. Already-
+Opus seats (build/close/dispatch/codemod) are unchanged. A seat that COMPLETED as Fable
+pre-outage (e.g. the GESTALT-1 A-tranche auditor) keeps its `fable` declaration untouched: a
+cached replay never re-spawns the model, so it is immune to the outage — do NOT re-key it.
+**Re-Fable eligibility**: waves sealed during the outage, above all the visual/paint-taste
+ones, get a Fable re-challenge offered to the owner once Fable returns; the correctness/scope/
+law/parsimony critic lenses sit within Opus competence, the paint-taste lens is the degradation
+to revisit. This amendment lapses — revert to the tier map — the moment Fable is available again.
+
 ## Standing cadence laws (PLAN §3/§4 — cited, not restated)
 
 ≤3 concurrent seats · browser-owning seats strictly serialized (singleton) · hallmark
@@ -122,10 +136,11 @@ version — carried by G1, blocking nothing. Owner-reversible.
   `BAND-A11Y` **W2-E** (Slider `:focus-visible` ribbon register, RU-18 N5) and **W2-F** (Slider
   44px coarse-pointer floor restore, RU-33 routing 1) are gated behind the stamped Slider.vue
   edit order (`waves/BAND-A11Y.md` §Sequencing, D-17): REDUCTION W1 cut → MATERIAL W4 track
-  repoint → W2-E/W2-F. UNLANDED at HEAD `01310c9c` — `keepDockOpen` is still present
-  (`src/components/slider/Slider.vue:27` default + `slider/types.ts:25` prop), which proves
-  REDUCTION W1 has not cut; neither leg may lawfully land yet. They land at a later A11Y touch
-  after MATERIAL W4. **The rest of A11Y W2 LANDED this cut** (W2-A dock+pager tab↔panel linkage,
+  repoint → W2-E/W2-F. **[UPDATED 2026-07-21 — REDUCTION W1 HAS NOW LANDED: `keepDockOpen` is
+  cut (`Slider.vue` adopts context-driven `useDockHold`, `slider/types.ts` prop gone). The FIRST
+  precondition is met; W2-E/W2-F still wait on the MIDDLE step (MATERIAL W4 track repoint) before
+  they may land — neither leg lands yet, but the block reason is now MATERIAL W4, not W1.]** They
+  land at a later A11Y touch after MATERIAL W4. **The rest of A11Y W2 LANDED this cut** (W2-A dock+pager tab↔panel linkage,
   W2-B decorative-icon sweep-class arm, W2-C kbd de-dup, W2-D carousel conditional tab stop);
   **W2-B's Combobox SITE is DEAD — retarget-to-nothing** (D-14: the combobox family was deleted
   by REDUCTION, so the site-fix + its born-RED died with the delete; command is already correct).

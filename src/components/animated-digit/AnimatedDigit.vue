@@ -24,8 +24,6 @@ import { useAnimatedNumber } from "../../composables/motion/number/useAnimatedNu
  *    width-clamp can read this so the value cell shrinks proportionally
  *    as the rendered digits widen. When omitted the primitive computes
  *    it from the formatted string length.
- *  - `mode`: `"absolute"` (default) or `"progress"` — passes through to
- *    `useAnimatedNumber`.
  *
  * AnimatedDigit keeps its own local `placeholder: "—"`
  * default (NOT the shared `coalesceMetric` leaf). It is a distinct animated
@@ -35,8 +33,6 @@ import { useAnimatedNumber } from "../../composables/motion/number/useAnimatedNu
  * coalesce). Folding it onto the value-card core would conflate two different
  * surfaces. The keep is deliberate.
  */
-
-export type AnimatedDigitMode = "absolute" | "progress";
 
 export interface AnimatedDigitProps {
     value: number | null | undefined;
@@ -48,22 +44,14 @@ export interface AnimatedDigitProps {
      * consumer's width-clamp reads from a single source of truth.
      */
     digitCount?: number;
-    /** Tag forwarded to `useAnimatedNumber`. */
-    mode?: AnimatedDigitMode;
-    /** Damping factor; forwarded to `useAnimatedNumber`. */
-    damping?: number;
     class?: HTMLAttributes["class"];
 }
 
 const props = withDefaults(defineProps<AnimatedDigitProps>(), {
     placeholder: "—",
-    mode: "absolute",
 });
 
-const animated = useAnimatedNumber(() => props.value ?? null, {
-    mode: props.mode,
-    damping: props.damping,
-});
+const animated = useAnimatedNumber(() => props.value ?? null);
 
 const formatted = computed(() => {
     if (props.value === null || props.value === undefined) return props.placeholder;

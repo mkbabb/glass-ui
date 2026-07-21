@@ -17,6 +17,11 @@ export type DockInteraction = "auto" | "manual";
  */
 export interface DockProps {
     fitContent?: boolean;
+    /**
+     * Positioning register: `"inline"` (default) participates in normal flow;
+     * `"fixed"` pins the dock centred to the viewport bottom; `"sticky"` rides
+     * the `.dock-sticky` register.
+     */
     position?: "fixed" | "inline" | "sticky";
     /**
      * Backdrop material mode. `"live"` (default) samples and filters the painted
@@ -93,27 +98,6 @@ export interface DockProps {
      */
     overflow?: "grow" | "wrap";
     /**
-     * When set, the dock root establishes an inline-size container query
-     * subject (`container-type: inline-size; container-name: <value>`) so
-     * descendants can query the named container via `@container <value>
-     * (...)` rules. ORTHOGONAL to the `overflow` clip: opting into a
-     * container subject does not change the dock's clip shell; use
-     * `overflow="wrap"` for multi-line content.
-     *
-     * Always-expanded only: `container-type: inline-size`
-     * clamps the box to its contained intrinsic size, so on a COLLAPSIBLE
-     * dock the collapse↔expand FLIP measures collapsed→collapsed and the
-     * morph FREEZES. A collapsible dock that needs deterministic targeting
-     * uses a plain `data-testid` (no layout side-effect).
-     */
-    containerName?: string;
-    /**
-     * Opt this dock into a consumer-owned shared-element View Transition. Leave
-     * unset for ordinary route transitions so the dock remains in the root
-     * snapshot rather than becoming a separate backdrop-filter snapshot.
-     */
-    viewTransitionName?: string;
-    /**
      * Idle-collapse delay in ms (default 3600). Inert on an always-expanded dock.
      */
     collapseDelay?: number;
@@ -151,15 +135,6 @@ export interface DockProps {
      */
     layout?: "linear" | "grid";
     /**
-     * The sampled-luminance observer dynamically refines the declarative bright-
-     * backdrop tint. Default `true` because docks commonly sit over live fields.
-     * It refines the material floor; a
-     * dark-substrate consumer opts out with `:auto-luminance="false"` (or
-     * `--glass-tint-strength: 0%` on the dock). The observer is rAF-throttled ≤ 4 Hz,
-     * IntersectionObserver-gated, and parks under `prefers-reduced-motion: reduce`.
-     */
-    autoLuminance?: boolean;
-    /**
      * The KNOWN background-layer canvas the dock floats over (an aurora/blob
      * `<canvas>`) — an element, a getter, or a CSS selector. When present, the
      * observer downsamples it under the dock's box after settling (the animated-backdrop
@@ -182,7 +157,6 @@ export interface DockProps {
 
 /** The resolved shell-prop computeds the GlassDock SFC binds. */
 export interface DockShellProps {
-    containerStyle: ComputedRef<Record<string, string> | undefined>;
     collapseDelay: ComputedRef<number>;
     startCollapsed: ComputedRef<boolean>;
     interaction: ComputedRef<DockInteraction>;
@@ -201,18 +175,6 @@ export interface DockShellProps {
  * resolution point — the one-path precept).
  */
 export function useDockShellProps(props: DockProps): DockShellProps {
-    /* `containerName` applies inline-size containment. Use it on always-expanded
-       docks: containment makes a collapsible dock measure its contained intrinsic
-       size at both FLIP endpoints, leaving no collapse↔expand span. Overflow remains
-       an independent concern; multi-line consumers opt into `overflow="wrap"`. */
-    const containerStyle = computed<Record<string, string> | undefined>(() => {
-        if (!props.containerName) return undefined;
-        return {
-            "container-type": "inline-size",
-            "container-name": props.containerName,
-        };
-    });
-
     /* Collapse applies on both orientations. Every default has one resolution point. */
     /* The patient-dwell default gives a forgiving hover/interaction window before
        auto-collapse, in lockstep with useDockState. An explicit value still wins. */
@@ -262,7 +224,6 @@ export function useDockShellProps(props: DockProps): DockShellProps {
     const fitContent = computed(() => props.fitContent ?? false);
 
     return {
-        containerStyle,
         collapseDelay,
         startCollapsed,
         interaction,

@@ -22,6 +22,5 @@ export interface SliderProps extends FormFieldProps {
     /** Decorative checkpoints in the numeric domain; they never snap the value. */
     marks?: readonly number[];
     invalid?: boolean;
-    keepDockOpen?: boolean;
     motion?: Motion;
 }

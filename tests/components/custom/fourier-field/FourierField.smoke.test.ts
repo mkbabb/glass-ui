@@ -1,11 +1,12 @@
 // The FourierField mount-smoke + the `/fourier-math` consumer-#1.
 //
 // Two jobs in one spec:
-//   1. MOUNT-SMOKE — the GPU-substrate component mounts with the ambient color
-//      seam, accepts the `intensity` envelope, and does not throw (the substrate
-//      picker degrades gracefully under happy-dom's no-WebGPU/WebGL env). The
-//      `variant: "hero"|"final"` prop is RETIRED (folds into config presets). The
-//      COMPONENT is imported RELATIVE (../…/src) per the mirrored-test-tree rule.
+//   1. MOUNT-SMOKE — the GPU-substrate component mounts (bare warm-identity default
+//      AND the studio config/getPalette surface) and does not throw (the substrate
+//      picker degrades gracefully under happy-dom's no-WebGPU/WebGL env). The ambient
+//      `color`/`colorResolver`/`seed`/`freeze`/`intensity` knobs are RETIRED — 0-setter
+//      dead config folded into the config presets (REDUCTION W1). The COMPONENT is
+//      imported RELATIVE (../…/src) per the mirrored-test-tree rule.
 //   2. THE `/fourier-math` CONSUMER-#1 — the pure math leaf is imported via the
 //      PUBLISHED subpath `@mkbabb/glass-ui/fourier-math` (NOT the relative
 //      `./math`), so this spec doubles as the glass-ui-side importer that clears
@@ -25,41 +26,30 @@ import {
     positionsAt,
 } from "@mkbabb/glass-ui/fourier-math";
 // (1) the COMPONENT — relative import (the mirrored-test-tree rule).
-import { FourierField } from "@glass/components/fourier-field";
-import { defaultBlobColorResolver } from "@glass/composables/color";
+import { DEFAULT_FOURIER_CONFIG, FourierField } from "@glass/components/fourier-field";
 
 describe("FourierField mount-smoke", () => {
-    it("mounts with the required resolver seam and does not throw", () => {
-        const wrapper = mount(FourierField, {
-            props: {
-                color: "oklch(0.6 0.18 25)",
-                colorResolver: defaultBlobColorResolver,
-                seed: "smoke",
-            },
-        });
+    it("mounts bare (the warm-identity default) and does not throw", () => {
+        // No props → the warm-identity default config + palette. happy-dom has no
+        // WebGPU/WebGL, so the substrate picker degrades gracefully; the assert is
+        // that the canvas mounts without throwing.
+        const wrapper = mount(FourierField);
         expect(wrapper.find("canvas.fourier-field-canvas").exists()).toBe(true);
         wrapper.unmount();
     });
 
-    it("accepts the intensity prop (the loudness envelope) across the clamp range", () => {
-        // The intensity envelope is clamped [0,2] at the SFC (intensity=5 clamps to
-        // 2). happy-dom has no WebGPU/WebGL, so the PIXEL paint is the device gate's
-        // binding (tests-visual/fourier-field.spec.ts); the unit assert here is that
-        // every clamp-range value mounts without throwing (the prop is wired, not a
-        // no-op decl) and the GPU substrate degrades gracefully.
-        for (const intensity of [0, 0.4, 1, 2, 5]) {
-            const wrapper = mount(FourierField, {
-                props: {
-                    color: "oklch(0.6 0.18 25)",
-                    colorResolver: defaultBlobColorResolver,
-                    seed: "smoke-intensity",
-                    intensity,
-                    freeze: true,
-                },
-            });
-            expect(wrapper.find("canvas.fourier-field-canvas").exists()).toBe(true);
-            wrapper.unmount();
-        }
+    it("mounts the studio surface (config + getPalette) and does not throw", () => {
+        // The surviving public surface after REDUCTION W1: the studio drives the
+        // full config model + themes the curve via getPalette. happy-dom degrades the
+        // GPU substrate; the assert is a clean mount.
+        const wrapper = mount(FourierField, {
+            props: {
+                config: DEFAULT_FOURIER_CONFIG,
+                getPalette: () => [...DEFAULT_FOURIER_CONFIG.palette],
+            },
+        });
+        expect(wrapper.find("canvas.fourier-field-canvas").exists()).toBe(true);
+        wrapper.unmount();
     });
 });
 

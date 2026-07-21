@@ -323,17 +323,6 @@ export interface ConstellationProps {
     count?: number;
     /** Link distance in px (the falloff reach). Default 132. */
     link?: number;
-    /** Drift speed. Default 0.16. */
-    speed?: number;
-    /**
-     * Pointer-parallax depth. Each node carries a seeded
-     * depth `z ∈ [0,1]`; the pointer offsets node screen positions by `parallax · z ·
-     * (pointer − center)` so the flat lattice reads as having depth (the Awwwards "living
-     * network" register). Additive default-on at a SUB-PERCEPTUAL 0.08 (a hair of depth, not
-     * a behavior break); 0 = the flat lattice. It perturbs only the painted node position,
-     * never field geometry. Frozen under reduced-motion, `freeze`.
-     */
-    parallax?: number;
     /**
      * Per-instance outer-envelope recession (the Aurora
      * `opacityCeiling`, fourier `intensity` sibling — ONE recession vocabulary

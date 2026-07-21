@@ -10,11 +10,11 @@
 // The fission split facility is DEFINITION-ABSENT (decided-terminal;
 // clean break, no alias — demo-only spectacle + the prime Safari suspect).
 import { computed, ref, useId, useTemplateRef, watch } from "vue";
-// The sampled-luminance observer is wired ON by
-// DEFAULT for the dock (the surface the user reported unreadable over light, and the
+// The sampled-luminance observer is wired ON for every
+// `backdropMode: "live"` dock (the surface the user reported unreadable over light, and the
 // one most often over a live/bright backdrop). It REFINES the declarative bucket +
 // the Arm-1 self-engage (both stay the floor); a dark-substrate consumer opts out via
-// `--glass-tint-strength: 0%` on the dock or `:auto-luminance="false"`. Imported
+// `--glass-tint-strength: 0%` on the dock or `backdropMode: "static"`. Imported
 // directly (NOT via the glass barrel) — the composable is demo-private (path B): the
 // dock is the binary consumer #1, the public barrel seat awaits a 2nd binary consumer
 // (docs/consumer-evidence/use-glass-backdrop-luminance.md names the booked trigger).
@@ -46,17 +46,7 @@ defineOptions({ inheritAttrs: false });
    useDockShellProps): no `variant` discriminant, "vertical" is `orientation="vertical"`
    alone, and collapse↔expand applies on BOTH orientations (single opt-out
    `alwaysExpanded`). Defaults resolve at each read site via `?? default`. */
-/* `autoLuminance` MUST default TRUE
-   via `withDefaults`, NOT via a bare optional `boolean` type. Vue's boolean-prop
-   CASTING resolves an ABSENT `boolean`-typed prop (no default) to `false`, NOT
-   `undefined` — so a `props.autoLuminance !== false` guard would read `false !== false`
-   and NEVER wire the sampled-luminance observer on an unpassed dock (the whole dock
-   adaptive-luminance band would be dead library-wide). The explicit `autoLuminance: true` default makes an unpassed dock
-   default-ON (the documented intent) while `:auto-luminance="false"` still opts
-   out — the ONE place the boolean default resolves (the other shell defaults stay the
-   `?? default` read-site pattern in useDockShellProps). */
 const props = withDefaults(defineProps<DockProps>(), {
-    autoLuminance: true,
     backdropMode: "live",
 });
 
@@ -65,11 +55,8 @@ const props = withDefaults(defineProps<DockProps>(), {
    scroll-overflow class (`scrollClass` is
    `dock-scroll-x` on EVERY horizontal dock and `null` on vertical, whose
    block-axis scroll folds into the unconditional cap-derived shell.css rule; the
-   `overflow="scroll"` opt-in is retired), `alwaysExpanded`/`fitContent`, and the
-   container-query `containerStyle`. (See useDockShellProps for the full
-   `containerName` always-expanded-only rationale) */
+   `overflow="scroll"` opt-in is retired), and `alwaysExpanded`/`fitContent`. */
 const {
-    containerStyle,
     collapseDelay,
     startCollapsed,
     interaction,
@@ -99,9 +86,10 @@ useDockOverflowFit(dockEl);
    the dock by default. It writes `--glass-backdrop-luma` + derives the
    `--glass-backdrop: light|dark` bucket on the dock root, DYNAMICALLY tracking the
    painted backdrop (a live aurora bleed) the static bucket is too coarse for. The
-   Arm-1 self-engage + the declarative bucket stay the FLOOR — this REFINES. Opt out
-   with `:auto-luminance="false"`. */
-if (props.backdropMode === "live" && props.autoLuminance !== false) {
+   Arm-1 self-engage + the declarative bucket stay the FLOOR — this REFINES.
+   Wired ON for every `backdropMode: "live"` dock; a `"static"` dock uses the
+   solid plate with no observer. */
+if (props.backdropMode === "live") {
     // Hand the field canvas as a REACTIVE GETTER, not
     // a by-value snapshot. `props.backgroundCanvas` is the DockStage aurora canvas,
     // which resolves POST-MOUNT (the scoped-slot `canvasRef` is null during this
@@ -211,17 +199,6 @@ useDockExpandedSize({
     expanded: visualExpanded,
 });
 
-/* Collapse and layer motion stay on the Dock spring. A consumer may opt a
-   dock into its own shared-element route morph with a stable custom-ident; ordinary
-   route transitions leave the dock in the root snapshot. Extracting every glass dock
-   into an independent backdrop-filter snapshot overloaded page-wide transitions and
-   produced transient unpainted frames on Dock-heavy routes. */
-const rootVtStyle = computed<Record<string, string> | undefined>(() =>
-    props.viewTransitionName
-        ? { "view-transition-name": props.viewTransitionName }
-        : undefined,
-);
-
 /* The CLICK-INTEGRITY guard. Scopes the collapsed-tap / hover-
    approach pass-through to the TAPPED ELEMENT'S IDENTITY (captured at pointerdown)
    so a mid-morph layer swap can never activate a DIFFERENT control under the
@@ -303,8 +280,6 @@ defineExpose({
         :data-interaction="interaction === 'manual' ? 'manual' : undefined"
         :data-held="isHeld || undefined"
         :data-search="search || undefined"
-        :data-container-name="containerName || undefined"
-        :style="[containerStyle, rootVtStyle]"
         @mouseenter="onMouseEnter"
         @mouseleave="onMouseLeave($event)"
         @focusin="onFocusIn"

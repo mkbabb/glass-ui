@@ -44,18 +44,13 @@ the existing Reka-backed menu, select, or popover families.
 | `startCollapsed` | boolean | `true` |
 | `collapseDelay` | milliseconds | `2000` |
 | `fitContent` | boolean | `false` |
-| `autoLuminance` | boolean | `true` |
 | `backgroundCanvas` | canvas, getter, selector, or `null` | `null` |
-| `containerName` | string | unset |
-| `viewTransitionName` | CSS custom-ident | unset |
 | `search` | boolean | `false` |
 
 `layout="grid"` is always expanded. `overflow="wrap"` applies to horizontal docks;
 capped horizontal and vertical runs otherwise use native scrolling only when measured
 content exceeds the relevant size cap. `backdropMode="static"` avoids backdrop sampling
-and filtering. Set `viewTransitionName` only when the consumer owns a shared-element
-route morph; an ordinary route transition should leave it unset so the dock remains in
-the root snapshot.
+and filtering (a `"live"` dock samples the painted backdrop by default).
 
 ## Slots
 

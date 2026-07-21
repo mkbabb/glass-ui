@@ -9,14 +9,6 @@ export type ProgressOrientation = Orientation;
 export interface ProgressProps extends PrimitiveProps {
     modelValue?: number | null;
     max?: number;
-    getValueLabel?: (
-        value: number | null | undefined,
-        max: number,
-    ) => string | undefined;
-    getValueText?: (
-        value: number | null | undefined,
-        max: number,
-    ) => string | undefined;
     class?: HTMLAttributes["class"];
     variant?: ProgressVariant;
     status?: ProgressStatus;

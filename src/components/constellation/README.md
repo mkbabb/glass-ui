@@ -99,7 +99,6 @@ import { Constellation } from "@mkbabb/glass-ui/constellation";
             seed="hero-cover"
             :count="56"
             :link="132"
-            :speed="0.16"
         />
         <h1 class="text-display">…</h1>
     </div>

@@ -22,15 +22,13 @@ const phrases: TypewriterWord[] = [
 
 // Controls
 const baseSpeed = ref<number[]>([120]);
-const errorRate = ref<number[]>([1.5]);
+const humanize = ref(true);
 const cursorVisible = ref(true);
 const cursorBlink = ref(true);
 const remountKey = ref(0);
 
 // Read first element of the array-based slider model.
 const speedMs = computed(() => baseSpeed.value[0] ?? 120);
-const errorPct = computed(() => errorRate.value[0] ?? 1.5);
-const errorProb = computed(() => errorPct.value / 100);
 
 function restart(): void {
     remountKey.value += 1;
@@ -73,7 +71,7 @@ function restart(): void {
                         :key="remountKey"
                         :words="phrases"
                         :base-speed="speedMs"
-                        :error-rate="errorProb"
+                        :humanize="humanize"
                         :cursor-visible="cursorVisible"
                         :cursor-blink="cursorBlink"
                         :pause-after-type="2200"
@@ -102,7 +100,7 @@ function restart(): void {
                     :key="`cli-${remountKey}`"
                     text="npm install @mkbabb/glass-ui"
                     :base-speed="speedMs"
-                    :error-rate="errorProb"
+                    :humanize="humanize"
                     :cursor-visible="cursorVisible"
                     :cursor-blink="cursorBlink"
                     :loop="false"
@@ -135,20 +133,9 @@ function restart(): void {
                 />
             </div>
 
-            <div class="flex flex-col gap-3">
-                <div class="flex items-center justify-between">
-                    <Label for="tw-errors">Error rate</Label>
-                    <span class="fira-code text-small text-muted-foreground">
-                        {{ errorPct.toFixed(1) }}%
-                    </span>
-                </div>
-                <Slider
-                    id="tw-errors"
-                    v-model="errorRate"
-                    :min="0"
-                    :max="8"
-                    :step="0.5"
-                />
+            <div class="flex items-center justify-between gap-3">
+                <Label for="tw-humanize">Humanize</Label>
+                <Switch id="tw-humanize" v-model="humanize" />
             </div>
 
             <div class="flex items-center justify-between gap-3">

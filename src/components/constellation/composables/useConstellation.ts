@@ -92,8 +92,10 @@ export function useConstellation(
     const routePointer = options.routePointer;
     const count = Math.min(props.count ?? 64, MAX_NODES);
     const link = props.link ?? 132;
-    const speed = props.speed ?? 0.16;
-    const parallax = props.parallax ?? DEFAULT_PARALLAX;
+    // `speed`/`parallax` retired as public props (zero setters) → the opinionated
+    // defaults resolve here (parallax off; the flat-lattice drift at 0.16).
+    const speed = 0.16;
+    const parallax = DEFAULT_PARALLAX;
     const seed = props.seed;
     const warpOnClick = props.warpOnClick ?? false;
     const wander = props.wander ?? false;

@@ -1,7 +1,6 @@
 import { mount } from "@vue/test-utils";
-import { renderToString } from "@vue/server-renderer";
 import { describe, expect, it } from "vitest";
-import { createSSRApp, defineComponent, h } from "vue";
+import { defineComponent, h } from "vue";
 
 import GlassDock from "@glass/components/dock/GlassDock.vue";
 import { useDockContext } from "@glass/components/dock/composables/dockContext";
@@ -57,26 +56,5 @@ describe("GlassDock transition identity", () => {
         expect(wrapper.get(".glass-dock").attributes("style") ?? "").not.toContain(
             "view-transition-name",
         );
-    });
-
-    it("uses the consumer's explicit shared-element name", async () => {
-        const html = await renderToString(
-            createSSRApp({
-                render: () =>
-                    h("div", [
-                        h(GlassDock, {
-                            viewTransitionName: "route-dock-primary",
-                            backdropMode: "static",
-                        }),
-                        h(GlassDock, {
-                            viewTransitionName: "route-dock-secondary",
-                            backdropMode: "static",
-                        }),
-                    ]),
-            }),
-        );
-
-        expect(html).toContain("view-transition-name:route-dock-primary");
-        expect(html).toContain("view-transition-name:route-dock-secondary");
     });
 });

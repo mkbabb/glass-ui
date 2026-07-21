@@ -1,10 +1,12 @@
 /**
  * The born-RED dock-hold MOUNT gate.
  *
- * The keepDockOpen contract: a `<Slider>` dragged inside a `<GlassDock>` must
- * acquire a keep-open token from the slider's REAL host element so the dock does
- * not idle-collapse mid-gesture, and the dock's `held` edge must light
- * `data-held` on BOTH the dock root and the slider root.
+ * The context-driven dock-hold contract: a `<Slider>` dragged inside a
+ * `<GlassDock>` must acquire a keep-open token from the slider's REAL host
+ * element so the dock does not idle-collapse mid-gesture, and the dock's `held`
+ * edge must light `data-held` on BOTH the dock root and the slider root. The hold
+ * is unconditional inside a dock and a no-op outside — there is no consumer prop
+ * (`keepDockOpen` was retired; the hold reads `useOptionalDockContext()` directly).
  *
  * The failure mode this guards: `Slider.vue` binds `@pointerdown` on reka's `<SliderRoot>`,
  * a forwarding component whose `$attrs` listeners are DROPPED across the
@@ -56,7 +58,7 @@ function findSliderHost(root: Element): HTMLElement | null {
     return root.querySelector('[data-slot="slider"]');
 }
 
-describe("dock keepDockOpen host-native hold contract", () => {
+describe("dock context-driven host-native hold contract", () => {
     afterEach(() => {
         document.body.innerHTML = "";
     });

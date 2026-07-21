@@ -15,7 +15,6 @@ function mountPressCollapseDock() {
                     {
                         ref: dock,
                         startCollapsed: false,
-                        autoLuminance: false,
                     },
                     {
                         default: () => [
