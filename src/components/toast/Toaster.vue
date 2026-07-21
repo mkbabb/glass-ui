@@ -5,7 +5,7 @@ import Toast from "./Toast.vue";
 import ToastClose from "./ToastClose.vue";
 import ToastTitle from "./ToastTitle.vue";
 import ToastDescription from "./ToastDescription.vue";
-import { useToastQueue } from "./use-toast";
+import { useToastQueue, removeToast } from "./use-toast";
 import { cn } from "../_shared/class-names";
 
 export type ToasterPosition =
@@ -36,6 +36,20 @@ function toastRootProps(toast: QueuedToast) {
         ...rootProps
     } = toast;
     return rootProps;
+}
+
+// Exit-complete slot release. `.glass-reveal` runs the exit as a keyframe
+// (`glass-reveal-out`, or `glass-reveal-out-reduced` under reduced/off motion) that
+// reka's `usePresence` awaits; its `animationend` bubbles to the ToastRoot (this
+// native listener falls through to it). When it fires for the reveal-out keyframe on
+// the root itself — never a descendant animation, hence the `target === currentTarget`
+// guard — the dismissed toast has finished receding, so we drop it from the queue and
+// free its `TOAST_LIMIT` slot. This is the whole removal path: no deferred timer.
+const REVEAL_OUT_KEYFRAMES = new Set(["glass-reveal-out", "glass-reveal-out-reduced"]);
+function onToastExitComplete(id: string, event: AnimationEvent) {
+    if (event.target !== event.currentTarget) return;
+    if (!REVEAL_OUT_KEYFRAMES.has(event.animationName)) return;
+    removeToast(id);
 }
 
 // Invariant viewport chrome — identical across every anchor. The anchor
@@ -76,7 +90,12 @@ const viewportClass = computed(() => {
 
 <template>
     <ToastProvider>
-        <Toast v-for="toast in toasts" :key="toast.id" v-bind="toastRootProps(toast)">
+        <Toast
+            v-for="toast in toasts"
+            :key="toast.id"
+            v-bind="toastRootProps(toast)"
+            @animationend="onToastExitComplete(toast.id, $event)"
+        >
             <div class="grid gap-1">
                 <ToastTitle v-if="toast.title">
                     {{ toast.title }}

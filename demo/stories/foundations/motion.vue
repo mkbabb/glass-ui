@@ -40,7 +40,7 @@ interface TransitionDemo {
 // the `fade-slide`, `pop`, `dialog-scale`, `dropdown`
 // Vue-<Transition> recipes are RETIRED (census-dead, 0 src/ consumers); their overlay/
 // menu entrances now ride the ONE `.glass-reveal` recipe bound by `data-reveal`
-// (enter-overlay, enter-menu, enter-tooltip, enter-transient — see the live overlays
+// (enter-overlay, enter-menu, enter-tooltip — see the live overlays
 // in Display ▸ Overlays). The showcase keeps the still-live generic swaps.
 const transitionDemos: TransitionDemo[] = [
     {

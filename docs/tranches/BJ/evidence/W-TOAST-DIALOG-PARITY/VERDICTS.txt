@@ -1,0 +1,67 @@
+BJ.W-TOAST-DIALOG-PARITY — VERDICTS
+band: BAND-FEEDBACK-MOTION W1 (F20 + J4 + RU-21 N9)
+model: claude-opus-4-8
+date: 2026-07-21
+posture: born-RED proven at HEAD, captured verbatim, then flipped with the paired DELTA. Left uncommitted.
+
+OPEN-FM-3a RULING (design call, decided against live paint — not user-gated)
+  UNIFY the toast onto the ONE dialog overlay register; the transient scale-from-0.5 dies.
+  Grounds: the shipped transient bloom (scale-from 0.5, blur 8px) reads as a deep half-size
+  pop divergent from the dialog's refined near-1 overlay settle (the user's "toast awful vs
+  refined dialog" verdict). The wave charter, the seat prompt, and the F20 dossier all name
+  the overlay contract as the target. KISS: a re-point to the existing dialog register, not a
+  new system.
+
+GATE (a) — live-π REGISTER-PARITY guard [RED@HEAD -> GREEN]
+  HEAD (born-RED):  toast data-reveal=transient — enter-scale 0.5, blur 8px, slide 0,
+                    clock 0.46s, exit 0.10s; live min x-scale 0.53 (deep bloom).
+  dialog baseline:  data-reveal=overlay — enter-scale 0.94, blur 6px, slide 0.5rem,
+                    clock 0.44s, exit 0.15s; live min x-scale 0.9964.
+  AFTER (parity):   toast data-reveal=overlay — enter-scale 0.94, blur 6px, slide 0.5rem,
+                    clock 0.44s, exit 0.15s; live min x-scale 0.9964  == the dialog, exact.
+                    --spring-transient token resolves empty (register retired).
+  Evidence: paired-pi.json; before-toast-settled.png / baseline-dialog-overlay.png /
+            after-toast-settled.png. Computed-style + rAF trajectory only; no getContext.
+
+GATE (b) — queue-slot release at exit-complete [RED@HEAD -> GREEN]
+  HEAD (born-RED):  use-toast.ts carried the shadcn TOAST_REMOVE_DELAY = 1000000ms (~16.7min);
+                    a dismissed toast held its TOAST_LIMIT slot for the whole delay.
+  AFTER:            TOAST_REMOVE_DELAY + the setTimeout map + addToRemoveQueue deleted.
+                    DISMISS_TOAST only flips open:false; Toaster.onToastExitComplete removes
+                    the entry on the glass-reveal-out animationend (removeToast(id)).
+  Unit:  tests/components/toast.queue.test.ts (2 tests) — RED at HEAD (slot held; dismissed
+         toasts leak across tests), GREEN after the fix.
+  Live:  fired 3 toasts -> dismissed 1 -> count 3->2 after the 150ms exit clock (slot freed).
+
+GATE (c) — paired before/after capture (3 frame samples toast vs dialog)
+  Filed in this dir: paired-pi.json first_frames arrays (toast HEAD / dialog / toast AFTER)
+  + the three PNGs. The toast AFTER trajectory tracks the dialog trajectory frame-for-frame.
+
+GATE (d) — overfit rule (toast-only helper needs 2 sites or dies)
+  Toast was the SOLE consumer of the transient register + spring. Retired in full:
+    - .glass-reveal[data-reveal=transient] arm            (src/styles/glass/reveal.css)
+    - --enter-transient-* + --exit-transient-duration     (src/styles/tokens/motion-registers.css)
+    - --spring-transient / -settle / -duration            (src/styles/tokens/scheme-spring.css, via regen)
+    - 'transient' SPRING_PRESETS row + SpringPresetName    (src/composables/motion/spring/springPresets.ts)
+  Regen: node scripts/regen-spring-tokens.mjs — idempotent (md5 stable); springTokenMirror
+  sync gate GREEN (data-driven on PRESETS.length, no hardcoded count).
+
+NON-VACUITY: gate (b) watched RED at HEAD via a git-stash of the source (test present, fix
+absent) — both queue tests FAILED on their assertions before the fix. Gate (a) RED shown by
+the HEAD transient capture (scale 0.5) vs the dialog (0.94), then GREEN by the AFTER capture.
+
+REGRESSION: tests/composables/motion + tests/components/toast + tests/components/ui/dialog
+  = 84 passed. Toast contract test still GREEN. vue-tsc --noEmit clean.
+
+FILES TOUCHED (uncommitted):
+  src/components/toast/Toast.vue            data-reveal transient->overlay + comment
+  src/components/toast/use-toast.ts         drop TOAST_REMOVE_DELAY/timer; add removeToast
+  src/components/toast/Toaster.vue          @animationend -> onToastExitComplete -> removeToast
+  src/styles/glass/reveal.css               delete transient arm + comment true-ups
+  src/styles/tokens/motion-registers.css    delete transient register tokens + table row
+  src/styles/tokens/scheme-spring.css       regen (transient curve/settle/duration gone)
+  src/composables/motion/spring/springPresets.ts  drop 'transient' preset row + union member
+  src/styles/transitions.css                toast contract comment -> overlay register
+  demo/stories/foundations/motion.vue       register-list comment true-up
+  tests/setup.ts                            CSS.escape shim (reka presence animationend path)
+  tests/components/toast.queue.test.ts      NEW — gate (b) born-RED regression

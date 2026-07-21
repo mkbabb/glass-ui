@@ -3,7 +3,6 @@ import type { Component, ComputedRef, VNode } from "vue";
 import type { Surface, Tone } from "../_shared/axes";
 
 const TOAST_LIMIT = 5;
-const TOAST_REMOVE_DELAY = 1000000;
 
 // the toast's semantic status reads the ONE shared `Tone`
 // axis (_shared/axes.ts's TONES tuple: neutral/success/warning/info/destructive),
@@ -41,24 +40,13 @@ interface QueuedToast extends ToastOptions {
     "onUpdate:open"?: (open: boolean) => void;
 }
 
-const toastTimeouts = new Map<string, ReturnType<typeof setTimeout>>();
-
-function addToRemoveQueue(toastId: string) {
-    if (toastTimeouts.has(toastId)) {
-        return;
-    }
-
-    const timeout = setTimeout(() => {
-        toastTimeouts.delete(toastId);
-        dispatch({
-            type: "REMOVE_TOAST",
-            toastId,
-        });
-    }, TOAST_REMOVE_DELAY);
-
-    toastTimeouts.set(toastId, timeout);
-}
-
+// Removal is EXIT-COMPLETE-driven, not timer-deferred. `DISMISS_TOAST` flips
+// `open: false` (arming the `.glass-reveal-out` exit); when that exit animation
+// finishes, `Toaster.vue`'s `animationend` handler calls `removeToast(id)` — the
+// entry leaves the queue at the exact frame it stops painting, so a dismissed toast
+// never squats a `TOAST_LIMIT` slot. This retires the shadcn `TOAST_REMOVE_DELAY`
+// 1000000ms (~16.7min) deferral (a greenfield-no-meta relic that held the slot for
+// the whole delay) and its `setTimeout` bookkeeping outright — no timer, no map.
 const toasts = ref<QueuedToast[]>([]);
 const toastQueue = computed<readonly QueuedToast[]>(() => toasts.value);
 
@@ -83,14 +71,9 @@ function dispatch(action: ToastAction) {
         case "DISMISS_TOAST": {
             const { toastId } = action;
 
-            if (toastId) {
-                addToRemoveQueue(toastId);
-            } else {
-                toasts.value.forEach((toast) => {
-                    addToRemoveQueue(toast.id);
-                });
-            }
-
+            // Flip the target(s) to `open: false` — that arms the reka-awaited
+            // `.glass-reveal-out` exit. The queue slot is released later, on the
+            // exit-complete `animationend` (via `removeToast`), not on a timer.
             toasts.value = toasts.value.map((t) =>
                 t.id === toastId || toastId === undefined
                     ? {
@@ -176,4 +159,14 @@ function useToastQueue(): ComputedRef<readonly QueuedToast[]> {
     return toastQueue;
 }
 
-export { toast, useToast, useToastQueue };
+/**
+ * Release a dismissed toast's queue slot. Called by `Toaster.vue` when the
+ * `.glass-reveal-out` exit animation completes (the `animationend` presence
+ * resolution) — the frame the surface stops painting is the frame the slot frees.
+ * Renderer-only; intentionally absent from the public barrel.
+ */
+function removeToast(toastId: string): void {
+    dispatch({ type: "REMOVE_TOAST", toastId });
+}
+
+export { toast, useToast, useToastQueue, removeToast };

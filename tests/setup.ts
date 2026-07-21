@@ -72,6 +72,11 @@ Object.defineProperty(globalThis, "CSS", {
     writable: true,
     value: {
         supports: vi.fn(() => true),
+        // reka-ui's `usePresence.handleAnimationEnd` calls `CSS.escape(animationName)`
+        // when an `animationend` bubbles to a presence node (the reveal-out exit path
+        // the Toast queue test drives); happy-dom ships no `CSS.escape`. Our animation
+        // names are plain identifiers, so a passthrough is faithful and never throws.
+        escape: (value: string) => String(value),
     },
 });
 

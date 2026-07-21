@@ -2,7 +2,7 @@
    Named motion registers over the single `.glass-reveal` recipe. This table maps
    a semantic name to `{spring, clock, scale, blur, slide}`. The one `.glass-reveal` recipe
    (glass/reveal.css) binds a register by name via `data-reveal="overlay|menu|
-   tooltip|transient"` — swapping ONLY these knob vars, never the recipe body.
+   tooltip"` — swapping ONLY these knob vars, never the recipe body.
 
    Imported by tokens.css immediately after scheme-spring.css, it reads the
    parity-fixed `--spring-*` / `--spring-*-duration` clocks. This file re-times
@@ -20,16 +20,17 @@
    | enter-overlay   | snappy          | 0.44s          | 0.94       | 6px   | 0.5rem|  Dialog/Sheet/Popover — the .glass-reveal DEFAULT. Blur is the dominant overlay channel; t90 ~212ms/+3.2% (iOS 130-370ms materialize band).
    | enter-menu      | smooth          | 0.35s (tight)  | 0.96       | 2px   | 0.5rem|  dropdown/select/combobox/command — a refined, shared bounce; t90 ~239ms/+0.2%.
    | enter-tooltip   | ease-out-expo   | 0.2s (fastest) | 0.97       | 0     | 0     |  tooltip/hover-card — NO overshoot, fastest decelerating arrival.
-   | enter-transient | transient       | 0.46s          | 0.5        | 8px   | 0     |  Toast — the gentle-class CENTER-SEED materialize bloom. New spring row (0.62, 0.90); t90 ~0.34s.
 
-   ── The exit register (tighten 200ms → 150/100ms) ────────────────────────────
+   Toast rides `enter-overlay` too (F20 parity) — the same spring/scale/exit contract
+   as the Dialog; there is no separate transient register.
+
+   ── The exit register (tighten 200ms → 150ms) ────────────────────────────────
    Named exit clocks on the no-overshoot `--ease-out`; a closing surface must
    never overshoot past gone. Minted as their own tokens, not a retune of the
    shared `--duration-fast` (0.2s) — re-timing that would re-time everything, and
    this closes the reveal.css comment-vs-value drift (the comment claimed ≤150ms
    while `--duration-fast` = 0.2s). The `.glass-reveal` exit reads `--exit-overlay-
-   duration` by default; `[data-reveal="transient"]` swaps in the tighter transient
-   exit.
+   duration`.
 
    ── press / morph / cascade — NAMES over shipped recipes (zero paint change) ──
    These names point at their existing source tokens; no unused alias is minted:
@@ -46,10 +47,9 @@
    (0.12s), the mid-settle on `--spring-smooth` (0.35s). Minting a 7th INTERACTIVE
    preset for one value.js consumer fails the two-consumer bar;
    "bless snappy" is rejected because 0.44s reads sluggish for a press-adjacent
-   interaction. The `transient` seventh row is Toast's distinct center-seed bloom;
-   Toast is its sole current consumer. */
+   interaction. */
 :root {
-    /* ── enter-overlay — the .glass-reveal DEFAULT (Dialog / Sheet / Popover) ── */
+    /* ── enter-overlay — the .glass-reveal DEFAULT (Dialog / Sheet / Popover / Toast) ── */
     --enter-overlay-spring: var(--spring-snappy);
     --enter-overlay-clock: var(--spring-snappy-duration);
     --enter-overlay-scale: 0.94;
@@ -71,19 +71,8 @@
     --enter-tooltip-blur: 0px;
     --enter-tooltip-slide: 0px;
 
-    /* ── enter-transient — Toast center-seed bloom ── */
-    --enter-transient-spring: var(--spring-transient);
-    --enter-transient-clock: var(--spring-transient-duration);
-    /* The deep scale-from — a materialize bloom from ~half-size (not the near-no-op
-       overlay 0.94), so the surface reads as coalescing from its own seed. */
-    --enter-transient-scale: 0.5;
-    --enter-transient-blur: 8px;
-    /* Center-seed — no directional edge slide (it blooms from its own centre). */
-    --enter-transient-slide: 0px;
-
-    /* ── Named exit clocks: tighten the reveal exit 200ms → 150/100ms ── */
+    /* ── Named exit clock: tighten the reveal exit 200ms → 150ms ── */
     --exit-overlay-duration: 0.15s;
-    --exit-transient-duration: 0.1s;
     /* The exit curve — no-overshoot ease-out; never overshoot past gone. */
     --exit-curve: var(--ease-out);
 }

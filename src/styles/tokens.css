@@ -30,8 +30,8 @@
    @import-ed IMMEDIATELY AFTER scheme-motion.css (adjacent same-selector :root
    blocks at the same cascade slot — the spring/easing tokens resolve in order). */
 @import "./tokens/scheme-spring.css";
-/* The named motion registers (enter-overlay/menu/tooltip/
-   transient + the named exit clocks) over the ONE `.glass-reveal` recipe. @import-ed
+/* The named motion registers (enter-overlay/menu/tooltip
+   + the named exit clocks) over the ONE `.glass-reveal` recipe. @import-ed
    IMMEDIATELY AFTER scheme-spring.css because it READS the parity-fixed `--spring-*` /
    `--spring-*-duration` clocks (READ-ONLY — the fence); adjacent same-
    selector :root block at the same cascade slot (order-invariant custom properties). */

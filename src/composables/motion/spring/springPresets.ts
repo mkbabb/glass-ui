@@ -18,7 +18,6 @@ export type SpringPresetName =
     | "gentle"
     | "dock"
     | "press"
-    | "transient"
     | "panel"
     | "orb-drop";
 
@@ -50,8 +49,6 @@ export interface SpringPresetRow {
  *   DOCK    → dock    — the dock expand/collapse morph AND everything inside it.
  *   PRESS   → press   — the iOS interactive tap-press: a sub-200ms answer, a tiny alive
  *                       rebound.
- *   TRANSIENT → transient — the center-seed materialize bloom (Toast):
- *                       a deep scale-from with a near-critically-damped settle (no flick).
  *   PANEL   → panel   — the fired presentation deploy: both axes ONE spring, an
  *                       intrinsic overshoot that is NOT velocity-bought.
  *   ORB-DROP → orb-drop — the invocation drop: a dead critically-damped landing whose
@@ -121,13 +118,6 @@ export const SPRING_PRESETS: readonly SpringPresetRow[] = [
         dampingFraction: 0.8,
         comment:
             "A responsive press with a subtle rebound and continuous interruption.",
-    },
-    {
-        name: "transient",
-        response: 0.62,
-        dampingFraction: 0.9,
-        comment:
-            "A centered materialize bloom for brief surfaces such as Toast.",
     },
     {
         // response 0.40 is the only value reproducing the measured (ζ=0.71, f_d≈1.76Hz)

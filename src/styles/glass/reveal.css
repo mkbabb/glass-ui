@@ -40,17 +40,17 @@
 @layer components {
     .glass-reveal {
         /* ── Register-binding knobs ───────────────────────────────────────────────
-           The base binds the `enter-overlay` register (Dialog/Sheet/Popover — the
-           DEFAULT); a `data-reveal="menu|tooltip|transient"` variant below swaps ONLY
+           The base binds the `enter-overlay` register (Dialog/Sheet/Popover/Toast — the
+           DEFAULT); a `data-reveal="menu|tooltip"` variant below swaps ONLY
            these knobs, never the recipe BODY. The knobs source tokens/motion-registers.css
            (which reads the parity-fixed --spring-* clocks without retiming them here).
            Curve parity, not response-shortening, keeps the entrance in band; retain
            the full settle clock. */
         --reveal-spring: var(--enter-overlay-spring);
         --reveal-clock: var(--enter-overlay-clock);
-        /* The named exit register tightens 200ms → 150ms for overlays and
-           100ms for transients on the no-overshoot ease-out. It owns a token instead
-           of retuning shared --duration-fast, keeping comment and value aligned. */
+        /* The named exit register tightens 200ms → 150ms for overlays on the
+           no-overshoot ease-out. It owns a token instead of retuning shared
+           --duration-fast, keeping comment and value aligned. */
         --reveal-exit-clock: var(--exit-overlay-duration);
         --reveal-exit-curve: var(--exit-curve);
         /* The materialize channels — the register bundle's scale-from / decongest-blur /
@@ -85,11 +85,12 @@
     }
 
     /* ── Register-binding axis ────────────────────────────────────────────────────
-       `data-reveal="overlay|menu|tooltip|transient"` swaps ONLY the register knobs
+       `data-reveal="overlay|menu|tooltip"` swaps ONLY the register knobs
        (spring/clock/scale/blur/slide/exit-clock) — the recipe BODY (@starting-style
        from-state, data-state legs, coupled channels, PRM carve) stays ONE. `data-reveal`
        is distinct from the full/reduced/off `data-motion` axis. Default (no attr) is
-       enter-overlay. */
+       enter-overlay; Toast rides that overlay register too (F20 parity — the same
+       spring/transition contract as the Dialog, no bespoke transient fork). */
     .glass-reveal[data-reveal="overlay"] {
         /* Explicit restatement of the base default (legibility — a no-op re-point). */
         --reveal-spring: var(--enter-overlay-spring);
@@ -116,15 +117,6 @@
         --glass-reveal-enter-scale: var(--enter-tooltip-scale);
         --glass-reveal-blur: var(--enter-tooltip-blur);
         --glass-reveal-slide: var(--enter-tooltip-slide);
-    }
-    /* enter-transient — Toast center-seed bloom. */
-    .glass-reveal[data-reveal="transient"] {
-        --reveal-spring: var(--enter-transient-spring);
-        --reveal-clock: var(--enter-transient-clock);
-        --reveal-exit-clock: var(--exit-transient-duration);
-        --glass-reveal-enter-scale: var(--enter-transient-scale);
-        --glass-reveal-blur: var(--enter-transient-blur);
-        --glass-reveal-slide: var(--enter-transient-slide);
     }
 
     /* OPEN — the settled, bloomed-in state (the spring-clocked scale/fade/blur-settle
@@ -191,9 +183,9 @@
            dispatches ANIMATION_OUT and the exit paints its full ≥4-frame recede. The
            clock is the no-overshoot `--ease-out` on the fast `--duration-fast` (≤150ms).
            Scale, opacity, and filter keep the exit compositor-only. It rides the named
-           exit register (`--reveal-exit-clock` = `--exit-overlay-duration` 150ms by
-           default, `--exit-transient-duration` 100ms on `[data-reveal=transient]`) on
-           the no-overshoot `--reveal-exit-curve` (= `--ease-out`). */
+           exit register (`--reveal-exit-clock` = `--exit-overlay-duration` 150ms, the
+           menu/tooltip registers reusing it) on the no-overshoot `--reveal-exit-curve`
+           (= `--ease-out`). */
         animation: glass-reveal-out var(--reveal-exit-clock) var(--reveal-exit-curve) both;
         /* The side-popover `translate` slide-out stays a TRANSITION — a DIFFERENT
            property, so it coexists with the scale/opacity/filter animation (no cascade
@@ -261,8 +253,8 @@
        `useMotionAxis` (_shared/useMotionAxis.ts) emits `data-motion="reduced"/"off"`
        from the overlay content SFCs (Dialog + Sheet). These arms consume that signal.
        It is disjoint from the `data-reveal` register axis above (two attributes, two
-       concerns): `data-reveal` picks the enter-register BUNDLE (overlay/menu/tooltip/
-       transient); `data-motion` DEGRADES the whole reveal for a motion-sensitive
+       concerns): `data-reveal` picks the enter-register BUNDLE (overlay/menu/tooltip);
+       `data-motion` DEGRADES the whole reveal for a motion-sensitive
        consumer. OS `prefers-reduced-motion` (the @media carve below, unlayered) still
        WINS where active — PRM ≥ the prop reduction (the useMotionAxis precedence).
 

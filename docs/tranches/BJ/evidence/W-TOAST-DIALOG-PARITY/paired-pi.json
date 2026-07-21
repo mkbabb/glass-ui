@@ -1,0 +1,79 @@
+{
+  "wave": "BJ.W-TOAST-DIALOG-PARITY",
+  "band": "BAND-FEEDBACK-MOTION W1 (F20 + J4 + RU-21 N9)",
+  "ruling": "OPEN-FM-3a decided against live paint: UNIFY the toast onto the ONE dialog overlay register (the transient scale-from-0.5 dies). Direction confirmed by the wave charter + prompt.",
+  "method": "live localhost:5199, computed-style only (getComputedStyle of the register knobs + rAF-sampled animated scale/opacity/filter trajectory during enter). Never getContext. Single browser seat.",
+  "gate_a_register_parity": {
+    "toast_HEAD_transient": {
+      "data-reveal": "transient",
+      "enter-scale": "0.5",
+      "enter-blur": "8px",
+      "enter-slide": "0px",
+      "reveal-clock": "calc(0.46s * 1)",
+      "reveal-exit-clock": "0.1s",
+      "min_x_scale_observed": 0.53,
+      "first_frames": [
+        {"t": 7, "scale": "0.53", "opacity": "0", "filter": "blur(8px)"},
+        {"t": 15, "scale": "0.531749", "opacity": "0.0714687", "filter": "blur(7.42825px)"},
+        {"t": 23, "scale": "0.536346", "opacity": "0.133309", "filter": "blur(6.93353px)"},
+        {"t": 32, "scale": "0.543245", "opacity": "0.187039", "filter": "blur(6.50369px)"},
+        {"t": 40, "scale": "0.552245", "opacity": "0.236559", "filter": "blur(6.10753px)"},
+        {"t": 48, "scale": "0.562808", "opacity": "0.281671", "filter": "blur(5.74663px)"}
+      ]
+    },
+    "dialog_baseline_overlay": {
+      "data-reveal": "overlay",
+      "data-slot": "dialog-content",
+      "enter-scale": "0.94",
+      "enter-blur": "6px",
+      "enter-slide": "0.5rem",
+      "reveal-clock": "calc(0.44s * 1)",
+      "reveal-exit-clock": "0.15s",
+      "min_x_scale_observed": 0.9964,
+      "first_frames": [
+        {"t": 11, "scale": "0.9964", "opacity": "0", "filter": "blur(6px)"},
+        {"t": 17, "scale": "0.996421", "opacity": "0.0739756", "filter": "blur(5.55615px)"},
+        {"t": 25, "scale": "0.996477", "opacity": "0.135993", "filter": "blur(5.18404px)"},
+        {"t": 32, "scale": "0.996551", "opacity": "0.185351", "filter": "blur(4.8879px)"},
+        {"t": 41, "scale": "0.996669", "opacity": "0.241285", "filter": "blur(4.55229px)"},
+        {"t": 50, "scale": "0.996808", "opacity": "0.291249", "filter": "blur(4.2525px)"}
+      ]
+    },
+    "toast_AFTER_overlay": {
+      "data-reveal": "overlay",
+      "enter-scale": "0.94",
+      "enter-blur": "6px",
+      "enter-slide": "0.5rem",
+      "reveal-clock": "calc(0.44s * 1)",
+      "reveal-exit-clock": "0.15s",
+      "min_x_scale_observed": 0.9964,
+      "spring_transient_token_resolves_empty": true,
+      "first_frames": [
+        {"t": 5, "scale": "0.9964", "opacity": "0", "filter": "blur(6px)"},
+        {"t": 11, "scale": "0.9964", "opacity": "0", "filter": "blur(6px)"},
+        {"t": 19, "scale": "0.996421", "opacity": "0.0731711", "filter": "blur(5.56097px)"},
+        {"t": 27, "scale": "0.996477", "opacity": "0.136708", "filter": "blur(5.17975px)"},
+        {"t": 35, "scale": "0.996554", "opacity": "0.187292", "filter": "blur(4.87625px)"},
+        {"t": 43, "scale": "0.996666", "opacity": "0.240118", "filter": "blur(4.55929px)"}
+      ]
+    },
+    "verdict": "RED at HEAD (toast rides the transient register: scale-from 0.5, blur 8px, exit 100ms — a deep half-size bloom divergent from the dialog's near-1 overlay settle). GREEN after re-home: the toast's overlay register is byte-identical to the dialog's (0.94 / 6px / 0.5rem / 0.44s / 0.15s; min x-scale 0.9964 == 0.9964). Parity is exact, not merely tokened."
+  },
+  "gate_b_queue_release": {
+    "HEAD": "DISMISS_TOAST flips open:false then addToRemoveQueue schedules REMOVE_TOAST after TOAST_REMOVE_DELAY = 1000000ms (~16.7min). A dismissed toast squats its TOAST_LIMIT (5) slot for the whole delay.",
+    "AFTER": "TOAST_REMOVE_DELAY + the setTimeout map deleted. Removal keys off exit-complete: Toaster.onToastExitComplete fires on the glass-reveal-out animationend and calls removeToast(id).",
+    "live_evidence": "fired 3 toasts (count 3) -> dismissed 1 via its close button -> after 500ms (past the 150ms exit clock) count == 2. Slot released at exit-complete.",
+    "unit_evidence": "tests/components/toast.queue.test.ts (2 tests): born-RED at HEAD (slot held, dismissed toasts even leak across tests); GREEN after the fix.",
+    "verdict": "RED at HEAD (slot held ~16.7min) -> GREEN after (released at exit-complete)."
+  },
+  "gate_d_overfit": {
+    "rule": "any toast-only motion helper that survives the wave needs 2 sites or dies",
+    "retired": [
+      ".glass-reveal[data-reveal=transient] arm (glass/reveal.css)",
+      "--enter-transient-{spring,clock,scale,blur,slide} + --exit-transient-duration (tokens/motion-registers.css)",
+      "--spring-transient / -settle / -duration (tokens/scheme-spring.css, via regen)",
+      "the 'transient' SPRING_PRESETS row + SpringPresetName member (springPresets.ts)"
+    ],
+    "verdict": "Toast was the sole consumer of the entire transient register/spring chain; all of it dies with the re-home. No toast-only motion helper survives."
+  }
+}
