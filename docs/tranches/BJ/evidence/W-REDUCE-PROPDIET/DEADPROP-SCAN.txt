@@ -26,8 +26,13 @@ census:  full-constellation fresh census (atlas/slides/speedtest/muster/keyframe
     position: atlas Dock.vue:230 + muster CommandDock.vue:120 live-set position="fixed" (current-contract, rule c).
     containerName: muster container-name -> <MetricStack> (metric family, W4), NOT <GlassDock> — GlassDock.containerName = 0 setters.
 
-== Slider (src/components/slider/types.ts) — keepDockOpen -> context-driven useDockHold ==
-  keepDockOpen                 RED@HEAD=1  GREEN@work=0  RED->GREEN OK
+== Slider (src/components/slider/types.ts) — keepDockOpen -> context-driven useDockHold; CUT STANDS (runtime null-DELTA by dock-context) ==
+  keepDockOpen                 RED@HEAD=1  GREEN@work=0  RED->GREEN OK (runtime null-DELTA)
+    CENSUS-CORRECTED 2026-07-21: NOT "0 setters anywhere". muster live-sets it — SignalsLayer.vue:116 (:keep-dock-open="true")
+      + CommandPalette.vue:490 (:keep-dock-open="false"). The cut STANDS because it is runtime null-DELTA: CommandPalette sits at
+      the App root (a SIBLING of the dock subtree, per its own comment :339-341), so useDockHold no-ops both before AND after the
+      cut; SignalsLayer's "true" equals the new always-on-in-dock behavior. Per the consumer-updates ruling a marked
+      keepDockOpen-cleanup addendum is OWED to muster (delete the two now-dead bindings) — routed to muster's tranche (K).
 
 == Progress (src/components/progress/types.ts) — reka passthroughs ==
   getValueLabel                RED@HEAD=1  GREEN@work=0  RED->GREEN OK
@@ -39,13 +44,20 @@ census:  full-constellation fresh census (atlas/slides/speedtest/muster/keyframe
   digitCount                   RED@HEAD=1  GREEN@work=1  KEPT (present RED@HEAD=1, present GREEN@work=1 — live consumer)
     digitCount: speedtest ResultStack.vue:71,149 live-set :digit-count on <AnimatedDigit> (current-contract, rule c).
 
-== FourierField (src/components/fourier-field/index.ts) — 5 cut (closed by this seat) ==
-  color                        RED@HEAD=1  GREEN@work=0  RED->GREEN OK
-  colorResolver                RED@HEAD=1  GREEN@work=0  RED->GREEN OK
-  seed                         RED@HEAD=1  GREEN@work=0  RED->GREEN OK
-  freeze                       RED@HEAD=1  GREEN@work=0  RED->GREEN OK
+== FourierField (src/components/fourier-field/index.ts) — 1 cut (intensity); 4 KEPT (CENSUS-CORRECTED 2026-07-21) ==
+  color                        RED@HEAD=1  GREEN@work=1  KEPT (present RED@HEAD=1, present GREEN@work=1 — live consumer)
+  colorResolver                RED@HEAD=1  GREEN@work=1  KEPT (present RED@HEAD=1, present GREEN@work=1 — live consumer)
+  seed                         RED@HEAD=1  GREEN@work=1  KEPT (present RED@HEAD=1, present GREEN@work=1 — live consumer)
+  freeze                       RED@HEAD=1  GREEN@work=1  KEPT (present RED@HEAD=1, present GREEN@work=1 — live consumer)
   intensity                    RED@HEAD=1  GREEN@work=0  RED->GREEN OK
-    only glass-ui demo consumes <FourierField> and sets config/spectrum/getPalette only; slides dropped it; 0 constellation setters.
+    color/colorResolver/seed/freeze: slides feedback-coder deck live-mounts <FourierField> in BOTH bookends — Slide01.vue:32-38
+      (color="var(--viz-fourier)" :color-resolver="defaultBlobColorResolver" seed="hero" :freeze="capture") + Slide05.vue:43
+      (color="var(--viz-chebyshev)" :color-resolver seed="final" :freeze="capture"), imported @mkbabb/glass-ui/fourier-field.
+      Current-contract, rule (c) — all four KEEP (exactly as position/freeze(constellation)/digitCount). The prior "slides DROPPED
+      fourier-field since formation / 0 constellation setters for all 5" was a STALE-snapshot census (asserted-not-measured),
+      refuted on disk (slides HEAD b538506, tracked+clean). freeze -> "fourier-field/frozen" seed path + the color binding restored.
+    intensity: 0 real setters (only glass-ui demo consumes <FourierField>, config/spectrum/getPalette only; keyframes.js refs are
+      docs, EditorStartScreen.vue no longer mounts it) — the intensity loudness override CUT stands.
 
 == Constellation (src/components/constellation/constellationTypes.ts) — 2 cut; freeze KEPT ==
   speed                        RED@HEAD=1  GREEN@work=0  RED->GREEN OK
@@ -57,3 +69,12 @@ census:  full-constellation fresh census (atlas/slides/speedtest/muster/keyframe
     layout/requirement/placeholder/required: labeled-field.contract.test.ts 'converges native and annotated requirement
     state' (:73-118) + data-layout=horizontal (:42-47) prove a TESTED, load-bearing a11y/visual contract. The band's
     '7/12 dead' premise does NOT reproduce at HEAD -> fresh census/evidence wins (the Configurator KEEP precedent).
+
+== WatercolorDot (src/components/watercolor-dot/WatercolorDot.vue) — cycleDuration + range KEPT (SECTION ADDED 2026-07-21) ==
+  cycleDuration                RED@HEAD=1  GREEN@work=1  KEPT (present RED@HEAD=1, present GREEN@work=1 — live consumer)
+  range                        RED@HEAD=1  GREEN@work=1  KEPT (present RED@HEAD=1, present GREEN@work=1 — live consumer)
+    value.js demo/picker/controls/SpectrumCanvas/SpectrumCanvas.vue:26-27 live-sets :cycle-duration="2000" + :range="[15, 85]"
+      on a <WatercolorDot animate> (import @mkbabb/glass-ui/watercolor-dot at :38) — current-contract, rule (c). The f04f05d8
+      cut (retired both as "0-setter dead knobs") landed with NO captured born-RED and NO census row here (WatercolorDot was
+      ENTIRELY ABSENT from this artifact + the G-DEADPROP-SCAN roster), which is exactly why the live value.js setter slipped
+      through. Restored to WatercolorDot.vue props + the useWatercolorBlob forward; both KEEP.

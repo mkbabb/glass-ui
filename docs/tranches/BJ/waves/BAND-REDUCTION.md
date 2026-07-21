@@ -137,15 +137,21 @@ the F04-direct silhouette axis; its keep/kill is a GF-DOCK W5 shape-grammar RULI
 not cut here. The dock cuts owe a null-DELTA on the four dockContext-consuming families'
 stories (RU-12 A4: slider/select/popover/dropdown-menu).
 
-**Slider (`./slider`) — remove `keepDockOpen`.** `slider/types.ts:25` declares it (default
-`true`, `Slider.vue:27`); ZERO `<Slider :keep-dock-open>` setters anywhere (the grep hits are
-Popover's OWN live prop + internal wiring + one contract test). The reroute is adoption of an
-existing authority (RU-12 A3): `Slider.vue:12-13` already imports
-`useOptionalDockContext`/`useDockHold` — the hold becomes context-driven, always-on inside a
-dock. **Blast radius:** rewrite `tests/components/ui/slider/dock-hold-contract.test.ts` to the
-context-driven form (behavior survives, prop does not). **Hotspot order (APOTHEOSIS D-17):**
-this cut lands FIRST on `Slider.vue`, before MATERIAL W4's track/marks repoint and A11Y
-W2-E/W2-F.
+**Slider (`./slider`) — remove `keepDockOpen`. [CUT STANDS; census-corrected 2026-07-21 — the
+"ZERO setters anywhere" claim is STRUCK.]** `slider/types.ts:25` declares it (default `true`,
+`Slider.vue:27`). The band asserted "ZERO `<Slider :keep-dock-open>` setters anywhere" — FALSE
+on disk: muster live-sets it at `SignalsLayer.vue:116` (`:keep-dock-open="true"`) and
+`CommandPalette.vue:490` (`:keep-dock-open="false"`). The cut nonetheless STANDS because it is
+**runtime null-DELTA**: `CommandPalette` sits at the App root, a SIBLING of the dock subtree
+(its own comment `:339-341`), so `useDockHold` no-ops both before AND after; `SignalsLayer`'s
+`"true"` equals the new always-on-in-dock behavior. The reroute is adoption of an existing
+authority (RU-12 A3): `Slider.vue:12-13` already imports `useOptionalDockContext`/`useDockHold`
+— the hold becomes context-driven, always-on inside a dock. **Consumer-updates ruling: a marked
+`keepDockOpen`-cleanup addendum is OWED to muster** (delete the two now-dead bindings) — routed
+to muster's tranche (K). **Blast radius:** rewrite
+`tests/components/ui/slider/dock-hold-contract.test.ts` to the context-driven form (behavior
+survives, prop does not). **Hotspot order (APOTHEOSIS D-17):** this cut lands FIRST on
+`Slider.vue`, before MATERIAL W4's track/marks repoint and A11Y W2-E/W2-F.
 
 **Labeled\* (`./labeled-field`) — CUT REFUTED 2026-07-21; KEEP the surface.** **[CENSUS-CORRECTED
 — the prior "7/12 dead · cut layout/requirement/placeholder + the duplicated required/disabled"
@@ -176,18 +182,33 @@ MATERIAL W4's (two registers per RU-09 R4).
 rule (c) FIRES exactly as for position/freeze. `digitCount` is load-bearing layout, not dead
 config; the story's own zero-setter masked the cross-repo delta. No relay owed (KEPT, no break).]**
 
-**WatercolorDot (`./watercolor-dot`) — retire the dead knobs regardless of the ASK.**
-Single-external (value.js ×3 files — RU-12 R14); keep/relocate is ASK §B5. Keep `solid`/`ghost`
-only if both are demoed (verify at execution).
+**WatercolorDot (`./watercolor-dot`) — `cycleDuration` + `range` KEPT. [CENSUS-CORRECTED
+2026-07-21 — the prior "retire the dead knobs regardless of the ASK" is STRUCK.]** Fresh census:
+value.js `demo/picker/controls/SpectrumCanvas/SpectrumCanvas.vue:26-27` live-sets
+`:cycle-duration="2000"` + `:range="[15, 85]"` on a `<WatercolorDot animate>` (import
+`@mkbabb/glass-ui/watercolor-dot`) — current-contract, rule (c). The f04f05d8 cut landed with NO
+captured born-RED and NO census row (WatercolorDot was ENTIRELY ABSENT from `DEADPROP-SCAN.txt`
+and the G-DEADPROP-SCAN roster), which is why the live setter slipped through; both knobs are
+restored to `WatercolorDot.vue` + the `useWatercolorBlob` forward. Single-external (value.js ×3
+files — RU-12 R14); keep/relocate is ASK §B5. Keep `solid`/`ghost` only if both are demoed
+(verify at execution).
 
-**FourierField (5 dead: `color, colorResolver, freeze, intensity, seed`) — RETIRED 2026-07-21.**
-Fresh full-constellation census: only glass-ui's OWN demo consumes `<FourierField>` and it sets
-`config`/`spectrum`/`getPalette` ONLY; slides DROPPED fourier-field since formation (moving
-snapshot) — 0 constellation setters for all 5 ambient-seam knobs. Cut executed: the props leave
-`FourierFieldProps` + the SFC; the opinionated defaults resolve inside the component (seed →
-`"fourier-field"`, freeze → the composable's own PRM path, intensity → `config.intensity`,
-palette → `getPalette`/`config.palette`). Null-DELTA (the demo's config+getPalette path is
-unchanged). **Constellation (2 dead: `parallax, speed`) — `freeze` KEPT. [CENSUS-CORRECTED
+**FourierField — only `intensity` cut; `color, colorResolver, seed, freeze` KEPT.
+[CENSUS-CORRECTED 2026-07-21 — the prior "5 dead / slides DROPPED fourier-field since formation /
+0 constellation setters for all 5" is STRUCK: it was a STALE-snapshot census asserted-not-measured.]**
+FALSE on disk: the tracked slides feedback-coder deck (HEAD b538506, clean) live-mounts
+`<FourierField>` in BOTH bookends — `Slide01.vue:32-38` (`color="var(--viz-fourier)"`
+`:color-resolver="defaultBlobColorResolver"` `seed="hero"` `:freeze="capture"`) and `Slide05.vue:43`
+(`color="var(--viz-chebyshev)"` `:color-resolver` `seed="final"` `:freeze="capture"`), imported
+from `@mkbabb/glass-ui/fourier-field`. Rule (c) FIRES — a current-contract setter is a live
+consumer whatever the pin (the SAME rule that KEPT position/freeze(constellation)/digitCount) — so
+`color`/`colorResolver`/`seed`/`freeze` all KEEP (restored to `FourierFieldProps` + the SFC + the
+`useFourierField({freeze})` forward + the `freeze → "fourier-field/frozen"` seed path + the color
+binding). Only `intensity` is cut (0 real setters; the loudness override → `config.intensity`) — a
+true dead knob. On a slides bump the four KEPT props preserve the warm-hero/cool-final bookend
+palette asymmetry, the per-field seed identity, and `:freeze="capture"` (the export/print/visual
+freeze lever — no public successor exists; the "PRM path" covers reduced-motion only, not export).
+**Constellation (2 dead: `parallax, speed`) — `freeze` KEPT. [CENSUS-CORRECTED
 2026-07-21 — the prior "3 dead: freeze, parallax, speed" is STRUCK: atlas
 `Constellation.host.vue:487` live-sets `:freeze` (the deterministic capture frame,
 current-contract, ^6.0.0) — rule (c) FIRES, `freeze` KEEPS.]** Component fates were ASK §B2/§B3;
@@ -203,10 +224,15 @@ skeleton) is small-set saturation, not kinship (RU-19 Q5) — no merge question.
 
 ### W1 KEEP-DISPOSITION RECORD — dated 2026-07-21 (censused/executed at the REDUCTION W1 close; fresh full-constellation greps, both grains)
 
-The band's "0 setters / retire" premise was refuted for four props by a fresh census; each KEEPS
-by rule (c) (a current-contract usage is a live consumer whatever the pin), mirroring the
-Configurator KEEP precedent. No relay is owed for any KEEP (nothing breaks); the one cut whose
-critic-census was refuted (`containerName`) has 0 real consumers, so it too needs no relay.
+The band's "0 setters / retire" premise was refuted by a fresh on-disk census for several props
+— GlassDock `position`, Constellation `freeze`, AnimatedDigit `digitCount`, the Labeled\*
+cluster, FourierField `color`/`colorResolver`/`seed`/`freeze`, and WatercolorDot
+`cycleDuration`/`range` — each KEEPS by rule (c) (a current-contract usage is a live consumer
+whatever the pin), mirroring the Configurator KEEP precedent. No relay is owed for those KEEPs
+(nothing breaks). Two executed cuts STAND but were mis-censused: `containerName` (0 real
+consumers, no relay) and Slider `keepDockOpen` (runtime null-DELTA, but muster live-sets two
+now-dead bindings → a marked cleanup addendum is OWED to muster's tranche, per the
+consumer-updates ruling).
 
 - **GlassDock `position` — KEPT.** atlas `Dock.vue:230` (`position="fixed"`, ^6.0.0) + muster
   `CommandDock.vue:120` (`position="fixed"`, ^3.1.0) live-set it, current-contract. The band row
@@ -224,11 +250,28 @@ critic-census was refuted (`containerName`) has 0 real consumers, so it too need
   claim is dropped (the delta was masked by glass-ui's own story setting no digit-count).
   `mode`/`damping` cut. (muster `RankedVerdict.vue:207` `:digit-count` binds `<MetricRow>`, W4 —
   not an AnimatedDigit consumer.)
-- **FourierField 5 ambient-seam knobs — CUT (executed this seat).** `color, colorResolver, seed,
-  freeze, intensity` = 0 constellation setters (only glass-ui's demo consumes `<FourierField>`,
-  config/spectrum/getPalette only; slides dropped it). Opinionated defaults resolved inside the
-  SFC; null-DELTA on the demo path. The `FourierField.smoke.test.ts` mount arms migrated to the
-  surviving surface (bare + config/getPalette).
+- **FourierField `color`/`colorResolver`/`seed`/`freeze` — KEPT (census-corrected 2026-07-21);
+  only `intensity` CUT.** The prior "5 knobs CUT / 0 constellation setters / slides dropped it"
+  is STRUCK — it was a stale-snapshot census refuted on disk. slides feedback-coder
+  `Slide01.vue:32-38` (`color="var(--viz-fourier)"` `:color-resolver` `seed="hero"`
+  `:freeze="capture"`) + `Slide05.vue:43` (`color="var(--viz-chebyshev)"` … `seed="final"`
+  `:freeze="capture"`) live-set all four (current-contract, rule c) — restored to the props + SFC
+  + the `useFourierField({freeze})` forward. `intensity` (0 real setters, loudness override) is
+  the one true dead knob and stays cut. The `FourierField.smoke.test.ts` arms cover bare +
+  config/getPalette + the restored ambient seam (color/colorResolver/seed/freeze).
+- **WatercolorDot `cycleDuration`/`range` — KEPT (census-corrected 2026-07-21).** The f04f05d8
+  cut retired both as "0-setter dead knobs" with NO captured born-RED and NO census row
+  (WatercolorDot was absent from `DEADPROP-SCAN.txt` + the G-DEADPROP-SCAN roster). value.js
+  `SpectrumCanvas.vue:26-27` live-sets `:cycle-duration="2000"` + `:range="[15, 85]"` on a
+  `<WatercolorDot animate>` (current-contract, rule c) — restored to the props + the
+  `useWatercolorBlob` forward.
+- **Slider `keepDockOpen` — CUT STANDS (runtime null-DELTA), but NOT "0 setters".** muster
+  `SignalsLayer.vue:116` (`:keep-dock-open="true"`) + `CommandPalette.vue:490`
+  (`:keep-dock-open="false"`) live-set it; the cut is runtime null-DELTA because CommandPalette
+  is an App-root sibling of the dock subtree (its comment `:339-341`) so `useDockHold` no-ops
+  both sides, and SignalsLayer's `"true"` == the new always-on-in-dock. Per the consumer-updates
+  ruling a marked `keepDockOpen`-cleanup addendum is OWED to muster (delete the two dead
+  bindings) — routed to muster's tranche (K).
 - **Labeled\* `layout`/`requirement`/`placeholder`/`required` — CUT REFUTED → KEPT.**
   `tests/components/labeled-field.contract.test.ts` proves `requirement`+native `required`
   convergence and `layout="horizontal"` are a tested, load-bearing a11y/visual contract; the
@@ -249,7 +292,7 @@ critic-census was refuted (`containerName`) has 0 real consumers, so it too need
 
 | gate | posture | probe |
 | --- | --- | --- |
-| **G-DEADPROP-SCAN** | **BORN RED** (surface-hygiene) | static dead-config scan reds on the enumerated 0-setter props at HEAD, GREEN after the cut. **[COUNTS CENSUS-CORRECTED 2026-07-21 — the artifact is `../evidence/W-REDUCE-PROPDIET/DEADPROP-SCAN.txt` (RED@HEAD present → GREEN@work absent, per prop).]** Typewriter 11 (+`respectReducedMotion` folded to `humanize`), GlassDock **3** (`position` KEPT — atlas+muster live), Slider `keepDockOpen`, Progress 2, AnimatedDigit **2** (`digitCount` KEPT — speedtest live), FourierField 5, Constellation **2** (`freeze` KEPT — atlas live), Labeled\* **0** (KEEP — contract-test refutes the cut). |
+| **G-DEADPROP-SCAN** | **BORN RED** (surface-hygiene) | static dead-config scan reds on the enumerated 0-setter props at HEAD, GREEN after the cut. **[COUNTS CENSUS-CORRECTED 2026-07-21 — the artifact is `../evidence/W-REDUCE-PROPDIET/DEADPROP-SCAN.txt` (RED@HEAD present → GREEN@work absent, per prop).]** Typewriter 11 (+`respectReducedMotion` folded to `humanize`), GlassDock **3** (`position` KEPT — atlas+muster live), Slider `keepDockOpen` **1** (CUT STANDS runtime null-DELTA; NOT "0 setters" — muster live-sets 2 now-dead bindings, cleanup addendum owed to muster), Progress 2, AnimatedDigit **2** (`digitCount` KEPT — speedtest live), FourierField **1** (`intensity` cut; `color`/`colorResolver`/`seed`/`freeze` KEPT — slides Slide01/Slide05 live), WatercolorDot **0** (`cycleDuration`/`range` KEPT — value.js live; section added), Constellation **2** (`freeze` KEPT — atlas live), Labeled\* **0** (KEEP — contract-test refutes the cut). |
 | G-PAINT-NULL-DELTA | inert-cut proof | each affected component's story renders byte-identically (paired π) across the cut. |
 | G-SURFACE-DELTA | intentional | `public-surface.spec.ts` / `.test-d.ts` reflect the removed props; clean break, no alias. |
 | G-TYPECHECK + G-VITEST | refactor-safety | typecheck + suite green; the rewritten dock-hold contract test passes context-driven. |

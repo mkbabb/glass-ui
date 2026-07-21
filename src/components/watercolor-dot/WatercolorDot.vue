@@ -51,12 +51,18 @@ const props = withDefaults(
         variant?: "solid" | "ghost";
         /** Run the rAF-driven compositor transform wobble (default false → static). */
         animate?: boolean;
+        /** Base morph cycle duration in ms (default 4000). */
+        cycleDuration?: number;
+        /** Border-radius range [lo, hi] as percentages (default [20, 80]). */
+        range?: [number, number];
         /** Extra seed string mixed into the shape + wet-edge PRNG for uniqueness. */
         seed?: string;
     }>(),
     {
         variant: "solid",
         animate: false,
+        cycleDuration: 4000,
+        range: () => [20, 80],
         seed: "",
     },
 );
@@ -82,10 +88,8 @@ const filterSeed = computed(() => hashString(props.color + props.seed) % 256);
 const colorRef = toRef(props, "color");
 const { borderRadius, transform } = useWatercolorBlob(colorRef, {
     animate: props.animate,
-    // Opinionated shape defaults (the retired `cycleDuration`/`range` knobs
-    // had zero setters — the blob ships one warm-cream silhouette register).
-    cycleDuration: 4000,
-    range: [20, 80],
+    cycleDuration: props.cycleDuration,
+    range: props.range,
     seed: props.seed,
 });
 </script>

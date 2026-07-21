@@ -1,4 +1,4 @@
-import type { OklchStop } from "../../composables/color";
+import type { ColorResolver, OklchStop } from "../../composables/color";
 import type { FourierFieldConfig } from "./constants";
 import type { BasisComponent } from "./math";
 
@@ -42,4 +42,12 @@ export interface FourierFieldProps {
     spectrum?: readonly BasisComponent[];
     /** Resolve the curve palette as OKLCh (the studio themes it). */
     getPalette?: () => OklchStop[];
+    /** Ambient-consumer color seam — a `var()`/`light-dark()` token or a literal; derives a warm palette. */
+    color?: string;
+    /** The color resolver (the GooBlob/Aurora seam) — required when `color` is a `var()` token. */
+    colorResolver?: ColorResolver;
+    /** Extra seed mixed into the generated elliptic spectrum PRNG. Default "". */
+    seed?: string;
+    /** Paint ONE static deterministic best-frame and never animate (the capture lever). Default false. */
+    freeze?: boolean;
 }

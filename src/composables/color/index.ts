@@ -36,9 +36,10 @@ export interface OklchStop {
 /**
  * A color seam: resolves a CSS color string to a GAMMA-sRGB triple in [0,1].
  * `defaultBlobColorResolver` is the default. A general-purpose injection type for
- * consumers that theme a substrate through an external color pipeline. The goo-blob
- * resolves color internally through `cssToOklch → oklchToGammaRgb` without dependency
- * injection.
+ * consumers that theme a substrate through an external color pipeline — the
+ * `<FourierField>` ambient background takes it as an optional `colorResolver` prop
+ * (paired with the `color` token seam). The goo-blob resolves color internally through
+ * `cssToOklch → oklchToGammaRgb` without dependency injection.
  */
 export type ColorResolver = (css: string) => [number, number, number];
 

@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { computed, shallowRef, useTemplateRef, watch } from "vue";
-import type { OklchStop } from "../../composables/color";
+import { computed, onMounted, shallowRef, useTemplateRef, watch } from "vue";
+import type { ColorResolver, OklchStop } from "../../composables/color";
+import { cssToOklch } from "../../composables/color";
+import { resolveTokenColor } from "../../composables/dom";
 import { useGlobalDark } from "../../composables/dark";
 import { useRoutePointer } from "../../composables/motion/pointer/useRoutePointer";
 import { mulberry32, hashString } from "../../composables/glass/procedural/prng";
@@ -31,18 +33,34 @@ const emit = defineEmits<{ rendererStatus: [status: RendererStatus] }>();
  * The DEFAULT palette is the warm-cream library identity (`--viz-fourier` warm-amber); a
  * demo Teal/cool preset stays demo-LOCAL (presets-in-consumers — never a library token).
  *
- * Visual bundles live in config presets. The studio passes the full `config` + `spectrum` +
- * `getPalette`; a bare `<FourierField>` uses the warm-identity default.
+ * Visual bundles live in config presets. An ambient-background consumer passes `color` and the
+ * `colorResolver` for a thin warm default preserving the recessive look; the studio passes
+ * the full `config` + `spectrum` + `getPalette`.
  */
-const props = defineProps<{
-    /** The full author config (the studio's `useConfiguratorState` model). Defaults to the warm identity. */
-    config?: FourierFieldConfig;
-    /** An explicit CPU-minted spectrum (a curated shape's DFT). When absent, a seeded elliptic spectrum is generated. */
-    spectrum?: readonly BasisComponent[];
-    /** Resolve the curve palette as OKLCh (the studio themes it). When absent, `config.palette` is used. */
-    getPalette?: () => OklchStop[];
-}>();
+const props = withDefaults(
+    defineProps<{
+        /** The full author config (the studio's `useConfiguratorState` model). Defaults to the warm identity. */
+        config?: FourierFieldConfig;
+        /** An explicit CPU-minted spectrum (a curated shape's DFT). When absent, a seeded elliptic spectrum is generated. */
+        spectrum?: readonly BasisComponent[];
+        /** Resolve the curve palette as OKLCh (the studio themes it). When absent, `color`/`config.palette` is used. */
+        getPalette?: () => OklchStop[];
+        /** Ambient-consumer color seam — a `var()`/`light-dark()` token or a literal; derives a warm 2-stop palette. */
+        color?: string;
+        /** The color resolver (the GooBlob/Aurora seam) — required when `color` is a `var()` token. */
+        colorResolver?: ColorResolver;
+        /** Extra seed mixed into the generated elliptic spectrum PRNG. Default "". */
+        seed?: string;
+        /** Paint ONE static deterministic best-frame and never animate (the capture lever). Default false. */
+        freeze?: boolean;
+    }>(),
+    {
+        seed: "",
+        freeze: false,
+    },
+);
 
+const hostRef = useTemplateRef<HTMLElement>("hostRef");
 const canvasRef = useTemplateRef<HTMLCanvasElement>("canvasRef");
 
 const { isDark } = useGlobalDark();
@@ -89,7 +107,8 @@ const spectrum = computed<readonly BasisComponent[]>(() => {
     // "boring" random ellipse. The default `source: "elliptic"` keeps the seeded generator.
     const figure = FOURIER_FIGURES[cfg.value.source];
     if (figure) return makeHarmonicFigure(figure);
-    const rng = mulberry32(hashString("fourier-field"));
+    const liveSeed = props.freeze ? "fourier-field/frozen" : props.seed || "fourier-field";
+    const rng = mulberry32(hashString(liveSeed + props.seed));
     return makeEllipticSpectrum(rng, {
         harmonics: Math.min(cfg.value.harmonics + 4, MAX_PHASORS - 2),
         harmonicScale: cfg.value.harmonicScale,
@@ -97,8 +116,32 @@ const spectrum = computed<readonly BasisComponent[]>(() => {
 });
 const getSpectrum = (): readonly BasisComponent[] => spectrum.value;
 
-// The resolved palette — the studio's `getPalette` wins; otherwise the config palette.
-// Re-resolves on a dark flip (the `isDark` reactive read drives the getPalette re-theme).
+// Resolve a `var(--token)`/`light-dark()` color to a concrete value before
+// reading it (value.js cannot parse a `var()` wrapper). The host element resolves the
+// cascade through the SHARED un-wrap leaf (`resolveTokenColor` — the ONE
+// getComputedStyle-paint-and-read path the aurora/blob ColorResolver seam uses); the
+// `light-dark()` literal rides the same paint-and-read trick (a `light-dark()` painted on
+// a real CSS property resolves through the cascade), so it is folded into the leaf's
+// scope here. A `var()`/`light-dark()` wrapper that did NOT resolve concretely (the host
+// is not yet mounted — the immediate watch fires in setup() before `hostRef`) is NOT
+// handed to value.js; the caller keeps the warm-identity palette until mount resolves it.
+function resolveColorString(css: string): string {
+    if (!css.includes("var(") && !css.includes("light-dark(")) return css;
+    const el = hostRef.value;
+    if (typeof window === "undefined" || !el) return css;
+    // resolveTokenColor un-wraps a `var()` wrapper; paint-and-read the cascade for a
+    // `light-dark()` wrapper the leaf's `var(`-only guard skips.
+    if (css.includes("var(")) return resolveTokenColor(css, el);
+    const prev = el.style.color;
+    el.style.color = css;
+    const resolved = getComputedStyle(el).color;
+    el.style.color = prev;
+    return resolved || css;
+}
+
+// The resolved palette — the studio's `getPalette` wins; otherwise derive a warm 2-stop ramp
+// from the ambient `color` seam; otherwise the config palette. Re-resolves on a dark flip
+// (the `isDark` reactive read).
 const resolvedPalette = shallowRef<OklchStop[]>(cfg.value.palette);
 function refreshPalette(): void {
     if (props.getPalette) {
@@ -106,12 +149,25 @@ function refreshPalette(): void {
         return;
     }
     void isDark.value; // the dark-flip retint trigger
+    if (props.color) {
+        const resolved = resolveColorString(props.color);
+        // Guard the value.js parse: an UNRESOLVED `var()`/`light-dark()` wrapper (the
+        // host is not yet mounted) cannot be parsed by value.js (it throws on a `var()`
+        // reference). Keep the warm-identity palette and re-resolve on mount.
+        if (resolved.includes("var(") || resolved.includes("light-dark(")) return;
+        const base = cssToOklch(resolved);
+        resolvedPalette.value = [
+            { L: Math.max(0.5, base.L), C: Math.max(0.12, base.C), h: base.h },
+            { L: Math.min(0.9, base.L + 0.22), C: base.C * 0.4, h: base.h + 18 },
+        ];
+        return;
+    }
     resolvedPalette.value = cfg.value.palette;
 }
 const getPalette = (): OklchStop[] => resolvedPalette.value;
 
 // Pass a live forward-through config. `cfg` is a `computed<FourierFieldConfig>` over
-// `props.config` plus intensity/interactive overrides; spreading `cfg.value` would freeze
+// `props.config` plus the interactive override; spreading `cfg.value` would freeze
 // its getters. The proxy forwards every reflection
 // (get/has/ownKeys/getOwnPropertyDescriptor — the setups spread/enumerate `config` in
 // places, so a bare `get`-only Proxy over `{}` would enumerate empty) to `cfg.value`, so
@@ -128,6 +184,7 @@ const renderer = useFourierField(canvasRef, {
     config: renderConfig,
     getSpectrum,
     getPalette,
+    freeze: () => props.freeze,
     // the ambient field reads the route broadcaster (the canvas is
     // pointer-events:none; the studio owns its host listeners so this is undefined there).
     routePointer: routePointerRead,
@@ -141,10 +198,20 @@ watch(renderer.rendererStatus, (status) => emit("rendererStatus", status), {
 // control change to a quiescent field repaints same-frame.
 watch(() => props.config, () => renderer.wake(), { deep: true });
 
-watch([() => props.getPalette, isDark], refreshPalette, {
+watch([() => props.color, () => props.getPalette, isDark], refreshPalette, {
     immediate: true,
 });
+// The immediate watch fires in setup() before `hostRef` is mounted, so a `var()`-token
+// `color` cannot resolve the cascade yet (it kept the warm-identity default). Re-resolve
+// once the host element exists — the `var()` un-wrap now reaches a real element.
+onMounted(() => {
+    refreshPalette();
+});
 watch(isDark, () => renderer.wake());
+watch(
+    () => props.freeze,
+    () => renderer.wake(),
+);
 
 defineExpose({
     backend: () => renderer.backend,
@@ -159,6 +226,7 @@ defineExpose({
 
 <template>
     <div
+        ref="hostRef"
         class="fourier-field"
         :class="{ 'fourier-field--interactive': hostInteractive }"
     >

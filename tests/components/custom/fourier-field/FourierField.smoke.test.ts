@@ -1,12 +1,13 @@
 // The FourierField mount-smoke + the `/fourier-math` consumer-#1.
 //
 // Two jobs in one spec:
-//   1. MOUNT-SMOKE — the GPU-substrate component mounts (bare warm-identity default
-//      AND the studio config/getPalette surface) and does not throw (the substrate
-//      picker degrades gracefully under happy-dom's no-WebGPU/WebGL env). The ambient
-//      `color`/`colorResolver`/`seed`/`freeze`/`intensity` knobs are RETIRED — 0-setter
-//      dead config folded into the config presets (REDUCTION W1). The COMPONENT is
-//      imported RELATIVE (../…/src) per the mirrored-test-tree rule.
+//   1. MOUNT-SMOKE — the GPU-substrate component mounts across its three registers
+//      (bare warm-identity default, the studio config/getPalette surface, AND the
+//      ambient `color`/`colorResolver`/`seed`/`freeze` seam) and does not throw (the
+//      substrate picker degrades gracefully under happy-dom's no-WebGPU/WebGL env). The
+//      ambient knobs are LIVE (slides Slide01/Slide05 set them — rule (c) KEEP); only
+//      the `intensity` loudness override is retired (0-setter, REDUCTION W1). The
+//      COMPONENT is imported RELATIVE (../…/src) per the mirrored-test-tree rule.
 //   2. THE `/fourier-math` CONSUMER-#1 — the pure math leaf is imported via the
 //      PUBLISHED subpath `@mkbabb/glass-ui/fourier-math` (NOT the relative
 //      `./math`), so this spec doubles as the glass-ui-side importer that clears
@@ -27,6 +28,7 @@ import {
 } from "@mkbabb/glass-ui/fourier-math";
 // (1) the COMPONENT — relative import (the mirrored-test-tree rule).
 import { DEFAULT_FOURIER_CONFIG, FourierField } from "@glass/components/fourier-field";
+import { defaultBlobColorResolver } from "@glass/composables/color";
 
 describe("FourierField mount-smoke", () => {
     it("mounts bare (the warm-identity default) and does not throw", () => {
@@ -46,6 +48,23 @@ describe("FourierField mount-smoke", () => {
             props: {
                 config: DEFAULT_FOURIER_CONFIG,
                 getPalette: () => [...DEFAULT_FOURIER_CONFIG.palette],
+            },
+        });
+        expect(wrapper.find("canvas.fourier-field-canvas").exists()).toBe(true);
+        wrapper.unmount();
+    });
+
+    it("mounts the ambient color seam (color/colorResolver/seed/freeze) and does not throw", () => {
+        // The LIVE ambient register — slides' feedback-coder bookends set
+        // color="var(--viz-…)" + :color-resolver + seed + :freeze="capture" (rule (c)
+        // KEEP). happy-dom degrades the GPU substrate; the assert is a clean mount with
+        // the ambient props wired (not stale no-op declarations).
+        const wrapper = mount(FourierField, {
+            props: {
+                color: "oklch(0.6 0.18 25)",
+                colorResolver: defaultBlobColorResolver,
+                seed: "smoke",
+                freeze: true,
             },
         });
         expect(wrapper.find("canvas.fourier-field-canvas").exists()).toBe(true);
