@@ -69,7 +69,7 @@ const NextIcon = computed(() =>
             data-slot="carousel-pager-prev"
             @click="scrollPrev"
         >
-            <component :is="PrevIcon" class="size-4" />
+            <component :is="PrevIcon" class="size-4" aria-hidden="true" />
         </Button>
 
         <!-- The counter re-registers OFF the opaque `bg-card` slab
@@ -93,7 +93,7 @@ const NextIcon = computed(() =>
             data-slot="carousel-pager-next"
             @click="scrollNext"
         >
-            <component :is="NextIcon" class="size-4" />
+            <component :is="NextIcon" class="size-4" aria-hidden="true" />
         </Button>
     </div>
 </template>

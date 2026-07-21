@@ -86,7 +86,7 @@ function onKeyDown(event: KeyboardEvent) {
     :role="accessibleName ? 'region' : undefined"
     :aria-roledescription="accessibleName ? 'carousel' : undefined"
     :aria-label="accessibleName"
-    tabindex="0"
+    :tabindex="accessibleName ? 0 : undefined"
     @keydown="onKeyDown"
   >
     <slot :can-scroll-next :can-scroll-prev :carousel-api :carousel-ref :orientation :scroll-next :scroll-prev />

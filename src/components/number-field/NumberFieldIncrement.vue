@@ -22,7 +22,7 @@ const props = defineProps<NumberFieldIncrementProps>();
             :class="cn('number-field__step number-field__step--increment', props.class)"
         >
             <slot>
-                <Plus />
+                <Plus aria-hidden="true" />
             </slot>
         </Button>
     </NumberFieldIncrement>

@@ -5,12 +5,14 @@ import {
     onBeforeUnmount,
     onMounted,
     ref,
+    useId,
     useTemplateRef,
     watch,
 } from "vue";
 import type { Component } from "vue";
 import { useSelectionGroup } from "../../composables/motion/morph/useSelectionGroup";
 import { useOptionalDockContext } from "./composables/dockContext";
+import { provideDockRailContext } from "./composables/dockRailContext";
 import DockCrossfade from "./DockCrossfade.vue";
 import type { DockFaceDescriptor } from "./composables/dockCrossfadeContext";
 import {
@@ -107,6 +109,22 @@ const selection = useSelectionGroup<{ value: string }>({
     containerRef: railListEl,
     indicatorRef: railIndicatorEl,
     buttonRefs: railButtonRefs,
+});
+
+// ── The tablist↔tabpanel linkage (W2-A). The rail renders as an APG tablist only
+//    when it actually paints (`showRail && >1 face`); a `<DockLayer>` face reads
+//    `isTablist` to decide whether to become a `role="tabpanel"`. The id derivation is
+//    minted ONCE here off a group-level uid so the tab side (below) and the panel side
+//    (the face) emit the SAME `aria-controls`/`aria-labelledby` strings. ──
+const railIsTablist = computed(() => props.showRail && layers.value.length > 1);
+const railUid = useId();
+const idSafe = (faceId: string) => faceId.replace(/[^a-zA-Z0-9_-]/g, "");
+const railTabId = (faceId: string) => `dock-tab-${railUid}-${idSafe(faceId)}`;
+const railPanelId = (faceId: string) => `dock-panel-${railUid}-${idSafe(faceId)}`;
+provideDockRailContext({
+    isTablist: railIsTablist,
+    tabId: railTabId,
+    panelId: railPanelId,
 });
 
 /* pull-to-switch (consumer #2). The switcher rail is draggable: pull
@@ -209,7 +227,7 @@ onBeforeUnmount(() => {
              indicator writer's inline style (`singleSliderStyle`) — the reka
              `--reka-tabs-indicator-*` path is retired, so Chrome ≡ Safari by construction. -->
         <div
-            v-if="showRail && layers.length > 1"
+            v-if="railIsTablist"
             ref="railListEl"
             role="tablist"
             class="dock-layer-rail"
@@ -228,8 +246,10 @@ onBeforeUnmount(() => {
                 :ref="(el: any) => { if (el) railButtonRefs[idx] = el as HTMLElement }"
                 type="button"
                 class="dock-layer-tab"
+                :id="railTabId(layer.id)"
                 :tabindex="selection.rovingTabindex(idx)"
                 v-bind="selection.itemAttrs(layer.id)"
+                :aria-controls="railPanelId(layer.id)"
                 :title="layer.label"
                 :aria-label="layer.label ?? layer.id"
                 @click="selection.select(layer.id, idx)"

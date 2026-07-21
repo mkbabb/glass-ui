@@ -118,6 +118,18 @@ version — carried by G1, blocking nothing. Owner-reversible.
   `BAND-FEEDBACK-MOTION` W7(d). A destination band that closes without carrying its annotation is a
   silent drop. Also owed once, outside the bands: **C7** (the CRIT8B-1 two-layer-census bracket) applies
   at the **RU-01 capstone seat** in P-CLOSE, and **G1** fires at the P-EX5 outbound batch.
+- **Sequence-held (dependency pending, NOT ASK-gated; added 2026-07-20 at the A11Y W2 close).**
+  `BAND-A11Y` **W2-E** (Slider `:focus-visible` ribbon register, RU-18 N5) and **W2-F** (Slider
+  44px coarse-pointer floor restore, RU-33 routing 1) are gated behind the stamped Slider.vue
+  edit order (`waves/BAND-A11Y.md` §Sequencing, D-17): REDUCTION W1 cut → MATERIAL W4 track
+  repoint → W2-E/W2-F. UNLANDED at HEAD `01310c9c` — `keepDockOpen` is still present
+  (`src/components/slider/Slider.vue:27` default + `slider/types.ts:25` prop), which proves
+  REDUCTION W1 has not cut; neither leg may lawfully land yet. They land at a later A11Y touch
+  after MATERIAL W4. **The rest of A11Y W2 LANDED this cut** (W2-A dock+pager tab↔panel linkage,
+  W2-B decorative-icon sweep-class arm, W2-C kbd de-dup, W2-D carousel conditional tab stop);
+  **W2-B's Combobox SITE is DEAD — retarget-to-nothing** (D-14: the combobox family was deleted
+  by REDUCTION, so the site-fix + its born-RED died with the delete; command is already correct).
+  Evidence: `evidence/W-A11Y-LINKAGE/{BORN-RED,GREEN,VERDICTS}.txt`.
 - **Conditional:** ASK-24 CI-GPU fallback (fires only if the SwiftShader probe fails) ·
   device-capture lane (D-2 non-goal unless the owner supplies one).
 

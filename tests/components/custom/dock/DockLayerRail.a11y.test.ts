@@ -18,6 +18,7 @@ import { defineComponent, h, nextTick, ref } from "vue";
 import GlassDock from "@glass/components/dock/GlassDock.vue";
 import DockLayerGroup from "@glass/components/dock/DockLayerGroup.vue";
 import DockLayer from "@glass/components/dock/DockLayer.vue";
+import DockCrossfade from "@glass/components/dock/DockCrossfade.vue";
 
 /**
  * Mount a `<GlassDock>` (so the dock context — keepOpen/release — is provided)
@@ -339,6 +340,63 @@ describe("dock rail a11y contract (APG tabs)", () => {
         expect(document.activeElement).toBe(activeHostEl);
         expect(activeHostEl.getAttribute("tabindex")).toBe("-1");
 
+        wrapper.unmount();
+    });
+});
+
+// The tab↔panel linkage (W2-A dock leg). The rail's role=tab buttons must
+// `aria-controls` the matching `.dock-face`, and each face must be a
+// `role="tabpanel"` with a stable id + `aria-labelledby` back to its tab — the APG
+// tablist↔tabpanel pair, modelled on SegmentedTabs' `option.controls` precedent.
+// RED before the fix: the rail buttons carry no `aria-controls` and the faces carry
+// no `role="tabpanel"`/`id`/`aria-labelledby`.
+describe("dock rail tab↔panel linkage (APG tablist↔tabpanel)", () => {
+    beforeEach(() => vi.useFakeTimers());
+    afterEach(() => vi.useRealTimers());
+
+    it("10. LINKAGE — each tab aria-controls its tabpanel face; each face aria-labelledby its tab", async () => {
+        const { wrapper } = await mountRail();
+        const tabs = wrapper.findAll('[role="tab"]');
+        const panels = wrapper.findAll('[role="tabpanel"]');
+        expect(tabs).toHaveLength(2);
+        expect(panels).toHaveLength(2);
+
+        const panelEls = panels.map((p) => p.element as HTMLElement);
+        for (const tab of tabs) {
+            const controls = tab.attributes("aria-controls");
+            const tabId = tab.attributes("id");
+            expect(controls, "tab carries aria-controls").toBeTruthy();
+            expect(tabId, "tab carries an id").toBeTruthy();
+            const panel = panelEls.find((el) => el.id === controls);
+            expect(panel, `a tabpanel with id ${controls} exists`).toBeTruthy();
+            // The face points BACK to its tab — the two-way APG linkage.
+            expect(panel!.getAttribute("aria-labelledby")).toBe(tabId);
+        }
+    });
+
+    it("11. NO-DANGLE — a DockLayer in a bare DockCrossfade (no rail) is NOT a tabpanel", async () => {
+        // The controlled-no-rail case (a consumer composes <DockCrossfade> directly):
+        // there is no tablist, so a face must NOT become a tabpanel — a dangling
+        // aria-labelledby to a tab that does not exist is worse than no role.
+        const wrapper = mount(
+            defineComponent({
+                setup: () => () =>
+                    h(DockCrossfade, { active: "a" }, () => [
+                        h(DockLayer, { id: "a", label: "A" }, () => "A"),
+                        h(DockLayer, { id: "b", label: "B" }, () => "B"),
+                    ]),
+            }),
+            { attachTo: document.body },
+        );
+        await nextTick();
+        await nextTick();
+
+        const faces = wrapper.findAll(".dock-face");
+        expect(faces.length).toBeGreaterThan(0);
+        for (const f of faces) {
+            expect(f.attributes("role")).toBeUndefined();
+            expect(f.attributes("aria-labelledby")).toBeUndefined();
+        }
         wrapper.unmount();
     });
 });

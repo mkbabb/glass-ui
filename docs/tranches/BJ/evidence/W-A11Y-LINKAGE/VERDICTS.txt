@@ -1,0 +1,83 @@
+BJ.W-A11Y-LINKAGE (BAND-A11Y Wave 2) — wave record + verdicts
+Captured at execution 2026-07-20, HEAD 01310c9c (the W-PAGER-DOT-MORPH / FM W6 commit).
+Machine reports read, never a piped exit code (PLAN §3 pipe-trap rule).
+Roster authority: docs/tranches/BJ/waves/BAND-A11Y.md §"Wave 2" (SUPERSESSION LAW — the
+band file is the spec; this file is the execution record, not a second roster).
+
+Dependency posture at open:
+  · PagerDots leg is unblocked — its stamped gate (BAND-A11Y §Sequencing, D-17: "PagerDots —
+    W2-A after FEEDBACK-MOTION W6") is SATISFIED: FM W6 = BJ.W-PAGER-DOT-MORPH is HEAD 01310c9c.
+  · The dock leg carries no sequencing gate.
+
+════════════════════════════════════════════════════════════════════════════════
+LANDED THIS CUT (born-RED → GREEN; see BORN-RED.txt + GREEN.txt for verbatim runs)
+════════════════════════════════════════════════════════════════════════════════
+
+W2-A  tab↔panel linkage [RT-7; RU-18 N1/N2]
+  · DOCK — DockLayerGroup rail buttons gain a stable `id` + `aria-controls`; DockLayer faces
+    gain `role="tabpanel"` + `id` + `aria-labelledby`, but ONLY inside a rendered tablist rail.
+    The id derivation is minted ONCE in a new optional context
+    (src/components/dock/composables/dockRailContext.ts) off a group-level `useId()`, so the tab
+    side and the panel side emit the SAME strings with no shared literal. The controlled-no-rail
+    <DockCrossfade> case injects null → no panel role → NO dangling aria-labelledby.
+    Born-RED: DockLayerRail.a11y.test.ts "10. LINKAGE" (RED at HEAD, 0 tabpanels) → GREEN.
+    Guard (stays GREEN both trees): "11. NO-DANGLE".
+  · PAGER — PagerDots `pattern="tabs"` dots gain `aria-controls` from a `panelIds` slide-id
+    contract (the SegmentedTabs `option.controls` precedent, factored for the count rail);
+    `group` register exempt. Born-RED: pager-dots.contract.test.ts "tab↔panel linkage" two
+    asserts (RED at HEAD, no panelIds prop) → GREEN. Guard: group-pattern ignore (GREEN both).
+
+W2-B  decorative-icon hiding [RT-8; N3] — the SWEEP-CLASS arm (the site is retarget-to-nothing,
+      see DEFERRED/DEAD below)
+  · Added aria-hidden to decorative glyphs inside controls that already carry their own name:
+      NumberFieldIncrement/Decrement Plus/Minus (reka names the button "Increase"/"Decrease"),
+      CarouselPager prev/next chevrons (the Button carries the aria-label),
+      DialogContent close X (the sr-only "Close" names the button),
+      EasingPicker copy-state (LoaderCircle/Check/Copy — button aria-labelled) + playback
+      (RotateCcw/Play/Square — the button carries a visible text label).
+  · NOT swept (verified redundant — already under an aria-hidden ancestor, so a second stamp is
+    noise): Checkbox indicator icons (CheckboxIndicator is aria-hidden); Select trigger/scroll
+    chevrons (reka SelectIcon / SelectScrollButtonImpl render aria-hidden="true").
+    Born-RED: decorative-icon-sweep.test.ts three rendered-attr asserts (RED at HEAD) → GREEN.
+
+W2-C  kbd combo label de-dup [RT-9; N4]
+  · demo/shell/AppShell.vue — the full combo is now labelled ONCE on the <dt>; the per-key
+    <kbd> parts are unlabelled (was: every part carried the full combo, double-announcing).
+    Born-RED: shortcut-kbd-a11y.test.ts (vitest-fs source assert — the band's demo-surface
+    idiom, AppShell is the routed shell root and not isolable for a rendered mount) → GREEN.
+
+W2-D  Carousel conditional tab stop [RU-21 N5]
+  · src/components/carousel/Carousel.vue:89 — `tabindex="0"` → `:tabindex="accessibleName ? 0
+    : undefined"`, matching the already-conditional role/aria-roledescription. An unnamed
+    carousel is no longer a nameless focusable generic.
+    Born-RED: carousel.contract.test.ts unnamed + empty-name asserts (RED at HEAD) → GREEN.
+    Guard: named region keeps tabindex="0" (GREEN both).
+
+Non-vacuity: each landed assert was WATCHED RED against HEAD src (BORN-RED.txt, 10 failing
+assertions with file:line) before the source existed, then GREEN at the fixed tree — not a
+report-instead-of-capture. Regression: tests/components/custom/dock · ui/dialog · carousel ·
+number-field · easing · tests/demo all GREEN (168 + 9 tests); `vue-tsc --noEmit` (main +
+tsconfig.test.json) clean.
+
+════════════════════════════════════════════════════════════════════════════════
+DEFERRED / DEAD ROWS (OPEN — the wave does not claim them done)
+════════════════════════════════════════════════════════════════════════════════
+
+W2-E  Slider focus-ribbon register [RU-18 N5] — SEQUENCE-HELD.
+W2-F  Slider 44px coarse-floor restore [RU-33 routing 1] — SEQUENCE-HELD.
+  Both are gated behind the Slider.vue edit order (BAND-A11Y §Sequencing, D-17): REDUCTION W1
+  cut → MATERIAL W4 track repoint → W2-E/W2-F. Proof W1 is UNLANDED at this HEAD: `keepDockOpen`
+  is still present (src/components/slider/Slider.vue:27 default + slider/types.ts:25 prop).
+  Neither may lawfully land in this cut. Journalled OPEN in EXECUTION-PROGRESS.md.
+
+W2-B site (Combobox SearchIcon) — DEAD, retarget-to-nothing (APOTHEOSIS D-14).
+  BAND-REDUCTION's combobox→command fold DELETED the 9-SFC combobox family (COMBOBOX absent
+  from src at this HEAD), so the site-fix and its born-RED lawfully died with the delete;
+  command is already correct (CommandInput.vue:25 <Search aria-hidden="true" />). The band file
+  states the sweep-class arm "is unaffected either way" — it landed above.
+
+The `useSelectionIndicator` comment truth-up is NOT this wave's: it is ASK-17-gated + owned by
+BAND-DOC-TRUTH (family J). A prior working-tree hunk that had executed it was reverted verbatim
+to HEAD as part of this close (git checkout HEAD -- src/composables/motion/morph/
+useSelectionIndicator.ts); it lands in BAND-DOC-TRUTH's cut after the ASK-17 ruling, worded
+against whatever is on disk then.

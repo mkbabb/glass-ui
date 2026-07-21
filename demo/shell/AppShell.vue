@@ -289,11 +289,10 @@ onMounted(() => {
             </DialogHeader>
             <dl class="mt-2 grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-sm">
                 <template v-for="shortcut in shortcuts" :key="shortcut.raw">
-                    <dt class="flex gap-1">
+                    <dt class="flex gap-1" :aria-label="formatCombo(shortcut.raw)">
                         <kbd
                             v-for="part in formatComboParts(shortcut.raw)"
                             :key="part"
-                            :aria-label="formatCombo(shortcut.raw)"
                             class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs"
                         >
                             {{ part }}

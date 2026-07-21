@@ -68,6 +68,15 @@ export interface PagerDotsProps {
      * oracle, two aria registers — the `pagerWindow` math is NEVER re-forked.
      */
     pattern?: "tabs" | "group";
+    /**
+     * The tab↔panel linkage — index-aligned slide-panel element ids. Entry `i`
+     * becomes the `aria-controls` of slide `i`'s dot, completing the APG
+     * tablist↔tabpanel linkage for a consumer that owns the panels (the SegmentedTabs
+     * `option.controls` precedent, factored for the count-based rail). `"tabs"` pattern
+     * ONLY; ignored in `"group"` (a presentation rail, not a tablist). A sparse or
+     * absent entry emits no `aria-controls` — the consumer links only the panels it owns.
+     */
+    panelIds?: string[];
     /** Accessible name for the rail group. */
     ariaLabel?: string;
     /** Additional classes for the rail root. */
@@ -370,6 +379,7 @@ function onKeydown(e: KeyboardEvent): void {
             type="button"
             :role="pattern === 'group' ? undefined : 'tab'"
             :aria-selected="pattern === 'group' ? undefined : i === activeIndex"
+            :aria-controls="pattern === 'group' ? undefined : panelIds?.[i] || undefined"
             :aria-current="pattern === 'group' && i === activeIndex ? 'true' : undefined"
             :aria-label="`Go to slide ${i + 1}`"
             :tabindex="rovingTabindex(i)"

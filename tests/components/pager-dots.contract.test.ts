@@ -94,6 +94,64 @@ describe("PagerDots boundaries", () => {
     });
 });
 
+// The tabs-pattern tab↔panel linkage — the slide-id contract. Index-aligned to slides
+// (the SegmentedTabs `option.controls` precedent, factored for the count-based rail): a
+// `panelIds` entry becomes the dot's `aria-controls`, completing the APG tablist↔tabpanel
+// linkage for a consumer that owns the panels. RED before the contract exists: the
+// `role="tab"` dots carry no `aria-controls`.
+describe("PagerDots tab↔panel linkage (the slide-id contract)", () => {
+    it("emits aria-controls on each tabs-pattern dot from panelIds", () => {
+        const wrapper = mount(PagerDots, {
+            props: {
+                count: 3,
+                active: 1,
+                pattern: "tabs",
+                panelIds: ["slide-panel-0", "slide-panel-1", "slide-panel-2"],
+                ariaLabel: "Linked carousel",
+            },
+        });
+        const dots = wrapper.findAll('[data-slot="pager-dot"]');
+        expect(dots).toHaveLength(3);
+        dots.forEach((dot, i) => {
+            expect(dot.attributes("role")).toBe("tab");
+            expect(dot.attributes("aria-controls")).toBe(`slide-panel-${i}`);
+        });
+    });
+
+    it("omits aria-controls where a slide id is absent from the contract", () => {
+        const wrapper = mount(PagerDots, {
+            props: {
+                count: 3,
+                active: 0,
+                pattern: "tabs",
+                // sparse — only the middle slide is linked
+                panelIds: [undefined as unknown as string, "mid-panel", undefined as unknown as string],
+                ariaLabel: "Sparse",
+            },
+        });
+        const dots = wrapper.findAll('[data-slot="pager-dot"]');
+        expect(dots[0]!.attributes("aria-controls")).toBeUndefined();
+        expect(dots[1]!.attributes("aria-controls")).toBe("mid-panel");
+        expect(dots[2]!.attributes("aria-controls")).toBeUndefined();
+    });
+
+    it("ignores panelIds in the group presentation pattern (aria-current, not tab)", () => {
+        const wrapper = mount(PagerDots, {
+            props: {
+                count: 3,
+                active: 0,
+                pattern: "group",
+                ring: false,
+                panelIds: ["p0", "p1", "p2"],
+                ariaLabel: "Slides",
+            },
+        });
+        for (const dot of wrapper.findAll('[data-slot="pager-dot"]')) {
+            expect(dot.attributes("aria-controls")).toBeUndefined();
+        }
+    });
+});
+
 // The full-viewport PRESENTATION register the deck composes DIRECTLY (`pattern="group"`
 // + `:ring="false"`) — no DeckPager wrapper. role="group"/aria-current replace the tabs
 // register's tablist/aria-selected. Relocated here from the retired DeckPager contract

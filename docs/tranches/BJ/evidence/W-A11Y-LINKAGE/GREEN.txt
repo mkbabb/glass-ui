@@ -1,0 +1,51 @@
+BJ.W-A11Y-LINKAGE (BAND-A11Y Wave 2) — GREEN flip (live tree, fixed src)
+Paired with BORN-RED.txt: the same five test files, now against the LIVE tree with the
+wave's source fixes applied. The 10 born-RED assertions flip GREEN; the guards
+(PagerDots group-ignore, dock NO-DANGLE, carousel named-region tab stop) stay GREEN.
+Machine report read, not a piped exit code (PLAN §3 pipe-trap rule).
+
+command: npx vitest run <same 5 files> --reporter=verbose   (cwd = repo root)
+
+════════════════════════════════════════════════════════════════════════════════
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui
+
+ ✓ tests/demo/shortcut-kbd-a11y.test.ts > keyboard-shortcut help: combo labelled once, parts unlabelled (W2-C) > locates the per-part kbd loop and its enclosing dt 1ms
+ ✓ tests/demo/shortcut-kbd-a11y.test.ts > keyboard-shortcut help: combo labelled once, parts unlabelled (W2-C) > does NOT stamp a per-part aria-label on the <kbd> parts 0ms
+ ✓ tests/demo/shortcut-kbd-a11y.test.ts > keyboard-shortcut help: combo labelled once, parts unlabelled (W2-C) > labels the combo ONCE on the enclosing <dt> 0ms
+ ✓ tests/components/pager-dots.contract.test.ts > PagerDots SVG resources > keeps filter and clip ids unique per instance and stable across rerender 30ms
+ ✓ tests/components/pager-dots.contract.test.ts > PagerDots SVG resources > allocates a fresh namespace on remount and removes definitions on unmount 7ms
+ ✓ tests/components/pager-dots.contract.test.ts > PagerDots boundaries > clamps selection when a dynamic count shrinks 7ms
+ ✓ tests/components/pager-dots.contract.test.ts > PagerDots boundaries > renders an empty, valid rail at zero count 2ms
+ ✓ tests/components/pager-dots.contract.test.ts > PagerDots boundaries > normalizes fractional semantic selection and keeps keyboard steps integral 2ms
+ ✓ tests/components/pager-dots.contract.test.ts > PagerDots tab↔panel linkage (the slide-id contract) > emits aria-controls on each tabs-pattern dot from panelIds 1ms
+ ✓ tests/components/pager-dots.contract.test.ts > PagerDots tab↔panel linkage (the slide-id contract) > omits aria-controls where a slide id is absent from the contract 1ms
+ ✓ tests/components/pager-dots.contract.test.ts > PagerDots tab↔panel linkage (the slide-id contract) > ignores panelIds in the group presentation pattern (aria-current, not tab) 1ms
+ ✓ tests/components/pager-dots.contract.test.ts > PagerDots group register (the deck presentation pattern) > renders role=group with aria-current on the active dot 1ms
+ ✓ tests/components/custom/dock/DockLayerRail.a11y.test.ts > dock rail a11y contract (APG tabs) > 1. ROLES — rail is role=tablist with role=tab triggers 24ms
+ ✓ tests/components/custom/dock/DockLayerRail.a11y.test.ts > dock rail a11y contract (APG tabs) > inherits a vertical dock as a horizontal switcher rail 5ms
+ ✓ tests/components/custom/dock/DockLayerRail.a11y.test.ts > dock rail a11y contract (APG tabs) > 2. SELECTED-NOT-PRESSED — aria-selected on the active tab; NO aria-pressed anywhere 5ms
+ ✓ tests/components/custom/dock/DockLayerRail.a11y.test.ts > dock rail a11y contract (APG tabs) > 3. ROVING-TABINDEX — exactly one tab is the tab stop (0), the others -1 4ms
+ ✓ tests/components/custom/dock/DockLayerRail.a11y.test.ts > dock rail a11y contract (APG tabs) > 4. KEYBOARD — ArrowDown/Home/End move selection (reka APG handler) 8ms
+ ✓ tests/components/custom/dock/DockLayerRail.a11y.test.ts > dock rail a11y contract (APG tabs) > 5. FOCUS-VISIBLE — rail tab carries the .dock-layer-tab class (the dock.css focus-ring selector) 4ms
+ ✓ tests/components/custom/dock/DockLayerRail.a11y.test.ts > dock rail a11y contract (APG tabs) > 6. KEEP-OPEN — focusing a rail tab calls keepOpen; leaving the rail calls release 4ms
+ ✓ tests/components/custom/dock/DockLayerRail.a11y.test.ts > dock rail a11y contract (APG tabs) > 7. ARIA-HIDDEN — the inactive .dock-face carries aria-hidden=true 3ms
+ ✓ tests/components/custom/dock/DockLayerRail.a11y.test.ts > dock rail a11y contract (APG tabs) > 8. TRAVELLING-INDICATOR — the .dock-layer-tab-indicator rides the ONE selection-indicator writer 4ms
+ ✓ tests/components/custom/dock/DockLayerRail.a11y.test.ts > dock rail a11y contract (APG tabs) > keeps entering and leaving faces co-present until the spring settles 9ms
+ ✓ tests/components/custom/dock/DockLayerRail.a11y.test.ts > dock rail a11y contract (APG tabs) > preserves the partially entered face across a distinct third switch 14ms
+ ✓ tests/components/custom/dock/DockLayerRail.a11y.test.ts > dock rail a11y contract (APG tabs) > 9. FOCUS-ORPHAN — focus is re-homed to the revealed active host after a swap 5ms
+ ✓ tests/components/custom/dock/DockLayerRail.a11y.test.ts > dock rail tab↔panel linkage (APG tablist↔tabpanel) > 10. LINKAGE — each tab aria-controls its tabpanel face; each face aria-labelledby its tab 3ms
+ ✓ tests/components/custom/dock/DockLayerRail.a11y.test.ts > dock rail tab↔panel linkage (APG tablist↔tabpanel) > 11. NO-DANGLE — a DockLayer in a bare DockCrossfade (no rail) is NOT a tabpanel 1ms
+ ✓ tests/components/carousel.contract.test.ts > Carousel landmark contract > does not manufacture an unnamed landmark, nor an unnamed tab stop 9ms
+ ✓ tests/components/carousel.contract.test.ts > Carousel landmark contract > treats an empty accessible name as unnamed 1ms
+ ✓ tests/components/carousel.contract.test.ts > Carousel landmark contract > exposes a named carousel region — and its tab stop — when the caller supplies a name 1ms
+ ✓ tests/components/carousel.contract.test.ts > Carousel command surface > consolidates previous and next commands in CarouselPager 15ms
+ ✓ tests/components/a11y/decorative-icon-sweep.test.ts > decorative-icon sweep — icons in named controls are aria-hidden > NumberField step buttons: the Plus/Minus glyphs are hidden (reka names the button) 24ms
+ ✓ tests/components/a11y/decorative-icon-sweep.test.ts > decorative-icon sweep — icons in named controls are aria-hidden > CarouselPager nav buttons: the chevrons are hidden (the button carries the aria-label) 6ms
+ ✓ tests/components/a11y/decorative-icon-sweep.test.ts > decorative-icon sweep — icons in named controls are aria-hidden > Dialog close: the X glyph is hidden (the sr-only 'Close' names the button) 10ms
+
+ Test Files  5 passed (5)
+      Tests  33 passed (33)
+   Start at  21:25:29
+   Duration  781ms (transform 1.10s, setup 213ms, import 1.51s, tests 217ms, environment 555ms)
+

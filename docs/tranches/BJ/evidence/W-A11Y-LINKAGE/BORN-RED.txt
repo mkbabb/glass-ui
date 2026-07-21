@@ -1,0 +1,287 @@
+BJ.W-A11Y-LINKAGE (BAND-A11Y Wave 2) — BORN-RED capture
+Standing law (PLAN §3): the RED is RUN at HEAD and captured verbatim with file:line,
+then implemented, then flipped GREEN. This is the RUN, not a prose claim.
+
+Method: HEAD src checked out in a scratch git worktree (never the live tree, whose
+PagerDots source already carries the panelIds fix) at HEAD 01310c9c; node_modules
+symlinked from the main checkout; the wave's five test files copied in; vitest run.
+The live tree's fixed-src GREEN flip is banked beside this in GREEN.txt.
+
+worktree: $SCRATCH/head-worktree   HEAD: $(git -C "$WT" rev-parse HEAD)
+command: npx vitest run <5 files> --reporter=verbose   (cwd = worktree root)
+
+HEAD-src confirmation (the features do not exist at HEAD):
+  src/components/pager-dots/PagerDots.vue        panelIds occurrences: 0
+  src/components/dock/DockLayer.vue              tabpanel/dockRailContext: 0
+  src/components/carousel/Carousel.vue:89        tabindex="0" (unconditional)
+
+════════════════════════════════════════════════════════════════════════════════
+VERBATIM vitest --reporter=verbose OUTPUT (HEAD src):
+════════════════════════════════════════════════════════════════════════════════
+
+ RUN  v4.1.10 /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/e79fce3f-d24e-4654-8b27-d029653fedbe/scratchpad/head-worktree
+
+ ✓ tests/demo/shortcut-kbd-a11y.test.ts > keyboard-shortcut help: combo labelled once, parts unlabelled (W2-C) > locates the per-part kbd loop and its enclosing dt 2ms
+ × tests/demo/shortcut-kbd-a11y.test.ts > keyboard-shortcut help: combo labelled once, parts unlabelled (W2-C) > does NOT stamp a per-part aria-label on the <kbd> parts 3ms
+   → expected '<kbd\n                            v-f…' not to match /aria-label/
+ × tests/demo/shortcut-kbd-a11y.test.ts > keyboard-shortcut help: combo labelled once, parts unlabelled (W2-C) > labels the combo ONCE on the enclosing <dt> 1ms
+   → expected '<dt class="flex gap-1">' to match /:aria-label="formatCombo\(shortcut\.r…/
+ ✓ tests/components/pager-dots.contract.test.ts > PagerDots SVG resources > keeps filter and clip ids unique per instance and stable across rerender 33ms
+ ✓ tests/components/pager-dots.contract.test.ts > PagerDots SVG resources > allocates a fresh namespace on remount and removes definitions on unmount 7ms
+ ✓ tests/components/pager-dots.contract.test.ts > PagerDots boundaries > clamps selection when a dynamic count shrinks 9ms
+ ✓ tests/components/pager-dots.contract.test.ts > PagerDots boundaries > renders an empty, valid rail at zero count 2ms
+ ✓ tests/components/pager-dots.contract.test.ts > PagerDots boundaries > normalizes fractional semantic selection and keeps keyboard steps integral 3ms
+ × tests/components/pager-dots.contract.test.ts > PagerDots tab↔panel linkage (the slide-id contract) > emits aria-controls on each tabs-pattern dot from panelIds 4ms
+   → expected undefined to be 'slide-panel-0' // Object.is equality
+ × tests/components/pager-dots.contract.test.ts > PagerDots tab↔panel linkage (the slide-id contract) > omits aria-controls where a slide id is absent from the contract 1ms
+   → expected undefined to be 'mid-panel' // Object.is equality
+ ✓ tests/components/pager-dots.contract.test.ts > PagerDots tab↔panel linkage (the slide-id contract) > ignores panelIds in the group presentation pattern (aria-current, not tab) 1ms
+ ✓ tests/components/pager-dots.contract.test.ts > PagerDots group register (the deck presentation pattern) > renders role=group with aria-current on the active dot 1ms
+ ✓ tests/components/custom/dock/DockLayerRail.a11y.test.ts > dock rail a11y contract (APG tabs) > 1. ROLES — rail is role=tablist with role=tab triggers 26ms
+ ✓ tests/components/custom/dock/DockLayerRail.a11y.test.ts > dock rail a11y contract (APG tabs) > inherits a vertical dock as a horizontal switcher rail 6ms
+ ✓ tests/components/custom/dock/DockLayerRail.a11y.test.ts > dock rail a11y contract (APG tabs) > 2. SELECTED-NOT-PRESSED — aria-selected on the active tab; NO aria-pressed anywhere 5ms
+ ✓ tests/components/custom/dock/DockLayerRail.a11y.test.ts > dock rail a11y contract (APG tabs) > 3. ROVING-TABINDEX — exactly one tab is the tab stop (0), the others -1 6ms
+ ✓ tests/components/custom/dock/DockLayerRail.a11y.test.ts > dock rail a11y contract (APG tabs) > 4. KEYBOARD — ArrowDown/Home/End move selection (reka APG handler) 9ms
+ ✓ tests/components/custom/dock/DockLayerRail.a11y.test.ts > dock rail a11y contract (APG tabs) > 5. FOCUS-VISIBLE — rail tab carries the .dock-layer-tab class (the dock.css focus-ring selector) 4ms
+ ✓ tests/components/custom/dock/DockLayerRail.a11y.test.ts > dock rail a11y contract (APG tabs) > 6. KEEP-OPEN — focusing a rail tab calls keepOpen; leaving the rail calls release 5ms
+ ✓ tests/components/custom/dock/DockLayerRail.a11y.test.ts > dock rail a11y contract (APG tabs) > 7. ARIA-HIDDEN — the inactive .dock-face carries aria-hidden=true 4ms
+ ✓ tests/components/custom/dock/DockLayerRail.a11y.test.ts > dock rail a11y contract (APG tabs) > 8. TRAVELLING-INDICATOR — the .dock-layer-tab-indicator rides the ONE selection-indicator writer 3ms
+ ✓ tests/components/custom/dock/DockLayerRail.a11y.test.ts > dock rail a11y contract (APG tabs) > keeps entering and leaving faces co-present until the spring settles 11ms
+ ✓ tests/components/custom/dock/DockLayerRail.a11y.test.ts > dock rail a11y contract (APG tabs) > preserves the partially entered face across a distinct third switch 15ms
+ ✓ tests/components/custom/dock/DockLayerRail.a11y.test.ts > dock rail a11y contract (APG tabs) > 9. FOCUS-ORPHAN — focus is re-homed to the revealed active host after a swap 5ms
+ × tests/components/custom/dock/DockLayerRail.a11y.test.ts > dock rail tab↔panel linkage (APG tablist↔tabpanel) > 10. LINKAGE — each tab aria-controls its tabpanel face; each face aria-labelledby its tab 7ms
+   → expected [] to have a length of 2 but got +0
+ ✓ tests/components/custom/dock/DockLayerRail.a11y.test.ts > dock rail tab↔panel linkage (APG tablist↔tabpanel) > 11. NO-DANGLE — a DockLayer in a bare DockCrossfade (no rail) is NOT a tabpanel 1ms
+ × tests/components/carousel.contract.test.ts > Carousel landmark contract > does not manufacture an unnamed landmark, nor an unnamed tab stop 13ms
+   → expected '0' to be undefined
+ × tests/components/carousel.contract.test.ts > Carousel landmark contract > treats an empty accessible name as unnamed 3ms
+   → expected '0' to be undefined
+ ✓ tests/components/carousel.contract.test.ts > Carousel landmark contract > exposes a named carousel region — and its tab stop — when the caller supplies a name 1ms
+ ✓ tests/components/carousel.contract.test.ts > Carousel command surface > consolidates previous and next commands in CarouselPager 15ms
+ × tests/components/a11y/decorative-icon-sweep.test.ts > decorative-icon sweep — icons in named controls are aria-hidden > NumberField step buttons: the Plus/Minus glyphs are hidden (reka names the button) 28ms
+   → expected undefined to be 'true' // Object.is equality
+ × tests/components/a11y/decorative-icon-sweep.test.ts > decorative-icon sweep — icons in named controls are aria-hidden > CarouselPager nav buttons: the chevrons are hidden (the button carries the aria-label) 8ms
+   → expected undefined to be 'true' // Object.is equality
+ × tests/components/a11y/decorative-icon-sweep.test.ts > decorative-icon sweep — icons in named controls are aria-hidden > Dialog close: the X glyph is hidden (the sr-only 'Close' names the button) 14ms
+   → expected null to be 'true' // Object.is equality
+   → Cannot read properties of null (reading 'nextSibling')
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 10 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/demo/shortcut-kbd-a11y.test.ts > keyboard-shortcut help: combo labelled once, parts unlabelled (W2-C) > does NOT stamp a per-part aria-label on the <kbd> parts
+AssertionError: expected '<kbd\n                            v-f…' not to match /aria-label/
+
+- Expected:
+/aria-label/
+
++ Received:
+"<kbd
+                            v-for=\"part in formatComboParts(shortcut.raw)\"
+                            :key=\"part\"
+                            :aria-label=\"formatCombo(shortcut.raw)\"
+                            class=\"rounded bg-muted px-1.5 py-0.5 font-mono text-xs\"
+                        >"
+
+ ❯ tests/demo/shortcut-kbd-a11y.test.ts:38:33
+     36|
+     37|     it("does NOT stamp a per-part aria-label on the <kbd> parts", () =…
+     38|         expect(kbdOpen![0]).not.toMatch(/aria-label/);
+       |                                 ^
+     39|     });
+     40|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/11]⎯
+
+ FAIL  tests/demo/shortcut-kbd-a11y.test.ts > keyboard-shortcut help: combo labelled once, parts unlabelled (W2-C) > labels the combo ONCE on the enclosing <dt>
+AssertionError: expected '<dt class="flex gap-1">' to match /:aria-label="formatCombo\(shortcut\.r…/
+
+- Expected:
+/:aria-label="formatCombo\(shortcut\.raw\)"/
+
++ Received:
+"<dt class=\"flex gap-1\">"
+
+ ❯ tests/demo/shortcut-kbd-a11y.test.ts:42:28
+     40|
+     41|     it("labels the combo ONCE on the enclosing <dt>", () => {
+     42|         expect(dtOpen![0]).toMatch(/:aria-label="formatCombo\(shortcut…
+       |                            ^
+     43|     });
+     44| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/11]⎯
+
+ FAIL  tests/components/carousel.contract.test.ts > Carousel landmark contract > does not manufacture an unnamed landmark, nor an unnamed tab stop
+AssertionError: expected '0' to be undefined
+
+- Expected:
+undefined
+
++ Received:
+"0"
+
+ ❯ tests/components/carousel.contract.test.ts:35:45
+     33|         // carousel is not a focusable generic — a keyboard user does …
+     34|         // nameless container. RED before the fix: tabindex="0" was un…
+     35|         expect(root.attributes("tabindex")).toBeUndefined();
+       |                                             ^
+     36|     });
+     37|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/11]⎯
+
+ FAIL  tests/components/carousel.contract.test.ts > Carousel landmark contract > treats an empty accessible name as unnamed
+AssertionError: expected '0' to be undefined
+
+- Expected:
+undefined
+
++ Received:
+"0"
+
+ ❯ tests/components/carousel.contract.test.ts:45:45
+     43|         expect(root.attributes("role")).toBeUndefined();
+     44|         expect(root.attributes("aria-label")).toBeUndefined();
+     45|         expect(root.attributes("tabindex")).toBeUndefined();
+       |                                             ^
+     46|     });
+     47|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/11]⎯
+
+ FAIL  tests/components/pager-dots.contract.test.ts > PagerDots tab↔panel linkage (the slide-id contract) > emits aria-controls on each tabs-pattern dot from panelIds
+AssertionError: expected undefined to be 'slide-panel-0' // Object.is equality
+
+- Expected:
+"slide-panel-0"
+
++ Received:
+undefined
+
+ ❯ tests/components/pager-dots.contract.test.ts:117:53
+    115|         dots.forEach((dot, i) => {
+    116|             expect(dot.attributes("role")).toBe("tab");
+    117|             expect(dot.attributes("aria-controls")).toBe(`slide-panel-…
+       |                                                     ^
+    118|         });
+    119|     });
+ ❯ tests/components/pager-dots.contract.test.ts:115:14
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/11]⎯
+
+ FAIL  tests/components/pager-dots.contract.test.ts > PagerDots tab↔panel linkage (the slide-id contract) > omits aria-controls where a slide id is absent from the contract
+AssertionError: expected undefined to be 'mid-panel' // Object.is equality
+
+- Expected:
+"mid-panel"
+
++ Received:
+undefined
+
+ ❯ tests/components/pager-dots.contract.test.ts:134:54
+    132|         const dots = wrapper.findAll('[data-slot="pager-dot"]');
+    133|         expect(dots[0]!.attributes("aria-controls")).toBeUndefined();
+    134|         expect(dots[1]!.attributes("aria-controls")).toBe("mid-panel");
+       |                                                      ^
+    135|         expect(dots[2]!.attributes("aria-controls")).toBeUndefined();
+    136|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/11]⎯
+
+ FAIL  tests/components/a11y/decorative-icon-sweep.test.ts > decorative-icon sweep — icons in named controls are aria-hidden > NumberField step buttons: the Plus/Minus glyphs are hidden (reka names the button)
+AssertionError: expected undefined to be 'true' // Object.is equality
+
+- Expected:
+"true"
+
++ Received:
+undefined
+
+ ❯ tests/components/a11y/decorative-icon-sweep.test.ts:68:47
+     66|         const inc = wrapper.get('[aria-label="Increase"] svg');
+     67|         const dec = wrapper.get('[aria-label="Decrease"] svg');
+     68|         expect(inc.attributes("aria-hidden")).toBe("true");
+       |                                               ^
+     69|         expect(dec.attributes("aria-hidden")).toBe("true");
+     70|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/11]⎯
+
+ FAIL  tests/components/a11y/decorative-icon-sweep.test.ts > decorative-icon sweep — icons in named controls are aria-hidden > CarouselPager nav buttons: the chevrons are hidden (the button carries the aria-label)
+AssertionError: expected undefined to be 'true' // Object.is equality
+
+- Expected:
+"true"
+
++ Received:
+undefined
+
+ ❯ tests/components/a11y/decorative-icon-sweep.test.ts:91:48
+     89|         const prev = wrapper.get('[data-slot="carousel-pager-prev"] sv…
+     90|         const next = wrapper.get('[data-slot="carousel-pager-next"] sv…
+     91|         expect(prev.attributes("aria-hidden")).toBe("true");
+       |                                                ^
+     92|         expect(next.attributes("aria-hidden")).toBe("true");
+     93|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/11]⎯
+
+ FAIL  tests/components/a11y/decorative-icon-sweep.test.ts > decorative-icon sweep — icons in named controls are aria-hidden > Dialog close: the X glyph is hidden (the sr-only 'Close' names the button)
+AssertionError: expected null to be 'true' // Object.is equality
+
+- Expected:
+"true"
+
++ Received:
+null
+
+ ❯ tests/components/a11y/decorative-icon-sweep.test.ts:134:52
+    132|         const glyph = closeButton.querySelector("svg");
+    133|         expect(glyph, "the close button renders an X glyph").toBeTruth…
+    134|         expect(glyph!.getAttribute("aria-hidden")).toBe("true");
+       |                                                    ^
+    135|
+    136|         wrapper.unmount();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/11]⎯
+
+ FAIL  tests/components/a11y/decorative-icon-sweep.test.ts > decorative-icon sweep — icons in named controls are aria-hidden > Dialog close: the X glyph is hidden (the sr-only 'Close' names the button)
+TypeError: Cannot read properties of null (reading 'nextSibling')
+ ❯ nextSibling ../../../../../../../Users/mkbabb/Programming/glass-ui/node_modules/@vue/runtime-dom/dist/runtime-dom.cjs.js:55:31
+ ❯ removeFragment ../../../../../../../Users/mkbabb/Programming/glass-ui/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:6762:14
+ ❯ remove ../../../../../../../Users/mkbabb/Programming/glass-ui/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:6733:9
+ ❯ unmount ../../../../../../../Users/mkbabb/Programming/glass-ui/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:6707:9
+ ❯ Object.remove ../../../../../../../Users/mkbabb/Programming/glass-ui/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:1176:9
+ ❯ unmount ../../../../../../../Users/mkbabb/Programming/glass-ui/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:6682:20
+ ❯ unmountComponent ../../../../../../../Users/mkbabb/Programming/glass-ui/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:6781:7
+ ❯ unmount ../../../../../../../Users/mkbabb/Programming/glass-ui/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:6672:7
+ ❯ unmountComponent ../../../../../../../Users/mkbabb/Programming/glass-ui/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:6781:7
+ ❯ unmount ../../../../../../../Users/mkbabb/Programming/glass-ui/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:6672:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/11]⎯
+
+ FAIL  tests/components/custom/dock/DockLayerRail.a11y.test.ts > dock rail tab↔panel linkage (APG tablist↔tabpanel) > 10. LINKAGE — each tab aria-controls its tabpanel face; each face aria-labelledby its tab
+AssertionError: expected [] to have a length of 2 but got +0
+
+- Expected
++ Received
+
+- 2
++ 0
+
+ ❯ tests/components/custom/dock/DockLayerRail.a11y.test.ts:362:24
+    360|         const panels = wrapper.findAll('[role="tabpanel"]');
+    361|         expect(tabs).toHaveLength(2);
+    362|         expect(panels).toHaveLength(2);
+       |                        ^
+    363|
+    364|         const panelEls = panels.map((p) => p.element as HTMLElement);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/11]⎯
+
+
+ Test Files  5 failed (5)
+      Tests  10 failed | 23 passed (33)
+   Start at  21:22:48
+   Duration  908ms (transform 1.30s, setup 218ms, import 1.76s, tests 258ms, environment 636ms)
+

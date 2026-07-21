@@ -481,9 +481,9 @@ const stepsModel = computed<number[]>({
                         data-testid="easing-copy"
                         @click="copy"
                     >
-                        <LoaderCircle v-if="copyState === 'pending'" class="size-4 animate-spin" />
-                        <Check v-else-if="copyState === 'copied'" class="size-4 text-(--easing-curve-accent)" />
-                        <Copy v-else class="size-4" />
+                        <LoaderCircle v-if="copyState === 'pending'" class="size-4 animate-spin" aria-hidden="true" />
+                        <Check v-else-if="copyState === 'copied'" class="size-4 text-(--easing-curve-accent)" aria-hidden="true" />
+                        <Copy v-else class="size-4" aria-hidden="true" />
                     </button>
                 </div>
                 <div v-if="copyState !== 'idle'" class="flex flex-wrap items-center justify-between gap-2 text-mono-caption">
@@ -499,12 +499,12 @@ const stepsModel = computed<number[]>({
             <!-- the playback travel control -->
             <div v-if="playback" class="flex flex-wrap items-center gap-2">
                 <Button class="w-fit" data-testid="easing-playback" @click="playTravel">
-                    <RotateCcw v-if="playing || playbackState === 'complete'" />
-                    <Play v-else />
+                    <RotateCcw v-if="playing || playbackState === 'complete'" aria-hidden="true" />
+                    <Play v-else aria-hidden="true" />
                     {{ playbackLabel }}
                 </Button>
                 <Button v-if="playing" class="w-fit" data-testid="easing-cancel" @click="cancelTravel">
-                    <Square />
+                    <Square aria-hidden="true" />
                     Cancel preview
                 </Button>
                 <span class="text-mono-caption text-muted-foreground" role="status" aria-live="polite">

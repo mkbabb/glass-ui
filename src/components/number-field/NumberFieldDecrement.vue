@@ -22,7 +22,7 @@ const props = defineProps<NumberFieldDecrementProps>();
             :class="cn('number-field__step number-field__step--decrement', props.class)"
         >
             <slot>
-                <Minus />
+                <Minus aria-hidden="true" />
             </slot>
         </Button>
     </NumberFieldDecrement>

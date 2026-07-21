@@ -489,7 +489,7 @@ const contentStyle = computed<CSSProperties>(() => ({
                 v-if="props.showClose"
                 class="focus-ring absolute right-(--overlay-pad-inline) top-(--overlay-pad-block) rounded-sm opacity-70 transition-opacity hover:opacity-100 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
             >
-                <X class="w-4 h-4" />
+                <X class="w-4 h-4" aria-hidden="true" />
                 <span class="sr-only">Close</span>
             </RekaDialogClose>
         </RekaDialogContent>

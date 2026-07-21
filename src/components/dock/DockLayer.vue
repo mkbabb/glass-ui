@@ -2,6 +2,7 @@
 import { computed, onBeforeUnmount, onMounted, ref, useTemplateRef, watch } from "vue";
 import type { Component } from "vue";
 import { useDockCrossfadeContext } from "./composables/dockCrossfadeContext";
+import { useDockRailContext } from "./composables/dockRailContext";
 
 /**
  * DockLayer is a named content pane (a face) inside DockCrossfade or DockLayerGroup.
@@ -58,6 +59,19 @@ onBeforeUnmount(() => ctx.unregister(props.id));
 
 const isActive = computed(() => ctx.activeId.value === props.id);
 const isLeaving = computed(() => ctx.leavingId.value === props.id);
+
+// The tablist↔tabpanel linkage (W2-A). A face becomes a `role="tabpanel"` ONLY inside a
+// rendered switcher rail (`<DockLayerGroup>` with `showRail && >1 face`). In the
+// controlled-no-rail `<DockCrossfade>` case the rail context is absent, so the face
+// carries no panel role — no dangling `aria-labelledby` to a non-existent tab.
+const rail = useDockRailContext();
+const isTabpanel = computed(() => rail?.isTablist.value ?? false);
+const panelId = computed(() =>
+    isTabpanel.value ? rail!.panelId(props.id) : undefined,
+);
+const panelLabelledBy = computed(() =>
+    isTabpanel.value ? rail!.tabId(props.id) : undefined,
+);
 </script>
 
 <template>
@@ -65,6 +79,9 @@ const isLeaving = computed(() => ctx.leavingId.value === props.id);
         ref="hostEl"
         class="dock-face"
         :class="{ 'is-active': isActive, 'is-leaving': isLeaving }"
+        :role="isTabpanel ? 'tabpanel' : undefined"
+        :id="panelId"
+        :aria-labelledby="panelLabelledBy"
         :inert="isActive ? undefined : true"
         :aria-hidden="isActive ? undefined : true"
         :tabindex="isActive ? -1 : undefined"
