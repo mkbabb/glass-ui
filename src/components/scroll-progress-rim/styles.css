@@ -1,64 +1,123 @@
-/* ScrollProgressRim component styles.
- * One inset, radius-following band paints a quiet perimeter beneath the fill. */
+/* ScrollProgressRim — the law-12 fill-pill + dots progress read.
+ *
+ * A linear stadium track sits inset along the host's block-end (horizontal) or
+ * inline-end (vertical) edge; a spectrum fill-pill grows from the leading edge to
+ * the progress fraction, its VISIBLE WIDTH sprung by --spring-snappy (the codex
+ * indicators/progress preset). Discrete progress renders its remaining positions
+ * as dots that crossfade out as the pill swallows them — never an angular sweep,
+ * so it reads true on any host silhouette (the conic-on-a-rectangle break retires).
+ *
+ * D-16 divergence (RECORDED, not silently forked). This is an inset EDGE band:
+ * host-relative placement, a thin ~4px stadium hugging one silhouette edge. Its
+ * geometry genuinely diverges from BAND-MATERIAL W4's standalone control
+ * `glass-track-well` (a ~1rem control surface a Slider/Progress own outright), so
+ * it does NOT compose that register. It also mints NO new track vocabulary: the
+ * recessed groove reads the shared `--progress-track-on-glass` token and the dots
+ * read the shared `--value-mark-*` tokens (the same value-marks vocabulary W4
+ * formalizes). If W4's registers later admit this edge geometry, adoption is a
+ * follow-up cut — not this wave. */
 .scroll-progress-rim {
-    --scroll-progress-rim-inset: 1px;
     --scroll-progress-rim-width: 4px;
+    --scroll-progress-rim-inset: 2px;
+    --scroll-progress-rim-margin: 8px;
     position: absolute;
-    inset: var(--scroll-progress-rim-inset);
+    inset: 0;
     z-index: 2;
     isolation: isolate;
-    border-radius: var(--scroll-progress-rim-radius, inherit);
     pointer-events: none;
 }
 
 .scroll-progress-rim__track {
     position: absolute;
+    border-radius: var(--radius-pill);
+    background: var(--progress-track-on-glass);
+}
+
+/* horizontal — the pill hugs the block-end edge, inset from the sides so host
+ * curvature (a pill dock, a circular host) never clips it */
+.scroll-progress-rim[data-orientation="horizontal"] .scroll-progress-rim__track {
+    inset-inline: var(--scroll-progress-rim-margin);
+    inset-block-end: var(--scroll-progress-rim-inset);
+    block-size: var(--scroll-progress-rim-width);
+}
+
+/* vertical — the pill hugs the inline-end edge */
+.scroll-progress-rim[data-orientation="vertical"] .scroll-progress-rim__track {
+    inset-block: var(--scroll-progress-rim-margin);
+    inset-inline-end: var(--scroll-progress-rim-inset);
+    inline-size: var(--scroll-progress-rim-width);
+}
+
+.scroll-progress-rim__fill {
+    position: absolute;
     inset: 0;
-    border: var(--scroll-progress-rim-width) solid transparent;
     border-radius: inherit;
-    background:
-        conic-gradient(
-            from 0deg,
-            var(--scroll-progress-rim-spectrum, var(--section-color-7)),
-            transparent var(--scroll-progress-rim-fill, 0%),
-            transparent 100%
-        ),
-        color-mix(in srgb, var(--foreground) 14%, transparent);
-    -webkit-mask:
-        linear-gradient(#fff 0 0) padding-box,
-        linear-gradient(#fff 0 0) border-box;
-    -webkit-mask-composite: xor;
-    mask:
-        linear-gradient(#fff 0 0) padding-box,
-        linear-gradient(#fff 0 0) border-box;
-    mask-composite: exclude;
+    background: var(--scroll-progress-rim-spectrum, var(--section-color-7));
+    /* spring the width: the clip reveal is the pill's visible length, animated on
+     * --spring-snappy; a growing reveal, never a translated fixed-width thumb */
+    clip-path: inset(0 100% 0 0 round var(--radius-pill));
+    transition: clip-path var(--spring-snappy-duration, 0.44s)
+        var(--spring-snappy, ease-out);
 }
 
-.scroll-progress-rim[data-coverage="bottom-edge"] .scroll-progress-rim__track {
-    background:
-        linear-gradient(
-            to right,
-            var(--scroll-progress-rim-spectrum, var(--section-color-7)),
-            transparent var(--scroll-progress-rim-fill, 0%),
-            transparent 100%
-        ),
-        color-mix(in srgb, var(--foreground) 14%, transparent);
-    clip-path: inset(calc(100% - var(--scroll-progress-rim-width)) 0 0);
+.scroll-progress-rim[data-orientation="horizontal"] .scroll-progress-rim__fill {
+    clip-path: inset(
+        0 calc(100% - var(--scroll-progress-rim-fill, 0%)) 0 0 round
+            var(--radius-pill)
+    );
 }
 
-.scroll-progress-rim[data-coverage="inline-end-edge"] .scroll-progress-rim__track {
-    background:
-        linear-gradient(
-            to bottom,
-            var(--scroll-progress-rim-spectrum, var(--section-color-7)),
-            transparent var(--scroll-progress-rim-fill, 0%),
-            transparent 100%
-        ),
-        color-mix(in srgb, var(--foreground) 14%, transparent);
-    clip-path: inset(0 0 0 calc(100% - var(--scroll-progress-rim-width)));
+.scroll-progress-rim[data-orientation="horizontal"]:dir(rtl)
+    .scroll-progress-rim__fill {
+    clip-path: inset(
+        0 0 0 calc(100% - var(--scroll-progress-rim-fill, 0%)) round
+            var(--radius-pill)
+    );
 }
 
-.scroll-progress-rim[data-coverage="inline-end-edge"]:dir(rtl)
-    .scroll-progress-rim__track {
-    clip-path: inset(0 calc(100% - var(--scroll-progress-rim-width)) 0 0);
+.scroll-progress-rim[data-orientation="vertical"] .scroll-progress-rim__fill {
+    clip-path: inset(
+        calc(100% - var(--scroll-progress-rim-fill, 0%)) 0 0 0 round
+            var(--radius-pill)
+    );
+}
+
+.scroll-progress-rim__dot {
+    position: absolute;
+    inline-size: var(--value-mark-size, 0.375rem);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(
+        --value-mark-color,
+        color-mix(in srgb, var(--foreground) 34%, transparent)
+    );
+    transition: opacity var(--spring-snappy-duration, 0.44s)
+        var(--spring-snappy, ease-out);
+}
+
+.scroll-progress-rim[data-orientation="horizontal"] .scroll-progress-rim__dot {
+    inset-block: 0;
+    margin-block: auto;
+    inset-inline-start: var(--dot-position);
+    transform: translateX(-50%);
+}
+
+.scroll-progress-rim[data-orientation="horizontal"]:dir(rtl)
+    .scroll-progress-rim__dot {
+    transform: translateX(50%);
+}
+
+.scroll-progress-rim[data-orientation="vertical"] .scroll-progress-rim__dot {
+    inset-inline: 0;
+    margin-inline: auto;
+    /* the vertical fill grows from the block-end, so dots read from that edge too */
+    inset-block-end: var(--dot-position);
+    transform: translateY(50%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .scroll-progress-rim__fill,
+    .scroll-progress-rim__dot {
+        transition: none;
+    }
 }

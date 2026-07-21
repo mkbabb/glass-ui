@@ -1,0 +1,174 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui
+
+ ❯ tests/components/custom/scroll-progress-rim/ScrollProgressRim.test.ts (8 tests | 5 failed) 19ms
+     × carries no angular/perimeter paint — the broken-arc geometry is retired 3ms
+     × paints the spectrum as a linear gradient, never an angular sweep 7ms
+     × drives the segment fill by the true aggregate fraction, not a pinned 100% 2ms
+     × renders one dot per segment and swallows the passed dots 3ms
+     × exposes an orientation for the horizontal/vertical fill axis 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/custom/scroll-progress-rim/ScrollProgressRim.test.ts > ScrollProgressRim — law-12 fill-pill + dots geometry > carries no angular/perimeter paint — the broken-arc geometry is retired
+AssertionError: expected '/* ScrollProgressRim component styles…' not to match /conic-gradient/
+
+- Expected:
+/conic-gradient/
+
++ Received:
+"/* ScrollProgressRim component styles.
+ * One inset, radius-following band paints a quiet perimeter beneath the fill. */
+.scroll-progress-rim {
+    --scroll-progress-rim-inset: 1px;
+    --scroll-progress-rim-width: 4px;
+    position: absolute;
+    inset: var(--scroll-progress-rim-inset);
+    z-index: 2;
+    isolation: isolate;
+    border-radius: var(--scroll-progress-rim-radius, inherit);
+    pointer-events: none;
+}
+
+.scroll-progress-rim__track {
+    position: absolute;
+    inset: 0;
+    border: var(--scroll-progress-rim-width) solid transparent;
+    border-radius: inherit;
+    background:
+        conic-gradient(
+            from 0deg,
+            var(--scroll-progress-rim-spectrum, var(--section-color-7)),
+            transparent var(--scroll-progress-rim-fill, 0%),
+            transparent 100%
+        ),
+        color-mix(in srgb, var(--foreground) 14%, transparent);
+    -webkit-mask:
+        linear-gradient(#fff 0 0) padding-box,
+        linear-gradient(#fff 0 0) border-box;
+    -webkit-mask-composite: xor;
+    mask:
+        linear-gradient(#fff 0 0) padding-box,
+        linear-gradient(#fff 0 0) border-box;
+    mask-composite: exclude;
+}
+
+.scroll-progress-rim[data-coverage=\"bottom-edge\"] .scroll-progress-rim__track {
+    background:
+        linear-gradient(
+            to right,
+            var(--scroll-progress-rim-spectrum, var(--section-color-7)),
+            transparent var(--scroll-progress-rim-fill, 0%),
+            transparent 100%
+        ),
+        color-mix(in srgb, var(--foreground) 14%, transparent);
+    clip-path: inset(calc(100% - var(--scroll-progress-rim-width)) 0 0);
+}
+
+.scroll-progress-rim[data-coverage=\"inline-end-edge\"] .scroll-progress-rim__track {
+    background:
+        linear-gradient(
+            to bottom,
+            var(--scroll-progress-rim-spectrum, var(--section-color-7)),
+            transparent var(--scroll-progress-rim-fill, 0%),
+            transparent 100%
+        ),
+        color-mix(in srgb, var(--foreground) 14%, transparent);
+    clip-path: inset(0 0 0 calc(100% - var(--scroll-progress-rim-width)));
+}
+
+.scroll-progress-rim[data-coverage=\"inline-end-edge\"]:dir(rtl)
+    .scroll-progress-rim__track {
+    clip-path: inset(0 calc(100% - var(--scroll-progress-rim-width)) 0 0);
+}
+"
+
+ ❯ tests/components/custom/scroll-progress-rim/ScrollProgressRim.test.ts:23:28
+     21|     // is a linear paint, so no angular geometry may survive anywhere …
+     22|     it("carries no angular/perimeter paint — the broken-arc geometry i…
+     23|         expect(STYLES).not.toMatch(/conic-gradient/);
+       |                            ^
+     24|         expect(STYLES).not.toMatch(/mask-composite/);
+     25|         expect(STYLES).not.toMatch(/mask-border/);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  tests/components/custom/scroll-progress-rim/ScrollProgressRim.test.ts > ScrollProgressRim — law-12 fill-pill + dots geometry > paints the spectrum as a linear gradient, never an angular sweep
+AssertionError: expected '--scroll-progress-rim-fill: 50.000%; …' to match /--scroll-progress-rim-spectrum:\s*lin…/
+
+- Expected:
+/--scroll-progress-rim-spectrum:\s*linear-gradient\(/
+
++ Received:
+"--scroll-progress-rim-fill: 50.000%; --scroll-progress-rim-spectrum: var(--section-color-0) calc(var(--scroll-progress-rim-fill, 0%) * 0.0000), var(--section-color-5) calc(var(--scroll-progress-rim-fill, 0%) * 0.2000), var(--section-color-4) calc(var(--scroll-progress-rim-fill, 0%) * 0.4000), var(--section-color-3) calc(var(--scroll-progress-rim-fill, 0%) * 0.6000), var(--section-color-2) calc(var(--scroll-progress-rim-fill, 0%) * 0.8000), var(--section-color-7) calc(var(--scroll-progress-rim-fill, 0%) * 1.0000);"
+
+ ❯ tests/components/custom/scroll-progress-rim/ScrollProgressRim.test.ts:33:23
+     31|         });
+     32|         const style = wrapper.attributes("style") ?? "";
+     33|         expect(style).toMatch(/--scroll-progress-rim-spectrum:\s*linea…
+       |                       ^
+     34|         expect(style).not.toContain("conic-gradient");
+     35|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  tests/components/custom/scroll-progress-rim/ScrollProgressRim.test.ts > ScrollProgressRim — law-12 fill-pill + dots geometry > drives the segment fill by the true aggregate fraction, not a pinned 100%
+AssertionError: expected '100%' to be '51.750%' // Object.is equality
+
+Expected: "51.750%"
+Received: "100%"
+
+ ❯ tests/components/custom/scroll-progress-rim/ScrollProgressRim.test.ts:45:32
+     43|         });
+     44|         const style = wrapper.attributes("style") ?? "";
+     45|         expect(fillVar(style)).toBe("51.750%");
+       |                                ^
+     46|         expect(fillVar(style)).not.toBe("100%");
+     47|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  tests/components/custom/scroll-progress-rim/ScrollProgressRim.test.ts > ScrollProgressRim — law-12 fill-pill + dots geometry > renders one dot per segment and swallows the passed dots
+AssertionError: expected [] to have a length of 4 but got +0
+
+- Expected
++ Received
+
+- 4
++ 0
+
+ ❯ tests/components/custom/scroll-progress-rim/ScrollProgressRim.test.ts:75:22
+     73|         });
+     74|         const dots = wrapper.findAll(".scroll-progress-rim__dot");
+     75|         expect(dots).toHaveLength(4);
+       |                      ^
+     76|
+     77|         // dot centers at 12.5 / 37.5 / 62.5 / 87.5% — fill is 51.75%,…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  tests/components/custom/scroll-progress-rim/ScrollProgressRim.test.ts > ScrollProgressRim — law-12 fill-pill + dots geometry > exposes an orientation for the horizontal/vertical fill axis
+AssertionError: expected undefined to be 'horizontal' // Object.is equality
+
+- Expected:
+"horizontal"
+
++ Received:
+undefined
+
+ ❯ tests/components/custom/scroll-progress-rim/ScrollProgressRim.test.ts:114:59
+    112|     it("exposes an orientation for the horizontal/vertical fill axis",…
+    113|         const horizontal = mount(ScrollProgressRim, { props: { value: …
+    114|         expect(horizontal.attributes("data-orientation")).toBe("horizo…
+       |                                                           ^
+    115|         const vertical = mount(ScrollProgressRim, {
+    116|             props: { value: 1, orientation: "vertical" },
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  5 failed | 3 passed (8)
+   Start at  16:02:41
+   Duration  361ms (transform 117ms, setup 37ms, import 114ms, tests 19ms, environment 96ms)
+

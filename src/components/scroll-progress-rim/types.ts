@@ -1,3 +1,3 @@
-export type ScrollProgressRimCoverage = "full-ring" | "bottom-edge" | "inline-end-edge";
+export type ScrollProgressRimOrientation = "horizontal" | "vertical";
 
 export type ScrollProgressRimSegments = readonly number[];

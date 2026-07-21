@@ -35,13 +35,6 @@
     initial-value: 0%;
 }
 
-/* The masked scroll-progress rim's interpolable sweep. */
-@property --scroll-progress-rim-fill {
-    syntax: "<percentage>";
-    inherits: false;
-    initial-value: 0%;
-}
-
 /* The area-inflation scalar (the 5-beat blob's grow→overshoot
    →shrink envelope). The 2nd `useLiquidFlex` channel in `useTabIndicator.ts` writes
    `--tab-blob` every frame (it is NOT added to a CSS `transition` list — the

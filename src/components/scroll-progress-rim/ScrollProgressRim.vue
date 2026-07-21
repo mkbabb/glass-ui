@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { computed, type CSSProperties } from "vue";
-import type { ScrollProgressRimCoverage, ScrollProgressRimSegments } from "./types";
+import type {
+    ScrollProgressRimOrientation,
+    ScrollProgressRimSegments,
+} from "./types";
 
 defineOptions({ name: "ScrollProgressRim" });
 
@@ -13,22 +16,30 @@ const DEFAULT_STOPS = [
     "var(--section-color-7)",
 ] as const;
 
+// A dot crossfades over this fraction band as the fill-pill's leading edge
+// reaches its center — the "swallow" of law 12, never a hard on/off flip.
+const SWALLOW_BAND = 0.06;
+
 export interface ScrollProgressRimProps {
     /** Aggregate progress in the same units as `max`. */
     value: number;
     /** Aggregate ceiling. @default 1 */
     max?: number;
-    /** Optional per-item fill values. Each segment is clamped to [0, 1]. */
+    /**
+     * Optional discrete positions. Each entry renders as a dot; the fill-pill
+     * swallows a dot as it passes. The values seed the aggregate read but the
+     * pill length is always the true `value / max` fraction (never pinned full).
+     */
     segments?: ScrollProgressRimSegments;
-    /** Which part of the host edge carries progress. @default "full-ring" */
-    coverage?: ScrollProgressRimCoverage;
-    /** CSS color anchors for the rim's spectrum. */
+    /** The fill axis. @default "horizontal" */
+    orientation?: ScrollProgressRimOrientation;
+    /** CSS color anchors for the fill's spectrum. */
     stops?: readonly string[];
 }
 
 const props = withDefaults(defineProps<ScrollProgressRimProps>(), {
     max: 1,
-    coverage: "full-ring",
+    orientation: "horizontal",
 });
 
 const clamp = (value: number, min: number, max: number) =>
@@ -40,53 +51,40 @@ const value = computed(() => clamp(props.value, 0, max.value));
 const fraction = computed(() => value.value / max.value);
 const spectrum = computed(() => (props.stops?.length ? props.stops : DEFAULT_STOPS));
 
-const aggregateStops = computed(() => {
+// The spectrum is a LINEAR gradient along the fill axis (never an angular conic):
+// as the pill grows it reveals more of the band — the liquid-volume read of law 12.
+const spectrumGradient = computed(() => {
+    const axis = props.orientation === "vertical" ? "to top" : "to right";
     const stops = spectrum.value;
-    const at = (part: number) =>
-        `calc(var(--scroll-progress-rim-fill, 0%) * ${part.toFixed(4)})`;
-    if (stops.length === 1) return `${stops[0]} 0%, ${stops[0]} ${at(1)}`;
-    return stops
-        .map((color, index) => `${color} ${at(index / (stops.length - 1))}`)
+    if (stops.length === 1) {
+        return `linear-gradient(${axis}, ${stops[0]}, ${stops[0]})`;
+    }
+    const body = stops
+        .map(
+            (color, index) =>
+                `${color} ${((index / (stops.length - 1)) * 100).toFixed(2)}%`,
+        )
         .join(", ");
+    return `linear-gradient(${axis}, ${body})`;
 });
 
-const segmentStops = computed(() => {
+// One dot per discrete position, at its slot center; a dot the pill has reached
+// crossfades toward 0 (swallowed), a dot ahead stays lit.
+const dots = computed(() => {
     const segments = props.segments;
-    if (!segments?.length) return null;
-
-    const stops = spectrum.value;
-    const percent = (part: number) => `${(part * 100).toFixed(3)}%`;
-    return segments
-        .flatMap((segment, index) => {
-            const start = index / segments.length;
-            const fill = start + clamp(segment, 0, 1) / segments.length;
-            const end = (index + 1) / segments.length;
-            const color =
-                stops[
-                    segments.length === 1
-                        ? 0
-                        : Math.round(
-                              (index / (segments.length - 1)) * (stops.length - 1),
-                          )
-                ] ?? DEFAULT_STOPS[0];
-            return [
-                `${color} ${percent(start)}`,
-                `${color} ${percent(fill)}`,
-                `transparent ${percent(fill)}`,
-                `transparent ${percent(end)}`,
-            ];
-        })
-        .join(", ");
+    if (!segments?.length) return [];
+    return segments.map((_, index) => {
+        const position = (index + 0.5) / segments.length;
+        const opacity = clamp((position - fraction.value) / SWALLOW_BAND, 0, 1);
+        return { position, opacity };
+    });
 });
 
 const style = computed<CSSProperties>(
     () =>
         ({
-            "--scroll-progress-rim-fill": props.segments?.length
-                ? "100%"
-                : `${(fraction.value * 100).toFixed(3)}%`,
-            "--scroll-progress-rim-spectrum":
-                segmentStops.value ?? aggregateStops.value,
+            "--scroll-progress-rim-fill": `${(fraction.value * 100).toFixed(3)}%`,
+            "--scroll-progress-rim-spectrum": spectrumGradient.value,
         }) as CSSProperties,
 );
 </script>
@@ -94,7 +92,7 @@ const style = computed<CSSProperties>(
 <template>
     <div
         class="scroll-progress-rim"
-        :data-coverage="coverage"
+        :data-orientation="orientation"
         :style="style"
         role="progressbar"
         aria-label="Scroll progress"
@@ -102,6 +100,17 @@ const style = computed<CSSProperties>(
         :aria-valuenow="value"
         :aria-valuemax="max"
     >
-        <span class="scroll-progress-rim__track" aria-hidden="true" />
+        <span class="scroll-progress-rim__track" aria-hidden="true">
+            <span class="scroll-progress-rim__fill" />
+            <span
+                v-for="(dot, index) in dots"
+                :key="index"
+                class="scroll-progress-rim__dot"
+                :style="{
+                    '--dot-position': `${(dot.position * 100).toFixed(3)}%`,
+                    opacity: dot.opacity.toFixed(3),
+                }"
+            />
+        </span>
     </div>
 </template>

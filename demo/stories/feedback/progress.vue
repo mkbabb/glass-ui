@@ -13,10 +13,10 @@ const segmentProgress = [1, 0.72, 0.35, 0] as const;
 const progressVariants = ["default", "gradient", "liquid"] as const;
 const rimStates = [0, 50, 100] as const;
 const rimWidths = ["1px", "4px", "12px"] as const;
-const rimEdges = [
-    { label: "Block end", coverage: "bottom-edge", dir: "ltr" },
-    { label: "Inline end", coverage: "inline-end-edge", dir: "ltr" },
-    { label: "Inline end · RTL", coverage: "inline-end-edge", dir: "rtl" },
+const rimAxes = [
+    { label: "Horizontal", orientation: "horizontal", dir: "ltr" },
+    { label: "Vertical", orientation: "vertical", dir: "ltr" },
+    { label: "Horizontal · RTL", orientation: "horizontal", dir: "rtl" },
 ] as const;
 
 const animated = ref(0);
@@ -196,8 +196,9 @@ onUnmounted(stopAnimated);
 
         <StorySection label="scroll progress rim">
             <p class="font-mono text-xs text-muted-foreground">
-                The inset band follows real Dock and compact host silhouettes without
-                changing their footprint.
+                A law-12 fill-pill: an inset stadium hugs one host edge and the
+                spectrum pill grows to the true fraction — a linear read that stays
+                honest on a pill Dock, a wide card, or a circular host alike.
             </p>
             <div class="flex flex-wrap items-center gap-4">
                 <div
@@ -237,6 +238,16 @@ onUnmounted(stopAnimated);
                         aria-label="Collapsed Dock rim at 50 percent"
                     />
                 </div>
+                <div
+                    class="relative grid size-16 place-items-center rounded-full bg-card/40"
+                >
+                    <span class="font-mono text-xs tabular-nums">65%</span>
+                    <ScrollProgressRim
+                        :value="65"
+                        :max="100"
+                        aria-label="Circular host rim at 65 percent"
+                    />
+                </div>
             </div>
 
             <div class="grid grid-cols-3 gap-2">
@@ -256,24 +267,24 @@ onUnmounted(stopAnimated);
                     </span>
                 </div>
                 <div
-                    v-for="edge in rimEdges"
-                    :key="edge.label"
-                    :dir="edge.dir"
-                    class="relative grid h-12 min-w-0 place-items-center rounded-card bg-card/40"
+                    v-for="axis in rimAxes"
+                    :key="axis.label"
+                    :dir="axis.dir"
+                    class="relative grid h-24 min-w-0 place-items-center rounded-card bg-card/40"
                 >
                     <ScrollProgressRim
                         :value="50"
                         :max="100"
-                        :coverage="edge.coverage"
-                        :aria-label="`${edge.label} rim at 50 percent`"
+                        :orientation="axis.orientation"
+                        :aria-label="`${axis.label} rim at 50 percent`"
                     />
                     <span class="font-mono text-micro text-muted-foreground">
-                        {{ edge.label }}
+                        {{ axis.label }}
                     </span>
                 </div>
             </div>
 
-            <div class="glass-card relative rounded-card px-4 py-3">
+            <div class="glass-card relative rounded-card px-4 py-3 pb-5">
                 <ScrollProgressRim
                     :value="2.07"
                     :max="4"
@@ -282,7 +293,7 @@ onUnmounted(stopAnimated);
                 />
                 <div class="flex flex-col gap-0.5">
                     <span class="font-mono text-sm font-medium tabular-nums">
-                        4 stages
+                        4 stages · 52%
                     </span>
                     <span class="font-mono text-micro text-muted-foreground">
                         Per-item · 1.00 / 0.72 / 0.35 / 0.00
