@@ -874,6 +874,51 @@ seat; read the machine report, never a piped exit code.
 no other owner in this corpus — `BAND-COLOCATION.md:71` explicitly declares the styles-root
 grouping nicety NOT a wave). Runs any time after `BAND-GATES` W3 authors the gate.
 
+### §CLOSE — LANDED (`c2a37ac5`, 2026-07-22, model claude-opus-4-8)
+
+Evidence: `../evidence/W-REFRACT-LATCH/` (README + gate reports + the latch-ON discrimination
+JSON + the dual-engine screenshots).
+
+**Born-RED re-proven at HEAD `2ad97ca1`** (`refract-lens-never-sharper.spec.ts --project=webkit`):
+`@supports=true` (the lie) · lens **0.0794-sharp** (91.9% of scene energy) vs the **0.0018**-frosted
+blur-only twin · tolerance 0.12, received 0.9187. The `test.fail()` EXPECTED-RED marker was live.
+
+**Fix (clean break, no masking fallback):**
+- `src/styles/glass-refract.css` — the lying `@supports (backdrop-filter: url("#glass-refract"))`
+  wrapper DELETED; the composite moved behind the runtime latch `:root[data-glass-refract="on"]
+  .glass-lens`. The un-gated blur base is byte-unchanged.
+- `src/composables/glass/supportsBackdropRefract.ts` (NEW) — `supportsBackdropRefract()` +
+  `armGlassRefract()`, honesty-ordered: SSR guard → engine claims url() → rejects garbage
+  (happy-dom/jsdom shim guard) → the FUNCTIONAL arm. The WebKit accept-and-drop class is
+  discriminated ONLY functionally (all supports/computed reads return true): canvas 2D
+  `ctx.filter = url(#f)` rides the same url()-referenced-filter raster path — **Chromium applies it
+  (pixel red), WebKit drops it (pixel blue)**, validated per-engine by this wave's live probe.
+  Exported from the glass barrel; `arm*` shape kin to `installDarkModeSync`.
+- `demo/main.ts` — one root-level `armGlassRefract()` bootstrap. Necessary because
+  `sideEffects: ['*.css']` prunes module-load side effects, so the arm is explicit (as a consumer's
+  would be); without it Chromium's demo lens would silently regress to blur-only. The spec's "no
+  demo edits" is honored in spirit — no per-story/component edit, a single root bootstrap analogous
+  to the existing capture/router boot.
+- `tests-visual/refract-lens-never-sharper.spec.ts` — `test.fail()` marker + the WebKit branch
+  dropped; the invariant is now a STANDING lock, GREEN on both engines. Blind-capture recovery added
+  (the correct blur-degrade removed the heavy `url()` filter that had incidentally masked a
+  pre-existing ~10% chromium-headless video-capture race; the gate now re-captures a provably-blind
+  screencast up to 4× — instrument recovery, NOT a verdict retry — and reds LOUD if every attempt is
+  blind). Stability re-verified: WebKit solid, chromium **26/26** clean post-recovery.
+
+**Gate GREEN — flips `BAND-GATES` W3(D) `gate:refract-lens-never-sharper`:** `2 passed` on
+`--project=webkit` AND `--project=chromium-headless-new` (reports banked). The latch harness does NOT
+arm the latch, so `.glass-lens` degrades to its blur base on BOTH engines and reads at its blur-only
+twin — the latch-OFF degrade proof (blur paints on both engines).
+
+**§π/DELTA — the latch-ON discrimination proof** (`latch-discrimination.json`, dual-engine, computed
++ screenshot, no `getContext`): both engines return `@supports=true`; the functional arm defeats the
+lie — **Chromium** arms `data-glass-refract="on"`, lens computes `blur(7px) saturate(1.4) url("data:…`
+(refraction); **WebKit** stays OFF, lens computes `blur(7px) saturate(1.4)` (blur degrade, no dropped
+url — the Safari-floor degrade RESTORED). WebKit's screenshot shows stripes through the chips because
+`page.screenshot()` is backdrop-filter-blind (the video-path law); its truth is the computed style +
+the video-path gate. Zero API change: `.glass-lens` consumers untouched, no MIGRATION.md row.
+
 ---
 
 ## §Band-level obligations & OPEN roll-up

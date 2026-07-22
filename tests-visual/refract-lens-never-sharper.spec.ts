@@ -25,12 +25,16 @@
 // organ on this engine, so the gate reads a decoded VIDEO frame. Observation is video +
 // computed-style only — no context is ever taken from a live canvas.
 //
-// AUTHORED BORN-RED (BAND-GATES §Wave 3 §Acceptance). The fix is the runtime latch that
-// replaces the lying `@supports` — `BJ.W-REFRACT-LATCH` (BAND-MATERIAL W8); this file
-// authors the gate only and edits none of its source. The binding assertion carries
-// `test.fail()` — the EXPECTED-RED latch — so CI reads a born-RED gate as GREEN and a
-// ROTTED gate as RED. When W8's latch lands, the assertion starts passing, `test.fail()`
-// inverts, and W8 drops the marker in the same cut.
+// AUTHORED BORN-RED (BAND-GATES §Wave 3 §Acceptance); LATCH LANDED by BJ.W-REFRACT-LATCH
+// (BAND-MATERIAL W8, HEAD 2ad97ca1). `src/styles/glass-refract.css` no longer gates on the
+// WebKit-lying `@supports (backdrop-filter: url(#…))` — the composite sits behind the
+// runtime latch `:root[data-glass-refract="on"]`, set once per session by
+// `armGlassRefract()` (`src/composables/glass/supportsBackdropRefract.ts`) whose functional
+// arm actually exercises the url()-filter raster path (Chromium applies it, WebKit drops
+// it). The gate harness does NOT arm the latch, so `.glass-lens` degrades to its un-gated
+// blur base on BOTH engines here — the invariant holds GREEN and this file drops its
+// `test.fail()` marker. Born-RED re-proven at HEAD before the fix: WebKit @supports=true,
+// lens 0.0794-sharp (91.9% scene energy) vs the 0.0018-frosted twin.
 //
 // STANDING, not disposable: it also catches the day WebKit ships `url()` for real (the
 // functional arm goes true, the gate stays green). Per R-6 (RULED 2026-07-20, lead,
@@ -69,6 +73,25 @@ const SHARPNESS_TOLERANCE = 0.12;
 // How many trailing screencast frames the verdict is taken over (median). The tail is the
 // settled paint; the head can predate the injected stylesheets.
 const SETTLED_FRAMES = 5;
+
+// The minimum background gradient energy a frame must carry to count as "the scene
+// painted." The bare striped scene reads ~0.086; a pre-paint / capture-miss frame reads
+// ~0. Frames below this floor are dropped before the settled tail is taken (a whole-
+// recording miss then reds LOUD instead of medianing a NaN scene ratio).
+const SCENE_PAINTED_FLOOR = 0.01;
+
+// How many times a BLIND screencast (whole recording unpainted) is re-captured before the
+// instrument is declared broken. At a measured ~10% blind rate on chromium-headless, four
+// attempts drive the miss probability below 1e-4 while a genuinely broken capture still
+// reds LOUD. Re-capturing a blind instrument is NOT a verdict retry — the assertion is
+// never re-run, only a provably-unpainted recording is refused.
+const CAPTURE_ATTEMPTS = 4;
+
+// A capture whose blur-only twin carries more than this fraction of the bare scene's
+// energy did not settle its `backdrop-filter` — a blind recording, re-captured (never a
+// real degrade: a genuine blur-only twin reads ~0.02). Well clear of a frosted twin's
+// ceiling and far below the ~0.9 an unsettled twin reads.
+const BLIND_TWIN_RATIO = 0.5;
 
 /**
  * The shipped CSS this gate measures — the real files, never a copy. `property-regs.css`
@@ -189,9 +212,17 @@ interface Reading {
     energy: { background: number; twin: number; lens: number; planted: number };
 }
 
-/** Drive the harness on `browser`, capture the screencast, decode one frame, measure. */
-const readScene = async (browser: Browser): Promise<Reading> => {
-    const ffmpeg = resolveFfmpeg();
+/**
+ * One capture attempt. Returns the measured `Reading`, or `null` when the screencast is
+ * BLIND — the whole recording is unpainted (chromium-headless software-raster occasionally
+ * presents the compositor idle and never lands the scene in the video; measured ~10% of
+ * captures, which the heavy `url()` filter at HEAD used to incidentally mask). A blind
+ * capture is not a verdict, so `readScene` re-captures it — instrument recovery, NOT a
+ * verdict retry (the anti-flake doctrine forbids re-running the ASSERTION, never the blind
+ * INSTRUMENT). It cannot manufacture a GREEN: the WebKit sharp-lens paints a scene, so its
+ * capture is never blind and never re-rolled away.
+ */
+const captureScene = async (browser: Browser, ffmpeg: string): Promise<Reading | null> => {
     const dir = mkdtempSync(join(tmpdir(), "refract-lens-"));
 
     try {
@@ -229,41 +260,79 @@ const readScene = async (browser: Browser): Promise<Reading> => {
             ["-y", "-i", join(dir, recording), "-vsync", "0", join(dir, "f-%04d.png")],
             { stdio: "ignore" },
         );
-        const frames = readdirSync(dir)
-            .filter((file) => file.startsWith("f-") && file.endsWith(".png"))
-            .sort()
-            .slice(-SETTLED_FRAMES);
-        if (frames.length === 0) {
-            throw new Error("refract-lens-never-sharper: the screencast decoded to no frames.");
-        }
 
         const top = CHIP.top + CHIP.inset;
         const bottom = CHIP.top + CHIP.height - CHIP.inset;
+
+        const decoded = readdirSync(dir)
+            .filter((file) => file.startsWith("f-") && file.endsWith(".png"))
+            .sort()
+            .map((file) => PNG.sync.read(readFileSync(join(dir, file))));
+        if (decoded.length === 0) {
+            throw new Error("refract-lens-never-sharper: the screencast decoded to no frames.");
+        }
+
+        // Keep only frames where the BARE striped scene actually painted. A pre-first-paint
+        // frame reads ~0 background energy; medianing it in would yield a NaN scene ratio —
+        // the SAME hazard the decode-not-seek note above guards, extended to per-frame. When
+        // the WHOLE recording is unpainted (the blind-capture race) `painted` is empty and
+        // this attempt returns null for `readScene` to re-capture. Filtering on the bare
+        // scene cannot hide the WebKit sharp-lens RED — a sharp lens has a painted scene by
+        // construction.
+        const painted = decoded.filter(
+            (png) => gradientEnergy(png, BACKGROUND_X.from, BACKGROUND_X.to, top, bottom) > SCENE_PAINTED_FLOOR,
+        );
+        if (painted.length === 0) return null;
+        const frames = painted.slice(-SETTLED_FRAMES);
+
         // Median over the settled tail — the suite's in-spec anti-flake discipline
         // (playwright.config.ts: robust verdict inside the spec, never a runner retry).
         const median = (values: number[]): number =>
             [...values].sort((a, b) => a - b)[values.length >> 1];
         const across = (from: number, to: number): number =>
-            median(
-                frames.map((file) =>
-                    gradientEnergy(PNG.sync.read(readFileSync(join(dir, file))), from, to, top, bottom),
-                ),
-            );
+            median(frames.map((png) => gradientEnergy(png, from, to, top, bottom)));
         const chipEnergy = (left: number): number =>
             across(left + CHIP.inset, left + CHIP.width - CHIP.inset);
 
-        return {
-            ...observed,
-            energy: {
-                background: across(BACKGROUND_X.from, BACKGROUND_X.to),
-                twin: chipEnergy(CHIP_X.twin),
-                lens: chipEnergy(CHIP_X.lens),
-                planted: chipEnergy(CHIP_X.planted),
-            },
+        const energy = {
+            background: across(BACKGROUND_X.from, BACKGROUND_X.to),
+            twin: chipEnergy(CHIP_X.twin),
+            lens: chipEnergy(CHIP_X.lens),
+            planted: chipEnergy(CHIP_X.planted),
         };
+
+        // The second blind-capture signature: the scene painted but the BLUR BASE did not.
+        // A settled capture has a frosted twin (twin ≪ scene); a twin near the bare scene
+        // means `backdrop-filter` never applied in this recording — the same blindness class
+        // as an unpainted scene (`page.screenshot()` is backdrop-filter-blind on WebKit; the
+        // headless video path can miss the filter too). A real blur-only twin is always
+        // well below this floor (~0.02), so refusing it for re-capture can never re-roll a
+        // genuine reading — only an instrument miss. The final `twinFloor` instrument-honesty
+        // assertion remains the loud backstop if every attempt is blind.
+        if (energy.twin / energy.background > BLIND_TWIN_RATIO) return null;
+
+        return { ...observed, energy };
     } finally {
         rmSync(dir, { recursive: true, force: true });
     }
+};
+
+/**
+ * Drive the harness and return one measured `Reading`, re-capturing a BLIND screencast up
+ * to {@link CAPTURE_ATTEMPTS} times. If every attempt is blind the instrument is broken —
+ * red LOUD (a gate that silently skips its own capture is the unwired-gate class this band
+ * exists to end).
+ */
+const readScene = async (browser: Browser): Promise<Reading> => {
+    const ffmpeg = resolveFfmpeg();
+    for (let attempt = 0; attempt < CAPTURE_ATTEMPTS; attempt++) {
+        const reading = await captureScene(browser, ffmpeg);
+        if (reading) return reading;
+    }
+    throw new Error(
+        `refract-lens-never-sharper: the screencast never painted the striped scene in ` +
+            `${CAPTURE_ATTEMPTS} attempts (blind capture) — no verdict is possible.`,
+    );
 };
 
 /** The verdict predicate — how much scene energy a surface carries above the blur floor. */
@@ -328,15 +397,13 @@ test.describe("gate:refract-lens-never-sharper — the WebKit @supports gate-lie
     });
 
     test("the lens never paints sharper than its own blur base", async ({}, testInfo) => {
-        // EXPECTED-RED at HEAD on WebKit — `glass-refract.css`'s `@supports` engages and the
-        // whole composite drops at paint. GREEN when BJ.W-REFRACT-LATCH (MATERIAL W8) lands
-        // the runtime latch; `test.fail()` then inverts and W8 drops this marker.
-        // Chromium paints the composite correctly, so the lock is honestly GREEN there and
-        // is NOT marked — a blanket marker would hide a real Chromium regression.
+        // GREEN on every engine since BJ.W-REFRACT-LATCH landed the runtime latch: the gate
+        // harness does not arm `:root[data-glass-refract="on"]`, so `.glass-lens` degrades to
+        // its un-gated blur base and reads at its blur-only twin on both Chromium AND WebKit.
+        // This is a STANDING regression lock — it reds again the day `glass-refract.css`
+        // re-gates on a lying `@supports`, or the day a WebKit paints the url() composite
+        // sharp. No engine is marked: a blanket marker would hide a real regression.
         const engine = testInfo.project.name;
-        if (engine.includes("webkit")) {
-            test.fail(true, "EXPECTED-RED — BJ.W-REFRACT-LATCH (BAND-MATERIAL W8) owns the flip");
-        }
 
         // ── THE INVARIANT ──────────────────────────────────────────────────────────────
         const perSample = readings.map((r) => sharpnessExcess(r.energy, r.energy.lens));
