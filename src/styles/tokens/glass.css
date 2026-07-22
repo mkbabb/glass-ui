@@ -83,6 +83,57 @@
        resting material; primary Buttons consume the shared deep register. Radius-only —
        the per-rung saturate()/brightness() companions stay (the saturate-revert is a
        later paint, not this collapse). */
+
+    /* ══ THE BLUR-LADDER PRECEPT — one material per role, the collisions ruled ══
+       (BJ.W-BLUR-LADDER canon; the token source is the canon, not design-idioms.md
+       — avoids the BAND-COLOCATION Precept-F duplication. Sibling waves cite THIS
+       table.) The ladder has FEWER distinct radii than names; that is intentional,
+       and here is why each rung is its own material:
+
+         rung      radius(std)  composed distinction          role
+         ────────  ───────────  ────────────────────────────  ──────────────────────
+         wash      1px          saturate only                 sub-perceptual scrim
+         quiet     7px          saturate + brightness(1.02)    lower control/form (lifted)
+         resting   7px          saturate                      canonical plate (dock/Card/menu-row)
+         floating  11px         saturate  [dark bright 1.10]   floating surface (popover/cell)
+         overlay   11px         saturate  [dark bright 1.06]   modal-over-modal / flat scrim
+         deep      16px         glass-deep.css                 animated substrate + immersive scrim
+
+       COLLISION 1 — quiet == resting radius (7px). RULED INTENTIONAL: the ONE
+       unified 7px base material at the RADIUS axis (dock + default-Card + menu-row
+       resolve the same 7px leg, the resolved-radius peer lock). They stay DISTINCT
+       composed materials — quiet carries the brightness(1.02) lift (the lower rung
+       reads with the same life as resting+), resting is the flat canonical plate.
+       The names are NOT merged: a merge would drop the brightness distinction. (The
+       rename-to-4-real-rungs read, OPEN-2a, is DECLINED at the systematic tier for
+       that reason; a design-tier re-rule stays Fable's.)
+
+       COLLISION 2 — floating == overlay radius (11px) at standard density. The
+       shared floating/overlay base; they diverge by (a) the dark-arm brightness
+       companion (floating 1.10 vs overlay 1.06, dark-arm-glass.css) and (b) the
+       high-DPI arm below. In light mode at standard DPI they compose identically —
+       distinct by role and dark luminance, not by a standard-density perceptual step.
+
+       THE DPI ARM (light-dark.css:34-38) — the ONE device-conditional rung:
+       `--glass-blur-overlay-radius` → 17px at `min-resolution: 2dppx`. Documented
+       here so it is AUDITABLE (a denser backing store amortizes a richer overlay
+       wash). Whether to KEEP it (amortized cost) or KILL it (F48 subtler-for-ALL +
+       device-consistency) is a paint-taste ruling DEFERRED to the design tier
+       (OPEN-2b, Fable + π); the 17px arm STANDS until that ruling — this wave only
+       makes it auditable, it does not pre-empt the taste call.
+
+       SATURATE IDENTITY (D-04) — the SHIPPED per-rung saturate values (wash/quiet/
+       resting 1.4, floating/overlay 1.6, declared below) ARE the material identity,
+       machine-locked by `proof:glass-legibility` L7. An earlier prose bake naming
+       1.05/1.18/1.2 was STALE; the saturate prose below is trued to the shipped
+       values (this discharges DOC-TRUTH T42's trigger — values-side ruling, no
+       repaint; a prose-side revert would have been a separate later paint wave).
+
+       ONE MATERIAL PER ROLE — every glass surface reads one composed
+       `--glass-blur-{rung}` for its role; raw off-ladder `blur(Npx)` is forbidden
+       (BAND-GATES W3 `token-hygiene` enforces). This wave lands the one open
+       repoint: the drawer immersive Command scrim (the deepest flat backdrop) →
+       `--glass-blur-deep-radius`, its role home. */
     --glass-blur-wash-radius:     1px;
     --glass-blur-quiet-radius:    7px;
     --glass-blur-resting-radius:  7px;
@@ -111,8 +162,8 @@
        `--glass-opacity-{tier}` alpha register above. A `:root { --glass-saturate-
        quiet: … }` override re-resolves the rung's saturation with ZERO recipe edit
        (the "dark cards" chronic + the apple-glass saturate-as-load-bearing
-       lever). The values here ARE the bake (wash/quiet/resting 1.05,
-       floating 1.18, overlay 1.2) become the token defaults — so the composed blur
+       lever). The values here ARE the bake (wash/quiet/resting 1.4,
+       floating/overlay 1.6) become the token defaults — so the composed blur
        is UNCHANGED at these defaults (proof:glass-cal / proof:card-tier-
        alpha stay GREEN by construction). The deep-tier `--glass-saturate-deep` 1.8
        ceiling (glass-deep.css) is the upper bound; no rung saturate exceeds it. The
@@ -145,10 +196,11 @@
        `--glass-blur-quiet: none`, so this whole chain drops with the blur. */
     --glass-blur-quiet:    blur(calc(var(--glass-blur-quiet-radius) * var(--glass-level))) saturate(var(--glass-saturate-quiet)) brightness(1.02);
     --glass-blur-resting:  blur(calc(var(--glass-blur-resting-radius) * var(--glass-level))) saturate(var(--glass-saturate-resting));
-    /* The floating/overlay backdrop saturate sits at a
-       gentle ~1.18/1.2 (real liquid glass concentrates light ~1.1–1.2×; a
-       1.4–1.5× over-juices the bleed-through into a garish smear over a colored
-       substrate). wash/quiet/resting sit at 1.05. */
+    /* The floating/overlay backdrop saturate sits at 1.6, the
+       upper transmissive rung (still under the deep 1.8 ceiling); wash/quiet/
+       resting sit at 1.4. These shipped values ARE the material identity (D-04,
+       proof:glass-legibility L7) — the earlier ~1.05/1.18/1.2 prose was a stale
+       bake, trued here to what paints. */
     --glass-blur-floating: blur(calc(var(--glass-blur-floating-radius) * var(--glass-level))) saturate(var(--glass-saturate-floating));
     --glass-blur-overlay:  blur(calc(var(--glass-blur-overlay-radius) * var(--glass-level))) saturate(var(--glass-saturate-overlay));
     /* The composed `--glass-blur-dock` token RETIRED (orphaned by

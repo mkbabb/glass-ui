@@ -203,10 +203,44 @@ replaces scattered comments with ONE source. The gate lives in `BAND-GATES` W3 �
 
 - `OPEN-1a` — F09/F12 disk-vs-screenshot drift: live-π re-check owed before any defect claim (above;
   F17 removed from this class — FLIP F-1).
-- `OPEN-1b` — `--radius-input` new name: `--radius-media` vs `--radius-tile` (Skeleton/Avatar/Command are
-  media/tile surfaces). Fable rules the name.
+- `OPEN-1b` — `--radius-input` new name — **RULED at build (opus systematic reconcile): `--radius-media`.**
+  The rung's consumers are media/tile surfaces (Skeleton, Avatar-square identity, Command input); the
+  rename is the reconcile itself (a defect cannot be reconciled without a name), so the systematic-core
+  landing carried the draft-leading name. Fable may re-rule `-tile` at design tier — a clean-break re-rename.
 - `OPEN-1c` — `segmented.css` repoint target: `--radius-control` (stadium) vs `--radius-strip`
-  (column-stack) — depends on the segmented variant geometry. Fable rules.
+  (column-stack) — depends on the segmented variant geometry. Fable rules. **DEFERRED — NOT landed at
+  build** (the column-stack geometry OPEN this seat was ordered not to guess). `segmented.css:169`
+  (`.segmented-tab` `0.3125rem`) + `:306` (`.segmented-tabs--underline .segmented-tab` `0.25rem`) stay
+  raw at HEAD; the `token-hygiene` gate's `it.fails` latch (BAND-GATES W3) covers the two-site interim.
+
+### §BUILD LANDED — the systematic core (opus, modelId `claude-opus-4-8`), 2026-07-21
+
+RE-VERIFIED at HEAD `8786d2c8` (band cited `485891a2`; both born-RED defects reproduce; the
+`proof:squircle-language` gate confirmed absent from `scripts/` + `tests/`).
+
+- **Canon table** — the role→token→shape single source authored into `theme/radius.css` header (the
+  token source, not `design-idioms.md` — avoids the BAND-COLOCATION W1 Precept F duplication); documents
+  the concentric relay as law + the F12 "card-never-in-pill" rule.
+- **Reconcile 1 (misnomer):** `--radius-input`→`--radius-media` clean break; the three media consumers
+  (Skeleton, Avatar, Command) + `tokens/manifest.ts` repointed; the Input's stadium pill stands alone.
+- **Reconcile 2 (dead tokens):** `--corner-k-soft`/`-sharp` deleted + the false "pinned by
+  proof:squircle-language" comment struck; `--corner-k-squircle` alone survives (net −2 tokens).
+- **Repoint:** `SortableList.vue:144` `999px`→`var(--radius-pill)`.
+- **F15 dogfood swap:** `infinite-scroll.vue` raw `<button rounded-md>` → library `<Button size="sm">`.
+- **Guards:** `tests/styles/radius-role-canon.test.ts` pins the reconcile + F12 (tags-input container on
+  `--radius-field`, chip stadium from `<Chip>`); F45/F48 already pinned by `radius-dialog-bind.test.ts`.
+
+### §DEFERRED — the design tier owes these decisions (do not guess)
+
+- **F17 floating-variant chrome** — the born-RED square-input remediation. Site: `searchVariants.ts:10`
+  `floating: "… rounded-none"` strips the `.input-bar` (`utilities/components.css:12-16`
+  `--radius-2xl`) with a utilities-layer class, zero `.fuzzy-search--floating` re-chrome rules in `src/`.
+  **Decision owed (Fable + live-π):** the `floating` variant gains its own rounded chrome, OR stops
+  stripping `border-radius`, OR the demo drops `variant="floating"`. **DRIFT NOTE:** at HEAD `search.vue`
+  no longer passes `variant="floating"` (SearchBar defaults `inline`, `search.vue:491`), so the demo no
+  longer TRIGGERS the square; the strip persists in `searchVariants.ts:10` for any consumer that opts in.
+  The chrome decision + its before/after live-π capture is the design-tier deliverable (LIVE-DEFER).
+- **OPEN-1c segmented target** — see above (column-stack vs stadium geometry, Fable rules).
 
 ---
 
@@ -335,6 +369,60 @@ W3 can lint raw blur against it.
 - `OPEN-2b` — the 2dppx overlay arm: kill (draft) vs document intentional. Fable rules.
 - `OPEN-2c` — F48 further pull: warranted at HEAD vs already-satisfied by the shipped dial-back (π decides).
 - `OPEN-2d` — F28 bloom: intentional emphasis grammar vs bug — live-π gated (the radius fork is closed).
+
+### §BUILD LANDED — the systematic core (opus, modelId `claude-opus-4-8`), 2026-07-22
+
+RE-VERIFIED at HEAD `31c01d2a` (band cited `485891a2`): all three born-RED facts reproduce —
+quiet==resting==7px + floating==overlay==11px (`glass.css:87-89,:97`); the 2dppx overlay→17px arm
+(`light-dark.css:36`); the raw `blur(14px)` immersive scrim (`drawer/styles.css:379`). The saturate
+values-vs-prose contradiction also confirmed (shipped 1.4/1.4/1.4/1.6/1.6 at `:123-127` vs prose naming
+1.05/1.18/1.2).
+
+- **The blur-ladder precept** — the role→rung→material canon authored into `tokens/glass.css` header (the
+  token source is the canon, avoids the BAND-COLOCATION Precept-F duplication). Documents the six rungs,
+  BOTH collisions, the DPI arm, and the one-material-per-role rule. This is the "collapse the collisions to
+  one material per role, documented" deliverable.
+- **Collision 1 (quiet==resting, 7px) — RULED INTENTIONAL, documented.** The unified 7px base material at
+  the RADIUS axis; the rungs stay DISTINCT composed materials (quiet carries `brightness(1.02)`, resting is
+  the flat plate), so the names are NOT merged — a merge would drop the brightness distinction. `OPEN-2a`
+  (rename-to-4) is therefore DECLINED at the systematic tier for that reason; a design-tier re-rule stays
+  Fable's (marked, not forced).
+- **Collision 2 (floating==overlay, 11px) — documented as the shared base.** They diverge by the dark-arm
+  brightness companion (1.10 vs 1.06) + the DPI arm; light-mode/standard-DPI they compose identically. No
+  new perceptual step invented (that would be paint-taste).
+- **The DPI arm — DOCUMENTED (auditable), the kill DEFERRED.** The 17px 2dppx arm is now named in the
+  precept as the one device-conditional rung with its amortization rationale. Whether to KEEP or KILL it
+  (`OPEN-2b`, F48-subtler vs device-amortization) is a paint-taste ruling DEFERRED to the design tier; the
+  17px arm STANDS — this wave makes it auditable, it does not pre-empt the taste call. (`light-dark.css`
+  and `glass-subtlety.test.ts:84-87` UNTOUCHED — no fresh literal re-pinned, BAND-GATES W1 KILL-roster
+  clean.)
+- **Saturate identity (D-04) — RULED VALUES-SIDE, no repaint.** The shipped 1.4/1.6 ARE the material
+  identity (`proof:glass-legibility` L7). The two stale prose blocks (`glass.css` register header +
+  floating/overlay note) trued to name the shipped values. This is ruling-only + a prose trueup (no
+  saturate VALUE touched — radius-axis wave); it discharges DOC-TRUTH T42's trigger (values-side, so T42
+  needs no separate revert wave).
+- **Repoint:** `drawer/styles.css:379` `blur(14px)` → `blur(var(--glass-blur-deep-radius))` (16px). The
+  immersive Command scrim is the deepest flat backdrop (deliberately deeper than the standard overlay scrim
+  at `:209`), so the deep rung is its role home; the raw literal dies (flips BAND-GATES W3 `token-hygiene`
+  GREEN on this site). Under EITHER W3 graded verdict (the `:378-380` block is the flat-default arm W3's
+  graded form gates against, not replaces). Blur-only preserved — no `saturate()` added to a scrim.
+- **Guards:** none minted — the ladder radii are already pinned by `glass-subtlety.test.ts` (untouched,
+  KILL-roster-bound) and enforcement is BAND-GATES W3's; a bespoke pin would duplicate. `glass-subtlety` +
+  `dialog-stage-ownership` + `Drawer.motion-lifecycle` re-run GREEN (15/15) post-edit.
+
+### §DEFERRED — the design tier owes these (do not guess; marked, not forced)
+
+- **`OPEN-2a`** — rung rename (4 real rungs vs 6 documented-collapsed). DECLINED at systematic tier (the
+  brightness companions make quiet≠resting, floating≠overlay in composed output); Fable may re-rule at
+  design tier as a clean-break rename.
+- **`OPEN-2b`** — the 2dppx overlay arm: KILL (F48 subtler-for-ALL + device-consistency) vs KEEP
+  (amortized cost). Documented + auditable now; the call is Fable + live-π. Killing also strikes
+  `glass-subtlety.test.ts:84-87` (coordinate with BAND-GATES W1's KILL of that file).
+- **`OPEN-2c`** — F48 further uniform pull: warranted at HEAD vs already-satisfied by the shipped ~30%
+  dial-back. π-decided against the F49/F50 reference stills (paint-taste, not a blind integer pull).
+- **`OPEN-2d`** — F28 bloom: the springs-page ordinary-button glow/shadow-bloom vs flat-Select divergence —
+  intentional emphasis grammar vs bug. Radius fork is CLOSED (all in-frame controls sit at 7px); the live-π
+  rules bloom-intentionality only (route `/motion/springs`, NOT `/foundations`).
 
 ---
 

@@ -362,9 +362,10 @@
 
 /*
  * Coupling (D): the opt-in `immersive` Command spotlight.
- * The scrim owns one FIXED 14px backdrop depth, never a per-frame
- * radius ramp on `--stage-t`. A `blur(calc(--stage-t *
- * 14px))` re-rasterizes the blur kernel EVERY frame (the cardinal Safari sin, §L7 /
+ * The scrim owns one FIXED deep backdrop depth (`--glass-blur-deep-radius`, the
+ * ladder's deepest flat rung — this immersive plate is deliberately deeper than the
+ * standard overlay scrim above), never a per-frame radius ramp on `--stage-t`. A
+ * `blur(calc(--stage-t * Npx))` re-rasterizes the blur kernel EVERY frame (the cardinal Safari sin, §L7 /
  * fold C2·R); the DIM ramps instead via the scrim α coupling (the `[data-stage-scrim]`
  * rule above, already `--stage-t`-driven) — the backdrop depth is material-constant
  * while the dim tracks the detent. The scrim fades in over
@@ -376,7 +377,7 @@
  * its paint is byte-identical.
  */
 [data-stage-scrim][data-stage-immersive]:not([data-backdrop="graded"]) {
-    backdrop-filter: blur(14px);
+    backdrop-filter: blur(var(--glass-blur-deep-radius));
 }
 
 /* Reduced-motion — the house `SpringProgress` snaps the detent deterministically
