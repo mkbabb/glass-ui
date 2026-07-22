@@ -15,6 +15,29 @@ export function relLuminance(r: number, g: number, b: number): number {
     return 0.2126 * linearize(r) + 0.7152 * linearize(g) + 0.0722 * linearize(b);
 }
 
+/**
+ * Composite a straight-alpha sRGB pixel [r,g,b] at coverage `a` (0..1) OVER an
+ * opaque sRGB `underlay` triple → the resolved opaque sRGB [r,g,b] (source-over).
+ * The animated field is a TRANSLUCENT canvas; the perceived backdrop is the field
+ * painted over the REAL opaque page beneath it, so the underlay MUST be the actual
+ * page color — a dark page and a light page under the SAME translucent field yield
+ * DISTINCT composited luma. A hardcoded white underlay collapses that distinction
+ * (the born-RED). This is the luma→tint axis input, NOT a second opacity axis.
+ */
+export function compositeOver(
+    r: number,
+    g: number,
+    b: number,
+    a: number,
+    underlay: readonly [number, number, number],
+): [number, number, number] {
+    return [
+        r * a + underlay[0] * (1 - a),
+        g * a + underlay[1] * (1 - a),
+        b * a + underlay[2] * (1 - a),
+    ];
+}
+
 /** Parse a `rgb()/rgba()` string → [r,g,b,a] (the un-wrapped concrete form). */
 export function parseRgb(str: string): [number, number, number, number] | null {
     const m = str.match(

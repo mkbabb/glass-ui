@@ -16,7 +16,7 @@
 // reactivity: a pure sampling family (the single-home of the sampling/OKLab math).
 
 import { resolveTokenColor } from "../dom/useResolveTokenColor";
-import { isCanvas, relLuminance, parseRgb } from "./backdropSampleMath";
+import { isCanvas, relLuminance, parseRgb, compositeOver } from "./backdropSampleMath";
 // the ambient-hue histogram (accumulate/resolve + the value.js
 // color source) lives in the colocated leaf; the sampler COMPOSES it (the ONE color
 // source).
@@ -52,9 +52,10 @@ export const SAMPLE_DOWNSAMPLE = 32;
 // readback carries REAL painted content only when the source WebGL `<canvas>` actually
 // rendered a frame AND kept its drawing buffer (`preserveDrawingBuffer`). An
 // unrendered, composited-and-cleared, software-raster-fallback field reads
-// fully-transparent (mean alpha ≈ 0); compositing THAT over white yields a DEGENERATE
-// luma ≈ 1.0 + a `transparent` ambient hue — the "witness fires but the value is a lie"
-// state. Below this mean-alpha floor the readback is not a
+// fully-transparent (mean alpha ≈ 0); compositing THAT over the underlay yields only
+// the underlay's own luma + a `transparent` ambient hue — the "witness fires but the
+// value is a lie" state (the field contributed nothing). Below this mean-alpha floor
+// the readback is not a
 // valid sample: `sampleAnimated` returns null and the live caller writes `unavailable`
 // (see useGlassBackdropLuminance.sampleNow). A null live sample NEVER falls to the
 // static stack-walk — that coalescing is deliberately forbidden. Fail-loud,
@@ -133,11 +134,19 @@ export function normalizeToRgb(
  * rider over the SAME pixel pass). Returns null if no source, an all-transparent
  * (unrendered) field, or a tainted canvas — the live caller writes `unavailable` on a
  * null; it NEVER falls to the static stack-walk (that coalescing is forbidden).
+ *
+ * The field canvas is TRANSLUCENT, so each downsampled pixel is composited over the
+ * REAL opaque page `underlay` (resolved by `resolveUnderlayRgb` from the same stack the
+ * static sampler reads) — the same translucent field over a dark page vs a light page
+ * yields DISTINCT luma. Passing a fixed white underlay collapses that distinction and
+ * is the born-RED this repairs. The underlay feeds the EXISTING luma→tint axis; it is
+ * NOT a second opacity/attenuation axis.
  */
 export function sampleAnimated(
     el: HTMLElement,
     source: HTMLCanvasElement | null,
     ctx: CanvasRenderingContext2D | null,
+    underlay: readonly [number, number, number],
 ): SampleResult | null {
     if (!source || source.width === 0 || source.height === 0) return null;
     if (!ctx) return null;
@@ -176,11 +185,17 @@ export function sampleAnimated(
         let n = 0;
         const hist = makeHueHistogram();
         for (let i = 0; i < data.length; i += 4) {
-            // Composite over white (the alpha-translucent aurora over the page).
+            // Composite the translucent aurora pixel over the REAL page underlay
+            // (source-over) — a dark page and a light page under the same field
+            // resolve to distinct luma; a fixed-white underlay was the born-RED.
             const a = data[i + 3]! / 255;
-            const r = data[i]! * a + 255 * (1 - a);
-            const g = data[i + 1]! * a + 255 * (1 - a);
-            const b = data[i + 2]! * a + 255 * (1 - a);
+            const [r, g, b] = compositeOver(
+                data[i]!,
+                data[i + 1]!,
+                data[i + 2]!,
+                a,
+                underlay,
+            );
             sum += relLuminance(r, g, b);
             alphaSum += a;
             // the hue histogram, a FREE rider in the SAME loop
@@ -203,16 +218,20 @@ export function sampleAnimated(
 }
 
 /**
- * Sample the STATIC backdrop: stack-walk `elementsFromPoint` at the surface centre,
- * read the first element under it with a resolved non-transparent background, un-wrap
- * the `var(--token)` through the resolveTokenColor leaf → relative luminance + the
- * ambient hue (the single resolved background color binned the SAME way). The reusable
- * 2D context (for the modern-color normalization paint-read) is passed in.
+ * Resolve the opaque backdrop beneath the surface as concrete sRGB `[r,g,b,a]`:
+ * stack-walk `elementsFromPoint` at the surface centre, take the first element under it
+ * with a resolved opaque-enough background (un-wrapping `var(--token)` through the
+ * resolveTokenColor leaf); nothing opaque under it → the page paints through to the
+ * body/root, so read that. Null only when even the body background is unresolvable.
+ * The reusable 2D context (for the modern-color normalization paint-read) is passed in.
+ *
+ * The SINGLE stack-walk of record — the static sampler reduces it to a luma+hue, the
+ * animated sampler reads it as the compositing underlay (`resolveUnderlayRgb`).
  */
-export function sampleStatic(
+export function resolveBackdropRgba(
     el: HTMLElement,
     ctx: CanvasRenderingContext2D | null,
-): SampleResult | null {
+): [number, number, number, number] | null {
     const rect = el.getBoundingClientRect();
     const cx = rect.left + rect.width / 2;
     const cy = rect.top + rect.height / 2;
@@ -227,15 +246,48 @@ export function sampleStatic(
         const rgba = normalizeToRgb(concrete, ctx);
         if (!rgba) continue;
         if (rgba[3] < 0.5) continue; // a near-transparent layer is not the backdrop
-        return staticResult(rgba);
+        return rgba;
     }
     // Nothing opaque under it → the page paints through to the body/root; read that.
     const bodyBg = resolveTokenColor(
         getComputedStyle(document.body).backgroundColor,
         el,
     );
-    const bodyRgba = normalizeToRgb(bodyBg, ctx);
-    return bodyRgba ? staticResult(bodyRgba) : null;
+    return normalizeToRgb(bodyBg, ctx);
+}
+
+/** The CSS-initial page canvas is white — when NO opaque page background resolves
+ *  (SSR/no-paint), that white viewport IS the formula-correct underlay. This lives at
+ *  the named resolver, never hardcoded inside the compositing loop. */
+const CSS_INITIAL_UNDERLAY: readonly [number, number, number] = [255, 255, 255];
+
+/**
+ * The REAL opaque page underlay beneath the surface — the color the TRANSLUCENT
+ * animated field composites OVER. Reuses `resolveBackdropRgba` (the same stack the
+ * static sampler reads), dropping alpha to an opaque triple; falls back to the
+ * CSS-initial white viewport when nothing opaque paints under the surface. This is the
+ * luma→tint axis input for `sampleAnimated`, NOT a second opacity/attenuation axis.
+ */
+export function resolveUnderlayRgb(
+    el: HTMLElement,
+    ctx: CanvasRenderingContext2D | null,
+): [number, number, number] {
+    const rgba = resolveBackdropRgba(el, ctx);
+    if (rgba && rgba[3] >= 0.5) return [rgba[0], rgba[1], rgba[2]];
+    return [...CSS_INITIAL_UNDERLAY];
+}
+
+/**
+ * Sample the STATIC backdrop: reduce the resolved backdrop (`resolveBackdropRgba`) to
+ * relative luminance + the ambient hue (the single resolved background color binned the
+ * SAME way). The reusable 2D context is passed in.
+ */
+export function sampleStatic(
+    el: HTMLElement,
+    ctx: CanvasRenderingContext2D | null,
+): SampleResult | null {
+    const rgba = resolveBackdropRgba(el, ctx);
+    return rgba ? staticResult(rgba) : null;
 }
 
 /** A single resolved backdrop color → the luma + the ambient hue (binned alone). */

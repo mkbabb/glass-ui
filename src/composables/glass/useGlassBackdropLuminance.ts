@@ -16,6 +16,7 @@ import {
     sampleStatic,
     sampleAnimated,
     resolveSourceCanvas,
+    resolveUnderlayRgb,
     SAMPLE_DOWNSAMPLE,
     type SampleResult,
     type BackgroundCanvasSource,
@@ -323,8 +324,13 @@ export function useGlassBackdropLuminance(
         const mode = wantsLiveLoop() ? "live" : "static";
         const source =
             mode === "live" ? resolveSourceCanvas(options.backgroundCanvas) : null;
+        // The animated field is TRANSLUCENT: composite it over the REAL opaque page
+        // beneath the surface (the same stack the static sampler reads) so a dark page
+        // and a light page under the same field resolve to distinct luma.
         const result =
-            mode === "live" ? sampleAnimated(el, source, ctx) : sampleStatic(el, ctx);
+            mode === "live"
+                ? sampleAnimated(el, source, ctx, resolveUnderlayRgb(el, ctx))
+                : sampleStatic(el, ctx);
         const sampledAt = Date.now();
         if (result) write(result, el, mode, sampledAt);
         else

@@ -1030,3 +1030,36 @@ Applied per `../formation/refable/REFABLE-RU-04-JUDGE.md`; the capstone is `APOT
 - **MECH-10:** W6's OPEN-9 sentence annotated — GATES closed the OPEN to the same effect.
 - **D-17:** W4 gains the `Slider.vue` hotspot edit order (REDUCTION W1 → MATERIAL W4 → A11Y
   W2-E/F, with DOC-TRUTH T31/T32 riding the A11Y fix).
+
+---
+
+## Composited-signal amendment (2026-07-21, convergent-hardening freeze) — the real underlay cure
+
+**Anchor-law cite (freeze input, READ-ONLY):** `addenda/2026-07-21-convergent-hardening/`
+COORDINATION.md §"G3 → W-BACKDROP-COMPOSITED-SIGNAL / MATERIAL W2" · REGISTRY.md R-COMPOSITED-SIGNAL ·
+GATES.md §"composited signal" · REJECTIONS.md §"second dock attenuation/opacity axis". The freeze KEPT
+the producer RED and STRUCK the proposed second attenuation/opacity axis: the existing observer +
+luma→tint register stay the intended axis; only the producer's lost-underlay compositing is repaired.
+
+**Material row — backdrop luminance sample.** The animated sampler
+(`src/composables/glass/backdropLuminanceSample.ts`, `sampleAnimated`) composited every TRANSLUCENT
+field pixel over a HARDCODED WHITE underlay, so the SAME field over a dark page and a light page reduced
+to IDENTICAL luma — the composited signal carried zero page information. **Born-RED (re-proven at HEAD,
+analytical):** a mid-coverage field pixel over dark `[10,10,10]` vs light `[250,250,250]` both resolve to
+luma `0.4999` (identical); the correct source-over model yields `0.0529` vs `0.4852` (distinct).
+
+**Cure (Glass PRODUCER only).** `resolveBackdropRgba` extracts the ONE stack-walk of record (the static
+sampler now reduces it to luma+hue, the animated sampler reads it as the compositing underlay);
+`resolveUnderlayRgb` drops it to an opaque triple, falling back to the CSS-initial white viewport ONLY at
+a named resolver (never hardcoded inside the loop). `compositeOver` (the single-sourced source-over math
+in `backdropSampleMath.ts`) composites each field pixel over that REAL underlay. The observer
+(`useGlassBackdropLuminance.sampleNow`) resolves the underlay per sample and feeds it in. This reuses the
+EXISTING luma→tint axis — NO second opacity/attenuation axis (the freeze struck it; the Q consumer
+`--glass-opacity-dock` retune is the sibling thread's, not this producer cure's).
+
+**Acceptance (GREEN, `tests/composables/glass/backdropLuminanceSample.test.ts`).** A 1×1-equivalent
+translucent field over dark vs light underlay yields formula-correct DISTINCT luma, each matching the
+closed-form single-pixel composite; a mutation restoring the white underlay (loop ignores `underlay`)
+collapses the two to identical and FAILS the mutation gate (verified: mutated loop → 1 failed). The
+GlassDock null-getter half of R-COMPOSITED-SIGNAL and the W3 adopt/decline judgment stay OUT of scope
+(sibling / deferred).
