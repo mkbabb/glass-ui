@@ -39,7 +39,7 @@ This file is NOT Sol-owned — it is the Claude-side receipt ledger. The Sol thr
 | commit | wave | acceptance per Sol steer |
 | --- | --- | --- |
 | `4442b451` +`2ad97ca1` | W7 CSS-CLOSURE-RESTORE | landed; not yet adjudicated by Sol |
-| `44621bb4` +`bb33810c` +`f0d32d69` | W8 REFRACT-LATCH (+ SegmentedTabs auto-arm) | landed; not yet adjudicated by Sol |
+| `44621bb4` +`bb33810c` +`f0d32d69`→`b5e70155` | W8 REFRACT-LATCH (f0d SegmentedTabs auto-arm REVERTED by `b5e70155`) | **acceptance RED** — INTEGRATION-RED/ACCEPTANCE-RED per W8-CRIT-MECHANISM/INTEGRATION-C2 + W8-F0D critics; I-2/I-3/I-4 arms + 2 fresh Sol critics owed |
 | `626540ad` | backdrop composited-signal (producer) | landed; Sol keeps as bounded reviewable but ties into W2 package acceptance |
 | `8786d2c8` | W6 card-slice (stranded `.card-description`) | part of the W6 partial (see conflict) |
 | `31c01d2a` +`22401a90` | W1 RADIUS-ROLE (+ its gate, added by Claude) | **acceptance RED** — banked partial; W1-31C-ADJUDICATION-C2 redress owed |
@@ -318,3 +318,45 @@ cross-repo (value.js/keyframes/Atlas) migration + two Sol x-high critics — non
 The producer-side redress loop can continue on Opus (forward, Sol-bankable), but whether to keep spending on
 model-law-RED Opus partials vs. route the Luna redresses to the Sol lane is the owner's call. Recorded here;
 not inferred.
+
+---
+
+## BJ.W-ORPHAN-GATE closer (Opus) — reach-gated CSS closure hardened, 4 cures landed + 3 mutations watched
+
+**Commit `0169e935`** (tree `8be0b36d`), `tests/gates/orphan-css-partial.test.ts` only — 1 file, +228/−33.
+No AI authorship trailer; no Sol-owned surface touched (ASK/PLAN/EXECUTION-PROGRESS/BAND-REDUCTION/addenda
+all left dirty as-authored). The commit banks the prior uncommitted reach-gating impl (HEAD predated it) PLUS
+the four cures. Gate GREEN: 7 passed.
+
+**Cures applied (all four ask items):**
+1. **Dead-SFC bite witnessed on a REAL module** (was fictional). `deadSfc` moved from the never-existent
+   `__DEAD_NEVER_EXPORTED__.vue` (which `publicJsReach` skips vacuously via `!existsSync`) to
+   `src/composables/motion/scroll/useScrollScene.ts` — verified present on disk AND absent from reach.
+   Added `expect(existsSync(deadSfc)).toBe(true)` so unreachability is proven on a present-but-unimported file.
+2. **EXCLUSION invariant added to the anchor** after the inclusion checks:
+   `const allModules = files.filter(/\.(?:ts|tsx|mjs|js|vue)$/); expect(reach.size).toBeLessThan(allModules.length)`.
+   Empirically reach = 532 / 536 modules (proper subset). Closes the `export *`-barrel failure scenario where
+   reach == whole tree, a dead SFC sits IN reach, and the gate silently stops biting while every inclusion
+   check stays green.
+3. **declaredCssRoots recursion banked** (I-1.5 arm, previously unwatched). New unit test:
+   nested `{ import: "./dist/styles/nested-leaf.css" }` → collected as `src/styles/nested-leaf.css`;
+   NEGATION — nested `.js` leaf → `[]`, and `./styles.css`→`./dist/glass-ui.css` bundle → `[]`.
+4. **dist/ overclaim struck.** describe retitled to "…every src/ partial is reachable from a published entry
+   via the source graph"; header "carries the partial into dist" clause replaced with a SCOPE note: this gate
+   reads ZERO dist bytes, dist-presence is INFERRED from vite always-emit CSS side-effect semantics, and
+   package-OUTPUT omission (the I-12 `./styles.css` zero-rules class) is explicitly NOT covered.
+
+**Mutation receipts (read from the vitest machine report, not a piped exit code):**
+- **MUT-A — reach-gate removed** (`rescuedReferences` filter reverted to `referrers.length > 0`):
+  dead-SFC bite REDs (1 failed), "reachable exported SFC keeps its partial GREEN" STAYS GREEN. Both watched.
+- **MUT-B — reach widened to whole tree** (`publicJsReach` default `entries = walk(SRC)`): the anchor's
+  EXCLUSION invariant REDs (`reach.size` no longer `< allModules.length`); the dead-SFC bite also reds as the
+  ask's failure scenario predicts (useScrollScene becomes reachable). 2 failed.
+- **MUT-C — declaredCssRoots reverted to a flat non-recursing walk**: the recursion unit test REDs (1 failed);
+  the real-package gate stays green (real exports are all top-level bare strings), proving the test isolates
+  the recursion branch.
+
+All three restored to HEAD after each watch; final file == committed. No reach-analysis decision was left
+open — every cure was fully specified by the ask.
+
+## BJ.W8 I-5 mount-arm redress b5e70155 (Opus) — SegmentedTabs onMounted(armGlassRefract) REVERTED forward (no history rewrite): dist/tabs.js WATCHED probe-free (0 refract/probe/armGlass symbols; imports only class-names/writeVelocityWeight/useMotionAxis/useDragMorph); root export retained src/index.ts:163 export * from ./composables/glass → armGlassRefract; probe lives in dist/glass-ui.js not dist/tabs.js; demo/main.ts sole source witness; MIGRATION.md + BAND-MATERIAL.md W8 rewritten to one-armGlassRefract()-per-app-root, CSS-only = explicitly blur-only. ROUTED (not done): value.js/keyframes/Atlas root-call wiring + installed-package adoption census (their tranches). W8 stays INTEGRATION-RED/ACCEPTANCE-RED: I-2 three latch arms, I-3 detector lifecycle tests + collision-proof probe id (supportsBackdropRefract.ts:68 still fixed gl-refract-probe), I-4 gate mutation, and two fresh Sol post-redress critics all owed.
