@@ -4,6 +4,7 @@ import StorySection from "../../chassis/section/StorySection.vue";
 import { ref } from "vue";
 import { InfiniteScroll } from "@glass/components/infinite-scroll";
 import { Badge } from "@glass/components/badge";
+import { Button } from "@glass/components/button";
 import { cn } from "@glass/components/_shared/class-names";
 
 interface Event {
@@ -69,13 +70,7 @@ function reset() {
     <StoryPage>
         <div class="flex items-end justify-between gap-4">
             <StorySection label="Infinite scroll" heading="Event feed" />
-            <button
-                type="button"
-                class="interactive-item rounded-md border border-border bg-background px-3 py-1.5 text-small shadow-cartoon-sm"
-                @click="reset"
-            >
-                Reset
-            </button>
+            <Button size="sm" @click="reset">Reset</Button>
         </div>
 
         <!-- The component sets the scroll container internally; we give it a

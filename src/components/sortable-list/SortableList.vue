@@ -141,7 +141,7 @@ defineExpose({
     left: 0;
     right: 0;
     height: 5px;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     /* Muted gold gradient. Same token set as .gold-shimmer
        but with a lower-saturation stop in the middle so the
        sweep reads as a warm glow instead of a metallic

@@ -32,7 +32,7 @@ const hostAttrs = computed(() =>
     position: relative;
     overflow: hidden;
     isolation: isolate;
-    border-radius: var(--radius-input);
+    border-radius: var(--radius-media);
     background: var(--muted);
 }
 

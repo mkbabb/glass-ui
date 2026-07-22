@@ -122,9 +122,13 @@ describe("gate:token-hygiene — radius/backdrop-blur literals off the ladder", 
     // NEW off-ladder literal, or a PARTIAL repoint by MATERIAL W1/W2, reds here. File-grain,
     // never line-grain — THE ANCHOR LAW.
     it("the born-RED set neither grows nor partially shrinks under the latch", () => {
+        // MATERIAL W1 landed its SortableList `999px`→`--radius-pill` repoint (mirror
+        // dropped in the same cut, per the header). The two `segmented.css` radii stay
+        // pinned pending MATERIAL W1 OPEN-1c (the column-stack-vs-stadium geometry Fable
+        // rules); the drawer blur is MATERIAL W2's. The latch above stays RED on this
+        // non-empty residue.
         expect(scanned.map((v) => `${v.file} [${v.channel}]`).sort()).toEqual([
             "src/components/drawer/styles.css [backdrop-blur]",
-            "src/components/sortable-list/SortableList.vue [radius]",
             "src/components/tabs/styles/segmented.css [radius]",
             "src/components/tabs/styles/segmented.css [radius]",
         ]);

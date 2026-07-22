@@ -10,6 +10,36 @@
    collide. This partial MUST @import BEFORE theme/bridges.css (the inline
    bridges reference these primitives). */
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   RADIUS ROLE CANON — the single source (iOS-27 codex law 4: radius as a
+   concentrically-nested ROLE grammar). One authoritative role→token→shape table;
+   the band's siblings cite THIS, not scattered inline comments.
+
+   Role                            Token             Value    Shape       Grammar
+   ─ icon / single tap-target      50% / --radius-pill  circle   round    single tap-target
+   ─ control / field / mode / cta  --radius-control  stadium  round       primary action = pill
+   ─ multi-line field / stepper    --radius-field    16px     soft-rect   a box is not a stadium
+   ─ dialog-nested single input    --radius-field    16px     soft-rect   nests concentric (F45/F7)
+   ─ content card / popover        --radius-card     16px     squircle@lg content container (R28-40)
+   ─ dialog                        --radius-dialog   16px     round       matches the card (F48)
+   ─ panel / configurator          --radius-panel    12px     squircle    group box, not a pill
+   ─ sheet / bigdock               --radius-3xl      24px     squircle    large glass overlay
+   ─ slider track                  --radius-pill     capsule  round       tall capsule
+   ─ media tile (skeleton/avatar/  --radius-media    10px     soft-rect   media/tile surface —
+     command)                      (= --radius)                           NOT the Input pill
+
+   THE RULE the gate enforces (BJ.W-STATIC-HYGIENE token-hygiene, born-RED against
+   the raw literals this band repoints): every radius resolves through a rung, and
+   a CARD never nests inside a PILL / a PILL never nests in a near-rect (the F12
+   "pill chips inside a near-rectangle container" incoherence class).
+
+   Concentric nesting (law 1) is already implemented as the --radius-ctx /
+   --radius-inset / --radius-floor relay below: a container publishes its resolved
+   corner + inner pad; a nested card derives
+     border-radius: max(--radius-floor, calc(--radius-ctx − --radius-inset)).
+   The canon DOCUMENTS the relay as the law; it does not re-mint it.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
 /* Radius primitives — leading plain @theme (declared before the inline aliases
    reference them; see the order note above). */
 @theme {
@@ -32,7 +62,12 @@
     --radius-card:    var(--radius-2xl);
     --radius-panel:   var(--radius-xl);
     --radius-dialog:  var(--radius-card);
-    --radius-input:   var(--radius);
+    /* Media-tile corner rung (Skeleton / Avatar-square / Command input). This is
+       the true role of the rung formerly misnamed `--radius-input`: its consumers
+       are media/tile surfaces, NOT the Input — which reads `--radius-pill` (the
+       stadium) per `_shared/field/field-control.css`. Renamed clean-break (no
+       legacy alias) so retuning tile rounding never silently reshapes the Input. */
+    --radius-media:   var(--radius);
     --radius-button:  var(--radius);
     /* Form-radius unification. `--radius-field` is the non-pill field
        rung the multi-line / stepper form atoms (Textarea, NumberFieldInput)
@@ -106,17 +141,13 @@
 
        Superellipse exponent (MDN authoritative): `superellipse(K)` paints
        |x|^(2K) + |y|^(2K) = 1, so the curve exponent n = 2K. The CSS `squircle`
-       keyword == `superellipse(2)` == n=4 — the iOS-idiomatic web squircle. The
-       k-PRIMITIVE band (a consumer dials 1.7–2.4 to taste; the dock-morph calc()s
-       its animated k against this ONE vocabulary — do not re-define a second k).
-       (re-ground: --corner-k-soft / --corner-k-sharp have no
-       runtime var() consumer but ARE pinned by proof:squircle-language (the
-       TOKEN-AXIS-EXISTS clause asserts both rungs are minted) — so KEPT, not
-       swept; the clean-break delete is a coordination follow-up once the gate
-       re-anchors.) */
+       keyword == `superellipse(2)` == n=4 — the iOS-idiomatic web squircle. ONE
+       squircle vocabulary: `--corner-k-squircle`. The dock-morph calc()s its
+       animated k against it — do not re-define a second k. (The former
+       `--corner-k-soft` / `--corner-k-sharp` rungs had zero runtime var()
+       consumers and were "pinned" only by `proof:squircle-language`, a gate that
+       does not exist in scripts/ or tests/ — deleted clean-break.) */
     --corner-k-squircle: 2;   /* the squircle — superellipse(2), n=4               */
-    --corner-k-soft:     1.7; /* gentler, between round and squircle — n≈3.4       */
-    --corner-k-sharp:    2.4; /* crisper square-bias for large surfaces — n≈4.8    */
 
     /* Semantic per-surface SHAPE aliases — the rounded-vs-squircle POLICY (a
        RADIUS-THRESHOLD policy: the superellipse only READS at a LARGE radius
