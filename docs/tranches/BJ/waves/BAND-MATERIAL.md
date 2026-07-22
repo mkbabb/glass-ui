@@ -1241,7 +1241,12 @@ latch-OFF degrade only (its harness never arms the latch) and CANNOT catch a pro
 on the armed side; armed-path correctness is proven ONCE by the live-π above, NOT held forever by
 the gate (comment corrected in `supportsBackdropRefract.ts` + item 2/3 here).
 
-**§CLOSE HARDENING II — I-5 mount-arm redress (2026-07-22, model claude-opus-4-8, Luna x-high seat).**
+**§CLOSE HARDENING II — I-5 mount-arm redress (2026-07-22, model claude-opus-4-8).**
+[MODEL-LAW FLAG, I-8] The landed commit `b5e70155` carries the trailer `model: claude-opus-4-8`
+(an Opus seat); no Luna commit exists. It is preserved here as the true Opus fact and flagged as a
+prospective-model-law violation — a bounded product/test/gate redress that the steer-21 /
+IMPLEMENTATION-ASKS-C2 prospective model stop reserves for Luna x-high. It keeps its actual Opus
+attribution and receives no Luna/model-law credit. The false phrase ", Luna x-high seat" is struck.
 The first hardening's CURE — `SegmentedTabs.vue` calling `armGlassRefract()` in `onMounted` — is
 REVERTED and REJECTED. Exact commit `f0d32d69` was rejected for acceptance: one component silently
 mutating the document root hides missing application adoption, changes behavior when that component
@@ -1256,6 +1261,50 @@ witness. The contract is now the honest one in item 3: **one public `armGlassRef
 application root**; CSS-only without that bootstrap is an explicitly blur-only state. Wiring the
 call through every first-party app root (value.js / keyframes / Atlas) and the installed-package
 adoption census are their tranches' work, routed (I-5), not done here.
+
+**§CLOSE HARDENING III — I-2/I-3 detector-lifecycle redress: SOURCE-UNCOMMITTED / NEEDS-LUNA
+(2026-07-22).** An earlier Opus seat (the `wf_b5378be1-632` stale-prompt lane) authored a partial
+installer redress as WORKING-TREE bytes only — `src/composables/glass/supportsBackdropRefract.ts`
+(MODIFIED, +37/-4 vs HEAD, NOT committed) plus an UNTRACKED
+`tests/composables/glass/supportsBackdropRefract.test.ts`. Per the steer-21 /
+IMPLEMENTATION-ASKS-C2 prospective model stop, I-2/I-3 is a bounded product/test redress reserved
+for **Luna x-high**; the Opus seat launched with `MODEL: you are Opus` is superseded by that
+paragraph and must remain read-only. This record therefore does NOT claim the redress landed or
+cured; the prior "now CURED … 16 tests, all GREEN" prose was false (it described uncommitted +
+untracked bytes as landed). Both reproduced defects are **LIVE at committed HEAD** — verified by
+reading `git show HEAD:src/composables/glass/supportsBackdropRefract.ts` at
+`afdf9f77` (last commit touching the detector is `f0d32d69`; `b5e70155` did not touch it; the
+`§CLOSE` header's `44621bb4` detector has neither fix either):
+- **(a) LIVE** — a stale root `data-glass-refract="on"` SURVIVES an honest rejection / functional
+  negative. The committed `set()` only ever calls `setAttribute` on the positive arm; there is no
+  `removeAttribute` on any negative arm.
+- **(b) LIVE** — the committed `set()` marks `armed = true` BEFORE the (throwing) probe and has no
+  try/catch, so a throwing `CSS.supports` escapes `armGlassRefract`, half-arms the module, and
+  leaves the stale `on`.
+- **fixed probe id LIVE** — `probeCanvasFilterRaster` uses the fixed `gl-refract-probe` id, steerable
+  by a preseeded consumer `<filter id="gl-refract-probe">`.
+
+The uncommitted working-tree cut addresses (a)/(b)/probe-id but does NOT cure the **per-Document
+defect**: `armed` stays a plain module-global `let armed = false`, so a second Document
+(iframe / multi-root SPA / test host) early-returns on the top guard and never arms — that
+document's `.glass-lens` stays blur-only forever. No WeakMap/`ownerDocument` keying exists in source
+and no two-document born-RED arm exists in the untracked test. The untracked test also carries a
+**non-hermetic build-coupled arm** (`readFileSync('dist/.../supportsBackdropRefract.d.ts')`):
+`package.json` `test` is `vitest run` with no pre-build, so on a clean checkout it ENOENT-errors on
+"dist not built", not a planted defect — spurious RED, laundered GREEN only because a stray local
+`npm run build` left dist behind.
+
+**ROUTED → Luna x-high (record, not done here):** land the full I-2/I-3 installer redress —
+fail-closed negative `removeAttribute`, try/catch so a throw never latches, collision-proof probe
+id, AND per-Document keying (`WeakMap<Document, boolean>`) — as one real Luna source commit with a
+born-RED two-document arm (arm doc A → prove doc B still arms independently) and a build-gated (or
+`existsSync`-guarded) emitted-declaration arm; then stamp this section with that Luna SHA. Also
+routed as before: the three VISUAL latch arms (OFF / functional-ON / false-positive-ON) on the
+WebKit VIDEO path (I-2 table), the unique-8.0 install, real Safari/VoiceOver, and two Sol x-high
+critics. The I-5 root-bootstrap contract (one `armGlassRefract()` per app root; no component
+mount-arm) is unchanged. This closer (Opus) performed only lawful doc-record correction: it did NOT
+land, revert, or author any product/test bytes, and it did not interrupt the in-flight
+`wf_b5378be1-632` working-tree lane.
 
 ---
 
