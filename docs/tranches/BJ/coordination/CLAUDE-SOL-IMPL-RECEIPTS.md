@@ -392,3 +392,77 @@ open — every cure was fully specified by the ask.
 **Record corrected.** Struck the false ", Luna x-high seat" at BAND-MATERIAL.md:1244 (b5e70155 preserved as an Opus commit, flagged per I-8). Rewrote §CLOSE HARDENING III from the false "now CURED, 16 tests GREEN" to SOURCE-UNCOMMITTED with defects flagged LIVE at HEAD.
 
 **ROUTED → Luna x-high (NEEDS-LUNA):** land the full I-2/I-3 installer redress (fail-closed negative `removeAttribute`; try/catch so a throw never latches; collision-proof probe id; per-Document `WeakMap<Document, boolean>` keying) as one real Luna source commit with a born-RED two-document arm + a build-gated/`existsSync`-guarded emitted-declaration arm; then stamp §CLOSE HARDENING III with that Luna SHA. Also still routed: three VISUAL latch arms on the WebKit VIDEO path, unique-8.0 install, real Safari/VoiceOver, two Sol x-high critics.
+
+---
+
+## BJ.W4-TYPEDSEAM producer cut — `abb1eba2` (2026-07-22, model claude-opus-4-8)
+
+**Model-law posture.** This is the W4 §8 bounded product/test/gate/doc redress the
+W4-TRACK-ADJUDICATION-C2 authorized. The closer ask declares `MODEL-AGNOSTIC
+producer cut` (distinct from the W8 I-2/I-3 detector, which is Luna-x-high-barred
+per STEER-21). The W8 working-tree bytes (`supportsBackdropRefract.ts` + its untracked
+test) were left UNTOUCHED — not staged, not reverted, not credited.
+
+**Defect at HEAD `5a8da780` (born-RED, proven live before the cut):** all five W4
+source files were byte-identical to the rejected `f9b9d16e` — `track-well.css:36`
+`var(--track-bg,--muted-medium)`, `value-marks.css` `.value-marks`/`.value-mark`,
+`Slider.vue:492` `var(--track-bg,--secondary)`, `Progress.vue:108`
+`.progress-rail { --track-bg: … }` + indeterminate color-mix stops on `--track-bg`,
+`package.json` `./styles.css -> ./dist/glass-ui.css` (zero rules for the emitted
+shared classes), no `dist/component-styles.css` generator. Census at HEAD:
+15 `--track-bg`, 16 `.value-mark(s)`.
+
+**Cut (`abb1eba2`, 17 files, NO Sol-owned/consumer/W8 file):**
+- `src/styles/glass/track-well.css` — `--track-bg` removed; well keeps only
+  `background: var(--muted-medium)` (no shared paint axis); comment trued.
+- `src/styles/glass/value-marks.css` — every selector `.value-mark(s)` ->
+  `.glass-value-mark(s)` (no comma-group alias).
+- `src/components/slider/Slider.vue` — mark classes renamed; `.slider-track` +
+  spectrum read `--glass-slider-track-background` (fallbacks --muted-medium /
+  --secondary); comments trued (retired `--slider-track-bg` noted as replaced).
+- `src/components/progress/Progress.vue` — mark classes renamed; `.progress-rail`
+  `--track-bg` mask deleted, reads `var(--glass-progress-track-color,
+  var(--progress-track-on-glass))` at rail bg + all four indeterminate color-mix
+  stops (h + v); comments trued.
+- `src/styles/glass.css` — register comment renamed to the glass-namespaced family.
+- `package.json` + `scripts/lib/subpath-policy.mjs` (`CSS_FONT_EXPORTS`) —
+  `./styles.css -> ./dist/component-styles.css`; `./styles` unchanged +
+  non-duplicated; `regen-exports.mjs` EXACT-REPRODUCTION re-verified YES.
+- `scripts/gen-component-styles.mjs` (new) — fail-closed generator emitting the
+  ordered manifest (`track-well.css` -> `value-marks.css` -> `glass-ui.css`);
+  wired into `build` after `emit-types`. dist is gitignored (regenerated at build).
+- `demo/stories/forms/slider.vue`, `demo/stories/substrates/aurora/OklchStopRow.vue`
+  — the 4 Glass `--track-bg` writers migrated to `--glass-slider-track-background`,
+  right-hand gradient values preserved exactly.
+- `tests-visual/on-glass-fg.spec.ts:241` — synthetic div moved to
+  `var(--glass-progress-track-color, var(--progress-track-on-glass))` (§5.1).
+- `DESIGN.md` + `MIGRATION.md` — full 8.0 property/DOM/export remove+add ledger.
+- tests: 3 standing tests renamed to the glass mark family; new born-RED
+  `tests/styles/typed-track-seam.test.ts` (source/DOM census + manifest order +
+  export target).
+
+**Mutations WATCHED biting (born-RED, each restored byte-identical after):**
+restore `--track-bg` on the well -> §3.1 gate RED (2 fail); restore `.value-marks`
+selector -> §2.1 gate RED (3 fail); local `--glass-progress-track-color:` assignment
+on rail -> §3.2 inheritance gate RED (4 fail); repoint `./styles.css -> glass-ui.css`
+-> §4.1 export gate RED (8 fail); reorder manifest imports -> §4.1 manifest gate RED
+(9 fail). Unmutated cut GREEN.
+
+**GREEN evidence:** typed-track-seam 15/15; W4 set 47/47; slider+progress+styles
+103/103; `vue-tsc --noEmit -p tsconfig.src.json` clean; `regen-exports.mjs` EXACT.
+
+**ROUTED remainder (record only — NOT done, per LAWS: acceptance is atomic and
+these arms are owner/Sol-gated):**
+1. **Unique `@mkbabb/glass-ui@8.0.0` tarball** (§4.3) — version is still `7.0.0`;
+   real source->pack->install identity + both installed-CSS-entry fixtures (§4.2)
+   owed. Version bump + publish are the owner CI hinge.
+2. **Real Chromium+Safari/WebKit §6 geometry/pixel matrix** + PRM + forced-colors
+   + real-VoiceOver — retained-evidence arm, not producible in JSDOM.
+3. **Consumer migration + repin** (cross-repo, ROUTE-only): value.js x4 receivers
+   (§5.2), keyframes PlaybackRibbon + dev-dep (§5.3), SCI + Atlas default-receiver
+   repins (§5.4). Land in each owning repo against the exact 8.0 artifact.
+4. **Two fresh Sol x-high critics** (§9.2) against the final exact bytes — package/
+   API/cross-repo + geometry/material/cascade.
+5. **Band note truth-up** — `docs/tranches/BJ/waves/BAND-MATERIAL.md` still carries
+   the rejected "LANDED"/pixel-identical W4 claims (§1.2); left for the Sol-owned
+   band surface. **W4 stays ACCEPTANCE-RED** until 1-4 converge.
