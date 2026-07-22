@@ -15,11 +15,11 @@
 // second source of truth that drifts, and `styles/fonts` is a real published entry (a
 // separate subpath by design, not an orphan).
 //
-// AUTHORED BORN-RED (BAND-GATES §Wave 3 §Acceptance). The fix — re-homing the two
-// `@import`s — is BJ.W-CSS-CLOSURE-RESTORE (BAND-MATERIAL W7); this file authors the gate
-// only and edits none of its CSS. The binding assertion carries `it.fails` (the
-// EXPECTED-RED latch) so CI reads born-RED as GREEN and ROT as RED; when W7 lands the
-// re-home the assertion starts passing, `it.fails` inverts, and W7 drops the marker.
+// LANDED GREEN by BJ.W-CSS-CLOSURE-RESTORE (BAND-MATERIAL W7): the two `@import`s were
+// re-homed to the glass.css closure (chip + atom after glass-capsule.css), so the orphan set
+// is now empty and the binding assertion below is a STANDING regression lock — a re-orphaned
+// partial reds it. The born-RED `it.fails` marker + the hard-pinned two-file latch test were
+// dropped when W7 landed; the planted-orphan self-test bite keeps the predicate honest.
 
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
@@ -107,19 +107,10 @@ describe("gate:orphan-CSS-partial — every src/ partial is reachable by a chann
         expect(reachable.size).toBeGreaterThan(files.filter((f) => f.endsWith(".css")).length / 2);
     });
 
-    // EXPECTED-RED at HEAD. GREEN when BJ.W-CSS-CLOSURE-RESTORE (MATERIAL W7) re-homes the
-    // glass-chip/glass-atom `@import`s; `it.fails` then inverts and W7 drops the marker.
-    it.fails("EXPECTED-RED — no src/ CSS partial is orphaned", () => {
+    // STANDING GREEN (BJ.W-CSS-CLOSURE-RESTORE landed the re-home). Every src/ CSS partial is
+    // reachable by a channel; a newly orphaned partial reds here — the regression lock.
+    it("no src/ CSS partial is orphaned", () => {
         expect(orphans.join("\n")).toBe("");
-    });
-
-    // The latch above passes on ANY non-empty set. This one keeps the teeth while it is up: a
-    // NEWLY orphaned partial, or a PARTIAL re-home by MATERIAL W7, reds here.
-    it("the born-RED set neither grows nor partially shrinks under the latch", () => {
-        expect(orphans).toEqual([
-            "src/styles/glass/glass-atom.css",
-            "src/styles/glass/glass-chip.css",
-        ]);
     });
 
     it("self-test bite — a planted orphan partial reds", () => {

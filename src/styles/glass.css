@@ -81,6 +81,16 @@
    tinted` seam + the `--glass-rim-*`/`--glass-shadow-floating` tokens resolve) and
    BEFORE the consuming recipes (segmented-tabs.css et al, imported by index.css). */
 @import "./glass/glass-capsule.css";
+/* The chip + atom capsule-composers (`.glass-chip`, `.glass-atom`/`.badge-atom`/
+   `.cartoon-cast`). Both compose `.glass-capsule` and read the `--glass-fill-tinted`
+   plate axis + `--glass-material-rim`, so @import-ed IMMEDIATELY AFTER glass-capsule.css
+   (same `@layer components`, source-order-after so their tinted-fill layers win at equal
+   specificity) and BEFORE the consuming Chip/Badge/Combobox recipes. glass-chip.css
+   also reads the accent axis (`--accent-band`/`-edge`/`-ink`) from accent-tone.css above.
+   KEEP-CENTRAL per COLOCATION CL-3 — glass-atom is a MIXED register (folding strands
+   `.cartoon-cast`). */
+@import "./glass/glass-chip.css";
+@import "./glass/glass-atom.css";
 /* The ONE shared liquid-fill register (`.glass-liquid-fill`):
    the warm glass-cylinder fill the Slider's `.slider-range` AND
    `<Progress variant="liquid">` COMPOSE (fewer-sharper-primitives).
