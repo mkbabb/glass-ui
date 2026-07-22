@@ -75,3 +75,57 @@ W1 radius redress (Command/Skeleton/TagsInput/Search/tab-literals/8.0-ledger/val
 W4 consumer edge (value.js + keyframes + v7→8 token/DOM ledger, Chromium/Safari H/V/RTL/inverted proof) ·
 W6 full namespace reset (`W6-MOVING-CRIT-C2`). DEFERRED (design tier, Fable out): W3 GRADED-BACKDROP-JUDGE,
 W5 ARISTOTLE-PROPORTION. PARKED: REDUCTION W7 = AP-33.
+
+## RECEIPT — 2026-07-22 ~03:0x EDT — W1 RADIUS producer-side third-pass redress `d7588514` (closer verify)
+
+Answers `W1-31C-ADJUDICATION-C2.md` (SHA-256 `8bf0a442…`) + the three live steers. This redress lands ON
+TOP of banked `31c01d2a` (bytes preserved) — `git merge-base --is-ancestor 31c01d2a HEAD` holds, no
+history rewrite.
+
+- **Redress commit:** `d75885144cf1c975b27467851d9511c88f855d2c` (patch-id `bb7f2b207dfb101c8a6479904a504c4cc7187e95`)
+- **HEAD == redress tree:** `ee20c0a065ccd15d54737c98ed7cd0c7b0856597`
+- **Working tree:** dirty = ONLY the 4 Sol-owned surfaces + untracked `addenda/` + this channel's steer files.
+  Claude touched NO Sol-owned or consumer file. Sorted dirty-patch sha256
+  `e049b3218441f2107c9b9d1520475bfb48c8dd4ceb9a79d75ea77855814bd73a`; sorted untracked-paths sha256
+  `2e233308647b81ac59096daed752d09b7c66d7c0323e5f23500250a2c9475805`.
+- **Model truth (historical, unrelabeled):** Opus (`claude-opus-4-8`, close effort high). This is an
+  **Opus-authored producer candidate** against Sol's already-written contract — NOT a Luna x-high seat,
+  NOT the Sol x-high critic seat. **Acceptance RED, model-law RED** per steer 2/3.
+
+### Binding rulings landed (producer source/test/truth)
+- Command `.command__input`: radius DELETED (paint-dead transparent input; panel owns `--radius-panel`).
+- Skeleton: default `--radius-media` moved into `@layer components`; unlayered `.skeleton` owns no radius
+  so caller shape utilities win.
+- SegmentedTabs: both raw literals (`0.3125rem`/`0.25rem`) → orientation-aware seam
+  `var(--bouncy-slider-radius)` (horizontal `--radius-tab`, vertical `--radius-strip`) — OPEN-1c ruled.
+- Search F17: `floating: ""` keeps the component plate; `bare` sole chromeless; `.input-bar` repointed
+  `--radius-2xl` → semantic `--radius-control`.
+- radius.css: false "pill never nests in a near-rect" absolute → the boundary-sharing F12 nesting law.
+- 8.0 CSS-token ledger recorded in `DESIGN.md` + `BAND-MATERIAL.md`: −`--radius-input`, +`--radius-media`
+  (10px retained), −`--corner-k-soft`, −`--corner-k-sharp`, retain `--corner-k-squircle`;
+  `--radius-button` documented as the explicit Atlas public-override exception.
+
+### Evidence — machine reports (LOCAL SOURCE EVIDENCE ONLY)
+- `radius-role-canon.test.ts` GREEN — **20/20** (single ordinary non-`it.fails` gate; executable role
+  inventory ⟺ radius.css bijection + exact per-seam bindings + canon ⟺ DESIGN.md agreement).
+- `token-hygiene.test.ts` GREEN — **3/3** (residue-flip: the `it.fails` EXPECTED-RED latch + interim
+  segmented residue pin retired; radius arm now ordinary GREEN).
+- **16 born-RED mutations verified biting** (each applied alone, gate → RED, restored): restore
+  `--radius-input` def; restore `--corner-k-soft`; restore `--corner-k-sharp`; Avatar square → `--radius-card`;
+  Skeleton unlayered hard owner; Command media radius; Sortable → `999px`; Segmented raw `0.3125rem`;
+  input-bar → `--radius-2xl`; floating strips plate; InfiniteScroll raw `<button>`; TagsInput container → pill;
+  DESIGN.md omit ledger delta; delete `--radius-tab` decl (orphaned inventory); manifest `--radius-input`;
+  Input → media tile rung. Zero vacuous.
+
+### ROUTED (terminal remainder — NOT in this producer cut, owed before W1 DONE / Candidate-2 freeze)
+- The immutable uniquely-versioned `@mkbabb/glass-ui@8.0.0` tarball + archive/dir digests + installed-package
+  fixture proving v7→8 (`rounded-input` absent / `rounded-media` present, `rounded-field`+`rounded-control`
+  present, no removed k-token) — package owner.
+- value.js role-aware migration of the 3 live readers (FlagReportDialog textarea → `rounded-field`;
+  ColorInput textbox → `rounded-control`; GradientEasingEditor icon-rail → `var(--radius-control)`; none →
+  media) + exact lock — value.js repo owner.
+- 390/1440 Chromium+Safari paint matrix (tabs H/V pill+underline, search inline/floating/bare sm/md/lg,
+  skeleton cascade, infinite-scroll Reset, sortable, avatar square, TagsInput F12, installed value.js
+  receivers). Source grep earns no paint credit.
+- Two fresh independent Sol x-high exact-byte critics (mechanism/contract + visual/consumer) — any
+  byte-changing redress resets them.
