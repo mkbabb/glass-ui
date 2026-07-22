@@ -1,0 +1,31 @@
+{
+  "engine": "webkit-2dppx",
+  "target": "20e064f1 — W2 C2 producer-side blur redress",
+  "note": "Bundled-WebKit getComputedStyle over w2-compiled.css (captured DEVELOPMENT cascade) + class-only static markup. NOT Safari, NOT shipped CSS, NO mounted Vue receiver. Cross-engine cascade corroboration only.",
+  "devicePixelRatio": 2,
+  "proofs": {
+    "devicePixelRatio": 2,
+    "calm": {
+      "wash": "blur(1px) saturate(1.4)",
+      "quiet": "blur(7px) saturate(1.4) brightness(1.02)",
+      "resting": "blur(7px) saturate(1.4)",
+      "floating": "blur(11px) saturate(1.6)",
+      "overlay": "blur(11px) saturate(1.6)",
+      "deep": "blur(14.5px) saturate(1.74)"
+    },
+    "scrim": {
+      "base": "blur(14px)",
+      "level1": 14,
+      "level03": 4.2,
+      "level0": 0,
+      "stageT0": 14,
+      "stageT1": 14
+    }
+  },
+  "mutationBite": {
+    "shippedOverlayPx": 11,
+    "mutationRestored17Px": 17,
+    "bites": true
+  },
+  "finishedAt": "2026-07-22T09:13:24.554Z"
+}

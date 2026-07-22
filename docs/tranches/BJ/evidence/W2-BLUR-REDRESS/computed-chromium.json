@@ -1,0 +1,86 @@
+{
+  "engine": "chromium",
+  "target": "20e064f1 — W2 C2 producer-side blur redress",
+  "startedAt": "2026-07-22T09:13:17.022Z",
+  "proofs": {
+    "calm-ladder": {
+      "desktop": {
+        "wash": "blur(1px) saturate(1.4)",
+        "quiet": "blur(7px) saturate(1.4) brightness(1.02)",
+        "resting": "blur(7px) saturate(1.4)",
+        "floating": "blur(11px) saturate(1.6)",
+        "overlay": "blur(11px) saturate(1.6)",
+        "deep": "blur(14.5px) saturate(1.74)"
+      },
+      "mobile": {
+        "wash": "blur(1px) saturate(1.4)",
+        "quiet": "blur(7px) saturate(1.4) brightness(1.02)",
+        "resting": "blur(7px) saturate(1.4)",
+        "floating": "blur(11px) saturate(1.6)",
+        "overlay": "blur(11px) saturate(1.6)",
+        "deep": "blur(14.5px) saturate(1.74)"
+      }
+    },
+    "overlay-every-dpr": {
+      "dpr1": {
+        "devicePixelRatio": 1,
+        "overlayRadiusPx": 11
+      },
+      "dpr2": {
+        "devicePixelRatio": 2,
+        "overlayRadiusPx": 11,
+        "mutationRestored17": 17
+      },
+      "ruling": "overlay is 11px at every DPR; the 2dppx→17px writer is KILLED"
+    },
+    "dialog-immersive-scrim": {
+      "desktop": {
+        "base": "blur(14px)",
+        "level1": 14,
+        "level03": 4.2,
+        "level0": 0,
+        "stageT0": 14,
+        "stageT1": 14,
+        "hasSaturate": false,
+        "hasBrightness": false
+      },
+      "mobile": {
+        "base": "blur(14px)",
+        "level1": 14,
+        "level03": 4.2,
+        "level0": 0,
+        "stageT0": 14,
+        "stageT1": 14,
+        "hasSaturate": false,
+        "hasBrightness": false
+      }
+    },
+    "drawer-immersive-scrim": {
+      "desktop": {
+        "base": "blur(14px)",
+        "level1": 14,
+        "level03": 4.2,
+        "level0": 0,
+        "stageT0": 14,
+        "stageT1": 14,
+        "hasSaturate": false,
+        "hasBrightness": false
+      },
+      "mobile": {
+        "base": "blur(14px)",
+        "level1": 14,
+        "level03": 4.2,
+        "level0": 0,
+        "stageT0": 14,
+        "stageT1": 14,
+        "hasSaturate": false,
+        "hasBrightness": false
+      }
+    },
+    "command-not-a-receiver": {
+      "immersiveScrimCount": 0,
+      "ruling": "CommandDialog forwards DialogProps (not DialogContentProps); it cannot request the stage"
+    }
+  },
+  "finishedAt": "2026-07-22T09:13:22.613Z"
+}

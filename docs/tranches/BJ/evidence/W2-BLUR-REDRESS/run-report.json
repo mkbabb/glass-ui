@@ -1,0 +1,408 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/node_modules/.bin/playwright",
+      "test",
+      "--config",
+      "docs/tranches/BJ/evidence/W2-BLUR-REDRESS/w2-blur.config.ts"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/docs/tranches/BJ/evidence/W2-BLUR-REDRESS/w2-blur.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "w2-blur-redress.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "w2-blur-redress.webkit.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-2dppx",
+        "name": "webkit-2dppx",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "w2-blur-redress.webkit.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/docs/tranches/BJ/evidence/W2-BLUR-REDRESS/run-report.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run demo:serve -- --host localhost --port 5199",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/",
+      "url": "http://localhost:5199",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "w2-blur-redress.spec.ts",
+      "file": "w2-blur-redress.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "W2 blur redress — compiled-CSS capture (Chromium → WebKit harness)",
+          "file": "w2-blur-redress.spec.ts",
+          "line": 207,
+          "column": 6,
+          "specs": [
+            {
+              "title": "capture the demo cascade into w2-compiled.css",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 810,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-22T09:13:17.031Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "250d1481b7cfcb7e026c-c3394dc76878d7645e9e",
+              "file": "w2-blur-redress.spec.ts",
+              "line": 208,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "W2 blur redress — calm ladder, overlay every-DPR, deep continuum (Chromium)",
+          "file": "w2-blur-redress.spec.ts",
+          "line": 263,
+          "column": 6,
+          "specs": [
+            {
+              "title": "five calm roles resolve three magnitudes {1,7,11}; deep is separate; current saturates render; overlay is 11px at DPR 1 AND 2 (killed 17px arm gone)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1576,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-22T09:13:17.958Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "250d1481b7cfcb7e026c-74216e9a623448e87818",
+              "file": "w2-blur-redress.spec.ts",
+              "line": 264,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "W2 blur redress — immersive stage scrim on real receivers (Chromium)",
+          "file": "w2-blur-redress.spec.ts",
+          "line": 520,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Dialog (production immersive) — scrim computes fixed 14px × --glass-level, no --stage-t coupling, no saturation",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1145,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-22T09:13:19.540Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "250d1481b7cfcb7e026c-9cbd8a161de9f88f951e",
+              "file": "w2-blur-redress.spec.ts",
+              "line": 521,
+              "column": 5
+            },
+            {
+              "title": "Drawer (new story) — scrim computes fixed 14px × --glass-level, no --stage-t coupling, no saturation",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1125,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-22T09:13:20.690Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "250d1481b7cfcb7e026c-3cb7702fef8b2a1176ac",
+              "file": "w2-blur-redress.spec.ts",
+              "line": 546,
+              "column": 5
+            },
+            {
+              "title": "CommandDialog is NOT a receiver — opening the command palette mounts no immersive scrim",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 786,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-22T09:13:21.821Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "250d1481b7cfcb7e026c-9cc2d1e4bf8c0498d82d",
+              "file": "w2-blur-redress.spec.ts",
+              "line": 571,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "w2-blur-redress.webkit.spec.ts",
+      "file": "w2-blur-redress.webkit.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "W2 blur redress — bundled-WebKit static-cascade (captured dev CSS, class-only markup)",
+          "file": "w2-blur-redress.webkit.spec.ts",
+          "line": 88,
+          "column": 6,
+          "specs": [
+            {
+              "title": "bundled WebKit resolves the ruled computed blur values over the W2 cascade (calm ladder, overlay every-DPR, immersive scrim, deep-separate)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 542,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-22T09:13:22.918Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dee9450a8344654aa998-b73918292ae8fe25bb02",
+              "file": "w2-blur-redress.webkit.spec.ts",
+              "line": 89,
+              "column": 5
+            },
+            {
+              "title": "bundled WebKit resolves the ruled computed blur values over the W2 cascade (calm ladder, overlay every-DPR, immersive scrim, deep-separate)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit-2dppx",
+                  "projectName": "webkit-2dppx",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 534,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-22T09:13:23.872Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dee9450a8344654aa998-69fdd05a56a6e7882d13",
+              "file": "w2-blur-redress.webkit.spec.ts",
+              "line": 89,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-07-22T09:13:16.759Z",
+    "duration": 7815.772,
+    "expected": 7,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

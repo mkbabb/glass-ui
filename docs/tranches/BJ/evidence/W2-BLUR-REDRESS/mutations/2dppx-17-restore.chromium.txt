@@ -1,0 +1,34 @@
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium] › tests-visual/w2-blur-redress.spec.ts:264:5 › W2 blur redress — calm ladder, overlay every-DPR, deep continuum (Chromium) › five calm roles resolve three magnitudes {1,7,11}; deep is separate; current saturates render; overlay is 11px at DPR 1 AND 2 (killed 17px arm gone) (1.6s)
+
+
+  1) [chromium] › tests-visual/w2-blur-redress.spec.ts:264:5 › W2 blur redress — calm ladder, overlay every-DPR, deep continuum (Chromium) › five calm roles resolve three magnitudes {1,7,11}; deep is separate; current saturates render; overlay is 11px at DPR 1 AND 2 (killed 17px arm gone) 
+
+    Error: overlay blur == 11px at 2dppx (the killed 17px arm is gone)
+
+    expect(received).toBeCloseTo(expected, precision)
+
+    Expected: 11
+    Received: 17
+
+    Expected precision:    1
+    Expected difference: < 0.05
+    Received difference:   6
+
+      358 |             dprProof.overlayRadiusPx,
+      359 |             `overlay blur == 11px at 2dppx (the killed 17px arm is gone)`,
+    > 360 |         ).toBeCloseTo(11, 1);
+          |           ^
+      361 |         expect(
+      362 |             dprProof.devicePixelRatio,
+      363 |             "the emulated context is genuinely 2dppx",
+        at /Users/mkbabb/Programming/glass-ui/tests-visual/w2-blur-redress.spec.ts:360:11
+
+    Error Context: test-results/w2-blur-redress-W2-blur-re-f958e-AND-2-killed-17px-arm-gone--chromium/error-context.md
+
+    Error Context: test-results/w2-blur-redress-W2-blur-re-f958e-AND-2-killed-17px-arm-gone--chromium/error-context.md
+
+  1 failed
+    [chromium] › tests-visual/w2-blur-redress.spec.ts:264:5 › W2 blur redress — calm ladder, overlay every-DPR, deep continuum (Chromium) › five calm roles resolve three magnitudes {1,7,11}; deep is separate; current saturates render; overlay is 11px at DPR 1 AND 2 (killed 17px arm gone) 
