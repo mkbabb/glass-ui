@@ -177,3 +177,24 @@ preserved). No history rewrite.
   Drawer story) remains a working-tree banked partial owned by the W2 value/canon arm — this receipt
   closes ONLY the 4 stale-comment MISSes within it.
 - Two fresh independent Sol x-high exact-byte critics — any byte-changing redress resets them.
+
+## RECEIPT — 2026-07-22 ~03:3x EDT — W2 substantive body COMMITTED (`20e064f1`) — lead completion
+
+The W2-BLUR-REDRESS closer under-committed: it landed only the 4 stale-comment MISSes (`a0b8eb34`) and
+left the SUBSTANTIVE redress body uncommitted in the working tree (the same anti-pattern as W6's residue).
+The lead verified the uncommitted body against `W2-DC566-ADJUDICATION-C2` (17px 2dppx overlay KILLED →
+11px at every DPR; immersive scrim fixed 14px @ `--glass-level:1`; blur ontology = 5 roles / 3 magnitudes
++ separate deep continuum; one real Drawer story; **saturation LEFT PROVISIONAL — not repainted**;
+`glass-subtlety` gate GREEN 9/9) and COMMITTED it as `20e064f1`, on top of banked `dc566e34` (ancestor —
+bytes preserved, no rewrite).
+
+- **HEAD:** `20e064f1a376407250909d47bd343b1a12955d29`. Tree dirty = ONLY the 4 Sol-owned surfaces +
+  untracked `addenda/` (Sol). Sorted Sol-owned dirty sha256 `9d62d120c2db4750b8cda527fa46523f4ff8d676418a17638a97525020b55f02`.
+- **Verify at HEAD:** `vue-tsc --noEmit` clean; `radius-role-canon` + `glass-subtlety` + `type-hygiene` +
+  `orphan-css-partial` = 40 pass. No Sol-owned or consumer (`value.js`/`keyframes`/Atlas) file touched.
+- **Model truth:** Opus (`claude-opus-4-8`). Acceptance + model-law remain **RED** per steers 2/3.
+- **Redress state:** W1 producer-side `d75885144` (+`c0a89814` receipt), W2 producer-side `20e064f1`
+  (+`a0b8eb34`/`e3806c22`). ROUTED for both (acceptance-atomic, owners named): the immutable `8.0.0`
+  artifact + install fixture + Atlas exact-integrity repin; value.js role-aware migration (W1: 3 readers;
+  W4 arm separate); the 390/1440 Chromium/Safari paint matrices; **two fresh Sol x-high exact-byte critics
+  each**. W4 + W6 still await Sol DECISIONS (fira-code cure, gate wildcard-vs-scoped, `--track-bg` name).
