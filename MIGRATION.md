@@ -3043,20 +3043,24 @@ runtime latch `:root[data-glass-refract="on"]`, set once per session by `armGlas
 (Chromium arms ON + refracts, WebKit stays OFF + degrades to the un-gated blur base — the intended
 Safari floor, no broken `url()` reference).
 
-Consumer action, kin to `installDarkModeSync` (the module-load arm is pruned by
-`sideEffects: ['*.css']`, so it is explicit):
+**Required consumer action: one `armGlassRefract()` call per application root.** Kin to
+`installDarkModeSync` — the module-load arm is pruned by `sideEffects: ['*.css']`, so the call is
+explicit. No library component arms the latch itself (a component silently mutating the document
+root would hide missing app adoption, and underline/Select-only `/tabs` consumers would load +
+execute the mount-time probe path for a lens they never paint). Arm once at your app root:
 
-- **Shipped components need no action.** `SegmentedTabs` (the one `.glass-lens`-bearing library
-  component — the pill traveling indicator) auto-arms in `onMounted`, so its Chromium refraction is
-  out-of-box. Mounting any such component also arms every other `.glass-lens` surface in the
-  document (the latch is root-level).
-- **A `.glass-lens` surface you author yourself** — apply the class to your own markup and no
-  shipped component is mounted — must arm once at bootstrap or it paints blur-only on Chromium:
+```ts
+import { armGlassRefract } from "@mkbabb/glass-ui";
+armGlassRefract(); // idempotent, SSR-safe, DOM-ready-deferred; OFF on WebKit via the functional probe
+```
 
-  ```ts
-  import { armGlassRefract } from "@mkbabb/glass-ui";
-  armGlassRefract(); // idempotent, SSR-safe, DOM-ready-deferred
-  ```
+That single call arms **every** `.glass-lens` surface in the document at once (the latch is
+root-level) — `SegmentedTabs`' pill traveling indicator included, as well as any `.glass-lens`
+surface you author yourself.
+
+**Without the bootstrap, `.glass-lens` is an explicitly blur-only state** — NOT a silently-equivalent
+contract. The lens degrades to its documented blur floor (the same floor Safari holds) until an app
+root calls `armGlassRefract()`; on Chromium the refraction garnish is simply absent.
 
 ### Refraction gains a Tier-1 WebGL2 FLOOR — the SOTA degrade ladder (BG.W-GLASS-REFRACT-WEBGL — additive, no consumer break)
 

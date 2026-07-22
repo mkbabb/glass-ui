@@ -3,7 +3,7 @@
 // `pill` uses glass; `underline` uses the shared paper ink mark. The indicator
 // transform derives from horizontal or vertical orientation. CSS owns track paint;
 // this SFC owns markup and measured indicator position.
-import { ref, computed, onBeforeUpdate, onMounted, type HTMLAttributes } from "vue";
+import { ref, computed, onBeforeUpdate, type HTMLAttributes } from "vue";
 import { cn } from "../_shared/class-names";
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "../tooltip";
 import {
@@ -29,11 +29,12 @@ import type { Motion } from "../_shared/axes";
 import { useMotionAxis } from "../_shared/useMotionAxis";
 // The pill indicator (`<div>` below) composes `.glass-lens`, whose Chromium refraction
 // composite is gated behind the runtime latch `:root[data-glass-refract="on"]` set by
-// `armGlassRefract()`. `sideEffects: ['*.css']` prunes any module-load arm, so a SHIPPED
-// component must arm itself or it silently regresses to blur-only for every consumer that
-// does not call the bootstrap. The arm is idempotent (module-level `armed` flag), so
-// repeat mounts are free; WebKit stays OFF via the functional probe.
-import { armGlassRefract } from "../../composables/glass";
+// `armGlassRefract()`. That latch is an APPLICATION-ROOT bootstrap concern — one public
+// `armGlassRefract()` call per app root (the package-root export) arms every `.glass-lens`
+// surface at once. This component deliberately does NOT arm it: a single component must not
+// silently mutate the document root, and underline/Select-only consumers must not load or
+// execute the mount-time probe path for a lens they never paint. Without the bootstrap the
+// lens degrades to its documented blur-only floor.
 
 // WAAPI keyframes can't dereference custom properties — resolve literals at
 // runtime via the cascade root.
@@ -150,10 +151,6 @@ const model = defineModel<string>({ required: true });
 const containerRef = ref<HTMLElement | null>(null);
 const indicatorRef = ref<HTMLElement | null>(null);
 const buttonRefs = ref<HTMLElement[]>([]);
-
-// Arm the `.glass-lens` refraction latch out-of-box so the shipped pill indicator
-// refracts on Chromium with zero consumer action. Idempotent + SSR-safe; OFF on WebKit.
-onMounted(armGlassRefract);
 
 // ── Computed state ──
 

@@ -1142,12 +1142,19 @@ it lies by accepting at parse — so the gate moves to a runtime latch (the
    the ARMED side (canvas url() paints but backdrop-filter url() drops → latch arms ON → armed
    lens paints sharp); armed-path correctness is proven ONCE per engine by this wave's live-π,
    NOT held forever by the standing gate.
-3. Consumer contract (CORRECTED at §CLOSE hardening — the original "zero API change" claim was
-   FALSE): the composite now paints only under the runtime latch, so a SHIPPED `.glass-lens`
-   component must arm itself or it regresses to blur-only on Chromium. `SegmentedTabs` (the one
-   src `.glass-lens` bearer) auto-arms in `onMounted`, so its consumers need no action; a consumer
-   applying `.glass-lens` to its OWN surface calls `armGlassRefract()` once at bootstrap (kin to
-   `installDarkModeSync`). MIGRATION.md carries that consumer note.
+3. Consumer contract (CORRECTED at §CLOSE hardening, then again at the I-5 redress — the original
+   "zero API change" / "no migration" / "no demo edits" claims were all FALSE): the composite now
+   paints only under the runtime latch, so `.glass-lens` refraction is an APPLICATION-ROOT bootstrap
+   capability, not a CSS-only enhancement. **The smallest honest contract is one public
+   `armGlassRefract()` call per application root** — the package-root export
+   (`import { armGlassRefract } from "@mkbabb/glass-ui"`). One call arms every `.glass-lens` surface
+   in the app at once (`SegmentedTabs`' pill indicator included); it is idempotent + SSR-safe and OFF
+   on WebKit via the functional probe. No component arms the root itself: a single component silently
+   mutating the document root hides missing app adoption, and underline/Select-only `/tabs` consumers
+   would otherwise load + execute the mount-time probe path for a lens they never paint. **CSS-only
+   without the bootstrap is an explicitly blur-only state, NOT a silently-equivalent contract** —
+   `.glass-lens` degrades to its documented blur floor until an app root calls the bootstrap.
+   MIGRATION.md carries that root-import consumer note.
 
 **Gate half — authored born-RED in `BAND-GATES` W3 (the standing "authored born-RED there, GREEN
 by the MATERIAL sibling" idiom this band already uses for `token-hygiene` / `orphan-CSS-partial`):**
@@ -1197,11 +1204,12 @@ blur-only twin · tolerance 0.12, received 0.9187. The `test.fail()` EXPECTED-RE
   `ctx.filter = url(#f)` rides the same url()-referenced-filter raster path — **Chromium applies it
   (pixel red), WebKit drops it (pixel blue)**, validated per-engine by this wave's live probe.
   Exported from the glass barrel; `arm*` shape kin to `installDarkModeSync`.
-- `demo/main.ts` — one root-level `armGlassRefract()` bootstrap. Necessary because
-  `sideEffects: ['*.css']` prunes module-load side effects, so the arm is explicit (as a consumer's
-  would be); without it Chromium's demo lens would silently regress to blur-only. The spec's "no
-  demo edits" is honored in spirit — no per-story/component edit, a single root bootstrap analogous
-  to the existing capture/router boot.
+- `demo/main.ts` — one root-level `armGlassRefract()` bootstrap, the first source witness of the
+  required contract. Necessary because `sideEffects: ['*.css']` prunes module-load side effects, so
+  the arm is explicit (as a consumer's app-root call would be); without it Chromium's demo lens
+  silently regresses to blur-only. The spec's "no demo edits" claim is STRUCK: a demo edit is
+  required — one root bootstrap analogous to the existing capture/router boot, mirroring the per-app-
+  root call every first-party consumer must add.
 - `tests-visual/refract-lens-never-sharper.spec.ts` — `test.fail()` marker + the WebKit branch
   dropped; the invariant is now a STANDING lock, GREEN on both engines. Blind-capture recovery added
   (the correct blur-degrade removed the heavy `url()` filter that had incidentally masked a
@@ -1222,20 +1230,32 @@ url — the Safari-floor degrade RESTORED). WebKit's screenshot shows stripes th
 `page.screenshot()` is backdrop-filter-blind (the video-path law); its truth is the computed style +
 the video-path gate.
 
-**§CLOSE HARDENING (2026-07-22, model claude-opus-4-8) — the "zero API change" claim was FALSE.**
-The composite now paints only under the latch, and the sole arm caller was `demo/main.ts`. A
-SHIPPED, exported `.glass-lens` component — `SegmentedTabs` (the pill traveling indicator,
-`SegmentedTabs.vue`; the one src `.glass-lens` bearer) — therefore silently regressed from
-blur+refraction to blur-only on Chromium for any consumer that upgraded without adding the
-bootstrap (it was auto-on via `@supports` at 7.0.0). CURE (preferred — eliminates the regression):
-`SegmentedTabs.vue` now calls the idempotent `armGlassRefract()` in `onMounted`, so the shipped
-component refracts out-of-box on Chromium with zero consumer action (WebKit stays OFF via the
-functional probe; the module-level `armed` flag makes repeat mounts free). A consumer applying
-`.glass-lens` to its OWN surface still arms once at bootstrap — recorded as a MIGRATION.md consumer
-note. The GATE-OVERCLAIM was corrected in parallel: the standing `gate:refract-lens-never-sharper`
-locks the latch-OFF degrade only (its harness never arms the latch) and CANNOT catch a probe
-false-positive on the armed side; armed-path correctness is proven ONCE by the live-π above, NOT
-held forever by the gate (comment corrected in `supportsBackdropRefract.ts` + item 2/3 here).
+**§CLOSE HARDENING (2026-07-22, model claude-opus-4-8) — the "zero API change" / "no migration" /
+"no demo edits" claims were all FALSE.** The composite now paints only under the latch, so
+`.glass-lens` refraction became an application-root bootstrap capability rather than a CSS-only
+enhancement. A SHIPPED, exported `.glass-lens` component — `SegmentedTabs` (the pill traveling
+indicator, `SegmentedTabs.vue`; the one src `.glass-lens` bearer) — therefore no longer refracts
+on Chromium unless the consuming app arms the latch (it was auto-on via `@supports` at 7.0.0). The
+GATE-OVERCLAIM was corrected in parallel: the standing `gate:refract-lens-never-sharper` locks the
+latch-OFF degrade only (its harness never arms the latch) and CANNOT catch a probe false-positive
+on the armed side; armed-path correctness is proven ONCE by the live-π above, NOT held forever by
+the gate (comment corrected in `supportsBackdropRefract.ts` + item 2/3 here).
+
+**§CLOSE HARDENING II — I-5 mount-arm redress (2026-07-22, model claude-opus-4-8, Luna x-high seat).**
+The first hardening's CURE — `SegmentedTabs.vue` calling `armGlassRefract()` in `onMounted` — is
+REVERTED and REJECTED. Exact commit `f0d32d69` was rejected for acceptance: one component silently
+mutating the document root hides missing application adoption, changes behavior when that component
+happens to mount, and makes underline/Select-only `/tabs` consumers load + execute the mount-time
+probe path (a 1.57 kB raw probe chunk) despite painting no lens. The redress (producer-side, forward,
+no history rewrite): the `SegmentedTabs.vue` `onMounted(armGlassRefract)` arm + its
+`armGlassRefract` import are REMOVED, so an emitted `/tabs` is free of the probe dependency for the
+pill/underline/Select branches; `armGlassRefract` stays exported from the package ROOT (the public
+bootstrap, `src/index.ts:163` `export * from "./composables/glass"`); the one explicit
+`armGlassRefract()` call is routed through the DEMO app root (`demo/main.ts`) as the first source
+witness. The contract is now the honest one in item 3: **one public `armGlassRefract()` per
+application root**; CSS-only without that bootstrap is an explicitly blur-only state. Wiring the
+call through every first-party app root (value.js / keyframes / Atlas) and the installed-package
+adoption census are their tranches' work, routed (I-5), not done here.
 
 ---
 
