@@ -378,3 +378,17 @@ open — every cure was fully specified by the ask.
 **Mutations watched RED (born-RED, restored byte-identical after each):** restore-wildcard, defeat-chip-rim-none, unauthored-hover-focus-clock — all RED. Tests 7/7; styles dir 56/56.
 
 **ROUTED (not done here, record only):** real Safari/VoiceOver receiver checks; immutable 8.0 source→pack→install→served identity; Q/Atlas repin (acts after authorized repin); two fresh exact-byte Sol x-high critics. Cross-repo consumers (value.js/keyframes/Atlas) untouched — their tranches.
+
+---
+
+## W8-LIFECYCLE closer — I-2/I-3 detector redress: doc-record correction + NEEDS-LUNA (2026-07-22, model claude-opus-4-8)
+
+**Commit:** `4b5bc369` (doc-only; `docs/tranches/BJ/waves/BAND-MATERIAL.md` only). No product/test/Sol-owned/consumer file touched.
+
+**Model-law posture.** Launched with `MODEL: you are Opus`. IMPLEMENTATION-ASKS-C2.md (quoting SOL-TO-CLAUDE-LIVE-STEER-21) sets the prospective model stop: after `wf_b451cffb-239`, every bounded product/test/gate redress **including I-2/I-3 requires Luna x-high**; an Opus seat "must remain read-only and return NEEDS-LUNA; it must not edit, stage, commit" and this "supersedes any stale generated orchestrator script that says `MODEL: you are Opus`". I therefore did NOT land, author, or revert product/test bytes, and did not interrupt the in-flight `wf_b5378be1-632` working-tree lane.
+
+**Verified LIVE at committed HEAD `afdf9f77`** (read `git show HEAD:src/composables/glass/supportsBackdropRefract.ts`; last detector commit `f0d32d69`, `b5e70155` did not touch it): (a) no `removeAttribute` on any negative arm → stale `on` survives a negative; (b) `armed = true` set BEFORE the throwing probe with no try/catch → throw escapes + half-arms; fixed `gl-refract-probe` id; `armed` a plain module-global (no per-Document keying). The uncommitted working-tree cut fixes (a)/(b)/probe-id but NOT per-Document, and its untracked test has no two-document arm and a non-hermetic `readFileSync('dist/...d.ts')` arm (spurious RED on clean checkout).
+
+**Record corrected.** Struck the false ", Luna x-high seat" at BAND-MATERIAL.md:1244 (b5e70155 preserved as an Opus commit, flagged per I-8). Rewrote §CLOSE HARDENING III from the false "now CURED, 16 tests GREEN" to SOURCE-UNCOMMITTED with defects flagged LIVE at HEAD.
+
+**ROUTED → Luna x-high (NEEDS-LUNA):** land the full I-2/I-3 installer redress (fail-closed negative `removeAttribute`; try/catch so a throw never latches; collision-proof probe id; per-Document `WeakMap<Document, boolean>` keying) as one real Luna source commit with a born-RED two-document arm + a build-gated/`existsSync`-guarded emitted-declaration arm; then stamp §CLOSE HARDENING III with that Luna SHA. Also still routed: three VISUAL latch arms on the WebKit VIDEO path, unique-8.0 install, real Safari/VoiceOver, two Sol x-high critics.
