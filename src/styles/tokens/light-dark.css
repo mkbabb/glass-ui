@@ -1,5 +1,5 @@
 /* tokens/light-dark.css
-   §-1a coarse-pointer comfort + §-1b light-dark() color architecture — the @media (pointer:coarse) / @media (min-resolution) / @supports (light-dark()) overrides. After the master token partials (overrides them).
+   §-1a coarse-pointer comfort + §-1b light-dark() color architecture — the @media (pointer:coarse) / @supports (light-dark()) overrides. After the master token partials (overrides them). (No device-DPR blur arm: the 2dppx overlay writer is KILLED, §-1a below.)
    A partial of the tokens.css cascade; @import-ed by tokens.css in
    cascade order. Same :root cascade context as its siblings. */
 
@@ -21,21 +21,15 @@
     }
 }
 
-/* High-resolution overlay-blur restore. On a 2dppx+ display the
-   richer overlay wash is amortised by the extra device pixels (the blur samples
-   a denser backing store), so a higher ceiling is restored where it is
-   affordable. Standard-density displays keep the 11px budget radius set in §-1a
-   `:root`. Token-only override — every overlay surface that reads
-   `--glass-blur-overlay-radius` inherits the restored value automatically.
-
-   The restore pulled 24→20→17px in lockstep with the base
-   ladder's ~15-20% dial-back (the base overlay rung moved 15→13→11). 17px stays the
-   amortised high-DPI ceiling; standard density reads the dialed-back 11px. */
-@media (min-resolution: 2dppx) {
-    :root {
-        --glass-blur-overlay-radius: 17px;
-    }
-}
+/* NO device-conditional overlay-blur rung. The overlay role resolves 11px at EVERY
+   DPR (the `:root` budget radius in glass.css). The former `@media (min-resolution:
+   2dppx)` writer that lifted overlay to 17px is KILLED (BJ.W-BLUR-LADDER C2): it broke
+   the owner's uniform-subtlety direction, inverted the hierarchy (a calm overlay
+   outgrew the 16px deep ceiling), and carried no perceptual/performance warrant — a
+   CSS blur radius maps over MORE device pixels at higher DPR, so the claimed
+   "amortization" is physically incomplete. Reintroduction is a later born-RED proposal
+   that must demonstrate a role benefit over a real receiver in current Chromium+Safari
+   at DPR 1 and 2, not a defer. `glass-subtlety.test.ts` REDs on any restored writer. */
 
 /* ═══════════════════════════════════════════════
    §-1b LIGHT-DARK() COLOR ARCHITECTURE

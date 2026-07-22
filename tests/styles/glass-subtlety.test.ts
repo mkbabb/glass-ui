@@ -81,13 +81,54 @@ describe("glass blur ladder — the ~15% subtlety recalibration", () => {
         expect(deep.get("--glass-blur-deep-radius")).toBe("16px");
     });
 
-    it("keeps the high-DPI overlay restore in lockstep with the base pull", () => {
-        const hidpi = declMap(read("src/styles/tokens/light-dark.css"));
-        expect(hidpi.get("--glass-blur-overlay-radius")).toBe("17px");
+    it("has NO device-conditional overlay-radius writer (the 2dppx arm is KILLED)", () => {
+        // Comments carry the kill rationale (which names the retired 17px arm); strip
+        // them, then prove no LIVE rule re-pins the overlay radius by device density.
+        const raw = read("src/styles/tokens/light-dark.css").replace(/\/\*[\s\S]*?\*\//g, "");
+        expect(raw).not.toMatch(/min-resolution/);
+        expect(raw).not.toMatch(/--glass-blur-overlay-radius/);
+        // The base overlay role is the single 11px source of record at every DPR.
+        expect(blurRadius(light, "--glass-blur-overlay")).toBe(11);
     });
 
     it("keeps the content and overlay tiers distinct after the pull", () => {
         expect(blurRadius(light, "--glass-blur-floating"))
             .toBeGreaterThan(blurRadius(light, "--glass-blur-quiet"));
+    });
+});
+
+// The private immersive stage scrim is a scene-SEPARATION effect, not a calm/deep
+// glass rung: fixed 14px at --glass-level:1, MULTIPLIED by the shared clarity scalar
+// (so the a11y brackets flatten it), radius INDEPENDENT of the per-frame --stage-t,
+// and blur-only (no saturation term). Source-substituted the same way the ladder is.
+describe("immersive stage scrim — private stage effect, 14px × --glass-level", () => {
+    const drawer = read("src/components/drawer/styles.css");
+    const scrimMap = declMap(drawer);
+
+    it("declares the private radius token at a fixed 14px", () => {
+        expect(scrimMap.get("--stage-immersive-blur-radius")).toBe("14px");
+    });
+
+    it("multiplies the radius by the shared --glass-level clarity axis", () => {
+        // 14px at level 1, 4.2px at level 0.3, 0px at level 0 — resolved from source.
+        expect(blurRadius(scrimMap, "--stage-immersive-blur")).toBe(14);
+        const flatLvl = flatten(scrimMap, scrimMap.get("--stage-immersive-blur")!);
+        expect(scrimMap.get("--stage-immersive-blur")).toContain("var(--glass-level)");
+        expect(flatLvl).toMatch(/blur\(\s*calc\(\s*14px\s*\*\s*1\s*\)\s*\)/);
+    });
+
+    it("keeps the radius OFF the per-frame --stage-t clock and free of saturation", () => {
+        const decl = scrimMap.get("--stage-immersive-blur")!;
+        expect(decl).not.toContain("--stage-t");
+        expect(decl).not.toContain("saturate");
+        expect(decl).not.toContain("brightness");
+    });
+
+    it("consumes NO calm/deep rung — it is not the deep endpoint", () => {
+        // The immersive backdrop-filter reads the private token, never --glass-blur-deep-*.
+        const rule = /\[data-stage-scrim\]\[data-stage-immersive\][^{]*\{[^}]*\}/.exec(drawer);
+        expect(rule).not.toBeNull();
+        expect(rule![0]).toContain("var(--stage-immersive-blur)");
+        expect(rule![0]).not.toContain("--glass-blur-deep-radius");
     });
 });

@@ -32,11 +32,14 @@ composed at `:root`).
 ## The OPT-IN deep-glass tier (BB.W-DEEP-GLASS)
 
 Above the calm default sits an opt-in maximal-iOS-27 register — the separate
-`--glass-blur-deep-*` family the calm ladder never reads (deep radius 16px, deep saturate
-1.5), interpolated by `--glass-depth` (the `--glass-level` twin `@property <number>`).
-`.glass-deep` is a token-substitution decoration on a base rung (re-points
+`--glass-blur-deep-*` family the calm ladder never reads (deep-endpoint radius 16px,
+deep saturate 1.8), interpolated by `--glass-depth` (the `--glass-level` twin
+`@property <number>`) as a continuum from the calm floating floor (11px / 1.6) up to
+that endpoint; the three named grade defaults resolve ~12.75/14.5/16px. `.glass-deep`
+is a token-substitution decoration on a base rung (re-points
 `--glass-blur-floating: var(--glass-blur-deep)`); the `deep` CardTier rung maps
-`'glass-floating glass-deep'`. Opt-in only, never the bare content default.
+`'glass-floating glass-deep'`. Opt-in only, never the bare content default — it is a
+separate continuum, not the calm ladder's sixth rung.
 
 ## Adaptive-glass legibility (AX.W55 · AZ.W-ADAPTIVE-AUTO)
 

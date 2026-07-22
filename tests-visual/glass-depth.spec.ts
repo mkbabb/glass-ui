@@ -3,8 +3,8 @@
 //
 // THE TIER: the maximal iOS-27 Liquid-Glass register ABOVE the W-GLASS-CAL calm
 // default. `.glass-deep` (a deep blur token re-point ON a base `.glass-floating`
-// rung — the `.glass-opaque` precedent) reaches the Apple deep band (saturate 1.5 /
-// blur 16px), STRICTLY deeper than the calm floating rung (13px / 1.18). A SEPARATE
+// rung — the `.glass-opaque` precedent) reaches the Apple deep endpoint (saturate 1.8 /
+// blur 16px), STRICTLY deeper than the calm floating rung (11px / 1.6). A SEPARATE
 // `--glass-blur-deep-*` family on the `--glass-depth` scalar; the calm content
 // default is BYTE-UNCHANGED.
 //
@@ -17,7 +17,7 @@
 //       calm `.glass-floating` default beside it (the deeper, more light-concentrating
 //       plate — the "increased glassmorphism" realized in the paint).
 //   (b) CALM BYTE-UNCHANGED — the calm `.glass-floating` plate's resolved
-//       `backdrop-filter` matches the W-GLASS-CAL value (blur 13px, saturate 1.18 in
+//       `backdrop-filter` matches the W-GLASS-CAL value (blur 11px, saturate 1.6 in
 //       light): the deep mint did NOT shift the calm default (the calm-unchanged proof
 //       in the render).
 //   (c) LEVEL-COMPOSE — at `--glass-level: 0` (the opaque escape, the a11y bracket)
@@ -43,8 +43,9 @@ const VIEWPORTS = [
 ] as const;
 
 // The calm W-GLASS-CAL floating ceiling (the deep tier sits STRICTLY above it).
-const CALM_FLOATING_BLUR = 13;
-const CALM_FLOATING_SATURATE = 1.18;
+// Recalibrated to the shipped values: floating radius 11px, floating saturate 1.6.
+const CALM_FLOATING_BLUR = 11;
+const CALM_FLOATING_SATURATE = 1.6;
 
 interface FilterReadout {
     raw: string;
@@ -170,7 +171,7 @@ test.describe("glass-depth (π lane — the opt-in deep-glass tier, fail-CLOSED)
                 ).toBeGreaterThan(calm.saturate!);
 
                 // (b) CALM BYTE-UNCHANGED — the calm floating plate is the W-GLASS-CAL
-                // value in LIGHT (13px / 1.18). The dark arm lifts the saturate
+                // value in LIGHT (11px / 1.6). The dark arm lifts the saturate
                 // companion (W-DARK-MATERIAL), so the byte-unchanged radius assert is
                 // mode-invariant; the saturate value is asserted in light only.
                 expect(

@@ -5,6 +5,40 @@ records the breaking changes that landed in that cut, newest first. Clean breaks
 — no legacy aliases, no back-compat shims (L invariant 4); every break is a one-line
 rename or import re-point per call site.
 
+## 8.0.0
+
+**The device-DPR overlay-blur arm is removed.** The `overlay` glass role is now
+`11px` at EVERY device pixel ratio. The `@media (min-resolution: 2dppx)` writer that
+lifted `--glass-blur-overlay-radius` to `17px` on retina displays (shipped in 7.0.0)
+is deleted — it broke the uniform-subtlety direction, inverted the hierarchy (a calm
+overlay outgrew the `16px` deep ceiling), and a CSS blur radius already maps over more
+device pixels at higher DPR, so the claimed amortization was physically incomplete. A
+consumer that relied on the richer retina overlay wash re-verifies legibility; there is
+no token-name change, only the removal of the device-conditional value.
+
+**The immersive stage scrim is a private stage-effect role, reconnected to
+`--glass-level`.** `stage="immersive"` on `Dialog`/`Drawer` paints one fixed `14px`
+backdrop sample (the last published value) **multiplied by `--glass-level`**, so it
+flattens in lockstep with every other glass surface: `14px` at level 1, `4.2px` at
+level 0.3 (`prefers-contrast: more`), `0px` at level 0 (`prefers-reduced-transparency`
+/ `forced-colors`). The radius never reads the per-frame `--stage-t`, and it carries no
+saturation term — it is a scene-separation effect, not a glass surface recipe, and not
+the deep endpoint. (Interim development had repointed it onto the `16px` deep radius,
+bypassing the clarity axis; this restores the `14px × level` behavior.)
+
+**`CommandDialog` is not an immersive receiver.** It forwards `DialogProps`, never
+`DialogContentProps`, so it cannot request the stage. Only `Dialog` and `Drawer` accept
+`stage="immersive"`.
+
+**Blur ontology, restated.** The glass material is three separate concepts: FIVE calm
+role recipes (`wash`/`quiet`/`resting`/`floating`/`overlay`) across THREE distinct
+standard magnitudes (`1`/`7`/`11px`); one opt-in `deep` continuum (`11→16px`, saturate
+`1.6→1.8`) above the calm set; and one private immersive stage scrim beside it. Equal
+radii (`quiet`==`resting`==7px, `floating`==`overlay`==11px) are shared radius legs that
+still differ by brightness / dark-arm recipe / role — not merged materials. The per-role
+saturate values (`1.4`/`1.6`) are provisional current values pending a structured paint
+comparison, not ratified identity. No token-name or API change from this restatement.
+
 ## 7.0.0 (2026-07-17)
 
 The packed public map changes from 82 to 74 export keys. It removes

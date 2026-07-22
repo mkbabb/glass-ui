@@ -15,8 +15,9 @@ Projects import styles via CSS, components and composables via JS.
 :root {
     --glass-opacity-resting: 0.82;
     /* the consumer-tunable radius primitive — the composed --glass-blur-resting
-       threads --glass-level + saturate, never override it directly */
-    --glass-blur-resting-radius: 8px;
+       threads --glass-level + saturate, never override it directly. The shipped
+       resting/quiet default is 7px (the unified base material); re-pin here to retune. */
+    --glass-blur-resting-radius: 7px;
 }
 ```
 

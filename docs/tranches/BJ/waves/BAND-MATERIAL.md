@@ -455,6 +455,45 @@ values-vs-prose contradiction also confirmed (shipped 1.4/1.4/1.4/1.6/1.6 at `:1
   intentional emphasis grammar vs bug. Radius fork is CLOSED (all in-frame controls sit at 7px); the live-π
   rules bloom-intentionality only (route `/motion/springs`, NOT `/foundations`).
 
+### §C2-REDRESS — the third-pass Sol adjudication, LANDED (opus, modelId `claude-opus-4-8`), 2026-07-22
+
+The independent third-pass Sol adjudication (`addenda/2026-07-21-convergent-hardening/W2-DC566-ADJUDICATION-C2.md`)
+banked `dc566e34` + `7de2ece1` as partial source progress and REJECTED them as W2 completion. It closed the
+open forks; this redress lands the producer-side arm on top. **The §BUILD LANDED bullets above are historical
+— where they describe CURRENT behavior they are SUPERSEDED here** (the 16px scrim, the DPI "STANDS", and the
+saturate "ARE the material identity" claims no longer describe the tree):
+
+- **Ontology (§3) — reframed.** The "six rungs / one material per role" prose is STRUCK. The canon
+  (`tokens/glass.css` header) now states FIVE calm role recipes across THREE distinct standard magnitudes
+  (1/7/11px), ONE opt-in `deep` continuum (11→16px, saturate 1.6→1.8, three grade defaults ~12.75/14.5/16px)
+  ABOVE the calm set, and ONE private immersive stage scrim BESIDE it. `OPEN-2a` design-tier re-rule now cites
+  **Sol**, not retired Fable.
+- **Immersive scrim (§4) — 14px × `--glass-level`, private role.** `drawer/styles.css` Coupling (D) no longer
+  reads `--glass-blur-deep-radius` (16px). It declares a private `--stage-immersive-blur-radius: 14px` and
+  `--stage-immersive-blur: blur(calc(… * var(--glass-level)))`, so the a11y brackets flatten it (14 / 4.2 / 0
+  at level 1 / 0.3 / 0). Radius stays off `--stage-t`; blur-only, no saturation, no second opacity axis. It is
+  NOT the deep endpoint.
+- **DPI arm (§5) — KILLED.** The `@media (min-resolution: 2dppx)` overlay→17px writer is deleted from
+  `tokens/light-dark.css`; overlay is 11px at every DPR. `glass-subtlety.test.ts` inverted its positive 17px
+  pin into a negative relationship assertion (no `min-resolution` / no `--glass-blur-overlay-radius` writer in
+  `light-dark.css`) so a restored branch REDs. `OPEN-2b` is CLOSED as KILL (reintroduction is a later born-RED
+  proposal, not a defer).
+- **Saturate (§6) — provisional, acceptance still RED.** The 1.4/1.6 light-arm values are UNCHANGED (no blind
+  repaint) but the "ARE the material identity / machine-locked by `proof:glass-legibility` L7" prose is STRUCK
+  across `tokens/glass.css`; they are labeled PROVISIONAL CURRENT values pending a routed structured-substrate
+  paint comparison. W2 stays RED on the saturation arm until that paint rules.
+- **Receivers (§7).** Dialog is the sole production-demonstrated receiver; ONE real immersive Drawer story state
+  added (`demo/stories/containers/drawer.vue`, `data-testid="drawer-immersive"`). CommandDialog is NOT a
+  receiver — the "immersive Command scrim/spotlight" claim is struck from source + canon.
+- **Docs/package truth (§8).** `README.md` + `docs/canon/consumer-wiring.md` trued to the 7px resting primitive
+  (was 8px); `docs/canon/glass-system.md` deep saturate 1.5→1.8; stale `tests-visual/glass-depth.spec.ts`
+  calm-floating baseline 13px/1.18 → 11px/1.6; a new `MIGRATION.md` 8.0.0 section records the DPI removal +
+  scrim reconnection + ontology restatement. **ROUTED (not landed here):** the unique installed 8.0.0 artifact
+  + Atlas exact-integrity repin (atomic W2 acceptance across both arms), the structured-substrate saturation
+  comparison, and the 390/1440 Chromium+Safari paint matrix.
+- **`R-COMPOSITED-SIGNAL` (§9).** The mandatory PARALLEL arm (already landed `626540ad`) — W2 acceptance is
+  ATOMIC across both arms; neither is releasable alone. No second opacity axis added by either.
+
 ---
 
 ## Wave 3 — `BJ.W-GRADED-BACKDROP-JUDGE` — adopt-or-retire the gradient-backdrop-blur experiment

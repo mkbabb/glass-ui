@@ -361,23 +361,40 @@
 }
 
 /*
- * Coupling (D): the opt-in `immersive` Command spotlight.
- * The scrim owns one FIXED deep backdrop depth (`--glass-blur-deep-radius`, the
- * ladder's deepest flat rung — this immersive plate is deliberately deeper than the
- * standard overlay scrim above), never a per-frame radius ramp on `--stage-t`. A
- * `blur(calc(--stage-t * Npx))` re-rasterizes the blur kernel EVERY frame (the cardinal Safari sin, §L7 /
- * fold C2·R); the DIM ramps instead via the scrim α coupling (the `[data-stage-scrim]`
- * rule above, already `--stage-t`-driven) — the backdrop depth is material-constant
- * while the dim tracks the detent. The scrim fades in over
- * its `animate="fade"` enter, so the fixed blur reads as coalescing, never a pop.
- * Default OFF.
+ * Coupling (D): the opt-in `immersive` stage scrim (Dialog + Drawer).
+ * A PRIVATE stage-effect role — a scene-SEPARATION sample, NOT a glass surface recipe
+ * and NOT the deep endpoint. It owns ONE FIXED depth: `--stage-immersive-blur`, 14px
+ * at `--glass-level: 1` (the last published/reviewed immersive value, MIGRATION.md),
+ * MULTIPLIED by the shared `--glass-level` clarity scalar so the accessibility brackets
+ * (reduced-transparency / forced-colors set `--glass-level: 0`, prefers-contrast sets
+ * 0.3, glass/a11y-fallback.css) FLATTEN it in lockstep with every other glass surface:
+ * 14px at level 1, 4.2px at level 0.3, 0px at level 0. The radius NEVER reads the
+ * per-frame `--stage-t` — a `blur(calc(--stage-t * Npx))` re-rasterizes the blur kernel
+ * EVERY frame (the cardinal Safari sin, §L7); the DIM ramps instead via the scrim α
+ * coupling (the `[data-stage-scrim]` rule above, already `--stage-t`-driven) — the
+ * backdrop depth is material-constant while the dim tracks the detent. Blur-only — NO
+ * saturate/brightness term (a scene-separation effect carries no content-bearing glass
+ * plate) and NO second opacity axis. The scrim fades in over its `animate="fade"` enter,
+ * so the fixed blur reads as coalescing, never a pop. Default OFF.
+ *
+ * RECEIVERS: Dialog (production-demonstrated, dialog.vue) and Drawer (public + tested,
+ * one demonstrated story state). CommandDialog is NOT a receiver — it forwards
+ * `DialogProps`, never `DialogContentProps`, so it cannot request the stage.
  *
  * `:not([data-backdrop="graded"])` — the graded-backdrop Dialog replaces this flat
  * immersive plate with the masked halo (Δ0 plate count); Drawer never opts in, so
  * its paint is byte-identical.
  */
+[data-stage-scrim] {
+    /* The private immersive stage depth — a fixed 14px at level 1, scaled by the
+       shared `--glass-level` clarity axis (never a public calm/deep rung). Declared
+       on every stage scrim; applied only when `[data-stage-immersive]` is set. */
+    --stage-immersive-blur-radius: 14px;
+    --stage-immersive-blur: blur(calc(var(--stage-immersive-blur-radius) * var(--glass-level)));
+}
+
 [data-stage-scrim][data-stage-immersive]:not([data-backdrop="graded"]) {
-    backdrop-filter: blur(var(--glass-blur-deep-radius));
+    backdrop-filter: var(--stage-immersive-blur);
 }
 
 /* Reduced-motion — the house `SpringProgress` snaps the detent deterministically

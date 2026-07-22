@@ -55,8 +55,9 @@ import { DEFAULT_AURORA_CONFIG, MAX_NUCLEI } from "@mkbabb/glass-ui/aurora";
 :root {
     --glass-opacity-resting: 0.82;
     /* the consumer-tunable radius primitive — the composed --glass-blur-resting
-       threads --glass-level + saturate, never override it directly */
-    --glass-blur-resting-radius: 8px;
+       threads --glass-level + saturate, never override it directly. The shipped
+       resting/quiet default is 7px (the unified base material); re-pin here to retune. */
+    --glass-blur-resting-radius: 7px;
 }
 ```
 

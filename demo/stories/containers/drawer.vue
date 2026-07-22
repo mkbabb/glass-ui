@@ -176,6 +176,45 @@ const fixedEdges = [
             </div>
         </StorySection>
 
+        <StorySection heading="Immersive stage" gap="lg">
+            <p class="text-small text-muted-foreground">
+                <code class="font-mono text-micro">stage="immersive"</code> adds the
+                private stage scrim — one fixed 14px backdrop sample scaled by
+                <code class="font-mono text-micro">--glass-level</code> (so
+                reduced-transparency and forced-colors flatten it), never a per-frame
+                radius ramp. The page recedes behind it; the backdrop blurs to a
+                spotlight while the dim tracks the pull.
+            </p>
+            <div class="flex flex-wrap gap-3">
+                <Drawer stage="immersive">
+                    <DialogTrigger as-child>
+                        <Button>Open immersive drawer</Button>
+                    </DialogTrigger>
+                    <DrawerContent data-testid="drawer-immersive">
+                        <DrawerHeader>
+                            <DrawerTitle>Immersive session</DrawerTitle>
+                            <DrawerDescription>
+                                The field behind the sheet is blurred to a fixed
+                                14px spotlight — a scene-separation effect, not a
+                                glass surface. Close to compare with the plain
+                                dim above.
+                            </DrawerDescription>
+                        </DrawerHeader>
+                        <div class="px-6 pb-6 grid gap-2">
+                            <Button emphasis="quiet" class="justify-start">
+                                Continue
+                            </Button>
+                            <DialogClose as-child>
+                                <Button emphasis="quiet" class="justify-start">
+                                    Dismiss
+                                </Button>
+                            </DialogClose>
+                        </div>
+                    </DrawerContent>
+                </Drawer>
+            </div>
+        </StorySection>
+
         <StorySection heading="Right live-behind · reversible" gap="lg">
             <p class="text-small text-muted-foreground">
                 The Review trigger remains reachable while the right panel moves. Use it
