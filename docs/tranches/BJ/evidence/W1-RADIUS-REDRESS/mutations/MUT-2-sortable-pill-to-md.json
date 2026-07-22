@@ -1,0 +1,287 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/node_modules/.bin/playwright",
+      "test",
+      "--config",
+      "docs/tranches/BJ/evidence/W1-RADIUS-REDRESS/w1-radius.config.ts",
+      "--project=chromium",
+      "-g",
+      "sortable-list"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/docs/tranches/BJ/evidence/W1-RADIUS-REDRESS/w1-radius.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-capture",
+        "name": "chromium-capture",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "_capture_css.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "w1-radius-redress.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-coarse",
+        "name": "chromium-coarse",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "w1-radius-redress.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "w1-radius-redress.webkit.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/docs/tranches/BJ/evidence/W1-RADIUS-REDRESS/mutations/MUT-2-sortable-pill-to-md.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run demo:serve -- --host localhost --port 5199",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/",
+      "url": "http://localhost:5199",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "w1-radius-redress.spec.ts",
+      "file": "w1-radius-redress.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "W1 radius redress — computed receivers (fine pointer, Chromium)",
+          "file": "w1-radius-redress.spec.ts",
+          "line": 145,
+          "column": 6,
+          "specs": [
+            {
+              "title": "sortable-list — the drop-indicator capsule computes --radius-pill (9999px); rest has no bar; the drag-ghost carries its gold ring",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 777,
+                      "error": {
+                        "message": "Error: drop-above capsule → --radius-pill (9999px)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m9998.4\u001b[39m\nReceived:    \u001b[31m6\u001b[39m",
+                        "stack": "Error: drop-above capsule → --radius-pill (9999px)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m9998.4\u001b[39m\nReceived:    \u001b[31m6\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/tests-visual/w1-radius-redress.spec.ts:638:89",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/tests-visual/w1-radius-redress.spec.ts",
+                          "column": 89,
+                          "line": 638
+                        },
+                        "snippet": "  636 |         // Both insertion edges compute the capsule (--radius-pill = 9999px) — a mutation\n  637 |         // swapping the token or hard-coding 999px REDs here.\n> 638 |         expect(parsePx(probe.dropAbove), \"drop-above capsule → --radius-pill (9999px)\").toBeGreaterThanOrEqual(9999 - EPS);\n      |                                                                                         ^\n  639 |         expect(parsePx(probe.dropBelow), \"drop-below capsule → --radius-pill (9999px)\").toBeGreaterThanOrEqual(9999 - EPS);\n  640 |         // The ghost carries a real box-shadow ring (the gold affordance), not none.\n  641 |         expect(probe.ghostShadow.length, \"drag-ghost must carry a box-shadow ring\").toBeGreaterThan(4);"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/tests-visual/w1-radius-redress.spec.ts",
+                            "column": 89,
+                            "line": 638
+                          },
+                          "message": "Error: drop-above capsule → --radius-pill (9999px)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m9998.4\u001b[39m\nReceived:    \u001b[31m6\u001b[39m\n\n  636 |         // Both insertion edges compute the capsule (--radius-pill = 9999px) — a mutation\n  637 |         // swapping the token or hard-coding 999px REDs here.\n> 638 |         expect(parsePx(probe.dropAbove), \"drop-above capsule → --radius-pill (9999px)\").toBeGreaterThanOrEqual(9999 - EPS);\n      |                                                                                         ^\n  639 |         expect(parsePx(probe.dropBelow), \"drop-below capsule → --radius-pill (9999px)\").toBeGreaterThanOrEqual(9999 - EPS);\n  640 |         // The ghost carries a real box-shadow ring (the gold affordance), not none.\n  641 |         expect(probe.ghostShadow.length, \"drag-ghost must carry a box-shadow ring\").toBeGreaterThan(4);\n    at /Users/mkbabb/Programming/glass-ui/tests-visual/w1-radius-redress.spec.ts:638:89"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-22T08:47:36.051Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/test-results/w1-radius-redress-W1-radiu-d11bd-ghost-carries-its-gold-ring-chromium/error-context.md"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/test-results/w1-radius-redress-W1-radiu-d11bd-ghost-carries-its-gold-ring-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/tests-visual/w1-radius-redress.spec.ts",
+                        "column": 89,
+                        "line": 638
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "3e7681b4617fe87477a0-d78870af049014ef3b00",
+              "file": "w1-radius-redress.spec.ts",
+              "line": 595,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "W1 radius redress — coarse hit-floor + insertion (F12)",
+          "file": "w1-radius-redress.spec.ts",
+          "line": 689,
+          "column": 6,
+          "specs": [
+            {
+              "title": "sortable-list — the coarse insertion capsule computes --radius-pill (9999px)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "coarse-pointer only",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/tests-visual/w1-radius-redress.spec.ts",
+                        "line": 690,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-22T08:47:37.157Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "coarse-pointer only",
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/tests-visual/w1-radius-redress.spec.ts",
+                            "line": 690,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e7681b4617fe87477a0-75bdbb4d22a4b91b3f33",
+              "file": "w1-radius-redress.spec.ts",
+              "line": 779,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-07-22T08:47:35.809Z",
+    "duration": 1370.491,
+    "expected": 0,
+    "skipped": 1,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

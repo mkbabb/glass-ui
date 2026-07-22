@@ -48,8 +48,17 @@
    ═══════════════════════════════════════════════════════════════════════════ */
 
 /* Radius primitives — leading plain @theme (declared before the inline aliases
-   reference them; see the order note above). */
-@theme {
+   reference them; see the order note above).
+
+   STATIC: the radius scale is the public corner-override canon (manifest.ts), so
+   every rung emits at :root unconditionally. Without `static`, Tailwind v4 tree-
+   shakes any alias whose ONLY consumer is a JS-bundled component stylesheet it
+   never scans — `--radius-field` (read by tags-input/styles.css + field/field-
+   control.css, both imported through Vue SFC `<style src>`, NOT the index.css
+   Tailwind cascade) vanished from runtime :root and TagsInput/Textarea/dialog
+   fields fell back to 0px instead of the ruled 16px. Static keeps the whole
+   canon present so a receiver's `var(--radius-field)` always resolves. */
+@theme static {
     --radius: 0.625rem;
     --radius-xs: 4px;
     --radius-sm: 4px;

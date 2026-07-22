@@ -1,0 +1,648 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/node_modules/.bin/playwright",
+      "test",
+      "--config",
+      "docs/tranches/BJ/evidence/W1-RADIUS-REDRESS/w1-radius.config.ts",
+      "--project=chromium"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/docs/tranches/BJ/evidence/W1-RADIUS-REDRESS/w1-radius.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-capture",
+        "name": "chromium-capture",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "_capture_css.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "w1-radius-redress.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-coarse",
+        "name": "chromium-coarse",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "w1-radius-redress.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "w1-radius-redress.webkit.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/docs/tranches/BJ/evidence/W1-RADIUS-REDRESS/mutations/MUT-1-missing-radius-field-writer.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run demo:serve -- --host localhost --port 5199",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/",
+      "url": "http://localhost:5199",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "w1-radius-redress.spec.ts",
+      "file": "w1-radius-redress.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "W1 radius redress — computed receivers (fine pointer, Chromium)",
+          "file": "w1-radius-redress.spec.ts",
+          "line": 145,
+          "column": 6,
+          "specs": [
+            {
+              "title": "tabs — horizontal → --radius-tab (9999px), vertical → --radius-strip (12px), button co-geometric with indicator",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 970,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-22T08:47:05.504Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "3e7681b4617fe87477a0-8e1b06c21f2a7733038c",
+              "file": "w1-radius-redress.spec.ts",
+              "line": 149,
+              "column": 5
+            },
+            {
+              "title": "search — inline .input-bar (sm/md/lg) computes --radius-control (9999px) + glass plate; floating retains the plate, bare is chromeless",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 933,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-22T08:47:06.564Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "3e7681b4617fe87477a0-86de9009e54927319980",
+              "file": "w1-radius-redress.spec.ts",
+              "line": 220,
+              "column": 5
+            },
+            {
+              "title": "skeleton — default → --radius-media (10px); 48px avatar → circle; card → --radius-card (16px) [caller utilities win the @layer cascade]",
+              "ok": true,
+              "tags": [
+                "layer"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 916,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-22T08:47:07.502Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "3e7681b4617fe87477a0-22e667fad17e36cec751",
+              "file": "w1-radius-redress.spec.ts",
+              "line": 321,
+              "column": 5
+            },
+            {
+              "title": "infinite-scroll — the Reset is the PUBLIC Button (data-slot=button, computed control radius 9999px), rest + focus",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 770,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-22T08:47:08.422Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "3e7681b4617fe87477a0-78c5526b4f2715009b09",
+              "file": "w1-radius-redress.spec.ts",
+              "line": 383,
+              "column": 5
+            },
+            {
+              "title": "atoms — Avatar square identity computes --radius-media (10px), value-identical; circle is the pill",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 891,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-22T08:47:09.196Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "3e7681b4617fe87477a0-dfb40e7964c13a7fbf7f",
+              "file": "w1-radius-redress.spec.ts",
+              "line": 417,
+              "column": 5
+            },
+            {
+              "title": "tags-input — the field CONTAINER computes --radius-field (16px, NEVER 0px); the pill Chip child is 9999px, DISTINCT, and STRICTLY INSET",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 753,
+                      "error": {
+                        "message": "Error: --radius-field must resolve at :root (was tree-shaken/EMPTY)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"\"\u001b[39m",
+                        "stack": "Error: --radius-field must resolve at :root (was tree-shaken/EMPTY)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"\"\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/tests-visual/w1-radius-redress.spec.ts:510:101",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/tests-visual/w1-radius-redress.spec.ts",
+                          "column": 101,
+                          "line": 510
+                        },
+                        "snippet": "  508 |         // custom-property serializes as its authored \"1rem\"; the RESOLVED 16px proof is\n  509 |         // the container's computed border-radius below.\n> 510 |         expect(probe.rootField, \"--radius-field must resolve at :root (was tree-shaken/EMPTY)\").not.toBe(\"\");\n      |                                                                                                     ^\n  511 |\n  512 |         expect(probe.rows.length, \"no TagsInput with a Chip child\").toBeGreaterThan(0);\n  513 |         for (const r of probe.rows as NonNullable<(typeof probe.rows)[number]>[]) {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/tests-visual/w1-radius-redress.spec.ts",
+                            "column": 101,
+                            "line": 510
+                          },
+                          "message": "Error: --radius-field must resolve at :root (was tree-shaken/EMPTY)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"\"\u001b[39m\n\n  508 |         // custom-property serializes as its authored \"1rem\"; the RESOLVED 16px proof is\n  509 |         // the container's computed border-radius below.\n> 510 |         expect(probe.rootField, \"--radius-field must resolve at :root (was tree-shaken/EMPTY)\").not.toBe(\"\");\n      |                                                                                                     ^\n  511 |\n  512 |         expect(probe.rows.length, \"no TagsInput with a Chip child\").toBeGreaterThan(0);\n  513 |         for (const r of probe.rows as NonNullable<(typeof probe.rows)[number]>[]) {\n    at /Users/mkbabb/Programming/glass-ui/tests-visual/w1-radius-redress.spec.ts:510:101"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-22T08:47:10.092Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/test-results/w1-radius-redress-W1-radiu-4edc0-DISTINCT-and-STRICTLY-INSET-chromium/error-context.md"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/test-results/w1-radius-redress-W1-radiu-4edc0-DISTINCT-and-STRICTLY-INSET-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/tests-visual/w1-radius-redress.spec.ts",
+                        "column": 101,
+                        "line": 510
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "3e7681b4617fe87477a0-28adb558766aa3951b4f",
+              "file": "w1-radius-redress.spec.ts",
+              "line": 469,
+              "column": 5
+            },
+            {
+              "title": "field census — base single-line input keeps the pill (9999px); Textarea → --radius-field (16px); dialog-nested input (F7) → --radius-field (16px)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 770,
+                      "error": {
+                        "message": "Error: --radius-field must resolve at :root (was tree-shaken/EMPTY)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"\"\u001b[39m",
+                        "stack": "Error: --radius-field must resolve at :root (was tree-shaken/EMPTY)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"\"\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/tests-visual/w1-radius-redress.spec.ts:579:101",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/tests-visual/w1-radius-redress.spec.ts",
+                          "column": 101,
+                          "line": 579
+                        },
+                        "snippet": "  577 |         record(info, \"field-census\", probe);\n  578 |\n> 579 |         expect(probe.rootField, \"--radius-field must resolve at :root (was tree-shaken/EMPTY)\").not.toBe(\"\");\n      |                                                                                                     ^\n  580 |         // Base single-line input stays the stadium pill.\n  581 |         expect(parsePx(probe.inputRadius), \"base input keeps the pill (9999px)\").toBeGreaterThanOrEqual(9999 - EPS);\n  582 |         // Textarea (multi-line box) reads the ruled field rung, NOT the pill."
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/tests-visual/w1-radius-redress.spec.ts",
+                            "column": 101,
+                            "line": 579
+                          },
+                          "message": "Error: --radius-field must resolve at :root (was tree-shaken/EMPTY)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"\"\u001b[39m\n\n  577 |         record(info, \"field-census\", probe);\n  578 |\n> 579 |         expect(probe.rootField, \"--radius-field must resolve at :root (was tree-shaken/EMPTY)\").not.toBe(\"\");\n      |                                                                                                     ^\n  580 |         // Base single-line input stays the stadium pill.\n  581 |         expect(parsePx(probe.inputRadius), \"base input keeps the pill (9999px)\").toBeGreaterThanOrEqual(9999 - EPS);\n  582 |         // Textarea (multi-line box) reads the ruled field rung, NOT the pill.\n    at /Users/mkbabb/Programming/glass-ui/tests-visual/w1-radius-redress.spec.ts:579:101"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-22T08:47:11.095Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/test-results/w1-radius-redress-W1-radiu-f0345-t-F7-→---radius-field-16px--chromium/error-context.md"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/test-results/w1-radius-redress-W1-radiu-f0345-t-F7-→---radius-field-16px--chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/tests-visual/w1-radius-redress.spec.ts",
+                        "column": 101,
+                        "line": 579
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "3e7681b4617fe87477a0-c519717a40389885b391",
+              "file": "w1-radius-redress.spec.ts",
+              "line": 542,
+              "column": 5
+            },
+            {
+              "title": "sortable-list — the drop-indicator capsule computes --radius-pill (9999px); rest has no bar; the drag-ghost carries its gold ring",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 825,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-22T08:47:12.203Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "3e7681b4617fe87477a0-d78870af049014ef3b00",
+              "file": "w1-radius-redress.spec.ts",
+              "line": 595,
+              "column": 5
+            },
+            {
+              "title": "command — .command__input has NO border-radius (computed 0px); the panel owns --radius-panel (12px)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 791,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-22T08:47:13.124Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "3e7681b4617fe87477a0-6e79342e04cbc125aec8",
+              "file": "w1-radius-redress.spec.ts",
+              "line": 654,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "W1 radius redress — coarse hit-floor + insertion (F12)",
+          "file": "w1-radius-redress.spec.ts",
+          "line": 689,
+          "column": 6,
+          "specs": [
+            {
+              "title": "tags-input — the coarse child MEASURES a ≥44px action region (chip min-block + ::after spacer), owns its corners, and stays strictly inset",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "coarse-pointer only",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/tests-visual/w1-radius-redress.spec.ts",
+                        "line": 690,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-22T08:47:13.919Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "coarse-pointer only",
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/tests-visual/w1-radius-redress.spec.ts",
+                            "line": 690,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e7681b4617fe87477a0-1bff5288d55a7f11ce53",
+              "file": "w1-radius-redress.spec.ts",
+              "line": 692,
+              "column": 5
+            },
+            {
+              "title": "sortable-list — the coarse insertion capsule computes --radius-pill (9999px)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "coarse-pointer only",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/tests-visual/w1-radius-redress.spec.ts",
+                        "line": 690,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-22T08:47:13.922Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "coarse-pointer only",
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/tests-visual/w1-radius-redress.spec.ts",
+                            "line": 690,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e7681b4617fe87477a0-75bdbb4d22a4b91b3f33",
+              "file": "w1-radius-redress.spec.ts",
+              "line": 779,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-07-22T08:47:05.264Z",
+    "duration": 8686.705000000002,
+    "expected": 7,
+    "skipped": 2,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

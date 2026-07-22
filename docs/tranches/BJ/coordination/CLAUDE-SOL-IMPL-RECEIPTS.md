@@ -198,3 +198,54 @@ bytes preserved, no rewrite).
   artifact + install fixture + Atlas exact-integrity repin; value.js role-aware migration (W1: 3 readers;
   W4 arm separate); the 390/1440 Chromium/Safari paint matrices; **two fresh Sol x-high exact-byte critics
   each**. W4 + W6 still await Sol DECISIONS (fira-code cure, gate wildcard-vs-scoped, `--track-bg` name).
+
+## RECEIPT — 2026-07-22 ~04:5x EDT — W1-PAINT closer: cures applied, born-RED mutations retained, both engines GREEN
+
+Applied every W1-PAINT cure (paint-proof closer, Opus `claude-opus-4-8`). The proof is a REAL browser run
+(Playwright Chromium + WebKit on localhost:5199), computed-style + screenshot, readiness/expect-polling only.
+
+**Product fix (the natural missing-writer, cure #3).** `--radius-field` was tree-shaken from runtime `:root`
+because its ONLY consumers (`tags-input/styles.css`, `_shared/field/field-control.css`) load via Vue SFC
+`<style src>` — NOT the Tailwind-scanned `index.css` cascade — so Tailwind v4 dropped the alias. Every
+sibling radius token emits because its consumer CSS IS `@import`ed into `index.css`. Fix: `src/styles/theme/
+radius.css` `@theme {` → `@theme static {` (force-emit the public radius canon). Live-verified: `[data-slot=
+tags-input]` container `0px` → `16px`; `--radius-field` resolves at `:root`.
+
+**Truthful labels (cures #1/#webkit).** Retitled the WebKit spec/describe/JSON note: struck every "Safari" +
+"real receiver" claim → "bundled-WebKit static-cascade discovery over route-unioned DEVELOPMENT CSS + class-
+only markup; NOT Safari, NO mounted receiver, NO VoiceOver; the actual Safari + VoiceOver mounted matrix
+remains OWED / acceptance-RED." Bare/floating recipes now read from `searchVariants.ts` (mutation-biting, no
+`rounded-none`→0px tautology); floating + tags-input(field) + sortable nodes added to the harness.
+
+**Load-bearing assertions corrected.**
+- TagsInput F12: container now asserts computed `--radius-field` ≈16px, NEVER 0px (distinct-from-pill was NOT
+  acceptance). Chromium 16px / WebKit 16px. Chip 9999px, distinct, strictly inset.
+- Field census (`/forms/inputs`): base input pill 9999px; Textarea 16px; dialog-nested input (F7, real
+  `[data-slot=dialog-content]` scope) 16px — cross-checks the writer at its other receivers.
+- Coarse 44px floor: dropped the dead `::before` read; now MEASURES chip `min-block-size`=44px + painted
+  height 44px + `::after` touch-spacer inline-size 44px, + `elementFromPoint` region ownership (center + top/
+  bottom edge-mids + left cap; pill border-radius clips the rect corners so those fall through by design) +
+  strict-inset no-overlap. REDs on sub-44.
+- Sortable (missing receiver added): `/data/sortable-list` drop-indicator `::before`/`::after` capsule computes
+  `--radius-pill` 9999px (rest 0px); drag-ghost carries its gold ring; coarse arm asserts the capsule too.
+- Sleeps: every `page.waitForTimeout` + the in-page `setTimeout(500)` (both specs + `_capture_css.spec.ts`)
+  replaced by readiness gates (`waitForReceiver` = attach + resolved computed radius; `settleFrames` = 2-rAF
+  pre-screenshot; `waitForStyleSheetsStable` for the capture; `.glass-avatar` mount wait for the atoms tab).
+
+**Retained biting mutations (cure #2) — `evidence/W1-RADIUS-REDRESS/mutations/`.**
+- `BASELINE-green.json` — 12 passed / 0 failed (chromium+chromium-coarse+webkit).
+- `MUT-1-missing-radius-field-writer.json` — the NATURAL defect: `@theme static`→`@theme` reverted →
+  `--radius-field` tree-shaken → tags-input + field-census RED (2 failed). The whole cure's raison d'être,
+  born-RED and retained as a distinct artifact (the prior receipt's mutation was against vitest gates, not
+  this browser spec, and its failing report had been overwritten).
+- `MUT-2-sortable-pill-to-md.json` — computed-radius bite on a second receiver: SortableList `--radius-pill`
+  → `--radius-md` → drop capsule computes 6px not 9999px → RED (1 failed).
+
+**Result.** Both engines GREEN at the ruled COMPUTED assertions with ≥2 proven bites. Banked under
+`docs/tranches/BJ/evidence/W1-RADIUS-REDRESS/`: `run-report.json` (12/0), `computed-{chromium,chromium-coarse,
+webkit}.json`, regenerated `compiled-demo.css` (now carries `--radius-field` + sortable rules), per-receiver
+screenshots. **STILL OWED / acceptance-RED** (unchanged by this closer, per W1-PAINT-WORKFLOW-ADJUDICATION-C2
++ steer 14): immutable packed 8.0 install + value.js/consumer locks; ACTUAL Safari + VoiceOver mounted-
+receiver matrix; the full mounted binding matrix (Tabs activation/glide/PRM, mounted Search variants, Command
+dialog states, etc.); two fresh Sol x-high exact-byte critics. This lane is producer-side paint discovery +
+the field-writer forward fix — NOT terminal W1 closure.
