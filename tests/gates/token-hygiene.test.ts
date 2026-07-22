@@ -5,12 +5,12 @@
 // rung minted outside the ladder — unlintable, unretunable, and invisible to the token
 // graph.
 //
-// AUTHORED BORN-RED (BAND-GATES §Wave 3 §Acceptance). The shipped violations are owned by
-// BAND-MATERIAL W1 (radii) and W2 (the drawer blur); this file authors the gate only and
-// touches none of their source. The binding assertion carries `it.fails` — the
-// EXPECTED-RED latch — so CI reads a born-RED gate as GREEN and a ROTTED gate as RED. When
-// MATERIAL W1/W2 repoint the literals the assertion starts passing, `it.fails` inverts,
-// and the flip wave drops the marker in the same cut.
+// This gate authored BORN-RED (BAND-GATES §Wave 3 §Acceptance) and has since FLIPPED to an
+// ordinary GREEN assertion: MATERIAL W1 (radii — incl. the two segmented tab literals via
+// the OPEN-1c contextual seam) and W2 (the drawer blur) repointed every shipped violation,
+// so `src/` now carries no off-ladder radius or backdrop blur. The `it.fails` EXPECTED-RED
+// latch and its interim residue pin are retired; the binding assertion is a plain `it` that
+// reds on ANY new off-ladder literal.
 //
 // OPEN-6 (the allowlist) is ruled here, at wave time, by what the ladder can express:
 //   1. Ladder SOURCE files (`src/styles/theme/**`, `src/styles/tokens/**`, `tokens.css`)
@@ -112,26 +112,12 @@ const format = (list: TokenHygieneViolation[]): string =>
     list.map((v) => `${v.file}:${v.line} [${v.channel}] ${v.value}`).join("\n");
 
 describe("gate:token-hygiene — radius/backdrop-blur literals off the ladder", () => {
-    // EXPECTED-RED at HEAD. GREEN when BAND-MATERIAL W1 (radii) + W2 (drawer blur) repoint;
-    // at that moment `it.fails` inverts and the flip wave drops the marker.
-    it.fails("EXPECTED-RED — src/ carries no off-ladder radius or backdrop blur", () => {
+    // ORDINARY GREEN (flipped from the born-RED `it.fails` latch once MATERIAL W1/W2 landed).
+    // Reds on ANY new off-ladder literal — file-grain, never line-grain (THE ANCHOR LAW). The
+    // interim residue pin (the two `segmented.css` radii, held pending OPEN-1c) is retired now
+    // that the OPEN-1c contextual seam repointed both onto `var(--bouncy-slider-radius)`.
+    it("src/ carries no off-ladder radius or backdrop blur", () => {
         expect(format(scanned)).toBe("");
-    });
-
-    // The latch above passes on ANY non-empty set. This one keeps the teeth while it is up: a
-    // NEW off-ladder literal, or a PARTIAL repoint by MATERIAL W1/W2, reds here. File-grain,
-    // never line-grain — THE ANCHOR LAW.
-    it("the born-RED set neither grows nor partially shrinks under the latch", () => {
-        // MATERIAL W1 landed its SortableList `999px`→`--radius-pill` repoint (mirror
-        // dropped in the same cut, per the header). MATERIAL W2 landed the drawer
-        // immersive-scrim repoint (`blur(14px)`→`blur(var(--glass-blur-deep-radius))`),
-        // so the drawer entry drops from this pin. Only the two `segmented.css` radii
-        // stay pinned pending MATERIAL W1 OPEN-1c (the column-stack-vs-stadium geometry
-        // Fable rules); the latch above stays RED on this non-empty residue.
-        expect(scanned.map((v) => `${v.file} [${v.channel}]`).sort()).toEqual([
-            "src/components/tabs/styles/segmented.css [radius]",
-            "src/components/tabs/styles/segmented.css [radius]",
-        ]);
     });
 
     it("self-test bite — a planted literal reds on both channels", () => {

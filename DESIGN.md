@@ -356,24 +356,83 @@ Twelve-tier stacking, plus two out-of-band tiers:
 
 ## Border Radius
 
-| Token             | Value              | Pixel (at 16 px base) | Use                        |
-| ----------------- | ------------------ | --------------------- | -------------------------- |
-| `--radius`        | 0.5rem             | 8 px                  | Default                    |
-| `--radius-sm`     | 4px                | 4 px                  | Tight corners (kbd, badge) |
-| `--radius-md`     | 6px                | 6 px                  | Medium                     |
-| `--radius-lg`     | var(--radius)      | 8 px                  | Interactive                |
-| `--radius-xl`     | 12px               | 12 px                 | Panels                     |
-| `--radius-2xl`    | 1rem               | 16 px                 | Large cards, dialogs       |
-| `--radius-pill`   | 9999px             | 9999 px               | Pills                      |
-| `--radius-card`   | var(--radius-2xl)  | 16 px                 | Card surfaces              |
-| `--radius-panel`  | var(--radius-xl)   | 12 px                 | Panels                     |
-| `--radius-dialog` | var(--radius-2xl)  | 16 px                 | Modal dialogs              |
-| `--radius-input`  | var(--radius)      | 8 px                  | Inputs                     |
-| `--radius-button` | var(--radius)      | 8 px                  | Buttons                    |
-| `--radius-badge`  | var(--radius-pill) | 9999 px               | Badges                     |
-| `--radius-dock`   | var(--radius-pill) | 9999 px               | Dock container             |
+The radius grammar is a **role-keyed** scale (iOS-27 codex law 4). The source of record is
+`src/styles/theme/radius.css`; this table is the human mirror and is checked against it by
+`tests/styles/radius-role-canon.test.ts` (every rung classified; the executable inventory and
+this table must agree). Five classes: **primitive** (the numeric ladder), **semantic role**
+(what a surface IS), **context relay** (the concentric-nesting channel), **shape axis** (the
+`corner-shape` superellipse), and **public-only override seam**.
 
-**φ-derivation + the concentric rule (§L6).** The ladder is the √φ family, not arbitrary px: read `sm` (4px) as the base, `md` ≈ base·√φ, `--radius`/`lg` ≈ base·φ (the live 8px default), `xl` ≈ base·φ·√φ (12px), `2xl` ≈ base·φ² (16px) — the live values already sit on the ladder, so this is a derivation re-statement, not a visual break. **Nested surfaces are concentric**: an inner radius is `calc(var(--radius-outer) − var(--gap))` so the corners of a chip inside a card stay parallel to the card's (the iOS concentric-radius law; `BD.W-CONCENTRIC-RADIUS`). A new free radius earns a √φ-indexed rung, never a magic number.
+### Primitives — the numeric ladder
+
+| Token           | Value    | Pixel (16px base) | Note                          |
+| --------------- | -------- | ----------------- | ----------------------------- |
+| `--radius`      | 0.625rem | 10 px             | Base (`= --radius-media`)     |
+| `--radius-xs`   | 4px      | 4 px              | Floor rung                    |
+| `--radius-sm`   | 4px      | 4 px              | Tight corners (kbd)           |
+| `--radius-md`   | 6px      | 6 px              | Medium                        |
+| `--radius-lg`   | var(--radius)   | 10 px      | Interactive alias of base     |
+| `--radius-xl`   | 12px     | 12 px             | Panel rung                    |
+| `--radius-2xl`  | 1rem     | 16 px             | Large-card rung               |
+| `--radius-3xl`  | 1.5rem   | 24 px             | Big-dock/sheet rung           |
+| `--radius-pill` | 9999px   | stadium           | Stadium/capsule (half-height) |
+
+### Semantic roles — what the surface IS
+
+| Token               | Resolves to        | Pixel | Role                                                        |
+| ------------------- | ------------------ | ----- | ---------------------------------------------------------- |
+| `--radius-media`    | var(--radius)      | 10 px | Media tile — Skeleton default, Avatar square. NOT the Input |
+| `--radius-control`  | var(--radius-pill) | stadium | Control/field/mode/action pill (input-bar, tag delete)   |
+| `--radius-field`    | var(--radius-2xl)  | 16 px | Multi-line field / stepper / dialog-nested input, TagsInput container |
+| `--radius-card`     | var(--radius-2xl)  | 16 px | Content card / popover                                     |
+| `--radius-dialog`   | var(--radius-card) | 16 px | Dialog (matches the card — F48)                            |
+| `--radius-panel`    | var(--radius-xl)   | 12 px | Panel / configurator / Command panel                      |
+| `--radius-strip`    | 0.75rem            | 12 px | Bounded column-stack segmented track (vertical)            |
+| `--radius-tab`      | var(--radius-pill) | stadium | Segmented-control stadium (horizontal)                   |
+| `--radius-badge`    | var(--radius-pill) | stadium | Badge                                                    |
+| `--radius-dock`     | var(--radius-pill) | stadium | Dock container                                           |
+| `--radius-dock-card`| var(--radius-3xl)  | 24 px | Big-dock card shell (density-scaled)                       |
+| `--radius-tooltip`  | var(--radius-lg)   | 10 px | Tooltip                                                    |
+
+### Context relay — the concentric-nesting channel (law 1)
+
+| Token            | Default            | Note                                                     |
+| ---------------- | ------------------ | -------------------------------------------------------- |
+| `--radius-ctx`   | var(--radius-card) | A container publishes its resolved outer corner here     |
+| `--radius-inset` | 0px                | …and its inner pad here                                  |
+| `--radius-floor` | var(--radius-xs)   | Minimum a nested corner never rounds below (4px)         |
+
+A nested card-class surface derives `max(--radius-floor, calc(--radius-ctx − --radius-inset))`.
+
+### Shape axis — the `corner-shape` superellipse (parallel to radius)
+
+| Token                    | Value                              | Note                                    |
+| ------------------------ | ---------------------------------- | --------------------------------------- |
+| `--corner-k-squircle`    | 2                                  | The lone squircle exponent (superellipse(2), n=4) |
+| `--corner-shape-bigdock` | superellipse(var(--corner-k-squircle)) | Large glass overlay                 |
+| `--corner-shape-sheet`   | superellipse(var(--corner-k-squircle)) | Coarse-pointer side slide           |
+| `--corner-shape-panel`   | superellipse(var(--corner-k-squircle)) | Group box                           |
+| `--corner-shape-thumb`   | superellipse(var(--corner-k-squircle)) | Spectrum slider knob                |
+
+### Public-only override seam
+
+| Token             | Value         | Pixel | Note                                                          |
+| ----------------- | ------------- | ----- | ------------------------------------------------------------ |
+| `--radius-button` | var(--radius) | 10 px | The explicit utility-button corner override seam. Consumers retune it — clean Atlas sets it to a private 6px plate register (`atlas src/design/tokens/radius.css`). **Documented public exception; never silently repointed or retired.** |
+
+**φ-derivation + the concentric rule (§L6).** The primitive ladder is the √φ family, not arbitrary px: read `sm` (4px) as the base, `md` ≈ base·√φ, `--radius`/`lg` ≈ base·φ (the 10px default), `xl` ≈ base·φ·√φ (12px), `2xl` ≈ base·φ² (16px). **Nested surfaces share a boundary concentrically** via the relay above — an inner corner is `max(floor, ctx − inset)` so a plate inside a card stays parallel to the card's (`BD.W-CONCENTRIC-RADIUS`). This is the **boundary-sharing** law, not an absolute silhouette ban: a discrete child control (a pill `<Chip>`) strictly inset inside a near-rect field is a legitimate role composition, not a defect. A new free radius earns a √φ-indexed rung, never a magic number.
+
+### 8.0 CSS-token ledger — the radius delta (clean break, no alias)
+
+| Change | Token             | Was → Is                        | Reason                                                     |
+| ------ | ----------------- | ------------------------------- | --------------------------------------------------------- |
+| REMOVE | `--radius-input`  | var(--radius) (10px) → gone     | Misnamed a media-tile rung (Skeleton/Avatar/Command), never the Input (which reads `--radius-pill`). Renamed, no legacy alias. |
+| ADD    | `--radius-media`  | — → var(--radius) (10px)        | The true media-tile role for the retained 10px rung.      |
+| REMOVE | `--corner-k-soft` | 1.2 → gone                      | Zero runtime `var()` consumers; only "pinned" by an absent gate. |
+| REMOVE | `--corner-k-sharp`| 4 → gone                        | Same — dead k-rung, no consumer.                          |
+| RETAIN | `--corner-k-squircle` | 2 (unchanged)               | The sole surviving squircle exponent vocab.               |
+
+The value.js consumer migration (three `--radius-input`/`rounded-input` readers → `field`/`control`, never `media`), the immutable 8.0 package artifact, and the install fixture ride the value.js owner's tranche — not this producer cut.
 
 ---
 

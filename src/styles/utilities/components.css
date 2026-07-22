@@ -13,7 +13,11 @@
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        border-radius: var(--radius-2xl);
+        /* The seated single-line field is a true control PILL — the semantic
+           `--radius-control` stadium (= --radius-pill, clamped to half-height), NOT the
+           raw `--radius-2xl` primitive. inline and floating search fields both read this
+           plate; `bare` opts out via `rounded-none`. */
+        border-radius: var(--radius-control);
         border: 1px solid var(--glass-border-floating);
         background: var(--glass-bg-floating);
         backdrop-filter: var(--glass-blur-floating);

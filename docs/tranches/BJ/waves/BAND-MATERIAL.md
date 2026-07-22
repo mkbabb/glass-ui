@@ -230,17 +230,48 @@ RE-VERIFIED at HEAD `8786d2c8` (band cited `485891a2`; both born-RED defects rep
 - **Guards:** `tests/styles/radius-role-canon.test.ts` pins the reconcile + F12 (tags-input container on
   `--radius-field`, chip stadium from `<Chip>`); F45/F48 already pinned by `radius-dialog-bind.test.ts`.
 
-### §DEFERRED — the design tier owes these decisions (do not guess)
+### §DEFERRED → §RULED (design tier, C2 adjudication `W1-31C-ADJUDICATION-C2.md`)
 
-- **F17 floating-variant chrome** — the born-RED square-input remediation. Site: `searchVariants.ts:10`
-  `floating: "… rounded-none"` strips the `.input-bar` (`utilities/components.css:12-16`
-  `--radius-2xl`) with a utilities-layer class, zero `.fuzzy-search--floating` re-chrome rules in `src/`.
-  **Decision owed (Fable + live-π):** the `floating` variant gains its own rounded chrome, OR stops
-  stripping `border-radius`, OR the demo drops `variant="floating"`. **DRIFT NOTE:** at HEAD `search.vue`
-  no longer passes `variant="floating"` (SearchBar defaults `inline`, `search.vue:491`), so the demo no
-  longer TRIGGERS the square; the strip persists in `searchVariants.ts:10` for any consumer that opts in.
-  The chrome decision + its before/after live-π capture is the design-tier deliverable (LIVE-DEFER).
-- **OPEN-1c segmented target** — see above (column-stack vs stadium geometry, Fable rules).
+- **F17 floating-variant chrome — RULED.** `floating` KEEPS its public name but stops stripping the
+  `.input-bar` plate: it binds the same complete component-owned glass chrome as `inline`
+  (`searchVariants.ts` `floating: ""`); `bare` remains the sole explicit chromeless variant. `.input-bar`
+  itself repoints from the primitive `--radius-2xl` to the semantic `--radius-control`
+  (`utilities/components.css`), so inline + floating single-line search fields are true control pills
+  across sm/md/lg. One recipe, not floating-only special chrome — `surface` chooses glass/veil/opaque,
+  `variant` chooses component-owned plate vs bare.
+- **OPEN-1c segmented target — RULED.** Both raw tab-button radii (`segmented.css` `.segmented-tab`
+  `0.3125rem` + `.segmented-tabs--underline .segmented-tab` `0.25rem`) → `var(--bouncy-slider-radius)`,
+  the component's existing orientation-aware seam: horizontal → `--radius-tab` (the control stadium),
+  vertical → the parent's `--radius-strip` rebind (the bounded column-stack corner). Not a global
+  `--radius-control`, not a stadium forced onto the tall vertical stack, not an underline-only radius.
+
+### §CONVERGENT-HARDENING C2 (opus `claude-opus-4-8`) — producer-side redress ON TOP of `31c01d2a`
+
+Banks the `31c01d2a` bytes; lands the bounded C2 rulings (source/test/truth):
+
+- **Command input — RULED: DELETE `border-radius`.** `.command__input` is a transparent, borderless
+  `RekaComboboxInput` with no painted plate; the panel owns `--radius-panel` and clips. The 31c
+  `--radius-media` map was paint-dead coupling — removed, no Command-specific token minted.
+- **Skeleton cascade — RULED: layer the default.** The default `--radius-media` moves into
+  `@layer components` (Skeleton.vue) so caller shape utilities (`rounded-full`/`rounded-card`, merged via
+  `cn('skeleton', props.class)`) win from the later utilities layer. No `shape` prop, no `!important`, no
+  private selector.
+- **F12 nesting law — RULED: boundary-sharing, not an absolute ban.** The false "a pill never nests in a
+  near-rect" prose is struck from `radius.css` and the gate; replaced by the concentric boundary-sharing
+  law. TagsInput (`--radius-field` container) holding pill `<Chip>` children is the intended role
+  composition and its own counterexample.
+- **Canon truth.** DESIGN.md's stale `--radius-input`/8px rows are corrected to a complete
+  classified table (primitive · semantic role · context relay · shape axis · public override) checked
+  against the executable inventory by `radius-role-canon.test.ts`. `--radius-button` is documented as the
+  explicit public override seam Atlas consumes — never retired.
+- **Gate.** `radius-role-canon.test.ts` is now the single ordinary (non-`it.fails`) W1 gate; the
+  `token-hygiene` radius arm flips to an ordinary GREEN assertion once both segmented literals leave.
+
+**8.0 CSS-token ledger (producer-side truth; mirror of DESIGN.md §"8.0 CSS-token ledger"):** remove
+`--radius-input`; add `--radius-media` (retained 10px); remove `--corner-k-soft` + `--corner-k-sharp`;
+retain `--corner-k-squircle`. The value.js migration (3 readers → field/control, NEVER media), the
+immutable 8.0 package artifact + install fixture, and the 390/1440 Chromium+Safari paint matrix are
+ROUTED to their owners — not this producer cut.
 
 ---
 

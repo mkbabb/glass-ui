@@ -32,8 +32,18 @@ const hostAttrs = computed(() =>
     position: relative;
     overflow: hidden;
     isolation: isolate;
-    border-radius: var(--radius-media);
     background: var(--muted);
+}
+
+/* The DEFAULT tile radius lives on @layer components so a caller's public shape
+   utility (rounded-full for an avatar specimen, rounded-card for a card specimen —
+   merged onto this element by `cn('skeleton', props.class)`) wins from the later
+   utilities layer. An unlayered radius here would outrank those utilities and defeat
+   the public shape seam. --radius-media is the media/tile default, not a hard owner. */
+@layer components {
+    .skeleton {
+        border-radius: var(--radius-media);
+    }
 }
 
 .skeleton::after {

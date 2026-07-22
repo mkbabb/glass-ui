@@ -28,10 +28,17 @@
    ─ media tile (skeleton/avatar/  --radius-media    10px     soft-rect   media/tile surface —
      command)                      (= --radius)                           NOT the Input pill
 
-   THE RULE the gate enforces (BJ.W-STATIC-HYGIENE token-hygiene, born-RED against
-   the raw literals this band repoints): every radius resolves through a rung, and
-   a CARD never nests inside a PILL / a PILL never nests in a near-rect (the F12
-   "pill chips inside a near-rectangle container" incoherence class).
+   THE NESTING LAW (boundary-sharing, not an absolute silhouette ban). Concentric
+   subtraction applies when two painted surfaces SHARE A BOUNDARY: an inner plate
+   follows an outer corner across a known inset (the relay below). A discrete child
+   control floating inside a padded field/card is NOT that case — it may keep its own
+   role silhouette (a pill chip inside a near-rect field is legitimate, per F12) when
+   all hold: its painted + hit boxes are strictly inset from the container boundary;
+   it clips nor collides at rest/focus/removal/wrap/coarse-touch; the outer stays the
+   field/container and the child stays the control/tag; and no ancestor overflow shears
+   the child's focus ring, remove action, or hit floor. (The old absolute "a pill never
+   nests in a near-rect" was FALSE — TagsInput's `--radius-field` container holding pill
+   `<Chip>` children is its counterexample and the intended role composition.)
 
    Concentric nesting (law 1) is already implemented as the --radius-ctx /
    --radius-inset / --radius-floor relay below: a container publishes its resolved

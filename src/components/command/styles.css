@@ -35,10 +35,15 @@
 }
 
 .command__input {
+    /* No border-radius: this is a transparent, borderless RekaComboboxInput with no
+       painted plate or clip of its own. The Command panel owns the outer corner
+       (`--radius-panel`) and clips the composition; the wrapper owns the divider. A
+       radius here is paint-dead and only mints latent coupling. If a future change
+       gives this input a painted plate, it must choose an explicit field/control role
+       then — it must not inherit the media-tile rung by accident. */
     width: 100%;
     height: var(--dropdown-input-height);
     border: 0;
-    border-radius: var(--radius-media);
     outline: 0;
     background: transparent;
     padding-block: 0.75rem;

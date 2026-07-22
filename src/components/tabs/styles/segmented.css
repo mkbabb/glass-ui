@@ -166,7 +166,12 @@
     cursor: pointer;
     white-space: nowrap;
     padding: 0.25rem 0.625rem;
-    border-radius: 0.3125rem;
+    /* The button silhouette reads the SAME orientation-aware seam the indicator does
+       (`--bouncy-slider-radius`): horizontal → `--radius-tab` (the control stadium),
+       vertical → the parent's `--radius-strip` rebind (the bounded column-stack corner).
+       The default-pill button/hit/focus box stays co-geometric with the measured
+       indicator — one role decision, not a second raw radius. */
+    border-radius: var(--bouncy-slider-radius);
     font: inherit;
     font-size: var(--type-caption);
     color: var(--muted-foreground);
@@ -303,7 +308,11 @@
        display rungs ride. A confident editorial strip, not a default Tailwind row. */
     font-size: var(--type-subheading);
     letter-spacing: var(--type-tracking-display);
-    border-radius: 0.25rem;
+    /* Same orientation-aware seam as the pill tab button (see `.segmented-tab`):
+       horizontal underline → `--radius-tab`, vertical → `--radius-strip`. The paper
+       label paints no plate, so this governs only its focus/hit box — kept co-geometric
+       with the material's contextual radius rather than a raw `0.25rem`. */
+    border-radius: var(--bouncy-slider-radius);
     /* The tab-text colour cross-fade rides the fast generic clock (the §6 doctrine
        — a colour shift is a bezier ease, never a spring), matching the pill tab
        buttons. The INDICATOR glide is the only channel on the calibrated spring
