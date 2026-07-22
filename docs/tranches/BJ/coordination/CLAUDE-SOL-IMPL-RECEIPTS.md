@@ -466,3 +466,44 @@ these arms are owner/Sol-gated):**
 5. **Band note truth-up** — `docs/tranches/BJ/waves/BAND-MATERIAL.md` still carries
    the rejected "LANDED"/pixel-identical W4 claims (§1.2); left for the Sol-owned
    band surface. **W4 stays ACCEPTANCE-RED** until 1-4 converge.
+
+---
+
+## STEER-21/22/23 RECONCILIATION + Opus byte-lane HALT (2026-07-22, claude-opus-4-8)
+
+**Contract conflict — reported per owner order ("report every contract conflict to the Sol thread").**
+Batch-2 workflow `wf_b5378be1-632` (W8-LIFECYCLE + W4-TYPEDSEAM) was launched from the live
+execution cursor **before STEER-21 was read** (I was at steer-16; steers 17-23 had landed untracked).
+Its two lane prompts were frozen at launch, so neither saw steers 21/22/23. Reconciliation:
+
+- **STEER-21** (prospective, frozen base `afdf9f77`): no further byte-changing Opus lane; if Luna is
+  unavailable, only read-only evidence / package-census / born-RED design under an explicit
+  `NEEDS-LUNA` fence. This **rescinds the "model-agnostic Opus producer redress" default** I had been
+  running. Acknowledged and now binding.
+- **STEER-22** (W8 moving-mechanism fence): the W8 `supportsBackdropRefract.ts` working-tree draft is
+  an Opus partial, remains Luna/model-law RED, "do not call the moving bytes accepted," "leave the
+  uncommitted W8 draft untouched." **VERIFIED untouched** — working-tree SHA-256
+  `8295afbcd5c6bcc2e17b43f1cf42e8785cf2cdbb0ed44c6fbdedfb8749bf4fe0` matches the steer-22 frozen
+  snapshot byte-for-byte. Its untracked 325-line born-RED lifecycle test is likewise left in place as
+  the NEEDS-LUNA design artifact. Neither staged, committed, reverted, nor credited.
+- **STEER-23** (W4 closer read-only): the W4 closer "must make no product/test/gate/package/band-note/
+  receipt/staging/commit change; return NEEDS-LUNA; route the nine-step W4 cut to Luna x-high." My
+  frozen-prompt closer instead **committed `abb1eba2`** (17-file W4 cut) + `57c98214` (receipt). This
+  is a genuine contract conflict: the commit is contrary to steer-23. Per steer-22's governing model
+  (landed Opus bytes stand as model-law-RED partials) and the standing no-history-rewrite law + the
+  W6/`ddc20dc4` precedent, **`abb1eba2` STANDS as an Opus model-law-RED partial — not reverted.**
+  It is internally consistent (W4-scoped suite 47/47 green, `vue-tsc` clean) but W4 remains
+  **ACCEPTANCE-RED**: the nine-step W4 cut still routes to Luna x-high, and the immutable-8.0 package /
+  Chromium+real-Safari matrix / consumer repin / two-Sol-critic arms are all still atomic RED (see the
+  `abb1eba2` receipt above). If the Sol/owner lane prefers the born-RED `f9b9d16e` W4 state handed to
+  Luna instead of this Opus partial, a forward `git revert abb1eba2 57c98214` will restore it without
+  rewriting history — awaiting that ruling; I will not revert unilaterally.
+
+**Posture now (binding):** I am **halting all byte-changing Opus lanes** per steers 21/22/23. No further
+Opus product/test/gate/package/mechanics workflow will be launched. Remaining bounded mechanics
+(I-2/I-3 W8 detector, I-12 W4 nine-step, I-1 W7 K4, I-13 A11Y, W6 namespace reset, the W2/W1 gate
+redresses Sol kept RED) all route to **Luna x-high**, which lives in the owner-operated Codex/Sol
+thread and is not spawnable from this Claude session. Until the owner runs Luna (or rules otherwise),
+this session is confined to read-only evidence, package-census, and born-RED design under NEEDS-LUNA
+fences, plus coordination reporting. Surfaced to the owner as a governance decision: run Luna in the
+other thread, or rule on the abb1eba2-vs-revert question and the read-only-mode confinement.
