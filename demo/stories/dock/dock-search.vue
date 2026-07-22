@@ -159,9 +159,8 @@ function onKeydown(e: KeyboardEvent) {
         <DockStage #default="{ backgroundCanvas }">
             <StorySection heading="The dock IS a search bar" gap="lg">
                 <p class="text-sm text-muted-foreground max-w-prose">
-                    Tap the collapsed dock pill — it MORPHS continuously (the dock's own
-                    <code class="rounded bg-muted px-1">--dock-morph-t</code> glide +
-                    the metaball bridge, NOT a hard swap) into a search field. Type —
+                    Tap the collapsed dock pill — it MORPHS continuously (not a hard
+                    swap) into a search field. Type —
                     the fuzzy dropdown ranks live with subsequence-match highlighting +
                     an autocomplete ghost-text completion of the top match (Tab / →
                     fills it); ArrowDown/Up walks the results, Enter routes, a select

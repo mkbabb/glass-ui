@@ -142,9 +142,7 @@ const initialPostures = [
         <StorySection heading="Collapsible vertical dock — it morphs its height" gap="md">
             <p class="text-small text-muted-foreground">
                 A vertical dock collapses and morphs its height like a horizontal dock does its
-                width — it animates its
-                <code class="rounded bg-muted px-1">height</code> on the
-                <code class="rounded bg-muted px-1">--dock-morph-t</code> spring. Hover to expand;
+                width — it animates its height with the same weighted spring. Hover to expand;
                 the dock grows its block axis open and shrinks back to the collapsed circle on idle.
                 Both examples remain collapsible — the open posture is not pinned.
             </p>
