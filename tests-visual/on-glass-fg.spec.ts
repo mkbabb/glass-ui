@@ -238,7 +238,7 @@ async function readOnGlass(
 
         const track = document.createElement("div");
         track.style.cssText =
-            "position:relative;height:16px;border-radius:9999px;overflow:hidden;background:var(--progress-track,var(--progress-track-on-glass));";
+            "position:relative;height:16px;border-radius:9999px;overflow:hidden;background:var(--glass-progress-track-color,var(--progress-track-on-glass));";
         const fill = document.createElement("div");
         fill.style.cssText =
             "position:absolute;inset:0;width:60%;border-radius:9999px;background:var(--progress-fill,var(--primary));";

@@ -17,8 +17,8 @@ describe("track-well / value-marks shared registers", () => {
         });
 
         expect(wrapper.get(".slider-track").classes()).toContain("glass-track-well");
-        expect(wrapper.get(".value-marks").exists()).toBe(true);
-        expect(wrapper.findAll(".value-mark")).toHaveLength(3);
+        expect(wrapper.get(".glass-value-marks").exists()).toBe(true);
+        expect(wrapper.findAll(".glass-value-mark")).toHaveLength(3);
     });
 
     it("has the Progress rail compose the shared well + mark registers", () => {
@@ -27,8 +27,8 @@ describe("track-well / value-marks shared registers", () => {
         });
 
         expect(wrapper.get(".progress-rail").classes()).toContain("glass-track-well");
-        expect(wrapper.get(".value-marks").exists()).toBe(true);
-        expect(wrapper.findAll(".value-mark")).toHaveLength(3);
+        expect(wrapper.get(".glass-value-marks").exists()).toBe(true);
+        expect(wrapper.findAll(".glass-value-mark")).toHaveLength(3);
     });
 
     it("forwards the Slider axis flags onto the shared marks container", () => {
@@ -43,7 +43,7 @@ describe("track-well / value-marks shared registers", () => {
             },
         });
 
-        const marks = wrapper.get(".value-marks");
+        const marks = wrapper.get(".glass-value-marks");
         expect(marks.attributes("data-orientation")).toBe("vertical");
         expect(marks.attributes("data-inverted")).toBe("true");
     });

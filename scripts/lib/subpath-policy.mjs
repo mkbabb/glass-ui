@@ -162,7 +162,15 @@ export const CSS_FONT_EXPORTS = {
     // Q060 / ATLAS-N C4 — Tailwind v4 registration only: the @theme aliases
     // and dark variant, without the component cascade or resolved base tokens.
     "./styles/theme": "./dist/styles/theme.css",
-    "./styles.css": "./dist/glass-ui.css",
+    // BJ.W4-TYPEDSEAM — the component-only entry. `./dist/glass-ui.css` (the raw
+    // SFC bundle) emits the `.glass-track-well`/`.glass-value-mark(s)` classes with
+    // ZERO rules for the shared W4 structure, so an installed consumer importing
+    // this entry lost position/clip/radius/background/marks. The target is now the
+    // GENERATED packed manifest `dist/component-styles.css` (track-well → value-marks
+    // → the SFC bundle, in that exact order); canonical `./styles` still reaches the
+    // partials via `styles/glass.css` and does NOT import the manifest (no duplicate
+    // W4 rule; a consumer needs exactly one style entry).
+    "./styles.css": "./dist/component-styles.css",
     "./fonts/*": "./dist/fonts/*",
 };
 

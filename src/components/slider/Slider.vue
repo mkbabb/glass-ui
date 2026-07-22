@@ -210,7 +210,7 @@ onMounted(() => {
         <SliderTrack class="slider-track glass-track-well">
             <span
                 v-if="marks.length"
-                class="value-marks"
+                class="glass-value-marks"
                 aria-hidden="true"
                 :data-orientation="props.orientation === 'vertical' ? 'vertical' : undefined"
                 :data-inverted="props.inverted || undefined"
@@ -218,7 +218,7 @@ onMounted(() => {
                 <span
                     v-for="mark in marks"
                     :key="mark.value"
-                    class="value-mark"
+                    class="glass-value-mark"
                     :style="{ '--value-mark-position': `${mark.position * 100}%` }"
                 />
             </span>
@@ -286,23 +286,29 @@ onMounted(() => {
 /* ── Shared geometry — size axis lifts via CSS vars set by the [data-size] rules ──
    The recessed GROOVE (position/overflow/pill-radius/recessed-bg) is COMPOSED
    from the shared `.glass-track-well` register (template class); the track owns
-   only its SIZING (grown flex child + the [data-size] height axis) here. The
-   `--slider-track-bg` consumer knob collapsed to the register's `--track-bg`
-   (clean break) — a standard slider recesses to the register default
-   (`--muted-medium`); the spectrum gradient rides `--track-bg` below. */
+   only its SIZING (grown flex child + the [data-size] height axis) + its OWN
+   typed background here. The retired `--slider-track-bg` consumer knob is
+   replaced (clean break, no alias) by the v8 typed input
+   `--glass-slider-track-background` (a valid CSS `background` grammar — color,
+   `transparent`, gradient, or comma-layered checkerboard); a standard slider
+   falls back to `--muted-medium`, the spectrum gradient falls back to
+   `--secondary` below. The property inherits so a wrapper can style a Slider
+   population; the namespace limits that inheritance to the Glass Slider family
+   (no generic inheriting well knob). */
 .slider-track {
     width: 100%;
     flex-grow: 1;
     height: var(--slider-track-height, 0.375rem);
+    background: var(--glass-slider-track-background, var(--muted-medium));
     transition:
         background var(--duration-fast) var(--ease-standard),
         border-color var(--duration-fast) var(--ease-standard);
 }
 
-/* The value MARKS (`.value-marks`/`.value-mark`) are COMPOSED from the shared
-   value-marks register — the horizontal/vertical/RTL/inverted dot geometry lives
-   ONCE there; the Slider forwards its orientation/inverted flags as data attrs on
-   the marks container. No scoped mark rules survive here (the twin was folded). */
+/* The value MARKS (`.glass-value-marks`/`.glass-value-mark`) are COMPOSED from the
+   shared value-marks register — the horizontal/vertical/RTL/inverted dot geometry
+   lives ONCE there; the Slider forwards its orientation/inverted flags as data attrs
+   on the marks container. No scoped mark rules survive here (the twin was folded). */
 
 /* ── The continuous GLASS fill (standard) — the shared liquid-fill register ──
    The fill is ONE continuous glass rounded-pill spanning the FULL thick-track
@@ -481,15 +487,15 @@ onMounted(() => {
 
 /* ── The gradient-track color slider (spectrum) ──
    A tall capsule track whose background is a consumer-supplied
-   `--track-bg: linear-gradient(...)` (the value.js LCH/hue ramp — the shared
-   track-well groove knob). The range is transparent — the gradient itself IS the
-   fill — and the thumb is a SQUIRCLE the HEIGHT of the track (the iOS
-   color-picker idiom), spanning the full track height rather than floating as a
-   circle. The spectrum fallback is `--secondary` (not the well's `--muted-medium`
-   default), so this rule keeps its own `background` override. */
+   `--glass-slider-track-background: linear-gradient(...)` (the value.js LCH/hue
+   ramp — the Slider's OWN typed background input). The range is transparent —
+   the gradient itself IS the fill — and the thumb is a SQUIRCLE the HEIGHT of the
+   track (the iOS color-picker idiom), spanning the full track height rather than
+   floating as a circle. The spectrum fallback is `--secondary` (not the standard
+   `--muted-medium`), so this rule keeps its own fallback override. */
 .glass-slider[data-variant="spectrum"] .slider-track {
     height: calc(var(--slider-thumb-size, 1rem) * 1.5);
-    background: var(--track-bg, var(--secondary));
+    background: var(--glass-slider-track-background, var(--secondary));
 }
 
 .glass-slider[data-variant="spectrum"] .slider-range {

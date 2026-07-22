@@ -1176,9 +1176,23 @@ The sticky-position + backdrop-blur classes (and the `--card-header-bg` tint tok
 **Slider axes**: `variant="standard|spectrum"` and `size="sm|md|lg"` are typed
 component props reflected through `data-variant` and `data-size`; the component's
 colocated CSS owns their paint and geometry. All recipes share
-`--slider-track-bg`, `--slider-track-height`, `--slider-thumb-bg`,
+`--glass-slider-track-background`, `--slider-track-height`, `--slider-thumb-bg`,
 `--slider-thumb-size`, `--slider-thumb-border-color`, `--slider-range-bg`, and
 `--slider-thumb-shadow`.
+
+`--glass-slider-track-background` is the Slider's typed v8 track input (a valid
+CSS `background` — color, `transparent`, gradient, or comma-layered
+checkerboard); it inherits, so an ancestor may style a Slider population, and the
+namespace keeps that inheritance inside the Glass Slider family. The spectrum
+variant's consumer-supplied gradient rides this same property (falling back to
+`--secondary`; the standard variant falls back to `--muted-medium`). Progress's
+matching typed v8 input is `--glass-progress-track-color` (a valid CSS `<color>`
+ONLY, falling back to `--progress-track-on-glass`), read at the determinate rail
+background and every indeterminate `color-mix()` stop and never assigned locally
+on `.progress-rail` (so an inherited ancestor override reaches the rail). Both
+compose the ONE shared `.glass-track-well` groove register and the ONE shared
+`.glass-value-marks`/`.glass-value-mark` checkpoint-dot register. The generic
+`--track-bg` axis and the generic `.value-mark(s)` selectors do not exist.
 
 | Variant         | Track                      | Thumb                               | Use                                                                                                 |
 | --------------- | -------------------------- | ----------------------------------- | --------------------------------------------------------------------------------------------------- |

@@ -80,14 +80,14 @@ const indicatorClass = computed(() => ({
     >
         <span
             v-if="marks.length"
-            class="value-marks"
+            class="glass-value-marks"
             aria-hidden="true"
             :data-orientation="props.orientation === 'vertical' ? 'vertical' : undefined"
         >
             <span
                 v-for="mark in marks"
                 :key="mark.value"
-                class="value-mark"
+                class="glass-value-mark"
                 :style="{ '--value-mark-position': `${mark.position * 100}%` }"
             />
         </span>
@@ -98,14 +98,19 @@ const indicatorClass = computed(() => ({
 <style scoped>
 /* The recessed GROOVE (position/overflow/pill-radius/recessed-bg) is COMPOSED
    from the shared `.glass-track-well` register (template class); the rail owns
-   only its SIZING (block meter) + the recessed channel colour here. The
-   `--progress-track` consumer knob collapsed to the register's `--track-bg`
-   (clean break); the warm-meter default `--progress-track-on-glass` rides it. */
+   only its SIZING (block meter) + its OWN typed background here. The retired
+   `--progress-track` consumer knob is replaced (clean break, no alias) by the v8
+   typed input `--glass-progress-track-color` (a valid CSS `<color>` ONLY — never
+   a gradient), read directly here (NOT assigned onto `.progress-rail`, which
+   would mask an inherited ancestor override) with the warm-meter
+   `--progress-track-on-glass` as its fallback. The property inherits so a wrapper
+   can style a Progress population; an ancestor declaration reaches this
+   consumption point. */
 .progress-rail {
     display: block;
     inline-size: 100%;
     block-size: var(--progress-size, 1rem);
-    --track-bg: var(--progress-track-on-glass);
+    background: var(--glass-progress-track-color, var(--progress-track-on-glass));
 }
 
 .progress-rail[data-orientation="vertical"] {
@@ -118,8 +123,8 @@ const indicatorClass = computed(() => ({
     box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--destructive) 48%, transparent);
 }
 
-/* The value MARKS (`.value-marks`/`.value-mark`) are COMPOSED from the shared
-   value-marks register — the horizontal/vertical/RTL dot geometry lives ONCE
+/* The value MARKS (`.glass-value-marks`/`.glass-value-mark`) are COMPOSED from the
+   shared value-marks register — the horizontal/vertical/RTL dot geometry lives ONCE
    there; the Progress forwards its orientation as a data attr on the marks
    container. No scoped mark rules survive here (the twin was folded). */
 
@@ -161,14 +166,14 @@ const indicatorClass = computed(() => ({
 .progress-rail[data-indeterminate] {
     background: linear-gradient(
         90deg,
-        var(--track-bg) 0%,
+        var(--glass-progress-track-color, var(--progress-track-on-glass)) 0%,
         color-mix(
                 in srgb,
                 var(--progress-fill, var(--primary)) 60%,
-                var(--track-bg)
+                var(--glass-progress-track-color, var(--progress-track-on-glass))
             )
             50%,
-        var(--track-bg) 100%
+        var(--glass-progress-track-color, var(--progress-track-on-glass)) 100%
     );
     background-size: 200% 100%;
     animation: progress-indeterminate-sweep
@@ -178,14 +183,14 @@ const indicatorClass = computed(() => ({
 .progress-rail[data-orientation="vertical"][data-indeterminate] {
     background-image: linear-gradient(
         0deg,
-        var(--track-bg) 0%,
+        var(--glass-progress-track-color, var(--progress-track-on-glass)) 0%,
         color-mix(
                 in srgb,
                 var(--progress-fill, var(--primary)) 60%,
-                var(--track-bg)
+                var(--glass-progress-track-color, var(--progress-track-on-glass))
             )
             50%,
-        var(--track-bg) 100%
+        var(--glass-progress-track-color, var(--progress-track-on-glass)) 100%
     );
     background-size: 100% 200%;
     animation-name: progress-indeterminate-rise;

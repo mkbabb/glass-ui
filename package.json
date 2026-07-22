@@ -492,14 +492,14 @@
         "./styles": "./dist/styles/index.css",
         "./styles/fonts": "./dist/styles/fonts.css",
         "./styles/theme": "./dist/styles/theme.css",
-        "./styles.css": "./dist/glass-ui.css",
+        "./styles.css": "./dist/component-styles.css",
         "./fonts/*": "./dist/fonts/*"
     },
     "files": [
         "dist"
     ],
     "scripts": {
-        "build": "vite build && npm run emit-types",
+        "build": "vite build && npm run emit-types && node scripts/gen-component-styles.mjs",
         "build:watch": "vite build --watch",
         "demo:dist:build": "vite build --config demo/vite.demo-dist.config.ts",
         "demo:dist:serve": "vite preview --config demo/vite.demo-dist.config.ts --port 5200",

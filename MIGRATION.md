@@ -7,6 +7,49 @@ rename or import re-point per call site.
 
 ## 8.0.0
 
+**The Slider/Progress track seam is typed and split; the generic `--track-bg`
+knob and `.value-mark(s)` selectors are removed.** The Slider `.slider-track` and
+the Progress `.progress-rail` now COMPOSE two shared registers — the recessed
+`.glass-track-well` groove and the `.glass-value-marks`/`.glass-value-mark`
+checkpoint-dot layer — and each drives its OWN typed public property. There is no
+shared inheriting background axis (a Slider `background` and a Progress `<color>`
+are different grammars and must not collide on one knob).
+
+_CSS custom properties_
+
+| Classification | Property |
+| --- | --- |
+| removed at 8.0 | `--slider-track-bg`, `--progress-track` |
+| never published (candidate-only) | `--track-bg` |
+| added at 8.0 | `--glass-slider-track-background` (CSS `background` grammar; falls back `--muted-medium`, spectrum `--secondary`), `--glass-progress-track-color` (CSS `<color>` only; falls back `--progress-track-on-glass`) |
+| retained | `--progress-track-on-glass`, `--value-mark-position`, `--value-mark-size`, `--value-mark-color` |
+
+Old Slider writers (`--slider-track-bg: <background>`) move to
+`--glass-slider-track-background`. Old Progress writers (`--progress-track:
+<color>`) move to `--glass-progress-track-color`; a gradient into the Progress
+property is invalid (color grammar only). Both properties inherit, so an ancestor
+may style a component population; Progress reads the property (it is never
+assigned on `.progress-rail`), so an inherited override reaches the rail.
+
+_DOM classes (unsupported implementation hooks, listed for completeness)_
+
+| Classification | DOM surface |
+| --- | --- |
+| removed | `.slider-marks`, `.slider-mark`, `.progress-value-marks`, `.progress-value-mark` |
+| never emitted (candidate-only) | `.value-marks`, `.value-mark` |
+| added | `.glass-track-well`, `.glass-value-marks`, `.glass-value-mark` |
+
+_Package export_
+
+`@mkbabb/glass-ui/styles.css` (the component-only entry) now targets the
+generated `dist/component-styles.css` manifest, which folds the shared
+`track-well.css` + `value-marks.css` structure before the raw SFC bundle so the
+emitted `.glass-track-well`/`.glass-value-mark(s)` classes have their rules on
+this entry. The canonical `@mkbabb/glass-ui/styles` (`dist/styles/index.css`) is
+unchanged and reaches the same partials through its own cascade — import exactly
+ONE style entry, never both.
+
+
 **The device-DPR overlay-blur arm is removed.** The `overlay` glass role is now
 `11px` at EVERY device pixel ratio. The `@media (min-resolution: 2dppx)` writer that
 lifted `--glass-blur-overlay-radius` to `17px` on retina displays (shipped in 7.0.0)

@@ -100,8 +100,8 @@
    slider/progress recipes. */
 @import "./glass/liquid-fill.css";
 /* The two shared TRACK registers — the sibling of liquid-fill (that owns the
-   FILL): `.glass-track-well` owns the recessed pill GROOVE, `.value-marks`/
-   `.value-mark` own the checkpoint dot paint. Both are COMPOSED by the Slider's
+   FILL): `.glass-track-well` owns the recessed pill GROOVE, `.glass-value-marks`/
+   `.glass-value-mark` own the checkpoint dot paint. Both are COMPOSED by the Slider's
    `.slider-track` + the Progress `.progress-rail` (fewer-sharper-primitives:
    one groove recipe + one mark recipe, N surfaces). @import-ed here alongside
    liquid-fill (same `@layer components`, so `--radius-pill`/`--muted-medium`/

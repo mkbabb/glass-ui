@@ -13,14 +13,17 @@
      · #2  Progress's `.progress-rail` composes it (the meter fill rides it).
      · (the surviving continuous Timeline widens the family at its redesign.)
 
-   ONE colour knob, ZERO per-site groove knowledge. A surface recesses the
-   well by setting `--track-bg` (the recessed channel colour) — it never
-   touches the pill radius, the clip, or `position`. The register owns the
-   groove mechanic; the surface owns its colour + its own SIZING (height /
-   flex / block-size stay component-scoped — a slider is a grown flex child, a
-   meter is a block, their sizing models legitimately differ, so no shared
-   `--track-height` is minted here).
-     · --track-bg — the recessed channel colour (default the muted groove).
+   ZERO per-site groove knowledge, NO shared public paint axis. The register
+   carries only a MUTED fallback `background` — customization stays with the
+   component owner via its OWN typed input (`--glass-slider-track-background`
+   on `.slider-track`, `--glass-progress-track-color` on `.progress-rail`), so
+   a Slider background image and a Progress `<color>` never collide on one
+   inheriting knob. A direct future track-well consumer authors its own
+   `background`; the register mints no shared generic paint knob. The surface owns
+   its colour + its own SIZING (height / flex / block-size stay
+   component-scoped — a slider is a grown flex child, a meter is a block, their
+   sizing models legitimately differ, so no shared `--track-height` is minted
+   here).
 
    @layer components, @import-ed in glass.css alongside the liquid-fill
    register (the W7 closure discipline — no orphan partial). The consuming
@@ -33,6 +36,6 @@
         position: relative;
         overflow: hidden;
         border-radius: var(--radius-pill);
-        background: var(--track-bg, var(--muted-medium));
+        background: var(--muted-medium);
     }
 }

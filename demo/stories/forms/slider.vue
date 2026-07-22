@@ -151,7 +151,7 @@ const matrix = ref<Record<MatrixKey, number[]>>(
 
         <!-- Spectrum variant — value.js gradient track + a track-height
              SQUIRCLE thumb (the iOS color-picker idiom). The track background
-             is consumer-supplied via the shared track-well `--track-bg` knob. -->
+             is consumer-supplied via the Slider's typed `--glass-slider-track-background` input. -->
         <section class="flex flex-col gap-3">
             <p class="text-small text-muted-foreground">spectrum variant — gradient track</p>
             <Slider
@@ -161,7 +161,7 @@ const matrix = ref<Record<MatrixKey, number[]>>(
                 :step="1"
                 aria-label="Spectrum"
                 :style="{
-                    '--track-bg':
+                    '--glass-slider-track-background':
                         'linear-gradient(to right, var(--viz-fourier), var(--viz-legendre), var(--viz-chebyshev))',
                 }"
             />
