@@ -129,3 +129,51 @@ history rewrite.
   receivers). Source grep earns no paint credit.
 - Two fresh independent Sol x-high exact-byte critics (mechanism/contract + visual/consumer) — any
   byte-changing redress resets them.
+
+## RECEIPT — 2026-07-22 ~03:2x EDT — W2 BLUR truth-up MISS redress `a0b8eb34` (closer, mechanical)
+
+Answers the 4 residual `W2-DC566-ADJUDICATION-C2.md` §8/§11 source-comment truth-up MISSes the broader
+W2 value-redress landed everywhere (glass.css/README/MIGRATION/canon) but left stale in the two token
+files. Lands ON TOP of the banked W2 partial (`dc566e34`+`7de2ece1` committed; the further glass.css/
+light-dark/drawer/README/MIGRATION/canon/test bytes remain uncommitted in the working tree — untouched,
+preserved). No history rewrite.
+
+- **Redress commit:** `a0b8eb341823a8527ed5b5c54e166f3da87dd291` (parent `c0a89814`)
+- **HEAD tree:** `84098550dcd883c7ee2975e14411045e4bfa4af4`
+- **Scope:** ONLY `src/styles/tokens/dark-arm-glass.css` (3 comment cures) + `src/styles/tokens/
+  glass-deep.css` (1 comment cure). Zero value byte changed; zero Sol-owned or consumer file touched.
+- **Model truth (historical, unrelabeled):** Opus (`claude-opus-4-8`), Fable unavailable. Opus-authored
+  producer candidate against Sol's written contract — NOT a Luna/Sol x-high seat. Acceptance stays RED
+  pending the routed paint/package/consumer arms + two fresh Sol critics; this closes ONLY the 4 prose MISSes.
+
+### Binding rulings landed (source-comment truth-up, §8/§11)
+- dark-arm-glass.css:8 — light-arm "saturate(1.05)" → "saturate 1.4 (wash/quiet/resting) / 1.6 (floating/
+  overlay)" (⟺ glass.css `--glass-saturate-*` 1.4/1.6). §8 "dark light-arm 1.05" false-CURRENT killed.
+- dark-arm-glass.css:47 — light deep partner "saturate 1.5 / depth-LERPed" → "LERPs saturate 1.6→1.8 on
+  --glass-depth, ceiling `--glass-saturate-deep` 1.8" (⟺ glass-deep.css:64 `1.8` + §3 LERP). §11 ontology
+  RED "1.5 deep".
+- glass-deep.css:53 — calm floating floor "11px / 1.18" → "11px / 1.6" (⟺ glass.css `--glass-saturate-
+  floating` 1.6; the same file's line 46 already read 1.6). §11 ontology RED "1.18 current calm".
+- dark-arm-glass.css:25 — deleted "Machine-locked by `proof:glass-legibility` L7." — mirrors the glass.css
+  §6 correction (glass-legibility reads resolved background alpha/warmth/contrast, NOT backdrop-filter
+  saturation → cannot ratify these). Dark defaults 1.35/1.30/1.28/1.22 stand PROVISIONAL CURRENT.
+
+### Evidence — machine report (LOCAL SOURCE EVIDENCE ONLY)
+- `vitest run tests/styles/ tests/gates/token-hygiene.test.ts` GREEN — **8 files / 52 tests**;
+  `glass-subtlety.test.ts` **9/9** (reads both cured files; comment-only edits, radius ladder unmoved).
+- Residual `1.18` in dark-arm-glass.css:30 is the live `brightness(1.18)` companion term — a correct
+  current value, NOT a stale saturate claim; out of the truth-up scope, left intact.
+- No new born-RED vitest gate minted: these are prose reconciliations to values ALREADY fenced by
+  glass.css (saturate 1.4/1.6) + glass-deep.css (1.8). Minting a prose-string detector would be a
+  contrived critic-gate (barred). The saturate VALUES' RED-detector is the routed browser lane below.
+
+### ROUTED (terminal remainder — NOT in this comment cut, owed before W2 DONE / Candidate-2 freeze)
+- 390/1440 Chromium+Safari paint proof of the calm/deep saturate values (`tests-visual/glass-depth.spec.ts`
+  now pins `CALM_FLOATING_SATURATE=1.6` + deep 1.8 — browser lane, not a vitest detector). Source grep
+  earns no paint credit.
+- The immutable uniquely-versioned `@mkbabb/glass-ui@8.0.0` tarball + install fixture + Atlas repin —
+  package/consumer owners; the 8.0 CSS-token saturation ledger travels with the broader W2 canon arm.
+- The broader W2 redress body (5-calm-roles/3-mag canon, 14px scrim, killed 17px 2dppx overlay, real
+  Drawer story) remains a working-tree banked partial owned by the W2 value/canon arm — this receipt
+  closes ONLY the 4 stale-comment MISSes within it.
+- Two fresh independent Sol x-high exact-byte critics — any byte-changing redress resets them.
