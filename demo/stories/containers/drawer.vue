@@ -227,7 +227,7 @@ const fixedEdges = [
                     Add checklist item
                 </Button>
                 <span
-                    class="self-center text-mono-caption text-muted-foreground"
+                    class="self-center text-mono-small text-muted-foreground"
                     aria-live="polite"
                 >
                     {{ checklistItems }} items · review

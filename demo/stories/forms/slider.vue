@@ -47,10 +47,10 @@ const matrix = ref<Record<MatrixKey, number[]>>(
              continuous glass pill whose rounded leading edge is the grab. With
              label + value readout. -->
         <section class="flex flex-col gap-3">
-            <p class="section-label">standard</p>
+            <p class="text-small text-muted-foreground">standard</p>
             <div class="flex items-center justify-between">
                 <span class="text-small text-foreground">Volume</span>
-                <span class="text-mono-caption text-muted-foreground tabular-nums">
+                <span class="text-mono-small text-muted-foreground tabular-nums">
                     {{ volume[0] }}%
                 </span>
             </div>
@@ -65,10 +65,10 @@ const matrix = ref<Record<MatrixKey, number[]>>(
 
         <!-- Custom fourier-red fill via descendant selectors. -->
         <section class="flex flex-col gap-3">
-            <p class="section-label">viz-fourier fill</p>
+            <p class="text-small text-muted-foreground">viz-fourier fill</p>
             <div class="flex items-center justify-between">
                 <span class="text-small text-foreground">Balance</span>
-                <span class="text-mono-caption text-muted-foreground tabular-nums">
+                <span class="text-mono-small text-muted-foreground tabular-nums">
                     {{ balance[0] }}
                 </span>
             </div>
@@ -88,10 +88,10 @@ const matrix = ref<Record<MatrixKey, number[]>>(
 
         <!-- Range mode: two thumbs bound a window. -->
         <section class="flex flex-col gap-3">
-            <p class="section-label">range · two thumbs</p>
+            <p class="text-small text-muted-foreground">range · two thumbs</p>
             <div class="flex items-center justify-between">
                 <span class="text-small text-foreground">Price window</span>
-                <span class="text-mono-caption text-muted-foreground tabular-nums">
+                <span class="text-mono-small text-muted-foreground tabular-nums">
                     ${{ range[0] }} – ${{ range[1] }}
                 </span>
             </div>
@@ -105,7 +105,7 @@ const matrix = ref<Record<MatrixKey, number[]>>(
         </section>
 
         <section class="flex flex-col gap-4">
-            <p class="section-label">checkpoint directions</p>
+            <p class="text-small text-muted-foreground">checkpoint directions</p>
             <div class="grid gap-5 md:grid-cols-2">
                 <div class="grid gap-2">
                     <span class="text-small text-foreground">RTL</span>
@@ -153,7 +153,7 @@ const matrix = ref<Record<MatrixKey, number[]>>(
              SQUIRCLE thumb (the iOS color-picker idiom). The track background
              is consumer-supplied via `--slider-track-bg`. -->
         <section class="flex flex-col gap-3">
-            <p class="section-label">spectrum variant — gradient track</p>
+            <p class="text-small text-muted-foreground">spectrum variant — gradient track</p>
             <Slider
                 v-model="spectrum"
                 variant="spectrum"
@@ -169,7 +169,7 @@ const matrix = ref<Record<MatrixKey, number[]>>(
 
         <!-- Disabled. -->
         <section class="flex flex-col gap-3">
-            <p class="section-label">disabled</p>
+            <p class="text-small text-muted-foreground">disabled</p>
             <Slider
                 v-model="disabled"
                 :max="100"
@@ -180,7 +180,7 @@ const matrix = ref<Record<MatrixKey, number[]>>(
         </section>
 
         <section class="flex flex-col gap-3">
-            <p class="section-label">invalid</p>
+            <p class="text-small text-muted-foreground">invalid</p>
             <Slider
                 v-model="invalid"
                 invalid
@@ -194,7 +194,7 @@ const matrix = ref<Record<MatrixKey, number[]>>(
 
         <section class="grid gap-5 md:grid-cols-3">
             <div class="grid gap-3">
-                <p class="section-label">keyboard</p>
+                <p class="text-small text-muted-foreground">keyboard</p>
                 <Slider
                     v-model="keyboard"
                     :step="10"
@@ -202,11 +202,11 @@ const matrix = ref<Record<MatrixKey, number[]>>(
                 />
             </div>
             <div class="grid gap-3">
-                <p class="section-label">touch</p>
+                <p class="text-small text-muted-foreground">touch</p>
                 <Slider v-model="touch" aria-label="Coarse touch value" />
             </div>
             <div class="grid gap-3">
-                <p class="section-label">reduced motion</p>
+                <p class="text-small text-muted-foreground">reduced motion</p>
                 <Slider
                     v-model="reduced"
                     motion="reduced"
@@ -217,18 +217,18 @@ const matrix = ref<Record<MatrixKey, number[]>>(
 
         <!-- Variant × size matrix. -->
         <section class="flex flex-col gap-4">
-            <p class="section-label">variant × size matrix</p>
+            <p class="text-small text-muted-foreground">variant × size matrix</p>
             <div class="grid grid-cols-[auto_1fr_1fr_1fr] items-center gap-x-6 gap-y-5">
                 <div></div>
                 <div
                     v-for="size in sizes"
                     :key="`hd-${size}`"
-                    class="text-mono-caption text-muted-foreground"
+                    class="text-mono-small text-muted-foreground"
                 >
                     {{ size }}
                 </div>
                 <template v-for="variant in variants" :key="variant">
-                    <div class="text-mono-caption text-muted-foreground">
+                    <div class="text-mono-small text-muted-foreground">
                         {{ variant }}
                     </div>
                     <Slider

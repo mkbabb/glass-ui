@@ -72,7 +72,7 @@ const categories = computed(() =>
              survives on the front door, PC7). The cards ride the resting glass rung so
              the aurora the chassis paints reads THROUGH them. -->
         <section class="mt-16">
-            <p class="text-admin-label mb-4 text-muted-foreground">Categories</p>
+            <p class="text-small mb-4 text-muted-foreground">Categories</p>
             <div
                 class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
             >

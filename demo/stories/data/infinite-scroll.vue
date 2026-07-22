@@ -103,7 +103,7 @@ function reset() {
                     />
                     <div class="flex min-w-0 flex-1 flex-col">
                         <span class="truncate text-small">{{ e.title }}</span>
-                        <span class="text-mono-caption text-muted-foreground">
+                        <span class="text-mono-small text-muted-foreground">
                             #{{ e.id }} · page {{ e.page }}
                         </span>
                     </div>

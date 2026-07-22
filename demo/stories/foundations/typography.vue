@@ -14,7 +14,7 @@ import StorySection from "../../chassis/section/StorySection.vue";
 import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import { cn } from "@glass/components/_shared/class-names";
 
-// The graded display ladder — display → body → admin rail, as a DESIGNED rhythm.
+// The graded display ladder — display → body → mono rail, as a DESIGNED rhythm.
 const ladder: { cls: string; label: string; sample: string }[] = [
     { cls: "text-display-5", label: "display-5", sample: "Golden" },
     { cls: "text-display-4", label: "display-4", sample: "Audacious" },
@@ -29,11 +29,9 @@ const ladder: { cls: string; label: string; sample: string }[] = [
     { cls: "text-small", label: "small", sample: "Metadata and secondary body copy." },
     { cls: "text-caption", label: "caption", sample: "Caption · labels · hints" },
     { cls: "text-micro", label: "micro", sample: "Micro: badges, fine print" },
-    { cls: "text-admin-label", label: "admin-label", sample: "ADMIN · UPPERCASE · MONO" },
     { cls: "text-math", label: "math", sample: "f(x) = ∑ aₙ φₙ(x)" },
     { cls: "text-math-body", label: "math-body", sample: "KaTeX-adjacent body math" },
     { cls: "text-mono-small", label: "mono-small", sample: "npm run dev" },
-    { cls: "text-mono-caption", label: "mono-caption", sample: "mono · caption · caps" },
 ];
 
 // The audacious peaks — the tiers the flat table never showed (the visual-load-
@@ -55,7 +53,7 @@ const peaks: { cls: string; label: string; peg: string; word: string }[] = [
              focal word rides the cascade (StoryPage's .scroll-
              cascade host) on its own view() timeline. -->
         <section class="flex flex-col gap-3">
-            <p class="section-label">Foundations · Typography</p>
+            <p class="text-small text-muted-foreground">Foundations · Typography</p>
             <div class="text-display-audacious text-foreground">
                 Aa
             </div>
@@ -100,7 +98,7 @@ const peaks: { cls: string; label: string; peg: string; word: string }[] = [
                         :key="row.label"
                         class="flex flex-col gap-1"
                     >
-                        <span class="text-mono-caption text-muted-foreground">{{
+                        <span class="text-mono-small text-muted-foreground">{{
                             row.label
                         }}</span>
                         <span :class="cn(row.cls, 'text-foreground')">{{

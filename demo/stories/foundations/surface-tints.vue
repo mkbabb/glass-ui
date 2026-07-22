@@ -49,10 +49,10 @@ const aliases: TintRow[] = [
                     <div class="tint-checker">
                         <div class="tint-swatch" :class="row.cls" />
                     </div>
-                    <code class="fira-code text-mono-caption text-foreground break-all">
+                    <code class="fira-code text-mono-small text-foreground break-all">
                         {{ row.label }}
                     </code>
-                    <span v-if="row.hint" class="text-mono-caption text-muted-foreground">
+                    <span v-if="row.hint" class="text-mono-small text-muted-foreground">
                         {{ row.hint }}
                     </span>
                 </div>
@@ -68,10 +68,10 @@ const aliases: TintRow[] = [
                     <div class="tint-checker">
                         <div class="tint-swatch" :class="row.cls" />
                     </div>
-                    <code class="fira-code text-mono-caption text-foreground break-all">
+                    <code class="fira-code text-mono-small text-foreground break-all">
                         {{ row.label }}
                     </code>
-                    <span v-if="row.hint" class="text-mono-caption text-muted-foreground">
+                    <span v-if="row.hint" class="text-mono-small text-muted-foreground">
                         {{ row.hint }}
                     </span>
                 </div>

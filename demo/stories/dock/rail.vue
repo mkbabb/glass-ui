@@ -154,7 +154,7 @@ const initialPostures = [
                     :key="posture.label"
                     class="flex flex-col items-start gap-3"
                 >
-                    <span class="text-mono-caption text-muted-foreground">{{ posture.label }}</span>
+                    <span class="text-mono-small text-muted-foreground">{{ posture.label }}</span>
                     <GlassDock
                         orientation="vertical"
                         role="toolbar"

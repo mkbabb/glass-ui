@@ -52,7 +52,7 @@ const chartTileSwatches: { id: string; hint: string; cssVar: string }[] = [
                             class="size-12 rounded-md border border-border"
                             :style="{ background: swatch.cssVar }"
                         />
-                        <span class="text-mono-caption text-muted-foreground">{{ swatch.hint }}</span>
+                        <span class="text-mono-small text-muted-foreground">{{ swatch.hint }}</span>
                     </div>
                 </div>
             </ShowcaseFrame>

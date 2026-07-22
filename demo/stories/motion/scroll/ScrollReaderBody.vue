@@ -88,13 +88,13 @@ const collapsePct = computed(() => `${Math.round(collapseT.value * 100)}%`);
 
             <!-- The live readout off the reader. -->
             <div class="flex flex-wrap gap-3">
-                <span class="text-admin-label rounded-pill border border-border/60 px-3 py-1">
+                <span class="text-small rounded-pill border border-border/60 px-3 py-1">
                     progress {{ progressPct }}
                 </span>
-                <span class="text-admin-label rounded-pill border border-border/60 px-3 py-1">
+                <span class="text-small rounded-pill border border-border/60 px-3 py-1">
                     direction {{ direction ?? "—" }}
                 </span>
-                <span class="text-admin-label rounded-pill border border-border/60 px-3 py-1">
+                <span class="text-small rounded-pill border border-border/60 px-3 py-1">
                     velocity {{ velocityRead }}
                 </span>
             </div>
@@ -132,11 +132,11 @@ const collapsePct = computed(() => `${Math.round(collapseT.value * 100)}%`);
                 <!-- The live crossing-event log. -->
                 <div class="glass-quiet rounded-card flex min-w-[14rem] flex-col gap-2 p-4">
                     <div class="flex items-center justify-between">
-                        <span class="text-admin-label text-muted-foreground">
+                        <span class="text-small text-muted-foreground">
                             onCross log
                         </span>
                         <button
-                            class="text-admin-label text-muted-foreground hover:text-foreground"
+                            class="text-small text-muted-foreground hover:text-foreground"
                             type="button"
                             @click="clear"
                         >
@@ -160,7 +160,7 @@ const collapsePct = computed(() => `${Math.round(collapseT.value * 100)}%`);
                         </li>
                     </ul>
                     <button
-                        class="text-admin-label rounded-pill border border-border/60 px-3 py-1 text-muted-foreground hover:text-foreground"
+                        class="text-small rounded-pill border border-border/60 px-3 py-1 text-muted-foreground hover:text-foreground"
                         type="button"
                         @click="recalculate"
                     >
@@ -185,13 +185,13 @@ const collapsePct = computed(() => `${Math.round(collapseT.value * 100)}%`);
 
             <!-- The collapse readout off the machine. -->
             <div class="flex flex-wrap gap-3">
-                <span class="text-admin-label rounded-pill border border-border/60 px-3 py-1">
+                <span class="text-small rounded-pill border border-border/60 px-3 py-1">
                     collapse {{ collapsePct }}
                 </span>
-                <span class="text-admin-label rounded-pill border border-border/60 px-3 py-1">
+                <span class="text-small rounded-pill border border-border/60 px-3 py-1">
                     state {{ collapsed ? "collapsed" : "expanded" }}
                 </span>
-                <span class="text-admin-label rounded-pill border border-border/60 px-3 py-1">
+                <span class="text-small rounded-pill border border-border/60 px-3 py-1">
                     direction {{ collapseDir ?? "—" }}
                 </span>
             </div>
@@ -207,7 +207,7 @@ const collapsePct = computed(() => `${Math.round(collapseT.value * 100)}%`);
                 >
                     <span class="size-2.5 rounded-pill bg-[var(--motion-accent)]" />
                     <span class="text-subheading text-foreground">Floating header</span>
-                    <span class="text-admin-label text-muted-foreground ml-auto">
+                    <span class="text-small text-muted-foreground ml-auto">
                         shrinks as you scroll
                     </span>
                 </header>

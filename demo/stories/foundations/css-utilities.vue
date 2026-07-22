@@ -14,8 +14,8 @@ import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 <template>
     <StoryPage>
         <StorySection
-            label="default --scale-hover = 1.08"
-            blurb="Hover any of the four chips — each lifts to 108% scale with `--duration-fast` + `--ease-standard`. The utility is a single-rule recipe: `transform: scale(var(--scale-hover))` plus a transition-transform shorthand."
+            label="Scale on hover"
+            blurb="Hover any of the four chips — each lifts on the .scale-on-hover utility. Set --scale-hover to choose the amount; the presets below run from subtle (1.04) to audacious (1.25)."
         >
             <ShowcaseFrame pad="lg">
                 <div class="flex flex-wrap items-center justify-center gap-6">
@@ -47,29 +47,29 @@ import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
                 <ShowcaseFrame pad="md" tier="quiet" class="scope-subtle">
                     <div class="flex flex-col items-center gap-2">
                         <div class="scale-on-hover h-12 w-12 rounded-card bg-primary text-primary-foreground" />
-                        <code class="fira-code text-mono-caption">1.04</code>
-                        <span class="text-mono-caption text-muted-foreground">subtle</span>
+                        <code class="fira-code text-mono-small">1.04</code>
+                        <span class="text-caption text-muted-foreground">subtle</span>
                     </div>
                 </ShowcaseFrame>
                 <ShowcaseFrame pad="md" tier="quiet" class="scope-default">
                     <div class="flex flex-col items-center gap-2">
                         <div class="scale-on-hover h-12 w-12 rounded-card bg-primary text-primary-foreground" />
-                        <code class="fira-code text-mono-caption">1.08</code>
-                        <span class="text-mono-caption text-muted-foreground">default</span>
+                        <code class="fira-code text-mono-small">1.08</code>
+                        <span class="text-caption text-muted-foreground">default</span>
                     </div>
                 </ShowcaseFrame>
                 <ShowcaseFrame pad="md" tier="quiet" class="scope-boomed">
                     <div class="flex flex-col items-center gap-2">
                         <div class="scale-on-hover h-12 w-12 rounded-card bg-primary text-primary-foreground" />
-                        <code class="fira-code text-mono-caption">1.15</code>
-                        <span class="text-mono-caption text-muted-foreground">boomed</span>
+                        <code class="fira-code text-mono-small">1.15</code>
+                        <span class="text-caption text-muted-foreground">boomed</span>
                     </div>
                 </ShowcaseFrame>
                 <ShowcaseFrame pad="md" tier="quiet" class="scope-audacious">
                     <div class="flex flex-col items-center gap-2">
                         <div class="scale-on-hover h-12 w-12 rounded-card bg-primary text-primary-foreground" />
-                        <code class="fira-code text-mono-caption">1.25</code>
-                        <span class="text-mono-caption text-muted-foreground">audacious</span>
+                        <code class="fira-code text-mono-small">1.25</code>
+                        <span class="text-caption text-muted-foreground">audacious</span>
                     </div>
                 </ShowcaseFrame>
             </div>

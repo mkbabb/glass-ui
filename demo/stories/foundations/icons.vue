@@ -124,7 +124,7 @@ const pops: { icon: Component; section: number }[] = [
                         >
                             <component :is="pop.icon" class="size-5" aria-hidden="true" />
                         </Chip>
-                        <span class="text-mono-caption text-muted-foreground">{{
+                        <span class="text-mono-small text-muted-foreground">{{
                             pop.section
                         }}</span>
                     </div>
@@ -154,7 +154,7 @@ const pops: { icon: Component; section: number }[] = [
                             class="text-foreground"
                         />
                         <span
-                            class="text-mono-caption text-center text-muted-foreground"
+                            class="text-mono-small text-center text-muted-foreground"
                             >{{ icon.name }}</span
                         >
                     </div>
@@ -175,7 +175,7 @@ const pops: { icon: Component; section: number }[] = [
                         :stroke-width="1.75"
                         class="text-foreground"
                     />
-                    <span class="text-mono-caption text-muted-foreground">{{
+                    <span class="text-mono-small text-muted-foreground">{{
                         s.label
                     }}</span>
                 </div>
@@ -191,7 +191,7 @@ const pops: { icon: Component; section: number }[] = [
                     class="flex flex-col items-center gap-2"
                 >
                     <Compass :size="28" :stroke-width="w" class="text-foreground" />
-                    <span class="text-mono-caption text-muted-foreground"
+                    <span class="text-mono-small text-muted-foreground"
                         >{{ w.toFixed(1) }}px</span
                     >
                 </div>

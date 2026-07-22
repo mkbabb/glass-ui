@@ -69,7 +69,7 @@ const signOutOpen = ref(false);
              second header; PH3). -->
 
         <section class="flex flex-col gap-3">
-            <p class="section-label">destructive — delete workspace</p>
+            <p class="text-small text-muted-foreground">destructive — delete workspace</p>
             <div
                 class="relative min-h-[240px] overflow-hidden rounded-2xl border border-border/60 bg-card/60 p-6"
             >
@@ -143,7 +143,7 @@ const signOutOpen = ref(false);
         </section>
 
         <section class="flex flex-col gap-3">
-            <p class="section-label">benign — archive thread</p>
+            <p class="text-small text-muted-foreground">benign — archive thread</p>
             <div
                 class="relative min-h-[200px] overflow-hidden rounded-2xl border border-border/60 bg-card/60 p-6"
             >
@@ -207,7 +207,7 @@ const signOutOpen = ref(false);
         </section>
 
         <section class="flex flex-col gap-3">
-            <p class="section-label">custom body + action</p>
+            <p class="text-small text-muted-foreground">custom body + action</p>
             <div
                 class="relative min-h-[220px] overflow-hidden rounded-2xl border border-border/60 bg-card/60 p-6"
             >

@@ -168,14 +168,14 @@ const ACCENT_STRENGTH = "48%";
                             data-material="functional"
                         >
                             <span>live canvas sample</span>
-                            <span class="text-mono-caption text-muted-foreground">
+                            <span class="text-mono-small text-muted-foreground">
                                 {{ backdropSample.state }} ·
                                 {{ backdropSample.source }} ·
                                 {{ sampleAge === null ? "—" : `${sampleAge}ms` }}
                             </span>
                             <span
                                 v-if="backdropSample.state === 'sampled'"
-                                class="text-mono-caption text-muted-foreground"
+                                class="text-mono-small text-muted-foreground"
                             >
                                 {{ backdropSample.luma.toFixed(3) }} ·
                                 {{ Math.round(backdropSample.targetRect.x) }},{{
@@ -184,7 +184,7 @@ const ACCENT_STRENGTH = "48%";
                             </span>
                             <span
                                 v-else-if="backdropSample.state === 'unavailable'"
-                                class="text-mono-caption text-muted-foreground"
+                                class="text-mono-small text-muted-foreground"
                             >
                                 {{ backdropSample.reason }}
                             </span>
@@ -205,7 +205,7 @@ const ACCENT_STRENGTH = "48%";
                         data-rim-device="on"
                     >
                         <span>rim ON</span>
-                        <span class="text-mono-caption text-muted-foreground"
+                        <span class="text-mono-small text-muted-foreground"
                             >--glass-edge-light</span
                         >
                     </div>
@@ -215,7 +215,7 @@ const ACCENT_STRENGTH = "48%";
                         :style="{ '--glass-edge-light': '0 0 0 0 transparent' }"
                     >
                         <span>rim OFF</span>
-                        <span class="text-mono-caption text-muted-foreground"
+                        <span class="text-caption text-muted-foreground"
                             >suppressed</span
                         >
                     </div>
@@ -246,7 +246,7 @@ const ACCENT_STRENGTH = "48%";
                         @pointermove="onPointerMove"
                     >
                         <span>{{ s.label }}</span>
-                        <span class="text-mono-caption text-muted-foreground"
+                        <span class="text-mono-small text-muted-foreground"
                             >--glass-accent</span
                         >
                     </div>
@@ -266,7 +266,7 @@ const ACCENT_STRENGTH = "48%";
                         }"
                     >
                         <span>accent ON</span>
-                        <span class="text-mono-caption text-muted-foreground"
+                        <span class="text-caption text-muted-foreground"
                             >data hue · violet</span
                         >
                     </div>
@@ -275,7 +275,7 @@ const ACCENT_STRENGTH = "48%";
                         data-accent-device="off"
                     >
                         <span>accent OFF</span>
-                        <span class="text-mono-caption text-muted-foreground"
+                        <span class="text-caption text-muted-foreground"
                             >unset · warm-cream</span
                         >
                     </div>
@@ -284,8 +284,8 @@ const ACCENT_STRENGTH = "48%";
         </StorySection>
 
         <StorySection
-            label="#glass-refract squircle edge-lens (Chromium, progressively enhanced)"
-            blurb="A .glass-material.glass-lens panel composes the shipped #glass-refract squircle-bevel SVG filter behind @supports(backdrop-filter:url()): the backdrop BENDS + concentrates at the rim (edge-lensing), the press deepens the lens-swell on --glass-refract. Non-Chromium engines paint the blur base alone."
+            label="Edge-lens rim (Chromium, progressively enhanced)"
+            blurb="Add .glass-lens to a glass panel and the backdrop bends and concentrates at the rim — an edge-lens effect that deepens on press. Non-Chromium engines paint the blur base alone."
         >
             <ShowcaseFrame pad="lg" tier="field">
                 <div class="flex flex-wrap gap-6">
@@ -304,8 +304,8 @@ const ACCENT_STRENGTH = "48%";
         </StorySection>
 
         <StorySection
-            label="corner-shape: squircle (Chrome 139+, progressively enhanced)"
-            blurb="@supports(corner-shape:superellipse(2)) paints the iOS-26 superellipse corner on the dialog/sheet register where it reads. Cards/pills stay round by policy — the superellipse is imperceptible at a 16px card radius. The border-radius round is the un-gated cross-engine fallback."
+            label="Squircle corners (Chrome 139+, progressively enhanced)"
+            blurb="Supporting engines paint the iOS-26 superellipse corner on the dialog/sheet register where it reads. Cards and pills stay round by policy — the superellipse is imperceptible at a 16px card radius, and round corners are the cross-engine fallback."
         >
             <ShowcaseFrame pad="lg" tier="field">
                 <div class="flex flex-wrap items-end gap-6">
@@ -332,7 +332,7 @@ const ACCENT_STRENGTH = "48%";
         >
             <ShowcaseFrame pad="lg" tier="field">
                 <div class="mb-4 flex flex-wrap items-center gap-2">
-                    <span class="text-mono-caption text-muted-foreground"
+                    <span class="text-caption text-muted-foreground"
                         >tint sample:</span
                     >
                     <Button
@@ -363,7 +363,7 @@ const ACCENT_STRENGTH = "48%";
 
         <StorySection
             label="The brand-metal triad — gold · silver · bronze"
-            blurb="Three brand metals: gold (warm-yellow ~84°), silver (cool-steel ~255°), bronze (warm-brown ~54°). The text-clip register (.metal-{gold,silver,bronze}) sweeps the slow --duration-metal (6s) patina pass; the swept metallic rim (.metal-*-border) and the prismatic .metal-rainbow-rim read on a glass plate. Reduced motion keeps the metal static — it reads as metal without the slide."
+            blurb="Three brand metals: gold (warm-yellow), silver (cool-steel), bronze (warm-brown). The .metal-gold/.metal-silver/.metal-bronze text classes sweep a slow patina; the .metal-*-border rim and the prismatic .metal-rainbow-rim read on a glass plate. Reduced motion keeps the metal static — it reads as metal without the slide."
         >
             <ShowcaseFrame pad="lg" tier="field">
                 <!-- The medal triad — the text-clip register (consumer #1). -->
@@ -417,7 +417,7 @@ const ACCENT_STRENGTH = "48%";
                         data-glass-deep="on"
                     >
                         <span>.glass-deep</span>
-                        <span class="text-mono-caption text-muted-foreground"
+                        <span class="text-mono-small text-muted-foreground"
                             >Apple deep · 16px/1.5</span
                         >
                     </div>
@@ -426,7 +426,7 @@ const ACCENT_STRENGTH = "48%";
                         data-glass-deep="off"
                     >
                         <span>calm default</span>
-                        <span class="text-mono-caption text-muted-foreground"
+                        <span class="text-mono-small text-muted-foreground"
                             >floating · 13px/1.18</span
                         >
                     </div>

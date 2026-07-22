@@ -23,7 +23,7 @@ const disableTransitions = ref(false);
     <StoryPage>
         <StorySection
             label="size axis"
-            blurb="Standalone rungs: sm (28px) · md (36px, default) · lg (44px) · control (follows the generic --control-size var). All toggle the canonical useGlobalDark singleton."
+            blurb="Standalone rungs: sm (28px) · md (36px, default) · lg (44px) · control (follows the generic control size). All toggle the same global dark mode."
         >
             <ShowcaseFrame pad="lg">
                 <div class="flex flex-wrap items-center gap-6">
@@ -34,7 +34,7 @@ const disableTransitions = ref(false);
                     >
                         <DarkModeToggle :size="size" />
                         <code
-                            class="fira-code text-mono-caption text-muted-foreground"
+                            class="fira-code text-mono-small text-muted-foreground"
                             >{{ size }}</code
                         >
                     </div>
@@ -56,7 +56,7 @@ const disableTransitions = ref(false);
                         <GlassDock :size="d" always-expanded>
                             <DarkModeToggle size="dock" />
                         </GlassDock>
-                        <code class="fira-code text-mono-caption text-muted-foreground">
+                        <code class="fira-code text-mono-small text-muted-foreground">
                             size="{{ d }}"
                         </code>
                     </div>

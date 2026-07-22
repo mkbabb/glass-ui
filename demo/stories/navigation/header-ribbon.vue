@@ -36,7 +36,7 @@ import { Settings, Search, Bell } from "@lucide/vue";
                     </template>
                 </HeaderRibbon>
                 <p
-                    class="absolute inset-x-0 bottom-3 text-center text-mono-caption text-muted-foreground"
+                    class="absolute inset-x-0 bottom-3 text-center text-caption text-muted-foreground"
                 >
                     always available
                 </p>
@@ -73,7 +73,7 @@ import { Settings, Search, Bell } from "@lucide/vue";
                     </template>
                 </HeaderRibbon>
                 <p
-                    class="absolute inset-x-0 bottom-3 text-center text-mono-caption text-muted-foreground"
+                    class="absolute inset-x-0 bottom-3 text-center text-caption text-muted-foreground"
                 >
                     RTL · physical right
                 </p>

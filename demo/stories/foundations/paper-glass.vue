@@ -144,7 +144,7 @@ onMounted(() => {
                     "
                 >
                     <div class="flex flex-col">
-                        <p class="text-admin-label text-muted-foreground">
+                        <p class="text-small text-muted-foreground">
                             {{ t.tier }}
                         </p>
                         <p class="text-subheading text-foreground">
@@ -194,7 +194,7 @@ onMounted(() => {
                     >
                         <div class="flex items-start justify-between gap-4">
                             <div class="flex flex-col gap-1">
-                                <p class="text-admin-label text-muted-foreground">
+                                <p class="text-small text-muted-foreground">
                                     {{ plate.id }} tier
                                 </p>
                                 <p class="text-subheading text-foreground">
@@ -218,7 +218,7 @@ onMounted(() => {
 
         <!-- Paper-grain overlay tile: explicit grain utility on a flat surface. -->
         <div>
-            <p class="text-admin-label mb-4 text-muted-foreground">
+            <p class="text-small mb-4 text-muted-foreground">
                 paper-grain-overlay · standalone
             </p>
             <div
@@ -240,14 +240,14 @@ onMounted(() => {
 
         <!-- Live token readout. -->
         <div>
-            <p class="text-admin-label mb-4 text-muted-foreground">Live token values</p>
+            <p class="text-small mb-4 text-muted-foreground">Live token values</p>
             <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
                 <div
                     v-for="t in tiers"
                     :key="`v-${t.tier}`"
                     class="flex flex-col gap-1 rounded-panel border border-border bg-card/60 p-3"
                 >
-                    <span class="text-mono-caption text-muted-foreground">{{
+                    <span class="text-mono-small text-muted-foreground">{{
                         t.tier
                     }}</span>
                     <span class="text-small text-foreground">

@@ -212,7 +212,7 @@ watch(playStops, invalidateCopy);
              event, not a second hue). Within proportion: the violet lands on the
              title masthead, never a body <p>/section <h2> (the d1 ink floor). -->
         <header class="flex flex-col gap-1">
-            <span class="section-label">Motion · Spring Orchestrator</span>
+            <span class="text-small text-muted-foreground">Motion · Spring Orchestrator</span>
             <span
                 class="text-display-3 font-display leading-tight"
                 :style="{ color: 'var(--motion-accent)' }"
@@ -294,7 +294,7 @@ watch(playStops, invalidateCopy);
                     aria-live="polite"
                 >
                     <div class="glass-quiet flex flex-col gap-1 rounded-panel p-3">
-                        <span class="text-mono-caption text-muted-foreground"
+                        <span class="text-caption text-muted-foreground"
                             >family</span
                         >
                         <span class="fira-code text-small text-foreground">
@@ -304,7 +304,7 @@ watch(playStops, invalidateCopy);
                         </span>
                     </div>
                     <div class="glass-quiet flex flex-col gap-1 rounded-panel p-3">
-                        <span class="text-mono-caption text-muted-foreground"
+                        <span class="text-caption text-muted-foreground"
                             >authority</span
                         >
                         <span class="fira-code text-small text-foreground">
@@ -313,7 +313,7 @@ watch(playStops, invalidateCopy);
                         </span>
                     </div>
                     <div class="glass-quiet flex flex-col gap-1 rounded-panel p-3">
-                        <span class="text-mono-caption text-muted-foreground"
+                        <span class="text-caption text-muted-foreground"
                             >generated clock</span
                         >
                         <span class="fira-code text-small text-foreground">
@@ -323,7 +323,7 @@ watch(playStops, invalidateCopy);
                         </span>
                     </div>
                     <div class="glass-quiet flex flex-col gap-1 rounded-panel p-3">
-                        <span class="text-mono-caption text-muted-foreground"
+                        <span class="text-caption text-muted-foreground"
                             >projection</span
                         >
                         <span class="fira-code text-small text-foreground">
@@ -413,7 +413,7 @@ watch(playStops, invalidateCopy);
                 </div>
 
                 <div class="flex flex-col gap-3">
-                    <span class="text-mono-caption text-muted-foreground"
+                    <span class="text-caption text-muted-foreground"
                         >Seed from a register</span
                     >
                     <div class="flex flex-wrap gap-2">
@@ -428,7 +428,7 @@ watch(playStops, invalidateCopy);
                         </button>
                     </div>
 
-                    <span class="mt-2 text-mono-caption text-muted-foreground">
+                    <span class="mt-2 text-mono-small text-muted-foreground">
                         {{
                             matchingPreset
                                 ? `Seeded --spring-${matchingPreset.name}`

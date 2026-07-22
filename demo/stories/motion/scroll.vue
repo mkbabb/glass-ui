@@ -20,7 +20,6 @@ import ScrollChoreographyBody from "./scroll/ScrollChoreographyBody.vue";
         <div
             :style="{
                 '--paper-ink-mark-color': 'var(--motion-accent)',
-                '--section-label-accent': 'var(--motion-accent)',
             }"
             class="flex flex-col gap-8"
         >

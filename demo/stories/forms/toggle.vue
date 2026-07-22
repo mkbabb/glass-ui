@@ -15,7 +15,7 @@ const densityOptions = ["Compact", "Comfortable", "Spacious", "Touch", "Presenta
     <StoryPage>
         <!-- ToggleGroup type=multiple. -->
         <section class="flex flex-col gap-3">
-            <p class="section-label">toggle-group · multiple</p>
+            <p class="text-small text-muted-foreground">toggle-group · multiple</p>
             <ToggleGroup
                 v-model="marks"
                 type="multiple"
@@ -32,14 +32,14 @@ const densityOptions = ["Compact", "Comfortable", "Spacious", "Touch", "Presenta
                     <Underline class="h-4 w-4" />
                 </ToggleGroupItem>
             </ToggleGroup>
-            <p class="text-mono-caption text-muted-foreground">
+            <p class="text-mono-small text-muted-foreground">
                 marks · [{{ marks.join(", ") }}]
             </p>
         </section>
 
         <!-- ToggleGroup type=single. -->
         <section class="flex flex-col gap-3">
-            <p class="section-label">toggle-group · single</p>
+            <p class="text-small text-muted-foreground">toggle-group · single</p>
             <ToggleGroup v-model="align" type="single" aria-label="Text alignment">
                 <ToggleGroupItem value="left" aria-label="Align left">
                     <AlignLeft class="h-4 w-4" />
@@ -51,7 +51,7 @@ const densityOptions = ["Compact", "Comfortable", "Spacious", "Touch", "Presenta
                     <AlignRight class="h-4 w-4" />
                 </ToggleGroupItem>
             </ToggleGroup>
-            <p class="text-mono-caption text-muted-foreground">align · {{ align }}</p>
+            <p class="text-mono-small text-muted-foreground">align · {{ align }}</p>
         </section>
 
         <StorySection
@@ -73,7 +73,7 @@ const densityOptions = ["Compact", "Comfortable", "Spacious", "Touch", "Presenta
                     {{ option }}
                 </ToggleGroupItem>
             </ToggleGroup>
-            <p class="text-mono-caption text-muted-foreground">
+            <p class="text-mono-small text-muted-foreground">
                 density · {{ density }}
             </p>
         </StorySection>

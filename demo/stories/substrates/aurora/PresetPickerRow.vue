@@ -43,7 +43,7 @@ function onKey(e: KeyboardEvent, key: PresetKey) {
          contradiction). The tiles are warm-glass cels (`.glass-capsule`) floating
          over the §3 field-well, NOT opaque bg-card plates. -->
     <div class="flex flex-col gap-3" role="group" aria-label="Presets">
-        <p class="text-admin-label text-muted-foreground">Presets</p>
+        <p class="text-small text-muted-foreground">Presets</p>
         <FadingScroll
             axis="x"
             class="configurator-gallery-track flex snap-x snap-mandatory gap-3 px-1 py-2 scrollbar-thin"
@@ -85,7 +85,7 @@ function onKey(e: KeyboardEvent, key: PresetKey) {
                     <span class="text-small font-medium text-foreground">
                         {{ PRESET_META[key].label }}
                     </span>
-                    <span class="text-admin-label text-muted-foreground">
+                    <span class="text-small text-muted-foreground">
                         {{ PRESET_META[key].sub }}
                     </span>
                 </div>

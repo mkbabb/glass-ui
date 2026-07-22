@@ -163,7 +163,7 @@ function derive() {
         <div class="mt-1 flex flex-col gap-2 rounded-panel border border-border/40 bg-card/40 p-2.5">
             <div class="flex items-center gap-2">
                 <Sparkles :size="13" class="text-muted-foreground" />
-                <p class="text-admin-label text-muted-foreground">Derive from color</p>
+                <p class="text-small text-muted-foreground">Derive from color</p>
             </div>
             <!-- The derive seed is the <ColorSwatch> register
                  (off the raw `h-8 w-9` color slab); the 4-harmony chip group WRAPS to a
@@ -190,7 +190,7 @@ function derive() {
                         :key="h.value"
                         :value="h.value"
                         :aria-label="h.label"
-                        class="h-8 flex-1 basis-[calc(50%-0.25rem)] px-1.5 text-mono-caption"
+                        class="h-8 flex-1 basis-[calc(50%-0.25rem)] px-1.5 text-mono-small"
                     >
                         {{ h.label }}
                     </ToggleGroupItem>
@@ -198,7 +198,7 @@ function derive() {
             </div>
             <div class="flex items-center justify-between gap-2">
                 <div class="flex items-center gap-2">
-                    <span class="text-mono-caption text-muted-foreground">Stops</span>
+                    <span class="text-caption text-muted-foreground">Stops</span>
                     <div class="flex items-center gap-1.5">
                         <Button
                             iconOnly
@@ -210,7 +210,7 @@ function derive() {
                             <span class="text-sm leading-none">−</span>
                         </Button>
                         <span
-                            class="text-mono-caption w-4 text-center tabular-nums text-foreground"
+                            class="text-mono-small w-4 text-center tabular-nums text-foreground"
                         >
                             {{ stopCount }}
                         </span>
@@ -238,7 +238,7 @@ function derive() {
         </div>
 
         <div class="flex items-center justify-between">
-            <p class="text-admin-label text-muted-foreground">
+            <p class="text-small text-muted-foreground">
                 Stops ({{ config.palette.length }}/{{ MAX_STOPS }})
             </p>
             <Button

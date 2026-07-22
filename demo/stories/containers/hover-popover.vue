@@ -81,7 +81,7 @@ import { Settings, ArrowLeft, RotateCcw, Square } from "@lucide/vue";
                     </PopoverContent>
                 </Popover>
             </Surface>
-            <p class="text-mono-caption text-muted-foreground">
+            <p class="text-small text-muted-foreground">
                 Hover-triggered floating label. The four sides above auto-flip if the
                 trigger sits near a viewport edge — reka-ui's collisionAvoidance picks
                 the next-best side without consumer wiring. Defer-on-leave keeps the
@@ -108,7 +108,7 @@ import { Settings, ArrowLeft, RotateCcw, Square } from "@lucide/vue";
                     >
                         <div class="flex flex-col gap-1">
                             <span>Save the current document</span>
-                            <span class="text-mono-caption text-muted-foreground"
+                            <span class="text-mono-small text-muted-foreground"
                                 >⌘ S</span
                             >
                         </div>
@@ -151,7 +151,7 @@ import { Settings, ArrowLeft, RotateCcw, Square } from "@lucide/vue";
                     >
                 </Popover>
             </Surface>
-            <p class="text-mono-caption text-muted-foreground">
+            <p class="text-small text-muted-foreground">
                 <code class="rounded bg-muted px-1">openDelay</code> tunes the
                 open-defer timer (renamed from the retired <code>hoverOpenDelay</code>).
                 Snappy reads support cluster-tier hover affordances; deferred reads suit

@@ -86,7 +86,7 @@ function revealNow() {
                     then hands ownership to the Dock without moving its layout. The same
                     morph owner measures the run below; reduced motion completes without
                     travel.
-                    <span v-if="pending" class="text-mono-caption">(seat armed)</span>
+                    <span v-if="pending" class="text-caption">(seat armed)</span>
                 </p>
 
                 <div
@@ -122,7 +122,7 @@ function revealNow() {
                         <Button
                             v-if="pending"
                             emphasis="quiet"
-                            class="text-mono-caption"
+                            class="text-mono-small"
                             @click="revealNow"
                         >
                             Reveal seat
@@ -150,7 +150,7 @@ function revealNow() {
                     </GlassDock>
 
                     <dl
-                        class="grid w-full max-w-xl grid-cols-2 gap-x-6 gap-y-3 border-t border-border/30 pt-5 text-mono-caption sm:grid-cols-4"
+                        class="grid w-full max-w-xl grid-cols-2 gap-x-6 gap-y-3 border-t border-border/30 pt-5 text-mono-small sm:grid-cols-4"
                         aria-label="CTA receive measurements"
                     >
                         <div>
@@ -199,7 +199,7 @@ function revealNow() {
                         </div>
                     </dl>
                     <p
-                        class="text-mono-caption text-muted-foreground"
+                        class="text-mono-small text-muted-foreground"
                         aria-live="polite"
                     >
                         start {{ observables.startedAtMs === null ? "—" : "0 ms" }} ·
@@ -218,7 +218,7 @@ function revealNow() {
                     </p>
                 </div>
 
-                <p class="text-mono-caption text-muted-foreground">
+                <p class="text-small text-muted-foreground">
                     Fine and coarse runs are checked against the selected spring
                     horizon, travel, and scale bands. Reset is an explicit snap; reverse
                     travel is not supported.

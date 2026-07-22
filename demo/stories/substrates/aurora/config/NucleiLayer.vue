@@ -31,7 +31,7 @@ function addNucleus() {
 <template>
     <div class="flex min-w-[300px] flex-col gap-3 p-3">
         <div class="flex items-center justify-between">
-            <p class="text-admin-label text-muted-foreground">
+            <p class="text-small text-muted-foreground">
                 Nuclei ({{ config.nuclei.length }}/{{ MAX_NUCLEI }})
             </p>
             <Button
@@ -54,7 +54,7 @@ function addNucleus() {
                 class="flex flex-col gap-1.5 rounded-panel border border-border/40 bg-card/50 p-2"
             >
                 <div class="flex items-center justify-between">
-                    <span class="text-mono-caption text-muted-foreground">#{{ i + 1 }}</span>
+                    <span class="text-mono-small text-muted-foreground">#{{ i + 1 }}</span>
                     <Button
                         emphasis="quiet"
                         size="sm"

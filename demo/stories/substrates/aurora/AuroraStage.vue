@@ -76,7 +76,7 @@ useCursorInteraction(stageRef, () => props.config, {
         <NucleiOverlay :nuclei="config.nuclei" :dimmed="config.medium === 'smooth'" />
         <div
             v-if="pointerAffordanceEnabled"
-            class="pointer-events-none absolute bottom-3 left-3 text-mono-caption uppercase tracking-widest text-foreground/50 mix-blend-difference"
+            class="pointer-events-none absolute bottom-3 left-3 text-caption text-foreground/50 mix-blend-difference"
         >
             move to shape the field
         </div>

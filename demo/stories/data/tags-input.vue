@@ -57,7 +57,7 @@ const skillCount = computed(() => skills.value.length);
                     </TagsInputItem>
                     <TagsInputInput id="skills-input" placeholder="Add skill…" />
                 </TagsInput>
-                <p class="text-mono-caption text-muted-foreground">
+                <p class="text-mono-small text-muted-foreground">
                     {{ skillCount }} skill{{ skillCount === 1 ? "" : "s" }} · enter to
                     add, backspace to remove last
                 </p>
@@ -101,7 +101,7 @@ const skillCount = computed(() => skills.value.length);
                     <TagsInputInput id="emails-input" placeholder="you@example.com" />
                 </TagsInput>
                 <p
-                    class="text-mono-caption"
+                    class="text-small"
                     :class="emailError ? 'text-destructive' : 'text-muted-foreground'"
                 >
                     {{ emailError ?? "Valid RFC-ish emails only." }}

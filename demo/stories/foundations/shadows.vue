@@ -48,7 +48,7 @@ const shadows: { cls: string; label: string }[] = [
                             )
                         "
                     />
-                    <span class="text-mono-caption text-muted-foreground">{{
+                    <span class="text-mono-small text-muted-foreground">{{
                         s.label
                     }}</span>
                 </div>
@@ -68,7 +68,7 @@ const shadows: { cls: string; label: string }[] = [
                         )
                     "
                 >
-                    <span class="text-admin-label text-muted-foreground">hover me</span>
+                    <span class="text-small text-muted-foreground">hover me</span>
                     <span class="text-subheading text-foreground">Lifts 1px</span>
                 </button>
                 <p class="text-small max-w-md text-muted-foreground">

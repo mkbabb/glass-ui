@@ -35,7 +35,7 @@ function setNoiseOctaves(v: string | string[]) {
     <div class="flex min-w-[280px] flex-col gap-3">
         <!-- Oil sub-modes (oil medium only — the short toggle sets, segmented). -->
         <div v-if="showStrokeMode" class="flex flex-col gap-1">
-            <p class="text-admin-label text-muted-foreground">Stroke mode</p>
+            <p class="text-small text-muted-foreground">Stroke mode</p>
             <SegmentedTabs
                 :options="[...strokeModeOptions]"
                 :model-value="config.strokeMode"
@@ -45,7 +45,7 @@ function setNoiseOctaves(v: string | string[]) {
             />
         </div>
         <div v-if="showStrokeMode" class="flex flex-col gap-1">
-            <p class="text-admin-label text-muted-foreground">Stroke layers</p>
+            <p class="text-small text-muted-foreground">Stroke layers</p>
             <SegmentedTabs
                 :options="[...strokeLayersOptions]"
                 :model-value="String(config.strokeLayers)"
@@ -55,7 +55,7 @@ function setNoiseOctaves(v: string | string[]) {
             />
         </div>
         <div class="flex flex-col gap-1">
-            <p class="text-admin-label text-muted-foreground">Noise octaves</p>
+            <p class="text-small text-muted-foreground">Noise octaves</p>
             <SegmentedTabs
                 :options="[...noiseOctavesOptions]"
                 :model-value="String(config.noiseOctaves)"

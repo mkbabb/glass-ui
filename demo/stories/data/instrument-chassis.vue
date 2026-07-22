@@ -130,10 +130,10 @@ const reserves: InstrumentChassisReserve[] = ["none", "stage", "inspector", "bot
                     }"
                 >
                     <template #stage>
-                        <span class="text-admin-label">Stage · {{ reserve }}</span>
+                        <span class="text-small">Stage · {{ reserve }}</span>
                     </template>
                     <template #inspector>
-                        <span class="text-mono-caption text-muted-foreground">
+                        <span class="text-small text-muted-foreground">
                             Inspector
                         </span>
                     </template>

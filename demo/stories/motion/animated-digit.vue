@@ -20,7 +20,7 @@ function resample(): void {
     <StoryPage>
         <StorySection
             label="value tween"
-            blurb="A null/undefined value paints the placeholder; a numeric value tweens toward it on the useAnimatedNumber spring."
+            blurb="A null/undefined value paints the placeholder; a numeric value tweens toward it on a spring."
         >
             <!-- the motion band's ONE coherent violet event
                  (--motion-accent, the demo-local --viz-legendre twin): a leading
@@ -28,7 +28,7 @@ function resample(): void {
             <div class="flex flex-wrap items-end gap-10">
                 <div class="flex flex-col items-start gap-1">
                     <span class="h-1 w-8 rounded-pill bg-[var(--motion-accent)]" />
-                    <span class="text-admin-label text-muted-foreground">download · Mbps</span>
+                    <span class="text-small text-muted-foreground">download · Mbps</span>
                     <AnimatedDigit
                         :value="downloadMbps"
                         :format="(v) => v.toFixed(1)"
@@ -37,7 +37,7 @@ function resample(): void {
                 </div>
                 <div class="flex flex-col items-start gap-1">
                     <span class="h-1 w-8 rounded-pill bg-[var(--motion-accent)]" />
-                    <span class="text-admin-label text-muted-foreground">latency · ms</span>
+                    <span class="text-small text-muted-foreground">latency · ms</span>
                     <AnimatedDigit
                         :value="latencyMs"
                         class="text-display-hero tabular-nums text-foreground"

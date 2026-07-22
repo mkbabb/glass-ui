@@ -35,7 +35,6 @@ const members: FamilyMember[] = [
         <div
             :style="{
                 '--paper-ink-mark-color': 'var(--motion-accent)',
-                '--section-label-accent': 'var(--motion-accent)',
             }"
         >
             <FamilyTabs :members="members" aria-label="Text motion family" />

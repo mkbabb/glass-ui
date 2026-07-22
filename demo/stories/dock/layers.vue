@@ -77,7 +77,7 @@ function back() {
             <p class="text-small text-muted-foreground">
                 Root pane shows three entry points. Clicking one swaps the pane; the dock resizes in place.
             </p>
-            <p class="text-mono-caption text-muted-foreground" data-testid="dock-layer-readout">
+            <p class="text-mono-small text-muted-foreground" data-testid="dock-layer-readout">
                 active layer = {{ activeLayer }}
             </p>
             <div class="dock-stage-tile flex justify-center rounded-card border border-border/30 p-10">
@@ -281,8 +281,8 @@ function back() {
                 The thin <code class="rounded bg-muted px-1">&lt;DockCrossfade :active&gt;</code>
                 core consumed DIRECTLY — a controlled 4-pane crossfade with NO switcher rail.
                 An external strip drives <code class="rounded bg-muted px-1">active</code>;
-                the faces cross-dissolve on the per-face <code class="rounded bg-muted px-1">--dock-t</code>
-                spring, the box holds the PEAK face (differing heights never jump).
+                the faces cross-dissolve and the box holds the tallest face, so panes of
+                differing height never jump.
             </p>
             <div class="flex flex-wrap justify-center gap-1">
                 <button
@@ -324,16 +324,6 @@ function back() {
                     </DockCrossfade>
                 </GlassDock>
             </div>
-        </StorySection>
-
-        <StorySection heading="Mechanics" gap="sm">
-            <ol class="text-small list-decimal space-y-1 pl-5 text-muted-foreground">
-                <li>Faces stack on a CSS grid at <code class="rounded bg-muted px-1">1 / 1</code>; the box reserves the PEAK face height ONCE (never a per-swap FLIP).</li>
-                <li>A switch cross-dissolves the two faces: the entering reads <code class="rounded bg-muted px-1">opacity: var(--dock-t)</code>, the leaving <code class="rounded bg-muted px-1">calc(1 - var(--dock-t))</code>.</li>
-                <li>The <code class="rounded bg-muted px-1">--dock-t</code> scalar rides ONE interruptible <code class="rounded bg-muted px-1">useDockSpring</code> — a rapid re-toggle re-bases velocity-continuously (no hard cut, the liquid-weight edict; crossfade beats View Transitions).</li>
-                <li>A dissolving focus-holder transfers focus to its successor (un-inert-before-focus).</li>
-                <li>During a simultaneous collapse the <code class="rounded bg-muted px-1">.dock-face-content</code> wrapper clips off <code class="rounded bg-muted px-1">--dock-morph-t</code> — the interactive run's hover plates still overflow at rest.</li>
-            </ol>
         </StorySection>
         </DockStage>
     </StoryPage>

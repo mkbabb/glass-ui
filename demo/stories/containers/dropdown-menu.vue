@@ -100,7 +100,7 @@ const flags = ref({ minimap: true, overlays: false, rulers: true });
 
             <Surface material="content" surface="veil" class="flex flex-col gap-3 p-5">
                 <div class="flex items-center justify-between">
-                    <span class="text-admin-label capitalize"
+                    <span class="text-small capitalize"
                         >{{ panelLayout }} layout</span
                     >
                     <div class="flex flex-wrap gap-1.5">

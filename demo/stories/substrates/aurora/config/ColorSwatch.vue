@@ -35,7 +35,7 @@ function onInput(event: Event): void {
                 @input="onInput"
             />
         </span>
-        <code v-if="showHex" class="text-mono-caption tabular-nums uppercase text-muted-foreground">
+        <code v-if="showHex" class="text-mono-small tabular-nums uppercase text-muted-foreground">
             {{ model.toUpperCase() }}
         </code>
     </span>

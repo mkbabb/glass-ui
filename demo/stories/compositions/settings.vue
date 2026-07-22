@@ -79,11 +79,9 @@ interface Group {
     blurb: string;
 }
 
-// Section eyebrows read one coherent section-accent
-// register (`.section-label--tinted`), NOT a four-hue rainbow (a
-// per-group `section: 2/5/8/11` indigo/amber/red/teal cycle would read as
-// arbitrary noise). The page-scope one-color-event rule: settings gets ONE
-// eyebrow-accent identity.
+// Section headers stay calm grey; the page's ONE accent identity is carried by
+// the violet left rail on each group (`.settings-group`), not by a tinted
+// eyebrow — one coherent accent, never a four-hue rainbow.
 const groups: Record<string, Group> = {
     account: {
         label: "Account",
@@ -114,7 +112,7 @@ const groups: Record<string, Group> = {
             <!-- Account -->
             <section class="flex flex-col gap-4">
                 <div class="settings-group flex flex-col gap-1">
-                    <span class="section-label--tinted text-admin-label">
+                    <span class="text-small font-medium text-muted-foreground">
                         {{ groups.account.label }}
                     </span>
                     <p class="text-small text-muted-foreground">
@@ -145,7 +143,7 @@ const groups: Record<string, Group> = {
             <!-- Appearance -->
             <section class="flex flex-col gap-4">
                 <div class="settings-group flex flex-col gap-1">
-                    <span class="section-label--tinted text-admin-label">
+                    <span class="text-small font-medium text-muted-foreground">
                         {{ groups.appearance.label }}
                     </span>
                     <p class="text-small text-muted-foreground">
@@ -242,7 +240,7 @@ const groups: Record<string, Group> = {
             <!-- Notifications -->
             <section class="flex flex-col gap-4">
                 <div class="settings-group flex flex-col gap-1">
-                    <span class="section-label--tinted text-admin-label">
+                    <span class="text-small font-medium text-muted-foreground">
                         {{ groups.notifications.label }}
                     </span>
                     <p class="text-small text-muted-foreground">
@@ -280,7 +278,7 @@ const groups: Record<string, Group> = {
             <!-- Accessibility -->
             <section class="flex flex-col gap-4">
                 <div class="settings-group flex flex-col gap-1">
-                    <span class="section-label--tinted text-admin-label">
+                    <span class="text-small font-medium text-muted-foreground">
                         {{ groups.accessibility.label }}
                     </span>
                     <p class="text-small text-muted-foreground">
@@ -314,10 +312,9 @@ const groups: Record<string, Group> = {
    underlay); StoryHero drops the card to the calm `wash` tier so the grid reads. */
 
 /* One coherent section-accent register for the whole page (the violet
-   brand anchor, --section-color-7) so the four eyebrows read as one system, not
+   brand anchor, --section-color-7) so the four groups read as one system, not
    a four-hue rainbow. */
 .settings-group {
-    --section-label-accent: var(--section-color-7);
     /* The math-paper section-accent rail: a thin
        left rail keyed off the page's ONE accent. The eyebrow + blurb indent off
        the rail so the section reads as an intentional, organized block. */

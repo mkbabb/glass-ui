@@ -132,7 +132,7 @@ function togglePlay() {
                     :key="posture.label"
                     class="dock-stage-tile flex flex-col items-center gap-4 rounded-[var(--radius-card)] border border-border/30 p-8"
                 >
-                    <span class="text-mono-caption text-muted-foreground">{{ posture.label }}</span>
+                    <span class="text-mono-small text-muted-foreground">{{ posture.label }}</span>
                     <GlassDock
                         class="relative z-10"
                         role="toolbar"

@@ -131,7 +131,7 @@ function legendBackground(seg: TimelineSegment): string {
 
 <template>
         <div>
-            <p class="text-admin-label mb-4 text-muted-foreground">
+            <p class="text-small mb-4 text-muted-foreground">
                 Segmented variant — multi-phase progress
             </p>
 
@@ -166,10 +166,10 @@ function legendBackground(seg: TimelineSegment): string {
                     }"
                 >
                     <div class="flex min-w-0 flex-col gap-1">
-                        <span class="text-admin-label flex items-center gap-2">
+                        <span class="text-small flex items-center gap-2">
                             {{ detail.label }}
                             <span
-                                class="text-mono-caption uppercase tracking-wider text-muted-foreground"
+                                class="text-caption text-muted-foreground"
                             >
                                 {{ detail.state }}
                             </span>
@@ -209,7 +209,7 @@ function legendBackground(seg: TimelineSegment): string {
 
         <!-- Phase legend -->
         <div>
-            <p class="text-admin-label mb-4 text-muted-foreground">Segments</p>
+            <p class="text-small mb-4 text-muted-foreground">Segments</p>
             <ol
                 class="flex flex-col divide-y divide-border rounded-card border border-border bg-card shadow-cartoon"
             >
@@ -224,11 +224,11 @@ function legendBackground(seg: TimelineSegment): string {
                     />
                     <div class="flex min-w-0 flex-1 flex-col">
                         <span class="text-small font-medium">{{ seg.label }}</span>
-                        <span class="text-mono-caption text-muted-foreground">
+                        <span class="text-mono-small text-muted-foreground">
                             state: {{ seg.state }}
                         </span>
                     </div>
-                    <span class="fira-code text-mono-caption text-muted-foreground">
+                    <span class="fira-code text-mono-small text-muted-foreground">
                         {{ typeof seg.progress === "number" ? Math.round(seg.progress * 100) : "—" }}%
                     </span>
                 </li>

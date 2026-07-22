@@ -41,7 +41,7 @@ function restart(): void {
              --motion-accent violet as the ONE color text-event (the existing
              motion-purple family on the masthead, never a body <p>/<h2>). -->
         <header class="flex flex-col gap-1">
-            <span class="section-label">Motion · Typewriter</span>
+            <span class="text-small text-muted-foreground">Motion · Typewriter</span>
             <span
                 class="text-display-3 font-display leading-tight"
                 :style="{ color: 'var(--motion-accent)' }"
@@ -84,7 +84,7 @@ function restart(): void {
 
         <!-- Secondary: single-line, monospace, for code-style typing. -->
         <section class="flex flex-col gap-2">
-            <span class="text-admin-label text-muted-foreground"
+            <span class="text-small text-muted-foreground"
                 >Single-line, monospace</span
             >
             <div
@@ -98,7 +98,7 @@ function restart(): void {
                 <span class="text-muted-foreground">$&nbsp;</span>
                 <TypewriterText
                     :key="`cli-${remountKey}`"
-                    text="npm install @mkbabb/glass-ui"
+                    text="echo 'warm cream'"
                     :base-speed="speedMs"
                     :humanize="humanize"
                     :cursor-visible="cursorVisible"

@@ -99,7 +99,7 @@ const viz: { id: string; glyph: string; label: string; sub: string }[] = [
                         animate
                         :style="{ width: SWATCH_SIZE, height: SWATCH_SIZE }"
                     />
-                    <span class="text-mono-caption text-muted-foreground">{{ i }}</span>
+                    <span class="text-mono-small text-muted-foreground">{{ i }}</span>
                 </div>
             </div>
         </StorySection>
@@ -133,7 +133,7 @@ const viz: { id: string; glyph: string; label: string; sub: string }[] = [
                         </div>
                         <div class="flex flex-col">
                             <span class="text-subheading text-foreground">{{ t.label }}</span>
-                            <span class="text-mono-caption text-muted-foreground">{{
+                            <span class="text-mono-small text-muted-foreground">{{
                                 t.sub
                             }}</span>
                         </div>
@@ -170,7 +170,7 @@ const viz: { id: string; glyph: string; label: string; sub: string }[] = [
                         />
                         <div class="flex flex-col">
                             <span class="text-small text-foreground">{{ c.name }}</span>
-                            <span class="text-mono-caption text-muted-foreground">{{
+                            <span class="text-mono-small text-muted-foreground">{{
                                 c.utility
                             }}</span>
                         </div>

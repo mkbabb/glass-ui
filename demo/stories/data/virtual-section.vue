@@ -115,7 +115,7 @@ function scrollToTarget() {
                         <span class="text-muted-foreground text-caption">
                             {{ item.body }}
                         </span>
-                        <span class="text-mono-caption text-muted-foreground">
+                        <span class="text-mono-small text-muted-foreground">
                             #{{ item.index }} · depth {{ item.depth }}
                         </span>
                     </div>

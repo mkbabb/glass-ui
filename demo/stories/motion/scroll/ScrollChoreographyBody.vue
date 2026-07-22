@@ -65,7 +65,7 @@ useScrollPin({
 
             <div class="flex flex-wrap gap-3">
                 <span
-                    class="text-admin-label rounded-pill border px-3 py-1"
+                    class="text-small rounded-pill border px-3 py-1"
                     :class="
                         scrollOk
                             ? 'border-success/40 text-success'
@@ -75,7 +75,7 @@ useScrollPin({
                     scroll() {{ scrollOk ? "supported" : "fallback" }}
                 </span>
                 <span
-                    class="text-admin-label rounded-pill border px-3 py-1"
+                    class="text-small rounded-pill border px-3 py-1"
                     :class="
                         viewOk
                             ? 'border-success/40 text-success'
@@ -85,7 +85,7 @@ useScrollPin({
                     view() {{ viewOk ? "supported" : "fallback" }}
                 </span>
                 <span
-                    class="text-admin-label rounded-pill border px-3 py-1"
+                    class="text-small rounded-pill border px-3 py-1"
                     :class="
                         timelineScopeOk
                             ? 'border-success/40 text-success'

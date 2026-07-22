@@ -79,10 +79,10 @@ function onSwatch(e: Event) {
             :aria-label="`Stop ${index + 1} color`"
             @input="onSwatch"
         />
-        <span class="text-mono-caption text-muted-foreground">{{ index }}</span>
+        <span class="text-mono-small text-muted-foreground">{{ index }}</span>
         <div class="flex flex-col gap-1">
             <div class="flex items-center gap-2">
-                <span class="text-mono-caption w-3 text-muted-foreground">L</span>
+                <span class="text-mono-small w-3 text-muted-foreground">L</span>
                 <Slider
                     class="flex-1 py-1"
                     variant="spectrum"
@@ -95,12 +95,12 @@ function onSwatch(e: Event) {
                     :style="{ '--slider-track-bg': lTrack }"
                     @update:model-value="(v: number[] | undefined) => v && patch({ L: v[0] })"
                 />
-                <span class="text-mono-caption w-7 text-right text-muted-foreground">
+                <span class="text-mono-small w-7 text-right text-muted-foreground">
                     {{ stop.L.toFixed(2) }}
                 </span>
             </div>
             <div class="flex items-center gap-2">
-                <span class="text-mono-caption w-3 text-muted-foreground">C</span>
+                <span class="text-mono-small w-3 text-muted-foreground">C</span>
                 <Slider
                     class="flex-1 py-1"
                     variant="spectrum"
@@ -113,12 +113,12 @@ function onSwatch(e: Event) {
                     :style="{ '--slider-track-bg': cTrack }"
                     @update:model-value="(v: number[] | undefined) => v && patch({ C: v[0] })"
                 />
-                <span class="text-mono-caption w-7 text-right text-muted-foreground">
+                <span class="text-mono-small w-7 text-right text-muted-foreground">
                     {{ stop.C.toFixed(2) }}
                 </span>
             </div>
             <div class="flex items-center gap-2">
-                <span class="text-mono-caption w-3 text-muted-foreground">h</span>
+                <span class="text-mono-small w-3 text-muted-foreground">h</span>
                 <Slider
                     class="flex-1 py-1"
                     variant="spectrum"
@@ -131,7 +131,7 @@ function onSwatch(e: Event) {
                     :style="{ '--slider-track-bg': hTrack }"
                     @update:model-value="(v: number[] | undefined) => v && patch({ h: v[0] })"
                 />
-                <span class="text-mono-caption w-7 text-right text-muted-foreground">
+                <span class="text-mono-small w-7 text-right text-muted-foreground">
                     {{ Math.round(stop.h) }}°
                 </span>
             </div>

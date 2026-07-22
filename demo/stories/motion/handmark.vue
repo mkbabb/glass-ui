@@ -22,8 +22,8 @@ function replayLoad() {
         <!-- The masthead underline — a hand pen line under the word. -->
         <StorySection
             heading="The hand voice"
-            label="pen underline · the masthead default"
-            blurb="HandMark lays a hand-drawn mark under a word; the word stays real selectable text, the mark is an aria-hidden SVG overlay. The PEN default is grain:0 — a clean wobbled path, no filter."
+            label="pen underline"
+            blurb="Lay a hand-drawn line under a word. The word stays real, selectable text; the mark is purely decorative, so screen readers still read the plain word. The pen default is a clean, lightly wobbled stroke."
         >
             <div class="paper-grain-overlay rounded-card border bg-card p-8">
                 <p class="text-display-3 font-display leading-tight text-foreground">
@@ -34,8 +34,8 @@ function replayLoad() {
 
         <!-- Natural pencil-boil morphology using the `boil` brush. -->
         <StorySection
-            label="boil brush · the natural morphology"
-            blurb="A seeded hand-drawn underline keeps its character at any scale. Different seeds vary naturally; repeating a seed reproduces the same mark."
+            label="boil brush"
+            blurb="A seeded hand-drawn underline that keeps its character at any size. Different seeds vary the wobble naturally; the same seed always redraws the same mark."
         >
             <div class="paper-grain-overlay rounded-card border bg-card p-8">
                 <p class="text-display-3 font-display leading-tight text-foreground">
@@ -47,8 +47,8 @@ function replayLoad() {
 
         <!-- Highlighter specimen. -->
         <StorySection
-            label="highlighter · multiply over the page"
-            blurb="The highlighter paints like a highlighter: a low-seated hull ribbon, tapered ends, a square cap, multiplying against the page text behind it (not isolated off the page). A wide translucent slab BEHIND the word."
+            label="highlighter"
+            blurb="Paints like a real highlighter: a wide translucent slab behind the word that lets the page show through, with tapered ends and a square cap."
         >
             <div class="paper-grain-overlay rounded-card border bg-card p-8">
                 <p class="text-display-3 font-display leading-tight text-foreground">
@@ -63,8 +63,8 @@ function replayLoad() {
 
         <!-- The draw-on clock — the imperative play(). -->
         <StorySection
-            label="draw-on · imperative play()"
-            blurb="animation='draw-on' reveals the mark once on appear — a stroke-dashoffset sweep for clean ink, a clip-path wipe for grained ink (never dashoffset under a filter). Fire it via a template ref's play()."
+            label="draw-on"
+            blurb="The mark draws itself on once when it appears, so a heading arrives with its underline still being sketched. Replay it whenever you like from code."
         >
             <div class="paper-grain-overlay flex flex-col gap-4 rounded-card border bg-card p-8">
                 <p class="text-display-3 font-display leading-tight text-foreground">
@@ -82,8 +82,8 @@ function replayLoad() {
 
         <!-- Distinct pen, boil, pencil, crayon, and marker voices. -->
         <StorySection
-            label="the brush continuum · distinct voices"
-            blurb="Each medium is a POINT in one parameter space, not a class in a taxonomy. pen (clean), boil (procedural), pencil (fine tooth), crayon (waxy grain), marker (juicy) — measurably distinct geometry, never everything-renders-pen."
+            label="the brush voices"
+            blurb="Five hands from one control: pen (clean), boil (lively), pencil (fine tooth), crayon (waxy grain), marker (juicy). Each is visibly its own hand — never all rendering the same."
         >
             <div class="paper-grain-overlay flex flex-col gap-3 rounded-card border bg-card p-8 text-display-3 font-display leading-tight text-foreground">
                 <p><HandMark brush="pen">pen</HandMark></p>
@@ -96,8 +96,8 @@ function replayLoad() {
 
         <!-- A circle around a datum — positioned mode (the editorial margin mark). -->
         <StorySection
-            label="positioned mode · circle a datum"
-            blurb="The ring brush hand-circles a datum — pencil-boil's ellipsePoints overshoot (a hand circle, not a snapped ellipse). A thin single-pass whisper pointing at the anomaly, aspect-stable via non-scaling-stroke."
+            label="circle a datum"
+            blurb="The ring brush hand-circles a value — a loose, overshooting loop like a real hand circle, not a snapped shape. A thin single pass that quietly points at the number that matters."
         >
             <div class="paper-grain-overlay rounded-card border bg-card p-8">
                 <p class="text-display-3 font-display leading-tight text-foreground">
@@ -114,10 +114,10 @@ function replayLoad() {
             </div>
         </StorySection>
 
-        <!-- The box-mode hull marks over TINY datums — the se-guard ( b). -->
+        <!-- A box or bracket over a very small target. -->
         <StorySection
-            label="box-mode hull · the se-guard (never a vanish)"
-            blurb="A hull brush (marker/crayon) over a tiny datum used to collapse to an empty perfect-freehand outline and VANISH. The se-guard falls back to a stroked body, so a box/bracket over a 1-char datum always paints a visible band."
+            label="box a datum"
+            blurb="A box or bracket over a very small target always paints a visible band — even a single character stays clearly marked, never thinning away to nothing."
         >
             <div class="paper-grain-overlay flex flex-wrap items-center gap-8 rounded-card border bg-card p-8">
                 <p class="text-display-3 font-display leading-tight text-foreground">
@@ -147,8 +147,8 @@ function replayLoad() {
 
         <!-- The amplitude knob — a bolder hand line off the wobble scalar ( c). -->
         <StorySection
-            label="amplitude · the excursion knob"
-            blurb="The natural-underline excursion is font-proportional (aspect-correct viewBox) and driven by the amplitude knob — the default reads byte-identical, an explicit amplitude lifts the wobble÷stroke ratio for a bolder hand line."
+            label="amplitude"
+            blurb="The underline's wobble scales with the font. Turn amplitude up for a bolder, more energetic hand; the default stays understated."
         >
             <div class="paper-grain-overlay flex flex-col gap-3 rounded-card border bg-card p-8 text-display-3 font-display leading-tight text-foreground">
                 <p><HandMark brush="boil" :seed="8">default</HandMark></p>
@@ -158,8 +158,8 @@ function replayLoad() {
 
         <!-- The color prop — the motion family's ONE coherent purple event. -->
         <StorySection
-            label="color prop · the motion accent"
-            blurb="The default color is currentColor (inherits the ink). An explicit color prop wins — here the motion family's --motion-accent purple (--viz-legendre violet twin; demo-local, never a lib token)."
+            label="color"
+            blurb="By default the mark inherits the surrounding text ink. Pass a color to override it — here the motion family's violet accent."
         >
             <div class="paper-grain-overlay rounded-card border bg-card p-8">
                 <p class="text-display-3 font-display leading-tight text-foreground">

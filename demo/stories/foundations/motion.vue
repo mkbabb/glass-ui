@@ -153,7 +153,7 @@ function toggle(id: string): void {
                     </div>
 
                     <div class="flex items-center justify-between">
-                        <span class="text-mono-caption text-muted-foreground">
+                        <span class="text-mono-small text-muted-foreground">
                             v-if · {{ visible[demo.id] ? "true" : "false" }}
                         </span>
                         <Button size="sm" @click="toggle(demo.id)"> Toggle </Button>

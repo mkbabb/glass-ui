@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import { ref } from "vue";
-import { Lock, ShieldCheck, Sparkles, Users } from "@lucide/vue";
+import { Layers, Palette, Sparkles, Type } from "@lucide/vue";
 import { Button } from "@glass/components/button";
 import { Checkbox } from "@glass/components/checkbox";
 import { Input } from "@glass/components/input";
@@ -35,10 +35,12 @@ const email = ref("");
 const password = ref("");
 const remember = ref(true);
 
-const trustBadges = [
-    { icon: ShieldCheck, text: "SOC 2 Type II", section: 4 },
-    { icon: Lock, text: "End-to-end encrypted", section: 2 },
-    { icon: Users, text: "Trusted by 12k teams", section: 7 },
+// Honest product highlights, not trust badges — every line is a real thing the
+// library does. The chips demo the icon + section-tone pattern.
+const highlights = [
+    { icon: Palette, text: "Warm paper + cartoon shadows", section: 4 },
+    { icon: Type, text: "Plus Jakarta display type", section: 2 },
+    { icon: Layers, text: "Layered glass materials", section: 7 },
 ];
 </script>
 
@@ -96,7 +98,7 @@ const trustBadges = [
 
                 <ul class="flex flex-col gap-3">
                     <li
-                        v-for="badge in trustBadges"
+                        v-for="badge in highlights"
                         :key="badge.text"
                         class="flex items-center gap-3"
                     >
@@ -116,7 +118,7 @@ const trustBadges = [
                 class="flex flex-col justify-center gap-[calc(1.5rem_+_var(--density-gap,0rem))] bg-card/70 p-[calc(var(--card-pad-block,calc(--spacing(6)_*_1.272))_+_var(--density-pad,0rem))] backdrop-blur-sm lg:p-[calc(3.5rem_+_var(--density-pad,0rem))]"
             >
                 <div class="flex flex-col gap-2">
-                    <span class="section-label">Sign in</span>
+                    <span class="text-small text-muted-foreground">Sign in</span>
                     <h3 class="text-heading">Welcome back</h3>
                     <p class="text-small text-muted-foreground">
                         New here?
@@ -176,7 +178,7 @@ const trustBadges = [
 
                     <div class="flex items-center gap-3">
                         <Separator class="flex-1" />
-                        <span class="text-mono-caption">or</span>
+                        <span class="text-small text-muted-foreground">or</span>
                         <Separator class="flex-1" />
                     </div>
 

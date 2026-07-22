@@ -189,7 +189,7 @@ const size = computed(() => (isNarrow.value ? "sm" : "md"));
                             role="group"
                             aria-label="Presets"
                         >
-                            <p class="text-admin-label text-muted-foreground">
+                            <p class="text-small text-muted-foreground">
                                 Presets
                             </p>
                             <div
@@ -221,7 +221,7 @@ const size = computed(() => (isNarrow.value ? "sm" : "md"));
                                             {{ p.label }}
                                         </span>
                                         <span
-                                            class="text-admin-label text-muted-foreground"
+                                            class="text-small text-muted-foreground"
                                         >
                                             {{ p.config.medium }} · spread
                                             {{ p.config.spread }}

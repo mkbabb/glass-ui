@@ -120,6 +120,6 @@ const decorations: { value: Decoration; use: string }[] = [
 
 .surface-cell code {
     font-family: var(--font-mono);
-    font-size: var(--text-mono-caption);
+    font-size: var(--type-caption);
 }
 </style>

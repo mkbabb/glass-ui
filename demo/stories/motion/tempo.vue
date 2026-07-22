@@ -63,7 +63,7 @@ const dialogOpen = ref(false);
         >
             <div class="tempo-panel glass-card flex flex-col gap-4 rounded-card p-6">
                 <div class="flex items-baseline justify-between gap-4">
-                    <span class="text-mono-caption">--motion-tempo</span>
+                    <span class="text-mono-small">--motion-tempo</span>
                     <span class="text-subheading text-foreground tabular-nums">{{
                         tempo[0].toFixed(2)
                     }}</span>
@@ -75,7 +75,7 @@ const dialogOpen = ref(false);
                     :step="0.05"
                     aria-label="Motion tempo"
                 />
-                <div class="flex flex-wrap gap-2 text-mono-caption text-muted-foreground">
+                <div class="flex flex-wrap gap-2 text-mono-small text-muted-foreground">
                     <Button emphasis="quiet" size="sm" @click="tempo = [0.7]">0.70 · quicker</Button>
                     <Button emphasis="quiet" size="sm" @click="tempo = [1]">1.00 · identity</Button>
                     <Button emphasis="quiet" size="sm" @click="tempo = [1.3]">1.30 · longer</Button>
@@ -132,8 +132,8 @@ const dialogOpen = ref(false);
         </StorySection>
 
         <StorySection
-            heading="JS dock morph — the response scales in lockstep"
-            blurb="Hover the dock to run its collapse↔expand morph. useDockSpring reads --motion-tempo at construction and scales the DOCK_SPRING response by it — so the JS morph and the CSS overlays above stretch by the SAME factor (duration ∝ response). Move the slider, then hover: the morph tracks the tempo."
+            heading="The dock morph scales in lockstep"
+            blurb="Hover the dock to run its collapse↔expand morph. It reads the same --motion-tempo as the overlays above and stretches its timing by the same factor — dock and overlays move to one clock. Move the slider, then hover: the morph tracks the tempo."
         >
             <div class="dock-demo-stage flex min-h-40 items-center justify-center rounded-card p-8">
                 <GlassDock :key="tempo[0]">

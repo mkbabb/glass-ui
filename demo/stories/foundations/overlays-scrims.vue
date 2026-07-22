@@ -52,10 +52,10 @@ const motionOffsets: TokenLadderRow[] = [
                     <div class="scrim-stage">
                         <div class="scrim-overlay" :class="row.cls" />
                     </div>
-                    <code class="fira-code text-mono-caption text-foreground break-all">
+                    <code class="fira-code text-mono-small text-foreground break-all">
                         {{ row.label }}
                     </code>
-                    <span class="text-mono-caption text-muted-foreground">
+                    <span class="text-mono-small text-muted-foreground">
                         {{ row.hint }}
                     </span>
                 </div>

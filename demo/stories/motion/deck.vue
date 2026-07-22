@@ -54,7 +54,7 @@ const index = computed({
                         :data-state="i === deck.index.value ? 'active' : 'inactive'"
                         :inert="i !== deck.index.value ? true : undefined"
                     >
-                        <p class="text-mono-caption">{{ i + 1 }} / {{ slides.length }}</p>
+                        <p class="text-mono-small">{{ i + 1 }} / {{ slides.length }}</p>
                         <!-- the slide DISPLAY title in the --motion-accent violet (a display
                              heading, not a StorySection <h2>). -->
                         <h3 class="text-display-2" :style="{ color: 'var(--motion-accent)' }">{{ s.title }}</h3>

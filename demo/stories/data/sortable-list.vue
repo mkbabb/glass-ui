@@ -145,8 +145,8 @@ function insertAt<T>(list: T[], index: number, item: T): T[] {
                 <Card size="sm" surface="veil">
                     <CardContent class="flex flex-col gap-2">
                         <header class="flex items-center justify-between px-1">
-                            <span class="text-admin-label">Todo</span>
-                            <span class="text-mono-caption text-muted-foreground">
+                            <span class="text-small">Todo</span>
+                            <span class="text-mono-small text-muted-foreground">
                                 {{ todo.length }}
                             </span>
                         </header>
@@ -182,8 +182,8 @@ function insertAt<T>(list: T[], index: number, item: T): T[] {
                 <Card size="sm" surface="veil" class="border-section-5/40">
                     <CardContent class="flex flex-col gap-2">
                         <header class="flex items-center justify-between px-1">
-                            <span class="text-admin-label text-section-5">Doing</span>
-                            <span class="text-mono-caption text-muted-foreground">
+                            <span class="text-small text-section-5">Doing</span>
+                            <span class="text-mono-small text-muted-foreground">
                                 {{ doing.length }}
                             </span>
                         </header>
@@ -219,8 +219,8 @@ function insertAt<T>(list: T[], index: number, item: T): T[] {
                 <Card size="sm" surface="veil" class="border-section-4/40">
                     <CardContent class="flex flex-col gap-2">
                         <header class="flex items-center justify-between px-1">
-                            <span class="text-admin-label text-section-4">Done</span>
-                            <span class="text-mono-caption text-muted-foreground">
+                            <span class="text-small text-section-4">Done</span>
+                            <span class="text-mono-small text-muted-foreground">
                                 {{ done.length }}
                             </span>
                         </header>

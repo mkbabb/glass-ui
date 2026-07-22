@@ -96,7 +96,7 @@ function fireWithAction() {
              idiom-B second header; PH3). -->
 
         <section class="flex flex-col gap-3">
-            <p class="section-label">triggers</p>
+            <p class="text-small text-muted-foreground">triggers</p>
             <div class="flex flex-wrap items-center gap-3">
                 <Button @click="fireDefault">Default</Button>
                 <Button @click="fireSuccess">Success</Button>
@@ -109,7 +109,7 @@ function fireWithAction() {
         </section>
 
         <section class="flex flex-col gap-3">
-            <p class="section-label">viewport</p>
+            <p class="text-small text-muted-foreground">viewport</p>
             <p class="font-mono text-xs text-muted-foreground">
                 Toasts render bottom-right on desktop, top on mobile. Swipe or
                 close-button dismiss. The status rides the shared Toast

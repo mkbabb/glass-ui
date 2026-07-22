@@ -127,7 +127,7 @@ const columns: DataTableColumn<Repo>[] = [
         label: "Updated",
         sortable: true,
         align: "right",
-        class: "text-mono-caption text-muted-foreground",
+        class: "text-mono-small text-muted-foreground",
     },
 ];
 
@@ -218,7 +218,7 @@ watch(filter, () => {
                     Selected: <strong>{{ selectedRepo?.name ?? "None" }}</strong>
                     <span class="text-muted-foreground"> · Arrow keys move; Enter or Space selects.</span>
                 </p>
-                <p class="text-mono-caption text-muted-foreground" aria-live="polite">
+                <p class="text-mono-small text-muted-foreground" aria-live="polite">
                     Inspected: {{ inspectedRepoName ?? "None" }}
                 </p>
                 <div class="flex flex-wrap gap-2">

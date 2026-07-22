@@ -22,7 +22,7 @@ function setFlowPattern(v: string | string[]) {
 <template>
     <div class="flex min-w-[280px] flex-col gap-3 p-3">
         <div class="flex flex-col gap-1">
-            <p class="text-admin-label text-muted-foreground">Pattern</p>
+            <p class="text-small text-muted-foreground">Pattern</p>
             <SegmentedTabs
                 :options="[...flowPatternOptions]"
                 :model-value="config.flow.pattern"

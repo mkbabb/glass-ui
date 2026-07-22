@@ -722,7 +722,7 @@ export const CATEGORIES: Category[] = [
                 "navigation",
                 "toc-tracking",
                 "ToC Tracking",
-                "The reconciled ToC-tracking family from /sidebar — deepest-visible active highlight (useScrollTracker), damped sidebar follow, a ToC-click warm-then-scroll (useScrollTo + the virtual-window bridge), ONE delegated click handler (useClickDelegate), and a progressive batch-render (useLazyLoader). One home, no second engine.",
+                "A table of contents that tracks the deepest-visible section, follows with a damped highlight, warms then scrolls to a target on click, and progressively renders long lists. One home, no second engine.",
             ),
         ],
     },
@@ -771,7 +771,7 @@ export const CATEGORIES: Category[] = [
                 "dock",
                 "controls",
                 "Dock Controls",
-                "The dock IS SegmentedTabs/ToggleGroup wearing chrome. Its controls are ordinary members of the selection-control family: one <DockControl> (icon + tab shapes), one <DockTrigger> (select/dropdown/popover), and one headless useSelectionGroup engine driving roving focus, the traveling indicator, role-per-mode ARIA, and the scrollIntoView recenter. The painted plate insets while the hit cell stays the full control size (hit box ≠ paint box) so the target-size floor holds; both the leading #persistent and trailing #persistent-end slots ship natively.",
+                "The dock IS SegmentedTabs/ToggleGroup wearing chrome. Its controls are ordinary members of the selection-control family: <DockControl> (icon + tab shapes) and <DockTrigger> (select/dropdown/popover), sharing one engine for keyboard focus, the traveling indicator, and per-mode ARIA. The painted plate insets while the full control stays the tap target, so the target-size floor holds; the leading #persistent and trailing #persistent-end slots ship natively.",
             ),
             s(
                 "dock",
@@ -790,7 +790,7 @@ export const CATEGORIES: Category[] = [
                 "dock",
                 "dock-search",
                 "Dock Search",
-                "The dock IS the search bar — tap the collapsed pill and it morphs continuously (the dock's own --dock-morph-t glide, not a hard swap) into a search field; type and the fuzzy dropdown ranks live with subsequence-match highlighting plus a ghost-text completion of the top match; arrow keys walk the results, Enter routes, a select scrolls-to-and-warms the windowed section below. useDockSearch composes the shipped useFuzzySearch matcher, the virtual-section window, and the scroll-to subuse — the dock owns the gesture, the consumer plugs the data source.",
+                "The dock IS the search bar — tap the collapsed pill and it morphs continuously into a search field (not a hard swap); type and the fuzzy dropdown ranks live with subsequence-match highlighting plus a ghost-text completion of the top match; arrow keys walk the results, Enter routes, a selection scrolls to and warms the section below. The dock owns the gesture; the consumer plugs in the data source.",
             ),
             // the "Siri Island" story is DEFINITION-ABSENT (the Siri dock
             // capability is not part of the public dock surface).
@@ -914,7 +914,7 @@ export const CATEGORIES: Category[] = [
                 "feedback",
                 "completion-seal",
                 "Completion Seal",
-                "The hero-scale earned-gold completion mark — a one-shot gold-draw seal (a stroke-dashoffset wipe on four @property motion tokens) reading the earned-gold phase register with the metal-glow catch-light.",
+                "A one-shot gold seal that draws itself on to crown a finished, celebrated moment — with a soft metallic catch-light.",
             ),
         ],
     },
@@ -968,7 +968,7 @@ export const CATEGORIES: Category[] = [
                 "motion",
                 "handmark",
                 "Hand Mark",
-                "HandMark — the platform's hand voice. The pen underline, the boil natural morphology, the highlighter (multiply over the page), draw-on, the brush continuum, and a hand-circled datum — over the paper-grain register.",
+                "HandMark — the platform's hand voice: a hand-drawn pen underline, highlighter, pencil, crayon, and marker, plus a circled or boxed value, all over the paper grain.",
                 {
                     // Per-route exception: the hand-drawn
                     // demo IS a paper-grain register surface (its blurb + its own

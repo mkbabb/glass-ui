@@ -64,7 +64,7 @@ import { Maximize2, X } from "@lucide/vue";
                         <header
                             class="flex items-center justify-between gap-3 border-b border-border/40 px-6 py-4"
                         >
-                            <span class="text-mono-caption text-foreground">Branded toolbar</span>
+                            <span class="text-small text-foreground">Branded toolbar</span>
                             <button
                                 type="button"
                                 class="inline-flex items-center gap-2 rounded-button bg-primary/10 px-3 py-1.5 text-sm text-foreground transition-colors hover:bg-primary/20"

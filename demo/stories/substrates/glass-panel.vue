@@ -45,7 +45,7 @@ const lensOn = () => axes.value.includes("lens");
             blurb="Compare five levels of glass presence over a living field. Toggle deeper material and lens refraction to see how the same surface gains weight without becoming a content card."
         >
             <div class="flex flex-wrap items-center gap-4 mb-6">
-                <span class="text-mono-caption text-muted-foreground">axes:</span>
+                <span class="text-caption text-muted-foreground">axes:</span>
                 <!-- The two modifier axes — multi-select chips (orthogonal
                      decorations ON the ladder, composed live onto every rung). -->
                 <ToggleGroup
@@ -79,7 +79,7 @@ const lensOn = () => axes.value.includes("lens");
                         ]"
                     >
                         <div class="flex flex-col gap-2">
-                            <code class="fira-code text-mono-caption text-foreground">
+                            <code class="fira-code text-mono-small text-foreground">
                                 .{{ rung.cls }}
                             </code>
                             <p class="text-prose text-muted-foreground">{{ rung.blurb }}</p>

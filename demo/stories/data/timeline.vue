@@ -77,7 +77,7 @@ function onEventKeydown(event: KeyboardEvent, index: number): void {
     <StoryPage>
         <StorySection heading="Discrete progression">
             <div>
-                <p class="text-admin-label mb-4 text-muted-foreground">Release timeline</p>
+                <p class="text-small mb-4 text-muted-foreground">Release timeline</p>
 
                 <div
                     :class="
@@ -118,7 +118,7 @@ function onEventKeydown(event: KeyboardEvent, index: number): void {
                     >
                         <div class="flex min-w-0 flex-col gap-1">
                             <span
-                                class="text-admin-label"
+                                class="text-small"
                                 :style="{ color: `var(--section-color-${activeEvent.tone})` }"
                             >
                                 {{ activeEvent.label }}
@@ -137,7 +137,7 @@ function onEventKeydown(event: KeyboardEvent, index: number): void {
 
             <!-- Event list -->
             <div>
-                <p class="text-admin-label mb-4 text-muted-foreground">Events</p>
+                <p class="text-small mb-4 text-muted-foreground">Events</p>
                 <ol class="flex flex-col divide-y divide-border rounded-card border border-border bg-card shadow-cartoon">
                     <li
                         v-for="(e, i) in events"
@@ -169,9 +169,9 @@ function onEventKeydown(event: KeyboardEvent, index: number): void {
                             </span>
                             <span class="flex min-w-0 flex-1 flex-col">
                                 <span class="text-small font-medium">{{ e.label }}</span>
-                                <span class="text-mono-caption text-muted-foreground">{{ e.body }}</span>
+                                <span class="text-mono-small text-muted-foreground">{{ e.body }}</span>
                             </span>
-                            <span class="fira-code text-mono-caption text-muted-foreground">
+                            <span class="fira-code text-mono-small text-muted-foreground">
                                 {{ Math.round(e.at * 100) }}%
                             </span>
                         </button>

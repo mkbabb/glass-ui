@@ -47,7 +47,7 @@ const fmt = (n: number) => new Intl.NumberFormat("en-US", { style: "currency", c
     <StoryPage>
 
         <div>
-            <p class="text-admin-label mb-4 text-muted-foreground">Basic table</p>
+            <p class="text-small mb-4 text-muted-foreground">Basic table</p>
             <div
                 :class="
                     cn(
@@ -56,7 +56,7 @@ const fmt = (n: number) => new Intl.NumberFormat("en-US", { style: "currency", c
                 "
             >
                 <Table>
-                    <TableCaption class="pb-4 text-mono-caption">
+                    <TableCaption class="pb-4 text-caption">
                         Recent invoices with status, payment method, and total.
                     </TableCaption>
                     <TableHeader>
@@ -96,7 +96,7 @@ const fmt = (n: number) => new Intl.NumberFormat("en-US", { style: "currency", c
         </div>
 
         <div>
-            <p class="text-admin-label mb-4 text-muted-foreground">
+            <p class="text-small mb-4 text-muted-foreground">
                 Empty state — &lt;TableEmpty&gt;
             </p>
             <div class="overflow-hidden rounded-card border border-border bg-card shadow-cartoon">

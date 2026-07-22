@@ -285,12 +285,10 @@ function onKeydown(e: KeyboardEvent) {
                     </div>
                 </div>
 
-                <p class="text-mono-caption text-muted-foreground">
-                    The dock owns the gesture / shrink / dropdown; the consumer plugs
-                    its data source. ONE matcher (useFuzzySearch), ONE windowing
-                    (useVirtualSectionWindow), ONE scroll reader (useScrollChrome) — no
-                    second of any. The morph is the dock's own --dock-morph-t
-                    (box-inviolate).
+                <p class="text-small text-muted-foreground">
+                    The dock owns the gesture, the shrink, and the dropdown; the
+                    consumer plugs in its data source. One matcher, one windowed list,
+                    one scroll reader — no second of any.
                 </p>
             </StorySection>
         </DockStage>

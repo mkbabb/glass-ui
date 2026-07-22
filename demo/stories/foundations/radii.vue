@@ -49,7 +49,7 @@ const semantic: { cls: string; label: string; role: string }[] = [
                     />
                     <div class="flex flex-col items-center">
                         <span class="text-small text-foreground">{{ r.label }}</span>
-                        <span class="text-mono-caption text-muted-foreground">{{
+                        <span class="text-mono-small text-muted-foreground">{{
                             r.hint
                         }}</span>
                     </div>
@@ -74,7 +74,7 @@ const semantic: { cls: string; label: string; role: string }[] = [
                     />
                     <div class="flex flex-col items-center text-center">
                         <span class="text-small text-foreground">{{ r.label }}</span>
-                        <span class="text-mono-caption text-muted-foreground">{{
+                        <span class="text-mono-small text-muted-foreground">{{
                             r.role
                         }}</span>
                     </div>

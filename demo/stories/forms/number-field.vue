@@ -36,7 +36,7 @@ const invalidValue = ref<number>();
                         <NumberFieldIncrement />
                     </NumberFieldContent>
                 </NumberField>
-                <p class="text-mono-caption text-muted-foreground">Integer · 0..99</p>
+                <p class="text-small text-muted-foreground">Integer · 0..99</p>
             </div>
 
             <!-- Decimal + percent formatting. -->
@@ -57,7 +57,7 @@ const invalidValue = ref<number>();
                         <NumberFieldIncrement />
                     </NumberFieldContent>
                 </NumberField>
-                <p class="text-mono-caption text-muted-foreground">Percent · 0..100%</p>
+                <p class="text-small text-muted-foreground">Percent · 0..100%</p>
             </div>
 
             <!-- Stepped integer. -->
@@ -76,7 +76,7 @@ const invalidValue = ref<number>();
                         <NumberFieldIncrement />
                     </NumberFieldContent>
                 </NumberField>
-                <p class="text-mono-caption text-muted-foreground">
+                <p class="text-small text-muted-foreground">
                     Moves in fives · use ± or arrow keys
                 </p>
             </div>
@@ -95,7 +95,7 @@ const invalidValue = ref<number>();
                         <NumberFieldIncrement />
                     </NumberFieldContent>
                 </NumberField>
-                <p class="text-mono-caption text-muted-foreground">Locked</p>
+                <p class="text-small text-muted-foreground">Locked</p>
             </div>
 
             <div class="flex flex-col gap-3">
@@ -120,7 +120,7 @@ const invalidValue = ref<number>();
                 </NumberField>
                 <p
                     id="nf-invalid-error"
-                    class="text-mono-caption text-destructive"
+                    class="text-small text-destructive"
                 >
                     Enter an amount.
                 </p>

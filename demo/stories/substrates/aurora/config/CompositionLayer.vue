@@ -31,7 +31,7 @@ function onImageFile(e: Event) {
 <template>
     <div class="flex min-w-[280px] flex-col gap-3 p-3">
         <div class="flex flex-col gap-1">
-            <p class="text-admin-label text-muted-foreground">Source</p>
+            <p class="text-small text-muted-foreground">Source</p>
             <SegmentedTabs
                 :options="[...sourceOptions]"
                 :model-value="config.source ?? 'palette'"
@@ -41,7 +41,7 @@ function onImageFile(e: Event) {
             />
         </div>
         <div v-if="config.source === 'image'" class="flex flex-col gap-1">
-            <p class="text-admin-label text-muted-foreground">Image</p>
+            <p class="text-small text-muted-foreground">Image</p>
             <input
                 type="file"
                 accept="image/*"
@@ -51,7 +51,7 @@ function onImageFile(e: Event) {
             />
         </div>
         <div class="flex flex-col gap-1">
-            <p class="text-admin-label text-muted-foreground">Warp mode</p>
+            <p class="text-small text-muted-foreground">Warp mode</p>
             <SegmentedTabs
                 :options="[...warpModeOptions]"
                 :model-value="config.warpMode"
