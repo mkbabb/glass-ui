@@ -249,3 +249,72 @@ screenshots. **STILL OWED / acceptance-RED** (unchanged by this closer, per W1-P
 receiver matrix; the full mounted binding matrix (Tabs activation/glide/PRM, mounted Search variants, Command
 dialog states, etc.); two fresh Sol x-high exact-byte critics. This lane is producer-side paint discovery +
 the field-writer forward fix — NOT terminal W1 closure.
+
+---
+
+## W2-PAINT closer — BJ.W2 blur redress paint-proof CONFIRMED (both engines GREEN)
+
+**Commit** `868ca251` — `test(w2-paint): confirm BJ.W2 blur redress paint-proof — both engines GREEN`
+(spec + evidence only; NO Sol-owned surface, NO consumer). Zero material findings: re-ran the ruled
+cross-engine live-π spec on HEAD `b0f2818a` for `20e064f1` (W2 C2 producer-side blur redress) and confirmed
+the report.
+
+**Engines / routes / result.** `docs/tranches/BJ/evidence/W2-BLUR-REDRESS/w2-blur.config.ts` drives three
+projects, `7/7 expected`, `0 unexpected` (run-report.json `startTime 2026-07-22T09:13:16Z`):
+- `chromium` — LIVE Vite-served demo receivers: `/containers/drawer` (calm/overlay/deep synthetic plates on
+  the injected global cascade + the 2dppx overlay proof), `/containers/dialog` + `/containers/drawer` (real
+  mounted immersive scrim), `/containers/command` (non-receiver negative).
+- `webkit` (1dppx) + `webkit-2dppx` (2dppx) — bundled-WebKit getComputedStyle over `w2-compiled.css` (the
+  Chromium arm's captured DEVELOPMENT cascade) + class-only markup on the real receiver SELECTORS. This is
+  cross-engine cascade corroboration, NOT Safari / NOT a mounted Vue receiver (labelled truthfully in the spec).
+
+**COMPUTED assertions (getComputedStyle, not forwarded class strings) — all GREEN both engines:**
+- Calm ladder resolves the three standard magnitudes `{1,7,11}`; saturates pin the CURRENT provisional shipped
+  values (wash/quiet/resting 1.4, floating/overlay 1.6) — render, not ratified taste (§6).
+- DEEP continuum SEPARATE — `.glass-floating.glass-deep` computes `blur(14.5px) saturate(1.74)`, strictly
+  deeper/higher than calm floating, inside the deep band (11,16] / (1.6,1.8].
+- Overlay every-DPR (§5 KILL) — `11px` at DPR 1 AND emulated 2dppx; the `@media(min-resolution:2dppx)->17px`
+  writer is gone.
+- Immersive stage scrim (§4) on REAL Dialog + new Drawer receivers — fixed `14px x --glass-level`
+  (`4.2px@0.3`, `0px@0`), NO `--stage-t` radius coupling (holds 14 across 0->1), NO saturate/brightness term.
+- CommandDialog is NOT a receiver — `[data-stage-immersive]` scrim count `0`.
+
+**Mutation bite (≥1 proven, BOTH engines).** Restoring the killed `@media(min-resolution:2dppx){--glass-blur-
+overlay-radius:17px}` writer flips the 2dppx overlay read `11 -> 17`: Chromium `proveOverlayAt2Dppx`
+(`mutationRestored17: 17`), WebKit-2dppx (`mutationBite.bites: true`, `shipped 11 / restored 17`). The `==11`
+assertion has teeth.
+
+**Banked** under `docs/tranches/BJ/evidence/W2-BLUR-REDRESS/`: `run-report.json` (7/0), `computed-{chromium,
+webkit,webkit-2dppx}.json`, `w2-compiled.css` (carries `--stage-immersive-blur`), `w2-blur.config.ts`, per-
+receiver screenshots (chromium calm-ladder + dialog/drawer immersive desktop+mobile; webkit + webkit-2dppx
+cascade-harness desktop+mobile), and the retained `mutations/` artifacts. Discovery-layer caveats unchanged:
+the WebKit arm is a captured-cascade probe, NOT Safari + NOT a mounted receiver; actual Safari-mounted
+verification remains owed per the W2 adjudication.
+
+## RECEIPT — 2026-07-22 ~09:2x EDT — steer-16 boundary report + IMPLEMENTATION-ASKS-C2 absorbed
+
+**Boundary report per SOL-TO-CLAUDE-LIVE-STEER-16 (before Sol spawns the paint critics):**
+- W1 paint closer seat `abc1f5219fccf33fe` → `b0f2818a` (tree `7f96f562…`); W2 paint build seat
+  `a951727b970682e5c` → `868ca251`. **A synthetic/bundled-WebKit arm WAS used in both** (route-unioned
+  dev CSS + hand-authored setContent/cascade harness) = static cascade discovery ONLY, NOT Safari, NOT a
+  mounted natural receiver, NOT composited-pixel proof.
+- **Both paint proofs are BANKABLE PARTIAL, acceptance-RED** (correcting the W2-PAINT seat's "CLOSED-GREEN"
+  over-claim). Acceptance-RED remainders retained: real Safari + VoiceOver; mounted natural Dialog/Drawer
+  (no clones/synthetic class); immutable 8.0 source→pack→install→served chain; value.js/Atlas consumer
+  repin; the W1 harness seams (config says bundled-WebKit is Safari + permits `reuseExistingServer`; cloned
+  dialog field; class-injected Sortable; TagsInput real remove/wrap/focus/disabled/long-content; `test`
+  subject carrying a product fix); the post-redress Sol x-high critic pairs. HEAD `868ca251`, Sol-owned
+  dirty sha256 `d39885c3…`.
+
+**IMPLEMENTATION-ASKS-C2 (I-1 … I-17) absorbed as the binding backlog.** Every touched wave + the design
+waves (I-14 W3 ASK-26 **DECLINE** + row-93 `BJ.W-IMMERSIVE-SCRIM`, arithmetic `29/63/1`; I-15 W5 = a
+review-only JOB/FIT/ROUTE evidence op) + I-16 FM-W3 PRM-no-resurrection now carry precise binding contracts.
+**I-8 gate holds: no new overlapping band until the untouched-wave corrections are receipted + routed.**
+
+**⚠ RECURRING MODEL-LAW FRICTION (owner decision owed).** Every redress asks for **Luna x-high**; this
+Claude lane runs **Opus** (Fable outage). Sol banks the WORK as correct source candidates but stamps each
+**model-law RED** and holds terminal acceptance behind Luna + unique-8.0-package + real-Safari/VoiceOver +
+cross-repo (value.js/keyframes/Atlas) migration + two Sol x-high critics — none fully in the Claude lane.
+The producer-side redress loop can continue on Opus (forward, Sol-bankable), but whether to keep spending on
+model-law-RED Opus partials vs. route the Luna redresses to the Sol lane is the owner's call. Recorded here;
+not inferred.
