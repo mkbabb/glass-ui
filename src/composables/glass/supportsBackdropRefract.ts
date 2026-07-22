@@ -29,10 +29,17 @@
 //
 // The functional arm is a PROXY (canvas 2D raster ≠ the backdrop-filter compositing
 // pipeline) and one-directional — it can only add confidence, never override an honest
-// rejection. If a future engine paints backdrop-filter url() but not canvas url() (or
-// vice-versa), the born-RED `gate:refract-lens-never-sharper` (tests-visual) keeps the
-// scoping honest forever: the lens may never paint sharper than its own blur base on any
-// engine, latched ON or OFF.
+// rejection. What the standing `gate:refract-lens-never-sharper` (tests-visual) locks is
+// NARROWER than "forever, latched ON or OFF": its harness does NOT arm the latch, so it
+// only ever measures the latch-OFF degrade — the day `glass-refract.css` re-gates on a
+// lying `@supports`, or a WebKit paints the OFF lens sharp, it reds. It does NOT observe
+// the ARMED path, so it CANNOT catch a probe FALSE-POSITIVE (a future engine where canvas
+// url() paints but backdrop-filter url() DROPS → this arm returns true → the latch arms ON
+// → the armed lens paints sharp, the accept-and-drop class recurring on the armed side).
+// That armed-path correctness is proven ONCE, per engine, by this wave's live-π
+// (`evidence/W-REFRACT-LATCH/latch-discrimination.json`: Chromium arms + refracts, WebKit
+// stays OFF) — it is NOT held forever by the standing gate. A maintainer who widens the
+// arm to a new engine must re-run that live-π; the gate alone will not flag a mis-arm.
 //
 // Colocation: A07 — homes in `composables/glass/` beside the other glass runtime
 // detectors. `arm*` (not `use*`) signals shape: a one-shot idempotent side-effect

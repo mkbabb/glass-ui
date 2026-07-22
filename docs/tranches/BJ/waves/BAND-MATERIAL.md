@@ -841,10 +841,17 @@ it lies by accepting at parse — so the gate moves to a runtime latch (the
    readback through `ctx.filter = "url(#probe)"` on an offscreen 2D canvas. This is a PROXY (2D
    raster ≠ the backdrop pipeline) and one-directional: it is validated per engine by this wave's
    live-π before it is trusted, and if validation fails the latch ships capability-scoped to the
-   engines where the composite is paint-proven at cut time, with the born-RED gate keeping that
-   scoping honest forever.
-3. Zero API change: `.glass-lens` consumers untouched, no MIGRATION.md row, no demo edits (the
-   latch is root-level).
+   engines where the composite is paint-proven at cut time. The born-RED gate locks the latch-OFF
+   degrade only (its harness never arms the latch), so it CANNOT catch a probe false-positive on
+   the ARMED side (canvas url() paints but backdrop-filter url() drops → latch arms ON → armed
+   lens paints sharp); armed-path correctness is proven ONCE per engine by this wave's live-π,
+   NOT held forever by the standing gate.
+3. Consumer contract (CORRECTED at §CLOSE hardening — the original "zero API change" claim was
+   FALSE): the composite now paints only under the runtime latch, so a SHIPPED `.glass-lens`
+   component must arm itself or it regresses to blur-only on Chromium. `SegmentedTabs` (the one
+   src `.glass-lens` bearer) auto-arms in `onMounted`, so its consumers need no action; a consumer
+   applying `.glass-lens` to its OWN surface calls `armGlassRefract()` once at bootstrap (kin to
+   `installDarkModeSync`). MIGRATION.md carries that consumer note.
 
 **Gate half — authored born-RED in `BAND-GATES` W3 (the standing "authored born-RED there, GREEN
 by the MATERIAL sibling" idiom this band already uses for `token-hygiene` / `orphan-CSS-partial`):**
@@ -917,7 +924,22 @@ lie — **Chromium** arms `data-glass-refract="on"`, lens computes `blur(7px) sa
 (refraction); **WebKit** stays OFF, lens computes `blur(7px) saturate(1.4)` (blur degrade, no dropped
 url — the Safari-floor degrade RESTORED). WebKit's screenshot shows stripes through the chips because
 `page.screenshot()` is backdrop-filter-blind (the video-path law); its truth is the computed style +
-the video-path gate. Zero API change: `.glass-lens` consumers untouched, no MIGRATION.md row.
+the video-path gate.
+
+**§CLOSE HARDENING (2026-07-22, model claude-opus-4-8) — the "zero API change" claim was FALSE.**
+The composite now paints only under the latch, and the sole arm caller was `demo/main.ts`. A
+SHIPPED, exported `.glass-lens` component — `SegmentedTabs` (the pill traveling indicator,
+`SegmentedTabs.vue`; the one src `.glass-lens` bearer) — therefore silently regressed from
+blur+refraction to blur-only on Chromium for any consumer that upgraded without adding the
+bootstrap (it was auto-on via `@supports` at 7.0.0). CURE (preferred — eliminates the regression):
+`SegmentedTabs.vue` now calls the idempotent `armGlassRefract()` in `onMounted`, so the shipped
+component refracts out-of-box on Chromium with zero consumer action (WebKit stays OFF via the
+functional probe; the module-level `armed` flag makes repeat mounts free). A consumer applying
+`.glass-lens` to its OWN surface still arms once at bootstrap — recorded as a MIGRATION.md consumer
+note. The GATE-OVERCLAIM was corrected in parallel: the standing `gate:refract-lens-never-sharper`
+locks the latch-OFF degrade only (its harness never arms the latch) and CANNOT catch a probe
+false-positive on the armed side; armed-path correctness is proven ONCE by the live-π above, NOT
+held forever by the gate (comment corrected in `supportsBackdropRefract.ts` + item 2/3 here).
 
 ---
 

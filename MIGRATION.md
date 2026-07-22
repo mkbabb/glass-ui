@@ -2995,7 +2995,34 @@ opt-in CLASS renames). One-line rename per call site:
 ```
 
 `<Button :liquid>` re-points internally (no consumer change). Off-Chromium the lens still degrades to
-the un-gated blur+tint base (the `@supports (backdrop-filter: url(#…))` floor, PRESERVED).
+the un-gated blur+tint base (PRESERVED — see the runtime-latch note below, which replaces the
+former `@supports` gate).
+
+### `.glass-lens` Chromium refraction now rides a runtime latch — arm it once (BJ.W-REFRACT-LATCH)
+
+`.glass-lens`'s Chromium `backdrop-filter: url(#…)` composite no longer engages via
+`@supports (backdrop-filter: url("#glass-refract"))` — WebKit 26.5 LIES to that condition (returns
+true, retains the composite in computed style, then drops the whole value at paint, blur leg
+included), so the composite is worse than the blur-only floor on Safari. It now sits behind the
+runtime latch `:root[data-glass-refract="on"]`, set once per session by `armGlassRefract()`
+(the root barrel `@mkbabb/glass-ui`) whose functional probe actually exercises the url()-filter raster path
+(Chromium arms ON + refracts, WebKit stays OFF + degrades to the un-gated blur base — the intended
+Safari floor, no broken `url()` reference).
+
+Consumer action, kin to `installDarkModeSync` (the module-load arm is pruned by
+`sideEffects: ['*.css']`, so it is explicit):
+
+- **Shipped components need no action.** `SegmentedTabs` (the one `.glass-lens`-bearing library
+  component — the pill traveling indicator) auto-arms in `onMounted`, so its Chromium refraction is
+  out-of-box. Mounting any such component also arms every other `.glass-lens` surface in the
+  document (the latch is root-level).
+- **A `.glass-lens` surface you author yourself** — apply the class to your own markup and no
+  shipped component is mounted — must arm once at bootstrap or it paints blur-only on Chromium:
+
+  ```ts
+  import { armGlassRefract } from "@mkbabb/glass-ui";
+  armGlassRefract(); // idempotent, SSR-safe, DOM-ready-deferred
+  ```
 
 ### Refraction gains a Tier-1 WebGL2 FLOOR — the SOTA degrade ladder (BG.W-GLASS-REFRACT-WEBGL — additive, no consumer break)
 
