@@ -758,6 +758,41 @@ paints, `--chip-flood-t` registers, remove-button geometry correct (screenshot +
 getContext; Safari + Chrome); (d) byte-delta review of the cascade insertion (the light-dark/inset-shadow
 trap class watched).
 
+### §CLOSE — LANDED (`4442b451`, 2026-07-21, model claude-opus-4-8)
+
+Born-RED re-verified on base `562db5c7` (not the band's cited `485891a2`): `grep glass-chip dist/glass-ui.css`
+= **0**, `grep glass-atom` = **0**; `glass.css`'s @import root (`:46-108`) omitted exactly the two partials.
+
+**Fix (the closure restore, KISS — no restructure, no fold, no alias):** two `@import` lines added to
+`src/styles/glass.css` IMMEDIATELY AFTER `glass-capsule.css` (both partials compose `.glass-capsule` +
+read `--glass-fill-tinted`/`--glass-material-rim`, same `@layer components`, source-order-after) —
+`@import "./glass/glass-chip.css"; @import "./glass/glass-atom.css";`. KEEP-CENTRAL per COLOCATION CL-3
+(glass-atom is a MIXED register — folding strands `.cartoon-cast`); the files were NOT moved, NOT edited.
+No `light-dark()`/inset-shadow trap present in either partial (gate d clear).
+
+**Gate (a) GREEN:** `tests/gates/orphan-css-partial.test.ts` — the born-RED `it.fails` marker + the
+hard-pinned two-file latch test dropped (W7's contract, gate lines 18-22/110-111); the binding assertion
+is now the STANDING GREEN regression lock (`no src/ CSS partial is orphaned`) + the planted-orphan
+self-test bite (BITES on a re-orphan). 4/4 GREEN.
+
+**Gate (b) GREEN:** published closure `dist/styles/index.css → glass.css → glass/glass-chip.css +
+glass/glass-atom.css`, both partial files present in `dist/styles/glass/` with rule bodies (`.glass-chip`
++ `@property --chip-flood-t`; `.glass-atom`/`.badge-atom`/`.cartoon-cast`). NOTE the R3a grep target
+`dist/glass-ui.css` is the SFC-only bundle and never carried these — the closure ships via the copied
+`dist/styles/` @import tree, which now reaches both.
+
+**Gate (c) GREEN — live accent-paint DELTA** (`/forms/chip`, localhost:5199, computed-style + screenshot,
+no getContext): selectable chip OFF `{floodT 0, ::after opacity 0, neutral warm bg, position relative,
+isolation isolate}` → ON `{floodT 1, ::after opacity 1, bg = accent-band oklab(0.406 0.033 -0.008),
+border = accent-edge, ink = rgb(213,208,200), scale 1.074}`. `--chip-flood-t` @property registers
+(resolves to its `0` initial-value, not empty). Screenshot pair confirms the lavender accent bloom ON vs
+neutral capsule OFF (scratchpad `chip-selected-ON/OFF.png`). Chrome (chrome-devtools MCP, dark) + Chromium
+(Playwright MCP, light) both confirm. **Safari-floor arm:** headless WebKit crashes on the demo shell's
+WebGPU vizzes (known shell fragility, not the chip CSS); covered-by-argument — the partials use only
+Safari-native engine-agnostic primitives (color-mix in oklab · radial-gradient · mix-blend-mode:
+plus-lighter · scale · @property), zero backdrop-filter/mask-composite/url() (none of the WebKit-divergent
+class the band's dual-engine clause targets).
+
 ---
 
 ## Wave 8 — `BJ.W-REFRACT-LATCH` — the WebKit `@supports` gate-lie repair (the second shipped 7.0.0 defect)
