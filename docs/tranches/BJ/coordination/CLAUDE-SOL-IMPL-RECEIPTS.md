@@ -360,3 +360,21 @@ All three restored to HEAD after each watch; final file == committed. No reach-a
 open — every cure was fully specified by the ask.
 
 ## BJ.W8 I-5 mount-arm redress b5e70155 (Opus) — SegmentedTabs onMounted(armGlassRefract) REVERTED forward (no history rewrite): dist/tabs.js WATCHED probe-free (0 refract/probe/armGlass symbols; imports only class-names/writeVelocityWeight/useMotionAxis/useDragMorph); root export retained src/index.ts:163 export * from ./composables/glass → armGlassRefract; probe lives in dist/glass-ui.js not dist/tabs.js; demo/main.ts sole source witness; MIGRATION.md + BAND-MATERIAL.md W8 rewritten to one-armGlassRefract()-per-app-root, CSS-only = explicitly blur-only. ROUTED (not done): value.js/keyframes/Atlas root-call wiring + installed-package adoption census (their tranches). W8 stays INTEGRATION-RED/ACCEPTANCE-RED: I-2 three latch arms, I-3 detector lifecycle tests + collision-proof probe id (supportsBackdropRefract.ts:68 still fixed gl-refract-probe), I-4 gate mutation, and two fresh Sol post-redress critics all owed.
+
+## BJ.W-FEEDBACK-MOTION-TUNE FM-W3-PRM cure 6f9acf1f (Opus) — PRM no-resurrection: mechanism honesty (layer-not-specificity) + genuine emulated-PRM proof
+
+**Defect (3 findings, all shipped false-mechanism / false-excuse prose):**
+1. a11y-overrides.css:33 (+ BAND-FEEDBACK-MOTION.md:184 + PROOF.json:10/18/28) claimed the surviving PRM fades win "at higher specificity" / "0,1,0 > 0,0,0". FALSE: both the `*` fallback and the `.fade-*` AUTH set are `!important`, so specificity is never consulted; the fades survive ONLY because layered `!important` (`@layer components`) outranks unlayered `!important` per CSS Cascade L5 (index.css:1 `@layer theme, base, components, utilities`; a11y-overrides.css imported unlayered via accessibility.css terminally). Landmine: drop `!important` from a fade and the unlayered wildcard crushes it to 0s.
+2. PROOF.json:54-64 chromium arm was NOT real emulated-PRM — reduce-rule bytes applied unconditionally, excused by a FALSE "MCP emulate exposes no reduced-motion feature". And unconditional-byte-injection reproduces the numbers via specificity (unlayered), not the shipped layer mechanism.
+3. BAND-A11Y.md:24 still asserted the OVERTURNED band-wide "reduced-motion substrate CONFIRMED KEEP" with now-false claims (stale `7-33` cite, "overrides even data-allow-motion", "no wave touches ... the data-allow-motion carve" — the wave did exactly that).
+
+**Cure (commit 6f9acf1f, 5 files, NO Sol-owned surface):**
+- `src/styles/utilities/a11y-overrides.css:33` — comment corrected to layer-not-specificity.
+- `docs/tranches/BJ/waves/BAND-FEEDBACK-MOTION.md` §PRM-AUTHORIZED-SET — "higher-specificity" → layered-`!important` (components layer).
+- `docs/tranches/BJ/waves/BAND-A11Y.md:24` — stale fence replaced with dated **[SUPERSEDED 2026-07-22]** supersession; stale cite/claims struck.
+- `docs/tranches/BJ/evidence/W-FEEDBACK-MOTION-TUNE/PRM-NO-RESURRECTION-PROOF.json` — `specificity_over_wildcard`→`layer_over_wildcard`; **Option A** taken: chromium arm rebuilt as a GENUINE `page.emulateMedia({reducedMotion:'reduce'})` proof (Playwright MCP) over the LITERAL shipped bytes of a11y-overrides.css + transitions.css under the real `@layer` statement. `matchMedia` verified `true`(reduce)/`false`(baseline) → gate provably fired; panel `0.3s,0.3s → 0s` under reduce only; fade `0.18s→0.1s` SURVIVES (layer); **iso receiver** (layered spec 0,1,0 beats unlayered spec 1,1,0) empirically isolates layer-beats-specificity. `post_fix_sha256`/`restored_clean_sha256` re-pinned to `50897fb7…` (on-disk match verified).
+- `tests/styles/prm-no-resurrection.test.ts` — comment de-landmined.
+
+**Mutations watched RED (born-RED, restored byte-identical after each):** restore-wildcard, defeat-chip-rim-none, unauthored-hover-focus-clock — all RED. Tests 7/7; styles dir 56/56.
+
+**ROUTED (not done here, record only):** real Safari/VoiceOver receiver checks; immutable 8.0 source→pack→install→served identity; Q/Atlas repin (acts after authorized repin); two fresh exact-byte Sol x-high critics. Cross-repo consumers (value.js/keyframes/Atlas) untouched — their tranches.
