@@ -111,7 +111,6 @@ function openConfigurator(): void {
         orientation="vertical"
         always-expanded
         class="demo-sidebar-dock min-h-0"
-        aria-label="Category navigation"
         data-testid="sidebar-dock-collapsible"
     >
         <!-- Foundations is a normal category chip in the roving tablist; the dock

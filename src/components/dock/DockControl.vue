@@ -44,15 +44,19 @@ const props = withDefaults(
         /** Compact icon variant: auto-sized instead of fixed square (icon shape). */
         compact?: boolean;
         /**
-         * Selected/toggled state. Stamps `aria-pressed` + `data-active`; the icon
-         * shape composes the `.glass-capsule` selected seat.
+         * Toggle state — a THREE-state discriminant. Unset ⇒ nav mode (no
+         * `aria-pressed`); `false` ⇒ off-state toggle (`aria-pressed="false"`);
+         * `true` ⇒ on (`aria-pressed="true"` + `data-active` + the `.glass-capsule`
+         * selected seat, both truthy-gated).
          */
         active?: boolean;
         /** Button type (default "button" to prevent form submission). */
         type?: ButtonHTMLAttributes["type"];
         /**
          * Disabled state (the four-state contract). A boundary nav control stays
-         * PRESENT but disabled so the row geometry holds, never DOM-absent.
+         * PRESENT-but-disabled — FOCUSABLE via `aria-disabled` (never the native
+         * `disabled` stamp that drops it from the tab order), with activation
+         * suppressed — so the row geometry holds and AT can still discover it.
          */
         disabled?: boolean;
         /** Host tag/component (reka-ui Primitive `as`; default "button"). */
@@ -64,7 +68,10 @@ const props = withDefaults(
     {
         shape: "icon",
         compact: false,
-        active: false,
+        // `default: undefined` opts the Boolean `active` OUT of Vue's absent-Boolean
+        // false-cast, so an unset `active` stays `undefined` (nav mode) instead of
+        // collapsing to `false` and mis-stamping every nav control as an off toggle.
+        active: undefined,
         type: "button",
         disabled: false,
         as: "button",
@@ -89,20 +96,24 @@ const classes = computed(() =>
           ),
 );
 
-// The selectable-state attributes. `aria-pressed` is the AT-selectable semantic;
-// `data-active` is the CSS hook the `[data-active]` glass register reads. Both
-// omitted when `active` is unset. Spread through `$attrs` so they land on the
-// rendered host regardless of the `as`/`as-child` Primitive host.
+// The selectable/disabled-state attributes, spread through `$attrs` so they land on
+// the rendered host regardless of the `as`/`as-child` Primitive host.
+//   • `active` is a TRI-STATE toggle discriminant: unset ⇒ nav mode (NO
+//     `aria-pressed`, so a RouterLink/nav control never mis-announces as an off
+//     toggle); `false`/`true` ⇒ `aria-pressed="false"/"true"`. `data-active` (the
+//     `[data-active]` glass hook) stays truthy-gated.
+//   • `disabled` stamps `aria-disabled` ALONE — never the native `disabled` attr,
+//     which would drop a boundary nav control from the tab order. The control stays
+//     FOCUSABLE (PRESENT-but-disabled, AT-discoverable); `blockDisabledActivation`
+//     suppresses activation since `aria-disabled` does not block events.
 const stateAttrs = computed(() => ({
-    ...(props.active ? { "aria-pressed": "true", "data-active": "" } : {}),
-    ...(props.disabled
+    ...(props.active !== undefined
         ? {
-              ...(props.as === "button" && !props.asChild
-                  ? { disabled: true }
-                  : {}),
-              "aria-disabled": "true",
+              "aria-pressed": String(props.active),
+              ...(props.active ? { "data-active": "" } : {}),
           }
         : {}),
+    ...(props.disabled ? { "aria-disabled": "true" } : {}),
 }));
 
 // `type` is a <button>-only attribute; emit it only when the host is a button.

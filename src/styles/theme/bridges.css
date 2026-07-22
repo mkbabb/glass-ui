@@ -13,6 +13,17 @@
     /* ═══════════════════════════════════════════════
        Typography — size scale → text-* utilities
        ═══════════════════════════════════════════════ */
+    /* The default-ramp reset (BJ.W-TYPE-CODEMOD, coupled to the type codemod).
+       Tailwind v4 ships STATIC `text-sm` (0.875rem) / `text-xs` (0.75rem) rungs
+       that silently bypass the fluid √φ clamps — a linter cannot tell the scale
+       rung `text-small` from the off-scale `text-sm`. Clearing exactly these two
+       namespace keys makes a residual `text-sm`/`text-xs` a BUILD-VISIBLE unknown
+       utility (not a silent bypass); the codemod migrated every call-site onto the
+       named √φ rungs. Scoped to the two collision rungs (NOT `--text-*: initial`)
+       so the in-use `text-base/lg/xl/2xl/3xl/4xl` scale positions survive — those
+       are out of the codemod figure and a blanket clear would break them. */
+    --text-sm: initial;
+    --text-xs: initial;
     --text-admin-label: var(--type-admin-label);
     --text-micro:       var(--type-micro);
     --text-caption:     var(--type-caption);
@@ -150,7 +161,6 @@
     --color-surface-tint-18: var(--surface-tint-18);
     --color-surface-tint-22: var(--surface-tint-22);
     --color-surface-tint-25: var(--surface-tint-25);
-    --color-surface-tint-35: var(--surface-tint-35);
     --color-surface-tint-40: var(--surface-tint-40);
     --color-surface-tint-70: var(--surface-tint-70);
 

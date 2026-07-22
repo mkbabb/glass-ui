@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, toRef } from "vue";
+import { computed, ref, toRef } from "vue";
 import { useInfiniteScroll } from "./composables";
 
 const props = withDefaults(
@@ -33,6 +33,16 @@ const { sentinelRef } = useInfiniteScroll({
 // Re-expose for the template — the destructured binding above isn't picked
 // up by Vue's template-ref auto-binding when the source is a composable.
 defineExpose({ sentinelRef });
+
+// The loading/exhausted state flips silently to AT (the sentinel is aria-hidden).
+// A polite live region announces the transitions — the SortableList sr-only model.
+const announcement = computed(() =>
+    props.isLoading
+        ? "Loading more items"
+        : !props.hasMore
+          ? "All items loaded"
+          : "",
+);
 </script>
 
 <template>
@@ -53,8 +63,14 @@ defineExpose({ sentinelRef });
         </div>
 
         <!-- End of list -->
-        <div v-else-if="!hasMore" class="py-4 text-center text-sm text-muted-foreground">
+        <div v-else-if="!hasMore" class="py-4 text-center text-small text-muted-foreground">
             <slot name="end" />
         </div>
+
+        <!-- Polite announce of the loading→exhausted transitions (the sentinel is
+             aria-hidden; the state flips were otherwise silent to AT). -->
+        <span class="sr-only" role="status" aria-live="polite" aria-atomic="true">
+            {{ announcement }}
+        </span>
     </div>
 </template>

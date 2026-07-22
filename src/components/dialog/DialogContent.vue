@@ -384,21 +384,27 @@ const scrimForceMount = computed(() =>
         : undefined,
 );
 
-// Focus handoff — the closing side sheet keeps a mounted-but-inert Presence beyond
-// reka's logical close, so move focus to the trigger at the LOGICAL close if it would
-// otherwise strand inside the animating-out sheet (mirror DrawerContent; the
-// inert-bounces-to-body → sync-watch-pulls-to-trigger order).
-const sideAnchorEl = ref<HTMLElement | null>(null);
-const resolveSideContentEl = (): HTMLElement | null =>
-    (sideAnchorEl.value?.closest(
+// Focus handoff — a closing springed surface keeps a mounted-but-inert Presence
+// beyond reka's logical close on BOTH paths: a side sheet sliding out AND a centered
+// spring dialog whose exit stays mounted (`closingInert` covers both, so both strand
+// focus on `<body>` for the exit window). Move focus to the trigger at the LOGICAL
+// close if it would otherwise strand inside the animating-out content (mirror
+// DrawerContent; the inert-bounces-to-body → sync-watch-pulls-to-trigger order). The
+// anchor is UN-GATED — rendered on both paths — so the center path can resolve the
+// same live content root the side path does (a side-only anchor left the widened
+// guard unable to test containment for a centered dialog).
+const contentAnchorEl = ref<HTMLElement | null>(null);
+const resolveContentEl = (): HTMLElement | null =>
+    (contentAnchorEl.value?.closest(
         '[data-slot="dialog-content"]',
     ) as HTMLElement | null) ?? null;
 watch(
     () => dialogRoot.open.value,
     (open) => {
-        if (!sideSpringLive.value || open !== false) return;
+        if (!(sideSpringLive.value || centerSpringActive.value) || open !== false)
+            return;
         const active = document.activeElement;
-        if (active && resolveSideContentEl()?.contains(active))
+        if (active && resolveContentEl()?.contains(active))
             dialogRoot.triggerElement.value?.focus({ preventScroll: true });
     },
     { flush: "sync" },
@@ -459,10 +465,10 @@ const contentStyle = computed<CSSProperties>(() => ({
             :data-motion="motionAxis.dataMotion.value"
             :data-spring="centerSpringActive ? (props.springPreset ?? 'smooth') : undefined"
         >
-            <!-- Hidden anchor — the focus-handoff watch resolves the live content
-           root via `closest`, never a Presence-transient `$el` (the DrawerContent
-           discipline). -->
-            <span v-if="!isCenter" ref="sideAnchorEl" hidden />
+            <!-- Hidden anchor (BOTH paths) — the focus-handoff watch resolves the
+           live content root via `closest`, never a Presence-transient `$el` (the
+           DrawerContent discipline). -->
+            <span ref="contentAnchorEl" hidden />
             <!-- A side sheet owns one noninteractive, mask-graded
            backdrop sample (the per-edge FORM 1 of the shared `glass-graded-halo`
            slot). The host's flat blur is disabled for this glass-only arm in
@@ -487,7 +493,7 @@ const contentStyle = computed<CSSProperties>(() => ({
            reads so the X clears the heading and breathes with the pad. -->
             <RekaDialogClose
                 v-if="props.showClose"
-                class="focus-ring absolute right-(--overlay-pad-inline) top-(--overlay-pad-block) rounded-sm opacity-70 transition-opacity hover:opacity-100 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
+                class="focus-ring absolute right-(--overlay-pad-inline) top-(--overlay-pad-block) rounded-sm opacity-70 transition-opacity hover:opacity-100 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-accent-foreground"
             >
                 <X class="w-4 h-4" aria-hidden="true" />
                 <span class="sr-only">Close</span>

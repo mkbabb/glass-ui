@@ -228,9 +228,13 @@ onMounted(() => {
         <!-- Fixed vertical sidebar rail dock (off-canvas below the mobile breakpoint —
              see dock-nav.css; the BottomDock owns the off-canvas Sheet trigger).
              The shell dock is a static vertical sidebar rail. -->
-        <aside class="demo-sidebar-rail" data-shell-region="category-navigation">
+        <nav
+            class="demo-sidebar-rail"
+            aria-label="Category navigation"
+            data-shell-region="category-navigation"
+        >
             <SidebarDock />
-        </aside>
+        </nav>
 
         <div class="flex min-h-0 min-w-0 flex-1 flex-col">
             <!-- `<main>` owns route scroll. BottomDock is the adjacent shell footer,
@@ -287,13 +291,13 @@ onMounted(() => {
                     Move around the storybook without the mouse.
                 </DialogDescription>
             </DialogHeader>
-            <dl class="mt-2 grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-sm">
+            <dl class="mt-2 grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-small">
                 <template v-for="shortcut in shortcuts" :key="shortcut.raw">
                     <dt class="flex gap-1" :aria-label="formatCombo(shortcut.raw)">
                         <kbd
                             v-for="part in formatComboParts(shortcut.raw)"
                             :key="part"
-                            class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs"
+                            class="rounded bg-muted px-1.5 py-0.5 font-mono text-micro"
                         >
                             {{ part }}
                         </kbd>

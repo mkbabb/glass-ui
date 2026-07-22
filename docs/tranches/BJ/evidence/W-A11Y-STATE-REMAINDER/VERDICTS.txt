@@ -1,0 +1,60 @@
+BJ BAND-A11Y remainder seat (opus) — W1(A/B/C/D) · W3-B · W4(A + B-ruling) · W5-C
+model: claude-opus-4-8 · base HEAD 1be91765 · left uncommitted
+
+Scope reconciliation:
+  - W1-E (skip link), W1-F (heading outline), W2*, W3-A, W3-C, W5-A/B/D: NOT in this seat's roster.
+  - W2-E/W2-F: sequence-held on MATERIAL W4 (per EXECUTION-PROGRESS) — untouched.
+  - Reduced-motion substrate (a11y-overrides.css / PRM plumbing): CONFIRMED KEEP — untouched.
+  - W1-A born-RED harness = vitest-fs source assert, mirroring the just-landed W2-C sibling
+    (tests/demo/shortcut-kbd-a11y.test.ts): "AppShell is the routed shell root, not isolable for a
+    rendered-attr mount." The band + landed-sibling census win over the prompt's DOM-assert framing.
+
+PER-ROSTER (born-RED verified at HEAD → fix → GREEN):
+
+W1-A  nav landmark [RT-1]                    RED→GREEN
+      AppShell <aside>→<nav aria-label="Category navigation"> ; drop inert GlassDock aria-label.
+      born-RED: tests/demo/sidebar-nav-landmark.a11y.test.ts (fs source, 3 asserts).
+
+W1-B  aria-pressed tri-state [RT-2]          RED→GREEN
+      active is TRI-STATE: default:undefined (opts out of Vue's absent-Boolean false-cast) ⇒ nav mode
+      no aria-pressed; false⇒"false"; true⇒"true". data-active/glass-capsule stay truthy-gated.
+      born-RED+guard: tests/components/custom/dock/DockControl.a11y.test.ts (shared stateAttrs seat).
+
+W1-C  center-spring focus-return [RT-3]      RED→GREEN
+      guard widened sideSpringLive→(sideSpringLive||centerSpringActive); focus-anchor un-gated
+      (rendered both paths); sideAnchorEl/resolveSideContentEl→contentAnchorEl/resolveContentEl.
+      born-RED: tests/components/ui/dialog/dialog-focus-return.test.ts — asserts the watch INVOKES
+      trigger.focus() at logical close (final activeElement unreliable: happy-dom inert doesn't block
+      reka's FocusScope re-capture — real choreography is the band's browser-π LIVE-DEFER).
+      Bite proven: guard-only revert leaves resolveContentEl()=null for center ⇒ still RED.
+
+W1-D  placeholder contrast [RT-4]            RED→GREEN
+      4 page-opaque ::placeholder → bare var(--muted-foreground) (input-pill, field-control [drop
+      opacity:0.68], input-bar-field [drop 50% color-mix], tags-input). Orphaned --surface-tint-35
+      DELETED (def color-radius + dark-arm + @theme bridge; 0 repo consumers post-repoint; siblings
+      via their own addendum). command exemplar + dock-search --on-glass-muted KEEP untouched.
+      born-RED: tests/styles/placeholder-contrast.test.ts (fs source, 4 partials + token-deleted).
+
+W3-B  dialog close-X open-state ink [RT-12]  RED→GREEN
+      data-[state=open]:text-muted-foreground → text-accent-foreground (bg-accent's designed AA pair).
+      born-RED: tests/components/ui/dialog/dialog-close-contrast.test.ts.
+
+W4-A  InfiniteScroll announce [RT-13]        RED→GREEN
+      sr-only role="status" aria-live="polite" region announcing loading→exhausted (SortableList model).
+      born-RED: tests/components/infinite-scroll.announce.test.ts.
+
+W4-B  invalid/errorLive KEEP ruling          GREEN (refactor-safety, NOT born-RED — honest)
+      REDUCTION W1 already consumed the KEEP ruling; acceptance = error wiring stays rendered-attr
+      asserted. Added errorLive politeness (polite/assertive/off) KEEP-guard to labeled-field.contract.
+
+W5-C  boundary-disabled focusable [C9]       RED→GREEN  (shares W1-B stateAttrs seat)
+      disabled stamps aria-disabled ALONE (native disabled dropped) ⇒ boundary nav stays focusable;
+      blockDisabledActivation (pre-existing @click.capture) suppresses activation.
+      born-RED: DockControl.a11y.test.ts (drops-native-disabled + suppresses-activation).
+
+GATES:
+  Full unit suite: 1233 passed | 2 expected-fail | 1 failed.
+  The 1 fail = tests/gates/boot-graph.test.ts (dist-demo mtime freshness) — a build-arm meta-gate that
+  trips on ANY uncommitted source edit (builtAt > newestSourceMtime); greened by `npm run
+  demo:dist:build` at close. NOT a logic regression from this seat.
+  vue-tsc --project tsconfig.src.json: clean (exit 0).

@@ -1,0 +1,42 @@
+     × .input-pill::placeholder resolves onto bare var(--muted-foreground) 5ms
+     × .field-control::placeholder resolves onto bare var(--muted-foreground) 1ms
+     × .input-bar-field::placeholder resolves onto bare var(--muted-foreground) 1ms
+     × .tags-input__input::placeholder resolves onto bare var(--muted-foreground) 1ms
+     × deletes the orphaned --surface-tint-35 register (def + dark arm + bridge) 1ms
+     × wraps the category rail in a NAMED <nav> landmark, not a nameless <aside> 4ms
+     × drops the inert aria-label from the role-less GlassDock host 1ms
+     × exposes a polite live region, silent while idle 15ms
+     × announces loading when isLoading flips true 5ms
+     × announces exhaustion when the list is fully loaded 2ms
+     × announces aria-pressed="false" for an off-state toggle (active: false) 4ms
+     × drops the native disabled stamp on the button arm (stays focusable) 2ms
+     × returns focus to the trigger when a centered spring dialog logically closes 36ms
+     × does not paint the low-contrast muted ink on the open-state seat 30ms
+     × re-inks the open-state seat onto the accent-foreground AA pair 7ms
+⎯⎯⎯⎯⎯⎯ Failed Tests 15 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  tests/demo/sidebar-nav-landmark.a11y.test.ts > category-rail landmark (W1-A) > wraps the category rail in a NAMED <nav> landmark, not a nameless <aside>
+     30|     it("wraps the category rail in a NAMED <nav> landmark, not a namel…
+ FAIL  tests/demo/sidebar-nav-landmark.a11y.test.ts > category-rail landmark (W1-A) > drops the inert aria-label from the role-less GlassDock host
+    >"
+ FAIL  tests/styles/placeholder-contrast.test.ts > placeholder contrast floor (W1-D) > .input-pill::placeholder resolves onto bare var(--muted-foreground)
+ FAIL  tests/styles/placeholder-contrast.test.ts > placeholder contrast floor (W1-D) > .tags-input__input::placeholder resolves onto bare var(--muted-foreground)
+ FAIL  tests/styles/placeholder-contrast.test.ts > placeholder contrast floor (W1-D) > .field-control::placeholder resolves onto bare var(--muted-foreground)
+ FAIL  tests/styles/placeholder-contrast.test.ts > placeholder contrast floor (W1-D) > .input-bar-field::placeholder resolves onto bare var(--muted-foreground)
+ FAIL  tests/styles/placeholder-contrast.test.ts > placeholder contrast floor (W1-D) > deletes the orphaned --surface-tint-35 register (def + dark arm + bridge)
+       built-in <color>, so per the §2b resolve-late discipline it reads a
+ FAIL  tests/components/infinite-scroll.announce.test.ts > InfiniteScroll — loading/exhausted announce (W4-A) > exposes a polite live region, silent while idle
+ FAIL  tests/components/infinite-scroll.announce.test.ts > InfiniteScroll — loading/exhausted announce (W4-A) > announces loading when isLoading flips true
+ FAIL  tests/components/infinite-scroll.announce.test.ts > InfiniteScroll — loading/exhausted announce (W4-A) > announces exhaustion when the list is fully loaded
+ FAIL  tests/components/custom/dock/DockControl.a11y.test.ts > DockControl — aria-pressed tri-state (W1-B) > announces aria-pressed="false" for an off-state toggle (active: false)
+ FAIL  tests/components/custom/dock/DockControl.a11y.test.ts > DockControl — boundary-disabled stays focusable (W5-C) > drops the native disabled stamp on the button arm (stays focusable)
+ FAIL  tests/components/ui/dialog/dialog-close-contrast.test.ts > DialogContent — close-X open-state ink (W3-B) > does not paint the low-contrast muted ink on the open-state seat
+ FAIL  tests/components/ui/dialog/dialog-close-contrast.test.ts > DialogContent — close-X open-state ink (W3-B) > does not paint the low-contrast muted ink on the open-state seat
+ FAIL  tests/components/ui/dialog/dialog-close-contrast.test.ts > DialogContent — close-X open-state ink (W3-B) > re-inks the open-state seat onto the accent-foreground AA pair
+ FAIL  tests/components/ui/dialog/dialog-focus-return.test.ts > DialogContent — center-spring focus-return (W1-C) > returns focus to the trigger when a centered spring dialog logically closes
+ FAIL  tests/components/ui/dialog/dialog-close-contrast.test.ts > DialogContent — close-X open-state ink (W3-B) > re-inks the open-state seat onto the accent-foreground AA pair
+ FAIL  tests/components/ui/dialog/dialog-focus-return.test.ts > DialogContent — center-spring focus-return (W1-C) > returns focus to the trigger when a centered spring dialog logically closes
+AssertionError: expected <button type="button" …(1)></button> to be <button type="button" …(4)></button> // Object.is equality
+  >
+  </button>
+ Test Files  6 failed (6)
+      Tests  15 failed | 6 passed (21)

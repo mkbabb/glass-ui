@@ -143,6 +143,25 @@ describe("LabeledField contract", () => {
         expect(wrapper.get("input").classes()).not.toContain("field-grid-cell");
     });
 
+    // W4-B KEEP ruling (refactor-safety, NOT born-RED — passes at HEAD): the
+    // DAG-reduction gated `invalid`/`errorLive` on this band; the ruling is KEEP
+    // (both are load-bearing a11y contract, not prop duplication). This guards that
+    // `errorLive` remains a live-politeness discriminant through any dedup: it
+    // renders the error region's `aria-live` and `off` opts the region out entirely.
+    it("honors the errorLive politeness discriminant (W4-B KEEP)", () => {
+        const withLive = (errorLive: "polite" | "assertive" | "off") =>
+            mount(LabeledField, {
+                props: { label: "Email", invalid: true, errorLive },
+                slots: {
+                    default: () => h("input"),
+                    error: () => "Enter a valid email address.",
+                },
+            });
+        expect(withLive("polite").get(".labeled-field-error").attributes("aria-live")).toBe("polite");
+        expect(withLive("assertive").get(".labeled-field-error").attributes("aria-live")).toBe("assertive");
+        expect(withLive("off").get(".labeled-field-error").attributes("aria-live")).toBeUndefined();
+    });
+
     it("keeps every earned adapter on the same accessible anatomy", () => {
         const cases = [
             mount(LabeledInput, {
