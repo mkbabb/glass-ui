@@ -109,7 +109,7 @@
            (the per-control `--dock-icon-hover-bg` still wins if a consumer set it),
            so the whole dock-control family shares ONE glass-translucent hover fill.
            One source per state across icon/tab/picker (no four-vocabulary drift). */
-        &:hover:not(:disabled) {
+        &:hover:not(:disabled):not([aria-disabled="true"]) {
             background: var(--dock-icon-hover-bg, var(--dock-control-hover-bg));
             color: var(--btn-hover-color, var(--foreground));
             scale: var(--scale-hover-dock);
@@ -119,11 +119,11 @@
            glass-darken (`--dock-control-press-bg`, a tier below resting) alongside
            the existing scale-press, so a tap reads "darken + shrink" (C4-INV-4 was
            scale-only). Token-first — a consumer retunes via `--dock-control-press-bg`. */
-        &:active:not(:disabled) {
+        &:active:not(:disabled):not([aria-disabled="true"]) {
             background: var(--dock-control-press-bg);
         }
 
-        &:active:not(:disabled):not([data-press-armed]) {
+        &:active:not(:disabled):not([data-press-armed]):not([aria-disabled="true"]) {
             scale: var(--scale-press-dock);
         }
 
@@ -131,9 +131,13 @@
            (prev/next at the first/last item) stays PRESENT but disabled so the row
            geometry holds (never DOM-absent — the "flaky" read). It dims to the shared
            disabled opacity + suppresses the press/pointer (the hover/active rules
-           already `:not(:disabled)`-exclude it, so this only needs the dim + the
-           pointer-suppress). Compositor-only (opacity); no layout shift. */
-        &:disabled {
+           already `:not(:disabled):not([aria-disabled="true"])`-exclude it, so this
+           only needs the dim + the pointer-suppress). Since a boundary DockControl
+           expresses disabled via `aria-disabled` ALONE (no native `disabled`), the
+           register carries both arms so the aria-disabled control dims + suppresses.
+           Compositor-only (opacity); no layout shift. */
+        &:disabled,
+        &[aria-disabled="true"] {
             opacity: var(--opacity-disabled, 0.4);
             pointer-events: none;
             cursor: default;

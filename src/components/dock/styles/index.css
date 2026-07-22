@@ -196,7 +196,9 @@
     .dock-icon-button:disabled,
     .dock-tab-button:disabled,
     .dock-select-trigger:disabled,
-    .dock-dropdown-trigger:disabled {
+    .dock-dropdown-trigger:disabled,
+    .dock-icon-button[aria-disabled="true"],
+    .dock-tab-button[aria-disabled="true"] {
         opacity: var(--opacity-disabled);
         cursor: not-allowed;
     }

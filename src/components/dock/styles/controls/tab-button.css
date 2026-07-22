@@ -65,14 +65,14 @@
            the bg cross-fade (glass-tier), the scale, and the specular gleam read
            together BEFORE click. The transform rides `--dock-press-spring`
            (`--spring-smooth`) per the easing doctrine. */
-        &:hover:not(:disabled) {
+        &:hover:not(:disabled):not([aria-disabled="true"]) {
             background: var(--dock-control-hover-bg);
             color: var(--foreground);
             scale: var(--scale-hover-dock);
         }
 
         /* The iOS press darken-plus-shrink (see the icon-button). */
-        &:active:not(:disabled) {
+        &:active:not(:disabled):not([aria-disabled="true"]) {
             background: var(--dock-control-press-bg);
             scale: var(--scale-press-dock);
         }
@@ -131,8 +131,8 @@
         box-shadow: var(--border-hairline), var(--glass-highlight);
     }
 
-    .dock-tab-button[data-tier="secondary"]:hover:not(:disabled),
-    .dock-icon-button[data-tier="secondary"]:hover:not(:disabled) {
+    .dock-tab-button[data-tier="secondary"]:hover:not(:disabled):not([aria-disabled="true"]),
+    .dock-icon-button[data-tier="secondary"]:hover:not(:disabled):not([aria-disabled="true"]) {
         background: color-mix(in srgb, var(--card) 65%, transparent);
         box-shadow:
             var(--glass-specular),
