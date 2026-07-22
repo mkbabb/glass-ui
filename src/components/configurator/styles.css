@@ -21,8 +21,7 @@
  * gear sheet's `px-(--configurator-pad-inline)` chrome utilities resolve it; a
  * consumer retunes the whole chassis inline rhythm from one override. */
 :root {
-    --configurator-pad-inline: 1rem; /* 16px — the unified section+chrome inline anchor */
-    --configurator-section-gap: 0.5rem; /* 8px — the inter-section card breath */
+    --configurator-pad-inline: 1.25rem; /* 20px — the unified section+chrome inline anchor (J10 roominess: widened from 16px so the inspector breathes) */
 }
 
 /* A Configurator is one material envelope around three sibling regions: gallery,
@@ -111,11 +110,28 @@
         calc(var(--radius-ctx) - var(--radius-inset))
     );
 }
-/* The inter-section card breath — a gap between stacked section cards (replacing the
- * retired flush `border-b last:border-b-0` divider). Adjacent-sibling so only the
- * INTER-section seams get the gap; the first card stays flush to its container top. */
+/* F11 — sub-sections of ONE inspector read as ONE contiguous INSET GROUPED LIST,
+ * NOT a stack of gapped cards. Adjacent `.configurator-layer` siblings JOIN: the
+ * inter-section gap collapses to 0, a single SHARED hairline divides them, and the
+ * group rounds only at its outermost (first-top / last-bottom) corners — the iOS
+ * grouped-table read.
+ *
+ *  - A section with a FOLLOWING sibling (`:has(+ …)`, i.e. not-last) squares its
+ *    bottom corners and drops its own bottom border; the next section's top border
+ *    is the ONE hairline between them (no doubled rule).
+ *  - A section PRECEDED by a sibling (`+ …`, i.e. not-first) squares its top corners
+ *    and its top margin collapses to 0 (the grouped-list join).
+ *  - A LONE section (no siblings — e.g. a standalone <EasingConfigurator>, or a
+ *    section that is its own group) keeps the full concentric card above. */
+.configurator-layer:has(+ .configurator-layer) {
+    border-end-start-radius: 0;
+    border-end-end-radius: 0;
+    border-bottom-width: 0;
+}
 .configurator-layer + .configurator-layer {
-    margin-block-start: var(--configurator-section-gap);
+    margin-block-start: 0;
+    border-start-start-radius: 0;
+    border-start-end-radius: 0;
 }
 /* The ONE inline-padding anchor — the section header trigger
  * AND the section body read var(--configurator-pad-inline), the SAME anchor the sheet
@@ -191,8 +207,8 @@
         grid-template-columns:
             minmax(0, 1fr)
             minmax(
-                var(--configurator-aside-min, 280px),
-                var(--configurator-aside-max, 360px)
+                var(--configurator-aside-min, 300px),
+                var(--configurator-aside-max, 400px)
             );
         grid-template-rows: auto minmax(0, 1fr);
     }

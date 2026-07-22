@@ -324,7 +324,7 @@ const stepsModel = computed<number[]>({
 
 <template>
     <div
-        class="grid gap-4 lg:grid-cols-[1fr_18rem]"
+        class="grid items-start gap-4 lg:grid-cols-[1fr_18rem]"
         :data-mode="mode"
         :data-copy-state="copyState"
         :data-playback-state="playbackState"

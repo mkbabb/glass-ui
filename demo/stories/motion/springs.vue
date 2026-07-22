@@ -18,6 +18,11 @@ import { Button } from "@glass/components/button";
 import { Label } from "@glass/components/label";
 import { LabeledSlider } from "@glass/components/labeled-field";
 import {
+    Configurator,
+    ConfiguratorLayer,
+    type ConfiguratorPreset,
+} from "@glass/components/configurator";
+import {
     Select,
     SelectContent,
     SelectItem,
@@ -149,6 +154,32 @@ function loadPlaygroundPreset(name: PresetId): void {
     const row = springPreset(name);
     playResponse.value = row.response;
     playDamping.value = row.dampingFraction;
+}
+
+// The seed gallery projected to the <Configurator> preset row — each named
+// register is a preset chip that loads its response/ζ into the live authoring
+// controls. `config` carries the register id so the standard's select-preset
+// event round-trips through loadPlaygroundPreset.
+const seedPresets = computed<ConfiguratorPreset<PresetId>[]>(() =>
+    PRESET_ROWS.map((row) => ({
+        key: row.name,
+        label: row.name,
+        sub: `${row.response}s · ζ${row.dampingFraction}`,
+        config: row.name,
+    })),
+);
+const activeSeed = computed(() => matchingPreset.value?.name);
+
+// The @reset hook — back to the shipped `smooth` seed (the born default of the
+// authoring pair), stopping any in-flight preview.
+function resetPlayground(): void {
+    loadPlaygroundPreset("smooth");
+}
+
+// The <Configurator> select-preset event carries the chip key as a bare string;
+// every seed key is a PresetId by construction (seedPresets maps PRESET_ROWS).
+function onSeedPreset(key: string): void {
+    loadPlaygroundPreset(key as PresetId);
 }
 
 const playCard = shallowRef<HTMLElement | null>(null);
@@ -336,159 +367,175 @@ watch(playStops, invalidateCopy);
             </section>
         </StorySection>
 
+        <!-- Custom authoring adopts the ONE configurator anatomy (BJ.W-CONFIGURATOR-STD
+             G-CFG-1): a preset seed row (the named registers) + a live stage + a
+             right-hand inspector of grouped <ConfiguratorLayer> sections. The `heading`
+             at level="title" sets the section two rungs above the default body register
+             so the page reads a real type ladder (hero ≫ section title ≫ layer heading
+             ≫ row label ≫ token) — the story section stays a rung above the configurator
+             section labels it contains. -->
         <StorySection
-            label="Custom spring authoring"
-            blurb="Tune response and damping, then play the custom curve beside the named set. The readout shows its measured settling time and projected shape."
+            heading="Custom spring authoring"
+            level="title"
+            blurb="Tune response and damping, then play the custom curve. Seed from a named register up top; the inspector reads its measured settling time and projected shape."
         >
-            <div class="grid gap-4 lg:grid-cols-[1fr_18rem]">
-                <div class="flex flex-col gap-5">
-                    <LabeledSlider
-                        :model-value="playResponse"
-                        label="response (s)"
-                        description="The spring's period — larger is slower / looser."
-                        :min="0.1"
-                        :max="1.2"
-                        :step="0.01"
-                        @update:model-value="(v: number) => (playResponse = v)"
-                    />
-                    <LabeledSlider
-                        :model-value="playDamping"
-                        label="dampingFraction ζ"
-                        description="ζ=1 fully damps with no overshoot; below 1 overshoots, above 1 over-damps."
-                        :min="0.2"
-                        :max="1.5"
-                        :step="0.01"
-                        @update:model-value="(v: number) => (playDamping = v)"
-                    />
-
-                    <!-- live travel stage —: the violet spent HARDER
-                         within proportion (the stage frame reads --motion-accent at a
-                         low alpha alongside the travelling dot; ONE family hue, no
-                         second). -->
+            <Configurator
+                class="h-[min(64vh,520px)]"
+                :presets="seedPresets"
+                :active-preset="activeSeed"
+                @select-preset="onSeedPreset"
+                @reset="resetPlayground"
+            >
+                <template #stage>
+                    <!-- live travel stage — the --motion-accent violet spent within
+                         proportion (the track reads the family hue at low alpha
+                         alongside the travelling dot). -->
                     <div
-                        class="relative h-12 overflow-hidden rounded-pill border bg-[var(--surface-tint-1)]"
-                        :style="{
-                            containerType: 'inline-size',
-                            borderColor:
-                                'color-mix(in srgb, var(--motion-accent) 35%, transparent)',
-                            '--preview-cap': '280px',
-                            '--preview-start': '0.5rem',
-                            '--preview-end': '0.5rem',
-                            '--preview-inline-size': '2rem',
-                            '--preview-block-size': '2rem',
-                            '--preview-envelope': 'var(--preview-inline-size)',
-                            '--preview-peak': playPeak,
-                        }"
+                        class="configurator-specimen paper-grain-overlay relative flex h-full w-full items-center justify-center overflow-hidden p-6"
                     >
                         <div
-                            ref="playCard"
-                            class="absolute top-1/2 rounded-pill bg-[var(--motion-accent)]"
+                            class="relative h-12 w-full max-w-[440px] overflow-hidden rounded-pill border bg-[var(--surface-tint-1)]"
                             :style="{
-                                insetInlineStart: 'var(--preview-start)',
-                                inlineSize: 'var(--preview-inline-size)',
-                                blockSize: 'var(--preview-block-size)',
-                                transform: `translate(${RESPONSIVE_TRAVEL}, -50%)`,
+                                containerType: 'inline-size',
+                                borderColor:
+                                    'color-mix(in srgb, var(--motion-accent) 35%, transparent)',
+                                '--preview-cap': '360px',
+                                '--preview-start': '0.5rem',
+                                '--preview-end': '0.5rem',
+                                '--preview-inline-size': '2rem',
+                                '--preview-block-size': '2rem',
+                                '--preview-envelope': 'var(--preview-inline-size)',
+                                '--preview-peak': playPeak,
                             }"
-                        />
+                        >
+                            <div
+                                ref="playCard"
+                                class="absolute top-1/2 rounded-pill bg-[var(--motion-accent)]"
+                                :style="{
+                                    insetInlineStart: 'var(--preview-start)',
+                                    inlineSize: 'var(--preview-inline-size)',
+                                    blockSize: 'var(--preview-block-size)',
+                                    transform: `translate(${RESPONSIVE_TRAVEL}, -50%)`,
+                                }"
+                            />
+                        </div>
+                        <div
+                            class="absolute bottom-3 left-3 flex items-center gap-2 rounded-pill border border-border/40 bg-card/70 px-3 py-1"
+                        >
+                            <span class="text-micro font-mono text-muted-foreground">
+                                overshoot {{ playOvershoot }}%
+                            </span>
+                            <span
+                                class="text-micro font-mono text-muted-foreground/60"
+                                aria-live="polite"
+                            >
+                                {{ playgroundPreview.playing.value ? "playing" : "settled" }}
+                                · {{ playDuration.toFixed(0) }}ms
+                            </span>
+                        </div>
                     </div>
+                </template>
 
+                <template #controls>
+                    <ConfiguratorLayer label="Spring" sub="--spring-*">
+                        <LabeledSlider
+                            v-model="playResponse"
+                            label="response (s)"
+                            description="The spring's period — larger is slower / looser."
+                            :min="0.1"
+                            :max="1.2"
+                            :step="0.01"
+                        />
+                        <LabeledSlider
+                            v-model="playDamping"
+                            label="dampingFraction ζ"
+                            description="ζ=1 fully damps with no overshoot; below 1 overshoots, above 1 over-damps."
+                            :min="0.2"
+                            :max="1.5"
+                            :step="0.01"
+                        />
+                    </ConfiguratorLayer>
+
+                    <ConfiguratorLayer label="Output" sub="linear()">
+                        <p class="text-small text-muted-foreground">
+                            {{
+                                matchingPreset
+                                    ? `Seeded --spring-${matchingPreset.name}`
+                                    : "Custom linear()"
+                            }}
+                            · {{ playProjection.sampleCount }} samples ·
+                            {{ playProjection.settleSeconds.toFixed(2) }}s settle
+                        </p>
+                        <div
+                            class="glass-card flex items-start gap-2 rounded-card px-3 py-2"
+                        >
+                            <code
+                                class="min-w-0 flex-1 break-all text-[0.7rem] leading-snug text-foreground"
+                                >{{ playStops }}</code
+                            >
+                            <button
+                                type="button"
+                                class="shrink-0 rounded-pill p-1.5 text-muted-foreground transition-colors hover:bg-[var(--surface-tint-1)] hover:text-foreground"
+                                :aria-label="copyLabel"
+                                :aria-disabled="
+                                    copyStatus === 'pending' ? 'true' : undefined
+                                "
+                                @click="copyStops"
+                            >
+                                <Check
+                                    v-if="copyStatus === 'success'"
+                                    class="size-4 text-(--motion-accent)"
+                                />
+                                <Copy v-else class="size-4" />
+                            </button>
+                        </div>
+                        <p
+                            v-if="copyMessage"
+                            class="text-small"
+                            :class="
+                                copyStatus === 'failure'
+                                    ? 'text-destructive'
+                                    : 'text-muted-foreground'
+                            "
+                            role="status"
+                            aria-live="polite"
+                        >
+                            {{ copyMessage }}
+                        </p>
+                        <p
+                            v-if="matchingPreset"
+                            class="text-small"
+                            :class="tokenMatches ? 'text-success' : 'text-destructive'"
+                            role="status"
+                        >
+                            {{
+                                tokenMatches
+                                    ? "Byte-exact shipped token"
+                                    : "Token mismatch"
+                            }}
+                            · {{ playStops.length }} bytes
+                        </p>
+                        <p v-else class="text-small text-muted-foreground">
+                            Custom authoring · no shipped token claimed
+                        </p>
+                    </ConfiguratorLayer>
+                </template>
+
+                <template #footer="{ reset }">
                     <div class="flex flex-wrap items-center gap-3">
                         <StoryPlayButton @play="playgroundPlay" />
-                        <span class="text-small text-muted-foreground">
-                            overshoot ~<span class="fira-code text-foreground"
-                                >{{ playOvershoot }}%</span
-                            >
-                        </span>
+                        <Button emphasis="quiet" @click="reset">Reset</Button>
                         <span
                             class="text-small text-muted-foreground"
                             aria-live="polite"
                         >
-                            {{
-                                playgroundPreview.playing.value ? "playing" : "settled"
-                            }}
+                            {{ playgroundPreview.playing.value ? "playing" : "settled" }}
                             · {{ playDuration.toFixed(0) }}ms at
                             {{ playTempo.toFixed(2) }}×
                         </span>
                     </div>
-                </div>
-
-                <div class="flex flex-col gap-3">
-                    <span class="text-caption text-muted-foreground"
-                        >Seed from a register</span
-                    >
-                    <div class="flex flex-wrap gap-2">
-                        <button
-                            v-for="row in PRESET_ROWS"
-                            :key="row.name"
-                            type="button"
-                            class="rounded-pill border border-border/60 px-3 py-1 text-xs text-muted-foreground transition-colors hover:bg-[var(--surface-tint-1)] hover:text-foreground"
-                            @click="loadPlaygroundPreset(row.name)"
-                        >
-                            {{ row.name }}
-                        </button>
-                    </div>
-
-                    <span class="mt-2 text-mono-small text-muted-foreground">
-                        {{
-                            matchingPreset
-                                ? `Seeded --spring-${matchingPreset.name}`
-                                : "Custom linear()"
-                        }}
-                        · {{ playProjection.sampleCount }} samples ·
-                        {{ playProjection.settleSeconds.toFixed(2) }}s settle
-                    </span>
-                    <div
-                        class="glass-card flex items-start gap-2 rounded-card px-3 py-2"
-                    >
-                        <code
-                            class="min-w-0 flex-1 break-all text-[0.7rem] leading-snug text-foreground"
-                            >{{ playStops }}</code
-                        >
-                        <button
-                            type="button"
-                            class="shrink-0 rounded-pill p-1.5 text-muted-foreground transition-colors hover:bg-[var(--surface-tint-1)] hover:text-foreground"
-                            :aria-label="copyLabel"
-                            :aria-disabled="
-                                copyStatus === 'pending' ? 'true' : undefined
-                            "
-                            @click="copyStops"
-                        >
-                            <Check
-                                v-if="copyStatus === 'success'"
-                                class="size-4 text-(--motion-accent)"
-                            />
-                            <Copy v-else class="size-4" />
-                        </button>
-                    </div>
-                    <p
-                        v-if="copyMessage"
-                        class="text-small"
-                        :class="
-                            copyStatus === 'failure'
-                                ? 'text-destructive'
-                                : 'text-muted-foreground'
-                        "
-                        role="status"
-                        aria-live="polite"
-                    >
-                        {{ copyMessage }}
-                    </p>
-                    <p
-                        v-if="matchingPreset"
-                        class="text-small"
-                        :class="tokenMatches ? 'text-success' : 'text-destructive'"
-                        role="status"
-                    >
-                        {{
-                            tokenMatches ? "Byte-exact shipped token" : "Token mismatch"
-                        }}
-                        · {{ playStops.length }} bytes
-                    </p>
-                    <p v-else class="text-small text-muted-foreground">
-                        Custom authoring · no shipped token claimed
-                    </p>
-                </div>
-            </div>
+                </template>
+            </Configurator>
         </StorySection>
     </StoryPage>
 </template>

@@ -6,7 +6,6 @@ import StorySection from "../../chassis/section/StorySection.vue";
 import { Button } from "@glass/components/button";
 import {
     EasingConfigurator,
-    EasingPicker,
     type EasingPickerValue,
 } from "@glass/components/easing";
 import {
@@ -186,12 +185,25 @@ onBeforeUnmount(disposeSpring);
             </div>
         </StorySection>
 
+        <!-- The curve authoring surfaces adopt the ONE configurator anatomy
+             (BJ.W-CONFIGURATOR-STD G-CFG-5): BOTH editors are now
+             <EasingConfigurator> (picker seated in a <ConfiguratorLayer>/
+             <ConfiguratorRow>), reading the shared card grammar instead of one
+             carded + one bare. `items-start` stops the shorter editor's stage
+             from stretching to its sibling's height and painting an empty
+             bottom void (the F31 over-height defect). -->
         <StorySection
-            label="Authoring boundary"
+            heading="Authoring boundary"
+            level="title"
             blurb="Shape a reusable curve with keyboard-accessible controls and compare continuous and stepped timing side by side."
         >
-            <div class="grid gap-6 lg:grid-cols-2">
-                <EasingPicker v-model="bezier" mode="bezier" />
+            <div class="grid items-start gap-6 lg:grid-cols-2">
+                <EasingConfigurator
+                    v-model="bezier"
+                    label="Continuous timing"
+                    :name="bezier?.css"
+                    mode="bezier"
+                />
                 <EasingConfigurator
                     v-model="steps"
                     label="Discrete timing"

@@ -1,0 +1,34 @@
+BJ.W-CONFIGURATOR-STD — born-RED probes, captured verbatim at HEAD 75c19ead (v7.0.0-129)
+model: claude-opus-4-8 · dev server localhost:5199 (glass-ui demo)
+
+G-CFG-1 (F29) — springs has NO configurator standard (hand-rolled sliders):
+  $ grep -c "Configurator\|VizStudio" demo/stories/motion/springs.vue
+  0
+
+G-CFG-2 (F10) — StorySection heading pinned to text-subheading; total flatness:
+  $ grep -n 'text-subheading' demo/chassis/section/StorySection.vue
+  32:        <h2 v-else-if="heading" class="text-subheading">{{ heading }}</h2>
+  $ grep -rl '#heading' demo/stories | wc -l
+  0
+  live π (containers/configurator): StorySection h2 = 20.352px  ==  configurator
+    section label = 20.352px  (section title === field-section label, two-level flat)
+
+G-CFG-3 (F11) — inspector reads as GAPPED CARDS (8px inter-section gap):
+  $ grep -n 'configurator-layer + .configurator-layer' src/components/configurator/styles.css
+  117:.configurator-layer + .configurator-layer {   (margin-block-start: var(--configurator-section-gap) = 8px)
+  live π (blob inspector, 4 layers): marginTop = [0, 8px, 8px, 8px], each a 4px-radius card
+
+G-CFG-4 (F09 REGRESSION-GUARD, not born-RED) — container already card grammar:
+  live π: [data-slot=configurator] borderTopLeftRadius = 12px (--radius-panel) at every mount
+
+G-CFG-5 (F31) — curve-gallery stage over-heights into a void:
+  live π (curve-gallery /motion/curve-gallery): left bezier canvas card stretched to its
+    taller EasingConfigurator sibling; svg block-size capped at 320px → ~120px empty void
+    below the curve inside the stretched card.
+
+G-CFG-6 (J10 roominess) — no assertion; cramped:
+  live π (containers/configurator): aside band 360px (grid = "878px 360px"),
+    --configurator-pad-inline = 1rem (16px), section descriptions wrapping.
+
+Born-RED screenshots: BORN-RED-springs-1440.png, BORN-RED-curve-gallery-1440.png,
+  BORN-RED-blob-1440.png, BORN-RED-blob-inspector-1440.png, BORN-RED-configurator-1440.png

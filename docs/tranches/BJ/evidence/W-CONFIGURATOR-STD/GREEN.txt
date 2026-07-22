@@ -1,0 +1,53 @@
+BJ.W-CONFIGURATOR-STD — GREEN verification (uncommitted on 75c19ead)
+model: claude-opus-4-8 · dev server localhost:5199 · live-verified Chrome, dark + light
+
+G-CFG-1 (F29) GREEN — springs adopts the ONE configurator anatomy:
+  $ grep -c "Configurator\|VizStudio" demo/stories/motion/springs.vue  ->  13
+  live: /motion/springs "Custom spring authoring" renders <Configurator> = seed-register
+    preset gallery + live travel stage + right-hand inspector (grouped Spring+Output
+    <ConfiguratorLayer>s) + Play/Reset footer. FUNCTIONAL: clicking the "bouncy" seed chip
+    round-trips through the v-model (response 0.6 / ζ0.6, chip aria-pressed=true,
+    "Seeded --spring-bouncy"). No stale bindings. tests/demo/springs-story.test.ts 5/5 pass.
+  DELTA: BORN-RED-springs-1440 (hand-rolled) -> GREEN-springs-1440 (configurator).
+
+G-CFG-2 (F10) GREEN — StorySection carries a `level` axis; ladder widened:
+  StorySection.vue: level ∈ {title,heading,subheading} (default subheading); h2 :class=headingClass.
+  --configurator-section-size: --type-subheading -> --type-heading (20.4 -> 25.9px).
+  live π spec (containers/configurator): "Preset studio" 32.9 (title) >> "Field" configurator
+    section 25.9 (heading) >> "Medium" row 14 (small) >> token 11 — 4 distinct rungs.
+  live π studio (springs): "Custom spring authoring" 32.9 >> "Spring"/"Output" 25.9 >> rows 14.
+  DELTA: BORN-RED-configurator (20.4 flat) -> GREEN-configurator-1440 / GREEN-configurator-light-1440.
+
+G-CFG-3 (F11) GREEN — sub-sections of ONE inspector read as ONE inset grouped list:
+  styles.css: `.configurator-layer:has(+ .configurator-layer)` squares bottom + drops bottom
+    border; `+ .configurator-layer` sets margin-block-start:0 + squares top. Adjacent siblings
+    JOIN (gap 0, one shared hairline, rounded first-top/last-bottom); a LONE section keeps its card.
+  live π: blob 4-layer [mt 0,0,0,0 · botR 0,0,0,4], aurora 7-layer, gear Sheet 6-layer, springs
+    2-layer — all form one grouped list; container radius stays 12px.
+  DELTA: BORN-RED-blob-inspector (8px gapped cards) -> GREEN-blob-grouped-seam-1440 (joined).
+
+G-CFG-4 (F09 REGRESSION-GUARD) GREEN — container radius = card grammar everywhere:
+  live π: [data-slot=configurator] borderTopLeftRadius = 12px (--radius-panel) at containers/
+    configurator, blob, aurora, gear Sheet. Never ovoid. Pill residual routes to family F (untouched).
+
+G-CFG-5 (F31) GREEN — curve stage void closed + adopt:
+  EasingPicker.vue grid gains `items-start`; curve-gallery outer grid gains `items-start`;
+    BOTH editors now <EasingConfigurator> (symmetric card grammar).
+  live π: canvas card 346px hugs the 320px svg (13px padding only, was ~120px void).
+  DELTA: BORN-RED-curve-gallery (void) -> GREEN-curve-gallery-1440 (closed, symmetric).
+
+G-CFG-6 (J10 roominess) GREEN — container min-width + section breathing room asserted:
+  aside band fallback 280/360 -> 300/400; --configurator-pad-inline 16 -> 20px.
+  live π (containers/configurator): grid = "838px 400px" (aside 400, min floor 300);
+    section descriptions now fit one line.
+  DELTA: BORN-RED-configurator -> GREEN-configurator-1440.
+
+Regression battery: vue-tsc 0 errors; springs-story 5/5; configurator-recursion + custom/configurator
+  + styles 25/25; demo + easing + gates all green EXCEPT gate:boot-graph (dist-demo STALENESS only —
+  source changed without `npm run demo:dist:build`; not a logic regression, greens on rebuild at close).
+  No console errors/warnings on any verified route.
+
+Studio-variant note: Wave-1 STORY-TAXONOMY has NOT landed (pageType=0, StoryPage still boolean axis),
+  so the "studio variant registry" does not exist yet. Per the band's KISS law ("ONE configurator
+  anatomy ... No second configurator forked"), springs + curve-gallery adopt the shipped <Configurator>
+  component DIRECTLY; routing them through the Wave-1 `studio` variant is Wave-1's concern (recorded honestly).

@@ -30,9 +30,14 @@
        the per-row CADENCE, not the section/label/preset register).
 
        1. Section register — the <ConfiguratorLayer> label reads as a SECTION,
-          not a row: the √φ subheading rung at weight 600, NOT a
-          flat `text-small font-semibold`. */
-    --configurator-section-size: var(--type-subheading);  /* 20.4px — √φ section rung */
+          not a row: the φ HEADING rung at weight 600, NOT a
+          flat `text-small font-semibold`. Widened from the √φ subheading (20.4px)
+          to the φ heading (25.9px) — the F10 ladder was too NARROW: the section
+          sat ~4px over the field labels (text-small 14px), so section and row read
+          two-level flat. At heading the ladder reads section (25.9) ≫ row label
+          (14) ≫ token (11) — three clearly-separated rungs, weight FROM SIZE (the
+          weight stays 600, not a mono stamp). */
+    --configurator-section-size: var(--type-heading);    /* 25.9px — φ section rung (F10 widen) */
     --configurator-section-weight: 600;                   /* the heading weight */
 
     /* The SINGLE-COLUMN stage-row FLOOR. Below `lg` the

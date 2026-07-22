@@ -165,6 +165,7 @@ const size = computed(() => (isNarrow.value ? "sm" : "md"));
     <StoryPage>
         <StorySection
             heading="Preset studio"
+            level="title"
             blurb="Choose a visual preset, then adjust spread, bloom, medium, and grain while the stage and edited-state feedback update immediately."
         >
             <ShowcaseFrame pad="lg" tier="quiet">
@@ -306,6 +307,7 @@ const size = computed(() => (isNarrow.value ? "sm" : "md"));
 
         <StorySection
             heading="Preset state"
+            level="heading"
             blurb="Cycle between named presets, edit the live intensity, and observe when the current values diverge from the selected preset."
         >
             <ShowcaseFrame pad="md" tier="quiet">
