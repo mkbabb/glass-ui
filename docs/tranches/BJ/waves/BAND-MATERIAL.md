@@ -724,7 +724,102 @@ unknown, not a silent bypass.
 ### §OPEN
 
 - `OPEN-6a` — the `text-xs` split target: `text-caption` vs `text-micro` per site. Resolve per call-site
-  at execution against the √φ rung the site's role wants.
+  at execution against the √φ rung the site's role wants. **RULED at execution (§CLOSE):** uniform
+  `text-micro` — `text-caption` carries `font-style: italic` and ZERO of the live `text-xs` sites are
+  italic, so caption would regress all of them; `text-micro` (11px, non-italic, no font-family) is the
+  parity-faithful rung.
+
+### §CLOSE — LANDED (2026-07-22, model claude-opus-4-8; coupled cut with `BAND-GATES` W4)
+
+**RE-CENSUS at HEAD `626540ad` (the band's cited `485891a2` drifted; the live census wins per the
+count-truth-up mandate).** Filtered `grep -rEn '\btext-(sm|xs)\b' --include=*.vue --include=*.ts src demo`
+= **227** (16 src + 211 demo), NOT the stale spec figure 234 (218 demo). Of the 227, **2 are legit
+CSS-var token refs** (`var(--control-text-sm)` in `_shared/control-size.ts` + `text-[length:var(
+--control-text-sm)]` in `badge/index.ts`) — a `\btext-sm\b` matches the substring inside `--control-text-sm`
+(the exact inflation the filter warns of, here surviving into `.ts`); the **strict utility count is 225**
+(128 `text-sm` + 97 `text-xs`). Arbitraries: **9** (4× `text-[0.7em]`, 4× `text-[10px]`, 1× `text-[0.7rem]`),
+matching spec. **Codemod reach = 225 utility + 9 arbitrary = 234 real edits.**
+
+**Mappings (mechanical, parity-first, no design guess):**
+- `text-sm` → `text-small` (√φ `--type-small`; floor 0.875rem == Tailwind `text-sm` 0.875rem — byte-identical
+  at the clamp floor; the wide-viewport fluid growth is the INTENDED clamp adoption, the "27-inch font too
+  small" fix `scale.css` documents).
+- `text-xs` → `text-micro` (non-italic; see OPEN-6a ruling). Bounded −1px snap (12px→11px), non-italic
+  preserved.
+- The one `font-mono text-sm` (`progress.vue:306`) → `text-mono-small` (mono variant — `text-small` sets
+  `font-family: var(--font-text)` which would clobber `font-mono`; `text-micro`/`text-mono-small` do not).
+- All 9 arbitraries → `text-micro` (all ≤11px micro contexts).
+- Token-refs (`var(--control-text-sm)` ×2) UNTOUCHED (excluded by the `(?<![-\w])` lookbehind).
+
+**The default-ramp reset (SCOPED, not the literal `--text-*: initial`).** `theme/bridges.css` clears
+exactly `--text-sm: initial; --text-xs: initial` — the two collision rungs. The live census proved
+`text-base/lg/xl/2xl/3xl/4xl` (17), `leading-{tight,none,snug,relaxed}` (27), `tracking-widest` (3) are in
+active demo use and OUT of the 234 figure; a blanket `--text-*/--leading-*/--tracking-*: initial` would
+break them and force design-guess mappings (`text-4xl`→which display rung?). Scoping to the two bypass
+rungs achieves the stated goal exactly — a residual `text-sm`/`text-xs` is now a build-visible unknown
+utility — without collateral breakage. The √φ `@utility` rungs (`text-small`/`text-micro`/`text-caption`,
+defined via `@utility` in `typography/semantic.css`, a mechanism the `@theme` reset does not touch) are
+fully intact.
+
+**The four CSS-declaration repoints (APOTHEOSIS MECH-02):** `segmented.css:171` `0.8125rem`→`var(--type-caption)`
++ `:184` `0.875rem`→`var(--type-small)` (preserving the two-tier mobile<desktop intent); `layer-group.css:205`
+`0.75rem`→`var(--type-caption)` (byte-identical); the `0.1em` ×2 (`dropdown-menu/styles.css:94`,
+`command/styles.css:123`)→`var(--type-tracking-caps)` (== 0.1em, byte-identical).
+
+**GATE FLIP — `BAND-GATES` W4 `type-hygiene` GREEN, same cut.** Authored `tests/gates/type-hygiene.test.ts`
+as the STANDING GREEN regression lock (same-cut flip → no `it.fails` scaffold; RULING-2 never-RED-at-tag):
+utility arm bans `text-sm`/`text-xs` + raw `text-[<len>]` in `.vue`/`.ts` (lookbehind excludes the token-ref
+form), CSS arm bans raw rem/px `font-size` + `letter-spacing: 0.1em` in `src/components/**/*.css`; 4 self-test
+bites (planted `text-sm`/`text-[13px]`/`font-size:13px`/`0.1em` red, on-ladder + token-ref forms don't). 5/5
+GREEN. Production build GREEN (vite + vue-tsc types emit). Post-codemod: 0 residual utility `text-sm/xs`,
+0 residual arbitraries, token-refs preserved, no corruption.
+
+**π/DELTA — CORRECTED (W6-TYPE-CODEMOD closer, 2026-07-22, model claude-opus-4-8).** The original
+`springs page` π was STRUCK as unsound: its cited pair `scratchpad/pi-{before,after}-springs.png` was
+BYTE-IDENTICAL (`shasum -a 256` equal, `cmp` IDENTICAL — the "before" was a copy of the "after"), so it
+proved no delta; the springs page carries exactly ONE arbitrary codemod edit (`text-[0.7rem]`→`text-micro`
+on a below-the-fold `<code>`) and ZERO `text-sm`→`text-small` migrations, so it never exercised the
+load-bearing +2.4px growth it narrated. springs.vue is DEMOTED — unrepresentative of the codemod reach.
+
+The genuine paint DELTA is captured on a REAL surface the codemod's `text-sm`→√φ mapping governs — the
+shipped `CardDescription` (`display/card`, 1440px), which ALSO surfaced a stranded consumer this closer
+fixed (`.card-description` was reading the CLEARED `var(--text-sm)`; repointed to `var(--type-small)`, the
+√φ rung `text-small` maps onto — see the §MATERIAL truth-up below). Distinct-hash pair (computed-π +
+screenshot, own-launch localhost, screenshot/computed-style only, no getContext):
+- BEFORE (stranded `var(--text-sm)` → invalid-at-computed-value → inherit): `.card-description` = **18.608px**
+  (inherits parent body), lh 27.912px. `docs/tranches/BJ/evidence/W-TYPE-CODEMOD/card-before-strandedtextsm-1440.png`
+  — SHA-256 `9dcb8ba50b6b2e0f436dde39321b9342d2fea9f9651f329373c3d14b8d2f2093`.
+- AFTER (`var(--type-small)`, the √φ rung): `.card-description` = **16.4px** fluid at 1440px
+  (== `clamp(0.875rem, 0.8rem + 0.25vw, 1.25rem)`), lh 24.6px, `scrollWidth == clientWidth` (NO wrap/overflow
+  regression). `docs/tranches/BJ/evidence/W-TYPE-CODEMOD/card-after-typesmall-1440.png`
+  — SHA-256 `02931a4879d4ee3269f1c3172312e30f2eb94deb2438602f155a352ae3b0c7ff` (`cmp` DISTINCT).
+
+This distinct pair discharges the paint obligation for the CSS-declaration repoint class onto the √φ ladder
+(the exact `0.875rem`→fluid `--type-small` growth, no truncation/overflow at width). The Safari-floor arm
+stays covered-by-argument: font-size class/token substitution + a scoped `@theme` clear, engine-agnostic CSS
+with no backdrop-filter/mask/url() surface.
+
+**OPEN (deferred, routed).** The utility-arm +2.4px growth non-regression across the DENSE studio pages
+(`demo/stories/feedback/progress.vue` font-mono `text-xs`→`text-micro` + a `text-sm`→`text-small` growth
+surface, 1440px, pre-W6 base vs post) is NOT discharged by the card pair — it needs a genuine pre-codemod
+(pre-`562db5c7`) build, out of the fix-closer's bounded scope. Routed to a paint-tier follow-up; the gate +
+dist re-verify + this card DELTA bound the risk to layout-safe growth on the one live public surface.
+
+**§MATERIAL truth-up (W6-TYPE-CODEMOD closer, 2026-07-22, model claude-opus-4-8).** The §CLOSE claim
+"Scoping to the two bypass rungs ... without collateral breakage" was FALSE: the ramp reset
+(`bridges.css` `--text-sm: initial`) STRANDED a pre-existing DIRECT `var()` consumer the census never
+scanned — `src/components/card/styles.css` `.card-description { font-size: var(--text-sm); }`, the SHIPPED
+public `CardDescription`. Post-reset the `var(--text-sm)` had no fallback → invalid-at-computed-value →
+`.card-description` inherited its parent (~18.6px) instead of the intended 14px/√φ-small. It slipped all
+three nets by construction: the census scanned only `.vue/.ts` utility classes (not CSS `var()`
+consumers); the type-hygiene CSS arm banned only RAW rem/px literals (a `var(--text-sm)` passed); the
+paired-π measured only springs.vue (no card). **The MISSED 5th CSS-declaration repoint** — line 41
+`var(--text-sm)`→`var(--type-small)` (the exact √φ rung, same mapping as `segmented.css:184`
+`0.875rem`→`var(--type-small)`; byte-identical at the clamp floor). **STANDING-GREEN lock extended:** the
+`type-hygiene` gate CSS arm now bans `var(--text-sm)`/`var(--text-xs)` across ALL `src/**/*.css` (new
+`scanClearedVarRefs` + self-test bite; watched RED on the unfixed `card/styles.css:41`, GREEN after the
+repoint — 7/7). Dist re-verify: `grep var(--text-sm) dist/components/card/styles.css` = 0; the built
+`.card-description` resolves `font-size:var(--type-small)`.
 
 ---
 
