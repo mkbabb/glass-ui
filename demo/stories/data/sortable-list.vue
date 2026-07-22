@@ -58,83 +58,91 @@ function insertAt<T>(list: T[], index: number, item: T): T[] {
 
 <template>
     <StoryPage>
-        <StorySection heading="Single list" blurb="Drag the grip to reorder.">
-            <Card size="sm" surface="veil">
-                <CardContent>
-                    <SortableList
-                        :items="tasks"
-                        :get-id="(t) => t.id"
-                        :get-label="(t) => t.label"
-                        label="Tasks"
-                        class="flex flex-col gap-2"
-                        @reorder="tasks = $event"
-                    >
-                        <SortableItem
-                            v-for="t in tasks"
-                            :key="t.id"
-                            :id="t.id"
-                            class="flex items-center gap-3 rounded-md border border-border/70 bg-background px-3 py-2.5"
+        <!--
+            F14 responsive audit (BJ.W-RESPONSIVE-AUDIT): the two single-column
+            list demos each wasted the full desktop measure (F13). They are
+            parallel specimens, so they pair 2-up at ≥md and stack single-file at
+            mobile — the horizontal space is used, the 390px column is preserved.
+        -->
+        <div class="grid items-start gap-6 md:grid-cols-2">
+            <StorySection heading="Single list" blurb="Drag the grip to reorder.">
+                <Card size="sm" surface="veil">
+                    <CardContent>
+                        <SortableList
+                            :items="tasks"
+                            :get-id="(t) => t.id"
+                            :get-label="(t) => t.label"
+                            label="Tasks"
+                            class="flex flex-col gap-2"
+                            @reorder="tasks = $event"
                         >
-                            <SortableHandle
-                                class="text-muted-foreground hover:text-foreground"
-                                :aria-label="`Reorder ${t.label}`"
+                            <SortableItem
+                                v-for="t in tasks"
+                                :key="t.id"
+                                :id="t.id"
+                                class="flex items-center gap-3 rounded-md border border-border/70 bg-background px-3 py-2.5"
                             >
-                                <span class="fira-code leading-none">⋮⋮</span>
-                            </SortableHandle>
-                            <span
-                                class="h-2 w-2 rounded-full"
-                                :style="{
-                                    background: `var(--section-color-${t.tone})`,
-                                }"
-                            />
-                            <span class="text-small">{{ t.label }}</span>
-                        </SortableItem>
-                    </SortableList>
-                </CardContent>
-            </Card>
-        </StorySection>
+                                <SortableHandle
+                                    class="text-muted-foreground hover:text-foreground"
+                                    :aria-label="`Reorder ${t.label}`"
+                                >
+                                    <span class="fira-code leading-none">⋮⋮</span>
+                                </SortableHandle>
+                                <span
+                                    class="h-2 w-2 rounded-full"
+                                    :style="{
+                                        background: `var(--section-color-${t.tone})`,
+                                    }"
+                                />
+                                <span class="text-small">{{ t.label }}</span>
+                            </SortableItem>
+                        </SortableList>
+                    </CardContent>
+                </Card>
+            </StorySection>
 
-        <StorySection
-            heading="Handle-only"
-            blurb="Only the grip button starts a drag — the row body stays selectable text."
-        >
-            <Card size="sm" surface="veil">
-                <CardContent>
-                    <SortableList
-                        :items="handleOnlyTasks"
-                        :get-id="(t) => t.id"
-                        :get-label="(t) => t.label"
-                        label="Handle-only tasks"
-                        handle-selector="[data-sortable-handle]"
-                        class="flex flex-col gap-2"
-                        @reorder="handleOnlyTasks = $event"
-                    >
-                        <SortableItem
-                            v-for="t in handleOnlyTasks"
-                            :key="t.id"
-                            :id="t.id"
-                            :disabled="t.id === 'h3'"
-                            class="flex items-center gap-3 rounded-md border border-border/70 bg-background px-3 py-2.5"
+            <StorySection
+                heading="Handle-only"
+                blurb="Only the grip button starts a drag — the row body stays selectable text."
+            >
+                <Card size="sm" surface="veil">
+                    <CardContent>
+                        <SortableList
+                            :items="handleOnlyTasks"
+                            :get-id="(t) => t.id"
+                            :get-label="(t) => t.label"
+                            label="Handle-only tasks"
+                            handle-selector="[data-sortable-handle]"
+                            class="flex flex-col gap-2"
+                            @reorder="handleOnlyTasks = $event"
                         >
-                            <SortableHandle
-                                type="button"
-                                class="rounded-md border border-border bg-card p-1.5 text-muted-foreground transition-colors hover:text-foreground"
-                                :aria-label="`Drag ${t.label}`"
+                            <SortableItem
+                                v-for="t in handleOnlyTasks"
+                                :key="t.id"
+                                :id="t.id"
+                                :disabled="t.id === 'h3'"
+                                class="flex items-center gap-3 rounded-md border border-border/70 bg-background px-3 py-2.5"
                             >
-                                <GripVertical class="size-4" />
-                            </SortableHandle>
-                            <span
-                                class="h-2 w-2 rounded-full"
-                                :style="{
-                                    background: `var(--section-color-${t.tone})`,
-                                }"
-                            />
-                            <span class="text-small">{{ t.label }}</span>
-                        </SortableItem>
-                    </SortableList>
-                </CardContent>
-            </Card>
-        </StorySection>
+                                <SortableHandle
+                                    type="button"
+                                    class="rounded-md border border-border bg-card p-1.5 text-muted-foreground transition-colors hover:text-foreground"
+                                    :aria-label="`Drag ${t.label}`"
+                                >
+                                    <GripVertical class="size-4" />
+                                </SortableHandle>
+                                <span
+                                    class="h-2 w-2 rounded-full"
+                                    :style="{
+                                        background: `var(--section-color-${t.tone})`,
+                                    }"
+                                />
+                                <span class="text-small">{{ t.label }}</span>
+                            </SortableItem>
+                        </SortableList>
+                    </CardContent>
+                </Card>
+            </StorySection>
+        </div>
 
         <StorySection
             heading="Cross-list"
