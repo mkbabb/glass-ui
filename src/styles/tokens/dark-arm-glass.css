@@ -5,7 +5,7 @@
     /* Dark glass is TRANSMISSIVE. The dark rung
        backdrop-filter carries a saturate/brightness LUMINOSITY LIFT (the iOS-dark
        "dark glass glows where light passes" model) so a backdrop GLOWS through the
-       plate instead of dying behind it. The light arm sits at saturate(1.05) — over a
+       plate instead of dying behind it. The light arm sits at saturate 1.4 (wash/quiet/resting) / 1.6 (floating/overlay) — over a
        near-black canvas that reads as no transmission; the dark arm lifts it so the
        aurora/page behind reads with chroma + a glow. The blur() RADIUS is the
        light-arm primitive UNTOUCHED (owns the radius dial-back) — only the
@@ -21,8 +21,7 @@
        resolves the rung saturation with ZERO recipe edit, AND the composed dark blur
        is UNCHANGED at these defaults. The `brightness()` companions stay
        baked (this fold mints ONLY the saturate knob). The dark dock/deep saturate stay
-       baked (off-ladder footprint rungs, not part of the {wash..overlay} ladder).
-       Machine-locked by `proof:glass-legibility` L7. */
+       baked (off-ladder footprint rungs, not part of the {wash..overlay} ladder). */
     --glass-saturate-wash:     1.35;
     --glass-saturate-quiet:    1.35;
     --glass-saturate-resting:  1.30;
@@ -44,7 +43,7 @@
        dark glass glows MORE where the backdrop passes — so its saturate/brightness
        companion lifts HARDER than the calm dark floating (1.28/1.10): the deep
        arm carries saturate(1.55) brightness(1.16), in LOCKSTEP with the light deep
-       arm (which sits at saturate 1.5 / depth-LERPed, glass-deep.css). The RADIUS
+       arm (which LERPs saturate 1.6→1.8 on --glass-depth, ceiling `--glass-saturate-deep` 1.8, glass-deep.css). The RADIUS
        is the SAME --glass-blur-deep-active-radius × --glass-level (radius-only
        across modes, the §2c discipline — only the saturate/brightness companions
        differ between light/dark). This is a SEPARATE deep token the calm dark
