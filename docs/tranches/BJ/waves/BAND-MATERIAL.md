@@ -874,7 +874,7 @@ seat; read the machine report, never a piped exit code.
 no other owner in this corpus — `BAND-COLOCATION.md:71` explicitly declares the styles-root
 grouping nicety NOT a wave). Runs any time after `BAND-GATES` W3 authors the gate.
 
-### §CLOSE — LANDED (`c2a37ac5`, 2026-07-22, model claude-opus-4-8)
+### §CLOSE — LANDED (`44621bb4`, 2026-07-22, model claude-opus-4-8)
 
 Evidence: `../evidence/W-REFRACT-LATCH/` (README + gate reports + the latch-ON discrimination
 JSON + the dual-engine screenshots).
