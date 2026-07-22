@@ -3,32 +3,47 @@
    and the size-agnostic touch-hit-area utility. LAST in cascade.
    A partial of the utilities.css cascade; @import-ed by utilities.css in
    cascade order. See docs/precepts/design-idioms.md §cohesion-aware partials. */
-/* ── Reduced motion: nuanced — preserve opacity, remove spatial motion ── */
+/* ── Reduced motion: INSTANT global fallback (no resurrection) ────────────────
+   A global PRM fallback SUPPRESSES motion; it may NOT create transition
+   eligibility, re-enable an explicitly de-animated receiver, or attach a nonzero
+   clock to a receiver that authored none (Q-PRM-NO-RESURRECTION-C2 → FM W3,
+   row 12 `BJ.W-FEEDBACK-MOTION-TUNE`; this SUPERSEDES the historical BAND-A11Y
+   "wildcard reduced-motion substrate CONFIRMED KEEP" fence, now formation prose).
+
+   This is the KISS INSTANT wildcard: it snaps animation to a single endpoint
+   frame and forces transition-duration to ZERO. It deliberately does NOT mint a
+   `transition-property` list — minting one was the resurrection vector: the old
+   `transition-property: opacity, color, background-color, border-color,
+   box-shadow` override created a 100ms clock on transitionless receivers (the SCI
+   focal chip / plate rim's authored `transition:none`, VFT `.focus-ring`'s
+   un-authored color change). With `transition-property` left untouched, an
+   element that authored `transition:none` keeps `transition-property:none`
+   (nothing transitions — the `none` is NOT defeated), and an element that
+   authored no transition keeps its instant clock (no un-authored hover/focus
+   colour change acquires one).
+
+   `transition-duration:0s` is a genuine ZERO clock, not the old 0.1s (nor a
+   forensically-visible 0.01ms) — the instant fallback attaches no clock at all.
+   accessibility is absolute: `[data-allow-motion]` is NOT carved out here (a user
+   who asks for reduced motion outranks any per-element motion-allow). Its
+   theme-flip capability is the SEPARATE `html.no-transition` marker below and is
+   never overloaded into a public PRM licence.
+
+   The ONLY nonzero PRM transition clocks that survive are NARROW, explicit,
+   producer-owned authorizations that outrank this fallback NOT by specificity
+   (both are `!important`) but by cascade LAYER — they are `!important` inside
+   `@layer components`, and per CSS Cascade L5 layered `!important` beats unlayered
+   `!important` (index.css:1 layer order). enumerated + hashed in
+   docs/tranches/BJ/waves/BAND-FEEDBACK-MOTION.md §PRM-AUTHORIZED-SET (the
+   opacity-only Vue fade / pane-swap classes in transitions.css). They are never
+   inferred from a `*` wildcard. */
 @media (prefers-reduced-motion: reduce) {
-    *:not([data-allow-motion]) {
+    *,
+    *::before,
+    *::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
-    }
-
-    /* Keep opacity transitions (safe, non-spatial) but shorten */
-    *:not([data-allow-motion]) {
-        transition-duration: 0.1s !important;
-        transition-property:
-            opacity, color, background-color, border-color, box-shadow !important;
-    }
-
-    /* Reduced-motion OVERRIDES
-       the `data-allow-motion` theme-flip carve. That carve (the `.no-transition`
-       block below) lets a control keep its OWN authored spatial animation through
-       the flip storm — but a user who asks for reduced motion outranks any
-       per-element motion-allow. So motion-allowed elements ALSO snap their spatial
-       (transform) transition + any animation here; accessibility is absolute. (The
-       DarkModeToggle icon animates through a flip under full motion, and SNAPS
-       under PRM.) */
-    [data-allow-motion] {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+        transition-duration: 0s !important;
     }
 }
 

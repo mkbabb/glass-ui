@@ -21,13 +21,7 @@ routings postdate both the draft and PLAN.md's FAMILY K section.
 
 ## Band fences
 
-**CONFIRMED KEEP (band-wide non-goal)—the reduced-motion substrate.** Both RU-18 passes: the
-PRM system is a two-door design (`src/styles/utilities/a11y-overrides.css:7-33` blanket that
-overrides even `data-allow-motion`, + per-component `@media` arms, + the shared
-`useReducedMotion`/`useMotionAxis` signal gating the JS/rAF animators; canvas lifecycle owns
-the live-PRM freeze). No wave in this band touches `a11y-overrides.css`'s PRM rules, the PRM
-signal plumbing, the `data-allow-motion` carve, or the forced-colors focus restore. (The
-`touch-hit-area` utility itself is also KEEP—W2-F rewires a consumer onto it, never edits it.)
+**[SUPERSEDED 2026-07-22 — Q-PRM-NO-RESURRECTION-C2 / I-16, FM W3 `BJ.W-FEEDBACK-MOTION-TUNE`; no sixth A11Y wave minted.]** The former band-wide CONFIRMED-KEEP of the reduced-motion substrate is OVERTURNED. `a11y-overrides.css`'s PRM block is rewritten: the global fallback is now a single instant `*, *::before, *::after { animation-duration:0.01ms; animation-iteration-count:1; transition-duration:0s !important }` with NO minted `transition-property` list; the `[data-allow-motion]` PRM-override block and the `:not([data-allow-motion])` carve are DELETED (accessibility-absolute — `data-allow-motion` no longer needs a PRM carve). The `html.no-transition` theme-flip marker and the forced-colors focus restore are UNCHANGED and remain KEEP. Nonzero PRM transition clocks are now only the enumerated §PRM-AUTHORIZED-SET in BAND-FEEDBACK-MOTION.md (the `!important` opacity-fade classes in transitions.css, which survive by cascade LAYER — layered `!important` in `@layer components` outranks the unlayered `!important` fallback per CSS Cascade L5, not by specificity). The `useReducedMotion`/`useMotionAxis` signal plumbing and the canvas live-PRM freeze are unchanged. (The `touch-hit-area` utility itself is also KEEP—W2-F rewires a consumer onto it, never edits it.)
 
 **Also KEEP (verified working at HEAD, do not churn):** Toaster's added polite live region
 (`src/components/toast/Toaster.vue:114`), PagerDots roving tabindex + focus recovery,

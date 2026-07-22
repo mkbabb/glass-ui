@@ -1,0 +1,74 @@
+{
+  "wave": "BJ.W-FEEDBACK-MOTION-TUNE (FM W3, row 12)",
+  "ask": "I-16 / Q-PRM-NO-RESURRECTION-C2 (04fe76f9), Q critic e5d1a16c",
+  "source_fix": {
+    "file": "src/styles/utilities/a11y-overrides.css",
+    "post_fix_sha256": "50897fb7c5b57938f50f9b12c39416c1377886a9a03ad41e3d62f8ab80671205",
+    "change": "Removed the last-cascade wildcard *:not([data-allow-motion]) { transition-duration:0.1s !important; transition-property: opacity,color,background-color,border-color,box-shadow !important } resurrection rule. Replaced with a single INSTANT wildcard (*, *::before, *::after) { animation-duration:0.01ms; animation-iteration-count:1; transition-duration:0s !important } — no minted transition-property list. Removed the now-redundant [data-allow-motion] re-snap block (plain * covers it; accessibility absolute)."
+  },
+  "prm_authorized_set": {
+    "policy": "The instant * fallback attaches NO clock. The only surviving nonzero PRM transition clocks are narrow, exact producer-owned authorizations enumerated below. They outrank the * fallback NOT by specificity (both are !important, so specificity is never consulted) but by cascade LAYER: they are !important inside @layer components, and per CSS Cascade L5 a layered !important beats an unlayered !important (index.css:1 layer order; the a11y-overrides.css fallback is unlayered).",
+    "authorizations": [
+      {
+        "id": "AUTH-1 fade/pane/metric opacity fades",
+        "file": "src/styles/transitions.css:120-130",
+        "selectors": ".fade-enter-active, .fade-leave-active, .tab-fade-enter-active, .tab-fade-leave-active, .pane-swap-enter-active, .pane-swap-leave-active, .metric-swap-enter-active, .metric-swap-leave-active",
+        "property_set": "(authored opacity fades; unchanged transition-property)",
+        "duration": "0.1s",
+        "layer_over_wildcard": "layered !important (@layer components) outranks unlayered !important fallback per CSS Cascade L5; specificity not consulted (empirically isolated in chromium_computed_proof.receivers.iso_layer_beats_specificity)",
+        "rationale": "opacity-only Vue transition classes; safe non-spatial fade shortened, never a wildcard",
+        "sha256_rule_120_130": "9e04f749ac14c731c7ff7e5ca6c0f5c4a4959512532055f56907103df32bdb15"
+      },
+      {
+        "id": "AUTH-2 pane/metric opacity-isolate",
+        "file": "src/styles/transitions.css:132-140",
+        "selectors": ".pane-swap-enter-active, .pane-swap-leave-active, .metric-swap-enter-active, .metric-swap-leave-active",
+        "property_set": "opacity",
+        "duration": "0.15s",
+        "layer_over_wildcard": "layered !important (@layer components) outranks unlayered !important fallback per CSS Cascade L5; specificity not consulted",
+        "rationale": "isolates opacity, snaps the transform leg; exact class set",
+        "sha256_rule_132_140": "d3f21adf29929ad49dc01f6ee5113f6f70bcc8cfa66d54a7f2fd79417faa6712"
+      }
+    ],
+    "subordinate_dead_in_effect": [
+      {
+        "id": "SUB-1 top-layer backdrop",
+        "file": "src/styles/animations.css:300-305",
+        "selectors": ".glass-top-layer[popover], dialog.glass-top-layer",
+        "note": "transition-duration: var(--duration-fast) is NON-important — overridden to 0s by the instant wildcard (was already overridden by the old 0.1s !important wildcard). scale:none survives. Dead-in-effect, unchanged.",
+        "sha256_rule_300_305": "cf40f5043e46582ac47b77fef393105fdc67263bd68f46da709c9584c6c46e62"
+      }
+    ]
+  },
+  "theme_flip_marker_preserved": {
+    "selector": "html.no-transition, html.no-transition *:not([data-allow-motion])[+::before/::after]",
+    "note": "SEPARATE non-PRM flip-storm suppressor; only zeros duration; NOT overloaded into a PRM license. Unchanged."
+  },
+  "packed_mutations_watched_RED": {
+    "test_file": "tests/styles/prm-no-resurrection.test.ts (7/7 GREEN on fix)",
+    "mutation[restore-wildcard]": "restore transition-duration:0.1s on the * fallback -> RED (restore-wildcard + unauthored-hover-focus-clock cases fail)",
+    "mutation[defeat-chip-rim-none]": "re-mint transition-property: opacity,color,background-color,border-color,box-shadow -> RED (defeat-chip-rim-none case fails)",
+    "mutation[unauthored-hover-focus-clock]": "set transition-duration:0.01ms (forensic clock) on the * fallback -> RED (unauthored-hover-focus-clock case fails)",
+    "restored_clean_sha256": "50897fb7c5b57938f50f9b12c39416c1377886a9a03ad41e3d62f8ab80671205"
+  },
+  "chromium_computed_proof": {
+    "engine": "Chromium via Playwright MCP (browser_run_code_unsafe -> page.emulateMedia)",
+    "method": "GENUINE emulated-PRM media, NOT byte-injection. page.emulateMedia({reducedMotion:'reduce'}) fires the real @media (prefers-reduced-motion: reduce) gate; getComputedStyle read on synthetic-DOM receivers. The CSS under test is the LITERAL SHIPPED BYTES of src/styles/transitions.css (its own @layer components{} intact) and src/styles/utilities/a11y-overrides.css (unlayered, as accessibility.css imports it terminally), hosted under the real index.css:1 layer statement `@layer theme, base, components, utilities;`. matchMedia('(prefers-reduced-motion: reduce)').matches was verified === true under the reduce arm and === false under the baseline arm, so the media gate provably fired (this replaces the retired unconditional-byte-injection arm and its false 'emulate tool exposes no reduced-motion feature' excuse).",
+    "media_gate_fired": { "baseline_arm_matches": false, "reduce_arm_matches": true },
+    "receivers": {
+      "chip_authored_transition_none": { "authorship": "@layer components { transition:none }", "baseline": {"property":"none","duration":"0s"}, "reduced": {"property":"none","duration":"0s"}, "note": "authored transition:none preserved under PRM — the wildcard sets transition-duration:0s but never mints transition-property, so property stays none" },
+      "focusring_unauthored_hover_color": { "authorship": "hover color change, NO transition authored", "baseline": {"property":"all","duration":"0s"}, "reduced": {"property":"all","duration":"0s"}, "note": "un-authored hover color attaches NO clock (duration 0s both arms)" },
+      "panel_authored_spatial_transition": { "authorship": "@layer components { transition: transform .3s, opacity .3s }", "baseline": {"property":"transform, opacity","duration":"0.3s, 0.3s"}, "reduced": {"property":"transform, opacity","duration":"0s"}, "note": "SMOKING GUN that the PRM gate fired AND the wildcard applied: 0.3s,0.3s -> 0s only under reduce; property preserved" },
+      "fade_narrow_authorized": { "authorship": "transitions.css .fade-enter-active (@layer components; PRM arm sets transition-duration:0.1s !important)", "baseline": {"property":"opacity","duration":"0.18s"}, "reduced": {"property":"opacity","duration":"0.1s"}, "note": "AUTH-1 SURVIVES the unlayered wildcard under real PRM (layered !important @layer components beats unlayered !important fallback); shortened 0.18s -> 0.1s by the transitions.css PRM arm" },
+      "iso_layer_beats_specificity": { "authorship": "@layer components{ .iso{transition-duration:0.1s !important} (spec 0,1,0) } vs UNLAYERED #iso.iso{transition-duration:0s !important} (spec 1,1,0, HIGHER)", "baseline": {"duration":"0.1s"}, "reduced": {"duration":"0.1s"}, "note": "ISOLATION EXPERIMENT: the layered LOW-specificity !important (0,1,0) beats the unlayered HIGH-specificity !important (1,1,0). Empirically proves the surviving mechanism is cascade LAYER, not specificity — specificity is never consulted for cross-layer !important (CSS Cascade L5). This is the receiver the shipped fades (which happen to also have higher specificity than *) cannot themselves isolate." }
+    },
+    "old_defect_delta": "Restoring the retired wildcard (transition-duration:0.1s !important + minted transition-property: opacity,color,background-color,border-color,box-shadow on the unlayered *) resurrects chip/focusring/panel to a 100ms paint-prop clock — proven RED by the tests/styles/prm-no-resurrection.test.ts source mutations (restore-wildcard, defeat-chip-rim-none, unauthored-hover-focus-clock), each watched RED.",
+    "verdict": "FIXED, under genuine emulated PRM: authored transition:none preserved (chip property=none), un-authored hover color attaches NO clock (focusring duration=0s), authored spatial transition snapped instant (panel 0.3s->0s), narrow authorized fade retains 0.1s via LAYER precedence, and the iso receiver empirically demonstrates layered !important beats higher-specificity unlayered !important. The media gate provably fired (matchMedia true under reduce, false under baseline)."
+  },
+  "routed_not_done": [
+    "real Safari/VoiceOver receiver checks",
+    "immutable 8.0 source->pack->install->served identity",
+    "Q/Atlas repin (acts only after authorized repin)",
+    "two fresh exact-byte Sol x-high critics"
+  ]
+}

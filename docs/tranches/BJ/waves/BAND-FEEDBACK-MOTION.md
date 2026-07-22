@@ -162,6 +162,54 @@ never the brand-metal sweep clock; the 2.4s fallback is gone; (c) the driver-sha
 no `setInterval` progress driver survives, and no wrap frame animates the fill backwards across
 the track; (d) paired before/after capture of one full loop cycle (frame-sampled) for each.
 
+### §PRM-NO-RESURRECTION (I-16 / Q-PRM-NO-RESURRECTION-C2 `04fe76f9`, Q critic `e5d1a16c`)
+
+This wave also owns the global PRM producer-policy correction. The Q critic overturned BAND-A11Y's
+"wildcard reduced-motion substrate **CONFIRMED KEEP**" ruling — that A11Y fence is now **historical
+formation prose, explicitly SUPERSEDED here** (no sixth A11Y wave is minted; row 12 owns the shared
+`src/styles/` motion authorities). The defect: under `prefers-reduced-motion: reduce`, the
+last-cascade wildcard `*:not([data-allow-motion])` set `transition-duration: 0.1s !important` and
+INVENTED a `transition-property: opacity, color, background-color, border-color, box-shadow` list —
+overriding an authored `transition:none` (SCI focal chip / plate rim) and attaching a fresh 100ms
+clock to a receiver that authored none (VFT `.focus-ring` colour change).
+
+The cut (`src/styles/utilities/a11y-overrides.css`): the wildcard is replaced by ONE **instant**
+fallback — `*, *::before, *::after { animation-duration: 0.01ms; animation-iteration-count: 1;
+transition-duration: 0s !important }` — with **no minted `transition-property` list**. A global PRM
+fallback SUPPRESSES motion; it never creates transition eligibility, re-enables a de-animated
+receiver, or attaches a nonzero clock to one that authored none. The separate `html.no-transition`
+theme-flip marker is UNCHANGED and is never overloaded into a public PRM licence.
+
+**§PRM-AUTHORIZED-SET** — the ONLY nonzero PRM transition clocks that survive are narrow, exact,
+layered-`!important` (components layer, outranking the unlayered fallback) producer-owned
+authorizations, enumerated + hashed (never inferred from `*`). They win NOT by specificity — both
+are `!important`, so specificity is never consulted — but because per CSS Cascade L5 a layered
+`!important` (`@layer components`) outranks an unlayered `!important` (the `a11y-overrides.css`
+fallback; index.css:1 layer order):
+
+| id | file | selectors | property/duration | rule SHA-256 |
+|----|------|-----------|-------------------|--------------|
+| AUTH-1 | `transitions.css:120-130` | `.fade-*`/`.tab-fade-*`/`.pane-swap-*`/`.metric-swap-*` -active/-leave | opacity fade / 0.1s | `9e04f749…` |
+| AUTH-2 | `transitions.css:132-140` | `.pane-swap-*`/`.metric-swap-*` -active | `transition-property: opacity` / 0.15s | `d3f21adf…` |
+
+Subordinate (dead-in-effect, unchanged): `animations.css:300-305`
+`.glass-top-layer[popover], dialog.glass-top-layer` — its non-`!important`
+`transition-duration: var(--duration-fast)` is overridden to `0s` by the instant wildcard (as it
+already was by the old 0.1s wildcard); `scale:none` survives. Rule SHA-256 `cf40f504…`.
+
+Gates (born-RED, `tests/styles/prm-no-resurrection.test.ts`, 7/7 GREEN on the fix): (e)
+**restore-wildcard** — a nonzero `transition-duration` on the universal fallback REDs; (f)
+**defeat-chip-rim-none** — a minted `transition-property` list on the fallback REDs (it is the exact
+`transition:none`-override mechanism); (g) **unauthored-hover-focus-clock** — the universal
+`transition-duration` must be exactly `0s` (a genuine zero clock, not a forensic 0.01ms). Each was
+watched RED against its exact reintroduced defect. Chromium computed-style DELTA proof (natural media
+`reduce:false`; getComputedStyle == forensic-seek value) is filed at
+`../evidence/W-FEEDBACK-MOTION-TUNE/PRM-NO-RESURRECTION-PROOF.json`: FIXED keeps chip
+`transition-property:none`, focus-ring `duration:0s`, snaps the authored spatial transition to `0s`,
+and retains the AUTH-1 fade at `0.1s`; the OLD defect resurrects all three to a 100ms clock. ROUTED
+(not done here): real Safari/VoiceOver, immutable 8.0 install, Q/Atlas repin, two fresh Sol x-high
+critics.
+
 ## Wave 4 — `BJ.W-ALERT-IDIOM` (F19)
 
 Alert becomes a first-class glass citizen: card-role radius from the `BJ.W-RADIUS-ROLE` table,
