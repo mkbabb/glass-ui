@@ -1,0 +1,85 @@
+/* ════════════════════════════════════════════════════════════════════════
+   .value-marks / .value-mark — the ONE shared value-MARK register.
+
+   The decorative checkpoint dots painted along a track — the
+   horizontal/vertical/RTL/inverted dot geometry factored ONCE out of the
+   twin scoped copies the Slider (`.slider-mark`) and Progress
+   (`.progress-value-mark`) each carried (~65 duplicated lines). Both were fed
+   by the same `resolveValueMarks` domain + the same `--value-mark-*` tokens
+   and painted the same dot; the paint lived twice. Now it lives once.
+
+   The mechanic: each `.value-mark` is a ZERO-thickness positioned LINE at its
+   `--value-mark-position` along the main axis (spanning the cross axis); its
+   `::before` centres the dot on that line via physical `left/top: 50%` +
+   `translate(-50%,-50%)`. The zero-thickness line makes the centring
+   direction-agnostic, so RTL is handled by the logical `inset-inline-*` alone
+   — no per-direction transform flip is needed (the register is SIMPLER than
+   either scoped copy while painting pixel-identically to both).
+
+   The container carries the axis state as data attrs (the consumer forwards
+   its orientation / inverted flags):
+     · [data-orientation="vertical"] — the dots run bottom→top (value 0 = bottom).
+     · [data-inverted]               — the main-axis origin flips (slider only).
+
+   Tokens (inline defaults, the shared value-marks vocabulary):
+     · --value-mark-position — the fraction along the track (set per dot).
+     · --value-mark-size     — the dot diameter (default 0.375rem).
+     · --value-mark-color    — the dot fill (default foreground @ 34%).
+
+   @layer components, @import-ed in glass.css alongside the track-well +
+   liquid-fill registers. Decorative only (`aria-hidden`, `pointer-events:none`).
+   ════════════════════════════════════════════════════════════════════════ */
+
+@layer components {
+    .value-marks {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+    }
+
+    /* Horizontal (base): a full-height, zero-width line at the position. */
+    .value-mark {
+        position: absolute;
+        inset-block: 0;
+        inset-inline-start: var(--value-mark-position);
+        inline-size: 0;
+    }
+
+    /* Horizontal inverted: the main-axis origin flips to the end (slider). */
+    .value-marks[data-inverted] .value-mark {
+        inset-inline-start: auto;
+        inset-inline-end: var(--value-mark-position);
+    }
+
+    /* Vertical: a full-width, zero-height line measured from the block-end
+       (value 0 = bottom). */
+    .value-marks[data-orientation="vertical"] .value-mark {
+        inset-inline: 0;
+        inset-block-start: auto;
+        inset-block-end: var(--value-mark-position);
+        inline-size: 100%;
+        block-size: 0;
+    }
+
+    /* Vertical inverted: measured from the block-start instead (slider). */
+    .value-marks[data-orientation="vertical"][data-inverted] .value-mark {
+        inset-block-start: var(--value-mark-position);
+        inset-block-end: auto;
+    }
+
+    /* The dot — centred on the zero-thickness line, direction-agnostic. */
+    .value-mark::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        inline-size: var(--value-mark-size, 0.375rem);
+        block-size: var(--value-mark-size, 0.375rem);
+        border-radius: 50%;
+        background: var(
+            --value-mark-color,
+            color-mix(in srgb, var(--foreground) 34%, transparent)
+        );
+        transform: translate(-50%, -50%);
+    }
+}

@@ -651,6 +651,49 @@ existing `glass-liquid-fill` idiom rather than minting new machinery.
 - `OPEN-4b` — whether ContinuousRail's warm-glass region-stitch track joins the fold at the timeline
   redesign or stays its own idiom (its stitched-gradient fill is genuinely distinct).
 
+### §BUILD LANDED — the fold (opus, modelId `claude-opus-4-8`), 2026-07-22
+
+CENSUS re-proven on disk at HEAD `7de2ece1`: BOTH registers duplicated. Track surface — three
+vocabularies: `.slider-track` (`--slider-track-bg`/`--muted-medium`) + `.progress-rail`
+(`--progress-track`/`--progress-track-on-glass`) + the timeline `.glass-track`/`.timeline-rail` (OUT
+per C-C, joins at the W5 redesign). Value marks — the twin ~65-line paint: `.slider-marks`/`.slider-mark`
+(+ inverted + vertical + `::before` dot) vs `.progress-value-marks`/`.progress-value-mark` (+ `:dir(rtl)`
++ vertical legs), both fed by the same `resolveValueMarks` + `--value-mark-*` tokens, painting the same
+dot twice. **The fold is REFACTOR-PARITY, stated honestly — never born-RED.**
+
+- **Two register partials minted** (the `liquid-fill.css` glass-layer idiom, NOT `_shared/`):
+  `src/styles/glass/track-well.css` (`.glass-track-well` — position/overflow/pill-radius/recessed-bg via
+  the ONE `--track-bg` knob) + `src/styles/glass/value-marks.css` (`.value-marks`/`.value-mark` —
+  horizontal/vertical/RTL/inverted dot geometry ONCE). Both @import-ed into `glass.css` right after
+  `liquid-fill.css` (the W7 closure discipline — no orphan partial; verified in `dist/styles/glass.css`).
+- **Slider + Progress compose the registers via template class**; every scoped track-surface + mark rule
+  deleted. Slider keeps only its SIZING (grown flex child + `[data-size]` height axis); Progress keeps
+  only its block sizing + the warm `--track-bg: var(--progress-track-on-glass)` default. Each component
+  forwards its axis flags (`data-orientation`/`data-inverted`) onto the shared marks container.
+- **Clean break, no aliases (MEMORY doctrine):** the two track-bg knobs (`--slider-track-bg`,
+  `--progress-track`) COLLAPSE to `--track-bg`; the four spectrum-slider demo consumers migrated
+  (`forms/slider.vue`, `aurora/OklchStopRow.vue` ×3). Fill knobs (`--slider-range-*`, `--progress-fill`)
+  UNTOUCHED. `grep --slider-track-bg src/ demo/` = 0 (comment only).
+- **The unified marks mechanic is SIMPLER than either scoped copy** (a zero-thickness positioned line +
+  a physically-centred `::before` dot makes RTL direction-agnostic — no `:dir(rtl)` transform flip is
+  needed), and reproduces all 8 register×orientation×direction cases PIXEL-IDENTICALLY (case table proven
+  by construction; `Slider.marks.test.ts`/`Progress.test.ts` mark positions unchanged, 32 GREEN).
+- **Guard:** `tests/styles/track-well-fold.test.ts` pins the fold (both components compose
+  `.glass-track-well` + `.value-marks`; Slider forwards its axis flags). vue-tsc clean; `npm run build`
+  green; registers ship in `dist/styles/glass/{track-well,value-marks}.css`.
+- **LIVE-π DEFER (orchestrator-owned, per band cadence):** the before/after pixel-identity capture
+  (Safari + Chrome) over the standard slider fill, spectrum gradient track, horizontal/vertical marks,
+  and the Progress meter + marks — the refactor-parity DELTA artefact. Parity is by-construction +
+  unit-proven; the paint capture is the remaining obligation.
+
+### §DEFERRED
+
+- **`OPEN-4b`** — ContinuousRail's warm-glass region-stitch track joining the fold: DEFERRED to the
+  `BJ.W-REDUCE-TIMELINE` redesign (BAND-REDUCTION W5), per the C-C sequencing ruling. The surviving
+  continuous Timeline adopts `.glass-track-well` at its redesign, widening the family to ≥3 real
+  consumers (the register name is timeline-collision-free: it is `glass-track-well`, NOT the live scoped
+  `glass-track` on `ScrubberTimeline.vue:209`).
+
 ---
 
 ## Wave 5 — `BJ.W-ARISTOTLE-PROPORTION` — the aristotelian-proportion review pass (A10)

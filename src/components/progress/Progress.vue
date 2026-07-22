@@ -67,7 +67,7 @@ const indicatorClass = computed(() => ({
         data-slot="progress"
         v-bind="delegatedProps"
         :model-value="isIndeterminate ? null : props.modelValue"
-        class="progress-rail"
+        class="progress-rail glass-track-well"
         :class="props.class"
         :data-variant="props.variant"
         :data-status="props.status"
@@ -78,11 +78,16 @@ const indicatorClass = computed(() => ({
         :aria-orientation="props.orientation"
         :style="rootStyle"
     >
-        <span v-if="marks.length" class="progress-value-marks" aria-hidden="true">
+        <span
+            v-if="marks.length"
+            class="value-marks"
+            aria-hidden="true"
+            :data-orientation="props.orientation === 'vertical' ? 'vertical' : undefined"
+        >
             <span
                 v-for="mark in marks"
                 :key="mark.value"
-                class="progress-value-mark"
+                class="value-mark"
                 :style="{ '--value-mark-position': `${mark.position * 100}%` }"
             />
         </span>
@@ -91,14 +96,16 @@ const indicatorClass = computed(() => ({
 </template>
 
 <style scoped>
+/* The recessed GROOVE (position/overflow/pill-radius/recessed-bg) is COMPOSED
+   from the shared `.glass-track-well` register (template class); the rail owns
+   only its SIZING (block meter) + the recessed channel colour here. The
+   `--progress-track` consumer knob collapsed to the register's `--track-bg`
+   (clean break); the warm-meter default `--progress-track-on-glass` rides it. */
 .progress-rail {
-    position: relative;
     display: block;
     inline-size: 100%;
     block-size: var(--progress-size, 1rem);
-    overflow: hidden;
-    border-radius: var(--radius-pill);
-    background: var(--progress-track, var(--progress-track-on-glass));
+    --track-bg: var(--progress-track-on-glass);
 }
 
 .progress-rail[data-orientation="vertical"] {
@@ -111,40 +118,10 @@ const indicatorClass = computed(() => ({
     box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--destructive) 48%, transparent);
 }
 
-.progress-value-marks {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-}
-
-.progress-value-mark {
-    position: absolute;
-    inset-block-start: 50%;
-    inset-inline-start: var(--value-mark-position);
-    inline-size: var(--value-mark-size, 0.375rem);
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: var(
-        --value-mark-color,
-        color-mix(in srgb, var(--foreground) 34%, transparent)
-    );
-    transform: translate(-50%, -50%);
-}
-
-.progress-rail:dir(rtl) .progress-value-mark {
-    transform: translate(50%, -50%);
-}
-
-.progress-rail[data-orientation="vertical"] .progress-value-mark {
-    inset-block-start: auto;
-    inset-block-end: var(--value-mark-position);
-    inset-inline-start: 50%;
-    transform: translate(-50%, 50%);
-}
-
-.progress-rail[data-orientation="vertical"]:dir(rtl) .progress-value-mark {
-    transform: translate(50%, 50%);
-}
+/* The value MARKS (`.value-marks`/`.value-mark`) are COMPOSED from the shared
+   value-marks register — the horizontal/vertical/RTL dot geometry lives ONCE
+   there; the Progress forwards its orientation as a data attr on the marks
+   container. No scoped mark rules survive here (the twin was folded). */
 
 .progress-value-fill {
     position: relative;
@@ -184,14 +161,14 @@ const indicatorClass = computed(() => ({
 .progress-rail[data-indeterminate] {
     background: linear-gradient(
         90deg,
-        var(--progress-track, var(--progress-track-on-glass)) 0%,
+        var(--track-bg) 0%,
         color-mix(
                 in srgb,
                 var(--progress-fill, var(--primary)) 60%,
-                var(--progress-track, var(--progress-track-on-glass))
+                var(--track-bg)
             )
             50%,
-        var(--progress-track, var(--progress-track-on-glass)) 100%
+        var(--track-bg) 100%
     );
     background-size: 200% 100%;
     animation: progress-indeterminate-sweep
@@ -201,14 +178,14 @@ const indicatorClass = computed(() => ({
 .progress-rail[data-orientation="vertical"][data-indeterminate] {
     background-image: linear-gradient(
         0deg,
-        var(--progress-track, var(--progress-track-on-glass)) 0%,
+        var(--track-bg) 0%,
         color-mix(
                 in srgb,
                 var(--progress-fill, var(--primary)) 60%,
-                var(--progress-track, var(--progress-track-on-glass))
+                var(--track-bg)
             )
             50%,
-        var(--progress-track, var(--progress-track-on-glass)) 100%
+        var(--track-bg) 100%
     );
     background-size: 100% 200%;
     animation-name: progress-indeterminate-rise;

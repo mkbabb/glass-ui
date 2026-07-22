@@ -5,7 +5,7 @@ import { Slider } from "@glass/components/slider";
 
 const markPositions = (wrapper: ReturnType<typeof mount>) =>
     wrapper
-        .findAll(".slider-mark")
+        .findAll(".value-mark")
         .map((mark) => mark.attributes("style")?.match(/[\d.]+%/)?.[0]);
 
 describe("Slider value marks", () => {
@@ -21,7 +21,7 @@ describe("Slider value marks", () => {
         });
 
         expect(markPositions(wrapper)).toEqual(["20%", "50%"]);
-        const layer = wrapper.get(".slider-marks");
+        const layer = wrapper.get(".value-marks");
         expect(layer.attributes("aria-hidden")).toBe("true");
         expect(wrapper.attributes("marks")).toBeUndefined();
     });
@@ -78,7 +78,7 @@ describe("Slider value marks", () => {
         expect(wrapper.findAll('[role="slider"]')).toHaveLength(2);
         expect(markPositions(wrapper)).toEqual(["10%", "25%", "50%", "75%", "90%"]);
         expect(wrapper.get(".slider-track").element.children[0]?.classList).toContain(
-            "slider-marks",
+            "value-marks",
         );
         expect(wrapper.get(".slider-track").element.children[1]?.classList).toContain(
             "slider-range",

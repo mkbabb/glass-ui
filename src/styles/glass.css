@@ -99,6 +99,15 @@
    `--glass-under-shadow-quiet` tokens resolve) and BEFORE the consuming
    slider/progress recipes. */
 @import "./glass/liquid-fill.css";
+/* The two shared TRACK registers — the sibling of liquid-fill (that owns the
+   FILL): `.glass-track-well` owns the recessed pill GROOVE, `.value-marks`/
+   `.value-mark` own the checkpoint dot paint. Both are COMPOSED by the Slider's
+   `.slider-track` + the Progress `.progress-rail` (fewer-sharper-primitives:
+   one groove recipe + one mark recipe, N surfaces). @import-ed here alongside
+   liquid-fill (same `@layer components`, so `--radius-pill`/`--muted-medium`/
+   `--value-mark-*` resolve) and BEFORE the consuming slider/progress recipes. */
+@import "./glass/track-well.css";
+@import "./glass/value-marks.css";
 @import "./glass/surface-axis.css";
 @import "./glass/material-roles.css";
 @import "./glass/reveal.css";

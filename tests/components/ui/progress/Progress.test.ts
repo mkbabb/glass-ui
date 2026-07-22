@@ -22,7 +22,7 @@ describe("Progress", () => {
             });
             expect(
                 wrapper
-                    .findAll(".progress-value-mark")
+                    .findAll(".value-mark")
                     .map((mark) => mark.attributes("style")),
             ).toEqual([
                 "--value-mark-position: 25%;",
@@ -41,7 +41,7 @@ describe("Progress", () => {
             "--progress-value-percent: 50%",
         );
         expect(root(wrapper).attributes("aria-valuenow")).toBe("125");
-        expect(wrapper.get(".progress-value-mark").attributes("style")).toContain(
+        expect(wrapper.get(".value-mark").attributes("style")).toContain(
             "--value-mark-position: 50%",
         );
     });
@@ -50,14 +50,14 @@ describe("Progress", () => {
         const wrapper = mount(Progress, {
             props: { modelValue: 0.49, max: 1, marks: [0.5] },
         });
-        const markStyle = wrapper.get(".progress-value-mark").attributes("style");
+        const markStyle = wrapper.get(".value-mark").attributes("style");
 
         await wrapper.setProps({ modelValue: 0.51 });
 
         expect(root(wrapper).attributes("style")).toContain(
             "--progress-value-percent: 51%",
         );
-        expect(wrapper.get(".progress-value-mark").attributes("style")).toBe(markStyle);
+        expect(wrapper.get(".value-mark").attributes("style")).toBe(markStyle);
     });
 
     it("renders only sorted, unique, interior marks as decorative paint", () => {
@@ -65,19 +65,19 @@ describe("Progress", () => {
             props: { modelValue: 40, marks: [100, 75, 25, 25, 0, -1, Number.NaN] },
         });
 
-        expect(wrapper.get(".progress-value-marks").attributes("aria-hidden")).toBe(
+        expect(wrapper.get(".value-marks").attributes("aria-hidden")).toBe(
             "true",
         );
         expect(
             wrapper
-                .findAll(".progress-value-mark")
+                .findAll(".value-mark")
                 .map((mark) => mark.attributes("style")),
         ).toEqual(["--value-mark-position: 25%;", "--value-mark-position: 75%;"]);
     });
 
     it("adds no decorative layer when marks are omitted", () => {
         const wrapper = mount(Progress, { props: { modelValue: 40 } });
-        expect(wrapper.find(".progress-value-marks").exists()).toBe(false);
+        expect(wrapper.find(".value-marks").exists()).toBe(false);
     });
 
     it("keeps inherited RTL on the same logical value geometry", () => {
@@ -90,7 +90,7 @@ describe("Progress", () => {
         expect(root(wrapper).attributes("style")).toContain(
             "--progress-value-percent: 25%",
         );
-        expect(wrapper.get(".progress-value-mark").attributes("style")).toContain(
+        expect(wrapper.get(".value-mark").attributes("style")).toContain(
             "--value-mark-position: 25%",
         );
     });
@@ -138,7 +138,7 @@ describe("Progress", () => {
             "data-orientation": "vertical",
         });
         expect(wrapper.findAll(".progress-value-fill")).toHaveLength(1);
-        expect(wrapper.findAll(".progress-value-mark")).toHaveLength(3);
+        expect(wrapper.findAll(".value-mark")).toHaveLength(3);
     });
 
     describe("gradient lifecycle", () => {
