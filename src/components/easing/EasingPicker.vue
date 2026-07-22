@@ -472,7 +472,7 @@ const stepsModel = computed<number[]>({
                 data-testid="easing-readout"
             >
                 <div class="flex items-center gap-2">
-                    <code ref="readoutEl" tabindex="0" class="min-w-0 flex-1 break-all text-xs text-foreground select-text">{{ readoutLiteral }}</code>
+                    <code ref="readoutEl" tabindex="0" class="min-w-0 flex-1 break-all text-micro text-foreground select-text">{{ readoutLiteral }}</code>
                     <button
                         type="button"
                         class="shrink-0 rounded-pill p-1.5 text-muted-foreground transition-colors hover:bg-(--surface-tint-8) hover:text-foreground aria-disabled:cursor-wait aria-disabled:opacity-disabled"

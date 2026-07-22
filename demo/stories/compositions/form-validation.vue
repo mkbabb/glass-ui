@@ -42,7 +42,7 @@ function clearSummaryWhenValid(): void {
 <template>
     <StoryPage>
         <StorySection heading="Form validation" gap="lg">
-            <p class="max-w-xl text-sm text-muted-foreground">
+            <p class="max-w-xl text-small text-muted-foreground">
                 Errors wait for field exit or submit, then clear as each native value becomes valid.
                 Submit moves focus to the first invalid field.
             </p>
@@ -57,7 +57,7 @@ function clearSummaryWhenValid(): void {
                 <div role="status" aria-atomic="true">
                     <p
                         v-if="hasErrors"
-                        class="border-s-2 border-destructive ps-3 text-sm text-destructive"
+                        class="border-s-2 border-destructive ps-3 text-small text-destructive"
                     >
                         Some details need attention. Complete the highlighted fields.
                     </p>

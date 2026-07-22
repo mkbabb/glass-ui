@@ -158,7 +158,7 @@ function onKeydown(e: KeyboardEvent) {
     <StoryPage>
         <DockStage #default="{ backgroundCanvas }">
             <StorySection heading="The dock IS a search bar" gap="lg">
-                <p class="text-sm text-muted-foreground max-w-prose">
+                <p class="text-small text-muted-foreground max-w-prose">
                     Tap the collapsed dock pill — it MORPHS continuously (not a hard
                     swap) into a search field. Type —
                     the fuzzy dropdown ranks live with subsequence-match highlighting +
@@ -278,7 +278,7 @@ function onKeydown(e: KeyboardEvent) {
                             }"
                         >
                             <h3 class="text-subheading">{{ item.label }}</h3>
-                            <p class="text-sm text-muted-foreground">{{ item.text }}</p>
+                            <p class="text-small text-muted-foreground">{{ item.text }}</p>
                         </section>
                         <div :style="{ height: `${bottomSpacerPx}px` }" />
                     </div>

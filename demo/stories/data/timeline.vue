@@ -162,7 +162,7 @@ function onEventKeydown(event: KeyboardEvent, index: number): void {
                                  contrast-color() picks the max-contrast ink per fill on the census
                                  engines (Chrome 149 / Safari 26); text-white is the pre-modern base. -->
                             <span
-                                class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-medium text-white"
+                                class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-micro font-medium text-white"
                                 :style="{ background: `var(--section-color-${e.tone})`, color: `contrast-color(var(--section-color-${e.tone}))` }"
                             >
                                 {{ i + 1 }}

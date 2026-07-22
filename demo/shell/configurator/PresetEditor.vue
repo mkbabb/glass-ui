@@ -154,7 +154,7 @@ function effectiveFont(slot: keyof FontSlots): string {
                     <DialogTitle class="font-display text-2xl">
                         glass-ui demo Configurator
                     </DialogTitle>
-                    <DialogDescription class="text-prose text-sm">
+                    <DialogDescription class="text-prose text-small">
                         Live-tune the design axes — glass, scale, and token presets.
                         Changes persist locally.
                     </DialogDescription>

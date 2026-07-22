@@ -81,7 +81,7 @@ function guardConfirmDismiss(event: Event) {
     <StoryPage>
 
             <StorySection heading="Standard dialog" gap="lg">
-                <p class="text-sm text-muted-foreground">
+                <p class="text-small text-muted-foreground">
                     Glass variant with a form body and a cancel/submit footer.
                 </p>
                 <div class="flex flex-wrap gap-3">
@@ -135,7 +135,7 @@ function guardConfirmDismiss(event: Event) {
             </StorySection>
 
             <StorySection heading="Behavior states" gap="lg">
-                <p class="text-sm text-muted-foreground">
+                <p class="text-small text-muted-foreground">
                     The same Dialog anatomy covers nonmodal work, bounded scrolling,
                     nested focus ownership, and compositions with an ordinary explicit
                     close action.
@@ -201,7 +201,7 @@ function guardConfirmDismiss(event: Event) {
                                         :key="check"
                                         class="flex items-center gap-3 py-3 text-small"
                                     >
-                                        <span class="w-6 font-mono text-xs text-muted-foreground">
+                                        <span class="w-6 font-mono text-micro text-muted-foreground">
                                             {{ String(index + 1).padStart(2, "0") }}
                                         </span>
                                         <span>{{ check }}</span>
@@ -308,9 +308,9 @@ function guardConfirmDismiss(event: Event) {
             </StorySection>
 
             <StorySection heading="Spring register" gap="lg">
-                <p class="text-sm text-muted-foreground">
+                <p class="text-small text-muted-foreground">
                     The centered dialog's entrance rides the named JS spring set by
-                    <code class="font-mono text-xs">springPreset</code>. Flip the register
+                    <code class="font-mono text-micro">springPreset</code>. Flip the register
                     and reopen to eye-judge each curve's scale bloom —
                     <strong>bouncy</strong> overshoots most (the canonical dialog
                     entrance), <strong>gentle</strong> settles with none.
@@ -342,9 +342,9 @@ function guardConfirmDismiss(event: Event) {
             </StorySection>
 
             <StorySection heading="Backdrop" gap="lg">
-                <p class="text-sm text-muted-foreground">
+                <p class="text-small text-muted-foreground">
                     The centered dialog's scrim rides the
-                    <code class="font-mono text-xs">backdrop</code> axis —
+                    <code class="font-mono text-micro">backdrop</code> axis —
                     <strong>scrim</strong> (default) washes the whole field flat;
                     <strong>graded</strong> swaps it for the box-following halo that
                     pools a soft focus concentric with the modal, dimming the aurora
@@ -382,17 +382,17 @@ function guardConfirmDismiss(event: Event) {
             </StorySection>
 
             <StorySection heading="Confirm preset" gap="lg">
-                <p class="text-sm text-muted-foreground">
+                <p class="text-small text-muted-foreground">
                     The confirm-flow Dialog preset — destructive tone, async loading
                     state, the loading dismiss-guard. A consumer composition over
-                    <code class="font-mono text-xs">Dialog</code>, not a distinct
+                    <code class="font-mono text-micro">Dialog</code>, not a distinct
                     component. Confirmed {{ confirmed }} time(s).
                 </p>
                 <div class="relative isolate rounded-2xl border border-border bg-card p-6">
                     <div class="flex items-center justify-between gap-4">
                         <div>
                             <p class="text-subheading">Delete workspace</p>
-                            <p class="text-sm text-muted-foreground">
+                            <p class="text-small text-muted-foreground">
                                 Anchored absolutely inside this card surface.
                             </p>
                         </div>

@@ -117,7 +117,7 @@ function togglePlay() {
              its own getImageData readback (12 → 1). -->
         <DockStage :paused="bgPaused">
         <StorySection heading="Collapsible (hover to expand)" gap="md">
-            <p class="text-sm text-muted-foreground">
+            <p class="text-small text-muted-foreground">
                 The collapsed pill scales up on hover on the same
                 <code class="rounded bg-muted px-1">--spring-dock</code> vocabulary the
                 expand morph uses, so hover-to-expand reads as one continuous spring.
@@ -174,7 +174,7 @@ function togglePlay() {
                     <DockControl aria-label="Next"><SkipForward /></DockControl>
                     <DockSeparator />
                     <span
-                        class="px-2 text-xs text-muted-foreground tabular-nums max-w-36 truncate"
+                        class="px-2 text-micro text-muted-foreground tabular-nums max-w-36 truncate"
                     >
                         {{ track }}
                     </span>
@@ -183,7 +183,7 @@ function togglePlay() {
         </StorySection>
 
         <StorySection heading="Static backdrop" gap="md">
-            <p class="text-sm text-muted-foreground">
+            <p class="text-small text-muted-foreground">
                 <code class="rounded bg-muted px-1">backdrop-mode="static"</code>
                 keeps the dock controls and morph behavior while replacing the live
                 sampled lens with a solid, filter-free plate.
@@ -217,7 +217,7 @@ function togglePlay() {
                             aria-label="Dock view"
                             data-testid="dock-select-trigger"
                         >
-                            <span class="text-xs">{{ dockViewLabels[dockView] }}</span>
+                            <span class="text-micro">{{ dockViewLabels[dockView] }}</span>
                             <SelectValue class="sr-only" />
                         </DockTrigger>
                         <SelectContent>
@@ -239,7 +239,7 @@ function togglePlay() {
                             data-testid="dock-dropdown-trigger"
                         >
                             <Settings class="h-4 w-4" />
-                            <span class="text-xs">{{
+                            <span class="text-micro">{{
                                 dockCommandLabels[dockCommand]
                             }}</span>
                             <ChevronDown class="h-3 w-3 opacity-60" />
@@ -274,11 +274,11 @@ function togglePlay() {
                             aria-label="Dock info"
                         >
                             <Bell class="h-4 w-4" />
-                            <span class="text-xs">Info</span>
+                            <span class="text-micro">Info</span>
                             <ChevronDown class="h-3 w-3 opacity-60" />
                         </DockTrigger>
                         <PopoverContent align="center" class="w-52">
-                            <p class="text-xs text-muted-foreground">
+                            <p class="text-micro text-muted-foreground">
                                 The popover trigger shares the
                                 <code class="rounded bg-muted px-1">.dock-trigger</code>
                                 geometry with the select + dropdown — same padding,
@@ -289,7 +289,7 @@ function togglePlay() {
                 </GlassDock>
 
                 <div
-                    class="grid gap-1 rounded-lg border border-border/50 bg-background/60 px-3 py-2 text-xs text-muted-foreground sm:grid-cols-2"
+                    class="grid gap-1 rounded-lg border border-border/50 bg-background/60 px-3 py-2 text-micro text-muted-foreground sm:grid-cols-2"
                 >
                     <p data-testid="dock-select-readout">
                         select =
@@ -308,7 +308,7 @@ function togglePlay() {
         </StorySection>
 
         <StorySection heading="With popover triggers" gap="md">
-            <p class="text-sm text-muted-foreground">
+            <p class="text-small text-muted-foreground">
                 <code class="rounded bg-muted px-1">Popover keep-dock-open</code>
                 gives these command panels click and tap disclosure semantics while
                 pinning the parent dock open. Hover previews belong to HoverCard;
@@ -329,22 +329,22 @@ function togglePlay() {
                         <PopoverContent side="bottom" align="center" class="w-auto p-1">
                             <div class="flex min-w-44 flex-col gap-1">
                                 <p
-                                    class="px-2 py-1 text-[10px] uppercase tracking-wider text-muted-foreground"
+                                    class="px-2 py-1 text-micro uppercase tracking-wider text-muted-foreground"
                                 >
                                     Share
                                 </p>
                                 <button
-                                    class="rounded px-2 py-1.5 text-left text-sm hover:bg-muted"
+                                    class="rounded px-2 py-1.5 text-left text-small hover:bg-muted"
                                 >
                                     Copy link
                                 </button>
                                 <button
-                                    class="rounded px-2 py-1.5 text-left text-sm hover:bg-muted"
+                                    class="rounded px-2 py-1.5 text-left text-small hover:bg-muted"
                                 >
                                     Email
                                 </button>
                                 <button
-                                    class="rounded px-2 py-1.5 text-left text-sm hover:bg-muted"
+                                    class="rounded px-2 py-1.5 text-left text-small hover:bg-muted"
                                 >
                                     Embed
                                 </button>
@@ -361,22 +361,22 @@ function togglePlay() {
                         <PopoverContent side="bottom" align="end" class="w-auto p-1">
                             <div class="flex min-w-44 flex-col gap-1">
                                 <p
-                                    class="px-2 py-1 text-[10px] uppercase tracking-wider text-muted-foreground"
+                                    class="px-2 py-1 text-micro uppercase tracking-wider text-muted-foreground"
                                 >
                                     Export
                                 </p>
                                 <button
-                                    class="rounded px-2 py-1.5 text-left text-sm hover:bg-muted"
+                                    class="rounded px-2 py-1.5 text-left text-small hover:bg-muted"
                                 >
                                     PNG
                                 </button>
                                 <button
-                                    class="rounded px-2 py-1.5 text-left text-sm hover:bg-muted"
+                                    class="rounded px-2 py-1.5 text-left text-small hover:bg-muted"
                                 >
                                     SVG
                                 </button>
                                 <button
-                                    class="rounded px-2 py-1.5 text-left text-sm hover:bg-muted"
+                                    class="rounded px-2 py-1.5 text-left text-small hover:bg-muted"
                                 >
                                     PDF
                                 </button>
@@ -390,7 +390,7 @@ function togglePlay() {
                         <PopoverTrigger as-child>
                             <DockControl aria-label="Track">
                                 <span class="flex items-center gap-1">
-                                    <span class="text-xs">Track</span>
+                                    <span class="text-micro">Track</span>
                                     <ChevronDown class="h-3 w-3 opacity-60" />
                                 </span>
                             </DockControl>
@@ -401,7 +401,7 @@ function togglePlay() {
                                     v-for="t in tracks"
                                     :key="t"
                                     :class="[
-                                        'rounded px-2 py-1.5 text-left text-sm hover:bg-muted',
+                                        'rounded px-2 py-1.5 text-left text-small hover:bg-muted',
                                         track === t && 'bg-muted font-medium',
                                     ]"
                                     @click="track = t"
@@ -419,7 +419,7 @@ function togglePlay() {
             heading="Slider in dock — the keep-dock-open hold"
             data-testid="dock-slider-section"
         >
-            <p class="text-sm text-muted-foreground">
+            <p class="text-small text-muted-foreground">
                 A <code class="rounded bg-muted px-1">&lt;Slider&gt;</code> descendant
                 of a dock holds the dock open while the user drags (the
                 <code class="rounded bg-muted px-1">dockKeepOpen</code>
@@ -467,7 +467,7 @@ function togglePlay() {
                     </template>
                 </GlassDock>
             </div>
-            <p class="text-xs text-muted-foreground">
+            <p class="text-micro text-muted-foreground">
                 Hover to expand, then press-and-hold a thumb and move the pointer OFF
                 the dock: the dock stays open through the held drag and re-collapses
                 only after release. Either drag holds the dock open, and both halos
@@ -477,7 +477,7 @@ function togglePlay() {
         </StorySection>
 
         <StorySection heading="Tap and click land where you aimed" gap="md">
-            <p class="text-sm text-muted-foreground">
+            <p class="text-small text-muted-foreground">
                 A tap on the collapsed pill, or a click during the hover-expand morph,
                 must land on the control it was AIMED at — never on whatever the layer
                 swap moves under the pointer. The summary control here is a Settings
@@ -516,14 +516,14 @@ function togglePlay() {
                     </template>
                 </GlassDock>
             </div>
-            <p class="text-xs text-muted-foreground">
+            <p class="text-micro text-muted-foreground">
                 The settled click (after the morph) reaches the control normally — only
                 the racing, identity-mismatched click is swallowed.
             </p>
         </StorySection>
 
         <StorySection heading="Menus inside a dock teleport out" gap="md">
-            <p class="text-sm text-muted-foreground">
+            <p class="text-small text-muted-foreground">
                 A dropdown or menu mounted inside a dock MUST be wired into the dock's
                 <code class="rounded bg-muted px-1">keepOpen</code> +
                 <code class="rounded bg-muted px-1">data-glass-dock-portal</code>
@@ -538,7 +538,7 @@ function togglePlay() {
                 sampling region rather than painting a second glass plate inside the
                 dock's.
             </p>
-            <p class="text-xs text-muted-foreground">
+            <p class="text-micro text-muted-foreground">
                 The canonical mis-wire (the keyframes D9 break): a dropdown mounted
                 OUTSIDE the
                 <code class="rounded bg-muted px-1">keepOpen</code>+portal contract
@@ -551,7 +551,7 @@ function togglePlay() {
         </StorySection>
 
         <StorySection heading="Overflow wrap — content reflows to multiple rows" gap="md">
-            <p class="text-xs text-muted-foreground">
+            <p class="text-micro text-muted-foreground">
                 <code class="rounded bg-muted px-1">overflow="wrap"</code> reflows the
                 row to multiple rows by INTRINSIC flex-wrap whenever the content's
                 natural width exceeds the dock's inline cap (the dock shrink-wraps to
@@ -590,7 +590,7 @@ function togglePlay() {
                     /></DockControl>
                 </GlassDock>
             </div>
-            <p class="text-xs text-muted-foreground">
+            <p class="text-micro text-muted-foreground">
                 Collapsible wrap dock — hover to expand. Collapsed it is a single-row
                 stadium pill (flat
                 <code class="rounded bg-muted px-1">--shadow-dock</code> glow); expanded
@@ -616,7 +616,7 @@ function togglePlay() {
         </StorySection>
 
         <StorySection heading="Big dock — card shell + tile grid" gap="md">
-            <p class="text-xs text-muted-foreground">
+            <p class="text-micro text-muted-foreground">
                 <code class="rounded bg-muted px-1">shape="card"</code> gives a finite
                 concentric card radius (not a stadium pill);
                 <code class="rounded bg-muted px-1">layout="grid"</code> lays children
@@ -642,7 +642,7 @@ function togglePlay() {
         </StorySection>
 
         <StorySection heading="Background pause/play toggle" gap="md">
-            <p class="text-xs text-muted-foreground">
+            <p class="text-micro text-muted-foreground">
                 <code class="rounded bg-muted px-1">&lt;DockBackgroundToggle&gt;</code>
                 lets the user pause a running Aurora/GooBlob background — wire it to the
                 renderer's <code class="rounded bg-muted px-1">pause()</code>/<code
@@ -669,7 +669,7 @@ function togglePlay() {
                     </template>
                 </GlassDock>
             </div>
-            <p class="text-center text-xs text-muted-foreground">
+            <p class="text-center text-micro text-muted-foreground">
                 background:
                 <code class="rounded bg-muted px-1">{{
                     bgPaused ? "paused (rAF parked)" : "running"
@@ -677,7 +677,7 @@ function togglePlay() {
             </p>
         </StorySection>
 
-        <StorySection heading="Notes" gap="sm" class="text-sm text-muted-foreground">
+        <StorySection heading="Notes" gap="sm" class="text-small text-muted-foreground">
             <ul class="list-disc pl-5 space-y-1">
                 <li>
                     The dock stays open while a popover or held control inside it is

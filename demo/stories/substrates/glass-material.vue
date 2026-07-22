@@ -124,7 +124,7 @@ const ACCENT_STRENGTH = "48%";
                         v-for="rung in rungs"
                         :key="rung"
                         :class="`glass-${rung}`"
-                        class="flex h-28 w-44 items-center justify-center rounded-card text-sm font-medium"
+                        class="flex h-28 w-44 items-center justify-center rounded-card text-small font-medium"
                         data-specular-plate
                         :style="specularStyle"
                         @pointermove="onPointerMove"
@@ -132,7 +132,7 @@ const ACCENT_STRENGTH = "48%";
                         glass-{{ rung }}
                     </div>
                     <div
-                        class="glass-card flex h-28 w-44 items-center justify-center text-sm font-medium"
+                        class="glass-card flex h-28 w-44 items-center justify-center text-small font-medium"
                         data-specular-plate
                         :style="specularStyle"
                         @pointermove="onPointerMove"
@@ -164,7 +164,7 @@ const ACCENT_STRENGTH = "48%";
                         <div
                             ref="liveCardEl"
                             data-glass-sample="live"
-                            class="glass-card relative flex size-full flex-col items-center justify-center gap-1 rounded-card px-3 text-center text-sm font-medium"
+                            class="glass-card relative flex size-full flex-col items-center justify-center gap-1 rounded-card px-3 text-center text-small font-medium"
                             data-material="functional"
                         >
                             <span>live canvas sample</span>
@@ -201,7 +201,7 @@ const ACCENT_STRENGTH = "48%";
             <ShowcaseFrame pad="lg" tier="field">
                 <div class="flex flex-wrap gap-6">
                     <div
-                        class="glass-resting flex h-28 w-44 flex-col items-center justify-center gap-1 rounded-card bg-foreground/[0.18] text-sm font-medium"
+                        class="glass-resting flex h-28 w-44 flex-col items-center justify-center gap-1 rounded-card bg-foreground/[0.18] text-small font-medium"
                         data-rim-device="on"
                     >
                         <span>rim ON</span>
@@ -210,7 +210,7 @@ const ACCENT_STRENGTH = "48%";
                         >
                     </div>
                     <div
-                        class="glass-resting flex h-28 w-44 flex-col items-center justify-center gap-1 rounded-card bg-foreground/[0.18] text-sm font-medium"
+                        class="glass-resting flex h-28 w-44 flex-col items-center justify-center gap-1 rounded-card bg-foreground/[0.18] text-small font-medium"
                         data-rim-device="off"
                         :style="{ '--glass-edge-light': '0 0 0 0 transparent' }"
                     >
@@ -235,7 +235,7 @@ const ACCENT_STRENGTH = "48%";
                     <div
                         v-for="s in accentSamples"
                         :key="s.label"
-                        class="glass-floating flex h-28 w-44 flex-col items-center justify-center gap-1 rounded-card text-sm font-medium"
+                        class="glass-floating flex h-28 w-44 flex-col items-center justify-center gap-1 rounded-card text-small font-medium"
                         data-accent-swatch
                         :data-accent-hue="s.hue"
                         :style="{
@@ -258,7 +258,7 @@ const ACCENT_STRENGTH = "48%";
                      neutral fallback, the on/off contrast device). -->
                 <div class="mt-6 flex flex-wrap gap-6">
                     <div
-                        class="glass-floating flex h-28 w-56 flex-col items-center justify-center gap-1 rounded-card text-sm font-medium"
+                        class="glass-floating flex h-28 w-56 flex-col items-center justify-center gap-1 rounded-card text-small font-medium"
                         data-accent-device="on"
                         :style="{
                             '--glass-accent': 'oklch(0.62 0.2 295)',
@@ -271,7 +271,7 @@ const ACCENT_STRENGTH = "48%";
                         >
                     </div>
                     <div
-                        class="glass-floating flex h-28 w-56 flex-col items-center justify-center gap-1 rounded-card text-sm font-medium"
+                        class="glass-floating flex h-28 w-56 flex-col items-center justify-center gap-1 rounded-card text-small font-medium"
                         data-accent-device="off"
                     >
                         <span>accent OFF</span>
@@ -290,12 +290,12 @@ const ACCENT_STRENGTH = "48%";
             <ShowcaseFrame pad="lg" tier="field">
                 <div class="flex flex-wrap gap-6">
                     <div
-                        class="glass-floating glass-lens flex h-28 w-44 items-center justify-center rounded-card text-sm font-medium"
+                        class="glass-floating glass-lens flex h-28 w-44 items-center justify-center rounded-card text-small font-medium"
                     >
                         .glass-lens
                     </div>
                     <div
-                        class="glass-floating flex h-28 w-44 items-center justify-center rounded-card text-sm font-medium"
+                        class="glass-floating flex h-28 w-44 items-center justify-center rounded-card text-small font-medium"
                     >
                         blur base (no refract)
                     </div>
@@ -313,12 +313,12 @@ const ACCENT_STRENGTH = "48%";
                          used by DialogContent: a superellipse on supporting engines
                          and a round-corner fallback elsewhere. -->
                     <div
-                        class="glass-floating rounded-dialog flex h-28 w-44 items-center justify-center text-sm font-medium"
+                        class="glass-floating rounded-dialog flex h-28 w-44 items-center justify-center text-small font-medium"
                     >
                         squircle (dialog register)
                     </div>
                     <div
-                        class="glass-card flex h-28 w-44 items-center justify-center text-sm font-medium"
+                        class="glass-card flex h-28 w-44 items-center justify-center text-small font-medium"
                     >
                         round (.glass-card)
                     </div>
@@ -348,7 +348,7 @@ const ACCENT_STRENGTH = "48%";
                 </div>
                 <div class="flex flex-wrap gap-6">
                     <div
-                        class="glass-floating glass-chromatic flex h-28 w-44 items-center justify-center rounded-card text-sm font-medium"
+                        class="glass-floating glass-chromatic flex h-28 w-44 items-center justify-center rounded-card text-small font-medium"
                         data-tint-plate
                         :style="{
                             '--glass-tint-source': tint.source || undefined,
@@ -382,19 +382,19 @@ const ACCENT_STRENGTH = "48%";
                      rim — the badge/§N6-border register (consumer #2). -->
                 <div class="mt-6 flex flex-wrap items-center gap-6">
                     <div
-                        class="metal-gold-border flex h-20 w-32 items-center justify-center rounded-card text-sm font-medium"
+                        class="metal-gold-border flex h-20 w-32 items-center justify-center rounded-card text-small font-medium"
                         data-metal-border="gold"
                     >
                         gold rim
                     </div>
                     <div
-                        class="metal-bronze-border flex h-20 w-32 items-center justify-center rounded-card text-sm font-medium"
+                        class="metal-bronze-border flex h-20 w-32 items-center justify-center rounded-card text-small font-medium"
                         data-metal-border="bronze"
                     >
                         bronze rim
                     </div>
                     <div
-                        class="glass-floating metal-rainbow-rim flex h-20 w-32 items-center justify-center rounded-card text-sm font-medium"
+                        class="glass-floating metal-rainbow-rim flex h-20 w-32 items-center justify-center rounded-card text-small font-medium"
                         data-metal-rainbow
                     >
                         rainbow rim
@@ -413,7 +413,7 @@ const ACCENT_STRENGTH = "48%";
                      .glass-floating default over the SAME live aurora. -->
                 <div class="flex flex-wrap gap-6">
                     <div
-                        class="glass-floating glass-deep flex h-28 w-44 flex-col items-center justify-center gap-1 rounded-card text-sm font-medium"
+                        class="glass-floating glass-deep flex h-28 w-44 flex-col items-center justify-center gap-1 rounded-card text-small font-medium"
                         data-glass-deep="on"
                     >
                         <span>.glass-deep</span>
@@ -422,7 +422,7 @@ const ACCENT_STRENGTH = "48%";
                         >
                     </div>
                     <div
-                        class="glass-floating flex h-28 w-44 flex-col items-center justify-center gap-1 rounded-card text-sm font-medium"
+                        class="glass-floating flex h-28 w-44 flex-col items-center justify-center gap-1 rounded-card text-small font-medium"
                         data-glass-deep="off"
                     >
                         <span>calm default</span>

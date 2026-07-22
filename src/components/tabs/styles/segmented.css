@@ -168,7 +168,7 @@
     padding: 0.25rem 0.625rem;
     border-radius: 0.3125rem;
     font: inherit;
-    font-size: 0.8125rem;
+    font-size: var(--type-caption);
     color: var(--muted-foreground);
     transition: color var(--duration-fast) ease;
     /* identity base — keep `scale:1; translate:0` so a hover/press
@@ -181,7 +181,7 @@
 @media (min-width: 640px) {
     .segmented-tab {
         padding: 0.3125rem 0.75rem;
-        font-size: 0.875rem;
+        font-size: var(--type-small);
     }
 }
 

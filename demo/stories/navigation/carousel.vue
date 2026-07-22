@@ -102,7 +102,7 @@ const windowActive = ref(0);
 
         <!-- ── EXHIBIT 1 — hero: single-card glass scroller + drag-scrub worm focal ── -->
         <StorySection heading="Hero — single-card scroller, worm focal" gap="md">
-            <p class="text-sm text-muted-foreground">
+            <p class="text-small text-muted-foreground">
                 One card at a time over a live field. Drag or tap a dot — the pager worm
                 <em>follows</em> the scroll (the drag-scrub), morphing dot-to-dot with liquid
                 weight; the content is crisp glass, no filter, nothing paints outside the card.
@@ -125,7 +125,7 @@ const windowActive = ref(0);
                                 class="flex h-48 flex-col items-start justify-end rounded-card p-5"
                                 :style="{ background: `hsl(${s.hue} 60% 82%)`, color: 'hsl(24 12% 12%)' }"
                             >
-                                <p class="text-xs uppercase tracking-widest opacity-70">{{ s.note }}</p>
+                                <p class="text-micro uppercase tracking-widest opacity-70">{{ s.note }}</p>
                                 <p class="font-display text-2xl">{{ s.title }}</p>
                             </div>
                         </CarouselItem>
@@ -144,7 +144,7 @@ const windowActive = ref(0);
 
         <!-- ── EXHIBIT 2 — peek: multi-item + FadingScroll edges + chevron pager ── -->
         <StorySection heading="Peek — multi-item scroller, faded edges" gap="md">
-            <p class="text-sm text-muted-foreground">
+            <p class="text-small text-muted-foreground">
                 A start-aligned multi-item scroller: partial slides peek at the edges,
                 <code class="rounded bg-muted px-1">&lt;FadingScroll&gt;</code> feathers them.
                 The <code class="rounded bg-muted px-1">&lt;CarouselPager&gt;</code> chevrons +
@@ -162,12 +162,12 @@ const windowActive = ref(0);
                                 <div
                                     class="flex h-32 flex-col justify-between rounded-card border border-border/40 glass-wash p-4"
                                 >
-                                    <p class="text-[10px] uppercase tracking-widest text-muted-foreground">
+                                    <p class="text-micro uppercase tracking-widest text-muted-foreground">
                                         {{ s.category }}
                                     </p>
                                     <div class="flex flex-col gap-1">
                                         <p class="font-display text-lg">{{ s.id }}</p>
-                                        <p class="text-xs text-muted-foreground">
+                                        <p class="text-micro text-muted-foreground">
                                             slide {{ i + 1 }} / {{ peekCards.length }}
                                         </p>
                                     </div>
@@ -184,7 +184,7 @@ const windowActive = ref(0);
 
         <!-- ── EXHIBIT 3 — hero-scale worm: larger dots, the metaball waist reads ── -->
         <StorySection heading="Hero-scale worm — wide pitch, the waist reads" gap="md">
-            <p class="text-sm text-muted-foreground">
+            <p class="text-small text-muted-foreground">
                 Larger dots + a wider pitch: the metaball waist between the worm's two bodies
                 reads unambiguously as it travels — the barbell's true home (the indicator, not
                 the content). <code class="rounded bg-muted px-1">v-model:active</code> is the
@@ -216,7 +216,7 @@ const windowActive = ref(0);
 
         <!-- ── EXHIBIT 4 — vertical orientation ── -->
         <StorySection heading="Vertical — column scroller" gap="md">
-            <p class="text-sm text-muted-foreground">
+            <p class="text-small text-muted-foreground">
                 The same engine on the vertical axis: the pager rail runs down the side and the
                 worm morphs top-to-bottom.
             </p>
@@ -230,7 +230,7 @@ const windowActive = ref(0);
                                         class="flex h-40 flex-col items-start justify-end rounded-card p-5"
                                         :style="{ background: `hsl(${s.hue} 60% 82%)`, color: 'hsl(24 12% 12%)' }"
                                     >
-                                        <p class="text-xs uppercase tracking-widest opacity-70">{{ s.note }}</p>
+                                        <p class="text-micro uppercase tracking-widest opacity-70">{{ s.note }}</p>
                                         <p class="font-display text-xl">{{ s.title }}</p>
                                     </div>
                                 </CarouselItem>
@@ -250,7 +250,7 @@ const windowActive = ref(0);
 
         <!-- ── EXHIBIT 5 — windowed: 12 slides, windowFit=7, worm re-seat across the clip ── -->
         <StorySection heading="Windowed — 12 slides, a clipped rail" gap="md">
-            <p class="text-sm text-muted-foreground">
+            <p class="text-small text-muted-foreground">
                 Twelve slides with a <code class="rounded bg-muted px-1">windowFit=7</code> pager:
                 the rail windows to the active dot and the worm re-seats cleanly across the
                 clipped edge as you page.
@@ -280,7 +280,7 @@ const windowActive = ref(0);
             </ShowcaseFrame>
         </StorySection>
 
-        <StorySection heading="Using the API" gap="sm" class="text-sm text-muted-foreground">
+        <StorySection heading="Using the API" gap="sm" class="text-small text-muted-foreground">
             <ul class="list-disc space-y-1 pl-5">
                 <li>Bind <code class="rounded bg-muted px-1">v-model:active</code> — embla owns the authority; a rapid click + Next-hammer never double-writes.</li>
                 <li>Listen on <code class="rounded bg-muted px-1">@init-api</code> to capture the Embla instance for a custom scrub (the hero drag-scrub).</li>

@@ -298,7 +298,7 @@ const controlsScrolls = computed(() => props.scrollMode !== "never");
                                 // adds the static technicolor cel cast (a direct
                                 // box-shadow utility — the cast is static on a
                                 // chip, not the moving inert-child caster).
-                                'configurator-preset-chip glass-capsule glass-capsule-hover shadow-cartoon focus-ring shrink-0 px-3 py-1 text-xs font-medium text-foreground',
+                                'configurator-preset-chip glass-capsule glass-capsule-hover shadow-cartoon focus-ring shrink-0 px-3 py-1 text-micro font-medium text-foreground',
                                 p.key === activePreset && 'is-active',
                             )
                         "

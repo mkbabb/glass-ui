@@ -74,7 +74,7 @@ const disableTransitions = ref(false);
                         size="md"
                         :disable-transitions="disableTransitions"
                     />
-                    <label class="flex items-center gap-2 text-sm">
+                    <label class="flex items-center gap-2 text-small">
                         <input v-model="disableTransitions" type="checkbox" />
                         suppress transitions during toggle
                     </label>

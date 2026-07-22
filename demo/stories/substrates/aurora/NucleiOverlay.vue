@@ -70,7 +70,7 @@ const items = computed(() =>
         >
             <!-- Counter-rotate so the index reads upright regardless of nucleus angle. -->
             <span
-                class="text-mono-small absolute left-1/2 top-1/2 rounded-full bg-foreground/70 px-1.5 py-0.5 text-[10px] leading-none text-background"
+                class="text-mono-small absolute left-1/2 top-1/2 rounded-full bg-foreground/70 px-1.5 py-0.5 text-micro leading-none text-background"
                 :style="{ transform: n.labelTransform }"
             >
                 {{ n.i + 1 }}

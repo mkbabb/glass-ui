@@ -106,8 +106,8 @@ const body: StoryBody = {
         {
             label: "size axis",
             specimens: [
-                { component: Badge, props: { size: "sm" }, slots: { default: "sm · text-xs" } },
-                { component: Badge, props: { size: "md" }, slots: { default: "md · text-sm (default)" } },
+                { component: Badge, props: { size: "sm" }, slots: { default: "sm · text-micro" } },
+                { component: Badge, props: { size: "md" }, slots: { default: "md · text-small (default)" } },
                 { component: Badge, props: { size: "lg" }, slots: { default: "lg · text-base" } },
             ],
         },
@@ -157,11 +157,11 @@ const body: StoryBody = {
             ],
         },
         {
-            label: "baseline alignment in text-sm context",
+            label: "baseline alignment in text-small context",
             // Prose with an inline specimen — the bespoke escape.
             bespoke: {
                 component: "p",
-                props: { class: "text-sm" },
+                props: { class: "text-small" },
                 slots: {
                     default: [
                         "Row text aligned with ",

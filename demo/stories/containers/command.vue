@@ -105,7 +105,7 @@ function execute(id: string, closeDialog = false) {
     <StoryPage>
 
         <StorySection heading="Inline palette" gap="md">
-            <p class="text-sm text-muted-foreground">
+            <p class="text-small text-muted-foreground">
                 Search the collection in place; selection is shared with the focused
                 dialog below.
             </p>
@@ -125,7 +125,7 @@ function execute(id: string, closeDialog = false) {
                             <div class="flex flex-col items-center gap-2 py-4">
                                 <CommandIcon class="h-6 w-6 opacity-40" />
                                 <p>No matches for "{{ query }}"</p>
-                                <p class="text-xs text-muted-foreground">
+                                <p class="text-micro text-muted-foreground">
                                     try a file name, action, or setting
                                 </p>
                             </div>
@@ -159,7 +159,7 @@ function execute(id: string, closeDialog = false) {
                     </CommandList>
                 </Command>
 
-                <p class="mt-3 text-center text-xs text-muted-foreground">
+                <p class="mt-3 text-center text-micro text-muted-foreground">
                     Last picked:
                     <code class="rounded bg-muted px-1.5 py-0.5">{{
                         selected ?? "—"
@@ -172,7 +172,7 @@ function execute(id: string, closeDialog = false) {
             <div
                 class="mx-auto flex w-full max-w-lg items-center justify-between gap-4"
             >
-                <p class="max-w-sm text-sm text-muted-foreground">
+                <p class="max-w-sm text-small text-muted-foreground">
                     Open the same commands in a modal search surface. Escape dismisses
                     it and returns focus here.
                 </p>
@@ -229,7 +229,7 @@ function execute(id: string, closeDialog = false) {
             </CommandDialog>
         </StorySection>
 
-        <StorySection heading="Anatomy" gap="sm" class="text-sm text-muted-foreground">
+        <StorySection heading="Anatomy" gap="sm" class="text-small text-muted-foreground">
             <ul class="list-disc pl-5 space-y-1">
                 <li>
                     <code class="rounded bg-muted px-1">Command</code> — root, owns the

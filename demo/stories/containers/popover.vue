@@ -19,7 +19,7 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
 
         <div class="grid gap-12">
             <StorySection heading="Form pod" gap="lg">
-                <p class="text-sm text-muted-foreground">
+                <p class="text-small text-muted-foreground">
                     A typical two-field editor anchored to a button.
                 </p>
                 <!-- The lone trigger is wrapped in the `flex flex-wrap` idiom so it
@@ -34,7 +34,7 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
                             <div class="grid gap-3">
                                 <div>
                                     <h4 class="font-display text-base">Dimensions</h4>
-                                    <p class="text-xs text-muted-foreground">
+                                    <p class="text-micro text-muted-foreground">
                                         Set width and height in grid cells.
                                     </p>
                                 </div>
@@ -53,7 +53,7 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
             </StorySection>
 
             <StorySection heading="Pointer-adaptive preview" gap="lg">
-                <p class="text-sm text-muted-foreground">
+                <p class="text-small text-muted-foreground">
                     Hover or focus on a fine pointer; tap on a coarse pointer. The
                     same public trigger promotes to a tap-toggle surface when hover
                     is unavailable, so the content never becomes pointer-exclusive.
@@ -76,11 +76,11 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
                                     <h4 class="font-display text-base">
                                         Fourier profile
                                     </h4>
-                                    <p class="text-xs text-muted-foreground">
+                                    <p class="text-micro text-muted-foreground">
                                         A stable harmonic blend for quiet motion.
                                     </p>
                                 </div>
-                                <dl class="grid grid-cols-2 gap-x-4 gap-y-2 text-xs">
+                                <dl class="grid grid-cols-2 gap-x-4 gap-y-2 text-micro">
                                     <dt class="text-muted-foreground">Terms</dt>
                                     <dd class="font-mono text-right">8</dd>
                                     <dt class="text-muted-foreground">Falloff</dt>
@@ -95,8 +95,8 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
             </StorySection>
 
             <StorySection heading="Placement" gap="lg">
-                <p class="text-sm text-muted-foreground">
-                    <code class="font-mono text-xs">side</code> controls the preferred
+                <p class="text-small text-muted-foreground">
+                    <code class="font-mono text-micro">side</code> controls the preferred
                     edge; Floating UI flips if there's not enough room.
                 </p>
                 <div class="grid place-items-center py-12">
@@ -107,7 +107,7 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
                                 <Button>Top</Button>
                             </PopoverTrigger>
                             <PopoverContent side="top">
-                                <p class="font-mono text-xs">side=top</p>
+                                <p class="font-mono text-micro">side=top</p>
                             </PopoverContent>
                         </Popover>
                         <div />
@@ -116,7 +116,7 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
                                 <Button>Left</Button>
                             </PopoverTrigger>
                             <PopoverContent side="left">
-                                <p class="font-mono text-xs">side=left</p>
+                                <p class="font-mono text-micro">side=left</p>
                             </PopoverContent>
                         </Popover>
                         <div />
@@ -125,7 +125,7 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
                                 <Button>Right</Button>
                             </PopoverTrigger>
                             <PopoverContent side="right">
-                                <p class="font-mono text-xs">side=right</p>
+                                <p class="font-mono text-micro">side=right</p>
                             </PopoverContent>
                         </Popover>
                         <div />
@@ -134,7 +134,7 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
                                 <Button>Bottom</Button>
                             </PopoverTrigger>
                             <PopoverContent side="bottom">
-                                <p class="font-mono text-xs">side=bottom</p>
+                                <p class="font-mono text-micro">side=bottom</p>
                             </PopoverContent>
                         </Popover>
                         <div />
@@ -143,7 +143,7 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
                 <div
                     class="flex flex-wrap items-center gap-3 pt-4 border-t border-border"
                 >
-                    <span class="text-xs text-muted-foreground font-mono">
+                    <span class="text-micro text-muted-foreground font-mono">
                         align:
                     </span>
                     <Popover v-for="side in sides" :key="side">
@@ -162,16 +162,16 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
                             "
                             class="w-auto"
                         >
-                            <p class="font-mono text-xs">align variant</p>
+                            <p class="font-mono text-micro">align variant</p>
                         </PopoverContent>
                     </Popover>
                 </div>
             </StorySection>
 
             <StorySection heading="Trigger states" gap="lg">
-                <p class="text-sm text-muted-foreground">
+                <p class="text-small text-muted-foreground">
                     The trigger is an ordinary
-                    <code class="font-mono text-xs">Button</code> — any variant, size,
+                    <code class="font-mono text-micro">Button</code> — any variant, size,
                     or the disabled edge. A disabled trigger never opens and drops out
                     of the tab order.
                 </p>

@@ -81,7 +81,7 @@ function revealNow() {
              the morph reads as glass-into-glass. NO net-new GL context (one-GL-per-route). -->
         <DockStage #default="{ backgroundCanvas }">
             <StorySection heading="External CTA morphs into the dock" gap="lg">
-                <p class="text-sm text-muted-foreground max-w-prose">
+                <p class="text-small text-muted-foreground max-w-prose">
                     Add to dock flies the external action into its reserved star seat,
                     then hands ownership to the Dock without moving its layout. The same
                     morph owner measures the run below; reduced motion completes without

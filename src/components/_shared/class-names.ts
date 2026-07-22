@@ -20,7 +20,7 @@ export type ClassValue =
  * conflict-key (the CSS-property bucket the utility writes to), and
  * keeps only the last token per bucket. Variant prefixes like
  * `hover:`, `md:`, `dark:`, `[&::after]:` carry their own conflict
- * scope: a bucket-key incorporates the prefix so `text-sm md:text-lg`
+ * scope: a bucket-key incorporates the prefix so `text-small md:text-lg`
  * keeps both. `!`-important tokens scope identically to their
  * non-important twin (`!p-2 p-4` keeps `p-4` — last-write-wins ignores
  * importance, mirroring twMerge's behaviour for the cases glass-ui hits).
@@ -64,7 +64,7 @@ export function joinClassValues(...inputs: ClassValue[]): string {
  */
 const RULES: ReadonlyArray<readonly [string, RegExp]> = [
     // ── Typography ────────────────────────────────────────────────
-    // Font-size — listed BEFORE text-color so `text-sm` doesn't get
+    // Font-size — listed BEFORE text-color so `text-small` doesn't get
     // mis-bucketed as a colour.
     ["font-size", /^text-(xs|sm|base|lg|xl|2xl|3xl|4xl|5xl|6xl|7xl|8xl|9xl)$/],
     // Glass-ui typography utilities (`text-micro`, `text-display*`,

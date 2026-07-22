@@ -34,9 +34,9 @@ const surfaces: readonly SheetSurface[] = ["glass", "veil", "opaque"] as const;
 <template>
     <StoryPage>
         <StorySection heading="Four sides" gap="lg">
-            <p class="text-sm text-muted-foreground">
+            <p class="text-small text-muted-foreground">
                 Each trigger opens its own side sheet — identical body, different
-                <code class="font-mono text-xs">placement</code> prop.
+                <code class="font-mono text-micro">placement</code> prop.
             </p>
             <div class="flex flex-wrap gap-3">
                 <Dialog v-for="side in sides" :key="side">
@@ -81,11 +81,11 @@ const surfaces: readonly SheetSurface[] = ["glass", "veil", "opaque"] as const;
         </StorySection>
 
         <StorySection heading="Surface axis + states" gap="lg">
-            <p class="text-sm text-muted-foreground">
+            <p class="text-small text-muted-foreground">
                 The same side sheet across the
-                <code class="font-mono text-xs">surface</code> axis (glass · veil ·
+                <code class="font-mono text-micro">surface</code> axis (glass · veil ·
                 opaque) and the disabled-trigger edge. Any
-                <code class="font-mono text-xs">Button</code> variant anchors it.
+                <code class="font-mono text-micro">Button</code> variant anchors it.
             </p>
             <Surface
                 material="content"
@@ -138,7 +138,7 @@ const surfaces: readonly SheetSurface[] = ["glass", "veil", "opaque"] as const;
         </StorySection>
 
         <StorySection heading="When to use" gap="lg">
-            <ul class="list-disc pl-6 text-sm text-muted-foreground grid gap-1">
+            <ul class="list-disc pl-6 text-small text-muted-foreground grid gap-1">
                 <li>
                     Detail / inspector panels that reveal alongside the primary view
                     rather than replacing it.

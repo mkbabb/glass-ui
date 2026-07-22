@@ -78,7 +78,7 @@ function fireWithAction() {
             ToastAction,
             {
                 altText: "Undo archive",
-                class: "cursor-pointer rounded-md border border-border/60 px-3 py-1 text-sm font-medium transition hover:bg-foreground/5",
+                class: "cursor-pointer rounded-md border border-border/60 px-3 py-1 text-small font-medium transition hover:bg-foreground/5",
             },
             () => "Undo",
         ),
@@ -110,7 +110,7 @@ function fireWithAction() {
 
         <section class="flex flex-col gap-3">
             <p class="text-small text-muted-foreground">viewport</p>
-            <p class="font-mono text-xs text-muted-foreground">
+            <p class="font-mono text-micro text-muted-foreground">
                 Toasts render bottom-right on desktop, top on mobile. Swipe or
                 close-button dismiss. The status rides the shared Toast
                 <code>tone</code> axis (neutral / success / warning / info /

@@ -93,7 +93,7 @@ useClickDelegate({
                             :data-toc-id="root.id"
                             :data-scroll-target="root.id"
                             :class="[
-                                'w-full text-left px-3 py-1.5 rounded-md text-sm transition-fast',
+                                'w-full text-left px-3 py-1.5 rounded-md text-small transition-fast',
                                 activeRootId === root.id || activeId === root.id
                                     ? 'bg-primary/10 text-primary font-medium'
                                     : 'hover:bg-muted/50 text-muted-foreground',
@@ -107,7 +107,7 @@ useClickDelegate({
                             :data-toc-id="child.id"
                             :data-scroll-target="child.id"
                             :class="[
-                                'w-full text-left pl-6 pr-3 py-1 rounded-md text-xs transition-fast',
+                                'w-full text-left pl-6 pr-3 py-1 rounded-md text-micro transition-fast',
                                 activeId === child.id
                                     ? 'bg-primary/10 text-primary'
                                     : 'hover:bg-muted/40 text-muted-foreground/80',
@@ -128,7 +128,7 @@ useClickDelegate({
                             <h3 class="text-lg font-semibold mb-2">
                                 {{ root.title }}
                             </h3>
-                            <p class="text-sm text-muted-foreground mb-4">
+                            <p class="text-small text-muted-foreground mb-4">
                                 A scrollable section body for {{ root.title }}. Scroll
                                 to watch the active ToC item track the deepest visible
                                 node.
@@ -139,10 +139,10 @@ useClickDelegate({
                                 :key="child.id"
                                 class="mb-4 pl-3 border-l-2 border-border/50"
                             >
-                                <h4 class="text-sm font-medium mb-1">
+                                <h4 class="text-small font-medium mb-1">
                                     {{ child.title }}
                                 </h4>
-                                <p class="text-xs text-muted-foreground">
+                                <p class="text-micro text-muted-foreground">
                                     Subsection body content. The deepest visible node
                                     wins the active highlight.
                                 </p>

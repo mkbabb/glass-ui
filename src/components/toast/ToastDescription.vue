@@ -11,7 +11,7 @@ const props = defineProps<ToastDescriptionProps>();
 </script>
 
 <template>
-    <RekaToastDescription :class="cn('text-sm opacity-90', props.class)">
+    <RekaToastDescription :class="cn('text-small opacity-90', props.class)">
         <slot />
     </RekaToastDescription>
 </template>

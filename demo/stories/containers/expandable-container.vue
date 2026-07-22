@@ -30,7 +30,7 @@ import { Maximize2, X } from "@lucide/vue";
                             <div
                                 class="flex h-48 items-center justify-center rounded-md bg-card text-muted-foreground"
                             >
-                                <code class="fira-code text-sm">
+                                <code class="fira-code text-small">
                                     button-position=right · fullscreen={{ fullscreen }}
                                 </code>
                             </div>
@@ -44,7 +44,7 @@ import { Maximize2, X } from "@lucide/vue";
                             <div
                                 class="flex h-48 items-center justify-center rounded-md bg-card text-muted-foreground"
                             >
-                                <code class="fira-code text-sm">
+                                <code class="fira-code text-small">
                                     button-position=left · fullscreen={{ fullscreen }}
                                 </code>
                             </div>
@@ -67,7 +67,7 @@ import { Maximize2, X } from "@lucide/vue";
                             <span class="text-small text-foreground">Branded toolbar</span>
                             <button
                                 type="button"
-                                class="inline-flex items-center gap-2 rounded-button bg-primary/10 px-3 py-1.5 text-sm text-foreground transition-colors hover:bg-primary/20"
+                                class="inline-flex items-center gap-2 rounded-button bg-primary/10 px-3 py-1.5 text-small text-foreground transition-colors hover:bg-primary/20"
                                 :aria-label="label"
                                 @click="collapse"
                             >
@@ -80,7 +80,7 @@ import { Maximize2, X } from "@lucide/vue";
                         <div
                             class="flex h-48 items-center justify-center rounded-md bg-card text-muted-foreground"
                         >
-                            <code class="fira-code text-sm">
+                            <code class="fira-code text-small">
                                 re-skinned trigger + branded #fullscreen-chrome ·
                                 fullscreen={{ fullscreen }}
                             </code>
@@ -99,7 +99,7 @@ import { Maximize2, X } from "@lucide/vue";
                     <template #expand-trigger="{ expand, label }">
                         <button
                             type="button"
-                            class="absolute right-2 top-2 z-10 inline-flex items-center gap-2 rounded-button bg-primary/10 px-3 py-1.5 text-sm text-foreground transition-colors hover:bg-primary/20"
+                            class="absolute right-2 top-2 z-10 inline-flex items-center gap-2 rounded-button bg-primary/10 px-3 py-1.5 text-small text-foreground transition-colors hover:bg-primary/20"
                             :aria-label="label"
                             @click="expand"
                         >
@@ -111,7 +111,7 @@ import { Maximize2, X } from "@lucide/vue";
                         <div
                             class="flex h-48 items-center justify-center rounded-md bg-card text-muted-foreground"
                         >
-                            <code class="fira-code text-sm">custom #expand-trigger affordance</code>
+                            <code class="fira-code text-small">custom #expand-trigger affordance</code>
                         </div>
                     </template>
                 </ExpandableContainer>
@@ -128,7 +128,7 @@ import { Maximize2, X } from "@lucide/vue";
                         <div
                             class="flex h-48 flex-col items-center justify-center gap-4 rounded-md bg-card p-6 text-muted-foreground"
                         >
-                            <code class="fira-code text-sm">
+                            <code class="fira-code text-small">
                                 outer · fullscreen={{ fullscreen }}
                             </code>
                             <ExpandableContainer class="esc-stack-inner">
@@ -136,7 +136,7 @@ import { Maximize2, X } from "@lucide/vue";
                                     <div
                                         class="flex h-32 items-center justify-center rounded-md bg-background/60 px-8 text-muted-foreground"
                                     >
-                                        <code class="fira-code text-sm">
+                                        <code class="fira-code text-small">
                                             inner · fullscreen={{ innerFullscreen }}
                                         </code>
                                     </div>

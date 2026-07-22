@@ -20,7 +20,7 @@ const attrs = useAttrs();
         <table
             v-bind="attrs"
             data-slot="table"
-            :class="cn('w-full caption-bottom text-sm', props.class)"
+            :class="cn('w-full caption-bottom text-small', props.class)"
             :role="props.role"
             :aria-label="props.ariaLabel"
             :aria-colcount="props.ariaColCount"

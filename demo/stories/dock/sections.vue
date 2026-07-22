@@ -20,7 +20,7 @@ import DockStage from "./_frame/DockStage.vue";
     <StoryPage>
         <DockStage #default="{ backgroundCanvas }">
             <StorySection heading="Semantic groups and separators" gap="md">
-                <p class="text-sm text-muted-foreground">
+                <p class="text-small text-muted-foreground">
                     Ordinary groups and <code class="rounded bg-muted px-1">DockSeparator</code>
                     express dock hierarchy without another component or descriptor model.
                 </p>

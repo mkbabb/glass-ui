@@ -207,7 +207,7 @@ function derive() {
                             aria-label="Fewer stops"
                             @click="stepCount(-1)"
                         >
-                            <span class="text-sm leading-none">−</span>
+                            <span class="text-small leading-none">−</span>
                         </Button>
                         <span
                             class="text-mono-small w-4 text-center tabular-nums text-foreground"

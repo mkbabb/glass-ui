@@ -73,7 +73,7 @@ function toggle(id: string): void {
             blurb="The house rule for which easing fits which job — the legend every <Transition> below composes from. Motion ▸ Motion Lab exercises the live Glass presets and authoring seam; this is the foundation tour of the grammar they build."
         >
             <div class="overflow-hidden rounded-card border border-border">
-                <table class="w-full text-sm">
+                <table class="w-full text-small">
                     <thead>
                         <tr class="bg-[var(--surface-tint-1)] text-left">
                             <th class="px-4 py-2 font-semibold">Transition kind</th>
@@ -88,7 +88,7 @@ function toggle(id: string): void {
                         >
                             <td class="px-4 py-2 text-foreground">{{ row.kind }}</td>
                             <td class="px-4 py-2">
-                                <code class="text-xs text-muted-foreground">{{
+                                <code class="text-micro text-muted-foreground">{{
                                     row.easing
                                 }}</code>
                             </td>

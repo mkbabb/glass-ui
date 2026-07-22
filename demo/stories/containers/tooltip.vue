@@ -23,7 +23,7 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
         <TooltipProvider :delay-duration="150">
             <div class="grid gap-12">
                 <StorySection heading="Icon toolbar" gap="lg">
-                    <p class="text-sm text-muted-foreground">
+                    <p class="text-small text-muted-foreground">
                         Every icon action remains a named button; the tooltip adds
                         only a terse description. Required help stays visible or
                         programmatically associated because touch does not open a
@@ -60,7 +60,7 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
                 </StorySection>
 
                 <StorySection heading="Button annotations" gap="lg">
-                    <p class="text-sm text-muted-foreground">
+                    <p class="text-small text-muted-foreground">
                         Use sparingly for labeled buttons — only when the tooltip
                         carries non-redundant info.
                     </p>
@@ -89,8 +89,8 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
                 </StorySection>
 
                 <StorySection heading="Placement" gap="lg">
-                    <p class="text-sm text-muted-foreground">
-                        <code class="font-mono text-xs">side</code> preference —
+                    <p class="text-small text-muted-foreground">
+                        <code class="font-mono text-micro">side</code> preference —
                         Floating UI flips on collision.
                     </p>
                     <div class="flex flex-wrap gap-3">

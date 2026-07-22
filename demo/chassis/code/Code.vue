@@ -10,7 +10,7 @@
 // already has its color event).
 //
 // A component-name, token, subpath, px, or numeric literal inline — however it is
-// spelled (`font-mono text-xs`, or a raw `class="fira-code"`) — folds onto this ONE
+// spelled (`font-mono text-micro`, or a raw `class="fira-code"`) — folds onto this ONE
 // primitive; three dialects unify on the chip (clean break, no alias).
 // Ligatures live (`fira-code` carries liga/calt).
 //

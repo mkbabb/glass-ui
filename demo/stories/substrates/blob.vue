@@ -821,7 +821,7 @@ watch(studioPaused, () => {
                 resume is CLEAN (the canvas paints the live bead intact, never a wrecked slab)."
         >
             <ShowcaseFrame class="flex flex-wrap items-center gap-4">
-                <span class="flex items-center gap-3 text-sm" data-testid="blob-pause-toggle">
+                <span class="flex items-center gap-3 text-small" data-testid="blob-pause-toggle">
                     <DockBackgroundToggle v-model:paused="studioPaused" />
                     <span class="tabular-nums opacity-70">
                         studio: {{ studioPaused ? "paused" : "running" }}

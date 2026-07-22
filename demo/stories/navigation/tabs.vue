@@ -118,7 +118,7 @@ const chapterBody: Record<string, string> = {
                         :options="viewOptions"
                         aria-label="View mode"
                     />
-                    <span class="text-xs text-muted-foreground"
+                    <span class="text-micro text-muted-foreground"
                         >selected: {{ viewMode }}</span
                     >
                 </div>
@@ -128,7 +128,7 @@ const chapterBody: Record<string, string> = {
                         :options="priorityOptions"
                         aria-label="Priority"
                     />
-                    <span class="text-xs text-muted-foreground"
+                    <span class="text-micro text-muted-foreground"
                         >selected: {{ priority }}</span
                     >
                 </div>
@@ -152,7 +152,7 @@ const chapterBody: Record<string, string> = {
                         :options="viewOptions"
                         aria-label="Draggable view mode"
                     />
-                    <span class="text-xs text-muted-foreground"
+                    <span class="text-micro text-muted-foreground"
                         >selected: {{ liquidView }} — drag the pill</span
                     >
                 </div>
@@ -306,7 +306,7 @@ const chapterBody: Record<string, string> = {
                     aria-label="Project view"
                     :responsive="{ ariaLabel: 'Project view' }"
                 />
-                <p class="mt-4 text-xs text-muted-foreground">
+                <p class="mt-4 text-micro text-muted-foreground">
                     active view: {{ respView }}
                 </p>
             </div>

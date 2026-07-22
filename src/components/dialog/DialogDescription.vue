@@ -11,7 +11,7 @@ const props = defineProps<DialogDescriptionProps>();
 </script>
 
 <template>
-    <RekaDialogDescription :class="cn('text-sm text-muted-foreground', props.class)">
+    <RekaDialogDescription :class="cn('text-small text-muted-foreground', props.class)">
         <slot />
     </RekaDialogDescription>
 </template>

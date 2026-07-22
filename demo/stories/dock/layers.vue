@@ -91,7 +91,7 @@ function back() {
                             <button
                                 v-for="l in layers"
                                 :key="l.id"
-                                class="focus-ring inline-flex items-center gap-1 rounded-[var(--radius-pill)] px-2 py-1 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                                class="focus-ring inline-flex items-center gap-1 rounded-[var(--radius-pill)] px-2 py-1 text-small text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                                 :aria-label="l.label"
                                 :data-testid="`dock-layer-open-${l.id}`"
                                 @click="open(l.id)"
@@ -112,8 +112,8 @@ function back() {
                             </DockControl>
                             <DockSeparator />
                             <component :is="l.icon" class="h-4 w-4 opacity-70" />
-                            <span class="text-sm font-medium">{{ l.label }}</span>
-                            <span class="text-xs text-muted-foreground">· {{ l.blurb }}</span>
+                            <span class="text-small font-medium">{{ l.label }}</span>
+                            <span class="text-micro text-muted-foreground">· {{ l.blurb }}</span>
                             <DockSeparator />
                             <DockControl aria-label="New item">
                                 <FileText />
@@ -150,8 +150,8 @@ function back() {
                             :icon="l.icon"
                         >
                             <component :is="l.icon" class="h-4 w-4" />
-                            <span class="px-1 text-sm font-medium">{{ l.label }}</span>
-                            <span class="text-xs text-muted-foreground">{{ l.blurb }}</span>
+                            <span class="px-1 text-small font-medium">{{ l.label }}</span>
+                            <span class="text-micro text-muted-foreground">{{ l.blurb }}</span>
                         </DockLayer>
                     </DockLayerGroup>
                 </GlassDock>
@@ -219,8 +219,8 @@ function back() {
                             :icon="l.icon"
                         >
                             <component :is="l.icon" class="h-4 w-4" />
-                            <span class="px-1 text-sm font-medium">{{ l.label }}</span>
-                            <span class="text-xs text-muted-foreground">{{ l.blurb }}</span>
+                            <span class="px-1 text-small font-medium">{{ l.label }}</span>
+                            <span class="text-micro text-muted-foreground">{{ l.blurb }}</span>
                         </DockLayer>
                     </DockLayerGroup>
                     <template #collapsed>
@@ -261,12 +261,12 @@ function back() {
                             <div class="flex flex-col gap-1 py-1">
                                 <div class="flex items-center gap-2 px-1">
                                     <component :is="l.icon" class="h-4 w-4" />
-                                    <span class="text-sm font-medium">{{ l.label }}</span>
+                                    <span class="text-small font-medium">{{ l.label }}</span>
                                 </div>
                                 <span
                                     v-for="(row, i) in overflowRows"
                                     :key="i"
-                                    class="px-1 text-xs text-muted-foreground"
+                                    class="px-1 text-micro text-muted-foreground"
                                     >{{ row }}</span
                                 >
                             </div>
@@ -288,7 +288,7 @@ function back() {
                 <button
                     v-for="p in controlledPanes"
                     :key="p.id"
-                    class="focus-ring inline-flex items-center gap-1 rounded-[var(--radius-pill)] border border-border/30 px-2 py-1 text-sm"
+                    class="focus-ring inline-flex items-center gap-1 rounded-[var(--radius-pill)] border border-border/30 px-2 py-1 text-small"
                     :class="controlled === p.id ? 'bg-muted text-foreground' : 'text-muted-foreground'"
                     :aria-pressed="controlled === p.id"
                     :data-testid="`dock-crossfade-select-${p.id}`"
@@ -311,12 +311,12 @@ function back() {
                             <div class="flex flex-col gap-1 py-1">
                                 <div class="flex items-center gap-2 px-1">
                                     <component :is="p.icon" class="h-4 w-4" />
-                                    <span class="text-sm font-medium">{{ p.label }}</span>
+                                    <span class="text-small font-medium">{{ p.label }}</span>
                                 </div>
                                 <span
                                     v-for="(row, i) in p.rows"
                                     :key="i"
-                                    class="dock-face-content px-1 text-xs text-muted-foreground"
+                                    class="dock-face-content px-1 text-micro text-muted-foreground"
                                     >{{ row }}</span
                                 >
                             </div>

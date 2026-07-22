@@ -39,7 +39,7 @@ const canvasStyle = computed(() => {
     <StoryPage>
 
         <StorySection heading="Right-click surface" gap="lg">
-            <p class="text-sm text-muted-foreground">
+            <p class="text-small text-muted-foreground">
                 Right-click, long-press, or focus the paper and press Shift+F10.
             </p>
             <DropdownMenu trigger="context">

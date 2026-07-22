@@ -47,9 +47,9 @@ const fixedEdges = [
 <template>
     <StoryPage>
         <StorySection heading="Snap points" gap="lg">
-            <p class="text-sm text-muted-foreground">
+            <p class="text-small text-muted-foreground">
                 Four snap positions: 25%, 40%, 70%, 100%. Current snap —
-                <code class="font-mono text-xs">{{ String(snap) }}</code
+                <code class="font-mono text-micro">{{ String(snap) }}</code
                 >.
             </p>
             <div class="flex flex-wrap gap-3">
@@ -65,7 +65,7 @@ const fixedEdges = [
                                 to switch snap points.
                             </DrawerDescription>
                         </DrawerHeader>
-                        <div class="px-6 pb-4 grid gap-3 text-sm">
+                        <div class="px-6 pb-4 grid gap-3 text-small">
                             <div
                                 v-for="p in snapPoints"
                                 :key="p"
@@ -85,7 +85,7 @@ const fixedEdges = [
         </StorySection>
 
         <StorySection heading="Fixed edge panels" gap="lg">
-            <p class="text-sm text-muted-foreground">
+            <p class="text-small text-muted-foreground">
                 Left and right drawers are full-slide panels without a detent grip. The
                 longer activity feed scrolls inside its fixed panel while the title and
                 close action remain seated.
@@ -125,7 +125,7 @@ const fixedEdges = [
                             <li
                                 v-for="item in edge.items"
                                 :key="item"
-                                class="rounded-lg border border-border/50 bg-card/50 px-3 py-2 text-sm"
+                                class="rounded-lg border border-border/50 bg-card/50 px-3 py-2 text-small"
                             >
                                 {{ item }}
                             </li>
@@ -141,8 +141,8 @@ const fixedEdges = [
         </StorySection>
 
         <StorySection heading="Bottom fixed height" gap="lg">
-            <p class="text-sm text-muted-foreground">
-                Omit <code class="font-mono text-xs">snapPoints</code> for a single
+            <p class="text-small text-muted-foreground">
+                Omit <code class="font-mono text-micro">snapPoints</code> for a single
                 resting position sized by content.
             </p>
             <div class="flex flex-wrap gap-3">
@@ -177,7 +177,7 @@ const fixedEdges = [
         </StorySection>
 
         <StorySection heading="Right live-behind · reversible" gap="lg">
-            <p class="text-sm text-muted-foreground">
+            <p class="text-small text-muted-foreground">
                 The Review trigger remains reachable while the right panel moves. Use it
                 rapidly to reverse direction; adding a checklist item confirms the
                 release plan stays interactive behind the panel.
@@ -212,7 +212,7 @@ const fixedEdges = [
                                 plan.
                             </DrawerDescription>
                         </DrawerHeader>
-                        <div class="space-y-3 px-6 pb-6 text-sm text-muted-foreground">
+                        <div class="space-y-3 px-6 pb-6 text-small text-muted-foreground">
                             <p>
                                 Confirm the final checklist while the plan remains
                                 editable.
@@ -237,7 +237,7 @@ const fixedEdges = [
         </StorySection>
 
         <StorySection heading="Live-behind mode" gap="lg">
-            <p class="text-sm text-muted-foreground">
+            <p class="text-small text-muted-foreground">
                 The sheet pauses at Peek, Half, and Full while the verdict remains
                 usable behind it. Even Full stops above the persistent action bar.
             </p>

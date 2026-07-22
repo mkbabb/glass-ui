@@ -285,7 +285,7 @@ onMounted(() => {
                         v-model="interactive"
                         aria-label="Interactive pointer effects"
                     />
-                    <span class="text-sm"
+                    <span class="text-small"
                         >interactive (steer-toward-cursor + tap ripples)</span
                     >
                 </Label>
@@ -310,9 +310,9 @@ onMounted(() => {
                 </div>
             </ShowcaseFrame>
 
-            <p class="text-sm text-muted-foreground">
+            <p class="text-small text-muted-foreground">
                 Under
-                <code class="font-mono text-xs">prefers-reduced-motion: reduce</code>
+                <code class="font-mono text-micro">prefers-reduced-motion: reduce</code>
                 the substrate paints ONE static frame then parks — the lattice freezes
                 in place and pointer reactivity is disabled (no drift, no ripples).
                 Toggle reduced-motion in your OS to verify the freeze.
@@ -339,16 +339,16 @@ onMounted(() => {
                         class="absolute inset-0"
                     />
                     <span
-                        class="pointer-events-none absolute bottom-3 left-3 rounded-pill bg-card/80 px-2.5 py-1 text-xs text-muted-foreground"
+                        class="pointer-events-none absolute bottom-3 left-3 rounded-pill bg-card/80 px-2.5 py-1 text-micro text-muted-foreground"
                     >
                         click or press Enter/Space to warp
                     </span>
                 </div>
             </ShowcaseFrame>
 
-            <p class="text-sm text-muted-foreground">
-                Note <code class="font-mono text-xs">pointerReactive</code> is OFF here
-                and <code class="font-mono text-xs">warpOnClick</code> still fires — the
+            <p class="text-small text-muted-foreground">
+                Note <code class="font-mono text-micro">pointerReactive</code> is OFF here
+                and <code class="font-mono text-micro">warpOnClick</code> still fires — the
                 two axes are independent. The pixels remain decorative; enabling the
                 warp promotes the host to a named keyboard/pointer control.
             </p>
@@ -403,7 +403,7 @@ onMounted(() => {
                         class="absolute inset-0"
                     />
                     <span
-                        class="pointer-events-none absolute bottom-3 left-3 rounded-pill bg-card/80 px-2.5 py-1 text-xs text-muted-foreground"
+                        class="pointer-events-none absolute bottom-3 left-3 rounded-pill bg-card/80 px-2.5 py-1 text-micro text-muted-foreground"
                     >
                         hold pointer or Enter/Space to pull
                     </span>
@@ -429,7 +429,7 @@ onMounted(() => {
                         class="absolute inset-0"
                     />
                     <span
-                        class="pointer-events-none absolute bottom-3 left-3 rounded-pill bg-card/80 px-2.5 py-1 text-xs text-muted-foreground"
+                        class="pointer-events-none absolute bottom-3 left-3 rounded-pill bg-card/80 px-2.5 py-1 text-micro text-muted-foreground"
                     >
                         opacityCeiling 1.0 (full)
                     </span>
@@ -447,7 +447,7 @@ onMounted(() => {
                         class="absolute inset-0"
                     />
                     <span
-                        class="pointer-events-none absolute bottom-3 left-3 rounded-pill bg-card/80 px-2.5 py-1 text-xs text-muted-foreground"
+                        class="pointer-events-none absolute bottom-3 left-3 rounded-pill bg-card/80 px-2.5 py-1 text-micro text-muted-foreground"
                     >
                         opacityCeiling 0.4 (recessed)
                     </span>
@@ -484,12 +484,12 @@ onMounted(() => {
                         class="absolute inset-0"
                     />
                     <span
-                        class="pointer-events-none absolute bottom-3 left-3 rounded-pill bg-card/80 px-2.5 py-1 text-xs text-muted-foreground"
+                        class="pointer-events-none absolute bottom-3 left-3 rounded-pill bg-card/80 px-2.5 py-1 text-micro text-muted-foreground"
                     >
                         pinned anomaly — accent edges + autonomous drift
                     </span>
                     <span
-                        class="pointer-events-none absolute right-3 top-3 rounded-pill bg-card/80 px-2.5 py-1 font-mono text-xs"
+                        class="pointer-events-none absolute right-3 top-3 rounded-pill bg-card/80 px-2.5 py-1 font-mono text-micro"
                         :class="genSettled ? 'text-muted-foreground' : 'text-primary'"
                     >
                         {{ genSettled ? "settled" : "warping…" }}
@@ -497,16 +497,16 @@ onMounted(() => {
                 </div>
             </ShowcaseFrame>
 
-            <p class="text-sm text-muted-foreground">
+            <p class="text-small text-muted-foreground">
                 The pinned node holds its position while the rest of the field drifts;
                 its incident edges read in the
-                <code class="font-mono text-xs">--constellation-accent</code> tint; and
-                the autonomous <code class="font-mono text-xs">pinnedDrift</code> gently
+                <code class="font-mono text-micro">--constellation-accent</code> tint; and
+                the autonomous <code class="font-mono text-micro">pinnedDrift</code> gently
                 breathes it around its anchor (distinct from the click-warp re-target).
                 Click to warp the focal node — the
-                <code class="font-mono text-xs">settled</code> badge flips while the
+                <code class="font-mono text-micro">settled</code> badge flips while the
                 spring is in flight, then
-                <code class="font-mono text-xs">warpAutoRelease</code> frees it on
+                <code class="font-mono text-micro">warpAutoRelease</code> frees it on
                 arrival (the identity-ride).
             </p>
         </StorySection>

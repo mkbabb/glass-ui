@@ -102,9 +102,9 @@ const pops: { icon: Component; section: number }[] = [
         <StorySection label="Foundations · Icons" heading="Pops · the color event">
             <p class="text-small max-w-2xl text-muted-foreground">
                 The plated icon is the brand's color event: a
-                <span class="font-mono text-xs">warm 0-alpha → tone</span>
+                <span class="font-mono text-micro">warm 0-alpha → tone</span>
                 backplate under a full-chroma glyph, walked across the 13-stop
-                <span class="font-mono text-xs">--section-color-*</span> ramp.
+                <span class="font-mono text-micro">--section-color-*</span> ramp.
                 <span class="text-foreground">The proportion rule:</span> a surface
                 gets ONE color event — either a field behind glass or a chip cluster
                 like this, never both at full volume; a chip never exceeds icon

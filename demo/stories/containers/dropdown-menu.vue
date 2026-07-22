@@ -32,7 +32,7 @@ const flags = ref({ minimap: true, overlays: false, rulers: true });
     <StoryPage>
 
         <StorySection heading="Composed menu" gap="lg">
-            <p class="text-sm text-muted-foreground">
+            <p class="text-small text-muted-foreground">
                 One trigger, every subcomponent.
             </p>
             <div class="flex flex-wrap gap-3">
@@ -148,9 +148,9 @@ const flags = ref({ minimap: true, overlays: false, rulers: true });
         </StorySection>
 
         <StorySection heading="Trigger variants + states" gap="lg">
-            <p class="text-sm text-muted-foreground">
-                The trigger is any <code class="font-mono text-xs">Button</code>; items
-                carry their own <code class="font-mono text-xs">disabled</code>
+            <p class="text-small text-muted-foreground">
+                The trigger is any <code class="font-mono text-micro">Button</code>; items
+                carry their own <code class="font-mono text-micro">disabled</code>
                 edge, and a disabled trigger never opens.
             </p>
             <Surface

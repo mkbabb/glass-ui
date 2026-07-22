@@ -470,7 +470,7 @@ watch(playStops, invalidateCopy);
                             class="glass-card flex items-start gap-2 rounded-card px-3 py-2"
                         >
                             <code
-                                class="min-w-0 flex-1 break-all text-[0.7rem] leading-snug text-foreground"
+                                class="min-w-0 flex-1 break-all text-micro leading-snug text-foreground"
                                 >{{ playStops }}</code
                             >
                             <button

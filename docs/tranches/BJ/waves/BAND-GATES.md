@@ -553,6 +553,21 @@ source — after it, `text-sm` is a build-visible unknown, not a silent bypass.
 - The mono-caps caption idiom kill → Family D (a sweep + StorySection rework, not a gate).
 - The font-family role-collapse note → informational, no gate.
 
+### §Status — `type-hygiene` AUTHORED + FLIPPED GREEN (2026-07-22, model claude-opus-4-8)
+
+The gate half and its coupled `BAND-MATERIAL` W6 flip landed in ONE cut (RULING-2, never-RED-at-tag), so
+`tests/gates/type-hygiene.test.ts` ships directly as the STANDING GREEN regression lock — no `it.fails`
+born-RED scaffold to strip (the same-cut idiom `BAND-MATERIAL` W7 used for `orphan-CSS-partial`). Arms:
+(1) utility — bans `text-sm`/`text-xs` + raw `text-[<len>]` in `src`+`demo` `.vue`/`.ts`, with the
+`(?<![-\w])` negative lookbehind that excludes the legit `var(--control-text-sm)` / `text-[length:var(…)]`
+token-ref forms (the counting method stated in-file); (2) CSS-declaration — bans raw rem/px `font-size` +
+`letter-spacing: 0.1em` in `src/components/**/*.css`. Four self-test bites prove teeth. **RE-CENSUS
+truth-up:** the born-RED figure was **227 filtered / 225 strict utility** (16 src + 211 demo; the stale
+spec 234 counted the 2 `.ts` token-refs) **+ 9 arbitraries + the four CSS-declaration sites** — one figure,
+both bands; see `BAND-MATERIAL` W6 §CLOSE for the full census, mappings, the SCOPED ramp reset
+(`--text-sm/xs: initial`, not the collateral-breaking `--text-*` wildcard), and the paired-π DELTA. 5/5
+GREEN; production build GREEN.
+
 ---
 
 ## §Band-level obligations & OPEN roll-up

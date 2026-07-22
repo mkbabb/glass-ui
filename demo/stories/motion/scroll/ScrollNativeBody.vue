@@ -58,7 +58,7 @@ const REVEAL_ITEMS = Array.from({ length: 8 }, (_, i) => `Reveal card ${i + 1}`)
             <div class="flex flex-wrap gap-3">
                 <span
                     :class="cn(
-                        'inline-flex items-center gap-2 rounded-pill px-3 py-1.5 text-sm font-medium',
+                        'inline-flex items-center gap-2 rounded-pill px-3 py-1.5 text-small font-medium',
                         scrollOk ? 'bg-[var(--surface-tint-2)] text-foreground' : 'bg-[var(--surface-tint-1)] text-muted-foreground',
                     )"
                 >
@@ -67,7 +67,7 @@ const REVEAL_ITEMS = Array.from({ length: 8 }, (_, i) => `Reveal card ${i + 1}`)
                 </span>
                 <span
                     :class="cn(
-                        'inline-flex items-center gap-2 rounded-pill px-3 py-1.5 text-sm font-medium',
+                        'inline-flex items-center gap-2 rounded-pill px-3 py-1.5 text-small font-medium',
                         viewOk ? 'bg-[var(--surface-tint-2)] text-foreground' : 'bg-[var(--surface-tint-1)] text-muted-foreground',
                     )"
                 >

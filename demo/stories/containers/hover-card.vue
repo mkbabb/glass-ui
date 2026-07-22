@@ -16,7 +16,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@glass/components/avatar";
     <StoryPage>
 
             <StorySection heading="Profile preview" gap="lg">
-                <p class="text-sm text-muted-foreground">
+                <p class="text-small text-muted-foreground">
                     Hover the underlined trigger.
                 </p>
                 <p class="text-base">
@@ -40,11 +40,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@glass/components/avatar";
                                     <p class="font-display text-base">
                                         Jean-Baptiste Joseph Fourier
                                     </p>
-                                    <p class="text-xs text-muted-foreground">
+                                    <p class="text-micro text-muted-foreground">
                                         Heat diffusion, harmonic analysis, one
                                         rather ambitious series.
                                     </p>
-                                    <p class="font-mono text-xs text-muted-foreground">
+                                    <p class="font-mono text-micro text-muted-foreground">
                                         joined · an 1768
                                     </p>
                                 </div>

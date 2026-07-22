@@ -150,7 +150,7 @@ const highlights = [
                             <Label for="auth-password">Password</Label>
                             <a
                                 href="#"
-                                class="text-xs text-muted-foreground underline underline-offset-4 hover:text-foreground"
+                                class="text-micro text-muted-foreground underline underline-offset-4 hover:text-foreground"
                                 >Forgot?</a
                             >
                         </div>

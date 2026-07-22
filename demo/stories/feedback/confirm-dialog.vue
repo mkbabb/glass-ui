@@ -74,11 +74,11 @@ const signOutOpen = ref(false);
                 class="relative min-h-[240px] overflow-hidden rounded-2xl border border-border/60 bg-card/60 p-6"
             >
                 <div class="flex flex-col gap-3">
-                    <div class="flex items-center gap-2 text-sm text-foreground">
+                    <div class="flex items-center gap-2 text-small text-foreground">
                         <Trash2 class="size-4 text-destructive" />
                         <span>Workspace: <em>fourier-sandbox-42</em></span>
                     </div>
-                    <p class="max-w-prose text-sm text-muted-foreground">
+                    <p class="max-w-prose text-small text-muted-foreground">
                         Deleting a workspace removes every analysis, note, and
                         attachment inside it. This cannot be undone — use the
                         destructive pattern.
@@ -134,7 +134,7 @@ const signOutOpen = ref(false);
                     </Dialog>
                     <ul
                         v-if="destructiveLog.length"
-                        class="mt-2 font-mono text-xs text-muted-foreground"
+                        class="mt-2 font-mono text-micro text-muted-foreground"
                     >
                         <li v-for="line in destructiveLog" :key="line">— {{ line }}</li>
                     </ul>
@@ -148,11 +148,11 @@ const signOutOpen = ref(false);
                 class="relative min-h-[200px] overflow-hidden rounded-2xl border border-border/60 bg-card/60 p-6"
             >
                 <div class="flex flex-col gap-3">
-                    <div class="flex items-center gap-2 text-sm text-foreground">
+                    <div class="flex items-center gap-2 text-small text-foreground">
                         <Archive class="size-4 text-muted-foreground" />
                         <span>Thread: <em>Q2 planning notes</em></span>
                     </div>
-                    <p class="max-w-prose text-sm text-muted-foreground">
+                    <p class="max-w-prose text-small text-muted-foreground">
                         Archive is reversible — the confirm button stays
                         default-tone. Keep the guardrail for deliberate
                         intent, not for consequence.
@@ -198,7 +198,7 @@ const signOutOpen = ref(false);
                     </Dialog>
                     <ul
                         v-if="benignLog.length"
-                        class="mt-2 font-mono text-xs text-muted-foreground"
+                        class="mt-2 font-mono text-micro text-muted-foreground"
                     >
                         <li v-for="line in benignLog" :key="line">— {{ line }}</li>
                     </ul>
@@ -212,7 +212,7 @@ const signOutOpen = ref(false);
                 class="relative min-h-[220px] overflow-hidden rounded-2xl border border-border/60 bg-card/60 p-6"
             >
                 <div class="flex flex-col gap-3">
-                    <p class="max-w-prose text-sm text-muted-foreground">
+                    <p class="max-w-prose text-small text-muted-foreground">
                         A richer body + a custom confirm label — the preset is just
                         Dialog primitives, so consumers frame it however they like.
                     </p>

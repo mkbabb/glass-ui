@@ -67,18 +67,18 @@ onUnmounted(stopAnimated);
         <StorySection label="determinate">
             <div class="flex flex-col gap-3">
                 <div class="flex items-center justify-between">
-                    <p class="font-mono text-xs text-muted-foreground">
+                    <p class="font-mono text-micro text-muted-foreground">
                         {{ determinate }}% complete
                     </p>
                     <div class="flex items-center gap-2">
                         <Button
-                            class="h-7 px-2 text-xs"
+                            class="h-7 px-2 text-micro"
                             @click="determinate = Math.max(0, determinate - 10)"
                         >
                             −10
                         </Button>
                         <Button
-                            class="h-7 px-2 text-xs"
+                            class="h-7 px-2 text-micro"
                             @click="determinate = Math.min(100, determinate + 10)"
                         >
                             +10
@@ -92,7 +92,7 @@ onUnmounted(stopAnimated);
                 />
                 <div class="grid gap-4 md:grid-cols-2">
                     <div class="grid gap-2">
-                        <span class="font-mono text-xs text-muted-foreground">
+                        <span class="font-mono text-micro text-muted-foreground">
                             Arbitrary domain · 0.5 / 1
                         </span>
                         <Progress
@@ -103,7 +103,7 @@ onUnmounted(stopAnimated);
                         />
                     </div>
                     <div dir="rtl" class="grid gap-2">
-                        <span class="font-mono text-xs text-muted-foreground">
+                        <span class="font-mono text-micro text-muted-foreground">
                             RTL · 25 / 100
                         </span>
                         <Progress
@@ -125,7 +125,7 @@ onUnmounted(stopAnimated);
         </StorySection>
 
         <StorySection label="indeterminate">
-            <p class="font-mono text-xs text-muted-foreground">
+            <p class="font-mono text-micro text-muted-foreground">
                 <code>indeterminate</code> removes the numeric value and the rail sweeps
                 to signal unknown duration. It becomes static under
                 <code>prefers-reduced-motion</code>.
@@ -174,7 +174,7 @@ onUnmounted(stopAnimated);
 
         <!-- Gradient paint over the shared progress geometry and semantics. -->
         <StorySection label="gradient variant">
-            <p class="font-mono text-xs text-muted-foreground">
+            <p class="font-mono text-micro text-muted-foreground">
                 <code>variant="gradient"</code> adds the lifecycle motion grammar and
                 optional indeterminate sweep (a slow left-to-right pan, retired under
                 <code>prefers-reduced-motion</code>).
@@ -190,7 +190,7 @@ onUnmounted(stopAnimated);
              phase colour rides --progress-fill (here the legendre violet) with zero
              per-site glass knowledge. -->
         <StorySection label="liquid variant (shared glass-cylinder fill)">
-            <p class="font-mono text-xs text-muted-foreground">
+            <p class="font-mono text-micro text-muted-foreground">
                 <code>variant="liquid"</code> selects the shared
                 <code>.glass-liquid-fill</code> paint that Slider also reads. The tint
                 rides <code>--progress-fill</code> (or <code>--liquid-fill-tint</code>).
@@ -206,7 +206,7 @@ onUnmounted(stopAnimated);
         </StorySection>
 
         <StorySection label="scroll progress rim">
-            <p class="font-mono text-xs text-muted-foreground">
+            <p class="font-mono text-micro text-muted-foreground">
                 A law-12 fill-pill: an inset stadium hugs one host edge and the
                 spectrum pill grows to the true fraction — a linear read that stays
                 honest on a pill Dock, a wide card, or a circular host alike.
@@ -218,7 +218,7 @@ onUnmounted(stopAnimated);
                     class="relative inline-grid rounded-[var(--radius-dock)]"
                 >
                     <GlassDock always-expanded backdrop-mode="static">
-                        <span class="px-3 font-mono text-xs tabular-nums">
+                        <span class="px-3 font-mono text-micro tabular-nums">
                             {{ value }}%
                         </span>
                     </GlassDock>
@@ -235,7 +235,7 @@ onUnmounted(stopAnimated);
                         backdrop-mode="static"
                         style="pointer-events: none"
                     >
-                        <span class="px-3 font-mono text-xs">Expanded</span>
+                        <span class="px-3 font-mono text-micro">Expanded</span>
                         <template #collapsed>
                             <span
                                 class="size-2 rounded-full bg-foreground/60"
@@ -252,7 +252,7 @@ onUnmounted(stopAnimated);
                 <div
                     class="relative grid size-16 place-items-center rounded-full bg-card/40"
                 >
-                    <span class="font-mono text-xs tabular-nums">65%</span>
+                    <span class="font-mono text-micro tabular-nums">65%</span>
                     <ScrollProgressRim
                         :value="65"
                         :max="100"
@@ -303,7 +303,7 @@ onUnmounted(stopAnimated);
                     aria-label="Segment progress"
                 />
                 <div class="flex flex-col gap-0.5">
-                    <span class="font-mono text-sm font-medium tabular-nums">
+                    <span class="text-mono-small font-medium tabular-nums">
                         4 stages · 52%
                     </span>
                     <span class="font-mono text-micro text-muted-foreground">

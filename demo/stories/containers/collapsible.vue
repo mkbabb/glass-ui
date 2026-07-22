@@ -81,14 +81,14 @@ const keyboardOpen = ref(false);
                             </Button>
                         </CollapsibleTrigger>
                     </div>
-                    <p class="font-mono text-xs text-muted-foreground">
+                    <p class="font-mono text-micro text-muted-foreground">
                         dist/glass-ui.js · 142.3 kB
                     </p>
                     <CollapsibleContent class="grid gap-2">
-                        <p class="font-mono text-xs text-muted-foreground">
+                        <p class="font-mono text-micro text-muted-foreground">
                             dist/glass-ui.css · 38.9 kB
                         </p>
-                        <p class="font-mono text-xs text-muted-foreground">
+                        <p class="font-mono text-micro text-muted-foreground">
                             dist/index.d.ts · 12.4 kB
                         </p>
                     </CollapsibleContent>

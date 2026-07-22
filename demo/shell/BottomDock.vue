@@ -170,7 +170,7 @@ const hasNext = computed(() =>
                             </TooltipTrigger>
                             <TooltipContent side="top" :side-offset="10">
                                 Previous story ·
-                                <kbd class="font-mono text-[0.7em]">[</kbd>
+                                <kbd class="font-mono text-micro">[</kbd>
                             </TooltipContent>
                         </Tooltip>
 
@@ -210,7 +210,7 @@ const hasNext = computed(() =>
                                 </DockControl>
                             </TooltipTrigger>
                             <TooltipContent side="top" :side-offset="10">
-                                Next story · <kbd class="font-mono text-[0.7em]">]</kbd>
+                                Next story · <kbd class="font-mono text-micro">]</kbd>
                             </TooltipContent>
                         </Tooltip>
                     </TooltipProvider>
@@ -237,7 +237,7 @@ const hasNext = computed(() =>
                             </TooltipTrigger>
                             <TooltipContent side="top" :side-offset="10">
                                 Previous category ·
-                                <kbd class="font-mono text-[0.7em]">{</kbd>
+                                <kbd class="font-mono text-micro">{</kbd>
                             </TooltipContent>
                         </Tooltip>
                         <Tooltip>
@@ -253,7 +253,7 @@ const hasNext = computed(() =>
                             </TooltipTrigger>
                             <TooltipContent side="top" :side-offset="10">
                                 Next category ·
-                                <kbd class="font-mono text-[0.7em]">}</kbd>
+                                <kbd class="font-mono text-micro">}</kbd>
                             </TooltipContent>
                         </Tooltip>
                         <!-- the V↔H orientation-morph control is

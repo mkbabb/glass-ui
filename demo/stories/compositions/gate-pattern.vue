@@ -148,7 +148,7 @@ function relock() {
                             autocomplete="off"
                             @input="error = false"
                         />
-                        <p v-if="error" role="alert" class="text-sm text-destructive">
+                        <p v-if="error" role="alert" class="text-small text-destructive">
                             That key is incorrect. Try again.
                         </p>
 
