@@ -74,6 +74,26 @@ Date 2026-07-24 · HEAD at audit `0371836d` · phase: **tranche development only
     twice-challenged by gestalt passes, adjudicated, against a FINITE invariant checklist.
   - **Byte-changing work is UNBLOCKED.** Steers 21-34's Opus byte-lane halt is discharged with the
     thread that issued it.
+- **PROCEDURAL ECOUTE — OWNER RULING 2026-07-25 (third Ecoute of the day):**
+  (a) **Every procedural animation/substrate gets a two-sided ledger** — boons AND banes, effects AND
+  defects — including its CONFIGURATOR. Owning artefact: `PROCEDURAL-LEDGER.md` (workflow in flight).
+  (b) **Configurators:** standardized (the `34681df9` anatomy stands), **made larger, proper expand
+  buttons, expressive and configurable — DEFT changes, the extant is "rather alright"**. F09 lineage;
+  the A01 modal-expansion precedent is the natural expand mechanism.
+  (c) **THE BLOB PHYSICS CHARTER (owner's words, binding):** proper meatballing AND fission — satellites
+  properly SEPARATE from and ORBIT the core; **each satellite is an instance of its own Blob with
+  potential recursive sub-satellites**; natural, chaotic, ELLIPTICAL orbits; fully coordinated and
+  orchestrated up the blob tree — **OR emergent cohesion via simulation** (need not be fully
+  coordinated): "**Experiment.**" Experimentation is authorized as tranche-development work in the
+  scratchpad (prototypes, measured), never as repo bytes.
+  (d) **FOURIER-FIELD — OWNER OVERRULE:** "a complete mess… shall greenfield." This overturns tier-2's
+  KEEP-THIN disposition (banked hours earlier at `9c5a7451`) → **GF-FOURIER is MINTED**. The tier-2
+  spec's content SURVIVES as constraints into the greenfield: WGPU-only, its 8 corrections, and the
+  live slides consumer (deletion denied; relay owed — greenfield ≠ delete).
+  (e) "Parts of aurora, etc." — the aurora share folds into GF-AURORA **at its lane boundary** (the
+  in-flight run has frozen prompts; same law as the blob WebGPU ruling). BOUNDARY DUTY, lead-owned:
+  when `wf_50bff562-da7` lands, reconcile GF-BLOB's terminal against charter (c) and GF-AURORA's
+  against this ruling — neither lane may claim either ruling on its own authority.
 - **LAYOUT ECOUTE — OWNER RULING 2026-07-25 (second Ecoute of the day):** on ALL pages, mobile variants
   must better take up space — full width (handling pathologically wide screens) AND height — bespoke and
   optimized for mobile. **Without contrivance or extra complexity: ONE layout where befitting; a
@@ -85,8 +105,18 @@ Date 2026-07-24 · HEAD at audit `0371836d` · phase: **tranche development only
   transposition factors on one page** and a mobile hierarchy that collapses section into family
   (24:24:12); steer-12's mobile fixed-dock occlusions (Tabs vertical section, Search size fields,
   TagsInput validation); the blob page's chip-rail clipping at desktop 1440 (`right:1618px`); the
-  Safari-402px no-horizontal-overflow baseline (8 routes). Owning artefact: `LAYOUT.md` (workflow in
-  flight). Browser seats serialized — singleton law.
+  Safari-402px no-horizontal-overflow baseline (8 routes). **CLOSED — `LAYOUT.md` banked at
+  `b1e9fa31`** (tri-fold, 8/8, both benches adjudicated row-by-row). The spec in one line: a `100dvh`
+  shell grid with the dock as an IN-FLOW ROW (occlusion impossible by construction), an
+  orientation-aware rail/dock seat law (`>48rem ∧ landscape` = rail; portrait = dock-only), four derived
+  measures (66ch prose · 21rem cel · φ·cel wide · 96rem article = 2× the seat threshold), the cel field
+  turning surplus width into COLUMNS never line-length, ONE ladder transposition, and exactly ONE
+  surviving fork (the configurator studio, re-keyed viewport→container). Notable catches:
+  `viewport-fit=cover` is ABSENT from `index.html:9` so every `env(safe-area-*)` in the tree is inert
+  today; the `useBreakpoint` deletion was re-ruled on doctrine merit because its "0 call sites"
+  rationale hit the same rg blind spot as the consumer mis-prune (live external consumers exist) —
+  routed to LIB-SEAM with consumer addenda. Implementation = execution-phase; owner before/after
+  captures owed per §9.
 - **GREENFIELDING IS TRANCHE-DEVELOPMENT WORK — OWNER RULING 2026-07-25, standing.** "All greenfielding
   should be done in-tranche development, NOW, rather than deferred until tranche execution time. All
   lanes thereof." This strikes the `EXECUTION-PROGRESS.md` P-EX4 posture that parks the four greenfields
