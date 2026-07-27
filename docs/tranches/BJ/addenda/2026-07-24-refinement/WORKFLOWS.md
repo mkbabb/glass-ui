@@ -35,7 +35,7 @@ tri-fold; only the Fable arm + adjudication are owed on top.
 | `wf_6b459be5-e21` reconcile | `reconcile.wf.js` | **CLOSED 17/17** (2nd launch) | `RECONCILIATION.md` |
 | `wf_aaa19aee-da2` tier-2 | `tier2.wf.js` | **CLOSED 65/65** (tri-fold resume) | `COMPONENT-WAVES-TERMINAL-2.md` |
 | `wf_ab31a195-57f` layout | `layout.wf.js` | **CLOSED 8/8** | `LAYOUT.md` |
-| `wf_50bff562-da7` greenfield | `greenfield.wf.js` | **LIVE** — resumed tri-fold; 54 journal results at last check | on close → `GREENFIELD-TERMINAL.md` + **BOUNDARY DUTIES** below |
+| `wf_50bff562-da7` greenfield | `greenfield.wf.js` | **CLOSED 41/42** (one arm to a schema retry cap; duplex absorbed it — all 5 lanes + fold present, every apotheosis Fable-adjudicated) | `GREENFIELD-TERMINAL.md` — **boundary duties still OPEN** (blob/aurora reconcile at procedural close) |
 | `wf_51cdb0e0-bdb` procedural | `procedural.wf.js` | **LIVE** — 15 journal results at last check | on close → `PROCEDURAL-LEDGER.md` |
 
 Historical/superseded scripts kept for archaeology: `components-flat`, `component-apotheosis`,
