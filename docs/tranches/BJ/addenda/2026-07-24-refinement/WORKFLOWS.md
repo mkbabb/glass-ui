@@ -60,7 +60,7 @@ EXEC-STATE census row; membership stands, aggregates do not).
 | consolidate | `wf_1f04cfd9-089` | `consolidate.wf.js` | `TERMINAL-ROSTER.md` — §A roster+DAG · §B burn-down ×5 · §C constellation · §D owner-needs |
 | tier-3 | `wf_c6d8b0c5-fcf` | `tier3.wf.js` | `COMPONENT-WAVES-TERMINAL-3.md` (10 lanes ≈17 components + fold). **Owns the Chrome seat** — no other run may touch a browser while it lives |
 | archaeology | `wf_1a9b1bd8-dad` | `archaeology.wf.js` | `ARCHAEOLOGY.md` — the ecoute register · recurrence×implementation matrix · lessons ledger · plan amendments · abrogation reading |
-| gestalt | `wf_e3eec3a9-c1f` | `gestalt.wf.js` | `GESTALT.md` — six sweeps (shadcn/contrivance×2/design-canon/suffusion/perf) + tri-fold verdict; carries the OWED-LIVE cell list for the later browser pass |
+| gestalt | `wf_e3eec3a9-c1f` | `gestalt.wf.js` | **CLOSED 9/9** → banked `GESTALT.md` (tri-fold verdict, 8 disk-ruled adjudications; carries the OWED-LIVE cell list for the later browser pass) |
 
 **The archaeology corpus** (input to `wf_1a9b1bd8-dad`) lives in the scratchpad at
 `…/scratchpad/archaeology/{claude,codex}/` — 697 claude + 839 codex owner messages, 21+4 shards.
