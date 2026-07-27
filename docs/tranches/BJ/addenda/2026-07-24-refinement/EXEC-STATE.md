@@ -360,3 +360,31 @@ DISCHARGED by this document.
 source of record, never copied; BI/BJ carry explicit SUPERSEDED-INTO-BK marks for every ported row;
 the 60-gate budget is BK's gate roster. Cut by workflow (tri-fold) after tier-3 banks + the folding
 pass lands.
+
+---
+
+## THE SIXTH ECOUTE — 2026-07-27 evening, standing
+
+**The exemplar codex expands.** (a) NEW video `ScreenRecording_07-27-2026 18-51-47_1.MP4` marked:
+dock/search-bar grow-morph top AND bottom · black siri/control-centre orb expansion · ios27 glass tabs ·
+the draggable magnifying selection with glass distortion. (b) The prior `New Folder With Items 4`
+analyses (music/chatgpt/gemini exemplars — music and chatgpt "truly") RE-DONE under the tri-fold +
+breath-of-life edict + full component set: the owner's full mark-list is embedded VERBATIM in
+`wf/ios27-exemplars.wf.js` (double-dock choreography · album-from-dock continuous timeline ·
+pages-from-album windowing · eyeglass · siri pull-down/partial black-dock/drawer momentum · dot-matrix
+color · notification corner-× + vaporize · waveform · the SMOOTH-not-sharp popover spring). The extant
+`IOS27-ARCHIVE` is EXTENDED and cited, never re-measured. Design-language law: never a trite
+recreation — warm cream, deft rounding, our palettes, our glass. (c) **Tabs toggle re-audit**: f5 glass
+poor · f1 good · f4 "better, but still far too trite, shiny, and bright—not like blurred and frosted
+glass"; the slider the same; the IOS27-MICRO demo glass is the good reference. (d) **NO CHROME SPECIAL
+BEHAVIOR for any glass items** — engine-conditional glass paint is a defect class; census running.
+(e) **Novelties**: FIRST a Fable brainstorming/prototyping session, THEN new novelties unioned into the
+extant set, THEN the thrice critical pass — breath of life + GOAL OF GLASS always; survey Safari +
+modern web design, performant penchant only; all design authoring per the tri-fold law **via the
+frontend design plugin (DesignSync)**.
+
+**The closing sequence (revised):** tier-3 resume ∥ ios27-exemplars (`wf_a31672c0-e81`) ∥ frost-tabs
+(`wf_b0b48d79-692`) → novelties run (Fable-led, consumes the codex) → `perfect.wf.js` folds EVERYTHING
+(archaeology §4 + gestalt §4 + tier-3 + codex + frost verdict + novelties) into the roster → the BK cut.
+Frame corpus at `scratchpad/ios27/` (2fps, 329 frames, SOURCE.txt per dir; rebuild: ffmpeg fps=2 from
+the two Downloads paths).
