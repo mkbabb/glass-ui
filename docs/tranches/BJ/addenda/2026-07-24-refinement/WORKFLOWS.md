@@ -63,7 +63,7 @@ EXEC-STATE census row; membership stands, aggregates do not).
 | gestalt | `wf_e3eec3a9-c1f` | `gestalt.wf.js` | **CLOSED 9/9** → banked `GESTALT.md` (tri-fold verdict, 8 disk-ruled adjudications; carries the OWED-LIVE cell list for the later browser pass) |
 
 | ios27-exemplars | `wf_a31672c0-e81` | `ios27-exemplars.wf.js` | `EXEMPLARS-CODEX.md` — 12 frame-marking seats + stills over the 9 videos (329 frames at `scratchpad/ios27/`), tri-fold codex; extends IOS27-ARCHIVE, never re-measures |
-| frost-tabs | `wf_b0b48d79-692` | `frost-tabs.wf.js` | `FROST-TABS-REAUDIT.md` — f1/f4/f5 + slider live property deltas, the no-chrome-special census, tri-fold verdict. **Owns the Chrome seat now** (tier-3's live seat is cached) |
+| frost-tabs | `wf_b0b48d79-692` | `frost-tabs.wf.js` | **CLOSED 5/5** → banked `FROST-TABS-REAUDIT.md` (f1/f4/f5 exemplars found IN-REPO at IOS27-MICRO/prototypes; the four authored causes D-1..D-4; blanket-cure-alone lands at f5-poor — the veil/photometry/brightness arms are load-bearing; 8 banked-record corrections incl. the prefix-trap 7→5 re-count; Chrome seat released) |
 | novelties (QUEUED) | — | authored at launch, after the codex banks | `NOVELTIES.md` — Fable brainstorm → union with extant → thrice critical pass; design authoring via DesignSync per the tri-fold law |
 | perfect (QUEUED LAST) | — | `perfect.wf.js` | amended `TERMINAL-ROSTER.md` + the `docs/tranches/BK/` cut — fires only after ALL above bank |
 
