@@ -342,3 +342,21 @@ then a Fable agglomerates the two into a choosy apotheosis, scrupulously.
 its journal on disk, and its banking target named in `WORKFLOWS.md` §LIVE RUNS before results exist.
 The archaeology corpus is rebuildable via `./wf/extract-archaeology.sh`. A fresh session reads this
 file → `WORKFLOWS.md` → harvests journals → banks → relaunches only what is missing.
+
+---
+
+## THE RATIFICATION — 2026-07-27, standing
+
+The owner delegated the sitting: *"Ratify the owner decisions with your best judgement."*
+**`RATIFICATION.md` is the presented batch** (the E42 cure). Every ask row is RULED with grounds; the
+six §D blockers, ASK.md R-1…R-6, the parked-four paint rows, and the archaeology ruling batch are all
+dispositioned. Nothing blocking remains owner-only; three capture-time glances carry ratified defaults.
+One explicit owner word overrides any row, always. TERMINAL-ROSTER blocker #4 (the owner sitting) is
+DISCHARGED by this document.
+
+**The BK decision — RATIFIED 2026-07-27:** the perfected audit warrants a full execution tranche.
+**BK** ports the unexecuted remainders of BI + BJ + this refinement corpus into ONE clean cut:
+`TERMINAL-ROSTER.md` (post-folding-pass) becomes BK's PLAN-of-record; specs are CITED at their one
+source of record, never copied; BI/BJ carry explicit SUPERSEDED-INTO-BK marks for every ported row;
+the 60-gate budget is BK's gate roster. Cut by workflow (tri-fold) after tier-3 banks + the folding
+pass lands.

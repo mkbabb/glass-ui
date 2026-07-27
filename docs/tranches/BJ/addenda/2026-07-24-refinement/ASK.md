@@ -1,5 +1,9 @@
 # BJ REFINEMENT — the reduced owner ask
 
+> **RESOLVED 2026-07-27 — see `RATIFICATION.md`.** The owner delegated the sitting ("Ratify the owner
+> decisions with your best judgement"); R-1…R-6 are RULED at their recommendations, the §D blockers and
+> the ruling batch are ruled there too. This file stays as the record of the questions as asked.
+
 Date: 2026-07-24. **Six rows.** BJ's `ASK.md` carried thirty-three.
 
 ## Why it reduced from 33 to 6
