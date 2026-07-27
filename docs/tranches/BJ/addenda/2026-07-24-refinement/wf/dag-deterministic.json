@@ -1,0 +1,5352 @@
+{
+ "meta": {
+  "componentCount": 62,
+  "totalLoc": 56676,
+  "totalCode": 34018,
+  "totalComment": 17620,
+  "zeroSrcConsumers": 42,
+  "method": "Similarity is computed per feature space and NEVER collapsed to one number. A space with <4 members on either side returns null rather than a score — this kills the v2 artifact where aurora~search scored 1.0 because both had a single class token. A pair is a CANDIDATE only when >=2 independent spaces agree at >=0.5. Single-space agreement is a known false-positive mode in both directions: alert/toast score high on css because they legitimately share _shared/feedback (correct sharing, not duplication), and the four procedural fields score low on css because they share composables and a substrate rather than classes."
+ },
+ "nodes": {
+  "accordion": {
+   "component": "accordion",
+   "files": 5,
+   "loc": 294,
+   "code": 252,
+   "comment": 7,
+   "commentPct": 2.7,
+   "sfcs": 4,
+   "cssFiles": 0,
+   "props": [
+    "class",
+    "disabled",
+    "forceMount",
+    "value"
+   ],
+   "propCount": 4,
+   "emits": [
+    "update:modelValue"
+   ],
+   "reka": [
+    "AccordionContent",
+    "AccordionHeader",
+    "AccordionItem",
+    "AccordionRoot",
+    "AccordionTrigger",
+    "injectAccordionItemContext",
+    "injectCollapsibleRootContext"
+   ],
+   "cssClasses": [
+    "disclosure-content",
+    "disclosure-header",
+    "disclosure-icon",
+    "transition-disclosure"
+   ],
+   "classCount": 4,
+   "tokens": [],
+   "springs": [],
+   "composables": [],
+   "importsComponents": [],
+   "anim": {
+    "transition": 1,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": false
+   },
+   "a11y": {
+    "aria": [
+     "aria-controls",
+     "aria-hidden",
+     "aria-labelledby"
+    ],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 1
+  },
+  "alert": {
+   "component": "alert",
+   "files": 4,
+   "loc": 115,
+   "code": 98,
+   "comment": 0,
+   "commentPct": 0,
+   "sfcs": 3,
+   "cssFiles": 0,
+   "props": [
+    "announce",
+    "class",
+    "tone"
+   ],
+   "propCount": 3,
+   "emits": [],
+   "reka": [],
+   "cssClasses": [
+    "tone"
+   ],
+   "classCount": 1,
+   "tokens": [
+    "--control-text",
+    "--feedback-tone-rung",
+    "--glass-bg-wash",
+    "--glass-blur-wash",
+    "--spacing",
+    "--tone",
+    "--ui-glyph"
+   ],
+   "springs": [],
+   "composables": [],
+   "importsComponents": [],
+   "anim": {
+    "transition": 0,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": false
+   },
+   "a11y": {
+    "aria": [
+     "aria-live"
+    ],
+    "roles": [
+     "role"
+    ],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 1
+  },
+  "animated-digit": {
+   "component": "animated-digit",
+   "files": 2,
+   "loc": 94,
+   "code": 45,
+   "comment": 39,
+   "commentPct": 46.4,
+   "sfcs": 1,
+   "cssFiles": 0,
+   "props": [
+    "class",
+    "digitCount",
+    "format",
+    "placeholder",
+    "value"
+   ],
+   "propCount": 5,
+   "emits": [],
+   "reka": [],
+   "cssClasses": [
+    "animated-digit"
+   ],
+   "classCount": 1,
+   "tokens": [
+    "--digit-count"
+   ],
+   "springs": [],
+   "composables": [
+    "composables/motion/number/useAnimatedNumber"
+   ],
+   "importsComponents": [],
+   "anim": {
+    "transition": 0,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": false
+   },
+   "a11y": {
+    "aria": [],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 1
+  },
+  "aurora": {
+   "component": "aurora",
+   "files": 35,
+   "loc": 9003,
+   "code": 5074,
+   "comment": 3232,
+   "commentPct": 38.9,
+   "sfcs": 1,
+   "cssFiles": 0,
+   "props": [
+    "config",
+    "onInitError",
+    "opacityCeiling",
+    "renderMode",
+    "runtimeOptions"
+   ],
+   "propCount": 5,
+   "emits": [
+    "rendererStatus",
+    "status"
+   ],
+   "reka": [],
+   "cssClasses": [
+    "aurora-canvas",
+    "aurora-canvas-layer",
+    "aurora-canvas-layer--armed",
+    "aurora-placeholder",
+    "aurora-root",
+    "block",
+    "catch",
+    "h-full",
+    "min-h-0",
+    "overflow-hidden",
+    "then",
+    "w-full"
+   ],
+   "classCount": 12,
+   "tokens": [
+    "--armed",
+    "--duration-slow",
+    "--ease-standard"
+   ],
+   "springs": [],
+   "composables": [
+    "composables/atoms",
+    "composables/atoms-fields",
+    "composables/auroraFallbackGround",
+    "composables/color",
+    "composables/color/value",
+    "composables/glass/procedural/color.glsl",
+    "composables/glass/procedural/color.wgsl",
+    "composables/glass/webgl/compile",
+    "composables/glass/webgl/shaders/flow.glsl",
+    "composables/glass/webgl/shaders/flow.wgsl",
+    "composables/glass/webgl/useWebGLCanvas",
+    "composables/glass/webgpu/rendererStatus",
+    "composables/glass/webgpu/useGpuSubstrate",
+    "composables/glass/webgpu/useWebGPUCanvas",
+    "composables/motion/core/useIntersectionPause",
+    "composables/motion/pointer/pointerFieldMappings",
+    "composables/motion/pointer/usePointerVelocityField",
+    "composables/motion/scroll/useScrollProgress",
+    "composables/runtime",
+    "composables/textureUpload",
+    "composables/useAurora",
+    "composables/useCursorInteraction"
+   ],
+   "importsComponents": [
+    "composables",
+    "constants"
+   ],
+   "anim": {
+    "transition": 2,
+    "keyframes": 0,
+    "raf": 2,
+    "prm": true
+   },
+   "a11y": {
+    "aria": [
+     "aria-hidden"
+    ],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 23
+  },
+  "avatar": {
+   "component": "avatar",
+   "files": 5,
+   "loc": 236,
+   "code": 204,
+   "comment": 0,
+   "commentPct": 0,
+   "sfcs": 3,
+   "cssFiles": 1,
+   "props": [
+    "crossOrigin",
+    "referrerPolicy",
+    "src"
+   ],
+   "propCount": 3,
+   "emits": [
+    "loadingStatusChange",
+    "status"
+   ],
+   "reka": [
+    "AvatarFallback",
+    "AvatarImage",
+    "AvatarRoot"
+   ],
+   "cssClasses": [
+    "glass-avatar",
+    "glass-avatar__fallback",
+    "glass-avatar__identity",
+    "glass-avatar__image",
+    "glass-avatar__status"
+   ],
+   "classCount": 5,
+   "tokens": [
+    "--avatar-size",
+    "--background",
+    "--control-h-md",
+    "--font-weight-semibold",
+    "--foreground",
+    "--glass-bg-wash",
+    "--glass-border-wash",
+    "--glass-specular",
+    "--radius-media",
+    "--radius-pill",
+    "--secondary",
+    "--shadow-sm",
+    "--tracking-tight",
+    "--type-caption",
+    "--type-display-2",
+    "--type-subheading"
+   ],
+   "springs": [],
+   "composables": [],
+   "importsComponents": [],
+   "anim": {
+    "transition": 0,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": false
+   },
+   "a11y": {
+    "aria": [
+     "aria-hidden",
+     "aria-label",
+     "aria-labelledby"
+    ],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 2
+  },
+  "badge": {
+   "component": "badge",
+   "files": 2,
+   "loc": 89,
+   "code": 69,
+   "comment": 12,
+   "commentPct": 14.8,
+   "sfcs": 1,
+   "cssFiles": 0,
+   "props": [
+    "class",
+    "size",
+    "surface",
+    "tone",
+    "variant"
+   ],
+   "propCount": 5,
+   "emits": [],
+   "reka": [],
+   "cssClasses": [
+    "surface"
+   ],
+   "classCount": 1,
+   "tokens": [
+    "--control-text",
+    "--control-text-sm",
+    "--glass",
+    "--outline",
+    "--type-body",
+    "--ui-glyph-sm",
+    "--ui-scale"
+   ],
+   "springs": [],
+   "composables": [],
+   "importsComponents": [],
+   "anim": {
+    "transition": 0,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": false
+   },
+   "a11y": {
+    "aria": [],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 7
+  },
+  "blob": {
+   "component": "blob",
+   "files": 27,
+   "loc": 5573,
+   "code": 3099,
+   "comment": 2005,
+   "commentPct": 39.3,
+   "sfcs": 1,
+   "cssFiles": 0,
+   "props": [
+    "color",
+    "config",
+    "disabled",
+    "paused",
+    "pressLabel",
+    "seed"
+   ],
+   "propCount": 6,
+   "emits": [
+    "click",
+    "rendererStatus",
+    "status",
+    "update:paused",
+    "value"
+   ],
+   "reka": [],
+   "cssClasses": [
+    "goo-blob-canvas",
+    "goo-blob-hit",
+    "goo-blob-wrapper"
+   ],
+   "classCount": 3,
+   "tokens": [
+    "--blob-color",
+    "--blob-hit-radius",
+    "--blob-shadow-ambient",
+    "--blob-shadow-contact",
+    "--blob-shadow-contact-hover",
+    "--blob-shadow-hover",
+    "--duration-slow",
+    "--ease-standard",
+    "--focus-ring-color",
+    "--z-content"
+   ],
+   "springs": [],
+   "composables": [
+    "composables/blobSimulation",
+    "composables/color",
+    "composables/dom",
+    "composables/glass/procedural/color.glsl",
+    "composables/glass/procedural/color.wgsl",
+    "composables/glass/procedural/prng",
+    "composables/glass/webgl/compile",
+    "composables/glass/webgpu/rendererStatus",
+    "composables/glass/webgpu/useGpuSubstrate",
+    "composables/glass/webgpu/useWebGPUCanvas",
+    "composables/motion/pointer/usePointerVelocityField",
+    "composables/useBlobMood",
+    "composables/useBlobPointer",
+    "composables/useBlobSatellites",
+    "composables/useMetaballRenderer"
+   ],
+   "importsComponents": [
+    "shaders"
+   ],
+   "anim": {
+    "transition": 16,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": true
+   },
+   "a11y": {
+    "aria": [
+     "aria-hidden",
+     "aria-label"
+    ],
+    "roles": [],
+    "focusVisible": true,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 2
+  },
+  "button": {
+   "component": "button",
+   "files": 3,
+   "loc": 296,
+   "code": 258,
+   "comment": 4,
+   "commentPct": 1.5,
+   "sfcs": 1,
+   "cssFiles": 1,
+   "props": [
+    "class",
+    "disabled",
+    "emphasis",
+    "iconOnly",
+    "loading",
+    "size",
+    "tone",
+    "type"
+   ],
+   "propCount": 8,
+   "emits": [],
+   "reka": [
+    "Primitive"
+   ],
+   "cssClasses": [
+    "button",
+    "glass-capsule-hover",
+    "hostClass"
+   ],
+   "classCount": 3,
+   "tokens": [
+    "--button-size",
+    "--button-tone",
+    "--button-tone-ink",
+    "--control-h-lg",
+    "--control-h-md",
+    "--control-h-sm",
+    "--control-h-xs",
+    "--control-text",
+    "--control-text-sm",
+    "--destructive",
+    "--destructive-foreground",
+    "--foreground",
+    "--glass-bg-floating",
+    "--glass-bg-quiet",
+    "--glass-bg-rung",
+    "--glass-blur-deep",
+    "--glass-blur-resting",
+    "--glass-btn-press-t",
+    "--glass-capsule-fill",
+    "--glass-cell-backdrop-filter",
+    "--glass-plate-tinted",
+    "--glass-specular-btn-hover",
+    "--glass-specular-intensity-active",
+    "--glass-specular-intensity-hover",
+    "--info",
+    "--info-foreground",
+    "--muted-foreground",
+    "--opacity-disabled",
+    "--primary",
+    "--radius-pill",
+    "--scale-press",
+    "--scale-press-btn",
+    "--shadow-sm",
+    "--specular-intensity",
+    "--success",
+    "--success-foreground",
+    "--ui-glyph",
+    "--ui-scale",
+    "--warning",
+    "--warning-foreground"
+   ],
+   "springs": [],
+   "composables": [
+    "composables/glass",
+    "composables/motion/spring/useLiquidPress"
+   ],
+   "importsComponents": [],
+   "anim": {
+    "transition": 1,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": true
+   },
+   "a11y": {
+    "aria": [
+     "aria-busy",
+     "aria-disabled"
+    ],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 2,
+    "tabindex": false
+   },
+   "srcConsumers": [
+    "src/styles/index.css"
+   ],
+   "srcConsumerCount": 1,
+   "demoConsumers": 50
+  },
+  "card": {
+   "component": "card",
+   "files": 10,
+   "loc": 418,
+   "code": 353,
+   "comment": 8,
+   "commentPct": 2.2,
+   "sfcs": 7,
+   "cssFiles": 2,
+   "props": [
+    "as",
+    "cartoon",
+    "class",
+    "dataHue",
+    "dataHueStrength",
+    "grid",
+    "metal",
+    "selected",
+    "shrink",
+    "size",
+    "variant"
+   ],
+   "propCount": 11,
+   "emits": [],
+   "reka": [],
+   "cssClasses": [
+    "card",
+    "card-action",
+    "card-content",
+    "card-description",
+    "card-footer",
+    "card-header",
+    "card-header--shrink",
+    "card-title",
+    "paper-grid"
+   ],
+   "classCount": 9,
+   "tokens": [
+    "--card-header-pad-condensed",
+    "--card-pad-block",
+    "--card-pad-footer",
+    "--card-pad-inline",
+    "--card-pad-section-gap",
+    "--card-pad-title-gap",
+    "--duration-normal",
+    "--ease-standard",
+    "--font-weight-semibold",
+    "--glass-accent",
+    "--glass-accent-strength",
+    "--glass-bg-resting",
+    "--glass-blur-resting",
+    "--leading-normal",
+    "--muted-foreground-strong",
+    "--paper-grid-texture",
+    "--paper-grid-texture-size",
+    "--selection-accent-strength",
+    "--selection-accent-strength-selected",
+    "--shadow-cartoon-md",
+    "--shrink",
+    "--spacing",
+    "--tracking-tight",
+    "--type-display-1",
+    "--type-display-2",
+    "--type-heading",
+    "--type-leading-heading",
+    "--type-small"
+   ],
+   "springs": [],
+   "composables": [
+    "composables/motion/scroll/useScrollTrigger"
+   ],
+   "importsComponents": [
+    "surface"
+   ],
+   "anim": {
+    "transition": 4,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": true
+   },
+   "a11y": {
+    "aria": [],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [
+    "src/styles/index.css"
+   ],
+   "srcConsumerCount": 1,
+   "demoConsumers": 12
+  },
+  "carousel": {
+   "component": "carousel",
+   "files": 8,
+   "loc": 498,
+   "code": 313,
+   "comment": 122,
+   "commentPct": 28,
+   "sfcs": 4,
+   "cssFiles": 0,
+   "props": [
+    "ariaLabel",
+    "class",
+    "opts",
+    "orientation",
+    "plugins"
+   ],
+   "propCount": 5,
+   "emits": [],
+   "reka": [],
+   "cssClasses": [
+    "carousel-track",
+    "carousel-viewport",
+    "glass-pager-ring",
+    "overflow-hidden",
+    "size-4",
+    "tabular-nums",
+    "text-mono-caption"
+   ],
+   "classCount": 7,
+   "tokens": [],
+   "springs": [],
+   "composables": [
+    "composables/motion/core/useReducedMotion"
+   ],
+   "importsComponents": [],
+   "anim": {
+    "transition": 0,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": true
+   },
+   "a11y": {
+    "aria": [
+     "aria-hidden",
+     "aria-label",
+     "aria-roledescription"
+    ],
+    "roles": [
+     "group"
+    ],
+    "focusVisible": false,
+    "keydown": 3,
+    "tabindex": true
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 1
+  },
+  "checkbox": {
+   "component": "checkbox",
+   "files": 3,
+   "loc": 120,
+   "code": 105,
+   "comment": 0,
+   "commentPct": 0,
+   "sfcs": 1,
+   "cssFiles": 1,
+   "props": [
+    "class",
+    "defaultValue",
+    "disabled",
+    "id",
+    "modelValue",
+    "value"
+   ],
+   "propCount": 6,
+   "emits": [
+    "update:modelValue",
+    "value"
+   ],
+   "reka": [
+    "CheckboxIndicator",
+    "CheckboxRoot",
+    "useForwardPropsEmits"
+   ],
+   "cssClasses": [
+    "checkbox",
+    "checkbox__indicator",
+    "checkbox__seat",
+    "control-surface",
+    "focus-ring",
+    "glass-control-edge",
+    "tap-squish"
+   ],
+   "classCount": 7,
+   "tokens": [
+    "--control-checked-bg",
+    "--control-ring",
+    "--destructive",
+    "--duration-fast",
+    "--ease-standard",
+    "--invalid-ring",
+    "--opacity-disabled",
+    "--primary-foreground",
+    "--radius-control",
+    "--radius-pill",
+    "--touch-target"
+   ],
+   "springs": [],
+   "composables": [],
+   "importsComponents": [],
+   "anim": {
+    "transition": 1,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": false
+   },
+   "a11y": {
+    "aria": [
+     "aria-hidden",
+     "aria-invalid"
+    ],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 2
+  },
+  "chip": {
+   "component": "chip",
+   "files": 5,
+   "loc": 307,
+   "code": 246,
+   "comment": 34,
+   "commentPct": 12.1,
+   "sfcs": 1,
+   "cssFiles": 1,
+   "props": [
+    "class",
+    "defaultValue",
+    "disabled",
+    "mode",
+    "modelValue",
+    "name",
+    "removeLabel",
+    "required",
+    "shape",
+    "size",
+    "surface",
+    "tone"
+   ],
+   "propCount": 12,
+   "emits": [
+    "event",
+    "remove",
+    "update:modelValue",
+    "value"
+   ],
+   "reka": [
+    "Toggle"
+   ],
+   "cssClasses": [
+    "accent-tone",
+    "chipClass",
+    "focus-ring",
+    "glass-chip__content",
+    "glass-chip__remove"
+   ],
+   "classCount": 5,
+   "tokens": [
+    "--accent-band",
+    "--accent-band-strength",
+    "--accent-edge",
+    "--accent-edge-strength",
+    "--accent-ink",
+    "--accent-ink-resolved",
+    "--card",
+    "--cell",
+    "--chip-glass-strength",
+    "--foreground",
+    "--glass-fill-strength",
+    "--glass-fill-tint",
+    "--icon",
+    "--interactive",
+    "--primary",
+    "--surface",
+    "--tone"
+   ],
+   "springs": [],
+   "composables": [
+    "composables/color/useAccentTone"
+   ],
+   "importsComponents": [],
+   "anim": {
+    "transition": 0,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": false
+   },
+   "a11y": {
+    "aria": [
+     "aria-hidden",
+     "aria-label",
+     "aria-pressed"
+    ],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": true
+   },
+   "srcConsumers": [
+    "src/styles/glass.css"
+   ],
+   "srcConsumerCount": 1,
+   "demoConsumers": 4
+  },
+  "collapsible": {
+   "component": "collapsible",
+   "files": 4,
+   "loc": 176,
+   "code": 149,
+   "comment": 4,
+   "commentPct": 2.6,
+   "sfcs": 3,
+   "cssFiles": 0,
+   "props": [
+    "asChild",
+    "class",
+    "defaultOpen",
+    "disabled",
+    "forceMount",
+    "open"
+   ],
+   "propCount": 6,
+   "emits": [
+    "update:open"
+   ],
+   "reka": [
+    "CollapsibleContent",
+    "CollapsibleRoot",
+    "CollapsibleTrigger",
+    "injectCollapsibleRootContext"
+   ],
+   "cssClasses": [],
+   "classCount": 0,
+   "tokens": [],
+   "springs": [],
+   "composables": [],
+   "importsComponents": [],
+   "anim": {
+    "transition": 0,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": false
+   },
+   "a11y": {
+    "aria": [
+     "aria-controls",
+     "aria-labelledby"
+    ],
+    "roles": [
+     "region"
+    ],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 1
+  },
+  "command": {
+   "component": "command",
+   "files": 13,
+   "loc": 490,
+   "code": 409,
+   "comment": 8,
+   "commentPct": 1.9,
+   "sfcs": 9,
+   "cssFiles": 1,
+   "props": [
+    "class",
+    "disabled",
+    "modelValue",
+    "open",
+    "surface"
+   ],
+   "propCount": 5,
+   "emits": [
+    "escapeKeyDown",
+    "focusOutside",
+    "interactOutside",
+    "pointerDownOutside",
+    "select",
+    "update:modelValue",
+    "update:open"
+   ],
+   "reka": [
+    "ComboboxContent",
+    "ComboboxEmpty",
+    "ComboboxGroup",
+    "ComboboxInput",
+    "ComboboxItem",
+    "ComboboxLabel",
+    "ComboboxRoot",
+    "ComboboxSeparator"
+   ],
+   "cssClasses": [
+    "command",
+    "command-dialog__command",
+    "command-dialog__content",
+    "command__empty",
+    "command__group",
+    "command__group-label",
+    "command__input",
+    "command__input-icon",
+    "command__input-wrapper",
+    "command__item",
+    "command__list",
+    "command__separator",
+    "command__shortcut",
+    "glass-command-dialog"
+   ],
+   "classCount": 14,
+   "tokens": [
+    "--border",
+    "--dropdown-input-height",
+    "--dropdown-text",
+    "--dropdown-text-secondary",
+    "--foreground",
+    "--muted-foreground",
+    "--opacity-disabled",
+    "--overlay-max-block",
+    "--panel-padding",
+    "--popover-foreground",
+    "--radius-panel",
+    "--type-tracking-caps"
+   ],
+   "springs": [],
+   "composables": [],
+   "importsComponents": [
+    "dialog"
+   ],
+   "anim": {
+    "transition": 0,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": false
+   },
+   "a11y": {
+    "aria": [
+     "aria-hidden"
+    ],
+    "roles": [
+     "presentation"
+    ],
+    "focusVisible": false,
+    "keydown": 1,
+    "tabindex": false
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 1
+  },
+  "completion-seal": {
+   "component": "completion-seal",
+   "files": 5,
+   "loc": 565,
+   "code": 254,
+   "comment": 268,
+   "commentPct": 51.3,
+   "sfcs": 1,
+   "cssFiles": 1,
+   "props": [
+    "class",
+    "label",
+    "personalBest",
+    "play",
+    "shape"
+   ],
+   "propCount": 5,
+   "emits": [],
+   "reka": [],
+   "cssClasses": [
+    "completion-seal",
+    "completion-seal__check",
+    "completion-seal__disc",
+    "completion-seal__mark",
+    "completion-seal__ring",
+    "completion-seal__svg",
+    "sr-only"
+   ],
+   "classCount": 7,
+   "tokens": [
+    "--color-gold",
+    "--color-gold-light",
+    "--ease-out",
+    "--gold-light",
+    "--metal-glow-blur",
+    "--metal-glow-blur-default",
+    "--metal-glow-opacity",
+    "--metal-glow-opacity-default",
+    "--phase-complete-color",
+    "--seal-best",
+    "--seal-check-delay",
+    "--seal-disc-fill",
+    "--seal-draw",
+    "--seal-glint",
+    "--seal-ink",
+    "--seal-ring-delay",
+    "--seal-scale",
+    "--seal-stroke-width",
+    "--spring-bouncy",
+    "--spring-bouncy-duration",
+    "--spring-snappy",
+    "--spring-snappy-duration"
+   ],
+   "springs": [
+    "bouncy",
+    "snappy"
+   ],
+   "composables": [
+    "composables/motion/core/useReducedMotion",
+    "composables/useCompletionSeal"
+   ],
+   "importsComponents": [],
+   "anim": {
+    "transition": 0,
+    "keyframes": 4,
+    "raf": 2,
+    "prm": true
+   },
+   "a11y": {
+    "aria": [
+     "aria-hidden",
+     "aria-live"
+    ],
+    "roles": [
+     "status"
+    ],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [
+    "src/styles/index.css"
+   ],
+   "srcConsumerCount": 1,
+   "demoConsumers": 1
+  },
+  "configurator": {
+   "component": "configurator",
+   "files": 7,
+   "loc": 1534,
+   "code": 524,
+   "comment": 927,
+   "commentPct": 63.9,
+   "sfcs": 3,
+   "cssFiles": 1,
+   "props": [
+    "activeLayer",
+    "activePreset",
+    "asideSide",
+    "asideWidth",
+    "bodyClass",
+    "canReset",
+    "class",
+    "defaultOpen",
+    "description",
+    "dividers",
+    "galleryPlacement",
+    "id",
+    "label",
+    "layers",
+    "name",
+    "presets",
+    "scrollMode",
+    "size",
+    "sub"
+   ],
+   "propCount": 19,
+   "emits": [
+    "e",
+    "id",
+    "key",
+    "reset",
+    "select-layer",
+    "select-preset"
+   ],
+   "reka": [],
+   "cssClasses": [
+    "border-t",
+    "configurator",
+    "configurator-aside",
+    "configurator-controls",
+    "configurator-footer",
+    "configurator-gallery-track",
+    "configurator-layer",
+    "configurator-layer-body",
+    "configurator-layer-region",
+    "configurator-layer-trigger",
+    "configurator-preset-chip",
+    "configurator-preset-tile",
+    "configurator-preset-well",
+    "configurator-presets",
+    "configurator-row",
+    "configurator-section-label",
+    "configurator-stage",
+    "containerClass",
+    "flex",
+    "flex-1",
+    "flex-col",
+    "focus-ring",
+    "font-medium",
+    "font-mono",
+    "font-normal",
+    "gap-2",
+    "gap-3",
+    "grid",
+    "h-3",
+    "h-4",
+    "h-6",
+    "inline-flex",
+    "items-baseline",
+    "items-center",
+    "justify-between",
+    "justify-center",
+    "leading-snug",
+    "min-h-0",
+    "min-w-0",
+    "overflow-hidden",
+    "overflow-visible",
+    "px-3",
+    "py-2",
+    "relative",
+    "rounded-pill",
+    "scrollbar-hidden",
+    "scrollbar-thin",
+    "shrink-0",
+    "tap-squish",
+    "text-foreground",
+    "text-micro",
+    "text-muted-foreground",
+    "text-small",
+    "transition-control",
+    "transition-disclosure",
+    "truncate",
+    "w-3",
+    "w-4",
+    "w-6",
+    "w-full"
+   ],
+   "classCount": 60,
+   "tokens": [
+    "--card",
+    "--configurator-aside-max",
+    "--configurator-aside-min",
+    "--configurator-divider",
+    "--configurator-divider-section",
+    "--configurator-pad-inline",
+    "--configurator-preset-row-gap",
+    "--configurator-preset-row-weight",
+    "--configurator-row-gap-comfortable",
+    "--configurator-row-gap-compact",
+    "--configurator-row-gap-spacious",
+    "--configurator-row-py-comfortable",
+    "--configurator-row-py-compact",
+    "--configurator-row-py-spacious",
+    "--configurator-section-size",
+    "--configurator-section-tint",
+    "--configurator-section-weight",
+    "--configurator-size",
+    "--configurator-stage-min",
+    "--duration-fast",
+    "--focus-ring-color",
+    "--font-text",
+    "--foreground",
+    "--glass-bg-quiet",
+    "--glass-blur-floating",
+    "--glass-capsule-fill",
+    "--radius-card",
+    "--radius-ctx",
+    "--radius-floor",
+    "--radius-inset",
+    "--radius-panel",
+    "--radius-pill",
+    "--shadow-cartoon-lg",
+    "--spring-snappy",
+    "--type-leading-body",
+    "--type-tracking-tight"
+   ],
+   "springs": [
+    "snappy"
+   ],
+   "composables": [
+    "composables/context"
+   ],
+   "importsComponents": [],
+   "anim": {
+    "transition": 6,
+    "keyframes": 1,
+    "raf": 0,
+    "prm": true
+   },
+   "a11y": {
+    "aria": [
+     "aria-controls",
+     "aria-expanded",
+     "aria-hidden",
+     "aria-label",
+     "aria-pressed"
+    ],
+    "roles": [
+     "group",
+     "region"
+    ],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [
+    "src/styles/index.css"
+   ],
+   "srcConsumerCount": 1,
+   "demoConsumers": 9
+  },
+  "constellation": {
+   "component": "constellation",
+   "files": 10,
+   "loc": 2452,
+   "code": 1460,
+   "comment": 857,
+   "commentPct": 37,
+   "sfcs": 1,
+   "cssFiles": 0,
+   "props": [
+    "accentEdges",
+    "backgroundInteractive",
+    "class",
+    "count",
+    "ctx",
+    "drawOverlay",
+    "field",
+    "freeze",
+    "gain",
+    "gravityWell",
+    "holdMs",
+    "link",
+    "maxSpeed",
+    "now",
+    "opacityCeiling",
+    "pinned",
+    "pinnedDrift",
+    "pointerReactive",
+    "ramp",
+    "reach",
+    "seed",
+    "soften",
+    "wander",
+    "warpAutoRelease",
+    "warpOnClick"
+   ],
+   "propCount": 25,
+   "emits": [
+    "rendererStatus",
+    "status"
+   ],
+   "reka": [],
+   "cssClasses": [
+    "constellation",
+    "constellation-canvas"
+   ],
+   "classCount": 2,
+   "tokens": [
+    "--constellation-accent",
+    "--constellation-alpha",
+    "--constellation-edge-accent-alpha",
+    "--constellation-edge-alpha",
+    "--constellation-edge-floor",
+    "--constellation-edge-focus-alpha",
+    "--constellation-k-floor",
+    "--constellation-line",
+    "--constellation-node",
+    "--constellation-node-dim",
+    "--constellation-wander-idle",
+    "--constellation-wander-jitter",
+    "--constellation-warp-response",
+    "--constellation-warp-zeta",
+    "--constellation-well-gain",
+    "--constellation-well-hold-ms",
+    "--constellation-well-max-speed",
+    "--constellation-well-ramp",
+    "--constellation-well-reach",
+    "--focus-ring-color"
+   ],
+   "springs": [],
+   "composables": [
+    "composables/glass/canvas2d",
+    "composables/glass/procedural/prng",
+    "composables/glass/webgpu/rendererStatus",
+    "composables/motion/core/useReducedMotion",
+    "composables/motion/pointer/pointerFieldMappings",
+    "composables/motion/pointer/usePointerVelocityField",
+    "composables/motion/pointer/useRoutePointer",
+    "composables/useConstellation"
+   ],
+   "importsComponents": [],
+   "anim": {
+    "transition": 0,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": true
+   },
+   "a11y": {
+    "aria": [
+     "aria-hidden",
+     "aria-label"
+    ],
+    "roles": [
+     "button"
+    ],
+    "focusVisible": true,
+    "keydown": 1,
+    "tabindex": true
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 2
+  },
+  "dark-mode-toggle": {
+   "component": "dark-mode-toggle",
+   "files": 3,
+   "loc": 160,
+   "code": 138,
+   "comment": 1,
+   "commentPct": 0.7,
+   "sfcs": 1,
+   "cssFiles": 1,
+   "props": [
+    "disableTransitions",
+    "size"
+   ],
+   "propCount": 2,
+   "emits": [],
+   "reka": [],
+   "cssClasses": [
+    "dark-mode-toggle-button",
+    "glass-dock",
+    "toggle-circle",
+    "toggle-sun"
+   ],
+   "classCount": 4,
+   "tokens": [
+    "--control-icon-padding",
+    "--control-size",
+    "--dark-mode-toggle-padding",
+    "--dark-mode-toggle-size",
+    "--dock-control-glyph-size",
+    "--dock-control-size",
+    "--dock-icon-glyph",
+    "--dock-ring",
+    "--duration-fast",
+    "--ease-standard",
+    "--focus-ring-shadow",
+    "--foreground",
+    "--radius-pill",
+    "--size-icon-btn",
+    "--spring-snappy",
+    "--spring-snappy-duration",
+    "--surface-tint-10"
+   ],
+   "springs": [
+    "snappy"
+   ],
+   "composables": [
+    "composables/dark",
+    "composables/motion/spring/useLiquidPress"
+   ],
+   "importsComponents": [],
+   "anim": {
+    "transition": 5,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": true
+   },
+   "a11y": {
+    "aria": [
+     "aria-hidden",
+     "aria-label",
+     "aria-pressed"
+    ],
+    "roles": [],
+    "focusVisible": true,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [
+    "src/styles/index.css"
+   ],
+   "srcConsumerCount": 1,
+   "demoConsumers": 2
+  },
+  "data-table": {
+   "component": "data-table",
+   "files": 6,
+   "loc": 794,
+   "code": 649,
+   "comment": 65,
+   "commentPct": 9.1,
+   "sfcs": 1,
+   "cssFiles": 1,
+   "props": [],
+   "propCount": 0,
+   "emits": [
+    "id",
+    "row",
+    "select",
+    "sort",
+    "update:selectedRowId",
+    "update:sort",
+    "update:tabbableRowId"
+   ],
+   "reka": [],
+   "cssClasses": [
+    "data-table",
+    "data-table-action-skeleton",
+    "data-table-actions",
+    "data-table-actions-cell",
+    "data-table-card",
+    "data-table-card-fields",
+    "data-table-card-header",
+    "data-table-card-label",
+    "data-table-card-skeleton-title",
+    "data-table-card-title",
+    "data-table-card-value",
+    "data-table-cards",
+    "data-table-cell-skeleton",
+    "data-table-header-row",
+    "data-table-row-interactive",
+    "data-table-sort",
+    "data-table-state",
+    "focus-ring",
+    "glass-quiet",
+    "h-3"
+   ],
+   "classCount": 20,
+   "tokens": [
+    "--border",
+    "--duration-fast",
+    "--ease-standard",
+    "--focus-ring-color",
+    "--focus-ring-shadow",
+    "--muted-foreground",
+    "--radius-card",
+    "--radius-sm",
+    "--space-phi-5",
+    "--surface-tint-8"
+   ],
+   "springs": [],
+   "composables": [
+    "composables/dom",
+    "composables/useDataTableResponsive",
+    "composables/useDataTableRowIdentity"
+   ],
+   "importsComponents": [],
+   "anim": {
+    "transition": 1,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": false
+   },
+   "a11y": {
+    "aria": [
+     "aria-busy",
+     "aria-col",
+     "aria-hidden",
+     "aria-label",
+     "aria-row",
+     "aria-rowindex",
+     "aria-selected",
+     "aria-sort"
+    ],
+    "roles": [
+     "alert"
+    ],
+    "focusVisible": false,
+    "keydown": 3,
+    "tabindex": true
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 1
+  },
+  "deck": {
+   "component": "deck",
+   "files": 4,
+   "loc": 206,
+   "code": 133,
+   "comment": 47,
+   "commentPct": 26.1,
+   "sfcs": 0,
+   "cssFiles": 0,
+   "props": [],
+   "propCount": 0,
+   "emits": [],
+   "reka": [],
+   "cssClasses": [],
+   "classCount": 0,
+   "tokens": [],
+   "springs": [],
+   "composables": [
+    "composables/useDeck",
+    "composables/useDeckKeyboard"
+   ],
+   "importsComponents": [],
+   "anim": {
+    "transition": 0,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": false
+   },
+   "a11y": {
+    "aria": [],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 5,
+    "tabindex": false
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 1
+  },
+  "dialog": {
+   "component": "dialog",
+   "files": 13,
+   "loc": 1072,
+   "code": 676,
+   "comment": 309,
+   "commentPct": 31.4,
+   "sfcs": 9,
+   "cssFiles": 1,
+   "props": [
+    "backdrop",
+    "class",
+    "defaultOpen",
+    "disableOutsidePointerEvents",
+    "forceMount",
+    "modal",
+    "motion",
+    "open",
+    "placement",
+    "scrim",
+    "scroll",
+    "showClose",
+    "slideT",
+    "springPreset",
+    "stage",
+    "surface",
+    "unmountOnHide"
+   ],
+   "propCount": 17,
+   "emits": [
+    "update:open",
+    "value"
+   ],
+   "reka": [
+    "DialogClose",
+    "DialogContent",
+    "DialogDescription",
+    "DialogOverlay",
+    "DialogPortal",
+    "DialogRoot",
+    "DialogTitle",
+    "DialogTrigger",
+    "injectDialogRootContext",
+    "useForwardPropsEmits"
+   ],
+   "cssClasses": [
+    "absolute",
+    "contentClass",
+    "dark",
+    "focus-ring",
+    "glass-graded-halo",
+    "h-4",
+    "isGraded",
+    "opacity-70",
+    "rounded-sm",
+    "sr-only",
+    "transition-opacity",
+    "w-4"
+   ],
+   "classCount": 12,
+   "tokens": [
+    "--glass-bg-dialog",
+    "--glass-bg-overlay",
+    "--glass-bg-rung",
+    "--glass-blur-wash",
+    "--glass-halo-bloom",
+    "--glass-halo-blur",
+    "--glass-halo-core",
+    "--glass-level",
+    "--glass-saturate-overlay",
+    "--overlay-pad-block",
+    "--overlay-pad-inline",
+    "--radius-ctx",
+    "--radius-dialog",
+    "--radius-inset",
+    "--sheet-edge-direction",
+    "--spacing",
+    "--stage-t",
+    "--z-modal"
+   ],
+   "springs": [],
+   "composables": [
+    "composables/context",
+    "composables/motion/spring/useSpringMount"
+   ],
+   "importsComponents": [],
+   "anim": {
+    "transition": 3,
+    "keyframes": 0,
+    "raf": 3,
+    "prm": false
+   },
+   "a11y": {
+    "aria": [
+     "aria-hidden"
+    ],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [
+    "src/components/command/types.ts",
+    "src/styles/index.css"
+   ],
+   "srcConsumerCount": 2,
+   "demoConsumers": 10
+  },
+  "dock": {
+   "component": "dock",
+   "files": 44,
+   "loc": 8018,
+   "code": 3586,
+   "comment": 3838,
+   "commentPct": 51.7,
+   "sfcs": 8,
+   "cssFiles": 19,
+   "props": [
+    "active",
+    "alwaysExpanded",
+    "anchor",
+    "as",
+    "asChild",
+    "backdropMode",
+    "backgroundCanvas",
+    "class",
+    "collapseDelay",
+    "compact",
+    "disabled",
+    "fitContent",
+    "for",
+    "icon",
+    "id",
+    "interaction",
+    "label",
+    "layout",
+    "layoutValue",
+    "motion",
+    "orientation",
+    "overflow",
+    "pauseLabel",
+    "paused",
+    "playLabel",
+    "position",
+    "railPosition",
+    "reserve",
+    "scrollClass",
+    "search",
+    "shape",
+    "showRail",
+    "size",
+    "startCollapsed",
+    "type"
+   ],
+   "propCount": 35,
+   "emits": [
+    "update:paused",
+    "value"
+   ],
+   "reka": [
+    "PopoverTrigger",
+    "Primitive",
+    "SelectIcon",
+    "SelectTrigger"
+   ],
+   "cssClasses": [
+    "active",
+    "catch",
+    "classes",
+    "dark",
+    "dark-mode-toggle-button",
+    "dock-controls",
+    "dock-crossfade",
+    "dock-dropdown-trigger",
+    "dock-face",
+    "dock-face-content",
+    "dock-icon-button",
+    "dock-icon-button--compact",
+    "dock-inline",
+    "dock-layer",
+    "dock-layer--full",
+    "dock-layer-group",
+    "dock-layer-rail",
+    "dock-layer-tab",
+    "dock-layer-tab-indicator",
+    "dock-layers",
+    "dock-overflow-wrap",
+    "dock-persistent",
+    "dock-persistent-end",
+    "dock-plate",
+    "dock-scroll-x",
+    "dock-search-field",
+    "dock-select-trigger",
+    "dock-select-trigger__chevron",
+    "dock-separator",
+    "dock-separator--anchor",
+    "dock-spacer",
+    "dock-sticky",
+    "dock-tab-button",
+    "dock-trigger",
+    "glass-capsule",
+    "glass-dock",
+    "glass-drag-grabbable",
+    "glass-drag-lift",
+    "is-active",
+    "size-4",
+    "then",
+    "triggerClass"
+   ],
+   "classCount": 42,
+   "tokens": [
+    "--accent",
+    "--anchor",
+    "--border",
+    "--border-hairline",
+    "--btn-hover-color",
+    "--card",
+    "--child-reveal",
+    "--compact",
+    "--corner-shape-bigdock",
+    "--cta-seat-ghost-opacity",
+    "--cta-seat-reveal-duration",
+    "--dock-active-bg",
+    "--dock-active-border",
+    "--dock-active-color",
+    "--dock-active-scale",
+    "--dock-active-shadow",
+    "--dock-card-radius",
+    "--dock-coarse-scale",
+    "--dock-collapsed-hover-scale",
+    "--dock-collapsed-padding",
+    "--dock-collapsed-px",
+    "--dock-collapsed-summary-min-size",
+    "--dock-compact-control-min-width",
+    "--dock-compact-control-padding",
+    "--dock-compact-control-size",
+    "--dock-content-safe-inset",
+    "--dock-control-active-bg",
+    "--dock-control-floor",
+    "--dock-control-glyph-size",
+    "--dock-control-hover-bg",
+    "--dock-control-press-bg",
+    "--dock-control-radius",
+    "--dock-control-safe-inset",
+    "--dock-control-size",
+    "--dock-control-specular-size",
+    "--dock-crossfade-peak",
+    "--dock-density-audacious-control-size",
+    "--dock-density-audacious-gap",
+    "--dock-density-audacious-layer-height",
+    "--dock-density-audacious-padding-block",
+    "--dock-density-audacious-padding-inline",
+    "--dock-density-audacious-tab-min-height",
+    "--dock-density-audacious-tab-padding-block",
+    "--dock-density-audacious-tab-padding-inline",
+    "--dock-density-audacious-trigger-padding-block",
+    "--dock-density-audacious-trigger-padding-inline",
+    "--dock-density-comfortable-control-size",
+    "--dock-density-comfortable-gap",
+    "--dock-density-comfortable-layer-height",
+    "--dock-density-comfortable-padding-block",
+    "--dock-density-comfortable-padding-inline",
+    "--dock-density-comfortable-tab-padding-block",
+    "--dock-density-comfortable-tab-padding-inline",
+    "--dock-density-comfortable-trigger-padding-block",
+    "--dock-density-comfortable-trigger-padding-inline",
+    "--dock-density-compact-control-size",
+    "--dock-density-compact-gap",
+    "--dock-density-compact-layer-height",
+    "--dock-density-compact-padding-block",
+    "--dock-density-compact-padding-inline",
+    "--dock-density-compact-tab-padding-block",
+    "--dock-density-compact-tab-padding-inline",
+    "--dock-density-compact-trigger-padding-block",
+    "--dock-density-compact-trigger-padding-inline",
+    "--dock-density-spacious-control-size",
+    "--dock-density-spacious-gap",
+    "--dock-density-spacious-layer-height",
+    "--dock-density-spacious-padding-block",
+    "--dock-density-spacious-padding-inline",
+    "--dock-density-spacious-tab-padding-block",
+    "--dock-density-spacious-tab-padding-inline",
+    "--dock-density-spacious-trigger-padding-block",
+    "--dock-density-spacious-trigger-padding-inline",
+    "--dock-expand-t",
+    "--dock-expanded-px",
+    "--dock-fg-on-aurora",
+    "--dock-h",
+    "--dock-icon-glyph",
+    "--dock-icon-glyph-floor",
+    "--dock-icon-glyph-ratio",
+    "--dock-icon-hover-bg",
+    "--dock-icon-padding",
+    "--dock-label-ratio",
+    "--dock-label-size",
+    "--dock-layer-gap",
+    "--dock-layer-group-gap",
+    "--dock-layer-height",
+    "--dock-layer-rail-active",
+    "--dock-layer-rail-bg",
+    "--dock-layer-rail-divider",
+    "--dock-layer-rail-gap",
+    "--dock-layer-rail-glyph",
+    "--dock-layer-rail-hover",
+    "--dock-layer-rail-padding",
+    "--dock-layer-tab-radius",
+    "--dock-layer-tab-size",
+    "--dock-live",
+    "--dock-local-scale",
+    "--dock-max-block-size",
+    "--dock-max-inline-size",
+    "--dock-mobile-scale",
+    "--dock-morph-max-stretch",
+    "--dock-morph-t",
+    "--dock-motion-fast",
+    "--dock-motion-resize",
+    "--dock-motion-standard",
+    "--dock-pad-collapsed",
+    "--dock-padding-block",
+    "--dock-padding-inline",
+    "--dock-plate-collapse-inset",
+    "--dock-plate-collapse-inset-block",
+    "--dock-plate-inset-block",
+    "--dock-plate-inset-inline",
+    "--dock-pos",
+    "--dock-press-spring",
+    "--dock-press-t",
+    "--dock-rail-accent-gap",
+    "--dock-rail-accent-inset",
+    "--dock-rail-accent-width",
+    "--dock-rail-active-accent",
+    "--dock-rail-extend-length",
+    "--dock-rail-padding",
+    "--dock-resize-spring",
+    "--dock-reveal-blur",
+    "--dock-ring",
+    "--dock-scale",
+    "--dock-scroll-gutter",
+    "--dock-scroll-safe-inset",
+    "--dock-search-field-gap",
+    "--dock-search-shrink-end",
+    "--dock-search-shrink-start",
+    "--dock-selected-accent",
+    "--dock-separator-height",
+    "--dock-shape-clip",
+    "--dock-shape-clip-from",
+    "--dock-shape-clip-to",
+    "--dock-shape-from",
+    "--dock-shape-to",
+    "--dock-size-scale",
+    "--dock-stagger-onset",
+    "--dock-stagger-step",
+    "--dock-stagger-window",
+    "--dock-stagger-window-size",
+    "--dock-surface-blur",
+    "--dock-t",
+    "--dock-tab-h",
+    "--dock-tab-min-height",
+    "--dock-tab-padding-block",
+    "--dock-tab-padding-inline",
+    "--dock-tile-min",
+    "--dock-tile-pad",
+    "--dock-touch-target",
+    "--dock-trigger-gap",
+    "--dock-trigger-icon-size",
+    "--dock-trigger-min-height",
+    "--dock-trigger-padding-block",
+    "--dock-trigger-padding-inline",
+    "--dock-wrap-column-gap",
+    "--dock-wrap-elev",
+    "--dock-wrap-layer-min-height",
+    "--dock-wrap-padding-block",
+    "--dock-wrap-padding-inline",
+    "--dock-wrap-row-gap",
+    "--duration-fast",
+    "--duration-normal",
+    "--ease-out",
+    "--ease-standard",
+    "--fade-end",
+    "--fade-scroll-width",
+    "--fade-start",
+    "--focus-ring-shadow",
+    "--foreground",
+    "--full",
+    "--glass-ambient-hue",
+    "--glass-ambient-strength",
+    "--glass-backdrop",
+    "--glass-backdrop-luma",
+    "--glass-backdrop-luma-knee",
+    "--glass-bg-dock",
+    "--glass-bg-floating",
+    "--glass-bg-resting",
+    "--glass-bg-wash",
+    "--glass-blur-resting",
+    "--glass-blur-resting-radius",
+    "--glass-border-dock",
+    "--glass-border-floating",
+    "--glass-border-quiet",
+    "--glass-border-resting",
+    "--glass-border-wash",
+    "--glass-btn-press-t",
+    "--glass-capsule-fill",
+    "--glass-edge-light",
+    "--glass-grain-opacity",
+    "--glass-highlight",
+    "--glass-key-direction",
+    "--glass-level",
+    "--glass-rim-bottom",
+    "--glass-rim-top",
+    "--glass-specular",
+    "--glass-specular-size",
+    "--glass-tint-ink",
+    "--glass-tint-ink-dock",
+    "--glass-tint-source",
+    "--glass-tint-strength",
+    "--glass-tint-strength-aa",
+    "--glass-tint-strength-floor",
+    "--motion-weight",
+    "--muted-foreground",
+    "--on-glass-muted",
+    "--opacity-disabled",
+    "--opacity-icon-muted",
+    "--paper-clean-texture",
+    "--paper-texture-size",
+    "--radius-dock",
+    "--radius-dock-card",
+    "--radius-pill",
+    "--radius-sm",
+    "--radius-xl",
+    "--scale-hover-dock",
+    "--scale-press-dock",
+    "--shadow-color",
+    "--shadow-dock",
+    "--shadow-dock-collapsed",
+    "--shadow-dock-override",
+    "--size-icon-btn",
+    "--spring-dock-duration",
+    "--spring-snappy",
+    "--spring-snappy-duration",
+    "--stretch",
+    "--summary",
+    "--surface-tint-15",
+    "--type-caption",
+    "--type-small",
+    "--ui-scale",
+    "--z-dock"
+   ],
+   "springs": [
+    "dock",
+    "press",
+    "snappy"
+   ],
+   "composables": [
+    "composables/context",
+    "composables/dockContext",
+    "composables/dockCrossfadeContext",
+    "composables/dockMorphMeasure",
+    "composables/dockRailContext",
+    "composables/dom/useResizeObserver",
+    "composables/dom/useTouchGate",
+    "composables/glass",
+    "composables/glass/useGlassBackdropLuminance",
+    "composables/motion/core/motionTempo",
+    "composables/motion/morph/useDockCtaReceive",
+    "composables/motion/morph/useDragMorph",
+    "composables/motion/morph/useSelectionGroup",
+    "composables/motion/scroll/useScrollChrome",
+    "composables/motion/spring/springPresets",
+    "composables/motion/spring/useLiquidPress",
+    "composables/useDockClickIntegrity",
+    "composables/useDockMorph",
+    "composables/useDockOverflowFit",
+    "composables/useDockShellProps",
+    "composables/useDockSpring",
+    "composables/useDockState",
+    "composables/useDockTouchGate"
+   ],
+   "importsComponents": [
+    "dropdown-menu"
+   ],
+   "anim": {
+    "transition": 15,
+    "keyframes": 0,
+    "raf": 2,
+    "prm": true
+   },
+   "a11y": {
+    "aria": [
+     "aria-controls",
+     "aria-current",
+     "aria-disabled",
+     "aria-expanded",
+     "aria-hidden",
+     "aria-label",
+     "aria-labelledby",
+     "aria-orientation",
+     "aria-pressed",
+     "aria-selected"
+    ],
+    "roles": [
+     "button",
+     "separator",
+     "tab",
+     "tablist"
+    ],
+    "focusVisible": true,
+    "keydown": 4,
+    "tabindex": true
+   },
+   "srcConsumers": [
+    "src/components/popover/PopoverContent.vue",
+    "src/components/select/SelectContent.vue",
+    "src/components/popover/Popover.vue",
+    "src/styles/index.css",
+    "src/components/slider/Slider.vue",
+    "src/styles/glass.css",
+    "src/components/dropdown-menu/DropdownMenuContent.vue"
+   ],
+   "srcConsumerCount": 7,
+   "demoConsumers": 18
+  },
+  "drawer": {
+   "component": "drawer",
+   "files": 12,
+   "loc": 1625,
+   "code": 874,
+   "comment": 624,
+   "commentPct": 41.7,
+   "sfcs": 7,
+   "cssFiles": 1,
+   "props": [
+    "activeSnapPoint",
+    "class",
+    "defaultOpen",
+    "direction",
+    "disableOutsidePointerEvents",
+    "forceMount",
+    "modal",
+    "mode",
+    "open",
+    "showOverlay",
+    "snapPoints",
+    "stage",
+    "surface"
+   ],
+   "propCount": 13,
+   "emits": [
+    "update:activeSnapPoint",
+    "update:open",
+    "value"
+   ],
+   "reka": [
+    "DialogContent",
+    "DialogDescription",
+    "DialogOverlay",
+    "DialogPortal",
+    "DialogRoot",
+    "DialogTitle",
+    "injectDialogRootContext",
+    "useForwardPropsEmits"
+   ],
+   "cssClasses": [
+    "glass-drawer",
+    "glass-drawer-grip",
+    "glass-drawer-handle",
+    "glass-drawer-snap-rule"
+   ],
+   "classCount": 4,
+   "tokens": [
+    "--border",
+    "--card",
+    "--card-pad-footer",
+    "--card-pad-title-gap",
+    "--drawer-handle-color",
+    "--drawer-handle-h",
+    "--drawer-handle-opacity",
+    "--drawer-handle-opacity-active",
+    "--drawer-handle-w",
+    "--drawer-inset-block-end",
+    "--drawer-snap-rule-color",
+    "--duration-fast",
+    "--ease-out",
+    "--focus-ring-color",
+    "--glass-bg-overlay",
+    "--glass-bg-sheet",
+    "--glass-blur-overlay",
+    "--glass-blur-wash",
+    "--glass-border-overlay",
+    "--glass-capsule-warm",
+    "--glass-capsule-warm-floor",
+    "--glass-drawer-t",
+    "--glass-level",
+    "--glass-tint-source",
+    "--glass-tint-strength",
+    "--muted-foreground",
+    "--overlay-pad-block",
+    "--overlay-pad-inline",
+    "--overlay-scrim-ink",
+    "--radius-panel",
+    "--radius-pill",
+    "--sheet-crown",
+    "--sheet-descent",
+    "--sheet-freeze",
+    "--sheet-solid",
+    "--spring-snappy",
+    "--spring-snappy-duration",
+    "--stage-immersive-blur",
+    "--stage-immersive-blur-radius",
+    "--stage-t",
+    "--touch-target",
+    "--z-dock",
+    "--z-modal"
+   ],
+   "springs": [
+    "snappy"
+   ],
+   "composables": [
+    "composables/context",
+    "composables/drawerSnapContext",
+    "composables/motion/core/motionTempo",
+    "composables/useDrawerSnap"
+   ],
+   "importsComponents": [],
+   "anim": {
+    "transition": 3,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": true
+   },
+   "a11y": {
+    "aria": [
+     "aria-hidden",
+     "aria-label",
+     "aria-orientation",
+     "aria-valuemax",
+     "aria-valuemin",
+     "aria-valuenow",
+     "aria-valuetext"
+    ],
+    "roles": [
+     "slider"
+    ],
+    "focusVisible": true,
+    "keydown": 3,
+    "tabindex": true
+   },
+   "srcConsumers": [
+    "src/styles/index.css"
+   ],
+   "srcConsumerCount": 1,
+   "demoConsumers": 1
+  },
+  "dropdown-menu": {
+   "component": "dropdown-menu",
+   "files": 17,
+   "loc": 1030,
+   "code": 883,
+   "comment": 15,
+   "commentPct": 1.7,
+   "sfcs": 14,
+   "cssFiles": 1,
+   "props": [
+    "action",
+    "alignOffset",
+    "asChild",
+    "class",
+    "defaultOpen",
+    "dir",
+    "disabled",
+    "inset",
+    "modal",
+    "modelValue",
+    "open",
+    "sideOffset",
+    "surface",
+    "textValue",
+    "trigger",
+    "value"
+   ],
+   "propCount": 16,
+   "emits": [
+    "closeAutoFocus",
+    "entryFocus",
+    "escapeKeyDown",
+    "focusOutside",
+    "interactOutside",
+    "openAutoFocus",
+    "pointerDownOutside",
+    "select",
+    "update:modelValue",
+    "update:open"
+   ],
+   "reka": [
+    "ContextMenuCheckboxItem",
+    "ContextMenuContent",
+    "ContextMenuGroup",
+    "ContextMenuItem",
+    "ContextMenuItemIndicator",
+    "ContextMenuLabel",
+    "ContextMenuPortal",
+    "ContextMenuRadioGroup",
+    "ContextMenuRadioItem",
+    "ContextMenuRoot",
+    "ContextMenuSeparator",
+    "ContextMenuSub",
+    "ContextMenuSubContent",
+    "ContextMenuSubTrigger",
+    "ContextMenuTrigger",
+    "DropdownMenuCheckboxItem",
+    "DropdownMenuContent",
+    "DropdownMenuGroup",
+    "DropdownMenuItem",
+    "DropdownMenuItemIndicator",
+    "DropdownMenuLabel",
+    "DropdownMenuPortal",
+    "DropdownMenuRadioGroup",
+    "DropdownMenuRadioItem",
+    "DropdownMenuRoot",
+    "DropdownMenuSeparator",
+    "DropdownMenuSub",
+    "DropdownMenuSubContent",
+    "DropdownMenuSubTrigger",
+    "DropdownMenuTrigger",
+    "injectDropdownMenuRootContext",
+    "useForwardPropsEmits"
+   ],
+   "cssClasses": [
+    "dropdown-menu__content",
+    "dropdown-menu__indicator",
+    "dropdown-menu__item",
+    "dropdown-menu__label",
+    "dropdown-menu__radio-dot",
+    "dropdown-menu__separator",
+    "dropdown-menu__shortcut",
+    "dropdown-menu__sub-chevron",
+    "dropdown-menu__sub-content",
+    "dropdown-menu__sub-trigger",
+    "dropdown-menu__trigger",
+    "glass-menu-trigger"
+   ],
+   "classCount": 12,
+   "tokens": [
+    "--border",
+    "--dropdown-text",
+    "--dropdown-text-secondary",
+    "--muted-foreground",
+    "--opacity-disabled",
+    "--overlay-max-block",
+    "--overlay-min-width",
+    "--popover-foreground",
+    "--radius-panel",
+    "--radius-pill",
+    "--type-tracking-caps",
+    "--z-popover"
+   ],
+   "springs": [],
+   "composables": [
+    "composables/dockContext"
+   ],
+   "importsComponents": [
+    "dock"
+   ],
+   "anim": {
+    "transition": 0,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": false
+   },
+   "a11y": {
+    "aria": [
+     "aria-hidden"
+    ],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 3,
+    "tabindex": false
+   },
+   "srcConsumers": [
+    "src/components/dock/DockTrigger.vue"
+   ],
+   "srcConsumerCount": 1,
+   "demoConsumers": 5
+  },
+  "easing": {
+   "component": "easing",
+   "files": 5,
+   "loc": 988,
+   "code": 658,
+   "comment": 246,
+   "commentPct": 27.2,
+   "sfcs": 2,
+   "cssFiles": 0,
+   "props": [
+    "label",
+    "mode",
+    "name",
+    "playback",
+    "preset",
+    "readout",
+    "steps",
+    "term"
+   ],
+   "propCount": 8,
+   "emits": [],
+   "reka": [],
+   "cssClasses": [
+    "animate-spin",
+    "block",
+    "break-all",
+    "copyState",
+    "fill-foreground",
+    "flex",
+    "flex-1",
+    "flex-col",
+    "flex-wrap",
+    "gap-2",
+    "gap-4",
+    "glass-card",
+    "grid",
+    "items-center",
+    "items-start",
+    "justify-between",
+    "min-w-0",
+    "overflow-hidden",
+    "p-3",
+    "px-3",
+    "py-1",
+    "py-2",
+    "relative",
+    "rounded-card",
+    "rounded-pill",
+    "select-none",
+    "select-text",
+    "shrink-0",
+    "size-4",
+    "sr-only",
+    "stroke-background",
+    "stroke-border",
+    "text-foreground",
+    "text-micro",
+    "text-mono-caption",
+    "text-muted-foreground",
+    "touch-none",
+    "transition-colors",
+    "w-fit",
+    "w-full"
+   ],
+   "classCount": 40,
+   "tokens": [
+    "--easing-curve-accent",
+    "--font-mono",
+    "--motion-accent",
+    "--surface-tint-8",
+    "--viz-legendre"
+   ],
+   "springs": [],
+   "composables": [
+    "composables/dom/useClipboard",
+    "composables/motion/core/useReducedMotion",
+    "composables/useEasingPicker"
+   ],
+   "importsComponents": [],
+   "anim": {
+    "transition": 1,
+    "keyframes": 0,
+    "raf": 2,
+    "prm": true
+   },
+   "a11y": {
+    "aria": [
+     "aria-describedby",
+     "aria-disabled",
+     "aria-hidden",
+     "aria-label",
+     "aria-live",
+     "aria-valuemax",
+     "aria-valuemin",
+     "aria-valuenow",
+     "aria-valuetext"
+    ],
+    "roles": [
+     "group",
+     "slider",
+     "status"
+    ],
+    "focusVisible": true,
+    "keydown": 3,
+    "tabindex": true
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 1
+  },
+  "expandable-container": {
+   "component": "expandable-container",
+   "files": 3,
+   "loc": 285,
+   "code": 245,
+   "comment": 2,
+   "commentPct": 0.8,
+   "sfcs": 1,
+   "cssFiles": 1,
+   "props": [
+    "buttonPosition",
+    "collapseLabel",
+    "expandLabel",
+    "surface"
+   ],
+   "propCount": 4,
+   "emits": [],
+   "reka": [
+    "FocusScope"
+   ],
+   "cssClasses": [
+    "expandable-container",
+    "expandable-container__chrome",
+    "expandable-container__icon",
+    "glass-overlay"
+   ],
+   "classCount": 4,
+   "tokens": [
+    "--border",
+    "--card",
+    "--control-h-md",
+    "--duration-fast",
+    "--ease-standard",
+    "--focus-ring-color",
+    "--focus-ring-width",
+    "--foreground",
+    "--glass-blur-wash",
+    "--icon-sm",
+    "--muted-foreground",
+    "--radius-button",
+    "--shadow-sm",
+    "--z-modal"
+   ],
+   "springs": [],
+   "composables": [
+    "composables/keyboard"
+   ],
+   "importsComponents": [],
+   "anim": {
+    "transition": 2,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": true
+   },
+   "a11y": {
+    "aria": [
+     "aria-hidden",
+     "aria-label",
+     "aria-modal"
+    ],
+    "roles": [],
+    "focusVisible": true,
+    "keydown": 0,
+    "tabindex": true
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 1
+  },
+  "fading-scroll": {
+   "component": "fading-scroll",
+   "files": 4,
+   "loc": 287,
+   "code": 166,
+   "comment": 89,
+   "commentPct": 34.9,
+   "sfcs": 1,
+   "cssFiles": 0,
+   "props": [
+    "ariaLabel",
+    "ariaLabelledby",
+    "axis",
+    "fadeEnd",
+    "fadeStart"
+   ],
+   "propCount": 5,
+   "emits": [],
+   "reka": [],
+   "cssClasses": [
+    "axis",
+    "fading-scroll"
+   ],
+   "classCount": 2,
+   "tokens": [
+    "--fade-end",
+    "--fade-scroll-width",
+    "--fade-start"
+   ],
+   "springs": [],
+   "composables": [
+    "composables/dom/useResizeObserver",
+    "composables/motion/scroll/supportsCssTimeline",
+    "composables/useFadingScroll"
+   ],
+   "importsComponents": [],
+   "anim": {
+    "transition": 0,
+    "keyframes": 0,
+    "raf": 1,
+    "prm": false
+   },
+   "a11y": {
+    "aria": [
+     "aria-label",
+     "aria-labelledby"
+    ],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": true
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 6
+  },
+  "fourier-field": {
+   "component": "fourier-field",
+   "files": 12,
+   "loc": 2897,
+   "code": 1921,
+   "comment": 762,
+   "commentPct": 28.4,
+   "sfcs": 1,
+   "cssFiles": 0,
+   "props": [
+    "color",
+    "colorResolver",
+    "config",
+    "freeze",
+    "getPalette",
+    "seed",
+    "spectrum"
+   ],
+   "propCount": 7,
+   "emits": [
+    "rendererStatus",
+    "status"
+   ],
+   "reka": [],
+   "cssClasses": [
+    "fourier-field",
+    "fourier-field--interactive",
+    "fourier-field-canvas"
+   ],
+   "classCount": 3,
+   "tokens": [
+    "--interactive"
+   ],
+   "springs": [],
+   "composables": [
+    "composables/color",
+    "composables/dark",
+    "composables/dom",
+    "composables/glass/procedural/color.glsl",
+    "composables/glass/procedural/color.wgsl",
+    "composables/glass/procedural/prng",
+    "composables/glass/webgl/useWebGLCanvas",
+    "composables/glass/webgpu/rendererStatus",
+    "composables/glass/webgpu/useGpuSubstrate",
+    "composables/glass/webgpu/useWebGPUCanvas",
+    "composables/motion/pointer/pointerFieldMappings",
+    "composables/motion/pointer/usePointerVelocityField",
+    "composables/motion/pointer/useRoutePointer",
+    "composables/useFourierField"
+   ],
+   "importsComponents": [
+    "shaders"
+   ],
+   "anim": {
+    "transition": 0,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": false
+   },
+   "a11y": {
+    "aria": [
+     "aria-hidden"
+    ],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 2
+  },
+  "handmark": {
+   "component": "handmark",
+   "files": 11,
+   "loc": 2242,
+   "code": 1295,
+   "comment": 788,
+   "commentPct": 37.8,
+   "sfcs": 1,
+   "cssFiles": 0,
+   "props": [
+    "amplitude",
+    "animation",
+    "appear",
+    "boilFps",
+    "boilFrames",
+    "box",
+    "brush",
+    "color",
+    "drawDelayMs",
+    "drawMs",
+    "jagged",
+    "natural",
+    "overrides",
+    "path",
+    "points",
+    "roughness",
+    "seed",
+    "segments",
+    "shape"
+   ],
+   "propCount": 19,
+   "emits": [],
+   "reka": [],
+   "cssClasses": [
+    "draws",
+    "hm__path",
+    "hm__path--clip",
+    "hm__path--dashoffset",
+    "hm__svg",
+    "join",
+    "map"
+   ],
+   "classCount": 7,
+   "tokens": [
+    "--clip",
+    "--dashoffset",
+    "--ease-out-expo"
+   ],
+   "springs": [],
+   "composables": [
+    "composables/glass/procedural/prng",
+    "composables/useHandMark"
+   ],
+   "importsComponents": [],
+   "anim": {
+    "transition": 3,
+    "keyframes": 0,
+    "raf": 1,
+    "prm": true
+   },
+   "a11y": {
+    "aria": [
+     "aria-hidden"
+    ],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 1
+  },
+  "header-ribbon": {
+   "component": "header-ribbon",
+   "files": 4,
+   "loc": 117,
+   "code": 96,
+   "comment": 3,
+   "commentPct": 3,
+   "sfcs": 1,
+   "cssFiles": 1,
+   "props": [
+    "ariaLabel",
+    "class",
+    "placement"
+   ],
+   "propCount": 3,
+   "emits": [],
+   "reka": [],
+   "cssClasses": [
+    "header-ribbon",
+    "header-ribbon__actions",
+    "header-ribbon__band"
+   ],
+   "classCount": 3,
+   "tokens": [
+    "--panel-padding",
+    "--radius-pill",
+    "--size-icon-btn",
+    "--z-header"
+   ],
+   "springs": [],
+   "composables": [],
+   "importsComponents": [],
+   "anim": {
+    "transition": 0,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": false
+   },
+   "a11y": {
+    "aria": [
+     "aria-label"
+    ],
+    "roles": [
+     "toolbar"
+    ],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [
+    "src/styles/index.css"
+   ],
+   "srcConsumerCount": 1,
+   "demoConsumers": 1
+  },
+  "infinite-scroll": {
+   "component": "infinite-scroll",
+   "files": 5,
+   "loc": 183,
+   "code": 120,
+   "comment": 35,
+   "commentPct": 22.6,
+   "sfcs": 1,
+   "cssFiles": 0,
+   "props": [
+    "hasMore",
+    "isLoading",
+    "threshold"
+   ],
+   "propCount": 3,
+   "emits": [
+    "load-more"
+   ],
+   "reka": [],
+   "cssClasses": [
+    "animate-spin",
+    "border-2",
+    "border-muted-foreground",
+    "border-t-transparent",
+    "flex",
+    "h-5",
+    "h-px",
+    "justify-center",
+    "py-4",
+    "rounded-pill",
+    "sr-only",
+    "text-center",
+    "text-muted-foreground",
+    "text-small",
+    "w-5",
+    "w-full"
+   ],
+   "classCount": 16,
+   "tokens": [],
+   "springs": [],
+   "composables": [],
+   "importsComponents": [],
+   "anim": {
+    "transition": 0,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": false
+   },
+   "a11y": {
+    "aria": [
+     "aria-atomic",
+     "aria-hidden",
+     "aria-live"
+    ],
+    "roles": [
+     "status"
+    ],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [
+    "src/composables/sidebar/useLazyLoader.ts"
+   ],
+   "srcConsumerCount": 1,
+   "demoConsumers": 1
+  },
+  "input": {
+   "component": "input",
+   "files": 3,
+   "loc": 85,
+   "code": 74,
+   "comment": 0,
+   "commentPct": 0,
+   "sfcs": 1,
+   "cssFiles": 0,
+   "props": [
+    "autocomplete",
+    "class",
+    "defaultValue",
+    "disabled",
+    "enterkeyhint",
+    "form",
+    "inputmode",
+    "invalid",
+    "maxlength",
+    "minlength",
+    "modelValue",
+    "name",
+    "pattern",
+    "placeholder",
+    "readonly",
+    "required",
+    "size",
+    "type"
+   ],
+   "propCount": 18,
+   "emits": [
+    "update:modelValue",
+    "value"
+   ],
+   "reka": [],
+   "cssClasses": [],
+   "classCount": 0,
+   "tokens": [],
+   "springs": [],
+   "composables": [],
+   "importsComponents": [],
+   "anim": {
+    "transition": 0,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": false
+   },
+   "a11y": {
+    "aria": [
+     "aria-invalid"
+    ],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [
+    "src/forms.ts"
+   ],
+   "srcConsumerCount": 1,
+   "demoConsumers": 9
+  },
+  "instrument-chassis": {
+   "component": "instrument-chassis",
+   "files": 4,
+   "loc": 224,
+   "code": 196,
+   "comment": 0,
+   "commentPct": 0,
+   "sfcs": 1,
+   "cssFiles": 1,
+   "props": [
+    "boundaries",
+    "class",
+    "proportion",
+    "reserve",
+    "state",
+    "tone"
+   ],
+   "propCount": 6,
+   "emits": [],
+   "reka": [],
+   "cssClasses": [
+    "dark",
+    "instrument-action",
+    "instrument-chassis",
+    "instrument-composition",
+    "instrument-inspector",
+    "instrument-stage"
+   ],
+   "classCount": 6,
+   "tokens": [
+    "--duration-normal",
+    "--ease-standard",
+    "--glass-bg-chassis",
+    "--glass-blur-quiet",
+    "--glass-border-wash",
+    "--glass-curvature-overlay",
+    "--glass-shadow-quiet",
+    "--instrument-boundary-catch",
+    "--instrument-boundary-shadow",
+    "--instrument-control-gap",
+    "--instrument-control-padding-block",
+    "--instrument-control-padding-inline",
+    "--instrument-dial-gap",
+    "--instrument-dial-padding-block",
+    "--instrument-dial-padding-inline",
+    "--instrument-inspector-reserve",
+    "--instrument-stage-reserve",
+    "--instrument-state-tint",
+    "--instrument-title-gap",
+    "--instrument-tone",
+    "--muted-foreground",
+    "--radius-card",
+    "--spacing",
+    "--surface-tint-6"
+   ],
+   "springs": [],
+   "composables": [],
+   "importsComponents": [],
+   "anim": {
+    "transition": 2,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": true
+   },
+   "a11y": {
+    "aria": [
+     "aria-busy"
+    ],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [
+    "src/styles/index.css"
+   ],
+   "srcConsumerCount": 1,
+   "demoConsumers": 1
+  },
+  "label": {
+   "component": "label",
+   "files": 2,
+   "loc": 94,
+   "code": 79,
+   "comment": 0,
+   "commentPct": 0,
+   "sfcs": 1,
+   "cssFiles": 0,
+   "props": [
+    "class",
+    "disabled",
+    "for",
+    "requirement"
+   ],
+   "propCount": 4,
+   "emits": [],
+   "reka": [
+    "Label"
+   ],
+   "cssClasses": [
+    "glass-label",
+    "label-requirement"
+   ],
+   "classCount": 2,
+   "tokens": [
+    "--destructive",
+    "--font-text",
+    "--foreground",
+    "--muted-foreground",
+    "--opacity-disabled",
+    "--type-caption",
+    "--type-leading-small",
+    "--type-small"
+   ],
+   "springs": [],
+   "composables": [],
+   "importsComponents": [],
+   "anim": {
+    "transition": 0,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": false
+   },
+   "a11y": {
+    "aria": [
+     "aria-hidden"
+    ],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 15
+  },
+  "labeled-field": {
+   "component": "labeled-field",
+   "files": 7,
+   "loc": 413,
+   "code": 364,
+   "comment": 7,
+   "commentPct": 1.9,
+   "sfcs": 5,
+   "cssFiles": 0,
+   "props": [
+    "controlId",
+    "controlLabelable",
+    "describedBy",
+    "description",
+    "disabled",
+    "errorId",
+    "errorLive",
+    "invalid",
+    "items",
+    "label",
+    "labelledBy",
+    "layout",
+    "modelValue",
+    "open",
+    "placeholder",
+    "required",
+    "requirement"
+   ],
+   "propCount": 17,
+   "emits": [
+    "update:modelValue",
+    "update:open",
+    "value"
+   ],
+   "reka": [],
+   "cssClasses": [
+    "labeled-field",
+    "labeled-field-control",
+    "labeled-field-copy",
+    "labeled-field-description",
+    "labeled-field-error"
+   ],
+   "classCount": 5,
+   "tokens": [
+    "--destructive",
+    "--muted-foreground",
+    "--spacing",
+    "--type-leading-small",
+    "--type-small"
+   ],
+   "springs": [],
+   "composables": [],
+   "importsComponents": [],
+   "anim": {
+    "transition": 0,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": false
+   },
+   "a11y": {
+    "aria": [
+     "aria-describedby",
+     "aria-errormessage",
+     "aria-invalid",
+     "aria-labelledby",
+     "aria-live"
+    ],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 14
+  },
+  "metric": {
+   "component": "metric",
+   "files": 8,
+   "loc": 394,
+   "code": 338,
+   "comment": 0,
+   "commentPct": 0,
+   "sfcs": 4,
+   "cssFiles": 1,
+   "props": [
+    "class",
+    "context",
+    "density",
+    "icon",
+    "iconSize",
+    "iconStrokeWidth",
+    "label",
+    "loading",
+    "orientation",
+    "placeholder",
+    "size",
+    "unit",
+    "value"
+   ],
+   "propCount": 13,
+   "emits": [],
+   "reka": [],
+   "cssClasses": [
+    "metric",
+    "metric-cell",
+    "metric-cell__heading",
+    "metric-cell__icon",
+    "metric-row",
+    "metric-row__term",
+    "metric-stack",
+    "metric__context",
+    "metric__label",
+    "metric__reading",
+    "metric__unit",
+    "metric__value"
+   ],
+   "classCount": 12,
+   "tokens": [
+    "--font-mono",
+    "--foreground",
+    "--glass-bg-wash",
+    "--glass-blur-wash",
+    "--glass-border-wash",
+    "--muted-foreground",
+    "--radius-card",
+    "--radius-sm",
+    "--surface-tint-15",
+    "--type-caption",
+    "--type-display-3",
+    "--type-micro",
+    "--type-prose",
+    "--type-small",
+    "--type-title",
+    "--type-tracking-tight",
+    "--type-tracking-wide"
+   ],
+   "springs": [],
+   "composables": [],
+   "importsComponents": [],
+   "anim": {
+    "transition": 0,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": false
+   },
+   "a11y": {
+    "aria": [
+     "aria-busy",
+     "aria-hidden"
+    ],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [
+    "src/styles/index.css"
+   ],
+   "srcConsumerCount": 1,
+   "demoConsumers": 2
+  },
+  "number-field": {
+   "component": "number-field",
+   "files": 8,
+   "loc": 250,
+   "code": 210,
+   "comment": 1,
+   "commentPct": 0.5,
+   "sfcs": 5,
+   "cssFiles": 1,
+   "props": [
+    "class",
+    "defaultValue",
+    "disabled",
+    "formatOptions",
+    "id",
+    "invalid",
+    "locale",
+    "max",
+    "min",
+    "modelValue",
+    "readonly",
+    "step"
+   ],
+   "propCount": 12,
+   "emits": [
+    "update:modelValue",
+    "value"
+   ],
+   "reka": [
+    "NumberFieldDecrement",
+    "NumberFieldIncrement",
+    "NumberFieldInput",
+    "NumberFieldRoot",
+    "injectNumberFieldRootContext",
+    "useForwardPropsEmits"
+   ],
+   "cssClasses": [
+    "glass-ui-number-field",
+    "number-field",
+    "number-field__content",
+    "number-field__input",
+    "number-field__step",
+    "number-field__step--decrement",
+    "number-field__step--increment"
+   ],
+   "classCount": 7,
+   "tokens": [
+    "--control-h-lg",
+    "--decrement",
+    "--field-control-height",
+    "--font-mono",
+    "--increment"
+   ],
+   "springs": [],
+   "composables": [],
+   "importsComponents": [],
+   "anim": {
+    "transition": 0,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": false
+   },
+   "a11y": {
+    "aria": [
+     "aria-hidden",
+     "aria-invalid",
+     "aria-required"
+    ],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 1
+  },
+  "pager-dots": {
+   "component": "pager-dots",
+   "files": 5,
+   "loc": 846,
+   "code": 464,
+   "comment": 313,
+   "commentPct": 40.3,
+   "sfcs": 1,
+   "cssFiles": 0,
+   "props": [
+    "ariaLabel",
+    "class",
+    "count",
+    "orientation",
+    "panelIds",
+    "pattern",
+    "ring",
+    "windowFit"
+   ],
+   "propCount": 8,
+   "emits": [
+    "e",
+    "index",
+    "select"
+   ],
+   "reka": [],
+   "cssClasses": [
+    "focus-ring",
+    "glass-pager-ring",
+    "goo-body",
+    "goo-dot",
+    "goo-neck",
+    "pager-bed-layer",
+    "pager-dot",
+    "pager-dots",
+    "pager-worm-defs",
+    "pager-worm-layer",
+    "tap-squish"
+   ],
+   "classCount": 11,
+   "tokens": [
+    "--foreground",
+    "--pager-dot-active",
+    "--pager-dot-active-dim",
+    "--pager-dot-elongated",
+    "--pager-dot-hover",
+    "--pager-dot-inactive",
+    "--pager-dot-size",
+    "--pager-goo-filter",
+    "--pager-hit-inset",
+    "--pager-hit-target",
+    "--pager-neck-clip",
+    "--pager-worm-layer-opacity",
+    "--pager-worm-max-stretch",
+    "--radius-pill",
+    "--stretch"
+   ],
+   "springs": [],
+   "composables": [
+    "composables/dom/useResizeObserver",
+    "composables/motion/morph/useLeadTrail",
+    "composables/motion/spring/useLiquidFlex",
+    "composables/usePagerWorm"
+   ],
+   "importsComponents": [],
+   "anim": {
+    "transition": 0,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": true
+   },
+   "a11y": {
+    "aria": [
+     "aria-controls",
+     "aria-current",
+     "aria-hidden",
+     "aria-label",
+     "aria-orientation",
+     "aria-selected"
+    ],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 3,
+    "tabindex": true
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 3
+  },
+  "paper-backdrop": {
+   "component": "paper-backdrop",
+   "files": 2,
+   "loc": 22,
+   "code": 16,
+   "comment": 1,
+   "commentPct": 5.9,
+   "sfcs": 1,
+   "cssFiles": 0,
+   "props": [
+    "class"
+   ],
+   "propCount": 1,
+   "emits": [],
+   "reka": [],
+   "cssClasses": [
+    "paper-backdrop",
+    "paper-underpaint"
+   ],
+   "classCount": 2,
+   "tokens": [],
+   "springs": [],
+   "composables": [],
+   "importsComponents": [],
+   "anim": {
+    "transition": 0,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": false
+   },
+   "a11y": {
+    "aria": [
+     "aria-hidden"
+    ],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 1
+  },
+  "popover": {
+   "component": "popover",
+   "files": 5,
+   "loc": 344,
+   "code": 278,
+   "comment": 29,
+   "commentPct": 9.4,
+   "sfcs": 3,
+   "cssFiles": 0,
+   "props": [
+    "ariaLabel",
+    "asChild",
+    "class",
+    "closeDelay",
+    "defaultOpen",
+    "keepDockOpen",
+    "open",
+    "openDelay",
+    "portal",
+    "surface",
+    "trigger"
+   ],
+   "propCount": 11,
+   "emits": [
+    "closeAutoFocus",
+    "escapeKeyDown",
+    "focusOutside",
+    "interactOutside",
+    "openAutoFocus",
+    "pointerDownOutside",
+    "update:open"
+   ],
+   "reka": [
+    "HoverCardContent",
+    "HoverCardPortal",
+    "HoverCardRoot",
+    "HoverCardTrigger",
+    "PopoverContent",
+    "PopoverPortal",
+    "PopoverRoot",
+    "PopoverTrigger"
+   ],
+   "cssClasses": [
+    "contentClass"
+   ],
+   "classCount": 1,
+   "tokens": [
+    "--overlay-pad-block",
+    "--overlay-pad-inline"
+   ],
+   "springs": [],
+   "composables": [
+    "composables/context",
+    "composables/dockContext"
+   ],
+   "importsComponents": [
+    "dock"
+   ],
+   "anim": {
+    "transition": 0,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": false
+   },
+   "a11y": {
+    "aria": [
+     "aria-label",
+     "aria-modal"
+    ],
+    "roles": [
+     "group"
+    ],
+    "focusVisible": false,
+    "keydown": 3,
+    "tabindex": false
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 5
+  },
+  "progress": {
+   "component": "progress",
+   "files": 3,
+   "loc": 309,
+   "code": 263,
+   "comment": 15,
+   "commentPct": 5.4,
+   "sfcs": 1,
+   "cssFiles": 0,
+   "props": [
+    "class",
+    "indeterminate",
+    "marks",
+    "max",
+    "modelValue",
+    "orientation",
+    "status",
+    "variant"
+   ],
+   "propCount": 8,
+   "emits": [],
+   "reka": [
+    "ProgressIndicator",
+    "ProgressRoot"
+   ],
+   "cssClasses": [
+    "glass-liquid-fill",
+    "glass-track-well",
+    "glass-value-mark",
+    "glass-value-marks",
+    "indicatorClass",
+    "progress-liquid-fill",
+    "progress-rail",
+    "progress-value-fill"
+   ],
+   "classCount": 8,
+   "tokens": [
+    "--destructive",
+    "--duration-normal",
+    "--ease-standard",
+    "--glass-progress-track-color",
+    "--liquid-fill-tint",
+    "--motion-duration-progress-crescendo",
+    "--motion-duration-progress-indeterminate",
+    "--motion-duration-progress-intake",
+    "--motion-ease-standard",
+    "--primary",
+    "--progress-crescendo",
+    "--progress-fill",
+    "--progress-size",
+    "--progress-track-on-glass",
+    "--progress-value-percent",
+    "--progress-vertical-size",
+    "--value-mark-position"
+   ],
+   "springs": [],
+   "composables": [],
+   "importsComponents": [],
+   "anim": {
+    "transition": 2,
+    "keyframes": 4,
+    "raf": 0,
+    "prm": true
+   },
+   "a11y": {
+    "aria": [
+     "aria-hidden",
+     "aria-invalid",
+     "aria-orientation"
+    ],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 1
+  },
+  "radio-group": {
+   "component": "radio-group",
+   "files": 4,
+   "loc": 228,
+   "code": 193,
+   "comment": 0,
+   "commentPct": 0,
+   "sfcs": 2,
+   "cssFiles": 1,
+   "props": [
+    "class",
+    "defaultValue",
+    "dir",
+    "disabled",
+    "id",
+    "invalid",
+    "loop",
+    "modelValue",
+    "orientation",
+    "value"
+   ],
+   "propCount": 10,
+   "emits": [
+    "update:modelValue"
+   ],
+   "reka": [
+    "RadioGroupIndicator",
+    "RadioGroupItem",
+    "RadioGroupRoot",
+    "useForwardProps"
+   ],
+   "cssClasses": [
+    "radio-group",
+    "radio-group__face",
+    "radio-group__indicator",
+    "radio-group__item"
+   ],
+   "classCount": 4,
+   "tokens": [
+    "--control-checked-bg",
+    "--control-ring",
+    "--destructive",
+    "--duration-fast",
+    "--ease-standard",
+    "--focus-ring-shadow",
+    "--glass-bg-wash",
+    "--invalid-ring",
+    "--opacity-disabled",
+    "--primary-foreground",
+    "--radio-face",
+    "--radio-seat",
+    "--radio-seat-offset",
+    "--scale-press",
+    "--touch-target",
+    "--transition-liquid-spatial"
+   ],
+   "springs": [],
+   "composables": [],
+   "importsComponents": [],
+   "anim": {
+    "transition": 2,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": true
+   },
+   "a11y": {
+    "aria": [
+     "aria-hidden",
+     "aria-invalid"
+    ],
+    "roles": [],
+    "focusVisible": true,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 1
+  },
+  "scroll-progress-rim": {
+   "component": "scroll-progress-rim",
+   "files": 4,
+   "loc": 252,
+   "code": 186,
+   "comment": 39,
+   "commentPct": 17.3,
+   "sfcs": 1,
+   "cssFiles": 1,
+   "props": [
+    "max",
+    "orientation",
+    "segments",
+    "stops",
+    "value"
+   ],
+   "propCount": 5,
+   "emits": [],
+   "reka": [],
+   "cssClasses": [
+    "join",
+    "map",
+    "scroll-progress-rim",
+    "scroll-progress-rim__dot",
+    "scroll-progress-rim__fill",
+    "scroll-progress-rim__track"
+   ],
+   "classCount": 6,
+   "tokens": [
+    "--dot-position",
+    "--foreground",
+    "--progress-track-on-glass",
+    "--radius-pill",
+    "--scroll-progress-rim-fill",
+    "--scroll-progress-rim-inset",
+    "--scroll-progress-rim-margin",
+    "--scroll-progress-rim-spectrum",
+    "--scroll-progress-rim-width",
+    "--section-color-0",
+    "--section-color-2",
+    "--section-color-3",
+    "--section-color-4",
+    "--section-color-5",
+    "--section-color-7",
+    "--spring-snappy",
+    "--spring-snappy-duration",
+    "--value-mark-color",
+    "--value-mark-size"
+   ],
+   "springs": [
+    "snappy"
+   ],
+   "composables": [],
+   "importsComponents": [],
+   "anim": {
+    "transition": 3,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": true
+   },
+   "a11y": {
+    "aria": [
+     "aria-hidden",
+     "aria-label",
+     "aria-valuemax",
+     "aria-valuemin",
+     "aria-valuenow"
+    ],
+    "roles": [
+     "progressbar"
+    ],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [
+    "src/styles/index.css"
+   ],
+   "srcConsumerCount": 1,
+   "demoConsumers": 1
+  },
+  "search": {
+   "component": "search",
+   "files": 7,
+   "loc": 569,
+   "code": 410,
+   "comment": 76,
+   "commentPct": 15.6,
+   "sfcs": 1,
+   "cssFiles": 0,
+   "props": [
+    "icon",
+    "modelValue",
+    "placeholder",
+    "size",
+    "surface",
+    "tag",
+    "variant"
+   ],
+   "propCount": 7,
+   "emits": [
+    "update:modelValue",
+    "value"
+   ],
+   "reka": [],
+   "cssClasses": [
+    "input-bar",
+    "input-bar-field",
+    "shrink-0",
+    "text-muted-foreground"
+   ],
+   "classCount": 4,
+   "tokens": [
+    "--search-icon-size"
+   ],
+   "springs": [],
+   "composables": [
+    "composables/fuzzySearchIndex",
+    "composables/types",
+    "composables/useFuzzySearch"
+   ],
+   "importsComponents": [],
+   "anim": {
+    "transition": 0,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": false
+   },
+   "a11y": {
+    "aria": [
+     "aria-hidden"
+    ],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 3,
+    "tabindex": false
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 2
+  },
+  "select": {
+   "component": "select",
+   "files": 11,
+   "loc": 611,
+   "code": 415,
+   "comment": 125,
+   "commentPct": 23.1,
+   "sfcs": 10,
+   "cssFiles": 0,
+   "props": [
+    "autocomplete",
+    "class",
+    "defaultOpen",
+    "defaultValue",
+    "dir",
+    "disabled",
+    "fieldHue",
+    "hideIndicator",
+    "modelValue",
+    "nullableValue",
+    "open",
+    "placeholder",
+    "selectedLabel",
+    "size",
+    "surface",
+    "textValue",
+    "value",
+    "variant"
+   ],
+   "propCount": 18,
+   "emits": [
+    "closeAutoFocus",
+    "escapeKeyDown",
+    "pointerDownOutside",
+    "select",
+    "update:modelValue",
+    "update:open"
+   ],
+   "reka": [
+    "SelectContent",
+    "SelectGroup",
+    "SelectIcon",
+    "SelectItem",
+    "SelectItemIndicator",
+    "SelectItemText",
+    "SelectLabel",
+    "SelectPortal",
+    "SelectRoot",
+    "SelectScrollDownButton",
+    "SelectScrollUpButton",
+    "SelectSeparator",
+    "SelectTrigger",
+    "SelectValue",
+    "SelectViewport",
+    "useForwardProps"
+   ],
+   "cssClasses": [
+    "absolute",
+    "flex",
+    "flex-col",
+    "glass-field-portal",
+    "h-2",
+    "h-4",
+    "inline-block",
+    "items-center",
+    "justify-center",
+    "left-2",
+    "min-w-0",
+    "rounded-pill",
+    "shrink-0",
+    "transition-disclosure",
+    "w-2",
+    "w-4"
+   ],
+   "classCount": 16,
+   "tokens": [
+    "--control-h-md",
+    "--control-h-sm",
+    "--destructive",
+    "--field-h",
+    "--foreground",
+    "--glass-accent",
+    "--invalid-ring",
+    "--overlay-min-width",
+    "--overlay-pad-block",
+    "--overlay-pad-inline",
+    "--reka-select-content-transform-origin",
+    "--reka-select-trigger-height",
+    "--reka-select-trigger-width",
+    "--select-chevron-opacity",
+    "--select-dot-color",
+    "--spacing"
+   ],
+   "springs": [],
+   "composables": [
+    "composables/dockContext"
+   ],
+   "importsComponents": [
+    "dock"
+   ],
+   "anim": {
+    "transition": 2,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": false
+   },
+   "a11y": {
+    "aria": [
+     "aria-hidden",
+     "aria-invalid"
+    ],
+    "roles": [],
+    "focusVisible": true,
+    "keydown": 2,
+    "tabindex": false
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 7
+  },
+  "separator": {
+   "component": "separator",
+   "files": 2,
+   "loc": 156,
+   "code": 133,
+   "comment": 0,
+   "commentPct": 0,
+   "sfcs": 1,
+   "cssFiles": 0,
+   "props": [
+    "class",
+    "decorative",
+    "label",
+    "orientation"
+   ],
+   "propCount": 4,
+   "emits": [],
+   "reka": [
+    "Separator"
+   ],
+   "cssClasses": [
+    "separator",
+    "separator-label",
+    "separator-labelled",
+    "separator-segment"
+   ],
+   "classCount": 4,
+   "tokens": [
+    "--font-mono",
+    "--muted-foreground",
+    "--separator-ink",
+    "--type-caption",
+    "--type-leading-caption"
+   ],
+   "springs": [],
+   "composables": [],
+   "importsComponents": [],
+   "anim": {
+    "transition": 0,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": false
+   },
+   "a11y": {
+    "aria": [
+     "aria-hidden",
+     "aria-label",
+     "aria-labelledby",
+     "aria-orientation"
+    ],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 3
+  },
+  "skeleton": {
+   "component": "skeleton",
+   "files": 2,
+   "loc": 97,
+   "code": 75,
+   "comment": 8,
+   "commentPct": 9.6,
+   "sfcs": 1,
+   "cssFiles": 0,
+   "props": [
+    "class"
+   ],
+   "propCount": 1,
+   "emits": [],
+   "reka": [],
+   "cssClasses": [
+    "skeleton"
+   ],
+   "classCount": 1,
+   "tokens": [
+    "--duration-shimmer-fast",
+    "--foreground",
+    "--muted",
+    "--radius-media"
+   ],
+   "springs": [],
+   "composables": [],
+   "importsComponents": [],
+   "anim": {
+    "transition": 0,
+    "keyframes": 1,
+    "raf": 0,
+    "prm": true
+   },
+   "a11y": {
+    "aria": [
+     "aria-hidden"
+    ],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 1
+  },
+  "slider": {
+   "component": "slider",
+   "files": 3,
+   "loc": 652,
+   "code": 373,
+   "comment": 219,
+   "commentPct": 37,
+   "sfcs": 1,
+   "cssFiles": 0,
+   "props": [
+    "class",
+    "defaultValue",
+    "dir",
+    "disabled",
+    "invalid",
+    "inverted",
+    "marks",
+    "max",
+    "min",
+    "minStepsBetweenThumbs",
+    "modelValue",
+    "motion",
+    "orientation",
+    "size",
+    "step",
+    "variant"
+   ],
+   "propCount": 16,
+   "emits": [
+    "update:modelValue",
+    "value",
+    "valueCommit"
+   ],
+   "reka": [
+    "SliderRange",
+    "SliderRoot",
+    "SliderThumb",
+    "SliderTrack",
+    "useForwardPropsEmits"
+   ],
+   "cssClasses": [
+    "glass-liquid-fill",
+    "glass-slider",
+    "glass-specular-track",
+    "glass-track-well",
+    "glass-value-mark",
+    "glass-value-marks",
+    "slider-range",
+    "slider-thumb",
+    "slider-track"
+   ],
+   "classCount": 9,
+   "tokens": [
+    "--atom-drag-v",
+    "--background",
+    "--corner-shape-thumb",
+    "--destructive",
+    "--duration-fast",
+    "--duration-normal",
+    "--ease-cartoon-punch",
+    "--ease-standard",
+    "--focus-ring-shadow",
+    "--glass-blur-quiet",
+    "--glass-capsule-warm",
+    "--glass-material-rim",
+    "--glass-slider-track-background",
+    "--glass-under-shadow-quiet",
+    "--liquid-fill-blur",
+    "--liquid-fill-shadow",
+    "--liquid-fill-tint",
+    "--motion-weight",
+    "--muted-medium",
+    "--opacity-disabled",
+    "--secondary",
+    "--shadow-sm",
+    "--slider-range-bg",
+    "--slider-range-blur",
+    "--slider-range-origin",
+    "--slider-range-shadow",
+    "--slider-thumb-bg",
+    "--slider-thumb-border-color",
+    "--slider-thumb-border-w",
+    "--slider-thumb-hover-ring-color",
+    "--slider-thumb-hover-ring-w",
+    "--slider-thumb-shadow",
+    "--slider-thumb-size",
+    "--slider-thumb-spring",
+    "--slider-track-height",
+    "--slider-vertical-size",
+    "--smear",
+    "--spring-smooth",
+    "--surface-tint-15",
+    "--surface-tint-8",
+    "--value-mark-position"
+   ],
+   "springs": [
+    "smooth"
+   ],
+   "composables": [
+    "composables/dockContext",
+    "composables/dom/useDragVelocity",
+    "composables/dom/useTouchGate",
+    "composables/useDockHold"
+   ],
+   "importsComponents": [
+    "dock"
+   ],
+   "anim": {
+    "transition": 5,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": true
+   },
+   "a11y": {
+    "aria": [
+     "aria-describedby",
+     "aria-errormessage",
+     "aria-hidden",
+     "aria-invalid",
+     "aria-label",
+     "aria-labelledby"
+    ],
+    "roles": [
+     "slider"
+    ],
+    "focusVisible": true,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 6
+  },
+  "sortable-list": {
+   "component": "sortable-list",
+   "files": 12,
+   "loc": 1140,
+   "code": 824,
+   "comment": 189,
+   "commentPct": 18.7,
+   "sfcs": 3,
+   "cssFiles": 0,
+   "props": [
+    "axis",
+    "disabled",
+    "getId",
+    "getLabel",
+    "group",
+    "handleSelector",
+    "id",
+    "items",
+    "label",
+    "type"
+   ],
+   "propCount": 10,
+   "emits": [
+    "index",
+    "insert",
+    "item",
+    "next",
+    "reorder"
+   ],
+   "reka": [],
+   "cssClasses": [
+    "filter",
+    "is-sortable-dragging",
+    "is-sortable-drop-above",
+    "is-sortable-drop-below",
+    "replace",
+    "some",
+    "sortable-drag-ghost",
+    "sortable-handle",
+    "sortable-item",
+    "split",
+    "sr-only"
+   ],
+   "classCount": 11,
+   "tokens": [
+    "--color-gold",
+    "--color-gold-dark",
+    "--color-gold-light",
+    "--duration-shimmer",
+    "--radius-pill"
+   ],
+   "springs": [],
+   "composables": [
+    "composables/context",
+    "composables/types",
+    "composables/useSortable"
+   ],
+   "importsComponents": [],
+   "anim": {
+    "transition": 5,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": false
+   },
+   "a11y": {
+    "aria": [
+     "aria-atomic",
+     "aria-disabled",
+     "aria-label",
+     "aria-live"
+    ],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 8,
+    "tabindex": false
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 2
+  },
+  "status-dot": {
+   "component": "status-dot",
+   "files": 3,
+   "loc": 252,
+   "code": 206,
+   "comment": 10,
+   "commentPct": 4.6,
+   "sfcs": 1,
+   "cssFiles": 0,
+   "props": [
+    "class",
+    "label",
+    "motion",
+    "size",
+    "state"
+   ],
+   "propCount": 5,
+   "emits": [],
+   "reka": [],
+   "cssClasses": [
+    "feedback-mark",
+    "status-dot"
+   ],
+   "classCount": 2,
+   "tokens": [
+    "--destructive",
+    "--destructive-foreground",
+    "--feedback-mark-color",
+    "--feedback-mark-size",
+    "--feedback-state-color",
+    "--feedback-state-ink",
+    "--info",
+    "--info-foreground",
+    "--muted-foreground",
+    "--radius-pill",
+    "--success",
+    "--success-foreground",
+    "--warning",
+    "--warning-foreground"
+   ],
+   "springs": [],
+   "composables": [],
+   "importsComponents": [],
+   "anim": {
+    "transition": 0,
+    "keyframes": 1,
+    "raf": 0,
+    "prm": true
+   },
+   "a11y": {
+    "aria": [
+     "aria-hidden",
+     "aria-label"
+    ],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 3
+  },
+  "surface": {
+   "component": "surface",
+   "files": 2,
+   "loc": 112,
+   "code": 103,
+   "comment": 0,
+   "commentPct": 0,
+   "sfcs": 1,
+   "cssFiles": 0,
+   "props": [
+    "class",
+    "deep",
+    "grain",
+    "material",
+    "shadow",
+    "specular",
+    "surface",
+    "tier"
+   ],
+   "propCount": 8,
+   "emits": [],
+   "reka": [
+    "Primitive"
+   ],
+   "cssClasses": [
+    "glass-specular-track",
+    "specularArmed"
+   ],
+   "classCount": 2,
+   "tokens": [
+    "--glass-specular-intensity-active",
+    "--glass-specular-intensity-hover",
+    "--glass-specular-intensity-rest"
+   ],
+   "springs": [],
+   "composables": [
+    "composables/glass"
+   ],
+   "importsComponents": [],
+   "anim": {
+    "transition": 0,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": false
+   },
+   "a11y": {
+    "aria": [],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [
+    "src/components/card/Card.vue"
+   ],
+   "srcConsumerCount": 1,
+   "demoConsumers": 9
+  },
+  "switch": {
+   "component": "switch",
+   "files": 3,
+   "loc": 164,
+   "code": 141,
+   "comment": 0,
+   "commentPct": 0,
+   "sfcs": 1,
+   "cssFiles": 1,
+   "props": [
+    "class",
+    "defaultValue",
+    "disabled",
+    "id",
+    "invalid",
+    "modelValue",
+    "size",
+    "value"
+   ],
+   "propCount": 8,
+   "emits": [
+    "update:modelValue",
+    "value"
+   ],
+   "reka": [
+    "SwitchRoot",
+    "SwitchThumb",
+    "useForwardPropsEmits"
+   ],
+   "cssClasses": [
+    "glass-wash",
+    "switch",
+    "switch__thumb",
+    "switch__track"
+   ],
+   "classCount": 4,
+   "tokens": [
+    "--card",
+    "--control-checked-bg",
+    "--focus-ring-shadow",
+    "--glass-highlight",
+    "--glass-material-rim",
+    "--glass-shadow-wash",
+    "--invalid-ring",
+    "--opacity-disabled",
+    "--radius-pill",
+    "--shadow-md",
+    "--spring-snappy",
+    "--spring-snappy-duration",
+    "--switch-height",
+    "--switch-width",
+    "--touch-target"
+   ],
+   "springs": [
+    "snappy"
+   ],
+   "composables": [],
+   "importsComponents": [],
+   "anim": {
+    "transition": 2,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": true
+   },
+   "a11y": {
+    "aria": [
+     "aria-hidden",
+     "aria-invalid"
+    ],
+    "roles": [],
+    "focusVisible": true,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 5
+  },
+  "table": {
+   "component": "table",
+   "files": 9,
+   "loc": 186,
+   "code": 158,
+   "comment": 0,
+   "commentPct": 0,
+   "sfcs": 8,
+   "cssFiles": 0,
+   "props": [
+    "ariaColCount",
+    "ariaLabel",
+    "ariaRowCount",
+    "class",
+    "colspan",
+    "role"
+   ],
+   "propCount": 6,
+   "emits": [],
+   "reka": [],
+   "cssClasses": [
+    "flex",
+    "items-center",
+    "justify-center",
+    "overflow-auto",
+    "py-10",
+    "relative",
+    "w-full"
+   ],
+   "classCount": 7,
+   "tokens": [],
+   "springs": [],
+   "composables": [],
+   "importsComponents": [],
+   "anim": {
+    "transition": 0,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": false
+   },
+   "a11y": {
+    "aria": [
+     "aria-colcount",
+     "aria-label",
+     "aria-rowcount"
+    ],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 1
+  },
+  "tabs": {
+   "component": "tabs",
+   "files": 8,
+   "loc": 1427,
+   "code": 730,
+   "comment": 584,
+   "commentPct": 44.4,
+   "sfcs": 1,
+   "cssFiles": 2,
+   "props": [
+    "activation",
+    "ariaLabel",
+    "class",
+    "motion",
+    "options",
+    "orientation",
+    "responsive",
+    "semantics",
+    "variant"
+   ],
+   "propCount": 9,
+   "emits": [],
+   "reka": [],
+   "cssClasses": [
+    "getPropertyValue",
+    "glass-capsule",
+    "glass-capsule-hover",
+    "glass-capsule-track",
+    "glass-drag-grabbable",
+    "glass-drag-lift",
+    "glass-lens",
+    "segmented-indicator",
+    "segmented-indicator--js",
+    "segmented-tab",
+    "segmented-tabs",
+    "segmented-tabs--underline",
+    "segmented-tabs--vertical",
+    "trim"
+   ],
+   "classCount": 14,
+   "tokens": [
+    "--bouncy-slider-radius",
+    "--bouncy-track-radius",
+    "--bouncy-track-trim",
+    "--duration-fast",
+    "--ease-cartoon-punch",
+    "--foreground",
+    "--gl-tab-active",
+    "--muted-foreground",
+    "--paper-ink-mark-color",
+    "--paper-ink-mark-weight",
+    "--radius-ctx",
+    "--radius-floor",
+    "--radius-inset",
+    "--radius-sm",
+    "--radius-strip",
+    "--radius-tab",
+    "--scale-press-btn",
+    "--spring-snappy",
+    "--stretch",
+    "--tab-blob",
+    "--tab-indicator-duration",
+    "--tab-indicator-max-stretch",
+    "--type-caption",
+    "--type-small",
+    "--type-subheading",
+    "--type-tracking-display",
+    "--underline",
+    "--vertical"
+   ],
+   "springs": [
+    "snappy"
+   ],
+   "composables": [
+    "composables/motion/core/writeVelocityWeight",
+    "composables/motion/morph/useDragMorph",
+    "composables/motion/morph/useSelectionIndicator",
+    "composables/useTabDragMorph",
+    "composables/useTabResponsive",
+    "composables/useTabRovingFocus"
+   ],
+   "importsComponents": [],
+   "anim": {
+    "transition": 5,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": true
+   },
+   "a11y": {
+    "aria": [
+     "aria-controls",
+     "aria-label",
+     "aria-orientation",
+     "aria-pressed",
+     "aria-selected"
+    ],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 6,
+    "tabindex": true
+   },
+   "srcConsumers": [
+    "src/styles/index.css",
+    "src/composables/motion/morph/useSelectionGroup.ts"
+   ],
+   "srcConsumerCount": 2,
+   "demoConsumers": 6
+  },
+  "tags-input": {
+   "component": "tags-input",
+   "files": 8,
+   "loc": 316,
+   "code": 271,
+   "comment": 1,
+   "commentPct": 0.4,
+   "sfcs": 5,
+   "cssFiles": 1,
+   "props": [
+    "addOnBlur",
+    "addOnPaste",
+    "addOnTab",
+    "autoFocus",
+    "class",
+    "defaultValue",
+    "delimiter",
+    "dir",
+    "disabled",
+    "duplicate",
+    "id",
+    "invalid",
+    "max",
+    "maxLength",
+    "modelValue",
+    "placeholder",
+    "value"
+   ],
+   "propCount": 17,
+   "emits": [
+    "addTag",
+    "invalid",
+    "removeTag",
+    "update:modelValue",
+    "value"
+   ],
+   "reka": [
+    "TagsInputInput",
+    "TagsInputItem",
+    "TagsInputItemDelete",
+    "TagsInputItemText",
+    "TagsInputRoot",
+    "injectTagsInputItemContext",
+    "injectTagsInputRootContext",
+    "useForwardPropsEmits"
+   ],
+   "cssClasses": [
+    "glass-ui-tags-input",
+    "tags-input",
+    "tags-input__chip",
+    "tags-input__delete",
+    "tags-input__input",
+    "tags-input__item",
+    "tags-input__text"
+   ],
+   "classCount": 7,
+   "tokens": [
+    "--color-accent-opaque",
+    "--control-h-md",
+    "--control-text",
+    "--destructive",
+    "--duration-fast",
+    "--ease-standard",
+    "--focus-ring-color",
+    "--focus-ring-shadow",
+    "--invalid-ring",
+    "--muted-foreground",
+    "--radius-control",
+    "--radius-field",
+    "--touch-target"
+   ],
+   "springs": [],
+   "composables": [],
+   "importsComponents": [],
+   "anim": {
+    "transition": 1,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": false
+   },
+   "a11y": {
+    "aria": [
+     "aria-hidden",
+     "aria-invalid",
+     "aria-label"
+    ],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 1
+  },
+  "textarea": {
+   "component": "textarea",
+   "files": 3,
+   "loc": 85,
+   "code": 73,
+   "comment": 0,
+   "commentPct": 0,
+   "sfcs": 1,
+   "cssFiles": 0,
+   "props": [
+    "class",
+    "cols",
+    "defaultValue",
+    "disabled",
+    "form",
+    "invalid",
+    "maxlength",
+    "minlength",
+    "modelValue",
+    "name",
+    "placeholder",
+    "readonly",
+    "required",
+    "resize",
+    "rows",
+    "size",
+    "wrap"
+   ],
+   "propCount": 17,
+   "emits": [
+    "update:modelValue",
+    "value"
+   ],
+   "reka": [],
+   "cssClasses": [],
+   "classCount": 0,
+   "tokens": [],
+   "springs": [],
+   "composables": [],
+   "importsComponents": [],
+   "anim": {
+    "transition": 0,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": false
+   },
+   "a11y": {
+    "aria": [
+     "aria-invalid"
+    ],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [
+    "src/forms.ts"
+   ],
+   "srcConsumerCount": 1,
+   "demoConsumers": 4
+  },
+  "timeline": {
+   "component": "timeline",
+   "files": 9,
+   "loc": 2263,
+   "code": 1057,
+   "comment": 1043,
+   "commentPct": 49.7,
+   "sfcs": 6,
+   "cssFiles": 0,
+   "props": [
+    "ariaLabel",
+    "boundaryX",
+    "currentSegmentKey",
+    "disablePopover",
+    "label",
+    "markersAriaLabel",
+    "modelValue",
+    "railAriaLabel",
+    "railGradient",
+    "regionLeft",
+    "regionWidth",
+    "segments",
+    "valueNow",
+    "variant"
+   ],
+   "propCount": 14,
+   "emits": [
+    "click",
+    "hover",
+    "hoverEnd",
+    "key",
+    "payload",
+    "scrubEnd",
+    "scrubStart",
+    "seg",
+    "segment",
+    "update:modelValue",
+    "v"
+   ],
+   "reka": [],
+   "cssClasses": [
+    "caret-value",
+    "continuous-detail",
+    "continuous-dot",
+    "continuous-dot-check",
+    "continuous-marker",
+    "continuous-markers",
+    "continuous-region",
+    "continuous-region-fill",
+    "continuous-track",
+    "continuous-track-wrap",
+    "fira-code",
+    "glass-fill",
+    "glass-thumb",
+    "glass-thumb-seat",
+    "glass-track",
+    "segmented-band",
+    "segmented-cell",
+    "segmented-dot",
+    "segmented-track",
+    "sr-only",
+    "tabular-nums",
+    "timeline-caret",
+    "timeline-cel",
+    "timeline-continuous",
+    "timeline-popover",
+    "timeline-popover-body",
+    "timeline-popover-description",
+    "timeline-popover-label",
+    "timeline-popover-state",
+    "timeline-popover-value",
+    "timeline-rail",
+    "timeline-row",
+    "timeline-segmented"
+   ],
+   "classCount": 33,
+   "tokens": [
+    "--accent",
+    "--background",
+    "--border",
+    "--cartoon-ink",
+    "--cel-accent",
+    "--continuous-fill-opacity",
+    "--continuous-fill-width",
+    "--duration-fast",
+    "--duration-normal",
+    "--duration-slow",
+    "--ease-cartoon-punch",
+    "--ease-out",
+    "--ease-standard",
+    "--flex-vel",
+    "--focus-ring-shadow",
+    "--font-mono",
+    "--foreground",
+    "--glass-bg-floating",
+    "--glass-blur-floating",
+    "--glass-blur-quiet",
+    "--glass-border-accent",
+    "--glass-border-floating",
+    "--glass-material-rim",
+    "--glass-under-shadow-default",
+    "--muted-foreground",
+    "--popover",
+    "--popover-foreground",
+    "--popover-tint",
+    "--radius-pill",
+    "--radius-sm",
+    "--scale-press",
+    "--shadow-cartoon-md",
+    "--shadow-cartoon-sm",
+    "--shadow-color",
+    "--shadow-sm",
+    "--spring-snappy",
+    "--stitch-gradient",
+    "--stitch-pos-x",
+    "--stitch-size-x",
+    "--success",
+    "--surface-tint-12",
+    "--surface-tint-15",
+    "--surface-tint-25",
+    "--timeline-continuous-height",
+    "--timeline-continuous-seam-color",
+    "--timeline-continuous-seam-opacity",
+    "--timeline-detail-min-height",
+    "--timeline-dot-blur",
+    "--timeline-dot-check-color",
+    "--timeline-dot-fill",
+    "--timeline-dot-ring",
+    "--timeline-dot-size",
+    "--timeline-dot-size-touch",
+    "--timeline-dot-tint-completed",
+    "--timeline-dot-tint-current",
+    "--timeline-h",
+    "--timeline-h-scrubber",
+    "--timeline-h-segmented",
+    "--timeline-head",
+    "--timeline-press-t",
+    "--timeline-segment-default-gradient",
+    "--timeline-segment-default-gradient-color",
+    "--timeline-segment-flex",
+    "--timeline-segment-gap",
+    "--timeline-touch-target",
+    "--type-body",
+    "--type-mono-caption",
+    "--type-small",
+    "--z-popover"
+   ],
+   "springs": [
+    "snappy"
+   ],
+   "composables": [
+    "composables/glass",
+    "composables/motion/spring/useLiquidFlex",
+    "composables/motion/spring/useLiquidPress",
+    "composables/motion/spring/useSpring"
+   ],
+   "importsComponents": [],
+   "anim": {
+    "transition": 13,
+    "keyframes": 3,
+    "raf": 1,
+    "prm": true
+   },
+   "a11y": {
+    "aria": [
+     "aria-current",
+     "aria-hidden",
+     "aria-label",
+     "aria-valuemax",
+     "aria-valuemin",
+     "aria-valuenow",
+     "aria-valuetext"
+    ],
+    "roles": [
+     "group",
+     "list",
+     "listitem",
+     "progressbar",
+     "slider"
+    ],
+    "focusVisible": true,
+    "keydown": 3,
+    "tabindex": true
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 4
+  },
+  "toast": {
+   "component": "toast",
+   "files": 8,
+   "loc": 568,
+   "code": 349,
+   "comment": 153,
+   "commentPct": 30.5,
+   "sfcs": 6,
+   "cssFiles": 0,
+   "props": [
+    "altText",
+    "class",
+    "defaultOpen",
+    "duration",
+    "forceMount",
+    "open",
+    "position",
+    "surface",
+    "tone",
+    "type"
+   ],
+   "propCount": 10,
+   "emits": [],
+   "reka": [
+    "ToastAction",
+    "ToastClose",
+    "ToastDescription",
+    "ToastPortal",
+    "ToastProvider",
+    "ToastRoot",
+    "ToastTitle",
+    "ToastViewport",
+    "useForwardPropsEmits"
+   ],
+   "cssClasses": [
+    "gap-1",
+    "glass-reveal-out",
+    "glass-reveal-out-reduced",
+    "grid",
+    "h-4",
+    "viewportClass",
+    "w-4"
+   ],
+   "classCount": 7,
+   "tokens": [
+    "--overlay-pad-block",
+    "--overlay-pad-inline",
+    "--reka-toast-swipe-end-x",
+    "--reka-toast-swipe-move-x",
+    "--spacing",
+    "--tone",
+    "--ui-scale"
+   ],
+   "springs": [],
+   "composables": [],
+   "importsComponents": [],
+   "anim": {
+    "transition": 3,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": false
+   },
+   "a11y": {
+    "aria": [
+     "aria-atomic",
+     "aria-hidden",
+     "aria-label",
+     "aria-live"
+    ],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 1,
+    "tabindex": false
+   },
+   "srcConsumers": [
+    "src/styles/transitions.css"
+   ],
+   "srcConsumerCount": 1,
+   "demoConsumers": 2
+  },
+  "toggle-group": {
+   "component": "toggle-group",
+   "files": 5,
+   "loc": 328,
+   "code": 286,
+   "comment": 0,
+   "commentPct": 0,
+   "sfcs": 2,
+   "cssFiles": 1,
+   "props": [
+    "class",
+    "disabled",
+    "size",
+    "value",
+    "variant"
+   ],
+   "propCount": 5,
+   "emits": [
+    "update:modelValue"
+   ],
+   "reka": [
+    "ToggleGroupItem",
+    "ToggleGroupRoot"
+   ],
+   "cssClasses": [
+    "toggle-group",
+    "toggle-group__item"
+   ],
+   "classCount": 2,
+   "tokens": [
+    "--accent",
+    "--accent-foreground",
+    "--control-h-lg",
+    "--control-h-md",
+    "--control-h-sm",
+    "--control-surface-bg",
+    "--control-surface-bg-hover",
+    "--control-surface-blur",
+    "--control-surface-border",
+    "--control-text",
+    "--control-text-sm",
+    "--foreground",
+    "--glass-bg-quiet",
+    "--glass-blur-quiet",
+    "--glass-cell-backdrop-filter",
+    "--glass-rim-bottom",
+    "--glass-rim-top",
+    "--muted-foreground",
+    "--opacity-disabled",
+    "--primary",
+    "--radius-pill",
+    "--scale-press",
+    "--scale-press-sm",
+    "--shadow-sm",
+    "--tab-track-recess-ink",
+    "--toggle-group-item-size"
+   ],
+   "springs": [],
+   "composables": [
+    "composables/context"
+   ],
+   "importsComponents": [],
+   "anim": {
+    "transition": 0,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": false
+   },
+   "a11y": {
+    "aria": [],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 3
+  },
+  "tooltip": {
+   "component": "tooltip",
+   "files": 5,
+   "loc": 194,
+   "code": 162,
+   "comment": 7,
+   "commentPct": 4.1,
+   "sfcs": 4,
+   "cssFiles": 0,
+   "props": [
+    "ariaLabel",
+    "asChild",
+    "class",
+    "defaultOpen",
+    "delayDuration",
+    "disabled",
+    "open",
+    "skipDelayDuration",
+    "surface"
+   ],
+   "propCount": 9,
+   "emits": [
+    "escapeKeyDown",
+    "pointerDownOutside",
+    "update:open"
+   ],
+   "reka": [
+    "TooltipContent",
+    "TooltipPortal",
+    "TooltipProvider",
+    "TooltipRoot",
+    "TooltipTrigger"
+   ],
+   "cssClasses": [
+    "contentClass"
+   ],
+   "classCount": 1,
+   "tokens": [
+    "--overlay-pad-block",
+    "--overlay-pad-inline",
+    "--spacing",
+    "--tooltip-text"
+   ],
+   "springs": [],
+   "composables": [],
+   "importsComponents": [],
+   "anim": {
+    "transition": 0,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": false
+   },
+   "a11y": {
+    "aria": [
+     "aria-label"
+    ],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 2,
+    "tabindex": false
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 5
+  },
+  "typewriter": {
+   "component": "typewriter",
+   "files": 9,
+   "loc": 1418,
+   "code": 1009,
+   "comment": 206,
+   "commentPct": 17,
+   "sfcs": 1,
+   "cssFiles": 0,
+   "props": [
+    "baseSpeed",
+    "cursorBlink",
+    "cursorVisible",
+    "humanize",
+    "loop",
+    "pauseAfterDelete",
+    "pauseAfterType",
+    "text",
+    "words"
+   ],
+   "propCount": 9,
+   "emits": [
+    "complete",
+    "index",
+    "start",
+    "wordComplete"
+   ],
+   "reka": [],
+   "cssClasses": [
+    "sr-only",
+    "tw-accessible",
+    "tw-cursor",
+    "tw-cursor--blink",
+    "tw-reserve",
+    "tw-root",
+    "tw-tail",
+    "tw-visual"
+   ],
+   "classCount": 8,
+   "tokens": [
+    "--blink"
+   ],
+   "springs": [],
+   "composables": [
+    "composables/motion/core/useReducedMotion",
+    "composables/useTypewriter"
+   ],
+   "importsComponents": [
+    "utils"
+   ],
+   "anim": {
+    "transition": 0,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": true
+   },
+   "a11y": {
+    "aria": [
+     "aria-hidden"
+    ],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 1
+  },
+  "watercolor-dot": {
+   "component": "watercolor-dot",
+   "files": 4,
+   "loc": 513,
+   "code": 230,
+   "comment": 243,
+   "commentPct": 51.4,
+   "sfcs": 1,
+   "cssFiles": 0,
+   "props": [
+    "animate",
+    "color",
+    "cycleDuration",
+    "range",
+    "seed",
+    "variant"
+   ],
+   "propCount": 6,
+   "emits": [],
+   "reka": [],
+   "cssClasses": [
+    "watercolor-filter-host",
+    "watercolor-ghost-stroke",
+    "watercolor-swatch"
+   ],
+   "classCount": 3,
+   "tokens": [
+    "--background",
+    "--duration-fast",
+    "--ease-standard",
+    "--foreground",
+    "--watercolor-color",
+    "--watercolor-dash",
+    "--watercolor-filter",
+    "--watercolor-gap",
+    "--watercolor-ghost-weight",
+    "--watercolor-wobble"
+   ],
+   "springs": [],
+   "composables": [
+    "composables/glass/procedural/prng",
+    "composables/motion/core/useRAFLoop"
+   ],
+   "importsComponents": [],
+   "anim": {
+    "transition": 2,
+    "keyframes": 0,
+    "raf": 0,
+    "prm": true
+   },
+   "a11y": {
+    "aria": [
+     "aria-hidden"
+    ],
+    "roles": [],
+    "focusVisible": false,
+    "keydown": 0,
+    "tabindex": false
+   },
+   "srcConsumers": [],
+   "srcConsumerCount": 0,
+   "demoConsumers": 3
+  }
+ },
+ "candidatePairs": [
+  {
+   "a": "checkbox",
+   "b": "radio-group",
+   "agree": 2,
+   "scoredSpaces": 3,
+   "css": 0,
+   "props": 0.6,
+   "reka": null,
+   "composables": null,
+   "aria": null,
+   "tokens": 0.5,
+   "springs": null
+  }
+ ]
+}
