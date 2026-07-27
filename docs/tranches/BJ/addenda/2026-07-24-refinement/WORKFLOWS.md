@@ -57,7 +57,7 @@ EXEC-STATE census row; membership stands, aggregates do not).
 
 | run | id | script (`./wf/`) | banking target on close |
 |---|---|---|---|
-| consolidate | `wf_1f04cfd9-089` | `consolidate.wf.js` | `TERMINAL-ROSTER.md` — §A roster+DAG · §B burn-down ×5 · §C constellation · §D owner-needs |
+| consolidate | `wf_1f04cfd9-089` | `consolidate.wf.js` | **CLOSED 5/5** → banked `TERMINAL-ROSTER.md` (70 rows, critic fold 31-ADOPT/2-REFUTE/0-drops, gate budget rebuilt to exactly 60, Φ0 executable). **OWED on top:** the final folding pass — GESTALT §4 routed deltas + ARCHAEOLOGY §4 plan amendments + the tier-3 fold land in the roster once both close (the roster's foreman predates all three) |
 | tier-3 | `wf_c6d8b0c5-fcf` | `tier3.wf.js` | `COMPONENT-WAVES-TERMINAL-3.md` (10 lanes ≈17 components + fold). **Owns the Chrome seat** — no other run may touch a browser while it lives |
 | archaeology | `wf_1a9b1bd8-dad` | `archaeology.wf.js` | `ARCHAEOLOGY.md` — the ecoute register · recurrence×implementation matrix · lessons ledger · plan amendments · abrogation reading |
 | gestalt | `wf_e3eec3a9-c1f` | `gestalt.wf.js` | **CLOSED 9/9** → banked `GESTALT.md` (tri-fold verdict, 8 disk-ruled adjudications; carries the OWED-LIVE cell list for the later browser pass) |
