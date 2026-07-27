@@ -74,6 +74,23 @@ Date 2026-07-24 · HEAD at audit `0371836d` · phase: **tranche development only
     twice-challenged by gestalt passes, adjudicated, against a FINITE invariant checklist.
   - **Byte-changing work is UNBLOCKED.** Steers 21-34's Opus byte-lane halt is discharged with the
     thread that issued it.
+- **ENVIRONMENT CORRECTIONS (procedural fold, 2026-07-27 — binding on every future π):**
+  **glass-ui dev = port 5400. Port 5199 is sci-report's Connectivity Atlas — the standing "demo: 5199"
+  line was FALSE.** Port 4188 was 3 days stale at measurement (built ~07-24; the last source commit is
+  07-22, so its bytes DO match HEAD — prior 4188 measurements are substantively intact, but build
+  freshness is verified before any future π, always). Evidence cells never cross-inferred:
+  A = chrome-devtools/real-Chrome/DPR2/dark · B = playwright/Chromium/DPR1/light. One browser-singleton
+  violation logged 15:30-15:50Z (foreign `#BENCH` div) — concurrent chrome findings in that window are
+  DISCOUNTED. The blob GL-arm cut is **1,439 LOC, not 1,040** (uploadBlobUniforms 399 + UNIFORM_NAMES 52
+  were omitted from the earlier figure above — that row stands corrected by this one).
+- **THE BLOB "NO FISSION" COMPLAINT — MECHANICALLY EXPLAINED (procedural ledger D1).** The effective
+  satellite radius is NEGATIVE below the 0.120 config-UV existence threshold (hero ships 0.10): **zero
+  fission at every point in parameter space, components=1 in every frame, max-separation config paints
+  one perfect circle.** Even above threshold, the orbitWiden servo saturates at 1.25 (D4/B3 — three
+  anti-separation clamps encode the INVERSE of the owner's intent), and `fissionAmp` — the exact knob
+  the owner asked for, fully implemented — has **zero setters anywhere**. The designed mercury-pinch
+  (`fissionSnap`) was documented and unreachable. The charter's cure is not a tune; it is the physics
+  redesign in PROCEDURAL-LEDGER §2.
 - **PROCEDURAL ECOUTE — OWNER RULING 2026-07-25 (third Ecoute of the day):**
   (a) **Every procedural animation/substrate gets a two-sided ledger** — boons AND banes, effects AND
   defects — including its CONFIGURATOR. Owning artefact: `PROCEDURAL-LEDGER.md` (workflow in flight).

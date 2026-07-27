@@ -36,14 +36,14 @@ tri-fold; only the Fable arm + adjudication are owed on top.
 | `wf_aaa19aee-da2` tier-2 | `tier2.wf.js` | **CLOSED 65/65** (tri-fold resume) | `COMPONENT-WAVES-TERMINAL-2.md` |
 | `wf_ab31a195-57f` layout | `layout.wf.js` | **CLOSED 8/8** | `LAYOUT.md` |
 | `wf_50bff562-da7` greenfield | `greenfield.wf.js` | **CLOSED 41/42** (one arm to a schema retry cap; duplex absorbed it — all 5 lanes + fold present, every apotheosis Fable-adjudicated) | `GREENFIELD-TERMINAL.md` — **boundary duties still OPEN** (blob/aurora reconcile at procedural close) |
-| `wf_51cdb0e0-bdb` procedural | `procedural.wf.js` | **LIVE** — 15 journal results at last check | on close → `PROCEDURAL-LEDGER.md` |
+| `wf_51cdb0e0-bdb` procedural | `procedural.wf.js` | **CLOSED 16/16** | `PROCEDURAL-LEDGER.md` — its routing §3 DISCHARGES the boundary duties below |
 
 Historical/superseded scripts kept for archaeology: `components-flat`, `component-apotheosis`,
 `component-dag`, `ecoute-dag`, `exemplar-frames`, `parent-components`, `parent-design`, `canon-opus`.
 Data snapshots: `dag-deterministic.json`, `dag-clusters.json` (cluster figures CONTESTED — see
 EXEC-STATE census row; membership stands, aggregates do not).
 
-## Boundary duties on the LIVE runs (lead-owned; frozen prompts may not claim late rulings)
+## Boundary duties — DISCHARGED 2026-07-27 (lead-verified: PROCEDURAL-LEDGER §3 reconciles GF-BLOB under the senior physics apotheosis and GF-AURORA under the procedural Ecoute; the slides relay is drafted there). Historical record below.
 
 - **`wf_50bff562-da7` GF-BLOB lane** → reconcile against (a) WebGPU-only (WebGL2 arm CUT) and (b) the
   BLOB PHYSICS CHARTER (satellites = recursive Blob instances, chaotic elliptical orbits,
@@ -53,7 +53,7 @@ EXEC-STATE census row; membership stands, aggregates do not).
 - **`wf_51cdb0e0-bdb`** → on close, bank the fold as `PROCEDURAL-LEDGER.md`; GF-FOURIER's slides relay
   addendum routes to the slides tranche.
 
-## If a wall hits RIGHT NOW
+## NO RUNS LIVE as of 2026-07-27. If a wall hits during a future run
 
 1. New session reads `EXEC-STATE.md` → this file.
 2. Check both live runs' journals (paths above). Harvest any `{"type":"result"}` lines into the
