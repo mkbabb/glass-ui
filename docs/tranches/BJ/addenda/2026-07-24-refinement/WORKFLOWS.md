@@ -53,7 +53,23 @@ EXEC-STATE census row; membership stands, aggregates do not).
 - **`wf_51cdb0e0-bdb`** → on close, bank the fold as `PROCEDURAL-LEDGER.md`; GF-FOURIER's slides relay
   addendum routes to the slides tranche.
 
-## NO RUNS LIVE as of 2026-07-27. If a wall hits during a future run
+## LIVE RUNS — batch of four, launched 2026-07-27 ~17:45 ET (the closing-formulation batch)
+
+| run | id | script (`./wf/`) | banking target on close |
+|---|---|---|---|
+| consolidate | `wf_1f04cfd9-089` | `consolidate.wf.js` | `TERMINAL-ROSTER.md` — §A roster+DAG · §B burn-down ×5 · §C constellation · §D owner-needs |
+| tier-3 | `wf_c6d8b0c5-fcf` | `tier3.wf.js` | `COMPONENT-WAVES-TERMINAL-3.md` (10 lanes ≈17 components + fold). **Owns the Chrome seat** — no other run may touch a browser while it lives |
+| archaeology | `wf_1a9b1bd8-dad` | `archaeology.wf.js` | `ARCHAEOLOGY.md` — the ecoute register · recurrence×implementation matrix · lessons ledger · plan amendments · abrogation reading |
+| gestalt | `wf_e3eec3a9-c1f` | `gestalt.wf.js` | `GESTALT.md` — six sweeps (shadcn/contrivance×2/design-canon/suffusion/perf) + tri-fold verdict; carries the OWED-LIVE cell list for the later browser pass |
+
+**The archaeology corpus** (input to `wf_1a9b1bd8-dad`) lives in the scratchpad at
+`…/scratchpad/archaeology/{claude,codex}/` — 697 claude + 839 codex owner messages, 21+4 shards.
+It is REBUILDABLE: `./wf/extract-archaeology.sh <outdir>` re-extracts from the raw transcripts
+(26 glass-ui sessions + 5 satellite dirs + 106 glass-ui codex rollouts), then shard per the script
+header. Rebuild + relaunch is lossless; in-session, `resumeFromRunId` replays cached seats only if
+the shard files sit at the SAME absolute paths (prompts embed them).
+
+## If a wall hits during a live run
 
 1. New session reads `EXEC-STATE.md` → this file.
 2. Check both live runs' journals (paths above). Harvest any `{"type":"result"}` lines into the

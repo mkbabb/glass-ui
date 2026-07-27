@@ -289,14 +289,8 @@ real work and not theatre:
   defect absent from `ROUND-1-FINDINGS.md` entirely.
 - `W-ALERT`, `W-TABS`, `W-AURORA` re-authored with tightened dispositions.
 
-## IN FLIGHT — all four resumed from cache, only failed seats re-run
-
-| run | id | remaining |
-|---|---|---|
-| apotheosis | `wf_df5ddb7a-134` | terminal specs for `timeline`, `toast`, `slider` + fold (benches cached) |
-| dag-triumvirate | `wf_5e7dd9f7-18a` | `cluster-pairs` adjudication + terminal graph fold |
-| structure | `wf_71b65b7b-323` | all 5 zone adjudicators + the directory settlement fold (survey + all benches cached) |
-| proportion | `wf_6cb9f75f-b6c` | most challenge benches + all adjudicators + fold (measures cached) |
+## IN FLIGHT — see `WORKFLOWS.md` §LIVE RUNS for the current batch (this table is historical;
+the run ledger there is the single source of record for run state)
 
 ---
 
@@ -314,3 +308,37 @@ real work and not theatre:
    route and state, desktop + mobile, and bank it separately from `webkit-engine`.
 6. **The saturate contradiction** — motion canon says down on cream, iOS photometry measures +62% and says
    up. `W-FROST` makes the measured quadruple the gate; the first paired capture settles it.
+
+---
+
+## THE FOURTH + FIFTH ECOUTES — 2026-07-27, standing
+
+**Fourth (the gestalt-audit Ecoute).** Audit the gestalt of the library in totality: modularization
+edicts, breath-of-life + momentum suffused into the animations (verified, not asserted), performance
+audits, the thrice-audited components, the module DAG, the session history AND codex addenda ("no stone
+left unturned"), the 100+ tranche archaeology, the owner's 200+ ecoute-moi's/feedback/steers/screenshots/
+videos de-duplicated and distilled, the partial tranche implementations audited for feature completeness
+and usability.
+
+**Fifth (the reckoning Ecoute — the long-horizon task, "not to be put on the shelf").** The last 100+
+tranches and 100+ sessions audited with lurid, fastidious, exacting detail: what was communicated again
+and again interminably · what was properly implemented · what was half-baked — informing friction
+minimization and the tranche/wave addenda: **what needs re-exhortation, what needs pruning**. The edicts
+restated as law: distillation and reduction of the library into an APOTHEOSIS · **full shadcn abrogation
+(components AND style)** · consolidation or pruning of unused/overfit/contrived components · contrivance
+rooted out of BOTH the extant wave addenda AND the library gestalt · deft, KISS, colocation,
+modularization, no legacy · GOLDEN GLASS, BREATH OF LIFE, MOVEMENT OF MOMENTUM. This requires physically
+unearthing the session logs and tranche records (an agent swarm, not memory recall). The owner's pointed
+question — "how many more ecoute-moi's must this take" — is answered by §1 of `ARCHAEOLOGY.md` when
+`wf_1a9b1bd8-dad` closes: every ≥3-times-said theme gets the friction named and the one structural
+change that retires it.
+
+**Labor law restated (supersedes nothing — sharpens the tri-fold):** Opus for all banausic and manual
+labor; Fable adjudicates in aggregated, batched passes. ALL design work: Fable ∥ Opus 5 author
+independently — **frontend design authoring always through the frontend design plugin (DesignSync)** —
+then a Fable agglomerates the two into a choosy apotheosis, scrupulously.
+
+**Durability edict (sworn).** No progress lost to session walls: every run has its script in `./wf/`,
+its journal on disk, and its banking target named in `WORKFLOWS.md` §LIVE RUNS before results exist.
+The archaeology corpus is rebuildable via `./wf/extract-archaeology.sh`. A fresh session reads this
+file → `WORKFLOWS.md` → harvests journals → banks → relaunches only what is missing.
