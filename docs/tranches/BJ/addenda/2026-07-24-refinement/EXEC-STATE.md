@@ -74,6 +74,19 @@ Date 2026-07-24 · HEAD at audit `0371836d` · phase: **tranche development only
     twice-challenged by gestalt passes, adjudicated, against a FINITE invariant checklist.
   - **Byte-changing work is UNBLOCKED.** Steers 21-34's Opus byte-lane halt is discharged with the
     thread that issued it.
+- **LAYOUT ECOUTE — OWNER RULING 2026-07-25 (second Ecoute of the day):** on ALL pages, mobile variants
+  must better take up space — full width (handling pathologically wide screens) AND height — bespoke and
+  optimized for mobile. **Without contrivance or extra complexity: ONE layout where befitting; a
+  perfectly optimized desktop AND mobile variant only when otherwise. Only the most modern layout
+  facilities** (container queries, `dvh/svh`, grid `auto-fit`/`minmax`/subgrid, `clamp()`, logical
+  properties, `:has()`). Supersedes/absorbs F14 and the landed `W-RESPONSIVE-AUDIT` (`1be91765`) scope.
+  Known priors it must consume: PROPORTION.md's mobile law (every space rung steps down exactly one;
+  `--ui-scale` moves the control box only, type never rides it) and its measured indictment — **seven
+  transposition factors on one page** and a mobile hierarchy that collapses section into family
+  (24:24:12); steer-12's mobile fixed-dock occlusions (Tabs vertical section, Search size fields,
+  TagsInput validation); the blob page's chip-rail clipping at desktop 1440 (`right:1618px`); the
+  Safari-402px no-horizontal-overflow baseline (8 routes). Owning artefact: `LAYOUT.md` (workflow in
+  flight). Browser seats serialized — singleton law.
 - **GREENFIELDING IS TRANCHE-DEVELOPMENT WORK — OWNER RULING 2026-07-25, standing.** "All greenfielding
   should be done in-tranche development, NOW, rather than deferred until tranche execution time. All
   lanes thereof." This strikes the `EXECUTION-PROGRESS.md` P-EX4 posture that parks the four greenfields
@@ -100,6 +113,8 @@ Date 2026-07-24 · HEAD at audit `0371836d` · phase: **tranche development only
 | iOS-27 photometry | `IOS27-ARCHIVE.md` | graded blur, vaporize, corner affordance, frost quadruple |
 | Tier-1 component specs (8) | `COMPONENT-WAVES.md` | **SUPERSEDED** — single-seat, benches died on quota |
 | **Tier-1 TERMINAL specs (8) + fold** | **`COMPONENT-WAVES-TERMINAL.md`** (1,376 lines) | `wf_df5ddb7a-134`, 60 seats, 4.9M tokens. Thrice-challenged + juried + re-authored. **All eight changed**; four changed disposition. Cite this, never `COMPONENT-WAVES.md`. |
+| **Tier-2 TERMINAL specs (8) + fold — FIRST TRI-FOLD BATCH** | **`COMPONENT-WAVES-TERMINAL-2.md`** | `wf_aaa19aee-da2`, 65 seats. drawer→**MERGE-INTO dialog** (sheet home overturned — sheet was retired one cut ago, 3 on-disk records) · dialog→SPLIT+ABSORB (confirm/gate per C66) · **deck→DELETE** (overturns DAG MOVE-TO) + carousel/pager fold · sortable-list→KEEP+flatten (a11y transaction preserved byte-for-byte) · search→SPLIT (`composables/search/`) · **tags-input demote STRUCK** · **fourier-field deletion DENIED — external consumer (slides) verified 3×** · constellation KEEP-THIN, "0 consumers" overturned (slides imports 6 runtime + 3 types). **16/62 components now terminal.** The adjudication demonstrably worked: five split cells ruled on drawer alone, each arm's errors struck with falsifiers (Fable's LOC double-count; Opus's unearned W3 sequencing block). |
+| **THE CONSUMER-DEFINITION LESSON (tier-2, binding on the census question)** | — | The zero-consumer census (45-70% spread) used **src-only** consumers. Tier-2 proved that definition WRONG in kind, not degree: fourier-field and constellation both have live **cross-repo** consumers (slides). The owner sentence that settles the census must rule on: src edges · demo sites · barrels · CSS `@import` · **sibling repos (slides/value.js/atlas/sci/keyframes)**. Until then NO deletion may cite a zero-consumer figure without a fresh cross-repo grep — [[feedback-consumer-updates-ruling]] still governs what a consumer is OWED (nothing), but existence changes the relay duty. |
 | Tier-1 band reconciliation | `BAND-FOLD.md` | |
 | Audit dimensions | `ANALYSIS-SPEC.md` | D1–D12 + the three benches + rules of judgement |
 
