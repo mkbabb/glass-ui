@@ -37,6 +37,21 @@ overturns) IN PLACE per the strike-in-place law; GF-FOURIER/config-express apoth
 by their banked file§.
 (e) ${REF}/VALIDATION.md §4 protocol + ${REF}/EXPERIMENTS.md OWED rows + ASK.md R-7 — verify the BK
 cursor carries them (owner+trigger each).
+(f) THE CODEX META-AUDIT (owner-directed input, landed 07-28, untracked): the five dirs under
+docs/tranches/BJ/audits/2026-07-28-{consumer-constellation,library-dag,frontend-apotheosis,
+session-archaeology,claude-resume}/. Read the summary/adjudication files of each (CONSUMER-LEDGER.md +
+the wave/page audits · IMPORT-DAG-V2-SUMMARY.md + ADJUDICATION-SOL.md · FRONTEND-APOTHEOSIS-SOL.md +
+INTERNAL-BROWSER-EVIDENCE.md · HISTORY-ARCHAEOLOGY-TERRA.md · FINAL-FINDINGS-AND-HANDOFF.md). The
+dissolution law governs: MINE the findings, never cite Sol/Terra authority — every claim adopted is
+re-verified on disk or marked PLAUSIBLE; adjudicate each dir's material against the terminal record
+(consumer ledger vs #77 and the relay addenda · import-DAG v2 vs DAG-RULINGS/roster edges ·
+frontend/browser evidence vs GESTALT/FROST cells · the archaeology vs ARCHAEOLOGY.md — divergences
+RULED with greps) and route ADOPTED rows to their owning waves. No wholesale absorption.
+(g) SALVAGED PRIOR-ARM DRAFTS (this run's first launch died on a wall mid-write; the drafts are
+MATERIAL, never authority — the opus draft's tail falsely claims NOVELTIES/DESIGN-NOW absent, a known
+defect): ${REF}/STAGE2-FOLD.arm-fable.md · ${REF}/TERMINAL-ROSTER.stage2-arm-opus.md ·
+${REF}/TERMINAL-ROSTER.stage2.arm-fable.md. Mine with incredulity; after the fold lands, these three
+scratch files are DELETED by the writer (they are not corpus).
 DELIVER: the complete amended TERMINAL-ROSTER.md body (in-place amendments, ⊕-marked, §0 fold ledger
 extended) + the BK deltas (EXECUTION-PROGRESS row updates — #89 spec'd, #5/#90-related states,
 new/changed rows; PORT.md §stage-2 record).`
@@ -56,7 +71,8 @@ TRI-FOLD ADJUDICATOR + WRITER — two independent delta folds. Agglomerate with 
 (contested cells re-read on disk; the #22 frost-thinning cure ruling is the headline split-risk — RULE
 it from the measured table, never average). Then YOU ALONE write: the amended \`${REF}/TERMINAL-ROSTER.md\`
 (full body) + the BK file amendments (\`docs/tranches/BK/EXECUTION-PROGRESS.md\`, \`docs/tranches/BK/PORT.md\`
-— surgical edits, cursor ids stay reconciled). Return the change summary + final counts + §REJECTED.
+— surgical edits, cursor ids stay reconciled). Then DELETE the three salvaged scratch drafts named in
+(g). Return the change summary + final counts + §REJECTED.
 
 ===== FABLE =====\n${fF || '(died)'}\n\n===== OPUS =====\n${fO || '(died)'}`,
   { label: 'write:apotheosis', phase: 'Write', model: 'fable', effort: 'xhigh' })

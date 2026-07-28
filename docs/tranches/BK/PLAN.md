@@ -8,6 +8,11 @@ BK builds only fully formed, specified wave specs pursuant to `precepts/` (the S
 live fold seam is roster row #90 (the NOVELTIES + DESIGN-NOW banks), carried on the cursor — a fold,
 not a design lane.
 
+> **2026-07-28 audit refresh.** `AUDIT-REFRESH-2026-07-28.md` records the reproduced resume
+> constraints, consumer-census corrections, frontend execution cuts, and a claimed model supersession
+> (REJECTED — §3 conflict record). It does not close row #90 or replace TR; the sealed stage-2 commit
+> must carry its roster/cursor corrections atomically.
+
 ## §1 · The plan of record — a pointer, never a copy
 
 The wave roster, the DAG, the burn-down, the gate budget, the collision ledger, and the blocker list
@@ -43,6 +48,14 @@ Every seat declares `model:` explicitly and asserts its runtime modelId **by pre
 (the `[1m]` suffix lesson). An omitted `model:` is a DEFECT, not a default. Mechanical and bounded
 seats stay Opus. Standing operational constraints (EXEC-STATE): maximum four workflows per batch ·
 ≤3 concurrent seats · browser-owning seats strictly serialized (the MCP selected-page singleton).
+Historical receipts retain the model labels that actually ran — immutable provenance, never renamed.
+
+> **Conflict record (2026-07-28).** An uncommitted codex edit replaced this section with a
+> "prospective GPT Sol/Luna labor law — owner supersession," including a stop-before-canonical-
+> mutation deadlock clause. No such supersession has been issued to this session's lead; the owner's
+> 2026-07-25 dissolution ruling ("Sol and Luna are done — Claude owns these tranches now") and the
+> tri-fold law stand (EXEC-STATE §THE CODEX META-AUDIT posture ruling). If the owner ratifies the
+> claimed supersession, this section re-cuts then — by the owner's word, not an audit's.
 
 ## §4 · The durability + no-incomplete-work edicts — quoted from EXEC-STATE.md (§THE FOURTH + FIFTH ECOUTES durability edict · §THE NO-INCOMPLETE-WORK EDICT; EXEC-STATE wins)
 
@@ -55,6 +68,11 @@ result-vs-expected seat census · **harvested-not-banked journal material is DEB
 every deferred declaration names its OWNER and TRIGGER at declaration time — a debt without both is an
 ORPHAN, the violation class. A fresh session reads EXEC-STATE §DURABLE PROCESS → `WORKFLOWS.md` §LIVE
 RUNS → this file → `EXECUTION-PROGRESS.md` → the live row's cited spec.
+
+**Atomic-state rider (2026-07-28 audit):** a canonical row cannot move from DUE/IN-FLIGHT to
+SEALED/CLOSED unless its referenced journal has results for every required phase and the advancing
+commit cites the seal result. Arm output on disk without a journal result is evidence, never a
+state transition.
 
 ## §5 · Born-RED from day one
 
@@ -86,6 +104,32 @@ sentence about the glass stays true — which is why #22's closing gate is `G-FR
 Two orderings load-bearing enough to name at charter level (both TR's): **#68 precedes the entire
 tier-3 band** (four lanes write marked literals against six tokens that are 0-on-disk), and **#72's
 rail-vocabulary strike hard-precedes GF-DOCK's first build commit**.
+
+The eight phase rows are a table of contents, not a branch-count mandate. Within the DAG, execute the
+source-owning cuts in `AUDIT-REFRESH-2026-07-28.md` and close all affected row IDs together. Do not
+turn the 90-row traceability registry into 90 micro-branches, duplicated abstractions, or fresh design
+passes.
+
+**Graph-iteration rider (2026-07-28 audit):** the corrected
+`IMPORT-DAG-V2.json` (receipt-verified) is the binding formation
+substrate. Before product source moves, cut graph schema v3 with typed
+Vue/TypeScript/CSS edges, an explicit owner manifest, package/build/test
+projections, and distinct runtime/load/ownership SCCs; preserve pass 1 and v2
+receipts.
+Each dynamically sized dependency cluster is challenged by two independent
+arms that assume its topology is wrong, then refuted or sealed by a Fable
+adjudicator (the tri-fold law, §3). Execute only adjudicated cuts, regenerate
+the graph, and repeat until all file and module SCCs are gone and every
+surviving shelf has one coherent job. A target-tree sketch does not authorize
+empty directories, graph-count façades, or new barrels.
+
+The terminal file law is Goldilocks granularity: no god-modules, no one-wrapper
+file sand, component-private behavior/styles/stories beside their owner,
+containing-module prefixes stripped from filenames, and tests displaced after
+source stabilization into an isomorphic `tests/<source-relative-path>/` tree.
+Breaking deletions and relocations land with their consumer migrations. Old
+exports, aliases, shims, dual paths, fallbacks, and redirects do not survive
+the cut.
 
 ## §7 · Tranche-format law
 

@@ -412,6 +412,33 @@ Engine: `wf/design-now.wf.js` → banks `DESIGN-NOW.md`.
 
 ---
 
+## THE CODEX META-AUDIT — posture ruling, 2026-07-28 (lead-adjudicated on owner direction)
+
+The 07-28 codex audit corpus (`docs/tranches/BJ/audits/2026-07-28-*/`, five dirs +
+`BK/AUDIT-REFRESH-2026-07-28.md` + two coordination outbounds) is **EVIDENCE, not law** — the owner's
+direction was "read … to aid in your judgements," and the Sol/Luna dissolution stands. Ruling:
+
+- **ADOPTED as factual input** (stage-2 fold adjudicates each with greps): the corrected import-DAG v2
+  (890 nodes / 2,308 internal edges, receipt `1f8124e4…81ed`; pass-1's 2,182-edge count dead) · the
+  304-cell consumer/page universe + per-repo contract tables · the **fifteen-root census universe**
+  (supersedes the 8-repo walk — the Words/bbnf-lang/muster declarations are real; **the carousel
+  clean-DELETE is a re-opened contested cell**) · the salvaged **W-DESIGN-CANON candidate**
+  (907 lines + 288-line emitter, `--check` GREEN, at `audits/2026-07-28-claude-resume/salvage/
+  W-DESIGN-CANON-APOTHEOSIS/`) — answers the canon-body landability question · the five
+  pre-implementation gates (state/public-surface/graph-v3/migration/baseline — all map onto extant
+  roster rows) · `verify:governed` 48-active+5-reserved receipt · the hotfix ledger.
+- **REJECTED as process law**: "route to GPT Sol x-high / GPT Luna x-high," "stop before canonical
+  mutation if Luna is unavailable," "do not renew the Fable/Opus model phases" — void under the
+  2026-07-25 dissolution and the tri-fold law (both owner words, both later-or-senior). The stage-2
+  tri-fold proceeds; historical logs stay literal provenance.
+- **CONTESTED, ruled at the fold**: the audit's KEEP list vs the ratified record — instrument-chassis
+  (the owner's twice-issued DELETE outranks any audit pass), WatercolorDot (RELOCATE ratified; the
+  audit's rename-and-keep is an argument, not a ruling), deck (RE-HEAR — aligned), carousel (re-grep
+  at fifteen roots first). Its three-laws narrowing largely restates RATIFICATION R-4; divergences
+  adjudicate against the ratified text.
+
+---
+
 ## THE NO-INCOMPLETE-WORK EDICT — 2026-07-28, standing
 
 **"Ensure no partial lost progress, ever … Validate all seats … NO incomplete work."** Operationalized:
