@@ -155,6 +155,14 @@ eight; strike or amend any line.**
 
 ---
 
+## R-7 · Device footage owed (added 2026-07-28, VALIDATION CURE-6 — the one ask only you can fill)
+
+Three exemplar marks route to #67 IOS27-EXEC but their footage does not exist in any corpus dir:
+the **draggable loupe** close-up (text-selection magnifier, slow drag), the **Siri waveform**
+invocation, and the **ChatGPT dock motion** pass (fission/fusion + double-dock scroll cycle, slow).
+Until filmed, the marks ride the stage-2 delta fold explicitly as OWED-CAPTURE; the waves consuming
+them execute their other arms. One screen recording each, any length, at your leisure.
+
 ## How to answer
 
 Mark R-1 … R-6. Anything unmarked stays at its recommendation and its wave proceeds — **silence advances

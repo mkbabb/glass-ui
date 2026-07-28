@@ -4,8 +4,8 @@ Each batch of the component graph was viewed thrice: two benches told to assume 
 wrong, and an adjudicator that proves or disproves each finding independently. Batch sizes are bespoke
 to the graph's own clusters, not arbitrary slices.
 
-**Owed:** the `cluster-pairs` adjudication and the terminal fold — both hit the session limit and are
-resuming from cache.
+**Owed: NOTHING** (struck 2026-07-28 per VALIDATION CURE-7 — the `cluster-dock`/`cluster-pairs`
+adjudications completed and are SUPERSEDED in substance by `DAG-RULINGS.md` §2/§3/§3a; journal-only).
 
 
 ---

@@ -1,4 +1,4 @@
-# STRUCTURE-ZONES — the five zone settlements, banked
+# STRUCTURE-ZONES — four zone settlements + the whole-repo fold + the §6 styles settlement, banked
 
 **Provenance:** run `wf_71b65b7b-323` (structure, CLOSED 07-25), adjudicator seats harvested verbatim
 from the journal 2026-07-28 under the no-incomplete-work edict — this was the one declared
@@ -1971,3 +1971,250 @@ The last three self-describe as *"a vitest-fs source assert"*, each citing the p
 5. **24 hard-coded `"../../demo/…"` specifiers in `tests/`** plus 8 bare `"demo/…"` path strings in the source-regex gates (`grep -rhoE '"(demo|\.\./\.\./demo)/[^"]+"' tests tests-visual scripts | sort -u` → 34 distinct). The three `readFileSync` files fail loud on a missing path and **silent-green on a surviving-but-renamed selector**.
 
 **Three files cite a document that no longer exists:** `shell/SidebarDock.vue:92`, `shell/configurator/useConfiguratorOpen.ts:7`, `stories/substrates/blob.vue:276` all reference `CLAUDE.md` (§Configurator, "GlassDock aria contract") — hard-deleted 2026-07-13. Strike, do not re-point.
+
+
+# ═══════════ §6 · THE SIXTH SETTLEMENT — src/styles (banked under VALIDATION CURE-1; the header's original "five zone settlements" claim was a size-rank error — the true composition is FOUR zone settlements + the whole-repo fold above, plus THIS) ═══════════
+
+Verified everything against disk at `0371836d`. Instruments: `/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/adj-{count,tok,twin,dead,dead2,kf2}.mjs`.
+
+# D3 · `src/styles` — TERMINAL SETTLEMENT
+
+## 0 · GROUND TRUTH (my measure, all three benches disagreed)
+
+74 `.css` + 2 `.ts`. **12,693 CSS lines = 4,440 code / 7,412 comment / 841 blank → 62.5%.** Largest file `glass/material.css` **225 code**; nothing above it. 20 files ≤23 code; `theme/dark.css` = **1**. **60 code lines/file.**
+
+**SAND and GOD are both right and do not actually contradict.** GOD concedes its own bench at file level ("that is false, and I will not pretend otherwise") — the leaf *is* sand. GOD's real find is one level up: **92 hand-ordered `@import`s across 7 entry roots** (index 36 · glass 22 · tokens 19 · utilities 5 · theme 4 · typography 3 · accessibility 3), whose only correctness condition is concatenation order. Sand at the leaf, one god-module at the manifest — same disease, and the cure is identical: **fewer, larger files under one manifest.**
+
+**The driver is a phantom.** `grep -rl "no-god-module\|500-line" src/styles` → **26 files**; `grep -ro` over `src` → **80 citations**. `grep -rn "no-god-module\|500-line\|toBeLessThan(5..)\|MAX_LINES" tests scripts vite*.ts package.json` → **one hit, a comment in `scripts/regen-spring-tokens.mjs:37`**. No gate. 165 dangling `§` refs; `§15` does not exist.
+
+---
+
+## RULINGS ON THE CONTESTED CLAIMS
+
+| claim | bench | ruling | my evidence |
+|---|---|---|---|
+| zone is sand, 59 code/file | SAND | **SUSTAINED** | 4,440/74 = 60 |
+| zone has god-modules at file level | GOD | **OVERRULED** (bench self-overruled) | max 225 code |
+| the cascade is the god-module | GOD | **SUSTAINED** | 92 `@import` / 7 roots |
+| 21 restatements of the material cohort | SAND | **SUSTAINED, exact** | material 9 · ladder 3 · grain 3 · specular-track 2 · rim 2 · a11y-fallback 2 = **21** |
+| cohort repeated 7× in material.css | GOD | **PARTIAL** — it is **9** | |
+| `.dock-*` hard-coded in 6 shared sheets | SAND | **PARTIAL** — **5** as selectors | material 32 · a11y-overrides 4 · rim 2 · specular-track 2 · capsule 1 |
+| 128 / 169 multi-file token decls | SAND / GOD | **GOD** | 879 distinct, **169** in >1 file |
+| 54 byte-identical `dark-arm` twins | GOD | **SUSTAINED, exact** | 114 decls, 54 twinned, **0 divergent**, 60 untwinned |
+| `dark-arm` shrinks to shadow/inset residents | GOD | **OVERRULED as stated** | of 60 untwinned, only **8** are shadow/inset; 52 are constellation/configurator/cartoon-ink/glass-opacity |
+| the twins are a legacy-engine ladder | GOD | **PARTIAL — misdiagnosed** | `light-dark.css` is `@supports`-gated at `:root` (0,1,0); `dark-arm` `.dark` (0,1,0) imports **later** and **wins**. The two arms serve **two different dark triggers** (OS `prefers-color-scheme` vs the `.dark` class), not two engines. The file header's "non-supporting engines" rationale is false prose. It is still a dual path and still must collapse — but *which* arm survives is a wave decision with a hard constraint (Law 6): **`light-dark()` is forbidden for shadow/inset** (`dark-arm.css:22-28` + the standing memory item). |
+| bridges 194/196 passthrough | GOD / SAND | **SUSTAINED, exact** | the 2 non-passthroughs are `--text-sm: initial`, `--text-xs: initial` |
+| `color-radius.css` has 0 radius | both | **SUSTAINED** | 0 vs **28** in `theme/radius.css` (GOD's count, not SAND's 25) |
+| 36 `@property` over 8 files | SAND | **PARTIAL** — **34 over 6** | property-regs 20 · specular 6 · tokens/glass 4 · base 2 · chip 1 · scroll-choreography 1 |
+| 47 / 49 dead classes | GOD / WRONG-HOME | **PARTIAL — 37 of 137** | zero application in `src`+`demo`; 8 of those are *test-pinned only*. Floor, not ceiling: `.glass-opaque` reads alive textually but its two `src` mentions are comments saying *"NOT a `.glass-opaque`"* |
+| `.glass-opaque` live in `glass/defined.css` | WRONG-HOME | **OVERRULED — factually wrong** | declared **once**, `glass/ladder-undershadow.css`; `defined.css` declares `.glass-defined, .input-pill, .control-surface` |
+| keyframes clean, 0 orphaned | GOD | **OVERRULED** | 30 declared, **6 never named by `animation:`** (tooltip-in, fade-in, scale-in, slide-up, shimmer-sweep, shake); `dock-in`'s sole animator is dead `transitions.css:83` → **7** |
+| `transitions.css` 17/17 dead | WRONG-HOME | **PARTIAL** | `fade`/`tab-fade` **are** applied — `demo/stories/foundations/motion.vue:132` `<Transition :name="demo.cssClass">`, the story that catalogues this file. `pane-swap`/`metric-swap`/`dock-in` = 0. File dies on **superfluity**, not vacuity |
+| all `--animate-*` dead | WRONG-HOME | **SUSTAINED and extended** — **11**, not 10 | `--animate-floating-panel-in` too; each 0 consumers |
+| a11y partials' headers lie | GOD | **SUSTAINED** | `glass/a11y-fallback.css:3` "@import-ed by glass.css" and `utilities/a11y-overrides.css:4` "by utilities.css" — both are imported by `accessibility.css:3-5` |
+| move `glass-atom.css` whole to badge | SAND | **OVERRULED** | `.glass-atom` also consumed by `src/components/dock/styles/shape.css`. WRONG-HOME's split is correct |
+| move track trio to `_shared/track/` | WRONG-HOME | **SUSTAINED** | consumers = progress, slider, `scroll-progress-rim/styles.css`; `_shared/{disclosure,feedback,field,menu}` are four precedents |
+| new `_shared/pager/` | WRONG-HOME | **PARTIAL** | 2 consumers and one **is** `pager-dots` — colocate there, do not mint a `_shared` dir for 35 code lines |
+| evict `control-surfaces` to `_shared/field/` | SAND | **OVERRULED** | `.control-surface` consumers include checkbox, toggle-group, disclosure — not fields. Stays a shared register |
+| `viz-reveal.css` → `composables/glass/webgl/` | WRONG-HOME | **OVERRULED — self-contradicting** | the same bench proved `find src/composables -name '*.css'` → **empty**. That move invents the second convention it forbade |
+| delete the 5 `tokens.ts` chart exports | SAND | **SUSTAINED** | 0 consumers **and** `grep echarts package.json` → **nothing**. Superfluity: chart config for a library that is not a dependency |
+| `tokens.ts` → `src/tokens.ts` | WRONG-HOME | **SUSTAINED, modified** | published `./tokens` entry (`subpath-policy.mjs:124`) inside the CSS zone. But fold `manifest.ts` **into** it — one file, no new `src/tokens/` dir shadowing `src/styles/tokens/` |
+| `theme.css`/`fonts.css` are import-less published entries | WRONG-HOME | **PARTIAL** | true for `fonts.css` (0 edges); `theme.css` **is** imported (`index.css:176`) *and* published *and* read by `vite.utility-emit.ts:74` |
+| 24 path literals / 18 files | SAND | **PARTIAL** — 22 literals / 20 files | |
+
+---
+
+## 1 · THE TARGET TREE
+
+```
+src/styles/
+    index.css              THE one ordered manifest — @layer decl, @source, ~30 @import. No rules.
+    fonts.css              published ./styles/fonts — the OFL woff2 payload, split for weight
+    theme.css              published ./styles/theme — plain @theme radius → @theme inline bridges
+                           → plain @theme literals → @variant dark, in that order, one file
+    typography.css         faces + semantic register + type utilities
+    utilities.css          @utility register + base element rules
+    a11y.css               THE terminal accessibility mode
+    motion.css             keyframes + view-transition + substrate reveal
+    scroll.css             scroll-timeline substrate (driven + choreography + chrome)
+    paper.css              paper texture tokens + underpaint/grain utilities
+    tokens/
+        color.css          palette · neutrals · section · viz · on-glass fg — ONE arm per token
+        material.css       every --glass-*: ladder alpha/blur/saturate, fx, deep, halo, plate
+        shadow.css         cartoon offsets + the .dark shadow/inset arms (light-dark() FORBIDDEN)
+        sizing.css         --ui-scale doctrine · control heights · pads · offsets
+        motion.css         duration · ease · spring · motion-weight · registers · scroll · z
+        type.css           font stacks + the √φ --type-* scale
+        scale.css          interactive scales · focus · gold/silver/bronze · rainbow
+        property.css       all 34 @property registrations
+    glass/
+        material.css       the five-rung ladder and everything that paints on it
+        surfaces.css       the composed register a component reaches for
+        reveal.css         the .glass-reveal entrance state machine
+        metal.css          the brand-metal rim family
+```
+
+**21 CSS files, ~3,600 code lines after the deletions and evictions ≈ 170 code/file** — the band `src/components/dock/styles/*` already occupies. Defence of the number in both directions: below it you get today's tree (`track-well.css` = 8 code lines in 41; `theme/dark.css` = 1); above it you get the manifest god-module, which is what 7 entry roots and 92 ordered imports already are. `glass/material.css` is the one large file (~420 code after the 21→1 cohort collapse) because it is one concept.
+
+`src/styles/tokens.ts` and `src/styles/tokens/manifest.ts` **leave the zone** → `src/tokens.ts` (one file).
+
+---
+
+## 2 · MOVES
+
+| current | target | ground |
+|---|---|---|
+| `src/styles/glass-refract.css` | `src/styles/glass/material.css` | 12 code lines declaring `.glass-material`/`.glass-floating` at the zone root while 22 siblings sit in `glass/` |
+| `src/styles/glass-specular-track.css` | `glass/material.css` + `a11y.css` | 2 of the 21 cohort restatements; its residue is a PRM + reduced-transparency pin — a 4th a11y file in a 5th place |
+| `src/styles/glass/glass-chip.css` (125 code) | `src/components/chip/styles.css` | consumers are `chip/Chip.vue` + `chip/chipVariants.ts`, nothing else. The module is already split across the boundary in both directions — `glass.css:64` reaches sideways into `components/chip/accent-tone.css` |
+| `glass/glass-atom.css` `.badge-atom--*` | `src/components/badge/styles.css` (new) | only `src/components/badge/index.ts` emits them; the file's own header at `:101` says so |
+| `glass/{track-well,liquid-fill,value-marks}.css` (71 code) | `src/components/_shared/track/styles.css` | consumers = progress, slider, `scroll-progress-rim/styles.css`. Four `_shared/*` precedents; three files for one register is sand |
+| `glass/surfaces-pager.css` `.glass-pager-ring` | `src/components/pager-dots/styles.css` | consumers = `pager-dots/PagerDots.vue`, `carousel/CarouselPager.vue`. One of the two **is** the pager — no new `_shared` dir |
+| `glass/surfaces-pager.css` `.glass-chromatic` | `glass/material.css` | a decoration register, not a pager thing |
+| `glass/squircle.css` `.configurator` | `src/components/configurator/styles.css` | 10 code lines for two component-private rules |
+| `glass/squircle.css` `.glass-floating.sheet-animate` | `src/components/dialog/placement.css` | ditto |
+| `utilities/metal.css` (138 code) | `glass/metal.css` | contains **zero** `@utility` — it is a material, misfiled under utilities |
+| `utilities/base-misc.css` `.ghost-slot`, `.kbd` | `demo/demo.css` | zero `src` reach; consumers are 5 demo stories and `demo/shell/{AppShell,BottomDock}.vue` |
+| `tokens/scheme-motion.css:261` `:where(.glass-drawer,…)` | `src/components/drawer/styles.css` | a component rule inside the **token** cascade; `drawer/styles.css:105` already owns `.glass-drawer` |
+| `src/styles/tokens.ts` + `tokens/manifest.ts` | `src/tokens.ts` (merged) | a published JS entry (`subpath-policy.mjs:124` → `package.json` `./tokens`) living inside the CSS zone; also kills the `tokens.ts ↔ tokens/` stem clash |
+| `src/styles/glass.css:64` `@import ".../chip/accent-tone.css"` | `index.css` component roster | a material partial must not reach sideways into a component |
+| **114 component-named tokens** → their component dirs | `--dock-*` 36 (sizing 31, offsets 2, scroll-tokens 2, glass 1) → `dock/styles/`; `--constellation-*` 27 (color-radius 18, dark-arm 9); `--configurator-*` 17 (sizing-config 14, dark-arm 3); `--timeline-*` 14; `--blob-*` 11; `--table-*` 5; `--search-*` 4 | colocation. Cascade-safe: `index.css:174` imports tokens before `:181+` components. `--surface-tint-*` (29) is **excluded** — a genuine shared axis with 8+ consumers, and `src/components/surface/` declares no `--surface-*` at all |
+
+---
+
+## 3 · AGGLOMERATIONS
+
+**`glass/material.css`** ← material · rim · grain-overlay · ladder · ladder-undershadow · deep · defined · material-roles · surface-axis · glass-refract · glass-specular-track (11 → 1; 622 → ~420 code). In order: the 5 material `@property` regs → **the cohort written ONCE** as `:where()` + a `[data-glass-material]` opt-in → the `--glass-*` rim/specular/edge-light block → the `::before` catch-light and rest/hover/active/disabled steps → the five ladder rungs + `.glass-card` + the `[data-over-content]` undershadow → the `::after` grain → the `.glass-deep` LERP and tier map → `.glass-defined` → the `[data-material]` role→shadow map → the `[data-surface]`/`[data-grain]` axis → `.glass-chromatic` → the refract arm.
+
+**`glass/surfaces.css`** ← surfaces · glass-capsule · control-surfaces · glass-atom (`.glass-atom` only) (4 → 1; ~130 code). The named shapes a component composes: `.glass-capsule` (16 src consumers), `.input-pill`/`.control-surface` (6), `.glass-atom` (dock + badge), the surface roster.
+
+**`tokens/color.css`** ← color-radius · light-dark · dark-arm colour residue (3 → 1; 288 → ~200). **One declaration per token**; both mode triggers resolved from one source. This is where the 44+21+9 three-file/two-file collisions go to zero.
+
+**`tokens/material.css`** ← tokens/glass · glass-fx · glass-deep · dark-arm-glass · on-glass-fg (5 → 1; 176). `glass-deep.css` is 7 code lines in 116 (**89.7% comment for 5 declarations**); `dark-arm-glass.css`'s own header says it is `@import`-ed *"IMMEDIATELY AFTER dark-arm.css"* — a page break confessing itself.
+
+**`tokens/sizing.css`** ← sizing · sizing-config · offsets (3 → 1; 116). `sizing-config.css`'s header: *"lives in sizing-config.css to hold the 500-line bound."*
+
+**`tokens/motion.css`** ← scheme-motion (motion residue) · scheme-spring · motion-registers · scroll-tokens (4 → 1; ~140). Keep the `scheme-spring` region generator-owned (`scripts/regen-spring-tokens.mjs`) as a marked span.
+
+**`tokens/property.css`** ← property-regs · property-regs-specular + the 4 strays in `tokens/glass.css` (34 regs, one place).
+
+**`theme.css`** ← theme/radius · bridges · literals · dark (4 → 1; 266 → ~72 code). Justified precisely because `theme.css:9-27` documents that the four must be concatenated in file order to be correct — a split whose correctness condition is reassembly is a page break. `theme/dark.css` is **1 code line**. Generate the 194 passthroughs the way `scheme-spring.css` is already generated; that deletes 194 hand-edit sites.
+
+**`a11y.css`** ← accessibility · glass/a11y-fallback · utilities/a11y-overrides · utilities/responsive + the specular-track PRM pin (4+ → 1; 148 code). One terminal product mode currently in **three directories**, with two headers that name the wrong importer.
+
+**`scroll.css`** ← scroll-driven · scroll-choreography · scroll-chrome (3 → 1; 175). One native scroll-timeline substrate.
+
+**`motion.css`** ← animations (7 surviving keyframes) · view-transition · viz-reveal (3 → 1; ~150).
+
+**`typography.css`** ← typography/scale · semantic · utilities (3 → 1; 351). `typography/utilities.css` additionally collides across directories with `utilities/`.
+
+**`utilities.css`** ← utilities/base · base-misc · btn · components (4 → 1; 403 → ~340 after evictions). `base-misc`'s `-misc` suffix is the confession.
+
+**Killed outright: the five sub-roots** — `glass.css` (22 code), `tokens.css` (19), `utilities.css`-as-root (5), `typography.css`-as-root (3), `theme.css`-as-root (4) — 45 `@import`s and ~240 lines of duplicated cascade prose. Load order is documented in **six** places today. `index.css` carries the one ordered manifest. This resolves five of the six stem collisions **by subtraction**, which is the preferable form.
+
+---
+
+## 4 · SPLITS
+
+Only three, all evictions rather than shards:
+
+| file | seam |
+|---|---|
+| `tokens/scheme-motion.css` | three topics, one misleading name: **18 typography** (`--font-stack-*`, `--type-*`) → `tokens/type.css`; **17 `--z-*`** + 23 motion → `tokens/motion.css`; the `.glass-drawer` rule → drawer |
+| `tokens/scale-paper.css` | **8 `§` sections under a name covering 2** (`:7 §11` `:108 §12` `:178 §13` `:227 §13c` `:259 §14` `:279 §16` `:340 §19` `:355 §20`). Scales/focus/metals/rainbow → `tokens/scale.css`; §12 paper → root `paper.css` beside the rules that read it; §16 timeline (14) / §19 table (5) / §17 metric → their components |
+| `glass/glass-atom.css` | `.glass-atom` (2 consumers) stays shared; `.badge-atom--*` (badge only) leaves |
+
+---
+
+## 5 · RENAMES UNDER MODULE-NAME STRIPPING — exhaustive
+
+**A · file repeats its parent** — the repo's own `glass/` idiom is already STRIP (`deep.css`→`.glass-deep`, `reveal.css`→`.glass-reveal`, `defined.css`→`.glass-defined`, `track-well.css`→`.glass-track-well`, `value-marks.css`→`.glass-value-mark`, `liquid-fill.css`→`.glass-liquid-fill`). Three files break it:
+
+```
+glass/glass-atom.css      -> glass/atom.css       (then folds into glass/surfaces.css)
+glass/glass-capsule.css   -> glass/capsule.css    (then folds into glass/surfaces.css)
+glass/glass-chip.css      -> glass/chip.css       (then leaves the zone → components/chip/)
+tokens/scroll-tokens.css  -> tokens/scroll.css    (then folds into tokens/motion.css)
+```
+
+**B · top-level file repeats the sibling module it belongs to**
+```
+glass-refract.css         -> glass/refract.css        (then folds into glass/material.css)
+glass-specular-track.css  -> glass/specular-track.css (then folds into glass/material.css + a11y.css)
+```
+
+**C · `<dir>.css` beside `<dir>/` — six stem collisions, all resolved**
+`glass.css`↔`glass/`, `tokens.css`↔`tokens/`, `theme.css`↔`theme/`, `typography.css`↔`typography/`, `utilities.css`↔`utilities/`, `tokens.ts`↔`tokens/`. Five die with the sub-roots (§3); `tokens.ts` leaves the zone. **The idiom, named: `<module>/index.css` is the only module root** — `src/components/dock/styles/index.css` and `src/styles/index.css` already do this. `<module>.css` beside `<module>/` is the second convention and is struck. (`dock/styles/controls.css` beside `dock/styles/controls/` is the same defect outside this zone — flag for D3's component seat.)
+
+**D · file repeats a sibling's full stem — the carve scar; the rename *is* the merge**
+```
+tokens/dark-arm-glass.css        -> tokens/material.css
+tokens/property-regs-specular.css-> tokens/property.css
+tokens/sizing-config.css         -> tokens/sizing.css
+tokens/glass-fx.css              -> tokens/material.css
+tokens/glass-deep.css            -> tokens/material.css
+utilities/base-misc.css          -> utilities.css
+glass/ladder-undershadow.css     -> glass/material.css
+glass/surfaces-pager.css         -> components/pager-dots/styles.css
+glass/control-surfaces.css       -> glass/surfaces.css
+tokens/scheme-motion.css         -> tokens/motion.css   (the `scheme-` prefix is redundant inside tokens/)
+tokens/scheme-spring.css         -> tokens/motion.css
+```
+
+**E · names that misdescribe contents**
+`tokens/color-radius.css` — **0** `--radius-*` (all 28 in `theme/radius.css`) → `tokens/color.css`. `tokens/scheme-motion.css` — 18 typography + 17 z-index → split (§4). `utilities/metal.css` — no `@utility` → `glass/metal.css`.
+
+---
+
+## 6 · DELETIONS
+
+| target | size | ground |
+|---|---|---|
+| `glass/liquid-enter.css` | 126 code / 238 | **VACUITY.** `.liquid-enter`, `.is-cel`, `.is-display` + 4 keyframes — `grep -rn "liquid-enter\|\bis-cel\b" src demo tests scripts \| grep -v '^src/styles/'` → **0**. Header calls it "The UNIVERSAL `.liquid-enter` mount recipe" |
+| `draw-in.css` | 39 code / 85 | **VACUITY.** `.draw-rule`, `.draw-rule--wipe`, `[data-draw-in]`, 2 keyframes → **0**. `index.css:245` names "the demo masthead rule + CompletionSeal + HandMark" as consumers; none of the three reference it |
+| `transitions.css` | 85 code / 155 | **SUPERFLUITY.** `pane-swap`/`metric-swap`/`dock-in` → 0 outside the gate that pins them; the header's *"`pane-swap` (below, live dock consumer)"* is false. `fade`/`tab-fade` are applied only by `demo/stories/foundations/motion.vue:132`, the story cataloguing this file. The file's own header states the replacement: *"their overlay/menu entrances now ride the ONE `.glass-reveal` recipe bound by `data-reveal`"* — the register already does this job |
+| `theme/literals.css` `--animate-*` | 11 aliases | **VACUITY.** `--animate-{tooltip-in,fade-in,scale-in,slide-up,dock-in,shimmer,shimmer-sweep,gold-shimmer,metal,shake,floating-panel-in}` — each **0** consumers; only builtin `animate-{spin,in,out,css,mode}` appear in the repo |
+| `animations.css` 7 of 14 keyframes | | **VACUITY.** `tooltip-in`, `fade-in`, `scale-in`, `slide-up`, `shimmer-sweep`, `shake` are never named by any `animation:`/`animation-name:` in `src`+`demo`; `dock-in`'s sole animator is `transitions.css:83`, deleted above. Survivors: `shimmer`, `metal-shimmer-sweep`, `sparkle-sweep`, `typewriter-blink`, `glass-reveal-out`, `glass-reveal-out-reduced` |
+| `glass/ladder-undershadow.css` `.glass-opaque` | | **VACUITY.** Declared exactly once, zero applications; its only two `src` mentions are comments at `DialogContent.vue:241` and `GlassTimeline.vue:206` reading *"NOT a `.glass-opaque`"*. **Dead by its own documentation.** (`.glass-over-text` in the same file: also 0) |
+| `glass/surface-axis.css` `.glass-well` + `tokens/glass.css` `--glass-well-tone` | | **VACUITY.** 0 applications. Keep the file's `[data-surface]`/`[data-grain]` axis — 18 consumers |
+| `tokens/scheme-motion.css` `.liquid-stage` | | **VACUITY.** 0. Strike from the `:where(.glass-drawer, .liquid-stage)` rule as it relocates |
+| `tokens.ts`: `chartHeights`, `chartMargin`, `chartColors`, `minWidthInputSm`, `motionStagger` | 54 lines | **SUPERFLUITY, not consumer count.** 0 consumers **and** `grep echarts package.json` → nothing. Chart-library config values for a chart library that is not a dependency, peer or otherwise |
+| the remaining 30 dead classes | | **VACUITY.** `utilities/components.css` (`hover-lift-md`, `hover-lift-lg`, `shadow-cartoon-lg`, `divider-h`, `divider-h-tapered`) · `base-misc` (`depth-text`, `preserve-3d`, `ios`, `deferred-section--cached`) · `typography/utilities` (`text-pane-title`, `section-label--tinted`, `text-engraved`) · `metal-silver-border` (its `gold`/`bronze` siblings are live — asymmetry within one family is oversight) · `section-description` · `hairline-accent` · `scroll-{cascade,reveal}--inline` · `scroll-chrome--native` |
+| **133 lines of carve apologetics + 165 dangling `§` refs + the tombstone prose** | | **VACUITY.** The 500-line bound they defend does not exist. Tombstones for deleted files (`floating-panel.css` "retired" at `index.css:106`, `animations.css:3`, `glass/squircle.css:53`, `theme/literals.css:16`; `hover-popover.css` "deleted" at `index.css:207`) are version history in a greenfield artifact. Stale refs to files that never existed or no longer do: `tokens/offsets-sizing.css` (`index.css:55`, `utilities/base.css:30`, `dark-arm.css:144`), `glass/progress-rail.css` (`index.css:66`), `cards.css` (`index.css:103,104` + 4 in `scale-paper.css`) |
+| **the 54 `dark-arm` colour twins + the DA1 lockstep gate** | | **DUAL PATH** (rule 4). 54 declarations that must byte-agree with 54 others, enforced by a gate whose only job is to hold the duplication up. Collapse to one. **Law 6 — I do not prescribe which arm survives**: the constraint is that `light-dark()` is forbidden for the shadow/inset family (`dark-arm.css:22-28`, the inset trap), and the two arms currently serve two *triggers* (OS preference vs `.dark` class), not two engines as the header claims. That is the boundary; the cure is a wave with a paired capture |
+
+**~500 code lines struck on vacuity/superfluity, before any restructuring**; comment ratio 62.5% → ~30%.
+
+---
+
+## 7 · TEST DISPLACEMENT
+
+**Edict-4 violations inside `src/styles`: ZERO.** `find src/styles \( -name '*.test.*' -o -name '*.spec.*' -o -path '*__tests__*' \)` → no output. (The two `*spec*` hits are `glass-specular-track.css` and `tokens/property-regs-specular.css`.) Nothing is owed from this zone.
+
+Isomorphism is broken the other way, and **WRONG-HOME's diagnosis beats SAND's**: of the 10 files in `tests/styles/`, only `typography.test.ts` has a source twin. The other nine are cross-file invariant gates spanning `src/styles` **and** `src/components` (`radius-role-canon.test.ts` reads five component partials; `placeholder-contrast.test.ts` four). They are not source mirrors and can never be made into them — SAND's proposed 1:1 remapping is a category error.
+
+| current | target | ground |
+|---|---|---|
+| `tests/styles/{glass-subtlety,placeholder-contrast,prm-no-resurrection,radius-dialog-bind,radius-role-canon,token-graph,track-well-fold,typed-track-seam}.test.ts` | `tests/gates/` | the existing home for non-isomorphic invariant gates (`boot-graph`, `orphan-css-partial`, `token-hygiene`, `type-hygiene`) |
+| `tests/styles/typography.test.ts` | stays — the one real twin | |
+| `tests/styles/tokenGraphDetector.ts` | `tests/gates/lib/tokenGraph.ts` | a non-test helper in a test tree; `tests/utils/mountComposable.ts` is the precedent, and the name strips its module |
+| `tests/styles/prm-no-resurrection.test.ts:188` | **amend in the same commit** | `expect(r.selector).toMatch(/\.(fade\|tab-fade\|pane-swap\|metric-swap)-/)` structurally preserves two zero-consumer selector families. Left alone it converts the `transitions.css` deletion into a false RED |
+| `tests/gates/orphan-css-partial.test.ts:266` | replace, don't extend | self-describes as *"STANDING GREEN … a regression lock"* — passes at HEAD by construction, so under Law 7 it is not a gate. It is a **file**-level oracle over a **selector**-level problem: it certifies GREEN over 250 lines of fully-dead CSS. **The born-RED replacement:** every class declared in `src/styles` is applied by at least one `src/` or `demo/` receiver — **37 of 137 red it today** |
+
+---
+
+## 8 · WHAT BREAKS
+
+**Export subpaths — 5 of the 72 touch this zone.** `./styles` → `dist/styles/index.css` (survives). `./styles/fonts` → `dist/styles/fonts.css` — **`fonts.css` has zero `@import`-ers by design**; a "tidy the roots" pass that deletes it silently kills a published entry. `./styles/theme` → `dist/styles/theme.css` — survives *as a file* because the `theme/` collapse targets exactly that path. `./styles.css` → `dist/component-styles.css` (build artifact, unaffected). **`./tokens` → `dist/tokens.js` must repoint** when `src/styles/tokens.ts` → `src/tokens.ts`: one line at `scripts/lib/subpath-policy.mjs:124`.
+
+**Build.** `vite.style-fold.ts:104` `cpSync`s `src/styles/` → `dist/styles/` wholesale, so intra-zone moves are free. Two hard-coded literals are not: `vite.utility-emit.ts:74` `resolve(root, "src/styles/theme.css")` (survives by design) and `vite.utility-emit.ts:177` `resolve(root, "src/styles")` (directory, survives).
+
+**Path literals: 22 distinct across 20 files** (`grep -rhoE '"[^"]*src/styles/[^"]*"' tests scripts vite*.ts | sort -u | wc -l`) — `scripts/lib/{subpath-policy,minify-css}.mjs`, `scripts/regen-spring-tokens.mjs`, `vite.{style-fold,utility-emit}.ts`, `tests/gates/{orphan-css-partial,token-hygiene}.test.ts`, all 9 of `tests/styles/`, plus 5 component/composable tests. That coupling is itself an argument for the fold: 74 shards mint 22 brittle literals; 21 files mint far fewer.
+
+**CSS reachability — five mechanisms, not two.** `tests/gates/orphan-css-partial.test.ts` models only (1) `@import` closure and (2) SFC `<style src=`. Three more are live and a restructure that models only the first two will orphan a stylesheet: (3) dynamic `await import()` — `demo/main.ts:112` → `demo/capture/capture.css`; (4) runtime `new URL()` injected as `<link>` — `demo/shell/configurator/presets/manifest.ts:25` → `presets/neutral.css`; (5) **export subpath with no importer at all** — `fonts.css`. Channel 5 is the trap for this refinement.
+
+**Internal imports: all 92 rewritten.** The 45 in the five dying sub-roots vanish; `index.css` carries one ordered manifest of ~30. **The 20 component partials leave `index.css`** for the `<style src=` channel the other 18 SFCs already use (19 refs / 18 files) — adding a component must not mean editing the shared cascade root.
+
+**Public surface.** No class or token name changes except the deletions in §6. The dock's four control names stop being hard-coded across five shared sheets (`.dock-icon-button` appears **32×** in `glass/material.css` alone); membership-by-enumeration becomes a `[data-glass-material]` opt-in the dock sets, so the dock can rename a control without editing shared CSS.
+
+**Demo.** `.ghost-slot` and `.kbd` relocate into `demo/demo.css` — 5 stories and 2 shell files already reference them by name, so no demo edit beyond the import. `demo/stories/foundations/motion.vue` loses its `transitionDemos` section with `transitions.css`. Unrelated but adjacent, for whoever owns the demo zone: `demo/.../TimelineContinuousBody.vue:172` `<Transition name="phase-detail">` has **no matching CSS anywhere in the repo** — a silently inert transition.

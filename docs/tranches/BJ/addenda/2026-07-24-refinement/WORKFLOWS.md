@@ -28,18 +28,21 @@ tri-fold; only the Fable arm + adjudication are owed on top.
 | run | script (`./wf/`) | state | output → banked at |
 |---|---|---|---|
 | `wf_df5ddb7a-134` apotheosis | `apotheosis.wf.js` | **CLOSED 60/60** | `COMPONENT-WAVES-TERMINAL.md` |
-| `wf_5e7dd9f7-18a` dag-triumvirate | `dag-triumvirate.wf.js` | **CLOSED 16/16** | `DAG-RULINGS.md` |
-| `wf_71b65b7b-323` structure | `structure.wf.js` | **CLOSED 22/22** | `DIRECTORY-SHAPE.md` (survey); zone adjudications in journal — **fold into the structure settlement wave at R5** |
+| `wf_5e7dd9f7-18a` dag-triumvirate | `dag-triumvirate.wf.js` | **CLOSED 16/16** | `DAG-RULINGS.md` (the `cluster-dock`/`cluster-pairs` seats are journal-only, SUPERSEDED in substance by its §2/§3/§3a — VALIDATION run 2) |
+| `wf_71b65b7b-323` structure | `structure.wf.js` | **CLOSED 22/22** | `DIRECTORY-SHAPE.md` (survey) + **`STRUCTURE-ZONES.md`** (banked 07-28: four zone settlements + the whole-repo fold + §6 src/styles per VALIDATION CURE-1) |
 | `wf_6cb9f75f-b6c` proportion | `proportion.wf.js` | **CLOSED 31/31** | `PROPORTION.md` |
-| `wf_b5c595d5-e53` reckoning | `reckoning.wf.js` | **CLOSED 14/14** | folded into `EXEC-STATE.md` corrections + the owner report |
+| `wf_b5c595d5-e53` reckoning | `reckoning.wf.js` | **CLOSED 14/14** | absorbers-of-record: `RECONCILIATION.md` (:62/:262) + `ARCHAEOLOGY.md` §R-3 + `EXEC-STATE.md` corrections (VALIDATION CURE-7 names them) |
 | `wf_6b459be5-e21` reconcile | `reconcile.wf.js` | **CLOSED 17/17** (2nd launch) | `RECONCILIATION.md` |
 | `wf_aaa19aee-da2` tier-2 | `tier2.wf.js` | **CLOSED 65/65** (tri-fold resume) | `COMPONENT-WAVES-TERMINAL-2.md` |
 | `wf_ab31a195-57f` layout | `layout.wf.js` | **CLOSED 8/8** | `LAYOUT.md` |
-| `wf_50bff562-da7` greenfield | `greenfield.wf.js` | **CLOSED 41/42** (one arm to a schema retry cap; duplex absorbed it — all 5 lanes + fold present, every apotheosis Fable-adjudicated) | `GREENFIELD-TERMINAL.md` — **boundary duties still OPEN** (blob/aurora reconcile at procedural close) |
+| `wf_50bff562-da7` greenfield | `greenfield.wf.js` | **CLOSED 41/42** — the lost seat was the GF-AURORA pass-4 PAINT diverge arm; VALIDATION §3 rules the loss ABSORBED (the bench pair's live re-measurement + `PROCEDURAL-LEDGER.md` §1.2/§3.2 are the absorbers, strictly more than the lost arm) | `GREENFIELD-TERMINAL.md` — boundary duties DISCHARGED (see the dated section below) |
 | `wf_51cdb0e0-bdb` procedural | `procedural.wf.js` | **CLOSED 16/16** | `PROCEDURAL-LEDGER.md` — its routing §3 DISCHARGES the boundary duties below |
 
 Historical/superseded scripts kept for archaeology: `components-flat`, `component-apotheosis`,
 `component-dag`, `ecoute-dag`, `exemplar-frames`, `parent-components`, `parent-design`, `canon-opus`.
+Provenance marks (VALIDATION run table): `ECOUTE.md` is a **single Opus fold, never adjudicated**
+(cite accordingly); the canon-opus CROSS-FOLD is under adjudication (CURE-4, cures run); all nine
+Jul-24 runs are SUPERSEDED-CLEAN with named successors.
 Data snapshots: `dag-deterministic.json`, `dag-clusters.json` (cluster figures CONTESTED — see
 EXEC-STATE census row; membership stands, aggregates do not).
 
@@ -63,14 +66,14 @@ EXEC-STATE census row; membership stands, aggregates do not).
 | experiments | `wf_edc5c430-3f0` | `experiments.wf.js` | `EXPERIMENTS.md` — Seventh-Ecoute stage-2: rows 38 (dilating grasp) + 40 (honest loupe) PROTOTYPED at `scratchpad/experiments/`; row 31 (grain) ruled acceptance-arithmetic; browser seat serialized vs design-now (OWED-SERIALIZED protocol if held) |
 | perfect | `wf_54069001-013` | `perfect.wf.js` | amended `TERMINAL-ROSTER.md` (folds a-f incl. frost verdict + tier-3 complete) + the `docs/tranches/BK/` cut on disk + supersession banners; codex/novelties land via the declared STAGE-2 DELTA row if absent at runtime |
 | design-now | `wf_2eec57c9-fb5` | `design-now.wf.js` | `DESIGN-NOW.md` — the Seventh-Ecoute engine: GF-BLOB physics PROTOTYPED (the "Experiment." run; prototype under `scratchpad/design-now/blob-physics/`; owns the browser if paint needed) · GF-FOURIER authored (N7) · W-CHIP authored (blocker #5) · W-DESIGN-CANON body authored — thrice-design per lane, zero deferred-design clauses survive |
-| validate | `wf_42cc8a9d-9cc` | `validate.wf.js` | `VALIDATION.md` — the no-incomplete-work certificate: all 28 runs' seat census, the debt register (SEQUENCED/ORPHAN), the greenfield 41/42 ruling, the standing close protocol. Zone-settlement debt already DISCHARGED → `STRUCTURE-ZONES.md` |
+| validate | `wf_42cc8a9d-9cc` | `validate.wf.js` | **CLOSED 4/4** → banked `VALIDATION.md` — 30-run census (15 COMPLETE · 6 SUPERSEDED-CLEAN · 4 IN-FLIGHT · 5 DEBT), 8 cures. **Lead executed 07-28**: CURE-1 (`STRUCTURE-ZONES.md` §6 + header) · CURE-2 (`PROPORTION-CATEGORIES.md`) · CURE-3 (`PROCEDURAL-APOTHEOSES.md` + the DESIGN-NOW-blob reconcile rider for stage-2) · CURE-6 (ASK.md R-7 footage row) · CURE-7 (this ledger + GRAPH-RULINGS + EXEC-STATE marks) · CURE-8 (PID 2506 killed). CURE-4/5 → the cures run below |
+| cures | `wf_8253976f-a84` | `cures.wf.js` | CURE-4 CROSS-FOLD disposition-of-record + CURE-5 `W-OVERLAY` terminal spec (the last unowned spec, thrice-design) — banks into `CURES.md` |
 | archaeology | `wf_1a9b1bd8-dad` | `archaeology.wf.js` | **CLOSED 43/43** → banked `ARCHAEOLOGY.md` (44-theme ecoute register over ~1,500 owner messages, recurrence×implementation matrix, lessons ledger, §4 = roster row #70 intake payload) |
 | gestalt | `wf_e3eec3a9-c1f` | `gestalt.wf.js` | **CLOSED 9/9** → banked `GESTALT.md` (tri-fold verdict, 8 disk-ruled adjudications; carries the OWED-LIVE cell list for the later browser pass) |
 
 | ios27-exemplars | `wf_a31672c0-e81` | `ios27-exemplars.wf.js` | **CLOSED 16/16** (one wall survived at the apotheosis) → banked `EXEMPLARS-CODEX.md` — phenomenon table + choreography laws (candidate canon for W-DESIGN-CANON) + routed deltas + 10 frame-ruled adjudications; every timing burst-cited, every constant a ratio/delta |
 | frost-tabs | `wf_b0b48d79-692` | `frost-tabs.wf.js` | **CLOSED 5/5** → banked `FROST-TABS-REAUDIT.md` (f1/f4/f5 exemplars found IN-REPO at IOS27-MICRO/prototypes; the four authored causes D-1..D-4; blanket-cure-alone lands at f5-poor — the veil/photometry/brightness arms are load-bearing; 8 banked-record corrections incl. the prefix-trap 7→5 re-count; Chrome seat released) |
-| novelties (QUEUED) | — | authored at launch, after the codex banks | `NOVELTIES.md` — Fable brainstorm → union with extant → thrice critical pass; design authoring via DesignSync per the tri-fold law |
-| perfect (QUEUED LAST) | — | `perfect.wf.js` | amended `TERMINAL-ROSTER.md` + the `docs/tranches/BK/` cut — fires only after ALL above bank |
+(the interim QUEUED rows for novelties/perfect were superseded by their live rows below — struck per VALIDATION CURE-7)
 
 **The archaeology corpus** (input to `wf_1a9b1bd8-dad`) lives in the scratchpad at
 `…/scratchpad/archaeology/{claude,codex}/` — 697 claude + 839 codex owner messages, 21+4 shards.
@@ -82,8 +85,9 @@ the shard files sit at the SAME absolute paths (prompts embed them).
 ## If a wall hits during a live run
 
 1. New session reads `EXEC-STATE.md` → this file.
-2. Check both live runs' journals (paths above). Harvest any `{"type":"result"}` lines into the
-   banking targets named in the run ledger.
+2. Census EVERY run dir's journal (`ls -t <transcript-root>/wf_*/journal.jsonl`), not a remembered
+   list. Harvest any `{"type":"result"}` lines into the banking targets named in the run ledger —
+   by seat identity, never size-rank (VALIDATION §4 rule 3).
 3. Re-seed missing seats: copy the script from `./wf/`, relaunch (same session: `resumeFromRunId`;
    new session: fresh run — the tri-fold law says cached/banked Opus material is the Opus arm, never
    re-run it; author only the missing arms + adjudication).

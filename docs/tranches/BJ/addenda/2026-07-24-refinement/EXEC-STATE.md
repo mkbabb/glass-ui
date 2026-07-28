@@ -294,7 +294,10 @@ the run ledger there is the single source of record for run state)
 
 ---
 
-## OWED
+## OWED — dated status marks added 2026-07-28 per VALIDATION CURE-7: rows 1 (tier-2/3 done to 33/62 +
+roster-ruled remainder), 2 (DAG-RULINGS), 3 (DIRECTORY-SHAPE + STRUCTURE-ZONES), 4 (PROPORTION +
+PROPORTION-CATEGORIES), 6 (FROST-TABS Q-1 discharge) are **DISCHARGED**; row 5 (the Safari arm) is
+**the one live row** — owner roster #3/#10, the serialized browser seat.
 
 1. **Remaining 54 components** — every component gets its own workflow (tier 1 = dock, aurora, slider,
    tabs, alert, toast, handmark, timeline is done).
@@ -415,8 +418,10 @@ Engine: `wf/design-now.wf.js` → banks `DESIGN-NOW.md`.
 (1) at every run close the lead verifies `agents_error == 0` — any error class resumes via
 `resumeFromRunId` until 0, walls included; (2) the ledger row may read CLOSED only after a
 result-vs-expected seat census; (3) **harvested-not-banked journal material is DEBT and blocks CLOSED**
-(the structure zone settlements were the one instance — now banked as `STRUCTURE-ZONES.md`, debt
-DISCHARGED); (4) every QUEUED/stage-2/deferred declaration names its OWNER and TRIGGER at declaration
+(VALIDATION.md found FIVE instances — structure zones incl. the §6 styles settlement, the six
+proportion category rulings → `PROPORTION-CATEGORIES.md`, the three procedural apotheoses →
+`PROCEDURAL-APOTHEOSES.md`, the canon-opus CROSS-FOLD → cures-run adjudication — all banked/owned
+2026-07-28; bank by seat identity, never size-rank); (4) every QUEUED/stage-2/deferred declaration names its OWNER and TRIGGER at declaration
 time — a debt without both is an ORPHAN, the violation class; (5) `wf/validate.wf.js` re-runs the
 28-run census on demand; its `VALIDATION.md` is the completeness certificate of record and §4 there
 restates this protocol.
