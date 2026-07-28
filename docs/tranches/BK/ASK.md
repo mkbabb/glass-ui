@@ -6,6 +6,10 @@ the presented batch, cited, never re-asked. The standing rule binds: no wave is 
 unpresented ask; every ask row carries a ratified default so **silence advances, never parks**.
 **One explicit owner word overrides any row, at any time, without ceremony.**
 
+> **⊕⁶ RATIFIED 2026-07-28 night (owner word, EXEC-STATE §THE RATIFICATION item 1):** every row
+> below — g1–g12 — now stands on an explicit owner ratification of the lead's judgments, not on
+> silence. The glance windows at capture stay open; one word still reverses any row.
+
 ## The three capture-time glances
 
 Not asks — one-glance reversal windows. Each fires at a specific capture, each already has the

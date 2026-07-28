@@ -51,12 +51,12 @@ seats stay Opus. Standing operational constraints (EXEC-STATE): maximum four wor
 ≤3 concurrent seats · browser-owning seats strictly serialized (the MCP selected-page singleton).
 Historical receipts retain the model labels that actually ran — immutable provenance, never renamed.
 
-> **Conflict record (2026-07-28).** An uncommitted codex edit replaced this section with a
-> "prospective GPT Sol/Luna labor law — owner supersession," including a stop-before-canonical-
-> mutation deadlock clause. No such supersession has been issued to this session's lead; the owner's
-> 2026-07-25 dissolution ruling ("Sol and Luna are done — Claude owns these tranches now") and the
-> tri-fold law stand (EXEC-STATE §THE CODEX META-AUDIT posture ruling). If the owner ratifies the
-> claimed supersession, this section re-cuts then — by the owner's word, not an audit's.
+> **Conflict record (2026-07-28) — RESOLVED by owner word, same night.** An uncommitted codex edit
+> had replaced this section with a "prospective GPT Sol/Luna labor law — owner supersession." The
+> owner ruled: **"Codex was used, and shall be used occasionally, for audits. Otherwise we control
+> and drive."** No supersession exists; the claimed one is dead; the tri-fold law above is the labor
+> law of record (EXEC-STATE §THE RATIFICATION OF 2026-07-28 item 3). Codex findings arrive as
+> audit EVIDENCE, adjudicated with greps — never as process law.
 
 ## §4 · The durability + no-incomplete-work edicts — quoted from EXEC-STATE.md (§THE FOURTH + FIFTH ECOUTES durability edict · §THE NO-INCOMPLETE-WORK EDICT; EXEC-STATE wins)
 

@@ -412,6 +412,33 @@ Engine: `wf/design-now.wf.js` → banks `DESIGN-NOW.md`.
 
 ---
 
+## THE RATIFICATION OF 2026-07-28 (night) — the owner's word on the relayed asks
+
+Owner, verbatim in force: "Ratify the above with your judgement. Codex was used, and shall be used
+occasionally, for audits. Otherwise we control and drive."
+
+1. **Every relayed row is RATIFIED on the lead's judgments** — g1–g12 defaults now stand on an owner
+   word, not silence: g1 HEAVY · g2 KEEP-if-gate · g3 harden-not-delete · g4 fourier-field
+   KEEP-in-library · g5 tags-input DELETE at #18 · g6 number-field KEEP at #82 · g7 Kuwahara
+   NOT-BUILT · g8 PROSE (no history rewrite) · g9 Op C DECLINED · g10 fence stands · g11
+   ℱ-as-Foundations ships · g12 CONSUME perfect-freehand. The glance windows at capture remain open.
+2. **The governance sitting is RULED: REJECT-WITH-SALVAGE** (the lead's judgment, owner-ratified).
+   Executed at ratification: the entire codex working set reverted to HEAD via a durable stash bank
+   (**stash `f37407cd`**; the earlier partial bank `003a8339` + the scratchpad patch/tar stand;
+   post-revert `vue-tsc -p tsconfig.test.json` verified GREEN-but-for the 2 pre-existing
+   track-well-fold errors). The SALVAGE half — the three detector conversions (boot-graph AST lineage · type-hygiene
+   `clamp()` · token-hygiene) + the three hardened bodies (avatar · TypewriterText · reka-binding),
+   all annotation-stripped — lands at **Φ0 row #1** from the banked stash, per PROOF-SWEEP lane A §4's
+   REJECT path. The dual-60-roster conflict dies with the rejection: `BK/gates/ROSTER.md` is the ONE
+   roster of the user-mandated ceiling.
+3. **THE CODEX ROLE LAW (standing):** codex is an OCCASIONAL AUDIT instrument — its findings arrive as
+   evidence, adjudicated with greps, never as process law; **Claude controls and drives** (the
+   tri-fold). The BK `PLAN.md` §3 conflict record is RESOLVED by this word: no Sol/Luna supersession
+   was issued; the claimed one is dead. Codex-authored edits to tracked files are adjudicated
+   ADOPT/REVERT/HOLD before any commit carries them — the lane-A discipline is the permanent template.
+
+---
+
 ## FORMULATION PERFECTED — the compact-ready close, 2026-07-28 night (seal commit `8f00081a`)
 
 THE PERFECTION VERDICT (wf_34cf61fe-f49, 7/7): **YES — the 90 wave specs are perfected pursuant to
