@@ -412,6 +412,31 @@ Engine: `wf/design-now.wf.js` → banks `DESIGN-NOW.md`.
 
 ---
 
+## THE OWNER SITTING OF 2026-07-28 (evening) — perfection, tails, dispositions
+
+Owner words, verbatim in force:
+1. **All BK wave specs PERFECTED** — pursuant to `precepts/`, ready for thereupon execution.
+2. **The BA–BJ tails are not dropped** — every tranche's unclosed residue is folded into BK
+   appropriately or explicitly retired; a tails inventory proves it (no orphans).
+3. **Execution only at the owner's go; the session compacts beforehand** — this session PREPARES.
+   Mode stays TRANCHE-DEVELOPMENT until the go.
+4. **The codex edits are scrupulously examined** — every uncommitted modification (35 tracked files
+   incl. `src/` + 30 tests + `package.json`/`vitest.config.ts`, plus the untracked governance
+   instrument) adjudicated ADOPT/REVERT/HOLD before any commit carries them.
+5. **carousel is NOT DELETED** — owner word, overriding the ratified clean-DELETE (which rested on
+   the eight-root census; `words` imports `@mkbabb/glass-ui/carousel` at 2 files — CONSUMER-LEDGER
+   row `words`). Disposition: KEEP (consolidation into an apotheosis stays legal; deletion does not).
+6. **instrument-chassis likely DELETES unless a use case is proven across value.js, speedtest, etc.**
+   — the proof condition. Evidence banked same sitting: `speedtest` imports
+   `@mkbabb/glass-ui/instrument-chassis` at 4 files (^4.0.1), `muster` at 6 files (^3.1.0); zero at
+   value/atlas/keyframes on 7.x. Verdict rests with the owner on the delivered list; the substance
+   pass (what those files actually render) runs in the proof sweep.
+7. **The full chopping-block/consolidation list is delivered to the owner for ratification** — the
+   owner rules per-row; owner words in this sitting bind the stage-2 fold's output (the lead applies
+   them as an overlay after the seal if the fold landed contrary rows).
+
+---
+
 ## THE CODEX META-AUDIT — posture ruling, 2026-07-28 (lead-adjudicated on owner direction)
 
 The 07-28 codex audit corpus (`docs/tranches/BJ/audits/2026-07-28-*/`, five dirs +
