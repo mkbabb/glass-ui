@@ -1,5 +1,9 @@
 # BI — THE REFORMATION TRANCHE (the plan of record)
 
+> **SUPERSEDED-INTO-BK (2026-07-28).** Every live row's execution moved to `docs/tranches/BK/`; the row-by-row map is `docs/tranches/BK/PORT.md`.
+> The PLAN-of-record is `docs/tranches/BJ/addenda/2026-07-24-refinement/TERMINAL-ROSTER.md`; this file no longer schedules anything.
+> Cite this file for provenance only — read it for its record, never for live status or authority; its rulings survive where PORT.md says they do.
+
 Formed 2026-07-12 by the convergent multiagent pipeline (TRANCHE-FORMULATION + DESIGN-ITERATION,
 `~/Programming/precepts/instructions/`). BI is the UNION the user ordered ("BH/BI are to be updated,
 upgraded, unioned, and reformed"): the post-BG audit repair mandate (the 2026-07-11/12 user findings)

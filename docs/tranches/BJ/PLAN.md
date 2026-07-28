@@ -1,5 +1,9 @@
 # BJ — THE GRAND-AUDIT REFORMATION TRANCHE (the plan of record)
 
+> **SUPERSEDED-INTO-BK (2026-07-28).** Every live row's execution moved to `docs/tranches/BK/`; the row-by-row map is `docs/tranches/BK/PORT.md`.
+> The PLAN-of-record is `addenda/2026-07-24-refinement/TERMINAL-ROSTER.md`; this file no longer schedules anything.
+> Cite this file for provenance only — read it for its record, never for live status or authority; its rulings survive where PORT.md says they do.
+
 Formed 2026-07-17 by the convergent multiagent pipeline (TRANCHE-FORMULATION + DESIGN-ITERATION,
 `~/Programming/precepts/instructions/`) over the post-7.0.0 grand-audit corpus. BJ is the union the
 user's F04/A05/A06/A07/A10 orders demand: a ruthless component-surface reduction with the questions
@@ -22,10 +26,17 @@ The user resolved Decision-0 on 2026-07-17: "First, publish 7.0.0" (CUT-NOW; the
 `REGISTRY.md:16-18`), and 7.0.0 is live on npm with provenance (release.yml run 29617310925 green;
 tag = master = 4ab12128). So BJ does NOT re-open the cut question. Two consequences are fixed:
 the release-dating is authorized (no `plan:premature-version-finalization` re-litigation), and Q051
-rows 2/3/4/9/10 self-ratified at that tag while rows 1/11-16 are LIVE BJ inputs (family I). The one
-version decision inside BJ is the `./sidebar` export-map break (COLOCATION W2): per the perfection fold
-it rides **8.0.0**, not a slip into a frozen 7.0.0 surface (§2, family H). Everything else
-in this tranche is additive-or-internal against the shipped 7.0.0.
+rows 2/3/4/9/10 self-ratified at that tag while rows 1/11-16 are LIVE BJ inputs (family I). Two
+named break families ride **8.0.0**, never a slip into the frozen 7.0.0 surface: the `./sidebar`
+export-map break (COLOCATION W2) and `BJ.W-PROGRESS-RIM-REPLACE`'s public replacement of v7
+`coverage`/`ScrollProgressRimCoverage` with `orientation`/`ScrollProgressRimOrientation` (the FM W2
+close plus fresh consumer census/migration receipt). They are not the whole public ledger. A direct
+v7-tag→candidate diff also finds removed `./liquid-grid` and `./pulse` export-map entries plus public
+barrel/type removals including Combobox, FuzzySearch, DeckPager, `useBloomUp`,
+`useNumericTransition`, `useCountup`, `useStaggerReveal`, and `useTextHighlight`. Before the 8.0 cut,
+`R-PUBLIC-8-LEDGER` publishes the comprehensive API diff, migration map, and fresh consumer census;
+the existing owning waves annotate their removals. No removal is presumed additive/internal merely
+because the two originally named families have migration rows.
 
 ## §1 — The band DAG (the nine bands + the four greenfields + the BI engage carry-over)
 
@@ -97,9 +108,10 @@ FAMILY A — BAND-GATES ── the gate reformation ─── the TRUTH SUBSTRAT
   `glass-track-well` regardless of the scrubber's fate (C-C); `BJ.W-REDUCE-TIMELINE`'s surviving
   continuous Timeline ADOPTS `glass-track-well` at its redesign, widening the family to ≥3. W4 may run
   before W5; W5 adopts on arrival.
-- **Idle-breath is compositor-only, beside PERF W2.** `BJ.W-IDLE-BREATH` (FEEDBACK-MOTION W5) is pure
-  CSS animation (no rAF) by construction, so it cannot re-inflate the `BAND-PERF` W2 idle budget it
-  lives next to; the compositor-only gate asserts a rAF-count delta of 0 (J1).
+- **Idle-breath is ASK-27-conditional, beside PERF W2.** If ASK-27 ratifies idle motion,
+  `BJ.W-IDLE-BREATH` (FEEDBACK-MOTION W5) must be pure CSS animation with no rAF and a measured
+  rAF-count delta of 0 (J1). If ASK-27 declines, the wave does not fabricate animation; it records the
+  static-material posture and interaction-only affordance instead.
 - **The DeckPager cut lands before or with PAGER-DOT-MORPH.** `BJ.W-PAGER-DOT-MORPH` (FEEDBACK-MOTION
   W6) refines the surviving `PagerDots`/`usePagerWorm` path only; the vestigial `deck/DeckPager.vue`
   wrapper cut is its precondition (J3 / SUPERFLUITY F33).
@@ -196,16 +208,25 @@ A wave is DONE only when its born-RED gates flip GREEN **with captured evidence*
   self-test/mutation bite proving it can fail (`gate:vacuous-no-assertion` is theatre). Refactor-safety
   and null-DELTA gates are stated honestly as such — a refactor gate is never dressed as born-RED
   (COLOCATION, REDUCTION dead-config, TRACK-DRY refactor-parity).
-- **The liquid-weight law (standing user edict, PLAN-level).** ALL motion — transitions, scrolling,
-  pager/deck dots, entries and exits — carries inertia, weight, bounce, liquid-glass quality; no bare
-  fades, no mechanical ticks. The edict binds EVERY wave that touches motion, not only its named
-  owners (`BJ.W-PAGER-DOT-MORPH`, `BJ.W-ROUTE-PENDING`, the FEEDBACK-MOTION band, the dock goo-morph):
-  a wave shipping motion that reads weightless fails its challenge pass on this law alone.
+- **The liquid-weight law (standing user edict, PLAN-level).** Spatial and state journeys—transitions,
+  scrolling, pager/deck dots, entries, and exits—carry inertia, liquid weight, or restrained rebound
+  appropriate to their semantic job; no mechanical ticks or generic fade-only default. A justified
+  opacity-led exit is allowed when reverse travel or literal undraw would mislead, delay removal, or
+  contradict the formed Toast/Handmark grammar. The edict binds EVERY wave that touches motion, not
+  only its named owners (`BJ.W-PAGER-DOT-MORPH`, `BJ.W-ROUTE-PENDING`, the FEEDBACK-MOTION band, the
+  dock goo-morph); a wave must explain why its motion reads as that component rather than applying one
+  universal bounce.
 - **The breath-of-life law (standing user edict, PLAN-level, the liquid-weight sibling).** Every
-  component always displays engagement — at rest (idle breath: `BJ.W-IDLE-BREATH` and the substrate
-  fields) and on interaction (affordances that read grow/glow/lift). A wave shipping an inert-at-rest
-  atom or a dead affordance fails its challenge pass on this law alone; the PRM arm and the
-  compositor-only constraint are the law's own guardrails, not exceptions to it.
+  interactive component displays legible engagement on interaction (affordances that read
+  grow/glow/lift or an equally clear component-native response). At-rest breath is conditional on
+  ASK-27: while it pends, static material presence is valid and no wave invents idle light. If idle
+  breath is ratified it remains compositor-safe and cannot become a perpetual attention tax.
+  `prefers-reduced-motion` parity is required separately; it is not the WCAG pause/stop/hide control.
+  Nonessential automatic motion presented beside content—including dock sweeps, Aurora drift, Blob
+  always-alive motion, and IOS W6—must end within five seconds or expose a discoverable
+  pause/stop/hide mechanism at the consuming surface, backed by a producer opt-down/shared axis;
+  auto-updating information has no five-second exception. Existing FM W5, IOS W6, and each greenfield
+  W0 contract own this clause; no new motion wave is minted.
 - **Live-π discipline (the paint arm).** A "live-verified" claim needs a captured DELTA artefact
   (screenshot + paired-π), never a commit-message claim. Observe via **screenshot + computed-style
   only — never `getContext` on a live canvas** (the context-steal trap); serve on **localhost, not
@@ -230,22 +251,29 @@ A wave is DONE only when its born-RED gates flip GREEN **with captured evidence*
 
 - **≤3 concurrent seats** (the pipeline()-to-4 rate-wall lesson). Serialize every browser-owning seat
   against the others (the seat-singleton trap).
-- **Model split, always declared — the formation phase is DISCHARGED (owner order 2026-07-20).** The
+- **SOL/LUNA SUPERSESSION (owner order 2026-07-21).** From this order forward, every design,
+  judgment, audit, critique, orchestration, challenge, and paint-taste seat declares **Sol x-high**;
+  every bounded mechanical seat against a written contract declares **Luna x-high**. This
+  prospectively supersedes the Fable/Opus tier text below and every outage substitution derived from
+  it. Historical receipts keep the model names that actually ran and are never relabeled. The exact
+  goal, evidence, and freeze contract live at
+  `addenda/2026-07-21-convergent-hardening/GOAL.md`.
+- **Historical model split — DISCHARGED and non-operative after the 2026-07-21 supersession.** The
   2026-07-17 phasing ("ALL seats FABLE, mechanical included, until EXECUTION begins") governed the
-  formation window and that window is closed: the owner opened execution on 2026-07-20. The standing
-  split is now live — Fable (often, fastidiously) for design, judgment, audit, critique, orchestration
+  formation window and that window is closed: the owner opened execution on 2026-07-20. From that
+  opening until the supersession above, the split was Fable (often, fastidiously) for design,
+  judgment, audit, critique, orchestration
   and every paint-taste ruling (the greenfield closures, the graded-backdrop verdict, the proportion
   roster, every §5 known-carry judgment); Opus for mechanical fanout — codemods, moves, gate authoring
   to a written spec, fix application, test/π running; Sonnet only for bulk trivial fanout.
-  **The enforcement mechanics are the owner's 2026-07-20 model-enforcement law, stated once at
-  `EXECUTION-PROGRESS.md` §The model-enforcement law and not restated here** — its load-bearing
-  clause is that an `agent()` call with no `model:` inherits the orchestrator's model (Fable), so an
-  omitted `model:` in a fanout stage is a DEFECT and never a default; every seat declares its model,
-  every schema requires `modelId`, and the assertion is a PREFIX match (the `[1m]` suffix lesson).
+  Those labels remain only as historical receipts. The surviving enforcement rule is model-neutral:
+  an omitted model is a defect, every new seat declares the Sol/Luna model required by the
+  supersession, every schema requires `modelId`, and the assertion is a PREFIX match (the `[1m]`
+  suffix lesson).
 - **The hallmark design lane (user order 2026-07-17).** The core/hallmark features and pages — the
   FOUR greenfields (dock, handmark, aurora, blob), the landing/catalog hallmark pages (STORY W4/W5),
   and the material identity waves (MATERIAL W2/W3, the subtlety re-tune + graded-backdrop) — run
-  their design work through the frontend-design plugin (DesignSync + /design-sync) with FABLE
+  their design work through the frontend-design plugin (DesignSync + /design-sync) with **Sol x-high**
   instances, on the precepts DESIGN-ITERATION convergent loop. Mechanical fanout never substitutes
   for this lane on a hallmark surface.
 - **The guardian / EXEC-STATE durability pattern.** One self-renewing non-spammy guardian cron
@@ -321,8 +349,9 @@ pixel floor CI-wired, the static-hygiene gates, the type-hygiene lint) → the g
 obligations captured (dual-engine where claimed; live π per band; V-A95 re-repro-or-close) → every
 wave's two-critic challenge pass run (the A08/J11 law) → the disposition ledgers verified terminal →
 the user ASK (`ASK.md`) RESOLVED → the family-B Q060 outbound relays sent → the overfitting audit run
-at close (every `src/` artefact ≥2 sites OR exported OR a named private demo helper). The `./sidebar`
-break rides 8.0.0.
+at close (every `src/` artefact ≥2 sites OR exported OR a named private demo helper).
+`R-PUBLIC-8-LEDGER` must be GREEN before 8.0: the complete v7-tag→candidate export-map and public
+barrel/type diff, migration map, and fresh consumer census—not only the `./sidebar` break.
 
 **Two close conditions the ledgers impose, easy to close against silence:**
 
