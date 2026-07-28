@@ -35,8 +35,8 @@ no arithmetic, no dispositions · no figure is quoted bare — every census name
 figure) · quotation is legal only when marked as quotation with its source named and a source-wins
 clause — the four marked instances across the BK files: `gates/ROSTER.md` ← TR §B.5 · §3 below ←
 EXEC-STATE.md · §4 below ← EXEC-STATE.md · `ASK.md`'s record register ← TR §D ¶«Owner-visible,
-non-blocking» (`:380` at the 2026-07-28 seal; the ¶ name is the durable key — line anchors re-verify
-at each seal, the SL-6 lesson); the source wins in every one.
+non-blocking» (`:384` at the 2026-07-28 ⊕⁴ perfection fold; the ¶ name is the durable key — line
+anchors re-verify at each seal, the SL-6 lesson); the source wins in every one.
 
 ## §3 · The tri-fold labor law — quoted from EXEC-STATE.md §THE FOURTH + FIFTH ECOUTES (the labor-law restatement; EXEC-STATE wins)
 
@@ -100,7 +100,7 @@ sentence about the glass stays true — which is why #22's closing gate is `G-FR
 | Φ4 | the canon walls — six-token landing FIRST (the tier-3 wall, J-6) | **#68 Φ4-FIRST** · #78 |
 | Φ5 | the material/motion spines · greenfields · the ten component lanes · overlay (#89, Φ5 per K-9) | #26 ∪ IOS27 W-1 · #22 |
 | Φ6 | layout · story · perf · doc-truth · colocation · consumer band | #59 · #60 · #61 · #62 |
-| Φ7 | collapse → close battery **`--run release`** → the 8.0.0 cut | #65 → #66 |
+| Φ7 | collapse → close battery on the release path (⊕⁴ U-08 re-bind, TR#66) → the 8.0.0 cut | #65 → #66 |
 
 Two orderings load-bearing enough to name at charter level (both TR's): **#68 precedes the entire
 tier-3 band** (four lanes write marked literals against six tokens that are 0-on-disk), and **#72's
@@ -135,17 +135,21 @@ the cut.
 ## §7 · Tranche-format law
 
 `docs/tranches/BK/` holds `PLAN.md` (this file) · `EXECUTION-PROGRESS.md` (the cursor — status only,
-never a second spec) · `PORT.md` (the provenance ledger + §REJECTED) · `ASK.md` (exactly the three
-capture-time glances with ratified defaults; silence advances, never parks; one explicit owner word
-overrides any row, at any time, without ceremony) · `gates/ROSTER.md` (the 60 seats). `FINAL.md` is
+never a second spec) · `PORT.md` (the provenance ledger + §REJECTED) · `ASK.md` (the three
+capture-time glances + ⊕⁴ the eight disposition rows g4-g11, every row with a ratified default;
+silence advances, never parks; one explicit owner word overrides any row, at any time, without
+ceremony) · `gates/ROSTER.md` (the 60 seats). `FINAL.md` is
 authored at close and carries: the collapsed battery GREEN with evidence · the challenge-pass record ·
 the π/DELTA captures · the overfitting audit · the fresh cross-repo census · the shadcn-abrogation
 census · the published 8.0.0 receipt.
 
 ## §8 · The close
 
-Roster #66: the battery runs **`--run release`, never `--run local`** (the 7.0.0 lesson: a build
-blocker and six gate drifts surfaced only at tag-push) · `npm test` GREEN verified under it · C-13
+Roster #66: the close battery runs against **the release build path, never a local-only subset**
+(the 7.0.0 lesson: a build blocker and six gate drifts surfaced only at tag-push) — ⊕⁴ the historic
+`--run release` phrase is RE-BOUND at TR#66 (U-08: the named runner is dead; the surviving machinery
+is `npm run typecheck` + `npm test` + `verify-governed-invariants.mjs` + `verify:package` + the wired
+C-13 visual suite, all GREEN) · C-13
 wired · fresh cross-repo census per TR §C (fresh-at-ship stays law) · shadcn census · ONE suite re-pin
 (C-10) · the LIB-SEAM addenda shipped and PUBLISHED — **publish, not commit, closes a consumer-facing
 row (L2)**; consumer dependence never preserves an obsolete API — the consumer updates via a marked

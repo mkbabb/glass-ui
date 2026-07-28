@@ -11,6 +11,23 @@ ledger's warrant: nothing in the folded artifacts, the returned-Luna backlog, th
 the 16 BI decisions, the IOS27 seam, the ten tier-3 lanes, or the RATIFICATION batch is unowned,
 unrouted, or silently dropped.
 
+## §0 · PRE-HISTORY — the lineage docs of record (⊕⁴ 2026-07-28, U-01; the pre-BG arm)
+
+This ledger's §1/§2 map BI and BJ. Everything earlier reaches BK through THREE lineage documents,
+named here so the chain is never one-eyed again (PROOF-SWEEP lane C §6's standing verdict, cured):
+
+- **`docs/tranches/BC/DEFERRAL-LEDGER.md`** — the BC deferral register (§5 the BB/BC noun chain);
+  the route by which BB and BC obligations reached BD.
+- **`docs/tranches/BD/FOLD-LEDGER.md`** + **`docs/tranches/BD/union/DEFERRED-CENSUS.md`** — the BD
+  union fold that absorbed BC/BE/BF and the 100-session census; BD's 1,338 routed rows live in
+  `docs/tranches/BI/FORMATION/open-row-routing.json` filtered `^docs/tranches/BD/` (count ⊘ at the
+  fold seat), the seed of G-ROW-HOMED's **+BD-CARRY arm** (TR#16, §B.5 — an ARM, seats +0).
+
+Anything pre-BG that is not FOLDED/RETIRED in PROOF-SWEEP lane C §1/§2 and not seated as a U-row is,
+by construction of that ledger's dedupe, covered by its seat's own verdict — the +BD-CARRY arm is
+the standing detector that makes a silent pre-BG drop visible at close, exactly as +BI-CARRY does
+for BI.
+
 ## §1 · BI
 
 ### §1.1 JUDGMENT-ROSTER Q051 (`docs/tranches/BI/addenda/JUDGMENT-ROSTER.md`) — 17 rows ✦ reproduced
@@ -105,6 +122,28 @@ record.
 **§1.4 count:** 20 = 9 carrier rows (Q002 Q003 Q010 Q023 Q040 Q041 Q042 Q060 Q063) + 10
 EXECUTED/DISCHARGED record rows (Q020 Q021 Q024 Q030 Q031 Q032 Q033 Q043 Q050 Q070) + 1 via §1.1
 (Q051).
+
+### §1.5 The BI FORMATION P-corpus — 134 rows ✦ (⊕⁴ 2026-07-28, U-02; `BI/FORMATION/waves/BI.W-P000..P133`, per-lane disposition per `docs/tranches/BI/HANDOFF-ACTIVE-EXECUTION.md:96-113` + the executable map `:380-394`)
+
+The P ledger's own arithmetic (`:113`): **61 DONE + 2 achieved-by-abrogation + 22 terminal
+declined/superseded/abrogated + 49 landed-but-nonterminal = 134.** The 85 terminal rows (61+2+22)
+are RECORD — executed or retired on BI's own ledger; any re-open resolves against RECONCILIATION,
+never by re-audit (§1.3's law). The 49 nonterminal rows disposition by the handoff's own eight
+lanes; every lane's named close condition is superseded by the refinement terminals and each maps
+to its BK carrier:
+
+| lane (`:384-391`) | P rows | n | BK carrier |
+|---|---|---|---|
+| material · type · responsive · a11y · producer migration | P015-P023 | 9 | #22/#68 (material+type) · #59 (responsive) · #31 (a11y) · #76 (declarations); the lane's Q002/Q003 close conditions superseded per §1.4 |
+| temporal authority + motion | P025-P031 | 7 | #26 (the ONE authority) + #27/#28/#29/#30; the two post-edit challenges = the standing twice-challenge rule (#11) |
+| dock plate · selection · motion · demo | P035 P036 P041 P042 | 4 | #47/#48 (the greenfield supersedes the P-era posture cells) + #56; Q021 evidence consumed at §1.1 r1 |
+| procedural marks + fields | P046 P047 P051 | 3 | #49/#50/#51/#55 (+#54); the dual-engine premise VOID (WebGPU-only — same ruling as §1.4 Q042) |
+| demo chassis · IA · heroes · examples · a11y | P055 P056 P058 P060 P062 | 5 | #56/#58 (+#59; a11y #31) |
+| core controls + feedback | P065 P067 P068 P075-P077 | 6 | #79-#84 lanes + #88 (progress) + #87 (Pulse/StatusDot) + #33/#34 |
+| semantic component apotheosis | P091-P094 P097-P098 P101-P102 P104-P105 P107-P108 P116 | 13 | #43 (chip) · #32 (tabs) · #35 (slider) · #82 (number-field) · #44 (tags-input, behind ASK g5) · #57 (labeled-field) · #64 (disclosures · command · data-table) · #89 (tooltip · menu) · #39 (drawer) |
+| physical sleeve + package boundary | P122 P127 | 2 | P122's InstrumentChassis coordinate witness dies with the ✦³ DELETE-CONFIRMED (#18 — record); P127 → #8/#66 (clean graph · strict declarations · immutable publish) |
+
+Σ 9+7+4+3+5+6+13+2 = **49 ✓**. Zero roster growth, zero gate movement; the §3 Σ row carries the 134.
 
 ## §2 · BJ
 
@@ -211,6 +250,8 @@ routed into it is live work.
 | BI named remainders | 8 | 6 | 0 | 1 (W-SLIDER-ENGAGE, in place) + 1 → class §1.3 | 8 ✓ |
 | BI wave corpus | 109 | 0 | 0 | 109 (class EXECUTED/SUPERSEDED, §1.3 grounds) | 109 ✓ |
 | BI addenda Q-waves | 20 | 9 | 10 record (EXECUTED/DISCHARGED on disk ✦) + 1 via §1.1 (Q051) | 0 (supersessions carry named carriers) | 20 ✓ |
+| ⊕⁴ BI FORMATION P-corpus (§1.5) | 134 | 49 nonterminal → 8 lanes, carriers named | 85 record (61 DONE + 2 abrogation + 22 terminal) | 0 (terminal rows ARE the retire class, counted as record) | 134 ✓ |
+| ⊕⁴ BA-BJ union tails (PROOF-SWEEP lane C) | ~380 seat rows → 50 union orphans | 46 one-liner seatings + U-01/U-02/U-04 structural | U-03 ALREADY-CARRIED (SL-1…SL-5) | ~205 FOLDED + ~120 RETIRED at the lane's own §1/§2 (cited, not restated) | 50 ✓ |
 | BJ band waves | 49 | 44 | 4 landed-in-BJ with residue carried (RED-W1 · RED-W6 · DOC-TRUTHUP · RESP-AUDIT) | 1 ceded in place (IDIOMS → via #62) | 49 ✓ |
 | BJ `waves/` files | 10 | 9 bands → §2.1 | 0 | 1 (APOTHEOSIS → TR §A.2) | 10 ✓ |
 | BJ phase ledger | 7 + row 93 | 6 + row 93 | 0 | 1 (P-CLOSE historical) | 8 ✓ |
@@ -220,8 +261,9 @@ routed into it is live work.
 
 Zero silent drops. Every RETIRED/SUPERSEDED/DECLINED row carries grounds in its own cell; every
 ported row names its TR carrier; TR §0's fold ledger + TR §REJECTED hold the roster-level
-adjudication trail. `G-ROW-HOMED` (+BI-CARRY +UF +BG-join) is the standing detector — re-derived at
-close, never trusted from this table.
+adjudication trail. `G-ROW-HOMED` (+BI-CARRY +UF +BG-join **+BD-CARRY** — ⊕⁵ the arm this same file's §0 defines,
+restored to its own detector sentence, SE-7) is the standing detector — re-derived at close, never
+trusted from this table.
 
 ## §REJECTED — the tri-fold adjudication, losers with falsifiers
 
@@ -315,3 +357,43 @@ sittings — r12's "R-1 DELETE" and ASK-6's "clean 8/8 DELETE" read as porting h
 outcome by TR#18 (carousel KEEP + deck substrate · metric family consolidation); r12's carrier cell
 is corrected in place below the table it lives in. Gate seats moved **+0** at this seal; the Σ-check
 gains no rows.
+
+## §6 · The perfection-fold record — 2026-07-28, `claude-fable-5` (⊕⁴)
+
+Inputs, both CLOSED and banked before the fold fired: **`PROOF-SWEEP.md`** (`wf_8a75422c-8a1`,
+23/23 — lanes A/B/C) · **`DECK-RELOCATION.md`** (`wf_8ea3a20f-669`, 7/7 — the deck adjudication +
+the relocation roster). Outcome, zero silent drops:
+
+- **Lane C §4's 50 union orphans seated**: 46 one-liners at their named TR/§C/cursor seats (each
+  ⊕⁴-marked, cited by U-id) · U-01 structural (this file's §0 + the +BD-CARRY arm at TR#16/§B.5) ·
+  U-02 structural (§1.5 + the §3 Σ row) · U-04 ruled on the RETIRE-the-machine branch (TR#16 —
+  `BI/ledgers/CHRONIC-DISPOSITIONS.md` the record of truth, the AX register historical) · U-03
+  verified ALREADY-CARRIED at TR SL-1…SL-5, nothing added twice. Every lane C §3 re-verdict honored
+  (T55 confirmed-folded at #66 · D27 retired R5 · O-3's residue inside U-21 · the restamp overrule
+  inside U-04 · the Kuwahara overrule → ASK g7).
+- **Lane B §3's four corrections carried**: the census-instrument false-negative class → TR#76's
+  ship-time clause · the #40 docket correction (`DashboardEssay.vue` named, `useDeckDetent`
+  mirror-only) · the `src/index.ts:36-37` stale barrel doc → TR#19 · the metric relay hardened
+  ON-7.x-BLOCKING with **sci-active** the current-contract copy (TR#76/#87/§C).
+- **The DECK-RELOCATION bank folded**: PART I §3 = #40's spec-of-record (the roster row a pointer) ·
+  PART II's fold-seatable rows routed (#18 relay destinations · #46 variant trim · #21 subpath
+  candidates · #42 search shape · #8 alias note · #76 instrument defects) · the §7 owner-glances →
+  ASK g4-g6 with ratified defaults.
+- **Gate seats +0; two ARMS named** (+BD-CARRY · +clock-fence); the ASK register grew g4-g11 (eight
+  disposition rows, defaults ratified, silence advances); ids 90 · budget exactly 60 — unchanged.
+
+## §7 · The perfection-seal record — 2026-07-28, `claude-fable-5` (⊕⁵)
+
+One orphan critic + four precepts readers (`claude-opus-5`, rows 1-25 · 26-50 · 51-70 · 71-90 + the
+orphan seating) audited the ⊕⁴ state; every confirmed miss CURED ON DISK, every refuted finding
+ruled — the full ledger is **TR §00 SE-1…SE-10** (cited, never restated). BK-side cures at this seal:
+this file's §3 detector sentence regains +BD-CARRY (M-2) · `ASK.md` g5 re-grounded on the real banks
+(lane B item 14 + DECK-RELOCATION PART II §1/§7 — M-3's "lane C §1/§7" cited a section that does not
+exist), gains the fires-at column g4-g12 and the g12 handmark-freehand row · the cursor explodes row
+`12-15` into four rows (SE-6 — TR now STATES the id↔scope mapping, which un-does this file's
+§REJECTED "Fable arm cursor" objection on its own ground: the mapping exists now, so the split is
+licensed; the rejection row stands as history) · gates/ROSTER preamble re-worded (born-RED
+*conditions*, not seats) + the rail figure re-derived with its detector. Provenance truth (SE-1):
+the two roster arm files RESTORED from HEAD; the four stage-2 arm banks LOST-NEVER-TRACKED — §4
+above + TR §0 (g)/(j) + §00 S-1…S-15 are the surviving stage-2 record. Gate seats moved **+0**;
+ids 90; the Σ-check gains no surfaces.

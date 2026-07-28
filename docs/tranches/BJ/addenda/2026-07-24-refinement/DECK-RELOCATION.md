@@ -134,7 +134,7 @@ Owner item 12 (`EXEC-STATE.md:455-457`): carousel STAYS and shares the deck's su
 
 ---
 
-## §3 · THE WIDENED #40 WAVE-AMENDMENT DRAFT — body for the perfection fold to seat verbatim
+## §3 · THE WIDENED #40 WAVE-AMENDMENT — ⊕⁵ SEATED-BY-POINTER (the fold seated it as TR#40's spec of record 2026-07-28; the DRAFT banner is dead — TR SE-7)
 
 > ### #40 W-PAGER ⊕³ — widened to THE DECK APOTHEOSIS (owner sitting items 11-12, `EXEC-STATE.md:450-457`)
 >
@@ -165,7 +165,9 @@ Owner item 12 (`EXEC-STATE.md:455-457`): carousel STAYS and shares the deck's su
 | Embla delete | — | D3: delete; owner word: carousel KEEP | Legal as consolidation; the unnamed loop loss becomes a named clean break + words relay (§0.7) |
 | Continuous position | — | D3: core must publish it; atlas detent: "no continuous scalar crosses this seam" | Optional producer-fed channel; atlas's seam stays closed unless it opts in (§0.8) |
 
-Key files for the fold: `docs/tranches/BJ/addenda/2026-07-24-refinement/TERMINAL-ROSTER.md:135` (the row this amends), `EXEC-STATE.md:450-457` (authority), `EXEMPLARS-CODEX.md:145-171` (laws), `/Users/mkbabb/Programming/glass-ui/src/components/deck/README.md:65-71` (the fence to amend), `/Users/mkbabb/Programming/slides/src/styles/deck.css` (the largest migration corpus), `/Users/mkbabb/Programming/atlas/src/stage/useDeckDetent.ts` (the prior-art travel arm).
+⊕⁵ ANCHOR RULE (2026-07-28 seal, TR SE-7 — the SL-6 lesson applied inside this bank): every `TERMINAL-ROSTER.md:<line>` anchor in this file was pinned pre-⊕⁴ and has drifted; **the roster ROW NUMBER (`#n`) beside each anchor is the durable key and wins** — line anchors here are historical, re-verify against the row number, never the line.
+
+Key files for the fold: `docs/tranches/BJ/addenda/2026-07-24-refinement/TERMINAL-ROSTER.md` row **#40** (the row this amends; ⊕⁵ the stale `:135` anchor struck — that line is #27), `EXEC-STATE.md:450-457` (authority), `EXEMPLARS-CODEX.md:145-171` (laws), `/Users/mkbabb/Programming/glass-ui/src/components/deck/README.md:65-71` (the fence to amend), `/Users/mkbabb/Programming/slides/src/styles/deck.css` (the largest migration corpus), `/Users/mkbabb/Programming/atlas/src/stage/useDeckDetent.ts` (the prior-art travel arm).
 
 ---
 
