@@ -761,9 +761,16 @@ re-point buttons.vue + atoms.vue; update verify:package lists. (5) Addenda per W
 
 ## Wave 7 — BJ.W-REDUCE-OVERLAY-SURFACE · dialog/drawer surface cuts (NEW — RU-09 R7 / RU-19 V8)
 
-**Status:** UNION — ASK-GATED ON AN UNMINTED ROW. **[ESCALATION 2026-07-20, STAB9 — lead/owner action owed before this wave can park or run.]** "ASK A4" is RU-09's internal ask numbering (`REFABLE-RU-03-REDUCTION.md:62`), NOT an `ASK.md` row ID and NOT an `ASK-REDUCTION.md` section: the public `DrawerDirection` narrowing appears in neither document (grep = 0). Scope item (2) is a public-API type narrowing, so it cannot execute on a formation-side call. The lead must either MINT the ratification row into `ASK.md` or record a lead-decided disposition here with its rationale. Until then this wave is PARKED-UNROUTABLE, not merely ASK-gated.
+**Status:** UNION — AP-33 · PARKED PENDING OWNER MARK. `ASK.md` now mints ASK-33 with this exact
+public-narrowing scope. The missing-authority defect is discharged, but the recommendation is not an
+owner decision and does not unpark the wave.
+**[HISTORICAL ESCALATION 2026-07-20, STAB9; superseded by ASK-33 on 2026-07-22.]** "ASK A4" was
+RU-09's internal ask number (`REFABLE-RU-03-REDUCTION.md:62`), not an `ASK.md` row or
+`ASK-REDUCTION.md` section. The public `DrawerDirection` narrowing then appeared in neither document,
+so the wave was correctly classified PARKED-UNROUTABLE until the authority row was minted. Preserve
+that defect history; current routing is AP-33.
 **Terminal owner:** glass-ui orchestrator
-**Depends on:** ASK A4; sequenced WITH MATERIAL W3 (which OWNS the C-F staging-substrate
+**Depends on:** ASK-33; sequenced WITH MATERIAL W3 (which OWNS the C-F staging-substrate
 extraction — one Stage enum + resolveStage + provideStageRoots + useStageAnchor + one
 scrim-registration composable + the overlay-stage css out of drawer/styles.css). This wave owns
 only the SURFACE cuts that ride it.
@@ -782,7 +789,7 @@ side-lens and no-ladder drawers have ZERO gesture affordance).
 (1) DELETE `DrawerTitle.vue` + `DrawerDescription.vue` (byte-identical twins; the drawer story
 already imports DialogTrigger/DialogClose across families); drawer consumers import
 DialogTitle/DialogDescription. Keep DrawerHeader/DrawerFooter (genuinely distinct padding ladder).
-(2) NARROW `DrawerDirection` to `bottom|top` (ASK A4 — a public-API narrowing): delete the side
+(2) NARROW `DrawerDirection` to `bottom|top` (ASK-33 — a public-API narrowing): delete the side
 branch of resolveDefaultSnapPoints, isSideAxis, the translateX snapStyle arms, horizontal
 aria-orientation; the story's fixed-edge panels re-express as `<DialogContent
 placement="left|right">`, no-ladder sheets as `<DialogContent placement="bottom">`. Drawer
@@ -795,7 +802,7 @@ before its cuts ship (no twin left behind).
 
 | gate | posture | probe |
 | --- | --- | --- |
-| G-ASK-RESOLVED (A4) | precondition | the narrowing ratified. |
+| G-ASK-RESOLVED (ASK-33) | precondition | the narrowing ratified. |
 | G-SURFACE-DELTA | intentional | DrawerTitle/Description + the side/no-ladder arms off the surface. |
 | G-SHEET-PARITY | visual | paired-π: the re-expressed side-lens + no-ladder demos render equivalently on DialogContent placement. |
 | G-SEAM-SEQUENCE | cross-band | MATERIAL W3's shared staging seam exists (or lands in the same cut) — the twin stage/scrim/PRM code is not deleted into a void. |
@@ -924,7 +931,7 @@ is a one-time RED→GREEN differential or an execution-time census/probe; nothin
 (§D1), WatercolorDot (§B5), DataTable (§B1 — census corrected: atlas + speedtest live),
 FourierField/Constellation component fates (§B2/§B3, corrected census),
 tempo page fold (§C4), confirm-dialog story fold (§C2/A6), scroll page fold + A06 standard
-(§C3), pulse merge (**LEAD-RULED 2026-07-20, EXECUTED with W3** — P-CLOSE merge-on-merit, no ASK minted; W6 §Status is the disposition of record — no longer open), drawer narrowing (**PARKED-UNROUTABLE** — W7's "ASK A4", per `:614`), goo collapse (**ASK-6** / `ASK-REDUCTION.md` **§C1**) [three cites corrected 2026-07-20, STAB11: the prior "(A2)" was RU-09 internal numbering and collided with `ASK.md` ASK-2 / §A2, completion-seal — a live row recommending KEEP; W8's Status `:657` and gate `:688` already carried this correction and this register was the third, un-swept site], chassis/metric (A1, re-issued
+(§C3), pulse merge (**LEAD-RULED 2026-07-20, EXECUTED with W3** — P-CLOSE merge-on-merit, no ASK minted; W6 §Status is the disposition of record — no longer open), drawer narrowing (**AP-33** — W7; owner mark still owed), carousel half (**ASK-6** / `ASK-REDUCTION.md` **§C1**; REDUCTION W8 deck-half + FM W6 already severed and executed) [three cites corrected 2026-07-20, STAB11: the prior "(A2)" was RU-09 internal numbering and collided with `ASK.md` ASK-2 / §A2, completion-seal — a live row recommending KEEP; W8's Status `:657` and gate `:688` already carried this correction and this register was the third, un-swept site], chassis/metric (A1, re-issued
 with the fired flip clause), carousel (§C1, re-issued with the words census), timeline shape +
 scrubber fold (**ASK-7**) [cite corrected 2026-07-20, STAB11: the prior "/A5" was RU-09 internal numbering and collided with `ASK.md` ASK-5, the tempo page; W5's Depends line `:551` already carried this correction], **the A05 conditional-disposition roster — RECORDED 2026-07-20** (the dated disposition block in W3's A05 section: A05-SPECULAR DELETED, A05-CTA/A05-BACKDROP-TRIO KEEP→COLOCATION re-home, A05-DRAW-IN KEEP-as-register — no longer open).
 

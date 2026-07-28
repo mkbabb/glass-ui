@@ -149,6 +149,11 @@ eyeglass / metaball-neck register, or ratify the `--stretch` reuse as sufficient
   `filter:url()` Safari risk. Lean: ratify the reuse unless a paint pass shows it wanting the lens.
 - Evidence: `GF-DOCK-PASS3.md` §7/§12 (Q2).
 
+**[DATED BRACKET 2026-07-22 · senior-spec correction; frozen wording preserved.] ASK-15'S OLD
+FORK IS STALE.** GF-DOCK §7.1 already makes the cheap, no-`filter:url()` selection lens mandatory.
+That baseline proceeds in W4 and is not owner-gated. The live rollout/full-refraction choice is
+ASK-32 below; no executor may revive `--stretch`-instead-of-lens as the option set.
+
 **ASK-16 · dock collapsed "+N" tray (GF-DOCK §12.3).** Does the collapsed dock need the optional "+N"
 detent tray, or does it expand-then-detent?
 - **Recommendation: not required for convergence — a design call.** The filmstrip handles overflow when
@@ -165,6 +170,11 @@ correction of the misleading "SegmentedTabs wearing chrome" comment.
   and the SidebarDock comment truth-up. [Pointer trued up 2026-07-20, STAB7: the prior cite
   "`BAND-A11Y.md` W2 (E)" predated the A11Y union — W2 is now `BJ.W-A11Y-LINKAGE` and its (E) is the
   Slider focus-ribbon register. Question and recommendation unchanged.]
+
+**[DATED BRACKET 2026-07-22 · exact owner correction; frozen wording preserved.] ASK-17 parks only
+the comment truth-up.** It does not park GF-DOCK W3 implementation and it does not belong to A11Y W2.
+Its receiver is `BJ.W-DOC-TRUTHUP`'s Family-J SidebarDock comment slice; A11Y W5(A) supplies the
+evidence. GF-DOCK W3 proceeds under its decided toolbar/link keyboard contract.
 
 **ASK-18 · handmark brush floor (Q-HM-1) — RESOLVED BY YOUR RULING 2026-07-17, no answer owed.**
 "handmark is keep. But greenfield and perfect from first principles. Fable." — the greenfield holds
@@ -187,12 +197,23 @@ contour-hatching mode?
   (C-G) — the preset cut alone does not close it.
 - Evidence: `GF-AURORA-PASS3.md` §8; `JUDGE.md` C-G.
 
+**[DATED BRACKET 2026-07-21 · lead truth-up; frozen wording preserved.] AUTHORITY CONFLICT—ASK-20
+STILL NEEDS THE OWNER.** The senior greenfield spec records the ink fork as **CUT** from the singular
+A13 reading + F03 parsimony (`GF-AURORA-PASS3.md:163-166,313,423-434`), but that internal design
+adjudication is not an owner mark on this frozen row. Do not launch W3 until the owner either accepts
+the recorded CUT or marks the original option. ASK-28 is a separate DUSK/DAWN judgment, not a
+replacement for ASK-20.
+
 **ASK-21 · blob default register (Q-BLOB-DEFAULT).** Does the default `<Blob>` ship as the loud
 liquid-metal creature, or stay the calm warm-cream whisper with a liquid-metal opt-in?
 - **Recommendation: the library's OWN default evolves to liquid-metal chrome**, with the calm whisper
   preserved as a named register (the "lib's own default tokens evolve as its identity changes" edict).
   A clean-break taste call that inherits to every existing consumer — yours to own.
 - Evidence: `GF-BLOB-PASS3.md` §2.1/§7 (Q-BLOB-DEFAULT).
+
+**[DATED BRACKET 2026-07-21 · lead truth-up; frozen wording preserved.] DO NOT ANSWER ASK-21.**
+The senior greenfield spec refuted chrome as the default candidate and replaced the question with
+technicolor-vs-warm-cream (`GF-BLOB-PASS3.md:81-105,389-398`). The corrected live choice is ASK-29.
 
 **ASK-22 · blob WGPU-twin delete coordination (GF-BLOB §7; cross-tranche).** Land the WGPU-twin delete
 (`metaball.wgsl.ts` + `wgpuSetup.ts` + `uniformBridgeWGPU.ts`) in THIS greenfield or a shared
@@ -201,6 +222,12 @@ substrate-delete wave?
   value.js-genesis delete order that also touches dot-matrix/goo-dot; W-DELETE-TWIN can carry it or defer
   to a shared coordination wave. Lean: land it in W-DELETE-TWIN with the cross-tranche touch flagged.
 - Evidence: `GF-BLOB-PASS3.md` §7 (WGPU-twin).
+
+**[DATED BRACKET 2026-07-21 · R-1 lead disposition; frozen wording preserved.] DISCHARGED FOR
+GF-BLOB.** The senior roster struck W-DELETE-TWIN and records that the value.js delete order does not
+bind this producer; GF-BLOB W-FINAL carries only the consumer relay addendum
+(`GF-BLOB-PASS3.md:255-267,284,299,400-403`; `formation/stability/TERMINAL-ROUTINGS.md` R-1). No Blob
+wave waits on ASK-22. Any substrate-delete implementation stays with its owning external tranche.
 
 **ASK-23 · dot-flow halftone revive (CHRONIC R15; standing offer).** The dot-flow halftone was retired;
 do you want the revive charter offered, or does it stay retired?
@@ -266,6 +293,70 @@ selection-lens sweep) re-scope those targets?
 
 ---
 
+## §3A — Greenfield questions minted from the senior pass-3 specs (2026-07-21 lead truth-up)
+
+These rows repair option-set drift without rewriting ASK-20/21/22. No answer is inferred.
+
+**ASK-28 · Aurora solar-quartet disposition (Q-AURORA-QUARTET).** After the authored DUSK re-found
+and DAWN hardening are shown in before/after π-QUARTET captures, do you ratify both identities or
+delete either slot as still confusable?
+- **Recommendation: ratify the re-found identities; if silent, harden-not-delete.** A capture informs
+  the call but does not make the user judgment. This blocks only W5's DUSK/DAWN death clauses, not W3
+  crayon or the parallel-safe smooth-quartet work.
+- Evidence: `GF-AURORA-PASS3.md:212-240,375-378,420-434`.
+
+**[DATED BRACKET 2026-07-22 · ratification-protocol correction; frozen wording preserved.] SILENCE
+DOES NOT DECIDE ASK-28.** “Harden-not-delete” remains the recommendation only. Until the owner marks
+the row, W5's DUSK/DAWN death clauses stay parked; W3 and the parallel-safe smooth-quartet proceed.
+
+**ASK-29 · Blob default identity (Q-BLOB-DEFAULT, corrected).** Does default `<Blob>` become the
+technicolor watercolor creature, or remain warm-cream with technicolor opt-in?
+- **Recommendation: technicolor default, warm-cream as a named calm preset.** Chrome remains an
+  exported preset and is not a default candidate. This is a clean-break taste decision consumed by
+  W0 contract-lock, W-IDENT, W-SHOW, and W-FINAL.
+- Evidence: `GF-BLOB-PASS3.md:81-105,244-251,289-299,389-394`.
+
+**ASK-30 · Blob thinking mood (Q-BLOB-THINKING).** Adopt `thinking` as a sixth named mood with the
+sparkle nucleus as its signature?
+- **Recommendation: yes.** It completes the named assistant arc; while pending, only the thinking
+  clause of W-MOOD is parked and the remaining mood-output corrections proceed.
+- Evidence: `GF-BLOB-PASS3.md:154-166,294-295,395-396`.
+
+**ASK-31 · Blob grab-and-fling (Q-BLOB-GRAB).** Ship grab-and-fling as an opt-in mascot-register
+interaction, using the separate place/flick regimes and never enabling it on the substrate register?
+- **Recommendation: yes, opt-in.** While pending, W-REACT's satellite repulsion proceeds and only the
+  grab clause remains parked.
+- Evidence: `GF-BLOB-PASS3.md:212-234,296,397-399`.
+
+**[DATED BRACKET 2026-07-22 · interaction contract; frozen wording preserved.]** If ASK-31 is
+ratified, the mascot remains equivalent when non-dragged; `pointercancel`, lost capture, and outside
+release restore a settled state; and the owner must classify a keyboard-operable equivalent or
+explicitly rule the gesture decorative.
+
+**ASK-32 · dock lens rollout / full-refraction variant (GF-DOCK §7.1, corrected ASK-15).** Does the
+mandatory cheap, no-`filter:url()` selection lens ship on the strip only or on strip + rail, and is a
+separately gated full-refraction variant authorized after the WebKit proof?
+- **Recommendation: ship the cheap lens on strip + rail; keep full refraction optional and gated.**
+  Selection must stay legible without stacked SVG filters. Any drag-capable lens restores on
+  `pointercancel`, lost capture, and outside release, with keyboard selection producing the same
+  terminal state.
+- Evidence: `GF-DOCK-PASS3.md` §7.1/§12.2 and the 2026-07-22 candidate-1 truth challenge.
+
+**[DATED BRACKET 2026-07-28 · lane-A adjudication; frozen wording preserved.] The strip+rail half of
+this fork is already RATIFIED** (`GF-DOCK-PASS3.md:245,321`); only the separately gated full-refraction
+variant remains the live question on this row.
+
+**ASK-33 · Drawer direction clean break (REDUCTION W7; replaces nonexistent “ASK A4”).** Ratify
+narrowing public `DrawerDirection` to `top | bottom`, moving side/no-ladder presentations to
+`DialogContent` placement while preserving the detented Drawer core?
+- **Recommendation: yes.** Verified external Drawer consumers use detented bottom sheets; the public
+  side/no-ladder arms and DrawerTitle/DrawerDescription twins therefore add surface without an
+  exercised drawer contract. This answer parks or releases only REDUCTION W7; MATERIAL W3 retains the
+  shared staging-dedup seat.
+- Evidence: `waves/BAND-REDUCTION.md` Wave 7 and candidate-1 public-contract challenge.
+
+---
+
 ## §4 — Ratification protocol (how your rulings bind)
 
 Reply once, marking each row terminal. The marking routes each row as follows:
@@ -275,11 +366,15 @@ Reply once, marking each row terminal. The marking routes each row as follows:
 - **An OVERRULE mark** on a §1 row converts a KEEP into a costed multi-repo family-B migration relay
   (every breaking consumer gets a by-name ask before the tag); a PRUNE/relocate into the corresponding
   delete + relay.
-- **A greenfield ruling (§2)** unblocks the gated wave: ASK-14 unblocks GF-DOCK W7; ASK-18/19 are
+- **A greenfield ruling (§2/§3A)** unblocks only its named slice: ASK-14 unblocks GF-DOCK W7; ASK-18/19 are
   RESOLVED by your 2026-07-17 ruling (first-principles authority granted — no answer owed) and fix the
-  GF-HANDMARK register + shape surface; ASK-20 sizes GF-AURORA W3; ASK-21 sets the GF-BLOB default;
-  ASK-22 sequences the WGPU-twin delete. Un-ruled greenfield rows leave their wave PARKED (they do not
-  block the rest of the tranche).
+  GF-HANDMARK register + shape surface; ASK-20 remains an explicit authority conflict, ASK-22 is
+  discharged by R-1's lead routing, and ASK-21's stale option set is replaced by ASK-29. ASK-28 gates only Aurora W5's DUSK/DAWN
+  disposition; ASK-29 sets the Blob default; ASK-30/31 gate only the thinking/grab clauses; ASK-32
+  gates only the dock-lens rollout/full-refraction option above the mandatory cheap lens. Un-ruled
+  greenfield rows leave those named slices PARKED; they do not block unrelated work.
+- **ASK-33** is the missing REDUCTION W7 authority seat. Until marked, W7 is `AP-33`, not
+  `PARKED-UNROUTABLE`; no implementation may infer the public narrowing from the recommendation.
 - **§3** ASK-25 and ASK-27 are USER rulings carried here (RU-04 judge §5.3): ASK-25's answer feeds FM
   W4 + the A11Y W3-C gate table; ASK-27's answer unblocks FM W5 and is consumed by PERF OPEN-P5(b) +
   STORY W5 — un-ruled, W5 stays parked and no band pre-decides the idle axis. ASK-26 is the
@@ -289,8 +384,9 @@ Reply once, marking each row terminal. The marking routes each row as follows:
   provenance corrections are facts, not options).
 
 Every row is terminal on your mark; no row here re-appears in a future tranche (the crosswalk's
-zero-silent-drop spine holds). This checklist closes the family-C surface purge + the four greenfield
-identity calls + the three material/story/motion judgments — the entire user-reserved surface of BJ.
+zero-silent-drop spine holds). This checklist closes the family-C surface purge plus every
+greenfield, material, story, motion, and clean-break judgment enumerated in the roll-up—the entire
+user-reserved surface of BJ.
 
 ---
 
@@ -303,28 +399,41 @@ identity calls + the three material/story/motion judgments — the entire user-r
 | ASK-3 | confirm-dialog story | DELETE (fold) | demo page count + relay |
 | ASK-4 | reveal/scroll | RE-ISSUED: per-symbol table (useStagger KEEP; 2 deletes; relocations) + page fold | scroll-family reduction |
 | ASK-5 | tempo page | fold PAGE into springs (token out of scope) | motion taxonomy |
-| ASK-6 | deck vs carousel | RE-ISSUED: deck-keep + carousel DELETE-with-relay (words named) | deck/carousel shape + FM W6 |
+| ASK-6 | deck vs carousel | RE-ISSUED: deck-keep + carousel DELETE-with-relay (words named) | ~~deck/carousel shape + FM W6~~ REDUCTION W4 carousel slice only; FM W6 already severed/executed |
 | ASK-7 | timeline | collapse 5→1, redesign-in-library | REDUCTION W5 |
 | ASK-8 | DataTable | thin or demo-privatize | REDUCTION W3 + A11Y |
 | ASK-9 | FourierField | retire dead knobs; keep-or-cut | REDUCTION W1 + A14 |
 | ASK-10 | Constellation | retire dead knobs; keep-or-relocate | REDUCTION W1 |
 | ASK-11 | easing tooling | demo-privatize | REDUCTION W3 + F31 |
 | ASK-12 | WatercolorDot | relocate vs keep (value.js only) | REDUCTION W1 |
-| ASK-13 | compositions | prune whole section (scene: 6-vs-7) | REDUCTION W3 + STORY W1 |
+| ASK-13 | compositions | prune whole section (scene: ~~6-vs-7~~ 5-vs-6) | REDUCTION W3 + STORY W1 |
 | ASK-14 | dock fission fork | parked both ways — you rule | GF-DOCK W7 |
-| ASK-15 | dock eyeglass/liquid-metal pill | flagged enhancement (lean: ratify reuse) | GF-DOCK W4 |
-| ASK-16 | dock "+N" tray | not required (lean: no tray) | GF-DOCK collapsed state |
-| ASK-17 | dock keyboard truth-up | confirm the comment truth-up (family J) | GF-DOCK W3 + A11Y W2 |
+| ASK-15 | dock eyeglass/liquid-metal pill | ~~flagged enhancement (lean: ratify reuse)~~ STALE FORK; use ASK-32 | ~~GF-DOCK W4~~ superseded by ASK-32 |
+| ASK-16 | dock "+N" tray | not required (lean: no tray) | ~~GF-DOCK collapsed state~~ GF-DOCK W9 optional collapsed slice |
+| ASK-17 | dock keyboard truth-up | confirm the comment truth-up (family J) | ~~GF-DOCK W3 + A11Y W2~~ DOC-TRUTH comment slice; A11Y W5(A) evidence |
 | ASK-18 | handmark brush floor | RESOLVED-BY-RULING (design loop; 3+override working target) | GF-HANDMARK register |
 | ASK-19 | handmark box/bracket | RESOLVED-BY-RULING (design loop; RETIRE working target) | GF-HANDMARK shape surface |
-| ASK-20 | aurora crayon scope | ONE crayon (+ keep pastel/watercolor floor) | GF-AURORA W3 |
-| ASK-21 | blob default register | liquid-metal chrome (whisper as a register) | GF-BLOB default |
-| ASK-22 | blob WGPU-twin delete | surface the sequencing (lean: W-DELETE-TWIN) | GF-BLOB W-DELETE-TWIN |
+| ASK-20 | aurora crayon scope | ~~ONE crayon (+ keep pastel/watercolor floor)~~ AUTHORITY CONFLICT: senior spec says CUT; owner mark still required | GF-AURORA W3 |
+| ASK-21 | blob default register | ~~liquid-metal chrome (whisper as a register)~~ STALE OPTION SET; use ASK-29 | ~~GF-BLOB default~~ superseded by ASK-29 |
+| ASK-22 | blob WGPU-twin delete | ~~surface the sequencing (lean: W-DELETE-TWIN)~~ DISCHARGED by R-1: no Blob delete wave; relay at W-FINAL | ~~GF-BLOB W-DELETE-TWIN~~ GF-BLOB W-FINAL relay only |
 | ASK-23 | dot-flow halftone revive | STAY-RETIRED (offer only) | — |
 | ASK-24 | pixel-floor GPU fallback | conditional — only if the probe fails | BAND-GATES W2 |
 | ASK-25 | alert status-tint | identity call (lean: neutral + status ink) | FM W4 + the A11Y W3-C gate table |
-| ASK-26 | graded-backdrop adopt/decline | wave-decided (lean: ADOPT); the flag | MATERIAL W3 |
+| ASK-26 | graded-backdrop adopt/decline | ~~wave-decided (lean: ADOPT); the flag~~ DECLINED (`EXECUTION-PROGRESS.md:264`) | MATERIAL W3 |
 | ASK-27 | idle-engagement precedence (OPEN-FM-3) | none pre-decided — you rank the canons | FM W5 + PERF OPEN-P5(b) + STORY W5 |
+| ASK-28 | Aurora DUSK/DAWN quartet | ratify after π-QUARTET; silence infers nothing | GF-AURORA W5 death clauses |
+| ASK-29 | Blob default identity | technicolor default; warm-cream named preset | GF-BLOB W0/W-IDENT/W-SHOW/W-FINAL |
+| ASK-30 | Blob thinking mood | adopt sixth named mood | GF-BLOB W-MOOD thinking clause |
+| ASK-31 | Blob grab-and-fling | ship opt-in on mascot register | GF-BLOB W-REACT grab clause |
+| ASK-32 | dock lens rollout/full-refraction | cheap lens strip + rail; full refraction optional/gated | GF-DOCK W4 rollout slice |
+| ASK-33 | DrawerDirection clean break | narrow to top/bottom; side placements use DialogContent | REDUCTION W7 |
+
+**[DATED BRACKET 2026-07-28 · owner sitting; frozen wording preserved.] ASK-1 and ASK-6's cells are
+OVERTAKEN by the owner words of 2026-07-28** (`EXEC-STATE.md` §THE OWNER SITTING items 5-9): carousel
+is NOT DELETED (KEEP, consolidated onto the deck substrate); instrument-chassis DELETE confirmed with
+the proof rejected (muster = prototype, its counts bind nothing); the metric family consolidates into
+one apotheosis, discharging R-1. TR §A rows #18/#40 carry the applied law; these register cells stay
+frozen as history.
 
 **Nothing here is a silent drop.** Every user-reserved row is above; the DECIDED reductions are in
 `waves/BAND-REDUCTION.md` and the band specs; the full disposition of all 67 feedback rows is in

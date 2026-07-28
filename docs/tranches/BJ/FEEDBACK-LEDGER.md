@@ -82,3 +82,12 @@ Rows F02/F06/F07… without a screenshot are URL-anchored verdicts; the demo run
 | A15 | Fable-class models leveraged more often for this grand audit — never for trivialities. |
 | A16 | MAXIMAL parallelization; NOTHING from the misfiring of BI or previous dropped. |
 | A17 | Story pages + preview cards slow-load/stutter class (perf): partial load then stutter (F01); slow to load (F46). Performance is a first-class lens. |
+
+## Consumer field reports (post-corpus, 2026-07-23+)
+
+Findings from live consumers after the 2026-07-17 corpus closed. Same disposition rule as the F-rows:
+an owning wave, a fold, or a retire — no silent drop.
+
+| Row | Anchor | Finding | Disposition |
+|-----|--------|---------|-------------|
+| CFR-01 | `feedback/F19-metric-badge-overround-grid.png` · `addenda/2026-07-23-metric-shape-consumer-report.md` | `sci-report` bid-review (glass-ui 6.0.0): `<MetricBadge>` (`rounded-full`) used in a four-up summary grid reads as an over-rounded, left-weighted pill with dead right-space — "padding here is gross and far too rounded." The correct member is `MetricCell appearance="dashboard"` (card, `rounded-lg`, `p-3`, stacked). F09 re-observed on the metric family; corroborates F15/F18, asks A05/A10. | BAND-REDUCTION owns: metric-family shape as an opinionated default (grid → card, never pill), a badge/cell/stack chooser doc, and a metric row in the F15 rounding audit; carry-forward seed to the forthcoming tranche's metric consolidation. Consumer already remediated. |
