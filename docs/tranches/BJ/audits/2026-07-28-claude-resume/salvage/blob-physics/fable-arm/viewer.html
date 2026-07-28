@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>blob physics — fable arm viewer</title>
+<style>
+  body { margin: 0; background: oklch(0.916 0.023 63); display: grid; place-items: center; height: 100vh; }
+  .stage { position: relative; width: 640px; height: 640px; }
+  canvas { position: absolute; inset: 0; filter: blur(10px) url(#goo); }
+  svg { position: absolute; width: 0; height: 0; }
+  .hud { position: fixed; top: 8px; left: 8px; font: 12px monospace; color: #444; }
+</style>
+</head>
+<body>
+<svg><defs><filter id="goo">
+  <feColorMatrix in="SourceGraphic" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -9"/>
+</filter></defs></svg>
+<div class="stage"><canvas id="c" width="640" height="640"></canvas></div>
+<div class="hud" id="hud"></div>
+<script>
+// Regime-D two-state cure cell, depth per ?depth=, amp 0.5 — the instrument's visual leg.
+const Q = new URLSearchParams(location.search);
+const DEPTH = parseInt(Q.get('depth') || '1');
+const DT = 1/240, R0 = 0.22;
+const RC = DEPTH === 1 ? 0.187 : 0.136;
+const LADDER = [0.135967, 0.120556, 0.106891];
+const f = 0.273, n = 1.7, T0 = 9;
+const kOf = (a,b) => Math.min(a,b)/3;
+const sepBar = (R,r) => R + r + 2*kOf(R,r);
+let seed = 42;
+const rng = (() => { let a = seed>>>0; return () => { a|=0; a=(a+0x6d2b79f5)|0; let t=Math.imul(a^(a>>>15),1|a); t=(t+Math.imul(t^(t>>>7),61|t))^t; return ((t^(t>>>14))>>>0)/4294967296; }; })();
+const bodies = [{parent:-1, r:RC, x:0, y:0, vx:0, vy:0, target:'core'}];
+(function add(pIdx, radii, dl) {
+  const P = bodies[pIdx];
+  for (let i=0;i<radii.length;i++) {
+    const r = radii[i];
+    const aHome = (P.r + r)/(1-f);
+    const T = T0*Math.sqrt(P.r/R0), om = 2*Math.PI/T;
+    const mu = om*om*Math.pow(aHome, n+1);
+    const th = i/radii.length*2*Math.PI + rng()*2*Math.PI;
+    const d = aHome*(0.95+rng()*0.1);
+    const vc = Math.sqrt(mu*Math.pow(d,1-n));
+    const b = {parent:pIdx, r, aHome, mu, x:P.x+d*Math.cos(th), y:P.y+d*Math.sin(th),
+      vx:P.vx - vc*Math.sin(th), vy:P.vy + vc*Math.cos(th), target:'free'};
+    bodies.push(b);
+    if (dl>1) add(bodies.length-1, radii.slice(0,2).map(rr=>rr*(r/P.r)*(P.r/R0)*(R0/P.r)*(r/R0>1?1:r/R0)/(r/R0)*1), dl-1);
+  }
+})(0, LADDER.map(r=>r*RC/R0), 1);
+if (DEPTH>1) {
+  // explicit depth-2: 2 children on each top bead
+  const tops = bodies.map((b,i)=>({b,i})).filter(x=>x.b.parent===0);
+  for (const {b:P, i:pIdx} of tops) {
+    for (let j=0;j<2;j++) {
+      const r = LADDER[j]*(P.r/R0);
+      const aHome = (P.r + r)/(1-f);
+      const T = T0*Math.sqrt(P.r/R0), om = 2*Math.PI/T;
+      const mu = om*om*Math.pow(aHome, n+1);
+      const th = rng()*2*Math.PI;
+      const d = aHome*(0.95+rng()*0.1);
+      const vc = Math.sqrt(mu*Math.pow(d,1-n));
+      bodies.push({parent:pIdx, r, aHome, mu, x:P.x+d*Math.cos(th), y:P.y+d*Math.sin(th),
+        vx:P.vx - vc*Math.sin(th), vy:P.vy + vc*Math.cos(th), target:'free'});
+    }
+  }
+}
+const F_CAP=0.35, K_REP=60, C_AP=3.0;
+function accel(out) {
+  for (let i=0;i<bodies.length;i++){out[2*i]=0;out[2*i+1]=0;}
+  for (let i=1;i<bodies.length;i++) {
+    const b=bodies[i], P=bodies[b.parent];
+    const dx=b.x-P.x, dy=b.y-P.y, d=Math.hypot(dx,dy)||1e-9;
+    const ux=dx/d, uy=dy/d;
+    const vrx=b.vx-P.vx, vry=b.vy-P.vy, vRad=vrx*ux+vry*uy;
+    const g=b.mu/Math.pow(d,n);
+    out[2*i]-=g*ux; out[2*i+1]-=g*uy;
+    const gap=d-(P.r+b.r), w=2*kOf(P.r,b.r);
+    if (gap<0){const a=K_REP*-gap; out[2*i]+=a*ux; out[2*i+1]+=a*uy;}
+    else if (gap<w){const a=F_CAP*(1-gap/w); out[2*i]-=a*ux; out[2*i+1]-=a*uy;}
+    if (gap<w && vRad<0){out[2*i]-=C_AP*vRad*ux; out[2*i+1]-=C_AP*vRad*uy;}
+    const lo = b.target==='free' ? sepBar(P.r,b.r)*1.10 : b.aHome*(1-f);
+    const hi = b.aHome*(1+f);
+    if (d>hi){const a=-9*(d-hi)-6*Math.max(vRad,0); out[2*i]+=a*ux; out[2*i+1]+=a*uy;}
+    else if (d<lo){const a=9*(lo-d)-6*Math.min(vRad,0); out[2*i]+=a*ux; out[2*i+1]+=a*uy;}
+    const s=Math.hypot(vrx,vry), vc=Math.sqrt(b.mu*Math.pow(Math.max(d,0.05),1-n)), cap=2.5*vc;
+    if (s>cap){const dr=3*(s-cap); out[2*i]-=dr*vrx/s; out[2*i+1]-=dr*vry/s;}
+    const dA=Math.hypot(b.x,b.y)||1e-9, pen=dA+b.r-0.76;
+    if (pen>0){const ua=b.x/dA, va=b.y/dA, vr2=b.vx*ua+b.vy*va;
+      const a=-25*pen-10*Math.max(vr2,0); out[2*i]+=a*ua; out[2*i+1]+=a*va;}
+  }
+  for (let i=1;i<bodies.length;i++) for (let j=i+1;j<bodies.length;j++) {
+    const a=bodies[i], c=bodies[j];
+    const dx=c.x-a.x, dy=c.y-a.y, d=Math.hypot(dx,dy)||1e-9, gap=d-(a.r+c.r);
+    const ux=dx/d, uy=dy/d;
+    if (gap<0){const f0=K_REP*-gap; out[2*i]-=f0*ux; out[2*i+1]-=f0*uy; out[2*j]+=f0*ux; out[2*j+1]+=f0*uy;}
+    else if (a.parent===c.parent){const w=2*kOf(a.r,c.r);
+      if (gap<w){const f0=0.5*F_CAP*(1-gap/w); out[2*i]+=f0*ux; out[2*i+1]+=f0*uy; out[2*j]-=f0*ux; out[2*j+1]-=f0*uy;}}
+  }
+}
+const ACC=new Float64Array(64);
+let simT=0;
+function step() {
+  accel(ACC);
+  for (let i=1;i<bodies.length;i++){bodies[i].vx+=ACC[2*i]*DT; bodies[i].vy+=ACC[2*i+1]*DT;}
+  for (let i=1;i<bodies.length;i++){bodies[i].x+=bodies[i].vx*DT; bodies[i].y+=bodies[i].vy*DT;}
+  simT+=DT;
+  // event engine, amp 0.5
+  const F0=0.10, C0=0.05, amp=0.5, J=0.26;
+  if (rng()<F0*amp*DT) {
+    const cands=bodies.filter((b,i)=>i>0 && b.target==='bonded');
+    if (cands.length){const b=cands[Math.floor(rng()*cands.length)]; b.target='free';
+      const P=bodies[b.parent], dx=b.x-P.x, dy=b.y-P.y, d=Math.hypot(dx,dy)||1e-9;
+      const ux=dx/d, uy=dy/d, tj=0.35*(rng()*2-1), nr=Math.hypot(1,tj);
+      b.vx+=J*(ux-tj*uy)/nr; b.vy+=J*(uy+tj*ux)/nr;}
+  }
+  if (rng()<C0*(1-0.6*amp)*DT) {
+    const cands=bodies.filter((b,i)=>i>0 && b.target==='free' && !bodies.some(c=>c.parent===bodies.indexOf(b) && c.target==='free'));
+    if (cands.length) cands[Math.floor(rng()*cands.length)].target='bonded';
+  }
+}
+const ctx = document.getElementById('c').getContext('2d');
+const PALETTE = ['oklch(0.72 0.19 25)','oklch(0.75 0.17 145)','oklch(0.70 0.19 265)','oklch(0.78 0.16 85)'];
+function paint() {
+  for (let k=0;k<4;k++) step();
+  ctx.clearRect(0,0,640,640);
+  const S = 640, PS = 0.625; // config->uv paint scale
+  for (let i=0;i<bodies.length;i++) {
+    const b=bodies[i];
+    const x = S/2 + b.x*PS*S, y = S/2 + b.y*PS*S, r = b.r*PS*S;
+    ctx.fillStyle = i===0 ? 'oklch(0.68 0.21 330)' : PALETTE[(i-1)%4];
+    ctx.beginPath(); ctx.arc(x,y,r,0,7); ctx.fill();
+  }
+  let free=0; for (let i=1;i<bodies.length;i++){const b=bodies[i],P=bodies[b.parent];
+    if (Math.hypot(b.x-P.x,b.y-P.y)>sepBar(P.r,b.r)) free++;}
+  document.getElementById('hud').textContent =
+    `t=${simT.toFixed(1)}s depth=${DEPTH} bodies=${bodies.length} free=${free}`;
+  requestAnimationFrame(paint);
+}
+paint();
+</script>
+</body>
+</html>

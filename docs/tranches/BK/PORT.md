@@ -31,7 +31,7 @@ table IS the per-row Q051-r{n} filing the `BI-CARRY` arm demands; #16's sweep re
 | r9 | inline-edit primitive | ratified RETIRE-until-convergence (disk `:91-93` ✦) — stays retired, revive on explicit need | record — no carrier |
 | r10 | the 8 Baseline standing-books | ratified batch RETIRE | record — no carrier |
 | r11 | aurora-medium-lazy split | re-booking affirmed (§5): **FOLD** | #60 re-measure |
-| r12 | metrics-sextet scope | owner-visible, non-blocking (§B.3) | record; the family resolves in kind at #18 (R-1 DELETE) + #76 (sci-report Card composition) |
+| r12 | metrics-sextet scope | owner-visible, non-blocking (§B.3) | record; ✦³ the family resolves by CONSOLIDATION (owner sitting round 2 item 8): the metric-family apotheosis at #87, migrations at #76 — the R-1 DELETE superseded (§5 row 1) |
 | r13 | hover-popover Kronecker fold | re-booking affirmed (§5): **DECLINE**, KISS | RETIRED |
 | r14 | completion / border-progress consumer | ratified; border-progress MOOT (0 files on disk); completion-seal DELETE-with-relay (atlas `completion.ts` + `DashboardHero.vue`) | #18 + #76 |
 | r15 | I-5 dot-flow halftone revival | **DECLINED** §1.3 — stays deleted; T17 a parameter only | RETIRED |
@@ -248,5 +248,70 @@ close, never trusted from this table.
 |---|---|---|
 | 1 | the BI-addenda Q-wave roster unrostered — 19/20 waves without a PORT row (`README.md:12` a live wave surface; §1.3's class scoped to `BI/waves/` only; no §3 row, so the Σ-check could not see the drop) | §1.4 authored — 20 per-wave dispositions, 10 EXECUTED/DISCHARGED verified on disk ✦, 9 routed to existing BK rows (zero roster growth); §3 row added |
 | 2 | `PLAN.md` §2 self-falsified its quotation invariant ("one instance" while its own §3/§4 quote EXEC-STATE unmarked-source, no source-wins) | §2 now enumerates the four marked instances; §3/§4 headers name EXEC-STATE.md and carry the source-wins clause |
-| 3 | `ASK.md`'s record register a verbatim unmarked copy of TR §D, already drifted ("the refract DELETE" vs §D's "the refract-latch DELETE") | replaced with the byte-faithful marked quotation of `TERMINAL-ROSTER.md:300` + §D-wins clause — the ROSTER.md form, the drift dead by construction |
+| 3 | `ASK.md`'s record register a verbatim unmarked copy of TR §D, already drifted ("the refract DELETE" vs §D's "the refract-latch DELETE") | replaced with the byte-faithful marked quotation of `TERMINAL-ROSTER.md:300` + §D-wins clause — the ROSTER.md form, ~~the drift dead by construction~~ ✦³ that claim was falsified the same day (the stage-2 landing moved §D and grew it three clauses; the `:300` anchor died) — the standing cure is §5 row 2's: ¶-name anchor + byte re-sync at every seal |
 | 4 | §2.5/§REJECTED cited TR §0's fold ledger for the `WAVES.md` non-re-map — §0's union scorecard names five folded artifact sets, `WAVES.md` absent; the true router is TR §A's spec-of-record column | both citations corrected in place; outcome unchanged (the non-re-map stands on the corrected ground) |
+
+## §4 · The stage-2 record — row #90 FIRED 2026-07-28, adjudicated at HEAD `0ffa87ac`
+
+**Tri-fold:** two independent fold arms (FABLE `claude-fable-5` · OPUS `claude-opus-5[1m]`, both at
+`d844bef6`) → ONE adjudication (`claude-fable-5`, this record's seat, HEAD re-pinned `0ffa87ac` — the
+two post-arm commits both docs-only and both RULED INTO the fold: `e277ea42` banks the codex corpus +
+restores PLAN §3's tri-fold law; `0ffa87ac` is THE OWNER SITTING, applied as the overlay per its own
+item 7). The first launch died 2-started/0-results at the 15:57Z wall — logged; this record is the
+relaunch's. **Inputs, all banked before the fold fired:** `EXEMPLARS-CODEX.md` (16/16) ·
+`NOVELTIES.md` · `DESIGN-NOW.md` (13/13) · `EXPERIMENTS.md` + its CAPTURE ADDENDUM · `CURES.md`
+(4/4) · `PROCEDURAL-APOTHEOSES.md` · `VALIDATION.md` §4 · refinement `ASK.md` R-7 · the five-dir
+codex meta-audit (mined under the dissolution law — re-verified on disk or marked PLAUSIBLE, no
+external authority cited) · the three salvaged prior-arm drafts (mined, then DELETED).
+
+**Outcome.** 7 delta sets + the post-arm pair folded, **0 silent drops** (per-delta tables at the two
+retained STAGE2-FOLD arm files; the adjudication ledger at TR §00 S-1…S-15 + A-1…A-7). 4 specs seated
+as spec-of-record (#43 `DESIGN-NOW.md` §w-chip · #50 §blob-physics · #53 §gf-fourier · #89 `CURES.md`
+§2, Φ6→Φ5 per K-9 — the four blocked terminals UNBLOCK) and #78 re-classified **AUTHOR → LAND**
+(907-line body + 288-line emitter, `--check` GREEN, salvage COMMITTED at `e277ea42`). **VERDICT
+blockers 4 → 3 — zero unowned specs remain.** **Gate seats +0; the budget stays exactly 60**,
+add-one-retire-one intact. 1 design ruling minted (TR §0.S — the sequenced-floor cross-cover with the
+decoupled veil, ruled from the CAPTURE ADDENDUM's measured table; the stacking identity reproduced at
+three seats). 10 strike-in-place edit units applied to `PROCEDURAL-APOTHEOSES.md` (U1-U10, once).
+9 codex-meta-audit rows ADOPTED on re-verified cells, 6 REFUTED with greps, 5 ROUTED.
+
+**THE OWNER SITTING overlay (binding, post-arm):** carousel **KEEP by owner word** (the arms'
+DELETE-with-relay overridden on outcome; their ground-strike survives — words imports it; Ruling 1
+stays law) · instrument-chassis **DELETES unless a use case is proven** (evidence banked: speedtest ×4
+`^4.0.1` · muster ×6 `^3.1.0`; substance pass in the proof sweep `wf_8a75422c-8a1`) · **execution
+only at the owner's go, compact first** · the dirty-set ADOPT/REVERT/HOLD order · the BA-BJ tails
+inventory + the chopping-block ratification list (TR §D). §B.6 components target re-priced 53 → **54**
+(53 if deck falls).
+
+**The Σ-check gains no rows:** no new waves, no new ids; #89's Φ corrected (identity unchanged), #90
+LANDED (CLOSED at the lead's seal commit + seat census, at the owner's go). **Residue, each with owner
++ trigger, none blocking Φ0-Φ4:** #78's LAND act (the lead; before #78 executes) · R-7 OWED-CAPTURE ×3
+(the owner; before the consuming #67 arms) · Safari-app cells (#10's serialized browser seat) ·
+device-fps + loupe L-3 (#67's matrix) · row-42 fringe (#32's paired capture). **Provenance:** the four
+live stage-2 arm banks RETAINED beside the corpus (cited, never authoritative alone); the three dead
+first-launch drafts DELETED at this landing (`STAGE2-FOLD.arm-fable.md` ·
+`TERMINAL-ROSTER.stage2-arm-opus.md` · `TERMINAL-ROSTER.stage2.arm-fable.md`). BK carriage: cursor
+header + rows amended this landing; ~~`ASK.md` unchanged (its §D quotation re-syncs under its own
+§D-wins clause)~~ ✦³ **CORRECTED at the seal (SL-6): a §D-wins clause resolves divergence — it never
+re-syncs bytes and never repairs a dead line anchor; this landing broke both (the §D paragraph moved
+294→357 and grew three clauses), and only the seal's re-sync cured them**; `gates/ROSTER.md`
+unchanged (seat movement stays #65's alone — still true at the seal, seats +0); ~~`PLAN.md` untouched
+this landing~~ ✦³ **CORRECTED: PLAN §6 still seated overlay at Φ6 against this same record's K-9
+ruling (M-3) — cured at the seal**; §3 already restored at `e277ea42`, and VALIDATION §4 rules 6-8
+seat at TR#11 with the source winning on divergence.
+
+## §5 · The stage-2 seal record — 2026-07-28, critic `claude-opus-5[1m]`, seal `claude-fable-5`; five misses, five ADOPTED, zero refuted
+
+| # | miss | cure on disk |
+|---|---|---|
+| 1 | **M-1 (severe):** the roster pinned `0ffa87ac` while HEAD was `192879b7`, and THE OWNER SITTING's SECOND ROUND (items 8-12, EXEC-STATE:438-457) was unfolded in totality — item 9 CLOSED the chassis proof condition the fold left open, item 8 superseded the metric DELETE, items 10-12 had no roster row/owner/trigger, and the live `deck-relocation` run was uncited | HEAD re-pinned `192879b7` (docs-only, verified); the five rulings folded whole at TR §00 SL-1…SL-5 — metric-family apotheosis → #87 (+#18/#76/§B.6 re-derived 54→55) · chassis DELETE CONFIRMED + the muster-prototype census law (§C standing law; the ⊘ muster cells demoted to relay evidence) · watercolor CONFIRMED + the RELOCATION CENSUS → #55 (lane E) · the deck apotheosis + three-way inventory → #40 (lane D, `wf_8ea3a20f-669` cited) · carousel shares the deck substrate → #18/#40; cursor rows amended to match |
+| 2 | **M-2:** `ASK.md`'s §D quotation anchored a line (`:300`) that the stage-2 landing turned into a blank inside §B.5, and its quoted bytes lost three clauses (keyframes `SequenceTarget.vue:138` · the A-3 seat-name dissolution · carousel KEEP) — while §4 above claimed the quote would "re-sync under its own §D-wins clause" and the seal-pass row 3 claimed the drift "dead by construction" | the quote re-synced byte-faithful to the live ¶ (then re-verified AFTER the SL-1 roster amendments, which grew the paragraph again); the anchor re-cut to the ¶-name as the durable key with the line number dated to this seal (`:380`); `PLAN.md` §2's mirror anchor cured the same way; the two false mechanism claims struck in place above |
+| 3 | **M-3:** `PLAN.md` §6 seated overlay at Φ6 after K-9 moved #89 to Φ5 — a phase membership the same fold overturned as an internal contradiction | the Φ-table row cured: overlay named at Φ5 (K-9), struck from Φ6 |
+| 4 | **M-4:** TR#81 carried "decides the `field-surfaces.css` destination **at execution**" — the deferred-design class the Seventh Ecoute forbids, contradicted by its own C-11 SETTLED cell; the cursor-header "TR wins" rule made the deferred clause the operative text | the row text now states the settled destination (`styles/glass/overlay-plate.css`, C-11/K-10) and the stale "Needs #89's contract" reads BANKED-UNBLOCKED (TR SL-7) |
+| 5 | **M-5:** the blob discharge receipts were cited at `scratchpad/design-now/blob-physics/` — an ephemeral session path no other seat can resolve (the exact volatility-debt class A-4 declares dead), and S-3/#78 still asserted the canon at TWO paths against A-4's own one-source cell | the receipts SALVAGED (1.4 MB, full tree) to `docs/tranches/BJ/audits/2026-07-28-claude-resume/salvage/blob-physics/` beside the canon salvage; TR#50 cites the durable path; S-3/#78 amended to the ONE-path form; `DESIGN-NOW.md:626`'s tmp-absolute paths filed at TR §B.4 for #61's strike (TR SL-8) |
+
+**Scope note:** PORT §1.1 r12 and §2.3 ASK-6 above are lineage cells written before the owner
+sittings — r12's "R-1 DELETE" and ASK-6's "clean 8/8 DELETE" read as porting history, superseded on
+outcome by TR#18 (carousel KEEP + deck substrate · metric family consolidation); r12's carrier cell
+is corrected in place below the table it lives in. Gate seats moved **+0** at this seal; the Σ-check
+gains no rows.

@@ -34,8 +34,9 @@ no arithmetic, no dispositions · no figure is quoted bare — every census name
 (RATIFICATION §1.1); every suite count names its detector (TR §00 J-10; row #9 owns the ONE committed
 figure) · quotation is legal only when marked as quotation with its source named and a source-wins
 clause — the four marked instances across the BK files: `gates/ROSTER.md` ← TR §B.5 · §3 below ←
-EXEC-STATE.md · §4 below ← EXEC-STATE.md · `ASK.md`'s record register ← TR §D (`:300`); the source
-wins in every one.
+EXEC-STATE.md · §4 below ← EXEC-STATE.md · `ASK.md`'s record register ← TR §D ¶«Owner-visible,
+non-blocking» (`:380` at the 2026-07-28 seal; the ¶ name is the durable key — line anchors re-verify
+at each seal, the SL-6 lesson); the source wins in every one.
 
 ## §3 · The tri-fold labor law — quoted from EXEC-STATE.md §THE FOURTH + FIFTH ECOUTES (the labor-law restatement; EXEC-STATE wins)
 
@@ -97,8 +98,8 @@ sentence about the glass stays true — which is why #22's closing gate is `G-FR
 | Φ2 | the Safari build fence — D0 gates every Safari π | #6 (+#7 fence) |
 | Φ3 | gate truth · π protocol · process cure · accounting | #9 → #10 |
 | Φ4 | the canon walls — six-token landing FIRST (the tier-3 wall, J-6) | **#68 Φ4-FIRST** · #78 |
-| Φ5 | the material/motion spines · greenfields · the ten component lanes | #26 ∪ IOS27 W-1 · #22 |
-| Φ6 | layout · story · perf · doc-truth · colocation · overlay · consumer band | #59 · #60 · #61 · #62 |
+| Φ5 | the material/motion spines · greenfields · the ten component lanes · overlay (#89, Φ5 per K-9) | #26 ∪ IOS27 W-1 · #22 |
+| Φ6 | layout · story · perf · doc-truth · colocation · consumer band | #59 · #60 · #61 · #62 |
 | Φ7 | collapse → close battery **`--run release`** → the 8.0.0 cut | #65 → #66 |
 
 Two orderings load-bearing enough to name at charter level (both TR's): **#68 precedes the entire

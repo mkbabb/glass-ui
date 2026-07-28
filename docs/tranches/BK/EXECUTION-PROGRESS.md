@@ -6,9 +6,20 @@ wave's terminal spec — the columns here repeat TR's pointers for navigation on
 TR wins. **Accounting: 90 roster ids · 87 cursor rows** (row `12-15` is ONE row covering four wave
 ids, exactly as TR seats it) · of the 87: 85 execution-live + #36 RETIRED-in-place + #70 BANKED.
 States: UNSTARTED → IN-FLIGHT → LANDED (bytes committed) → CLOSED (twice-challenged; π/DELTA captured
-where owed). Blockers of record: TR §VERDICT rows 1-4 + the Φ4 six-token wall — tracked on their
-owning rows (#1/#2 · #9+#66 C-13 · #4 · #89/#90 · #68), never restated here. Row #90 is the standing
-fold seam: its delta pass runs at each pending bank.
+where owed). ⊕² Each row carries three independent fields — `spec_state` (draft/banked/sealed) ·
+`code_state` (unstarted/in-flight/landed/verified) · `evidence_state` (owed/captured/adjudicated) —
+never inferred one from another (TR#11); no row advances to SEALED/CLOSED unless the referenced
+journal carries a result for every required phase and the advancing commit cites the seal; arm output
+on disk is evidence, never a state transition. Blockers of record: TR §VERDICT rows 1-3 + the Φ4
+six-token wall — tracked on their owning rows (#1/#2 · #9+#66 C-13 · #4 · #68); ⊕² VERDICT row 4 (the
+unowned spec) DISCHARGED at the stage-2 fold, 2026-07-28 — every roster spec is banked and cited.
+⊕² Row #90's fold FIRED 2026-07-28 — residue only, each with owner + trigger (see the row).
+✦² Execution begins only at the owner's go (THE OWNER SITTING item 3 — the session compacts first);
+the owner-sitting overlay is applied in TR — ✦³ BOTH rounds (`0ffa87ac` items 1-7 at TR A-2 ·
+`192879b7` items 8-12 at TR SL-1…SL-5): carousel KEEP + deck-substrate share · instrument-chassis
+DELETE CONFIRMED · metric-family consolidation (#87) · watercolor CONFIRMED + the relocation census
+(#55, `wf_8ea3a20f-669` lane E) · the deck apotheosis (#40, lane D) · muster = PROTOTYPE, counts
+never bind. ✦³ The 2026-07-28 seal cured the critic's five misses on disk (TR §00 SL-1…SL-8).
 
 ## Φ0 — executable this hour
 
@@ -17,7 +28,7 @@ fold seam: its delta pass runs at each pending bank.
 | 1 | W-SURFACE-PIN | Φ0 | UNSTARTED | TR#1 → RECONCILIATION §2 r2; spec `:483` | —(RED cell `surface.root.exact` ×2 projects; cure = #2 by subtraction; re-pin C-10; adjudicate the 38-file sweep, J-11) |
 | 2 | W-REFRACT-DELETE | Φ0 | UNSTARTED | TR#2 → FROST §3 hit 1 + WAVES:559 + BAND-MATERIAL:1265 | G-REFRACT-TOTAL (retires at Φ0 close); owner-reversible in one word |
 | 3 | W-CAPTURE-MOTION | Φ0 | UNSTARTED | TR#3 → RECONCILIATION §5/§8-17 | —(instrument; precedes every motion π) |
-| 4 | TRACK-STRAYS + PARKED-RECONCILE | Φ0 | UNSTARTED | TR#4 (J-14 census: 250 · 24 non-doc · 10 outside docs/) | G-CITE-COMMITTED born-RED until landed; + the 5199→5400 line |
+| 4 | TRACK-STRAYS + PARKED-RECONCILE | Φ0 | UNSTARTED | TR#4 (J-14 census: 250 · 24 non-doc · 10 outside docs/) | G-CITE-COMMITTED born-RED until landed; + the 5199→5400 line; ✦² audit corpus + canon salvage COMMITTED at `e277ea42` (re-scope); still stray: `card-raw.json` + the stage-2 working set; re-census at Φ0 |
 | 5 | W-PREFIX-SWEEP | Φ0 | UNSTARTED | TR#5 → FROST §0 C-1 + §3 hit 2 | G-GLASS-HAS-FROST prefix arm (b), born-RED at 5 dist bodies |
 | 8 | W-PKG-TRUTH | Φ0/4 | UNSTARTED | TR#8 → WAVES:195 + TR§C keyframes S1 | G-PACK-INSTALL · G-THEME-BLEED · G-BARREL-EXPLICIT · G-BUNDLE-RATCHET · G-NO-ORPHAN-EXPORT (+SURFACE-OWNED arm) |
 
@@ -26,7 +37,7 @@ fold seam: its delta pass runs at each pending bank.
 | # | wave | Φ | state | spec of record | gates |
 |---|---|---|---|---|---|
 | 75 | W-STOP-HOOK | Φ1 | UNSTARTED | TR#75 → RATIFICATION §4 r1 | born-RED: no `hooks` key in either settings file; crons stay dead |
-| 90 | STAGE-2 DELTA FOLD | Φ1 | UNSTARTED — codex half DUE (J-12) | TR#90 → EXEMPLARS-CODEX.md (BANKED 16/16) + NOVELTIES.md/DESIGN-NOW.md at their banks | —(fold seam; routes → #67/#47/#32/#30/#71 + #43/#53/#78/#89/#50-prototype) |
+| 90 | STAGE-2 DELTA FOLD | Φ1 | ⊕² LANDED 2026-07-28 (fold fired at the arm banks; ✦² adjudicated — TR amended in place) — CLOSED at the lead's seal commit + seat census, at the owner's go | TR#90 ⊕² — all three halves banked plus four later inputs (EXPERIMENTS+addendum · CURES · PROCEDURAL-APOTHEOSES · the codex meta-audit) | residue, owner+trigger each: canon LAND (#78, salvage committed `e277ea42`) · R-7 OWED-CAPTURE ×3 (the owner; before the consuming #67 arms) · Safari-app cells (#10) · device-fps + loupe L-3 (#67) · row-42 fringe (#32); ✦² the three dead drafts DELETED, four arm banks retained provenance; ✦³ SEALED-in-substance 2026-07-28 — the critic's five misses cured (TR §00 SL-1…SL-8), round 2 (`192879b7`) folded, blob receipts salvaged; the CLOSED transition still lands at the lead's seal commit + seat census, at the owner's go |
 
 ## Φ2
 
@@ -39,9 +50,9 @@ fold seam: its delta pass runs at each pending bank.
 
 | # | wave | Φ | state | spec of record | gates |
 |---|---|---|---|---|---|
-| 9 | W-GATE-TRUTH (+C-13 wiring +W1/W2 redress) | Φ3 | UNSTARTED | TR#9 → WAVES:257 + CWT-3 §5 | owns the ONE suite figure + detector (J-10); the 55 lane-minted born-RED = close-battery class; easing 11→≤7 |
+| 9 | W-GATE-TRUTH (+C-13 wiring +W1/W2 redress) | Φ3 | UNSTARTED | TR#9 → WAVES:257 + CWT-3 §5 | owns the ONE suite figure + detector (J-10); the 55 lane-minted born-RED = close-battery class; easing 11→≤7; ⊕² + the B4/B5 trap-gate verify clause (the 38-file sweep) + the measured governed register stated beside the doc budget (48 active/5 reserved, detector named — with #65) |
 | 10 | π-SUITE | Φ3 | UNSTARTED | TR#10 → PROCEDURAL C8; port 5400 | protocol: P0 mode-assertion · σ≈50 admissibility · corner-crop cell · build freshness per receipt |
-| 11 | W-PROCESS-CURE | Φ3 | UNSTARTED | TR#11 → WAVES:291 | —(tri-fold law · modelId assertion · DesignSync mandate · ONE-burndown rule) |
+| 11 | W-PROCESS-CURE | Φ3 | UNSTARTED | TR#11 → WAVES:291 | —(tri-fold law · modelId assertion · DesignSync clause corrected to *component* authoring · ONE-burndown rule · ⊕² VALIDATION §4 rules 6-8 seated · ⊕² three-field row state · the unimplemented-`--check` lesson) |
 | 12-15 | W-BG-CLOSE-RECONCILE ∥ UF-LEDGER ∥ PHANTOM-REPAIR ∥ PROVENANCE | Φ3 | UNSTARTED | TR#12-15 → RECONCILIATION §8-9..12 | G-PROVENANCE (≡CITE-COMMITTED+STAMP-EMITTED); phantom repair rosters #68/#69/#78/#89 |
 | 16 | W-ORPHAN-ROWS | Φ3 | UNSTARTED | TR#16 → ECOUTE §3 (false gaps struck) | G-ROW-HOMED (+BI-CARRY +UF +BG-join); + the merged findings file (S5, with #4) |
 | 77 | W-MOMENTUM-CENSUS | Φ3 | UNSTARTED | TR#77 → ARCHAEOLOGY §4 N8 + GESTALT §1 | G-ENGAGE-RUNG census-as-evidence arm; 62-row table born mostly RED |
@@ -51,7 +62,7 @@ fold seam: its delta pass runs at each pending bank.
 | # | wave | Φ | state | spec of record | gates |
 |---|---|---|---|---|---|
 | 68 | W-TOKEN-CANON | Φ4-FIRST | UNSTARTED | TR#68 → LAYOUT:233 + GREENFIELD-TERMINAL:212 + PROPORTION §6 | PROPORTION register clauses; six ADDED tokens 0 on disk — the tier-3 wall (J-6); feeds #23; before #79-#88 |
-| 78 | W-DESIGN-CANON | Φ4 | UNSTARTED | TR#78 → GESTALT §3 RANK 1; body via DESIGN-NOW (#90) | G-DOC-TRUTH (+ONE-CANON + four canon arms, seats +0); MOMENTUM = ALL MOTION |
+| 78 | W-DESIGN-CANON | Φ4 | UNSTARTED (⊕² spec_state = sealed; **LAND not AUTHOR**) | TR#78 → ⊕² the emitted 907-line body + 288-line emitter, ✦² committed at `docs/tranches/BJ/audits/2026-07-28-claude-resume/salvage/W-DESIGN-CANON-APOTHEOSIS/` (`e277ea42`) | G-DOC-TRUTH (+ONE-CANON + four canon arms, seats +0); ⊕² executes S-1..S-7 + A-1/A-2 and authors nothing; `regen-design-canon.mjs --check` exit 0 in acceptance; MOMENTUM = ALL MOTION |
 | 17 | W-COMMENT-DIET | Φ4 | UNSTARTED | TR#17 → WAVES:847 | G-COMMENT-RATIO; ONE counter, denominator 80,117/86,899/660 |
 | 20 | W-FALLBACK-LITERAL-SWEEP | Φ4 | UNSTARTED | TR#20 → RECONCILIATION §5/§8-14 | G-OVERFIT fallback arm |
 | 25 | W-FIELD-WELL | Φ4 | UNSTARTED | TR#25 → RECONCILIATION §2 r10/§8-15 | rides G-ENGAGE-RUNG |
@@ -61,13 +72,13 @@ fold seam: its delta pass runs at each pending bank.
 
 | # | wave | Φ | state | spec of record | gates |
 |---|---|---|---|---|---|
-| 18 | W-DELETE | Φ5 | UNSTARTED | TR#18 → WAVES:323 as amended | G-RELAY enforces the whole-repo walk; deck RE-HEARD not deleted (#40) |
+| 18 | W-DELETE | Φ5 | UNSTARTED | TR#18 → WAVES:323 as amended | G-RELAY enforces the whole-repo walk; deck RE-HEARD not deleted (#40); ✦² **carousel KEEP by owner word** (item 5) — ✦³ and it SHARES the deck substrate (round 2 item 12) · ✦³ **instrument-chassis DELETE CONFIRMED** (round 2 item 9 — the proof REJECTED; muster = prototype, counts never bind; sweep demotes to relay evidence) · ✦³ **metric leaves the DELETE list** (item 8 — family apotheosis at #87; migrations at #76) · ⊕² relay rows grown: paper-backdrop → atlas+speedtest · animated-digit re-take before its cut |
 | 19 | W-DEAD-EXPORT · W-SHIM-PURGE · W-SELECTION-ONE | Φ5 | UNSTARTED | TR#19 → WAVES:341/:353/:365 + O-17 D-19 | G-OVERFIT (+ONE-SELECTION arm); SELECTION-ONE hard-precedes #84 |
-| 21 | W-DAG-REDUCE | Φ5 | UNSTARTED | TR#21 → WAVES:371 + CWT-3 §1 | —(#17 hard; priced by RATIFICATION §1.1) |
-| 22 | W-FROST — the material apex | Φ5 | UNSTARTED | TR#22 → WAVES:450 + FROST §2 F-1..F-11 + Q-2/Q-3 + CWT-3 §6 | **G-FROST-TRANSMISSION is the closing gate (F-2)** · G-GLASS-HAS-FROST · G-RUNG-ONLY; may NOT close on F-1 alone |
+| 21 | W-DAG-REDUCE | Φ5 | UNSTARTED | TR#21 → WAVES:371 + CWT-3 §1 ⊕² + IMPORT-DAG-V2 (receipt `1f8124e4…`) | —(#17 hard; priced by RATIFICATION §1.1); ⊕² census superseded: 890 nodes/2,308 internal/10 file SCCs/3 module SCCs — M02 is nine modules wide; typed-edge v3 is this row's instrument, not a phase |
+| 22 | W-FROST — the material apex | Φ5 | UNSTARTED | TR#22 → WAVES:450 + FROST §2 F-1..F-11 + Q-2/Q-3 + CWT-3 §6 | **G-FROST-TRANSMISSION is the closing gate (F-2)** · G-GLASS-HAS-FROST · G-RUNG-ONLY; may NOT close on F-1 alone; ⊕² + the `glass/grasp` rung pair + the sequenced-floor cross-cover release law (TR §0.S — decoupled veil · leak ≡ 0 · peak radius ≤ 1.25× · engage-only), addendum senior, single-layer cure BLOCKED |
 | 23 | W-RADIUS-ROLE | Φ5 | UNSTARTED | TR#23 → WAVES:544 + O-7 + `theme/radius.css:62` | G-RADIUS-ROLE; dock 12→16 AS A ROLE (§1.4); π-SHAPE-HOLD re-pins same cut |
 | 24 | W-GRADIENT-BLUR | Φ5 | UNSTARTED | TR#24 → WAVES:551 | G-RUNG-ONLY GRADIENT-BLUR arm; F50 in-wave capture row (ASK.md g2) |
-| 26 | W-SPRING-RETUNE — the ONE spring authority | Φ5 | UNSTARTED | TR#26 → WAVES:577 + MOTION-CANON §0 + IOS27 W-1 unified | G-SPRING-HONEST · G-SPRING-ONE-JOB; dock byte 0.35/ζ0.82 (`springPresets.ts:109-111`) |
+| 26 | W-SPRING-RETUNE — the ONE spring authority | Φ5 | UNSTARTED | TR#26 → WAVES:577 + MOTION-CANON §0 + IOS27 W-1 unified | G-SPRING-HONEST · G-SPRING-ONE-JOB; dock byte 0.35/ζ0.82 (`springPresets.ts:109-111`); ⊕² CF-1 delete-first (completion-seal before the table cut) · the six ruled names + regen `--check` in acceptance · the K-4 overlay entry re-points |
 | 27 | W-ENGAGE-LADDER+AFFORD | Φ5 | UNSTARTED | TR#27 → WAVES:631 + BI.W-ENGAGE-AFFORD absorbed + O-19 | G-ENGAGE-RUNG (+PRM arm); R-4 RULED — material at rest, ladder alive; suffusion trio |
 | 28 | W-FEEDBACK-MOTION | Φ5 | UNSTARTED | TR#28 → WAVES:648 re-trued + O-18 | —(after #27; W-ALERT α order) |
 | 29 | W-ROUTE-MOTION | Φ5 | UNSTARTED | TR#29 → WAVES:654 (F06 re-scoped) | G-NO-FLASH (non-dock) |
@@ -76,64 +87,64 @@ fold seam: its delta pass runs at each pending bank.
 | 32 | W-TABS | Φ5 | UNSTARTED | TR#32 → CWT §TABS + FROST T-A..T-C | G-TABS-SEAM; π cells re-run AFTER #22's F-1/F-3/F-4 (T-C); #71 executes inside this cut |
 | 33 | W-ALERT | Φ5 | UNSTARTED | TR#33 → CWT §ALERT | G-FEEDBACK-TINT-SEAM; hard fence: G-FROST-TRANSMISSION green first; R-3 neutral glass + status ink |
 | 34 | W-TOAST | Φ5 | UNSTARTED | TR#34 → CWT §TOAST | —(after #33) |
-| 35 | W-SLIDER | Φ5 | UNSTARTED | TR#35 → CWT KEEP·AMEND + FROST S-A..S-E | G-SLIDER-INSCRIBE (acceptance, conditional C-13); S-B split with #22; `glass-scrubber` rename at the cut |
+| 35 | W-SLIDER | Φ5 | UNSTARTED | TR#35 → CWT KEEP·AMEND + FROST S-A..S-E | G-SLIDER-INSCRIBE (acceptance, conditional C-13); S-B split with #22; `glass-scrubber` rename at the cut; ⊕² loupe constants CONFIRMED (k-band [1.15, 2.60] · V0 900 px/s · τ 100 ms) with the `--flex-vel` provenance rider; device cells → #67 |
 | 36 | ~~W-HAIRLINE~~ | — | RETIRED | TR#36 — SUBSUMED by #87 (J-3, disk-verified) | seat retired; row numbered so no citation dangles |
 | 37 | W-SLIDER-TRANSPORT | Φ5 | UNSTARTED | TR#37 → CWT :1285 | acceptance rows; precondition #46's ScrubberTimeline deletion |
 | 38 | W-DIALOG (cut 1) | Φ5 | UNSTARTED | TR#38 → CWT-2 :170-385 | 2 minted, close-battery class; G-SCRIM-NO-BLUR surface (BJ row 93 findings absorb here, PORT §2.2) |
 | 39 | W-DIALOG-DETENT (cut 2) | Φ5 | UNSTARTED | TR#39 → CWT-2 :26-161 | —(after #38; carries the drawer MERGE-INTO) |
-| 40 | W-PAGER | Φ5 | UNSTARTED | TR#40 → CWT-2 :386-500s | 5 born-RED, close-battery class; deck RE-HEAR row (atlas `useStageDeck`/`useDeckDetent`) |
+| 40 | W-PAGER | Φ5 | UNSTARTED | TR#40 → CWT-2 :386-500s | 5 born-RED, close-battery class; ✦³ deck RE-HEAR **widened to the DECK APOTHEOSIS** (round 2 item 11): three-way inventory (slides mechanics → glass-ui · slides styling → atlas · atlas `useStageDeck`/`useDeckDetent`), substrate SHARED with carousel (item 12); lane D of `wf_8ea3a20f-669` banks the amendment draft — re-hearing rules at the perfection pass |
 | 41 | W-SORTABLE | Φ5 | UNSTARTED | TR#41 → CWT-2 §SORTABLE | —(a11y transaction byte-preserved; FLIP minted; E4 rect-cache) |
 | 42 | W-SEARCH | Φ5 | UNSTARTED | TR#42 → CWT-2 §SEARCH → `composables/search/` | —(GF-DOCK aperture seam) |
-| 44 | W-TAGS-FIELD | Φ5/6 | UNSTARTED | TR#44 → CWT-2 §TAGS-INPUT | G-T13 (re-pin register fold); #43 hard |
+| 44 | W-TAGS-FIELD | Φ5/6 | UNSTARTED | TR#44 → CWT-2 §TAGS-INPUT | G-T13 (re-pin register fold); ⊕² #43 BANKED — the hard block LIFTS; LAND sequenced behind #43's cut |
 | 45 | W-CONSTELLATION | Φ5 | UNSTARTED | TR#45 → CWT-2 :1279-1443 + PROCEDURAL §4 | G-CON-SURFACE-GRAIN(c) (re-pin fold); after #52; slides R7 vehicle |
 | 46 | GF-TIMELINE | Φ5 | UNSTARTED | TR#46 → GREENFIELD-TERMINAL:20-226 | 0 gates; 10 unit cases; T-PART-2 pin; Σwidth RULED (§1.5) |
 | 47 | GF-DOCK W1-W9 | Φ5 | UNSTARTED | TR#47 → GREENFIELD-TERMINAL:227-349 | DOCK ×4: BUDGET born-RED (14 props vs ≤6) · RUN+MORPH · REACH · STATE; #72 hard-precedes first build commit; after #6/#26/#7-fence |
 | 48 | W-DOCK-FISSION | Φ5 | UNSTARTED | TR#48 → WAVES:701 | G-FISSION-EXISTS = acceptance ("built, not gated"); after #47 W7 |
 | 49 | GF-AURORA | Φ5 | UNSTARTED | TR#49 → GREENFIELD-TERMINAL:350-572 + PROCEDURAL §3.2 | AURORA seat (3 arms + amplitude-aware demand); interactivity default ON, PRM-guarded; V-A95 rider π-REVERSE-DRAG; DUSK/DAWN capture row (ASK.md g3) |
-| 50 | GF-BLOB | Φ5 | UNSTARTED | TR#50 + TR§B.1 — the 07-27 charter SENIOR | blob six (SEPARATION · SAT-HAS-SURFACE · CHAOS λ≥0.25 · FISSION-CAUSED+LATCHED · SHADOW-ANALYTIC · SETTLED-ONE-SIGNAL); W0 GL-excise born-RED (`webgl2` 239/44, 1,439 LOC); technicolor default; r7 A/B FIRST capture (ASK.md g1) |
+| 50 | GF-BLOB | Φ5 | UNSTARTED (⊕² spec_state = sealed) | TR#50 + TR§B.1 → ⊕² **`DESIGN-NOW.md` §blob-physics (SPEC OF RECORD; the charter reconciled, the 0.380 bar dead)** | blob six ⊕² re-authored born-RED at DESIGN-NOW §5 (G-SEPARATION latched-event form · G-CHAOS λ≥0.25 undriven); W0 GL-excise (⊕² blob-scoped 72/11 → 0; repo-wide 239/44 = #54's register; 1,439 LOC); technicolor default; ⊕² drive 0.90 / calm 0.30 / drive\* 0.3381; depth cap 2; r7 A/B FIRST capture (ASK.md g1) |
 | 51 | GF-HANDMARK W0-W5 | Φ5 | UNSTARTED | TR#51 → GREENFIELD-TERMINAL:709-934 | G-HM-MARK · G-HM-LAYER; atlas ACK before W2 closes; dark-band EXECUTE-AT-CAPTURE |
 | 52 | W-CONFIG-EXPRESS | Φ5 | UNSTARTED | TR#52 → PROCEDURAL §2.3/§3.4 + GM-L5 | G-CFG-EXPRESS; expand button BUILDS (§4); LAYOUT's one fork re-keys here |
-| 53 | GF-FOURIER | Φ5 | UNSTARTED | TR#53 → PROCEDURAL §2.2 (owner overrule); terminal via DESIGN-NOW (#90) | G-FF-ONE-LAW; slides six-row relay drafted |
-| 55 | WATERCOLOR-RELOCATE | Φ5 | UNSTARTED | TR#55 → RATIFICATION §2 R-2 | G-RELAY (value.js receiving end); veto window closed |
+| 53 | GF-FOURIER | Φ5 | UNSTARTED (⊕² spec_state = sealed) | TR#53 → ⊕² **`DESIGN-NOW.md` §gf-fourier (SPEC OF RECORD)**; PROCEDURAL §2.2 the mint | ⊕² N7 DISCHARGED; G-FF-ONE-LAW born-RED + 5 close-battery rows, seats +0; 8-row slides relay with the seat re-open condition; preconditions #54 seam (fallback specified) · #52 before W4 · #26 before W2 · C-13 |
+| 55 | WATERCOLOR-RELOCATE | Φ5 | UNSTARTED | TR#55 → RATIFICATION §2 R-2 + round 2 item 10 | G-RELAY (value.js receiving end); veto window closed; ✦³ owner-CONFIRMED + the RELOCATION CENSUS ordered ("and elements like it") — lane E of `wf_8ea3a20f-669` banks THE RELOCATION ROSTER, dispositions on the chopping-block list |
 | 56 | W-DEMO-TRUTH | Φ5/6 | UNSTARTED | TR#56 → PROCEDURAL §4 + FROST Q-4 | —(receiver row; σ≈50 admissibility; `ShowcaseFrame surface="opaque"` ×118) |
 | 57 | W-LABELED-FIELD | Φ5 | UNSTARTED | TR#57 → PROCEDURAL §4 FFN-10 + CWT-3 §7.11 | —(verify sufficiency, never re-spec) |
 | 58 | W-PREVIEW-CARD · W-STORY-TAXONOMY · W-STORY-PROPORTION | Φ5/6 | UNSTARTED | TR#58 → WAVES:737/:768/:773 | G-TILE-COVERAGE · G-ONE-NAME (+B5 arm); live-tile band (4 vs 124); #73 executes in this chassis |
 | 59 | W-LAYOUT | Φ5/6 | UNSTARTED | TR#59 → LAYOUT.md (`b1e9fa31`) | G1 (+G2 +viewport-fit arms) · G-MEASURE-LAW · G6 · G-FORK-CENSUS; `viewport-fit=cover` first |
-| 67 | IOS27-EXEC W-1..W-7 | Φ5 | UNSTARTED | TR#67 → `IOS27-MICRO/FINAL/FINAL.md` (W-0 banked `1d0c17c6`) | —(W-1 ⊂ #26 · W-2 before GF-DOCK kernel · T1/T9/T5 after spring; W-5 un-parked, reversible-in-total; codex deltas at #90) |
+| 67 | IOS27-EXEC W-1..W-7 | Φ5 | UNSTARTED | TR#67 → `IOS27-MICRO/FINAL/FINAL.md` (W-0 banked `1d0c17c6`) | —(W-1 ⊂ #26 · W-2 before GF-DOCK kernel · T1/T9/T5 after spring; W-5 un-parked, reversible-in-total; ⊕² codex deltas folded; + R-7 OWED-CAPTURE ×3 (owner: the owner) + both device-fps cells + loupe L-3 — every other arm proceeds) |
 | 71 | W-EYEGLASS | Φ5 | UNSTARTED | TR#71 → ARCHAEOLOGY §R-4 + RATIFICATION §4 | born-RED: `rg -i 'eyeglass|loupe' src demo` → 0; inside #32's cut, T-C ordering |
 | 72 | W-RAIL-RENAME-THEN-BUILD | Φ5 | UNSTARTED | TR#72 → ARCHAEOLOGY §4 N2 (E29) | G-ONE-NAME rail arm; census 115 occ/103 lines/13 files (J-7) → 0; hard-precedes #47 |
 | 73 | W-SCROLL-SHRINK | Φ5/6 | UNSTARTED | TR#73 → ARCHAEOLOGY §R-5 + §4 N4 | born-RED: 0 sites; in #58's chassis, after #59 |
 | 74 | W-RIM-RAINBOW | Φ5 | UNSTARTED | TR#74 → ARCHAEOLOGY §R-6 + CWT-3 §W-PROGRESS-SEAM | scoped gate (J-9): rim consumes ≥1 `--rainbow-*` rung ∧ width < 4px; inside #88's cut |
 | 79 | W-CARD-MATERIAL | Φ5 | UNSTARTED | TR#79 → CWT-3 §LANE card | lane gates, close-battery class (CWT-3 §5); C-2/C-3/C-4 per §B.7; after #68 |
 | 80 | W-BUTTON | Φ5 | UNSTARTED | TR#80 → CWT-3 §LANE button | lane gates; owns `base.css:113-117` (C-7); precedes K2 strike (C-8); after #68 |
-| 81 | W-PICKER | Φ5 | UNSTARTED | TR#81 → CWT-3 §LANE select-combobox | lane gates; `field-surfaces.css` destination at execution; needs #89's contract |
+| 81 | W-PICKER | Φ5 | UNSTARTED | TR#81 → CWT-3 §LANE select-combobox | lane gates; ⊕² #89's contract BANKED (`CURES.md` §2) — UNBLOCKED; `field-surfaces.css` destination SETTLED → `styles/glass/overlay-plate.css` (C-11, K-10); option radius 12 by the LAW (C-12, K-11) |
 | 82 | W-FIELD | Φ5 | UNSTARTED | TR#82 → CWT-3 §LANE forms-seam | lane gates; owns `.glass-control-edge` (C-5); after #68/#83 |
 | 83 | W-CONTROL-BIT | Φ5 | UNSTARTED | TR#83 → CWT-3 §LANE binary-triad | lane gates; owns `_shared/control.ts` (C-6); before/with #82/#84; after #68 |
 | 84 | W-TOGGLE-ROW | Φ5 | UNSTARTED | TR#84 → CWT-3 §LANE toggle-group | lane gates; hard behind #19's `SelectionOption` widening |
 | 85 | W-EASING | Φ5 | UNSTARTED | TR#85 → CWT-3 §LANE easing | lane gates; gates 11→≤7; owns `EasingPicker.vue` (C-4) |
 | 86 | W-SURFACE-MATERIAL | Φ5 | UNSTARTED | TR#86 → CWT-3 §LANE surface-material | lane gates; C-1/C-2/C-3/C-9 per §B.7 |
-| 87 | W-MARKS | Φ5 | UNSTARTED | TR#87 → CWT-3 §LANE display-atoms | lane gates; absorbs #36's separator register (J-3); −789 gate lines; StatusDot MIGRATION rows |
+| 87 | W-MARKS | Φ5 | UNSTARTED | TR#87 → CWT-3 §LANE display-atoms + round 2 item 8 | lane gates; absorbs #36's separator register (J-3); −789 gate lines; StatusDot MIGRATION rows; ✦³ + the metric-family apotheosis (spec authored pre-go at the perfection pass; keyframes/sci migrations ride #76) |
 | 88 | W-PROGRESS-SEAM | Φ5 | UNSTARTED | TR#88 → CWT-3 §LANE progress | lane gates; carries #74; atlas DockCrest π10 BLOCKS the 8.0.0 adopt |
+| 89 | W-OVERLAY | ⊕² Φ5 (K-9; moved from Φ6) | UNSTARTED (⊕² spec_state = sealed) | TR#89 → **`CURES.md` §2 (SPEC OF RECORD)**; CWT-3 §7.2 + DAG §4.1 the priors | ⊕² SEATED — the four blocked terminals (#81/#86/#82/#47-sever) UNBLOCK; 20 assertions, all ARMS, zero mints; `══ {#81, #86, #82, #47-sever}`, after #68, joint with #86's `resolve.ts` move; the sever precedes #47's first build commit |
 
 ## Φ6
 
 | # | wave | Φ | state | spec of record | gates |
 |---|---|---|---|---|---|
-| 43 | W-CHIP | Φ6 | UNSTARTED | TR#43 → CWT-3 §7.1; spec via DESIGN-NOW (#90) | —(price raised: #80 witness · R7 press floor · A6 20×20); #44 hard-blocked until banked |
+| 43 | W-CHIP | Φ6 | UNSTARTED (⊕² spec_state = sealed) | TR#43 → **`DESIGN-NOW.md` §w-chip (SPEC OF RECORD)**; CWT-3 §7.1 the prior | ⊕² blocker #5 DISCHARGED; X-G1..8 close-battery, zero seats; #44 UNBLOCKED (LAND sequenced behind this cut); P1 the 7.0.0 chip-CSS first paint witness; P7/P8 KNOWN-RED behind #31/#22 F-1 |
 | 60 | W-BOOT-SHELL · W-FRAME-DISCIPLINE | Φ6 | UNSTARTED | TR#60 → WAVES:790/:816 + GF fold §8 | G-FIRST-PAINT (+SHELL) · G-QUIESCENT (+ONE-CONTEXT) |
 | 61 | W-DOC-TRUTH | Φ6 | UNSTARTED | TR#61 → ECOUTE §3 + RECONCILIATION §8-16 + TR§B.4 | G-DOC-TRUTH; owns the grown B.4 + J-13 re-open + the Fraunces record (J-5) |
 | 62 | W-COLOCATION | Φ6 | UNSTARTED | TR#62 → WAVES:840 + DIRECTORY-SHAPE | G-COLOCATED (+≤500 arm) · G-ONE-NAME (name-token arm); the 8-file carve |
-| 64 | TIER-3 RESIDUAL | Φ6 | UNSTARTED | TR#64 → CWT-3 fold §7 (J-1 re-scope) | —(shadcn-abrogation checklist the standing prelude; `bg-page-audit-roster.md` the index) |
-| 69 | W-PERF | Φ6 | UNSTARTED | TR#69 → RECONCILIATION:85/:196 + FEEDBACK-LEDGER:84 | seats shared with #60; F-6 blur budget owed here |
-| 76 | W-CONSUMER-BAND | Φ6/7 | UNSTARTED | TR#76 → TR§C (three sources, ONE batch per repo) | G-RELAY; keyframes S1 FIRST; publish-closes (L2) |
-| 89 | W-OVERLAY | Φ6 | UNSTARTED | TR#89 → CWT-3 §7.2 + DAG §4.1; spec via DESIGN-NOW (#90) | —(blocks four banked terminals until its bank) |
+| 64 | TIER-3 RESIDUAL | Φ6 | UNSTARTED | TR#64 → CWT-3 fold §7 (J-1 re-scope) | —(shadcn-abrogation checklist the standing prelude — ⊕² the finite eight-family ledger with DECLARATION-CLEARED ∥ IDIOM-CLEARED proved separately; `bg-page-audit-roster.md` the index) |
+| 69 | W-PERF | Φ6 | UNSTARTED | TR#69 → RECONCILIATION:85/:196 + FEEDBACK-LEDGER:84 | seats shared with #60; F-6 blur budget owed here; ⊕² + the resting-rung cost (+33 µs/rung, ≈+1.07 ms/frame at 32 plates — zero at rest under §0.S's engage-only mount; this row owns the many-surface ceiling) |
+| 76 | W-CONSUMER-BAND | Φ6/7 | UNSTARTED | TR#76 → TR§C (three sources, ONE batch per repo) | G-RELAY; keyframes S1 FIRST; publish-closes (L2); ⊕² the universe is GENERATED (15 roots · 6 subpaths · 3 mirrors · 1 negative control), never a remembered list; +3 repo rows (words · muster · slides-k); ✦² words rows = adopt/migration evidence (carousel KEEP, A-2); ✦³ muster = PROTOTYPE, counts never bind (SL-3); metric-family migrations (keyframes + sci-report, SL-2) |
 
 ## Φ7 — the close
 
 | # | wave | Φ | state | spec of record | gates |
 |---|---|---|---|---|---|
 | 63 | W-REPO-WEIGHT | Φ7 | UNSTARTED | TR#63 → WAVES:893 | G-NO-EVIDENCE-COMMIT; history rewrite DECLINED (§1.6) |
-| 65 | W-GATE-COLLAPSE | Φ7 | UNSTARTED | TR#65 — owns §B.5; ONE batched SHA pin | G-GATE-BUDGET; intake CLOSED (J-4); + easing 11→≤7 |
+| 65 | W-GATE-COLLAPSE | Φ7 | UNSTARTED | TR#65 — owns §B.5; ONE batched SHA pin | G-GATE-BUDGET; intake CLOSED (J-4) and ⊕² STILL empty after the stage-2 fold (seats +0 across all seven delta sets); the two-figure reconciliation with #9 (60 doc seats ∥ 48-active code register, both detectors); + easing 11→≤7 |
 | 66 | CLOSE + 8.0.0 | Φ7 | UNSTARTED | TR#66 → AUDIT-PLAN §3; **`--run release`** | C-13 BLOCKING · G-BATTERY-EXISTS · full battery GREEN · fresh census · re-pin · `FINAL.md` |
 
 ## Banked (pre-BK; residue duty only)

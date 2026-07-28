@@ -1,0 +1,447 @@
+{
+  "U1": [
+    {
+      "name": "R body radius",
+      "value": 0.22,
+      "law": "types.ts:297 (unchanged)"
+    },
+    {
+      "name": "r crown bead",
+      "value": 0.135967,
+      "law": "φ^(1/4) ladder rung 1 from R"
+    },
+    {
+      "name": "k₀ meniscus",
+      "value": 0.045322,
+      "law": "min(R,r)/3"
+    },
+    {
+      "name": "contact radius",
+      "value": 0.355967,
+      "law": "R + r"
+    },
+    {
+      "name": "break radius",
+      "value": 0.446611,
+      "law": "contact + 2k₀ (E1, measured)"
+    },
+    {
+      "name": "containment ceiling",
+      "value": 0.624033,
+      "law": "(0.5uv − 5% margin)/POS_SCALE − r"
+    },
+    {
+      "name": "ceiling in canvas uv",
+      "value": 0.475,
+      "law": "must be ≤ 0.5"
+    },
+    {
+      "name": "e_min (must separate)",
+      "value": 0.1129,
+      "law": "k₀/(R+r+k₀)"
+    },
+    {
+      "name": "e_max (must stay in frame)",
+      "value": 0.2735,
+      "law": "(ceil−contact)/(ceil+contact)"
+    },
+    {
+      "name": "fission drive threshold",
+      "value": 0.3381,
+      "law": "(break−contact)/(ceil−contact)"
+    }
+  ],
+  "U2": {
+    "analytic": [
+      {
+        "subScale": 0.25,
+        "rSub": 0.034,
+        "contactSub": 0.17,
+        "breakSub": 0.1926,
+        "rHill": 0.2465,
+        "stableCeiling": 0.1233,
+        "canSeparateAndStayBound": false,
+        "breakOverStable": 1.56
+      },
+      {
+        "subScale": 0.34,
+        "rSub": 0.0462,
+        "contactSub": 0.1822,
+        "breakSub": 0.213,
+        "rHill": 0.2465,
+        "stableCeiling": 0.1233,
+        "canSeparateAndStayBound": false,
+        "breakOverStable": 1.73
+      },
+      {
+        "subScale": 0.45,
+        "rSub": 0.0612,
+        "contactSub": 0.1972,
+        "breakSub": 0.2379,
+        "rHill": 0.2465,
+        "stableCeiling": 0.1233,
+        "canSeparateAndStayBound": false,
+        "breakOverStable": 1.93
+      },
+      {
+        "subScale": 0.58,
+        "rSub": 0.0789,
+        "contactSub": 0.2148,
+        "breakSub": 0.2674,
+        "rHill": 0.2465,
+        "stableCeiling": 0.1233,
+        "canSeparateAndStayBound": false,
+        "breakOverStable": 2.17
+      }
+    ],
+    "lobe": [
+      {
+        "subScale": 0.2,
+        "rSub": 0.0272,
+        "rSubPx_at480": 8,
+        "lobeProminencePct": 323.6,
+        "components": 1,
+        "reads": true
+      },
+      {
+        "subScale": 0.28,
+        "rSub": 0.0381,
+        "rSubPx_at480": 11,
+        "lobeProminencePct": 323.6,
+        "components": 1,
+        "reads": true
+      },
+      {
+        "subScale": 0.34,
+        "rSub": 0.0462,
+        "rSubPx_at480": 14,
+        "lobeProminencePct": 323.6,
+        "components": 1,
+        "reads": true
+      },
+      {
+        "subScale": 0.45,
+        "rSub": 0.0612,
+        "rSubPx_at480": 18,
+        "lobeProminencePct": 323.6,
+        "components": 1,
+        "reads": true
+      },
+      {
+        "subScale": 0.58,
+        "rSub": 0.0789,
+        "rSubPx_at480": 24,
+        "lobeProminencePct": 323.6,
+        "components": 1,
+        "reads": true
+      },
+      {
+        "subScale": 0.72,
+        "rSub": 0.0979,
+        "rSubPx_at480": 29,
+        "lobeProminencePct": 323.6,
+        "components": 1,
+        "reads": true
+      }
+    ]
+  },
+  "U3": [
+    {
+      "drive": 0,
+      "ceiling": 0.356,
+      "eventsPerMin": 0,
+      "secBetweenEvents": null,
+      "meanFreeSec": 0,
+      "sepDuty": 0,
+      "seedsWithZeroEvents": 8
+    },
+    {
+      "drive": 0.2,
+      "ceiling": 0.4096,
+      "eventsPerMin": 0,
+      "secBetweenEvents": null,
+      "meanFreeSec": 0,
+      "sepDuty": 0,
+      "seedsWithZeroEvents": 8
+    },
+    {
+      "drive": 0.3,
+      "ceiling": 0.4364,
+      "eventsPerMin": 0,
+      "secBetweenEvents": null,
+      "meanFreeSec": 0,
+      "sepDuty": 0.44,
+      "seedsWithZeroEvents": 8
+    },
+    {
+      "drive": 0.34,
+      "ceiling": 0.4471,
+      "eventsPerMin": 0,
+      "secBetweenEvents": null,
+      "meanFreeSec": 0,
+      "sepDuty": 1.05,
+      "seedsWithZeroEvents": 8
+    },
+    {
+      "drive": 0.4,
+      "ceiling": 0.4632,
+      "eventsPerMin": 0,
+      "secBetweenEvents": null,
+      "meanFreeSec": 0,
+      "sepDuty": 3.32,
+      "seedsWithZeroEvents": 8
+    },
+    {
+      "drive": 0.5,
+      "ceiling": 0.49,
+      "eventsPerMin": 0.65,
+      "secBetweenEvents": 92.3,
+      "meanFreeSec": 0.53,
+      "sepDuty": 9.07,
+      "seedsWithZeroEvents": 5
+    },
+    {
+      "drive": 0.65,
+      "ceiling": 0.5302,
+      "eventsPerMin": 2.66,
+      "secBetweenEvents": 22.6,
+      "meanFreeSec": 4.34,
+      "sepDuty": 32.84,
+      "seedsWithZeroEvents": 4
+    },
+    {
+      "drive": 0.8,
+      "ceiling": 0.5704,
+      "eventsPerMin": 4.81,
+      "secBetweenEvents": 12.5,
+      "meanFreeSec": 4.42,
+      "sepDuty": 65.75,
+      "seedsWithZeroEvents": 0
+    },
+    {
+      "drive": 1,
+      "ceiling": 0.624,
+      "eventsPerMin": 9.17,
+      "secBetweenEvents": 6.5,
+      "meanFreeSec": 3.87,
+      "sepDuty": 62.57,
+      "seedsWithZeroEvents": 1
+    }
+  ],
+  "U4": {
+    "rDock": 0.4013,
+    "rows": [
+      {
+        "quenchTau": 0.5,
+        "settleSec": 30,
+        "worstSec": 30,
+        "flapEvents": 0,
+        "neverSettled": 8
+      },
+      {
+        "quenchTau": 1,
+        "settleSec": 26.36,
+        "worstSec": 30,
+        "flapEvents": 4,
+        "neverSettled": 8
+      },
+      {
+        "quenchTau": 2,
+        "settleSec": 26.35,
+        "worstSec": 30,
+        "flapEvents": 73,
+        "neverSettled": 8
+      },
+      {
+        "quenchTau": 3.5,
+        "settleSec": 26.34,
+        "worstSec": 30,
+        "flapEvents": 89,
+        "neverSettled": 7
+      }
+    ]
+  },
+  "U5": {
+    "params": {
+      "n": 1.7,
+      "T0": 12,
+      "G": 0.87171,
+      "sigma": 0.259,
+      "Bo": 0.14,
+      "tauT": 8,
+      "cDamp": 0.3,
+      "k0": 0.045322,
+      "periTarget": 0.34086,
+      "rMaxTarget": 0.62403
+    },
+    "perSeed": [
+      {
+        "seed": 1,
+        "lambda": 2.5472,
+        "sepDuty": 0,
+        "breaksPerMin": 0,
+        "ecc": 0.004,
+        "apo": 0.349,
+        "peri": 0.346,
+        "rMax": 0.3762,
+        "engulfPct": 0,
+        "escapes": 0,
+        "cenMean": 0.221,
+        "entropy": 0.793,
+        "fieldAgreePct": 100
+      },
+      {
+        "seed": 2,
+        "lambda": 0.9619,
+        "sepDuty": 71.9,
+        "breaksPerMin": 30,
+        "ecc": 0.049,
+        "apo": 0.42,
+        "peri": 0.381,
+        "rMax": 0.6249,
+        "engulfPct": 0,
+        "escapes": 0,
+        "cenMean": 0.237,
+        "entropy": 0.6,
+        "fieldAgreePct": 100
+      },
+      {
+        "seed": 3,
+        "lambda": 1.0326,
+        "sepDuty": 69.6,
+        "breaksPerMin": 28.29,
+        "ecc": 0.157,
+        "apo": 0.512,
+        "peri": 0.368,
+        "rMax": 0.625,
+        "engulfPct": 0,
+        "escapes": 0,
+        "cenMean": 0.243,
+        "entropy": 0.635,
+        "fieldAgreePct": 98.4
+      },
+      {
+        "seed": 4,
+        "lambda": 1.227,
+        "sepDuty": 62.9,
+        "breaksPerMin": 28.29,
+        "ecc": 0.154,
+        "apo": 0.509,
+        "peri": 0.368,
+        "rMax": 0.6285,
+        "engulfPct": 0,
+        "escapes": 0,
+        "cenMean": 0.203,
+        "entropy": 0.593,
+        "fieldAgreePct": 100
+      },
+      {
+        "seed": 5,
+        "lambda": 1.2979,
+        "sepDuty": 46.1,
+        "breaksPerMin": 16,
+        "ecc": 0.149,
+        "apo": 0.502,
+        "peri": 0.366,
+        "rMax": 0.6257,
+        "engulfPct": 0,
+        "escapes": 0,
+        "cenMean": 0.215,
+        "entropy": 0.547,
+        "fieldAgreePct": 99.2
+      },
+      {
+        "seed": 6,
+        "lambda": 1.6939,
+        "sepDuty": 25.5,
+        "breaksPerMin": 9.71,
+        "ecc": 0.207,
+        "apo": 0.544,
+        "peri": 0.348,
+        "rMax": 0.6248,
+        "engulfPct": 0,
+        "escapes": 0,
+        "cenMean": 0.213,
+        "entropy": 0.519,
+        "fieldAgreePct": 100
+      },
+      {
+        "seed": 7,
+        "lambda": 1.6657,
+        "sepDuty": 29.7,
+        "breaksPerMin": 7.43,
+        "ecc": 0.207,
+        "apo": 0.543,
+        "peri": 0.346,
+        "rMax": 0.6256,
+        "engulfPct": 0,
+        "escapes": 0,
+        "cenMean": 0.214,
+        "entropy": 0.593,
+        "fieldAgreePct": 100
+      },
+      {
+        "seed": 8,
+        "lambda": 1.0324,
+        "sepDuty": 64.3,
+        "breaksPerMin": 27.14,
+        "ecc": 0.135,
+        "apo": 0.494,
+        "peri": 0.37,
+        "rMax": 0.6249,
+        "engulfPct": 0,
+        "escapes": 0,
+        "cenMean": 0.232,
+        "entropy": 0.558,
+        "fieldAgreePct": 100
+      }
+    ],
+    "mean": {
+      "lambda": 1.432,
+      "sepDuty": 46.25,
+      "breaksPerMin": 18.358,
+      "ecc": 0.133,
+      "eccSpread": 0.194,
+      "apo": 0.484,
+      "peri": 0.362,
+      "orbits": 16.288,
+      "rBar": 0.412,
+      "rMax": 0.6285,
+      "nCompMean": 1.64,
+      "engulfPct": 0,
+      "wallPct": 0,
+      "escapes": 0,
+      "cenMax": 0.444,
+      "cenMean": 0.222,
+      "entropy": 0.605,
+      "fieldAgreePct": 99.7,
+      "lambdaSpread": 1.585,
+      "rBarSpreadPct": 25.2
+    },
+    "lambdaMin": 0.9619,
+    "cleanEventsPerMin": 9.18,
+    "cleanMeanFreeSec": 3.89,
+    "tetherDivergenceTrace": [
+      0.00000152,
+      6.32e-9,
+      3.33e-10,
+      1.71e-12,
+      5.84e-15,
+      2.02e-16,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

@@ -1,0 +1,122 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>GF-BLOB physics prototype — 2D SDF instrument</title>
+<style>
+  :root { color-scheme: light; }
+  body { margin:0; background:#efe1d4; color:#2b2320;
+         font:14px/1.45 ui-sans-serif,-apple-system,"SF Pro Text",system-ui,sans-serif; padding:20px 24px; }
+  h1 { font-size:15px; font-weight:650; letter-spacing:.01em; margin:0 0 2px; }
+  p.sub { margin:0 0 16px; opacity:.62; font-size:12.5px; }
+  .strip { display:flex; gap:10px; flex-wrap:wrap; }
+  figure { margin:0; }
+  canvas { display:block; border-radius:14px; background:#f4ece4;
+           box-shadow:0 1px 2px rgba(60,40,25,.10), 0 8px 22px rgba(60,40,25,.07); }
+  figcaption { font-size:11px; opacity:.55; margin-top:5px; font-variant-numeric:tabular-nums; }
+  .row { margin:22px 0 8px; font-size:12px; font-weight:600; letter-spacing:.04em;
+         text-transform:uppercase; opacity:.5; }
+  #live { display:flex; gap:18px; align-items:flex-start; }
+  #hud { font-size:12px; font-variant-numeric:tabular-nums; opacity:.75; white-space:pre; }
+</style>
+<h1>GF-BLOB · colony physics, 2D SDF instrument</h1>
+<p class="sub">Regime F — two turning radii per node, phase free. The shipped renderer stays WebGPU; this canvas is an instrument, not a design.</p>
+
+<div class="row">Live · drive 0.90</div>
+<div id="live"><canvas id="c" width="420" height="420"></canvas><div id="hud"></div></div>
+
+<div class="row">Fission episode · one bead, 9 frames at 1.4 s</div>
+<div class="strip" id="s1"></div>
+
+<div class="row">Calm preset · drive 0.30 (below the 0.3381 threshold — provably no separation)</div>
+<div class="strip" id="s2"></div>
+
+<div class="row">Depth 2 · satellites carrying their own sub-lobes</div>
+<div class="strip" id="s3"></div>
+
+<script type="module">
+import * as S from "./sim.mjs";
+import { P_of, SPEC, LADDER } from "./harness.mjs";
+
+const TERM = { n:1.7, T0:12, Bo:0.14, tauT:7, cDamp:0.3, drive:0.90, k0:0.045322, edgeUV:0.475 };
+const DT = 1/240, EXT = 0.8;
+
+// warm cream ground, deep ink body — our language, not a rainbow
+const INK   = [0x2b,0x23,0x20];
+const BODY  = [0xe8,0x8c,0x4a];
+const BEAD  = [[0xd8,0x5a,0x3c],[0xe6,0xa8,0x3e],[0xc0,0x4f,0x6a]];
+const GROUND= [0xf4,0xec,0xe4];
+
+function render(ctx, bodies, P, N) {
+  const img = ctx.createImageData(N, N), d = img.data, step = 2*EXT/(N-1);
+  const smin = (a,b,k0)=>{ const k=k0*4, h=Math.max(k-Math.abs(a-b),0)/k; return Math.min(a,b)-h*h*k*0.25; };
+  for (let j=0;j<N;j++){ const py=-EXT+j*step;
+    for (let i=0;i<N;i++){ const px=-EXT+i*step;
+      let f=Infinity, best=-1, bd=Infinity;
+      for (let q=0;q<bodies.length;q++){ const b=bodies[q];
+        const di=Math.hypot(px-b.x,py-b.y)-b.r;
+        if (di<bd){bd=di;best=q;}
+        f = f===Infinity ? di : smin(f,di,P.k0);
+      }
+      const o=(j*N+i)*4;
+      let c;
+      if (f<=0) {
+        const src = best===0?BODY:BEAD[(best-1)%3];
+        const sh = Math.min(1, Math.max(0, -f/0.10));            // interior shade, dims not lifts
+        c=[src[0]*(1-0.30*sh)+INK[0]*0.30*sh, src[1]*(1-0.30*sh)+INK[1]*0.30*sh, src[2]*(1-0.30*sh)+INK[2]*0.30*sh];
+      } else if (f<0.012) { c=[INK[0],INK[1],INK[2]]; }          // one hairline of ink at the edge
+      else c=GROUND;
+      d[o]=c[0]; d[o+1]=c[1]; d[o+2]=c[2]; d[o+3]=255;
+    }}
+  ctx.putImageData(img,0,0);
+}
+
+function build(seed, drive, spec) {
+  const P = P_of({ ...TERM, drive });
+  const rng = S.mulberry32(seed);
+  const bodies = S.makeTree(spec ?? SPEC(), rng);
+  S.seedVelocities(bodies, P);
+  return { P, bodies, sc:new Float64Array(bodies.length*2) };
+}
+function advance(st, secs, t0) {
+  for (let s=0;s<Math.round(secs/DT);s++) S.step(st.bodies, st.P, "F", t0+s*DT, DT, st.sc);
+  return t0+secs;
+}
+function strip(el, seed, drive, times, spec, size=176) {
+  const st = build(seed, drive, spec);
+  let t = advance(st, 40, 0);
+  for (const gap of times) {
+    t = advance(st, gap, t);
+    const fig=document.createElement("figure");
+    const cv=document.createElement("canvas"); cv.width=cv.height=size;
+    fig.append(cv);
+    const cap=document.createElement("figcaption");
+    let sep=0;
+    for (let i=1;i<st.bodies.length;i++){ const b=st.bodies[i],p=st.bodies[b.parent];
+      if (Math.hypot(b.x-p.x,b.y-p.y)-b.r-p.r > 2*st.P.k0) sep++; }
+    cap.textContent = `t ${t.toFixed(1)}s · free ${sep}/${st.bodies.length-1}`;
+    fig.append(cap); el.append(fig);
+    render(cv.getContext("2d"), st.bodies, st.P, size);
+  }
+}
+
+strip(document.getElementById("s1"), 3, 0.90, [0,1.4,1.4,1.4,1.4,1.4,1.4,1.4,1.4]);
+strip(document.getElementById("s2"), 3, 0.30, [0,3,3,3,3]);
+strip(document.getElementById("s3"), 2, 0.90,
+      [0,2.5,2.5,2.5,2.5], SPEC({ depth:2, subPer:2, subScale:0.45, subOrbit:1.0 }));
+
+const live = build(5, 0.90, SPEC());
+let lt = advance(live, 20, 0);
+const ctx = document.getElementById("c").getContext("2d");
+const hud = document.getElementById("hud");
+function frame(){
+  lt = advance(live, 1/60, lt);
+  render(ctx, live.bodies, live.P, 420);
+  let sep=0, rmax=0;
+  for (let i=1;i<live.bodies.length;i++){ const b=live.bodies[i],p=live.bodies[b.parent];
+    if (Math.hypot(b.x-p.x,b.y-p.y)-b.r-p.r > 2*live.P.k0) sep++;
+    rmax=Math.max(rmax,(Math.hypot(b.x,b.y)+b.r)*0.625); }
+  hud.textContent = `t        ${lt.toFixed(1)} s\nfree     ${sep} / 3\nedge     ${rmax.toFixed(3)} uv  (cap 0.500)\nsettled  ${S.settledColony(live.bodies, live.P)}`;
+  requestAnimationFrame(frame);
+}
+frame();
+document.title = "GF-BLOB physics prototype — ready";
+</script>

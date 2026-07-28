@@ -5,6 +5,12 @@ VALIDATION.md CURE-3 — `PROCEDURAL-LEDGER.md` cites these documents' §-number
 §1–§8 is the binding amendment to GF-BLOB-PASS3") while they existed only in the journal. This file is
 the cited source of record. NOTE (CURE-3 rider): `DESIGN-NOW.md`'s blob re-cut was authored WITHOUT
 this charter on its input list — reconcile the two at the stage-2 delta fold before GF-BLOB executes.
+**RECONCILED 2026-07-28 (the stage-2 fold, ⊕²). `DESIGN-NOW.md` §blob-physics is GF-BLOB's spec of
+record; the charter cells it overturns are marked `[STRUCK ⊕²]` / `[SUPERSEDED ⊕²]` in place below
+with falsifiers, and unmarked cells stand as corroborating record. The CURE-3 rider is DISCHARGED by
+this reconciliation. The GF-FOURIER and CONFIG-EXPRESS apotheoses below STAND — cite them as
+`PROCEDURAL-APOTHEOSES.md` §GF-FOURIER / §CONFIG-EXPRESS; PROCEDURAL-LEDGER's dangling "charter §n"
+citations resolve HERE.**
 
 # ═══════════ BLOB-PHYSICS CHARTER ═══════════
 
@@ -15,6 +21,12 @@ All verification complete. Composing the adjudicated charter.
 **modelId: `claude-fable-5`** · TRI-FOLD ADJUDICATOR — BLOB PHYSICS · HEAD `9c5a7451` · zero repo bytes; every instrument re-run in `/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/proc/blob-sim/` (Opus arm: `sim.mjs`+runners; Fable arm: `arm2/sim{,2,3}.mjs`).
 
 # THE ADJUDICATED BLOB PHYSICS CHARTER
+
+**⊕² SUPERSEDED AS SPEC — `DESIGN-NOW.md` §blob-physics (2026-07-28) is the spec of record.** What
+stands here: the §0 verification ledger · §2's recursion-in-state / one-painted-field architecture and
+the population clamp · §3's n=1.7 central attraction and approach-only damping · the depth-cap
+measurements · §4's impulse-latch cure (D9) · the LOD / analytic-shadow direction. What falls is
+marked in place below.
 
 ## §0 VERIFICATION LEDGER—what was checked before adoption
 
@@ -40,7 +52,7 @@ All verification complete. Composing the adjudicated charter.
 | Opus `run.mjs` shows e≈0.009 everywhere | re-ran | CONFIRMED as the confessed §8-bug-1 run—final numbers live in `regimeD.mjs`/`click.mjs`/`mood2.mjs`, which are clean |
 | **Incredulity catch**: "13 bodies measured 0% wall hits" | `regimeD.mjs` D4 row `13/depth-1`: **9.4% wall hits** at envFrac 0.42, vJitter 0.20 | Opus cherry-picked the depth-2 row. Cured below by shipping f=0.273 (sweep: 0% wall at f≤0.30) + G-BOUNDED runs at the SHIPPED tree |
 
-## §1 THE RULING—the spine is Opus's regime D, the envelope hybrid
+## §1 THE RULING—the spine is Opus's regime D, the envelope hybrid **[SUPERSEDED ⊕² — DESIGN-NOW §0.2 A: regime F (the integral pump, two derived turning radii per node, phase free, topology read from the field) WINS. The radial-envelope-about-home family is DESIGN-NOW §7 R7: 7-11% separation duty at e≈0.05 — cohesion bought by suppressing the charter.]**
 
 **Coordinate ONLY the radial envelope; leave the angular dynamics fully emergent.** A one-sided critically-damped radial term fires only outside `[a(1−f), a(1+f)]`; inside the band the body is free.
 
@@ -59,27 +71,27 @@ The owner's words settle the value question: "natural, chaotic, elliptical… it
 ## §3 THE FORCE SYSTEM—buildable spec (config-UV, dt=1/60, velocity-Verlet; m = r²)
 
 1. **Central attraction, per body toward its parent**: `|F| = G·m_parent/(d²+ε²)^(n/2)`, **G 0.113, n 1.7, ε = r_parent**. Bertrand's theorem: n∉{2,−1} never closes—apsidal precession −44.3°/rev, a rosette that never re-traces. Replaces the sine stack.
-2. **Radial envelope** (the skeleton): one-sided spring outside `[a(1−f), a(1+f)]`, response 1.2, ζ 0.9, damping applied only to the out-of-band-carrying velocity component. **Floor law: `a(1−f) = R_parent + r_body` → f = 1−(R+r)/a = 0.273 at default**—a bead never buries deeper than surface contact. Ceiling check: `a(1+f)+r = 0.660 < rWall 0.78`.
+2. **Radial envelope** (the skeleton): one-sided spring outside `[a(1−f), a(1+f)]`, response 1.2, ζ 0.9, damping applied only to the out-of-band-carrying velocity component. **Floor law: `a(1−f) = R_parent + r_body` → f = 1−(R+r)/a = 0.273 at default**—a bead never buries deeper than surface contact. Ceiling check: `a(1+f)+r = 0.660 < rWall 0.78`. **[SUPERSEDED ⊕² — the one-sided radial envelope is the R7 class; replaced by the integral pump plus the one-sided energy ceiling `0.475/POS_SCALE − r − subtreeReach` (DESIGN-NOW W3): measured edge 0.4583 uv, 0 wall contacts, 8 seeds × 300 s.]**
 3. **Capillary bridge** (the neck): within gap ∈ (0, kBand=smoothK), attraction `kCoh·4u(1−u)`, u=gap/kBand, **kCoh 0.010** base. This is 98.2% of binding energy (measured 54:1 vs gravity)—fission is a surface-tension problem.
 4. **Contact**: spring on dock response 0.35, **approach-only** damping ζ 0.10 (`sign(vn)<0` only). Symmetric or high-ζ damping circularizes every orbit within two passes (Opus §8 bug 1, visible in `run.mjs`'s e≈0.009)—**any implementation that damps separation kills the eccentricity**.
-5. **Containment**: one-sided critically-damped wall at rWall 0.78, response 0.35.
+5. **Containment**: one-sided critically-damped wall at rWall 0.78, response 0.35. **[STRUCK ⊕² — DESIGN-NOW §7 R5/R6/R16: a positional wall is the forbidden clamp family; the derived energy ceiling achieves 0 contacts with no positional term.]**
 6. **Seeding**: tangential circular speed × (1 ± vJitter), **vJitter 0.28** at idle; random direction per body (retrograde allowed). Eccentricity is an ATTRACTOR: e_global settles 0.33–0.36 across an 11× jitter sweep—`geometry.eccentricity` is a dead knob, delete it.
-7. **Defaults**: bodyRadius 0.22, satelliteRadius 0.10, child r = 0.45×parent, smoothK 0.06, **orbitRadius a = 0.44**. The separation threshold is `a > R + r + smoothK = 0.380` (BLOB_HERO's 0.30 provably paints one circle; the PASS3 §2.8 gate as drafted checks the wrong bar). Merge↔orbit breath comes free from eccentric periapsis dips through the horizon (2.5 kiss passes/30 s band contact retained—Fable's meniscus-waist events survive under D as bridged% 24.4 at f 0.20).
+7. **Defaults**: bodyRadius 0.22, satelliteRadius 0.10, child r = 0.45×parent, smoothK 0.06, **orbitRadius a = 0.44**. The separation threshold is `a > R + r + smoothK = 0.380` (BLOB_HERO's 0.30 provably paints one circle; the PASS3 §2.8 gate as drafted checks the wrong bar). **[STRUCK ⊕² — raw-smin instrument artifact: the instrument skipped the shipped shader's own k×4 IQ normalization (`types.ts:315-316`). The true bar is `R + r + 2k₀` (40/40 cells; the shader's own arm breaks at 2.01k₀ = 0.4470, raw at 0.3790 — the ledger's own number on the wrong instrument). DESIGN-NOW §0.2 B. Every number derived from 0.380 dies.]** Merge↔orbit breath comes free from eccentric periapsis dips through the horizon (2.5 kiss passes/30 s band contact retained—Fable's meniscus-waist events survive under D as bridged% 24.4 at f 0.20).
 
 ## §4 FISSION + MERGE—causal, emergent, latched
 
 - **One impulse bus**: pointer click, pointer-deceleration burst, and API `nudge` all enter as impulses—**latched one per burst crossing** (cures D9: `blobSimulation.ts:131-136` fires every frame today) and all counted (cures the uncounted-Poke live-ledger defect).
 - **Siting**: impulse magnitude Gaussian around the POINTER (σ ≈ 0.22× inter-body spacing), direction radially outward from the struck body's parent (click→body direction is degenerate for the body under the cursor—Opus §8 bug 2).
-- **Operating point**: J_full = 0.005 → Δv ≈ 5.6×v_circ → 0.78 bodies unbound/click, 2.5% wall hits—one click, one bead. `J_eff = J_full·fissionAmp`; **fissionAmp 0 = the calm contract** (no dice: `FISSION_PROB_AT_FULL` cadence dies; cadence becomes causal).
+- **Operating point**: J_full = 0.005 → Δv ≈ 5.6×v_circ → 0.78 bodies unbound/click, 2.5% wall hits—one click, one bead. `J_eff = J_full·fissionAmp`; **fissionAmp 0 = the calm contract** (no dice: `FISSION_PROB_AT_FULL` cadence dies; cadence becomes causal). **[SUPERSEDED ⊕² — `fissionAmp` → `surface.drive`, default 0.90 / calm preset 0.30 / derived threshold drive\* 0.3381 (DESIGN-NOW W4). The J 0.005 knee is superseded by the derived J\* = 0.00284 (same order, different regime — §0.2 H), and click AMPLIFIES rather than causes (81% → 94%). The `fissionAmp 0 = calm` contract is replaced by the calm-floor precedence law.]**
 - **The pinch snap is emergent**: capillary force peaks mid-band and vanishes at the edge, so the residual velocity snaps the bead free at 0.106 UV/s (4.6× the choreographed crossfade). `fissionSnap` deleted, not re-roled (§REJECTED-3).
 - **Merge**: a free body's chaotic excursion dips below the horizon; capillary captures it. "Absorbed" = bonded. The 5-phase FSM, `orbitPos`, `orbitBlendOrigins`, MERGE_STAGGER/ORBIT_BLEND, and the single-fissioner token all die.
 - **Population is fixed**: bodies transition bonded↔free; no spawn/despawn (§REJECTED-5).
 
-## §5 MOOD—three scalars into the laws, one derivation surface (`constants.ts:64-103` kept)
+## §5 MOOD—three scalars into the laws, one derivation surface (`constants.ts:64-103` kept) **[SUPERSEDED ⊕² — DESIGN-NOW W7: mood is three scalars into the laws (arousal → drive [0.55, 1.00] · valence → T₀ [16 s, 9 s] · arousal → Bo [0.22, 0.09]) with the calm-floor precedence RULED — mood may not raise a configured drive below drive\*, or the calm contract's 100% settle duty is a lie.]**
 
 `a_eff = 0.33 + 0.19·arousal` (cap 0.52 by the wall law `(0.78−r)/(1+f)`=0.534; Opus's 0.22-slope excited pole measured 37.5% wall hits—the catch that set the cap) · `vJitter = 0.10 + 0.30·arousal` · `kCoh = 0.016 − 0.010·arousal`. Measured ladder: sleepy a_eff 0.352 < 0.380 → docks at surface contact and breathes (66.8% merged); excited → 97.8% separated. Fission difficulty rides kCoh for free—sleepy needs J 0.007 to free 0.71 beads, excited is already unbound. `smoothK` slider relabels to **"Cohesion—how hard the colony is to split"**.
 
-## §6 SCHEDULING—`settled ≡ KE_rel < ε`
+## §6 SCHEDULING—`settled ≡ KE_rel < ε` **[STRUCK ⊕² — DESIGN-NOW §7 R17: a relative-KE settle reads settled with a free bead in steady orbit while the field paints two components. The law is the closed-form energy predicate + never-true-while-separated + a 1 s continuous dwell (DESIGN-NOW W6). The no-reference-clock / freeze-exact and park-on-lifecycle clauses here SURVIVE.]**
 
 One derived scalar: total kinetic energy in the core-relative frame. Read by the public seam AND `shouldContinue`—U3 single-signal preserved. A chaotic system has no schedulable next event (e-folding 3.4 s), so `nextEventMs`/`scheduleWake` are deleted (cures D7; the one remaining horizon, mood auto-transition, converts sim→wall as `delay = (nextSimMs − simTimeMs)/tempo`, tempo 0 → no timer—cures D8, Fable's formula). Park on lifecycle predicates (offscreen/hidden/PRM) and on KE < ε (sleepy reaches it; orbiting renders—the breath-of-life edict wants that). **Resume = continue from frozen state**: no reference clock exists, so no catch-up and no pop, ever. PRM pose: bodies static at radius a_eff, golden-angle spacing, visibly detached. D12 stands: raise `pulseAmp` or the breath drowns under the FBM floor.
 
@@ -97,7 +109,7 @@ One derived scalar: total kinetic energy in the core-relative frame. Read by the
 | 8 | defaults: orbit 0.17→0.44, sat 0.082→0.10, smoothK 0.05→0.06; delete `eccentricity` | `types.ts:297-320`, `presets.ts:57-64`, `blob.vue:721` |
 | 9 | sliders: orbit 0.26–0.53 (floor R+r−k, ceiling (rWall−r)/(1+f)) · sat 0.017–0.19 (8 px floor, 0.85R ceiling) · cohesion 0.00–0.12 · sats 0–8 · subs 0–2 · envelope f · tempo | `blob.vue` (configurator lane executes; DEFT per W-CONFIGURATOR-STD `34681df9`) |
 
-## §8 GATES (born-RED where marked) + OBLIGATIONS
+## §8 GATES (born-RED where marked) + OBLIGATIONS **[SUPERSEDED ⊕² — the six SUBSTRATE seats are re-authored born-RED at DESIGN-NOW §5: G-SEPARATION in the latched-event form (gap > 2k₀ + r/2 held ≥250 ms, colony mean ≥4/min) · G-CHAOS λ ≥ 0.25/s on every seed UNDRIVEN (not 0.15) · the rest per that table. The π and relay obligations here stand as corroborating record.]**
 
 G-SEPARATION-THRESHOLD `a > R+r+smoothK` at shipped default (RED: 0.30<0.380) · G-SAT-HAS-SURFACE painted r>0 (RED: −0.020) · G-CHAOS λ>0.15/s (RED: λ=0, analytic) · G-BOUNDED 0 wall contacts, 8 seeds×60 s **at the SHIPPED 13-body tree and at the excited pole** (the §0 incredulity catch makes this cell mandatory, not assumed) · G-FISSION-CAUSED+LATCHED every separation within 600 ms of one counted impulse or a periapsis crossing (RED: fissionAmp has zero setters) · G-DEPTH-BOUND ≤2, 0% collapse · G-ONE-FIELD · G-SHADOW-ANALYTIC (RED: `:247`) · G-SETTLED-ONE-SIGNAL no `setTimeout` in the sim path (RED: `blobSimulation.ts:105`). π owed (browser-owning seat): π-SEPARATE (`blobstats.py` components ≥2; currently 1 everywhere), π-FISSION (click DELTA), π-CHAOS (same-seed divergence ~10 s), π-PERF (the 3× claim, DPR-2, aurora co-present). Relay: barrel breaks (`blob/index.ts:7,15,16` + `eccentricity`)—marked addendum to the value.js/slides tranche at W-FINAL per the consumer-updates ruling; no blob wave waits. Routed elsewhere: configurator expand/std deltas, D6/D10-D12 surface knobs, chip-rail clip.
 
