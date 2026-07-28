@@ -406,3 +406,17 @@ is the thrice design workflow**: Fable ∥ Opus 5 author/prototype independently
 frontend design plugin — DesignSync), a Fable agglomerates into the choosy apotheosis, scrupulously.
 The stage-2 delta fold amends TERMINAL-ROSTER + BK so no design-deferred row survives into execution.
 Engine: `wf/design-now.wf.js` → banks `DESIGN-NOW.md`.
+
+---
+
+## THE NO-INCOMPLETE-WORK EDICT — 2026-07-28, standing
+
+**"Ensure no partial lost progress, ever … Validate all seats … NO incomplete work."** Operationalized:
+(1) at every run close the lead verifies `agents_error == 0` — any error class resumes via
+`resumeFromRunId` until 0, walls included; (2) the ledger row may read CLOSED only after a
+result-vs-expected seat census; (3) **harvested-not-banked journal material is DEBT and blocks CLOSED**
+(the structure zone settlements were the one instance — now banked as `STRUCTURE-ZONES.md`, debt
+DISCHARGED); (4) every QUEUED/stage-2/deferred declaration names its OWNER and TRIGGER at declaration
+time — a debt without both is an ORPHAN, the violation class; (5) `wf/validate.wf.js` re-runs the
+28-run census on demand; its `VALIDATION.md` is the completeness certificate of record and §4 there
+restates this protocol.
