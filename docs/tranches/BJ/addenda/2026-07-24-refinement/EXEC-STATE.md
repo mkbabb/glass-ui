@@ -435,6 +435,27 @@ Owner words, verbatim in force:
    owner rules per-row; owner words in this sitting bind the stage-2 fold's output (the lead applies
    them as an overlay after the seal if the fold landed contrary rows).
 
+Second round of words, same sitting (the owner ruling on the delivered list):
+8. **The metric family consolidates** — "metric pill and crew likely need consolidation": metric +
+   metric-badge + metric-cell + metric-stack → ONE metric family apotheosis (the keyframes/sci-active
+   7.x `metric` imports migrate to the family, discharging the R-1 relay).
+9. **instrument-chassis DELETES — the proof is REJECTED.** The speedtest/muster usage "likely
+   leveraged it ineffectively," and **muster is a PROTOTYPE repo, not to be considered outright** —
+   a standing census rule from this word forward: muster's consumer counts never bind a disposition.
+   The relay addendum notes speedtest migrates off the chassis at its own bump.
+10. **watercolor-dot → value.js CONFIRMED** (as WatercolorSwatch or its native name there) — "and
+    elements like it": a RELOCATION CENSUS is ordered — find every component whose consumption is
+    concentrated in one consumer with consumer-specific semantics; those relocate to their dominant
+    consumer rather than staying library surface.
+11. **deck consults the slides repo.** The original plan kept slides-specific items in slides; with
+    atlas's advent, slides-specific STYLING migrates to atlas — and **the abstract, generalized slide
+    facilities migrate INTO glass-ui**. #40's re-hearing widens into a deck apotheosis fed by a
+    three-way inventory: slides' deck mechanics (abstract → glass-ui) · slides styling (→ atlas) ·
+    atlas's `useStageDeck`/`useDeckDetent` (already-landed prior art).
+12. **carousel STAYS and shares the deck's substrate** — carousel leverages the same animations and
+    facilities as the slide deck: one windowed-sequence motion engine under both (the EXEMPLARS-CODEX
+    pages-from-album windowing + continuous-timeline laws are the design ground).
+
 ---
 
 ## THE CODEX META-AUDIT — posture ruling, 2026-07-28 (lead-adjudicated on owner direction)
