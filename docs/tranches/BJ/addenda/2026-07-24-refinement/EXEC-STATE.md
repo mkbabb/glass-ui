@@ -412,6 +412,22 @@ Engine: `wf/design-now.wf.js` → banks `DESIGN-NOW.md`.
 
 ---
 
+## FORMULATION PERFECTED — the compact-ready close, 2026-07-28 night (seal commit `8f00081a`)
+
+THE PERFECTION VERDICT (wf_34cf61fe-f49, 7/7): **YES — the 90 wave specs are perfected pursuant to
+`precepts/`; BK is executable at Φ0 at the owner's go.** All BA–BJ tails seated or retired (the 50
+union orphans, PROOF-SWEEP lane C); both owner-sitting rounds applied; gates exactly 60.
+
+A fresh session bootstraps: this file §DURABLE PROCESS → `docs/tranches/BK/PLAN.md` →
+`docs/tranches/BK/EXECUTION-PROGRESS.md` (header ⊕⁵) → `TERMINAL-ROSTER.md` §00 SE-1..SE-10 → the
+live row's cited spec. Pending OWNER words (none block the go): (1) the 31-file governance sitting —
+PROOF-SWEEP lane A HOLD class, ADOPT-atomic or REJECT (the dirty tree is exactly this class; REVERT
+bank at stash `003a8339`); (2) the BK/ASK.md glance + disposition rows g1–g12, every one carrying a
+ratified default and a fires-at trigger — silence advances; (3) the R-7 device footage (owner-only).
+Execution NEVER starts without the owner's explicit go; the session compacts before it.
+
+---
+
 ## THE OWNER SITTING OF 2026-07-28 (evening) — perfection, tails, dispositions
 
 Owner words, verbatim in force:
