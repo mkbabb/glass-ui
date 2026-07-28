@@ -388,3 +388,21 @@ frontend design plugin (DesignSync)**.
 (archaeology §4 + gestalt §4 + tier-3 + codex + frost verdict + novelties) into the roster → the BK cut.
 Frame corpus at `scratchpad/ios27/` (2fps, 329 frames, SOURCE.txt per dir; rebuild: ffmpeg fps=2 from
 the two Downloads paths).
+
+---
+
+## THE SEVENTH ECOUTE — 2026-07-28, standing law
+
+**"Any design, research, or prototyping planned is never to be done mid-tranche but NOW"** — tranche
+development owns ALL design/research/prototyping; execution (BK) contains only **fully formed, specified
+wave specs pursuant to `precepts/`**. Consequences, immediate: (a) every EXPERIMENT-class row converts —
+the experiment runs NOW and its result lands in the spec (GF-BLOB's "Experiment." clause is prototyped
+now, not during BK); (b) unowned/absent specs are authored now (GF-FOURIER — N7, no owner; W-CHIP —
+roster blocker #5; W-DESIGN-CANON — the canon body itself); (c) NOVELTIES.md rows ruled EXPERIMENT get
+a stage-2 prototyping pass at its bank, same law; (d) capture-time ACCEPTANCE glances with ratified
+defaults (r7 A/B, F50, DUSK) are NOT design — they stay execution-side, per RATIFICATION §6; a value
+solved BEHIND a born-RED gate is likewise acceptance arithmetic, not deferred design. **The instrument
+is the thrice design workflow**: Fable ∥ Opus 5 author/prototype independently (frontend via the
+frontend design plugin — DesignSync), a Fable agglomerates into the choosy apotheosis, scrupulously.
+The stage-2 delta fold amends TERMINAL-ROSTER + BK so no design-deferred row survives into execution.
+Engine: `wf/design-now.wf.js` → banks `DESIGN-NOW.md`.
