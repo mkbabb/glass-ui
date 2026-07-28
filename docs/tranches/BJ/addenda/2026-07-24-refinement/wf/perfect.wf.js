@@ -24,11 +24,19 @@ rainbow hairline · rail-rename-before-rebuild · the Stop-hook ruling-batch row
 (b) \`${REF}/GESTALT.md\` §4 routed deltas — the Ruling-1 delete dispositions with their named consumers,
 deck RE-HEAR, W-DESIGN-CANON, the suffusion row-set (3 shared files close 15 INERT components), the
 whole-repo consumer-walk rule, the §2 target census.
-(c) \`${REF}/COMPONENT-WAVES-TERMINAL-3.md\` — the ten tier-3 lanes' waves + its fold's collisions
-(field register, binary-control extraction, selection register, track seam — one owner per file per cut).
+(c) \`${REF}/COMPONENT-WAVES-TERMINAL-3.md\` — COMPLETE (ten tri-fold lanes) — the lanes' waves + the
+fold's collisions (field register, binary-control extraction, selection register, track seam — one owner
+per file per cut).
 (d) \`${REF}/RATIFICATION.md\` — strike every "owner-owed" mark the roster carries for rows now RULED;
 blocker #4 is DISCHARGED; the capture-time glances (r7 A/B, F50, DUSK) become in-wave capture rows with
 their ratified defaults.
+(e) \`${REF}/FROST-TABS-REAUDIT.md\` — the W-FROST F-1..F-11 amendments, W-TABS T-A..T-C, W-SLIDER
+S-A..S-E, the quadruple Q-1..Q-4, the amended G-NO-ENGINE-BRANCH edict + 20-hit census (the refract-latch
+DELETE closes blocker #1 by subtraction and overrides the earlier keep — owner-reversible), and its §0
+corrections to the banked record (prefix trap 7→5, saturate §CONTRADICTION struck, OWED #6 discharged).
+(f) \`${REF}/EXEMPLARS-CODEX.md\` and \`${REF}/NOVELTIES.md\` — fold their routed deltas IF present on
+disk when you run; for whichever is absent, add ONE roster row "STAGE-2 DELTA FOLD" naming the pending
+artifact — the delta pass runs at its bank, and the BK cursor carries the same pending row.
 Keep the roster's own §0-§D shape, the 60-seat gate budget law (add-one-retire-one), and re-verify any
 figure you touch on disk. Every wave still cites its spec-of-record.`
 
