@@ -63,3 +63,55 @@ Preconditions before any number banks (else the row-38 `ALL PASS` and the loupe 
 - **X-B vs G3 at the grasp (G-6):** X-B reads "material gain move plus exactly one light response"; the build fires zero light responses (static rim) to stay inside G3's budget of 2, since grasp IS the rung move. The silent resolution is endorsed here—grasp is a material register, X-B's own text excludes the gain move on the same surface—but the arbitration table at #27 should say it in one line.
 - **L-8 fringe intensity:** band width 3.0–3.6px sits inside row 42's 2–3pt; the 0.92-alpha ceiling with a 0.98 leading stop is unruled and flirts with the Sixth Ecoute's "too shiny, too bright." Magnitude call lands with row 42's paired capture at #32, both arms (moving AND rest—the prototype instrumented rest only, L-6).
 - **L-9:** register `--raise-o`, drop the dead `@property --raise`, in the shipped form.
+
+---
+
+# CAPTURE ADDENDUM — the sequenced cell, executed 2026-07-28 (supersedes §Row-38 where it conflicts)
+
+modelId: `claude-opus-5[1m]` — sequenced capture complete. **Cell:** Chrome 150 / macOS / dpr 2 /
+1280×806. Idle rAF p50 **8.30 ms → 120.5 Hz**, so the drop edge is **>12.5 ms** (one missed vsync),
+not the banked 25 ms (L-4/G-5 redressed). Screenshots at
+`scratchpad/experiments/capture-2026-07-28/` (17 files: grasp ×8 both modes incl. the single-layer
+cure cells, loupe ×3 speeds, π plate-ON/OFF ×4 + rim-kept ×2).
+
+## GRASP (row 38) — VERDICT: AMEND
+
+Substrate σ **85.3** (Q-2 admissible), translated every frame (G-2). The prototype is two-layer
+complementary crossfade (oRest+oGrasp = 1.0000 at all 38 samples; release 177.9 ms).
+
+**The G-1 release dip is REFUTED, in pixels.** Same-pixels band (1050×230 device px, text-free;
+control |Δ| outside the plate = 0): rest 95.17/102.45 meanL (dark/light) · grasp 112.81/116.49 ·
+mid f=.3031 **109.84/114.10** — mid is DIMMER than the grasp endpoint by −2.97/−2.38 L: **monotone**.
+The banked α(f)=0.18(1−f)+0.30f² arithmetic double-attenuates the rest rung (source-over predicts
+113.57, Δ0.54 from measured; the doc's formula 119.64, Δ5.54). Strike the arithmetic and the defect.
+
+**The REAL crossfade defect, measured:** σ-kept nearly doubles mid-release (12.7% → 24.1%) — the
+un-frosted fraction (1−o_g)(1−o_r) peaks at **25% raw substrate at o=0.5**. Frost thinning, not veil
+overshoot.
+
+**The folded single-layer cure MUST NOT enter #22 as written:** measured (rest rung pinned at 1,
+grasp crossfades alone), the veils STACK — α 0.472/0.426 at grasp vs 0.34/0.30 rest; meanL −18.2 L
+vs rest; T −20%. It inverts the ruled direction (veil DOWN/+21.2%) and fails A2/A6.
+
+**Rest-cost:** an opacity-0 rung's backdrop region is NOT skipped — ≈ +1.07 ms/frame at 32 plates
+(~33 µs per resting rung); unobservable at one surface, load-bearing for a many-surface partial.
+**Live arms:** 5 s scripted (8 cycles, live substrate): p50 8.30 / p95 9.20 / max 9.40 ms — **0
+drops/100**. G-3 redress: the G6 singleton falsifiable and holds (grasping B releases A).
+
+## LOUPE (row 40) — VERDICT: CONFIRM
+
+**L-1 redressed off the committed matrices:** registration error ≤0.011 px at every speed; true
+point-under-finger lag 0.305/1.314/3.929 px mean at 150/700/2200 px/s = **≤0.52 frames of travel**
+(pure input-to-commit lag; the identity is now measured). k inverse with |v|: 2.361@147 · 1.659@700 ·
+1.382@2165 (K_MAX 2.60, k_min observed 1.219). Clone: no rung, no clip, offsetWidth constant 2700
+(no layout re-scale), matrix always a downscale; focus-pull blur 0 at hold → 0.67 px at 2200 px/s
+(~30% edge-contrast softening at speed — the |v|-coupled blur, LAW 13 class).
+**L-2 redressed — admissible same-pixels π** (plate toggled, rim/spec identical): substrate σ 68.43/
+63.81 (Q-2 PASS both arms) · ΔmeanL **−13.92/−13.67** · σ-kept 3.6/4.1% · hf-kept 0.8/1.0% —
+**F-5 dims-not-lifts: PASS, both arms, now quotable** (the banked −15.94/−22.40 had the right sign,
+adjacency-inflated dark arm corrected). 5 s continuous drag (peak ≈1257 px/s): p50 8.30 / p95 9.50 /
+max 10.20 ms — **0.00 drops/100** at the 120 Hz edge.
+
+**Still OWED, unchanged:** Safari-app cells (this capture is Chrome-only, both modes) · both rows'
+device-cell fps at #67 · loupe L-3 blur-sweep/mask-over-backdrop at the device cell · row 42 fringe
+magnitude at #32.
