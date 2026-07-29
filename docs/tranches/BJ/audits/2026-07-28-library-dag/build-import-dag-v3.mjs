@@ -337,10 +337,21 @@ function importedSymbolMetadata(clause) {
 
 const childProcessModules = new Set(["child_process", "node:child_process"]);
 const nodeModuleModules = new Set(["module", "node:module"]);
+const pathModules = new Set(["path", "node:path"]);
+const processModules = new Set(["node:process"]);
+const urlModules = new Set(["url", "node:url"]);
+const pathMemberNames = new Set(["dirname", "join", "resolve"]);
 
-function createBindingResolver(sourceFile) {
+function createBindingResolver(sourceFile, options = {}) {
     const scopeByNode = new Map();
-    const rootScope = { parent: null, bindings: new Map() };
+    const parameterValues = options.parameterValues ?? new Map();
+    const rootScope = {
+        parent: null,
+        bindings: new Map(),
+        functionScope: null,
+        kind: "module",
+    };
+    rootScope.functionScope = rootScope;
     const assignmentOperators = new Set([
         ts.SyntaxKind.EqualsToken,
         ts.SyntaxKind.PlusEqualsToken,
@@ -360,12 +371,40 @@ function createBindingResolver(sourceFile) {
         ts.SyntaxKind.QuestionQuestionEqualsToken,
     ]);
 
+    const canonicalRootModule = (moduleName, imported) => {
+        if (!["REPO_ROOT", "ROOT"].includes(imported)) return false;
+        if (!moduleName.startsWith(".")) return false;
+        const importedPath = portable(resolve(dirname(sourceFile.fileName), moduleName));
+        return importedPath.endsWith("/scripts/lib/subpath-policy.mjs") ||
+            importedPath.endsWith("/scripts/lib/canon-doc.mjs");
+    };
     const directImportProvenance = (moduleName, imported) => {
+        if (canonicalRootModule(moduleName, imported)) {
+            return { kind: "repository-root" };
+        }
         if (childProcessModules.has(moduleName) && processExecutionNames.has(imported)) {
             return { kind: "module-member", moduleName, member: imported };
         }
         if (nodeModuleModules.has(moduleName) && imported === "createRequire") {
             return { kind: "create-require-factory", moduleName };
+        }
+        if (pathModules.has(moduleName) && pathMemberNames.has(imported)) {
+            return { kind: "path-member", moduleName, member: imported };
+        }
+        if (processModules.has(moduleName) && imported === "cwd") {
+            return { kind: "process-member", moduleName, member: imported };
+        }
+        if (urlModules.has(moduleName) && imported === "fileURLToPath") {
+            return { kind: "url-member", moduleName, member: imported };
+        }
+        if (
+            childProcessModules.has(moduleName) ||
+            nodeModuleModules.has(moduleName) ||
+            pathModules.has(moduleName) ||
+            processModules.has(moduleName) ||
+            urlModules.has(moduleName)
+        ) {
+            return { kind: "module", moduleName };
         }
         return { kind: "local" };
     };
@@ -375,15 +414,21 @@ function createBindingResolver(sourceFile) {
         initializer,
         propertyPath = [],
         iterate = false,
+        kind = "variable",
+        parameterIndex = null,
+        defaultInitializer = null,
     ) => {
         if (ts.isIdentifier(name)) {
             scope.bindings.set(name.text, {
-                kind: "variable",
+                kind,
                 initializer,
                 propertyPath,
                 iterate,
                 tainted: false,
                 scope,
+                declaration: name,
+                parameterIndex,
+                defaultInitializer,
             });
             return;
         }
@@ -402,6 +447,9 @@ function createBindingResolver(sourceFile) {
                     initializer,
                     [...propertyPath, property ?? shorthand],
                     iterate,
+                    kind,
+                    parameterIndex,
+                    element.initializer ?? defaultInitializer,
                 );
             }
             return;
@@ -414,6 +462,9 @@ function createBindingResolver(sourceFile) {
                     initializer,
                     [...propertyPath, index],
                     iterate,
+                    kind,
+                    parameterIndex,
+                    element.initializer ?? defaultInitializer,
                 );
             }
         }
@@ -432,8 +483,20 @@ function createBindingResolver(sourceFile) {
         }
         const scope =
             node !== sourceFile && createsScope(node)
-                ? { parent: parentScope, bindings: new Map() }
+                ? {
+                      parent: parentScope,
+                      bindings: new Map(),
+                      functionScope: ts.isFunctionLike(node)
+                          ? null
+                          : parentScope.functionScope,
+                      kind: ts.isFunctionLike(node)
+                          ? "function"
+                          : ts.isModuleBlock(node)
+                            ? "module"
+                            : "lexical",
+                  }
                 : parentScope;
+        if (scope.functionScope === null) scope.functionScope = scope;
         scopeByNode.set(node, scope);
 
         if (ts.isImportDeclaration(node) && ts.isStringLiteralLike(node.moduleSpecifier)) {
@@ -443,9 +506,9 @@ function createBindingResolver(sourceFile) {
                 if (clause.name) {
                     scope.bindings.set(
                         clause.name.text,
-                        childProcessModules.has(moduleName) || nodeModuleModules.has(moduleName)
+                        directImportProvenance(moduleName, "default").kind === "module"
                             ? { kind: "module", moduleName }
-                            : { kind: "local" },
+                            : directImportProvenance(moduleName, "default"),
                     );
                 }
                 if (clause.namedBindings && ts.isNamespaceImport(clause.namedBindings)) {
@@ -472,15 +535,29 @@ function createBindingResolver(sourceFile) {
                 ts.isForOfStatement(node.parent.parent)
                     ? node.parent.parent
                     : null;
+            const declarationScope =
+                ts.isVariableDeclarationList(node.parent) &&
+                !(node.parent.flags & (ts.NodeFlags.Let | ts.NodeFlags.Const))
+                    ? scope.functionScope
+                    : scope;
             registerPattern(
                 node.name,
-                scope,
+                declarationScope,
                 node.initializer ?? forOf?.expression ?? null,
                 [],
                 Boolean(forOf && !node.initializer),
             );
         } else if (ts.isParameter(node)) {
-            registerPattern(node.name, scope, null);
+            registerPattern(
+                node.name,
+                scope,
+                null,
+                [],
+                false,
+                "parameter",
+                node.parent.parameters.indexOf(node),
+                node.initializer ?? null,
+            );
         } else if (
             (ts.isFunctionExpression(node) || ts.isClassExpression(node)) &&
             node.name
@@ -538,14 +615,20 @@ function createBindingResolver(sourceFile) {
         if (base.kind === "require-loader" && name === "resolve") {
             return { kind: "require-resolve", loader: base.loader };
         }
+        if (base.kind === "process-global" && name === "cwd") {
+            return { kind: "process-member", moduleName: "runtime", member: name };
+        }
         return { kind: "local" };
     };
     const resolveRecord = (record, seen) => {
         if (record?.tainted) return { kind: "local" };
+        const knownValue = parameterValues.get(record?.declaration?.getStart(sourceFile));
+        if (knownValue !== undefined) return { kind: "known-path", value: knownValue };
         if (!record || record.kind !== "variable") return record ?? { kind: "local" };
-        if (!record.initializer || seen.has(record)) return { kind: "local" };
+        const initializer = record.initializer ?? record.defaultInitializer;
+        if (!initializer || seen.has(record)) return { kind: "local" };
         seen.add(record);
-        let resolved = resolveExpression(record.initializer, record.initializer, seen);
+        let resolved = resolveExpression(initializer, initializer, seen);
         for (const property of record.propertyPath) {
             if (!property) return { kind: "local" };
             resolved = member(resolved, property);
@@ -565,9 +648,9 @@ function createBindingResolver(sourceFile) {
         if (ts.isIdentifier(node)) {
             const record = lookup(node.text, useNode);
             if (record) return record.tainted ? { kind: "local" } : resolveRecord(record, seen);
-            return node.text === "require"
-                ? { kind: "require-loader", loader: "require" }
-                : { kind: "local" };
+            if (node.text === "require") return { kind: "require-loader", loader: "require" };
+            if (node.text === "process") return { kind: "process-global" };
+            return { kind: "local" };
         }
         if (ts.isPropertyAccessExpression(node)) {
             return member(resolveExpression(node.expression, useNode, seen), node.name.text);
@@ -583,16 +666,59 @@ function createBindingResolver(sourceFile) {
             if (callee.kind === "create-require-factory") {
                 return { kind: "require-loader", loader: "createRequire" };
             }
+            if (
+                callee.kind === "process-member" &&
+                callee.member === "cwd" &&
+                node.arguments.length === 0
+            ) {
+                return { kind: "repository-root" };
+            }
             if (callee.kind === "require-loader") {
                 const moduleName = node.arguments[0] && literalString(node.arguments[0]);
-                if (moduleName && (childProcessModules.has(moduleName) || nodeModuleModules.has(moduleName))) {
+                if (
+                    moduleName &&
+                    (
+                        childProcessModules.has(moduleName) ||
+                        nodeModuleModules.has(moduleName) ||
+                        pathModules.has(moduleName) ||
+                        processModules.has(moduleName) ||
+                        urlModules.has(moduleName)
+                    )
+                ) {
                     return { kind: "module", moduleName };
                 }
             }
         }
         return { kind: "local" };
     }
-    return { lookup, resolveExpression };
+    const knownPathValue = (node, useNode = node) => {
+        const record = ts.isIdentifier(node) ? lookup(node.text, useNode) : null;
+        if (!record || record.tainted) return null;
+        const knownValue = parameterValues.get(record.declaration?.getStart(sourceFile));
+        return knownValue === undefined ? null : knownValue;
+    };
+    const isUnshadowed = (name, node) => lookup(name, node) === null;
+    const recordsForPattern = (pattern) => {
+        const records = [];
+        function visitPattern(node) {
+            if (ts.isIdentifier(node)) {
+                const record = lookup(node.text, node);
+                if (record && !records.includes(record)) records.push(record);
+            } else {
+                ts.forEachChild(node, visitPattern);
+            }
+        }
+        visitPattern(pattern);
+        return records;
+    };
+    return {
+        lookup,
+        resolveExpression,
+        knownPathValue,
+        isUnshadowed,
+        recordsForPattern,
+        callResultValue: options.callResultValue ?? null,
+    };
 }
 
 function createStaticSpecifierResolver(sourceFile, bindingResolver) {
@@ -1923,14 +2049,28 @@ function evaluatePathExpression(
     const string = literalString(node);
     if (string !== null) return string;
     if (ts.isIdentifier(node)) {
-        if (node.text === "__dirname") return dirname(join(repositoryRoot, sourcePath));
         const binding = bindingResolver?.lookup(node.text, node);
         if (binding) {
-            if (binding.kind !== "variable" || !binding.initializer || seen.has(binding)) {
-                return null;
+            if (binding.tainted) return null;
+            const known = bindingResolver.knownPathValue(node, node);
+            if (known !== null) return known;
+            if (
+                binding.initializer &&
+                ts.isCallExpression(binding.initializer) &&
+                bindingResolver.callResultValue
+            ) {
+                const returned = bindingResolver.callResultValue(
+                    binding.initializer,
+                    binding.propertyPath,
+                );
+                if (returned !== null) return returned;
             }
-            return evaluatePathExpression(
-                binding.initializer,
+            const provenance = bindingResolver.resolveExpression(node, node);
+            if (provenance.kind === "repository-root") return repositoryRoot;
+            const initializer = binding.initializer ?? binding.defaultInitializer;
+            if (!initializer || seen.has(binding)) return null;
+            let value = evaluatePathExpression(
+                initializer,
                 sourceFile,
                 sourcePath,
                 repositoryRoot,
@@ -1938,22 +2078,39 @@ function evaluatePathExpression(
                 new Set(seen).add(binding),
                 bindingResolver,
             );
+            if (value === null && binding.propertyPath.length > 0) {
+                const property = binding.propertyPath.at(-1);
+                if (ts.isObjectLiteralExpression(initializer) && property !== undefined) {
+                    const member = initializer.properties.find((candidate) => {
+                        const name = candidate.name &&
+                            (candidate.name.text ?? literalString(candidate.name));
+                        return String(name) === String(property);
+                    });
+                    if (member) {
+                        const valueNode = ts.isPropertyAssignment(member)
+                            ? member.initializer
+                            : ts.isShorthandPropertyAssignment(member)
+                              ? member.name
+                              : null;
+                        value = evaluatePathExpression(
+                            valueNode,
+                            sourceFile,
+                            sourcePath,
+                            repositoryRoot,
+                            constants,
+                            new Set(seen).add(binding),
+                            bindingResolver,
+                        );
+                    }
+                }
+            }
+            return value;
         }
-        if (seen.has(node.text)) return null;
-        if (constants.has(node.text)) {
-            seen.add(node.text);
-            return evaluatePathExpression(
-                constants.get(node.text),
-                sourceFile,
-                sourcePath,
-                repositoryRoot,
-                constants,
-                seen,
-                bindingResolver,
-            );
-        }
-        if (["root", "repoRoot", "repositoryRoot", "REPO_ROOT", "ROOT"].includes(node.text)) {
-            return repositoryRoot;
+        if (
+            node.text === "__dirname" &&
+            bindingResolver?.isUnshadowed("__dirname", node)
+        ) {
+            return dirname(join(repositoryRoot, sourcePath));
         }
         return null;
     }
@@ -1968,19 +2125,25 @@ function evaluatePathExpression(
     if (
         ts.isCallExpression(node) &&
         ts.isPropertyAccessExpression(node.expression) &&
-        ts.isIdentifier(node.expression.expression) &&
-        node.expression.expression.text === "process" &&
-        node.expression.name.text === "cwd"
+        bindingResolver?.resolveExpression(node.expression, node).kind === "process-member" &&
+        node.expression.name.text === "cwd" &&
+        node.arguments.length === 0
     ) {
         return repositoryRoot;
     }
     if (ts.isCallExpression(node)) {
         const name = callName(node.expression);
+        const pathBinding = bindingResolver?.resolveExpression(node.expression, node);
+        if (
+            pathBinding?.kind === "process-member" &&
+            pathBinding.member === "cwd" &&
+            node.arguments.length === 0
+        ) {
+            return repositoryRoot;
+        }
         const isPathFunction =
-            ts.isIdentifier(node.expression) ||
-            (ts.isPropertyAccessExpression(node.expression) &&
-                ts.isIdentifier(node.expression.expression) &&
-                ["path", "nodePath"].includes(node.expression.expression.text));
+            pathBinding?.kind === "path-member" &&
+            pathMemberNames.has(pathBinding.member);
         const values = node.arguments.map((argument) =>
             evaluatePathExpression(
                 argument,
@@ -1993,10 +2156,14 @@ function evaluatePathExpression(
             ),
         );
         if (values.some((value) => value === null)) return null;
-        if (name === "resolve" && isPathFunction) return resolve(...values);
-        if (name === "join" && isPathFunction) return join(...values);
-        if (name === "dirname" && isPathFunction) return dirname(values[0]);
-        if (name === "fileURLToPath") {
+        if (pathBinding?.member === "resolve" && isPathFunction) return resolve(...values);
+        if (pathBinding?.member === "join" && isPathFunction) return join(...values);
+        if (pathBinding?.member === "dirname" && isPathFunction) return dirname(values[0]);
+        if (
+            name === "fileURLToPath" &&
+            pathBinding?.kind === "url-member" &&
+            pathBinding.member === "fileURLToPath"
+        ) {
             try {
                 return fileURLToPath(values[0]);
             } catch {
@@ -2004,7 +2171,11 @@ function evaluatePathExpression(
             }
         }
     }
-    if (ts.isNewExpression(node) && callName(node.expression) === "URL") {
+    if (
+        ts.isNewExpression(node) &&
+        callName(node.expression) === "URL" &&
+        bindingResolver?.isUnshadowed("URL", node.expression)
+    ) {
         const value = evaluatePathExpression(
             node.arguments?.[0],
             sourceFile,
@@ -2033,17 +2204,242 @@ function evaluatePathExpression(
     return null;
 }
 
+function namedFunction(sourceFile, name) {
+    return sourceFile?.statements.find(
+        (node) => ts.isFunctionDeclaration(node) && node.name?.text === name,
+    ) ?? null;
+}
+
+function callsNamed(sourceFile, name) {
+    const calls = [];
+    function visit(node) {
+        if (ts.isCallExpression(node) && callName(node.expression) === name) {
+            calls.push(node);
+        }
+        ts.forEachChild(node, visit);
+    }
+    visit(sourceFile);
+    return calls;
+}
+
+function parameterRecord(sourceFile, functionNode, index, property = null) {
+    const parameter = functionNode?.parameters[index];
+    if (!parameter) return null;
+    return createBindingResolver(sourceFile)
+        .recordsForPattern(parameter.name)
+        .find(
+            (record) =>
+                record.parameterIndex === index &&
+                (property === null || record.propertyPath.at(-1) === property),
+        ) ?? null;
+}
+
+function setParameterValue(
+    valuesBySource,
+    sourcePath,
+    sourceFile,
+    functionNode,
+    index,
+    value,
+    property = null,
+) {
+    const record = parameterRecord(sourceFile, functionNode, index, property);
+    if (value === null || !record) return false;
+    valuesBySource.get(sourcePath).set(record.declaration.getStart(sourceFile), value);
+    return true;
+}
+
+function functionVariable(functionNode, name) {
+    let result = null;
+    function visit(node) {
+        if (result || (node !== functionNode && ts.isFunctionLike(node))) return;
+        if (
+            ts.isVariableDeclaration(node) &&
+            ts.isIdentifier(node.name) &&
+            node.name.text === name
+        ) {
+            result = node.initializer;
+            return;
+        }
+        ts.forEachChild(node, visit);
+    }
+    visit(functionNode?.body ?? functionNode);
+    return result;
+}
+
+function provenCallValue(
+    sourceFile,
+    sourcePath,
+    name,
+    index,
+    repositoryRoot,
+    callResultValue = null,
+    parameterValues = new Map(),
+) {
+    const calls = callsNamed(sourceFile, name);
+    if (calls.length === 0) return null;
+    const values = calls.map((call) =>
+        evaluatePathExpression(
+            call.arguments[index],
+            sourceFile,
+            sourcePath,
+            repositoryRoot,
+            new Map(),
+            new Set(),
+            createBindingResolver(sourceFile, {
+                parameterValues,
+                callResultValue,
+            }),
+        ),
+    );
+    return values.every((value) => value !== null && value === values[0])
+        ? values[0]
+        : null;
+}
+
+function collectPathParameterContracts(scriptAsts, repositoryRoot) {
+    const valuesBySource = new Map(
+        [...scriptAsts.keys()].map((path) => [path, new Map()]),
+    );
+    const put = (path, file, fn, index, value, property = null) =>
+        setParameterValue(valuesBySource, path, file, fn, index, value, property);
+
+    // These exact source/call contracts are the finite generator API in this
+    // corpus. An identifier named root elsewhere never receives provenance.
+    const styleAssetsPath = "vite.style-assets.ts";
+    const styleFoldPath = "vite.style-fold.ts";
+    const utilityEmitPath = "vite.utility-emit.ts";
+    const styleAssets = scriptAsts.get(styleAssetsPath);
+    const styleFold = scriptAsts.get(styleFoldPath);
+    const utilityEmit = scriptAsts.get(utilityEmitPath);
+    if (styleAssets && styleFold) {
+        const rootCalls = callsNamed(styleAssets, "copyStyleAssets");
+        const root = provenCallValue(
+            styleAssets,
+            styleAssetsPath,
+            "copyStyleAssets",
+            0,
+            repositoryRoot,
+        );
+        const copy = namedFunction(styleFold, "copyStyleAssets");
+        const fold = namedFunction(styleFold, "foldSfcBundle");
+        const copyValues = valuesBySource.get(styleFoldPath);
+        if (copy && root !== null && put(styleFoldPath, styleFold, copy, 0, root)) {
+            const expression = functionVariable(copy, "distStyles");
+            const distStyles = expression
+                ? evaluatePathExpression(
+                      expression,
+                      styleFold,
+                      styleFoldPath,
+                      repositoryRoot,
+                      new Map(),
+                      new Set(),
+                      createBindingResolver(styleFold, {
+                          parameterValues: copyValues,
+                      }),
+                  )
+                : null;
+            if (distStyles !== null) copyValues.set("distStyles", distStyles);
+        }
+        const copyCall = rootCalls.length === 1 ? rootCalls[0] : null;
+        const copyResult = (node, properties) =>
+            node === copyCall && properties.at(-1)
+                ? copyValues.get(properties.at(-1)) ?? null
+                : null;
+        if (fold) {
+            const foldPath = (index) =>
+                provenCallValue(
+                    styleAssets,
+                    styleAssetsPath,
+                    "foldSfcBundle",
+                    index,
+                    repositoryRoot,
+                    copyResult,
+                );
+            put(styleFoldPath, styleFold, fold, 0, foldPath(0));
+            put(styleFoldPath, styleFold, fold, 1, foldPath(1));
+        }
+        if (utilityEmit) {
+            const emit = namedFunction(utilityEmit, "emitComponentUtilities");
+            put(
+                utilityEmitPath,
+                utilityEmit,
+                emit,
+                0,
+                provenCallValue(
+                    styleAssets,
+                    styleAssetsPath,
+                    "emitComponentUtilities",
+                    0,
+                    repositoryRoot,
+                    copyResult,
+                ),
+            );
+        }
+    }
+
+    const graphPath = canonicalGraphGeneratorPath;
+    const graphSource = scriptAsts.get(graphPath);
+    if (graphSource) {
+        const build = namedFunction(graphSource, "buildGraph");
+        const visibility = namedFunction(graphSource, "gitRepositoryVisibility");
+        const graphValues = valuesBySource.get(graphPath);
+        const defaultExpression = parameterRecord(
+            graphSource,
+            build,
+            0,
+            "repositoryRoot",
+        )?.defaultInitializer;
+        const defaultRoot = defaultExpression
+            ? evaluatePathExpression(
+                  defaultExpression,
+                  graphSource,
+                  graphPath,
+                  repositoryRoot,
+                  new Map(),
+                  new Set(),
+                  createBindingResolver(graphSource, {
+                      parameterValues: graphValues,
+                  }),
+              )
+            : null;
+        if (build && put(graphPath, graphSource, build, 0, defaultRoot, "repositoryRoot")) {
+            put(
+                graphPath,
+                graphSource,
+                visibility,
+                0,
+                provenCallValue(
+                    graphSource,
+                    graphPath,
+                    "gitRepositoryVisibility",
+                    0,
+                    repositoryRoot,
+                    null,
+                    graphValues,
+                ),
+            );
+        }
+    }
+    return { valuesBySource, callResultValueBySource: new Map() };
+}
+
 export function extractFileOperations(
     sourceFile,
     sourcePath,
     repositoryRoot,
     origin = null,
     pathOverrides = new Map(),
+    parameterValues = new Map(),
+    callResultValue = null,
 ) {
     const operations = [];
     const unmodeled = [];
     const constants = collectConstInitializers(sourceFile);
-    const bindingResolver = createBindingResolver(sourceFile);
+    const bindingResolver = createBindingResolver(sourceFile, {
+        parameterValues,
+        callResultValue,
+    });
     const sourceLocation = (node) => {
         const local = sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile));
         return offsetLocation(
@@ -2118,10 +2514,15 @@ export function extractProcessInvocations(
     repositoryRoot,
     origin = null,
     context = {},
+    parameterValues = new Map(),
+    callResultValue = null,
 ) {
     const invocations = [];
     const constants = collectConstInitializers(sourceFile);
-    const bindingResolver = createBindingResolver(sourceFile);
+    const bindingResolver = createBindingResolver(sourceFile, {
+        parameterValues,
+        callResultValue,
+    });
     const sourceLocation = (node) => {
         const local = sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile));
         return offsetLocation(
@@ -2613,8 +3014,27 @@ export async function buildGraph({
             dynamicModuleReferences.push(
                 ...extracted.nonliteralReferences.filter(({ localHint }) => !localHint),
             );
+            const needsPathContract =
+                path === "vite.style-fold.ts" ||
+                path === "vite.utility-emit.ts" ||
+                path === canonicalGraphGeneratorPath;
+            const pathContracts = needsPathContract
+                ? collectPathParameterContracts(scriptAsts, repositoryRoot)
+                : null;
+            const parameterValues =
+                pathContracts?.valuesBySource.get(path) ?? new Map();
+            const callResultValue =
+                pathContracts?.callResultValueBySource.get(path) ?? null;
             processInvocations.push(
-                ...extractProcessInvocations(extracted.sourceFile, path, repositoryRoot),
+                ...extractProcessInvocations(
+                    extracted.sourceFile,
+                    path,
+                    repositoryRoot,
+                    null,
+                    {},
+                    parameterValues,
+                    callResultValue,
+                ),
             );
             const fileOperations = extractFileOperations(
                 extracted.sourceFile,
@@ -2622,11 +3042,13 @@ export async function buildGraph({
                 repositoryRoot,
                 null,
                 path === canonicalGraphGeneratorPath
-                    ? new Map([[
+                      ? new Map([[
                           "manifestPath",
                           graphOwnerManifestPath,
                       ]])
-                    : undefined,
+                      : undefined,
+                parameterValues,
+                callResultValue,
             );
             unmodeledFileOperations.push(...fileOperations.unmodeled);
             for (const operation of fileOperations.operations) {

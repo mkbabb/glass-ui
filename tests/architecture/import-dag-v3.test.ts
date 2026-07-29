@@ -355,6 +355,63 @@ describe("graph schema v3", () => {
         ]);
     });
 
+    it("keeps path provenance lexical, taint-aware, and fail-closed", () => {
+        const { sourceFile } = extractScriptReferences(`
+            import { readFileSync, readdirSync } from "node:fs";
+            import { join, resolve } from "node:path";
+            import { REPO_ROOT } from "./scripts/lib/subpath-policy.mjs";
+
+            const immutable = process.cwd();
+            const alias = immutable;
+            readdirSync(resolve(alias, "src"));
+            readdirSync(REPO_ROOT);
+
+            let tainted = process.cwd();
+            tainted = resolve("bad");
+            readdirSync(tainted);
+
+            function arbitrary(root: string) {
+                readdirSync(root);
+            }
+            function shadowedDir(__dirname: string) {
+                readFileSync(join(__dirname, "x"));
+            }
+            function shadowedProcess(process: { cwd: () => string }) {
+                readdirSync(process.cwd());
+            }
+            function shadowedJoin(join: (...parts: string[]) => string) {
+                readdirSync(join("src"));
+            }
+            function shadowedResolve(resolve: (...parts: string[]) => string) {
+                readdirSync(resolve("src"));
+            }
+            function varShadow() {
+                {
+                    var process = { cwd: () => "bad" };
+                }
+                readdirSync(process.cwd());
+            }
+        `);
+        const operations = extractFileOperations(sourceFile, "fixture.ts", root, null);
+
+        expect(operations.operations.map(({ target }) => target).sort()).toEqual([
+            ".",
+            "src",
+        ]);
+        expect(operations.unmodeled).toHaveLength(7);
+        expect(operations.unmodeled.map(({ operation }) => operation)).toEqual(
+            expect.arrayContaining([
+                "readFileSync",
+                "readdirSync",
+                "readdirSync",
+                "readdirSync",
+                "readdirSync",
+                "readdirSync",
+                "readdirSync",
+            ]),
+        );
+    });
+
     it("promotes TypeScript syntactic diagnostics to fail-closed parse errors", () => {
         const malformed = extractScriptReferences(
             "export const broken: = {;",
@@ -608,6 +665,100 @@ describe("graph schema v3", () => {
                 "node:url",
             ]),
         );
+    });
+
+    it("ratchets the truthful package/style/utility operation closure", () => {
+        const generatorEdge = (
+            source: string,
+            target: string,
+            edgeKind: string,
+            operation: string,
+        ) =>
+            graph.internalEdges.find(
+                (edge) =>
+                    edge.source === source &&
+                    edge.target === target &&
+                    edge.edgeKind === edgeKind &&
+                    edge.metadata?.operation === operation,
+            );
+        const generatorPath =
+            "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs";
+
+        expect(generatorEdge(generatorPath, "package.json", "generator-read", "readFileSync")).toBeDefined();
+        expect(
+            graph.internalEdges.filter(
+                (edge) =>
+                    edge.source === "scripts/regen-exports.mjs" &&
+                    edge.target === "package.json" &&
+                    edge.edgeKind === "generator-read" &&
+                    edge.metadata?.operation === "readFileSync",
+            ),
+        ).toHaveLength(2);
+        expect(generatorEdge("scripts/regen-exports.mjs", "package.json", "generator-write", "writeFileSync")).toBeDefined();
+        for (const [source, target, edgeKind] of [
+            ["vite.style-fold.ts", "src/components", "generator-read"],
+            ["vite.style-fold.ts", "src/fonts", "generator-read"],
+            ["vite.style-fold.ts", "src/styles", "generator-read"],
+            ["vite.style-fold.ts", "dist/components", "generator-write"],
+            ["vite.style-fold.ts", "dist/fonts", "generator-write"],
+            ["vite.style-fold.ts", "dist/styles", "generator-write"],
+        ] as const) {
+            expect(generatorEdge(source, target, edgeKind, "cpSync")).toBeDefined();
+        }
+        expect(generatorEdge("vite.style-fold.ts", "dist/styles/index.css", "generator-read", "readFileSync")).toBeDefined();
+        expect(generatorEdge("vite.style-fold.ts", "dist/styles/index.css", "generator-write", "writeFileSync")).toBeDefined();
+        expect(generatorEdge("vite.utility-emit.ts", "dist", "generator-read", "readdirSync")).toBeDefined();
+        expect(generatorEdge("vite.utility-emit.ts", "src/styles", "generator-read", "readdirSync")).toBeDefined();
+
+        expect(graph.summary.edgeKindCounts["generator-read"]).toBe(11);
+        expect(graph.summary.edgeKindCounts["generator-write"]).toBe(7);
+        expect(graph.summary.unmodeledFileOperations).toBe(275);
+        expect(
+            graph.internalEdges.find(
+                (edge) =>
+                    edge.source === "vite.style-fold.ts" &&
+                    edge.target === "." &&
+                    edge.edgeKind === "generator-read" &&
+                    edge.metadata?.operation === "readdirSync",
+            ),
+        ).toBeUndefined();
+
+        expect(graph.nodes.find(({ path }) => path === "dist")).toMatchObject({
+            nodeKind: "missing-runtime-placeholder",
+        });
+        for (const path of ["dist/components", "dist/fonts", "dist/styles"]) {
+            expect(graph.nodes.find((node) => node.path === path)).toMatchObject({
+                nodeKind: "generated-by-write",
+                generatedBy: "vite.style-fold.ts",
+            });
+        }
+        for (const path of ["src/components", "src/fonts", "src/styles"]) {
+            expect(graph.nodes.find((node) => node.path === path)).toMatchObject({
+                nodeType: "directory",
+                nodeKind: "directory",
+            });
+        }
+        expect(graph.nodes.find(({ path }) => path === "dist/styles/index.css")).toMatchObject({
+            nodeType: "generated-artifact",
+            nodeKind: "generated-by-write",
+            generatedBy: "vite.style-fold.ts",
+        });
+
+        const gitInvocation = graph.processInvocations.find(
+            ({ source, api, argv }) =>
+                source === generatorPath &&
+                api === "execFileSync" &&
+                argv[0]?.value === "-C",
+        );
+        expect(gitInvocation).toMatchObject({
+            command: { value: "git", dynamic: false },
+            dynamicArguments: 0,
+        });
+        expect(gitInvocation?.argv[1]).toMatchObject({
+            expression: "repositoryRoot",
+            target: ".",
+            dynamic: false,
+        });
     });
 
     it("uses block-type-aware Vue external-block metadata", () => {

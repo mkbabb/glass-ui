@@ -1,9 +1,9 @@
 # Glass UI repository graph — schema v3
 
-Observed: 2026-07-29T21:53:12.670Z
+Observed: 2026-07-29T22:57:40.597Z
 
 Deterministic receipt (the `observedAt` value is excluded):
-`cb918030422930d03864c87c49736d3b6f63eee77db47c938f4aea25c588a7c1`
+`c8dca7c4e0f63d9137c823801ddeb6c005c70295079c38c1b952233339fab592`
 
 Owner manifest receipt: `e19b663fb671e046727469832be1d160095eb5cb7d3ba54aa2818277043100ba`
 
@@ -30,8 +30,8 @@ package export key maps to exactly one owner.
 
 | Measure | Count |
 | --- | ---: |
-| Nodes | 1491 |
-| Internal edges | 3564 |
+| Nodes | 1498 |
+| Internal edges | 3578 |
 | External edges | 1969 |
 | Owners | 101 |
 | Public entries | 72 |
@@ -42,9 +42,9 @@ package export key maps to exactly one owner.
 | Dynamic template/style asset expressions | 123 |
 | Unmatched literal globs | 0 |
 | Parse errors | 0 |
-| Detectable-but-unmodeled file operations | 286 |
+| Detectable-but-unmodeled file operations | 275 |
 | Process invocations | 8 |
-| Dynamic process arguments | 10 |
+| Dynamic process arguments | 9 |
 
 ## Node types
 
@@ -54,23 +54,23 @@ Physical/content types remain separate from lifecycle provenance:
 | --- | ---: |
 | `binary` | 9 |
 | `declaration` | 3 |
-| `directory` | 17 |
+| `directory` | 23 |
 | `documentation` | 29 |
-| `generated-artifact` | 1 |
+| `generated-artifact` | 2 |
 | `license` | 2 |
-| `package-output` | 138 |
+| `package-output` | 137 |
 | `source` | 1154 |
 | `style` | 131 |
-| `virtual-placeholder` | 7 |
+| `virtual-placeholder` | 8 |
 
 ## Node lifecycle taxonomy
 
 | Kind | Count |
 | --- | ---: |
-| `declared-package-output` | 138 |
-| `directory` | 17 |
-| `generated-by-write` | 1 |
-| `missing-runtime-placeholder` | 7 |
+| `declared-package-output` | 137 |
+| `directory` | 20 |
+| `generated-by-write` | 5 |
+| `missing-runtime-placeholder` | 8 |
 | `repository-file` | 1328 |
 
 `repository-file` is canonical source content even when a tool rewrites it
@@ -93,7 +93,7 @@ never supplies their bytes, hash, or type.
 | `demo` | 195 |
 | `package-surface` | 2 |
 | `product` | 693 |
-| `repository-boundary` | 166 |
+| `repository-boundary` | 173 |
 | `scripts-generators` | 16 |
 | `tests` | 214 |
 | `visual-tests` | 191 |
@@ -115,8 +115,8 @@ queries directly joinable without conflating them.
 | `file-read` | 32 |
 | `file-write` | 4 |
 | `finite-dynamic` | 2 |
-| `generator-read` | 2 |
-| `generator-write` | 2 |
+| `generator-read` | 11 |
+| `generator-write` | 7 |
 | `glob-lazy` | 107 |
 | `literal-dynamic` | 68 |
 | `literal-require` | 2 |
@@ -133,8 +133,8 @@ queries directly joinable without conflating them.
 | View | Edges | File cycles | Owner cycles |
 | --- | ---: | ---: | ---: |
 | `eagerRuntime` | 2220 | 2 | 3 |
-| `buildLoad` | 3435 | 10 | 3 |
-| `ownership` | 3564 | 10 | 3 |
+| `buildLoad` | 3449 | 10 | 3 |
+| `ownership` | 3578 | 10 | 3 |
 
 `eagerRuntime` excludes type-only, lazy, CSS/asset, and generator reach.
 `buildLoad` adds compile/load/package/generator relations.
@@ -222,7 +222,7 @@ are modeled when their path expression can be
 reduced from literals, `resolve`/`join`, `new URL(..., import.meta.url)`,
 and local constants; irreducibly dynamic operations remain counted in
 `unmodeledFileOperations` and are not represented as false edges. This
-snapshot contains 286 such operations
+snapshot contains 275 such operations
 (251 at the pre-source challenge seal). Literal CommonJS `require` and
 `createRequire` targets are graph edges; `exec`/`execFile`/`spawn`
 families are retained in a process-invocation ledger with statically reducible
