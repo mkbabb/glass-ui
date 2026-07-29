@@ -521,7 +521,7 @@ describe("gate:boot-graph — build arm", () => {
     // OPEN-P0: fail loud, never skip. A skipped measurement greens a regressed graph.
     const built = existsSync(indexHtml);
     const buildHint =
-        "dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first)";
+        "dist-demo/index.html is absent — CI runs `npm run demo:dist:build` before `npm test`; isolated/local `npm test` requires that explicit build first";
 
     it("the built demo has a dist-demo to measure", () => {
         expect(built, buildHint).toBe(true);

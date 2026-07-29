@@ -63,17 +63,17 @@ describe("reka binding-idiom render-effect canary", () => {
         expect(ownsDefaultButtonIconSize(css)).toBe(true);
         expect(
             ownsDefaultButtonIconSize(
-                css.replace(BUTTON_ICON_SELECTOR, ".button > svg"),
+                css.replaceAll(BUTTON_ICON_SELECTOR, ".button > svg"),
             ),
         ).toBe(false);
         expect(
             ownsDefaultButtonIconSize(
-                css.replace('[class*="size-"]', '[class*="tone-"]'),
+                css.replaceAll('[class*="size-"]', '[class*="tone-"]'),
             ),
         ).toBe(false);
         expect(
             ownsDefaultButtonIconSize(
-                css.replace(
+                css.replaceAll(
                     `${BUTTON_ICON_SELECTOR} {`,
                     `${BUTTON_ICON_SELECTOR} { color: inherit; }\n.button > svg {`,
                 ),

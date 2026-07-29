@@ -30,7 +30,10 @@
 // component stylesheet channel — raw rem/px `font-size` and the caps-tracking
 // `letter-spacing: 0.1em` literal in `src/components/**/*.css` — the precise
 // born-RED set (SVG-coordinate inline styles and the tokenized typography canon
-// are a different channel and out of scope).
+// are a different channel and out of scope). The PostCSS arms inspect declaration
+// values only; selectors, comments, and at-rule preludes are intentionally outside
+// the census, while declarations nested inside at-rules remain visible to
+// `walkDecls`. A CSS parse failure throws, so malformed input fails closed.
 
 import { readFileSync, readdirSync } from "node:fs";
 import { join, relative } from "node:path";

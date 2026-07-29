@@ -23,7 +23,9 @@
 //   5. `@supports` PRELUDES — a feature probe must carry a literal; a `var()` tests nothing.
 //   6. `filter: blur()` is NOT in scope. The `--glass-blur-*` ladder governs the BACKDROP
 //      channel; element blur is a different axis with no rungs to bypass.
-// Comments are stripped before scanning — a literal named in prose is not a declaration.
+// PostCSS scans declaration values only: selectors, comments, and at-rule preludes are not
+// declarations, while declarations nested inside at-rules remain in `walkDecls`. CSS or Vue
+// SFC parse failures throw and therefore fail the gate closed rather than returning an empty census.
 
 import { readFileSync, readdirSync } from "node:fs";
 import { join, relative, sep } from "node:path";
