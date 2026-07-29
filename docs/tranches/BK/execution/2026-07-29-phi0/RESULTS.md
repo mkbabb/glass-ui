@@ -11,7 +11,7 @@ Post-cutover cure script:
 Journal: `docs/tranches/BK/execution/2026-07-29-phi0/journal.jsonl`
 
 **State: CHALLENGED; ROUND-3 CANDIDATES LANDED; EXACT LUNA
-RE-ATTESTATION PASSED; CHALLENGE G/H NEXT.** The committed registration is preserved
+RE-ATTESTATION PASSED; CHALLENGE G/H IN PROGRESS.** The committed registration is preserved
 byte-for-byte: two Truth plus two Challenge results, 4/4. The early #75 Truth
 seat is a separately late-accounted 1/1 amendment, yielding five actual
 pre-cutover seats without rewriting the original run. Cure rounds 1 and 2
@@ -256,7 +256,7 @@ mechanically re-attested the complete sequence in session
 IN PROGRESS. The original registration is 4/4 with zero seat errors; late #75
 is 1/1. Challenge rounds 1 and 2 are banked failures with zero silent drops.
 Round-3 surface candidate `f3a83c9b` and graph candidate `ee5cbcfb` are
-landed and exact-Luna mechanically re-attested. Challenge G/H have not yet
-launched. #1 and #75 remain IN-FLIGHT, #2 remains UNSTARTED, and the
+landed and exact-Luna mechanically re-attested. Challenge G/H are launched
+as fresh non-author Sol xhigh seats. #1 and #75 remain IN-FLIGHT, #2 remains UNSTARTED, and the
 source-mutation fence remains closed until both challenges and lead
 adjudication pass.
