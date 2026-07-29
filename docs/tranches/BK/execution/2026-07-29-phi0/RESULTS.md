@@ -10,9 +10,10 @@ Post-cutover cure script:
 
 Journal: `docs/tranches/BK/execution/2026-07-29-phi0/journal.jsonl`
 
-**State: ROUND-4 PASS/GO SEALED; #1/#75/#2 SEALED PASS; #3/#4/#5 are
-IN-FLIGHT candidates at source `74c59ade`, pending exactly two fresh Sol
-challenges and fresh Sol adjudication; no seal.** #2 remains sealed with
+**State: ROUND-4 PASS/GO SEALED; #1/#75/#2 SEALED PASS; #3/#4 remain
+IN-FLIGHT at source `74c59ade`; #5 remains IN-FLIGHT at cured candidate
+`8be4f662`, pending exactly two entirely fresh `gpt-5.6-sol` xhigh
+judgment-only challenges and one fresh Sol xhigh adjudication; no seal.** #2 remains sealed with
 `code_state=landed` at `82bdc93e` and
 `evidence_state=adjudicated`; Challenge I PASS, Challenge J PASS, and fresh
 adjudication PASS-and-seal. The
@@ -28,6 +29,9 @@ challenges, and one fresh Sol adjudication. Terra was neither substituted nor
 relabelled. The round-4 evidence is sealed below; #2's source fence was lifted
 only for the already-registered subtraction, and its completed source/browser
 receipt is sealed below after the two fresh challenges and fresh adjudication.
+The initial prefix challenge failures and the exact Luna cure candidate are
+banked at the end of this file; they are historical receipts, and the cure is
+not pre-approved PASS.
 
 ## Truth seats
 
@@ -538,3 +542,96 @@ Glass option, placeholder, API, alias, shim, sizing workaround, or replacement
 adornment. Q owns consumer-only CompletionSeal deletion. No new run, wave, gate,
 registry, control plane, or row is created. Journal parsing advances 68 → 70
 valid JSONL lines, and the first 68 lines remain byte-identical.
+
+## BK Φ0 — initial prefix challenge failures and 8be4f662 cure candidate
+
+The two initial fresh challenges of the `74c59ade` prefix candidate are banked
+in chronological order below. Both were fresh, non-author `gpt-5.6-sol` xhigh
+judgment-only seats with no mutations. Neither exposed a session identifier;
+none is invented. These are historical receipts, not current open findings
+after the cure.
+
+- **`/root/prefix_capture_challenge_a` — FAIL.** It had 0 blockers and 2
+  majors. Major 1 found that `cssFilesUnder` was file/directory polymorphic,
+  so commit `74c59ade` lost truthful graph operations and nodes: 1,496 → 1,492
+  nodes, generator-write 7 → 3, unmodeled 272 → 279, with `dist/src`
+  directory nodes missing. The required cure was a directory-only walker, an
+  explicit single-file helper, and regeneration. Major 2 found that Q's G-5
+  cancellation was narrated while active authority still reserved an
+  adornment; the required cure was amendment of the existing G batch
+  disposition, canonical terminal roster §C, and the dependent BJ cursor, with
+  no new row.
+- **`/root/prefix_capture_challenge_b` — FAIL.** It had 1 blocker, 1 major,
+  and 1 minor. The blocker was that `demo:dist` omitted `publishStyleAssets`,
+  leaving 7 webkit-only families in the static build: Timeline ×4, Slider
+  reset, Dock reset, and segmented underline. It required a narrow demo
+  `generateBundle` CSS hook and a census of both `dist` and `dist-demo`. The
+  major required value+important pairing and recursive normalization through
+  every CSS container, including nested at-rules, without cascade changes. The
+  minor required the exact full-suite first-failure/rerun record: the first
+  default run was 200/201 files and 1318/1319 tests with only the stale
+  `dist-demo/index.html` freshness gate failing, not a timeout; after a fresh
+  demo build, two default reruns passed 201/201 files and 1319/1319 tests.
+No test-timeout or source-timeout edit was made.
+
+The exact Luna xhigh cure source/mechanics session was packaged Codex CLI
+session `019fafa7-44f4-7b02-8a42-cc2b3309e5ec`, actual invoked model
+`gpt-5.6-luna`. Final cure commit `8be4f662` (`fix(BK/Φ0): close prefix
+pipeline challenge gaps`) is based on candidate-bank HEAD `77540ffd` and
+source candidate `74c59ade`. Exactly nine paths landed:
+`demo/vite.demo-dist.config.ts`,
+`docs/tranches/BJ/EXECUTION-PROGRESS.md`,
+`docs/tranches/BJ/addenda/2026-07-24-refinement/TERMINAL-ROSTER.md`,
+`docs/tranches/BJ/audits/2026-07-28-library-dag/IMPORT-DAG-V3-SUMMARY.md`,
+`docs/tranches/BJ/audits/2026-07-28-library-dag/IMPORT-DAG-V3.json`,
+`docs/tranches/BJ/coordination/ATLAS-Q-G-BATCH-DISPOSITION.md`,
+`tests/styles/backdrop-prefix-normalization.test.ts`, `vite.style-assets.ts`,
+and `vite.style-fold.ts` (509 insertions / 150 deletions including the
+generated graph).
+
+The cure restores a directory-only `cssFilesUnder` walk, an explicit
+`dist/glass-ui.css` file helper, and the graph read/write closure; adds the
+narrow demo `generateBundle` normalization hook; pairs value plus `!important`
+and recurses through nested containers; adds mismatch/nested regressions; and
+amends the G-5 terminal cancellation in the three existing authority docs.
+No option slot, placeholder, API, alias, shim, fixed/min width, sizing
+workaround, replacement adornment, row, wave, gate, registry, or parallel
+control plane was introduced.
+
+The current graph receipt is
+`cf51835423ea0745c3504d6b8604e2d4c556b4598109e4be201bdba39830ebd0`:
+1,497 nodes / 3,579 internal edges / 1,969 external edges / 101 owners / 72
+public entries / 1,283 public symbols; fatal ledgers zero; generator-read 12,
+generator-write 7, unmodeled 274. Graph focused tests and `generator --check`
+passed. Relative to the rejected graph, this is +5 nodes, +10 internal edges,
++2 external edges, −5 unmodeled operations, +5 generator reads, and +4
+generator writes; the parent generator closure is restored. Focused prefix
+tests passed 3/3. `npm run build` and `npm run demo:dist:build` passed, with
+3,513 demo modules. Package verification passed with
+`npm_config_cache=/private/tmp/glass-ui-npm-cache npm run verify:package`:
+205 targets, 482 declarations, 114 CSS files, and 67 strict imports. The
+initial exact script was environmentally blocked by a pre-existing root-owned
+npm cache; there was no package defect. Typecheck has zero new diagnostics;
+only the pre-existing `scripts/lib/minify-css.mjs` TS7016 remains.
+
+The emitted AST census is `dist`: 127 CSS files / 90 declarations / 45
+canonical pairs, and `dist-demo`: 73 CSS files / 94 declarations / 47
+canonical pairs; each has zero unpaired, noncanonical, value-mismatch, or
+important-mismatch declarations. Core Sol xhigh in-app Browser verification at
+1280x720 and 390x844 found one Tabs H1, zero horizontal document overflow, zero
+console warning/error, no motion-mode `data-capture` or capture stylesheet,
+desktop List click focus and `aria-pressed` transfer, exactly one visible phone
+Project view combobox, and zero competing Project view tablist.
+
+Row state remains bounded: #3 stays IN-FLIGHT at its existing `74c59ade`
+source candidate; its first real motion π is still owed at the row 22 grasp
+trace. The Q bounded reversal trace remains routed to `W-MOMENTUM-CENSUS`, and
+the existing SegmentedTabs width/height transition remains the existing P5 red
+under current tabs/motion ownership. #4 stays IN-FLIGHT at its existing
+`74c59ade` source candidate with protected corpus/artifact/citation/census
+reconciliation unchanged. #5 is IN-FLIGHT at cured candidate `8be4f662`,
+pending exactly two entirely fresh `gpt-5.6-sol` xhigh judgment-only challenges
+and one fresh Sol xhigh adjudication; there is no seal or pre-approved PASS.
+G-5 cancellation is active terminal authority owned by Q consumer-only
+CompletionSeal deletion; Glass opens no replacement work. Historical
+Fable/Opus/Sonnet artifacts remain literal provenance and are not relabelled.
