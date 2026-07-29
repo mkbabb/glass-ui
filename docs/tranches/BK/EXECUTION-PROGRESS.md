@@ -15,7 +15,11 @@ on disk is evidence, never a state transition. Blockers of record: TR §VERDICT 
 six-token wall — tracked on their owning rows (#1/#2 · #9+#66 C-13 · #4 · #68); ⊕² VERDICT row 4 (the
 unowned spec) DISCHARGED at the stage-2 fold, 2026-07-28 — every roster spec is banked and cited.
 ⊕² Row #90's fold FIRED 2026-07-28 — residue only, each with owner + trigger (see the row).
-✦² Execution begins only at the owner's go (THE OWNER SITTING item 3 — the session compacts first);
+✦² ~~Execution begins only at the owner's go (THE OWNER SITTING item 3 — the session compacts first)~~
+⊕⁶ **THE COMPACT-AND-IMPLEMENT ORDER, 2026-07-28 ("Prepare for compaction and implementation"):
+the go chain is ORDERED — on the next bootstrap post-compact, mode flips to EXECUTION and Φ0 OPENS**
+(EXEC-STATE §THE COMPACT-AND-IMPLEMENT ORDER carries the Φ0 opening playbook + the execution laws;
+one owner word still halts anything);
 the owner-sitting overlay is applied in TR — ✦³ BOTH rounds (`0ffa87ac` items 1-7 at TR A-2 ·
 `192879b7` items 8-12 at TR SL-1…SL-5): carousel KEEP + deck-substrate share · instrument-chassis
 DELETE CONFIRMED · metric-family consolidation (#87) · watercolor CONFIRMED + the relocation census

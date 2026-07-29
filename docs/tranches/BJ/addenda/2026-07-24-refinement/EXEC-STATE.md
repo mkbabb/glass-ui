@@ -412,6 +412,37 @@ Engine: `wf/design-now.wf.js` → banks `DESIGN-NOW.md`.
 
 ---
 
+## THE COMPACT-AND-IMPLEMENT ORDER — 2026-07-28, the final word of the formulation arc
+
+Owner, verbatim: **"Prepare for compaction and implementation."** Ruling of record: the compact→
+implement sequence is ORDERED. On the next bootstrap (post-compact), **mode flips
+TRANCHE-DEVELOPMENT → EXECUTION and Φ0 OPENS** — no further go is awaited unless the owner
+interposes a word first (one word halts, as always).
+
+**THE Φ0 OPENING PLAYBOOK** (rows #1–#8, the truth substrate — TR §A owns the specs; this is the
+mechanical order of first moves):
+1. **#1** — the honest baseline: run the suite, bank the RED census (the known S0:
+   `surface.root.exact`, one assertion × two vitest projects), census the strays (the legacy
+   untracked coordination/addenda trees ride #63's gitignore-or-sweep) · **execute the governance
+   bank**: from stash `f37407cd`, land the SALVAGE only (boot-graph AST lineage · type-hygiene
+   `clamp()` · token-hygiene detector conversions + the avatar/TypewriterText/reka hardened bodies,
+   ALL annotation-stripped, NO governedInvariant imports); verify typecheck stays at the 2
+   pre-existing errors; the stash itself stays banked, never dropped.
+2. **#2** — the refract-latch DELETE (cures the S0 by subtraction; owner-reversible in one word).
+3. Then #3–#8 per the cursor's Φ0 order; Φ1's #75 wake/resume hook lands EARLY (the harness
+   protects everything after it).
+
+**Execution laws in force** (restated once for the bootstrap; EXEC-STATE sections own the full
+text): tri-fold labor law (Opus banausic with `model:` declared + modelId asserted by prefix; Fable
+adjudicates; DesignSync for frontend design) · ≤4 workflows/batch, browser seats serialized · the
+wall protocol (salvage-first, `resumeFromRunId`, bank by seat identity) · one owner per file per
+cut · live-verified = captured DELTA (screenshot + paired π), never a commit-message claim ·
+no masking fallbacks · clean breaks, consumers update in THEIR tranches · the close runs
+**`--run release`** · publish/deploy AUTHORIZED at the close chain (standing since the BJ
+greenlight) · codex = occasional audit evidence only, we drive.
+
+---
+
 ## THE RATIFICATION OF 2026-07-28 (night) — the owner's word on the relayed asks
 
 Owner, verbatim in force: "Ratify the above with your judgement. Codex was used, and shall be used
