@@ -10,9 +10,10 @@ Post-cutover cure script:
 
 Journal: `docs/tranches/BK/execution/2026-07-29-phi0/journal.jsonl`
 
-**State: ROUND-4 PASS/GO SEALED; #1/#75 SEALED; #2 IN-FLIGHT WITH
-`code_state=landed-candidate` AT `82bdc93e` AND
-`evidence_state=mechanical-pass-plus-browser-pending-two-fresh-Sol-challenges-and-fresh-Sol-adjudication`; CANDIDATE/PENDING JUDGMENT, NOT SEALED.** The
+**State: ROUND-4 PASS/GO SEALED; #1/#75 SEALED; #2 SEALED PASS with
+`code_state=landed` at `82bdc93e` and
+`evidence_state=adjudicated`; Challenge I PASS, Challenge J PASS, and fresh
+adjudication PASS-and-seal.** The
 committed registration is preserved byte-for-byte: two
 Truth plus two Challenge results, 4/4. The early #75 Truth seat is a separately
 late-accounted 1/1 amendment, yielding five actual pre-cutover seats without
@@ -22,9 +23,9 @@ mechanical re-attestation passed, but fresh Challenge G/H and the lead
 adjudication completed FAIL/NO-GO. Round 4 stays in the same run: exact Luna
 graph, surface, and document-integration owners, two fresh Sol judgment-only
 challenges, and one fresh Sol adjudication. Terra was neither substituted nor
-relabelled. The round-4 evidence is sealed below; #2's source fence remains
-lifted only for the already-registered subtraction, and its completed
-source/browser receipt is banked below as a landed candidate, not a seal.
+relabelled. The round-4 evidence is sealed below; #2's source fence was lifted
+only for the already-registered subtraction, and its completed source/browser
+receipt is sealed below after the two fresh challenges and fresh adjudication.
 
 ## Truth seats
 
@@ -412,19 +413,21 @@ was invented.
 Adjudicated transitions: **#1 W-SURFACE-PIN IN-FLIGHT → SEALED**; **#75
 W-STOP-HOOK IN-FLIGHT → SEALED**; **#2 W-REFRACT-DELETE source fence LIFTED
 for already-registered subtraction, state UNSTARTED at that adjudication**.
-The subsequent registered source/browser receipt advances #2 to an IN-FLIGHT
-landed candidate, still pending exactly two fresh Sol judgment-only challenges
-and one fresh Sol adjudication before sealing. Blocking remainder: none.
+At that intermediate point, the subsequent registered source/browser receipt
+advanced #2 to an IN-FLIGHT landed candidate, pending exactly two fresh Sol
+judgment-only challenges and one fresh Sol adjudication; the later Challenge
+I/J and fresh adjudication below supersede that intermediate state. Blocking
+remainder: none.
 Routed remainder: value.js riders and the final consumer-boundary communique
 remain in their existing rows.
 
-## BK #2 — W-REFRACT-DELETE candidate mechanical source/browser receipt
+## BK #2 — W-REFRACT-DELETE sealed mechanical source/browser receipt
 
 The document-integration seat is actual `gpt-5.6-luna` at `xhigh`, session
 `019faf4c-3867-77c2-9b36-997899951668`, banking the completed receipt at source
-commit `82bdc93e`. #2 is **IN-FLIGHT**, `code_state=landed-candidate`, with
-`evidence_state=mechanical-pass-plus-browser-pending-two-fresh-Sol-challenges-and-fresh-Sol-adjudication`;
-this is candidate/pending judgment, not sealed. The eight intended paths are
+commit `82bdc93e`. #2 is **SEALED PASS**, `code_state=landed`, with
+`evidence_state=adjudicated`; Challenge I PASS, Challenge J PASS, and fresh
+adjudication PASS-and-seal. The eight intended paths are
 `demo/main.ts`, the V3 summary and JSON, `src/components/tabs/SegmentedTabs.vue`,
 `src/composables/glass/index.ts`, the deleted
 `src/composables/glass/supportsBackdropRefract.ts`,
@@ -452,6 +455,21 @@ one Tabs H1, no horizontal document overflow, no console warnings/errors, 7
 and root `data-glass-refract` absent. Clicking List then ArrowRight moved
 selection and focus to Kanban while retaining the one indicator in that group;
 phone Project view has combobox count 1. Historical MIGRATION and visual-test
-prose remain provenance and are not active source blockers. Required next
-seats are exactly two fresh `gpt-5.6-sol` xhigh judgment-only challenges and
-one fresh Sol adjudication.
+prose remain provenance and are not active source blockers.
+
+## BK #2 — fresh challenges and adjudication seal
+
+Actual Luna seal-banking session: `019faf55-14e9-7552-8c63-2d7f7b31e167`; it is distinct from the prior candidate document-integration session `019faf4c-3867-77c2-9b36-997899951668`, which remains historical provenance.
+
+- **Challenge I — PASS.** Exact tranche scope, KISS deletion optimality, every
+  source/CSS/test/graph/browser/evidence feature, and the model law pass. #2
+  may seal; no cure.
+- **Challenge J — PASS.** Independent falsification found no
+  runtime/public-surface/accessibility/motion/provider/consumer/evidence/
+  provenance defects. Deletion is optimal; no cure.
+- **Fresh adjudication — PASS-AND-SEAL.** Seal #2 at source `82bdc93e` / bank
+  `bc26be1a`; no blockers, majors, minors, or cure. Row #2 transitions from
+  IN-FLIGHT landed-candidate pending adjudication to SEALED PASS.
+  `G-REFRACT-TOTAL` remains phrased to retire at Φ0 close because later
+  registered Φ0 rows still remain. This completes #2 only, not total BK.
+  Φ0/BK continue to the next registered rows; no new apparatus or release.
