@@ -35,7 +35,9 @@ stays undispatched rather than accepting a substitute or false label.
 Historical Fable/Opus/Sonnet artifacts remain immutable provenance and are not
 renamed. The present deviation window is being enumerated in
 `docs/tranches/BK/execution/2026-07-29-phi0/RESULTS.md`; exact Luna
-re-attestation remains a convergence fence until its receipt lands. No global replacement
+re-attestation landed from actual `gpt-5.6-luna` xhigh desktop session
+`019faece-3c9d-75e0-97aa-1bb349353341`; Challenge G/H and lead adjudication
+remain the convergence fence. No global replacement
 implements this transition, and no new Claude model-bearing seat launches
 after the two already-started Φ0 challenges receipt.
 
@@ -80,7 +82,7 @@ EXEC-STATE census row; membership stands, aggregates do not).
 
 | run | id | script (`./wf/`) | banking target on close |
 |---|---|---|---|
-| BK Φ0 truth | `bk-phi0-20260729-01` | historical registration `bk-phi0-execution.wf.js`; post-cutover cure script `bk-phi0-cures.wf.js` | **ORIGINAL RUN CHALLENGED: 4/4 registered results + late #75 truth 1/1, 0 seat errors; cure rounds 1 and 2 failed honestly; round-3 Sol candidates landed, exact Luna re-attestation undispatched.** #1 candidate chain is `858c1087`→`0557703f`→`950a703f`→`f3a83c9b` (six-file battery 40/40). Graph-v3 is `9c43b5d7`→`ee5cbcfb`, current receipt `c9274358…`, 1,497/3,576/1,953, focused 16/16 twice, stable after ignored build output; #75's 14-class machine-local cure passes with its clone-local caveat. The committed original script is byte-preserved; the companion cure script requires one exact Luna xhigh mechanical re-attestation over every deviation-window Sol receipt before Challenge G/H. Luna is not exposed in the current collaboration runtime, so that seat remains truthfully undispatched; Terra is not substituted or relabelled. No new run, registry, wave, or gate exists. Durable journal: `docs/tranches/BK/execution/2026-07-29-phi0/journal.jsonl`; bank: `docs/tranches/BK/execution/2026-07-29-phi0/RESULTS.md`. No product-source mutation, G/H dispatch, or convergence before the Luna receipt; no row closes before cure evidence and lead adjudication. |
+| BK Φ0 truth | `bk-phi0-20260729-01` | historical registration `bk-phi0-execution.wf.js`; post-cutover cure script `bk-phi0-cures.wf.js` | **ORIGINAL RUN CHALLENGED: 4/4 registered results + late #75 truth 1/1, 0 seat errors; cure rounds 1 and 2 failed honestly; round-3 Sol candidates landed and exact Luna re-attestation PASSED.** #1 candidate chain is `858c1087`→`0557703f`→`950a703f`→`f3a83c9b` (six-file battery 40/40). Graph-v3 is `9c43b5d7`→`ee5cbcfb`, current receipt `c9274358…`, 1,497/3,576/1,953, focused 16/16 twice, stable after ignored build output; #75's 14-class machine-local cure passes with its clone-local caveat. The committed original script is byte-preserved. Exact `gpt-5.6-luna` xhigh desktop session `019faece-3c9d-75e0-97aa-1bb349353341` mechanically reproduced every deviation-window receipt with zero workspace delta; Terra was not substituted or relabelled. Challenge G/H and lead adjudication remain owed. No new run, registry, wave, or gate exists. Durable journal: `docs/tranches/BK/execution/2026-07-29-phi0/journal.jsonl`; bank: `docs/tranches/BK/execution/2026-07-29-phi0/RESULTS.md`. No product-source mutation or convergence before G/H and lead adjudication; no row closes before that evidence. |
 
 | run | id | script (`./wf/`) | banking target on close |
 |---|---|---|---|

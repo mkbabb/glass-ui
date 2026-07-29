@@ -11,16 +11,19 @@ Post-cutover cure script:
 Journal: `docs/tranches/BK/execution/2026-07-29-phi0/journal.jsonl`
 
 **State: CHALLENGED; ROUND-3 CANDIDATES LANDED; EXACT LUNA
-RE-ATTESTATION UNDISPATCHED.** The committed registration is preserved
+RE-ATTESTATION PASSED; CHALLENGE G/H NEXT.** The committed registration is preserved
 byte-for-byte: two Truth plus two Challenge results, 4/4. The early #75 Truth
 seat is a separately late-accounted 1/1 amendment, yielding five actual
 pre-cutover seats without rewriting the original run. Cure rounds 1 and 2
 failed honestly. Round 3 has two Sol judgment/implementation candidates; the
 prospective model law fences their mechanical re-attestation, Challenge G/H,
-convergence, and #2 on an exact `gpt-5.6-luna` xhigh receipt. Luna is not
-exposed by the current collaboration runtime, and Terra is neither substituted
-nor relabelled. No row advances to CLOSED before that receipt, two fresh
-challenges, and lead adjudication.
+convergence, and #2 on an exact `gpt-5.6-luna` xhigh receipt. The collaboration
+dispatcher did not expose Luna, so the exact desktop CLI model was invoked
+directly; session `019faece-3c9d-75e0-97aa-1bb349353341` records
+`gpt-5.6-luna` at `xhigh`. It passed the registered read-only mechanical
+battery with zero workspace delta. Terra was neither substituted nor
+relabelled. No row advances to CLOSED before two fresh challenges and lead
+adjudication.
 
 ## Truth seats
 
@@ -36,7 +39,7 @@ challenges, and lead adjudication.
   contract, side-effect ESM imports reach all three forbidden-path scanners,
   and CSS syntax casing is handled without folding custom-property
   identifiers. The six-file battery remains 40/40. `f3a83c9b` is a landed Sol
-  candidate pending exact Luna mechanical re-attestation and Challenge G/H;
+  candidate mechanically re-attested by exact Luna and pending Challenge G/H;
   #1 also remains open until #2 closes the public-surface RED by subtraction.
 - `truth:graph-v3` — LANDED CANDIDATE WITH REQUIRED ROUND-3 CURES, 0 seat
   errors. The initial receipt
@@ -51,8 +54,8 @@ challenges, and lead adjudication.
   changed node lifecycle/type truth, inline Vue locations were block-relative,
   and one variable-proven local dynamic import was falsely nonlocal. The
   round-3 Sol candidate `ee5cbcfb` cures those three defects at current-main
-  receipt `c9274358…` but is not converged until that integrated receipt
-  receives exact Luna re-attestation and Challenge G/H.
+  receipt `c9274358…`. Exact Luna reproduced that integrated receipt; it is not
+  converged until Challenge G/H and lead adjudication pass.
 - `truth:stop-hook` — COMPLETED CANDIDATE WITH CLONE-LOCAL CAVEAT, 0 seat errors. One
   project-local `Stop` command hook in `.claude/settings.local.json`; first stop
   blocks with the durable journal/missing-seat resume instruction, a boolean
@@ -66,7 +69,7 @@ challenges, and lead adjudication.
   The current strict-JSON `jq` implementation passes 14/14 classes: empty,
   whitespace, malformed, wrong-type, XML, OpenStep, and parser-missing inputs
   fail open; missing/false activity blocks; boolean true re-entry exits with
-  no output. Final exact Luna re-attestation and Challenge G/H remain pending.
+  no output. Exact Luna reproduced 14/14; Challenge G/H remain pending.
 
 ## Gestalt challenges
 
@@ -148,7 +151,7 @@ model-law cells. Every finding is adopted; the historical workflow is restored
 byte-for-byte, #75 is late-accounted, the active law cells are supersession-
 marked, and round 3 owns the code cures. This round is durably failed.
 
-## Cure round 3 and exact-model fence
+## Cure round 3 and exact-model receipt
 
 `phi0-graph-cures-round-3` was registered before graph authoring;
 `phi0-surface-cures-round-3` was added after Challenge F completed and before
@@ -169,11 +172,35 @@ The prospective owner law requires `mechanical-reattestation:phi0-round-3`
 with exact `gpt-5.6-luna` xhigh over every post-boundary Sol cure receipt,
 including earlier superseded bytes, both current candidates, graph
 snapshot/manifest/censuses/tests, the six-file surface matrix, typecheck
-delta, v1/v2 hashes, and #75’s 14-class hook evidence. The current
-collaboration runtime exposes Sol and Terra only. The Luna seat therefore
-remains **UNDISPATCHED—REQUIRED MODEL UNAVAILABLE**; Terra is not a substitute.
-Challenge G/H, convergence, cursor closure, and #2 source mutation remain
-fenced on that receipt.
+delta, v1/v2 hashes, and #75’s 14-class hook evidence. The collaboration
+dispatcher exposes Sol and Terra only, but the packaged desktop CLI exposed
+the exact required Luna model. The read-only seat ran as actual
+`gpt-5.6-luna` xhigh in session
+`019faece-3c9d-75e0-97aa-1bb349353341` and **PASSED**:
+
+- graph `--check` passed twice and again after a fresh ignored demo build;
+  focused architecture passed 16/16 sequentially and 16/16 under concurrent
+  typecheck;
+- stored, canonical, and two rebuilt receipts reproduced
+  `c9274358ca10d584c892484788f3f04bab346c552ddda1423f424c4bbe0f783f`;
+  manifest SHA is `e19b663f…`, summary SHA is `3d1ffb5f…`, and v1/v2 bytes
+  remain `bac5e3c1…` / `c68ddc34…`;
+- the fresh demo build passed and the six-file surface battery passed 40/40;
+  typecheck reproduced only the two active-tree baseline TS2339 diagnostics,
+  for zero delta;
+- journal parsing passed 37/37 before this receipt was appended, the original
+  workflow remained `edd43280…`, and the Stop hook passed 14/14 with one local
+  hook and zero global hooks;
+- tracked, staged, and unstaged tracked deltas were all zero; the 248-file
+  nonignored-untracked boundary remained byte-list-identical at
+  `aafdab71…`; no graph fixture residue remained.
+
+Luna’s sandbox could not list the host crontab. The lead’s immediate host-level
+follow-up reproduced the existing single commented `dns-speedtest` line and
+zero active resume crons; no cron was added. Historical and superseded model
+provenance remains literal. Challenge G/H, convergence, cursor closure, and #2
+source mutation remain fenced on the two fresh Sol challenges and lead
+adjudication, not on any further Luna seat.
 
 ## Honest opening baseline
 
@@ -220,15 +247,16 @@ boundary cures `0557703f`, `950a703f`, the graph receipts culminating in
 combined judgment/implementation and mechanical verification. Their actual
 model is recorded without euphemism. Earlier versions are mapped as
 superseded-by the current candidates rather than silently dropped. Exact Luna
-must mechanically re-attest the complete sequence before convergence; until
-then every current candidate has status
-`candidate-pending-exact-luna-reattestation`.
+mechanically re-attested the complete sequence in session
+`019faece-3c9d-75e0-97aa-1bb349353341`; every current candidate now has status
+`candidate-mechanically-reattested-pending-challenge-g-h`.
 
 ## Lead adjudication
 
 IN PROGRESS. The original registration is 4/4 with zero seat errors; late #75
 is 1/1. Challenge rounds 1 and 2 are banked failures with zero silent drops.
 Round-3 surface candidate `f3a83c9b` and graph candidate `ee5cbcfb` are
-landed. The exact Luna mechanical seat is required and currently
-undispatchable; Challenge G/H have not launched. #1 and #75 remain IN-FLIGHT,
-#2 remains UNSTARTED, and the source-mutation fence remains closed.
+landed and exact-Luna mechanically re-attested. Challenge G/H have not yet
+launched. #1 and #75 remain IN-FLIGHT, #2 remains UNSTARTED, and the
+source-mutation fence remains closed until both challenges and lead
+adjudication pass.
