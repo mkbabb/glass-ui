@@ -228,9 +228,11 @@ and states their in-flight status.
 `p/totality`: `6c4bbc06` THE GO, `109f5573` the ratification), and the owner's own 07-20
 execution order lifted the deferral that was the gate's last ground. The named Q/Atlas G-rows resume as
 scheduled band annotations at our batch points; `V-PERCH-PRIMITIVE` (FINAL W-5) is UN-PARKED.
-Two ship-time edges bind: **G-4** (DataTable `:ref` churn → their W-PERF/B7) and **G-5**
-(SegmentedTabs option-slot → their W-PORTAL) each want a one-line note naming our shipping cut
-version — carried by G1, blocking nothing. G-4's source seat is conditional on ASK-8: if DataTable
+The dated ship-time edge **G-4** (DataTable `:ref` churn → their W-PERF/B7) still wants a one-line
+note naming our shipping cut version — carried by G1, blocking nothing. **G-5 is CANCELLED
+(terminal/current): Q owns consumer-only CompletionSeal deletion; Glass opens no work, option slot,
+placeholder, API, alias, shim, fixed/min width, sizing workaround, or replacement adornment.**
+G-4's source seat is conditional on ASK-8: if DataTable
 stays/thins, REDUCTION W3 lands the stable callback lifecycle and Atlas PERF remeasures; if it becomes
 demo-private or loses `rowRef`, the producer fix is moot and family-B carries the migration. PERF W2
 owns telemetry only. Owner-reversible.
@@ -272,7 +274,9 @@ owns telemetry only. Owner-reversible.
   `coordination/ATLAS-Q-G-BATCH-DISPOSITION.md` **Addendum 3**. The named G-rows are not parked work;
   they are scheduled band annotations that land at their destination band's batch point (G-1→A11Y ·
   G-2/G-3→MATERIAL · G-4→REDUCTION W3 if ASK-8 retains `rowRef`, then PERF verifies ·
-  G-5→tabs-register · G-6→A11Y W2-F sibling clause · G-CLOSE→FINAL W-5). Owner-reversible: if the
+  G-6→A11Y W2-F sibling clause · G-CLOSE→FINAL W-5). **G-5 is CANCELLED (terminal/current): Q owns
+  consumer-only CompletionSeal deletion; Glass opens no work, option slot, placeholder, API, alias,
+  shim, fixed/min width, sizing workaround, or replacement adornment.** Owner-reversible: if the
   owner re-gates G-CLOSE, W-5 re-parks here unchanged and the built basis (V-PERCH, the 341-green
   battery, the MARKS-E apex formula) is untouched either way.
 - **PARKED-UNROUTABLE — DISCHARGED INTO ASK-33 on 2026-07-22 (historical defect retained):

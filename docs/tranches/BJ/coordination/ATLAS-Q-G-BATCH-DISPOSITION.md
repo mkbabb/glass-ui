@@ -12,7 +12,7 @@ substance verified, exact lines re-pinned below.
 | G-2 shape-pill radius unthemeable | VERIFIED in substance — `src/components/dock/styles/shell.css:424` `.glass-dock.vertical.shape-pill { border-radius: var(--radius-pill) }`; the pill register is token-fed but not shape-knob-themeable | CLAUSE on BAND-MATERIAL's radius-role wave; GF-DOCK §shape-grammar notes the seam |
 | G-3 backdrop-attenuation primitive missing | VERIFIED — no attenuation lever in the token register (only per-tier `--glass-opacity-*`); consumers pinning near-opaque confirmed by their Dock.css cite | CLAUSE on BAND-MATERIAL — and the design basis ALREADY EXISTS: the EXEMPLARS-2 annular gradient-blur mark (MARKS-C-APPS 6c, the first wild `--glass-halo-*` kin) + V-ALENS; the primitive spec rides the IOS27-MICRO FINAL wave set |
 | G-4 DataTable inline row `:ref` churn | VERIFIED — `src/components/data-table/DataTable.vue:289,412` both carry `(el) => setRowEl(entry, index, el)` inline closures | CLAUSE on BAND-PERF (the per-frame/observer hygiene family); their W-PERF acceptance is edge-gated on our fix — sequencing noted for the G1 outbound reply |
-| G-5 SegmentedTabs adornment resize | Their live measurement (662.8→688.2px re-proven ×2) accepted; our tabs surface is under active re-register (the frosted cure) | NAMED DEFECT ROW: reserve-the-adornment-box in the option-slot grammar — homes with the tabs-register work (IOS27-MICRO FINAL set / BAND-MATERIAL tabs rows); never a jitter-masking shim (their own law) |
+| G-5 SegmentedTabs adornment resize | Their live measurement (662.8→688.2px re-proven ×2) accepted; the earlier tabs re-register route is retained as dated history | **CANCELLED — terminal/current.** Q owns consumer-only CompletionSeal deletion. Glass opens no work, option slot, placeholder, API, alias, shim, fixed/min width, sizing workaround, or replacement adornment; `reserve-the-adornment-box` is not active authority |
 | G-CLOSE the corner-perch close primitive | OUR ROOT-SIDE BASIS IS BUILT: V-PERCH (the novelty loop, 341-green battery) + the MARKS-E apex-seat formula (X seated ON the corner-curve apex, 62-69% outside) — measured from the owner's own referent screenshot | **VETO HONORED for execution**: no shipped-primitive work until the owner confirms. The DESIGN layer is already owner-ordered (the 2026-07-18 EXEMPLARS-2 order marked the corner-X and ordered the vaporize/dissolve re-deploy in our facilities) — analysis + prototypes stand; the ONE-primitive wave (drawers/dialogs/popovers/hover-cards/sheets) enters the BJ wave set VETO-GATED **[SUPERSEDED 2026-07-20 by Addendum 3 (`:80`) — the deferral is lifted, the hold ends, G-CLOSE is UN-GATED, and `V-PERCH-PRIMITIVE` (FINAL W-5) is UN-PARKED on its merits. This cell is the 2026-07-19 disposition of record, retained as dated history. Read Addendum 3 as terminal.]** |
 
 Relay-back rides the G1 outbound batch (LEAD-AMENDMENT-LEDGER row G1): per-row landings +
@@ -105,9 +105,10 @@ accordingly". A gate with no remaining ground is not a gate.
    points — their letter explicitly disclaims any interruption ask.
 2. **G-CLOSE is UN-GATED.** `V-PERCH-PRIMITIVE` (FINAL W-5 — the ONE close affordance across
    dismissible surfaces) is UN-PARKED and enters the wave set on its merits.
-3. **Two sibling edges bind at ship:** **G-4** (DataTable `:ref` observer churn → their W-PERF, batch
-   B7) and **G-5** (SegmentedTabs option-slot reservation → their W-PORTAL) each want a one-line note
-   naming OUR shipping cut version. Both ride the G1/Q060 relay; neither blocks us.
+3. **The dated sibling-edge routing is retained for G-4 only:** DataTable `:ref` observer churn still
+   points to their W-PERF, batch B7. The former G-5 SegmentedTabs option-slot reservation route is
+   **CANCELLED** by the terminal amendment below; it no longer rides G1/Q060 or requires a shipping
+   note.
 4. **The G1 relay-back text is re-grounded a final time:** it reports the lift ACKNOWLEDGED and the
    rows RESUMED (not a deferral, not a verification failure), plus the corrected checkout map so no
    future sweep repeats addendum 1's error.
@@ -115,3 +116,9 @@ accordingly". A gate with no remaining ground is not a gate.
 Owner-reversible: this ruling rests on verified sibling artifacts plus the owner's direct execution
 order. If the owner re-gates G-CLOSE, the row re-parks unchanged — the built basis (V-PERCH, the
 341-green battery, the MARKS-E apex formula) is untouched either way.
+
+## Terminal amendment — G-5 CANCELLED (2026-07-29)
+
+**G-5 is CANCELLED.** Q owns consumer-only CompletionSeal deletion. Glass opens no work, option slot,
+placeholder, API, alias, shim, fixed/min width, sizing workaround, or replacement adornment. The
+earlier `reserve-the-adornment-box` option-slot routing is historical only and is not active authority.

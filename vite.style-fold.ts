@@ -8,7 +8,7 @@ import {
 } from "node:fs";
 import { resolve } from "node:path";
 
-import postcss from "postcss";
+import postcss, { type Container } from "postcss";
 
 import { minifyCss } from "./scripts/lib/minify-css.mjs";
 
@@ -124,13 +124,17 @@ export function copyStyleAssets(root: string): {
 }
 
 function cssFilesUnder(...roots: string[]): string[] {
-    return roots.flatMap((root) => {
-        if (!existsSync(root)) return [];
-        if (statSync(root).isFile()) return root.endsWith(".css") ? [root] : [];
-        return (readdirSync(root, { recursive: true }) as string[])
-            .filter((path) => path.endsWith(".css"))
-            .map((path) => resolve(root, path));
-    });
+    return roots.flatMap((root) =>
+        existsSync(root)
+            ? (readdirSync(root, { recursive: true }) as string[])
+                  .filter((path) => path.endsWith(".css"))
+                  .map((path) => resolve(root, path))
+            : [],
+    );
+}
+
+function cssFile(path: string): string[] {
+    return existsSync(path) && path.endsWith(".css") ? [path] : [];
 }
 
 /**
@@ -204,11 +208,11 @@ export function inlineFonts(srcFonts: string, ...cssRoots: string[]): void {
  * The lexical minifier remains prefix-blind and preserves the normalized pair.
  */
 export function normalizeBackdropFilterPairs(css: string): string {
-    const root = postcss.parse(css);
+    const stylesheet = postcss.parse(css);
 
-    root.walkRules((rule) => {
-        for (let index = 0; index < (rule.nodes?.length ?? 0); index++) {
-            const node = rule.nodes?.[index];
+    const normalizeContainer = (container: Container) => {
+        for (let index = 0; index < (container.nodes?.length ?? 0); index++) {
+            const node = container.nodes?.[index];
             if (
                 !node ||
                 node.type !== "decl" ||
@@ -217,12 +221,13 @@ export function normalizeBackdropFilterPairs(css: string): string {
                 continue;
             }
 
-            const next = rule.nodes?.[index + 1];
+            const next = container.nodes?.[index + 1];
             if (
                 node.prop === "-webkit-backdrop-filter" &&
                 next?.type === "decl" &&
                 next.prop === "backdrop-filter" &&
-                next.value === node.value
+                next.value === node.value &&
+                next.important === node.important
             ) {
                 index++;
                 continue;
@@ -232,7 +237,8 @@ export function normalizeBackdropFilterPairs(css: string): string {
                 node.prop === "backdrop-filter" &&
                 next?.type === "decl" &&
                 next.prop === "-webkit-backdrop-filter" &&
-                next.value === node.value
+                next.value === node.value &&
+                next.important === node.important
             ) {
                 node.prop = "-webkit-backdrop-filter";
                 next.prop = "backdrop-filter";
@@ -247,9 +253,16 @@ export function normalizeBackdropFilterPairs(css: string): string {
             }
             index++;
         }
+    };
+
+    normalizeContainer(stylesheet);
+    stylesheet.walk((node) => {
+        if (node.type === "rule" || node.type === "atrule") {
+            normalizeContainer(node);
+        }
     });
 
-    return root.toString();
+    return stylesheet.toString();
 }
 
 export function injectWebkitBackdrop(...cssRoots: string[]): void {
@@ -257,6 +270,14 @@ export function injectWebkitBackdrop(...cssRoots: string[]): void {
         const src = readFileSync(path, "utf-8");
         const out = normalizeBackdropFilterPairs(src);
         if (out !== src) writeFileSync(path, out, "utf-8");
+    }
+}
+
+export function injectWebkitBackdropFile(path: string): void {
+    for (const file of cssFile(path)) {
+        const src = readFileSync(file, "utf-8");
+        const out = normalizeBackdropFilterPairs(src);
+        if (out !== src) writeFileSync(file, out, "utf-8");
     }
 }
 

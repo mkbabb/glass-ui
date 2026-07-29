@@ -1,8 +1,9 @@
 import { resolve } from "node:path";
 import tailwindcss from "@tailwindcss/vite";
 import vue from "@vitejs/plugin-vue";
-import { defineConfig } from "vite";
+import { defineConfig, type Plugin } from "vite";
 import { glassCssTarget } from "../vite.targets";
+import { normalizeBackdropFilterPairs } from "../vite.style-fold";
 
 // The paint-judge demo-dist build. This config builds the demo as a static SPA
 // so the paint-judge can serve BUILT bytes (`vite preview`) instead of the dev
@@ -22,6 +23,24 @@ import { glassCssTarget } from "../vite.targets";
 // processed by the Tailwind v4 vite plugin — no `publishStyleAssets` needed.
 const repoRoot = resolve(__dirname, "..");
 
+function normalizeDemoCssAssets(): Plugin {
+    return {
+        name: "glass-ui:normalize-demo-backdrop-filter",
+        generateBundle(_options, bundle) {
+            for (const output of Object.values(bundle)) {
+                if (
+                    output.type !== "asset" ||
+                    !output.fileName.endsWith(".css") ||
+                    typeof output.source !== "string"
+                ) {
+                    continue;
+                }
+                output.source = normalizeBackdropFilterPairs(output.source);
+            }
+        },
+    };
+}
+
 export default defineConfig({
     root: repoRoot,
     // `base: "/"` — the deep-SPA-route asset-resolution fix. A deep route
@@ -36,7 +55,7 @@ export default defineConfig({
             "@glass": resolve(repoRoot, "src"),
         },
     },
-    plugins: [tailwindcss(), vue()],
+    plugins: [tailwindcss(), vue(), normalizeDemoCssAssets()],
     build: {
         cssTarget: glassCssTarget,
         // A dedicated output dir — NEVER the library `dist/` (which the

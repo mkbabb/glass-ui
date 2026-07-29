@@ -6,6 +6,7 @@ import {
     foldSfcBundle,
     inlineFonts,
     injectWebkitBackdrop,
+    injectWebkitBackdropFile,
     minifyStyleAssets,
 } from "./vite.style-fold";
 import { emitComponentUtilities } from "./vite.utility-emit";
@@ -60,11 +61,8 @@ export function publishStyleAssets(): Plugin {
             //    normalize backdrop-filter pairs across the cascade, including
             //    the top-level SFC bundle.
             inlineFonts(srcFonts, distStyles, distComponents);
-            injectWebkitBackdrop(
-                distStyles,
-                distComponents,
-                resolve(root, "dist/glass-ui.css"),
-            );
+            injectWebkitBackdrop(distStyles, distComponents);
+            injectWebkitBackdropFile(resolve(root, "dist/glass-ui.css"));
 
             // 4. BG.W-CSS-MINIFY (F8.4) — minify the shipped cascade LAST (strip
             //    comments + collapse whitespace, string-safe). Runs after every
