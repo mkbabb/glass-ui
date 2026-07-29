@@ -1,6 +1,6 @@
 {
   "schema": "glass-ui-import-dag/3",
-  "observedAt": "2026-07-29T19:04:42.299Z",
+  "observedAt": "2026-07-29T19:50:44.165Z",
   "repositoryRoot": ".",
   "ownerManifest": {
     "path": "OWNER-MANIFEST.json",
@@ -47,9 +47,9 @@
     "edgeDefinition": "Vue/TypeScript AST imports, export-from, finite provenance-resolved dynamic imports, glob/worker/URL and provenance-backed require loaders; Vue external blocks, literal bound template assets, and static inline-style URLs with file-native line/column locations; HTML script entries; PostCSS imports and URLs; package/build/type/side-effect metadata; detectable filesystem and binding-proven child-process invocation targets."
   },
   "summary": {
-    "nodes": 1496,
-    "internalEdges": 3577,
-    "externalEdges": 1963,
+    "nodes": 1492,
+    "internalEdges": 3569,
+    "externalEdges": 1967,
     "owners": 101,
     "publicEntries": 72,
     "publicSymbols": 1283,
@@ -59,49 +59,49 @@
     "dynamicAssetReferences": 123,
     "unresolvedGlobPatterns": 0,
     "parseErrors": 0,
-    "unmodeledFileOperations": 272,
+    "unmodeledFileOperations": 279,
     "processInvocations": 8,
     "dynamicProcessArguments": 9,
     "nodeTypeCounts": {
       "binary": 9,
       "declaration": 2,
-      "directory": 23,
+      "directory": 18,
       "documentation": 29,
-      "generated-artifact": 2,
+      "generated-artifact": 1,
       "license": 2,
-      "package-output": 137,
-      "source": 1153,
+      "package-output": 138,
+      "source": 1154,
       "style": 131,
       "virtual-placeholder": 8
     },
     "nodeKindCounts": {
-      "declared-package-output": 137,
-      "directory": 20,
-      "generated-by-write": 5,
+      "declared-package-output": 138,
+      "directory": 18,
+      "generated-by-write": 1,
       "missing-runtime-placeholder": 8,
-      "repository-file": 1326
+      "repository-file": 1327
     },
     "projectionCounts": {
       "build-config": 14,
       "demo": 195,
       "package-surface": 2,
       "product": 693,
-      "repository-boundary": 173,
+      "repository-boundary": 168,
       "scripts-generators": 15,
-      "tests": 213,
+      "tests": 214,
       "visual-tests": 191
     },
     "edgeKindCounts": {
       "asset-url": 8,
       "build-entry": 69,
       "css-import": 113,
-      "eager-runtime": 3345,
+      "eager-runtime": 3350,
       "export-from": 475,
       "file-read": 32,
       "file-write": 4,
       "finite-dynamic": 2,
-      "generator-read": 12,
-      "generator-write": 7,
+      "generator-read": 7,
+      "generator-write": 3,
       "glob-lazy": 107,
       "literal-dynamic": 68,
       "literal-require": 2,
@@ -618,10 +618,10 @@
       "nodeType": "source",
       "nodeKind": "repository-file",
       "virtual": false,
-      "bytes": 6613,
-      "sha256": "d8a3e3192fb68970b9a03b5a5b166ab99df0468e0173552dbc24ae49103aad28",
+      "bytes": 6742,
+      "sha256": "10da96d7a5042d9a0eb7b6128d7ff711aef1b02fc6572b46424aa4ff94b2ef68",
       "generatedBy": null,
-      "lines": 150
+      "lines": 152
     },
     {
       "path": "demo/router.ts",
@@ -2859,17 +2859,6 @@
       "generatedBy": "scripts/gen-component-styles.mjs"
     },
     {
-      "path": "dist/components",
-      "projection": "repository-boundary",
-      "owner": "repository/generated-output",
-      "nodeType": "directory",
-      "nodeKind": "generated-by-write",
-      "virtual": true,
-      "bytes": null,
-      "sha256": null,
-      "generatedBy": "vite.style-fold.ts"
-    },
-    {
       "path": "dist/configurator.d.ts",
       "projection": "repository-boundary",
       "owner": "repository/generated-output",
@@ -3176,17 +3165,6 @@
       "bytes": null,
       "sha256": null,
       "generatedBy": null
-    },
-    {
-      "path": "dist/fonts",
-      "projection": "repository-boundary",
-      "owner": "repository/generated-output",
-      "nodeType": "directory",
-      "nodeKind": "generated-by-write",
-      "virtual": true,
-      "bytes": null,
-      "sha256": null,
-      "generatedBy": "vite.style-fold.ts"
     },
     {
       "path": "dist/fonts/*",
@@ -3816,17 +3794,6 @@
       "generatedBy": null
     },
     {
-      "path": "dist/styles",
-      "projection": "repository-boundary",
-      "owner": "repository/generated-output",
-      "nodeType": "directory",
-      "nodeKind": "generated-by-write",
-      "virtual": true,
-      "bytes": null,
-      "sha256": null,
-      "generatedBy": "vite.style-fold.ts"
-    },
-    {
       "path": "dist/styles/fonts.css",
       "projection": "repository-boundary",
       "owner": "repository/generated-output",
@@ -3841,12 +3808,12 @@
       "path": "dist/styles/index.css",
       "projection": "repository-boundary",
       "owner": "repository/generated-output",
-      "nodeType": "generated-artifact",
-      "nodeKind": "generated-by-write",
+      "nodeType": "package-output",
+      "nodeKind": "declared-package-output",
       "virtual": true,
       "bytes": null,
       "sha256": null,
-      "generatedBy": "vite.style-fold.ts"
+      "generatedBy": null
     },
     {
       "path": "dist/styles/theme.css",
@@ -4357,7 +4324,7 @@
       "nodeKind": "repository-file",
       "virtual": false,
       "bytes": 17765,
-      "sha256": "7a1e0f8d1c955e89bef57135ac2b7519b1eefde7857c2306608e8e14fa97bb9a",
+      "sha256": "8e20c2db2cc7b0eb43bc839509056c3cca402bd58388fcad049a076fa6c03e64",
       "generatedBy": null,
       "lines": 589
     },
@@ -4519,17 +4486,6 @@
     },
     {
       "path": "src",
-      "projection": "repository-boundary",
-      "owner": "repository/directory",
-      "nodeType": "directory",
-      "nodeKind": "directory",
-      "virtual": false,
-      "bytes": null,
-      "sha256": null,
-      "generatedBy": null
-    },
-    {
-      "path": "src/components",
       "projection": "repository-boundary",
       "owner": "repository/directory",
       "nodeType": "directory",
@@ -11824,17 +11780,6 @@
       "lines": 154
     },
     {
-      "path": "src/fonts",
-      "projection": "repository-boundary",
-      "owner": "product/fonts",
-      "nodeType": "directory",
-      "nodeKind": "directory",
-      "virtual": false,
-      "bytes": null,
-      "sha256": null,
-      "generatedBy": null
-    },
-    {
       "path": "src/fonts/fira-code/fira-code-latin-ext.woff2",
       "projection": "product",
       "owner": "product/fonts",
@@ -17619,6 +17564,18 @@
       "lines": 4
     },
     {
+      "path": "tests/styles/backdrop-prefix-normalization.test.ts",
+      "projection": "tests",
+      "owner": "tests/styles",
+      "nodeType": "source",
+      "nodeKind": "repository-file",
+      "virtual": false,
+      "bytes": 2385,
+      "sha256": "f487084277fe61da03dcb6b23c5e4364527e6806157b25b279c35b33e878fde3",
+      "generatedBy": null,
+      "lines": 52
+    },
+    {
       "path": "tests/styles/glass-subtlety.test.ts",
       "projection": "tests",
       "owner": "tests/styles",
@@ -17841,10 +17798,10 @@
       "nodeType": "source",
       "nodeKind": "repository-file",
       "virtual": false,
-      "bytes": 3678,
-      "sha256": "28f152d160c10c525aca579024284e4f6c5d55ceeedb9390dd0b510a76edb3c1",
+      "bytes": 3689,
+      "sha256": "2c8d7d37a5eee3ffcffc3cca5470e26c8b6f949c9fba8c0b4c8bdb8ddc3dbe21",
       "generatedBy": null,
-      "lines": 74
+      "lines": 78
     },
     {
       "path": "vite.style-fold.ts",
@@ -17853,10 +17810,10 @@
       "nodeType": "source",
       "nodeKind": "repository-file",
       "virtual": false,
-      "bytes": 16474,
-      "sha256": "71b074dbf8ab287c3b53c346b0bae4131fff2ba26f44802c9a7a32814d74cc24",
+      "bytes": 13523,
+      "sha256": "45cf512edcbc06ceef1a83da4c07dee886a472c5659108a38b6832cce8155522",
       "generatedBy": null,
-      "lines": 311
+      "lines": 293
     },
     {
       "path": "vite.targets.ts",
@@ -20327,8 +20284,8 @@
       "source": "demo/main.ts",
       "specifier": "./capture/capture.css",
       "edgeKind": "literal-dynamic",
-      "line": 104,
-      "column": 11,
+      "line": 106,
+      "column": 31,
       "metadata": {},
       "target": "demo/capture/capture.css",
       "boundary": "within-projections",
@@ -20342,7 +20299,7 @@
       "source": "demo/main.ts",
       "specifier": "./capture/engine-badge",
       "edgeKind": "literal-dynamic",
-      "line": 140,
+      "line": 142,
       "column": 40,
       "metadata": {},
       "target": "demo/capture/engine-badge.ts",
@@ -111495,6 +111452,29 @@
       }
     },
     {
+      "source": "tests/styles/backdrop-prefix-normalization.test.ts",
+      "specifier": "../../vite.style-fold",
+      "edgeKind": "eager-runtime",
+      "line": 4,
+      "column": 1,
+      "metadata": {
+        "symbols": [
+          {
+            "name": "normalizeBackdropFilterPairs",
+            "local": "normalizeBackdropFilterPairs",
+            "typeOnly": false
+          }
+        ]
+      },
+      "target": "vite.style-fold.ts",
+      "boundary": "within-projections",
+      "projections": {
+        "eagerRuntime": true,
+        "buildLoad": true,
+        "ownership": true
+      }
+    },
+    {
       "source": "tests/styles/placeholder-contrast.test.ts",
       "target": "src/styles/theme/bridges.css",
       "specifier": null,
@@ -113063,7 +113043,7 @@
       "source": "vite.style-assets.ts",
       "specifier": "./vite.style-fold",
       "edgeKind": "eager-runtime",
-      "line": 3,
+      "line": 4,
       "column": 1,
       "metadata": {
         "symbols": [
@@ -113106,7 +113086,7 @@
       "source": "vite.style-assets.ts",
       "specifier": "./vite.utility-emit",
       "edgeKind": "eager-runtime",
-      "line": 10,
+      "line": 11,
       "column": 1,
       "metadata": {
         "symbols": [
@@ -113127,111 +113107,9 @@
     },
     {
       "source": "vite.style-fold.ts",
-      "target": ".",
-      "specifier": null,
-      "edgeKind": "generator-read",
-      "line": 127,
-      "column": 16,
-      "boundary": "repository-boundary",
-      "metadata": {
-        "operation": "readdirSync"
-      },
-      "projections": {
-        "eagerRuntime": false,
-        "buildLoad": true,
-        "ownership": true
-      }
-    },
-    {
-      "source": "vite.style-fold.ts",
-      "target": "dist/components",
-      "specifier": null,
-      "edgeKind": "generator-write",
-      "line": 116,
-      "column": 9,
-      "boundary": "repository-boundary",
-      "metadata": {
-        "operation": "cpSync"
-      },
-      "projections": {
-        "eagerRuntime": false,
-        "buildLoad": true,
-        "ownership": true
-      }
-    },
-    {
-      "source": "vite.style-fold.ts",
-      "target": "dist/fonts",
-      "specifier": null,
-      "edgeKind": "generator-write",
-      "line": 110,
-      "column": 9,
-      "boundary": "repository-boundary",
-      "metadata": {
-        "operation": "cpSync"
-      },
-      "projections": {
-        "eagerRuntime": false,
-        "buildLoad": true,
-        "ownership": true
-      }
-    },
-    {
-      "source": "vite.style-fold.ts",
-      "target": "dist/styles",
-      "specifier": null,
-      "edgeKind": "generator-write",
-      "line": 113,
-      "column": 9,
-      "boundary": "repository-boundary",
-      "metadata": {
-        "operation": "cpSync"
-      },
-      "projections": {
-        "eagerRuntime": false,
-        "buildLoad": true,
-        "ownership": true
-      }
-    },
-    {
-      "source": "vite.style-fold.ts",
-      "target": "dist/styles/index.css",
-      "specifier": null,
-      "edgeKind": "generator-read",
-      "line": 157,
-      "column": 26,
-      "boundary": "repository-boundary",
-      "metadata": {
-        "operation": "readFileSync"
-      },
-      "projections": {
-        "eagerRuntime": false,
-        "buildLoad": true,
-        "ownership": true
-      }
-    },
-    {
-      "source": "vite.style-fold.ts",
-      "target": "dist/styles/index.css",
-      "specifier": null,
-      "edgeKind": "generator-write",
-      "line": 165,
-      "column": 13,
-      "boundary": "repository-boundary",
-      "metadata": {
-        "operation": "writeFileSync"
-      },
-      "projections": {
-        "eagerRuntime": false,
-        "buildLoad": true,
-        "ownership": true
-      }
-    },
-    {
-      "source": "vite.style-fold.ts",
       "specifier": "./scripts/lib/minify-css.mjs",
       "edgeKind": "eager-runtime",
-      "line": 11,
+      "line": 13,
       "column": 1,
       "metadata": {
         "symbols": [
@@ -113246,57 +113124,6 @@
       "boundary": "within-projections",
       "projections": {
         "eagerRuntime": true,
-        "buildLoad": true,
-        "ownership": true
-      }
-    },
-    {
-      "source": "vite.style-fold.ts",
-      "target": "src/components",
-      "specifier": null,
-      "edgeKind": "generator-read",
-      "line": 116,
-      "column": 9,
-      "boundary": "repository-boundary",
-      "metadata": {
-        "operation": "cpSync"
-      },
-      "projections": {
-        "eagerRuntime": false,
-        "buildLoad": true,
-        "ownership": true
-      }
-    },
-    {
-      "source": "vite.style-fold.ts",
-      "target": "src/fonts",
-      "specifier": null,
-      "edgeKind": "generator-read",
-      "line": 110,
-      "column": 9,
-      "boundary": "repository-boundary",
-      "metadata": {
-        "operation": "cpSync"
-      },
-      "projections": {
-        "eagerRuntime": false,
-        "buildLoad": true,
-        "ownership": true
-      }
-    },
-    {
-      "source": "vite.style-fold.ts",
-      "target": "src/styles",
-      "specifier": null,
-      "edgeKind": "generator-read",
-      "line": 113,
-      "column": 9,
-      "boundary": "repository-boundary",
-      "metadata": {
-        "operation": "cpSync"
-      },
-      "projections": {
-        "eagerRuntime": false,
         "buildLoad": true,
         "ownership": true
       }
@@ -160322,6 +160149,52 @@
       "package": "vitest"
     },
     {
+      "source": "tests/styles/backdrop-prefix-normalization.test.ts",
+      "specifier": "postcss",
+      "edgeKind": "eager-runtime",
+      "line": 1,
+      "column": 1,
+      "metadata": {
+        "symbols": [
+          {
+            "name": "default",
+            "local": "postcss",
+            "typeOnly": false
+          }
+        ]
+      },
+      "resolution": "external-package",
+      "package": "postcss"
+    },
+    {
+      "source": "tests/styles/backdrop-prefix-normalization.test.ts",
+      "specifier": "vitest",
+      "edgeKind": "eager-runtime",
+      "line": 2,
+      "column": 1,
+      "metadata": {
+        "symbols": [
+          {
+            "name": "describe",
+            "local": "describe",
+            "typeOnly": false
+          },
+          {
+            "name": "expect",
+            "local": "expect",
+            "typeOnly": false
+          },
+          {
+            "name": "it",
+            "local": "it",
+            "typeOnly": false
+          }
+        ]
+      },
+      "resolution": "external-package",
+      "package": "vitest"
+    },
+    {
       "source": "tests/styles/glass-subtlety.test.ts",
       "specifier": "node:fs",
       "edgeKind": "eager-runtime",
@@ -161055,9 +160928,27 @@
     },
     {
       "source": "vite.style-assets.ts",
+      "specifier": "node:path",
+      "edgeKind": "eager-runtime",
+      "line": 1,
+      "column": 1,
+      "metadata": {
+        "symbols": [
+          {
+            "name": "resolve",
+            "local": "resolve",
+            "typeOnly": false
+          }
+        ]
+      },
+      "resolution": "external-package",
+      "package": "node:path"
+    },
+    {
+      "source": "vite.style-assets.ts",
       "specifier": "vite",
       "edgeKind": "type-only",
-      "line": 1,
+      "line": 2,
       "column": 1,
       "metadata": {
         "symbols": [
@@ -161131,6 +161022,24 @@
       },
       "resolution": "external-package",
       "package": "node:path"
+    },
+    {
+      "source": "vite.style-fold.ts",
+      "specifier": "postcss",
+      "edgeKind": "eager-runtime",
+      "line": 11,
+      "column": 1,
+      "metadata": {
+        "symbols": [
+          {
+            "name": "default",
+            "local": "postcss",
+            "typeOnly": false
+          }
+        ]
+      },
+      "resolution": "external-package",
+      "package": "postcss"
     },
     {
       "source": "vite.utility-emit.ts",
@@ -164707,50 +164616,92 @@
     },
     {
       "source": "vite.style-fold.ts",
-      "operation": "statSync",
+      "operation": "cpSync",
+      "line": 112,
+      "column": 9
+    },
+    {
+      "source": "vite.style-fold.ts",
+      "operation": "cpSync",
+      "line": 115,
+      "column": 9
+    },
+    {
+      "source": "vite.style-fold.ts",
+      "operation": "cpSync",
       "line": 118,
+      "column": 9
+    },
+    {
+      "source": "vite.style-fold.ts",
+      "operation": "statSync",
+      "line": 120,
       "column": 31
     },
     {
       "source": "vite.style-fold.ts",
+      "operation": "statSync",
+      "line": 129,
+      "column": 13
+    },
+    {
+      "source": "vite.style-fold.ts",
+      "operation": "readdirSync",
+      "line": 130,
+      "column": 17
+    },
+    {
+      "source": "vite.style-fold.ts",
       "operation": "readFileSync",
-      "line": 179,
+      "line": 159,
+      "column": 26
+    },
+    {
+      "source": "vite.style-fold.ts",
+      "operation": "writeFileSync",
+      "line": 167,
+      "column": 13
+    },
+    {
+      "source": "vite.style-fold.ts",
+      "operation": "readFileSync",
+      "line": 181,
       "column": 21
     },
     {
       "source": "vite.style-fold.ts",
       "operation": "readFileSync",
-      "line": 184,
+      "line": 186,
       "column": 25
     },
     {
       "source": "vite.style-fold.ts",
       "operation": "writeFileSync",
-      "line": 189,
+      "line": 191,
       "column": 22
     },
     {
       "source": "vite.style-fold.ts",
       "operation": "readFileSync",
-      "line": 251,
+      "line": 257,
       "column": 21
     },
     {
       "source": "vite.style-fold.ts",
       "operation": "writeFileSync",
-      "line": 276,
-      "column": 22
+      "line": 259,
+      "column": 26
     },
     {
       "source": "vite.style-fold.ts",
       "operation": "readFileSync",
-      "line": 306,
+      "line": 288,
       "column": 21
     },
     {
       "source": "vite.style-fold.ts",
       "operation": "writeFileSync",
-      "line": 308,
+      "line": 290,
       "column": 26
     },
     {
@@ -176645,7 +176596,7 @@
   ],
   "projections": {
     "eagerRuntime": {
-      "edgeCount": 2218,
+      "edgeCount": 2219,
       "fileSccs": [
         [
           "src/components/alert/Alert.vue",
@@ -180994,6 +180945,9 @@
           "tests/shims.d.ts"
         ],
         [
+          "tests/styles/backdrop-prefix-normalization.test.ts"
+        ],
+        [
           "tests/styles/glass-subtlety.test.ts"
         ],
         [
@@ -184480,6 +184434,14 @@
         },
         {
           "source": "tests/styles",
+          "target": "build/config",
+          "edgeCount": 1,
+          "edgeKinds": [
+            "eager-runtime"
+          ]
+        },
+        {
+          "source": "tests/styles",
           "target": "product/component/progress",
           "edgeCount": 2,
           "edgeKinds": [
@@ -184840,7 +184802,7 @@
       ]
     },
     "buildLoad": {
-      "edgeCount": 3448,
+      "edgeCount": 3440,
       "fileSccs": [
         [
           "demo/chassis/landing/SectionPreviewCard.vue",
@@ -188949,6 +188911,9 @@
           "tests/shims.d.ts"
         ],
         [
+          "tests/styles/backdrop-prefix-normalization.test.ts"
+        ],
+        [
           "tests/styles/glass-subtlety.test.ts"
         ],
         [
@@ -189663,14 +189628,6 @@
         },
         {
           "source": "build/config",
-          "target": "product/fonts",
-          "edgeCount": 1,
-          "edgeKinds": [
-            "generator-read"
-          ]
-        },
-        {
-          "source": "build/config",
           "target": "product/public/forms",
           "edgeCount": 1,
           "edgeKinds": [
@@ -189688,7 +189645,7 @@
         {
           "source": "build/config",
           "target": "product/styles",
-          "edgeCount": 3,
+          "edgeCount": 2,
           "edgeKinds": [
             "build-entry",
             "generator-read"
@@ -189696,19 +189653,10 @@
         },
         {
           "source": "build/config",
-          "target": "repository/directory",
-          "edgeCount": 2,
+          "target": "repository/generated-output",
+          "edgeCount": 1,
           "edgeKinds": [
             "generator-read"
-          ]
-        },
-        {
-          "source": "build/config",
-          "target": "repository/generated-output",
-          "edgeCount": 6,
-          "edgeKinds": [
-            "generator-read",
-            "generator-write"
           ]
         },
         {
@@ -193570,6 +193518,14 @@
         },
         {
           "source": "tests/styles",
+          "target": "build/config",
+          "edgeCount": 1,
+          "edgeKinds": [
+            "eager-runtime"
+          ]
+        },
+        {
+          "source": "tests/styles",
           "target": "package/main",
           "edgeCount": 1,
           "edgeKinds": [
@@ -193968,7 +193924,7 @@
       ]
     },
     "ownership": {
-      "edgeCount": 3577,
+      "edgeCount": 3569,
       "fileSccs": [
         [
           "demo/chassis/landing/SectionPreviewCard.vue",
@@ -198077,6 +198033,9 @@
           "tests/shims.d.ts"
         ],
         [
+          "tests/styles/backdrop-prefix-normalization.test.ts"
+        ],
+        [
           "tests/styles/glass-subtlety.test.ts"
         ],
         [
@@ -198791,14 +198750,6 @@
         },
         {
           "source": "build/config",
-          "target": "product/fonts",
-          "edgeCount": 1,
-          "edgeKinds": [
-            "generator-read"
-          ]
-        },
-        {
-          "source": "build/config",
           "target": "product/public/forms",
           "edgeCount": 1,
           "edgeKinds": [
@@ -198816,7 +198767,7 @@
         {
           "source": "build/config",
           "target": "product/styles",
-          "edgeCount": 3,
+          "edgeCount": 2,
           "edgeKinds": [
             "build-entry",
             "generator-read"
@@ -198825,19 +198776,17 @@
         {
           "source": "build/config",
           "target": "repository/directory",
-          "edgeCount": 3,
+          "edgeCount": 1,
           "edgeKinds": [
-            "generator-read",
             "new-url"
           ]
         },
         {
           "source": "build/config",
           "target": "repository/generated-output",
-          "edgeCount": 6,
+          "edgeCount": 1,
           "edgeKinds": [
-            "generator-read",
-            "generator-write"
+            "generator-read"
           ]
         },
         {
@@ -202715,6 +202664,14 @@
         },
         {
           "source": "tests/styles",
+          "target": "build/config",
+          "edgeCount": 1,
+          "edgeKinds": [
+            "eager-runtime"
+          ]
+        },
+        {
+          "source": "tests/styles",
           "target": "package/main",
           "edgeCount": 1,
           "edgeKinds": [
@@ -203194,5 +203151,5 @@
       }
     }
   },
-  "receiptSha256": "f2133ed209b266c02f302496eda11d46e95df5f33106b519dd9141b87560aaff"
+  "receiptSha256": "5224dd083da5d684da330a9015d016a85c4dd67cc8baa9cbb8fa2e5a3786bcb0"
 }

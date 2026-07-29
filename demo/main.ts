@@ -33,7 +33,7 @@ app.config.errorHandler = (err, _instance, info) => {
 // instead of guessing a fixed sleep. WebKit RENDERS correctly — this is a HARNESS
 // path, ZERO src/component logic touched.
 //
-// The non-capture (normal demo) path is BYTE-UNTOUCHED — the capture branch is
+// The non-capture (normal demo) path is BYTE-UNTOUCHED — capture branches are
 // reached ONLY when the `capture` param is present.
 
 // The GL warm-up before the readiness flag — enough frames for the aurora field
@@ -62,9 +62,10 @@ const nextPaint = () =>
 
 const captureParams = new URLSearchParams(window.location.search);
 const captureRoute = captureParams.get("capture");
+const motionCapture = captureParams.get("motion") === "1";
 
 if (captureRoute) {
-    void bootCaptureMode(app, captureRoute, captureParams);
+    void bootCaptureMode(app, captureRoute, captureParams, motionCapture);
 } else {
     // Await the router; beforeResolve eagerly resolves
     // the first navigation's lazy chunk) BEFORE mount, so the first paint is the resolved
@@ -73,21 +74,21 @@ if (captureRoute) {
 }
 
 /**
- * Boot the demo into the C18 settled-frame capture mode. The order is
- * load-bearing: the color scheme + `data-capture` flag are set BEFORE mount, so
- * animation recipes never play; the keyed component mounts at its settled frame.
+ * Boot the demo into a capture mode. The color scheme and still-capture flag are
+ * set BEFORE mount, so the existing still path mounts at its settled frame.
  */
 async function bootCaptureMode(
     appInstance: App,
     route: string,
     params: URLSearchParams,
+    motionCapture: boolean,
 ): Promise<void> {
     const mode = params.get("mode") === "dark" ? "dark" : "light";
     const el = document.documentElement;
 
-    // 1 · Set the color scheme + the capture flag BEFORE mount. `data-capture`
-    //     activates the capture stylesheet from frame 0, so the entrance
-    //     animations (and their layer-promoting transforms) never bind.
+    // 1 · Set the color scheme + still-capture flag BEFORE mount. `data-capture`
+    //     activates the existing capture stylesheet from frame 0; motion capture
+    //     deliberately leaves the attribute absent so the real clock stays live.
     try {
         localStorage.setItem("vueuse-color-scheme", mode);
     } catch {
@@ -96,24 +97,25 @@ async function bootCaptureMode(
     }
     el.classList.toggle("dark", mode === "dark");
     el.style.colorScheme = mode;
-    el.setAttribute("data-capture", "");
+    if (motionCapture) el.removeAttribute("data-capture");
+    else el.setAttribute("data-capture", "");
     el.setAttribute("data-capture-mode", mode);
 
-    // 2 · Load the capture stylesheet (dynamic — never in the normal bundle; inert
-    //     outside the `html[data-capture]` scope regardless).
-    await import("./capture/capture.css");
+    // 2 · Load the still-capture stylesheet only for the still path (dynamic —
+    //     never in the normal bundle).
+    if (!motionCapture) await import("./capture/capture.css");
 
     // 3 · Resolve the initial navigation, mount, then navigate to the capture
     //     target. Mounting after `isReady()` + pushing the target is the robust
     //     order (the `/` redirect resolves first, then we land the real route).
-    //     Forward any EXTRA capture params (everything except `capture`/`mode`) onto
+    //     Forward any EXTRA capture params (everything except `capture`/`mode`/`motion`) onto
     //     the pushed route as query — history-mode push drops the OUTER search string,
     //     so a story cannot read window.location.search; it reads useRoute().query.
     //     The `&aurmedium=…` deterministic medium override flows
     //     through here; general, so a future per-story capture param needs no edit.)
     const extra = new URLSearchParams();
     for (const [k, v] of params) {
-        if (k !== "capture" && k !== "mode") extra.set(k, v);
+        if (k !== "capture" && k !== "mode" && k !== "motion") extra.set(k, v);
     }
     const extraStr = extra.toString();
     const target = extraStr

@@ -8,6 +8,8 @@ import {
 } from "node:fs";
 import { resolve } from "node:path";
 
+import postcss from "postcss";
+
 import { minifyCss } from "./scripts/lib/minify-css.mjs";
 
 /**
@@ -122,13 +124,13 @@ export function copyStyleAssets(root: string): {
 }
 
 function cssFilesUnder(...roots: string[]): string[] {
-    return roots.flatMap((root) =>
-        existsSync(root)
-            ? (readdirSync(root, { recursive: true }) as string[])
-                  .filter((path) => path.endsWith(".css"))
-                  .map((path) => resolve(root, path))
-            : [],
-    );
+    return roots.flatMap((root) => {
+        if (!existsSync(root)) return [];
+        if (statSync(root).isFile()) return root.endsWith(".css") ? [root] : [];
+        return (readdirSync(root, { recursive: true }) as string[])
+            .filter((path) => path.endsWith(".css"))
+            .map((path) => resolve(root, path));
+    });
 }
 
 /**
@@ -191,89 +193,70 @@ export function inlineFonts(srcFonts: string, ...cssRoots: string[]): void {
 }
 
 /**
- * injectWebkitBackdrop — AY.W-A11Y-PERF O-2a: inject the
- * `-webkit-backdrop-filter` prefix into the SHIPPED dist CSS. The source authors
- * the UNPREFIXED form only (the single-source-of-truth discipline + the
- * Lightning-CSS dedup concern the glass.css policy comment records), so without
- * this pass the shipped `dist/styles/*.css` carries the unprefixed
- * `backdrop-filter` only and a Safari ≤17 engine (which supports ONLY the
- * `-webkit-` form) paints NO blur AND the `@supports not` opaque fallback does
- * NOT fire (Safari 17 supports the webkit form, so `@supports not
- * ((backdrop-filter) or (-webkit-backdrop-filter))` is FALSE) — a transparent
- * glass surface with floating text, strictly worse than no-glass. The LIBRARY
- * owns its shipped artefact: this pass emits the prefixed pair at BUILD (the
- * source stays unprefixed; the build adds the pair LAST, so the Lightning dedup
- * never sees both forms in source). For every `backdrop-filter: <v>;`
- * declaration NOT already immediately preceded by a `-webkit-backdrop-filter:`,
- * prepend the prefixed pair with the SAME value. Runs AFTER the cpSync +
- * SFC-fold + component-utility emit + font-inline so it covers the complete
- * shipped cascade. Idempotent (skips a decl already webkit-paired).
+ * normalizeBackdropFilterPairs — normalize the shipped CSS after Vite/Lightning emits
+ * it. Source and generated bundles may contain either leg; the pass makes every
+ * surviving declaration an adjacent, same-value pair in canonical order. Runs
+ * after the cpSync, SFC fold, utility emit, and font inline so it covers the
+ * complete shipped cascade. Idempotent for an already canonical pair.
  *
- * X4 (value.js A6 + L16) — THE ONE PREFIX POLICY, recorded: the source authors the
- * UNPREFIXED `backdrop-filter` (incl. the `backdrop-filter: none` reset the spectrum
- * slider + veil-off recipes carry); this pass emits the `-webkit-` companion for
- * EVERY such decl (the value group admits `none`), so the shipped decl is BOTH forms.
- * The lexical minifier (minify-css.mjs) is prefix-blind — it strips comments +
- * collapses whitespace only, NEVER a vendor-prefix collapse — so a structural
- * minifier's "drop the redundant unprefixed `none`" pass never runs and both forms
- * survive to dist. `proof:xr-producer-repairs` X4 asserts the fresh dist carries the
- * unprefixed `backdrop-filter: none` (not collapsed away) beside its `-webkit-` pair.
+ * X4 (value.js A6 + L16) — the shipped policy is that every backdrop declaration
+ * carries both forms, including `backdrop-filter: none` resets.
+ * The lexical minifier remains prefix-blind and preserves the normalized pair.
  */
+export function normalizeBackdropFilterPairs(css: string): string {
+    const root = postcss.parse(css);
+
+    root.walkRules((rule) => {
+        for (let index = 0; index < (rule.nodes?.length ?? 0); index++) {
+            const node = rule.nodes?.[index];
+            if (
+                !node ||
+                node.type !== "decl" ||
+                (node.prop !== "backdrop-filter" && node.prop !== "-webkit-backdrop-filter")
+            ) {
+                continue;
+            }
+
+            const next = rule.nodes?.[index + 1];
+            if (
+                node.prop === "-webkit-backdrop-filter" &&
+                next?.type === "decl" &&
+                next.prop === "backdrop-filter" &&
+                next.value === node.value
+            ) {
+                index++;
+                continue;
+            }
+
+            if (
+                node.prop === "backdrop-filter" &&
+                next?.type === "decl" &&
+                next.prop === "-webkit-backdrop-filter" &&
+                next.value === node.value
+            ) {
+                node.prop = "-webkit-backdrop-filter";
+                next.prop = "backdrop-filter";
+                index++;
+                continue;
+            }
+
+            if (node.prop === "-webkit-backdrop-filter") {
+                node.cloneAfter({ prop: "backdrop-filter" });
+            } else {
+                node.cloneBefore({ prop: "-webkit-backdrop-filter" });
+            }
+            index++;
+        }
+    });
+
+    return root.toString();
+}
+
 export function injectWebkitBackdrop(...cssRoots: string[]): void {
-    // Match an unprefixed `backdrop-filter: <value>;` DECLARATION (a property
-    // line in a rule body), NOT a `@supports`/`@container` query condition
-    // (those live inside `( … )` preludes — `(backdrop-filter: blur(1px))` — and
-    // carry NO trailing `;`, so injecting there would CORRUPT the at-rule query).
-    // The match requires:
-    //   - the property name immediately preceded by a `{`, `;`, or newline+ws
-    //     (a declaration boundary) AND not part of `-webkit-backdrop-filter`
-    //     (the `[^-]` guard), and
-    //   - a trailing `;` (a real declaration terminator).
-    // The value excludes a bare `)` so a greedy match cannot spill across an
-    // `@supports` prelude's `) or (` operators (the corruption class). A value
-    // with a `var(...)`/`blur(Npx)` contains balanced parens, so to allow those
-    // we match a value with BALANCED NESTED parens up to THREE levels:
-    // `(?:[^;{}()]|<G3>)+` where `<G3>` is a paren group that may itself contain
-    // paren groups two more deep — runs of non-paren text OR one balanced (nesting)
-    // paren group — terminated by `;`. This admits `var(--glass-blur-wash)` (1
-    // level), `blur(var(--top-layer-backdrop-blur, 8px))` (2 levels — the Safari
-    // `blur(var())` case, BG.W-GLASS-REGISTER-UNIFY: the prior single-level
-    // `\([^()]*\)` STOPPED at the inner `(` of a `blur(var(…))`, so the whole
-    // declaration NEVER matched → NO `-webkit-` pair reached the shipped dist →
-    // Safari ≤17 painted no blur on the `.glass-top-layer` entry), and
-    // `blur(calc(var(--r) * var(--l)))` (3 levels) but still STOPS at the `;`
-    // before any query operator. The `-webkit-backdrop-filter:` (M4a alias-parity)
-    // arm is emitted from the SAME resolved `value.trim()`, so its value tracks the
-    // unprefixed one exactly. Locked by `proof:glass`'s safari-blur-var arm.
-    const bdfDeclRe =
-        /([{};]|\n)(\s*)backdrop-filter\s*:\s*((?:[^;{}()]|\((?:[^()]|\((?:[^()]|\([^()]*\))*\))*\))+);/g;
     for (const path of cssFilesUnder(...cssRoots)) {
         const src = readFileSync(path, "utf-8");
-        let changed = false;
-        const out = src.replace(
-            bdfDeclRe,
-            (
-                match,
-                boundary: string,
-                indent: string,
-                value: string,
-                offset: number,
-            ) => {
-                // Exclude the `-webkit-backdrop-filter` property (the boundary
-                // char before would be `-`, which is not in our boundary class,
-                // so this is belt-and-suspenders) and skip a decl ALREADY
-                // webkit-paired (the hand-authored pair — Slider/ContinuousRail/
-                // useGlassRenderer/Drawer): never double-inject.
-                const lookbackStart = Math.max(0, offset - 120);
-                const lookback = src.slice(lookbackStart, offset + 1);
-                if (/-webkit-backdrop-filter\s*:[^;{}]*;\s*$/.test(lookback)) {
-                    return match;
-                }
-                changed = true;
-                return `${boundary}${indent}-webkit-backdrop-filter: ${value.trim()};\n${indent}backdrop-filter: ${value.trim()};`;
-            },
-        );
-        if (changed) writeFileSync(path, out, "utf-8");
+        const out = normalizeBackdropFilterPairs(src);
+        if (out !== src) writeFileSync(path, out, "utf-8");
     }
 }
 
@@ -287,7 +270,7 @@ export function injectWebkitBackdrop(...cssRoots: string[]): void {
  * The minify is DELIBERATELY conservative + string-aware (`scripts/lib/
  * minify-css.mjs` `minifyCss`): the dist partials are copied RAW so they still
  * carry Tailwind-v4 SOURCE directives (`@theme`/`@utility`/`@apply`/`@source`/
- * `@layer`) the consumer's Tailwind processes, PLUS the `injectWebkitBackdrop`
+ * `@layer`) the consumer's Tailwind processes, PLUS the normalized backdrop-filter
  * pairs and the `@supports` no-masking fallbacks — a structural minifier
  * (lightningcss/esbuild) would prune the "redundant" webkit prefix, drop a
  * "dead" `@supports` branch, or choke on the non-standard at-rules. The lexical
@@ -295,9 +278,8 @@ export function injectWebkitBackdrop(...cssRoots: string[]): void {
  * `/*`-in-string byte (the atSourceIndex trap).
  *
  * Runs LAST (after cpSync + SFC-fold + component-utility emit + font-inline +
- * webkit-inject) so it minifies the COMPLETE shipped cascade — and so the
- * `injectWebkitBackdrop` newline/`;`-boundary regex reads the un-collapsed text
- * first. Recursive (the `glass/`, `dock-controls/`, `tokens/`, … subdir
+ * backdrop normalization) so it minifies the COMPLETE shipped cascade. Recursive
+ * (the `glass/`, `dock-controls/`, `tokens/`, … subdir
  * partials ship + are `@import`-referenced, so they are minified too).
  * Idempotent by construction (a cpSync-fresh dist is minified once per build).
  */

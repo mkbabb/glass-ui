@@ -1,3 +1,4 @@
+import { resolve } from "node:path";
 import type { Plugin } from "vite";
 
 import {
@@ -18,9 +19,9 @@ import { emitComponentUtilities } from "./vite.utility-emit";
  * sub-plugin modules the orchestrator composes IN ORDER (byte-identical build):
  *
  *   1. `vite.style-fold.ts`     — copy src/{styles,fonts}→dist, fold the SFC
- *                                 bundle, base64-inline the fonts, inject the
- *                                 `-webkit-backdrop-filter` prefix pair, then
- *                                 minify the shipped cascade LAST.
+ *                                 bundle, base64-inline the fonts, normalize
+ *                                 backdrop-filter pairs, then minify the shipped
+ *                                 cascade LAST.
  *   2. `vite.utility-emit.ts`   — P9: emit glass-ui's own component-utility
  *                                 RULES into dist/styles/components.css.
  *
@@ -28,9 +29,8 @@ import { emitComponentUtilities } from "./vite.utility-emit";
  * functions record why):
  *   - cpSync FIRST (creates dist/styles + dist/fonts).
  *   - SFC-fold + utility-emit BEFORE the post-process passes.
- *   - font-inline + webkit before minify (they walk every dist/styles/*.css and
- *     the webkit regex reads newline/`;` boundaries; a component-utility webkit
- *     decl must get its prefix pair, so utility-emit precedes them).
+ *   - font-inline + backdrop normalization before minify (the component-utility
+ *     output must be normalized before the final styles pass).
  *   - minify LAST (BG.W-CSS-MINIFY / F8.4 — strips comments + collapses
  *     whitespace across the COMPLETE shipped cascade). The BB.W-CSS-CRITICAL
  *     critical/deferred split retired here: after minify the ~13KB saving on
@@ -57,10 +57,14 @@ export function publishStyleAssets(): Plugin {
             await emitComponentUtilities(root, distStyles);
 
             // 3. Post-process the shipped copy: base64-inline the fonts, then
-            //    inject the `-webkit-backdrop-filter` prefix pair (covers the
-            //    complete shipped cascade incl. components.css).
+            //    normalize backdrop-filter pairs across the cascade, including
+            //    the top-level SFC bundle.
             inlineFonts(srcFonts, distStyles, distComponents);
-            injectWebkitBackdrop(distStyles, distComponents);
+            injectWebkitBackdrop(
+                distStyles,
+                distComponents,
+                resolve(root, "dist/glass-ui.css"),
+            );
 
             // 4. BG.W-CSS-MINIFY (F8.4) — minify the shipped cascade LAST (strip
             //    comments + collapse whitespace, string-safe). Runs after every
