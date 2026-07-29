@@ -77,12 +77,16 @@ export const scanTypeUtilities = (file: string, text: string): TypeUtilityViolat
 
 const RAW_FONT_SIZE = /(?:^|[\s,(])\d*\.?\d+(?:px|rem|em)\b/i;
 const CAPS_TRACKING = /(?:^|\s)0\.1em(?:\s|$)/;
+const VAR_FUNCTION = /[vV][aA][rR]\(/;
 // A reference to a @theme key the ramp reset cleared to `initial`. `bridges.css`
 // clears `--text-sm`/`--text-xs`, so any surviving `var(--text-sm)` resolves to
 // a guaranteed-invalid value → the declaration falls back to inherit. Banned
 // across ALL src CSS (not just components) so a dangling reference to a cleared
 // key cannot ship GREEN again — the class of bypass that stranded `.card-description`.
-const CLEARED_VAR = /var\(\s*(--text-(?:sm|xs))\b/g;
+const CLEARED_VAR = /[vV][aA][rR]\(\s*(--text-(?:sm|xs))\b/g;
+
+const asciiLowerCase = (value: string): string =>
+    value.replace(/[A-Z]/g, (character) => character.toLowerCase());
 
 export interface TypeDeclarationViolation {
     file: string;
@@ -95,10 +99,11 @@ export const scanTypeDeclarations = (file: string, text: string): TypeDeclaratio
     const violations: TypeDeclarationViolation[] = [];
     const root = postcss.parse(text, { from: file });
     root.walkDecls((declaration) => {
+        const property = asciiLowerCase(declaration.prop);
         if (
-            declaration.prop === "font-size" &&
+            property === "font-size" &&
             RAW_FONT_SIZE.test(declaration.value) &&
-            !declaration.value.includes("var(")
+            !VAR_FUNCTION.test(declaration.value)
         ) {
             violations.push({
                 file,
@@ -107,7 +112,7 @@ export const scanTypeDeclarations = (file: string, text: string): TypeDeclaratio
                 value: declaration.value.trim(),
             });
         }
-        if (declaration.prop === "letter-spacing" && CAPS_TRACKING.test(declaration.value)) {
+        if (property === "letter-spacing" && CAPS_TRACKING.test(declaration.value)) {
             violations.push({
                 file,
                 line: declaration.source?.start?.line ?? 1,
@@ -223,9 +228,19 @@ describe("gate:type-hygiene — off-ladder type utilities and declarations", () 
     it("self-test bite — a planted raw `font-size:13px` reds on the CSS arm", () => {
         const planted = scanTypeDeclarations(
             "planted.css",
-            [".a { font-size: 13px; }", ".b { letter-spacing: 0.1em; }"].join("\n"),
+            [
+                ".a { font-size: 13px; }",
+                ".b { letter-spacing: 0.1em; }",
+                ".c { FONT-SIZE: 14px; }",
+                ".d { LETTER-SPACING: 0.1em; }",
+            ].join("\n"),
         );
-        expect(planted.map((v) => `${v.channel}`)).toEqual(["font-size", "letter-spacing"]);
+        expect(planted.map((v) => `${v.channel}`)).toEqual([
+            "font-size",
+            "letter-spacing",
+            "font-size",
+            "letter-spacing",
+        ]);
     });
 
     it("self-test bite — a planted `var(--text-sm)`/`var(--text-xs)` reds on the cleared-var arm", () => {
@@ -235,9 +250,15 @@ describe("gate:type-hygiene — off-ladder type utilities and declarations", () 
                 ".a { font-size: var(--text-sm); }",
                 ".b { font-size: var( --text-xs ); }",
                 ".c { font-size: var(--text-small); }", // the LADDER rung — must NOT red
+                ".d { FONT-SIZE: VAR(--text-sm); }",
+                ".e { FONT-SIZE: VAR(--TEXT-SM); }", // custom-property identifiers remain case-sensitive
             ].join("\n"),
         );
-        expect(planted.map((v) => v.value)).toEqual(["var(--text-sm)", "var(--text-xs)"]);
+        expect(planted.map((v) => v.value)).toEqual([
+            "var(--text-sm)",
+            "var(--text-xs)",
+            "var(--text-sm)",
+        ]);
     });
 
     it("self-test bite — the on-ladder + token-ref forms do NOT red", () => {
@@ -257,6 +278,8 @@ describe("gate:type-hygiene — off-ladder type utilities and declarations", () 
             [
                 ".a { font-size: var(--type-caption); }",
                 ".b { letter-spacing: var(--type-tracking-caps); }",
+                ".c { FONT-SIZE: VAR(--type-caption); }",
+                ".d { LETTER-SPACING: VAR(--type-tracking-caps); }",
                 "/* font-size: 13px in prose is not a declaration */",
             ].join("\n"),
         );

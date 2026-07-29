@@ -46,6 +46,8 @@ const LADDER_SOURCES = [
 ];
 
 const RAW_LENGTH = /(?<![\w.-])(\d*\.?\d+)(px|rem|em|ch|vh|vw|vmin|vmax|pt|cm|mm|in|pc|q)\b/i;
+const VAR_FUNCTION = /[vV][aA][rR]\(/;
+const BLUR_FUNCTION = /[bB][lL][uU][rR]\(([^)]*)\)/;
 
 export interface TokenHygieneViolation {
     file: string;
@@ -55,7 +57,10 @@ export interface TokenHygieneViolation {
 }
 
 const isOffLadder = (value: string): boolean =>
-    !value.includes("var(") && RAW_LENGTH.test(value) && !/^\s*0\s*$/.test(value);
+    !VAR_FUNCTION.test(value) && RAW_LENGTH.test(value) && !/^\s*0\s*$/.test(value);
+
+const asciiLowerCase = (value: string): string =>
+    value.replace(/[A-Z]/g, (character) => character.toLowerCase());
 
 const radiusProperty = (property: string): boolean =>
     property === "border-radius" ||
@@ -80,7 +85,8 @@ export const scanTokenHygiene = (file: string, text: string): TokenHygieneViolat
     for (const { css, lineOffset } of cssSources(file, text)) {
         const root = postcss.parse(css, { from: file });
         root.walkDecls((declaration) => {
-            if (radiusProperty(declaration.prop) && isOffLadder(declaration.value)) {
+            const property = asciiLowerCase(declaration.prop);
+            if (radiusProperty(property) && isOffLadder(declaration.value)) {
                 violations.push({
                     file,
                     line: lineOffset + (declaration.source?.start?.line ?? 1),
@@ -88,8 +94,8 @@ export const scanTokenHygiene = (file: string, text: string): TokenHygieneViolat
                     value: declaration.value.trim(),
                 });
             }
-            if (!/(?:^|-)backdrop-filter$/.test(declaration.prop)) return;
-            const blur = /blur\(([^)]*)\)/.exec(declaration.value);
+            if (!/(?:^|-)backdrop-filter$/.test(property)) return;
+            const blur = BLUR_FUNCTION.exec(declaration.value);
             if (blur && isOffLadder(blur[1])) {
                 violations.push({
                     file,
@@ -155,6 +161,8 @@ describe("gate:token-hygiene — radius/backdrop-blur literals off the ladder", 
                 ".a { border-radius: 999px; }",
                 ".b { backdrop-filter: blur(9px) saturate(1.2); }",
                 ".c { border-start-start-radius: 12px; }",
+                ".d { BORDER-RADIUS: 23px; }",
+                ".e { BACKDROP-FILTER: BLUR(7px); }",
             ].join("\n"),
         );
 
@@ -162,6 +170,8 @@ describe("gate:token-hygiene — radius/backdrop-blur literals off the ladder", 
             "1:radius",
             "2:backdrop-blur",
             "3:radius",
+            "4:radius",
+            "5:backdrop-blur",
         ]);
     });
 
@@ -177,6 +187,8 @@ describe("gate:token-hygiene — radius/backdrop-blur literals off the ladder", 
                 ".f { border-radius: 0; }",
                 ".g { backdrop-filter: var(--glass-blur-resting); }",
                 ".h { filter: blur(0.5px); }",
+                ".j { BORDER-RADIUS: VAR(--radius-card); }",
+                ".k { BACKDROP-FILTER: VAR(--glass-blur-resting); }",
                 "/* border-radius: 4px in prose is not a declaration */",
                 "@supports (backdrop-filter: blur(1px)) { .i { color: red; } }",
             ].join("\n"),

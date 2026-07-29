@@ -100,6 +100,8 @@ interface StaticImportBinding {
     line: number;
 }
 
+const SIDE_EFFECT_IMPORT = "<side-effect>";
+
 const scriptSource = (source: string, file = "fixture.ts"): ts.SourceFile => {
     const content = source.includes("<script")
         ? (() => {
@@ -132,9 +134,19 @@ const importBindings = (sourceFile: ts.SourceFile): StaticImportBinding[] =>
             return [];
         }
         const clause = statement.importClause;
-        if (!clause) return [];
         const module = statement.moduleSpecifier.text;
         const line = sourceFile.getLineAndCharacterOfPosition(statement.getStart()).line + 1;
+        if (!clause) {
+            return [
+                {
+                    imported: SIDE_EFFECT_IMPORT,
+                    local: SIDE_EFFECT_IMPORT,
+                    module,
+                    typeOnly: false,
+                    line,
+                },
+            ];
+        }
         const bindings: StaticImportBinding[] = [];
         if (clause.name) {
             bindings.push({
@@ -162,6 +174,15 @@ const importBindings = (sourceFile: ts.SourceFile): StaticImportBinding[] =>
                 local: clause.namedBindings.name.text,
                 module,
                 typeOnly: clause.isTypeOnly,
+                line,
+            });
+        }
+        if (bindings.length === 0 && !clause.isTypeOnly) {
+            bindings.push({
+                imported: SIDE_EFFECT_IMPORT,
+                local: SIDE_EFFECT_IMPORT,
+                module,
+                typeOnly: false,
                 line,
             });
         }
@@ -239,7 +260,19 @@ export function scanStaticShellImports(source: string): BootGraphViolation[] {
         if (binding.typeOnly) continue;
         for (const name of DEFERRED_SHELL_COMPONENTS) {
             const componentModule = binding.module.endsWith(`/${name}.vue`);
-            if (binding.imported !== name && binding.local !== name && !componentModule) continue;
+            const sideEffectBarrel =
+                binding.imported === SIDE_EFFECT_IMPORT &&
+                ((name === "Aurora" && binding.module === AURORA_BARREL) ||
+                    (name === "PresetEditor" &&
+                        /(?:^|\/)configurator$/.test(binding.module)));
+            if (
+                binding.imported !== name &&
+                binding.local !== name &&
+                !componentModule &&
+                !sideEffectBarrel
+            ) {
+                continue;
+            }
             violations.push({
                 file: "demo/shell/AppShell.vue",
                 line: binding.line,
@@ -353,7 +386,7 @@ export function scanFrame0Ground(source: string): BootGraphViolation[] {
 }
 
 /**
- * SOURCE arm (b): value imports from the aurora BARREL in the shell-field config path.
+ * SOURCE arm (b): runtime imports from the aurora BARREL in the shell-field config path.
  * Type-only imports erase at build time and are permitted.
  */
 export function scanAuroraBarrelImports(source: string): BootGraphViolation[] {
@@ -363,12 +396,12 @@ export function scanAuroraBarrelImports(source: string): BootGraphViolation[] {
         .map((binding) => ({
             file: "demo/chassis/hero/aurora-hero.ts",
             line: binding.line,
-            detail: `value import from the aurora barrel "${binding.module}" — the barrel re-exports Aurora.vue; import from the defining leaf`,
+            detail: `runtime import from the aurora barrel "${binding.module}" — the barrel re-exports Aurora.vue; import from the defining leaf`,
         }));
 }
 
 /**
- * SOURCE arm (c): value imports of the CONFIGURATOR barrel from an eager shell module.
+ * SOURCE arm (c): runtime imports of the CONFIGURATOR barrel from an eager shell module.
  * The barrel's first line is `export { default as PresetEditor } from "./PresetEditor.vue"`,
  * so the specifier drags the Sheet. Leaf specifiers (`./configurator/useConfiguratorOpen`)
  * and type-only imports are permitted.
@@ -387,7 +420,7 @@ export function scanConfiguratorBarrelImports(
         .map((binding) => ({
                 file,
                 line: binding.line,
-                detail: `value import from the configurator barrel "${binding.module}" — it re-exports PresetEditor.vue; import the leaf module`,
+                detail: `runtime import from the configurator barrel "${binding.module}" — it re-exports PresetEditor.vue; import the leaf module`,
             }));
 }
 
@@ -440,6 +473,18 @@ describe("gate:boot-graph — source arm", () => {
                 `import type { Aurora, PresetEditor } from "./types";\n// import { Aurora } from "./static";\nconst prose = "import { PresetEditor } from './static'";`,
             ),
         ).toEqual([]);
+        expect(
+            scanStaticShellImports(
+                [
+                    `import "@glass/components/aurora/Aurora.vue";`,
+                    `import "./configurator/PresetEditor.vue";`,
+                    `import "@glass/components/aurora";`,
+                    `import "./configurator";`,
+                    `import "@glass/components/aurora/constants/presets";`,
+                    `import "./configurator/useConfiguratorOpen";`,
+                ].join("\n"),
+            ).map((violation) => violation.line),
+        ).toEqual([1, 2, 3, 4]);
         const dualScriptSfc = [
             `<script lang="ts">`,
             `import { PresetEditor } from "./configurator/PresetEditor.vue";`,
@@ -519,6 +564,14 @@ describe("gate:boot-graph — source arm", () => {
                 `import type { AuroraConfig } from "@glass/components/aurora";\n// @glass/components/aurora`,
             ),
         ).toEqual([]);
+        expect(
+            scanAuroraBarrelImports(
+                [
+                    `import "@glass/components/aurora";`,
+                    `import "@glass/components/aurora/constants/presets";`,
+                ].join("\n"),
+            ).map((violation) => violation.line),
+        ).toEqual([1]);
     });
 
     it("no EAGER shell module imports the configurator barrel", () => {
@@ -547,6 +600,15 @@ describe("gate:boot-graph — source arm", () => {
                 "demo/shell/AppShell.vue",
             ),
         ).toEqual([]);
+        expect(
+            scanConfiguratorBarrelImports(
+                [
+                    `import "../configurator";`,
+                    `import "../configurator/useConfiguratorOpen";`,
+                ].join("\n"),
+                "demo/shell/AppShell.vue",
+            ).map((violation) => violation.line),
+        ).toEqual([1]);
     });
 });
 

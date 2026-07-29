@@ -93,7 +93,7 @@ describe("reka binding-idiom render-effect canary", () => {
         );
     });
 
-    it("TagsInput: the active item resolves `data-[state=active]` (the `tag=` idiom is gone)", async () => {
+    it("TagsInput: item text renders from `value=` (the stale `tag=` idiom is gone)", async () => {
         const wrapper = mount(
             {
                 components: { TagsInput, TagsInputItem, TagsInputItemText },
@@ -110,14 +110,14 @@ describe("reka binding-idiom render-effect canary", () => {
         await nextTick();
         // The item value renders (the modern `value=` binding, not the stale
         // `tag=`). A stale `tag=` would render empty text.
-        expect(wrapper.text()).toContain("alpha");
-        expect(wrapper.text()).toContain("beta");
-        // The reka TagsInputItem reflects its state attribute.
-        const items = wrapper.findAll(
-            "[data-reka-collection-item], [data-slot=tags-input] [role]",
-        );
-        // At minimum the family root carries the data-slot.
-        expect(wrapper.get("[data-slot=tags-input]")).toBeTruthy();
+        expect(
+            wrapper
+                .findAll("[data-slot=tags-input-item-text]")
+                .map((item) => item.text()),
+        ).toEqual(["alpha", "beta"]);
+        expect(
+            wrapper.get("[data-slot=tags-input]").attributes("data-slot"),
+        ).toBe("tags-input");
     });
 
     it("Toast: the dismissal rides `onUpdate:open` (NOT the React `onOpenChange`)", async () => {
