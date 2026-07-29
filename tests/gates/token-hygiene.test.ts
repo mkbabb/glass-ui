@@ -47,7 +47,7 @@ const LADDER_SOURCES = [
 
 const RAW_LENGTH = /(?<![\w.-])(\d*\.?\d+)(px|rem|em|ch|vh|vw|vmin|vmax|pt|cm|mm|in|pc|q)\b/i;
 const VAR_FUNCTION = /[vV][aA][rR]\(/;
-const BLUR_FUNCTION = /[bB][lL][uU][rR]\(([^)]*)\)/;
+const BLUR_FUNCTION = /blur\(([^)]*)\)/gi;
 
 export interface TokenHygieneViolation {
     file: string;
@@ -95,8 +95,10 @@ export const scanTokenHygiene = (file: string, text: string): TokenHygieneViolat
                 });
             }
             if (!/(?:^|-)backdrop-filter$/.test(property)) return;
-            const blur = BLUR_FUNCTION.exec(declaration.value);
-            if (blur && isOffLadder(blur[1])) {
+            BLUR_FUNCTION.lastIndex = 0;
+            let blur: RegExpExecArray | null;
+            while ((blur = BLUR_FUNCTION.exec(declaration.value)) !== null) {
+                if (!isOffLadder(blur[1])) continue;
                 violations.push({
                     file,
                     line: lineOffset + (declaration.source?.start?.line ?? 1),
@@ -195,5 +197,30 @@ describe("gate:token-hygiene — radius/backdrop-blur literals off the ladder", 
         );
 
         expect(format(clean)).toBe("");
+
+        const repeated = scanTokenHygiene(
+            "repeated.css",
+            ".a { backdrop-filter: blur(var(--glass-blur-resting)) BLUR(0.1EM) blur(7px); }",
+        );
+        expect(repeated).toHaveLength(2);
+        expect(repeated.map(({ file, line, value }) => [file, line, value])).toEqual([
+            [
+                "repeated.css",
+                1,
+                "blur(var(--glass-blur-resting)) BLUR(0.1EM) blur(7px)",
+            ],
+            [
+                "repeated.css",
+                1,
+                "blur(var(--glass-blur-resting)) BLUR(0.1EM) blur(7px)",
+            ],
+        ]);
+
+        expect(
+            scanTokenHygiene(
+                "zero.css",
+                ".a { backdrop-filter: blur(var(--glass-blur-resting)) blur(0); }",
+            ),
+        ).toEqual([]);
     });
 });

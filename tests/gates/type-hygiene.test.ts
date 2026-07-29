@@ -76,7 +76,7 @@ export const scanTypeUtilities = (file: string, text: string): TypeUtilityViolat
 // ── CSS-declaration arm ────────────────────────────────────────────────────
 
 const RAW_FONT_SIZE = /(?:^|[\s,(])\d*\.?\d+(?:px|rem|em)\b/i;
-const CAPS_TRACKING = /(?:^|\s)0\.1em(?:\s|$)/;
+const CAPS_TRACKING = /(?:^|\s)0\.1em(?:\s|$)/i;
 const VAR_FUNCTION = /[vV][aA][rR]\(/;
 // A reference to a @theme key the ramp reset cleared to `initial`. `bridges.css`
 // clears `--text-sm`/`--text-xs`, so any surviving `var(--text-sm)` resolves to
@@ -233,12 +233,16 @@ describe("gate:type-hygiene — off-ladder type utilities and declarations", () 
                 ".b { letter-spacing: 0.1em; }",
                 ".c { FONT-SIZE: 14px; }",
                 ".d { LETTER-SPACING: 0.1em; }",
+                ".e { letter-spacing: 0.1EM; }",
+                ".f { letter-spacing: 0.1eM; }",
             ].join("\n"),
         );
         expect(planted.map((v) => `${v.channel}`)).toEqual([
             "font-size",
             "letter-spacing",
             "font-size",
+            "letter-spacing",
+            "letter-spacing",
             "letter-spacing",
         ]);
     });

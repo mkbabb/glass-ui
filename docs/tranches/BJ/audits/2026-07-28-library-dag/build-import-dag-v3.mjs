@@ -26,6 +26,14 @@ import ts from "typescript";
 
 const defaultRepositoryRoot = resolve(import.meta.dirname, "../../../../..");
 const defaultOutputDirectory = import.meta.dirname;
+const canonicalGraphGeneratorPath =
+    "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs";
+const graphOwnerManifestPath =
+    "docs/tranches/BJ/audits/2026-07-28-library-dag/OWNER-MANIFEST.json";
+const emittedGraphArtifactPaths = new Set([
+    "docs/tranches/BJ/audits/2026-07-28-library-dag/IMPORT-DAG-V3.json",
+    "docs/tranches/BJ/audits/2026-07-28-library-dag/IMPORT-DAG-V3-SUMMARY.md",
+]);
 const importedExtensions = [
     ".ts",
     ".tsx",
@@ -313,6 +321,9 @@ function importedSymbolMetadata(clause) {
         });
     }
     if (clause.namedBindings && ts.isNamedImports(clause.namedBindings)) {
+        if (clause.namedBindings.elements.length === 0 && !clause.isTypeOnly) {
+            return [{ name: "*side-effect*", typeOnly: false }];
+        }
         for (const element of clause.namedBindings.elements) {
             symbols.push({
                 name: element.propertyName?.text ?? element.name.text,
@@ -330,6 +341,24 @@ const nodeModuleModules = new Set(["module", "node:module"]);
 function createBindingResolver(sourceFile) {
     const scopeByNode = new Map();
     const rootScope = { parent: null, bindings: new Map() };
+    const assignmentOperators = new Set([
+        ts.SyntaxKind.EqualsToken,
+        ts.SyntaxKind.PlusEqualsToken,
+        ts.SyntaxKind.MinusEqualsToken,
+        ts.SyntaxKind.AsteriskEqualsToken,
+        ts.SyntaxKind.AsteriskAsteriskEqualsToken,
+        ts.SyntaxKind.SlashEqualsToken,
+        ts.SyntaxKind.PercentEqualsToken,
+        ts.SyntaxKind.LessThanLessThanEqualsToken,
+        ts.SyntaxKind.GreaterThanGreaterThanEqualsToken,
+        ts.SyntaxKind.GreaterThanGreaterThanGreaterThanEqualsToken,
+        ts.SyntaxKind.AmpersandEqualsToken,
+        ts.SyntaxKind.BarEqualsToken,
+        ts.SyntaxKind.CaretEqualsToken,
+        ts.SyntaxKind.AmpersandAmpersandEqualsToken,
+        ts.SyntaxKind.BarBarEqualsToken,
+        ts.SyntaxKind.QuestionQuestionEqualsToken,
+    ]);
 
     const directImportProvenance = (moduleName, imported) => {
         if (childProcessModules.has(moduleName) && processExecutionNames.has(imported)) {
@@ -353,6 +382,7 @@ function createBindingResolver(sourceFile) {
                 initializer,
                 propertyPath,
                 iterate,
+                tainted: false,
                 scope,
             });
             return;
@@ -469,7 +499,39 @@ function createBindingResolver(sourceFile) {
         }
         return null;
     };
+    const taintTarget = (node) => {
+        if (!node) return;
+        if (ts.isIdentifier(node)) {
+            const record = lookup(node.text, node);
+            if (record) record.tainted = true;
+            return;
+        }
+        if (ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node)) {
+            taintTarget(node.expression);
+            return;
+        }
+        ts.forEachChild(node, taintTarget);
+    };
+    const markWrites = (node) => {
+        if (ts.isBinaryExpression(node) && assignmentOperators.has(node.operatorToken.kind)) {
+            taintTarget(node.left);
+        } else if (
+            (ts.isPrefixUnaryExpression(node) || ts.isPostfixUnaryExpression(node)) &&
+            [ts.SyntaxKind.PlusPlusToken, ts.SyntaxKind.MinusMinusToken].includes(node.operator)
+        ) {
+            taintTarget(node.operand);
+        } else if (node.kind === ts.SyntaxKind.DeleteExpression) {
+            taintTarget(node.expression);
+        } else if (ts.isForInStatement(node) || ts.isForOfStatement(node)) {
+            if (!ts.isVariableDeclarationList(node.initializer)) {
+                taintTarget(node.initializer);
+            }
+        }
+        ts.forEachChild(node, markWrites);
+    };
+    markWrites(sourceFile);
     const member = (base, name) => {
+        if (base.tainted) return { kind: "local" };
         if (base.kind === "module") {
             return directImportProvenance(base.moduleName, name);
         }
@@ -479,6 +541,7 @@ function createBindingResolver(sourceFile) {
         return { kind: "local" };
     };
     const resolveRecord = (record, seen) => {
+        if (record?.tainted) return { kind: "local" };
         if (!record || record.kind !== "variable") return record ?? { kind: "local" };
         if (!record.initializer || seen.has(record)) return { kind: "local" };
         seen.add(record);
@@ -501,7 +564,7 @@ function createBindingResolver(sourceFile) {
         }
         if (ts.isIdentifier(node)) {
             const record = lookup(node.text, useNode);
-            if (record) return resolveRecord(record, seen);
+            if (record) return record.tainted ? { kind: "local" } : resolveRecord(record, seen);
             return node.text === "require"
                 ? { kind: "require-loader", loader: "require" }
                 : { kind: "local" };
@@ -608,7 +671,13 @@ function createStaticSpecifierResolver(sourceFile, bindingResolver) {
         }
         if (ts.isIdentifier(node)) {
             const record = bindingResolver.lookup(node.text, useNode);
-            if (!record || record.kind !== "variable" || !record.initializer || seen.has(record)) {
+            if (
+                !record ||
+                record.kind !== "variable" ||
+                record.tainted ||
+                !record.initializer ||
+                seen.has(record)
+            ) {
                 return unknown;
             }
             const nextSeen = new Set(seen).add(record);
@@ -723,7 +792,13 @@ function createStaticSpecifierResolver(sourceFile, bindingResolver) {
         }
         if (ts.isIdentifier(node)) {
             const record = bindingResolver.lookup(node.text, useNode);
-            if (!record || record.kind !== "variable" || !record.initializer || seen.has(record)) {
+            if (
+                !record ||
+                record.kind !== "variable" ||
+                record.tainted ||
+                !record.initializer ||
+                seen.has(record)
+            ) {
                 return "unknown";
             }
             return prefixKind(
@@ -757,7 +832,12 @@ function createStaticSpecifierResolver(sourceFile, bindingResolver) {
     return { resolve };
 }
 
-export function extractScriptReferences(source, path = "fixture.ts", origin = null) {
+export function extractScriptReferences(
+    source,
+    path = "fixture.ts",
+    origin = null,
+    context = {},
+) {
     const sourceFile = ts.createSourceFile(
         path,
         source,
@@ -786,6 +866,7 @@ export function extractScriptReferences(source, path = "fixture.ts", origin = nu
                 : sourceLocation(diagnostic.start);
         return {
             source: path,
+            ...context,
             ...location,
             message: ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n"),
         };
@@ -795,8 +876,9 @@ export function extractScriptReferences(source, path = "fixture.ts", origin = nu
         references.push({
             specifier,
             edgeKind,
+            ...context,
             ...location,
-            metadata,
+            metadata: { ...metadata, ...context },
         });
     };
     const addNonliteral = (edgeKind, node, localHint = false) => {
@@ -805,6 +887,7 @@ export function extractScriptReferences(source, path = "fixture.ts", origin = nu
             source: path,
             edgeKind,
             expression: expressionText(node, sourceFile),
+            ...context,
             ...location,
             localHint,
         });
@@ -1074,6 +1157,7 @@ export function extractCssReferences(
     } catch (error) {
         parseErrors.push({
             source: path,
+            ...context,
             ...sourceLocation({ line: error.line ?? null, column: error.column ?? null }),
             message: error.message,
         });
@@ -1085,6 +1169,7 @@ export function extractCssReferences(
         if (!specifier) {
             parseErrors.push({
                 source: path,
+                ...context,
                 ...location,
                 message: `nonliteral CSS @import: ${rule.params}`,
             });
@@ -1144,7 +1229,12 @@ function splitSrcset(value) {
         .filter(Boolean);
 }
 
-export function extractTemplateReferences(source, path = "fixture.vue", origin = null) {
+export function extractTemplateReferences(
+    source,
+    path = "fixture.vue",
+    origin = null,
+    context = {},
+) {
     const references = [];
     const parseErrors = [];
     const dynamicAssetReferences = [];
@@ -1161,6 +1251,7 @@ export function extractTemplateReferences(source, path = "fixture.vue", origin =
             dynamicAssetReferences,
             parseErrors: [{
                 source: path,
+                ...context,
                 ...location,
                 message: `Vue template parse: ${error.message}`,
             }],
@@ -1175,6 +1266,7 @@ export function extractTemplateReferences(source, path = "fixture.vue", origin =
             tag: node.tag,
             attribute,
             expression,
+            ...context,
             ...location,
         });
     };
@@ -1190,7 +1282,7 @@ export function extractTemplateReferences(source, path = "fixture.vue", origin =
                 specifier,
                 edgeKind: "template-style-asset",
                 ...location,
-                metadata: { tag: node.tag, attribute: "style" },
+                metadata: { tag: node.tag, attribute: "style", ...context },
             });
         }
     };
@@ -1233,7 +1325,7 @@ export function extractTemplateReferences(source, path = "fixture.vue", origin =
                             specifier,
                             edgeKind: "template-asset",
                             ...location,
-                            metadata: { tag: node.tag, attribute: name },
+                            metadata: { tag: node.tag, attribute: name, ...context },
                         });
                     }
                 }
@@ -1384,6 +1476,7 @@ function projectionInventory(repositoryRoot, visibility) {
         const prefix = `${directory.replace(/\/$/, "")}/`;
         for (const path of [...visibility.files]
             .filter((candidate) => candidate.startsWith(prefix))
+            .filter((candidate) => !emittedGraphArtifactPaths.has(candidate))
             .filter((candidate) => !exclude(candidate))
             .sort()) {
             if (projectionByPath.has(path)) {
@@ -1393,6 +1486,7 @@ function projectionInventory(repositoryRoot, visibility) {
         }
     };
     const addFile = (projection, path) => {
+        if (emittedGraphArtifactPaths.has(path)) return;
         if (!visibility.files.has(path)) return;
         if (projectionByPath.has(path)) {
             throw new Error(`graph-v3: ${path} appears in two projections`);
@@ -1409,6 +1503,8 @@ function projectionInventory(repositoryRoot, visibility) {
         (path) => path === "tests-visual/package.json",
     );
     addDirectory("scripts-generators", "scripts");
+    addFile("scripts-generators", canonicalGraphGeneratorPath);
+    addFile("scripts-generators", graphOwnerManifestPath);
     for (const path of [
         "demo/vite.demo-dist.config.ts",
         "index.html",
@@ -1910,7 +2006,13 @@ function evaluatePathExpression(node, sourceFile, sourcePath, repositoryRoot, co
     return null;
 }
 
-function extractFileOperations(sourceFile, sourcePath, repositoryRoot, origin = null) {
+function extractFileOperations(
+    sourceFile,
+    sourcePath,
+    repositoryRoot,
+    origin = null,
+    pathOverrides = new Map(),
+) {
     const operations = [];
     const unmodeled = [];
     const constants = collectConstInitializers(sourceFile);
@@ -1922,6 +2024,8 @@ function extractFileOperations(sourceFile, sourcePath, repositoryRoot, origin = 
         );
     };
     function resolvedArgument(argument) {
+        const override = pathOverrides.get(expressionText(argument, sourceFile));
+        if (override) return override;
         const value = evaluatePathExpression(
             argument,
             sourceFile,
@@ -1983,6 +2087,7 @@ export function extractProcessInvocations(
     sourcePath,
     repositoryRoot,
     origin = null,
+    context = {},
 ) {
     const invocations = [];
     const constants = collectConstInitializers(sourceFile);
@@ -2052,6 +2157,7 @@ export function extractProcessInvocations(
                 }
                 invocations.push({
                     source: sourcePath,
+                    ...context,
                     ...location,
                     api: binding.member,
                     binding: expressionText(node.expression, sourceFile),
@@ -2089,7 +2195,7 @@ async function readBuildEntryMap(repositoryRoot) {
     const policyPath = join(repositoryRoot, "scripts/lib/subpath-policy.mjs");
     if (!existsSync(policyPath)) return { entries: {}, error: "subpath policy absent" };
     try {
-        const policy = await import(`${pathToFileURL(policyPath).href}?graph-v3=${Date.now()}`);
+        const policy = await import("../../../../../scripts/lib/subpath-policy.mjs");
         const tree = policy.readTree({ repoRoot: repositoryRoot });
         const classification = policy.classifyAll(tree);
         if (!classification.pass) {
@@ -2247,6 +2353,23 @@ function parseArguments(argv) {
         else throw new Error(`graph-v3: unknown argument ${argument}`);
     }
     return options;
+}
+
+function normalizedVueLang(block, fallback) {
+    const lang = String(block?.lang ?? fallback).trim().toLowerCase();
+    return lang || fallback;
+}
+
+function vueBlockContext(kind, block, blockIndex, setup = false, extra = {}) {
+    return {
+        blockKind: kind,
+        blockType: kind,
+        blockIndex,
+        lang: normalizedVueLang(block, kind === "template" ? "html" : kind === "style" ? "css" : "js"),
+        setup,
+        src: block?.src ?? null,
+        ...extra,
+    };
 }
 
 export async function buildGraph({
@@ -2465,6 +2588,13 @@ export async function buildGraph({
                 extracted.sourceFile,
                 path,
                 repositoryRoot,
+                null,
+                path === canonicalGraphGeneratorPath
+                    ? new Map([[
+                          "manifestPath",
+                          graphOwnerManifestPath,
+                      ]])
+                    : undefined,
             );
             unmodeledFileOperations.push(...fileOperations.unmodeled);
             for (const operation of fileOperations.operations) {
@@ -2490,6 +2620,7 @@ export async function buildGraph({
                     continue;
                 }
                 const target = portable(relative(repositoryRoot, absoluteTarget)) || ".";
+                if (emittedGraphArtifactPaths.has(target)) continue;
                 if (target === "node_modules" || target.startsWith("node_modules/")) {
                     externalEdges.push({
                         source: path,
@@ -2555,50 +2686,67 @@ export async function buildGraph({
                 parseErrors.push({ source: path, message: String(error) });
             }
             const { descriptor } = parsed;
-            for (const [blockKind, block] of [
-                ["script", descriptor.script],
-                ["script", descriptor.scriptSetup],
-                ["template", descriptor.template],
-            ]) {
+            const blockEntries = [
+                { kind: "script", block: descriptor.script, setup: false },
+                { kind: "script", block: descriptor.scriptSetup, setup: true },
+                { kind: "template", block: descriptor.template, setup: false },
+                ...descriptor.styles.map((block, styleIndex) => ({
+                    kind: "style",
+                    block,
+                    setup: false,
+                    styleIndex,
+                })),
+            ]
+                .filter(({ block }) => block)
+                .sort(
+                    (left, right) =>
+                        (left.block.loc?.start?.offset ?? 0) -
+                        (right.block.loc?.start?.offset ?? 0),
+                )
+                .map((entry, blockIndex) => ({
+                    ...entry,
+                    context: vueBlockContext(
+                        entry.kind,
+                        entry.block,
+                        blockIndex,
+                        entry.setup,
+                        entry.kind === "style"
+                            ? {
+                                  styleIndex: entry.styleIndex,
+                                  scoped: Boolean(entry.block.scoped),
+                                  module: entry.block.module ?? false,
+                              }
+                            : {},
+                    ),
+                }));
+            for (const { kind, block, context } of blockEntries) {
+                if (kind === "style") continue;
                 if (block?.src) {
                     addResolvedReference(path, {
                         specifier: block.src,
                         edgeKind: "vue-block",
                         line: block.loc?.start?.line ?? null,
                         column: block.loc?.start?.column ?? null,
-                        metadata: {
-                            blockKind,
-                            blockType: blockKind,
-                            src: block.src,
-                            lang: block.lang ?? null,
-                            setup: blockKind === "script" && block === descriptor.scriptSetup,
-                        },
+                        metadata: context,
                     });
                 }
             }
-            descriptor.styles.forEach((style, index) => {
-                const metadata = {
-                    blockKind: "style",
-                    blockType: "style",
-                    styleIndex: index,
-                    src: style.src ?? null,
-                    lang: style.lang ?? "css",
-                    scoped: Boolean(style.scoped),
-                    module: style.module ?? false,
-                };
+            for (const { block: style, context } of blockEntries.filter(
+                ({ kind }) => kind === "style",
+            )) {
                 if (style.src) {
                     addResolvedReference(path, {
                         specifier: style.src,
                         edgeKind: "vue-block",
                         line: style.loc?.start?.line ?? null,
                         column: style.loc?.start?.column ?? null,
-                        metadata,
+                        metadata: context,
                     });
                 } else {
                     const css = extractCssReferences(
                         style.content,
                         path,
-                        metadata,
+                        context,
                         style.loc?.start ?? null,
                     );
                     parseErrors.push(...css.parseErrors);
@@ -2610,17 +2758,18 @@ export async function buildGraph({
                         );
                     }
                 }
-            });
-            for (const [block, suffix] of [
-                [descriptor.script, descriptor.script?.lang ?? "js"],
-                [descriptor.scriptSetup, descriptor.scriptSetup?.lang ?? "js"],
-            ]) {
+            }
+            for (const { block, context } of blockEntries.filter(
+                ({ kind }) => kind === "script",
+            )) {
                 if (!block || block.src) continue;
+                const suffix = context.lang;
                 const virtualPath = `${path}.${suffix}`;
                 const extracted = extractScriptReferences(
                     block.content,
                     virtualPath,
                     block.loc?.start ?? null,
+                    context,
                 );
                 scriptAsts.set(
                     path,
@@ -2652,6 +2801,7 @@ export async function buildGraph({
                                 column: reference.column ?? null,
                                 boundary: "within-projections",
                                 metadata: {
+                                    ...reference.metadata,
                                     patterns: reference.patterns,
                                     negativePatterns: expansion.negatives,
                                     options: reference.options,
@@ -2683,14 +2833,17 @@ export async function buildGraph({
                         path,
                         repositoryRoot,
                         block.loc?.start ?? null,
+                        context,
                     ),
                 );
             }
-            if (descriptor.template && !descriptor.template.src) {
+            const templateBlock = blockEntries.find(({ kind }) => kind === "template");
+            if (templateBlock?.block && !templateBlock.block.src) {
                 const template = extractTemplateReferences(
-                    descriptor.template.content,
+                    templateBlock.block.content,
                     path,
-                    descriptor.template.loc?.start ?? null,
+                    templateBlock.block.loc?.start ?? null,
+                    templateBlock.context,
                 );
                 parseErrors.push(...template.parseErrors);
                 dynamicAssetReferences.push(...template.dynamicAssetReferences);

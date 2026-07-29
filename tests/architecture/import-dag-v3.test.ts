@@ -139,6 +139,42 @@ describe("graph schema v3", () => {
         expect(nonliteralReferences).toEqual([]);
     });
 
+    it("keeps empty runtime imports eager while empty type imports stay type-only", () => {
+        const { references } = extractScriptReferences(`
+            import {} from "./runtime-side-effect";
+            import type {} from "./type-only";
+            import { Runtime, type Contract } from "./mixed";
+        `);
+        expect(
+            references.map(({ edgeKind, specifier, metadata }) => ({
+                edgeKind,
+                specifier,
+                symbols: metadata.symbols,
+            })),
+        ).toEqual([
+            {
+                edgeKind: "eager-runtime",
+                specifier: "./runtime-side-effect",
+                symbols: [{ name: "*side-effect*", typeOnly: false }],
+            },
+            {
+                edgeKind: "type-only",
+                specifier: "./type-only",
+                symbols: [],
+            },
+            {
+                edgeKind: "eager-runtime",
+                specifier: "./mixed",
+                symbols: [{ name: "Runtime", local: "Runtime", typeOnly: false }],
+            },
+            {
+                edgeKind: "type-only",
+                specifier: "./mixed",
+                symbols: [{ name: "Contract", local: "Contract", typeOnly: true }],
+            },
+        ]);
+    });
+
     it("resolves finite const/collection/loop dynamic imports and fails unknown locality closed", () => {
         const { references, nonliteralReferences } = extractScriptReferences(`
             const localPrefix = "./pages/" + pageName;
@@ -179,6 +215,48 @@ describe("graph schema v3", () => {
             { expression: "remote", localHint: false },
             { expression: "runtimeChosenPath", localHint: true },
         ]);
+    });
+
+    it("taints finite provenance after declaration-wide mutation but preserves stable loops", () => {
+        const cases = [
+            `let path = "./assigned"; path = "./later"; import(path);`,
+            `let path = "./updated"; path++; import(path);`,
+            `const refs = { one: "./property" }; refs.one = "./later"; import(refs.one);`,
+            `const refs = { one: "./deleted" }; delete refs.one; import(refs.one);`,
+            `let path = "./destructured"; ({ path } = { path: "./later" }); import(path);`,
+            `let path = "./loop-target"; for (path of ["./later"]) {} import(path);`,
+        ];
+        for (const source of cases) {
+            const extracted = extractScriptReferences(source);
+            expect(extracted.references.filter(({ edgeKind }) => edgeKind === "finite-dynamic")).toEqual([]);
+            expect(extracted.nonliteralReferences).toEqual([
+                expect.objectContaining({ edgeKind: "finite-dynamic", localHint: true }),
+            ]);
+        }
+
+        const stable = extractScriptReferences(`
+            const stable = "./stable";
+            import(stable);
+            const shaders = {
+                aurora: "/src/components/aurora/constants/shaders/aurora.wgsl.ts#AURORA_WGSL",
+                metaball: "/src/components/blob/shaders/metaball.wgsl.ts#METABALL_WGSL",
+            };
+            for (const [, ref] of Object.entries(shaders)) {
+                const [path] = ref.split("#");
+                import(path);
+            }
+        `);
+        expect(
+            stable.references
+                .filter(({ edgeKind }) => edgeKind === "finite-dynamic")
+                .map(({ specifier }) => specifier)
+                .sort(),
+        ).toEqual([
+            "./stable",
+            "/src/components/aurora/constants/shaders/aurora.wgsl.ts",
+            "/src/components/blob/shaders/metaball.wgsl.ts",
+        ]);
+        expect(stable.nonliteralReferences).toEqual([]);
     });
 
     it("recognizes only provenance-backed require/createRequire bindings", () => {
@@ -440,6 +518,71 @@ describe("graph schema v3", () => {
         ]);
     });
 
+    it("projects the canonical generator and manifest without seeding emitted artifacts", () => {
+        const generatorPath =
+            "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs";
+        const manifestPath =
+            "docs/tranches/BJ/audits/2026-07-28-library-dag/OWNER-MANIFEST.json";
+        expect(graph.nodes.find(({ path }) => path === generatorPath)).toMatchObject({
+            projection: "scripts-generators",
+            nodeKind: "repository-file",
+            owner: "repository/docs",
+        });
+        expect(graph.nodes.find(({ path }) => path === manifestPath)).toMatchObject({
+            projection: "scripts-generators",
+            nodeKind: "repository-file",
+            owner: "repository/docs",
+        });
+        expect(
+            graph.nodes.some(({ path }) =>
+                [
+                    "docs/tranches/BJ/audits/2026-07-28-library-dag/IMPORT-DAG-V3.json",
+                    "docs/tranches/BJ/audits/2026-07-28-library-dag/IMPORT-DAG-V3-SUMMARY.md",
+                ].includes(path),
+            ),
+        ).toBe(false);
+
+        const outgoing = [...graph.internalEdges, ...graph.externalEdges].filter(
+            ({ source }) => source === generatorPath,
+        );
+        expect(outgoing).toEqual(
+            expect.arrayContaining([
+                expect.objectContaining({
+                    edgeKind: "generator-read",
+                    target: manifestPath,
+                }),
+                expect.objectContaining({
+                    edgeKind: "literal-dynamic",
+                    specifier: "../../../../../scripts/lib/subpath-policy.mjs",
+                }),
+                expect.objectContaining({
+                    edgeKind: "eager-runtime",
+                    specifier: "@vue/compiler-dom",
+                }),
+                expect.objectContaining({
+                    edgeKind: "eager-runtime",
+                    specifier: "@vue/compiler-sfc",
+                }),
+                expect.objectContaining({ edgeKind: "eager-runtime", specifier: "postcss" }),
+                expect.objectContaining({ edgeKind: "eager-runtime", specifier: "typescript" }),
+            ]),
+        );
+        expect(
+            outgoing
+                .filter(({ resolution }) => resolution === "external-package")
+                .map(({ specifier }) => specifier)
+                .sort(),
+        ).toEqual(
+            expect.arrayContaining([
+                "node:child_process",
+                "node:crypto",
+                "node:fs",
+                "node:path",
+                "node:url",
+            ]),
+        );
+    });
+
     it("uses block-type-aware Vue external-block metadata", () => {
         const edges = graph.internalEdges.filter(({ edgeKind }) => edgeKind === "vue-block");
         expect(edges.length).toBeGreaterThan(0);
@@ -447,6 +590,9 @@ describe("graph schema v3", () => {
             expect(metadata.blockKind).toBe(metadata.blockType);
             expect(metadata.src).toEqual(expect.any(String));
             expect(metadata).toHaveProperty("lang");
+            expect(metadata.lang).toBe(String(metadata.lang).toLowerCase());
+            expect(metadata.blockIndex).toEqual(expect.any(Number));
+            expect(metadata.setup).toEqual(expect.any(Boolean));
             if (metadata.blockType === "style") {
                 expect(metadata).toEqual(
                     expect.objectContaining({
@@ -593,6 +739,169 @@ import { Card } from "../../src/components/card/index";
             ]);
         } finally {
             cleanup();
+        }
+    }, 15_000);
+
+    it("propagates complete SFC identity to edges and applicable ledgers", async () => {
+        const suffix = `${process.pid}`;
+        const externalFixture = `tests/architecture/__graph-v3-sfc-external-${suffix}.vue`;
+        const externalScript = `tests/architecture/__graph-v3-sfc-external-${suffix}.ts`;
+        const externalTemplate = `tests/architecture/__graph-v3-sfc-external-${suffix}.html`;
+        const externalStyle = `tests/architecture/__graph-v3-sfc-external-${suffix}.css`;
+        const inlineFixture = `tests/architecture/__graph-v3-sfc-inline-${suffix}.vue`;
+        const malformedFixture = `tests/architecture/__graph-v3-sfc-malformed-${suffix}.vue`;
+        const cleanups = [
+            temporarilyWrite(
+                resolve(root, externalFixture),
+                `<script src="./__graph-v3-sfc-external-${suffix}.ts"></script>
+<template src="./__graph-v3-sfc-external-${suffix}.html"></template>
+<style src="./__graph-v3-sfc-external-${suffix}.css" scoped module lang="CSS"></style>
+`,
+            ),
+            temporarilyWrite(resolve(root, externalScript), "export const external = true;\n"),
+            temporarilyWrite(resolve(root, externalTemplate), "<div>external</div>\n"),
+            temporarilyWrite(resolve(root, externalStyle), ".external { color: red; }\n"),
+            temporarilyWrite(
+                resolve(root, inlineFixture),
+                `<script setup lang="TS">
+import { spawn } from "node:child_process";
+const dynamicPath = runtimeChosenPath;
+import(dynamicPath);
+spawn("node", [dynamicPath]);
+</script>
+<template>
+  <img src="../../tests-visual/fixtures/starry-night-crop.png" alt="literal">
+  <img :src="dynamicAsset" alt="dynamic">
+</template>
+<style lang="CSS" scoped module>
+@import "../../src/styles/index.css";
+.inline { background-image: url("../../tests-visual/fixtures/starry-night-crop.png"); }
+</style>
+`,
+            ),
+            temporarilyWrite(
+                resolve(root, malformedFixture),
+                `<script setup lang="TS">
+const broken: = {;
+</script>
+`,
+            ),
+        ];
+        try {
+            const fixtureGraph = await buildGraph({
+                repositoryRoot: root,
+                outputDirectory: audit,
+            });
+            const allEdges = [...fixtureGraph.internalEdges, ...fixtureGraph.externalEdges];
+            const identity = (metadata: Record<string, unknown>, blockKind: string, blockIndex: number, setup: boolean) =>
+                expect(metadata).toEqual(
+                    expect.objectContaining({
+                        blockKind,
+                        blockType: blockKind,
+                        blockIndex,
+                        lang: expect.stringMatching(/^[a-z0-9]+$/),
+                        setup,
+                    }),
+                );
+
+            for (const [source, expected] of [
+                [externalFixture, [
+                    { blockKind: "script", blockIndex: 0, setup: false, lang: "js" },
+                    { blockKind: "template", blockIndex: 1, setup: false, lang: "html" },
+                    { blockKind: "style", blockIndex: 2, setup: false, lang: "css" },
+                ]],
+                [inlineFixture, [
+                    { blockKind: "script", blockIndex: 0, setup: true, lang: "ts" },
+                    { blockKind: "template", blockIndex: 1, setup: false, lang: "html" },
+                    { blockKind: "style", blockIndex: 2, setup: false, lang: "css" },
+                ]],
+            ] as const) {
+                const metadata = allEdges
+                    .filter(({ source: edgeSource }) => edgeSource === source)
+                    .map(({ metadata }) => metadata);
+                for (const expectedIdentity of expected) {
+                    const match = metadata.find(
+                        (value) =>
+                            value.blockKind === expectedIdentity.blockKind &&
+                            value.blockIndex === expectedIdentity.blockIndex,
+                    );
+                    expect(
+                        match,
+                        `${source} missing ${expectedIdentity.blockKind}:${expectedIdentity.blockIndex}`,
+                    ).toBeDefined();
+                    identity(
+                        match!,
+                        expectedIdentity.blockKind,
+                        expectedIdentity.blockIndex,
+                        expectedIdentity.setup,
+                    );
+                    expect(match?.lang).toBe(expectedIdentity.lang);
+                }
+            }
+
+            expect(
+                allEdges.find(
+                    ({ source, edgeKind, target }) =>
+                        source === externalFixture &&
+                        edgeKind === "vue-block" &&
+                        target === externalStyle,
+                )?.metadata,
+            ).toEqual(
+                expect.objectContaining({
+                    styleIndex: 0,
+                    scoped: true,
+                    module: true,
+                }),
+            );
+            expect(
+                fixtureGraph.nonliteralLocalReferences.find(
+                    ({ source }) => source === inlineFixture,
+                ),
+            ).toEqual(
+                expect.objectContaining({
+                    blockKind: "script",
+                    blockType: "script",
+                    blockIndex: 0,
+                    lang: "ts",
+                    setup: true,
+                }),
+            );
+            expect(
+                fixtureGraph.processInvocations.find(
+                    ({ source }) => source === inlineFixture,
+                ),
+            ).toEqual(
+                expect.objectContaining({
+                    blockKind: "script",
+                    blockIndex: 0,
+                    lang: "ts",
+                    setup: true,
+                }),
+            );
+            expect(
+                fixtureGraph.dynamicAssetReferences.find(
+                    ({ source }) => source === inlineFixture,
+                ),
+            ).toEqual(
+                expect.objectContaining({
+                    blockKind: "template",
+                    blockIndex: 1,
+                    lang: "html",
+                    setup: false,
+                }),
+            );
+            expect(
+                fixtureGraph.parseErrors.find(({ source }) => source === malformedFixture),
+            ).toEqual(
+                expect.objectContaining({
+                    blockKind: "script",
+                    blockIndex: 0,
+                    lang: "ts",
+                    setup: true,
+                }),
+            );
+        } finally {
+            for (const cleanup of cleanups.reverse()) cleanup();
         }
     }, 15_000);
 

@@ -37,6 +37,7 @@
 // This seat has no standing to move the pin (formation/stability/TERMINAL-ROUTINGS.md
 // §R-6).
 
+import { createHash } from "node:crypto";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { parse as parseSfc } from "@vue/compiler-sfc";
@@ -49,6 +50,16 @@ const REPO_ROOT = process.cwd();
 const APP_SHELL = join(REPO_ROOT, "demo", "shell", "AppShell.vue");
 const AURORA_HERO = join(REPO_ROOT, "demo", "chassis", "hero", "aurora-hero.ts");
 const DIST_DEMO = join(REPO_ROOT, "dist-demo");
+const GRAPH_V3 = join(
+    REPO_ROOT,
+    "docs",
+    "tranches",
+    "BJ",
+    "audits",
+    "2026-07-28-library-dag",
+    "IMPORT-DAG-V3.json",
+);
+const APP_SHELL_MODULE = "demo/shell/AppShell.vue";
 
 // The components that must not be reachable by a top-level static import from the
 // always-mounted shell. Aurora carries the WebGL runtime and both shader sets; the
@@ -61,15 +72,8 @@ const DEFERRED_SHELL_COMPONENTS = ["Aurora", "PresetEditor"] as const;
 const AURORA_BARREL = "@glass/components/aurora";
 
 // The configurator barrel re-exports `PresetEditor.vue` on its first line, exactly like
-// the aurora barrel: any EAGER shell module importing the barrel re-drags the Sheet and
+// the aurora barrel: any reached eager module importing the barrel re-drags the Sheet and
 // its reka stack into the boot graph and undoes the async boundary. Leaf imports only.
-// These are the shell modules that are eager by construction — `AppShell.vue` mounts
-// both docks statically, so all three are in the boot graph on every route.
-const EAGER_SHELL_MODULES = [
-    "demo/shell/AppShell.vue",
-    "demo/shell/SidebarDock.vue",
-    "demo/shell/BottomDock.vue",
-] as const;
 
 // OPEN-P4 — the ceilings, set from the MEASURED post-diet build (56 modulepreloads +
 // 1 entry / 483,862 B, the eager `auroraFallbackGround` wash included) with headroom for
@@ -85,6 +89,75 @@ const EAGER_SHELL_MODULES = [
 // draft needs a further cut this wave does not own — see BAND-PERF.md §Wave 1 OPEN-P3/P4.
 const MAX_MODULEPRELOADS = 60;
 const MAX_EAGER_JS_BYTES = 500 * 1024;
+
+interface GraphNode {
+    path: string;
+    nodeType: string;
+    sha256: string | null;
+}
+
+interface GraphInternalEdge {
+    source: string;
+    target: string;
+    edgeKind?: string;
+    projections?: {
+        eagerRuntime?: boolean;
+    };
+}
+
+interface GraphSnapshot {
+    nodes: GraphNode[];
+    internalEdges: GraphInternalEdge[];
+}
+
+const readGraphSnapshot = (): GraphSnapshot =>
+    JSON.parse(readFileSync(GRAPH_V3, "utf8")) as GraphSnapshot;
+
+/**
+ * The source arm follows the graph-v3 eager-runtime projection, not a second import
+ * parser. `visited` is populated before enqueueing so cycles and repeated edges are
+ * traversed once.
+ */
+export const deriveEagerRuntimeClosure = (
+    snapshot: GraphSnapshot,
+    root = APP_SHELL_MODULE,
+): string[] => {
+    const outgoing = new Map<string, GraphInternalEdge[]>();
+    for (const edge of snapshot.internalEdges) {
+        if (!edge.projections?.eagerRuntime) continue;
+        const edges = outgoing.get(edge.source) ?? [];
+        edges.push(edge);
+        outgoing.set(edge.source, edges);
+    }
+
+    const visited = new Set([root]);
+    const pending = [root];
+    while (pending.length > 0) {
+        const source = pending.shift()!;
+        for (const edge of outgoing.get(source) ?? []) {
+            if (visited.has(edge.target)) continue;
+            visited.add(edge.target);
+            pending.push(edge.target);
+        }
+    }
+    return [...visited];
+};
+
+const sha256 = (path: string): string =>
+    createHash("sha256").update(readFileSync(join(REPO_ROOT, path))).digest("hex");
+
+const freshEagerSourceModules = (snapshot: GraphSnapshot): string[] => {
+    const reached = deriveEagerRuntimeClosure(snapshot);
+    const nodes = new Map(snapshot.nodes.map((node) => [node.path, node]));
+    const sourceModules = reached.filter((path) => nodes.get(path)?.nodeType === "source");
+    const stale = sourceModules.filter((path) => nodes.get(path)?.sha256 !== sha256(path));
+    if (stale.length > 0) {
+        throw new Error(
+            `graph-v3 snapshot is stale for reached eager source modules: ${stale.join(", ")}`,
+        );
+    }
+    return sourceModules;
+};
 
 export interface BootGraphViolation {
     file: string;
@@ -103,7 +176,7 @@ interface StaticImportBinding {
 const SIDE_EFFECT_IMPORT = "<side-effect>";
 
 const scriptSource = (source: string, file = "fixture.ts"): ts.SourceFile => {
-    const content = source.includes("<script")
+    const content = file.endsWith(".vue") && /<(?:script|template)(?:\s|>)/.test(source)
         ? (() => {
               const parsed = parseSfc(source, { filename: file });
               if (parsed.errors.length > 0) throw new Error(parsed.errors.join("\n"));
@@ -575,7 +648,8 @@ describe("gate:boot-graph — source arm", () => {
     });
 
     it("no EAGER shell module imports the configurator barrel", () => {
-        const all = EAGER_SHELL_MODULES.flatMap((rel) =>
+        const snapshot = readGraphSnapshot();
+        const all = freshEagerSourceModules(snapshot).flatMap((rel) =>
             scanConfiguratorBarrelImports(
                 readFileSync(join(REPO_ROOT, rel), "utf8"),
                 rel,
@@ -609,6 +683,46 @@ describe("gate:boot-graph — source arm", () => {
                 "demo/shell/AppShell.vue",
             ).map((violation) => violation.line),
         ).toEqual([1]);
+
+        const root = "demo/shell/AppShell.vue";
+        const closure = deriveEagerRuntimeClosure({
+            nodes: [],
+            internalEdges: [
+                {
+                    source: root,
+                    target: "demo/shell/EagerChild.vue",
+                    projections: { eagerRuntime: true },
+                },
+                {
+                    source: "demo/shell/EagerChild.vue",
+                    target: "demo/shell/TransitiveChild.ts",
+                    projections: { eagerRuntime: true },
+                },
+                {
+                    source: "demo/shell/EagerChild.vue",
+                    target: "demo/shell/Types.ts",
+                    edgeKind: "type-only",
+                    projections: { eagerRuntime: false },
+                },
+                {
+                    source: "demo/shell/EagerChild.vue",
+                    target: "demo/shell/LazyChild.vue",
+                    edgeKind: "literal-dynamic",
+                    projections: { eagerRuntime: false },
+                },
+                {
+                    source: "demo/shell/TransitiveChild.ts",
+                    target: root,
+                    projections: { eagerRuntime: true },
+                },
+            ],
+        });
+        expect(closure).toEqual([
+            root,
+            "demo/shell/EagerChild.vue",
+            "demo/shell/TransitiveChild.ts",
+        ]);
+        expect(new Set(closure).size).toBe(closure.length);
     });
 });
 

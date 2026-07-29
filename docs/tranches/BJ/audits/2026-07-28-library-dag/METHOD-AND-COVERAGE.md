@@ -84,11 +84,17 @@ owner manifest, and joinable package/build/test/generator graphs as ruled in
 
 V3 inventories product, demo, tests, visual tests, scripts/generators, build
 configuration, and package-surface files, then admits traversable
-repository-boundary targets. Its seed universe is Git-tracked files plus
-nonignored untracked files. Ordinary ignored build products, caches,
-screenshots, and test results therefore cannot perturb the graph, while a
-legitimate nonignored worktree source remains visible; `node_modules` is
-excluded explicitly. It classifies Vue external-block metadata,
+repository-boundary targets. The canonical graph generator and its
+`OWNER-MANIFEST.json` input are explicitly projected as `scripts-generators`;
+there is no generic reached-boundary work queue. The two emitted V3 artifacts
+remain outside seed and reached-file discovery so the graph never hashes itself
+recursively.
+Its seed universe is Git-tracked files plus nonignored untracked files.
+Ordinary ignored build products, caches, screenshots, and test results
+therefore cannot perturb the graph, while a legitimate nonignored worktree
+source remains visible; `node_modules` is excluded explicitly. The canonical
+generator is measured for its Node/package imports and its manifest read.
+It classifies Vue external-block metadata,
 TypeScript import/export/load kinds, literal glob arrays with negative patterns
 and options, workers and `new URL(..., import.meta.url)`, template-local assets,
 literal bound Vue assets, static inline-style `url()` assets,
@@ -101,11 +107,22 @@ namespace imports, CommonJS destructuring, factory variables, and shadowing are
 distinguished; same-named local/domain functions are not admitted.
 Finite dynamic-import values derived from lexical constants, arrays, objects,
 property access, string concatenation, template expressions, and loop
-iteration become exact edges. Unknown dynamic-import provenance is treated as
-potentially local and therefore fails closed; proven remote and bare module
-values remain nonlocal. Vue script, script-setup, template, and style locations
-are translated from block-relative parser coordinates to exact file-native
-lines and columns.
+iteration become exact edges. Binding/specifier provenance is declaration-wide
+tainted after assignment, update, delete, destructuring, loop-target, or
+rooted property/element writes; stable bindings and the finite collection/loop
+forms used by the WebGPU imports remain exact. Unknown dynamic-import
+provenance is treated as potentially local and therefore fails closed; proven
+remote and bare module values remain nonlocal. Every Vue external or inline
+script, script-setup, template, and style edge carries flat block identity:
+`blockKind`, `blockType`, zero-based `blockIndex`, normalized `lang`, and
+`setup`, with `styleIndex`, `scoped`, and `module` retained for styles. The
+same context is carried by applicable nonliteral, dynamic-asset, process, and
+parse ledgers. Context fields are applied last so extracted metadata cannot
+overwrite them. Vue locations are translated from block-relative parser
+coordinates to exact file-native lines and columns.
+An empty named runtime import is one eager side-effect edge with the
+`*side-effect*` sentinel; an empty `import type` remains type-only with zero
+runtime edges, and mixed imports retain both projections.
 `exec`/`execFile`/`spawn` families have a separate command-and-argv ledger:
 statically reducible repository targets are retained, and each dynamic argument
 is counted instead of guessed. The same binding provenance admits named
@@ -125,11 +142,11 @@ fails even if a stored receipt string was left untouched. Unresolved literal
 local references, locally hinted nonliteral loaders, unmatched positive globs,
 Vue/CSS parse errors, TypeScript syntactic diagnostics, unowned/multiply owned
 files, unused owner rules, and public-entry ownership drift all fail generation.
-Irreducibly dynamic filesystem operations
-are counted explicitly rather than converted into invented edges. The initial
-pre-source challenge seal contained 251 such operations; the current exact
-count is recorded in both v3 artifacts. This is a known static-analysis bound,
-not a claim of exhaustive runtime filesystem coverage.
+Irreducibly dynamic filesystem operations are counted explicitly rather than
+converted into invented edges. The initial pre-source challenge seal
+contained 251 such operations; the current observed count is emitted in both
+v3 artifacts. This is a known static-analysis bound, not a claim of exhaustive
+runtime filesystem coverage.
 
 Node lifecycle and physical type are separate total classifications.
 `repository-file` covers canonical source even if a maintenance script rewrites
@@ -153,10 +170,12 @@ test statically imports the generator and literally loads the owner manifest
 and package declaration, so those sources and edges appear in v3. The generated
 JSON and Markdown files are deliberately outside seed discovery: including the
 machine result would make its receipt recursively depend on itself. The focused
-suite falsifies binding lookalikes, malformed TypeScript, finite and unknown
-dynamic-import provenance, file-native Vue SFC locations, SCC growth/merges,
-ignored-artifact overlays without permanent user mutation, and external
-temporary copies with tampered node payloads, public owners, and summaries.
+suite falsifies binding lookalikes, mutation-tainted provenance, stable finite
+imports, empty runtime/type-only imports, generator/package/manifest
+projection, emitted-artifact exclusion, full SFC identity and native
+locations, SCC growth/merges, ignored-artifact overlays without permanent
+user mutation, and external temporary copies with tampered node payloads,
+public owners, and summaries.
 
 The round-one `IMPORT-DAG-V3.json` was approximately 4.7 MB; the binding,
 asset-expression, lifecycle, and ratchet ledgers bring round two to
@@ -170,7 +189,9 @@ Pass 1 and v2 remain immutable historical evidence. V2 remains the binding
 historical audit receipt; v3 is the current execution instrument and issues its
 own schema and receipt without rewriting either predecessor.
 
-After each file-owning source cut:
+After the three surface owner paths are present in the global `git diff
+--name-only` snapshot, and before any final regeneration or focused/mechanical
+validation, after each file-owning source cut:
 
 1. regenerate v3 with
    `node docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs`;
