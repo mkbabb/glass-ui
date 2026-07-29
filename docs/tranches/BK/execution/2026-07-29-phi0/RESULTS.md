@@ -10,8 +10,10 @@ Post-cutover cure script:
 
 Journal: `docs/tranches/BK/execution/2026-07-29-phi0/journal.jsonl`
 
-**State: ROUND-4 PASS/GO SEALED; #1/#75/#2 SEALED PASS; #3/#4 remain
-IN-FLIGHT at source `74c59ade`; #5 remains IN-FLIGHT at cured candidate
+**State: ROUND-4 PASS/GO SEALED; #1/#75/#2 SEALED PASS; #3 remains
+IN-FLIGHT at source `74c59ade`; #4 remains IN-FLIGHT at landed candidate
+`5946f5ef` with `evidence_state=pending-two-fresh-Sol-challenges-and-adjudication`;
+#5 remains IN-FLIGHT at cured candidate
 `8be4f662`, pending exactly two entirely fresh `gpt-5.6-sol` xhigh
 judgment-only challenges and one fresh Sol xhigh adjudication; no seal.** #2 remains sealed with
 `code_state=landed` at `82bdc93e` and
@@ -633,11 +635,47 @@ Row state remains bounded: #3 stays IN-FLIGHT at its existing `74c59ade`
 source candidate; its first real motion π is still owed at the row 22 grasp
 trace. The Q bounded reversal trace remains routed to `W-MOMENTUM-CENSUS`, and
 the existing SegmentedTabs width/height transition remains the existing P5 red
-under current tabs/motion ownership. #4 stays IN-FLIGHT at its existing
-`74c59ade` source candidate with protected corpus/artifact/citation/census
-reconciliation unchanged. #5 is IN-FLIGHT at cured candidate `8be4f662`,
+under current tabs/motion ownership. #4 stays IN-FLIGHT at landed candidate
+`5946f5ef` with `evidence_state=pending-two-fresh-Sol-challenges-and-adjudication`
+and protected corpus/artifact/citation/census reconciliation unchanged. #5 is IN-FLIGHT at cured candidate `8be4f662`,
 pending exactly two entirely fresh `gpt-5.6-sol` xhigh judgment-only challenges
 and one fresh Sol xhigh adjudication; there is no seal or pre-approved PASS.
 G-5 cancellation is active terminal authority owned by Q consumer-only
 CompletionSeal deletion; Glass opens no replacement work. Historical
 Fable/Opus/Sonnet artifacts remain literal provenance and are not relabelled.
+
+## Row #4 shared cursor cure — candidate remains IN-FLIGHT
+
+The immutable candidate is committed at `5946f5ef`. Two fresh non-author
+judgment-only `gpt-5.6-sol` xhigh challenges examined that candidate and are
+banked below without relabelling or mutation. Their starts and results are
+recorded at journal lines 79–82 with `journaledAfterCompletion:true` because
+the durable records follow the completed challenge turns; no session ID,
+timestamp, or turn ID was exposed or invented.
+
+- Challenge A, `/root/row3_motion_evidence_audit` — FAIL, 0 blockers / 1 major /
+  0 minors. The sole major is the stale status-only cursor: it said the
+  reconciliation was “staged” and exposed only
+  `code_state=port-correction-landed`, despite the clean committed candidate
+  at `5946f5ef`; this violated the independent state-field law. Everything
+  else passed.
+- Challenge B, `/root/bk_convergence_audit` — PASS, 0 blockers / 0 majors / 1
+  minor. The sole minor is the same stale present-tense “staged” cursor wording;
+  census, hash, ignore, evidence, journal, provenance, scope, and KISS checks
+  all passed.
+
+The current exact Luna xhigh document seat applies only this shared cursor cure
+to the three allowed files. The cursor now records row #4 as `IN-FLIGHT` with
+`code_state=landed-candidate` at `5946f5ef` and
+`evidence_state=pending-two-fresh-Sol-challenges-and-adjudication`; it says the
+candidate is banked/committed, not staged. The exact Luna session
+`019faffb-647c-7500-9529-f0e203ff7e29` was exposed to the lead by the outer
+invocation; no timestamp or turn ID was exposed or invented. The
+candidate is cured/pending two entirely fresh Sol challenges plus fresh Sol
+adjudication, sealed false.
+
+Historical mechanical receipt facts remain unchanged and are not current state:
+pre-disposition `248/14/0`, explicit staging reducing Git-visible untracked
+paths to zero, journal base HEAD `d3c0a747`, and staged-path count `16`. Row
+#16 remains `UNSTARTED`; #63 remains repo-weight later; #78 canon LAND remains
+separate. No acceptance or seal is claimed.
