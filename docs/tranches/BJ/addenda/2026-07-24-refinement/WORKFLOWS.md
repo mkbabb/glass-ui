@@ -36,10 +36,12 @@ Historical Fable/Opus/Sonnet artifacts remain immutable provenance and are not
 renamed. The present deviation window is being enumerated in
 `docs/tranches/BK/execution/2026-07-29-phi0/RESULTS.md`; exact Luna
 re-attestation landed from actual `gpt-5.6-luna` xhigh desktop session
-`019faece-3c9d-75e0-97aa-1bb349353341`; Challenge G/H and lead adjudication
-remain the convergence fence. No global replacement
-implements this transition, and no new Claude model-bearing seat launches
-after the two already-started Φ0 challenges receipt.
+`019faece-3c9d-75e0-97aa-1bb349353341`; round 3 then failed at the two fresh
+Sol challenges and lead adjudication. Round 4 is registered and source-fenced:
+exact Luna owns the graph, surface, and document-integration slices, while two
+fresh Sol judgment-only challenges and a fresh Sol adjudication remain to run.
+No global replacement implements this transition, no frontend-design seat is
+present, and no new run is opened.
 
 ---
 
@@ -82,7 +84,7 @@ EXEC-STATE census row; membership stands, aggregates do not).
 
 | run | id | script (`./wf/`) | banking target on close |
 |---|---|---|---|
-| BK Φ0 truth | `bk-phi0-20260729-01` | historical registration `bk-phi0-execution.wf.js`; post-cutover cure script `bk-phi0-cures.wf.js` | **ORIGINAL RUN CHALLENGED: 4/4 registered results + late #75 truth 1/1, 0 seat errors; cure rounds 1 and 2 failed honestly; round-3 Sol candidates landed and exact Luna re-attestation PASSED.** #1 candidate chain is `858c1087`→`0557703f`→`950a703f`→`f3a83c9b` (six-file battery 40/40). Graph-v3 is `9c43b5d7`→`ee5cbcfb`, current receipt `c9274358…`, 1,497/3,576/1,953, focused 16/16 twice, stable after ignored build output; #75's 14-class machine-local cure passes with its clone-local caveat. The committed original script is byte-preserved. Exact `gpt-5.6-luna` xhigh desktop session `019faece-3c9d-75e0-97aa-1bb349353341` mechanically reproduced every deviation-window receipt with zero workspace delta; Terra was not substituted or relabelled. Challenge G/H and lead adjudication remain owed. No new run, registry, wave, or gate exists. Durable journal: `docs/tranches/BK/execution/2026-07-29-phi0/journal.jsonl`; bank: `docs/tranches/BK/execution/2026-07-29-phi0/RESULTS.md`. No product-source mutation or convergence before G/H and lead adjudication; no row closes before that evidence. |
+| BK Φ0 truth | `bk-phi0-20260729-01` | historical registration `bk-phi0-execution.wf.js`; post-cutover cure script `bk-phi0-cures.wf.js` | **ROUND 3 FAILED; ROUND 4 REGISTERED SOURCE-FENCED: 4/4 registered results + late #75 truth 1/1, 0 seat errors; cure rounds 1 and 2 failed honestly; round-3 Sol candidates landed and exact Luna re-attestation passed, then Challenge G/H and lead adjudication completed FAIL/NO-GO.** #1 candidate chain is `858c1087`→`0557703f`→`950a703f`→`f3a83c9b` (six-file battery 40/40). Graph-v3 is `9c43b5d7`→`ee5cbcfb`, current receipt `c9274358…`, 1,497/3,576/1,953, focused 16/16 twice, stable after ignored build output; #75's 14-class machine-local cure passes with its clone-local caveat. The committed original script is byte-preserved. Exact `gpt-5.6-luna` xhigh desktop session `019faece-3c9d-75e0-97aa-1bb349353341` mechanically reproduced every deviation-window receipt with zero workspace delta; Terra was not substituted or relabelled. Round 4 remains the same run: exact Luna graph/surface/document owners, two fresh Sol judgment-only challenges, and one fresh Sol adjudication; #1/#75 remain IN-FLIGHT and #2 remains UNSTARTED. No new run, registry, wave, gate, frontend-design seat, or control plane exists. Durable journal: `docs/tranches/BK/execution/2026-07-29-phi0/journal.jsonl`; bank: `docs/tranches/BK/execution/2026-07-29-phi0/RESULTS.md`. No product-source mutation or convergence before the registered round-4 evidence. |
 
 | run | id | script (`./wf/`) | banking target on close |
 |---|---|---|---|

@@ -103,3 +103,16 @@ watcher, parallel register, or duplicate receipt is warranted. Future evidence
 lands on the mapped cuts and the single release/adoption path; this receipt
 itself authorizes no product mutation, consumer edit, repin, publish, or state
 transition.
+
+## Post-round-4 constellation boundary
+
+The authoritative receiver `/Users/mkbabb/Programming/.p-totality/sci` on
+`p/totality` resolves signed `@mkbabb/glass-ui@7.0.0` with
+`@mkbabb/value.js@4.0.0`. Typecheck, 255 tests, the production build, and nine
+routes at `1280x720` plus `390x844` are green. There is no Glass root blocker,
+no dirty-master adoption, and no new owner. The deletion/consolidation/
+smallest-public-surface law folds into existing `#1/#2/#56/#58/#59/#61/#65/#66/#76`.
+Ordinary tests and internal-browser visual proof remain at their existing
+browser owners. One public-surface-close boundary reply still owes a signed
+successor tuple or explicit no-release, exact changed subpaths/migrations, and
+the root remainder. This section adds no receipt, owner, or state transition.

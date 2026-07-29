@@ -54,7 +54,7 @@ an acceptance pointer only: rows stay 90, gates +0, and no cursor state moves.
 
 | # | wave | Φ | state | spec of record | gates |
 |---|---|---|---|---|---|
-| 1 | W-SURFACE-PIN | Φ0 | IN-FLIGHT (`code_state=landed-candidate` at `858c1087` + cures `0557703f`/`950a703f`/`f3a83c9b`; `evidence_state=exact-Luna-reattested-pending-G-H`; #2 subtraction still owed) | TR#1 → RECONCILIATION §2 r2; spec `:483` | —(RED cell `surface.root.exact` ×2 projects; cure = #2 by subtraction; re-pin C-10; adjudicate the 38-file sweep, J-11) |
+| 1 | W-SURFACE-PIN | Φ0 | IN-FLIGHT (`code_state=landed-candidate` at `858c1087` + cures `0557703f`/`950a703f`/`f3a83c9b`; `evidence_state=round-3-failed-round-4-registered`; #2 subtraction still owed) | TR#1 → RECONCILIATION §2 r2; spec `:483` | —(RED cell `surface.root.exact` ×2 projects; cure = #2 by subtraction; re-pin C-10; adjudicate the 38-file sweep, J-11) |
 | 2 | W-REFRACT-DELETE | Φ0 | UNSTARTED | TR#2 → FROST §3 hit 1 + WAVES:559 + BAND-MATERIAL:1265 | G-REFRACT-TOTAL (retires at Φ0 close); owner-reversible in one word |
 | 3 | W-CAPTURE-MOTION | Φ0 | UNSTARTED | TR#3 → RECONCILIATION §5/§8-17 + the ⊕⁵ mode design at the row (SE-5) | —(instrument; precedes every motion π; motion mode = attribute absent + fixed frame series) |
 | 4 | TRACK-STRAYS + PARKED-RECONCILE | Φ0 | UNSTARTED | TR#4 (J-14 census: 250 · 24 non-doc · 10 outside docs/) | G-CITE-COMMITTED born-RED until landed; + the 5199→5400 line; ✦² audit corpus + canon salvage COMMITTED at `e277ea42` (re-scope); still stray: `card-raw.json` + the stage-2 working set; re-census at Φ0 |
@@ -65,7 +65,7 @@ an acceptance pointer only: rows stay 90, gates +0, and no cursor state moves.
 
 | # | wave | Φ | state | spec of record | gates |
 |---|---|---|---|---|---|
-| 75 | W-STOP-HOOK | Φ1 | IN-FLIGHT (`code_state=landed` machine-locally; `evidence_state=exact-Luna-reattested-pending-G-H`) | TR#75 → RATIFICATION §4 r1 | born-RED banked: no hooks key before the write; now one project-local ignored Stop hook, zero global hooks, zero active resume crons; 14-class strict-JSON matrix passes, clone-local caveat retained |
+| 75 | W-STOP-HOOK | Φ1 | IN-FLIGHT (`code_state=landed` machine-locally; `evidence_state=round-3-failed-round-4-registered`) | TR#75 → RATIFICATION §4 r1 | born-RED banked: no hooks key before the write; now one project-local ignored Stop hook, zero global hooks, zero active resume crons; 14-class strict-JSON matrix passes, clone-local caveat retained |
 | 90 | STAGE-2 DELTA FOLD | Φ1 | ⊕² LANDED 2026-07-28 (fold fired at the arm banks; ✦² adjudicated — TR amended in place) — CLOSED at the lead's seal commit + seat census, at the owner's go | TR#90 ⊕² — all three halves banked plus four later inputs (EXPERIMENTS+addendum · CURES · PROCEDURAL-APOTHEOSES · the codex meta-audit) | residue, owner+trigger each: canon LAND (#78, salvage committed `e277ea42`) · R-7 OWED-CAPTURE ×3 (the owner; before the consuming #67 arms) · Safari-app cells (#10) · device-fps + loupe L-3 (#67) · row-42 fringe (#32); ✦² the three dead drafts DELETED, four arm banks retained provenance; ✦³ SEALED-in-substance 2026-07-28 — the critic's five misses cured (TR §00 SL-1…SL-8), round 2 (`192879b7`) folded, blob receipts salvaged; the CLOSED transition still lands at the lead's seal commit + seat census, at the owner's go |
 
 ## Φ2
