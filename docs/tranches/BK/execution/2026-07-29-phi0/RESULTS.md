@@ -10,8 +10,8 @@ Post-cutover cure script:
 
 Journal: `docs/tranches/BK/execution/2026-07-29-phi0/journal.jsonl`
 
-**State: ROUND-4 CANDIDATE MECHANICALLY INTEGRATED; PENDING TWO FRESH SOL
-CHALLENGES AND FRESH SOL ADJUDICATION; #1/#75 IN-FLIGHT; #2 UNSTARTED.** The
+**State: ROUND-4 PASS/GO SEALED; #1/#75 SEALED; #2 UNSTARTED WITH ITS SOURCE
+FENCE LIFTED FOR ALREADY-REGISTERED SUBTRACTION.** The
 committed registration is preserved byte-for-byte: two
 Truth plus two Challenge results, 4/4. The early #75 Truth seat is a separately
 late-accounted 1/1 amendment, yielding five actual pre-cutover seats without
@@ -21,8 +21,8 @@ mechanical re-attestation passed, but fresh Challenge G/H and the lead
 adjudication completed FAIL/NO-GO. Round 4 stays in the same run: exact Luna
 graph, surface, and document-integration owners, two fresh Sol judgment-only
 challenges, and one fresh Sol adjudication. Terra was neither substituted nor
-relabelled. No row advances to CLOSED and #2 remains fenced before round-4
-evidence converges.
+relabelled. The round-4 evidence is now sealed below; #2 remains UNSTARTED and
+is not pre-approved for any implementation.
 
 ## Truth seats
 
@@ -383,6 +383,34 @@ V2, and OWNER-MANIFEST remained respectively
 The only changed document paths are `journal.jsonl`, this RESULTS file,
 `WORKFLOWS.md`, and `EXECUTION-PROGRESS.md`; the journal parses fully, its
 46-line historical prefix is byte-identical, and `git diff --check` passes.
-Remaining blocks are the two fresh Sol judgment-only challenges and fresh Sol
-adjudication for #1 and #75. #1 and #75 remain IN-FLIGHT; #2 remains
-UNSTARTED and unreleased.
+The preceding candidate snapshot is retained as provenance; it is superseded
+by the sealed round-4 receipt below.
+
+## Round 4 — PASS/GO SEALED
+
+The six appended journal rows bank the completed fresh non-author judgment
+tasks `phi0_round4_challenge_g`, `phi0_round4_challenge_h`, and
+`phi0_round4_adjudication`, all actual `gpt-5.6-sol` xhigh, judgment-only,
+tool-free, with `commands: 0`, `changed: []`, and `mutations: 0`. Their starts
+truthfully carry `journaledAfterCompletion: true`; no session ID or timestamp
+was invented.
+
+- Challenge G: exact verdict **PASS**, with no blocker, major, or minor
+  findings. The transient round-3 graph-owner session repetition is corrected
+  by authoritative metadata; delayed journaling is conforming under the
+  pre-registered round-4 amendment and immutable identity/chronology logs.
+- Challenge H: exact verdict **PASS/GO**, with no blocking implementation or
+  provenance finding. Its only disclosures are the nonblocking transient-ID
+  and delayed-journaling history.
+- Fresh lead adjudication: exact verdict **PASS/GO**. Both challenges
+  converge; round 3 remains a historical failure, while round 4 is no longer
+  source-fenced and needs no cure or replay. Total-tranche, wave, graph,
+  surface, Stop, provenance, evidence, model-law, and inbound checks pass.
+
+Adjudicated transitions: **#1 W-SURFACE-PIN IN-FLIGHT → SEALED**; **#75
+W-STOP-HOOK IN-FLIGHT → SEALED**; **#2 W-REFRACT-DELETE source fence LIFTED
+for already-registered subtraction, state UNSTARTED**. #2 is not
+pre-approved: it must independently earn its mechanics, two fresh Sol
+challenges, and fresh adjudication before sealing. Blocking remainder: none.
+Routed remainder: value.js riders and the final consumer-boundary communique
+remain in their existing rows.
