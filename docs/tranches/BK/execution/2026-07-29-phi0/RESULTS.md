@@ -10,8 +10,9 @@ Post-cutover cure script:
 
 Journal: `docs/tranches/BK/execution/2026-07-29-phi0/journal.jsonl`
 
-**State: ROUND-4 PASS/GO SEALED; #1/#75 SEALED; #2 UNSTARTED WITH ITS SOURCE
-FENCE LIFTED FOR ALREADY-REGISTERED SUBTRACTION.** The
+**State: ROUND-4 PASS/GO SEALED; #1/#75 SEALED; #2 IN-FLIGHT WITH
+`code_state=landed-candidate` AT `82bdc93e` AND
+`evidence_state=mechanical-pass-plus-browser-pending-two-fresh-Sol-challenges-and-fresh-Sol-adjudication`; CANDIDATE/PENDING JUDGMENT, NOT SEALED.** The
 committed registration is preserved byte-for-byte: two
 Truth plus two Challenge results, 4/4. The early #75 Truth seat is a separately
 late-accounted 1/1 amendment, yielding five actual pre-cutover seats without
@@ -21,8 +22,9 @@ mechanical re-attestation passed, but fresh Challenge G/H and the lead
 adjudication completed FAIL/NO-GO. Round 4 stays in the same run: exact Luna
 graph, surface, and document-integration owners, two fresh Sol judgment-only
 challenges, and one fresh Sol adjudication. Terra was neither substituted nor
-relabelled. The round-4 evidence is now sealed below; #2 remains UNSTARTED and
-is not pre-approved for any implementation.
+relabelled. The round-4 evidence is sealed below; #2's source fence remains
+lifted only for the already-registered subtraction, and its completed
+source/browser receipt is banked below as a landed candidate, not a seal.
 
 ## Truth seats
 
@@ -261,10 +263,10 @@ zero seat errors; late #75 is 1/1. Challenge rounds 1 and 2 are banked failures
 with zero silent drops. Round-3 surface candidate `f3a83c9b` and graph
 candidate `ee5cbcfb` were landed and exact-Luna mechanically re-attested, but
 Challenge G/H completed FAIL/NO-GO and the fresh Sol lead adjudication completed
-`completed-fail-and-round-4-chartered`. #1 and #75 remain IN-FLIGHT, #2 remains
-UNSTARTED, and the source-mutation fence remains closed. Round 4 is now a
-mechanically integrated candidate in this run; the two fresh Sol challenges
-and fresh Sol adjudication remain pending.
+`completed-fail-and-round-4-chartered`. At that adjudication point #1 and #75
+remained IN-FLIGHT and #2 remained UNSTARTED with its source-mutation fence
+closed. Round 4 was then mechanically integrated in this run; the current #2
+candidate receipt and its pending judgment seats are banked below.
 
 ## Challenge G/H — completed round-3 failure
 
@@ -409,8 +411,47 @@ was invented.
 
 Adjudicated transitions: **#1 W-SURFACE-PIN IN-FLIGHT → SEALED**; **#75
 W-STOP-HOOK IN-FLIGHT → SEALED**; **#2 W-REFRACT-DELETE source fence LIFTED
-for already-registered subtraction, state UNSTARTED**. #2 is not
-pre-approved: it must independently earn its mechanics, two fresh Sol
-challenges, and fresh adjudication before sealing. Blocking remainder: none.
+for already-registered subtraction, state UNSTARTED at that adjudication**.
+The subsequent registered source/browser receipt advances #2 to an IN-FLIGHT
+landed candidate, still pending exactly two fresh Sol judgment-only challenges
+and one fresh Sol adjudication before sealing. Blocking remainder: none.
 Routed remainder: value.js riders and the final consumer-boundary communique
 remain in their existing rows.
+
+## BK #2 — W-REFRACT-DELETE candidate mechanical source/browser receipt
+
+The document-integration seat is actual `gpt-5.6-luna` at `xhigh`, session
+`019faf4c-3867-77c2-9b36-997899951668`, banking the completed receipt at source
+commit `82bdc93e`. #2 is **IN-FLIGHT**, `code_state=landed-candidate`, with
+`evidence_state=mechanical-pass-plus-browser-pending-two-fresh-Sol-challenges-and-fresh-Sol-adjudication`;
+this is candidate/pending judgment, not sealed. The eight intended paths are
+`demo/main.ts`, the V3 summary and JSON, `src/components/tabs/SegmentedTabs.vue`,
+`src/composables/glass/index.ts`, the deleted
+`src/composables/glass/supportsBackdropRefract.ts`,
+`src/styles/glass-refract.css`, and
+`tests/components/custom/tabs/segmented-tabs.test.ts`. The receipt is 52
+insertions/357 deletions overall and 5/199 for source+test; the detector is
+deleted; the active forbidden-symbol census is zero. The provider/data URI is
+preserved at length 2300 with SHA-256
+`5a8181a31d1d7591527a2d4a2e0ebd3ba62a32a5c40e40f9917fc4ba2b67f8a3`.
+
+The graph receipt is
+`f2133ed209b266c02f302496eda11d46e95df5f33106b519dd9141b87560aaff`, with
+summary 1496/3577/1963/101/72/1283, fatal ledgers zero, and focused graph
+20/20. Focused Tabs/public-surface is 94/94; the full suite is 200 files and
+1316 tests. Library, package, and demo builds pass; package is 205 targets,
+482 declarations, 114 CSS, and 67 strict imports, and demo is 3513 modules.
+Typecheck delta is zero, with only the historical TS2339 diagnostics at
+`tests/styles/track-well-fold.test.ts` lines 20 and 30. The protected
+untracked boundary is 248 with SHA-256
+`aafdab71d16de49fbed96128a21aa50eb24bab80899d7ae3b44015e10630cc15`.
+
+Browser evidence is from the internal in-app Browser at 1280x720 and 390x844:
+one Tabs H1, no horizontal document overflow, no console warnings/errors, 7
+`.segmented-indicator.glass-capsule` and 0 `.segmented-indicator.glass-lens`,
+and root `data-glass-refract` absent. Clicking List then ArrowRight moved
+selection and focus to Kanban while retaining the one indicator in that group;
+phone Project view has combobox count 1. Historical MIGRATION and visual-test
+prose remain provenance and are not active source blockers. Required next
+seats are exactly two fresh `gpt-5.6-sol` xhigh judgment-only challenges and
+one fresh Sol adjudication.
