@@ -10,10 +10,12 @@ Post-cutover cure script:
 
 Journal: `docs/tranches/BK/execution/2026-07-29-phi0/journal.jsonl`
 
-**State: ROUND-4 PASS/GO SEALED; #1/#75 SEALED; #2 SEALED PASS with
+**State: ROUND-4 PASS/GO SEALED; #1/#75/#2 SEALED PASS; #3/#4/#5 are
+IN-FLIGHT candidates at source `74c59ade`, pending exactly two fresh Sol
+challenges and fresh Sol adjudication; no seal.** #2 remains sealed with
 `code_state=landed` at `82bdc93e` and
 `evidence_state=adjudicated`; Challenge I PASS, Challenge J PASS, and fresh
-adjudication PASS-and-seal.** The
+adjudication PASS-and-seal. The
 committed registration is preserved byte-for-byte: two
 Truth plus two Challenge results, 4/4. The early #75 Truth seat is a separately
 late-accounted 1/1 amendment, yielding five actual pre-cutover seats without
@@ -473,3 +475,66 @@ Actual Luna seal-banking session: `019faf55-14e9-7552-8c63-2d7f7b31e167`; it is 
   `G-REFRACT-TOTAL` remains phrased to retire at Φ0 close because later
   registered Φ0 rows still remain. This completes #2 only, not total BK.
   Φ0/BK continue to the next registered rows; no new apparatus or release.
+
+## BK Φ0 — 74c59ade source/browser candidate
+
+This is mechanical banking only. The source owner was invoked as exact
+`gpt-5.6-luna` xhigh through the packaged Codex CLI in session
+`019faf60-4e81-7441-ab10-a301c17011f0`; the authoritative invocation command
+was `/Applications/ChatGPT.app/Contents/Resources/codex -a never exec -m
+gpt-5.6-luna -c model_reasoning_effort="xhigh" -s workspace-write -C
+/Users/mkbabb/Programming/glass-ui --json`. The document session is literal
+`session_meta=019faf93-716f-7af0-adfe-3c1e13229f5d`, also exact
+`gpt-5.6-luna` xhigh. Lead browser adjudication used the core Sol xhigh seat.
+
+The landed source slice at `74c59ade` is `demo/main.ts`, `package.json`,
+`vite.style-assets.ts`, `vite.style-fold.ts`,
+`tests/styles/backdrop-prefix-normalization.test.ts`, and regenerated graph V3
+JSON plus summary: 425 insertions and 429 deletions including generated graph,
+with no unrelated source. `motion=1` omits html `data-capture` and
+`capture.css`, preserves light/dark, route, badge, warmup, readiness, and the
+real clock, and is excluded from the story query; absence remains unchanged
+still capture with unchanged `capture.css`. `demo:serve` is 5400. Structural
+PostCSS normalization repairs either surviving backdrop-filter leg into adjacent
+canonical same-value webkit/unprefixed pairs, covers `dist/glass-ui.css`,
+preserves nested values and supports conditions, and does not extra-minify
+top-level CSS.
+
+Evidence is focused transform 1/1; graph V3 20/20 with receipt
+`5224dd083da5d684da330a9015d016a85c4dd67cc8baa9cbb8fa2e5a3786bcb0`,
+1,492 nodes / 3,569 internal edges / 1,967 external edges / 101 owners / 72
+public entries / 1,283 public symbols, fatal ledgers zero; full suite 201 files
+and 1,317/1,317 tests after raising only the existing graph hook timeout;
+fresh library and demo builds pass; package validation is 205 targets, 482
+declarations, 114 CSS files, and 67 strict consumer imports; emitted AST census
+is 127 CSS files with 90/90 paired declarations, zero one-legged, zero
+wrong-order, top-level 20 declarations, and zero one-legged. Typecheck delta is
+zero with only historical `track-well-fold` TS2339 lines 20 and 30.
+`capture.css` SHA-256 is unchanged at
+`c502cf067adf12508f540873a00b5e917fe13aa781dd0cf6e66a89689955b420`.
+
+At 1280x720, still has `data-capture`, 21 kill-selector hits, readiness, one
+Tabs H1, zero overflow, and no warning/error. Motion dark has no `data-capture`,
+zero capture selectors, readiness, one Tabs H1, zero overflow, no forwarded
+motion query, nonzero 0.44s translate/width/height/scale transitions, and the
+click moves focus and selection to List, with no warning/error. The protected
+untracked boundary remains 248 with SHA-256
+`aafdab71d16de49fbed96128a21aa50eb24bab80899d7ae3b44015e10630cc15`; V1/V2/
+OWNER remain unchanged.
+
+Row states remain honest: #3 `W-CAPTURE-MOTION` is IN-FLIGHT
+`code_state=landed-candidate` at `74c59ade` with
+`evidence_state=owed-first-motion-pi`, and cannot seal until the first real
+motion pi at the row 22 grasp trace. The fresh Q bounded old-direction reversal
+trace routes under this existing row to the `W-MOMENTUM-CENSUS` turn; the
+existing SegmentedTabs width/height transition remains a P5 red under current
+tabs/motion ownership. #4 is IN-FLIGHT `port-correction-landed` at `74c59ade`
+while protected corpus reconciliation, artifact path, citation semantics, and
+census remain. #5 is IN-FLIGHT `landed-candidate` pending exactly two fresh Sol
+challenges and fresh Sol adjudication; no seal.
+
+In the existing inbound/routed note, Q withdrew G-5 as cancellation only: no
+Glass option, placeholder, API, alias, shim, sizing workaround, or replacement
+adornment. Q owns consumer-only CompletionSeal deletion. No new run, wave, gate,
+registry, control plane, or row is created. Journal parsing advances 68 → 70
+valid JSONL lines, and the first 68 lines remain byte-identical.
