@@ -58,6 +58,12 @@ EXEC-STATE census row; membership stands, aggregates do not).
 
 ## LIVE RUNS — batch of four, launched 2026-07-27 ~17:45 ET (the closing-formulation batch)
 
+### BK execution run — registered before results, 2026-07-29
+
+| run | id | script (`./wf/`) | banking target on close |
+|---|---|---|---|
+| BK Φ0 truth | `bk-phi0-20260729-01` | `bk-phi0-execution.wf.js` | **REGISTERED, 0/4 results, 0 errors.** Two isolated Truth seats (#1 governance salvage · pre-source graph-v3) → two independent gestalt challenges → lead adjudication. Durable journal: `docs/tranches/BK/execution/2026-07-29-phi0/journal.jsonl`; bank: `docs/tranches/BK/execution/2026-07-29-phi0/RESULTS.md`. No product-source mutation before graph-v3 seals; no row advances before the result census. |
+
 | run | id | script (`./wf/`) | banking target on close |
 |---|---|---|---|
 | consolidate | `wf_1f04cfd9-089` | `consolidate.wf.js` | **CLOSED 5/5** → banked `TERMINAL-ROSTER.md` (70 rows, critic fold 31-ADOPT/2-REFUTE/0-drops, gate budget rebuilt to exactly 60, Φ0 executable). **OWED on top:** the final folding pass — GESTALT §4 routed deltas + ARCHAEOLOGY §4 plan amendments + the tier-3 fold land in the roster once both close (the roster's foreman predates all three) |
