@@ -19,6 +19,7 @@ import { beforeAll, describe, expect, it } from "vitest";
 import {
     buildGraph,
     extractCssReferences,
+    extractFileOperations,
     extractProcessInvocations,
     extractScriptReferences,
     extractTemplateReferences,
@@ -325,6 +326,32 @@ describe("graph schema v3", () => {
             { api: "execSync", binding: "requiredChildProcess.execSync" },
             { api: "spawn", binding: "run" },
             { api: "spawnSync", binding: "runSync" },
+        ]);
+    });
+
+    it("does not resolve a shadowing root parameter as the repository root", () => {
+        const { sourceFile } = extractScriptReferences(`
+            const root = process.cwd();
+            readdirSync(root);
+            function scan(root: string) {
+                readdirSync(root);
+            }
+        `);
+        const operations = extractFileOperations(sourceFile, "fixture.ts", root, null);
+
+        expect(operations.operations).toEqual([
+            expect.objectContaining({
+                edgeKind: "generator-read",
+                operation: "readdirSync",
+                target: ".",
+                line: 3,
+            }),
+        ]);
+        expect(operations.unmodeled).toEqual([
+            expect.objectContaining({
+                operation: "readdirSync",
+                line: 5,
+            }),
         ]);
     });
 

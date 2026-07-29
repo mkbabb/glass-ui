@@ -1910,12 +1910,35 @@ function collectConstInitializers(sourceFile) {
     return values;
 }
 
-function evaluatePathExpression(node, sourceFile, sourcePath, repositoryRoot, constants, seen = new Set()) {
+function evaluatePathExpression(
+    node,
+    sourceFile,
+    sourcePath,
+    repositoryRoot,
+    constants,
+    seen = new Set(),
+    bindingResolver = null,
+) {
     if (!node) return null;
     const string = literalString(node);
     if (string !== null) return string;
     if (ts.isIdentifier(node)) {
         if (node.text === "__dirname") return dirname(join(repositoryRoot, sourcePath));
+        const binding = bindingResolver?.lookup(node.text, node);
+        if (binding) {
+            if (binding.kind !== "variable" || !binding.initializer || seen.has(binding)) {
+                return null;
+            }
+            return evaluatePathExpression(
+                binding.initializer,
+                sourceFile,
+                sourcePath,
+                repositoryRoot,
+                constants,
+                new Set(seen).add(binding),
+                bindingResolver,
+            );
+        }
         if (seen.has(node.text)) return null;
         if (constants.has(node.text)) {
             seen.add(node.text);
@@ -1926,6 +1949,7 @@ function evaluatePathExpression(node, sourceFile, sourcePath, repositoryRoot, co
                 repositoryRoot,
                 constants,
                 seen,
+                bindingResolver,
             );
         }
         if (["root", "repoRoot", "repositoryRoot", "REPO_ROOT", "ROOT"].includes(node.text)) {
@@ -1965,6 +1989,7 @@ function evaluatePathExpression(node, sourceFile, sourcePath, repositoryRoot, co
                 repositoryRoot,
                 constants,
                 new Set(seen),
+                bindingResolver,
             ),
         );
         if (values.some((value) => value === null)) return null;
@@ -1987,6 +2012,7 @@ function evaluatePathExpression(node, sourceFile, sourcePath, repositoryRoot, co
             repositoryRoot,
             constants,
             new Set(seen),
+            bindingResolver,
         );
         const base = evaluatePathExpression(
             node.arguments?.[1],
@@ -1995,6 +2021,7 @@ function evaluatePathExpression(node, sourceFile, sourcePath, repositoryRoot, co
             repositoryRoot,
             constants,
             new Set(seen),
+            bindingResolver,
         );
         if (value === null || base === null) return null;
         try {
@@ -2006,7 +2033,7 @@ function evaluatePathExpression(node, sourceFile, sourcePath, repositoryRoot, co
     return null;
 }
 
-function extractFileOperations(
+export function extractFileOperations(
     sourceFile,
     sourcePath,
     repositoryRoot,
@@ -2016,6 +2043,7 @@ function extractFileOperations(
     const operations = [];
     const unmodeled = [];
     const constants = collectConstInitializers(sourceFile);
+    const bindingResolver = createBindingResolver(sourceFile);
     const sourceLocation = (node) => {
         const local = sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile));
         return offsetLocation(
@@ -2032,6 +2060,8 @@ function extractFileOperations(
             sourcePath,
             repositoryRoot,
             constants,
+            new Set(),
+            bindingResolver,
         );
         if (value === null) return null;
         const absolutePath = isAbsolute(value) ? value : resolve(repositoryRoot, value);
@@ -2107,6 +2137,8 @@ export function extractProcessInvocations(
             sourcePath,
             repositoryRoot,
             constants,
+            new Set(),
+            bindingResolver,
         );
         let target = null;
         if (typeof evaluated === "string") {
