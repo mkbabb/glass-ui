@@ -34,6 +34,7 @@
 
 import { readFileSync, readdirSync } from "node:fs";
 import { join, relative } from "node:path";
+import postcss from "postcss";
 import { describe, expect, it } from "vitest";
 
 const REPO_ROOT = process.cwd();
@@ -71,14 +72,14 @@ export const scanTypeUtilities = (file: string, text: string): TypeUtilityViolat
 
 // ── CSS-declaration arm ────────────────────────────────────────────────────
 
-const RAW_FONT_SIZE = /(?:^|[;{}\s])font-size\s*:\s*([0-9][^;}]*)/;
-const CAPS_TRACKING = /letter-spacing\s*:\s*0\.1em\b/;
+const RAW_FONT_SIZE = /(?:^|[\s,(])\d*\.?\d+(?:px|rem|em)\b/i;
+const CAPS_TRACKING = /(?:^|\s)0\.1em(?:\s|$)/;
 // A reference to a @theme key the ramp reset cleared to `initial`. `bridges.css`
 // clears `--text-sm`/`--text-xs`, so any surviving `var(--text-sm)` resolves to
 // a guaranteed-invalid value → the declaration falls back to inherit. Banned
 // across ALL src CSS (not just components) so a dangling reference to a cleared
 // key cannot ship GREEN again — the class of bypass that stranded `.card-description`.
-const CLEARED_VAR = /var\(\s*--text-(?:sm|xs)\b/g;
+const CLEARED_VAR = /var\(\s*(--text-(?:sm|xs))\b/g;
 
 export interface TypeDeclarationViolation {
     file: string;
@@ -87,18 +88,29 @@ export interface TypeDeclarationViolation {
     value: string;
 }
 
-const stripComments = (text: string): string =>
-    text.replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "));
-
 export const scanTypeDeclarations = (file: string, text: string): TypeDeclarationViolation[] => {
     const violations: TypeDeclarationViolation[] = [];
-    stripComments(text).split("\n").forEach((line, index) => {
-        const size = RAW_FONT_SIZE.exec(line);
-        if (size && /[0-9](?:px|rem|em)\b/.test(size[1]) && !size[1].includes("var(")) {
-            violations.push({ file, line: index + 1, channel: "font-size", value: size[1].trim() });
+    const root = postcss.parse(text, { from: file });
+    root.walkDecls((declaration) => {
+        if (
+            declaration.prop === "font-size" &&
+            RAW_FONT_SIZE.test(declaration.value) &&
+            !declaration.value.includes("var(")
+        ) {
+            violations.push({
+                file,
+                line: declaration.source?.start?.line ?? 1,
+                channel: "font-size",
+                value: declaration.value.trim(),
+            });
         }
-        if (CAPS_TRACKING.test(line)) {
-            violations.push({ file, line: index + 1, channel: "letter-spacing", value: "0.1em" });
+        if (declaration.prop === "letter-spacing" && CAPS_TRACKING.test(declaration.value)) {
+            violations.push({
+                file,
+                line: declaration.source?.start?.line ?? 1,
+                channel: "letter-spacing",
+                value: declaration.value.trim(),
+            });
         }
     });
     return violations;
@@ -107,11 +119,17 @@ export const scanTypeDeclarations = (file: string, text: string): TypeDeclaratio
 /** Scans for references to the cleared `--text-sm`/`--text-xs` @theme keys. */
 export const scanClearedVarRefs = (file: string, text: string): TypeDeclarationViolation[] => {
     const violations: TypeDeclarationViolation[] = [];
-    stripComments(text).split("\n").forEach((line, index) => {
+    const root = postcss.parse(text, { from: file });
+    root.walkDecls((declaration) => {
         CLEARED_VAR.lastIndex = 0;
         let m: RegExpExecArray | null;
-        while ((m = CLEARED_VAR.exec(line)) !== null) {
-            violations.push({ file, line: index + 1, channel: "cleared-var", value: m[0].replace(/\s+/g, "") + ")" });
+        while ((m = CLEARED_VAR.exec(declaration.value)) !== null) {
+            violations.push({
+                file,
+                line: declaration.source?.start?.line ?? 1,
+                channel: "cleared-var",
+                value: `var(${m[1]})`,
+            });
         }
     });
     return violations;
@@ -157,10 +175,34 @@ describe("gate:type-hygiene — off-ladder type utilities and declarations", () 
 
     it("no raw font-size / caps-tracking literal in src/components/**/*.css", () => {
         expect(fmtDecl(declarationViolations)).toBe("");
+        expect(
+            scanTypeDeclarations(
+                "planted.css",
+                ".a { font-size:\n 13px; }\n.b { letter-spacing:\n 0.1em; }",
+            ).map((violation) => violation.channel),
+        ).toEqual(["font-size", "letter-spacing"]);
+        expect(
+            scanTypeDeclarations(
+                "clean.css",
+                "/* font-size: 13px; letter-spacing: 0.1em */ .a { font-size: var(--type-caption); }",
+            ),
+        ).toEqual([]);
     });
 
     it("no `var(--text-sm)`/`var(--text-xs)` reference to a cleared @theme key in src/**/*.css", () => {
         expect(fmtDecl(clearedVarViolations)).toBe("");
+        expect(
+            scanClearedVarRefs(
+                "planted.css",
+                ".a { font-size: var(\n --text-sm); } .b { font-size: var( --text-xs ); }",
+            ).map((violation) => violation.value),
+        ).toEqual(["var(--text-sm)", "var(--text-xs)"]);
+        expect(
+            scanClearedVarRefs(
+                "clean.css",
+                "/* var(--text-sm) */ .a { font-size: var(--text-small); }",
+            ),
+        ).toEqual([]);
     });
 
     it("self-test bite — a planted `text-sm` in a .vue and a raw `text-[13px]` red", () => {

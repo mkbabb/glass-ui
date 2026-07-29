@@ -39,6 +39,8 @@
 
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
+import { parse as parseSfc } from "@vue/compiler-sfc";
+import ts from "typescript";
 import { describe, expect, it } from "vitest";
 
 // The vitest root is the repo root (`vitest.config.ts` sits there); happy-dom leaves
@@ -90,13 +92,116 @@ export interface BootGraphViolation {
     detail: string;
 }
 
-/** Strip line and block comments so a specifier named in prose is not a declaration. */
-function stripComments(source: string): string {
-    return source
-        .replace(/\/\*[\s\S]*?\*\//g, "")
-        .replace(/<!--[\s\S]*?-->/g, "")
-        .replace(/^\s*\/\/.*$/gm, "");
+interface StaticImportBinding {
+    imported: string;
+    local: string;
+    module: string;
+    typeOnly: boolean;
+    line: number;
 }
+
+const scriptSource = (source: string, file = "fixture.ts"): ts.SourceFile => {
+    const content = source.includes("<script")
+        ? (() => {
+              const parsed = parseSfc(source, { filename: file });
+              if (parsed.errors.length > 0) throw new Error(parsed.errors.join("\n"));
+              return parsed.descriptor.scriptSetup?.content ?? parsed.descriptor.script?.content ?? "";
+          })()
+        : source;
+    return ts.createSourceFile(file, content, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+};
+
+const importBindings = (sourceFile: ts.SourceFile): StaticImportBinding[] =>
+    sourceFile.statements.flatMap((statement) => {
+        if (!ts.isImportDeclaration(statement) || !ts.isStringLiteral(statement.moduleSpecifier)) {
+            return [];
+        }
+        const clause = statement.importClause;
+        if (!clause) return [];
+        const module = statement.moduleSpecifier.text;
+        const line = sourceFile.getLineAndCharacterOfPosition(statement.getStart()).line + 1;
+        const bindings: StaticImportBinding[] = [];
+        if (clause.name) {
+            bindings.push({
+                imported: "default",
+                local: clause.name.text,
+                module,
+                typeOnly: clause.isTypeOnly,
+                line,
+            });
+        }
+        if (clause.namedBindings && ts.isNamedImports(clause.namedBindings)) {
+            for (const element of clause.namedBindings.elements) {
+                bindings.push({
+                    imported: element.propertyName?.text ?? element.name.text,
+                    local: element.name.text,
+                    module,
+                    typeOnly: clause.isTypeOnly || element.isTypeOnly,
+                    line,
+                });
+            }
+        }
+        return bindings;
+    });
+
+const walk = (node: ts.Node, visit: (node: ts.Node) => void): void => {
+    visit(node);
+    ts.forEachChild(node, (child) => walk(child, visit));
+};
+
+const propertyName = (name: ts.PropertyName): string | null =>
+    ts.isIdentifier(name) || ts.isStringLiteral(name) ? name.text : null;
+
+const objectProperty = (
+    object: ts.ObjectLiteralExpression,
+    name: string,
+): ts.Expression | null => {
+    const property = object.properties.find(
+        (candidate): candidate is ts.PropertyAssignment =>
+            ts.isPropertyAssignment(candidate) && propertyName(candidate.name) === name,
+    );
+    return property?.initializer ?? null;
+};
+
+const topLevelVariable = (
+    sourceFile: ts.SourceFile,
+    name: string,
+): ts.Expression | null => {
+    for (const statement of sourceFile.statements) {
+        if (!ts.isVariableStatement(statement)) continue;
+        for (const declaration of statement.declarationList.declarations) {
+            if (ts.isIdentifier(declaration.name) && declaration.name.text === name) {
+                return declaration.initializer ?? null;
+            }
+        }
+    }
+    return null;
+};
+
+const dynamicImportTargets = (node: ts.Node): string[] => {
+    const targets: string[] = [];
+    walk(node, (candidate) => {
+        if (
+            ts.isCallExpression(candidate) &&
+            candidate.expression.kind === ts.SyntaxKind.ImportKeyword &&
+            candidate.arguments.length === 1 &&
+            ts.isStringLiteral(candidate.arguments[0]!)
+        ) {
+            targets.push(candidate.arguments[0]!.text);
+        }
+    });
+    return targets;
+};
+
+const importAlias = (
+    bindings: StaticImportBinding[],
+    module: string,
+    imported: string,
+): string | null =>
+    bindings.find(
+        (binding) =>
+            !binding.typeOnly && binding.module === module && binding.imported === imported,
+    )?.local ?? null;
 
 /**
  * SOURCE arm (a): top-level static imports of the deferred shell components.
@@ -105,26 +210,121 @@ function stripComments(source: string): string {
  */
 export function scanStaticShellImports(source: string): BootGraphViolation[] {
     const violations: BootGraphViolation[] = [];
-    const cleaned = stripComments(source);
-
-    cleaned.split("\n").forEach((text, index) => {
-        const match = /^\s*import\s+([^;]+?)\s+from\s+["']([^"']+)["']/.exec(text);
-        if (!match) return;
-        const [, clause, specifier] = match;
-
+    const sourceFile = scriptSource(source, "demo/shell/AppShell.vue");
+    for (const binding of importBindings(sourceFile)) {
+        if (binding.typeOnly) continue;
         for (const name of DEFERRED_SHELL_COMPONENTS) {
-            // A type-only import erases at build time and drags nothing.
-            if (/^\s*type\s/.test(clause)) continue;
-            const bound = new RegExp(`(^|[{,\\s])${name}(\\s*[,}]|$)`).test(clause);
-            if (!bound) continue;
+            const componentModule = binding.module.endsWith(`/${name}.vue`);
+            if (binding.imported !== name && binding.local !== name && !componentModule) continue;
             violations.push({
                 file: "demo/shell/AppShell.vue",
-                line: index + 1,
-                detail: `top-level static import of ${name} from "${specifier}" — must be defineAsyncComponent`,
+                line: binding.line,
+                detail: `top-level static import of ${name} from "${binding.module}" — must be defineAsyncComponent`,
             });
         }
-    });
+    }
+    return violations;
+}
 
+export function scanAsyncShellDeclarations(source: string): BootGraphViolation[] {
+    const sourceFile = scriptSource(source, "demo/shell/AppShell.vue");
+    const bindings = importBindings(sourceFile);
+    const asyncAlias = importAlias(bindings, "vue", "defineAsyncComponent");
+    const expected = new Map([
+        ["PresetEditor", "./configurator/PresetEditor.vue"],
+        ["Aurora", "@glass/components/aurora/Aurora.vue"],
+    ]);
+    const violations: BootGraphViolation[] = [];
+    if (!asyncAlias) {
+        violations.push({ file: "demo/shell/AppShell.vue", line: 1, detail: "defineAsyncComponent must be a runtime import from vue" });
+        return violations;
+    }
+    for (const [name, target] of expected) {
+        const initializer = topLevelVariable(sourceFile, name);
+        if (
+            !initializer ||
+            !ts.isCallExpression(initializer) ||
+            !ts.isIdentifier(initializer.expression) ||
+            initializer.expression.text !== asyncAlias
+        ) {
+            violations.push({ file: "demo/shell/AppShell.vue", line: 1, detail: `${name} is not a top-level ${asyncAlias} binding` });
+            continue;
+        }
+        const targets = dynamicImportTargets(initializer);
+        if (targets.length !== 1 || targets[0] !== target) {
+            violations.push({ file: "demo/shell/AppShell.vue", line: sourceFile.getLineAndCharacterOfPosition(initializer.getStart()).line + 1, detail: `${name} loader must resolve exactly ${target}; got ${targets.join(",") || "none"}` });
+        }
+    }
+    return violations;
+}
+
+export function scanFrame0Ground(source: string): BootGraphViolation[] {
+    const sourceFile = scriptSource(source, "demo/shell/AppShell.vue");
+    const bindings = importBindings(sourceFile);
+    const hAlias = importAlias(bindings, "vue", "h");
+    const asyncAlias = importAlias(bindings, "vue", "defineAsyncComponent");
+    const groundBinding = bindings.find(
+        (binding) =>
+            !binding.typeOnly &&
+            binding.imported === "auroraFallbackGround" &&
+            binding.module === "@glass/components/aurora/composables/auroraFallbackGround",
+    );
+    const violations: BootGraphViolation[] = [];
+    if (!hAlias) violations.push({ file: "demo/shell/AppShell.vue", line: 1, detail: "h must be a runtime import from vue" });
+    if (!groundBinding) violations.push({ file: "demo/shell/AppShell.vue", line: 1, detail: "auroraFallbackGround must be an eager runtime leaf import" });
+    const aurora = topLevelVariable(sourceFile, "Aurora");
+    if (!aurora || !ts.isCallExpression(aurora) || !ts.isIdentifier(aurora.expression) || aurora.expression.text !== asyncAlias) {
+        violations.push({ file: "demo/shell/AppShell.vue", line: 1, detail: "Aurora async binding is absent" });
+        return violations;
+    }
+    const options = aurora.arguments[0];
+    const loading = options && ts.isObjectLiteralExpression(options)
+        ? objectProperty(options, "loadingComponent")
+        : null;
+    if (!loading || !ts.isObjectLiteralExpression(loading)) {
+        violations.push({ file: "demo/shell/AppShell.vue", line: 1, detail: "Aurora.loadingComponent is absent" });
+        return violations;
+    }
+    let resultBinding: string | null = null;
+    let groundCallValid = false;
+    let vnodeValid = false;
+    walk(loading, (node) => {
+        if (
+            groundBinding &&
+            ts.isVariableDeclaration(node) &&
+            ts.isIdentifier(node.name) &&
+            node.initializer &&
+            ts.isCallExpression(node.initializer) &&
+            ts.isIdentifier(node.initializer.expression) &&
+            node.initializer.expression.text === groundBinding.local
+        ) {
+            const argument = node.initializer.arguments[0];
+            groundCallValid = Boolean(
+                argument &&
+                ts.isPropertyAccessExpression(argument) &&
+                ts.isIdentifier(argument.expression) &&
+                argument.expression.text === "shellAuroraConfig" &&
+                argument.name.text === "value",
+            );
+            resultBinding = node.name.text;
+        }
+        if (
+            hAlias && resultBinding && ts.isCallExpression(node) &&
+            ts.isIdentifier(node.expression) && node.expression.text === hAlias &&
+            ts.isStringLiteral(node.arguments[0]!) && node.arguments[0]!.text === "div" &&
+            ts.isObjectLiteralExpression(node.arguments[1]!)
+        ) {
+            const style = objectProperty(node.arguments[1]!, "style");
+            if (!style || !ts.isObjectLiteralExpression(style)) return;
+            const uses = (name: string): boolean => {
+                const value = objectProperty(style, name);
+                return Boolean(value && ts.isPropertyAccessExpression(value) && ts.isIdentifier(value.expression) && value.expression.text === resultBinding && value.name.text === name);
+            };
+            vnodeValid = uses("backgroundImage") && uses("backgroundColor");
+        }
+    });
+    if (!groundCallValid) violations.push({ file: "demo/shell/AppShell.vue", line: 1, detail: "loadingComponent must call the eager ground with shellAuroraConfig.value" });
+    if (!vnodeValid) violations.push({ file: "demo/shell/AppShell.vue", line: 1, detail: "Vue h(div) must paint both ground background fields" });
     return violations;
 }
 
@@ -133,23 +333,14 @@ export function scanStaticShellImports(source: string): BootGraphViolation[] {
  * Type-only imports erase at build time and are permitted.
  */
 export function scanAuroraBarrelImports(source: string): BootGraphViolation[] {
-    const violations: BootGraphViolation[] = [];
-    const cleaned = stripComments(source);
-
-    cleaned.split("\n").forEach((text, index) => {
-        const match = /^\s*import\s+([^;]*?)\s*from\s+["']([^"']+)["']/.exec(text);
-        if (!match) return;
-        const [, clause, specifier] = match;
-        if (specifier !== AURORA_BARREL) return;
-        if (/^\s*type\s/.test(clause)) return;
-        violations.push({
+    const sourceFile = scriptSource(source, "demo/chassis/hero/aurora-hero.ts");
+    return importBindings(sourceFile)
+        .filter((binding) => binding.module === AURORA_BARREL && !binding.typeOnly)
+        .map((binding) => ({
             file: "demo/chassis/hero/aurora-hero.ts",
-            line: index + 1,
-            detail: `value import from the aurora barrel "${specifier}" — the barrel re-exports Aurora.vue; import from the defining leaf`,
-        });
-    });
-
-    return violations;
+            line: binding.line,
+            detail: `value import from the aurora barrel "${binding.module}" — the barrel re-exports Aurora.vue; import from the defining leaf`,
+        }));
 }
 
 /**
@@ -162,25 +353,18 @@ export function scanConfiguratorBarrelImports(
     source: string,
     file: string,
 ): BootGraphViolation[] {
-    const violations: BootGraphViolation[] = [];
-
-    stripComments(source)
-        .split("\n")
-        .forEach((text, index) => {
-            const match =
-                /^\s*import\s+([^;]*?)\s*from\s+["'](\.{1,2}\/configurator)["']/.exec(
-                    text,
-                );
-            if (!match) return;
-            if (/^\s*type\s/.test(match[1]!)) return;
-            violations.push({
+    const sourceFile = scriptSource(source, file);
+    return importBindings(sourceFile)
+        .filter(
+            (binding) =>
+                !binding.typeOnly &&
+                /(?:^|\/)configurator$/.test(binding.module),
+        )
+        .map((binding) => ({
                 file,
-                line: index + 1,
-                detail: `value import from the configurator barrel "${match[2]}" — it re-exports PresetEditor.vue; import the leaf module`,
-            });
-        });
-
-    return violations;
+                line: binding.line,
+                detail: `value import from the configurator barrel "${binding.module}" — it re-exports PresetEditor.vue; import the leaf module`,
+            }));
 }
 
 export interface EagerGraph {
@@ -222,36 +406,72 @@ describe("gate:boot-graph — source arm", () => {
         const source = readFileSync(APP_SHELL, "utf8");
         const violations = scanStaticShellImports(source);
         expect(violations, JSON.stringify(violations, null, 2)).toEqual([]);
+        expect(
+            scanStaticShellImports(
+                `import {\n Aurora as Field,\n PresetEditor as Editor\n} from "./static";`,
+            ).map((violation) => violation.detail),
+        ).toHaveLength(2);
+        expect(
+            scanStaticShellImports(
+                `import type { Aurora, PresetEditor } from "./types";\n// import { Aurora } from "./static";\nconst prose = "import { PresetEditor } from './static'";`,
+            ),
+        ).toEqual([]);
     });
 
     it("AppShell actually declares the async boundaries", () => {
-        const source = stripComments(readFileSync(APP_SHELL, "utf8"));
-        for (const name of DEFERRED_SHELL_COMPONENTS) {
-            expect(
-                new RegExp(`const\\s+${name}\\s*=\\s*defineAsyncComponent`).test(
-                    source,
-                ),
-                `${name} must be bound by defineAsyncComponent in AppShell.vue`,
-            ).toBe(true);
+        const source = readFileSync(APP_SHELL, "utf8");
+        expect(scanAsyncShellDeclarations(source)).toEqual([]);
+        const mutations = [
+            source.replace("const PresetEditor = defineAsyncComponent", "const PresetEditor = defineAsyncComponentLookalike"),
+            source
+                .replace('import("./configurator/PresetEditor.vue")', 'import("__C19_SWAP__")')
+                .replace('import("@glass/components/aurora/Aurora.vue")', 'import("./configurator/PresetEditor.vue")')
+                .replace('import("__C19_SWAP__")', 'import("@glass/components/aurora/Aurora.vue")'),
+            source.replace('import("./configurator/PresetEditor.vue")', 'import("./configurator/Other.vue")'),
+            source.replace('() => import("./configurator/PresetEditor.vue")', "PresetEditorEager"),
+            source.replace("const PresetEditor = defineAsyncComponent", "// const PresetEditor = defineAsyncComponent"),
+            source.replace(/const Aurora = defineAsyncComponent\([\s\S]*?\n\}\);/, "const MissingAurora = null;"),
+        ];
+        for (const mutation of mutations) {
+            expect(scanAsyncShellDeclarations(mutation).length).toBeGreaterThan(0);
         }
     });
 
     it("the shell field's frame-0 ground is EAGER, not inside the async chunk", () => {
-        const source = stripComments(readFileSync(APP_SHELL, "utf8"));
-        expect(
-            /^\s*import\s+\{[^}]*auroraFallbackGround[^}]*\}\s+from/m.test(source),
-            "AppShell must statically import auroraFallbackGround — the async Aurora chunk must not own first paint",
-        ).toBe(true);
-        expect(
-            /loadingComponent/.test(source),
-            "the async Aurora must ship an eager wash placeholder, else the shell field paints nothing until the chunk resolves",
-        ).toBe(true);
+        const source = readFileSync(APP_SHELL, "utf8");
+        expect(scanFrame0Ground(source)).toEqual([]);
+        const mutations = [
+            source.replace("import { auroraFallbackGround }", "import type { auroraFallbackGround }"),
+            source.replace("@glass/components/aurora/composables/auroraFallbackGround", "./wrong-ground"),
+            source.replace("backgroundImage: ground.backgroundImage,", "backgroundImage: 'none',"),
+            source.replace("backgroundColor: ground.backgroundColor,", "backgroundColor: 'transparent',"),
+            source.replace("auroraFallbackGround(shellAuroraConfig.value)", "auroraFallbackGround(otherConfig.value)"),
+            source.replace("loadingComponent:", "lookalikeLoadingComponent:"),
+            source
+                .replace(/\n\s+h,\n/, "\n")
+                .replace("<script setup lang=\"ts\">", "<script setup lang=\"ts\">\nimport type { h } from \"vue\";"),
+            source.replace(/\n\s+h,\n/, "\n"),
+            source.replace('return h("div"', 'return localH("div"'),
+        ];
+        for (const mutation of mutations) {
+            expect(scanFrame0Ground(mutation).length).toBeGreaterThan(0);
+        }
     });
 
     it("the shell-field config reads its defaults off the barrel-free leaf", () => {
         const source = readFileSync(AURORA_HERO, "utf8");
         const violations = scanAuroraBarrelImports(source);
         expect(violations, JSON.stringify(violations, null, 2)).toEqual([]);
+        expect(
+            scanAuroraBarrelImports(
+                `import {\n DEFAULT_AURORA_CONFIG as defaults\n} from "@glass/components/aurora";`,
+            ),
+        ).toHaveLength(1);
+        expect(
+            scanAuroraBarrelImports(
+                `import type { AuroraConfig } from "@glass/components/aurora";\n// @glass/components/aurora`,
+            ),
+        ).toEqual([]);
     });
 
     it("no EAGER shell module imports the configurator barrel", () => {
@@ -262,6 +482,18 @@ describe("gate:boot-graph — source arm", () => {
             ),
         );
         expect(all, JSON.stringify(all, null, 2)).toEqual([]);
+        expect(
+            scanConfiguratorBarrelImports(
+                `import {\n useConfiguratorOpen as open\n} from "../configurator";`,
+                "demo/shell/Nested.vue",
+            ),
+        ).toHaveLength(1);
+        expect(
+            scanConfiguratorBarrelImports(
+                `import type { X } from "./configurator";\nimport { X } from "./configurator/leaf";`,
+                "demo/shell/AppShell.vue",
+            ),
+        ).toEqual([]);
     });
 });
 

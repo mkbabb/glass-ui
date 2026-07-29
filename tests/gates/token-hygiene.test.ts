@@ -27,6 +27,8 @@
 
 import { readFileSync, readdirSync } from "node:fs";
 import { join, relative, sep } from "node:path";
+import { parse as parseSfc } from "@vue/compiler-sfc";
+import postcss from "postcss";
 import { describe, expect, it } from "vitest";
 
 // The vitest root is the repo root (`vitest.config.ts` sits there); happy-dom leaves
@@ -50,15 +52,22 @@ export interface TokenHygieneViolation {
     value: string;
 }
 
-/** Strip comments and `@supports` preludes; both carry literals that are not declarations. */
-const stripNonDeclarations = (text: string): string =>
-    text
-        .replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "))
-        .replace(/<!--[\s\S]*?-->/g, (m) => m.replace(/[^\n]/g, " "))
-        .replace(/@supports[^{]*\{/g, (m) => m.replace(/[^\n]/g, " "));
-
 const isOffLadder = (value: string): boolean =>
     !value.includes("var(") && RAW_LENGTH.test(value) && !/^\s*0\s*$/.test(value);
+
+const radiusProperty = (property: string): boolean =>
+    property === "border-radius" ||
+    /^border-(?:(?:top|bottom)-(?:left|right)|(?:start|end)-(?:start|end))-radius$/.test(property);
+
+const cssSources = (file: string, text: string): Array<{ css: string; lineOffset: number }> => {
+    if (!file.endsWith(".vue")) return [{ css: text, lineOffset: 0 }];
+    const parsed = parseSfc(text, { filename: file });
+    if (parsed.errors.length > 0) throw new Error(parsed.errors.join("\n"));
+    return parsed.descriptor.styles.map((style) => ({
+        css: style.content,
+        lineOffset: style.loc.start.line - 1,
+    }));
+};
 
 /**
  * The scanner, exported so the self-test bite drives it on synthetic content rather than
@@ -66,32 +75,29 @@ const isOffLadder = (value: string): boolean =>
  */
 export const scanTokenHygiene = (file: string, text: string): TokenHygieneViolation[] => {
     const violations: TokenHygieneViolation[] = [];
-    const lines = stripNonDeclarations(text).split("\n");
-
-    lines.forEach((line, index) => {
-        const radius = /(?:^|[;{}\s])border-(?:(?:top|bottom)-(?:left|right)-|(?:start|end)-(?:start|end)-)?radius\s*:\s*([^;}]+)/.exec(line);
-        if (radius && isOffLadder(radius[1])) {
-            violations.push({
-                file,
-                line: index + 1,
-                channel: "radius",
-                value: radius[1].trim(),
-            });
-        }
-
-        const backdrop = /backdrop-filter\s*:\s*([^;}]+)/.exec(line);
-        if (backdrop) {
-            const blur = /blur\(([^)]*)\)/.exec(backdrop[1]);
+    for (const { css, lineOffset } of cssSources(file, text)) {
+        const root = postcss.parse(css, { from: file });
+        root.walkDecls((declaration) => {
+            if (radiusProperty(declaration.prop) && isOffLadder(declaration.value)) {
+                violations.push({
+                    file,
+                    line: lineOffset + (declaration.source?.start?.line ?? 1),
+                    channel: "radius",
+                    value: declaration.value.trim(),
+                });
+            }
+            if (!/(?:^|-)backdrop-filter$/.test(declaration.prop)) return;
+            const blur = /blur\(([^)]*)\)/.exec(declaration.value);
             if (blur && isOffLadder(blur[1])) {
                 violations.push({
                     file,
-                    line: index + 1,
+                    line: lineOffset + (declaration.source?.start?.line ?? 1),
                     channel: "backdrop-blur",
-                    value: backdrop[1].trim(),
+                    value: declaration.value.trim(),
                 });
             }
-        }
-    });
+        });
+    }
 
     return violations;
 };
@@ -118,6 +124,26 @@ describe("gate:token-hygiene — radius/backdrop-blur literals off the ladder", 
     // that the OPEN-1c contextual seam repointed both onto `var(--bouncy-slider-radius)`.
     it("src/ carries no off-ladder radius or backdrop blur", () => {
         expect(format(scanned)).toBe("");
+        const multiline = scanTokenHygiene(
+            "planted.css",
+            ".a { border-radius:\n 999px; }\n.b { backdrop-filter:\n blur(9px); }",
+        );
+        expect(multiline.map((violation) => violation.channel)).toEqual([
+            "radius",
+            "backdrop-blur",
+        ]);
+        expect(
+            scanTokenHygiene(
+                "planted.vue",
+                `<template><div /></template><style>.a { border-radius:\n 13px; }</style>`,
+            ).map((violation) => violation.channel),
+        ).toEqual(["radius"]);
+        expect(
+            scanTokenHygiene(
+                "clean.css",
+                "/* border-radius: 9px */ @supports (backdrop-filter: blur(9px)) { .a { border-radius: var(--radius-card); } }",
+            ),
+        ).toEqual([]);
     });
 
     it("self-test bite — a planted literal reds on both channels", () => {

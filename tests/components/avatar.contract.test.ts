@@ -37,41 +37,79 @@ describe("Avatar", () => {
 
     it("announces one stable identity while hiding image and initials duplicates", async () => {
         const status = vi.fn();
+        const originalDescriptor = Object.getOwnPropertyDescriptor(window, "Image");
+        const probes: ControlledImage[] = [];
+        class ControlledImage extends EventTarget {
+            complete = false;
+            naturalWidth = 0;
+            src = "";
+            referrerPolicy = "";
+            crossOrigin: string | null = null;
+
+            constructor() {
+                super();
+                probes.push(this);
+            }
+        }
+        Object.defineProperty(window, "Image", {
+            configurable: true,
+            writable: true,
+            value: ControlledImage,
+        });
         const wrapper = mount(Avatar, {
             props: { label: "Ada Lovelace", size: "md", shape: "square" },
             slots: {
                 default: () => [
                     h(AvatarImage, {
-                        src: "",
+                        src: "/controlled-ada.png",
                         onLoadingStatusChange: status,
                     }),
                     h(AvatarFallback, null, { default: () => "AL" }),
                 ],
             },
         });
-        await flushPromises();
+        try {
+            await flushPromises();
+            expect(probes).toHaveLength(1);
 
-        const identity = wrapper.get(".glass-avatar__identity");
-        const image = wrapper.get("img");
-        const fallback = wrapper.get(".glass-avatar__fallback");
+            const identityBefore = wrapper.get(".glass-avatar__identity").element;
+            const imageBefore = wrapper.get("img");
+            const fallbackBefore = wrapper.get(".glass-avatar__fallback");
+            expect(wrapper.attributes()).toMatchObject({
+                "data-identity": "labelled",
+                "data-shape": "square",
+                "data-size": "md",
+            });
+            expect(identityBefore.getAttribute("role")).toBe("img");
+            expect(identityBefore.getAttribute("aria-label")).toBe("Ada Lovelace");
+            expect(imageBefore.attributes()).toMatchObject({
+                alt: "",
+                "aria-hidden": "true",
+                "data-image-state": "loading",
+            });
+            expect(fallbackBefore.attributes("aria-hidden")).toBe("true");
+            expect(wrapper.findAll('[role="img"]:not([aria-hidden="true"])')).toHaveLength(1);
+            expect(status.mock.calls.map(([value]) => value)).toContain("loading");
 
-        expect(wrapper.attributes()).toMatchObject({
-            "data-identity": "labelled",
-            "data-shape": "square",
-            "data-size": "md",
-        });
-        expect(identity.attributes()).toMatchObject({
-            role: "img",
-            "aria-label": "Ada Lovelace",
-        });
-        expect(image.attributes()).toMatchObject({
-            alt: "",
-            "aria-hidden": "true",
-            "data-image-state": "error",
-        });
-        expect(fallback.attributes("aria-hidden")).toBe("true");
-        expect(fallback.text()).toBe("AL");
-        expect(status).toHaveBeenLastCalledWith("error");
+            probes[0]!.dispatchEvent(new Event("error"));
+            await flushPromises();
+
+            const identityAfter = wrapper.get(".glass-avatar__identity").element;
+            expect(wrapper.get("img").attributes("data-image-state")).toBe("error");
+            expect(wrapper.get("img").attributes("aria-hidden")).toBe("true");
+            expect(wrapper.get(".glass-avatar__fallback").attributes("aria-hidden")).toBe("true");
+            expect(wrapper.findAll('[role="img"]:not([aria-hidden="true"])')).toHaveLength(1);
+            expect(identityAfter).toBe(identityBefore);
+            expect(identityAfter.getAttribute("aria-label")).toBe("Ada Lovelace");
+            expect(status.mock.calls.map(([value]) => value).slice(-2)).toEqual([
+                "loading",
+                "error",
+            ]);
+        } finally {
+            wrapper.unmount();
+            if (originalDescriptor) Object.defineProperty(window, "Image", originalDescriptor);
+            else Reflect.deleteProperty(window, "Image");
+        }
     });
 
     it("keeps decorative identity out of the reading order", () => {

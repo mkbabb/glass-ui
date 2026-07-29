@@ -141,12 +141,17 @@ describe("TypewriterText contract", () => {
             onComplete,
         }))!;
 
-        void typewriter.startTyping();
+        const originalTyping = typewriter.startTyping();
         expect(typewriter.isTyping.value).toBe(true);
         listener?.({ matches: true } as MediaQueryListEvent);
 
+        await vi.runAllTimersAsync();
+        await Promise.resolve();
+        await originalTyping;
+
         expect(typewriter.displayText.value).toBe("complete");
         expect(typewriter.isTyping.value).toBe(false);
+        expect(vi.getTimerCount()).toBe(0);
         expect(onComplete).toHaveBeenCalledOnce();
     });
 });

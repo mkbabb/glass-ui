@@ -10,7 +10,10 @@
 // v-model that `CommandInput` wraps) turns the relevant assertion RED — the
 // canary the note demands.
 
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { mount } from "@vue/test-utils";
+import postcss from "postcss";
 import { describe, expect, it } from "vitest";
 import { nextTick } from "vue";
 
@@ -24,6 +27,24 @@ import {
 import { Command, CommandInput } from "@glass/components/command/index";
 import { Toaster, useToast } from "@glass/components/toast";
 
+const BUTTON_ICON_SELECTOR = '.button > svg:not([class*="size-"])';
+
+const ownsDefaultButtonIconSize = (css: string): boolean => {
+    const root = postcss.parse(css, { from: undefined });
+    let owns = false;
+    root.walkRules((rule) => {
+        if (rule.selector.trim() !== BUTTON_ICON_SELECTOR) return;
+        const declarations = new Set<string>();
+        rule.walkDecls((declaration) => {
+            declarations.add(declaration.prop);
+        });
+        if (declarations.has("inline-size") && declarations.has("block-size")) {
+            owns = true;
+        }
+    });
+    return owns;
+};
+
 describe("reka binding-idiom render-effect canary", () => {
     it("Button: a host-sized icon survives the owned default-icon rule", () => {
         const wrapper = mount(Button, {
@@ -34,6 +55,30 @@ describe("reka binding-idiom render-effect canary", () => {
         expect(svgCls).toContain("size-9");
         expect(wrapper.get("button").attributes("data-slot")).toBe("button");
         expect(wrapper.get("button").attributes("data-emphasis")).toBe("secondary");
+
+        const css = readFileSync(
+            join(process.cwd(), "src/components/button/styles.css"),
+            "utf8",
+        );
+        expect(ownsDefaultButtonIconSize(css)).toBe(true);
+        expect(
+            ownsDefaultButtonIconSize(
+                css.replace(BUTTON_ICON_SELECTOR, ".button > svg"),
+            ),
+        ).toBe(false);
+        expect(
+            ownsDefaultButtonIconSize(
+                css.replace('[class*="size-"]', '[class*="tone-"]'),
+            ),
+        ).toBe(false);
+        expect(
+            ownsDefaultButtonIconSize(
+                css.replace(
+                    `${BUTTON_ICON_SELECTOR} {`,
+                    `${BUTTON_ICON_SELECTOR} { color: inherit; }\n.button > svg {`,
+                ),
+            ),
+        ).toBe(false);
     });
 
     it("Switch: the checked model drives the rendered data-state", async () => {
