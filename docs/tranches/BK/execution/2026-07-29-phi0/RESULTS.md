@@ -10,8 +10,9 @@ Post-cutover cure script:
 
 Journal: `docs/tranches/BK/execution/2026-07-29-phi0/journal.jsonl`
 
-**State: ROUND-3 FAILED; ROUND-4 REGISTERED SOURCE-FENCED; #1/#75 IN-FLIGHT;
-#2 UNSTARTED.** The committed registration is preserved byte-for-byte: two
+**State: ROUND-4 CANDIDATE MECHANICALLY INTEGRATED; PENDING TWO FRESH SOL
+CHALLENGES AND FRESH SOL ADJUDICATION; #1/#75 IN-FLIGHT; #2 UNSTARTED.** The
+committed registration is preserved byte-for-byte: two
 Truth plus two Challenge results, 4/4. The early #75 Truth seat is a separately
 late-accounted 1/1 amendment, yielding five actual pre-cutover seats without
 rewriting the original run. Cure rounds 1 and 2 failed honestly. Round-3 Sol
@@ -199,10 +200,10 @@ Luna’s sandbox could not list the host crontab. The lead’s immediate host-le
 follow-up reproduced the existing single commented `dns-speedtest` line and
 zero active resume crons; no cron was added. Historical and superseded model
 provenance remains literal. Challenge G/H and lead adjudication then failed
-round 3. Round 4 is registered source-fenced in the same run: exact Luna owns
-the bounded graph, surface, and document-integration work; two fresh Sol
-judgment-only challenges and a fresh Sol adjudication are the only remaining
-seats. No round-4 start rows exist yet.
+round 3. Round 4 is now mechanically integrated as a candidate in the same
+run: exact Luna owns the bounded graph, surface, and document-integration
+work; two fresh Sol judgment-only challenges and a fresh Sol adjudication are
+the only remaining seats.
 
 ## Honest opening baseline
 
@@ -261,8 +262,9 @@ with zero silent drops. Round-3 surface candidate `f3a83c9b` and graph
 candidate `ee5cbcfb` were landed and exact-Luna mechanically re-attested, but
 Challenge G/H completed FAIL/NO-GO and the fresh Sol lead adjudication completed
 `completed-fail-and-round-4-chartered`. #1 and #75 remain IN-FLIGHT, #2 remains
-UNSTARTED, and the source-mutation fence remains closed. Round 4 is registered
-in this run with no started rows yet.
+UNSTARTED, and the source-mutation fence remains closed. Round 4 is now a
+mechanically integrated candidate in this run; the two fresh Sol challenges
+and fresh Sol adjudication remain pending.
 
 ## Challenge G/H — completed round-3 failure
 
@@ -324,3 +326,63 @@ environment/auth content:
 - Ordered tool ledger: 48 `exec` calls, with exact inputs and outputs retained
   in that session log.
 - Model proof: `turn_context` records `gpt-5.6-luna` at `xhigh`.
+
+## Round 4 — candidate mechanically integrated
+
+This is mechanical integration evidence only; it does not adjudicate fitness,
+close #1 or #75, or authorize BK #2. The two application starts were launched
+before durable start rows, so both are recorded with `journaledAfterCompletion:
+true`; `session_meta` and the rollout logs are authoritative.
+
+- Graph application: session `019faefd-ecae-72d2-9263-4531332acdd5`,
+  `gpt-5.6-luna`, `xhigh`, source `32999753c730859cbcaa3c42227ff7195e63bdb7`;
+  578 records, 1,682,151 bytes, log SHA-256
+  `a5ae5374444660748f171c5c5505b9df8d4f10421a55085bd8da9e791e76f62a`,
+  prompt 4,038 bytes SHA-256
+  `6df64a20313baa3bf9858ea5ed9121ce387987e0dd8a7092de14b19e9d52f0b3`,
+  and 107 `exec` calls with 107 outputs. Its bounded changed paths were the
+  graph builder, V3 JSON, V3 summary, focused graph test, and METHOD-AND-COVERAGE.
+  The transient final message repeated the old round-3 session
+  `019faece-3c9d-75e0-97aa-1bb349353341`; no durable round-4 receipt existed in
+  that message, so only the actual session above is banked.
+- Surface application: session `019faefd-ecbd-7b72-b634-fbacba95a464`,
+  `gpt-5.6-luna`, `xhigh`, same source commit; 297 records, 945,582 bytes,
+  log SHA-256 `412209dd75c606790df2d9cd5a0f3451fc741a967417b6d139be81280bd9eb18`,
+  prompt 2,572 bytes SHA-256
+  `b3704eced394a5e8a5d8eaa4702b0941bbec799895fa6629c42f0d8370b777db`,
+  and 58 `exec` calls with 58 outputs. Its bounded changed paths were the
+  three surface battery tests.
+- Document integration: session `019faf1a-9423-7c52-9b58-252c11fa59fd`,
+  `gpt-5.6-luna`, `xhigh`, same source commit; only the four existing control
+  surfaces named below are changed. Journal lines advanced 46 → 52.
+
+Mechanical receipts: `npm run demo:dist:build` passed (3,514 modules);
+the six-file surface battery passed exactly 6 files and 40 tests; two
+post-build `graph-v3 --check` runs passed with receipt
+`a3c252fd3b5e47fa307563db3d4aec132de629514234a1b3cb9bb7a5ee7887af` and exact
+summary 1,497 nodes / 3,579 internal / 1,963 external / 101 owners / 72
+public entries / 1,285 public symbols, with all fatal ledgers, unused owners,
+and cycle defects at zero. The focused graph test passed 20/20 sequentially
+and 20/20 while typecheck was active. Typecheck exited 2 with only the two
+recorded TS2339 diagnostics at `tests/styles/track-well-fold.test.ts` lines 20
+and 30; delta zero. The strict-JSON Stop-hook matrix passed 14/14 with one
+project-local hook and zero global hooks. Direct crontab inspection was blocked
+by the sandbox (`operation not permitted`); retain that bounded host follow-up
+caveat without guessing.
+
+Boundary and preservation checks passed: HEAD remained
+`32999753c730859cbcaa3c42227ff7195e63bdb7`, no staged or pre-existing tracked
+delta was present before integration, the nonignored-untracked count remained
+248 with sorted-list SHA-256
+`aafdab71d16de49fbed96128a21aa50eb24bab80899d7ae3b44015e10630cc15`, and V1,
+V2, and OWNER-MANIFEST remained respectively
+`bac5e3c17f2ebcb46b2e17e9ef2fa2231fbb715e4672a8cc87fd44404e62a72a`,
+`c68ddc34d489b3db69082c452880e9fee2dd9ce4e1a66aab96a856751a87defd`, and
+`e19b663fb671e046727469832be1d160095eb5cb7d3ba54aa2818277043100ba`.
+
+The only changed document paths are `journal.jsonl`, this RESULTS file,
+`WORKFLOWS.md`, and `EXECUTION-PROGRESS.md`; the journal parses fully, its
+46-line historical prefix is byte-identical, and `git diff --check` passes.
+Remaining blocks are the two fresh Sol judgment-only challenges and fresh Sol
+adjudication for #1 and #75. #1 and #75 remain IN-FLIGHT; #2 remains
+UNSTARTED and unreleased.
