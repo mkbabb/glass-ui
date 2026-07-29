@@ -105,7 +105,22 @@ const scriptSource = (source: string, file = "fixture.ts"): ts.SourceFile => {
         ? (() => {
               const parsed = parseSfc(source, { filename: file });
               if (parsed.errors.length > 0) throw new Error(parsed.errors.join("\n"));
-              return parsed.descriptor.scriptSetup?.content ?? parsed.descriptor.script?.content ?? "";
+              const blocks = [
+                  parsed.descriptor.script,
+                  parsed.descriptor.scriptSetup,
+              ].filter((block) => block !== null);
+              blocks.sort((left, right) => left.loc.start.offset - right.loc.start.offset);
+
+              let cursor = 0;
+              let scripts = "";
+              for (const block of blocks) {
+                  scripts += source
+                      .slice(cursor, block.loc.start.offset)
+                      .replace(/[^\r\n]/g, " ");
+                  scripts += source.slice(block.loc.start.offset, block.loc.end.offset);
+                  cursor = block.loc.end.offset;
+              }
+              return scripts + source.slice(cursor).replace(/[^\r\n]/g, " ");
           })()
         : source;
     return ts.createSourceFile(file, content, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
@@ -140,6 +155,15 @@ const importBindings = (sourceFile: ts.SourceFile): StaticImportBinding[] =>
                     line,
                 });
             }
+        }
+        if (clause.namedBindings && ts.isNamespaceImport(clause.namedBindings)) {
+            bindings.push({
+                imported: "*",
+                local: clause.namedBindings.name.text,
+                module,
+                typeOnly: clause.isTypeOnly,
+                line,
+            });
         }
         return bindings;
     });
@@ -416,6 +440,24 @@ describe("gate:boot-graph — source arm", () => {
                 `import type { Aurora, PresetEditor } from "./types";\n// import { Aurora } from "./static";\nconst prose = "import { PresetEditor } from './static'";`,
             ),
         ).toEqual([]);
+        const dualScriptSfc = [
+            `<script lang="ts">`,
+            `import { PresetEditor } from "./configurator/PresetEditor.vue";`,
+            `</script>`,
+            `<template><main /></template>`,
+            `<script setup lang="ts">`,
+            `import { Aurora } from "@glass/components/aurora/Aurora.vue";`,
+            `</script>`,
+        ].join("\n");
+        expect(
+            scanStaticShellImports(dualScriptSfc).map(({ line, detail }) => [
+                line,
+                detail.match(/static import of (\w+)/)?.[1],
+            ]),
+        ).toEqual([
+            [2, "PresetEditor"],
+            [6, "Aurora"],
+        ]);
     });
 
     it("AppShell actually declares the async boundaries", () => {
@@ -469,6 +511,11 @@ describe("gate:boot-graph — source arm", () => {
         ).toHaveLength(1);
         expect(
             scanAuroraBarrelImports(
+                `import * as AuroraSurface from "@glass/components/aurora";`,
+            ),
+        ).toHaveLength(1);
+        expect(
+            scanAuroraBarrelImports(
                 `import type { AuroraConfig } from "@glass/components/aurora";\n// @glass/components/aurora`,
             ),
         ).toEqual([]);
@@ -485,6 +532,12 @@ describe("gate:boot-graph — source arm", () => {
         expect(
             scanConfiguratorBarrelImports(
                 `import {\n useConfiguratorOpen as open\n} from "../configurator";`,
+                "demo/shell/Nested.vue",
+            ),
+        ).toHaveLength(1);
+        expect(
+            scanConfiguratorBarrelImports(
+                `import * as Configurator from "../configurator";`,
                 "demo/shell/Nested.vue",
             ),
         ).toHaveLength(1);

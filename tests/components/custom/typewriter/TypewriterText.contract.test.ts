@@ -1,5 +1,5 @@
 import { mount } from "@vue/test-utils";
-import { effectScope, type EffectScope } from "vue";
+import { effectScope, nextTick, type EffectScope } from "vue";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import TypewriterText from "@glass/components/typewriter/TypewriterText.vue";
 import { useTypewriter } from "@glass/components/typewriter/composables/useTypewriter";
@@ -143,10 +143,17 @@ describe("TypewriterText contract", () => {
 
         const originalTyping = typewriter.startTyping();
         expect(typewriter.isTyping.value).toBe(true);
-        listener?.({ matches: true } as MediaQueryListEvent);
+        expect(vi.getTimerCount()).toBeGreaterThan(0);
+        expect(listener).toBeTypeOf("function");
+        listener!({ matches: true } as MediaQueryListEvent);
+        await nextTick();
+
+        expect(typewriter.displayText.value).toBe("complete");
+        expect(typewriter.isTyping.value).toBe(false);
+        expect(vi.getTimerCount()).toBe(0);
+        expect(onComplete).toHaveBeenCalledOnce();
 
         await vi.runAllTimersAsync();
-        await Promise.resolve();
         await originalTyping;
 
         expect(typewriter.displayText.value).toBe("complete");
