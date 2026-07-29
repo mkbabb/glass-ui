@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto";
+import { execFileSync } from "node:child_process";
 import {
     existsSync,
     realpathSync,
@@ -126,17 +127,67 @@ function digest(value) {
     return createHash("sha256").update(value).digest("hex");
 }
 
-function walk(directory, excluded = () => false) {
-    if (!existsSync(directory)) return [];
-    return readdirSync(directory, { withFileTypes: true })
-        .sort((left, right) => left.name.localeCompare(right.name))
-        .flatMap((entry) => {
-            const path = join(directory, entry.name);
-            const relativePath = portable(path);
-            if (excluded(relativePath, entry)) return [];
-            if (entry.isDirectory()) return walk(path, excluded);
-            return entry.isFile() ? [path] : [];
-        });
+function offsetLocation(location, origin = null) {
+    if (!location || location.line === null || location.line === undefined) {
+        return { line: null, column: null };
+    }
+    if (!origin) {
+        return {
+            line: location.line,
+            column: location.column ?? null,
+        };
+    }
+    return {
+        line: origin.line + location.line - 1,
+        column:
+            location.line === 1 && location.column !== null && location.column !== undefined
+                ? origin.column + location.column - 1
+                : location.column ?? null,
+    };
+}
+
+function gitRepositoryVisibility(repositoryRoot) {
+    let output;
+    try {
+        output = execFileSync(
+            "git",
+            [
+                "-C",
+                repositoryRoot,
+                "ls-files",
+                "-co",
+                "--exclude-standard",
+                "-z",
+            ],
+            { encoding: "utf8" },
+        );
+    } catch (error) {
+        throw new Error(
+            `graph-v3: Git-aware repository census failed: ${error.stderr?.toString() || error.message}`,
+        );
+    }
+    const files = new Set(
+        output
+            .split("\0")
+            .filter(Boolean)
+            .map(portable)
+            .filter(
+                (path) =>
+                    path !== "node_modules" &&
+                    !path.startsWith("node_modules/") &&
+                    existsSync(join(repositoryRoot, path)) &&
+                    !statSync(join(repositoryRoot, path)).isDirectory(),
+            ),
+    );
+    const directories = new Set(["."]);
+    for (const path of files) {
+        let parent = portable(dirname(path));
+        while (parent !== "." && parent !== "") {
+            directories.add(parent);
+            parent = portable(dirname(parent));
+        }
+    }
+    return { files, directories };
 }
 
 function uniqueSorted(values) {
@@ -150,6 +201,8 @@ function stableSortEdges(edges) {
             (left.target ?? "").localeCompare(right.target ?? "") ||
             left.edgeKind.localeCompare(right.edgeKind) ||
             (left.specifier ?? "").localeCompare(right.specifier ?? "") ||
+            (left.line ?? 0) - (right.line ?? 0) ||
+            (left.column ?? 0) - (right.column ?? 0) ||
             JSON.stringify(left.metadata ?? {}).localeCompare(JSON.stringify(right.metadata ?? {})),
     );
 }
@@ -287,12 +340,19 @@ function createBindingResolver(sourceFile) {
         }
         return { kind: "local" };
     };
-    const registerPattern = (name, scope, initializer, propertyPath = []) => {
+    const registerPattern = (
+        name,
+        scope,
+        initializer,
+        propertyPath = [],
+        iterate = false,
+    ) => {
         if (ts.isIdentifier(name)) {
             scope.bindings.set(name.text, {
                 kind: "variable",
                 initializer,
                 propertyPath,
+                iterate,
                 scope,
             });
             return;
@@ -311,13 +371,20 @@ function createBindingResolver(sourceFile) {
                     scope,
                     initializer,
                     [...propertyPath, property ?? shorthand],
+                    iterate,
                 );
             }
             return;
         }
-        for (const element of name.elements) {
+        for (const [index, element] of name.elements.entries()) {
             if (ts.isBindingElement(element)) {
-                registerPattern(element.name, scope, null);
+                registerPattern(
+                    element.name,
+                    scope,
+                    initializer,
+                    [...propertyPath, index],
+                    iterate,
+                );
             }
         }
     };
@@ -370,7 +437,18 @@ function createBindingResolver(sourceFile) {
                 }
             }
         } else if (ts.isVariableDeclaration(node)) {
-            registerPattern(node.name, scope, node.initializer ?? null);
+            const forOf =
+                ts.isVariableDeclarationList(node.parent) &&
+                ts.isForOfStatement(node.parent.parent)
+                    ? node.parent.parent
+                    : null;
+            registerPattern(
+                node.name,
+                scope,
+                node.initializer ?? forOf?.expression ?? null,
+                [],
+                Boolean(forOf && !node.initializer),
+            );
         } else if (ts.isParameter(node)) {
             registerPattern(node.name, scope, null);
         } else if (
@@ -451,10 +529,235 @@ function createBindingResolver(sourceFile) {
         }
         return { kind: "local" };
     }
-    return { resolveExpression };
+    return { lookup, resolveExpression };
 }
 
-export function extractScriptReferences(source, path = "fixture.ts") {
+function createStaticSpecifierResolver(sourceFile, bindingResolver) {
+    const unknown = { kind: "unknown" };
+    const strings = (values) => ({
+        kind: "strings",
+        values: uniqueSorted(values),
+    });
+    const merge = (values) => {
+        const known = values.filter(({ kind }) => kind !== "unknown");
+        if (known.length !== values.length || known.length === 0) return unknown;
+        if (known.every(({ kind }) => kind === "strings")) {
+            return strings(known.flatMap(({ values: items }) => items));
+        }
+        if (known.every(({ kind }) => kind === "array")) {
+            const length = known[0].values.length;
+            if (!known.every(({ values: items }) => items.length === length)) return unknown;
+            return {
+                kind: "array",
+                values: Array.from({ length }, (_, index) =>
+                    merge(known.map(({ values: items }) => items[index])),
+                ),
+            };
+        }
+        return unknown;
+    };
+    const elementOf = (value) =>
+        value.kind === "array" ? merge(value.values) : unknown;
+    const propertyOf = (value, property) => {
+        if (value.kind === "array" && Number.isInteger(Number(property))) {
+            return value.values[Number(property)] ?? unknown;
+        }
+        if (value.kind === "object") return value.values.get(String(property)) ?? unknown;
+        return unknown;
+    };
+    const unwrap = (node) => {
+        let current = node;
+        while (
+            ts.isParenthesizedExpression(current) ||
+            ts.isAsExpression(current) ||
+            ts.isTypeAssertionExpression(current) ||
+            ts.isNonNullExpression(current) ||
+            (ts.isSatisfiesExpression && ts.isSatisfiesExpression(current))
+        ) {
+            current = current.expression;
+        }
+        return current;
+    };
+    const evaluate = (input, useNode, seen = new Set()) => {
+        if (!input) return unknown;
+        const node = unwrap(input);
+        const literal = literalString(node);
+        if (literal !== null) return strings([literal]);
+        if (ts.isArrayLiteralExpression(node)) {
+            return {
+                kind: "array",
+                values: node.elements.map((element) => evaluate(element, useNode, seen)),
+            };
+        }
+        if (ts.isObjectLiteralExpression(node)) {
+            const values = new Map();
+            for (const property of node.properties) {
+                if (!ts.isPropertyAssignment(property) && !ts.isShorthandPropertyAssignment(property)) {
+                    return unknown;
+                }
+                const name = property.name && (property.name.text ?? literalString(property.name));
+                if (typeof name !== "string") return unknown;
+                values.set(
+                    name,
+                    ts.isPropertyAssignment(property)
+                        ? evaluate(property.initializer, useNode, seen)
+                        : evaluate(property.name, useNode, seen),
+                );
+            }
+            return { kind: "object", values };
+        }
+        if (ts.isIdentifier(node)) {
+            const record = bindingResolver.lookup(node.text, useNode);
+            if (!record || record.kind !== "variable" || !record.initializer || seen.has(record)) {
+                return unknown;
+            }
+            const nextSeen = new Set(seen).add(record);
+            let value = evaluate(record.initializer, record.initializer, nextSeen);
+            if (record.iterate) value = elementOf(value);
+            for (const property of record.propertyPath) {
+                value = propertyOf(value, property);
+            }
+            return value;
+        }
+        if (
+            ts.isBinaryExpression(node) &&
+            node.operatorToken.kind === ts.SyntaxKind.PlusToken
+        ) {
+            const left = evaluate(node.left, useNode, seen);
+            const right = evaluate(node.right, useNode, seen);
+            if (left.kind !== "strings" || right.kind !== "strings") return unknown;
+            const combinations = [];
+            for (const prefix of left.values) {
+                for (const suffix of right.values) {
+                    combinations.push(`${prefix}${suffix}`);
+                    if (combinations.length > 64) return unknown;
+                }
+            }
+            return strings(combinations);
+        }
+        if (ts.isTemplateExpression(node)) {
+            let values = [node.head.text];
+            for (const span of node.templateSpans) {
+                const expression = evaluate(span.expression, useNode, seen);
+                if (expression.kind !== "strings") return unknown;
+                values = values.flatMap((prefix) =>
+                    expression.values.map((value) => `${prefix}${value}${span.literal.text}`),
+                );
+                if (values.length > 64) return unknown;
+            }
+            return strings(values);
+        }
+        if (ts.isConditionalExpression(node)) {
+            return merge([
+                evaluate(node.whenTrue, useNode, seen),
+                evaluate(node.whenFalse, useNode, seen),
+            ]);
+        }
+        if (ts.isPropertyAccessExpression(node)) {
+            return propertyOf(
+                evaluate(node.expression, useNode, seen),
+                node.name.text,
+            );
+        }
+        if (ts.isElementAccessExpression(node)) {
+            const property = node.argumentExpression && staticPrimitive(node.argumentExpression);
+            return property === undefined
+                ? unknown
+                : propertyOf(evaluate(node.expression, useNode, seen), property);
+        }
+        if (ts.isCallExpression(node)) {
+            if (
+                ts.isPropertyAccessExpression(node.expression) &&
+                ts.isIdentifier(node.expression.expression) &&
+                node.expression.expression.text === "Object" &&
+                ["entries", "values"].includes(node.expression.name.text)
+            ) {
+                const object = evaluate(node.arguments[0], useNode, seen);
+                if (object.kind !== "object") return unknown;
+                if (node.expression.name.text === "values") {
+                    return { kind: "array", values: [...object.values.values()] };
+                }
+                return {
+                    kind: "array",
+                    values: [...object.values.entries()].map(([name, value]) => ({
+                        kind: "array",
+                        values: [strings([name]), value],
+                    })),
+                };
+            }
+            if (
+                ts.isPropertyAccessExpression(node.expression) &&
+                node.expression.name.text === "split"
+            ) {
+                const base = evaluate(node.expression.expression, useNode, seen);
+                const separator = node.arguments[0] && literalString(node.arguments[0]);
+                if (base.kind !== "strings" || separator === null) return unknown;
+                return merge(
+                    base.values.map((value) => ({
+                        kind: "array",
+                        values: value.split(separator).map((part) => strings([part])),
+                    })),
+                );
+            }
+        }
+        return unknown;
+    };
+    const prefixKind = (input, useNode, seen = new Set()) => {
+        if (!input) return "unknown";
+        const node = unwrap(input);
+        const value = literalString(node);
+        if (value !== null) {
+            if (localSpecifierPattern.test(value)) return "local";
+            return "nonlocal";
+        }
+        if (
+            ts.isBinaryExpression(node) &&
+            node.operatorToken.kind === ts.SyntaxKind.PlusToken
+        ) {
+            return prefixKind(node.left, useNode, seen);
+        }
+        if (ts.isTemplateExpression(node)) {
+            return node.head.text
+                ? prefixKind(ts.factory.createStringLiteral(node.head.text), useNode, seen)
+                : "unknown";
+        }
+        if (ts.isIdentifier(node)) {
+            const record = bindingResolver.lookup(node.text, useNode);
+            if (!record || record.kind !== "variable" || !record.initializer || seen.has(record)) {
+                return "unknown";
+            }
+            return prefixKind(
+                record.initializer,
+                record.initializer,
+                new Set(seen).add(record),
+            );
+        }
+        return "unknown";
+    };
+    const resolve = (node, useNode = node) => {
+        const value = evaluate(node, useNode);
+        if (value.kind === "strings" && value.values.length > 0) {
+            const kinds = uniqueSorted(
+                value.values.map((specifier) =>
+                    localSpecifierPattern.test(specifier) ? "local" : "nonlocal",
+                ),
+            );
+            return {
+                kind: kinds.length === 1 ? kinds[0] : "unknown",
+                specifiers: value.values,
+                provenance: "finite-static",
+            };
+        }
+        return {
+            kind: prefixKind(node, useNode),
+            specifiers: null,
+            provenance: "prefix-or-conservative",
+        };
+    };
+    return { resolve };
+}
+
+export function extractScriptReferences(source, path = "fixture.ts", origin = null) {
     const sourceFile = ts.createSourceFile(
         path,
         source,
@@ -465,16 +768,22 @@ export function extractScriptReferences(source, path = "fixture.ts") {
     const references = [];
     const nonliteralReferences = [];
     const bindingResolver = createBindingResolver(sourceFile);
+    const specifierResolver = createStaticSpecifierResolver(
+        sourceFile,
+        bindingResolver,
+    );
+    const sourceLocation = (position) => {
+        const local = sourceFile.getLineAndCharacterOfPosition(position);
+        return offsetLocation(
+            { line: local.line + 1, column: local.character + 1 },
+            origin,
+        );
+    };
     const parseErrors = sourceFile.parseDiagnostics.map((diagnostic) => {
         const location =
             diagnostic.start === undefined
                 ? {}
-                : {
-                      line:
-                          sourceFile.getLineAndCharacterOfPosition(diagnostic.start).line + 1,
-                      column:
-                          sourceFile.getLineAndCharacterOfPosition(diagnostic.start).character + 1,
-                  };
+                : sourceLocation(diagnostic.start);
         return {
             source: path,
             ...location,
@@ -482,19 +791,21 @@ export function extractScriptReferences(source, path = "fixture.ts") {
         };
     });
     const add = (specifier, edgeKind, node, metadata = {}) => {
+        const location = sourceLocation(node.getStart(sourceFile));
         references.push({
             specifier,
             edgeKind,
-            line: sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile)).line + 1,
+            ...location,
             metadata,
         });
     };
     const addNonliteral = (edgeKind, node, localHint = false) => {
+        const location = sourceLocation(node.getStart(sourceFile));
         nonliteralReferences.push({
             source: path,
             edgeKind,
             expression: expressionText(node, sourceFile),
-            line: sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile)).line + 1,
+            ...location,
             localHint,
         });
     };
@@ -535,8 +846,21 @@ export function extractScriptReferences(source, path = "fixture.ts") {
             if (specifier !== null && specifier !== undefined) {
                 add(specifier, "literal-dynamic", node);
             } else if (node.arguments[0]) {
-                const text = expressionText(node.arguments[0], sourceFile);
-                addNonliteral("literal-dynamic", node.arguments[0], localSpecifierPattern.test(text.replace(/^['"`]/, "")));
+                const resolved = specifierResolver.resolve(node.arguments[0], node);
+                if (resolved.specifiers) {
+                    for (const candidate of resolved.specifiers) {
+                        add(candidate, "finite-dynamic", node, {
+                            expression: expressionText(node.arguments[0], sourceFile),
+                            provenance: resolved.provenance,
+                        });
+                    }
+                } else {
+                    addNonliteral(
+                        "finite-dynamic",
+                        node.arguments[0],
+                        resolved.kind !== "nonlocal",
+                    );
+                }
             }
         } else if (
             ts.isCallExpression(node) &&
@@ -587,6 +911,7 @@ export function extractScriptReferences(source, path = "fixture.ts") {
             if (!patterns || options === undefined || typeof options !== "object" || Array.isArray(options)) {
                 addNonliteral("vite-import-meta-glob", node, true);
             } else {
+                const location = sourceLocation(node.getStart(sourceFile));
                 references.push({
                     edgeKind: options.eager === true ? "glob-eager" : "glob-lazy",
                     patterns,
@@ -595,7 +920,7 @@ export function extractScriptReferences(source, path = "fixture.ts") {
                         import: options.import ?? null,
                         query: options.query ?? null,
                     },
-                    line: sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile)).line + 1,
+                    ...location,
                     metadata: {},
                 });
             }
@@ -734,22 +1059,33 @@ function parseCssImportMetadata(rest) {
     return { layer, supports, media: remainder || null };
 }
 
-export function extractCssReferences(source, path = "fixture.css", context = {}) {
+export function extractCssReferences(
+    source,
+    path = "fixture.css",
+    context = {},
+    origin = null,
+) {
     const references = [];
     const parseErrors = [];
+    const sourceLocation = (location) => offsetLocation(location, origin);
     let root;
     try {
         root = postcss.parse(source, { from: path });
     } catch (error) {
-        parseErrors.push({ source: path, message: error.message });
+        parseErrors.push({
+            source: path,
+            ...sourceLocation({ line: error.line ?? null, column: error.column ?? null }),
+            message: error.message,
+        });
         return { references, parseErrors };
     }
     root.walkAtRules("import", (rule) => {
         const { specifier, rest } = consumeCssImportTarget(rule.params);
+        const location = sourceLocation(rule.source?.start);
         if (!specifier) {
             parseErrors.push({
                 source: path,
-                line: rule.source?.start?.line ?? null,
+                ...location,
                 message: `nonliteral CSS @import: ${rule.params}`,
             });
             return;
@@ -757,7 +1093,7 @@ export function extractCssReferences(source, path = "fixture.css", context = {})
         references.push({
             specifier,
             edgeKind: "css-import",
-            line: rule.source?.start?.line ?? null,
+            ...location,
             metadata: { ...parseCssImportMetadata(rest), ...context },
         });
     });
@@ -766,6 +1102,7 @@ export function extractCssReferences(source, path = "fixture.css", context = {})
         const values = [];
         if (node.type === "decl") values.push(node.value);
         if (node.type === "atrule") values.push(node.params);
+        const location = sourceLocation(node.source?.start);
         for (const value of values) {
             for (const specifier of extractCssUrlsFromValue(value)) {
                 if (
@@ -778,7 +1115,7 @@ export function extractCssReferences(source, path = "fixture.css", context = {})
                 references.push({
                     specifier,
                     edgeKind: "asset-url",
-                    line: node.source?.start?.line ?? null,
+                    ...location,
                     metadata: { ...context },
                 });
             }
@@ -807,21 +1144,30 @@ function splitSrcset(value) {
         .filter(Boolean);
 }
 
-export function extractTemplateReferences(source, path = "fixture.vue") {
+export function extractTemplateReferences(source, path = "fixture.vue", origin = null) {
     const references = [];
     const parseErrors = [];
     const dynamicAssetReferences = [];
+    const sourceLocation = (location) => offsetLocation(location, origin);
     let ast;
     try {
         ast = parseTemplate(source, { comments: false });
     } catch (error) {
+        const location = error.loc?.start
+            ? sourceLocation(error.loc.start)
+            : { line: null, column: null };
         return {
             references,
             dynamicAssetReferences,
-            parseErrors: [{ source: path, message: `Vue template parse: ${error.message}` }],
+            parseErrors: [{
+                source: path,
+                ...location,
+                message: `Vue template parse: ${error.message}`,
+            }],
         };
     }
     const addDynamic = (node, property, attribute, expression) => {
+        const location = sourceLocation(property.loc?.start);
         dynamicAssetReferences.push({
             source: path,
             edgeKind:
@@ -829,10 +1175,11 @@ export function extractTemplateReferences(source, path = "fixture.vue") {
             tag: node.tag,
             attribute,
             expression,
-            line: property.loc?.start?.line ?? null,
+            ...location,
         });
     };
     const addInlineStyle = (node, property, value) => {
+        const location = sourceLocation(property.loc?.start);
         for (const specifier of extractCssUrlsFromValue(value)) {
             if (!specifier || /^(?:data:|https?:|blob:|#|\/)/i.test(specifier)) continue;
             if (/(?:\{\{|v-bind\(|var\(|#\{|\$\{)/.test(specifier)) {
@@ -842,7 +1189,7 @@ export function extractTemplateReferences(source, path = "fixture.vue") {
             references.push({
                 specifier,
                 edgeKind: "template-style-asset",
-                line: property.loc?.start?.line ?? null,
+                ...location,
                 metadata: { tag: node.tag, attribute: "style" },
             });
         }
@@ -879,12 +1226,13 @@ export function extractTemplateReferences(source, path = "fixture.vue") {
                         continue;
                     }
                     if (!value) continue;
+                    const location = sourceLocation(property.loc?.start);
                     for (const specifier of name === "srcset" ? splitSrcset(value) : [value]) {
                         if (!specifier || /^(?:data:|https?:|blob:|#|\/)/i.test(specifier)) continue;
                         references.push({
                             specifier,
                             edgeKind: "template-asset",
-                            line: property.loc?.start?.line ?? null,
+                            ...location,
                             metadata: { tag: node.tag, attribute: name },
                         });
                     }
@@ -1030,14 +1378,14 @@ export function validateOwnerAssignments(paths, manifest) {
     return { assignments, defects };
 }
 
-function projectionInventory(repositoryRoot) {
+function projectionInventory(repositoryRoot, visibility) {
     const projectionByPath = new Map();
     const addDirectory = (projection, directory, exclude = () => false) => {
-        for (const absolutePath of walk(join(repositoryRoot, directory), (path, entry) => {
-            const repositoryPath = portable(relative(repositoryRoot, path));
-            return exclude(repositoryPath, entry);
-        })) {
-            const path = portable(relative(repositoryRoot, absolutePath));
+        const prefix = `${directory.replace(/\/$/, "")}/`;
+        for (const path of [...visibility.files]
+            .filter((candidate) => candidate.startsWith(prefix))
+            .filter((candidate) => !exclude(candidate))
+            .sort()) {
             if (projectionByPath.has(path)) {
                 throw new Error(`graph-v3: ${path} appears in two projections`);
             }
@@ -1045,7 +1393,7 @@ function projectionInventory(repositoryRoot) {
         }
     };
     const addFile = (projection, path) => {
-        if (!existsSync(join(repositoryRoot, path))) return;
+        if (!visibility.files.has(path)) return;
         if (projectionByPath.has(path)) {
             throw new Error(`graph-v3: ${path} appears in two projections`);
         }
@@ -1058,10 +1406,7 @@ function projectionInventory(repositoryRoot) {
     addDirectory(
         "visual-tests",
         "tests-visual",
-        (path, entry) =>
-            path === "tests-visual/package.json" ||
-            (entry.isDirectory() &&
-                ["tests-visual/.cache", "tests-visual/test-results", "tests-visual/node_modules"].includes(path)),
+        (path) => path === "tests-visual/package.json",
     );
     addDirectory("scripts-generators", "scripts");
     for (const path of [
@@ -1107,14 +1452,15 @@ function buildNode(
     generatedBy = null,
 ) {
     const absolutePath = join(repositoryRoot, path);
-    const exists = existsSync(absolutePath);
     const isDirectory =
         nodeKind === "directory" ||
-        (nodeKind === "generated-by-write" && extname(path) === "") ||
-        (exists && statSync(absolutePath).isDirectory());
+        (nodeKind === "generated-by-write" && extname(path) === "");
     const virtual =
-        ["declared-package-output", "missing-runtime-placeholder"].includes(nodeKind) ||
-        (nodeKind === "generated-by-write" && !exists);
+        [
+            "declared-package-output",
+            "generated-by-write",
+            "missing-runtime-placeholder",
+        ].includes(nodeKind);
     if (isDirectory || virtual) {
         return {
             path,
@@ -1371,7 +1717,13 @@ function packageName(specifier) {
     return specifier.split("/", 1)[0];
 }
 
-function resolveReference(repositoryRoot, importer, rawSpecifier, resolutionMode = "module") {
+function resolveReference(
+    repositoryRoot,
+    importer,
+    rawSpecifier,
+    resolutionMode = "module",
+    visibility = null,
+) {
     const specifier = stripQuery(rawSpecifier);
     if (/^(?:data:|https?:|blob:|#)/i.test(specifier)) {
         return { resolution: "external-url", specifier: rawSpecifier };
@@ -1405,6 +1757,27 @@ function resolveReference(repositoryRoot, importer, rawSpecifier, resolutionMode
               ]
             : [base];
     for (const candidate of candidates) {
+        if (pathWithin(repositoryRoot, candidate) && visibility) {
+            const target = portable(relative(repositoryRoot, candidate)) || ".";
+            if (visibility.files.has(target)) {
+                return {
+                    resolution: "repository-file",
+                    target,
+                    specifier: rawSpecifier,
+                };
+            }
+            if (
+                visibility.directories.has(target) &&
+                resolutionMode !== "module"
+            ) {
+                return {
+                    resolution: "repository-directory",
+                    target,
+                    specifier: rawSpecifier,
+                };
+            }
+            continue;
+        }
         if (!existsSync(candidate)) continue;
         if (resolutionMode === "module" && statSync(candidate).isDirectory()) continue;
         const target = portable(relative(repositoryRoot, candidate));
@@ -1537,10 +1910,17 @@ function evaluatePathExpression(node, sourceFile, sourcePath, repositoryRoot, co
     return null;
 }
 
-function extractFileOperations(sourceFile, sourcePath, repositoryRoot) {
+function extractFileOperations(sourceFile, sourcePath, repositoryRoot, origin = null) {
     const operations = [];
     const unmodeled = [];
     const constants = collectConstInitializers(sourceFile);
+    const sourceLocation = (node) => {
+        const local = sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile));
+        return offsetLocation(
+            { line: local.line + 1, column: local.character + 1 },
+            origin,
+        );
+    };
     function resolvedArgument(argument) {
         const value = evaluatePathExpression(
             argument,
@@ -1558,18 +1938,18 @@ function extractFileOperations(sourceFile, sourcePath, repositoryRoot) {
     function visit(node) {
         if (ts.isCallExpression(node)) {
             const name = callName(node.expression);
-            const line = sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile)).line + 1;
+            const location = sourceLocation(node);
             if (fsReadNames.has(name) || fsWriteNames.has(name)) {
                 const target = resolvedArgument(node.arguments[0]);
                 if (target) {
                     operations.push({
                         edgeKind: fsReadNames.has(name) ? "generator-read" : "generator-write",
                         target,
-                        line,
+                        ...location,
                         operation: name,
                     });
                 } else {
-                    unmodeled.push({ source: sourcePath, operation: name, line });
+                    unmodeled.push({ source: sourcePath, operation: name, ...location });
                 }
             } else if (fsCopyNames.has(name)) {
                 const source = resolvedArgument(node.arguments[0]);
@@ -1578,17 +1958,17 @@ function extractFileOperations(sourceFile, sourcePath, repositoryRoot) {
                     operations.push({
                         edgeKind: "generator-read",
                         target: source,
-                        line,
+                        ...location,
                         operation: name,
                     });
                     operations.push({
                         edgeKind: "generator-write",
                         target,
-                        line,
+                        ...location,
                         operation: name,
                     });
                 } else {
-                    unmodeled.push({ source: sourcePath, operation: name, line });
+                    unmodeled.push({ source: sourcePath, operation: name, ...location });
                 }
             }
         }
@@ -1598,10 +1978,22 @@ function extractFileOperations(sourceFile, sourcePath, repositoryRoot) {
     return { operations, unmodeled };
 }
 
-export function extractProcessInvocations(sourceFile, sourcePath, repositoryRoot) {
+export function extractProcessInvocations(
+    sourceFile,
+    sourcePath,
+    repositoryRoot,
+    origin = null,
+) {
     const invocations = [];
     const constants = collectConstInitializers(sourceFile);
     const bindingResolver = createBindingResolver(sourceFile);
+    const sourceLocation = (node) => {
+        const local = sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile));
+        return offsetLocation(
+            { line: local.line + 1, column: local.character + 1 },
+            origin,
+        );
+    };
     const describeArgument = (argument, index) => {
         const primitive = staticPrimitive(argument);
         const evaluated = evaluatePathExpression(
@@ -1646,8 +2038,7 @@ export function extractProcessInvocations(sourceFile, sourcePath, repositoryRoot
                 childProcessModules.has(binding.moduleName) &&
                 processExecutionNames.has(binding.member)
             ) {
-                const line =
-                    sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile)).line + 1;
+                const location = sourceLocation(node);
                 const command = node.arguments[0]
                     ? describeArgument(node.arguments[0], 0)
                     : null;
@@ -1661,7 +2052,7 @@ export function extractProcessInvocations(sourceFile, sourcePath, repositoryRoot
                 }
                 invocations.push({
                     source: sourcePath,
-                    line,
+                    ...location,
                     api: binding.member,
                     binding: expressionText(node.expression, sourceFile),
                     command,
@@ -1679,6 +2070,7 @@ export function extractProcessInvocations(sourceFile, sourcePath, repositoryRoot
         (left, right) =>
             left.source.localeCompare(right.source) ||
             left.line - right.line ||
+            (left.column ?? 0) - (right.column ?? 0) ||
             left.api.localeCompare(right.api),
     );
 }
@@ -1784,7 +2176,13 @@ function directExports(sourceFile) {
     return { symbols, reexports };
 }
 
-function publicSymbols(entrySource, scriptAsts, repositoryRoot, seen = new Set()) {
+function publicSymbols(
+    entrySource,
+    scriptAsts,
+    repositoryRoot,
+    visibility,
+    seen = new Set(),
+) {
     if (seen.has(entrySource)) return [];
     seen.add(entrySource);
     const sourceFile = scriptAsts.get(entrySource);
@@ -1792,13 +2190,20 @@ function publicSymbols(entrySource, scriptAsts, repositoryRoot, seen = new Set()
     const { symbols, reexports } = directExports(sourceFile);
     const result = symbols.map((symbol) => ({ ...symbol, declaredIn: entrySource }));
     for (const reexport of reexports) {
-        const resolution = resolveReference(repositoryRoot, entrySource, reexport.specifier, "module");
+        const resolution = resolveReference(
+            repositoryRoot,
+            entrySource,
+            reexport.specifier,
+            "module",
+            visibility,
+        );
         if (resolution.resolution !== "repository-file") continue;
         if (reexport.exportAll) {
             for (const symbol of publicSymbols(
                 resolution.target,
                 scriptAsts,
                 repositoryRoot,
+                visibility,
                 new Set(seen),
             )) {
                 if (symbol.name !== "default") result.push(symbol);
@@ -1854,7 +2259,11 @@ export async function buildGraph({
     if (ownerManifest.schema !== "glass-ui-owner-manifest/1") {
         throw new Error(`graph-v3: unsupported owner manifest schema ${ownerManifest.schema}`);
     }
-    const projectionByPath = projectionInventory(repositoryRoot);
+    const repositoryVisibility = gitRepositoryVisibility(repositoryRoot);
+    const projectionByPath = projectionInventory(
+        repositoryRoot,
+        repositoryVisibility,
+    );
     const seedPaths = [...projectionByPath.keys()].sort();
     const initialOwnership = validateOwnerAssignments(seedPaths, ownerManifest);
     if (initialOwnership.defects.length > 0) {
@@ -1873,9 +2282,10 @@ export async function buildGraph({
         generatedBy = null,
     ) => {
         if (nodesByPath.has(path)) return nodesByPath.get(path);
-        const absolutePath = join(repositoryRoot, path);
         const isDirectory =
-            (existsSync(absolutePath) && statSync(absolutePath).isDirectory()) ||
+            (nodeKind === "repository-file" &&
+                repositoryVisibility.directories.has(path) &&
+                !repositoryVisibility.files.has(path)) ||
             (nodeKind !== "repository-file" && extname(path) === "");
         if (isDirectory) {
             const ownershipProbe = validateOwnerAssignments(
@@ -1940,12 +2350,14 @@ export async function buildGraph({
             source,
             reference.specifier,
             resolutionMode,
+            repositoryVisibility,
         );
         const edgeBase = {
             source,
             specifier: reference.specifier,
             edgeKind: reference.edgeKind,
             line: reference.line ?? null,
+            column: reference.column ?? null,
             metadata: reference.metadata ?? {},
         };
         if (resolution.resolution === "repository-file" || resolution.resolution === "repository-directory") {
@@ -2010,7 +2422,12 @@ export async function buildGraph({
                     const expansion = expandLiteralGlob(path, reference.patterns, seedPaths);
                     for (const [pattern, targets] of expansion.matches) {
                         if (targets.length === 0) {
-                            unresolvedGlobPatterns.push({ source: path, pattern, line: reference.line });
+                            unresolvedGlobPatterns.push({
+                                source: path,
+                                pattern,
+                                line: reference.line,
+                                column: reference.column ?? null,
+                            });
                         }
                     }
                     for (const target of expansion.targets) {
@@ -2020,6 +2437,7 @@ export async function buildGraph({
                             specifier: reference.patterns.join(","),
                             edgeKind: reference.edgeKind,
                             line: reference.line,
+                            column: reference.column ?? null,
                             boundary: "within-projections",
                             metadata: {
                                 ...reference.metadata,
@@ -2066,6 +2484,7 @@ export async function buildGraph({
                         edgeKind: operationEdgeKind,
                         operation: operation.operation,
                         line: operation.line,
+                        column: operation.column ?? null,
                         resolution: "external-file-operation",
                     });
                     continue;
@@ -2078,17 +2497,20 @@ export async function buildGraph({
                         edgeKind: operationEdgeKind,
                         operation: operation.operation,
                         line: operation.line,
+                        column: operation.column ?? null,
                         resolution: "external-package-file-operation",
                     });
                     continue;
                 }
-                const exists = existsSync(absoluteTarget);
                 const modeledGeneratorWrite =
                     operationEdgeKind === "generator-write" &&
                     !projectionByPath.has(target);
+                const canonicalTarget =
+                    repositoryVisibility.files.has(target) ||
+                    repositoryVisibility.directories.has(target);
                 const nodeKind = modeledGeneratorWrite
                     ? "generated-by-write"
-                    : exists
+                    : canonicalTarget
                       ? "repository-file"
                       : "missing-runtime-placeholder";
                 const targetNode = addNode(
@@ -2104,12 +2526,14 @@ export async function buildGraph({
                 ) {
                     targetNode.nodeKind = "generated-by-write";
                     targetNode.generatedBy = path;
-                    if (targetNode.virtual) {
-                        targetNode.nodeType =
-                            extname(targetNode.path) === ""
-                                ? "directory"
-                                : "generated-artifact";
-                    }
+                    targetNode.virtual = true;
+                    targetNode.bytes = null;
+                    targetNode.sha256 = null;
+                    delete targetNode.lines;
+                    targetNode.nodeType =
+                        extname(targetNode.path) === ""
+                            ? "directory"
+                            : "generated-artifact";
                 }
                 internalEdges.push({
                     source: path,
@@ -2117,6 +2541,7 @@ export async function buildGraph({
                     specifier: null,
                     edgeKind: operationEdgeKind,
                     line: operation.line,
+                    column: operation.column ?? null,
                     boundary: projectionByPath.has(target)
                         ? "within-projections"
                         : "repository-boundary",
@@ -2140,6 +2565,7 @@ export async function buildGraph({
                         specifier: block.src,
                         edgeKind: "vue-block",
                         line: block.loc?.start?.line ?? null,
+                        column: block.loc?.start?.column ?? null,
                         metadata: {
                             blockKind,
                             blockType: blockKind,
@@ -2165,10 +2591,16 @@ export async function buildGraph({
                         specifier: style.src,
                         edgeKind: "vue-block",
                         line: style.loc?.start?.line ?? null,
+                        column: style.loc?.start?.column ?? null,
                         metadata,
                     });
                 } else {
-                    const css = extractCssReferences(style.content, path, metadata);
+                    const css = extractCssReferences(
+                        style.content,
+                        path,
+                        metadata,
+                        style.loc?.start ?? null,
+                    );
                     parseErrors.push(...css.parseErrors);
                     for (const reference of css.references) {
                         addResolvedReference(
@@ -2185,7 +2617,11 @@ export async function buildGraph({
             ]) {
                 if (!block || block.src) continue;
                 const virtualPath = `${path}.${suffix}`;
-                const extracted = extractScriptReferences(block.content, virtualPath);
+                const extracted = extractScriptReferences(
+                    block.content,
+                    virtualPath,
+                    block.loc?.start ?? null,
+                );
                 scriptAsts.set(
                     path,
                     extracted.sourceFile,
@@ -2202,6 +2638,7 @@ export async function buildGraph({
                                     source: path,
                                     pattern,
                                     line: reference.line,
+                                    column: reference.column ?? null,
                                 });
                             }
                         }
@@ -2212,6 +2649,7 @@ export async function buildGraph({
                                 specifier: reference.patterns.join(","),
                                 edgeKind: reference.edgeKind,
                                 line: reference.line,
+                                column: reference.column ?? null,
                                 boundary: "within-projections",
                                 metadata: {
                                     patterns: reference.patterns,
@@ -2240,11 +2678,20 @@ export async function buildGraph({
                         .map((reference) => ({ ...reference, source: path })),
                 );
                 processInvocations.push(
-                    ...extractProcessInvocations(extracted.sourceFile, path, repositoryRoot),
+                    ...extractProcessInvocations(
+                        extracted.sourceFile,
+                        path,
+                        repositoryRoot,
+                        block.loc?.start ?? null,
+                    ),
                 );
             }
             if (descriptor.template && !descriptor.template.src) {
-                const template = extractTemplateReferences(descriptor.template.content, path);
+                const template = extractTemplateReferences(
+                    descriptor.template.content,
+                    path,
+                    descriptor.template.loc?.start ?? null,
+                );
                 parseErrors.push(...template.parseErrors);
                 dynamicAssetReferences.push(...template.dynamicAssetReferences);
                 for (const reference of template.references) {
@@ -2398,7 +2845,14 @@ export async function buildGraph({
             .filter((candidate) => candidate.entry === entry)
             .map(({ conditions, target }) => ({ conditions, target }));
         let symbols = [];
-        if (sourceEntry) symbols = publicSymbols(sourceEntry, scriptAsts, repositoryRoot);
+        if (sourceEntry) {
+            symbols = publicSymbols(
+                sourceEntry,
+                scriptAsts,
+                repositoryRoot,
+                repositoryVisibility,
+            );
+        }
         if (!sourceEntry && targets.every(({ target }) => !/\.(?:m?js|cjs)$/.test(target))) {
             symbols = [{ name: "*asset*", declaredIn: targets.map(({ target }) => target).join(", "), typeOnly: false }];
         }
@@ -2429,22 +2883,27 @@ export async function buildGraph({
         (left, right) =>
             left.source.localeCompare(right.source) ||
             (left.line ?? 0) - (right.line ?? 0) ||
+            (left.column ?? 0) - (right.column ?? 0) ||
             left.edgeKind.localeCompare(right.edgeKind),
     );
     nonliteralLocalReferences.sort(
         (left, right) =>
-            left.source.localeCompare(right.source) || (left.line ?? 0) - (right.line ?? 0),
+            left.source.localeCompare(right.source) ||
+            (left.line ?? 0) - (right.line ?? 0) ||
+            (left.column ?? 0) - (right.column ?? 0),
     );
     dynamicModuleReferences.sort(
         (left, right) =>
             left.source.localeCompare(right.source) ||
             (left.line ?? 0) - (right.line ?? 0) ||
+            (left.column ?? 0) - (right.column ?? 0) ||
             left.edgeKind.localeCompare(right.edgeKind),
     );
     dynamicAssetReferences.sort(
         (left, right) =>
             left.source.localeCompare(right.source) ||
             (left.line ?? 0) - (right.line ?? 0) ||
+            (left.column ?? 0) - (right.column ?? 0) ||
             left.edgeKind.localeCompare(right.edgeKind) ||
             left.expression.localeCompare(right.expression),
     );
@@ -2452,20 +2911,27 @@ export async function buildGraph({
         (left, right) =>
             left.source.localeCompare(right.source) ||
             left.line - right.line ||
+            (left.column ?? 0) - (right.column ?? 0) ||
             left.api.localeCompare(right.api),
     );
     unresolvedGlobPatterns.sort(
         (left, right) =>
-            left.source.localeCompare(right.source) || left.pattern.localeCompare(right.pattern),
+            left.source.localeCompare(right.source) ||
+            (left.line ?? 0) - (right.line ?? 0) ||
+            (left.column ?? 0) - (right.column ?? 0) ||
+            left.pattern.localeCompare(right.pattern),
     );
     parseErrors.sort(
         (left, right) =>
-            left.source.localeCompare(right.source) || (left.line ?? 0) - (right.line ?? 0),
+            left.source.localeCompare(right.source) ||
+            (left.line ?? 0) - (right.line ?? 0) ||
+            (left.column ?? 0) - (right.column ?? 0),
     );
     unmodeledFileOperations.sort(
         (left, right) =>
             left.source.localeCompare(right.source) ||
             (left.line ?? 0) - (right.line ?? 0) ||
+            (left.column ?? 0) - (right.column ?? 0) ||
             left.operation.localeCompare(right.operation),
     );
 
@@ -2514,13 +2980,29 @@ export async function buildGraph({
         }
         if (
             node.nodeKind === "generated-by-write" &&
-            node.virtual &&
             !["generated-artifact", "directory"].includes(node.nodeType)
         ) {
             defects.push({
                 path: node.path,
                 defect: "generated-artifact-type-mismatch",
                 nodeType: node.nodeType,
+            });
+        }
+        if (
+            [
+                "generated-by-write",
+                "declared-package-output",
+                "missing-runtime-placeholder",
+            ].includes(node.nodeKind) &&
+            (!node.virtual || node.bytes !== null || node.sha256 !== null)
+        ) {
+            defects.push({
+                path: node.path,
+                defect: "virtual-provenance-carries-physical-payload",
+                nodeKind: node.nodeKind,
+                virtual: node.virtual,
+                bytes: node.bytes,
+                sha256: node.sha256,
             });
         }
         if (
@@ -2598,6 +3080,8 @@ export async function buildGraph({
             publicEntries: Object.keys(ownerManifest.publicEntries).length,
         },
         scope: {
+            fileUniverse:
+                "Git-tracked files plus nonignored untracked files; ordinary ignored build, cache, screenshot, and test-result artifacts do not affect the graph. node_modules is always excluded.",
             projections: {
                 product: ["src/**"],
                 demo: ["demo/**", "!demo/vite.demo-dist.config.ts"],
@@ -2619,7 +3103,7 @@ export async function buildGraph({
                 repositoryBoundary: "Local targets reached outside the seven seed projections.",
             },
             edgeDefinition:
-                "Vue/TypeScript AST imports, export-from, dynamic/glob/worker/URL and provenance-backed require loaders; Vue external blocks, literal bound template assets, and static inline-style URLs; HTML script entries; PostCSS imports and URLs; package/build/type/side-effect metadata; detectable filesystem and binding-proven child-process invocation targets.",
+                "Vue/TypeScript AST imports, export-from, finite provenance-resolved dynamic imports, glob/worker/URL and provenance-backed require loaders; Vue external blocks, literal bound template assets, and static inline-style URLs with file-native line/column locations; HTML script entries; PostCSS imports and URLs; package/build/type/side-effect metadata; detectable filesystem and binding-proven child-process invocation targets.",
         },
         summary: {
             nodes: nodes.length,
@@ -2741,10 +3225,17 @@ This is the pre-source execution instrument required by BK PLAN §6. Its seven
 seed projections are product, demo, tests, visual tests, scripts/generators,
 build configuration, and package surface. Local targets outside those seeds are
 added as repository-boundary nodes, so a boundary edge remains traversable.
+The file universe is Git-tracked files plus nonignored untracked files.
+Ordinary ignored build products, caches, screenshots, and test results cannot
+change the payload; \`node_modules\` is excluded explicitly.
 
 Vue SFCs are parsed with \`@vue/compiler-sfc\`, their script blocks with the
 TypeScript AST, their templates with the Vue template AST, and CSS with
-PostCSS. Literal Vite glob arrays retain negative patterns and
+PostCSS. Block-relative parser locations are translated to exact file-native
+line and column locations. Finite local dynamic-import values derived from
+constants, collections, property access, string concatenation, template
+expressions, and loops become exact edges; unresolved provenance fails closed
+as potentially local. Literal Vite glob arrays retain negative patterns and
 \`eager\`/\`import\`/\`query\` options. CSS imports retain layer, supports, and
 media clauses. Every graph file matches exactly one checked owner rule and every
 package export key maps to exactly one owner.
@@ -2789,7 +3280,9 @@ ${markdownRows(graph.summary.nodeKindCounts)}
 runtime, or ordinary file operation. Directories remain explicit rather than
 masquerading as generated files. Every node belongs to exactly one lifecycle
 kind; a generated directory therefore retains physical type \`directory\` and
-lifecycle kind \`generated-by-write\`.
+lifecycle kind \`generated-by-write\`. Generated and declared output nodes are
+virtual, provenance-defined graph facts: an ignored physical build artifact
+never supplies their bytes, hash, or type.
 
 ## Joinable projections
 
@@ -2872,7 +3365,9 @@ snapshot contains ${graph.summary.unmodeledFileOperations} such operations
 families are retained in a process-invocation ledger with statically reducible
 command and argv targets plus an explicit dynamic-argument count. Dynamic
 nonlocal module references are also ledgered, not falsely resolved into local
-edges. Literal Vue bindings and static inline-style \`url()\` values become
+edges. Unknown dynamic-import provenance is conservatively treated as local and
+therefore fails the generation contract. Literal Vue bindings and static
+inline-style \`url()\` values become
 asset edges; dynamic template or style asset expressions are retained in
 \`dynamicAssetReferences\` rather than silently omitted.
 
@@ -2880,7 +3375,8 @@ Runtime template bindings that can resolve to network data are not guessed to
 be local assets. Generated-write artifacts, declared package outputs, missing
 runtime placeholders, and directories have distinct lifecycle kinds; a
 generator's own file remains canonical source. Package outputs under \`dist/\`
-remain virtual declarations because this is a pre-build source graph.
+remain virtual declarations because this is a pre-build source graph, whether
+or not an ordinary ignored build has populated those paths on disk.
 
 The instrument is intentionally visible inside its own measurement boundary:
 its architecture test imports the generator, and literal manifest/package

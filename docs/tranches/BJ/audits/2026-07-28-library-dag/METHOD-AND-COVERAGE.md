@@ -84,7 +84,11 @@ owner manifest, and joinable package/build/test/generator graphs as ruled in
 
 V3 inventories product, demo, tests, visual tests, scripts/generators, build
 configuration, and package-surface files, then admits traversable
-repository-boundary targets. It classifies Vue external-block metadata,
+repository-boundary targets. Its seed universe is Git-tracked files plus
+nonignored untracked files. Ordinary ignored build products, caches,
+screenshots, and test results therefore cannot perturb the graph, while a
+legitimate nonignored worktree source remains visible; `node_modules` is
+excluded explicitly. It classifies Vue external-block metadata,
 TypeScript import/export/load kinds, literal glob arrays with negative patterns
 and options, workers and `new URL(..., import.meta.url)`, template-local assets,
 literal bound Vue assets, static inline-style `url()` assets,
@@ -95,6 +99,13 @@ detectable filesystem read/write/copy relationships. Literal CommonJS
 when lexical provenance resolves to the real Node loader. Named aliases,
 namespace imports, CommonJS destructuring, factory variables, and shadowing are
 distinguished; same-named local/domain functions are not admitted.
+Finite dynamic-import values derived from lexical constants, arrays, objects,
+property access, string concatenation, template expressions, and loop
+iteration become exact edges. Unknown dynamic-import provenance is treated as
+potentially local and therefore fails closed; proven remote and bare module
+values remain nonlocal. Vue script, script-setup, template, and style locations
+are translated from block-relative parser coordinates to exact file-native
+lines and columns.
 `exec`/`execFile`/`spawn` families have a separate command-and-argv ledger:
 statically reducible repository targets are retained, and each dynamic argument
 is counted instead of guessed. The same binding provenance admits named
@@ -125,7 +136,9 @@ Node lifecycle and physical type are separate total classifications.
 it, so `package.json` remains source. `generated-by-write` requires a real
 `generator-write` edge and a matching `generatedBy`; declared package outputs,
 missing runtime placeholders, and directories are not conflated with generated
-artifacts. The graph construction rejects incomplete or contradictory
+artifacts. Generated and declared output nodes are virtual,
+provenance-defined facts: ignored physical artifacts never supply their type,
+bytes, or hash. The graph construction rejects incomplete or contradictory
 provenance.
 
 The checked owner manifest also carries exact, hand-authored file- and
@@ -140,9 +153,10 @@ test statically imports the generator and literally loads the owner manifest
 and package declaration, so those sources and edges appear in v3. The generated
 JSON and Markdown files are deliberately outside seed discovery: including the
 machine result would make its receipt recursively depend on itself. The focused
-suite falsifies binding lookalikes, malformed TypeScript, SCC growth/merges, and
-external temporary copies with tampered node payloads, public owners, and
-summaries.
+suite falsifies binding lookalikes, malformed TypeScript, finite and unknown
+dynamic-import provenance, file-native Vue SFC locations, SCC growth/merges,
+ignored-artifact overlays without permanent user mutation, and external
+temporary copies with tampered node payloads, public owners, and summaries.
 
 The round-one `IMPORT-DAG-V3.json` was approximately 4.7 MB; the binding,
 asset-expression, lifecycle, and ratchet ledgers bring round two to

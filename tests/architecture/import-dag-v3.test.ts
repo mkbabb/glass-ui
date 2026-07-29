@@ -1,8 +1,11 @@
 import { execFileSync, spawnSync } from "node:child_process";
 import {
     cpSync,
+    existsSync,
+    mkdirSync,
     mkdtempSync,
     readFileSync,
+    rmdirSync,
     rmSync,
     symlinkSync,
     writeFileSync,
@@ -59,6 +62,30 @@ function runCheck(outputDirectory: string) {
     );
 }
 
+function temporarilyWrite(path: string, content: string | Buffer) {
+    const existed = existsSync(path);
+    const previous = existed ? readFileSync(path) : null;
+    const createdDirectories: string[] = [];
+    let parent = dirname(path);
+    while (!existsSync(parent)) {
+        createdDirectories.push(parent);
+        parent = dirname(parent);
+    }
+    mkdirSync(dirname(path), { recursive: true });
+    writeFileSync(path, content);
+    return () => {
+        if (previous) writeFileSync(path, previous);
+        else rmSync(path, { force: true });
+        for (const directory of createdDirectories) {
+            try {
+                rmdirSync(directory);
+            } catch {
+                // A concurrently created artifact owns the non-empty directory.
+            }
+        }
+    };
+}
+
 beforeAll(async () => {
     graph = await buildGraph({ repositoryRoot: root, outputDirectory: audit });
 });
@@ -110,6 +137,48 @@ describe("graph schema v3", () => {
             options: { eager: true, import: "default", query: "?raw" },
         });
         expect(nonliteralReferences).toEqual([]);
+    });
+
+    it("resolves finite const/collection/loop dynamic imports and fails unknown locality closed", () => {
+        const { references, nonliteralReferences } = extractScriptReferences(`
+            const localPrefix = "./pages/" + pageName;
+            import(localPrefix);
+
+            const shaders = {
+                aurora: "/src/components/aurora/constants/shaders/aurora.wgsl.ts#AURORA_WGSL",
+                metaball: "/src/components/blob/shaders/metaball.wgsl.ts#METABALL_WGSL",
+            };
+            for (const [id, ref] of Object.entries(shaders)) {
+                const [path, exportName] = ref.split("#");
+                import(path);
+            }
+
+            const remote = "https://example.com/modules/" + pageName;
+            import(remote);
+            const bare = "vue";
+            import(bare);
+            import(runtimeChosenPath);
+        `);
+        expect(
+            references
+                .filter(({ edgeKind }) => edgeKind === "finite-dynamic")
+                .map(({ specifier }) => specifier)
+                .sort(),
+        ).toEqual([
+            "/src/components/aurora/constants/shaders/aurora.wgsl.ts",
+            "/src/components/blob/shaders/metaball.wgsl.ts",
+            "vue",
+        ]);
+        expect(
+            nonliteralReferences.map(({ expression, localHint }) => ({
+                expression,
+                localHint,
+            })),
+        ).toEqual([
+            { expression: "localPrefix", localHint: true },
+            { expression: "remote", localHint: false },
+            { expression: "runtimeChosenPath", localHint: true },
+        ]);
     });
 
     it("recognizes only provenance-backed require/createRequire bindings", () => {
@@ -396,6 +465,237 @@ describe("graph schema v3", () => {
         }
     });
 
+    it("records Vue script, script-setup, template, and style locations in file-native coordinates", async () => {
+        const completionImports = [...graph.internalEdges, ...graph.externalEdges]
+            .filter(
+                ({ source, specifier }) =>
+                    source === "src/components/completion-seal/CompletionSeal.vue" &&
+                    [
+                        "vue",
+                        "../_shared/class-names",
+                        "./composables/useCompletionSeal",
+                        "./constants",
+                    ].includes(specifier),
+            )
+            .map(({ specifier, line, column }) => ({ specifier, line, column }))
+            .sort(
+                (left, right) =>
+                    left.line - right.line ||
+                    left.specifier.localeCompare(right.specifier),
+            );
+        expect(completionImports).toEqual([
+            { specifier: "vue", line: 68, column: 1 },
+            { specifier: "../_shared/class-names", line: 69, column: 1 },
+            {
+                specifier: "./composables/useCompletionSeal",
+                line: 70,
+                column: 1,
+            },
+            { specifier: "./constants", line: 71, column: 1 },
+            { specifier: "./constants", line: 71, column: 1 },
+        ]);
+        expect(
+            [...graph.internalEdges, ...graph.externalEdges]
+                .filter(
+                    ({ source, specifier }) =>
+                        source === "demo/chassis/code/Code.vue" &&
+                        ["vue", "@glass/components/_shared/class-names"].includes(
+                            specifier,
+                        ),
+                )
+                .map(({ specifier, line, column }) => ({
+                    specifier,
+                    line,
+                    column,
+                }))
+                .sort((left, right) => left.line - right.line),
+        ).toEqual([
+            { specifier: "vue", line: 19, column: 1 },
+            { specifier: "vue", line: 19, column: 1 },
+            {
+                specifier: "@glass/components/_shared/class-names",
+                line: 20,
+                column: 1,
+            },
+        ]);
+
+        const fixturePath = `tests/architecture/__graph-v3-sfc-location-${process.pid}.vue`;
+        const cleanup = temporarilyWrite(
+            resolve(root, fixturePath),
+            `<script lang="ts">
+import type { ButtonProps } from "../../src/components/button/index";
+</script>
+<template>
+<img src="../../tests-visual/fixtures/starry-night-crop.png" alt="">
+</template>
+<script setup lang="ts">
+import { Card } from "../../src/components/card/index";
+</script>
+<style scoped>
+.fixture {
+  background-image: url("../../tests-visual/fixtures/starry-night-crop.png");
+}
+</style>
+`,
+        );
+        try {
+            const fixtureGraph = await buildGraph({
+                repositoryRoot: root,
+                outputDirectory: audit,
+            });
+            expect(
+                fixtureGraph.nodes.find(({ path }) => path === fixturePath),
+            ).toMatchObject({
+                nodeKind: "repository-file",
+                projection: "tests",
+                virtual: false,
+            });
+            const fixtureEdges = fixtureGraph.internalEdges
+                .filter(({ source }) => source === fixturePath)
+                .map(({ edgeKind, specifier, line, column }) => ({
+                    edgeKind,
+                    specifier,
+                    line,
+                    column,
+                }))
+                .sort(
+                    (left, right) =>
+                        left.line - right.line ||
+                        left.edgeKind.localeCompare(right.edgeKind),
+                );
+            expect(fixtureEdges).toEqual([
+                {
+                    edgeKind: "type-only",
+                    specifier: "../../src/components/button/index",
+                    line: 2,
+                    column: 1,
+                },
+                {
+                    edgeKind: "template-asset",
+                    specifier:
+                        "../../tests-visual/fixtures/starry-night-crop.png",
+                    line: 5,
+                    column: 6,
+                },
+                {
+                    edgeKind: "eager-runtime",
+                    specifier: "../../src/components/card/index",
+                    line: 8,
+                    column: 1,
+                },
+                {
+                    edgeKind: "asset-url",
+                    specifier:
+                        "../../tests-visual/fixtures/starry-night-crop.png",
+                    line: 12,
+                    column: 3,
+                },
+            ]);
+        } finally {
+            cleanup();
+        }
+    }, 15_000);
+
+    it("keeps ignored build, cache, and screenshot overlays out of graph identity", async () => {
+        const suffix = `${process.pid}`;
+        const fixturePath = `tests-visual/__graph-v3-worktree-${suffix}.spec.ts`;
+        const ignoredDocsPath =
+            `docs/tranches/BJ/audits/2026-07-28-library-dag/` +
+            `__graph-v3-ignored-${suffix}.png`;
+        const cleanupFixture = temporarilyWrite(
+            resolve(root, fixturePath),
+            `new URL("../${ignoredDocsPath}", import.meta.url);\n`,
+        );
+        const overlayCleanups: Array<() => void> = [];
+        try {
+            const clean = await buildGraph({
+                repositoryRoot: root,
+                outputDirectory: audit,
+            });
+            expect(
+                clean.nodes.find(({ path }) => path === fixturePath),
+            ).toMatchObject({
+                nodeKind: "repository-file",
+                projection: "visual-tests",
+                virtual: false,
+            });
+            expect(
+                clean.nodes.find(({ path }) => path === ignoredDocsPath),
+            ).toMatchObject({
+                nodeKind: "missing-runtime-placeholder",
+                virtual: true,
+            });
+
+            for (const [path, bytes] of [
+                ["dist/component-styles.css", "ignored generated css\n"],
+                ["dist/styles/index.css", "ignored generated style index\n"],
+                ["dist/glass-ui.js", "ignored declared package output\n"],
+                ["dist-demo/index.html", "<p>ignored demo output</p>\n"],
+                [
+                    `tests-visual/__graph-v3-ignored-${suffix}.png`,
+                    "ignored visual bytes",
+                ],
+                [ignoredDocsPath, "ignored docs screenshot bytes"],
+                [
+                    `tests-visual/.cache/__graph-v3-${suffix}.json`,
+                    '{"ignored":true}\n',
+                ],
+                [
+                    `tests-visual/test-results/__graph-v3-${suffix}.json`,
+                    '{"ignored":true}\n',
+                ],
+            ] as const) {
+                overlayCleanups.push(
+                    temporarilyWrite(resolve(root, path), bytes),
+                );
+            }
+
+            const overlaid = await buildGraph({
+                repositoryRoot: root,
+                outputDirectory: audit,
+            });
+            expect({
+                ...overlaid,
+                observedAt: "<normalized-for-artifact-overlay>",
+            }).toEqual({
+                ...clean,
+                observedAt: "<normalized-for-artifact-overlay>",
+            });
+            expect(overlaid.receiptSha256).toBe(clean.receiptSha256);
+            expect(overlaid.summary).toEqual(clean.summary);
+            expect(
+                overlaid.nodes.find(
+                    ({ path }) => path === "dist/component-styles.css",
+                ),
+            ).toMatchObject({
+                nodeKind: "generated-by-write",
+                nodeType: "generated-artifact",
+                virtual: true,
+                bytes: null,
+                sha256: null,
+            });
+            expect(
+                overlaid.nodes.find(({ path }) => path === "dist/glass-ui.js"),
+            ).toMatchObject({
+                nodeKind: "declared-package-output",
+                nodeType: "package-output",
+                virtual: true,
+                bytes: null,
+                sha256: null,
+            });
+            expect(
+                overlaid.nodes.some(
+                    ({ path }) =>
+                        path ===
+                        `tests-visual/__graph-v3-ignored-${suffix}.png`,
+                ),
+            ).toBe(false);
+        } finally {
+            for (const cleanup of overlayCleanups.reverse()) cleanup();
+            cleanupFixture();
+        }
+    }, 15_000);
+
     it("ships clean, joinable projections and a current deterministic receipt", () => {
         expect(graph.schema).toBe("glass-ui-import-dag/3");
         expect(graph.summary).toMatchObject({
@@ -448,6 +748,19 @@ describe("graph schema v3", () => {
             expect(node.nodeKind === "generated-by-write").toBe(
                 typeof node.generatedBy === "string" && generatorEdge,
             );
+            if (
+                [
+                    "generated-by-write",
+                    "declared-package-output",
+                    "missing-runtime-placeholder",
+                ].includes(node.nodeKind)
+            ) {
+                expect(node).toMatchObject({
+                    virtual: true,
+                    bytes: null,
+                    sha256: null,
+                });
+            }
         }
         for (const edge of graph.internalEdges.filter(
             ({ edgeKind }) => edgeKind === "file-write",

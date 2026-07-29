@@ -1,9 +1,9 @@
 # Glass UI repository graph — schema v3
 
-Observed: 2026-07-29T16:08:12.499Z
+Observed: 2026-07-29T16:47:13.976Z
 
 Deterministic receipt (the `observedAt` value is excluded):
-`993a572241a07e2bc16c075224d53288963bf7780c50aa7e1e0c1f6b43aa7387`
+`c9274358ca10d584c892484788f3f04bab346c552ddda1423f424c4bbe0f783f`
 
 Owner manifest receipt: `e19b663fb671e046727469832be1d160095eb5cb7d3ba54aa2818277043100ba`
 
@@ -13,10 +13,17 @@ This is the pre-source execution instrument required by BK PLAN §6. Its seven
 seed projections are product, demo, tests, visual tests, scripts/generators,
 build configuration, and package surface. Local targets outside those seeds are
 added as repository-boundary nodes, so a boundary edge remains traversable.
+The file universe is Git-tracked files plus nonignored untracked files.
+Ordinary ignored build products, caches, screenshots, and test results cannot
+change the payload; `node_modules` is excluded explicitly.
 
 Vue SFCs are parsed with `@vue/compiler-sfc`, their script blocks with the
 TypeScript AST, their templates with the Vue template AST, and CSS with
-PostCSS. Literal Vite glob arrays retain negative patterns and
+PostCSS. Block-relative parser locations are translated to exact file-native
+line and column locations. Finite local dynamic-import values derived from
+constants, collections, property access, string concatenation, template
+expressions, and loops become exact edges; unresolved provenance fails closed
+as potentially local. Literal Vite glob arrays retain negative patterns and
 `eager`/`import`/`query` options. CSS imports retain layer, supports, and
 media clauses. Every graph file matches exactly one checked owner rule and every
 package export key maps to exactly one owner.
@@ -24,18 +31,18 @@ package export key maps to exactly one owner.
 | Measure | Count |
 | --- | ---: |
 | Nodes | 1497 |
-| Internal edges | 3574 |
+| Internal edges | 3576 |
 | External edges | 1953 |
 | Owners | 101 |
 | Public entries | 72 |
 | Public symbols | 1285 |
 | Unresolved local references | 0 |
 | Nonliteral local references | 0 |
-| Dynamic nonlocal module references | 1 |
+| Dynamic nonlocal module references | 0 |
 | Dynamic template/style asset expressions | 123 |
 | Unmatched literal globs | 0 |
 | Parse errors | 0 |
-| Detectable-but-unmodeled file operations | 258 |
+| Detectable-but-unmodeled file operations | 262 |
 | Process invocations | 7 |
 | Dynamic process arguments | 9 |
 
@@ -74,7 +81,9 @@ Physical/content types remain separate from lifecycle provenance:
 runtime, or ordinary file operation. Directories remain explicit rather than
 masquerading as generated files. Every node belongs to exactly one lifecycle
 kind; a generated directory therefore retains physical type `directory` and
-lifecycle kind `generated-by-write`.
+lifecycle kind `generated-by-write`. Generated and declared output nodes are
+virtual, provenance-defined graph facts: an ignored physical build artifact
+never supplies their bytes, hash, or type.
 
 ## Joinable projections
 
@@ -105,6 +114,7 @@ queries directly joinable without conflating them.
 | `export-from` | 476 |
 | `file-read` | 32 |
 | `file-write` | 4 |
+| `finite-dynamic` | 2 |
 | `generator-read` | 10 |
 | `generator-write` | 7 |
 | `glob-lazy` | 107 |
@@ -123,8 +133,8 @@ queries directly joinable without conflating them.
 | View | Edges | File cycles | Owner cycles |
 | --- | ---: | ---: | ---: |
 | `eagerRuntime` | 2220 | 2 | 3 |
-| `buildLoad` | 3445 | 10 | 3 |
-| `ownership` | 3574 | 10 | 3 |
+| `buildLoad` | 3447 | 10 | 3 |
+| `ownership` | 3576 | 10 | 3 |
 
 `eagerRuntime` excludes type-only, lazy, CSS/asset, and generator reach.
 `buildLoad` adds compile/load/package/generator relations.
@@ -212,13 +222,15 @@ are modeled when their path expression can be
 reduced from literals, `resolve`/`join`, `new URL(..., import.meta.url)`,
 and local constants; irreducibly dynamic operations remain counted in
 `unmodeledFileOperations` and are not represented as false edges. This
-snapshot contains 258 such operations
+snapshot contains 262 such operations
 (251 at the pre-source challenge seal). Literal CommonJS `require` and
 `createRequire` targets are graph edges; `exec`/`execFile`/`spawn`
 families are retained in a process-invocation ledger with statically reducible
 command and argv targets plus an explicit dynamic-argument count. Dynamic
 nonlocal module references are also ledgered, not falsely resolved into local
-edges. Literal Vue bindings and static inline-style `url()` values become
+edges. Unknown dynamic-import provenance is conservatively treated as local and
+therefore fails the generation contract. Literal Vue bindings and static
+inline-style `url()` values become
 asset edges; dynamic template or style asset expressions are retained in
 `dynamicAssetReferences` rather than silently omitted.
 
@@ -226,7 +238,8 @@ Runtime template bindings that can resolve to network data are not guessed to
 be local assets. Generated-write artifacts, declared package outputs, missing
 runtime placeholders, and directories have distinct lifecycle kinds; a
 generator's own file remains canonical source. Package outputs under `dist/`
-remain virtual declarations because this is a pre-build source graph.
+remain virtual declarations because this is a pre-build source graph, whether
+or not an ordinary ignored build has populated those paths on disk.
 
 The instrument is intentionally visible inside its own measurement boundary:
 its architecture test imports the generator, and literal manifest/package
