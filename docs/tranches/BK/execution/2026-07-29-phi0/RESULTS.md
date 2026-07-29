@@ -11,9 +11,10 @@ Post-cutover cure script:
 Journal: `docs/tranches/BK/execution/2026-07-29-phi0/journal.jsonl`
 
 **State: ROUND-4 PASS/GO SEALED; #1/#75/#2 SEALED PASS; #3 remains
-IN-FLIGHT at source `74c59ade`; #4 remains IN-FLIGHT at landed candidate
-`5946f5ef` with `evidence_state=pending-two-fresh-Sol-challenges-and-adjudication`;
-#5 remains IN-FLIGHT at cured candidate
+IN-FLIGHT at source `74c59ade`; #4 is SEALED with
+`code_state=landed-candidate` at `5946f5ef`, cursor cure `b232b05a`, and
+`evidence_state=adjudicated` after Challenge E PASS, Challenge F PASS, and
+final adjudication PASS-and-seal; #5 remains IN-FLIGHT at cured candidate
 `8be4f662`, pending exactly two entirely fresh `gpt-5.6-sol` xhigh
 judgment-only challenges and one fresh Sol xhigh adjudication; no seal.** #2 remains sealed with
 `code_state=landed` at `82bdc93e` and
@@ -644,7 +645,7 @@ G-5 cancellation is active terminal authority owned by Q consumer-only
 CompletionSeal deletion; Glass opens no replacement work. Historical
 Fable/Opus/Sonnet artifacts remain literal provenance and are not relabelled.
 
-## Row #4 shared cursor cure — candidate remains IN-FLIGHT
+## Row #4 shared cursor cure — historical pre-seal candidate receipt
 
 The immutable candidate is committed at `5946f5ef`. Two fresh non-author
 judgment-only `gpt-5.6-sol` xhigh challenges examined that candidate and are
@@ -664,18 +665,65 @@ timestamp, or turn ID was exposed or invented.
   census, hash, ignore, evidence, journal, provenance, scope, and KISS checks
   all passed.
 
-The current exact Luna xhigh document seat applies only this shared cursor cure
-to the three allowed files. The cursor now records row #4 as `IN-FLIGHT` with
+The exact Luna xhigh document seat applied only this shared cursor cure
+to the three allowed files. At that historical pre-seal boundary, the cursor recorded row #4 as `IN-FLIGHT` with
 `code_state=landed-candidate` at `5946f5ef` and
 `evidence_state=pending-two-fresh-Sol-challenges-and-adjudication`; it says the
 candidate is banked/committed, not staged. The exact Luna session
 `019faffb-647c-7500-9529-f0e203ff7e29` was exposed to the lead by the outer
 invocation; no timestamp or turn ID was exposed or invented. The
 candidate is cured/pending two entirely fresh Sol challenges plus fresh Sol
-adjudication, sealed false.
+adjudication, sealed false; the final fresh judgment and adjudication receipt below supersede that
+candidate state for the current row #4 status.
 
 Historical mechanical receipt facts remain unchanged and are not current state:
 pre-disposition `248/14/0`, explicit staging reducing Git-visible untracked
 paths to zero, journal base HEAD `d3c0a747`, and staged-path count `16`. Row
 #16 remains `UNSTARTED`; #63 remains repo-weight later; #78 canon LAND remains
-separate. No acceptance or seal is claimed.
+separate. No acceptance or seal was claimed at that historical boundary.
+
+## Row #4 — final fresh judgment and seal
+
+The immutable candidate chain is reconciliation source/bank `5946f5ef10775cfaae8a17f7b3c21dd863ff1c1a`
+followed by direct-child cursor cure `b232b05a0ab8d7eff5e06eb24e8d330a55f1e3be`; current main
+HEAD is `b232b05a` before this documentation-only bank. The two fresh post-cure challenges and
+the fresh adjudication were all read-only `gpt-5.6-sol` xhigh judgment-only seats:
+
+- Challenge E, `/root/row3_motion_evidence_audit`: PASS, 0 blockers / 0 majors / 0 minors. It
+  independently re-derived the corpus, ignore, evidence, journal, port, state, and model values
+  and authorized adjudication once the sibling passed.
+- Challenge F, `/root/bk_convergence_audit`: PASS, 0 blockers / 0 majors / 0 minors. It
+  independently re-derived the same boundary, found the two ignore rules to be the smallest lawful
+  preservation mechanism, found no row/gate/registry/workflow/source/test/control-plane movement,
+  and authorized fresh adjudication.
+- Final adjudication, `/root/prefix_cure_challenge_c`: PASS-AND-SEAL, 0 blockers / 0 majors /
+  0 minors. It independently re-derived the full boundary and authorized exactly:
+
+  `IN-FLIGHT (code_state=landed-candidate at 5946f5ef; evidence_state=pending-two-fresh-Sol-challenges-and-adjudication)` →
+  `SEALED (code_state=landed-candidate at 5946f5ef; cursor cure b232b05a; evidence_state=adjudicated; Challenge E PASS; Challenge F PASS; final adjudication PASS-and-seal)`.
+
+Common preserved evidence is exact: worktree/index/Git-visible nonignored untracked all zero;
+union `248 = 234 Markdown + 14 non-Markdown + 0 outside docs`; newline and NUL path SHA-256
+`aafdab71d16de49fbed96128a21aa50eb24bab80899d7ae3b44015e10630cc15` and
+`356763a42192bf36e84271e7291c4082a82555866b346d76aa22d5ee50019977`; archive `205` path/content
+SHA-256 `40fa7de27f8b87268d62ab6ca3d8f422ba87d497a72a952944deb5d8e97d2873` /
+`c2a0c61f46819a992c1bfeec2036cf0c35b85efb6e8d1cf36682d6dc0916e9cd`; steers `34` path/content
+SHA-256 `d039eaa704ddadf832a54854aaac2da901b699934b3a707da93cb7da5e1a8107` /
+`e4c842b726cdb6b6312abfa4c8ef4bdf8a54440ef1356714174fd0fe619f1172`; evidence `9` path/content
+SHA-256 `b9689b6aec35a421c2bcf6c99e812144d2ec1e31a4b98dc42552d9abca8c28fe` /
+`d8598d98b24b5a5243d4e1af59c28b2abf7a8e3f1d736d30093e0521a1cae124`; journal before this bank
+`84/84` valid JSONL with first-78 byte identity to `5946f5ef` and SHA-256
+`5f14ac5fab713a8e1da62442007486110bc91d3dd9a2c4bcb7f7d8977e5a3a8d`; port `5199→5400` landed at
+`74c59ade`; and `G-CITE-COMMITTED` is current/forward closure only.
+
+The seal is row #4 only. Φ0/BK continues with no new apparatus or release. #3 and #5 remain
+unchanged; #16, #63, and #78 retain their existing owner/state. The exact changed paths for this
+bank are only:
+
+- `docs/tranches/BJ/addenda/2026-07-24-refinement/WORKFLOWS.md`
+- `docs/tranches/BK/EXECUTION-PROGRESS.md`
+- `docs/tranches/BK/execution/2026-07-29-phi0/RESULTS.md`
+- `docs/tranches/BK/execution/2026-07-29-phi0/journal.jsonl`
+
+The current document-integration bank seat is exact `gpt-5.6-luna` xhigh. Final session metadata is
+pending lead-supplied resume correction; no session identifier or timestamp is invented here.
