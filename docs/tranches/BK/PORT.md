@@ -265,6 +265,12 @@ adjudication trail. `G-ROW-HOMED` (+BI-CARRY +UF +BG-join **+BD-CARRY** — ⊕�
 restored to its own detector sentence, SE-7) is the standing detector — re-derived at close, never
 trusted from this table.
 
+## §8 · Current Φ0 #4 reconciliation — candidate, 2026-07-29
+
+The current Luna xhigh mechanical receipt is candidate-only: row #4 remains IN-FLIGHT and requires two fresh Sol challenges plus fresh adjudication; row #16 remains UNSTARTED. Pre-disposition is 248 Git-visible untracked paths, 234 Markdown / 14 non-Markdown / 0 outside `docs/`, with newline path SHA-256 `aafdab71d16de49fbed96128a21aa50eb24bab80899d7ae3b44015e10630cc15` and NUL path SHA-256 `356763a42192bf36e84271e7291c4082a82555866b346d76aa22d5ee50019977`; after explicit staging the Git-visible untracked count is 0. The exact merged artifact and row #16 pointer are `docs/tranches/BK/execution/2026-07-29-phi0/NEEDS-LUNA-STEER-FINDINGS.md`.
+
+`G-CITE-COMMITTED` is current/forward citation closure, never retroactive history repair. #63 remains repo-weight later; #78 canon land remains separate. Historical J-14 wording and historical model labels remain literal.
+
 ## §REJECTED — the tri-fold adjudication, losers with falsifiers
 
 | loser | claim | falsifier / ground |

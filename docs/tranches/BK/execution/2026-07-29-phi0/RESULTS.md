@@ -275,6 +275,12 @@ remained IN-FLIGHT and #2 remained UNSTARTED with its source-mutation fence
 closed. Round 4 was then mechanically integrated in this run; the current #2
 candidate receipt and its pending judgment seats are banked below.
 
+## Row #4 current mechanical receipt — candidate, not sealed
+
+The current `gpt-5.6-luna` xhigh seat records candidate reconciliation for #4 `TRACK-STRAYS + PARKED-RECONCILE` and #16 `W-ORPHAN-ROWS`. Pre-disposition is 248 Git-visible untracked paths, 234 Markdown / 14 non-Markdown / 0 outside `docs/`, with newline path SHA-256 `aafdab71d16de49fbed96128a21aa50eb24bab80899d7ae3b44015e10630cc15` and NUL path SHA-256 `356763a42192bf36e84271e7291c4082a82555866b346d76aa22d5ee50019977`; after explicit staging the Git-visible untracked count is 0. The exact merged artifact and row #16 pointer are `docs/tranches/BK/execution/2026-07-29-phi0/NEEDS-LUNA-STEER-FINDINGS.md`.
+
+`G-CITE-COMMITTED` is current/forward citation closure, never retroactive history repair. #4 remains a candidate requiring two fresh Sol challenges plus fresh adjudication; #16 remains UNSTARTED; #63 remains repo-weight later; #78 canon land remains separate. Historical J-14 wording and historical model labels are not relabelled.
+
 ## Challenge G/H — completed round-3 failure
 
 Both seats were fresh non-author `gpt-5.6-sol` xhigh judgment seats. They

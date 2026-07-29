@@ -1,0 +1,60 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>WebKit renderer abort — nested color-mix() in background-color</title>
+<style>
+  :root {
+    --card: #ffffff;
+    --glass-level: 1;
+    --glass-opacity-dock: 0.72;
+    --glass-opacity-wash: 0.5;
+    --glass-tint-source: var(--card);
+    --glass-tint-strength: 0%;
+    --dock-morph-t: 0;
+    --dock-expand-t: calc(1 - var(--dock-morph-t));
+
+    /* Both endpoints are THEMSELVES color-mix()es. */
+    --glass-bg-wash: color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-wash)) * var(--glass-level)) * 100%), transparent);
+    --glass-bg-dock: color-mix(in oklab, color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-dock)) * var(--glass-level)) * 100%), transparent), var(--glass-tint-source) var(--glass-tint-strength));
+  }
+
+  body { font: 14px/1.5 system-ui, sans-serif; padding: 2rem; }
+
+  /* Verbatim from glass-ui/src/components/dock/styles/morph.css:125-138
+     (.glass-dock:not(.vertical) .dock-plate). After var() substitution this is a
+     color-mix tree four levels deep. WebKit aborts the renderer resolving it;
+     Chromium resolves it to color(srgb 1 1 1 / 0.72). */
+  .dock-plate {
+    background: color-mix(
+      in srgb,
+      color-mix(
+          in oklab,
+          var(--glass-bg-dock, var(--glass-bg-resting)),
+          var(--glass-tint-source) var(--glass-tint-strength)
+        )
+        calc(var(--dock-expand-t) * 100%),
+      color-mix(
+        in oklab,
+        var(--glass-bg-wash),
+        var(--glass-tint-source) var(--glass-tint-strength)
+      )
+    );
+    width: 320px; height: 72px; border-radius: 16px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<h1>WebKit renderer abort</h1>
+<p>If you are reading this with the panel below rendered, the engine survived.
+   In WebKit the tab dies before paint (<code>SIGABRT</code> in
+   <code>WebCore::Style::Color::resolvedColor()</code>, reached from
+   <code>applyValueBackgroundColor</code>).</p>
+
+<div class="dock-plate"></div>
+
+<p id="out">…</p>
+<script>
+  // Runs only if the renderer is still alive.
+  document.getElementById('out').textContent =
+    'survived — computed background: ' +
+    getComputedStyle(document.querySelector('.dock-plate')).backgroundColor;
+</script>
