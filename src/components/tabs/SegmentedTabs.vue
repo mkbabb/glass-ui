@@ -27,15 +27,6 @@ import {
 // Motion weight is the sole drag-enrichment axis.
 import type { Motion } from "../_shared/axes";
 import { useMotionAxis } from "../_shared/useMotionAxis";
-// The pill indicator (`<div>` below) composes `.glass-lens`, whose Chromium refraction
-// composite is gated behind the runtime latch `:root[data-glass-refract="on"]` set by
-// `armGlassRefract()`. That latch is an APPLICATION-ROOT bootstrap concern — one public
-// `armGlassRefract()` call per app root (the package-root export) arms every `.glass-lens`
-// surface at once. This component deliberately does NOT arm it: a single component must not
-// silently mutate the document root, and underline/Select-only consumers must not load or
-// execute the mount-time probe path for a lens they never paint. Without the bootstrap the
-// lens degrades to its documented blur-only floor.
-
 // WAAPI keyframes can't dereference custom properties — resolve literals at
 // runtime via the cascade root.
 function readToken(name: string, fallback: string): string {
@@ -378,7 +369,6 @@ const { rovingTabindex, onStripKeydown } = useTabRovingFocus({
                 // belongs on this measured box so geometry, clipping, and motion share
                 // one owner and one settled scale.
                 'glass-capsule',
-                'glass-lens',
                 dragEnabled && 'glass-drag-grabbable',
                 dragEnabled && drag.dragging.value && 'glass-drag-lift',
             ]"

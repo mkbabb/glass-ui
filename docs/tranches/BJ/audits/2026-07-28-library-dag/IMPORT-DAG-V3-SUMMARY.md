@@ -1,9 +1,9 @@
 # Glass UI repository graph — schema v3
 
-Observed: 2026-07-29T18:08:54.763Z
+Observed: 2026-07-29T19:04:42.299Z
 
 Deterministic receipt (the `observedAt` value is excluded):
-`a3c252fd3b5e47fa307563db3d4aec132de629514234a1b3cb9bb7a5ee7887af`
+`f2133ed209b266c02f302496eda11d46e95df5f33106b519dd9141b87560aaff`
 
 Owner manifest receipt: `e19b663fb671e046727469832be1d160095eb5cb7d3ba54aa2818277043100ba`
 
@@ -30,12 +30,12 @@ package export key maps to exactly one owner.
 
 | Measure | Count |
 | --- | ---: |
-| Nodes | 1497 |
-| Internal edges | 3579 |
+| Nodes | 1496 |
+| Internal edges | 3577 |
 | External edges | 1963 |
 | Owners | 101 |
 | Public entries | 72 |
-| Public symbols | 1285 |
+| Public symbols | 1283 |
 | Unresolved local references | 0 |
 | Nonliteral local references | 0 |
 | Dynamic nonlocal module references | 0 |
@@ -59,7 +59,7 @@ Physical/content types remain separate from lifecycle provenance:
 | `generated-artifact` | 2 |
 | `license` | 2 |
 | `package-output` | 137 |
-| `source` | 1154 |
+| `source` | 1153 |
 | `style` | 131 |
 | `virtual-placeholder` | 8 |
 
@@ -71,7 +71,7 @@ Physical/content types remain separate from lifecycle provenance:
 | `directory` | 20 |
 | `generated-by-write` | 5 |
 | `missing-runtime-placeholder` | 8 |
-| `repository-file` | 1327 |
+| `repository-file` | 1326 |
 
 `repository-file` is canonical source content even when a tool rewrites it
 (for example, `package.json`). `generated-by-write` requires a real modeled
@@ -92,7 +92,7 @@ never supplies their bytes, hash, or type.
 | `build-config` | 14 |
 | `demo` | 195 |
 | `package-surface` | 2 |
-| `product` | 694 |
+| `product` | 693 |
 | `repository-boundary` | 173 |
 | `scripts-generators` | 15 |
 | `tests` | 213 |
@@ -110,8 +110,8 @@ queries directly joinable without conflating them.
 | `asset-url` | 8 |
 | `build-entry` | 69 |
 | `css-import` | 113 |
-| `eager-runtime` | 3346 |
-| `export-from` | 476 |
+| `eager-runtime` | 3345 |
+| `export-from` | 475 |
 | `file-read` | 32 |
 | `file-write` | 4 |
 | `finite-dynamic` | 2 |
@@ -132,9 +132,9 @@ queries directly joinable without conflating them.
 
 | View | Edges | File cycles | Owner cycles |
 | --- | ---: | ---: | ---: |
-| `eagerRuntime` | 2220 | 2 | 3 |
-| `buildLoad` | 3450 | 10 | 3 |
-| `ownership` | 3579 | 10 | 3 |
+| `eagerRuntime` | 2218 | 2 | 3 |
+| `buildLoad` | 3448 | 10 | 3 |
+| `ownership` | 3577 | 10 | 3 |
 
 `eagerRuntime` excludes type-only, lazy, CSS/asset, and generator reach.
 `buildLoad` adds compile/load/package/generator relations.

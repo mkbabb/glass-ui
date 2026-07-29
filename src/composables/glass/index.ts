@@ -29,13 +29,6 @@ export { vSpecular } from "./vSpecular";
 // name `useCanvas2D` (+ the `useCanvasLifecycle` alias) and added
 // `resolveCanvasColor` (the shared `light-dark()`→`rgb()` Canvas2D resolver).
 // Constellation + FourierField compose it.
-// The `.glass-lens` refraction runtime latch — replaces the WebKit-lying
-// `@supports (backdrop-filter: url(#…))` gate. `armGlassRefract()` sets
-// `:root[data-glass-refract="on"]` once per session only when a functional probe proves
-// the url()-filter raster path paints (Chromium yes, WebKit accept-and-drop no). Consuming
-// apps arm it once at bootstrap; `sideEffects: ['*.css']` prunes module-load side effects,
-// so the arm is explicit (kin to `installDarkModeSync`).
-export { armGlassRefract, supportsBackdropRefract } from "./supportsBackdropRefract";
 export { useCanvas2D, useCanvasLifecycle, resolveCanvasColor } from "./canvas2d";
 export type {
     Canvas2DFrame,

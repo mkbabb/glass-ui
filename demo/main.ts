@@ -3,14 +3,6 @@ import "./demo.css";
 import { createApp, nextTick, type App } from "vue";
 import App_ from "./App.vue";
 import { router } from "./router";
-import { armGlassRefract } from "@glass/composables/glass";
-
-// Arm the `.glass-lens` refraction latch once at bootstrap — sets
-// `:root[data-glass-refract="on"]` iff the url()-filter raster path paints (Chromium yes,
-// WebKit's `@supports`-lying accept-and-drop no). Idempotent + DOM-ready-deferred; with the
-// latch OFF the lens degrades to its blur base. Explicit because `sideEffects: ['*.css']`
-// prunes module-load side effects (kin to how a consumer installs dark-mode sync).
-armGlassRefract();
 
 declare global {
     interface Window {

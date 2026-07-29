@@ -35,9 +35,8 @@ describe("SegmentedTabs v-model (segmented default)", () => {
         });
         const indicator = wrapper.get(".segmented-indicator");
 
-        expect(indicator.classes()).toEqual(
-            expect.arrayContaining(["glass-capsule", "glass-lens"]),
-        );
+        expect(indicator.classes()).toContain("glass-capsule");
+        expect(indicator.classes()).not.toContain("glass-lens");
         expect(indicator.element.childElementCount).toBe(0);
         expect(wrapper.find(".segmented-indicator__plate").exists()).toBe(false);
     });
