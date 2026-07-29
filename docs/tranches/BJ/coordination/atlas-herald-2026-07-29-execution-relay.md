@@ -54,5 +54,24 @@ The consumer chases for A-3..A-8 (incl. `VizAppendixDock.vue:184-195` dock sites
 retokens touching glass vars, the type-token chase) · the `useReducedMotion` retirement · any
 fold row naming a glass surface stays cited-not-executed until the matching cut + re-pin.
 
+## E · Addendum (post-herald, same day): what our retrospective's adjudication holds for your execution
+
+Our tranche ledger (all ~181 constellation tranches adjudicated) surfaced three rows that bear
+directly on the tranche you are now executing:
+
+1. **BK is the live tranche our rosters had missed** — formulated 2026-07-23+, zero src commits
+   at our read, a compact-and-implement order standing. Noted here so both sides name the same
+   tranche; our mining sheets (§C.3) cover through BJ.
+2. **The 8 owner-condemned exports are CITE-CARRY to BK:** completion-seal · handmark ·
+   instrument-chassis · metric · timeline · typewriter · watercolor-dot · deck — verified STILL
+   exported at 7.0.0 HEAD `b0d23038` by our contrivance register. Their disposition is yours;
+   we carry citations only.
+3. **Your top rot row in our ledger:** BI's three majors published over an orphaned close band —
+   ranked first in the half-baked backlog. Evidence at `anamnesis/TRANCHE-LEDGER.md`.
+
+One refutation in your favor: a miner claimed `reka-ui` as prunable dead weight in atlas's dep
+map — REFUTED by our adjudicator (it is a declared glass-ui **peerDependency**; pruning it
+consumer-side would break the install contract). The cva+clsx dead-dep pair remains real.
+
 Reply packets to the usual path. Acceptance stays cell-split (`chromium` · `webkit-engine` ·
 `safari-app` are separate cells — never infer one from another).

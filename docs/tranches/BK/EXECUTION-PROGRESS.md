@@ -33,6 +33,14 @@ PART I §3; the §7 owner-glances → ASK g4-g11 with ratified defaults). Gate s
 ⊕⁵ THE PERFECTION SEAL (2026-07-28): every critic/reader miss cured on disk — TR §00 SE-1…SE-10 the
 ledger; this cursor's deltas: 12-15 exploded · #37 RETIRED-UNBUILT · #25 → Φ5 · the g4-g12 fires-at
 column · the #7 unit-case re-class · the #66/#68/#57/#24 cell corrections below.
+⊕⁷ THE INBOUND FOLD (2026-07-29, order pin `62575d4e`, disk HEAD `9c805e42`—docs-only past the
+pin): the three execution-entry registers adjudicated and seated (value.js O-19 31 · atlas herald
+23 incl. its mid-fold §E addendum · speedtest BK-dispositions 32; **86/86**, zero silent drops —
+the critic's three misses cured by the lead same night)—the per-item register is
+`docs/tranches/BJ/addenda/2026-07-24-refinement/INBOUND-2026-07-29.md` (the executing session's
+single read); outbound receipts `docs/tranches/BJ/coordination/glass-outbound-2026-07-29-*`;
+gate seats +0, rows 90 unchanged; every NEW-SEAT is a TR ⊕⁷ one-liner at
+#22/#23/#31/#35/#43/#47/#52/#61/#64/#68/#76/#78/#80/#84/#87 + the §C value/atlas/speedtest rows.
 
 ## Φ0 — executable this hour
 
@@ -153,7 +161,7 @@ column · the #7 unit-case re-class · the #66/#68/#57/#24 cell corrections belo
 | 62 | W-COLOCATION | Φ6 | UNSTARTED | TR#62 → WAVES:840 + DIRECTORY-SHAPE | G-COLOCATED (+≤500 arm) · G-ONE-NAME (name-token arm); the 8-file carve |
 | 64 | TIER-3 RESIDUAL | Φ6 | UNSTARTED | TR#64 → CWT-3 fold §7 (J-1 re-scope) | —(shadcn-abrogation checklist the standing prelude — ⊕² the finite eight-family ledger with DECLARATION-CLEARED ∥ IDIOM-CLEARED proved separately; `bg-page-audit-roster.md` the index) |
 | 69 | W-PERF | Φ6 | UNSTARTED | TR#69 → RECONCILIATION:85/:196 + FEEDBACK-LEDGER:84 | seats shared with #60; F-6 blur budget owed here; ⊕² + the resting-rung cost (+33 µs/rung, ≈+1.07 ms/frame at 32 plates — zero at rest under §0.S's engage-only mount; this row owns the many-surface ceiling) |
-| 76 | W-CONSUMER-BAND | Φ6/7 | UNSTARTED | TR#76 → TR§C (three sources, ONE batch per repo) | G-RELAY; keyframes S1 FIRST; publish-closes (L2); ⊕² the universe is GENERATED (15 roots · 6 subpaths · 3 mirrors · 1 negative control), never a remembered list; +3 repo rows (words · muster · slides-k); ✦² words rows = adopt/migration evidence (carousel KEEP, A-2); ✦³ muster = PROTOTYPE, counts never bind (SL-3); metric-family migrations (keyframes + **sci-active** ⊕⁴, ON-7.x BLOCKING — lane B §1.3, SL-2); ⊕⁴ the census-instrument false-negative class cured before the ship-time re-run (lane B §3.1 + DECK-RELOCATION §6) |
+| 76 | W-CONSUMER-BAND | Φ6/7 | UNSTARTED | TR#76 → TR§C (three sources, ONE batch per repo) | G-RELAY; keyframes S1 FIRST; publish-closes (L2); ⊕² the universe is GENERATED (15 roots · 6 subpaths · 3 mirrors · 1 negative control), never a remembered list; +3 repo rows (words · muster · slides-k); ✦² words rows = adopt/migration evidence (carousel KEEP, A-2); ✦³ muster = PROTOTYPE, counts never bind (SL-3); metric-family migrations (keyframes + **sci-active** ⊕⁴, ON-7.x BLOCKING — lane B §1.3, SL-2); ⊕⁴ the census-instrument false-negative class cured before the ship-time re-run (lane B §3.1 + DECK-RELOCATION §6); ⊕⁷ the 2026-07-29 inbound fold lands here—§C value/atlas/speedtest rows grown (TR ⊕⁷), o19 A-20 recorded at the LIB-SEAM batch, `INBOUND-2026-07-29.md` the single read |
 
 ## Φ7 — the close
 
