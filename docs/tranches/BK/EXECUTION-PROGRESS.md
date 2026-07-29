@@ -41,12 +41,20 @@ the critic's three misses cured by the lead same night)—the per-item register 
 single read); outbound receipts `docs/tranches/BJ/coordination/glass-outbound-2026-07-29-*`;
 gate seats +0, rows 90 unchanged; every NEW-SEAT is a TR ⊕⁷ one-liner at
 #22/#23/#31/#35/#43/#47/#52/#61/#64/#68/#76/#78/#80/#84/#87 + the §C value/atlas/speedtest rows.
+⊕⁸ THE POST-GRAPH INBOUND RECEIPT (2026-07-29, boundary `9c43b5d7`):
+Atlas-Q/value supplement consumed once at
+`docs/tranches/BJ/coordination/glass-inbound-2026-07-29-atlas-q-value-receipt.md`.
+Receiver repairs route to #89/#39/#31/#65/#66/#76; workbench hierarchy to
+#56/#58/#59; finite-family abrogation to #64/#65/#66/#76; the Dock rider to
+#47/#31; and the consumer-painted indicator rider to
+#84/#32/#71/#26/#55/#76. Six Atlas-owned exclusions remain rejected. This is
+an acceptance pointer only: rows stay 90, gates +0, and no cursor state moves.
 
 ## Φ0 — executable this hour
 
 | # | wave | Φ | state | spec of record | gates |
 |---|---|---|---|---|---|
-| 1 | W-SURFACE-PIN | Φ0 | UNSTARTED | TR#1 → RECONCILIATION §2 r2; spec `:483` | —(RED cell `surface.root.exact` ×2 projects; cure = #2 by subtraction; re-pin C-10; adjudicate the 38-file sweep, J-11) |
+| 1 | W-SURFACE-PIN | Φ0 | IN-FLIGHT (`code_state=landed-candidate` at `858c1087` + cures `0557703f`/`950a703f`/`f3a83c9b`; `evidence_state=captured-pending-exact-Luna-reattestation`; G/H and #2 subtraction still owed) | TR#1 → RECONCILIATION §2 r2; spec `:483` | —(RED cell `surface.root.exact` ×2 projects; cure = #2 by subtraction; re-pin C-10; adjudicate the 38-file sweep, J-11) |
 | 2 | W-REFRACT-DELETE | Φ0 | UNSTARTED | TR#2 → FROST §3 hit 1 + WAVES:559 + BAND-MATERIAL:1265 | G-REFRACT-TOTAL (retires at Φ0 close); owner-reversible in one word |
 | 3 | W-CAPTURE-MOTION | Φ0 | UNSTARTED | TR#3 → RECONCILIATION §5/§8-17 + the ⊕⁵ mode design at the row (SE-5) | —(instrument; precedes every motion π; motion mode = attribute absent + fixed frame series) |
 | 4 | TRACK-STRAYS + PARKED-RECONCILE | Φ0 | UNSTARTED | TR#4 (J-14 census: 250 · 24 non-doc · 10 outside docs/) | G-CITE-COMMITTED born-RED until landed; + the 5199→5400 line; ✦² audit corpus + canon salvage COMMITTED at `e277ea42` (re-scope); still stray: `card-raw.json` + the stage-2 working set; re-census at Φ0 |
@@ -57,7 +65,7 @@ gate seats +0, rows 90 unchanged; every NEW-SEAT is a TR ⊕⁷ one-liner at
 
 | # | wave | Φ | state | spec of record | gates |
 |---|---|---|---|---|---|
-| 75 | W-STOP-HOOK | Φ1 | UNSTARTED | TR#75 → RATIFICATION §4 r1 | born-RED: no `hooks` key in either settings file; crons stay dead |
+| 75 | W-STOP-HOOK | Φ1 | IN-FLIGHT (`code_state=landed` machine-locally; `evidence_state=captured-pending-exact-Luna-reattestation`; G/H owed) | TR#75 → RATIFICATION §4 r1 | born-RED banked: no hooks key before the write; now one project-local ignored Stop hook, zero global hooks, zero active resume crons; 14-class strict-JSON matrix passes, clone-local caveat retained |
 | 90 | STAGE-2 DELTA FOLD | Φ1 | ⊕² LANDED 2026-07-28 (fold fired at the arm banks; ✦² adjudicated — TR amended in place) — CLOSED at the lead's seal commit + seat census, at the owner's go | TR#90 ⊕² — all three halves banked plus four later inputs (EXPERIMENTS+addendum · CURES · PROCEDURAL-APOTHEOSES · the codex meta-audit) | residue, owner+trigger each: canon LAND (#78, salvage committed `e277ea42`) · R-7 OWED-CAPTURE ×3 (the owner; before the consuming #67 arms) · Safari-app cells (#10) · device-fps + loupe L-3 (#67) · row-42 fringe (#32); ✦² the three dead drafts DELETED, four arm banks retained provenance; ✦³ SEALED-in-substance 2026-07-28 — the critic's five misses cured (TR §00 SL-1…SL-8), round 2 (`192879b7`) folded, blob receipts salvaged; the CLOSED transition still lands at the lead's seal commit + seat census, at the owner's go |
 
 ## Φ2
@@ -73,7 +81,7 @@ gate seats +0, rows 90 unchanged; every NEW-SEAT is a TR ⊕⁷ one-liner at
 |---|---|---|---|---|---|
 | 9 | W-GATE-TRUTH (+C-13 wiring +W1/W2 redress) | Φ3 | UNSTARTED | TR#9 → WAVES:257 + CWT-3 §5 | owns the ONE suite figure + detector (J-10); the 55 lane-minted born-RED = close-battery class; easing 11→≤7; ⊕² + the B4/B5 trap-gate verify clause (the 38-file sweep) + the measured governed register stated beside the doc budget (48 active/5 reserved, detector named — with #65) |
 | 10 | π-SUITE | Φ3 | UNSTARTED | TR#10 → PROCEDURAL C8; port 5400 | protocol: P0 mode-assertion · σ≈50 admissibility · corner-crop cell · build freshness per receipt; ⊕⁴ five named π rows seeded (U-35: the 4 BG SHAs + the Safari `var()` re-answer) · U-36 batch-retire · U-37 device-parity RETIRED-BY-RULING · U-38 corner-AA (cure owner #22) |
-| 11 | W-PROCESS-CURE | Φ3 | UNSTARTED | TR#11 → WAVES:291 | —(tri-fold law · modelId assertion · DesignSync clause corrected to *component* authoring · ONE-burndown rule · ⊕² VALIDATION §4 rules 6-8 seated · ⊕² three-field row state · the unimplemented-`--check` lesson) |
+| 11 | W-PROCESS-CURE | Φ3 | UNSTARTED | TR#11 → WAVES:291 + BK PLAN §3 owner cutover | —(historical tri-fold provenance + prospective Sol/Luna supersession · actual modelId assertion · frontend-design discipline for component authoring · ONE-burndown rule · ⊕² VALIDATION §4 rules 6-8 seated · ⊕² three-field row state · the unimplemented-`--check` lesson) |
 | 12 | W-BG-CLOSE-RECONCILE ⊕⁵ | Φ3 | UNSTARTED | TR#12 → RECONCILIATION §8-9 | —(the BG join + U-05 absorb-list; walk BG FINAL.md's 60 names) |
 | 13 | UF-LEDGER ⊕⁵ | Φ3 | UNSTARTED | TR#13 → RECONCILIATION §8-10 | —(78 rows → LANDED/OWNED/RETIRED, one pass) |
 | 14 | PHANTOM-REPAIR ⊕⁵ | Φ3 | UNSTARTED | TR#14 → RECONCILIATION §8-11 | —(doc side: REGISTRY re-points · ECOUTE false-gap strikes · the discharge class) |

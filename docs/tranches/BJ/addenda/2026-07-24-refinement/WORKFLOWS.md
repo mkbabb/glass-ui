@@ -18,8 +18,26 @@ reboot, without this conversation. Read this + `EXEC-STATE.md` and nothing is lo
 
 **The wall protocol (standing, from EXEC-STATE):** salvage-first — read the journal before relaunching
 (cached results may exist even when the run "failed"); resume with `resumeFromRunId` in-session; only
-failed seats re-run. Model law for resumed runs: cached Opus seats stand as the Opus arm of the
-tri-fold; only the Fable arm + adjudication are owed on top.
+failed seats re-run. Historical pre-cutover replay law: cached Opus seats stay
+as immutable Opus provenance; they are not relaunched or relabelled. Any still
+owed post-cutover review follows the prospective law below.
+
+**Prospective model law — effective after the `bk-phi0-20260729-01` original
+four-result run plus its late #75 truth receipt boundary (five actual seats)
+on 2026-07-29.** New judgment, critique, design,
+orchestration, and final adjudication seats invoke GPT Sol at xhigh. New
+mechanical extraction, census, test-execution, manifest-application, and
+document-mechanics seats invoke GPT Luna at xhigh. Frontend design uses one
+blind Sol design plus one blind Luna design under the frontend-design
+discipline, followed by a fresh Sol adjudication. Every receipt records the
+actual invoked model; if the exact required model is not callable, the seat
+stays undispatched rather than accepting a substitute or false label.
+Historical Fable/Opus/Sonnet artifacts remain immutable provenance and are not
+renamed. The present deviation window is being enumerated in
+`docs/tranches/BK/execution/2026-07-29-phi0/RESULTS.md`; exact Luna
+re-attestation remains a convergence fence until its receipt lands. No global replacement
+implements this transition, and no new Claude model-bearing seat launches
+after the two already-started Φ0 challenges receipt.
 
 ---
 
@@ -62,7 +80,7 @@ EXEC-STATE census row; membership stands, aggregates do not).
 
 | run | id | script (`./wf/`) | banking target on close |
 |---|---|---|---|
-| BK Φ0 truth | `bk-phi0-20260729-01` | `bk-phi0-execution.wf.js` | **REGISTERED, 0/4 results, 0 errors.** Two isolated Truth seats (#1 governance salvage · pre-source graph-v3) → two independent gestalt challenges → lead adjudication. Durable journal: `docs/tranches/BK/execution/2026-07-29-phi0/journal.jsonl`; bank: `docs/tranches/BK/execution/2026-07-29-phi0/RESULTS.md`. No product-source mutation before graph-v3 seals; no row advances before the result census. |
+| BK Φ0 truth | `bk-phi0-20260729-01` | historical registration `bk-phi0-execution.wf.js`; post-cutover cure script `bk-phi0-cures.wf.js` | **ORIGINAL RUN CHALLENGED: 4/4 registered results + late #75 truth 1/1, 0 seat errors; cure rounds 1 and 2 failed honestly; round-3 Sol candidates landed, exact Luna re-attestation undispatched.** #1 candidate chain is `858c1087`→`0557703f`→`950a703f`→`f3a83c9b` (six-file battery 40/40). Graph-v3 is `9c43b5d7`→`ee5cbcfb`, current receipt `c9274358…`, 1,497/3,576/1,953, focused 16/16 twice, stable after ignored build output; #75's 14-class machine-local cure passes with its clone-local caveat. The committed original script is byte-preserved; the companion cure script requires one exact Luna xhigh mechanical re-attestation over every deviation-window Sol receipt before Challenge G/H. Luna is not exposed in the current collaboration runtime, so that seat remains truthfully undispatched; Terra is not substituted or relabelled. No new run, registry, wave, or gate exists. Durable journal: `docs/tranches/BK/execution/2026-07-29-phi0/journal.jsonl`; bank: `docs/tranches/BK/execution/2026-07-29-phi0/RESULTS.md`. No product-source mutation, G/H dispatch, or convergence before the Luna receipt; no row closes before cure evidence and lead adjudication. |
 
 | run | id | script (`./wf/`) | banking target on close |
 |---|---|---|---|
@@ -101,6 +119,7 @@ the shard files sit at the SAME absolute paths (prompts embed them).
    list. Harvest any `{"type":"result"}` lines into the banking targets named in the run ledger —
    by seat identity, never size-rank (VALIDATION §4 rule 3).
 3. Re-seed missing seats: copy the script from `./wf/`, relaunch (same session: `resumeFromRunId`;
-   new session: fresh run — the tri-fold law says cached/banked Opus material is the Opus arm, never
-   re-run it; author only the missing arms + adjudication).
+   new session: fresh run). Cached/banked historical Opus/Fable/Sonnet material remains immutable
+   provenance and is never relabelled or needlessly replayed; any genuinely missing post-cutover
+   seat follows the prospective Sol/Luna law above.
 4. Execute the boundary duties above before citing any lane's output.

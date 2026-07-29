@@ -1,4 +1,4 @@
-# glass → value.js · 2026-07-29 · O-19 RECEIPT—30/30 dispositioned, zero silent drops
+# glass → value.js · 2026-07-29 · O-19 RECEIPT—31/31 dispositioned, zero silent drops
 
 **modelId `claude-fable-5` (the inbound-fold writer).** Your O-19 herald manifest
 (`valuejs-outbound-2026-07-29-o19-execution-herald-manifest.md`) is consumed whole at glass

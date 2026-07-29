@@ -3,15 +3,32 @@
 **Purpose: nothing is lost, nothing is redone.** Read this before dispatching anything. Update it when a
 batch lands. This is the crash bootstrap.
 
-Date 2026-07-24 · HEAD at audit `0371836d` · phase: **tranche development only, no source edits land**.
+Historical baseline: 2026-07-24 · HEAD at audit `0371836d` · phase then:
+**tranche development only, no source edits land**. Current state is **BK
+EXECUTION** at `docs/tranches/BK/EXECUTION-PROGRESS.md`; this file remains the
+durable crash bootstrap and ruling history.
 
 ---
 
 ## STANDING CONSTRAINTS
 
 - **Maximum four workflows per batch.** Owner-set. Exceeding it is what killed two prior runs.
-- **Model law — OWNER RULING 2026-07-24, standing and final: ALL agents use Opus 5. No Fable seats
-  anywhere, in any role.** This supersedes every earlier split. It is also the empirically correct call:
+- **MODEL CUTOVER — OWNER SUPERSESSION 2026-07-29, prospective from the
+  `bk-phi0-20260729-01` original four-result run plus late #75 truth boundary
+  (five actual seats).** Judgment, critique, design,
+  orchestration, and final adjudication use GPT Sol xhigh; mechanical
+  extraction, census, test execution, manifest application, and document
+  mechanics use GPT Luna xhigh. Frontend design is one blind Sol design plus
+  one blind Luna design under the frontend-design discipline, followed by a
+  fresh Sol adjudication. Every receipt records the model actually invoked; an
+  unavailable required model is not substituted or relabelled. Historical
+  Fable/Opus/Sonnet artifacts remain immutable provenance. This later direct
+  owner word supersedes the 2026-07-24/25 model laws and the 2026-07-28
+  no-supersession conflict record **prospectively only**; their historical
+  receipts and facts remain intact. No new Claude-bearing seat launches after
+  the two Φ0 challenges already in flight at the boundary.
+- **HISTORICAL model law — OWNER RULING 2026-07-24: ALL agents use Opus 5. No Fable seats
+  anywhere, in any role.** This superseded every earlier split at the time. It was also the empirically correct call:
   Fable 5 quota died mid-run twice and took 48/57 and 5/6 seats with it.
 - **SAFARI IS LIVE (2026-07-24 ~23:53 ET).** Remote automation enabled; `safaridriver` returns a session.
   Drive it with plain W3C WebDriver over HTTP — no Playwright, no deps. Probe script:
@@ -22,7 +39,7 @@ Date 2026-07-24 · HEAD at audit `0371836d` · phase: **tranche development only
   Measured: Playwright-WebKit crashes 5/5; **real Safari 26.4 renders every route perfectly** (302 nodes on
   `/`, matching Chromium exactly). Bank `webkit-engine` and `safari-app` as separate cells; never infer one
   from the other. This inverted `W-WEBKIT-CRASH` from a product S0 to a harness defect.
-- **THE TRI-FOLD MODEL LAW — OWNER ECOUTE-MOI 2026-07-25, supersedes the 07-24 all-Opus ruling.**
+- **HISTORICAL TRI-FOLD MODEL LAW — OWNER ECOUTE-MOI 2026-07-25, superseded the 07-24 all-Opus ruling.**
   Fable 5 orchestrates (the lead session runs Fable). All work of **complexity, design, or novelty** runs
   tri-fold: **two instances — one Fable, one Opus 5 — complete the task independently; a Fable
   adjudicator then agglomerates the pair, with serious sagacity and incredulity, into an apotheosis.**
@@ -57,8 +74,9 @@ Date 2026-07-24 · HEAD at audit `0371836d` · phase: **tranche development only
   `wf_50bff562-da7` died 14/25 (wall + a fold bug: null lanes not filtered). Tier-2 `wf_aaa19aee-da2`
   32/46 (all benches + most jurors done; terminals died). Both resume TRI-FOLD: cached Opus seats = the
   Opus arm; a Fable arm + Fable adjudicator complete the law.
-- **SOL AND LUNA ARE DONE. CLAUDE OWNS BI AND BJ — OWNER RULING 2026-07-25, standing and final.**
-  The Sol/Codex audit thread and the Luna mechanical seat are dissolved. Consequences, all binding:
+- **HISTORICAL: SOL AND LUNA ARE DONE. CLAUDE OWNS BI AND BJ — OWNER RULING 2026-07-25.**
+  The Sol/Codex audit thread and the Luna mechanical seat were dissolved. The
+  consequences below governed until the 2026-07-29 supersession:
   - **The model law is void.** No seat is Sol x-high or Luna x-high. Every seat is Opus 5 (the 07-24
     ruling stands). `model-law RED` is struck as a status everywhere it appears — it was never a
     product defect, and the seat it demanded no longer exists.
@@ -336,7 +354,8 @@ question — "how many more ecoute-moi's must this take" — is answered by §1 
 `wf_1a9b1bd8-dad` closes: every ≥3-times-said theme gets the friction named and the one structural
 change that retires it.
 
-**Labor law restated (supersedes nothing — sharpens the tri-fold):** Opus for all banausic and manual
+**HISTORICAL labor law for the formulation runs below (superseded prospectively
+by the 2026-07-29 MODEL CUTOVER at the top of this file):** Opus for all banausic and manual
 labor; Fable adjudicates in aggregated, batched passes. ALL design work: Fable ∥ Opus 5 author
 independently — **frontend design authoring always through the frontend design plugin (DesignSync)** —
 then a Fable agglomerates the two into a choosy apotheosis, scrupulously.
@@ -404,9 +423,10 @@ now, not during BK); (b) unowned/absent specs are authored now (GF-FOURIER — N
 roster blocker #5; W-DESIGN-CANON — the canon body itself); (c) NOVELTIES.md rows ruled EXPERIMENT get
 a stage-2 prototyping pass at its bank, same law; (d) capture-time ACCEPTANCE glances with ratified
 defaults (r7 A/B, F50, DUSK) are NOT design — they stay execution-side, per RATIFICATION §6; a value
-solved BEHIND a born-RED gate is likewise acceptance arithmetic, not deferred design. **The instrument
-is the thrice design workflow**: Fable ∥ Opus 5 author/prototype independently (frontend via the
+solved BEHIND a born-RED gate is likewise acceptance arithmetic, not deferred design. **The historical
+instrument used for this completed formulation bank was the thrice design workflow**: Fable ∥ Opus 5 author/prototype independently (frontend via the
 frontend design plugin — DesignSync), a Fable agglomerates into the choosy apotheosis, scrupulously.
+New design seats follow the 2026-07-29 Sol/Luna cutover; this paragraph records provenance only.
 The stage-2 delta fold amends TERMINAL-ROSTER + BK so no design-deferred row survives into execution.
 Engine: `wf/design-now.wf.js` → banks `DESIGN-NOW.md`.
 
@@ -433,13 +453,17 @@ mechanical order of first moves):
    protects everything after it).
 
 **Execution laws in force** (restated once for the bootstrap; EXEC-STATE sections own the full
-text): tri-fold labor law (Opus banausic with `model:` declared + modelId asserted by prefix; Fable
-adjudicates; DesignSync for frontend design) · ≤4 workflows/batch, browser seats serialized · the
+text): the prospective 2026-07-29 model cutover (Sol xhigh for judgment/design/orchestration/
+adjudication; Luna xhigh for mechanical seats; blind Sol + blind Luna frontend designs under the
+frontend-design discipline, then fresh Sol adjudication; actual invoked model recorded) ·
+≤4 workflows/batch, browser seats serialized · the
 wall protocol (salvage-first, `resumeFromRunId`, bank by seat identity) · one owner per file per
 cut · live-verified = captured DELTA (screenshot + paired π), never a commit-message claim ·
 no masking fallbacks · clean breaks, consumers update in THEIR tranches · the close runs
 **`--run release`** · publish/deploy AUTHORIZED at the close chain (standing since the BJ
-greenlight) · codex = occasional audit evidence only, we drive.
+greenlight). The historical “occasional audit only” role restriction is
+superseded prospectively by the MODEL CUTOVER above; its evidence-adjudication
+discipline remains.
 
 ---
 
@@ -462,11 +486,13 @@ occasionally, for audits. Otherwise we control and drive."
    all annotation-stripped — lands at **Φ0 row #1** from the banked stash, per PROOF-SWEEP lane A §4's
    REJECT path. The dual-60-roster conflict dies with the rejection: `BK/gates/ROSTER.md` is the ONE
    roster of the user-mandated ceiling.
-3. **THE CODEX ROLE LAW (standing):** codex is an OCCASIONAL AUDIT instrument — its findings arrive as
+3. **HISTORICAL CODEX ROLE LAW for the 2026-07-28 ratification (superseded
+   prospectively by the 2026-07-29 MODEL CUTOVER):** codex was an OCCASIONAL AUDIT instrument — its findings arrived as
    evidence, adjudicated with greps, never as process law; **Claude controls and drives** (the
    tri-fold). The BK `PLAN.md` §3 conflict record is RESOLVED by this word: no Sol/Luna supersession
    was issued; the claimed one is dead. Codex-authored edits to tracked files are adjudicated
-   ADOPT/REVERT/HOLD before any commit carries them — the lane-A discipline is the permanent template.
+   ADOPT/REVERT/HOLD before any commit carries them — the lane-A discipline remains the permanent
+   evidence discipline, while the named model routing is historical.
 
 ---
 
@@ -536,7 +562,9 @@ Second round of words, same sitting (the owner ruling on the delivered list):
 
 The 07-28 codex audit corpus (`docs/tranches/BJ/audits/2026-07-28-*/`, five dirs +
 `BK/AUDIT-REFRESH-2026-07-28.md` + two coordination outbounds) is **EVIDENCE, not law** — the owner's
-direction was "read … to aid in your judgements," and the Sol/Luna dissolution stands. Ruling:
+direction was "read … to aid in your judgements," and the Sol/Luna dissolution stood for that
+completed fold. The later 2026-07-29 MODEL CUTOVER supersedes its model routing prospectively; the
+factual rulings below remain historical evidence. Ruling:
 
 - **ADOPTED as factual input** (stage-2 fold adjudicates each with greps): the corrected import-DAG v2
   (890 nodes / 2,308 internal edges, receipt `1f8124e4…81ed`; pass-1's 2,182-edge count dead) · the
@@ -547,10 +575,10 @@ direction was "read … to aid in your judgements," and the Sol/Luna dissolution
   W-DESIGN-CANON-APOTHEOSIS/`) — answers the canon-body landability question · the five
   pre-implementation gates (state/public-surface/graph-v3/migration/baseline — all map onto extant
   roster rows) · `verify:governed` 48-active+5-reserved receipt · the hotfix ledger.
-- **REJECTED as process law**: "route to GPT Sol x-high / GPT Luna x-high," "stop before canonical
+- **HISTORICALLY REJECTED as process law for the 2026-07-28 fold**: "route to GPT Sol x-high / GPT Luna x-high," "stop before canonical
   mutation if Luna is unavailable," "do not renew the Fable/Opus model phases" — void under the
-  2026-07-25 dissolution and the tri-fold law (both owner words, both later-or-senior). The stage-2
-  tri-fold proceeds; historical logs stay literal provenance.
+  then-controlling 2026-07-25 dissolution and tri-fold law. The completed stage-2 tri-fold and its
+  logs stay literal provenance; this rejection does not govern post-cutover seats.
 - **CONTESTED, ruled at the fold**: the audit's KEEP list vs the ratified record — instrument-chassis
   (the owner's twice-issued DELETE outranks any audit pass), WatercolorDot (RELOCATE ratified; the
   audit's rename-and-keep is an argument, not a ruling), deck (RE-HEAR — aligned), carousel (re-grep
