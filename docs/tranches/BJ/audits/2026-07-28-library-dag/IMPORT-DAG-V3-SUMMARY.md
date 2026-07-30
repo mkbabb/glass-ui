@@ -1,9 +1,9 @@
 # Glass UI repository graph — schema v3
 
-Observed: 2026-07-30T04:32:55.857Z
+Observed: 2026-07-30T05:29:37.796Z
 
 Deterministic receipt (the `observedAt` value is excluded):
-`917b6b636e29b5ff67be115d89a4ad503056fa8f770c1d1586755a55deede786`
+`fc6c13a327c80a2f4785910b80a95aaf984c314d7770349a5c43c19bab8ec984`
 
 Owner manifest receipt: `e19b663fb671e046727469832be1d160095eb5cb7d3ba54aa2818277043100ba`
 

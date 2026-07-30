@@ -264,6 +264,44 @@ function literalString(node) {
     return null;
 }
 
+function unwrapTransparentSyntax(node) {
+    let current = node;
+    while (
+        current &&
+        (ts.isParenthesizedExpression(current) ||
+            ts.isAsExpression(current) ||
+            ts.isTypeAssertionExpression(current) ||
+            ts.isSatisfiesExpression(current) ||
+            ts.isNonNullExpression(current))
+    ) {
+        current = current.expression;
+    }
+    return current;
+}
+
+function canonicalNumericProperty(node) {
+    const current = unwrapTransparentSyntax(node);
+    if (!ts.isNumericLiteral(current) || !/^(0|[1-9]\d*)$/.test(current.text)) {
+        return null;
+    }
+    const value = Number(current.text);
+    return Number.isSafeInteger(value) && String(value) === current.text
+        ? current.text
+        : null;
+}
+
+function exactPropertyKey(node, allowIdentifier = true) {
+    let current = unwrapTransparentSyntax(node);
+    if (ts.isComputedPropertyName(current)) {
+        return exactPropertyKey(current.expression, false);
+    }
+    const string = literalString(current);
+    if (string !== null) return string;
+    const numeric = canonicalNumericProperty(current);
+    if (numeric !== null) return numeric;
+    return allowIdentifier && ts.isIdentifier(current) ? current.text : null;
+}
+
 function literalWithFallback(node) {
     const direct = literalString(node);
     if (direct !== null) return { value: direct, conditional: false };
@@ -448,12 +486,16 @@ function createBindingResolver(sourceFile, options = {}) {
         kind = "variable",
         parameterIndex = null,
         defaultInitializer = null,
+        propertyDefaults = [],
     ) => {
         if (ts.isIdentifier(name)) {
             scope.bindings.set(name.text, {
                 kind,
                 initializer,
                 propertyPath,
+                propertyDefaults,
+                assignmentRhs: [],
+                rootDefaultInitializer: defaultInitializer,
                 iterate,
                 tainted: false,
                 taintedFsMember: null,
@@ -473,8 +515,11 @@ function createBindingResolver(sourceFile, options = {}) {
                     registerPattern(element.name, scope, null);
                     continue;
                 }
-                const property =
-                    element.propertyName && (element.propertyName.text ?? literalString(element.propertyName));
+                const property = element.propertyName
+                    ? exactPropertyKey(element.propertyName)
+                    : ts.isIdentifier(element.name)
+                      ? element.name.text
+                      : null;
                 const shorthand = ts.isIdentifier(element.name) ? element.name.text : null;
                 registerPattern(
                     element.name,
@@ -484,7 +529,8 @@ function createBindingResolver(sourceFile, options = {}) {
                     iterate,
                     kind,
                     parameterIndex,
-                    element.initializer ?? defaultInitializer,
+                    defaultInitializer,
+                    [...propertyDefaults, element.initializer ?? null],
                 );
             }
             return;
@@ -499,7 +545,8 @@ function createBindingResolver(sourceFile, options = {}) {
                     iterate,
                     kind,
                     parameterIndex,
-                    element.initializer ?? defaultInitializer,
+                    defaultInitializer,
+                    [...propertyDefaults, element.initializer ?? null],
                 );
             }
         }
@@ -671,8 +718,11 @@ function createBindingResolver(sourceFile, options = {}) {
     const mutationProperty = (node) => {
         if (ts.isPropertyAccessExpression(node)) return node.name.text;
         if (!ts.isElementAccessExpression(node) || !node.argumentExpression) return null;
-        if (ts.isNumericLiteral(node.argumentExpression)) return Number(node.argumentExpression.text);
-        return literalString(node.argumentExpression);
+        const key = exactPropertyKey(node.argumentExpression, false);
+        if (key === null) return null;
+        return canonicalNumericProperty(node.argumentExpression) === null
+            ? key
+            : Number(key);
     };
     const mutationReceiverPrefixes = (node, property = undefined) => {
         const entries = [];
@@ -704,18 +754,24 @@ function createBindingResolver(sourceFile, options = {}) {
         }
         return candidates;
     };
-    const selectMutationReceiver = (node, property, expressionResolver) => {
+    const selectMutationReceivers = (node, property, expressionResolver) => {
         for (const candidate of mutationReceiverPrefixes(node, property)) {
-            const provenance = expressionResolver(candidate.receiver, candidate.receiver);
-            if (
-                provenance.kind === "process-global" ||
-                (provenance.kind === "cjs-module-namespace" &&
-                    fsModules.has(provenance.moduleName))
-            ) {
-                return { provenance, properties: candidate.properties };
+            const resolved = expressionResolver(candidate.receiver, candidate.receiver);
+            const provenances = Array.isArray(resolved) ? resolved : [resolved];
+            const matches = provenances.filter(
+                (provenance) =>
+                    provenance.kind === "process-global" ||
+                    (provenance.kind === "cjs-module-namespace" &&
+                        fsModules.has(provenance.moduleName)),
+            );
+            if (matches.length > 0) {
+                return matches.map((provenance) => ({
+                    provenance,
+                    properties: candidate.properties,
+                }));
             }
         }
-        return { provenance: null, properties: [] };
+        return [];
     };
     const sharedMutations = [];
     const taintTarget = (node) => {
@@ -737,49 +793,59 @@ function createBindingResolver(sourceFile, options = {}) {
         expressionResolver = resolveExpression,
     ) => {
         if (!node) return false;
-        const { provenance, properties } = selectMutationReceiver(
+        const receivers = selectMutationReceivers(
             node,
             property,
             expressionResolver,
         );
-        if (!provenance) return false;
-        if (provenance.kind !== "process-global") return false;
-        if (
-            properties.length === 0 ||
-            properties.length > 1 ||
-            properties.some((value) => typeof value !== "string")
-        ) {
-            globalProcess.tainted = true;
-        } else if (properties[0] === "cwd") {
-            globalProcess.cwdTainted = true;
-        } else {
-            globalProcess.tainted = true;
+        let matched = false;
+        for (const { provenance, properties } of receivers) {
+            if (provenance.kind !== "process-global") continue;
+            matched = true;
+            if (
+                properties.length === 0 ||
+                properties.length > 1 ||
+                properties.some((value) => typeof value !== "string")
+            ) {
+                globalProcess.tainted = true;
+            } else if (properties[0] === "cwd") {
+                globalProcess.cwdTainted = true;
+            }
         }
-        return true;
+        return matched;
     };
     const markCjsModuleMutation = (
         node,
         property = undefined,
         expressionResolver = resolveExpression,
     ) => {
-        const { provenance, properties } = selectMutationReceiver(
+        const receivers = selectMutationReceivers(
             node,
             property,
             expressionResolver,
         );
-        if (!provenance) return false;
-        if (provenance.kind !== "cjs-module-namespace" || !fsModules.has(provenance.moduleName)) {
-            return false;
+        let matched = false;
+        for (const { provenance, properties } of receivers) {
+            if (
+                provenance.kind !== "cjs-module-namespace" ||
+                !fsModules.has(provenance.moduleName)
+            ) {
+                continue;
+            }
+            matched = true;
+            const rootKey = provenance.cjsRoot;
+            const taint = cjsNamespaceTaints.get(rootKey) ?? {
+                all: false,
+                members: new Set(),
+            };
+            if (properties.length === 1 && typeof properties[0] === "string") {
+                taint.members.add(properties[0]);
+            } else {
+                taint.all = true;
+            }
+            cjsNamespaceTaints.set(rootKey, taint);
         }
-        const rootKey = provenance.cjsRoot;
-        const taint = cjsNamespaceTaints.get(rootKey) ?? { all: false, members: new Set() };
-        if (properties.length === 1 && typeof properties[0] === "string") {
-            taint.members.add(properties[0]);
-        } else {
-            taint.all = true;
-        }
-        cjsNamespaceTaints.set(rootKey, taint);
-        return true;
+        return matched;
     };
     const assignmentLeaves = (node, visit) => {
         if (!node) return;
@@ -903,6 +969,13 @@ function createBindingResolver(sourceFile, options = {}) {
     };
     const markWrites = (node) => {
         if (ts.isBinaryExpression(node) && assignmentOperators.has(node.operatorToken.kind)) {
+            if (node.operatorToken.kind === ts.SyntaxKind.EqualsToken && ts.isIdentifier(node.left)) {
+                const record = lookup(node.left.text, node.left);
+                if (record) {
+                    record.assignmentRhs ??= [];
+                    record.assignmentRhs.push(node.right);
+                }
+            }
             assignmentLeaves(node.left, censusWriteLeaf);
         } else if (
             (ts.isPrefixUnaryExpression(node) || ts.isPostfixUnaryExpression(node)) &&
@@ -1059,7 +1132,7 @@ function createBindingResolver(sourceFile, options = {}) {
         if (ts.isCallExpression(node)) {
             if (
                 node.expression.kind === ts.SyntaxKind.ImportKeyword &&
-                node.arguments.length === 1
+                (node.arguments.length === 1 || node.arguments.length === 2)
             ) {
                 const literal = literalString(node.arguments[0]);
                 const evaluated =
@@ -1132,8 +1205,11 @@ function createBindingResolver(sourceFile, options = {}) {
     const initialProperty = (node) => {
         if (ts.isPropertyAccessExpression(node)) return node.name.text;
         if (!ts.isElementAccessExpression(node) || !node.argumentExpression) return null;
-        if (ts.isNumericLiteral(node.argumentExpression)) return Number(node.argumentExpression.text);
-        return literalString(node.argumentExpression);
+        const key = exactPropertyKey(node.argumentExpression, false);
+        if (key === null) return null;
+        return canonicalNumericProperty(node.argumentExpression) === null
+            ? key
+            : Number(key);
     };
     const applyInitialProperties = (origin, properties) => {
         let current = origin;
@@ -1148,53 +1224,127 @@ function createBindingResolver(sourceFile, options = {}) {
         }
         return current;
     };
-    const projectInitialObjectProperty = (node, property, rest, seen) => {
+    const projectInitialObjectProperty = (
+        node,
+        property,
+        rest,
+        defaults,
+        seen,
+        allowAssignments,
+    ) => {
         const matches = [];
         for (const entry of node.properties) {
-            if (ts.isSpreadAssignment(entry) || !entry.name || entry.name.kind === ts.SyntaxKind.ComputedPropertyName) {
+            if (ts.isSpreadAssignment(entry) || !entry.name) {
                 return { kind: "local" };
             }
             if (!ts.isPropertyAssignment(entry) && !ts.isShorthandPropertyAssignment(entry)) {
                 return { kind: "local" };
             }
-            const name = entry.name.text ?? literalString(entry.name);
+            const name = exactPropertyKey(entry.name);
             if (typeof name !== "string") return { kind: "local" };
             if (String(name) === String(property)) matches.push(entry);
         }
+        const segmentDefault = defaults[0] ?? null;
         if (matches.length > 1) return { kind: "local" };
-        if (matches.length === 0) return missingInitialOrigin;
+        if (matches.length === 0) {
+            return segmentDefault
+                ? projectInitialOrigin(
+                      segmentDefault,
+                      segmentDefault,
+                      seen,
+                      rest,
+                      defaults.slice(1),
+                      allowAssignments,
+                  )
+                : missingInitialOrigin;
+        }
         const entry = matches[0];
+        const value = ts.isPropertyAssignment(entry) ? entry.initializer : entry.name;
+        if (ts.isIdentifier(value) && value.text === "undefined") {
+            return segmentDefault
+                ? projectInitialOrigin(
+                      segmentDefault,
+                      segmentDefault,
+                      seen,
+                      rest,
+                      defaults.slice(1),
+                      allowAssignments,
+                  )
+                : missingInitialOrigin;
+        }
         return projectInitialOrigin(
-            ts.isPropertyAssignment(entry) ? entry.initializer : entry.name,
+            value,
             entry,
             seen,
             rest,
+            defaults.slice(1),
+            allowAssignments,
         );
     };
-    const projectInitialArrayElement = (node, property, rest, seen) => {
+    const projectInitialArrayElement = (
+        node,
+        property,
+        rest,
+        defaults,
+        seen,
+        allowAssignments,
+    ) => {
         const index =
             typeof property === "number"
                 ? property
                 : typeof property === "string" && /^\d+$/.test(property)
                   ? Number(property)
                   : -1;
+        const segmentDefault = defaults[0] ?? null;
         if (!Number.isInteger(index) || index < 0 || index >= node.elements.length) {
-            return missingInitialOrigin;
+            return segmentDefault
+                ? projectInitialOrigin(
+                      segmentDefault,
+                      segmentDefault,
+                      seen,
+                      rest,
+                      defaults.slice(1),
+                      allowAssignments,
+                  )
+                : missingInitialOrigin;
         }
-        if (
-            node.elements.some(
-                (element) => !element || ts.isOmittedExpression(element) || ts.isSpreadElement(element),
-            )
-        ) {
+        if (node.elements.some((element) => element && ts.isSpreadElement(element))) {
             return { kind: "local" };
         }
-        return projectInitialOrigin(node.elements[index], node.elements[index], seen, rest);
+        const element = node.elements[index];
+        const value = unwrapTransparentSyntax(element);
+        if (
+            !element ||
+            ts.isOmittedExpression(element) ||
+            (value && ts.isIdentifier(value) && value.text === "undefined")
+        ) {
+            return segmentDefault
+                ? projectInitialOrigin(
+                      segmentDefault,
+                      segmentDefault,
+                      seen,
+                      rest,
+                      defaults.slice(1),
+                      allowAssignments,
+                  )
+                : missingInitialOrigin;
+        }
+        return projectInitialOrigin(
+            element,
+            element,
+            seen,
+            rest,
+            defaults.slice(1),
+            allowAssignments,
+        );
     };
     const projectInitialOrigin = (
         node,
         useNode = node,
         seen = new Set(),
         properties = [],
+        defaults = [],
+        allowAssignments = true,
     ) => {
         if (!node) return { kind: "local" };
         let current = node;
@@ -1204,7 +1354,13 @@ function createBindingResolver(sourceFile, options = {}) {
             if (record) {
                 if (seen.has(record)) return { kind: "local" };
                 if (["variable", "parameter"].includes(record.kind)) {
-                    return projectInitialBinding(record, seen, properties);
+                    return projectInitialBinding(
+                        record,
+                        seen,
+                        properties,
+                        defaults,
+                        allowAssignments,
+                    );
                 }
                 return applyInitialProperties(immutableProvenance(record), properties);
             }
@@ -1221,6 +1377,8 @@ function createBindingResolver(sourceFile, options = {}) {
                 current.expression,
                 seen,
                 [property, ...properties],
+                [null, ...defaults],
+                allowAssignments,
             );
         }
         if (ts.isObjectLiteralExpression(current)) {
@@ -1229,7 +1387,9 @@ function createBindingResolver(sourceFile, options = {}) {
                 current,
                 properties[0],
                 properties.slice(1),
+                defaults,
                 seen,
+                allowAssignments,
             );
         }
         if (ts.isArrayLiteralExpression(current)) {
@@ -1238,7 +1398,9 @@ function createBindingResolver(sourceFile, options = {}) {
                 current,
                 properties[0],
                 properties.slice(1),
+                defaults,
                 seen,
+                allowAssignments,
             );
         }
         return applyInitialProperties(
@@ -1246,33 +1408,105 @@ function createBindingResolver(sourceFile, options = {}) {
             properties,
         );
     };
-    const projectInitialBinding = (record, seen = new Set(), properties = []) => {
+    const projectInitialBindingVariants = (
+        record,
+        seen = new Set(),
+        properties = [],
+        defaults = [],
+        allowAssignments = true,
+    ) => {
         if (!record || !["variable", "parameter"].includes(record.kind)) {
-            return applyInitialProperties(immutableProvenance(record), properties);
+            return [applyInitialProperties(immutableProvenance(record), properties)];
         }
-        if (initialOrigins.has(record) && properties.length === 0) {
-            return initialOrigins.get(record);
-        }
-        const initializer = record.initializer;
+        if (seen.has(record)) return [{ kind: "local" }];
         const nextSeen = new Set(seen).add(record);
-        let projected = initializer
-            ? projectInitialOrigin(
-                  initializer,
-                  initializer,
-                  nextSeen,
-                  [...record.propertyPath, ...properties],
-              )
-            : missingInitialOrigin;
-        if (projected === missingInitialOrigin && record.defaultInitializer) {
-            projected = projectInitialOrigin(
-                record.defaultInitializer,
-                record.defaultInitializer,
-                nextSeen,
-                properties,
+        const roots = [];
+        if (record.initializer) roots.push(record.initializer);
+        else if (record.rootDefaultInitializer ?? record.defaultInitializer) {
+            roots.push(record.rootDefaultInitializer ?? record.defaultInitializer);
+        }
+        if (allowAssignments) roots.push(...(record.assignmentRhs ?? []));
+        const projections = roots
+            .map((root) =>
+                projectInitialOrigin(
+                    root,
+                    root,
+                    nextSeen,
+                    [...record.propertyPath, ...properties],
+                    [...(record.propertyDefaults ?? []), ...defaults],
+                    false,
+                ),
+            )
+            .filter((origin) => origin !== missingInitialOrigin);
+        return projections.length > 0 ? projections : [{ kind: "local" }];
+    };
+    const projectInitialVariants = (
+        node,
+        useNode = node,
+        seen = new Set(),
+        properties = [],
+        defaults = [],
+        allowAssignments = true,
+    ) => {
+        if (!node) return [{ kind: "local" }];
+        let current = node;
+        while (transparentInitialWrapper(current)) current = current.expression;
+        if (ts.isIdentifier(current)) {
+            const record = lookup(current.text, useNode);
+            if (record && ["variable", "parameter"].includes(record.kind)) {
+                return projectInitialBindingVariants(
+                    record,
+                    seen,
+                    properties,
+                    defaults,
+                    allowAssignments,
+                );
+            }
+        }
+        if (ts.isPropertyAccessExpression(current) || ts.isElementAccessExpression(current)) {
+            const property = initialProperty(current);
+            if (property === null) return [{ kind: "local" }];
+            return projectInitialVariants(
+                current.expression,
+                current.expression,
+                seen,
+                [property, ...properties],
+                [null, ...defaults],
+                allowAssignments,
             );
         }
-        const origin = projected === missingInitialOrigin ? { kind: "local" } : projected;
-        if (properties.length === 0) initialOrigins.set(record, immutableProvenance(origin));
+        return [
+            projectInitialOrigin(
+                current,
+                useNode,
+                seen,
+                properties,
+                defaults,
+                allowAssignments,
+            ),
+        ];
+    };
+    const projectInitialBinding = (
+        record,
+        seen = new Set(),
+        properties = [],
+        defaults = [],
+        allowAssignments = true,
+    ) => {
+        if (initialOrigins.has(record) && properties.length === 0 && allowAssignments) {
+            return initialOrigins.get(record);
+        }
+        const projections = projectInitialBindingVariants(
+            record,
+            seen,
+            properties,
+            defaults,
+            allowAssignments,
+        );
+        const origin = projections[0] ?? { kind: "local" };
+        if (properties.length === 0 && allowAssignments) {
+            initialOrigins.set(record, immutableProvenance(origin));
+        }
         return origin;
     };
     const knownPathValue = (node, useNode = node) => {
@@ -1378,7 +1612,7 @@ function createBindingResolver(sourceFile, options = {}) {
                 record.tainted = true;
             }
             const initialResolver = (node, useNode = node) =>
-                resolveExpression(node, useNode, new Set(), true);
+                projectInitialVariants(node, useNode, new Set());
             for (const mutation of sharedMutations) {
                 applySharedMutation(mutation, initialResolver);
             }
@@ -1754,7 +1988,11 @@ export function extractScriptReferences(
                 typeOnly: node.isTypeOnly || symbols.every(({ typeOnly }) => typeOnly),
                 symbols,
             });
-        } else if (ts.isCallExpression(node) && node.expression.kind === ts.SyntaxKind.ImportKeyword) {
+        } else if (
+            ts.isCallExpression(node) &&
+            node.expression.kind === ts.SyntaxKind.ImportKeyword &&
+            (node.arguments.length === 1 || node.arguments.length === 2)
+        ) {
             const specifier = node.arguments[0] && literalString(node.arguments[0]);
             if (specifier !== null && specifier !== undefined) {
                 add(specifier, "literal-dynamic", node);
@@ -2955,6 +3193,7 @@ function auditTargetUsage(
             current &&
             (ts.isParenthesizedExpression(current) ||
                 ts.isAsExpression(current) ||
+                ts.isTypeAssertionExpression(current) ||
                 ts.isSatisfiesExpression(current) ||
                 ts.isNonNullExpression(current))
         ) {
@@ -2987,7 +3226,11 @@ function auditTargetUsage(
         const imported = unwrap(current.expression);
         if (!ts.isCallExpression(imported)) return false;
         const dynamicImport = isExactTargetDynamicImport(imported);
-        return dynamicImport.singletonTarget && isDirectAwaitImport(imported);
+        return (
+            dynamicImport.singletonTarget &&
+            isDirectAwaitImport(imported) &&
+            (isStandaloneDiscardedAwait(node) || isNamespaceBindingInitializer(node))
+        );
     };
     const isTargetNamespace = (node) => {
         const binding = bindingResolver.resolveExpression(node, node);
@@ -3031,10 +3274,22 @@ function auditTargetUsage(
         return false;
     };
     const isNamespaceBindingInitializer = (node) => {
-        const declaration = node.parent;
+        let outer = node;
+        while (
+            outer.parent &&
+            (ts.isParenthesizedExpression(outer.parent) ||
+                ts.isAsExpression(outer.parent) ||
+                ts.isTypeAssertionExpression(outer.parent) ||
+                ts.isSatisfiesExpression(outer.parent) ||
+                ts.isNonNullExpression(outer.parent)) &&
+            outer.parent.expression === outer
+        ) {
+            outer = outer.parent;
+        }
+        const declaration = outer.parent;
         if (
             !ts.isVariableDeclaration(declaration) ||
-            declaration.initializer !== node ||
+            declaration.initializer !== outer ||
             !ts.isIdentifier(declaration.name)
         ) {
             return false;
@@ -3064,11 +3319,29 @@ function auditTargetUsage(
         }
         return Boolean(parent && ts.isAwaitExpression(parent) && parent.expression === current);
     };
+    const isStandaloneDiscardedAwait = (node) => {
+        if (!ts.isAwaitExpression(unwrap(node))) return false;
+        let outer = node;
+        let parent = outer.parent;
+        while (
+            parent &&
+            (ts.isParenthesizedExpression(parent) ||
+                ts.isAsExpression(parent) ||
+                ts.isTypeAssertionExpression(parent) ||
+                ts.isSatisfiesExpression(parent) ||
+                ts.isNonNullExpression(parent)) &&
+            parent.expression === outer
+        ) {
+            outer = parent;
+            parent = parent.parent;
+        }
+        return Boolean(parent && ts.isExpressionStatement(parent) && parent.expression === outer);
+    };
     const isExactTargetDynamicImport = (node) => {
         if (
             !ts.isCallExpression(node) ||
             node.expression.kind !== ts.SyntaxKind.ImportKeyword ||
-            node.arguments.length !== 1
+            (node.arguments.length !== 1 && node.arguments.length !== 2)
         ) {
             return false;
         }
@@ -3465,9 +3738,10 @@ function collectPathParameterContracts(
         const graphResolver = scriptResolvers.get(graphPath);
         const defaultValue = (property) => {
             const record = parameterRecord(graphResolver, build, 0, property);
-            return record?.defaultInitializer
+            const initializer = record?.propertyDefaults?.at(-1) ?? record?.defaultInitializer;
+            return initializer
                 ? evaluatePathExpression(
-                      record.defaultInitializer,
+                      initializer,
                       graphSource,
                       graphPath,
                       repositoryRoot,

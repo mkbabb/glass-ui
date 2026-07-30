@@ -88,6 +88,10 @@ const negativePromiseRows = [
         `import("./vite.utility-emit").then((module) => module.emitComponentUtilities(root));`,
     ],
     [
+        "two-argument import then",
+        `import("./vite.utility-emit", { with: { type: "json" } }).then((module) => module.emitComponentUtilities(root));`,
+    ],
+    [
         "finite stored promise then",
         `const specifier = "./vite.utility-emit"; const promise = import(specifier); promise.then(() => undefined);`,
     ],
@@ -98,6 +102,10 @@ const negativePromiseRows = [
     [
         "direct await target plus nontarget",
         `const specifier = Math.random() ? "./vite.utility-emit" : "node:fs"; await import(specifier);`,
+    ],
+    [
+        "consumed awaited target namespace",
+        `consume(await import("./vite.utility-emit"));`,
     ],
     ["promise passed", `consume(import("./vite.utility-emit"));`],
     ["promise returned", `function escape() { return import("./vite.utility-emit"); }`],
@@ -110,6 +118,7 @@ const directAwaitPromiseRows = [
     ["as-wrapper direct await", `await (import("./vite.utility-emit") as typeof import("./vite.utility-emit"));`],
     ["satisfies-wrapper direct await", `await (import("./vite.utility-emit") satisfies Promise<unknown>);`],
     ["non-null-wrapper direct await", `await (import("./vite.utility-emit")!);`],
+    ["two-argument direct await", `await import("./vite.utility-emit", {});`],
 ] as const;
 
 type ContractFixture = {
@@ -1098,6 +1107,25 @@ describe("graph schema v3", () => {
                 2,
             ],
             [
+                "process simple assignment alias",
+                `import { readdirSync } from "node:fs";
+                 let alias;
+                 alias = process;
+                 alias.cwd = replacement;
+                 readdirSync(process.cwd());`,
+                1,
+            ],
+            [
+                "CJS simple assignment alias",
+                `import { readFileSync } from "node:fs";
+                 const original = require("node:fs");
+                 let alias;
+                 alias = original;
+                 alias.readFileSync = replacement;
+                 original.readFileSync("simple-assignment.txt");`,
+                1,
+            ],
+            [
                 "process exact object origin",
                 `import { readdirSync } from "node:fs";
                  const holder = { process };
@@ -1110,6 +1138,22 @@ describe("graph schema v3", () => {
                 `import { readdirSync } from "node:fs";
                  const holder = [process];
                  holder[0].cwd = replacement;
+                 readdirSync(process.cwd());`,
+                1,
+            ],
+            [
+                "process computed literal object origin",
+                `import { readdirSync } from "node:fs";
+                 const holder = { ["process"]: process };
+                 holder.process.cwd = replacement;
+                 readdirSync(process.cwd());`,
+                1,
+            ],
+            [
+                "process computed literal destructuring origin",
+                `import { readdirSync } from "node:fs";
+                 const { ["process"]: alias } = { ["process"]: process };
+                 alias.cwd = replacement;
                  readdirSync(process.cwd());`,
                 1,
             ],
@@ -1199,8 +1243,153 @@ describe("graph schema v3", () => {
                  original.readFileSync("default-origin.txt");`,
                 1,
             ],
+            [
+                "process parameter object default origin",
+                `import { readdirSync } from "node:fs";
+                 function mutate({ alias } = { alias: process }) {
+                     alias.cwd = replacement;
+                 }
+                 mutate();
+                 readdirSync(process.cwd());`,
+                1,
+            ],
+            [
+                "CJS parameter array default origin",
+                `import { readFileSync } from "node:fs";
+                 const original = require("node:fs");
+                 function mutate([alias] = [original]) {
+                     alias.readFileSync = replacement;
+                 }
+                 mutate();
+                 original.readFileSync("parameter-array-default.txt");`,
+                1,
+            ],
+            [
+                "process nested object default origin",
+                `import { readdirSync } from "node:fs";
+                 function mutate({ nested: { alias } } = { nested: { alias: process } }) {
+                     alias.cwd = replacement;
+                 }
+                 mutate();
+                 readdirSync(process.cwd());`,
+                1,
+            ],
+            [
+                "CJS nested array default origin",
+                `import { readFileSync } from "node:fs";
+                 const original = require("node:fs");
+                 function mutate({ nested: [alias] } = { nested: [original] }) {
+                     alias.readFileSync = replacement;
+                 }
+                 mutate();
+                 original.readFileSync("nested-array-default.txt");`,
+                1,
+            ],
+            [
+                "process parameter array omitted element default",
+                `import { readdirSync } from "node:fs";
+                 function mutate([alias = process] = [,]) {
+                     alias.cwd = replacement;
+                 }
+                 mutate();
+                 readdirSync(process.cwd());`,
+                1,
+            ],
+            [
+                "process parameter array explicit undefined default",
+                `import { readdirSync } from "node:fs";
+                 function mutate([alias = process] = [undefined]) {
+                     alias.cwd = replacement;
+                 }
+                 mutate();
+                 readdirSync(process.cwd());`,
+                1,
+            ],
+            [
+                "CJS parameter array omitted element default",
+                `import { readFileSync } from "node:fs";
+                 const original = require("node:fs");
+                 function mutate([alias = original] = [,]) {
+                     alias.readFileSync = replacement;
+                 }
+                 mutate();
+                 original.readFileSync("array-omitted.txt");`,
+                1,
+            ],
+            [
+                "CJS parameter array explicit undefined default",
+                `import { readFileSync } from "node:fs";
+                 const original = require("node:fs");
+                 function mutate([alias = original] = [undefined]) {
+                     alias.readFileSync = replacement;
+                 }
+                 mutate();
+                 original.readFileSync("array-undefined.txt");`,
+                1,
+            ],
+            [
+                "process nested parameter array omitted element default",
+                `import { readdirSync } from "node:fs";
+                 function mutate({ nested: [alias = process] } = { nested: [,] }) {
+                     alias.cwd = replacement;
+                 }
+                 mutate();
+                 readdirSync(process.cwd());`,
+                1,
+            ],
+            [
+                "CJS nested parameter array explicit undefined default",
+                `import { readFileSync } from "node:fs";
+                 const original = require("node:fs");
+                 function mutate({ nested: [alias = original] } = { nested: [undefined] }) {
+                     alias.readFileSync = replacement;
+                 }
+                 mutate();
+                 original.readFileSync("nested-array-undefined.txt");`,
+                1,
+            ],
+            [
+                "process parent object default precedence",
+                `import { readdirSync } from "node:fs";
+                 function mutate({ nested: { alias = process } = { alias: replacement } } = {}) {
+                     alias.cwd = replacement;
+                 }
+                 mutate();
+                 readdirSync(process.cwd());`,
+                0,
+                ".",
+            ],
+            [
+                "process parent array default precedence",
+                `import { readdirSync } from "node:fs";
+                 function mutate({ nested: [alias = process] = [replacement] } = {}) {
+                     alias.cwd = replacement;
+                 }
+                 mutate();
+                 readdirSync(process.cwd());`,
+                0,
+                ".",
+            ],
+            [
+                "process shallow unrelated member",
+                `import { readdirSync } from "node:fs";
+                 const p = process;
+                 p.env = replacement;
+                 readdirSync(process.cwd());`,
+                0,
+                ".",
+            ],
+            [
+                "process shallow unrelated intrinsic member",
+                `import { readdirSync } from "node:fs";
+                 const p = process;
+                 Reflect.set(p, "env", replacement);
+                 readdirSync(process.cwd());`,
+                0,
+                ".",
+            ],
         ] as const;
-        for (const [label, source, expectedUnmodeled] of sharedIdentityCases) {
+        for (const [label, source, expectedUnmodeled, expectedTarget] of sharedIdentityCases) {
             const fixture = extractScriptReferences(source);
             const operations = extractFileOperations(
                 fixture.sourceFile,
@@ -1210,7 +1399,11 @@ describe("graph schema v3", () => {
                 new Map(),
                 fixture.bindingResolver,
             );
-            expect(operations.operations, label).toEqual([]);
+            expect(operations.operations, label).toEqual(
+                expectedTarget
+                    ? [expect.objectContaining({ operation: "readdirSync", target: expectedTarget })]
+                    : [],
+            );
             expect(operations.unmodeled, label).toHaveLength(expectedUnmodeled);
             expect(
                 operations.unmodeled.map(({ operation }) => operation),
