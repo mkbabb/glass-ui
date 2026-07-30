@@ -681,10 +681,14 @@ function createBindingResolver(sourceFile, options = {}) {
         }
         ts.forEachChild(node, taintTarget);
     };
-    const markGlobalProcessMutation = (node, property = undefined) => {
+    const markGlobalProcessMutation = (
+        node,
+        property = undefined,
+        expressionResolver = resolveExpression,
+    ) => {
         if (!node) return false;
         const { root, properties } = mutationTarget(node, property);
-        const provenance = resolveExpression(root, root);
+        const provenance = expressionResolver(root, root);
         if (provenance.kind !== "process-global") return false;
         if (
             properties.length === 0 ||
@@ -699,9 +703,13 @@ function createBindingResolver(sourceFile, options = {}) {
         }
         return true;
     };
-    const markCjsModuleMutation = (node, property = undefined) => {
+    const markCjsModuleMutation = (
+        node,
+        property = undefined,
+        expressionResolver = resolveExpression,
+    ) => {
         const { root, properties } = mutationTarget(node, property);
-        const provenance = resolveExpression(root, root);
+        const provenance = expressionResolver(root, root);
         if (provenance.kind !== "cjs-module-namespace" || !fsModules.has(provenance.moduleName)) {
             return false;
         }
@@ -910,19 +918,21 @@ function createBindingResolver(sourceFile, options = {}) {
         }
         return { kind: "local" };
     };
-    const resolveRecord = (record, seen) => {
-        if (record?.taintedFsMember) {
+    const initialOrigins = new Map();
+    const resolveRecord = (record, seen, initial = false) => {
+        if (!initial && record?.taintedFsMember) {
             return { ...record.taintedFsMember, kind: "tainted-fs-member" };
         }
-        if (record?.taintedFsNamespace) {
+        if (!initial && record?.taintedFsNamespace) {
             return { ...record.taintedFsNamespace, kind: "tainted-fs-namespace" };
         }
-        if (record?.tainted) return { kind: "local" };
-        if (record?.written) return { kind: "local" };
+        if (!initial && record?.tainted) return { kind: "local" };
+        if (!initial && record?.written) return { kind: "local" };
         const knownValue = parameterValues.get(record) ??
             parameterValues.get(record?.declaration?.getStart(sourceFile));
         if (knownValue !== undefined) return { kind: "known-path", value: knownValue };
         if (!record || record.kind !== "variable") return record ?? { kind: "local" };
+        if (initial) return captureRecord(record, seen, true);
         const initializer = record.initializer ?? record.defaultInitializer;
         if (!initializer || seen.has(record)) return { kind: "local" };
         seen.add(record);
@@ -933,7 +943,7 @@ function createBindingResolver(sourceFile, options = {}) {
         }
         return resolved;
     };
-    function resolveExpression(node, useNode = node, seen = new Set()) {
+    function resolveExpression(node, useNode = node, seen = new Set(), initial = false) {
         if (!node) return { kind: "local" };
         if (
             ts.isParenthesizedExpression(node) ||
@@ -941,10 +951,10 @@ function createBindingResolver(sourceFile, options = {}) {
             ts.isSatisfiesExpression(node) ||
             ts.isNonNullExpression(node)
         ) {
-            return resolveExpression(node.expression, useNode, seen);
+            return resolveExpression(node.expression, useNode, seen, initial);
         }
         if (ts.isAwaitExpression(node)) {
-            const awaited = resolveExpression(node.expression, useNode, seen);
+            const awaited = resolveExpression(node.expression, useNode, seen, initial);
             return awaited.kind === "module-promise"
                 ? { kind: "module-namespace", moduleName: awaited.moduleName }
                 : awaited;
@@ -952,15 +962,17 @@ function createBindingResolver(sourceFile, options = {}) {
         if (ts.isIdentifier(node)) {
             const record = lookup(node.text, useNode);
             if (record) {
-                if (record.taintedFsMember) {
+                if (!initial && record.taintedFsMember) {
                     return { ...record.taintedFsMember, kind: "tainted-fs-member" };
                 }
-                if (record.taintedFsNamespace) {
+                if (!initial && record.taintedFsNamespace) {
                     return { ...record.taintedFsNamespace, kind: "tainted-fs-namespace" };
                 }
-                return record.tainted || record.written
-                    ? { kind: "local" }
-                    : resolveRecord(record, seen);
+                return initial
+                    ? resolveRecord(record, seen, true)
+                    : record.tainted || record.written
+                      ? { kind: "local" }
+                      : resolveRecord(record, seen);
             }
             if (node.text === "require") return { kind: "require-loader", loader: "require" };
             if (node.text === "process" && !globalProcess.tainted) {
@@ -969,12 +981,16 @@ function createBindingResolver(sourceFile, options = {}) {
             return { kind: "local" };
         }
         if (ts.isPropertyAccessExpression(node)) {
-            return member(resolveExpression(node.expression, useNode, seen), node.name.text);
+            const resolved = resolveExpression(node.expression, useNode, seen, initial);
+            return (initial ? originMember : member)(resolved, node.name.text);
         }
         if (ts.isElementAccessExpression(node)) {
             const property = node.argumentExpression && literalString(node.argumentExpression);
             return property
-                ? member(resolveExpression(node.expression, useNode, seen), property)
+                ? (initial ? originMember : member)(
+                      resolveExpression(node.expression, useNode, seen, initial),
+                      property,
+                  )
                 : { kind: "local" };
         }
         if (ts.isCallExpression(node)) {
@@ -998,7 +1014,7 @@ function createBindingResolver(sourceFile, options = {}) {
                     return { kind: "module-promise", moduleName };
                 }
             }
-            const callee = resolveExpression(node.expression, useNode, seen);
+            const callee = resolveExpression(node.expression, useNode, seen, initial);
             if (callee.kind === "create-require-factory") {
                 return { kind: "require-loader", loader: "createRequire" };
             }
@@ -1063,31 +1079,49 @@ function createBindingResolver(sourceFile, options = {}) {
     }
     markWrites(sourceFile);
 
-    const captureRecord = (record, seen = new Set()) => {
+    const captureRecord = (record, seen = new Set(), initial = false) => {
         if (!record || record.kind !== "variable") return immutableProvenance(record);
+        if (initial && initialOrigins.has(record)) return initialOrigins.get(record);
         const initializer = record.initializer ?? record.defaultInitializer;
         if (!initializer || seen.has(record)) return { kind: "local" };
         const nextSeen = new Set(seen).add(record);
-        let resolved = resolveExpression(initializer, initializer, nextSeen);
+        let resolved = resolveExpression(initializer, initializer, nextSeen, initial);
         for (const property of record.propertyPath) {
             if (property === null || property === undefined) return { kind: "local" };
-            resolved = originMember(resolved, property);
+            resolved = (initial ? originMember : member)(resolved, property);
         }
-        return resolved;
+        const origin = immutableProvenance(resolved);
+        if (initial) initialOrigins.set(record, origin);
+        return origin;
     };
-    const applySharedMutation = ({ target, property, whole }) => {
+    const applySharedMutation = (
+        { target, property, whole },
+        expressionResolver = resolveExpression,
+    ) => {
         if (!target) return;
         const mutationProperty = whole ? null : property;
-        const processMutation = markGlobalProcessMutation(target, mutationProperty);
-        const cjsMutation = markCjsModuleMutation(target, mutationProperty);
+        const processMutation = markGlobalProcessMutation(
+            target,
+            mutationProperty,
+            expressionResolver,
+        );
+        const cjsMutation = markCjsModuleMutation(
+            target,
+            mutationProperty,
+            expressionResolver,
+        );
         if (!processMutation && !cjsMutation && whole) taintTarget(target);
     };
     const finalizeWrites = () => {
         if (writesFinalized || finalizingWrites) return;
         finalizingWrites = true;
+        initialOrigins.clear();
+        for (const record of records) {
+            initialOrigins.set(record, captureRecord(record, new Set(), true));
+        }
         for (const record of records) {
             if (!record.written) continue;
-            const origin = immutableProvenance(captureRecord(record));
+            const origin = initialOrigins.get(record) ?? { kind: "local" };
             record.origin = origin;
             if (origin.kind === "fs-member" || origin.kind === "tainted-fs-member") {
                 record.taintedFsMember = origin;
@@ -1104,7 +1138,11 @@ function createBindingResolver(sourceFile, options = {}) {
             }
             record.tainted = true;
         }
-        for (const mutation of sharedMutations) applySharedMutation(mutation);
+        const initialResolver = (node, useNode = node) =>
+            resolveExpression(node, useNode, new Set(), true);
+        for (const mutation of sharedMutations) {
+            applySharedMutation(mutation, initialResolver);
+        }
         finalizingWrites = false;
         writesFinalized = true;
     };
@@ -2756,6 +2794,48 @@ function auditTargetUsage(
             (binding.kind === "module-namespace" && ts.isAwaitExpression(unwrap(node)))
         );
     };
+    const isDirectAwaitImport = (node) => {
+        let current = node;
+        let parent = node.parent;
+        while (
+            parent &&
+            ts.isParenthesizedExpression(parent) &&
+            parent.expression === current
+        ) {
+            current = parent;
+            parent = parent.parent;
+        }
+        return Boolean(parent && ts.isAwaitExpression(parent) && parent.expression === current);
+    };
+    const isExactTargetDynamicImport = (node) => {
+        if (
+            !ts.isCallExpression(node) ||
+            node.expression.kind !== ts.SyntaxKind.ImportKeyword ||
+            node.arguments.length !== 1
+        ) {
+            return false;
+        }
+        const promise = bindingResolver.resolveExpression(node, node);
+        return (
+            promise.kind === "module-promise" &&
+            resolveContractModulePath(
+                repositoryRoot,
+                sourcePath,
+                promise.moduleName,
+                repositoryVisibility,
+            ) === target.sourcePath
+        );
+    };
+    let escapedTargetPromise = false;
+    function inspectTargetPromises(node) {
+        if (isExactTargetDynamicImport(node) && !isDirectAwaitImport(node)) {
+            escapedTargetPromise = true;
+            return;
+        }
+        ts.forEachChild(node, inspectTargetPromises);
+    }
+    inspectTargetPromises(sourceFile);
+    if (escapedTargetPromise) return null;
     const isStableAliasInitializer = (node) => {
         const declaration = node.parent;
         if (!ts.isVariableDeclaration(declaration) || !declaration.initializer) return false;

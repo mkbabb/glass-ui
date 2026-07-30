@@ -13,7 +13,7 @@ import {
 import { createRequire } from "node:module";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
-import { fileURLToPath, pathToFileURL } from "node:url";
+import { fileURLToPath } from "node:url";
 import { beforeAll, describe, expect, it } from "vitest";
 
 import {
@@ -301,7 +301,7 @@ describe("graph schema v3", () => {
         ]);
     });
 
-    it("recognizes child_process aliases and rejects name-only lookalikes plus complete private target proof", async () => {
+    it("recognizes child_process aliases and proves target contracts through public buildGraph", async () => {
         const extracted = extractScriptReferences(`
             import { execFileSync as executeFile, spawn as run } from "node:child_process";
             import * as childProcess from "node:child_process";
@@ -328,166 +328,159 @@ describe("graph schema v3", () => {
             { api: "execFileSync", binding: "executeFile" },
             { api: "execSync", binding: "requiredChildProcess.execSync" },
             { api: "spawn", binding: "run" },
-                { api: "spawnSync", binding: "runSync" },
+            { api: "spawnSync", binding: "runSync" },
         ]);
 
-        const generator = resolve(
-            audit,
-            "build-import-dag-v3.mjs",
-        );
-        const sibling = resolve(
-            audit,
-            `.build-import-dag-v3.private-${process.pid}.mjs`,
-        );
-        const fsPromises = (process as any).getBuiltinModule("fs/promises");
-        try {
-            await fsPromises.copyFile(generator, sibling);
-            const siblingSource = await fsPromises.readFile(sibling, "utf8");
-            await fsPromises.writeFile(
-                sibling,
-                `${siblingSource}\nexport { auditTargetUsage, createBindingResolver, provenTargetCallValue };\n`,
-            );
-            const vm = (process as any).getBuiltinModule("vm");
-            const privateGraph = await vm.runInThisContext(
-                `import(${JSON.stringify(`${pathToFileURL(sibling).href}?private-proof=${Date.now()}`)})`,
-                { importModuleDynamically: vm.constants.USE_MAIN_CONTEXT_DEFAULT_LOADER },
-            );
-            const targetSource = privateGraph.extractScriptReferences(
-                "export function target(_value: string) {}",
-                "fixture-target.ts",
-                null,
-                {},
-                { repositoryRoot: root },
-            );
-            const targetNode = targetSource.sourceFile.statements.find(
-                (node: any) => node.name?.text === "target",
-            );
-            const visibility = {
-                files: new Set(["fixture-target.ts"]),
-                directories: new Set(["."]),
-            };
-            const prove = (
-                source: string,
-                path = "fixture-caller.ts",
-                targetOverride = {
-                    sourcePath: "fixture-target.ts",
-                    exportName: "target",
-                    functionNode: targetNode,
+        const fixtureAudit = "docs/tranches/BJ/audits/2026-07-28-library-dag";
+        const ownerManifest = {
+            schema: "glass-ui-owner-manifest/1",
+            owners: { "fixture/graph": ["**"] },
+            publicEntries: { ".": "fixture/graph" },
+            cycleBaselines: {
+                components: {},
+                projections: {
+                    eagerRuntime: { fileComponents: [], ownerComponents: [] },
+                    buildLoad: { fileComponents: [], ownerComponents: [] },
+                    ownership: { fileComponents: [], ownerComponents: [] },
                 },
-            ) => {
-                const caller = privateGraph.extractScriptReferences(
-                    source,
-                    path,
-                    null,
-                    {},
-                    { repositoryRoot: root },
-                );
-                return privateGraph.provenTargetCallValue(
-                    caller.sourceFile,
-                    caller.bindingResolver,
-                    path,
-                    targetOverride,
-                    0,
-                    root,
-                    visibility,
-                );
-            };
+            },
+        };
+        const styleFoldSource = `
+import { cpSync } from "node:fs";
+import { resolve } from "node:path";
 
-            const localCaller = privateGraph.extractScriptReferences(
-                "function target(_value: string) {}\n target(\"./src\");",
-                "fixture-caller.ts",
-                null,
-                {},
-                { repositoryRoot: root },
+export function copyStyleAssets(root: string) {
+    const srcFonts = resolve(root, "src/fonts");
+    const distStyles = resolve(root, "dist/styles");
+    const distComponents = resolve(root, "dist/components");
+    cpSync(srcFonts, resolve(root, "dist/fonts"), { recursive: true });
+    cpSync(resolve(root, "src/styles"), distStyles, { recursive: true });
+    cpSync(resolve(root, "src/components"), distComponents, { recursive: true });
+    return { srcFonts, distStyles, distComponents };
+}
+`;
+        const utilityEmitSource = `
+import { writeFileSync } from "node:fs";
+import { resolve } from "node:path";
+
+export function emitComponentUtilities(root: string) {
+    writeFileSync(resolve(root, "dist/styles/components.css"), "fixture");
+}
+`;
+        const negativeRows = [
+            [
+                "literal import then",
+                `import("./vite.utility-emit").then((module) => module.emitComponentUtilities(root));`,
+            ],
+            [
+                "finite stored promise then",
+                `const specifier = "./vite.utility-emit"; const promise = import(specifier); promise.then(() => undefined);`,
+            ],
+            [
+                "stored then awaited exact target promise",
+                `const promise = import("./vite.utility-emit"); const namespace = await promise; namespace.emitComponentUtilities(root);`,
+            ],
+            ["promise passed", `consume(import("./vite.utility-emit"));`],
+            ["promise returned", `function escape() { return import("./vite.utility-emit"); }`],
+            ["promise stored in object", `const object = { promise: import("./vite.utility-emit") };`],
+            ["promise stored in array", `const array = [import("./vite.utility-emit")];`],
+            ["promise otherwise escaped", `globalThis.promise = import("./vite.utility-emit");`],
+        ] as const;
+        const baselineStyleAssets = `
+import { emitComponentUtilities } from "./vite.utility-emit";
+const root = process.cwd();
+const { srcFonts, distStyles, distComponents } =
+    (await import("./vite.style-fold")).copyStyleAssets(root);
+emitComponentUtilities(root);
+void srcFonts;
+void distStyles;
+void distComponents;
+`;
+        const makeFixture = (styleAssetsSource: string) => {
+            const temporaryDirectory = mkdtempSync(join(tmpdir(), "glass-graph-v3-contract-"));
+            const outputDirectory = resolve(temporaryDirectory, fixtureAudit);
+            mkdirSync(outputDirectory, { recursive: true });
+            mkdirSync(resolve(temporaryDirectory, "src/components"), { recursive: true });
+            mkdirSync(resolve(temporaryDirectory, "src/composables"), { recursive: true });
+            writeFileSync(resolve(temporaryDirectory, "src/index.ts"), "export const fixture = true;\n");
+            mkdirSync(resolve(temporaryDirectory, "scripts/lib"), { recursive: true });
+            writeFileSync(
+                resolve(temporaryDirectory, "scripts/lib/subpath-policy.mjs"),
+                "export const fixturePolicy = true;\n",
             );
-            const localTarget = localCaller.sourceFile.statements.find(
-                (node: any) => node.name?.text === "target",
+            writeFileSync(
+                resolve(temporaryDirectory, `${fixtureAudit}/OWNER-MANIFEST.json`),
+                `${JSON.stringify(ownerManifest, null, 2)}\n`,
             );
+            writeFileSync(
+                resolve(temporaryDirectory, "package.json"),
+                `${JSON.stringify({ name: "graph-v3-contract-fixture", exports: { ".": "./dist/index.js" } }, null, 2)}\n`,
+            );
+            writeFileSync(resolve(temporaryDirectory, "vite.style-assets.ts"), styleAssetsSource);
+            writeFileSync(resolve(temporaryDirectory, "vite.style-fold.ts"), styleFoldSource);
+            writeFileSync(resolve(temporaryDirectory, "vite.utility-emit.ts"), utilityEmitSource);
+            execFileSync("git", ["init", "-q"], { cwd: temporaryDirectory, stdio: "ignore" });
+            execFileSync("git", ["add", "."], { cwd: temporaryDirectory, stdio: "ignore" });
+            return { temporaryDirectory, outputDirectory };
+        };
+        const graphFor = (fixture: ReturnType<typeof makeFixture>) =>
+            buildGraph({
+                repositoryRoot: fixture.temporaryDirectory,
+                outputDirectory: fixture.outputDirectory,
+            });
+        const hasCopyRead = (fixtureGraph: Awaited<ReturnType<typeof buildGraph>>) =>
+            fixtureGraph.internalEdges.some(
+                ({ source, target, edgeKind, metadata }) =>
+                    source === "vite.style-fold.ts" &&
+                    target === "src/fonts" &&
+                    edgeKind === "generator-read" &&
+                    metadata?.operation === "cpSync",
+            );
+
+        const fixture = makeFixture(baselineStyleAssets);
+        try {
+            const baselineGraph = await graphFor(fixture);
+            expect(baselineGraph.parseErrors).toEqual([]);
+            expect(baselineGraph.summary.unresolvedLocalReferences).toBe(0);
+            expect(baselineGraph.summary.nonliteralLocalReferences).toBe(0);
+            expect(hasCopyRead(baselineGraph)).toBe(true);
             expect(
-                privateGraph.provenTargetCallValue(
-                    localCaller.sourceFile,
-                    localCaller.bindingResolver,
-                    "fixture-caller.ts",
-                    {
-                        sourcePath: "fixture-caller.ts",
-                        exportName: "target",
-                        functionNode: localTarget,
-                    },
-                    0,
-                    root,
-                    visibility,
+                baselineGraph.internalEdges.some(
+                    ({ source, target, edgeKind, metadata }) =>
+                        source === "vite.utility-emit.ts" &&
+                        target === "dist/styles/components.css" &&
+                        edgeKind === "generator-write" &&
+                        metadata?.operation === "writeFileSync",
                 ),
-            ).toBe("./src");
+            ).toBe(true);
 
-            for (const source of [
-                `import { target } from "./fixture-target"; target("./src");`,
-                `import * as namespace from "./fixture-target"; namespace.target("./src");`,
-                `import * as namespace from "./fixture-target"; namespace["target"]("./src");`,
-                `const namespace = require("./fixture-target"); namespace.target("./src");`,
-                `const specifier = "./fixture-target"; const namespace = await import(specifier); namespace.target("./src");`,
-                `import { target } from "./fixture-target"; const alias = (((target as ((value: string) => void)) satisfies ((value: string) => void))!); alias("./src");`,
-                `import { target } from "./fixture-target"; const first = target; const second = (first)!; second("./src");`,
-                `import { target } from "./fixture-target"; target?.("./src");`,
-            ]) {
+            const negativeGraphs = [];
+            for (const [label, escapedPromise] of negativeRows) {
+                writeFileSync(
+                    resolve(fixture.temporaryDirectory, "vite.style-assets.ts"),
+                    `${baselineStyleAssets}\n${escapedPromise}\n`,
+                );
+                negativeGraphs.push({ label, promise: graphFor(fixture) });
+            }
+            for (const { label, promise } of negativeGraphs) {
+                const fixtureGraph = await promise;
+                expect(fixtureGraph.parseErrors, label).toEqual([]);
+                expect(fixtureGraph.summary.unresolvedLocalReferences, label).toBe(0);
+                expect(fixtureGraph.summary.nonliteralLocalReferences, label).toBe(0);
+                expect(hasCopyRead(fixtureGraph), label).toBe(true);
                 expect(
-                    prove(source, source.includes("await") ? "fixture-caller.mjs" : "fixture-caller.ts"),
-                    source,
-                ).toBe("./src");
+                    fixtureGraph.internalEdges.some(
+                        ({ source, target, edgeKind, metadata }) =>
+                            source === "vite.utility-emit.ts" &&
+                            target === "dist/styles/components.css" &&
+                            edgeKind === "generator-write" &&
+                            metadata?.operation === "writeFileSync",
+                    ),
+                    label,
+                ).toBe(false);
             }
-
-            for (const source of [
-                `import { target } from "./fixture-target"; target();`,
-                `import { target } from "./fixture-target"; target("./a"); target("./b");`,
-                `import { target } from "./fixture-target"; target(dynamicPath);`,
-                `import * as namespace from "./fixture-target"; let mutable = namespace; mutable = other; mutable.target("./src");`,
-                `import * as namespace from "./fixture-target"; namespace[dynamicKey]("./src");`,
-                `import * as namespace from "./fixture-target"; take(namespace); namespace.target("./src");`,
-                `import { target } from "./fixture-target"; take(target);`,
-                `import { target } from "./fixture-target"; function escape() { return target; }`,
-                `import { target } from "./fixture-target"; target.call(null, "./src");`,
-                `import { target } from "./fixture-target"; target.apply(null, ["./src"]);`,
-                `import { target } from "./fixture-target"; target.bind(null)("./src");`,
-                `import { target } from "./fixture-target"; new target("./src");`,
-                "import { target } from \"./fixture-target\"; target`./src`;",
-                `import { target } from "./fixture-target"; const object = { target };`,
-                `import { target } from "./fixture-target"; const array = [target];`,
-                `import { target } from "./fixture-target"; Reflect.apply(target, null, ["./src"]);`,
-            ]) {
-                expect(prove(source)).toBeNull();
-            }
-
-            const deferred = privateGraph.extractScriptReferences(
-                `let specifier = "node:fs"; const namespace = await import(specifier); namespace = replacement; namespace.readFileSync("x");`,
-                "fixture-deferred.mjs",
-                null,
-                {},
-                { repositoryRoot: root, deferFinalization: true },
-            );
-            deferred.bindingResolver.setParameterValues(new Map());
-            deferred.bindingResolver.setDynamicImportResolver(() => ({
-                kind: "local",
-                specifiers: ["node:fs"],
-                provenance: "test-finite",
-            }));
-            deferred.bindingResolver.finalizeWrites();
-            deferred.bindingResolver.finalizeWrites();
-            expect(
-                privateGraph.extractFileOperations(
-                    deferred.sourceFile,
-                    "fixture-deferred.mjs",
-                    root,
-                    null,
-                    new Map(),
-                    deferred.bindingResolver,
-                ).unmodeled,
-            ).toEqual([
-                expect.objectContaining({
-                    operation: "readFileSync",
-                    boundary: "tainted-fs-member",
-                }),
-            ]);
         } finally {
-            await fsPromises.rm(sibling, { force: true });
+            rmSync(fixture.temporaryDirectory, { recursive: true, force: true });
         }
     });
 
@@ -713,6 +706,52 @@ describe("graph schema v3", () => {
                 }),
             ]);
         }
+
+        const deferredOutputs = [true, false].map((parameterFirst) => {
+            const deferred = extractScriptReferences(
+                `let specifier; let namespace = await import(specifier); namespace = replacement; namespace.readFileSync("setter-order.txt");`,
+                "fixture-deferred.mjs",
+                null,
+                {},
+                { repositoryRoot: root, deferFinalization: true },
+            );
+            const specifierRecord = deferred.bindingResolver.lookup(
+                "specifier",
+                deferred.sourceFile,
+            );
+            expect(specifierRecord).toBeDefined();
+            const parameterValues = new Map([[specifierRecord, "node:fs"]]);
+            const dynamicResolver = () => ({
+                kind: "nonlocal",
+                specifiers: ["node:fs"],
+                provenance: "test-finite",
+            });
+            if (parameterFirst) {
+                deferred.bindingResolver.setParameterValues(parameterValues);
+                deferred.bindingResolver.setDynamicImportResolver(dynamicResolver);
+            } else {
+                deferred.bindingResolver.setDynamicImportResolver(dynamicResolver);
+                deferred.bindingResolver.setParameterValues(parameterValues);
+            }
+            deferred.bindingResolver.finalizeWrites();
+            deferred.bindingResolver.finalizeWrites();
+            return extractFileOperations(
+                deferred.sourceFile,
+                "fixture-deferred.mjs",
+                root,
+                null,
+                parameterValues,
+                deferred.bindingResolver,
+            );
+        });
+        expect(deferredOutputs[0]).toEqual(deferredOutputs[1]);
+        expect(deferredOutputs[0].operations).toEqual([]);
+        expect(deferredOutputs[0].unmodeled).toEqual([
+            expect.objectContaining({
+                operation: "readFileSync",
+                boundary: "tainted-fs-member",
+            }),
+        ]);
     });
 
     it("does not resolve a shadowing root parameter as the repository root", () => {
@@ -935,6 +974,76 @@ describe("graph schema v3", () => {
         ).toEqual([
             expect.objectContaining({ operation: "readdirSync", target: ".", line: 4 }),
         ]);
+
+        const sharedIdentityCases = [
+            [
+                "process member mutation before alias rebind",
+                `import { readdirSync } from "node:fs";
+                 const original = process;
+                 let alias = original;
+                 alias.cwd = replacement;
+                 alias = replacement;
+                 readdirSync(process.cwd());
+                 readdirSync(original.cwd());
+                 readdirSync(alias.cwd());`,
+            ],
+            [
+                "process alias rebind before member mutation",
+                `import { readdirSync } from "node:fs";
+                 const original = process;
+                 let alias = original;
+                 alias = replacement;
+                 alias.cwd = replacement;
+                 readdirSync(process.cwd());
+                 readdirSync(original.cwd());
+                 readdirSync(alias.cwd());`,
+            ],
+            [
+                "CJS member mutation before alias rebind",
+                `import { readFileSync } from "node:fs";
+                 const original = require("node:fs");
+                 let alias = original;
+                 alias.readFileSync = replacement;
+                 alias = replacement;
+                 original.readFileSync("original-before.txt");
+                 alias.readFileSync("alias-before.txt");`,
+            ],
+            [
+                "CJS alias rebind before member mutation",
+                `import { readFileSync } from "node:fs";
+                 const original = require("node:fs");
+                 let alias = original;
+                 alias = replacement;
+                 alias.readFileSync = replacement;
+                 original.readFileSync("original-after.txt");
+                 alias.readFileSync("alias-after.txt");`,
+            ],
+        ] as const;
+        for (const [label, source] of sharedIdentityCases) {
+            const fixture = extractScriptReferences(source);
+            const operations = extractFileOperations(
+                fixture.sourceFile,
+                "fixture.ts",
+                root,
+                null,
+                new Map(),
+                fixture.bindingResolver,
+            );
+            expect(operations.operations, label).toEqual([]);
+            expect(operations.unmodeled, label).toHaveLength(
+                label.startsWith("process") ? 3 : 2,
+            );
+            expect(
+                operations.unmodeled.map(({ operation }) => operation),
+                label,
+            ).toEqual(
+                expect.arrayContaining(
+                    label.startsWith("process")
+                        ? ["readdirSync", "readdirSync", "readdirSync"]
+                        : ["readFileSync", "readFileSync"],
+                ),
+            );
+        }
     });
 
     it("promotes TypeScript syntactic diagnostics to fail-closed parse errors", () => {
@@ -1117,7 +1226,14 @@ describe("graph schema v3", () => {
         expect(invocations.map(({ api }) => api)).toEqual(
             expect.arrayContaining(["execFileSync", "spawnSync"]),
         );
-        expect(invocations.find(({ api }) => api === "execFileSync")?.argv).toEqual([
+        expect(
+            invocations.find(
+                ({ api, argv }) =>
+                    api === "execFileSync" &&
+                    argv[0]?.target ===
+                        "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
+            )?.argv,
+        ).toEqual([
             expect.objectContaining({
                 target:
                     "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
@@ -1261,7 +1377,7 @@ describe("graph schema v3", () => {
         expect(graph.summary.internalEdges).toBe(3585);
         expect(graph.summary.edgeKindCounts["generator-read"]).toBe(13);
         expect(graph.summary.edgeKindCounts["generator-write"]).toBe(12);
-        expect(graph.summary.unmodeledFileOperations).toBe(273);
+        expect(graph.summary.unmodeledFileOperations).toBe(286);
         expect(graph.summary.nodeKindCounts["generated-by-write"]).toBe(7);
         expect(graph.summary.nodeKindCounts["missing-runtime-placeholder"]).toBe(9);
         expect(
