@@ -456,6 +456,9 @@ function createBindingResolver(sourceFile, options = {}) {
                 iterate,
                 tainted: false,
                 taintedFsMember: null,
+                taintedFsNamespace: null,
+                written: false,
+                propertyWritten: false,
                 scope,
                 declaration: name,
                 parameterIndex,
@@ -650,96 +653,6 @@ function createBindingResolver(sourceFile, options = {}) {
         }
         return { kind: "local" };
     };
-    const originExpression = (node, useNode = node, seen = new Set()) => {
-        if (!node) return { kind: "local" };
-        let current = node;
-        while (
-            ts.isParenthesizedExpression(current) ||
-            ts.isAsExpression(current) ||
-            ts.isSatisfiesExpression(current) ||
-            ts.isNonNullExpression(current)
-        ) {
-            current = current.expression;
-        }
-        if (ts.isIdentifier(current)) {
-            const record = lookup(current.text, useNode);
-            if (record) {
-                if (record.origin) return record.origin;
-                if (record.kind !== "variable" || seen.has(record)) {
-                    return immutableProvenance(record);
-                }
-                const initializer = record.initializer ?? record.defaultInitializer;
-                if (!initializer) return { kind: "local" };
-                let resolved = originExpression(
-                    initializer,
-                    initializer,
-                    new Set(seen).add(record),
-                );
-                for (const property of record.propertyPath) {
-                    if (property === null || property === undefined) return { kind: "local" };
-                    resolved = originMember(resolved, property);
-                }
-                return resolved;
-            }
-            if (current.text === "process") return { kind: "process-global" };
-            return { kind: "local" };
-        }
-        if (ts.isPropertyAccessExpression(current)) {
-            return originMember(
-                originExpression(current.expression, useNode, seen),
-                current.name.text,
-            );
-        }
-        if (ts.isElementAccessExpression(current)) {
-            const property = current.argumentExpression && literalString(current.argumentExpression);
-            return property === null || property === undefined
-                ? { kind: "local" }
-                : originMember(originExpression(current.expression, useNode, seen), property);
-        }
-        return { kind: "local" };
-    };
-    const taintTarget = (node) => {
-        if (!node) return;
-        if (ts.isIdentifier(node)) {
-            const record = lookup(node.text, node);
-            if (record) {
-                const provenance = originExpression(node, node);
-                if (provenance.kind === "fs-member" || provenance.kind === "tainted-fs-member") {
-                    record.taintedFsMember = immutableProvenance(provenance);
-                    record.tainted = true;
-                } else {
-                    record.tainted = true;
-                }
-            }
-            return;
-        }
-        if (ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node)) {
-            taintTarget(node.expression);
-            return;
-        }
-        ts.forEachChild(node, taintTarget);
-    };
-    const markGlobalProcessMutation = (node, property = undefined) => {
-        if (!node) return;
-        const { root, properties } = mutationTarget(node, property);
-        const provenance = originExpression(root, root);
-        if (provenance.kind !== "process-global") return false;
-        if (
-            properties.length === 0 &&
-            ts.isIdentifier(root) &&
-            root.text === "process" &&
-            lookup("process", root) === null
-        ) {
-            globalProcess.tainted = true;
-        } else if (properties.length === 0) {
-            return false;
-        } else if (properties.length === 1 && properties[0] === "cwd") {
-            globalProcess.cwdTainted = true;
-        } else {
-            globalProcess.tainted = true;
-        }
-        return true;
-    };
     const mutationTarget = (node, property = undefined) => {
         let root = node;
         const properties = [];
@@ -754,10 +667,41 @@ function createBindingResolver(sourceFile, options = {}) {
         if (property !== undefined) properties.push(property);
         return { root, properties };
     };
+    const sharedMutations = [];
+    const taintTarget = (node) => {
+        if (!node) return;
+        if (ts.isIdentifier(node)) {
+            const record = lookup(node.text, node);
+            if (record) record.tainted = true;
+            return;
+        }
+        if (ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node)) {
+            taintTarget(node.expression);
+            return;
+        }
+        ts.forEachChild(node, taintTarget);
+    };
+    const markGlobalProcessMutation = (node, property = undefined) => {
+        if (!node) return false;
+        const { root, properties } = mutationTarget(node, property);
+        const provenance = resolveExpression(root, root);
+        if (provenance.kind !== "process-global") return false;
+        if (
+            properties.length === 0 ||
+            properties.length > 1 ||
+            properties.some((value) => typeof value !== "string")
+        ) {
+            globalProcess.tainted = true;
+        } else if (properties[0] === "cwd") {
+            globalProcess.cwdTainted = true;
+        } else {
+            globalProcess.tainted = true;
+        }
+        return true;
+    };
     const markCjsModuleMutation = (node, property = undefined) => {
         const { root, properties } = mutationTarget(node, property);
-        if (properties.length === 0 && property === undefined) return false;
-        const provenance = originExpression(root, root);
+        const provenance = resolveExpression(root, root);
         if (provenance.kind !== "cjs-module-namespace" || !fsModules.has(provenance.moduleName)) {
             return false;
         }
@@ -820,45 +764,112 @@ function createBindingResolver(sourceFile, options = {}) {
             assignmentLeaves(node.left, visit);
         }
     };
-    const markWriteLeaf = (leaf) => {
-        const processMutation = markGlobalProcessMutation(leaf);
-        const cjsMutation = markCjsModuleMutation(leaf);
-        if (!processMutation && !cjsMutation) taintTarget(leaf);
+    const recordMutation = (target, property = undefined, whole = false) => {
+        if (!target) return;
+        sharedMutations.push({ target, property, whole });
+    };
+    const censusWriteLeaf = (leaf) => {
+        if (ts.isIdentifier(leaf)) {
+            const record = lookup(leaf.text, leaf);
+            if (record) record.written = true;
+            else if (leaf.text === "process") recordMutation(leaf, undefined, true);
+            return;
+        }
+        let root = leaf;
+        while (ts.isPropertyAccessExpression(root) || ts.isElementAccessExpression(root)) {
+            root = root.expression;
+        }
+        if (ts.isIdentifier(root)) {
+            const record = lookup(root.text, root);
+            if (record) record.propertyWritten = true;
+        }
+        recordMutation(leaf);
+    };
+    const literalObjectShape = (node) => {
+        if (!ts.isObjectLiteralExpression(node)) return null;
+        const properties = [];
+        for (const property of node.properties) {
+            if (!ts.isPropertyAssignment(property) || !property.name) return null;
+            const name = property.name.text ?? literalString(property.name);
+            if (typeof name !== "string" || !ts.isObjectLiteralExpression(property.initializer)) {
+                return null;
+            }
+            properties.push(name);
+        }
+        return properties;
+    };
+    const intrinsicMutator = (node) => {
+        if (!ts.isCallExpression(node) || !ts.isPropertyAccessExpression(node.expression)) {
+            return null;
+        }
+        const receiver = node.expression.expression;
+        const name = node.expression.name.text;
+        if (!ts.isIdentifier(receiver) || !["Object", "Reflect"].includes(receiver.text)) {
+            return null;
+        }
+        if (lookup(receiver.text, receiver) !== null) return null;
+        if (receiver.text === "Object" && name === "defineProperty") {
+            const key = node.arguments[1] && literalString(node.arguments[1]);
+            return { target: node.arguments[0], property: key, whole: key === null || !node.arguments[2] || !ts.isObjectLiteralExpression(node.arguments[2]) };
+        }
+        if (receiver.text === "Object" && name === "defineProperties") {
+            const properties = literalObjectShape(node.arguments[1]);
+            return properties === null
+                ? [{ target: node.arguments[0], whole: true }]
+                : properties.map((property) => ({ target: node.arguments[0], property }));
+        }
+        if (receiver.text === "Object" && name === "assign") {
+            return { target: node.arguments[0], whole: true };
+        }
+        if (receiver.text === "Reflect" && name === "set") {
+            const key = node.arguments[1] && literalString(node.arguments[1]);
+            return { target: node.arguments[0], property: key, whole: key === null };
+        }
+        if (receiver.text === "Reflect" && name === "defineProperty") {
+            const key = node.arguments[1] && literalString(node.arguments[1]);
+            return { target: node.arguments[0], property: key, whole: key === null || !node.arguments[2] || !ts.isObjectLiteralExpression(node.arguments[2]) };
+        }
+        if (receiver.text === "Reflect" && name === "deleteProperty") {
+            const key = node.arguments[1] && literalString(node.arguments[1]);
+            return { target: node.arguments[0], property: key, whole: key === null };
+        }
+        return null;
     };
     const markWrites = (node) => {
         if (ts.isBinaryExpression(node) && assignmentOperators.has(node.operatorToken.kind)) {
-            assignmentLeaves(node.left, markWriteLeaf);
+            assignmentLeaves(node.left, censusWriteLeaf);
         } else if (
             (ts.isPrefixUnaryExpression(node) || ts.isPostfixUnaryExpression(node)) &&
             [ts.SyntaxKind.PlusPlusToken, ts.SyntaxKind.MinusMinusToken].includes(node.operator)
         ) {
-            assignmentLeaves(node.operand, markWriteLeaf);
+            assignmentLeaves(node.operand, censusWriteLeaf);
         } else if (node.kind === ts.SyntaxKind.DeleteExpression) {
-            assignmentLeaves(node.expression, markWriteLeaf);
+            assignmentLeaves(node.expression, censusWriteLeaf);
         } else if (ts.isForInStatement(node) || ts.isForOfStatement(node)) {
             if (!ts.isVariableDeclarationList(node.initializer)) {
-                assignmentLeaves(node.initializer, markWriteLeaf);
+                assignmentLeaves(node.initializer, censusWriteLeaf);
             }
-        } else if (
-            ts.isCallExpression(node) &&
-            ts.isPropertyAccessExpression(node.expression) &&
-            node.expression.name.text === "defineProperty" &&
-            ts.isIdentifier(node.expression.expression) &&
-            node.expression.expression.text === "Object" &&
-            lookup("Object", node.expression.expression) === null
-        ) {
-            const target = node.arguments[0];
-            const property = literalString(node.arguments[1]);
-            if (target) {
-                const processMutation = markGlobalProcessMutation(target, property);
-                const cjsMutation = markCjsModuleMutation(target, property);
-                if (!processMutation && !cjsMutation) taintTarget(target);
+        } else {
+            const mutation = intrinsicMutator(node);
+            if (mutation) {
+                for (const item of Array.isArray(mutation) ? mutation : [mutation]) {
+                    recordMutation(item.target, item.property, item.whole);
+                }
             }
         }
         ts.forEachChild(node, markWrites);
     };
     const member = (base, name) => {
         if (base.tainted) return { kind: "local" };
+        if (base.kind === "tainted-fs-namespace") {
+            return {
+                kind: "tainted-fs-member",
+                moduleName: base.moduleName,
+                member: name,
+                ...(base.cjsRoot ? { cjsRoot: base.cjsRoot } : {}),
+            };
+        }
+        if (base.kind === "tainted-fs-member") return { kind: "local" };
         if (base.kind === "module" || base.kind === "module-namespace") {
             return directImportProvenance(base.moduleName, name);
         }
@@ -903,8 +914,11 @@ function createBindingResolver(sourceFile, options = {}) {
         if (record?.taintedFsMember) {
             return { ...record.taintedFsMember, kind: "tainted-fs-member" };
         }
+        if (record?.taintedFsNamespace) {
+            return { ...record.taintedFsNamespace, kind: "tainted-fs-namespace" };
+        }
         if (record?.tainted) return { kind: "local" };
-        if (record?.origin) return record.origin;
+        if (record?.written) return { kind: "local" };
         const knownValue = parameterValues.get(record) ??
             parameterValues.get(record?.declaration?.getStart(sourceFile));
         if (knownValue !== undefined) return { kind: "known-path", value: knownValue };
@@ -941,7 +955,12 @@ function createBindingResolver(sourceFile, options = {}) {
                 if (record.taintedFsMember) {
                     return { ...record.taintedFsMember, kind: "tainted-fs-member" };
                 }
-                return record.tainted ? { kind: "local" } : resolveRecord(record, seen);
+                if (record.taintedFsNamespace) {
+                    return { ...record.taintedFsNamespace, kind: "tainted-fs-namespace" };
+                }
+                return record.tainted || record.written
+                    ? { kind: "local" }
+                    : resolveRecord(record, seen);
             }
             if (node.text === "require") return { kind: "require-loader", loader: "require" };
             if (node.text === "process" && !globalProcess.tainted) {
@@ -975,15 +994,7 @@ function createBindingResolver(sourceFile, options = {}) {
                           ? evaluated.specifiers[0]
                           : null;
                 const moduleName = resolved;
-                if (
-                    moduleName &&
-                    (childProcessModules.has(moduleName) ||
-                        nodeModuleModules.has(moduleName) ||
-                        fsModules.has(moduleName) ||
-                        pathModules.has(moduleName) ||
-                        processModules.has(moduleName) ||
-                        urlModules.has(moduleName))
-                ) {
+                if (moduleName) {
                     return { kind: "module-promise", moduleName };
                 }
             }
@@ -1000,24 +1011,23 @@ function createBindingResolver(sourceFile, options = {}) {
             }
             if (callee.kind === "require-loader") {
                 const moduleName = node.arguments[0] && literalString(node.arguments[0]);
-            if (
-                moduleName &&
-                (
-                    processModules.has(moduleName) ||
-                    childProcessModules.has(moduleName) ||
-                    nodeModuleModules.has(moduleName) ||
+                if (
+                    moduleName &&
+                    (
+                        processModules.has(moduleName) ||
+                        childProcessModules.has(moduleName) ||
+                        nodeModuleModules.has(moduleName) ||
                         fsModules.has(moduleName) ||
                         pathModules.has(moduleName) ||
-                        processModules.has(moduleName) ||
                         urlModules.has(moduleName) ||
-                    localSpecifierPattern.test(moduleName)
-                )
-            ) {
-                if (processModules.has(moduleName)) {
-                    return { kind: "process-global", moduleName };
-                }
-                return {
-                    kind: "cjs-module-namespace",
+                        localSpecifierPattern.test(moduleName)
+                    )
+                ) {
+                    if (processModules.has(moduleName)) {
+                        return { kind: "process-global", moduleName };
+                    }
+                    return {
+                        kind: "cjs-module-namespace",
                         moduleName,
                         cjsRoot: fsModules.has(moduleName) ? "fs" : moduleName,
                     };
@@ -1028,7 +1038,7 @@ function createBindingResolver(sourceFile, options = {}) {
     }
     const knownPathValue = (node, useNode = node) => {
         const record = ts.isIdentifier(node) ? lookup(node.text, useNode) : null;
-        if (!record || record.tainted) return null;
+        if (!record || record.tainted || record.written) return null;
         const knownValue = parameterValues.get(record) ??
             parameterValues.get(record.declaration?.getStart(sourceFile));
         return knownValue === undefined ? null : knownValue;
@@ -1047,22 +1057,54 @@ function createBindingResolver(sourceFile, options = {}) {
         visitPattern(pattern);
         return records;
     };
-    const snapshotOrigins = () => {
-        const records = new Set();
-        for (const scope of scopeByNode.values()) {
-            for (const record of scope.bindings.values()) records.add(record);
+    const records = new Set();
+    for (const scope of scopeByNode.values()) {
+        for (const record of scope.bindings.values()) records.add(record);
+    }
+    markWrites(sourceFile);
+
+    const captureRecord = (record, seen = new Set()) => {
+        if (!record || record.kind !== "variable") return immutableProvenance(record);
+        const initializer = record.initializer ?? record.defaultInitializer;
+        if (!initializer || seen.has(record)) return { kind: "local" };
+        const nextSeen = new Set(seen).add(record);
+        let resolved = resolveExpression(initializer, initializer, nextSeen);
+        for (const property of record.propertyPath) {
+            if (property === null || property === undefined) return { kind: "local" };
+            resolved = originMember(resolved, property);
         }
-        for (const record of records) {
-            if (!record.origin) {
-                record.origin = immutableProvenance(resolveRecord(record, new Set()));
-            }
-        }
+        return resolved;
+    };
+    const applySharedMutation = ({ target, property, whole }) => {
+        if (!target) return;
+        const mutationProperty = whole ? null : property;
+        const processMutation = markGlobalProcessMutation(target, mutationProperty);
+        const cjsMutation = markCjsModuleMutation(target, mutationProperty);
+        if (!processMutation && !cjsMutation && whole) taintTarget(target);
     };
     const finalizeWrites = () => {
         if (writesFinalized || finalizingWrites) return;
         finalizingWrites = true;
-        snapshotOrigins();
-        markWrites(sourceFile);
+        for (const record of records) {
+            if (!record.written) continue;
+            const origin = immutableProvenance(captureRecord(record));
+            record.origin = origin;
+            if (origin.kind === "fs-member" || origin.kind === "tainted-fs-member") {
+                record.taintedFsMember = origin;
+            } else if (
+                (origin.kind === "module-namespace" && fsModules.has(origin.moduleName)) ||
+                (origin.kind === "cjs-module-namespace" && fsModules.has(origin.moduleName)) ||
+                origin.kind === "tainted-fs-namespace"
+            ) {
+                record.taintedFsNamespace = {
+                    kind: "tainted-fs-namespace",
+                    moduleName: origin.moduleName,
+                    ...(origin.cjsRoot ? { cjsRoot: origin.cjsRoot } : {}),
+                };
+            }
+            record.tainted = true;
+        }
+        for (const mutation of sharedMutations) applySharedMutation(mutation);
         finalizingWrites = false;
         writesFinalized = true;
     };
@@ -1074,11 +1116,9 @@ function createBindingResolver(sourceFile, options = {}) {
         recordsForPattern,
         setParameterValues(values) {
             parameterValues = values;
-            finalizeWrites();
         },
         setDynamicImportResolver(resolver) {
             dynamicImportResolver = resolver;
-            finalizeWrites();
         },
         finalizeWrites,
         globalProcess,
@@ -1165,6 +1205,8 @@ function createStaticSpecifierResolver(sourceFile, bindingResolver) {
                 !record ||
                 record.kind !== "variable" ||
                 record.tainted ||
+                record.written ||
+                record.propertyWritten ||
                 !record.initializer ||
                 seen.has(record)
             ) {
@@ -1286,6 +1328,8 @@ function createStaticSpecifierResolver(sourceFile, bindingResolver) {
                 !record ||
                 record.kind !== "variable" ||
                 record.tainted ||
+                record.written ||
+                record.propertyWritten ||
                 !record.initializer ||
                 seen.has(record)
             ) {
@@ -1356,6 +1400,7 @@ export function extractScriptReferences(
     bindingResolver.setDynamicImportResolver((node, useNode) =>
         specifierResolver.resolve(node, useNode),
     );
+    if (!options.deferFinalization) bindingResolver.finalizeWrites();
     const sourceLocation = (position) => {
         const local = sourceFile.getLineAndCharacterOfPosition(position);
         return offsetLocation(
@@ -2411,7 +2456,7 @@ function evaluatePathExpression(
     if (ts.isIdentifier(node)) {
         const binding = bindingResolver?.lookup(node.text, node);
         if (binding) {
-            if (binding.tainted) return null;
+            if (binding.tainted || binding.written) return null;
             const known = bindingResolver.knownPathValue(node, node);
             if (known !== null) return known;
             const provenance = bindingResolver.resolveExpression(node, node);
@@ -2637,6 +2682,7 @@ function auditTargetUsage(
         return current;
     };
     const isTargetBinding = (binding) => {
+        if (!binding) return false;
         const localDeclaration =
             binding.kind === "local" &&
             sourcePath === target.sourcePath &&
@@ -2653,8 +2699,21 @@ function auditTargetUsage(
         return localDeclaration || importedDeclaration;
     };
     const isTargetReference = (node) =>
-        ts.isIdentifier(node) &&
         isTargetBinding(bindingResolver.resolveExpression(node, node));
+    const isTargetNamespace = (node) => {
+        const binding = bindingResolver.resolveExpression(node, node);
+        if (!binding || !["module-namespace", "cjs-module-namespace"].includes(binding.kind)) {
+            return false;
+        }
+        return (
+            resolveContractModulePath(
+                repositoryRoot,
+                sourcePath,
+                binding.moduleName,
+                repositoryVisibility,
+            ) === target.sourcePath
+        );
+    };
     const isDeclarationName = (node) => {
         const parent = node.parent;
         return (
@@ -2682,13 +2741,28 @@ function auditTargetUsage(
         }
         return false;
     };
+    const isNamespaceBindingInitializer = (node) => {
+        const declaration = node.parent;
+        if (
+            !ts.isVariableDeclaration(declaration) ||
+            declaration.initializer !== node ||
+            !ts.isIdentifier(declaration.name)
+        ) {
+            return false;
+        }
+        const binding = bindingResolver.resolveExpression(node, node);
+        return (
+            (binding.kind === "cjs-module-namespace" && ts.isCallExpression(unwrap(node))) ||
+            (binding.kind === "module-namespace" && ts.isAwaitExpression(unwrap(node)))
+        );
+    };
     const isStableAliasInitializer = (node) => {
         const declaration = node.parent;
         if (!ts.isVariableDeclaration(declaration) || !declaration.initializer) return false;
-        if (unwrap(declaration.initializer) !== node) return false;
+        if (unwrap(declaration.initializer) !== unwrap(node)) return false;
         if (!ts.isIdentifier(declaration.name)) return false;
         const record = bindingResolver.lookup(declaration.name.text, declaration.name);
-        return Boolean(record && !record.tainted && isTargetBinding(
+        return Boolean(record && !record.tainted && !record.written && isTargetBinding(
             bindingResolver.resolveExpression(declaration.name, declaration.name),
         ));
     };
@@ -2710,18 +2784,31 @@ function auditTargetUsage(
             ? parent
             : null;
     };
+    const completeTarget = (node) => {
+        if (isDeclarationName(node) || isPropertyName(node) || isImportSite(node)) return;
+        const call = directCallFor(node);
+        if (call) {
+            calls.add(call);
+        } else if (!isStableAliasInitializer(node)) {
+            invalid = true;
+        }
+    };
     function visit(node) {
-        if (ts.isIdentifier(node) && isTargetReference(node)) {
-            if (isDeclarationName(node) || isPropertyName(node) || isImportSite(node)) {
-                ts.forEachChild(node, visit);
+        if (isTargetReference(node)) {
+            completeTarget(node);
+            return;
+        }
+        if (isTargetNamespace(node)) {
+            if (
+                isDeclarationName(node) ||
+                isPropertyName(node) ||
+                isImportSite(node) ||
+                isNamespaceBindingInitializer(node)
+            ) {
                 return;
             }
-            const call = directCallFor(node);
-            if (call) {
-                calls.add(call);
-            } else if (!isStableAliasInitializer(node)) {
-                invalid = true;
-            }
+            invalid = true;
+            return;
         }
         ts.forEachChild(node, visit);
     }
@@ -3057,6 +3144,10 @@ function collectPathParameterContracts(
             );
         }
     }
+    for (const [path, resolver] of scriptResolvers) {
+        resolver?.setParameterValues(valuesBySource.get(path) ?? new Map());
+        resolver?.finalizeWrites();
+    }
     return valuesBySource;
 }
 
@@ -3075,6 +3166,7 @@ export function extractFileOperations(
         repositoryRoot,
     });
     resolver.setParameterValues(parameterValues);
+    resolver.finalizeWrites();
     const sourceLocation = (node) => {
         const local = sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile));
         return offsetLocation(
@@ -3185,6 +3277,7 @@ export function extractProcessInvocations(
         repositoryRoot,
     });
     resolver.setParameterValues(parameterValues);
+    resolver.finalizeWrites();
     const sourceLocation = (node) => {
         const local = sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile));
         return offsetLocation(
@@ -3633,7 +3726,10 @@ export async function buildGraph({
         if (!node || node.nodeType === "binary" || node.nodeType === "directory") continue;
         const source = readFileSync(join(repositoryRoot, path), "utf8");
         if (scriptExtensions.has(extname(path).toLowerCase())) {
-            const extracted = extractScriptReferences(source, path, null, {}, { repositoryRoot });
+            const extracted = extractScriptReferences(source, path, null, {}, {
+                repositoryRoot,
+                deferFinalization: true,
+            });
             scriptAsts.set(path, extracted.sourceFile);
             scriptResolvers.set(path, extracted.bindingResolver);
             scriptExtractions.push({
@@ -3733,7 +3829,7 @@ export async function buildGraph({
                     virtualPath,
                     block.loc?.start ?? null,
                     context,
-                    { repositoryRoot },
+                    { repositoryRoot, deferFinalization: true },
                 );
                 scriptAsts.set(
                     path,

@@ -1,6 +1,6 @@
 {
   "schema": "glass-ui-import-dag/3",
-  "observedAt": "2026-07-30T01:39:39.876Z",
+  "observedAt": "2026-07-30T02:33:52.765Z",
   "repositoryRoot": ".",
   "ownerManifest": {
     "path": "OWNER-MANIFEST.json",
@@ -4319,10 +4319,10 @@
       "nodeType": "source",
       "nodeKind": "repository-file",
       "virtual": false,
-      "bytes": 181733,
-      "sha256": "1d89011f1e3630d31d77ff12b8cb9eeb01cda33968453abfb358cc6cd967bd39",
+      "bytes": 186075,
+      "sha256": "0a2fe46d77c14c7b93a2a2ce326fabb3eda0f0ff7eae6c7763ef56b3e5744139",
       "generatedBy": null,
-      "lines": 4714
+      "lines": 4810
     },
     {
       "path": "docs/tranches/BJ/audits/2026-07-28-library-dag/OWNER-MANIFEST.json",
@@ -15246,10 +15246,10 @@
       "nodeType": "source",
       "nodeKind": "repository-file",
       "virtual": false,
-      "bytes": 66987,
-      "sha256": "34368342ad6205eceb301380597e575bf2c0bb4d17cd749f66d86ab505d5bf82",
+      "bytes": 78905,
+      "sha256": "b399f7b4919d7f663b2315b0ebb0426d259a77940ca82da3ad0990a08283ff1b",
       "generatedBy": null,
-      "lines": 1627
+      "lines": 1893
     },
     {
       "path": "tests/components/_shared/public-contracts.test-d.ts",
@@ -46723,7 +46723,7 @@
       "target": "docs/tranches/BJ/audits/2026-07-28-library-dag/OWNER-MANIFEST.json",
       "specifier": null,
       "edgeKind": "generator-read",
-      "line": 3474,
+      "line": 3567,
       "column": 32,
       "boundary": "within-projections",
       "metadata": {
@@ -46740,7 +46740,7 @@
       "target": "package.json",
       "specifier": null,
       "edgeKind": "generator-read",
-      "line": 3953,
+      "line": 4049,
       "column": 36,
       "boundary": "within-projections",
       "metadata": {
@@ -46756,7 +46756,7 @@
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "specifier": "../../../../../scripts/lib/subpath-policy.mjs",
       "edgeKind": "literal-dynamic",
-      "line": 3292,
+      "line": 3385,
       "column": 30,
       "metadata": {},
       "target": "scripts/lib/subpath-policy.mjs",
@@ -148591,6 +148591,11 @@
             "name": "fileURLToPath",
             "local": "fileURLToPath",
             "typeOnly": false
+          },
+          {
+            "name": "pathToFileURL",
+            "local": "pathToFileURL",
+            "typeOnly": false
           }
         ]
       },
@@ -163506,49 +163511,49 @@
     {
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "operation": "readFileSync",
-      "line": 2084,
+      "line": 2129,
       "column": 19
     },
     {
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "operation": "statSync",
-      "line": 2382,
+      "line": 2427,
       "column": 44
     },
     {
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "operation": "statSync",
-      "line": 2386,
+      "line": 2431,
       "column": 29
     },
     {
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "operation": "readFileSync",
-      "line": 3634,
+      "line": 3727,
       "column": 24
     },
     {
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "operation": "readFileSync",
-      "line": 4668,
+      "line": 4764,
       "column": 37
     },
     {
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "operation": "readFileSync",
-      "line": 4677,
+      "line": 4773,
       "column": 33
     },
     {
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "operation": "writeFileSync",
-      "line": 4688,
+      "line": 4784,
       "column": 9
     },
     {
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "operation": "writeFileSync",
-      "line": 4689,
+      "line": 4785,
       "column": 9
     },
     {
@@ -164826,49 +164831,49 @@
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "readFileSync",
-      "line": 1565,
+      "line": 1831,
       "column": 48
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "writeFileSync",
-      "line": 1567,
+      "line": 1833,
       "column": 21
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "readFileSync",
-      "line": 1574,
+      "line": 1840,
       "column": 48
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "writeFileSync",
-      "line": 1576,
+      "line": 1842,
       "column": 21
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "writeFileSync",
-      "line": 1583,
+      "line": 1849,
       "column": 21
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "readFileSync",
-      "line": 1585,
+      "line": 1851,
       "column": 28
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "rmSync",
-      "line": 1598,
+      "line": 1864,
       "column": 17
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "rmSync",
-      "line": 1623,
+      "line": 1889,
       "column": 13
     },
     {
@@ -165423,7 +165428,7 @@
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
-      "line": 1552,
+      "line": 1818,
       "column": 9,
       "api": "execFileSync",
       "binding": "execFileSync",
@@ -165454,7 +165459,7 @@
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
-      "line": 1608,
+      "line": 1874,
       "column": 28,
       "api": "spawnSync",
       "binding": "spawnSync",
@@ -203603,5 +203608,5 @@
       }
     }
   },
-  "receiptSha256": "2a266e694026aba8903c250944e46ad7abb2c83bf10f28d6fc23a5c34f00115f"
+  "receiptSha256": "1e1786f9f92f5e64495adc19446bed460a1bcb2f2f64398ebfc5975bed737e7b"
 }

@@ -13,7 +13,7 @@ import {
 import { createRequire } from "node:module";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { beforeAll, describe, expect, it } from "vitest";
 
 import {
@@ -301,7 +301,7 @@ describe("graph schema v3", () => {
         ]);
     });
 
-    it("recognizes child_process aliases and rejects name-only lookalikes", () => {
+    it("recognizes child_process aliases and rejects name-only lookalikes plus complete private target proof", async () => {
         const extracted = extractScriptReferences(`
             import { execFileSync as executeFile, spawn as run } from "node:child_process";
             import * as childProcess from "node:child_process";
@@ -328,8 +328,167 @@ describe("graph schema v3", () => {
             { api: "execFileSync", binding: "executeFile" },
             { api: "execSync", binding: "requiredChildProcess.execSync" },
             { api: "spawn", binding: "run" },
-            { api: "spawnSync", binding: "runSync" },
+                { api: "spawnSync", binding: "runSync" },
         ]);
+
+        const generator = resolve(
+            audit,
+            "build-import-dag-v3.mjs",
+        );
+        const sibling = resolve(
+            audit,
+            `.build-import-dag-v3.private-${process.pid}.mjs`,
+        );
+        const fsPromises = (process as any).getBuiltinModule("fs/promises");
+        try {
+            await fsPromises.copyFile(generator, sibling);
+            const siblingSource = await fsPromises.readFile(sibling, "utf8");
+            await fsPromises.writeFile(
+                sibling,
+                `${siblingSource}\nexport { auditTargetUsage, createBindingResolver, provenTargetCallValue };\n`,
+            );
+            const vm = (process as any).getBuiltinModule("vm");
+            const privateGraph = await vm.runInThisContext(
+                `import(${JSON.stringify(`${pathToFileURL(sibling).href}?private-proof=${Date.now()}`)})`,
+                { importModuleDynamically: vm.constants.USE_MAIN_CONTEXT_DEFAULT_LOADER },
+            );
+            const targetSource = privateGraph.extractScriptReferences(
+                "export function target(_value: string) {}",
+                "fixture-target.ts",
+                null,
+                {},
+                { repositoryRoot: root },
+            );
+            const targetNode = targetSource.sourceFile.statements.find(
+                (node: any) => node.name?.text === "target",
+            );
+            const visibility = {
+                files: new Set(["fixture-target.ts"]),
+                directories: new Set(["."]),
+            };
+            const prove = (
+                source: string,
+                path = "fixture-caller.ts",
+                targetOverride = {
+                    sourcePath: "fixture-target.ts",
+                    exportName: "target",
+                    functionNode: targetNode,
+                },
+            ) => {
+                const caller = privateGraph.extractScriptReferences(
+                    source,
+                    path,
+                    null,
+                    {},
+                    { repositoryRoot: root },
+                );
+                return privateGraph.provenTargetCallValue(
+                    caller.sourceFile,
+                    caller.bindingResolver,
+                    path,
+                    targetOverride,
+                    0,
+                    root,
+                    visibility,
+                );
+            };
+
+            const localCaller = privateGraph.extractScriptReferences(
+                "function target(_value: string) {}\n target(\"./src\");",
+                "fixture-caller.ts",
+                null,
+                {},
+                { repositoryRoot: root },
+            );
+            const localTarget = localCaller.sourceFile.statements.find(
+                (node: any) => node.name?.text === "target",
+            );
+            expect(
+                privateGraph.provenTargetCallValue(
+                    localCaller.sourceFile,
+                    localCaller.bindingResolver,
+                    "fixture-caller.ts",
+                    {
+                        sourcePath: "fixture-caller.ts",
+                        exportName: "target",
+                        functionNode: localTarget,
+                    },
+                    0,
+                    root,
+                    visibility,
+                ),
+            ).toBe("./src");
+
+            for (const source of [
+                `import { target } from "./fixture-target"; target("./src");`,
+                `import * as namespace from "./fixture-target"; namespace.target("./src");`,
+                `import * as namespace from "./fixture-target"; namespace["target"]("./src");`,
+                `const namespace = require("./fixture-target"); namespace.target("./src");`,
+                `const specifier = "./fixture-target"; const namespace = await import(specifier); namespace.target("./src");`,
+                `import { target } from "./fixture-target"; const alias = (((target as ((value: string) => void)) satisfies ((value: string) => void))!); alias("./src");`,
+                `import { target } from "./fixture-target"; const first = target; const second = (first)!; second("./src");`,
+                `import { target } from "./fixture-target"; target?.("./src");`,
+            ]) {
+                expect(
+                    prove(source, source.includes("await") ? "fixture-caller.mjs" : "fixture-caller.ts"),
+                    source,
+                ).toBe("./src");
+            }
+
+            for (const source of [
+                `import { target } from "./fixture-target"; target();`,
+                `import { target } from "./fixture-target"; target("./a"); target("./b");`,
+                `import { target } from "./fixture-target"; target(dynamicPath);`,
+                `import * as namespace from "./fixture-target"; let mutable = namespace; mutable = other; mutable.target("./src");`,
+                `import * as namespace from "./fixture-target"; namespace[dynamicKey]("./src");`,
+                `import * as namespace from "./fixture-target"; take(namespace); namespace.target("./src");`,
+                `import { target } from "./fixture-target"; take(target);`,
+                `import { target } from "./fixture-target"; function escape() { return target; }`,
+                `import { target } from "./fixture-target"; target.call(null, "./src");`,
+                `import { target } from "./fixture-target"; target.apply(null, ["./src"]);`,
+                `import { target } from "./fixture-target"; target.bind(null)("./src");`,
+                `import { target } from "./fixture-target"; new target("./src");`,
+                "import { target } from \"./fixture-target\"; target`./src`;",
+                `import { target } from "./fixture-target"; const object = { target };`,
+                `import { target } from "./fixture-target"; const array = [target];`,
+                `import { target } from "./fixture-target"; Reflect.apply(target, null, ["./src"]);`,
+            ]) {
+                expect(prove(source)).toBeNull();
+            }
+
+            const deferred = privateGraph.extractScriptReferences(
+                `let specifier = "node:fs"; const namespace = await import(specifier); namespace = replacement; namespace.readFileSync("x");`,
+                "fixture-deferred.mjs",
+                null,
+                {},
+                { repositoryRoot: root, deferFinalization: true },
+            );
+            deferred.bindingResolver.setParameterValues(new Map());
+            deferred.bindingResolver.setDynamicImportResolver(() => ({
+                kind: "local",
+                specifiers: ["node:fs"],
+                provenance: "test-finite",
+            }));
+            deferred.bindingResolver.finalizeWrites();
+            deferred.bindingResolver.finalizeWrites();
+            expect(
+                privateGraph.extractFileOperations(
+                    deferred.sourceFile,
+                    "fixture-deferred.mjs",
+                    root,
+                    null,
+                    new Map(),
+                    deferred.bindingResolver,
+                ).unmodeled,
+            ).toEqual([
+                expect.objectContaining({
+                    operation: "readFileSync",
+                    boundary: "tainted-fs-member",
+                }),
+            ]);
+        } finally {
+            await fsPromises.rm(sibling, { force: true });
+        }
     });
 
     it("recognizes fs provenance forms and rejects local file-operation lookalikes", () => {
@@ -384,6 +543,7 @@ describe("graph schema v3", () => {
         ]);
         expect(operations.unmodeled.map(({ operation, boundary }) => ({ operation, boundary }))).toEqual([
             { operation: "readFileSync", boundary: "tainted-fs-member" },
+            { operation: "readFileSync", boundary: "tainted-fs-member" },
             { operation: "writeFileSync", boundary: "tainted-fs-member" },
             { operation: "writeFileSync", boundary: "tainted-fs-member" },
         ]);
@@ -409,7 +569,12 @@ describe("graph schema v3", () => {
                 target: "stable-after-rebind.txt",
             }),
         ]);
-        expect(reboundOnlyOperations.unmodeled).toEqual([]);
+        expect(reboundOnlyOperations.unmodeled).toEqual([
+            expect.objectContaining({
+                operation: "readFileSync",
+                boundary: "tainted-fs-member",
+            }),
+        ]);
 
         const sharedMutation = extractScriptReferences(`
             const required = require("node:fs");
@@ -432,6 +597,29 @@ describe("graph schema v3", () => {
                 boundary: "tainted-fs-member",
             }),
         ]);
+        const cjsMutator = extractScriptReferences(`
+            const fs = require("node:fs");
+            Object.defineProperty(fs, "readFileSync", {});
+            fs.readFileSync("mutated-by-intrinsic.txt");
+            fs.writeFileSync("stable-member.txt", "content");
+        `);
+        const cjsMutatorOperations = extractFileOperations(
+            cjsMutator.sourceFile,
+            "fixture.ts",
+            root,
+            null,
+            new Map(),
+            cjsMutator.bindingResolver,
+        );
+        expect(cjsMutatorOperations.operations).toEqual([
+            expect.objectContaining({ operation: "writeFileSync", target: "stable-member.txt" }),
+        ]);
+        expect(cjsMutatorOperations.unmodeled).toEqual([
+            expect.objectContaining({
+                operation: "readFileSync",
+                boundary: "tainted-fs-member",
+            }),
+        ]);
     });
 
     it("models awaited exact dynamic fs imports and bounds promise properties", () => {
@@ -446,6 +634,14 @@ describe("graph schema v3", () => {
             const awaitedAlias = await aliasedPromise;
             awaitedAlias.writeFileSync("awaited-alias.txt", "content");
             aliasedPromise.then((fs) => fs.readFileSync("promise-boundary.txt"));
+            let bareAwaited = await import(specifier);
+            bareAwaited.readFileSync("bare-await-before.txt");
+            bareAwaited = replacement;
+            bareAwaited.readFileSync("bare-await-after.txt");
+            let bareCjs = require("node:fs");
+            bareCjs.readFileSync("bare-cjs-before.txt");
+            bareCjs = replacement;
+            bareCjs.readFileSync("bare-cjs-after.txt");
             const { readFileSync: reassignedCallable } = await import(specifier);
             reassignedCallable = replacement;
             reassignedCallable("reassigned-callable.txt");
@@ -468,6 +664,22 @@ describe("graph schema v3", () => {
                 operation: "then",
                 boundary: "module-promise",
                 moduleName: "node:fs",
+            }),
+            expect.objectContaining({
+                operation: "readFileSync",
+                boundary: "tainted-fs-member",
+            }),
+            expect.objectContaining({
+                operation: "readFileSync",
+                boundary: "tainted-fs-member",
+            }),
+            expect.objectContaining({
+                operation: "readFileSync",
+                boundary: "tainted-fs-member",
+            }),
+            expect.objectContaining({
+                operation: "readFileSync",
+                boundary: "tainted-fs-member",
             }),
             expect.objectContaining({
                 operation: "readFileSync",
@@ -613,6 +825,60 @@ describe("graph schema v3", () => {
                 expect.objectContaining({ operation: "readdirSync" }),
             ]);
         }
+
+        for (const mutation of [
+            `Object.defineProperty(p, "cwd", {});`,
+            `Object.defineProperties(p, { cwd: {} });`,
+            `Object.assign(p, source);`,
+            `Reflect.set(p, "cwd", value);`,
+            `Reflect.defineProperty(p, "cwd", {});`,
+            `Reflect.deleteProperty(p, "cwd");`,
+            `Reflect.set(p, dynamicKey, value);`,
+            `Object.defineProperty(p, dynamicKey, descriptor);`,
+        ]) {
+            const fixture = extractScriptReferences(
+                `import { readdirSync } from "node:fs"; const p = process; ${mutation} readdirSync(process.cwd());`,
+            );
+            const operations = extractFileOperations(
+                fixture.sourceFile,
+                "fixture.ts",
+                root,
+                null,
+                new Map(),
+                fixture.bindingResolver,
+            );
+            expect(operations.operations, mutation).toEqual([]);
+            expect(operations.unmodeled, mutation).toEqual([
+                expect.objectContaining({ operation: "readdirSync" }),
+            ]);
+        }
+
+        const shadowedMutator = extractScriptReferences(
+            `import { readdirSync } from "node:fs"; function Object() {} Object.defineProperty(process, "cwd", {}); readdirSync(process.cwd());`,
+        );
+        expect(
+            extractFileOperations(
+                shadowedMutator.sourceFile,
+                "fixture.ts",
+                root,
+                null,
+                new Map(),
+                shadowedMutator.bindingResolver,
+            ).operations,
+        ).toEqual([expect.objectContaining({ operation: "readdirSync", target: "." })]);
+        const aliasedMutator = extractScriptReferences(
+            `import { readdirSync } from "node:fs"; const p = process; const define = Object.defineProperty; define(p, "cwd", {}); readdirSync(process.cwd());`,
+        );
+        expect(
+            extractFileOperations(
+                aliasedMutator.sourceFile,
+                "fixture.ts",
+                root,
+                null,
+                new Map(),
+                aliasedMutator.bindingResolver,
+            ).operations,
+        ).toEqual([expect.objectContaining({ operation: "readdirSync", target: "." })]);
 
         const defaultProcess = extractScriptReferences(
             `import p from "node:process";
