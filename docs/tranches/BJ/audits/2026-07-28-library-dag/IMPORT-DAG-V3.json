@@ -1,6 +1,6 @@
 {
   "schema": "glass-ui-import-dag/3",
-  "observedAt": "2026-07-29T22:57:40.597Z",
+  "observedAt": "2026-07-30T00:01:33.038Z",
   "repositoryRoot": ".",
   "ownerManifest": {
     "path": "OWNER-MANIFEST.json",
@@ -47,8 +47,8 @@
     "edgeDefinition": "Vue/TypeScript AST imports, export-from, finite provenance-resolved dynamic imports, glob/worker/URL and provenance-backed require loaders; Vue external blocks, literal bound template assets, and static inline-style URLs with file-native line/column locations; HTML script entries; PostCSS imports and URLs; package/build/type/side-effect metadata; detectable filesystem and binding-proven child-process invocation targets."
   },
   "summary": {
-    "nodes": 1498,
-    "internalEdges": 3578,
+    "nodes": 1501,
+    "internalEdges": 3585,
     "externalEdges": 1969,
     "owners": 101,
     "publicEntries": 72,
@@ -59,7 +59,7 @@
     "dynamicAssetReferences": 123,
     "unresolvedGlobPatterns": 0,
     "parseErrors": 0,
-    "unmodeledFileOperations": 275,
+    "unmodeledFileOperations": 273,
     "processInvocations": 8,
     "dynamicProcessArguments": 9,
     "nodeTypeCounts": {
@@ -67,18 +67,18 @@
       "declaration": 3,
       "directory": 23,
       "documentation": 29,
-      "generated-artifact": 2,
+      "generated-artifact": 4,
       "license": 2,
       "package-output": 137,
       "source": 1154,
       "style": 131,
-      "virtual-placeholder": 8
+      "virtual-placeholder": 9
     },
     "nodeKindCounts": {
       "declared-package-output": 137,
       "directory": 20,
-      "generated-by-write": 5,
-      "missing-runtime-placeholder": 8,
+      "generated-by-write": 7,
+      "missing-runtime-placeholder": 9,
       "repository-file": 1328
     },
     "projectionCounts": {
@@ -86,7 +86,7 @@
       "demo": 195,
       "package-surface": 2,
       "product": 693,
-      "repository-boundary": 173,
+      "repository-boundary": 176,
       "scripts-generators": 16,
       "tests": 214,
       "visual-tests": 191
@@ -100,8 +100,8 @@
       "file-read": 32,
       "file-write": 4,
       "finite-dynamic": 2,
-      "generator-read": 11,
-      "generator-write": 7,
+      "generator-read": 13,
+      "generator-write": 12,
       "glob-lazy": 107,
       "literal-dynamic": 68,
       "literal-require": 2,
@@ -3266,6 +3266,17 @@
       "generatedBy": null
     },
     {
+      "path": "dist/glass-ui.css",
+      "projection": "repository-boundary",
+      "owner": "repository/generated-output",
+      "nodeType": "generated-artifact",
+      "nodeKind": "generated-by-write",
+      "virtual": true,
+      "bytes": null,
+      "sha256": null,
+      "generatedBy": "vite.style-fold.ts"
+    },
+    {
       "path": "dist/glass-ui.js",
       "projection": "repository-boundary",
       "owner": "repository/generated-output",
@@ -3827,6 +3838,17 @@
       "generatedBy": "vite.style-fold.ts"
     },
     {
+      "path": "dist/styles/components.css",
+      "projection": "repository-boundary",
+      "owner": "repository/generated-output",
+      "nodeType": "generated-artifact",
+      "nodeKind": "generated-by-write",
+      "virtual": true,
+      "bytes": null,
+      "sha256": null,
+      "generatedBy": "vite.utility-emit.ts"
+    },
+    {
       "path": "dist/styles/fonts.css",
       "projection": "repository-boundary",
       "owner": "repository/generated-output",
@@ -3854,6 +3876,17 @@
       "owner": "repository/generated-output",
       "nodeType": "package-output",
       "nodeKind": "declared-package-output",
+      "virtual": true,
+      "bytes": null,
+      "sha256": null,
+      "generatedBy": null
+    },
+    {
+      "path": "dist/subpaths",
+      "projection": "repository-boundary",
+      "owner": "repository/generated-output",
+      "nodeType": "virtual-placeholder",
+      "nodeKind": "missing-runtime-placeholder",
       "virtual": true,
       "bytes": null,
       "sha256": null,
@@ -4286,10 +4319,10 @@
       "nodeType": "source",
       "nodeKind": "repository-file",
       "virtual": false,
-      "bytes": 158870,
-      "sha256": "a9a01dcaa0b5caf8f290d296f913a047f384ce897d47770249bee6e937d70f61",
+      "bytes": 167394,
+      "sha256": "8e3bbcfd5c955a8bbc06118a2e7a17afe443dafa4837f5516f407e0b7f8ab645",
       "generatedBy": null,
-      "lines": 4086
+      "lines": 4374
     },
     {
       "path": "docs/tranches/BJ/audits/2026-07-28-library-dag/OWNER-MANIFEST.json",
@@ -15213,10 +15246,10 @@
       "nodeType": "source",
       "nodeKind": "repository-file",
       "virtual": false,
-      "bytes": 54098,
-      "sha256": "1151801208afe11a6389ce0d743ca1bd71172c314ad2f5d66c51e1959ac106c6",
+      "bytes": 60997,
+      "sha256": "764692dc3f8e4d4f23edf95667dbea68d2d3bb28f88b728996b93db0fba719c5",
       "generatedBy": null,
-      "lines": 1338
+      "lines": 1497
     },
     {
       "path": "tests/components/_shared/public-contracts.test-d.ts",
@@ -46690,7 +46723,7 @@
       "target": "docs/tranches/BJ/audits/2026-07-28-library-dag/OWNER-MANIFEST.json",
       "specifier": null,
       "edgeKind": "generator-read",
-      "line": 2813,
+      "line": 3135,
       "column": 32,
       "boundary": "within-projections",
       "metadata": {
@@ -46707,7 +46740,7 @@
       "target": "package.json",
       "specifier": null,
       "edgeKind": "generator-read",
-      "line": 3326,
+      "line": 3614,
       "column": 36,
       "boundary": "within-projections",
       "metadata": {
@@ -46723,7 +46756,7 @@
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "specifier": "../../../../../scripts/lib/subpath-policy.mjs",
       "edgeKind": "literal-dynamic",
-      "line": 2631,
+      "line": 2953,
       "column": 30,
       "metadata": {},
       "target": "scripts/lib/subpath-policy.mjs",
@@ -50366,6 +50399,24 @@
         "conditions": [
           "import"
         ]
+      },
+      "projections": {
+        "eagerRuntime": false,
+        "buildLoad": true,
+        "ownership": true
+      }
+    },
+    {
+      "source": "scripts/flatten-subpath-types.mjs",
+      "target": "dist/subpaths",
+      "specifier": null,
+      "edgeKind": "generator-write",
+      "line": 27,
+      "column": 1,
+      "boundary": "repository-boundary",
+      "metadata": {
+        "operation": "rmSync",
+        "effect": "delete"
       },
       "projections": {
         "eagerRuntime": false,
@@ -99625,6 +99676,16 @@
             "typeOnly": false
           },
           {
+            "name": "callsToTarget",
+            "local": "callsToTarget",
+            "typeOnly": false
+          },
+          {
+            "name": "provenTargetCallValue",
+            "local": "provenTargetCallValue",
+            "typeOnly": false
+          },
+          {
             "name": "validateCycleRatchets",
             "local": "validateCycleRatchets",
             "typeOnly": false
@@ -99648,7 +99709,7 @@
       "source": "tests/architecture/import-dag-v3.test.ts",
       "specifier": "../../docs/tranches/BJ/audits/2026-07-28-library-dag/OWNER-MANIFEST.json",
       "edgeKind": "literal-require",
-      "line": 33,
+      "line": 35,
       "column": 18,
       "metadata": {
         "binding": "require",
@@ -99666,7 +99727,7 @@
       "source": "tests/architecture/import-dag-v3.test.ts",
       "specifier": "../../package.json",
       "edgeKind": "literal-require",
-      "line": 36,
+      "line": 38,
       "column": 21,
       "metadata": {
         "binding": "require",
@@ -113241,6 +113302,40 @@
     },
     {
       "source": "vite.style-fold.ts",
+      "target": "dist/glass-ui.css",
+      "specifier": null,
+      "edgeKind": "generator-read",
+      "line": 278,
+      "column": 21,
+      "boundary": "repository-boundary",
+      "metadata": {
+        "operation": "readFileSync"
+      },
+      "projections": {
+        "eagerRuntime": false,
+        "buildLoad": true,
+        "ownership": true
+      }
+    },
+    {
+      "source": "vite.style-fold.ts",
+      "target": "dist/glass-ui.css",
+      "specifier": null,
+      "edgeKind": "generator-write",
+      "line": 280,
+      "column": 26,
+      "boundary": "repository-boundary",
+      "metadata": {
+        "operation": "writeFileSync"
+      },
+      "projections": {
+        "eagerRuntime": false,
+        "buildLoad": true,
+        "ownership": true
+      }
+    },
+    {
+      "source": "vite.style-fold.ts",
       "target": "dist/styles",
       "specifier": null,
       "edgeKind": "generator-write",
@@ -113374,6 +113469,74 @@
       "boundary": "repository-boundary",
       "metadata": {
         "operation": "readdirSync"
+      },
+      "projections": {
+        "eagerRuntime": false,
+        "buildLoad": true,
+        "ownership": true
+      }
+    },
+    {
+      "source": "vite.utility-emit.ts",
+      "target": "dist/styles/components.css",
+      "specifier": null,
+      "edgeKind": "generator-write",
+      "line": 233,
+      "column": 5,
+      "boundary": "repository-boundary",
+      "metadata": {
+        "operation": "writeFileSync"
+      },
+      "projections": {
+        "eagerRuntime": false,
+        "buildLoad": true,
+        "ownership": true
+      }
+    },
+    {
+      "source": "vite.utility-emit.ts",
+      "target": "dist/styles/index.css",
+      "specifier": null,
+      "edgeKind": "generator-read",
+      "line": 243,
+      "column": 22,
+      "boundary": "repository-boundary",
+      "metadata": {
+        "operation": "readFileSync"
+      },
+      "projections": {
+        "eagerRuntime": false,
+        "buildLoad": true,
+        "ownership": true
+      }
+    },
+    {
+      "source": "vite.utility-emit.ts",
+      "target": "dist/styles/index.css",
+      "specifier": null,
+      "edgeKind": "generator-write",
+      "line": 253,
+      "column": 9,
+      "boundary": "repository-boundary",
+      "metadata": {
+        "operation": "writeFileSync"
+      },
+      "projections": {
+        "eagerRuntime": false,
+        "buildLoad": true,
+        "ownership": true
+      }
+    },
+    {
+      "source": "vite.utility-emit.ts",
+      "target": "dist/styles/index.css",
+      "specifier": null,
+      "edgeKind": "generator-write",
+      "line": 264,
+      "column": 5,
+      "boundary": "repository-boundary",
+      "metadata": {
+        "operation": "writeFileSync"
       },
       "projections": {
         "eagerRuntime": false,
@@ -163353,49 +163516,49 @@
     {
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "operation": "readFileSync",
-      "line": 1706,
+      "line": 1793,
       "column": 19
     },
     {
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "operation": "statSync",
-      "line": 2004,
+      "line": 2091,
       "column": 44
     },
     {
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "operation": "statSync",
-      "line": 2008,
+      "line": 2095,
       "column": 29
     },
     {
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "operation": "readFileSync",
-      "line": 2971,
+      "line": 3295,
       "column": 24
     },
     {
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "operation": "readFileSync",
-      "line": 4040,
+      "line": 4328,
       "column": 37
     },
     {
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "operation": "readFileSync",
-      "line": 4049,
+      "line": 4337,
       "column": 33
     },
     {
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "operation": "writeFileSync",
-      "line": 4060,
+      "line": 4348,
       "column": 9
     },
     {
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "operation": "writeFileSync",
-      "line": 4061,
+      "line": 4349,
       "column": 9
     },
     {
@@ -163583,12 +163746,6 @@
       "operation": "readFileSync",
       "line": 213,
       "column": 13
-    },
-    {
-      "source": "scripts/verify-export-types.mjs",
-      "operation": "readFile",
-      "line": 280,
-      "column": 62
     },
     {
       "source": "scripts/verify-export-types.mjs",
@@ -164305,6 +164462,12 @@
       "column": 42
     },
     {
+      "source": "tests-visual/refract-lens-never-sharper.spec.ts",
+      "operation": "rmSync",
+      "line": 316,
+      "column": 9
+    },
+    {
       "source": "tests-visual/register-ios.spec.ts",
       "operation": "mkdirSync",
       "line": 288,
@@ -164637,68 +164800,86 @@
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "cpSync",
-      "line": 46,
+      "line": 48,
       "column": 9
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "readFileSync",
-      "line": 68,
+      "line": 70,
       "column": 32
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "mkdirSync",
-      "line": 75,
-      "column": 5
-    },
-    {
-      "source": "tests/architecture/import-dag-v3.test.ts",
-      "operation": "writeFileSync",
-      "line": 76,
+      "line": 77,
       "column": 5
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "writeFileSync",
       "line": 78,
+      "column": 5
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 80,
       "column": 23
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "rmSync",
+      "line": 81,
+      "column": 14
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "readFileSync",
-      "line": 1276,
+      "line": 1435,
       "column": 48
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "writeFileSync",
-      "line": 1278,
+      "line": 1437,
       "column": 21
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "readFileSync",
-      "line": 1285,
+      "line": 1444,
       "column": 48
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "writeFileSync",
-      "line": 1287,
+      "line": 1446,
       "column": 21
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "writeFileSync",
-      "line": 1294,
+      "line": 1453,
       "column": 21
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "readFileSync",
-      "line": 1296,
+      "line": 1455,
       "column": 28
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "rmSync",
+      "line": 1468,
+      "column": 17
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "rmSync",
+      "line": 1493,
+      "column": 13
     },
     {
       "source": "tests/gates/boot-graph.test.ts",
@@ -164833,6 +165014,12 @@
       "column": 32
     },
     {
+      "source": "tests/scripts/profile-bundle-value-js.test.ts",
+      "operation": "rmSync",
+      "line": 45,
+      "column": 41
+    },
+    {
       "source": "tests/styles/glass-subtlety.test.ts",
       "operation": "readFileSync",
       "line": 12,
@@ -164931,18 +165118,6 @@
     {
       "source": "vite.style-fold.ts",
       "operation": "readFileSync",
-      "line": 278,
-      "column": 21
-    },
-    {
-      "source": "vite.style-fold.ts",
-      "operation": "writeFileSync",
-      "line": 280,
-      "column": 26
-    },
-    {
-      "source": "vite.style-fold.ts",
-      "operation": "readFileSync",
       "line": 309,
       "column": 21
     },
@@ -164969,30 +165144,6 @@
       "operation": "readFileSync",
       "line": 183,
       "column": 25
-    },
-    {
-      "source": "vite.utility-emit.ts",
-      "operation": "writeFileSync",
-      "line": 233,
-      "column": 5
-    },
-    {
-      "source": "vite.utility-emit.ts",
-      "operation": "readFileSync",
-      "line": 243,
-      "column": 22
-    },
-    {
-      "source": "vite.utility-emit.ts",
-      "operation": "writeFileSync",
-      "line": 253,
-      "column": 9
-    },
-    {
-      "source": "vite.utility-emit.ts",
-      "operation": "writeFileSync",
-      "line": 264,
-      "column": 5
     }
   ],
   "processInvocations": [
@@ -165223,7 +165374,7 @@
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
-      "line": 52,
+      "line": 54,
       "column": 12,
       "api": "spawnSync",
       "binding": "spawnSync",
@@ -165282,7 +165433,7 @@
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
-      "line": 1263,
+      "line": 1422,
       "column": 9,
       "api": "execFileSync",
       "binding": "execFileSync",
@@ -165313,7 +165464,7 @@
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
-      "line": 1319,
+      "line": 1478,
       "column": 28,
       "api": "spawnSync",
       "binding": "spawnSync",
@@ -177650,6 +177801,9 @@
           "dist/fourier-math.js"
         ],
         [
+          "dist/glass-ui.css"
+        ],
+        [
           "dist/glass-ui.js"
         ],
         [
@@ -177800,6 +177954,9 @@
           "dist/status-dot.js"
         ],
         [
+          "dist/styles/components.css"
+        ],
+        [
           "dist/styles/fonts.css"
         ],
         [
@@ -177807,6 +177964,9 @@
         ],
         [
           "dist/styles/theme.css"
+        ],
+        [
+          "dist/subpaths"
         ],
         [
           "dist/surface.d.ts"
@@ -185053,7 +185213,7 @@
       ]
     },
     "buildLoad": {
-      "edgeCount": 3449,
+      "edgeCount": 3456,
       "fileSccs": [
         [
           "demo/chassis/landing/SectionPreviewCard.vue",
@@ -185688,6 +185848,9 @@
           "dist/fourier-math.js"
         ],
         [
+          "dist/glass-ui.css"
+        ],
+        [
           "dist/glass-ui.js"
         ],
         [
@@ -185838,6 +186001,9 @@
           "dist/status-dot.js"
         ],
         [
+          "dist/styles/components.css"
+        ],
+        [
           "dist/styles/fonts.css"
         ],
         [
@@ -185845,6 +186011,9 @@
         ],
         [
           "dist/styles/theme.css"
+        ],
+        [
+          "dist/subpaths"
         ],
         [
           "dist/surface.d.ts"
@@ -189924,7 +190093,7 @@
         {
           "source": "build/config",
           "target": "repository/generated-output",
-          "edgeCount": 6,
+          "edgeCount": 12,
           "edgeKinds": [
             "generator-read",
             "generator-write"
@@ -192600,7 +192769,7 @@
         {
           "source": "scripts/generators",
           "target": "repository/generated-output",
-          "edgeCount": 1,
+          "edgeCount": 2,
           "edgeKinds": [
             "generator-write"
           ]
@@ -194195,7 +194364,7 @@
       ]
     },
     "ownership": {
-      "edgeCount": 3578,
+      "edgeCount": 3585,
       "fileSccs": [
         [
           "demo/chassis/landing/SectionPreviewCard.vue",
@@ -194830,6 +194999,9 @@
           "dist/fourier-math.js"
         ],
         [
+          "dist/glass-ui.css"
+        ],
+        [
           "dist/glass-ui.js"
         ],
         [
@@ -194980,6 +195152,9 @@
           "dist/status-dot.js"
         ],
         [
+          "dist/styles/components.css"
+        ],
+        [
           "dist/styles/fonts.css"
         ],
         [
@@ -194987,6 +195162,9 @@
         ],
         [
           "dist/styles/theme.css"
+        ],
+        [
+          "dist/subpaths"
         ],
         [
           "dist/surface.d.ts"
@@ -199067,7 +199245,7 @@
         {
           "source": "build/config",
           "target": "repository/generated-output",
-          "edgeCount": 6,
+          "edgeCount": 12,
           "edgeKinds": [
             "generator-read",
             "generator-write"
@@ -201759,7 +201937,7 @@
         {
           "source": "scripts/generators",
           "target": "repository/generated-output",
-          "edgeCount": 1,
+          "edgeCount": 2,
           "edgeKinds": [
             "generator-write"
           ]
@@ -203435,5 +203613,5 @@
       }
     }
   },
-  "receiptSha256": "c8dca7c4e0f63d9137c823801ddeb6c005c70295079c38c1b952233339fab592"
+  "receiptSha256": "d12df4cdeffb303941143ab4489e535631f097dc2b038517920a91539899e5d2"
 }

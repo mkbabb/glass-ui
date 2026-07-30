@@ -23,6 +23,8 @@ import {
     extractProcessInvocations,
     extractScriptReferences,
     extractTemplateReferences,
+    callsToTarget,
+    provenTargetCallValue,
     validateCycleRatchets,
     validateOwnerAssignments,
 } from "../../docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs";
@@ -329,8 +331,110 @@ describe("graph schema v3", () => {
         ]);
     });
 
+    it("recognizes fs provenance forms and rejects local file-operation lookalikes", () => {
+        const { sourceFile } = extractScriptReferences(`
+            import { readFileSync as read } from "node:fs";
+            import * as fs from "fs";
+            const { writeFileSync: write } = require("node:fs");
+            const required = require("fs");
+
+            read("read.txt");
+            fs.writeFileSync("namespace.txt", "content");
+            write("destructured.txt", "content");
+            required.copyFileSync("copy-source.txt", "copy-target.txt");
+            required.rm("remove.txt");
+            required.rmSync("remove-sync.txt");
+
+            function readFileSync(_path: string) {}
+            readFileSync("local-function.txt");
+            const local = { writeFileSync(_path: string) {} };
+            local.writeFileSync("local-method.txt");
+        `);
+        const operations = extractFileOperations(sourceFile, "fixture.ts", root, null);
+
+        expect(operations.operations).toHaveLength(7);
+        expect(
+            operations.operations.map(({ operation, target, effect }) => ({
+                operation,
+                target,
+                effect: effect ?? null,
+            })),
+        ).toEqual([
+            { operation: "readFileSync", target: "read.txt", effect: null },
+            { operation: "writeFileSync", target: "namespace.txt", effect: null },
+            { operation: "writeFileSync", target: "destructured.txt", effect: null },
+            { operation: "copyFileSync", target: "copy-source.txt", effect: null },
+            { operation: "copyFileSync", target: "copy-target.txt", effect: null },
+            { operation: "rm", target: "remove.txt", effect: "delete" },
+            { operation: "rmSync", target: "remove-sync.txt", effect: "delete" },
+        ]);
+        expect(operations.unmodeled).toEqual([]);
+    });
+
+    it("transfers finite arguments only through the exact aliased declaration binding", () => {
+        const target = extractScriptReferences(
+            "export function transfer(value: string) { return value; }",
+            "finite-target.ts",
+            null,
+            {},
+            { repositoryRoot: root },
+        );
+        const caller = extractScriptReferences(
+            `
+                import { transfer as aliased } from "./finite-target";
+                import { transfer as unrelated } from "./other-target";
+                aliased("./true");
+                unrelated("./wrong");
+                function shadowed(transfer: (value: string) => void) {
+                    transfer("./shadowed");
+                }
+            `,
+            "finite-caller.ts",
+            null,
+            {},
+            { repositoryRoot: root },
+        );
+        const targetFunction = target.sourceFile.statements.find(
+            (statement: any) => statement.name?.text === "transfer",
+        );
+        const visibility = {
+            files: new Set(["finite-target.ts", "other-target.ts"]),
+            directories: new Set<string>(),
+        };
+        const identity = {
+            sourcePath: "finite-target.ts",
+            exportName: "transfer",
+            functionNode: targetFunction,
+        };
+        const calls = callsToTarget(
+            caller.sourceFile,
+            caller.bindingResolver,
+            "finite-caller.ts",
+            identity,
+            root,
+            visibility,
+        );
+
+        expect(calls.map((call) => call.expression.getText(caller.sourceFile))).toEqual([
+            "aliased",
+        ]);
+        expect(
+            provenTargetCallValue(
+                caller.sourceFile,
+                caller.bindingResolver,
+                "finite-caller.ts",
+                identity,
+                0,
+                root,
+                visibility,
+                new Map(),
+            ),
+        ).toBe("./true");
+    });
+
     it("does not resolve a shadowing root parameter as the repository root", () => {
         const { sourceFile } = extractScriptReferences(`
+            import { readdirSync } from "node:fs";
             const root = process.cwd();
             readdirSync(root);
             function scan(root: string) {
@@ -344,13 +448,13 @@ describe("graph schema v3", () => {
                 edgeKind: "generator-read",
                 operation: "readdirSync",
                 target: ".",
-                line: 3,
+                line: 4,
             }),
         ]);
         expect(operations.unmodeled).toEqual([
             expect.objectContaining({
                 operation: "readdirSync",
-                line: 5,
+                line: 6,
             }),
         ]);
     });
@@ -359,12 +463,14 @@ describe("graph schema v3", () => {
         const { sourceFile } = extractScriptReferences(`
             import { readFileSync, readdirSync } from "node:fs";
             import { join, resolve } from "node:path";
+            import { fileURLToPath as pathFromUrl } from "node:url";
             import { REPO_ROOT } from "./scripts/lib/subpath-policy.mjs";
 
             const immutable = process.cwd();
             const alias = immutable;
             readdirSync(resolve(alias, "src"));
             readdirSync(REPO_ROOT);
+            readFileSync(pathFromUrl(import.meta.url));
 
             let tainted = process.cwd();
             tainted = resolve("bad");
@@ -396,6 +502,7 @@ describe("graph schema v3", () => {
 
         expect(operations.operations.map(({ target }) => target).sort()).toEqual([
             ".",
+            "fixture.ts",
             "src",
         ]);
         expect(operations.unmodeled).toHaveLength(7);
@@ -410,6 +517,28 @@ describe("graph schema v3", () => {
                 "readdirSync",
             ]),
         );
+
+        for (const source of [
+            `import { readdirSync } from "node:fs"; process = {}; readdirSync(process.cwd());`,
+            `import { readdirSync } from "node:fs"; process.cwd = () => "/bad"; readdirSync(process.cwd());`,
+            `import { readdirSync } from "node:fs"; process["cwd"] = () => "/bad"; readdirSync(process.cwd());`,
+            `import { readdirSync } from "node:fs"; process[dynamicKey] = value; readdirSync(process.cwd());`,
+            `import { readdirSync } from "node:fs"; import { ROOT as wrongRoot } from "./nested/scripts/lib/canon-doc.mjs"; readdirSync(wrongRoot);`,
+        ]) {
+            const fixture = extractScriptReferences(source);
+            const tainted = extractFileOperations(
+                fixture.sourceFile,
+                "fixture.ts",
+                root,
+                null,
+                new Map(),
+                fixture.bindingResolver,
+            );
+            expect(tainted.operations).toEqual([]);
+            expect(tainted.unmodeled).toEqual([
+                expect.objectContaining({ operation: "readdirSync" }),
+            ]);
+        }
     });
 
     it("promotes TypeScript syntactic diagnostics to fail-closed parse errors", () => {
@@ -707,12 +836,38 @@ describe("graph schema v3", () => {
         }
         expect(generatorEdge("vite.style-fold.ts", "dist/styles/index.css", "generator-read", "readFileSync")).toBeDefined();
         expect(generatorEdge("vite.style-fold.ts", "dist/styles/index.css", "generator-write", "writeFileSync")).toBeDefined();
+        expect(generatorEdge("vite.style-fold.ts", "dist/glass-ui.css", "generator-read", "readFileSync")).toBeDefined();
+        expect(generatorEdge("vite.style-fold.ts", "dist/glass-ui.css", "generator-write", "writeFileSync")).toBeDefined();
         expect(generatorEdge("vite.utility-emit.ts", "dist", "generator-read", "readdirSync")).toBeDefined();
         expect(generatorEdge("vite.utility-emit.ts", "src/styles", "generator-read", "readdirSync")).toBeDefined();
+        expect(generatorEdge("vite.utility-emit.ts", "dist/styles/components.css", "generator-write", "writeFileSync")).toBeDefined();
+        expect(
+            graph.internalEdges.filter(
+                (edge) =>
+                    edge.source === "vite.utility-emit.ts" &&
+                    edge.target === "dist/styles/index.css" &&
+                    edge.edgeKind === "generator-write" &&
+                    edge.metadata?.operation === "writeFileSync",
+            ),
+        ).toHaveLength(2);
+        expect(
+            graph.internalEdges.find(
+                (edge) =>
+                    edge.source === "scripts/flatten-subpath-types.mjs" &&
+                    edge.target === "dist/subpaths" &&
+                    edge.edgeKind === "generator-write" &&
+                    edge.metadata?.operation === "rmSync" &&
+                    edge.metadata?.effect === "delete",
+            ),
+        ).toBeDefined();
 
-        expect(graph.summary.edgeKindCounts["generator-read"]).toBe(11);
-        expect(graph.summary.edgeKindCounts["generator-write"]).toBe(7);
-        expect(graph.summary.unmodeledFileOperations).toBe(275);
+        expect(graph.summary.nodes).toBe(1501);
+        expect(graph.summary.internalEdges).toBe(3585);
+        expect(graph.summary.edgeKindCounts["generator-read"]).toBe(13);
+        expect(graph.summary.edgeKindCounts["generator-write"]).toBe(12);
+        expect(graph.summary.unmodeledFileOperations).toBe(273);
+        expect(graph.summary.nodeKindCounts["generated-by-write"]).toBe(7);
+        expect(graph.summary.nodeKindCounts["missing-runtime-placeholder"]).toBe(9);
         expect(
             graph.internalEdges.find(
                 (edge) =>
@@ -742,6 +897,10 @@ describe("graph schema v3", () => {
             nodeType: "generated-artifact",
             nodeKind: "generated-by-write",
             generatedBy: "vite.style-fold.ts",
+        });
+        expect(graph.nodes.find(({ path }) => path === "dist/subpaths")).toMatchObject({
+            nodeKind: "missing-runtime-placeholder",
+            generatedBy: null,
         });
 
         const gitInvocation = graph.processInvocations.find(

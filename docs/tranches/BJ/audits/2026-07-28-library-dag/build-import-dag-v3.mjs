@@ -337,14 +337,25 @@ function importedSymbolMetadata(clause) {
 
 const childProcessModules = new Set(["child_process", "node:child_process"]);
 const nodeModuleModules = new Set(["module", "node:module"]);
+const fsModules = new Set(["fs", "node:fs"]);
 const pathModules = new Set(["path", "node:path"]);
 const processModules = new Set(["node:process"]);
 const urlModules = new Set(["url", "node:url"]);
 const pathMemberNames = new Set(["dirname", "join", "resolve"]);
+const fsOperationNames = new Set([
+    ...fsReadNames,
+    ...fsWriteNames,
+    ...fsCopyNames,
+    "rm",
+    "rmSync",
+]);
+const fsDeleteNames = new Set(["rm", "rmSync"]);
 
 function createBindingResolver(sourceFile, options = {}) {
     const scopeByNode = new Map();
-    const parameterValues = options.parameterValues ?? new Map();
+    let parameterValues = options.parameterValues ?? new Map();
+    const repositoryRoot = options.repositoryRoot ?? process.cwd();
+    const globalProcess = { tainted: false, cwdTainted: false };
     const rootScope = {
         parent: null,
         bindings: new Map(),
@@ -374,9 +385,12 @@ function createBindingResolver(sourceFile, options = {}) {
     const canonicalRootModule = (moduleName, imported) => {
         if (!["REPO_ROOT", "ROOT"].includes(imported)) return false;
         if (!moduleName.startsWith(".")) return false;
-        const importedPath = portable(resolve(dirname(sourceFile.fileName), moduleName));
-        return importedPath.endsWith("/scripts/lib/subpath-policy.mjs") ||
-            importedPath.endsWith("/scripts/lib/canon-doc.mjs");
+        const sourceAbsolute = resolve(repositoryRoot, sourceFile.fileName);
+        const importedPath = portable(resolve(dirname(sourceAbsolute), moduleName));
+        return new Set([
+            portable(resolve(repositoryRoot, "scripts/lib/subpath-policy.mjs")),
+            portable(resolve(repositoryRoot, "scripts/lib/canon-doc.mjs")),
+        ]).has(importedPath);
     };
     const directImportProvenance = (moduleName, imported) => {
         if (canonicalRootModule(moduleName, imported)) {
@@ -397,16 +411,20 @@ function createBindingResolver(sourceFile, options = {}) {
         if (urlModules.has(moduleName) && imported === "fileURLToPath") {
             return { kind: "url-member", moduleName, member: imported };
         }
+        if (fsModules.has(moduleName) && fsOperationNames.has(imported)) {
+            return { kind: "fs-member", moduleName, member: imported };
+        }
         if (
             childProcessModules.has(moduleName) ||
             nodeModuleModules.has(moduleName) ||
+            fsModules.has(moduleName) ||
             pathModules.has(moduleName) ||
             processModules.has(moduleName) ||
             urlModules.has(moduleName)
         ) {
             return { kind: "module", moduleName };
         }
-        return { kind: "local" };
+        return { kind: "local-import-member", moduleName, member: imported };
     };
     const registerPattern = (
         name,
@@ -477,9 +495,16 @@ function createBindingResolver(sourceFile, options = {}) {
 
     function walk(node, parentScope) {
         if (ts.isFunctionDeclaration(node) && node.name) {
-            parentScope.bindings.set(node.name.text, { kind: "local" });
+            parentScope.bindings.set(node.name.text, {
+                kind: "local",
+                declaration: node.name,
+                functionNode: node,
+            });
         } else if (ts.isClassDeclaration(node) && node.name) {
-            parentScope.bindings.set(node.name.text, { kind: "local" });
+            parentScope.bindings.set(node.name.text, {
+                kind: "local",
+                declaration: node.name,
+            });
         }
         const scope =
             node !== sourceFile && createsScope(node)
@@ -504,27 +529,30 @@ function createBindingResolver(sourceFile, options = {}) {
             const clause = node.importClause;
             if (clause && !clause.isTypeOnly) {
                 if (clause.name) {
-                    scope.bindings.set(
-                        clause.name.text,
-                        directImportProvenance(moduleName, "default").kind === "module"
-                            ? { kind: "module", moduleName }
-                            : directImportProvenance(moduleName, "default"),
-                    );
+                    scope.bindings.set(clause.name.text, {
+                        ...directImportProvenance(moduleName, "default"),
+                        declaration: clause.name,
+                    });
                 }
                 if (clause.namedBindings && ts.isNamespaceImport(clause.namedBindings)) {
                     scope.bindings.set(clause.namedBindings.name.text, {
-                        kind: "module",
+                        kind: "module-namespace",
                         moduleName,
+                        declaration: clause.namedBindings.name,
                     });
                 } else if (clause.namedBindings && ts.isNamedImports(clause.namedBindings)) {
                     for (const element of clause.namedBindings.elements) {
                         if (element.isTypeOnly) continue;
                         scope.bindings.set(
                             element.name.text,
-                            directImportProvenance(
-                                moduleName,
-                                element.propertyName?.text ?? element.name.text,
-                            ),
+                            {
+                                ...directImportProvenance(
+                                    moduleName,
+                                    element.propertyName?.text ?? element.name.text,
+                                ),
+                                declaration: element.name,
+                                imported: element.propertyName?.text ?? element.name.text,
+                            },
                         );
                     }
                 }
@@ -589,15 +617,41 @@ function createBindingResolver(sourceFile, options = {}) {
         }
         ts.forEachChild(node, taintTarget);
     };
+    const markGlobalProcessMutation = (node) => {
+        if (!node) return;
+        let root = node;
+        const properties = [];
+        while (ts.isPropertyAccessExpression(root) || ts.isElementAccessExpression(root)) {
+            properties.unshift(
+                ts.isPropertyAccessExpression(root)
+                    ? root.name.text
+                    : literalString(root.argumentExpression),
+            );
+            root = root.expression;
+        }
+        if (!ts.isIdentifier(root) || root.text !== "process" || lookup("process", root)) {
+            return;
+        }
+        if (properties.length === 0) {
+            globalProcess.tainted = true;
+        } else if (properties.length === 1 && properties[0] === "cwd") {
+            globalProcess.cwdTainted = true;
+        } else {
+            globalProcess.tainted = true;
+        }
+    };
     const markWrites = (node) => {
         if (ts.isBinaryExpression(node) && assignmentOperators.has(node.operatorToken.kind)) {
+            markGlobalProcessMutation(node.left);
             taintTarget(node.left);
         } else if (
             (ts.isPrefixUnaryExpression(node) || ts.isPostfixUnaryExpression(node)) &&
             [ts.SyntaxKind.PlusPlusToken, ts.SyntaxKind.MinusMinusToken].includes(node.operator)
         ) {
+            markGlobalProcessMutation(node.operand);
             taintTarget(node.operand);
         } else if (node.kind === ts.SyntaxKind.DeleteExpression) {
+            markGlobalProcessMutation(node.expression);
             taintTarget(node.expression);
         } else if (ts.isForInStatement(node) || ts.isForOfStatement(node)) {
             if (!ts.isVariableDeclarationList(node.initializer)) {
@@ -609,20 +663,26 @@ function createBindingResolver(sourceFile, options = {}) {
     markWrites(sourceFile);
     const member = (base, name) => {
         if (base.tainted) return { kind: "local" };
-        if (base.kind === "module") {
+        if (base.kind === "module" || base.kind === "module-namespace") {
             return directImportProvenance(base.moduleName, name);
         }
         if (base.kind === "require-loader" && name === "resolve") {
             return { kind: "require-resolve", loader: base.loader };
         }
-        if (base.kind === "process-global" && name === "cwd") {
+        if (
+            base.kind === "process-global" &&
+            !globalProcess.tainted &&
+            name === "cwd" &&
+            !globalProcess.cwdTainted
+        ) {
             return { kind: "process-member", moduleName: "runtime", member: name };
         }
         return { kind: "local" };
     };
     const resolveRecord = (record, seen) => {
         if (record?.tainted) return { kind: "local" };
-        const knownValue = parameterValues.get(record?.declaration?.getStart(sourceFile));
+        const knownValue = parameterValues.get(record) ??
+            parameterValues.get(record?.declaration?.getStart(sourceFile));
         if (knownValue !== undefined) return { kind: "known-path", value: knownValue };
         if (!record || record.kind !== "variable") return record ?? { kind: "local" };
         const initializer = record.initializer ?? record.defaultInitializer;
@@ -641,7 +701,8 @@ function createBindingResolver(sourceFile, options = {}) {
             ts.isParenthesizedExpression(node) ||
             ts.isAsExpression(node) ||
             ts.isSatisfiesExpression(node) ||
-            ts.isNonNullExpression(node)
+            ts.isNonNullExpression(node) ||
+            ts.isAwaitExpression(node)
         ) {
             return resolveExpression(node.expression, useNode, seen);
         }
@@ -649,7 +710,9 @@ function createBindingResolver(sourceFile, options = {}) {
             const record = lookup(node.text, useNode);
             if (record) return record.tainted ? { kind: "local" } : resolveRecord(record, seen);
             if (node.text === "require") return { kind: "require-loader", loader: "require" };
-            if (node.text === "process") return { kind: "process-global" };
+            if (node.text === "process" && !globalProcess.tainted) {
+                return { kind: "process-global" };
+            }
             return { kind: "local" };
         }
         if (ts.isPropertyAccessExpression(node)) {
@@ -662,6 +725,23 @@ function createBindingResolver(sourceFile, options = {}) {
                 : { kind: "local" };
         }
         if (ts.isCallExpression(node)) {
+            if (
+                node.expression.kind === ts.SyntaxKind.ImportKeyword &&
+                node.arguments.length === 1
+            ) {
+                const moduleName = literalString(node.arguments[0]);
+                if (
+                    moduleName &&
+                    (childProcessModules.has(moduleName) ||
+                        nodeModuleModules.has(moduleName) ||
+                        fsModules.has(moduleName) ||
+                        pathModules.has(moduleName) ||
+                        processModules.has(moduleName) ||
+                        urlModules.has(moduleName))
+                ) {
+                    return { kind: "module-namespace", moduleName };
+                }
+            }
             const callee = resolveExpression(node.expression, useNode, seen);
             if (callee.kind === "create-require-factory") {
                 return { kind: "require-loader", loader: "createRequire" };
@@ -677,15 +757,15 @@ function createBindingResolver(sourceFile, options = {}) {
                 const moduleName = node.arguments[0] && literalString(node.arguments[0]);
                 if (
                     moduleName &&
-                    (
-                        childProcessModules.has(moduleName) ||
-                        nodeModuleModules.has(moduleName) ||
-                        pathModules.has(moduleName) ||
-                        processModules.has(moduleName) ||
-                        urlModules.has(moduleName)
-                    )
+                    childProcessModules.has(moduleName) ||
+                    nodeModuleModules.has(moduleName) ||
+                    fsModules.has(moduleName) ||
+                    pathModules.has(moduleName) ||
+                    processModules.has(moduleName) ||
+                    urlModules.has(moduleName) ||
+                    localSpecifierPattern.test(moduleName)
                 ) {
-                    return { kind: "module", moduleName };
+                    return { kind: "module-namespace", moduleName };
                 }
             }
         }
@@ -694,7 +774,8 @@ function createBindingResolver(sourceFile, options = {}) {
     const knownPathValue = (node, useNode = node) => {
         const record = ts.isIdentifier(node) ? lookup(node.text, useNode) : null;
         if (!record || record.tainted) return null;
-        const knownValue = parameterValues.get(record.declaration?.getStart(sourceFile));
+        const knownValue = parameterValues.get(record) ??
+            parameterValues.get(record.declaration?.getStart(sourceFile));
         return knownValue === undefined ? null : knownValue;
     };
     const isUnshadowed = (name, node) => lookup(name, node) === null;
@@ -717,7 +798,10 @@ function createBindingResolver(sourceFile, options = {}) {
         knownPathValue,
         isUnshadowed,
         recordsForPattern,
-        callResultValue: options.callResultValue ?? null,
+        setParameterValues(values) {
+            parameterValues = values;
+        },
+        globalProcess,
     };
 }
 
@@ -963,6 +1047,7 @@ export function extractScriptReferences(
     path = "fixture.ts",
     origin = null,
     context = {},
+    options = {},
 ) {
     const sourceFile = ts.createSourceFile(
         path,
@@ -973,7 +1058,9 @@ export function extractScriptReferences(
     );
     const references = [];
     const nonliteralReferences = [];
-    const bindingResolver = createBindingResolver(sourceFile);
+    const bindingResolver = createBindingResolver(sourceFile, {
+        repositoryRoot: options.repositoryRoot,
+    });
     const specifierResolver = createStaticSpecifierResolver(
         sourceFile,
         bindingResolver,
@@ -1176,7 +1263,7 @@ export function extractScriptReferences(
         ts.forEachChild(node, visit);
     }
     visit(sourceFile);
-    return { sourceFile, references, nonliteralReferences, parseErrors };
+    return { sourceFile, bindingResolver, references, nonliteralReferences, parseErrors };
 }
 
 function scanBalancedFunction(value, start) {
@@ -2054,17 +2141,6 @@ function evaluatePathExpression(
             if (binding.tainted) return null;
             const known = bindingResolver.knownPathValue(node, node);
             if (known !== null) return known;
-            if (
-                binding.initializer &&
-                ts.isCallExpression(binding.initializer) &&
-                bindingResolver.callResultValue
-            ) {
-                const returned = bindingResolver.callResultValue(
-                    binding.initializer,
-                    binding.propertyPath,
-                );
-                if (returned !== null) return returned;
-            }
             const provenance = bindingResolver.resolveExpression(node, node);
             if (provenance.kind === "repository-root") return repositoryRoot;
             const initializer = binding.initializer ?? binding.defaultInitializer;
@@ -2132,7 +2208,6 @@ function evaluatePathExpression(
         return repositoryRoot;
     }
     if (ts.isCallExpression(node)) {
-        const name = callName(node.expression);
         const pathBinding = bindingResolver?.resolveExpression(node.expression, node);
         if (
             pathBinding?.kind === "process-member" &&
@@ -2160,7 +2235,6 @@ function evaluatePathExpression(
         if (pathBinding?.member === "join" && isPathFunction) return join(...values);
         if (pathBinding?.member === "dirname" && isPathFunction) return dirname(values[0]);
         if (
-            name === "fileURLToPath" &&
             pathBinding?.kind === "url-member" &&
             pathBinding.member === "fileURLToPath"
         ) {
@@ -2210,22 +2284,10 @@ function namedFunction(sourceFile, name) {
     ) ?? null;
 }
 
-function callsNamed(sourceFile, name) {
-    const calls = [];
-    function visit(node) {
-        if (ts.isCallExpression(node) && callName(node.expression) === name) {
-            calls.push(node);
-        }
-        ts.forEachChild(node, visit);
-    }
-    visit(sourceFile);
-    return calls;
-}
-
-function parameterRecord(sourceFile, functionNode, index, property = null) {
+function parameterRecord(bindingResolver, functionNode, index, property = null) {
     const parameter = functionNode?.parameters[index];
     if (!parameter) return null;
-    return createBindingResolver(sourceFile)
+    return bindingResolver
         .recordsForPattern(parameter.name)
         .find(
             (record) =>
@@ -2237,19 +2299,19 @@ function parameterRecord(sourceFile, functionNode, index, property = null) {
 function setParameterValue(
     valuesBySource,
     sourcePath,
-    sourceFile,
+    bindingResolver,
     functionNode,
     index,
     value,
     property = null,
 ) {
-    const record = parameterRecord(sourceFile, functionNode, index, property);
+    const record = parameterRecord(bindingResolver, functionNode, index, property);
     if (value === null || !record) return false;
-    valuesBySource.get(sourcePath).set(record.declaration.getStart(sourceFile), value);
+    valuesBySource.get(sourcePath).set(record, value);
     return true;
 }
 
-function functionVariable(functionNode, name) {
+function functionVariableDeclaration(functionNode, name) {
     let result = null;
     function visit(node) {
         if (result || (node !== functionNode && ts.isFunctionLike(node))) return;
@@ -2258,7 +2320,7 @@ function functionVariable(functionNode, name) {
             ts.isIdentifier(node.name) &&
             node.name.text === name
         ) {
-            result = node.initializer;
+            result = node;
             return;
         }
         ts.forEachChild(node, visit);
@@ -2267,16 +2329,87 @@ function functionVariable(functionNode, name) {
     return result;
 }
 
-function provenCallValue(
-    sourceFile,
+function resolveContractModulePath(
+    repositoryRoot,
     sourcePath,
-    name,
+    moduleName,
+    repositoryVisibility,
+) {
+    const resolution = resolveReference(
+        repositoryRoot,
+        sourcePath,
+        moduleName,
+        "module",
+        repositoryVisibility,
+    );
+    return resolution.resolution === "repository-file" ? resolution.target : null;
+}
+
+function callsToTarget(
+    sourceFile,
+    bindingResolver,
+    sourcePath,
+    target,
+    repositoryRoot,
+    repositoryVisibility,
+) {
+    const calls = [];
+    function visit(node) {
+        if (ts.isCallExpression(node)) {
+            const binding = bindingResolver.resolveExpression(node.expression, node);
+            const localDeclaration =
+                binding.kind === "local" &&
+                sourcePath === target.sourcePath &&
+                binding.functionNode === target.functionNode;
+            const importedDeclaration =
+                (binding.kind === "local-import-member" ||
+                    binding.kind === "fs-member") &&
+                binding.member === target.exportName &&
+                resolveContractModulePath(
+                    repositoryRoot,
+                    sourcePath,
+                    binding.moduleName,
+                    repositoryVisibility,
+                ) === target.sourcePath;
+            if (localDeclaration || importedDeclaration) calls.push(node);
+        }
+        ts.forEachChild(node, visit);
+    }
+    visit(sourceFile);
+    return calls;
+}
+
+export {
+    callsToTarget,
+    provenTargetCallValue,
+};
+
+function targetFunction(scriptAsts, sourcePath, exportName) {
+    const sourceFile = scriptAsts.get(sourcePath);
+    const functionNode = namedFunction(sourceFile, exportName);
+    return functionNode
+        ? { sourcePath, exportName, functionNode }
+        : null;
+}
+
+function provenTargetCallValue(
+    sourceFile,
+    bindingResolver,
+    sourcePath,
+    target,
     index,
     repositoryRoot,
-    callResultValue = null,
-    parameterValues = new Map(),
+    repositoryVisibility,
+    parameterValues,
 ) {
-    const calls = callsNamed(sourceFile, name);
+    const calls = callsToTarget(
+        sourceFile,
+        bindingResolver,
+        sourcePath,
+        target,
+        repositoryRoot,
+        repositoryVisibility,
+    );
     if (calls.length === 0) return null;
     const values = calls.map((call) =>
         evaluatePathExpression(
@@ -2284,12 +2417,9 @@ function provenCallValue(
             sourceFile,
             sourcePath,
             repositoryRoot,
-            new Map(),
+            parameterValues,
             new Set(),
-            createBindingResolver(sourceFile, {
-                parameterValues,
-                callResultValue,
-            }),
+            bindingResolver,
         ),
     );
     return values.every((value) => value !== null && value === values[0])
@@ -2297,12 +2427,77 @@ function provenCallValue(
         : null;
 }
 
-function collectPathParameterContracts(scriptAsts, repositoryRoot) {
+function setRecordValue(values, record, value) {
+    if (record && value !== null) values.set(record, value);
+}
+
+function callerDestructuringRecords(
+    sourceFile,
+    bindingResolver,
+    calls,
+    properties,
+) {
+    const results = [];
+    function visit(node) {
+        if (
+            ts.isVariableDeclaration(node) &&
+            node.initializer &&
+            ts.isCallExpression(node.initializer) &&
+            calls.includes(node.initializer)
+        ) {
+            const records = bindingResolver.recordsForPattern(node.name);
+            results.push(
+                Object.fromEntries(
+                    properties.map((property) => [
+                        property,
+                        records.find(
+                            (record) => record.propertyPath.at(-1) === property,
+                        ) ?? null,
+                    ]),
+                ),
+            );
+        }
+        ts.forEachChild(node, visit);
+    }
+    visit(sourceFile);
+    return results;
+}
+
+function loopRecord(bindingResolver, functionNode, name) {
+    let result = null;
+    function visit(node) {
+        if (result || (node !== functionNode && ts.isFunctionLike(node))) return;
+        if (ts.isForOfStatement(node) || ts.isForInStatement(node)) {
+            const initializer = node.initializer;
+            if (ts.isVariableDeclarationList(initializer)) {
+                for (const declaration of initializer.declarations) {
+                    if (ts.isIdentifier(declaration.name) && declaration.name.text === name) {
+                        result = bindingResolver.lookup(name, declaration.name);
+                        return;
+                    }
+                }
+            }
+        }
+        ts.forEachChild(node, visit);
+    }
+    visit(functionNode?.body ?? functionNode);
+    return result;
+}
+
+function collectPathParameterContracts(
+    scriptAsts,
+    scriptResolvers,
+    repositoryRoot,
+    repositoryVisibility,
+) {
     const valuesBySource = new Map(
         [...scriptAsts.keys()].map((path) => [path, new Map()]),
     );
-    const put = (path, file, fn, index, value, property = null) =>
-        setParameterValue(valuesBySource, path, file, fn, index, value, property);
+    for (const [path, resolver] of scriptResolvers) {
+        resolver?.setParameterValues(valuesBySource.get(path) ?? new Map());
+    }
+    const put = (path, resolver, fn, index, value, property = null) =>
+        setParameterValue(valuesBySource, path, resolver, fn, index, value, property);
 
     // These exact source/call contracts are the finite generator API in this
     // corpus. An identifier named root elsewhere never receives provenance.
@@ -2312,67 +2507,186 @@ function collectPathParameterContracts(scriptAsts, repositoryRoot) {
     const styleAssets = scriptAsts.get(styleAssetsPath);
     const styleFold = scriptAsts.get(styleFoldPath);
     const utilityEmit = scriptAsts.get(utilityEmitPath);
-    if (styleAssets && styleFold) {
-        const rootCalls = callsNamed(styleAssets, "copyStyleAssets");
-        const root = provenCallValue(
+    const styleAssetsResolver = scriptResolvers.get(styleAssetsPath);
+    const styleFoldResolver = scriptResolvers.get(styleFoldPath);
+    const utilityEmitResolver = scriptResolvers.get(utilityEmitPath);
+    const copyTarget = targetFunction(scriptAsts, styleFoldPath, "copyStyleAssets");
+    const foldTarget = targetFunction(scriptAsts, styleFoldPath, "foldSfcBundle");
+    const injectTarget = targetFunction(
+        scriptAsts,
+        styleFoldPath,
+        "injectWebkitBackdropFile",
+    );
+    const emitTarget = targetFunction(
+        scriptAsts,
+        utilityEmitPath,
+        "emitComponentUtilities",
+    );
+    if (
+        styleAssets &&
+        styleFold &&
+        styleAssetsResolver &&
+        styleFoldResolver &&
+        copyTarget
+    ) {
+        const copyCalls = callsToTarget(
             styleAssets,
+            styleAssetsResolver,
             styleAssetsPath,
-            "copyStyleAssets",
-            0,
+            copyTarget,
             repositoryRoot,
+            repositoryVisibility,
         );
         const copy = namedFunction(styleFold, "copyStyleAssets");
-        const fold = namedFunction(styleFold, "foldSfcBundle");
+        const root = provenTargetCallValue(
+            styleAssets,
+            styleAssetsResolver,
+            styleAssetsPath,
+            copyTarget,
+            0,
+            repositoryRoot,
+            repositoryVisibility,
+            valuesBySource.get(styleAssetsPath),
+        );
         const copyValues = valuesBySource.get(styleFoldPath);
-        if (copy && root !== null && put(styleFoldPath, styleFold, copy, 0, root)) {
-            const expression = functionVariable(copy, "distStyles");
-            const distStyles = expression
-                ? evaluatePathExpression(
-                      expression,
-                      styleFold,
-                      styleFoldPath,
-                      repositoryRoot,
-                      new Map(),
-                      new Set(),
-                      createBindingResolver(styleFold, {
-                          parameterValues: copyValues,
-                      }),
-                  )
-                : null;
-            if (distStyles !== null) copyValues.set("distStyles", distStyles);
+        if (copy && root !== null) {
+            put(styleFoldPath, styleFoldResolver, copy, 0, root);
+            const returnValues = {};
+            for (const property of ["srcFonts", "distStyles", "distComponents"]) {
+                const declaration = functionVariableDeclaration(copy, property);
+                returnValues[property] = declaration
+                    ? evaluatePathExpression(
+                          declaration.name,
+                          styleFold,
+                          styleFoldPath,
+                          repositoryRoot,
+                          copyValues,
+                          new Set(),
+                          styleFoldResolver,
+                      )
+                    : null;
+            }
+            for (const records of callerDestructuringRecords(
+                styleAssets,
+                styleAssetsResolver,
+                copyCalls,
+                ["srcFonts", "distStyles", "distComponents"],
+            )) {
+                for (const property of Object.keys(records)) {
+                    setRecordValue(
+                        valuesBySource.get(styleAssetsPath),
+                        records[property],
+                        returnValues[property],
+                    );
+                }
+            }
         }
-        const copyCall = rootCalls.length === 1 ? rootCalls[0] : null;
-        const copyResult = (node, properties) =>
-            node === copyCall && properties.at(-1)
-                ? copyValues.get(properties.at(-1)) ?? null
-                : null;
-        if (fold) {
-            const foldPath = (index) =>
-                provenCallValue(
-                    styleAssets,
-                    styleAssetsPath,
-                    "foldSfcBundle",
-                    index,
-                    repositoryRoot,
-                    copyResult,
-                );
-            put(styleFoldPath, styleFold, fold, 0, foldPath(0));
-            put(styleFoldPath, styleFold, fold, 1, foldPath(1));
-        }
-        if (utilityEmit) {
-            const emit = namedFunction(utilityEmit, "emitComponentUtilities");
+        if (foldTarget) {
             put(
-                utilityEmitPath,
-                utilityEmit,
-                emit,
+                styleFoldPath,
+                styleFoldResolver,
+                namedFunction(styleFold, "foldSfcBundle"),
                 0,
-                provenCallValue(
+                provenTargetCallValue(
                     styleAssets,
+                    styleAssetsResolver,
                     styleAssetsPath,
-                    "emitComponentUtilities",
+                    foldTarget,
                     0,
                     repositoryRoot,
-                    copyResult,
+                    repositoryVisibility,
+                    valuesBySource.get(styleAssetsPath),
+                ),
+            );
+            put(
+                styleFoldPath,
+                styleFoldResolver,
+                namedFunction(styleFold, "foldSfcBundle"),
+                1,
+                provenTargetCallValue(
+                    styleAssets,
+                    styleAssetsResolver,
+                    styleAssetsPath,
+                    foldTarget,
+                    1,
+                    repositoryRoot,
+                    repositoryVisibility,
+                    valuesBySource.get(styleAssetsPath),
+                ),
+            );
+        }
+        if (injectTarget) {
+            put(
+                styleFoldPath,
+                styleFoldResolver,
+                injectTarget.functionNode,
+                0,
+                (() => {
+                    const calls = callsToTarget(
+                        styleAssets,
+                        styleAssetsResolver,
+                        styleAssetsPath,
+                        injectTarget,
+                        repositoryRoot,
+                        repositoryVisibility,
+                    );
+                    const call = calls.find((candidate) => candidate.arguments.length > 0);
+                    return call
+                        ? evaluatePathExpression(
+                              call.arguments[0],
+                              styleAssets,
+                              styleAssetsPath,
+                              repositoryRoot,
+                              valuesBySource.get(styleAssetsPath),
+                              new Set(),
+                              styleAssetsResolver,
+                          )
+                        : null;
+                })(),
+            );
+            const fileRecord = loopRecord(
+                styleFoldResolver,
+                injectTarget.functionNode,
+                "file",
+            );
+            const injected = parameterRecord(
+                styleFoldResolver,
+                injectTarget.functionNode,
+                0,
+            );
+            setRecordValue(copyValues, fileRecord, copyValues.get(injected));
+        }
+        if (utilityEmit && utilityEmitResolver && emitTarget) {
+            put(
+                utilityEmitPath,
+                utilityEmitResolver,
+                emitTarget.functionNode,
+                0,
+                provenTargetCallValue(
+                    styleAssets,
+                    styleAssetsResolver,
+                    styleAssetsPath,
+                    emitTarget,
+                    0,
+                    repositoryRoot,
+                    repositoryVisibility,
+                    valuesBySource.get(styleAssetsPath),
+                ),
+            );
+            put(
+                utilityEmitPath,
+                utilityEmitResolver,
+                emitTarget.functionNode,
+                1,
+                provenTargetCallValue(
+                    styleAssets,
+                    styleAssetsResolver,
+                    styleAssetsPath,
+                    emitTarget,
+                    1,
+                    repositoryRoot,
+                    repositoryVisibility,
+                    valuesBySource.get(styleAssetsPath),
                 ),
             );
         }
@@ -2383,45 +2697,46 @@ function collectPathParameterContracts(scriptAsts, repositoryRoot) {
     if (graphSource) {
         const build = namedFunction(graphSource, "buildGraph");
         const visibility = namedFunction(graphSource, "gitRepositoryVisibility");
+        const graphResolver = scriptResolvers.get(graphPath);
         const graphValues = valuesBySource.get(graphPath);
-        const defaultExpression = parameterRecord(
-            graphSource,
-            build,
-            0,
-            "repositoryRoot",
-        )?.defaultInitializer;
-        const defaultRoot = defaultExpression
-            ? evaluatePathExpression(
-                  defaultExpression,
-                  graphSource,
-                  graphPath,
-                  repositoryRoot,
-                  new Map(),
-                  new Set(),
-                  createBindingResolver(graphSource, {
-                      parameterValues: graphValues,
-                  }),
-              )
-            : null;
-        if (build && put(graphPath, graphSource, build, 0, defaultRoot, "repositoryRoot")) {
+        const defaultValue = (property) => {
+            const record = parameterRecord(graphResolver, build, 0, property);
+            return record?.defaultInitializer
+                ? evaluatePathExpression(
+                      record.defaultInitializer,
+                      graphSource,
+                      graphPath,
+                      repositoryRoot,
+                      graphValues,
+                      new Set(),
+                      graphResolver,
+                  )
+                : null;
+        };
+        if (build && graphResolver) {
+            put(graphPath, graphResolver, build, 0, defaultValue("repositoryRoot"), "repositoryRoot");
+            put(graphPath, graphResolver, build, 0, defaultValue("outputDirectory"), "outputDirectory");
+        }
+        if (build && visibility && graphResolver) {
             put(
                 graphPath,
-                graphSource,
+                graphResolver,
                 visibility,
                 0,
-                provenCallValue(
+                provenTargetCallValue(
                     graphSource,
+                    graphResolver,
                     graphPath,
-                    "gitRepositoryVisibility",
+                    { sourcePath: graphPath, exportName: "gitRepositoryVisibility", functionNode: visibility },
                     0,
                     repositoryRoot,
-                    null,
+                    repositoryVisibility,
                     graphValues,
                 ),
             );
         }
     }
-    return { valuesBySource, callResultValueBySource: new Map() };
+    return valuesBySource;
 }
 
 export function extractFileOperations(
@@ -2429,17 +2744,17 @@ export function extractFileOperations(
     sourcePath,
     repositoryRoot,
     origin = null,
-    pathOverrides = new Map(),
     parameterValues = new Map(),
-    callResultValue = null,
+    bindingResolver = null,
 ) {
     const operations = [];
     const unmodeled = [];
     const constants = collectConstInitializers(sourceFile);
-    const bindingResolver = createBindingResolver(sourceFile, {
+    const resolver = bindingResolver ?? createBindingResolver(sourceFile, {
         parameterValues,
-        callResultValue,
+        repositoryRoot,
     });
+    resolver.setParameterValues(parameterValues);
     const sourceLocation = (node) => {
         const local = sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile));
         return offsetLocation(
@@ -2448,8 +2763,6 @@ export function extractFileOperations(
         );
     };
     function resolvedArgument(argument) {
-        const override = pathOverrides.get(expressionText(argument, sourceFile));
-        if (override) return override;
         const value = evaluatePathExpression(
             argument,
             sourceFile,
@@ -2457,7 +2770,7 @@ export function extractFileOperations(
             repositoryRoot,
             constants,
             new Set(),
-            bindingResolver,
+            resolver,
         );
         if (value === null) return null;
         const absolutePath = isAbsolute(value) ? value : resolve(repositoryRoot, value);
@@ -2467,21 +2780,29 @@ export function extractFileOperations(
     }
     function visit(node) {
         if (ts.isCallExpression(node)) {
-            const name = callName(node.expression);
+            const binding = resolver.resolveExpression(node.expression, node);
+            const name = binding.member;
             const location = sourceLocation(node);
-            if (fsReadNames.has(name) || fsWriteNames.has(name)) {
+            const isFsOperation =
+                binding.kind === "fs-member" &&
+                fsModules.has(binding.moduleName) &&
+                fsOperationNames.has(name);
+            if (isFsOperation && (fsReadNames.has(name) || fsWriteNames.has(name) || fsDeleteNames.has(name))) {
                 const target = resolvedArgument(node.arguments[0]);
                 if (target) {
                     operations.push({
-                        edgeKind: fsReadNames.has(name) ? "generator-read" : "generator-write",
+                        edgeKind: fsReadNames.has(name)
+                            ? "generator-read"
+                            : "generator-write",
                         target,
                         ...location,
                         operation: name,
+                        ...(fsDeleteNames.has(name) ? { effect: "delete" } : {}),
                     });
                 } else {
                     unmodeled.push({ source: sourcePath, operation: name, ...location });
                 }
-            } else if (fsCopyNames.has(name)) {
+            } else if (isFsOperation && fsCopyNames.has(name)) {
                 const source = resolvedArgument(node.arguments[0]);
                 const target = resolvedArgument(node.arguments[1]);
                 if (source && target) {
@@ -2515,14 +2836,15 @@ export function extractProcessInvocations(
     origin = null,
     context = {},
     parameterValues = new Map(),
-    callResultValue = null,
+    bindingResolver = null,
 ) {
     const invocations = [];
     const constants = collectConstInitializers(sourceFile);
-    const bindingResolver = createBindingResolver(sourceFile, {
+    const resolver = bindingResolver ?? createBindingResolver(sourceFile, {
         parameterValues,
-        callResultValue,
+        repositoryRoot,
     });
+    resolver.setParameterValues(parameterValues);
     const sourceLocation = (node) => {
         const local = sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile));
         return offsetLocation(
@@ -2539,7 +2861,7 @@ export function extractProcessInvocations(
             repositoryRoot,
             constants,
             new Set(),
-            bindingResolver,
+            resolver,
         );
         let target = null;
         if (typeof evaluated === "string") {
@@ -2570,7 +2892,7 @@ export function extractProcessInvocations(
     };
     function visit(node) {
         if (ts.isCallExpression(node)) {
-            const binding = bindingResolver.resolveExpression(node.expression, node);
+            const binding = resolver.resolveExpression(node.expression, node);
             if (
                 binding.kind === "module-member" &&
                 childProcessModules.has(binding.moduleName) &&
@@ -2894,6 +3216,8 @@ export async function buildGraph({
     const unmodeledFileOperations = [];
     const processInvocations = [];
     const scriptAsts = new Map();
+    const scriptResolvers = new Map();
+    const scriptExtractions = [];
 
     const addResolvedReference = (
         source,
@@ -2970,170 +3294,16 @@ export async function buildGraph({
         if (!node || node.nodeType === "binary" || node.nodeType === "directory") continue;
         const source = readFileSync(join(repositoryRoot, path), "utf8");
         if (scriptExtensions.has(extname(path).toLowerCase())) {
-            const extracted = extractScriptReferences(source, path);
+            const extracted = extractScriptReferences(source, path, null, {}, { repositoryRoot });
             scriptAsts.set(path, extracted.sourceFile);
+            scriptResolvers.set(path, extracted.bindingResolver);
+            scriptExtractions.push({
+                sourcePath: path,
+                extracted,
+                origin: null,
+                context: {},
+            });
             parseErrors.push(...extracted.parseErrors);
-            for (const reference of extracted.references) {
-                if (reference.patterns) {
-                    const expansion = expandLiteralGlob(path, reference.patterns, seedPaths);
-                    for (const [pattern, targets] of expansion.matches) {
-                        if (targets.length === 0) {
-                            unresolvedGlobPatterns.push({
-                                source: path,
-                                pattern,
-                                line: reference.line,
-                                column: reference.column ?? null,
-                            });
-                        }
-                    }
-                    for (const target of expansion.targets) {
-                        internalEdges.push({
-                            source: path,
-                            target,
-                            specifier: reference.patterns.join(","),
-                            edgeKind: reference.edgeKind,
-                            line: reference.line,
-                            column: reference.column ?? null,
-                            boundary: "within-projections",
-                            metadata: {
-                                ...reference.metadata,
-                                patterns: reference.patterns,
-                                negativePatterns: expansion.negatives,
-                                options: reference.options,
-                            },
-                            projections: projectionsForEdge(reference.edgeKind),
-                        });
-                    }
-                } else {
-                    addResolvedReference(path, reference, reference.edgeKind === "new-url" ? "asset" : "module");
-                }
-            }
-            nonliteralLocalReferences.push(
-                ...extracted.nonliteralReferences.filter(({ localHint }) => localHint),
-            );
-            dynamicModuleReferences.push(
-                ...extracted.nonliteralReferences.filter(({ localHint }) => !localHint),
-            );
-            const needsPathContract =
-                path === "vite.style-fold.ts" ||
-                path === "vite.utility-emit.ts" ||
-                path === canonicalGraphGeneratorPath;
-            const pathContracts = needsPathContract
-                ? collectPathParameterContracts(scriptAsts, repositoryRoot)
-                : null;
-            const parameterValues =
-                pathContracts?.valuesBySource.get(path) ?? new Map();
-            const callResultValue =
-                pathContracts?.callResultValueBySource.get(path) ?? null;
-            processInvocations.push(
-                ...extractProcessInvocations(
-                    extracted.sourceFile,
-                    path,
-                    repositoryRoot,
-                    null,
-                    {},
-                    parameterValues,
-                    callResultValue,
-                ),
-            );
-            const fileOperations = extractFileOperations(
-                extracted.sourceFile,
-                path,
-                repositoryRoot,
-                null,
-                path === canonicalGraphGeneratorPath
-                      ? new Map([[
-                          "manifestPath",
-                          graphOwnerManifestPath,
-                      ]])
-                      : undefined,
-                parameterValues,
-                callResultValue,
-            );
-            unmodeledFileOperations.push(...fileOperations.unmodeled);
-            for (const operation of fileOperations.operations) {
-                const operationEdgeKind =
-                    ["scripts-generators", "build-config"].includes(projectionByPath.get(path))
-                        ? operation.edgeKind
-                        : operation.edgeKind === "generator-read"
-                          ? "file-read"
-                          : "file-write";
-                const absoluteTarget = isAbsolute(operation.target)
-                    ? operation.target
-                    : join(repositoryRoot, operation.target);
-                if (!pathWithin(repositoryRoot, absoluteTarget)) {
-                    externalEdges.push({
-                        source: path,
-                        target: portable(absoluteTarget),
-                        edgeKind: operationEdgeKind,
-                        operation: operation.operation,
-                        line: operation.line,
-                        column: operation.column ?? null,
-                        resolution: "external-file-operation",
-                    });
-                    continue;
-                }
-                const target = portable(relative(repositoryRoot, absoluteTarget)) || ".";
-                if (emittedGraphArtifactPaths.has(target)) continue;
-                if (target === "node_modules" || target.startsWith("node_modules/")) {
-                    externalEdges.push({
-                        source: path,
-                        target,
-                        edgeKind: operationEdgeKind,
-                        operation: operation.operation,
-                        line: operation.line,
-                        column: operation.column ?? null,
-                        resolution: "external-package-file-operation",
-                    });
-                    continue;
-                }
-                const modeledGeneratorWrite =
-                    operationEdgeKind === "generator-write" &&
-                    !projectionByPath.has(target);
-                const canonicalTarget =
-                    repositoryVisibility.files.has(target) ||
-                    repositoryVisibility.directories.has(target);
-                const nodeKind = modeledGeneratorWrite
-                    ? "generated-by-write"
-                    : canonicalTarget
-                      ? "repository-file"
-                      : "missing-runtime-placeholder";
-                const targetNode = addNode(
-                    target,
-                    "repository-boundary",
-                    nodeKind,
-                    modeledGeneratorWrite ? path : null,
-                );
-                if (!targetNode) continue;
-                if (
-                    modeledGeneratorWrite &&
-                    targetNode.nodeKind !== "generated-by-write"
-                ) {
-                    targetNode.nodeKind = "generated-by-write";
-                    targetNode.generatedBy = path;
-                    targetNode.virtual = true;
-                    targetNode.bytes = null;
-                    targetNode.sha256 = null;
-                    delete targetNode.lines;
-                    targetNode.nodeType =
-                        extname(targetNode.path) === ""
-                            ? "directory"
-                            : "generated-artifact";
-                }
-                internalEdges.push({
-                    source: path,
-                    target,
-                    specifier: null,
-                    edgeKind: operationEdgeKind,
-                    line: operation.line,
-                    column: operation.column ?? null,
-                    boundary: projectionByPath.has(target)
-                        ? "within-projections"
-                        : "repository-boundary",
-                    metadata: { operation: operation.operation },
-                    projections: { eagerRuntime: false, buildLoad: true, ownership: true },
-                });
-            }
         } else if (extname(path).toLowerCase() === ".vue") {
             const parsed = parseSfc(source, { filename: path, sourceMap: false });
             for (const error of parsed.errors) {
@@ -3224,71 +3394,21 @@ export async function buildGraph({
                     virtualPath,
                     block.loc?.start ?? null,
                     context,
+                    { repositoryRoot },
                 );
                 scriptAsts.set(
                     path,
                     extracted.sourceFile,
                 );
+                scriptResolvers.set(path, extracted.bindingResolver);
+                scriptExtractions.push({
+                    sourcePath: path,
+                    extracted,
+                    origin: block.loc?.start ?? null,
+                    context,
+                });
                 parseErrors.push(
                     ...extracted.parseErrors.map((error) => ({ ...error, source: path })),
-                );
-                for (const reference of extracted.references) {
-                    if (reference.patterns) {
-                        const expansion = expandLiteralGlob(path, reference.patterns, seedPaths);
-                        for (const [pattern, targets] of expansion.matches) {
-                            if (targets.length === 0) {
-                                unresolvedGlobPatterns.push({
-                                    source: path,
-                                    pattern,
-                                    line: reference.line,
-                                    column: reference.column ?? null,
-                                });
-                            }
-                        }
-                        for (const target of expansion.targets) {
-                            internalEdges.push({
-                                source: path,
-                                target,
-                                specifier: reference.patterns.join(","),
-                                edgeKind: reference.edgeKind,
-                                line: reference.line,
-                                column: reference.column ?? null,
-                                boundary: "within-projections",
-                                metadata: {
-                                    ...reference.metadata,
-                                    patterns: reference.patterns,
-                                    negativePatterns: expansion.negatives,
-                                    options: reference.options,
-                                },
-                                projections: projectionsForEdge(reference.edgeKind),
-                            });
-                        }
-                    } else {
-                        addResolvedReference(
-                            path,
-                            reference,
-                            reference.edgeKind === "new-url" ? "asset" : "module",
-                        );
-                    }
-                }
-                nonliteralLocalReferences.push(
-                    ...extracted.nonliteralReferences
-                        .filter(({ localHint }) => localHint)
-                        .map((reference) => ({ ...reference, source: path })),
-                );
-                dynamicModuleReferences.push(
-                    ...extracted.nonliteralReferences
-                        .filter(({ localHint }) => !localHint)
-                        .map((reference) => ({ ...reference, source: path })),
-                );
-                processInvocations.push(
-                    ...extractProcessInvocations(
-                        extracted.sourceFile,
-                        path,
-                        repositoryRoot,
-                        block.loc?.start ?? null,
-                        context,
-                    ),
                 );
             }
             const templateBlock = blockEntries.find(({ kind }) => kind === "template");
@@ -3319,6 +3439,174 @@ export async function buildGraph({
                     reference.edgeKind === "css-import" ? "module" : "asset",
                 );
             }
+        }
+    }
+
+    const pathContracts = collectPathParameterContracts(
+        scriptAsts,
+        scriptResolvers,
+        repositoryRoot,
+        repositoryVisibility,
+    );
+    for (const { sourcePath, extracted, origin, context } of scriptExtractions) {
+        for (const reference of extracted.references) {
+            if (reference.patterns) {
+                const expansion = expandLiteralGlob(sourcePath, reference.patterns, seedPaths);
+                for (const [pattern, targets] of expansion.matches) {
+                    if (targets.length === 0) {
+                        unresolvedGlobPatterns.push({
+                            source: sourcePath,
+                            pattern,
+                            line: reference.line,
+                            column: reference.column ?? null,
+                        });
+                    }
+                }
+                for (const target of expansion.targets) {
+                    internalEdges.push({
+                        source: sourcePath,
+                        target,
+                        specifier: reference.patterns.join(","),
+                        edgeKind: reference.edgeKind,
+                        line: reference.line,
+                        column: reference.column ?? null,
+                        boundary: "within-projections",
+                        metadata: {
+                            ...reference.metadata,
+                            patterns: reference.patterns,
+                            negativePatterns: expansion.negatives,
+                            options: reference.options,
+                        },
+                        projections: projectionsForEdge(reference.edgeKind),
+                    });
+                }
+            } else {
+                addResolvedReference(
+                    sourcePath,
+                    reference,
+                    reference.edgeKind === "new-url" ? "asset" : "module",
+                );
+            }
+        }
+        nonliteralLocalReferences.push(
+            ...extracted.nonliteralReferences
+                .filter(({ localHint }) => localHint)
+                .map((reference) => ({ ...reference, source: sourcePath })),
+        );
+        dynamicModuleReferences.push(
+            ...extracted.nonliteralReferences
+                .filter(({ localHint }) => !localHint)
+                .map((reference) => ({ ...reference, source: sourcePath })),
+        );
+        const parameterValues = pathContracts.get(sourcePath) ?? new Map();
+        processInvocations.push(
+            ...extractProcessInvocations(
+                extracted.sourceFile,
+                sourcePath,
+                repositoryRoot,
+                origin,
+                context,
+                parameterValues,
+                extracted.bindingResolver,
+            ),
+        );
+        const fileOperations = extractFileOperations(
+            extracted.sourceFile,
+            sourcePath,
+            repositoryRoot,
+            origin,
+            parameterValues,
+            extracted.bindingResolver,
+        );
+        unmodeledFileOperations.push(...fileOperations.unmodeled);
+        for (const operation of fileOperations.operations) {
+            const operationEdgeKind =
+                ["scripts-generators", "build-config"].includes(projectionByPath.get(sourcePath))
+                    ? operation.edgeKind
+                    : operation.edgeKind === "generator-read"
+                      ? "file-read"
+                      : "file-write";
+            const absoluteTarget = isAbsolute(operation.target)
+                ? operation.target
+                : join(repositoryRoot, operation.target);
+            const operationMetadata = {
+                operation: operation.operation,
+                ...(operation.effect ? { effect: operation.effect } : {}),
+            };
+            if (!pathWithin(repositoryRoot, absoluteTarget)) {
+                externalEdges.push({
+                    source: sourcePath,
+                    target: portable(absoluteTarget),
+                    edgeKind: operationEdgeKind,
+                    ...operationMetadata,
+                    line: operation.line,
+                    column: operation.column ?? null,
+                    resolution: "external-file-operation",
+                });
+                continue;
+            }
+            const target = portable(relative(repositoryRoot, absoluteTarget)) || ".";
+            if (emittedGraphArtifactPaths.has(target)) continue;
+            if (target === "node_modules" || target.startsWith("node_modules/")) {
+                externalEdges.push({
+                    source: sourcePath,
+                    target,
+                    edgeKind: operationEdgeKind,
+                    ...operationMetadata,
+                    line: operation.line,
+                    column: operation.column ?? null,
+                    resolution: "external-package-file-operation",
+                });
+                continue;
+            }
+            const deleteEffect = operation.effect === "delete";
+            const modeledGeneratorWrite =
+                operationEdgeKind === "generator-write" &&
+                !deleteEffect &&
+                !projectionByPath.has(target);
+            const canonicalTarget =
+                repositoryVisibility.files.has(target) ||
+                repositoryVisibility.directories.has(target);
+            const nodeKind = modeledGeneratorWrite
+                ? "generated-by-write"
+                : canonicalTarget
+                  ? "repository-file"
+                  : "missing-runtime-placeholder";
+            const targetNode = addNode(
+                target,
+                "repository-boundary",
+                nodeKind,
+                modeledGeneratorWrite ? sourcePath : null,
+            );
+            if (!targetNode) continue;
+            if (
+                modeledGeneratorWrite &&
+                targetNode.nodeKind !== "generated-by-write"
+            ) {
+                targetNode.nodeKind = "generated-by-write";
+                targetNode.generatedBy = sourcePath;
+                targetNode.virtual = true;
+                targetNode.bytes = null;
+                targetNode.sha256 = null;
+                delete targetNode.lines;
+                targetNode.nodeType =
+                    extname(targetNode.path) === ""
+                        ? "directory"
+                        : "generated-artifact";
+            }
+            internalEdges.push({
+                source: sourcePath,
+                target,
+                specifier: null,
+                edgeKind: operationEdgeKind,
+                line: operation.line,
+                column: operation.column ?? null,
+                boundary: projectionByPath.has(target)
+                    ? "within-projections"
+                    : "repository-boundary",
+                metadata: operationMetadata,
+                projections: { eagerRuntime: false, buildLoad: true, ownership: true },
+            });
         }
     }
 
