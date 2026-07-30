@@ -1,9 +1,9 @@
 # Glass UI repository graph — schema v3
 
-Observed: 2026-07-30T00:46:30.954Z
+Observed: 2026-07-30T01:39:39.876Z
 
 Deterministic receipt (the `observedAt` value is excluded):
-`f5a5a2592c743b268ec7a15724fe9ee3c498e3af78e5d06df33a36902d1f8fc3`
+`2a266e694026aba8903c250944e46ad7abb2c83bf10f28d6fc23a5c34f00115f`
 
 Owner manifest receipt: `e19b663fb671e046727469832be1d160095eb5cb7d3ba54aa2818277043100ba`
 
@@ -42,7 +42,7 @@ package export key maps to exactly one owner.
 | Dynamic template/style asset expressions | 123 |
 | Unmatched literal globs | 0 |
 | Parse errors | 0 |
-| Unresolved calls from the finite supported filesystem-operation table | 273 |
+| Unresolved supported filesystem calls and opaque fs-module-promise boundaries | 273 |
 | Process invocations | 8 |
 | Dynamic process arguments | 9 |
 
@@ -217,14 +217,14 @@ declared public owner. CSS and font entries carry an explicit asset symbol.
 Generation exits non-zero for an unowned or multiply owned graph file, a
 package key without exactly one owner, an unresolved literal local reference,
 an unmatched positive glob, a nonliteral local loader/worker/URL, or a parser
-error, including TypeScript syntactic diagnostics. Generator calls from the
-finite supported filesystem-operation table are modeled when their path
-expression can be reduced from literals, `resolve`/`join`,
-`new URL(..., import.meta.url)`, and lexical bindings; unresolved calls remain
-counted in `unmodeledFileOperations` and are not represented as false edges.
-This snapshot contains 273 such unresolved
-calls (251 at the pre-source challenge seal); this is not an exhaustive census
-of Node filesystem activity. Literal CommonJS `require` and
+error, including TypeScript syntactic diagnostics. Supported filesystem calls
+are modeled when their path expression can be reduced from literals,
+`resolve`/`join`, `new URL(..., import.meta.url)`, and lexical bindings;
+unresolved supported filesystem calls and opaque fs-module-promise boundaries
+remain counted in `unmodeledFileOperations` and are not represented as false
+edges. This snapshot contains 273 such
+ledger rows; this is not an exhaustive census of Node filesystem activity.
+Literal CommonJS `require` and
 `createRequire` targets are graph edges; `exec`/`execFile`/`spawn`
 families are retained in a process-invocation ledger with statically reducible
 command and argv targets plus an explicit dynamic-argument count. Dynamic

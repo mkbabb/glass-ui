@@ -226,6 +226,9 @@ describe("graph schema v3", () => {
             `const refs = { one: "./deleted" }; delete refs.one; import(refs.one);`,
             `let path = "./destructured"; ({ path } = { path: "./later" }); import(path);`,
             `let path = "./loop-target"; for (path of ["./later"]) {} import(path);`,
+            `let path = "./nested"; ({ outer: [path = "./default", ...rest] } = { outer: ["./later"] }); import(path);`,
+            `let path = "./loop-nested"; for ({ path } of [{ path: "./later" }]) {} import(path);`,
+            `const refs = { nested: { one: "./nested-property" } }; ({ nested: { one: refs.nested.one } } = value); import(refs.nested.one);`,
         ];
         for (const source of cases) {
             const extracted = extractScriptReferences(source);
@@ -345,6 +348,13 @@ describe("graph schema v3", () => {
             const cjsAlias = required;
             cjsAlias.readFileSync = replacement;
             required.readFileSync("mutated-member.txt");
+            const reboundAlias = required;
+            reboundAlias = replacement;
+            reboundAlias.readFileSync("rebound-alias.txt");
+            let nestedRead = required.writeFileSync;
+            ({ readFileSync: nestedRead } = required);
+            nestedRead = replacement;
+            nestedRead("nested-rebound.txt");
             let reassigned = required.writeFileSync;
             reassigned = replacement;
             reassigned("reassigned-call.txt", "content");
@@ -375,6 +385,52 @@ describe("graph schema v3", () => {
         expect(operations.unmodeled.map(({ operation, boundary }) => ({ operation, boundary }))).toEqual([
             { operation: "readFileSync", boundary: "tainted-fs-member" },
             { operation: "writeFileSync", boundary: "tainted-fs-member" },
+            { operation: "writeFileSync", boundary: "tainted-fs-member" },
+        ]);
+
+        const reboundOnly = extractScriptReferences(`
+            const required = require("node:fs");
+            const alias = required;
+            alias = replacement;
+            required.readFileSync("stable-after-rebind.txt");
+            alias.readFileSync("local-after-rebind.txt");
+        `);
+        const reboundOnlyOperations = extractFileOperations(
+            reboundOnly.sourceFile,
+            "fixture.ts",
+            root,
+            null,
+            new Map(),
+            reboundOnly.bindingResolver,
+        );
+        expect(reboundOnlyOperations.operations).toEqual([
+            expect.objectContaining({
+                operation: "readFileSync",
+                target: "stable-after-rebind.txt",
+            }),
+        ]);
+        expect(reboundOnlyOperations.unmodeled).toEqual([]);
+
+        const sharedMutation = extractScriptReferences(`
+            const required = require("node:fs");
+            const alias = required;
+            alias.readFileSync = replacement;
+            required.readFileSync("shared-after-mutation.txt");
+        `);
+        expect(
+            extractFileOperations(
+                sharedMutation.sourceFile,
+                "fixture.ts",
+                root,
+                null,
+                new Map(),
+                sharedMutation.bindingResolver,
+            ).unmodeled,
+        ).toEqual([
+            expect.objectContaining({
+                operation: "readFileSync",
+                boundary: "tainted-fs-member",
+            }),
         ]);
     });
 
@@ -390,6 +446,9 @@ describe("graph schema v3", () => {
             const awaitedAlias = await aliasedPromise;
             awaitedAlias.writeFileSync("awaited-alias.txt", "content");
             aliasedPromise.then((fs) => fs.readFileSync("promise-boundary.txt"));
+            const { readFileSync: reassignedCallable } = await import(specifier);
+            reassignedCallable = replacement;
+            reassignedCallable("reassigned-callable.txt");
         `, "fixture.ts", null, {}, { repositoryRoot: root });
         const operations = extractFileOperations(
             fixture.sourceFile,
@@ -410,7 +469,38 @@ describe("graph schema v3", () => {
                 boundary: "module-promise",
                 moduleName: "node:fs",
             }),
+            expect.objectContaining({
+                operation: "readFileSync",
+                boundary: "tainted-fs-member",
+            }),
         ]);
+
+        for (const path of ["fixture.mjs", "fixture.mts"]) {
+            const moduleFixture = extractScriptReferences(
+                'const fs=await(import("node:fs")); fs.readFileSync("coordinate.txt");',
+                path,
+                null,
+                {},
+                { repositoryRoot: root },
+            );
+            expect(moduleFixture.parseErrors).toEqual([]);
+            const moduleOperations = extractFileOperations(
+                moduleFixture.sourceFile,
+                path,
+                root,
+                null,
+                new Map(),
+                moduleFixture.bindingResolver,
+            );
+            expect(moduleOperations.operations).toEqual([
+                expect.objectContaining({
+                    operation: "readFileSync",
+                    target: "coordinate.txt",
+                    line: 1,
+                    column: 36,
+                }),
+            ]);
+        }
     });
 
     it("does not resolve a shadowing root parameter as the repository root", () => {
@@ -506,6 +596,7 @@ describe("graph schema v3", () => {
             `import { readdirSync } from "node:fs"; process[dynamicKey] = value; readdirSync(process.cwd());`,
             `import { readdirSync } from "node:fs"; const p = process; p.cwd = () => "/bad"; readdirSync(process.cwd());`,
             `import { readdirSync } from "node:fs"; const p = process; Object.defineProperty(p, "cwd", {}); readdirSync(process.cwd());`,
+            `import { readdirSync } from "node:fs"; const p = process; ({ nested: [p.cwd] } = value); readdirSync(process.cwd());`,
             `import { readdirSync } from "node:fs"; import { ROOT as wrongRoot } from "./nested/scripts/lib/canon-doc.mjs"; readdirSync(wrongRoot);`,
         ]) {
             const fixture = extractScriptReferences(source);
@@ -522,6 +613,62 @@ describe("graph schema v3", () => {
                 expect.objectContaining({ operation: "readdirSync" }),
             ]);
         }
+
+        const defaultProcess = extractScriptReferences(
+            `import p from "node:process";
+             import { readdirSync } from "node:fs";
+             readdirSync(p.cwd());`,
+        );
+        const defaultProcessOperations = extractFileOperations(
+            defaultProcess.sourceFile,
+            "fixture.ts",
+            root,
+            null,
+            new Map(),
+            defaultProcess.bindingResolver,
+        );
+        expect(defaultProcessOperations.operations).toEqual([
+            expect.objectContaining({ operation: "readdirSync", target: ".", line: 3 }),
+        ]);
+
+        const defaultProcessMutation = extractScriptReferences(
+            `import p from "node:process";
+             import { readdirSync } from "node:fs";
+             const alias = p;
+             alias.cwd = replacement;
+             readdirSync(process.cwd());`,
+        );
+        const defaultProcessMutationOperations = extractFileOperations(
+            defaultProcessMutation.sourceFile,
+            "fixture.ts",
+            root,
+            null,
+            new Map(),
+            defaultProcessMutation.bindingResolver,
+        );
+        expect(defaultProcessMutationOperations.operations).toEqual([]);
+        expect(defaultProcessMutationOperations.unmodeled).toEqual([
+            expect.objectContaining({ operation: "readdirSync", line: 5 }),
+        ]);
+
+        const bareAliasRebind = extractScriptReferences(
+            `import p from "node:process";
+             import { readdirSync } from "node:fs";
+             p = replacement;
+             readdirSync(process.cwd());`,
+        );
+        expect(
+            extractFileOperations(
+                bareAliasRebind.sourceFile,
+                "fixture.ts",
+                root,
+                null,
+                new Map(),
+                bareAliasRebind.bindingResolver,
+            ).operations,
+        ).toEqual([
+            expect.objectContaining({ operation: "readdirSync", target: ".", line: 4 }),
+        ]);
     });
 
     it("promotes TypeScript syntactic diagnostics to fail-closed parse errors", () => {

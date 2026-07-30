@@ -228,6 +228,11 @@ function scriptKind(path) {
     return ts.ScriptKind.TS;
 }
 
+function forceEsModuleParsing(path) {
+    const extension = extname(path).toLowerCase();
+    return extension === ".mjs" || extension === ".mts";
+}
+
 function isImportMeta(node) {
     return (
         (ts.isMetaProperty(node) &&
@@ -355,6 +360,8 @@ function createBindingResolver(sourceFile, options = {}) {
     const scopeByNode = new Map();
     let parameterValues = options.parameterValues ?? new Map();
     let dynamicImportResolver = options.dynamicImportResolver ?? null;
+    let writesFinalized = false;
+    let finalizingWrites = false;
     const repositoryRoot = options.repositoryRoot ?? process.cwd();
     const globalProcess = { tainted: false, cwdTainted: false };
     const cjsNamespaceTaints = new Map();
@@ -397,6 +404,9 @@ function createBindingResolver(sourceFile, options = {}) {
     const directImportProvenance = (moduleName, imported) => {
         if (canonicalRootModule(moduleName, imported)) {
             return { kind: "repository-root" };
+        }
+        if (processModules.has(moduleName) && imported === "default") {
+            return { kind: "process-global", moduleName };
         }
         if (childProcessModules.has(moduleName) && processExecutionNames.has(imported)) {
             return { kind: "module-member", moduleName, member: imported };
@@ -539,7 +549,9 @@ function createBindingResolver(sourceFile, options = {}) {
                 }
                 if (clause.namedBindings && ts.isNamespaceImport(clause.namedBindings)) {
                     scope.bindings.set(clause.namedBindings.name.text, {
-                        kind: "module-namespace",
+                        kind: processModules.has(moduleName)
+                            ? "process-global"
+                            : "module-namespace",
                         moduleName,
                         declaration: clause.namedBindings.name,
                     });
@@ -607,14 +619,93 @@ function createBindingResolver(sourceFile, options = {}) {
         }
         return null;
     };
+    const immutableProvenance = (value) => {
+        if (!value || typeof value !== "object") return { kind: "local" };
+        const provenance = {};
+        for (const key of [
+            "kind",
+            "moduleName",
+            "member",
+            "loader",
+            "value",
+            "cjsRoot",
+            "functionNode",
+        ]) {
+            if (key in value) provenance[key] = value[key];
+        }
+        return provenance;
+    };
+    const originMember = (base, name) => {
+        if (base.kind === "module" || base.kind === "module-namespace") {
+            return directImportProvenance(base.moduleName, name);
+        }
+        if (base.kind === "cjs-module-namespace") {
+            const resolved = directImportProvenance(base.moduleName, name);
+            return resolved.kind === "fs-member"
+                ? { ...resolved, cjsRoot: base.cjsRoot }
+                : resolved;
+        }
+        if (base.kind === "process-global" && name === "cwd") {
+            return { kind: "process-member", moduleName: "runtime", member: name };
+        }
+        return { kind: "local" };
+    };
+    const originExpression = (node, useNode = node, seen = new Set()) => {
+        if (!node) return { kind: "local" };
+        let current = node;
+        while (
+            ts.isParenthesizedExpression(current) ||
+            ts.isAsExpression(current) ||
+            ts.isSatisfiesExpression(current) ||
+            ts.isNonNullExpression(current)
+        ) {
+            current = current.expression;
+        }
+        if (ts.isIdentifier(current)) {
+            const record = lookup(current.text, useNode);
+            if (record) {
+                if (record.origin) return record.origin;
+                if (record.kind !== "variable" || seen.has(record)) {
+                    return immutableProvenance(record);
+                }
+                const initializer = record.initializer ?? record.defaultInitializer;
+                if (!initializer) return { kind: "local" };
+                let resolved = originExpression(
+                    initializer,
+                    initializer,
+                    new Set(seen).add(record),
+                );
+                for (const property of record.propertyPath) {
+                    if (property === null || property === undefined) return { kind: "local" };
+                    resolved = originMember(resolved, property);
+                }
+                return resolved;
+            }
+            if (current.text === "process") return { kind: "process-global" };
+            return { kind: "local" };
+        }
+        if (ts.isPropertyAccessExpression(current)) {
+            return originMember(
+                originExpression(current.expression, useNode, seen),
+                current.name.text,
+            );
+        }
+        if (ts.isElementAccessExpression(current)) {
+            const property = current.argumentExpression && literalString(current.argumentExpression);
+            return property === null || property === undefined
+                ? { kind: "local" }
+                : originMember(originExpression(current.expression, useNode, seen), property);
+        }
+        return { kind: "local" };
+    };
     const taintTarget = (node) => {
         if (!node) return;
         if (ts.isIdentifier(node)) {
             const record = lookup(node.text, node);
             if (record) {
-                const provenance = resolveExpression(node, node);
+                const provenance = originExpression(node, node);
                 if (provenance.kind === "fs-member" || provenance.kind === "tainted-fs-member") {
-                    record.taintedFsMember = provenance;
+                    record.taintedFsMember = immutableProvenance(provenance);
                     record.tainted = true;
                 } else {
                     record.tainted = true;
@@ -628,13 +719,20 @@ function createBindingResolver(sourceFile, options = {}) {
         }
         ts.forEachChild(node, taintTarget);
     };
-    const markGlobalProcessMutation = (node) => {
+    const markGlobalProcessMutation = (node, property = undefined) => {
         if (!node) return;
-        const { root, properties } = mutationTarget(node);
-        const provenance = resolveExpression(root, root);
+        const { root, properties } = mutationTarget(node, property);
+        const provenance = originExpression(root, root);
         if (provenance.kind !== "process-global") return false;
-        if (properties.length === 0 && ts.isIdentifier(root) && root.text === "process") {
+        if (
+            properties.length === 0 &&
+            ts.isIdentifier(root) &&
+            root.text === "process" &&
+            lookup("process", root) === null
+        ) {
             globalProcess.tainted = true;
+        } else if (properties.length === 0) {
+            return false;
         } else if (properties.length === 1 && properties[0] === "cwd") {
             globalProcess.cwdTainted = true;
         } else {
@@ -658,7 +756,8 @@ function createBindingResolver(sourceFile, options = {}) {
     };
     const markCjsModuleMutation = (node, property = undefined) => {
         const { root, properties } = mutationTarget(node, property);
-        const provenance = resolveExpression(root, root);
+        if (properties.length === 0 && property === undefined) return false;
+        const provenance = originExpression(root, root);
         if (provenance.kind !== "cjs-module-namespace" || !fsModules.has(provenance.moduleName)) {
             return false;
         }
@@ -672,25 +771,73 @@ function createBindingResolver(sourceFile, options = {}) {
         cjsNamespaceTaints.set(rootKey, taint);
         return true;
     };
+    const assignmentLeaves = (node, visit) => {
+        if (!node) return;
+        if (
+            ts.isParenthesizedExpression(node) ||
+            ts.isAsExpression(node) ||
+            ts.isTypeAssertionExpression(node) ||
+            ts.isNonNullExpression(node)
+        ) {
+            assignmentLeaves(node.expression, visit);
+            return;
+        }
+        if (ts.isIdentifier(node) || ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node)) {
+            visit(node);
+            return;
+        }
+        if (ts.isBindingElement(node)) {
+            assignmentLeaves(node.name, visit);
+            return;
+        }
+        if (ts.isObjectBindingPattern(node) || ts.isObjectLiteralExpression(node)) {
+            for (const element of node.elements ?? node.properties) {
+                if (ts.isBindingElement(element)) {
+                    assignmentLeaves(element.name, visit);
+                } else if (ts.isPropertyAssignment(element)) {
+                    assignmentLeaves(element.initializer, visit);
+                } else if (ts.isShorthandPropertyAssignment(element)) {
+                    assignmentLeaves(element.name, visit);
+                } else if (ts.isSpreadAssignment(element)) {
+                    assignmentLeaves(element.expression, visit);
+                }
+            }
+            return;
+        }
+        if (ts.isArrayBindingPattern(node) || ts.isArrayLiteralExpression(node)) {
+            for (const element of node.elements) {
+                if (element && !ts.isOmittedExpression(element)) {
+                    assignmentLeaves(element, visit);
+                }
+            }
+            return;
+        }
+        if (ts.isSpreadElement(node)) {
+            assignmentLeaves(node.expression, visit);
+            return;
+        }
+        if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.EqualsToken) {
+            assignmentLeaves(node.left, visit);
+        }
+    };
+    const markWriteLeaf = (leaf) => {
+        const processMutation = markGlobalProcessMutation(leaf);
+        const cjsMutation = markCjsModuleMutation(leaf);
+        if (!processMutation && !cjsMutation) taintTarget(leaf);
+    };
     const markWrites = (node) => {
         if (ts.isBinaryExpression(node) && assignmentOperators.has(node.operatorToken.kind)) {
-            const processMutation = markGlobalProcessMutation(node.left);
-            const cjsMutation = markCjsModuleMutation(node.left);
-            if (!processMutation && !cjsMutation) taintTarget(node.left);
+            assignmentLeaves(node.left, markWriteLeaf);
         } else if (
             (ts.isPrefixUnaryExpression(node) || ts.isPostfixUnaryExpression(node)) &&
             [ts.SyntaxKind.PlusPlusToken, ts.SyntaxKind.MinusMinusToken].includes(node.operator)
         ) {
-            const processMutation = markGlobalProcessMutation(node.operand);
-            const cjsMutation = markCjsModuleMutation(node.operand);
-            if (!processMutation && !cjsMutation) taintTarget(node.operand);
+            assignmentLeaves(node.operand, markWriteLeaf);
         } else if (node.kind === ts.SyntaxKind.DeleteExpression) {
-            const processMutation = markGlobalProcessMutation(node.expression);
-            const cjsMutation = markCjsModuleMutation(node.expression);
-            if (!processMutation && !cjsMutation) taintTarget(node.expression);
+            assignmentLeaves(node.expression, markWriteLeaf);
         } else if (ts.isForInStatement(node) || ts.isForOfStatement(node)) {
             if (!ts.isVariableDeclarationList(node.initializer)) {
-                taintTarget(node.initializer);
+                assignmentLeaves(node.initializer, markWriteLeaf);
             }
         } else if (
             ts.isCallExpression(node) &&
@@ -757,6 +904,7 @@ function createBindingResolver(sourceFile, options = {}) {
             return { ...record.taintedFsMember, kind: "tainted-fs-member" };
         }
         if (record?.tainted) return { kind: "local" };
+        if (record?.origin) return record.origin;
         const knownValue = parameterValues.get(record) ??
             parameterValues.get(record?.declaration?.getStart(sourceFile));
         if (knownValue !== undefined) return { kind: "known-path", value: knownValue };
@@ -852,20 +1000,24 @@ function createBindingResolver(sourceFile, options = {}) {
             }
             if (callee.kind === "require-loader") {
                 const moduleName = node.arguments[0] && literalString(node.arguments[0]);
-                if (
-                    moduleName &&
-                    (
-                        childProcessModules.has(moduleName) ||
-                        nodeModuleModules.has(moduleName) ||
+            if (
+                moduleName &&
+                (
+                    processModules.has(moduleName) ||
+                    childProcessModules.has(moduleName) ||
+                    nodeModuleModules.has(moduleName) ||
                         fsModules.has(moduleName) ||
                         pathModules.has(moduleName) ||
                         processModules.has(moduleName) ||
                         urlModules.has(moduleName) ||
-                        localSpecifierPattern.test(moduleName)
-                    )
-                ) {
-                    return {
-                        kind: "cjs-module-namespace",
+                    localSpecifierPattern.test(moduleName)
+                )
+            ) {
+                if (processModules.has(moduleName)) {
+                    return { kind: "process-global", moduleName };
+                }
+                return {
+                    kind: "cjs-module-namespace",
                         moduleName,
                         cjsRoot: fsModules.has(moduleName) ? "fs" : moduleName,
                     };
@@ -895,7 +1047,25 @@ function createBindingResolver(sourceFile, options = {}) {
         visitPattern(pattern);
         return records;
     };
-    markWrites(sourceFile);
+    const snapshotOrigins = () => {
+        const records = new Set();
+        for (const scope of scopeByNode.values()) {
+            for (const record of scope.bindings.values()) records.add(record);
+        }
+        for (const record of records) {
+            if (!record.origin) {
+                record.origin = immutableProvenance(resolveRecord(record, new Set()));
+            }
+        }
+    };
+    const finalizeWrites = () => {
+        if (writesFinalized || finalizingWrites) return;
+        finalizingWrites = true;
+        snapshotOrigins();
+        markWrites(sourceFile);
+        finalizingWrites = false;
+        writesFinalized = true;
+    };
     return {
         lookup,
         resolveExpression,
@@ -904,10 +1074,13 @@ function createBindingResolver(sourceFile, options = {}) {
         recordsForPattern,
         setParameterValues(values) {
             parameterValues = values;
+            finalizeWrites();
         },
         setDynamicImportResolver(resolver) {
             dynamicImportResolver = resolver;
+            finalizeWrites();
         },
+        finalizeWrites,
         globalProcess,
     };
 }
@@ -1159,7 +1332,15 @@ export function extractScriptReferences(
     const sourceFile = ts.createSourceFile(
         path,
         source,
-        ts.ScriptTarget.Latest,
+        forceEsModuleParsing(path)
+            ? {
+                  languageVersion: ts.ScriptTarget.Latest,
+                  impliedNodeFormat: ts.ModuleKind.ESNext,
+                  setExternalModuleIndicator(file) {
+                      file.externalModuleIndicator = file;
+                  },
+              }
+            : ts.ScriptTarget.Latest,
         true,
         scriptKind(path),
     );
@@ -2432,7 +2613,7 @@ function resolveContractModulePath(
     return resolution.resolution === "repository-file" ? resolution.target : null;
 }
 
-function callsToTarget(
+function auditTargetUsage(
     sourceFile,
     bindingResolver,
     sourcePath,
@@ -2440,29 +2621,112 @@ function callsToTarget(
     repositoryRoot,
     repositoryVisibility,
 ) {
-    const calls = [];
+    const calls = new Set();
+    let invalid = false;
+    const unwrap = (node) => {
+        let current = node;
+        while (
+            current &&
+            (ts.isParenthesizedExpression(current) ||
+                ts.isAsExpression(current) ||
+                ts.isSatisfiesExpression(current) ||
+                ts.isNonNullExpression(current))
+        ) {
+            current = current.expression;
+        }
+        return current;
+    };
+    const isTargetBinding = (binding) => {
+        const localDeclaration =
+            binding.kind === "local" &&
+            sourcePath === target.sourcePath &&
+            binding.functionNode === target.functionNode;
+        const importedDeclaration =
+            binding.kind === "local-import-member" &&
+            binding.member === target.exportName &&
+            resolveContractModulePath(
+                repositoryRoot,
+                sourcePath,
+                binding.moduleName,
+                repositoryVisibility,
+            ) === target.sourcePath;
+        return localDeclaration || importedDeclaration;
+    };
+    const isTargetReference = (node) =>
+        ts.isIdentifier(node) &&
+        isTargetBinding(bindingResolver.resolveExpression(node, node));
+    const isDeclarationName = (node) => {
+        const parent = node.parent;
+        return (
+            (ts.isVariableDeclaration(parent) && parent.name === node) ||
+            (ts.isBindingElement(parent) && parent.name === node) ||
+            (ts.isParameter(parent) && parent.name === node) ||
+            ((ts.isFunctionDeclaration(parent) || ts.isClassDeclaration(parent)) &&
+                parent.name === node) ||
+            (ts.isImportSpecifier(parent) && parent.name === node) ||
+            (ts.isNamespaceImport(parent) && parent.name === node) ||
+            (ts.isImportClause(parent) && parent.name === node)
+        );
+    };
+    const isPropertyName = (node) =>
+        (ts.isPropertyAccessExpression(node.parent) && node.parent.name === node) ||
+        ((ts.isPropertyAssignment(node.parent) ||
+            ts.isMethodDeclaration(node.parent)) &&
+            node.parent.name === node);
+    const isImportSite = (node) => {
+        let current = node.parent;
+        while (current) {
+            if (ts.isImportDeclaration(current)) return true;
+            if (ts.isSourceFile(current)) return false;
+            current = current.parent;
+        }
+        return false;
+    };
+    const isStableAliasInitializer = (node) => {
+        const declaration = node.parent;
+        if (!ts.isVariableDeclaration(declaration) || !declaration.initializer) return false;
+        if (unwrap(declaration.initializer) !== node) return false;
+        if (!ts.isIdentifier(declaration.name)) return false;
+        const record = bindingResolver.lookup(declaration.name.text, declaration.name);
+        return Boolean(record && !record.tainted && isTargetBinding(
+            bindingResolver.resolveExpression(declaration.name, declaration.name),
+        ));
+    };
+    const directCallFor = (node) => {
+        let current = node;
+        let parent = node.parent;
+        while (
+            parent &&
+            (ts.isParenthesizedExpression(parent) ||
+                ts.isAsExpression(parent) ||
+                ts.isSatisfiesExpression(parent) ||
+                ts.isNonNullExpression(parent)) &&
+            parent.expression === current
+        ) {
+            current = parent;
+            parent = parent.parent;
+        }
+        return parent && ts.isCallExpression(parent) && parent.expression === current
+            ? parent
+            : null;
+    };
     function visit(node) {
-        if (ts.isCallExpression(node)) {
-            const binding = bindingResolver.resolveExpression(node.expression, node);
-            const localDeclaration =
-                binding.kind === "local" &&
-                sourcePath === target.sourcePath &&
-                binding.functionNode === target.functionNode;
-            const importedDeclaration =
-                binding.kind === "local-import-member" &&
-                binding.member === target.exportName &&
-                resolveContractModulePath(
-                    repositoryRoot,
-                    sourcePath,
-                    binding.moduleName,
-                    repositoryVisibility,
-                ) === target.sourcePath;
-            if (localDeclaration || importedDeclaration) calls.push(node);
+        if (ts.isIdentifier(node) && isTargetReference(node)) {
+            if (isDeclarationName(node) || isPropertyName(node) || isImportSite(node)) {
+                ts.forEachChild(node, visit);
+                return;
+            }
+            const call = directCallFor(node);
+            if (call) {
+                calls.add(call);
+            } else if (!isStableAliasInitializer(node)) {
+                invalid = true;
+            }
         }
         ts.forEachChild(node, visit);
     }
     visit(sourceFile);
-    return calls;
+    return invalid ? null : [...calls];
 }
 
 function targetFunction(scriptAsts, sourcePath, exportName) {
@@ -2482,7 +2746,7 @@ function provenTargetCallValue(
     repositoryRoot,
     repositoryVisibility,
 ) {
-    const calls = callsToTarget(
+    const calls = auditTargetUsage(
         sourceFile,
         bindingResolver,
         sourcePath,
@@ -2490,7 +2754,7 @@ function provenTargetCallValue(
         repositoryRoot,
         repositoryVisibility,
     );
-    if (calls.length === 0) return null;
+    if (!calls || calls.length === 0) return null;
     const values = calls.map((call) =>
         evaluatePathExpression(
             call.arguments[index],
@@ -2608,7 +2872,7 @@ function collectPathParameterContracts(
         styleFoldResolver &&
         copyTarget
     ) {
-        const copyCalls = callsToTarget(
+        const copyCalls = auditTargetUsage(
             styleAssets,
             styleAssetsResolver,
             styleAssetsPath,
@@ -2646,7 +2910,7 @@ function collectPathParameterContracts(
             for (const records of callerDestructuringRecords(
                 styleAssets,
                 styleAssetsResolver,
-                copyCalls,
+                copyCalls ?? [],
                 ["srcFonts", "distStyles", "distComponents"],
             )) {
                 for (const property of Object.keys(records)) {
@@ -4224,7 +4488,7 @@ package export key maps to exactly one owner.
 | Dynamic template/style asset expressions | ${graph.summary.dynamicAssetReferences} |
 | Unmatched literal globs | ${graph.summary.unresolvedGlobPatterns} |
 | Parse errors | ${graph.summary.parseErrors} |
-| Unresolved calls from the finite supported filesystem-operation table | ${graph.summary.unmodeledFileOperations} |
+| Unresolved supported filesystem calls and opaque fs-module-promise boundaries | ${graph.summary.unmodeledFileOperations} |
 | Process invocations | ${graph.summary.processInvocations} |
 | Dynamic process arguments | ${graph.summary.dynamicProcessArguments} |
 
@@ -4324,14 +4588,14 @@ declared public owner. CSS and font entries carry an explicit asset symbol.
 Generation exits non-zero for an unowned or multiply owned graph file, a
 package key without exactly one owner, an unresolved literal local reference,
 an unmatched positive glob, a nonliteral local loader/worker/URL, or a parser
-error, including TypeScript syntactic diagnostics. Generator calls from the
-finite supported filesystem-operation table are modeled when their path
-expression can be reduced from literals, \`resolve\`/\`join\`,
-\`new URL(..., import.meta.url)\`, and lexical bindings; unresolved calls remain
-counted in \`unmodeledFileOperations\` and are not represented as false edges.
-This snapshot contains ${graph.summary.unmodeledFileOperations} such unresolved
-calls (251 at the pre-source challenge seal); this is not an exhaustive census
-of Node filesystem activity. Literal CommonJS \`require\` and
+error, including TypeScript syntactic diagnostics. Supported filesystem calls
+are modeled when their path expression can be reduced from literals,
+\`resolve\`/\`join\`, \`new URL(..., import.meta.url)\`, and lexical bindings;
+unresolved supported filesystem calls and opaque fs-module-promise boundaries
+remain counted in \`unmodeledFileOperations\` and are not represented as false
+edges. This snapshot contains ${graph.summary.unmodeledFileOperations} such
+ledger rows; this is not an exhaustive census of Node filesystem activity.
+Literal CommonJS \`require\` and
 \`createRequire\` targets are graph edges; \`exec\`/\`execFile\`/\`spawn\`
 families are retained in a process-invocation ledger with statically reducible
 command and argv targets plus an explicit dynamic-argument count. Dynamic
