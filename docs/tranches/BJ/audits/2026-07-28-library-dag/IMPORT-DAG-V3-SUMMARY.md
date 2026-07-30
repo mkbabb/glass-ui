@@ -1,9 +1,9 @@
 # Glass UI repository graph — schema v3
 
-Observed: 2026-07-30T03:32:44.273Z
+Observed: 2026-07-30T04:32:55.857Z
 
 Deterministic receipt (the `observedAt` value is excluded):
-`bd615bf59e838790caacad3563f2a52b608c4f2f13be0a36bc502f116a56c4a1`
+`917b6b636e29b5ff67be115d89a4ad503056fa8f770c1d1586755a55deede786`
 
 Owner manifest receipt: `e19b663fb671e046727469832be1d160095eb5cb7d3ba54aa2818277043100ba`
 
@@ -42,7 +42,7 @@ package export key maps to exactly one owner.
 | Dynamic template/style asset expressions | 123 |
 | Unmatched literal globs | 0 |
 | Parse errors | 0 |
-| Unresolved supported filesystem calls and opaque fs-module-promise boundaries | 286 |
+| Unresolved supported filesystem calls and opaque fs-module-promise boundaries | 287 |
 | Process invocations | 10 |
 | Dynamic process arguments | 9 |
 
@@ -222,7 +222,7 @@ are modeled when their path expression can be reduced from literals,
 `resolve`/`join`, `new URL(..., import.meta.url)`, and lexical bindings;
 unresolved supported filesystem calls and opaque fs-module-promise boundaries
 remain counted in `unmodeledFileOperations` and are not represented as false
-edges. This snapshot contains 286 such
+edges. This snapshot contains 287 such
 ledger rows; this is not an exhaustive census of Node filesystem activity.
 Literal CommonJS `require` and
 `createRequire` targets are graph edges; `exec`/`execFile`/`spawn`

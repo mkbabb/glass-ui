@@ -36,6 +36,149 @@ const manifest = require(
 const packageJson = require("../../package.json");
 let graph: Awaited<ReturnType<typeof buildGraph>>;
 
+const fixtureAudit = "docs/tranches/BJ/audits/2026-07-28-library-dag";
+const ownerManifest = {
+    schema: "glass-ui-owner-manifest/1",
+    owners: { "fixture/graph": ["**"] },
+    publicEntries: { ".": "fixture/graph" },
+    cycleBaselines: {
+        components: {},
+        projections: {
+            eagerRuntime: { fileComponents: [], ownerComponents: [] },
+            buildLoad: { fileComponents: [], ownerComponents: [] },
+            ownership: { fileComponents: [], ownerComponents: [] },
+        },
+    },
+};
+const styleFoldSource = `
+import { cpSync } from "node:fs";
+import { resolve } from "node:path";
+
+export function copyStyleAssets(root: string) {
+    const srcFonts = resolve(root, "src/fonts");
+    const distStyles = resolve(root, "dist/styles");
+    const distComponents = resolve(root, "dist/components");
+    cpSync(srcFonts, resolve(root, "dist/fonts"), { recursive: true });
+    cpSync(resolve(root, "src/styles"), distStyles, { recursive: true });
+    cpSync(resolve(root, "src/components"), distComponents, { recursive: true });
+    return { srcFonts, distStyles, distComponents };
+}
+`;
+const utilityEmitSource = `
+import { writeFileSync } from "node:fs";
+import { resolve } from "node:path";
+
+export function emitComponentUtilities(root: string) {
+    writeFileSync(resolve(root, "dist/styles/components.css"), "fixture");
+}
+`;
+const baselineStyleAssets = `
+import { emitComponentUtilities } from "./vite.utility-emit";
+const root = process.cwd();
+const { srcFonts, distStyles, distComponents } =
+    (await import("./vite.style-fold")).copyStyleAssets(root);
+emitComponentUtilities(root);
+void srcFonts;
+void distStyles;
+void distComponents;
+`;
+const negativePromiseRows = [
+    [
+        "literal import then",
+        `import("./vite.utility-emit").then((module) => module.emitComponentUtilities(root));`,
+    ],
+    [
+        "finite stored promise then",
+        `const specifier = "./vite.utility-emit"; const promise = import(specifier); promise.then(() => undefined);`,
+    ],
+    [
+        "stored then awaited exact target promise",
+        `const promise = import("./vite.utility-emit"); const namespace = await promise; namespace.emitComponentUtilities(root);`,
+    ],
+    [
+        "direct await target plus nontarget",
+        `const specifier = Math.random() ? "./vite.utility-emit" : "node:fs"; await import(specifier);`,
+    ],
+    ["promise passed", `consume(import("./vite.utility-emit"));`],
+    ["promise returned", `function escape() { return import("./vite.utility-emit"); }`],
+    ["promise stored in object", `const object = { promise: import("./vite.utility-emit") };`],
+    ["promise stored in array", `const array = [import("./vite.utility-emit")];`],
+    ["promise otherwise escaped", `globalThis.promise = import("./vite.utility-emit");`],
+] as const;
+const directAwaitPromiseRows = [
+    ["parenthesized direct await", `await (import("./vite.utility-emit"));`],
+    ["as-wrapper direct await", `await (import("./vite.utility-emit") as typeof import("./vite.utility-emit"));`],
+    ["satisfies-wrapper direct await", `await (import("./vite.utility-emit") satisfies Promise<unknown>);`],
+    ["non-null-wrapper direct await", `await (import("./vite.utility-emit")!);`],
+] as const;
+
+type ContractFixture = {
+    temporaryDirectory: string;
+    outputDirectory: string;
+    styleAssetsPath: string;
+};
+
+async function withContractFixture(
+    styleAssetsSource: string,
+    execute: (fixture: ContractFixture) => Promise<void>,
+    afterSetup: ((fixture: ContractFixture) => void) | null = null,
+) {
+    const temporaryDirectory = mkdtempSync(join(tmpdir(), "glass-graph-v3-contract-"));
+    const fixture: ContractFixture = {
+        temporaryDirectory,
+        outputDirectory: resolve(temporaryDirectory, fixtureAudit),
+        styleAssetsPath: resolve(temporaryDirectory, "vite.style-assets.ts"),
+    };
+    try {
+        mkdirSync(fixture.outputDirectory, { recursive: true });
+        mkdirSync(resolve(temporaryDirectory, "src/components"), { recursive: true });
+        mkdirSync(resolve(temporaryDirectory, "src/composables"), { recursive: true });
+        writeFileSync(resolve(temporaryDirectory, "src/index.ts"), "export const fixture = true;\n");
+        mkdirSync(resolve(temporaryDirectory, "scripts/lib"), { recursive: true });
+        writeFileSync(
+            resolve(temporaryDirectory, "scripts/lib/subpath-policy.mjs"),
+            "export const fixturePolicy = true;\n",
+        );
+        writeFileSync(
+            resolve(temporaryDirectory, `${fixtureAudit}/OWNER-MANIFEST.json`),
+            `${JSON.stringify(ownerManifest, null, 2)}\n`,
+        );
+        writeFileSync(
+            resolve(temporaryDirectory, "package.json"),
+            `${JSON.stringify({ name: "graph-v3-contract-fixture", exports: { ".": "./dist/index.js" } }, null, 2)}\n`,
+        );
+        writeFileSync(fixture.styleAssetsPath, styleAssetsSource);
+        writeFileSync(resolve(temporaryDirectory, "vite.style-fold.ts"), styleFoldSource);
+        writeFileSync(resolve(temporaryDirectory, "vite.utility-emit.ts"), utilityEmitSource);
+        execFileSync("git", ["init", "-q"], { cwd: temporaryDirectory, stdio: "ignore" });
+        execFileSync("git", ["add", "."], { cwd: temporaryDirectory, stdio: "ignore" });
+        afterSetup?.(fixture);
+        await execute(fixture);
+    } finally {
+        rmSync(temporaryDirectory, { recursive: true, force: true });
+    }
+}
+
+function hasCopyRead(fixtureGraph: Awaited<ReturnType<typeof buildGraph>>) {
+    return fixtureGraph.internalEdges.some(
+        ({ source, target, edgeKind, metadata }) =>
+            source === "vite.style-fold.ts" &&
+            target === "src/fonts" &&
+            edgeKind === "generator-read" &&
+            metadata?.operation === "cpSync",
+    );
+}
+
+function hasUtilityWrite(fixtureGraph: Awaited<ReturnType<typeof buildGraph>>) {
+    return fixtureGraph.internalEdges.some(
+        ({ source, target, edgeKind, metadata }) =>
+            source === "vite.utility-emit.ts" &&
+            target === "dist/styles/components.css" &&
+            edgeKind === "generator-write" &&
+            metadata?.operation === "writeFileSync",
+    );
+}
+
 function makeCheckFixture() {
     const directory = mkdtempSync(join(tmpdir(), "glass-graph-v3-check-"));
     for (const name of [
@@ -331,157 +474,61 @@ describe("graph schema v3", () => {
             { api: "spawnSync", binding: "runSync" },
         ]);
 
-        const fixtureAudit = "docs/tranches/BJ/audits/2026-07-28-library-dag";
-        const ownerManifest = {
-            schema: "glass-ui-owner-manifest/1",
-            owners: { "fixture/graph": ["**"] },
-            publicEntries: { ".": "fixture/graph" },
-            cycleBaselines: {
-                components: {},
-                projections: {
-                    eagerRuntime: { fileComponents: [], ownerComponents: [] },
-                    buildLoad: { fileComponents: [], ownerComponents: [] },
-                    ownership: { fileComponents: [], ownerComponents: [] },
+        let setupFailureDirectory: string | null = null;
+        await expect(
+            withContractFixture(
+                baselineStyleAssets,
+                async () => undefined,
+                (fixture) => {
+                    setupFailureDirectory = fixture.temporaryDirectory;
+                    throw new Error("fixture setup failure");
                 },
-            },
-        };
-        const styleFoldSource = `
-import { cpSync } from "node:fs";
-import { resolve } from "node:path";
+            ),
+        ).rejects.toThrow("fixture setup failure");
+        expect(setupFailureDirectory).not.toBeNull();
+        expect(existsSync(setupFailureDirectory as string)).toBe(false);
 
-export function copyStyleAssets(root: string) {
-    const srcFonts = resolve(root, "src/fonts");
-    const distStyles = resolve(root, "dist/styles");
-    const distComponents = resolve(root, "dist/components");
-    cpSync(srcFonts, resolve(root, "dist/fonts"), { recursive: true });
-    cpSync(resolve(root, "src/styles"), distStyles, { recursive: true });
-    cpSync(resolve(root, "src/components"), distComponents, { recursive: true });
-    return { srcFonts, distStyles, distComponents };
-}
-`;
-        const utilityEmitSource = `
-import { writeFileSync } from "node:fs";
-import { resolve } from "node:path";
-
-export function emitComponentUtilities(root: string) {
-    writeFileSync(resolve(root, "dist/styles/components.css"), "fixture");
-}
-`;
-        const negativeRows = [
-            [
-                "literal import then",
-                `import("./vite.utility-emit").then((module) => module.emitComponentUtilities(root));`,
-            ],
-            [
-                "finite stored promise then",
-                `const specifier = "./vite.utility-emit"; const promise = import(specifier); promise.then(() => undefined);`,
-            ],
-            [
-                "stored then awaited exact target promise",
-                `const promise = import("./vite.utility-emit"); const namespace = await promise; namespace.emitComponentUtilities(root);`,
-            ],
-            ["promise passed", `consume(import("./vite.utility-emit"));`],
-            ["promise returned", `function escape() { return import("./vite.utility-emit"); }`],
-            ["promise stored in object", `const object = { promise: import("./vite.utility-emit") };`],
-            ["promise stored in array", `const array = [import("./vite.utility-emit")];`],
-            ["promise otherwise escaped", `globalThis.promise = import("./vite.utility-emit");`],
-        ] as const;
-        const baselineStyleAssets = `
-import { emitComponentUtilities } from "./vite.utility-emit";
-const root = process.cwd();
-const { srcFonts, distStyles, distComponents } =
-    (await import("./vite.style-fold")).copyStyleAssets(root);
-emitComponentUtilities(root);
-void srcFonts;
-void distStyles;
-void distComponents;
-`;
-        const makeFixture = (styleAssetsSource: string) => {
-            const temporaryDirectory = mkdtempSync(join(tmpdir(), "glass-graph-v3-contract-"));
-            const outputDirectory = resolve(temporaryDirectory, fixtureAudit);
-            mkdirSync(outputDirectory, { recursive: true });
-            mkdirSync(resolve(temporaryDirectory, "src/components"), { recursive: true });
-            mkdirSync(resolve(temporaryDirectory, "src/composables"), { recursive: true });
-            writeFileSync(resolve(temporaryDirectory, "src/index.ts"), "export const fixture = true;\n");
-            mkdirSync(resolve(temporaryDirectory, "scripts/lib"), { recursive: true });
-            writeFileSync(
-                resolve(temporaryDirectory, "scripts/lib/subpath-policy.mjs"),
-                "export const fixturePolicy = true;\n",
-            );
-            writeFileSync(
-                resolve(temporaryDirectory, `${fixtureAudit}/OWNER-MANIFEST.json`),
-                `${JSON.stringify(ownerManifest, null, 2)}\n`,
-            );
-            writeFileSync(
-                resolve(temporaryDirectory, "package.json"),
-                `${JSON.stringify({ name: "graph-v3-contract-fixture", exports: { ".": "./dist/index.js" } }, null, 2)}\n`,
-            );
-            writeFileSync(resolve(temporaryDirectory, "vite.style-assets.ts"), styleAssetsSource);
-            writeFileSync(resolve(temporaryDirectory, "vite.style-fold.ts"), styleFoldSource);
-            writeFileSync(resolve(temporaryDirectory, "vite.utility-emit.ts"), utilityEmitSource);
-            execFileSync("git", ["init", "-q"], { cwd: temporaryDirectory, stdio: "ignore" });
-            execFileSync("git", ["add", "."], { cwd: temporaryDirectory, stdio: "ignore" });
-            return { temporaryDirectory, outputDirectory };
-        };
-        const graphFor = (fixture: ReturnType<typeof makeFixture>) =>
-            buildGraph({
+        let successfulDirectory: string | null = null;
+        await withContractFixture(baselineStyleAssets, async (fixture) => {
+            successfulDirectory = fixture.temporaryDirectory;
+            const baselineGraph = await buildGraph({
                 repositoryRoot: fixture.temporaryDirectory,
                 outputDirectory: fixture.outputDirectory,
             });
-        const hasCopyRead = (fixtureGraph: Awaited<ReturnType<typeof buildGraph>>) =>
-            fixtureGraph.internalEdges.some(
-                ({ source, target, edgeKind, metadata }) =>
-                    source === "vite.style-fold.ts" &&
-                    target === "src/fonts" &&
-                    edgeKind === "generator-read" &&
-                    metadata?.operation === "cpSync",
-            );
-
-        const fixture = makeFixture(baselineStyleAssets);
-        try {
-            const baselineGraph = await graphFor(fixture);
             expect(baselineGraph.parseErrors).toEqual([]);
             expect(baselineGraph.summary.unresolvedLocalReferences).toBe(0);
             expect(baselineGraph.summary.nonliteralLocalReferences).toBe(0);
             expect(hasCopyRead(baselineGraph)).toBe(true);
-            expect(
-                baselineGraph.internalEdges.some(
-                    ({ source, target, edgeKind, metadata }) =>
-                        source === "vite.utility-emit.ts" &&
-                        target === "dist/styles/components.css" &&
-                        edgeKind === "generator-write" &&
-                        metadata?.operation === "writeFileSync",
-                ),
-            ).toBe(true);
+            expect(hasUtilityWrite(baselineGraph)).toBe(true);
 
-            const negativeGraphs = [];
-            for (const [label, escapedPromise] of negativeRows) {
-                writeFileSync(
-                    resolve(fixture.temporaryDirectory, "vite.style-assets.ts"),
-                    `${baselineStyleAssets}\n${escapedPromise}\n`,
-                );
-                negativeGraphs.push({ label, promise: graphFor(fixture) });
-            }
-            for (const { label, promise } of negativeGraphs) {
-                const fixtureGraph = await promise;
+            for (const [label, escapedPromise] of negativePromiseRows) {
+                writeFileSync(fixture.styleAssetsPath, `${baselineStyleAssets}\n${escapedPromise}\n`);
+                const fixtureGraph = await buildGraph({
+                    repositoryRoot: fixture.temporaryDirectory,
+                    outputDirectory: fixture.outputDirectory,
+                });
                 expect(fixtureGraph.parseErrors, label).toEqual([]);
                 expect(fixtureGraph.summary.unresolvedLocalReferences, label).toBe(0);
                 expect(fixtureGraph.summary.nonliteralLocalReferences, label).toBe(0);
                 expect(hasCopyRead(fixtureGraph), label).toBe(true);
-                expect(
-                    fixtureGraph.internalEdges.some(
-                        ({ source, target, edgeKind, metadata }) =>
-                            source === "vite.utility-emit.ts" &&
-                            target === "dist/styles/components.css" &&
-                            edgeKind === "generator-write" &&
-                            metadata?.operation === "writeFileSync",
-                    ),
-                    label,
-                ).toBe(false);
+                expect(hasUtilityWrite(fixtureGraph), label).toBe(false);
             }
-        } finally {
-            rmSync(fixture.temporaryDirectory, { recursive: true, force: true });
-        }
+
+            for (const [label, directAwait] of directAwaitPromiseRows) {
+                writeFileSync(fixture.styleAssetsPath, `${baselineStyleAssets}\n${directAwait}\n`);
+                const fixtureGraph = await buildGraph({
+                    repositoryRoot: fixture.temporaryDirectory,
+                    outputDirectory: fixture.outputDirectory,
+                });
+                expect(fixtureGraph.parseErrors, label).toEqual([]);
+                expect(fixtureGraph.summary.unresolvedLocalReferences, label).toBe(0);
+                expect(fixtureGraph.summary.nonliteralLocalReferences, label).toBe(0);
+                expect(hasCopyRead(fixtureGraph), label).toBe(true);
+                expect(hasUtilityWrite(fixtureGraph), label).toBe(true);
+            }
+        });
+        expect(successfulDirectory).not.toBeNull();
+        expect(existsSync(successfulDirectory as string)).toBe(false);
     });
 
     it("recognizes fs provenance forms and rejects local file-operation lookalikes", () => {
@@ -707,44 +754,49 @@ void distComponents;
             ]);
         }
 
-        const deferredOutputs = [true, false].map((parameterFirst) => {
-            const deferred = extractScriptReferences(
-                `let specifier; let namespace = await import(specifier); namespace = replacement; namespace.readFileSync("setter-order.txt");`,
-                "fixture-deferred.mjs",
-                null,
-                {},
-                { repositoryRoot: root, deferFinalization: true },
-            );
-            const specifierRecord = deferred.bindingResolver.lookup(
-                "specifier",
-                deferred.sourceFile,
-            );
-            expect(specifierRecord).toBeDefined();
-            const parameterValues = new Map([[specifierRecord, "node:fs"]]);
-            const dynamicResolver = () => ({
-                kind: "nonlocal",
-                specifiers: ["node:fs"],
-                provenance: "test-finite",
-            });
-            if (parameterFirst) {
-                deferred.bindingResolver.setParameterValues(parameterValues);
-                deferred.bindingResolver.setDynamicImportResolver(dynamicResolver);
-            } else {
-                deferred.bindingResolver.setDynamicImportResolver(dynamicResolver);
-                deferred.bindingResolver.setParameterValues(parameterValues);
-            }
-            deferred.bindingResolver.finalizeWrites();
-            deferred.bindingResolver.finalizeWrites();
-            return extractFileOperations(
-                deferred.sourceFile,
-                "fixture-deferred.mjs",
-                root,
-                null,
-                parameterValues,
-                deferred.bindingResolver,
-            );
-        });
+        const deferredOutputs = [false, true].flatMap((eagerFinalization) =>
+            [true, false].map((parameterFirst) => {
+                const deferred = extractScriptReferences(
+                    `let specifier; let namespace = await import(specifier); namespace = replacement; namespace.readFileSync("setter-order.txt");`,
+                    "fixture-deferred.mjs",
+                    null,
+                    {},
+                    { repositoryRoot: root, deferFinalization: true },
+                );
+                const specifierRecord = deferred.bindingResolver.lookup(
+                    "specifier",
+                    deferred.sourceFile,
+                );
+                expect(specifierRecord).toBeDefined();
+                const parameterValues = new Map([[specifierRecord, "node:fs"]]);
+                const dynamicResolver = () => ({
+                    kind: "nonlocal",
+                    specifiers: ["node:fs"],
+                    provenance: "test-finite",
+                });
+                if (eagerFinalization) deferred.bindingResolver.finalizeWrites();
+                if (parameterFirst) {
+                    deferred.bindingResolver.setParameterValues(parameterValues);
+                    deferred.bindingResolver.setDynamicImportResolver(dynamicResolver);
+                } else {
+                    deferred.bindingResolver.setDynamicImportResolver(dynamicResolver);
+                    deferred.bindingResolver.setParameterValues(parameterValues);
+                }
+                deferred.bindingResolver.finalizeWrites();
+                deferred.bindingResolver.finalizeWrites();
+                return extractFileOperations(
+                    deferred.sourceFile,
+                    "fixture-deferred.mjs",
+                    root,
+                    null,
+                    parameterValues,
+                    deferred.bindingResolver,
+                );
+            }),
+        );
         expect(deferredOutputs[0]).toEqual(deferredOutputs[1]);
+        expect(deferredOutputs[0]).toEqual(deferredOutputs[2]);
+        expect(deferredOutputs[0]).toEqual(deferredOutputs[3]);
         expect(deferredOutputs[0].operations).toEqual([]);
         expect(deferredOutputs[0].unmodeled).toEqual([
             expect.objectContaining({
@@ -970,9 +1022,32 @@ void distComponents;
                 null,
                 new Map(),
                 bareAliasRebind.bindingResolver,
-            ).operations,
+        ).operations,
         ).toEqual([
             expect.objectContaining({ operation: "readdirSync", target: ".", line: 4 }),
+        ]);
+
+        const cjsBareAliasRebind = extractScriptReferences(
+            `const fs = require("node:fs");
+             let alias = fs;
+             alias = replacement;
+             fs.readFileSync("bare-alias-control.txt");`,
+        );
+        expect(
+            extractFileOperations(
+                cjsBareAliasRebind.sourceFile,
+                "fixture.ts",
+                root,
+                null,
+                new Map(),
+                cjsBareAliasRebind.bindingResolver,
+            ).operations,
+        ).toEqual([
+            expect.objectContaining({
+                operation: "readFileSync",
+                target: "bare-alias-control.txt",
+                line: 4,
+            }),
         ]);
 
         const sharedIdentityCases = [
@@ -986,6 +1061,7 @@ void distComponents;
                  readdirSync(process.cwd());
                  readdirSync(original.cwd());
                  readdirSync(alias.cwd());`,
+                3,
             ],
             [
                 "process alias rebind before member mutation",
@@ -997,6 +1073,7 @@ void distComponents;
                  readdirSync(process.cwd());
                  readdirSync(original.cwd());
                  readdirSync(alias.cwd());`,
+                3,
             ],
             [
                 "CJS member mutation before alias rebind",
@@ -1007,6 +1084,7 @@ void distComponents;
                  alias = replacement;
                  original.readFileSync("original-before.txt");
                  alias.readFileSync("alias-before.txt");`,
+                2,
             ],
             [
                 "CJS alias rebind before member mutation",
@@ -1017,9 +1095,112 @@ void distComponents;
                  alias.readFileSync = replacement;
                  original.readFileSync("original-after.txt");
                  alias.readFileSync("alias-after.txt");`,
+                2,
+            ],
+            [
+                "process exact object origin",
+                `import { readdirSync } from "node:fs";
+                 const holder = { process };
+                 holder.process.cwd = replacement;
+                 readdirSync(process.cwd());`,
+                1,
+            ],
+            [
+                "process exact array origin",
+                `import { readdirSync } from "node:fs";
+                 const holder = [process];
+                 holder[0].cwd = replacement;
+                 readdirSync(process.cwd());`,
+                1,
+            ],
+            [
+                "process composed destructuring origin",
+                `import { readdirSync } from "node:fs";
+                 const { nested: { alias } } = { nested: { alias: process } };
+                 alias.cwd = replacement;
+                 readdirSync(process.cwd());`,
+                1,
+            ],
+            [
+                "process parameter default origin",
+                `import { readdirSync } from "node:fs";
+                 function mutate(alias = process) {
+                     alias.cwd = replacement;
+                 }
+                 mutate();
+                 readdirSync(process.cwd());`,
+                1,
+            ],
+            [
+                "process nested member mutation",
+                `import { readdirSync } from "node:fs";
+                 const p = process;
+                 p.env.foo = replacement;
+                 readdirSync(process.cwd());`,
+                1,
+            ],
+            [
+                "CJS nested member mutation",
+                `const fs = require("node:fs");
+                 fs.promises.readFile = replacement;
+                 fs.readFileSync("nested-member.txt");`,
+                1,
+            ],
+            [
+                "process intrinsic nested member mutation",
+                `import { readdirSync } from "node:fs";
+                 const p = process;
+                 Reflect.set(p.env, "foo", replacement);
+                 readdirSync(process.cwd());`,
+                1,
+            ],
+            [
+                "CJS intrinsic nested member mutation",
+                `const fs = require("node:fs");
+                 Object.defineProperty(fs.promises, "readFile", {});
+                 fs.readFileSync("intrinsic-nested-member.txt");`,
+                1,
+            ],
+            [
+                "CJS exact object origin",
+                `import { readFileSync } from "node:fs";
+                 const original = require("node:fs");
+                 const holder = { fs: original };
+                 holder.fs.readFileSync = replacement;
+                 original.readFileSync("object-origin.txt");`,
+                1,
+            ],
+            [
+                "CJS exact array origin",
+                `import { readFileSync } from "node:fs";
+                 const original = require("node:fs");
+                 const holder = [original];
+                 holder[0].readFileSync = replacement;
+                 original.readFileSync("array-origin.txt");`,
+                1,
+            ],
+            [
+                "CJS composed destructuring origin",
+                `import { readFileSync } from "node:fs";
+                 const original = require("node:fs");
+                 const { nested: { alias } } = { nested: { alias: original } };
+                 alias.readFileSync = replacement;
+                 original.readFileSync("destructured-origin.txt");`,
+                1,
+            ],
+            [
+                "CJS parameter default origin",
+                `import { readFileSync } from "node:fs";
+                 const original = require("node:fs");
+                 function mutate(alias = original) {
+                     alias.readFileSync = replacement;
+                 }
+                 mutate();
+                 original.readFileSync("default-origin.txt");`,
+                1,
             ],
         ] as const;
-        for (const [label, source] of sharedIdentityCases) {
+        for (const [label, source, expectedUnmodeled] of sharedIdentityCases) {
             const fixture = extractScriptReferences(source);
             const operations = extractFileOperations(
                 fixture.sourceFile,
@@ -1030,19 +1211,57 @@ void distComponents;
                 fixture.bindingResolver,
             );
             expect(operations.operations, label).toEqual([]);
-            expect(operations.unmodeled, label).toHaveLength(
-                label.startsWith("process") ? 3 : 2,
-            );
+            expect(operations.unmodeled, label).toHaveLength(expectedUnmodeled);
             expect(
                 operations.unmodeled.map(({ operation }) => operation),
                 label,
             ).toEqual(
                 expect.arrayContaining(
                     label.startsWith("process")
-                        ? ["readdirSync", "readdirSync", "readdirSync"]
-                        : ["readFileSync", "readFileSync"],
+                        ? Array(expectedUnmodeled).fill("readdirSync")
+                        : Array(expectedUnmodeled).fill("readFileSync"),
                 ),
             );
+        }
+
+        const conservativeInitialOriginCases = [
+            `import { readdirSync } from "node:fs";
+             const holder = { ...{ process } };
+             holder.process.cwd = replacement;
+             readdirSync(process.cwd());`,
+            `import { readdirSync } from "node:fs";
+             const key = "process";
+             const holder = { [key]: process };
+             holder.process.cwd = replacement;
+             readdirSync(process.cwd());`,
+            `import { readdirSync } from "node:fs";
+             const holder = [process];
+             const index = dynamicIndex;
+             holder[index].cwd = replacement;
+             readdirSync(process.cwd());`,
+            `import { readdirSync } from "node:fs";
+             const holder = { self: holder };
+             holder.self.cwd = replacement;
+             readdirSync(process.cwd());`,
+            `import { readdirSync } from "node:fs";
+             const holder = { process, process: replacement };
+             holder.process.cwd = replacement;
+             readdirSync(process.cwd());`,
+        ];
+        for (const source of conservativeInitialOriginCases) {
+            const fixture = extractScriptReferences(source);
+            const operations = extractFileOperations(
+                fixture.sourceFile,
+                "fixture.ts",
+                root,
+                null,
+                new Map(),
+                fixture.bindingResolver,
+            );
+            expect(operations.operations).toEqual([
+                expect.objectContaining({ operation: "readdirSync", target: "." }),
+            ]);
+            expect(operations.unmodeled).toEqual([]);
         }
     });
 
@@ -1377,7 +1596,7 @@ void distComponents;
         expect(graph.summary.internalEdges).toBe(3585);
         expect(graph.summary.edgeKindCounts["generator-read"]).toBe(13);
         expect(graph.summary.edgeKindCounts["generator-write"]).toBe(12);
-        expect(graph.summary.unmodeledFileOperations).toBe(286);
+        expect(graph.summary.unmodeledFileOperations).toBe(287);
         expect(graph.summary.nodeKindCounts["generated-by-write"]).toBe(7);
         expect(graph.summary.nodeKindCounts["missing-runtime-placeholder"]).toBe(9);
         expect(
