@@ -517,15 +517,13 @@ function createBindingResolver(sourceFile, options = {}) {
                 }
                 const property = element.propertyName
                     ? exactPropertyKey(element.propertyName)
-                    : ts.isIdentifier(element.name)
-                      ? element.name.text
-                      : null;
+                    : null;
                 const shorthand = ts.isIdentifier(element.name) ? element.name.text : null;
                 registerPattern(
                     element.name,
                     scope,
                     initializer,
-                    [...propertyPath, property ?? shorthand],
+                    [...propertyPath, element.propertyName ? property : shorthand],
                     iterate,
                     kind,
                     parameterIndex,
@@ -670,6 +668,14 @@ function createBindingResolver(sourceFile, options = {}) {
         }
         return null;
     };
+    const isUnshadowedUndefined = (node, useNode = node) => {
+        const current = unwrapTransparentSyntax(node);
+        return (
+            ts.isIdentifier(current) &&
+            current.text === "undefined" &&
+            lookup("undefined", useNode) === null
+        );
+    };
     const immutableProvenance = (value) => {
         if (!value || typeof value !== "object") return { kind: "local" };
         const provenance = {};
@@ -720,9 +726,7 @@ function createBindingResolver(sourceFile, options = {}) {
         if (!ts.isElementAccessExpression(node) || !node.argumentExpression) return null;
         const key = exactPropertyKey(node.argumentExpression, false);
         if (key === null) return null;
-        return canonicalNumericProperty(node.argumentExpression) === null
-            ? key
-            : Number(key);
+        return key;
     };
     const mutationReceiverPrefixes = (node, property = undefined) => {
         const entries = [];
@@ -922,7 +926,7 @@ function createBindingResolver(sourceFile, options = {}) {
         const properties = [];
         for (const property of node.properties) {
             if (!ts.isPropertyAssignment(property) || !property.name) return null;
-            const name = property.name.text ?? literalString(property.name);
+            const name = exactPropertyKey(property.name);
             if (typeof name !== "string" || !ts.isObjectLiteralExpression(property.initializer)) {
                 return null;
             }
@@ -941,7 +945,7 @@ function createBindingResolver(sourceFile, options = {}) {
         }
         if (lookup(receiver.text, receiver) !== null) return null;
         if (receiver.text === "Object" && name === "defineProperty") {
-            const key = node.arguments[1] && literalString(node.arguments[1]);
+            const key = node.arguments[1] && exactPropertyKey(node.arguments[1], false);
             return { target: node.arguments[0], property: key, whole: key === null || !node.arguments[2] || !ts.isObjectLiteralExpression(node.arguments[2]) };
         }
         if (receiver.text === "Object" && name === "defineProperties") {
@@ -954,23 +958,24 @@ function createBindingResolver(sourceFile, options = {}) {
             return { target: node.arguments[0], whole: true };
         }
         if (receiver.text === "Reflect" && name === "set") {
-            const key = node.arguments[1] && literalString(node.arguments[1]);
+            const key = node.arguments[1] && exactPropertyKey(node.arguments[1], false);
             return { target: node.arguments[0], property: key, whole: key === null };
         }
         if (receiver.text === "Reflect" && name === "defineProperty") {
-            const key = node.arguments[1] && literalString(node.arguments[1]);
+            const key = node.arguments[1] && exactPropertyKey(node.arguments[1], false);
             return { target: node.arguments[0], property: key, whole: key === null || !node.arguments[2] || !ts.isObjectLiteralExpression(node.arguments[2]) };
         }
         if (receiver.text === "Reflect" && name === "deleteProperty") {
-            const key = node.arguments[1] && literalString(node.arguments[1]);
+            const key = node.arguments[1] && exactPropertyKey(node.arguments[1], false);
             return { target: node.arguments[0], property: key, whole: key === null };
         }
         return null;
     };
     const markWrites = (node) => {
         if (ts.isBinaryExpression(node) && assignmentOperators.has(node.operatorToken.kind)) {
-            if (node.operatorToken.kind === ts.SyntaxKind.EqualsToken && ts.isIdentifier(node.left)) {
-                const record = lookup(node.left.text, node.left);
+            const assignmentTarget = unwrapTransparentSyntax(node.left);
+            if (node.operatorToken.kind === ts.SyntaxKind.EqualsToken && ts.isIdentifier(assignmentTarget)) {
+                const record = lookup(assignmentTarget.text, assignmentTarget);
                 if (record) {
                     record.assignmentRhs ??= [];
                     record.assignmentRhs.push(node.right);
@@ -1260,7 +1265,7 @@ function createBindingResolver(sourceFile, options = {}) {
         }
         const entry = matches[0];
         const value = ts.isPropertyAssignment(entry) ? entry.initializer : entry.name;
-        if (ts.isIdentifier(value) && value.text === "undefined") {
+        if (isUnshadowedUndefined(value, entry)) {
             return segmentDefault
                 ? projectInitialOrigin(
                       segmentDefault,
@@ -1313,11 +1318,7 @@ function createBindingResolver(sourceFile, options = {}) {
         }
         const element = node.elements[index];
         const value = unwrapTransparentSyntax(element);
-        if (
-            !element ||
-            ts.isOmittedExpression(element) ||
-            (value && ts.isIdentifier(value) && value.text === "undefined")
-        ) {
+        if (!element || ts.isOmittedExpression(element) || isUnshadowedUndefined(value, element)) {
             return segmentDefault
                 ? projectInitialOrigin(
                       segmentDefault,

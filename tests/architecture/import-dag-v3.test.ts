@@ -495,7 +495,7 @@ describe("graph schema v3", () => {
             ),
         ).rejects.toThrow("fixture setup failure");
         expect(setupFailureDirectory).not.toBeNull();
-        expect(existsSync(setupFailureDirectory as string)).toBe(false);
+        expect(existsSync(setupFailureDirectory!)).toBe(false);
 
         let successfulDirectory: string | null = null;
         await withContractFixture(baselineStyleAssets, async (fixture) => {
@@ -537,7 +537,7 @@ describe("graph schema v3", () => {
             }
         });
         expect(successfulDirectory).not.toBeNull();
-        expect(existsSync(successfulDirectory as string)).toBe(false);
+        expect(existsSync(successfulDirectory!)).toBe(false);
     });
 
     it("recognizes fs provenance forms and rejects local file-operation lookalikes", () => {
@@ -1349,6 +1349,213 @@ describe("graph schema v3", () => {
                 1,
             ],
             [
+                "process parenthesized global undefined object default",
+                `import { readdirSync } from "node:fs";
+                 function mutate({ alias = process } = { alias: (undefined) }) {
+                     alias.cwd = replacement;
+                 }
+                 mutate();
+                 readdirSync(process.cwd());`,
+                1,
+            ],
+            [
+                "process shadowed undefined object origin",
+                `import { readdirSync } from "node:fs";
+                 function mutate(undefined = process, { alias = process } = { alias: undefined }) {
+                     alias.cwd = replacement;
+                 }
+                 mutate();
+                 readdirSync(process.cwd());`,
+                1,
+            ],
+            [
+                "CJS shadowed undefined object origin",
+                `import { readFileSync } from "node:fs";
+                 const original = require("node:fs");
+                 function mutate(undefined = original, { alias = original } = { alias: undefined }) {
+                     alias.readFileSync = replacement;
+                 }
+                 mutate();
+                 original.readFileSync("shadowed-object.txt");`,
+                1,
+            ],
+            [
+                "process shadowed undefined array origin",
+                `import { readdirSync } from "node:fs";
+                 function mutate(undefined = process, [alias = process] = [undefined]) {
+                     alias.cwd = replacement;
+                 }
+                 mutate();
+                 readdirSync(process.cwd());`,
+                1,
+            ],
+            [
+                "CJS shadowed undefined array origin",
+                `import { readFileSync } from "node:fs";
+                 const original = require("node:fs");
+                 function mutate(undefined = original, [alias = original] = [undefined]) {
+                     alias.readFileSync = replacement;
+                 }
+                 mutate();
+                 original.readFileSync("shadowed-array.txt");`,
+                1,
+            ],
+            [
+                "process parenthesized assignment alias",
+                `import { readdirSync } from "node:fs";
+                 let alias;
+                 (alias) = process;
+                 alias.cwd = replacement;
+                 readdirSync(process.cwd());`,
+                1,
+            ],
+            [
+                "CJS asserted assignment alias",
+                `import { readFileSync } from "node:fs";
+                 const original = require("node:fs");
+                 let alias;
+                 (alias as any) = original;
+                 alias.readFileSync = replacement;
+                 original.readFileSync("asserted-assignment.txt");`,
+                1,
+            ],
+            [
+                "process unsupported computed binding key",
+                `import { readdirSync } from "node:fs";
+                 const key = dynamicKey;
+                 const { [key]: alias } = { process };
+                 alias.cwd = replacement;
+                 readdirSync(process.cwd());`,
+                0,
+                ".",
+            ],
+            [
+                "CJS unsupported computed binding key",
+                `import { readFileSync } from "node:fs";
+                 const original = require("node:fs");
+                 const key = dynamicKey;
+                 const { [key]: alias } = { fs: original };
+                 alias.readFileSync = replacement;
+                 original.readFileSync("unsupported-computed.txt");`,
+                0,
+                "unsupported-computed.txt",
+                "readFileSync",
+            ],
+            [
+                "process shallow numeric member",
+                `import { readdirSync } from "node:fs";
+                 const p = process;
+                 p[0] = replacement;
+                 readdirSync(process.cwd());`,
+                0,
+                ".",
+            ],
+            [
+                "CJS shallow numeric member",
+                `import { readFileSync } from "node:fs";
+                 const original = require("node:fs");
+                 original[0] = replacement;
+                 original.readFileSync("shallow-numeric.txt");`,
+                0,
+                "shallow-numeric.txt",
+                "readFileSync",
+            ],
+            [
+                "process defineProperty transparent unrelated key",
+                `import { readdirSync } from "node:fs";
+                 const p = process;
+                 Object.defineProperty(p, ("env" as const), {});
+                 readdirSync(process.cwd());`,
+                0,
+                ".",
+            ],
+            [
+                "CJS defineProperty transparent unrelated key",
+                `import { readFileSync } from "node:fs";
+                 const original = require("node:fs");
+                 Object.defineProperty(original, ("other" as const), {});
+                 original.readFileSync("define-property.txt");`,
+                0,
+                "define-property.txt",
+                "readFileSync",
+            ],
+            [
+                "process defineProperties transparent computed key",
+                `import { readdirSync } from "node:fs";
+                 const p = process;
+                 Object.defineProperties(p, { [("env" as const)]: {} });
+                 readdirSync(process.cwd());`,
+                0,
+                ".",
+            ],
+            [
+                "CJS defineProperties transparent computed key",
+                `import { readFileSync } from "node:fs";
+                 const original = require("node:fs");
+                 Object.defineProperties(original, { [("other" as const)]: {} });
+                 original.readFileSync("define-properties.txt");`,
+                0,
+                "define-properties.txt",
+                "readFileSync",
+            ],
+            [
+                "process Reflect.set numeric key",
+                `import { readdirSync } from "node:fs";
+                 const p = process;
+                 Reflect.set(p, 0, replacement);
+                 readdirSync(process.cwd());`,
+                0,
+                ".",
+            ],
+            [
+                "CJS Reflect.set numeric key",
+                `import { readFileSync } from "node:fs";
+                 const original = require("node:fs");
+                 Reflect.set(original, 0, replacement);
+                 original.readFileSync("reflect-set.txt");`,
+                0,
+                "reflect-set.txt",
+                "readFileSync",
+            ],
+            [
+                "process Reflect.defineProperty transparent key",
+                `import { readdirSync } from "node:fs";
+                 const p = process;
+                 Reflect.defineProperty(p, ("env" as const), {});
+                 readdirSync(process.cwd());`,
+                0,
+                ".",
+            ],
+            [
+                "CJS Reflect.defineProperty transparent key",
+                `import { readFileSync } from "node:fs";
+                 const original = require("node:fs");
+                 Reflect.defineProperty(original, ("other" as const), {});
+                 original.readFileSync("reflect-define-property.txt");`,
+                0,
+                "reflect-define-property.txt",
+                "readFileSync",
+            ],
+            [
+                "process Reflect.deleteProperty numeric key",
+                `import { readdirSync } from "node:fs";
+                 const p = process;
+                 Reflect.deleteProperty(p, 0);
+                 readdirSync(process.cwd());`,
+                0,
+                ".",
+            ],
+            [
+                "CJS Reflect.deleteProperty numeric key",
+                `import { readFileSync } from "node:fs";
+                 const original = require("node:fs");
+                 Reflect.deleteProperty(original, 0);
+                 original.readFileSync("reflect-delete-property.txt");`,
+                0,
+                "reflect-delete-property.txt",
+                "readFileSync",
+            ],
+            [
                 "process parent object default precedence",
                 `import { readdirSync } from "node:fs";
                  function mutate({ nested: { alias = process } = { alias: replacement } } = {}) {
@@ -1389,7 +1596,7 @@ describe("graph schema v3", () => {
                 ".",
             ],
         ] as const;
-        for (const [label, source, expectedUnmodeled, expectedTarget] of sharedIdentityCases) {
+        for (const [label, source, expectedUnmodeled, expectedTarget, expectedOperation = "readdirSync"] of sharedIdentityCases) {
             const fixture = extractScriptReferences(source);
             const operations = extractFileOperations(
                 fixture.sourceFile,
@@ -1401,7 +1608,7 @@ describe("graph schema v3", () => {
             );
             expect(operations.operations, label).toEqual(
                 expectedTarget
-                    ? [expect.objectContaining({ operation: "readdirSync", target: expectedTarget })]
+                    ? [expect.objectContaining({ operation: expectedOperation, target: expectedTarget })]
                     : [],
             );
             expect(operations.unmodeled, label).toHaveLength(expectedUnmodeled);
