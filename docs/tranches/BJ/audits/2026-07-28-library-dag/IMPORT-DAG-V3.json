@@ -1,6 +1,6 @@
 {
   "schema": "glass-ui-import-dag/3",
-  "observedAt": "2026-07-30T00:01:33.038Z",
+  "observedAt": "2026-07-30T00:46:30.954Z",
   "repositoryRoot": ".",
   "ownerManifest": {
     "path": "OWNER-MANIFEST.json",
@@ -4319,10 +4319,10 @@
       "nodeType": "source",
       "nodeKind": "repository-file",
       "virtual": false,
-      "bytes": 167394,
-      "sha256": "8e3bbcfd5c955a8bbc06118a2e7a17afe443dafa4837f5516f407e0b7f8ab645",
+      "bytes": 171500,
+      "sha256": "654619acadbb5cc10b7b3642e7c6ca8d013f663a3e7748b7db7e1ddb96f50844",
       "generatedBy": null,
-      "lines": 4374
+      "lines": 4450
     },
     {
       "path": "docs/tranches/BJ/audits/2026-07-28-library-dag/OWNER-MANIFEST.json",
@@ -15246,10 +15246,10 @@
       "nodeType": "source",
       "nodeKind": "repository-file",
       "virtual": false,
-      "bytes": 60997,
-      "sha256": "764692dc3f8e4d4f23edf95667dbea68d2d3bb28f88b728996b93db0fba719c5",
+      "bytes": 61261,
+      "sha256": "9e7fd3493028aeb7416ec6d723a6ae8d6a2f0ea0c36c91236b12898799737c8c",
       "generatedBy": null,
-      "lines": 1497
+      "lines": 1480
     },
     {
       "path": "tests/components/_shared/public-contracts.test-d.ts",
@@ -46723,7 +46723,7 @@
       "target": "docs/tranches/BJ/audits/2026-07-28-library-dag/OWNER-MANIFEST.json",
       "specifier": null,
       "edgeKind": "generator-read",
-      "line": 3135,
+      "line": 3210,
       "column": 32,
       "boundary": "within-projections",
       "metadata": {
@@ -46740,7 +46740,7 @@
       "target": "package.json",
       "specifier": null,
       "edgeKind": "generator-read",
-      "line": 3614,
+      "line": 3689,
       "column": 36,
       "boundary": "within-projections",
       "metadata": {
@@ -46756,7 +46756,7 @@
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "specifier": "../../../../../scripts/lib/subpath-policy.mjs",
       "edgeKind": "literal-dynamic",
-      "line": 2953,
+      "line": 3028,
       "column": 30,
       "metadata": {},
       "target": "scripts/lib/subpath-policy.mjs",
@@ -99676,16 +99676,6 @@
             "typeOnly": false
           },
           {
-            "name": "callsToTarget",
-            "local": "callsToTarget",
-            "typeOnly": false
-          },
-          {
-            "name": "provenTargetCallValue",
-            "local": "provenTargetCallValue",
-            "typeOnly": false
-          },
-          {
             "name": "validateCycleRatchets",
             "local": "validateCycleRatchets",
             "typeOnly": false
@@ -99709,7 +99699,7 @@
       "source": "tests/architecture/import-dag-v3.test.ts",
       "specifier": "../../docs/tranches/BJ/audits/2026-07-28-library-dag/OWNER-MANIFEST.json",
       "edgeKind": "literal-require",
-      "line": 35,
+      "line": 33,
       "column": 18,
       "metadata": {
         "binding": "require",
@@ -99727,7 +99717,7 @@
       "source": "tests/architecture/import-dag-v3.test.ts",
       "specifier": "../../package.json",
       "edgeKind": "literal-require",
-      "line": 38,
+      "line": 36,
       "column": 21,
       "metadata": {
         "binding": "require",
@@ -163516,49 +163506,49 @@
     {
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "operation": "readFileSync",
-      "line": 1793,
+      "line": 1903,
       "column": 19
     },
     {
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "operation": "statSync",
-      "line": 2091,
+      "line": 2201,
       "column": 44
     },
     {
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "operation": "statSync",
-      "line": 2095,
+      "line": 2205,
       "column": 29
     },
     {
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "operation": "readFileSync",
-      "line": 3295,
+      "line": 3370,
       "column": 24
     },
     {
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "operation": "readFileSync",
-      "line": 4328,
+      "line": 4404,
       "column": 37
     },
     {
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "operation": "readFileSync",
-      "line": 4337,
+      "line": 4413,
       "column": 33
     },
     {
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "operation": "writeFileSync",
-      "line": 4348,
+      "line": 4424,
       "column": 9
     },
     {
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "operation": "writeFileSync",
-      "line": 4349,
+      "line": 4425,
       "column": 9
     },
     {
@@ -164800,85 +164790,85 @@
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "cpSync",
-      "line": 48,
+      "line": 46,
       "column": 9
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "readFileSync",
-      "line": 70,
+      "line": 68,
       "column": 32
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "mkdirSync",
-      "line": 77,
+      "line": 75,
+      "column": 5
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 76,
       "column": 5
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "writeFileSync",
       "line": 78,
-      "column": 5
-    },
-    {
-      "source": "tests/architecture/import-dag-v3.test.ts",
-      "operation": "writeFileSync",
-      "line": 80,
       "column": 23
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "rmSync",
-      "line": 81,
+      "line": 79,
       "column": 14
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "readFileSync",
-      "line": 1435,
+      "line": 1418,
       "column": 48
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "writeFileSync",
-      "line": 1437,
+      "line": 1420,
       "column": 21
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "readFileSync",
-      "line": 1444,
+      "line": 1427,
       "column": 48
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "writeFileSync",
-      "line": 1446,
+      "line": 1429,
       "column": 21
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "writeFileSync",
-      "line": 1453,
+      "line": 1436,
       "column": 21
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "readFileSync",
-      "line": 1455,
+      "line": 1438,
       "column": 28
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "rmSync",
-      "line": 1468,
+      "line": 1451,
       "column": 17
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "rmSync",
-      "line": 1493,
+      "line": 1476,
       "column": 13
     },
     {
@@ -165374,7 +165364,7 @@
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
-      "line": 54,
+      "line": 52,
       "column": 12,
       "api": "spawnSync",
       "binding": "spawnSync",
@@ -165433,7 +165423,7 @@
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
-      "line": 1422,
+      "line": 1405,
       "column": 9,
       "api": "execFileSync",
       "binding": "execFileSync",
@@ -165464,7 +165454,7 @@
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
-      "line": 1478,
+      "line": 1461,
       "column": 28,
       "api": "spawnSync",
       "binding": "spawnSync",
@@ -203613,5 +203603,5 @@
       }
     }
   },
-  "receiptSha256": "d12df4cdeffb303941143ab4489e535631f097dc2b038517920a91539899e5d2"
+  "receiptSha256": "f5a5a2592c743b268ec7a15724fe9ee3c498e3af78e5d06df33a36902d1f8fc3"
 }

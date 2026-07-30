@@ -354,8 +354,10 @@ const fsDeleteNames = new Set(["rm", "rmSync"]);
 function createBindingResolver(sourceFile, options = {}) {
     const scopeByNode = new Map();
     let parameterValues = options.parameterValues ?? new Map();
+    let dynamicImportResolver = options.dynamicImportResolver ?? null;
     const repositoryRoot = options.repositoryRoot ?? process.cwd();
     const globalProcess = { tainted: false, cwdTainted: false };
+    const cjsNamespaceTaints = new Map();
     const rootScope = {
         parent: null,
         bindings: new Map(),
@@ -443,6 +445,7 @@ function createBindingResolver(sourceFile, options = {}) {
                 propertyPath,
                 iterate,
                 tainted: false,
+                taintedFsMember: null,
                 scope,
                 declaration: name,
                 parameterIndex,
@@ -608,7 +611,15 @@ function createBindingResolver(sourceFile, options = {}) {
         if (!node) return;
         if (ts.isIdentifier(node)) {
             const record = lookup(node.text, node);
-            if (record) record.tainted = true;
+            if (record) {
+                const provenance = resolveExpression(node, node);
+                if (provenance.kind === "fs-member" || provenance.kind === "tainted-fs-member") {
+                    record.taintedFsMember = provenance;
+                    record.tainted = true;
+                } else {
+                    record.tainted = true;
+                }
+            }
             return;
         }
         if (ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node)) {
@@ -619,6 +630,19 @@ function createBindingResolver(sourceFile, options = {}) {
     };
     const markGlobalProcessMutation = (node) => {
         if (!node) return;
+        const { root, properties } = mutationTarget(node);
+        const provenance = resolveExpression(root, root);
+        if (provenance.kind !== "process-global") return false;
+        if (properties.length === 0 && ts.isIdentifier(root) && root.text === "process") {
+            globalProcess.tainted = true;
+        } else if (properties.length === 1 && properties[0] === "cwd") {
+            globalProcess.cwdTainted = true;
+        } else {
+            globalProcess.tainted = true;
+        }
+        return true;
+    };
+    const mutationTarget = (node, property = undefined) => {
         let root = node;
         const properties = [];
         while (ts.isPropertyAccessExpression(root) || ts.isElementAccessExpression(root)) {
@@ -629,42 +653,91 @@ function createBindingResolver(sourceFile, options = {}) {
             );
             root = root.expression;
         }
-        if (!ts.isIdentifier(root) || root.text !== "process" || lookup("process", root)) {
-            return;
+        if (property !== undefined) properties.push(property);
+        return { root, properties };
+    };
+    const markCjsModuleMutation = (node, property = undefined) => {
+        const { root, properties } = mutationTarget(node, property);
+        const provenance = resolveExpression(root, root);
+        if (provenance.kind !== "cjs-module-namespace" || !fsModules.has(provenance.moduleName)) {
+            return false;
         }
-        if (properties.length === 0) {
-            globalProcess.tainted = true;
-        } else if (properties.length === 1 && properties[0] === "cwd") {
-            globalProcess.cwdTainted = true;
+        const rootKey = provenance.cjsRoot;
+        const taint = cjsNamespaceTaints.get(rootKey) ?? { all: false, members: new Set() };
+        if (properties.length === 1 && typeof properties[0] === "string") {
+            taint.members.add(properties[0]);
         } else {
-            globalProcess.tainted = true;
+            taint.all = true;
         }
+        cjsNamespaceTaints.set(rootKey, taint);
+        return true;
     };
     const markWrites = (node) => {
         if (ts.isBinaryExpression(node) && assignmentOperators.has(node.operatorToken.kind)) {
-            markGlobalProcessMutation(node.left);
-            taintTarget(node.left);
+            const processMutation = markGlobalProcessMutation(node.left);
+            const cjsMutation = markCjsModuleMutation(node.left);
+            if (!processMutation && !cjsMutation) taintTarget(node.left);
         } else if (
             (ts.isPrefixUnaryExpression(node) || ts.isPostfixUnaryExpression(node)) &&
             [ts.SyntaxKind.PlusPlusToken, ts.SyntaxKind.MinusMinusToken].includes(node.operator)
         ) {
-            markGlobalProcessMutation(node.operand);
-            taintTarget(node.operand);
+            const processMutation = markGlobalProcessMutation(node.operand);
+            const cjsMutation = markCjsModuleMutation(node.operand);
+            if (!processMutation && !cjsMutation) taintTarget(node.operand);
         } else if (node.kind === ts.SyntaxKind.DeleteExpression) {
-            markGlobalProcessMutation(node.expression);
-            taintTarget(node.expression);
+            const processMutation = markGlobalProcessMutation(node.expression);
+            const cjsMutation = markCjsModuleMutation(node.expression);
+            if (!processMutation && !cjsMutation) taintTarget(node.expression);
         } else if (ts.isForInStatement(node) || ts.isForOfStatement(node)) {
             if (!ts.isVariableDeclarationList(node.initializer)) {
                 taintTarget(node.initializer);
             }
+        } else if (
+            ts.isCallExpression(node) &&
+            ts.isPropertyAccessExpression(node.expression) &&
+            node.expression.name.text === "defineProperty" &&
+            ts.isIdentifier(node.expression.expression) &&
+            node.expression.expression.text === "Object" &&
+            lookup("Object", node.expression.expression) === null
+        ) {
+            const target = node.arguments[0];
+            const property = literalString(node.arguments[1]);
+            if (target) {
+                const processMutation = markGlobalProcessMutation(target, property);
+                const cjsMutation = markCjsModuleMutation(target, property);
+                if (!processMutation && !cjsMutation) taintTarget(target);
+            }
         }
         ts.forEachChild(node, markWrites);
     };
-    markWrites(sourceFile);
     const member = (base, name) => {
         if (base.tainted) return { kind: "local" };
         if (base.kind === "module" || base.kind === "module-namespace") {
             return directImportProvenance(base.moduleName, name);
+        }
+        if (base.kind === "module-promise") {
+            return name === "then" && fsModules.has(base.moduleName)
+                ? { kind: "module-promise-boundary", moduleName: base.moduleName }
+                : { kind: "local" };
+        }
+        if (base.kind === "cjs-module-namespace") {
+            const taint = cjsNamespaceTaints.get(base.cjsRoot);
+            if (
+                fsModules.has(base.moduleName) &&
+                taint &&
+                (taint.all || taint.members.has(name))
+            ) {
+                return {
+                    kind: "tainted-fs-member",
+                    moduleName: base.moduleName,
+                    member: name,
+                    cjsRoot: base.cjsRoot,
+                };
+            }
+            const resolved = directImportProvenance(base.moduleName, name);
+            return resolved.kind === "fs-member"
+                ? { ...resolved, cjsRoot: base.cjsRoot }
+                : resolved;
         }
         if (base.kind === "require-loader" && name === "resolve") {
             return { kind: "require-resolve", loader: base.loader };
@@ -680,6 +753,9 @@ function createBindingResolver(sourceFile, options = {}) {
         return { kind: "local" };
     };
     const resolveRecord = (record, seen) => {
+        if (record?.taintedFsMember) {
+            return { ...record.taintedFsMember, kind: "tainted-fs-member" };
+        }
         if (record?.tainted) return { kind: "local" };
         const knownValue = parameterValues.get(record) ??
             parameterValues.get(record?.declaration?.getStart(sourceFile));
@@ -701,14 +777,24 @@ function createBindingResolver(sourceFile, options = {}) {
             ts.isParenthesizedExpression(node) ||
             ts.isAsExpression(node) ||
             ts.isSatisfiesExpression(node) ||
-            ts.isNonNullExpression(node) ||
-            ts.isAwaitExpression(node)
+            ts.isNonNullExpression(node)
         ) {
             return resolveExpression(node.expression, useNode, seen);
         }
+        if (ts.isAwaitExpression(node)) {
+            const awaited = resolveExpression(node.expression, useNode, seen);
+            return awaited.kind === "module-promise"
+                ? { kind: "module-namespace", moduleName: awaited.moduleName }
+                : awaited;
+        }
         if (ts.isIdentifier(node)) {
             const record = lookup(node.text, useNode);
-            if (record) return record.tainted ? { kind: "local" } : resolveRecord(record, seen);
+            if (record) {
+                if (record.taintedFsMember) {
+                    return { ...record.taintedFsMember, kind: "tainted-fs-member" };
+                }
+                return record.tainted ? { kind: "local" } : resolveRecord(record, seen);
+            }
             if (node.text === "require") return { kind: "require-loader", loader: "require" };
             if (node.text === "process" && !globalProcess.tainted) {
                 return { kind: "process-global" };
@@ -729,7 +815,18 @@ function createBindingResolver(sourceFile, options = {}) {
                 node.expression.kind === ts.SyntaxKind.ImportKeyword &&
                 node.arguments.length === 1
             ) {
-                const moduleName = literalString(node.arguments[0]);
+                const literal = literalString(node.arguments[0]);
+                const evaluated =
+                    literal === null
+                        ? dynamicImportResolver?.(node.arguments[0], node)
+                        : null;
+                const resolved =
+                    literal !== null
+                        ? literal
+                        : evaluated?.specifiers?.length === 1
+                          ? evaluated.specifiers[0]
+                          : null;
+                const moduleName = resolved;
                 if (
                     moduleName &&
                     (childProcessModules.has(moduleName) ||
@@ -739,7 +836,7 @@ function createBindingResolver(sourceFile, options = {}) {
                         processModules.has(moduleName) ||
                         urlModules.has(moduleName))
                 ) {
-                    return { kind: "module-namespace", moduleName };
+                    return { kind: "module-promise", moduleName };
                 }
             }
             const callee = resolveExpression(node.expression, useNode, seen);
@@ -757,15 +854,21 @@ function createBindingResolver(sourceFile, options = {}) {
                 const moduleName = node.arguments[0] && literalString(node.arguments[0]);
                 if (
                     moduleName &&
-                    childProcessModules.has(moduleName) ||
-                    nodeModuleModules.has(moduleName) ||
-                    fsModules.has(moduleName) ||
-                    pathModules.has(moduleName) ||
-                    processModules.has(moduleName) ||
-                    urlModules.has(moduleName) ||
-                    localSpecifierPattern.test(moduleName)
+                    (
+                        childProcessModules.has(moduleName) ||
+                        nodeModuleModules.has(moduleName) ||
+                        fsModules.has(moduleName) ||
+                        pathModules.has(moduleName) ||
+                        processModules.has(moduleName) ||
+                        urlModules.has(moduleName) ||
+                        localSpecifierPattern.test(moduleName)
+                    )
                 ) {
-                    return { kind: "module-namespace", moduleName };
+                    return {
+                        kind: "cjs-module-namespace",
+                        moduleName,
+                        cjsRoot: fsModules.has(moduleName) ? "fs" : moduleName,
+                    };
                 }
             }
         }
@@ -792,6 +895,7 @@ function createBindingResolver(sourceFile, options = {}) {
         visitPattern(pattern);
         return records;
     };
+    markWrites(sourceFile);
     return {
         lookup,
         resolveExpression,
@@ -800,6 +904,9 @@ function createBindingResolver(sourceFile, options = {}) {
         recordsForPattern,
         setParameterValues(values) {
             parameterValues = values;
+        },
+        setDynamicImportResolver(resolver) {
+            dynamicImportResolver = resolver;
         },
         globalProcess,
     };
@@ -1064,6 +1171,9 @@ export function extractScriptReferences(
     const specifierResolver = createStaticSpecifierResolver(
         sourceFile,
         bindingResolver,
+    );
+    bindingResolver.setDynamicImportResolver((node, useNode) =>
+        specifierResolver.resolve(node, useNode),
     );
     const sourceLocation = (position) => {
         const local = sourceFile.getLineAndCharacterOfPosition(position);
@@ -2106,29 +2216,11 @@ function resolveReference(
     };
 }
 
-function collectConstInitializers(sourceFile) {
-    const values = new Map();
-    function visit(node) {
-        if (
-            ts.isVariableDeclaration(node) &&
-            ts.isIdentifier(node.name) &&
-            node.initializer &&
-            !values.has(node.name.text)
-        ) {
-            values.set(node.name.text, node.initializer);
-        }
-        ts.forEachChild(node, visit);
-    }
-    visit(sourceFile);
-    return values;
-}
-
 function evaluatePathExpression(
     node,
     sourceFile,
     sourcePath,
     repositoryRoot,
-    constants,
     seen = new Set(),
     bindingResolver = null,
 ) {
@@ -2150,7 +2242,6 @@ function evaluatePathExpression(
                 sourceFile,
                 sourcePath,
                 repositoryRoot,
-                constants,
                 new Set(seen).add(binding),
                 bindingResolver,
             );
@@ -2173,7 +2264,6 @@ function evaluatePathExpression(
                             sourceFile,
                             sourcePath,
                             repositoryRoot,
-                            constants,
                             new Set(seen).add(binding),
                             bindingResolver,
                         );
@@ -2225,7 +2315,6 @@ function evaluatePathExpression(
                 sourceFile,
                 sourcePath,
                 repositoryRoot,
-                constants,
                 new Set(seen),
                 bindingResolver,
             ),
@@ -2255,7 +2344,6 @@ function evaluatePathExpression(
             sourceFile,
             sourcePath,
             repositoryRoot,
-            constants,
             new Set(seen),
             bindingResolver,
         );
@@ -2264,7 +2352,6 @@ function evaluatePathExpression(
             sourceFile,
             sourcePath,
             repositoryRoot,
-            constants,
             new Set(seen),
             bindingResolver,
         );
@@ -2362,8 +2449,7 @@ function callsToTarget(
                 sourcePath === target.sourcePath &&
                 binding.functionNode === target.functionNode;
             const importedDeclaration =
-                (binding.kind === "local-import-member" ||
-                    binding.kind === "fs-member") &&
+                binding.kind === "local-import-member" &&
                 binding.member === target.exportName &&
                 resolveContractModulePath(
                     repositoryRoot,
@@ -2378,11 +2464,6 @@ function callsToTarget(
     visit(sourceFile);
     return calls;
 }
-
-export {
-    callsToTarget,
-    provenTargetCallValue,
-};
 
 function targetFunction(scriptAsts, sourcePath, exportName) {
     const sourceFile = scriptAsts.get(sourcePath);
@@ -2400,7 +2481,6 @@ function provenTargetCallValue(
     index,
     repositoryRoot,
     repositoryVisibility,
-    parameterValues,
 ) {
     const calls = callsToTarget(
         sourceFile,
@@ -2417,7 +2497,6 @@ function provenTargetCallValue(
             sourceFile,
             sourcePath,
             repositoryRoot,
-            parameterValues,
             new Set(),
             bindingResolver,
         ),
@@ -2546,7 +2625,6 @@ function collectPathParameterContracts(
             0,
             repositoryRoot,
             repositoryVisibility,
-            valuesBySource.get(styleAssetsPath),
         );
         const copyValues = valuesBySource.get(styleFoldPath);
         if (copy && root !== null) {
@@ -2560,7 +2638,6 @@ function collectPathParameterContracts(
                           styleFold,
                           styleFoldPath,
                           repositoryRoot,
-                          copyValues,
                           new Set(),
                           styleFoldResolver,
                       )
@@ -2595,7 +2672,6 @@ function collectPathParameterContracts(
                     0,
                     repositoryRoot,
                     repositoryVisibility,
-                    valuesBySource.get(styleAssetsPath),
                 ),
             );
             put(
@@ -2611,7 +2687,6 @@ function collectPathParameterContracts(
                     1,
                     repositoryRoot,
                     repositoryVisibility,
-                    valuesBySource.get(styleAssetsPath),
                 ),
             );
         }
@@ -2621,28 +2696,15 @@ function collectPathParameterContracts(
                 styleFoldResolver,
                 injectTarget.functionNode,
                 0,
-                (() => {
-                    const calls = callsToTarget(
-                        styleAssets,
-                        styleAssetsResolver,
-                        styleAssetsPath,
-                        injectTarget,
-                        repositoryRoot,
-                        repositoryVisibility,
-                    );
-                    const call = calls.find((candidate) => candidate.arguments.length > 0);
-                    return call
-                        ? evaluatePathExpression(
-                              call.arguments[0],
-                              styleAssets,
-                              styleAssetsPath,
-                              repositoryRoot,
-                              valuesBySource.get(styleAssetsPath),
-                              new Set(),
-                              styleAssetsResolver,
-                          )
-                        : null;
-                })(),
+                provenTargetCallValue(
+                    styleAssets,
+                    styleAssetsResolver,
+                    styleAssetsPath,
+                    injectTarget,
+                    0,
+                    repositoryRoot,
+                    repositoryVisibility,
+                ),
             );
             const fileRecord = loopRecord(
                 styleFoldResolver,
@@ -2670,7 +2732,6 @@ function collectPathParameterContracts(
                     0,
                     repositoryRoot,
                     repositoryVisibility,
-                    valuesBySource.get(styleAssetsPath),
                 ),
             );
             put(
@@ -2686,7 +2747,6 @@ function collectPathParameterContracts(
                     1,
                     repositoryRoot,
                     repositoryVisibility,
-                    valuesBySource.get(styleAssetsPath),
                 ),
             );
         }
@@ -2698,7 +2758,6 @@ function collectPathParameterContracts(
         const build = namedFunction(graphSource, "buildGraph");
         const visibility = namedFunction(graphSource, "gitRepositoryVisibility");
         const graphResolver = scriptResolvers.get(graphPath);
-        const graphValues = valuesBySource.get(graphPath);
         const defaultValue = (property) => {
             const record = parameterRecord(graphResolver, build, 0, property);
             return record?.defaultInitializer
@@ -2707,7 +2766,6 @@ function collectPathParameterContracts(
                       graphSource,
                       graphPath,
                       repositoryRoot,
-                      graphValues,
                       new Set(),
                       graphResolver,
                   )
@@ -2731,7 +2789,6 @@ function collectPathParameterContracts(
                     0,
                     repositoryRoot,
                     repositoryVisibility,
-                    graphValues,
                 ),
             );
         }
@@ -2749,7 +2806,6 @@ export function extractFileOperations(
 ) {
     const operations = [];
     const unmodeled = [];
-    const constants = collectConstInitializers(sourceFile);
     const resolver = bindingResolver ?? createBindingResolver(sourceFile, {
         parameterValues,
         repositoryRoot,
@@ -2768,7 +2824,6 @@ export function extractFileOperations(
             sourceFile,
             sourcePath,
             repositoryRoot,
-            constants,
             new Set(),
             resolver,
         );
@@ -2783,11 +2838,33 @@ export function extractFileOperations(
             const binding = resolver.resolveExpression(node.expression, node);
             const name = binding.member;
             const location = sourceLocation(node);
+            if (binding.kind === "module-promise-boundary") {
+                unmodeled.push({
+                    source: sourcePath,
+                    operation: "then",
+                    boundary: "module-promise",
+                    moduleName: binding.moduleName,
+                    ...location,
+                });
+                ts.forEachChild(node, visit);
+                return;
+            }
+            const isTaintedFsOperation =
+                binding.kind === "tainted-fs-member" &&
+                fsModules.has(binding.moduleName) &&
+                fsOperationNames.has(name);
             const isFsOperation =
                 binding.kind === "fs-member" &&
                 fsModules.has(binding.moduleName) &&
                 fsOperationNames.has(name);
-            if (isFsOperation && (fsReadNames.has(name) || fsWriteNames.has(name) || fsDeleteNames.has(name))) {
+            if (isTaintedFsOperation) {
+                unmodeled.push({
+                    source: sourcePath,
+                    operation: name,
+                    boundary: "tainted-fs-member",
+                    ...location,
+                });
+            } else if (isFsOperation && (fsReadNames.has(name) || fsWriteNames.has(name) || fsDeleteNames.has(name))) {
                 const target = resolvedArgument(node.arguments[0]);
                 if (target) {
                     operations.push({
@@ -2839,7 +2916,6 @@ export function extractProcessInvocations(
     bindingResolver = null,
 ) {
     const invocations = [];
-    const constants = collectConstInitializers(sourceFile);
     const resolver = bindingResolver ?? createBindingResolver(sourceFile, {
         parameterValues,
         repositoryRoot,
@@ -2859,7 +2935,6 @@ export function extractProcessInvocations(
             sourceFile,
             sourcePath,
             repositoryRoot,
-            constants,
             new Set(),
             resolver,
         );
@@ -4149,7 +4224,7 @@ package export key maps to exactly one owner.
 | Dynamic template/style asset expressions | ${graph.summary.dynamicAssetReferences} |
 | Unmatched literal globs | ${graph.summary.unresolvedGlobPatterns} |
 | Parse errors | ${graph.summary.parseErrors} |
-| Detectable-but-unmodeled file operations | ${graph.summary.unmodeledFileOperations} |
+| Unresolved calls from the finite supported filesystem-operation table | ${graph.summary.unmodeledFileOperations} |
 | Process invocations | ${graph.summary.processInvocations} |
 | Dynamic process arguments | ${graph.summary.dynamicProcessArguments} |
 
@@ -4249,13 +4324,14 @@ declared public owner. CSS and font entries carry an explicit asset symbol.
 Generation exits non-zero for an unowned or multiply owned graph file, a
 package key without exactly one owner, an unresolved literal local reference,
 an unmatched positive glob, a nonliteral local loader/worker/URL, or a parser
-error, including TypeScript syntactic diagnostics. Generator filesystem calls
-are modeled when their path expression can be
-reduced from literals, \`resolve\`/\`join\`, \`new URL(..., import.meta.url)\`,
-and local constants; irreducibly dynamic operations remain counted in
-\`unmodeledFileOperations\` and are not represented as false edges. This
-snapshot contains ${graph.summary.unmodeledFileOperations} such operations
-(251 at the pre-source challenge seal). Literal CommonJS \`require\` and
+error, including TypeScript syntactic diagnostics. Generator calls from the
+finite supported filesystem-operation table are modeled when their path
+expression can be reduced from literals, \`resolve\`/\`join\`,
+\`new URL(..., import.meta.url)\`, and lexical bindings; unresolved calls remain
+counted in \`unmodeledFileOperations\` and are not represented as false edges.
+This snapshot contains ${graph.summary.unmodeledFileOperations} such unresolved
+calls (251 at the pre-source challenge seal); this is not an exhaustive census
+of Node filesystem activity. Literal CommonJS \`require\` and
 \`createRequire\` targets are graph edges; \`exec\`/\`execFile\`/\`spawn\`
 families are retained in a process-invocation ledger with statically reducible
 command and argv targets plus an explicit dynamic-argument count. Dynamic

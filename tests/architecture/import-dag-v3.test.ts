@@ -23,8 +23,6 @@ import {
     extractProcessInvocations,
     extractScriptReferences,
     extractTemplateReferences,
-    callsToTarget,
-    provenTargetCallValue,
     validateCycleRatchets,
     validateOwnerAssignments,
 } from "../../docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs";
@@ -178,7 +176,7 @@ describe("graph schema v3", () => {
         ]);
     });
 
-    it("resolves finite const/collection/loop dynamic imports and fails unknown locality closed", () => {
+    it("resolves exact finite dynamic imports and fails unknown or multi-value locality closed", () => {
         const { references, nonliteralReferences } = extractScriptReferences(`
             const localPrefix = "./pages/" + pageName;
             import(localPrefix);
@@ -344,6 +342,12 @@ describe("graph schema v3", () => {
             required.copyFileSync("copy-source.txt", "copy-target.txt");
             required.rm("remove.txt");
             required.rmSync("remove-sync.txt");
+            const cjsAlias = required;
+            cjsAlias.readFileSync = replacement;
+            required.readFileSync("mutated-member.txt");
+            let reassigned = required.writeFileSync;
+            reassigned = replacement;
+            reassigned("reassigned-call.txt", "content");
 
             function readFileSync(_path: string) {}
             readFileSync("local-function.txt");
@@ -368,68 +372,45 @@ describe("graph schema v3", () => {
             { operation: "rm", target: "remove.txt", effect: "delete" },
             { operation: "rmSync", target: "remove-sync.txt", effect: "delete" },
         ]);
-        expect(operations.unmodeled).toEqual([]);
+        expect(operations.unmodeled.map(({ operation, boundary }) => ({ operation, boundary }))).toEqual([
+            { operation: "readFileSync", boundary: "tainted-fs-member" },
+            { operation: "writeFileSync", boundary: "tainted-fs-member" },
+        ]);
     });
 
-    it("transfers finite arguments only through the exact aliased declaration binding", () => {
-        const target = extractScriptReferences(
-            "export function transfer(value: string) { return value; }",
-            "finite-target.ts",
-            null,
-            {},
-            { repositoryRoot: root },
-        );
-        const caller = extractScriptReferences(
-            `
-                import { transfer as aliased } from "./finite-target";
-                import { transfer as unrelated } from "./other-target";
-                aliased("./true");
-                unrelated("./wrong");
-                function shadowed(transfer: (value: string) => void) {
-                    transfer("./shadowed");
-                }
-            `,
-            "finite-caller.ts",
-            null,
-            {},
-            { repositoryRoot: root },
-        );
-        const targetFunction = target.sourceFile.statements.find(
-            (statement: any) => statement.name?.text === "transfer",
-        );
-        const visibility = {
-            files: new Set(["finite-target.ts", "other-target.ts"]),
-            directories: new Set<string>(),
-        };
-        const identity = {
-            sourcePath: "finite-target.ts",
-            exportName: "transfer",
-            functionNode: targetFunction,
-        };
-        const calls = callsToTarget(
-            caller.sourceFile,
-            caller.bindingResolver,
-            "finite-caller.ts",
-            identity,
+    it("models awaited exact dynamic fs imports and bounds promise properties", () => {
+        const fixture = extractScriptReferences(`
+            const specifier = "node:fs";
+            const directPromise = import(specifier);
+            directPromise.readFileSync("direct-unawaited.txt");
+            const awaitedDirect = await import(specifier);
+            awaitedDirect.readFileSync("awaited-direct.txt");
+            const aliasedPromise = import(specifier);
+            aliasedPromise["writeFileSync"]("aliased-unawaited.txt", "content");
+            const awaitedAlias = await aliasedPromise;
+            awaitedAlias.writeFileSync("awaited-alias.txt", "content");
+            aliasedPromise.then((fs) => fs.readFileSync("promise-boundary.txt"));
+        `, "fixture.ts", null, {}, { repositoryRoot: root });
+        const operations = extractFileOperations(
+            fixture.sourceFile,
+            "fixture.ts",
             root,
-            visibility,
+            null,
+            new Map(),
+            fixture.bindingResolver,
         );
 
-        expect(calls.map((call) => call.expression.getText(caller.sourceFile))).toEqual([
-            "aliased",
+        expect(operations.operations.map(({ operation, target }) => ({ operation, target }))).toEqual([
+            { operation: "readFileSync", target: "awaited-direct.txt" },
+            { operation: "writeFileSync", target: "awaited-alias.txt" },
         ]);
-        expect(
-            provenTargetCallValue(
-                caller.sourceFile,
-                caller.bindingResolver,
-                "finite-caller.ts",
-                identity,
-                0,
-                root,
-                visibility,
-                new Map(),
-            ),
-        ).toBe("./true");
+        expect(operations.unmodeled).toEqual([
+            expect.objectContaining({
+                operation: "then",
+                boundary: "module-promise",
+                moduleName: "node:fs",
+            }),
+        ]);
     });
 
     it("does not resolve a shadowing root parameter as the repository root", () => {
@@ -523,6 +504,8 @@ describe("graph schema v3", () => {
             `import { readdirSync } from "node:fs"; process.cwd = () => "/bad"; readdirSync(process.cwd());`,
             `import { readdirSync } from "node:fs"; process["cwd"] = () => "/bad"; readdirSync(process.cwd());`,
             `import { readdirSync } from "node:fs"; process[dynamicKey] = value; readdirSync(process.cwd());`,
+            `import { readdirSync } from "node:fs"; const p = process; p.cwd = () => "/bad"; readdirSync(process.cwd());`,
+            `import { readdirSync } from "node:fs"; const p = process; Object.defineProperty(p, "cwd", {}); readdirSync(process.cwd());`,
             `import { readdirSync } from "node:fs"; import { ROOT as wrongRoot } from "./nested/scripts/lib/canon-doc.mjs"; readdirSync(wrongRoot);`,
         ]) {
             const fixture = extractScriptReferences(source);
