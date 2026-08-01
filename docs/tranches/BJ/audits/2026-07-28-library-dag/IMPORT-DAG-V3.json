@@ -1,6 +1,6 @@
 {
   "schema": "glass-ui-import-dag/3",
-  "observedAt": "2026-07-29T21:06:13.809Z",
+  "observedAt": "2026-07-31T05:52:02.068Z",
   "repositoryRoot": ".",
   "ownerManifest": {
     "path": "OWNER-MANIFEST.json",
@@ -47,9 +47,9 @@
     "edgeDefinition": "Vue/TypeScript AST imports, export-from, finite provenance-resolved dynamic imports, glob/worker/URL and provenance-backed require loaders; Vue external blocks, literal bound template assets, and static inline-style URLs with file-native line/column locations; HTML script entries; PostCSS imports and URLs; package/build/type/side-effect metadata; detectable filesystem and binding-proven child-process invocation targets."
   },
   "summary": {
-    "nodes": 1497,
-    "internalEdges": 3579,
-    "externalEdges": 1969,
+    "nodes": 1501,
+    "internalEdges": 3585,
+    "externalEdges": 1970,
     "owners": 101,
     "publicEntries": 72,
     "publicSymbols": 1283,
@@ -59,35 +59,35 @@
     "dynamicAssetReferences": 123,
     "unresolvedGlobPatterns": 0,
     "parseErrors": 0,
-    "unmodeledFileOperations": 274,
-    "processInvocations": 8,
-    "dynamicProcessArguments": 9,
+    "unmodeledFileOperations": 395,
+    "processInvocations": 11,
+    "dynamicProcessArguments": 13,
     "nodeTypeCounts": {
       "binary": 9,
-      "declaration": 2,
+      "declaration": 3,
       "directory": 23,
       "documentation": 29,
-      "generated-artifact": 2,
+      "generated-artifact": 4,
       "license": 2,
       "package-output": 137,
       "source": 1154,
       "style": 131,
-      "virtual-placeholder": 8
+      "virtual-placeholder": 9
     },
     "nodeKindCounts": {
       "declared-package-output": 137,
       "directory": 20,
-      "generated-by-write": 5,
-      "missing-runtime-placeholder": 8,
-      "repository-file": 1327
+      "generated-by-write": 7,
+      "missing-runtime-placeholder": 9,
+      "repository-file": 1328
     },
     "projectionCounts": {
       "build-config": 14,
       "demo": 195,
       "package-surface": 2,
       "product": 693,
-      "repository-boundary": 173,
-      "scripts-generators": 15,
+      "repository-boundary": 176,
+      "scripts-generators": 16,
       "tests": 214,
       "visual-tests": 191
     },
@@ -95,13 +95,13 @@
       "asset-url": 8,
       "build-entry": 69,
       "css-import": 113,
-      "eager-runtime": 3351,
+      "eager-runtime": 3352,
       "export-from": 475,
       "file-read": 32,
       "file-write": 4,
       "finite-dynamic": 2,
-      "generator-read": 12,
-      "generator-write": 7,
+      "generator-read": 13,
+      "generator-write": 12,
       "glob-lazy": 107,
       "literal-dynamic": 68,
       "literal-require": 2,
@@ -3266,6 +3266,17 @@
       "generatedBy": null
     },
     {
+      "path": "dist/glass-ui.css",
+      "projection": "repository-boundary",
+      "owner": "repository/generated-output",
+      "nodeType": "generated-artifact",
+      "nodeKind": "generated-by-write",
+      "virtual": true,
+      "bytes": null,
+      "sha256": null,
+      "generatedBy": "vite.style-fold.ts"
+    },
+    {
       "path": "dist/glass-ui.js",
       "projection": "repository-boundary",
       "owner": "repository/generated-output",
@@ -3827,6 +3838,17 @@
       "generatedBy": "vite.style-fold.ts"
     },
     {
+      "path": "dist/styles/components.css",
+      "projection": "repository-boundary",
+      "owner": "repository/generated-output",
+      "nodeType": "generated-artifact",
+      "nodeKind": "generated-by-write",
+      "virtual": true,
+      "bytes": null,
+      "sha256": null,
+      "generatedBy": "vite.utility-emit.ts"
+    },
+    {
       "path": "dist/styles/fonts.css",
       "projection": "repository-boundary",
       "owner": "repository/generated-output",
@@ -3854,6 +3876,17 @@
       "owner": "repository/generated-output",
       "nodeType": "package-output",
       "nodeKind": "declared-package-output",
+      "virtual": true,
+      "bytes": null,
+      "sha256": null,
+      "generatedBy": null
+    },
+    {
+      "path": "dist/subpaths",
+      "projection": "repository-boundary",
+      "owner": "repository/generated-output",
+      "nodeType": "virtual-placeholder",
+      "nodeKind": "missing-runtime-placeholder",
       "virtual": true,
       "bytes": null,
       "sha256": null,
@@ -4286,10 +4319,10 @@
       "nodeType": "source",
       "nodeKind": "repository-file",
       "virtual": false,
-      "bytes": 142380,
-      "sha256": "ca39a016162bee6c6a7c4e874b4487fb7ce27232f6da67a606b4238e722b6681",
+      "bytes": 393550,
+      "sha256": "1a19c8aa86a0dcc8418ff8da327ac09b462eb19869fe38e64bc4c3f3c6ec0285",
       "generatedBy": null,
-      "lines": 3632
+      "lines": 9615
     },
     {
       "path": "docs/tranches/BJ/audits/2026-07-28-library-dag/OWNER-MANIFEST.json",
@@ -4396,6 +4429,18 @@
       "sha256": "21309b121bbfab88abe3616f8c70084023dcb395ea98b36e4862a8f75fd6a8cb",
       "generatedBy": null,
       "lines": 168
+    },
+    {
+      "path": "scripts/lib/minify-css.d.mts",
+      "projection": "scripts-generators",
+      "owner": "scripts/generators",
+      "nodeType": "declaration",
+      "nodeKind": "repository-file",
+      "virtual": false,
+      "bytes": 48,
+      "sha256": "76a8e5c409d4c3e963cb2d9b41350c938b0735758dd6513e26e58b6ead008f89",
+      "generatedBy": null,
+      "lines": 2
     },
     {
       "path": "scripts/lib/minify-css.mjs",
@@ -15201,10 +15246,10 @@
       "nodeType": "source",
       "nodeKind": "repository-file",
       "virtual": false,
-      "bytes": 46789,
-      "sha256": "54fdafdc91b68018ec21c3db1b4d68c8856eba038c3fa92263d2b3c7d2345670",
+      "bytes": 331671,
+      "sha256": "7c44490d3a53638b92193916fbfa45054330bad4eadf949d39bd1788d37e2998",
       "generatedBy": null,
-      "lines": 1160
+      "lines": 6445
     },
     {
       "path": "tests/components/_shared/public-contracts.test-d.ts",
@@ -46678,7 +46723,7 @@
       "target": "docs/tranches/BJ/audits/2026-07-28-library-dag/OWNER-MANIFEST.json",
       "specifier": null,
       "edgeKind": "generator-read",
-      "line": 2380,
+      "line": 7897,
       "column": 32,
       "boundary": "within-projections",
       "metadata": {
@@ -46695,7 +46740,7 @@
       "target": "package.json",
       "specifier": null,
       "edgeKind": "generator-read",
-      "line": 2872,
+      "line": 8379,
       "column": 36,
       "boundary": "within-projections",
       "metadata": {
@@ -46711,7 +46756,7 @@
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "specifier": "../../../../../scripts/lib/subpath-policy.mjs",
       "edgeKind": "literal-dynamic",
-      "line": 2198,
+      "line": 7715,
       "column": 30,
       "metadata": {},
       "target": "scripts/lib/subpath-policy.mjs",
@@ -50354,6 +50399,24 @@
         "conditions": [
           "import"
         ]
+      },
+      "projections": {
+        "eagerRuntime": false,
+        "buildLoad": true,
+        "ownership": true
+      }
+    },
+    {
+      "source": "scripts/flatten-subpath-types.mjs",
+      "target": "dist/subpaths",
+      "specifier": null,
+      "edgeKind": "generator-write",
+      "line": 27,
+      "column": 1,
+      "boundary": "repository-boundary",
+      "metadata": {
+        "operation": "rmSync",
+        "effect": "delete"
       },
       "projections": {
         "eagerRuntime": false,
@@ -99578,10 +99641,15 @@
       "source": "tests/architecture/import-dag-v3.test.ts",
       "specifier": "../../docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "edgeKind": "eager-runtime",
-      "line": 19,
+      "line": 21,
       "column": 1,
       "metadata": {
         "symbols": [
+          {
+            "name": "assertStoredArtifacts",
+            "local": "assertStoredArtifacts",
+            "typeOnly": false
+          },
           {
             "name": "buildGraph",
             "local": "buildGraph",
@@ -99590,6 +99658,11 @@
           {
             "name": "extractCssReferences",
             "local": "extractCssReferences",
+            "typeOnly": false
+          },
+          {
+            "name": "extractFileOperations",
+            "local": "extractFileOperations",
             "typeOnly": false
           },
           {
@@ -99631,7 +99704,7 @@
       "source": "tests/architecture/import-dag-v3.test.ts",
       "specifier": "../../docs/tranches/BJ/audits/2026-07-28-library-dag/OWNER-MANIFEST.json",
       "edgeKind": "literal-require",
-      "line": 32,
+      "line": 36,
       "column": 18,
       "metadata": {
         "binding": "require",
@@ -99649,7 +99722,7 @@
       "source": "tests/architecture/import-dag-v3.test.ts",
       "specifier": "../../package.json",
       "edgeKind": "literal-require",
-      "line": 35,
+      "line": 39,
       "column": 21,
       "metadata": {
         "binding": "require",
@@ -113190,23 +113263,6 @@
     },
     {
       "source": "vite.style-fold.ts",
-      "target": ".",
-      "specifier": null,
-      "edgeKind": "generator-read",
-      "line": 129,
-      "column": 16,
-      "boundary": "repository-boundary",
-      "metadata": {
-        "operation": "readdirSync"
-      },
-      "projections": {
-        "eagerRuntime": false,
-        "buildLoad": true,
-        "ownership": true
-      }
-    },
-    {
-      "source": "vite.style-fold.ts",
       "target": "dist/components",
       "specifier": null,
       "edgeKind": "generator-write",
@@ -113232,6 +113288,40 @@
       "boundary": "repository-boundary",
       "metadata": {
         "operation": "cpSync"
+      },
+      "projections": {
+        "eagerRuntime": false,
+        "buildLoad": true,
+        "ownership": true
+      }
+    },
+    {
+      "source": "vite.style-fold.ts",
+      "target": "dist/glass-ui.css",
+      "specifier": null,
+      "edgeKind": "generator-read",
+      "line": 278,
+      "column": 21,
+      "boundary": "repository-boundary",
+      "metadata": {
+        "operation": "readFileSync"
+      },
+      "projections": {
+        "eagerRuntime": false,
+        "buildLoad": true,
+        "ownership": true
+      }
+    },
+    {
+      "source": "vite.style-fold.ts",
+      "target": "dist/glass-ui.css",
+      "specifier": null,
+      "edgeKind": "generator-write",
+      "line": 280,
+      "column": 26,
+      "boundary": "repository-boundary",
+      "metadata": {
+        "operation": "writeFileSync"
       },
       "projections": {
         "eagerRuntime": false,
@@ -113374,6 +113464,74 @@
       "boundary": "repository-boundary",
       "metadata": {
         "operation": "readdirSync"
+      },
+      "projections": {
+        "eagerRuntime": false,
+        "buildLoad": true,
+        "ownership": true
+      }
+    },
+    {
+      "source": "vite.utility-emit.ts",
+      "target": "dist/styles/components.css",
+      "specifier": null,
+      "edgeKind": "generator-write",
+      "line": 233,
+      "column": 5,
+      "boundary": "repository-boundary",
+      "metadata": {
+        "operation": "writeFileSync"
+      },
+      "projections": {
+        "eagerRuntime": false,
+        "buildLoad": true,
+        "ownership": true
+      }
+    },
+    {
+      "source": "vite.utility-emit.ts",
+      "target": "dist/styles/index.css",
+      "specifier": null,
+      "edgeKind": "generator-read",
+      "line": 243,
+      "column": 22,
+      "boundary": "repository-boundary",
+      "metadata": {
+        "operation": "readFileSync"
+      },
+      "projections": {
+        "eagerRuntime": false,
+        "buildLoad": true,
+        "ownership": true
+      }
+    },
+    {
+      "source": "vite.utility-emit.ts",
+      "target": "dist/styles/index.css",
+      "specifier": null,
+      "edgeKind": "generator-write",
+      "line": 253,
+      "column": 9,
+      "boundary": "repository-boundary",
+      "metadata": {
+        "operation": "writeFileSync"
+      },
+      "projections": {
+        "eagerRuntime": false,
+        "buildLoad": true,
+        "ownership": true
+      }
+    },
+    {
+      "source": "vite.utility-emit.ts",
+      "target": "dist/styles/index.css",
+      "specifier": null,
+      "edgeKind": "generator-write",
+      "line": 264,
+      "column": 5,
+      "boundary": "repository-boundary",
+      "metadata": {
+        "operation": "writeFileSync"
       },
       "projections": {
         "eagerRuntime": false,
@@ -119718,7 +119876,7 @@
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "specifier": "@vue/compiler-dom",
       "edgeKind": "eager-runtime",
-      "line": 22,
+      "line": 32,
       "column": 1,
       "metadata": {
         "symbols": [
@@ -119736,7 +119894,7 @@
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "specifier": "@vue/compiler-sfc",
       "edgeKind": "eager-runtime",
-      "line": 23,
+      "line": 33,
       "column": 1,
       "metadata": {
         "symbols": [
@@ -119780,6 +119938,11 @@
             "name": "createHash",
             "local": "createHash",
             "typeOnly": false
+          },
+          {
+            "name": "randomUUID",
+            "local": "randomUUID",
+            "typeOnly": false
           }
         ]
       },
@@ -119800,6 +119963,36 @@
             "typeOnly": false
           },
           {
+            "name": "closeSync",
+            "local": "closeSync",
+            "typeOnly": false
+          },
+          {
+            "name": "fstatSync",
+            "local": "fstatSync",
+            "typeOnly": false
+          },
+          {
+            "name": "fsyncSync",
+            "local": "fsyncSync",
+            "typeOnly": false
+          },
+          {
+            "name": "lstatSync",
+            "local": "lstatSync",
+            "typeOnly": false
+          },
+          {
+            "name": "mkdirSync",
+            "local": "mkdirSync",
+            "typeOnly": false
+          },
+          {
+            "name": "openSync",
+            "local": "openSync",
+            "typeOnly": false
+          },
+          {
             "name": "realpathSync",
             "local": "realpathSync",
             "typeOnly": false
@@ -119810,13 +120003,33 @@
             "typeOnly": false
           },
           {
+            "name": "readSync",
+            "local": "readSync",
+            "typeOnly": false
+          },
+          {
             "name": "readdirSync",
             "local": "readdirSync",
             "typeOnly": false
           },
           {
+            "name": "renameSync",
+            "local": "renameSync",
+            "typeOnly": false
+          },
+          {
+            "name": "rmdirSync",
+            "local": "rmdirSync",
+            "typeOnly": false
+          },
+          {
             "name": "statSync",
             "local": "statSync",
+            "typeOnly": false
+          },
+          {
+            "name": "unlinkSync",
+            "local": "unlinkSync",
             "typeOnly": false
           },
           {
@@ -119833,7 +120046,7 @@
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "specifier": "node:path",
       "edgeKind": "eager-runtime",
-      "line": 11,
+      "line": 21,
       "column": 1,
       "metadata": {
         "symbols": [
@@ -119886,7 +120099,7 @@
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "specifier": "node:url",
       "edgeKind": "eager-runtime",
-      "line": 21,
+      "line": 31,
       "column": 1,
       "metadata": {
         "symbols": [
@@ -119909,7 +120122,7 @@
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "specifier": "postcss",
       "edgeKind": "eager-runtime",
-      "line": 24,
+      "line": 34,
       "column": 1,
       "metadata": {
         "symbols": [
@@ -119927,7 +120140,7 @@
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "specifier": "typescript",
       "edgeKind": "eager-runtime",
-      "line": 25,
+      "line": 35,
       "column": 1,
       "metadata": {
         "symbols": [
@@ -148295,6 +148508,11 @@
             "typeOnly": false
           },
           {
+            "name": "spawn",
+            "local": "spawn",
+            "typeOnly": false
+          },
+          {
             "name": "spawnSync",
             "local": "spawnSync",
             "typeOnly": false
@@ -148333,13 +148551,18 @@
             "typeOnly": false
           },
           {
+            "name": "readdirSync",
+            "local": "readdirSync",
+            "typeOnly": false
+          },
+          {
             "name": "readFileSync",
             "local": "readFileSync",
             "typeOnly": false
           },
           {
-            "name": "rmdirSync",
-            "local": "rmdirSync",
+            "name": "renameSync",
+            "local": "renameSync",
             "typeOnly": false
           },
           {
@@ -148366,7 +148589,7 @@
       "source": "tests/architecture/import-dag-v3.test.ts",
       "specifier": "node:module",
       "edgeKind": "eager-runtime",
-      "line": 13,
+      "line": 14,
       "column": 1,
       "metadata": {
         "symbols": [
@@ -148384,7 +148607,7 @@
       "source": "tests/architecture/import-dag-v3.test.ts",
       "specifier": "node:os",
       "edgeKind": "eager-runtime",
-      "line": 14,
+      "line": 15,
       "column": 1,
       "metadata": {
         "symbols": [
@@ -148402,7 +148625,7 @@
       "source": "tests/architecture/import-dag-v3.test.ts",
       "specifier": "node:path",
       "edgeKind": "eager-runtime",
-      "line": 15,
+      "line": 16,
       "column": 1,
       "metadata": {
         "symbols": [
@@ -148428,9 +148651,27 @@
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
+      "specifier": "node:perf_hooks",
+      "edgeKind": "eager-runtime",
+      "line": 17,
+      "column": 1,
+      "metadata": {
+        "symbols": [
+          {
+            "name": "performance",
+            "local": "performance",
+            "typeOnly": false
+          }
+        ]
+      },
+      "resolution": "external-package",
+      "package": "node:perf_hooks"
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
       "specifier": "node:url",
       "edgeKind": "eager-runtime",
-      "line": 16,
+      "line": 18,
       "column": 1,
       "metadata": {
         "symbols": [
@@ -148448,7 +148689,7 @@
       "source": "tests/architecture/import-dag-v3.test.ts",
       "specifier": "vitest",
       "edgeKind": "eager-runtime",
-      "line": 17,
+      "line": 19,
       "column": 1,
       "metadata": {
         "symbols": [
@@ -163347,56 +163588,98 @@
     {
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "operation": "statSync",
-      "line": 187,
+      "line": 198,
       "column": 22
     },
     {
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "operation": "readFileSync",
-      "line": 1580,
+      "line": 6002,
       "column": 19
     },
     {
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "operation": "statSync",
-      "line": 1878,
+      "line": 6316,
       "column": 44
     },
     {
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "operation": "statSync",
-      "line": 1882,
+      "line": 6320,
       "column": 29
     },
     {
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "operation": "readFileSync",
-      "line": 2538,
+      "line": 8057,
       "column": 24
     },
     {
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "operation": "readFileSync",
-      "line": 3586,
-      "column": 37
-    },
-    {
-      "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
-      "operation": "readFileSync",
-      "line": 3595,
+      "line": 9075,
       "column": 33
     },
     {
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
-      "operation": "writeFileSync",
-      "line": 3606,
+      "operation": "readFileSync",
+      "line": 9084,
+      "column": 29
+    },
+    {
+      "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
+      "operation": "readdirSync",
+      "line": 9100,
+      "column": 12
+    },
+    {
+      "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
+      "operation": "readFileSync",
+      "line": 9147,
+      "column": 23
+    },
+    {
+      "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
+      "operation": "readFileSync",
+      "line": 9203,
+      "column": 28
+    },
+    {
+      "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
+      "operation": "readdirSync",
+      "line": 9250,
+      "column": 19
+    },
+    {
+      "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
+      "operation": "readFileSync",
+      "line": 9272,
+      "column": 28
+    },
+    {
+      "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
+      "operation": "mkdirSync",
+      "line": 9304,
       "column": 9
     },
     {
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
       "operation": "writeFileSync",
-      "line": 3607,
+      "line": 9319,
       "column": 9
+    },
+    {
+      "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
+      "operation": "writeFileSync",
+      "line": 9388,
+      "column": 9
+    },
+    {
+      "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
+      "operation": "writeFileSync",
+      "line": 9398,
+      "column": 13
     },
     {
       "source": "scripts/flatten-subpath-types.mjs",
@@ -163583,12 +163866,6 @@
       "operation": "readFileSync",
       "line": 213,
       "column": 13
-    },
-    {
-      "source": "scripts/verify-export-types.mjs",
-      "operation": "readFile",
-      "line": 280,
-      "column": 62
     },
     {
       "source": "scripts/verify-export-types.mjs",
@@ -164305,6 +164582,12 @@
       "column": 42
     },
     {
+      "source": "tests-visual/refract-lens-never-sharper.spec.ts",
+      "operation": "rmSync",
+      "line": 316,
+      "column": 9
+    },
+    {
       "source": "tests-visual/register-ios.spec.ts",
       "operation": "mkdirSync",
       "line": 288,
@@ -164636,69 +164919,777 @@
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
-      "operation": "cpSync",
-      "line": 45,
+      "operation": "mkdirSync",
+      "line": 146,
       "column": 9
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
-      "operation": "readFileSync",
-      "line": 67,
-      "column": 32
+      "operation": "mkdirSync",
+      "line": 147,
+      "column": 9
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "mkdirSync",
-      "line": 74,
-      "column": 5
+      "line": 148,
+      "column": 9
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "writeFileSync",
-      "line": 75,
-      "column": 5
+      "line": 149,
+      "column": 9
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "mkdirSync",
+      "line": 150,
+      "column": 9
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "writeFileSync",
-      "line": 77,
-      "column": 23
+      "line": 151,
+      "column": 9
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 155,
+      "column": 9
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 159,
+      "column": 9
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 163,
+      "column": 9
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 167,
+      "column": 9
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 168,
+      "column": 9
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 169,
+      "column": 9
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "mkdirSync",
+      "line": 172,
+      "column": 13
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 173,
+      "column": 13
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "rmSync",
+      "line": 180,
+      "column": 9
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "cpSync",
+      "line": 231,
+      "column": 9
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readdirSync",
+      "line": 320,
+      "column": 52
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readdirSync",
+      "line": 321,
+      "column": 27
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "readFileSync",
-      "line": 1098,
+      "line": 333,
+      "column": 25
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readdirSync",
+      "line": 334,
+      "column": 31
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readdirSync",
+      "line": 346,
+      "column": 9
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 1635,
+      "column": 17
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 1648,
+      "column": 17
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 1683,
+      "column": 17
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 5397,
+      "column": 17
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "mkdirSync",
+      "line": 5909,
+      "column": 17
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 5910,
+      "column": 17
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6038,
       "column": 48
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "writeFileSync",
-      "line": 1100,
+      "line": 6040,
       "column": 21
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "readFileSync",
-      "line": 1107,
+      "line": 6047,
       "column": 48
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "writeFileSync",
-      "line": 1109,
+      "line": 6049,
       "column": 21
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "writeFileSync",
-      "line": 1116,
+      "line": 6056,
       "column": 21
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
       "operation": "readFileSync",
-      "line": 1118,
+      "line": 6058,
       "column": 28
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "rmSync",
+      "line": 6065,
+      "column": 13
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "mkdirSync",
+      "line": 6066,
+      "column": 13
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 6068,
+      "column": 17
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6078,
+      "column": 38
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6092,
+      "column": 28
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "rmSync",
+      "line": 6094,
+      "column": 17
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 6102,
+      "column": 21
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6105,
+      "column": 32
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6106,
+      "column": 35
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 6113,
+      "column": 17
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "rmSync",
+      "line": 6114,
+      "column": 17
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6120,
+      "column": 28
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "rmSync",
+      "line": 6126,
+      "column": 17
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 6127,
+      "column": 17
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "rmSync",
+      "line": 6128,
+      "column": 17
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6135,
+      "column": 20
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6136,
+      "column": 20
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6144,
+      "column": 20
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6145,
+      "column": 20
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 6148,
+      "column": 13
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 6182,
+      "column": 17
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6191,
+      "column": 24
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6192,
+      "column": 24
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "rmSync",
+      "line": 6193,
+      "column": 17
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 6194,
+      "column": 17
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 6195,
+      "column": 17
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 6196,
+      "column": 17
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 6200,
+      "column": 13
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readdirSync",
+      "line": 6207,
+      "column": 34
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6211,
+      "column": 21
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 6214,
+      "column": 17
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 6216,
+      "column": 47
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6223,
+      "column": 24
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6224,
+      "column": 24
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readdirSync",
+      "line": 6235,
+      "column": 17
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "rmSync",
+      "line": 6239,
+      "column": 13
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6246,
+      "column": 32
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6247,
+      "column": 35
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6254,
+      "column": 20
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6255,
+      "column": 20
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6265,
+      "column": 34
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6266,
+      "column": 37
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "rmSync",
+      "line": 6267,
+      "column": 13
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "mkdirSync",
+      "line": 6268,
+      "column": 13
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 6269,
+      "column": 13
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6279,
+      "column": 20
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6280,
+      "column": 20
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "rmSync",
+      "line": 6281,
+      "column": 13
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6287,
+      "column": 33
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6288,
+      "column": 36
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6296,
+      "column": 20
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6297,
+      "column": 20
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "rmSync",
+      "line": 6300,
+      "column": 13
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "rmSync",
+      "line": 6301,
+      "column": 13
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6303,
+      "column": 37
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6304,
+      "column": 37
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 6305,
+      "column": 13
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 6314,
+      "column": 13
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "rmSync",
+      "line": 6315,
+      "column": 13
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6322,
+      "column": 20
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6323,
+      "column": 20
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "rmSync",
+      "line": 6324,
+      "column": 13
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "rmSync",
+      "line": 6325,
+      "column": 13
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 6326,
+      "column": 13
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 6330,
+      "column": 13
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "rmSync",
+      "line": 6331,
+      "column": 13
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 6332,
+      "column": 13
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6336,
+      "column": 46
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6337,
+      "column": 49
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 6338,
+      "column": 13
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readdirSync",
+      "line": 6346,
+      "column": 39
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "rmSync",
+      "line": 6349,
+      "column": 13
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "mkdirSync",
+      "line": 6350,
+      "column": 13
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6356,
+      "column": 20
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6357,
+      "column": 20
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "rmSync",
+      "line": 6358,
+      "column": 13
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "rmSync",
+      "line": 6359,
+      "column": 13
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 6360,
+      "column": 13
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 6361,
+      "column": 13
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 6362,
+      "column": 13
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6366,
+      "column": 32
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6367,
+      "column": 35
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 6368,
+      "column": 13
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6379,
+      "column": 20
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6380,
+      "column": 20
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readdirSync",
+      "line": 6382,
+      "column": 17
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readdirSync",
+      "line": 6392,
+      "column": 17
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6396,
+      "column": 20
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6397,
+      "column": 20
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "rmSync",
+      "line": 6398,
+      "column": 13
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 6402,
+      "column": 13
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "readFileSync",
+      "line": 6408,
+      "column": 29
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 6409,
+      "column": 13
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "writeFileSync",
+      "line": 6413,
+      "column": 13
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "mkdirSync",
+      "line": 6424,
+      "column": 13
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "operation": "rmSync",
+      "line": 6441,
+      "column": 13
     },
     {
       "source": "tests/gates/boot-graph.test.ts",
@@ -164833,6 +165824,12 @@
       "column": 32
     },
     {
+      "source": "tests/scripts/profile-bundle-value-js.test.ts",
+      "operation": "rmSync",
+      "line": 45,
+      "column": 41
+    },
+    {
       "source": "tests/styles/glass-subtlety.test.ts",
       "operation": "readFileSync",
       "line": 12,
@@ -164894,6 +165891,12 @@
     },
     {
       "source": "vite.style-fold.ts",
+      "operation": "readdirSync",
+      "line": 129,
+      "column": 16
+    },
+    {
+      "source": "vite.style-fold.ts",
       "operation": "readFileSync",
       "line": 185,
       "column": 21
@@ -164925,18 +165928,6 @@
     {
       "source": "vite.style-fold.ts",
       "operation": "readFileSync",
-      "line": 278,
-      "column": 21
-    },
-    {
-      "source": "vite.style-fold.ts",
-      "operation": "writeFileSync",
-      "line": 280,
-      "column": 26
-    },
-    {
-      "source": "vite.style-fold.ts",
-      "operation": "readFileSync",
       "line": 309,
       "column": 21
     },
@@ -164963,36 +165954,12 @@
       "operation": "readFileSync",
       "line": 183,
       "column": 25
-    },
-    {
-      "source": "vite.utility-emit.ts",
-      "operation": "writeFileSync",
-      "line": 233,
-      "column": 5
-    },
-    {
-      "source": "vite.utility-emit.ts",
-      "operation": "readFileSync",
-      "line": 243,
-      "column": 22
-    },
-    {
-      "source": "vite.utility-emit.ts",
-      "operation": "writeFileSync",
-      "line": 253,
-      "column": 9
-    },
-    {
-      "source": "vite.utility-emit.ts",
-      "operation": "writeFileSync",
-      "line": 264,
-      "column": 5
     }
   ],
   "processInvocations": [
     {
       "source": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
-      "line": 160,
+      "line": 171,
       "column": 18,
       "api": "execFileSync",
       "binding": "execFileSync",
@@ -165217,7 +166184,69 @@
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
-      "line": 51,
+      "line": 176,
+      "column": 9,
+      "api": "execFileSync",
+      "binding": "execFileSync",
+      "command": {
+        "index": 0,
+        "value": "git",
+        "target": null,
+        "expression": "\"git\"",
+        "dynamic": false
+      },
+      "argv": [
+        {
+          "index": 0,
+          "value": "init",
+          "target": null,
+          "expression": "\"init\"",
+          "dynamic": false
+        },
+        {
+          "index": 1,
+          "value": "-q",
+          "target": null,
+          "expression": "\"-q\"",
+          "dynamic": false
+        }
+      ],
+      "dynamicArguments": 0
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "line": 177,
+      "column": 9,
+      "api": "execFileSync",
+      "binding": "execFileSync",
+      "command": {
+        "index": 0,
+        "value": "git",
+        "target": null,
+        "expression": "\"git\"",
+        "dynamic": false
+      },
+      "argv": [
+        {
+          "index": 0,
+          "value": "add",
+          "target": null,
+          "expression": "\"add\"",
+          "dynamic": false
+        },
+        {
+          "index": 1,
+          "value": ".",
+          "target": null,
+          "expression": "\".\"",
+          "dynamic": false
+        }
+      ],
+      "dynamicArguments": 0
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "line": 237,
       "column": 12,
       "api": "spawnSync",
       "binding": "spawnSync",
@@ -165247,7 +166276,7 @@
           "index": 2,
           "value": null,
           "target": ".",
-          "expression": "root",
+          "expression": "repositoryRoot",
           "dynamic": false
         },
         {
@@ -165276,10 +166305,10 @@
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
-      "line": 1085,
-      "column": 9,
-      "api": "execFileSync",
-      "binding": "execFileSync",
+      "line": 256,
+      "column": 12,
+      "api": "spawnSync",
+      "binding": "spawnSync",
       "command": {
         "index": 0,
         "value": null,
@@ -165297,17 +166326,90 @@
         },
         {
           "index": 1,
-          "value": "--check",
+          "value": "--repository-root",
           "target": null,
-          "expression": "\"--check\"",
+          "expression": "\"--repository-root\"",
           "dynamic": false
+        },
+        {
+          "index": 2,
+          "value": null,
+          "target": ".",
+          "expression": "repositoryRoot",
+          "dynamic": false
+        },
+        {
+          "index": 3,
+          "value": "--output-directory",
+          "target": null,
+          "expression": "\"--output-directory\"",
+          "dynamic": false
+        },
+        {
+          "index": 4,
+          "value": null,
+          "target": null,
+          "expression": "outputDirectory",
+          "dynamic": true
         }
       ],
-      "dynamicArguments": 1
+      "dynamicArguments": 2
     },
     {
       "source": "tests/architecture/import-dag-v3.test.ts",
-      "line": 1141,
+      "line": 278,
+      "column": 19,
+      "api": "spawn",
+      "binding": "spawn",
+      "command": {
+        "index": 0,
+        "value": null,
+        "target": null,
+        "expression": "process.execPath",
+        "dynamic": true
+      },
+      "argv": [
+        {
+          "index": 0,
+          "value": null,
+          "target": "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
+          "expression": "resolve(audit, \"build-import-dag-v3.mjs\")",
+          "dynamic": false
+        },
+        {
+          "index": 1,
+          "value": "--repository-root",
+          "target": null,
+          "expression": "\"--repository-root\"",
+          "dynamic": false
+        },
+        {
+          "index": 2,
+          "value": null,
+          "target": ".",
+          "expression": "repositoryRoot",
+          "dynamic": false
+        },
+        {
+          "index": 3,
+          "value": "--output-directory",
+          "target": null,
+          "expression": "\"--output-directory\"",
+          "dynamic": false
+        },
+        {
+          "index": 4,
+          "value": null,
+          "target": null,
+          "expression": "outputDirectory",
+          "dynamic": true
+        }
+      ],
+      "dynamicArguments": 2
+    },
+    {
+      "source": "tests/architecture/import-dag-v3.test.ts",
+      "line": 6426,
       "column": 28,
       "api": "spawnSync",
       "binding": "spawnSync",
@@ -165350,12 +166452,12 @@
         {
           "index": 4,
           "value": null,
-          "target": "docs/tranches/BJ/audits/2026-07-28-library-dag",
-          "expression": "audit",
-          "dynamic": false
+          "target": null,
+          "expression": "outputDirectory",
+          "dynamic": true
         }
       ],
-      "dynamicArguments": 3
+      "dynamicArguments": 4
     }
   ],
   "packageSurface": {
@@ -177644,6 +178746,9 @@
           "dist/fourier-math.js"
         ],
         [
+          "dist/glass-ui.css"
+        ],
+        [
           "dist/glass-ui.js"
         ],
         [
@@ -177794,6 +178899,9 @@
           "dist/status-dot.js"
         ],
         [
+          "dist/styles/components.css"
+        ],
+        [
           "dist/styles/fonts.css"
         ],
         [
@@ -177801,6 +178909,9 @@
         ],
         [
           "dist/styles/theme.css"
+        ],
+        [
+          "dist/subpaths"
         ],
         [
           "dist/surface.d.ts"
@@ -177903,6 +179014,9 @@
         ],
         [
           "scripts/lib/canon-doc.mjs"
+        ],
+        [
+          "scripts/lib/minify-css.d.mts"
         ],
         [
           "scripts/lib/minify-css.mjs"
@@ -185044,7 +186158,7 @@
       ]
     },
     "buildLoad": {
-      "edgeCount": 3450,
+      "edgeCount": 3456,
       "fileSccs": [
         [
           "demo/chassis/landing/SectionPreviewCard.vue",
@@ -185679,6 +186793,9 @@
           "dist/fourier-math.js"
         ],
         [
+          "dist/glass-ui.css"
+        ],
+        [
           "dist/glass-ui.js"
         ],
         [
@@ -185829,6 +186946,9 @@
           "dist/status-dot.js"
         ],
         [
+          "dist/styles/components.css"
+        ],
+        [
           "dist/styles/fonts.css"
         ],
         [
@@ -185836,6 +186956,9 @@
         ],
         [
           "dist/styles/theme.css"
+        ],
+        [
+          "dist/subpaths"
         ],
         [
           "dist/surface.d.ts"
@@ -185938,6 +187061,9 @@
         ],
         [
           "scripts/lib/canon-doc.mjs"
+        ],
+        [
+          "scripts/lib/minify-css.d.mts"
         ],
         [
           "scripts/lib/minify-css.mjs"
@@ -189904,7 +191030,7 @@
         {
           "source": "build/config",
           "target": "repository/directory",
-          "edgeCount": 2,
+          "edgeCount": 1,
           "edgeKinds": [
             "generator-read"
           ]
@@ -189912,7 +191038,7 @@
         {
           "source": "build/config",
           "target": "repository/generated-output",
-          "edgeCount": 6,
+          "edgeCount": 12,
           "edgeKinds": [
             "generator-read",
             "generator-write"
@@ -192588,7 +193714,7 @@
         {
           "source": "scripts/generators",
           "target": "repository/generated-output",
-          "edgeCount": 1,
+          "edgeCount": 2,
           "edgeKinds": [
             "generator-write"
           ]
@@ -194183,7 +195309,7 @@
       ]
     },
     "ownership": {
-      "edgeCount": 3579,
+      "edgeCount": 3585,
       "fileSccs": [
         [
           "demo/chassis/landing/SectionPreviewCard.vue",
@@ -194818,6 +195944,9 @@
           "dist/fourier-math.js"
         ],
         [
+          "dist/glass-ui.css"
+        ],
+        [
           "dist/glass-ui.js"
         ],
         [
@@ -194968,6 +196097,9 @@
           "dist/status-dot.js"
         ],
         [
+          "dist/styles/components.css"
+        ],
+        [
           "dist/styles/fonts.css"
         ],
         [
@@ -194975,6 +196107,9 @@
         ],
         [
           "dist/styles/theme.css"
+        ],
+        [
+          "dist/subpaths"
         ],
         [
           "dist/surface.d.ts"
@@ -195077,6 +196212,9 @@
         ],
         [
           "scripts/lib/canon-doc.mjs"
+        ],
+        [
+          "scripts/lib/minify-css.d.mts"
         ],
         [
           "scripts/lib/minify-css.mjs"
@@ -199043,7 +200181,7 @@
         {
           "source": "build/config",
           "target": "repository/directory",
-          "edgeCount": 3,
+          "edgeCount": 2,
           "edgeKinds": [
             "generator-read",
             "new-url"
@@ -199052,7 +200190,7 @@
         {
           "source": "build/config",
           "target": "repository/generated-output",
-          "edgeCount": 6,
+          "edgeCount": 12,
           "edgeKinds": [
             "generator-read",
             "generator-write"
@@ -201744,7 +202882,7 @@
         {
           "source": "scripts/generators",
           "target": "repository/generated-output",
-          "edgeCount": 1,
+          "edgeCount": 2,
           "edgeKinds": [
             "generator-write"
           ]
@@ -203420,5 +204558,5 @@
       }
     }
   },
-  "receiptSha256": "cf51835423ea0745c3504d6b8604e2d4c556b4598109e4be201bdba39830ebd0"
+  "receiptSha256": "c0190488b5cf0da953c12425c7f24626a4ab39439106c124a18a81f10133cf90"
 }
