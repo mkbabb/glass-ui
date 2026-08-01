@@ -1,0 +1,308 @@
+{
+  "schema": "glass-row5-performance-profile/1",
+  "authorityHeader": "gpt-5.6-luna xhigh",
+  "repositoryRoot": "/private/tmp/glass-prefix-cure2.nQXmb9",
+  "audit": "/private/tmp/glass-prefix-cure2.nQXmb9/docs/tranches/BJ/audits/2026-07-28-library-dag",
+  "canonicalCli": "node /private/tmp/glass-prefix-cure2.nQXmb9/docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs --check",
+  "expected": {
+    "receiptSha256": "4655ab44f55ef2a37004d4fc4d51c5c3a0cd226d50a02dad7763b64bc1d79fa2",
+    "nodes": 1501,
+    "internalEdges": 3585,
+    "externalEdges": 1970
+  },
+  "totalMetrics": [
+    {
+      "ordinal": 1,
+      "wallMs": 16570.987249,
+      "buildGraphCpuSeconds": 11.249398,
+      "canonicalCliChildCpuSeconds": 10.82,
+      "cpuSeconds": 22.069398,
+      "maxRSS": 664862720,
+      "maxRSSUnit": "bytes",
+      "definition": "wall and CPU sum the buildGraph and canonical CLI phases; maxRSS is the maximum of the two phase maxima"
+    },
+    {
+      "ordinal": 2,
+      "wallMs": 14474.264167,
+      "buildGraphCpuSeconds": 10.014618,
+      "canonicalCliChildCpuSeconds": 10.41,
+      "cpuSeconds": 20.424618,
+      "maxRSS": 683933696,
+      "maxRSSUnit": "bytes",
+      "definition": "wall and CPU sum the buildGraph and canonical CLI phases; maxRSS is the maximum of the two phase maxima"
+    },
+    {
+      "ordinal": 3,
+      "wallMs": 15043.901625,
+      "buildGraphCpuSeconds": 10.35098,
+      "canonicalCliChildCpuSeconds": 10.74,
+      "cpuSeconds": 21.09098,
+      "maxRSS": 680968192,
+      "maxRSSUnit": "bytes",
+      "definition": "wall and CPU sum the buildGraph and canonical CLI phases; maxRSS is the maximum of the two phase maxima"
+    }
+  ],
+  "runs": [
+    {
+      "ordinal": 1,
+      "label": "cold-process control",
+      "kind": "cold-process-control",
+      "process": {
+        "execPath": "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+        "pid": 82531,
+        "nodeVersion": "v26.0.0",
+        "argv": [
+          "--expose-gc",
+          "/private/tmp/glass-row5-profile-before.mjs",
+          "--run",
+          "cold-process control"
+        ]
+      },
+      "expected": {
+        "receiptSha256": "4655ab44f55ef2a37004d4fc4d51c5c3a0cd226d50a02dad7763b64bc1d79fa2",
+        "nodes": 1501,
+        "internalEdges": 3585,
+        "externalEdges": 1970
+      },
+      "graphVerification": {
+        "receiptSha256": "4655ab44f55ef2a37004d4fc4d51c5c3a0cd226d50a02dad7763b64bc1d79fa2",
+        "counts": {
+          "nodes": 1501,
+          "internalEdges": 3585,
+          "externalEdges": 1970
+        },
+        "exact": true
+      },
+      "buildGraph": {
+        "before": {
+          "performanceNowMs": 219.847709,
+          "cpuUsage": {
+            "user": 213568,
+            "system": 25454
+          },
+          "memoryUsage": {
+            "rss": 144719872,
+            "heapTotal": 31490048,
+            "heapUsed": 20124080,
+            "external": 20572185,
+            "arrayBuffers": 60013
+          },
+          "resourceUsage": {
+            "maxRSS": 141328
+          }
+        },
+        "after": {
+          "performanceNowMs": 9030.887292,
+          "cpuUsage": {
+            "user": 11096803,
+            "system": 391699
+          },
+          "memoryUsage": {
+            "rss": 584974336,
+            "heapTotal": 506118144,
+            "heapUsed": 436115936,
+            "external": 20599980,
+            "arrayBuffers": 87768
+          },
+          "resourceUsage": {
+            "maxRSS": 572544
+          }
+        },
+        "wallMs": 8810.881458,
+        "cpuUsageDelta": {
+          "user": 10883161,
+          "system": 366237
+        }
+      },
+      "canonicalCliCheck": {
+        "command": "node /private/tmp/glass-prefix-cure2.nQXmb9/docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs --check",
+        "exitCode": 0,
+        "wallMs": 7760.105791,
+        "time": {
+          "wallSeconds": 7.75,
+          "userSeconds": 10.47,
+          "systemSeconds": 0.35,
+          "totalCpuSeconds": 10.82,
+          "maxRSS": 664862720,
+          "maxRSSUnit": "bytes",
+          "timeFormat": "/usr/bin/time -lp"
+        },
+        "stdout": "{\n  \"nodes\": 1501,\n  \"internalEdges\": 3585,\n  \"externalEdges\": 1970,\n  \"owners\": 101,\n  \"publicEntries\": 72,\n  \"publicSymbols\": 1283,\n  \"unresolvedLocalReferences\": 0,\n  \"nonliteralLocalReferences\": 0,\n  \"dynamicModuleReferences\": 0,\n  \"dynamicAssetReferences\": 123,\n  \"unresolvedGlobPatterns\": 0,\n  \"parseErrors\": 0,\n  \"unmodeledFileOperations\": 395,\n  \"processInvocations\": 12,\n  \"dynamicProcessArguments\": 14,\n  \"nodeTypeCounts\": {\n    \"binary\": 9,\n    \"declaration\": 3,\n    \"directory\": 23,\n    \"documentation\": 29,\n    \"generated-artifact\": 4,\n    \"license\": 2,\n    \"package-output\": 137,\n    \"source\": 1154,\n    \"style\": 131,\n    \"virtual-placeholder\": 9\n  },\n  \"nodeKindCounts\": {\n    \"declared-package-output\": 137,\n    \"directory\": 20,\n    \"generated-by-write\": 7,\n    \"missing-runtime-placeholder\": 9,\n    \"repository-file\": 1328\n  },\n  \"projectionCounts\": {\n    \"build-config\": 14,\n    \"demo\": 195,\n    \"package-surface\": 2,\n    \"product\": 693,\n    \"repository-boundary\": 176,\n    \"scripts-generators\": 16,\n    \"tests\": 214,\n    \"visual-tests\": 191\n  },\n  \"edgeKindCounts\": {\n    \"asset-url\": 8,\n    \"build-entry\": 69,\n    \"css-import\": 113,\n    \"eager-runtime\": 3352,\n    \"export-from\": 475,\n    \"file-read\": 32,\n    \"file-write\": 4,\n    \"finite-dynamic\": 2,\n    \"generator-read\": 13,\n    \"generator-write\": 12,\n    \"glob-lazy\": 107,\n    \"literal-dynamic\": 68,\n    \"literal-require\": 2,\n    \"new-url\": 125,\n    \"package-export\": 140,\n    \"package-side-effect\": 4,\n    \"require-resolve\": 1,\n    \"type-only\": 943,\n    \"types-version\": 66,\n    \"vue-block\": 19\n  },\n  \"eagerRuntimeFileCycles\": 2,\n  \"eagerRuntimeOwnerCycles\": 3,\n  \"buildLoadFileCycles\": 10,\n  \"buildLoadOwnerCycles\": 3,\n  \"ownershipFileCycles\": 10,\n  \"ownershipOwnerCycles\": 3\n}\nreceiptSha256=4655ab44f55ef2a37004d4fc4d51c5c3a0cd226d50a02dad7763b64bc1d79fa2\n"
+      }
+    },
+    {
+      "ordinal": 2,
+      "label": "equal-work repeat 1",
+      "kind": "equal-work-repeat",
+      "process": {
+        "execPath": "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+        "pid": 82936,
+        "nodeVersion": "v26.0.0",
+        "argv": [
+          "--expose-gc",
+          "/private/tmp/glass-row5-profile-before.mjs",
+          "--run",
+          "equal-work repeat 1"
+        ]
+      },
+      "expected": {
+        "receiptSha256": "4655ab44f55ef2a37004d4fc4d51c5c3a0cd226d50a02dad7763b64bc1d79fa2",
+        "nodes": 1501,
+        "internalEdges": 3585,
+        "externalEdges": 1970
+      },
+      "graphVerification": {
+        "receiptSha256": "4655ab44f55ef2a37004d4fc4d51c5c3a0cd226d50a02dad7763b64bc1d79fa2",
+        "counts": {
+          "nodes": 1501,
+          "internalEdges": 3585,
+          "externalEdges": 1970
+        },
+        "exact": true
+      },
+      "buildGraph": {
+        "before": {
+          "performanceNowMs": 190.615667,
+          "cpuUsage": {
+            "user": 207844,
+            "system": 19474
+          },
+          "memoryUsage": {
+            "rss": 144769024,
+            "heapTotal": 31490048,
+            "heapUsed": 20187576,
+            "external": 20572185,
+            "arrayBuffers": 60013
+          },
+          "resourceUsage": {
+            "maxRSS": 141376
+          }
+        },
+        "after": {
+          "performanceNowMs": 7278.432834,
+          "cpuUsage": {
+            "user": 10020790,
+            "system": 221228
+          },
+          "memoryUsage": {
+            "rss": 649723904,
+            "heapTotal": 506314752,
+            "heapUsed": 444962160,
+            "external": 20599980,
+            "arrayBuffers": 87768
+          },
+          "resourceUsage": {
+            "maxRSS": 634496
+          }
+        },
+        "wallMs": 7087.686333000001,
+        "cpuUsageDelta": {
+          "user": 9812876,
+          "system": 201742
+        }
+      },
+      "canonicalCliCheck": {
+        "command": "node /private/tmp/glass-prefix-cure2.nQXmb9/docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs --check",
+        "exitCode": 0,
+        "wallMs": 7386.577834,
+        "time": {
+          "wallSeconds": 7.38,
+          "userSeconds": 10.14,
+          "systemSeconds": 0.27,
+          "totalCpuSeconds": 10.41,
+          "maxRSS": 683933696,
+          "maxRSSUnit": "bytes",
+          "timeFormat": "/usr/bin/time -lp"
+        },
+        "stdout": "{\n  \"nodes\": 1501,\n  \"internalEdges\": 3585,\n  \"externalEdges\": 1970,\n  \"owners\": 101,\n  \"publicEntries\": 72,\n  \"publicSymbols\": 1283,\n  \"unresolvedLocalReferences\": 0,\n  \"nonliteralLocalReferences\": 0,\n  \"dynamicModuleReferences\": 0,\n  \"dynamicAssetReferences\": 123,\n  \"unresolvedGlobPatterns\": 0,\n  \"parseErrors\": 0,\n  \"unmodeledFileOperations\": 395,\n  \"processInvocations\": 12,\n  \"dynamicProcessArguments\": 14,\n  \"nodeTypeCounts\": {\n    \"binary\": 9,\n    \"declaration\": 3,\n    \"directory\": 23,\n    \"documentation\": 29,\n    \"generated-artifact\": 4,\n    \"license\": 2,\n    \"package-output\": 137,\n    \"source\": 1154,\n    \"style\": 131,\n    \"virtual-placeholder\": 9\n  },\n  \"nodeKindCounts\": {\n    \"declared-package-output\": 137,\n    \"directory\": 20,\n    \"generated-by-write\": 7,\n    \"missing-runtime-placeholder\": 9,\n    \"repository-file\": 1328\n  },\n  \"projectionCounts\": {\n    \"build-config\": 14,\n    \"demo\": 195,\n    \"package-surface\": 2,\n    \"product\": 693,\n    \"repository-boundary\": 176,\n    \"scripts-generators\": 16,\n    \"tests\": 214,\n    \"visual-tests\": 191\n  },\n  \"edgeKindCounts\": {\n    \"asset-url\": 8,\n    \"build-entry\": 69,\n    \"css-import\": 113,\n    \"eager-runtime\": 3352,\n    \"export-from\": 475,\n    \"file-read\": 32,\n    \"file-write\": 4,\n    \"finite-dynamic\": 2,\n    \"generator-read\": 13,\n    \"generator-write\": 12,\n    \"glob-lazy\": 107,\n    \"literal-dynamic\": 68,\n    \"literal-require\": 2,\n    \"new-url\": 125,\n    \"package-export\": 140,\n    \"package-side-effect\": 4,\n    \"require-resolve\": 1,\n    \"type-only\": 943,\n    \"types-version\": 66,\n    \"vue-block\": 19\n  },\n  \"eagerRuntimeFileCycles\": 2,\n  \"eagerRuntimeOwnerCycles\": 3,\n  \"buildLoadFileCycles\": 10,\n  \"buildLoadOwnerCycles\": 3,\n  \"ownershipFileCycles\": 10,\n  \"ownershipOwnerCycles\": 3\n}\nreceiptSha256=4655ab44f55ef2a37004d4fc4d51c5c3a0cd226d50a02dad7763b64bc1d79fa2\n"
+      }
+    },
+    {
+      "ordinal": 3,
+      "label": "equal-work repeat 2",
+      "kind": "equal-work-repeat",
+      "process": {
+        "execPath": "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+        "pid": 83129,
+        "nodeVersion": "v26.0.0",
+        "argv": [
+          "--expose-gc",
+          "/private/tmp/glass-row5-profile-before.mjs",
+          "--run",
+          "equal-work repeat 2"
+        ]
+      },
+      "expected": {
+        "receiptSha256": "4655ab44f55ef2a37004d4fc4d51c5c3a0cd226d50a02dad7763b64bc1d79fa2",
+        "nodes": 1501,
+        "internalEdges": 3585,
+        "externalEdges": 1970
+      },
+      "graphVerification": {
+        "receiptSha256": "4655ab44f55ef2a37004d4fc4d51c5c3a0cd226d50a02dad7763b64bc1d79fa2",
+        "counts": {
+          "nodes": 1501,
+          "internalEdges": 3585,
+          "externalEdges": 1970
+        },
+        "exact": true
+      },
+      "buildGraph": {
+        "before": {
+          "performanceNowMs": 177.747791,
+          "cpuUsage": {
+            "user": 197049,
+            "system": 20003
+          },
+          "memoryUsage": {
+            "rss": 145063936,
+            "heapTotal": 31490048,
+            "heapUsed": 20124088,
+            "external": 20572185,
+            "arrayBuffers": 60013
+          },
+          "resourceUsage": {
+            "maxRSS": 141664
+          }
+        },
+        "after": {
+          "performanceNowMs": 7436.38075,
+          "cpuUsage": {
+            "user": 10342546,
+            "system": 225571
+          },
+          "memoryUsage": {
+            "rss": 634634240,
+            "heapTotal": 489816064,
+            "heapUsed": 382157800,
+            "external": 20599980,
+            "arrayBuffers": 87768
+          },
+          "resourceUsage": {
+            "maxRSS": 619760
+          }
+        },
+        "wallMs": 7258.4895830000005,
+        "cpuUsageDelta": {
+          "user": 10145426,
+          "system": 205554
+        }
+      },
+      "canonicalCliCheck": {
+        "command": "node /private/tmp/glass-prefix-cure2.nQXmb9/docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs --check",
+        "exitCode": 0,
+        "wallMs": 7785.412042000001,
+        "time": {
+          "wallSeconds": 7.78,
+          "userSeconds": 10.41,
+          "systemSeconds": 0.33,
+          "totalCpuSeconds": 10.74,
+          "maxRSS": 680968192,
+          "maxRSSUnit": "bytes",
+          "timeFormat": "/usr/bin/time -lp"
+        },
+        "stdout": "{\n  \"nodes\": 1501,\n  \"internalEdges\": 3585,\n  \"externalEdges\": 1970,\n  \"owners\": 101,\n  \"publicEntries\": 72,\n  \"publicSymbols\": 1283,\n  \"unresolvedLocalReferences\": 0,\n  \"nonliteralLocalReferences\": 0,\n  \"dynamicModuleReferences\": 0,\n  \"dynamicAssetReferences\": 123,\n  \"unresolvedGlobPatterns\": 0,\n  \"parseErrors\": 0,\n  \"unmodeledFileOperations\": 395,\n  \"processInvocations\": 12,\n  \"dynamicProcessArguments\": 14,\n  \"nodeTypeCounts\": {\n    \"binary\": 9,\n    \"declaration\": 3,\n    \"directory\": 23,\n    \"documentation\": 29,\n    \"generated-artifact\": 4,\n    \"license\": 2,\n    \"package-output\": 137,\n    \"source\": 1154,\n    \"style\": 131,\n    \"virtual-placeholder\": 9\n  },\n  \"nodeKindCounts\": {\n    \"declared-package-output\": 137,\n    \"directory\": 20,\n    \"generated-by-write\": 7,\n    \"missing-runtime-placeholder\": 9,\n    \"repository-file\": 1328\n  },\n  \"projectionCounts\": {\n    \"build-config\": 14,\n    \"demo\": 195,\n    \"package-surface\": 2,\n    \"product\": 693,\n    \"repository-boundary\": 176,\n    \"scripts-generators\": 16,\n    \"tests\": 214,\n    \"visual-tests\": 191\n  },\n  \"edgeKindCounts\": {\n    \"asset-url\": 8,\n    \"build-entry\": 69,\n    \"css-import\": 113,\n    \"eager-runtime\": 3352,\n    \"export-from\": 475,\n    \"file-read\": 32,\n    \"file-write\": 4,\n    \"finite-dynamic\": 2,\n    \"generator-read\": 13,\n    \"generator-write\": 12,\n    \"glob-lazy\": 107,\n    \"literal-dynamic\": 68,\n    \"literal-require\": 2,\n    \"new-url\": 125,\n    \"package-export\": 140,\n    \"package-side-effect\": 4,\n    \"require-resolve\": 1,\n    \"type-only\": 943,\n    \"types-version\": 66,\n    \"vue-block\": 19\n  },\n  \"eagerRuntimeFileCycles\": 2,\n  \"eagerRuntimeOwnerCycles\": 3,\n  \"buildLoadFileCycles\": 10,\n  \"buildLoadOwnerCycles\": 3,\n  \"ownershipFileCycles\": 10,\n  \"ownershipOwnerCycles\": 3\n}\nreceiptSha256=4655ab44f55ef2a37004d4fc4d51c5c3a0cd226d50a02dad7763b64bc1d79fa2\n"
+      }
+    }
+  ]
+}

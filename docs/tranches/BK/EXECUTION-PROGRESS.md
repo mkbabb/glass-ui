@@ -59,7 +59,7 @@ an acceptance pointer only: rows stay 90, gates +0, and no cursor state moves.
 | 2 | W-REFRACT-DELETE | Φ0 | SEALED (`code_state=landed` at `82bdc93e`; `evidence_state=adjudicated`; Challenge I PASS; Challenge J PASS; fresh adjudication PASS-and-seal) | TR#2 → FROST §3 hit 1 + WAVES:559 + BAND-MATERIAL:1265 | G-REFRACT-TOTAL remains phrased to retire at Φ0 close because later registered Φ0 rows remain; #2 only is complete; Φ0/BK continue to the next registered rows; no new apparatus/release |
 | 3 | W-CAPTURE-MOTION | Φ0 | IN-FLIGHT (`code_state=landed-candidate` at `74c59ade`; `evidence_state=owed-first-motion-pi`; cannot seal until the first real motion π at the row 22 grasp trace) | TR#3 → RECONCILIATION §5/§8-17 + the ⊕⁵ mode design at the row (SE-5) | —(instrument; precedes every motion π; motion mode = attribute absent + fixed frame series); fresh Q bounded old-direction reversal trace routes under this existing row to the W-MOMENTUM-CENSUS turn; existing SegmentedTabs width/height transition remains P5 RED under current tabs/motion ownership |
 | 4 | TRACK-STRAYS + PARKED-RECONCILE | Φ0 | SEALED (`code_state=landed-candidate` at `5946f5ef`; cursor cure `b232b05a`; `evidence_state=adjudicated`; Challenge E PASS; Challenge F PASS; final adjudication PASS-and-seal) | TR#4 (historical J-14 census: 250 · 24 non-doc · 10 outside docs/) | G-CITE-COMMITTED is current/forward citation closure; the 5199→5400 port correction is landed; ✦² audit corpus + canon salvage COMMITTED at `e277ea42` (re-scope); pre-disposition 248/14/0 with both boundary hashes is reconciled to 0 Git-visible untracked after staging; exact artifact pointer is `docs/tranches/BK/execution/2026-07-29-phi0/NEEDS-LUNA-STEER-FINDINGS.md`; row #4 only seals; Φ0/BK continues with no new apparatus or release |
-| 5 | W-PREFIX-SWEEP | Φ0 | IN-FLIGHT (`code_state=landed-candidate` at cured `8be4f662`; `evidence_state=pending-two-entirely-fresh-Sol-challenges-and-adjudication`; no seal) | TR#5 → FROST §0 C-1 + §3 hit 2 | G-GLASS-HAS-FROST prefix arm (b); the initial `74c59ade` candidate failed both fresh Sol xhigh judgment-only challenges; cure focused prefix 3/3, graph 20/20, and current receipt `cf51835423ea0745c3504d6b8604e2d4c556b4598109e4be201bdba39830ebd0`; exactly two entirely fresh `gpt-5.6-sol` xhigh judgment-only challenges and one fresh Sol xhigh adjudication remain; G-5 cancellation is active terminal authority under Q consumer-only CompletionSeal deletion, and Glass opens no replacement work |
+| 5 | W-PREFIX-SWEEP | Φ0 | pointer: journal Row #5 status | TR#5 → FROST §0 C-1 + §3 hit 2 | Current status and receipts: `docs/tranches/BK/execution/2026-07-29-phi0/journal.jsonl`; raw profile and banked harness data: that execution directory; RESULTS is a pointer copy. |
 | 8 | W-PKG-TRUTH | Φ0/4 | UNSTARTED | TR#8 → WAVES:195 + TR§C keyframes S1 | G-PACK-INSTALL · G-THEME-BLEED · G-BARREL-EXPLICIT · G-BUNDLE-RATCHET · G-NO-ORPHAN-EXPORT (+SURFACE-OWNED arm) |
 
 ## Φ1
@@ -188,7 +188,6 @@ an acceptance pointer only: rows stay 90, gates +0, and no cursor state moves.
 
 ## Wall log
 
-*(empty — entries carry date, run id, salvage owed, and the armed resume)*
 
 ## Bootstrap (fresh context)
 

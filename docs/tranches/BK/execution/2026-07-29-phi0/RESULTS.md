@@ -14,8 +14,9 @@ Journal: `docs/tranches/BK/execution/2026-07-29-phi0/journal.jsonl`
 IN-FLIGHT at source `74c59ade`; #4 is SEALED with
 `code_state=landed-candidate` at `5946f5ef`, cursor cure `b232b05a`, and
 `evidence_state=adjudicated` after Challenge E PASS, Challenge F PASS, and
-final adjudication PASS-and-seal; #5 remains IN-FLIGHT at cured candidate
-`8be4f662`, pending exactly two entirely fresh `gpt-5.6-sol` xhigh
+final adjudication PASS-and-seal; #5 remains IN-FLIGHT on
+main merge `533be01f` after cure `5b919f62` (historical cure candidate
+`8be4f662` retained), pending exactly two entirely fresh `gpt-5.6-sol` xhigh
 judgment-only challenges and one fresh Sol xhigh adjudication; no seal.** #2 remains sealed with
 `code_state=landed` at `82bdc93e` and
 `evidence_state=adjudicated`; Challenge I PASS, Challenge J PASS, and fresh
@@ -725,5 +726,13 @@ bank are only:
 - `docs/tranches/BK/execution/2026-07-29-phi0/RESULTS.md`
 - `docs/tranches/BK/execution/2026-07-29-phi0/journal.jsonl`
 
-The current document-integration bank seat is exact `gpt-5.6-luna` xhigh. Final session metadata is
-pending lead-supplied resume correction; no session identifier or timestamp is invented here.
+The current document-integration bank seat is exact `gpt-5.6-luna` xhigh, session
+`019fb011-c521-7ca3-bed7-f79b3e4f73df`, with `sessionExposed=true` and
+`sessionMetadataStatus=exact-session-recorded`.
+
+## BK Φ0 Row #5 — evidence pointers — 2026-08-01
+
+- Current status and all Cure31/Cure32, challenge, and provenance receipts: [`journal.jsonl`](journal.jsonl).
+- Raw profile data: [`ROW5-PERFORMANCE-PROFILE-BEFORE.json`](ROW5-PERFORMANCE-PROFILE-BEFORE.json), SHA-256 `c605daa10baf53ab2f1fe1be191e1115e17c1c3c0b784d4d6990c29f0f6a5771`; [`ROW5-PERFORMANCE-PROFILE-AFTER.json`](ROW5-PERFORMANCE-PROFILE-AFTER.json), SHA-256 `5d205a24739fd98398a7e04a00b794a4d9a1d3f67199efc6368fb6016211fbee`.
+- Banked exact harness bytes: [`ROW5-PERFORMANCE-PROFILE-BEFORE.mjs`](ROW5-PERFORMANCE-PROFILE-BEFORE.mjs), SHA-256 `be4677d7366a0a1bc0435b04557c872be38449cc999649da3b363215f462fcd8`; [`ROW5-PERFORMANCE-PROFILE-CANDIDATE.mjs`](ROW5-PERFORMANCE-PROFILE-CANDIDATE.mjs), SHA-256 `1e2525d9f3f3ad93f09923ac84c53c65014c7f292d92bd6ede0e887a1f493ffe`; [`ROW5-PERFORMANCE-PROFILE-RUNNER.mjs`](ROW5-PERFORMANCE-PROFILE-RUNNER.mjs), SHA-256 `0431c74f81de6e5623497d4b8115fde23d04c0c02f8c7504bf0127799f540da5`.
+- Raw JSON retains historical `/private/tmp/` absolute paths; banked scripts preserve the exact historical source bytes. No seal, release, or constellation credit is claimed.
