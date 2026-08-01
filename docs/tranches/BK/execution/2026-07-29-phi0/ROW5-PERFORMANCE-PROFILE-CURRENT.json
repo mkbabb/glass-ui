@@ -1,0 +1,365 @@
+{
+  "schema": "glass-row5-performance-profile/3",
+  "generatedAt": "2026-08-01T19:54:11.551Z",
+  "runtime": {
+    "node": "v26.0.0",
+    "execPath": "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+    "platform": "darwin",
+    "arch": "arm64",
+    "versions": {
+      "node": "26.0.0",
+      "acorn": "8.16.0",
+      "ada": "3.4.4",
+      "amaro": "1.1.8",
+      "ares": "1.34.6",
+      "brotli": "1.2.0",
+      "cldr": "48.0",
+      "icu": "78.3",
+      "lief": "0.17.0",
+      "llhttp": "9.4.1",
+      "merve": "1.2.2",
+      "modules": "147",
+      "napi": "10",
+      "nbytes": "0.1.4",
+      "ncrypto": "0.0.1",
+      "nghttp2": "1.69.0",
+      "nghttp3": "",
+      "ngtcp2": "",
+      "openssl": "3.6.2",
+      "simdjson": "4.6.3",
+      "simdutf": "7.7.0",
+      "sqlite": "3.53.0",
+      "tz": "2026a",
+      "undici": "8.0.2",
+      "unicode": "17.0",
+      "uv": "1.52.1",
+      "uvwasi": "0.0.23",
+      "v8": "14.6.202.33-node.19",
+      "zlib": "1.2.12",
+      "zstd": "1.5.7"
+    }
+  },
+  "candidate": {
+    "commit": "cf8562a083e658c04889f14cd067753dedac0822",
+    "tree": "73476dd469c1f09e9f2d0e09565bf229c112611c",
+    "expectedCommit": "cf8562a083e658c04889f14cd067753dedac0822",
+    "expectedTree": "73476dd469c1f09e9f2d0e09565bf229c112611c"
+  },
+  "harnessSha256": "50a802e98c608f3517bae018a7256a03daab67824eae2127123936069a879dae",
+  "identities": {
+    "receipt": "c0190488b5cf0da953c12425c7f24626a4ab39439106c124a18a81f10133cf90",
+    "nodes": 1501,
+    "internalEdges": 3585,
+    "externalEdges": 1970,
+    "unmodeledFileOperations": 395,
+    "graphJson": "32c7054244ad1ecda53682ee93dd76f739d0394f4821fa4a127f8c80233d4754",
+    "summary": "d85a8d55ef1b2457eebf441fe54497f658bed6e1fd4be78c4117d48d720fc0e3",
+    "generator": "1a19c8aa86a0dcc8418ff8da327ac09b462eb19869fe38e64bc4c3f3c6ec0285",
+    "test": "7c44490d3a53638b92193916fbfa45054330bad4eadf949d39bd1788d37e2998",
+    "manifest": "e19b663fb671e046727469832be1d160095eb5cb7d3ba54aa2818277043100ba"
+  },
+  "raw": {
+    "A1": {
+      "phase": "A1",
+      "pid": 29200,
+      "wallMs": 10649.373000000001,
+      "cpuMicroseconds": 12799630,
+      "sampledAllocationBytes": 15121672376,
+      "samples": 456401,
+      "memoryStart": {
+        "memoryUsage": {
+          "rss": 143998976,
+          "heapTotal": 29392896,
+          "heapUsed": 20571328,
+          "external": 20638665,
+          "arrayBuffers": 60297
+        },
+        "memoryUsageMeaning": "process.memoryUsage() occupancy snapshot",
+        "maxRSS": 140624,
+        "maxRSSUnit": "KiB",
+        "maxRSSMeaning": "process.resourceUsage().maxRSS cumulative high-water"
+      },
+      "memoryEnd": {
+        "memoryUsage": {
+          "rss": 849739776,
+          "heapTotal": 532758528,
+          "heapUsed": 467316304,
+          "external": 20666460,
+          "arrayBuffers": 88052
+        },
+        "memoryUsageMeaning": "process.memoryUsage() occupancy snapshot",
+        "maxRSS": 829824,
+        "maxRSSUnit": "KiB",
+        "maxRSSMeaning": "process.resourceUsage().maxRSS cumulative high-water"
+      },
+      "summary": {
+        "nodes": 1501,
+        "internalEdges": 3585,
+        "externalEdges": 1970,
+        "unmodeledFileOperations": 395
+      },
+      "hashes": {
+        "generator": "1a19c8aa86a0dcc8418ff8da327ac09b462eb19869fe38e64bc4c3f3c6ec0285",
+        "graphJson": "32c7054244ad1ecda53682ee93dd76f739d0394f4821fa4a127f8c80233d4754",
+        "summary": "d85a8d55ef1b2457eebf441fe54497f658bed6e1fd4be78c4117d48d720fc0e3",
+        "manifest": "e19b663fb671e046727469832be1d160095eb5cb7d3ba54aa2818277043100ba",
+        "test": "7c44490d3a53638b92193916fbfa45054330bad4eadf949d39bd1788d37e2998"
+      },
+      "forbiddenResidue": [],
+      "timing": "nondeterministic",
+      "allocationMeaning": "profile.samples sampled allocation bytes/count; not exact allocations"
+    },
+    "A2": {
+      "phase": "A2",
+      "pid": 29200,
+      "wallMs": 10305.420499999998,
+      "cpuMicroseconds": 11069979,
+      "sampledAllocationBytes": 14977018752,
+      "samples": 452166,
+      "memoryStart": {
+        "memoryUsage": {
+          "rss": 1280638976,
+          "heapTotal": 150552576,
+          "heapUsed": 49633072,
+          "external": 26710349,
+          "arrayBuffers": 68409
+        },
+        "memoryUsageMeaning": "process.memoryUsage() occupancy snapshot",
+        "maxRSS": 2560912,
+        "maxRSSUnit": "KiB",
+        "maxRSSMeaning": "process.resourceUsage().maxRSS cumulative high-water"
+      },
+      "memoryEnd": {
+        "memoryUsage": {
+          "rss": 1316978688,
+          "heapTotal": 523993088,
+          "heapUsed": 477880584,
+          "external": 20657628,
+          "arrayBuffers": 87772
+        },
+        "memoryUsageMeaning": "process.memoryUsage() occupancy snapshot",
+        "maxRSS": 2560912,
+        "maxRSSUnit": "KiB",
+        "maxRSSMeaning": "process.resourceUsage().maxRSS cumulative high-water"
+      },
+      "summary": {
+        "nodes": 1501,
+        "internalEdges": 3585,
+        "externalEdges": 1970,
+        "unmodeledFileOperations": 395
+      },
+      "hashes": {
+        "generator": "1a19c8aa86a0dcc8418ff8da327ac09b462eb19869fe38e64bc4c3f3c6ec0285",
+        "graphJson": "32c7054244ad1ecda53682ee93dd76f739d0394f4821fa4a127f8c80233d4754",
+        "summary": "d85a8d55ef1b2457eebf441fe54497f658bed6e1fd4be78c4117d48d720fc0e3",
+        "manifest": "e19b663fb671e046727469832be1d160095eb5cb7d3ba54aa2818277043100ba",
+        "test": "7c44490d3a53638b92193916fbfa45054330bad4eadf949d39bd1788d37e2998"
+      },
+      "forbiddenResidue": [],
+      "timing": "nondeterministic",
+      "allocationMeaning": "profile.samples sampled allocation bytes/count; not exact allocations"
+    },
+    "B": {
+      "phase": "B",
+      "pid": 29781,
+      "wallMs": 10511.875125,
+      "cpuMicroseconds": 12701830,
+      "sampledAllocationBytes": 15174468224,
+      "samples": 457858,
+      "memoryStart": {
+        "memoryUsage": {
+          "rss": 54099968,
+          "heapTotal": 8536064,
+          "heapUsed": 4486008,
+          "external": 2285606,
+          "arrayBuffers": 20735
+        },
+        "memoryUsageMeaning": "process.memoryUsage() occupancy snapshot",
+        "maxRSS": 52832,
+        "maxRSSUnit": "KiB",
+        "maxRSSMeaning": "process.resourceUsage().maxRSS cumulative high-water"
+      },
+      "memoryEnd": {
+        "memoryUsage": {
+          "rss": 839565312,
+          "heapTotal": 524419072,
+          "heapUsed": 458794928,
+          "external": 20668228,
+          "arrayBuffers": 87772
+        },
+        "memoryUsageMeaning": "process.memoryUsage() occupancy snapshot",
+        "maxRSS": 819888,
+        "maxRSSUnit": "KiB",
+        "maxRSSMeaning": "process.resourceUsage().maxRSS cumulative high-water"
+      },
+      "summary": {
+        "nodes": 1501,
+        "internalEdges": 3585,
+        "externalEdges": 1970,
+        "unmodeledFileOperations": 395
+      },
+      "hashes": {
+        "generator": "1a19c8aa86a0dcc8418ff8da327ac09b462eb19869fe38e64bc4c3f3c6ec0285",
+        "graphJson": "32c7054244ad1ecda53682ee93dd76f739d0394f4821fa4a127f8c80233d4754",
+        "summary": "d85a8d55ef1b2457eebf441fe54497f658bed6e1fd4be78c4117d48d720fc0e3",
+        "manifest": "e19b663fb671e046727469832be1d160095eb5cb7d3ba54aa2818277043100ba",
+        "test": "7c44490d3a53638b92193916fbfa45054330bad4eadf949d39bd1788d37e2998"
+      },
+      "forbiddenResidue": [],
+      "timing": "nondeterministic",
+      "allocationMeaning": "profile.samples sampled allocation bytes/count; not exact allocations"
+    }
+  },
+  "commands": {
+    "workerA": {
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+        "--expose-gc",
+        "/Users/mkbabb/Programming/glass-ui/docs/tranches/BK/execution/2026-07-29-phi0/ROW5-PERFORMANCE-PROFILE-CURRENT.mjs",
+        "--worker-a",
+        "/private/tmp/row5-profile-lJu1sQ/clone",
+        "/private/tmp/row5-profile-lJu1sQ/worker-a.json"
+      ],
+      "status": 0,
+      "signal": null,
+      "stdout": "",
+      "stderr": "git: error: couldn't create cache file '/var/folders/zz/zyxvpxvq6csfxvn_n00001z00000gr/T/xcrun_db-CpQqqcZK' (errno=Operation not permitted)\ngit: error: couldn't create cache file '/var/folders/zz/zyxvpxvq6csfxvn_n00001z00000gr/T/xcrun_db-Hezn9fY0' (errno=Operation not permitted)\ngit: error: couldn't create cache file '/var/folders/zz/zyxvpxvq6csfxvn_n00001z00000gr/T/xcrun_db-54P7FmmK' (errno=Operation not permitted)\ngit: error: couldn't create cache file '/var/folders/zz/zyxvpxvq6csfxvn_n00001z00000gr/T/xcrun_db-Wsd1sXw3' (errno=Operation not permitted)\n"
+    },
+    "workerB": {
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+        "--expose-gc",
+        "--import",
+        "/Users/mkbabb/Programming/glass-ui/docs/tranches/BK/execution/2026-07-29-phi0/ROW5-PERFORMANCE-PROFILE-CURRENT.mjs",
+        "docs/tranches/BJ/audits/2026-07-28-library-dag/build-import-dag-v3.mjs",
+        "--check"
+      ],
+      "status": 0,
+      "signal": null,
+      "stdout": "{\n  \"nodes\": 1501,\n  \"internalEdges\": 3585,\n  \"externalEdges\": 1970,\n  \"owners\": 101,\n  \"publicEntries\": 72,\n  \"publicSymbols\": 1283,\n  \"unresolvedLocalReferences\": 0,\n  \"nonliteralLocalReferences\": 0,\n  \"dynamicModuleReferences\": 0,\n  \"dynamicAssetReferences\": 123,\n  \"unresolvedGlobPatterns\": 0,\n  \"parseErrors\": 0,\n  \"unmodeledFileOperations\": 395,\n  \"processInvocations\": 11,\n  \"dynamicProcessArguments\": 13,\n  \"nodeTypeCounts\": {\n    \"binary\": 9,\n    \"declaration\": 3,\n    \"directory\": 23,\n    \"documentation\": 29,\n    \"generated-artifact\": 4,\n    \"license\": 2,\n    \"package-output\": 137,\n    \"source\": 1154,\n    \"style\": 131,\n    \"virtual-placeholder\": 9\n  },\n  \"nodeKindCounts\": {\n    \"declared-package-output\": 137,\n    \"directory\": 20,\n    \"generated-by-write\": 7,\n    \"missing-runtime-placeholder\": 9,\n    \"repository-file\": 1328\n  },\n  \"projectionCounts\": {\n    \"build-config\": 14,\n    \"demo\": 195,\n    \"package-surface\": 2,\n    \"product\": 693,\n    \"repository-boundary\": 176,\n    \"scripts-generators\": 16,\n    \"tests\": 214,\n    \"visual-tests\": 191\n  },\n  \"edgeKindCounts\": {\n    \"asset-url\": 8,\n    \"build-entry\": 69,\n    \"css-import\": 113,\n    \"eager-runtime\": 3352,\n    \"export-from\": 475,\n    \"file-read\": 32,\n    \"file-write\": 4,\n    \"finite-dynamic\": 2,\n    \"generator-read\": 13,\n    \"generator-write\": 12,\n    \"glob-lazy\": 107,\n    \"literal-dynamic\": 68,\n    \"literal-require\": 2,\n    \"new-url\": 125,\n    \"package-export\": 140,\n    \"package-side-effect\": 4,\n    \"require-resolve\": 1,\n    \"type-only\": 943,\n    \"types-version\": 66,\n    \"vue-block\": 19\n  },\n  \"eagerRuntimeFileCycles\": 2,\n  \"eagerRuntimeOwnerCycles\": 3,\n  \"buildLoadFileCycles\": 10,\n  \"buildLoadOwnerCycles\": 3,\n  \"ownershipFileCycles\": 10,\n  \"ownershipOwnerCycles\": 3\n}\nreceiptSha256=c0190488b5cf0da953c12425c7f24626a4ab39439106c124a18a81f10133cf90\n",
+      "stderr": "git: error: couldn't create cache file '/var/folders/zz/zyxvpxvq6csfxvn_n00001z00000gr/T/xcrun_db-5NpArVGG' (errno=Operation not permitted)\ngit: error: couldn't create cache file '/var/folders/zz/zyxvpxvq6csfxvn_n00001z00000gr/T/xcrun_db-JZWy6rEC' (errno=Operation not permitted)\n"
+    }
+  },
+  "limits": {
+    "phaseWallMs": 30000,
+    "timing": "nondeterministic",
+    "sampledAllocation": "sampled bytes/count come only from HeapProfiler profile.samples; not exact allocations"
+  },
+  "derived": {
+    "currentAfter": {
+      "label": "raw A1 cold phase",
+      "phase": "A1",
+      "pid": 29200,
+      "wallMs": 10649.373000000001,
+      "cpuMicroseconds": 12799630,
+      "sampledAllocationBytes": 15121672376,
+      "samples": 456401,
+      "memoryStart": {
+        "memoryUsage": {
+          "rss": 143998976,
+          "heapTotal": 29392896,
+          "heapUsed": 20571328,
+          "external": 20638665,
+          "arrayBuffers": 60297
+        },
+        "memoryUsageMeaning": "process.memoryUsage() occupancy snapshot",
+        "maxRSS": 140624,
+        "maxRSSUnit": "KiB",
+        "maxRSSMeaning": "process.resourceUsage().maxRSS cumulative high-water"
+      },
+      "memoryEnd": {
+        "memoryUsage": {
+          "rss": 849739776,
+          "heapTotal": 532758528,
+          "heapUsed": 467316304,
+          "external": 20666460,
+          "arrayBuffers": 88052
+        },
+        "memoryUsageMeaning": "process.memoryUsage() occupancy snapshot",
+        "maxRSS": 829824,
+        "maxRSSUnit": "KiB",
+        "maxRSSMeaning": "process.resourceUsage().maxRSS cumulative high-water"
+      },
+      "summary": {
+        "nodes": 1501,
+        "internalEdges": 3585,
+        "externalEdges": 1970,
+        "unmodeledFileOperations": 395
+      },
+      "hashes": {
+        "generator": "1a19c8aa86a0dcc8418ff8da327ac09b462eb19869fe38e64bc4c3f3c6ec0285",
+        "graphJson": "32c7054244ad1ecda53682ee93dd76f739d0394f4821fa4a127f8c80233d4754",
+        "summary": "d85a8d55ef1b2457eebf441fe54497f658bed6e1fd4be78c4117d48d720fc0e3",
+        "manifest": "e19b663fb671e046727469832be1d160095eb5cb7d3ba54aa2818277043100ba",
+        "test": "7c44490d3a53638b92193916fbfa45054330bad4eadf949d39bd1788d37e2998"
+      },
+      "forbiddenResidue": [],
+      "timing": "nondeterministic",
+      "allocationMeaning": "profile.samples sampled allocation bytes/count; not exact allocations"
+    },
+    "legacyCurrentTreeCounterfactual": {
+      "label": "A1+B sums; no historical comparison",
+      "wallMs": 21161.248125000002,
+      "cpuMicroseconds": 25501460,
+      "sampledAllocationBytes": 30296140600,
+      "samples": 914259
+    },
+    "warmControl": {
+      "label": "raw A2 warm control; never summed",
+      "phase": "A2",
+      "pid": 29200,
+      "wallMs": 10305.420499999998,
+      "cpuMicroseconds": 11069979,
+      "sampledAllocationBytes": 14977018752,
+      "samples": 452166,
+      "memoryStart": {
+        "memoryUsage": {
+          "rss": 1280638976,
+          "heapTotal": 150552576,
+          "heapUsed": 49633072,
+          "external": 26710349,
+          "arrayBuffers": 68409
+        },
+        "memoryUsageMeaning": "process.memoryUsage() occupancy snapshot",
+        "maxRSS": 2560912,
+        "maxRSSUnit": "KiB",
+        "maxRSSMeaning": "process.resourceUsage().maxRSS cumulative high-water"
+      },
+      "memoryEnd": {
+        "memoryUsage": {
+          "rss": 1316978688,
+          "heapTotal": 523993088,
+          "heapUsed": 477880584,
+          "external": 20657628,
+          "arrayBuffers": 87772
+        },
+        "memoryUsageMeaning": "process.memoryUsage() occupancy snapshot",
+        "maxRSS": 2560912,
+        "maxRSSUnit": "KiB",
+        "maxRSSMeaning": "process.resourceUsage().maxRSS cumulative high-water"
+      },
+      "summary": {
+        "nodes": 1501,
+        "internalEdges": 3585,
+        "externalEdges": 1970,
+        "unmodeledFileOperations": 395
+      },
+      "hashes": {
+        "generator": "1a19c8aa86a0dcc8418ff8da327ac09b462eb19869fe38e64bc4c3f3c6ec0285",
+        "graphJson": "32c7054244ad1ecda53682ee93dd76f739d0394f4821fa4a127f8c80233d4754",
+        "summary": "d85a8d55ef1b2457eebf441fe54497f658bed6e1fd4be78c4117d48d720fc0e3",
+        "manifest": "e19b663fb671e046727469832be1d160095eb5cb7d3ba54aa2818277043100ba",
+        "test": "7c44490d3a53638b92193916fbfa45054330bad4eadf949d39bd1788d37e2998"
+      },
+      "forbiddenResidue": [],
+      "timing": "nondeterministic",
+      "allocationMeaning": "profile.samples sampled allocation bytes/count; not exact allocations"
+    }
+  },
+  "semantics": {
+    "memoryUsage": "occupancy snapshot from process.memoryUsage()",
+    "maxRSS": "process.resourceUsage().maxRSS cumulative high-water; on macOS the unit is KiB; A2 is cumulative",
+    "sampledAllocation": "profile.samples sampled allocation bytes/count, not exact allocations"
+  },
+  "pass": true
+}
