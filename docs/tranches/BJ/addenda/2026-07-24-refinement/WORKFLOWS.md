@@ -33,19 +33,19 @@ discipline, followed by a fresh Sol adjudication. Every receipt records the
 actual invoked model; if the exact required model is not callable, the seat
 stays undispatched rather than accepting a substitute or false label.
 Historical Fable/Opus/Sonnet artifacts remain immutable provenance and are not
-renamed. The present deviation window is being enumerated in
-`docs/tranches/BK/execution/2026-07-29-phi0/RESULTS.md`; exact Luna
-re-attestation landed from actual `gpt-5.6-luna` xhigh desktop session
-`019faece-3c9d-75e0-97aa-1bb349353341`; round 3 then failed at the two fresh
-Sol challenges and lead adjudication. Round 4 is registered and source-fenced:
-exact Luna owns the graph, surface, and document-integration slices. The
-initial `74c59ade` prefix candidate then failed both fresh Sol xhigh
-judgment-only challenges; exact Luna's cure candidate is `8be4f662`, with
-source/mechanics session `019fafa7-44f4-7b02-8a42-cc2b3309e5ec`. Row #5 remains
-IN-FLIGHT pending exactly two entirely fresh `gpt-5.6-sol` xhigh
-judgment-only challenges and one fresh Sol xhigh adjudication. No global
-replacement implements this transition, no frontend-design seat is present,
-and no new run is opened.
+renamed. The current Row #5 pointer is
+`docs/tranches/BK/execution/2026-07-29-phi0/RESULTS.md`; exact Luna xhigh owns
+document mechanics. Row #5 is **SEALED** at source HEAD
+`4c970c0edd36b32d3b40a575dc3e91c60138c61f` / tree
+`a904984a95475794e12bd2df127bb1728271470f`, with
+`code_state=landed-candidate` and `evidence_state=adjudicated`, after Challenge I
+PASS, Challenge J PASS, and adjudication K PASS-and-seal. Sealed execution-live
+rows advance to **6/87** (`#1,#2,#4,#5,#75,#90`); Row #8 remains UNSTARTED and is
+the next canonical execution owner. Row #3 remains IN-FLIGHT awaiting the first
+real motion π at Row #22. Q reversal stays under W-MOMENTUM-CENSUS; SegmentedTabs
+remains P5 RED; Q owns consumer-only CompletionSeal deletion. No BK release,
+Safari, or constellation credit is claimed. Row #5 opens no global replacement,
+frontend-design seat, or new run.
 
 ---
 
@@ -88,7 +88,7 @@ EXEC-STATE census row; membership stands, aggregates do not).
 
 | run | id | script (`./wf/`) | banking target on close |
 |---|---|---|---|
-| BK Φ0 truth | `bk-phi0-20260729-01` | historical registration `bk-phi0-execution.wf.js`; post-cutover cure script `bk-phi0-cures.wf.js` | Row #5 pointers: current status and receipts are in `docs/tranches/BK/execution/2026-07-29-phi0/journal.jsonl`; profile data is in the raw JSON files and banked harnesses in that execution directory; RESULTS and the cursor are pointer copies only. |
+| BK Φ0 truth | `bk-phi0-20260729-01` | historical registration `bk-phi0-execution.wf.js`; post-cutover cure script `bk-phi0-cures.wf.js` | Row #5 is SEALED; current status and receipts are in `docs/tranches/BK/execution/2026-07-29-phi0/journal.jsonl`; profile data is in the raw JSON files and banked harnesses in that execution directory; RESULTS and the cursor are pointer copies only. |
 
 | run | id | script (`./wf/`) | banking target on close |
 |---|---|---|---|
