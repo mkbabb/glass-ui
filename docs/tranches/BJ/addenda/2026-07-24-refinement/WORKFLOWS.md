@@ -39,13 +39,22 @@ document mechanics. Row #5 is **SEALED** at source HEAD
 `4c970c0edd36b32d3b40a575dc3e91c60138c61f` / tree
 `a904984a95475794e12bd2df127bb1728271470f`, with
 `code_state=landed-candidate` and `evidence_state=adjudicated`, after Challenge I
-PASS, Challenge J PASS, and adjudication K PASS-and-seal. Sealed execution-live
-rows advance to **6/87** (`#1,#2,#4,#5,#75,#90`); Row #8 remains UNSTARTED and is
-the next canonical execution owner. Row #3 remains IN-FLIGHT awaiting the first
-real motion π at Row #22. Q reversal stays under W-MOMENTUM-CENSUS; SegmentedTabs
-remains P5 RED; Q owns consumer-only CompletionSeal deletion. No BK release,
-Safari, or constellation credit is claimed. Row #5 opens no global replacement,
-frontend-design seat, or new run.
+PASS, Challenge J PASS, and adjudication K PASS-and-seal. Row #8 is **CLOSED** after
+implementation/evidence commit `147a0bf99ac9b99fe7d7415eb682569d289021a4`
+(`code_state=landed`; `evidence_state=adjudicated`; Challenge A CLEAN/null; Challenge
+B CLEAN/null; owner BANK by `gpt-5.6-sol` xhigh). R2 is
+`docs/tranches/BK/execution/2026-08-02-row8-pkg-truth-r2/PACKAGE-RECEIPT.json`
+(SHA256 `16dea3da732f0a5b988573ff7ffcb152a1e2a811efba2f7e915f9d41b56b9148`);
+the failed predecessor remains frozen as AMEND chronology (SHA256
+`7132892634e40b07e594c7f0978be2b14388d18d788db97845246352f39ed468`). Sealed
+execution-live rows advance to **7/87** (`#1,#2,#4,#5,#8,#75,#90`); Row #6
+W-BUILD-COLORMIX is the next canonical execution owner and Row #7 remains after it.
+Row #3 remains IN-FLIGHT awaiting the first real motion π at Row #22. Q reversal
+stays under W-MOMENTUM-CENSUS; SegmentedTabs remains P5 RED; Q owns consumer-only
+CompletionSeal deletion. Publication, mutable-v7 republish, signed-v8 release,
+real Safari/iOS, consumer adoption, constellation/crossrepo, and total-BK credit
+remain open/zero. Row #5 opens no global replacement, frontend-design seat, or new
+run.
 
 ---
 

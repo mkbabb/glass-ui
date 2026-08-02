@@ -54,11 +54,24 @@ an acceptance pointer only: rows stay 90, gates +0, and no cursor state moves.
 ⊕⁹ **BK Φ0 Row #5 seal, 2026-08-01:** Row #5 is SEALED only
 (`code_state=landed-candidate`; `evidence_state=adjudicated`; Challenge I PASS;
 Challenge J PASS; adjudication K PASS-and-seal). Sealed execution-live rows advance
-to **6/87** (`#1,#2,#4,#5,#75,#90`). Row #8 remains UNSTARTED and is the next
-canonical execution owner; Row #3 remains IN-FLIGHT awaiting its first real motion
-π at Row #22. Existing routes remain unchanged: Q reversal under
-W-MOMENTUM-CENSUS, SegmentedTabs P5 RED, and Q owns consumer-only CompletionSeal
-deletion. BK release, Safari, and constellation credit remain open/zero.
+to **6/87** (`#1,#2,#4,#5,#75,#90`). Existing routes remain unchanged: Q reversal
+under W-MOMENTUM-CENSUS, SegmentedTabs P5 RED, and Q owns consumer-only
+CompletionSeal deletion. BK release, Safari, and constellation credit remain
+open/zero.
+
+⊕¹⁰ **BK Φ0 Row #8 seal, 2026-08-02:** Row #8 is **CLOSED** after implementation/evidence
+commit `147a0bf99ac9b99fe7d7415eb682569d289021a4` (`code_state=landed`;
+`evidence_state=adjudicated`; Challenge A CLEAN/null; Challenge B CLEAN/null; owner
+BANK by `gpt-5.6-sol` xhigh). R2 is
+`docs/tranches/BK/execution/2026-08-02-row8-pkg-truth-r2/PACKAGE-RECEIPT.json`
+(SHA256 `16dea3da732f0a5b988573ff7ffcb152a1e2a811efba2f7e915f9d41b56b9148`);
+the failed predecessor remains frozen as AMEND chronology (SHA256
+`7132892634e40b07e594c7f0978be2b14388d18d788db97845246352f39ed468`). Sealed
+execution-live rows advance to **7/87** (`#1,#2,#4,#5,#8,#75,#90`). Row #6
+W-BUILD-COLORMIX is the next canonical execution owner; Row #7 remains after it.
+Row #3 remains IN-FLIGHT awaiting its first real motion π at Row #22. Publication,
+mutable-v7 republish, signed-v8 release, real Safari/iOS, consumer adoption,
+constellation/crossrepo, and total-BK credit remain open/zero.
 
 ## Φ0 — executable this hour
 
@@ -69,7 +82,7 @@ deletion. BK release, Safari, and constellation credit remain open/zero.
 | 3 | W-CAPTURE-MOTION | Φ0 | IN-FLIGHT (`code_state=landed-candidate` at `74c59ade`; `evidence_state=owed-first-motion-pi`; cannot seal until the first real motion π at the row 22 grasp trace) | TR#3 → RECONCILIATION §5/§8-17 + the ⊕⁵ mode design at the row (SE-5) | —(instrument; precedes every motion π; motion mode = attribute absent + fixed frame series); fresh Q bounded old-direction reversal trace routes under this existing row to the W-MOMENTUM-CENSUS turn; existing SegmentedTabs width/height transition remains P5 RED under current tabs/motion ownership |
 | 4 | TRACK-STRAYS + PARKED-RECONCILE | Φ0 | SEALED (`code_state=landed-candidate` at `5946f5ef`; cursor cure `b232b05a`; `evidence_state=adjudicated`; Challenge E PASS; Challenge F PASS; final adjudication PASS-and-seal) | TR#4 (historical J-14 census: 250 · 24 non-doc · 10 outside docs/) | G-CITE-COMMITTED is current/forward citation closure; the 5199→5400 port correction is landed; ✦² audit corpus + canon salvage COMMITTED at `e277ea42` (re-scope); pre-disposition 248/14/0 with both boundary hashes is reconciled to 0 Git-visible untracked after staging; exact artifact pointer is `docs/tranches/BK/execution/2026-07-29-phi0/NEEDS-LUNA-STEER-FINDINGS.md`; row #4 only seals; Φ0/BK continues with no new apparatus or release |
 | 5 | W-PREFIX-SWEEP | Φ0 | SEALED (`code_state=landed-candidate`; `evidence_state=adjudicated`; Challenge I PASS; Challenge J PASS; adjudication K PASS-and-seal) | TR#5 → FROST §0 C-1 + §3 hit 2 | Row #5 only; current status and receipts: `docs/tranches/BK/execution/2026-07-29-phi0/journal.jsonl`; raw profile and banked harness data: that execution directory; RESULTS is a pointer copy; no BK release/Safari/constellation credit |
-| 8 | W-PKG-TRUTH | Φ0/4 | UNSTARTED | TR#8 → WAVES:195 + TR§C keyframes S1 | G-PACK-INSTALL · G-THEME-BLEED · G-BARREL-EXPLICIT · G-BUNDLE-RATCHET · G-NO-ORPHAN-EXPORT (+SURFACE-OWNED arm) |
+| 8 | W-PKG-TRUTH | Φ0/4 | CLOSED (after `147a0bf99ac9b99fe7d7415eb682569d289021a4`; `code_state=landed`; `evidence_state=adjudicated`; Challenge A CLEAN/null; Challenge B CLEAN/null; owner BANK by `gpt-5.6-sol` xhigh; R2 `docs/tranches/BK/execution/2026-08-02-row8-pkg-truth-r2/PACKAGE-RECEIPT.json` SHA256 `16dea3da732f0a5b988573ff7ffcb152a1e2a811efba2f7e915f9d41b56b9148`; failed predecessor frozen AMEND chronology, SHA256 `7132892634e40b07e594c7f0978be2b14388d18d788db97845246352f39ed468`) | TR#8 → WAVES:195 + TR§C keyframes S1 | G-PACK-INSTALL · G-THEME-BLEED · G-BARREL-EXPLICIT · G-BUNDLE-RATCHET · G-NO-ORPHAN-EXPORT (+SURFACE-OWNED arm) |
 
 ## Φ1
 
