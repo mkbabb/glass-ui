@@ -29,7 +29,7 @@
 // the option/return types are byte-preserved; only the value.js math moved behind
 // the dynamic boundary.
 
-import { computed, ref, toValue, type ComputedRef, type MaybeRefOrGetter } from "vue";
+import { computed, ref, toValue, type ComputedRef, type MaybeRefOrGetter, type Ref } from "vue";
 
 export interface UseAccentToneOptions {
     /** Active band strength (0..1). Default 0.18 (the CSS `--accent-band-strength`). */
@@ -56,9 +56,40 @@ export interface UseAccentToneReturn {
 // The load-once cache for the dynamic ink solve — keyed by tone + the solve-relevant
 // opts. A concrete tone is solved ONCE; a repeated call with the SAME key reads the
 // cached ink synchronously (no re-import, no re-solve).
-const inkCache = new Map<string, string>();
+type InkCacheEntry =
+    | { state: "pending"; promise: Promise<void> }
+    | { state: "fulfilled"; value: string }
+    | { state: "failed"; error: unknown }
+    | { state: "absent" };
+
+type AccentToneSolveModule = typeof import("./accent-tone-solve");
+
+export const accentToneSolveBoundary = {
+    load: () => import("./accent-tone-solve"),
+};
+
+const inkCache = new Map<string, InkCacheEntry>();
+const cacheSubscribers = new Map<string, Set<Ref<number>>>();
+let accentToneLoader: Promise<AccentToneSolveModule | null> | undefined;
 const cacheKey = (toneCss: string, opts: UseAccentToneOptions) =>
     `${toneCss}|${opts.surface ?? ""}|${opts.inkContrast ?? ""}|${opts.bandStrength ?? ""}`;
+
+function loadAccentToneSolve(): Promise<AccentToneSolveModule | null> {
+    return (accentToneLoader ??= accentToneSolveBoundary.load().catch(() => null));
+}
+
+function observeCacheKey(key: string, signal: Ref<number>): void {
+    const subscribers = cacheSubscribers.get(key) ?? new Set<Ref<number>>();
+    subscribers.add(signal);
+    cacheSubscribers.set(key, subscribers);
+}
+
+function settleCacheKey(key: string, entry: Exclude<InkCacheEntry, { state: "pending" }>): void {
+    inkCache.set(key, entry);
+    const subscribers = cacheSubscribers.get(key);
+    cacheSubscribers.delete(key);
+    for (const signal of subscribers ?? []) signal.value++;
+}
 
 /**
  * `useAccentTone(tone, opts)` — resolve the contrast-safe label ink for the tonal
@@ -92,13 +123,36 @@ export function useAccentTone(
         // value.js-bearing solve leaf; cache + bump the version when it resolves.
         const key = cacheKey(toneCss, opts);
         const cached = inkCache.get(key);
-        if (cached !== undefined) return cached;
+        if (cached?.state === "fulfilled") return cached.value;
+        if (cached?.state === "absent") return "";
+        if (cached?.state === "failed") throw cached.error;
+        if (cached?.state === "pending") {
+            observeCacheKey(key, solveVersion);
+            return "";
+        }
 
-        void import("./accent-tone-solve").then(({ solveAccentInk }) => {
-            // lazy-boundary: value.js-free fast path; the concrete-tone ink solve is the ONLY value.js consumer
-            inkCache.set(key, solveAccentInk(toneCss, opts));
-            solveVersion.value++;
-        });
+        observeCacheKey(key, solveVersion);
+
+        // Attach both fulfillment and rejection handling before publishing the
+        // promise in the cache. An absent optional value.js leaf is a terminal
+        // process-local result: subsequent consumers reuse the CSS fallback and
+        // never create a retry storm or an unhandled rejection.
+        const pending = loadAccentToneSolve().then(
+            (module) => {
+                if (!module) {
+                    settleCacheKey(key, { state: "absent" });
+                    return;
+                }
+                try {
+                    // lazy-boundary: value.js-free fast path; the concrete-tone ink solve is the ONLY value.js consumer
+                    settleCacheKey(key, { state: "fulfilled", value: module.solveAccentInk(toneCss, opts) });
+                } catch (error) {
+                    settleCacheKey(key, { state: "failed", error });
+                }
+            },
+        );
+        inkCache.set(key, { state: "pending", promise: pending });
+        void pending;
         return "";
     });
 

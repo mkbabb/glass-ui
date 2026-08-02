@@ -78,45 +78,231 @@
 // Explicit per-package re-exports — the `export * from "./components"`
 // wildcard is intentionally NOT used because it drags vueuse-bearing
 // carousel/input/textarea barrels into the root SCC walk.
-export * from "./components/accordion";
-export * from "./components/alert";
-export * from "./components/avatar";
-export * from "./components/badge";
-export * from "./components/button";
-export * from "./components/card";
-export * from "./components/checkbox";
-export * from "./components/collapsible";
-export * from "./components/command";
-export * from "./components/data-table";
-export * from "./components/dialog";
+export {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+    type AccordionContentProps,
+    type AccordionEmits,
+    type AccordionItemProps,
+    type AccordionProps,
+    type AccordionSlotProps,
+    type AccordionTriggerProps,
+    type AccordionValue,
+} from "./components/accordion";
+export {
+    Alert,
+    AlertDescription,
+    AlertTitle,
+    alertVariants,
+    type AlertVariants,
+} from "./components/alert";
+export {
+    Avatar,
+    AvatarFallback,
+    AvatarImage,
+    type AvatarIdentityProps,
+    type AvatarProps,
+    type AvatarShape,
+    type AvatarSize,
+} from "./components/avatar";
+export { Badge, badgeVariants, type BadgeVariants } from "./components/badge";
+export { Button, type ButtonEmphasis, type ButtonProps, type ButtonSize } from "./components/button";
+export {
+    Card,
+    CardAction,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+    type CardMetal,
+    type CardProps,
+    type CardSize,
+    type CardTier,
+    type CardVariant,
+} from "./components/card";
+export { Checkbox, type CheckboxProps } from "./components/checkbox";
+export {
+    Collapsible,
+    CollapsibleContent,
+    CollapsibleTrigger,
+    type CollapsibleContentProps,
+    type CollapsibleEmits,
+    type CollapsibleProps,
+    type CollapsibleTriggerProps,
+} from "./components/collapsible";
+export {
+    Command,
+    CommandDialog,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+    CommandList,
+    CommandSeparator,
+    CommandShortcut,
+    type CommandDialogEmits,
+    type CommandDialogProps,
+    type CommandEmits,
+    type CommandListProps,
+    type CommandProps,
+} from "./components/command";
+export {
+    DataTable,
+    type DataTableColumn,
+    type DataTableProps,
+    type DataTableRowAttrs,
+    type DataTableRowIndex,
+    type DataTableRowRef,
+    type DataTableSort,
+    type DataTableStatus,
+} from "./components/data-table";
+export {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+    type DialogCloseProps,
+    type DialogContentProps,
+    type DialogDescriptionProps,
+    type DialogProps,
+    type DialogTitleProps,
+    type DialogTriggerProps,
+} from "./components/dialog";
 // Drawer is off the root barrel because it uses the house `useDrawerSnap` engine
 // (a `@mkbabb/keyframes.js` SpringProgress consumer), so
 // it is now a keyframes-BEARING heavy component that must NOT inline its optional
 // peer into the vueuse-free root bundle. It ships via the `/drawer` subpath
 // (`@mkbabb/glass-ui/drawer`) — the dock/aurora substrate-isolation pattern; see
 // MIGRATION.md. (clean break, no alias.)
-export * from "./components/dropdown-menu";
+export {
+    DropdownMenu,
+    DropdownMenuCheckboxItem,
+    DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuRadioGroup,
+    DropdownMenuRadioItem,
+    DropdownMenuSeparator,
+    DropdownMenuShortcut,
+    DropdownMenuSub,
+    DropdownMenuSubContent,
+    DropdownMenuSubTrigger,
+    DropdownMenuTrigger,
+    type DropdownMenuCheckboxItemEmits,
+    type DropdownMenuCheckboxItemProps,
+    type DropdownMenuContentEmits,
+    type DropdownMenuContentProps,
+    type DropdownMenuEmits,
+    type DropdownMenuGroupProps,
+    type DropdownMenuItemEmits,
+    type DropdownMenuItemProps,
+    type DropdownMenuLabelProps,
+    type DropdownMenuProps,
+    type DropdownMenuRadioGroupEmits,
+    type DropdownMenuRadioGroupProps,
+    type DropdownMenuRadioItemEmits,
+    type DropdownMenuRadioItemProps,
+    type DropdownMenuSeparatorProps,
+    type DropdownMenuShortcutProps,
+    type DropdownMenuSubContentEmits,
+    type DropdownMenuSubContentProps,
+    type DropdownMenuSubEmits,
+    type DropdownMenuSubProps,
+    type DropdownMenuSubTriggerProps,
+    type DropdownMenuTriggerAction,
+    type DropdownMenuTriggerProps,
+    type MenuTrigger,
+} from "./components/dropdown-menu";
 // `ui/hover-card` retired as a name (the reka HoverCardRoot
 // substrate stays, imported by the sealed `<Popover trigger="hover">` union). The
 // HoverCard component + subpath fold onto ONE `Popover`. (clean break, no alias.)
-export * from "./components/label";
+export { Label, type LabelProps, type LabelRequirement } from "./components/label";
 // `ui/multi-select` retired. A MultiSelect is a
 // Popover+Command composition over the same Combobox-family mechanism, so it folds
 // onto `<Combobox multiple>` (array v-model + chips-in-trigger). (clean break, no alias.)
-export * from "./components/number-field";
-export * from "./components/popover";
-export * from "./components/progress";
-export * from "./components/radio-group";
-export * from "./components/select";
-export * from "./components/separator";
+export {
+    NumberField,
+    NumberFieldContent,
+    NumberFieldDecrement,
+    NumberFieldIncrement,
+    NumberFieldInput,
+    type NumberFieldDecrementProps,
+    type NumberFieldIncrementProps,
+    type NumberFieldProps,
+} from "./components/number-field";
+export {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+    type PopoverContentEmits,
+    type PopoverContentProps,
+    type PopoverEmits,
+    type PopoverProps,
+    type PopoverTriggerMode,
+    type PopoverTriggerProps,
+} from "./components/popover";
+export {
+    Progress,
+    type ProgressOrientation,
+    type ProgressProps,
+    type ProgressStatus,
+    type ProgressVariant,
+} from "./components/progress";
+export {
+    RadioGroup,
+    RadioGroupItem,
+    type RadioGroupItemProps,
+    type RadioGroupProps,
+} from "./components/radio-group";
+export {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectSeparator,
+    SelectTrigger,
+    SelectValue,
+    type SelectContentEmits,
+    type SelectContentProps,
+    type SelectEmits,
+    type SelectGroupProps,
+    type SelectItemEmits,
+    type SelectItemProps,
+    type SelectItemSelectEvent,
+    type SelectLabelProps,
+    type SelectProps,
+    type SelectSeparatorProps,
+    type SelectTriggerProps,
+    type SelectValueProps,
+    type SelectValueSlotProps,
+} from "./components/select";
+export { Separator, type SeparatorProps } from "./components/separator";
 // `ui/sheet` retired; Sheet's side-slide folded onto
 // `<DialogContent placement=top|right|bottom|left>` (same reka DialogRoot + FocusScope;
 // the slide is paint, not mechanism). Reach `Dialog` (`@mkbabb/glass-ui/dialog`); snap-
 // detent physics stays `Drawer`'s. Clean break, no alias.
-export * from "./components/skeleton";
-export * from "./components/slider";
-export * from "./components/switch";
-export * from "./components/table";
+export { Skeleton } from "./components/skeleton";
+export { Slider, type SliderProps, type SliderSize, type SliderVariant } from "./components/slider";
+export { Switch, type SwitchProps } from "./components/switch";
+export {
+    Table,
+    TableBody,
+    TableCaption,
+    TableCell,
+    TableEmpty,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "./components/table";
 // `ui/Tabs` (the reka wrapper family) left the public surface because it duplicated
 // the tab vocabulary and its always-on baked-plate indicator painted an unwanted
 // oval blob. The standardized tab family
@@ -126,10 +312,61 @@ export * from "./components/table";
 // re-points onto the library's ONE headless selection engine `useSelectionGroup`
 // (roving focus + the ONE traveling-indicator writer, Safari-identical), so the
 // reka `--reka-tabs-indicator-*` path is gone. No public barrel re-exported them.
-export * from "./components/tags-input";
-export * from "./components/toast";
-export * from "./components/toggle-group";
-export * from "./components/tooltip";
+export {
+    TagsInput,
+    TagsInputInput,
+    TagsInputItem,
+    TagsInputItemDelete,
+    TagsInputItemText,
+    type TagsInputInputProps,
+    type TagsInputItemDeleteProps,
+    type TagsInputItemProps,
+    type TagsInputItemTextProps,
+    type TagsInputProps,
+} from "./components/tags-input";
+export {
+    Toast,
+    ToastAction,
+    ToastClose,
+    ToastDescription,
+    ToastTitle,
+    Toaster,
+    toast,
+    useToast,
+    type ToastActionProps,
+    type ToastCloseProps,
+    type ToastDescriptionProps,
+    type ToastEmits,
+    type ToastHandle,
+    type ToastOptions,
+    type ToastProps,
+    type ToastSwipeEvent,
+    type ToastTitleProps,
+    type ToasterPosition,
+} from "./components/toast";
+export {
+    ToggleGroup,
+    ToggleGroupItem,
+    type ToggleGroupEmits,
+    type ToggleGroupItemProps,
+    type ToggleGroupProps,
+    type ToggleGroupSize,
+    type ToggleGroupSlotProps,
+    type ToggleGroupValue,
+    type ToggleGroupVariant,
+} from "./components/toggle-group";
+export {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+    type TooltipContentEmits,
+    type TooltipContentProps,
+    type TooltipEmits,
+    type TooltipProps,
+    type TooltipProviderProps,
+    type TooltipTriggerProps,
+} from "./components/tooltip";
 
 // Custom composites — instrument-cluster chassis
 // `custom/hover-popover` folded onto `<Popover trigger="hover">`
@@ -137,7 +374,23 @@ export * from "./components/tooltip";
 // timer + keepDockOpen watch) lives on the sealed Popover union. (clean break, no alias.)
 
 // Custom composites — configurator primitive
-export * from "./components/configurator";
+export {
+    CONFIGURATOR_SIZE_KEY,
+    Configurator,
+    ConfiguratorLayer,
+    ConfiguratorRow,
+    provideConfiguratorSize,
+    useConfiguratorState,
+    useOptionalConfiguratorSize,
+    type ConfiguratorAsideSide,
+    type ConfiguratorCloneMode,
+    type ConfiguratorGalleryPlacement,
+    type ConfiguratorPreset,
+    type ConfiguratorScrollMode,
+    type ConfiguratorSize,
+    type ConfiguratorState,
+    type ConfiguratorStateOptions,
+} from "./components/configurator";
 
 // `custom/scrolling-text` lives in its one consumer.
 // The overflow-marquee's only binary consumer is a single app (2 sites), the
@@ -158,9 +411,63 @@ export * from "./components/configurator";
 // engines) that the bundler would otherwise walk transitively into every
 // consumer's entry chunk, even Card-/Button-only consumers. The motion
 // composables are reachable via `@mkbabb/glass-ui/motion`.
-export * from "./composables/reactive";
-export * from "./composables/dom";
-export * from "./composables/glass";
+export {
+    useInterval,
+    useTimer,
+    type UseIntervalControls,
+    type UseIntervalOptions,
+    type UseTimerControls,
+    type UseTimerOptions,
+} from "./composables/reactive";
+export {
+    createTokenColorCache,
+    resolveTokenColor,
+    useBreakpoint,
+    useClipboard,
+    useDragVelocity,
+    useIdleReady,
+    useResizeObserver,
+    useTokenColor,
+    useTouchGate,
+    useUserInvalidAria,
+    useViewportReady,
+    writeClipboard,
+    type ClipboardStatus,
+    type CopyFailureReason,
+    type CopyResult,
+    type ResolveTokenColorCache,
+    type TokenColorResolver,
+    type TouchGateReturn,
+    type UseBreakpointControls,
+    type UseClipboardOptions,
+    type UseClipboardReturn,
+    type UseDragVelocityParams,
+    type UseDragVelocityReturn,
+    type UseIdleReadyControls,
+    type UseIdleReadyOptions,
+    type UseResizeObserverControls,
+    type UseResizeObserverOptions,
+    type UseTokenColorControls,
+    type UseTokenColorOptions,
+    type UseUserInvalidAriaOptions,
+    type UseUserInvalidAriaReturn,
+    type UseViewportReadyControls,
+    type UseViewportReadyOptions,
+} from "./composables/dom";
+export {
+    createSpecularWriter,
+    resolveCanvasColor,
+    useCanvas2D,
+    useCanvasLifecycle,
+    useSpecularTracking,
+    vSpecular,
+    type Canvas2DFrame,
+    type Canvas2DHandle,
+    type Canvas2DOptions,
+    type Canvas2DSuspendReason,
+    type SpecularWriter,
+    type UseSpecularTracking,
+} from "./composables/glass";
 
 // The View-Transitions motion substrate. Dependency-free (no `vue`, no
 // `@mkbabb/keyframes.js`, no `@vueuse/core`), so it is safe on the

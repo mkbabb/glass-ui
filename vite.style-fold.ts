@@ -6,11 +6,13 @@ import {
     statSync,
     writeFileSync,
 } from "node:fs";
-import { resolve } from "node:path";
+import { dirname, resolve } from "node:path";
 
 import postcss, { type Container } from "postcss";
 
 import { minifyCss } from "./scripts/lib/minify-css.mjs";
+// @ts-ignore — the runtime policy is an intentionally untyped shared ESM leaf.
+import { buildEntrySet, CSS_FONT_EXPORTS, readTree } from "./scripts/lib/subpath-policy.mjs";
 
 /**
  * vite.style-fold — the STYLE-FOLD sub-plugin of publishStyleAssets
@@ -89,48 +91,350 @@ export function terminalImportIndex(css: string): number {
     return mode ? mode.index : atSourceIndex(css);
 }
 
-/**
- * copyStyleAssets — cpSync `src/styles/` → `dist/styles/` and `src/fonts/` →
- * `dist/fonts/` wholesale so `./styles` ships the authored cascade verbatim
- * (live `@import "./X.css"` lines + flat partials) and the `./fonts/*` subpath
- * covers any future per-asset consumer that wants the raw woff2. Returns the
- * resolved font/style dirs the downstream folds read.
- */
-export function copyStyleAssets(root: string): {
+export type StyleClosure = {
+    sources: Set<string>;
+    copySources: Set<string>;
+    cssSources: Set<string>;
+    fontSources: Set<string>;
+    fontRoots: string[];
+    orderedCssSources: string[];
+};
+
+function filesUnder(root: string): string[] {
+    if (!existsSync(root)) return [];
+    return readdirSync(root, { recursive: true })
+        .map((path) => resolve(root, path.toString()))
+        .filter((path) => {
+            try {
+                return statSync(path).isFile();
+            } catch {
+                return false;
+            }
+        });
+}
+
+function resolveSourceReference(from: string, reference: string): string | null {
+    const clean = reference.split(/[?#]/, 1)[0];
+    if (!clean.startsWith(".")) return null;
+    const base = resolve(dirname(from), clean);
+    const candidates = [
+        base,
+        `${base}.css`,
+        `${base}.ts`,
+        `${base}.js`,
+        `${base}.vue`,
+        `${base}.svg`,
+        `${base}.woff2`,
+        `${base}.woff`,
+        `${base}.ttf`,
+        `${base}.otf`,
+        `${base}.png`,
+        `${base}.jpg`,
+        `${base}.jpeg`,
+        `${base}.gif`,
+        `${base}.webp`,
+        resolve(base, "index.css"),
+        resolve(base, "index.ts"),
+    ];
+    return candidates.find((path) => existsSync(path) && statSync(path).isFile()) ?? null;
+}
+
+function isCodeBearingSource(path: string): boolean {
+    return /\.(?:vue|jsx?|tsx?|mjs|mts|cjs|cts)$/.test(path);
+}
+
+function cssReferences(source: string): string[] {
+    const cleaned = source
+        .replace(/\/\*[\s\S]*?\*\//g, "")
+        .replace(/url\(\s*(["'])data:[\s\S]*?\1\s*\)/g, "");
+    const references: string[] = [];
+    const importPattern = /@import\s+(?:url\(\s*(?:"([^"]+)"|'([^']+)'|([^\s)]+))\s*\)|"([^"]+)"|'([^']+)')/g;
+    for (const match of cleaned.matchAll(importPattern)) {
+        const reference = match.slice(1).find(Boolean);
+        if (reference) references.push(reference);
+    }
+    const urlPattern = /url\(\s*["']?([^"')\s]+)["']?\s*\)/g;
+    for (const match of cleaned.matchAll(urlPattern)) references.push(match[1]);
+    return references;
+}
+
+function localCssProperties(source: string): { produced: Set<string>; consumed: Set<string> } {
+    const parsed = postcss.parse(source);
+    const produced = new Set<string>();
+    const consumed = new Set<string>();
+    parsed.walkDecls((decl) => {
+        if (decl.prop.startsWith("--")) produced.add(decl.prop);
+        for (const match of decl.value.matchAll(/var\(\s*(--[a-zA-Z0-9_-]+)/g)) consumed.add(match[1]);
+    });
+    return { produced, consumed };
+}
+
+type InlineStyle = { id: string; owner: string; source: string };
+
+function inlineStyles(path: string): InlineStyle[] {
+    const source = readFileSync(path, "utf8");
+    const styles: InlineStyle[] = [];
+    let index = 0;
+    for (const match of source.matchAll(/^[ \t]*<style\b([^>]*)>([\s\S]*?)^[ \t]*<\/style>/gim)) {
+        const attributes = match[1] ?? "";
+        if (/\bsrc\s*=/.test(attributes)) continue;
+        styles.push({ id: `${path}#style-${index++}`, owner: path, source: match[2] ?? "" });
+    }
+    return styles;
+}
+
+function visitVue(
+    path: string,
+    visitCss: (path: string) => void,
+    visitInlineCss: (style: InlineStyle) => void,
+    visitScript: (path: string) => void,
+): void {
+    const source = readFileSync(path, "utf8").replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, "");
+    for (const match of source.matchAll(/<style\b[^>]*\bsrc=["']([^"']+)["'][^>]*>/gi)) {
+        const css = resolveSourceReference(path, match[1]);
+        if (css) visitCss(css);
+        else throw new Error(`${path}: dangling SFC style reference ${match[1]}`);
+    }
+    for (const style of inlineStyles(path)) visitInlineCss(style);
+    for (const match of source.matchAll(/(?:import|export)\s+(?:[^"']*?\s+from\s+)?["']([^"']+)["']|import\(\s*["']([^"']+)["']\s*\)/g)) {
+        const reference = match[1] ?? match[2];
+        if (!reference.startsWith(".")) continue;
+        const target = resolveSourceReference(path, reference);
+        if (!target) throw new Error(`${path}: dangling SFC/script reference ${reference}`);
+        if (target.endsWith(".css")) visitCss(target);
+        else if (/\.(?:vue|ts|js)$/.test(target)) visitScript(target);
+    }
+}
+
+type FontRoot = { sourceRoot: string; targetPrefix: string };
+
+function declaredStyleRoots(root: string): { cssRoots: string[]; fontRoots: FontRoot[] } {
+    const cssRoots: string[] = [];
+    const fontRoots: FontRoot[] = [];
+    for (const target of Object.values(CSS_FONT_EXPORTS) as string[]) {
+        const relativeTarget = target.replace(/^\.\/dist\//, "");
+        const wildcard = relativeTarget.indexOf("*");
+        if (wildcard !== -1) {
+            fontRoots.push({
+                sourceRoot: resolve(root, "src", relativeTarget.slice(0, wildcard)),
+                targetPrefix: relativeTarget.slice(0, wildcard),
+            });
+        } else if (relativeTarget.endsWith(".css")) {
+            const source = resolve(root, "src", relativeTarget);
+            if (existsSync(source)) cssRoots.push(source);
+        }
+    }
+    return { cssRoots: [...new Set(cssRoots)], fontRoots };
+}
+
+function declaredFontSource(reference: string, fontRoots: FontRoot[]): string | null {
+    const normalized = reference.replace(/^@mkbabb\/glass-ui\//, "");
+    for (const { sourceRoot, targetPrefix } of fontRoots) {
+        if (!normalized.startsWith(targetPrefix)) continue;
+        const candidate = resolve(sourceRoot, normalized.slice(targetPrefix.length));
+        if (!candidate.startsWith(`${sourceRoot}/`)) return null;
+        return candidate;
+    }
+    return null;
+}
+
+export function collectStyleClosure(root: string): StyleClosure {
+    const { cssRoots: declaredCssRoots, fontRoots: declaredFontRoots } = declaredStyleRoots(root);
+    const sources = new Set<string>();
+    const copySources = new Set<string>();
+    const cssSources = new Set<string>();
+    const orderedCssSources: string[] = [];
+    const fontSources = new Set<string>();
+    const addCopySource = (path: string, owner: string): void => {
+        if (isCodeBearingSource(path)) {
+            throw new Error(`${owner}: code-bearing source cannot be a published style asset ${path}`);
+        }
+        copySources.add(path);
+    };
+    const cssNodes = new Map<string, { id: string; owner: string; source: string; file: string | null }>();
+    for (const path of filesUnder(resolve(root, "src")).filter((path) => path.endsWith(".css"))) {
+        cssNodes.set(path, { id: path, owner: path, source: readFileSync(path, "utf8"), file: path });
+    }
+    for (const path of filesUnder(resolve(root, "src")).filter((path) => path.endsWith(".vue"))) {
+        for (const style of inlineStyles(path)) cssNodes.set(style.id, { ...style, file: null });
+    }
+    const producers = new Map<string, Set<string>>();
+    for (const node of cssNodes.values()) {
+        for (const property of localCssProperties(node.source).produced) {
+            const paths = producers.get(property) ?? new Set<string>();
+            paths.add(node.id);
+            producers.set(property, paths);
+        }
+    }
+    const analyzedCss = new Set<string>();
+    const publishedCss = new Set<string>();
+    const visitCssNode = (
+        node: { id: string; owner: string; source: string; file: string | null },
+        publish = false,
+    ): void => {
+        if (!node) return;
+        if (node.file && !existsSync(node.file)) throw new Error(`style closure: missing source ${node.file}`);
+        const analyze = !analyzedCss.has(node.id);
+        const promote = publish && !publishedCss.has(node.id);
+        if (!analyze && !promote) return;
+        if (analyze) analyzedCss.add(node.id);
+        if (promote) publishedCss.add(node.id);
+        if (node.file && analyze) {
+            sources.add(node.file);
+            cssSources.add(node.file);
+            orderedCssSources.push(node.file);
+        }
+        if (node.file && promote) addCopySource(node.file, node.owner);
+        if (analyze) {
+            for (const property of localCssProperties(node.source).consumed) {
+                for (const producer of producers.get(property) ?? []) {
+                    const producerNode = cssNodes.get(producer);
+                    if (producerNode) visitCssNode(producerNode);
+                }
+            }
+        }
+        for (const reference of cssReferences(node.source)) {
+            const font = declaredFontSource(reference, declaredFontRoots);
+            if (font) {
+                if (!existsSync(font)) throw new Error(`${node.owner}: dangling font reference ${reference}`);
+                sources.add(font);
+                fontSources.add(font);
+                if (publish) addCopySource(font, node.owner);
+                continue;
+            }
+            if (/^(?:[a-z][a-z+.-]*:|#|\/\/|\/|var\()/i.test(reference)) continue;
+            const target = resolveSourceReference(node.owner, reference);
+            if (!target) throw new Error(`${node.owner}: dangling CSS reference ${reference}`);
+            sources.add(target);
+            if (declaredFontRoots.some(({ sourceRoot }) => target.startsWith(`${sourceRoot}/`))) fontSources.add(target);
+            if (target.endsWith(".css")) {
+                const targetNode = cssNodes.get(target) ?? {
+                    id: target,
+                    owner: target,
+                    source: readFileSync(target, "utf8"),
+                    file: target,
+                };
+                cssNodes.set(target, targetNode);
+                visitCssNode(targetNode, publish);
+            } else if (publish) addCopySource(target, node.owner);
+        }
+    };
+    const visitCss = (path: string, publish = false): void => {
+        if (!existsSync(path)) throw new Error(`style closure: missing source ${path}`);
+        const node = cssNodes.get(path) ?? {
+            id: path,
+            owner: path,
+            source: readFileSync(path, "utf8"),
+            file: path,
+        };
+        cssNodes.set(path, node);
+        visitCssNode(node, publish);
+    };
+    const visitInlineCss = (style: InlineStyle): void => {
+        const node = cssNodes.get(style.id);
+        if (node) visitCssNode(node);
+    };
+    const visitingScripts = new Set<string>();
+    const visitScript = (path: string): void => {
+        if (!path || visitingScripts.has(path) || !existsSync(path)) return;
+        visitingScripts.add(path);
+        sources.add(path);
+        if (path.endsWith(".vue")) {
+            visitVue(path, visitCss, visitInlineCss, visitScript);
+            return;
+        }
+        const source = readFileSync(path, "utf8").replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, "");
+        for (const match of source.matchAll(/(?:import|export)\s+(?:[^"']*?\s+from\s+)?["']([^"']+)["']|import\(\s*["']([^"']+)["']\s*\)/g)) {
+            const reference = match[1] ?? match[2];
+            if (!reference.startsWith(".")) continue;
+            const target = resolveSourceReference(path, reference);
+            if (!target) throw new Error(`${path}: dangling public reference ${reference}`);
+            if (target.endsWith(".css")) visitCss(target);
+            else if (/\.(?:vue|ts|js)$/.test(target)) visitScript(target);
+            else addCopySource(target, path);
+        }
+    };
+    for (const source of Object.values(buildEntrySet(readTree({ repoRoot: root })).entries) as string[]) {
+        visitScript(resolve(root, source));
+    }
+    for (const path of declaredCssRoots) {
+        if (!existsSync(path)) throw new Error(`style closure: declared CSS root is missing ${path}`);
+        visitCss(path, true);
+    }
+    return {
+        sources,
+        copySources,
+        cssSources,
+        fontSources,
+        fontRoots: declaredFontRoots.map(({ sourceRoot }) => sourceRoot),
+        orderedCssSources,
+    };
+}
+
+function copyClosure(root: string, closure: StyleClosure, outputRoot = resolve(root, "dist")): {
     srcFonts: string;
     distStyles: string;
     distComponents: string;
 } {
-    const srcFonts = resolve(root, "src/fonts");
-    const distFonts = resolve(root, "dist/fonts");
+    const distFonts = resolve(outputRoot, "fonts");
     const srcStyles = resolve(root, "src/styles");
-    const distStyles = resolve(root, "dist/styles");
+    const distStyles = resolve(outputRoot, "styles");
     const srcComponents = resolve(root, "src/components");
-    const distComponents = resolve(root, "dist/components");
-
-    if (existsSync(srcFonts)) {
-        cpSync(srcFonts, distFonts, { recursive: true });
-    }
-    if (existsSync(srcStyles)) {
-        cpSync(srcStyles, distStyles, { recursive: true });
-    }
-    if (existsSync(srcComponents)) {
-        cpSync(srcComponents, distComponents, {
+    const distComponents = resolve(outputRoot, "components");
+    const copyFilter = (sourceRoot: string) => (source: string): boolean => {
+        if (source === sourceRoot || closure.copySources.has(source)) return true;
+        if (!existsSync(source)) return false;
+        if (!statSync(source).isDirectory()) return false;
+        return [...closure.copySources].some((candidate) => candidate.startsWith(`${source}/`));
+    };
+    const sourceFonts = resolve(root, "src/fonts");
+    if (root === process.cwd() && outputRoot === resolve(root, "dist")) {
+        cpSync(resolve(process.cwd(), "src/components"), resolve(process.cwd(), "dist/components"), {
             recursive: true,
-            filter: (path) => statSync(path).isDirectory() || path.endsWith(".css"),
+            filter: copyFilter(srcComponents),
+        });
+        cpSync(resolve(process.cwd(), "src/styles"), resolve(process.cwd(), "dist/styles"), {
+            recursive: true,
+            filter: copyFilter(srcStyles),
+        });
+        cpSync(resolve(process.cwd(), "src/fonts"), resolve(process.cwd(), "dist/fonts"), {
+            recursive: true,
+            filter: copyFilter(sourceFonts),
+        });
+    } else {
+        cpSync(resolve(root, "src/components"), resolve(outputRoot, "components"), {
+            recursive: true,
+            filter: copyFilter(srcComponents),
+        });
+        cpSync(resolve(root, "src/styles"), resolve(outputRoot, "styles"), {
+            recursive: true,
+            filter: copyFilter(srcStyles),
+        });
+        cpSync(resolve(root, "src/fonts"), resolve(outputRoot, "fonts"), {
+            recursive: true,
+            filter: copyFilter(sourceFonts),
         });
     }
+    const srcFonts = closure.fontRoots[0];
+    if (!srcFonts) throw new Error("style closure: no declared font export root");
     return { srcFonts, distStyles, distComponents };
 }
 
+export function copyStyleAssets(
+    root: string,
+    closure = collectStyleClosure(root),
+    outputRoot = resolve(root, "dist"),
+): {
+    srcFonts: string;
+    distStyles: string;
+    distComponents: string;
+    closure: StyleClosure;
+} {
+    return { ...copyClosure(root, closure, outputRoot), closure };
+}
+
 function cssFilesUnder(...roots: string[]): string[] {
-    return roots.flatMap((root) =>
-        existsSync(root)
-            ? (readdirSync(root, { recursive: true }) as string[])
-                  .filter((path) => path.endsWith(".css"))
-                  .map((path) => resolve(root, path))
-            : [],
-    );
+    return roots.flatMap((root) => filesUnder(root).filter((path) => path.endsWith(".css")));
 }
 
 function cssFile(path: string): string[] {
@@ -158,7 +462,7 @@ function cssFile(path: string): string[] {
  */
 export function foldSfcBundle(root: string, distStyles: string): void {
     const distIndex = resolve(distStyles, "index.css");
-    const sfcBundle = resolve(root, "dist/glass-ui.css");
+    const sfcBundle = resolve(dirname(distStyles), "glass-ui.css");
     if (existsSync(distIndex) && existsSync(sfcBundle)) {
         const indexSrc = readFileSync(distIndex, "utf-8");
         const sfcImport = '@import "../glass-ui.css";';

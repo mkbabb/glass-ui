@@ -1,0 +1,193 @@
+{
+  "schema": "glass-ui-row8-package-receipt/v1",
+  "terminal": "CLEAN",
+  "modelProvenance": {
+    "contentAdjudicator": {
+      "model": "gpt-5.6-sol",
+      "reasoningEffort": "xhigh"
+    },
+    "receiptMechanicsAuthor": {
+      "model": "gpt-5.6-luna",
+      "reasoningEffort": "xhigh",
+      "session": "019fc365-966a-7cf1-aec4-0ce0848b201f"
+    },
+    "adjudicatorNote": "The adjudicator suggested Sol as receipt author, but prospective law assigns document mechanics to Luna; do not relabel. Model names are facts, not authority widening."
+  },
+  "repository": {
+    "path": "/Users/mkbabb/Programming/glass-ui",
+    "priorCommit": "c0aab9117e8a10dfc302765fd5b119c012c0fff5",
+    "priorTree": "742342ee10e8ea9e154c466ac70cd8203927f7e4"
+  },
+  "preVerificationIntake": {
+    "path": "/Users/mkbabb/Documents/Codex/2026-08-02/glass-row8-pkg-first-adoption-successor/outputs/INTAKE.json",
+    "sha256": "bcea052899056c5d03b5fb74cf5d0c7deb0a023b7674e3b0ee50a4ef8fc60d9d",
+    "bytes": 2074,
+    "regular": true,
+    "mode": "0644",
+    "nlink": 1,
+    "schema": "glass-ui-row8-first-adoption-intake/v1"
+  },
+  "priorTypedMissingProofs": [
+    {
+      "kind": "MISSING",
+      "path": ".bundle-ratchet",
+      "state": "MISSING",
+      "priorCommit": "c0aab9117e8a10dfc302765fd5b119c012c0fff5",
+      "priorTree": "742342ee10e8ea9e154c466ac70cd8203927f7e4",
+      "lookupCommand": "git cat-file -e c0aab9117e8a10dfc302765fd5b119c012c0fff5:.bundle-ratchet",
+      "exit": 128,
+      "noFallback": true
+    },
+    {
+      "kind": "MISSING",
+      "path": "docs/tranches/BK/execution/2026-08-02-row8-pkg-truth/PACKAGE-RECEIPT.json",
+      "state": "MISSING",
+      "priorCommit": "c0aab9117e8a10dfc302765fd5b119c012c0fff5",
+      "priorTree": "742342ee10e8ea9e154c466ac70cd8203927f7e4",
+      "lookupCommand": "git cat-file -e c0aab9117e8a10dfc302765fd5b119c012c0fff5:docs/tranches/BK/execution/2026-08-02-row8-pkg-truth/PACKAGE-RECEIPT.json",
+      "exit": 128,
+      "noFallback": true
+    }
+  ],
+  "immutableTarball": {
+    "path": "/Users/mkbabb/Documents/Codex/2026-08-02/glass-row8-package-candidate-r5-final/outputs/mkbabb-glass-ui-7.0.0.tgz",
+    "sha256": "321eb144a0e638b8dc3b60bca3ef264a1eabd01d137746a17c2162bc0ba0d665",
+    "bytes": 898326,
+    "regular": true,
+    "mode": "0644",
+    "nlink": 1,
+    "tarMembers": 870,
+    "distFiles": 867,
+    "package": "@mkbabb/glass-ui@7.0.0",
+    "soleCandidateFile": true
+  },
+  "ratchet": {
+    "repoPath": ".bundle-ratchet",
+    "sha256": "66be3e85f701657295a2e513fee4291ce36ef23272eae77c05908abd40113d0b",
+    "raw": "898326\n",
+    "bytes": 7,
+    "value": 898326,
+    "canonical": true,
+    "mode": "first-adoption",
+    "equal": true
+  },
+  "graph": {
+    "jsonPath": "docs/tranches/BJ/audits/2026-07-28-library-dag/IMPORT-DAG-V3.json",
+    "jsonSha256": "07b3b2e1f2a1be8503a708d0163b4c08034101b3ad7f0089ad430af3da5bfebe",
+    "summaryPath": "docs/tranches/BJ/audits/2026-07-28-library-dag/IMPORT-DAG-V3-SUMMARY.md",
+    "summarySha256": "e6ad624a5f9ef5cf38c75d11445ebb45e08b7f2f179a8933da1effc8c97741df",
+    "receipt": "05ed678bdfd67add247c86853aa2458c958272af6f657b6c88ee3de2ccde0746",
+    "nodes": 1499,
+    "internalEdges": 3594,
+    "externalEdges": 1983,
+    "unmodeled": 454,
+    "unresolved": 0,
+    "nonliteral": 0,
+    "glob": 0,
+    "parse": 0,
+    "generationCount": 1,
+    "timing": {
+      "real": 10.15,
+      "user": 12.87,
+      "sys": 0.63,
+      "maxRss": 685260800
+    }
+  },
+  "verifier": {
+    "command": "GLASS_PACKAGE_TARBALL=/Users/mkbabb/Documents/Codex/2026-08-02/glass-row8-package-candidate-r5-final/outputs/mkbabb-glass-ui-7.0.0.tgz /usr/bin/time -lp node scripts/verify-export-types.mjs --first-adoption",
+    "invocationCount": 1,
+    "exit": 0,
+    "terminal": "CLEAN",
+    "callerProvided": true,
+    "prePostTarShaAndBytesIdentical": true,
+    "preserved": true,
+    "packInvocations": 0,
+    "claims": 205,
+    "declarations": 483,
+    "css": 114,
+    "publicImports": "67/67",
+    "artifactClosure": 867,
+    "mode": "first-adoption",
+    "datum": 898326,
+    "tarballBytes": 898326,
+    "equal": true,
+    "timing": {
+      "real": 38.13,
+      "user": 28.54,
+      "sys": 6.35,
+      "maxRss": 898138112
+    }
+  },
+  "installedFacts": {
+    "keyframes": {
+      "required": true,
+      "version": "6.0.0",
+      "dependency": "^6.0.0"
+    },
+    "pencil": {
+      "version": "0.11.2",
+      "rootOnly": true
+    },
+    "handmark": {
+      "realPublicSubpath": true
+    },
+    "directGlassPeerRequested": false,
+    "value": {
+      "version": "4.0.0",
+      "dependency": "4.0.0",
+      "installedThrough": "@mkbabb/keyframes.js"
+    },
+    "dependencyStatement": "The packed consumer has no direct Glass peer request for @mkbabb/value.js; @mkbabb/value.js@4.0.0 is explicitly present transitively through required @mkbabb/keyframes.js. This is not a claim of total Value absence."
+  },
+  "frozenPreservation": {
+    "productionGeneration": "2018af13b49afa0643fa7afcc249c4646301b14fd3ef343c654fc6bfb01319a4",
+    "distFiles": 867,
+    "distTreeSha256": "585372f505bf94f002dc265bd2f8948d7cda0b608671b3db1a885728209b4bec",
+    "distDemoFiles": 365,
+    "distDemoTreeSha256": "bf749464edf35506c6c6d42483e7e5c1c6d3b0846cbbe64e5b4134b45cd78206",
+    "componentStyles": {
+      "bytes": 109,
+      "sha256": "7118495220e4b67a184803517dd6c3ff8e9440a0db3455a5ca0eeddb861ac0bc0"
+    },
+    "useAccentToneSha256": "b7c2a9f174513428ea4f9b1ff314d37cc5d6fc8dd6dc36866e57d04b2dc8da53",
+    "architectureTestSha256": "845c46f38feb02717a8687b801b988909ffa026cce98cfea2c205a69ec607444",
+    "packageSha256": "8aee31ef95272c875195769100d8ce665d4e74b6d34b8f464f842ae83113680f",
+    "lockSha256": "dc8cce638f95d191e5e5766337bfd0e3dd9ee3e61f75296b8157a822e6f49e32",
+    "verifierSha256": "d079efd2a1716af62070a3196e83bcd1346a935e72378165c4584bb68719699b",
+    "cleanup": "No verifier temp, lock, generation residue, or duplicate candidate residue."
+  },
+  "priorRedChronology": [
+    "Fresh full suite initially RED only because the dist-demo boot freshness prerequisite was stale.",
+    "Canonical demo build cured that prerequisite with no source edit; the later full suite completed green at 201 files and 1341 tests.",
+    "The final candidate root had an interrupted pre-byte pack attempt leaving outputs empty; later exactly one real pack produced the current tar.",
+    "Default-mode verification on the same tar was operationally CLEAN but law RED because it used later-coordinate mode with untracked datum 898359 instead of required first-adoption equality.",
+    "The current successor reused the same tar and did not repack."
+  ],
+  "evidenceSummary": {
+    "architecture": "29/29",
+    "watchReadyOrdinals": "0-8",
+    "watchArtifactClosure": 867,
+    "productionBuildCount": 1,
+    "demoBuildCount": 1,
+    "fullSuite": "201 files / 1341 tests",
+    "builtDemoBrowser": {
+      "desktop": "1280x720 green",
+      "phone": "390x844 green",
+      "safariCredit": false
+    }
+  },
+  "credits": {
+    "included": "Row8 first-adoption package verification candidate evidence pending two fresh reviews/adjudication and commit.",
+    "explicitZero": [
+      "publication",
+      "release",
+      "mutable-v7 republish",
+      "Safari",
+      "constellation",
+      "crossrepo",
+      "consumer adoption",
+      "total BK"
+    ]
+  },
+  "selfHashIncluded": false
+}

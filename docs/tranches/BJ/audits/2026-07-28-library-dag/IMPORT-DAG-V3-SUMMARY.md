@@ -1,11 +1,11 @@
 # Glass UI repository graph — schema v3
 
-Observed: 2026-07-31T05:52:02.068Z
+Observed: 2026-08-02T19:32:01.968Z
 
 Deterministic receipt (the `observedAt` value is excluded):
-`c0190488b5cf0da953c12425c7f24626a4ab39439106c124a18a81f10133cf90`
+`05ed678bdfd67add247c86853aa2458c958272af6f657b6c88ee3de2ccde0746`
 
-Owner manifest receipt: `e19b663fb671e046727469832be1d160095eb5cb7d3ba54aa2818277043100ba`
+Owner manifest receipt: `b0019134a3a025ce083102e42371167f09810e01be3b41c24f47e68822f36875`
 
 ## Scope and result
 
@@ -33,21 +33,21 @@ package export key maps to exactly one owner.
 
 | Measure | Count |
 | --- | ---: |
-| Nodes | 1501 |
-| Internal edges | 3585 |
-| External edges | 1970 |
+| Nodes | 1499 |
+| Internal edges | 3594 |
+| External edges | 1983 |
 | Owners | 101 |
 | Public entries | 72 |
 | Public symbols | 1283 |
 | Unresolved local references | 0 |
 | Nonliteral local references | 0 |
-| Dynamic nonlocal module references | 0 |
+| Dynamic nonlocal module references | 1 |
 | Dynamic template/style asset expressions | 123 |
 | Unmatched literal globs | 0 |
 | Parse errors | 0 |
-| Unresolved supported filesystem calls and opaque fs-module-promise boundaries | 395 |
-| Process invocations | 11 |
-| Dynamic process arguments | 13 |
+| Unresolved supported filesystem calls and opaque fs-module-promise boundaries | 454 |
+| Process invocations | 18 |
+| Dynamic process arguments | 29 |
 
 ## Node types
 
@@ -59,22 +59,22 @@ Physical/content types remain separate from lifecycle provenance:
 | `declaration` | 3 |
 | `directory` | 23 |
 | `documentation` | 29 |
-| `generated-artifact` | 4 |
+| `generated-artifact` | 1 |
 | `license` | 2 |
-| `package-output` | 137 |
-| `source` | 1154 |
+| `package-output` | 138 |
+| `source` | 1155 |
 | `style` | 131 |
-| `virtual-placeholder` | 9 |
+| `virtual-placeholder` | 8 |
 
 ## Node lifecycle taxonomy
 
 | Kind | Count |
 | --- | ---: |
-| `declared-package-output` | 137 |
+| `declared-package-output` | 138 |
 | `directory` | 20 |
-| `generated-by-write` | 7 |
-| `missing-runtime-placeholder` | 9 |
-| `repository-file` | 1328 |
+| `generated-by-write` | 4 |
+| `missing-runtime-placeholder` | 8 |
+| `repository-file` | 1329 |
 
 `repository-file` is canonical source content even when a tool rewrites it
 (for example, `package.json`). `generated-by-write` requires a real modeled
@@ -96,7 +96,7 @@ never supplies their bytes, hash, or type.
 | `demo` | 195 |
 | `package-surface` | 2 |
 | `product` | 693 |
-| `repository-boundary` | 176 |
+| `repository-boundary` | 174 |
 | `scripts-generators` | 16 |
 | `tests` | 214 |
 | `visual-tests` | 191 |
@@ -113,21 +113,21 @@ queries directly joinable without conflating them.
 | `asset-url` | 8 |
 | `build-entry` | 69 |
 | `css-import` | 113 |
-| `eager-runtime` | 3352 |
+| `eager-runtime` | 3367 |
 | `export-from` | 475 |
-| `file-read` | 32 |
+| `file-read` | 42 |
 | `file-write` | 4 |
 | `finite-dynamic` | 2 |
-| `generator-read` | 13 |
-| `generator-write` | 12 |
+| `generator-read` | 8 |
+| `generator-write` | 7 |
 | `glob-lazy` | 107 |
-| `literal-dynamic` | 68 |
+| `literal-dynamic` | 70 |
 | `literal-require` | 2 |
-| `new-url` | 125 |
+| `new-url` | 127 |
 | `package-export` | 140 |
 | `package-side-effect` | 4 |
-| `require-resolve` | 1 |
-| `type-only` | 943 |
+| `require-resolve` | 2 |
+| `type-only` | 945 |
 | `types-version` | 66 |
 | `vue-block` | 19 |
 
@@ -135,9 +135,9 @@ queries directly joinable without conflating them.
 
 | View | Edges | File cycles | Owner cycles |
 | --- | ---: | ---: | ---: |
-| `eagerRuntime` | 2220 | 2 | 3 |
-| `buildLoad` | 3456 | 10 | 3 |
-| `ownership` | 3585 | 10 | 3 |
+| `eagerRuntime` | 2223 | 2 | 3 |
+| `buildLoad` | 3463 | 10 | 3 |
+| `ownership` | 3594 | 10 | 3 |
 
 `eagerRuntime` excludes type-only, lazy, CSS/asset, and generator reach.
 `buildLoad` adds compile/load/package/generator relations.
@@ -225,7 +225,7 @@ are modeled when their path expression can be reduced from literals,
 `resolve`/`join`, `new URL(..., import.meta.url)`, and lexical bindings;
 unresolved supported filesystem calls and opaque fs-module-promise boundaries
 remain counted in `unmodeledFileOperations` and are not represented as false
-edges. This snapshot contains 395 such
+edges. This snapshot contains 454 such
 ledger rows; this is not an exhaustive census of Node filesystem activity.
 Literal CommonJS `require` and
 `createRequire` targets are graph edges; `exec`/`execFile`/`spawn`/`fork`

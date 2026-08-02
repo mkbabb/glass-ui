@@ -4,7 +4,7 @@ import { dirname, resolve } from "node:path";
 import postcss from "postcss";
 import tailwindcss from "@tailwindcss/postcss";
 
-import { terminalImportIndex } from "./vite.style-fold";
+import { collectStyleClosure, terminalImportIndex, type StyleClosure } from "./vite.style-fold";
 
 const require_ = createRequire(import.meta.url);
 
@@ -69,8 +69,9 @@ const require_ = createRequire(import.meta.url);
 export async function emitComponentUtilities(
     root: string,
     distStyles: string,
+    closure: StyleClosure = collectStyleClosure(root),
 ): Promise<void> {
-    const dist = resolve(root, "dist");
+    const dist = resolve(distStyles, "..");
     const themePath = resolve(root, "src/styles/theme.css");
     if (!existsSync(dist) || !existsSync(themePath)) return;
 
@@ -174,19 +175,10 @@ export async function emitComponentUtilities(
     }
 
     const glassDefined = new Set<string>();
-    const srcStyles = resolve(root, "src/styles");
-    if (existsSync(srcStyles)) {
-        const declRe = /(?:^|[\s;{])(--[a-zA-Z0-9_-]+)\s*:/g;
-        for (const f of readdirSync(srcStyles).filter((n) => n.endsWith(".css"))) {
-            // Strip CSS block comments so a `--token` mentioned in prose is not
-            // mistaken for a declaration.
-            const css = readFileSync(resolve(srcStyles, f), "utf-8").replace(
-                /\/\*[\s\S]*?\*\//g,
-                "",
-            );
-            let d: RegExpExecArray | null;
-            while ((d = declRe.exec(css))) glassDefined.add(d[1]);
-        }
+    for (const path of closure.cssSources) {
+        postcss.parse(readFileSync(path, "utf-8")).walkDecls((decl) => {
+            if (decl.prop.startsWith("--")) glassDefined.add(decl.prop);
+        });
     }
 
     const referenced = new Set<string>();
@@ -209,21 +201,37 @@ export async function emitComponentUtilities(
     const houseAlias: Record<string, string> = {
         "--default-transition-duration": "var(--duration-fast, 150ms)",
     };
-    const baseBlock =
-        baseProps.length === 0
-            ? ""
-            : "/* R3 — Tailwind's OWN built-in theme defaults (--spacing, the\n" +
-              "   --text-* ladder, --ease-in-out, …) the kept utilities reference;\n" +
-              "   glass-ui ships its own radius/color/text bases, so ONLY the\n" +
-              "   Tailwind-owned props NOT in glass-ui's tokens are emitted here so\n" +
-              "   spacing/typography utilities paint for a bare consumer. PKT-1 —\n" +
-              "   the felt-duration default routes THROUGH --duration-fast so the\n" +
-              "   dist never re-declares a bare 150ms over a consumer's @theme. */\n" +
-              ":root {\n" +
-              baseProps
-                  .map((p) => `    ${p}: ${houseAlias[p] ?? themeOwned.get(p)};`)
-                  .join("\n") +
-              "\n}\n";
+    const fallbackFor = new Map(
+        baseProps.map((property) => [
+            property,
+            houseAlias[property] ?? themeOwned.get(property) ?? "initial",
+        ]),
+    );
+    const rewriteFallbackValue = (value: string): string => {
+        let output = "";
+        for (let index = 0; index < value.length; index++) {
+            if (!value.startsWith("var(", index)) {
+                output += value[index];
+                continue;
+            }
+            let depth = 0;
+            let end = index;
+            for (; end < value.length; end++) {
+                if (value[end] === "(") depth++;
+                else if (value[end] === ")" && --depth === 0) break;
+            }
+            const body = value.slice(index + 4, end);
+            const comma = body.indexOf(",");
+            const property = body.slice(0, comma === -1 ? undefined : comma).trim();
+            const fallback = fallbackFor.get(property);
+            output += `var(${body}${fallback && comma === -1 ? `, ${fallback}` : ""})`;
+            index = end;
+        }
+        return output;
+    };
+    kept.walkDecls((decl) => {
+        decl.value = rewriteFallbackValue(decl.value);
+    });
 
     const header =
         "/* P9 — glass-ui's own component-utility rules, emitted build-\n" +
@@ -232,7 +240,7 @@ export async function emitComponentUtilities(
         "   vite.style-assets.ts emitComponentUtilities; do not hand-edit. */\n";
     writeFileSync(
         resolve(distStyles, "components.css"),
-        header + baseBlock + kept.toString() + "\n",
+        header + kept.toString() + "\n",
         "utf-8",
     );
 

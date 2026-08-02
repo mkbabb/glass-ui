@@ -14,7 +14,6 @@ import {
     type Result,
 } from "@mkbabb/value.js/color";
 import { parseCssColor } from "@mkbabb/value.js/css";
-import { solveAccentInk } from "@glass/composables/color/accent-tone-solve";
 
 function value<T>(result: Result<T, ColorIssue>): T {
     if (!result.ok) throw new Error(result.error.code);
@@ -71,6 +70,76 @@ const TONES = [
     "oklch(0.7 0.15 145)", // green
 ];
 
+describe("useAccentTone controlled cache boundaries", () => {
+    it("quietly caches a rejected lazy module for every same-key consumer", async () => {
+        const unhandled: unknown[] = [];
+        const onUnhandled = (reason: unknown) => unhandled.push(reason);
+        process.on("unhandledRejection", onUnhandled);
+        try {
+            vi.resetModules();
+            const isolated = await import("@glass/composables/color/useAccentTone");
+            const loadSpy = vi
+                .spyOn(isolated.accentToneSolveBoundary, "load")
+                .mockRejectedValue(new Error("controlled optional module absence"));
+            const { useAccentTone: isolatedUseAccentTone } = isolated;
+            const sameA = isolatedUseAccentTone(() => "#d14a7c");
+            const sameB = isolatedUseAccentTone(() => "#d14a7c");
+            const differentA = isolatedUseAccentTone(() => "#2a7bd6");
+            const differentB = isolatedUseAccentTone(() => "#2a7bd6");
+            expect(sameA.ink.value).toBe("");
+            expect(sameB.ink.value).toBe("");
+            expect(differentA.ink.value).toBe("");
+            expect(differentB.ink.value).toBe("");
+            expect(loadSpy).toHaveBeenCalledTimes(1);
+            await new Promise((resolve) => setTimeout(resolve, 0));
+            expect(sameA.ink.value).toBe("");
+            expect(sameB.ink.value).toBe("");
+            expect(differentA.ink.value).toBe("");
+            expect(differentB.ink.value).toBe("");
+            const postReject = isolatedUseAccentTone(() => "#4c9f70");
+            expect(postReject.ink.value).toBe("");
+            await vi.waitFor(() => expect(postReject.ink.value).toBe(""));
+            expect(loadSpy).toHaveBeenCalledTimes(1);
+            expect(isolatedUseAccentTone(() => "#d14a7c").ink.value).toBe("");
+            expect(isolatedUseAccentTone(() => "#4c9f70").ink.value).toBe("");
+            expect(loadSpy).toHaveBeenCalledTimes(1);
+            await new Promise((resolve) => setTimeout(resolve, 0));
+            expect(unhandled).toEqual([]);
+            loadSpy.mockRestore();
+        } finally {
+            process.removeListener("unhandledRejection", onUnhandled);
+            vi.resetModules();
+        }
+    });
+
+    it("surfaces a solver failure distinctly and caches it without retrying", async () => {
+        const unhandled: unknown[] = [];
+        const onUnhandled = (reason: unknown) => unhandled.push(reason);
+        process.on("unhandledRejection", onUnhandled);
+        try {
+            vi.resetModules();
+            const { useAccentTone: isolatedUseAccentTone } = await import("@glass/composables/color/useAccentTone");
+            const failedA = isolatedUseAccentTone(() => "not-a-color");
+            const failedB = isolatedUseAccentTone(() => "not-a-color");
+            const healthy = isolatedUseAccentTone(() => "#2a7bd6");
+            expect(failedA.ink.value).toBe("");
+            expect(failedB.ink.value).toBe("");
+            expect(healthy.ink.value).toBe("");
+            await vi.waitFor(() => {
+                expect(() => failedA.ink.value).toThrow(/solveAccentInk:tone/);
+                expect(() => failedB.ink.value).toThrow(/solveAccentInk:tone/);
+                expect(healthy.ink.value).toMatch(/^oklch\(/);
+            });
+            expect(() => isolatedUseAccentTone(() => "not-a-color").ink.value).toThrow(/solveAccentInk:tone/);
+            await new Promise((resolve) => setTimeout(resolve, 0));
+            expect(unhandled).toEqual([]);
+        } finally {
+            process.removeListener("unhandledRejection", onUnhandled);
+            vi.resetModules();
+        }
+    });
+});
+
 describe("useAccentTone — the contrast-safe ink contract", () => {
     it("a var(--…) tone passes through (no resolved override — the CSS fallback ink)", () => {
         const { ink, toneStyle } = useAccentTone(() => "var(--section-color-7)");
@@ -86,6 +155,25 @@ describe("useAccentTone — the contrast-safe ink contract", () => {
         await settledInk(() => ink.value);
         expect(ink.value).toMatch(/^oklch\(/);
         expect(toneStyle.value["--accent-ink-resolved"]).toBe(ink.value);
+    });
+
+    it("settles every concurrent same-key consumer and keeps different keys independent", async () => {
+        const sameKey = "oklch(0.471 0.137 123.4)";
+        const otherKey = "oklch(0.471 0.137 124.4)";
+        const first = useAccentTone(() => sameKey);
+        const second = useAccentTone(() => sameKey);
+        const other = useAccentTone(() => otherKey);
+
+        expect(first.ink.value).toBe("");
+        expect(second.ink.value).toBe("");
+        expect(other.ink.value).toBe("");
+        await Promise.all([
+            settledInk(() => first.ink.value),
+            settledInk(() => second.ink.value),
+            settledInk(() => other.ink.value),
+        ]);
+        expect(second.ink.value).toBe(first.ink.value);
+        expect(other.ink.value).toMatch(/^oklch\(/);
     });
 
     it("over the LIGHT card: the band is light, so the ink resolves DARK", async () => {
@@ -128,8 +216,11 @@ describe("useAccentTone — the contrast-safe ink contract", () => {
         expect(tightRatio).toBeGreaterThan(looseRatio);
     });
 
-    it("an unparseable concrete tone fails explicitly", () => {
-        expect(() => solveAccentInk("not-a-color")).toThrow(
+    it("an unparseable concrete tone fails explicitly", async () => {
+        const { solveAccentInk: actualSolveAccentInk } = await vi.importActual<
+            typeof import("@glass/composables/color/accent-tone-solve")
+        >("@glass/composables/color/accent-tone-solve");
+        expect(() => actualSolveAccentInk("not-a-color")).toThrow(
             /solveAccentInk:tone/,
         );
     });

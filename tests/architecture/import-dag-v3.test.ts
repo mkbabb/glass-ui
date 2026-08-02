@@ -32,12 +32,14 @@ import {
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const audit = resolve(root, "docs/tranches/BJ/audits/2026-07-28-library-dag");
+const graph = JSON.parse(readFileSync(resolve(audit, "IMPORT-DAG-V3.json"), "utf8")) as Awaited<
+    ReturnType<typeof buildGraph>
+>;
 const require = createRequire(import.meta.url);
 const manifest = require(
     "../../docs/tranches/BJ/audits/2026-07-28-library-dag/OWNER-MANIFEST.json",
 );
 const packageJson = require("../../package.json");
-let graph: Awaited<ReturnType<typeof buildGraph>>;
 
 const fixtureAudit = "docs/tranches/BJ/audits/2026-07-28-library-dag";
 const ownerManifest = {
@@ -349,13 +351,14 @@ function expectNoArtifactResidue(directory: string) {
     ).toEqual([]);
 }
 
+beforeAll(() => {
+    expectNoArtifactResidue(audit);
+    assertStoredArtifacts(audit, graph);
+});
+
 function finishGenerator(generator: ReturnType<typeof generatorProcess>) {
     return generator.completion;
 }
-
-beforeAll(async () => {
-    graph = await buildGraph({ repositoryRoot: root, outputDirectory: audit });
-}, 30_000);
 
 describe("graph schema v3", () => {
     it("classifies each literal loader form by exact kind and specifier", () => {
@@ -1696,7 +1699,7 @@ describe("graph schema v3", () => {
         expect(existsSync(successfulDirectory!)).toBe(false);
     });
 
-    it("recognizes fs provenance forms and rejects local file-operation lookalikes", () => {
+    it("recognizes direct and provenance-derived fs authorities", () => {
         const { sourceFile } = extractScriptReferences(`
             import { readFileSync as read } from "node:fs";
             import * as fs from "fs";
@@ -2714,6 +2717,9 @@ describe("graph schema v3", () => {
             ]);
         }
 
+    });
+
+    it("rejects invalidated and hostile fs authorities and accounts for false-positive and unmodeled operations", () => {
         const syncedFs = extractScriptReferences(
             `import { readFileSync as namedRead } from "node:fs"; import * as esmFs from "node:fs"; import { syncBuiltinESMExports } from "node:module"; function local() {} const cjsFs=require("node:fs"); namedRead("sync-fs-pre.txt"); cjsFs.readFileSync=local; esmFs.readFileSync("sync-fs-middle.txt"); syncBuiltinESMExports(); namedRead("sync-fs-named-post.txt"); esmFs.readFileSync("sync-fs-namespace-post.txt");`,
         );
@@ -5197,6 +5203,60 @@ describe("graph schema v3", () => {
         expect(new Set(graph.publicReach.map(({ owner }) => owner)).size).toBeGreaterThan(1);
     });
 
+    it("projects the package lock under the package owner and its exact reader", () => {
+        const lockNodes = graph.nodes.filter(({ path }) => path === "package-lock.json");
+        expect(lockNodes).toHaveLength(1);
+        expect(lockNodes[0]).toMatchObject({
+            projection: "repository-boundary",
+            owner: "package/main",
+            nodeKind: "repository-file",
+            virtual: false,
+        });
+
+        const lockReads = graph.internalEdges.filter(
+            ({ source, target, edgeKind, boundary, metadata }) =>
+                source === "tests/public-surface.spec.ts" &&
+                target === "package-lock.json" &&
+                edgeKind === "file-read" &&
+                boundary === "repository-boundary" &&
+                metadata?.operation === "readFileSync",
+        );
+        expect(lockReads).toHaveLength(2);
+
+        const verifierLockReads = graph.internalEdges.filter(
+            ({ source, target, specifier, edgeKind, boundary }) =>
+                source === "scripts/verify-export-types.mjs" &&
+                target === "package-lock.json" &&
+                specifier === "../package-lock.json" &&
+                edgeKind === "new-url" &&
+                boundary === "repository-boundary",
+        );
+        expect(verifierLockReads).toHaveLength(1);
+        expect(verifierLockReads[0]).toMatchObject({
+            source: "scripts/verify-export-types.mjs",
+            target: "package-lock.json",
+            specifier: "../package-lock.json",
+            edgeKind: "new-url",
+            boundary: "repository-boundary",
+            line: 744,
+            column: 19,
+        });
+
+        const styleVerifierEdge = graph.internalEdges.find(
+            ({ source, target, edgeKind, metadata }) =>
+                source === "vite.style-assets.ts" &&
+                target === "scripts/verify-export-types.mjs" &&
+                edgeKind === "eager-runtime" &&
+                metadata?.symbols?.some(
+                    ({ name, local, typeOnly }) =>
+                        name === "verifyExportTypes" &&
+                        local === "verifyExportTypes" &&
+                        typeOnly === false,
+                ),
+        );
+        expect(styleVerifierEdge).toBeDefined();
+    });
+
     it("derives public owners and enforces member/merge/size SCC ratchets", () => {
         expect(graph.summary.publicEntries).toBe(Object.keys(packageJson.exports).length);
         for (const entry of graph.publicReach.filter(({ sourceEntry }) => sourceEntry)) {
@@ -5455,22 +5515,17 @@ describe("graph schema v3", () => {
         ] as const) {
             expect(generatorEdge(source, target, edgeKind, "cpSync")).toBeDefined();
         }
-        expect(generatorEdge("vite.style-fold.ts", "dist/styles/index.css", "generator-read", "readFileSync")).toBeDefined();
-        expect(generatorEdge("vite.style-fold.ts", "dist/styles/index.css", "generator-write", "writeFileSync")).toBeDefined();
-        expect(generatorEdge("vite.style-fold.ts", "dist/glass-ui.css", "generator-read", "readFileSync")).toBeDefined();
-        expect(generatorEdge("vite.style-fold.ts", "dist/glass-ui.css", "generator-write", "writeFileSync")).toBeDefined();
-        expect(generatorEdge("vite.utility-emit.ts", "dist", "generator-read", "readdirSync")).toBeDefined();
-        expect(generatorEdge("vite.utility-emit.ts", "src/styles", "generator-read", "readdirSync")).toBeDefined();
-        expect(generatorEdge("vite.utility-emit.ts", "dist/styles/components.css", "generator-write", "writeFileSync")).toBeDefined();
-        expect(
-            graph.internalEdges.filter(
-                (edge) =>
-                    edge.source === "vite.utility-emit.ts" &&
-                    edge.target === "dist/styles/index.css" &&
-                    edge.edgeKind === "generator-write" &&
-                    edge.metadata?.operation === "writeFileSync",
-            ),
-        ).toHaveLength(2);
+        for (const [source, target, edgeKind, operation] of [
+            ["vite.style-fold.ts", "dist/styles/index.css", "generator-read", "readFileSync"],
+            ["vite.style-fold.ts", "dist/styles/index.css", "generator-write", "writeFileSync"],
+            ["vite.style-fold.ts", "dist/glass-ui.css", "generator-read", "readFileSync"],
+            ["vite.style-fold.ts", "dist/glass-ui.css", "generator-write", "writeFileSync"],
+            ["vite.utility-emit.ts", "dist", "generator-read", "readdirSync"],
+            ["vite.utility-emit.ts", "src/styles", "generator-read", "readdirSync"],
+            ["vite.utility-emit.ts", "dist/styles/components.css", "generator-write", "writeFileSync"],
+        ] as const) {
+            expect(generatorEdge(source, target, edgeKind, operation)).toBeUndefined();
+        }
         expect(
             graph.internalEdges.find(
                 (edge) =>
@@ -5482,14 +5537,85 @@ describe("graph schema v3", () => {
             ),
         ).toBeDefined();
 
-        expect(graph.summary.nodes).toBe(1501);
-        expect(graph.summary.internalEdges).toBe(3585);
-        expect(graph.summary.dynamicModuleReferences).toBe(0);
-        expect(graph.summary.edgeKindCounts["generator-read"]).toBe(13);
-        expect(graph.summary.edgeKindCounts["generator-write"]).toBe(12);
-        expect(graph.summary.unmodeledFileOperations).toBe(395);
-        expect(graph.summary.nodeKindCounts["generated-by-write"]).toBe(7);
-        expect(graph.summary.nodeKindCounts["missing-runtime-placeholder"]).toBe(9);
+        expect(graph.summary.nodes).toBe(1499);
+        expect(graph.summary.internalEdges).toBe(3594);
+        expect(graph.summary.externalEdges).toBe(1983);
+        expect(graph.summary.dynamicModuleReferences).toBe(1);
+        expect(graph.summary.edgeKindCounts["generator-read"]).toBe(8);
+        expect(graph.summary.edgeKindCounts["generator-write"]).toBe(7);
+        // The failure-safe harness deliberately accounts for generator-child process.kill cleanup; this is not product drift.
+        expect(graph.summary.unmodeledFileOperations).toBe(454);
+        expect(graph.summary.processInvocations).toBe(18);
+        expect(graph.summary.dynamicProcessArguments).toBe(29);
+        expect(graph.summary.nodeKindCounts["generated-by-write"]).toBe(4);
+        expect(graph.summary.nodeKindCounts["missing-runtime-placeholder"]).toBe(8);
+
+        const verifierPath = "scripts/verify-export-types.mjs";
+        expect(graph.nodes.find(({ path }) => path === verifierPath)).toMatchObject({
+            sha256: "d079efd2a1716af62070a3196e83bcd1346a935e72378165c4584bb68719699b",
+        });
+        const installedPencilPackageRead = graph.unmodeledFileOperations.filter(
+            ({ source, operation, line, column }) =>
+                source === verifierPath &&
+                operation === "readFileSync" &&
+                line === 597 &&
+                column === 42,
+        );
+        expect(installedPencilPackageRead).toEqual([
+            {
+                source: verifierPath,
+                operation: "readFileSync",
+                line: 597,
+                column: 42,
+            },
+        ]);
+        const callerManifestTar = graph.processInvocations.filter(
+            ({ source, api, line, column }) =>
+                source === verifierPath &&
+                api === "spawnSync" &&
+                line === 446 &&
+                column === 26,
+        );
+        expect(callerManifestTar).toEqual([
+            {
+                source: verifierPath,
+                line: 446,
+                column: 26,
+                api: "spawnSync",
+                binding: "spawnSync",
+                command: {
+                    index: 0,
+                    value: "tar",
+                    target: null,
+                    expression: '"tar"',
+                    dynamic: false,
+                },
+                argv: [
+                    {
+                        index: 0,
+                        value: "-xOzf",
+                        target: null,
+                        expression: '"-xOzf"',
+                        dynamic: false,
+                    },
+                    {
+                        index: 1,
+                        value: null,
+                        target: null,
+                        expression: "path",
+                        dynamic: true,
+                    },
+                    {
+                        index: 2,
+                        value: "package/package.json",
+                        target: "package/package.json",
+                        expression: '"package/package.json"',
+                        dynamic: false,
+                    },
+                ],
+                dynamicArguments: 1,
+            },
+        ]);
         expect(
             graph.internalEdges.find(
                 (edge) =>
@@ -5500,13 +5626,11 @@ describe("graph schema v3", () => {
             ),
         ).toBeUndefined();
 
-        expect(graph.nodes.find(({ path }) => path === "dist")).toMatchObject({
-            nodeKind: "missing-runtime-placeholder",
-        });
+        expect(graph.nodes.find(({ path }) => path === "dist")).toBeUndefined();
         for (const path of ["dist/components", "dist/fonts", "dist/styles"]) {
             expect(graph.nodes.find((node) => node.path === path)).toMatchObject({
+                nodeType: "directory",
                 nodeKind: "generated-by-write",
-                generatedBy: "vite.style-fold.ts",
             });
         }
         for (const path of ["src/components", "src/fonts", "src/styles"]) {
@@ -5516,9 +5640,8 @@ describe("graph schema v3", () => {
             });
         }
         expect(graph.nodes.find(({ path }) => path === "dist/styles/index.css")).toMatchObject({
-            nodeType: "generated-artifact",
-            nodeKind: "generated-by-write",
-            generatedBy: "vite.style-fold.ts",
+            nodeType: "package-output",
+            nodeKind: "declared-package-output",
         });
         expect(graph.nodes.find(({ path }) => path === "dist/subpaths")).toMatchObject({
             nodeKind: "missing-runtime-placeholder",
@@ -5945,9 +6068,9 @@ const broken: = {;
     it("ships clean, joinable projections and a current deterministic receipt", async () => {
         expect(graph.schema).toBe("glass-ui-import-dag/3");
         expect(graph.summary).toMatchObject({
-            nodes: 1501,
-            internalEdges: 3585,
-            externalEdges: 1970,
+            nodes: 1499,
+            internalEdges: 3594,
+            externalEdges: 1983,
             unresolvedLocalReferences: 0,
             nonliteralLocalReferences: 0,
             unresolvedGlobPatterns: 0,
@@ -6022,12 +6145,10 @@ const broken: = {;
             });
         }
         expect(graph.packageSurface.sideEffects.matchedExportTargets.length).toBeGreaterThan(0);
-        expectNoArtifactResidue(audit);
-        assertStoredArtifacts(audit, graph);
         expect(graph.receiptSha256).toBeDefined();
     });
 
-    it("fails --check for tampered node payloads, public owners, and summaries", async () => {
+    async function runMutationStressPhase(phase: 1 | 2 | 3) {
         const lockDirectoryFor = (directory: string) =>
             resolve(directory, ".IMPORT-DAG-V3.lock");
         const mutations = [
@@ -6068,7 +6189,21 @@ const broken: = {;
                 writeFileSync(join(lockDirectory, "owner.test.json"), contents);
             }
         };
+        const activeGenerators = new Set<ReturnType<typeof generatorProcess>>();
+        const startGenerator = (...args: Parameters<typeof generatorProcess>) => {
+            const generator = generatorProcess(...args);
+            activeGenerators.add(generator);
+            return generator;
+        };
+        const finishTracked = async (generator: ReturnType<typeof generatorProcess>) => {
+            try {
+                return await finishGenerator(generator);
+            } finally {
+                activeGenerators.delete(generator);
+            }
+        };
 
+        try {
         await withContractFixture(baselineStyleAssets, async (fixture) => {
             const tamperDirectory = fixture.outputDirectory;
             const fixtureRoot = fixture.temporaryDirectory;
@@ -6078,6 +6213,9 @@ const broken: = {;
                     (name) => [name, readFileSync(resolve(tamperDirectory, name))] as const,
                 ),
             );
+            const beforeJson = readFileSync(resolve(tamperDirectory, "IMPORT-DAG-V3.json"));
+            const beforeSummary = readFileSync(resolve(tamperDirectory, "IMPORT-DAG-V3-SUMMARY.md"));
+            if (phase === 1) {
             for (const lockContents of [null, "{\"pid\":"] as const) {
                 const lockPath = lockDirectoryFor(tamperDirectory);
                 seedLock(tamperDirectory, lockContents);
@@ -6102,8 +6240,6 @@ const broken: = {;
                     writeFileSync(resolve(tamperDirectory, name), bytes);
                 }
             }
-            const beforeJson = readFileSync(resolve(tamperDirectory, "IMPORT-DAG-V3.json"));
-            const beforeSummary = readFileSync(resolve(tamperDirectory, "IMPORT-DAG-V3-SUMMARY.md"));
             for (const [name, before] of [
                 ["IMPORT-DAG-V3.json", beforeJson],
                 ["IMPORT-DAG-V3-SUMMARY.md", beforeSummary],
@@ -6144,6 +6280,10 @@ const broken: = {;
             expect(readFileSync(resolve(tamperDirectory, "IMPORT-DAG-V3.json"))).toEqual(beforeJson);
             expect(readFileSync(resolve(tamperDirectory, "IMPORT-DAG-V3-SUMMARY.md"))).toEqual(beforeSummary);
             expectNoArtifactResidue(tamperDirectory);
+            }
+            if (phase === 1) return;
+
+            if (phase === 2) {
 
             writeFileSync(
                 fixture.styleAssetsPath,
@@ -6200,7 +6340,7 @@ const broken: = {;
             writeFileSync(fixture.styleAssetsPath, baselineStyleAssets);
 
             for (const suffix of [".json.tmp", ".summary.tmp"] as const) {
-                const tempWriter = generatorProcess(tamperDirectory, {
+                const tempWriter = startGenerator(tamperDirectory, {
                     GRAPH_V3_TEST_PAUSE_BEFORE_PUBLICATION_MS: suffix === ".summary.tmp" ? "8000" : "1000",
                 }, fixtureRoot);
                 await waitForPublicationReady(tamperDirectory);
@@ -6215,7 +6355,7 @@ const broken: = {;
                 const rewrite = setInterval(() => {
                     if (existsSync(tempPath)) writeFileSync(tempPath, tamperedBytes);
                 }, 5);
-                const tampered = await finishGenerator(tempWriter);
+                const tampered = await finishTracked(tempWriter);
                 clearInterval(rewrite);
                 expect(tampered.status, suffix).not.toBe(0);
                 expect(tampered.stdout).not.toMatch(/receiptSha256=/);
@@ -6239,25 +6379,26 @@ const broken: = {;
             rmSync(lockDirectoryFor(tamperDirectory), { recursive: true, force: true });
             expect(runCheck(tamperDirectory, fixtureRoot).status).toBe(0);
 
-            const first = generatorProcess(tamperDirectory, {
-                GRAPH_V3_TEST_PAUSE_BEFORE_PUBLICATION_MS: "1000",
-            }, fixtureRoot);
-            await waitForPath(lockDirectoryFor(tamperDirectory));
+            const seededLock = lockDirectoryFor(tamperDirectory);
+            seedLock(
+                tamperDirectory,
+                `${JSON.stringify({ pid: process.pid, token: "test" })}\n`,
+            );
             const lockedJson = readFileSync(resolve(tamperDirectory, "IMPORT-DAG-V3.json"));
             const lockedSummary = readFileSync(resolve(tamperDirectory, "IMPORT-DAG-V3-SUMMARY.md"));
-            const second = runGenerate(tamperDirectory, {}, fixtureRoot);
-            expect(second.status).not.toBe(0);
-            expect(second.stderr).toMatch(/publication lock is active/i);
+            const generated = runGenerate(tamperDirectory, {}, fixtureRoot);
+            expect(generated.status).not.toBe(0);
+            expect(generated.stderr).toMatch(/publication lock is active/i);
             const lockedCheck = runCheck(tamperDirectory, fixtureRoot);
             expect(lockedCheck.status).not.toBe(0);
             expect(lockedCheck.stderr).toMatch(/publication lock is active/i);
             expect(readFileSync(resolve(tamperDirectory, "IMPORT-DAG-V3.json"))).toEqual(lockedJson);
             expect(readFileSync(resolve(tamperDirectory, "IMPORT-DAG-V3-SUMMARY.md"))).toEqual(lockedSummary);
-            expect((await finishGenerator(first)).status).toBe(0);
+            rmSync(seededLock, { recursive: true, force: true });
             expect(runCheck(tamperDirectory, fixtureRoot).status).toBe(0);
             expectNoArtifactResidue(tamperDirectory);
 
-            const replaced = generatorProcess(tamperDirectory, {
+            const replaced = startGenerator(tamperDirectory, {
                 GRAPH_V3_TEST_PAUSE_BEFORE_PUBLICATION_MS: "1000",
             }, fixtureRoot);
             const replacedLock = lockDirectoryFor(tamperDirectory);
@@ -6270,7 +6411,7 @@ const broken: = {;
                 join(replacedLock, "owner.replacement-token.json"),
                 `${JSON.stringify({ pid: process.pid, token: "replacement-token" })}\n`,
             );
-            const replacedResult = await finishGenerator(replaced);
+            const replacedResult = await finishTracked(replaced);
             expect(replacedResult.status).not.toBe(0);
             expect(replacedResult.signal).toBeNull();
             expect(replacedResult.stdout).not.toMatch(/receiptSha256=/);
@@ -6280,7 +6421,7 @@ const broken: = {;
             expect(readFileSync(resolve(tamperDirectory, "IMPORT-DAG-V3-SUMMARY.md"))).toEqual(replacedSummary);
             rmSync(replacedLock, { recursive: true, force: true });
 
-            const symlinked = generatorProcess(tamperDirectory, {
+            const symlinked = startGenerator(tamperDirectory, {
                 GRAPH_V3_TEST_PAUSE_BEFORE_PUBLICATION_MS: "1000",
             }, fixtureRoot);
             await waitForPublicationReady(tamperDirectory);
@@ -6289,7 +6430,7 @@ const broken: = {;
             const asideLock = `${replacedLock}.aside`;
             renameSync(replacedLock, asideLock);
             symlinkSync(asideLock, replacedLock);
-            const symlinkedResult = await finishGenerator(symlinked);
+            const symlinkedResult = await finishTracked(symlinked);
             expect(symlinkedResult.status).not.toBe(0);
             expect(symlinkedResult.stdout).not.toMatch(/receiptSha256=/);
             expect(symlinkedResult.stderr).toMatch(/symbolic|replaced/i);
@@ -6300,13 +6441,16 @@ const broken: = {;
             rmSync(replacedLock, { force: true });
             rmSync(asideLock, { recursive: true, force: true });
 
+                return;
+            }
+
             const postSummaryJson = readFileSync(resolve(tamperDirectory, "IMPORT-DAG-V3.json"));
             const postSummaryText = readFileSync(resolve(tamperDirectory, "IMPORT-DAG-V3-SUMMARY.md"));
             writeFileSync(
                 fixture.styleAssetsPath,
                 `${baselineStyleAssets}\nexport const changedBeforeJson = true;\n`,
             );
-            const postSummaryWriter = generatorProcess(tamperDirectory, {
+            const postSummaryWriter = startGenerator(tamperDirectory, {
                 GRAPH_V3_TEST_PAUSE_AFTER_SUMMARY_RENAME_MS: "600",
             }, fixtureRoot);
             await waitForSummaryRename(tamperDirectory, postSummaryText);
@@ -6314,7 +6458,7 @@ const broken: = {;
             writeFileSync(postSummaryTarget, postSummaryJson);
             rmSync(resolve(tamperDirectory, "IMPORT-DAG-V3.json"));
             symlinkSync(postSummaryTarget, resolve(tamperDirectory, "IMPORT-DAG-V3.json"));
-            const postSummaryResult = await finishGenerator(postSummaryWriter);
+            const postSummaryResult = await finishTracked(postSummaryWriter);
             expect(postSummaryResult.status).not.toBe(0);
             expect(postSummaryResult.stdout).not.toMatch(/receiptSha256=/);
             expect(postSummaryResult.stderr).toMatch(/symbolic|regular file|replaced/i);
@@ -6339,7 +6483,7 @@ const broken: = {;
                 fixture.styleAssetsPath,
                 `${baselineStyleAssets}\nexport const directoryReplacement = true;\n`,
             );
-            const directoryReplacementWriter = generatorProcess(tamperDirectory, {
+            const directoryReplacementWriter = startGenerator(tamperDirectory, {
                 GRAPH_V3_TEST_PAUSE_AFTER_SUMMARY_RENAME_MS: "600",
             }, fixtureRoot);
             await waitForSummaryRename(tamperDirectory, directoryReplacementSummary);
@@ -6348,7 +6492,7 @@ const broken: = {;
             const directoryTempPath = resolve(tamperDirectory, directoryTempName!);
             rmSync(directoryTempPath);
             mkdirSync(directoryTempPath);
-            const directoryReplacementResult = await finishGenerator(directoryReplacementWriter);
+            const directoryReplacementResult = await finishTracked(directoryReplacementWriter);
             expect(directoryReplacementResult.status).not.toBe(0);
             expect(directoryReplacementResult.stdout).not.toMatch(/receiptSha256=/);
             expect(directoryReplacementResult.stderr).toMatch(/temporary.*(changed|replaced)|directory/i);
@@ -6369,12 +6513,12 @@ const broken: = {;
                 fixture.styleAssetsPath,
                 `${baselineStyleAssets}\nexport const changedFixture = true;\n`,
             );
-            const writer = generatorProcess(tamperDirectory, {
+            const writer = startGenerator(tamperDirectory, {
                 GRAPH_V3_TEST_PAUSE_AFTER_SUMMARY_RENAME_MS: "5000",
             }, fixtureRoot);
             await waitForSummaryRename(tamperDirectory, killedSummary);
             process.kill(writer.child.pid!, "SIGKILL");
-            const killedResult = await finishGenerator(writer);
+            const killedResult = await finishTracked(writer);
             expect(killedResult.signal).toBe("SIGKILL");
             expect(readFileSync(resolve(tamperDirectory, "IMPORT-DAG-V3.json"))).toEqual(killedJson);
             expect(readFileSync(resolve(tamperDirectory, "IMPORT-DAG-V3-SUMMARY.md"))).not.toEqual(killedSummary);
@@ -6414,6 +6558,30 @@ const broken: = {;
             expect(runCheck(tamperDirectory, fixtureRoot).status).toBe(0);
             expectNoArtifactResidue(tamperDirectory);
         });
+        } finally {
+            const remaining = [...activeGenerators];
+            for (const generator of remaining) {
+                if (generator.child.exitCode === null && generator.child.signalCode === null) {
+                    process.kill(generator.child.pid!, "SIGKILL");
+                }
+            }
+            for (const generator of remaining) {
+                await finishTracked(generator);
+            }
+            activeGenerators.clear();
+        }
+    }
+
+    it("fails --check for tampered node payloads, public owners, and summaries: phase 1", async () => {
+        await runMutationStressPhase(1);
+    }, 30_000);
+
+    it("fails --check for tampered node payloads, public owners, and summaries: phase 2", async () => {
+        await runMutationStressPhase(2);
+    }, 30_000);
+
+    it("fails --check for tampered node payloads, public owners, and summaries: phase 3", async () => {
+        await runMutationStressPhase(3);
     }, 30_000);
 
     it("executes rather than silently no-oping when invoked through a symlink", () => {

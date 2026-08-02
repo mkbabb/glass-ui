@@ -17,7 +17,7 @@ describe("track-well / value-marks shared registers", () => {
         });
 
         expect(wrapper.get(".slider-track").classes()).toContain("glass-track-well");
-        expect(wrapper.get(".glass-value-marks").exists()).toBe(true);
+        expect(wrapper.find(".glass-value-marks").exists()).toBe(true);
         expect(wrapper.findAll(".glass-value-mark")).toHaveLength(3);
     });
 
@@ -27,7 +27,7 @@ describe("track-well / value-marks shared registers", () => {
         });
 
         expect(wrapper.get(".progress-rail").classes()).toContain("glass-track-well");
-        expect(wrapper.get(".glass-value-marks").exists()).toBe(true);
+        expect(wrapper.find(".glass-value-marks").exists()).toBe(true);
         expect(wrapper.findAll(".glass-value-mark")).toHaveLength(3);
     });
 
