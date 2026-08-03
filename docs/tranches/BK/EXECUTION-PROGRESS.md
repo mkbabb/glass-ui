@@ -262,6 +262,28 @@ Row #75 demoted with the ⊕¹² class. dist-demo rebuild + full-suite arbiter r
 the dock/drawer and row-91 lanes settle — the one standing suite RED is the freshness detector
 correctly demanding exactly that.
 
+⊕²² **DOCK/DRAWER ROUND VERDICT (2026-08-03, run `wf_cb664a4a-5c4`; record:
+`execution/2026-08-03-dock-drawer-round/ADJUDICATION.json`):** CURE-REQUIRED at prose-scale only —
+nothing structural falls. **Row #7's roster clause is SATISFIED** (born-RED `it.fails` latch real,
+census pin gone, #55 unpunished); **row #6's code-side is CLEAR IN SUBSTANCE** (one-layer plate
+lerp lands confirmed[0] verbatim — the −9.375% sag arithmetic re-derived exactly and cured; 0-alpha
+veils; accent-invariant specular stronger than ordered; constant crown tint; `--glass-bg-sheet`
+deleted; Escape gate rescoped with a discriminating arm). Residual cures dispatched to a single
+seat. ROUTING of record: (a) FOCUSABLE survivors `DataTable.vue:164` (real disabled-focus bug) +
+`ExpandableContainer.vue:167` folded into the residual seat (no owning lane live); (b) bare-
+transparent veil residue at `field-surfaces.css:103-120` / `feedback-tone.css:71` /
+`accent-tone.css:42` routed to their owning rows' cure rounds; (c) the showOverlay-retention
+amendment the challengers found "unbanked" IS banked — ⊕²⁰(a) above is that amendment, discharged
+by citation; (d) row-6 owed EVIDENCE unchanged + widened: the mid-morph t≈0.5 cell (or strike
+CAPTURED from `144aa196`'s record), ONE Safari cell now covering both the oklab 0-alpha veils AND
+the first-in-repo `oklch(from <color-mix var>)` specular form, one data-hue/metal hover cell;
+(e) C-13 note: `gates/ROSTER.md:32` promises +WK-BOOT arm and G-CSS-SPLIT acceptance the bound
+colormix detector doesn't carry — reconcile at the gate recount (#66/#68); (f) provenance: the
+dock impl's vue-tsc transcript was reconstructed not verbatim (substance independently true —
+zero wall-file type errors); the round's two paint deltas for the capture eye: the paper grain no
+longer overlays the 1.5px rim (arguably more correct), and `[data-held]` now smooths the lerp
+channel by `--duration-fast`.
+
 ## Φ0 — executable this hour
 
 | # | wave | Φ | state | spec of record | gates |
