@@ -160,12 +160,22 @@ async function enterFullscreenFocus() {
     focusFullscreen();
 }
 
+// The collapse-side fallback: the expand affordance first, else the first focusable in
+// the visible chrome. The chrome leg is COMPOSED from the shared `FOCUSABLE_SELECTOR`
+// (one focusable definition per repo) rather than a hand-kept subset — the old list
+// dropped `input`/`select`/`textarea`/`summary`/`[contenteditable]` and carried no
+// `:not([disabled])`, so it could hand focus to a disabled button.
+const CHROME_RESTORE_SELECTOR = [
+    '[data-mode="expand"]',
+    ...FOCUSABLE_SELECTOR.split(", ").map(
+        (candidate) => `.expandable-container__chrome:not([hidden]) ${candidate}`,
+    ),
+].join(", ");
+
 function restoreFocus() {
     const target = restoreTarget?.isConnected
         ? restoreTarget
-        : getContainer()?.querySelector<HTMLElement>(
-                '[data-mode="expand"], .expandable-container__chrome:not([hidden]) button, .expandable-container__chrome:not([hidden]) a[href], .expandable-container__chrome:not([hidden]) [tabindex]:not([tabindex="-1"])',
-            );
+        : getContainer()?.querySelector<HTMLElement>(CHROME_RESTORE_SELECTOR);
     restoreTarget = null;
     target?.focus();
 }

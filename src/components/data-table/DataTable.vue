@@ -26,6 +26,7 @@ import {
 } from "./composables/useDataTableRowIdentity";
 import { useDataTableResponsive } from "./composables/useDataTableResponsive";
 import { cn } from "../_shared/class-names";
+import { FOCUSABLE_SELECTOR } from "../_shared/focus";
 
 const props = withDefaults(defineProps<DataTableProps<T>>(), {
     status: "ready",
@@ -158,11 +159,15 @@ function selectRow(entry: RowEntry<T>): void {
     rowEls.get(entry.key)?.focus({ preventScroll: true });
 }
 
+// A click that lands on a nested CONTROL belongs to that control, not the row. The probe
+// is the shared `FOCUSABLE_SELECTOR` (_shared/focus.ts) — the same sequential-focus set
+// the disclosures hand focus to, so a row's "is this a control" answer can never drift
+// from the repo's one definition. Its `:not([disabled])` arms matter here: a disabled
+// control is inert, so a click on it is a click on the ROW, and `selectRow` may then
+// move focus (to the row) without ever targeting a disabled element.
 function onRowClick(event: MouseEvent, entry: RowEntry<T>): void {
     if (!(event.target instanceof Element)) return;
-    const nestedControl = event.target.closest(
-        'button,a[href],input,select,textarea,summary,[contenteditable="true"],[tabindex]:not([tabindex="-1"])',
-    );
+    const nestedControl = event.target.closest(FOCUSABLE_SELECTOR);
     if (!nestedControl || nestedControl === event.currentTarget) selectRow(entry);
 }
 

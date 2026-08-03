@@ -2,7 +2,7 @@
  *
  * This partial owns the dock's
  * DYNAMIC chrome: the `--dock-expand-t` directional expanded-ness derivation,
- * the flat plate-layer crossfade on the ONE `--dock-morph-t` clock, the collapsed/summary
+ * the one-layer plate surface lerp on the ONE `--dock-morph-t` clock, the collapsed/summary
  * state (the proportioned pill + the
  * summary glyph reveal), the held / open-descendant surface response, and the
  * adaptive-legibility `--glass-backdrop: light` bucket. The static structural
@@ -63,35 +63,16 @@
         --dock-expand-t: calc(1 - var(--dock-morph-t));
     }
 
-    /* The bloom-from-source decongest is a
-       TRANSIENT, not a resting state. A bare `.glass-dock` self-blur keyed off
-       `--dock-expand-t`, AT REST, resolves to the class endpoint → a PERMANENT 3px
-       self-blur on the resting collapsed dock, STACKED on the 7px backdrop (the "blurry
-       mess when shrunken", glass-dock-codebase §2.4). The FIX gates the self-blur (a
-       SURFACE `filter` arm on the dock's own pixels — NOT `backdrop-filter`, so the glass
-       plate blur is never clobbered; compositor-safe) to `[data-morphing]`: at REST the
-       dock is CRISP; ONLY mid-morph does the 3px bloom settle to 0 as the pill
-       materializes (the iOS-27 bloom, gesture-only). The backdrop blur (the glass
-       material) is UNTOUCHED. PRM zeroes it (the carve below). Clean break, no alias. */
-    .glass-dock {
-        --dock-reveal-blur: 0px; /* resting: CRISP — no own-pixel self-blur */
-    }
-    .glass-dock[data-morphing] {
-        /* The blur DIAL-BACK. The peak drops 3px → 1.25px AND the
-           decay is FRONT-LOADED: the `clamp(0, (0.5 - expand-t)/0.5, 1)` ramp drives the
-           blur 1.25px → 0 as expand-t crosses 0 → 0.5, then HOLDS 0 for the back half — a
-           brief decongest FLASH, crisp by the morph's midpoint (the icons never read soft
-           through the slow grow). The resting self-blur stays 0px (above, untouched). The
-           7px BACKDROP blur (the material) is untouched — only the OWN-pixel self-blur is
-           dialed. PRM → 0 (the carve below). */
-        --dock-reveal-blur: 1.25px; /* the transient decongest bloom — mid-morph only */
-        filter: blur(
-            calc(
-                var(--dock-reveal-blur) *
-                    clamp(0, calc((0.5 - var(--dock-expand-t)) / 0.5), 1)
-            )
-        );
-    }
+    /* NO FILTER ON AN ANCESTOR OF A LENS — the #47 (GF-DOCK) fence. A `filter` on
+       `.glass-dock` — or on ANY ancestor of a backdrop-filtered box (`.dock-plate`, the
+       dock's one `backdrop-filter`; the active `.glass-capsule` controls) — `blur(0px)`
+       included, makes that ancestor a BACKDROP ROOT: the lens beneath samples IT instead
+       of the page and the glass goes flat. The transient bloom is DELETED, not retargeted
+       — no safe host exists (`.dock-layers`, `.dock-persistent` and the controls each are,
+       or contain, a lens). The fence forbids the MECHANISM over a lens; HOW #47/#48 score
+       the bloom is theirs. AUTHORED CSS ONLY — the JS inline blur channel
+       (useElementMorph.ts:229, useLiquidReveal.ts:74, useDockCtaReceive.ts:245
+       `blur ?? 4`) is live, invisible to this fence, and owned by the motion rows. */
 
     /* The padding morph is split out + scoped `:not(.dock-overflow-wrap)` so the
        wrap variant's own padding rules (territory — `.dock-overflow-wrap` +
@@ -300,7 +281,8 @@
     .glass-dock.collapsed:hover {
         box-shadow: var(--shadow-dock-override, var(--shadow-dock));
     }
-    /* The collapsed-hover surface lift retargets both flat plate endpoints
+    /* The collapsed-hover surface lift retargets both endpoints of the ONE lerped plate
+       layer (dock.css), so the tier change fades on the plate itself
        (the box keeps the box-shadow elevation above; the plate carries the glass). */
     .glass-dock.collapsed:hover .dock-plate {
         --dock-plate-collapsed-bg: var(--glass-bg-wash);
@@ -325,16 +307,13 @@
      * thumb halo) via `useOptionalDockContext().held` for cross-substrate
      * coordination (typed-key canonical shape).
      */
-    /* The held-tier surface lift retargets both flat plate endpoints. */
+    /* The held-tier surface lift retargets both plate endpoints of the ONE lerped
+       layer (dock.css), so the tier change fades on the plate itself. */
     .glass-dock[data-held] .dock-plate {
         --dock-plate-collapsed-bg: var(--glass-bg-floating);
         --dock-plate-collapsed-border: var(--glass-border-floating);
         --dock-plate-expanded-bg: var(--glass-bg-floating);
         --dock-plate-expanded-border: var(--glass-border-floating);
-    }
-
-    .glass-dock[data-held] .dock-plate::before,
-    .glass-dock[data-held] .dock-plate-expanded {
         transition:
             background var(--duration-fast) var(--ease-standard),
             border-color var(--duration-fast) var(--ease-standard);

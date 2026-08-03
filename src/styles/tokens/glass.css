@@ -270,11 +270,10 @@
        glassy"). 0.74 sits BETWEEN the dialog 0.68 (transparent enough that the
        backdrop reads through) and the overlay 0.95 (opaque enough for AA body text
        against a busy grid) — a sheet is content-bearing, so it sits a hair above the
-       dialog. The composed `--glass-bg-sheet` rides the SAME oklab-tint-wrapped
-       recipe `--glass-bg-dialog` speaks, so the bright-bucket darken + the
-       `--glass-level` opaque escape + the dark-arm saturate companions reach the
-       sheet with ZERO new compositing seam. Drawer + Sheet self-re-point onto it.
-       Presets-in-consumers — a consumer retunes `--glass-opacity-sheet` via :root. */
+       dialog. This is an OPACITY primitive with no composed `--glass-bg-*` rung: the
+       Drawer crown composes its own plate from it inline (drawer/styles.css), lerping
+       the overlay role down to this one across the descent, so there is nothing left
+       for a rung to say. Presets-in-consumers — a consumer retunes it via :root. */
     --glass-opacity-sheet: 0.74;
 
     /* Dock foreground over an animated backdrop. A dock floating over an
@@ -327,13 +326,6 @@
        NOT a `--glass-bg-floating` double-name alias) so the floating edge/rim/under-
        shadow LIFT survives the transparency drop. */
     --glass-bg-dialog:   color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-dialog)) * var(--glass-level)) * 100%), transparent);
-    /* The bottom-sheet plate differs only by its opacity token. The α-band probe
-       DECIDED this is genuinely-
-       distinct physics (Δ plate-α 0.21 vs overlay; ΔL 0.10–0.18 over a busy/dark page
-       → KEEP). Its LIVE consumer is the Drawer descent gradient (drawer.css), where
-       the transmissive crown sinks the `--glass-bg-overlay` fill toward this see-
-       through floor across the pull. */
-    --glass-bg-sheet:    color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-sheet)) * var(--glass-level)) * 100%), transparent);
 
     /* ── The recessed WELL rung (value.js P3 ADMIT) ──────────
        A SEATED field register: the `--card` plate stepped a whisper DARKER toward the

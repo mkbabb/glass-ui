@@ -5,8 +5,8 @@
  * chrome: the unconditional `:where(.glass-dock)` self-engage, the
  * continuous backdrop-luma tint clamp, the 
  * warm-chromatic dock ink, the ancestor `@container style(--glass-backdrop: light)`
- * descendant bucket, the contrast-color() progressive refinement, and the
- * PRM reveal-blur carve.
+ * descendant bucket, the contrast-color() progressive refinement, and the frozen-
+ * backdrop (`data-backdrop-mode="static"`) arm.
  *
  * @import-ed by dock.css in cascade order, in the SAME `@layer components` as morph.css
  * (the carve is isomorphic — same layer, source order preserved → ZERO visual delta). */
@@ -29,8 +29,9 @@
        warm-ink here too — ONE reconciled path, the foreground twin folded in (it
        reaches the dock CONTROLS' glyph/label color). Over a DARK page the darken is
        sub-perceptual; a dark-substrate consumer opts out via `--glass-tint-strength:
-       0%` on the dock root. The flat plate layers keep the adaptive darken as a
-       separate gradient while the endpoint rungs crossfade by opacity. The muted body
+       0%` on the dock root. The plate keeps the adaptive darken as a SEPARATE gradient
+       veil over the ONE lerped surface layer (dock.css) — never mixed into the rung
+       endpoints, so a descendant tint override still reaches it. The muted body
        register lifts to the full warm-ink under the engaged plate (the muted L40
        tier cannot clear 4.5:1 on a translucent darkened plate — darkening moves the
        plate TOWARD muted's own luminance; the low-contrast muted register is
@@ -127,19 +128,5 @@
         --dock-plate-expanded-border: var(--glass-border-floating);
         backdrop-filter: none;
         -webkit-backdrop-filter: none;
-    }
-}
-
-/* The dock-expand bloom beat's blur-settle is OFF under
-   `prefers-reduced-motion: reduce` (the vestibular floor): a reduced-motion dock reads
-   crisp at every state, no in-between blur frames.
-   The self-blur is now gated to `[data-morphing]`, so the PRM
-   carve zeroes it on the ARMED scope too (specificity 0,2,0) — a PRM dock that briefly
-   arms `[data-morphing]` carries no 3px bloom; the resting `.glass-dock` is already
-   crisp by the re-gate. */
-@media (prefers-reduced-motion: reduce) {
-    .glass-dock,
-    .glass-dock[data-morphing] {
-        --dock-reveal-blur: 0px;
     }
 }

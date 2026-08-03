@@ -19,6 +19,27 @@ export const DOCK_SPRING = {
  */
 export const DOCK_MORPH_MAX_STRETCH = 1.14;
 
+/**
+ * The OPEN-DISMISSABLE-LAYER probe for the dock's Escape guard (`GlassDock.vue`).
+ *
+ * `[data-dismissable-layer]` is reka's own marker, stamped by `DismissableLayer` — the
+ * single primitive that owns Escape→dismiss. It is therefore EXACTLY the set of hosted
+ * layers entitled to eat an Escape (Dialog/Drawer/Popover/Menu/Select/Combobox/
+ * HoverCard/NavigationMenu/Tooltip content), and it excludes the disclosure primitives
+ * that merely stamp `data-state="open"` (Accordion, Collapsible) — those handle no
+ * Escape, so they must NOT swallow the dock's collapse.
+ *
+ * `:not([data-state="closed"])` is the OPEN half: a non-`forceMount` layer only exists
+ * while open, and a `forceMount` one stays mounted with `data-state="closed"`. Written
+ * as a negation, not `[data-state="open"]`, because the marker element is not
+ * guaranteed to carry a state attribute at all (e.g. `ToastViewport`).
+ *
+ * ONE attribute pair beats an enumerated content-class list: reka owns the marker, so
+ * a new dismissable primitive is covered without touching this constant.
+ */
+export const OPEN_DISMISSABLE_LAYER_SELECTOR =
+    '[data-dismissable-layer]:not([data-state="closed"])';
+
 /** `Symbol()` label for the `DockContext` injection key (`dockContext.ts`). */
 export const DOCK_CONTEXT_LABEL = "glass-ui:dock-context";
 

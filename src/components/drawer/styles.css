@@ -176,11 +176,20 @@
             calc((1 - (1 - var(--sheet-crown-opacity)) * var(--glass-level)) * 100%),
         transparent
     );
+    /* The adaptive darken rides at CONSTANT `--glass-tint-strength` across the whole
+       descent. A `(1 - --sheet-descent)` factor would decay the band's earned AA darken
+       to ZERO exactly as the crown thins 0.95 → 0.74 — transparency up, legibility down,
+       the wrong way round. The 0-alpha leg of every oklab veil below is a warm
+       `oklch(… / 0)`, NEVER bare `transparent`: `transparent` is `rgb(0 0 0 / 0)`, and it
+       is NON-premultiplied handling that carries that black component through the mix
+       (premultiplied interpolation is precisely what makes a 0-alpha endpoint
+       chroma-inert), so mixing toward it drags the result to BLACK — the hole.
+       `--sheet-freeze-card` stays `in srgb` toward `transparent`
+       — the house rung idiom (the `--glass-bg-*` ladder), not an oklab veil. */
     --sheet-tint-veil: color-mix(
         in oklab,
-        transparent,
-        var(--glass-tint-source)
-            calc(var(--glass-tint-strength) * (1 - var(--sheet-descent)))
+        oklch(0.9 0.05 75 / 0),
+        var(--glass-tint-source) var(--glass-tint-strength)
     );
     --sheet-freeze-card: color-mix(
         in srgb,
@@ -189,7 +198,7 @@
     );
     --sheet-freeze-warm: color-mix(
         in oklab,
-        transparent,
+        oklch(0.9 0.05 75 / 0),
         var(--glass-capsule-warm)
             calc(var(--sheet-freeze) * var(--glass-capsule-warm-floor, 16%))
     );

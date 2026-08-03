@@ -53,7 +53,8 @@ describe("Drawer detent semantics", () => {
         const scrim = document.querySelector<HTMLElement>("[data-stage-scrim]")!;
 
         expect(document.querySelectorAll("[data-stage-scrim]")).toHaveLength(1);
-        expect(scrim.style.pointerEvents).not.toBe("none");
+        // pointer-events is a UTILITY, never an inline style — the modal scrim blocks.
+        expect(scrim.classList.contains("pointer-events-none")).toBe(false);
 
         wrapper.unmount();
     });
@@ -71,7 +72,9 @@ describe("Drawer detent semantics", () => {
             if (count === 1) {
                 expect(scrims[0]!.hasAttribute("inert")).toBe(false);
                 if (_label === "explicit true over live-behind")
-                    expect(scrims[0]!.style.pointerEvents).toBe("none");
+                    expect(scrims[0]!.classList.contains("pointer-events-none")).toBe(
+                        true,
+                    );
             }
 
             wrapper.unmount();
@@ -87,7 +90,7 @@ describe("Drawer detent semantics", () => {
         const scrim = document.querySelector<HTMLElement>("[data-stage-scrim]")!;
 
         expect(scrim.dataset.state).toBe("closed");
-        expect(scrim.style.pointerEvents).toBe("none");
+        expect(scrim.classList.contains("pointer-events-none")).toBe(true);
         expect(scrim.hasAttribute("inert")).toBe(true);
 
         wrapper.unmount();

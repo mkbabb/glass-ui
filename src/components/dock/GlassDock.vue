@@ -20,6 +20,7 @@ import { computed, nextTick, ref, useId, useTemplateRef, watch } from "vue";
 // (docs/consumer-evidence/use-glass-backdrop-luminance.md names the booked trigger).
 import { FOCUSABLE_SELECTOR } from "../_shared/focus";
 import { useGlassBackdropLuminance } from "../../composables/glass/useGlassBackdropLuminance";
+import { OPEN_DISMISSABLE_LAYER_SELECTOR } from "./constants";
 import { provideDockContext } from "./composables/dockContext";
 import { useDockState } from "./composables/useDockState";
 import { useDockMorphOrchestrator } from "./composables/useDockMorph";
@@ -195,17 +196,37 @@ async function onSummaryKeydown(event: KeyboardEvent) {
     event.preventDefault();
     onClickCollapsed();
     await nextTick();
-    fullEl.value?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR)?.focus({
+    // The full face is the fallback focus target (it carries `tabindex="-1"`): a dock
+    // whose expanded face holds NO focusable descendant would otherwise no-op to
+    // <body>, and the summary goes inert on expand — a keyboard trap.
+    (
+        fullEl.value?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR) ?? fullEl.value
+    )?.focus({
         preventScroll: true,
     });
 }
 
-// Escape belongs to the innermost owner first: a Select/Dropdown hosted in the pane
-// closes on Escape and marks it handled, and that must not also collapse the dock.
+// Escape belongs to the innermost owner. The gate is STRUCTURAL, not `defaultPrevented`:
+// reka's DismissableLayer handles Escape on a WINDOW-level bubble and only READS
+// `defaultPrevented` (`if (!event.defaultPrevented) emits("dismiss")`) — it never SETS
+// it. So an element-level `!event.defaultPrevented` gate always sees `false` and is
+// inert, and calling `preventDefault()` here would SUPPRESS reka's own dismiss. Instead:
+// if the key came from inside an OPEN DISMISSABLE layer (a non-portalled Popover, an open
+// menu), that layer owns the dismiss and the dock stays expanded. Portalled
+// Select/Dropdown content never bubbles through this handler at all.
+//
+// The probe is narrowed on BOTH axes. By KIND: `OPEN_DISMISSABLE_LAYER_SELECTOR` reads
+// reka's `[data-dismissable-layer]` marker, not any `data-state="open"` — reka stamps
+// that on Accordion/Collapsible too, and an open accordion in the pane owns no Escape,
+// so it must not eat the collapse. By SCOPE: the matched layer must live INSIDE
+// `fullEl`. `closest()` walks the whole ancestor chain, so a dock hosted inside an open
+// Dialog would otherwise match the DIALOG and never Escape-collapse.
 async function onFullKeydown(event: KeyboardEvent) {
-    if (interaction.value !== "auto" || event.key !== "Escape" || event.defaultPrevented)
-        return;
-    event.preventDefault();
+    if (interaction.value !== "auto" || event.key !== "Escape") return;
+    const layer = (event.target as Element | null)?.closest?.(
+        OPEN_DISMISSABLE_LAYER_SELECTOR,
+    );
+    if (layer && fullEl.value?.contains(layer)) return;
     collapse();
     await nextTick();
     const summary = summaryEl.value;
@@ -326,15 +347,13 @@ defineExpose({
             L0 THE PLATE (the lens). One absolute, non-interactive
             (aria-hidden, decoration) element that owns backdrop-filter + the visual clip,
             pointer absorption, grain, and whose VISIBLE EXTENT morphs via clip-path off
-            the ONE plate-scoped `--dock-t` (dock/dock.css). Its two flat surface layers
-            crossfade inside it. It seats at z-index:-1 within the box's stacking context
+            the ONE plate-scoped `--dock-t` (dock/dock.css). Its ONE surface layer lerps
+            between the collapsed/expanded rungs. It seats at z-index:-1 within the box's stacking context
             (below the in-flow control run, above the box's drop-shadow), a SIBLING of the
             controls — never their ancestor — so a control hover plate overhangs the plate
             edge UN-CLIPPED. The box (`.glass-dock`) is structural (layout + elevation).
         -->
-        <div class="dock-plate" aria-hidden="true">
-            <div class="dock-plate-expanded" aria-hidden="true"></div>
-        </div>
+        <div class="dock-plate" aria-hidden="true"></div>
 
         <!--
             L1 THE CONTROLS. The normal-flow control run OVER the plate.
@@ -398,6 +417,7 @@ defineExpose({
                     'is-press-keepalive': pressKeepaliveLayer === 'full',
                 }]"
                 :inert="(outerCurrentLayer !== 'full' && pressKeepaliveLayer !== 'full') || undefined"
+                tabindex="-1"
                 @keydown="onFullKeydown"
             >
                 <slot />

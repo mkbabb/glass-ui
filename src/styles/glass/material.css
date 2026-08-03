@@ -198,20 +198,31 @@
            band below) + the live pointer-position disc (`--specular-x/y`, radial). The
            ink is a SINGLE-LEVEL oklab mix — warm cream toward the consumer data hue —
            because a color-mix endpoint that is itself a color-mix drops the whole
-           declaration in Safari. That is also why the layer alpha rides the cream
-           endpoint instead of a per-stop `color-mix(<core>, transparent)`, which would
-           re-nest it. At the resting `--glass-accent-strength: 0%` the mix is
-           `hsl(40 35% 92% / 0.55)` byte-identical — the warm-cream floor. */
+           declaration in Safari.
+
+           LAYER ALPHA IS ACCENT-INVARIANT. The mix core is OPAQUE; the two stop alphas
+           (0.55 rim glint / 0.50 pointer disc) are re-authored onto it in two FLAT
+           sibling tokens by relative colour syntax (`oklch(from …)` — the house idiom,
+           tokens/dark-arm.css), which touches alpha only and never nests a color-mix
+           inside a color-mix. Riding the alpha on the cream ENDPOINT instead couples it
+           to the accent: under premultiplied interpolation the layer alpha becomes
+           `0.55(1 − P) + P` — 0.7525 at metal.css's shipped 45%, 0.676 at the card's
+           28% — so any data-hue surface would silently paint a heavier, lifted gleam,
+           and the disc's rest alpha would drift 0.50 → 0.55. At the resting
+           `--glass-accent-strength: 0%` the core is `hsl(40 35% 92%)` and the two stops
+           resolve exactly `/0.55` and `/0.50` — the shipped warm-cream floor. */
         --glass-specular-core: color-mix(
             in oklab,
-            hsl(40 35% 92% / 0.55),
+            hsl(40 35% 92%),
             var(--glass-accent) var(--glass-accent-strength)
         );
+        --glass-specular-glint: oklch(from var(--glass-specular-core) l c h / 0.55);
+        --glass-specular-disc: oklch(from var(--glass-specular-core) l c h / 0.5);
         background:
             conic-gradient(
                 from 0deg at 50% 50%,
                 transparent 0deg,
-                var(--glass-specular-core) 18deg,
+                var(--glass-specular-glint) 18deg,
                 transparent 60deg,
                 transparent 360deg
             ),
@@ -219,7 +230,7 @@
                 ellipse var(--glass-specular-size, 36%)
                     var(--glass-specular-size, 36%) at var(--specular-x, 50%)
                     var(--specular-y, 50%),
-                var(--glass-specular-core) 0%,
+                var(--glass-specular-disc) 0%,
                 transparent 70%,
                 transparent 100%
             );

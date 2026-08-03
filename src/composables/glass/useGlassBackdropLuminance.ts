@@ -253,6 +253,8 @@ export function useGlassBackdropLuminance(
             targetRect: targetRect(el),
         };
         el.style.setProperty("--glass-backdrop-luma", value.toFixed(3));
+        // DEAD-PENDING-#22∥#68: the ambient channel below has ZERO paint readers at HEAD (its
+        // only one was the specular ambient endpoint); #22∥#68 owns deleting the writers.
         // the ambient hue (a complete `oklch()` at a FIXED
         // sub-perceptual chroma, or `transparent` for a gray null) the plate's tint
         // cascade biases toward at the opt-in `--glass-ambient-strength`. A gray backdrop

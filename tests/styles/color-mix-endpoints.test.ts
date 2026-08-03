@@ -3,10 +3,23 @@ import { join } from "node:path";
 import postcss from "postcss";
 import { describe, expect, it } from "vitest";
 
-// The seated invariant: no color-mix endpoint may itself be a color-mix. Safari 18
-// drops the whole declaration on nesting. `literalNested` is the written-source arm;
-// `resolvedNested` follows var() producers one graph deep for the four files the
-// de-nesting cured, so a re-nested token cannot smuggle the defect back in.
+// gate:G-WK-COLORMIX-BUDGET — this file is that gate's DETECTOR SEAT (the roster's
+// BUILD seat, "no nested color-mix() endpoints"). Safari 18 drops the whole declaration
+// when a color-mix endpoint is itself a color-mix.
+//
+// SEATED, LITERAL ONLY. `literalNested` — every color-mix endpoint written as a
+// color-mix in the source, across all executable CSS and CSS Vue style blocks — is 0,
+// and that is the invariant this file enforces.
+// KNOWN-LIVE, NOT GATED. RESOLVED nesting (a var() endpoint whose PRODUCER is a
+// color-mix) ships repo-wide and is NOT gated here: 75 endpoint contexts across 23
+// files at this HEAD (51 before the row-6 cure round re-expressed the dock plate as a
+// rung lerp) — components/dock/styles/dock.css (24, the round's own top contributor and
+// the repo's largest single site: the plate's rung lerp, 100% of the 51→75 delta),
+// ladder.css's `--glass-plate-tinted` wrapping every `--glass-bg-*` rung (9), rim.css
+// (11), surfaces.css (4), shadow.css (4), and 2 in tokens/glass.css itself. It stands
+// pending row-6's Safari π ruling; do not read this file's green as covering it.
+// The `resolvedNested` arm below is therefore a REGRESSION FENCE on the four files the
+// de-nesting cured, nothing wider — and `inspect()` recurses UNBOUNDED, not "one hop".
 
 type StyleSource = { id: string; css: string };
 type Call = { name: string; args: string[] };
@@ -103,7 +116,7 @@ const analyze = (sources: StyleSource[]): Report => {
     return { literalNested: [...literalNested], resolvedNested: [...resolvedNested] };
 };
 
-describe("color-mix endpoint structure", () => {
+describe("gate:G-WK-COLORMIX-BUDGET — color-mix endpoint structure", () => {
     it("rejects literal nested endpoints across executable CSS and CSS Vue style blocks", () => {
         const styles = collectStyles(files(root));
         expect(styles.some(({ id }) => id.includes(".vue#style-"))).toBe(true);

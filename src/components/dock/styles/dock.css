@@ -8,9 +8,11 @@
  * the defects become UNREPRESENTABLE, not patched:
  *
  *   L0 — THE PLATE (`.dock-plate`).  ONE absolute element owning `backdrop-filter` + the
- *        visual clip, pointer absorption, and grain. Its two flat child/pseudo layers read
- *        the public `--glass-*` rungs and crossfade by `--dock-expand-t`; adaptive tint is
- *        a separate gradient. The shell + adaptive-legibility partials re-point the
+ *        visual clip, pointer absorption, and grain. It paints ONE surface layer whose
+ *        colour LERPS between the public `--glass-*` collapsed/expanded rungs on
+ *        `--dock-expand-t` (never a two-layer opacity crossfade — that composites
+ *        `a + b − ab` and sags mid-morph); adaptive tint is a separate gradient veil.
+ *        The shell + adaptive-legibility partials re-point the
  *        inheriting `--dock-surface-blur`/`--glass-tint-*` tokens on `.glass-dock`, so
  *        the self-engage darken and dark-arm glow reach the layers via inheritance, ZERO
  *        re-author. Its VISIBLE
@@ -41,8 +43,9 @@
  * `round`-radius tracking and the plate clip becomes the sole extent driver.
  *
  * @import-ed by dock.css AFTER shell.css/shell-regions.css and BEFORE morph.css, in the
- * SAME `@layer components` — the plate lens and flat paint layers live here; state rules
- * retarget their endpoint variables in morph.css (source-order + specificity win). */
+ * SAME `@layer components` — the plate lens and its ONE lerped paint layer live here;
+ * state rules retarget that layer's endpoint variables in morph.css (source-order +
+ * specificity win). */
 
 @layer components {
     /* ── L0 — THE PLATE (the lens) ─────────────────────────────────────────────── */
@@ -86,56 +89,49 @@
             (1 - var(--dock-t)) * var(--dock-plate-collapse-inset-block, 0px)
         );
         clip-path: inset(var(--dock-plate-inset-block) var(--dock-plate-inset-inline));
-    }
 
-    /* The two flat surface layers crossfade over the one backdrop lens. The tint is a
-       separate ordinary gradient, so each layer reads one public rung directly and no
-       endpoint is color-mixed with another. */
-    .dock-plate::before,
-    .dock-plate-expanded {
-        position: absolute;
-        inset: 0;
-        border-radius: inherit;
-        pointer-events: none;
-    }
+        /* ── THE ONE-LAYER SURFACE INTERPOLATION ───────────────────────────────────
+           The collapsed↔expanded surface is ONE painted layer whose colour LERPS on
+           `--dock-expand-t`, not two complementary-opacity layers crossfading. A
+           stacked crossfade of two TRANSLUCENT layers composites `a + b − ab`, so at
+           t=0.5 the α0.30 wash under the α0.50 dock rung resolved 0.3625 against the
+           lerp's 0.40 — a −9.4% MID-MORPH SAG invisible at both settled endpoints (and
+           two independent 1.5px borders read as a double rim through the translucency).
+           One `color-mix` endpoint pair, one border, exact at t=0 and t=1, monotone
+           between. Both rungs are FLAT (a single `color-mix` each, tokens/glass.css), so
+           the written source nests nothing — LITERALLY. RESOLVED nesting is another
+           matter and is KNOWN-LIVE here: the rungs' producers (`--glass-bg-dock` /
+           `--glass-bg-wash`) are themselves `color-mix` tokens, making this file the
+           repo's largest such site (24 of the 75 endpoint contexts). NOT GATED, pending
+           row-6's Safari π — tests/styles/color-mix-endpoints.test.ts seats the literal
+           invariant only.
 
-    .dock-plate::before {
-        content: "";
-        opacity: calc(1 - var(--dock-expand-t));
+           The adaptive tint stays a SEPARATE ordinary gradient veil over the lerped
+           rung — a root-time zero-strength substitution cannot swallow a descendant
+           tint override, and the rung endpoints stay un-mixed with the tint. The 0-alpha
+           leg is a warm `oklch(… / 0)`, NEVER bare `transparent` (the WebKit
+           black-premultiply hole). */
+        --dock-plate-tint-veil: color-mix(
+            in oklab,
+            oklch(0.9 0.05 75 / 0),
+            var(--glass-tint-source) var(--glass-tint-strength)
+        );
         background:
             linear-gradient(
-                color-mix(
-                    in oklab,
-                    transparent,
-                    var(--glass-tint-source) var(--glass-tint-strength)
-                ),
-                color-mix(
-                    in oklab,
-                    transparent,
-                    var(--glass-tint-source) var(--glass-tint-strength)
-                )
+                var(--dock-plate-tint-veil),
+                var(--dock-plate-tint-veil)
             ),
-            var(--dock-plate-collapsed-bg);
-        border: 1.5px solid var(--dock-plate-collapsed-border);
-    }
-
-    .dock-plate-expanded {
-        opacity: var(--dock-expand-t);
-        background:
-            linear-gradient(
-                color-mix(
-                    in oklab,
-                    transparent,
-                    var(--glass-tint-source) var(--glass-tint-strength)
-                ),
-                color-mix(
-                    in oklab,
-                    transparent,
-                    var(--glass-tint-source) var(--glass-tint-strength)
-                )
-            ),
-            var(--dock-plate-expanded-bg);
-        border: 1.5px solid var(--dock-plate-expanded-border);
+            color-mix(
+                in srgb,
+                var(--dock-plate-expanded-bg) calc(var(--dock-expand-t) * 100%),
+                var(--dock-plate-collapsed-bg)
+            );
+        border: 1.5px solid
+            color-mix(
+                in srgb,
+                var(--dock-plate-expanded-border) calc(var(--dock-expand-t) * 100%),
+                var(--dock-plate-collapsed-border)
+            );
     }
 
     /* The paper-grain overlay — MOVED off `.glass-dock::after` onto the plate (the grain

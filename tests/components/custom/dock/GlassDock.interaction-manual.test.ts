@@ -426,12 +426,121 @@ describe("GlassDock — auto collapsed-face disclosure contract", () => {
         await nextTick();
 
         const summary = wrapper.get<HTMLDivElement>(".dock-layer--summary");
-        expect(event.defaultPrevented).toBe(true);
+        // The dock does NOT preventDefault: reka's DismissableLayer reads the flag on a
+        // window-level bubble and would be suppressed by it.
+        expect(event.defaultPrevented).toBe(false);
         expect(full.attributes("inert")).toBe("");
         expect(summary.attributes("inert")).toBeUndefined();
         expect(document.activeElement).toBe(summary.element);
         expect(reachableFaces(wrapper)).toHaveLength(1);
         expect(reachableFaces(wrapper)[0]!.element).toBe(summary.element);
+    });
+
+    it("Escape inside an OPEN hosted layer leaves the dock expanded — the layer owns the dismiss", async () => {
+        const wrapper = mountDock(
+            {},
+            {
+                default: () =>
+                    // reka's own DismissableLayer marker — the primitive that owns
+                    // Escape→dismiss stamps `data-dismissable-layer` alongside its state.
+                    h("div", { "data-dismissable-layer": "", "data-state": "open" }, [
+                        h("button", { "data-testid": "in-layer" }, "Item"),
+                    ]),
+                collapsed: () => h("span", "More"),
+            },
+        );
+        const full = wrapper.get(".dock-layer--full");
+        const inLayer = wrapper.get<HTMLButtonElement>("[data-testid='in-layer']");
+        inLayer.element.focus();
+        inLayer.element.dispatchEvent(
+            new KeyboardEvent("keydown", {
+                key: "Escape",
+                bubbles: true,
+                cancelable: true,
+            }),
+        );
+        await nextTick();
+        await nextTick();
+
+        expect(full.attributes("inert")).toBeUndefined();
+        expect(
+            wrapper.get<HTMLDivElement>(".dock-layer--summary").attributes("inert"),
+        ).toBe("");
+    });
+
+    it("an OPEN ACCORDION in the pane does NOT eat Escape — it owns no dismiss, so the dock collapses", async () => {
+        const wrapper = mountDock(
+            {},
+            {
+                // reka stamps `data-state="open"` on Accordion/Collapsible content too,
+                // but neither handles Escape. Only the DismissableLayer marker earns the
+                // veto — a bare open-state ancestor must not swallow the collapse.
+                default: () =>
+                    h("div", { "data-state": "open" }, [
+                        h("button", { "data-testid": "in-accordion" }, "Item"),
+                    ]),
+                collapsed: () => h("span", "More"),
+            },
+        );
+        const full = wrapper.get(".dock-layer--full");
+        const inAccordion = wrapper.get<HTMLButtonElement>(
+            "[data-testid='in-accordion']",
+        );
+        inAccordion.element.focus();
+        inAccordion.element.dispatchEvent(
+            new KeyboardEvent("keydown", {
+                key: "Escape",
+                bubbles: true,
+                cancelable: true,
+            }),
+        );
+        await nextTick();
+        await nextTick();
+
+        expect(full.attributes("inert")).toBe("");
+        expect(
+            wrapper.get<HTMLDivElement>(".dock-layer--summary").attributes("inert"),
+        ).toBeUndefined();
+    });
+
+    it("a dock HOSTED INSIDE an open dismissable layer still collapses — the match is bounded by the full face", async () => {
+        // The unbounded `closest()` walked past the dock root: a dock inside an open
+        // Dialog matched the DIALOG's layer and could never Escape-collapse.
+        const host = document.createElement("div");
+        host.setAttribute("data-dismissable-layer", "");
+        host.setAttribute("data-state", "open");
+        document.body.appendChild(host);
+        const wrapper = mount(GlassDock, {
+            slots: {
+                default: () => h("button", { "data-testid": "full-first" }, "Home"),
+                collapsed: () => h("span", "More"),
+            },
+            attachTo: host,
+        });
+        mounted.push({
+            unmount: () => {
+                wrapper.unmount();
+                host.remove();
+            },
+        });
+
+        const full = wrapper.get(".dock-layer--full");
+        const first = wrapper.get<HTMLButtonElement>("[data-testid='full-first']");
+        first.element.focus();
+        first.element.dispatchEvent(
+            new KeyboardEvent("keydown", {
+                key: "Escape",
+                bubbles: true,
+                cancelable: true,
+            }),
+        );
+        await nextTick();
+        await nextTick();
+
+        expect(full.attributes("inert")).toBe("");
+        expect(
+            wrapper.get<HTMLDivElement>(".dock-layer--summary").attributes("inert"),
+        ).toBeUndefined();
     });
 });
 
