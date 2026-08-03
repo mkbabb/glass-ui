@@ -202,6 +202,14 @@ ONE self-renewing guardian cron (crash bootstrap = EXEC-STATE → this cursor �
 push-to-origin at each waypoint = durability; clones deletion owner-executed (path-permission
 wall). Clone deletion of the 11 residues re-ordered by owner word this date.
 
+⊕¹⁸ **THE OWNERSHIP MARK (owner, 2026-08-03, verbatim):** *"Claude Code (with Fable and Opus
+instances) now fully own these tranche items. Codex has been fired, though we may bring them in
+in the future for further development or auditing."* — BK and all its items are owned by Claude
+Code (Fable lead + Opus fanout) exclusively; Codex is FIRED from the tranche (re-engagement only
+by future owner word, as development or audit instrument). The execution DAG of record for
+navigation is banked at `docs/tranches/BK/EXECUTION-DAG-2026-08-03.md` (derived; TR wins on any
+divergence).
+
 ## Φ0 — executable this hour
 
 | # | wave | Φ | state | spec of record | gates |
