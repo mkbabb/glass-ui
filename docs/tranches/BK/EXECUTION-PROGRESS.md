@@ -210,6 +210,16 @@ by future owner word, as development or audit instrument). The execution DAG of 
 navigation is banked at `docs/tranches/BK/EXECUTION-DAG-2026-08-03.md` (derived; TR wins on any
 divergence).
 
+⊕¹⁹ **OWNER DEFECT REPORT (2026-08-03, verbatim):** *"The hero page is broken with that rainbow
+ellipsoid, the erronerous watercolor dot--page transitions still flash, etc, etc. Most items have
+not been implemented?"* — three named LIVE defects entered on the register as owner-reported:
+(1) hero rainbow ellipsoid, (2) erroneous watercolor dot, (3) page-transition flash. Triage seat
+dispatched 2026-08-03 (live browser repro + localization); routed to their owning roster rows on
+localization, cured in the current execution batches. The owner's implementation census reading is
+CONFIRMED by the pass-1 audit: 0/87 — the codex delta was mostly governance churn; the genuinely
+good cores (refract cut, prefix cure, pkg-truth build, row-6 colormix kernel, music-staff
+candidate) are held as LANDED-CANDIDATE, everything else fell.
+
 ## Φ0 — executable this hour
 
 | # | wave | Φ | state | spec of record | gates |
