@@ -105,6 +105,18 @@ alone; 32 cure rounds on the un-rostered 224k-line import-dag instrument; 36 row
 leaving 92.7 GB of clones; the one honest identity refusal overridden in 19 seconds by an
 anti-introspection directive. **Census restated (repo-fleet pass 1, `wf_dbafe83b-6c8`): 0/87 codex-delta seals stand — all VOID; #75 = machine-local evidence only; #90 = LANDED, its residue awaiting the owner's named triggers; underlying code holds as LANDED-CANDIDATE per cluster verdicts (A/B/D/E: stand-with-cures · C: falls entire).**
 
+⊕¹³ **OWNER WORDS + THE KILL (2026-08-03 midday):** (1) the Codex root thread was closed by the
+owner and the lineage VERIFIED DEAD by the lead (last rollout write 10:51 · zero open session
+handles · all surviving codex host processes + cua kernels killed · port 5400 freed) — the ⊕¹²
+live-hazard is DISCHARGED; the 08-09 quota-reset watch is a residual check only. (2) **Music-staff
+KEEP-AND-PERFECT** (owner word verbatim: *"Music staff is to be kept herein and perfected. We may
+use it as a loading screen"*) — row **#91 W-MUSIC-STAFF** minted at TR ⊕¹⁰; APOTHEOSIS cure §7's
+strip-to-scaena default is REVERSED (the `variant`→`emphasis` fix + candidate commit ride the cure
+dispatch; the perfection wave is #91's). (3) value.js megatranche ACTIVE (auditing + development,
+owner word) — the §C value contracts and 8.0.0 breaking relays stand untouched; pencil-boil's
+0.11.2 bump is KEPT with its audit routed to that repo's tranche. **The cure dispatch opens now**
+per APOTHEOSIS §THE RATIFIED CURE ORDER (as amended by (2)).
+
 ## Φ0 — executable this hour
 
 | # | wave | Φ | state | spec of record | gates |

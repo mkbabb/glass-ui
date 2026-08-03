@@ -13,6 +13,18 @@ workbench hierarchy → #56/#58/#59; finite-family abrogation →
 #84/#32/#71/#26/#55/#76. Acceptance pointer only: six consumer-owned
 exclusions remain rejected, rows stay 90, gate seats +0, and no state moves.
 
+**⊕¹⁰ ROW #91 MINTED BY OWNER WORD (2026-08-03):** *"Music staff is to be kept herein and
+perfected. We may use it as a loading screen."* — **W-MUSIC-STAFF** enters as row **#91** (rows
+90→91; gate seats +0). The component (deposited 08-02 by the owner's scaena thread, seat
+"Galileo" — provenance `docs/tranches/BK/execution/2026-08-03-codex-audit/LOG-AUDIT.md`) is KEPT
+in glass-ui and ELEVATED to library scope, reversing the pass-1 strip-to-scaena default. Spec of
+record: the E-cluster adjudication's opening-defect list (`REPO-AUDIT-ADJUDICATIONS.json` cluster
+E: malformed clef + flat mis-engraving · runaway ledger lines · 18 dead token fallbacks ·
+ease-only motion, a liquid-weight breach · the `variant`→`emphasis` API break) + the owner's
+loading-screen affordance (the ink-on-arrival grammar IS the loading metaphor — indeterminate +
+determinate modes). Φ2 · design via DesignSync under the tri-fold law · its five test files
+re-adjudicated under the gates presumption at the wave.
+
 ---
 
 # §00 · THE ADJUDICATION LEDGER — every disagreement reproduced and RULED, never averaged
