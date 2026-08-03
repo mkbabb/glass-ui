@@ -27,8 +27,18 @@ const require_ = createRequire(import.meta.url);
  * The root fix: generate ONLY glass-ui's own component vocabulary in glass-ui's
  * OWN build (native theme context — deterministic, NOT a consumer re-derivation
  * — which is what AN.W2 rejected on payload + brittleness grounds) and ship the
- * emitted rules as static CSS in the dist `/styles` cascade. A bare consumer
- * (no `@source`) then gets them for free.
+ * emitted rules as static CSS in the dist `/styles` cascade. A consumer then gets
+ * them without an `@source` glob of its own.
+ *
+ * THE SUPPORTED CONSUMER CONTRACT is a TAILWIND-BUILD consumer — one whose own
+ * Tailwind v4 build imports `@mkbabb/glass-ui/styles` (glass-ui is Tailwind-first
+ * by law). That is the contract this emit serves and the only one it can serve:
+ * glass-ui's token layer ships as raw `@theme static{}` blocks
+ * (`dist/styles/theme/{radius,bridges,literals}.css`), which are Tailwind at-rules
+ * a plain-CSS engine drops wholesale, so the `--radius-*` ladder, the type scale,
+ * and the font stacks only become `:root` custom properties inside a Tailwind
+ * build. What this emit removes is the SCAN dependency (the utility RULES),
+ * not the Tailwind dependency. No plain-CSS compile path is claimed.
  *
  * The recipe — compile via `@tailwindcss/postcss` with:
  *
@@ -55,12 +65,12 @@ const require_ = createRequire(import.meta.url);
  * the `--animate-*` keyframe refs, the `--color-amber-*`/`--color-red-*` palette
  * stops, …). The kept utilities REFERENCE those via `var(--X)` (every `p-*`/
  * `gap-*`/`inset-*` is `calc(var(--spacing) * N)`), so dropping the whole block
- * leaves them undefined and the utilities silently no-op for a bare consumer.
+ * leaves them undefined and the utilities silently no-op in the consumer.
  * The fix emits NO `:root{}` block at all (that would re-emit — and risk
  * clobbering — glass-ui's own tokens): every reference to a Tailwind-owned prop
  * that glass-ui does not itself define is rewritten IN PLACE to carry Tailwind's
  * default as its `var()` fallback. A consumer that defines the prop still wins;
- * a bare consumer paints the default. `rewriteFallbackValue` recurses, so a
+ * one that does not paints the default. `rewriteFallbackValue` recurses, so a
  * nested body (`var(--tw-leading, var(--text-base--line-height))`) is covered
  * too — the un-recursed form shipped weightless `transition-*` utilities.
  *
@@ -85,6 +95,13 @@ export async function emitComponentUtilities(
     if (existsSync(sfcBundle)) scanPaths.push(sfcBundle);
 
     const classish = /^-?[a-z][a-z0-9]*(?:[-/:][\w./:\-\[\]%(),#=&*~+]*)*$/i;
+    // Arbitrary-PROPERTY setter tokens (`[--overlay-pad-inline:--spacing(6)]`) are
+    // legal Tailwind v4 classes, and they are the DEFINITIONS the emitted reader
+    // utilities consume (`px-(--overlay-pad-inline)` is emitted fallback-less by
+    // construction — the property is glass-ui's own, so the R3 rewrite correctly
+    // leaves it alone). `classish` rejects them on sight (they open on `[`), which
+    // shipped the readers with nothing anywhere in the cascade setting the value.
+    const propertySetter = /^\[--[\w-]+:[^\s]+\]$/;
     const strRe = /["'`]([^"'`\n]*?)["'`]/g;
     const tokens = new Set<string>();
     for (const path of scanPaths) {
@@ -94,7 +111,7 @@ export async function emitComponentUtilities(
             for (const part of m[1].split(/\s+/)) {
                 const t = part.trim();
                 if (!t || t.length > 120) continue;
-                if (!classish.test(t)) continue;
+                if (!classish.test(t) && !propertySetter.test(t)) continue;
                 if (!/[a-z]/i.test(t)) continue;
                 tokens.add(t);
             }
@@ -162,23 +179,32 @@ export async function emitComponentUtilities(
         dirname(require_.resolve("tailwindcss/package.json")),
         "theme.css",
     );
+    const twKeyframes = new Map<string, postcss.AtRule>();
     if (existsSync(twThemePath)) {
-        postcss.parse(readFileSync(twThemePath, "utf-8")).walkAtRules(
-            "theme",
-            (atRule) => {
-                atRule.walkDecls((decl) => {
-                    if (decl.prop.startsWith("--")) {
-                        themeOwned.set(decl.prop, decl.value);
-                    }
-                });
-            },
-        );
+        const twTheme = postcss.parse(readFileSync(twThemePath, "utf-8"));
+        twTheme.walkAtRules("theme", (atRule) => {
+            atRule.walkDecls((decl) => {
+                if (decl.prop.startsWith("--")) {
+                    themeOwned.set(decl.prop, decl.value);
+                }
+            });
+        });
+        // Tailwind pairs each `--animate-*` token with the `@keyframes` it names,
+        // nested in the same `@theme` block. The token alone is inert.
+        twTheme.walkAtRules("keyframes", (atRule) => {
+            twKeyframes.set(atRule.params.trim(), atRule);
+        });
     }
 
     const glassDefined = new Set<string>();
+    const glassKeyframes = new Set<string>();
     for (const path of closure.cssSources) {
-        postcss.parse(readFileSync(path, "utf-8")).walkDecls((decl) => {
+        const parsedSource = postcss.parse(readFileSync(path, "utf-8"));
+        parsedSource.walkDecls((decl) => {
             if (decl.prop.startsWith("--")) glassDefined.add(decl.prop);
+        });
+        parsedSource.walkAtRules("keyframes", (atRule) => {
+            glassKeyframes.add(atRule.params.trim());
         });
     }
 
@@ -235,11 +261,26 @@ export async function emitComponentUtilities(
         decl.value = rewriteFallbackValue(decl.value);
     });
 
+    // R4 — a `--animate-*` fallback carries an animation-NAME
+    // (`.animate-spin{animation:var(--animate-spin,spin 1s linear infinite)}`);
+    // without the `@keyframes` behind that name the animation is inert and the
+    // spinner renders static. Ship the backing keyframes for every referenced
+    // `--animate-*`, skipping any name glass-ui's own cascade already defines.
+    // `baseProps` is sorted, so the emission stays byte-stable.
+    for (const property of baseProps) {
+        if (!property.startsWith("--animate-")) continue;
+        const name = (themeOwned.get(property) ?? "").trim().split(/\s+/)[0];
+        const frames = name ? twKeyframes.get(name) : undefined;
+        if (frames && !glassKeyframes.has(name)) kept.append(frames.clone());
+    }
+
     const header =
         "/* P9 — glass-ui's own component-utility rules, emitted build-\n" +
-        "   independently from glass-ui's native @theme so a bare consumer\n" +
-        "   (no @source glob) paints them. Generated by\n" +
-        "   vite.style-assets.ts emitComponentUtilities; do not hand-edit. */\n";
+        "   independently from glass-ui's native @theme so a TAILWIND-BUILD\n" +
+        "   consumer paints them with no @source glob of its own. The token\n" +
+        "   layer still ships as @theme, so a Tailwind build is the supported\n" +
+        "   contract. Generated by vite.style-assets.ts emitComponentUtilities;\n" +
+        "   do not hand-edit. */\n";
     writeFileSync(
         resolve(distStyles, "components.css"),
         header + kept.toString() + "\n",
@@ -266,7 +307,8 @@ export async function emitComponentUtilities(
     const sourceAt = terminalImportIndex(indexSrc);
     const comment =
         "/* P9 — component-utility rules (rounded-panel, text-muted-foreground,\n" +
-        "   …) shipped build-independently so a bare consumer paints them. */\n";
+        "   …) shipped build-independently so a Tailwind-build consumer paints\n" +
+        "   them without an @source glob of its own. */\n";
     const folded =
         sourceAt === -1
             ? `${indexSrc}\n${comment}${compImport}\n`

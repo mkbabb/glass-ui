@@ -528,14 +528,13 @@ describe("Row 8 package falsifiers", () => {
         expect(manifest.peerDependenciesMeta).not.toHaveProperty("@mkbabb/keyframes.js");
         expect(manifest.peerDependencies["@mkbabb/pencil-boil"]).toBe("^0.11.2");
         expect(manifest.peerDependenciesMeta["@mkbabb/pencil-boil"]).toEqual({ optional: true });
-        expect(manifest.devDependencies["@mkbabb/pencil-boil"]).toBe("0.11.2");
         expect(lock.packages[""]["peerDependencies"]["@mkbabb/pencil-boil"]).toBe("^0.11.2");
-        expect(lock.packages[""]["devDependencies"]["@mkbabb/pencil-boil"]).toBe("0.11.2");
-        expect(lock.packages["node_modules/@mkbabb/pencil-boil"]).toMatchObject({
-            version: "0.11.2",
-            resolved: "https://registry.npmjs.org/@mkbabb/pencil-boil/-/pencil-boil-0.11.2.tgz",
-            integrity: "sha512-NifgOXlCU8ZBRwV3a3+nd20vFvpNPpol8PjaC1r0SjqyJD5euAQ3L1UEART6jz2zjUHfBqmSWGaq0XDAnIJX2A==",
-        });
+        // The exact devDep pin, the registry `resolved` URL, and the sha512
+        // integrity are REMEMBERED LITERALS — the very class this row's verifier
+        // comment condemns. A routine dev bump or a mirror re-resolve REDs them
+        // with zero semantic change. The structural contract is what binds: a
+        // caret peer range, its optionality, and lock/manifest agreement (asserted
+        // whole in the next case).
         expect(manifest.peerDependenciesMeta["@mkbabb/value.js"]).toEqual({ optional: true });
         expect(manifest.exports["./styles.css"]).toBe("./dist/component-styles.css");
     });
@@ -587,7 +586,7 @@ describe("Row 8 package falsifiers", () => {
         }
     });
 
-    it("keeps the root barrel explicit", () => {
+    it("G-BARREL-EXPLICIT: keeps the root barrel explicit", () => {
         const source = readFileSync("src/index.ts", "utf8");
         expect(source).not.toMatch(/^\s*export\s+\*\s+from/m);
         expect(source).toMatch(/export\s+type\s*\{/);
@@ -648,7 +647,11 @@ describe("Row 8 package falsifiers", () => {
         expect(results.packageRootDirectoryLast).toEqual(["dist/index.js"]);
     });
 
-    it("rejects datum+1 in first-adoption mode while permitting a later decrease", () => {
+    // Both directions are a REBIND. A growth was always loud; a shrink used to pass
+    // silently, accumulating headroom until the ceiling meant nothing — so the
+    // later-coordinate mode now demands the datum move deliberately, in both
+    // directions, and only exact equality rides through.
+    it("G-BUNDLE-RATCHET: rejects datum±1 — every movement of the datum is a deliberate rebind", () => {
         const fixture = mkdtempSync(resolve(tmpdir(), "glass-ratchet-hostile-"));
         try {
             writeFileSync(resolve(fixture, ".bundle-ratchet"), "1097643\n");
@@ -657,20 +660,27 @@ describe("Row 8 package falsifiers", () => {
                 import { ratchetEvidence } from ${JSON.stringify(verifier)};
                 const root = process.argv[1];
                 const results = [];
-                try {
-                    ratchetEvidence(root, 1097642, { firstAdoption: true });
-                } catch (error) {
-                    results.push(error.message);
-                }
+                const attempt = (bytes, options) => {
+                    try {
+                        return ratchetEvidence(root, bytes, options);
+                    } catch (error) {
+                        return error.message;
+                    }
+                };
+                results.push(attempt(1097642, { firstAdoption: true }));
                 await import("node:fs").then(({ writeFileSync }) => writeFileSync(root + "/.bundle-ratchet", "1097642\\n"));
-                results.push(ratchetEvidence(root, 1097642, { firstAdoption: true }));
-                results.push(ratchetEvidence(root, 1097641));
+                results.push(attempt(1097642, { firstAdoption: true }));
+                results.push(attempt(1097643));
+                results.push(attempt(1097641));
+                results.push(attempt(1097642));
                 console.log(JSON.stringify(results));
             `;
             const results = JSON.parse(runVerifierProbe(probe, fixture));
             expect(results[0]).toMatch(/first-adoption bundle ratchet requires exact equality/);
             expect(results[1]).toMatchObject({ mode: "first-adoption", equal: true });
-            expect(results[2]).toMatchObject({ mode: "later-coordinate", equal: false });
+            expect(results[2]).toMatch(/bundle ratchet increase forbidden/);
+            expect(results[3]).toMatch(/bundle ratchet shrink — rebind down deliberately/);
+            expect(results[4]).toMatchObject({ mode: "later-coordinate", equal: true });
         } finally {
             rmSync(fixture, { recursive: true, force: true });
         }

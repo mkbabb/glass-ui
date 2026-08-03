@@ -38,6 +38,15 @@ demo/.qa/
 *.jpg
 *_time.txt
 
+# BK adj:P2A S2 — the tranche execution-evidence captures (docs/tranches/*/execution/**).
+# Same cardinal-lesson class as the audit/visual + evidence carve-outs above: a cited
+# capture is version-controlled evidence, and a citation whose image is ignored is half
+# a DELTA. Placed AFTER the *.jpeg/*.jpg ignores so the negations win. Scoped to the
+# tranche execution dirs only — no widening past docs/tranches evidence.
+!docs/tranches/*/execution/**/*.png
+!docs/tranches/*/execution/**/*.jpeg
+!docs/tranches/*/execution/**/*.jpg
+
 # AS.W6 — visual-capture scratch (the W7 paired-π capture scripts + their PNGs).
 # Single-shot verification scratch, not the archived visual-evidence protocol
 # (that lives under docs/tranches/*/audit/visual/). Gitignored so a `git add -A`

@@ -54,6 +54,9 @@ function versionTuple(spec) {
  */
 function satisfiesPeerRange(version, range) {
     if (!range?.startsWith("^")) throw new Error(`peer range is not a caret range: ${range}`);
+    // npm semver admits a prerelease ONLY when the range itself names one:
+    // `6.0.0-beta.1` sits BELOW the `^6.0.0` floor, it does not satisfy it.
+    if (version.includes("-") && !range.includes("-")) return false;
     const low = versionTuple(range);
     const actual = versionTuple(version);
     const upper = low[0] > 0
@@ -200,7 +203,7 @@ function packageClaims(pkg, files) {
         const matches = targetMatches(target, files);
         const labels = [...claim.labels].join(", ");
         if (matches.length === 0) {
-            failures.push(`${labels}: package omits ${target}`);
+            failures.push(`G-NO-ORPHAN-EXPORT: ${labels}: package omits ${target}`);
             continue;
         }
         if (claim.declaration) {
@@ -442,7 +445,7 @@ function runTypeResolverChecks(consumerRoot, pkg, sourceSurface, codeSpecifiers)
             configPath,
         ], { cwd: consumerRoot, encoding: "utf8" });
         evidence.push({ mode: name, exit: result.status, stdout: result.stdout, stderr: result.stderr });
-        if (result.status !== 0) throw new Error(`${name} installed consumer typecheck failed:\n${result.stdout}\n${result.stderr}`);
+        if (result.status !== 0) throw new Error(`G-PACK-INSTALL: ${name} installed consumer typecheck failed:\n${result.stdout}\n${result.stderr}`);
         const program = ts.createProgram([sourcePath], compilerOptionsForMode(resolution, module));
         const diagnostics = ts.getPreEmitDiagnostics(program);
         if (diagnostics.length) {
@@ -708,7 +711,7 @@ function installedEvidence({ consumerRoot, installed, pkg, sourceSurface, codeSp
       }
       process.stdout.write(JSON.stringify(results));
     `], { cwd: consumerRoot, encoding: "utf8" });
-    if (runtime.status !== 0) throw new Error(`installed runtime import failed: ${runtime.stderr || runtime.stdout}`);
+    if (runtime.status !== 0) throw new Error(`G-PACK-INSTALL: installed runtime import failed: ${runtime.stderr || runtime.stdout}`);
     let runtimeResults;
     try { runtimeResults = JSON.parse(runtime.stdout); } catch (error) { throw new Error(`installed runtime evidence was invalid JSON: ${String(error)}`); }
 
@@ -726,17 +729,21 @@ function installedEvidence({ consumerRoot, installed, pkg, sourceSurface, codeSp
 export function ratchetEvidence(repoRoot, tarballBytes, { allowMissingRatchet = false, firstAdoption = false } = {}) {
     const path = resolve(repoRoot, ".bundle-ratchet");
     if (!existsSync(path)) {
-        if (firstAdoption || !allowMissingRatchet) throw new Error(".bundle-ratchet is missing; first adoption must bind the immutable tarball byte count");
+        if (firstAdoption || !allowMissingRatchet) throw new Error("G-BUNDLE-RATCHET: .bundle-ratchet is missing; first adoption must bind the immutable tarball byte count");
         return { path, status: "MISSING", candidateBytes: tarballBytes };
     }
     const raw = readFileSync(path, "utf8");
-    if (!canonicalRatchetPattern.test(raw)) throw new Error(".bundle-ratchet is not canonical unsigned decimal plus one LF");
+    if (!canonicalRatchetPattern.test(raw)) throw new Error("G-BUNDLE-RATCHET: .bundle-ratchet is not canonical unsigned decimal plus one LF");
     const datum = BigInt(raw.slice(0, -1));
     const candidate = BigInt(tarballBytes);
     if (firstAdoption && candidate !== datum) {
-        throw new Error(`first-adoption bundle ratchet requires exact equality: ${tarballBytes} !== ${datum}`);
+        throw new Error(`G-BUNDLE-RATCHET: first-adoption bundle ratchet requires exact equality: ${tarballBytes} !== ${datum}`);
     }
-    if (!firstAdoption && candidate > datum) throw new Error(`bundle ratchet increase forbidden: ${tarballBytes} > ${datum}`);
+    if (!firstAdoption && candidate > datum) throw new Error(`G-BUNDLE-RATCHET: bundle ratchet increase forbidden: ${tarballBytes} > ${datum}`);
+    // A SHRINK is as much a rebind as a growth: silent headroom accumulates until
+    // the ceiling means nothing (the N-4 defect class). Every movement of the datum
+    // is deliberate and owner-worded, so a smaller candidate FAILS LOUD too.
+    if (!firstAdoption && candidate < datum) throw new Error(`G-BUNDLE-RATCHET: bundle ratchet shrink — rebind down deliberately: ${tarballBytes} < ${datum}`);
     return {
         path,
         status: "PRESENT",

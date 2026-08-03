@@ -44,10 +44,8 @@ describe("demo landing semantics", () => {
 
         expect(wrapper.findAll("h1")).toHaveLength(1);
         expect(wrapper.get("h1").text()).toBe("Glass UI");
-        expect(wrapper.get(".optical-bench-signature").attributes("aria-hidden")).toBe(
-            "true",
-        );
-        expect(wrapper.findAll('[data-testid="watercolor-swatch"]')).toHaveLength(1);
+        expect(wrapper.findAll(".optical-bench-signature")).toHaveLength(0);
+        expect(wrapper.findAll('[data-testid="watercolor-swatch"]')).toHaveLength(0);
         expect(wrapper.findAll("a")).toHaveLength(CATEGORIES.length);
         expect(wrapper.get('a[href="/forms"]').text()).toBe("Forms");
         expect(wrapper.text()).not.toContain("/forms");

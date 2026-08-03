@@ -44,10 +44,19 @@
 
 /* Route snapshots are the sole route-motion writer. Typed-capable engines get a
  * restrained nav settle; callback-only Safari keeps its native root crossfade. */
+/* The root pair cross-fades under `plus-lighter`: alpha conservation demands a
+ * LINEAR clock on both halves (a spring curve makes the pair sum ≠ 1 mid-flight —
+ * the white flash). `--spring-snappy` stays on transform-bearing NAMED groups. */
+::view-transition-old(root),
+::view-transition-new(root) {
+    /* The snapshots are element-sized; without this the shorter of the pair
+       letterboxes against the page during the fade. */
+    block-size: 100%;
+}
 html:active-view-transition-type(route)::view-transition-old(root),
 html:active-view-transition-type(route)::view-transition-new(root) {
     animation-duration: var(--spring-snappy-duration);
-    animation-timing-function: var(--spring-snappy);
+    animation-timing-function: linear;
 }
 html:active-view-transition-type(route)::view-transition-old(root) {
     animation-name: gl-vt-route-out;
@@ -76,7 +85,9 @@ html:active-view-transition-type(route)::view-transition-new(root) {
 
 @keyframes gl-vt-slide-in  { from { opacity: 0; translate: 0 var(--vt-rise, 8px); } }
 @keyframes gl-vt-slide-out { to   { opacity: 0; translate: 0 var(--vt-rise, 8px); } }
-@keyframes gl-vt-route-in  { from { opacity: 0; translate: 0 var(--vt-rise, 8px); } }
+/* Root carries NO translate — the rise belongs to a named sub-element group, and
+ * a root-wide translate breaks the `plus-lighter` overlap. */
+@keyframes gl-vt-route-in  { from { opacity: 0; } }
 @keyframes gl-vt-route-out { to   { opacity: 0; } }
 
 /* Keep the non-transitioned UI interactive while the snapshot animates. */

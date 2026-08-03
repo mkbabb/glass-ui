@@ -77,7 +77,13 @@ describe("useAccentTone controlled cache boundaries", () => {
         process.on("unhandledRejection", onUnhandled);
         try {
             vi.resetModules();
+            // The factory runs once per real module LOAD, so it counts the loads the
+            // `accentToneLoader ??=` memo is there to collapse. Without the count the
+            // title is unfalsifiable: dropping the memo (a re-import per consumer)
+            // leaves every ink at "" and every assertion below still green.
+            let solveLoads = 0;
             vi.doMock("@glass/composables/color/accent-tone-solve", () => {
+                solveLoads += 1;
                 throw new Error("controlled optional module absence");
             });
             const { useAccentTone: isolatedUseAccentTone } = await import(
@@ -98,6 +104,7 @@ describe("useAccentTone controlled cache boundaries", () => {
             expect(postReject.ink.value).toBe("");
             await vi.waitFor(() => expect(postReject.ink.value).toBe(""));
             await new Promise((resolve) => setTimeout(resolve, 0));
+            expect(solveLoads).toBe(1);
             expect(unhandled).toEqual([]);
         } finally {
             vi.doUnmock("@glass/composables/color/accent-tone-solve");
