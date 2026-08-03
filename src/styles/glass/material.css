@@ -417,17 +417,6 @@
         transition: none;
     }
 
-    /* The `:active` LENS-SWELL is gone (the baked-scale note,
-       glass-refract.css header). The swell drove the displacement `scale` by mutating
-       the `--glass-refract` axis on the `--glass-btn-press-t` press drive (28 rest → 44
-       pressed). That depended on the var()-spliced head/`scale`/tail filter — which never
-       PARSED as a `backdrop-filter` (three tokens: `url("…") <n> url("…")`), so the lens
-       rendered `none` and the swell animated a value that reached NO filter. A CSS url()
-       string token cannot carry a substituted `var()` (the engine does not re-tokenise
-       inside a string), so a dynamic per-instance `scale` is structurally impossible in a
-       single self-contained data-URI — and the single token is mandatory for both parse
-       validity and bundler url()-rewrite safety. The `scale` is now BAKED at the §10
-       default (28); the resting lens read is PRESERVED (and now actually renders), the
-       press-depth animation is the deliberate tradeoff. The press squish + gleam lift on
-       the SAME `--glass-btn-press-t` drive (material gleam, above) carry the press read. */
+    /* The press read is carried by the press squish + gleam lift on the ONE
+       `--glass-btn-press-t` drive (material gleam, above). */
 }

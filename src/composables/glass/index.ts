@@ -1,12 +1,3 @@
-// The `useGlassRenderer` / `createGlassFilter` /
-// `destroyGlassFilter` detection-cascade cluster is DELETED (source-absent). It was
-// a SECOND refraction path — a JS-canvas `feDisplacementMap`-in-`backdrop-filter`
-// competing with the house `.glass-lens`/`#glass-refract` axis — with GlassPanel as
-// its ONLY consumer (a `proof:no-dual-path` violation). GlassPanel retired onto
-// `<Surface>`/`.glass-resting`, so the cluster has no consumer; `.glass-lens` is the
-// ONE refraction door. Clean break, no alias. `useSpecularTracking` + the
-// `useCanvas2D` lifecycle below stay live (aurora/blob/constellation/fourier).
-
 // The DRY pointer-anchored moving-specular write seam (the single source
 // Card.vue + DockControl.vue share; PRM-aware; the `.glass-material`
 // recipe maps the host `--mouse-x/y` write onto its typed specular channel).

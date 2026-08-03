@@ -172,6 +172,21 @@ agglomerated apotheosis."* — this IS the restored PLAN §3 tri-fold law, fresh
 dispatch (all-Opus lanes, Fable adjudication seats) and #91's design wave (Fable ∥ Opus via
 DesignSync → Fable apotheosis) run under it.
 
+⊕¹⁶ **THE DRIVER BATCH (Fable lead, 2026-08-03, post-dispatch):** (1) **`.bundle-ratchet` REBOUND
+898326→903382** — the delta is exactly music-staff's 7 packed members (5,056 bytes), an
+owner-worded KEEP-AND-PERFECT cut; RATCHET PROTOCOL minted: the datum rebinds only at an
+owner-worded component addition, in a commit that names the delta — never silently, never by a
+verify seat. (2) the two inert `.glass-lens` visual specs (`lensing.spec.ts` ·
+`glass-prune.spec.ts`) RETIRED in the same G-REFRACT-TOTAL movement as their subject; the refract
+archaeology prose swept from `material.css`/`glass-specular-track.css`/`composables/glass/index.ts`.
+(3) **ROUTED to the material row (#22 ∥ #68):** the ambient specular channel
+(`--glass-ambient-hue`/`--glass-ambient-strength`) now has ZERO CSS paint consumers after the
+one-pair specular collapse (`cfc4dffa`) — its ~20-line end-to-end deletion (4 files, incl. the
+luminance-observer writes) is that row's one-word subtraction. (4) the row-6
+`OWNER-AMENDMENT.md` dir committed as VOID-chronology evidence. (5) Residue: the 11 unregistered
+row-6 clones (~78 GB) are outside the driver's path permissions — the one owner command:
+`rm -rf /Users/mkbabb/Programming/glass-ui-row6-v{6,7,8,12,27,28,29,30,31,32,33}-isolated`.
+
 ## Φ0 — executable this hour
 
 | # | wave | Φ | state | spec of record | gates |

@@ -15,14 +15,9 @@
  * painting the catch-light without a legacy shim — the alias is a live
  * composition onto the unified mixin, not a dead orphan.
  *
- * This file carries ONLY:
- *   1. The reduced-motion + reduced-transparency a11y brackets, pointed at the
- *      `.glass-material` group (the canonical specular owner) so the guards
- *      cover every band surface, not just the opt-in class.
- *   2. The `@supports`-gated `#glass-refract` refraction garnish — RE-HOMED at
- * off the (now-folded) `.glass-specular-track.glass-refract`
- *      compound onto `.glass-material.glass-refract` (see glass-refract.css for
- *      the shipped filter asset + the re-homed consuming selector).
+ * This file carries ONLY the reduced-motion + reduced-transparency a11y
+ * brackets, pointed at the `.glass-material` group (the canonical specular
+ * owner) so the guards cover every band surface, not just the opt-in class.
  */
 
 /* ── Reduced-motion: pin the specular STATIC ───────────────────────────────
