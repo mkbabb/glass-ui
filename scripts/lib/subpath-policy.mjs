@@ -66,7 +66,7 @@ export const COMPONENT_CLASS = {
     "tags-input": "INTERNAL", textarea: "INTERNAL",
     // INTERNAL (1)
     "infinite-scroll": "INTERNAL",
-    // PUBLISH (29) — the custom/glass-native set.
+    // PUBLISH (30) — the custom/glass-native set.
     "animated-digit": "PUBLISH", aurora: "PUBLISH",
     "completion-seal": "PUBLISH",
     // BI.W-CHIP-FOLD: the one explicit-mode <Chip> family.
@@ -82,6 +82,7 @@ export const COMPONENT_CLASS = {
     "header-ribbon": "PUBLISH",
     "instrument-chassis": "PUBLISH", "labeled-field": "PUBLISH",
     metric: "PUBLISH",
+    "music-staff": "PUBLISH",
     "pager-dots": "PUBLISH", "paper-backdrop": "PUBLISH",
     search: "PUBLISH", "scroll-progress-rim": "PUBLISH",
     // BI.W-SPEEDTEST-ONLY-PAIR: scrolling-text RETIRED (speedtest-only; the ask-row offers the mechanism).

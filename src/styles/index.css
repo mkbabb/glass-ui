@@ -225,6 +225,10 @@
 @import "../components/dialog/placement.css";
 /* The static numeric-readout family. */
 @import "../components/metric/styles.css";
+/* The finite notation ribbon: warm folio material plus SVG glyph draw-in.
+   Its visual recipe stays with the component while this import fixes its
+   cascade position after the base material/utility registers. */
+@import "../components/music-staff/styles.css";
 /* The thin, radius-following masked scroll-progress band. */
 @import "../components/scroll-progress-rim/styles.css";
 

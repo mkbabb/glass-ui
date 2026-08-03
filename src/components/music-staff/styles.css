@@ -1,0 +1,164 @@
+@layer components {
+    .music-staff {
+        --music-staff-ink: color-mix(in srgb, var(--foreground, #29241e) 86%, transparent);
+        --music-staff-accent: var(--viz-chebyshev, #3159a6);
+        --music-staff-folio: rgb(255 246 226 / 82%);
+        --music-staff-rule-duration: calc(0.52s * var(--motion-tempo, 1));
+        --music-staff-symbol-duration: calc(0.42s * var(--motion-tempo, 1));
+        --music-staff-exit-duration: calc(0.25s * var(--motion-tempo, 1));
+        --music-staff-rule-stagger: calc(28ms * var(--motion-tempo, 1));
+        container-type: inline-size;
+        margin: 0;
+        color: var(--music-staff-ink);
+    }
+
+    .music-staff__viewport {
+        width: 100%;
+        overflow-x: auto;
+        overscroll-behavior-inline: contain;
+        border-radius: var(--radius-panel, 1rem);
+        scrollbar-color: color-mix(in srgb, var(--music-staff-accent) 46%, transparent) transparent;
+    }
+
+    .music-staff[data-material="folio"] .music-staff__viewport {
+        border: 1px solid color-mix(in srgb, hsl(26 16% 18%) 12%, transparent);
+        background-color: var(--music-staff-folio);
+        background-image: var(--paper-clean-texture, none);
+        box-shadow:
+            inset 0 1px 0 color-mix(in srgb, white 70%, transparent),
+            inset 0 -1px 0 color-mix(in srgb, hsl(26 16% 18%) 6%, transparent),
+            0 16px 44px color-mix(in srgb, hsl(26 16% 18%) 12%, transparent);
+        backdrop-filter: blur(var(--glass-blur-resting, 18px)) saturate(1.04);
+    }
+
+    /* A score remains a cream paper object in dark application chrome. The
+       bare material keeps inheriting the host's mode-responsive ink. */
+    .music-staff[data-material="folio"] {
+        --music-staff-ink: rgb(46 39 31 / 88%);
+        --music-staff-accent: var(--viz-chebyshev, #3159a6);
+    }
+
+    .music-staff__viewport:focus-visible {
+        outline: 2px solid var(--music-staff-accent);
+        outline-offset: 3px;
+    }
+
+    .music-staff svg {
+        display: block;
+        width: 100%;
+        min-height: 8rem;
+        overflow: visible;
+    }
+
+    .music-staff__line,
+    .music-staff__ledger,
+    .music-staff__stem,
+    .music-staff__flag,
+    .music-staff__head,
+    .music-staff__accidental path,
+    .music-staff__clef path {
+        fill: none;
+        stroke: currentcolor;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        vector-effect: non-scaling-stroke;
+    }
+
+    .music-staff__line { stroke-width: 1; opacity: 0.45; }
+    .music-staff__ledger { stroke-width: 1.2; opacity: 0.72; }
+    .music-staff__stem { stroke-width: 1.65; }
+    .music-staff__flag { stroke-width: 2; }
+    .music-staff__accidental path { stroke-width: 1.5; }
+    .music-staff__head { fill: currentcolor; stroke-width: 1.5; }
+    .music-staff__head--open { fill: var(--music-staff-folio); stroke-width: 1.7; }
+    .music-staff__clef path { stroke-width: 2.2; }
+    .music-staff__clef circle { fill: currentcolor; }
+
+    .music-staff__note.is-past { color: var(--music-staff-accent); }
+    .music-staff__playhead { color: var(--music-staff-accent); }
+    .music-staff__playhead path {
+        stroke: currentcolor;
+        stroke-width: 1.5;
+        opacity: 0.76;
+        vector-effect: non-scaling-stroke;
+    }
+    .music-staff__playhead circle { fill: currentcolor; }
+
+    @media (prefers-reduced-motion: no-preference) {
+        .music-staff[data-phase="enter"] .music-staff__line {
+            stroke-dasharray: 920;
+            stroke-dashoffset: 920;
+            animation: music-staff-rule-in var(--music-staff-rule-duration)
+                var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1))
+                var(--music-staff-rule-delay) both;
+        }
+
+        .music-staff[data-phase="enter"] .music-staff__clef path {
+            stroke-dasharray: 260;
+            stroke-dashoffset: 260;
+            animation: music-staff-glyph-in var(--music-staff-symbol-duration)
+                var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1))
+                calc(120ms * var(--motion-tempo, 1)) both;
+        }
+
+        .music-staff[data-phase="enter"] .music-staff__clef circle {
+            opacity: 0;
+            animation: music-staff-fill-in var(--music-staff-symbol-duration)
+                var(--ease-standard, ease-out)
+                calc(260ms * var(--motion-tempo, 1)) both;
+        }
+
+        .music-staff[data-phase="enter"] .music-staff__note path {
+            stroke-dasharray: 80;
+            stroke-dashoffset: 80;
+            animation: music-staff-glyph-in var(--music-staff-symbol-duration)
+                var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1))
+                var(--music-staff-note-delay) both;
+        }
+
+        .music-staff[data-phase="enter"] .music-staff__note path.music-staff__head {
+            fill-opacity: 0;
+            animation: music-staff-head-in var(--music-staff-symbol-duration)
+                var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1))
+                var(--music-staff-note-delay) both;
+        }
+
+        .music-staff[data-phase="exit"] {
+            animation: music-staff-exit var(--music-staff-exit-duration)
+                var(--ease-standard, ease-out) both;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .music-staff[data-phase="exit"] { opacity: 0; }
+    }
+
+    @media (max-width: 760px) {
+        .music-staff svg {
+            width: max(680px, 100%);
+            max-width: none;
+        }
+    }
+}
+
+@keyframes music-staff-rule-in {
+    to { stroke-dashoffset: 0; }
+}
+
+@keyframes music-staff-glyph-in {
+    to { stroke-dashoffset: 0; }
+}
+
+@keyframes music-staff-fill-in {
+    to { opacity: 1; fill-opacity: 1; }
+}
+
+@keyframes music-staff-head-in {
+    0% { stroke-dashoffset: 80; fill-opacity: 0; }
+    62% { fill-opacity: 0; }
+    100% { stroke-dashoffset: 0; fill-opacity: 1; }
+}
+
+@keyframes music-staff-exit {
+    to { opacity: 0; transform: translateY(-2px); }
+}

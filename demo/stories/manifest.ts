@@ -593,6 +593,13 @@ export const CATEGORIES: Category[] = [
                 "Atoms",
                 "The designed atoms wall — separator, status-dot, avatar, and the dark-mode toggle on ONE page, sectioned by the family switcher.",
             ),
+            s(
+                "display",
+                "music-staff",
+                "Music Staff",
+                "A parser-independent SVG quotation folio: five-line engraving, MIDI-derived note data, finite ink-on arrival, direct playback progress, and accessible overflow navigation. Shipped /music-staff.",
+                { background: "paper" },
+            ),
         ],
     },
     {
