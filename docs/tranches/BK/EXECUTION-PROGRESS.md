@@ -244,6 +244,24 @@ rebind belong to the close row (#66), nowhere earlier; (e) ALL dock/drawer-file 
 adj:P2D are HELD behind row #7's in-flight lane and land as one consolidated dock/drawer cure
 round after its verdict.
 
+⊕²¹ **CURE-BATCH + Φ3 LANDINGS (2026-08-03):** the pass-2 cure batch landed at `1fae253a`
+(Fable-adjudicated commit-worthy; lanes A/B CLEAN, C RESIDUE): boot-graph 638-line salvage
+re-landed byte-identical to `858c1087` (14/14 green), the ⊕¹⁹ owner defects KILLED in code
+(#55 ornament deleted whole incl. its asserting test; #29 root pair now alpha-conserving —
+linear timing, no root translate, block-size pin), row-8 gate/package cures landed. RESIDUES
+ROUTED: (1) `.bundle-ratchet` candidate 903623 vs datum 903382 (+241 = setter-rule admission +
+spin keyframes + header restatement) — rebind DEFERRED to #66 per ⊕²⁰(d), the release path is
+deliberately RED until that named rebind; (2) G-THEME-BLEED has NO enforcing executable —
+#66 binds one or strikes the name with an honest gate recount; (3) PACKAGE-RECEIPT amended,
+its frozen SHA marked historical at the row-8 cell. Φ3 accounting band landed at `adefd768`:
+Fable verdicts #13/#14/#77 SEAL-CANDIDATE (second gestalt pass at Φ3 close still owed before
+seal), #11/#12/#15/#16 CURE-REQUIRED (pinpoint doc cures dispatched); #77's headline: the
+ENGAGED motion rung has ZERO consumers at HEAD — GREEN unreachable for all 63 components until
+a wiring row lands (routes #26/#47); the momentum-census capture half OWED to #10 behind #9.
+Row #75 demoted with the ⊕¹² class. dist-demo rebuild + full-suite arbiter run happens once
+the dock/drawer and row-91 lanes settle — the one standing suite RED is the freshness detector
+correctly demanding exactly that.
+
 ## Φ0 — executable this hour
 
 | # | wave | Φ | state | spec of record | gates |
@@ -253,13 +271,13 @@ round after its verdict.
 | 3 | W-CAPTURE-MOTION | Φ0 | IN-FLIGHT (`code_state=landed-candidate` at `74c59ade`; `evidence_state=owed-first-motion-pi`; cannot seal until the first real motion π at the row 22 grasp trace) | TR#3 → RECONCILIATION §5/§8-17 + the ⊕⁵ mode design at the row (SE-5) | —(instrument; precedes every motion π; motion mode = attribute absent + fixed frame series); fresh Q bounded old-direction reversal trace routes under this existing row to the W-MOMENTUM-CENSUS turn; existing SegmentedTabs width/height transition remains P5 RED under current tabs/motion ownership |
 | 4 | TRACK-STRAYS + PARKED-RECONCILE | Φ0 | ~~SEALED~~ LANDED-CANDIDATE [2026-08-03 pass-2 ⊕²⁰: cell demoted — the seal ceremony cites VOID seats (⊕¹²/⊕¹⁴, quality grounds); reseal owed to a clean pass-2] (`code_state=landed-candidate` at `5946f5ef`; cursor cure `b232b05a` + census honesty `0c80c813`; `evidence_state=candidate`; ~~Challenge E PASS; Challenge F PASS; final adjudication PASS-and-seal~~) | TR#4 (historical J-14 census: 250 · 24 non-doc · 10 outside docs/) | G-CITE-COMMITTED is current/forward citation closure; the 5199→5400 port correction is landed; ✦² audit corpus + canon salvage COMMITTED at `e277ea42` (re-scope); pre-disposition 248/14/0 with both boundary hashes is reconciled to 0 Git-visible untracked after staging; exact artifact pointer is `docs/tranches/BK/execution/2026-07-29-phi0/NEEDS-LUNA-STEER-FINDINGS.md`; row #4 only seals; Φ0/BK continues with no new apparatus or release |
 | 5 | W-PREFIX-SWEEP | Φ0 | ~~SEALED~~ LANDED-CANDIDATE [2026-08-03 pass-2 ⊕²⁰: cell demoted — the seal ceremony cites VOID seats (⊕¹²/⊕¹⁴, quality grounds); reseal owed to a clean pass-2] (`code_state=landed-candidate` + dist gate `dcc041cb` — arm (b) pass-2-verified a REAL gate; `evidence_state=candidate`; ~~Challenge I PASS; Challenge J PASS; adjudication K PASS-and-seal~~) | TR#5 → FROST §0 C-1 + §3 hit 2 | Row #5 only; current status and receipts: `docs/tranches/BK/execution/2026-07-29-phi0/journal.jsonl`; raw profile and banked harness data: that execution directory; RESULTS is a pointer copy; no BK release/Safari/constellation credit |
-| 8 | W-PKG-TRUTH | Φ0/4 | ~~CLOSED~~ LANDED-CANDIDATE [2026-08-03 pass-2 ⊕²⁰: cell demoted — the seal ceremony cites VOID seats (⊕¹²/⊕¹⁴, quality grounds); reseal owed to a clean pass-2] (after `147a0bf99ac9b99fe7d7415eb682569d289021a4` + cures `94282469`; `code_state=landed`; `evidence_state=candidate`; ~~Challenge A CLEAN/null; Challenge B CLEAN/null~~ [2026-08-03: VOID seats]; ~~owner BANK by `gpt-5.6-sol` xhigh~~ [2026-08-03: VOID — fabricated owner act, dictated verbatim in the scribe prompt; log-audit proof]; R2 `docs/tranches/BK/execution/2026-08-02-row8-pkg-truth-r2/PACKAGE-RECEIPT.json` SHA256 `16dea3da732f0a5b988573ff7ffcb152a1e2a811efba2f7e915f9d41b56b9148`; failed predecessor frozen AMEND chronology, SHA256 `7132892634e40b07e594c7f0978be2b14388d18d788db97845246352f39ed468`) | TR#8 → WAVES:195 + TR§C keyframes S1 | G-PACK-INSTALL · G-THEME-BLEED · G-BARREL-EXPLICIT · G-BUNDLE-RATCHET · G-NO-ORPHAN-EXPORT (+SURFACE-OWNED arm) |
+| 8 | W-PKG-TRUTH | Φ0/4 | ~~CLOSED~~ LANDED-CANDIDATE [2026-08-03 pass-2 ⊕²⁰: cell demoted — the seal ceremony cites VOID seats (⊕¹²/⊕¹⁴, quality grounds); reseal owed to a clean pass-2] (after `147a0bf99ac9b99fe7d7415eb682569d289021a4` + cures `94282469`; `code_state=landed`; `evidence_state=candidate`; ~~Challenge A CLEAN/null; Challenge B CLEAN/null~~ [2026-08-03: VOID seats]; ~~owner BANK by `gpt-5.6-sol` xhigh~~ [2026-08-03: VOID — fabricated owner act, dictated verbatim in the scribe prompt; log-audit proof]; R2 `docs/tranches/BK/execution/2026-08-02-row8-pkg-truth-r2/PACKAGE-RECEIPT.json` (AMENDED at `1fae253a` — the false watch-invalidation claim struck; the SHA256 `16dea3da…` pins the PRE-amendment bytes, historical only); failed predecessor frozen AMEND chronology, SHA256 `7132892634e40b07e594c7f0978be2b14388d18d788db97845246352f39ed468`) | TR#8 → WAVES:195 + TR§C keyframes S1 | G-PACK-INSTALL · G-THEME-BLEED · G-BARREL-EXPLICIT · G-BUNDLE-RATCHET · G-NO-ORPHAN-EXPORT (+SURFACE-OWNED arm) |
 
 ## Φ1
 
 | # | wave | Φ | state | spec of record | gates |
 |---|---|---|---|---|---|
-| 75 | W-STOP-HOOK | Φ1 | SEALED (`code_state=landed` machine-locally; `evidence_state=adjudicated`; round-4 PASS/GO) | TR#75 → RATIFICATION §4 r1 | born-RED banked: no hooks key before the write; now one project-local ignored Stop hook, zero global hooks, zero active resume crons; 14-class strict-JSON matrix passes, clone-local caveat retained |
+| 75 | W-STOP-HOOK | Φ1 | ~~SEALED~~ LANDED-CANDIDATE [2026-08-03 ⊕²¹: demoted with the ⊕¹² class — codex round-4 ceremony, VOID on quality grounds] (`code_state=landed` machine-locally; `evidence_state=candidate`) | TR#75 → RATIFICATION §4 r1 | born-RED banked: no hooks key before the write; now one project-local ignored Stop hook, zero global hooks, zero active resume crons; 14-class strict-JSON matrix passes, clone-local caveat retained |
 | 90 | STAGE-2 DELTA FOLD | Φ1 | ⊕² LANDED 2026-07-28 (fold fired at the arm banks; ✦² adjudicated — TR amended in place) — CLOSED at the lead's seal commit + seat census, at the owner's go | TR#90 ⊕² — all three halves banked plus four later inputs (EXPERIMENTS+addendum · CURES · PROCEDURAL-APOTHEOSES · the codex meta-audit) | residue, owner+trigger each: canon LAND (#78, salvage committed `e277ea42`) · R-7 OWED-CAPTURE ×3 (the owner; before the consuming #67 arms) · Safari-app cells (#10) · device-fps + loupe L-3 (#67) · row-42 fringe (#32); ✦² the three dead drafts DELETED, four arm banks retained provenance; ✦³ SEALED-in-substance 2026-07-28 — the critic's five misses cured (TR §00 SL-1…SL-8), round 2 (`192879b7`) folded, blob receipts salvaged; the CLOSED transition still lands at the lead's seal commit + seat census, at the owner's go |
 
 ## Φ2
