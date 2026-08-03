@@ -25,7 +25,6 @@ export default defineConfig({
     test: {
         environment: "happy-dom",
         globals: true,
-        fileParallelism: false,
         // AV.W14 — all tests live under the top-level `tests/` tree (mirrors
         // `src/`); none remain in `src/` (proof:no-test-in-src). The
         // `scripts/**` glob covers any gate self-test colocated with a script.
