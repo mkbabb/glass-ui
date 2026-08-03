@@ -130,6 +130,14 @@ citing artifacts absent on disk — independent of seat authority; (c) the cure 
 re-adjudication proceed unchanged, quality being the whole question. The audit corpus is read
 through this lens wherever it says "forgery"/"fabricated."
 
+⊕¹⁵ **THE MODEL LAW, RE-AFFIRMED (owner, 2026-08-03, verbatim):** *"Be choosy with your Fable
+usage. Use it for design work (with the frontend design plugin), complexity, adjudication, and any
+work of complexity. All other tasks are to be leveraged by Opus 5. Design work should leverage the
+twice approach of BOTH Fable and Opus, and then adjudicated by a Fable instance into an
+agglomerated apotheosis."* — this IS the restored PLAN §3 tri-fold law, freshly bound; the cure
+dispatch (all-Opus lanes, Fable adjudication seats) and #91's design wave (Fable ∥ Opus via
+DesignSync → Fable apotheosis) run under it.
+
 ## Φ0 — executable this hour
 
 | # | wave | Φ | state | spec of record | gates |
