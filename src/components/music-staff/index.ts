@@ -1,13 +1,12 @@
 export { default as MusicStaff } from "./MusicStaff.vue";
 export type {
     MusicStaffMaterial,
-    MusicStaffPhase,
+    MusicStaffMode,
     MusicStaffProps,
 } from "./MusicStaff.vue";
 export {
     engraveMusicStaff,
     musicPitchName,
-    type EngraveMusicStaffOptions,
     type MusicStaffGeometry,
     type MusicStaffNoteEvent,
     type MusicStaffNoteGeometry,
@@ -15,9 +14,7 @@ export {
     type StaffClef,
 } from "./staffGeometry";
 export {
-    noteEventsFromMidi,
     noteEventsFromParsedMidi,
-    type MidiByteParser,
     type ParsedMidiDocumentLike,
     type ParsedMidiNoteLike,
     type ParsedMidiTrackLike,

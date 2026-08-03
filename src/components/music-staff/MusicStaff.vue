@@ -1,186 +1,322 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, useId } from "vue";
+import {
+    ACCIDENTAL_GLYPHS,
+    F_CLEF,
+    F_CLEF_DOTS,
+    FLAG_DOWN,
+    FLAG_UP,
+    G_CLEF,
+} from "./glyphs";
 import {
     engraveMusicStaff,
-    musicPitchName,
+    LOADING_BEATS,
+    LOADING_MOTIF,
+    METRICS,
+    type MusicStaffBeam,
     type MusicStaffNoteEvent,
+    type MusicStaffNoteGeometry,
     type StaffClef,
 } from "./staffGeometry";
 
-export type MusicStaffPhase = "enter" | "rest" | "exit";
+export type MusicStaffMode = "score" | "loading";
 export type MusicStaffMaterial = "folio" | "bare";
 
 export interface MusicStaffProps {
-    notes: readonly MusicStaffNoteEvent[];
     label: string;
+    notes?: readonly MusicStaffNoteEvent[];
+    mode?: MusicStaffMode;
     progress?: number;
-    phase?: MusicStaffPhase;
-    decorative?: boolean;
     clef?: StaffClef;
-    windowStart?: number;
-    windowEnd?: number;
-    maxNotes?: number;
-    width?: number;
-    height?: number;
     material?: MusicStaffMaterial;
-    describedNoteLimit?: number;
+    decorative?: boolean;
 }
 
 const props = withDefaults(defineProps<MusicStaffProps>(), {
-    progress: 0,
-    phase: "enter",
-    decorative: false,
+    notes: () => [],
+    mode: "score",
+    progress: undefined,
     clef: "auto",
-    maxNotes: 128,
-    width: 960,
-    height: 184,
     material: "folio",
-    describedNoteLimit: 16,
+    decorative: false,
 });
 
-const visibleNotes = computed(() => props.notes.filter((note) => {
-    const position = note.startTick ?? note.start;
-    return (props.windowStart === undefined || position >= props.windowStart)
-        && (props.windowEnd === undefined || position < props.windowEnd);
-}).slice(0, Math.max(0, props.maxNotes)));
-const geometry = computed(() => engraveMusicStaff(visibleNotes.value, {
-    clef: props.clef,
-    width: props.width,
-    height: props.height,
-}));
-const clampedProgress = computed(() => Math.max(0, Math.min(1, props.progress)));
-const playheadX = computed(
-    () => geometry.value.paddingX
-        + clampedProgress.value * (geometry.value.width - geometry.value.paddingX * 2),
-);
+const uid = useId();
+const inkId = `music-staff-ink-${uid}`;
+const clipId = `music-staff-clip-${uid}`;
+const loading = computed(() => props.mode === "loading");
+
+const geometry = computed(() => (loading.value
+    ? engraveMusicStaff(LOADING_MOTIF, { clef: props.clef, loopBeats: LOADING_BEATS })
+    : engraveMusicStaff(props.notes, { clef: props.clef })));
+
+const value = computed(() => (props.progress === undefined
+    ? undefined
+    : Math.max(0, Math.min(1, props.progress))));
+const sealed = computed(() => loading.value && value.value !== undefined && value.value >= 1);
+const playheadX = computed(() => geometry.value.noteX0
+    + (value.value ?? 0) * (geometry.value.contentEnd - geometry.value.noteX0));
+
+const clefPath = computed(() => (geometry.value.clef === "treble" ? G_CLEF : F_CLEF));
+const clefDots = computed(() => (geometry.value.clef === "bass" ? F_CLEF_DOTS : []));
+
+// Center-out: the eye anchors at the middle line, so the draw and the breath
+// both travel outward from it.
+const RULE_ORDER = [2, 1, 0, 1, 2];
+
 const description = computed(() => {
-    if (!visibleNotes.value.length) {
-        return `${props.label}. Empty five-line staff with no pitched notes.`;
-    }
-    const described = visibleNotes.value
-        .slice(0, Math.max(0, props.describedNoteLimit))
-        .map((note) => musicPitchName(note.midi, note.accidental));
-    const remainder = visibleNotes.value.length > described.length ? ", and more" : "";
-    return `${props.label}. Showing ${visibleNotes.value.length} of ${props.notes.length} notes: ${described.join(", ")}${remainder}.`;
+    const notes = geometry.value.notes;
+    const clefName = geometry.value.clef === "treble" ? "Treble" : "Bass";
+    if (!notes.length) return `${props.label}. Empty ${clefName.toLowerCase()} staff.`;
+    const spoken = notes.slice(0, 16).map((note) => `${note.pitchName} ${note.rhythmName}`);
+    const rest = notes.length - spoken.length;
+    return `${props.label}. ${clefName} staff, ${notes.length} notes: ${spoken.join(", ")}`
+        + `${rest > 0 ? `, and ${rest} more` : ""}.`;
 });
 
-function navigateViewport(event: KeyboardEvent): void {
-    const viewport = event.currentTarget as HTMLElement;
-    if (viewport.scrollWidth <= viewport.clientWidth) return;
-    const step = Math.max(80, viewport.clientWidth * 0.72);
-    let left: number | undefined;
-    if (event.key === "ArrowLeft") left = viewport.scrollLeft - step;
-    if (event.key === "ArrowRight") left = viewport.scrollLeft + step;
-    if (event.key === "Home") left = 0;
-    if (event.key === "End") left = viewport.scrollWidth;
-    if (left === undefined) return;
-    event.preventDefault();
-    viewport.scrollTo({ left, behavior: "auto" });
+const windowAttrs = computed(() => {
+    if (props.decorative) return {};
+    if (loading.value) {
+        return {
+            role: "progressbar",
+            "aria-busy": true,
+            "aria-label": props.label,
+            "aria-valuemin": "0",
+            "aria-valuemax": "1",
+            // Omitting aria-valuenow IS the indeterminate contract.
+            ...(value.value === undefined ? {} : {
+                "aria-valuenow": String(value.value),
+                "aria-valuetext": `${Math.round(value.value * 100)}%`,
+            }),
+        };
+    }
+    return { role: "img", tabindex: "0", "aria-label": description.value };
+});
+
+const rootStyle = computed(() => ({
+    "--music-staff-progress": String(value.value ?? 0),
+    "--music-staff-staff-top": String(geometry.value.staffTop),
+    "--music-staff-period": String(geometry.value.period),
+    "--music-staff-width": String(geometry.value.widthSp),
+    "--music-staff-height": String(geometry.value.heightSp),
+}));
+
+const noteStyle = (note: MusicStaffNoteGeometry) => (loading.value
+    ? { animationDelay: `calc(var(--music-staff-loop-duration) * -${note.strikePhase})` }
+    : { "--music-staff-delay": `calc(${note.revealDelayMs}ms * var(--motion-tempo))` });
+const delayStyle = (delayMs: number) => (loading.value
+    ? undefined
+    : { "--music-staff-delay": `calc(${delayMs}ms * var(--motion-tempo))` });
+
+const halfWidth = (note: MusicStaffNoteGeometry) => (note.head === "whole"
+    ? METRICS.wholeHalfWidth
+    : METRICS.headHalfWidth);
+
+// Four cubics per ellipse; the whole note's counter is a real hole (even-odd),
+// never a folio-coloured patch over the staff line.
+const K = 0.5523;
+function ellipse(cx: number, cy: number, rx: number, ry: number, deg: number): string {
+    const t = (deg * Math.PI) / 180, cos = Math.cos(t), sin = Math.sin(t);
+    const at = (x: number, y: number) => `${cx + x * cos - y * sin} ${cy + x * sin + y * cos}`;
+    return `M${at(0, -ry)}C${at(rx * K, -ry)} ${at(rx, -ry * K)} ${at(rx, 0)}`
+        + `C${at(rx, ry * K)} ${at(rx * K, ry)} ${at(0, ry)}`
+        + `C${at(-rx * K, ry)} ${at(-rx, ry * K)} ${at(-rx, 0)}`
+        + `C${at(-rx, -ry * K)} ${at(-rx * K, -ry)} ${at(0, -ry)}Z`;
 }
+const wholeHead = (note: MusicStaffNoteGeometry) =>
+    ellipse(note.x, note.y, 0.844, 0.5, 0) + ellipse(note.x, note.y, 0.42, 0.3, 55);
+
+const beamPath = (beam: MusicStaffBeam) => {
+    const t = METRICS.beamThickness * (beam.up ? 1 : -1);
+    return `M${beam.x1} ${beam.y1}L${beam.x2} ${beam.y2}`
+        + `L${beam.x2} ${beam.y2 + t}L${beam.x1} ${beam.y1 + t}Z`;
+};
 </script>
 
 <template>
     <figure
         class="music-staff"
-        :data-phase="phase"
         :data-material="material"
+        :data-mode="mode"
+        :data-sealed="sealed || undefined"
         :aria-hidden="decorative || undefined"
+        :style="rootStyle"
     >
         <div
-            class="music-staff__viewport"
-            :role="decorative ? undefined : 'img'"
-            :tabindex="decorative ? undefined : 0"
-            :aria-label="decorative ? undefined : description"
-            :aria-keyshortcuts="decorative ? undefined : 'ArrowLeft ArrowRight Home End'"
-            @keydown="navigateViewport"
+            class="music-staff__window"
+            :class="{ 'glass-resting': material === 'folio' }"
+            v-bind="windowAttrs"
         >
-            <svg
-                :viewBox="`0 0 ${geometry.width} ${geometry.height}`"
-                preserveAspectRatio="xMidYMid meet"
-                aria-hidden="true"
-                focusable="false"
-            >
-                <g class="music-staff__paper">
+            <svg :viewBox="geometry.viewBox" aria-hidden="true" focusable="false">
+                <defs>
+                    <path :id="`${inkId}-flag-up`" :d="FLAG_UP" />
+                    <path :id="`${inkId}-flag-down`" :d="FLAG_DOWN" />
                     <path
+                        v-for="(d, name) in ACCIDENTAL_GLYPHS"
+                        :id="`${inkId}-${name}`"
+                        :key="name"
+                        :d="d"
+                    />
+                    <clipPath v-if="!loading && value !== undefined" :id="clipId">
+                        <rect
+                            class="music-staff__clip-edge"
+                            :x="-geometry.widthSp"
+                            y="0"
+                            :width="geometry.widthSp"
+                            :height="geometry.heightSp"
+                            :style="{ transform: `translateX(${playheadX}px)` }"
+                        />
+                    </clipPath>
+                </defs>
+
+                <g class="music-staff__rules">
+                    <rect
                         v-for="(lineY, index) in geometry.staffLines"
-                        :key="`line-${index}`"
+                        :key="lineY"
                         class="music-staff__line"
-                        :style="{ '--music-staff-rule-delay': `calc(${index} * var(--music-staff-rule-stagger))` }"
-                        :d="`M 42 ${lineY} H ${geometry.width - 42}`"
+                        :style="{ '--music-staff-rule-index': RULE_ORDER[index] }"
+                        x="0"
+                        :y="lineY - METRICS.staffLineThickness / 2"
+                        :width="geometry.widthSp"
+                        :height="METRICS.staffLineThickness"
+                    />
+                    <rect
+                        v-for="bar in geometry.barlines"
+                        :key="bar.x"
+                        class="music-staff__barline"
+                        :x="bar.x"
+                        :y="geometry.staffTop"
+                        :width="bar.width"
+                        :height="4"
                     />
                 </g>
 
-                <g
-                    v-if="geometry.clef === 'treble'"
-                    class="music-staff__clef"
-                    aria-hidden="true"
-                >
-                    <path d="M66 112 C44 95 52 61 75 50 C92 42 97 58 87 72 C78 85 57 86 55 105 C53 123 70 135 84 124 C97 114 90 94 73 97 C58 100 57 118 68 129 C76 138 77 147 70 152" />
-                    <circle cx="69" cy="149" r="5.5" />
-                </g>
-                <g
-                    v-else
-                    class="music-staff__clef music-staff__clef--bass"
-                    aria-hidden="true"
-                >
-                    <path d="M58 73 C65 53 92 52 97 72 C102 94 78 113 57 126 C72 109 87 91 84 73 C82 62 67 62 65 75" />
-                    <circle cx="106" cy="75" r="3.2" />
-                    <circle cx="106" cy="94" r="3.2" />
-                </g>
-
-                <g
-                    v-for="note in geometry.notes"
-                    :key="note.id"
-                    class="music-staff__note"
-                    :class="{ 'is-past': note.normalizedStart <= clampedProgress }"
-                    :style="{ '--music-staff-note-delay': `calc(${note.revealDelayMs}ms * var(--motion-tempo, 1))` }"
-                    :data-note-id="note.id"
-                >
-                    <g v-if="note.accidental" class="music-staff__accidental" aria-hidden="true">
-                        <path
-                            v-if="note.accidental === 'sharp'"
-                            :d="`M ${note.x - 22} ${note.y - 12} V ${note.y + 11} M ${note.x - 15} ${note.y - 14} V ${note.y + 9} M ${note.x - 25} ${note.y - 4} L ${note.x - 12} ${note.y - 7} M ${note.x - 25} ${note.y + 5} L ${note.x - 12} ${note.y + 2}`"
-                        />
-                        <path
-                            v-else-if="note.accidental === 'flat'"
-                            :d="`M ${note.x - 20} ${note.y - 15} V ${note.y + 9} C ${note.x - 8} ${note.y + 2}, ${note.x - 9} ${note.y - 7}, ${note.x - 20} ${note.y - 2}`"
-                        />
-                        <path
-                            v-else
-                            :d="`M ${note.x - 22} ${note.y - 13} V ${note.y + 9} M ${note.x - 14} ${note.y - 9} V ${note.y + 13} M ${note.x - 22} ${note.y} L ${note.x - 14} ${note.y - 3} M ${note.x - 22} ${note.y + 8} L ${note.x - 14} ${note.y + 5}`"
+                <g :transform="`translate(${geometry.clefX} ${geometry.clefY})`">
+                    <g class="music-staff__clef">
+                        <path :d="clefPath" />
+                        <circle
+                            v-for="dot in clefDots"
+                            :key="dot.y"
+                            :cx="dot.x"
+                            :cy="dot.y"
+                            :r="dot.r"
                         />
                     </g>
-                    <path
-                        v-for="ledgerY in note.ledgerYs"
-                        :key="ledgerY"
-                        class="music-staff__ledger"
-                        :d="`M ${note.x - 12} ${ledgerY} H ${note.x + 12}`"
-                    />
-                    <path
-                        class="music-staff__head"
-                        :class="{ 'music-staff__head--open': note.openHead }"
-                        :d="`M ${note.x - 8} ${note.y + 2} C ${note.x - 8} ${note.y - 3}, ${note.x + 7} ${note.y - 6}, ${note.x + 8} ${note.y - 1} C ${note.x + 8} ${note.y + 4}, ${note.x - 7} ${note.y + 7}, ${note.x - 8} ${note.y + 2} Z`"
-                    />
-                    <path
-                        class="music-staff__stem"
-                        :d="note.stemUp
-                            ? `M ${note.x + 7} ${note.y} V ${note.stemEndY}`
-                            : `M ${note.x - 7} ${note.y} V ${note.stemEndY}`"
-                    />
-                    <path
-                        v-for="flagIndex in note.flagCount"
-                        :key="`flag-${flagIndex}`"
-                        class="music-staff__flag"
-                        :d="note.stemUp
-                            ? `M ${note.x + 7} ${note.stemEndY + (flagIndex - 1) * 7} C ${note.x + 21} ${note.stemEndY + 8 + (flagIndex - 1) * 7}, ${note.x + 19} ${note.stemEndY + 18 + (flagIndex - 1) * 7}, ${note.x + 9} ${note.stemEndY + 23 + (flagIndex - 1) * 7}`
-                            : `M ${note.x - 7} ${note.stemEndY - (flagIndex - 1) * 7} C ${note.x - 21} ${note.stemEndY - 8 - (flagIndex - 1) * 7}, ${note.x - 19} ${note.stemEndY - 18 - (flagIndex - 1) * 7}, ${note.x - 9} ${note.stemEndY - 23 - (flagIndex - 1) * 7}`"
-                    />
                 </g>
 
-                <g class="music-staff__playhead" :transform="`translate(${playheadX} 0)`">
-                    <path :d="`M 0 ${geometry.staffTop - 28} V ${geometry.staffBottom + 28}`" />
-                    <circle :cy="geometry.staffTop - 32" r="3.5" />
+                <g class="music-staff__transport">
+                    <g class="music-staff__reel">
+                        <g :id="inkId" class="music-staff__layer">
+                            <path
+                                v-for="beam in geometry.beams"
+                                :key="beam.id"
+                                class="music-staff__beam"
+                                :style="delayStyle(beam.delayMs)"
+                                :d="beamPath(beam)"
+                            />
+                            <rect
+                                v-for="stem in geometry.stems"
+                                :key="stem.id"
+                                class="music-staff__stem"
+                                :data-up="stem.up || undefined"
+                                :style="delayStyle(stem.delayMs)"
+                                :x="stem.x - METRICS.stemThickness / 2"
+                                :y="Math.min(stem.y1, stem.y2)"
+                                :width="METRICS.stemThickness"
+                                :height="Math.abs(stem.y2 - stem.y1)"
+                            />
+                            <use
+                                v-for="flag in geometry.flags"
+                                :key="flag.id"
+                                class="music-staff__flag"
+                                :href="`#${inkId}-flag-${flag.up ? 'up' : 'down'}`"
+                                :style="delayStyle(flag.delayMs)"
+                                :x="flag.x"
+                                :y="flag.y"
+                            />
+                            <g
+                                v-for="note in geometry.notes"
+                                :key="note.id"
+                                class="music-staff__note"
+                                :data-note-id="note.id"
+                                :style="noteStyle(note)"
+                            >
+                                <rect
+                                    v-for="ledgerY in note.ledgerYs"
+                                    :key="ledgerY"
+                                    class="music-staff__ledger"
+                                    :x="note.x - halfWidth(note) - METRICS.ledgerExtension"
+                                    :y="ledgerY - METRICS.ledgerThickness / 2"
+                                    :width="(halfWidth(note) + METRICS.ledgerExtension) * 2"
+                                    :height="METRICS.ledgerThickness"
+                                />
+                                <use
+                                    v-if="note.accidentalGlyph"
+                                    class="music-staff__accidental"
+                                    :href="`#${inkId}-${note.accidentalGlyph}`"
+                                    :x="note.accidentalX"
+                                    :y="note.y"
+                                />
+                                <ellipse
+                                    v-if="note.head !== 'whole'"
+                                    class="music-staff__head"
+                                    :class="{ 'music-staff__head--open': note.head === 'half' }"
+                                    :cx="note.x"
+                                    :cy="note.y"
+                                    :rx="note.head === 'half' ? 0.52 : 0.6"
+                                    :ry="note.head === 'half' ? 0.4 : 0.485"
+                                    :transform="`rotate(-20 ${note.x} ${note.y})`"
+                                />
+                                <path
+                                    v-else
+                                    class="music-staff__head music-staff__head--whole"
+                                    fill-rule="evenodd"
+                                    :d="wholeHead(note)"
+                                />
+                                <circle
+                                    v-for="dot in note.dots"
+                                    :key="dot"
+                                    class="music-staff__dot"
+                                    :cx="note.dotX + (dot - 1) * METRICS.dotGap"
+                                    :cy="note.dotY"
+                                    :r="METRICS.dotRadius"
+                                />
+                            </g>
+                        </g>
+                        <template v-if="loading">
+                            <use
+                                v-for="copy in 3"
+                                :key="copy"
+                                :href="`#${inkId}`"
+                                :x="copy * geometry.period"
+                            />
+                        </template>
+                    </g>
                 </g>
+
+                <template v-if="loading">
+                    <rect
+                        class="music-staff__reading"
+                        :x="geometry.readingX - 0.05"
+                        :y="geometry.staffTop - METRICS.playheadRise"
+                        width="0.1"
+                        :height="4 + METRICS.playheadRise * 2"
+                    />
+                </template>
+                <template v-else-if="value !== undefined">
+                    <use
+                        :href="`#${inkId}`"
+                        class="music-staff__layer music-staff__layer--accent"
+                        :clip-path="`url(#${clipId})`"
+                    />
+                    <g
+                        class="music-staff__playhead"
+                        :style="{ transform: `translateX(${playheadX}px)` }"
+                    >
+                        <rect x="-0.05" :y="geometry.staffTop - 1.2" width="0.1" :height="6.4" />
+                        <circle cx="0" :cy="geometry.staffTop - METRICS.playheadRise" r="0.35" />
+                    </g>
+                </template>
             </svg>
         </div>
     </figure>

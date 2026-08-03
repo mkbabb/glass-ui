@@ -597,7 +597,7 @@ export const CATEGORIES: Category[] = [
                 "display",
                 "music-staff",
                 "Music Staff",
-                "A parser-independent SVG quotation folio: five-line engraving, MIDI-derived note data, finite ink-on arrival, direct playback progress, and accessible overflow navigation. Shipped /music-staff.",
+                "A beat-native engraving folio — derived rhythm, beams, and clef — that doubles as a loading surface: the page streams past a parked reading line and each note strikes as it crosses.",
                 { background: "paper" },
             ),
         ],

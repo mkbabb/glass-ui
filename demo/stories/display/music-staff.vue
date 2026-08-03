@@ -1,78 +1,103 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import { Button } from "@glass/components/button";
-import {
-    MusicStaff,
-    type MusicStaffNoteEvent,
-    type MusicStaffPhase,
-} from "@glass/components/music-staff";
+import { Slider } from "@glass/components/slider";
+import { MusicStaff, type MusicStaffNoteEvent } from "@glass/components/music-staff";
 
 // A mechanics study rather than a claimed historical quotation. Product
 // consumers pass the current work's verified score- or MIDI-derived events.
 const study: MusicStaffNoteEvent[] = [
-    { id: "pedal-a", midi: 43, start: 0, duration: 2.8 },
-    { id: "a", midi: 55, start: 0, duration: 0.5 },
-    { id: "b", midi: 60, start: 0.5, duration: 0.25 },
-    { id: "c", midi: 64, start: 0.75, duration: 0.25 },
-    { id: "d", midi: 67, start: 1, duration: 0.5 },
-    { id: "e", midi: 70, start: 1.5, duration: 0.25, accidental: "flat" },
-    { id: "f", midi: 67, start: 1.75, duration: 0.25 },
-    { id: "g", midi: 64, start: 2, duration: 0.5 },
-    { id: "h", midi: 62, start: 2.5, duration: 0.5 },
-    { id: "i", midi: 60, start: 3, duration: 0.75 },
-    { id: "j", midi: 64, start: 3.75, duration: 0.25 },
-    { id: "k", midi: 67, start: 4, duration: 0.5 },
-    { id: "l", midi: 72, start: 4.5, duration: 0.75 },
+    { id: "a", midi: 55, beat: 0, beats: 0.5 },
+    { id: "b", midi: 60, beat: 0.5, beats: 0.25 },
+    { id: "c", midi: 64, beat: 0.75, beats: 0.25 },
+    { id: "d", midi: 67, beat: 1, beats: 0.5 },
+    { id: "e", midi: 70, beat: 1.5, beats: 0.25, accidental: "flat" },
+    { id: "f", midi: 67, beat: 1.75, beats: 0.25 },
+    { id: "g", midi: 64, beat: 2, beats: 0.5 },
+    { id: "h", midi: 62, beat: 2.5, beats: 0.5 },
+    { id: "i", midi: 60, beat: 3, beats: 0.75 },
+    { id: "j", midi: 64, beat: 3.75, beats: 0.25 },
+    { id: "k", midi: 67, beat: 4, beats: 2 },
+    { id: "l", midi: 72, beat: 6, beats: 4 },
 ];
 
-const replay = ref(0);
-const progress = ref(0.42);
-const phase = ref<MusicStaffPhase>("enter");
+// A low walking phrase: auto-clef lands on bass, and the register that used to
+// produce a ledger runaway now produces no ledgers at all.
+const walk: MusicStaffNoteEvent[] = [
+    { id: "w1", midi: 48, beat: 0, beats: 1 },
+    { id: "w2", midi: 50, beat: 1, beats: 0.5 },
+    { id: "w3", midi: 52, beat: 1.5, beats: 0.5 },
+    { id: "w4", midi: 53, beat: 2, beats: 1 },
+    { id: "w5", midi: 55, beat: 3, beats: 1.5 },
+    { id: "w6", midi: 51, beat: 4.5, beats: 0.5, accidental: "flat" },
+    { id: "w7", midi: 43, beat: 5, beats: 3 },
+];
 
-function replayDraw(): void {
-    phase.value = "enter";
-    replay.value += 1;
+const loadingProgress = ref<number[]>([0]);
+const scoreProgress = ref<number[]>([42]);
+const shown = ref(true);
+
+const loadingValue = computed(() => loadingProgress.value[0] / 100);
+const scoreValue = computed(() => scoreProgress.value[0] / 100);
+
+function replay(): void {
+    shown.value = false;
+    requestAnimationFrame(() => { shown.value = true; });
 }
 </script>
 
 <template>
     <StoryPage>
         <StorySection
-            heading="The quotation writes itself"
+            heading="The staff plays itself"
             level="heading"
-            blurb="Each rule and glyph is vector geometry. The finite arrival writes once onto a cream-glass folio, then becomes still; the blue-pencil line reports stored playback progress without spring lag."
+            blurb="A parked reading line and a page that streams past it: a player-piano roll claims no percentage, so the indeterminate case is honest by construction. Each note strikes on the beat it crosses the line — phase-locked to the loop, with no clock, no frame loop, and no timer. Give it a value and the rules ink up behind the transport; at one, the reel stalls and the score takes its final barline."
             gap="lg"
         >
+            <MusicStaff mode="loading" label="Loading the archive" />
             <MusicStaff
-                :key="replay"
-                :notes="study"
-                label="Parser-independent engraving mechanics study"
-                :progress="progress"
-                :phase="phase"
+                mode="loading"
+                label="Restoring the session"
+                :progress="loadingValue"
             />
-            <div class="flex flex-wrap gap-3">
-                <Button @click="replayDraw">Replay the ink</Button>
-                <Button emphasis="quiet" @click="phase = 'rest'">Seat at rest</Button>
-                <Button emphasis="quiet" @click="phase = 'exit'">Draw out</Button>
-            </div>
             <label class="flex max-w-xl flex-col gap-2 text-small text-muted-foreground">
-                Playback progress {{ Math.round(progress * 100) }}%
-                <input
-                    v-model.number="progress"
-                    class="accent-[var(--music-staff-accent)]"
-                    type="range"
-                    min="0"
-                    max="1"
-                    step="0.01"
-                >
+                Determinate value {{ loadingProgress[0] }}%
+                <Slider v-model="loadingProgress" :max="100" :step="1" aria-label="Loading value" />
             </label>
         </StorySection>
 
         <StorySection
+            heading="Engraved from the beats"
+            blurb="Notes carry an onset and a sounding length in quarter-note beats; heads, dots, flags, and beams are all derived from that one axis. Spacing is proportional-with-compression, so a run of sixteenths crowds without ever colliding. The blue-pencil wipe reports playback: a half-crossed note is half inked, and the playhead retargets on the spring register whose charter is indicators, progress, and reveals."
+            gap="lg"
+        >
+            <MusicStaff
+                v-if="shown"
+                :notes="study"
+                label="Engraving mechanics study"
+                :progress="scoreValue"
+            />
+            <div class="flex flex-wrap items-center gap-3">
+                <Button @click="replay">Replay the ink</Button>
+            </div>
+            <label class="flex max-w-xl flex-col gap-2 text-small text-muted-foreground">
+                Playback progress {{ scoreProgress[0] }}%
+                <Slider v-model="scoreProgress" :max="100" :step="1" aria-label="Playback progress" />
+            </label>
+        </StorySection>
+
+        <StorySection
+            heading="The clef the music asks for"
+            blurb="Left on auto, the staff picks the clef that minimises the worst ledger stack — so a low walking phrase engraves on bass with no ledgers at all. Where ledgers are genuinely demanded, the folio grows to hold every one of them: nothing is clipped, and nothing is drawn that the music did not ask for."
+        >
+            <MusicStaff :notes="walk" label="Low walking phrase, auto-clef" />
+        </StorySection>
+
+        <StorySection
             heading="Surface composition"
-            blurb="The bare material keeps the same notation and accessibility contract when a product already owns the surrounding glass. The accent is one consumer token, so current-work identity can re-ink elapsed notes without changing geometry."
+            blurb="The bare material keeps the same notation and accessibility contract when a product already owns the surrounding glass. The accent is one consumer token, so current-work identity can re-ink elapsed notes without touching geometry."
         >
             <div
                 class="glass-resting rounded-panel p-5"
@@ -82,7 +107,6 @@ function replayDraw(): void {
                     :notes="study"
                     label="Bare staff with consumer-provided violet editorial ink"
                     :progress="0.7"
-                    phase="rest"
                     material="bare"
                 />
             </div>
@@ -90,14 +114,9 @@ function replayDraw(): void {
 
         <StorySection
             heading="Decorative use"
-            blurb="A decorative loading ornament is removed from the accessibility tree and never accepts focus. An empty staff stays honest when no verified quotation is available."
+            blurb="A decorative ornament is removed from the accessibility tree and never accepts focus. An empty staff stays honest when no verified quotation is available."
         >
-            <MusicStaff
-                :notes="[]"
-                label="Decorative neutral staff"
-                decorative
-                phase="rest"
-            />
+            <MusicStaff :notes="[]" label="Decorative neutral staff" decorative />
         </StorySection>
     </StoryPage>
 </template>

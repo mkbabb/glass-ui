@@ -1,164 +1,322 @@
 @layer components {
+    /* One size knob. Every engraving measure in the geometry is in staff spaces,
+       so the whole score scales from this single length. */
     .music-staff {
-        --music-staff-ink: color-mix(in srgb, var(--foreground, #29241e) 86%, transparent);
-        --music-staff-accent: var(--viz-chebyshev, #3159a6);
-        --music-staff-folio: rgb(255 246 226 / 82%);
-        --music-staff-rule-duration: calc(0.52s * var(--motion-tempo, 1));
-        --music-staff-symbol-duration: calc(0.42s * var(--motion-tempo, 1));
-        --music-staff-exit-duration: calc(0.25s * var(--motion-tempo, 1));
-        --music-staff-rule-stagger: calc(28ms * var(--motion-tempo, 1));
-        container-type: inline-size;
+        --music-staff-space: 0.5rem;
+        --music-staff-ink: oklch(0.3 0.018 66 / 0.9);
+        --music-staff-accent: var(--viz-chebyshev);
+        --music-staff-folio: oklch(0.96 0.021 86);
+        --music-staff-loop-duration: calc(8s * var(--motion-tempo));
+        --music-staff-delay: 0ms;
+        --music-staff-rule-index: 0;
         margin: 0;
         color: var(--music-staff-ink);
     }
 
-    .music-staff__viewport {
-        width: 100%;
+    /* Bare inherits the host's mode-responsive ink; folio is a cream paper
+       object in dark chrome, so its ink does not follow the host. */
+    .music-staff[data-material="bare"] {
+        --music-staff-ink: color-mix(in oklab, var(--foreground) 88%, transparent);
+    }
+
+    .music-staff__window {
+        position: relative;
+        color: inherit;
+    }
+
+    /* A focused overflow box already pages with Arrow/Home/End/PageUp/PageDown. */
+    .music-staff[data-mode="score"] .music-staff__window {
         overflow-x: auto;
         overscroll-behavior-inline: contain;
-        border-radius: var(--radius-panel, 1rem);
-        scrollbar-color: color-mix(in srgb, var(--music-staff-accent) 46%, transparent) transparent;
+        scrollbar-color: color-mix(in oklab, var(--music-staff-accent) 46%, transparent) transparent;
     }
 
-    .music-staff[data-material="folio"] .music-staff__viewport {
-        border: 1px solid color-mix(in srgb, hsl(26 16% 18%) 12%, transparent);
-        background-color: var(--music-staff-folio);
-        background-image: var(--paper-clean-texture, none);
-        box-shadow:
-            inset 0 1px 0 color-mix(in srgb, white 70%, transparent),
-            inset 0 -1px 0 color-mix(in srgb, hsl(26 16% 18%) 6%, transparent),
-            0 16px 44px color-mix(in srgb, hsl(26 16% 18%) 12%, transparent);
-        backdrop-filter: blur(var(--glass-blur-resting, 18px)) saturate(1.04);
+    .music-staff[data-mode="loading"] .music-staff__window {
+        overflow: hidden;
     }
 
-    /* A score remains a cream paper object in dark application chrome. The
-       bare material keeps inheriting the host's mode-responsive ink. */
-    .music-staff[data-material="folio"] {
-        --music-staff-ink: rgb(46 39 31 / 88%);
-        --music-staff-accent: var(--viz-chebyshev, #3159a6);
+    /* The folio is the glass ladder's resting rung tinted cream through its own
+       designed tint seam — not a hand-rolled border, shadow, and backdrop. */
+    .music-staff[data-material="folio"] .music-staff__window {
+        --glass-tint-source: var(--music-staff-folio);
+        --glass-tint-strength: 85%;
+        background-image: var(--paper-clean-texture);
+        border-radius: var(--radius-panel);
+        color: var(--music-staff-ink);
     }
 
-    .music-staff__viewport:focus-visible {
+    .music-staff__window:focus-visible {
         outline: 2px solid var(--music-staff-accent);
         outline-offset: 3px;
     }
 
+    /* Intrinsic engraving size: a long score is longer, never smaller. */
     .music-staff svg {
         display: block;
-        width: 100%;
-        min-height: 8rem;
-        overflow: visible;
+        width: calc(var(--music-staff-space) * var(--music-staff-width));
+        height: calc(var(--music-staff-space) * var(--music-staff-height));
     }
 
+    /* Every mark is a filled outline. Nothing here is a stroke except the open
+       notehead's ring, whose width is a literal engraving metric in sp. */
     .music-staff__line,
+    .music-staff__barline,
     .music-staff__ledger,
     .music-staff__stem,
-    .music-staff__flag,
+    .music-staff__beam,
+    .music-staff__dot,
     .music-staff__head,
-    .music-staff__accidental path,
-    .music-staff__clef path {
+    .music-staff__flag,
+    .music-staff__accidental,
+    .music-staff__clef path,
+    .music-staff__clef circle,
+    .music-staff__reading,
+    .music-staff__playhead rect,
+    .music-staff__playhead circle {
+        fill: currentcolor;
+    }
+
+    .music-staff__line { opacity: 0.55; }
+    .music-staff__barline { opacity: 0.78; }
+    .music-staff__ledger { opacity: 0.86; }
+
+    .music-staff__head--open {
         fill: none;
         stroke: currentcolor;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-        vector-effect: non-scaling-stroke;
+        stroke-width: 0.16;
     }
 
-    .music-staff__line { stroke-width: 1; opacity: 0.45; }
-    .music-staff__ledger { stroke-width: 1.2; opacity: 0.72; }
-    .music-staff__stem { stroke-width: 1.65; }
-    .music-staff__flag { stroke-width: 2; }
-    .music-staff__accidental path { stroke-width: 1.5; }
-    .music-staff__head { fill: currentcolor; stroke-width: 1.5; }
-    .music-staff__head--open { fill: var(--music-staff-folio); stroke-width: 1.7; }
-    .music-staff__clef path { stroke-width: 2.2; }
-    .music-staff__clef circle { fill: currentcolor; }
-
-    .music-staff__note.is-past { color: var(--music-staff-accent); }
-    .music-staff__playhead { color: var(--music-staff-accent); }
-    .music-staff__playhead path {
-        stroke: currentcolor;
-        stroke-width: 1.5;
-        opacity: 0.76;
-        vector-effect: non-scaling-stroke;
+    .music-staff__layer--accent,
+    .music-staff__playhead,
+    .music-staff__reading {
+        color: var(--music-staff-accent);
     }
-    .music-staff__playhead circle { fill: currentcolor; }
+
+    .music-staff__reading { opacity: 0.62; }
+    .music-staff__playhead rect { opacity: 0.8; }
+    .music-staff__playhead circle { opacity: 0.8; }
+
+    /* Progress retargets on the register whose charter is indicators, progress,
+       and reveals; its overshoot is the weight the old flat playhead lacked. */
+    .music-staff__playhead,
+    .music-staff__clip-edge {
+        transition: transform var(--spring-snappy-duration) var(--spring-snappy);
+    }
+
+    /* Determinate loading: the rules ink up in viewport space behind the reel. */
+    .music-staff[data-mode="loading"] .music-staff__window::after {
+        content: "";
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: calc(var(--music-staff-progress) * 100%);
+        background-image: repeating-linear-gradient(
+            to bottom,
+            currentcolor 0 calc(var(--music-staff-space) * 0.13),
+            transparent calc(var(--music-staff-space) * 0.13) var(--music-staff-space)
+        );
+        background-repeat: no-repeat;
+        background-position: 0 calc(var(--music-staff-space) * var(--music-staff-staff-top));
+        background-size: 100% calc(var(--music-staff-space) * 4.13);
+        color: var(--music-staff-accent);
+        pointer-events: none;
+    }
+
+    /* The completion seal's final thin+thick barline, at the reading edge. */
+    .music-staff[data-sealed] .music-staff__window::before {
+        content: "";
+        position: absolute;
+        inset-block-start: calc(var(--music-staff-space) * var(--music-staff-staff-top));
+        inset-inline-end: calc(var(--music-staff-space) * 0.6);
+        height: calc(var(--music-staff-space) * 4);
+        width: calc(var(--music-staff-space) * 1.06);
+        background-image: linear-gradient(
+            to right,
+            currentcolor 0 calc(var(--music-staff-space) * 0.16),
+            transparent calc(var(--music-staff-space) * 0.16) calc(var(--music-staff-space) * 0.56),
+            currentcolor calc(var(--music-staff-space) * 0.56) 100%
+        );
+        pointer-events: none;
+        z-index: 1;
+    }
 
     @media (prefers-reduced-motion: no-preference) {
-        .music-staff[data-phase="enter"] .music-staff__line {
-            stroke-dasharray: 920;
-            stroke-dashoffset: 920;
-            animation: music-staff-rule-in var(--music-staff-rule-duration)
-                var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1))
-                var(--music-staff-rule-delay) both;
+        /* Rules draw centre-out on the shared draw-in clock; a rule never
+           overshoots, so it rides expo, never a spring. */
+        .music-staff__line {
+            animation:
+                music-staff-rule-wipe var(--draw-in-duration) var(--ease-out-expo)
+                    calc(28ms * var(--music-staff-rule-index) * var(--motion-tempo)) both;
         }
 
-        .music-staff[data-phase="enter"] .music-staff__clef path {
-            stroke-dasharray: 260;
-            stroke-dashoffset: 260;
-            animation: music-staff-glyph-in var(--music-staff-symbol-duration)
-                var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1))
-                calc(120ms * var(--motion-tempo, 1)) both;
+        .music-staff__barline {
+            animation: music-staff-bar-wipe var(--draw-in-duration) var(--ease-out-expo)
+                calc(120ms * var(--motion-tempo)) both;
         }
 
-        .music-staff[data-phase="enter"] .music-staff__clef circle {
-            opacity: 0;
-            animation: music-staff-fill-in var(--music-staff-symbol-duration)
-                var(--ease-standard, ease-out)
-                calc(260ms * var(--motion-tempo, 1)) both;
+        /* The rules breathe, never the ink: a slow wave travelling outward from
+           the middle line. In loading mode the reel is the engagement instead. */
+        .music-staff[data-mode="score"] .music-staff__line {
+            animation:
+                music-staff-rule-wipe var(--draw-in-duration) var(--ease-out-expo)
+                    calc(28ms * var(--music-staff-rule-index) * var(--motion-tempo)) both,
+                music-staff-breath 5.2s var(--ease-standard)
+                    calc(260ms * var(--music-staff-rule-index)) infinite alternate;
         }
 
-        .music-staff[data-phase="enter"] .music-staff__note path {
-            stroke-dasharray: 80;
-            stroke-dashoffset: 80;
-            animation: music-staff-glyph-in var(--music-staff-symbol-duration)
-                var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1))
-                var(--music-staff-note-delay) both;
+        .music-staff__clef {
+            animation:
+                music-staff-bar-wipe var(--draw-in-duration) var(--ease-out-expo)
+                    calc(120ms * var(--motion-tempo)) both,
+                music-staff-clef-settle var(--spring-smooth-duration) var(--spring-smooth)
+                    calc(300ms * var(--motion-tempo)) both;
+            transform-box: fill-box;
+            transform-origin: center;
         }
 
-        .music-staff[data-phase="enter"] .music-staff__note path.music-staff__head {
-            fill-opacity: 0;
-            animation: music-staff-head-in var(--music-staff-symbol-duration)
-                var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1))
-                var(--music-staff-note-delay) both;
+        /* A note kisses its line and settles; panel's overshoot is intrinsic. */
+        .music-staff[data-mode="score"] .music-staff__note {
+            animation: music-staff-note-land var(--spring-panel-duration) var(--spring-panel)
+                var(--music-staff-delay) both;
+            transform-box: fill-box;
+            transform-origin: center;
         }
 
-        .music-staff[data-phase="exit"] {
-            animation: music-staff-exit var(--music-staff-exit-duration)
-                var(--ease-standard, ease-out) both;
+        .music-staff__head,
+        .music-staff__accidental,
+        .music-staff__ledger,
+        .music-staff__dot,
+        .music-staff__flag {
+            animation: music-staff-ink-in calc(120ms * var(--motion-tempo))
+                var(--ease-standard) var(--music-staff-delay) both;
+        }
+
+        /* Attached parts get the brisk liquid morph, growing from the head. */
+        .music-staff__stem {
+            animation: music-staff-grow-y var(--spring-dock-duration) var(--spring-dock)
+                var(--music-staff-delay) both;
+            transform-box: fill-box;
+            transform-origin: bottom;
+        }
+
+        .music-staff__stem:not([data-up]) { transform-origin: top; }
+
+        .music-staff__beam {
+            animation: music-staff-grow-x var(--spring-dock-duration) var(--spring-dock)
+                var(--music-staff-delay) both;
+            transform-box: fill-box;
+            transform-origin: left;
+        }
+
+        .music-staff__playhead circle {
+            animation: music-staff-bead 5.2s var(--ease-standard) infinite alternate;
+            transform-box: fill-box;
+            transform-origin: center;
+        }
+
+        /* The transport is linear on purpose: an eased conveyor reads as stutter,
+           and the phase lock that fires each strike depends on it. */
+        .music-staff[data-mode="loading"] .music-staff__reel {
+            animation: music-staff-reel var(--music-staff-loop-duration) linear infinite;
+        }
+
+        .music-staff[data-mode="loading"] .music-staff__note {
+            animation: music-staff-strike var(--music-staff-loop-duration) linear infinite;
+            transform-box: fill-box;
+            transform-origin: center;
+        }
+
+        .music-staff[data-sealed] .music-staff__reel { animation-play-state: paused; }
+
+        .music-staff[data-sealed] .music-staff__transport {
+            animation: music-staff-settle var(--spring-bouncy-duration) var(--spring-bouncy) both;
+        }
+
+        .music-staff[data-sealed] .music-staff__window::before {
+            animation: music-staff-seal-wipe var(--draw-in-duration) var(--ease-out-expo) both;
         }
     }
 
+    /* A loading surface must still signal busy; opacity is the safe channel. */
     @media (prefers-reduced-motion: reduce) {
-        .music-staff[data-phase="exit"] { opacity: 0; }
-    }
-
-    @media (max-width: 760px) {
-        .music-staff svg {
-            width: max(680px, 100%);
-            max-width: none;
+        .music-staff[data-mode="loading"] .music-staff__line {
+            animation: music-staff-breath 5.2s var(--ease-standard)
+                calc(260ms * var(--music-staff-rule-index)) infinite alternate;
         }
+
+        .music-staff__playhead { transition-duration: var(--duration-fast); }
     }
 }
 
-@keyframes music-staff-rule-in {
-    to { stroke-dashoffset: 0; }
+@keyframes music-staff-rule-wipe {
+    from { clip-path: inset(0 100% 0 0); }
+    to { clip-path: inset(0); }
 }
 
-@keyframes music-staff-glyph-in {
-    to { stroke-dashoffset: 0; }
+@keyframes music-staff-bar-wipe {
+    from { clip-path: inset(100% 0 0 0); }
+    to { clip-path: inset(0); }
 }
 
-@keyframes music-staff-fill-in {
-    to { opacity: 1; fill-opacity: 1; }
+@keyframes music-staff-seal-wipe {
+    from { clip-path: inset(100% 0 0 0); }
+    to { clip-path: inset(0); }
 }
 
-@keyframes music-staff-head-in {
-    0% { stroke-dashoffset: 80; fill-opacity: 0; }
-    62% { fill-opacity: 0; }
-    100% { stroke-dashoffset: 0; fill-opacity: 1; }
+@keyframes music-staff-clef-settle {
+    from { transform: scale(0.96); }
+    to { transform: none; }
 }
 
-@keyframes music-staff-exit {
-    to { opacity: 0; transform: translateY(-2px); }
+@keyframes music-staff-note-land {
+    from { transform: translateY(-0.9px) scale(0.86); }
+    to { transform: none; }
+}
+
+@keyframes music-staff-grow-y {
+    from { transform: scaleY(0); }
+    to { transform: none; }
+}
+
+@keyframes music-staff-grow-x {
+    from { transform: scaleX(0); }
+    to { transform: none; }
+}
+
+@keyframes music-staff-ink-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes music-staff-breath {
+    from { opacity: 0.49; }
+    to { opacity: 0.61; }
+}
+
+@keyframes music-staff-bead {
+    from { opacity: 0.7; transform: scale(1); }
+    to { opacity: 0.9; transform: scale(1.06); }
+}
+
+@keyframes music-staff-reel {
+    to { transform: translateX(calc(-1px * var(--music-staff-period))); }
+}
+
+@keyframes music-staff-settle {
+    from { transform: translateX(-0.5px); }
+    to { transform: none; }
+}
+
+/* The strike must live in stops, not in the timing function: the animation is
+   linear so the phase lock survives, so the rebound is sampled from the press
+   register and written into the percentages. */
+@keyframes music-staff-strike {
+    0% { transform: scale(1); color: var(--music-staff-ink); }
+    1.2% { transform: scale(1.08); color: var(--music-staff-accent); }
+    1.88% { transform: scale(1.075); }
+    2.56% { transform: scale(1.065); }
+    3.92% { transform: scale(1.04); }
+    4.6% { transform: scale(1.029); }
+    5.96% { transform: scale(1.013); }
+    8% { transform: scale(1); color: var(--music-staff-ink); }
+    100% { transform: scale(1); color: var(--music-staff-ink); }
 }
