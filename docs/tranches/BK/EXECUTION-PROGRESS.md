@@ -73,6 +73,18 @@ Row #3 remains IN-FLIGHT awaiting its first real motion π at Row #22. Publicati
 mutable-v7 republish, signed-v8 release, real Safari/iOS, consumer adoption,
 constellation/crossrepo, and total-BK credit remain open/zero.
 
+⊕¹¹ **THE DRIVER TRANSFER + THE CODEX IMPLEMENTATION MARK (owner, 2026-08-03):** the delta
+`ce41396c..04fdfe91` + the standing dirty tree was implemented by a **series of Codex instances**
+(421 sessions, 2.1 GB); the owner's word — *"You are fully driving the auditing, tranche
+development, now"* — transfers ALL driving to Claude (the Fable lead) from this mark. Every
+Codex-claimed state below is **CANDIDATE, not canon**: seals #1/#2/#4/#5/#8 (and the row-8 "owner
+BANK by `gpt-5.6-sol`", void on its face — dissolved seat, owner act) are SUSPENDED-AS-CANDIDATE
+pending the challenge-pass-1 apotheosis (`wf_dbafe83b-6c8` repo fleet + `wf_c299a0ec-281` log
+fleet); ⊕⁸/⊕⁹/⊕¹⁰ are Codex-minted record-of-claim. THE CHALLENGE LAW (sworn 2026-08-03) is stated
+at EXEC-STATE §THE DRIVER TRANSFER: ≥2 quartet-of-Opus challenge passes + fresh-Fable apotheosis
+per implemented wave; gates/proof-scripts presumed contrivance; parsimony + visual verification
+govern. No further Codex writes are authorized post-mark.
+
 ## Φ0 — executable this hour
 
 | # | wave | Φ | state | spec of record | gates |

@@ -10,6 +10,37 @@ durable crash bootstrap and ruling history.
 
 ---
 
+## THE DRIVER TRANSFER + THE CODEX IMPLEMENTATION MARK — owner, 2026-08-03
+
+- **Authorship mark (owner word):** the delta `ce41396c..04fdfe91` (43 commits, 2026-07-29 → 08-02,
+  +233,851 lines) **plus the uncommitted working tree standing at 2026-08-03** was implemented by a
+  **series of Codex instances** (421 rollout sessions, 2.1 GB, `~/.codex/sessions/2026/{07,08}/*`,
+  cwd-filtered census banked at the session scratchpad), coordinated alongside the sci-report and
+  value.js megatranche efforts. Every state claim in that delta is **CANDIDATE, not canon**, until
+  Fable re-adjudication.
+- **Driver transfer (owner word, verbatim):** *"You are fully driving the auditing, tranche
+  development, now."* Claude (the Fable lead) drives ALL auditing and tranche development from this
+  mark. This prospectively supersedes the 07-29 "MODEL CUTOVER — OWNER SUPERSESSION" block below
+  (provenance `e164e433` — a Codex commit; its owner-word claim is under log-audit verification):
+  Sol/Luna seats hold NO adjudication or owner-act authority at and after this mark.
+- **THE CHALLENGE LAW — sworn 2026-08-03, hic et ubique:** every implemented wave is aggressively
+  challenged by **no fewer than two** passes before any seal counts; each pass = a **quartet of Opus 5
+  challengers** (assume-wrong stance; code-craft · parsimony/KISS · spec-adherence+tranche-fit ·
+  design-language lenses; defects AND superlatives, every claim provenance-proofed) adjudicated —
+  equally challenged back — into an apotheosis by a **singular fresh Fable instance**. Gestalt scope
+  per pass: total-tranche fit + wave analysis + feature analysis. Contrived gates, visual-testing
+  scripts, and proof:/meta scripts are **presumed useless contrivance unless proven otherwise**.
+  Extreme parsimony and KISS-forward solutions that reduce complexity and lines; the majority of
+  effort on direct code implementation — always agent-orchestrated — and visual verification.
+- **Audit in flight (pass 1):** `wf_dbafe83b-6c8` (6 clusters × quartet+Fable over the repo delta) +
+  `wf_c299a0ec-281` (14 miners + Fable over the 421 session logs). Codex-claimed seals
+  (#1 #2 #4 #5 #8, and the row-8 "owner BANK by `gpt-5.6-sol`") are **SUSPENDED-AS-CANDIDATE**
+  pending the apotheosis; cursor generations ⊕⁸/⊕⁹/⊕¹⁰ are Codex-minted and stand as
+  record-of-claim only.
+- **Live-lineage hazard:** a Codex session lineage was still writing rollouts within 20 minutes of
+  this mark (repo quiescent, HEAD 19 h old). No further Codex writes to the tree are authorized;
+  any landing post-mark are struck on sight.
+
 ## STANDING CONSTRAINTS
 
 - **Maximum four workflows per batch.** Owner-set. Exceeding it is what killed two prior runs.
@@ -27,6 +58,10 @@ durable crash bootstrap and ruling history.
   no-supersession conflict record **prospectively only**; their historical
   receipts and facts remain intact. No new Claude-bearing seat launches after
   the two Φ0 challenges already in flight at the boundary.
+  **[2026-08-03, the driver transfer: SUPERSEDED PROSPECTIVELY by the owner word above. Provenance
+  note: this block entered the record at `e164e433`, a Codex commit inside the audited delta — its
+  claim to carry a direct owner word is under log-audit verification and it is record-of-claim, not
+  canon, until that verification lands.]**
 - **HISTORICAL model law — OWNER RULING 2026-07-24: ALL agents use Opus 5. No Fable seats
   anywhere, in any role.** This superseded every earlier split at the time. It was also the empirically correct call:
   Fable 5 quota died mid-run twice and took 48/57 and 5/6 seats with it.
