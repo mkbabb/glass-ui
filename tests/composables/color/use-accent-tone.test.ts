@@ -77,45 +77,40 @@ describe("useAccentTone controlled cache boundaries", () => {
         process.on("unhandledRejection", onUnhandled);
         try {
             vi.resetModules();
-            const isolated = await import("@glass/composables/color/useAccentTone");
-            const loadSpy = vi
-                .spyOn(isolated.accentToneSolveBoundary, "load")
-                .mockRejectedValue(new Error("controlled optional module absence"));
-            const { useAccentTone: isolatedUseAccentTone } = isolated;
+            vi.doMock("@glass/composables/color/accent-tone-solve", () => {
+                throw new Error("controlled optional module absence");
+            });
+            const { useAccentTone: isolatedUseAccentTone } = await import(
+                "@glass/composables/color/useAccentTone"
+            );
             const sameA = isolatedUseAccentTone(() => "#d14a7c");
             const sameB = isolatedUseAccentTone(() => "#d14a7c");
             const differentA = isolatedUseAccentTone(() => "#2a7bd6");
             const differentB = isolatedUseAccentTone(() => "#2a7bd6");
-            expect(sameA.ink.value).toBe("");
-            expect(sameB.ink.value).toBe("");
-            expect(differentA.ink.value).toBe("");
-            expect(differentB.ink.value).toBe("");
-            expect(loadSpy).toHaveBeenCalledTimes(1);
+            for (const consumer of [sameA, sameB, differentA, differentB]) {
+                expect(consumer.ink.value).toBe("");
+            }
             await new Promise((resolve) => setTimeout(resolve, 0));
-            expect(sameA.ink.value).toBe("");
-            expect(sameB.ink.value).toBe("");
-            expect(differentA.ink.value).toBe("");
-            expect(differentB.ink.value).toBe("");
+            for (const consumer of [sameA, sameB, differentA, differentB]) {
+                expect(consumer.ink.value).toBe("");
+            }
             const postReject = isolatedUseAccentTone(() => "#4c9f70");
             expect(postReject.ink.value).toBe("");
             await vi.waitFor(() => expect(postReject.ink.value).toBe(""));
-            expect(loadSpy).toHaveBeenCalledTimes(1);
-            expect(isolatedUseAccentTone(() => "#d14a7c").ink.value).toBe("");
-            expect(isolatedUseAccentTone(() => "#4c9f70").ink.value).toBe("");
-            expect(loadSpy).toHaveBeenCalledTimes(1);
             await new Promise((resolve) => setTimeout(resolve, 0));
             expect(unhandled).toEqual([]);
-            loadSpy.mockRestore();
         } finally {
+            vi.doUnmock("@glass/composables/color/accent-tone-solve");
             process.removeListener("unhandledRejection", onUnhandled);
             vi.resetModules();
         }
     });
 
-    it("surfaces a solver failure distinctly and caches it without retrying", async () => {
+    it("degrades a solver failure to the CSS fallback ink with one warning", async () => {
         const unhandled: unknown[] = [];
         const onUnhandled = (reason: unknown) => unhandled.push(reason);
         process.on("unhandledRejection", onUnhandled);
+        const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
         try {
             vi.resetModules();
             const { useAccentTone: isolatedUseAccentTone } = await import("@glass/composables/color/useAccentTone");
@@ -126,14 +121,18 @@ describe("useAccentTone controlled cache boundaries", () => {
             expect(failedB.ink.value).toBe("");
             expect(healthy.ink.value).toBe("");
             await vi.waitFor(() => {
-                expect(() => failedA.ink.value).toThrow(/solveAccentInk:tone/);
-                expect(() => failedB.ink.value).toThrow(/solveAccentInk:tone/);
                 expect(healthy.ink.value).toMatch(/^oklch\(/);
+                expect(warn).toHaveBeenCalledTimes(1);
             });
-            expect(() => isolatedUseAccentTone(() => "not-a-color").ink.value).toThrow(/solveAccentInk:tone/);
+            // The failed key stays terminal: the CSS fallback ink, no throw, no retry.
+            expect(failedA.ink.value).toBe("");
+            expect(failedB.ink.value).toBe("");
+            expect(isolatedUseAccentTone(() => "not-a-color").ink.value).toBe("");
             await new Promise((resolve) => setTimeout(resolve, 0));
+            expect(warn).toHaveBeenCalledTimes(1);
             expect(unhandled).toEqual([]);
         } finally {
+            warn.mockRestore();
             process.removeListener("unhandledRejection", onUnhandled);
             vi.resetModules();
         }

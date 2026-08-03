@@ -40,6 +40,35 @@ const packageRootFields = [
     "peerDependenciesMeta",
 ];
 
+function versionTuple(spec) {
+    const [core] = spec.replace(/^[\^~>=<\s]+/, "").split("-");
+    const [major = 0, minor = 0, patch = 0] = core.split(".").map(Number);
+    return [major, minor, patch];
+}
+
+/**
+ * Caret satisfaction against a DECLARED peer range — never an exact literal. A
+ * legal patch release of a repo glass-ui does not control must not RED the
+ * release path (the remembered-literal defect class). Every @mkbabb peer range
+ * is a caret range; anything else is a contract error, not a version drift.
+ */
+function satisfiesPeerRange(version, range) {
+    if (!range?.startsWith("^")) throw new Error(`peer range is not a caret range: ${range}`);
+    const low = versionTuple(range);
+    const actual = versionTuple(version);
+    const upper = low[0] > 0
+        ? [low[0] + 1, 0, 0]
+        : low[1] > 0
+          ? [0, low[1] + 1, 0]
+          : [0, 0, low[2] + 1];
+    const compare = (a, b) => a.findIndex((part, index) => part !== b[index]);
+    const below = (a, b) => {
+        const index = compare(a, b);
+        return index !== -1 && a[index] < b[index];
+    };
+    return !below(actual, low) && below(actual, upper);
+}
+
 export function packageRootAgreement(pkg, lock) {
     const lockRoot = lock && typeof lock === "object" && lock.packages && typeof lock.packages === "object"
         ? lock.packages[""]
@@ -556,8 +585,8 @@ function installTarball(tarball, pkg) {
         }
         const pencilRange = pkg.peerDependencies?.[pencilPeer];
         const pencilVersion = pkg.devDependencies?.[pencilPeer];
-        if (!pencilRange || !pencilVersion || pencilRange !== `^${pencilVersion}`) {
-            throw new Error("Pencil peer range must match its exact development dependency");
+        if (!pencilRange || !pencilVersion) {
+            throw new Error("Pencil peer range and development dependency must both be declared");
         }
         const consumerDependencies = Object.fromEntries(
             Object.entries(pkg.peerDependencies ?? {})
@@ -605,17 +634,15 @@ function installTarball(tarball, pkg) {
             throw new Error("required Keyframes dependency @mkbabb/value.js was installed as a symlink");
         }
         const valuePackage = JSON.parse(readFileSync(valuePackagePath, "utf8"));
-        if (keyframesPackage.version !== "6.0.0") {
-            throw new Error(`required Keyframes version drifted: ${keyframesPackage.version}`);
+        const valueRange = pkg.peerDependencies?.["@mkbabb/value.js"];
+        if (!satisfiesPeerRange(keyframesPackage.version, requiredVersion)) {
+            throw new Error(`installed Keyframes ${keyframesPackage.version} is outside the declared peer range ${requiredVersion}`);
         }
-        if (keyframesPackage.dependencies?.["@mkbabb/value.js"] !== "4.0.0") {
-            throw new Error("Keyframes does not expose its exact @mkbabb/value.js 4.0.0 dependency");
+        if (!satisfiesPeerRange(valuePackage.version, valueRange)) {
+            throw new Error(`installed @mkbabb/value.js ${valuePackage.version} is outside the declared peer range ${valueRange}`);
         }
-        if (valuePackage.version !== "4.0.0") {
-            throw new Error(`Keyframes installed the wrong @mkbabb/value.js version: ${valuePackage.version}`);
-        }
-        if (pencilPackage.version !== pencilVersion) {
-            throw new Error(`Pencil installed the wrong version: ${pencilPackage.version}`);
+        if (!satisfiesPeerRange(pencilPackage.version, pencilRange)) {
+            throw new Error(`installed Pencil ${pencilPackage.version} is outside the declared peer range ${pencilRange}`);
         }
         return {
             consumerRoot,
@@ -630,7 +657,7 @@ function installTarball(tarball, pkg) {
                     path: valuePackageDirectory,
                     version: valuePackage.version,
                     symlink: false,
-                    dependency: keyframesPackage.dependencies["@mkbabb/value.js"],
+                    dependency: keyframesPackage.dependencies?.["@mkbabb/value.js"],
                     directGlassPeerRequested: Object.hasOwn(consumerDependencies, "@mkbabb/value.js"),
                     installedThrough: requiredPeer,
                 },

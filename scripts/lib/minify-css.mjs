@@ -196,8 +196,3 @@ export function minifyCss(css) {
 export function hasCommentOutsideString(css) {
     return scanCss(css).hasComment;
 }
-
-export function isMinified(css) {
-    if (hasCommentOutsideString(css)) return false;
-    return !css.replace(/\n$/, "").includes("\n");
-}

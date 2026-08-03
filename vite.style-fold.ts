@@ -371,66 +371,35 @@ export function collectStyleClosure(root: string): StyleClosure {
     };
 }
 
-function copyClosure(root: string, closure: StyleClosure, outputRoot = resolve(root, "dist")): {
+export function copyStyleAssets(
+    root: string,
+    closure: StyleClosure,
+    outputRoot: string,
+): {
     srcFonts: string;
     distStyles: string;
     distComponents: string;
 } {
-    const distFonts = resolve(outputRoot, "fonts");
     const srcStyles = resolve(root, "src/styles");
     const distStyles = resolve(outputRoot, "styles");
     const srcComponents = resolve(root, "src/components");
     const distComponents = resolve(outputRoot, "components");
+    const sourceFonts = resolve(root, "src/fonts");
     const copyFilter = (sourceRoot: string) => (source: string): boolean => {
         if (source === sourceRoot || closure.copySources.has(source)) return true;
         if (!existsSync(source)) return false;
         if (!statSync(source).isDirectory()) return false;
         return [...closure.copySources].some((candidate) => candidate.startsWith(`${source}/`));
     };
-    const sourceFonts = resolve(root, "src/fonts");
-    if (root === process.cwd() && outputRoot === resolve(root, "dist")) {
-        cpSync(resolve(process.cwd(), "src/components"), resolve(process.cwd(), "dist/components"), {
-            recursive: true,
-            filter: copyFilter(srcComponents),
-        });
-        cpSync(resolve(process.cwd(), "src/styles"), resolve(process.cwd(), "dist/styles"), {
-            recursive: true,
-            filter: copyFilter(srcStyles),
-        });
-        cpSync(resolve(process.cwd(), "src/fonts"), resolve(process.cwd(), "dist/fonts"), {
-            recursive: true,
-            filter: copyFilter(sourceFonts),
-        });
-    } else {
-        cpSync(resolve(root, "src/components"), resolve(outputRoot, "components"), {
-            recursive: true,
-            filter: copyFilter(srcComponents),
-        });
-        cpSync(resolve(root, "src/styles"), resolve(outputRoot, "styles"), {
-            recursive: true,
-            filter: copyFilter(srcStyles),
-        });
-        cpSync(resolve(root, "src/fonts"), resolve(outputRoot, "fonts"), {
-            recursive: true,
-            filter: copyFilter(sourceFonts),
-        });
-    }
+    cpSync(srcComponents, distComponents, { recursive: true, filter: copyFilter(srcComponents) });
+    cpSync(srcStyles, distStyles, { recursive: true, filter: copyFilter(srcStyles) });
+    cpSync(sourceFonts, resolve(outputRoot, "fonts"), {
+        recursive: true,
+        filter: copyFilter(sourceFonts),
+    });
     const srcFonts = closure.fontRoots[0];
     if (!srcFonts) throw new Error("style closure: no declared font export root");
     return { srcFonts, distStyles, distComponents };
-}
-
-export function copyStyleAssets(
-    root: string,
-    closure = collectStyleClosure(root),
-    outputRoot = resolve(root, "dist"),
-): {
-    srcFonts: string;
-    distStyles: string;
-    distComponents: string;
-    closure: StyleClosure;
-} {
-    return { ...copyClosure(root, closure, outputRoot), closure };
 }
 
 /** Every `.css` under each root — a root may be a directory to walk or a single file. */

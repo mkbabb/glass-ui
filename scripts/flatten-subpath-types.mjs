@@ -1,7 +1,5 @@
-#!/usr/bin/env node
 // Project the public declaration relays and close their reachable relative
-// references using Node-ESM spelling. The callable form is used by the shared
-// Vite lifecycle; the CLI remains the compatibility entry.
+// references using Node-ESM spelling. Called by the shared Vite lifecycle.
 
 import {
     readdirSync,
@@ -15,7 +13,6 @@ import { fileURLToPath } from "node:url";
 import { buildEntrySet, readTree } from "./lib/subpath-policy.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const DEFAULT_OUTPUT_ROOT = resolve(ROOT, "dist");
 
 const declarationFilePattern = /\.d\.(?:ts|mts|cts)$/;
 const relativeReferencePattern =
@@ -111,7 +108,7 @@ function closeDeclarationReferences(outputRoot) {
     }
 }
 
-export function flattenSubpathTypes(outputRoot = DEFAULT_OUTPUT_ROOT) {
+export function flattenSubpathTypes(outputRoot) {
     const { entries } = buildEntrySet(readTree({ repoRoot: ROOT }));
     for (const [name, source] of Object.entries(entries)) {
         const target = resolve(outputRoot, `${name === "index" ? "index" : name}.d.ts`);
@@ -135,8 +132,4 @@ export function flattenSubpathTypes(outputRoot = DEFAULT_OUTPUT_ROOT) {
     const result = { outputRoot, entries: Object.keys(entries) };
     console.log(`declaration entries: projected ${result.entries.length} public entries`);
     return result;
-}
-
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
-    flattenSubpathTypes(process.argv[2] ? resolve(process.argv[2]) : DEFAULT_OUTPUT_ROOT);
 }

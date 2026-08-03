@@ -57,16 +57,11 @@ export interface UseAccentToneReturn {
 // opts. A concrete tone is solved ONCE; a repeated call with the SAME key reads the
 // cached ink synchronously (no re-import, no re-solve).
 type InkCacheEntry =
-    | { state: "pending"; promise: Promise<void> }
+    | { state: "pending" }
     | { state: "fulfilled"; value: string }
-    | { state: "failed"; error: unknown }
     | { state: "absent" };
 
 type AccentToneSolveModule = typeof import("./accent-tone-solve");
-
-export const accentToneSolveBoundary = {
-    load: () => import("./accent-tone-solve"),
-};
 
 const inkCache = new Map<string, InkCacheEntry>();
 const cacheSubscribers = new Map<string, Set<Ref<number>>>();
@@ -75,7 +70,7 @@ const cacheKey = (toneCss: string, opts: UseAccentToneOptions) =>
     `${toneCss}|${opts.surface ?? ""}|${opts.inkContrast ?? ""}|${opts.bandStrength ?? ""}`;
 
 function loadAccentToneSolve(): Promise<AccentToneSolveModule | null> {
-    return (accentToneLoader ??= accentToneSolveBoundary.load().catch(() => null));
+    return (accentToneLoader ??= import("./accent-tone-solve").catch(() => null));
 }
 
 function observeCacheKey(key: string, signal: Ref<number>): void {
@@ -125,7 +120,6 @@ export function useAccentTone(
         const cached = inkCache.get(key);
         if (cached?.state === "fulfilled") return cached.value;
         if (cached?.state === "absent") return "";
-        if (cached?.state === "failed") throw cached.error;
         if (cached?.state === "pending") {
             observeCacheKey(key, solveVersion);
             return "";
@@ -133,26 +127,24 @@ export function useAccentTone(
 
         observeCacheKey(key, solveVersion);
 
-        // Attach both fulfillment and rejection handling before publishing the
-        // promise in the cache. An absent optional value.js leaf is a terminal
-        // process-local result: subsequent consumers reuse the CSS fallback and
-        // never create a retry storm or an unhandled rejection.
-        const pending = loadAccentToneSolve().then(
-            (module) => {
-                if (!module) {
-                    settleCacheKey(key, { state: "absent" });
-                    return;
-                }
-                try {
-                    // lazy-boundary: value.js-free fast path; the concrete-tone ink solve is the ONLY value.js consumer
-                    settleCacheKey(key, { state: "fulfilled", value: module.solveAccentInk(toneCss, opts) });
-                } catch (error) {
-                    settleCacheKey(key, { state: "failed", error });
-                }
-            },
-        );
-        inkCache.set(key, { state: "pending", promise: pending });
-        void pending;
+        // Both an ABSENT optional value.js leaf and a THROWING solve settle to
+        // the same terminal, process-local `absent`: the documented degradation
+        // is the CSS `var(--accent-ink-resolved, var(--foreground))` fallback,
+        // so the failure is warned once and never re-thrown from a render.
+        void loadAccentToneSolve().then((module) => {
+            if (!module) {
+                settleCacheKey(key, { state: "absent" });
+                return;
+            }
+            try {
+                // lazy-boundary: value.js-free fast path; the concrete-tone ink solve is the ONLY value.js consumer
+                settleCacheKey(key, { state: "fulfilled", value: module.solveAccentInk(toneCss, opts) });
+            } catch (error) {
+                console.warn(`useAccentTone: ink solve failed for ${toneCss}; using the CSS fallback ink`, error);
+                settleCacheKey(key, { state: "absent" });
+            }
+        });
+        inkCache.set(key, { state: "pending" });
         return "";
     });
 

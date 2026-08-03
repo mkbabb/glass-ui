@@ -26,13 +26,11 @@ export default defineConfig({
     plugins: [
         tailwindcss(),
         vue(),
-        // TypeScript declarations are emitted out-of-band by the repo-native
-        // `vue-tsc` (the `emit-types` script, run as the second half of
-        // `build`), NOT by an in-Vite dts plugin. `vue-tsc --project
-        // tsconfig.build.json` emits the flat per-entry `.d.ts` set into
-        // `dist/` in `emitDeclarationOnly` mode against the repo's own
-        // TypeScript — no plugin-bundled TS pin to drift from. See
-        // `tsconfig.build.json` + `package.json` build.
+        // The ONE publish lifecycle: JS/SFC-CSS/declarations/relays/styles are
+        // staged outside `dist/`, verified as a complete tuple, then atomically
+        // renamed into place. Declarations come from the repo-native `vue-tsc
+        // --project tsconfig.build.json` (spawned inside the plugin), NOT from a
+        // dts plugin with its own bundled TypeScript pin.
         publishStyleAssets(),
     ],
     // Cross-repo dev-resolution contract-v2
@@ -61,9 +59,8 @@ export default defineConfig({
             external: libraryExternal,
             output: {
                 // BB.W-PAYLOAD-DEFER (scope 3) — the canonical Vite-8 `manualChunks`
-                // recipe, shipped as the LIVE reference (CLAUDE.md §"Vite 8
-                // `manualChunks` recipe" documents it in prose; this is the
-                // verified-by-build copy-paste a consumer lifts). The single-arg
+                // recipe, shipped as the LIVE reference (the verified-by-build
+                // copy-paste a consumer lifts). The single-arg
                 // Rolldown-compatible form, ordered glass-ui → vueuse → vendor so the
                 // node_modules catch-all never swallows the two named splits (both
                 // resolve under node_modules). NEVER set `output.advancedChunks`

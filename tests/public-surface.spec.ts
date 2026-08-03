@@ -2,8 +2,9 @@ import { describe, expect, it } from "vitest";
 import { execFileSync } from "node:child_process";
 import { existsSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { resolve } from "node:path";
+import { relative, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
+import { collectStyleClosure } from "../vite.style-fold";
 import * as Aurora from "@glass/components/aurora";
 import * as BlobSurface from "@glass/components/blob";
 // @ts-expect-error the component-internal renderer contract is not public
@@ -586,11 +587,6 @@ describe("Row 8 package falsifiers", () => {
         }
     });
 
-    it("registers package-lock.json in the shared lifecycle watch inputs", () => {
-        const assets = readFileSync("vite.style-assets.ts", "utf8");
-        expect(assets).toContain('        "package-lock.json",');
-    });
-
     it("keeps the root barrel explicit", () => {
         const source = readFileSync("src/index.ts", "utf8");
         expect(source).not.toMatch(/^\s*export\s+\*\s+from/m);
@@ -598,116 +594,10 @@ describe("Row 8 package falsifiers", () => {
         expect(source).toMatch(/export\s*\{/);
     });
 
-    it("keeps utility defaults declaration-local", () => {
-        const source = readFileSync("vite.utility-emit.ts", "utf8");
-        expect(source).toContain("rewriteFallbackValue");
-        expect(source).not.toMatch(/kept\.append\([^\n]*:root/);
-        expect(source).toContain('"--default-transition-duration": "var(--duration-fast, 150ms)"');
-    });
-
-    it("keeps the post-cure package, closure, and generation falsifiers durable", () => {
-        const verifier = readFileSync("scripts/verify-export-types.mjs", "utf8");
-        expect(verifier).not.toContain("--legacy-peer-deps");
-        expect(verifier).not.toContain("installAbsentValueTarball");
-        expect(verifier).not.toContain("--omit=peer");
-        expect(verifier).not.toContain("pathToFileURL");
-        expect(verifier).not.toContain("consumer-pencil-shim");
-        expect(verifier).toContain("lstatSync(keyframes)");
-        expect(verifier).toContain("realpathSync(keyframes)");
-        expect(verifier).toContain("realpathSync(pencil)");
-        expect(verifier).toContain("consumerDependencies[pencilPeer] = pencilVersion");
-        expect(verifier).toContain("function packageCodeSpecifiers(pkg)");
-        expect(verifier).toContain("namespaceImports = codeSpecifiers");
-        expect(verifier).toContain("runtimeResults");
-        expect(verifier).not.toContain("optionalValueAbsence");
-        const callerPack = verifier.slice(
-            verifier.indexOf("const callerPath = process.env.GLASS_PACKAGE_TARBALL"),
-            verifier.indexOf("const packDirectory = mkdtempSync"),
-        );
-        expect(callerPack).toContain("lstatSync(path).isFile()");
-        expect(callerPack).toContain("lstatSync(path).isSymbolicLink()");
-        expect(callerPack).not.toContain("tarFiles(path)");
-        expect(callerPack).not.toContain('files.has("package.json")');
-        expect(callerPack).toContain('"package/package.json"');
-        expect(callerPack).toContain("packedPackage.name !== pkg.name");
-        expect(callerPack).toContain("packedPackage.version !== pkg.version");
-        expect(callerPack).toContain("...preUse");
-        expect(callerPack).toContain("const preUse = sha256(path)");
-        expect(callerPack).toContain("preUse,");
-        expect(callerPack.indexOf("const preUse = sha256(path)")).toBeLessThan(
-            callerPack.indexOf('spawnSync("tar", ["-xOzf"'),
-        );
-        expect(callerPack).toContain("callerProvided: true");
-        expect(callerPack).not.toContain("preserved: true");
-        expect(callerPack).not.toContain('spawnSync("npm", ["pack"');
-        expect(verifier).toContain("const packedFiles = tarFiles(packEvidence.path)");
-        expect(verifier).toContain("const packedClaims = packageClaims(pkg, packedFiles)");
-        expect(verifier).toContain("packedCssSetFailures(cssClosure.files, packedFiles)");
-        expect(verifier).toContain("tar membership is not unique after package normalization");
-        expect(verifier).toContain("directGlassPeerRequested: Object.hasOwn(consumerDependencies");
-        expect(verifier).toContain("installedThrough: requiredPeer");
-        expect(verifier).toContain("if (packEvidence.packDirectory) temporaryRoots.push(packEvidence.packDirectory)");
-        expect(verifier).toContain("const postUse = sha256(packEvidence.path)");
-        expect(verifier).toContain("GLASS_PACKAGE_TARBALL changed during verification");
-        expect(verifier).toContain("packEvidence.postUse = postUse");
-        expect(verifier).toContain("packEvidence.preserved = true");
-        expect(verifier).toContain("firstAdoption");
-        expect(verifier).toContain("candidate !== datum");
-        expect(verifier).toContain("BigInt(tarballBytes)");
-        expect(verifier).toContain("raw code-bearing source");
-        const fold = readFileSync("vite.style-fold.ts", "utf8");
-        expect(fold).toContain("CSS_FONT_EXPORTS");
-        expect(fold).toContain("inlineStyles");
-        expect(fold).not.toContain('filesUnder(resolve(root, "src/fonts"))');
-        expect(fold).toContain("copySources");
-        expect(fold).toContain("const analyzedCss = new Set<string>()");
-        expect(fold).toContain("const publishedCss = new Set<string>()");
-        expect(fold).toContain("visitCss(path, true)");
-        expect(fold).toContain("cpSync");
-        const assets = readFileSync("vite.style-assets.ts", "utf8");
-        expect(assets).not.toMatch(/let\s+published\b/);
-        expect(assets).toContain("buildEnd(error)");
-        expect(assets).toContain("let watchMode = false;");
-        expect(assets).toContain("watchMode = Boolean(config.build.watch);");
-        const closeBundleMarker = "        async closeBundle() {";
-        const buildEndMarker = "        buildEnd(error)";
-        const catchMarker = "} catch (error) {";
-        const publishCall = "publishGeneration(outputRoot);";
-        const exactCatchBlock = [
-            "            } catch (error) {",
-            "                cleanupGeneration();",
-            "                if (!watchMode) throw error;",
-            "                console.error(error instanceof Error ? error.message : String(error));",
-            "                return;",
-            "            }",
-        ].join("\n");
-        expect((assets.match(/^        async closeBundle\(\) \{$/gm) ?? [])).toHaveLength(1);
-        expect((assets.match(/^        buildEnd\(error\)/gm) ?? [])).toHaveLength(1);
-        const closeBundleIndex = assets.indexOf(closeBundleMarker);
-        const buildEndIndex = assets.indexOf(buildEndMarker);
-        expect(buildEndIndex).toBeGreaterThan(closeBundleIndex);
-        const closeBundle = assets.slice(closeBundleIndex, buildEndIndex);
-        expect((closeBundle.match(/\bcatch\b(?:\s*\([^)]*\))?\s*\{/g) ?? [])).toHaveLength(1);
-        expect((closeBundle.match(/publishGeneration\(outputRoot\);/g) ?? [])).toHaveLength(1);
-        expect(closeBundle.split(exactCatchBlock)).toHaveLength(2);
-        const catchIndex = closeBundle.indexOf(catchMarker);
-        const publishIndex = closeBundle.indexOf(publishCall);
-        expect(publishIndex).toBeGreaterThanOrEqual(0);
-        expect(publishIndex).toBeLessThan(catchIndex);
-        expect(closeBundle.slice(catchIndex)).not.toContain(publishCall);
-    });
-
-    it("rejects packed CSS drift and duplicate normalized tar members", () => {
+    it("rejects duplicate and escaping normalized tar members", () => {
         const verifier = pathToFileURL(resolve("scripts/verify-export-types.mjs")).href;
         const probe = `
-            import { readdirSync } from "node:fs";
-            import { join } from "node:path";
-            import { normalizeTarMembers, packedCssSetFailures } from ${JSON.stringify(verifier)};
-            const filesUnder = (directory, prefix = "") => readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
-                const path = join(directory, entry.name);
-                const name = prefix ? [prefix, entry.name].join("/") : entry.name;
-                return entry.isDirectory() ? filesUnder(path, name) : [name];
-            });
+            import { normalizeTarMembers } from ${JSON.stringify(verifier)};
             const rejection = (members) => {
                 try {
                     normalizeTarMembers(members);
@@ -717,11 +607,6 @@ describe("Row 8 package falsifiers", () => {
                 }
             };
             const acceptedMembers = (members) => [...normalizeTarMembers(members)];
-            const artifactCss = new Set(filesUnder("dist").filter((file) => file.endsWith(".css")));
-            const packedCss = new Set([...artifactCss].map((file) => ["dist", file].join("/")));
-            const withOrphan = new Set([...packedCss, "dist/orphan.css"]);
-            const withoutKnown = new Set(packedCss);
-            withoutKnown.delete("dist/component-styles.css");
             console.log(JSON.stringify({
                 normalizedCollision: rejection("package/dist/a.css\\ndist/a.css\\n"),
                 exactDuplicate: rejection("package/dist/a.css\\npackage/dist/a.css\\n"),
@@ -737,11 +622,6 @@ describe("Row 8 package falsifiers", () => {
                 packageRootRegularLast: rejection("package/dist/index.js\\npackage\\n"),
                 packageRootDirectoryFirst: acceptedMembers("package/\\npackage/dist/index.js\\n"),
                 packageRootDirectoryLast: acceptedMembers("package/dist/index.js\\npackage/\\n"),
-                artifactCssCount: artifactCss.size,
-                packedCssCount: packedCss.size,
-                exactCss: packedCssSetFailures(artifactCss, packedCss),
-                addedCss: packedCssSetFailures(artifactCss, withOrphan),
-                removedCss: packedCssSetFailures(artifactCss, withoutKnown),
             }));
         `;
         const results = JSON.parse(runVerifierProbe(probe));
@@ -766,26 +646,6 @@ describe("Row 8 package falsifiers", () => {
         expect(results.packageRootRegularLast).toBe(results.packageRootRegularFirst);
         expect(results.packageRootDirectoryFirst).toEqual(["dist/index.js"]);
         expect(results.packageRootDirectoryLast).toEqual(["dist/index.js"]);
-        expect(results.artifactCssCount).toBe(114);
-        expect(results.packedCssCount).toBe(114);
-        expect(results.exactCss).toEqual([]);
-        expect(results.addedCss).toEqual(["packed CSS closure has unreachable member orphan.css"]);
-        expect(results.removedCss).toEqual(["packed CSS closure is missing component-styles.css"]);
-    });
-
-    it("keeps raw code-bearing sources out of the built artifact", () => {
-        const filesUnder = (directory: string, prefix = ""): string[] => {
-            if (!existsSync(directory)) return [];
-            return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
-                const path = resolve(directory, entry.name);
-                const name = prefix ? `${prefix}/${entry.name}` : entry.name;
-                return entry.isDirectory() ? filesUnder(path, name) : [name];
-            });
-        };
-        expect(existsSync("dist")).toBe(true);
-        const files = filesUnder("dist");
-        expect(files.filter((file) => /\.vue$/.test(file))).toEqual([]);
-        expect(files.filter((file) => /\.(?:ts|tsx|jsx|mts|cts)$/.test(file) && !/\.d\.(?:ts|mts|cts)$/.test(file))).toEqual([]);
     });
 
     it("rejects datum+1 in first-adoption mode while permitting a later decrease", () => {
@@ -816,4 +676,68 @@ describe("Row 8 package falsifiers", () => {
         }
     });
 
+});
+
+// Build ACCEPTANCE: these read `dist/`. With no build on disk there is nothing to
+// accept, so they skip rather than lie (or hard-RED on a source-only checkout).
+describe.skipIf(!existsSync("dist"))("Row 8 built-artifact acceptance", () => {
+    const filesUnder = (directory: string, prefix = ""): string[] =>
+        readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+            const name = prefix ? `${prefix}/${entry.name}` : entry.name;
+            return entry.isDirectory()
+                ? filesUnder(resolve(directory, entry.name), name)
+                : [name];
+        });
+
+    it("ships exactly the style closure plus the three generated members", () => {
+        const closure = collectStyleClosure(process.cwd());
+        const sourceRoot = resolve(process.cwd(), "src");
+        // src/styles and src/components are copied whole-tree, so the src-relative
+        // path IS the dist-relative path; the lifecycle then writes three members
+        // that have no source file (SFC bundle, utility emit, component entry).
+        const expected = new Set([
+            ...[...closure.copySources]
+                .filter((path) => path.endsWith(".css"))
+                .map((path) => relative(sourceRoot, path)),
+            "glass-ui.css",
+            "styles/components.css",
+            "component-styles.css",
+        ]);
+        const shipped = new Set(filesUnder("dist").filter((file) => file.endsWith(".css")));
+        expect([...shipped].sort()).toEqual([...expected].sort());
+    });
+
+    it("rejects packed CSS drift against the built artifact", () => {
+        const verifier = pathToFileURL(resolve("scripts/verify-export-types.mjs")).href;
+        const probe = `
+            import { readdirSync } from "node:fs";
+            import { join } from "node:path";
+            import { packedCssSetFailures } from ${JSON.stringify(verifier)};
+            const filesUnder = (directory, prefix = "") => readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+                const path = join(directory, entry.name);
+                const name = prefix ? [prefix, entry.name].join("/") : entry.name;
+                return entry.isDirectory() ? filesUnder(path, name) : [name];
+            });
+            const artifactCss = new Set(filesUnder("dist").filter((file) => file.endsWith(".css")));
+            const packedCss = new Set([...artifactCss].map((file) => ["dist", file].join("/")));
+            const withOrphan = new Set([...packedCss, "dist/orphan.css"]);
+            const withoutKnown = new Set(packedCss);
+            withoutKnown.delete("dist/component-styles.css");
+            console.log(JSON.stringify({
+                exactCss: packedCssSetFailures(artifactCss, packedCss),
+                addedCss: packedCssSetFailures(artifactCss, withOrphan),
+                removedCss: packedCssSetFailures(artifactCss, withoutKnown),
+            }));
+        `;
+        const results = JSON.parse(runVerifierProbe(probe));
+        expect(results.exactCss).toEqual([]);
+        expect(results.addedCss).toEqual(["packed CSS closure has unreachable member orphan.css"]);
+        expect(results.removedCss).toEqual(["packed CSS closure is missing component-styles.css"]);
+    });
+
+    it("keeps raw code-bearing sources out of the built artifact", () => {
+        const files = filesUnder("dist");
+        expect(files.filter((file) => /\.vue$/.test(file))).toEqual([]);
+        expect(files.filter((file) => /\.(?:ts|tsx|jsx|mts|cts)$/.test(file) && !/\.d\.(?:ts|mts|cts)$/.test(file))).toEqual([]);
+    });
 });

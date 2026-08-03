@@ -72,20 +72,6 @@ function addWatchInputs(plugin: { addWatchFile: (path: string) => void }, root: 
     for (const path of closure.sources) plugin.addWatchFile(path);
 }
 
-function removeEmittedSourceFiles(outputRoot: string): void {
-    const visit = (directory: string) => {
-        for (const name of readdirSync(directory)) {
-            const path = resolve(directory, name);
-            const entry = statSync(path);
-            if (entry.isDirectory()) visit(path);
-            else if (/\.(?:ts|mts|cts)$/.test(name) && !/\.d\.(?:ts|mts|cts)$/.test(name)) {
-                rmSync(path, { force: true });
-            }
-        }
-    };
-    visit(outputRoot);
-}
-
 /**
  * publishStyleAssets — the one complete JS/SFC/declaration/style lifecycle
  * shared by full, iterative, and watch builds. A cycle is staged outside the
@@ -113,7 +99,6 @@ export function publishStyleAssets(): Plugin {
             "--pretty",
             "false",
         ], { cwd: repositoryRoot, stdio: "inherit" });
-        removeEmittedSourceFiles(outputRoot);
         flattenSubpathTypes(outputRoot);
     };
 

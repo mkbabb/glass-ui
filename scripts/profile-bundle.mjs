@@ -905,7 +905,7 @@ console.log("Built critical-path-weight report:");
         `  [W3 AURORA] medium tail                  : ${f.auroraMediumSplit} (${f.auroraEagerMediumHits} eager hits)`,
     );
     console.log(
-        `  [W4 DTS]    emit-types arm cold / warm   : ${f.dtsArmMs ?? "(not supplied)"}ms / ${f.dtsArmWarmMs ?? "(not supplied)"}ms`,
+        `  [W4 DTS]    declaration arm cold / warm  : ${f.dtsArmMs ?? "(not supplied)"}ms / ${f.dtsArmWarmMs ?? "(not supplied)"}ms`,
     );
     if (criticalPath.violations.length) {
         console.log("\n  CRITICAL-PATH VIOLATIONS:");

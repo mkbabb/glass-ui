@@ -512,7 +512,6 @@
         "demo:dist:serve": "vite preview --config demo/vite.demo-dist.config.ts --port 5200",
         "demo:serve": "vite --host localhost --port 5400",
         "dev": "vite",
-        "emit-types": "vue-tsc --project tsconfig.build.json && node scripts/flatten-subpath-types.mjs",
         "iter": "npm run iter-check && npm run iter-build && npm run iter-test",
         "iter-build": "vite build --config vite.iter.config.ts",
         "iter-check": "vue-tsc --noEmit --project tsconfig.src.json",

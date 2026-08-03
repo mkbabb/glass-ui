@@ -20,9 +20,9 @@ const require_ = createRequire(import.meta.url);
  * build SCANS a file using it. A consumer's content-scan does not reach
  * glass-ui's `node_modules` `.vue`/`dist/*.js`, so `rounded-panel` &c. resolve
  * to NOTHING in the consumer — `.configurator` computes `border-radius: 0` and
- * every glass-ui-component utility silently no-ops. The documented
- * `@source "../node_modules/@mkbabb/glass-ui"` workaround (CLAUDE.md / AN.W2
- * Option B) is fragile and fails silently.
+ * every glass-ui-component utility silently no-ops. The `@source
+ * "../node_modules/@mkbabb/glass-ui"` workaround (AN.W2 Option B) is fragile and
+ * fails silently.
  *
  * The root fix: generate ONLY glass-ui's own component vocabulary in glass-ui's
  * OWN build (native theme context — deterministic, NOT a consumer re-derivation
@@ -56,13 +56,13 @@ const require_ = createRequire(import.meta.url);
  * stops, …). The kept utilities REFERENCE those via `var(--X)` (every `p-*`/
  * `gap-*`/`inset-*` is `calc(var(--spacing) * N)`), so dropping the whole block
  * leaves them undefined and the utilities silently no-op for a bare consumer.
- * glass-ui already ships its own radius/color/text bases, so the fix is NOT to
- * keep the whole theme block (that would re-emit — and risk clobbering — every
- * glass-ui token); it is to emit a MINIMAL `:root{}` carrying exactly the props
- * the kept utilities reference that TAILWIND owns (present in the compiled
- * `:root,:host` block) and that glass-ui's OWN `src/styles` does NOT already
- * define. That is `--spacing` & co. — Tailwind's defaults — and nothing of
- * glass-ui's. Same self-sufficiency posture as tokens.css's radius/color bases.
+ * The fix emits NO `:root{}` block at all (that would re-emit — and risk
+ * clobbering — glass-ui's own tokens): every reference to a Tailwind-owned prop
+ * that glass-ui does not itself define is rewritten IN PLACE to carry Tailwind's
+ * default as its `var()` fallback. A consumer that defines the prop still wins;
+ * a bare consumer paints the default. `rewriteFallbackValue` recurses, so a
+ * nested body (`var(--tw-leading, var(--text-base--line-height))`) is covered
+ * too — the un-recursed form shipped weightless `transition-*` utilities.
  *
  * Deterministic + byte-stable: the token set is sorted; no timestamps.
  */
@@ -140,7 +140,8 @@ export async function emitComponentUtilities(
     });
 
     // R3 — make `kept` self-sufficient for the Tailwind-OWNED custom props its
-    // utilities reference. Three sets:
+    // utilities reference, by rewriting each such `var()` to carry Tailwind's
+    // default as its fallback. Three sets:
     //   themeOwned — every `--X` Tailwind's own built-in `@theme` default block
     //                defines, read from the installed `tailwindcss/theme.css`.
     //                NOT from this in-build compile's emitted `:root` block:
@@ -154,7 +155,7 @@ export async function emitComponentUtilities(
     //                (tokens.css + theme.css + the rest of the cascade). These
     //                already ship; re-emitting them would duplicate or clobber.
     //   referenced — every `var(--X)` the kept utility rules read.
-    // Emit `:root{}` for referenced ∩ themeOwned − glassDefined — i.e. exactly
+    // The fallback set is referenced ∩ themeOwned − glassDefined — i.e. exactly
     // Tailwind's built-in defaults (`--spacing` &c.) that glass-ui does not own.
     const themeOwned = new Map<string, string>();
     const twThemePath = resolve(
@@ -224,7 +225,8 @@ export async function emitComponentUtilities(
             const comma = body.indexOf(",");
             const property = body.slice(0, comma === -1 ? undefined : comma).trim();
             const fallback = fallbackFor.get(property);
-            output += `var(${body}${fallback && comma === -1 ? `, ${fallback}` : ""})`;
+            const authored = comma === -1 ? "" : `,${rewriteFallbackValue(body.slice(comma + 1))}`;
+            output += `var(${property}${authored || (fallback ? `, ${fallback}` : "")})`;
             index = end;
         }
         return output;
