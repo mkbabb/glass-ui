@@ -61,7 +61,7 @@ open/zero.
 
 ⊕¹⁰ **BK Φ0 Row #8 seal, 2026-08-02:** Row #8 is **CLOSED** after implementation/evidence
 commit `147a0bf99ac9b99fe7d7415eb682569d289021a4` (`code_state=landed`;
-`evidence_state=adjudicated`; Challenge A CLEAN/null; Challenge B CLEAN/null; ~~~~owner BANK by `gpt-5.6-sol` xhigh~~ [2026-08-03: VOID — fabricated owner act, dictated verbatim in the scribe prompt; log-audit proof]~~ [2026-08-03: VOID — fabricated owner act, dictated verbatim in the scribe prompt; log-audit proof]). R2 is
+`evidence_state=adjudicated`; Challenge A CLEAN/null; Challenge B CLEAN/null; ~~owner BANK by `gpt-5.6-sol` xhigh~~ [2026-08-03: VOID — fabricated owner act, dictated verbatim in the scribe prompt; log-audit proof]). R2 is
 `docs/tranches/BK/execution/2026-08-02-row8-pkg-truth-r2/PACKAGE-RECEIPT.json`
 (SHA256 `16dea3da732f0a5b988573ff7ffcb152a1e2a811efba2f7e915f9d41b56b9148`);
 the failed predecessor remains frozen as AMEND chronology (SHA256
@@ -103,7 +103,7 @@ thread before then. Sibling: pencil-boil 0.11.1/0.11.2 were codex-committed-and-
 glass peer bump waits on that repo's own audit. Waste of record: ~1.89 B tokens on the root spine
 alone; 32 cure rounds on the un-rostered 224k-line import-dag instrument; 36 row-6 V-rounds
 leaving 92.7 GB of clones; the one honest identity refusal overridden in 19 seconds by an
-anti-introspection directive.
+anti-introspection directive. **Census restated (repo-fleet pass 1, `wf_dbafe83b-6c8`): 0/87 codex-delta seals stand — all VOID; #75 = machine-local evidence only; #90 = LANDED, its residue awaiting the owner's named triggers; underlying code holds as LANDED-CANDIDATE per cluster verdicts (A/B/D/E: stand-with-cures · C: falls entire).**
 
 ## Φ0 — executable this hour
 

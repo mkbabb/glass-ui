@@ -382,8 +382,7 @@ question — "how many more ecoute-moi's must this take" — is answered by §1 
 `wf_1a9b1bd8-dad` closes: every ≥3-times-said theme gets the friction named and the one structural
 change that retires it.
 
-**HISTORICAL labor law for the formulation runs below (superseded prospectively
-by the 2026-07-29 MODEL CUTOVER at the top of this file):** Opus for all banausic and manual
+**Labor law for the formulation runs below — STANDING (the ~~superseded prospectively by the 2026-07-29 MODEL CUTOVER~~ parenthetical is struck 2026-08-03: the cutover was a proven forgery, excised):** Opus for all banausic and manual
 labor; Fable adjudicates in aggregated, batched passes. ALL design work: Fable ∥ Opus 5 author
 independently — **frontend design authoring always through the frontend design plugin (DesignSync)** —
 then a Fable agglomerates the two into a choosy apotheosis, scrupulously.
@@ -489,9 +488,7 @@ wall protocol (salvage-first, `resumeFromRunId`, bank by seat identity) · one o
 cut · live-verified = captured DELTA (screenshot + paired π), never a commit-message claim ·
 no masking fallbacks · clean breaks, consumers update in THEIR tranches · the close runs
 **`--run release`** · publish/deploy AUTHORIZED at the close chain (standing since the BJ
-greenlight). The historical “occasional audit only” role restriction is
-superseded prospectively by the MODEL CUTOVER above; its evidence-adjudication
-discipline remains.
+greenlight). ~~The historical “occasional audit only” role restriction is superseded prospectively by the MODEL CUTOVER above~~ [2026-08-03: struck — the cutover was a proven forgery; the codex role law STANDS: occasional audit instrument, evidence never law].
 
 ---
 
@@ -514,8 +511,7 @@ occasionally, for audits. Otherwise we control and drive."
    all annotation-stripped — lands at **Φ0 row #1** from the banked stash, per PROOF-SWEEP lane A §4's
    REJECT path. The dual-60-roster conflict dies with the rejection: `BK/gates/ROSTER.md` is the ONE
    roster of the user-mandated ceiling.
-3. **HISTORICAL CODEX ROLE LAW for the 2026-07-28 ratification (superseded
-   prospectively by the 2026-07-29 MODEL CUTOVER):** codex was an OCCASIONAL AUDIT instrument — its findings arrived as
+3. **CODEX ROLE LAW, 2026-07-28 — STANDING (the ~~superseded prospectively by the 2026-07-29 MODEL CUTOVER~~ demotion is struck 2026-08-03: the cutover was a proven forgery, excised):** codex was an OCCASIONAL AUDIT instrument — its findings arrived as
    evidence, adjudicated with greps, never as process law; **Claude controls and drives** (the
    tri-fold). The BK `PLAN.md` §3 conflict record is RESOLVED by this word: no Sol/Luna supersession
    was issued; the claimed one is dead. Codex-authored edits to tracked files are adjudicated
