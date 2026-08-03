@@ -8,6 +8,27 @@ formation: an owning wave, a fold, or a retire with rationale. Silent drops forb
 Rows F02/F06/F07… without a screenshot are URL-anchored verdicts; the demo runs at
 `http://127.0.0.1:5199`.
 
+## PROVENANCE — this corpus is not the first sitting (BK row #15, 2026-08-03)
+
+Most of these asks are older than 2026-07-17. Two earlier sittings said the same things in the
+owner's own words, and they are the citation target wherever a BJ row restates them:
+
+- `docs/tranches/AY/audit/USER-AUDIT-2026-06-10.md` — the live audit of 2026-06-10 (§B B1-B22 is the
+  glass-ui half). **37 days before this corpus, 54 days before BK execution.**
+- `docs/tranches/BD/viz/refine/USER-FEEDBACK-2026-06-23.md` + `-batch2.md` + `-batch3.md` — the three
+  refinement batches of 2026-06-23. **24 days before this corpus, 41 days before BK execution.**
+
+The per-row lineage — which BJ row restates which antecedent, its first-asked date, its age, and how
+many sittings carried it — lives once, at
+`docs/tranches/BK/execution/2026-08-03-row15-provenance/PROVENANCE-REGISTER.md` §2. It is cited, not
+restated here. Headline: 25 of the 68 asks were first made on 06-10 and 18 on 06-23; thirteen have
+been asked three or more times; the dock (F47), the app-wide blur/rounding hierarchy (F48), and the
+blob (A12) have been asked **four** times each and are the oldest live asks in the tranche.
+
+Two record corrections that this ledger does not own: the demo port above is stale (5400 is the ruled
+port, TR#4 at `74c59ade`), and `feedback/F19-metric-badge-overround-grid.png`, cited by CFR-01, is on
+disk but untracked — the force-track carve-out is a #4/#16 call. Both are recorded at the register §5.
+
 | Row | Anchor | Verdict (user's words, condensed only where marked) |
 |-----|--------|------------------------------------------------------|
 | F01 | `feedback/F01-preview-cards.png` | Preview cards could be better, more expressive with active items, better sized (different sizes, masonry-layout like). Further: preview cards AND all story pages are slow to load in — partially load, then stutter. |

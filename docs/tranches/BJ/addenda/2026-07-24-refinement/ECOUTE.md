@@ -110,21 +110,33 @@
 
 Eleven items. Nine are owner rows; two are wave-level owners the registry routes to and that do not exist.
 
+**⊕ FALSE-GAP STRIKE (BK row #14 PHANTOM-REPAIR, 2026-08-03 — TR #14's named act, the precondition
+TR #16 states as "ECOUTE §3, after the false-gap strike").** Six of the eleven-plus-gate gaps below
+are FALSE and are struck in place with their falsifier — five §1a rows (F11 · F29 · F13-remainder ·
+F23 · the three-wave row) and one id carried only by the `G-ROW-HOMED` RED condition at §3 (F41).
+Nothing is deleted; each struck row keeps its text with the ground beside it, so no citation dangles.
+Ground of record: `RECONCILIATION.md:154-210` (§4, "ORPHAN … minus 2 it got wrong" + LANDED table +
+Counts: "ORPHAN 9 (not 11)"). The six surviving §1a gaps — A12 · A14 · A16 · A04-remainder · F25 ·
+F33-goo-morph — stand as TR #16's scope, save **A04-remainder, DISCHARGED** by TR §A.2's adjudicated
+DAG (`TERMINAL-ROSTER.md:244-272`; arm ruling C-A04 ADOPT-DISCHARGED at
+`TERMINAL-ROSTER.arm-fable.md:117`). Full record:
+`docs/tranches/BK/execution/2026-08-03-row14-phantom-repair/PHANTOM-REPAIR.md`.
+
 | gap | why it fell through |
 |---|---|
-| **A12 blob greenfield** | the string `blob` occurs **0 times** in `WAVES.md`. An explicit, screenshot-free owner ask for a 5,546-LOC component that is byte-unchanged since the complaint. This is the largest single silent drop in the corpus. |
-| **A14** (procedural umbrella) | its A13 half is owned, its A12 half is not, so the umbrella has no owner. |
+| ~~**A12 blob greenfield**~~ **STRUCK — HOMED (row #16, 2026-08-03)** | ~~the string `blob` occurs **0 times** in `WAVES.md`~~ — the WAVES-scoped instrument was blind to the roster: A12 is owned **by name** at TR row **#50 GF-BLOB** (`TERMINAL-ROSTER.md:286`, "GF-BLOB claims the A14 umbrella's A12 half by name"; spec of record `DESIGN-NOW.md` §blob-physics; provenance clause at `:200`). The ask's substance — 54 days old, four sittings, "rebuild from first principles" — is #50's charter, not an orphan. |
+| ~~**A14** (procedural umbrella)~~ **STRUCK — HOMED (row #16, 2026-08-03)** | ~~its A13 half is owned, its A12 half is not, so the umbrella has no owner~~ — the same `TERMINAL-ROSTER.md:286` line homes the umbrella's A12 half at #50 and keeps `PROCEDURAL-LEDGER` as the umbrella; A13 was never contested. Both halves owned ⇒ no orphan. |
 | **A16** (nothing dropped from BI) | no wave; 16 BI `JUDGMENT-ROSTER` rows remain `DECISION: ____` on disk. |
-| **A04 remainder** (parallelization design) | the archaeology landed; the graph-design half has no owner. |
-| **F11** (item gap) | subject matter appears nowhere; the owner-row id `F11` collides with the audit-lens id `F11` (a re-export-shim finding), which is almost certainly the mechanism — see §2. |
-| **F13 remainder** (sortable-list design) | horizontal half landed; design half unowned. |
-| **F23** (slider/progress family) | DRY half landed; the enlarged-view/gradiated-blur half is unowned and F23 is cited in **no** corpus file. |
+| **A04 remainder** (parallelization design) | ~~the archaeology landed; the graph-design half has no owner.~~ **DISCHARGED (row #14)** — the graph-design half IS `TERMINAL-ROSTER.md:244-272` §A.2, the adjudicated DAG; ruled ADOPT-DISCHARGED at `TERMINAL-ROSTER.arm-fable.md:117`. |
+| ~~**F11** (item gap)~~ **STRUCK — FALSE GAP (row #14)** | ~~subject matter appears nowhere~~ — **LANDED at `34681df9`** ("land BJ.W-CONFIGURATOR-STD", 2026-07-21), `RECONCILIATION.md:188`: `styles.css:112-122` carries a literal `F11` header. The id-collision observation (owner `F11` vs lens `F11`) survives and rides `G-ROW-HOMED`'s namespace clause. |
+| ~~**F13 remainder** (sortable-list design)~~ **STRUCK — FALSE GAP (row #14)** | ~~design half unowned~~ — **REFUTED**, `RECONCILIATION.md:162`: `docs/tranches/BJ/waves/BAND-FEEDBACK-MOTION.md:290` states Δ-F13-1 is "MINTED HERE, on the interaction half"; the responsive half sits at G-RSP-1/3. |
+| ~~**F23** (slider/progress family)~~ **STRUCK — FALSE GAP (row #14)** | ~~unowned and cited in **no** corpus file~~ — **OWNED + PARKED**, `RECONCILIATION.md:163`: the third-consumer condition is `BAND-FOLD.md:31`/`:375` (§7 U-2) → W-TIMELINE; the enlarged-view clause routes to owner ask R-4. The "cited nowhere" cell is falsified by those two lines. |
 | **F25** (confirm-dialog fold) | `ASK-3` closed it; `W-DELETE`'s scope list does not include it. |
-| **F29** (springs configurator) | cited nowhere. |
+| ~~**F29** (springs configurator)~~ **STRUCK — FALSE GAP (row #14)** | ~~cited nowhere~~ — **LANDED at `34681df9`**, `RECONCILIATION.md:189`: `springs.vue` +315, Configurator refs 0→13. |
 | **F33 dot goo-morph** | the collapse half is owned by `W-DELETE`; the "dots goo-morph between states per the liquid-weight edict" half is owned by nothing. |
-| **`W-A11Y`, `W-DOC-TRUTH`, `W-PERF`** | cited as owning waves in `REGISTRY.md` for **9 accessibility findings (K-1…K-9), 12 documentation findings (L-1…L-9, L-12, A-6, Z-5) and A17's re-measure** — and **none of the three has a `## W-` heading in `WAVES.md`.** |
+| ~~**`W-A11Y`, `W-DOC-TRUTH`, `W-PERF`**~~ **STRUCK — FALSE GAP (row #14)** | the routing cells are real (9 K-findings · 12 doc findings · A17) and are now **re-pointed at the roster ids** — `W-A11Y` = **TR #31**, `W-DOC-TRUTH` = **TR #61**, `W-PERF` = **TR #69** (`REGISTRY.md` header note + 21 cells). ~~none of the three has a `## W-` heading in `WAVES.md`~~ — true of WAVES.md and irrelevant: the instrument (`grep -c '^## W-A11Y' WAVES.md`, `:374`) was WAVES.md-scoped, while all three bodies exist on disk at `docs/tranches/BJ/waves/BAND-A11Y.md` (359 lines) · `BAND-DOC-TRUTH.md` (283) · `BAND-PERF.md` (660). TR seats them accordingly: `:181` "#31 W-A11Y (≡BAND-A11Y five)" · `:211` #61 · `:219` "#69 W-PERF (≡BAND-PERF)". |
 
-`WAVES.md` closes with: *"Anything visible in `REGISTRY.md` with no owning wave above is a silent drop and is close-blocking. At authoring time the list is empty."* **That sentence is false at authoring time.** The list is 3 waves and ~22 findings, plus A12.
+`WAVES.md` closes with: *"Anything visible in `REGISTRY.md` with no owning wave above is a silent drop and is close-blocking. At authoring time the list is empty."* **That sentence is false at authoring time.** The list is 3 waves and ~22 findings, plus A12. **⊕ row #14, 2026-08-03: the WAVES.md sentence is CORRECTED at its own site (`WAVES.md:909`) and the "3 waves" half of this cell is STRUCK** — the three waves are TR #31/#61/#69 with band bodies on disk; the ~22 findings are re-pointed in `REGISTRY.md`; A12 stands and is TR #50's (`W-BLOB`, `PROCEDURAL-LEDGER` umbrella per arm ruling C-A14).
 
 ---
 
@@ -193,7 +205,7 @@ Owns A12, A14's unowned half, and `ASK.md` R-5. 5,546 LOC, byte-unchanged since 
 | `G-BLOB-MOOD-DISTINCT` | Any two named moods produce a mean-pixel-delta above threshold on the same renderer at the same seed. | **RED** — same construction as `G-MEDIUM-DISTINCT`; run it and record the figure before cutting any mood. |
 | `G-BLOB-EARNED` | Blob has ≥2 demo consumers **and** a stated non-demo purpose, or it demotes. | **RED** — 2 demo stories for 5,546 corrected LOC is the weakest ratio among the giants. |
 
-### `W-A11Y` — the wave the registry routes 9 findings to and that does not exist
+### `W-A11Y` — the wave the registry routes 9 findings to ~~and that does not exist~~ **= TR #31** (⊕ row #14: body on disk at `docs/tranches/BJ/waves/BAND-A11Y.md`, 359 lines; the "does not exist" premise was a WAVES.md-scoped instrument artifact)
 
 Owns K-1…K-9 and Y-3 (commit `35a30fbb` credited `BJ.W-A11Y-CONTRAST` GREEN while its MAJOR arm was untouched — re-opened).
 
@@ -203,7 +215,7 @@ Owns K-1…K-9 and Y-3 (commit `35a30fbb` credited `BJ.W-A11Y-CONTRAST` GREEN wh
 | `G-CONTRAST-COMPUTED` | Every state-bearing control computes ≥3:1 against its own surface, by an actual contrast computation. | **RED** — unchecked `Checkbox`/`RadioGroupItem` at **1.28:1**; dark-mode error text at **3.67:1** against a token comment asserting 4.60:1; `placeholder-contrast.test.ts` computes no contrast. |
 | `G-FOCUS-VISIBLE` | Every focusable trigger renders a visible focus indicator. | **RED** — `DropdownMenuTrigger` has none. |
 
-### `W-DOC-TRUTH` — the wave the registry routes 12 findings to and that does not exist
+### `W-DOC-TRUTH` — the wave the registry routes 12 findings to ~~and that does not exist~~ **= TR #61** (⊕ row #14: body on disk at `docs/tranches/BJ/waves/BAND-DOC-TRUTH.md`, 283 lines)
 
 Owns L-1…L-9, L-12, A-6, Z-5. (`W-COMMENT-DIET` carries a *gate* named `G-DOC-TRUTH`; a gate is not an owner, and the DOC family's scope is `README`/`DESIGN.md`/`docs/canon`/`docs/consumer-evidence`/`MIGRATION.md`/`CHANGELOG.md` — none of which is `src/` comment prose.)
 
@@ -216,13 +228,55 @@ Owns L-1…L-9, L-12, A-6, Z-5. (`W-COMMENT-DIET` carries a *gate* named `G-DOC-
 
 ### `W-ORPHAN-ROWS` — the seven owner rows with no home
 
-Owns F11, F13-remainder, F23, F25, F29, F33-goo-morph, A04-remainder, A16. Deliberately one wave: each item is bounded, and splitting them into seven waves reproduces the ledger inflation this refinement exists to kill. The wave's product is a **decision per row**, landed as source or as a one-line retire-with-reason.
+Owns ~~F11,~~ ~~F13-remainder,~~ ~~F23,~~ F25, ~~F29,~~ F33-goo-morph, ~~A04-remainder,~~ A16 — **⊕ row #14, 2026-08-03: four struck as false gaps (F11 · F13-remainder · F23 · F29, §1a) and A04-remainder discharged by TR §A.2; the wave's live scope is F25 · F33-goo-morph · A16** (plus the union tails TR #16 names). Deliberately one wave: each item is bounded, and splitting them into seven waves reproduces the ledger inflation this refinement exists to kill. The wave's product is a **decision per row**, landed as source or as a one-line retire-with-reason.
+
+**⊕ ROW #16 EXECUTED — THE DECISIONS, 2026-08-03** (record of record:
+`docs/tranches/BK/execution/2026-08-03-row16-orphan-rows/ORPHAN-ROWS-CLOSE.md`, HEAD `aee47957`).
+Row #14 read the §3 side right and §1a had not caught up: **A12 and A14 are struck above** as
+homed at TR #50, so the live scope is exactly the three ids this heading names. Each now carries a
+decision plus its named executing row — which is what this wave's product is defined to be. No
+seal is minted; CLOSED is the lead's act after the Challenge Law pass (⊕¹¹).
+
+- **F25 — HOMED AT #18 `W-DELETE`.** The ruling already existed and was ratified: `BJ/ASK.md:399`
+  reads "ASK-3 | confirm-dialog story | **DELETE (fold)**" (question at `:42-43`; restated at
+  `addenda/…/ASK.md:133`). The subject is live — `demo/stories/feedback/confirm-dialog.vue`,
+  12,294 B at HEAD. The gap was **seat, not decision**: #18's live scope is its TR row
+  (`TERMINAL-ROSTER.md:168`), not the `WAVES.md:323-330` paragraph — a paragraph now superseded
+  three times over (it orders deletion of `deck`, which LIVES; of `carousel`, KEEP by owner word;
+  of `metric`, which left the DELETE list at ✦³/SL-2). Doc-truth rider routed to **#61**.
+- **F33 — BOTH HALVES HOMED AT #40 (with #18).** Collapse half: owner word ruled deck LIVES and
+  widens to the deck apotheosis, carousel is KEEP and **shares the deck's substrate** — one
+  windowed-sequence engine under both (`TERMINAL-ROSTER.md:190` ✦³ items 11/12; spec of record
+  `DECK-RELOCATION.md` PART I §3). "Likely collapse" is answered as *consolidate the substrate,
+  keep both surfaces*. Dot-animation half: #40's five born-RED close-battery cells and the
+  `01310c9c` OVERTURN. See the corrected `G-GOO-MORPH` cell below.
+- **A16 — CLOSED-BY-DISPOSITION at TR §B.3.** The 16 blanks reproduce on disk, but the decisions
+  exist: `TERMINAL-ROSTER.md:298` §B.3, "THE 16 BI DECISIONS — ALL dispositioned, zero owner-owed"
+  (14 lead-ruled ratified wholesale per `RATIFICATION.md` §5 · r7 RULED §1.2 · r15 DECLINED §1.3 ·
+  r11/r13 affirmed · r12 owner-visible), corroborated at `TERMINAL-ROSTER.md:124`. What remains is
+  a doc-truth **back-annotation** of `JUDGMENT-ROSTER.md`, routed to **#61** beside the existing
+  "three BI addenda instruments gain SUPERSEDED banners" row (§B.4, ⊕⁴ U-42). Filling the blanks
+  from a summary would be a mint — eight of those rows read "the eye must judge" — so each must be
+  copied from `RATIFICATION.md` with its own citation.
+- **Union tails discharged here** (`PROOF-SWEEP.md:355-470` lane C, cited never copied):
+  **U-01** `+BD-CARRY` seeded and count-verified — **1,338** BD rows re-derived from
+  `BI/FORMATION/open-row-routing.json` (8,509 total; BD all `FOLD`/`DEFER_OQ_D_CENSUS`, 301 source
+  files, eight `canonicalFamily` buckets mapped to live BK rows); the arm stays RED until PORT
+  gains its §0 pre-history section. **U-04** the AX register RETIRED-as-a-machine, with the "23
+  HELD books" figure corrected to **21 unresolved booked triggers** (all 21 enumerated in the
+  record) and the machine convicted by its own header — its enforcing runner is deleted
+  (`grep -c '"proof:' package.json` → 0). **U-07** `NATIVE-PENDING-ROSTER.md` BATCH-STRUCK; its 35
+  P-ids stand as history, its three Q051 cohorts ride TR §B.3 and #10. **U-51** the `OPEN-*` census
+  seeded and its "50 ids" corrected to **55** (detector stated); **53 of the 55 are cited by zero
+  BK artifact**, exactly two reach the roster. **U-03** CLOSED-BY-APPLICATION (items 8-12 are the
+  ✦³ SL-1…SL-5 overlay already on disk). **U-05** discharged by row #12's 120-unit BG walk.
+  **PORT §1.3's 109-wave reproduction stays OPEN and owned by #16** — owed, not faked.
 
 | gate | assertion | RED-at-HEAD condition |
 |---|---|---|
-| `G-ROW-HOMED` | Every `FEEDBACK-LEDGER.md` row id resolves to exactly one wave in the roster; a row cited by zero waves fails; a row-id namespace collision with an audit-lens id fails. | **RED** — F11, F13, F23, F25, F29, F41 are cited by no wave; owner ids `F01`–`F12` collide with lens ids `F1`–`F12`. |
-| `G-GOO-MORPH` | A paging-dot transition between adjacent indices emits a connected mark at mid-transition (the two dots share a neck), not two discrete opacity crossfades. | **RED** — `pager-dots` changed 30+/18− since the complaint; no metaball or morph path exists in it. |
-| `G-BI-CARRY` | Zero `DECISION: ____` blanks remain in any BI roster cited as carried forward. | **RED** — 16 blanks on disk (A16). |
+| `G-ROW-HOMED` | Every `FEEDBACK-LEDGER.md` row id resolves to exactly one wave in the roster; a row cited by zero waves fails; a row-id namespace collision with an audit-lens id fails. | **RED** — ~~F11, F13, F23,~~ F25, ~~F29, F41~~ are cited by no wave; owner ids `F01`–`F12` collide with lens ids `F1`–`F12`. **⊕ row #14, 2026-08-03: five of the six ids are FALSE and struck** — F11/F29 LANDED `34681df9`, F41 LANDED `75c19ead` (`RECONCILIATION.md:190`, G-COPY-5 at `docs/tranches/BJ/waves/BAND-STORY.md:257`), F13 owned at `BAND-FEEDBACK-MOTION.md:290`, F23 owned at `BAND-FOLD.md:31`/`:375`. **F25 alone holds this gate RED**; the id-collision clause is untouched and stands RED on its own. **⊕ row #16, 2026-08-03 — BOTH CLAUSES DISPOSITIONED.** (a) **F25 is HOMED at #18 `W-DELETE`** (`BJ/ASK.md:399` ratified DELETE-fold; subject live at `demo/stories/feedback/confirm-dialog.vue`); the row-citation clause clears on the decision and the *act* is #18's cut. (b) **The id-collision clause is DISCHARGED BY CONVENTION, not by migration**: the ledger's own ids are zero-padded two-digit throughout — `F01`–`F50` · `A01`–`A17`, all 67 padded (`grep -oE '^\| *[FA][0-9]+' docs/tranches/BJ/FEEDBACK-LEDGER.md`) — while the audit lenses are never padded. `F01 ≠ F1` as strings, so the hazard is *reading*, not identity. **The convention, stated as the gate's own rule: owner-ledger ids are always zero-padded; a bare unpadded `F1`-form id in any BK artifact is a lens id by construction.** No renaming, no shim, no new seat. |
+| `G-GOO-MORPH` | A paging-dot transition between adjacent indices emits a connected mark at mid-transition (the two dots share a neck), not two discrete opacity crossfades. | ~~**RED** — `pager-dots` changed 30+/18− since the complaint; no metaball or morph path exists in it.~~ **⊕ row #16, 2026-08-03 — GROUND FALSIFIED AT HEAD, GATE TRANSFERRED TO #40.** The "no metaball or morph path exists" cell is false at `aee47957`: `src/components/pager-dots/constants.ts:14-16` defines `PAGER_NECK_GIRTH = 0.7`, *"the metaball NECK girth (the dumbbell-shoulder bridge height between the two pip-bodies)"*; `PagerDots.vue:13-14,26-29,39` implements the three-layer worm with a *"welling concave neck"*; `composables/usePagerWorm.ts:19,167` drives it via `useLeadTrail`; and `01310c9c` is literally *"close BJ.W-PAGER-DOT-MORPH — pin the goo-morph signature."* **The mechanism exists.** What stays open is its ruled form and its quality — worm on translate+scale, the `01310c9c` pin OVERTURNED, five born-RED close-battery cells — all of which live at TR row **#40 W-PAGER** (`TERMINAL-ROSTER.md:190`). The gate moves there with its ground re-stated; it does not hold #16 RED. |
+| `G-BI-CARRY` | Zero `DECISION: ____` blanks remain in any BI roster cited as carried forward. | ~~**RED** — 16 blanks on disk (A16).~~ **⊕ row #16, 2026-08-03 — RED ON A STALE ARTIFACT, NOT AN OPEN QUESTION.** The 16 blanks reproduce (`grep -c 'DECISION: ____' docs/tranches/BI/addenda/JUDGMENT-ROSTER.md` → **16**, one file), but every one is **dispositioned** at `TERMINAL-ROSTER.md:298` §B.3 — *"THE 16 BI DECISIONS — ALL dispositioned, zero owner-owed"* (14 lead-ruled ratified wholesale, `RATIFICATION.md` §5 · r7 RULED §1.2 · r15 DECLINED §1.3 · r11/r13 affirmed · r12 owner-visible), corroborated at `TERMINAL-ROSTER.md:124`. **A16 is CLOSED-BY-DISPOSITION.** The residual is a one-instrument doc-truth **back-annotation** — copy each §B.3 ruling into its `JUDGMENT-ROSTER.md` row with the `RATIFICATION.md` citation beside it — routed to **#61 W-DOC-TRUTH** alongside §B.4's existing "three BI addenda instruments gain SUPERSEDED banners" row (⊕⁴ U-42). Not done at #16 on purpose: eight of the sixteen read *"the eye must judge"* / *"veto window open"*, so filling them from a summary would be a mint. |
 
 ---
 
@@ -359,7 +413,7 @@ Both cite the same owner on the same date. They are incompatible, and the owner'
 
 **C-3 · `W-A11Y`, `W-DOC-TRUTH`, `W-PERF` — routed to, absent from the roster.**
 `REGISTRY.md` assigns 22 findings to three waves. `WAVES.md` has no heading for any of them, and closes by asserting the unowned list is empty.
-**Instrument:** `grep -c '^## W-A11Y' WAVES.md` → 0. Settled by authoring §3's waves or by re-routing the 22 findings, explicitly.
+**Instrument:** `grep -c '^## W-A11Y' WAVES.md` → 0. Settled by authoring §3's waves or by re-routing the 22 findings, explicitly. **⊕ row #14, 2026-08-03: SETTLED by re-routing** — the instrument is WAVES.md-scoped and blind to `docs/tranches/BJ/waves/BAND-*.md`; the 22 findings are re-pointed at TR #31/#61/#69 in `REGISTRY.md`. Never quote this grep as a wave-existence test again.
 
 **C-4 · "Four of eight springs ship monotone."**
 `REGISTRY.md` G-1 and `WAVES.md` W-SPRING-RETUNE both say four of eight, naming `smooth`, `press`, `dock`, `orb-drop`.

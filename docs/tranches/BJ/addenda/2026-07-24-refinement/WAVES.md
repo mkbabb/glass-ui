@@ -906,7 +906,19 @@ not taken without a mark.
 # Cross-cutting: what no wave owns
 
 Checked at the band fold. Anything visible in `REGISTRY.md` with no owning wave above is a silent drop and
-is **close-blocking**. At authoring time the list is empty; it is re-derived, not trusted, at close.
+is **close-blocking**. ~~At authoring time the list is empty; it is re-derived, not trusted, at close.~~
+
+**⊕ CORRECTED (BK row #14 PHANTOM-REPAIR, 2026-08-03 — TR #14's third named act).** The struck
+sentence was **false at authoring time**, as `ECOUTE.md:139` convicted: the list was 3 wave names
+(`W-A11Y`, `W-DOC-TRUTH`, `W-PERF`) carrying ~22 `REGISTRY.md` findings, plus A12. The corrected
+sentence: *this file is not the ownership index — the ownership index is
+`docs/tranches/BJ/addenda/2026-07-24-refinement/TERMINAL-ROSTER.md` §A, and a `REGISTRY.md` row is
+homed when its disposition cell names a TR row id, not when a `## W-` heading appears here.* The
+three names were never phantom waves: their bodies are `docs/tranches/BJ/waves/BAND-A11Y.md` (359
+lines), `BAND-DOC-TRUTH.md` (283), `BAND-PERF.md` (660), seated as **TR #31 · #61 · #69**
+(`TERMINAL-ROSTER.md:181`, `:211`, `:219`) and re-pointed in `REGISTRY.md` this date. A12 stands as a
+live gap and is TR #50's. The re-derive-at-close duty is unchanged, and its instrument is now the TR
+id column — never `grep -c '^## W-' WAVES.md`, which is blind to `waves/BAND-*.md` (`ECOUTE.md:374`).
 
 **Coverage note, stated honestly:** the WebKit cells of every π/DELTA obligation above are currently
 **uncapturable** because of `W-WEBKIT-CRASH`. No wave may claim a WebKit or Safari result until that wave

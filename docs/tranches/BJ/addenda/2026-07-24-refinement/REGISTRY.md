@@ -2,6 +2,16 @@
 
 Date: 2026-07-24 · Phase: **tranche development only** · No source edits land from this document.
 
+**⊕ RE-POINT (BK row #14 PHANTOM-REPAIR, 2026-08-03 — the doc-side act TR #14 names).** Every
+disposition cell that named `W-A11Y`, `W-DOC-TRUTH`, or `W-PERF` now carries the **real roster row
+id** beside the name: `W-A11Y` → **TR #31** · `W-DOC-TRUTH` → **TR #61** · `W-PERF` → **TR #69**
+(`docs/tranches/BJ/addenda/2026-07-24-refinement/TERMINAL-ROSTER.md:181`, `:211`, `:219`). 21 cells
+re-pointed, no disposition changed. This closes the ECOUTE §1a "cited as owning waves … none of the
+three has a `## W-` heading in `WAVES.md`" gap (`ECOUTE.md:137`): the instrument was WAVES.md-scoped
+only — all three waves have band bodies on disk at `docs/tranches/BJ/waves/BAND-A11Y.md` (359 lines),
+`BAND-DOC-TRUTH.md` (283), `BAND-PERF.md` (660), which is why TR #31 reads "≡BAND-A11Y five" and #69
+"≡BAND-PERF". Record of this repair: `docs/tranches/BK/execution/2026-08-03-row14-phantom-repair/PHANTOM-REPAIR.md`.
+
 This registry refines BJ. It does not open a new tranche. Every family below is grouped by the
 UNDERLYING DEFECT MECHANISM, not by wording or by area; two findings that share a mechanism share a
 family. Each family carries a terminal disposition and an owning wave in `WAVES.md`.
@@ -63,7 +73,7 @@ So defects that live exactly at the package boundary are structurally invisible 
 | A-3 | `@mkbabb/glass-ui/styles` silently overrides a consumer's Tailwind `@theme`: `--spacing`, `--radius*`, `--text-base`, `--container-lg`, `--font-weight*`. | audit lens CT-3 | **BUILD** — `W-PKG-TRUTH` |
 | A-4 | `./styles.css` ships components whose paint is structurally undefined — **143 of 172** no-fallback custom properties resolve to nothing. | audit lens CT-4 | **BUILD** — `W-PKG-TRUTH` |
 | A-5 | The library's one dynamic-import optionality boundary has no rejection handler; a missing `@mkbabb/value.js` becomes an unhandled promise rejection. | audit lens CT-5 | **BUILD** — `W-PKG-TRUTH` |
-| A-6 | README + the root barrel's own API table document two symbols absent from the published surface: `useKeyboardShortcuts`, `Combobox`. | audit lens CT-6 | **BUILD** — `W-DOC-TRUTH` |
+| A-6 | README + the root barrel's own API table document two symbols absent from the published surface: `useKeyboardShortcuts`, `Combobox`. | audit lens CT-6 | **BUILD** — `W-DOC-TRUTH` (TR #61) |
 | A-7 | 26.6 KB of component CSS ships in the tarball unreachable from any export entry. | audit lens CT-7 | **BUILD** — `W-PKG-TRUTH` |
 
 ### A-1 CORRECTED — the right peer, and the library's own quarantine vindicated
@@ -293,18 +303,18 @@ control, a contrast that computes but was never computed, a state with no keyboa
 
 | id | finding | disposition |
 |---|---|---|
-| K-1 | **`SortableList` steals Space/Enter from every focusable descendant** — a nested input cannot type a space. | **BUILD** — `W-A11Y` |
-| K-2 | An unchecked `Checkbox` / `RadioGroupItem` is drawn at **1.28:1** against its own surface — effectively invisible. | **BUILD** — `W-A11Y` |
-| K-3 | Dark-mode form error text computes **3.67:1** while the token's own comment asserts 4.60:1. | **BUILD** — `W-A11Y` |
-| K-4 | `DropdownMenuTrigger` ships with **no visible focus indicator at all**. | **BUILD** — `W-A11Y` |
-| K-5 | `Carousel`: off-screen slides remain in the tab order and the a11y tree; slide changes announce nothing. | **BUILD** — `W-A11Y` (moot if carousel deletes — then it is struck, not silently dropped) |
+| K-1 | **`SortableList` steals Space/Enter from every focusable descendant** — a nested input cannot type a space. | **BUILD** — `W-A11Y` (TR #31) |
+| K-2 | An unchecked `Checkbox` / `RadioGroupItem` is drawn at **1.28:1** against its own surface — effectively invisible. | **BUILD** — `W-A11Y` (TR #31) |
+| K-3 | Dark-mode form error text computes **3.67:1** while the token's own comment asserts 4.60:1. | **BUILD** — `W-A11Y` (TR #31) |
+| K-4 | `DropdownMenuTrigger` ships with **no visible focus indicator at all**. | **BUILD** — `W-A11Y` (TR #31) |
+| K-5 | `Carousel`: off-screen slides remain in the tab order and the a11y tree; slide changes announce nothing. | **BUILD** — `W-A11Y` (TR #31) (moot if carousel deletes — then it is struck, not silently dropped) |
 | K-6 | `ScrubberTimeline`'s value readout appears on hover/active only — a keyboard scrubber shows no value. | **BUILD** — `W-TIMELINE` |
 | K-7 | The dock's pinned (latched-open) state has **no keyboard path**. | **BUILD** — `W-DOCK` |
-| K-8 | The 44px `touch-hit-area` utility receives no pointer events and has **zero consumers**; its comment records satisfying a readback rather than a user need. | **BUILD** — `W-A11Y` + `W-SHIM-PURGE` |
-| K-9 | reka-ui 2.10.1 `VisuallyHidden` always emits `aria-hidden="true"`, silencing `ToastAnnounce`; our compensating live region is a shim in waiting. | **RULE** — `W-A11Y`; upstream-pin, not a local shim |
+| K-8 | The 44px `touch-hit-area` utility receives no pointer events and has **zero consumers**; its comment records satisfying a readback rather than a user need. | **BUILD** — `W-A11Y` (TR #31) + `W-SHIM-PURGE` |
+| K-9 | reka-ui 2.10.1 `VisuallyHidden` always emits `aria-hidden="true"`, silencing `ToastAnnounce`; our compensating live region is a shim in waiting. | **RULE** — `W-A11Y` (TR #31); upstream-pin, not a local shim |
 
 **Perf note.** A17's slow-load/stutter class (F01, F46) is *partially* explained by Family F — a blank
-tile is not slow, it is empty. `W-PERF` re-measures against the **fixed** card and does not inherit the
+tile is not slow, it is empty. `W-PERF` (TR #69) re-measures against the **fixed** card and does not inherit the
 original diagnosis.
 
 ---
@@ -317,15 +327,15 @@ stayed green. These are S0 because they are what a consumer reads *first*.
 
 | id | finding | disposition |
 |---|---|---|
-| L-1 | **README's primary usage example imports two symbols that do not exist anywhere in the library.** | **BUILD** — `W-DOC-TRUTH` |
-| L-2 | **`DESIGN.md`'s z-index table is wrong on the six highest rungs** — a consumer stacking against it lands *under* the modal. | **BUILD** — `W-DOC-TRUTH` |
-| L-3 | `DESIGN.md`'s glass-tier table lies about **every blur radius and every saturate factor**, and `MIGRATION.md` at HEAD states the opposite. | **BUILD** — `W-DOC-TRUTH` (couples to `W-FROST`, which changes these values) |
-| L-4 | `DESIGN.md`'s canonical spring table is wrong on **all four damping ratios and all three overshoot figures**, and quotes `linear()` payloads that no longer exist. | **BUILD** — `W-DOC-TRUTH` (couples to `W-SPRING-RETUNE`) |
-| L-5 | `DESIGN.md` documents **ten retired components and composables as the current API**, including a whole Dock table whose every trigger is retired. | **BUILD** — `W-DOC-TRUTH` |
-| L-6 | ~40 CSS custom properties documented as consumer-tunable knobs are **never declared anywhere in `src`**. | **BUILD** — `W-DOC-TRUTH` |
-| L-7 | `docs/canon` — the set README calls "the authoritative canon" — carries wrong constants, a retired-component example, and a superseded formula. Two forked copies of the same canon ship side by side (`docs/design` vs the `docs/precepts` submodule) and have **diverged on live constants**. | **BUILD** — `W-DOC-TRUTH`; one canon survives |
-| L-8 | `docs/consumer-evidence/` — the corpus justifying each public API's existence — cites the **pre-restructure source tree wholesale**: 29 dead paths. | **BUILD** — `W-DOC-TRUTH` |
-| L-9 | `MIGRATION.md`'s newest section omits the two export removals made since v7.0.0 and still hands consumers a now-dead path. | **BUILD** — `W-DOC-TRUTH` |
+| L-1 | **README's primary usage example imports two symbols that do not exist anywhere in the library.** | **BUILD** — `W-DOC-TRUTH` (TR #61) |
+| L-2 | **`DESIGN.md`'s z-index table is wrong on the six highest rungs** — a consumer stacking against it lands *under* the modal. | **BUILD** — `W-DOC-TRUTH` (TR #61) |
+| L-3 | `DESIGN.md`'s glass-tier table lies about **every blur radius and every saturate factor**, and `MIGRATION.md` at HEAD states the opposite. | **BUILD** — `W-DOC-TRUTH` (TR #61) (couples to `W-FROST`, which changes these values) |
+| L-4 | `DESIGN.md`'s canonical spring table is wrong on **all four damping ratios and all three overshoot figures**, and quotes `linear()` payloads that no longer exist. | **BUILD** — `W-DOC-TRUTH` (TR #61) (couples to `W-SPRING-RETUNE`) |
+| L-5 | `DESIGN.md` documents **ten retired components and composables as the current API**, including a whole Dock table whose every trigger is retired. | **BUILD** — `W-DOC-TRUTH` (TR #61) |
+| L-6 | ~40 CSS custom properties documented as consumer-tunable knobs are **never declared anywhere in `src`**. | **BUILD** — `W-DOC-TRUTH` (TR #61) |
+| L-7 | `docs/canon` — the set README calls "the authoritative canon" — carries wrong constants, a retired-component example, and a superseded formula. Two forked copies of the same canon ship side by side (`docs/design` vs the `docs/precepts` submodule) and have **diverged on live constants**. | **BUILD** — `W-DOC-TRUTH` (TR #61); one canon survives |
+| L-8 | `docs/consumer-evidence/` — the corpus justifying each public API's existence — cites the **pre-restructure source tree wholesale**: 29 dead paths. | **BUILD** — `W-DOC-TRUTH` (TR #61) |
+| L-9 | `MIGRATION.md`'s newest section omits the two export removals made since v7.0.0 and still hands consumers a now-dead path. | **BUILD** — `W-DOC-TRUTH` (TR #61) |
 | L-10 | **The root barrel is a wildcard re-export**, so two undocumented symbols joined the public API; the only gate that would notice is RED at HEAD. | **BUILD** — `W-PKG-TRUTH` |
 | L-11 | 94 backticked token references in `src` comments name registers that have since drifted. | **BUILD** — `W-COMMENT-DIET` |
 | L-12 | The doc-canon enforcement seam has **zero importers**. | **BUILD** — `W-GATE-TRUTH`: one gate that diffs documented constants against source, or the docs stop stating constants. |
@@ -395,12 +405,12 @@ tranches it rode.
 | Z-2 | **Gate-minting as the standard close remedy**, followed by wholesale abrogation that takes the load-bearing gates out with the overfit ones. Sixteen tranches. The paint-gate scope narrowed 16 surfaces → 1 in CI, and BC's keystone paint probe is now an **unimported orphan**. | C…BJ | **DECIDED — BUILD.** A fixed 40–60 budget with a keep-list justified per gate; minting a gate requires retiring one. Owner: `W-GATE-TRUTH`. |
 | Z-3 | **The immortal `min-consumers` book.** Three AY deferrals have ridden **10–11 tranches**; 28 such rows were re-stamped un-MET at BI. The ≥2-consumer bar has no expiry, so rejected substrate becomes a ledger copied forward forever. | AY…BJ | **DECIDED — RETIRE THE BOOK.** The bar is applied *once*, at `W-DAG-REDUCE`, and the verdict is terminal: keep, demote, or delete. No watched-conditions ledger survives this tranche. |
 | Z-4 | **Shadow execution.** Work performed off the recorded branch. Five occurrences; the remedy each time was a retrospective, never a mechanism. Worst case: **H and I closed on a branch that never merged — their FINAL docs are on master and their work is not.** | H, I, +3 | **DECIDED — BUILD.** Law 4: status is emitted from the SHA it ran against. A close stamp naming a SHA not reachable from the default branch fails. Owner: `W-PROCESS-CURE`. |
-| Z-5 | **Doc-drift numerals re-found at every close for sixteen tranches**, absorbed inline each time, never mechanised. Family L is this chronic's current balance. | C…BJ | **DECIDED — BUILD.** Docs stop restating constants; a gate diffs the few that remain against source. Owner: `W-DOC-TRUTH` + `W-GATE-TRUTH`. |
+| Z-5 | **Doc-drift numerals re-found at every close for sixteen tranches**, absorbed inline each time, never mechanised. Family L is this chronic's current balance. | C…BJ | **DECIDED — BUILD.** Docs stop restating constants; a gate diffs the few that remain against source. Owner: `W-DOC-TRUTH` (TR #61) + `W-GATE-TRUTH`. |
 | Z-6 | **Author-assertable status vocabulary** as the vehicle of ledger inflation — AX minted it, retired it; BB re-invented it; BJ ran it at scale. | AX, BB, BJ | **DECIDED — STRUCK.** Law 4. The vocabulary is reduced to what a runner can emit: PASS, FAIL, ABSENT. Owner: `W-PROCESS-CURE`. |
 | Z-7 | **The bundle budget whose only failure mode is raising its own ceiling** — 24× growth across 12 self-declared one-time lifts. | C…BJ | **DECIDED — BUILD.** The budget becomes a ratchet: it may only fall. A raise requires an owner mark, not a wave's own declaration. Owner: `W-PKG-TRUTH`. |
 
 **Supporting archaeology, no separate wave:** five published versions carry **zero CHANGELOG record**
-(the halt propagates into the public release history — folded into `W-DOC-TRUTH`); audit verdicts are
+(the halt propagates into the public release history — folded into `W-DOC-TRUTH` (TR #61)); audit verdicts are
 structurally indistinguishable from evidence, so hallucinated findings drove real retirements (cured by
 Law 1); the destructive-git precept recurred five times and its one tooling remedy has since been
 deleted (folded into `W-PROCESS-CURE`); "zero-deferral" and "permanent-archive" are close-time
@@ -487,7 +497,7 @@ critique, brainstorming and planning; Opus takes implementation fanout. Sol/Luna
 |---|---|---|---|
 | Y-1 | **21 of 50 chartered waves are wholly ABSENT** — every born-RED probe still reds at the exact line its wave documents. | audit lens BJ-4 | rows carried into `WAVES.md`; the absent 21 are re-scoped, not re-booked |
 | Y-2 | `BJ.W-GATE-COLLAPSE` — the tranche's user-mandated headline — is **absent**, and its acceptance instrument was swapped for one that reports success without measuring. | audit lens BJ-2 | **BUILD** — `W-GATE-TRUTH` supersedes it |
-| Y-3 | Commit `35a30fbb` is labelled one wave but discharges arms of three, crediting `BJ.W-A11Y-CONTRAST` GREEN while its MAJOR arm is untouched. | audit lens BJ-5 | **RE-OPEN** — `W-A11Y` |
+| Y-3 | Commit `35a30fbb` is labelled one wave but discharges arms of three, crediting `BJ.W-A11Y-CONTRAST` GREEN while its MAJOR arm is untouched. | audit lens BJ-5 | **RE-OPEN** — `W-A11Y` (TR #31) |
 | Y-4 | Three wave ids exist outside the wave roster: two landed in source with no charter; one is charter-less but cited as seated. | audit lens BJ-6 | **RECONCILE** — `WAVES.md` is the single roster |
 | Y-5 | `BJ.W-GRADED-BACKDROP-JUDGE` recorded a DECLINE verdict **without executing the DECLINE branch**, and dropped its unconditional deliverable. | audit lens BJ-7 | **RE-OPEN** — `W-FROST` absorbs the residual scrim |
 | Y-6 | Gates authored by `BAND-GATES` W2/W3 are enrolled in no automated runner; `ci.yml` cites a release job that does not exist. | audit lens BJ-8 | **BUILD** — `W-GATE-TRUTH` |

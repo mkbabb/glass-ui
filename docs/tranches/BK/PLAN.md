@@ -73,6 +73,12 @@ Historical receipts retain the model labels that actually ran — immutable prov
 > This restored §3 is the routing law because the owner transferred ownership to Claude, not
 > because the codex text was unauthorized at the time.]**
 
+**Routing rider (2026-08-03 — roster row #11, W-PROCESS-CURE; record of record `docs/tranches/BK/execution/2026-08-03-row11-process-cure/PROCESS-CURE.md`).** Three corrections to the section above, riding beneath the quotation because a marked quotation is never edited in place (§2):
+
+1. **The live model law is the owner's, twice worded and dated:** ⊕¹⁵ (2026-08-03) re-affirms the tri-fold — Fable for design, complexity, adjudication; Opus 5 for all else; design work runs BOTH arms then a Fable apotheosis — and ⊕¹⁸ (2026-08-03) vests BK and all its items in Claude Code, Codex fired from the tranche (re-engagement by future owner word only). The 2026-07-29 Sol/Luna cutover is **REVOKED prospectively**, not fraudulent: ⊕¹⁴ withdrew the "forgery" characterization on the owner's own correction. Exactly one model law survives at a time and contradictions are struck in place, never recorded additively (`ARCHAEOLOGY.md:246` S1 · `:196` ping-pong row 7).
+2. **DesignSync clause corrected:** DesignSync is a design-*project sync channel*, not a prose-canon authoring instrument (`list_projects` → `{"projects":[]}` at two independent seats — TR:161). The operative authoring law reads: **frontend *component* authoring runs the applicable frontend-design discipline; structured design text is the stated fallback for prose canon** — and **no seat fakes tool output**; an empty channel is reported empty.
+3. **modelId assertion is by prefix, never equality** (the `[1m]` suffix lesson, already stated above) — and the declaration is only half of it: the gap S1 named is *verification*, so every seat asserts its runtime modelId as well as declaring `model:`.
+
 ## §4 · The durability + no-incomplete-work edicts — quoted from EXEC-STATE.md (§THE FOURTH + FIFTH ECOUTES durability edict · §THE NO-INCOMPLETE-WORK EDICT; EXEC-STATE wins)
 
 > No progress lost to session walls: every run has its script in `./wf/`, its journal on disk, and its
@@ -89,6 +95,12 @@ RUNS → this file → `EXECUTION-PROGRESS.md` → the live row's cited spec.
 SEALED/CLOSED unless its referenced journal has results for every required phase and the advancing
 commit cites the seal result. Arm output on disk without a journal result is evidence, never a
 state transition.
+
+**Rules 6–8, seated 2026-08-03 (roster row #11) — quoted from `VALIDATION.md` §4 `:97-99`; VALIDATION wins.** The clauses above carry rules 1–4 only; the three minted from the audited failure classes were binding nowhere in BK until this seat:
+
+> 6. **No run fires before its declared inputs bank** — unless it declares, at launch, a delta row naming owner + trigger for each late input (the perfect/#90 precedent: lawful; the bare breach: not).
+> 7. **Ledger corrections are batched and dated**: a stale OWED/Owed block without dated status marks is itself a defect (the `EXEC-STATE:297` class — 5-of-6 stale reads as 6 live debts to a fresh seat).
+> 8. **Resources release at close**: the serialized browser seat, listening ports, and working-tree dirt are close-census items with named owners, not ambient state (the frost class).
 
 ## §5 · Born-RED from day one
 
@@ -126,7 +138,7 @@ source-owning cuts in `AUDIT-REFRESH-2026-07-28.md` and close all affected row I
 turn the 90-row traceability registry into 90 micro-branches, duplicated abstractions, or fresh design
 passes.
 
-**Graph-iteration rider (2026-07-28 audit):** the corrected
+~~**Graph-iteration rider (2026-07-28 audit):** the corrected
 `IMPORT-DAG-V2.json` (receipt-verified) is the binding formation
 substrate. Before product source moves, cut graph schema v3 with typed
 Vue/TypeScript/CSS edges, an explicit owner manifest, package/build/test
@@ -136,7 +148,16 @@ Each dynamically sized dependency cluster is challenged by two independent
 arms that assume its topology is wrong, then refuted or sealed by a fresh Sol
 adjudicator (the prospective law, §3). Execute only adjudicated cuts, regenerate
 the graph, and repeat until all file and module SCCs are gone and every
-surviving shelf has one coherent job. A target-tree sketch does not authorize
+surviving shelf has one coherent job.~~ **[STRUCK 2026-08-03 — roster row #11.
+THE GRAPH-V3 ARC FALLS ENTIRE:** `execution/2026-08-03-codex-audit/APOTHEOSIS.md`
+cluster C — 224,380 lines, 97.6% of the boundary, zero consumers,
+snapshot-tests-itself, RED in the publish path, a "performance cure" that fixed a
+cost it invented; deletion costs nothing. Its kill is cure order item 1 (same
+file), and **graph questions return to roster row #21 (W-DAG-REDUCE) at Φ5, whose
+instrument the typed-edge cut is** — not a precondition on product source, and not
+a phase. The "fresh Sol adjudicator (the prospective law, §3)" clause dies twice
+over: the arc is dead, and §3's prospective law is now ⊕¹⁵/⊕¹⁸ — Fable adjudicates,
+Opus fans out, Claude Code owns.**]** A target-tree sketch does not authorize
 empty directories, graph-count façades, or new barrels.
 
 The terminal file law is Goldilocks granularity: no god-modules, no one-wrapper
@@ -153,7 +174,11 @@ the cut.
 never a second spec) · `PORT.md` (the provenance ledger + §REJECTED) · `ASK.md` (the three
 capture-time glances + ⊕⁴ the eight disposition rows g4-g11, every row with a ratified default;
 silence advances, never parks; one explicit owner word overrides any row, at any time, without
-ceremony) · `gates/ROSTER.md` (the 60 seats). `FINAL.md` is
+ceremony) · `gates/ROSTER.md` (the 60 seats) · **`BURNDOWN.md` — THE ONE BURNDOWN FILE (row #11, E22),
+append-only, never re-minted: the only place in BK a percentage may be quoted, and only as a spread
+with its members enumerated and its source cited; the 100%-convergence numeral is struck at the source
+(`ARCHAEOLOGY.md:60` §R-8) and the stop condition remains the finite invariant checklist plus
+two-consecutive-clean**. `FINAL.md` is
 authored at close and carries: the collapsed battery GREEN with evidence · the challenge-pass record ·
 the π/DELTA captures · the overfitting audit · the fresh cross-repo census · the shadcn-abrogation
 census · the published 8.0.0 receipt.
