@@ -32,11 +32,9 @@ export interface DrawerContentProps {
 }
 
 /**
- * `showOverlay` — render the scrim. Defaults `true` for the modal sheet. The
- * live-behind pattern (`<Drawer mode="live-behind">`) passes `:show-overlay="false"`
- * so the page-behind stays visible AND interactive; reka's `:modal="false"` already
- * drops outside-pointer-capture + the focus trap, but a painted scrim would still
- * visually occlude the live surface, so the overlay is opt-out at the content level.
+ * `showOverlay` — render the scrim. When omitted, it follows the owning Drawer mode:
+ * live-behind is clear, modal is scrimmed. An explicit boolean always wins, including
+ * the uncommon live-behind case that intentionally wants a scrim.
  */
 // (portal-attrs) — reka DialogPortal roots a Teleport, which
 // cannot carry Vue's default attr-fallthrough, so a consumer's aria-label/aria-labelledby/
@@ -48,7 +46,7 @@ defineOptions({
 });
 
 const props = withDefaults(defineProps<DrawerContentProps>(), {
-    showOverlay: true,
+    showOverlay: undefined,
     surface: "glass",
 });
 const emits = defineEmits<DismissableContentEmits>();
@@ -135,6 +133,9 @@ const detentValueText = computed(
 );
 const direction = computed(() => snapCtx?.direction.value ?? "bottom");
 const mode = computed(() => snapCtx?.mode.value ?? "modal");
+const showOverlay = computed(
+    () => props.showOverlay ?? mode.value !== "live-behind",
+);
 
 function onHandleKeydown(event: KeyboardEvent) {
     if (!snap || !hasSnapPoints.value) return;
@@ -176,7 +177,7 @@ const snapStyle = computed<CSSProperties | undefined>(() => {
 
 <template>
     <RekaDialogPortal :force-mount="forceMount">
-        <DrawerOverlay v-if="props.showOverlay" :force-mount="forceMount" />
+        <DrawerOverlay v-if="showOverlay" :force-mount="forceMount" />
         <RekaDialogContent
             v-bind="{
                 ...forwarded,

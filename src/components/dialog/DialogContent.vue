@@ -426,9 +426,9 @@ watch(
 // floating tier's edge/rim/under-shadow LIFT survives (the private tier resolver
 // below keeps the class). Rides the DEFAULT `glass` surface; `surface="opaque"`
 // still reaches `--glass-level:0` (the dialog rung's own calc zeroes through
-// unchanged). The `--glass-bg-dialog` token carries the adaptive
-// oklab tint wrapper, so the bright-bucket darken reaches the modal for AA over a
-// busy page.
+// unchanged). `--glass-bg-dialog` is now a plain opacity footprint — the adaptive
+// bright-bucket darken reaches the modal through the ladder's element-level tint,
+// not through a root-baked oklab wrapper on this token.
 const plateStyle: CSSProperties = {
     "--glass-bg-rung": "var(--glass-bg-dialog)",
 } as CSSProperties;

@@ -2,8 +2,8 @@
  *
  * This partial owns the dock's
  * DYNAMIC chrome: the `--dock-expand-t` directional expanded-ness derivation,
- * the root background/border/padding interpolation on the ONE `--dock-morph-t`
- * clock, the collapsed/summary state (the proportioned pill + the
+ * the flat plate-layer crossfade on the ONE `--dock-morph-t` clock, the collapsed/summary
+ * state (the proportioned pill + the
  * summary glyph reveal), the held / open-descendant surface response, and the
  * adaptive-legibility `--glass-backdrop: light` bucket. The static structural
  * surface (root, clip, variants, persistent) lives in dock/shell.css.
@@ -17,7 +17,7 @@
        list would run TWO curves on TWO durations). `--dock-expand-t` is the directional
        expanded-ness (0 = collapsed look, 1 = expanded look) derived from the
        per-swap morph scalar + the synchronously-set `.expanded`/`.collapsed` class:
-       the box width AND the root padding/radius/color move on ONE clock. The
+       the box width AND the root padding/radius plus flat-layer opacity move on ONE clock. The
        per-frame writes drive the registered `<number>` scalar; the `calc()` reads
        below interpolate composited. Under PRM the spring's `respectReducedMotion`
        settles instantly (the scalar jumps 0→1 in one frame → the chrome snaps). */
@@ -90,97 +90,6 @@
                 var(--dock-reveal-blur) *
                     clamp(0, calc((0.5 - var(--dock-expand-t)) / 0.5), 1)
             )
-        );
-    }
-
-    /* The morphing root chrome — background / border-color interpolate between the
-       collapsed and expanded endpoints on the ONE `--dock-expand-t` scalar. Scoped
-       to the horizontal dock (`:not(.vertical)`) — the inline-axis aperture morph;
-       a vertical dock collapses its BLOCK axis (the summary/full FLIP from the
-       orchestrator) and reads its own surface plate (shell.css `.glass-dock.vertical`).
-       The two color axes blend in srgb (the house mix the token ladder speaks). The
-       `.collapsed` discrete bg/border declarations are RETIRED — this block is the
-       single authority, and at rest `--dock-expand-t` resolves to the class endpoint
-       (0 collapsed / 1 expanded) so the resting look is exact.
-       The `variant-dock` class is gone; `.glass-dock:not(.vertical)`
-       IS the horizontal dock now (no second-way to express orientation). */
-    /* The collapsed↔expanded SURFACE interp retargeted onto the L0
-       `.dock-plate` (the box is structural; the plate is the glass). The interp still
-       reads the SAME `--dock-expand-t` scalar + the inheriting `--glass-tint-*` tokens;
-       only the paint target moves to the plate so the box carries no competing bg. */
-    .glass-dock:not(.vertical) .dock-plate {
-        /* BOTH morph endpoints compose
-           the oklab adaptive tint so the self-engage darken (the unconditional
-           `:where(.glass-dock)` rule in the sibling adaptive-legibility.css partial
-           re-points the element-level
-           `--glass-tint-source`/`--glass-tint-strength`) reaches the LIVE
-           horizontal dock surface in BOTH the expanded AND the COLLAPSED look (this
-           0,3,0 morph interp OVERRIDES the 0,1,0 shell.css bg, so the tint must be
-           applied HERE — and the COLLAPSED endpoint `--glass-bg-wash` must carry it too,
-           else a collapsed dock over light paints the un-darkened wash and the plate
-           vanishes — the C5-2 ΔL≈0.01 collapse, re-surfaced on the collapsed endpoint).
-           The srgb transition mix between the two TINTED endpoints is preserved (the
-           in-flight morph frames are sub-perceptual); at the `0%` rest default both
-           inner oklab mixes are no-ops so this is byte-identical to today. */
-        background: color-mix(
-            in srgb,
-            color-mix(
-                    in oklab,
-                    var(--glass-bg-dock, var(--glass-bg-resting)),
-                    var(--glass-tint-source) var(--glass-tint-strength)
-                )
-                calc(var(--dock-expand-t) * 100%),
-            color-mix(
-                in oklab,
-                var(--glass-bg-wash),
-                var(--glass-tint-source) var(--glass-tint-strength)
-            )
-        );
-        border-color: color-mix(
-            in srgb,
-            var(--glass-border-dock, var(--glass-border-resting))
-                calc(var(--dock-expand-t) * 100%),
-            var(--glass-border-floating)
-        );
-    }
-
-    /* The VERTICAL chrome-interp un-gate. The
-       bg/border interp is AXIS-INVARIANT (a color mix reads the scalar with no
-       axis), so the vertical dock interpolates its plate between the SAME
-       collapsed↔expanded endpoints on the SAME `--dock-expand-t` scalar the
-       horizontal block reads — the ONE `DOCK_SPRING` clock, no second clock, no
-       re-added CSS transition. This PARALLEL `.vertical` block (specificity 0,2,0,
-       source-order AFTER the shell.css static `.glass-dock.vertical` plate so it
-       wins at equal specificity) is the inverse-axis twin of the horizontal block
-       above — the box-size morph already rides `block-size` on `layers.css`'s
-       `--dock-morph-t`; this gives the plate chrome the matching directional blend
-       so the vertical collapse↔expand no longer SNAPS its bg/border discretely. At
-       the rest endpoints `--dock-expand-t` resolves to the class value (0 collapsed
-       / 1 expanded), so the resting look is exact — byte-equivalent to the shell.css
-       static plate it supersedes during the morph. */
-    /* The VERTICAL surface interp retargeted onto `.dock-plate`
-       (0,3,0 — wins over shell.css's static `.glass-dock.vertical .dock-plate` during the
-       morph). */
-    .glass-dock.vertical .dock-plate {
-        background: color-mix(
-            in srgb,
-            color-mix(
-                    in oklab,
-                    var(--glass-bg-dock, var(--glass-bg-wash)),
-                    var(--glass-tint-source) var(--glass-tint-strength)
-                )
-                calc(var(--dock-expand-t) * 100%),
-            color-mix(
-                in oklab,
-                var(--glass-bg-wash),
-                var(--glass-tint-source) var(--glass-tint-strength)
-            )
-        );
-        border-color: color-mix(
-            in srgb,
-            var(--glass-border-dock, var(--glass-border-wash))
-                calc(var(--dock-expand-t) * 100%),
-            var(--glass-border-floating)
         );
     }
 
@@ -262,7 +171,7 @@
        three axes — they interpolate, never snap). `.collapsed` keeps only its
        non-morphing concerns: the pointer affordance, the centred summary layout,
        and the collapsed shadow (box-shadow crossfades discretely — a subtle,
-       acceptable swap that a `color-mix` cannot blend across its multi-layer
+       acceptable swap that cannot blend across its multi-layer
        value). */
     .glass-dock.collapsed {
         cursor: pointer;
@@ -391,11 +300,13 @@
     .glass-dock.collapsed:hover {
         box-shadow: var(--shadow-dock-override, var(--shadow-dock));
     }
-    /* The collapsed-hover surface lift retargeted onto the plate
+    /* The collapsed-hover surface lift retargets both flat plate endpoints
        (the box keeps the box-shadow elevation above; the plate carries the glass). */
     .glass-dock.collapsed:hover .dock-plate {
-        background: var(--glass-bg-wash);
-        border-color: var(--glass-border-floating);
+        --dock-plate-collapsed-bg: var(--glass-bg-wash);
+        --dock-plate-collapsed-border: var(--glass-border-floating);
+        --dock-plate-expanded-bg: var(--glass-bg-wash);
+        --dock-plate-expanded-border: var(--glass-border-floating);
     }
 
     .glass-dock.collapsed:hover:not([data-morphing]) {
@@ -414,16 +325,16 @@
      * thumb halo) via `useOptionalDockContext().held` for cross-substrate
      * coordination (typed-key canonical shape).
      */
-    /* The held-tier surface lift retargeted onto the plate. */
+    /* The held-tier surface lift retargets both flat plate endpoints. */
     .glass-dock[data-held] .dock-plate {
-        /* The held tier threads the oklab tint wrapper (zero-delta at the
-           `0%` rest default) so the adaptive darken reaches the held state too. */
-        background: color-mix(
-            in oklab,
-            var(--glass-bg-floating, var(--glass-bg-resting)),
-            var(--glass-tint-source) var(--glass-tint-strength)
-        );
-        border-color: var(--glass-border-floating, var(--glass-border-resting));
+        --dock-plate-collapsed-bg: var(--glass-bg-floating);
+        --dock-plate-collapsed-border: var(--glass-border-floating);
+        --dock-plate-expanded-bg: var(--glass-bg-floating);
+        --dock-plate-expanded-border: var(--glass-border-floating);
+    }
+
+    .glass-dock[data-held] .dock-plate::before,
+    .glass-dock[data-held] .dock-plate-expanded {
         transition:
             background var(--duration-fast) var(--ease-standard),
             border-color var(--duration-fast) var(--ease-standard);

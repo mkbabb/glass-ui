@@ -8,11 +8,11 @@ import {
     DrawerTitle,
 } from "@glass/components/drawer";
 
-async function mountDrawer(rootProps = "", contentProps = "") {
+async function mountDrawer(rootProps = "", contentProps = "", open = true) {
     const Harness = defineComponent({
         components: { Drawer, DrawerContent, DrawerDescription, DrawerTitle },
         template: `
-            <Drawer :open="true" ${rootProps}>
+            <Drawer :open="${open}" ${rootProps}>
                 <DrawerContent ${contentProps} data-detent-test>
                     <DrawerTitle>Test drawer</DrawerTitle>
                     <DrawerDescription>Adjust the drawer position.</DrawerDescription>
@@ -36,6 +36,59 @@ describe("Drawer detent semantics", () => {
 
         expect(sheet.dataset.glassDrawerSnapPoints).toBeUndefined();
         expect(sheet.querySelector("[data-glass-drawer-handle]")).toBeNull();
+
+        wrapper.unmount();
+    });
+
+    it("omits the scrim by default for live-behind mode", async () => {
+        const wrapper = await mountDrawer('mode="live-behind"');
+
+        expect(document.querySelectorAll("[data-stage-scrim]")).toHaveLength(0);
+
+        wrapper.unmount();
+    });
+
+    it("renders the blocking scrim by default for modal mode", async () => {
+        const wrapper = await mountDrawer();
+        const scrim = document.querySelector<HTMLElement>("[data-stage-scrim]")!;
+
+        expect(document.querySelectorAll("[data-stage-scrim]")).toHaveLength(1);
+        expect(scrim.style.pointerEvents).not.toBe("none");
+
+        wrapper.unmount();
+    });
+
+    it.each([
+        ["explicit true over live-behind", 'mode="live-behind"', ':show-overlay="true"', 1],
+        ["explicit false over modal", "", ':show-overlay="false"', 0],
+    ] as const)(
+        "%s",
+        async (_label, rootProps, contentProps, count) => {
+            const wrapper = await mountDrawer(rootProps, contentProps);
+            const scrims = document.querySelectorAll<HTMLElement>("[data-stage-scrim]");
+
+            expect(scrims).toHaveLength(count);
+            if (count === 1) {
+                expect(scrims[0]!.hasAttribute("inert")).toBe(false);
+                if (_label === "explicit true over live-behind")
+                    expect(scrims[0]!.style.pointerEvents).toBe("none");
+            }
+
+            wrapper.unmount();
+        },
+    );
+
+    it("keeps an explicitly shown closed native scrim inert while visually present", async () => {
+        const wrapper = await mountDrawer(
+            'mode="live-behind"',
+            ':show-overlay="true" :force-mount="true"',
+            false,
+        );
+        const scrim = document.querySelector<HTMLElement>("[data-stage-scrim]")!;
+
+        expect(scrim.dataset.state).toBe("closed");
+        expect(scrim.style.pointerEvents).toBe("none");
+        expect(scrim.hasAttribute("inert")).toBe(true);
 
         wrapper.unmount();
     });

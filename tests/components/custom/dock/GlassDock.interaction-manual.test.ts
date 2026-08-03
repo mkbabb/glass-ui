@@ -340,6 +340,101 @@ describe("GlassDock — manual + collapsed keyboard-reachability contract (H8)",
     });
 });
 
+describe("GlassDock — auto collapsed-face disclosure contract", () => {
+    const reachableFaces = (wrapper: ReturnType<typeof mountDock>) =>
+        wrapper.findAll(".dock-layer").filter((face) => !face.element.hasAttribute("inert"));
+
+    it("focuses the summary without expanding and keeps exactly one face reachable", async () => {
+        const wrapper = mountDock(
+            { startCollapsed: true },
+            {
+                default: () => h("button", { "data-testid": "full-first" }, "Home"),
+                collapsed: () => h("span", { "data-testid": "summary-content" }, "More"),
+            },
+        );
+        const summary = wrapper.get<HTMLDivElement>(".dock-layer--summary");
+        const full = wrapper.get(".dock-layer--full");
+
+        expect(summary.element.tagName).toBe("DIV");
+        expect(summary.attributes()).toMatchObject({
+            role: "button",
+            tabindex: "0",
+            "aria-label": "Expand dock",
+            "aria-expanded": "false",
+        });
+        expect(summary.attributes("aria-controls")).toBe(full.attributes("id"));
+        expect(full.attributes("inert")).toBe("");
+        summary.element.focus();
+        await nextTick();
+
+        expect(document.activeElement).toBe(summary.element);
+        expect(wrapper.find(".glass-dock").classes()).toContain("collapsed");
+        expect(reachableFaces(wrapper)).toHaveLength(1);
+        expect(reachableFaces(wrapper)[0]!.element).toBe(summary.element);
+    });
+
+    it.each(["Enter", " "]) (
+        "%s pins and focuses the first full-face descendant after seating",
+        async (key) => {
+            const wrapper = mountDock(
+                { startCollapsed: true },
+                {
+                    default: () => h("button", { "data-testid": "full-first" }, "Home"),
+                    collapsed: () => h("span", "More"),
+                },
+            );
+            const summary = wrapper.get<HTMLDivElement>(".dock-layer--summary");
+            const event = new KeyboardEvent("keydown", {
+                key,
+                bubbles: true,
+                cancelable: true,
+            });
+            summary.element.dispatchEvent(event);
+            await nextTick();
+            await nextTick();
+
+            const full = wrapper.get(".dock-layer--full");
+            expect(event.defaultPrevented).toBe(true);
+            expect(full.attributes("inert")).toBeUndefined();
+            expect(summary.attributes("inert")).toBe("");
+            expect(document.activeElement).toBe(
+                wrapper.get<HTMLButtonElement>("[data-testid='full-first']").element,
+            );
+            expect(reachableFaces(wrapper)).toHaveLength(1);
+            expect(reachableFaces(wrapper)[0]!.element).toBe(full.element);
+        },
+    );
+
+    it("Escape collapses the full face and restores focus to the seated summary", async () => {
+        const wrapper = mountDock(
+            {},
+            {
+                default: () => h("button", { "data-testid": "full-first" }, "Home"),
+                collapsed: () => h("span", "More"),
+            },
+        );
+        const full = wrapper.get(".dock-layer--full");
+        const first = wrapper.get<HTMLButtonElement>("[data-testid='full-first']");
+        first.element.focus();
+        const event = new KeyboardEvent("keydown", {
+            key: "Escape",
+            bubbles: true,
+            cancelable: true,
+        });
+        first.element.dispatchEvent(event);
+        await nextTick();
+        await nextTick();
+
+        const summary = wrapper.get<HTMLDivElement>(".dock-layer--summary");
+        expect(event.defaultPrevented).toBe(true);
+        expect(full.attributes("inert")).toBe("");
+        expect(summary.attributes("inert")).toBeUndefined();
+        expect(document.activeElement).toBe(summary.element);
+        expect(reachableFaces(wrapper)).toHaveLength(1);
+        expect(reachableFaces(wrapper)[0]!.element).toBe(summary.element);
+    });
+});
+
 // ── useDockSearch: the armSearch reroute ───────────────────────────────────────
 function mountSearch(interaction: DockInteraction, collapseDelay = 3600) {
     let dock!: UseDockStateReturn;

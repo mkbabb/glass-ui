@@ -9,7 +9,7 @@
 // axis-aware expand/collapse transition, and the pointer/focus hold machinery.
 // The fission split facility is DEFINITION-ABSENT (decided-terminal;
 // clean break, no alias — demo-only spectacle + the prime Safari suspect).
-import { computed, ref, useId, useTemplateRef, watch } from "vue";
+import { computed, nextTick, ref, useId, useTemplateRef, watch } from "vue";
 // The sampled-luminance observer is wired ON for every
 // `backdropMode: "live"` dock (the surface the user reported unreadable over light, and the
 // one most often over a live/bright backdrop). It REFINES the declarative bucket +
@@ -18,6 +18,7 @@ import { computed, ref, useId, useTemplateRef, watch } from "vue";
 // directly (NOT via the glass barrel) — the composable is demo-private (path B): the
 // dock is the binary consumer #1, the public barrel seat awaits a 2nd binary consumer
 // (docs/consumer-evidence/use-glass-backdrop-luminance.md names the booked trigger).
+import { FOCUSABLE_SELECTOR } from "../_shared/focus";
 import { useGlassBackdropLuminance } from "../../composables/glass/useGlassBackdropLuminance";
 import { provideDockContext } from "./composables/dockContext";
 import { useDockState } from "./composables/useDockState";
@@ -186,6 +187,31 @@ const {
     },
 });
 
+const summaryIsDisclosure = computed(
+    () => interaction.value === "auto" && outerCurrentLayer.value === "summary",
+);
+async function onSummaryKeydown(event: KeyboardEvent) {
+    if (!summaryIsDisclosure.value || !["Enter", " "].includes(event.key)) return;
+    event.preventDefault();
+    onClickCollapsed();
+    await nextTick();
+    fullEl.value?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR)?.focus({
+        preventScroll: true,
+    });
+}
+
+// Escape belongs to the innermost owner first: a Select/Dropdown hosted in the pane
+// closes on Escape and marks it handled, and that must not also collapse the dock.
+async function onFullKeydown(event: KeyboardEvent) {
+    if (interaction.value !== "auto" || event.key !== "Escape" || event.defaultPrevented)
+        return;
+    event.preventDefault();
+    collapse();
+    await nextTick();
+    const summary = summaryEl.value;
+    if (summary && !summary.hasAttribute("inert")) summary.focus({ preventScroll: true });
+}
+
 /* (the width-seizure cure) — measure the two convex-blend endpoints
    ONCE per content change (`--dock-expanded-px`/`--dock-collapsed-px`); the visible
    size is a ratio-FREE blend off `--dock-morph-t` (shape.css), so the unbounded
@@ -298,15 +324,17 @@ defineExpose({
         -->
         <!--
             L0 THE PLATE (the lens). One absolute, non-interactive
-            (aria-hidden, decoration) element that owns backdrop-filter + the glass surface
-            + rim + grain, and whose VISIBLE EXTENT morphs via clip-path off the ONE
-            plate-scoped `--dock-t` (dock/dock.css). It seats at z-index:-1 within the box's
-            stacking context (below the in-flow control run, above the box's drop-shadow),
-            a SIBLING of the controls — never their ancestor — so a control hover plate
-            overhangs the plate edge UN-CLIPPED. The box (`.glass-dock`) is now
-            structural (layout + the drop-shadow elevation); the plate is the surface.
+            (aria-hidden, decoration) element that owns backdrop-filter + the visual clip,
+            pointer absorption, grain, and whose VISIBLE EXTENT morphs via clip-path off
+            the ONE plate-scoped `--dock-t` (dock/dock.css). Its two flat surface layers
+            crossfade inside it. It seats at z-index:-1 within the box's stacking context
+            (below the in-flow control run, above the box's drop-shadow), a SIBLING of the
+            controls — never their ancestor — so a control hover plate overhangs the plate
+            edge UN-CLIPPED. The box (`.glass-dock`) is structural (layout + elevation).
         -->
-        <div class="dock-plate" aria-hidden="true"></div>
+        <div class="dock-plate" aria-hidden="true">
+            <div class="dock-plate-expanded" aria-hidden="true"></div>
+        </div>
 
         <!--
             L1 THE CONTROLS. The normal-flow control run OVER the plate.
@@ -363,22 +391,32 @@ defineExpose({
                  witnessed full-pane press retained until its click/cancel. -->
             <div
                 ref="fullEl"
+                :id="`${dockId}-full`"
                 :class="['dock-layer dock-layer--full', {
                     'is-active': outerCurrentLayer === 'full',
                     'is-leaving': outerLeavingLayer === 'full' || (pressKeepaliveLayer === 'full' && outerCurrentLayer !== 'full'),
                     'is-press-keepalive': pressKeepaliveLayer === 'full',
                 }]"
                 :inert="(outerCurrentLayer !== 'full' && pressKeepaliveLayer !== 'full') || undefined"
+                @keydown="onFullKeydown"
             >
                 <slot />
             </div>
             <div
                 ref="summaryEl"
+                :id="`${dockId}-summary`"
                 :class="['dock-layer dock-layer--summary', {
                     'is-active': outerCurrentLayer === 'summary',
                     'is-leaving': outerLeavingLayer === 'summary',
                 }]"
                 :inert="(outerCurrentLayer !== 'summary') || undefined"
+                :role="summaryIsDisclosure ? 'button' : undefined"
+                :tabindex="summaryIsDisclosure ? 0 : undefined"
+                :aria-label="summaryIsDisclosure ? 'Expand dock' : undefined"
+                :aria-expanded="summaryIsDisclosure ? 'false' : undefined"
+                :aria-controls="summaryIsDisclosure ? `${dockId}-full` : undefined"
+                @focusin.stop
+                @keydown="onSummaryKeydown"
                 @click="onClickCollapsed"
             >
                 <slot name="collapsed" />

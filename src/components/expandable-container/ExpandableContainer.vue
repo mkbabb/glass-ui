@@ -98,6 +98,7 @@ import { Maximize2, Minimize2 } from "@lucide/vue";
 import { FocusScope } from "reka-ui";
 import { registerShortcut } from "../../composables/keyboard";
 import type { Surface } from "../_shared/axes";
+import { FOCUSABLE_SELECTOR } from "../_shared/focus";
 
 defineOptions({ inheritAttrs: false });
 
@@ -149,9 +150,7 @@ function focusFullscreen() {
     const target =
         getContainer()?.querySelector<HTMLElement>("[autofocus]") ??
         getContainer()?.querySelector<HTMLElement>('[data-mode="collapse"]') ??
-        getContainer()?.querySelector<HTMLElement>(
-            'button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
-        );
+        getContainer()?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR);
     (target ?? getContainer())?.focus();
 }
 

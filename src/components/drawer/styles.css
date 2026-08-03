@@ -152,56 +152,52 @@
 /*
  * Coupling (A): the surface FREEZE, composed AT THE
  * ELEMENT. A detented sheet is SEE-THROUGH at peek/half (the page bleeds) and
- * SOLIDIFIES toward a warm-tinted card at full (the opaque plate ends visible bleed
- * while its blur kernel stays fixed). This is the iOS-27 bottom-sheet crown the
- * live α-0.95-at-every-detent flattened.
- *
- * A TWO-SEGMENT lerp on the ONE `--stage-t` knob (the self-standing crown owns
- * BOTH endpoints so it does not block):
- *   • DESCENT  t ∈ [0, 0.85] — the transmissive crown sinks `--glass-bg-overlay` α
- *     toward the shipped see-through `--glass-bg-sheet` floor (`--glass-opacity-sheet:
- *     0.74`). At peek/half the page bleeds through.
- *   • SOLIDIFY t ∈ [0.85, 1] — `--sheet-freeze` lerps the descended plate toward a
- *     WARM-TINTED card-mix (NOT bare `--card` — the gray-at-full carve hole).
- *     The plate opacity congeals; the blur kernel remains fixed so a drag
- *     never reallocates backdrop material.
- *
- * Composed at the default glass element via `color-mix`, never an ancestor filter
- * that would clobber the sheet's own backdrop sampling. Veil and opaque surfaces
- * remain entirely owned by the shared surface axis.
+ * SOLIDIFIES toward a warm card at full while the blur kernel stays fixed.
+ * One `--stage-t` drives descent [0,.85] and freeze [.85,1]; composition stays
+ * on the glass element so no ancestor clobbers its backdrop sample.
  */
 .glass-drawer[data-glass-drawer-snap-points="true"][data-surface="glass"] {
     /* the DESCENT fraction — 0 at closed → 1 at the commit floor (t=0.85). */
     --sheet-descent: clamp(0, calc(var(--stage-t) / 0.85), 1);
     /* the SOLIDIFY fraction — 0 below the commit floor → 1 at full (t=1). */
     --sheet-freeze: clamp(0, calc((var(--stage-t) - 0.85) / 0.15), 1);
-    /* the transmissive crown plate: the warm overlay fill sunk toward the shipped
-       see-through `--glass-bg-sheet` floor across the descent. */
+    /* Keep the crown flat (no nested color-mix): the card opacity lerps the overlay
+       role down to the sheet role across the descent — a consumer :root retune of
+       either token still moves it — and `--glass-level` firms it to the opaque
+       accessibility floor. */
+    --sheet-crown-opacity: calc(
+        var(--glass-opacity-overlay)
+            - (var(--glass-opacity-overlay) - var(--glass-opacity-sheet))
+                * var(--sheet-descent)
+    );
     --sheet-crown: color-mix(
-        in oklab,
-        color-mix(
-            in oklab,
-            var(--glass-bg-overlay),
-            var(--glass-tint-source) var(--glass-tint-strength)
-        ),
-        var(--glass-bg-sheet) calc(var(--sheet-descent) * 100%)
+        in srgb,
+        var(--card)
+            calc((1 - (1 - var(--sheet-crown-opacity)) * var(--glass-level)) * 100%),
+        transparent
     );
-    /* the warm-tinted SOLID escape (a warm card-mix toward the EXPLICIT
-       warm `--glass-capsule-warm` amber, NEVER bare `--card` and NEVER the
-       `--glass-tint-source` alias which resolves back to `--card` and would be a
-       no-op warm; black-premultiply-safe — a warm oklch color, never bare `transparent`).
-       At the shared 16% warm floor a dark full sheet stays C ≥ 0.02 warm — no
-       charcoal holiday at full. */
-    --sheet-solid: color-mix(
+    --sheet-tint-veil: color-mix(
         in oklab,
-        var(--card),
-        var(--glass-capsule-warm) var(--glass-capsule-warm-floor, 16%)
+        transparent,
+        var(--glass-tint-source)
+            calc(var(--glass-tint-strength) * (1 - var(--sheet-descent)))
     );
-    background: color-mix(
+    --sheet-freeze-card: color-mix(
+        in srgb,
+        transparent,
+        var(--card) calc(var(--sheet-freeze) * 100%)
+    );
+    --sheet-freeze-warm: color-mix(
         in oklab,
-        var(--sheet-crown),
-        var(--sheet-solid) calc(var(--sheet-freeze) * 100%)
+        transparent,
+        var(--glass-capsule-warm)
+            calc(var(--sheet-freeze) * var(--glass-capsule-warm-floor, 16%))
     );
+    background:
+        linear-gradient(var(--sheet-freeze-warm), var(--sheet-freeze-warm)),
+        linear-gradient(var(--sheet-freeze-card), var(--sheet-freeze-card)),
+        linear-gradient(var(--sheet-tint-veil), var(--sheet-tint-veil)),
+        var(--sheet-crown);
     /* Drawer translates through one material-constant overlay sample.
        `--stage-t` still congeals the plate above, but neither the gesture nor settle
        changes the blur radius. Unprefixed only; the style build emits Safari's

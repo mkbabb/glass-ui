@@ -115,6 +115,10 @@
            never self-match, so this declaration alone is inert for the dock's OWN
            plate — the self-engage rule, not this token, darkens the dock). */
         --glass-backdrop: light;
+        --dock-plate-collapsed-bg: var(--glass-bg-wash);
+        --dock-plate-collapsed-border: var(--glass-border-floating);
+        --dock-plate-expanded-bg: var(--glass-bg-dock, var(--glass-bg-resting));
+        --dock-plate-expanded-border: var(--glass-border-dock, var(--glass-border-resting));
         /* `contain: layout style` — the restyle-scope axes ONLY; `paint` is NOT in the
            value and `.glass-dock` is NOT a clip aperture.
 
@@ -376,19 +380,11 @@
         padding: var(--dock-rail-padding, var(--dock-padding-inline, 0.5rem));
     }
 
-    /* The vertical dock's SURFACE (background + border-color) retargeted
-       onto the L0 `.dock-plate` (the box is structural; the plate is the glass). The
-       element-level oklab tint composes the inheriting
-       `--glass-tint-source`/`-strength` the self-engage re-points on `.glass-dock`, so the
-       darken reaches the vertical plate. Zero-delta at the `0%` rest default. morph.css's
-       `.glass-dock.vertical .dock-plate` interp (0,3,0) OVERRIDES this during the morph. */
-    .glass-dock.vertical .dock-plate {
-        background: color-mix(
-            in oklab,
-            var(--glass-bg-dock, var(--glass-bg-wash)),
-            var(--glass-tint-source) var(--glass-tint-strength)
-        );
-        border-color: var(--glass-border-dock, var(--glass-border-wash));
+    /* The vertical dock's expanded rung is the dock/wash pair. The plate layers read
+       these endpoint variables; the box remains structural. */
+    .glass-dock.vertical {
+        --dock-plate-expanded-bg: var(--glass-bg-dock, var(--glass-bg-wash));
+        --dock-plate-expanded-border: var(--glass-border-dock, var(--glass-border-wash));
     }
 
     .glass-dock.vertical.shape-pill {

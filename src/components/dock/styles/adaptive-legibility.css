@@ -29,10 +29,8 @@
        warm-ink here too — ONE reconciled path, the foreground twin folded in (it
        reaches the dock CONTROLS' glyph/label color). Over a DARK page the darken is
        sub-perceptual; a dark-substrate consumer opts out via `--glass-tint-strength:
-       0%` on the dock root. The morph-root interp (`.glass-dock:not(.vertical)`
-       above) stays `color-mix(in srgb …)` for the transition — the adaptive darken
-       rides its RESTING endpoint (`--glass-bg-dock`), the in-flight morph frames are
-       sub-perceptual (the ratified resting-endpoint-only default). The muted body
+       0%` on the dock root. The flat plate layers keep the adaptive darken as a
+       separate gradient while the endpoint rungs crossfade by opacity. The muted body
        register lifts to the full warm-ink under the engaged plate (the muted L40
        tier cannot clear 4.5:1 on a translucent darkened plate — darkening moves the
        plate TOWARD muted's own luminance; the low-contrast muted register is
@@ -111,9 +109,9 @@
     }
 
     /* The public frozen-backdrop arm. A static dock is the per-instance opaque
-       endpoint of the existing glass material: no live luminance signal reaches
-       the plate and no backdrop-filter surface is allocated. This rule follows
-       morph.css so the solid plate wins over both axis-specific chrome interps. */
+       endpoint of the existing glass material: both flat layers read the same card
+       endpoint, no live luminance signal reaches the plate, and no backdrop-filter
+       surface is allocated. */
     .glass-dock[data-backdrop-mode="static"] {
         --glass-level: 0;
         --glass-tint-strength: 0%;
@@ -123,7 +121,10 @@
     }
 
     .glass-dock[data-backdrop-mode="static"] .dock-plate {
-        background: color-mix(in srgb, var(--card), transparent 0%);
+        --dock-plate-collapsed-bg: var(--card);
+        --dock-plate-collapsed-border: var(--glass-border-floating);
+        --dock-plate-expanded-bg: var(--card);
+        --dock-plate-expanded-border: var(--glass-border-floating);
         backdrop-filter: none;
         -webkit-backdrop-filter: none;
     }

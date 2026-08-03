@@ -8,16 +8,19 @@
  * the defects become UNREPRESENTABLE, not patched:
  *
  *   L0 — THE PLATE (`.dock-plate`).  ONE absolute element owning `backdrop-filter` + the
- *        `--glass-*` glass surface + rim + grain (the shipped ladder verbatim — reads the
- *        inheriting `--dock-surface-blur`/`--glass-tint-*` tokens the shell + adaptive-
- * legibility partials re-point on `.glass-dock`, so the self-engage darken +
- *        the dark-arm glow reach the plate via inheritance, ZERO re-author). Its VISIBLE
+ *        visual clip, pointer absorption, and grain. Its two flat child/pseudo layers read
+ *        the public `--glass-*` rungs and crossfade by `--dock-expand-t`; adaptive tint is
+ *        a separate gradient. The shell + adaptive-legibility partials re-point the
+ *        inheriting `--dock-surface-blur`/`--glass-tint-*` tokens on `.glass-dock`, so
+ *        the self-engage darken and dark-arm glow reach the layers via inheritance, ZERO
+ *        re-author. Its VISIBLE
  *        EXTENT morphs via `clip-path: inset(… )` off the ONE plate-scoped `@property
  *        --dock-t` (paint-only, compositor-composited, ZERO endpoint measurement — self-
  *        describing over the reserved box). It is a SIBLING of the control run, NEVER its
  *        ancestor — so a control hover plate overhangs the plate edge UN-CLIPPED
- *        (the clip defect is structurally unrepresentable). The drop-shadow ELEVATION stays on `.glass-dock`
- *        (box-shadow OUTSIDE the border box would be clipped by the plate's clip-path).
+ *        (the clip defect is structurally unrepresentable). The drop-shadow ELEVATION stays
+ *        on `.glass-dock` (box-shadow OUTSIDE the border box would be clipped by the plate's
+ *        clip-path).
  *
  *   L1 — THE CONTROLS (`.dock-controls`).  A normal-flow flex run OVER the plate,
  *        `overflow: visible` BOTH axes ALWAYS. No ancestor clips it — "afford enough room
@@ -38,8 +41,8 @@
  * `round`-radius tracking and the plate clip becomes the sole extent driver.
  *
  * @import-ed by dock.css AFTER shell.css/shell-regions.css and BEFORE morph.css, in the
- * SAME `@layer components` — the plate BASE surface here, the collapsed↔expanded surface
- * INTERP retargeted onto `.dock-plate` in morph.css (source-order + specificity win). */
+ * SAME `@layer components` — the plate lens and flat paint layers live here; state rules
+ * retarget their endpoint variables in morph.css (source-order + specificity win). */
 
 @layer components {
     /* ── L0 — THE PLATE (the lens) ─────────────────────────────────────────────── */
@@ -68,17 +71,6 @@
            the inheriting token). ONE backdrop-filter in the dock — the box no longer
            carries it (no double-blur). */
         backdrop-filter: var(--dock-surface-blur);
-        /* The glass surface — the element-level oklab adaptive tint (the 
-           AUTO self-engage re-points the inheriting `--glass-tint-source`/`-strength` on
-           `.glass-dock`; the plate composes them AT THE ELEMENT so the darken-over-light
-           reaches the plate). Zero-delta at the 0% rest default. morph.css OVERRIDES this
-           with the collapsed↔expanded interp on `.glass-dock:not(.vertical) .dock-plate`. */
-        background: color-mix(
-            in oklab,
-            var(--glass-bg-dock, var(--glass-bg-resting)),
-            var(--glass-tint-source) var(--glass-tint-strength)
-        );
-        border: 1.5px solid var(--glass-border-dock, var(--glass-border-resting));
         /* THE VISIBLE-EXTENT MORPH — paint-only clip off the ONE plate scalar. Reads
            `--dock-t` (S2: the plate is the sole reader). Transitionally the collapse
            insets are `0px` (the box-size morph drives the extent, shape.css) so this is a
@@ -94,6 +86,56 @@
             (1 - var(--dock-t)) * var(--dock-plate-collapse-inset-block, 0px)
         );
         clip-path: inset(var(--dock-plate-inset-block) var(--dock-plate-inset-inline));
+    }
+
+    /* The two flat surface layers crossfade over the one backdrop lens. The tint is a
+       separate ordinary gradient, so each layer reads one public rung directly and no
+       endpoint is color-mixed with another. */
+    .dock-plate::before,
+    .dock-plate-expanded {
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+    }
+
+    .dock-plate::before {
+        content: "";
+        opacity: calc(1 - var(--dock-expand-t));
+        background:
+            linear-gradient(
+                color-mix(
+                    in oklab,
+                    transparent,
+                    var(--glass-tint-source) var(--glass-tint-strength)
+                ),
+                color-mix(
+                    in oklab,
+                    transparent,
+                    var(--glass-tint-source) var(--glass-tint-strength)
+                )
+            ),
+            var(--dock-plate-collapsed-bg);
+        border: 1.5px solid var(--dock-plate-collapsed-border);
+    }
+
+    .dock-plate-expanded {
+        opacity: var(--dock-expand-t);
+        background:
+            linear-gradient(
+                color-mix(
+                    in oklab,
+                    transparent,
+                    var(--glass-tint-source) var(--glass-tint-strength)
+                ),
+                color-mix(
+                    in oklab,
+                    transparent,
+                    var(--glass-tint-source) var(--glass-tint-strength)
+                )
+            ),
+            var(--dock-plate-expanded-bg);
+        border: 1.5px solid var(--dock-plate-expanded-border);
     }
 
     /* The paper-grain overlay — MOVED off `.glass-dock::after` onto the plate (the grain

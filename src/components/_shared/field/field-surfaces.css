@@ -76,9 +76,9 @@
        This register adds the SHIPPED keyed two-stop directional rim (the bright top/
        right catch-light + the faint warm bottom/left under-shadow, `--glass-key` upper-
        right) so the control reads as a lifted glass plate with a defined warm edge over
-       the field. ONE register, ≥8 consumers (Select trigger + Input/Textarea/NumberField
-       pill + Checkbox/Radio + Switch track + Combobox anchor) — the DRY bar cleared by
-       construction. Composed (not re-declared): the rim is the SAME `--glass-rim-top`/
+       the field. ONE register shared by the Select trigger and sibling form controls —
+       the DRY bar cleared by construction. Composed (not re-declared): the rim is the
+       SAME `--glass-rim-top`/
        `--glass-rim-bottom` pair `.glass-capsule` reads, so `--glass-key` re-points BOTH
        the capsule and the control edge from ONE handle (cel coherence). */
     .glass-control-edge {
@@ -91,50 +91,65 @@
        rule). The rim travels with the control on the SHARED bezier (the pill/control-
        surface already transition box-shadow on `--ease-standard`). */
 
-    /* ── The menu plate WARM FLOOR + α-drop (the un-gray amplifier) ──
-       The floating recipe (`.glass-floating`, ladder.css) composes
-       `color-mix(--glass-bg-floating, --glass-tint-source --glass-tint-strength)`,
-       and `--glass-tint-strength` floors at 0% at calm rest — so the menu plate is
-       near-gray-flat. RE-POINT the menu fill to compose the SHIPPED warm-capsule floor
-       (`--glass-capsule-warm` at `--glass-capsule-warm-floor`, the proven meanChroma
-       ≥ 0.02 source — the SAME token the tab capsule reads, DRY) ON TOP of the floating
-       tint, AND drop the plate α so the warmed source + the portal field TRANSMIT and
-       give real L-variance (the menu is warm GLASS, never an opaque cream slab). The
-       six-layer rim/blur/shadow composite is UNTOUCHED — only the FILL admit changes. */
+    /* Keep the plate's compatible base, adaptive tint, and warm capsule floor as
+       separate flat paint layers; the existing rim, blur, and shadow stack remains
+       authoritative. */
     [data-slot="select-content"],
     [data-slot="combobox-list"] {
-        /* The α-drop seam: a consumer can re-solidify via `--select-plate-alpha: 1`.
-           Default 0.90 (light) drops the ~0.80α floating base to ~0.72 effective (the
-           amendment's transmit target) so the warmed source + the portal field show
-           through while the plate keeps body. The dark arm keeps more body (see .dark
-           below). The combobox list is the SAME overlay-family warm-glass plate
-           (DRY — one warm-floor register for both portalled pickers). */
+        /* Select plate alpha seam; consumers may re-solidify at 1. */
         --select-plate-alpha: 0.9;
-        background: color-mix(
-            in oklab,
-            color-mix(
-                in oklab,
-                var(--glass-bg-floating-tinted, var(--glass-bg-floating)),
-                var(--glass-capsule-warm) var(--glass-capsule-warm-floor)
+        background:
+            linear-gradient(
+                color-mix(
+                    in oklab,
+                    transparent,
+                    var(--glass-capsule-warm) var(--glass-capsule-warm-floor)
+                ),
+                color-mix(
+                    in oklab,
+                    transparent,
+                    var(--glass-capsule-warm) var(--glass-capsule-warm-floor)
+                )
             ),
-            transparent calc((1 - var(--select-plate-alpha)) * 100%)
-        );
-        /* the cartoon weight — the SHIPPED `--shadow-cartoon-lg` warm cel stamp UNDER
-           the floating elevation so the panel reads as a physical card lifted off the
-           page. Composed onto the floating box-shadow stack via the plate's own rule
-           (the floating tier's `--glass-material-rim` + shadows stay; this ADDS the
-           cartoon under-stamp). Static, PRM-immune. */
+            linear-gradient(
+                color-mix(
+                    in oklab,
+                    transparent,
+                    var(--glass-tint-source) var(--glass-tint-strength)
+                ),
+                color-mix(
+                    in oklab,
+                    transparent,
+                    var(--glass-tint-source) var(--glass-tint-strength)
+                )
+            ),
+            color-mix(
+                in srgb,
+                var(--card)
+                    calc(
+                        (1 - (1 - var(--glass-opacity-floating))
+                            * var(--glass-level))
+                            * var(--select-plate-alpha) * 100%
+                    ),
+                transparent
+            );
+        /* Add the static cartoon under-stamp beneath the floating stack. */
         box-shadow:
             var(--glass-material-rim), var(--glass-under-shadow-vivid),
             var(--glass-shadow-floating), var(--shadow-cartoon-lg);
     }
     .dark [data-slot="select-content"],
     .dark [data-slot="combobox-list"] {
-        /* dark glass needs more body — the warm field reads as a glow band, not a wash
-           lost in near-black; keep the fill nearly solid so the dark menu has presence.
-           PLAIN per-mode arm (not a light-dark() fragment — the inset-shadow trap, and
-           the box-shadow above carries no inset leg but the discipline holds). */
+        /* Plain dark arm; keep more body without a light-dark() fragment. */
         --select-plate-alpha: 0.94;
+    }
+    @media (prefers-reduced-transparency: reduce) {
+        [data-slot="select-content"],
+        [data-slot="combobox-list"],
+        .dark [data-slot="select-content"],
+        .dark [data-slot="combobox-list"] {
+            --select-plate-alpha: 1;
+        }
     }
 
     /* ── .glass-field-portal — the portal-local warm field (route identity) ──

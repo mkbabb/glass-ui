@@ -315,42 +315,25 @@
     --glass-bg-resting:  color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-resting)) * var(--glass-level)) * 100%), transparent);
     --glass-bg-floating: color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-floating)) * var(--glass-level)) * 100%), transparent);
     --glass-bg-overlay:  color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-overlay)) * var(--glass-level)) * 100%), transparent);
-    /* The dock bg ALSO rides the oklab tint seam (amendment): the same
-       `color-mix(in oklab, …, --glass-tint-source --glass-tint-strength)` wrapper
-       the rungs reach for, ZERO-delta at `--glass-tint-strength: 0%` — so the
-       adaptive darken can reach the dock (the G2 over-light surface) without a
-       second hand-rolled recipe.
-
-       note — this `:root`-baked oklab tint IS the
-       substitution trap the `@utility glass-fill` HOME (glass/surfaces.css, R9) kills:
-       the outer tint here resolves --glass-tint-source/-strength at `:root` (0%), so a
-       descendant `.glass-dock` that re-points the tint under the bright bucket does
-       NOT re-tint through this token. The dock/shell/morph surfaces already escape it by
-       composing the element-level oklab tint AT the element (dock/shell.css,
-       dock/morph.css) — the applied `glass-fill` shape. De-tinting this `:root` token
-       onto the plain opacity footprint is the sibling-gate-coordinated atomic step
-       (proof:dialog-glass DG1 pins `--glass-bg-dialog` to the same wrapper form). */
-    --glass-bg-dock:     color-mix(in oklab, color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-dock)) * var(--glass-level)) * 100%), transparent), var(--glass-tint-source) var(--glass-tint-strength));
+    /* Plain opacity footprints: component surfaces own adaptive tint as a separate
+       flat paint layer, so a root-time zero-strength substitution cannot swallow a
+       descendant tint override or recreate a nested endpoint during composition. */
+    --glass-bg-dock:     color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-dock)) * var(--glass-level)) * 100%), transparent);
     --glass-bg-chassis:  color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-chassis)) * var(--glass-level)) * 100%), transparent);
-    /* The dialog plate bg, composed the SAME oklab-tint-wrapped
-       way the dock self-re-points (so the darken reaches the
-       modal over a bright backdrop without a second hand-rolled recipe). The 0.68
-       opacity is the iOS-27 control-center register (see `--glass-opacity-dialog`).
+    /* The dialog plate keeps the 0.68 iOS-27 control-center opacity register
+       (see `--glass-opacity-dialog`).
        DialogContent.vue re-points the internal `--glass-bg-
        rung` slot onto `--glass-bg-dialog` on the dialog scope (the ONE-DOOR read —
        NOT a `--glass-bg-floating` double-name alias) so the floating edge/rim/under-
        shadow LIFT survives the transparency drop. */
-    --glass-bg-dialog:   color-mix(in oklab, color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-dialog)) * var(--glass-level)) * 100%), transparent), var(--glass-tint-source) var(--glass-tint-strength));
-    /* The bottom-sheet plate bg, composed the SAME oklab-
-       tint-wrapped way `--glass-bg-dialog` is (so the darken + the dark-arm
-       saturate companion reach the see-through sheet without a second hand-rolled
-       recipe — byte-isomorphic to `--glass-bg-dialog`, only the opacity token
-       differs). The α-band probe DECIDED this is genuinely-
+    --glass-bg-dialog:   color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-dialog)) * var(--glass-level)) * 100%), transparent);
+    /* The bottom-sheet plate differs only by its opacity token. The α-band probe
+       DECIDED this is genuinely-
        distinct physics (Δ plate-α 0.21 vs overlay; ΔL 0.10–0.18 over a busy/dark page
        → KEEP). Its LIVE consumer is the Drawer descent gradient (drawer.css), where
        the transmissive crown sinks the `--glass-bg-overlay` fill toward this see-
        through floor across the pull. */
-    --glass-bg-sheet:    color-mix(in oklab, color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-sheet)) * var(--glass-level)) * 100%), transparent), var(--glass-tint-source) var(--glass-tint-strength));
+    --glass-bg-sheet:    color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-sheet)) * var(--glass-level)) * 100%), transparent);
 
     /* ── The recessed WELL rung (value.js P3 ADMIT) ──────────
        A SEATED field register: the `--card` plate stepped a whisper DARKER toward the

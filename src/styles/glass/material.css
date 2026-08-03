@@ -183,119 +183,62 @@
             )
         );
         /* A thin, BOUNDED, pointer-anchored EDGE gleam (not a
-           full-plate central disc that would wash small tiles muddy). The geometry is an
-           EXPLICIT-radius circle bounded by `--glass-specular-size` (36% of the
-           plate) whose falloff reaches `/0` well INSIDE the plate (70%) — a tracked
-           catch-light reading the surface near the lit edge, NEVER a whole-surface
-           wash. The core is genuinely WARM-CREAM (L < 100% so the warm hue survives;
-           an `hsl(40 30% 100%)` would blow out to white). The `--specular-intensity`
-           multiplier drives the layer `opacity`, NOT a per-stop alpha (a
-           registered-`@property` var() nested in an hsl() alpha computes to 0 in
-           Chromium — the cross-engine-safe path); the per-stop alphas are literals so
-           even the lifted hover/active states read as a lens, not a flash. */
-        /* The static rim glint UNIFIED with the pointer catch-light disc on ONE
-           `::before`. TWO background layers compose: (TOP) the EDGE-anchored conic
-           sweep — a warm-cream arc seated static `from 0deg` at the top rim (the
-           `--specular-angle` channel that once tracked the pointer angle was retired at
-           REDUCTION A05-SPECULAR — no live writer remained); (BOTTOM) the live
-           pointer-position centered disc (`--specular-x/y`, still driven by
-           createSpecularWriter). BOTH ride the SAME `--specular-intensity` cohort (the
-           `opacity` below) + `plus-lighter` blend + warm-cream core `hsl(40 35% 92%)`
-           — NEVER a second color/blend fork. The conic is masked to the rim band only
-           (the `--glass-edge-glint-band` radial mask, scope 3), so the glint is a
-           bounded RIM ring, NOT a whole-plate wash (the D19 bounded-gleam discipline). */
-        /* The catch-light CORE COLOR composes the per-instance
-           chromatic accent. The warm-cream `hsl(40 35% 92%)` core resolves through
-           the ONE `--glass-specular-core` var, OKLab-mixed toward `var(--glass-
-           accent)` at `var(--glass-accent-strength)`. This tints the CORE only — it
-           is the COLOR axis; owns the GEOMETRY (the conic angle-keyed
-           edge-glint + the radial disc + the masks + the `plus-lighter` blend, all
-           BELOW, untouched). Tinting the ONE core tints BOTH the centered disc AND
-           the rim glint (they share the core), so the data hue reads at the glint
-           where the pointer grazes — the data-keyed colored catch-light. At
-           `--glass-accent-strength: 0%` + `--glass-accent: transparent` (the
-           `@property` defaults) the mix === `hsl(40 35% 92%)` byte-identical (the
-           warm-cream floor). Each gradient stop reproduces its original alpha via
-           `color-mix(in srgb, <core> N%, transparent)` (=== `<core> / 0.NN`),
-           so the geometry + falloff is byte-identical at rest. */
-        /* The iOS-27 backdrop-HUE sample seam (the 2nd of the
-           ≤2 chromatic pairs, beside). —
-           ONE hue channel, ONE writer: the seam reads `--glass-ambient-hue` (the REAL
-           observer write — `useGlassBackdropLuminance` writes a sampled `oklch()` modal
-           hue there, tokens/glass.css §), NOT the never-written
-           `--glass-backdrop-hue` (no observer writes it).
-           So a dock/card catch-light picks up the field hue SUB-PERCEPTUALLY over a live
-           aurora WHERE THE OBSERVER IS WIRED, at the bounded `--glass-ambient-strength`
-           (the companion write-strength knob the observer's target owns). NEUTRAL BY
-           DEFAULT — the `--glass-ambient-hue` registered initial `transparent` +
-           `--glass-ambient-strength` initial `0%` make the OUTER mix
-           `color-mix(in oklab, X, transparent 0%) === X` byte-identical, so an unwired
-           surface reads the warm-cream core exactly (the REFERENCE FENCE: no chromatic
-           pickup until the observer writes the hue). The REST hairline (the `box-shadow`
-           below) reads the RAW neutral `hsl(40 35% 92%)` — NOT this core — so the
-           RESTING hairline is NEVER chromatic (prismatic reserved). */
+           full-plate central disc that would wash small tiles muddy). The geometry is a
+           dimension-normalized footprint bounded by `--glass-specular-size` (36% on
+           each gradient-box axis, an `ellipse` because `circle <percentage>` is invalid
+           and dropped the whole layer) whose falloff reaches `/0` well INSIDE the plate
+           (70%) — a tracked catch-light reading the surface near the lit edge, NEVER a
+           whole-surface wash. The core is genuinely WARM-CREAM (L < 100% so the warm hue
+           survives; an `hsl(40 30% 100%)` would blow out to white). The
+           `--specular-intensity` multiplier drives the layer `opacity`, NOT a per-stop
+           alpha (a registered-`@property` var() nested in an hsl() alpha computes to 0 in
+           Chromium — the cross-engine-safe path).
+
+           TWO layers, ONE ink: the static top-seated rim glint (conic, masked to the rim
+           band below) + the live pointer-position disc (`--specular-x/y`, radial). The
+           ink is a SINGLE-LEVEL oklab mix — warm cream toward the consumer data hue —
+           because a color-mix endpoint that is itself a color-mix drops the whole
+           declaration in Safari. That is also why the layer alpha rides the cream
+           endpoint instead of a per-stop `color-mix(<core>, transparent)`, which would
+           re-nest it. At the resting `--glass-accent-strength: 0%` the mix is
+           `hsl(40 35% 92% / 0.55)` byte-identical — the warm-cream floor. */
         --glass-specular-core: color-mix(
             in oklab,
-            color-mix(
-                in oklab,
-                hsl(40 35% 92%),
-                var(--glass-accent) var(--glass-accent-strength)
-            ),
-            var(--glass-ambient-hue) var(--glass-ambient-strength)
+            hsl(40 35% 92% / 0.55),
+            var(--glass-accent) var(--glass-accent-strength)
         );
         background:
-            /* static top-seated rim glint (the --specular-angle channel retired
-               at REDUCTION A05-SPECULAR — no live writer remained) */
             conic-gradient(
                 from 0deg at 50% 50%,
                 transparent 0deg,
-                color-mix(in srgb, var(--glass-specular-core) 55%, transparent) 18deg,
+                var(--glass-specular-core) 18deg,
                 transparent 60deg,
                 transparent 360deg
             ),
             radial-gradient(
-                circle var(--glass-specular-size, 36%) at var(--specular-x, 50%)
+                ellipse var(--glass-specular-size, 36%)
+                    var(--glass-specular-size, 36%) at var(--specular-x, 50%)
                     var(--specular-y, 50%),
-                color-mix(in srgb, var(--glass-specular-core) 50%, transparent) 0%,
+                var(--glass-specular-core) 0%,
                 transparent 70%,
                 transparent 100%
             );
-        /* The resting NEUTRAL specular HAIRLINE (the read-carrier
-           at the calmer blur). demoted the blur ladder (quiet/resting → 8px → 7px), so a
-           demoted plate needs a thin bright rim to still read as GLASS at rest. This
-           inset warm-cream ring FOLLOWS the rounded box (`border-radius: inherit`) and
-           composites `plus-lighter` with the disc/conic above (a bright additive edge).
-           It is NEUTRAL — the raw `hsl(40 35% 92%)`, NEVER the `--glass-specular-core`
-           (which carries the accent + backdrop-hue) — so the resting hairline is never
-           chromatic (the REFERENCE FENCE; prismatic reserved). It is a STATIC
-           paint (no transition, no @keyframes → `proof:no-layout-animation` + the
-           0-idle-track discipline hold; the interaction transition stays scoped to the
-           :hover/:active block below). It is the SUPPLEMENTARY rim beside the primary
-           `--glass-edge-light` box-shadow rim — the two carry the demoted-blur read. */
+        /* Static neutral hairline: raw warm cream, no accent/ambient pickup or
+           animation track. It supplements the primary edge at the calmer blur. */
         box-shadow: inset 0 0 0 var(--glass-specular-hairline-width, 0.75px)
             color-mix(
                 in srgb,
                 hsl(40 35% 92%) var(--glass-specular-hairline-ink, 70%),
                 transparent
             );
-        /* The `::before` opacity gates the disc + conic (via `--specular-intensity`) AND
-           this rest hairline. A rest FLOOR keeps the neutral hairline lit at rest (the
-           read-carrier) while the interaction lift still rides `--specular-intensity`
-           (hover 0.10 / active 0.16 both clear the floor). `--glass-specular-rest-
-           hairline` (0.07) is a low whisper — at this floor the interaction disc/conic
-           stay sub-perceptual (well under the muddy ceiling), so it reads as a
-           rim hairline, not a center wash. */
+        /* The 0.07 rest floor lights the hairline; hover/active clear it. */
         opacity: max(
             var(--specular-intensity, 0),
             var(--glass-specular-rest-hairline, 0.07)
         );
-        /* Per-layer masks (the `,`-separated list pairs with the two backgrounds in
-           order): the EDGE conic is masked to the RIM BAND ONLY — transparent across
-           the interior, opaque in the outer `--glass-edge-glint-band` (default 22%) — so
-           the angle-keyed glint reads as a THICKNESS rim, not a center wash; the centered
-           disc keeps its own-radius clip. `mask-image` Baseline 2023-12-07;
-           a non-supporting engine ignores it and the `inset: 0` + in-paint falloff still
-           bound the gleam. */
+        /* The mask layers UNION (they composite into ONE mask for the element — they do
+           not pair with the background layers): the outer `--glass-edge-glint-band` ring
+           that bounds the conic to a THICKNESS rim, plus the disc's own-radius clip. */
         mask-image:
             radial-gradient(
                 circle closest-side at 50% 50%,
@@ -304,7 +247,8 @@
                 black 100%
             ),
             radial-gradient(
-                circle var(--glass-specular-size, 36%) at var(--specular-x, 50%)
+                ellipse var(--glass-specular-size, 36%)
+                    var(--glass-specular-size, 36%) at var(--specular-x, 50%)
                     var(--specular-y, 50%),
                 black 0%,
                 black 60%,

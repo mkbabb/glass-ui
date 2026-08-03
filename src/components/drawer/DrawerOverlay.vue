@@ -3,7 +3,10 @@
 // The scrim utility classes are PRESERVED byte-for-byte; only the underlying
 // component identity changes (vaul → reka). The `showOverlay:false` live-behind
 // opt-out is the content's `v-if` over this overlay (no paint, page-interactive).
-import { DialogOverlay as RekaDialogOverlay } from "reka-ui";
+import {
+    DialogOverlay as RekaDialogOverlay,
+    injectDialogRootContext,
+} from "reka-ui";
 import { type HtmlHTMLAttributes, onBeforeUnmount, ref, watch } from "vue";
 import { cn } from "../_shared/class-names";
 import { useOptionalDrawerSnapContext } from "./composables/drawerSnapContext";
@@ -15,6 +18,7 @@ export interface DrawerOverlayProps {
 
 const props = defineProps<DrawerOverlayProps>();
 
+const dialogRoot = injectDialogRootContext();
 const snapContext = useOptionalDrawerSnapContext();
 const overlayAnchorEl = ref<HTMLElement | null>(null);
 let registeredScrim: HTMLElement | null = null;
@@ -43,6 +47,7 @@ onBeforeUnmount(() => {
        `data-stage-immersive` is gated on (Drawer.vue). Its radius never ramps with
        the detent scalar. -->
     <RekaDialogOverlay
+        v-if="dialogRoot?.modal.value"
         v-bind="{
             forceMount: props.forceMount,
             inert: snapContext && !snapContext.open.value ? '' : undefined,
@@ -57,4 +62,21 @@ onBeforeUnmount(() => {
     >
         <span ref="overlayAnchorEl" hidden />
     </RekaDialogOverlay>
+    <div
+        v-else-if="dialogRoot && (props.forceMount || dialogRoot.open.value)"
+        v-bind="{
+            inert: snapContext && !snapContext.open.value ? true : undefined,
+        }"
+        data-stage-scrim
+        :data-state="dialogRoot.open.value ? 'open' : 'closed'"
+        style="pointer-events: none"
+        :class="
+            cn(
+                'fixed inset-0 z-overlay [backdrop-filter:var(--glass-blur-wash)]',
+                props.class,
+            )
+        "
+    >
+        <span ref="overlayAnchorEl" hidden />
+    </div>
 </template>
