@@ -18,8 +18,7 @@ import {
     copyStyleAssets,
     foldSfcBundle,
     inlineFonts,
-    injectWebkitBackdrop,
-    injectWebkitBackdropFile,
+    normalizeShippedBackdropPairs,
     minifyStyleAssets,
     collectStyleClosure,
     type StyleClosure,
@@ -182,8 +181,11 @@ export function publishStyleAssets(): Plugin {
                 foldSfcBundle(repositoryRoot, distStyles);
                 await emitComponentUtilities(repositoryRoot, distStyles, closure);
                 inlineFonts(srcFonts, distStyles, distComponents);
-                injectWebkitBackdrop(distStyles, distComponents);
-                injectWebkitBackdropFile(resolve(outputRoot, "glass-ui.css"));
+                normalizeShippedBackdropPairs(
+                    distStyles,
+                    distComponents,
+                    resolve(outputRoot, "glass-ui.css"),
+                );
                 minifyStyleAssets(distStyles, distComponents);
                 stageTypesAndRelays(outputRoot);
                 generateComponentStyles(outputRoot, closure.orderedCssSources);

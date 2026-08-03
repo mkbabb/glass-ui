@@ -107,7 +107,7 @@ const chapterBody: Record<string, string> = {
         <!-- ════ The PILL material (glass) ════ -->
         <StorySection
             heading="Pill — the glass material (default)"
-            blurb="A quiet glass track with one selected capsule. The measured capsule owns its fill, rim, refraction, glide, and transient travel squish; at rest it fits its slot at scale 1."
+            blurb="A quiet glass track with one selected capsule. The measured capsule owns its fill, rim, glide, and transient travel squish; at rest it fits its slot at scale 1."
         >
             <div
                 class="glass-card flex flex-col gap-4 rounded-[var(--radius-card)] p-5"

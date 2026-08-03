@@ -484,7 +484,7 @@ export const CATEGORIES: Category[] = [
                 "substrates",
                 "glass-material",
                 "Glass Material",
-                "The unified glass-material grammar (moving-specular + edge-rim from one mixin) plus four progressively-enhanced SOTA folds — convex-lens refract, squircle, chromatic edge-dispersion, adaptive tint — each over a working fallback.",
+                "The unified glass-material grammar (moving-specular + edge-rim from one mixin) plus three progressively-enhanced SOTA folds — squircle, chromatic edge-dispersion, adaptive tint — each over a working fallback.",
                 {
                     background: "aurora",
                     hero: true,

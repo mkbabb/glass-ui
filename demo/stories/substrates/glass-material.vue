@@ -1,8 +1,8 @@
 <script setup lang="ts">
 // The unified glass-material matrix. Every named band surface (the five ladder
 // rungs + card + the floating/overlay registers Dialog/Sheet/Popover compose)
-// reads the SAME catch-light + rim from one `.glass-material` mixin; the four
-// SOTA folds (refraction, squircle, chromatic fringe, adaptive tint) ride that
+// reads the SAME catch-light + rim from one `.glass-material` mixin; the three
+// SOTA folds (squircle, chromatic fringe, adaptive tint) ride that
 // grammar behind capability checks and tokens. The matrix is staged over a
 // shipped high-frequency Aurora backdrop so the specular + rim + folds read
 // against busy color (glass does not read on flat cream).
@@ -278,26 +278,6 @@ const ACCENT_STRENGTH = "48%";
                         <span class="text-caption text-muted-foreground"
                             >unset · warm-cream</span
                         >
-                    </div>
-                </div>
-            </ShowcaseFrame>
-        </StorySection>
-
-        <StorySection
-            label="Edge-lens rim (Chromium, progressively enhanced)"
-            blurb="Add .glass-lens to a glass panel and the backdrop bends and concentrates at the rim — an edge-lens effect that deepens on press. Non-Chromium engines paint the blur base alone."
-        >
-            <ShowcaseFrame pad="lg" tier="field">
-                <div class="flex flex-wrap gap-6">
-                    <div
-                        class="glass-floating glass-lens flex h-28 w-44 items-center justify-center rounded-card text-small font-medium"
-                    >
-                        .glass-lens
-                    </div>
-                    <div
-                        class="glass-floating flex h-28 w-44 items-center justify-center rounded-card text-small font-medium"
-                    >
-                        blur base (no refract)
                     </div>
                 </div>
             </ShowcaseFrame>

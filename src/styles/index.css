@@ -71,8 +71,7 @@
  *                              A `.glass-specular-track` opt-in paints
  *                              a masked radial catch-light tracking the pointer
  *                              (@property-animated, reduced-motion-static, var()
- *                              fallback) + the @supports-gated refraction
- *                              garnish. Loads after glass.css so it composes
+ *                              fallback). Loads after glass.css so it composes
  *                              over the glass tiers.
  *   5. paper.css             — paper underpaint + grain overlay utilities.
  *                              Pairs with (4) for paper-on-glass compositions.
@@ -176,7 +175,6 @@
 @import "./theme.css";
 @import "./glass.css";
 @import "./glass-specular-track.css";
-@import "./glass-refract.css";
 @import "./paper.css";
 @import "../components/dark-mode-toggle/dark-mode-toggle.css";
 @import "../components/header-ribbon/styles.css";

@@ -433,12 +433,13 @@ export function copyStyleAssets(
     return { ...copyClosure(root, closure, outputRoot), closure };
 }
 
+/** Every `.css` under each root — a root may be a directory to walk or a single file. */
 function cssFilesUnder(...roots: string[]): string[] {
-    return roots.flatMap((root) => filesUnder(root).filter((path) => path.endsWith(".css")));
-}
-
-function cssFile(path: string): string[] {
-    return existsSync(path) && path.endsWith(".css") ? [path] : [];
+    return roots.flatMap((root) => {
+        if (!existsSync(root)) return [];
+        if (statSync(root).isFile()) return root.endsWith(".css") ? [root] : [];
+        return filesUnder(root).filter((path) => path.endsWith(".css"));
+    });
 }
 
 /**
@@ -507,9 +508,12 @@ export function inlineFonts(srcFonts: string, ...cssRoots: string[]): void {
  * after the cpSync, SFC fold, utility emit, and font inline so it covers the
  * complete shipped cascade. Idempotent for an already canonical pair.
  *
- * X4 (value.js A6 + L16) — the shipped policy is that every backdrop declaration
- * carries both forms, including `backdrop-filter: none` resets.
- * The lexical minifier remains prefix-blind and preserves the normalized pair.
+ * WHY BOTH LEGS, EMITTED AT BUILD: Safari ≤17 implements the webkit-only form, so
+ * the shipped policy is that every backdrop declaration carries both — including
+ * `backdrop-filter: none` resets — rather than a source-side `@supports` restatement
+ * (the collapsed capability ladder, `glass/a11y-fallback.css`). The lexical minifier
+ * is prefix-blind and preserves the normalized pair; the shipped bytes are asserted
+ * by G-GLASS-HAS-FROST arm (b) in `tests/styles/backdrop-prefix-normalization.test.ts`.
  */
 export function normalizeBackdropFilterPairs(css: string): string {
     const stylesheet = postcss.parse(css);
@@ -569,19 +573,15 @@ export function normalizeBackdropFilterPairs(css: string): string {
     return stylesheet.toString();
 }
 
-export function injectWebkitBackdrop(...cssRoots: string[]): void {
-    for (const path of cssFilesUnder(...cssRoots)) {
+/**
+ * normalizeShippedBackdropPairs — apply the pass in place over the emitted CSS.
+ * Each path is a directory (walked for `.css`) or a single `.css` file.
+ */
+export function normalizeShippedBackdropPairs(...paths: string[]): void {
+    for (const path of cssFilesUnder(...paths)) {
         const src = readFileSync(path, "utf-8");
         const out = normalizeBackdropFilterPairs(src);
         if (out !== src) writeFileSync(path, out, "utf-8");
-    }
-}
-
-export function injectWebkitBackdropFile(path: string): void {
-    for (const file of cssFile(path)) {
-        const src = readFileSync(file, "utf-8");
-        const out = normalizeBackdropFilterPairs(src);
-        if (out !== src) writeFileSync(file, out, "utf-8");
     }
 }
 

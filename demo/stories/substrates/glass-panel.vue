@@ -5,9 +5,8 @@
 // five-rung `.glass-{wash,quiet,resting,floating,overlay}` ladder, shown BARE (composing
 // the library CLASSES directly, not a `<GlassPanel>` component) over a LIVE aurora field
 // (glass on craft — apple.com's web has no glass-materials gallery; ours floats over a
-// breathing field, research/apple-glass.md §3.1). Two modifier AXES toggle live: the
-// `.glass-deep` DEPTH axis (the apple-home-nav 16-20px register) and the `.glass-lens`
-// REFRACTION axis (the OS-grade squircle feDisplacementMap the web SOTA never shipped).
+// breathing field, research/apple-glass.md §3.1). One modifier AXIS toggles live: the
+// `.glass-deep` DEPTH axis (the apple-home-nav 16-20px register).
 //
 // A developer reading this beside /display/card sees the binary answer to "which glass
 // do I reach for?": a bare surface → a `.glass-{rung}` MATERIAL; a content container →
@@ -28,26 +27,23 @@ const rungs = [
     { cls: "glass-overlay", label: "overlay", blurb: "~0.95α — modal-over-modal" },
 ] as const;
 
-// The two modifier AXES, toggled live (multi-select chips — each is an orthogonal
-// decoration ON the rungs, not a register of its own). `.glass-deep` re-points the blur
-// to the deep family (the maximal-iOS depth tier); `.glass-lens` adds the squircle
-// feDisplacementMap refraction (Chromium-only — WebKit degrades to the blur base, the
-// correct cross-engine degrade per research/apple-ios27.md §6).
+// The modifier AXIS, toggled live (a chip — an orthogonal decoration ON the rungs,
+// not a register of its own). `.glass-deep` re-points the blur to the deep family
+// (the maximal-iOS depth tier).
 const axes = ref<string[]>([]);
 const deepOn = () => axes.value.includes("deep");
-const lensOn = () => axes.value.includes("lens");
 </script>
 
 <template>
     <StoryPage>
         <StorySection
             label="Glass MATERIALS — the five-rung ladder"
-            blurb="Compare five levels of glass presence over a living field. Toggle deeper material and lens refraction to see how the same surface gains weight without becoming a content card."
+            blurb="Compare five levels of glass presence over a living field. Toggle deeper material to see how the same surface gains weight without becoming a content card."
         >
             <div class="flex flex-wrap items-center gap-4 mb-6">
-                <span class="text-caption text-muted-foreground">axes:</span>
-                <!-- The two modifier axes — multi-select chips (orthogonal
-                     decorations ON the ladder, composed live onto every rung). -->
+                <span class="text-caption text-muted-foreground">axis:</span>
+                <!-- The modifier axis — a chip (an orthogonal decoration ON the
+                     ladder, composed live onto every rung). -->
                 <ToggleGroup
                     v-model="axes"
                     type="multiple"
@@ -55,7 +51,6 @@ const lensOn = () => axes.value.includes("lens");
                     aria-label="Glass modifiers"
                 >
                     <ToggleGroupItem value="deep">.glass-deep</ToggleGroupItem>
-                    <ToggleGroupItem value="lens">.glass-lens</ToggleGroupItem>
                 </ToggleGroup>
             </div>
 
@@ -67,16 +62,12 @@ const lensOn = () => axes.value.includes("lens");
                     class="relative z-10 grid grid-cols-1 gap-4 p-8 sm:grid-cols-2 lg:grid-cols-5"
                 >
                     <!-- Each specimen is a BARE glass material — the rung CLASS
-                         composed with the live-toggled .glass-deep / .glass-lens
-                         axes. No <GlassPanel> component; this IS the material. -->
+                         composed with the live-toggled .glass-deep axis. No
+                         <GlassPanel> component; this IS the material. -->
                     <div
                         v-for="rung in rungs"
                         :key="rung.cls"
-                        :class="[
-                            rung.cls,
-                            { 'glass-deep': deepOn(), 'glass-lens': lensOn() },
-                            'rounded-card p-6',
-                        ]"
+                        :class="[rung.cls, { 'glass-deep': deepOn() }, 'rounded-card p-6']"
                     >
                         <div class="flex flex-col gap-2">
                             <code class="fira-code text-mono-small text-foreground">

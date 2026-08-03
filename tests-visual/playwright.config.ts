@@ -120,19 +120,11 @@ export default defineConfig({
             // scopes it so the chromium-only π corpus does not re-run on WebKit. No ANGLE
             // launch flags (WebKit drives its own WebGL/Metal path); the cross-engine
             // sentinel + the no-flash assert are the binding truth. The live real-paint
-            // subset is `local`-tagged (a real GPU + demo); the context-event + lens-degrade
-            // SOURCE facts run headless-WebKit in CI (the proof:visual-runner split — CI
-            // proves the WIRING, the local WebKit run proves the PAINT).
+            // subset is `local`-tagged (a real GPU + demo); the context-event SOURCE facts
+            // run headless-WebKit in CI (the proof:visual-runner split — CI proves the
+            // WIRING, the local WebKit run proves the PAINT).
             name: "webkit",
-            testMatch: [
-                "safari-webgl.spec.ts",
-                "aurora-swraster.spec.ts",
-                // BJ.W-STATIC-HYGIENE — the `@supports` gate-lie lock. WebKit is the
-                // engine the lie lives on, so the lock is meaningless without this row;
-                // it drives its own recorded context (the video path — WebKit screenshots
-                // are backdrop-filter-blind) and needs no demo server.
-                "refract-lens-never-sharper.spec.ts",
-            ],
+            testMatch: ["safari-webgl.spec.ts", "aurora-swraster.spec.ts"],
             use: {
                 ...devices["Desktop Safari"],
                 viewport: { width: 1280, height: 800 },

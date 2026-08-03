@@ -130,8 +130,9 @@
    webkit-only form (Safari ≤17) — years pre-target (target = current Chrome +
    current Safari). `backdrop-filter` is Baseline on that set, and the real
    webkit path is the BUILD-EMITTED `-webkit-backdrop-filter:` prefix pair
-   (`vite.style-assets.ts`), asserted in the shipped dist by
-   `proof:webkit-backdrop`, NOT a live source-side restatement. The
+   (`vite.style-assets.ts`), asserted over the shipped dist by G-GLASS-HAS-FROST
+   arm (b) (`tests/styles/backdrop-prefix-normalization.test.ts`), NOT a live
+   source-side restatement. The
    `@supports not selector(has(*))` `.is-focus-within` arm collapsed
    too — `:has()` is Chrome 105+/Safari 15.4+ AND its `Card.vue` toggler never
    existed on disk (an orphan behind a lying comment); `.glass-card:has(:focus-

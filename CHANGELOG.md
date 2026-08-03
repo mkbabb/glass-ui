@@ -1,5 +1,18 @@
 # Changelog
 
+## 8.0.0 (unreleased — accruing; `MIGRATION.md` §8.0.0 is the complete break list)
+
+### Removed — the `.glass-lens` refraction, entire
+
+`armGlassRefract` and `supportsBackdropRefract` are gone from the root barrel with no
+replacement, and `src/styles/glass-refract.css` (the baked `#glass-refract`
+`feDisplacementMap` data-URI, ~2.3 KB shipped to every consumer) is deleted from the
+`/styles` cascade along with the `.glass-lens` class it declared. The composite
+rasterized on Chromium alone, WebKit returned true to the `@supports` probe and then
+dropped the whole value at paint, and the runtime latch that worked around that lie
+required a per-app bootstrap call. Consumers delete the `armGlassRefract()` call and
+drop `.glass-lens`; the `.glass-{rung}` blur+tint base is unchanged.
+
 ## 7.0.0 (2026-07-17)
 
 ### Export-map delta (the authoritative 6.x → 7.0 migration surface)

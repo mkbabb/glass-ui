@@ -82,6 +82,23 @@ still differ by brightness / dark-arm recipe / role — not merged materials. Th
 saturate values (`1.4`/`1.6`) are provisional current values pending a structured paint
 comparison, not ratified identity. No token-name or API change from this restatement.
 
+**The `.glass-lens` refraction is DELETED — the class, the filter asset, and both
+root exports.** `armGlassRefract()` and `supportsBackdropRefract()` are removed from
+`@mkbabb/glass-ui` with NO replacement, and `src/styles/glass-refract.css` (the baked
+`#glass-refract` `feDisplacementMap` data-URI) no longer ships in the `/styles`
+cascade. The composite only ever rasterized on Chromium, WebKit lied to the `@supports`
+probe, and the runtime latch that worked around the lie carried a per-app bootstrap
+cost for a garnish half the web never painted. Delete the `armGlassRefract()` call at
+your app root and drop `.glass-lens` from any element that carries it; the surviving
+`.glass-{rung}` blur+tint base is what those surfaces already painted everywhere
+except Chromium, so the lived read is unchanged off-Chromium.
+
+| Removed at 8.0 | Replacement |
+| --- | --- |
+| `armGlassRefract` (root barrel) | none — delete the call |
+| `supportsBackdropRefract` (root barrel) | none — no capability branch remains |
+| `.glass-lens` class + `src/styles/glass-refract.css` | the `.glass-{wash,quiet,resting,floating,overlay}` base |
+
 ## 7.0.0 (2026-07-17)
 
 The packed public map changes from 82 to 74 export keys. It removes
@@ -3076,6 +3093,11 @@ the un-gated blur+tint base (PRESERVED — see the runtime-latch note below, whi
 former `@supports` gate).
 
 ### `.glass-lens` Chromium refraction now rides a runtime latch — arm it once (BJ.W-REFRACT-LATCH)
+
+> **VOID at 8.0.0.** The latch, `armGlassRefract()`, `supportsBackdropRefract()`, and
+> `.glass-lens` itself are DELETED — see §8.0.0. The "required consumer action" below is
+> retracted: there is nothing to arm. This section is retained only as the record of what
+> the 8.0 removal removes.
 
 `.glass-lens`'s Chromium `backdrop-filter: url(#…)` composite no longer engages via
 `@supports (backdrop-filter: url("#glass-refract"))` — WebKit 26.5 LIES to that condition (returns
