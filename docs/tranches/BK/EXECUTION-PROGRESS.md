@@ -284,6 +284,29 @@ zero wall-file type errors); the round's two paint deltas for the capture eye: t
 longer overlays the 1.5px rim (arguably more correct), and `[data-held]` now smooths the lerp
 channel by `--duration-fast`.
 
+⊕²³ **ROW-91 DESIGN WAVE VERDICT (2026-08-03, run `wf_17686eab-b01` — the ⊕¹⁵ tri-fold executed in
+full: Fable ∥ Opus DesignSync authoring → fresh-Fable apotheosis → Opus implement → live verify →
+2 challengers → fresh-Fable adjudication; records in `execution/2026-08-03-row91-design/`):**
+CURE-REQUIRED, nothing FALLS. The candidate (committed `138dd6e6`) is verified superlative at the
+core — Bravura-exact METRICS, `spell()` the single spelling authority (glyph and aria-label cannot
+diverge), the sp unit system, ledger containment + auto-clef proven over the full range, token-
+named spring motion, the zero-JS reel "one sign away from correct". TEN exact cures dispatched:
+(1) strike phase inverted (fires at 1−φ, crosses at φ) + direction-aware gate; (2) progress ink +
+seal re-homed off `glass-resting`'s owned pseudos (the grain-overlay SOLE-writer collision — and
+the proposed REPO-LEVEL gate is ADOPTED: no component stylesheet declares `::before/::after` on an
+element bearing a `glass-*` rung class, minted at the gate recount); (3) beams anchored to stems
+(0.57 attach offset, sign-flipped down-stem); (4) glyph subpath winding normalized (4/7 glyphs
+punch holes — F-clef ball, G-clef eye, sharp/natural bars) + interior-winding gates; (5) the five
+public tokens freed from on-element declarations (dead to ancestor overrides today);
+(6) staff furniture to window space (cures reel-dry >1354px + 62px empty staff + 31% folio fill);
+(7) sealed means stopped (strikes pause, `aria-busy` honest); (8) reel guttered at the clef +
+edge masks; (9) §11 material honesty — DRIVER DEFAULT under the ratified-defaults doctrine:
+**genuine glass folio** (tint within the ladder's translucent range; the library's identity is
+glass, no paper-pretending-glass middle) — owner may overrule; (10) post-cure verify follow-ups
+(use-clone animation, twin-flash reading, reading-line prominence, strike scope). Adjudicator
+challenge-backs of record: the open-head "defect" REFUTED (stroke-inclusive bboxes match to
+0.01 sp); the hover-envelope objection OVERRULED by spec §0's adjudicated rejection.
+
 ## Φ0 — executable this hour
 
 | # | wave | Φ | state | spec of record | gates |
@@ -307,7 +330,7 @@ channel by `--duration-fast`.
 | # | wave | Φ | state | spec of record | gates |
 |---|---|---|---|---|---|
 | 6 | W-BUILD-COLORMIX | Φ2 | IN-FLIGHT (`code_state=landed-candidate` at `cfc4dffa` — kernel pass-2-CONFIRMED: literal nested color-mix 0 across src, specular resurrected in paint; `evidence_state=captured-pending-Safari` [2026-08-03: the mid-morph t≈0.5 cell CAPTURED via pinned-t + exact numeric linearity 0.38/0.44/0.50 — the sag CURED at `6cad2b7e` and proven dead in paint; accent-invariant specular cell banked; CAPTURE-RECORD.md §discharge; the one Safari cell stays OWNER-GATED (safaridriver)]) | TR#6 → WAVES:23 + GF fold D0 | G-WK-COLORMIX-BUDGET born-RED at the dock morph partial (`src/components/dock/styles/morph.css` — the line coordinate `:125` is DEAD as of 2026-08-03: the file was rewritten and carries zero `color-mix`; locate by content, not line) (+G-WK-BOOT arm; G-CSS-SPLIT acceptance); D0 gates every Safari π |
-| 91 | W-MUSIC-STAFF | Φ2 | IN-FLIGHT (minted at TR ⊕¹⁰, owner word "kept herein and perfected… loading screen"; `code_state=landed-candidate` at `99530df6`; perfection wave RUNNING 2026-08-03 as the Fable∥Opus DesignSync design wave; geometry-first spec adjudicated at adj:P2D — accidental-aware placement, path-length-derived dashes, ppq-required rhythm; `staffGeometry.ts` kernel ships untouched; findings file: `docs/tranches/BK/execution/2026-08-03-row91-design/P2D-ROW91-FINDINGS.md`) | TR ⊕¹⁰ | engraving truth + liquid-weight springs + indeterminate loading mode |
+| 91 | W-MUSIC-STAFF | Φ2 | IN-FLIGHT (`code_state=landed-candidate` at `138dd6e6` — the tri-fold design wave's full rewrite [sp units, Bravura glyphs, spell() authority, beat-native rhythm]; verdict CURE-REQUIRED ⊕²³, ten cures dispatched; `evidence_state=partial` — 9 live cells banked at the design dir, re-verify owed post-cure) | TR ⊕¹⁰ | engraving truth + liquid-weight springs + indeterminate loading mode |
 | 7 | dock-SIGABRT constraint | Φ2 | IN-FLIGHT (`code_state=landed-candidate` 2026-08-03 in working tree — the self-blur arm DELETED +7/−29, backdrop-root diagnosis Fable-CONFIRMED; verdict CURE-REQUIRED with code core STANDING; cures C1–C4 in the consolidated dock/drawer round `wf_cb664a4a-5c4`; record: `docs/tranches/BK/execution/2026-08-03-row7/RECORD.md` + `ADJUDICATION.json`) | TR#7 → RECONCILIATION §2 r3 (`src/components/dock/styles/morph.css` §bloom-from-source decongest — the `.glass-dock[data-morphing]` self-blur `filter` arm; the old `:125-144` coordinate is DEAD, the file was rewritten) | G-NO-STACKED-URL-FILTER (⊕⁵ UNIT CASE, no seat — SE-7; born-RED `PagerDots.vue:493`); design fence on #47 |
 
 ## Φ3
