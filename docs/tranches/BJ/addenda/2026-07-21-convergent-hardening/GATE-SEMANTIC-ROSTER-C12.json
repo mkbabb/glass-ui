@@ -1,0 +1,1044 @@
+{
+  "schemaVersion": 4,
+  "authority": {
+    "head": "0371836dfeeb3b7982250d612f93b5347a1d29d4",
+    "tree": "97b386172a899ef43b686ffbe43263395b3a7744",
+    "supersedesRosterSha256": "40b693f0a59ee9659c5aad6b4715acf96936207bd938669a32471c47c346d6f9",
+    "canonicalBinding": "governedInvariant",
+    "mode": "enabled",
+    "maximumCountedSeats": 60,
+    "semanticClassBinding": "semanticClass",
+    "parentFormation": "GATE-SEMANTIC-ROSTER-C11-CANDIDATE.md"
+  },
+  "counts": {
+    "activeVitest": 48,
+    "hardReservedVitest": 4,
+    "conditionalReservedVitest": 1,
+    "worstCaseCountedSeats": 53,
+    "remainingSeats": 7,
+    "externalEnforcement": 11,
+    "baseProductTooling": 31,
+    "componentBehavior": 17,
+    "preBindingDetectorRedress": 12
+  },
+  "activeVitest": [
+    {
+      "id": "token.graph.published-names-backed",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "Published semantic-token names are unique and every published name has at least one parsed live CSS declaration or Vue class-sink arbitrary-property definition.",
+      "sourcePath": "tests/styles/token-graph.test.ts",
+      "currentRegistration": "backs every published token with a source declaration, without duplicates",
+      "semanticClass": "base-product-tooling",
+      "requiredDetectorRedress": {
+        "phase": "pre-binding",
+        "ownerModel": "Luna x-high",
+        "mechanism": "Collect CSS custom-property declarations through PostCSS. For arbitrary-property definitions, parse Vue SFCs and admit only token literals with a proven bounded syntax path into a template class sink under liveArbitraryWriterGrammar; comments, free strings, unused bindings, templates outside class sinks, and unresolved flows do not count.",
+        "mutations": [
+          "remove the final live class-sink writer while retaining a matching line comment",
+          "move the final writer literal into an unused top-level const",
+          "move the final writer literal into a free string or template comment",
+          "break the identifier path from a writer binding to every template class sink",
+          "duplicate a published semantic name",
+          "remove the final parsed CSS declaration for a published name",
+          "alias cn or computed from the wrong module and require the flow to fail closed",
+          "move the final class-sink writer into an unexported SFC"
+        ]
+      },
+      "liveArbitraryWriterGrammar": {
+        "version": 1,
+        "sourceKind": "vue-sfc",
+        "parsers": [
+          "@vue/compiler-sfc",
+          "typescript"
+        ],
+        "sinks": [
+          "static template class attribute",
+          "v-bind:class expression"
+        ],
+        "admittedLiteralNodes": [
+          "StringLiteral",
+          "NoSubstitutionTemplateLiteral"
+        ],
+        "boundedFlow": [
+          "a literal directly contained by the class expression",
+          "a literal passed through the approved cn class combiner into the class expression",
+          "a literal in a top-level const initializer reached by an identifier from the class expression",
+          "a literal reached through top-level computed and cn wrappers whose returned expression flows to the class expression"
+        ],
+        "reject": [
+          "comments",
+          "free or unused string literals",
+          "unreferenced top-level bindings",
+          "template text outside a class attribute or class binding",
+          "dynamic or unresolved identifiers",
+          "a token-definition dataflow path that crosses a call other than the approved computed and cn wrappers; unrelated sibling calls do not invalidate an otherwise proved path"
+        ],
+        "mutationLaw": "Every admitted token literal must have a parser-proven path to at least one template class sink; severing that path turns the published-name predicate RED.",
+        "approvedBindingIdentities": {
+          "computed": {
+            "module": "vue",
+            "imported": "computed",
+            "aliasesAllowed": true
+          },
+          "cn": {
+            "resolvedSourcePath": "src/components/_shared/class-names.ts",
+            "imported": "cn",
+            "aliasesAllowed": true
+          }
+        },
+        "bindingResolution": "Resolve imported symbol identity through TypeScript module resolution; identifier spelling alone never authorizes a wrapper.",
+        "sourceReachLaw": {
+          "roots": "package runtime entrypoints represented by the exact public-surface roster",
+          "edgeKinds": [
+            "runtime import",
+            "runtime re-export",
+            "Vue component runtime import"
+          ],
+          "rule": "A Vue arbitrary-property writer counts only when its SFC is runtime-reachable from a public package entrypoint; an unexported/dead SFC cannot back a published token.",
+          "mutations": [
+            "move the final writer into an unexported dead SFC",
+            "break the last public runtime edge to the writer SFC while leaving its class sink intact",
+            "retain only a type import to the writer SFC"
+          ]
+        },
+        "currentCarrierCensus": [
+          {
+            "sourcePath": "src/components/dialog/DialogContent.vue",
+            "sink": "contentClass",
+            "flows": [
+              "baseClasses",
+              "sideBaseClasses"
+            ]
+          },
+          {
+            "sourcePath": "src/components/drawer/DrawerFooter.vue",
+            "sink": "template-root-div:v-bind:class",
+            "flows": [
+              "direct-cn-literal"
+            ]
+          },
+          {
+            "sourcePath": "src/components/drawer/DrawerHeader.vue",
+            "sink": "template-root-div:v-bind:class",
+            "flows": [
+              "direct-cn-literal"
+            ]
+          },
+          {
+            "sourcePath": "src/components/popover/PopoverContent.vue",
+            "sink": "contentClass",
+            "flows": [
+              "computed-cn-literal"
+            ]
+          },
+          {
+            "sourcePath": "src/components/select/SelectContent.vue",
+            "sink": "RekaSelectContent:v-bind:class",
+            "flows": [
+              "direct-cn-literal"
+            ]
+          },
+          {
+            "sourcePath": "src/components/toast/Toast.vue",
+            "sink": "RekaToastRoot:v-bind:class",
+            "flows": [
+              "direct-cn-literal"
+            ]
+          },
+          {
+            "sourcePath": "src/components/tooltip/TooltipContent.vue",
+            "sink": "contentClass",
+            "flows": [
+              "computed-cn-literal"
+            ]
+          }
+        ],
+        "currentCarrierCensusRole": "Formation coverage witness for all current carrier shapes and both non-CSS-backed published tokens; the semantic predicate remains at-least-one live backing, so future source movement is allowed only with a freshly proved reachable carrier."
+      }
+    },
+    {
+      "id": "token.graph.alias-acyclic",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "The custom-property alias graph contains no cycle.",
+      "sourcePath": "tests/styles/token-graph.test.ts",
+      "currentRegistration": "contains no custom-property alias cycle",
+      "semanticClass": "base-product-tooling"
+    },
+    {
+      "id": "surface.root.exact",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "The package root runtime export surface is exact.",
+      "sourcePath": "tests/public-surface.spec.ts",
+      "currentRegistration": "keeps the exact root runtime surface",
+      "semanticClass": "base-product-tooling"
+    },
+    {
+      "id": "surface.subpaths.exact",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "Every governed subpath runtime surface is exact.",
+      "sourcePath": "tests/public-surface.spec.ts",
+      "currentRegistration": "keeps exact $subpath runtime surface",
+      "requiredCaseIdentity": {
+        "count": 48,
+        "orderedKeysSha256": "118e091405270a3e1fa2ae9aea24c3805acc1a7a6a087dfd6c247e2f19776252"
+      },
+      "semanticClass": "base-product-tooling"
+    },
+    {
+      "id": "behavior.button.host-icon-default-selector-exclusion",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "A host-sized Button SVG retains its size utility and the owned default-icon selector explicitly excludes size-class children.",
+      "sourcePath": "tests/components/ui/reka-binding-idiom.test.ts",
+      "currentRegistration": "Button: a host-sized icon survives the owned default-icon rule",
+      "semanticClass": "component-behavior",
+      "requiredRegistrationMigration": {
+        "from": "Button: a host-sized icon survives the owned default-icon rule",
+        "to": "Button: a host-sized icon is excluded by the owned default-icon selector"
+      },
+      "requiredDetectorRedress": {
+        "phase": "pre-binding",
+        "ownerModel": "Luna x-high",
+        "mechanism": "Keep the rendered SVG size-class and Button host assertions, parse src/components/button/styles.css with PostCSS, and require the owned default inline-size/block-size rule to use the exact .button > svg:not([class*=\"size-\"]) selector.",
+        "mutations": [
+          "restore an unconditional .button > svg default sizing selector",
+          "change the exclusion to a non-size class attribute",
+          "remove the rendered host size class",
+          "move the exception to a rule that does not own the default inline-size/block-size declarations"
+        ],
+        "excludedAcceptance": "Later effective-cascade and real painted-size ownership remain ordinary/browser acceptance debt; this Vitest semantic seat governs only the rendered class plus the canonical owned default-selector exclusion."
+      }
+    },
+    {
+      "id": "reka.switch.checked-render",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "The checked model reaches the rendered Switch data state.",
+      "sourcePath": "tests/components/ui/reka-binding-idiom.test.ts",
+      "currentRegistration": "Switch: the checked model drives the rendered data-state",
+      "semanticClass": "base-product-tooling"
+    },
+    {
+      "id": "reka.tags-input.value-binding",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "TagsInput item values render through the current value binding and the family root remains present.",
+      "sourcePath": "tests/components/ui/reka-binding-idiom.test.ts",
+      "currentRegistration": "TagsInput: the active item resolves `data-[state=active]` (the `tag=` idiom is gone)",
+      "requiredCaseIdentity": {
+        "keys": [
+          "alpha",
+          "beta"
+        ]
+      },
+      "semanticClass": "base-product-tooling"
+    },
+    {
+      "id": "reka.toast.open-update",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "Toast dismissal reaches the store through update:open and closes the rendered toast.",
+      "sourcePath": "tests/components/ui/reka-binding-idiom.test.ts",
+      "currentRegistration": "Toast: the dismissal rides `onUpdate:open` (NOT the React `onOpenChange`)",
+      "semanticClass": "base-product-tooling"
+    },
+    {
+      "id": "reka.command.search-model",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "The Command input model receives and renders the authored filter term.",
+      "sourcePath": "tests/components/ui/reka-binding-idiom.test.ts",
+      "currentRegistration": "Command: the filter term rides `CommandInput` v-model (NOT `ComboboxRoot v-model:search-term`)",
+      "semanticClass": "base-product-tooling"
+    },
+    {
+      "id": "spring.projection.byte-sync",
+      "owner": "IOS27-MICRO.W-1",
+      "predicate": "Generated spring stops and settle values match every shipped spring token byte-for-byte.",
+      "sourcePath": "tests/composables/motion/springProjection.test.ts",
+      "currentRegistration": "reproduces every shipped spring token and rounded settle byte-for-byte",
+      "requiredCaseIdentity": {
+        "keys": [
+          "smooth",
+          "snappy",
+          "bouncy",
+          "gentle",
+          "dock",
+          "press",
+          "panel",
+          "orb-drop"
+        ],
+        "orderedKeysSha256": "ef2496ddaffbb7ef1a1efba36941c18440b83eb6ba8a7332d193877a7a297f7f"
+      },
+      "semanticClass": "base-product-tooling"
+    },
+    {
+      "id": "spring.projection.peak-overshoot",
+      "owner": "IOS27-MICRO.W-1",
+      "predicate": "Reported peak agrees with the overshoot encoded by every shipped stop sequence.",
+      "sourcePath": "tests/composables/motion/springProjection.test.ts",
+      "currentRegistration": "reports peak as the overshoot the shipped stops encode",
+      "requiredCaseIdentity": {
+        "keys": [
+          "smooth",
+          "snappy",
+          "bouncy",
+          "gentle",
+          "dock",
+          "press",
+          "panel",
+          "orb-drop"
+        ],
+        "orderedKeysSha256": "ef2496ddaffbb7ef1a1efba36941c18440b83eb6ba8a7332d193877a7a297f7f"
+      },
+      "semanticClass": "base-product-tooling"
+    },
+    {
+      "id": "spring.mirror.fixed-point",
+      "owner": "IOS27-MICRO.W-1",
+      "predicate": "Regeneration is a fixed point on the committed spring CSS.",
+      "sourcePath": "tests/composables/motion/springTokenMirror.test.ts",
+      "currentRegistration": "is a fixed point on the committed scheme-spring.css",
+      "semanticClass": "base-product-tooling"
+    },
+    {
+      "id": "spring.mirror.anchor-fail-closed",
+      "owner": "IOS27-MICRO.W-1",
+      "predicate": "Every required generator anchor throws when it stops matching instead of silently skipping.",
+      "sourcePath": "tests/composables/motion/springTokenMirror.test.ts",
+      "currentRegistration": "throws rather than silently skipping when an anchor stops matching",
+      "requiredCaseIdentity": {
+        "keys": [
+          "block-header",
+          "spring-lines",
+          "duration-lines",
+          "mirror-rows",
+          "transition-liquid-spatial"
+        ]
+      },
+      "semanticClass": "base-product-tooling"
+    },
+    {
+      "id": "spring.mirror.header-generated",
+      "owner": "IOS27-MICRO.W-1",
+      "predicate": "The spring header mirror is generated from SPRING_PRESETS.",
+      "sourcePath": "tests/composables/motion/springTokenMirror.test.ts",
+      "currentRegistration": "is generated from SPRING_PRESETS, never hand-written",
+      "semanticClass": "base-product-tooling"
+    },
+    {
+      "id": "spring.mirror.row-bijection",
+      "owner": "IOS27-MICRO.W-1",
+      "predicate": "The spring header contains exactly one correctly ordered row per preset and no orphan row.",
+      "sourcePath": "tests/composables/motion/springTokenMirror.test.ts",
+      "currentRegistration": "carries one row per preset and no orphan rows",
+      "requiredCaseIdentity": {
+        "keys": [
+          "smooth",
+          "snappy",
+          "bouncy",
+          "gentle",
+          "dock",
+          "press",
+          "panel",
+          "orb-drop"
+        ],
+        "orderedKeysSha256": "ef2496ddaffbb7ef1a1efba36941c18440b83eb6ba8a7332d193877a7a297f7f"
+      },
+      "semanticClass": "base-product-tooling"
+    },
+    {
+      "id": "spring.mirror.overshoot-fence",
+      "owner": "IOS27-MICRO.W-1",
+      "predicate": "Every shipped curve remains inside the zero-to-ten-percent overshoot fence.",
+      "sourcePath": "tests/composables/motion/springTokenMirror.test.ts",
+      "currentRegistration": "holds the [0%,10%] overshoot fence on the curve the token ships",
+      "requiredCaseIdentity": {
+        "keys": [
+          "smooth",
+          "snappy",
+          "bouncy",
+          "gentle",
+          "dock",
+          "press",
+          "panel",
+          "orb-drop"
+        ],
+        "orderedKeysSha256": "ef2496ddaffbb7ef1a1efba36941c18440b83eb6ba8a7332d193877a7a297f7f"
+      },
+      "semanticClass": "base-product-tooling"
+    },
+    {
+      "id": "spring.mirror.gentle-critical",
+      "owner": "IOS27-MICRO.W-1",
+      "predicate": "The gentle preset remains exactly critically damped and effectively non-overshooting.",
+      "sourcePath": "tests/composables/motion/springTokenMirror.test.ts",
+      "currentRegistration": "holds gentle's ζ exactly critical — a calm arrival must not overshoot",
+      "semanticClass": "base-product-tooling"
+    },
+    {
+      "id": "glass.blur-tier-order",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "Floating blur remains greater than quiet blur.",
+      "sourcePath": "tests/styles/glass-subtlety.test.ts",
+      "currentRegistration": "keeps the content and overlay tiers distinct after the pull",
+      "semanticClass": "base-product-tooling"
+    },
+    {
+      "id": "radius.dialog.card-bind",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "The dialog radius directly binds to the card radius.",
+      "sourcePath": "tests/styles/radius-dialog-bind.test.ts",
+      "currentRegistration": "binds --radius-dialog directly onto --radius-card",
+      "semanticClass": "base-product-tooling"
+    },
+    {
+      "id": "radius.context.card-relay",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "The concentric context relay routes through the card corner and resolves equal to dialog.",
+      "sourcePath": "tests/styles/radius-dialog-bind.test.ts",
+      "currentRegistration": "routes the concentric relay through the card corner",
+      "semanticClass": "base-product-tooling"
+    },
+    {
+      "id": "type.headline-kicker-ratio",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "The headline and kicker retain the exact inverse-square-root-phi relationship.",
+      "sourcePath": "tests/styles/typography.test.ts",
+      "currentRegistration": "publishes the exact 1/√φ proportional pair",
+      "migrationTransform": {
+        "keep": "the computed 1/√φ relationship and headline-to-kicker dependency",
+        "delete": [
+          "exact 0.7861513777574233 terminal literal",
+          "unrelated exact leading literal"
+        ]
+      },
+      "semanticClass": "base-product-tooling"
+    },
+    {
+      "id": "gate.boot.source.async-components",
+      "owner": "BJ.W-BOOT-DIET",
+      "predicate": "AppShell contains no prohibited top-level named static import of Aurora or PresetEditor.",
+      "sourcePath": "tests/gates/boot-graph.test.ts",
+      "currentRegistration": "AppShell reaches Aurora and PresetEditor through defineAsyncComponent",
+      "requiredCaseIdentity": {
+        "keys": [
+          "Aurora",
+          "PresetEditor"
+        ]
+      },
+      "semanticClass": "base-product-tooling",
+      "requiredDetectorRedress": {
+        "phase": "pre-binding",
+        "ownerModel": "Luna x-high",
+        "mechanism": "Parse the AppShell Vue script with the SFC and TypeScript parsers; resolve top-level static value imports by binding identity and reject Aurora or PresetEditor regardless of formatting or alias layout.",
+        "mutations": [
+          "add a multiline named static import of Aurora",
+          "add a multiline aliased static import of PresetEditor",
+          "retain a type-only import and remain GREEN",
+          "plant the import text in a comment or inert string and remain GREEN"
+        ]
+      }
+    },
+    {
+      "id": "gate.boot.source.async-declarations",
+      "owner": "BJ.W-BOOT-DIET",
+      "predicate": "AppShell declares both required async component boundaries with their exact dynamic-import module targets.",
+      "sourcePath": "tests/gates/boot-graph.test.ts",
+      "currentRegistration": "AppShell actually declares the async boundaries",
+      "requiredCaseIdentity": {
+        "keys": [
+          "PresetEditor:./configurator/PresetEditor.vue",
+          "Aurora:@glass/components/aurora/Aurora.vue"
+        ]
+      },
+      "semanticClass": "base-product-tooling",
+      "requiredDetectorRedress": {
+        "phase": "pre-binding",
+        "ownerModel": "Luna x-high",
+        "mechanism": "Parse the AppShell Vue script and prove the top-level PresetEditor and Aurora bindings are initialized by the real defineAsyncComponent call whose loader resolves respectively to ./configurator/PresetEditor.vue and @glass/components/aurora/Aurora.vue; textual lookalikes and wrong dynamic modules do not count.",
+        "mutations": [
+          "replace defineAsyncComponent with a similarly named function",
+          "swap the Aurora and PresetEditor loader targets",
+          "replace either loader with a different dynamic module",
+          "replace a loader dynamic import with an eager/static value",
+          "leave only a comment or string lookalike",
+          "remove either required binding"
+        ]
+      }
+    },
+    {
+      "id": "gate.boot.source.frame0-ground",
+      "owner": "BJ.W-BOOT-DIET",
+      "predicate": "AppShell statically imports auroraFallbackGround from its exact leaf and the Aurora loadingComponent paints that call result into both VNode background-image and background-color.",
+      "sourcePath": "tests/gates/boot-graph.test.ts",
+      "currentRegistration": "the shell field's frame-0 ground is EAGER, not inside the async chunk",
+      "semanticClass": "base-product-tooling",
+      "requiredDetectorRedress": {
+        "phase": "pre-binding",
+        "ownerModel": "Luna x-high",
+        "mechanism": "Parse the AppShell Vue script and prove one symbol/dataflow chain: the exact static auroraFallbackGround import is called with shellAuroraConfig.value inside Aurora.loadingComponent, its result binding supplies both backgroundImage and backgroundColor on the returned h(div) VNode style, and neither sink is satisfied by independent text.",
+        "mutations": [
+          "move auroraFallbackGround behind the async loader",
+          "import auroraFallbackGround from a wrong module",
+          "paint only backgroundImage from the returned ground",
+          "paint only backgroundColor from the returned ground",
+          "replace either paint sink with a different value",
+          "call auroraFallbackGround with a value other than shellAuroraConfig.value",
+          "leave the call or loadingComponent only in a string/comment",
+          "replace the static ground import with a type-only import"
+        ]
+      },
+      "requiredBindingLineage": {
+        "import": "auroraFallbackGround:@glass/components/aurora/composables/auroraFallbackGround",
+        "asyncBoundary": "Aurora",
+        "call": "ground=auroraFallbackGround(shellAuroraConfig.value)",
+        "paintSinks": [
+          "h(div).style.backgroundImage=ground.backgroundImage",
+          "h(div).style.backgroundColor=ground.backgroundColor"
+        ]
+      }
+    },
+    {
+      "id": "gate.boot.source.no-aurora-barrel-value-import",
+      "owner": "BJ.W-BOOT-DIET",
+      "predicate": "AuroraHero contains no value import from the custom Aurora barrel.",
+      "sourcePath": "tests/gates/boot-graph.test.ts",
+      "currentRegistration": "the shell-field config reads its defaults off the barrel-free leaf",
+      "semanticClass": "base-product-tooling",
+      "requiredDetectorRedress": {
+        "phase": "pre-binding",
+        "ownerModel": "Luna x-high",
+        "mechanism": "Parse aurora-hero.ts imports with the TypeScript parser and reject every value import from the custom Aurora barrel regardless of multiline formatting or aliasing while permitting type-only imports.",
+        "mutations": [
+          "add a multiline value import from @glass/components/aurora",
+          "add an aliased value import from the same barrel",
+          "retain a type-only barrel import and remain GREEN",
+          "plant the specifier in a comment or string and remain GREEN"
+        ]
+      }
+    },
+    {
+      "id": "gate.boot.source.no-config-barrel",
+      "owner": "BJ.W-BOOT-DIET",
+      "predicate": "No eager shell module imports the configurator barrel.",
+      "sourcePath": "tests/gates/boot-graph.test.ts",
+      "currentRegistration": "no EAGER shell module imports the configurator barrel",
+      "requiredCaseIdentity": {
+        "keys": [
+          "demo/shell/AppShell.vue",
+          "demo/shell/SidebarDock.vue",
+          "demo/shell/BottomDock.vue"
+        ]
+      },
+      "semanticClass": "base-product-tooling",
+      "requiredDetectorRedress": {
+        "phase": "pre-binding",
+        "ownerModel": "Luna x-high",
+        "mechanism": "Parse each exact eager-shell Vue script and reject every value import resolving to its configurator barrel regardless of multiline formatting or aliasing while permitting leaf and type-only imports.",
+        "mutations": [
+          "add a multiline value import from ./configurator",
+          "add a parent-relative configurator-barrel value import",
+          "replace one of the three governed module identities",
+          "retain a leaf or type-only import and remain GREEN"
+        ]
+      }
+    },
+    {
+      "id": "gate.boot.build.ceilings",
+      "owner": "BJ.W-BOOT-DIET",
+      "predicate": "A parsed eager graph contains one entry, at least one preload, and stays within preload and byte ceilings.",
+      "sourcePath": "tests/gates/boot-graph.test.ts",
+      "currentRegistration": "the eager graph stays under the modulepreload and byte ceilings",
+      "semanticClass": "base-product-tooling"
+    },
+    {
+      "id": "gate.css-reach.source-approx-no-orphan",
+      "owner": "BJ.W-STATIC-HYGIENE",
+      "predicate": "The committed source-level two-channel reach approximation reports no source CSS partial as orphaned.",
+      "sourcePath": "tests/gates/orphan-css-partial.test.ts",
+      "currentRegistration": "no src/ CSS partial is orphaned",
+      "semanticClass": "base-product-tooling"
+    },
+    {
+      "id": "gate.token-hygiene.clean",
+      "owner": "BJ.W-STATIC-HYGIENE",
+      "predicate": "Source carries no off-ladder radius or backdrop-blur declaration.",
+      "sourcePath": "tests/gates/token-hygiene.test.ts",
+      "currentRegistration": "src/ carries no off-ladder radius or backdrop blur",
+      "semanticClass": "base-product-tooling",
+      "requiredDetectorRedress": {
+        "phase": "pre-binding",
+        "ownerModel": "Luna x-high",
+        "mechanism": "Parse CSS and Vue style declarations, distinguish @supports preludes from declaration values, and evaluate complete multiline border-radius and backdrop-filter values against the ladder allowlist.",
+        "mutations": [
+          "split an off-ladder radius value across lines",
+          "split an off-ladder backdrop blur across lines",
+          "plant the same literals only in comments or @supports preludes and remain GREEN",
+          "hide a violation in a Vue style block"
+        ]
+      }
+    },
+    {
+      "id": "gate.type-hygiene.utilities-clean",
+      "owner": "BJ.W-RAMP-RESET",
+      "predicate": "Vue and TypeScript modules under src and demo carry no banned text-sm/text-xs utility or raw numeric-length text arbitrary.",
+      "sourcePath": "tests/gates/type-hygiene.test.ts",
+      "currentRegistration": "no `text-sm`/`text-xs` utility or raw `text-[<len>]` arbitrary in src/ + demo/",
+      "semanticClass": "base-product-tooling"
+    },
+    {
+      "id": "gate.type-hygiene.declarations-clean",
+      "owner": "BJ.W-RAMP-RESET",
+      "predicate": "Component CSS carries no raw font-size or caps-tracking literal.",
+      "sourcePath": "tests/gates/type-hygiene.test.ts",
+      "currentRegistration": "no raw font-size / caps-tracking literal in src/components/**/*.css",
+      "semanticClass": "base-product-tooling",
+      "requiredDetectorRedress": {
+        "phase": "pre-binding",
+        "ownerModel": "Luna x-high",
+        "mechanism": "Parse every src/components CSS declaration and evaluate complete multiline font-size and caps-tracking values; comments and non-declaration text do not count.",
+        "mutations": [
+          "split a raw font-size value across lines",
+          "split the 0.1em letter-spacing value across lines",
+          "plant the same text only in a comment and remain GREEN",
+          "restore a raw literal through a later declaration"
+        ]
+      }
+    },
+    {
+      "id": "gate.type-hygiene.cleared-vars-clean",
+      "owner": "BJ.W-RAMP-RESET",
+      "predicate": "Source CSS carries no reference to cleared text-sm/text-xs theme keys.",
+      "sourcePath": "tests/gates/type-hygiene.test.ts",
+      "currentRegistration": "no `var(--text-sm)`/`var(--text-xs)` reference to a cleared @theme key in src/**/*.css",
+      "semanticClass": "base-product-tooling",
+      "requiredDetectorRedress": {
+        "phase": "pre-binding",
+        "ownerModel": "Luna x-high",
+        "mechanism": "Parse all src CSS declaration values and reject references to cleared --text-sm/--text-xs keys regardless of whitespace or line breaks while excluding comments.",
+        "mutations": [
+          "split var( and --text-sm across lines",
+          "use whitespace around --text-xs",
+          "plant the reference only in a comment and remain GREEN",
+          "reference --text-small and remain GREEN"
+        ]
+      }
+    },
+    {
+      "id": "behavior.infinite-scroll.rearm-without-eager-load",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "Loading completion creates a new observer without requesting eagerly; the next intersection emits exactly the second request.",
+      "sourcePath": "tests/components/infinite-scroll.contract.test.ts",
+      "currentRegistration": "re-observes after loading without eagerly requesting another page",
+      "semanticClass": "component-behavior"
+    },
+    {
+      "id": "behavior.chip.mode-transition-clears-semantics",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "Selectable-to-action-to-static transitions begin with correct pressed selectable semantics, clear pressed/data-state in action mode, and finish as non-control static content.",
+      "sourcePath": "tests/components/chip.contract.test.ts",
+      "currentRegistration": "does not retain stale pressed semantics when mode changes",
+      "requiredCaseIdentity": {
+        "keys": [
+          "selectable:true",
+          "action:undefined",
+          "static"
+        ]
+      },
+      "semanticClass": "component-behavior",
+      "requiredDetectorRedress": {
+        "phase": "pre-binding",
+        "ownerModel": "Luna x-high",
+        "mechanism": "In one registration assert the initial selectable BUTTON, aria-pressed=true, data-state=on and data-mode=selectable; after action transition assert BUTTON/action with no pressed/data-state; after static transition assert SPAN/static with no button or pressed semantics.",
+        "mutations": [
+          "omit or falsify the initial selectable pressed state",
+          "retain aria-pressed after the action transition",
+          "retain data-state after the action transition",
+          "render static mode as a button",
+          "leave a descendant button or pressed relation after the static transition"
+        ],
+        "nodeIdentityLaw": "DOM-node replacement is not a semantic requirement when the correct host and state are observable at each settle; same-node reuse is permitted only if every stale control semantic is removed."
+      }
+    },
+    {
+      "id": "behavior.command.active-identity-executes-once",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "Arrow navigation, active-descendant identity, Enter execution, closure, and inline selected identity remain synchronized.",
+      "sourcePath": "tests/components/command.contract.test.ts",
+      "currentRegistration": "Arrow navigation and Enter execute one shared active identity",
+      "semanticClass": "component-behavior"
+    },
+    {
+      "id": "behavior.typewriter.prm-midflight-settle-once",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "A live reduced-motion transition settles an active typing pass immediately and completes exactly once.",
+      "sourcePath": "tests/components/custom/typewriter/TypewriterText.contract.test.ts",
+      "currentRegistration": "settles an active pass when reduced motion turns on",
+      "semanticClass": "component-behavior",
+      "requiredDetectorRedress": {
+        "phase": "pre-binding",
+        "ownerModel": "Luna x-high",
+        "mechanism": "Capture the original startTyping promise, trigger the live PRM transition, drain all fake timers and microtasks, await the original promise, then assert final text, non-typing state, zero pending timers, and exactly one completion callback after the drain.",
+        "mutations": [
+          "let the cancelled typing token resume and invoke completion after the PRM settle",
+          "settle final text without cancelling the current token",
+          "invoke completion once immediately and once after a pending timer",
+          "resolve the original startTyping promise before its cancelled delay chain has drained",
+          "restore scope teardown as the only cancellation and require the detector to fail before teardown"
+        ]
+      }
+    },
+    {
+      "id": "behavior.accordion.single-linkage-controlled-policy",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "The alpha trigger/region pair is linked, and controlled single-mode state transfers alpha to beta then clears beta when collapsible.",
+      "sourcePath": "tests/components/accordion.contract.test.ts",
+      "currentRegistration": "links each heading trigger to one region and enforces controlled single policy",
+      "requiredCaseIdentity": {
+        "keys": [
+          "alpha-linkage",
+          "alpha-to-beta",
+          "beta-collapse"
+        ]
+      },
+      "semanticClass": "component-behavior"
+    },
+    {
+      "id": "behavior.avatar.single-rendered-identity",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "Image failure and initials fallback preserve exactly one stable accessible identity while duplicates remain hidden.",
+      "sourcePath": "tests/components/avatar.contract.test.ts",
+      "currentRegistration": "announces one stable identity while hiding image and initials duplicates",
+      "semanticClass": "component-behavior"
+    },
+    {
+      "id": "behavior.checkbox.tristate-render-bijection",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "Unchecked, checked, and indeterminate models map bijectively to rendered state, ARIA value, and icon anatomy.",
+      "sourcePath": "tests/components/checkbox.contract.test.ts",
+      "currentRegistration": "renders %s as a distinct %s state",
+      "requiredCaseIdentity": {
+        "keys": [
+          "false:unchecked:false:none",
+          "true:checked:true:check",
+          "indeterminate:indeterminate:mixed:minus"
+        ]
+      },
+      "semanticClass": "component-behavior"
+    },
+    {
+      "id": "behavior.dropdown.keyboard-roving-typeahead",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "Keyboard-opened menus retain Home, ArrowDown, and typeahead roving-focus behavior.",
+      "sourcePath": "tests/components/dropdown-menu.contract.test.ts",
+      "currentRegistration": "preserves keyboard roving focus and typeahead",
+      "requiredCaseIdentity": {
+        "keys": [
+          "Home:First command",
+          "ArrowDown:Grid",
+          "typeahead-m:More"
+        ]
+      },
+      "semanticClass": "component-behavior"
+    },
+    {
+      "id": "field.error.dual-description-linkage",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "Active errors join description and error IDs in aria-describedby and also own aria-errormessage, invalid state, and live politeness.",
+      "sourcePath": "tests/components/labeled-field.contract.test.ts",
+      "currentRegistration": "links active errors through both descriptive ARIA channels",
+      "semanticClass": "component-behavior"
+    },
+    {
+      "id": "number.locale-form-and-edit",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "The initial de-DE visible value and hidden form value agree semantically, and a later localized edit updates the numeric model.",
+      "sourcePath": "tests/components/number-field.contract.test.ts",
+      "currentRegistration": "keeps locale formatting/parsing and numeric form serialization on one Reka path",
+      "requiredCaseIdentity": {
+        "keys": [
+          "initial-visible:1,5",
+          "initial-form:1.5",
+          "edited-model:2.5"
+        ]
+      },
+      "semanticClass": "component-behavior"
+    },
+    {
+      "id": "pager.tabs.panel-linkage",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "Tabs-pattern dots receive index-aligned panel IDs through aria-controls.",
+      "sourcePath": "tests/components/pager-dots.contract.test.ts",
+      "currentRegistration": "emits aria-controls on each tabs-pattern dot from panelIds",
+      "requiredCaseIdentity": {
+        "count": 3,
+        "keys": [
+          "slide-panel-0",
+          "slide-panel-1",
+          "slide-panel-2"
+        ]
+      },
+      "semanticClass": "component-behavior"
+    },
+    {
+      "id": "slider.multithumb.aria-linkage",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "Every semantic thumb receives label, description, error-message, and invalid-state linkage.",
+      "sourcePath": "tests/components/slider.contract.test.ts",
+      "currentRegistration": "links label, invalid state, and description to every semantic thumb",
+      "requiredCaseIdentity": {
+        "keys": [
+          "thumb:20",
+          "thumb:80"
+        ]
+      },
+      "semanticClass": "component-behavior"
+    },
+    {
+      "id": "sortable.keyboard.transaction",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "Keyboard lift, proposal, and commit preserve focus, narration, and the intended final order.",
+      "sourcePath": "tests/components/sortable-list.contract.test.ts",
+      "currentRegistration": "lifts, proposes, and commits with stable focus and one reorder",
+      "requiredCaseIdentity": {
+        "keys": [
+          "start:a,b,c",
+          "lift:a",
+          "propose:3",
+          "commit:b,c,a"
+        ]
+      },
+      "semanticClass": "component-behavior"
+    },
+    {
+      "id": "tags-input.ime-delimiter-guard",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "A delimiter typed during IME composition remains draft text and does not commit another tag.",
+      "sourcePath": "tests/components/tags-input.contract.test.ts",
+      "currentRegistration": "does not commit a delimiter while an IME composition is active",
+      "requiredCaseIdentity": {
+        "keys": [
+          "initial:alpha",
+          "composing:draft,",
+          "model-unchanged"
+        ]
+      },
+      "semanticClass": "component-behavior"
+    },
+    {
+      "id": "tooltip.escape-description-cleanup",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "Focus opens the tooltip; Escape closes it and removes the trigger description relation.",
+      "sourcePath": "tests/components/tooltip.contract.test.ts",
+      "currentRegistration": "dismisses on Escape and removes the description relation",
+      "semanticClass": "component-behavior"
+    },
+    {
+      "id": "typewriter.at.complete-once",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "Assistive technology receives exactly one complete phrase while partial visual frames remain hidden.",
+      "sourcePath": "tests/components/typewriter.contract.test.ts",
+      "currentRegistration": "exposes the complete text once while hiding partial visual frames",
+      "semanticClass": "component-behavior"
+    }
+  ],
+  "reservedVitest": [
+    {
+      "id": "reserve.a11y.contrast-floors",
+      "owner": "BAND-A11Y.W3-C",
+      "predicate": "One table-driven authored-token contrast-floor gate covers tone/ink and placeholder pairs.",
+      "expectedSourcePath": null,
+      "reservation": "hard"
+    },
+    {
+      "id": "reserve.perf.shell-field-governance",
+      "owner": "BJ.W-SHELL-FIELD-GOVERNANCE",
+      "predicate": "The permanent shell-field ownership and read-hygiene invariant lands.",
+      "expectedSourcePath": "tests/gates/shell-field-governance.test.ts",
+      "reservation": "hard"
+    },
+    {
+      "id": "reserve.perf.deferred-paint",
+      "owner": "BJ.W-DEFERRED-PAINT",
+      "predicate": "The permanent deferred-paint invariant lands.",
+      "expectedSourcePath": "tests/gates/deferred-paint.test.ts",
+      "reservation": "hard"
+    },
+    {
+      "id": "reserve.perf.route-pending",
+      "owner": "BJ.W-ROUTE-PENDING",
+      "predicate": "The permanent route-pending affordance invariant lands.",
+      "expectedSourcePath": "tests/gates/route-pending.test.ts",
+      "reservation": "hard"
+    },
+    {
+      "id": "reserve.colocation.hygiene-form-b",
+      "owner": "BJ.W-COLO-3",
+      "predicate": "If owner adjudication selects Form B, one standalone colocation-hygiene gate consumes this pre-reserved seat; Form A releases it.",
+      "expectedSourcePath": null,
+      "reservation": "conditional",
+      "condition": "BAND-COLOCATION W3 Form B is explicitly selected"
+    }
+  ],
+  "externalEnforcement": [
+    {
+      "id": "external.package.export-resolution",
+      "predicate": "The packed package resolves its public runtime and type exports.",
+      "sourcePath": "scripts/verify-export-types.mjs",
+      "enrollment": [
+        "package.json#scripts.verify:package",
+        "scripts/release.sh",
+        ".github/workflows/release.yml"
+      ]
+    },
+    {
+      "id": "external.types.shared-parity",
+      "predicate": "Shared primitive, selection, interaction, and dark types retain upstream parity.",
+      "sourcePath": "tests/components/_shared/public-contracts.test-d.ts",
+      "enrollment": [
+        "package.json#scripts.typecheck",
+        "tsconfig.test.json",
+        ".github/workflows/ci.yml",
+        ".github/workflows/release.yml"
+      ]
+    },
+    {
+      "id": "external.types.chip",
+      "predicate": "Chip discriminated public prop modes accept and reject their exact shapes.",
+      "sourcePath": "tests/components/chip.public-contracts.test-d.ts",
+      "enrollment": [
+        "package.json#scripts.typecheck",
+        "tsconfig.test.json",
+        ".github/workflows/ci.yml",
+        ".github/workflows/release.yml"
+      ]
+    },
+    {
+      "id": "external.types.command",
+      "predicate": "Command public types retain the ruled scalar, search, and update surface.",
+      "sourcePath": "tests/components/command.public-contracts.test-d.ts",
+      "enrollment": [
+        "package.json#scripts.typecheck",
+        "tsconfig.test.json",
+        ".github/workflows/ci.yml",
+        ".github/workflows/release.yml"
+      ]
+    },
+    {
+      "id": "external.types.disclosure",
+      "predicate": "Accordion and Collapsible public type contracts remain exact.",
+      "sourcePath": "tests/components/disclosure.public-contracts.test-d.ts",
+      "enrollment": [
+        "package.json#scripts.typecheck",
+        "tsconfig.test.json",
+        ".github/workflows/ci.yml",
+        ".github/workflows/release.yml"
+      ]
+    },
+    {
+      "id": "external.types.dropdown-menu",
+      "predicate": "Dropdown public root and part types retain exact admitted and forbidden props.",
+      "sourcePath": "tests/components/dropdown-menu.public-contracts.test-d.ts",
+      "enrollment": [
+        "package.json#scripts.typecheck",
+        "tsconfig.test.json",
+        ".github/workflows/ci.yml",
+        ".github/workflows/release.yml"
+      ]
+    },
+    {
+      "id": "external.types.floating",
+      "predicate": "Popover and Tooltip public type contracts remain exact.",
+      "sourcePath": "tests/components/floating.public-contracts.test-d.ts",
+      "enrollment": [
+        "package.json#scripts.typecheck",
+        "tsconfig.test.json",
+        ".github/workflows/ci.yml",
+        ".github/workflows/release.yml"
+      ]
+    },
+    {
+      "id": "external.types.primitive-display",
+      "predicate": "Primitive display-family public type contracts remain exact.",
+      "sourcePath": "tests/components/primitive-display.public-contracts.test-d.ts",
+      "enrollment": [
+        "package.json#scripts.typecheck",
+        "tsconfig.test.json",
+        ".github/workflows/ci.yml",
+        ".github/workflows/release.yml"
+      ]
+    },
+    {
+      "id": "external.types.toast",
+      "predicate": "Toast handle and options contracts accept and reject their exact keys.",
+      "sourcePath": "tests/components/toast.public-contracts.test-d.ts",
+      "enrollment": [
+        "package.json#scripts.typecheck",
+        "tsconfig.test.json",
+        ".github/workflows/ci.yml",
+        ".github/workflows/release.yml"
+      ]
+    },
+    {
+      "id": "external.browser.aurora-floor",
+      "predicate": "Aurora paints a non-black interior on the real release-hardware path and the planted black mutation fails.",
+      "sourcePath": "tests-visual/substrate-paints-color.spec.ts",
+      "enrollment": [
+        "scripts/release.sh",
+        "tests-visual/package.json#scripts.gate:pixel-floor",
+        "tests-visual/package.json#scripts.gate:pixel-floor:planted"
+      ]
+    },
+    {
+      "id": "external.browser.blob-floor",
+      "predicate": "Blob paints a contained non-flood droplet in CI and the planted blank/flood mutation fails.",
+      "sourcePath": "tests-visual/substrate-paints-color.spec.ts",
+      "enrollment": [
+        ".github/workflows/ci.yml#pixel-floor",
+        "tests-visual/package.json#scripts.gate:pixel-floor:ci",
+        "tests-visual/package.json#scripts.gate:pixel-floor:ci:planted"
+      ]
+    }
+  ],
+  "ordinaryTestLaw": {
+    "detectorSelfTestsRemainExecuted": true,
+    "componentRegressionsRemainExecuted": true,
+    "ordinaryTestsConsumeBudget": false,
+    "refractScenarioStatus": "browser acceptance debt; present in Playwright configuration but absent from a machine CI/release enrollment edge",
+    "detectorRedressRowsMustBindAtomically": true
+  },
+  "machineLaw": {
+    "topLevelPartitions": [
+      "activeVitest",
+      "reservedVitest",
+      "externalEnforcement"
+    ],
+    "activeSemanticClasses": {
+      "base-product-tooling": 31,
+      "component-behavior": 17
+    },
+    "countedCeilingExpression": "activeVitest + hardReservedVitest + conditionalReservedVitest <= 60",
+    "detectorRedressMustPrecedeBinding": true,
+    "detectorRedressSeatCountInvariant": "A required detector redress strengthens its existing semantic seat and never adds a counted seat.",
+    "activeSemanticClassIdDigests": {
+      "base-product-tooling": "76e5592586cbdf15a7df592ab2b1a94c09e295ba5a301a15dba80051ccfc7e3a",
+      "component-behavior": "222a1a54d747480b490b409d9668534673343219270a93f5831f2e0ad2a9fe2b"
+    },
+    "semanticClassDigestInput": "SHA-256(JSON.stringify(active row IDs in roster order for each semanticClass))",
+    "parserDependencyLaw": {
+      "mode": "direct-dev-dependency-and-lock",
+      "required": {
+        "typescript": "^6.0.3",
+        "@vue/compiler-sfc": "^3.5.40",
+        "postcss": "^8.5.19"
+      },
+      "acceptance": [
+        "every parser imported by the governed verifier or a redressed detector is a direct devDependency",
+        "package-lock.json resolves the same selected parser family",
+        "a clean npm ci can resolve and execute the verifier without relying on another package's dependency",
+        "removing a direct declaration or its lock resolution turns package preflight RED",
+        "mutating the compiler-sfc lock resolution away from the resolved Vue version turns package preflight RED"
+      ],
+      "compatibility": [
+        "the clean-install resolved @vue/compiler-sfc version equals the clean-install resolved vue version",
+        "the equality is proven from package-lock/package-tree identities rather than source imports alone"
+      ]
+    }
+  }
+}

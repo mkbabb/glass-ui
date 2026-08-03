@@ -1,4 +1,15 @@
-# BK Φ0 execution results — 2026-07-29
+# BK Φ0 execution results — 2026-07-29 · VOID-PROCESS EVIDENCE
+
+> **THIS DOCUMENT IS VOID-PROCESS EVIDENCE (re-headed 2026-08-03).** Every seal it
+> records was sealed under a void process — challenge seats that executed zero tool
+> calls, verdicts dictated in the scribe prompt, and receipts citing artifacts absent
+> on disk — so **none of them stand** (census restated at the cursor ⊕¹²: 0/87
+> codex-delta seals); the underlying code holds only as
+> landed-candidate pending pass-2 re-adjudication. The adjudicated record is
+> `docs/tranches/BK/execution/2026-08-03-codex-audit/` (APOTHEOSIS.md ·
+> REPO-AUDIT-ADJUDICATIONS.json · LOG-AUDIT.md), and the cursor's ⊕¹¹–⊕¹⁵ blocks
+> carry the standing rulings. Read every claim below as a claim of record, not a
+> fact; the one source of record for what actually ran is the journal.
 
 Run: `bk-phi0-20260729-01`
 
@@ -10,7 +21,9 @@ Post-cutover cure script:
 
 Journal: `docs/tranches/BK/execution/2026-07-29-phi0/journal.jsonl`
 
-**State: ROUND-4 PASS/GO SEALED; #1/#75/#2/#4/#5 SEALED PASS; #3 remains
+**State [VOID 2026-08-03 — every SEALED below reads landed-candidate; the live
+state is the cursor's Φ0 table, and what actually ran is the journal]: ROUND-4
+PASS/GO SEALED; #1/#75/#2/#4/#5 SEALED PASS; #3 remains
 IN-FLIGHT at source `74c59ade`. Row #5 is SEALED at source HEAD
 `4c970c0edd36b32d3b40a575dc3e91c60138c61f` / tree
 `a904984a95475794e12bd2df127bb1728271470f`, with
@@ -40,9 +53,11 @@ not pre-approved PASS.
 ## Truth seats
 
 - `truth:surface-salvage` — COMPLETED, 0 errors; landed as `858c1087`.
-  The exact owner-ratified slice is eight files: three detector conversions,
-  three hardened bodies, and the two package manifests for direct
-  `@vue/compiler-sfc`/`postcss` development dependencies. The slice contains
+  The owner-ratified slice is six files — three detector conversions and three
+  hardened bodies — plus a necessary amendment to the two package manifests for
+  direct `@vue/compiler-sfc`/`postcss` development dependencies (the devDep
+  carve-out was expressly OVERRULED at the bank; the manifest edit was mechanically
+  correct but was never part of the ratified six). The slice contains
   zero `governedInvariant`, governed setup, verifier, or governance-roster
   references. The cure chain `0557703f` → `950a703f` → `f3a83c9b` closes the
   challenged detector/body truth gaps: both SFC script blocks and namespace
@@ -229,8 +244,12 @@ targeted public-surface file reported 80 passing tests plus that one assertion.
 After `npm run demo:dist:build`, the build-state-dependent failure cleared and
 the full suite reported only the public-surface assertion: 198/199 files and
 1,295/1,296 tests passed.
-`npm run typecheck` reported only the two pre-existing
-`tests/styles/track-well-fold.test.ts` TS2339 errors at lines 20 and 30.
+**THE ONE TYPECHECK BASELINE.** This run reported two pre-existing
+`tests/styles/track-well-fold.test.ts` TS2339 errors at lines 20 and 30. That
+baseline is DEAD: `147a0bf9` cured both via `get`→`find`, so nothing pinned to
+"exactly the 2 pre-existing errors" describes anything. The live fact, one command
+and one date: `npm run typecheck` (both arms) → **exit 0, zero diagnostics,
+2026-08-03**. Every later restatement in this file points here.
 
 The fresh pre-existing stray census is 248 Git-visible untracked files:
 205 under `docs/tranches/BJ/addenda/2026-07-21-convergent-hardening/` and 43
@@ -382,9 +401,8 @@ post-build `graph-v3 --check` runs passed with receipt
 summary 1,497 nodes / 3,579 internal / 1,963 external / 101 owners / 72
 public entries / 1,285 public symbols, with all fatal ledgers, unused owners,
 and cycle defects at zero. The focused graph test passed 20/20 sequentially
-and 20/20 while typecheck was active. Typecheck exited 2 with only the two
-recorded TS2339 diagnostics at `tests/styles/track-well-fold.test.ts` lines 20
-and 30; delta zero. The strict-JSON Stop-hook matrix passed 14/14 with one
+and 20/20 while typecheck was active. Typecheck: see THE ONE TYPECHECK BASELINE.
+The strict-JSON Stop-hook matrix passed 14/14 with one
 project-local hook and zero global hooks. Direct crontab inspection was blocked
 by the sandbox (`operation not permitted`); retain that bounded host follow-up
 caveat without guessing.
@@ -460,8 +478,7 @@ summary 1496/3577/1963/101/72/1283, fatal ledgers zero, and focused graph
 20/20. Focused Tabs/public-surface is 94/94; the full suite is 200 files and
 1316 tests. Library, package, and demo builds pass; package is 205 targets,
 482 declarations, 114 CSS, and 67 strict imports, and demo is 3513 modules.
-Typecheck delta is zero, with only the historical TS2339 diagnostics at
-`tests/styles/track-well-fold.test.ts` lines 20 and 30. The protected
+Typecheck: see THE ONE TYPECHECK BASELINE. The protected
 untracked boundary is 248 with SHA-256
 `aafdab71d16de49fbed96128a21aa50eb24bab80899d7ae3b44015e10630cc15`.
 
@@ -522,9 +539,8 @@ and 1,317/1,317 tests after raising only the existing graph hook timeout;
 fresh library and demo builds pass; package validation is 205 targets, 482
 declarations, 114 CSS files, and 67 strict consumer imports; emitted AST census
 is 127 CSS files with 90/90 paired declarations, zero one-legged, zero
-wrong-order, top-level 20 declarations, and zero one-legged. Typecheck delta is
-zero with only historical `track-well-fold` TS2339 lines 20 and 30.
-`capture.css` SHA-256 is unchanged at
+wrong-order, top-level 20 declarations, and zero one-legged. Typecheck: see THE
+ONE TYPECHECK BASELINE. `capture.css` SHA-256 is unchanged at
 `c502cf067adf12508f540873a00b5e917fe13aa781dd0cf6e66a89689955b420`.
 
 At 1280x720, still has `data-capture`, 21 kill-selector hits, readiness, one
@@ -608,21 +624,18 @@ No option slot, placeholder, API, alias, shim, fixed/min width, sizing
 workaround, replacement adornment, row, wave, gate, registry, or parallel
 control plane was introduced.
 
-The current graph receipt is
-`cf51835423ea0745c3504d6b8604e2d4c556b4598109e4be201bdba39830ebd0`:
-1,497 nodes / 3,579 internal edges / 1,969 external edges / 101 owners / 72
-public entries / 1,283 public symbols; fatal ledgers zero; generator-read 12,
-generator-write 7, unmodeled 274. Graph focused tests and `generator --check`
-passed. Relative to the rejected graph, this is +5 nodes, +10 internal edges,
-+2 external edges, −5 unmodeled operations, +5 generator reads, and +4
-generator writes; the parent generator closure is restored. Focused prefix
-tests passed 3/3. `npm run build` and `npm run demo:dist:build` passed, with
+[2026-08-03: the "current graph receipt" stated here was FALSE at HEAD — it read
+`cf518354…`/1,497/3,579/1,969 while the artifact read `05ed678b…`/1,499/3,594/1,983.
+Struck, not corrected: the whole import-dag-v3 apparatus was deleted by pass-1 cure §1
+(`d2f202bc`), so there is no artifact to cite. Graph questions return to row #21.]
+Focused prefix tests passed 3/3. `npm run build` and `npm run demo:dist:build` passed, with
 3,513 demo modules. Package verification passed with
 `npm_config_cache=/private/tmp/glass-ui-npm-cache npm run verify:package`:
 205 targets, 482 declarations, 114 CSS files, and 67 strict imports. The
 initial exact script was environmentally blocked by a pre-existing root-owned
-npm cache; there was no package defect. Typecheck has zero new diagnostics;
-only the pre-existing `scripts/lib/minify-css.mjs` TS7016 remains.
+npm cache; there was no package defect. Typecheck: see THE ONE TYPECHECK
+BASELINE (this line's contradictory `minify-css.mjs` TS7016 baseline is struck —
+two baselines in one file were never both true).
 
 The emitted AST census is `dist`: 127 CSS files / 90 declarations / 45
 canonical pairs, and `dist-demo`: 73 CSS files / 94 declarations / 47

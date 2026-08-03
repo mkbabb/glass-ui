@@ -1,0 +1,529 @@
+{
+  "schemaVersion": 1,
+  "authority": {
+    "head": "0371836dfeeb3b7982250d612f93b5347a1d29d4",
+    "tree": "97b386172a899ef43b686ffbe43263395b3a7744",
+    "parentAdjudication": "GATE-SEMANTIC-ROSTER-ADJUDICATION-C7.md",
+    "canonicalBinding": "governedInvariant",
+    "mode": "enabled",
+    "maximumCountedSeats": 60
+  },
+  "counts": {
+    "activeVitest": 48,
+    "hardReservedVitest": 4,
+    "conditionalReservedVitest": 1,
+    "worstCaseCountedSeats": 53,
+    "remainingSeats": 7,
+    "externalEnforcement": 11
+  },
+  "activeVitest": [
+    {
+      "id": "token.graph.published-backed-unique",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "Every published semantic token has exactly one source declaration.",
+      "sourcePath": "tests/styles/token-graph.test.ts",
+      "currentRegistration": "backs every published token with a source declaration, without duplicates"
+    },
+    {
+      "id": "token.graph.alias-acyclic",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "The custom-property alias graph contains no cycle.",
+      "sourcePath": "tests/styles/token-graph.test.ts",
+      "currentRegistration": "contains no custom-property alias cycle"
+    },
+    {
+      "id": "surface.root.exact",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "The package root runtime export surface is exact.",
+      "sourcePath": "tests/public-surface.spec.ts",
+      "currentRegistration": "keeps the exact root runtime surface"
+    },
+    {
+      "id": "surface.subpaths.exact",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "Every governed subpath runtime surface is exact.",
+      "sourcePath": "tests/public-surface.spec.ts",
+      "currentRegistration": "keeps exact $subpath runtime surface",
+      "requiredCaseIdentity": {
+        "count": 48,
+        "orderedKeysSha256": "118e091405270a3e1fa2ae9aea24c3805acc1a7a6a087dfd6c247e2f19776252"
+      }
+    },
+    {
+      "id": "reka.button.host-icon",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "A host-sized Button icon survives the owned default icon rule.",
+      "sourcePath": "tests/components/ui/reka-binding-idiom.test.ts",
+      "currentRegistration": "Button: a host-sized icon survives the owned default-icon rule"
+    },
+    {
+      "id": "reka.switch.checked-render",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "The checked model reaches the rendered Switch data state.",
+      "sourcePath": "tests/components/ui/reka-binding-idiom.test.ts",
+      "currentRegistration": "Switch: the checked model drives the rendered data-state"
+    },
+    {
+      "id": "reka.tags-input.value-binding",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "TagsInput item values render through the current value binding and the family root remains present.",
+      "sourcePath": "tests/components/ui/reka-binding-idiom.test.ts",
+      "currentRegistration": "TagsInput: the active item resolves `data-[state=active]` (the `tag=` idiom is gone)",
+      "requiredCaseIdentity": {
+        "keys": ["alpha", "beta"]
+      }
+    },
+    {
+      "id": "reka.toast.open-update",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "Toast dismissal reaches the store through update:open and closes the rendered toast.",
+      "sourcePath": "tests/components/ui/reka-binding-idiom.test.ts",
+      "currentRegistration": "Toast: the dismissal rides `onUpdate:open` (NOT the React `onOpenChange`)"
+    },
+    {
+      "id": "reka.command.search-model",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "The Command input model receives and renders the authored filter term.",
+      "sourcePath": "tests/components/ui/reka-binding-idiom.test.ts",
+      "currentRegistration": "Command: the filter term rides `CommandInput` v-model (NOT `ComboboxRoot v-model:search-term`)"
+    },
+    {
+      "id": "spring.projection.byte-sync",
+      "owner": "IOS27-MICRO.W-1",
+      "predicate": "Generated spring stops and settle values match every shipped spring token byte-for-byte.",
+      "sourcePath": "tests/composables/motion/springProjection.test.ts",
+      "currentRegistration": "reproduces every shipped spring token and rounded settle byte-for-byte",
+      "requiredCaseIdentity": {
+        "keys": ["smooth", "snappy", "bouncy", "gentle", "dock", "press", "panel", "orb-drop"],
+        "orderedKeysSha256": "ef2496ddaffbb7ef1a1efba36941c18440b83eb6ba8a7332d193877a7a297f7f"
+      }
+    },
+    {
+      "id": "spring.projection.peak-overshoot",
+      "owner": "IOS27-MICRO.W-1",
+      "predicate": "Reported peak agrees with the overshoot encoded by every shipped stop sequence.",
+      "sourcePath": "tests/composables/motion/springProjection.test.ts",
+      "currentRegistration": "reports peak as the overshoot the shipped stops encode",
+      "requiredCaseIdentity": {
+        "keys": ["smooth", "snappy", "bouncy", "gentle", "dock", "press", "panel", "orb-drop"],
+        "orderedKeysSha256": "ef2496ddaffbb7ef1a1efba36941c18440b83eb6ba8a7332d193877a7a297f7f"
+      }
+    },
+    {
+      "id": "spring.mirror.fixed-point",
+      "owner": "IOS27-MICRO.W-1",
+      "predicate": "Regeneration is a fixed point on the committed spring CSS.",
+      "sourcePath": "tests/composables/motion/springTokenMirror.test.ts",
+      "currentRegistration": "is a fixed point on the committed scheme-spring.css"
+    },
+    {
+      "id": "spring.mirror.anchor-fail-closed",
+      "owner": "IOS27-MICRO.W-1",
+      "predicate": "Every required generator anchor throws when it stops matching instead of silently skipping.",
+      "sourcePath": "tests/composables/motion/springTokenMirror.test.ts",
+      "currentRegistration": "throws rather than silently skipping when an anchor stops matching",
+      "requiredCaseIdentity": {
+        "keys": ["block-header", "spring-lines", "duration-lines", "mirror-rows", "transition-liquid-spatial"]
+      }
+    },
+    {
+      "id": "spring.mirror.header-generated",
+      "owner": "IOS27-MICRO.W-1",
+      "predicate": "The spring header mirror is generated from SPRING_PRESETS.",
+      "sourcePath": "tests/composables/motion/springTokenMirror.test.ts",
+      "currentRegistration": "is generated from SPRING_PRESETS, never hand-written"
+    },
+    {
+      "id": "spring.mirror.row-bijection",
+      "owner": "IOS27-MICRO.W-1",
+      "predicate": "The spring header contains exactly one correctly ordered row per preset and no orphan row.",
+      "sourcePath": "tests/composables/motion/springTokenMirror.test.ts",
+      "currentRegistration": "carries one row per preset and no orphan rows",
+      "requiredCaseIdentity": {
+        "keys": ["smooth", "snappy", "bouncy", "gentle", "dock", "press", "panel", "orb-drop"],
+        "orderedKeysSha256": "ef2496ddaffbb7ef1a1efba36941c18440b83eb6ba8a7332d193877a7a297f7f"
+      }
+    },
+    {
+      "id": "spring.mirror.overshoot-fence",
+      "owner": "IOS27-MICRO.W-1",
+      "predicate": "Every shipped curve remains inside the zero-to-ten-percent overshoot fence.",
+      "sourcePath": "tests/composables/motion/springTokenMirror.test.ts",
+      "currentRegistration": "holds the [0%,10%] overshoot fence on the curve the token ships",
+      "requiredCaseIdentity": {
+        "keys": ["smooth", "snappy", "bouncy", "gentle", "dock", "press", "panel", "orb-drop"],
+        "orderedKeysSha256": "ef2496ddaffbb7ef1a1efba36941c18440b83eb6ba8a7332d193877a7a297f7f"
+      }
+    },
+    {
+      "id": "spring.mirror.gentle-critical",
+      "owner": "IOS27-MICRO.W-1",
+      "predicate": "The gentle preset remains exactly critically damped and effectively non-overshooting.",
+      "sourcePath": "tests/composables/motion/springTokenMirror.test.ts",
+      "currentRegistration": "holds gentle's zeta exactly critical — a calm arrival must not overshoot"
+    },
+    {
+      "id": "glass.blur-tier-order",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "Floating blur remains greater than quiet blur.",
+      "sourcePath": "tests/styles/glass-subtlety.test.ts",
+      "currentRegistration": "keeps the content and overlay tiers distinct after the pull"
+    },
+    {
+      "id": "radius.dialog.card-bind",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "The dialog radius directly binds to the card radius.",
+      "sourcePath": "tests/styles/radius-dialog-bind.test.ts",
+      "currentRegistration": "binds --radius-dialog directly onto --radius-card"
+    },
+    {
+      "id": "radius.context.card-relay",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "The concentric context relay routes through the card corner and resolves equal to dialog.",
+      "sourcePath": "tests/styles/radius-dialog-bind.test.ts",
+      "currentRegistration": "routes the concentric relay through the card corner"
+    },
+    {
+      "id": "type.headline-kicker-ratio",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "The headline and kicker retain the exact inverse-square-root-phi relationship.",
+      "sourcePath": "tests/styles/typography.test.ts",
+      "currentRegistration": "publishes the exact 1/sqrt(phi) proportional pair"
+    },
+    {
+      "id": "gate.boot.source.async-components",
+      "owner": "BJ.W-BOOT-DIET",
+      "predicate": "AppShell reaches Aurora and PresetEditor only through async component edges.",
+      "sourcePath": "tests/gates/boot-graph.test.ts",
+      "currentRegistration": "AppShell reaches Aurora and PresetEditor through defineAsyncComponent",
+      "requiredCaseIdentity": {
+        "keys": ["Aurora", "PresetEditor"]
+      }
+    },
+    {
+      "id": "gate.boot.source.async-declarations",
+      "owner": "BJ.W-BOOT-DIET",
+      "predicate": "AppShell declares both required async component boundaries.",
+      "sourcePath": "tests/gates/boot-graph.test.ts",
+      "currentRegistration": "AppShell actually declares the async boundaries",
+      "requiredCaseIdentity": {
+        "keys": ["Aurora", "PresetEditor"]
+      }
+    },
+    {
+      "id": "gate.boot.source.frame0-ground",
+      "owner": "BJ.W-BOOT-DIET",
+      "predicate": "The shell field's frame-zero ground and loading wash remain eager.",
+      "sourcePath": "tests/gates/boot-graph.test.ts",
+      "currentRegistration": "the shell field's frame-0 ground is EAGER, not inside the async chunk"
+    },
+    {
+      "id": "gate.boot.source.aurora-leaf",
+      "owner": "BJ.W-BOOT-DIET",
+      "predicate": "Shell-field defaults come from the barrel-free Aurora leaf.",
+      "sourcePath": "tests/gates/boot-graph.test.ts",
+      "currentRegistration": "the shell-field config reads its defaults off the barrel-free leaf"
+    },
+    {
+      "id": "gate.boot.source.no-config-barrel",
+      "owner": "BJ.W-BOOT-DIET",
+      "predicate": "No eager shell module imports the configurator barrel.",
+      "sourcePath": "tests/gates/boot-graph.test.ts",
+      "currentRegistration": "no EAGER shell module imports the configurator barrel"
+    },
+    {
+      "id": "gate.boot.build.ceilings",
+      "owner": "BJ.W-BOOT-DIET",
+      "predicate": "A parsed eager graph contains one entry, at least one preload, and stays within preload and byte ceilings.",
+      "sourcePath": "tests/gates/boot-graph.test.ts",
+      "currentRegistration": "the eager graph stays under the modulepreload and byte ceilings"
+    },
+    {
+      "id": "gate.css-reach.no-orphan",
+      "owner": "BJ.W-STATIC-HYGIENE",
+      "predicate": "No source CSS partial is orphaned from both published closure channels.",
+      "sourcePath": "tests/gates/orphan-css-partial.test.ts",
+      "currentRegistration": "no src/ CSS partial is orphaned"
+    },
+    {
+      "id": "gate.token-hygiene.clean",
+      "owner": "BJ.W-STATIC-HYGIENE",
+      "predicate": "Source carries no off-ladder radius or backdrop-blur declaration.",
+      "sourcePath": "tests/gates/token-hygiene.test.ts",
+      "currentRegistration": "src/ carries no off-ladder radius or backdrop blur"
+    },
+    {
+      "id": "gate.type-hygiene.utilities-clean",
+      "owner": "BJ.W-RAMP-RESET",
+      "predicate": "Source and demo carry no banned text-sm/text-xs utility or raw length arbitrary.",
+      "sourcePath": "tests/gates/type-hygiene.test.ts",
+      "currentRegistration": "no `text-sm`/`text-xs` utility or raw `text-[<len>]` arbitrary in src/ + demo/"
+    },
+    {
+      "id": "gate.type-hygiene.declarations-clean",
+      "owner": "BJ.W-RAMP-RESET",
+      "predicate": "Component CSS carries no raw font-size or caps-tracking literal.",
+      "sourcePath": "tests/gates/type-hygiene.test.ts",
+      "currentRegistration": "no raw font-size / caps-tracking literal in src/components/**/*.css"
+    },
+    {
+      "id": "gate.type-hygiene.cleared-vars-clean",
+      "owner": "BJ.W-RAMP-RESET",
+      "predicate": "Source CSS carries no reference to cleared text-sm/text-xs theme keys.",
+      "sourcePath": "tests/gates/type-hygiene.test.ts",
+      "currentRegistration": "no `var(--text-sm)`/`var(--text-xs)` reference to a cleared @theme key in src/**/*.css"
+    },
+    {
+      "id": "behavior.infinite-scroll.rearm-without-eager-load",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "Loading completion creates a new observer without requesting eagerly; the next intersection emits exactly the second request.",
+      "sourcePath": "tests/components/infinite-scroll.contract.test.ts",
+      "currentRegistration": "re-observes after loading without eagerly requesting another page"
+    },
+    {
+      "id": "behavior.chip.mode-transition-clears-semantics",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "Selectable to action to static transitions replace the host and clear stale pressed semantics.",
+      "sourcePath": "tests/components/chip.contract.test.ts",
+      "currentRegistration": "does not retain stale pressed semantics when mode changes",
+      "requiredCaseIdentity": {
+        "keys": ["selectable:true", "action:undefined", "static"]
+      }
+    },
+    {
+      "id": "behavior.command.active-identity-executes-once",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "Arrow navigation, active-descendant identity, Enter execution, closure, and inline selected identity remain synchronized.",
+      "sourcePath": "tests/components/command.contract.test.ts",
+      "currentRegistration": "Arrow navigation and Enter execute one shared active identity"
+    },
+    {
+      "id": "behavior.typewriter.prm-midflight-settle-once",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "A live reduced-motion transition settles an active typing pass immediately and completes exactly once.",
+      "sourcePath": "tests/components/custom/typewriter/TypewriterText.contract.test.ts",
+      "currentRegistration": "settles an active pass when reduced motion turns on"
+    },
+    {
+      "id": "behavior.accordion.single-linkage-controlled-policy",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "Single-mode accordion linkage is bijective and controlled collapsible state transfers then clears correctly.",
+      "sourcePath": "tests/components/accordion.contract.test.ts",
+      "currentRegistration": "links each heading trigger to one region and enforces controlled single policy",
+      "requiredCaseIdentity": {
+        "keys": ["alpha", "beta", "gamma-disabled"]
+      }
+    },
+    {
+      "id": "behavior.avatar.single-rendered-identity",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "Image failure and initials fallback preserve exactly one stable accessible identity while duplicates remain hidden.",
+      "sourcePath": "tests/components/avatar.contract.test.ts",
+      "currentRegistration": "announces one stable identity while hiding image and initials duplicates"
+    },
+    {
+      "id": "behavior.checkbox.tristate-render-bijection",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "Unchecked, checked, and indeterminate models map bijectively to rendered state, ARIA value, and icon anatomy.",
+      "sourcePath": "tests/components/checkbox.contract.test.ts",
+      "currentRegistration": "renders %s as a distinct %s state",
+      "requiredCaseIdentity": {
+        "keys": ["false:unchecked:false:none", "true:checked:true:check", "indeterminate:indeterminate:mixed:minus"]
+      }
+    },
+    {
+      "id": "behavior.dropdown.keyboard-roving-typeahead",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "Keyboard-opened menus retain Home, ArrowDown, and typeahead roving-focus behavior.",
+      "sourcePath": "tests/components/dropdown-menu.contract.test.ts",
+      "currentRegistration": "preserves keyboard roving focus and typeahead",
+      "requiredCaseIdentity": {
+        "keys": ["Home:First command", "ArrowDown:Grid", "typeahead-m:More"]
+      }
+    },
+    {
+      "id": "field.error.dual-description-linkage",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "Active errors join description and error IDs in aria-describedby and also own aria-errormessage, invalid state, and live politeness.",
+      "sourcePath": "tests/components/labeled-field.contract.test.ts",
+      "currentRegistration": "links active errors through both descriptive ARIA channels"
+    },
+    {
+      "id": "number.locale-form-roundtrip",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "Localized visible editing updates the numeric model while hidden form serialization remains canonical.",
+      "sourcePath": "tests/components/number-field.contract.test.ts",
+      "currentRegistration": "keeps locale formatting/parsing and numeric form serialization on one Reka path",
+      "requiredCaseIdentity": {
+        "keys": ["de-DE-visible:1,5", "model:2.5", "form:1.5"]
+      }
+    },
+    {
+      "id": "pager.tabs.panel-linkage",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "Tabs-pattern dots receive index-aligned panel IDs through aria-controls.",
+      "sourcePath": "tests/components/pager-dots.contract.test.ts",
+      "currentRegistration": "emits aria-controls on each tabs-pattern dot from panelIds",
+      "requiredCaseIdentity": {
+        "count": 3,
+        "keys": ["panel-a", "panel-b", "panel-c"]
+      }
+    },
+    {
+      "id": "slider.multithumb.aria-linkage",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "Every semantic thumb receives label, description, error-message, and invalid-state linkage.",
+      "sourcePath": "tests/components/slider.contract.test.ts",
+      "currentRegistration": "links label, invalid state, and description to every semantic thumb",
+      "requiredCaseIdentity": {
+        "keys": ["thumb:20", "thumb:80"]
+      }
+    },
+    {
+      "id": "sortable.keyboard.transaction",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "Keyboard lift, proposal, and commit preserve focus, narration, and the intended final order.",
+      "sourcePath": "tests/components/sortable-list.contract.test.ts",
+      "currentRegistration": "lifts, proposes, and commits with stable focus and one reorder",
+      "requiredCaseIdentity": {
+        "keys": ["start:a,b,c", "lift:a", "propose:3", "commit:b,c,a"]
+      }
+    },
+    {
+      "id": "tags-input.ime-delimiter-guard",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "A delimiter typed during IME composition remains draft text and does not commit another tag.",
+      "sourcePath": "tests/components/tags-input.contract.test.ts",
+      "currentRegistration": "does not commit a delimiter while an IME composition is active",
+      "requiredCaseIdentity": {
+        "keys": ["initial:alpha", "composing:draft,", "model-unchanged"]
+      }
+    },
+    {
+      "id": "tooltip.escape-description-cleanup",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "Focus opens the tooltip; Escape closes it and removes the trigger description relation.",
+      "sourcePath": "tests/components/tooltip.contract.test.ts",
+      "currentRegistration": "dismisses on Escape and removes the description relation"
+    },
+    {
+      "id": "typewriter.at.complete-once",
+      "owner": "BJ.W-GATE-COLLAPSE",
+      "predicate": "Assistive technology receives exactly one complete phrase while partial visual frames remain hidden.",
+      "sourcePath": "tests/components/typewriter.contract.test.ts",
+      "currentRegistration": "exposes the complete text once while hiding partial visual frames"
+    }
+  ],
+  "reservedVitest": [
+    {
+      "id": "reserve.a11y.contrast-floors",
+      "owner": "BAND-A11Y.W3-C",
+      "predicate": "One table-driven authored-token contrast-floor gate covers tone/ink and placeholder pairs.",
+      "expectedSourcePath": null,
+      "reservation": "hard"
+    },
+    {
+      "id": "reserve.perf.shell-field-governance",
+      "owner": "BJ.W-SHELL-FIELD-GOVERNANCE",
+      "predicate": "The permanent shell-field ownership and read-hygiene invariant lands.",
+      "expectedSourcePath": "tests/gates/shell-field-governance.test.ts",
+      "reservation": "hard"
+    },
+    {
+      "id": "reserve.perf.deferred-paint",
+      "owner": "BJ.W-DEFERRED-PAINT",
+      "predicate": "The permanent deferred-paint invariant lands.",
+      "expectedSourcePath": "tests/gates/deferred-paint.test.ts",
+      "reservation": "hard"
+    },
+    {
+      "id": "reserve.perf.route-pending",
+      "owner": "BJ.W-ROUTE-PENDING",
+      "predicate": "The permanent route-pending affordance invariant lands.",
+      "expectedSourcePath": "tests/gates/route-pending.test.ts",
+      "reservation": "hard"
+    },
+    {
+      "id": "reserve.colocation.hygiene-form-b",
+      "owner": "BJ.W-COLO-3",
+      "predicate": "If owner adjudication selects Form B, one standalone colocation-hygiene gate consumes this pre-reserved seat; Form A releases it.",
+      "expectedSourcePath": null,
+      "reservation": "conditional",
+      "condition": "BAND-COLOCATION W3 Form B is explicitly selected"
+    }
+  ],
+  "externalEnforcement": [
+    {
+      "id": "external.package.export-resolution",
+      "predicate": "The packed package resolves its public runtime and type exports.",
+      "sourcePath": "scripts/verify-export-types.mjs",
+      "enrollment": ["package.json#scripts.verify:package", "scripts/release.sh", ".github/workflows/release.yml"]
+    },
+    {
+      "id": "external.types.shared-parity",
+      "predicate": "Shared primitive, selection, interaction, and dark types retain upstream parity.",
+      "sourcePath": "tests/components/_shared/public-contracts.test-d.ts",
+      "enrollment": ["package.json#scripts.typecheck", "tsconfig.test.json", ".github/workflows/ci.yml", ".github/workflows/release.yml"]
+    },
+    {
+      "id": "external.types.chip",
+      "predicate": "Chip discriminated public prop modes accept and reject their exact shapes.",
+      "sourcePath": "tests/components/chip.public-contracts.test-d.ts",
+      "enrollment": ["package.json#scripts.typecheck", "tsconfig.test.json", ".github/workflows/ci.yml", ".github/workflows/release.yml"]
+    },
+    {
+      "id": "external.types.command",
+      "predicate": "Command public types retain the ruled scalar, search, and update surface.",
+      "sourcePath": "tests/components/command.public-contracts.test-d.ts",
+      "enrollment": ["package.json#scripts.typecheck", "tsconfig.test.json", ".github/workflows/ci.yml", ".github/workflows/release.yml"]
+    },
+    {
+      "id": "external.types.disclosure",
+      "predicate": "Accordion and Collapsible public type contracts remain exact.",
+      "sourcePath": "tests/components/disclosure.public-contracts.test-d.ts",
+      "enrollment": ["package.json#scripts.typecheck", "tsconfig.test.json", ".github/workflows/ci.yml", ".github/workflows/release.yml"]
+    },
+    {
+      "id": "external.types.dropdown-menu",
+      "predicate": "Dropdown public root and part types retain exact admitted and forbidden props.",
+      "sourcePath": "tests/components/dropdown-menu.public-contracts.test-d.ts",
+      "enrollment": ["package.json#scripts.typecheck", "tsconfig.test.json", ".github/workflows/ci.yml", ".github/workflows/release.yml"]
+    },
+    {
+      "id": "external.types.floating",
+      "predicate": "Popover and Tooltip public type contracts remain exact.",
+      "sourcePath": "tests/components/floating.public-contracts.test-d.ts",
+      "enrollment": ["package.json#scripts.typecheck", "tsconfig.test.json", ".github/workflows/ci.yml", ".github/workflows/release.yml"]
+    },
+    {
+      "id": "external.types.primitive-display",
+      "predicate": "Primitive display-family public type contracts remain exact.",
+      "sourcePath": "tests/components/primitive-display.public-contracts.test-d.ts",
+      "enrollment": ["package.json#scripts.typecheck", "tsconfig.test.json", ".github/workflows/ci.yml", ".github/workflows/release.yml"]
+    },
+    {
+      "id": "external.types.toast",
+      "predicate": "Toast handle and options contracts accept and reject their exact keys.",
+      "sourcePath": "tests/components/toast.public-contracts.test-d.ts",
+      "enrollment": ["package.json#scripts.typecheck", "tsconfig.test.json", ".github/workflows/ci.yml", ".github/workflows/release.yml"]
+    },
+    {
+      "id": "external.browser.aurora-floor",
+      "predicate": "Aurora paints a non-black interior on the real release-hardware path and the planted black mutation fails.",
+      "sourcePath": "tests-visual/substrate-paints-color.spec.ts",
+      "enrollment": ["scripts/release.sh", "tests-visual/package.json#scripts.gate:pixel-floor", "tests-visual/package.json#scripts.gate:pixel-floor:planted"]
+    },
+    {
+      "id": "external.browser.blob-floor",
+      "predicate": "Blob paints a contained non-flood droplet in CI and the planted blank/flood mutation fails.",
+      "sourcePath": "tests-visual/substrate-paints-color.spec.ts",
+      "enrollment": [".github/workflows/ci.yml#pixel-floor", "tests-visual/package.json#scripts.gate:pixel-floor:ci", "tests-visual/package.json#scripts.gate:pixel-floor:ci:planted"]
+    }
+  ],
+  "ordinaryTestLaw": {
+    "detectorSelfTestsRemainExecuted": true,
+    "componentRegressionsRemainExecuted": true,
+    "ordinaryTestsConsumeBudget": false,
+    "refractScenarioStatus": "browser acceptance debt; present in Playwright configuration but absent from a machine CI/release enrollment edge"
+  }
+}

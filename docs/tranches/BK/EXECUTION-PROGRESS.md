@@ -117,6 +117,40 @@ owner word) — the §C value contracts and 8.0.0 breaking relays stand untouche
 0.11.2 bump is KEPT with its audit routed to that repo's tranche. **The cure dispatch opens now**
 per APOTHEOSIS §THE RATIFIED CURE ORDER (as amended by (2)).
 
+⊕¹³ᵃ **2026-08-03 · THE SE-1 LOSS, RECORDED AND CORRECTED (cure §8, lane 5):** the nine J-14
+"outside `docs/`" artifacts the audit found destroyed — `card-raw.json` (deleted against an
+explicit HOLD-FOR-OWNER conditioned on the UNSTARTED #22 frost ruling) · `motion-probe.json` ·
+`scripts/verify-governed-invariants.mjs` (**the** detector TR#65 names for the 48-active/5-reserved
+code-side gate register) · `vitest.governed-setup.mjs` · `tests/governance/`
+{`governedInvariant.ts`, `chipListener.setup.ts`, `fixtures/captureEventMethod.ts`} ·
+`tests/styles/tokenGraphDetector.ts` · `tests/composables/glass/supportsBackdropRefract.test.ts` —
+are **gone from disk, appear in ZERO commits across all refs, and the banked recovery tar
+`/tmp/codex-2026-07-28.untracked.tar.gz` is destroyed with them**; only `scripts/safari-probe.mjs`
+of the ten survives (tracked). **CORRECTION to the audit's "unrecoverable"**: all nine are
+byte-recoverable in THIS clone from two local stash refs — `f37407cd3a277af789fe10480ea2f997452059f3^3`
+(the REJECTED-WITH-SALVAGE governance instrument, eight of the nine) and
+`003a8339526eadea944ca97bbe34b5f0d0ce6f39^3` (`motion-probe.json`) — read with
+`git cat-file -p <sha>^3:<path>`; every blob re-read this date. Stashes are local refs: a fresh
+clone still gets none of them, and a `git stash clear` or a gc ends it. **Standing:** rows #9/#65
+may not quote any code-side gate register until the detector is RECOVERED (from the pinned stash)
+or re-derived and committed — a register figure without its committed detector is the exact
+"both figures ship with their detectors or neither ships" violation TR#65 forbids. Their
+adjudicated dispositions (HOLD / HOLD-FOR-OWNER / REJECTED-WITH-SALVAGE) are unchanged by this
+record; recovery is a row's act, not a bookkeeping one.
+
+⊕¹³ᵇ **2026-08-03 · THE CENSUS DISPOSITION (cure §8, lane 5):** the two masking `.gitignore` lines
+are STRUCK and the corpus they hid is COMMITTED, not deleted — 239 files (205 under
+`docs/tranches/BJ/addenda/2026-07-21-convergent-hardening/`: 192 md + 12 json + 1 snapshot tar; 34
+`docs/tranches/BJ/coordination/SOL-TO-CLAUDE-LIVE-STEER*.md`), every one of which appeared in zero
+commits until this cut. Residue stated honestly: 625 png + 50 jpg captures under that addenda tree
+remain untracked under the STANDING global `*.png`/`*.jpg` ignore (a pre-existing policy, not the
+codex masking) and still travel with no clone — a narrow force-track carve-out is a #4/#16 call, not
+this lane's. The "0 Git-visible untracked" seal metric that those two lines produced is void with
+its seal. Row #8's evidence dirs collapse 3 → 1 (R2 + `AMEND.md`, both predecessor SHA256s and the
+malformed 65-char `componentStyles` digest recorded there); the tracked R1 stays readable at
+`git cat-file -p c0aab911:docs/tranches/BK/execution/2026-08-02-row8-pkg-truth/PACKAGE-RECEIPT.json`,
+the untracked `2026-08-01` CONTRACT.md is deleted by cure order with its hash banked.
+
 ⊕¹⁴ **THE OWNER'S CORRECTION (2026-08-03, mid-dispatch), verbatim:** *"I TOLD the codex instance
 to own the tranche and the like. I've changed that edict now. You own it. That's not a forgery.
 And anyways, that's irrelevant. Focus on the actual implementation and tranche quality."*
@@ -160,8 +194,8 @@ DesignSync → Fable apotheosis) run under it.
 
 | # | wave | Φ | state | spec of record | gates |
 |---|---|---|---|---|---|
-| 6 | W-BUILD-COLORMIX | Φ2 | UNSTARTED | TR#6 → WAVES:23 + GF fold D0 | G-WK-COLORMIX-BUDGET born-RED at `morph.css:125` (+G-WK-BOOT arm; G-CSS-SPLIT acceptance); D0 gates every Safari π |
-| 7 | dock-SIGABRT constraint | Φ2 | UNSTARTED | TR#7 → RECONCILIATION §2 r3 (`morph.css:125-144`) | G-NO-STACKED-URL-FILTER (⊕⁵ UNIT CASE, no seat — SE-7; born-RED `PagerDots.vue:493`); design fence on #47 |
+| 6 | W-BUILD-COLORMIX | Φ2 | UNSTARTED | TR#6 → WAVES:23 + GF fold D0 | G-WK-COLORMIX-BUDGET born-RED at the dock morph partial (`src/components/dock/styles/morph.css` — the line coordinate `:125` is DEAD as of 2026-08-03: the file was rewritten and carries zero `color-mix`; locate by content, not line) (+G-WK-BOOT arm; G-CSS-SPLIT acceptance); D0 gates every Safari π |
+| 7 | dock-SIGABRT constraint | Φ2 | UNSTARTED | TR#7 → RECONCILIATION §2 r3 (`src/components/dock/styles/morph.css` §bloom-from-source decongest — the `.glass-dock[data-morphing]` self-blur `filter` arm; the old `:125-144` coordinate is DEAD, the file was rewritten) | G-NO-STACKED-URL-FILTER (⊕⁵ UNIT CASE, no seat — SE-7; born-RED `PagerDots.vue:493`); design fence on #47 |
 
 ## Φ3
 
