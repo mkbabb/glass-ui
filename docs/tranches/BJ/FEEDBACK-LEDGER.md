@@ -21,9 +21,10 @@ owner's own words, and they are the citation target wherever a BJ row restates t
 The per-row lineage — which BJ row restates which antecedent, its first-asked date, its age, and how
 many sittings carried it — lives once, at
 `docs/tranches/BK/execution/2026-08-03-row15-provenance/PROVENANCE-REGISTER.md` §2. It is cited, not
-restated here. Headline: 25 of the 68 asks were first made on 06-10 and 18 on 06-23; thirteen have
-been asked three or more times; the dock (F47), the app-wide blur/rounding hierarchy (F48), and the
-blob (A12) have been asked **four** times each and are the oldest live asks in the tranche.
+restated here. Headline: 25 of the 68 asks were first made on 06-10 and 18 on 06-23. There are only
+**three sittings**, so an ask can be restated at most three times: **ten asks sit at that ceiling**,
+and the dock (F47), the app-wide blur/rounding hierarchy (F48), and the blob (A12) are among them —
+carried by all three sittings, and the oldest live asks in the tranche.
 
 Two record corrections that this ledger does not own: the demo port above is stale (5400 is the ruled
 port, TR#4 at `74c59ade`), and `feedback/F19-metric-badge-overround-grid.png`, cited by CFR-01, is on

@@ -50,7 +50,16 @@ and the antecedent is cited by file item-id. Where no antecedent names the subje
 **BJ-native** and its age is 17 d. The verbatim owner words live at the cited files; they are cited
 here, never restated (one-source law).
 
-`n` = number of sittings the subject appears in (BJ inclusive).
+**`n` — the SITTING-DATE detector, applied uniformly.** `n` = the count of distinct **sitting dates**
+in which the subject appears, BJ inclusive. §1's corpus has exactly three sittings — **2026-06-10
+(AY)** · **2026-06-23 (BD)** · **2026-07-17 (BJ)** — therefore **`n` ∈ {1,2,3}, and `n`=4 is
+impossible**: the three BD batch files are *one* sitting delivered in three files, and two item-ids
+inside one file are still one sitting. `n` counts sittings — never files, never item-ids.
+
+**⊕ 2026-08-03 (Φ3 doc-cure):** the column was authored under a mixed detector, some cells counting
+item-ids or files, which put three rows at an unreachable `n`=4. Corrected in place under the uniform
+detector above: **F33 3→2 · F47 4→3 · F48 4→3 · A12 4→3 · A14 3→2 · CFR-01 3→2.** No first-asked
+date, no age, and none of the three date-counts below moves — only `n` does.
 
 | BJ row | subject | antecedent(s) | first asked | age (08-03) | n |
 |---|---|---|---|---|---|
@@ -86,7 +95,7 @@ here, never restated (one-source law).
 | F30 | `/motion/tempo` — "what even is" | AY B17 (prune class) | 06-10 | 54 d | 2 |
 | F31 | curve-gallery padding; modularize easing curve | BD-b1 #6 | 06-23 | 41 d | 2 |
 | F32 | reveal vs the other scrolling components | AY B17 (prune class) | 06-10 | 54 d | 2 |
-| F33 | deck vs carousel — collapse; dot animations refined | **BD-b1 #2** (deck too fast/small/subtle) · **BD-b3 C2** (same substrate, de-duplicate) | 06-23 | 41 d | 3 |
+| F33 | deck vs carousel — collapse; dot animations refined | **BD-b1 #2** (deck too fast/small/subtle) · **BD-b3 C2** (same substrate, de-duplicate) | 06-23 | 41 d | 2 |
 | F34-F40 | handmark: awful · not pen-like · broken · disjointed · greenfield · layering · meta-text | — | 07-17 | 17 d | 1 |
 | F41 | text-motion npm-install block | — | 07-17 | 17 d | 1 |
 | F42 | `/motion/scroll` vs the others | AY B17 (prune class) | 06-10 | 54 d | 2 |
@@ -94,8 +103,8 @@ here, never restated (one-source law).
 | F44 | `/compositions/settings` overfit | AY B17 | 06-10 | 54 d | 2 |
 | F45 | gate-pattern rounding; prune compositions | AY B17 · BD-b2 B2 | 06-10 | 54 d | 3 |
 | F46 | intro double-card, blank, slow | AY B22 (full-bleed, no sub-container) | 06-10 | 54 d | 2 |
-| F47 | **dock UX greenfield again** — scroll affordance, auto-scroll to occluded | **AY B1/B2/B4/B5/B8/B9/B15** · **BD-b2 A1-A7** · **BD-b3 A1-A13** | 06-10 | **54 d** | **4** |
-| F48 | hierarchy/blur/rounding app+framework wide; blur subtler | AY B11 · BD-b1 #1 · BD-b3 A4 | 06-10 | 54 d | 4 |
+| F47 | **dock UX greenfield again** — scroll affordance, auto-scroll to occluded | **AY B1/B2/B4/B5/B8/B9/B15** · **BD-b2 A1-A7** · **BD-b3 A1-A13** | 06-10 | **54 d** | **3** |
+| F48 | hierarchy/blur/rounding app+framework wide; blur subtler | AY B11 · BD-b1 #1 · BD-b3 A4 | 06-10 | 54 d | 3 |
 | F49 | OpenAI popup — subtle blurring reference | BD-b3 A4 | 06-23 | 41 d | 2 |
 | F50 | gradient blur behind popovers/modals | — | 07-17 | 17 d | 1 |
 | A01 | engagement affordance edict; slider modal/grow variants | AY B3 · BD-b3 B1 | 06-10 | 54 d | 3 |
@@ -109,19 +118,23 @@ here, never restated (one-source law).
 | A09 | addenda not ad-hoc patches | — | 07-17 | 17 d | 1 |
 | A10 | aristotelian proportion audit of UI | — | 07-17 | 17 d | 1 |
 | A11 | "what of our breath of life" | BD-b3 B1 | 06-23 | 41 d | 2 |
-| A12 | **blob greenfield** — old value.js, cartoon shadow, metaballing, emotional states | **AY B10** (largely broken, pixelated, no goo/satellites, rebuild from first principles) · **AY B18** · **BD-b2 C1** (totally broken; ghost dashed outline) | 06-10 | **54 d** | **4** |
+| A12 | **blob greenfield** — old value.js, cartoon shadow, metaballing, emotional states | **AY B10** (largely broken, pixelated, no goo/satellites, rebuild from first principles) · **AY B18** · **BD-b2 C1** (totally broken; ghost dashed outline) | 06-10 | **54 d** | **3** |
 | A13 | **aurora modes** — van Gogh, oil pastel, crayon | **AY B20** (van-Gogh awful + laggy, rebuild) · **AY B21** (crayon too oily; oils laggy) · **AY B19** (preview black bar) · BD-b2 D1 | 06-10 | **54 d** | **3** |
-| A14 | procedural components codified (umbrella over A12/A13) | AY B10/B20 | 06-10 | 54 d | 3 |
+| A14 | procedural components codified (umbrella over A12/A13) | AY B10/B20 | 06-10 | 54 d | 2 |
 | A15 | Fable-class models for the grand audit | — | 07-17 | 17 d | 1 |
 | A16 | maximal parallelization; nothing dropped | — | 07-17 | 17 d | 1 |
 | A17 | slow-load/stutter class as a first-class perf lens | BD-b2 A7 (FOUC) | 06-23 | 41 d | 2 |
-| CFR-01 | metric family shape (grid → card, never pill) | AY B17 · BJ F18 | 06-10 | 54 d | 3 |
+| CFR-01 | metric family shape (grid → card, never pill) | AY B17 · BJ F18 | 06-10 | 54 d | 2 |
 
 **Counts** (this table's own arithmetic, detector = the rows above; 68 asks in 62 table lines, the
 seven handmark rows F34-F40 grouped on one line because they are one subject): **25 BJ-native**
-(17 d) · **18** first asked 06-23 (41 d) · **25** first asked 06-10 (54 d). **Thirteen asks carry
-n≥3 sittings** — F05, F06, F10, F27, F33, F45, F47, F48, A01, A12, A13, A14, CFR-01 — of which
-**F47 · F48 · A12 sit at n=4**.
+(17 d) · **18** first asked 06-23 (41 d) · **25** first asked 06-10 (54 d). **Ten asks sit at the
+detector's ceiling, n=3** — F05, F06, F10, F27, F45, F47, F48, A01, A12, A13: every one of them
+carried by all three sittings, which is as often as an ask can be restated in this corpus. There is
+no n=4 and there cannot be one (§2's detector). *(⊕ 2026-08-03: this sentence read "thirteen asks
+carry n≥3 … of which F47 · F48 · A12 sit at n=4"; F33, A14, and CFR-01 fall to n=2 and the three
+n=4 cells fall to n=3 under the uniform detector. The 25/18/25 date-counts are unaffected — they read
+first-asked dates, not sittings.)*
 
 **The dock, the blob, and the aurora are the oldest live asks in the tranche.** Their roster rows are
 #47 (GF-DOCK), #50 (GF-BLOB), #49 (GF-AURORA). Nothing in this register moves their state; it makes
@@ -151,7 +164,9 @@ screenshots**) · **B18** (the empty-states blob reads better than the others; o
 mascot scales down) → `BD/viz/refine/USER-FEEDBACK-2026-06-23-batch2.md` **C1** ("totally broken";
 the dashed outline does not follow the proper path) → BJ **A12** (look to the OLD value.js
 implementation — cartoon shadow, proper metaballing, emotional states, high dynamic interactivity).
-First asked **2026-06-10, 54 days old at this seat, four sittings.** Two provenance facts bind the
+First asked **2026-06-10, 54 days old at this seat, three sittings** — all three the corpus has, which
+is what makes it the oldest continuously-restated ask on the roster *(⊕ 2026-08-03: read "four
+sittings"; corrected under §2's sitting-date detector, which admits no fourth sitting)*. Two provenance facts bind the
 wave: (a) the owner's reference target is a **historical** implementation plus the old captures, not
 a fresh invention — the DESIGN-NOW §blob-physics spec of record is the terminal design and inherits
 that target; (b) "rebuild from first principles" is the owner's phrase from 06-10, twice re-earned,
@@ -202,11 +217,15 @@ explicitly owns "the `demo:serve --port 5199`→5400 line"; this row does not ed
 records it here, and the ledger's new §PROVENANCE block points at the correction rather than
 restating it. **Owner: #4.**
 
-**F-3 · no codex-era provenance record exists to correct.** Row #15 is UNSTARTED at
-`EXECUTION-PROGRESS.md:258` and appears in no seal, receipt, or claim in the codex corpus; the
-0/87-VOID census (⊕¹²/⊕¹⁴) therefore invalidates nothing this row inherits, and the graph-v3 arc
-(APOTHEOSIS cure §1, questions returned to #21) touches no provenance artifact. Stated because the
-absence is a finding, not a silence.
+**F-3 · no codex-era provenance record exists to correct.** Row #15 appears in no seal, receipt, or
+claim in the codex corpus; the 0/87-VOID census (⊕¹²/⊕¹⁴) therefore invalidates nothing this row
+inherits, and the graph-v3 arc (APOTHEOSIS cure §1, questions returned to #21) touches no provenance
+artifact. Stated because the absence is a finding, not a silence.
+*(⊕ 2026-08-03, Φ3 doc-cure: this finding used to open "Row #15 is UNSTARTED at
+`EXECUTION-PROGRESS.md:258`" — a **self-referential** cite. That cell was the row's own **pre-edit**
+state, and §6 item 4 records this very row flipping it; the finding cannot rest on a line it is about
+to rewrite. The UNSTARTED read is retired as pre-edit state; the finding stands on the codex-corpus
+absence alone, which no edit of this row's own cursor cell can touch.)*
 
 **F-4 · one ledger anchor class is URL-only.** Rows F02/F06/F07/F13/F14/F16/F18/F19/F20/F23/F24/F25/
 F26/F29/F30/F32/F33/F42/F44 carry a route, not a screenshot. That is the ledger's own declared class

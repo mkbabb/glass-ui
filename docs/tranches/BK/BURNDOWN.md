@@ -97,3 +97,48 @@ did not reproduce under any detector in the corpus and is superseded by row #12'
 Likewise "23 HELD AX books" → **21** unresolved booked triggers (enumerated at
 `ORPHAN-ROWS-CLOSE.md` §4.2) and "50 BJ `OPEN-*` ids" → **55** (detector stated at §4.4). Retired
 figures are named here once and then not carried.
+
+---
+
+## 2026-08-03 · amendment 1 — two field re-keys and one citation swap
+
+Rule 1 holds: entries 1 and 2 are **not** rewritten, and nothing above this line is edited. This is
+the batched, dated correction rule 7 sends here (VALIDATION §4 rule 7), authored by the Φ3 doc-cure
+lane against rows #11 (the vocabulary) and #16 (the citation). **No figure in either entry moves** —
+every numerator, denominator, member list, and the spread all stand exactly as read. What changes is
+what two of the fields are *called*, and where one parenthetical points.
+
+**Re-key 1 — entry 1 field 1 and entry 2 field 1 are not a `spec_state` census.** Both are headed
+"`spec_state = sealed`, execution-live rows: 0 / N". Under **L-8** (`PROCESS-CURE.md:85`, the row-11
+record's own three-field law) `spec_state ∈ {draft, banked, sealed}` is a per-row field of the
+roster; what those two fields actually read is ⊕¹²'s census of **codex-delta seal standing**, a
+different population — as entry 2's own note already concedes (*"the two populations are different
+denominators"*). Labelling a seal-standing reading with a row-state key contradicts the very
+vocabulary row #11 minted. **Both fields are re-keyed to *the Challenge-Law seal-standing census*** —
+entry 1: 0 / 87; entry 2: 0 / 88. Numerators, members (none), and source (⊕¹²/⊕¹⁴) unchanged; only
+the key is.
+
+**Re-key 2 — `landed-doc-side` is struck as a `spec_state` value.** Entry 2 field 3 is headed
+"`spec_state ∈ {banked, landed-doc-side}`". L-8 admits exactly three values and `landed-doc-side` is
+not one of them: it is a *cursor cell* phrase (`EXECUTION-PROGRESS.md` rows #11–#15 read "LANDED
+doc-side"), which reports where the deliverable sits, not what the spec's state is. **Field 3 is
+re-keyed to *the banked doc-side deliverable census*, 6 / 88 — all six members are `spec_state =
+banked` under L-8.** The six members, their artifacts, their line counts, and the closing sentence
+(none is sealed) are unchanged. `landed-doc-side` is not a spec_state anywhere in BK and is not
+quoted as one from here.
+
+**Citation swap — entry 2's #91-mint cite.** Entry 2's denominator correction reads *"The roster has
+held 91 ids since ⊕¹⁰ minted `#91 W-MUSIC-STAFF` (`EXECUTION-PROGRESS.md:71`)"*. That line number is
+wrong and the collision that produced it is worth naming: **two different ⊕¹⁰ marks exist.** The BK
+cursor's own ⊕¹⁰ is the **row-8 seal** (`EXECUTION-PROGRESS.md:66`), and `:71` falls inside it — it
+reads *"the failed predecessor remains frozen as AMEND chronology (SHA256 …)"* and says nothing about
+#91. The mint is **TERMINAL-ROSTER's ⊕¹⁰** (`docs/tranches/BJ/addenda/2026-07-24-refinement/TERMINAL-ROSTER.md:16`,
+*"ROW #91 MINTED BY OWNER WORD (2026-08-03)"*), **recorded at BK cursor ⊕¹³**
+(`EXECUTION-PROGRESS.md:117` — *"row #91 W-MUSIC-STAFF minted at TR ⊕¹⁰"*), with the roster row
+itself at `:288` carrying `TR ⊕¹⁰` in its source cell. **Read entry 2's parenthetical as: TR ⊕¹⁰
+(`TERMINAL-ROSTER.md:16`), recorded at BK cursor ⊕¹³ (`EXECUTION-PROGRESS.md:117`).** The 91-id
+roster, the 88 denominator, and every field beneath are unaffected — only the anchor was wrong.
+
+**Nothing else is amended, and this amendment mints no figure.** It quotes no percentage; the spread
+of record remains entry 2's **0% – ≈18.2%**, and the standing Φ0/Φ1 `SEALED`-cell discrepancy remains
+the pass-2 re-adjudication's to correct, uncounted here as in both entries.

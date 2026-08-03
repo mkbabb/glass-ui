@@ -116,10 +116,20 @@ are FALSE and are struck in place with their falsifier — five §1a rows (F11 �
 F23 · the three-wave row) and one id carried only by the `G-ROW-HOMED` RED condition at §3 (F41).
 Nothing is deleted; each struck row keeps its text with the ground beside it, so no citation dangles.
 Ground of record: `RECONCILIATION.md:154-210` (§4, "ORPHAN … minus 2 it got wrong" + LANDED table +
-Counts: "ORPHAN 9 (not 11)"). The six surviving §1a gaps — A12 · A14 · A16 · A04-remainder · F25 ·
-F33-goo-morph — stand as TR #16's scope, save **A04-remainder, DISCHARGED** by TR §A.2's adjudicated
-DAG (`TERMINAL-ROSTER.md:244-272`; arm ruling C-A04 ADOPT-DISCHARGED at
-`TERMINAL-ROSTER.arm-fable.md:117`). Full record:
+Counts: "ORPHAN 9 (not 11)").
+
+**⊕ 2026-08-03 (Φ3 doc-cure) — the surviving-gap list is re-cut to three.** This paragraph read *"the
+six surviving §1a gaps — A12 · A14 · A16 · A04-remainder · F25 · F33-goo-morph — stand as TR #16's
+scope, save A04-remainder, DISCHARGED"*, and it contradicted the table directly below it on two
+counts. **A12 and A14 are struck at their own cells** (below, "STRUCK — HOMED (row #16,
+2026-08-03)"): both are owned by name at `TERMINAL-ROSTER.md:286` — A12 at TR **#50 GF-BLOB**, A14's
+umbrella half at the same line with `PROCEDURAL-LEDGER` kept as the umbrella — so neither is a gap
+and neither is scope. **A04-remainder is DISCHARGED at its own cell**, not merely excepted in prose:
+the graph-design half *is* TR §A.2's adjudicated DAG (`TERMINAL-ROSTER.md:244-272`; arm ruling C-A04
+ADOPT-DISCHARGED at `TERMINAL-ROSTER.arm-fable.md:117`). It does not stand.
+
+**The surviving §1a gaps are three — A16 · F25 · F33-goo-morph** — and those three, and only those,
+stand as TR #16's scope. Each keeps its own unstruck cell below. Full record:
 `docs/tranches/BK/execution/2026-08-03-row14-phantom-repair/PHANTOM-REPAIR.md`.
 
 | gap | why it fell through |

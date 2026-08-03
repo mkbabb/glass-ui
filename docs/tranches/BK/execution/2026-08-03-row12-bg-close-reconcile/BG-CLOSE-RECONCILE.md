@@ -39,8 +39,14 @@ verdict**; where a BG wave's acceptance was a live-π, this row records the disp
    MOOT-GATE** — the wave cannot land, and its *substance* (if any) routes to a BK row.
 2. **The graph-v3 arc FALLS.** APOTHEOSIS cluster C, `FALLS ENTIRE`; cure §1 executed on disk at
    **`d2f202bc`** (`revert(BK): kill the graph-v3 instrument arc + un-serialize the suite`).
-   Verified at HEAD: `tests/architecture/` **absent** · `scripts/build-import-dag-v3.mjs` **absent** ·
+   Verified at the walk read-point **`aee47957`**: `tests/architecture/` **absent** ·
+   `scripts/build-import-dag-v3.mjs` **absent** ·
    `IMPORT-DAG-V3.json` **absent** · `tests/gates/boot-graph.test.ts` present at 406 lines.
+   **Read-point note (Φ3 doc-cure, 2026-08-03):** the 406 is pinned to **`aee47957`**, this row's
+   walk SHA, and is true there. It is **not** true at HEAD any longer — the pass-2 salvage re-land
+   (`1fae253a`, *"boot-graph 638-line salvage re-land (858c1087 verbatim, 6 detectors)"*) carries the
+   file to **638 lines**. Quote the figure with its SHA or not at all; the three absences above are
+   unaffected and hold at both read-points.
    **Consequence for this row:** BG's `G1 dag-paint-keystone` arc (`FINAL.md:656`) is a *different*
    dag from the codex graph-v3 instrument and is **not** revived by it. All graph questions return
    to **BK #21 `W-DAG-REDUCE`** at Φ5, per cure §1's own words.
@@ -376,7 +382,14 @@ declarations). **The corrected statement of record: BG's *cursor* froze at front
 did not stop there.** The genuine BG failure is the one this row exists to cure — **no FINAL, no
 close record** — not an early halt. `FINAL.md` self-describes as *"the develop-ready plan, NOT an
 implementation"*, and BG's own 34-row ledger against 119 waves is a *ledger* gap, not a build gap:
-this walk finds **34 names LANDED or LANDED-OTHER at HEAD** that no BG close record ever claimed.
+this walk finds landed names at HEAD that no BG close record ever claimed. **Figure retired here
+(Φ3 doc-cure, 2026-08-03):** this sentence used to close with its own *"34 names LANDED or
+LANDED-OTHER at HEAD that no BG close record ever claimed"*, which read as a second never-claimed
+figure against §5's, and collided visually with the 34-row ledger count standing beside it. The two
+34s were never the same fact. **The never-claimed figure lives once, at §5 — 23, out of a landed
+total of 46, detector stated there.** The 34 that survives in this sentence is
+`RECONCILIATION.md:77`'s count of the rows in BG's own cursor ledger: a ledger-size fact, quoted, not
+a landed-name count derived here.
 
 ---
 
@@ -417,11 +430,35 @@ Machine-derived from §2's own table, not hand-tallied:
 | RETIRE (falsifier stated) | **15** | RETIRE 10 · RETIRE-UNBUILT 2 · RETIRE-UNTRIGGERED 1 · RETIRE-SUPERSEDED 1 · RETIRE-6+1-DECIDE 1 |
 | **total units walked** | **120** | 119 `BG.W-*` ids + `createFragmentGLPass` |
 
-**Landed-and-never-claimed: 46** (LANDED + LANDED-OTHER) — the size of the accounting loss a BG
-FINAL would have prevented, and the answer to `RECONCILIATION.md:77`'s "66 of 119 appear in zero
-commits": far more of BG is on disk than its own ledger ever claimed. **Live residue: 43 rows, every
-one homed** on a BK roster row; #16 `W-ORPHAN-ROWS` (`G-ROW-HOMED`) verifies that closure over this
-file.
+**Landed total: 46** = LANDED 38 + LANDED-OTHER 8. That is the answer to `RECONCILIATION.md:77`'s
+"66 of 119 appear in zero commits": far more of BG is on disk than its own ledger ever claimed. It is
+a *landed* figure and nothing else.
+
+**Landed-and-never-claimed: 23 of those 46** — **the one never-claimed figure of record.** It is the
+size of the accounting loss a BG FINAL would have prevented. Detector, stated so it is falsifiable: a
+landed name is **CLAIMED** iff a BG close record asserts its completion — (a) a
+`BG/execution/EXECUTION-PROGRESS.md` row whose own status cell reads `DONE`, (b) a `BG/FINAL.md`
+defect-table row carrying `✅` that names it, or (c) a `FOLD-LEDGER.md` `MET` row whose dest names it.
+Anything else is never-claimed. **Claimed, 23**, by that detector: `W-BE-BF-LEDGER` ·
+`W-CARTOON-INK-GAMUT` · `W-CONSTELLATION-PARALLAX-OFF` · `W-CONSTRAINT-MANIFEST` ·
+`W-DEAD-COMPOSABLE-CUT` · `W-DEFERRED-LEDGER` · `W-DISPOSITION-RESTAMP` · `W-DOCK-BLUR-RETIRE-CARVE` ·
+`W-DOCK-CUT` · `W-DOCK-DECOMPOSE` · `W-FIELD-AURORA` · `W-GLASS-BLUR-PEER` · `W-GLASS-CLIP-DISCIPLINE` ·
+`W-GOO-BARBELL-CSS` · `W-SCROLL-PROGRESS-RAIL` · `W-SECTION-TYPEWRITER-FADEUP` · `W-SHEET-INSET-ROOT` ·
+`W-STORY-PAGE-API` · `W-VIZ-DEMIGRATE` (cursor `DONE` rows) · `W-DOCK-CAP-SCROLLS` ·
+`W-DOCK-CAST-RETIRE` · `W-DOCK-OVERFLOW-FADE` (`FINAL.md:218,227` ✅ D3/D12) · `W-CLOSEFIX-9SITE`
+(claimed under its rename at the cursor's own `0.7` `DONE` row, *"renamed off CLOSEFIX-9SITE"*).
+Clause (c) adds nobody: the 12 `MET` rows route only to `W-DISPOSITION-RESTAMP`, `W-DEFERRED-LEDGER`
+(both already claimed), `W-COHERENCE-CENSUS` and `W-GLASS-CONSUMER-BAND` (neither landed).
+**Never-claimed, 23** — the complement over §2's landed rows: `W-AMBIENT-HISTOGRAM-LEAF` ·
+`W-CANVAS-LIFECYCLE-LEAVES` · `W-CHIP-ALIAS-KILL` · `W-CUT` · `W-DEAD-TOKEN-SWEEP` ·
+`W-DEMO-CHASSIS-CONSOLIDATE` · `W-DEMO-STYLE-REHOME` · `W-DOCK-MORPH-UNIFY` · `W-GLASS-SOTA-LADDER` ·
+`W-LIQUID-ENTRANCE-GENERAL` · `W-PAPER-CROSSREPO-ASKS` · `W-PAPER-SUFFUSE` · `W-SAFARI-BLUR-LITERAL` ·
+`W-SCROLL-PROGRESS-GLASSY` · `W-SFC-CSS-PARTIAL-SWEEP` · `W-SIRI-DOCK-INTEGRATION` · `W-SPIKE-DELETE` ·
+`W-TABS-KEYBOARD-LEAF` · `W-TAILWIND4-IDIOM` · `W-TIMELINE-ENCAPSULATE` · `W-VIZ-INTRINSIC-SIZE` ·
+`W-VIZ-SIZER-ADOPT-HARD` · `W-VIZ-SUBSTRATE-DELETE`.
+
+**Live residue: 43 rows, every one homed** on a BK roster row; #16 `W-ORPHAN-ROWS` (`G-ROW-HOMED`)
+verifies that closure over this file.
 
 **Routing concentration** — every `#NN` appearing in a route/falsifier cell across all 120 rows (a
 row may name two): #22×13 · #58×8 · #47×8 · #10×8 · #27×6 · #26×6 · #62×5 · #59×5 · #65×4 · #76×3 ·
