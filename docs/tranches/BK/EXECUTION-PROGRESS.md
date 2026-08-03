@@ -187,6 +187,21 @@ luminance-observer writes) is that row's one-word subtraction. (4) the row-6
 row-6 clones (~78 GB) are outside the driver's path permissions — the one owner command:
 `rm -rf /Users/mkbabb/Programming/glass-ui-row6-v{6,7,8,12,27,28,29,30,31,32,33}-isolated`.
 
+⊕¹⁷ **THE EXECUTION CHARTER (owner, 2026-08-03 afternoon, verbatim excerpts):** *"Begin and
+continue the current tranche… adhere exactly to the plan, in particular regarding agent
+orchestration and deep parallelization. Do not edit items directly unless befitting and fully
+orchestrate the processes as team lead. Continue through this indefatigably: do not relinquish
+control back to me until you have completed the plan IN TOTALITY. NO quick solutions, NO
+workarounds: idiomatic, gestalt approaches. Execute with maximal parallelism and workflow usage.
+You are authorized to publish, push, and pull whatever items you need — and deploy anything and
+everything via Cloudflare, AWS's CLI, etc. Use your core model for orchestration, design,
+synthesis, but defer to Opus or Sonnet for workflow fanout. Ensure total robustness with
+non-spammy or duplicative crons; suffuse durability to survive both crashes and system walls."*
+BOUND: Fable leads + adjudicates; Opus/Sonnet fan out; ≤4 workflows per batch (standing wall);
+ONE self-renewing guardian cron (crash bootstrap = EXEC-STATE → this cursor → pass registers);
+push-to-origin at each waypoint = durability; clones deletion owner-executed (path-permission
+wall). Clone deletion of the 11 residues re-ordered by owner word this date.
+
 ## Φ0 — executable this hour
 
 | # | wave | Φ | state | spec of record | gates |
