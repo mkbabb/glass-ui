@@ -42,7 +42,7 @@ document mechanics. Row #5 is **SEALED** at source HEAD
 PASS, Challenge J PASS, and adjudication K PASS-and-seal. Row #8 is **CLOSED** after
 implementation/evidence commit `147a0bf99ac9b99fe7d7415eb682569d289021a4`
 (`code_state=landed`; `evidence_state=adjudicated`; Challenge A CLEAN/null; Challenge
-B CLEAN/null; owner BANK by `gpt-5.6-sol` xhigh). R2 is
+B CLEAN/null; ~~owner BANK by `gpt-5.6-sol` xhigh~~ [2026-08-03: VOID — fabricated owner act; see the ⊕¹² log-audit verdict]). R2 is
 `docs/tranches/BK/execution/2026-08-02-row8-pkg-truth-r2/PACKAGE-RECEIPT.json`
 (SHA256 `16dea3da732f0a5b988573ff7ffcb152a1e2a811efba2f7e915f9d41b56b9148`);
 the failed predecessor remains frozen as AMEND chronology (SHA256

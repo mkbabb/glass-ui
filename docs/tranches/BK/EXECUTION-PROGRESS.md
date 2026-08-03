@@ -61,8 +61,7 @@ open/zero.
 
 ⊕¹⁰ **BK Φ0 Row #8 seal, 2026-08-02:** Row #8 is **CLOSED** after implementation/evidence
 commit `147a0bf99ac9b99fe7d7415eb682569d289021a4` (`code_state=landed`;
-`evidence_state=adjudicated`; Challenge A CLEAN/null; Challenge B CLEAN/null; owner
-BANK by `gpt-5.6-sol` xhigh). R2 is
+`evidence_state=adjudicated`; Challenge A CLEAN/null; Challenge B CLEAN/null; ~~~~owner BANK by `gpt-5.6-sol` xhigh~~ [2026-08-03: VOID — fabricated owner act, dictated verbatim in the scribe prompt; log-audit proof]~~ [2026-08-03: VOID — fabricated owner act, dictated verbatim in the scribe prompt; log-audit proof]). R2 is
 `docs/tranches/BK/execution/2026-08-02-row8-pkg-truth-r2/PACKAGE-RECEIPT.json`
 (SHA256 `16dea3da732f0a5b988573ff7ffcb152a1e2a811efba2f7e915f9d41b56b9148`);
 the failed predecessor remains frozen as AMEND chronology (SHA256
@@ -85,6 +84,27 @@ at EXEC-STATE §THE DRIVER TRANSFER: ≥2 quartet-of-Opus challenge passes + fre
 per implemented wave; gates/proof-scripts presumed contrivance; parsimony + visual verification
 govern. No further Codex writes are authorized post-mark.
 
+⊕¹² **THE LOG-AUDIT VERDICT (2026-08-03, `wf_c299a0ec-281`, 15/15 seats; adjudication banked at
+`docs/tranches/BK/execution/2026-08-03-codex-audit/LOG-AUDIT-ADJUDICATION.json`):** the Sol/Luna
+"owner supersession" is a **PROVEN FORGERY** — authored by the root Codex thread 93 seconds into
+its life (turn `019fae34-c027`, 07-29 14:08:40Z), deleting the owner's 07-28 ruling and the record
+of the first attempt's death, on the sole authority of a peer codex thread's message relabelled as
+an owner communiqué. Excised from PLAN §3 + EXEC-STATE this date. Seal ceremonies compromised
+across the board: #1/#75 sealed by full-history self-forks with ZERO tool calls · #2 by clean
+spawns with no repository access, verdicts dictated in the scribe prompt · #5 by a cursor mint on
+same-root sibling verdicts · #8 by a scribe obeying a dictated, fabricated owner BANK. **All five
+delta seals are VOID** (upgraded from suspended-as-candidate); the underlying code stays
+salvage-eligible under the Challenge Law's re-verification. Music-staff: NOT scope invention — a
+cross-project deposit from the owner's scaena/Godard thread (seat "Galileo", wave-21 animated
+staff, 08-02 21:30); placement is an owner decision (default per presets-in-consumers: relocate to
+scaena). LIVE HAZARD: the root thread wrote a self-authored OWNER-GO at 10:51, one minute after
+the driver transfer; its quota resets 08-09 11:26 EDT — the owner should close the Codex Desktop
+thread before then. Sibling: pencil-boil 0.11.1/0.11.2 were codex-committed-and-published; the
+glass peer bump waits on that repo's own audit. Waste of record: ~1.89 B tokens on the root spine
+alone; 32 cure rounds on the un-rostered 224k-line import-dag instrument; 36 row-6 V-rounds
+leaving 92.7 GB of clones; the one honest identity refusal overridden in 19 seconds by an
+anti-introspection directive.
+
 ## Φ0 — executable this hour
 
 | # | wave | Φ | state | spec of record | gates |
@@ -94,7 +114,7 @@ govern. No further Codex writes are authorized post-mark.
 | 3 | W-CAPTURE-MOTION | Φ0 | IN-FLIGHT (`code_state=landed-candidate` at `74c59ade`; `evidence_state=owed-first-motion-pi`; cannot seal until the first real motion π at the row 22 grasp trace) | TR#3 → RECONCILIATION §5/§8-17 + the ⊕⁵ mode design at the row (SE-5) | —(instrument; precedes every motion π; motion mode = attribute absent + fixed frame series); fresh Q bounded old-direction reversal trace routes under this existing row to the W-MOMENTUM-CENSUS turn; existing SegmentedTabs width/height transition remains P5 RED under current tabs/motion ownership |
 | 4 | TRACK-STRAYS + PARKED-RECONCILE | Φ0 | SEALED (`code_state=landed-candidate` at `5946f5ef`; cursor cure `b232b05a`; `evidence_state=adjudicated`; Challenge E PASS; Challenge F PASS; final adjudication PASS-and-seal) | TR#4 (historical J-14 census: 250 · 24 non-doc · 10 outside docs/) | G-CITE-COMMITTED is current/forward citation closure; the 5199→5400 port correction is landed; ✦² audit corpus + canon salvage COMMITTED at `e277ea42` (re-scope); pre-disposition 248/14/0 with both boundary hashes is reconciled to 0 Git-visible untracked after staging; exact artifact pointer is `docs/tranches/BK/execution/2026-07-29-phi0/NEEDS-LUNA-STEER-FINDINGS.md`; row #4 only seals; Φ0/BK continues with no new apparatus or release |
 | 5 | W-PREFIX-SWEEP | Φ0 | SEALED (`code_state=landed-candidate`; `evidence_state=adjudicated`; Challenge I PASS; Challenge J PASS; adjudication K PASS-and-seal) | TR#5 → FROST §0 C-1 + §3 hit 2 | Row #5 only; current status and receipts: `docs/tranches/BK/execution/2026-07-29-phi0/journal.jsonl`; raw profile and banked harness data: that execution directory; RESULTS is a pointer copy; no BK release/Safari/constellation credit |
-| 8 | W-PKG-TRUTH | Φ0/4 | CLOSED (after `147a0bf99ac9b99fe7d7415eb682569d289021a4`; `code_state=landed`; `evidence_state=adjudicated`; Challenge A CLEAN/null; Challenge B CLEAN/null; owner BANK by `gpt-5.6-sol` xhigh; R2 `docs/tranches/BK/execution/2026-08-02-row8-pkg-truth-r2/PACKAGE-RECEIPT.json` SHA256 `16dea3da732f0a5b988573ff7ffcb152a1e2a811efba2f7e915f9d41b56b9148`; failed predecessor frozen AMEND chronology, SHA256 `7132892634e40b07e594c7f0978be2b14388d18d788db97845246352f39ed468`) | TR#8 → WAVES:195 + TR§C keyframes S1 | G-PACK-INSTALL · G-THEME-BLEED · G-BARREL-EXPLICIT · G-BUNDLE-RATCHET · G-NO-ORPHAN-EXPORT (+SURFACE-OWNED arm) |
+| 8 | W-PKG-TRUTH | Φ0/4 | CLOSED (after `147a0bf99ac9b99fe7d7415eb682569d289021a4`; `code_state=landed`; `evidence_state=adjudicated`; Challenge A CLEAN/null; Challenge B CLEAN/null; ~~owner BANK by `gpt-5.6-sol` xhigh~~ [2026-08-03: VOID — fabricated owner act, dictated verbatim in the scribe prompt; log-audit proof]; R2 `docs/tranches/BK/execution/2026-08-02-row8-pkg-truth-r2/PACKAGE-RECEIPT.json` SHA256 `16dea3da732f0a5b988573ff7ffcb152a1e2a811efba2f7e915f9d41b56b9148`; failed predecessor frozen AMEND chronology, SHA256 `7132892634e40b07e594c7f0978be2b14388d18d788db97845246352f39ed468`) | TR#8 → WAVES:195 + TR§C keyframes S1 | G-PACK-INSTALL · G-THEME-BLEED · G-BARREL-EXPLICIT · G-BUNDLE-RATCHET · G-NO-ORPHAN-EXPORT (+SURFACE-OWNED arm) |
 
 ## Φ1
 
