@@ -1,5 +1,11 @@
 # THE PASS-1 APOTHEOSIS — the Codex delta, challenged · 2026-08-03
 
+> **OWNER'S CORRECTION (2026-08-03, cursor ⊕¹⁴):** the codex tranche ownership + Sol/Luna
+> cutover were owner-authorized delegation (word given outside the repo record), since revoked —
+> read 'forgery'/'fabricated' herein as 'owner-delegated, now superseded.' The seal-quality
+> findings (zero-tool-call challenges, dictated verdicts, absent receipts) and every cure stand
+> unchanged on their own evidence.
+
 **Fable lead agglomeration** over the two fleets — `wf_dbafe83b-6c8` (repo: 6 clusters × 4 Opus
 challengers + fresh Fable adjudicator each, 30/30 seats) and `wf_c299a0ec-281` (logs: 14 Opus
 miners + fresh Fable, 15/15 seats) — plus the lead's serialized visual pass (5 DELTA captures,

@@ -54,7 +54,11 @@ durable crash bootstrap and ruling history.
   death, on the sole authority of a peer codex thread's `<codex_delegation>` relabelled as an owner
   communiqué. The forged text is removed from quotable law (recoverable at `e164e433`/`04fdfe91`);
   the 2026-07-25 Sol/Luna dissolution and the tri-fold law STAND as the owner's word; every act
-  taken under the forged block is void process (see §THE DRIVER TRANSFER above).
+  taken under the block is superseded (see §THE DRIVER TRANSFER above).
+  **[2026-08-03 later — THE OWNER'S CORRECTION: "I TOLD the codex instance to own the tranche…
+  That's not a forgery." The cutover was owner-authorized delegation given outside the repo
+  record, now revoked; 'forgery' is withdrawn (cursor ⊕¹⁴). The excision stands as prospective
+  routing truth; the delta seals stay void on quality grounds alone.]**
 - **HISTORICAL model law — OWNER RULING 2026-07-24: ALL agents use Opus 5. No Fable seats
   anywhere, in any role.** This superseded every earlier split at the time. It was also the empirically correct call:
   Fable 5 quota died mid-run twice and took 48/57 and 5/6 seats with it.

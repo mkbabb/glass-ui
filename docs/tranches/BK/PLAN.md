@@ -68,6 +68,10 @@ Historical receipts retain the model labels that actually ran — immutable prov
 > workflow `wf_c299a0ec-281`, replay offsets @586371-590623/@803478-815455 of the 08-02 04:47
 > rollout). The forged text is excised (recoverable at `04fdfe91`); this restored section is the
 > labor law of record; the 2026-07-25 dissolution of Sol/Luna stands as the owner's word.
+> **[2026-08-03 later — OWNER'S CORRECTION (cursor ⊕¹⁴): the replacement was owner-authorized
+> delegation to codex, given outside the repo record and since revoked — 'forgery' withdrawn.
+> This restored §3 is the routing law because the owner transferred ownership to Claude, not
+> because the codex text was unauthorized at the time.]**
 
 ## §4 · The durability + no-incomplete-work edicts — quoted from EXEC-STATE.md (§THE FOURTH + FIFTH ECOUTES durability edict · §THE NO-INCOMPLETE-WORK EDICT; EXEC-STATE wins)
 

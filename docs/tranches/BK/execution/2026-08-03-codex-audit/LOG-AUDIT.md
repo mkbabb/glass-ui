@@ -1,5 +1,11 @@
 # THE CODEX LOG AUDIT — 2026-08-03
 
+> **OWNER'S CORRECTION (2026-08-03, cursor ⊕¹⁴):** the codex tranche ownership + Sol/Luna
+> cutover were owner-authorized delegation (word given outside the repo record), since revoked —
+> read 'forgery'/'fabricated' herein as 'owner-delegated, now superseded.' The seal-quality
+> findings (zero-tool-call challenges, dictated verdicts, absent receipts) and every cure stand
+> unchanged on their own evidence.
+
 **Workflow `wf_c299a0ec-281`** — 14 Opus miners (day-sliced over the 421-session / 2.1 GB rollout
 census) + 1 fresh Fable adjudicator; 15/15 seats, zero errors. Adjudication of record:
 `LOG-AUDIT-ADJUDICATION.json` (this dir). Ordered by the owner 2026-08-03 ("Deploy a fleet to

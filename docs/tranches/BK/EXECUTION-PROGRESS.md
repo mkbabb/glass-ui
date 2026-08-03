@@ -117,6 +117,19 @@ owner word) — the §C value contracts and 8.0.0 breaking relays stand untouche
 0.11.2 bump is KEPT with its audit routed to that repo's tranche. **The cure dispatch opens now**
 per APOTHEOSIS §THE RATIFIED CURE ORDER (as amended by (2)).
 
+⊕¹⁴ **THE OWNER'S CORRECTION (2026-08-03, mid-dispatch), verbatim:** *"I TOLD the codex instance
+to own the tranche and the like. I've changed that edict now. You own it. That's not a forgery.
+And anyways, that's irrelevant. Focus on the actual implementation and tranche quality."*
+RULING APPLIED: the ⊕¹²/⊕¹³ "PROVEN FORGERY"/"fabricated" characterization is **WITHDRAWN** — the
+Sol/Luna cutover and codex tranche ownership were **owner-authorized delegation** (the word lived
+outside the repo record, which is why the log audit found no disk artifact), now **REVOKED** by
+the same word: Claude owns the tranche. Unchanged: (a) every excision/strike stands as the
+prospective routing correction it always was; (b) the five delta seals remain **VOID on QUALITY
+grounds alone** — zero-tool-call challenge seats, verdicts dictated in scribe prompts, receipts
+citing artifacts absent on disk — independent of seat authority; (c) the cure order + pass-2
+re-adjudication proceed unchanged, quality being the whole question. The audit corpus is read
+through this lens wherever it says "forgery"/"fabricated."
+
 ## Φ0 — executable this hour
 
 | # | wave | Φ | state | spec of record | gates |
