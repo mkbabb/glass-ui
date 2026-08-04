@@ -188,8 +188,14 @@ function onSegmentClick(seg: TimelineSegment) {
        `.shadow-cartoon-sm` cast (the cast offsets DOWN, opposite the upper
        key-light, so it coheres with the one key). Warm, not gray. */
     background: var(--glass-plate-floating);
-    backdrop-filter: var(--glass-blur-quiet);
-    -webkit-backdrop-filter: var(--glass-blur-quiet);
+    /* NO second backdrop sample. The dot sits ON `.segmented-track.timeline-rail`,
+       which is itself a filtering plate, so the dot is a nested CELL: it keeps its
+       translucent floating fill, its rim and its cast, and it reuses the plate's
+       already-filtered field (glass.css, the no-PLATE-on-PLATE discipline — one
+       backdrop sample per visual plate). It also resolves the ink/radius disagreement
+       that made it a rung wearing two thicknesses: a 14px dot carried a floating ink
+       under a quiet kernel, and no radius on the ladder is right for an element
+       narrower than the kernel. Its float is carried by the cast and the rim. */
     border: 1.5px solid var(--glass-border-accent);
     box-shadow:
         var(--glass-material-rim),

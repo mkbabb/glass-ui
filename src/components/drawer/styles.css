@@ -162,12 +162,19 @@
     /* the SOLIDIFY fraction — 0 below the commit floor → 1 at full (t=1). */
     --sheet-freeze: clamp(0, calc((var(--stage-t) - 0.85) / 0.15), 1);
     /* Keep the crown flat (no nested color-mix): the crown's INK lerps the overlay
-       rung down to the sheet footprint across the descent — a consumer :root retune of
+       rung down to the CROWN TARGET across the descent — a consumer :root retune of
        base or step still moves both ends — and `--glass-level` firms it to the opaque
-       accessibility floor through the same machinery every plate uses. */
+       accessibility floor through the same machinery every plate uses.
+
+       THE ENDPOINTS ARE DISTINCT, AND THAT IS THE MECHANISM. It lerped the OVERLAY
+       rung down to the SHEET footprint — and both are +2, so `(overlay − sheet)·descent
+       ≡ 0`: a constant wearing a lerp's name. The crown STARTS at the sheet's own
+       footprint (+2, where a closed sheet sits) and THINS one step of ink to the crown
+       target (+1, `--glass-veil-crown`) as it comes to rest. That is the live descent
+       the pre-veil opacity lerp described in its own units. */
     --sheet-crown-ink: calc(
-        var(--glass-veil-overlay)
-            - (var(--glass-veil-overlay) - var(--glass-veil-sheet)) * var(--sheet-descent)
+        var(--glass-veil-sheet)
+            - (var(--glass-veil-sheet) - var(--glass-veil-crown)) * var(--sheet-descent)
     );
     --sheet-crown: color-mix(
         in srgb,
@@ -175,17 +182,16 @@
             calc(var(--glass-level) * 100%),
         var(--card)
     );
-    /* The adaptive darken rides at CONSTANT `--glass-veil-rung` across the whole
-       descent. A `(1 - --sheet-descent)` factor would decay the band's earned AA darken
-       to ZERO exactly as the crown thins 0.95 → 0.74 — transparency up, legibility down,
-       the wrong way round. The 0-alpha leg of every oklab veil below is a warm
-       `oklch(… / 0)`, NEVER bare `transparent`: `transparent` is `rgb(0 0 0 / 0)`, and it
-       is NON-premultiplied handling that carries that black component through the mix
-       (premultiplied interpolation is precisely what makes a 0-alpha endpoint
-       chroma-inert), so mixing toward it drags the result to BLACK — the hole.
-       `--sheet-freeze-card` stays `in srgb` toward `transparent`
-       — the house rung idiom (the `--glass-plate-*` ladder), not an oklab veil. */
-    --sheet-tint-veil: oklch(0.9 0.05 75 / 0);
+    /* NO separate tint veil layer. It was a `linear-gradient` of one permanently
+       0-alpha colour with exactly one writer — a painted layer that could never paint,
+       carrying an axis the crown ink above already carries. The 0-alpha leg of every
+       oklab veil below is a warm `oklch(… / 0)`, NEVER bare `transparent`:
+       `transparent` is `rgb(0 0 0 / 0)`, and it is NON-premultiplied handling that
+       carries that black component through the mix (premultiplied interpolation is
+       precisely what makes a 0-alpha endpoint chroma-inert), so mixing toward it drags
+       the result to BLACK — the hole. `--sheet-freeze-card` stays `in srgb` toward
+       `transparent` — the house rung idiom (the `--glass-plate-*` ladder), not an oklab
+       veil. */
     --sheet-freeze-card: color-mix(
         in srgb,
         transparent,
@@ -200,7 +206,6 @@
     background:
         linear-gradient(var(--sheet-freeze-warm), var(--sheet-freeze-warm)),
         linear-gradient(var(--sheet-freeze-card), var(--sheet-freeze-card)),
-        linear-gradient(var(--sheet-tint-veil), var(--sheet-tint-veil)),
         var(--sheet-crown);
     /* Drawer translates through one material-constant overlay sample.
        `--stage-t` still congeals the plate above, but neither the gesture nor settle

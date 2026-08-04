@@ -54,8 +54,15 @@
        composed. A property whose only value is a kill-switch is not a mechanism.
        Nested filtering plates compose bounded in quadrature (√(r₁²+r₂²)), so a legal
        nesting is a bounded optical cost, not a runaway; the successor discipline is a
-       DEPTH bound (nested filtering-plate depth ≤ 2), asserted in tests/styles, not a
-       blanket suppression that kills the primary to avoid it. */
+       DEPTH bound (nested filtering-plate depth ≤ 2).
+
+       WHERE THE BOUND IS ACTUALLY CHECKED: in the TEMPLATES, not in this file's
+       selectors. Plate-inside-plate is a DOM-composition fact — `<CommandDialog>`
+       renders a `glass-floating` root inside a `DialogContent` that resolves to another
+       — and a selector-text scan of the stylesheets cannot see it, because neither
+       component's rule mentions the other. The arm walks the class nesting of
+       `src/**/*.vue` (tests/styles/glass-subtlety.test.ts) and the π battery counts
+       filtering ancestors at runtime. */
 
     /* ── The ONE paint-box clip register ───────────
        Content glass and `.glass-card` share this one paint-containment register,
@@ -86,7 +93,15 @@
        pseudos carry `border-radius: inherit`) so the clip FOLLOWS the corner (a
        clip with no radius trims to a SHARP RECT — the bug proof:glass-clip's
        radius-alongside arm reds). `overflow: hidden` stays FORBIDDEN (it would
-       clip the focus ring). */
+       clip the focus ring).
+
+       IT IS ALSO A BACKDROP-ROOT FORMER, which is why these four rungs are not
+       graspable as they stand: a `backdrop-filter` samples only as far back as its
+       backdrop root, so a grasp carrier (glass/grasp.css) mounted inside a
+       `contain: paint` surface would blur exactly nothing, at full opacity, looking
+       like a mount defect. A rung that wants the register must stand this down under
+       the same carrier gate the register's other hosts use — the discovery arm in
+       tests/styles/glass-subtlety.test.ts reds on a mount that does not. */
     .glass-wash,
     .glass-quiet,
     .glass-resting,

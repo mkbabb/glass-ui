@@ -150,10 +150,29 @@
        sits BELOW light, inverting the shipped dark-brighter doctrine. A dark plate does
        not need a brighter rim to read; it needs the page behind it to stay dark, and a
        0.40 white ring over a near-black canvas is the loudest thing on the screen. */
-    --glass-rim-top: inset 0 var(--glass-key-lit-y) 0 hsl(0 0% 100% / 0.1);
+    /* THE LEVEL TERM IS THE A11Y PATH — and it is scoped like one. Both legs scale
+       their alpha by `--glass-level`, so the rim dies with the material through the ONE
+       clarity knob the reduced-transparency and forced-colors brackets already set to
+       0, with no per-bracket enumeration and no second list of tokens to keep in sync.
+       A white hairline surviving on a flattened plate is exactly the decoration a
+       reduced-transparency user asked not to be given.
+
+       WHAT IT DOES NOT DO — and the claim is bounded here deliberately: these tokens
+       are declared at `:root`, so the `var(--glass-level)` inside them resolves ONCE,
+       in `:root`'s scope. Only a bracket that sets `--glass-level` AT `:root` re-runs
+       them — which is precisely what the a11y brackets do, and why this is the a11y
+       path. An ELEMENT-scoped `--glass-level: 0` (`[data-surface="opaque"]`, a static
+       dock) does NOT re-resolve the rim: that is the substitution-vs-inheritance trap
+       glass/surface-axis.css documents on the plate tokens, and it is why those
+       surfaces keep their rim — a solid plate with a glass edge, which is what they
+       are for. At level 1 both legs are byte-identical to the pinned form. */
+    --glass-rim-top: inset 0 var(--glass-key-lit-y) 0
+        hsl(0 0% 100% / calc(0.1 * var(--glass-level)));
     --glass-rim-bottom:
-        inset 0 var(--glass-key-shade-y) 0 color-mix(in srgb, var(--foreground) 6%, transparent),
-        inset var(--glass-key-shade-x) 0 0 color-mix(in srgb, var(--foreground) 4%, transparent);
+        inset 0 var(--glass-key-shade-y) 0
+            color-mix(in srgb, var(--foreground) calc(6% * var(--glass-level)), transparent),
+        inset var(--glass-key-shade-x) 0 0
+            color-mix(in srgb, var(--foreground) calc(4% * var(--glass-level)), transparent);
     /* `--glass-edge-light-dark` (0.22) is DELETED with the full-perimeter ring it
        weighted. It existed to dial the rim UP on the dark substrate on the theory that
        a dark plate needs a brighter edge to read; the plate reads because the page

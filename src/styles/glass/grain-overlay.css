@@ -21,7 +21,16 @@
        (the pop); the opacity cross-fade is a compositor-cheap interpolation with the
        image constant — the only sanctioned grain engage. The `transition` lives HERE so
        a hover/active grain lift (wherever a glass surface raises grain on interaction)
-       reads as a smooth fade by construction, not a discrete swap. */
+       reads as a smooth fade by construction, not a discrete swap.
+
+       `mix-blend-mode` MAKES THE PARENT AN ISOLATED GROUP — so this pseudo is a
+       backdrop-root former on every rung it lands on, and a grasp carrier
+       (glass/grasp.css) mounted inside one of those rungs would blur nothing at all.
+       Measured on Chrome 148: a blending `::after` alone is enough to kill the
+       register. The dock plate carries the same texture and stands its own copy down
+       under the carrier gate (dock/styles/dock.css); any future rung that mounts the
+       carriers owes the same stand-down, and the discovery arm in
+       tests/styles/glass-subtlety.test.ts reds if it does not. */
     .glass-wash::after,
     .glass-quiet::after,
     .glass-resting::after,

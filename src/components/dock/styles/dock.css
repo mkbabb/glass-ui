@@ -9,12 +9,13 @@
  *
  *   L0 — THE PLATE (`.dock-plate`).  ONE absolute element owning `backdrop-filter` + the
  *        visual clip, pointer absorption, and grain. It paints ONE surface layer whose
- *        colour LERPS between the public `--glass-*` collapsed/expanded rungs on
- *        `--dock-expand-t` (never a two-layer opacity crossfade — that composites
- *        `a + b − ab` and sags mid-morph); adaptive tint is a separate gradient veil.
- *        The shell + adaptive-legibility partials re-point the
- *        inheriting `--dock-surface-blur`/`--glass-veil-*` tokens on `.glass-dock`, so
- *        the self-engage darken and dark-arm glow reach the layers via inheritance, ZERO
+ *        INK lerps between the collapsed/expanded rungs on `--dock-expand-t` (never a
+ *        two-layer opacity crossfade — that composites `a + b − ab` and sags mid-morph),
+ *        composed through `@utility glass-plate` AT THE ELEMENT so the observer's
+ *        measured backdrop luminance reaches it — the earned darken, one chromatic
+ *        writer, no second tint layer. The shell + adaptive-legibility partials re-point
+ *        the inheriting `--dock-surface-blur`/`--glass-veil-*` tokens on `.glass-dock`,
+ *        so the dark-arm glow reaches the layers via inheritance, ZERO
  *        re-author. Its VISIBLE
  *        EXTENT morphs via `clip-path: inset(… )` off the ONE plate-scoped `@property
  *        --dock-t` (paint-only, compositor-composited, ZERO endpoint measurement — self-
@@ -68,8 +69,8 @@
            backdrop round-clip to the same silhouette on every shape. */
         border-radius: inherit;
         /* The backdrop lens — reads the dock-scoped resolved blur the shell composes
-           (`--dock-surface-blur: var(--glass-blur-resting)`, the 7px peer-locked
-           material + its saturate companion; the `.dark .glass-dock` glow arm + the
+           (`--dock-surface-blur: var(--glass-blur-resting)`, the 16px calibration-host
+           radius + its saturate companion; the `.dark .glass-dock` glow arm + the
            `prefers-reduced-transparency` → `--glass-level: 0` bracket both reach it via
            the inheriting token). ONE backdrop-filter in the dock — the box no longer
            carries it (no double-blur). */
@@ -90,44 +91,71 @@
         );
         clip-path: inset(var(--dock-plate-inset-block) var(--dock-plate-inset-inline));
 
-        /* ── THE ONE-LAYER SURFACE INTERPOLATION ───────────────────────────────────
-           The collapsed↔expanded surface is ONE painted layer whose colour LERPS on
-           `--dock-expand-t`, not two complementary-opacity layers crossfading. A
-           stacked crossfade of two TRANSLUCENT layers composites `a + b − ab`, so at
-           t=0.5 the α0.30 wash under the α0.50 dock rung resolved 0.3625 against the
-           lerp's 0.40 — a −9.4% MID-MORPH SAG invisible at both settled endpoints (and
-           two independent 1.5px borders read as a double rim through the translucency).
-           One `color-mix` endpoint pair, one border, exact at t=0 and t=1, monotone
-           between. Both rungs are FLAT (a single `color-mix` each, tokens/glass.css), so
-           the written source nests nothing — LITERALLY. RESOLVED nesting is another
-           matter and is KNOWN-LIVE here: the rungs' producers (`--glass-plate-dock` /
-           `--glass-plate-wash`) are themselves `color-mix` tokens, making this file the
-           repo's largest such site (24 of the 75 endpoint contexts). NOT GATED, pending
-           row-6's Safari π — tests/styles/color-mix-endpoints.test.ts seats the literal
-           invariant only.
+        /* ── THE ONE-LAYER SURFACE INTERPOLATION, COMPOSED AT THE ELEMENT ──────────
+           The collapsed↔expanded surface is ONE painted layer, and what LERPS on
+           `--dock-expand-t` is the plate's INK — the rung's alpha — not two ready-made
+           colours. Two complementary-opacity layers crossfading composite `a + b − ab`,
+           so at t=0.5 the wash under the dock rung sagged −9.4% against the lerp,
+           invisible at both settled endpoints; lerping the ink is exact at t=0 and t=1
+           and monotone between, with one border and nothing stacked.
 
-           The adaptive tint stays a SEPARATE ordinary gradient veil over the lerped
-           rung — a root-time zero-strength substitution cannot swallow a descendant
-           tint override, and the rung endpoints stay un-mixed with the tint. The 0-alpha
-           leg is a warm `oklch(… / 0)`, NEVER bare `transparent` (the WebKit
-           black-premultiply hole). */
-        --dock-plate-tint-veil: oklch(0.9 0.05 75 / 0);
-        background:
-            linear-gradient(
-                var(--dock-plate-tint-veil),
-                var(--dock-plate-tint-veil)
-            ),
-            color-mix(
-                in srgb,
-                var(--dock-plate-expanded-bg) calc(var(--dock-expand-t) * 100%),
-                var(--dock-plate-collapsed-bg)
-            );
+           WHY THE INK AND NOT THE COLOUR — this is the dock's earned darken. The
+           `--glass-plate-{rung}` tokens are composed at `:root`, so they bake `:root`'s
+           `--glass-backdrop-luma`: a plate painted from them cannot see the luminance
+           THIS dock's own observer writes on THIS dock's root
+           (`useGlassBackdropLuminance`), and the G2 edict — "glass dock over VERY LIGHT
+           materials is unreadable, darken DYNAMICALLY like iOS 27" — resolves to a
+           constant. Composing through `@utility glass-plate` (glass/veil.css) at the
+           ELEMENT reads the inherited luma where the surface actually paints, so the
+           clamp earns up to two more rungs of ink over a measured-bright backdrop and
+           resolves EXACTLY the tier's own ink over a calm or unsampled one. ONE
+           chromatic writer, and the observer is wired to it.
+
+           NO SEPARATE TINT VEIL. A permanently-zero-alpha gradient layer painted over
+           the rung is a mechanism's name on an identity: it had exactly one writer, at
+           alpha 0, and the axis it was meant to carry IS the veil clamp above. */
+        --glass-veil-tier: calc(
+            var(--dock-plate-collapsed-tier) +
+                (
+                    var(--dock-plate-expanded-tier) -
+                        var(--dock-plate-collapsed-tier)
+                ) * var(--dock-expand-t)
+        );
+        @apply glass-plate;
+        /* The grasp register's host inputs (glass/grasp.css): the dock plate is one of
+           the two named consumers, and its 16px resting radius IS the calibration host
+           the 1.625× held optic derives from. */
+        --glass-grasp-rest-filter: var(--dock-surface-blur);
+        --glass-grasp-radius: var(--glass-blur-resting-radius);
         border: 1.5px solid
             color-mix(
                 in srgb,
                 var(--dock-plate-expanded-border) calc(var(--dock-expand-t) * 100%),
                 var(--dock-plate-collapsed-border)
             );
+    }
+
+    /* ── THE GRASP PRECONDITION — the plate stands down its two backdrop roots ──────
+       The grasp carriers (glass/grasp.css) are `backdrop-filter` boxes INSIDE this
+       plate, and a `backdrop-filter` samples only as far back as its BACKDROP ROOT.
+       This plate forms one TWICE over: the extent `clip-path`, and the grain `::after`,
+       whose `mix-blend-mode` makes its parent an isolated group. Captured on Chrome 148
+       (stripe field, blur(8px) carrier): with either present the carriers blur NOTHING
+       — not less, nothing — and with both cleared the blur lands. A register that
+       silently blurs nothing is the exact dead-mechanism shape this file's own history
+       is made of, so both stand down for the duration of a hold.
+
+       Neither costs anything to give up while held. The clip is `inset(0px 0px)` at
+       rest (the collapse insets default to `0px`, above) and a HELD dock is held OPEN,
+       so it clips nothing it would otherwise clip; the grain is a texture at
+       `--glass-grain-opacity` over a plate the hold has already opened. If a future
+       collapse geometry makes the clip load-bearing, the plate must move it to an
+       ancestor rather than re-take it here — the register cannot work under it. */
+    .dock-plate:has(> .glass-grasp-carrier[data-grasp="grasp"]) {
+        clip-path: none;
+    }
+    .dock-plate:has(> .glass-grasp-carrier[data-grasp="grasp"])::after {
+        display: none;
     }
 
     /* The paper-grain overlay — MOVED off `.glass-dock::after` onto the plate (the grain

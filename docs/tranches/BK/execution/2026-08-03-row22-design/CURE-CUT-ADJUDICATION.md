@@ -55,3 +55,51 @@ a user-visible search-legibility defect. Three live traces:
 
 **After the re-cure lands: RE-CLAIM directly to π-1 + the grasp-π re-run** (both unblocked —
 the Q-4 slice landed at `7a3dd86c`).
+
+---
+
+# ROUND 2 — the re-cure adjudication (2026-08-04, `wf_b2c1fb63-3dd`)
+
+**VERDICT: CURE-REQUIRED, substantially sound → the six RC cures DRIVER-APPLIED, then committed.**
+R-1 is a TRUE HAND (sole grasp caller `useDockHold.ts:101` off native pointerdown/touchstart;
+the three posture callers pass no kind and drive zero paint; the Slider takes its own edge and
+engages standalone; spectrum excluded). R-2's value chain is LIVE INK (88% → 52.8% through
+`--glass-veil-rung`; release on the registered-property envelope). R-4 deleted, nothing minted.
+R-5/R-6 landed except the four residuals below. The 10 settled findings NOT re-opened, no
+regression. Verify gate reproduced on the adjudicator's own run; register receipt byte-identical.
+
+**The RC ledger (all six driver-applied in the landing commit, each verified):**
+
+- **RC-1 (MED)** `glass-subtlety.test.ts` stand-down arm: the `/none/` substring neutralizer
+  replaced with FORMER-KEYED neutralization (per pseudo per former + `display:none` box
+  removal). Driver ran the adjudicator's named mutation — `dock.css:155` `clip-path:none` →
+  `pointer-events:none` → **RED** with the former-keyed message; restore byte-exact by checksum.
+- **RC-2 (MED)** the discovery parser's tag-stack desync: the carrier open-tag `continue`
+  removed — a carrier pushes like any element, so its close-tag pop stays synced and a
+  multi-host template attributes each carrier to ITS host.
+- **RC-3 (MED)** `liquid-fill.css` dropped `background` from its transition shorthand (ink
+  rides the rung's clock alone — engage is the register's 0ms step even in the
+  `[data-held]`-without-`:active` passive-touch window); a new arm asserts no host rule
+  transitions the background channel.
+- **RC-4 (LOW)** the struck `--glass-plate-dock`'s three remaining prose cites re-pointed
+  (`surfaces-pager.css:34` · `defined.css:46`, dropping the deleted-CLAUDE.md cite ·
+  `tokens/sizing.css` dock-control block — the wall confirmed lapsed, folded in).
+- **RC-5 (LOW)** CURE-CUT.md self-denial cured with strike-brackets (the round-1 "reaches ANY
+  plate"/"UNREPRESENTABLE" bullets bracketed against §R-3's own adjudication; the `:621-627`
+  cite → `test:634`/`:636`; the moved mounts `GlassDock.vue:390-392` / `Slider.vue:269-271`).
+- **RC-6 (LOW)** grasp.css doctrine bounded: "THE EXCEPTIONS, STATED (two)" (the
+  `:active` transform shorthand counted) and the charter's arm-scope stated honestly
+  (host-subject rules; ancestor formers are the surface's duty + the π probe's half).
+
+**RESIDUE recorded for the driver (not cures):** (i) no dock-CHROME hand exists — the dock's
+grasp is reachable only through a Slider descendant; whether dock chrome should own a hand is a
+design follow-up; (ii) `keepOpen('grasp')` + bare `release()` pairing is convention-only —
+token-return API or an arm, a candidate for the close battery; (iii) `opacity<1` is a spec
+former absent from FORMERS (unprobed by the round-1 matrix; live site: the disabled slider) —
+a π/probe item; (iv) two unreproduced flake reports (stand-down arm 3/19 on identical bytes;
+one boot-graph ghost) — watch, do not act.
+
+**Driver battery at the landing commit:** vue-tsc 0 · tests/styles 147+1 xfail ·
+glass-subtlety 40/40 · tests/components 876/876 (one contention flake, did not reproduce) ·
+tests/gates 57/57 after the R-7 dist rebuild · gate-register byte-identical
+(`rosterSha256:dc05df91 violations:0`).

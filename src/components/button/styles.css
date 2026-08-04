@@ -44,10 +44,13 @@
         font-weight: 650;
     }
 
+    /* Secondary is the QUIET rung, on both axes. It read quiet ink under a resting
+       kernel — one rung's paint and another's thickness, which is the monotone-dilution
+       law broken at the surface while the token table still proves it. */
     .button[data-emphasis="secondary"] {
         --glass-veil-tier: var(--glass-veil-quiet);
         --glass-capsule-fill: var(--glass-plate-quiet);
-        backdrop-filter: var(--glass-blur-resting);
+        backdrop-filter: var(--glass-blur-quiet);
     }
 
     .button[data-emphasis="quiet"],

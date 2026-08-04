@@ -129,16 +129,29 @@
 
     /* ── OFF-LADDER FOOTPRINTS — integer offsets, zero raw alphas ──
        A surface whose footprint differs from a card's declares its distance from the
-       resting rung in STEPS, never in a hand-picked alpha. Four exist; each states why
-       its footprint moves it, and the whole set re-tunes with base/step like the rest.
-         chassis  −2  a 64rem plate reads far heavier than a card at the same ink
+       resting rung in STEPS, never in a hand-picked alpha. Each states why its footprint
+       moves it, and the whole set re-tunes with base/step like the rest. Each also PAIRS
+       a radius: a rung is a thickness of the same glass, so an ink and a radius that
+       disagree are two rungs pretending to be one. The pairing is the offset's own —
+       the ladder radius at the same alpha — and any surface that departs from it is a
+       RULED exemption with its ground on the surface, never a drift.
+         chassis  −2  a 64rem plate reads far heavier than a card at the same ink;
+                      radius pairs at wash's 10px (instrument-chassis/styles.css)
          dock     −1  the sharpest glass in the library — chrome over an unknown field
-                      must let that field through (owner edict)
-         dialog   +1  the iOS-27 control-centre modal: see-through, still occluding
-         sheet    +2  content-bearing over a busy grid; the Drawer crown lerps the
-                      overlay rung down to it across the descent (drawer/styles.css) */
+                      must let that field through (owner edict). RULED EXEMPTION on the
+                      radius: the dock plate holds resting's 16px because it is the
+                      grasp register's calibration host (the 26px held optic is 16 ×
+                      1.625) and it is one of the register's two named consumers
+         crown    +1  the Drawer crown's DESCENT TARGET — the crown starts at the
+                      sheet's own +2 footprint and thins ONE step to this rung as the
+                      sheet comes to rest, so the descent lerp has two distinct
+                      endpoints and is a lerp rather than a constant wearing the name
+         dialog   +1  the iOS-27 control-centre modal: see-through, still occluding;
+                      radius pairs at floating's 20px
+         sheet    +2  content-bearing over a busy grid; radius pairs at overlay's 22px */
     --glass-veil-chassis: calc(var(--glass-veil-base) - 2 * var(--glass-veil-step));
     --glass-veil-dock:    calc(var(--glass-veil-base) - 1 * var(--glass-veil-step));
+    --glass-veil-crown:   calc(var(--glass-veil-base) + 1 * var(--glass-veil-step));
     --glass-veil-dialog:  calc(var(--glass-veil-base) + 1 * var(--glass-veil-step));
     --glass-veil-sheet:   calc(var(--glass-veil-base) + 2 * var(--glass-veil-step));
 
@@ -148,10 +161,13 @@
        base — a complete `hsl()` color consumed via `var()`; for the muted icon weight
        the control mixes it down with `--opacity-icon-muted`. Defaults to
        `var(--foreground)`; a consumer overrides it per-backdrop (e.g. a near-white
-       over a dark aurora) without touching library source. Under the bright bucket
-       (`@container style(--glass-backdrop: light)`, dock.css) it re-points toward the
-       contrast-clearing ink, and an `@supports (color: contrast-color(…))` block flips
-       it natively on supporting engines. */
+       over a dark aurora) without touching library source. The dock re-points it
+       UNCONDITIONALLY on its own root (`dock/styles/adaptive-legibility.css`) — there
+       is no `@container style(--glass-backdrop: light)` bucket for it, and there was
+       never a conditional one that said anything different: a style query cannot
+       self-match, so the dock's own bucket only ever re-asserted the unconditional
+       value. An `@supports (color: contrast-color(…))` block refines it natively on
+       supporting engines. */
     --dock-fg-on-aurora: var(--foreground);
 
     /* ── THE PLATE — one flat mix per rung, zero nested color-mix ──
@@ -174,7 +190,11 @@
     --glass-plate-resting:  color-mix(in srgb, oklch(from var(--glass-veil-ink) l c h / var(--glass-veil-resting))  calc(var(--glass-level) * 100%), var(--card));
     --glass-plate-floating: color-mix(in srgb, oklch(from var(--glass-veil-ink) l c h / var(--glass-veil-floating)) calc(var(--glass-level) * 100%), var(--card));
     --glass-plate-overlay:  color-mix(in srgb, oklch(from var(--glass-veil-ink) l c h / var(--glass-veil-overlay))  calc(var(--glass-level) * 100%), var(--card));
-    --glass-plate-dock:     color-mix(in srgb, oklch(from var(--glass-veil-ink) l c h / var(--glass-veil-dock))     calc(var(--glass-level) * 100%), var(--card));
+    /* NO `--glass-plate-dock`. The dock plate composes its colour AT THE ELEMENT off a
+       LERPED ink (`dock/styles/dock.css`), which is the only path the observer's
+       measured luminance can reach; the `:root`-baked token had zero `var()` readers
+       left and was a name with nothing behind it. The ink rung `--glass-veil-dock`
+       above is the live one. */
     --glass-plate-chassis:  color-mix(in srgb, oklch(from var(--glass-veil-ink) l c h / var(--glass-veil-chassis))  calc(var(--glass-level) * 100%), var(--card));
     --glass-plate-dialog:   color-mix(in srgb, oklch(from var(--glass-veil-ink) l c h / var(--glass-veil-dialog))   calc(var(--glass-level) * 100%), var(--card));
 

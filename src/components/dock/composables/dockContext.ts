@@ -6,6 +6,22 @@ export type DockOrientation = "horizontal" | "vertical";
 export type DockLayout = "linear" | "grid";
 
 /**
+ * What KIND of hold a token is. The two are different facts about the dock and
+ * only one of them is a hand:
+ *
+ *  - `"morph"` (the default) — POSTURE only. "Something is open and the dock must
+ *    not idle-collapse under it": an armed search field, an open popover, a
+ *    focused rail tab. It suppresses the collapse timer and nothing else. It is
+ *    NOT a hand, and it never engages the grasp optic (glass/grasp.css) — a
+ *    search field left open for a minute is not a minute-long touch.
+ *  - `"grasp"` — a live POINTER HOLD on a descendant control (`useDockHold`'s
+ *    acquire, driven by native `pointerdown`/`touchstart` on the resolved host).
+ *    A grasp IMPLIES a morph hold (a finger down must also hold the dock open),
+ *    so it takes both counts; it is the edge the material answers.
+ */
+export type DockHoldKind = "morph" | "grasp";
+
+/**
  * Dock context surfaces the dock id + orientation + held-state coordination
  * to descendants.
  *
@@ -27,11 +43,20 @@ export interface DockContext {
      * (a 1px perpendicular hairline is useless in a 2D tile grid).
      */
     layout: ComputedRef<DockLayout>;
-    /** Acquire a keep-open token; suppresses timer-based collapse. */
-    keepOpen: () => void;
-    /** Release a previously-acquired keep-open token. */
-    release: () => void;
-    /** Reactive `keepOpenCount > 0` flag; descendants reflect via `data-held`. */
+    /**
+     * Acquire a hold token; suppresses timer-based collapse. `kind` defaults to
+     * `"morph"` (posture only). Pass `"grasp"` for a live pointer hold — it takes
+     * BOTH counts, so a grasp also holds the dock open.
+     */
+    keepOpen: (kind?: DockHoldKind) => void;
+    /** Release a previously-acquired token of the SAME `kind` that took it. */
+    release: (kind?: DockHoldKind) => void;
+    /**
+     * Reactive GRASP edge — `true` while ≥1 pointer hold is live on a descendant.
+     * This is what the dock root reflects as `data-held` and what the grasp
+     * register answers; it is deliberately NOT the morph-hold count (an open
+     * popover is not a finger).
+     */
     held: ComputedRef<boolean>;
 }
 

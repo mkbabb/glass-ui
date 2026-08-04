@@ -4,8 +4,61 @@
    A held surface opens: it dilates 1.625× in thickness and sheds 40% of its ink, so
    the world behind it comes FORWARD while the finger is down. That is the whole
    behaviour. It is a MATERIAL register — no light response, no scale writer (the
-   press ladder owns scale), no colour event. A consumer opts in by setting
-   `[data-held]` on a glass surface; nothing here fires without it.
+   press ladder owns scale), no colour event.
+
+   THE HAND IS A POINTER HOLD, AND ONLY THAT. `[data-held]` on a graspable surface is
+   written from a live pointer/touch acquire on the host (`useDockHold`'s
+   `keepOpen("grasp")` → the dock's `graspHeld`; the slider's own returned edge). It is
+   NOT the dock's posture count: an armed search field or an open popover holds the
+   dock OPEN, which is a state, and a register that answered it would sit at 0.6× ink
+   and 1.625× blur for minutes at a time with nobody touching anything. Direct
+   manipulation or nothing.
+
+   THE OPT-IN IS THE CARRIERS, NOT A CLASS LIST. A consumer mounts the two filter-only
+   carriers as DIRECT CHILDREN of the plate it wants graspable and flips `[data-held]`
+   on that same plate. Every rule below is gated on `:has(> .glass-grasp-carrier[data-
+   grasp="grasp"])`, so it needs no rung class to reach a surface — which is why it can
+   reach the two SHIPPED consumers at all, the dock's `.dock-plate` and the slider's
+   `.slider-range`, both composed plates carrying no rung class. It is INERT on a
+   surface that has not mounted the carriers: the host's filter is suppressed only
+   where a carrier is actually there to carry it, so a bare `[data-held]` cannot
+   flatten a naive binding.
+
+   IT DOES NOT FOLLOW THAT EVERY PLATE IS GRASPABLE TODAY — the reach is the SELECTOR's,
+   the precondition is the HOST's, and the two are not the same claim (see THE HOST'S
+   ONE PRECONDITION below). The five ladder rungs and the card are NOT graspable as they
+   stand: `contain: paint` (glass/material.css) and the grain `::after`'s
+   `mix-blend-mode` (glass/grain-overlay.css) are backdrop-root formers nobody has stood
+   down, so a carrier mounted on a `.glass-card` today would blur exactly nothing. THE
+   LAW, generically: a host mounting the carriers must stand down EVERY backdrop-root
+   former it or its ancestors declare, under this same carrier gate, for the duration of
+   the hold. The arm in tests/styles/glass-subtlety.test.ts DISCOVERS the hosts from the
+   mounts (it scans the templates for the carrier class rather than naming two files) and
+   reds on a former left standing — so a third consumer inherits the check by mounting,
+   not by being remembered. THE ARM'S SCOPE, stated honestly: it examines rules whose
+   SUBJECT is a host class — the host's own formers. ANCESTOR formers are the ancestor
+   surface's duty and the live-paint π probe's half; the law above binds the author, the
+   arm enforces the host-subject slice of it.
+
+   IT OUTRANKS THE REST REGISTER BY SPECIFICITY, NOT BY IMPORT ORDER. Every rule here
+   is ≥ (0,2,0) — the `:has()` argument alone is (0,2,0) — so it beats the single-class
+   rest rule of every plate in the library from any position in the cascade. Import
+   order cannot be the mechanism: the register's real consumers are component partials
+   (`dock/styles/dock.css`, `glass/liquid-fill.css`) imported AFTER this file, so a
+   tied (0,1,0) engage rule would lose to them wherever it sat. State outranks rest,
+   said once, in the selector.
+
+   THE EXCEPTIONS, STATED (two): an SFC-scoped block is UNLAYERED, and unlayered author
+   declarations beat every `@layer` rule at any specificity. So a consumer that declares
+   `transition` on the graspable element from its own scoped block outranks THIS file's
+   release transition and would strand the ink mid-lerp. `Slider.vue` carries exactly
+   two such shorthands on the graspable element: the release-window rule
+   (`.glass-slider:not(:active):not([data-held]) .slider-range`), which COMPOSES the
+   register's ink channel into its own shorthand off the register's clock rather than
+   re-typing one — that composition is armed — and the engage-window rule
+   (`.glass-slider:active .slider-range`, `transition: transform`), which names the
+   transform channel only and so never touches the ink clock: behaviorally correct for
+   engage, stated here so the census of unlayered outranking shorthands is two, not one.
 
    THE CONSTANTS ARE DERIVED, NOT PINNED. The calibration was measured on a 16px host
    at 26px held, so the ratio is 26/16 = 1.625 and the ink ratio is 0.6 — and every
@@ -17,27 +70,63 @@
    A partial of the glass.css cascade; @import-ed AFTER rim.css, its own
    @layer components. */
 @layer components {
+    /* ── THE HOST — always-opaque, never-filtering, for the whole gesture ──────────
+       While the carriers are mounted the host's own filter is suppressed, held AND
+       releasing alike. That makes the host §0.S clause 1's ONE always-opaque veil
+       layer: its ink lerps on a registered `<number>` (monotone by construction, exact
+       at both endpoints), and there is no second filtering layer beneath the carriers
+       to compose with — the stacking identity 1−(1−α_rest)(1−α_grasp) has nothing to
+       act on, because there is only ever one veil.
+
+       THE HOST'S ONE PRECONDITION: while the carriers are mounted, NEITHER IT NOR ANY
+       ANCESTOR may form a BACKDROP ROOT. A `backdrop-filter` samples only as far back
+       as its backdrop root, so a host under one gives its carriers a backdrop of
+       exactly nothing and the register blurs NOTHING — silently, at full opacity,
+       looking like a mount defect. Suppressing the host's own filter (above) clears the
+       trigger the register owns; the rest belong to the surface and it must clear them
+       under this same gate. Captured on Chrome 148 over a 8px stripe field, carrier at
+       blur(8px): a host with `clip-path: inset(0px 0px)` → NO blur · a host with a
+       `mix-blend-mode` `::after` → NO blur · either one alone still kills it · both
+       cleared → blur ✓. `contain: layout style`, `z-index`, `border-radius`,
+       `box-shadow` and a `transform` on the host are all clean. `contain: paint` is a
+       former by spec and is what keeps the ladder rungs out (above). The dock plate
+       carries both measured formers and stands both down under the gate
+       (dock/styles/dock.css); the liquid fill carries neither.
+
+       NO `will-change` — not here and not on the carriers. It would name a GROUPING
+       property on the direct ancestor of two `backdrop-filter` boxes, which is one more
+       way to form that same Backdrop Root. The animated property is carrier opacity,
+       which the compositor already handles; rest cost stays exactly zero because at
+       rest neither carrier exists. Whether a `will-change` on a further ANCESTOR forms
+       the root is unmeasured and stays a π item — with one live site to answer it on:
+       `dock/styles/shell.css`'s vertical rail hints `will-change: transform` on the dock
+       BOX under `:hover`/`:active`/`[data-held]`, so on a vertical dock it is armed for
+       the whole grasp. Nothing in the register depends on the answer; the horizontal
+       dock and the slider carry no such hint. */
+    :has(> .glass-grasp-carrier[data-grasp="grasp"]) {
+        backdrop-filter: none;
+    }
+
     /* ── ENGAGE — a true 0ms discrete step ─────────────────────────────────────────
        No easing on entry, deliberately. Inertia on the response to a finger reads as
        LAG: the surface must already be open when the finger arrives. The weight lives
        in the RELEASE (below) and in the consumer's paired spatial press, which rides
        the spring registers by name (`--spring-press` / `--spring-smooth`).
 
-       The host's own filter is SUPPRESSED here. That makes the host the one
-       always-opaque, never-filtering layer: its ink lerps on a registered `<number>`
-       (monotone by construction, exact at both endpoints), and there is no second
-       filtering layer beneath the carriers to compose with — the stacking identity
-       1−(1−α_rest)(1−α_grasp) has nothing to act on, because there is only ever one
-       veil. */
-    :where(.glass-wash, .glass-quiet, .glass-resting, .glass-floating, .glass-overlay,
-        .glass-card, .glass-material)[data-held] {
-        backdrop-filter: none;
-        /* 0.6 × the rung's own ink. The held plate sheds ink so the field behind it
-           reads; it does not brighten, and it does not change hue. */
-        --glass-veil-rung: calc(
-            var(--glass-veil-tier, var(--glass-veil-resting)) * 0.6
-        );
-        will-change: backdrop-filter;
+       0.6 × the host's CLAMPED rest ink (`--glass-veil-rest`) — never 0.6 × the raw
+       tier. Over a measured-bright backdrop the clamp has already earned ink, and
+       shedding from the tier instead would drop the held plate BELOW the register's own
+       `[0.6·α_rest, α_rest]` band. The held surface sheds ink so the field behind it
+       reads; it does not brighten, and it does not change hue.
+
+       THE PAIR IS A RATIO, NOT AN ALPHA, so the band holds on a host that is not a
+       plate. `@utility glass-plate` composes both names as the veil's alpha (the clamp
+       in glass/veil.css); `glass/liquid-fill.css` — the slider's host, which paints a
+       tinted MIX and no veil — declares `--glass-veil-rest: 1` and scales its tint
+       strength by the rung, so `rung ÷ rest` runs the same 1 → 0.6 there and "sheds 40%
+       of its ink" is a paint fact on BOTH shipped consumers rather than prose on one. */
+    [data-held]:has(> .glass-grasp-carrier[data-grasp="grasp"]) {
+        --glass-veil-rung: calc(var(--glass-veil-rest) * 0.6);
     }
 
     /* ── THE CARRIERS — filter-only, mounted on engage, gone on release ────────────
@@ -49,8 +138,8 @@
 
        A consumer mounts them under `[data-held]` and unmounts them on `transitionend`
        — never on a JS timer, which drifts against the actual paint. Rest cost is
-       exactly zero: with no `[data-held]`, neither carrier exists and no surface in
-       the library carries a `will-change`. */
+       exactly zero: with no hold, neither carrier exists and no surface in the library
+       carries a `will-change`. */
     .glass-grasp-carrier {
         position: absolute;
         inset: 0;
@@ -83,6 +172,10 @@
     }
 
     /* ── RELEASE — the rest carrier lands first, then the grasp one leaves ─────────
+       RELEASING IS A STRUCTURE, NOT A FLAG: carriers still mounted + `[data-held]`
+       gone. There is no `data-releasing` attribute to set, to forget to clear, or to
+       fall out of step with the mount.
+
        Order matters and is the whole mechanism. On the release frame the REST carrier
        goes to opacity 1 (same frame, no transition), and only then does the GRASP
        carrier fade out. Mid-fade the two filters compose in quadrature, peaking at
@@ -92,29 +185,27 @@
        The clock is the EFFECTS register's own: `--ease-standard` over the dock
        spring's settle. (The prototype measured 177.9ms; that is recorded as what it
        used, not as a requirement — a raw literal here would mint a clock beside the
-       register table.) The ink lerps across the same envelope. */
-    :where(.glass-wash, .glass-quiet, .glass-resting, .glass-floating, .glass-overlay,
-        .glass-card, .glass-material)[data-releasing] .glass-grasp-carrier[data-grasp="rest"] {
+       register table.) The ink lerps across the same envelope and lands on
+       `--glass-veil-rest` — the SAME value the plate resolves once the carriers
+       unmount, so the unmount is value-identical and there is no step at the end. */
+    :not([data-held]):has(> .glass-grasp-carrier[data-grasp="grasp"])
+        > .glass-grasp-carrier[data-grasp="rest"] {
         opacity: 1;
     }
-    :where(.glass-wash, .glass-quiet, .glass-resting, .glass-floating, .glass-overlay,
-        .glass-card, .glass-material)[data-releasing] .glass-grasp-carrier[data-grasp="grasp"] {
+    :not([data-held]):has(> .glass-grasp-carrier[data-grasp="grasp"])
+        > .glass-grasp-carrier[data-grasp="grasp"] {
         opacity: 0;
         transition: opacity var(--spring-dock-duration) var(--ease-standard);
     }
-    :where(.glass-wash, .glass-quiet, .glass-resting, .glass-floating, .glass-overlay,
-        .glass-card, .glass-material)[data-releasing] {
-        --glass-veil-rung: var(--glass-veil-tier, var(--glass-veil-resting));
+    :not([data-held]):has(> .glass-grasp-carrier[data-grasp="grasp"]) {
+        --glass-veil-rung: var(--glass-veil-rest);
         transition: --glass-veil-rung var(--spring-dock-duration) var(--ease-standard);
     }
 
-    /* Reduced motion keeps the register — the material still answers the hand — and
-       drops the envelope: the release is the same discrete step the engage is. */
-    @media (prefers-reduced-motion: reduce) {
-        :where(.glass-wash, .glass-quiet, .glass-resting, .glass-floating,
-            .glass-overlay, .glass-card, .glass-material)[data-releasing]
-            .glass-grasp-carrier[data-grasp="grasp"] {
-            transition: none;
-        }
-    }
+    /* NO `prefers-reduced-motion` arm, and the omission is the ruling. The release is
+       an opacity cross-fade of two filters in place — nothing translates, scales or
+       parallaxes — which is the substitution reduced-motion ASKS FOR, not a thing it
+       asks you to drop. And dropping it would strand the register: the carriers
+       unmount on `transitionend` (never on a timer, clause 4), so a `transition: none`
+       arm leaves a released plate flattened and held for the rest of the session. */
 }

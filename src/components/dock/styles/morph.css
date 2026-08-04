@@ -2,11 +2,12 @@
  *
  * This partial owns the dock's
  * DYNAMIC chrome: the `--dock-expand-t` directional expanded-ness derivation,
- * the one-layer plate surface lerp on the ONE `--dock-morph-t` clock, the collapsed/summary
+ * the one-layer plate INK lerp on the ONE `--dock-morph-t` clock, the collapsed/summary
  * state (the proportioned pill + the
- * summary glyph reveal), the held / open-descendant surface response, and the
- * adaptive-legibility `--glass-backdrop: light` bucket. The static structural
- * surface (root, clip, variants, persistent) lives in dock/shell.css.
+ * summary glyph reveal), and the held / open-descendant RIM response (the held BODY
+ * response is the grasp register's, glass/grasp.css). The static structural
+ * surface (root, clip, variants, persistent) lives in dock/shell.css; the dock's
+ * foreground legibility lives in dock/adaptive-legibility.css.
  *
  * @import-ed by dock.css in cascade order, in the SAME `@layer components` — the
  * carve is isomorphic (same layer, same source order → ZERO visual delta). */
@@ -281,16 +282,14 @@
     .glass-dock.collapsed:hover {
         box-shadow: var(--shadow-dock-override, var(--shadow-dock));
     }
-    /* The collapsed-hover surface lift retargets both endpoints of the ONE lerped plate
-       layer (dock.css), so the tier change fades on the plate itself
-       (the box keeps the box-shadow elevation above; the plate carries the glass). */
-    .glass-dock.collapsed:hover .dock-plate {
-        --dock-plate-collapsed-bg: var(--glass-plate-wash);
-        --dock-plate-collapsed-border: var(--glass-border-floating);
-        --dock-plate-expanded-bg: var(--glass-plate-wash);
-        --dock-plate-expanded-border: var(--glass-border-floating);
-    }
-
+    /* NO collapsed-hover surface lift. The rule that sat here declared the plate's
+       COLLAPSED endpoints byte-for-byte as `shell.css` already declares them, and its
+       EXPANDED endpoints are unread while `--dock-expand-t` is pinned at 0 — which it
+       is, on a collapsed dock. It painted identity at rest under a "surface lift"
+       comment. Nothing replaces it: a collapsed-dock hover rung is in no spec, and
+       inventing one to make the comment true is how a register acquires a state nobody
+       designed. The collapsed dock's hover read is its `box-shadow` elevation (above)
+       and its scale lift (below). */
     .glass-dock.collapsed:hover:not([data-morphing]) {
         scale: var(--dock-collapsed-hover-scale);
         will-change: transform; /* Promote the armed-at-rest scale lift */
@@ -298,25 +297,28 @@
 
     /* Held-state substrate response.
      *
-     * When a descendant signals `dockKeepOpen` (e.g. an active slider drag),
-     * `useDockState.isHeld` flips true and the root carries `data-held`.
-     * The dock background lifts a tier (resting → floating-equivalent) and
-     * the border quiets to the floating ring; the change tracks pointer
-     * movement on `--duration-fast` so it reads as a held-cursor cue, not
-     * a state change. The same flag is consumed by descendants (Slider
-     * thumb halo) via `useOptionalDockContext().held` for cross-substrate
-     * coordination (typed-key canonical shape).
+     * `data-held` on the root is the GRASP edge — `useDockState.graspHeld`, written by
+     * a live pointer hold on a descendant control (`useDockHold`'s
+     * `keepOpen("grasp")`), not by the posture count that an open popover or an armed
+     * search field also takes. The border quiets to the floating ring on
+     * `--duration-fast` so it reads as a held-cursor cue tracking the pointer, not as
+     * a state change. Descendants that want to answer the same hand read
+     * `useOptionalDockContext().held`; a control that owns its own gesture (the
+     * Slider) answers its OWN, so a sibling's drag never lights it.
      */
-    /* The held-tier surface lift retargets both plate endpoints of the ONE lerped
-       layer (dock.css), so the tier change fades on the plate itself. */
+    /* The held response on the PLATE BODY is the GRASP register's (glass/grasp.css) and
+       only its: a held surface OPENS — it sheds 40% of its ink and dilates 1.625× in
+       thickness so the field behind it comes forward. The tier LIFT this rule used to
+       add pushed the same axis the opposite way, and two writers disagreeing about
+       which direction "held" means is how a register stops meaning anything. What
+       survives here is the RIM half, which is a different axis: the border quiets to
+       the floating ring so the held-cursor cue reads on the edge while the body opens. */
     .glass-dock[data-held] .dock-plate {
-        --dock-plate-collapsed-bg: var(--glass-plate-floating);
-        --dock-plate-collapsed-border: var(--glass-border-floating);
-        --dock-plate-expanded-bg: var(--glass-plate-floating);
+        /* The EXPANDED endpoint only. The collapsed one is `--glass-border-floating`
+           already (shell.css) and is unread at `--dock-expand-t: 0` besides — a held
+           dock is held OPEN — so declaring it here was a no-op twice over. */
         --dock-plate-expanded-border: var(--glass-border-floating);
-        transition:
-            background var(--duration-fast) var(--ease-standard),
-            border-color var(--duration-fast) var(--ease-standard);
+        transition: border-color var(--duration-fast) var(--ease-standard);
     }
 
     /* The whole-plate open-descendant recolor is DELETED (clean
@@ -325,6 +327,6 @@
        floating, the user's "a dropdown changes the color of the ENTIRE dock" bug. A
        dropdown opening now leaves the dock plate INVARIANT; the open affordance is
        TRIGGER-scoped (the trigger's own `[aria-expanded]`/`[data-state=open]` active-fill
-       in dock-controls/triggers.css). The `[data-held]` (slider-drag) lift above is KEPT —
-       a legitimate held-cursor cue, not the bug. */
+       in dock-controls/triggers.css). The `[data-held]` (pointer-hold) RIM quiet above is
+       KEPT — a legitimate held-cursor cue, not the bug. */
 }

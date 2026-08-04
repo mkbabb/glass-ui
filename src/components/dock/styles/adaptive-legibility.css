@@ -1,12 +1,13 @@
 /* Dock adaptive-legibility styles (a partial held
  * under the 500-line no-god-module bound).
  *
- * This partial owns the darken-over-light legibility concern, distinct from the morph
- * chrome: the unconditional `:where(.glass-dock)` self-engage, the
- * continuous backdrop-luma tint clamp, the 
- * warm-chromatic dock ink, the ancestor `@container style(--glass-backdrop: light)`
- * descendant bucket, the contrast-color() progressive refinement, and the frozen-
- * backdrop (`data-backdrop-mode="static"`) arm.
+ * This partial owns the dock's FOREGROUND legibility over an unknown backdrop, distinct
+ * from the morph chrome: the unconditional `:where(.glass-dock)` self-engage of the
+ * control glyph/label ink, the contrast-color() progressive refinement, and the
+ * frozen-backdrop (`data-backdrop-mode="static"`) arm. The PLATE half — the earned
+ * darken off the measured backdrop luminance — is composed at the element in
+ * dock/dock.css and lives in `@utility glass-plate` (glass/veil.css); no token
+ * re-pointed here could carry it.
  *
  * @import-ed by dock.css in cascade order, in the SAME `@layer components` as morph.css
  * (the carve is isomorphic — same layer, source order preserved → ZERO visual delta). */
@@ -18,42 +19,40 @@
        The dock floats over WHATEVER the consumer painted — frequently a light/near-
        white app surface (the canonical G2 case the user reported). 
        A self-declared `--glass-backdrop: light` on the dock's OWN root (shell.css)
-       would be a NO-OP: CSS style queries NEVER self-match (the `@container
-       style()` block below reads an ANCESTOR — verified on Chrome 148), so a
-       self-declaration cannot self-darken. This `:where(.glass-dock)` rule is the genuine
-       UNCONDITIONAL self-engage — mirroring the overlay band's `ladder.css:169` —
-       re-pointing the INHERITING tint tokens DIRECTLY on the dock root so the
-       shell (`--glass-plate-dock`), chassis-strip, and held/open tiers darken through
-       the veil clamp in lockstep. `--dock-fg-on-aurora` re-points here too — ONE
-       reconciled path, the foreground twin folded in (it reaches the dock CONTROLS'
-       glyph/label color). A dark-substrate consumer opts out via `--glass-level` on
-       the dock root. The muted body
+       would be a NO-OP: CSS style queries NEVER self-match (a `@container style()`
+       block reads an ANCESTOR — verified on Chrome 148), so a self-declaration cannot
+       self-darken. This `:where(.glass-dock)` rule is the genuine UNCONDITIONAL
+       self-engage — mirroring the overlay band's `ladder.css:169` — and what it
+       engages is the FOREGROUND: `--dock-fg-on-aurora` and the muted body register,
+       re-pointed directly on the dock root so the CONTROLS' glyph/label ink clears
+       over an unknown field. It re-points no plate colour and could not: the plate's
+       own darken is composed AT THE ELEMENT through the veil clamp (see the rule
+       body below), which is the whole dynamic half. A dark-substrate consumer opts
+       out via `--glass-level` on the dock root. The muted body
        register lifts to the full warm-ink under the engaged plate (the muted L40
        tier cannot clear 4.5:1 on a translucent darkened plate — darkening moves the
        plate TOWARD muted's own luminance; the low-contrast muted register is
        inappropriate over a busy glass plate, so it resolves to the legible dark
        ink, which clears ~10:1). */
     :where(.glass-dock) {
-        /* The plate's own earned darken now rides the veil clamp (`@utility
-           glass-plate`, glass/veil.css), which reads the SAME `--glass-backdrop-luma`
-           this dock's observer writes — so the dock keeps the continuous
-           darken-over-bright it had, through the one chromatic writer instead of a
-           second one layered on top. What stays here is the FOREGROUND half, which is
-           genuinely dock-local: the control glyph/label ink over an unknown field. */
+        /* The plate's own earned darken is NOT here and is not a token re-point: the
+           plate composes its veil AT THE ELEMENT (`@apply glass-plate`, dock/dock.css),
+           so the clamp in `@utility glass-plate` (glass/veil.css) reads the
+           `--glass-backdrop-luma` this dock's observer writes on this dock's root
+           (`useGlassBackdropLuminance`) and inherits it down to the plate. That is the
+           whole dynamic darken; re-pointing an inheriting token here could not produce
+           it, because the composed `--glass-plate-*` colours resolve at `:root`. What
+           stays here is the FOREGROUND half, which is genuinely dock-local: the control
+           glyph/label ink over an unknown field. */
         --dock-fg-on-aurora: var(--foreground);
         --muted-foreground: var(--foreground);
     }
 
-    /* The ancestor-querying `@container` block KEPT — it reaches the DESCENDANT
-       nested-glass surfaces inside a dock when a consumer marks `--glass-backdrop:
-       light` on the dock's ancestor (the self-engage above re-points only the dock
-       root's own inheriting tokens; a consumer's explicit ancestor bucket still
-       cascades to nested glass through this block). */
-    @container style(--glass-backdrop: light) {
-        .glass-dock {
-            --dock-fg-on-aurora: var(--foreground);
-        }
-    }
+    /* NO `@container style(--glass-backdrop: light)` bucket for the dock's own ink. It
+       declared exactly what the unconditional self-engage above already declares, so it
+       could only ever re-assert a value — a condition wearing a mechanism's name. The
+       bucket that genuinely reaches DESCENDANT nested glass inside a dock lives with
+       the rungs it re-points (glass/ladder.css); this file owns the dock root's ink. */
 
     /* The `contrast-color()` flip for the dock control foreground (Chrome
        147+/Safari 26+; progressive enhancement, NEVER the load-bearing floor). The
@@ -72,11 +71,6 @@
             --dock-fg-on-aurora: contrast-color(var(--card));
             --muted-foreground: contrast-color(var(--card));
         }
-        @container style(--glass-backdrop: light) {
-            .glass-dock {
-                --dock-fg-on-aurora: contrast-color(var(--card));
-            }
-        }
     }
 
     /* The public frozen-backdrop arm. A static dock is the per-instance opaque
@@ -88,10 +82,15 @@
         --glass-backdrop-luma: 0;
     }
 
+    /* No plate-colour re-point: `--glass-level: 0` above resolves the veil recipe to
+       solid `--card` through the SAME machinery every plate uses (glass/veil.css), so
+       re-declaring the endpoints as `--card` here would be a parallel recipe for the
+       value the one recipe already produces. Only the border and the lens are
+       per-instance. */
     .glass-dock[data-backdrop-mode="static"] .dock-plate {
-        --dock-plate-collapsed-bg: var(--card);
-        --dock-plate-collapsed-border: var(--glass-border-floating);
-        --dock-plate-expanded-bg: var(--card);
+        /* The EXPANDED endpoint only — the collapsed one already resolves to
+           `--glass-border-floating` on the shell (shell.css), so re-declaring it here
+           was a byte-identical no-op. */
         --dock-plate-expanded-border: var(--glass-border-floating);
         backdrop-filter: none;
         -webkit-backdrop-filter: none;

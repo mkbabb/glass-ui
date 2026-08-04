@@ -183,9 +183,13 @@ const emit = defineEmits<{
        enrolled in the ambient seam (no-op at the default 0% strength). */
     background: var(--glass-plate-resting);
     /* §3 root-cause #1 (flat-field) CURE — REAL transmission (build owns the
-       -webkit- prefix into dist per the glass.css single-source policy). */
-    backdrop-filter: var(--glass-blur-floating);
-    -webkit-backdrop-filter: var(--glass-blur-floating);
+       -webkit- prefix into dist per the glass.css single-source policy). The radius
+       PAIRS the rail's ink: it paints the resting rung, so it is 16px thick. A rung is
+       a thickness of the same glass — a resting ink under a floating kernel is two
+       rungs pretending to be one, and it broke the ladder's monotone-dilution law at
+       the surface while the token table still proved it. */
+    backdrop-filter: var(--glass-blur-resting);
+    -webkit-backdrop-filter: var(--glass-blur-resting);
     /* §3 (c) defined edge — the keyed rim + warm under-shadow. */
     border: 1px solid var(--glass-border-accent);
     box-shadow: var(--glass-material-rim), var(--glass-under-shadow-default);
@@ -220,9 +224,11 @@ const emit = defineEmits<{
         var(--cel-accent) 38%,
         oklch(0 0 0 / 0)
     );
-    /* the keyed inner cel edge — lit top, shaded bottom (one key-light). */
-    box-shadow:
-        inset 0 0.5px 0 0 color-mix(in oklab, white 26%, oklch(0 0 0 / 0)),
-        inset 0 -0.5px 0 0 color-mix(in oklab, var(--cartoon-ink, black) 14%, oklch(0 0 0 / 0));
+    /* The keyed inner cel edge is the LIBRARY rim, not a local re-spell of it. It said
+       the same thing — lit on the key-facing edge, shaded opposite — in its own white
+       at 0.26, twice the ceiling every other plate in the library holds to, and off the
+       `--glass-key-*` sign pair, so a consumer moving the key left the cel lit from the
+       old side. One rim, one light source. */
+    box-shadow: var(--glass-material-rim);
 }
 </style>

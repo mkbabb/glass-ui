@@ -103,22 +103,26 @@
            collapsed-hover scales arm only on their state selectors; fixed/sticky dock
            helpers below raise this same stack onto `--z-dock`. */
         z-index: 0;
-        /* The dock self-darkens over light backdrops by
-           default via the UNCONDITIONAL `:where(.glass-dock)` self-engage rule in
-           dock/morph.css (mirroring the overlay band's `ladder.css:169`): it re-points
-           the inheriting `--glass-veil-ink`/`--glass-veil-rung` directly on the
-           dock root, so the shell + chassis + held/open tiers darken toward warm-ink
-           with NO consumer opt-in (a dock floats over arbitrary — frequently light —
-           page content). `--glass-backdrop: light` is KEPT here so a consumer's
-           DESCENDANT nested-glass inside the dock also reads the bright bucket via the
-           ancestor-querying `@container` block in dock/morph.css (CSS style queries
-           never self-match, so this declaration alone is inert for the dock's OWN
-           plate — the self-engage rule, not this token, darkens the dock). */
+        /* The dock self-darkens over light backdrops with NO consumer opt-in (a dock
+           floats over arbitrary — frequently light — page content), and it does so
+           WHERE IT PAINTS: the L0 plate composes `@utility glass-plate` at the element
+           (dock/dock.css), whose clamp reads the `--glass-backdrop-luma` this dock's
+           own observer writes on this root and which inherits to the plate. No token
+           re-pointed here darkens the plate — the `--glass-plate-*` colours resolve at
+           `:root`. `--glass-backdrop: light` is KEPT so a consumer's DESCENDANT
+           nested-glass inside the dock reads the bright bucket via the
+           ancestor-querying `@container` block in glass/ladder.css (CSS style queries
+           never self-match, so this declaration is inert for the dock's OWN plate). */
         --glass-backdrop: light;
-        --dock-plate-collapsed-bg: var(--glass-plate-wash);
+        /* The plate's morph endpoints are INK RUNGS, not composed colours: the plate
+           lerps its own veil alpha between them and composes the colour at the element
+           (dock/dock.css), which is what lets the observer's measured luminance reach
+           the paint. A `--glass-plate-*` colour endpoint bakes `:root`'s luma and
+           cannot. */
+        --dock-plate-collapsed-tier: var(--glass-veil-wash);
         --dock-plate-collapsed-border: var(--glass-border-floating);
-        --dock-plate-expanded-bg: var(--glass-plate-dock, var(--glass-plate-resting));
-        --dock-plate-expanded-border: var(--glass-border-dock, var(--glass-border-resting));
+        --dock-plate-expanded-tier: var(--glass-veil-dock);
+        --dock-plate-expanded-border: var(--glass-border-dock);
         /* `contain: layout style` — the restyle-scope axes ONLY; `paint` is NOT in the
            value and `.glass-dock` is NOT a clip aperture.
 
@@ -162,9 +166,9 @@
            MOVED off `.glass-dock` onto the L0 `.dock-plate` (dock/dock.css), which owns
            the ONE backdrop lens + its `clip-path` visible-extent morph. The box is now
            STRUCTURAL (layout + the drop-shadow elevation below); the plate is the surface.
-           The `--dock-surface-blur` + `--glass-veil-*` tokens re-pointed on `.glass-dock`
-           by the shell + adaptive-legibility partials INHERIT to the plate, so the
-           self-engage darken + the dark-arm glow reach it with ZERO re-author. The
+           The `--dock-surface-blur` + `--glass-veil-*` tokens declared on `.glass-dock`
+           INHERIT to the plate, so the dark-arm glow and the morph's rung endpoints
+           reach it with ZERO re-author (the earned darken composes at the plate). The
            collapsed↔expanded surface INTERP is retargeted onto `.dock-plate` in
            morph.css. No `backdrop-filter` on the box → ONE lens, no double-blur. */
         /* The dock rim is the DIRECTIONAL pair (bright catch-light
@@ -380,12 +384,12 @@
         padding: var(--dock-rail-padding, var(--dock-padding-inline, 0.5rem));
     }
 
-    /* The vertical dock's expanded rung is the dock/wash pair. The plate layers read
-       these endpoint variables; the box remains structural. */
-    .glass-dock.vertical {
-        --dock-plate-expanded-bg: var(--glass-plate-dock, var(--glass-plate-wash));
-        --dock-plate-expanded-border: var(--glass-border-dock, var(--glass-border-wash));
-    }
+    /* NO vertical re-point of the plate endpoints. The rail's expanded rung was
+       re-declared here as the dock/wash pair — the SAME `--glass-veil-dock` /
+       `--glass-border-dock` the horizontal dock already reads, differing only in a
+       fallback that cannot fire (both tokens are declared at `:root`, tokens/glass.css).
+       A rule whose every declaration resolves to what it overrides is a rung wearing an
+       orientation's name; orientation is a shape/density choice, not a material. */
 
     .glass-dock.vertical.shape-pill {
         border-radius: var(--radius-pill);

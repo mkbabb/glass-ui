@@ -20,7 +20,8 @@
    under-shadow. The register owns every glass mechanic; the surface owns only the
    colour. The four knobs (all optional, warm-glass defaults):
      · --liquid-fill-tint      — the fill hue (default the warm-cream capsule amber).
-     · --liquid-fill-strength  — the tint mix % against the warm 0-alpha leg (88%).
+     · --liquid-fill-strength  — the tint mix % against the warm 0-alpha leg (88%),
+           scaled at paint by the grasp register's `--glass-veil-rung` (below).
      · --liquid-fill-blur      — the backdrop blur rung (the quiet ~2px-equiv radius).
      · --liquid-fill-shadow    — the under-shadow leg (the glass-thickness floor).
 
@@ -39,26 +40,58 @@
 @layer components {
     .glass-liquid-fill {
         border-radius: var(--radius-pill);
+        /* ── THE GRASP REGISTER'S INK HALF, LIVE ON THIS HOST ──────────────────────
+           The register moves ONE scalar, `--glass-veil-rung`, between the host's rest
+           endpoint and 0.6× it (glass/grasp.css). On a PLATE that scalar is the veil's
+           alpha and `@utility glass-plate` composes both names; this fill is not a
+           plate — it paints a tinted MIX, not a veil — so it declares the pair itself
+           and reads the RATIO. `--glass-veil-rest: 1` is that: the fill's rest ink is
+           its full `--liquid-fill-strength`, so `rung ÷ rest ≡ rung` and the strength
+           below scales by it directly, with no division to resolve.
+
+           Without this the register's ink half was a structural no-op here — the fill
+           never read the rung, so "sheds 40% of its ink" moved nothing on the slider
+           and §5.4's band `[0.6·ink, ink]` was unfalsifiable on the host it was
+           written for. Now held really does shed 40% of the fill's tint in paint, and
+           the release lerps it back along the register's own registered-property
+           envelope (`--glass-veil-rung` is `@property`-registered `<number>`,
+           tokens/glass.css). */
+        --glass-veil-rest: 1;
+        --glass-veil-rung: var(--glass-veil-rest);
         /* The warm tinted glass fill — the tint mixes against a warm 0-alpha leg so
            the cylinder is a warm tinted `.glass-atom` over the field, not a flat bar.
            `--liquid-fill-tint` is the ONE phase-colour knob (default the warm-cream
-           capsule amber — the lib identity; the brand/phase hue is the consumer's). */
+           capsule amber — the lib identity; the brand/phase hue is the consumer's).
+           The mix % is the strength SCALED BY THE RUNG: at rest the rung is 1 and the
+           value is byte-identical to the pinned form; held it is 0.6× and the warm
+           cylinder thins so the field behind it comes forward with the blur. */
         background: color-mix(
             in oklab,
             var(--liquid-fill-tint, var(--glass-capsule-warm))
-                var(--liquid-fill-strength, 88%),
+                calc(var(--liquid-fill-strength, 88%) * var(--glass-veil-rung)),
             oklch(0.9 0.05 75 / 0)
         );
-        /* The blur routes the `--glass-blur-quiet` rung (the ~2px-equivalent radius
-           that SCALES by `--glass-level`), not a literal blur off the level knob. */
+        /* The blur routes the `--glass-blur-quiet` rung (the 14px radius that SCALES by
+           `--glass-level`), not a literal blur off the level knob. */
         backdrop-filter: var(--liquid-fill-blur, var(--glass-blur-quiet));
+        /* The grasp register's host inputs (glass/grasp.css). The fill IS the quiet
+           rung, so the held optic derives 1.625× from the quiet radius and the rest
+           carrier restores this surface's OWN resting filter — a consumer that
+           re-points `--liquid-fill-blur` moves both, because the rest carrier reads the
+           same knob. */
+        --glass-grasp-rest-filter: var(--liquid-fill-blur, var(--glass-blur-quiet));
+        --glass-grasp-radius: var(--glass-blur-quiet-radius);
         /* The unified edge rim reads the cylinder's curvature; the under-shadow
            lays the glass-thickness floor at the leading edge. */
         box-shadow:
             var(--glass-material-rim),
             var(--liquid-fill-shadow, var(--glass-under-shadow-quiet));
-        transition:
-            background var(--duration-fast) var(--ease-standard),
-            box-shadow var(--duration-fast) var(--ease-standard);
+        /* NO background channel in this shorthand. The ink rides `--glass-veil-rung`
+           alone: engage is the register's true 0ms step and release lerps the RUNG on
+           the register's own clock (glass/grasp.css), with the color-mix above
+           recomputing from it each frame. A `transition: background` here would make
+           the engage shed EASE in the `[data-held]`-without-`:active` window (the
+           passive touchstart acquire suppresses activation) — the two-clock defect. */
+        transition: box-shadow var(--duration-fast) var(--ease-standard);
     }
 }

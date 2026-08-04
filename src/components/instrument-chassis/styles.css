@@ -30,7 +30,11 @@
             var(--glass-shadow-quiet),
             inset 0 1px 0 var(--surface-tint-6),
             inset 0 -0.5px 0 rgb(0 0 0 / 0.06);
-        backdrop-filter: var(--glass-blur-quiet);
+        /* The chassis is the −2 footprint (`--glass-veil-chassis`, tokens/glass.css), so
+           its radius PAIRS at the wash rung's 10px. The footprint had an ink and no
+           pinned thickness, and picked up quiet's 14px by habit — a 64rem plate reads
+           heavy at any radius, and the ink is what carries its weight. */
+        backdrop-filter: var(--glass-blur-wash);
         transition: border-color var(--duration-normal) var(--ease-standard);
     }
 

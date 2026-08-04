@@ -230,10 +230,12 @@
 
 /* The OBSERVER's measured backdrop relative-luminance, now
    LOAD-BEARING. `useGlassBackdropLuminance` WRITES `--glass-backdrop-luma` (0..1) on
-   the glass target; the content/overlay/dock `:where()` rules READ it on the RHS of the
-   `--glass-veil-rung` clamp (glass/ladder.css, dock/morph.css) — the continuous
-   driver that lifts the calm 4% floor toward the ≤24% AA ceiling as the measured
-   backdrop brightens past the knee (the iOS-27 dynamic-range shift; apple-ios27.md §1.5).
+   the glass target; the ONE clamp that reads it lives in `@utility glass-plate`
+   (glass/veil.css) and composes AT THE ELEMENT, so every surface applying the plate —
+   the five ladder rungs, the card, the dock's L0 plate and its search field — earns the
+   same continuous darken from the same arithmetic. It lifts the rung's own ink by up to
+   two steps as the measured backdrop brightens past the knee (the iOS-27 dynamic-range
+   shift; apple-ios27.md §1.5), ceiling included.
    Registered as a typed INHERITING `<number>` (the `--glass-level`/`--progress-crescendo`
    precedent) so a bare `var()` INTERPOLATES smoothly between sample frames instead of
    snapping (a per-sample re-paint would flicker the plate). `inherits: true` so the

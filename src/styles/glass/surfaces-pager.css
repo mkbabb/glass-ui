@@ -31,8 +31,10 @@
            real silhouette (the ≤24% clamp keeps it translucent); under `.dark` the
            tint arm LIFTS it toward luminous warm-dark, never a charcoal
            slab. `in oklab` is the glass-tint perceptual family (the in-srgb
-           `--surface-tint-*` brand fence is untouched). The dock `--glass-plate-dock`
-           self-re-point precedent applied to the pager chassis. */
+           `--surface-tint-*` brand fence is untouched). The dock plate's element-level
+           compose precedent applied to the pager chassis (a `--glass-veil-tier` +
+           `@apply glass-plate` pair — glass/veil.css; the old `--glass-plate-dock`
+           pre-composed colour is struck). */
         --glass-veil-tier: var(--glass-veil-floating);
         @apply glass-plate;
         backdrop-filter: var(--glass-blur-floating);

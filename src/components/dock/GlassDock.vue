@@ -118,6 +118,7 @@ const {
     expanded,
     isPinned,
     isHeld,
+    graspHeld,
     onMouseEnter,
     onMouseLeave,
     onFocusIn,
@@ -152,13 +153,17 @@ const fsmQuiet = computed(
    into this single typed provide. `dockExpanded` is retired (zero
    downstream consumers per Rδ); `glassDockId` is dedup'd with
    `context.id`. */
+/* `held` is the GRASP edge, not the posture count: it is what the dock root paints
+   as `data-held` and what a descendant reads to co-answer the same hand. The
+   posture count is reached through `keepOpen`/`release` and is deliberately not
+   published as a flag — nothing should paint off "a popover is open". */
 provideDockContext({
     id: dockId,
     orientation,
     layout,
     keepOpen,
     release,
-    held: isHeld,
+    held: graspHeld,
 });
 
 const visualExpanded = computed(() => alwaysExpanded.value || expanded.value);
@@ -294,10 +299,29 @@ watch(visualExpanded, (isExpanded) => {
     }
 });
 
+// ── The GRASP mount (glass/grasp.css) ────────────────────────────────────────────
+// Keyed on `graspHeld` — an actual POINTER hold on a descendant control — never on
+// the posture count: the optic is the material's answer to a hand, and an armed
+// search field or an open popover is not one.
+// The carriers exist exactly as long as the gesture's optic does: mounted the frame
+// the hold begins, unmounted on the release fade's OWN `transitionend` — never a
+// timer, which drifts against the paint. The register reads their presence, so
+// "releasing" needs no flag: carriers mounted + `data-held` gone IS the release. The
+// `graspHeld` guard on the end handler keeps a re-grab mid-release from unmounting
+// under the finger (that fade reverses, and its `transitionend` still fires).
+const grasping = ref(false);
+watch(graspHeld, (held) => {
+    if (held) grasping.value = true;
+});
+function onGraspReleaseEnd(event: TransitionEvent): void {
+    if (event.propertyName === "opacity" && !graspHeld.value) grasping.value = false;
+}
+
 defineExpose({
     expanded,
     isPinned,
     isHeld,
+    graspHeld,
     isTransitioning,
     expand,
     collapse,
@@ -325,7 +349,7 @@ defineExpose({
         :data-size="size"
         :data-backdrop-mode="props.backdropMode"
         :data-interaction="interaction === 'manual' ? 'manual' : undefined"
-        :data-held="isHeld || undefined"
+        :data-held="graspHeld || undefined"
         :data-search="search || undefined"
         @mouseenter="onMouseEnter"
         @mouseleave="onMouseLeave($event)"
@@ -353,7 +377,24 @@ defineExpose({
             controls — never their ancestor — so a control hover plate overhangs the plate
             edge UN-CLIPPED. The box (`.glass-dock`) is structural (layout + elevation).
         -->
-        <div class="dock-plate" aria-hidden="true"></div>
+        <!--
+            The plate is the GRASP register's host (glass/grasp.css): `data-held` rides
+            the PLATE, not the box, because the plate is the surface that carries the
+            veil and the lens. The two filter-only carriers mount only while the gesture
+            is live and unmount on the release's own `transitionend` — the register
+            reads their presence, so nothing here needs a releasing flag. The edge is
+            `graspHeld` (a pointer down on a descendant), never the posture count.
+        -->
+        <div class="dock-plate" aria-hidden="true" :data-held="graspHeld || undefined">
+            <template v-if="grasping">
+                <span class="glass-grasp-carrier" data-grasp="rest"></span>
+                <span
+                    class="glass-grasp-carrier"
+                    data-grasp="grasp"
+                    @transitionend="onGraspReleaseEnd"
+                ></span>
+            </template>
+        </div>
 
         <!--
             L1 THE CONTROLS. The normal-flow control run OVER the plate.

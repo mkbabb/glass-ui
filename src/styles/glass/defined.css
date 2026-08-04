@@ -43,8 +43,9 @@
     .input-pill,
     .control-surface {
         --glass-definition: 1;
-        /* The substitution-vs-inheritance fix (the --dock-scale re-declare / --glass-plate-dock
-           pre-substituted-seam precedent — CLAUDE.md "The substitution-vs-inheritance trap").
+        /* The substitution-vs-inheritance fix (the --dock-scale re-declare precedent;
+           the trap itself is documented at theme/surface-axis.css — a custom property's
+           inner var() substitutes at the element that DECLARES it).
            --glass-floor-fill + --glass-border-defined are composed at :root, where
            --glass-definition is 0 — and a custom property's inner var() substitutes at the
            element that DECLARES it, so the :root copies resolve TRANSPARENT (calc(0 * N%)) and

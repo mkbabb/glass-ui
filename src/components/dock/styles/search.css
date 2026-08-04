@@ -3,14 +3,16 @@
  * The active dock-search field + its placeholder + the result rows read CLEARLY forward
  * over whatever backdrop the dock floats on (≥4.5:1, the darken seam) — never the
  * pale-ghost-fading-into-content trap (the NN/g defect, WWDC §219 "buttons remain
- * legible"). The field surface composes the `--glass-veil-rung` bright-bucket
- * darken at the ELEMENT level (the `<rung>, var(--glass-veil-ink)
- * var(--glass-veil-rung))` seam glass/ladder.css + morph.css already compose) — NOT
- * the RAW pre-substituted `--glass-plate-dock` token (the substitution-vs-inheritance trap
- * the dock surfaces already hit: a surface reading the pre-baked `--glass-plate-dock` baked
- * at `:root` 0% strength does NOT darken — the pale-fade). At the 0%/floor default the
- * inner oklab mix is a no-op (byte-identical to the un-tinted rung); under the bright
- * bucket it darkens-over-light (and lifts-over-dark).
+ * legible"). The field surface composes its plate at the ELEMENT — `@apply glass-plate`
+ * (the one recipe, glass/veil.css), whose clamp reads the `--glass-backdrop-luma` the
+ * dock's observer writes and the field inherits — NOT a pre-substituted `:root` plate
+ * token (the substitution-vs-inheritance trap: a colour composed at `:root` bakes
+ * `:root`'s luma and does NOT darken — the pale-fade; the dock's own such token is
+ * struck for exactly that reason, tokens/glass.css). Over a calm or
+ * unsampled backdrop the clamp resolves exactly the tier's own ink (the honest calm
+ * identity); past the knee it earns up to two more rungs of it. The dock's own L0 plate
+ * takes the SAME path (dock/dock.css), so field and plate darken in lockstep by
+ * construction rather than by two recipes agreeing.
  *
  * The result rows ride `.glass-menu-row` (the glass-quiet hover-lift, CONSUMED
  * here; the glassify is this partial's). The customization-surface axes
@@ -31,14 +33,12 @@
         gap: var(--dock-search-field-gap, 0.375rem);
     }
 
-    /* The ACTIVE field surface — the element-level oklab tint (NOT the raw
-       `--glass-plate-dock`). The field reads the floating rung darkened toward the warm-ink
-       at the bright-bucket strength, so it reads ≥4.5:1 over a busy backdrop. The
-       `--glass-veil-ink`/`--glass-veil-rung` are the SAME element-level customs
-       the dock plate self-engages (morph.css's `:where(.glass-dock)` rule re-points them
-       under the bright bucket); this field rides that lockstep, never a field-local
-       recipe. The field TEXT is `--foreground` (the full warm ink); the
-       placeholder/muted caption is `--on-glass-muted` (5.76:1 vs the plate). */
+    /* The ACTIVE field surface — the element-composed plate (never a `:root`-baked
+       plate colour). The field reads the floating rung, darkened by whatever the
+       measured backdrop earns, so it holds ≥4.5:1 over a busy field. It rides the SAME
+       `@utility glass-plate` seam the dock's L0 plate does — one recipe, two surfaces,
+       never a field-local fork. The field TEXT is `--foreground` (the full warm ink);
+       the placeholder/muted caption is `--on-glass-muted` (5.76:1 vs the plate). */
     .glass-dock[data-search] .dock-search-field .input-bar {
         --glass-veil-tier: var(--glass-veil-floating);
         @apply glass-plate;

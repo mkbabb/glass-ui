@@ -34,9 +34,18 @@
 
    `--glass-veil` is published as a nestable VALUE token so a consumer composing the
    plate INSIDE a bigger mix (the capsule's warm floor, a tone-tinted feedback panel)
-   reads it without re-spelling the recipe. */
+   reads it without re-spelling the recipe.
+
+   TWO NAMES, ONE ARITHMETIC. `--glass-veil-rest` is the CLAMPED rest ink — the tier
+   plus whatever the backdrop earned. `--glass-veil-rung` is what the plate PAINTS, and
+   at rest it is exactly `--glass-veil-rest`. The split exists so the grasp register
+   (glass/grasp.css) can express its band as a factor of the rest ink rather than of the
+   raw tier: held = 0.6 × rest, releasing = rest. Written against the raw tier instead,
+   a held plate over a bright backdrop resolved BELOW the band floor the register's own
+   falsifier pins (0.6·tier < 0.6·rest whenever the clamp earned anything), and the
+   attribute drop at the end of a release stepped the ink instead of landing on it. */
 @utility glass-plate {
-    --glass-veil-rung: clamp(
+    --glass-veil-rest: clamp(
         var(--glass-veil-tier, var(--glass-veil-resting)),
         calc(
             var(--glass-veil-tier, var(--glass-veil-resting)) + 2 *
@@ -52,6 +61,7 @@
                 var(--glass-veil-step)
         )
     );
+    --glass-veil-rung: var(--glass-veil-rest);
     --glass-veil: color-mix(
         in srgb,
         oklch(from var(--glass-veil-ink) l c h / var(--glass-veil-rung))

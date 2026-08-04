@@ -1,6 +1,7 @@
 import { computed, ref, watch, onUnmounted } from "vue";
 import type { ComputedRef, Ref } from "vue";
 import { isTeleportedTarget } from "./isTeleportedTarget";
+import type { DockHoldKind } from "./dockContext";
 import type { DockInteraction } from "./useDockShellProps";
 import { HOVER_INTENT_MS } from "../constants";
 
@@ -43,8 +44,20 @@ export interface UseDockStateReturn {
     expanded: Ref<boolean>;
     /** `true` whenever `state === "pinned"` — derived ref. */
     isPinned: Ref<boolean>;
-    /** `true` whenever at least one child token holds the dock open via `keepOpen`. */
+    /**
+     * `true` whenever at least one child token holds the dock open via `keepOpen`
+     * — the MORPH hold (posture). An armed search field or an open popover is one;
+     * a hand is not implied. It governs the collapse timer and the click-away, and
+     * it drives NO paint.
+     */
     isHeld: ComputedRef<boolean>;
+    /**
+     * `true` while at least one `keepOpen("grasp")` token is live — an actual
+     * POINTER hold on a descendant control. The dock's `data-held` edge and the
+     * grasp register (glass/grasp.css) read THIS, never `isHeld`: the material
+     * answers a hand, and "a popover is open" is not one.
+     */
+    graspHeld: ComputedRef<boolean>;
     /** Mouseenter handler — transitions `collapsed → hover`. */
     onMouseEnter: () => void;
     /** Mouseleave handler — schedules `hover → collapsed` after `collapseDelay`. */
@@ -56,9 +69,9 @@ export interface UseDockStateReturn {
     /** Click handler on the collapsed layer — transitions to `pinned`. */
     onClickCollapsed: () => void;
     /** Increment hold ref-count; suppresses timer-based collapse. */
-    keepOpen: () => void;
+    keepOpen: (kind?: DockHoldKind) => void;
     /** Decrement hold ref-count; allows timer-based collapse when count reaches 0. */
-    release: () => void;
+    release: (kind?: DockHoldKind) => void;
     /** Imperative open — forces `state = "hover"` (no-op when `alwaysExpanded`). */
     expand: () => void;
     /** Imperative close — forces `state = "collapsed"` (no-op when `alwaysExpanded`). */
@@ -116,12 +129,20 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
     const isPinned = computed(() => state.value === "pinned");
 
     let collapseTimer: ReturnType<typeof setTimeout> | null = null;
-    /* `keepOpenCount` is reactive so descendants
-       can derive `isHeld` from it. The semantics (≥ 1 token alive
-       suppresses timer-based collapse) are unchanged; reactivity is
-       additive. */
+    /* TWO COUNTS, TWO FACTS. `keepOpenCount` is POSTURE — every token, of either
+       kind, suppresses timer-based collapse and click-away. `graspCount` is the
+       HAND — only a live pointer hold takes one (`keepOpen("grasp")`, acquired by
+       `useDockHold` off a native `pointerdown`/`touchstart` on the resolved host).
+       The split exists because the grasp register (glass/grasp.css) is a
+       direct-manipulation answer to a finger: sourced from the posture count it
+       engaged the held optic — 0.6× ink, 1.625× blur, the plate's clip and grain
+       stood down — for the entire time a search field or a popover was open, which
+       is a state, not a touch. A grasp is also a posture hold (a finger down must
+       hold the dock open), so it takes both counts and releases both. */
     const keepOpenCount = ref(0);
+    const graspCount = ref(0);
     const isHeld: ComputedRef<boolean> = computed(() => keepOpenCount.value > 0);
+    const graspHeld: ComputedRef<boolean> = computed(() => graspCount.value > 0);
     let removeClickAway: (() => void) | null = null;
     let installClickAwayFrame: number | null = null;
     let isCollapsing = false;
@@ -319,12 +340,14 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
 
     // --- keepOpen / release (ref-counted child holds) ---
 
-    function keepOpen() {
+    function keepOpen(kind: DockHoldKind = "morph") {
         keepOpenCount.value++;
+        if (kind === "grasp") graspCount.value++;
         clearTimer();
     }
 
-    function release() {
+    function release(kind: DockHoldKind = "morph") {
+        if (kind === "grasp") graspCount.value = Math.max(0, graspCount.value - 1);
         keepOpenCount.value = Math.max(0, keepOpenCount.value - 1);
         if (keepOpenCount.value === 0 && state.value === "hover") {
             // Grace period: don't collapse immediately after a child releases
@@ -440,6 +463,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         expanded,
         isPinned,
         isHeld,
+        graspHeld,
         onMouseEnter,
         onMouseLeave,
         onFocusIn,

@@ -423,12 +423,20 @@ function togglePlay() {
                 A <code class="rounded bg-muted px-1">&lt;Slider&gt;</code> descendant
                 of a dock holds the dock open while the user drags (the
                 <code class="rounded bg-muted px-1">dockKeepOpen</code>
-                token), and reflects the dock's held state via
-                <code class="rounded bg-muted px-1">data-held</code> on its root. Drag a
-                knob: the thumb halo intensifies and the dock substrate tier-shades up
-                while held; release returns both to default. The contract is
-                bidirectional and pointer-anchored — it lives on the API surface, not
-                the recipe.
+                token, taken as a
+                <code class="rounded bg-muted px-1">grasp</code>), and reflects that
+                live pointer hold via
+                <code class="rounded bg-muted px-1">data-held</code> — on the root for
+                the API contract, and on the PLATE the glass actually paints on, where
+                the grasp register reads it. The predicate is the HAND and only the
+                hand: a popover open inside the dock holds it open without engaging any
+                of this, and a slider outside a dock still grasps on its own drag. Drag
+                a knob: both surfaces OPEN under the finger (each dilates 1.625× in
+                thickness; the plate sheds 40% of its veil ink and the fill 40% of its
+                tint strength, so the field behind comes forward), the dock's rim quiets
+                to the floating ring, and the release lerps ink and optic back together
+                on the dock spring's own settle. The contract is bidirectional and
+                pointer-anchored — it lives on the API surface, not the recipe.
             </p>
             <div
                 class="dock-stage-tile flex justify-center rounded-[var(--radius-card)] border border-border/30 p-8"

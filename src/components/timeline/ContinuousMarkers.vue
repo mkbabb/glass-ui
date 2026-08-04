@@ -263,16 +263,20 @@ function onPopoverOpenChange(seg: TimelineSegment, open: boolean) {
     background: var(--timeline-dot-fill);
     backdrop-filter: var(--timeline-dot-blur);
     border-color: var(--timeline-dot-ring);
-    /* The continuous dot is a flush rivet
-       (the inverse of the segmented float-dot): an INNER keyed shadow reads it
-       as PRESSED-IN at the phase joint of the one bar. Lit top-inset +
-       shaded bottom-inset = the one key-light, sunk. A faint outer rim keeps
-       the perceived centre on the math centre. The black-premultiply trap: 0-alpha arms
-       are oklch(.../0), never bare transparent. */
+    /* The continuous dot is a flush rivet (the inverse of the segmented float-dot): an
+       INNER keyed shadow reads it as PRESSED-IN at the phase joint of the one bar —
+       shaded top-inset + lit bottom-inset, the one key-light, sunk.
+
+       ONE rim leg. `--glass-material-rim` sat above these two and said the opposite
+       thing on the same box: it is the RAISED read (lit top, shade bottom), which is
+       precisely what a rivet is not, so the dot carried two rims arguing about whether
+       it stood up or sank in. The pressed pair is the design; the raised leg is struck.
+       The lit alpha lands on the rim's own 0.10 — the library has one white value, not
+       a per-surface one. The black-premultiply trap: 0-alpha arms are oklch(.../0),
+       never bare transparent. */
     box-shadow:
-        var(--glass-material-rim),
         inset 0 1px 1.5px color-mix(in oklab, var(--cartoon-ink, black) 16%, oklch(0 0 0 / 0)),
-        inset 0 -1px 1px color-mix(in oklab, white 22%, oklch(0 0 0 / 0));
+        inset 0 -1px 1px color-mix(in oklab, white 10%, oklch(0 0 0 / 0));
 }
 
 .continuous-dot:hover,

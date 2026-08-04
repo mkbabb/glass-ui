@@ -8,7 +8,15 @@
    opacity+blur clobbers. The level-0 path resolves solid `--card` + `blur(0)`
    through the SAME machinery (the opacity seam → 1, the blur seam → 0), so every
    glass surface — current and future — flattens with no per-rung enumeration. The
-   grain kill stays (it sits off the level axis). */
+   grain kill stays (it sits off the level axis).
+
+   THE RIM RIDES THE SAME KNOB, and that is why no white-inset kill is enumerated here.
+   `--glass-rim-top`/`--glass-rim-bottom` scale their alphas by `--glass-level`
+   (tokens/glass-fx.css, tokens/dark-arm.css), so the material's edge dies with the
+   material — including under `forced-colors`, which sets the same knob. Re-zeroing a
+   named shadow token in this bracket would work only for the tokens someone remembered
+   to list; the level term works for every surface that reads the rim, which is all of
+   them. */
 @media (prefers-reduced-transparency: reduce) {
     :root {
         --glass-level: 0;

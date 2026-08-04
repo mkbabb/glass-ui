@@ -1,5 +1,5 @@
-import { onBeforeUnmount, onMounted } from "vue";
-import type { ComputedRef } from "vue";
+import { onBeforeUnmount, onMounted, ref } from "vue";
+import type { Ref } from "vue";
 import { useOptionalDockContext } from "./dockContext";
 
 /**
@@ -10,6 +10,14 @@ import { useOptionalDockContext } from "./dockContext";
  * descendant control, the dock holds open (idle-collapse suppressed) and the
  * dock's `held` edge lights `data-held` on the dock root AND the control for the
  * thumb-halo intensification.
+ *
+ * THIS ACQUIRE IS THE HAND. It is the only path in the library driven by an actual
+ * pointer going down, so it is the one the GRASP register (glass/grasp.css) is
+ * sourced from: the token it takes is `keepOpen("grasp")`, which lights the dock's
+ * `held` edge as well as holding posture. The returned `isHeld` is this host's OWN
+ * live-hold flag — it flips with the finger whether or not a dock is present, so a
+ * STANDALONE control engages on its own drag and a control inside a dock does NOT
+ * co-engage off a sibling's hold.
  *
  * Why NATIVE host listeners (not a Vue `@pointerdown` template binding):
  * reka-ui's `<SliderRoot>` is a FORWARDING component — it renders through a
@@ -36,9 +44,11 @@ import { useOptionalDockContext } from "./dockContext";
  * hold path, no parallel `touchGate` watch).
  *
  * DI: consumes the EXISTING typed `DockContext` via `useOptionalDockContext()`
- * through the `keepOpen` and `release` pair. A control
- * rendered OUTSIDE a `<GlassDock>` gets the befitting-silent default (no dock) —
- * every hook is a no-op, a primitive may legitimately render outside a dock.
+ * through the `keepOpen` and `release` pair. A control rendered OUTSIDE a
+ * `<GlassDock>` gets the befitting-silent default (no dock) — the DOCK half is a
+ * no-op, a primitive may legitimately render outside a dock. The HAND half is not
+ * conditional on it: the returned edge tracks the pointer either way, which is what
+ * lets a standalone `<Slider>` grasp.
  */
 
 export interface UseDockHoldOptions {
@@ -51,8 +61,13 @@ export interface UseDockHoldOptions {
 }
 
 export interface UseDockHoldReturn {
-    /** `true` whenever the dock observes ≥1 held token (the `data-held` edge). */
-    isHeld: ComputedRef<boolean> | undefined;
+    /**
+     * `true` while THIS host's own pointer hold is live — from the native
+     * `pointerdown`/`touchstart` acquire to the window-scoped release. Dock-free by
+     * construction: a control outside a `<GlassDock>` still reports its own hand,
+     * and a control inside one never reports a sibling's.
+     */
+    isHeld: Ref<boolean>;
 }
 
 /**
@@ -72,19 +87,24 @@ export function useDockHold(
 
     // ONE acquire flag — the single source of truth for whether THIS host holds a
     // token. The native pointer + touch listeners drive the same flag, so a
-    // pointer-down then a stray touch (or vice versa) cannot double-acquire.
-    let acquired = false;
+    // pointer-down then a stray touch (or vice versa) cannot double-acquire. It is
+    // a `ref` because it IS the host's grasp edge, returned to the consumer: the
+    // dock token is a side effect of the hand, not its definition, so the flag
+    // flips with no dock in scope.
+    const held = ref(false);
 
     function acquire(): void {
-        if (!armed() || acquired || !dock) return;
-        dock.keepOpen();
-        acquired = true;
+        if (!armed() || held.value) return;
+        held.value = true;
+        // A pointer hold is a GRASP: it takes the posture count (no idle-collapse
+        // mid-gesture) and the grasp count (the edge the material answers).
+        dock?.keepOpen("grasp");
     }
 
     function release(): void {
-        if (!acquired || !dock) return;
-        dock.release();
-        acquired = false;
+        if (!held.value) return;
+        held.value = false;
+        dock?.release("grasp");
     }
 
     // Window-scoped release: reka retargets the captured pointer's up/cancel to
@@ -139,5 +159,5 @@ export function useDockHold(
         release();
     });
 
-    return { isHeld: dock?.held };
+    return { isHeld: held };
 }

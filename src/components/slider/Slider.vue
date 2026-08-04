@@ -1,5 +1,13 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, useAttrs, useTemplateRef } from "vue";
+import {
+    computed,
+    onBeforeUnmount,
+    onMounted,
+    ref,
+    useAttrs,
+    useTemplateRef,
+    watch,
+} from "vue";
 import {
     SliderRange,
     SliderRoot,
@@ -9,7 +17,6 @@ import {
 } from "reka-ui";
 import { useTouchGate } from "../../composables/dom/useTouchGate";
 import { useDragVelocity } from "../../composables/dom/useDragVelocity";
-import { useOptionalDockContext } from "../dock/composables/dockContext";
 import { useDockHold } from "../dock/composables/useDockHold";
 import { resolveValueMarks } from "../_shared/field/valueDomain";
 import { useMotionAxis } from "../_shared/useMotionAxis";
@@ -52,11 +59,13 @@ const delegatedProps = computed(() => {
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits);
 
-/* The host-native dock hold (one owner, one acquire path).
-   The Slider subscribes to the dock's reactive `held` flag (surfaced on
-   the canonical typed `DockContext` alongside the `keepOpen`/`release`
-   pair, single-typed-key) and reflects it on the root via
-   `data-held` for the thumb-halo intensification recipe in scoped CSS.
+/* The host-native drag hold (one owner, one acquire path).
+   The Slider reflects ITS OWN live pointer hold on the root via `data-held` — the
+   flag `useDockHold` returns, which flips on the native `pointerdown`/`touchstart`
+   acquire and clears on the window-scoped release. It is NOT the dock's posture
+   count: read that way, every slider in a dock lit up whenever any sibling held the
+   dock open (a popover, an armed search field), and a slider outside a dock could
+   never light at all. The grasp register answers THIS hand.
 
    The acquire/release of that hold is owned ENTIRELY by `useDockHold`,
    which attaches NATIVE `pointerdown`/`touchstart` listeners on the
@@ -71,7 +80,6 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
    window-`pointerup` re-implementation, and no parallel
    `watch(touchGate.isActive)` acquire path — the one `useDockHold` owner
    holds it all. */
-const dock = useOptionalDockContext();
 const sliderRootRef = useTemplateRef<{ $el: HTMLElement } | HTMLElement | null>(
     "sliderRootRef",
 );
@@ -86,10 +94,10 @@ function getRootEl(): HTMLElement | null {
 // The native hold resolves the reka forwardRef host at its own `onMounted`
 // (template refs are live by then). A resolver getter — not a ref Slider
 // populates in a sibling `onMounted` — sidesteps the onMounted-ordering trap.
-// The hold is CONTEXT-DRIVEN and always-on inside a dock: `useDockHold`
-// consumes `useOptionalDockContext()`, so it is a no-op outside a `<GlassDock>`
-// and holds unconditionally inside one — no consumer-facing opt-out knob.
-useDockHold(getRootEl);
+// The DOCK half is context-driven and always-on inside a dock (no consumer-facing
+// opt-out knob) and a no-op outside one; the HAND half — `isHeld` — is this
+// slider's own drag either way.
+const { isHeld } = useDockHold(getRootEl);
 
 /* The weight-train velocity bridge. Writes the BOUNDED
    `--atom-drag-v` (0..1, saturating `tanh`) on the resolved host during the drag
@@ -161,8 +169,30 @@ onBeforeUnmount(() => {
     root.removeEventListener("touchend", onTouchEnd);
 });
 
-const isHeld = computed(() => dock?.held.value === true);
 const isTouchActive = computed(() => touchGate.isActive.value);
+
+// ── The GRASP mount (glass/grasp.css) ────────────────────────────────────────────
+// The carriers exist exactly as long as the gesture's optic does: mounted the frame
+// the hold begins, unmounted on the release fade's OWN `transitionend` — never a
+// timer, which drifts against the paint. The register reads their presence, so
+// "releasing" needs no flag: carriers mounted + `data-held` gone IS the release. The
+// `isHeld` guard keeps a re-grab mid-release from unmounting under the finger (that
+// fade reverses, and its `transitionend` still fires).
+//
+// NOT ON THE SPECTRUM VARIANT. That recipe DE-GLASSES its range on purpose — no
+// background, no `backdrop-filter`, no rim (the gradient track IS the fill and the
+// squircle thumb is the handle) — so mounting the carriers there would frost a
+// surface deliberately made not-glass, and the register would paint a hold on a
+// range that has no material to open. The spectrum's held read is its thumb halo,
+// which it already carries.
+const graspable = computed(() => v.value !== "spectrum");
+const grasping = ref(false);
+watch(isHeld, (held) => {
+    if (held && graspable.value) grasping.value = true;
+});
+function onGraspReleaseEnd(event: TransitionEvent): void {
+    if (event.propertyName === "opacity" && !isHeld.value) grasping.value = false;
+}
 
 /* The never-nameless floor's DX signal. reka's
    SliderThumbImpl names the thumb `$attrs['aria-label'] || getLabel(index, count)`,
@@ -222,7 +252,28 @@ onMounted(() => {
                     :style="{ '--value-mark-position': `${mark.position * 100}%` }"
                 />
             </span>
-            <SliderRange class="slider-range glass-liquid-fill" />
+            <!--
+                The range is the GRASP register's host (glass/grasp.css): `data-held`
+                and the two filter-only carriers ride the FILL — the surface that
+                actually carries the glass — not the root. The carriers mount only
+                while THIS slider's drag is live and unmount on the release's own
+                `transitionend`; the register reads their presence, so no releasing
+                flag exists to fall out of step. The spectrum variant is excluded —
+                its range carries no glass to open.
+            -->
+            <SliderRange
+                class="slider-range glass-liquid-fill"
+                :data-held="isHeld || undefined"
+            >
+                <template v-if="grasping && graspable">
+                    <span class="glass-grasp-carrier" data-grasp="rest"></span>
+                    <span
+                        class="glass-grasp-carrier"
+                        data-grasp="grasp"
+                        @transitionend="onGraspReleaseEnd"
+                    ></span>
+                </template>
+            </SliderRange>
         </SliderTrack>
         <SliderThumb
             v-for="(_, key) in values"
@@ -435,11 +486,31 @@ onMounted(() => {
 /* FOLLOW-THROUGH (release): the `--ease-cartoon-punch` curve on the transform
    channel carries the >1.0 overshoot-and-settle knot as the squash returns to rest —
    a monotonic settle would be a dead spring. The cast recoils LATE (the caster's
-   1.15× lag). The transition swaps to the punch curve on release (no `:active`). */
+   1.15× lag). The transition swaps to the punch curve on release (no `:active`).
+
+   IT ALSO CARRIES THE GRASP REGISTER'S INK CHANNEL, and must. This rule governs the
+   RELEASE WINDOW (`:not([data-held])`) on the very element the register releases on,
+   and an SFC-scoped block is UNLAYERED — it outranks every `@layer components` rule
+   whatever the specificity, which is the one exception to the register's
+   outrank-by-specificity doctrine (glass/grasp.css). So the register's own
+   `transition: --glass-veil-rung …` loses here, and a `transition` shorthand that
+   omitted the channel would strand the ink: it would step 0.6 → 1 in one frame under
+   a blur still fading over the dock spring's settle. The clock is READ from the
+   register (`--spring-dock-duration`/`--ease-standard`), never re-typed as a literal
+   — one clock, two declarations, and the arm in tests/styles/glass-subtlety.test.ts
+   reds if this channel is dropped.
+
+   And the `background` channel LEAVES this list, for the same reason. The fill's
+   background is now a function of that rung (glass/liquid-fill.css), so transitioning
+   both would chase one change down two clocks — the dependent `background` restarts a
+   `--duration-fast` fade on every frame the rung advances, landing the ink late
+   behind its own blur. One animated channel, one clock. Every other liquid-fill
+   consumer already resolves this way (the register's release rule replaces the fill's
+   own shorthand there); this rule now says the same thing where it outranks it. */
 .glass-slider:not(:active):not([data-held]) .slider-range {
     transition:
         transform var(--duration-normal) var(--ease-cartoon-punch),
-        background var(--duration-fast) var(--ease-standard),
+        --glass-veil-rung var(--spring-dock-duration) var(--ease-standard),
         box-shadow var(--duration-fast) var(--ease-standard);
 }
 
@@ -467,11 +538,12 @@ onMounted(() => {
         inset 0 0 0 1px var(--destructive);
 }
 
-/* Held-state: when a dock-keep-open token is held by THIS slider's drag
-   (or any sibling drag the dock observes). The STANDARD recipe (no visible thumb)
-   intensifies the TRACK FILL's edge rim; the SPECTRUM recipe (visible thumb)
-   intensifies its thumb halo (its range is transparent, so the held register
-   rides the handle). The substrate response in dock.css intensifies in parallel. */
+/* Held-state: THIS slider's own live pointer hold, and only its own — the edge
+   `useDockHold` returns, never a sibling's drag and never the dock's posture count
+   (a popover open inside the dock is not a hand). The STANDARD recipe (no visible
+   thumb) intensifies the TRACK FILL's edge rim; the SPECTRUM recipe (visible thumb)
+   intensifies its thumb halo (its range is transparent, so the held register rides
+   the handle). A dock the finger is inside answers the same hand on its own plate. */
 .glass-slider:not([data-variant="spectrum"])[data-held] .slider-range {
     box-shadow:
         var(--glass-material-rim),

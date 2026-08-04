@@ -375,13 +375,15 @@
     --dock-scroll-gutter: var(--dock-scroll-safe-inset);
 
     /* The dock-control family reads a real GLASS register
-       on hover/active, NOT a same-hue `--card` mix at an alpha adjacent to the dock's
-       own `--glass-plate-dock` substrate (a sub-1%-ΔL no-op — the loud Q3 tell: "nothing
-       on hover, something on click"). Both legs now point at NAMED glass tiers a
-       measurable step ABOVE the dock's 42%-opacity substrate:
+       on hover/active, NOT a same-hue `--card` mix at an alpha adjacent to the dock
+       plate's own composed substrate (a sub-1%-ΔL no-op — the loud Q3 tell: "nothing
+       on hover, something on click"). The dock substrate is the element-level
+       `--glass-veil-tier` compose (glass/veil.css; the old `--glass-plate-dock`
+       pre-composed colour is struck). Both legs point at NAMED glass tiers a
+       measurable step ABOVE that substrate:
          • hover  → `--glass-plate-resting` (the 65% glass plate) — the control surface
                     WAKES as a brighter glass tier on hover, reading the blurred dock
-                    substrate through it. The +ΔL above `--glass-plate-dock` is perceptible
+                    substrate through it. The +ΔL above the plate substrate is perceptible
                     BEFORE click; the specular gleam + scale ride alongside (one register).
          • active → `--glass-plate-floating` (the 80% glass plate) — a tier ABOVE hover,
                     the keyframes-dock "selected element reads as glass" model the user

@@ -310,11 +310,17 @@
        because the page behind it is dark and the plate's own ink is deeper still — the
        rim only has to say where the edge is. The under-shadow holds warm at 6%/4% and
        does the grounding in both modes. The key sign tokens are inherited from :root,
-       not re-declared, so the lit edge agrees with the cartoon cast in both modes. */
-    --glass-rim-top: inset 0 var(--glass-key-lit-y) 0 hsl(0 0% 100% / 0.08);
+       not re-declared, so the lit edge agrees with the cartoon cast in both modes. Both
+       legs carry the `--glass-level` term for the same reason the light arm does: the
+       rim is the glass's edge, and the a11y brackets flatten the material through that
+       ONE knob rather than through a second list of tokens. */
+    --glass-rim-top: inset 0 var(--glass-key-lit-y) 0
+        hsl(0 0% 100% / calc(0.08 * var(--glass-level)));
     --glass-rim-bottom:
-        inset 0 var(--glass-key-shade-y) 0 color-mix(in srgb, var(--foreground) 6%, transparent),
-        inset var(--glass-key-shade-x) 0 0 color-mix(in srgb, var(--foreground) 4%, transparent);
+        inset 0 var(--glass-key-shade-y) 0
+            color-mix(in srgb, var(--foreground) calc(6% * var(--glass-level)), transparent),
+        inset var(--glass-key-shade-x) 0 0
+            color-mix(in srgb, var(--foreground) calc(4% * var(--glass-level)), transparent);
 
     /* The `.glass-capsule-track` recess ink, DARK arm (the
        PLAIN per-mode pair's dark leg; the light arm is in `tokens/glass-fx.css`).
