@@ -142,6 +142,52 @@ Three corrections, each a codex-era clause that the ⊕ rulings invalidate and t
 
 ---
 
+## §2a · The `WAVES.md:291` OWNS-clauses, dispositioned
+
+**⊕ 2026-08-03 (Φ3-close residual cure).** `WAVES.md:291` seats this wave as **"Owns: family X, Z-4,
+Z-6"** and lists six changes. §1's laws discharge most of that scope *by substance* but never named the
+ids — and an unnamed discharge is indistinguishable from a drop, which is the exact reading defect this
+wave exists to kill. Every clause is dispositioned here, once, with its ground: **DISCHARGED** (a law
+above already does it) · **PRUNED** (dead, with the reason) · **ROUTED** (another roster row owns it,
+and the clause is restated *at that row*, not only here). Sources: `REGISTRY.md` §FAMILY X (`:421-490`)
+· `REGISTRY.md:407` (Z-4) · `:409` (Z-6) · `WAVES.md:291` items 1–6. Roster cites take L-12's form
+(`docs/tranches/BJ/addenda/2026-07-24-refinement/TERMINAL-ROSTER.md` §A row #n).
+
+| clause | disposition | ground |
+|---|---|---|
+| **X-1** · the convergence gate cannot terminate — provenance hashes make every round byte-different, so two-consecutive-clean is unreachable by construction | **DISCHARGED** (content half) + **PRUNED** (emitter half) | Content half: **L-6** forbids the duplicated derived data the predicate trips over (one append-only burndown; no second copy of the roster, cursor or DAG; a figure quoted only from it, with members and source), and **L-5**'s ground is the owner's banked convergence-gates law — *a finite invariant checklist plus two-consecutive-clean, never a percentage*. Emitter half (a runner emitting a provenance sidecar): **PRUNED** — BK emits no convergence artifact (`grep -rn "supersedesRosterSha256" docs/tranches/BK --include='*.md'` → **0**; the two `.json` hits are row #9 scout material *quoting* the BJ-era schema, not an emitted artifact), and **L-11** forbids this wave asserting a script it did not write |
+| **X-2** · findings may be raised against documents, so cures manufacture the next round's findings | **DISCHARGED at L-4** | REGISTRY's own disposition is *"a finding needs a path and a failing command"* — which is L-4's fence in substance: a finding is INADMISSIBLE unless it carries a falsifier **at HEAD** — a path, a line, and a command output |
+| **X-3** · the model-caste routing sink (a seat with zero commits, 103 files routing to it) | **DISCHARGED at L-1** | The caste gate is deleted by owner word, twice dated: ⊕¹⁵ (tri-fold) and ⊕¹⁸ (Claude Code owns BK). A route to a seat with no landed commits is a hard failure, not a valid disposition |
+| **X-4a** · 240 untracked governing documents cited as binding; `WAVES.md:291` item 1's `commit-msg` hook | **ROUTED → #15** | The assertion *is* `G-CITE-COMMITTED`, an arm of the `G-PROVENANCE` seat that **§A row #15** holds (`TERMINAL-ROSTER.md:165`; the seat's identity at `:357` — `G-PROVENANCE (≡CITE-COMMITTED+STAMP-EMITTED)`). The untracked-census act rides **§A row #4** (`:154`, *"G-CITE-COMMITTED born-RED until this lands"*). Clause restated at #15 on this date |
+| **X-4b** · 34.4% of `src` is comment | **PRUNED from this row, owner named** | REGISTRY's own disposition cell names `W-COMMENT-DIET` = **§A row #17**. Not a drop: an owner on the roster of record. This row states no comment figure |
+| **X-4c** · 2.7 GB of tracked screenshots; `.git` at 4.0 GB | **PRUNED from this row, owner named** | REGISTRY's own disposition cell names `W-REPO-WEIGHT` = **§A row #63** |
+| **X-4d** · 67 convergence rounds exiting into handoff documents; BJ has no `FINAL.md`; `WAVES.md:291` item 4's *round cap 3* + *merged-commit exit artifact* | **PRUNED** (the cap) + **DISCHARGED** (the exit artifact) + **FOLDED at #66** (the FINAL) | *Round cap 3* is a **count** used as a stop condition — the exact class L-5 strikes and L-10 prunes; the owner's banked convergence law supersedes it (two-consecutive-clean over a finite invariant checklist, never a round count). *Exit artifact is a merged commit* is **live and honoured**: every BK ⊕ round exits as a dated commit on the default branch, never a handoff document (⊕²⁵ = `0a0f95cc`). The `FINAL.md` half folds at #66 — §2b |
+| **X-4e** · the model-declaration law is 0.5% enforced; `WAVES.md:291` item 6's *enforce-or-delete* | **DISCHARGED at L-1/L-2** (the law) + **ROUTED → #15** (the hook) | L-1's fence has a dated owner word behind it — *a seat with no `model:` is a **DEFECT**, not a default* — and L-2 makes the runtime assertion by prefix. The `commit-msg` trailer enforcement is the same emitter as X-4a and travels with it to #15 |
+| **X-4f** · the cursor's close criterion is unfalsifiable (landing bytes can never mark a row done) | **DISCHARGED at L-8** + **ROUTED → #15** (the stamp) | L-8's three fields are the falsifiable form: `spec_state` · `code_state` · `evidence_state`, **none ever inferred from another**, so "the bytes are good and the seal is void" is statable without lying in either direction. The machine-emitted stamp that replaces the prose criterion is `G-STAMP-EMITTED`, #15's |
+| **Z-4** · shadow execution — five occurrences; **H and I closed on a branch that never merged, their FINAL docs on master and their work not** (`REGISTRY.md:407`); `WAVES.md:291` item 2 | **ROUTED → #15**, clause restated | The clause, restated verbatim for the receiving row: **a close stamp is emitted from the SHA it ran against, and a stamp naming a SHA not reachable from the default branch FAILS.** That is `G-STAMP-EMITTED`'s whole assertion (`WAVES.md:291`'s own born-RED table: *"Every wave close stamp is script-generated and names a reachable SHA — RED, hand-authored"*). Restated at `TERMINAL-ROSTER.md` §A row #15 on this date |
+| **Z-6** · author-assertable status vocabulary as the vehicle of ledger inflation — *"AX minted it, retired it; BB re-invented it; BJ ran it at scale"* (`REGISTRY.md:409`); `WAVES.md:291` item 3 | **ROUTED → #9** (gate half), clause restated + **DISCHARGED at L-8/L-11** (row half) | Gate half, restated for the receiving row: **a gate's status is what its runner emits — PASS · FAIL · ABSENT — never what an author asserts; an unwired gate is ABSENT, never GREEN.** #9 already holds the proposition in other words — C-13 wiring is BLOCKING because *"an unwired gate cannot fail"* (`docs/tranches/BK/gates/ROSTER.md:12`); ABSENT is that sentence given a value. Row half: L-8's three fields are BK's row vocabulary and L-11 kills the assertable-success case at its root — a declared-but-unrun mode *emits the success signal of the thing it never did* |
+| `WAVES.md:291` **item 5** · doc-budget check at close (≤ 0.25 × changed `src` lines) | **DISCHARGED at L-9** | The C-11 exemption is stated (retained doc lines count; discovery artifacts are provenance, not corpus) and is read by the `G-NO-EVIDENCE-COMMIT` DOC-BUDGET arm (`docs/tranches/BK/gates/ROSTER.md:34`) |
+
+**Detector for the gap this block closes** (so a reader can re-run it): before this date,
+`grep -rn "Z-6\|Z-4\|family X" docs/tranches/BK --include='*.md'` → **0**, and `ABSENT` as a status
+value → **0** BK-side. The two names now resolve, and the two live routes resolve at **both** ends —
+Z-4 + the X-4a/X-4e/X-4f emitter halves at **#15**, Z-6/item-3's gate half at **#9** — because a route
+whose clause exists at the sending end only is precisely the absorbing sink X-3 convicts.
+
+## §2b · `RECONCILIATION.md:344` §8 item 13 — the FINAL-at-tag law, FOLDED AT #66
+
+**⊕ 2026-08-03 (Φ3-close residual cure), one clause.** §8 item 13 reads *"A tranche that touches
+`src/` owes a FINAL before the next tag. **One clause on `W-PROCESS-CURE`**"* and assigns it here.
+**It is FOLDED, not dropped:** the act is already homed at `TERMINAL-ROSTER.md` §A row **#66**
+(`:216`, lane C §3.1 — *"the FINAL-at-tag ceremony is already named in this row's acceptance —
+confirmed, nothing added"*), whose close battery is the tag-time instrument. The law, stated once and
+never re-copied: **a tranche that touches `src/` emits its `FINAL.md` before the next tag; the ceremony
+is #66's acceptance; X-4d's "BJ has no `FINAL.md`" is the finding it answers.** L-6's
+no-second-copy rule is why this is a fold and not a restatement — the fold, not the clause, is what
+this row owed.
+
+---
+
 ## §3 · Where each law lives
 
 | law | landing site |

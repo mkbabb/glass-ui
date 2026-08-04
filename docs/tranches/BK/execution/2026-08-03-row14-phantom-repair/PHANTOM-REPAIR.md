@@ -90,6 +90,18 @@ surviving A12 gap (TR #50 GF-BLOB, `TERMINAL-ROSTER.md:200`), and the retirement
 `grep -c '^## W-'` instrument. The re-derive-at-close duty is preserved verbatim — only its
 instrument changed.
 
+**[⊕²⁵ 2026-08-03 · Φ3-close residual cure — THE MINTED RULE IS FENCED TO THREE NAMES.** The sentence
+above mints a *general* homing rule; this row applied it to **three** names. It is hereby fenced to
+exactly those three — `W-A11Y` → TR **#31** · `W-DOC-TRUTH` → TR **#61** · `W-PERF` → TR **#69** — and
+to the 21 `REGISTRY.md` cells §1 re-pointed. **It is not a survey of `REGISTRY.md` and it certifies
+nothing about any cell this row did not touch.** Measured at this cure, detectors stated so they
+re-derive: `grep -c 'TR #' REGISTRY.md` → **24** lines carry a roster id ·
+`grep '^|' REGISTRY.md | grep -E '\b(W|GF)-[A-Z0-9]' | grep -v 'TR #' | wc -l` → **92** table rows name
+a wave and carry **no** roster id (`grep -oE '\b(W|GF)-[A-Z0-9-]+' REGISTRY.md | wc -l` → **139**
+wave-name occurrences file-wide, which is why the Φ3-close adjudication's occurrence-level *~120* and
+this row-level *92* are the same population read by two detectors — both stated, neither bare). The
+rule is sound; its *application* is three names deep, and §5's class verdict is corrected accordingly.**]**
+
 ---
 
 ## 4 · THE DISCHARGE CLASS — every row closed with a citation
@@ -177,9 +189,39 @@ this seat; **this row records the closure, the owning row performs the act.**
 
 **Class verdict.** Four distinct phantom mechanisms — mis-cited line (#68), assignment-mistaken-for-body
 (#69), unauthored-mint (#78), unowned-spec (#89) — all resolved **on the roster**, none by minting a
-wave. Together with #36/#37 (retired-in-place, numbers held) and §1's three re-points, the phantom
-class for BJ→BK is closed. The one durable rule this row leaves behind: **a wave exists when a roster
-row seats it, never when a grep finds a heading.**
+wave. Together with #36/#37 (retired-in-place, numbers held) and §1's three re-points, ~~the phantom
+class for BJ→BK is closed~~ **[⊕²⁵ 2026-08-03 · Φ3-close residual cure: STRUCK AS AN OVERCLAIM — the
+claim was falsified by this row's own instrument. Restated honestly below.]** The one durable rule this
+row leaves behind: **a wave exists when a roster row seats it, never when a grep finds a heading.**
+
+**The honest class statement, ⊕²⁵ 2026-08-03.** What is closed is the **named** phantom set: the four
+roster rows above (#68 · #69 · #78 · #89), the two retired-in-place (#36 · #37), and §1's three
+re-points (`W-A11Y` · `W-DOC-TRUTH` · `W-PERF`). What is **not** closed is `REGISTRY.md`'s remaining
+homing surface: **24** lines carry a `TR #` roster id against **92** table rows that name a wave and
+carry none (detectors at §3's fence bracket). Under this row's own minted rule those 92 rows are
+**unhomed**, and at least six of the names they cite were superseded or renamed by the roster itself,
+so re-pointing them is not cosmetic — a reader following the cell lands on a dead name:
+
+| REGISTRY cites | × | the roster's live successor | ground |
+|---|---|---|---|
+| `W-AURORA-MEDIUM` | 4 | **#49 GF-AURORA** | `WAVES.md:428` **explicitly superseded** (TR §A preamble, `TERMINAL-ROSTER.md:147`) |
+| `W-HANDMARK` | 1 | **#51 GF-HANDMARK W0-W5** | `WAVES.md:668` explicitly superseded, same line |
+| `W-DOCK` | 3 | **#47 GF-DOCK W1-W9** | `TERMINAL-ROSTER.md` §A row #47 |
+| `W-DOCK-OVERFLOW` | 2 | **#47** (the overflow grammar is GF-DOCK's W3) | §A row #47's own cell |
+| `W-TIMELINE` | 2 | **#46 GF-TIMELINE** | §A row #46 |
+| `W-REFRACT-LATCH` | 2 | **#2 W-REFRACT-DELETE** — and the *subject* is DELETE, not a rename | §A row #2: *"W-REFRACT-DELETE (was W-REFRACT-LATCH)"* |
+
+The three largest name-only cohorts are unaffected by supersession and are live rows under other names
+— `W-GATE-TRUTH` ×17 (**#9**) · `W-PROCESS-CURE` ×11 (**#11**) · `W-PKG-TRUTH` ×9 (**#8**) — so the
+re-point is mechanical, not adjudicative, for the bulk of it.
+
+**ROUTED — named residue, not a note:** the **full `REGISTRY.md` disposition-cell re-point** (all
+remaining wave-name-only cells → roster ids, with the six superseded names re-pointed at their
+successors and `W-REFRACT-LATCH`'s cells additionally marked *subject deleted at #2*) is routed to
+**TR §A row #61 `W-DOC-TRUTH`**, the roster-surgery row that already carries this row's sibling strike
+lists (the §B.4 SUPERSEDED-banner row, ⊕⁴ U-42, and #16's R-2/R-4/R-5). It is one mechanical pass over
+one file; it mints no wave, no gate and no seat. Until it lands, **this row's rule is fenced to three
+names and the class is OPEN by count** — which is the statement §5 should have made.
 
 ---
 
@@ -234,6 +276,13 @@ concurrent lanes are not clobbered:**
 
 **Residue, stated honestly:**
 
+- **R-14A · the full `REGISTRY.md` disposition-cell re-point → TR §A row #61 `W-DOC-TRUTH`**
+  (⊕²⁵ 2026-08-03, Φ3-close residual cure). 24 lines carry a `TR #` id; **92** table rows name a wave
+  and carry none; six of those names the roster superseded or renamed (`W-AURORA-MEDIUM`→#49 ·
+  `W-HANDMARK`→#51 · `W-DOCK`→#47 · `W-DOCK-OVERFLOW`→#47 · `W-TIMELINE`→#46 · `W-REFRACT-LATCH`→#2,
+  *subject deleted*). Table, detectors and grounds at §5. This row's minted homing rule is **fenced to
+  its three repaired names** (§3 bracket) until that pass lands; §5's former "class closed" sentence is
+  struck as an overclaim.
 - The four edited files are **untracked-as-modified** at this seat; this row never commits (hard wall).
   A committing seat must carry all four in one cut or the ⊕ notes cite each other across a boundary.
 - `ECOUTE.md`'s internal line numbers shifted by the strike preamble (+12 lines before §1a). The three

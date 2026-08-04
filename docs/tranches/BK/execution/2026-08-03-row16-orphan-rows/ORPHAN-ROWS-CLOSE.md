@@ -7,11 +7,33 @@ bytes, zero git write ops, no browser, no build.
 
 **Sources of record, cited never copied:**
 `docs/tranches/BJ/addenda/2026-07-24-refinement/TERMINAL-ROSTER.md:166` (the spec) ·
-`ECOUTE.md:229-237` §3 `W-ORPHAN-ROWS` (after row #14's false-gap strike) ·
+`aee47957:ECOUTE.md:217-225` §3 `W-ORPHAN-ROWS` (after row #14's false-gap strike) — **⊕²⁵ cite
+re-pinned, see the CITE HYGIENE note below** ·
 `PROOF-SWEEP.md:355-470` lane C §4 (the 50 union tails) ·
 `docs/tranches/BK/EXECUTION-PROGRESS.md` ⊕¹¹–⊕¹⁹ (the ruling ledger) ·
 `docs/tranches/BK/execution/2026-08-03-codex-audit/APOTHEOSIS.md` (pass-1 verdicts) ·
 `docs/tranches/BK/EXECUTION-DAG-2026-08-03.md` (derived; TR wins on divergence).
+
+**⊕²⁵ 2026-08-03 · CITE HYGIENE — every `ECOUTE.md` line-cite in this file is re-pinned to SHA
+`aee47957`, and the line drift is stated.** This row pinned HEAD `aee47957` but read `ECOUTE.md`
+through row #14's **uncommitted** +12-line strike preamble (#14 §7 admits the shift), so its ECOUTE
+line numbers resolved against no committed tree. Re-derived from the pin this cure:
+
+| subject | this row's original cite | **at pin `aee47957`** | worktree today | note |
+|---|---|---|---|---|
+| §3 `W-ORPHAN-ROWS` heading | `:229-237` | **`:217`** | `:245` | `### W-ORPHAN-ROWS — the seven owner rows with no home` |
+| the product sentence (§3's whole ground) | `:229` | **`:219`** | `:247` | *"The wave's product is a **decision per row**, landed as source or as a one-line retire-with-reason."* — verbatim at the pin |
+| the §3 gate table (`G-ROW-HOMED` · `G-GOO-MORPH` · `G-BI-CARRY`) | `:229-237` | **`:221-225`** | `:250-254` | — |
+| the §1a A12 / A14 gap rows | `:127-128` | **`:115` / `:116`** | `:143` / `:144` | pre-strike wording at the pin; struck-in-place today |
+
+Rule adopted here and used below: **an `ECOUTE.md` cite is written `aee47957:ECOUTE.md:n`**; a bare
+`ECOUTE.md:n` in this file is the worktree reading and is superseded by the table above.
+
+**NOTE OF RECORD — the "fabricated quotation" charge is OVERTURNED.** A Φ3-close integrity challenger
+ranked as its top finding that §3's quotation does not exist and that #16's method is therefore
+self-authorized. **False, and demonstrably:** `git show aee47957:…/ECOUTE.md | sed -n '219p'` carries
+the sentence verbatim. #16's method is charter-derived; the defect was line-drift only, and it is
+cured by the table above.
 
 Codex-era posture, stated once: this row **cites zero codex seals** (census restated 0/87, all
 VOID on QUALITY grounds — ⊕¹²/⊕¹⁴), reads the audit corpus through ⊕¹⁴'s withdrawal of the
@@ -31,7 +53,7 @@ not repeated as fact anywhere in this file.
 | lane | claim | verdict | detector run this seat |
 |---|---|---|---|
 | #11 | `PROCESS-CURE.md` (160 L) + `BURNDOWN.md` exist on disk | **CONFIRMED** | `wc -l` → 160 · `BURNDOWN.md` read in full |
-| #11 | 25 runners hold 0 `proof:*` implementations (L-5 ground) | **CONFIRMED** | `grep -c '"proof:' package.json` → **0** |
+| #11 | ~~25 runners hold 0 `proof:*` implementations (L-5 ground)~~ **[⊕²⁵ 2026-08-03 · Φ3-close residual cure — DETECTOR SUBSTITUTION, restated]** L-5's actual ground: the **numeric convergence stop** had 0 implementations across the 25 runners | **CONFIRMED on the honest detector** | ~~`grep -c '"proof:' package.json` → **0**~~ — that command proves *zero `proof:*` npm scripts* and says nothing whatever about 25 runners or about the 100% numeral. The ground of record is `ARCHAEOLOGY.md:60` §R-8, re-read at this cure: *"Falsifier **[disk]**: 0 hits in the 25 runners, and the owner's banked convergence-gates law (finite invariant checklist + two-consecutive-clean; 'never let critics mint') supersedes the numeric stop. **Struck** (Opus)."* The `package.json` count remains a **separate** true fact and is used at §4.2 only for what it does prove — that the `proof:disposition-live` runner does not exist |
 | #11 | graph-v3 rider struck; arc FALLS | **CONFIRMED** | `tests/architecture` absent · `scripts/build-import-dag-v3.mjs` absent · revert `d2f202bc` (2026-08-03) reads on `git log` |
 | #11 | burndown denominator **87** execution-live rows | **CORRECTED → 88** | roster ids are **91** since ⊕¹⁰ (`EXECUTION-PROGRESS.md:71`); minus #36/#37 RETIRED-in-place and #70 BANKED (`EXECUTION-DAG:81`) = **88**. Entry 1 counted #91 in its numerator (field 2, 10 members) while excluding it from the denominator. Restated in burndown **entry 2**, not rewritten (append-only, rule 1) |
 | #12 | BG `FINAL.md` carries **119** `BG.W-*` ids; +1 booked = 120 units | **CONFIRMED** | `grep -oE 'BG\.W-[A-Za-z0-9-]+' docs/tranches/BG/FINAL.md \| sort -u \| wc -l` → **119** |
@@ -107,14 +129,15 @@ declining lanes supplied their replacement text; neither is overridden.
 
 ## §3 · G-ROW-HOMED — THE DECISION PER ROW
 
-`ECOUTE.md:229` states this wave's product exactly: *"a **decision per row**, landed as source or
-as a one-line retire-with-reason."* Three live ids after row #14's strike, plus the namespace
-clause. Each below is a decision with its ground.
+`aee47957:ECOUTE.md:219` states this wave's product exactly: *"The wave's product is a **decision per
+row**, landed as source or as a one-line retire-with-reason."* (⊕²⁵ re-pinned from the worktree's
+`:229`/`:247` reading; the sentence is verbatim at the pin — see the cite-hygiene note above.) Three
+live ids after row #14's strike, plus the namespace clause. Each below is a decision with its ground.
 
 ### 3.1 The scope itself — A12 and A14 are NOT orphans
 
-`ECOUTE.md:127-128` still lists **A12 (blob greenfield)** and **A14 (procedural umbrella)** among
-the surviving §1a gaps. Both are homed by name at TR row **#50 GF-BLOB**
+`aee47957:ECOUTE.md:115-116` (worktree `:143-144` at this row's seat) still lists **A12 (blob
+greenfield)** and **A14 (procedural umbrella)** among the surviving §1a gaps. Both are homed by name at TR row **#50 GF-BLOB**
 (`TERMINAL-ROSTER.md:286`: *"PROCEDURAL-LEDGER the umbrella; GF-BLOB claims the A14 umbrella's A12
 half by name"*; `:200` carries A12's provenance clause landed by #15). The §1a cells are
 struck-in-place this row with that falsifier. **Consequence: G-ROW-HOMED's row-citation clause is
@@ -205,9 +228,54 @@ by construction.* Landed as the gate's own text. No renaming, no migration, no n
 | `G-BI-CARRY` | RED, 16 blanks | **CLOSED-BY-DISPOSITION** (TR §B.3); back-annotation routed to #61 |
 
 **Honest statement:** this row does not paint the gate GREEN. Three of the four clauses resolve to
-a *decision plus a named executing row*, which is exactly what `ECOUTE.md:229` defines the wave's
-product to be; the fourth (F25) clears only when #18 cuts. No seal is minted here — CLOSED is the
-lead's act after the Challenge Law pass (⊕¹¹).
+a *decision plus a named executing row*, which is exactly what `aee47957:ECOUTE.md:219` defines the
+wave's product to be; the fourth (F25) clears only when #18 cuts. No seal is minted here — CLOSED is
+the lead's act after the Challenge Law pass (⊕¹¹).
+
+### 3.7 UF-J5 / `expandable-container` · **DECISION: HOMED AT #52 `W-CONFIG-EXPRESS`**
+
+**[⊕²⁵ 2026-08-03 · Φ3-close residual cure.** R-11 below asserted that #13's routed UF-J5 residue was
+discharged *"by the same rule used throughout — decision + named executing row"* while **naming no
+executing row**: `grep -rn "expandable" ORPHAN-ROWS-CLOSE.md` → **0** before this cure. The
+orphan-homing row had orphaned a row routed to it, which is the G-ROW-HOMED premise failing at its own
+author. Homed here, on evidence, with the executing row named.**]**
+
+The routed ask (`UF-DISPOSITION-LEDGER.md` §4, #13's act): *"/containers/expandable-container—needs
+fixing from first principles. And esc doesn't globally work."* Half (a) LANDED at `f24577c7`; half (b)
+was converted to a falsifiable four-clause definition of done, and **#13 explicitly declined to seat
+it** — *"no BK roster row names `expandable-container`. It therefore goes to #16 W-ORPHAN-ROWS as a row
+to seat… seating the wave is #16's."*
+
+**The roster does name it — through its spec of record, not its title.** `TERMINAL-ROSTER.md` §A row
+**#52 `W-CONFIG-EXPRESS`** (`:202`) carries *"**the expand button BUILDS** (RATIFICATION §4—deft,
+bounded by 'extant is rather alright'; **A01 modal-expansion the mechanism**)"* and cites
+`PROCEDURAL-APOTHEOSES.md` §CONFIG-EXPRESS as its spec. That spec names the component by name, four
+times, and each named clause maps to one clause of #13's definition of done:
+
+| #13's clause | the act, already specced at #52 | citation |
+|---|---|---|
+| (i) the expand/collapse transition resolves through the ONE spring authority (#26), no bespoke duration literal | the edit list for the file: *"strike `glass-overlay` (Z1); **FLIP morph graft (dock + 0.42 override; reduced-motion opacity)**"* — a named spring, not a literal | `PROCEDURAL-APOTHEOSES.md:525` |
+| (ii) the expanded plate is a rung of the material ladder, not a bespoke surface (#22/#86) | the cure is stated verbatim: *"strike `glass-overlay` from `ExpandableContainer.vue:12`; the expanded root paints scrim background-only (the post-§3(d) ModalOverlay register, `bg-overlay-scrim`) with `backdrop-filter: none`; the studio inside paints its own `glass-floating` material"* — and it is called *"one edit, benefits every future EC consumer"* | `:462` |
+| (iii) esc dismissal is the LIFO stack | **already met** at `f24577c7`; a regression re-opens the row | `UF-DISPOSITION-LEDGER.md` §4 |
+| (iv) it earns **≥2 sites** or is demoted from a published subpath to a demo specimen | #52 **is** the second site: *"`<Configurator expandable>` (VizStudio passes true) wraps its root in `<ExpandableContainer>`"*, and the spec's R1 rejects rebuilding it precisely on this ground — *"ships the entire a11y/lock/Esc/restore mechanism with 0 consumers (verified); rebuilding it violates KISS + the ≥2-sites overfitting law"* | `:482`, `:566` |
+
+Corroborating, and consistent: the spec's own defect table opens with *"X1: ExpandableContainer built,
+**zero consumers** | **TRUE**"* (`:440`) — the same disk fact #13 measured — and the 2026-07-28
+cross-fold disposition of record routes the idiom there by name: *"The Teleport idiom IS salvaged —
+PROCEDURAL-APOTHEOSES config-express spine ('ExpandableContainer adoption'; :548 Teleport+FLIP
+canvas-survival protocol) → **#52**"* (`CURES.md:41`, X8). `CURES.md:204` independently binds
+*"#52 expandable"* as `OverlayScrim` consumer 3 of 3.
+
+**Component fate, so the seating is unambiguous:** the component is **KEEP**. `DAG-RULINGS.md:130`
+(row 37) ruled MERGE-INTO-dialog; `ECOUTE.md`'s component census **refuted the fold** — *"25 |
+expandable-container | … **KEEP** — the dialog fold is refuted (it renders in host flow; the fold
+remounts every stateful child)"* — and `CURES.md:41` records the same supersession (*"not delete"*).
+No deletion is licensed by this seating and none is minted here.
+
+**Decision:** UF-J5(b) is **HOMED at #52 `W-CONFIG-EXPRESS`**, carrying #13's four-clause definition of
+done verbatim as that row's acceptance; clause (ii)'s material call is cross-gated at #22/#86 and
+clause (i)'s spring at #26, exactly as #13 wrote them. The **act** is #52's cut at Φ5. No wave is
+minted, no seat moves, and `G-ROW-HOMED`'s premise holds at its own author.
 
 ---
 
@@ -312,7 +380,27 @@ Detector, stated so it re-derives:
   roster (`OPEN-P10`, `OPEN-P5` — `grep -oE '\bOPEN-[A-Za-z0-9_-]+' TERMINAL-ROSTER.md`), and
   ~~exactly one [OPEN id] reaches all of `docs/tranches/BK/` (`OPEN-P10`)~~ **[⊕²⁵ 2026-08-03 driver correction, Φ3-close adjudication: TWO reach `docs/tranches/BK/` — `OPEN-P0` + `OPEN-P10` (git grep at pin `aee47957`); the derived 53-of-55 figure stands]**. **53 of 55 OPEN ids are cited by
   zero BK artifact.**
-- **Decision:** the seed is this census — the detector plus the two-of-55 reach figure — landed so
+- **U-51's SECOND clause — the 21-evidence-dir vs 4-landed-waves delta, landed as a sweep input.**
+  **[⊕²⁵ 2026-08-03 · Φ3-close residual cure: `TERMINAL-ROSTER.md:166`'s U-51 orders "**+ the
+  21-evidence-dir vs 4-landed-waves delta noted as a sweep input**" (= `PROOF-SWEEP.md:457`, "BJ §4
+  gaps"). This row's first pass landed the OPEN-id half and dropped this one —
+  `grep -c evidence ORPHAN-ROWS-CLOSE.md` → 0 before this cure. Landed now.]** Measured this cure:
+  `ls docs/tranches/BJ/evidence/ | wc -l` → **21** directories, every one named for a wave. Only
+  **four** hold real captures, all pinned at **prior** HEADs, three saying *"Left uncommitted"* in
+  their own VERDICTS headers — `W-PAGER-DOT-MORPH` (`85089b3b`) · `W-PROGRESS-RIM-REPLACE` ·
+  `W-FEEDBACK-MOTION-TUNE` (`19ea4ce1`) · `W-TOAST-DIALOG-PARITY` — and #77's census rules all four
+  **STALE-AT-HEAD, credited to no row** (`MOMENTUM-CENSUS.md:193-199`). The other 17 are credited by
+  that census not at all.
+  **The delta, stated so `G-ROW-HOMED` can bite it:** an evidence directory is a *wave-name assertion*
+  — 21 names claim a wave ran, 4 carry paint, 0 of the 4 are creditable at HEAD. Each of the 21 names
+  is therefore a homing question of exactly the class row #14 opened at `REGISTRY.md`, and several are
+  superseded on their face — `W-REFRACT-LATCH` (subject **DELETE** at TR §A row #2) ·
+  `W-PAGER-DOT-MORPH` (→ #40, `01310c9c`) · `W-A11Y-LINKAGE` + `W-A11Y-STATE-REMAINDER` (→ #31) ·
+  `W-DOC-TRUTHUP` (→ #61). **Seeded, not adjudicated** (S8 fence, as with the 55 OPEN ids): the
+  per-dir name→roster-row walk rides the same follow-on seat as R-7, and the *capture* credit is
+  #10's, never this row's.
+- **Decision:** the seed is this census — the detector plus the two-of-55 reach figure, plus the
+  21-vs-4 evidence-dir delta above — landed so
   `G-ROW-HOMED` can see a *specific* OPEN drop rather than a generic one. Per-id re-adjudication is
   **explicitly NOT minted**: every OPEN id lives in the BJ refinement corpus that
   `RECONCILIATION` (166 rows / 114 refuted) and `ARCHAEOLOGY` (43/43) already re-audited at HEAD,
@@ -400,12 +488,24 @@ anchors that **no clone carries**.
    (cited by CFR-01 per #15's register §5; the other 30 members of that directory are already
    tracked, which is itself the precedent — the directory's convention is *tracked*, and F19 is the
    lone deviation).
-4. **The act is #4's, at #4's cut** — `git add -f` on that one path, in a commit that names the
-   carve-out and its ground. This row holds a NEVER-git wall and executes nothing. The rule that
-   goes with it: **the carve-out is enumerated, never a glob** — each future member is added by name
-   with its citing artifact beside it, so the exemption can never quietly become a policy.
-5. **If #4 declines**, the honest alternative is to strike the CFR-01 citation rather than leave a
-   committed artifact pointing at a file that does not travel. Declining silently is not available.
+4. ~~**The act is #4's, at #4's cut** — `git add -f` on that one path, in a commit that names the
+   carve-out and its ground.~~ **[⊕²⁵ 2026-08-03 · Φ3-close residual cure — DISCHARGED AND
+   RE-ATTRIBUTED. The act was already performed, by a different row, before this cure: `138dd6e6`
+   (*"feat(music-staff): row-91 perfection candidate … **+ F19 png force-tracked per #16 ruling**"*)
+   force-tracked the file at **row #91's** cut, not #4's. Re-measured at HEAD:
+   `ls docs/tranches/BJ/feedback | wc -l` → **31** and `git ls-files docs/tranches/BJ/feedback | wc -l`
+   → **31** — the untracked member is gone, the §6 table above is honest **at its `aee47957` pin only**,
+   and `G-CITE-COMMITTED` is no longer RED at 1 on this ground. The carve-out is therefore GRANTED and
+   its one member is LANDED; #4 inherits no act from this ruling. `PROVENANCE-REGISTER.md` F-1 (#15's
+   finding) is discharged by the same commit.]** This row held a NEVER-git wall and executed nothing.
+   The rule that goes with the carve-out survives the discharge unchanged and is the durable half:
+   **the carve-out is enumerated, never a glob** — each future member is added by name with its citing
+   artifact beside it, so the exemption can never quietly become a policy. Membership after `138dd6e6`:
+   one, `F19-metric-badge-overround-grid.png`, tracked.
+5. ~~**If #4 declines**, the honest alternative is to strike the CFR-01 citation~~ **[⊕²⁵ MOOT —
+   nothing was declined; the file travels. The clause is kept as the standing rule for any *future*
+   member: a committed artifact may not point at a file that does not travel, and declining silently
+   is never available.]**
 
 ---
 
@@ -419,11 +519,11 @@ anchors that **no clone carries**.
 | R-4 | `JUDGMENT-ROSTER.md`'s 16 `DECISION: ____` need back-annotation from `RATIFICATION.md`/TR §B.3 | **#61** | §3.4; the four-instrument SUPERSEDED-banner row already exists in B.4 (⊕⁴ U-42) |
 | R-5 | `WAVES.md:323-330` W-DELETE list orders deletion of `deck`, `carousel`, `metric` — all three overturned | **#61**, with #18 as the live scope citation | §3.2 |
 | R-6 | `G-GOO-MORPH` re-grounded and transferred | **#40** | §3.3; the gate's RED-at-HEAD prose is falsified at `constants.ts:14-16` |
-| R-7 | PORT §1.3's 109-wave EXECUTED-or-SUPERSEDED wave-by-wave reproduction | **#16 (this row), OPEN** | §4.5 — owed, not faked; the one item of this row's remit left undischarged |
+| R-7 | PORT §1.3's 109-wave EXECUTED-or-SUPERSEDED wave-by-wave reproduction · **⊕²⁵ + the 21 evidence-dir name→roster-row walk (§4.4)** | **#16 (this row), OPEN** | §4.5 — owed, not faked; **⊕²⁵ 2026-08-03: after the Φ3-close residual cure this is the ONE item of this row's remit still undischarged.** A 109-wave re-walk is a full lane on the `BG-CLOSE-RECONCILE.md` model, not a closer's sitting; no partial figure is quoted anywhere in this file, and none is quoted here. The row is honestly incomplete by its own record until that follow-on seat runs |
 | R-8 | `useLeadTrail` strike-or-wire (one real consumer) | **#26 / #47** | #77's finding, re-derived and CONFIRMED here (§1); the act is `src/`-side |
 | R-9 | #77's capture half | **#10 π-SUITE**, itself behind #9's ⊕¹³ᵃ detector recovery | doc-side wall; #77 is mechanism-COMPLETE / capture-OWED |
-| R-10 | F19 png force-track act | **#4** | §6, ruled and scoped to one named file |
-| R-11 | #13's five residuals (#56, #16, #74, #71, #58) incl. UF-J5's four-clause definition of done | seated at their named rows; the **#16** member is UF-J5's *seating*, which §3/§4 discharge by the same rule used throughout — decision + named executing row, never a mint | `UF-DISPOSITION-LEDGER.md` §4 |
+| R-10 | ~~F19 png force-track act~~ **⊕²⁵ DISCHARGED AND RE-ATTRIBUTED** | ~~**#4**~~ → **already performed at `138dd6e6` by row #91's cut** (*"+ F19 png force-tracked per #16 ruling"*) | §6 items 4/5 as amended. Re-measured at HEAD: `docs/tranches/BJ/feedback` **31 on disk / 31 tracked**; the §6 table's `30 tracked / 1 untracked` is honest **at its `aee47957` pin only**. `G-CITE-COMMITTED` is no longer RED on this ground; #15's F-1 discharges with it; #4 inherits no act. The enumerated-never-a-glob rule survives as the standing carve-out law |
+| R-11 | #13's five residuals (#56, #16, #74, #71, #58) incl. UF-J5's four-clause definition of done | seated at their named rows; ~~the **#16** member is UF-J5's *seating*, which §3/§4 discharge by the same rule used throughout — decision + named executing row, never a mint~~ **[⊕²⁵ 2026-08-03 · Φ3-close residual cure: that clause invoked the rule and then **named no executing row** — `grep -rn "expandable"` on this file returned **0**. The #16 member is now genuinely discharged at **§3.7**: UF-J5(b)/`expandable-container` is **HOMED at TR §A row #52 `W-CONFIG-EXPRESS`**, whose spec of record (`PROCEDURAL-APOTHEOSES.md` §CONFIG-EXPRESS `:440`/`:462`/`:482`/`:525`/`:566`) names the component and answers all four of #13's clauses; component fate is **KEEP** (`ECOUTE.md` census row 25 refutes the dialog fold; `CURES.md:41` X8 concurs). Act = #52's cut at Φ5.]** | `UF-DISPOSITION-LEDGER.md` §4 · this file §3.7 |
 | R-12 | 53 of 55 BJ `OPEN-*` ids cited by zero BK artifact | recorded, **not** re-adjudicated (S8 fence) | §4.4 |
 
 **What this row deliberately did NOT do**, each with its reason:
