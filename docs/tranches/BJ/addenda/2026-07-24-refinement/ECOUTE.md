@@ -128,9 +128,15 @@ and neither is scope. **A04-remainder is DISCHARGED at its own cell**, not merel
 the graph-design half *is* TR §A.2's adjudicated DAG (`TERMINAL-ROSTER.md:244-272`; arm ruling C-A04
 ADOPT-DISCHARGED at `TERMINAL-ROSTER.arm-fable.md:117`). It does not stand.
 
-**The surviving §1a gaps are three — A16 · F25 · F33-goo-morph** — and those three, and only those,
-stand as TR #16's scope. Each keeps its own unstruck cell below. Full record:
-`docs/tranches/BK/execution/2026-08-03-row14-phantom-repair/PHANTOM-REPAIR.md`.
+~~**The surviving §1a gaps are three — A16 · F25 · F33-goo-morph** — and those three, and only those,
+stand as TR #16's scope.~~ **⊕ 2026-08-03 (Φ3 residual cure) — the surviving gap is ONE: A16.** Row
+#16 decided F25 and F33 and did not strike their cells; both are struck in place below with their
+falsifiers — **F25 HOMED at #18** (`TERMINAL-ROSTER.md:168`, `BJ/ASK.md:399`) and **F33 both halves
+HOMED at #40, with #18 on the collapse half** (`TERMINAL-ROSTER.md:190`), per
+`ORPHAN-ROWS-CLOSE.md` §3.2–§3.3. **A16 alone keeps an unstruck cell**, and it is itself
+CLOSED-BY-DISPOSITION at TR §B.3 with only a doc-truth back-annotation routed to #61. Full records:
+`docs/tranches/BK/execution/2026-08-03-row14-phantom-repair/PHANTOM-REPAIR.md` ·
+`docs/tranches/BK/execution/2026-08-03-row16-orphan-rows/ORPHAN-ROWS-CLOSE.md`.
 
 | gap | why it fell through |
 |---|---|
@@ -141,9 +147,9 @@ stand as TR #16's scope. Each keeps its own unstruck cell below. Full record:
 | ~~**F11** (item gap)~~ **STRUCK — FALSE GAP (row #14)** | ~~subject matter appears nowhere~~ — **LANDED at `34681df9`** ("land BJ.W-CONFIGURATOR-STD", 2026-07-21), `RECONCILIATION.md:188`: `styles.css:112-122` carries a literal `F11` header. The id-collision observation (owner `F11` vs lens `F11`) survives and rides `G-ROW-HOMED`'s namespace clause. |
 | ~~**F13 remainder** (sortable-list design)~~ **STRUCK — FALSE GAP (row #14)** | ~~design half unowned~~ — **REFUTED**, `RECONCILIATION.md:162`: `docs/tranches/BJ/waves/BAND-FEEDBACK-MOTION.md:290` states Δ-F13-1 is "MINTED HERE, on the interaction half"; the responsive half sits at G-RSP-1/3. |
 | ~~**F23** (slider/progress family)~~ **STRUCK — FALSE GAP (row #14)** | ~~unowned and cited in **no** corpus file~~ — **OWNED + PARKED**, `RECONCILIATION.md:163`: the third-consumer condition is `BAND-FOLD.md:31`/`:375` (§7 U-2) → W-TIMELINE; the enlarged-view clause routes to owner ask R-4. The "cited nowhere" cell is falsified by those two lines. |
-| **F25** (confirm-dialog fold) | `ASK-3` closed it; `W-DELETE`'s scope list does not include it. |
+| ~~**F25** (confirm-dialog fold)~~ **STRUCK — HOMED (row #16, 2026-08-03)** | ~~`ASK-3` closed it; `W-DELETE`'s scope list does not include it.~~ — the gap was **seat, not decision**: `WAVES.md:323-330`'s scope paragraph is superseded three times over and is not #18's live scope; the citation of record is the roster row, `TERMINAL-ROSTER.md:168` **#18 `W-DELETE`**. The ruling exists and is ratified at `docs/tranches/BJ/ASK.md:399` (*"ASK-3 | confirm-dialog story | DELETE (fold) | demo page count + relay"*); subject live at `demo/stories/feedback/confirm-dialog.vue` (12,294 B). **F25 is HOMED at #18**; the remaining act is #18's cut, not an orphan. Ground: `ORPHAN-ROWS-CLOSE.md` §3.2. |
 | ~~**F29** (springs configurator)~~ **STRUCK — FALSE GAP (row #14)** | ~~cited nowhere~~ — **LANDED at `34681df9`**, `RECONCILIATION.md:189`: `springs.vue` +315, Configurator refs 0→13. |
-| **F33 dot goo-morph** | the collapse half is owned by `W-DELETE`; the "dots goo-morph between states per the liquid-weight edict" half is owned by nothing. |
+| ~~**F33 dot goo-morph**~~ **STRUCK — BOTH HALVES HOMED (row #16, 2026-08-03)** | ~~the collapse half is owned by `W-DELETE`; the "dots goo-morph between states per the liquid-weight edict" half is owned by nothing.~~ — **collapse half → #40 `W-PAGER` (with #18)**: owner word ruled deck LIVES and widens to the deck apotheosis, carousel is KEEP and shares the deck's substrate (`TERMINAL-ROSTER.md:190` ✦³ round-2 items 11/12; spec of record `DECK-RELOCATION.md` PART I §3) — "likely collapse" is answered as *consolidate the substrate, keep both surfaces*. **Goo-morph half → #40**: the mechanism EXISTS at HEAD (`pager-dots/constants.ts:14-16` `PAGER_NECK_GIRTH`, `PagerDots.vue:13-14,26-29,39`, `usePagerWorm.ts:19,167`; `01310c9c`), so `G-GOO-MORPH`'s RED-at-HEAD ground is falsified; what remains open is quality and ruled form, which is #40's cell. Ground: `ORPHAN-ROWS-CLOSE.md` §3.3. |
 | ~~**`W-A11Y`, `W-DOC-TRUTH`, `W-PERF`**~~ **STRUCK — FALSE GAP (row #14)** | the routing cells are real (9 K-findings · 12 doc findings · A17) and are now **re-pointed at the roster ids** — `W-A11Y` = **TR #31**, `W-DOC-TRUTH` = **TR #61**, `W-PERF` = **TR #69** (`REGISTRY.md` header note + 21 cells). ~~none of the three has a `## W-` heading in `WAVES.md`~~ — true of WAVES.md and irrelevant: the instrument (`grep -c '^## W-A11Y' WAVES.md`, `:374`) was WAVES.md-scoped, while all three bodies exist on disk at `docs/tranches/BJ/waves/BAND-A11Y.md` (359 lines) · `BAND-DOC-TRUTH.md` (283) · `BAND-PERF.md` (660). TR seats them accordingly: `:181` "#31 W-A11Y (≡BAND-A11Y five)" · `:211` #61 · `:219` "#69 W-PERF (≡BAND-PERF)". |
 
 `WAVES.md` closes with: *"Anything visible in `REGISTRY.md` with no owning wave above is a silent drop and is close-blocking. At authoring time the list is empty."* **That sentence is false at authoring time.** The list is 3 waves and ~22 findings, plus A12. **⊕ row #14, 2026-08-03: the WAVES.md sentence is CORRECTED at its own site (`WAVES.md:909`) and the "3 waves" half of this cell is STRUCK** — the three waves are TR #31/#61/#69 with band bodies on disk; the ~22 findings are re-pointed in `REGISTRY.md`; A12 stands and is TR #50's (`W-BLOB`, `PROCEDURAL-LEDGER` umbrella per arm ruling C-A14).

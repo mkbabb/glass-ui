@@ -1,0 +1,130 @@
+<!-- @dsCard group="Motion" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BK #26 — The One Spring Authority (six rows)</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: oklch(0.97 0.012 85);
+    --ink: oklch(0.28 0.02 60);
+    --ink-soft: oklch(0.45 0.015 60);
+    --card: oklch(0.99 0.008 90 / 0.72);
+    --rule: oklch(0.28 0.02 60 / 0.14);
+    --accent: oklch(0.62 0.14 45);
+    --dead: oklch(0.55 0.02 60 / 0.45);
+    --grid: oklch(0.28 0.02 60 / 0.08);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(0.22 0.015 60);
+      --ink: oklch(0.92 0.01 85);
+      --ink-soft: oklch(0.72 0.012 85);
+      --card: oklch(0.27 0.015 60 / 0.72);
+      --rule: oklch(0.92 0.01 85 / 0.14);
+      --accent: oklch(0.75 0.12 55);
+      --dead: oklch(0.7 0.01 85 / 0.4);
+      --grid: oklch(0.92 0.01 85 / 0.08);
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 2rem clamp(1rem, 4vw, 3rem);
+    background: var(--bg); color: var(--ink);
+    font: 400 15px/1.5 ui-serif, "Iowan Old Style", Georgia, serif;
+  }
+  h1 { font-size: 1.35rem; font-weight: 600; margin: 0 0 .25rem; letter-spacing: -0.01em; }
+  .sub { color: var(--ink-soft); font-size: .85rem; margin-bottom: 1.5rem; }
+  .grid {
+    display: grid; gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  }
+  .row {
+    background: var(--card); border: 1px solid var(--rule);
+    border-radius: 1rem; padding: 1rem 1.1rem .8rem;
+    backdrop-filter: blur(8px);
+  }
+  .row h2 {
+    margin: 0; font-size: 1rem; font-weight: 600;
+    display: flex; justify-content: space-between; align-items: baseline;
+  }
+  .pair { font: 500 .72rem/1 ui-monospace, Menlo, monospace; color: var(--ink-soft); }
+  .job { font-size: .78rem; color: var(--ink-soft); font-style: italic; margin: .2rem 0 .5rem; }
+  svg { width: 100%; height: auto; display: block; }
+  .meta { display: flex; justify-content: space-between; font: 500 .68rem/1 ui-monospace, Menlo, monospace; color: var(--ink-soft); margin-top: .35rem; }
+  .peak { color: var(--accent); }
+  .grave {
+    margin-top: 1.75rem; padding-top: .9rem; border-top: 1px solid var(--rule);
+    font-size: .8rem; color: var(--dead);
+  }
+  .grave b { color: var(--ink-soft); font-weight: 600; }
+  .grave s { text-decoration-thickness: 1px; }
+</style>
+</head>
+<body>
+<h1>The One Spring Authority — eight rows become six</h1>
+<div class="sub">BK&nbsp;#26 W-SPRING-RETUNE · every curve below is computed from the table's own arithmetic
+(semi-implicit solve over the row's own settle band) — the same solve the generator ships. Exactly one row rebounds.</div>
+<div class="grid" id="rows"></div>
+<div class="grave">
+  <b>The grave:</b> <s>smooth</s> → press/present/world · <s>snappy</s> → dock/panel/present ·
+  <s>bouncy</s> (+9.5%, above the entire measured corpus) → panel + the light channel ·
+  <s>gentle</s> → world · <s>orb-drop</s> → present (rename) · <s>transient</s> — name-graved (C-5), never a row.
+  Annotations (tooltip) take a bezier: no mass, no spring.
+</div>
+<script>
+const ROWS = [
+  { name:"press",   r:0.20, z:0.80, b:0.02,  job:"the touch answer" },
+  { name:"present", r:0.22, z:1.00, b:0.02,  job:"the anchored materialization" },
+  { name:"dock",    r:0.30, z:0.88, b:0.02,  job:"the coordinated travel", was:"0.35 / ζ0.82" },
+  { name:"panel",   r:0.40, z:0.71, b:0.005, job:"the fired deploy — the one rebound" },
+  { name:"bloom",   r:0.42, z:0.90, b:0.005, job:"the room-sized growth · NEW" },
+  { name:"world",   r:0.48, z:1.00, b:0.005, job:"the world's recession", was:"0.82 (gentle)" },
+];
+// Step response x(t) for (response, zeta): omega_n = 2*pi/response; solve to the
+// last time |1-x| exits the +/-band, semi-implicit Euler (the useLeadTrail idiom).
+function solve(r, z, band) {
+  const w = 2*Math.PI/r, h = 1/2400, T = 8*r;
+  let x = 0, v = 0; const xs = [], ts = [];
+  for (let t = 0; t <= T; t += h) {
+    const a = -w*w*(x-1) - 2*z*w*v; v += a*h; x += v*h;
+    xs.push(x); ts.push(t);
+  }
+  let settle = 0;
+  for (let i = xs.length-1; i >= 0; i--) if (Math.abs(1-xs[i]) > band) { settle = ts[Math.min(i+1, ts.length-1)]; break; }
+  let peak = 0, peakT = 0;
+  for (let i = 0; i < xs.length && ts[i] <= settle; i++) if (xs[i] > peak) { peak = xs[i]; peakT = ts[i]; }
+  return { xs, ts, settle, peak, peakT };
+}
+const host = document.getElementById("rows");
+for (const row of ROWS) {
+  const { xs, ts, settle, peak, peakT } = solve(row.r, row.z, row.b);
+  const W = 260, H = 120, pad = 8;
+  const px = t => pad + (t/settle) * (W - 2*pad);
+  const py = x => H - pad - x * (H - 2*pad) / 1.12;
+  let d = "";
+  for (let i = 0; i < xs.length && ts[i] <= settle; i += 6)
+    d += (d ? " L" : "M") + px(ts[i]).toFixed(1) + " " + py(xs[i]).toFixed(1);
+  const over = (peak - 1) * 100;
+  const rebounds = over > row.b * 100;
+  const el = document.createElement("div");
+  el.className = "row";
+  el.innerHTML = `
+    <h2>${row.name} <span class="pair">${row.r.toFixed(2)} / ζ${row.z.toFixed(2)} · B ${row.b*100}%</span></h2>
+    <div class="job">${row.job}${row.was ? ` · was ${row.was}` : ""}</div>
+    <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${row.name} spring step response">
+      <line x1="${pad}" y1="${py(1)}" x2="${W-pad}" y2="${py(1)}" stroke="var(--grid)" stroke-width="1"/>
+      <path d="${d}" fill="none" stroke="${rebounds ? "var(--accent)" : "var(--ink-soft)"}" stroke-width="2" stroke-linecap="round"/>
+      ${rebounds ? `<circle cx="${px(peakT)}" cy="${py(peak)}" r="3" fill="var(--accent)"/>` : ""}
+    </svg>
+    <div class="meta">
+      <span>settle ${settle.toFixed(2)}s</span>
+      <span class="${rebounds ? "peak" : ""}">${rebounds ? `+${over.toFixed(1)}% at ${(peakT/settle*100).toFixed(0)}% of clock` : "monotone — lands dead"}</span>
+    </div>`;
+  host.appendChild(el);
+}
+</script>
+</body>
+</html>

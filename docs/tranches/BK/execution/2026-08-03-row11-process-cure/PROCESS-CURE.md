@@ -138,7 +138,7 @@ Three corrections, each a codex-era clause that the ⊕ rulings invalidate and t
 
 **Not corrected, deliberately:** `PLAN.md` §3's quoted labor-law block and its 2026-07-28 Conflict record. Both are quotation and immutable history respectively; the live routing law is stated in the rider (L-1/L-3), and `PLAN.md` §2's source-wins clause governs.
 
-**No seal is minted by this row.** #11's own state after this landing is `spec_state=sealed` · `code_state=landed` (doc-side; this wave has no `src/` half) · `evidence_state=captured` (this file plus the burndown are its artifacts) — and it holds no CLOSED transition, which is the lead's act after the challenge pass the Challenge Law requires (⊕¹¹).
+**No seal is minted by this row.** #11's own state after this landing is `spec_state=banked` · `code_state=n/a` (doc-only row; this wave has no `src/` half) · `evidence_state=captured` (this file plus the burndown are its artifacts) — and it holds no CLOSED transition, which is the lead's act after the challenge pass the Challenge Law requires (⊕¹¹). **[⊕ 2026-08-03 residual cure: this sentence previously read `spec_state=sealed` · `code_state=landed`, which contradicted its own leading clause — `sealed` is the vocabulary of a minted seal and none exists (0/87 stands). Corrected to `banked`, the term rows #14/#16 use for the same condition; `code_state` corrected to `n/a` for the same reason those rows carry it.]**
 
 ---
 
